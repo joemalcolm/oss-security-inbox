@@ -1,71 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/17/1
-Message-ID: <CACsGmeQW_WKZMtCKEEXzNdxE2QKOGX_88U7-dEScg4cL93uvUg@mail.gmail.com>
-Date: Thu, 17 Jun 2021 17:28:01 +0100
-From: Andrew Zayine <scholarshipchile@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: New Open-Source Forensic Tool for SQLite Data Recovery
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/25/2
+Message-ID: <o215932q-o26q-5o78-nr77-p0s99088rr23@redhat.com>
+Date: Thu, 25 Feb 2021 16:58:53 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+cc: Ruhr-University Bochum <bugs-syssec@....de>,  Cheolwoo Myung <cwmyung@....ac.kr>, Alexander Bulekov <alxndr@...edu>
+Subject: CVE-2021-20257 QEMU: net: e1000: infinite loop while processing transmit descriptors
 Content-Type: text/plain; charset=utf-8
 
-Hi All,
+   Hello,
 
-As an editorial assistant in the International Journal of Cyber
-Forensics and Advanced Threat Investigations (ISSN: 2753-9997), I
-would like to advertise a new open-source tool presented recently in
-the journal.
+An infinite loop issue was found in the e1000 NIC emulator of the QEMU. It 
+occurs while processing transmit (tx) descriptors in process_tx_desc, if 
+various descriptor fields are initialised with invalid values. A guest may use 
+this flaw to consume cpu cycles on the host resulting in DoS scenario.
 
-(FQLite) is a tool to find and restore deleted records in SQLite
-databases. It, therefore, examines the database for entries marked as
-deleted. Those entries can be recovered and displayed. It is written
-with the Java programming language. The program can operate in two
-different modes. It can be started from the command line (CLI mode). A
-simple graphical user interface is also supported (GUI mode).
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2021-02/msg07428.html
 
-The program is able to search an SQLite database file for regular as
-well as deleted records.
+'CVE-2021-20257' assigned by Red Hat Inc.
 
-Official Project Webpage
----------------------------------
-Check out the latest binary version (as a runnable jar-Archive) from
-the official project homepage:
-https://www.staff.hs-mittweida.de/~pawlaszc/fqlite/
+This issue was independently reported by Sergej Schumilo, Cornelius 
+Aschermann, Simon Werner of Ruhr-University Bochum; Cheolwoo Myung of Seoul 
+National University; And Alexander Bulekov (CC'd).
 
-Technical Background
-------------------------------------
-On overview article highlighting the technical background of FQLite
-can be retrieved from
 
-Pawlaszczyk, D., & Hummert, C. (2021). Making the Invisible Visible
-–Techniques for Recovering Deleted SQLite Data Records. International
-Journal of Cyber Forensics and Advanced Threat Investigations, 1(1-3),
-27-41. DOI: https://doi.org/10.46386/ijcfati.v1i1-3.17
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
-Prerequisites
-------------------
-To run the tool you need at least a Java Runtime Environment 1.8 or higher.
-
-Example Usage
-----------------------
-To run the FQLite in GUI mode the executable jar can normally be
-started with a double-click on the jar-archive file. If this does not
-work, since javaw is not linked correctly to .jar files, you can use
-the command line as well:
-
-$>java -jar fqlite.jar
-
-To run the FQLite from the command line you can use the following command:
-
-$>java -cp fqlite.jar fqlite.base.MAIN <database.db>
-
-Licence and Author
---------------------------
-Author: Dirk Pawlaszczyk pawlaszc@...mittweida.de
-
-FQLite for SQLite is bi-licensed under the Mozilla Public License
-Version 2, as well as the GNU General Public License Version 3 or
-later.
-
-You can modify or redistribute it under the conditions of these licenses.
-
-Best Regards
-Andrew Zayine, Ph.D., CISSP, CISM, CRISC, CDPSE, PMP
