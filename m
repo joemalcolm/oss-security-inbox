@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3562" "Tuesday" "23" "May" "2017" "08:34:04" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1705230831540.6623@freddy.simplesystems.org>" "58" "Re: [oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder" "^cc:" nil nil "5" "2017052313:34:04" "[oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder" (number mark "        bfriesen@sim May 23   58/3562  " thread-indent "\"Re: [oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder\"\n") "<29e52200-d7ee-12b8-f048-653bf1ff8b34@gentoo.org>" ("<20170520072632.z5nbivrdwmqm3soe@eldamar.local>" "<20170520152406.2339.3B884775@matica.foolinux.mooo.com>" "<20170520175436.GA30962@jasmine>" "<alpine.GSO.2.20.1705201313250.6623@freddy.simplesystems.org>" "<bd1dd6da-8b2a-4776-ea92-cc5a4b369515@gentoo.org>" "<alpine.GSO.2.20.1705221753220.23240@scrappy.simplesystems.org>" "<29e52200-d7ee-12b8-f048-653bf1ff8b34@gentoo.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1020" "Thursday" "25" "February" "2021" "21:48:38" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" nil "25" "Re: [oss-security] Vulnerability in the Linux Audit Framework Auditd" nil nil nil "2" nil nil (number mark "U       carnil@debia Feb 25   25/1020  " thread-indent "\"Re: [oss-security] Vulnerability in the Linux Audit Framework Auditd\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Vulnerability in the Linux Audit Framework Auditd" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21999 invoked by uid 550); 23 May 2017 13:34:19 -0000
+Received: (qmail 3778 invoked by uid 550); 25 Feb 2021 20:48:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,79 +11,73 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21972 invoked from network); 23 May 2017 13:34:18 -0000
-X-X-Sender: bfriesen@freddy.simplesystems.org
-In-Reply-To: <29e52200-d7ee-12b8-f048-653bf1ff8b34@gentoo.org>
-Message-ID: <alpine.GSO.2.20.1705230831540.6623@freddy.simplesystems.org>
-References: <20170520072632.z5nbivrdwmqm3soe@eldamar.local> <20170520152406.2339.3B884775@matica.foolinux.mooo.com> <20170520175436.GA30962@jasmine> <alpine.GSO.2.20.1705201313250.6623@freddy.simplesystems.org> <bd1dd6da-8b2a-4776-ea92-cc5a4b369515@gentoo.org>
- <alpine.GSO.2.20.1705221753220.23240@scrappy.simplesystems.org> <29e52200-d7ee-12b8-f048-653bf1ff8b34@gentoo.org>
-User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Tue, 23 May 2017 08:34:04 -0500 (CDT)
-cc: oss-security@lists.openwall.com
-Date: Tue, 23 May 2017 08:34:04 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized
- memory in RLE decoder
-To: Thomas Deutschmann <whissi@gentoo.org>
+Received: (qmail 3754 invoked from network); 25 Feb 2021 20:48:52 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=5oylp0coKHlAYKnA4rKOsGv6dcSMEQRz7fxdomrAgwY=;
+        b=P2CCzW3RUrBy0QIMsbBADOi7XzvbHo0Yg1k2o9TO2TatRM333V9NcYgduXTpUb6ovi
+         WnAerN5U89WmxJBR0ZFPznQXzZCXltO7F09t9yL5A8matrPDKJIWtaD4YKOnTP13jh9F
+         nw5f/3d5oU52oV0aRpnODRdNgOU5sYWwUapBYSOSHcVWvpal8WKfcpES5qkqFB+HSXGR
+         DZGMFwmuATNZOcnVLKk5NreaTo9PmpSgPxIfGUtwwv2XYXRQ2VA6z3uYjcnTatazIXAk
+         7gU8mQ6O2PbBnC2movytJBGcQ20vVb1w0bVg+M1XD2PGYmvIGHAZ9WpG9ObV48dtaEkQ
+         IprA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to;
+        bh=5oylp0coKHlAYKnA4rKOsGv6dcSMEQRz7fxdomrAgwY=;
+        b=ZWjLA+cXJP2sAlD/Fe3g9MiVGqSO3JGEgL7ga0fAZDC6Fo8E5ZJym6M6LMiXeeFoDu
+         PEfPaOrpKJGfib4sH4Tpdw9x657L+8TIddO0fYRia1M2tzFXGJSEPG9t16mfVaCP4GlR
+         K+oNkhkpmvKjVV9JntFx0NdK1SpE24Upbw97RxbNuI7Nmuz/3H/YuPiTcvAkhcB0lxKV
+         tXJGJT2fOGCCv6VEFGaNjlWrB1MRtkcbERZlPjm6anyXuHniwgd1WgM/rsSGv9VcSa7x
+         9XgCh6kVs0k0GaFh536Z6w7bEZZBRN99TxZ4by0BzuwTB4A5K/uXkSgbp97xLtuynHZC
+         JlPA==
+X-Gm-Message-State: AOAM531r0Y1quhduRceDPH/0tRRU6Pc2DltamEImH3TbnzEcFEWkUQFU
+	8YmcFKn/XLLtC5mueD+memg=
+X-Google-Smtp-Source: ABdhPJw0eA94AIywFZ0o+OyWaGJ4BypaoMcU+6e6l2A8SaGJ+21/109yXOa9JhkyIOnxyDtFRuk+1w==
+X-Received: by 2002:a5d:6d0c:: with SMTP id e12mr5142213wrq.136.1614286120994;
+        Thu, 25 Feb 2021 12:48:40 -0800 (PST)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Thu, 25 Feb 2021 21:48:38 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: oss-security@lists.openwall.com
+Cc: Steve Grubb <sgrubb@redhat.com>,
+	Felix Kosterhon <felix.kosterhon@secuinfra.com>
+Message-ID: <YDgNJsbBFtYumXCp@eldamar.lan>
+References: <41A7FAA9-5814-47A7-A9A5-B36D9DE550A8@secuinfra.com>
+ <2132838.iZASKD2KPV@x2>
+ <E42466DE-9ABE-4996-9F6B-D82DA14396B9@secuinfra.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <E42466DE-9ABE-4996-9F6B-D82DA14396B9@secuinfra.com>
+Subject: Re: [oss-security] Vulnerability in the Linux Audit Framework Auditd
 
-On Tue, 23 May 2017, Thomas Deutschmann wrote:
+Hi,
 
-> Hi,
->
-> thanks! I received an tiff attachment. Could you please confirm its
-> SHA256 sum? I got
->
->> 790EF50E47EDCEF26DF6D6A7EB87B7706C1E32486D0EC3DB46A4E784E75C9DE8
+On Thu, Feb 18, 2021 at 03:52:54PM +0000, Felix Kosterhon wrote:
+> Hello Mr. Grubb,
+>  
+> thank you for your insight.
+> First and foremost we would like to clarify that our intent is not
+> to put blame on anyone but to improve the level of security for the
+> affected systems and the organisations utilising Auditd.
+> According to the rules.conf manual page, file-watch rules are meant
+> to monitor any accesses to files based on their permission level.
+> For the syscalls mentioned in this report this is not the case.
+>  
+> RedHat Inc. shares our perspective on this issue and has assigned a
+> CVE for the vulnerability. Additionally they informed us that they
+> will work together with the Upstream Linux Kernel Developers on
+> behalf of fixing this issue.
 
-That is what I get here.  Since there seems to be so much interest in 
-this file, I include a base64 encoding of it below.
+Is there a reference to this which can be followed/tracked? Asking
+because the Red Hat bugzilla entry for CVE-2020-35501 for now would
+still be restricted, but would like to get a better idea on how to
+track this issue within Debian.
 
-TU0AKgAACAj/AP8I/xD/GP8g/yn/Mf85/0H/Sv9S/1r/Yv9q/3P/e/+D/4v/lP+c/6T/rP+0/73/
-xf/N/9X/3v/m/+7/9v//9gD2CPYQ9hj2IPYp9jH2OfZB9kr2UvZa9mL2avZz9nv2g/aL9pT2nPak
-9qz2tPa99sX2zfbV9t725vbu9vb2/+4A7gjuEO4Y7iDuKe4x7jnuQe5K7lLuWu5i7mruc+577oPu
-i+6U7pzupO6s7rTuve7F7s3u1e7e7ubu7u727v/mAOYI5hDmGOYg5inmMeY55kHmSuZS5lrmYuZq
-5nPme+aD5ovmlOac5qTmrOa05r3mxebN5tXm3ubm5u7m9ub/3gDeCN4Q3hjeIN4p3jHeOd5B3kre
-Ut5a3mLeat5z3nveg96L3pTenN6k3qzetN693sXezd7V3t7e5t7u3vbe/9UA1QjVENUY1SDVKdUx
-1TnVQdVK1VLVWtVi1WrVc9V71YPVi9WU1ZzVpNWs1bTVvdXF1c3V1dXe1ebV7tX21f/NAM0IzRDN
-GM0gzSnNMc05zUHNSs1SzVrNYs1qzXPNe82DzYvNlM2czaTNrM20zb3Nxc3NzdXN3s3mze7N9s3/
-xQDFCMUQxRjFIMUpxTHFOcVBxUrFUsVaxWLFasVzxXvFg8WLxZTFnMWkxazFtMW9xcXFzcXVxd7F
-5sXuxfbF/70AvQi9EL0YvSC9Kb0xvTm9Qb1KvVK9Wr1ivWq9c717vYO9i72UvZy9pL2svbS9vb3F
-vc291b3evea97r32vf+0ALQItBC0GLQgtCm0MbQ5tEG0SrRStFq0YrRqtHO0e7SDtIu0lLSctKS0
-rLS0tL20xbTNtNW03rTmtO609rT/rACsCKwQrBisIKwprDGsOaxBrEqsUqxarGKsaqxzrHusg6yL
-rJSsnKykrKystKy9rMWszazVrN6s5qzurPas/6QApAikEKQYpCCkKaQxpDmkQaRKpFKkWqRipGqk
-c6R7pIOki6SUpJykpKSspLSkvaTFpM2k1aTepOak7qT2pP+cAJwInBCcGJwgnCmcMZw5nEGcSpxS
-nFqcYpxqnHOce5yDnIuclJycnKScrJy0nL2cxZzNnNWc3pzmnO6c9pz/lACUCJQQlBiUIJQplDGU
-OZRBlEqUUpRalGKUapRzlHuUg5SLlJSUnJSklKyUtJS9lMWUzZTVlN6U5pTulPaU/4sAiwiLEIsY
-iyCLKYsxizmLQYtKi1KLWotii2qLc4t7i4OLi4uUi5yLpIusi7SLvYvFi82L1Yvei+aL7ov2i/+D
-AIMIgxCDGIMggymDMYM5g0GDSoNSg1qDYoNqg3ODe4ODg4uDlIOcg6SDrIO0g72DxYPNg9WD3oPm
-g+6D9oP/ewB7CHsQexh7IHspezF7OXtBe0p7Untae2J7antze3t7g3uLe5R7nHuke6x7tHu9e8V7
-zXvVe9575nvue/Z7/3MAcwhzEHMYcyBzKXMxczlzQXNKc1JzWnNic2pzc3N7c4Nzi3OUc5xzpHOs
-c7RzvXPFc81z1XPec+Zz7nP2c/9qAGoIahBqGGogailqMWo5akFqSmpSalpqYmpqanNqe2qDaotq
-lGqcaqRqrGq0ar1qxWrNatVq3mrmau5q9mr/YgBiCGIQYhhiIGIpYjFiOWJBYkpiUmJaYmJiamJz
-Yntig2KLYpRinGKkYqxitGK9YsVizWLVYt5i5mLuYvZi/1oAWghaEFoYWiBaKVoxWjlaQVpKWlJa
-WlpiWmpac1p7WoNai1qUWpxapFqsWrRavVrFWs1a1VreWuZa7lr2Wv9SAFIIUhBSGFIgUilSMVI5
-UkFSSlJSUlpSYlJqUnNSe1KDUotSlFKcUqRSrFK0Ur1SxVLNUtVS3lLmUu5S9lL/SgBKCEoQShhK
-IEopSjFKOUpBSkpKUkpaSmJKakpzSntKg0qLSpRKnEqkSqxKtEq9SsVKzUrVSt5K5kruSvZK/0EA
-QQhBEEEYQSBBKUExQTlBQUFKQVJBWkFiQWpBc0F7QYNBi0GUQZxBpEGsQbRBvUHFQc1B1UHeQeZB
-7kH2Qf85ADkIORA5GDkgOSk5MTk5OUE5SjlSOVo5YjlqOXM5ezmDOYs5lDmcOaQ5rDm0Ob05xTnN
-OdU53jnmOe459jn/MQAxCDEQMRgxIDEpMTExOTFBMUoxUjFaMWIxajFzMXsxgzGLMZQxnDGkMawx
-tDG9McUxzTHVMd4x5jHuMfYx/ykAKQgpECkYKSApKSkxKTkpQSlKKVIpWiliKWopcyl7KYMpiymU
-KZwppCmsKbQpvSnFKc0p1SneKeYp7in2Kf8gACAIIBAgGCAgICkgMSA5IEEgSiBSIFogYiBqIHMg
-eyCDIIsglCCcIKQgrCC0IL0gxSDNINUg3iDmIO4g9iD/GAAYCBgQGBgYIBgpGDEYORhBGEoYUhha
-GGIYahhzGHsYgxiLGJQYnBikGKwYtBi9GMUYzRjVGN4Y5hjuGPYY/xAAEAgQEBAYECAQKRAxEDkQ
-QRBKEFIQWhBiEGoQcxB7EIMQixCUEJwQpBCsELQQvRDFEM0Q1RDeEOYQ7hD2EP8IAAgICBAIGAgg
-CCkIMQg5CEEISghSCFoIYghqCHMIewiDCIsIlAicCKQIrAi0CL0IxQjNCNUI3gjmCO4I9gj/AAAA
-CAAQABgAIAApADEAOQBBAEoAUgBaAGIAagBzAHsAgwCLAJQAnACkAKwAtAC9AMUAzQDVAN4A5gDu
-APYA/wARAQAAAwAAAAEAIgAAAQEAAwAAAAEAMAAAAQIAAwAAAAIACAAIAQMAAwAAAAEAAQAAAQYA
-AwAAAAEABQAAAREABAAAAAEAAAAIARIAAwAAAAEAAQAAARUAAwAAAAEAAgAAARYAAwAAAAEAIAAA
-ARcABAAAAAEAAAgAARoABQAAAAEAAAjaARsABQAAAAEAAAjiARwAAwAAAAEAAQAAASgAAwAAAAEA
-AgAAAVIAAwAAAAEAAgAAAVMAAwAAAAIAAQABh3MABwAAAAAAAABIAAA=
-
-Bob
--- 
-Bob Friesenhahn
-bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Regards,
+Salvatore
