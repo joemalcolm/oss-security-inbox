@@ -1,86 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/24/2
-Message-ID: <b11bd2b0-1f34-4d41-9555-d31de13d43da@thomas-ward.net>
-Date: Sat, 24 Apr 2021 12:20:38 -0400
-From: Thomas Ward <teward@...mas-ward.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Malicious commits to Linux kernel as part of university study
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/26/1
+Message-ID: <5s13663-1p72-s775-1762-6sp1qr114s39@redhat.com>
+Date: Fri, 26 Feb 2021 20:16:15 +0530 (IST)
+From: P J P <ppandit@...hat.com>
+To: oss security list <oss-security@...ts.openwall.com>
+Subject: CVE-2021-3416 QEMU: net: infinite loop in loopback mode may lead tostack overflow
 Content-Type: text/plain; charset=utf-8
 
-Clarification is from 2020.  That clarification doesn't address the fact that this is still technically research misconduct regardless of the clarifications.  The Linux Kernel has banned commits from University of Michigan because of a large volume of noise and useless patch requests among other things.  So it still requires a misconduct evaluation.
+   Hello,
 
-⁣Get BlueMail for Android ​
+A potential stack overflow via infinite loop issue was found in various NIC 
+emulators of QEMU. The said issue occurs in loopback mode of a NIC wherein 
+reentrant DMA checks may get bypassed. A guest user/process may use this flaw 
+to consume cpu cycles or crash the QEMU process on the host resulting in DoS 
+scenario.
 
+Upstream patch:
+---------------
+   -> https://lists.gnu.org/archive/html/qemu-devel/2021-02/msg07431.html
+   -> https://lists.gnu.org/archive/html/qemu-devel/2021-02/msg07484.html
 
--------- Original Message --------
-From: Silas <silas.cutler@...cklistthisdomain.com>
-Sent: Fri Apr 23 23:32:27 EDT 2021
-To: oss-security@...ts.openwall.com
-Subject: Re: [oss-security] Malicious commits to Linux kernel as part of university study
+'CVE-2021-3416' assigned via Red Hat Inc.
 
-Hello,
-
-They issued a clarification as well:
-https://www-users.cs.umn.edu/~kjlu/papers/clarifications-hc.pdf
-
-- S
-
-
-
-On 4/22/21 12:25 PM, Marcus Meissner wrote:
-> Hi,
-> 
-> to follow the "give complete content" requirement, here their statement on their website:
-> 
-> https://cse.umn.edu/cs/statement-cse-linux-kernel-research-april-21-2021
-> 
-> "
-> Statement from CS&E on Linux Kernel research - April 21, 2021
-> 
-> Leadership in the University of Minnesota Department of Computer Science & Engineering learned today about the details of research being conducted by one of its faculty members and graduate students into the security of the Linux Kernel. The research method used raised serious concerns in the Linux Kernel community and, as of today, this has resulted in the University being banned from contributing to the Linux Kernel.
-> 
-> We take this situation extremely seriously. We have immediately suspended this line of research. We will investigate the research method and the process by which this research method was approved, determine appropriate remedial action, and safeguard against future issues, if needed. We will report our findings back to the community as soon as practical.
-> 
-> Sincerely,
-> 
-> Mats Heimdahl, Department Head
-> Loren Terveen, Associate Department Head
-> "
-> 
-> Ciao, Marcus
-> 
-> On Thu, Apr 22, 2021 at 05:11:42PM +0200, Marcus Meissner wrote:
->> Hi,
->>
->> https://twitter.com/UMNComputerSci/status/1384948683821694976
->>
->> Ciao, Marcus
->>
->>
->> On Thu, Apr 22, 2021 at 02:55:03PM +0000, David H wrote:
->>> Has anyone reported this to https://research.umn.edu/ethics-compliance/reporting-research-misconduct ?
->>>
->>>
->>> ﻿On 4/22/21, 3:00 AM, "Peter Bex" <peter@...e-magic.net> wrote:
->>>
->>>     Hi all,
->>>
->>>     Probably a lot of you know this already but I consider it serious enough
->>>     to point out to the OSS security community at large.
->>>
->>>     The university of Minnesota has been banned from making any commits to
->>>     the Linux kernel after it was found out they'd been submitting bogus
->>>     patches to the LKML to knowingly introduce security issues:
->>>     https://lore.kernel.org/linux-nfs/YH%2FfM%2FTsbmcZzwnX@kroah.com/
->>>
->>>     They also published a paper:
->>>     https://raw.githubusercontent.com/QiushiWu/qiushiwu.github.io/main/papers/OpenSourceInsecurity.pdf
->>>
->>>     I don't know the scope of this research, but it could involve other OSS
->>>     projects, now or in the future, as well.  Hence this e-mail.  If you feel
->>>     it's spam or needless drama, feel free to ignore.
->>>
->>>     Cheers,
->>>     Peter
->>
+Thank you.
+--
+Prasad J Pandit / Red Hat Product Security Team
+8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
 
