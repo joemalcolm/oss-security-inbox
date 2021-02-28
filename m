@@ -1,4 +1,9 @@
-Received: (qmail 3953 invoked by uid 550); 29 Mar 2024 23:49:21 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2758" "Sunday" "28" "February" "2021" "10:23:46" "+0100" "Fabian Keil" "freebsd-listen@fabiankeil.de" nil "73" "[oss-security] Multiple DoS issues fixed in Privoxy 3.0.32 stable" nil nil nil "2" nil nil (number mark "U       freebsd-list Feb 28   73/2758  " thread-indent "\"[oss-security] Multiple DoS issues fixed in Privoxy 3.0.32 stable\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple DoS issues fixed in Privoxy 3.0.32 stable" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 22180 invoked by uid 550); 28 Feb 2021 11:05:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,54 +12,87 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3908 invoked from network); 29 Mar 2024 23:49:20 -0000
-From: Russ Allbery <eagle@eyrie.org>
+Received: (qmail 11878 invoked from network); 28 Feb 2021 09:26:48 -0000
+Date: Sun, 28 Feb 2021 10:23:46 +0100
+From: Fabian Keil <freebsd-listen@fabiankeil.de>
 To: oss-security@lists.openwall.com
-In-Reply-To: <6038e843-fc3f-4c51-a48c-feb283242b41@canonical.com> (Marc
-	Deslauriers's message of "Fri, 29 Mar 2024 19:15:11 -0400")
-Organization: The Eyrie
-References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
-	<uu76c4$u7g$1@ciao.gmane.io> <20240329211052.GA2470@openwall.com>
-	<uu7da3$87n$1@ciao.gmane.io>
-	<20240329221938.dqit6xuh4es2v6gc@awork3.anarazel.de>
-	<uu7g5q$8hl$1@ciao.gmane.io>
-	<01322afdcf6b4dd7b81452dc5afed6b1@amazon.com>
-	<6038e843-fc3f-4c51-a48c-feb283242b41@canonical.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-Date: Fri, 29 Mar 2024 16:49:09 -0700
-Message-ID: <87r0fsiop6.fsf@hope.eyrie.org>
+Message-ID: <20210228102346.65e49420@fabiankeil.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: Re: [oss-security] Re: backdoor in upstream xz/liblzma leading to
- ssh server compromise
+Content-Type: multipart/signed; boundary="Sig_/RCSyHhiXw=.+/Vtg7AS0M2J";
+ protocol="application/pgp-signature"; micalg=pgp-sha1
+X-Df-Sender: Nzc1MDY3
+Subject: [oss-security] Multiple DoS issues fixed in Privoxy 3.0.32 stable
 
-Marc Deslauriers <marc.deslauriers@canonical.com> writes:
+--Sig_/RCSyHhiXw=.+/Vtg7AS0M2J
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-> I would argue against having a policy requiring something like this to
-> be made public immediately. The important thing here is to do whatever
-> it takes to make sure users are secure as fast as possible, not expose
-> them to even bigger attack surface with no mitigation available.
+               Announcing Privoxy 3.0.32 stable
+--------------------------------------------------------------------
 
-There is an interesting potential disagreement of interests here, too, in
-that one's ability to respond to a disclosed vulnerability with no
-available updated packages is heavily resource-dependent.  Large
-(security-savvy) companies may reasonably prefer disclosure as early as
-possible because they have in-house security teams that follow lists like
-this and are capable of taking immediate action in advance of a general
-fix.  However, smaller organizations or individuals who are reliant on
-distributions for notification and patches are potentially more vulnerable
-to any increased attacker activity that might happen due to the public
-announcement and before the availability of updated packages.
+Privoxy 3.0.32 fixes multiple DoS issues and a couple of other bugs.
+The issues also affect earlier Privoxy releases.
 
-That gap could be closed somewhat by distributions sending immediate
-security alerts with mitigations and workarounds once the issue becomes
-public and then following up with alerts once patches are available, at
-the cost of an obvious increase in work and stress for distributions (and
-possible contention of resources between putting out a migitation alert
-and preparing a proper fix).
+--------------------------------------------------------------------
+ChangeLog for Privoxy 3.0.32
+--------------------------------------------------------------------
+- Security/Reliability:
+  - ssplit(): Remove an assertion that could be triggered with a
+    crafted CGI request.
+    Commit 2256d7b4d67. OVE-20210203-0001.
+    Reported by: Joshua Rogers (Opera)
+  - cgi_send_banner(): Overrule invalid image types. Prevents a
+    crash with a crafted CGI request if Privoxy is toggled off.
+    Commit e711c505c48. OVE-20210206-0001.
+    Reported by: Joshua Rogers (Opera)
+  - socks5_connect(): Don't try to send credentials when none are
+    configured. Fixes a crash due to a NULL-pointer dereference
+    when the socks server misbehaves.
+    Commit 85817cc55b9. OVE-20210207-0001.
+    Reported by: Joshua Rogers (Opera)
+  - chunked_body_is_complete(): Prevent an invalid read of size two.
+    Commit a912ba7bc9c. OVE-20210205-0001.
+    Reported by: Joshua Rogers (Opera)
+  - Obsolete pcre: Prevent invalid memory accesses with an invalid
+    pattern passed to pcre_compile(). Note that the obsolete pcre code
+    is scheduled to be removed before the 3.0.33 release. There has been
+    a warning since 2008 already.
+    Commit 28512e5b624. OVE-20210222-0001.
+    Reported by: Joshua Rogers (Opera)
 
-(Disclosure: I am a member of the Debian project, but I am not a member of
-the Debian security team and am speaking solely for myself here.)
+[...]
 
--- 
-Russ Allbery (eagle@eyrie.org)             <https://www.eyrie.org/~eagle/>
+-----------------------------------------------------------------
+About Privoxy:
+-----------------------------------------------------------------
+
+Privoxy is a non-caching web proxy with advanced filtering capabilities for
+enhancing privacy, modifying web page data and HTTP headers, controlling
+access, and removing ads and other obnoxious Internet junk. Privoxy has a
+flexible configuration and can be customized to suit individual needs and
+tastes. It has application for both stand-alone systems and multi-user
+networks.
+
+Privoxy is Free Software and licensed under the GNU GPLv2.
+
+[...]
+
+Home Page:=20
+   https://www.privoxy.org/
+
+Complete announcement:
+   https://lists.privoxy.org/pipermail/privoxy-announce/2021-February/00000=
+7.html
+
+--Sig_/RCSyHhiXw=.+/Vtg7AS0M2J
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EARECAB0WIQTKUNd6H/m3+ByGULIFiohV/3dUnQUCYDthIwAKCRAFiohV/3dU
+nSn1AJ48xW6Px2AZ+HM3gOynPKBvdR86TQCeO0nLigdgt5rrqVB7eAzSDPsF/kQ=
+=FMEa
+-----END PGP SIGNATURE-----
+
+--Sig_/RCSyHhiXw=.+/Vtg7AS0M2J--
