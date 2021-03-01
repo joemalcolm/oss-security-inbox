@@ -1,83 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/27/4
-Message-ID: <CAMyKh9dsqQfJQ1-aTomc_Ou3q3_m0iofZtuAwxPaFrm0mi4B1Q@mail.gmail.com>
-Date: Wed, 27 Oct 2021 16:40:55 +0200
-From: Samuel Groß <saelo@...gle.com>
-To: Francis Perron <francis.perron@...pify.com>
-Cc: oss-security@...ts.openwall.com,  Carlos Alberto Lopez Perez <clopez@...lia.com>, security@...kit.org, Alberto Garcia <berto@...lia.com>
-Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2021-0006
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/01/3
+Message-ID: <9c3be1f8-052f-f034-5026-22ab4ecff61b@mh-sec.de>
+Date: Mon, 1 Mar 2021 15:48:57 +0100
+From: Marc <mh@...sec.de>
+To: oss-security@...ts.openwall.com
+Subject: Multiple Vulnerabilities in jpeg-xl (CVE-2021-27804)
 Content-Type: text/plain; charset=utf-8
 
-Hi!
 
-I don't know what happened to CVE-2021-30851 as these CVEs are allocated by
-Apple usually. I think the CVE would correspond to this issue though:
-https://bugs.webkit.org/show_bug.cgi?id=227988
+Multiple Vulnerabilities in jpeg-xl
+===================================
+CVE: CVE-2021-27804
+Highest Severity Rating: High
+Confirmed Affected Versions: jpeg-xl v0.3.1 and earlier
+Vendor: Joint Photographic Experts Group (JPEG)
+Vendor URL: https://gitlab.com/wg1/jpeg-xl
 
-Best!
-Samuel
 
-On Wed, Oct 27, 2021 at 3:02 PM Francis Perron <francis.perron@...pify.com>
-wrote:
+Summary and Impact
+------------------
+jpeg-xl is the reference implementation by the Joint Photographic
+Experts Group (JPEG) of the new JPEG XL standard.
+Multiple memory corruption vulnerabilities were found and reported in
+the last 3 months. The security issues were responsively reported to
+the vendor and were fixed in subsequent version, however silently.
 
-> On Wed, Oct 27, 2021 at 12:09 AM Salvatore Bonaccorso <carnil@...ian.org>
-> wrote:
-> >
-> > Hi,
-> >
-> > [dropping most other recipients]
-> >
-> > On Tue, Oct 26, 2021 at 08:05:36PM +0100, Carlos Alberto Lopez Perez
-> wrote:
-> > >
-> ------------------------------------------------------------------------
-> > > WebKitGTK and WPE WebKit Security Advisory
->  WSA-2021-0006
-> > >
-> ------------------------------------------------------------------------
-> > >
-> > > Date reported           : October 26, 2021
-> > > Advisory ID             : WSA-2021-0006
-> > > WebKitGTK Advisory URL  :
-> https://webkitgtk.org/security/WSA-2021-0006.html
-> > > WPE WebKit Advisory URL :
-> https://wpewebkit.org/security/WSA-2021-0006.html
-> > > CVE identifiers         : CVE-2021-30846, CVE-2021-30848,
-> > >                           CVE-2021-30849, CVE-2021-30851,
-> > >                           CVE-2021-30858, CVE-2021-42762.
-> > >
-> > > Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
-> > [...]
-> > > CVE-2021-30851
-> > >     Versions affected: WebKitGTK and WPE WebKit before 2.34.0.
-> > >     Credit to Samuel Groß of Google Project Zero.
-> > >     Impact: Processing maliciously crafted web content may lead to code
-> > >     execution. Description: A memory corruption vulnerability was
-> > >     addressed with improved locking.
-> >
-> > CVE-2021-30851 seems to be REJECTED (cf.
-> > https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-30851). Is
-> > there a typo in the CVE id for this one or did the CVE got rejected
-> > later on?
->
-> BCC'ing Samuel Groß
->
->
-> Salvatore -
->   I think 30851 was not issued, and it may have been a mistake here.
-> There was no other CVE issued as part of WSA-2021-0006 according to
-> the GitHub repo for the CVE program:
-> https://github.com/CVEProject/cvelist/search?q=wsa-2021-0006
->
-> if you need a CVE for this, Samuel may be able to sort this out with
-> the WebKit folks, who also seem to advertise 30851 on their security
-> advisory site: https://webkitgtk.org/security/WSA-2021-0006.html
->
->
-> Have a good Wednesday,
->
-> --
-> Francis Perron
->   Engineering Program Manager | Security Incident Response
->
+The changelog does not reflect security issues being fixed:
 
+jpeg-xl (0.3.2) urgency=medium
+
+  * Bump JPEG XL version to 0.3.2.
+  * Fix embedded ICC encoding regression #149.
+
+ -- Fri, 12 Feb 2021 21:00:12 +0100
+
+jpeg-xl (0.3.1) urgency=medium
+
+  * Bump JPEG XL version to 0.3.1.
+
+ -- Tue, 09 Feb 2021 09:48:43 +0100
+
+jpeg-xl (0.3) urgency=medium
+
+  * Bump JPEG XL version to 0.3.
+
+ -- Wed, 27 Jan 2021 22:36:32 +0100
+
+All the while it is already being available e.g. in Arch Linux
+(https://aur.archlinux.org/packages/libjpeg-xl-git/) and FreeBSD
+(https://pkgs.org/download/jpeg-xl) and is currently in the process of
+being added to Debian and therefore to Ubuntu and Kali Linux.
+
+Hence the need to sit down and write a boring advisory to publish on a
+mailing list instead of doing something more interesting :(
+
+For anyone interested, the memory corruptions were discovered by using
+the AFL++ fuzzer (https://github.com/AFLplusplus/AFLplusplus) for just a
+few hours for testing purposes. The current v0.3.2 release of jpeg-xl
+also produces writeable memory corruptions when fuzzing for a very short
+time (with a good starting corpus that is).
+
+
+Recommendation
+--------------
+The vendor should establish a proper notification on fixed security
+issues in the changelog and not put the Internet at risk.
+
+
+-- 
+Marc Heuse
+www.mh-sec.de
+
+PGP: AF3D 1D4C D810 F0BB 977D  3807 C7EE D0A0 6BE9 F573
