@@ -1,26 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/15/2
-Message-ID: <20210115165756.tdsblbvt4hljd764@anathema>
-Date: Fri, 15 Jan 2021 17:57:56 +0100
-From: Morten Linderud <foxboron@...hlinux.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/01/2
+Message-ID: <1d9e46e1-2201-5fb9-b5dc-791ce8f7e461@apache.org>
+Date: Mon, 1 Mar 2021 11:15:46 +0000
+From: Mark Thomas <markt@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: [vs] Cinnamon lock screen bypass in multiple distributions
+Subject: CVE-2021-25329: Apache Tomcat Incomplete fix for CVE-2020-9484
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 15, 2021 at 09:14:03PM +0500, Alexander E. Patrakov wrote:
-> As this is already public, no need to hold it on the distros list.
->
-> >> Arch Linux:
-> >> https://u.pcloud.link/publink/show?code=kZWfUYXZ7gbkkdrvvALNp1WkDy2EkJCjBAH7
-> >> This distribution also has the latest released cinnamon-screensaver,
-> >> 4.8.1-1. xorg-server version is 1.20.10-3, the only patches applied
-> >> are for the build system, not for C code.
+The fix for CVE-2020-9484 was incomplete. When using Apache Tomcat 
+10.0.0-M1 to 10.0.0, 9.0.0.M1 to 9.0.41, 8.5.0 to 8.5.61 or 7.0.0. to 
+7.0.107 with a configuration edge case that was highly unlikely to be 
+used, the Tomcat instance was still vulnerable to CVE-2020-9494. Note 
+that both the previously published prerequisites for CVE-2020-9484 and 
+the previously published mitigations for CVE-2020-9484 also apply to 
+this issue.
 
-Is there any assigned CVE for this yet?
+Credit:
 
--- 
-Morten Linderud
-PGP: 9C02FF419FECBE16
+This issue was identified by Trung Pham of Viettel Cyber Security.
 
+References:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+https://lists.apache.org/thread.html/rfe62fbf9d4c314f166fe8c668e50e5d9dd882a99447f26f0367474bf%40%3Cannounce.tomcat.apache.org%3E
