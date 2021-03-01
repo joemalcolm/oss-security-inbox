@@ -1,65 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/09/2
-Message-ID: <20210909141609.tiluhoctwxabsu6g@yuggoth.org>
-Date: Thu, 9 Sep 2021 14:16:09 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/01/4
+Message-ID: <CAF6oT1duK+GdUtY9VTi_MfY2Si7sxXSeqC2hAWe9mmaTqua_9g@mail.gmail.com>
+Date: Mon, 1 Mar 2021 10:51:19 -0800
+From: Chao Sun <sunchao@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA-2021-006] Neutron: Routes middleware memory leak for nonexistent controllers (CVE-2021-40797)
+Subject: CVE-2020-1926: Timing attack in Cookie signature verification
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-OSSA-2021-006: Routes middleware memory leak for nonexistent controllers
-========================================================================
+Description:
 
-:Date: September 09, 2021
-:CVE: CVE-2021-40797
+Apache Hive cookie signature verification used a non constant time
+comparison which is known to be vulnerable to timing attacks. This could
+allow recovery of another users cookie signature. The issue was addressed
+in Apache Hive 2.3.8
 
+This issue is being tracked as HIVE-22708
 
-Affects
-~~~~~~~
-- Neutron: <16.4.1, >=17.0.0 <17.2.1, >=18.0.0 <18.1.1
+Credit:
 
+Apache Hive would like to thank S. Wasin for reporting this issue.
 
-Description
-~~~~~~~~~~~
-Slawek Kaplonski with Red Hat reported a vulnerability in Neutron's
-routes middleware. By making API requests involving nonexistent
-controllers, an authenticated user may cause the API worker to
-consume increasing amounts of memory, resulting in API performance
-degradation or denial of service. All Neutron deployments are
-affected.
+References:
 
+https://issues.apache.org/jira/browse/HIVE-22708
 
-Patches
-~~~~~~~
-- https://review.opendev.org/807638 (Queens)
-- https://review.opendev.org/807637 (Rocky)
-- https://review.opendev.org/807636 (Stein)
-- https://review.opendev.org/807635 (Train)
-- https://review.opendev.org/807634 (Ussuri)
-- https://review.opendev.org/807633 (Victoria)
-- https://review.opendev.org/807632 (Wallaby)
-- https://review.opendev.org/807335 (Xena)
-
-
-Credits
-~~~~~~~
-- Slawek Kaplonski from Red Hat (CVE-2021-40797)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1942179
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-40797
-
-
-Notes
-~~~~~
-- The stable/train, stable/stein, stable/rocky, and stable/queens
-  branches are under extended maintenance and will receive no new
-  point releases, but patches for them are provided as a courtesy.
-
--- 
-Jeremy Stanley
-
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
