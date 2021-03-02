@@ -1,44 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/26/1
-Message-ID: <87im0x1lqi.fsf@mpe.ellerman.id.au>
-Date: Mon, 26 Jul 2021 19:13:25 +1000
-From: Michael Ellerman <mpe@...erman.id.au>
-To: oss-security@...ts.openwall.com
-Cc: linuxppc-dev@...ts.ozlabs.org
-Subject: Linux kernel: powerpc: KVM guest to host memory corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/02/2
+Message-ID: <2073738.irdbgypaU6@x2>
+Date: Tue, 02 Mar 2021 10:18:10 -0500
+From: Steve Grubb <sgrubb@...hat.com>
+To: oss-security@...ts.openwall.com, Salvatore Bonaccorso <carnil@...ian.org>
+Cc: Felix Kosterhon <felix.kosterhon@...uinfra.com>
+Subject: Re: Vulnerability in the Linux Audit Framework Auditd
 Content-Type: text/plain; charset=utf-8
 
-The Linux kernel for powerpc since v3.10 has a bug which allows a malicious KVM guest to
-corrupt host memory.
+Hello,
 
-In the handling of the H_RTAS hypercall, args.rets is made to point into the args.args
-buffer which is located on the stack:
+On Thursday, February 25, 2021 3:48:38 PM EST Salvatore Bonaccorso wrote:
+> On Thu, Feb 18, 2021 at 03:52:54PM +0000, Felix Kosterhon wrote:
+> > Hello Mr. Grubb,
+> > 
+> > thank you for your insight.
+> > First and foremost we would like to clarify that our intent is not
+> > to put blame on anyone but to improve the level of security for the
+> > affected systems and the organisations utilising Auditd.
+> > According to the rules.conf manual page, file-watch rules are meant
+> > to monitor any accesses to files based on their permission level.
+> > For the syscalls mentioned in this report this is not the case.
+> > 
+> > RedHat Inc. shares our perspective on this issue and has assigned a
+> > CVE for the vulnerability. Additionally they informed us that they
+> > will work together with the Upstream Linux Kernel Developers on
+> > behalf of fixing this issue.
+> 
+> Is there a reference to this which can be followed/tracked? Asking
+> because the Red Hat bugzilla entry for CVE-2020-35501 for now would
+> still be restricted, but would like to get a better idea on how to
+> track this issue within Debian.
 
-	args.rets = &args.args[be32_to_cpu(args.nargs)];
+Not sure who is supposed to answer this. I started an upstream audit 
+discussion:
 
-However args.nargs has not been range checked. That allows the guest to point args.rets
-anywhere up to +16GB from args.args.
+https://listman.redhat.com/archives/linux-audit/2021-February/msg00079.html
 
-The guest does not have control of what is written to args.rets, it is always (u32)-3,
-because subsequent code does check nargs. Additionally the guest will be killed as a
-result of the nargs being out of range, so a given guest only has a single shot at
-corrupting memory.
+The current thinking is perhaps just document this in a man page. End users 
+can always use a syscall audit rule and pick up any use. The shipped rules 
+have open_by_handle_at as part of the syscalls being watched for quite some 
+time. Typically people don't write their own rules, they have to meet the 
+DISA STIG or CIS which prescribes the rules you need to be using. So, I don't 
+know if there really is anything to do.
 
-Only machines using Linux as the hypervisor, aka. KVM or bare metal, are affected by the
-bug.
+Maybe we can get a patch adding open_by_handle_at to the permission filter in 
+the kernel. We'll just have to see how the upstream discussion unfolds.
 
-The bug was introduced in:
+-Steve
 
-    8e591cb72047 ("KVM: PPC: Book3S: Add infrastructure to implement kernel-side RTAS calls")
 
-Which was first released in v3.10.
-
-The upstream fix is:
-
-  f62f3c20647e ("KVM: PPC: Book3S: Fix H_RTAS rets buffer overflow")
-
-  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f62f3c20647ebd5fb6ecb8f0b477b9281c44c10a
-
-Which will be included in the v5.14 release.
-
-cheers
