@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["895" "Wednesday" "3" "February" "2021" "08:19:09" "+0100" "Greg KH" "gregkh@linuxfoundation.org" "<YBpObXzJVfFDoJbc@kroah.com>" "29" "[oss-security] Re: KASAN: use-after-free in =?utf-8?B?Y29u?==?utf-8?B?X3Njcm9sbOKAiw==?=" nil nil nil "2" "2021020307:19:09" "[oss-security] Re: KASAN: use-after-free in =?utf-8?B?Y29u?==?utf-8?B?X3Njcm9sbOKAiw==?=" (number mark "U       gregkh@linux Feb  3   29/895   " thread-indent "\"[oss-security] Re: KASAN: use-after-free in =?utf-8?B?Y29u?==?utf-8?B?X3Njcm9sbOKAiw==?=\"\n") "<573a638c.960f.17766b555b8.Coremail.zhaowenjia@stu.xjtu.edu.cn>" ("<573a638c.960f.17766b555b8.Coremail.zhaowenjia@stu.xjtu.edu.cn>") nil nil nil nil nil nil nil "[oss-security] Re: KASAN: use-after-free in =?utf-8?B?Y29u?==?utf-8?B?X3Njcm9sbOKAiw==?=" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["11647" "Tuesday" "2" "March" "2021" "18:19:55" "-0700" "Damien Miller" "djm@cvs.openbsd.org" nil "287" "[oss-security] Announce: OpenSSH 8.5 released" nil nil nil "3" nil nil (number mark "U       djm@cvs.open Mar  2  287/11647 " thread-indent "\"[oss-security] Announce: OpenSSH 8.5 released\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Announce: OpenSSH 8.5 released" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1069 invoked by uid 550); 3 Feb 2021 07:28:20 -0000
+Received: (qmail 17997 invoked by uid 550); 3 Mar 2021 01:20:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,54 +12,297 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30123 invoked from network); 3 Feb 2021 07:19:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1612336752;
-	bh=TcuLCr6URRhAmUnV5yGVmJqJhV6LTmmNwOLyezOrg5g=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HAbSMjPqBskGcHfp7p8M/oZZtp0jkyit/Dmcd3qKXqGfWeYTahBffrvBwTnso8LGs
-	 Z0Z+KdWvr+w1L9T2haVQm3/o8ga6WRfT1bze3+1pO10JmLm+N32ShkAdskRKpXtSIY
-	 CHzhg3C7uhQOfgUymkBDrSQGte26lD6tV/XvdM3E=
-Date: Wed, 3 Feb 2021 08:19:09 +0100
-From: Greg KH <gregkh@linuxfoundation.org>
-To: ???? <zhaowenjia@stu.xjtu.edu.cn>
-Cc: security@kernel.org, oss-security@lists.openwall.com,
-	jirislaby@kernel.org, nico@fluxnic.net
-Message-ID: <YBpObXzJVfFDoJbc@kroah.com>
-References: <573a638c.960f.17766b555b8.Coremail.zhaowenjia@stu.xjtu.edu.cn>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <573a638c.960f.17766b555b8.Coremail.zhaowenjia@stu.xjtu.edu.cn>
-Subject: [oss-security] Re: KASAN: use-after-free in =?utf-8?Q?con?=
- =?utf-8?B?X3Njcm9sbOKAiw==?=
+Received: (qmail 17967 invoked from network); 3 Mar 2021 01:20:08 -0000
+From: Damien Miller <djm@cvs.openbsd.org>
+Date: Tue, 2 Mar 2021 18:19:55 -0700 (MST)
+To: oss-security@lists.openwall.com
+Message-ID: <12510d5a023346ec@cvs.openbsd.org>
+Subject: [oss-security] Announce: OpenSSH 8.5 released
 
-On Wed, Feb 03, 2021 at 03:04:55PM +0800, ???? wrote:
-> Dear Linux kernel developers,
-> 
-> I found a crash "KASAN: use-after-free in con_scroll+0x45c/0x620 drivers/tty/vt/vt.c:641"  when running the syzkaller,  
-> 
-> It is can be reproduced. I did not find a report about this problem. Hope it is useful.
-> 
-> 
-> 
-> 
-> Linux version: Linux v5.9-rc8 (549738f15)
-> 
-> 
-> The following is the crash report.
-> 
-> ==================================================================
-> 
-> BUG: KASAN: use-after-free in scr_memmovew include/linux/vt_buffer.h:68 [inline]
-> BUG: KASAN: use-after-free in con_scroll+0x45c/0x620 drivers/tty/vt/vt.c:641
-> Read of size 693770 at addr ffff8880000b894c by task syz-executor.2/7755
-> 
-> CPU: 0 PID: 7755 Comm: syz-executor.2 Not tainted 5.1.0 #4
+OpenSSH 8.5 has just been released. It will be available from the
+mirrors listed at https://www.openssh.com/ shortly.
 
-5.1.0 is _VERY_ old, please try reproducing this on a more modern kernel
-(i.e. 5.10 or newer).
+OpenSSH is a 100% complete SSH protocol 2.0 implementation and
+includes sftp client and server support.
 
-thanks,
+Once again, we would like to thank the OpenSSH community for their
+continued support of the project, especially those who contributed
+code or patches, reported bugs, tested snapshots or donated to the
+project. More information on donations may be found at:
+https://www.openssh.com/donations.html
 
-greg k-h
+Future deprecation notice
+=========================
+
+It is now possible[1] to perform chosen-prefix attacks against the
+SHA-1 algorithm for less than USD$50K.
+
+In the SSH protocol, the "ssh-rsa" signature scheme uses the SHA-1
+hash algorithm in conjunction with the RSA public key algorithm.
+OpenSSH will disable this signature scheme by default in the near
+future.
+
+Note that the deactivation of "ssh-rsa" signatures does not necessarily
+require cessation of use for RSA keys. In the SSH protocol, keys may be
+capable of signing using multiple algorithms. In particular, "ssh-rsa"
+keys are capable of signing using "rsa-sha2-256" (RSA/SHA256),
+"rsa-sha2-512" (RSA/SHA512) and "ssh-rsa" (RSA/SHA1). Only the last of
+these is being turned off by default.
+
+This algorithm is unfortunately still used widely despite the
+existence of better alternatives, being the only remaining public key
+signature algorithm specified by the original SSH RFCs that is still
+enabled by default.
+
+The better alternatives include:
+
+ * The RFC8332 RSA SHA-2 signature algorithms rsa-sha2-256/512. These
+   algorithms have the advantage of using the same key type as
+   "ssh-rsa" but use the safe SHA-2 hash algorithms. These have been
+   supported since OpenSSH 7.2 and are already used by default if the
+   client and server support them.
+
+ * The RFC8709 ssh-ed25519 signature algorithm. It has been supported
+   in OpenSSH since release 6.5.
+
+ * The RFC5656 ECDSA algorithms: ecdsa-sha2-nistp256/384/521. These
+   have been supported by OpenSSH since release 5.7.
+
+To check whether a server is using the weak ssh-rsa public key
+algorithm, for host authentication, try to connect to it after
+removing the ssh-rsa algorithm from ssh(1)'s allowed list:
+
+    ssh -oHostKeyAlgorithms=-ssh-rsa user@host
+
+If the host key verification fails and no other supported host key
+types are available, the server software on that host should be
+upgraded.
+
+This release enables the UpdateHostKeys option by default to assist
+the client by automatically migrating to better algorithms.
+
+[1] "SHA-1 is a Shambles: First Chosen-Prefix Collision on SHA-1 and
+    Application to the PGP Web of Trust" Leurent, G and Peyrin, T
+    (2020) https://eprint.iacr.org/2020/014.pdf
+
+Security
+========
+
+ * ssh-agent(1): fixed a double-free memory corruption that was
+   introduced in OpenSSH 8.2 . We treat all such memory faults as
+   potentially exploitable. This bug could be reached by an attacker
+   with access to the agent socket.
+
+   On modern operating systems where the OS can provide information
+   about the user identity connected to a socket, OpenSSH ssh-agent
+   and sshd limit agent socket access only to the originating user
+   and root. Additional mitigation may be afforded by the system's
+   malloc(3)/free(3) implementation, if it detects double-free
+   conditions.
+
+   The most likely scenario for exploitation is a user forwarding an
+   agent either to an account shared with a malicious user or to a
+   host with an attacker holding root access.
+
+ * Portable sshd(8): Prevent excessively long username going to PAM.
+   This is a mitigation for a buffer overflow in Solaris' PAM username
+   handling (CVE-2020-14871), and is only enabled for Sun-derived PAM
+   implementations.  This is not a problem in sshd itself, it only
+   prevents sshd from being used as a vector to attack Solaris' PAM.
+   It does not prevent the bug in PAM from being exploited via some
+   other PAM application. GHPR#212
+
+
+Potentially-incompatible changes
+================================
+
+This release includes a number of changes that may affect existing
+configurations:
+
+ * ssh(1), sshd(8): this release changes the first-preference signature
+   algorithm from ECDSA to ED25519.
+
+ * ssh(1), sshd(8): set the TOS/DSCP specified in the configuration
+   for interactive use prior to TCP connect. The connection phase of
+   the SSH session is time-sensitive and often explicitly interactive.
+   The ultimate interactive/bulk TOS/DSCP will be set after
+   authentication completes.
+
+ * ssh(1), sshd(8): remove the pre-standardization cipher
+   rijndael-cbc@lysator.liu.se. It is an alias for aes256-cbc before
+   it was standardized in RFC4253 (2006), has been deprecated and
+   disabled by default since OpenSSH 7.2 (2016) and was only briefly
+   documented in ssh.1 in 2001.
+
+ * ssh(1), sshd(8): update/replace the experimental post-quantum
+   hybrid key exchange method based on Streamlined NTRU Prime coupled
+   with X25519.
+
+   The previous sntrup4591761x25519-sha512@tinyssh.org method is
+   replaced with sntrup761x25519-sha512@openssh.com. Per its
+   designers, the sntrup4591761 algorithm was superseded almost two
+   years ago by sntrup761.
+
+   (note this both the updated method and the one that it replaced are
+   disabled by default)
+
+ * ssh(1): disable CheckHostIP by default. It provides insignificant
+   benefits while making key rotation significantly more difficult,
+   especially for hosts behind IP-based load-balancers.
+
+Changes since OpenSSH 8.4
+=========================
+
+New features
+------------
+
+ * ssh(1): this release enables UpdateHostkeys by default subject to
+   some conservative preconditions:
+    - The key was matched in the UserKnownHostsFile (and not in the
+      GlobalKnownHostsFile).
+    - The same key does not exist under another name.
+    - A certificate host key is not in use.
+    - known_hosts contains no matching wildcard hostname pattern.
+    - VerifyHostKeyDNS is not enabled.
+    - The default UserKnownHostsFile is in use.
+
+   We expect some of these conditions will be modified or relaxed in
+   future.
+
+ * ssh(1), sshd(8): add a new LogVerbose configuration directive for
+   that allows forcing maximum debug logging by file/function/line
+   pattern-lists.
+
+ * ssh(1): when prompting the user to accept a new hostkey, display
+   any other host names/addresses already associated with the key.
+
+ * ssh(1): allow UserKnownHostsFile=none to indicate that no
+   known_hosts file should be used to identify host keys.
+
+ * ssh(1): add a ssh_config KnownHostsCommand option that allows the
+   client to obtain known_hosts data from a command in addition to
+   the usual files.
+
+ * ssh(1): add a ssh_config PermitRemoteOpen option that allows the
+   client to restrict the destination when RemoteForward is used
+   with SOCKS.
+
+ * ssh(1): for FIDO keys, if a signature operation fails with a
+   "incorrect PIN" reason and no PIN was initially requested from the
+   user, then request a PIN and retry the operation. This supports
+   some biometric devices that fall back to requiring PIN when reading
+   of the biometric failed, and devices that require PINs for all
+   hosted credentials.
+
+ * sshd(8): implement client address-based rate-limiting via new
+   sshd_config(5) PerSourceMaxStartups and PerSourceNetBlockSize
+   directives that provide more fine-grained control on a per-origin
+   address basis than the global MaxStartups limit.
+
+Bugfixes
+--------
+
+ * ssh(1): Prefix keyboard interactive prompts with "(user@host)" to
+   make it easier to determine which connection they are associated
+   with in cases like scp -3, ProxyJump, etc. bz#3224
+
+ * sshd(8): fix sshd_config SetEnv directives located inside Match
+   blocks. GHPR#201
+
+ * ssh(1): when requesting a FIDO token touch on stderr, inform the
+   user once the touch has been recorded.
+
+ * ssh(1): prevent integer overflow when ridiculously large
+   ConnectTimeout values are specified, capping the effective value
+   (for most platforms) at 24 days. bz#3229
+
+ * ssh(1): consider the ECDSA key subtype when ordering host key
+   algorithms in the client.
+
+ * ssh(1), sshd(8): rename the PubkeyAcceptedKeyTypes keyword to
+   PubkeyAcceptedAlgorithms. The previous name incorrectly suggested
+   that it control allowed key algorithms, when this option actually
+   specifies the signature algorithms that are accepted. The previous
+   name remains available as an alias. bz#3253
+
+ * ssh(1), sshd(8): similarly, rename HostbasedKeyTypes (ssh) and
+   HostbasedAcceptedKeyTypes (sshd) to HostbasedAcceptedAlgorithms.
+
+ * sftp-server(8): add missing lsetstat@openssh.com documentation
+   and advertisement in the server's SSH2_FXP_VERSION hello packet.
+
+ * ssh(1), sshd(8): more strictly enforce KEX state-machine by
+   banning packet types once they are received. Fixes memleak caused
+   by duplicate SSH2_MSG_KEX_DH_GEX_REQUEST (oss-fuzz #30078).
+
+ * sftp(1): allow the full range of UIDs/GIDs for chown/chgrp on 32bit
+   platforms instead of being limited by LONG_MAX. bz#3206
+
+ * Minor man page fixes (capitalization, commas, etc.) bz#3223
+
+ * sftp(1): when doing an sftp recursive upload or download of a
+   read-only directory, ensure that the directory is created with
+   write and execute permissions in the interim so that the transfer
+   can actually complete, then set the directory permission as the
+   final step. bz#3222
+
+ * ssh-keygen(1): document the -Z, check the validity of its argument
+   earlier and provide a better error message if it's not correct.
+   bz#2879
+
+ * ssh(1): ignore comments at the end of config lines in ssh_config,
+   similar to what we already do for sshd_config. bz#2320
+
+ * sshd_config(5): mention that DisableForwarding is valid in a
+   sshd_config Match block. bz3239
+
+ * sftp(1): fix incorrect sorting of "ls -ltr" under some
+   circumstances. bz3248.
+
+ * ssh(1), sshd(8): fix potential integer truncation of (unlikely)
+   timeout values. bz#3250
+
+ * ssh(1): make hostbased authentication send the signature algorithm
+   in its SSH2_MSG_USERAUTH_REQUEST packets instead of the key type.
+   This make HostbasedAcceptedAlgorithms do what it is supposed to -
+   filter on signature algorithm and not key type.
+
+Portability
+-----------
+
+ * sshd(8): add a number of platform-specific syscalls to the Linux
+   seccomp-bpf sandbox. bz#3232 bz#3260
+
+ * sshd(8): remove debug message from sigchld handler that could cause
+   deadlock on some platforms. bz#3259
+
+ * Sync contrib/ssh-copy-id with upstream.
+
+ * unittests: add a hostname function for systems that don't have it.
+   Some systems don't have a hostname command (it's not required by
+   POSIX). The do have uname -n (which is), but not all of those have
+   it report the FQDN.
+
+Checksums:
+==========
+
+ - SHA1 (openssh-8.5.tar.gz) = 04cae43c389fb411227c01219e4eb46e3113f34e
+ - SHA256 (openssh-8.5.tar.gz) = 5qB2CgzNG4io4DmChTjHgCWqRWvEOvCKJskLdJCz+SU=
+
+ - SHA1 (openssh-8.5p1.tar.gz) = 72eadcbe313b07b1dd3b693e41d3cd56d354e24e
+ - SHA256 (openssh-8.5p1.tar.gz) = 9S8/QdQpqpkY44zyAK8iXM3Y5m8FLaVyhwyJc3ZG7CU=
+
+Please note that the SHA256 signatures are base64 encoded and not
+hexadecimal (which is the default for most checksum tools). The PGP
+key used to sign the releases is available from the mirror sites:
+https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
+
+Please note that the OpenPGP key used to sign releases has been
+rotated for this release. The new key has been signed by the previous
+key to provide continuity.
+
+Reporting Bugs:
+===============
+
+- Please read https://www.openssh.com/report.html
+  Security bugs should be reported directly to openssh@openssh.com
