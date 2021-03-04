@@ -1,41 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/16/2
-Message-ID: <20210816190406.fmt3myvwvycywfv4@redhat.com>
-Date: Mon, 16 Aug 2021 14:04:06 -0500
-From: Eric Blake <eblake@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: STARTTLS vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/04/1
+Message-Id: <E1lHlOS-0000Se-RY@xenbits.xenproject.org>
+Date: Thu, 04 Mar 2021 10:39:44 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 367 v1 - Linux: netback fails to honor grant mapping errors
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Aug 11, 2021 at 06:02:35PM +0200, Hanno Böck wrote:
-> On Wed, 11 Aug 2021 10:31:58 -0500
-> Eric Blake <eblake@...hat.com> wrote:
-> 
-> > Not mentioned in that list was ndb, but as far as I can tell, that
-> > project has already documented the ramifications of opportunistic
-> > encryption as being a security risk, and all known implementations
-> > (both servers and clients) with TLS support have a mode of execution
-> > that ensures the connection is dropped if a downgrade attack is
-> > attempted:
-> 
-> I should point out that our research is not on simple downgrade attacks.
-> These are kinda obvious by the design of STARTTLS if you implement it
-> in an opportunistic way.
-> 
-> The buffering vulnerabilities we found are in STARTTLS implementations
-> that have the expectation to enforce a secure connection, but suffer
-> from various vulnerabilities in the implementation.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Thank you for persisting.  As a result, I have found a security bug in
-nbdkit, which improperly cached the result of NBD_OPT_STRUCTURED_REPLY
-from a plaintext MitM attacker prior to acting on NBD_OPT_STARTTLS, to
-the potential confusion of a client that does not expect structured
-replies.  I will follow up again when I have a CVE number.
+                    Xen Security Advisory XSA-367
 
-https://listman.redhat.com/archives/libguestfs/2021-August/msg00077.html
+          Linux: netback fails to honor grant mapping errors
 
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.           +1-919-301-3266
-Virtualization:  qemu.org | libvirt.org
+ISSUE DESCRIPTION
+=================
 
+XSA-362 tried to address issues here, but in the case of the netback
+driver the changes were insufficient: It left the relevant function
+invocation with, effectively, no error handling at all.  As a result,
+memory allocation failures there could still lead to frontend-induced
+crashes of the backend.
+
+IMPACT
+======
+
+A malicious or buggy networking frontend driver may be able to crash
+the corresponding backend driver, potentially affecting the entire
+domain running the backend driver.  In a typical (non-disaggregated)
+system that is a host-wide denial of service (DoS).
+
+VULNERABLE SYSTEMS
+==================
+
+Linux versions from at least 2.6.39 onwards are vulnerable, when run in
+PV mode.  Earlier versions differ significantly in behavior and may
+therefore instead surface other issues under the same conditions.  Linux
+run in HVM / PVH modes is not vulnerable.
+
+MITIGATION
+==========
+
+For Linux, running the backends in HVM or PVH domains will avoid the
+vulnerability.  For example, by running the dom0 in PVH mode.
+
+In all other cases there is no known mitigation.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa367-linux.patch           Linux 5.12-rc
+
+$ sha256sum xsa367*
+b0244bfddee91cd7986172893e70664b74e698c5d44f25865870f179f80f9a92  xsa367-linux.patch
+$
+
+CREDITS
+=======
+
+This issue was reported by Intel's kernel test robot and recognized as a
+security issue by Jan Beulich of SUSE.
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This issue was reported publicly, before the XSA could be issued.
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmBAuOYMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZUCAH/1zw5d2l1R3k+nvJ659plwOYDe8Cmh4GeJ02PoUv
+fC/5efe7l/tXEmfg4rg5WiY8JZqQGeGmhwiOs8bI/8c5IXucaPOM1wDUaHUMkWTA
+tl/P/tbDamzd1/dSK4DdILTApibU+M/nmUn0sBBYpu53VUbeyXq2EAtjmliKgCG9
+Oo4PW4ys5ro+hwrPtYdLD1ktIN64+C+TqkKUdJset7po5sWX4nV1Cwp/4oKaNyeF
+Alh495TUCnhgc8gnXUgXhmxWKp3Iag/tHjmtu34mT5HHZdBrNBShFKhHSP5bJHE2
+CxYD1b/KbkRiLPOgZXNec+ikDQT4bTCeVLpnWvOXQ1FTXR4=
+=hY2s
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa367-linux.patch" of type "application/octet-stream" (3974 bytes)
