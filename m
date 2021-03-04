@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1912" "Sunday" "18" "March" "2018" "07:59:06" "+0000" "Thomas Kluyver" "takowl@gmail.com" "<CAOvn4qiRLkETd=3+5f0PJ1r47CmFQWk0_aFiR0mpdRH26LzRJA@mail.gmail.com>" "67" "Re: [oss-security] CVE request: maliciously crafted notebook files in Jupyter" nil nil nil "3" "2018031807:59:06" "[oss-security] CVE request: maliciously crafted notebook files in Jupyter" (number mark "U       takowl@gmail Mar 18   67/1912  " thread-indent "\"Re: [oss-security] CVE request: maliciously crafted notebook files in Jupyter\"\n") "<20180317140214.GB8389@eldamar.local>" ("<1521122159.1270614.1304206128.19D1CFEA@webmail.messagingengine.com>" "<20180317140214.GB8389@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["10118" "Thursday" "4" "March" "2021" "10:58:11" "+0000" "Xen.org security team" "security@xen.org" nil "217" "[oss-security] Xen Security Advisory 369 v1 - Linux: special config may crash when trying to map foreign pages" nil nil nil "3" nil nil (number mark "U       security@xen Mar  4  217/10118 " thread-indent "\"[oss-security] Xen Security Advisory 369 v1 - Linux: special config may crash when trying to map foreign pages\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 369 v1 - Linux: special config may crash when trying to map foreign pages" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7788 invoked by uid 550); 18 Mar 2018 10:46:34 -0000
+Received: (qmail 16366 invoked by uid 550); 4 Mar 2021 10:58:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,111 +12,240 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14070 invoked from network); 18 Mar 2018 07:59:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=GXW7B9t9xVoYK/piNMCqtRWdc4GGvYuu+97HLw26RPE=;
-        b=MoJipvqyMKZ1HAySx8aV9xPKMM6b765+xHXd0ylqjrFT0hpSyPh3abiK2/qvObaQg+
-         m/vsS+jz+mlknoaro27xo38a3TcETrLQMQVPZmm0ati0XF/iW6Ygbd4b6mAPK9UsStT3
-         5kJkBfEReekbtdOpgDkBCFrIjilSQn3EIN2W/Hxp2UfqaT70DH4kH2zEgNv3qte3a3uS
-         s/AipBI7j50PYQ20qzg2H0yzTLzS6h5/ktP4IUAPyynacmBcZaaddsL4DKPr+sVTFrLW
-         g0hIRv+UeAGZDId/BDkFJRu47EBbWBmXFi70sndWAcMtLotbR54Z3u97/lh5LXXsSmDC
-         c1ZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=GXW7B9t9xVoYK/piNMCqtRWdc4GGvYuu+97HLw26RPE=;
-        b=lZeLBGlha0V5SpsruIvYEFXunibffmdfZtoNe6uPite/4R/0aMkHj1GGyRE3UgUUEi
-         nFVM5P3411+LvzMeysnywF8NU0rUEEV4T+OMpexWKgZhcOndBwCCrB8w6SSoojbFU7Kn
-         oPbFP3qogTYArZWaYGHo3h3/0JiQ6x1QLQGG/DbIhgZIF2u3Sn07EVdHOnXyHKopGpnL
-         spz++SKYTy/FxV4vhZpXB2KLaSu7vtyKLi1Y3CQpJeoih7nnqn5XnS2ht2zCgFbLPZ8x
-         mAaq1qqdyJoA70kZyBPoJ8Iav7KAB8+oNtulxx2Ft9gxE/Rpl5EXzN5ZQgH0GEhPRyhy
-         auJg==
-X-Gm-Message-State: AElRT7HfIrQjx5bp1QxmwOEUZp0R3leCr9vjqs4fHcp16WgdItIyez1v
-	FIGdIwQhTvlRjLxsvQhgKe2iFxbdI3zZsVZRwjo=
-X-Google-Smtp-Source: AG47ELun+Zk08LubL1PFtlIW47Zbo3ZhCSuE9+p/f5c+MkGE0tiw8g2w1fyF1keq4pR5Tl88D7iz5hatcxBSRGbra/Q=
-X-Received: by 2002:a19:1483:: with SMTP id 3-v6mr5065204lfu.122.1521359977612;
- Sun, 18 Mar 2018 00:59:37 -0700 (PDT)
+Received: (qmail 16333 invoked from network); 4 Mar 2021 10:58:29 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
+	Content-Transfer-Encoding:Content-Type;
+	bh=9//W9NVX0OPw4RURgTZOd9DdR5TW685wHuUJYEASpTA=; b=boeON9A0IU4UYFlMt57H2R5tPx
+	/zVYJKzXqEuKmYwn5g27xheTjrHiRO7YohfblG50cUIzgFMEWZuZ4C+TcI8gI7lVcyEgwEjqhABvD
+	/i3jb/HKsIJhHyIEyJYOs2bq1fkwoXwgEb6yw5fsoWM45/VARHeN7FfucR//kiIZ5nTs=;
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-In-Reply-To: <20180317140214.GB8389@eldamar.local>
-References: <1521122159.1270614.1304206128.19D1CFEA@webmail.messagingengine.com>
- <20180317140214.GB8389@eldamar.local>
-From: Thomas Kluyver <takowl@gmail.com>
-Date: Sun, 18 Mar 2018 07:59:06 +0000
-Message-ID: <CAOvn4qiRLkETd=3+5f0PJ1r47CmFQWk0_aFiR0mpdRH26LzRJA@mail.gmail.com>
-To: Salvatore Bonaccorso <carnil@debian.org>
-Cc: oss-security@lists.openwall.com, security <security@ipython.org>, 
-	MinRK <benjaminrk@gmail.com>, jkamens@quantopian.com, ssanderson@quantopian.com
-Content-Type: multipart/alternative; boundary="0000000000000a8c7a0567ab3926"
-Subject: Re: [oss-security] CVE request: maliciously crafted notebook files in Jupyter
+X-Mailer: MIME-tools 5.509 (Entity 5.509)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1lHlgJ-0003KK-Ms@xenbits.xenproject.org>
+Date: Thu, 04 Mar 2021 10:58:11 +0000
+Subject: [oss-security] Xen Security Advisory 369 v1 - Linux: special config may crash
+ when trying to map foreign pages
 
---0000000000000a8c7a0567ab3926
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-Thanks Salvatore. Devdatta Akhawe filled in the form on my behalf, and
-we've now been assigned CVE-2018-8768.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I'm going to merge the fix now and start the release process for 5.4.1.
+                    Xen Security Advisory XSA-369
 
-Thomas
+   Linux: special config may crash when trying to map foreign pages
 
-On 17 March 2018 at 14:05, Salvatore Bonaccorso <carnil@debian.org> wrote:
+ISSUE DESCRIPTION
+=================
 
-> Hi,
->
-> On Thu, Mar 15, 2018 at 01:55:59PM +0000, Thomas Kluyver wrote:
-> > Email address of requester: security@ipython.org, thomas@kluyver.me.uk,
-> benjaminrk@gmail.com, jkamens@quantopian.com, ssanderson@quantopian.com
-> >
-> > Software name: Jupyter Notebook (formerly IPython Notebook)
-> > Type of vulnerability: Maliciously forged file
-> > Attack outcome: Possible remote execution
-> >
-> > Vulnerability: A maliciously forged notebook file can bypass
-> sanitization to execute Javascript in the notebook context. Specifically,
-> invalid HTML is 'fixed' by jQuery after sanitization, making it dangerous.
-> >
-> > Affected versions:
-> >
-> > - notebook =E2=89=A4 5.4.0
-> >
-> > URI with issues:
-> >
-> > - GET /notebook/**
-> >
-> > Patches:  not yet finalised
-> >
-> > Mitigations:
-> >
-> > Upgrade to Jupyter notebook 5.4.1 or 5.5 once available.
-> > If using pip,
-> >
-> >     pip install --upgrade notebook
-> >
-> > For conda:
-> >
-> >     conda update conda
-> >     conda update notebook
-> >
-> > Vulnerability reported by vkgonka@mail.ru , via Jonathan Kamens at
-> Quantopian
->
-> Thanks for the headsup.
->
-> This reply is mainly for this other purpose: It looks you wanted to
-> have a CVE assigned trough this reply to the list. CVE's cannot
-> anymore be requested via the oss-security list. If you want to request
-> one please have a look at https://cveform.mitre.org/
->
-> Once you have the CVE assigned, can you please loop back the
-> assignement in this thread?
->
-> Regards,
-> Salvatore
->
+With CONFIG_XEN_BALLOON_MEMORY_HOTPLUG disabled and
+CONFIG_XEN_UNPOPULATED_ALLOC enabled the Linux kernel will use guest
+physical addresses allocated via the ZONE_DEVICE functionality for
+mapping foreign guest's pages.
 
---0000000000000a8c7a0567ab3926--
+This will result in problems, as the p2m list will only cover the initial
+memory size of the domain plus some padding at the end. Most ZONE_DEVICE
+allocated addresses will be outside the p2m range and thus a mapping can't
+be established with those memory addresses, resulting in a crash.
+
+The attack involves doing I/O requiring large amounts of data to be
+mapped by the Dom0 or driver domain.  The amount of data needed to
+result in a crash can vary depending on the memory layout of the
+affected Dom0 or driver domain.
+
+IMPACT
+======
+
+A Dom0 or driver domain based on a Linux kernel (configured as
+described above) can be crashed by a malicious guest administrator, or
+possibly malicious unprivileged guest processes.
+
+VULNERABLE SYSTEMS
+==================
+
+Only x86 paravirtualized (PV) Dom0 or driver domains are
+affected.
+
+Only Linux kernels configured *with* CONFIG_XEN_UNPOPULATED_ALLOC and
+*without* CONFIG_XEN_BALLOON_MEMORY_HOTPLUG are vulnerable.  Only
+kernels from kernel version 5.9 onwards are affected.
+
+CONFIG_XEN_BALLOON_MEMORY_HOTPLUG is enabled by default in upstream
+Linux when Xen support is enabled, so kernels using upstream default
+Kconfig are not affected.  Most distribution kernels supporting Xen
+dom0 use are likewise not vulnerable.
+
+Arm systems or x86 PVH or x86 HVM driver domains are not affected.
+
+MITIGATION
+==========
+
+There is no mitigation available.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa369-linux.patch           Linux 5.9-stable - 5.12-rc
+
+$ sha256sum xsa369*
+937df4f078a070cf47bdd718c6b8a042ec6bee255eedc422d833c2ae3dd561c7  xsa369-linux.patch
+$
+
+CREDITS
+=======
+
+This issue was discovered by Marek Marczykowski-Górecki of Invisible
+Things Lab.
+
+For patch:
+Reported-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This was reported publicly multiple times, before the XSA could be
+issued.
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmBAvMQMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZ5PoH/2EY28X1Fe+2RW5SrnAo2dZWLXeIrXQIXbsDCdlI
+GKhFChUhYHJP3wLhE4F7J5SAjl48ta/gtdpbpJWXsZSS+2KIdV/dDZ3ZA6cxWFAI
+DuVvqqt5O0xpF02bgTZrL1GUL8975L0O7cwtGmsIbPjVSF5UktuLS0Q1zRAiYvG9
+l5Xu32nekxz2fGebMYrJTIPYNc8LOg3d+MIAE4W1u3Wj46S8yRJhyNQmsPQXZTEk
+nlTp0ed8ScAt7pIZn7dbnLz8zUAQ64h2yar0UBih51kd3Bss5E4PXsS0zlXlVNfk
+046nBhbFfB3dgM49NlJ3oHhiZh6dN5LpMblmGK4Tb+FJqNE=
+=QwG+
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa369-linux.patch"
+Content-Disposition: attachment; filename="xsa369-linux.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSnVlcmdlbiBHcm9zcyA8amdyb3NzQHN1c2UuY29tPgpTdWJqZWN0
+OiB4ZW46IGZpeCBwMm0gc2l6ZSBpbiBkb20wIGZvciBkaXNhYmxlZCBtZW1v
+cnkgaG90cGx1ZyBjYXNlCgpTaW5jZSBjb21taXQgOWUyMzY5YzA2YzhhMTgg
+KCJ4ZW46IGFkZCBoZWxwZXJzIHRvIGFsbG9jYXRlIHVucG9wdWxhdGVkCm1l
+bW9yeSIpIGZvcmVpZ24gbWFwcGluZ3MgYXJlIHVzaW5nIGd1ZXN0IHBoeXNp
+Y2FsIGFkZHJlc3NlcyBhbGxvY2F0ZWQKdmlhIFpPTkVfREVWSUNFIGZ1bmN0
+aW9uYWxpdHkuCgpUaGlzIHdpbGwgcmVzdWx0IGluIHByb2JsZW1zIGZvciB0
+aGUgY2FzZSBvZiBubyBiYWxsb29uIG1lbW9yeSBob3RwbHVnCmJlaW5nIGNv
+bmZpZ3VyZWQsIGFzIHRoZSBwMm0gbGlzdCB3aWxsIG9ubHkgY292ZXIgdGhl
+IGluaXRpYWwgbWVtb3J5CnNpemUgb2YgdGhlIGRvbWFpbi4gQW55IFpPTkVf
+REVWSUNFIGFsbG9jYXRlZCBhZGRyZXNzIHdpbGwgYmUgb3V0c2lkZQp0aGUg
+cDJtIHJhbmdlIGFuZCB0aHVzIGEgbWFwcGluZyBjYW4ndCBiZSBlc3RhYmxp
+c2hlZCB3aXRoIHRoYXQgbWVtb3J5CmFkZHJlc3MuCgpGaXggdGhhdCBieSBl
+eHRlbmRpbmcgdGhlIHAybSBzaXplIGZvciB0aGF0IGNhc2UuIEF0IHRoZSBz
+YW1lIHRpbWUgYWRkCmEgY2hlY2sgZm9yIGEgdG8gYmUgY3JlYXRlZCBtYXBw
+aW5nIHRvIGJlIHdpdGhpbiB0aGUgcDJtIGxpbWl0cyBpbgpvcmRlciB0byBk
+ZXRlY3QgZXJyb3JzIGVhcmx5LgoKV2hpbGUgY2hhbmdpbmcgYSBjb21tZW50
+LCByZW1vdmUgc29tZSAzMi1iaXQgbGVmdG92ZXJzLgoKVGhpcyBpcyBYU0Et
+MzY5LgoKRml4ZXM6IDllMjM2OWMwNmM4YTE4ICgieGVuOiBhZGQgaGVscGVy
+cyB0byBhbGxvY2F0ZSB1bnBvcHVsYXRlZCBtZW1vcnkiKQpDYzogPHN0YWJs
+ZUB2Z2VyLmtlcm5lbC5vcmc+ICMgNS45ClJlcG9ydGVkLWJ5OiBNYXJlayBN
+YXJjenlrb3dza2ktR8OzcmVja2kgPG1hcm1hcmVrQGludmlzaWJsZXRoaW5n
+c2xhYi5jb20+ClNpZ25lZC1vZmYtYnk6IEp1ZXJnZW4gR3Jvc3MgPGpncm9z
+c0BzdXNlLmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVsaWNoIDxqYmV1bGlj
+aEBzdXNlLmNvbT4KU2lnbmVkLW9mZi1ieTogSnVlcmdlbiBHcm9zcyA8amdy
+b3NzQHN1c2UuY29tPgotLS0KIGFyY2gveDg2L2luY2x1ZGUvYXNtL3hlbi9w
+YWdlLmggfCAxMiArKysrKysrKysrKysKIGFyY2gveDg2L3hlbi9wMm0uYyAg
+ICAgICAgICAgICAgfCAxMCArKysrKystLS0tCiBhcmNoL3g4Ni94ZW4vc2V0
+dXAuYyAgICAgICAgICAgIHwgMjUgKysrLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LQogMyBmaWxlcyBjaGFuZ2VkLCAyMSBpbnNlcnRpb25zKCspLCAyNiBkZWxl
+dGlvbnMoLSkKCmRpZmYgLS1naXQgYS9hcmNoL3g4Ni9pbmNsdWRlL2FzbS94
+ZW4vcGFnZS5oIGIvYXJjaC94ODYvaW5jbHVkZS9hc20veGVuL3BhZ2UuaApp
+bmRleCAxYTE2MmU1NTk3NTMuLjcwNjhlNGJiMDU3ZCAxMDA2NDQKLS0tIGEv
+YXJjaC94ODYvaW5jbHVkZS9hc20veGVuL3BhZ2UuaAorKysgYi9hcmNoL3g4
+Ni9pbmNsdWRlL2FzbS94ZW4vcGFnZS5oCkBAIC04Niw2ICs4NiwxOCBAQCBj
+bGVhcl9mb3JlaWduX3AybV9tYXBwaW5nKHN0cnVjdCBnbnR0YWJfdW5tYXBf
+Z3JhbnRfcmVmICp1bm1hcF9vcHMsCiB9CiAjZW5kaWYKIAorLyoKKyAqIFRo
+ZSBtYXhpbXVtIGFtb3VudCBvZiBleHRyYSBtZW1vcnkgY29tcGFyZWQgdG8g
+dGhlIGJhc2Ugc2l6ZS4gIFRoZQorICogbWFpbiBzY2FsaW5nIGZhY3RvciBp
+cyB0aGUgc2l6ZSBvZiBzdHJ1Y3QgcGFnZS4gIEF0IGV4dHJlbWUgcmF0aW9z
+CisgKiBvZiBiYXNlOmV4dHJhLCBhbGwgdGhlIGJhc2UgbWVtb3J5IGNhbiBi
+ZSBmaWxsZWQgd2l0aCBwYWdlCisgKiBzdHJ1Y3R1cmVzIGZvciB0aGUgZXh0
+cmEgbWVtb3J5LCBsZWF2aW5nIG5vIHNwYWNlIGZvciBhbnl0aGluZworICog
+ZWxzZS4KKyAqCisgKiAxMHggc2VlbXMgbGlrZSBhIHJlYXNvbmFibGUgYmFs
+YW5jZSBiZXR3ZWVuIHNjYWxpbmcgZmxleGliaWxpdHkgYW5kCisgKiBsZWF2
+aW5nIGEgcHJhY3RpY2FsbHkgdXNhYmxlIHN5c3RlbS4KKyAqLworI2RlZmlu
+ZSBYRU5fRVhUUkFfTUVNX1JBVElPCSgxMCkKKwogLyoKICAqIEhlbHBlciBm
+dW5jdGlvbnMgdG8gd3JpdGUgb3IgcmVhZCB1bnNpZ25lZCBsb25nIHZhbHVl
+cyB0by9mcm9tCiAgKiBtZW1vcnksIHdoZW4gdGhlIGFjY2VzcyBtYXkgZmF1
+bHQuCmRpZmYgLS1naXQgYS9hcmNoL3g4Ni94ZW4vcDJtLmMgYi9hcmNoL3g4
+Ni94ZW4vcDJtLmMKaW5kZXggOTU0NWI4ZGY1MzE1Li5lZDM1ODVlZWJjNGUg
+MTAwNjQ0Ci0tLSBhL2FyY2gveDg2L3hlbi9wMm0uYworKysgYi9hcmNoL3g4
+Ni94ZW4vcDJtLmMKQEAgLTQxNiw2ICs0MTYsOSBAQCB2b2lkIF9faW5pdCB4
+ZW5fdm1hbGxvY19wMm1fdHJlZSh2b2lkKQogCXhlbl9wMm1fbGFzdF9wZm4g
+PSB4ZW5fbWF4X3AybV9wZm47CiAKIAlwMm1fbGltaXQgPSAocGh5c19hZGRy
+X3QpUDJNX0xJTUlUICogMTAyNCAqIDEwMjQgKiAxMDI0IC8gUEFHRV9TSVpF
+OworCWlmICghcDJtX2xpbWl0ICYmIElTX0VOQUJMRUQoQ09ORklHX1hFTl9V
+TlBPUFVMQVRFRF9BTExPQykpCisJCXAybV9saW1pdCA9IHhlbl9zdGFydF9p
+bmZvLT5ucl9wYWdlcyAqIFhFTl9FWFRSQV9NRU1fUkFUSU87CisKIAl2bS5m
+bGFncyA9IFZNX0FMTE9DOwogCXZtLnNpemUgPSBBTElHTihzaXplb2YodW5z
+aWduZWQgbG9uZykgKiBtYXgoeGVuX21heF9wMm1fcGZuLCBwMm1fbGltaXQp
+LAogCQkJUE1EX1NJWkUgKiBQTURTX1BFUl9NSURfUEFHRSk7CkBAIC02NTIs
+MTAgKzY1NSw5IEBAIGJvb2wgX19zZXRfcGh5c190b19tYWNoaW5lKHVuc2ln
+bmVkIGxvbmcgcGZuLCB1bnNpZ25lZCBsb25nIG1mbikKIAlwdGVfdCAqcHRl
+cDsKIAl1bnNpZ25lZCBpbnQgbGV2ZWw7CiAKLQlpZiAodW5saWtlbHkocGZu
+ID49IHhlbl9wMm1fc2l6ZSkpIHsKLQkJQlVHX09OKG1mbiAhPSBJTlZBTElE
+X1AyTV9FTlRSWSk7Ci0JCXJldHVybiB0cnVlOwotCX0KKwkvKiBPbmx5IGlu
+dmFsaWQgZW50cmllcyBhbGxvd2VkIGFib3ZlIHRoZSBoaWdoZXN0IHAybSBj
+b3ZlcmVkIGZyYW1lLiAqLworCWlmICh1bmxpa2VseShwZm4gPj0geGVuX3Ay
+bV9zaXplKSkKKwkJcmV0dXJuIG1mbiA9PSBJTlZBTElEX1AyTV9FTlRSWTsK
+IAogCS8qCiAJICogVGhlIGludGVyZmFjZSByZXF1aXJlcyBhdG9taWMgdXBk
+YXRlcyBvbiBwMm0gZWxlbWVudHMuCmRpZmYgLS1naXQgYS9hcmNoL3g4Ni94
+ZW4vc2V0dXAuYyBiL2FyY2gveDg2L3hlbi9zZXR1cC5jCmluZGV4IDdlYWIx
+NGQ1NjM2OS4uMWEzYjc1NjUyZmE0IDEwMDY0NAotLS0gYS9hcmNoL3g4Ni94
+ZW4vc2V0dXAuYworKysgYi9hcmNoL3g4Ni94ZW4vc2V0dXAuYwpAQCAtNTks
+MTggKzU5LDYgQEAgc3RhdGljIHN0cnVjdCB7CiB9IHhlbl9yZW1hcF9idWYg
+X19pbml0ZGF0YSBfX2FsaWduZWQoUEFHRV9TSVpFKTsKIHN0YXRpYyB1bnNp
+Z25lZCBsb25nIHhlbl9yZW1hcF9tZm4gX19pbml0ZGF0YSA9IElOVkFMSURf
+UDJNX0VOVFJZOwogCi0vKiAKLSAqIFRoZSBtYXhpbXVtIGFtb3VudCBvZiBl
+eHRyYSBtZW1vcnkgY29tcGFyZWQgdG8gdGhlIGJhc2Ugc2l6ZS4gIFRoZQot
+ICogbWFpbiBzY2FsaW5nIGZhY3RvciBpcyB0aGUgc2l6ZSBvZiBzdHJ1Y3Qg
+cGFnZS4gIEF0IGV4dHJlbWUgcmF0aW9zCi0gKiBvZiBiYXNlOmV4dHJhLCBh
+bGwgdGhlIGJhc2UgbWVtb3J5IGNhbiBiZSBmaWxsZWQgd2l0aCBwYWdlCi0g
+KiBzdHJ1Y3R1cmVzIGZvciB0aGUgZXh0cmEgbWVtb3J5LCBsZWF2aW5nIG5v
+IHNwYWNlIGZvciBhbnl0aGluZwotICogZWxzZS4KLSAqIAotICogMTB4IHNl
+ZW1zIGxpa2UgYSByZWFzb25hYmxlIGJhbGFuY2UgYmV0d2VlbiBzY2FsaW5n
+IGZsZXhpYmlsaXR5IGFuZAotICogbGVhdmluZyBhIHByYWN0aWNhbGx5IHVz
+YWJsZSBzeXN0ZW0uCi0gKi8KLSNkZWZpbmUgRVhUUkFfTUVNX1JBVElPCQko
+MTApCi0KIHN0YXRpYyBib29sIHhlbl81MTJnYl9saW1pdCBfX2luaXRkYXRh
+ID0gSVNfRU5BQkxFRChDT05GSUdfWEVOXzUxMkdCKTsKIAogc3RhdGljIHZv
+aWQgX19pbml0IHhlbl9wYXJzZV81MTJnYih2b2lkKQpAQCAtNzkwLDIwICs3
+NzgsMTMgQEAgY2hhciAqIF9faW5pdCB4ZW5fbWVtb3J5X3NldHVwKHZvaWQp
+CiAJCWV4dHJhX3BhZ2VzICs9IG1heF9wYWdlcyAtIG1heF9wZm47CiAKIAkv
+KgotCSAqIENsYW1wIHRoZSBhbW91bnQgb2YgZXh0cmEgbWVtb3J5IHRvIGEg
+RVhUUkFfTUVNX1JBVElPCi0JICogZmFjdG9yIHRoZSBiYXNlIHNpemUuICBP
+biBub24taGlnaG1lbSBzeXN0ZW1zLCB0aGUgYmFzZQotCSAqIHNpemUgaXMg
+dGhlIGZ1bGwgaW5pdGlhbCBtZW1vcnkgYWxsb2NhdGlvbjsgb24gaGlnaG1l
+bSBpdAotCSAqIGlzIGxpbWl0ZWQgdG8gdGhlIG1heCBzaXplIG9mIGxvd21l
+bSwgc28gdGhhdCBpdCBkb2Vzbid0Ci0JICogZ2V0IGNvbXBsZXRlbHkgZmls
+bGVkLgorCSAqIENsYW1wIHRoZSBhbW91bnQgb2YgZXh0cmEgbWVtb3J5IHRv
+IGEgWEVOX0VYVFJBX01FTV9SQVRJTworCSAqIGZhY3RvciB0aGUgYmFzZSBz
+aXplLgogCSAqCiAJICogTWFrZSBzdXJlIHdlIGhhdmUgbm8gbWVtb3J5IGFi
+b3ZlIG1heF9wYWdlcywgYXMgdGhpcyBhcmVhCiAJICogaXNuJ3QgaGFuZGxl
+ZCBieSB0aGUgcDJtIG1hbmFnZW1lbnQuCi0JICoKLQkgKiBJbiBwcmluY2lw
+bGUgdGhlcmUgY291bGQgYmUgYSBwcm9ibGVtIGluIGxvd21lbSBzeXN0ZW1z
+IGlmCi0JICogdGhlIGluaXRpYWwgbWVtb3J5IGlzIGFsc28gdmVyeSBsYXJn
+ZSB3aXRoIHJlc3BlY3QgdG8KLQkgKiBsb3dtZW0sIGJ1dCB3ZSB3b24ndCB0
+cnkgdG8gZGVhbCB3aXRoIHRoYXQgaGVyZS4KIAkgKi8KLQlleHRyYV9wYWdl
+cyA9IG1pbjMoRVhUUkFfTUVNX1JBVElPICogbWluKG1heF9wZm4sIFBGTl9E
+T1dOKE1BWE1FTSkpLAorCWV4dHJhX3BhZ2VzID0gbWluMyhYRU5fRVhUUkFf
+TUVNX1JBVElPICogbWluKG1heF9wZm4sIFBGTl9ET1dOKE1BWE1FTSkpLAog
+CQkJICAgZXh0cmFfcGFnZXMsIG1heF9wYWdlcyAtIG1heF9wZm4pOwogCWkg
+PSAwOwogCWFkZHIgPSB4ZW5fZTgyMF90YWJsZS5lbnRyaWVzWzBdLmFkZHI7
+Ci0tIAoyLjI2LjIKCg==
+
+--=separator--
