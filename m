@@ -1,25 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/17/6
-Message-ID: <YFH8FxuqgoM20wT4@kroah.com>
-Date: Wed, 17 Mar 2021 13:54:47 +0100
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/04/3
+Message-ID: <CALSkbjrEnXHaaq-QqvZN-JZ_8BWP3CLzZs10yZG8hWza4NMZpg@mail.gmail.com>
+Date: Thu, 4 Mar 2021 15:08:16 +0000
+From: daniel gaspar <danielvazgaspar@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Use After Free and Double Free bugs in Linux Kernel mainline
+Subject: CVE-2021-27907: Apache Superset stored XSS on Dashboard markdown
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 17, 2021 at 07:53:00PM +0800, lyl2019@...l.ustc.edu.cn wrote:
-> Hi,
->    I have found 4 security bugs in Linux Kernel mainline recently,
-> and all of these bug are confirmed by the kernel maintainers.
-> 
-> Details are below. I'm trying to request CVE IDs for these bugs.
+Description:
 
-Please just ask MITRE directly for CVE ids if you really want them,
-that's the correct location for them.
+Apache Superset  up to and including 0.38.0 allowed the creation of a
+Markdown component on a Dashboard page for describing chart's related
+information. Abusing this functionality, a malicious user could inject
+javascript code executing unwanted action in the context of the user's
+browser. The javascript code will be automatically executed (Stored
+XSS) when a legitimate user surfs on the dashboard page. The
+vulnerability is exploitable creating a “div” section and embedding in
+it a “svg” element with javascript code.
 
-And have you submitted these fixes to the kernel developers yet?  If
-not, why not?
+Credit:
 
-thanks,
+This issue was reported by Gianluca Veltri and Dario Castrogiovanni of Cuebiq
 
-greg k-h
