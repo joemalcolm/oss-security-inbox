@@ -1,123 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/01/1
-Message-ID: <d2b2c4b7-cba4-349e-1856-23f84fc6a198@spamtrap.tnetconsulting.net>
-Date: Tue, 30 Nov 2021 14:27:31 -0700
-From: Grant Taylor <gtaylor@...tconsulting.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: IMA gadgets
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/05/1
+Message-Id: <E1lIDvZ-0006Cd-QZ@xenbits.xenproject.org>
+Date: Fri, 05 Mar 2021 17:07:49 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 367 v2 (CVE-2021-28038) - Linux: netback fails to honor grant mapping errors
 Content-Type: text/plain; charset=utf-8
 
-Pre-script:  I'm new to Linux's Integrity Measurement Architecture so my 
-comments below may be completely off base.  Please gently correct me if 
-that's the case.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On 11/30/21 1:16 PM, Florian Weimer wrote:
-> I do not think this works in the sense that it can detect serve for 
-> more than just detecting file corruption (as an unsigned hash would).
+            Xen Security Advisory CVE-2021-28038 / XSA-367
+                              version 2
 
-My understanding is that the signature which uses public & private keys 
-would be more resilient than just a hash in that the signature created 
-with the private key (which need not be on system) can be verified with 
-the public key on system.  A simple hash doesn't provide that same level 
-of integrity.
+          Linux: netback fails to honor grant mapping errors
 
-> First of all, there is the issue that IMA signatures (at least as they 
-> exist in RPM today) are content-only ...
+UPDATES IN VERSION 2
+====================
 
-My initial skim of the Integrity Measurement Architecture page on 
-Gentoo's Wiki indicates that the pathname is included in the template has.
+CVE assigned.
 
-The columns (from left to right) are:
+ISSUE DESCRIPTION
+=================
 
-    *PCR* (Platform Configuration Register) in which the values are 
-registered. This only makes sense if a TPM chip is in use.
-    *Template hash* of the entry, which is a hash that combines the 
-length and values of the file content hash /and/ /the/ /pathname/
-    *Template* that registered the integrity value (ima-ng the case)
-    *File content* hash which is the hash of the file itself
+XSA-362 tried to address issues here, but in the case of the netback
+driver the changes were insufficient: It left the relevant function
+invocation with, effectively, no error handling at all.  As a result,
+memory allocation failures there could still lead to frontend-induced
+crashes of the backend.
 
-Link - Integrity Measurement Architecture - Gentoo Wiki
-  - https://wiki.gentoo.org/wiki/Integrity_Measurement_Architecture
+IMPACT
+======
 
-So ... I may be mistaken, but I believe more than just the content is 
-covered by IMA signatures.
+A malicious or buggy networking frontend driver may be able to crash
+the corresponding backend driver, potentially affecting the entire
+domain running the backend driver.  In a typical (non-disaggregated)
+system that is a host-wide denial of service (DoS).
 
-> ... and do not cover file permissions or file capabilities.
+VULNERABLE SYSTEMS
+==================
 
-I see nothing to refute that portion of your statement.
+Linux versions from at least 2.6.39 onwards are vulnerable, when run in
+PV mode.  Earlier versions differ significantly in behavior and may
+therefore instead surface other issues under the same conditions.  Linux
+run in HVM / PVH modes is not vulnerable.
 
-> This means an attacker can turn any binary into a SUID binary. 
-> The signatures do not cover these file attributes, so they will 
-> still verify.
+MITIGATION
+==========
 
-It may be possible to add SUID and / or capabilities to a signed file. 
-But I have to question how such a questionable non-SUID binary would be 
-given a signature in the first place?  Or asked another why, why would a 
-questionable file be given a IMA signature in the first place?
+For Linux, running the backends in HVM or PVH domains will avoid the
+vulnerability.  For example, by running the dom0 in PVH mode.
 
-> The signatures do not cover the file names, either.  Therefore, 
-> an attacker can take a file and put it into a difference place in a 
-> file system.
+In all other cases there is no known mitigation.
 
-I question the veracity of that statement.  It seems to disagree with 
-the template hash containing the path.  Maybe it's a case of the file 
-hash being the same, but no longer matching with a template hash.
+RESOLUTION
+==========
 
-> For example, there's a debug-shell.service file that, when dropped into 
-> the right directory, will open a root shell on /dev/tty9.  This may 
-> seem a bit silly, but I think the intent behind the IMA signatures is 
-> to combine them with remote attestation, and make (remote) interaction 
-> with devices in places without physical security trustworthy.
+Applying the attached patch resolves this issue.
 
-Maybe I'm wrong, but I view IMA signatures as something akin to a real 
-time Tripwire as in has this file been modified since it was blessed ~> 
-approved to run?
+xsa367-linux.patch           Linux 5.12-rc
 
-> Another example is /usr/share/perl5/vendor_perl/App/cpanminus.pod 
-> from a typical distribution of the App::cpanminus package.  If this is 
-> dropped into /etc/sysconfig/run-parts, after a while, the system will 
-> download untrusted code over the network and execute it, as far as I 
-> can see.  (CPAN does not seem to be authenticated.)  The file does 
-> nothing when parsed by perl on the command line, but bash will try 
-> to run it and invoke a cpan shell command that triggers the download 
-> and code execution.  I don't think this kind of file type confusion 
-> is addressed by the proposed trusted_for system call, either.
+$ sha256sum xsa367*
+b0244bfddee91cd7986172893e70664b74e698c5d44f25865870f179f80f9a92  xsa367-linux.patch
+$
 
-I'm not current on cpanminus so there could be plenty that I'm 
-overlooking.  I would expect that download code to the site's Perl 
-installation.  But I would expect that said code would not get executed. 
-  Perhaps there is some form of chained process that I'm not cognizant of.
+CREDITS
+=======
 
-I still think that moving / copying / linking cpanminus.pod from it's 
-original location to the new location would run afoul of the template hash.
+This issue was reported by Intel's kernel test robot and recognized as a
+security issue by Jan Beulich of SUSE.
 
-> I'm sure there are many gadgets like this.  These two are just the 
-> first examples I found.
+NOTE REGARDING LACK OF EMBARGO
+==============================
 
-I think that it's worth looking at any and all gadgets to understand how 
-they would interact with IMA signatures.  At best it is an academic 
-exercise of how IMA signatures would help.  At worst it identifies a 
-vulnerability that needs to be remediated.
+This issue was reported publicly, before the XSA could be issued.
+-----BEGIN PGP SIGNATURE-----
 
-> So in short, I don't really see how IMA signatures shipped as part 
-> of all distribution packages, on all files, can provide value beyond 
-> that of the hash that the already contain.
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmBCZVEMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZfqAH/i7ypTUP90UIxeyMB9XmNRiqD+LaTSBExt8xTowd
+zbsWrxFYnZRPSLqs/dVHlDQfF65eD40Agh/Hxp5f0hGHjv8x1kepvpo2di1ovA2h
+C8/WpOK2nFq77/GTG2mAsJA3ltDF0WJsr5oqaBNVf/lwQSmiescTWtI6+LDFmmpd
+q1EyKPUClKZW3PoZkCVmiWDtqhVJc3LaJJcy4x/Zd4EgV+uGi2wsYsiQzObrwPss
+2D5laUr8RJcSTE7+bXlMA8KnzrOZ6UqK1YIPSGIYBOJnhizGf9CBZCxcNTONWQFC
+zh1d9GAv93fugE37xRHE7PRjgl/RVO5rn0k5EQw5GTa676A=
+=GKdV
+-----END PGP SIGNATURE-----
 
-I think the PKI signature would help more than /just/ a /simple/ hash.
-
-Maybe the crux of the difference between my understanding of what you're 
-concern is and my understanding from skimming the linked page is that 
-you seem to be talking as if there is only a hash of the file contents 
-verses that has plush another hash that covers more system installation 
-specific data.
-
-Post-Script:  Please correct me if I'm wrong in any of my understanding.
-
-
-
--- 
-Grant. . . .
-unix || die
-
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (4017 bytes)
+Download attachment "xsa367-linux.patch" of type "application/octet-stream" (3974 bytes)
