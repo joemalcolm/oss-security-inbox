@@ -1,53 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/18/2
-Message-ID: <YKPP+hCgfAaW0OiB@blues>
-Date: Tue, 18 May 2021 16:32:26 +0200
-From: Matthieu Herrb <matthieu@...rb.eu>
-To: oss-security@...ts.openwall.com
-Subject: libX11 security advisory: May 18, 2021
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/05/2
+Message-Id: <E1lIDvd-0006DY-2i@xenbits.xenproject.org>
+Date: Fri, 05 Mar 2021 17:07:53 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 369 v2 (CVE-2021-28039) - Linux: special config may crash when trying to map foreign pages
 Content-Type: text/plain; charset=utf-8
 
-X.Org libX11 security advisory: May 18, 2021
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Missing request length checks in libX11
-=======================================
+            Xen Security Advisory CVE-2021-28039 / XSA-369
+                              version 2
 
-CVE-2021-31535
+   Linux: special config may crash when trying to map foreign pages
 
-XLookupColor() and other X libraries function lack proper validation
-of the length of their string parameters. If those parameters can be
-controlled by an external application (for instance a color name that
-can be emitted via a terminal control sequence) it can lead to the
-emission of extra X protocol requests to the X server.
+UPDATES IN VERSION 2
+====================
 
-Patch
------
+CVE assigned.
 
-A patch for XLookupColor() and other potentially vulnerable functions
-has been committed to libX11. libX11 1.7.1 will be released shortly
-and contains a fix for this issue.
+ISSUE DESCRIPTION
+=================
 
-https://gitlab.freedesktop.org/xorg/lib/libx11
+With CONFIG_XEN_BALLOON_MEMORY_HOTPLUG disabled and
+CONFIG_XEN_UNPOPULATED_ALLOC enabled the Linux kernel will use guest
+physical addresses allocated via the ZONE_DEVICE functionality for
+mapping foreign guest's pages.
 
-commit: 8d2e02ae650f00c4a53deb625211a0527126c605
+This will result in problems, as the p2m list will only cover the initial
+memory size of the domain plus some padding at the end. Most ZONE_DEVICE
+allocated addresses will be outside the p2m range and thus a mapping can't
+be established with those memory addresses, resulting in a crash.
 
-    Reject string longer than USHRT_MAX before sending them on the wire
+The attack involves doing I/O requiring large amounts of data to be
+mapped by the Dom0 or driver domain.  The amount of data needed to
+result in a crash can vary depending on the memory layout of the
+affected Dom0 or driver domain.
 
-XTerm version 367 contains extra validation for the length of color
-names passed to XLookupColor() from terminal control sequences.  XTerm
-version 366 and earlier are vulnerable.
-
-Tests conducted by Roman Fiedler on other terminal emulator
-applications have not found other cases of passing un-checked color
-names to XLookupColor().
-
-Thanks
+IMPACT
 ======
 
-This vulnerability has been discovered by Roman Fiedler from
-Unparalleled IT Services e.U.
+A Dom0 or driver domain based on a Linux kernel (configured as
+described above) can be crashed by a malicious guest administrator, or
+possibly malicious unprivileged guest processes.
 
--- 
-Matthieu Herrb
+VULNERABLE SYSTEMS
+==================
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Only x86 paravirtualized (PV) Dom0 or driver domains are
+affected.
+
+Only Linux kernels configured *with* CONFIG_XEN_UNPOPULATED_ALLOC and
+*without* CONFIG_XEN_BALLOON_MEMORY_HOTPLUG are vulnerable.  Only
+kernels from kernel version 5.9 onwards are affected.
+
+CONFIG_XEN_BALLOON_MEMORY_HOTPLUG is enabled by default in upstream
+Linux when Xen support is enabled, so kernels using upstream default
+Kconfig are not affected.  Most distribution kernels supporting Xen
+dom0 use are likewise not vulnerable.
+
+Arm systems or x86 PVH or x86 HVM driver domains are not affected.
+
+MITIGATION
+==========
+
+There is no mitigation available.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa369-linux.patch           Linux 5.9-stable - 5.12-rc
+
+$ sha256sum xsa369*
+937df4f078a070cf47bdd718c6b8a042ec6bee255eedc422d833c2ae3dd561c7  xsa369-linux.patch
+$
+
+CREDITS
+=======
+
+This issue was discovered by Marek Marczykowski-Górecki of Invisible
+Things Lab.
+
+For patch:
+Reported-by: Marek Marczykowski-Górecki <marmarek@...isiblethingslab.com>
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This was reported publicly multiple times, before the XSA could be
+issued.
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmBCZVUMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZp8wIALvuzrh0iQDIg86Mx/eTtfVflmrz91YiDPfhrDj1
+L1D2lR+uFPKFpb3CdDTlzKoby/1ym4wbTLCjnDdXxjmPTdn4KybcBNbNONt2p69X
+dr/3KsO6yW5tjSi3FRZnnyTnTJN/q65tijG23sAcF7KuNW+xT2d70tWMH+LeMQZO
+fGkztK08cZspFfZZiOJHuqi5qpzoaBw7/vqlCphoiDMeE1EOGpaa/+bGb4doehyj
+dN8dyEWbyWdTp5lAxmduJfDMuixeESIxPnXP8jV3Z9b+Gt5l9S0cM+DCWDRUkW3M
+W0Z7va35sFLCx4+N7fLuzMUkzoLWpTJq2i2m9lploexe3nY=
+=PtNk
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa369-linux.patch" of type "application/octet-stream" (5098 bytes)
