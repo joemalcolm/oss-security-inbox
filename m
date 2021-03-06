@@ -1,30 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/05/1
-Message-ID: <bdea6093-16a6-a6c7-bd9f-a774fd158aec@apache.org>
-Date: Tue, 05 Oct 2021 09:02:50 +0000
-From: Stefan Eissing <icing@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/06/2
+Message-ID: <20210306100856.1cdc126e@fabiankeil.de>
+Date: Sat, 6 Mar 2021 10:08:56 +0100
+From: Fabian Keil <freebsd-listen@...iankeil.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-41524: Apache HTTP Server: null pointer dereference in h2 fuzzing 
+Subject: Re: Multiple DoS issues fixed in Privoxy 3.0.32 stable
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Fabian Keil <freebsd-listen@...iankeil.de> wrote on 2021-02-28:
 
-Description:
+> Privoxy 3.0.32 fixes multiple DoS issues and a couple of other bugs.
+> The issues also affect earlier Privoxy releases.
+[...]
+>   - ssplit(): Remove an assertion that could be triggered with a
+>     crafted CGI request.
+>     Commit 2256d7b4d67. OVE-20210203-0001.
+>     Reported by: Joshua Rogers (Opera)
 
-While fuzzing the 2.4.49 httpd, a new null pointer dereference was detected during HTTP/2 request processing,
-allowing an external source to DoS the server. This requires a specially crafted request. 
+CVE-2021-20272.
 
-The vulnerability was recently introduced in version 2.4.49. No exploit is known to the project.
+>   - cgi_send_banner(): Overrule invalid image types. Prevents a
+>     crash with a crafted CGI request if Privoxy is toggled off.
+>     Commit e711c505c48. OVE-20210206-0001.
+>     Reported by: Joshua Rogers (Opera)
 
-Mitigation:
+CVE-2021-20273.
 
-Disable the HTTP/2 protocol.
+>   - socks5_connect(): Don't try to send credentials when none are
+>     configured. Fixes a crash due to a NULL-pointer dereference
+>     when the socks server misbehaves.
+>     Commit 85817cc55b9. OVE-20210207-0001.
+>     Reported by: Joshua Rogers (Opera)
 
-Credit:
+CVE-2021-20274.
 
-Apache httpd team would like to thank LI ZHI XIN from NSFocus Security Team for reporting this issue.
+>   - chunked_body_is_complete(): Prevent an invalid read of size two.
+>     Commit a912ba7bc9c. OVE-20210205-0001.
+>     Reported by: Joshua Rogers (Opera)
 
-References:
+CVE-2021-20275.
 
-https://httpd.apache.org/security/vulnerabilities_24.html
+>   - Obsolete pcre: Prevent invalid memory accesses with an invalid
+>     pattern passed to pcre_compile(). Note that the obsolete pcre code
+>     is scheduled to be removed before the 3.0.33 release. There has been
+>     a warning since 2008 already.
+>     Commit 28512e5b624. OVE-20210222-0001.
+>     Reported by: Joshua Rogers (Opera)
 
+CVE-2021-20276.
+
+Fabian
+
+Content of type "application/pgp-signature" skipped
