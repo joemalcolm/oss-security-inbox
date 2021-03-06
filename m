@@ -1,38 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/07/2
-Message-ID: <Pine.BSM.4.64L.2108070210210.904@herc.mirbsd.org>
-Date: Sat, 7 Aug 2021 02:14:12 +0000 (UTC)
-From: Thorsten Glaser <tg@...bsd.de>
-To: Axel Beckert <abe@...ian.org>
-cc: lynx-dev@...gnu.org, oss-security@...ts.openwall.com, security@...ian.org, 991971@...s.debian.org
-Subject: Re: [Lynx-dev] bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/06/1
+Message-ID: <20210306083924.GC26482@suse.de>
+Date: Sat, 6 Mar 2021 09:39:24 +0100
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: Linux iscsi security fixes
 Content-Type: text/plain; charset=utf-8
 
-Axel Beckert dixit:
+Hi,
 
->This is more severe than it initially looked like: Due to TLS Server
->Name Indication (SNI) the hostname as parsed by Lynx (i.e with
->"user:pass@" included) is sent in _clear_ text over the wire even
+The iscsi developers have just published 3 security fixes to Linux Kernel mainline git.
 
-I *ALWAYS* SAID SNI IS A SHIT THING ONLY USED AS BAD EXCUSE FOR NAT
-BY PEOPLE WHO ARE TOO STUPID TO CONFIGURE THEIR SERVERS RIGHT AND AS
-BAD EXCUSE FOR LACKING IPv6 SUPPORT, AND THEN THE FUCKING IDIOTS WENT
-AND MADE SNI *MANDATORY* FOR TLSv1.3, AND I FEEL *SO* VINDICATED RIGHT
-NOW! IDIOTS IN CHARGE OF SECURITY, FUCKING IDIOTS…
+Reported-by: Adam Nichols <adam@...mm-co.com>
 
->But given that the symptoms Thorsten discovered stayed unreported for
->quite some years, I assume that this use case is a rather seldom one.
+(I think) the researcher had requested CVEs, the kernel devs however ommitted them from the commits.
 
-Nah, SNI is a rather recent thing. But…
+CVE-2021-27365: iscsi_host_get_param() allows sysfs params larger than 4k
 
->IMHO this nevertheless needs a CVE-ID.
+	The linux kernel iscsi initiator code allows initiator/target parameters to be negotiated than can be longer than 4k, since no limit is imposed. But when these values are displayed via sysfs, the sysfs subsystem limits that output to 4k, so the memory above that gets leaked.
 
-… it probably does. Other browsers also need checking.
+	https://bugzilla.suse.com/show_bug.cgi?id=1182715
+	https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ec98ea7070e94cc25a422ec97d1421e28d97b7ee
+	https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f9dbdf97a5bd92b1a49cee3d591b55b11fd7a6d5
 
-Thanks for the detective work,
-//mirabilos
--- 
-<diogenese> Beware of ritual lest you forget the meaning behind it.
-<igli> yeah but it means if you really care about something, don't
-    ritualise it, or you will lose it. don't fetishise it, don't
-    obsess. or you'll forget why you love it in the first place.
+	(not sure if both directly associated, but both fix the same class of issues)
+
+(2 fixes in 1 upstream commit, just in 2 seperate hunks:)
+
+CVE-2021-27363: kernel-source: show_transport_handle() shows iSCSI transport handle to non-root users
+
+	The iscsi initiator kernel subsystem makes the transport handle available via sysfs so that the iscsid daemon can access it, but it makes this visible to all users, making it possible for non-root users to attack the iscsi subsystem using this knowledge, particularly together with CVE-2021-27364, which allows non-root users to user the netlink socket to talk to the iscsi kernel subsystem.
+
+	https://bugzilla.suse.com/show_bug.cgi?id=1182716
+	https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=688e8128b7a92df982709a4137ea4588d16f24aa
+
+
+CVE-2021-27364: kernel-source: iscsi_if_recv_msg() allows non-root users to connect and send commands
+	This vulnerability allows any user to connect to the iscsi NETLINK socket and send commands to the kernel, such as "end a session", which is not good.
+
+	Together with CVE-2021-27363, this allows non-root bad actors to end sessions arbitrarily. (See bsc#1182716).
+	https://bugzilla.suse.com/show_bug.cgi?id=1182717
+	https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=688e8128b7a92df982709a4137ea4588d16f24aa
+
+Ciao, Marcus
