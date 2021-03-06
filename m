@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2041" "Thursday" "15" "February" "2018" "23:07:20" "+0000" "Paul Jakma" "paul@jakma.org" "<alpine.LFD.2.21.1802152258500.12267@stoner.jakma.org>" "53" "[oss-security] Quagga 1.2.3 release with BGP security issue fixes" nil nil nil "2" "2018021523:07:20" "[oss-security] Quagga 1.2.3 release with BGP security issue fixes" (number mark "U       paul@jakma.o Feb 15   53/2041  " thread-indent "\"[oss-security] Quagga 1.2.3 release with BGP security issue fixes\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2248" "Saturday" "6" "March" "2021" "09:39:24" "+0100" "Marcus Meissner" "meissner@suse.de" nil "36" "[oss-security] Linux iscsi security fixes" nil nil nil "3" nil nil (number mark "U       meissner@sus Mar  6   36/2248  " thread-indent "\"[oss-security] Linux iscsi security fixes\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux iscsi security fixes" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19527 invoked by uid 550); 15 Feb 2018 23:09:24 -0000
+Received: (qmail 6055 invoked by uid 550); 6 Mar 2021 08:39:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,95 +12,55 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17586 invoked from network); 15 Feb 2018 23:07:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jakma-org.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:subject:message-id:user-agent:mime-version;
-        bh=09NUIxHKxBfPH6YMBhnRmu78uP17VhupHprCKS/lOUs=;
-        b=mmPUFt3TiCHcrSMXBQERupU+thE5Yuw/meyZBN4A6Kdp7SFiSgNApnUiphT+FDUNdL
-         vjtIZgyk0DACSl8EWgD1WxVhFkZvwtpxUm2oZ64emMJZJwKF6TCzmIIXEQxq/6H3jfMk
-         fCJgDo5Ko0l402YHvgaUnjbC9M1ijdNB14YJs/XQUBdNhCOoVWspLLK3+GkRqmZvnA4v
-         LbrbwSIXBwvXDFjXthkJvcR8gqhAgwQ+pWy7eosJcnGdxHxK4KeuAhQKA11McY+lZq1M
-         vLe8a584YSITUO1W6x4vaW8cSOVTEHBrYAUYWJdxCFvYmYskdV0k+Wgnx3d499+R22tL
-         BSMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:user-agent
-         :mime-version;
-        bh=09NUIxHKxBfPH6YMBhnRmu78uP17VhupHprCKS/lOUs=;
-        b=H/6rh/NmiwFZfsbRRc/Go/56IK3g4meM3yenMAmyCZQd1UZEaeGjwQ6at3jBOqQNJS
-         QYIHqoJE56OhR4byCx2hIEMObZBHTvep17Bn/MWHVtkqpUYV8elfekgMQTSLOvhrx9x+
-         eGsGieowJJfUMVOtuOm352BoxBHkGbseDmZgtEN6Cefje+efYzDmB1SveruoUcttRN95
-         jcxav0wBFtJXai3xW9fLMvMRk4DrLB9fBEGb7sIdT0T9gQ5WAuXcQvYWwQcZT/JbXlbb
-         YSPFn2ZtbRfOQOmnF+cU9npZINDb6ObBB6Wbkf29qO2hPqqOggMiQLreOkuWn9qXe90f
-         OyYg==
-X-Gm-Message-State: APf1xPASPQVgRzFkv/UZb+9CFFqqLFEgo2ry9+7Ki2TC6Yskao7IrrZv
-	1JLcAJt5XhrW6GGgRA7s9WcO1WuA
-X-Google-Smtp-Source: AH8x2258eY+gybR2tDC6qCURuDSbP03aJ89P0ObYN5yD3NVM2tASw3h5WjYigggV7N0WLNxIn9USOA==
-X-Received: by 10.157.52.145 with SMTP id g17mr3214696otc.320.1518736047080;
-        Thu, 15 Feb 2018 15:07:27 -0800 (PST)
-Date: Thu, 15 Feb 2018 23:07:20 +0000 (GMT)
-From: Paul Jakma <paul@jakma.org>
-To: oss-security@lists.openwall.com
-Message-ID: <alpine.LFD.2.21.1802152258500.12267@stoner.jakma.org>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
-X-Snooper: A life spent reading others private email is a sad and wasted one
-X-NSA: nitrate toxic DNDO hostage al aqsar fluffy jihad DHS cute musharef kittens jet-A1 ear avgas wax ammonium bad qran dog inshallah allah al-akbar martyr iraq hammas hisballah rabin ayatollah korea revolt mustard gas x-ray british airways hydrogen washington peroxide cool FEMA emergency four lions encryption ricin table pandemic scanner power sleet catalyst injection acetone toluene amatol
-X-KEYSCORE: The greatest long-term threats to freedom and democracy are based in Langley and Fort Meade and Cheltenham
+Received: (qmail 6025 invoked from network); 6 Mar 2021 08:39:36 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Sat, 6 Mar 2021 09:39:24 +0100
+From: Marcus Meissner <meissner@suse.de>
+To: OSS Security List <oss-security@lists.openwall.com>
+Message-ID: <20210306083924.GC26482@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] Quagga 1.2.3 release with BGP security issue fixes
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Organization: SUSE Software Solutions =?iso-8859-1?Q?Ger?=
+ =?iso-8859-1?Q?many_GmbH=2C_Maxfeldstr=2E_5=2C_90409_Nuernberg=2C_Germany?=
+ =?iso-8859-1?Q?=2C_GF=3A_Felix_Imend=F6rffer=2C_HRB_36809=2C_AG_N=FCrnber?=
+ =?iso-8859-1?Q?g?=
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Subject: [oss-security] Linux iscsi security fixes
 
 Hi,
 
-Quagga 1.2.3 has been released, and it contains fixes for a number of 
-BGP security issues, 3 of which were not public till today. Please see:
+The iscsi developers have just published 3 security fixes to Linux Kernel mainline git.
 
-   http://savannah.nongnu.org/forum/forum.php?forum_id=9095
+Reported-by: Adam Nichols <adam@grimm-co.com>
 
-The CERT vulnerability note is at:
+(I think) the researcher had requested CVEs, the kernel devs however ommitted them from the commits.
 
-   https://www.kb.cert.org/vuls/id/940439
+CVE-2021-27365: iscsi_host_get_param() allows sysfs params larger than 4k
 
-Quagga advisories are at the URIs in the release announcement, also 
-available via either of:
+	The linux kernel iscsi initiator code allows initiator/target parameters to be negotiated than can be longer than 4k, since no limit is imposed. But when these values are displayed via sysfs, the sysfs subsystem limits that output to 4k, so the memory above that gets leaked.
 
-   https://gogs.quagga.net/Quagga/quagga/src/master/doc/security
-   https://git.savannah.gnu.org/cgit/quagga.git/tree/doc/security
+	https://bugzilla.suse.com/show_bug.cgi?id=1182715
+	https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ec98ea7070e94cc25a422ec97d1421e28d97b7ee
+	https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f9dbdf97a5bd92b1a49cee3d591b55b11fd7a6d5
 
-Quagga-2018-1114 can be triggered by receiving a transitive BGP 
-attribute - meaning it potentially could be triggered by a message sent 
-by a BGP speaker far away. It involves a double-free, which could be 
-serious, depending on the malloc implementation. See:
+	(not sure if both directly associated, but both fix the same class of issues)
 
-  https://gogs.quagga.net/Quagga/quagga/src/master/doc/security/Quagga-2018-1114.txt
+(2 fixes in 1 upstream commit, just in 2 seperate hunks:)
 
-Vendors are encouraged to provide backports to older releases.
+CVE-2021-27363: kernel-source: show_transport_handle() shows iSCSI transport handle to non-root users
 
-Quagga users should upgrade to a release appropriate for their stability 
-needs with the relevant fixes applied.
+	The iscsi initiator kernel subsystem makes the transport handle available via sysfs so that the iscsid daemon can access it, but it makes this visible to all users, making it possible for non-root users to attack the iscsi subsystem using this knowledge, particularly together with CVE-2021-27364, which allows non-root users to user the netlink socket to talk to the iscsi kernel subsystem.
 
-regards,
-- -- 
-Paul Jakma | paul@jakma.org | @pjakma | Key ID: 0xD86BF79464A2FF6A
+	https://bugzilla.suse.com/show_bug.cgi?id=1182716
+	https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=688e8128b7a92df982709a4137ea4588d16f24aa
 
------BEGIN PGP SIGNATURE-----
 
-iQJMBAEBCAA2BQJahhKpLxpodHRwczovL3d3dy5qYWttYS5vcmcvfnBhdWwvcGdw
-X3BvbGljeS0xLjEudHh0AAoJEOFGbL/NtBuaDNsP/2l3tczRgiGVpoiDu3yAWkWT
-Q4VSv7lbDgorvm5FYDiEPr8e7rp6ERiJNGjjlpl907pmDU2TAEaeQI3PQj4I9uag
-hv4sq1+n/ODoXPGtlQKsDWN4ob0B3fZ6bOh8a4Y6iUl9s0ESk0Ogi34k7hjqjWp2
-4RbjpLbLMOAF3IOZo3uFoA9+Uzr8jDkC6FVNULfcWDOaTlagjJgE+Amr0a6gM+yK
-DSjYommtAmqSrV3/Wv3uC96/whWnjzTZluObBTc8FVWy9zxP5zwvRMirDxehWrEh
-N9C9A38ZsfXMQ+IWbaosdCClMNSZqbiRSZP6aNmBk9/HlSUK6yF6e6jNOzmiPdy3
-0n1507rkfBInu5ALeqs/DyWGqVLkV2h+RHKJyUCIzmHaBomHf3MS9iPBy+63whQg
-aGPuT6283dzcjD20qYY1u0KLziRVHg8TdDu4aCy3UXD/w2pvbn3Nymo3RoL/g20/
-9VylvokNujnzaGxjG9nc5/fqA/XKkT9G/7sCnG2OHU7hheaPrq/6+7OL4RCS6kz4
-iL40V0RDp26yg7lHm51MtCEHn91yv5wFKnG2fESfkUUMTeqO8jiThbl8UOYE4j/l
-66VvLca/XwP4r0KASmrM8O3PiktmulGg2TTCo30nx4bmr30j10dGtteBQupwpRWn
-UXXvosef5rPdV887X4EK
-=YNE6
------END PGP SIGNATURE-----
+CVE-2021-27364: kernel-source: iscsi_if_recv_msg() allows non-root users to connect and send commands
+	This vulnerability allows any user to connect to the iscsi NETLINK socket and send commands to the kernel, such as "end a session", which is not good.
+
+	Together with CVE-2021-27363, this allows non-root bad actors to end sessions arbitrarily. (See bsc#1182716).
+	https://bugzilla.suse.com/show_bug.cgi?id=1182717
+	https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=688e8128b7a92df982709a4137ea4588d16f24aa
+
+Ciao, Marcus
