@@ -1,38 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/27/2
-Message-ID: <CANMpf86pR03Hea8=OsT5_PKADprCMvArOD7WfiGOCzQEWfCFRA@mail.gmail.com>
-Date: Thu, 27 May 2021 07:18:08 -0700
-From: James Dailey <jamespdailey@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/08/1
+Message-ID: <CAA8xKjXLrzagaAMMSFBoFT=vgq4ksj8ZjCuFit1Hz-Mvot2vyA@mail.gmail.com>
+Date: Mon, 8 Mar 2021 15:35:38 +0100
+From: Mauro Matteo Cascella <mcascell@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-17514: Apache Fineract: Disabled hostname verification for HTTPS
+Cc: "Dr. David Alan Gilbert" <dgilbert@...hat.com>
+Subject: CVE-2021-20263 QEMU: virtiofsd: 'security.capabilities' is not dropped with xattrmap option
 Content-Type: text/plain; charset=utf-8
 
-The fineract project announces release of 1.5.0 which - among other things
-- fixes this issue.
+Hello,
 
-*CVE-2020-17514: Disabled Hostname verification for HTTPS  *
+A flaw was found in the virtio-fs shared file system daemon
+(virtiofsd) of QEMU. Virtio-fs is meant to share a host file system
+directory with a guest virtual machine. The new 'xattrmap' option may
+cause the 'security.capability' xattr in the guest to not drop on file
+write, potentially leading to a modified, privileged executable in the
+guest. In rare circumstances, this flaw could be used by a malicious
+user to elevate their privileges within the guest.
 
-[DESCRIPTION]:
+For the problem to happen virtiofsd needs to be running with '-o
+xattr' and '-o xattrmap' (to enable and rename xattrs, respectively).
+The problem only occurs if 'security.capability' is one of the xattrs
+that's being renamed. Different caching modes cause different guest
+behavior: '-o cache=none' makes the issue easy to reproduce. There's a
+suspicion the flaw could be reproduced with the default option '-o
+cache=auto' as well.
 
-*Critical*:  Apache Fineract disables HTTPS hostname verification in
-`ProcessorHelper` in the `configureClient` method.
+The impact of this flaw is limited by the fact that xattrmap is a
+recent feature that's little used so far. Additionally, unprivileged
+users shouldn't be granted write permission on privileged executables
+in the first place.
 
-Under typical deployments, a man in the middle attack could be successful.
+Virtiofsd 'xattrmap' feature in QEMU 5.2:
+https://gitlab.com/virtio-fs/qemu/-/commit/6084633dff3a05d6317
 
-*Release branch*: The fix is available at
-https://github.com/apache/fineract/tree/1.5.0.
+Upstream patch:
+https://lists.gnu.org/archive/html/qemu-devel/2021-03/msg01244.html
 
-*Acknowledgements*: We would like to thank Simon Gerst at
-https://github.com/intrigus-lgtm  for reporting this issue, and the *Apache
-Security team* for their assistance.
-Reported to security team 15 October 2020
-Fixed 19 October 2020
-Update Released 23 May  2021
-Issue public 26 May 2021
-Affects 0.4.0-incubating, 0.5.0-incubating, 0.6.0-incubating, 1.0.0, 1.1.0,
-1.2.0, 1.3.0, 1.4.0
+This issue was reported by Dr. David Alan Gilbert (CC'd).
 
-[REFERENCES]:
+CVE-2021-20263 assigned by Red Hat, Inc.
 
-https://issues.apache.org/jira/browse/FINERACT-1211
+Best regards.
+-- 
+Mauro Matteo Cascella
+Red Hat Product Security
+PGP-Key ID: BB3410B0
 
