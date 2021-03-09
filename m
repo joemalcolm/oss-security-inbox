@@ -1,120 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/01/4
-Message-ID: <CAH5WSp4XsLN42kbnDknq2c32mZs_5uvyEzgBSQ9ar_ypASbYRw@mail.gmail.com>
-Date: Wed, 1 Sep 2021 17:15:57 +0800
-From: Minh Yuan <yuanmingbuaa@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/09/2
+Message-ID: <CAHydKRCvKgWUm=J=WYJ=UWEfAsO67UDjo2ReDwq6fd=da4amqg@mail.gmail.com>
+Date: Tue, 9 Mar 2021 16:02:23 +0100
+From: Gézapeti Cseh <gezapeti@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-3753: A out-of-bounds caused by the race of KDSETMODE in vt for latest Linux
+Subject: CVE-2020-35451: Oozie local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Description:
 
-We recently discovered a race oob read in vt in the latest kernel (
-v4.19.205 for now ), and the patch
-<https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=ffb324e6f874121f7dce5bdae5e05d02baae7269>
-can't
-handle this bug.
+There is a race condition in OozieSharelibCLI which allows a malicious
+attacker to replace the files in Oozie's sharelib during it's
+creation.
 
-The root cause of this vulnerability is that the write access to vc_mode is
-not protected by lock in vt_ioctl (KDSETMDE).
-To trigger the oob, we set the crafted vc_visible_origin by using the
-following steps:
+A race condition in OozieSharelibCLI allows an attacker to replace the
+contents of the sharelib.  This issue affects Apache Oozie versions
+prior to 5.2.1.
 
-  Thread 1                                        Thread 2
-                                                                      Thread
-3
-vt_ioctl()
-    case KDSETMODE:
-        vc->vc_mode = KD_GRAPHICS
+Mitigation:
 
-                                            vt_ioctl()
-                                                case TIOCL_BLANKSCREEN:
-                                                    if (
-vc->vc_mode != KD_TEXT)
+Validate the contents of the sharelib after uploading.
 
-console_blanked = fg_console + 1;
-                                                ... ...
-                                                case VT_RESIZE
-                                                    set_origin()
-                                                        vgacon_set_origin()
+Credit:
 
-// make vc_visible_origin not equal to vga_vram_base
-                                                            if (
-console_blanked && !vga_palette_blanked)
-                                                                return 0;
-
-
-
-                                                     vt_ioctl()
-
-                                                         case
-KDSETMODE:
-
-
-vc->vc_mode = KD_TEXT
-
-                                            write()
-                                                do_con_write()
-                                                    do_con_troll()
-                                                        lf()
-                                                            con_scroll()
-
-// set vga_rolled_over
-                                                                vgacon_scroll()
-                                                                    if (
-c->vc_mode != KD_TEXT)
-
-return false;
-
-oldo = c->vc_origin;
-
-vga_rolled_over = oldo - vga_vram_base;
-
-                                            vt_ioctl()
-                                                case TIOCL_SCROLLCONSOLE:
-wrap = rolled_over + c->vc_size_row
-
-// set vc_visible_origin to oob
-                                                    c->vc_
-visible_origin = vga_vram_base + (from + from_off) % wrap
-
-                                                case TIOCL_SETSEL:
-                                                    // trigger oob
-                                                    sel_pos(ps)
-
-
-
-
-
-
-
-
-
-
-console_lock();
-
-                                                         ...
-
-
-console_unlock();
-
-
-
-        console_lock();
-        ...
-        console_unlock();
-
-
-And the patch for this issue is available now. (
-https://github.com/torvalds/linux/commit/2287a51ba822384834dafc1c798453375d1107c7
-)
-
-Timeline:
-* 08.30.21 - Vulnerability reported to security@...nel.org.
-* 08.31.21 - CVE-2021-3753 assigned.
-* 09.01.21 - Vulnerability opened.
-
-Regards,
-
-Yuan Ming, Tsinghua University
-
+The Apache Oozie PMC would like to thank Jonathan Leitschuh for
+reporting the issue
