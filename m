@@ -1,23 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/21/2
-Message-ID: <de8ffe7a-5058-ccb8-f3a8-c59a6564ed9c@apache.org>
-Date: Tue, 21 Sep 2021 16:33:57 +0000
-From: Randall Hauch <rhauch@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/09/1
+Message-ID: <CAA8xKjUvFqcwS8YymfmUqipHXLae2TT81Sgg2_yZ+TcW1rqBsA@mail.gmail.com>
+Date: Tue, 9 Mar 2021 09:56:16 +0100
+From: Mauro Matteo Cascella <mcascell@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-38153: Timing Attack Vulnerability for Apache Kafka Connect and Clients 
+Subject: CVE-2021-3409 QEMU: sdhci: incomplete fix for CVE-2020-17380/CVE-2020-25085
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Hello,
 
-Description:
+QEMU upstream commit [1] was supposed to fix CVE-2020-17380 and
+CVE-2020-25085, both involving a heap buffer overflow in the SDHCI
+controller emulation code. In fact, commit [1] turned out to be
+incomplete, in that it was still possible to reproduce the same
+issue(s) with specially crafted input, inducing a bogus transfer and
+subsequent out-of-bounds read/write access in sdhci_do_adma() or
+sdhci_sdma_transfer_multi_blocks().
 
-Some components in Apache Kafka use `Arrays.equals` to validate a password or key, which is vulnerable to timing attacks that make brute force attacks for such credentials more likely to be successful. Users should upgrade to 2.8.1 or higher, or 3.0.0 or higher where this vulnerability has been fixed. The affected versions include Apache Kafka 2.0.0, 2.0.1, 2.1.0, 2.1.1, 2.2.0, 2.2.1, 2.2.2, 2.3.0, 2.3.1, 2.4.0, 2.4.1, 2.5.0, 2.5.1, 2.6.0, 2.6.1, 2.6.2, 2.7.0, 2.7.1, and 2.8.0.
+A new series has been proposed (not merged yet) to address those
+issues, and CVE-2021-3409 was assigned to facilitate
+tracking/backporting of the new patch.
 
-Credit:
+Old patch:
+[1] https://git.qemu.org/?p=qemu.git;a=commit;h=dfba99f17feb6d4a129da19d38df1bcd8579d1c3
 
-Apache Kafka would like to thank J. Santilli for reporting this issue.
+New patch series:
+https://lists.nongnu.org/archive/html/qemu-devel/2021-03/msg00949.html
 
-References:
+CVE-2021-3409 assigned by Red Hat, Inc.
 
-https://kafka.apache.org/cve-list
+Best regards.
+-- 
+Mauro Matteo Cascella
+Red Hat Product Security
+PGP-Key ID: BB3410B0
 
