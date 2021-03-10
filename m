@@ -1,32 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/25/10
-Message-ID: <20210825213708.GA3330@localhost.localdomain>
-Date: Wed, 25 Aug 2021 21:52:26 +0000
-From: Qualys Security Advisory <qsa@...lys.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE-2021-33909: size_t-to-int vulnerability in Linux's filesystem layer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/10/2
+Message-ID: <CADDz7Zt75GX5nwYzvYhU81iCSsWq+1DotfC0LoTwntk_gp6RrA@mail.gmail.com>
+Date: Tue, 9 Mar 2021 22:48:43 -0800
+From: Will Glass-Husain <wglass@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2020-13959: Velocity Tools XSS Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Description:
 
-Our exploit for CVE-2021-33909 (Sequoia) is attached to this email.
-Alternatively, it is available at:
+The default error page for VelocityView reflects back the vm file that
+was entered as part of the URL.  An attacker can set an XSS payload
+file as this vm file in the URL which results in this payload being
+executed.
 
-https://www.qualys.com/research/security-advisories/
+XSS vulnerabilities allow attackers to execute arbitrary JavaScript in
+the context of the attacked website and the attacked user. This can be
+abused to steal session cookies, perform requests in the name of the
+victim or for phishing attacks.
 
-We are at your disposal for questions, comments, and further
-discussions. Thank you very much!
+Mitigation:
 
-With best regards,
+Applications based on Apache Velocity Tools should upgrade to version
+3.1.  This version escapes the reflected text on the default error
+page, preventing potential javascript execution.
 
---
-the Qualys Security Advisory team
+Credit:
 
-
-[https://d1dejaj6dcqv24.cloudfront.net/asset/image/email-banner-384-2x.png]<https://www.qualys.com/email-banner>
-
-
-
-This message may contain confidential and privileged information. If it has been sent to you in error, please reply to advise the sender of the error and then immediately delete it. If you are not the intended recipient, do not read, copy, disclose or otherwise use this message. The sender disclaims any liability for such unauthorized use. NOTE that all incoming emails sent to Qualys email accounts will be archived and may be scanned by us and/or by external service providers to detect and prevent threats to our systems, investigate illegal or inappropriate behavior, and/or eliminate unsolicited promotional emails (“spam”). If you have any concerns about this process, please contact us.
-
-Download attachment "CVE-2021-33909-exploit.tar.gz" of type "application/gzip" (13610 bytes)
+This issue was reported and a patch was submitted by Jackson Henry,
+member of Sakura Samurai.
