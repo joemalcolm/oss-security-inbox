@@ -1,23 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/07/6
-Message-ID: <a2cd6ccf-b381-5513-3c7c-598a6da8c9c9@apache.org>
-Date: Thu, 07 Oct 2021 15:24:32 +0000
-From: Stefan Eissing <icing@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/10/1
+Message-ID: <CADDz7ZtCRimpVJMqO=gz6F+TWf-NbR8j8n7HvcpPNYH2Mz3maQ@mail.gmail.com>
+Date: Tue, 9 Mar 2021 22:48:11 -0800
+From: Will Glass-Husain <wglass@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-42013: Path Traversal and Remote Code Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773) 
+Subject: CVE-2020-13936: Velocity Sandbox Bypass
 Content-Type: text/plain; charset=utf-8
-
-Severity: critical
 
 Description:
 
-It was found that the fix for CVE-2021-41773 in Apache HTTP Server 2.4.50 was insufficient. An attacker could use a path traversal attack to map URLs to files outside the directories configured by Alias-like directives.  
+An attacker that is able to modify Velocity templates may execute
+arbitrary Java code or run arbitrary system commands with the same
+privileges as the account running the Servlet container.  This applies
+to applications that allow untrusted users to upload/modify velocity
+templates running Apache Velocity Engine versions up to 2.2.
 
-If files outside of these directories are not protected by the usual default configuration "require all denied", these requests can succeed. If CGI scripts are also enabled for these aliased pathes, this could allow for remote code execution.
+Mitigation:
 
-This issue only affects Apache 2.4.49 and Apache 2.4.50 and not earlier versions.
+Applications using Apache Velocity that allow untrusted users to
+upload templates should upgrade to version 2.3.  This version adds
+additional default restrictions on what methods/properties can be
+accessed in a template.
 
 Credit:
 
-Reported by Juan Escobar from Dreamlab Technologies, Fernando Muñoz from NULL Life CTF Team, and Shungo Kumasaka
-
+This issue was discovered by Alvaro Munoz pwntester@...hub.com of
+Github Security Labs and was originally reported as GHSL-2020-048.
