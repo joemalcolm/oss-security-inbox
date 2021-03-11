@@ -1,19 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/10/3
-Message-ID: <CA+QaCWLGu_jk5s6qzO-LNFi5R2mZecSWPA68ijhUXgTUNsT2Xw@mail.gmail.com>
-Date: Tue, 10 Aug 2021 10:48:11 +0800
-From: Willem Jiang <ningjiang@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/11/1
+Message-ID: <CALJHwhTXW8pi-7KJkkNpafM8SSiMM4edX4JbnPTFisGPV+RBjw@mail.gmail.com>
+Date: Thu, 11 Mar 2021 15:59:47 +1000
+From: Wade Mealing <wmealing@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-21501: Apache ServiceComb: ServiceComb ServiceCenter Directory Traversal
+Subject: CVE-2021-20261: kernel: panic in start_motor+0x21 when /dev/fd0 is read by multiple threads.
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+Gday,
 
-Description:
+A race condition was found in the Linux kernels implementation of the
+floppy disk drive controller driver software.  The impact of this issue is
+lessened by the fact that the default permissions on the floppy device
+(/dev/fd0) are restricted to root.  If the permissions on the device have
+changed the impact changes greatly.  In the default configuration root (or
+equivalent) permissions are required to attack this flaw.
 
-Improper configuration will cause ServiceComb ServiceCenter Directory
-Traversal problem in ServcieCenter 1.x.x versions. This issue was
-fixed in ServiceComb ServiceCenter 2.0.0.
+From:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a0c80efe5956ccce9fe7ae5c78542578c07bc20a
 
-References:
-https://github.com/apache/servicecomb-service-center/pull/788
+"In case of multiple threads trying to open("/dev/fdX"), this leads to
+serious corruptions all over the place, because all of a sudden there is no
+critical section protection (that'd otherwise be guaranteed by locked fd)
+whatsoever."
+
+It is likely that this memory corruption will at minimum crash the system,
+at worse corrupt memory and lead to possible privilege escalation.
+
+Fixed in:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a0c80efe5956ccce9fe7ae5c78542578c07bc20a
+
+Red Hat Bugzilla:
+https://bugzilla.redhat.com/show_bug.cgi?id=1932150
+
+To answer the inevitable question that is coming: I'm reporting this
+because it is my job.   ;)
+
+Thank you
+
+-- 
+
+Wade Mealing
+
+Product Security - Kernel, RHCE
+
+Red Hat
+
+<https://www.redhat.com>
+
+wmealing@...hat.com
+<https://red.ht/sig>
+TRIED. TESTED. TRUSTED. <https://redhat.com/trusted>
+
+secalert@...hat.com for urgent response
+
