@@ -1,47 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/27/1
-Message-ID: <20210127093340.6d976bc2@computer>
-Date: Wed, 27 Jan 2021 09:33:40 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/11/2
+Message-ID: <CALJHwhT3uLqQEbkVd9f2zMRONWUB3M2_Z60n7jXUPX3=A5d6uA@mail.gmail.com>
+Date: Thu, 11 Mar 2021 17:19:44 +1000
+From: Wade Mealing <wmealing@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Baron Samedit: Heap-based buffer overflow in Sudo (CVE-2021-3156)
+Subject: CVE-2021-20269: kexec-tools: incorrect permissions on vmcore-dmesg.txt file
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Gday,
 
-Just sharing a few thoughts and things I read elsewhere:
+A flaw was found in the kexec-tools where it made the incorrect permissions
+on the vmcore-dmesg.txt extracted from the vmcore of a previous kernel
+panic.  It is possible that this could be used to leak kernel internal
+information from a previous execution if it was output to the ring buffer
+or part of the panic backtrace.   An unprivileged user with a local account
+can use this to extract kernel internal information resulting in an
+information leak.
 
-complexity
-==========
+TLDR: The vmcore-dmesg.txt is created world readable and should not be.
 
-The top comment on lobste.rs points out that a problem of sudo is
-complexity:
-https://lobste.rs/s/efsvqu/heap_based_buffer_overflow_sudo_cve_2021#c_c6fcfa
-
-I think that's a very fair point. Also it seems the development trend
-in sudo is to actually increase complexity even more and adding all
-kinds of features that really should not be part of a suid tool, see
-e.g.
-https://computingforgeeks.com/better-secure-new-sudo-release/
-
-The lobste.rs poster points to doas, which seems to be a much simpler
-alternative coming from OpenBSD, a portable version exists:
-https://github.com/Duncaen/OpenDoas
-
-testing
-=======
-
-Top commenter at HN points out that there's a lack of testing in sudo:
-https://news.ycombinator.com/item?id=25921811
-
-Neither the commit that introduced this bug nor the commit that fixed
-it contained a test.
-
-Fair point again.
-Here doas does not compare well: It does not seem to come with a test
-suite at all.
+Red Hat Bugzilla:
+  http://bugzilla.redhat.com/CVE-2021-20269
 
 
+Thank you.
 -- 
-Hanno Böck
-https://hboeck.de/
+
+Wade Mealing
+
+Product Security - Kernel, RHCE
+
+Red Hat
+
+<https://www.redhat.com>
+
+wmealing@...hat.com
+<https://red.ht/sig>
+TRIED. TESTED. TRUSTED. <https://redhat.com/trusted>
+
+secalert@...hat.com for urgent response
+
