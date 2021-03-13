@@ -1,21 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/01/4
-Message-ID: <20210201192439.GA23096@openwall.com>
-Date: Mon, 1 Feb 2021 20:24:39 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/13/1
+Message-ID: <CAJmbs8h2x=qsfULgUkzjziS2m5iQnpA5T_Y124Oata4eFWuWHw@mail.gmail.com>
+Date: Sat, 13 Mar 2021 18:29:46 +0700
+From: Maxim Solodovnik <solomax@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux Kernel: local priv escalation via futexes
+Subject: CVE-2021-27576: Apache OpenMeetings: bandwidth can be overloaded with public web service
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 29, 2021 at 06:01:11PM +0100, Marcus Meissner wrote:
-> Mitre has now assigned CVE-2021-3347.
+Description:
 
-FWIW, here's a recent writeup and exploit for a different futex
-vulnerability:
+NetTest web service can be used to overload the bandwidth of the server
 
-https://elongl.github.io/exploitation/2021/01/08/cve-2014-3153.html
-https://github.com/elongl/CVE-2014-3153
+Versions Affected: 4.0.0 - 5.1.0
 
-Might help someone get into futexes... and exploiting their bugs.
+References:
 
-Alexander
+https://lists.apache.org/thread.html/r9bb615bd70a0197368f5f3ffc887162686caeb0b5fc30592a7a871e9%40%3Cuser.openmeetings.apache.org%3E
