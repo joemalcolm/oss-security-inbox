@@ -1,46 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/14/5
-Message-ID: <CABBoStjJjmxfF-4OLiBq4D_uJ4LuUqrxftAeh5UCxntLsyoshQ@mail.gmail.com>
-Date: Fri, 14 May 2021 15:16:37 -0400
-From: Ana McTaggart <amctagga@...hat.com>
-To: oss-security@...ts.openwall.com, felix.huettner@...l.schwarz
-Subject: CVE-2021-3531: Ceph: RGW unauthenticated denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/16/2
+Message-ID: <YFAXlFS+y63uKlto@fullerene.field.pennock-tech.net>
+Date: Mon, 15 Mar 2021 22:27:32 -0400
+From: Phil Pennock <oss-security-phil@...dhuis.org>
+To: oss-security@...ts.openwall.com
+Cc: Phil Pennock <pdp@...adia.com>
+Subject: [CVE-2020-28466][CVE-2021-3127] NATS.io vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-A flaw was found in the Red Hat Ceph Storage RGW. When processing a GET
-Request for a swift URL that ends with two slashes it can cause the rgw to
-crash, resulting in a denial of service.
+[moderators: my apologies for the initial unsigned message, please
+ discard that one and permit this one]
 
-We have assigned it a CVE of CVE-2021-3531 and a patch is attached.
+Folks,
 
-Fixes may be found here:
+Two new CVEs for the NATS project for issues fixed with the
+2.2.0 release.  The full text of the advisories should be attached.
+These, and other advisories, can be found at
+<https://advisories.nats.io/>.
 
-Nautilus:
-https://github.com/ceph/ceph/commit/f44a8ae8aa27ecef69528db9aec220f12492810e
-Octopus:
-https://github.com/ceph/ceph/commit/b87e64e3206210580f4a6df2d77f9ae3f1033039
-Pacific:
-https://github.com/ceph/ceph/commit/bf06990ab41d7ac299e4441ad9cd434e926a18e7
+ * CVE-2020-28466
+   + import loops between accounts, expressed in the account JWT, could
+     DoS the server
+   + this was fixed in public git some time ago without initially
+     thinking of the security impact, this was the first
+     release since then
+   + realistically, the current situation is that if you have untrusted
+     third parties with control over their account JWTs, then while
+     we'll hurry security releases for severe flaws (compromise,
+     disclosure), for DoS protection folks need to follow closer to git
+     mainline
 
-Ana McTaggart
+ * CVE-2021-3127
+   + this one is far more serious: information disclosure between
+     accounts
+   + something which should have been an error was a disregarded
+     warning, letting people reuse binding tokens to bypass access
+     controls on data exports from an account because the binding was
+     not enforced
+   + the bug is in the JWT library, the current NATS server has the fix
+     in as as a dependency; the advisory includes a Python script which
+     can be pointed at your account server's account pack URL, or a pack
+     on local disk, to audit all the accounts to find instances of
+     someone exploiting this
 
-Red Hat Product Security
+Regards,
+-Phil Pennock
 
-Red Hat Remote <https://www.redhat.com>
+View attachment "CVE-2020-28466.txt" of type "text/plain" (1969 bytes)
 
+View attachment "CVE-2021-3127.txt" of type "text/plain" (7627 bytes)
 
-secalert@...hat.com for urgent response
-
-
-amct@...hat.com
-
-
-M: +1 (774)279-0791 <7742790791>     IM: amctagga
-
-
-Pronouns:They/Them/Theirs
-
-Content of type "text/html" skipped
-
-Download attachment "0001-rgw-sanitize-r-in-s3-CORSConfiguration-s-ExposeHeade.patch" of type "application/x-patch" (1265 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
