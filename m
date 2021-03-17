@@ -1,60 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/29/3
-Message-Id: <10CA3DFF-8822-4BB2-8659-8C311199769F@isc.org>
-Date: Thu, 29 Apr 2021 12:36:56 +0200
-From: Ondřej Surý <ondrej@....org>
-To: Ariadne Conill <ariadne@...eferenced.org>
-Cc: oss-security@...ts.openwall.com, "security-officer@....org" <security-officer@....org>
-Subject: Re: ISC discloses three BIND vulnerabilities (CVE-2021-25214, CVE-2021-25215, and CVE-2021-25216)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/17/14
+Message-ID: <ab4fb69d-bbc1-0ee7-d3b9-58871ea096d8@virtuozzo.com>
+Date: Wed, 17 Mar 2021 18:36:29 +0300
+From: Evgenii Shatokhin <eshatokhin@...tuozzo.com>
+To: Greg KH <greg@...ah.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS
 Content-Type: text/plain; charset=utf-8
 
-Hi Ariande,
-
-BIND 9.17.x was using the system SPNEGO since 9.17.2 (I think).
-
-Also for older versions, it should be enough to use --disable-isc-spnego if you can’t patch it (that’s what I am doing for Debian buster).  It just won’t work with Heimdal krb5, but it compiles just fine with MIT krb5.
-
-Cheers,
-Ondrej
---
-Ondřej Surý (He/Him)
-ondrej@....org
-
-> On 29. 4. 2021, at 12:34, Ariadne Conill <ariadne@...eferenced.org> wrote:
+On 17.03.2021 18:17, Greg KH wrote:
+> On Wed, Mar 17, 2021 at 07:45:59PM +0530, Rohit Keshri wrote:
+>> Hello Team,
+>>
+>> A denial of service vulnerability was found in n_tty_receive_char_special
+>> in drivers/tty/n_tty.c of the Linux kernel.  In this flaw a local attacker
+>> with a normal user privilege could delay the loop (due to a changing
+>> ldata->read_head, and a missing sanity check) and cause a threat to the
+>> system availability.
+>>
+>> 'CVE-2021-20219' was assigned by Red Hat.
+>>
+>> Acknowledgements: Evgenii Shatokhin (Virtuozzo Research LLC)
 > 
-> Hello,
-> 
-> On Wed, 28 Apr 2021, Michael McNally wrote:
-> 
->> On April 28, 2021, we (Internet Systems Consortium) disclosed three
->> vulnerabilities affecting our BIND 9 software:
->> 
->>  CVE-2021-25214: A broken inbound incremental zone update (IXFR)
->>  can cause named to terminate unexpectedly
->>  https://kb.isc.org/docs/cve-2021-25214
->> 
->>  CVE-2021-25215: An assertion check can fail while answering queries for
->>  DNAME records that require the DNAME to be processed to resolve itself
->>  https://kb.isc.org/docs/cve-2021-25215
->> 
->>  CVE-2021-25216: A second vulnerability in BIND's GSSAPI security policy
->>  negotiation can be targeted by a buffer overflow attack
->>  https://kb.isc.org/docs/cve-2021-25216
->> 
->> New versions of BIND are available from https://www.isc.org/downloads
->> 
->> Operators and package maintainers who prefer to apply patches selectively can
->> find individual vulnerability-specific patches in the "patches" subdirectory
->> of the release directories for our two stable release branches (9.11 and 9.16)
->> 
->> https://downloads.isc.org/isc/bind9/9.11.31/patches
->> https://downloads.isc.org/isc/bind9/9.16.15/patches
-> 
-> These directories only have patches for CVE-2021-25214 and CVE-2021-25215. A patch for CVE-2021-25216 appears to be missing.  In some supported branches of Alpine, we erroneously followed a development branch of BIND, so I am trying to determine if there is anything I need to backport to cover CVE-2021-25216.
-> 
-> Thanks in advance for any advice you can provide on this.
-> 
-> Ariadne
+> Really?  Not the tools or people that reported this issue and fixed it
+> in the community back in 2018?
 
+The description is misleading, unfortunately.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+RedHat backported that original fix (commit 3d63b7e4ae0d "n_tty: Fix 
+stall at n_tty_receive_char_special().") long ago.
+
+I just found that their backport was incomplete: one hunk of the patch 
+was lost. This lead to the problem I reported: the reproducer program 
+caused n_tty_receive_char() to loop forever. As a result, other 
+processes could hang too.
+
+Regards,
+Evgenii
+
+> 
+> {sigh}
+> 
+> greg k-h
+> .
+> 
+
