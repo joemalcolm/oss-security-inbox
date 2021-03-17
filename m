@@ -1,80 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/02/2
-Message-ID: <f599998d-84c3-8123-a3f9-b14330690367@gmail.com>
-Date: Thu, 1 Jul 2021 10:08:07 +0200
-From: Mariusz Felisiak <felisiak.mariusz@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/17/2
+Message-ID: <YFHVuDKj+oMwxBZX@kroah.com>
+Date: Wed, 17 Mar 2021 11:11:04 +0100
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Django: CVE-2021-35042: Potential SQL injection via unsanitized QuerySet.order_by() input
+Subject: Re: CVE-2021-3428 Linux kernel: integer overflow in ext4_es_cache_extent
 Content-Type: text/plain; charset=utf-8
 
-https://www.djangoproject.com/weblog/2021/jul/01/security-releases/
+On Wed, Mar 17, 2021 at 11:21:23AM +0530, Rohit Keshri wrote:
+> Hello Team,
+> 
+> A flaw was found in the Linux kernel. A denial of service problem is
+> identified if an extent tree is corrupted in a crafted ext4 filesystem in
+> fs/ext4/extents.c in ext4_es_cache_extent. Fabricating an integer overflow,
+> A local attacker with a special user privilege may cause a system crash
+> problem which can lead to an availability threat.
 
-In accordance with `our security release policy
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
-Django team
-is issuing
-`Django 3.2.5 <https://docs.djangoproject.com/en/dev/releases/3.2.5/>`_ and
-`Django 3.1.13 <https://docs.djangoproject.com/en/dev/releases/3.1.13/>`_.
-These releases address the security issue with severity "high" detailed 
-below. We encourage all users of Django to upgrade as soon as possible.
+Please include what kernel version things like this were "found in" and
+when it was fixed, otherwise you force everyone to go scramble just to
+find that this was reported in July of 2020 and fixed then in the 5.9
+kernel release and has already been backported to all relevant stable
+kernel releases in August of last year.
 
-CVE-2021-35042: Potential SQL injection via unsanitized 
-``QuerySet.order_by()`` input
-=====================================================================================
+In other words, no one running an updated kernel version from kernel.org
+is vulnerable today, right?  Are you saying that specific distro kernels
+are vulnerable to this?  If so, which ones?
 
-Unsanitized user input passed to ``QuerySet.order_by()`` could bypass 
-intended
-column reference validation in path marked for deprecation resulting in a
-potential SQL injection even if a deprecation warning is emitted.
+> 'CVE-2021-3428' was assigned by Red Hat.
 
-As a mitigation the strict column reference validation was restored for the
-duration of the deprecation period. This regression appeared in 3.1 as a 
-side
-effect of fixing `#31426 <https://code.djangoproject.com/ticket/31426>`_.
+Are you sure that SUSE didn't already assign one to this?
 
-The issue is not present in the main branch as the deprecated path has been
-removed.
+And if not, why not and why do this now?  Who is this report for?
 
-Thanks to Joel Saunders for the report.
+thanks,
 
-Affected supported versions
-===========================
-
-* Django 3.2
-* Django 3.1
-
-Resolution
-==========
-
-Patches to resolve the issue have been applied to Django's 3.2 and 3.1
-release branches. The patches may be obtained from the
-following changesets:
-
-* On the `3.2 release branch 
-<https://github.com/django/django/commit/a34a5f724c5d5adb2109374ba3989ebb7b11f81f>`__
-* On the `3.1 release branch 
-<https://github.com/django/django/commit/0bd57a879a0d54920bb9038a732645fb917040e9>`__
-
-The following releases have been issued:
-
-* Django 3.2.5 (`download Django 3.2.5 
-<https://www.djangoproject.com/m/releases/3.2/Django-3.2.5.tar.gz>`_ | 
-`3.2.5 checksums 
-<https://www.djangoproject.com/m/pgp/Django-3.2.5.checksum.txt>`_)
-* Django 3.1.13 (`download Django 3.1.13 
-<https://www.djangoproject.com/m/releases/3.1/Django-3.1.13.tar.gz>`_ | 
-`3.1.13 checksums 
-<https://www.djangoproject.com/m/pgp/Django-3.1.13.checksum.txt>`_)
-
-The PGP key ID used for this release is Mariusz Felisiak: 
-`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
-
-General notes regarding security reporting
-==========================================
-
-As always, we ask that potential security issues be reported via
-private email to ``security@...ngoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
-
+greg k-h
