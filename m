@@ -1,49 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/11/1
-Message-ID: <20210811081634.15143171@computer>
-Date: Wed, 11 Aug 2021 08:16:34 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/17/12
+Message-ID: <YFIgdvb3HG4js+Y2@eldamar.lan>
+Date: Wed, 17 Mar 2021 16:29:58 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: STARTTLS vulnerabilities
+Subject: Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi Rohit,
 
-On Tue, 10 Aug 2021 15:41:56 +0200
-Guido Berhoerster <guido+openwall.com@...hoerster.name> wrote:
+On Wed, Mar 17, 2021 at 04:17:05PM +0100, Greg KH wrote:
+> On Wed, Mar 17, 2021 at 07:45:59PM +0530, Rohit Keshri wrote:
+> > Hello Team,
+> > 
+> > A denial of service vulnerability was found in n_tty_receive_char_special
+> > in drivers/tty/n_tty.c of the Linux kernel.  In this flaw a local attacker
+> > with a normal user privilege could delay the loop (due to a changing
+> > ldata->read_head, and a missing sanity check) and cause a threat to the
+> > system availability.
+> > 
+> > 'CVE-2021-20219' was assigned by Red Hat.
+> > 
+> > Acknowledgements: Evgenii Shatokhin (Virtuozzo Research LLC)
+> 
+> Really?  Not the tools or people that reported this issue and fixed it
+> in the community back in 2018?
 
-> have you or are you planning to look into XMPP client/server
-> implementations as well?  The use of STARTTLS for both c2s and s2s
-> connections is still prevalent both in terms of implementation
-> support and actual practice and could potentially suffer form the
-> same issues (command injection or downgrade attacks).
+Can you clarify, would 3d63b7e4ae0d ("n_tty: Fix stall at
+n_tty_receive_char_special().") be the upstream fix you are referring
+to for it?
 
-We have not looked much into other protocols, and given how much time
-we've already spent on the topic I think it is unlikely that we will do
-this.
-
-Of course it's a very obvious idea for further research to look if one
-finds similar vulnerabilities to the ones we found in other protocols.
-So I'd really like to encourage other people to look for this.
-
-FWIW there are a lot of protocols with a STARTTLS mechanism, here's the
-list of supported protocols by OpenSSL:
-	smtp
-	pop3
-	imap
-	ftp
-	xmpp
-	xmpp-server
-	telnet
-	irc
-	mysql
-	postgres
-	lmtp
-	nntp
-	sieve
-	ldap
-
-
--- 
-Hanno Böck
-https://hboeck.de/
+Regards,
+Salvatore
