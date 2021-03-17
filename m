@@ -1,91 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/05/4
-Message-ID: <CALBaBG-wC+E2CToPvR5u_4Oz4J-CURY_2i8qUDt7vYd_wfgw0Q@mail.gmail.com>
-Date: Wed, 5 May 2021 09:40:31 -0700
-From: Aaron Patterson <aaron.patterson@...il.com>
-To: ruby-security-ann@...glegroups.com, rubyonrails-security@...glegroups.com,  oss-security@...ts.openwall.com
-Subject: [CVE-2021-22904] Possible DoS Vulnerability in Action Controller Token Authentication
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/17/18
+Message-ID: <YFJxUTwEHsaHhO7/@sashalap>
+Date: Wed, 17 Mar 2021 17:14:57 -0400
+From: Sasha Levin <sashal@...nel.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2020-35519 Linux kernel: x25_bind out-of-bounds read
 Content-Type: text/plain; charset=utf-8
 
-There is a possible DoS vulnerability in the Token Authentication logic in
-Action Controller.  This vulnerability has been assigned the CVE identifier
-CVE-2021-22904.
+On Thu, Mar 18, 2021 at 01:20:18AM +0530, Rohit Keshri wrote:
+>Hello Team,
+>
+>An out-of-bounds (OOB) memory access flaw was found in x25_bind in
+>net/x25/af_x25.c in the Linux kernel. A bounds check failure allows a local
+>attacker with a user account on the system to gain access to out-of-bounds
+>memory, leading to a system crash or a leak of internal kernel information.
+>The highest threat from this vulnerability is to confidentiality,
+>integrity, as well as system availability.
+>
+>'CVE-2020-35519' was assigned by Red Hat.
 
-Versions Affected:  >= 4.0.0
-Not affected:       < 4.0.0
-Fixed Versions:     6.1.3.2, 6.0.3.7, 5.2.4.6, 5.2.6
+This mail doesn't even mention where/how this is fixed. Is this
+6ee50c8e262a ("net/x25: prevent a couple of overflows")?
 
-Impact
-------
-Impacted code uses `authenticate_or_request_with_http_token` or
-`authenticate_with_http_token` for request authentication.  Impacted code
-will
-look something like this:
+If so, it's already fixed in all stable kernels.
 
-```
-class PostsController < ApplicationController
-  before_action :authenticate
-
-  private
-
-  def authenticate
-    authenticate_or_request_with_http_token do |token, options|
-      # ...
-    end
-  end
-end
-```
-
-All users running an affected release should either upgrade or use one of
-the
-workarounds immediately.
-
-Releases
---------
-The fixed releases are available at the normal locations.
-
-Workarounds
------------
-The following monkey patch placed in an initializer can be used to work
-around
-the issue:
-
-```ruby
-module ActionController::HttpAuthentication::Token
-  AUTHN_PAIR_DELIMITERS = /(?:,|;|\t)/
-end
-```
-
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided
-patches for
-the two supported release series. They are in git-am format and consist of a
-single changeset.
-
-* 5-2-http-authentication-dos.patch - Patch for 5.2 series
-* 6-0-http-authentication-dos.patch - Patch for 6.0 series
-* 6-1-http-authentication-dos.patch - Patch for 6.1 series
-
-Please note that only the 6.1.Z, 6.0.Z, and 5.2.Z series are supported at
-present. Users of earlier unsupported releases are advised to upgrade as
-soon
-as possible as we cannot guarantee the continued availability of security
-fixes for unsupported releases.
-
-Credits
--------
-Thank you to https://hackerone.com/wonda_tea_coffee for reporting this
-issue!
+How can the issue cause a leak btw?
 
 -- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-Content of type "text/html" skipped
-
-Download attachment "6-1-http-authentication-dos.patch" of type "application/octet-stream" (2136 bytes)
-
-Download attachment "6-0-http-authentication-dos.patch" of type "application/octet-stream" (2136 bytes)
-
-Download attachment "5-2-http-authentication-dos.patch" of type "application/octet-stream" (2136 bytes)
+Thanks,
+Sasha
