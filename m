@@ -1,80 +1,136 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/03/1
-Message-ID: <573a638c.960f.17766b555b8.Coremail.zhaowenjia@stu.xjtu.edu.cn>
-Date: Wed, 3 Feb 2021 15:04:55 +0800 (GMT+08:00)
-From: ???? <zhaowenjia@....xjtu.edu.cn>
-To: security@...nel.org, oss-security@...ts.openwall.com,  gregkh@...uxfoundation.org, jirislaby@...nel.org, nico@...xnic.net
-Subject: KASAN: use-after-free in con_scroll​
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/17/3
+Message-ID: <150fb1c3.1c2a0.17840082a2e.Coremail.lyl2019@mail.ustc.edu.cn>
+Date: Wed, 17 Mar 2021 19:53:00 +0800 (GMT+08:00)
+From: lyl2019@...l.ustc.edu.cn
+To: oss-security@...ts.openwall.com
+Subject: Use After Free and Double Free bugs in Linux Kernel mainline
 Content-Type: text/plain; charset=utf-8
 
-Dear Linux kernel developers,
+Hi,
+   I have found 4 security bugs in Linux Kernel mainline recently,
+and all of these bug are confirmed by the kernel maintainers.
 
-I found a crash "KASAN: use-after-free in con_scroll+0x45c/0x620 drivers/tty/vt/vt.c:641"  when running the syzkaller,  
-
-It is can be reproduced. I did not find a report about this problem. Hope it is useful.
-
-
+Details are below. I'm trying to request CVE IDs for these bugs.
 
 
-Linux version: Linux v5.9-rc8 (549738f15)
+Bug 1: net/qlcnic: Fix a use after free in qlcnic_83xx_get_minidump_template
+Commit Url:https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=db74623a3850
+
+In qlcnic_83xx_get_minidump_template, fw_dump->tmpl_hdr was freed by
+vfree(). But unfortunately, it is used when extended is true.
+
+---
+ drivers/net/ethernet/qlogic/qlcnic/qlcnic_minidump.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_minidump.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_minidump.c
+index 7760a3394e93..7ecb3dfe30bd 100644
+--- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_minidump.c
++++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_minidump.c
+@@ -1425,6 +1425,7 @@ void qlcnic_83xx_get_minidump_template(struct qlcnic_adapter *adapter)
+ 
+ 	if (fw_dump->tmpl_hdr == NULL || current_version > prev_version) {
+ 		vfree(fw_dump->tmpl_hdr);
++		fw_dump->tmpl_hdr = NULL;
+ 
+ 		if (qlcnic_83xx_md_check_extended_dump_capability(adapter))
+ 			extended = !qlcnic_83xx_extend_md_capab(adapter);
+@@ -1443,6 +1444,8 @@ void qlcnic_83xx_get_minidump_template(struct qlcnic_adapter *adapter)
+ 			struct qlcnic_83xx_dump_template_hdr *hdr;
+ 
+ 			hdr = fw_dump->tmpl_hdr;
++			if (!hdr)
++				return;
+ 			hdr->drv_cap_mask = 0x1f;
+ 			fw_dump->cap_mask = 0x1f;
+ 			dev_info(&pdev->dev,
+-- 
 
 
-The following is the crash report.
+Bug2: nvme/rdma: Fix a use after free in nvmet_rdma_write_data_done
+Commit Url: https://github.com/torvalds/linux/commit/abec6561fc4e0fbb19591a0b35676d8c783b5493
 
-==================================================================
+In nvmet_rdma_write_data_done, rsp is recoverd by wc->wr_cqe
+and freed by nvmet_rdma_release_rsp(). But after that, pr_info()
+used the freed chunk's member object and could leak the freed
+chunk address with wc->wr_cqe by computing the offset.
 
-BUG: KASAN: use-after-free in scr_memmovew include/linux/vt_buffer.h:68 [inline]
-BUG: KASAN: use-after-free in con_scroll+0x45c/0x620 drivers/tty/vt/vt.c:641
-Read of size 693770 at addr ffff8880000b894c by task syz-executor.2/7755
+ drivers/nvme/target/rdma.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-CPU: 0 PID: 7755 Comm: syz-executor.2 Not tainted 5.1.0 #4
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Ubuntu-1.8.2-1ubuntu1 04/01/2014
-Call Trace:
- __dump_stack lib/dump_stack.c:77 [inline]
- dump_stack+0x75/0xae lib/dump_stack.c:113
- print_address_description+0x60/0x223 mm/kasan/report.c:187
- kasan_report.cold+0x1a/0x32 mm/kasan/report.c:317
- memmove+0x20/0x50 mm/kasan/common.c:123
- scr_memmovew include/linux/vt_buffer.h:68 [inline]
- con_scroll+0x45c/0x620 drivers/tty/vt/vt.c:641
- csi_L drivers/tty/vt/vt.c:1967 [inline]
- do_con_trol+0x4ba4/0x5d80 drivers/tty/vt/vt.c:2366
- do_con_write.part.0+0xd3d/0x1ac0 drivers/tty/vt/vt.c:2790
- do_con_write drivers/tty/vt/vt.c:2558 [inline]
- con_write+0x33/0xc0 drivers/tty/vt/vt.c:3127
- process_output_block drivers/tty/n_tty.c:595 [inline]
- n_tty_write+0x391/0xe50 drivers/tty/n_tty.c:2333
- do_tty_write drivers/tty/tty_io.c:961 [inline]
- tty_write+0x3d4/0x6e0 drivers/tty/tty_io.c:1045
- do_loop_readv_writev fs/read_write.c:704 [inline]
- do_loop_readv_writev fs/read_write.c:688 [inline]
- do_iter_write fs/read_write.c:959 [inline]
- do_iter_write+0x3eb/0x560 fs/read_write.c:938
- vfs_writev+0x19a/0x2d0 fs/read_write.c:1002
- do_writev+0x106/0x2d0 fs/read_write.c:1037
- do_syscall_64+0x9a/0x2b0 arch/x86/entry/common.c:290
- entry_SYSCALL_64_after_hwframe+0x44/0xa9
-RIP: 0033:0x45de59
-Code: 0d b4 fb ff c3 66 2e 0f 1f 84 00 00 00 00 00 66 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 0f 83 db b3 fb ff c3 66 2e 0f 1f 84 00 00 00 00
-RSP: 002b:00007fae6e580c78 EFLAGS: 00000246 ORIG_RAX: 0000000000000014
-RAX: ffffffffffffffda RBX: 000000000003b900 RCX: 000000000045de59
-RDX: 0000000000000001 RSI: 0000000020001000 RDI: 0000000000000003
-RBP: 000000000118bf60 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 000000000118bf2c
-R13: 00007fffd398ebcf R14: 00007fae6e5819c0 R15: 000000000118bf2c
+diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
+index 06b6b742bb21..6c1f3ab7649c 100644
+--- a/drivers/nvme/target/rdma.c
++++ b/drivers/nvme/target/rdma.c
+@@ -802,9 +802,8 @@ static void nvmet_rdma_write_data_done(struct ib_cq *cq, struct ib_wc *wc)
+ 		nvmet_req_uninit(&rsp->req);
+ 		nvmet_rdma_release_rsp(rsp);
+ 		if (wc->status != IB_WC_WR_FLUSH_ERR) {
+-			pr_info("RDMA WRITE for CQE 0x%p failed with status %s (%d).\n",
+-				wc->wr_cqe, ib_wc_status_msg(wc->status),
+-				wc->status);
++			pr_info("RDMA WRITE for CQE failed with status %s (%d).\n",
++				ib_wc_status_msg(wc->status), wc->status);
+ 			nvmet_rdma_error_comp(queue);
+ 		}
+ 		return;
 
-The buggy address belongs to the page:
-page:ffffea0000002e00 count:1 mapcount:0 mapping:0000000000000000 index:0x0
-flags: 0x1000(reserved)
-raw: 0000000000001000 ffffea0000002e08 ffffea0000002e08 0000000000000000
-raw: 0000000000000000 0000000000000000 00000001ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
 
-Memory state around the buggy address:
- ffff8880000fff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
- ffff8880000fff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
->ffff888000100000: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-                   ^
- ffff888000100080: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
- ffff888000100100: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
-==================================================================
+Bug3: scsi: Fix a double free in myrs_cleanup
+Commit Url:https://git.kernel.org/pub/scm/linux/kernel/git/mkp/scsi.git/commit/?id=2bb817712e2f
+
+In myrs_cleanup, cs->mmio_base will be freed twice by
+iounmap().
+
+---
+ drivers/scsi/myrs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/scsi/myrs.c b/drivers/scsi/myrs.c
+index 4adf9ded296a..329fd025c718 100644
+--- a/drivers/scsi/myrs.c
++++ b/drivers/scsi/myrs.c
+@@ -2273,12 +2273,12 @@ static void myrs_cleanup(struct myrs_hba *cs)
+ 	if (cs->mmio_base) {
+ 		cs->disable_intr(cs);
+ 		iounmap(cs->mmio_base);
++		cs->mmio_base = NULL;
+ 	}
+ 	if (cs->irq)
+ 		free_irq(cs->irq, cs);
+ 	if (cs->io_addr)
+ 		release_region(cs->io_addr, 0x80);
+-	iounmap(cs->mmio_base);
+ 	pci_set_drvdata(pdev, NULL);
+ 	pci_disable_device(pdev);
+ 	scsi_host_put(cs->host);
+-- 
+
+
+Bug4: scsi: Fix a use after free in st_open
+Commit Url:https://git.kernel.org/pub/scm/linux/kernel/git/mkp/scsi.git/commit/?id=c8c165dea4c8
+
+In st_open, if STp->in_use is true, STp will be freed by
+scsi_tape_put(). However, STp is still used by DEBC_printk()
+after. It is better to DEBC_printk() before scsi_tape_put().
+
+---
+ drivers/scsi/st.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/scsi/st.c b/drivers/scsi/st.c
+index 841ad2fc369a..9ca536aae784 100644
+--- a/drivers/scsi/st.c
++++ b/drivers/scsi/st.c
+@@ -1269,8 +1269,8 @@ static int st_open(struct inode *inode, struct file *filp)
+ 	spin_lock(&st_use_lock);
+ 	if (STp->in_use) {
+ 		spin_unlock(&st_use_lock);
+-		scsi_tape_put(STp);
+ 		DEBC_printk(STp, "Device already in use.\n");
++		scsi_tape_put(STp);
+ 		return (-EBUSY);
+ 	}
+ 
+-- 
