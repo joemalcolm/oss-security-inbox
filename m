@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["838" "Thursday" "19" "April" "2018" "14:30:56" "-0700" "Ed Cable" "edcable@mifos.org" "<CAPnWRTj6xGZuO7f5ASRKG81uis-kmgrJ2Pws4cyZRv58X38f_g@mail.gmail.com>" "34" "[oss-security] [SECURITY] CVE-2018-1290: Apache Fineract SQL Injection Vulnerability - Single quotation escape caused by two continuous SQL parameters" nil nil nil "4" "2018041921:30:56" "[oss-security] [SECURITY] CVE-2018-1290: Apache Fineract SQL Injection Vulnerability - Single quotation escape caused by two continuous SQL parameters" (number mark "U       edcable@mifo Apr 19   34/838   " thread-indent "\"[oss-security] [SECURITY] CVE-2018-1290: Apache Fineract SQL Injection Vulnerability - Single quotation escape caused by two continuous SQL parameters\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3120" "Wednesday" "17" "March" "2021" "09:05:14" "-0400" "Brad Spengler" "spender@grsecurity.net" nil "70" "Re: [oss-security] CVE-2021-3428 Linux kernel: integer overflow in ext4_es_cache_extent" nil nil nil "3" nil nil (number mark "U       spender@grse Mar 17   70/3120  " thread-indent "\"Re: [oss-security] CVE-2021-3428 Linux kernel: integer overflow in ext4_es_cache_extent\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-3428 Linux kernel: integer overflow in ext4_es_cache_extent" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20444 invoked by uid 550); 19 Apr 2018 21:34:15 -0000
+Received: (qmail 19584 invoked by uid 550); 17 Mar 2021 13:15:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,74 +12,96 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14315 invoked from network); 19 Apr 2018 21:31:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=mifos-org.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=CwP8t8W4U59Q+EuNDo3jCawAc1VbRAZ7xjpNLYQtIK4=;
-        b=FYAINNhBuH9/znWqGt7kWEQhnuDftCybqiTdz3NlQoytTQTatJap8EqVHTT/NFJ3y9
-         WsbS9iEqddGFfzXPIIOYlP6ozLzMfUl8AyQ8wbgSzAFvq1JSTzMkJV9H81flu6F44V2A
-         cXGUj/G3J5mBb3hoZgNbKMa3HE0E2azm6bUKRs7sz4fRo8YKHYsINLqLON7XADSSjF/r
-         pzXPvR61iUXBgqcW3vbiqZBU1FcsNfMRnM/W7SdyAdNLI9jPmj86lVOr6J0W3Uve1MWR
-         N8L6Ak5CTsP7nCFbivRnNk2MYj3KYEO9Ca/IzeLDqhNCIsQMHaGCzJZ6yohq4Fd41EvD
-         REFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=CwP8t8W4U59Q+EuNDo3jCawAc1VbRAZ7xjpNLYQtIK4=;
-        b=FLXag88ITixOt4nr4kUcIfyINmzPLOZqrB9DXhRmT6I51AV6qvrg8nVHxoq2EvIg7P
-         KTXXUEMVLYXZrZf2TCFZBYbEXpCQRSuRy+Rk7/cPBL4LRhFjWym9zqisWU0qU96uOqa1
-         Ai6dIh76wz7Xbu9fKJWCOzBjib5M0Fv2WJi+rK/qSRkHZdiEd8LSqcOGHoZOLkJuU9F/
-         JuevX5K9Iwq+ArITEGo8uV3IEqtrqlLUu+8ccAFP2UxmAEnCXIIOVj/33hUHPRja7/PN
-         I2XyudbzAOaq1eQAitUZd02MyV/fDWyZBgB14Levnjxrnr/D7KcGaUSh/l6Wb5Yx6JKm
-         1nyw==
-X-Gm-Message-State: ALQs6tCIpeRu0q7Z4bz29TMtV5aRNQQ7NueGRJ7JxA5YQSvkt2Tn9r+5
-	fTocslaYCsXcFaxY6XUKAlXwYcJg06WYJJxbcJWRKg==
-X-Google-Smtp-Source: AB8JxZqarfzfR+ZgppWzG7uPUVwsHIcYeEA+lkFd9aawtanA0FPPFEDC5T7RQaY62ukh2LUsYWJksyLL09ZvZdVljpY=
-X-Received: by 2002:a19:43:: with SMTP id 64-v6mr1052411lfa.13.1524173476732;
- Thu, 19 Apr 2018 14:31:16 -0700 (PDT)
+Received: (qmail 10218 invoked from network); 17 Mar 2021 13:05:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=grsecurity.net;
+	s=mail; t=1615986314;
+	bh=N6tRr+jpCxjYmrNWYX/k8vAGCYeMvBUbvqHROXGJV7I=;
+	h=Date:From:To:Subject:References:In-Reply-To:From;
+	b=JRivFVRj8GXJ2ZBxkiAkw00LLuOqfRbm98BDtnVL6lAiqpVjk4JdVNY5zOx9tk3no
+	 JPcRjh1pIecyPbWTYuwrX0bTu2COay61Yo7scnfMourvz3fNeAH3sIXMsHQ2ZnT8Dk
+	 /jpS8kFxbPoVSisShNrDIRR7KtBRQ6hIaL20ZXbw=
+Date: Wed, 17 Mar 2021 09:05:14 -0400
+From: Brad Spengler <spender@grsecurity.net>
+To: oss-security@lists.openwall.com
+Message-ID: <20210317130514.GA1279@grsecurity.net>
+References: <CAKx+4-oZ3YabEpWXYSs8LccRc8PcC_o2fbg7V5FpLT+nVBn66w@mail.gmail.com>
+ <YFHVuDKj+oMwxBZX@kroah.com>
 MIME-Version: 1.0
-From: Ed Cable <edcable@mifos.org>
-Date: Thu, 19 Apr 2018 14:30:56 -0700
-Message-ID: <CAPnWRTj6xGZuO7f5ASRKG81uis-kmgrJ2Pws4cyZRv58X38f_g@mail.gmail.com>
-To: user@fineract.apache.org, Dev <dev@fineract.apache.org>, 
-	security <security@apache.org>, oss-security@lists.openwall.com, 
-	=?UTF-8?B?5ZyG54+g56yU?= <627963028@qq.com>
-Content-Type: multipart/alternative; boundary="000000000000a832b4056a3a4a47"
-Subject: [oss-security] [SECURITY] CVE-2018-1290: Apache Fineract SQL Injection Vulnerability
- - Single quotation escape caused by two continuous SQL parameters
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="0F1p//8PRICkK4MW"
+Content-Disposition: inline
+In-Reply-To: <YFHVuDKj+oMwxBZX@kroah.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Subject: Re: [oss-security] CVE-2021-3428 Linux kernel: integer overflow in
+ ext4_es_cache_extent
 
---000000000000a832b4056a3a4a47
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+--0F1p//8PRICkK4MW
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Severity: Critical
+Hi Greg,
 
-Vendor:
-The Apache Software Foundation
+> Please include what kernel version things like this were "found in" and
+> when it was fixed, otherwise you force everyone to go scramble just to
+> find that this was reported in July of 2020 and fixed then in the 5.9
+> kernel release and has already been backported to all relevant stable
+> kernel releases in August of last year.
 
-Versions Affected:
-Apache Fineract 1.0.0
-Apache Fineract 0.6.0-incubating
-Apache Fineract 0.5.0-incubating
-Apache Fineract 0.4.0-incubating
+Those are a lot of assumptions there.  I do wonder how you feel you can
+ignore the CVE process the rest of the world is engaged in, while at the
+same time boss around those engaged in it.  But setting aside the irony
+of someone telling the world "if you want to know what was fixed or not,
+we publish the source, figure it out for yourself" being irate at being
+handed the same terms, I went ahead and did the investigation for you.
 
-Description:
+The fix (part of the patch series https://www.spinics.net/lists/linux-ext4/msg73471.html):
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ce9f24cccdc019229b70a5c15e2b09ad9c0ab5d1
+was included in 5.9, and was backported through to 5.7.  However, you'll
+note the fixes tag points to a commit first appearing in 5.2.  That commit
+commit itself was backported to some earlier stable kernels, like 4.14.
 
-Using a single quotation escape with two continuous SQL parameters can
-cause a SQL injection. This could be done in Methods like
-retrieveAuditEntries of AuditsApiResource Class
-retrieveCommands of MakercheckersApiResource Class
+Why wasn't the fix for this CVE backported to kernels older than 5.7? For
+the same reason many other bugs/vulnerabilities don't get backported: small,
+often trivial conflicts.
 
-Credit:
-This issue was discovered by =E5=9C=86=E7=8F=A0=E7=AC=94 (627963028@qq.com)
+In this instance, it becomes clear the reason why it wasn't backported any
+further than 5.7 is because 5.7 contained the following commit:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=54d3adbc29f0c7c53890da1683e629cd220d7201
 
-References:
-http://fineract.apache.org/
-https://cwiki.apache.org/confluence/display/FINERACT/Apache+
-Fineract+Security+Report
+without which there is a small conflict in fs/ext4/block_validity.c:
+<<<<<<< HEAD
+                else {
+                        sbi->s_es->s_last_error_block = cpu_to_le64(start_blk);
+                        return 0;
+                }
+=======
+                else
+                        return entry->ino == ino;
+>>>>>>> ce9f24cccdc0... ext4: check journal inode extents more carefully
 
-Regards,
-Apache Fineract Team
+Thanks,
+-Brad
 
---000000000000a832b4056a3a4a47--
+--0F1p//8PRICkK4MW
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.12 (GNU/Linux)
+
+iQIcBAEBCgAGBQJgUf6DAAoJEETRwPglJf5JOlsQAIz5CIg84sUNuJJ3x8oOnI5K
+YUT4ojrG9h0ZsqEAvZdPm9ywIrwWTh/3M7VYmoaHMBvCzkJP22X0oo6W8R5H7i/w
+C0D51tXn0LCghHp08lQfU6atUQDMs2K4XlmvmiA6RkvVf7bPr8NgSpJSYNZmgvC/
+/iymB1SVQu/senVd386G0obsWjd0rsR4IYJ/3vamS62x5VO/Nlm6s5f89WHSVNmZ
+t8jrnrJ/R8Vv6+9twMMzserxUO+lFC/5XMf9BCloc7bocv1vL4FCh4UGiYQ+BvbO
+ruxZr+ui31mIjq+EBViLyTSdibvDlIBvSeLxzAQWK+5GlVfaayjHKGrc86c4YhcR
+FJ26IVaaHOLMnOv6f0f8YW7SauhVN/tq7Xphxk0ySr1S6F0WbpLYtknKcKGJsTHy
+Ys8/Txwshv12BpStyCLm6FfMRN9gjwXlhLR85Aefw3kg52lppcE6zuNflA4n98ID
+VASpW41wxJnHTGY5jgOxsfo60CHn7Je7B4wLkrx+n7z7wm0mPZva6EB5LRjJyen8
+LgfZKeZzbgWxqs1OY/npFG2AG1BbhaV8EsNrwzfDqy2mJZwfuKA1HYBSp+fKSp/f
+NepaJfT8Mf6teg9nOGLqQZPA3x7VnHYJAEFz8uAeDjZT8YgtiTHDPVTAtEMOIko6
+qBVeVGpMtjNkusGKtbSt
+=k8a/
+-----END PGP SIGNATURE-----
+
+--0F1p//8PRICkK4MW--
