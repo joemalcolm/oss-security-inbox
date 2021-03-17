@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5360" "Thursday" "19" "April" "2018" "23:22:28" "+0100" "=?UTF-8?B?VsOtdG9yIFNpbHZh?=" "vitorhg20080@gmail.com" "<8250f648-c517-fa70-36db-214d87671a4c@gmail.com>" "143" "[oss-security] CVE-2018-10194 Ghostscript 9.18 stack-based buffer overflow" nil nil nil "4" "2018041922:22:28" "[oss-security] CVE-2018-10194 Ghostscript 9.18 stack-based buffer overflow" (number mark "U       vitorhg20080 Apr 19  143/5360  " thread-indent "\"[oss-security] CVE-2018-10194 Ghostscript 9.18 stack-based buffer overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1118" "Wednesday" "17" "March" "2021" "18:39:14" "+0300" "Evgenii Shatokhin" "eshatokhin@virtuozzo.com" nil "39" "Re: [oss-security] CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS" nil nil nil "3" nil nil (number mark "U       eshatokhin@v Mar 17   39/1118  " thread-indent "\"Re: [oss-security] CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5820 invoked by uid 550); 19 Apr 2018 22:34:24 -0000
+Received: (qmail 10171 invoked by uid 550); 17 Mar 2021 15:45:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,186 +12,136 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24207 invoked from network); 19 Apr 2018 22:22:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-language;
-        bh=OP2PHmtehRKuTcETY37Wju9AB1rmNiKpGYSqpeyATmQ=;
-        b=U4trreKCsX8Ox4bPY1Ttg5/xk7b7H8wGj2s57q6V2Awz6jb896NMFG1xlDpcR9gGz2
-         pgCCndyPNV1O6YRnSf93P8+urbNNwXSwoe9eVNFSD6m57eI9ZZsQh4aaSlurTzzj0zo2
-         YtW5BdUHQ5lufJ5YzyMUtH8NwHrtlqFtLdrk5lKMsz4p3wNbX8Cq6tGN2DBkLSw0obEe
-         yt1ec/LwXjE5XUgL7bP3mi2oFsaCNT1WkyWVeYPdu+Umu+6JhZvmzDGZ2IrolFgQlxEr
-         yujlQXWkrqsR7LK8O+GFM5gZEvmEmQ45IvUtMfSeswutSZfPHOOA9iRacFM702JMHKzq
-         59MQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version:content-language;
-        bh=OP2PHmtehRKuTcETY37Wju9AB1rmNiKpGYSqpeyATmQ=;
-        b=XZESt0KdO1z50hP6grvalbKg4M5nsbkq58rK0O7I9X6BjLFWF5fhRrDwbe8Nk5pSAm
-         227y4GsyDigNcVJhkVKWgfCb1XEUWbGkliiMMmUOtWzpJr4qfo4rc7hdjZ6BHZaedcvs
-         upgtL0q8aAznWu+N/MOVkVlpl23OU87H0MrxFA2xxydYXRVrzL/pZ8pwMbwjMUTd+cgg
-         bbWatn0NmGtZ2wWeNVswxTFmHMK1raHTsd6r8eewMDLj7Yk6kYBs3T0V9k65sVvJVOoa
-         uArjLGAS/Hdw5vrX8RcglCtC1IN0lg+lRRRhJD7zZbQ/5eMHt8+OGIsBx3xCjcG2PU+o
-         +2ng==
-X-Gm-Message-State: ALQs6tCIXSs7JAMZpORUxUj+vGD72UF0xFjgNzdprt/OgJNNRw13o3Mo
-	WpUyIyvjXjU8kgp3JTTcUu9Fnv5T
-X-Google-Smtp-Source: AIpwx4/qY/ifj4ALgkdcmYn++yUhp2OXZROFQaLZKUQ21nGWkXwBvEJCgs5YVhgGEhOztcC/OXIFRA==
-X-Received: by 10.28.12.141 with SMTP id 135mr263554wmm.99.1524176549889;
-        Thu, 19 Apr 2018 15:22:29 -0700 (PDT)
-To: oss-security@lists.openwall.com
-From: =?UTF-8?Q?V=c3=adtor_Silva?= <vitorhg20080@gmail.com>
-Message-ID: <8250f648-c517-fa70-36db-214d87671a4c@gmail.com>
-Date: Thu, 19 Apr 2018 23:22:28 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.7.0
-MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------2BD15F820F748089562C6F46"
+Received: (qmail 7543 invoked from network); 17 Mar 2021 15:39:28 -0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Ni80eO9BHakVzsJzw+8MZsuynjVUoBQteAgZmXUZeRbgPAVfG6fXy1+riQV4aLHROdZ9kD4tWLnxFJxdC2iY6psq3/g66am28G6PD8V5vgC1OE7PQizOZ2sa/XuEKrHvx7gaH7w17y8X8oOn8zqYu0OSbEPwtX7PDZNEc2VIHKIX7POq6MQ4C7zWbn7kJIW1hBGDkHBOOKQ7aslEfH+hJETEA3uZdTfYgJARZHNaGZGAovfMXKLRkxRm6F+P/Qns1m08FUWIWle3xe41uqNRq9srdNecDqRz1BIjvXPv2oFsD+EG2KUcLF8hOH2kqYbjXqMt6wsxRj9H5+xdyDqD0A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=I/XT+Dg4iu5+yDMr+qunzxl2koo0rzmUwYZbZ4Legcc=;
+ b=ZPBg1mpKGanOXs2GCSlRh1gogB3NzTpPNeb9DlzmkzdpdIxKtDIYYwn9UCnhjdrGm6j/DVHi+O8nn6JGrVCSHFium6seqccmZpxplXdOHxKXgSEqhi1PLRV2E9DSLJ0Dv04htJaHatjsU+oCCo3PHdl/lAqklyhpvghKy99f+SeXE2lGx8WJWHRR5jY0f4Z0aCTyqNGGq8BXC5yQcia80Z660k8Z1tfwJfrRj3KHrS0Oi5b3kFW4pnc/ZJPybJ7h509P/2q+jKMoDl8aCBgrgMP3fBGCMy+AlXfPXp6N5AZN+dsYAmP5prTJmcrh+yPvbXTUEdOHl2uqOh9WLHt5rQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=I/XT+Dg4iu5+yDMr+qunzxl2koo0rzmUwYZbZ4Legcc=;
+ b=Efi1lGYXuipSd8pUkjMzzbss4aoDAvVtyA0XlC4RTE9UiwLDR1sXHMBSDqXf/b2ddOpxi/1jpJD7pNia15WrSci75llggtK/4XEmEasXjod34qXMs2FzOdkHZSj6OKtqdJGJKwnR+k0ulujGtwk+/aLraLcgRpdnpho/qx8Ymik=
+Authentication-Results: lists.openwall.com; dkim=none (message not signed)
+ header.d=none;lists.openwall.com; dmarc=none action=none
+ header.from=virtuozzo.com;
+To: Salvatore Bonaccorso <carnil@debian.org>
+References: <CAKx+4-qgvO4_R8fTqwxKLqwud42wUkG3V2POGeXE6C6Bv+zrxg@mail.gmail.com>
+ <YFIdcSI6NvjeqFKp@kroah.com> <YFIgdvb3HG4js+Y2@eldamar.lan>
+Cc: oss-security@lists.openwall.com
+From: Evgenii Shatokhin <eshatokhin@virtuozzo.com>
+Message-ID: <6822116c-31f0-bdc4-5b40-d2e0b91a5e02@virtuozzo.com>
+Date: Wed, 17 Mar 2021 18:39:14 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
+In-Reply-To: <YFIgdvb3HG4js+Y2@eldamar.lan>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Subject: [oss-security] CVE-2018-10194 Ghostscript 9.18 stack-based buffer overflow
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [85.249.47.245]
+X-ClientProxiedBy: FRYP281CA0010.DEUP281.PROD.OUTLOOK.COM (2603:10a6:d10::20)
+ To DB8PR08MB5019.eurprd08.prod.outlook.com (2603:10a6:10:e0::21)
+MIME-Version: 1.0
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 647363d9-f78b-44e9-2a32-08d8e95ad283
+X-MS-TrafficTypeDiagnostic: DB6PR0801MB1974:
+X-Microsoft-Antispam-PRVS: 
+	<DB6PR0801MB19748FBE97B0B6957D1B34B2D96A9@DB6PR0801MB1974.eurprd08.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:8273;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 
+	7d1xJNbLV19hSWT7jQB5tQOID1k1e3DtFllVXpTL4cntF9Ar1qjtgF+Ac8oO/HGu7ZUSpBcnVPS4nzuY9aH6sJ5ZCQoh586hk0ecu5GWHhGwErlNmos+YfBCAqO46AqA1nl8lELLEIR/iGZ31mNJc+4Y5aCqtDtMP7NuBX1K7lhfcbT0CXGvW6qA11cdkeg8qRL5NNhSdVgdtsZeROrErBydxFHPNLHQ6XiEwriG8zTybH5CHfvgqV8h3xhbwCO+NUysVyO27xlCMuwRrwIhuoXcXe4wxoh1AkVoGBg3RBhcIF99NJuLKGdoH8eQTOps5jY2+lU7tU03mKlrhOqatE/l3igd2h3/VpeN8LHHea0RmpJaXmabA2SB8MO2BDdO6MUQPXAigaYZvZjpVuZyLHgS91DYlt/7X8QEpYYMbYEcryE5NuBZtPE1o3KVx5x1bLPDm1g45gmiJNpoUowsEseAVEVlieqdrSEC+85XXEzc2Fjz2+7CTmzExIitSxF767U/S4qZZGj8Ecn+dY1iNKuYtRNKXeh+MdSqz88BkgST22OSRdedFmTGy1vbs+68kWjeM8cLl7vUddruGktTNnbr89477rF5SXiHCpv2MeN/agoBhQzso5wN4UckrDcpJw8VMF8kFHLXdTCdvFHPyg==
+X-Forefront-Antispam-Report: 
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DB8PR08MB5019.eurprd08.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(39850400004)(376002)(346002)(396003)(136003)(366004)(6486002)(316002)(8676002)(8936002)(2906002)(956004)(478600001)(36756003)(5660300002)(86362001)(2616005)(31686004)(186003)(16526019)(52116002)(4326008)(16576012)(66476007)(66946007)(53546011)(31696002)(26005)(66556008)(6916009)(45980500001)(43740500002);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData: 
+	=?utf-8?B?RTJBMER0S3JlQUpZaDd0ak85ZUlTdVVUZ0oydlZiK0tTQUVYZi93ZTN1QTZz?=
+ =?utf-8?B?NmJoUkNsRTFXRDU1UUg5TjdqZHRVaCtDVnhqREJrajNpbG9IbHVrR05VUGk5?=
+ =?utf-8?B?VWxzSGh4ai9ab0FrMW1WLzZVZnRDNmxRazBUMno3c3owQ3F3SERGYU1QSDJ6?=
+ =?utf-8?B?R2dQNFBIcTF0TW5nNnU5U2VXamdKVlJtRTc0Rm4rWGNjdytxNWlyYnEvdnFX?=
+ =?utf-8?B?dDlJV1RoYTd4TkQ4Z3h0NlV3L3ZtYitZTTREeWlXZjNNK2dwL2ZObjdRZHJp?=
+ =?utf-8?B?SkJqM041R3ZQNjM1dEt6NUdZTzhiTWNNQWNXc0w1K3p0Z1JVR0JZY2VWbzdC?=
+ =?utf-8?B?SWZ5enpvNWs4ejVyZ1hMZm1UcmZCWHZZTGFpL1RrMXl3RnZCeWI5R3RaQXVq?=
+ =?utf-8?B?aUw3eDdFNkdmQmF6Ri9CeUhTMHU3Y2dUcEtvV3o4UnpQdENZTVZoVE5XMzNC?=
+ =?utf-8?B?SkZBTjliQ1RVM2l2b0FrWVBJSmNiNTN0ZW91TlN2UzBkcjh1dHU5bDhKZlhF?=
+ =?utf-8?B?VWt1NFRZK1ZmUnhUZ2RwcnZkbjdMeHh1WjNkZTQ4amxSeWg5WVg4aE0vSW9T?=
+ =?utf-8?B?Vi9PWlJCM2pvNEdtNGx4WTA0R2JSY0xpRGtZZW9tWFdqZERGbDZHcVg3aWUx?=
+ =?utf-8?B?VjlVMlhmYTIzK1ZzYVNwVkk2N2VPMWNKbUI1T2ZSVEk3aHFGcUNNbUlKakFi?=
+ =?utf-8?B?S21xazRFN3JkZ2c4a0FxUVlIOWRleDRtazUwWGx3VHpKY1NpUXBuVTJTVHNK?=
+ =?utf-8?B?TWczcmJGalRrQVF3L3ZQOUpacDBZelU3cGFGRys5WS9CMTdRNVBsSHRGcU1y?=
+ =?utf-8?B?bFdPZ09kS0Znb0lUQTZ5V0owNWsrL01ZOVBySEtVWmpyS2ttZkpLUWo4cHFK?=
+ =?utf-8?B?dEZQejJ6Ym9vVGk0K1RIeUl2a3I2MzBDRlZ6TXZwdU1Da2NSV0VYL1RVQ3Q4?=
+ =?utf-8?B?bmE3UGxyL1JFV3dNYmk2Z3BnV3ZrOTJ5NmVrZSszK0hLdG5OdFg2Sk9PNG53?=
+ =?utf-8?B?VWxpRitsOWozQmJmbk5FWHBoK0lXNTIwakdxcFlsL3loL3UrdFlxL2M2aVJL?=
+ =?utf-8?B?K1ZxTlVxNkFxNVErZUpzZVNtSndsLytUSDhYQ1JlMWtXK1pSZDkzZzgzaWVY?=
+ =?utf-8?B?eEdWc003aTRmenlDa1VuQWZwSURVbmRUUllwbURDbkdBREFiU1JNQTJFUklB?=
+ =?utf-8?B?eS9RRjQwU0laUU1yd3lGWldMOHRlUUdoVXJZNmtBUTE0TWJKMVNGOWhwTUp4?=
+ =?utf-8?B?S3I1d3pYbmlabXNrL1RVRGhEOEVOdnN1RGViekZadEFPUWQyZEVSQkZvOERy?=
+ =?utf-8?B?RkoxbHV3UzhVVDZuSEVQbG56enQvOGlNUWVDclh0OER3YUZKazA4QTdlUmNY?=
+ =?utf-8?B?eVJuOXVtdlc1cFpOalpocDJ6T0RaNUd1ZFN0RG9EYkdNeGRHQUNRcVJzelJ4?=
+ =?utf-8?B?RlRRTWxDbFRqY0FZRzFHb3dINHArYlB2bWNsY0pSYVh4N1pNS1FEUWhqQWF0?=
+ =?utf-8?B?ZzlCOUZRWUI2NHZMU1pTWEdOdXFqMWU5REJYVmVnZXhLWURvK2FBTWx4Y1lk?=
+ =?utf-8?B?SFZDMUF6NWQwejF4Unl3WnpOUENqc29tYlIxVEEySFN6TXZJTHlpWGNERHdw?=
+ =?utf-8?B?UTI3TlVyVnRvdGRJTVhZQ3puSk5DSURjUEdmV2RXcExuNTdpMWJOSjliOHEw?=
+ =?utf-8?B?MC9JMWxCOXdMb0NsUHNUVnZxVEZiVmFERkNTRjd2SVNYd0s5d2QrYmp3ZzYv?=
+ =?utf-8?Q?a78T2UVA3xeVsqPeoChbjE1bITp+o+XjfFzlwru?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 647363d9-f78b-44e9-2a32-08d8e95ad283
+X-MS-Exchange-CrossTenant-AuthSource: DB8PR08MB5019.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Mar 2021 15:39:16.2204
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: SqhqyNwwj3dY00Jw9GO7p40YghqKIbkq/QEk755BiE6mpQ5po02QJO4bzvA7OlYXs53IP0CPs+yiVqQHtMCbBoAoYGcVaN//+3HWwR7q5yk=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB6PR0801MB1974
+Subject: Re: [oss-security] CVE-2021-20219 Linux kernel: improper
+ synchronization in flush_to_ldisc() can lead to DoS
 
---------------2BD15F820F748089562C6F46
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+On 17.03.2021 18:29, Salvatore Bonaccorso wrote:
+> Hi Rohit,
+> 
+> On Wed, Mar 17, 2021 at 04:17:05PM +0100, Greg KH wrote:
+>> On Wed, Mar 17, 2021 at 07:45:59PM +0530, Rohit Keshri wrote:
+>>> Hello Team,
+>>>
+>>> A denial of service vulnerability was found in n_tty_receive_char_special
+>>> in drivers/tty/n_tty.c of the Linux kernel.  In this flaw a local attacker
+>>> with a normal user privilege could delay the loop (due to a changing
+>>> ldata->read_head, and a missing sanity check) and cause a threat to the
+>>> system availability.
+>>>
+>>> 'CVE-2021-20219' was assigned by Red Hat.
+>>>
+>>> Acknowledgements: Evgenii Shatokhin (Virtuozzo Research LLC)
+>>
+>> Really?  Not the tools or people that reported this issue and fixed it
+>> in the community back in 2018?
+> 
+> Can you clarify, would 3d63b7e4ae0d ("n_tty: Fix stall at
+> n_tty_receive_char_special().") be the upstream fix you are referring
+> to for it?
 
-Hello,
+Sorry for jumping in.
 
-I think I found a possible RCE on ghostscript 9.23. I can reproduce on
-9.18 (but not in 9.23) and the vendor confirmed the vulnerability and
-applied a fix for 9.23.
+Yes, this is the original fix, but the issue I reported is specific to 
+RHEL 7: their backport of that fix was incomplete.
 
+> 
+> Regards,
+> Salvatore
+> .
 
-[Suggested description]
-The set_text_distance function in devices/vector/gdevpdts.c in the
-pdfwrite component in Artifex Ghostscript through 9.22 does not prevent
-overflows in text-positioning calculation, which allows remote attackers
-to cause a denial of service (application crash) or possibly have
-unspecified other impact via a crafted PDF document.
+Regards,
+Evgenii
 
-------------------------------------------
+> 
 
-[Additional Information]
-This seems to be affected only on ghostscript 9.18 or less. My
-analysis seems this is a bad validation on input at
-pdf_set_text_matrix at gdevpdts.c causing pprintg1 function at
-spprint.c to write outbounds of the stack.
-
-I can provide with a file use case. Even this seems not to trigger on
-newer versions, this package is still available on a lot of systems
-(such as ubuntu or debian) as the latest version available.
-
-$ gs -o tested.pdf -sDEVICE=3Dpdfwrite -dPDFSETTINGS=3D/prepress
--dHaveTrueTypes=3Dtrue -dEmbedAllFonts=3Dtrue \
-=C2=A0 -dSubsetFonts=3Dfalse -c ".setpdfwrite <</NeverEmbed [ ]>>
-setdistillerparams" -f fuzzed-case1.ps
-GPL Ghostscript 9.18 (2015-10-05)
-Copyright (C) 2015 Artifex Software, Inc.=C2=A0 All rights reserved.
-This software comes with NO WARRANTY: see the file PUBLIC for details.
-Loading NimbusRomNo9L-Reg font from
-/usr/share/ghostscript/9.18/Resource/Font/NimbusRomNo9L-Reg... 4743540
-3133830 2015200 710957 1 done.
-Loading NimbusRomNo9L-Med font from
-/usr/share/ghostscript/9.18/Resource/Font/NimbusRomNo9L-Med... 4820876
-3332725 2035392 735152 1 done.
-Loading NimbusMono-Regular font from
-/usr/share/ghostscript/9.18/Resource/Font/NimbusMono-Regular... 4900004
-3527153 2055584 752136 1 done.
-Loading NimbusMono-Bold font from
-/usr/share/ghostscript/9.18/Resource/Font/NimbusMono-Bold... 5118700
-3762771 2095968 786137 1 done.
-Loading NimbusRomNo9L-RegIta font from
-/usr/share/ghostscript/9.18/Resource/Font/NimbusRomNo9L-RegIta...
-5357220 4001795 2156544 851571 1 done.
-Loading NimbusSanL-Reg font from
-/usr/share/ghostscript/9.18/Resource/Font/NimbusSanL-Reg... 5556092
-4193319 2358464 1039445 1 done.
-*** stack smashing detected ***: gs terminated
-Aborted (core dumped)
-
-------------------------------------------
-
-[Vulnerability Type]
-Buffer Overflow
-
-------------------------------------------
-
-[Vendor of Product]
-ghostscript
-
-------------------------------------------
-
-[Affected Product Code Base]
-ghostscript - 9.18
-
-------------------------------------------
-
-[Affected Component]
-pprintg1 of ghostscript
-
-------------------------------------------
-
-[Attack Type]
-Remote
-
-------------------------------------------
-
-[Impact Code execution]
-true
-
-------------------------------------------
-
-[Impact Denial of Service]
-true
-
-------------------------------------------
-
-[Attack Vectors]
-crafted postscript can crash and/or execute code via buffer overflow
-
-------------------------------------------
-
-[Reference]
-https://bugs.ghostscript.com/show_bug.cgi?id=3D699255
-
-
---------------2BD15F820F748089562C6F46
-Content-Type: application/pgp-keys;
- name="pEpkey.asc"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: attachment;
- filename="pEpkey.asc"
-
------BEGIN PGP PUBLIC KEY BLOCK-----=0A=
-=0A=
-mQENBFrXfgEBCADtmSEl3jdulIwXlfJKz8WOhNs6/QKDp4gwWvnfJPCnaYPSvuCe=0A=
-uv2wq6HFZSa/3ha+L0k8JMMnIzfxOr9Qqvfu3vBzeofcqcH3gjMz5wMDo4ewj+Gq=0A=
-S+yh/rSeS5efisKBzU7E0YvPjPN8z8+9t309o0xP/wO0sFyBN94iz2lpk7bTP1aC=0A=
-sbu+geoFrfmN9BR0SgziLy96nPX16alf+XObAmoBZSQK1FUpUtKJRPvP3shumhPb=0A=
-mN3eqcCQdlzBckA/FMSf4r9xmnh0W6RjSmyviLsdrpLhbhNrMIk76aTNzF8ww1kM=0A=
-jobbAK1iE0FlDhyeUK9CyM1lOnCaWGeqpvn9ABEBAAG0JVbDrXRvciBTaWx2YSA8=0A=
-dml0b3JoZzIwMDgwQGdtYWlsLmNvbT6JAVQEEwEIAD4WIQSMg0chtDcxHDBECHt4=0A=
-r1a80rIKqAUCWtd+AQIbAwUJAeEzgAULCQgHAgYVCgkICwIEFgIDAQIeAQIXgAAK=0A=
-CRB4r1a80rIKqMvHB/9KtiKkEKvt4FmbBX0jvUuGJlhmrFqusiIhsE/T0lLiP94F=0A=
-i5rhz5pFlyo+ibjXHghhbahDUBK6C8gxkAzRu/rZxkhYzv0dGqLaotX3De3Awaqe=0A=
-KMB5MaQLmJGi5SRBCMMeNQNrdQC+ihviMToGiP7UWUlQ6+1f6q7/jdO650VsfUfD=0A=
-6RsvTLKsIMfRi6TZuYYj0k7tP6GsIeusuaBTPMi9/EGXdhB63fYq5MA+kymDdgfN=0A=
-HPuFhyhn+arMOtpny1zG7Gevvzh2iev7B+8x/ZfJ2+RgJYpRgvkv5CCx0BWaaj6O=0A=
-ACu/SBgkeDgKQHRgG5vMbriNR94QeNMFedMz08aruQENBFrXfgEBCACVb4tkuP3w=0A=
-DBKUAHjEgFHmekcV2Yco4i68c1LlLiQu3uia1mwOZ+vFfULM9AUCab/5fCMhZolA=0A=
-TFxQnyQwNX0StorpzEHYdXEPS2HHb14gV/FYh9Q23NN+203l0aJtVqaofY3J4zF7=0A=
-w4n4IOOsSkA8JooAWrDrK0VSHRiK4RouCUVLBBQ+vl19KV9HGXpAvru9B+nIXRAM=0A=
-W3h7G0wIKgQ5lNt9FSwiCn13N4QvnrX6fB+Jyzs/EkksX8JK2j5RiDE25J35E66I=0A=
-viZDcOe52E4c3zUOfSeFNMSEMosQBWseH23hXUjb26FUwUBcqggBVjfLMTVCT9bH=0A=
-LUZQA9NP1Hw5ABEBAAGJATwEGAEIACYWIQSMg0chtDcxHDBECHt4r1a80rIKqAUC=0A=
-Wtd+AQIbDAUJAeEzgAAKCRB4r1a80rIKqLp7B/sHnDQiVSWgYTBsllGkz1ZZC2Si=0A=
-T79SexEu/ojKYU9xeFNYa+EG+5qwzr/3cxltAUZ6Yub/pEBQRvF3Gupkbfl6f/8i=0A=
-BxaVNOP6ylL/95kKo0Z/rJ/7PeSt+WG6vdqUWOz9Z5DJpawyzGvfOszuElWU+HOJ=0A=
-3o8HwqlT4wOlCw8h3CKo2SMRbwcskxFn/80sOFsaPVmLKpw9jmDymiSak7MIWBam=0A=
-jD7Guuq/BXoGNE6gCby3Ru/KKSXsRO6jJXNEaPeG3rX+XiE2hWVosSvNk0Ex6J0e=0A=
-FrvMHfMumzAQyBi6kYAf8XCaF7FFZ6hibKVaWr3s6i/WEc7JE2ivRujirVko=0A=
-=3DcKny=0A=
------END PGP PUBLIC KEY BLOCK-----=0A=
-
---------------2BD15F820F748089562C6F46--
