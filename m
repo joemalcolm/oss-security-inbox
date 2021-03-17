@@ -1,20 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/05/1
-Message-ID: <CAH0iFcZ=byObwNkds9r0ZDOAW75kC8VqW1FzY-pM5aw3tNn5Qg@mail.gmail.com>
-Date: Thu, 5 Aug 2021 14:50:49 -0400
-From: Michael Dawson <midawson@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/17/9
+Message-ID: <20210317130514.GA1279@grsecurity.net>
+Date: Wed, 17 Mar 2021 09:05:14 -0400
+From: Brad Spengler <spender@...ecurity.net>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: Node.js security updates for all active release lines, August 2021
+Subject: Re: CVE-2021-3428 Linux kernel: integer overflow in ext4_es_cache_extent
 Content-Type: text/plain; charset=utf-8
 
----------- Forwarded message ---------
-From: midawson <midawson@...hat.com>
-Date: Thu, Aug 5, 2021 at 12:04 PM
-Subject: Node.js security updates for all active release lines, August 2021
-To: nodejs-sec <nodejs-sec@...glegroups.com>
+Hi Greg,
 
+> Please include what kernel version things like this were "found in" and
+> when it was fixed, otherwise you force everyone to go scramble just to
+> find that this was reported in July of 2020 and fixed then in the 5.9
+> kernel release and has already been backported to all relevant stable
+> kernel releases in August of last year.
 
-The Node.js project will release new versions of all supported release
-lines on or shortly after August 11th 2021. For more information see:
-https://nodejs.org/en/blog/vulnerability/aug-2021-security-releases/
+Those are a lot of assumptions there.  I do wonder how you feel you can
+ignore the CVE process the rest of the world is engaged in, while at the
+same time boss around those engaged in it.  But setting aside the irony
+of someone telling the world "if you want to know what was fixed or not,
+we publish the source, figure it out for yourself" being irate at being
+handed the same terms, I went ahead and did the investigation for you.
 
+The fix (part of the patch series https://www.spinics.net/lists/linux-ext4/msg73471.html):
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ce9f24cccdc019229b70a5c15e2b09ad9c0ab5d1
+was included in 5.9, and was backported through to 5.7.  However, you'll
+note the fixes tag points to a commit first appearing in 5.2.  That commit
+commit itself was backported to some earlier stable kernels, like 4.14.
+
+Why wasn't the fix for this CVE backported to kernels older than 5.7? For
+the same reason many other bugs/vulnerabilities don't get backported: small,
+often trivial conflicts.
+
+In this instance, it becomes clear the reason why it wasn't backported any
+further than 5.7 is because 5.7 contained the following commit:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=54d3adbc29f0c7c53890da1683e629cd220d7201
+
+without which there is a small conflict in fs/ext4/block_validity.c:
+<<<<<<< HEAD
+                else {
+                        sbi->s_es->s_last_error_block = cpu_to_le64(start_blk);
+                        return 0;
+                }
+=======
+                else
+                        return entry->ino == ino;
+>>>>>>> ce9f24cccdc0... ext4: check journal inode extents more carefully
+
+Thanks,
+-Brad
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
