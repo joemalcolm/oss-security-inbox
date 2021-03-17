@@ -1,126 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/01/1
-Message-ID: <aa5e1a0e-daba-41f2-1f98-91d36584f119@pietroalbini.org>
-Date: Mon, 1 Nov 2021 01:01:46 +0100
-From: Pietro Albini <pietro@...troalbini.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-42574: rustc 1.56.0 and bidirectional-override codepoints in source code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/17/4
+Message-ID: <28BC3D20-FB43-4E52-9D84-5589FC4366FC@oracle.com>
+Date: Wed, 17 Mar 2021 12:40:41 +0000
+From: John Haxby <john.haxby@...cle.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Use After Free and Double Free bugs in Linux Kernel mainline
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+This one isn't a security bug:
 
-The Rust Security Response WG was notified of a security concern affecting
-source code containing "bidirectional override" Unicode codepoints: in some
-cases the use of those codepoints could lead to the reviewed code being
-different than the compiled code.
+> On 17 Mar 2021, at 11:53, lyl2019@...l.ustc.edu.cn wrote:
+> 
+> Bug2: nvme/rdma: Fix a use after free in nvmet_rdma_write_data_done
+> Commit Url: https://github.com/torvalds/linux/commit/abec6561fc4e0fbb19591a0b35676d8c783b5493
+> 
+> In nvmet_rdma_write_data_done, rsp is recoverd by wc->wr_cqe
+> and freed by nvmet_rdma_release_rsp(). But after that, pr_info()
+> used the freed chunk's member object and could leak the freed
+> chunk address with wc->wr_cqe by computing the offset.
+> 
+> drivers/nvme/target/rdma.c | 5 ++---
+> 1 file changed, 2 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
+> index 06b6b742bb21..6c1f3ab7649c 100644
+> --- a/drivers/nvme/target/rdma.c
+> +++ b/drivers/nvme/target/rdma.c
+> @@ -802,9 +802,8 @@ static void nvmet_rdma_write_data_done(struct ib_cq *cq, struct ib_wc *wc)
+> 		nvmet_req_uninit(&rsp->req);
+> 		nvmet_rdma_release_rsp(rsp);
+> 		if (wc->status != IB_WC_WR_FLUSH_ERR) {
+> -			pr_info("RDMA WRITE for CQE 0x%p failed with status %s (%d).\n",
+> -				wc->wr_cqe, ib_wc_status_msg(wc->status),
+> -				wc->status);
+> +			pr_info("RDMA WRITE for CQE failed with status %s (%d).\n",
+> +				ib_wc_status_msg(wc->status), wc->status);
+> 			nvmet_rdma_error_comp(queue);
+> 		}
+> 		return;
 
-This is a vulnerability in the Unicode specification, and its assigned
-identifier is CVE-2021-42574. While the vulnerability itself is not a rustc
-flaw, we're taking proactive measures to mitigate its impact on Rust
-developers.
+Commit ad67b74d2469 ("printk: hash addresses printed with %p") back in 2017 made '%p' a non-security issue. That commit noted that there were approximately 14,000 places in the kernel where there was an address printed with %p.  Rather than 14,000 CVEs :) this was fixed once and once only by that commit.
 
-## Overview
+That's not to say that this "0x%p" doesn't have a problem: for a start you don't need the "0x" because %p prints one anyway. That point is moot, though, because no one objected to just removing the pointer.  The commit message is wrong though: it doesn't leak an address.
 
-Unicode has support for both left-to-right and right-to-left languages, and to
-aid writing left-to-right words inside a right-to-left sentence (or vice versa)
-it also features invisible codepoints called "bidirectional override".
-
-These codepoints are normally used across the Internet to embed a word inside a
-sentence of another language (with a different text direction), but it was
-reported to us that they could be used to manipulate how source code is
-displayed in some editors and code review tools, leading to the reviewed code
-being different than the compiled code. This is especially bad if the whole
-team relies on bidirectional-aware tooling.
-
-As an example, the following snippet (with `{U+NNNN}` replaced with the Unicode
-codepoint `NNNN`):
-
-```rust
-if access_level != "user{U+202E} {U+2066}// Check if admin{U+2069} {U+2066}" {
-```
-
-...would be rendered by bidirectional-aware tools as:
-
-```rust
-if access_level != "user" { // Check if admin
-```
-
-## Affected Versions
-
-Rust 1.56.1 introduces two new lints to detect and reject code containing the
-affected codepoints. Rust 1.0.0 through Rust 1.56.0 do not include such lints,
-leaving your source code vulnerable to this attack if you do not perform
-out-of-band checks for the presence of those codepoints.
-
-To assess the security of the ecosystem we analyzed all crate versions ever
-published on crates.io (as of 2021-10-17), and only 5 crates have the affected
-codepoints in their source code, with none of the occurrences being malicious.
-
-## Mitigations
-
-We will be releasing Rust 1.56.1 today, 2021-11-01, with two new
-deny-by-default lints detecting the affected codepoints, respectively in string
-literals and in comments. The lints will prevent source code files containing
-those codepoints from being compiled, protecting you from the attack.
-
-If your code has legitimate uses for the codepoints we recommend replacing them
-with the related escape sequence. The error messages will suggest the right
-escapes to use.
-
-If you can't upgrade your compiler version, or your codebase also includes
-non-Rust source code files, we recommend periodically checking that the
-following codepoints are not present in your repository and your dependencies:
-U+202A, U+202B, U+202C, U+202D, U+202E, U+2066, U+2067, U+2068, U+2069.
-
-## Timeline of events
-
-* 2021-07-25: we received the report and started working on a fix.
-* 2021-09-14: the date for the embargo lift (2021-11-01) is communicated to us.
-* 2021-10-17: performed an analysis of all the source code ever published to
-   crates.io to check for the presence of this attack.
-* 2021-11-01: embargo lifts, the vulnerability is disclosed and Rust 1.56.1 is
-   released.
-
-## Acknowledgments
-
-Thanks to Nicholas Boucher [1] and Ross Anderson [2] from the University of
-Cambridge for disclosing this to us according to our security policy [3]!
-
-We also want to thank the members of the Rust project who contributed to the
-mitigations for this issue. Thanks to Esteban Küber for developing the lints,
-Pietro Albini for leading the security response, and many others for their
-involvement, insights and feedback: Josh Stone, Josh Triplett, Manish
-Goregaokar, Mara Bos, Mark Rousskov, Niko Matsakis, and Steve Klabnik.
-
-## Appendix: Homoglyph attacks
-
-As part of their research, Nicholas Boucher and Ross Anderson also uncovered a
-similar security issue identified as CVE-2021-42694 involving homoglyphs inside
-identifiers. Rust already includes mitigations for that attack since Rust
-1.53.0. Rust 1.0.0 through Rust 1.52.1 is not affected due to the lack of
-support for non-ASCII identifiers in those releases.
-
-[1] https://github.com/nickboucher
-[2] https://www.cl.cam.ac.uk/~rja14
-[3] https://www.rust-lang.org/policies/security
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEV2nIi/XdPRSiNKes77mGCudSDawFAmF+hJkACgkQ77mGCudS
-DaxljBAAtBlcz3g8h8lZvzOfOb8zRNfgw7mvBxr1fNyjNkV6n/xJA5yO6DC7K5ra
-qqHXVdn7yfN5PvCBB7+vqQMDbM3X+m0Ui1eSIW09hGuyqBEc2+3UXlcWe0RVFBjT
-ZiGb0TvHqaCZT9z+fRWtkbUia/vnZfTfJkQ0Xj4SE325I0k3uimBpJ+jZFLl98kR
-1fnQtDkPQHK+VG5PdlYrZiGB+CibwlJWSqi7qyedPE7BVyFxSn2fHuFmQ4rUpBQc
-fAMWI83B+HuQ650vJY2mGCq2qedsTaUDK9S9oF+7pl7FtSjlsBdmJ9ikGB1FFlVP
-/6l0DZBRx2o3dp0KlD7k/MsXWZdo2Wg3wRamCltA/9f+uZBxLsdwJ+z1mvZB+wah
-jDkrDMOXdacZA5Yr69swY5UnTDyM5oZixT6LQTDCTQTBGMOLFsWTc3kNk7v4r+vj
-CR6pVj/2+jqy3hI/IrAWm129KVpyp8XM4KQbMenOBN32eBbDOtIZBn7cjqizfamU
-mP5dvUaIfUzOkHcr1Bcx5WJSSTgON8pVTb6AsreCY7rSG2fiHT2beb6W5yZFhdm2
-vWefxdcsL/h5WF0NHO5Hgj5o5a29sCpKOuSLfyW6GsA8waSRPkZBs2YWyzidhFr3
-A9hmwxWAyDQv8NZZcThepdMjFT8zoDq6cb/aDX28OOjIfJAFQWQ=
-=IsMc
------END PGP SIGNATURE-----
-
-View attachment "rust-1.56.0-fix.patch" of type "text/x-patch" (34016 bytes)
-
-View attachment "rust-1.56.0-fix.patch.asc" of type "text/plain" (833 bytes)
+jch
