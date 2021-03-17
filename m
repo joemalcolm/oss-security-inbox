@@ -1,22 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/10/13
-Message-ID: <YMIJ0OV72O2XK7m+@mail-itl>
-Date: Thu, 10 Jun 2021 14:47:11 +0200
-From: Marek Marczykowski-Górecki <marmarek@...isiblethingslab.com>
-To: Gianluca Gabrielli <ggabrielli@...e.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: XScreenSaver 5.45: Disconnecting a video output can cause XScreenSaver to crash and unlock
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/17/7
+Message-ID: <209aa35a-1730-012b-7dc9-cdd700d5598c@suse.com>
+Date: Wed, 17 Mar 2021 13:12:38 +0100
+From: Wolfgang Frisch <wolfgang.frisch@...e.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2021-3428 Linux kernel: integer overflow in ext4_es_cache_extent
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 10, 2021 at 02:34:58PM +0200, Gianluca Gabrielli wrote:
-> Thank Marek for having shared this with the list. I don't see a CVE ID
-> assigned to this bug, have requested one?
+On 17/03/2021 11.11, Greg KH wrote:
+> Are you sure that SUSE didn't already assign one to this?
+> 
+> And if not, why not
 
-I have not (nor has the vendor).
+I chose not to assign a CVE after consulting with security@...nel.org 
+and proceeded to handle the issue as a regular bug. Local denial of 
+service bugs that require specially crafted file systems and the 
+elevated privileges required to mount them, are generally not considered 
+security issues worthy of CVEs by the kernel community. It's a 
+borderline case but I have no issues with this new CVE assignment.
+
+Best regards,
+Wolfgang
+
 
 -- 
-Best Regards,
-Marek Marczykowski-Górecki
-Invisible Things Lab
+Wolfgang Frisch <wolfgang.frisch@...e.com>
+Security Engineer
+OpenPGP fingerprint: A2E6 B7D4 53E9 544F BC13  D26B D9B3 56BD 4D4A 2D15
+SUSE Software Solutions Germany GmbH
+Maxfeldstr. 5, 90409 Nuremberg, Germany
+(HRB 36809, AG Nürnberg)
+Managing Director: Felix Imendörffer
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+
+
+Download attachment "OpenPGP_signature" of type "application/pgp-signature" (841 bytes)
