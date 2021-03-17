@@ -1,50 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/25/1
-Message-ID: <87pmrtbbdt.fsf@mpe.ellerman.id.au>
-Date: Mon, 25 Oct 2021 22:18:54 +1100
-From: Michael Ellerman <mpe@...erman.id.au>
-To: oss-security@...ts.openwall.com
-Cc: linuxppc-dev@...ts.ozlabs.org
-Subject: Linux kernel: powerpc: KVM guest can trigger host crash on Power8 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/17/15
+Message-ID: <6822116c-31f0-bdc4-5b40-d2e0b91a5e02@virtuozzo.com>
+Date: Wed, 17 Mar 2021 18:39:14 +0300
+From: Evgenii Shatokhin <eshatokhin@...tuozzo.com>
+To: Salvatore Bonaccorso <carnil@...ian.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS
 Content-Type: text/plain; charset=utf-8
 
-The Linux kernel for powerpc since v5.2 has a bug which allows a
-malicious KVM guest to crash the host, when the host is running on
-Power8.
+On 17.03.2021 18:29, Salvatore Bonaccorso wrote:
+> Hi Rohit,
+> 
+> On Wed, Mar 17, 2021 at 04:17:05PM +0100, Greg KH wrote:
+>> On Wed, Mar 17, 2021 at 07:45:59PM +0530, Rohit Keshri wrote:
+>>> Hello Team,
+>>>
+>>> A denial of service vulnerability was found in n_tty_receive_char_special
+>>> in drivers/tty/n_tty.c of the Linux kernel.  In this flaw a local attacker
+>>> with a normal user privilege could delay the loop (due to a changing
+>>> ldata->read_head, and a missing sanity check) and cause a threat to the
+>>> system availability.
+>>>
+>>> 'CVE-2021-20219' was assigned by Red Hat.
+>>>
+>>> Acknowledgements: Evgenii Shatokhin (Virtuozzo Research LLC)
+>>
+>> Really?  Not the tools or people that reported this issue and fixed it
+>> in the community back in 2018?
+> 
+> Can you clarify, would 3d63b7e4ae0d ("n_tty: Fix stall at
+> n_tty_receive_char_special().") be the upstream fix you are referring
+> to for it?
 
-Only machines using Linux as the hypervisor, aka. KVM, powernv or bare
-metal, are affected by the bug. Machines running PowerVM are not
-affected.
+Sorry for jumping in.
 
-The bug was introduced in:
+Yes, this is the original fix, but the issue I reported is specific to 
+RHEL 7: their backport of that fix was incomplete.
 
-    10d91611f426 ("powerpc/64s: Reimplement book3s idle code in C")
+> 
+> Regards,
+> Salvatore
+> .
 
-Which was first released in v5.2.
+Regards,
+Evgenii
 
-The upstream fix is:
+> 
 
-  cdeb5d7d890e ("KVM: PPC: Book3S HV: Make idle_kvm_start_guest() return 0 if it went to guest")
-  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=cdeb5d7d890e14f3b70e8087e745c4a6a7d9f337
-
-Which will be included in the v5.16 release.
-
-Note to backporters, the following commits are required:
-
-  73287caa9210ded6066833195f4335f7f688a46b
-  ("powerpc64/idle: Fix SP offsets when saving GPRs")
-
-  9b4416c5095c20e110c82ae602c254099b83b72f
-  ("KVM: PPC: Book3S HV: Fix stack handling in idle_kvm_start_guest()")
-
-  cdeb5d7d890e14f3b70e8087e745c4a6a7d9f337
-  ("KVM: PPC: Book3S HV: Make idle_kvm_start_guest() return 0 if it went to guest")
-
-  496c5fe25c377ddb7815c4ce8ecfb676f051e9b6
-  ("powerpc/idle: Don't corrupt back chain when going idle")
-
-
-I have a test case to trigger the bug, which I can share privately with
-anyone who would like to test the fix.
-
-cheers
