@@ -1,27 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/21/2
-Message-ID: <262c7ab7f2cbc14ba3fe9deb29d173067918b289.camel@apache.org>
-Date: Mon, 21 Jun 2021 08:37:01 -0700
-From: Brennan Ashton <btashton@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/17/11
+Message-ID: <YFIdcSI6NvjeqFKp@kroah.com>
+Date: Wed, 17 Mar 2021 16:17:05 +0100
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-26461: Apache NuttX (incubating): malloc, realloc and memalign implementations are vulnerable to integer wrap-arounds
+Subject: Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS
 Content-Type: text/plain; charset=utf-8
 
-Description:
+On Wed, Mar 17, 2021 at 07:45:59PM +0530, Rohit Keshri wrote:
+> Hello Team,
+> 
+> A denial of service vulnerability was found in n_tty_receive_char_special
+> in drivers/tty/n_tty.c of the Linux kernel.  In this flaw a local attacker
+> with a normal user privilege could delay the loop (due to a changing
+> ldata->read_head, and a missing sanity check) and cause a threat to the
+> system availability.
+> 
+> 'CVE-2021-20219' was assigned by Red Hat.
+> 
+> Acknowledgements: Evgenii Shatokhin (Virtuozzo Research LLC)
 
-Apache Nuttx (incubating) versions prior to 10.1.0 are vulnerable to
-integer wrap-around in functions malloc, realloc and memalign. This
-improper memory assignment can lead to arbitrary memory allocation,
-resulting in unexpected behavior such as a crash or a remote code
-injection/execution. 
+Really?  Not the tools or people that reported this issue and fixed it
+in the community back in 2018?
 
-This issue is also known as BadAlloc
+{sigh}
 
-Credit:
-
-Apache NuttX would like to thank Omri Ben-Bassat of Section 52 at Azure
-Defender for IoT of Microsoft Corp for bringing this issue to our
-attention.
-
---Brennan Ashton
-
+greg k-h
