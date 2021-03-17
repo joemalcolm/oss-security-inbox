@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3997" "Wednesday" "27" "May" "2015" "18:53:16" "+0000" "Seaman, Chad" "cseaman@akamai.com" "<1432752795980.1810@akamai.com>" "154" "[oss-security] CVE Request, multiple WordPress plugins and themes" nil nil nil "5" "2015052718:53:16" "[oss-security] CVE Request, multiple WordPress plugins and themes" (number mark "        cseaman@akam May 27  154/3997  " thread-indent "\"[oss-security] CVE Request, multiple WordPress plugins and themes\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["874" "Wednesday" "17" "March" "2021" "16:29:58" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" nil "25" "Re: [oss-security] CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS" nil nil nil "3" nil nil (number mark "U       carnil@debia Mar 17   25/874   " thread-indent "\"Re: [oss-security] CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30685 invoked by uid 550); 27 May 2015 20:09:12 -0000
+Received: (qmail 9834 invoked by uid 550); 17 Mar 2021 15:30:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,177 +11,71 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22192 invoked from network); 27 May 2015 18:53:29 -0000
-Thread-Topic: CVE Request, multiple WordPress plugins and themes
-Thread-Index: AQHQmJhCdM72yoEmUUC+CGJWxthR5A==
-Message-ID: <1432752795980.1810@akamai.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [172.28.90.109]
-Content-Type: multipart/alternative;
-	boundary="_000_14327527959801810akamaicom_"
-MIME-Version: 1.0
-CC: "cve-assign@mitre.org" <cve-assign@mitre.org>
-Date: Wed, 27 May 2015 18:53:16 +0000
-From: "Seaman, Chad" <cseaman@akamai.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request, multiple WordPress plugins and themes
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 9814 invoked from network); 17 Mar 2021 15:30:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=kdRZHZ+3kHyVE2YmSPmtCyr5Js6pSHjrftAaZg3OXZs=;
+        b=aHpv/63fzSS/OnM9rwpiN6PnCHx1tuokfe6EZS19StahEWlljmuRitwv6qq/Kt6ynl
+         5YCxFyCG01JLeh95ys0ZXqOD+hhArPIPPzYhvl+Zh5W0wlBZmGyUWOZo6gYKtVb4ur/n
+         X/cqPvkK7J4gyd53GdGmnst1xGAQ8dGAY86jKUAJLCbBA38Jt3MUeP6XKBAxcXXh6F2/
+         msM5oGZ+kYGSd6wyQl9aM5Iw5qnb6lmTY3kV/0lMMXmi1E9LIqatMcBKwPhVlKXC3/Np
+         o3cum5kZL2f2XW0LHC4CbZmVmTLoKmor2x/2eN7rby194caChvMlGbm5bl4lrbTE0dh/
+         NNVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to;
+        bh=kdRZHZ+3kHyVE2YmSPmtCyr5Js6pSHjrftAaZg3OXZs=;
+        b=VThmMvmObtG5RCaoHbf8n8g/yVDtM13WD0qerXNnJ5HiB5rau7rvVFSDH+7EE6OvbS
+         aflKqgHhYedEXofE0hrwx96+75mofaDiqu6/A820OKf5SNHwExBUz/kEg5P6d11LNNTU
+         J4vwQXnThlZKdgA/U50gELyzPbsDKGnRShTRrsTFVNQU7r88+ow+4QnOziYKvRs+3oTU
+         ZSIbwr/Tam122pTgDMTNETKIICxH1p4OoMRhOavx2jchtWIaqYwnxIo3/H+R1q5JWN2I
+         QvAuQyiRfFwVqFUxsuJDPgTJcHIZYl1XIndh9J3eFs6Fje8J2H5pQaKfxOp1UTGjSssx
+         luDg==
+X-Gm-Message-State: AOAM533Y7scH9VQowz3AQvt1qCBV1AJkF0+NCvBmwaTfrHAGpw9T9UJt
+	DUurbIjB+R1LucjY/1r+KRcr9lKmd8wXNQ==
+X-Google-Smtp-Source: ABdhPJzn8Zm5d/1NGD2k7T/cMerK+rINRHQ/LXziIs9i1SFLumy9ltKlARxMOBP0JpfsuQ0tirULIw==
+X-Received: by 2002:a5d:5104:: with SMTP id s4mr5285587wrt.62.1615995000971;
+        Wed, 17 Mar 2021 08:30:00 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Wed, 17 Mar 2021 16:29:58 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: oss-security@lists.openwall.com
+Message-ID: <YFIgdvb3HG4js+Y2@eldamar.lan>
+References: <CAKx+4-qgvO4_R8fTqwxKLqwud42wUkG3V2POGeXE6C6Bv+zrxg@mail.gmail.com>
+ <YFIdcSI6NvjeqFKp@kroah.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YFIdcSI6NvjeqFKp@kroah.com>
+Subject: Re: [oss-security] CVE-2021-20219 Linux kernel: improper
+ synchronization in flush_to_ldisc() can lead to DoS
 
---_000_14327527959801810akamaicom_
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+Hi Rohit,
 
-?
+On Wed, Mar 17, 2021 at 04:17:05PM +0100, Greg KH wrote:
+> On Wed, Mar 17, 2021 at 07:45:59PM +0530, Rohit Keshri wrote:
+> > Hello Team,
+> > 
+> > A denial of service vulnerability was found in n_tty_receive_char_special
+> > in drivers/tty/n_tty.c of the Linux kernel.  In this flaw a local attacker
+> > with a normal user privilege could delay the loop (due to a changing
+> > ldata->read_head, and a missing sanity check) and cause a threat to the
+> > system availability.
+> > 
+> > 'CVE-2021-20219' was assigned by Red Hat.
+> > 
+> > Acknowledgements: Evgenii Shatokhin (Virtuozzo Research LLC)
+> 
+> Really?  Not the tools or people that reported this issue and fixed it
+> in the community back in 2018?
 
-?I'm not sure if these should be broken down by individual vulnerability or=
- lumped per plugin/theme, there are 21 plugins/themes affected in total.
+Can you clarify, would 3d63b7e4ae0d ("n_tty: Fix stall at
+n_tty_receive_char_special().") be the upstream fix you are referring
+to for it?
 
-
-  * grand-media [PLUGIN]
-    + url: https://wordpress.org/plugins/grand-media/
-    + vuln found:
-    :--|- XSS
-    :
-    :--|- LFI
-    :    |- note: only truly exploitable if user sets ALLOW_NO_EXT =3D=3D t=
-rue
-    :
-    :--|- DoS
-    :    |- note: force to recursively call itself via remote 301 redirects=
-, cripples php-fpm w/ nginx
-    :
-    :--|- Open proxy
-
-
-
-  * wp-mobile-edition [PLUGIN]
-    + url: https://wordpress.org/plugins/wp-mobile-edition/
-    + vuln found:
-    :--|- LFI
-    :    |- note: pre PHP 5.3 is likely (unconfirmed) suspectible to nullby=
-te injection, meaning any file can be read
-    :
-    :--|- OpenProxy
-    :
-    :--|- DoS
-    :    |- note: will process list of files in for loop, aiding DoS capabi=
-lities
-    :    |- note: follows 301 redirects, can be used to recursively call it=
-self to exhaustion, ?cripples php-fpm w/ nginx
-    :
-    :--|- e-mail header injection (spam sandwich)
-    :    |- note: will throw fatal error, but will send e-mail before doing=
- so.
-    :
-    :--|- Multiple XSS vulns
-
-
-* wp-fastest-cache [PLUGIN] + url: https://wordpress.org/plugins/wp-fastest=
--cache/ + vuln found: :--|- XSS * leaflet-maps-marker [PLUGIN] + url: https=
-://wordpress.org/plugins/leaflet-maps-marker/ + vuln found: :--|- XSS x 2 *=
- landing-pages [PLUGIN] + url: https://wordpress.org/plugins/landing-pages/=
- + vuln found: :--|- XSS into admin session * extended-catagories-widget [P=
-LUGINS] + url: https://wordpress.org/plugins/extended-categories-widget/ + =
-vuln found: :--|- post auth admin SQLi
-
-  * gallery-images [PLUGINS] && gallery-video [PLUGINS]
-    + url: https://wordpress.org/plugins/gallery-images/
-    + url: https://wordpress.org/plugins/gallery-video/
-    + vuln found:
-    :--|- XSS into admin session (image and video gallery are both affected)
-
-
-  * easy-google-fonts [PLUGIN]
-    + url: https://wordpress.org/plugins/easy-google-fonts/
-    + vuln found:
-    :--|- XSS into admin session
-
-
-  * cta [PLUGIN]
-    + url: https://wordpress.org/plugins/cta/
-    + vuln found:
-    :--|- CSRF & persistent XSS attack into admin session, and site-wide fo=
-r visitors
-
-
-  * constant-contact-api [PLUGIN]
-    + url: https://wordpress.org/plugins/constant-contact-api/
-    + vuln found:
-    :--|- XSS x 2
-
-
-  * zerif-lite [THEME]
-    + url: https://wordpress.org/themes/zerif-lite/
-    + vuln found:
-    :--|- XSS
-
-
-  * colorway [THEME]
-    + url: https://wordpress.org/themes/colorway/
-    + vuln found:
-    :--|- e-mail header injection (spam sandwich)
-    :
-    :--|- XSS x 3
-
-
-  * charitas-lite [THEME]
-    + url: https://wordpress.org/themes/charitas-lite/
-    + vuln found:
-    :--|- e-mail header injection (spam sandwich)
-
-
-  * ariwoo [THEME]
-    + url: https://wordpress.org/themes/ariwoo/
-    + vuln found:
-    :--|- e-mail header injection (spam sandwich)
-    :
-    :--|- XSS x 3
-
-
-  * kage-green [THEME]
-    + url: https://wordpress.org/themes/kage-green/
-    + vuln found:
-    :--|- XSS
-
-
-  * intuition [THEME]
-    + url: https://wordpress.org/themes/intuition/
-    + vuln found:
-    :--|- XSS
-
-
-  * imag-mag [THEME]
-    + url: https://wordpress.org/themes/imag-mag/
-    + vuln found:
-    :--|- XSS
-
-
-  * fastnews-light [THEME]
-    + url: https://wordpress.org/themes/fastnews-light/
-    + vuln found:
-    :--|- XSS
-
-
-  * business-directory [THEME]
-    + url: https://wordpress.org/themes/business-directory/
-    + vuln found:
-    :--|- XSS
-
-
-  * boot-store [THEME]
-    + url: https://wordpress.org/themes/boot-store/
-    + deps: TheCartPress (https://wordpress.org/plugins/thecartpress/)
-    + note: theme must be present, plugin must be present, user must not be=
- logged in.
-    + vuln found:
-    :--|- XSS
-
-
-
-
-
---_000_14327527959801810akamaicom_--
+Regards,
+Salvatore
