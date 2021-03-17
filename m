@@ -1,92 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/30/1
-Message-Id: <071030FD-1E7C-4FD5-98C3-E2E6630E9BBF@beckweb.net>
-Date: Wed, 30 Jun 2021 18:28:03 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/17/17
+Message-ID: <CAKx+4-qm94y68oc4fT20OpYjs1kXn6mTMem7WD18DtAyFsWzdw@mail.gmail.com>
+Date: Thu, 18 Mar 2021 01:20:18 +0530
+From: Rohit Keshri <rkeshri@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins and Jenkins plugins
+Subject: CVE-2020-35519 Linux kernel: x25_bind out-of-bounds read
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+Hello Team,
 
-The following releases contain fixes for security vulnerabilities:
+An out-of-bounds (OOB) memory access flaw was found in x25_bind in
+net/x25/af_x25.c in the Linux kernel. A bounds check failure allows a local
+attacker with a user account on the system to gain access to out-of-bounds
+memory, leading to a system crash or a leak of internal kernel information.
+The highest threat from this vulnerability is to confidentiality,
+integrity, as well as system availability.
 
-* Jenkins 2.300
-* Jenkins LTS 2.289.2
-* CAS Plugin 1.6.1
-* requests-plugin 2.2.7, 2.2.8, and 2.2.13
-* Selenium HTML report Plugin 1.1
-
-
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2021-06-30/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-2278 / CVE-2021-21670
-Jenkins 2.299 and earlier, LTS 2.289.1 and earlier allows users to cancel
-queue items and abort builds of jobs for which they have Item/Cancel
-permission even when they do not have Item/Read permission.
+'CVE-2020-35519' was assigned by Red Hat.
 
 
-SECURITY-2371 / CVE-2021-21671
-Jenkins 2.299 and earlier, LTS 2.289.1 and earlier does not invalidate the
-existing session on login. This allows attackers to use social engineering
-techniques to gain administrator access to Jenkins.
+Regards,
+..
+Rohit Keshri / Red Hat Product Security Team
+PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
 
-This vulnerability was introduced in Jenkins 2.266 and LTS 2.277.1.
-
-
-SECURITY-2329 / CVE-2021-21672
-Selenium HTML report Plugin 1.0 and earlier does not configure its XML
-parser to prevent XML external entity (XXE) attacks.
-
-This allows attackers with the ability to control the report files parsed
-using this plugin to have Jenkins parse a crafted report file that uses
-external entities for extraction of secrets from the Jenkins controller or
-server-side request forgery.
-
-
-SECURITY-2387 / CVE-2021-21673
-CAS Plugin 1.6.0 and earlier improperly determines that a redirect URL
-after login is legitimately pointing to Jenkins.
-
-This allows attackers to perform phishing attacks by having users go to a
-Jenkins URL that will forward them to a different site after successful
-authentication.
-
-
-SECURITY-1995 / CVE-2021-21674
-requests-plugin 2.2.6 and earlier does not perform a permission
-check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to view the list of
-pending requests.
-
-
-SECURITY-2136 (1) / CVE-2021-21675
-requests-plugin 2.2.12 and earlier does not require POST requests to
-request and apply changes, resulting in cross-site request forgery (CSRF)
-vulnerabilities.
-
-These vulnerabilities allow attackers to create requests and/or have
-administrators apply pending requests, like renaming or deleting jobs,
-deleting builds, etc.
-
-
-SECURITY-2136 (2) / CVE-2021-21676
-requests-plugin 2.2.7 and earlier does not perform a permission
-check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to send test emails to
-an attacker-specified email address.
+secalert@...hat.com for urgent response
 
