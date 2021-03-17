@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1347" "Monday" "9" "December" "2019" "18:30:22" "+0100" "Noel Kuntze" "noel.kuntze+oss-security@thermi.consulting" nil "46" nil "^Date:" nil nil "12" nil nil (number mark "        noel.kuntze+ Dec  9   46/1347  " thread-indent "\"Re: [oss-security] Shell wildcards considered dangerous?\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Shell wildcards considered dangerous?" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1134" "Wednesday" "17" "March" "2021" "11:11:04" "+0100" "Greg KH" "greg@kroah.com" nil "28" "Re: [oss-security] CVE-2021-3428 Linux kernel: integer overflow in ext4_es_cache_extent" nil nil nil "3" nil nil (number mark "U       greg@kroah.c Mar 17   28/1134  " thread-indent "\"Re: [oss-security] CVE-2021-3428 Linux kernel: integer overflow in ext4_es_cache_extent\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-3428 Linux kernel: integer overflow in ext4_es_cache_extent" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32187 invoked by uid 550); 9 Dec 2019 18:07:50 -0000
+Received: (qmail 30342 invoked by uid 550); 17 Mar 2021 10:11:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,78 +11,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13629 invoked from network); 9 Dec 2019 17:30:39 -0000
-X-Virus-Scanned: amavisd-new at thermi.consulting
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=thermi.consulting;
-	s=201909; t=1575912627;
-	bh=KS54iF9Qak7lhMHcnyIjV062p82lN4gLp39O/WIs4Co=;
-	h=Subject:To:From:Date:MIME-Version:Content-Type;
-	b=yQPwT0XpLC+MCG4q+XMB2QVN5F3EuhR9rGhOiqzL+2GEVIqLaversKhu+fCvOb2rN
-	 t4fiiVs3LdtLQWSeihzO0G5W4PlJzcNfuAKcyAGqZMSXhTWvkYA6DO1+Qkh+xocwoE
-	 hhHUtrj1/6YAsrD7uXMs60j3VmuxgX38vOPkRcCcGPaL7G31Wro4kIFDdKAN8C9dkt
-	 9bIwspM4+q6ZyGQhtRtSxVEmVWE8klMPLG2GIYN8t5qd9UKv+GphEGoiDGoxBuRDCM
-	 DeAGODlor+cGk6FXrT+j424SGoGP1V8oPI1ive1tl1igmSHRKwcWc6YGagd5nhlu3W
-	 YIwNFABIQMZcg==
-References: <CAGUWgD-yn2kf3T69ri7ahcCfKm=kiMBnxeb84mnH-qqYWQNUdg@mail.gmail.com>
- <8bd059ae-5faa-46fa-71d0-bb0f61ea8e62@thermi.consulting>
- <20191209151808.GA35251@orca>
- <a12cddb8-7753-5e5f-de0f-8c575c2632d2@thermi.consulting>
- <20191209164635.GB35251@orca>
-Message-ID: <9966eab6-4dba-5d17-3a59-5beb5200e745@thermi.consulting>
-MIME-Version: 1.0
-In-Reply-To: <20191209164635.GB35251@orca>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-Date: Mon, 9 Dec 2019 18:30:22 +0100
-From: Noel Kuntze <noel.kuntze+oss-security@thermi.consulting>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Shell wildcards considered dangerous?
+Received: (qmail 30321 invoked from network); 17 Mar 2021 10:11:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=
+	date:from:to:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=fm3; bh=8+qPP7jCHY1bwGtmX2Uo/6W8GkQ
+	aFgtb4PXio58KyMw=; b=c6oNnVUlCTH8OwAIDAC6XxeIqrl/od4NifFUUhswmDl
+	vUqwhIN2Nr41xAIHwDixkmlPbljvr/SsYZp2Pz0Bv3Fz+Zyf7LYVSLx229V6Q+xG
+	Tyh1RFgDJ1AEQCY2b3vNcKGftThy8FTZTHwu112WmN915beyYevvr7q+Hv8IpBKh
+	d0fgAmps03iQvClIfbsWwHbDkN8QT4qDawcgqXt7ITomgPVHVeClycAS6/NjPnJM
+	BY/d+aBJyx5mNGqAPxgCDX7QoG2AFn3Ezqt42W+fr32mfZuJuDwBdfs6SDRvg2uU
+	TI/YlczsWOtjyAcP7wfIe5c1gtswUvDSLJLXrv+G3Dw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=8+qPP7
+	jCHY1bwGtmX2Uo/6W8GkQaFgtb4PXio58KyMw=; b=gcWGwVE4ZOG5PxT2/UaGNM
+	1gxzM4mWWbdQJ3pHHYbziSq2QeylV+cvW04fqKkLusDbh8XORjjS+KE/ziSdIobM
+	MxXMIq3K33b5r+gx0P7g+nxjU/NFl/Zk2zyz5U2CTnbjGTB1YYnx5YstzZXQ+/1K
+	XtO0jA2gT0mpq+uaKTVJ72I/h6iRY9wvdIrBCbaYsfklPOJHUAHsU4tAGFssY2G3
+	082qBYJ9xCY/jpqOgRo+/kcoo+N/XPyuzq2ELzAp/E+4nLQgoJSqiAGKwCJBAFcb
+	g0IOMcGMlA9C9N72zFfsy6V4LL3HUXGvkvf+w86slk8jOatdkyk03QrK9BqFmY4g
+	==
+X-ME-Sender: <xms:vNVRYJ-NCukIwZ8aTVQ0oiGG6HfBL26UgPwlpZHmC0M09s9z6fppCg>
+    <xme:vNVRYNtCRW3ktskwvm6p1DC7g3jamf6U5NKCY-DG-_siHgVr0iOIzqgXEvsuIyX85
+    0b8V6tE7gxnHQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudefgedgudefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesthdtre
+    dttddtvdenucfhrhhomhepifhrvghgucfmjfcuoehgrhgvgheskhhrohgrhhdrtghomheq
+    necuggftrfgrthhtvghrnhepueelledtheekleethfeludduvdfhffeuvdffudevgeehke
+    egieffveehgeeftefgnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucfkphepkeel
+    rddvtdehrddufedurddutdeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepghhrvghgsehkrhhorghhrdgtohhm
+X-ME-Proxy: <xmx:vNVRYHCR0kPWEIm8WJIww-eeTV_7LqtVP06gQBYeIskkXQjx8zenVg>
+    <xmx:vNVRYNf4dYeAE7Jqesf4HMhMFwd58GkLpqmPa4FVg2kDfOJvHiAVtQ>
+    <xmx:vNVRYOPhQ79V26mWeqnq-HqyiIL73pwgxfsmJqefFQ5scpgzgsWHUA>
+    <xmx:vNVRYEZtnV11570WzaFh_E8tzDlWiZZpnvyT47Ybwi90YJrXIBVlfQ>
+Date: Wed, 17 Mar 2021 11:11:04 +0100
+From: Greg KH <greg@kroah.com>
 To: oss-security@lists.openwall.com
+Message-ID: <YFHVuDKj+oMwxBZX@kroah.com>
+References: <CAKx+4-oZ3YabEpWXYSs8LccRc8PcC_o2fbg7V5FpLT+nVBn66w@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAKx+4-oZ3YabEpWXYSs8LccRc8PcC_o2fbg7V5FpLT+nVBn66w@mail.gmail.com>
+Subject: Re: [oss-security] CVE-2021-3428 Linux kernel: integer overflow in
+ ext4_es_cache_extent
 
-Hello Leonid,
+On Wed, Mar 17, 2021 at 11:21:23AM +0530, Rohit Keshri wrote:
+> Hello Team,
+> 
+> A flaw was found in the Linux kernel. A denial of service problem is
+> identified if an extent tree is corrupted in a crafted ext4 filesystem in
+> fs/ext4/extents.c in ext4_es_cache_extent. Fabricating an integer overflow,
+> A local attacker with a special user privilege may cause a system crash
+> problem which can lead to an availability threat.
 
-I was referring to my own message, not the original one by Georgi.
+Please include what kernel version things like this were "found in" and
+when it was fixed, otherwise you force everyone to go scramble just to
+find that this was reported in July of 2020 and fixed then in the 5.9
+kernel release and has already been backported to all relevant stable
+kernel releases in August of last year.
 
-Kind regards
+In other words, no one running an updated kernel version from kernel.org
+is vulnerable today, right?  Are you saying that specific distro kernels
+are vulnerable to this?  If so, which ones?
 
-Noel
+> 'CVE-2021-3428' was assigned by Red Hat.
 
-Am 09.12.19 um 17:46 schrieb Leonid Isaev:
-> On Mon, Dec 09, 2019 at 04:28:35PM +0100, Noel Kuntze wrote:
->> The message was about the attack vector on applications that put together
->> argument vectors based on user input, not specifically about human use of the
->> shell.
-> Then, why in "tar xf *.tar" the "*" is expected to mean anything other than
-> a literal * (0x2a)? It is because of the shell globbing: "tar xf ./*.tar" will
-> work without any "--". For example:
-> -----8<-----
-> $ echo -E "xxx" > "-b xxx.qwetr"
-> $ file *.qwetr
-> file: invalid option -- ' '
-> file: invalid option -- 'x'
-> file: invalid option -- 'x'
-> file: invalid option -- 'x'
-> file: invalid option -- '.'
-> file: invalid option -- 'q'
-> file: invalid option -- 'w'
-> Usage: file [-bcCdEhikLlNnprsvzZ0] [--apple] [--extension] [--mime-encoding]
->             [--mime-type] [-e <testname>] [-F <separator>]  [-f <namefile>]
->             [-m <magicfiles>] [-P <parameter=value>] <file> ...
->        file -C [-m <magicfiles>]
->        file [--help]
-> $
-> $ file ./*.qwetr
-> ./-b xxx.qwetr: ASCII text
-> ----->8-----
->
-> Sincerely,
-> L.
+Are you sure that SUSE didn't already assign one to this?
 
--- 
-Noel Kuntze
-IT security consultant
+And if not, why not and why do this now?  Who is this report for?
 
-GPG Key ID: 0x0739AD6C
-Fingerprint: 3524 93BE B5F7 8E63 1372 AF2D F54E E40B 0739 AD6C
+thanks,
 
+greg k-h
