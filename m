@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6370" "Thursday" "13" "December" "2018" "07:53:54" "-0800" "Hacker Fantastic" "hackerfantastic@googlemail.com" "<CAG-OiePvtSA1Wu03T76iXfYhER0Qr7fCBZ6n+mSfVpbjJ-UnQQ@mail.gmail.com>" "127" "Re: [oss-security] Multiple telnet.c overflows" "^Cc:" nil nil "12" "2018121315:53:54" "[oss-security] Multiple telnet.c overflows" (number mark "        hackerfantas Dec 13  127/6370  " thread-indent "\"Re: [oss-security] Multiple telnet.c overflows\"\n") "<CAJ_zFk+Dhd0buWMW7p4sRDZ_0KEDnOiKp4nV35XUgCUnFc5q-w@mail.gmail.com>" ("<CAG-OieOVQkON9yTYJcKuKGfP5XK5zitz0nTr9+ci71mTZrz-+A@mail.gmail.com>" "<3f060bee-a765-4cd8-e752-e0cdfef5c6f2@oracle.com>" "<CAJ_zFkK-Wg5cvzQ_Om+=+pyddbyPvT8D07qL8wL8NYX6MNnnXg@mail.gmail.com>" "<CAG-OieODDwrDfoci2ehVUbHg13Ehz66VB50KERZ01qCdrgCLBw@mail.gmail.com>" "<CAJ_zFkLKWJnC9t27kN74jNueh3nTqx2+2hB3dsv74CsfBY_qfg@mail.gmail.com>" "<CAG-OieOUdanQyhyksodXwP7WyQpnAh0t3gy_Z_Cq-PTf+22GYw@mail.gmail.com>" "<CAJ_zFkKWP18xP6jUh=Gax3o_R4mFB905FC9yKWTd9-VEwEZEmA@mail.gmail.com>" "<CAG-OieMJ=sJxrf37ndMZF8akPtTibc-RMAgi8+Dkxz5URabR+A@mail.gmail.com>" "<CAJ_zFk+Dhd0buWMW7p4sRDZ_0KEDnOiKp4nV35XUgCUnFc5q-w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["9382" "Wednesday" "17" "March" "2021" "14:02:43" "+0100" "Greg Kroah-Hartman" "gregkh@linuxfoundation.org" nil "147" "Re: [oss-security] CVE-2021-3428 Linux kernel: integer overflow in ext4_es_cache_extent" nil nil nil "3" nil nil (number mark "U       gregkh@linux Mar 17  147/9382  " thread-indent "\"Re: [oss-security] CVE-2021-3428 Linux kernel: integer overflow in ext4_es_cache_extent\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-3428 Linux kernel: integer overflow in ext4_es_cache_extent" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21837 invoked by uid 550); 13 Dec 2018 15:58:37 -0000
+Received: (qmail 15789 invoked by uid 550); 17 Mar 2021 13:14:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,176 +11,176 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15861 invoked from network); 13 Dec 2018 15:54:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=GF/lhsrikiWtTKD0pvpcXPeJijsKS6BHdz3jF1T+i64=;
-        b=bBeZ1PAE2s2jYTfFeuTg/twZr+ttBt+yKG2YZRq4MHiniNLU+ll1qp6SEASXaNYyXd
-         D1Lj822wkVEgmhyVSAC1Tt68dEXObSsKgmhs419Wkqxp4Cxfa0jO1VGSA0nntcr/q5i1
-         h9o7TVu0h5cVNWhUXYDdpHI9dqUiGYug2PnMrxnpcU9Lg2GdaP0pfmNzGeVRVY+S/c16
-         ZWW3a09IfLKJm/RxShfacU7JBZtcGtwYCD3ecRKpYa0zyNhIBz9ZIdW4nPl8LZwZk0Tk
-         xZ5/KlgOyRhZN4UiroopRA1W+V9iRHWo/M3L3P2a4v6OYJ6U9QVua5++Y9aVp7IytA8g
-         ROfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=GF/lhsrikiWtTKD0pvpcXPeJijsKS6BHdz3jF1T+i64=;
-        b=AsiAa/oYaY0NTtNvd7ee7b70sdgMYd+3HBvusRq+W7dVPuis/2qAm3mfL35DMjVu4I
-         mx/KNt2zfYV1MYxesDAAnDy4TfHq4EOirOBRt0pum84UXFdOdmKQtvpT9yrpx+7Kg+aB
-         ksU2Lty/NHjU2DbjtOjZ1S0FNUA1ckqdcvXF/nzEvab5nmxbg+wDWbUfxAgzkPPcWPRI
-         5Q4yW0/XjiYgH3q90tBWuLgt9OdjTspt0r4pe9YvJPkupSH12WqMmqyRi/Q77VfoL72v
-         zm6hNOAJ2/LzzdY6xHKiqBd1NGflADqsWeBVH8K1XmEgFOKZSe/WK+fjcZtqGrkcS7P3
-         +x0w==
-X-Gm-Message-State: AA+aEWZW+4+A+JXfnyYX5UzaYfKIsrZLyGnlMuyS82nln4xSHy0cLa1o
-	0TarTuOwPj0pz1JfbMCo1/pMa6IRu5wYDXjiaQk=
-X-Google-Smtp-Source: AFSGD/WOZtlV1UIIVjgyROnl/avROpK75GV3ZuHDa8zZm1IFHs8NxmXDxH8zwM2JarnMUTh7MgBnc8fJ5kfWp4IwJH8=
-X-Received: by 2002:a2e:97d7:: with SMTP id m23-v6mr16515913ljj.18.1544716446259;
- Thu, 13 Dec 2018 07:54:06 -0800 (PST)
-MIME-Version: 1.0
-References: <CAG-OieOVQkON9yTYJcKuKGfP5XK5zitz0nTr9+ci71mTZrz-+A@mail.gmail.com>
- <3f060bee-a765-4cd8-e752-e0cdfef5c6f2@oracle.com> <CAJ_zFkK-Wg5cvzQ_Om+=+pyddbyPvT8D07qL8wL8NYX6MNnnXg@mail.gmail.com>
- <CAG-OieODDwrDfoci2ehVUbHg13Ehz66VB50KERZ01qCdrgCLBw@mail.gmail.com>
- <CAJ_zFkLKWJnC9t27kN74jNueh3nTqx2+2hB3dsv74CsfBY_qfg@mail.gmail.com>
- <CAG-OieOUdanQyhyksodXwP7WyQpnAh0t3gy_Z_Cq-PTf+22GYw@mail.gmail.com>
- <CAJ_zFkKWP18xP6jUh=Gax3o_R4mFB905FC9yKWTd9-VEwEZEmA@mail.gmail.com>
- <CAG-OieMJ=sJxrf37ndMZF8akPtTibc-RMAgi8+Dkxz5URabR+A@mail.gmail.com> <CAJ_zFk+Dhd0buWMW7p4sRDZ_0KEDnOiKp4nV35XUgCUnFc5q-w@mail.gmail.com>
-In-Reply-To: <CAJ_zFk+Dhd0buWMW7p4sRDZ_0KEDnOiKp4nV35XUgCUnFc5q-w@mail.gmail.com>
-Message-ID: <CAG-OiePvtSA1Wu03T76iXfYhER0Qr7fCBZ6n+mSfVpbjJ-UnQQ@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="0000000000000ee548057ce95365"
-Cc: oss-security@lists.openwall.com
-Date: Thu, 13 Dec 2018 07:53:54 -0800
-From: Hacker Fantastic <hackerfantastic@googlemail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Multiple telnet.c overflows
-To: Tavis Ormandy <taviso@google.com>
+Received: (qmail 9512 invoked from network); 17 Mar 2021 13:03:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1615986166;
+	bh=rTxPxURoIRLTlKSHF7wO1tnw4cab1vlJ18HAxYk4muM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=kATIdpSuKEPBPdT5cPcaLX5P/mwZsblQb+k8KcKU3TE8PIIRXs41W/K9iIusUIbpy
+	 Nki7qtqifjMZlRFPLRf8QnSj0fdzEfivLOFY0n7hobzrDXPA7kxGrvQnrJsOrqMiSQ
+	 9rwWtGVOo7WWhMVZfYP3pvtW+tRdqYIWwgxg0TUQ=
+Date: Wed, 17 Mar 2021 14:02:43 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Salvatore Bonaccorso <carnil@debian.org>
+Cc: oss-security@lists.openwall.com, Theodore Ts'o <tytso@mit.edu>,
+	Jan Kara <jack@suse.cz>, Lukas Czerner <lczerner@redhat.com>,
+	Wolfgang Frisch <wolfgang.frisch@suse.com>, stable@vger.kernel.org
+Message-ID: <YFH981qaFJdMeyHA@kroah.com>
+References: <CAKx+4-oZ3YabEpWXYSs8LccRc8PcC_o2fbg7V5FpLT+nVBn66w@mail.gmail.com>
+ <YFHVuDKj+oMwxBZX@kroah.com>
+ <YFH414+hBOyl1Bw7@eldamar.lan>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YFH414+hBOyl1Bw7@eldamar.lan>
+Subject: Re: [oss-security] CVE-2021-3428 Linux kernel: integer overflow in
+ ext4_es_cache_extent
 
---0000000000000ee548057ce95365
-Content-Type: text/plain; charset="UTF-8"
+On Wed, Mar 17, 2021 at 01:40:55PM +0100, Salvatore Bonaccorso wrote:
+> Hi Greg,
+> 
+> On Wed, Mar 17, 2021 at 11:11:04AM +0100, Greg KH wrote:
+> > On Wed, Mar 17, 2021 at 11:21:23AM +0530, Rohit Keshri wrote:
+> > > Hello Team,
+> > > 
+> > > A flaw was found in the Linux kernel. A denial of service problem is
+> > > identified if an extent tree is corrupted in a crafted ext4 filesystem in
+> > > fs/ext4/extents.c in ext4_es_cache_extent. Fabricating an integer overflow,
+> > > A local attacker with a special user privilege may cause a system crash
+> > > problem which can lead to an availability threat.
+> > 
+> > Please include what kernel version things like this were "found in" and
+> > when it was fixed, otherwise you force everyone to go scramble just to
+> > find that this was reported in July of 2020 and fixed then in the 5.9
+> > kernel release and has already been backported to all relevant stable
+> > kernel releases in August of last year.
+> > 
+> > In other words, no one running an updated kernel version from kernel.org
+> > is vulnerable today, right?  Are you saying that specific distro kernels
+> > are vulnerable to this?  If so, which ones?
+> 
+> It might be missing in some stable trees from a quick check. I just
+> checked the SUSE bug and it lists the following three relevant
+> commits, whilst the last one seems the relevant one:
+> 
+> d176b1f62f24 "ext4: handle error of ext4_setup_system_zone() on remount"
+> bf9a379d0980 "ext4: don't allow overlapping system zones"
+> ce9f24cccdc0 "ext4: check journal inode extents more carefully"
+> 
+> ce9f24cccdc0 was indeed included in 5.9-rc2, and backported to
+> 
+> v5.7.18: 3b654d118548ef2bb212dca361a5d1d19707822d ext4: check journal inode extents more carefully
+> v5.8.4: cfa678021a1bb6b5ce4aa45c865f2d3167646f89 ext4: check journal inode extents more carefully
+> v5.9-rc2: ce9f24cccdc019229b70a5c15e2b09ad9c0ab5d1 ext4: check journal inode extents more carefully
+> 
+> Then though it has 
+G> 
+> Fixes: 0a944e8a6c66 ("ext4: don't perform block validity checks on the journal inode")
+> 
+> and 0a944e8a6c66 itself was backported to some of the stable series as
+> well, I found:
+> 
+> v3.16.85: 71bfaf9e30125ec5b408fd328e412abf3b23214d ext4: don't perform block validity checks on the journal inode
+> v4.14.178: fc3293a80acc469fbabc91bfbf2e65dc84377dc7 ext4: don't perform block validity checks on the journal inode
+> v4.19.73: 97fbf573460e56ddf172614f70cdfa2af03b20ea ext4: don't perform block validity checks on the journal inode
+> v4.4.221: 571fa68cacdf5fa70a6fdb71bda051f822d3cfb6 ext4: don't perform block validity checks on the journal inode
+> v4.9.221: 2130aae807893cff163404bf6f6f6a4906dd14a1 ext4: don't perform block validity checks on the journal inode
+> v5.2-rc2: 0a944e8a6c66ca04c7afbaa17e22bf208a8b37f0 ext4: don't perform block validity checks on the journal inode
+> 
+> So in the current still supported stable series, in 4.9.221, 4.14.178 and
+> 4.19.73.
+> 
+> I just tried the reproducer from
+> https://bugzilla.suse.com/show_bug.cgi?id=1173485 on a system with 4.19.177
+> which so has not yet the 0a944e8a6c66 ("ext4: don't perform block validity
+> checks on the journal inode") fix backported and it indeed causes:
+> 
+> [  224.003978] ------------[ cut here ]------------
+> [  224.005052] kernel BUG at fs/ext4/extents_status.c:762!
+> [  224.006659] invalid opcode: 0000 [#1] SMP PTI
+> [  224.008378] CPU: 0 PID: 594 Comm: mount Not tainted 4.19.0-15-amd64 #1 Debian 4.19.177-1
+> [  224.011292] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
+> [  224.014043] RIP: 0010:ext4_es_cache_extent+0xfe/0x100 [ext4]
+> [  224.015770] Code: 48 8b 45 00 48 8b 7d 08 48 83 c5 18 48 89 e2 4c 89 e6 e8 a5 15 d8 d2 48 8b 45 00 48 85 c0 75 e4 e9 54 ff ff ff e8 a2 65 3f d2 <0f> 0b 0f 1f 44 00 00 41 55 49 89 fd 41 54 55 48 89 d5 53 89 f3 0f
+> [  224.019834] RSP: 0018:ffffa7a840b8f958 EFLAGS: 00010213
+> [  224.021034] RAX: 07ffffffffffffff RBX: 0000000000007ffd RCX: 0000ffffffffffff
+> [  224.022658] RDX: 0000000000007fff RSI: 00000000ffffffff RDI: ffff940d78a78968
+> [  224.024283] RBP: 0000000000007fff R08: 1000ffffffffffff R09: 00000000000002c9
+> [  224.025913] R10: 00000000000002c9 R11: 0000000000000041 R12: ffff940d78a78968
+> [  224.027549] R13: 00000000ffffffff R14: ffffffffffffffff R15: 00000000ffffffff
+> [  224.029179] FS:  00007fe8d33fb100(0000) GS:ffff940d7ba00000(0000) knlGS:0000000000000000
+> [  224.031011] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+> [  224.032354] CR2: 000056074c755878 CR3: 0000000135184001 CR4: 00000000001606f0
+> [  224.033990] Call Trace:
+> [  224.034634]  ext4_cache_extents+0x63/0xd0 [ext4]
+> [  224.035712]  __read_extent_tree_block+0x111/0x160 [ext4]
+> [  224.036665]  ? __kmalloc+0x180/0x220
+> [  224.037343]  ? ext4_find_extent+0x144/0x320 [ext4]
+> [  224.038247]  ext4_find_extent+0x144/0x320 [ext4]
+> [  224.039144]  ext4_ext_map_blocks+0x6a/0xda0 [ext4]
+> [  224.040063]  ? schedule+0x28/0x80
+> [  224.040747]  ? __wait_on_bit+0x58/0x90
+> [  224.041476]  ext4_map_blocks+0x2e4/0x5f0 [ext4]
+> [  224.042350]  ? ext4_data_block_valid+0x1d/0x20 [ext4]
+> [  224.043313]  ? __ext4_ext_check+0x238/0x3a0 [ext4]
+> [  224.044261]  _ext4_get_block+0x8e/0x110 [ext4]
+> [  224.045158]  ? unlock_new_inode+0x4e/0x60
+> [  224.045960]  generic_block_bmap+0x4b/0x70
+> [  224.046765]  jbd2_journal_init_inode+0x11/0xb0 [jbd2]
+> [  224.047794]  ext4_fill_super+0x3052/0x3c70 [ext4]
+> [  224.048730]  ? bdev_name.isra.6+0x2a/0xa0
+> [  224.049530]  ? ext4_calculate_overhead+0x490/0x490 [ext4]
+> [  224.050555]  ? snprintf+0x49/0x60
+> [  224.051234]  ? ext4_calculate_overhead+0x490/0x490 [ext4]
+> [  224.052309]  ? mount_bdev+0x177/0x1b0
+> [  224.053074]  ? ext4_calculate_overhead+0x490/0x490 [ext4]
+> [  224.054146]  mount_bdev+0x177/0x1b0
+> [  224.054858]  mount_fs+0x3e/0x150
+> [  224.055533]  vfs_kern_mount.part.36+0x54/0x120
+> [  224.056394]  do_mount+0x20e/0xcc0
+> [  224.057022]  ? _copy_from_user+0x37/0x60
+> [  224.057781]  ? memdup_user+0x4b/0x70
+> [  224.058530]  ksys_mount+0xb6/0xd0
+> [  224.059231]  __x64_sys_mount+0x21/0x30
+> [  224.059949]  do_syscall_64+0x53/0x110
+> [  224.060631]  entry_SYSCALL_64_after_hwframe+0x44/0xa9
+> [  224.061531] RIP: 0033:0x7fe8d35f9fea
+> [  224.062255] Code: 48 8b 0d a9 0e 0c 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 49 89 ca b8 a5 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 76 0e 0c 00 f7 d8 64 89 01 48
+> [  224.065741] RSP: 002b:00007ffcd2022e38 EFLAGS: 00000246 ORIG_RAX: 00000000000000a5
+> [  224.067223] RAX: ffffffffffffffda RBX: 000056074c748fb0 RCX: 00007fe8d35f9fea
+> [  224.068620] RDX: 000056074c751050 RSI: 000056074c7491e0 RDI: 000056074c7491c0
+> [  224.069987] RBP: 00007fe8d39471c4 R08: 0000000000000000 R09: 0000000000000000
+> [  224.071399] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+> [  224.072764] R13: 0000000000000000 R14: 000056074c7491c0 R15: 000056074c751050
+> [  224.074101] Modules linked in: loop sctp binfmt_misc crct10dif_pclmul crc32_pclmul ghash_clmulni_intel button virtio_console virtio_balloon evdev qemu_fw_cfg joydev pcspkr serio_raw nfsd auth_rpcgss nfs_acl lockd grace sunrpc ip_tables x_tables autofs4 ext4 crc16 mbcache jbd2 fscrypto ecb hid_generic usbhid hid btrfs xor zstd_decompress zstd_compress xxhash raid6_pq libcrc32c crc32c_generic dm_mod ata_generic virtio_net net_failover failover virtio_blk crc32c_intel ata_piix libata uhci_hcd ehci_pci ehci_hcd scsi_mod floppy aesni_intel usbcore psmouse aes_x86_64 crypto_simd cryptd glue_helper i2c_piix4 virtio_pci virtio_ring virtio usb_common
+> [  224.084374] ---[ end trace a93d957244af62ea ]---
+> [  224.085298] RIP: 0010:ext4_es_cache_extent+0xfe/0x100 [ext4]
+> [  224.086402] Code: 48 8b 45 00 48 8b 7d 08 48 83 c5 18 48 89 e2 4c 89 e6 e8 a5 15 d8 d2 48 8b 45 00 48 85 c0 75 e4 e9 54 ff ff ff e8 a2 65 3f d2 <0f> 0b 0f 1f 44 00 00 41 55 49 89 fd 41 54 55 48 89 d5 53 89 f3 0f
+> [  224.089834] RSP: 0018:ffffa7a840b8f958 EFLAGS: 00010213
+> [  224.090832] RAX: 07ffffffffffffff RBX: 0000000000007ffd RCX: 0000ffffffffffff
+> [  224.092181] RDX: 0000000000007fff RSI: 00000000ffffffff RDI: ffff940d78a78968
+> [  224.093539] RBP: 0000000000007fff R08: 1000ffffffffffff R09: 00000000000002c9
+> [  224.094899] R10: 00000000000002c9 R11: 0000000000000041 R12: ffff940d78a78968
+> [  224.096264] R13: 00000000ffffffff R14: ffffffffffffffff R15: 00000000ffffffff
+> [  224.097586] FS:  00007fe8d33fb100(0000) GS:ffff940d7ba00000(0000) knlGS:0000000000000000
+> [  224.099144] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+> [  224.100284] CR2: 000056074c755878 CR3: 0000000135184001 CR4: 00000000001606f0
+> 
+> So likely the 4.9.y, 4.14.y and 4.19.y still have the bug?  Is this correct? I
+> only quickly skimmed over the report, but this seems to be the case.
 
-Hi, I do not believe this is either CVE-2005-0469 or CVE-2005-0468. The
-issue is the same problem I described in handling environment variables
-originally, the TERM environment being a remotely reachable way of trigger
-the issue in inetutils and other clients. The issue appears to behave
-differently on netkit-telnet instances, and mirrors that of the Mikrotik
-client - causing a ring.cc assertion error to be printed, however the
-application still causes a SIGABRT when the connection is then terminated
-with the large buffers having caused a failure in ring.cc.
+It's hard to tell if those older kernels have this issue as the fix for
+this does not apply at all, and even SUSE didn't backport the change as
+it didn't seem relevant to them.
 
-Here is an example of the latest netkit-telnet behaviour with what I
-believe is heap corruption caused by the same PoC trigger -
-telnet_term_0day.py (the SIGABRT happens after the connection is killed to
-cause the ring.cc assertion):
+But I'll gladly take backports if someone wants to provide them :)
 
-telnet: buffer overflow, losing data, sorry
-telnet: ring.cc:143: int ringbuf::flush(): Assertion `top-bot > 0 &&
-top-bot <= count' failed.
-Aborted (core dumped)
-Program received signal SIGABRT, Aborted.
-0x00007ffff7a59d7f in raise () from /usr/lib/libc.so.6
-(gdb) bt
-#0  0x00007ffff7a59d7f in raise () from /usr/lib/libc.so.6
-#1  0x00007ffff7a44672 in abort () from /usr/lib/libc.so.6
-#2  0x00007ffff7a44548 in __assert_fail_base.cold.0 () from
-/usr/lib/libc.so.6
-#3  0x00007ffff7a52396 in __assert_fail () from /usr/lib/libc.so.6
-#4  0x000055555555f417 in ringbuf::flush() ()
-#5  0x000055555555f01f in netflush() ()
-#6  0x000055555555fcbe in process_rings(int, int, int, int, int, int) ()
-#7  0x00005555555639cf in Scheduler(int) ()
-#8  0x0000555555563acf in telnet(char const*) ()
-#9  0x000055555555ea9b in tn(int, char const**) ()
-#10 0x0000555555559acd in main ()
+Do distros consider "mounting untrusted ext4 filesystem images" a valid
+thing to worry about?  If so, that is against what the ext4 developers
+have said in the past from what I recall, so that might be good to get
+straightened out, and maybe why SUSE didn't assign a CVE for this...
 
-I couldn't account for all clients in my original advisory as I stated, the
-telnet client code is quite messy and there are buffers that are referenced
-in loops using functions such as sprintf() / free() and realloc() -
-supplied environment arguments DISPLAY, USER, TERM and things like
-LOGNAME,LINEMODE which have a corresponding IAC handler all seem to be ways
-of reaching the root vulnerable code paths. It also appears that this issue
-maybe much deeper rooted in the BSD code base that is shared amongst many
-telnet clients - inetutils and Mikrotik included. I have provided a PoC for
-testing purposes of the issue through a supplied IAC handler to set the
-TERM protocol in a connecting client.
+Thanks for digging into this.
 
-I have also learned that Safari still supports "telnet://" URI handlers
-however telnet command is deprecated on OS-X, a user would need to have a
-vulnerable telnet client installed such as the one in "homebrew" - however
-the USER= overflow is not reached in that client due to some additional
-argument length checking code by Apple. For a remote telnet client to
-trigger this issue in a URI handler an attacker would need to supply the
-"USER=" environment variable through telnet://user@ip which is a correct
-way of supplying a username in a uniform resource identifier - thus giving
-these vulnerabilities a potential way of being called remotely when a user
-supports telnet URI handlers and is using a vulnerable telnet
-implementation. Alternatively if USER= cannot be reached or overflown (as
-in the Apple client) then the overflows could be caused by a connecting
-telnetd service such as the telnet_term_0day.py example proof-of-concept.
-That could be reached simply by accessing telnet:// - URI handlers are not
-just limited to web browsers and are a means to identify network resources,
-there could be other clients not just web browsers out there using them
-(rfc3986)
-
-Unfortunately it is really busy for me this time of year and I do not have
-the time to investigate further beyond what I have provided to the list.
-They are present in at least a dozen BSD based telnet clients so far,
-Apple's telnet client from Sierra, NetKIT BSD (stack overflow confirmed,
-heap unsure), inetutils-1.9.4 & also netkit-telnet. It is hard for me to
-determine exploitation risk of all such instances that are out there but I
-hope now this list can see that this is a widespread problem not just
-limited to a single telnet client and has security implications from a
-remote perspective and also locally - when a user is in a restricted shell
-and calls the "telnet" command they could breakout of the shell using one
-of these overflows. Hackers out there might now cry out "ah-hah but what
-about !sh" - in some restricted shells in embedded devices (Mikrotik) such
-functionality is often removed and thus this offers a way to overwrite /
-corrupt memory and potentially breakout of such shells. I will agree that
-the use of the stack-overflow and its restricted shell breakout is minimal
-but it should still not be dismissed as "not a vulnerability" because
-security implications aren't immediately apparent.
-
-With that my original advisory needs amending to take into account that the
-core problem being demonstrated here is more wide-spread than I initially
-realised. I would argue telnet should be deprecated entirely in systems
-where it has not yet been disabled in favour of more regularly audited &
-peer reviewed OpenSSH. I believe the reasons these flaws have persisted for
-some 20 years in various forms is that no-one takes telnet client security
-as an issue yet I have shown two ways it could be triggered remotely and
-also used in a local context.
-
-Happy Hacking to all and to all a Merry Haxmas!
-
-Kind Regards,
-Hacker Fantastic
-
-
-On Wed, Dec 12, 2018 at 10:13 PM Tavis Ormandy <taviso@google.com> wrote:
-
-> On Wed, Dec 12, 2018 at 5:21 PM Hacker Fantastic
-> <hackerfantastic@googlemail.com> wrote:
-> >
-> > Please see the below proof of concept in triggering the heap overflow
-> using the IAC SB TELQUAL_IS environment option variable assignment. As per
-> my original advisory, which did not fully indicate the details but gave the
-> overview of how to trigger the condition.
->
-> Cool, but I think this is a different bug (AFAICT, it's CVE-2005-0469,
-> it was fixed in netkit, but far fewer distros use inetutils). I agree
-> this was a real vulnerability, It's a pretty good sign inetutils
-> should be deprecated imho.
->
-> Tavis.
->
-
-
--- 
-Matthew Hickey
-Tel: +44 7543 661237
-Web: http://blog.hackerfantastic.com
-
-Please visit my website for blog postings, status updates and project
-information.
-
---0000000000000ee548057ce95365--
+greg k-h
