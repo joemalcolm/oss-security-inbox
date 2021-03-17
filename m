@@ -1,30 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/11/2
-Message-ID: <5AC665375A88489691186D327AC3D0FF@HAGGIS>
-Date: Thu, 11 Feb 2021 23:43:29 +0100
-From: "Jens Geyer" <jensg@...che.org>
-To: <oss-security@...ts.openwall.com>, <security@...che.org>, "Thrift-Dev" <dev@...ift.apache.org>, <user@...ift.apache.org>
-Subject: CVE-2020-13949: Apache Thrift: potential DoS when processing untrusted payloads
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/17/16
+Message-ID: <YFIlh+AKXSV7Wt5Y@kroah.com>
+Date: Wed, 17 Mar 2021 16:51:35 +0100
+From: Greg KH <greg@...ah.com>
+To: Evgenii Shatokhin <eshatokhin@...tuozzo.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-13949: potential DoS when processing untrusted Thrift payloads
+On Wed, Mar 17, 2021 at 06:36:29PM +0300, Evgenii Shatokhin wrote:
+> On 17.03.2021 18:17, Greg KH wrote:
+> > On Wed, Mar 17, 2021 at 07:45:59PM +0530, Rohit Keshri wrote:
+> > > Hello Team,
+> > > 
+> > > A denial of service vulnerability was found in n_tty_receive_char_special
+> > > in drivers/tty/n_tty.c of the Linux kernel.  In this flaw a local attacker
+> > > with a normal user privilege could delay the loop (due to a changing
+> > > ldata->read_head, and a missing sanity check) and cause a threat to the
+> > > system availability.
+> > > 
+> > > 'CVE-2021-20219' was assigned by Red Hat.
+> > > 
+> > > Acknowledgements: Evgenii Shatokhin (Virtuozzo Research LLC)
+> > 
+> > Really?  Not the tools or people that reported this issue and fixed it
+> > in the community back in 2018?
+> 
+> The description is misleading, unfortunately.
+> 
+> RedHat backported that original fix (commit 3d63b7e4ae0d "n_tty: Fix stall
+> at n_tty_receive_char_special().") long ago.
+> 
+> I just found that their backport was incomplete: one hunk of the patch was
+> lost. This lead to the problem I reported: the reproducer program caused
+> n_tty_receive_char() to loop forever. As a result, other processes could
+> hang too.
 
-Severity: Important
+Ah, so the above text should have said "of the Red Hat Enterprise Linux
+Kernel release XX.XX only", right?
 
-Vendor:
-The Apache Software Foundation
+Given that the above CVE is not public in any database that I can find,
+one can only hope that the text will reflect what really is happening
+here.  Rohit, why was this even published?
 
-Versions Affected:
-Apache Thrift up to and including 0.13.0
+Again, stuff like this is just causing extra work by everyone else for
+no good reason that I can see.
 
-Description:
-Applications using Thrift would not error upon receiving messages declaring containers of sizes larger than the payload. As a result, malicious RPC clients could send short messages which would result in a large memory allocation, potentially leading to denial of service.
+Rohit, PLEASE work on making these types of "announcements" reflect what
+is actually happening.  I understand your company process rules require
+the assignment of CVEs to issues to make things get resolved easier, but
+that doesn't mean you should inflict that pain on the rest of the
+world...
 
-Mitigation:
-Upgrade to version 0.14.0
+thanks,
 
-Credit:
-This issue was reported by Hasnain Lakhani of Facebook.
-
-On behalf of the Apache Thrift PMC,
-Jens Geyer
+gre gk-h
