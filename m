@@ -1,37 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/09/1
-Message-ID: <CAA8xKjUvFqcwS8YymfmUqipHXLae2TT81Sgg2_yZ+TcW1rqBsA@mail.gmail.com>
-Date: Tue, 9 Mar 2021 09:56:16 +0100
-From: Mauro Matteo Cascella <mcascell@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/18/2
+Message-ID: <CAKx+4-pR3JScgA-PJFSwkAw6B8xiXYWFtVD6rEYp2wnJjyCogw@mail.gmail.com>
+Date: Thu, 18 Mar 2021 17:03:53 +0530
+From: Rohit Keshri <rkeshri@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-3409 QEMU: sdhci: incomplete fix for CVE-2020-17380/CVE-2020-25085
+Subject: Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hello Team,
 
-QEMU upstream commit [1] was supposed to fix CVE-2020-17380 and
-CVE-2020-25085, both involving a heap buffer overflow in the SDHCI
-controller emulation code. In fact, commit [1] turned out to be
-incomplete, in that it was still possible to reproduce the same
-issue(s) with specially crafted input, inducing a bogus transfer and
-subsequent out-of-bounds read/write access in sdhci_do_adma() or
-sdhci_sdma_transfer_multi_blocks().
+> Given that the above CVE is not public in any database that I can find,
+> one can only hope that the text will reflect what really is happening
+> here.  Rohit, why was this even published?
 
-A new series has been proposed (not merged yet) to address those
-issues, and CVE-2021-3409 was assigned to facilitate
-tracking/backporting of the new patch.
+> Again, stuff like this is just causing extra work by everyone else for
+> no good reason that I can see.
 
-Old patch:
-[1] https://git.qemu.org/?p=qemu.git;a=commit;h=dfba99f17feb6d4a129da19d38df1bcd8579d1c3
 
-New patch series:
-https://lists.nongnu.org/archive/html/qemu-devel/2021-03/msg00949.html
+I understand and apologize for the confusion.
 
-CVE-2021-3409 assigned by Red Hat, Inc.
 
-Best regards.
--- 
-Mauro Matteo Cascella
-Red Hat Product Security
-PGP-Key ID: BB3410B0
+This issue was reported for rhel7 to us (which was not seen in rhel8
+or later versions),  but it also  applies to  kernel before this
+('3d63b7e4ae0dc') patch or kernel without this patch.
+
+
+$ git tag --contains  3d63b7e4ae0dc
+v4.18
+v4.18-rc3
+v4.18-rc4
+v4.18-rc5
+v4.18-rc6
+v4.18-rc7
+v4.18-rc8
+
+..
+
+
+Since this issue was reported to us,  identified as a security flaw,
+and was fixed in the upstream, we decided to assign a CVE.
+
+
+We appreciate and value your feedback and co-operation.
+
+..
+Rohit Keshri / Red Hat Product Security Team
+PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
+
+secalert@...hat.com for urgent response
 
