@@ -1,4 +1,9 @@
-Received: (qmail 21740 invoked by uid 550); 29 Jul 2024 07:02:52 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2618" "Thursday" "18" "March" "2021" "10:19:31" "-0700" "Kurt H Maier" "khm@sciops.net" nil "54" "Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS" nil nil nil "3" nil nil (number mark "U       khm@sciops.n Mar 18   54/2618  " thread-indent "\"Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 25839 invoked by uid 550); 18 Mar 2021 17:19:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,61 +12,72 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21704 invoked from network); 29 Jul 2024 07:02:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:MIME-Version:Content-Type:
-	Content-Transfer-Encoding:References:In-Reply-To:Date:To:From:Subject:
-	Message-ID:Reply-To:Cc:Content-ID:Content-Description;
-	bh=UcqgogBMKGJgZBC7au7Ug1FeA44XYwTmb6MtZHo6Jy8=; b=PwghRZCipsOHrdTE2C3snKJJBY
-	W/CyMhSwXgQEnh/bAZsnU2x3nlcAt70OtzqxeQBAv+I84xYaYMuAPNnTcXfZsdOcLmWRZN19Xe8XQ
-	n8zbnAUrrESj7Ll0XY4DWrjzwxaJw6z03jdLkFX2eBggZijP1HIEJkmROcNv+aAYtr+rOVBA/5FiM
-	MoOUYaFirP9NjNic+jsMAUeDRk5iTBDa9ChLfi26DgI76K+guwPfMQ6vo9hL0YxxNU8F6JA+tPV8i
-	5xc5WbbdG+z3SIYzyUjbqYYgycAieYZDfQ952HiXVfCXrber76XwL6ApEB8DCiv+rfew311Z+cXZ1
-	QH+3qsYg==;
-Message-ID: <5e5fcc5b94cbcd6eb83fcfd3e73f0f08c0cba7e2.camel@debian.org>
-From: Yves-Alexis Perez <corsac@debian.org>
+Received: (qmail 25821 invoked from network); 18 Mar 2021 17:19:44 -0000
+Date: Thu, 18 Mar 2021 10:19:31 -0700
+From: Kurt H Maier <khm@sciops.net>
 To: oss-security@lists.openwall.com
-Date: Mon, 29 Jul 2024 09:02:33 +0200
-In-Reply-To: <30400489-6c59-4133-a3ce-fa0c16b63c02@analygence.com>
-References: <30400489-6c59-4133-a3ce-fa0c16b63c02@analygence.com>
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.52.3-1 
+Message-ID: <YFOLo/QrlgIrFotJ@wopr>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <CAKx+4-pR3JScgA-PJFSwkAw6B8xiXYWFtVD6rEYp2wnJjyCogw@mail.gmail.com>
+ <YFNCtWmsYrtYQeEJ@kroah.com>
 MIME-Version: 1.0
-X-Debian-User: corsac
-Subject: Re: [oss-security] ASLRn't is still alive and well on x86 kernels,
- despite CVE-2024-26621 patch
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YFNCtWmsYrtYQeEJ@kroah.com>
+Subject: Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper
+ synchronization in flush_to_ldisc() can lead to DoS
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu, Mar 18, 2021 at 01:08:21PM +0100, Greg KH wrote:
+> 
+> But none of that takes into account for the backporting of commits into
+> the stable tree, you need a different tool for that, which many of us
+> have our own.  If you use that you will see that the above commit really
+> is in lots of fixed kernel trees:
+> 
+> $ id_found_in 3d63b7e4ae0dc5e02d28ddd2fa1f945defc68d81
+> 3.16.61 3.18.115 4.4.140 4.9.112 4.14.54 4.17.5 4.18
 
-On Mon, 2024-07-08 at 12:37 -0400, Will Dormann wrote:
-> =C2=A0 - Modern x86 systems with the CVE-2024-26621 patch will NOT ranzom=
-ize=20
-> the load address of large libraries.=C2=A0 (i.e. is still vulnerable to=20
-> "ASLRn't" despite the patch)
+It's not really Red Hat's fault that there are six hundred "stable"
+kernel versions, which each change approximately weekly.  It's generally
+not worth tracking, and it would not be sane to expect Red Hat to seek 
+or announce CVEs for git branches they don't maintain.
 
-So it turns out this was because the patch addressing CVE-2024-26621
-(4ef9ad19e17676b9ef071309bc62020e2373705d) did so using CONFIG_32BIT which =
-is
-(perhaps surprisingly) *not* defined on IA-32.
+> > Since this issue was reported to us,  identified as a security flaw,
+> > and was fixed in the upstream, we decided to assign a CVE.
+> 
+> But then you announce that CVE to the community with no context or
+> information which only causes us to have to do lots of extra work.
 
-d9592025000b3cf26c742f3505da7b83aedc26d5 was recently merged to Linus tree
-switching to !IS_ENABLED(CONFIG_64BIT) which should work on all architectur=
-es.
-So ASLRn't *should* be fixed on IA-32 kernels with 6.11.
+They should have included the details which they later added, but I
+can't even remember the last time Red Hat reported a kernel
+vulnerability which contained enough information to satisfy you, so I
+wouldn't really blame them if they gave up trying to please you.
 
-Regards,
-- --=20
-Yves-Alexis
------BEGIN PGP SIGNATURE-----
+> If it's Red Hat's goal to get some people in the Linux kernel community
+> mad at them, it's working well.  If it's Red Hat's goal to somehow help
+> the community out with this type of announcement, it's not working at
+> all.  You failed to site the fix, when it was, who did the fix, who
+> found the fix, and where it was actually fixed in, all things that
+> people here actually would like to know.
 
-iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAmanPokACgkQ3rYcyPpX
-RFvvbgf9FxMoxKSPfurTVA4wavVh2wQ397KBfPEz1QtKwHqrmZR4TfEJOlzsC2BM
-h/6Vk+uJK70ByaKvR1j8fdYMUKniIM5GAAfNdpbPpsTgMLHGjHrj/89zG2R2YxIN
-GwuY00rOyUXRF8hpfMCACnGatRJQqTcnr+Bdb6abYkxxTQLTu9vK/gj+A/eJOw2y
-ayj/SOd4hnSl7725A8rTiiW53mdE3jDhxLNHnTU8Ucdwd2SFNk81bu3j0EWkcw6V
-J5DFcGGhiIPIWb6e2ff3ucOLBFwXkuhxJqoocwaQEdwtBqq5Ui7MWHfM1fpdHgNH
-k+JbdP0eXtrUgbSjLiQfzYwMPTeLVw=3D=3D
-=3DzO5O
------END PGP SIGNATURE-----
+Some people in the Linux kernel community seem to get mad as a hobby,
+and measure their success by volume of email sent about it.  Those of
+us who administer Red Hat systems generally find the level of detail
+sufficient and I for one appreciate Rohit's announcements.  This one
+could have been better, I agree.
+
+Since MITRE set about destroying the CVE assignment process, reporting
+of CVE assignments has been optional and to be frank we're lucky to get
+this much these days.
+
+> So, what really is your goal here?
+
+What's yours?  You don't seem to run RHEL, so why get bent out of shape
+if they slip up while reporting a CVE assignment?  I guess more 
+accurately, why get bent out of shape *every time* they report a CVE
+assignment?  Is it possible for you to just stop, so those of us who
+find value in the reports don't have to page through all the complaining
+in order to read it?  Or is oss-security just doomed to the "greg is mad
+at the email" cycle forever?
+
+khm
