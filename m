@@ -1,4 +1,9 @@
-Received: (qmail 28003 invoked by uid 550); 28 Dec 2022 15:37:52 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3228" "Thursday" "18" "March" "2021" "14:28:59" "+0100" "Daniel Beck" "ml@beckweb.net" nil "86" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "3" nil nil (number mark "U       ml@beckweb.n Mar 18   86/3228  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9846 invoked by uid 550); 18 Mar 2021 13:29:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,140 +12,103 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22436 invoked from network); 28 Dec 2022 15:31:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=hardenedbsd.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=vuofHjDm4STYXNdGsep6aD4JXI32+stKyT0rMvY0yIE=;
-        b=gtw3JBQVK415jmrBeDvapjJYJdJrnltnKNSkGA6YgrLtP2bs/93MkQJeCOIQjucj2f
-         jZ1To18EjK2jj0xhwN8IYMiq6Xg5V/SPv5nZlAucA3ifJ4UAbPbg5X3GMMFD4ImRFlfu
-         DJbtp9w36RU53oYDAzNd29JbudrOxckr34nj6U+d9FMncElAubAJ6NiUceU+gLE6umJn
-         z6D7sclZS0mLbXhJnd26xqMG2dfmuKWyl6XP/Yyaf2A0JcD1cory6tUYo/TPu2YMttAA
-         ZAm4dfTdT/xpiY0SVWQ6xCzNiFlrWcmNlJbolRbXkuSOqJhvyzlCXB04MdpLlyKrX841
-         OYfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vuofHjDm4STYXNdGsep6aD4JXI32+stKyT0rMvY0yIE=;
-        b=eSGz0FGB8wZc+UgSg+YeqmL6F8n/Ou/ca/m+L+1eS35Qk9P2fKhgW8jo1SPpAUV66E
-         pMvBhY7sLgdineAXK4Mr3YvL21BXzhlnKcd6NjUVmn3rCJEZ4Ljq3TsM3SsNqDR9bnEP
-         4d37kwUNEr5ixWE+R6PNjChGWh3O2/JWYmgZXdgKPKjB43z1VaQGFd9FaQdWSvn2VNfG
-         ypgYduayjCoAB2b+cHHpFPs+e8dyQ/Uj3GctOXT0HeLP4ygiDaScTpitVWvPuxgKJug2
-         0qF5aiHlEUS2aLpByBq5mn2UEGvgU0hS/orwy7GshqLa0S71JvBzKUVGVtMEwJYDEHrz
-         LuOw==
-X-Gm-Message-State: AFqh2krF3Z+3I7i2A0zWQfLzkN6+0rhpbWM05KcamWVAj4eR7rjyCvlz
-	1gqvmVPNW2aSmukApSTBX0oSE/q37MjBhgX8cIYNc4ucn8iprpnbDl+ujYYKzuxVqhqh3SAVjWW
-	oOVVZNvj6+hYmXgORiQAB6zSPj2MHbABIpOjvXHDcHOtwrYtWx1MkAj/Dg+Xz1X9LM78vHmZXEH
-	Q0AxGZZmKsei+gnk2fog==
-X-Google-Smtp-Source: AMrXdXsJ7fP4Q5mz0Ra/FOpqE5hbViJkZkTFXPjbP9L+A24yyFhTx8aCgTBTZVxN/TmkNlUjEx+7sQ==
-X-Received: by 2002:ac8:534c:0:b0:3a9:8183:6a04 with SMTP id d12-20020ac8534c000000b003a981836a04mr43048522qto.54.1672241498856;
-        Wed, 28 Dec 2022 07:31:38 -0800 (PST)
-Date: Wed, 28 Dec 2022 10:31:37 -0500
-From: Shawn Webb <shawn.webb@hardenedbsd.org>
+Received: (qmail 9807 invoked from network); 18 Mar 2021 13:29:10 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.15\))
+Message-Id: <20241D7D-8489-4A8A-82BE-7CFD4F92E1F8@beckweb.net>
+Date: Thu, 18 Mar 2021 14:28:59 +0100
 To: oss-security@lists.openwall.com
-Cc: Alejandro Colomar <alx.manpages@gmail.com>,
-	Michael Kerrisk <mtk.manpages@gmail.com>,
-	linux-kernel@vger.kernel.org, linux-man@vger.kernel.org
-Message-ID: <20221228153137.4w4bhaqt4fb5vlio@mutt-hbsd>
-X-Operating-System: FreeBSD mutt-hbsd 14.0-CURRENT-HBSD FreeBSD
- 14.0-CURRENT-HBSD 
-X-PGP-Key: https://git.hardenedbsd.org/hardenedbsd/pubkeys/-/blob/master/Shawn_Webb/03A4CBEBB82EA5A67D9F3853FF2E67A277F8E1FA.pub.asc
-References: <Y6SJDbKBk471KE4k@p183>
- <Y6TUJcr/IHrsTE0W@codewreck.org>
- <1a1963aa1036ba07@orthanc.ca>
- <20221228152458.6xyksrxunukjrtzx@mutt-hbsd>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="k7cz6avvpg6f66a7"
-Content-Disposition: inline
-In-Reply-To: <20221228152458.6xyksrxunukjrtzx@mutt-hbsd>
-Subject: Re: [oss-security] [patch] proc.5: tell how to parse /proc/*/stat
- correctly
+X-Mailer: Apple Mail (2.3445.104.15)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1616074150;0f57baaa;
+X-HE-SMSGID: 1lMshv-0004Z5-Bj
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
---k7cz6avvpg6f66a7
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-On Wed, Dec 28, 2022 at 10:24:58AM -0500, Shawn Webb wrote:
-> On Tue, Dec 27, 2022 at 04:44:49PM -0800, Lyndon Nerenberg (VE7TFX/VE6BBM=
-) wrote:
-> > Dominique Martinet writes:
-> >=20
-> > > But, really, I just don't see how this can practically be said to be =
-parsable...
-> >=20
-> > In its current form it never will be.  The solution is to place
-> > this variable-length field last.  Then you can "cut -d ' ' -f 51-"
-> > to get the command+args part (assuming I counted all those fields
-> > correctly ...)
-> >=20
-> > Of course, this breaks backwards compatability.
->=20
-> It would also break forwards compatibility in the case new fields
-> needed to be added.
->=20
-> The only solution would be a libxo-style feature wherein a
-> machine-parseable format is exposed by virtue of a file extension.
->=20
-> Examples:
->=20
-> 1. /proc/pid/stats.json
-> 2. /proc/pid/stats.xml
-> 3. /proc/pid/stats.yaml_shouldnt_be_a_thing
+The following releases contain fixes for security vulnerabilities:
 
-To expand upon this idea, lets define an example json file:
+* CloudBees AWS Credentials Plugin 1.28.1
+* Libvirt Agents Plugin 1.9.1
+* Matrix Authorization Strategy Plugin 2.6.6
+* Role-based Authorization Strategy Plugin 3.1.1
+* Warnings Next Generation Plugin 8.5.0
 
-{
-	"schemaver": "20221228001",
-	"name": "cat",
-	"state": {
-		"raw": "R",
-		"intval": 1,
-		"Pretty": "(Running)",
-	},
-	"tgid": 5452,
-	"pid": 5452,
-	"ppid": 743,
-	"uid": {
-		"real": 501,
-		"effective": 501,
-		"saved_set": 501,
-		"fs": 501
-	}
-}
 
-And so on.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2021-03-18/
 
---=20
-Shawn Webb
-Cofounder / Security Engineer
-HardenedBSD
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-https://git.hardenedbsd.org/hardenedbsd/pubkeys/-/raw/master/Shawn_Webb/03A=
-4CBEBB82EA5A67D9F3853FF2E67A277F8E1FA.pub.asc
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
---k7cz6avvpg6f66a7
-Content-Type: application/pgp-signature; name="signature.asc"
+---
 
------BEGIN PGP SIGNATURE-----
+SECURITY-2180 / CVE-2021-21623
+Items (like jobs) can be organized hierarchically in Jenkins, using the
+Folders Plugin or something similar. An item is expected to be accessible
+only if all its ancestors are accessible as well.
 
-iQIzBAABCAAdFiEEA6TL67gupaZ9nzhT/y5nonf44foFAmOsYVkACgkQ/y5nonf4
-4fonfA//aKcBZ1LuRMDhEhGwkR7Iq3V988pnjIrfeJzNM33Cpf4zWtfsyR73gStD
-29peSWTP+L9hg6A9K9FcvcbseYYYhlegTtqPtxdbEbL7fqBzm2LDLD9Vh3RTQE1Z
-qYMOXSGRjbjivPfoDDGXlFahY5Lqt5NX5w1/wfR+4NpbpGZ/VyXo48XtSmiG9XuV
-+LDGIQ1FOul4M1XqqD3CApJsjuOmwtLGQxQIcatQYgkOin9uN1O8bYMVHiXXPEJp
-q+s+gZIT9sxHLKvNbAjw3WRzTHMPNPk2PTxLkNjxBbrxd428UNamJlPmLwPsp2xg
-OucAMb3coSh+Af71K7f+bZ6lv/ZAVKbA0Vpmun887rww/dlcPKUd+DpdVKc2JK8k
-pvQy/OZIly8+uggmx3qfz8svjpR0wD68v5wX/i/+UXsszgp9ArlCKbAlORTxea+A
-5R7wQi9QS0jKk04zMA5GZ2W8gEFgjRYdjPe3oIt64mcbHKE8qaj3kZNjgoyqXl7e
-zmMjP776S8ot/aPsHTho9sizi8RuqjMbX3q4TePjWajbJC99Akqoo6Ah/x2rNZ54
-U3l5aQAEOw8E/sMYAjBNMVIJFZz9yEyDgeYqXBOI3zl68h6A/hdDtd75higpM1Qo
-8pHkUFFYDOBKfaIdJmDR4QNf/DPOYQaW9RZFrF6p6c2L5WPdOko=
-=Epsn
------END PGP SIGNATURE-----
+Matrix Authorization Strategy Plugin 2.6.5 and earlier does not correctly
+perform permission checks to determine whether an item should be
+accessible.
 
---k7cz6avvpg6f66a7--
+This allows attackers with Item/Read permission on nested items to access
+them, even if they lack Item/Read permission for parent folders.
+
+
+SECURITY-2182 / CVE-2021-21624
+Items (like jobs) can be organized hierarchically in Jenkins, using the
+Folders Plugin or something similar. An item is expected to be accessible
+only if all its ancestors are accessible as well.
+
+Role-based Authorization Strategy Plugin 3.1 and earlier does not correctly
+perform permission checks to determine whether an item should be
+accessible.
+
+This allows attackers with Item/Read permission on nested items to access
+them, even if they lack Item/Read permission for parent folders.
+
+
+SECURITY-2032 / CVE-2021-21625
+CloudBees AWS Credentials Plugin 1.28 and earlier does not perform a
+permission check in a helper method for HTTP endpoints.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of AWS credentials stored in Jenkins if any of the following plugins
+are installed:
+
+* Amazon Elastic Container Service (ECS) / Fargate
+* AWS Parameter Store Build Wrapper
+* AWS SAM
+
+Further plugins may use this helper method as well without performing a
+permission check themselves.
+
+Credentials IDs obtained this way can be used as part of an attack to
+capture the credentials using another vulnerability.
+
+
+SECURITY-2041 / CVE-2021-21626
+Warnings Next Generation Plugin 8.4.4 and earlier does not perform
+permission checks in methods implementing form validation.
+
+This allows attackers with Item/Read permission but without Item/Workspace
+or Item/Configure permission to check whether attacker-specified file
+patterns match workspace contents. A sequence of requests can be used to
+effectively list workspace contents.
+
+
+SECURITY-1764 / CVE-2021-21627
+Libvirt Agents Plugin 1.9.0 and earlier does not require POST requests for
+a form submission endpoint, resulting in a cross-site request forgery
+(CSRF) vulnerability.
+
+This vulnerability allows attackers to stop hypervisor domains.
