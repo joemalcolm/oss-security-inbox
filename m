@@ -1,38 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/02/1
-Message-ID: <YYBhTMCXrf9TPicd@LykOS.localdomain>
-Date: Mon, 1 Nov 2021 17:51:08 -0400
-From: Santiago Torres <torresariass@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/18/1
+Message-ID: <20210318060359.GA7529@lorien.valinor.li>
+Date: Thu, 18 Mar 2021 07:04:00 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Trojan Source Attacks
+Subject: Re: CVE-2020-35519 Linux kernel: x25_bind out-of-bounds read
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 01, 2021 at 09:51:38PM +0100, Jan Engelhardt wrote:
+Hi,
+
+On Wed, Mar 17, 2021 at 05:14:57PM -0400, Sasha Levin wrote:
+> On Thu, Mar 18, 2021 at 01:20:18AM +0530, Rohit Keshri wrote:
+> > Hello Team,
+> > 
+> > An out-of-bounds (OOB) memory access flaw was found in x25_bind in
+> > net/x25/af_x25.c in the Linux kernel. A bounds check failure allows a local
+> > attacker with a user account on the system to gain access to out-of-bounds
+> > memory, leading to a system crash or a leak of internal kernel information.
+> > The highest threat from this vulnerability is to confidentiality,
+> > integrity, as well as system availability.
+> > 
+> > 'CVE-2020-35519' was assigned by Red Hat.
 > 
-> On Monday 2021-11-01 18:27, Nicholas Boucher wrote:
-> >
-> >We have identified an issue affecting all compilers and interpreters that support Unicode.
-> >[...]
-> >The attached paper describes an attack paradigm -- which we believe to be novel -- discovered by security researchers at the
-> >University of Cambridge.
+> This mail doesn't even mention where/how this is fixed. Is this
+> 6ee50c8e262a ("net/x25: prevent a couple of overflows")?
 > 
-> Not so novel. At one time, this picture made the rounds
-> (https://twitter.com/acronis/status/1019152990022787072 - the pic is likely
-> older than this 2018 tweet), and anyone who knew that Unicode had zero-width
-> characters already made the connection.
+> If so, it's already fixed in all stable kernels.
+> 
+> How can the issue cause a leak btw?
 
-Along the same lines, there were a myriad of attacks using bash-style
-sequences to obscure parts of patches inside of git show/git log/less/
-other pagers not too long ago (circa 2017, maybe?). We even discussed
-similar possibilities on this paper[1] (sec 4.3) when mentioning git
-commit signing of content displayed on collaborative coding platforms.
+Just as additional reference: I think this goes back to this report:
+https://www.openwall.com/lists/oss-security/2020/11/15/2 
 
-Overall there's a plethora of work around "punycode meets tool X" that
-I'm surprised this is called novel.
+In upstream this was fixed then if the above is correct in
 
-Cheers!
--Santiago
+	v4.4.248
+	v4.9.248
+	v4.14.211
+	v4.19.162
+	v5.4.82
+	v5.9.13
+	v5.10-rc7
 
-[1] https://ssl.engineering.nyu.edu/papers/afzali_asiaccs_2018.pdf
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Regards,
+Salvatore
