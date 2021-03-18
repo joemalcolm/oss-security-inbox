@@ -1,59 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/07/3
-Message-ID: <20210807024937.g43ooqppdm7zozbh@sym.noone.org>
-Date: Sat, 7 Aug 2021 04:49:39 +0200
-From: Axel Beckert <abe@...ian.org>
-To: Thorsten Glaser <tg@...bsd.de>
-Cc: oss-security@...ts.openwall.com, security@...ian.org
-Subject: Re: bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/18/4
+Message-ID: <YFNCtWmsYrtYQeEJ@kroah.com>
+Date: Thu, 18 Mar 2021 13:08:21 +0100
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS
 Content-Type: text/plain; charset=utf-8
 
-Hi Thorsten,
-
-I'm dropping the lynx-specific recipients, i.e. lynx-dev and the bug
-report…
-
-Thorsten Glaser wrote:
-> Axel Beckert dixit:
-> > This is more severe than it initially looked like: Due to TLS Server
-> > Name Indication (SNI) the hostname as parsed by Lynx (i.e with
-> > "user:pass@" included) is sent in _clear_ text over the wire even
+On Thu, Mar 18, 2021 at 05:03:53PM +0530, Rohit Keshri wrote:
+> Hello Team,
 > 
-> I *ALWAYS* SAID SNI IS A SHIT THING […]
+> > Given that the above CVE is not public in any database that I can find,
+> > one can only hope that the text will reflect what really is happening
+> > here.  Rohit, why was this even published?
+> 
+> > Again, stuff like this is just causing extra work by everyone else for
+> > no good reason that I can see.
+> 
+> 
+> I understand and apologize for the confusion.
+> 
+> 
+> This issue was reported for rhel7 to us (which was not seen in rhel8
+> or later versions),  but it also  applies to  kernel before this
+> ('3d63b7e4ae0dc') patch or kernel without this patch.
+> 
+> 
+> $ git tag --contains  3d63b7e4ae0dc
+> v4.18
+> v4.18-rc3
+> v4.18-rc4
+> v4.18-rc5
+> v4.18-rc6
+> v4.18-rc7
+> v4.18-rc8
+> 
+> ..
 
-Don't blame the messenger. ;-)
+`git describe` should be used instead for stuff like this:
+	$ git describe --contains 3d63b7e4ae0dc
+	v4.18-rc3~4^2~4
 
-> Other browsers also need checking.
+But none of that takes into account for the backporting of commits into
+the stable tree, you need a different tool for that, which many of us
+have our own.  If you use that you will see that the above commit really
+is in lots of fixed kernel trees:
 
-Good idea.
+$ id_found_in 3d63b7e4ae0dc5e02d28ddd2fa1f945defc68d81
+3.16.61 3.18.115 4.4.140 4.9.112 4.14.54 4.17.5 4.18
 
-I just checked in Debian Unstable those tools I'd mostly expect with
-such URLs and commandline usage:
+So this means that your RHEL 7 kernel, which is based on 3.10, somehow
+missed picking this up when it was backported to the "newer" stable
+kernel trees almost 3 years ago.
 
-* Axel (sic! :-) 2.17.10-2
-* ELinks 0.13.2-1+b1
-* LibWWW-Perl (aka LWP) 6.53-1 via /usr/bin/GET
-* Links/Links2 2.21-1+b1
-* Wget (1.21-1+b1)
-* Wget2 (1.99.1-2.2)
+Is that a mistake in your kernel development process that should be
+resolved?
 
-I didn't find any such issue in any of these tools. All cases verified
-via Wireshark's "follow TCP stream" against an Apache 2.4.48 (from
-Debian Unstable as well).
+> Since this issue was reported to us,  identified as a security flaw,
+> and was fixed in the upstream, we decided to assign a CVE.
 
-But yeah, there are probably many more to check. But so far it looks
-like a lynx-specific issue.
+But then you announce that CVE to the community with no context or
+information which only causes us to have to do lots of extra work.
 
-> Thanks for the detective work,
+If it's Red Hat's goal to get some people in the Linux kernel community
+mad at them, it's working well.  If it's Red Hat's goal to somehow help
+the community out with this type of announcement, it's not working at
+all.  You failed to site the fix, when it was, who did the fix, who
+found the fix, and where it was actually fixed in, all things that
+people here actually would like to know.
 
-You're welcome. Thanks for stumbling over this issue and triggering my
-digging. :-)
+So, what really is your goal here?
 
-		Regards, Axel
--- 
- ,''`.  |  Axel Beckert <abe@...ian.org>, https://people.debian.org/~abe/
-: :' :  |  Debian Developer, ftp.ch.debian.org Admin
-`. `'   |  4096R: 2517 B724 C5F6 CA99 5329  6E61 2FF9 CD59 6126 16B5
-  `-    |  1024D: F067 EA27 26B9 C3FC 1486  202E C09E 1D89 9593 0EDE
+thanks,
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+greg k-h
