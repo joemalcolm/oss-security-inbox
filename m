@@ -1,33 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/22/1
-Message-ID: <so4o1n2-r92q-8sn6-829r-qns5o0qo873@redhat.com>
-Date: Fri, 22 Jan 2021 13:42:27 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Alex Xu <alex@...u.ca>, Stefan Hajnoczi <shajnocz@...hat.com>
-Subject: CVE-2020-35517 QEMU: virtiofsd: potential privileged host device access from guest
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/19/3
+Message-ID: <CAFzhf4qsDm74NJYA2toWYAVxUvvJyP7dD9sPC88EPkHpxf+cag@mail.gmail.com>
+Date: Thu, 18 Mar 2021 23:47:24 +0000
+From: Piotr Krysiuk <piotras@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2020-27171] Numeric error when restricting speculative pointer arithmetic allows unprivileged local users to leak content of kernel memory
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Numeric error in the Linux kernel mechanism to mitigate speculatively
+out-of-bounds loads (Spectre mitigation) has been identified.
 
-A potential host privilege escalation issue was found in the virtio-fs shared 
-file system daemon (virtiofsd) of the QEMU. Virtio-fs daemon shares host 
-directory tree with a guest VM. The said privilege escalation scenario may 
-occur if a privileged guest user was to create device special file in the 
-shared directory and use it to r/w access host devices. A privileged guest 
-user may use this flaw to arbitrarily access (r/w) host files resulting in DoS 
-scenario or may potentially escalate privileges on the host.
+Unprivileged BPF programs running on affected 64-bit systems can
+exploit this to execute speculatively out-of-bounds loads from 4GB
+window within the kernel memory. This can be abused to extract
+contents of kernel memory via side-channel.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2021-01/msg05461.html
+The identified issue is when computing ptr_limit for preventing
+out-of-bounds speculation on pointer arithmetic. The computation of
+ptr_limit is off-by-one whenever the pointer moves to the left.
 
-* This issue was reported by Alex Xu (CC'd).
+The computed ptr_limit is zero in particular when subtracting zero
+offset from a pointer that is already at the beginning of map element
+value. This leads to integer underflow in fixup_bpf_calls() where
+sanitization code is generated.
 
-* 'CVE-2020-35517' assigned by Red Hat Inc.
+I developed a PoC to demonstrate how unprivileged local users can
+extract contents of kernel memory.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+The PoC has been shared privately with <security@...nel.org> to assist
+with fix development.
+
+The patches are available from BPF subsystem public git repository. The
+minimal fix is:
+
+* bpf: Fix off-by-one for area size in creating mask to left [
+https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=10d2bb2e6b1d8c4576c56a748f697dbeb8388899
+]
+
+However it is recommended to apply the whole series as it includes
+fix for another speculatively out-of-bounds vulnerability in BPF
+[CVE-2020-27170] that I reported at the same time and some additional
+hardening of the affected code:
+
+* bpf: Prohibit alu ops for pointer types not defining ptr_limit [
+https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=f232326f6966cf2a1d1db7bc917a4ce5f9f55f76
+]
+* bpf: Fix off-by-one for area size in creating mask to left [
+https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=10d2bb2e6b1d8c4576c56a748f697dbeb8388899
+]
+* bpf: Simplify alu_limit masking for pointer arithmetic [
+https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=b5871dca250cd391885218b99cc015aca1a51aea
+]
+* bpf: Add sanity check for upper ptr_limit [
+https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=1b1597e64e1a610c7a96710fc4717158e98a08b3
+]
+* bpf, selftests: Fix up some test_verifier cases for unprivileged [
+https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=0a13e3537ea67452d549a6a80da3776d6b7dedb3
+]
+
+# Discoverer
+
+Piotr Krysiuk <piotras@...il.com>
+
+# References
+
+CVE-2020-27171 (reserved via https://cveform.mitre.org/)
 
