@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["998" "Friday" "12" "June" "2015" "02:31:07" "-0700" "Jose R R" "Jose.r.r@metztli-it.com" "<CAM12Q5TX2mSUHAen7ihUkz_cr2f3GbNhkFDv=LgMWQ=ntCngUg@mail.gmail.com>" "28" "Re: [oss-security] OpenSSL Sec Adv 20150611" nil nil nil "6" "2015061209:31:07" "[oss-security] OpenSSL Sec Adv 20150611" (number mark "        Jose.r.r@met Jun 12   28/998   " thread-indent "\"Re: [oss-security] OpenSSL Sec Adv 20150611\"\n") "<20150611171113.GA26244@zoho.com>" ("<20150611171113.GA26244@zoho.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4953" "Thursday" "18" "March" "2021" "20:21:36" "+0100" "Solar Designer" "solar@openwall.com" nil "94" "Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS" nil nil nil "3" nil nil (number mark "U       solar@openwa Mar 18   94/4953  " thread-indent "\"Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1772 invoked by uid 550); 12 Jun 2015 09:39:11 -0000
+Received: (qmail 11401 invoked by uid 550); 18 Mar 2021 19:22:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +11,111 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21517 invoked from network); 12 Jun 2015 09:31:19 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:date
-         :message-id:subject:from:to:content-type;
-        bh=15baqFibjZGUrZZStV+Tebspb12Ex632LOdJShBNLDM=;
-        b=LML+ZSczOfxPf40UVTqDO/yF4nQWrdQjjtirscxZbQqnR+HEcj7rwvkJ55jdAda/T7
-         U5bXGwukGS8tmF592AlOijfbPh7ZjMJsezGFUFSuaS3jX19v7ULaCkACOZG0WwWNrNg5
-         +CMLPJLaFgSDrfKdQfeteHd678MEU50HjPDRP6HtaDy++z1Q+xD3nRXvsIQPDs1XPuYn
-         pvfP5vp+iLTul8DTevnoRfgHy88xljdUdoU4qFPCnBQOnrzj9uGLe15GwPO/U/ADGp8G
-         XFZHyRVVLY5C+AY6is07fD7MKskMmkFumct/W4W4OJDIP5g1vW8oHSOBHqxrRnbMt2P2
-         skMQ==
-X-Gm-Message-State: ALoCoQlKbA+j1IMokgafWKWO21aK22IIx1bR37dxmKA+Bx2NiSoNrxFcbMW2uVNdrJZ94tGKVk1a
-MIME-Version: 1.0
-X-Received: by 10.182.215.193 with SMTP id ok1mr11522103obc.6.1434101467275;
- Fri, 12 Jun 2015 02:31:07 -0700 (PDT)
-In-Reply-To: <20150611171113.GA26244@zoho.com>
-References: <20150611171113.GA26244@zoho.com>
-X-Google-Sender-Auth: Gv9RnAviqwexPqKP4ZtYkNIN_kw
-Message-ID: <CAM12Q5TX2mSUHAen7ihUkz_cr2f3GbNhkFDv=LgMWQ=ntCngUg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 12 Jun 2015 02:31:07 -0700
-From: Jose R R <Jose.r.r@metztli-it.com>
 Reply-To: oss-security@lists.openwall.com
-Sender: jose.r.r@metztli.com
-Subject: Re: [oss-security] OpenSSL Sec Adv 20150611
+Received: (qmail 10095 invoked from network); 18 Mar 2021 19:21:48 -0000
+Date: Thu, 18 Mar 2021 20:21:36 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Message-ID: <20210318192136.GA6178@openwall.com>
+References: <CAKx+4-pR3JScgA-PJFSwkAw6B8xiXYWFtVD6rEYp2wnJjyCogw@mail.gmail.com> <YFNCtWmsYrtYQeEJ@kroah.com> <YFOLo/QrlgIrFotJ@wopr> <YFOc8bhUAKOgjfVS@sashalap>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YFOc8bhUAKOgjfVS@sashalap>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS
 
-Niltze, Mancha-
+Hi,
 
-On Thu, Jun 11, 2015 at 10:11 AM, mancha <mancha1@zoho.com> wrote:
-> FYI, today OpenSSL released new versions (1.0.2b, 1.0.1n, 1.0.0s, and
-> 0.9.8zg) to address several security issues [1].
->
-> --mancha
->
-> [1] http://openssl.org/news/secadv_20150611.txt
+FWIW, I agree with what Kurt H Maier wrote.  While I wish Red Hat's
+messages like these were more informative right away, Greg's messages
+are unfortunately beyond being purely constructive and are in part
+discouraging.  We're lucky that so far his requests for more information
+actually resulted in just that, and didn't result in Red Hat stopping to
+post - that is, that others replying had the strength to interpret them
+constructively despite of their tone suggesting otherwise.  OTOH, we
+have no way to know whether someone was actually discouraged enough not
+to post on some occasion.
 
-Assuming I built Apache 2.4.x ( --enable-ssl --enable-so)
+Greg, I'd appreciate you not repeating the same things over and over -
+such as (roughly) "who is this for" and "why did you assign this CVE
+_now_".  Questioning CVE assignment is reasonable and desirable, but
+only when that is specific (e.g., point out specific reasons why you
+think an issue might not be CVE worthy) and not generic (questioning
+every CVE without giving reasons, or asking why bother with CVE for an
+old issue).  As a moderator, I tell you that the kind of messages Red
+Hat is posting _are_ desirable in here.  They could be more detailed,
+and it's OK to ask for more detail, but it's not OK to discourage their
+posting.  Thank you.
 
-and PHP5.6.x ( --with-openssl=shared )
+On Thu, Mar 18, 2021 at 02:33:21PM -0400, Sasha Levin wrote:
+> On Thu, Mar 18, 2021 at 10:19:31AM -0700, Kurt H Maier wrote:
+> >On Thu, Mar 18, 2021 at 01:08:21PM +0100, Greg KH wrote:
+> >>
+> >>But none of that takes into account for the backporting of commits into
+> >>the stable tree, you need a different tool for that, which many of us
+> >>have our own.  If you use that you will see that the above commit really
+> >>is in lots of fixed kernel trees:
+> >>
+> >>$ id_found_in 3d63b7e4ae0dc5e02d28ddd2fa1f945defc68d81
+> >>3.16.61 3.18.115 4.4.140 4.9.112 4.14.54 4.17.5 4.18
+> >
+> >It's not really Red Hat's fault that there are six hundred "stable"
+> >kernel versions, which each change approximately weekly.  It's generally
+> >not worth tracking, and it would not be sane to expect Red Hat to seek
+> >or announce CVEs for git branches they don't maintain.
+> 
+> I think that this is an excellent point: RedHat shouldn't be reporting
+> issues for "Linux Kernel" then. Look at the subject of this mail:
+> 
+> 	CVE-2021-20219 Linux kernel: improper synchronization in 
+> 	flush_to_ldisc() can lead to DoS
+> 
+> It doesn't say "Red Hat Linux kernel", it just says "Linux kernel",
+> right?
+> 
+> Red Hat runs on a forked version of the kernel that has it's own set of
+> backports, features, and bugs. As you pointed out I think it would make
+> a lot of sense if they would instead start assigning CVEs for "Red Hat
+> Linux Kernel".
 
-for a set of servers with a previous version of OpenSSL support,
-recent release will require me to build again and redeploy? ;-)
+Oh, no.  Just no.  Red Hat (nor others) shouldn't start to
+indiscriminately label their CVE assignments for Linux kernel issues
+(nor for issues in other software they modify and package) like that.
 
+I think what we really want is encourage Red Hat (and other distros) to
+put more effort into figuring out and documenting whether each issue is
+specific to them or (was) also present in mainline (any version or git
+commit, but not requiring a review of any branches other than what they
+possibly took code from).  I think they usually already have that
+information internally.  It's just that it didn't propagate into this
+thread's original message now.  It should.
 
-Best Professional Regards.
+Then, for issues that (ever) exist(ed) in upstream kernels, or in any
+upstream Open Source software for that matter, they should be brought to
+oss-security.  It's very kind of a distro to help us all with that.  We
+should encourage that.
 
--- 
-Jose R R
-http://www.metztli-it.com
----------------------------------------------------------------------------------------------
-Try at no charge http://b2evolution.net for http://OpenShift.com PaaS
----------------------------------------------------------------------------------------------
-from our GitHub http://Nepohualtzintzin.com repository. Cloud the easy way!
----------------------------------------------------------------------------------------------
+For issues that are distro-specific, it's a grey area.  First, like you
+correctly say, they should be labeled accordingly.  Then the question of
+their relevance to oss-security comes up.  Among the published content
+guidelines for oss-security we actually have one asking not to post in
+here distro-specific advisories aimed at end-users.  As I recall, when
+at some point years ago FreeBSD started sending their advisories in
+here, I asked them not to.  Indeed, we're also not seeing e.g. Red Hat's
+advisories in here, although they do produce those and send them to
+proper channels.  However, what about distro-specific vulnerability
+notifications not meant for end-users, but for downstream distros?
+Using my two examples, both FreeBSD and RHEL do have some downstream or
+otherwise related distros, who might need to know to merge the fixes.
+
+In fact, we have a reverse example of that in this same thread -
+Virtuozzo had reported the issue to Red Hat presumably due to their
+reuse of code from RHEL.  It can happen both ways, and would also be
+relevant to third-parties if there are more than two distros reusing
+distro-specific code like that.  It is quite possible that this thread
+was also noticed and will be acted upon by some other RHEL kernel forks,
+although chances are those monitor other Red Hat resources and would
+have learned from there as well.
+
+Alexander
