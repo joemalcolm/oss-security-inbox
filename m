@@ -1,41 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/27/2
-Message-ID: <CAKghNw2tx1MqnRF-osqZQ4x5PWak8jTT1nvjrcZrJtrFOQdZdQ@mail.gmail.com>
-Date: Sat, 27 Mar 2021 15:28:52 -0700
-From: Gordon Tetlow <gordon@...lows.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/19/1
+Message-ID: <YFPFrYcJK1e+qedn@jasmine.lan>
+Date: Thu, 18 Mar 2021 17:27:09 -0400
+From: Leo Famulari <leo@...ulari.name>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL 1.1.1 CVE-2021-3450 CA certificate check bypass with X509_V_FLAG_X509_STRICT, CVE-2021-3449 NULL pointer deref in signature_algorithms processing
+Subject: Risk of local privilege escalation in GNU Guix
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Mar 27, 2021 at 11:05 AM Solar Designer <solar@...nwall.com> wrote:
->
-> One other detail I feel I have to bring up in here, and expect a
-> response to, is Wind River's apparent leak of the vulnerability detail
-> two days prior to scheduled public disclosure.  This was brought up on
-> the distros list back then, and I was also asked about it on Twitter
-> when the vulnerabilities were finally made public appropriately on the
-> scheduled date.
->
-> Since the vulnerability detail wasn't on the distros list, it's not
-> exactly a case of a list member leaking from there, but it's closely
-> related.  And regardless of where this happened, it's a concern, which
-> we probably should discuss on oss-security.
->
-> So I'd appreciate an explanation/statement from Wind River on what
-> happened and what measures, if any, are being taken to prevent this from
-> happening again.  I'd also appreciate a comment from OpenSSL.
->
-> The leak was on a web page archived here:
->
-> https://web.archive.org/web/20210324105700/https://support2.windriver.com/index.php?page=security-notices&on=view&id=7055
+A security vulnerability that can lead to local privilege escalation has
+been found in `guix-daemon` [0]. It affects multi-user setups in which
+`guix-daemon` runs locally.
 
-While I am neither Wind River nor OpenSSL, I did notice on the linked
-page that the upper right hand corner says:
-Released: Apr 22, 2020     Updated: Mar 22, 2021
+It does _not_ affect multi-user setups where `guix-daemon` runs on a
+separate machine and is accessed over the network via
+`GUIX_DAEMON_SOCKET`, as is customary on cluster setups [1].
 
-Without knowing much else, it feels like someone accidentally put a
-"released" date as last year and the content management system went
-ahead and made the article public. Hard to say without confirmation,
-but I could definitely see that being the chain of events.
+Exploitation is more difficult, but not impossible, on machines where
+the Linux protected hardlinks [2] feature is enabled, which is common —
+this is the case when the contents of `/proc/sys/fs/protected_hardlinks`
+are `1`.
 
-Gordon
+# Vulnerability
+
+The attack consists in having an unprivileged user spawn a build process, for 
+instance with `guix build`, that makes its build directory world-writable.  The 
+user then creates a hardlink to a root-owned file such as `/etc/shadow` in that
+build directory.  If the user passed the `--keep-failed` option and the build
+eventually fails, the daemon changes ownership of the whole build tree,
+including the hardlink, to the user.  At that point, the user has write access
+to the target file.
+
+# Fix
+
+This bug [3] has been fixed [4].
+
+The fix consists in adding a root-owned “wrapper” directory in which the build
+directory itself is located.  If the user passed the `--keep-failed` option and 
+the build fails, the `guix-daemon` first changes ownership of the build
+directory, and then, in two stages, moves the build directory into the location
+where users expect to find failed builds, roughly like this:
+
+1. `chown -R USER /tmp/guix-build-foo.drv-0/top`
+2. `mv /tmp/guix-build-foo.drv-0{,.pivot}`
+3. `mv /tmp/guix-build-foo.drv-0.pivot/top /tmp/guix-build-foo.drv-0`
+
+In step #1, `/tmp/guix-build-foo.drv-0` remains root-owned, with permissions of
+`#o700`.  Thus, only root can change directory into it or into `top`.  Likewise in
+step #2.
+
+The build tree becomes accessible to the user once step #3 has succeeded, not
+before.  These steps are performed after the package build scripts have stopped
+running.
+
+More information may be available on the Guix blog:
+
+https://guix.gnu.org/en/blog/2021/risk-of-local-privilege-escalation-via-guix-daemon/
+
+We are grateful to Nathan Nye of WhiteBeam Security for reporting
+this bug and discussing fixes with us!
+
+Your feedback is welcome.
+
+On behalf of the Guix team,
+Leo Famulari
+
+[0] https://guix.gnu.org/manual/en/html_node/Invoking-guix_002ddaemon.html
+[1] https://hpc.guix.info/blog/2017/11/installing-guix-on-a-cluster/
+[2] https://sysctl-explorer.net/fs/protected_hardlinks/
+[3] https://issues.guix.gnu.org/47229
+[4] https://git.savannah.gnu.org/cgit/guix.git/commit/?id=ec7fb669945bfb47c5e1fdf7de3a5d07f7002ccf
