@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5936" "Wednesday" "13" "January" "2021" "16:40:06" "+0100" "Marcus Meissner" "meissner@suse.de" "<20210113154006.GF13248@suse.de>" "137" "Re: [oss-security] CVE-2020-28374: Linux SCSI target (LIO) unrestricted copy offload" nil nil nil "1" "2021011315:40:06" "[oss-security] CVE-2020-28374: Linux SCSI target (LIO) unrestricted copy offload" (number mark "U       meissner@sus Jan 13  137/5936  " thread-indent "\"Re: [oss-security] CVE-2020-28374: Linux SCSI target (LIO) unrestricted copy offload\"\n") "<20210112190134.585e5a60@suse.de>" ("<20210112190134.585e5a60@suse.de>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2020-28374: Linux SCSI target (LIO) unrestricted copy offload" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["276" "Friday" "19" "March" "2021" "16:30:27" "+0100" "Andreas Lehmkuehler" "lehmi@apache.org" nil "10" "[oss-security] CVE-2021-27807: Apache PDFBox: A carefully crafted PDF file can trigger an infinite loop while loading the file" nil nil nil "3" nil nil (number mark "U       lehmi@apache Mar 19   10/276   " thread-indent "\"[oss-security] CVE-2021-27807: Apache PDFBox: A carefully crafted PDF file can trigger an infinite loop while loading the file\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-27807: Apache PDFBox: A carefully crafted PDF file can trigger an infinite loop while loading the file" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29887 invoked by uid 550); 13 Jan 2021 15:40:19 -0000
+Received: (qmail 9697 invoked by uid 550); 19 Mar 2021 17:38:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,159 +12,28 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29869 invoked from network); 13 Jan 2021 15:40:18 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Wed, 13 Jan 2021 16:40:06 +0100
-From: Marcus Meissner <meissner@suse.de>
+Received: (qmail 28201 invoked from network); 19 Mar 2021 15:30:40 -0000
 To: oss-security@lists.openwall.com
-Message-ID: <20210113154006.GF13248@suse.de>
-References: <20210112190134.585e5a60@suse.de>
+From: Andreas Lehmkuehler <lehmi@apache.org>
+Organization: Apache Software Foundation
+Message-ID: <080e4f99-db4b-fe12-937f-a908f01f14dc@apache.org>
+Date: Fri, 19 Mar 2021 16:30:27 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210112190134.585e5a60@suse.de>
-Organization: SUSE Software Solutions =?iso-8859-1?Q?Ger?=
- =?iso-8859-1?Q?many_GmbH=2C_Maxfeldstr=2E_5=2C_90409_Nuernberg=2C_Germany?=
- =?iso-8859-1?Q?=2C_GF=3A_Felix_Imend=F6rffer=2C_HRB_36809=2C_AG_N=FCrnber?=
- =?iso-8859-1?Q?g?=
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Subject: Re: [oss-security] CVE-2020-28374: Linux SCSI target (LIO)
- unrestricted copy offload
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2021-27807: Apache PDFBox: A carefully crafted PDF file can trigger an infinite
+ loop while loading the file
 
-Hi,
+Description:
 
-For tcmu-runner Mitre suggested that we use a different CVE as its not the same codebase.
+A carefully crafted PDF file can trigger an infinite loop while loading the 
+file. This issue affects Apache PDFBox Apache PDFBox version 2.0.22 and prior 
+2.0.x versions.
 
-Please use CVE-2021-3139 for tcmu-runner.
+Credit:
 
-Ciao, Marcus
+Apache PDFBox would like to thank Fabian Meumertzheim for reporting this issue
 
-On Tue, Jan 12, 2021 at 07:01:34PM +0100, David Disseldorp wrote:
-> ===============================================================================
-> == Subject:     Linux SCSI target (LIO) unrestricted copy offload
-> ==
-> ==
-> == CVE ID#:     CVE-2020-28374
-> ==
-> == Versions:    Linux: v3.12 and later
-> ==              tcmu-runner: v1.3.0 and later
-> ==
-> == Summary:     An attacker with access to a LUN and knowledge of Unit Serial
-> ==              Number assignments can read and write to any LIO backstore,
-> ==              regardless of SCSI transport settings.
-> ===============================================================================
-> 
-> 
-> Description
-> -----------
-> SCSI "EXTENDED COPY" (XCOPY) requests sent to a Linux SCSI target (LIO) allow an
-> attacker to read or write anywhere on any LIO backstore configured on the
-> host, provided the attacker has access to one LUN and knowledge of the victim
-> backstore's vpd_unit_serial (AKA "wwn"). This is possible regardless of the
-> transport/HBA settings for the victim backstore.
-> - with vhost-scsi this can allow VM guests to read or write to images assigned
->   to other qemu processes
-> - with iSCSI this allows CHAP, ACL and network portal isolation bypass
-> - backstores with no corresponding transport LUN mapping remain vulnerable
-> - all other LIO transports and backstores which allow for XCOPY processing by
->   LIO's target_core_xcopy handler should be considered vulnerable
-> - tcmu-runner based user backstores are also vulnerable via a similar logic bug
-> 
-> This is due to the way that LIO behaves when processing XCOPY
-> copy-source/copy-destination (CSCD) descriptors; when attempting to match
-> CSCD descriptors with corresponding se_devices, target_xcopy_locate_se_dev_e4()
-> iterates over LIO's global devices list, which includes all configured
-> backstores, instead of only considering backstores which are exposed to the
-> initiator via transport layer ACL settings.
-> 
-> Similarly, when LIO is configured to forward SCSI requests to the user-space
-> tcmu-runner daemon (via target_core_user), tcmu-runner's xcopy_locate_udev()
-> iterates over all tcmu-runner devices, without considering any transport layer
-> restrictions.
-> 
-> 
-> Exploitation
-> ------------
-> The attacker sends an XCOPY request with two CSCD descriptors.
-> One CSCD descriptor must correspond to the NAA IEEE identifier for the LUN to
-> which the attacker has access. The other (victim) CSCD descriptor must be an
-> NAA IEEE identifier which matches another configured backstore within LIO's
-> global device inventory.
-> 
-> For successful exploitation of this bug an attacker must be able to provide a
-> matching NAA identifier for the victim backstore.
-> 
-> 
-> Affected Versions
-> -----------------
-> Linux Kernel (LIO target_core_xcopy)
-> - Exploitable as of
->   f99715ac8d6f ("target: Enable global EXTENDED_COPY setup/release")
->   + mainline v3.12-rc1 and later
-> 
-> tcmu-runner (user-space SCSI target, coupled with LIO's target_core_user)
-> - Exploitable as of 9c86bd0db97a ("tcmur: Add emulate XCOPY command support")
->   + tcmu-runner v1.3.0 and later
-> 
-> 
-> Relevance
-> ---------
-> Linux kernel LIO deployments are affected under the following conditions:
-> - Linux kernel with f99715ac8d6f, i.e. mainline v3.12-rc1 or later
-> - LIO SCSI target (target_core_mod) loaded
-> - at least two configured backstores
-> - one "attacker backstore" must be exposed via a SCSI transport (e.g. iSCSI)
->   which permits access to a potential attacker
->   + the attacker backstore must allow and use in-kernel LIO XCOPY command
->     emulation
->     - all backstores except special "pscsi" passthrough and "user" types
->     - emulate_3pc=1 must be set (default)
-> - one or more "victim backstores" must be configured
->   + transport settings for victim backstores are irrelevant
->   + all backstore types are vulnerable, including "iblock", "fileio", "rd_mcp",
->     "pscsi" and "user"
->   + emulate_3pc=1 must be set the victim backstore (default)
-> 
-> tcmu-runner deployments are affected under the following conditions:
-> - tcmu-runner with 9c86bd0db97a, i.e. v1.3.0 or later
-> - one "attacker backstore" must be exposed via a SCSI transport (e.g. iSCSI)
->   which permits access to a potential attacker
-> - one or more "victim backstores" must be configured
->   + transport settings for victim backstores are irrelevant
->   + the victim backstore must also be managed by the same tcmu-runner instance
->     - e.g. an XCOPY request to a "user"+tcmu-runner backstore can't be used to
->       read or write to an "iblock" backstore, only to other backstores handled
->       by the same tcmu-runner instance.
-> 
-> 
-> Mitigation
-> ----------
-> Caveat: instructions below do *not* affect XCOPY requests sent to tcmu-runner
->         based backstores. They are only suitable for disabling kernel
-> 	(target_core_xcopy) support for XCOPY requests.
-> 
-> Requires acb3f2600eb8 ("target: Reject EXTENDED_COPY when emulate_3pc is disabled")
-> - v3.12-rc7 or later
-> 
-> XCOPY support is enabled by default, but can be disabled via:
->   echo 0 > /sys/kernel/config/target/core/<backstore>/<name>/attrib/emulate_3pc
-> or
->   targetcli /backstores/<backstore>/<name> set attribute emulate_3pc=0
-> 
-> ...where <backstore> and <name> should be filled appropriately.
-> 
-> 
-> Fixes
-> -----
-> Linux kernel and tcmu-runner fixes will be provided following the coordinated
-> release date: 2021-01-12 10:00 Pacific Standard Time.
-> 
-> 
-> Credits
-> -------
-> Research and patches by David Disseldorp of SUSE.
-> Patch review by Mike Christie of Oracle, and Lee Duncan of SUSE.
-> 
-
--- 
-Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@suse.de>
