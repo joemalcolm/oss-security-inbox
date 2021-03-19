@@ -1,36 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/03/1
-Message-ID: <Yan+cPE6n/neDPhS@ugly>
-Date: Fri, 3 Dec 2021 12:24:32 +0100
-From: Oswald Buddenhagen <oswald.buddenhagen@....de>
-To: isync-devel@...ts.sourceforge.net
-Cc: oss-security@...ts.openwall.com
-Subject: CVE-2021-3657: multiple buffer overflows in isync/mbsync
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/19/10
+Message-ID: <7bca690f-e807-8447-d624-45476e9e8711@apache.org>
+Date: Fri, 19 Mar 2021 16:32:39 +0100
+From: Andreas Lehmkuehler <lehmi@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-27906: Apache PDFBox: A carefully crafted PDF file can trigger an OutOfMemory-Exception while loading the file
 Content-Type: text/plain; charset=utf-8
 
-description:
 
-A flaw was found in mbsync versions prior to 1.4.4. Due to inadequate
-handling of extremely large (>=2GiB) IMAP literals, malicious or
-compromised IMAP servers, and hypothetically even external email
-senders, could cause several different buffer overflows, which could
-conceivably be exploited for remote code execution.
+Description:
 
-mitigation:
+A carefully crafted PDF file can trigger an OutOfMemory-Exception while loading 
+the file. This issue affects Apache PDFBox Apache PDFBox version 2.0.22 and 
+prior 2.0.x versions.
 
-upgrade to the freshly released v1.4.4 available from 
-https://sourceforge.net/projects/isync/files/isync/ , or apply the 
-matching attached patch. note that while a patch for v1.3.x is provided, 
-no upstream release will be made any more.
+This issue is being tracked as PDFBOX-5112
 
-details:
+Credit:
 
-i'm not sure it's actually possible to pull off RCE with these. a
-non-server attacker would be additionally impaired by message size
-limitations and being unable to predict the exact size of the headers
-stored in the box, so they would likely need an account on the same
-liberally configured system, apart from knowing to target mbsync.
-
-View attachment "CVE-2021-3657-buffer-overflows-on-big-1.4.patch" of type "text/x-diff" (7190 bytes)
-
-View attachment "CVE-2021-3657-buffer-overflows-on-big-1.3.patch" of type "text/x-diff" (5489 bytes)
+Apache PDFBox would like to thank Fabian Meumertzheim for reporting this issue
