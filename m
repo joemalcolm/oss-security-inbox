@@ -1,32 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/29/5
-Message-Id: <B55D8C2E-39CF-4588-9C85-B78849C7D903@dwheeler.com>
-Date: Fri, 29 Jan 2021 12:30:01 -0500
-From: "David A. Wheeler" <dwheeler@...eeler.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/19/7
+Message-ID: <YFSyTOoNtyrQvrH3@sashalap>
+Date: Fri, 19 Mar 2021 10:16:44 -0400
+From: Sasha Levin <sashal@...nel.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux Kernel: local priv escalation via futexes
+Subject: Re: Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS
 Content-Type: text/plain; charset=utf-8
 
+On Thu, Mar 18, 2021 at 08:21:36PM +0100, Solar Designer wrote:
+>On Thu, Mar 18, 2021 at 02:33:21PM -0400, Sasha Levin wrote:
+>> Red Hat runs on a forked version of the kernel that has it's own set of
+>> backports, features, and bugs. As you pointed out I think it would make
+>> a lot of sense if they would instead start assigning CVEs for "Red Hat
+>> Linux Kernel".
+>
+>Oh, no.  Just no.  Red Hat (nor others) shouldn't start to
+>indiscriminately label their CVE assignments for Linux kernel issues
+>(nor for issues in other software they modify and package) like that.
+>
+>I think what we really want is encourage Red Hat (and other distros) to
+>put more effort into figuring out and documenting whether each issue is
+>specific to them or (was) also present in mainline (any version or git
 
+Agreed. And while we can't require that, it would be awesome if it were
+done systematically instead of picking a random commit here and there
+and assign it a CVE.
 
-> On Jan 29, 2021, at 12:01 PM, Marcus Meissner <meissner@...e.de> wrote:
-> Mitre has now assigned CVE-2021-3347.
-> 
-> On Fri, Jan 29, 2021 at 05:42:08PM +0100, Solar Designer wrote:
->> Hi,
->> 
->> I'm not familiar with futexes, but just to save others a few minutes on
->> looking this up:
-> 
-> (Is anyone? Futex are too complex for me at least, I would guess also 
-> using them is error prone.)
+>commit, but not requiring a review of any branches other than what they
+>possibly took code from).  I think they usually already have that
 
-Here’s some helpful context. "A futex overview and update” (2009) at https://lwn.net/Articles/360699/
-"The futex mechanism... is a fast, lightweight kernel-assisted locking primitive for user-space applications. It provides for very fast uncontended lock acquisition and release. The futex state is stored in a user-space variable (an unsigned 32-bit integer on all platforms). Atomic operations are used in order to change the state of the futex in the uncontended case without the overhead of a syscall. In the contended cases, the kernel is invoked to put tasks to sleep and wake them up. Futexes are the basis of several mutual exclusion constructs commonly used in threaded programming."
+I suppose we can't *require* them, but it's a matter of curtesy, right?
+They already have that information, and instead of making a bunch of
+other people do the same job they could just share the information to
+begin with.
 
-More recently: "Rethinking the futex API” (2020): https://lwn.net/Articles/823513/
-"The current effort to rework futexes appears to be driven by a couple of concerns. One that goes mostly unstated is the desire to create a system-call interface that makes a bit more sense than futex(), which is a complex, multiplexed API with wildly varying arguments and a number of special cases.”
+>information internally.  It's just that it didn't propagate into this
+>thread's original message now.  It should.
 
---- David A. Wheeler
+Exactly, they already must have this information, which is where some of
+the frustration around these notifications comes from: it reads as
+nothing more than a lip service.
 
+>Then, for issues that (ever) exist(ed) in upstream kernels, or in any
+>upstream Open Source software for that matter, they should be brought to
+>oss-security.  It's very kind of a distro to help us all with that.  We
+>should encourage that.
 
+They should, but look at the original announcement mail in this thread:
+it's so generic and lacks so much information that it can't possibly
+inform anyone of an issue.
+
+"There's a bug in the kernel and we assigned a CVE!"
+
+>For issues that are distro-specific, it's a grey area.  First, like you
+>correctly say, they should be labeled accordingly.  Then the question of
+>their relevance to oss-security comes up.  Among the published content
+>guidelines for oss-security we actually have one asking not to post in
+>here distro-specific advisories aimed at end-users.  As I recall, when
+>at some point years ago FreeBSD started sending their advisories in
+>here, I asked them not to.  Indeed, we're also not seeing e.g. Red Hat's
+>advisories in here, although they do produce those and send them to
+>proper channels.  However, what about distro-specific vulnerability
+>notifications not meant for end-users, but for downstream distros?
+>Using my two examples, both FreeBSD and RHEL do have some downstream or
+>otherwise related distros, who might need to know to merge the fixes.
+
+Sure, that makes sense. I'm not disagreeing that distro specific issues
+are relevant here, but pretend that you're a downstream of RHEL and read
+the original announcement in this thread, how would you act? would you
+know what to merge? on to which versions?
+
+What's the value of these announcements then?
+
+-- 
+Thanks,
+Sasha
