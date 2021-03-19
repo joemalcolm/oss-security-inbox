@@ -1,70 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/08/4
-Message-ID: <YCEuiRh1ryqAtwvX@kroah.com>
-Date: Mon, 8 Feb 2021 13:28:57 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/19/4
+Message-ID: <YFRTGpfRTmm566ZQ@kroah.com>
+Date: Fri, 19 Mar 2021 08:30:34 +0100
 From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Cc: alex.gaynor@...il.com
-Subject: Re: CVE-2021-20226 kernel: use-after-free in io_uring feature
+Subject: Re: Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Feb 08, 2021 at 03:00:18PM +0530, Rohit Keshri wrote:
-> Hello,
-> 
-> The flaw CVE-2021-20226 is identified as a use-after-free problem with
-> breach to data integrity, confidentiality and system availability, and
-> this may even cause escalated privileges with good troubleshooting
-> skills.
-> 
-> 
-> I also wanted to add that the affected souce (as was reported for
-> kernel v5.7.0) has been modified from v5.10 kernel version with patch
-> 233295130e53 with following cleanup details.
-> 
-> ~~~
-> 
-> $ git show 233295130e53
-> commit 233295130e53c8dfe6dbef3f52634c3f7e44cd6a
-> Author: Pavel Begunkov <asml.silence@...il.com>
-> Date:   Sat Oct 10 18:34:06 2020 +0100
-> 
->     io_uring: clean up ->files grabbing
-> 
->     Move work.files grabbing into io_prep_async_work() to all other work
->     resources initialisation. We don't need to keep it separately now, as
->     ->ring_fd/file are gone. It also allows to not grab it when a request
->     is not going to io-wq.
-> ..
-> 
-> $ git tag --contains 233295130e53
-> v5.10
-> v5.10-rc1
-> v5.10-rc2
-> v5.10-rc3
-> v5.10-rc4
-> v5.10-rc5
-> v5.10-rc6
-> v5.10-rc7
-> v5.11-rc1
-> v5.11-rc2
-> v5.11-rc3
-> v5.11-rc4
-> v5.11-rc5
-> v5.11-rc6
-> v5.11-rc7
+On Thu, Mar 18, 2021 at 08:21:36PM +0100, Solar Designer wrote:
+> Greg, I'd appreciate you not repeating the same things over and over -
+> such as (roughly) "who is this for" and "why did you assign this CVE
+> _now_".  Questioning CVE assignment is reasonable and desirable, but
+> only when that is specific (e.g., point out specific reasons why you
+> think an issue might not be CVE worthy) and not generic (questioning
+> every CVE without giving reasons, or asking why bother with CVE for an
+> old issue).  As a moderator, I tell you that the kind of messages Red
+> Hat is posting _are_ desirable in here.  They could be more detailed,
+> and it's OK to ask for more detail, but it's not OK to discourage their
+> posting.  Thank you.
 
-That's odd, don't use `git tag --contains`, the better thing to do is:
+If you look at the 3 RH emails this week for issues, they all contained
+misinformation and confused people.  I did not do my usual "why are you
+asking for a CVE for an old issue" questions, I asked in one for more
+information about the issue involved, and for the other, proper
+acknowledgment for the people that reported and fixed the issue as what
+was written was entirely incorrect and ignored them.
 
-$ git describes --contains 233295130e53
-v5.10-rc1~167^2~10
+I asked for that _because_ once these types of "announcements" go out to
+the world, my inbox instantly starts filling up with "why isn't this
+fixed in a stable kernel." "please tell me what commit fixes this
+issue." and the like from users of Linux.  Because the CVE notices are
+all still marked "private", doing misleading announcements like this
+cause a mini DoS on a number of kernel community members each time.
 
-Which means is showed up in the tree in the 5.10-rc1 release, so
-anything newer than that is fine.
+So until Red Hat starts sending out announcements that are actually
+correct and are helpful to the community, I will keep complaining,
+because they directly affect me and others that work upstream on the
+stable kernel releases.
 
-Note, this does not include tests for backports to stable kernel
-releases or distro kernels.  That kind of query is left as an exercise
-for the reader :)
+For an example of how to do a "good" CVE notice, I will point out
+Piotr's excellent emails today for CVE-2020-27171 and CVE-2020-27170.
+Red Hat could use those as a template of how to write their
+announcements in a way that would be useful for us all, and would _not_
+cause the upstream kernel developers additional work.
 
-Hope this helps,
+thanks,
 
 greg k-h
