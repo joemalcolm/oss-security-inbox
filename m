@@ -1,34 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/12/1
-Message-Id: <D0B48415-57AD-43DE-9C28-20C8205FF772@cmpct.info>
-Date: Thu, 12 Aug 2021 00:18:46 +0100
-From: Sam James <sam@...ct.info>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/19/5
+Message-ID: <CAHvrgmw1HW6Fe_iX0ioM9yrsc2b9Pt0owD=Ygc3gcMMC=d_sQQ@mail.gmail.com>
+Date: Fri, 19 Mar 2021 10:16:59 +0100
+From: Vardan Torosyan <vardan.torosyan@...fana.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-20314: Remote stack buffer overflow in libspf2
+Subject: Grafana 7.4.5, 7.3.10 and 6.7.6 released with security fixes for Grafana Enterprose
 Content-Type: text/plain; charset=utf-8
 
+Dear all,
+
+We have released Grafana 7.4.5, 7.3.10 and 6.7.6 with important security
+fixes for all Grafana Enterprise versions from 6.1.0-beta1 through 7.4.4.
+Grafana OSS is not affected, as it does not use the features affected by
+vulnerabilities.
+
+*Remote Escalation of Privileges vulnerability (CVE-2021-27962)*
 
 
-> On 11 Aug 2021, at 15:41, Philipp Jeitner (SIT) <philipp.jeitner@....fraunhofer.de> wrote:
-> 
-> #### Description
-> 
-> Stack buffer overflow in libspf2 versions below 1.2.11 when processing certain SPF macros can lead to Denial of service and potentially code execution via malicious crafted SPF explanation messages. CVE-2021-20314 has been assigned to this issue.
-> [...]
-> #### Patch
-> 
-> The issue has been fixed in github commit c37b7c1:
-> 
-> https://github.com/shevek/libspf2/commit/c37b7c13c30e225183899364b9f2efdfa85552ef
-> 
-> An updated version of libspf2 (1.2.11) which also fixes other security related issues is available from github (https://github.com/shevek/libspf2). The libspf2 website (https://www.libspf2.org/download.html) and latest release there is NOT UPDATED YET.
-> 
+On the 26th of February during an internal security audit, we discovered
+that Grafana Enterprise 7.2.0 introduced a mechanism which allows users
+with the Editor role to bypass data source permissions on an organization’s
+default data source, if configured. To our knowledge, this has not been
+detected by anyone else.
 
-I don't see this as either a tag or a release on the GitHub repository. Possibly the maintainer forgot to run git push --tags?
 
-Thanks for your work on this issue.
+Affected versions: Grafana Enterprise releases 7.2.0 through 7.4.3 are
+affected by this vulnerability.
 
-best,
-sam
+Patched versions: 7.3.x and 7.4.x
 
-Download attachment "signature.asc" of type "application/pgp-signature" (619 bytes)
+
+*Remote Access Control Bypass vulnerabilities (CVE-2021-28146,
+CVE-2021-28147)*
+
+On the 10th of March during our internal security audit, we discovered that
+on Grafana Enterprise instances using an external authentication service,
+Grafana Enterprise 7.4.0 introduced a mechanism which allows any
+authenticated user to add external groups to existing teams. We have
+reserved CVE-2021-28146 for this issue.
+
+As we continued an internal audit, on the 11th of March we discovered that
+Grafana Enterprise 6.1.0 introduced the same vulnerability as above, but
+only for Grafana instances which have editorsCanAdmin feature enabled. We
+have reserved CVE-2021-28147for this issue.
+
+Affected versions: Grafana Enterprise 7.4.0-beta1 through 7.4.4 are
+affected by CVE-2021-28146 and 6.1.0-beta1 through 7.4.4 are affected by
+CVE-2021-28147.
+
+Patched versions: 6.x, 7.3.x and 7.4.x
+
+*Remote Unauthenticated Denial of Service vulnerability (CVE-2021-28148)*
+
+On the 11th of March during our internal security audit, we discovered
+that Grafana
+Enterprise 6.6.0 introduced a new HTTP API endpoint for usage insights
+which allows any unauthenticated user to send an unlimited number of
+requests to the endpoint, leading to a denial of service (DoS) attacks
+against Grafana Enterprise instances.
+
+Affected versions: Grafana Enterprise 6.6.0-beta1 to 7.4.4
+
+Patched versions: 6.x, 7.3.x and 7.4.x
+
+*Solutions and mitigations*
+
+Download and install the appropriate patch for your version of Grafana.
+
+
+Affected Grafana Cloud instances have been already upgraded to the versions
+with fix. Grafana Enterprise customers have been provided with updated
+binaries ahead of this disclosure.
+
+Further information can be found at
+https://grafana.com/blog/2021/03/18/grafana-6.7.6-7.3.10-and-7.4.5-released-with-important-security-fixes-for-grafana-enterprise/
+
+Best Regards,
+Vardan Torosyan
+
