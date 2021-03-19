@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1961" "Tuesday" "30" "May" "2017" "09:36:22" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty2tYv6KAjgrN3fL_YisPSMHQqpSWagEwA+T2Rz15-wGDQ@mail.gmail.com>" "51" "Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" "^Cc:" nil nil "5" "2017053015:36:22" "[oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" (number mark "        kseifried@re May 30   51/1961  " thread-indent "\"Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function\"\n") "<CA+DvKQ+TfTcK79YgeMZorvpG38HP8zAeB=gioL6xUVDPyn7Ghg@mail.gmail.com>" ("<EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>" "<20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>" "<d522fd07-7916-48a4-270c-933ffacddb98@redhat.com>" "<CA+DvKQ+TfTcK79YgeMZorvpG38HP8zAeB=gioL6xUVDPyn7Ghg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3258" "Friday" "19" "March" "2021" "10:16:44" "-0400" "Sasha Levin" "sashal@kernel.org" nil "68" "Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS" nil nil nil "3" nil nil (number mark "U       sashal@kerne Mar 19   68/3258  " thread-indent "\"Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30616 invoked by uid 550); 30 May 2017 15:36:35 -0000
+Received: (qmail 9408 invoked by uid 550); 19 Mar 2021 14:17:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,85 +11,99 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30565 invoked from network); 30 May 2017 15:36:34 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=GwWwmvhbb1Cvb4sfLaKxqvEknppHKJINSlf3heZUpXM=;
-        b=fuUiqcNCfQoKIoAlZnxsZJl2SGBNI2wDvtKmzznHaGg43EyHNtKaKwH0LswPRsntbc
-         1KcscsPQkD5D5Hcliq8WBmF1/Nespk2CfyggYvxL5gYR77QrvatcBY3RS8If43JiiwLU
-         leWigzac5yWTvOJGtUkXcLlynUEUJI1QEziHJciQaTmEZFj9+VozB3LIATlSRH+ic7V/
-         5PXpZJx05Q2rIO/8aDamfJErFmrurPOBTU49hLg0Cj9F1VPw71QTMHC5WD/akbi+cGod
-         0hTzFWmOyJwk+o8CyV5K2SHyvUezPQEAVnp+h8CEE0nF1jE6yZm4Xlbk82NmEo2c2HB8
-         1m8w==
-X-Gm-Message-State: AODbwcA1MyUZ7TZsElnMgx+YWBp0WPdkxJxPvled4oh8fVuX5D+nDDIG
-	iewQRHXZ5P2iwtguPNhog19+kZ26wjME3GJWCA==
-X-Received: by 10.157.14.236 with SMTP id 99mr9110630otj.164.1496158582762;
- Tue, 30 May 2017 08:36:22 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CA+DvKQ+TfTcK79YgeMZorvpG38HP8zAeB=gioL6xUVDPyn7Ghg@mail.gmail.com>
-References: <EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>
- <20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>
- <d522fd07-7916-48a4-270c-933ffacddb98@redhat.com> <CA+DvKQ+TfTcK79YgeMZorvpG38HP8zAeB=gioL6xUVDPyn7Ghg@mail.gmail.com>
-Message-ID: <CANO=Ty2tYv6KAjgrN3fL_YisPSMHQqpSWagEwA+T2Rz15-wGDQ@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="001a11372618da873c0550bf902f"
-Cc: "Designer, Solar" <solar@openwall.com>
-Date: Tue, 30 May 2017 09:36:22 -0600
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux kernel: stack buffer overflow with
- controlled payload in get_options() function
-To: oss-security <oss-security@lists.openwall.com>
+Received: (qmail 9390 invoked from network); 19 Mar 2021 14:17:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1616163405;
+	bh=cv/uPtwobj8XL2qfKALzXoKD5VR8/MdgkHgifTL1n2M=;
+	h=Date:From:To:Subject:References:In-Reply-To:From;
+	b=LSkpXbyXawdk4o78bZBPuH8twcHIaJ1qYcsa3JtUTg5VFVZyuHf6f2Iv4A3ve2jwT
+	 W9ong5BktxA5Rkf4Mor3RG/JQKhKk0Y3rQWvk+UIQahtwHxa+7JBwtC8wNktuj0JcE
+	 YAb7LX+ci+FdBAS0/LR+wGi+e1B0bOdo5nBabsYIzx578i/Cpb27DYIn1iHZRriuqB
+	 tNaA8iMRlRm7umhSedLNQGamnQ8ZJavg3vS9u5JoKBBWup40/psqGZw1UYm/Ct+bu/
+	 T0pJu+2ctNpejNmdEq3LshjB/wnVrQJNM31NV74UBnJ3yBWfjVzvSfVjoVJgEgD16B
+	 vDhGgm2IUf7jw==
+Date: Fri, 19 Mar 2021 10:16:44 -0400
+From: Sasha Levin <sashal@kernel.org>
+To: oss-security@lists.openwall.com
+Message-ID: <YFSyTOoNtyrQvrH3@sashalap>
+References: <CAKx+4-pR3JScgA-PJFSwkAw6B8xiXYWFtVD6rEYp2wnJjyCogw@mail.gmail.com>
+ <YFNCtWmsYrtYQeEJ@kroah.com>
+ <YFOLo/QrlgIrFotJ@wopr>
+ <YFOc8bhUAKOgjfVS@sashalap>
+ <20210318192136.GA6178@openwall.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20210318192136.GA6178@openwall.com>
+Subject: Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper
+ synchronization in flush_to_ldisc() can lead to DoS
 
---001a11372618da873c0550bf902f
-Content-Type: text/plain; charset="UTF-8"
-
-On Tue, May 30, 2017 at 9:20 AM, Daniel Micay <danielmicay@gmail.com> wrote:
-
-> That's not what secure/verified boot means to everyone else, and
-> there's nothing in mainline with those properties. To everyone else,
-> it's not an arbitrary bureaucratic/marketing feature. It's
-> verification of the whole base OS... i.e. Android, Android Things
-> (Brillo), ChromeOS, iOS and sane embedded Linux systems. Likely
-> Windows on mobile devices too, and I really doubt that Microsoft
-> doesn't plan on verifying the userspace OS if they don't already.
+On Thu, Mar 18, 2021 at 08:21:36PM +0100, Solar Designer wrote:
+>On Thu, Mar 18, 2021 at 02:33:21PM -0400, Sasha Levin wrote:
+>> Red Hat runs on a forked version of the kernel that has it's own set of
+>> backports, features, and bugs. As you pointed out I think it would make
+>> a lot of sense if they would instead start assigning CVEs for "Red Hat
+>> Linux Kernel".
 >
-
-Red Hat is only associated with this in so far as I happen to work for Red
-Hat and I typically do the CVE assignments on the distros@ list (where this
-issue was initially reported).
-
-
+>Oh, no.  Just no.  Red Hat (nor others) shouldn't start to
+>indiscriminately label their CVE assignments for Linux kernel issues
+>(nor for issues in other software they modify and package) like that.
 >
-> Anyway, good luck with meaningless Red Hat security theatre. These
-> "vulnerabilities" are just reinforcing the view that security people
-> are foolish. There isn't disagreement that it's a meaningless feature
-> with this level of incompleteness and yet a CVE is assigned for it?
-> Okay then...
->
+>I think what we really want is encourage Red Hat (and other distros) to
+>put more effort into figuring out and documenting whether each issue is
+>specific to them or (was) also present in mainline (any version or git
 
-I suggest you take this issue up with MITRE/CVE Board (disclaimer: I'm also
-on the CVE Board), they control CVE and the definitions of what is CVE
-worthy, and in this case it largely falls under the "advertised/implied
-security feature doesn't work as such". This is unlikely to change as it's
-well established and has been used for over a decade.
+Agreed. And while we can't require that, it would be awesome if it were
+done systematically instead of picking a random commit here and there
+and assign it a CVE.
 
+>commit, but not requiring a review of any branches other than what they
+>possibly took code from).  I think they usually already have that
 
->
-> Sorry for thinking that this should be about something more than
-> padding CVs and marketing materials.
->
+I suppose we can't *require* them, but it's a matter of curtesy, right?
+They already have that information, and instead of making a bunch of
+other people do the same job they could just share the information to
+begin with.
 
-I suggest then you take this up with the original researcher if you're
-worried about people padding their CVs. This discussion isn't
-productive/helpful and I suggest you take it off list.
+>information internally.  It's just that it didn't propagate into this
+>thread's original message now.  It should.
 
+Exactly, they already must have this information, which is where some of
+the frustration around these notifications comes from: it reads as
+nothing more than a lip service.
+
+>Then, for issues that (ever) exist(ed) in upstream kernels, or in any
+>upstream Open Source software for that matter, they should be brought to
+>oss-security.  It's very kind of a distro to help us all with that.  We
+>should encourage that.
+
+They should, but look at the original announcement mail in this thread:
+it's so generic and lacks so much information that it can't possibly
+inform anyone of an issue.
+
+"There's a bug in the kernel and we assigned a CVE!"
+
+>For issues that are distro-specific, it's a grey area.  First, like you
+>correctly say, they should be labeled accordingly.  Then the question of
+>their relevance to oss-security comes up.  Among the published content
+>guidelines for oss-security we actually have one asking not to post in
+>here distro-specific advisories aimed at end-users.  As I recall, when
+>at some point years ago FreeBSD started sending their advisories in
+>here, I asked them not to.  Indeed, we're also not seeing e.g. Red Hat's
+>advisories in here, although they do produce those and send them to
+>proper channels.  However, what about distro-specific vulnerability
+>notifications not meant for end-users, but for downstream distros?
+>Using my two examples, both FreeBSD and RHEL do have some downstream or
+>otherwise related distros, who might need to know to merge the fixes.
+
+Sure, that makes sense. I'm not disagreeing that distro specific issues
+are relevant here, but pretend that you're a downstream of RHEL and read
+the original announcement in this thread, how would you act? would you
+know what to merge? on to which versions?
+
+What's the value of these announcements then?
 
 -- 
-
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
-
---001a11372618da873c0550bf902f--
+Thanks,
+Sasha
