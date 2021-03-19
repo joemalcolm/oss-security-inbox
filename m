@@ -1,24 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/11/3
-Message-ID: <41cad9cb-8df5-29b8-c4bd-95cc51a9e1d7@apache.org>
-Date: Mon, 11 Oct 2021 03:05:49 +0000
-From: Dave Fisher <wave@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/19/14
+Message-ID: <YFULl+8RMJkYL67G@sashalap>
+Date: Fri, 19 Mar 2021 16:37:43 -0400
+From: Sasha Levin <sashal@...nel.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-41832: Apache OpenOffice: Content Manipulation with Certificate Validation Attack 
+Subject: Re: Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Hey Brad,
 
-Description:
+I'll let Greg respond on your concerns with him, I've removed those
+references to him from my reply.
 
-It is possible for an attacker to manipulate documents to appear to be signed by a trusted source.
+On Fri, Mar 19, 2021 at 03:58:25PM -0400, Brad Spengler wrote:
+>Hi Sasha,
+>
+>> I'm really not sure how to respond to this. I don't own upstream, my
+>> name isn't Linus, Greg, nor do I maintain a major subsystem. I don't
+>> have any control over how upstream commits look like.
+>
+>Both you and Greg certainly have control over stable kernel commit
+>messages (it's the same ability you use to add the upstream commit ID).
 
-All versions of Apache OpenOffice up to 4.1.10 are affected. Users are advised to update to version 4.1.11.
+So we do, but traditionally I haven't changed the commit message. I also
+don't have an additional source of information when I queue up the
+commits, so I'm not sure how my ability to edit stable commit messages
+helps here.
 
-See CVE-2021-25635 for the LibreOffice advisory.
+>> Great, let's work together on making it better, but it's been following
+>> the same pattern for quite a while now.
+>
+>I think both you and Greg are exaggerating the level of "extra work" this
+>temporary blip creates for you -- with the exception of the RH backport
+>issue, it was not difficult at all for me to determine what issue was
+>being discussed, without even having to plug the CVEs into bugzilla.redhat.com
+>which produces:
+>https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2020-35519
+>https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2021-3428
 
+So this CVE link above is exactly what I referred to: how do you go from
+CVE-2021-3428 to the commit in question?
 
-Credit:
-
-Apache OpenOffice would like to thank Simon Rohlmann, Vladislav Mladenov, Christian Mainka, and Jorg Schwenk of Ruhr University Bochum, Germany
-
+-- 
+Thanks,
+Sasha
