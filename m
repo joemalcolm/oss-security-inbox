@@ -1,4 +1,9 @@
-Received: (qmail 28508 invoked by uid 550); 27 Jan 2025 23:20:12 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1447" "Friday" "19" "March" "2021" "16:37:43" "-0400" "Sasha Levin" "sashal@kernel.org" nil "37" "Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS" nil nil nil "3" nil nil (number mark "U       sashal@kerne Mar 19   37/1447  " thread-indent "\"Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5789 invoked by uid 550); 19 Mar 2021 20:38:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,121 +12,71 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 24555 invoked from network); 27 Jan 2025 23:02:57 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1738018969;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=BZ3ZWhpPWiYUUL/MR+7iD0Db9H2BSB3xx/OU4eju2oM=;
-	b=dzqhSTsejEdAmQTMN4O5oldwlYsQ3Kn2R75aHoKcwBlO+35e+rT1vXD5dB3VtWCa2hS7c3
-	QOEJhOsBFR1vObRf2Xa0pruBRWYoWw+7vM8WDtvo8m1O9TXuIh1Kvg+/yCW9PgbNxbg+Yq
-	39b965Rd3VE5VNWxFuVVrHiyxXjb7Jg=
-X-MC-Unique: 168fnoWdMMar-BsjrVybCQ-1
-X-Mimecast-MFC-AGG-ID: 168fnoWdMMar-BsjrVybCQ
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738018967; x=1738623767;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BZ3ZWhpPWiYUUL/MR+7iD0Db9H2BSB3xx/OU4eju2oM=;
-        b=w8gruHLlXc+8Vr+vGc87P07YIv7vZ3vH1SeGONIIRn+erRJbfPno1t9EYOonbvMPEK
-         s8Al5e2U1B7HJ7MMOGMmNY25qdLN92YEWtMPpn8Sm2frZRr3aXC3fW658K9GWgi6VnzT
-         +Rm7J+IIflB2NvrE1knPh2R4nHVzEZFQ7MD++z3Txqrlq/hXQgdZ4LX9p2v/fhPSoTDu
-         KaBUxnfrXCO7ZLuai94SdUuCnjYBi2u1HEU43+q66hjwrinJ1Ketok75jkCoq32/I+Dy
-         9+FU4hDCuLOFQsRtU0QaDOX6tTa0eG/aJp/AHWrpTosmxvODYNA4hmhxK4VDWeIrlgnR
-         43+g==
-X-Gm-Message-State: AOJu0YwEPLr2KrF/auXv/49pxOju8uY3kYDb4wO9hNn58cWoYZiOgWXJ
-	L69Dlg3CUYltyTH8ud5FZrmbOLOIkRann+kcItAHLYG/I80C82eVK3QeiNFyhwLg3EjsEt64Sca
-	j9+GkI95O8S5VDcOx6lzOhgIY1And0hqE0nDb/R7yHxvYGV1llfVzJXpfE1pNN2EFYTvg0l9pqm
-	VSDtP/fBm+jc47rlp9CBB74qzv/2gUokSh/2iU5enK
-X-Gm-Gg: ASbGncvG2V7SSTswZYKLsHNzadPNPvHiIRp0mcNeHRgwTryC5ycWUlN+NK1jtv87h2A
-	FRpkzqGWDKQUID20WnZvNN7qWsejzdaV9dbzNynkf013MCz3LmSunX50YFwiSP1s=
-X-Received: by 2002:a05:6871:a58b:b0:295:ed0a:8061 with SMTP id 586e51a60fabf-2b1c0bbdeb0mr20855987fac.39.1738018967380;
-        Mon, 27 Jan 2025 15:02:47 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGnjhGRMb3oEv6FPVbhnE97XaWn+/H/z3dCywM5EZawlxOSnl6ZY2ub3BtkHAurP6Mm/KMpSki8m9JagYM/Dkk=
-X-Received: by 2002:a05:6871:a58b:b0:295:ed0a:8061 with SMTP id
- 586e51a60fabf-2b1c0bbdeb0mr20855974fac.39.1738018966987; Mon, 27 Jan 2025
- 15:02:46 -0800 (PST)
+Received: (qmail 5768 invoked from network); 19 Mar 2021 20:38:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1616186264;
+	bh=TWQvElBT3z26GAX4/FY/Tl7EbULnjbe2rsRYuDYDe/4=;
+	h=Date:From:To:Subject:References:In-Reply-To:From;
+	b=RhrGZzyQeyfZDAh9vDbAnhd8qWvebar0GFanmD3ZJQE93+ueOcHe4GMCs5l0z5CLW
+	 6IT0e3hpocwD2uesy6+yu6TfW2iV7U8yB14+yssfuHG2U6Igi79iV940fcHK202Ub2
+	 LwOTxppY0giEt1vFHiobO+iHK886Dj3yp7qRujP49C0zmJiwzqq67fIvYZejKLU+CR
+	 szPGntN4c1S5FqX4mBnEO15G3WSNwC6Num6IAJ0Y1XCnEtWk1sjRnuaNIu1leewSIS
+	 mhji+M/AN1uW0kyKOXGezXu3ylkntpJ5Cx+cGEOxvEMsQzO5vG3aACrR2yXb7xEOTv
+	 /Dt1M10pUyUfQ==
+Date: Fri, 19 Mar 2021 16:37:43 -0400
+From: Sasha Levin <sashal@kernel.org>
+To: oss-security@lists.openwall.com
+Message-ID: <YFULl+8RMJkYL67G@sashalap>
+References: <CAKx+4-pR3JScgA-PJFSwkAw6B8xiXYWFtVD6rEYp2wnJjyCogw@mail.gmail.com>
+ <YFNCtWmsYrtYQeEJ@kroah.com>
+ <YFOLo/QrlgIrFotJ@wopr>
+ <YFOc8bhUAKOgjfVS@sashalap>
+ <20210318192136.GA6178@openwall.com>
+ <YFSyTOoNtyrQvrH3@sashalap>
+ <20210319144311.GA22152@grsecurity.net>
+ <YFTlezXaxyIRxcKN@sashalap>
+ <20210319195825.GA28654@grsecurity.net>
 MIME-Version: 1.0
-References: <Z4__rJ3_SmmtEIsG@netmeister.org> <0a34f769-2a8d-4726-b9d7-6238ec3846e7@oracle.com>
- <2025012512-likely-strainer-4e6d@gregkh> <CAEFCzXX4sU9ps3PLcgjOS84+bKAb1qXy_koJdGNMqKokEsDbgg@mail.gmail.com>
- <87bjvssr2k.fsf@oldenburg3.str.redhat.com>
-In-Reply-To: <87bjvssr2k.fsf@oldenburg3.str.redhat.com>
-From: Pete Allor <pallor@redhat.com>
-Date: Mon, 27 Jan 2025 18:02:35 -0500
-X-Gm-Features: AWEUYZlYA2X7V3-AeSolNw0pX4SdoI69LmAqlQlQE-O8ZvZq8aLBCJ2nAcaGIR8
-Message-ID: <CAEFCzXXNvs6vLnqv+1y4Ob9=j9CHms5LMYHkXBQhcOcwd_0T-w@mail.gmail.com>
-To: Florian Weimer <fweimer@redhat.com>
-Cc: oss-security@lists.openwall.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: zC-XVyo_6NYbsWBomgIoDmF9oXxdz_FW0UKAKFBqnZg_1738018967
-X-Mimecast-Originator: redhat.com
-Content-Type: multipart/alternative; boundary="000000000000240f2e062cb8130e"
-Subject: Re: [oss-security] Node.js EOL CVEs: CVE-2025-23087, CVE-2025-23088, CVE-2025-23089
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20210319195825.GA28654@grsecurity.net>
+Subject: Re: [oss-security] Re: CVE-2021-20219 Linux kernel: improper
+ synchronization in flush_to_ldisc() can lead to DoS
 
---000000000000240f2e062cb8130e
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hey Brad,
 
-Florian,
-The question is about who is scoring and a level of their knowledge and
-understanding.   Assuming that each is using CVSS v3.1 then the question is
-does the scoring entity look at how the component is built and used or are
-they scoring for every eventuality and device across all time (and in turn
-introducing 'temporal' scoring into that 'base' score).   We often see that
-broad interpretation and the creeping in of temporal scoring to "elevate"
-the CVSS.
+I'll let Greg respond on your concerns with him, I've removed those
+references to him from my reply.
 
-It is why I would advocate for a CVSS review (as we do at Red Hat) and then
-assign a 'Severity Rating' as that now involves how the component is used
-within our software which changes HOW a customer/downstream/user should
-actually view that CVE.
-
-So I will state that the way some aggregators of CVEs assign CVSS is the
-problem.   Consider that overreach and then the reliance by regulators
-and/or internal audit make a broad rule and everyone is bringing down the
-house.
-
-So the issue of identifying the 'component' becomes truly important (CPE
-does not cover OSS and hence the new drive to incorporate PURL to better
-identify CVEs and essentially get to your fork construct.
-
-Pete
-
-On Mon, Jan 27, 2025 at 1:34=E2=80=AFAM Florian Weimer <fweimer@redhat.com>=
- wrote:
-
-> * Pete Allor:
+On Fri, Mar 19, 2021 at 03:58:25PM -0400, Brad Spengler wrote:
+>Hi Sasha,
 >
-> > I do agree with Greg K-H that open source projects should become CNAs.
-> > But do want to note that missing elements of the CVE when submitting
-> > allows CISA-ADP to 'vulnrich' your data.  Here is where
-> > misinterpretation and/or lack of understanding by CISA confuses
-> > downstream users and once you gain that 'critical' stigma in the
-> > system, you have to be persistent to get that changed.
-> >
-> > Is that a problem?  I think so and so do a number of PSIRTs so now we
-> > have to contend with CISA-ADP and NVD to adjust their scores when the
-> > CNA is 'the authoritative source' within the CVE Program.
+>> I'm really not sure how to respond to this. I don't own upstream, my
+>> name isn't Linus, Greg, nor do I maintain a major subsystem. I don't
+>> have any control over how upstream commits look like.
 >
-> The larger problem is that component scoring tends to be higher than
-> whole-system scoring.  If a security component fails in its security
-> function, it certainly deserves an impact rating that reflects that it's
-> totally broken due to the vulnerability.  But if this component is
-> integrated into a larger system, impact is often lower and might even be
-> insignificant due to the way the component is used.
->
-> The current system does not really reflect that.  One way to deal with
-> it could be to treat everything as a fork, but not to decouple from
-> upstream changes, but to make it clear that the upstream impact ratings
-> do not apply.
->
-> Thanks,
-> Florian
->
->
+>Both you and Greg certainly have control over stable kernel commit
+>messages (it's the same ability you use to add the upstream commit ID).
 
---000000000000240f2e062cb8130e--
+So we do, but traditionally I haven't changed the commit message. I also
+don't have an additional source of information when I queue up the
+commits, so I'm not sure how my ability to edit stable commit messages
+helps here.
 
+>> Great, let's work together on making it better, but it's been following
+>> the same pattern for quite a while now.
+>
+>I think both you and Greg are exaggerating the level of "extra work" this
+>temporary blip creates for you -- with the exception of the RH backport
+>issue, it was not difficult at all for me to determine what issue was
+>being discussed, without even having to plug the CVEs into bugzilla.redhat.com
+>which produces:
+>https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2020-35519
+>https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2021-3428
+
+So this CVE link above is exactly what I referred to: how do you go from
+CVE-2021-3428 to the commit in question?
+
+-- 
+Thanks,
+Sasha
