@@ -1,24 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/14/4
-Message-ID: <b1b3fb6f-a394-ede3-0c3c-ea2c11018062@apache.org>
-Date: Tue, 14 Dec 2021 16:52:05 +0000
-From: Ron Grabowski <rgrabowski@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/19/8
+Message-ID: <20210319144311.GA22152@grsecurity.net>
+Date: Fri, 19 Mar 2021 10:43:11 -0400
+From: Brad Spengler <spender@...ecurity.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-45046: Apache Log4j2 Thread Context Message Pattern and Context Lookup Pattern vulnerable to a denial of service attack 
+Subject: Re: Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate (CVSS: 3.7 AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L)
+Hi Sasha,
 
-Description:
+I'm sorry, but I can't let this email demonstrating a complete lack of
+self-awareness go without comment.
 
-It was found that the fix to address CVE-2021-44228 in Apache Log4j 2.15.0 was incomplete in certain non-default configurations. This could allows attackers with control over Thread Context Map (MDC) input data when the logging configuration uses a non-default Pattern Layout with either a Context Lookup (for example, $${ctx:loginId}) or a Thread Context Map pattern (%X, %mdc, or %MDC) to craft malicious input data using a JNDI Lookup pattern resulting in a denial of service (DOS) attack. Log4j 2.15.0 restricts JNDI LDAP lookups to localhost by default. Note that previous mitigations involving configuration such as to set the system property `log4j2.noFormatMsgLookup` to `true` do NOT mitigate this specific vulnerability.
+> I suppose we can't *require* them, but it's a matter of curtesy, right?
+> They already have that information, and instead of making a bunch of
+> other people do the same job they could just share the information to
+> begin with.
 
-Log4j 2.16.0 fixes this issue by removing support for message lookup patterns and disabling JNDI functionality by default.  
+I'm seriously baffled that you could type those words out with a straight
+face.  As we know happens often, including with the recent iSCSI
+vulnerabilities, upstream has intentionally omitted CVE information
+from kernel commit messages -- in other words:
+"they already have the information, and instead of making a bunch of
+other people do the same job they could just share the information to
+begin with."
 
-This issue can be mitigated in prior releases (<2.16.0) by removing the JndiLookup class from the classpath (example: zip -q -d log4j-core-*.jar org/apache/logging/log4j/core/lookup/JndiLookup.class).
+Do none of you understand at all that the problems that exist are entirely
+of your own creation?  Neither you nor Greg ever come to this list with
+announcements of your own.  That you have to endure a tiny fraction of what
+the rest of the world is inflicted with from your intentional actions --
+sorry, you are not the victims here, and it's completely ridiculous to
+paint yourselves as one.
 
-References:
+Greg started his tirade yesterday with a false assumption that the stable
+kernels had already fixed the one issue August of last year.  That was not
+true (stable kernels < 5.7 were all missing the fix).  Then he claimed SuSE
+didn't bother to backport the fix.  That was not true:
+https://github.com/SUSE/kernel/commit/b93bddd7ae24aa8ebe48d13dcff4011a34861482
 
-https://logging.apache.org/log4j/2.x/security.html
-https://www.cve.org/CVERecord?id=CVE-2021-44228
+If you guys want to complain about bad information, leaving it out of useless
+snarky replies would be a good start.
 
+> Exactly, they already must have this information, which is where some of
+> the frustration around these notifications comes from: it reads as
+> nothing more than a lip service.
+
+You're assuming too much -- it's quite clearly someone new at RH doing these
+recent advisories.
+
+Thanks,
+-Brad
+
+Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
