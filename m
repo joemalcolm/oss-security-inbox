@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2354" "Saturday" "13" "February" "2016" "19:51:04" "+0300" "Alexander Cherepanov" "ch3root@openwall.com" "<56BF5EF8.7070203@openwall.com>" "58" "Re: [oss-security] snprintf return value misuse in a lot of projects" "^Date:" nil nil "2" "2016021316:51:04" "[oss-security] snprintf return value misuse in a lot of projects" (number mark "        ch3root@open Feb 13   58/2354  " thread-indent "\"Re: [oss-security] snprintf return value misuse in a lot of projects\"\n") "<m3k2m8d7k9.fsf@gmail.com>" ("<m3k2m8d7k9.fsf@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["616" "Sunday" "21" "March" "2021" "14:01:37" "+0100" "Jacques Le Roux" "jacques.le.roux@les7arts.com" nil "25" "[oss-security] [CVE-2021-26295] RCE vulnerability in latest Apache OFBiz due to Java serialisation using RMI" nil nil nil "3" nil nil (number mark "U       jacques.le.r Mar 21   25/616   " thread-indent "\"[oss-security] [CVE-2021-26295] RCE vulnerability in latest Apache OFBiz due to Java serialisation using RMI\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2021-26295] RCE vulnerability in latest Apache OFBiz due to Java serialisation using RMI" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 12274 invoked by uid 550); 13 Feb 2016 16:51:16 -0000
+Received: (qmail 1185 invoked by uid 550); 21 Mar 2021 13:11:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,75 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 12256 invoked from network); 13 Feb 2016 16:51:16 -0000
-References: <m3k2m8d7k9.fsf@gmail.com>
-X-Enigmail-Draft-Status: N1110
-Message-ID: <56BF5EF8.7070203@openwall.com>
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 30498 invoked from network); 21 Mar 2021 13:02:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=les7arts.com;
+	s=nfrance; t=1616331690;
+	bh=KyxCl1lTMBdz0yPuE6H7lxI030wC802RlGMVnxLwLMU=;
+	h=From:To:Subject:Date;
+	z=From:=20Jacques=20Le=20Roux=20<jacques.le.roux@les7arts.com>|To:=
+	 20oss-security@lists.openwall.com|Subject:=20[CVE-2021-26295]=20RC
+	 E=20vulnerability=20in=20latest=20Apache=20OFBiz=20due=20to=20Java
+	 =0D=0A=20serialisation=20using=20RMI|Date:=20Sun,=2021=20Mar=20202
+	 1=2014:01:37=20+0100;
+	b=Fd17fpnfoOjsqYm7zbTGzHyLaEHcveFNYUO5KQ/qkLbY7aA48k+6oxqs3bwSSnxTG
+	 +w/TmHtKlJ4+fJzoMCXYcwqdtxLTOCZtIK/gC1N9oswBRU48bj+lUHCswPl+PJKE8/
+	 0RlaBLd+BcWTEGiFjRwD89Or6iL+KYLSUZyi9YUE=
+From: Jacques Le Roux <jacques.le.roux@les7arts.com>
+To: oss-security@lists.openwall.com
+Organization: Les Arts Informatiques
+Message-ID: <ab4895c3-fe33-99c7-6182-0d4aa05fff32@les7arts.com>
+Date: Sun, 21 Mar 2021 14:01:37 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
 MIME-Version: 1.0
-In-Reply-To: <m3k2m8d7k9.fsf@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Date: Sat, 13 Feb 2016 19:51:04 +0300
-From: Alexander Cherepanov <ch3root@openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] snprintf return value misuse in a lot of projects
-To: oss-security@lists.openwall.com
+Content-Language: en-GB
+Subject: [oss-security] [CVE-2021-26295] RCE vulnerability in latest Apache OFBiz due to Java
+ serialisation using RMI
 
-On 2016-02-13 17:11, Yuriy M. Kaminskiy wrote:
-> I noticed dangerous pattern in a lot of projects, where snprintf(3)
-> return value is used without checking, with potentially disasterous
-> consequences:
+Severity:
+High
 
-It's kinda a known. E.g., some such patterns are listed in 
-https://sourceware.org/ml/libc-alpha/2013-10/msg00686.html .
+Vendor:
+The Apache Software Foundation
 
-The same problem is with strlcpy.
+Versions Affected:
+OFBiz versions prior to 17.12.06
 
-> And there are yet another very common pattern:
->
->    p += snprintf(p, end-p,[....]);
->    p += snprintf(p, end-p,[....]);
->    p += snprintf(p, end-p,[....]);
->    ...
->
-> which may be 'barely safe' by posix (if you'd read `man 3posix snprintf`,
-> you'd expect 2nd line is [somewhat] safe (end-p is negative, then
-> casted to size_t and produce value larger than (size_t)INT_MAX, that
-> should result in error EOVERFLOW), and third and following will dance
-> around last byte, likely remaining safe), but it is TOTALLY
-> broken on glibc, as glibc's snprintf DOES NOT follow posix, and accepts
-> *any* size.
+Description:
+Apache OFBiz has unsafe deserialization prior to 17.12.06.
+An unauthenticated attacker can use this vulnerability to successfully take over Apache OFBiz.
 
-For a glibc discussion please see 
-https://sourceware.org/bugzilla/show_bug.cgi?id=14771 .
+Mitigation:
+Upgrade to at least 17.12.06
+or apply the patch at https://github.com/apache/ofbiz-framework/commit/af9ed4e/
 
-As for POSIX, the requirement of EOVERFLOW for a big second parameter is 
-a (rejected) bug in POSIX -- http://austingroupbugs.net/view.php?id=761 
-. A closely related bug -- http://austingroupbugs.net/view.php?id=1020 .
+Credit:
+r00t4dm at Cloud-Penetrating Arrow Lab <r00t4dm@gmail.com>
+MagicZero from SGLAB of Legendsec at Qi'anxin Group.
+Longofo at Knownsec 404 Team
 
-ISO C describes the size parameter of snprintf as a limit to the number 
-of output characters written, without any connections to the size of the 
-buffer. Thus, the following examples are valid in ISO C:
+References:
+http://ofbiz.apache.org/download.html#vulnerabilities
 
-   char s[10];
-   snprintf(s, 20, "abc");
-   snprintf(s, SIZE_MAX, "%s", "abc");
-
-OTOH POSIX describes the size parameter as the actual size of the buffer 
-(bug 1020) and requires to reject buffers of size larger than INT_MAX 
-(bug 761).
-
-Even though POSIX contradicts ISO C in this question (while formally 
-deferring to ISO C) there is a sentiment that the POSIX approach is 
-better for safety/security. (E.g., it was expressed during the recent 
-discussion about strlcpy/strlcat in the glibc mailing list.)
-
-As it turned out, the same problem affects the fread function, with the 
-Linux kernel instead of POSIX contradicting ISO C. See 
-https://sourceware.org/bugzilla/show_bug.cgi?id=19165 and 
-https://sourceware.org/ml/libc-alpha/2016-02/msg00274.html .
-
-Perhaps this is a topic that will benefit from input from a wider community.
-
--- 
-Alexander Cherepanov
