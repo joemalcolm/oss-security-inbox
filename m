@@ -1,90 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/19/2
-Message-ID: <YAbtDzwSAq3kkWxB@f195.suse.de>
-Date: Tue, 19 Jan 2021 15:30:39 +0100
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/21/1
+Message-ID: <ab4895c3-fe33-99c7-6182-0d4aa05fff32@les7arts.com>
+Date: Sun, 21 Mar 2021 14:01:37 +0100
+From: Jacques Le Roux <jacques.le.roux@...7arts.com>
 To: oss-security@...ts.openwall.com
-Subject: segv_handler junkcode snippet / openSUSE segv_handler package potential local root exploit
+Subject: [CVE-2021-26295] RCE vulnerability in latest Apache OFBiz due to Java serialisation using RMI
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
+Severity:
+High
 
-I stumbled over this old code from samba / "junkcode" [1]. The code
-demonstrates the idea how to establish a temporary or global
-segmentation fault handler via an LD_PRELOAD library. This code ended up
-in an openSUSE package "segv_handler" for a long time e.g. in [2]. I am
-not aware of any other cases where this code has been released for
-production use.
+Vendor:
+The Apache Software Foundation
 
-The documentation suggests to install the library globally via
-/etc/ld.so.preload. If done this way the code will be used by all
-programs in the system, including setuid-root programs.
+Versions Affected:
+OFBiz versions prior to 17.12.06
 
-The code has various issues:
+Description:
+Apache OFBiz has unsafe deserialization prior to 17.12.06.
+An unauthenticated attacker can use this vulnerability to successfully take over Apache OFBiz.
 
-1) the accompanying "backtrace" script is invoked via the `system()`
-  library call and the command line constructed in line 22 does not escape
-  any special characters. Thus if an executable name (as obtained from
-  /proc/self/exe) contains special characters, then this will have side
-  effects. It should not be a big security issue, because the "root" user
-  should not typically run executables that are named by potential
-  attackers.
-2) the "backtrace" script uses a predictable temporary file in
-  "/tmp/gdb.$$".  The contents of this file will be used as a command
-  source file to `gdb -x`.  Thus if an unprivileged local attacker manages
-  to precreate this file it can try to win a race condition and feed
-  arbitrary commands to the `gdb` invoked potentially by the "root" user.
-  This can allow for a full local root exploit.
-3) the "backtrace" script invokes the "cat" and "gdb" commands using
-  non-absolute path names. In the context of a setuid-root binary that
-  does not sanitize the PATH environment variable this would allow an
-  unprivileged user to execute arbitrary commands.
-4) the hardcoded directory path for backtraces in /var/log/segv would
-  need to be setup as a sticky-bit directory with mode 1777 to work for
-  all users in the system. Then segv_handler.c line 24 would become
-  subject to possible symlink attacks, however, when the path
-  "/var/log/segv/segv_<exe>.<pid>.out" is created. The openSUSE package in [2]
-  uses the /tmp/ directory for this purpose and is thus affected.
-5) The backtraces created in /var/log/segv will be created with the
-  umask of the process running the segfault handler. If the directory
-  /var/log/segv is world-readable and the created backtrace files are also
-  world readable then this poses an information leak towards other users
-  in the system. Data found in stack variables or pointer values can be
-  used for further attacks.
+Mitigation:
+Upgrade to at least 17.12.06
+or apply the patch at https://github.com/apache/ofbiz-framework/commit/af9ed4e/
 
-Some of the issues can be mitigated by protection mechanisms. The bash
-shell by default drops privileges when invoked in a setuid-root context
-which would mitigate issues 1), 2) and 3) (in fact this means that
-segv_handler will not work for setuid-root programs at all in this
-case). The kernel's symlink protection would protect against 4).
+Credit:
+r00t4dm at Cloud-Penetrating Arrow Lab <r00t4dm@...il.com>
+MagicZero from SGLAB of Legendsec at Qi'anxin Group.
+Longofo at Knownsec 404 Team
 
-I contacted the code's author Andrew Tridgell ("Tridge") on 2021-01-07
-about these concerns and suggested to remove this example code, document
-the issues or fix the code. He expressed that he would like to adjust
-the code but we did not come to a conclusion yet.
+References:
+http://ofbiz.apache.org/download.html#vulnerabilities
 
-I could not find any trace that this code or the openSUSE package are in
-active use anywhere, therefore we will remove this package from
-openSUSE. I suggest to use the Linux kernel's core_pattern feature
-instead (see `man 5 core`) or one of the integrated crash handlers like
-provided by systemd (coredumpctl) or Ubuntu (apport).
-
-[1]: https://www.samba.org/ftp/unpacked/junkcode/segv_handler/
-[2]: https://build.opensuse.org/package/show/openSUSE:Leap:15.0/segv_handler
-
-Cheers
-
-Matthias
-
--- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
- 
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG Nürnberg
-Geschäftsführer: Felix Imendörffer
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
