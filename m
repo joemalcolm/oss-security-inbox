@@ -1,103 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/14/1
-Message-ID: <06bd0517-a955-881f-553b-c49b7a7a4ed2@radix.lt>
-Date: Tue, 14 Dec 2021 15:14:06 +0200
-From: Povilas Kanapickas <povilas@...ix.lt>
-To: oss-security@...ts.openwall.com
-Subject: Fwd: X.Org Security Advisory: December 14, 2021
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/21/2
+Message-ID: <20210321143011.GA22068@hurricane.linuxnetz.de>
+Date: Sun, 21 Mar 2021 15:30:11 +0100
+From: Robert Scheck <robert@...oraproject.org>
+To: Jan Engelhardt <jengelh@...i.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: kopano-core 11.0.1: Remote DoS by memory exhaustion
 Content-Type: text/plain; charset=utf-8
 
+On Fri, 19 Mar 2021, Jan Engelhardt wrote:
+> Initial publication, no CVE number yet (will request).
+> 
+> # Affected versions
+> 
+>   * kopano-core 11.0.1     (current head of 11.x branch)
+>   * kopano-core 10.0.7     (head of 10.x branch)
+>   * kopano-core 9.1.0      (head of 9.x branch)
+>   * kopano-core 8.7.16
+>   * it is believed this affects all versions to date,
+>     including zarafa 7.2.6, the discontinued predecessor
+>     project to Kopano, sometimes still in use.
 
--------- Forwarded Message --------
-Subject: X.Org Security Advisory: December 14, 2021
-Date: Tue, 14 Dec 2021 15:11:35 +0200
-From: Povilas Kanapickas <povilas@...ix.lt>
-To: xorg-announce@...ts.x.org
-CC: xorg-devel@...ts.x.org <xorg-devel@...ts.x.org>, xorg@...ts.x.org
+I hereby confirm the trigger, but I would like to correct the affected
+versions regarding the Zarafa predecessor project to be more precise for
+the CVE:
 
-X.Org Security Advisory: December 14, 2021
+ * Zarafa 7.2.x: Affected (tested myself)
+ * Zarafa 7.1.x: Affected (tested myself)
+ * Zarafa 7.0.x: Affected (tested myself)
+ * Zarafa 6.40.x: Affected (tested myself)
+ * Zarafa 6.30.x: Affected (tested myself)
+ * Zarafa 6.2x: Not affected (tested myself)
+ * Zarafa 6.1x: Not affected (tested myself)
+ * Zarafa 6.0x: Not affected (tested myself)
+ * Zarafa 5.2x: Not affected (tested myself)
+ * Zarafa 5.1x: Most likely not affected (but not tested myself)
+ * Zarafa 5.0x: Not applicable (no zarafa-ical component)
+ * Zarafa 4.2x: Not applicable (no zarafa-ical component)
 
-Multiple input validation failures in X server extensions
-=========================================================
+As a conclusion the flaw issue was introduced after Zarafa 6.20.13 Final
+(SVN Rev. 19023) and before Zarafa 6.30.0 Beta 1 (SVN Rev. 13713).
 
-All of the following issues can lead to local privileges elevation on
-systems where the X server is running privileged and remote code
-execution for ssh X forwarding sessions.
+Given the crash and error messages in old Zarafa versions look different
+than in more recent Zarafa/Kopano versions, here is how it looked for me
+when tracking down the version introducing the flaw:
 
-* CVE-2021-4008/ZDI-CAN-14192 SProcRenderCompositeGlyphs out-of-bounds
-access
+Starting zarafa-ical version 6,30,14,20002 (20002), pid 4937
+Pid 4943 caught SIGSEGV (6), traceback:
+0x0000000040ad4a /usr/bin/zarafa-ical(_Z7sigsegvi+0x5a) [0x40ad4a]
+0x002ac38a5a4ca0 /lib64/libpthread.so.0 [0x2ac38a5a4ca0]
+0x002ac38a7e1fc5 /lib64/libc.so.6(gsignal+0x35) [0x2ac38a7e1fc5]
+0x002ac38a7e3a70 /lib64/libc.so.6(abort+0x110) [0x2ac38a7e3a70]
+0x002ac389ec2d94 /usr/lib64/libstdc++.so.6(_ZN9__gnu_cxx27__verbose_terminate_handlerEv+0x114) [0x2ac389ec2d94]
+0x002ac389ec0e46 /usr/lib64/libstdc++.so.6 [0x2ac389ec0e46]
+0x002ac389ec0e73 /usr/lib64/libstdc++.so.6 [0x2ac389ec0e73]
+0x002ac389ec0f71 /usr/lib64/libstdc++.so.6 [0x2ac389ec0f71]
+0x002ac389ec12b9 /usr/lib64/libstdc++.so.6(_Znwm+0x79) [0x2ac389ec12b9]
+0x002ac389e9f861 /usr/lib64/libstdc++.so.6(_ZNSs4_Rep9_S_createEmmRKSaIcE+0x21) [0x2ac389e9f861]
+0x002ac389ea023b /usr/lib64/libstdc++.so.6(_ZNSs4_Rep8_M_cloneERKSaIcEm+0x2b) [0x2ac389ea023b]
+0x002ac389ea0b45 /usr/lib64/libstdc++.so.6(_ZNSs7reserveEm+0x45) [0x2ac389ea0b45]
+0x002ac389ea0faf /usr/lib64/libstdc++.so.6(_ZNSs6appendERKSs+0x4f) [0x2ac389ea0faf]
+0x0000000041ec94 /usr/bin/zarafa-ical(_ZN4Http13HrReadHeadersEv+0xa4) [0x41ec94]
+0x0000000040bcb7 /usr/bin/zarafa-ical(_Z15HrHandleRequestP9ECChannelPP12IMAPISession+0x127) [0x40bcb7]
+0x0000000040d612 /usr/bin/zarafa-ical(_Z13HandlerClientPv+0x42) [0x40d612]
+0x00000000430bf0 /usr/bin/zarafa-ical(_Z18unix_fork_functionPFPvS_ES_+0x40) [0x430bf0]
+0x0000000040ab6d /usr/bin/zarafa-ical(_Z20HrStartHandlerClientP9ECChannelb+0xbd) [0x40ab6d]
+0x0000000040b0c5 /usr/bin/zarafa-ical(_Z20HrProcessConnectionsii+0x1c5) [0x40b0c5]
+0x0000000040ba14 /usr/bin/zarafa-ical(main+0x484) [0x40ba14]
+0x002ac38a7cf9f4 /lib64/libc.so.6(__libc_start_main+0xf4) [0x2ac38a7cf9f4]
+0x0000000040a989 /usr/bin/zarafa-ical(__gxx_personality_v0+0x2a9) [0x40a989]
 
-The handler for the CompositeGlyphs request of the Render extension does
-not properly validate the request length leading to out of bounds memory
-write.
+And yes, Zarafa is a discontinued project/product, but sometimes still in
+active/production use.
 
-* CVE-2021-4009/ZDI-CAN 14950 SProcXFixesCreatePointerBarrier
-out-of-bounds access
 
-The handler for the CreatePointerBarrier request of the XFixes extension
-does not properly validate the request length leading to out of bounds
-memory write.
+Kind regards
 
-* CVE-2021-4010/ZDI-CAN-14951 SProcScreenSaverSuspend out-of-bounds access
+Robert Scheck
 
-The handler for the Suspend request of the Screen Saver extension does
-not properly validate the request length leading to out of bounds memory
-write.
-
-* CVE-2021-4011/ZDI-CAN-14952 SwapCreateRegister out-of-bounds access
-
-The handlers for the RecordCreateContext and RecordRegisterClients
-requests of the Record extension do not properly validate the request
-length leading to out of bounds memory write.
-
-Patches
--------
-
-Patches for this issues have been commited to the xorg server git
-repository (https://gitlab.freedesktop.org/xorg/xserver). xorg-server
-21.1.2 will be released shortly and will include these patches.
-
-commit ebce7e2d80e7c80e1dda60f2f0bc886f1106ba60
-
-    render: Fix out of bounds access in SProcRenderCompositeGlyphs()
-
-    ZDI-CAN-14192, CVE-2021-4008
-
-    This vulnerability was discovered and the fix was suggested by:
-    Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
-
-commit b5196750099ae6ae582e1f46bd0a6dad29550e02
-
-    xfixes: Fix out of bounds access in *ProcXFixesCreatePointerBarrier()
-
-    ZDI-CAN-14950, CVE-2021-4009
-
-    This vulnerability was discovered and the fix was suggested by:
-    Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
-
-commit 6c4c53010772e3cb4cb8acd54950c8eec9c00d21
-
-    Xext: Fix out of bounds access in SProcScreenSaverSuspend()
-
-    ZDI-CAN-14951, CVE-2021-4010
-
-    This vulnerability was discovered and the fix was suggested by:
-    Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
-
-commit e56f61c79fc3cee26d83cda0f84ae56d5979f768
-
-    record: Fix out of bounds access in SwapCreateRegister()
-
-    ZDI-CAN-14952, CVE-2021-4011
-
-    This vulnerability was discovered and the fix was suggested by:
-    Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
-
-Thanks
-======
-
-This vulnerability was discovered by Jan-Niklas Sohn working with
-Trend Micro Zero Day Initiative.
-
---
-Povilas Kanapickas
+Content of type "application/pgp-signature" skipped
