@@ -1,36 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/10/9
-Message-ID: <1622544226.KAPKHQKN@httpd.apache.org>
-Date: Wed, 09 Jun 2021 23:11:00 +0200
-From: Christophe JAILLET <jailletc36@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-31618: Apache httpd: NULL pointer dereference on specially crafted HTTP/2 request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/22/1
+Message-ID: <fef0f10f-a8db-f14d-eb25-4329f1c914f8@igalia.com>
+Date: Mon, 22 Mar 2021 20:41:36 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2021-0002
 Content-Type: text/plain; charset=utf-8
 
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2021-0002
+------------------------------------------------------------------------
 
-CVE-2021-31618: NULL pointer dereference on specially crafted HTTP/2 request
+Date reported           : March 22, 2021
+Advisory ID             : WSA-2021-0002
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2021-0002.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2021-0002.html
+CVE identifiers         : CVE-2020-27918, CVE-2020-29623, CVE-2020-9947,
+                          CVE-2021-1765, CVE-2021-1789, CVE-2021-1799,
+                          CVE-2021-1801, CVE-2021-1870.
 
-Severity: important
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-Vendor: The Apache Software Foundation
+CVE-2020-27918
+    Versions affected: WebKitGTK before 2.30.6 and WPE WebKit before 2.30.6.
+    Credit to Liu Long of Ant Security Light-Year Lab.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A use after free issue was
+    addressed with improved memory management.
 
-Versions Affected:
-2.4.47
-httpd 
-Description:
-Apache HTTP Server 2.4.47
-Apache HTTP Server protocol handler for the HTTP/2 protocol checks received request headers against the size limitations as configured for the server and used for the HTTP/1 protocol as well. On violation of these restrictions and HTTP response is sent to the client with a status code indicating why the request was rejected.
+CVE-2020-29623
+    Versions affected: WebKitGTK before 2.30.6 and WPE WebKit before 2.30.6.
+    Credit to Simon Hunt of OvalTwo LTD.
+    Impact: A user may be unable to fully delete browsing history.
+    Description: "Clear History and Website Data" did not clear the
+    history in some circumstances. The issue was addressed with improved
+    data deletion.
 
-This rejection response was not fully initialised in the HTTP/2 protocol handler if the offending header was the very first one received or appeared in a a footer. This led to a NULL pointer dereference on initialised memory, crashing reliably the child process. Since such a triggering HTTP/2 request is easy to craft and submit, this can be exploited to DoS the server.
+CVE-2020-9947
+    Versions affected: WebKitGTK before 2.30.0 and WPE WebKit before 2.30.0.
+    Credit to cc working with Trend Micro Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A use after free issue was
+    addressed with improved memory management.
 
-This affected versions prior to 2.4.47
+CVE-2021-1765
+    Versions affected: WebKitGTK before 2.30.6 and WPE WebKit before 2.30.6.
+    Credit to Eliya Stein of Confiant.
+    Impact: Maliciously crafted web content may violate iframe
+    sandboxing policy. Description: This issue was addressed with
+    improved iframe sandbox enforcement.
 
-Mitigation:
-none
+CVE-2021-1789
+    Versions affected: WebKitGTK before 2.30.6 and WPE WebKit before 2.30.6.
+    Credit to @S0rryMybad of 360 Vulcan Team.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A type confusion issue was
+    addressed with improved state handling.
 
-Credit:
-Apache HTTP server would like to thank  LI ZHI XIN from NSFocus for reporting this.
+CVE-2021-1799
+    Versions affected: WebKitGTK before 2.30.6 and WPE WebKit before 2.30.6.
+    Credit to Gregory Vishnepolsky & Ben Seri of Armis Security, and
+    Samy Kamkar.
+    Impact: A malicious website may be able to access restricted ports
+    on arbitrary servers, Description: A port redirection issue was
+    addressed with additional port validation.
 
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html
+CVE-2021-1801
+    Versions affected: WebKitGTK before 2.30.6 and WPE WebKit before 2.30.6.
+    Credit to Eliya Stein of Confiant.
+    Impact: Maliciously crafted web content may violate iframe
+    sandboxing policy. Description: This issue was addressed with
+    improved iframe sandbox enforcement.
 
+CVE-2021-1870
+    Versions affected: WebKitGTK before 2.30.6 and WPE WebKit before 2.30.6.
+    Credit to an anonymous researcher.
+    Impact: A remote attacker may be able to cause arbitrary code
+    execution. Apple is aware of a report that this issue may have been
+    actively exploited. Description: A logic issue was addressed with
+    improved restrictions.
+
+
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
+
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+March 22, 2021
