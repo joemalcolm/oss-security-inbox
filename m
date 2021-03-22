@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1854" "Wednesday" "22" "November" "2017" "15:27:11" "-0700" "Kurt Seifried" "kseifrie@redhat.com" "<63829CA0-BA0A-433E-8DAC-EE1D232F4639@redhat.com>" "43" "Re: [oss-security] Re: Security risk of server side text editing ..." "^Cc:" nil nil "11" "2017112222:27:11" "[oss-security] Re: Security risk of server side text editing ..." (number mark "        kseifrie@red Nov 22   43/1854  " thread-indent "\"Re: [oss-security] Re: Security risk of server side text editing ...\"\n") "<20171122221706.GA26704@openwall.com>" ("<201711171035.vAHAZFC3003212@masaka.moolenaar.net>" "<20171122221706.GA26704@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3852" "Monday" "22" "March" "2021" "20:41:36" "+0100" "Carlos Alberto Lopez Perez" "clopez@igalia.com" nil "85" "[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2021-0002" nil nil nil "3" nil nil (number mark "U       clopez@igali Mar 22   85/3852  " thread-indent "\"[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2021-0002\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2021-0002" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3640 invoked by uid 550); 22 Nov 2017 22:27:26 -0000
+Received: (qmail 17500 invoked by uid 550); 22 Mar 2021 19:42:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,78 +11,111 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3622 invoked from network); 22 Nov 2017 22:27:26 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=hMKYxmLLhFWuKjQX7MdOYjFeNr4X2P5qmfXOAIN6vTo=;
-        b=H6tvoTTiUrJr5KRoyxEWM4g/mLZRDk8Sk3Pz5BQYe4JTDgpuYwgUEdREMtBJnNd+S3
-         mT0idUSqwzBNrYZrAVrXW3tbZUuviSygCAKZNtK7XitCe4c7OjQFWAyUst8CTo56iLdJ
-         j+nswETRZkkqTmmZcphVfMcTOgGiWf7O957SpDpegSysZaZG9hBBjFDE8i2jsxR+SiV3
-         vUv4lq4U3+wOWAZa2UOvpdgMB1BGrvAiZ+VU0T7w99CILJmsCFYACrpMSGzMJ5r9zWxZ
-         JaRWhu/jcFfJ9BDrsOK9S4OVYSCNGqBTgH7ABNpFRlw6Yp/2kcF+32Qs715OW3tNOSQl
-         Sm+A==
-X-Gm-Message-State: AJaThX7LdZdFVhZjlBt7Wk8fqx8xTnv8IfB9rwGLHSSr7REv0C3plOLK
-	Slcp4Vnew2rvQKCrykB0SgZcJg==
-X-Google-Smtp-Source: AGs4zMYRcMDGfPyg5XTFF/93waW+8HWsvUWteYqAqluBRiMgeqfq6kMWxrntAl76gloB+P5O0hiJnw==
-X-Received: by 10.36.2.212 with SMTP id 203mr9214646itu.43.1511389634046;
-        Wed, 22 Nov 2017 14:27:14 -0800 (PST)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (1.0)
-X-Mailer: iPhone Mail (15B150)
-In-Reply-To: <20171122221706.GA26704@openwall.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <63829CA0-BA0A-433E-8DAC-EE1D232F4639@redhat.com>
-References: <201711171035.vAHAZFC3003212@masaka.moolenaar.net> <20171122221706.GA26704@openwall.com>
-Cc: Bram Moolenaar <Bram@moolenaar.net>
-Date: Wed, 22 Nov 2017 15:27:11 -0700
-From: Kurt Seifried <kseifrie@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Security risk of server side text editing ...
-To: oss-security@lists.openwall.com
+Received: (qmail 17467 invoked from network); 22 Mar 2021 19:41:59 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; s=20170329;
+	h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:Message-ID:Subject:From:Cc:To; bh=Zy3GqEw9k2D4X2uUmMVT0Uxzydqu60xjc3jPF7kqqlY=;
+	b=HRgX1hdQvSs4e5Me6X3QpJxN2bBeb91Cj+n+M18Hj3dooiyLMHsAZaGYtKFgZVx51Ya5s/IUB+c0gNz5qk6vQqPurcG/Q+SKa8x+xdcU2xGJ4dCzmr3WROlU8lGUdMBuxk/k+HMjyLJQyYXgvVGH5o6bps+EYTDGFdt2yXRLLN0DO/5jtzKKe8Ee7IXi4FzXO4YpTqSFp10/aWsJIJcDpyJdSbz2qEdhcfQWvQXJskDB5/AiiWYP1iviIbzhRGmDngpEy0Ckt6wz37czvqw1joBIMaZ0sCydXaiyR+GhOPi4EZotJpw/eomXZYutZInH+o+jHlu469KhajPRtk+lBA==;
+To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Cc: security@webkit.org, distributor-list@gnome.org,
+ oss-security@lists.openwall.com, bugtraq@securityfocus.com
+From: Carlos Alberto Lopez Perez <clopez@igalia.com>
+Organization: Igalia S.L.
+Mail-Followup-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org,
+ security@webkit.org, distributor-list@gnome.org,
+ oss-security@lists.openwall.com, bugtraq@securityfocus.com
+Message-ID: <fef0f10f-a8db-f14d-eb25-4329f1c914f8@igalia.com>
+Date: Mon, 22 Mar 2021 20:41:36 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2021-0002
 
-Can you post a summary of the issues, it sounds like more than one CVE will=
- be needed, thanks.
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2021-0002
+------------------------------------------------------------------------
+
+Date reported           : March 22, 2021
+Advisory ID             : WSA-2021-0002
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2021-0002.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2021-0002.html
+CVE identifiers         : CVE-2020-27918, CVE-2020-29623, CVE-2020-9947,
+                          CVE-2021-1765, CVE-2021-1789, CVE-2021-1799,
+                          CVE-2021-1801, CVE-2021-1870.
+
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+
+CVE-2020-27918
+    Versions affected: WebKitGTK before 2.30.6 and WPE WebKit before 2.30.6.
+    Credit to Liu Long of Ant Security Light-Year Lab.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A use after free issue was
+    addressed with improved memory management.
+
+CVE-2020-29623
+    Versions affected: WebKitGTK before 2.30.6 and WPE WebKit before 2.30.6.
+    Credit to Simon Hunt of OvalTwo LTD.
+    Impact: A user may be unable to fully delete browsing history.
+    Description: "Clear History and Website Data" did not clear the
+    history in some circumstances. The issue was addressed with improved
+    data deletion.
+
+CVE-2020-9947
+    Versions affected: WebKitGTK before 2.30.0 and WPE WebKit before 2.30.0.
+    Credit to cc working with Trend Micro Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A use after free issue was
+    addressed with improved memory management.
+
+CVE-2021-1765
+    Versions affected: WebKitGTK before 2.30.6 and WPE WebKit before 2.30.6.
+    Credit to Eliya Stein of Confiant.
+    Impact: Maliciously crafted web content may violate iframe
+    sandboxing policy. Description: This issue was addressed with
+    improved iframe sandbox enforcement.
+
+CVE-2021-1789
+    Versions affected: WebKitGTK before 2.30.6 and WPE WebKit before 2.30.6.
+    Credit to @S0rryMybad of 360 Vulcan Team.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A type confusion issue was
+    addressed with improved state handling.
+
+CVE-2021-1799
+    Versions affected: WebKitGTK before 2.30.6 and WPE WebKit before 2.30.6.
+    Credit to Gregory Vishnepolsky & Ben Seri of Armis Security, and
+    Samy Kamkar.
+    Impact: A malicious website may be able to access restricted ports
+    on arbitrary servers, Description: A port redirection issue was
+    addressed with additional port validation.
+
+CVE-2021-1801
+    Versions affected: WebKitGTK before 2.30.6 and WPE WebKit before 2.30.6.
+    Credit to Eliya Stein of Confiant.
+    Impact: Maliciously crafted web content may violate iframe
+    sandboxing policy. Description: This issue was addressed with
+    improved iframe sandbox enforcement.
+
+CVE-2021-1870
+    Versions affected: WebKitGTK before 2.30.6 and WPE WebKit before 2.30.6.
+    Credit to an anonymous researcher.
+    Impact: A remote attacker may be able to cause arbitrary code
+    execution. Apple is aware of a report that this issue may have been
+    actively exploited. Description: A logic issue was addressed with
+    improved restrictions.
 
 
--Kurt
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
 
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
 
-
-
-
-> On Nov 22, 2017, at 15:17, Solar Designer <solar@openwall.com> wrote:
->=20
->> On Fri, Nov 17, 2017 at 11:35:15AM +0100, Bram Moolenaar wrote:
->> Please check out patch 8.0.1300.
->=20
-> Thanks.  Personally, I don't have much to add.  This continues to do
-> what I find are weird and wrong things, so any implementation issues are
-> secondary to that.  I suppose you have some rationale for preserving the
-> old behavior of propagating the edited file's permissions onto related
-> temporary files, but I'm unaware of good reasons for that.
->=20
-> If it's about users' collaboration, then I don't see a good reason for
-> other users in the group, even if they could access the original file
-> via group permissions, to also have access to recovery and backup files.
->=20
-> As to the patch itself, aside from it propagating the possibly unsafe
-> permissions on purpose (I mean unsafe such as in Hanno's original
-> example, but also applying to backup files), it's also risky in
-> temporarily setting umask to 0.  On some systems, this could mean libc
-> or the kernel creating files with unsafe permissions if anything goes
-> very wrong during this time - e.g., a coredump.  Checking st_ino is OK
-> as a hardening measure, but might not always be sufficient: inode number
-> reuse is possible if the original file could have been deleted.
-> I suppose st_dev is not checked because of the use of O_NOFOLLOW, but I
-> guess Vim can be built on systems without working O_NOFOLLOW as well?
->=20
-> In case anyone wants to review the patch for real, I've attached it to
-> this message, and here it is on GitHub (for expanding of the context):
->=20
-> https://github.com/vim/vim/commit/cd142e3369db8888163a511dbe9907bcd138829c
->=20
-> Alexander
-> <8.0.1300>
+The WebKitGTK and WPE WebKit team,
+March 22, 2021
