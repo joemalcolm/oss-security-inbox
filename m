@@ -1,24 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/11/1
-Message-ID: <20210211054747.GA6747@lorien.valinor.li>
-Date: Thu, 11 Feb 2021 06:47:47 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/23/2
+Message-ID: <20210323170306.GA2473828@nxnw.org>
+Date: Tue, 23 Mar 2021 10:03:06 -0700
+From: Steve Beattie <steve.beattie@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: screen crash processing combining characters
+Cc: ONE K <n4ke4mry@...il.com>
+Subject: [CVE-2021-3444] Linux kernel bpf verifier incorrect mod32 truncation
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello,
 
-On Tue, Feb 09, 2021 at 11:03:06PM -0000, Tavis Ormandy wrote:
-> On 2021-02-09, Tavis Ormandy wrote:
-> > I'll send a report to Thomas Dickey.
-> >
-> 
-> Fyi, Thomas (XTerm maintainer) replied - he was able to repro, and said
-> the fix is going to be in patch #366, a bug fix release coming soon.
+CVE-2021-3444 - Linux kernel bpf verifier incorrect mod32 truncation
 
-It has now been released:
-https://invisible-island.net/xterm/xterm.log.html#xterm_366
+Recently, it was discovered that bpf verifier in the Linux kernel
+did not properly handle mod32 destination register truncation when
+the source register was known to be 0. De4dCr0w of 360 Alpha Lab
+discovered that this vulnerability could be turned into out-of-bounds
+reads in the kernel, and out-of-bounds writes can not be ruled out.
 
-Regards,
-Salvatore
+It was fixed in upstream commit:
+
+  9b00f1b78809 ("bpf: Fix truncation handling for mod32 dst reg wrt zero")
+
+and also landed in the 5.11.2, 5.10.19, and 5.4.101 stable kernels.
+
+The commit itself references
+
+  468f6eafa6c4 ("bpf: fix 32-bit ALU op verification") (v4.15-rc5)
+
+as introducing the issue, but further analysis seemed to indicate that
+
+  f6b1b3bf0d5f ("bpf: fix subprog verifier bypass by div/mod by 0 exception") (v4.16-rc1)
+
+was also necessary to take advantage of the vulnerability.
+
+Thanks.
+
+-- 
+Steve Beattie
+<sbeattie@...ntu.com>
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
