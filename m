@@ -1,313 +1,112 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/25/1
-Message-ID: <CAMMGaruFZnpyZd958Lckk=eVPgMQHf+-Bhth_p2xTW=2bJcgig@mail.gmail.com>
-Date: Tue, 25 May 2021 15:18:22 +0800
-From: Mart111n <mmmart11nnnnn@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/23/3
+Message-ID: <ae651bbb-c98f-9cb8-5392-5f47b254264a@oracle.com>
+Date: Tue, 23 Mar 2021 10:13:48 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-3564 Linux Bluetooth device initialization implementation bug
+Subject: Re: Multiple memory leaks fixed in Privoxy 3.0.29 stable
 Content-Type: text/plain; charset=utf-8
 
-Hello there,
+It looks like Red Hat has assigned CVE ids for these issues now, but
+not yet told Mitre to publish them:
 
-Our team (BlockSec) found an implementation bug that resides in the kernel
-BlueTooth subsystem when the HCI device initialization fails. It can lead
-to unexpected results, like double-free memory corruption vulnerability.
+CVE-2020-35502 privoxy: memory leaks when a response is buffered
+https://bugzilla.redhat.com/show_bug.cgi?id=1928749
 
-=*=*=*=*=*=*=*=*=  BUG DETAILS  =*=*=*=*=*=*=*=*=
+CVE-2021-20209 privoxy: memory leak in the show-status CGI handler when no
+action files are configured
+https://bugzilla.redhat.com/show_bug.cgi?id=1928726
 
-This implementation bug is inside hci_dev_do_open() function.
+CVE-2021-20210 privoxy: memory leak in the show-status CGI handler when no
+filter files are configured
+https://bugzilla.redhat.com/show_bug.cgi?id=1928729
 
-static int hci_dev_do_open(struct hci_dev *hdev)
-{
-...
-    } else {
-        /* Init failed, cleanup */
-        flush_work(&hdev->tx_work);
-        flush_work(&hdev->cmd_work);  // {1}
-        flush_work(&hdev->rx_work);   // {2}
+CVE-2021-20211 privoxy: memory leak when client tags are active
+https://bugzilla.redhat.com/show_bug.cgi?id=1928733
 
-        skb_queue_purge(&hdev->cmd_q);
-        skb_queue_purge(&hdev->rx_q);
+CVE-2021-20212 privoxy: memory leak if multiple filters are executed and the
+last one is skipped due to a pcre error
+https://bugzilla.redhat.com/show_bug.cgi?id=1928736
 
-        if (hdev->flush)
-          hdev->flush(hdev);
+CVE-2021-20213 privoxy: dereference of a NULL-pointer that could result in a
+crash if accept-intercepted-requests was enabled
+https://bugzilla.redhat.com/show_bug.cgi?id=1928740
 
-        if (hdev->sent_cmd) {
-          kfree_skb(hdev->sent_cmd);
-          hdev->sent_cmd = NULL;
-        }
-...
-}
+CVE-2021-20214 privoxy: memory leak in the client-tags CGI handler when
+client tags are configured
+https://bugzilla.redhat.com/show_bug.cgi?id=1928743
 
-The purpose of flush_work(struct work_struct *work) is to wait for the
-accomplishment of the work_struct. Hence, the accomplishment of the code
-flush_work(&hdev->cmd_work) {1} means the cmd_work is finished. However, we
-discover an implementation bug that can result in activating hci_cmd_work()
-even the hdev->cmd_work has already been flushed {2}.
+CVE-2021-20215 privoxy: memory leaks in the show-status CGI handler when
+memory allocations fail
+https://bugzilla.redhat.com/show_bug.cgi?id=1928747
 
-The process is as follows:
-hci_rx_work() -> hci_event_packet() -> hci_event_packet() ->
-hci_cmd_complete_evt() -> queue_work(hdev->workqueue, &hdev->cmd_work)
-
-We found this implementation bug can lead to double-free memory corruption,
-which resulted from a data race of the hdev->sent_cmd. Here is the code
-snippet for this race.
-
-static void hci_cmd_work(struct work_struct *work)
-{
-...
-    if (atomic_read(&hdev->cmd_cnt)) {
-        skb = skb_dequeue(&hdev->cmd_q);
-        if (!skb)
-            return;
-
-        kfree_skb(hdev->sent_cmd);
-
-        hdev->sent_cmd = skb_clone(skb, GFP_KERNEL);
-...
-}
-
-
-We use thread-A to represent hci_dev_do_open() function and the thread-B
-for hci_cmd_work().
-The normal sequence should be like this:
-
-----------------------------------------------------------------------------------------------------
-thread-A                               |  thread-B
-                                       |  kfree_skb(hdev->sent_cmd); (FREE)
-                                       |
-                                       |  hdev->sent_cmd = skb_clone(skb,
-GFP_KERNEL); (WRITE)
-if (hdev->sent_cmd) { (READ)           |
-                                       |
-kfree_skb(hdev->sent_cmd); (FREE)      |
-                                       |
-hdev->sent_cmd = NULL; (WRITE)         |
-                                       |
-----------------------------------------------------------------------------------------------------
-
-However, if the sequence is like this:
-
-----------------------------------------------------------------------------------------------------
-thread-A                               |  thread-B
-                                       |  kfree_skb(hdev->sent_cmd); (FREE)
-if (hdev->sent_cmd) { (READ)           |
-                                       |
-kfree_skb(hdev->sent_cmd); (FREE)      |
-                                       |  hdev->sent_cmd = skb_clone(skb,
-GFP_KERNEL); (WRITE)
-                                       |
-hdev->sent_cmd = NULL; (WRITE)         |
-                                       |
-----------------------------------------------------------------------------------------------------
-
-If the FREE operation in thread-A is before WRITE operation in thread-B, it
-can lead to double-free memory corruption in the kernel.
-
-
-=*=*=*=*=*=*=*=*=  BUG EFFECTS  =*=*=*=*=*=*=*=*=
-
-For now, we can successfully trigger the vulnerability to corrupt the
-kernel memory and thus crash the kernel. Although this bug is related to
-Bluetooth device initialization, the attacker can trigger it without extra
-privileges.
-
-That is because the Linux kernel does not ask for the privilege when
-attaching the HCI device as the attached device is default set to
-HCI_AUTO_OFF state. This bug is inside in the very first attaching
-procedure and requires no syscalls.
-
-The crash log is presented below.
-
-==================================================================
-[  500.906562] hci0 type 1 len 3
-[  500.904986] BUG: KASAN: use-after-free in kfree_skb+0x33/0x1c0
-[  500.904986] Read of size 4 at addr ffff888009d3599c by task
-kworker/u5:0/54
-[  500.904986]
-[  500.909997] CPU: 0 PID: 54 Comm: kworker/u5:0 Not tainted 5.11.11+ #16
-[  500.909997] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-1.13.0-1ubuntu1.1 04/01/2014
-[  500.909997] Workqueue: hci0 hci_power_on
-[  500.909997] Call Trace:
-[  500.909997]  dump_stack+0x16c/0x1be
-[  500.924511]  print_address_description+0x7b/0x3a0
-[  500.924511]  __kasan_report+0x14e/0x200
-[  500.924511]  ? kfree_skb+0x33/0x1c0
-[  500.924511]  ? skb_queue_purge+0x193/0x1c0
-[  500.924511]  kasan_report+0x47/0x60
-[  500.924511]  ? skb_queue_purge+0x193/0x1c0
-[  500.924511]  check_memory_region+0x2e2/0x330
-[  500.924511]  kfree_skb+0x33/0x1c0
-[  500.924511]  hci_dev_do_open+0x1008/0x1570
-[  500.924511]  ? printk+0x62/0x83
-[  500.924511]  hci_power_on+0x183/0x580
-[  500.924511]  ? strscpy+0x7f/0x240
-[  500.924511]  process_one_work+0x722/0x1150
-[  500.924511]  worker_thread+0xb5c/0x17d0
-[  500.924511]  ? process_one_work+0x1150/0x1150
-[  500.924511]  kthread+0x2fc/0x320
-[  500.924511]  ? process_one_work+0x1150/0x1150
-[  500.924511]  ? kthread_unuse_mm+0x1d0/0x1d0
-[  500.924511]  ret_from_fork+0x22/0x30
-[  500.924511]
-[  500.924511] Allocated by task 273:
-[  500.924511]  ____kasan_kmalloc+0xc6/0x100
-[  500.924511]  kmem_cache_alloc+0xfe/0x1f0
-[  500.924511]  skb_clone+0x1b5/0x360
-[  500.924511]  hci_cmd_work+0x15d/0x350
-[  500.924511]  process_one_work+0x722/0x1150
-[  500.924511]  worker_thread+0xb5c/0x17d0
-[  500.924511]  kthread+0x2fc/0x320
-[  500.924511]  ret_from_fork+0x22/0x30
-[  500.924511]
-[  500.924511] Freed by task 273:
-[  500.924511]  kasan_set_track+0x3d/0x70
-[  500.924511]  kasan_set_free_info+0x1f/0x40
-[  500.924511]  ____kasan_slab_free+0x10e/0x140
-[  500.924511]  kmem_cache_free+0xca/0x210
-[  500.924511]  hci_cmd_work+0x150/0x350
-[  500.924511]  process_one_work+0x722/0x1150
-[  500.924511]  worker_thread+0xb5c/0x17d0
-[  500.924511]  kthread+0x2fc/0x320
-[  500.924511]  ret_from_fork+0x22/0x30
-[  500.924511]
-[  500.924511] The buggy address belongs to the object at ffff888009d358c0
-[  500.924511]  which belongs to the cache skbuff_head_cache of size 232
-[  500.924511] The buggy address is located 220 bytes inside of
-[  500.924511]  232-byte region [ffff888009d358c0, ffff888009d359a8)
-[  500.924511] The buggy address belongs to the page:
-[  500.924511] page:00000000b691648a refcount:1 mapcount:0
-mapping:0000000000000000 index:0x0 pfn:0x9d35
-[  500.924511] flags: 0x100000000000200(slab)
-[  500.924511] raw: 0100000000000200 dead000000000100 dead000000000122
-ffff888006d64640
-[  500.924511] raw: 0000000000000000 00000000000c000c 00000001ffffffff
-0000000000000000
-[  500.924511] page dumped because: kasan: bad access detected
-[  500.924511]
-[  500.924511] Memory state around the buggy address:
-[  500.924511]  ffff888009d35880: fc fc fc fc fc fc fc fc fa fb fb fb fb fb
-fb fb
-[  500.924511]  ffff888009d35900: fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-fb fb
-[  500.924511] >ffff888009d35980: fb fb fb fb fb fc fc fc fc fc fc fc fc fc
-fc fc
-[  500.924511]                             ^
-[  500.924511]  ffff888009d35a00: fa fb fb fb fb fb fb fb fb fb fb fb fb fb
-fb fb
-[  500.924511]  ffff888009d35a80: fb fb fb fb fb fb fb fb fb fb fb fb fb fc
-fc fc
-[  500.924511]
-==================================================================
-[  500.924511] Disabling lock debugging due to kernel taint
-[  501.014277]
-==================================================================
-[  501.014929] BUG: KASAN: double-free or invalid-free in
-hci_dev_do_open+0x1008/0x1570
-[  501.014929]
-[  501.014929] CPU: 0 PID: 54 Comm: kworker/u5:0 Tainted: G    B
-  5.11.11+ #16
-[  501.014929] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-1.13.0-1ubuntu1.1 04/01/2014
-[  501.014929] Workqueue: hci0 hci_power_on
-[  501.014929] Call Trace:
-[  501.014929]  dump_stack+0x16c/0x1be
-[  501.014929]  ? hci_dev_do_open+0x1008/0x1570
-[  501.014929]  ? hci_dev_do_open+0x1008/0x1570
-[  501.014929]  print_address_description+0x7b/0x3a0
-[  501.014929]  ? hci_dev_do_open+0x1008/0x1570
-[  501.014929]  ? hci_dev_do_open+0x1008/0x1570
-[  501.014929]  kasan_report_invalid_free+0x54/0xd0
-[  501.014929]  ____kasan_slab_free+0xe7/0x140
-[  501.014929]  kmem_cache_free+0xca/0x210
-[  501.014929]  ? hci_dev_do_open+0x1008/0x1570
-[  501.014929]  hci_dev_do_open+0x1008/0x1570
-[  501.014929]  ? printk+0x62/0x83
-[  501.014929]  hci_power_on+0x183/0x580
-[  501.014929]  ? strscpy+0x7f/0x240
-[  501.014929]  process_one_work+0x722/0x1150
-[  501.014929]  worker_thread+0xb5c/0x17d0
-[  501.014929]  ? process_one_work+0x1150/0x1150
-[  501.014929]  kthread+0x2fc/0x320
-[  501.014929]  ? process_one_work+0x1150/0x1150
-[  501.014929]  ? kthread_unuse_mm+0x1d0/0x1d0
-[  501.014929]  ret_from_fork+0x22/0x30
-[  501.014929]
-[  501.014929] Allocated by task 273:
-[  501.014929]  ____kasan_kmalloc+0xc6/0x100
-[  501.014929]  kmem_cache_alloc+0xfe/0x1f0
-[  501.014929]  skb_clone+0x1b5/0x360
-[  501.014929]  hci_cmd_work+0x15d/0x350
-[  501.014929]  process_one_work+0x722/0x1150
-[  501.014929]  worker_thread+0xb5c/0x17d0
-[  501.014929]  kthread+0x2fc/0x320
-[  501.014929]  ret_from_fork+0x22/0x30
-[  501.014929]
-[  501.014929] Freed by task 273:
-[  501.014929]  kasan_set_track+0x3d/0x70
-[  501.066803]  kasan_set_free_info+0x1f/0x40
-[  501.066803]  ____kasan_slab_free+0x10e/0x140
-[  501.066803]  kmem_cache_free+0xca/0x210
-[  501.066803]  hci_cmd_work+0x150/0x350
-[  501.066803]  process_one_work+0x722/0x1150
-[  501.066803]  worker_thread+0xb5c/0x17d0
-[  501.066803]  kthread+0x2fc/0x320
-[  501.066803]  ret_from_fork+0x22/0x30
-[  501.066803]
-[  501.066803] The buggy address belongs to the object at ffff888009d358c0
-[  501.066803]  which belongs to the cache skbuff_head_cache of size 232
-[  501.066803] The buggy address is located 0 bytes inside of
-[  501.066803]  232-byte region [ffff888009d358c0, ffff888009d359a8)
-[  501.066803] The buggy address belongs to the page:
-[  501.066803] page:00000000b691648a refcount:1 mapcount:0
-mapping:0000000000000000 index:0x0 pfn:0x9d35
-[  501.066803] flags: 0x100000000000200(slab)
-[  501.066803] raw: 0100000000000200 dead000000000100 dead000000000122
-ffff888006d64640
-[  501.066803] raw: 0000000000000000 00000000000c000c 00000001ffffffff
-0000000000000000
-[  501.066803] page dumped because: kasan: bad access detected
-[  501.066803]
-[  501.066803] Memory state around the buggy address:
-[  501.066803]  ffff888009d35780: fa fb fb fb fb fb fb fb fb fb fb fb fb fb
-fb fb
-[  501.066803]  ffff888009d35800: fb fb fb fb fb fb fb fb fb fb fb fb fb fc
-fc fc
-[  501.066803] >ffff888009d35880: fc fc fc fc fc fc fc fc fa fb fb fb fb fb
-fb fb
-[  501.066803]                                            ^
-[  501.066803]  ffff888009d35900: fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-fb fb
-[  501.066803]  ffff888009d35980: fb fb fb fb fb fc fc fc fc fc fc fc fc fc
-fc fc
-[  501.066803]
-==================================================================
-
-=*=*=*=*=*=*=*=*=  Timeline  =*=*=*=*=*=*=*=*=
-
-2021-05-17: Bug reported to security () kernel org and linux-distros
-() vs openwall org
-
-2021-05-25: CVE-2021-3564 assigned
-
-We informed security@...nel.org on May 17, 2021. Now the 7-day embargo
-period is over, we are being asked to bring the issue to public.
-
-Since our patch has not been applied to upstream yet, we will release
-the POC later.
-
-=*=*=*=*=*=*=*=*=  Credit  =*=*=*=*=*=*=*=*=
-
-HaoXiong@...ckSec Team
-
-LinMa@...cksec Team
-
-syzkaller
+	-Alan Coopersmith-               alan.coopersmith@...cle.com
+	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
 
 
 
-Best regards.
-
-Mart111n
+On 11/29/20 7:53 AM, Fabian Keil wrote:
+>                 Announcing Privoxy 3.0.29 stable
+> --------------------------------------------------------------------
+> 
+> Privoxy 3.0.29 stable fixes a couple of memory leaks and introduces
+> https inspection which allows to filter encrypted requests and
+> responses.
+> 
+> --------------------------------------------------------------------
+> ChangeLog for Privoxy 3.0.29
+> --------------------------------------------------------------------
+> 
+> - Security/Reliability:
+>    - Fixed memory leaks when a response is buffered and the buffer
+>      limit is reached or Privoxy is running out of memory.
+>      Commits bbd53f1010b and 4490d451f9b. OVE-20201118-0001.
+>      Sponsored by: Robert Klemme
+>    - Fixed a memory leak in the show-status CGI handler when
+>      no action files are configured. Commit c62254a686.
+>      OVE-20201118-0002.
+>      Sponsored by: Robert Klemme
+>    - Fixed a memory leak in the show-status CGI handler when
+>      no filter files are configured. Commit 1b1370f7a8a.
+>      OVE-20201118-0003.
+>      Sponsored by: Robert Klemme
+>    - Fixes a memory leak when client tags are active.
+>      Commit 245e1cf32. OVE-20201118-0004.
+>      Sponsored by: Robert Klemme
+>    - Fixed a memory leak if multiple filters are executed
+>      and the last one is skipped due to a pcre error.
+>      Commit 5cfb7bc8fe. OVE-20201118-0005.
+>    - Prevent an unlikely dereference of a NULL-pointer that
+>      could result in a crash if accept-intercepted-requests
+>      was enabled, Privoxy failed to get the request destination
+>      from the Host header and a memory allocation failed.
+>      Commit 7530132349. CID 267165. OVE-20201118-0006.
+>    - Fixed memory leaks in the client-tags CGI handler when
+>      client tags are configured and memory allocations fail.
+>      Commit cf5640eb2a. CID 267168. OVE-20201118-0007.
+>    - Fixed memory leaks in the show-status CGI handler when memory
+>      allocations fail. Commit 064eac5fd0 and commit fdee85c0bf3.
+>      CID 305233. OVE-20201118-0008.
+> 
+> - General improvements:
+> [...]
+> 
+> -----------------------------------------------------------------
+> About Privoxy:
+> -----------------------------------------------------------------
+> 
+> Privoxy is a non-caching web proxy with advanced filtering capabilities for
+> enhancing privacy, modifying web page data and HTTP headers, controlling
+> access, and removing ads and other obnoxious Internet junk. Privoxy has a
+> flexible configuration and can be customized to suit individual needs and
+> tastes. It has application for both stand-alone systems and multi-user
+> networks.
+> 
+> Privoxy is Free Software and licensed under the GNU GPLv2.
+> 
+> [...]
+> 
+> Home Page:
+>     https://www.privoxy.org/
+> 
 
