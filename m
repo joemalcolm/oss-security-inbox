@@ -1,61 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/27/1
-Message-ID: <YDnsmGZ4hL6knMJD@eldamar.lan>
-Date: Sat, 27 Feb 2021 07:54:16 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/23/1
+Message-ID: <20210323091036.GB2094@dhcp-25-225.brq.redhat.com>
+Date: Tue, 23 Mar 2021 10:10:37 +0100
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: wpa_supplicant P2P provision discovery processing vulnerability
+Subject: Re: Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello,
 
-On Thu, Feb 25, 2021 at 09:03:50PM +0200, Jouni Malinen wrote:
-> Published: February 25, 2021
-> Latest version available from: https://w1.fi/security/2021-1/
-> 
-> 
-> Vulnerability
-> 
-> A vulnerability was discovered in how wpa_supplicant processes P2P
-> (Wi-Fi Direct) provision discovery requests. Under a corner case
-> condition, an invalid Provision Discovery Request frame could end up
-> reaching a state where the oldest peer entry needs to be removed. With
-> a suitably constructed invalid frame, this could result in use
-> (read+write) of freed memory. This can result in an attacker within
-> radio range of the device running P2P discovery being able to cause
-> unexpected behavior, including termination of the wpa_supplicant process
-> and potentially code execution.
-> 
-> 
-> Vulnerable versions/configurations
-> 
-> wpa_supplicant v1.0-v2.9 with CONFIG_P2P build option enabled
-> 
-> An attacker (or a system controlled by the attacker) needs to be within
-> radio range of the vulnerable system to send a set of suitably
-> constructed management frames that trigger the corner case to be reached
-> in the management of the P2P peer table.
-> 
-> 
-> Possible mitigation steps
-> 
-> - Merge the following commit to wpa_supplicant and rebuild it:
-> 
->   P2P: Fix a corner case in peer addition based on PD Request
->   
->   This patch is available from https://w1.fi/security/2021-1/
->   
-> - Update to wpa_supplicant v2.10 or newer, once available
-> 
-> - Disable P2P (control interface command "P2P_SET disabled 1" or
->   "p2p_disabled=1" in (each, if multiple interfaces used) wpa_supplicant
->   configuration file)
-> 
-> - Disable P2P from the build (remove CONFIG_P2P=y)
+we are reviewing our approach to sending CVE kernel announcements to
+oss-security after the (mostly) constructive feedback received in this
+email thread.
 
-CVE-2021-27803 is assigned for this issue:
+I admit that several of the recent announcements were not up to par with
+the minimal standard we strive to achieve and I apologize for that. Our
+intention never was to cause unnecessary work for others, quite the
+opposite.
 
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-27803
+Thank you,
+-- 
+Petr Matousek / Red Hat Product Security
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
 
-Regards,
-Salvatore
