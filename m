@@ -1,49 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/27/3
-Message-ID: <CAE_88GYP-ZX9=b7LfepVqRZyBeOmGTWRV92BONJCBGkLULcQ3Q@mail.gmail.com>
-Date: Tue, 27 Apr 2021 14:35:20 -0300
-From: "Thiago H. de Paula Figueiredo" <thiagohp@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/24/2
+Message-ID: <YFpulxkoFSCwxeto@zen.localdomain>
+Date: Tue, 23 Mar 2021 23:41:27 +0100
+From: ortmann@...teo.de
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-30638: An Information Disclosure due to insufficient input validation exists in Apache Tapestry 5.4.0 and later
+Subject: Remote DoS Vulnerability in bitchx, ircii < 20210314 and scrollz
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Hi,
 
-Information Exposure vulnerability in context asset handling of Apache
-Tapestry allows an attacker to download files inside WEB-INF if using a
-specially-constructed URL.  This was caused by an incomplete fix for
-CVE-2020-13953.  This issue affects Apache Tapestry Apache Tapestry 5.4.0
-version to Apache Tapestry 5.6.3; Apache Tapestry 5.7.0 version and Apache
-Tapestry 5.7.1.
+i discovered a remote DoS vulnerability (crash) that effects bitchx, ircii and
+scrollz.
+
+Its unknown if this could also be used for arbitrary code execution.
+
+Affected Versions:
+
+  This bug is very old and affects any version, except
+  ircii-20210314, which got a fix.
+
+CVE Name:
+
+  none yet
+
+Problem Description:
+
+  ircii has a bug in parsing CTCP UTC messages. bitchx and scrollz are forks of
+  ircii and inherited that feature and bug.
+
+Impact:
+
+  A malicious irc user could nuke any other irc user that uses bitchx, ircii or
+  scrollz out of irc (crash their irc client) by connecting to the same irc
+  network and sending a malicious CTCP UTC message.
 
 Solution:
 
-For Tapestry 5.4.0 to 5.6.3: upgrade to 5.6.4
+  For ircii: Update to ircii-20210314
+  For bitchx and scrollz: none yet
 
-For Tapestry 5.7.0 and 5.7.1: upgrade to 5.7.2
+History:
 
-************ Problem Description ************
+  20210302 Vulnerability and PoC reported to:
+    bitchx - security@...chx.org
+    ircii - mrg@...rna.com.au
+    scrollz - flier@...ollz.info
+  20210314 ircii released a fixed version
 
-An Information Disclosure due to insufficient input validation exists
-
-in Apache Tapestry 5.6.1 and later (latest)
-
-A recent patch for CVE-2020-13953
-
-(
-https://github.com/apache/tapestry-5/commit/cf1912291af9146ee86a4aef471ae2ab31d3a28b
-)
-
-fails to account for the backslash character in the filtering regex
-
-An attacker is therefore able to list and download web app files from
-
-the WEB-INF and META-INF directory using a crafted payload.
-
-Credit:
-
-This vulnerability was discovered by Kc Udonsi of Trend Micro
-
--- 
-Thiago
-
+light and love,
+Michael Ortmann
