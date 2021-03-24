@@ -1,107 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/11/9
-Message-Id: <59CE18A6-1040-41CB-9058-F0E116A6E51A@beckweb.net>
-Date: Tue, 11 May 2021 15:44:37 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/24/5
+Message-ID: <CAFzhf4p-q+Lf35mfjUQwdV-yqYHQUW06BEs9rJG9OO4LL2YoNQ@mail.gmail.com>
+Date: Wed, 24 Mar 2021 19:38:11 +0000
+From: Piotr Krysiuk <piotras@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+Subject: Re: [CVE-2020-27171] Numeric error when restricting speculative pointer arithmetic allows unprivileged local users to leak content of kernel memory
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+Some details of how CVE-2020-27171 could be exploited in practice were
+provided via linux-distros mailing list with 7 days embargo. This was
+intended to help any affected Linux distributions to assess the risk
+and decide about any appropriate actions.
 
-The following releases contain fixes for security vulnerabilities:
+As the embargo expires today, I was asked to share these details
+publically on oss-security.
 
-* Credentials Plugin 2.3.19
-* Dashboard View Plugin 2.16
-* P4 Plugin 1.11.5
-* S3 publisher Plugin 0.11.7
-* Xcode integration Plugin 2.0.15
-* Xray - Test Management for Jira Plugin 2.4.1
+The CVE-2020-27171 vulnerability has been successfully reproduced
+against Linux kernel v5.12-rc3 using the following logic for BPF
+program attached to a socket:
 
+    load pointer to our big array into BPF_REG_MAP_PTR,
+    load offset of data to leak into BPF_REG_OFFSET,
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2021-05-11/
+    BPF_MOV64_REG(BPF_REG_OOB_ADDRESS, BPF_REG_MAP_PTR),
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+    // load any slowly-loaded value...
+    BPF_LDX_MEM(BPF_DW, BPF_REG_SLOW_CHECK, BPF_REG_MAP_PTR, 0x1200),
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+    // ... and turn it into known zero for verifier,
+    // while preserving slowly-loaded dependency for affected hardware
+    BPF_ALU64_IMM(BPF_AND, BPF_REG_SLOW_CHECK, 1),
+    BPF_ALU64_IMM(BPF_AND, BPF_REG_SLOW_CHECK, 2),
 
----
+    // speculatively bypassed offset check
+    BPF_JMP_REG(BPF_JNE, BPF_REG_OFFSET, BPF_REG_SLOW_CHECK,
+                skip_speculation),
 
-SECURITY-2349 / CVE-2021-21648
-Credentials Plugin 2.3.18 and earlier does not escape user-controlled
-information on a view it provides.
+    // speculatively subtract masked BPF_REG_OFFSET from BPF_REG_OOB_ADDRESS,
+    // where incorrect mask value 0xffffffff is used due to integer underflow
+    BPF_ALU64_REG(BPF_SUB, BPF_REG_OOB_ADDRESS, BPF_REG_OFFSET),
 
-This results in a reflected cross-site scripting (XSS) vulnerability.
+    // speculatively out-of-bounds load
+    BPF_LDX_MEM(BPF_B, BPF_REG_LEAKED_BYTE, BPF_REG_OOB_ADDRESS, 0),
 
+    transmit speculatively loaded BPF_REG_LEAKED_BYTE via side-channel,
 
-SECURITY-2233 / CVE-2021-21649
-Dashboard View Plugin 2.15 and earlier does not escape URLs referenced in
-Image Dashboard Portlets.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with View/Configure permission.
-
-
-SECURITY-2200 / CVE-2021-21650
-S3 publisher Plugin 0.11.6 and earlier does not perform Run/Artifacts
-permission checks in various HTTP endpoints and API models.
-
-This allows attackers with Item/Read permission to obtain information about
-artifacts uploaded to S3, if the optional Run/Artifacts permission is
-enabled.
-
-
-SECURITY-2201 / CVE-2021-21651
-S3 publisher Plugin 0.11.6 and earlier does not perform a permission check
-in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to obtain the list of
-configured profiles.
-
-
-SECURITY-2251 (1) / CVE-2021-21652
-Xray - Test Management for Jira Plugin 2.4.0 and earlier does not require
-POST requests for a connection test method, resulting in a cross-site
-request forgery (CSRF) vulnerability.
-
-This vulnerability allows attackers to connect to an attacker-specified URL
-using attacker-specified credentials IDs obtained through another method,
-capturing credentials stored in Jenkins.
-
-
-SECURITY-2251 (2) / CVE-2021-21653
-Xray - Test Management for Jira Plugin 2.4.0 and earlier does not perform a
-permission check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-
-SECURITY-2327 / CVE-2021-21654 (permission check) & CVE-2021-21655 (CSRF)
-P4 Plugin 1.11.4 and earlier does not perform permission checks in multiple
-HTTP endpoints implementing connection tests.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified Perforce server using attacker-specified username and
-password.
-
-Additionally, these HTTP endpoints do not require POST requests, resulting
-in a cross-site request forgery (CSRF) vulnerability.
-
-
-SECURITY-2335 / CVE-2021-21656
-Xcode integration Plugin 2.0.14 and earlier does not configure its XML
-parser to prevent XML external entity (XXE) attacks.
-
-This allows attackers able to control the input files for the Xcode build
-step to have Jenkins parse a crafted Xcode Workspace File that uses
-external entities for extraction of secrets from the Jenkins controller or
-server-side request forgery.
-
+The full reproducers were shared with a number of Linux distributions
+for protection purposes.
