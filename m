@@ -1,70 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/04/3
-Message-Id: <A943B848-EBB4-4F3D-9337-4C180431A6D7@gmail.com>
-Date: Tue, 4 May 2021 10:58:23 +0200
-From: Carlton Gibson <carlton.gibson@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/27/2
+Message-ID: <CAKghNw2tx1MqnRF-osqZQ4x5PWak8jTT1nvjrcZrJtrFOQdZdQ@mail.gmail.com>
+Date: Sat, 27 Mar 2021 15:28:52 -0700
+From: Gordon Tetlow <gordon@...lows.org>
 To: oss-security@...ts.openwall.com
-Subject: Django 3.2.1, 3.1.9, and 2.2.21: CVE-2021-31542: Potential directory-traversal via uploaded files
+Subject: Re: OpenSSL 1.1.1 CVE-2021-3450 CA certificate check bypass with X509_V_FLAG_X509_STRICT, CVE-2021-3449 NULL pointer deref in signature_algorithms processing
 Content-Type: text/plain; charset=utf-8
 
-https://www.djangoproject.com/weblog/2021/may/04/security-releases/ <https://www.djangoproject.com/weblog/2021/may/04/security-releases/>
+On Sat, Mar 27, 2021 at 11:05 AM Solar Designer <solar@...nwall.com> wrote:
+>
+> One other detail I feel I have to bring up in here, and expect a
+> response to, is Wind River's apparent leak of the vulnerability detail
+> two days prior to scheduled public disclosure.  This was brought up on
+> the distros list back then, and I was also asked about it on Twitter
+> when the vulnerabilities were finally made public appropriately on the
+> scheduled date.
+>
+> Since the vulnerability detail wasn't on the distros list, it's not
+> exactly a case of a list member leaking from there, but it's closely
+> related.  And regardless of where this happened, it's a concern, which
+> we probably should discuss on oss-security.
+>
+> So I'd appreciate an explanation/statement from Wind River on what
+> happened and what measures, if any, are being taken to prevent this from
+> happening again.  I'd also appreciate a comment from OpenSSL.
+>
+> The leak was on a web page archived here:
+>
+> https://web.archive.org/web/20210324105700/https://support2.windriver.com/index.php?page=security-notices&on=view&id=7055
 
-In accordance with `our security release policy
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the Django team
-is issuing
-`Django 3.2.1 <https://docs.djangoproject.com/en/dev/releases/3.2.1/>`_,
-`Django 3.1.9 <https://docs.djangoproject.com/en/dev/releases/3.1.9/>`_, and
-`Django 2.2.21 <https://docs.djangoproject.com/en/dev/releases/2.2.21/>`_.
-These release addresses the security issue detailed below. We encourage all users of Django to upgrade as soon as possible.
+While I am neither Wind River nor OpenSSL, I did notice on the linked
+page that the upper right hand corner says:
+Released: Apr 22, 2020     Updated: Mar 22, 2021
 
-CVE-2021-31542: Potential directory-traversal via uploaded files
-================================================================
+Without knowing much else, it feels like someone accidentally put a
+"released" date as last year and the content management system went
+ahead and made the article public. Hard to say without confirmation,
+but I could definitely see that being the chain of events.
 
-``MultiPartParser``, ``UploadedFile``, and ``FieldFile`` allowed
-directory-traversal via uploaded files with suitably crafted file names.
-
-In order to mitigate this risk, stricter basename and path sanitation is now
-applied. Specifically, empty file names and paths with dot segments will be
-rejected.
-
-This issue has low severity, according to the Django security policy.
-
-Affected supported versions
-===========================
-
-* Django main branch
-* Django 3.2
-* Django 3.1
-* Django 2.2
-
-Resolution
-==========
-
-Patches to resolve the issue have been applied to Django's main branch and to
-the 3.2, 3.1, and 2.2 release branches. The patches may be obtained from the
-following changesets:
-
-* On the `main branch <https://github.com/django/django/commit/0b79eb36915d178aef5c6a7bbce71b1e76d376d3>`__
-* On the `3.2 release branch <https://github.com/django/django/commit/c98f446c188596d4ba6de71d1b77b4a6c5c2a007>`__
-* On the `3.1 release branch <https://github.com/django/django/commit/25d84d64122c15050a0ee739e859f22ddab5ac48>`__
-* On the `2.2 release branch <https://github.com/django/django/commit/04ac1624bdc2fa737188401757cf95ced122d26d>`__
-
-The following releases have been issued:
-
-* Django 3.2.1 (`download Django 3.2.1 <https://www.djangoproject.com/m/releases/3.2/Django-3.2.1.tar.gz>`_ | `3.2.1 checksums <https://www.djangoproject.com/m/pgp/Django-3.2.1.checksum.txt>`_)
-* Django 3.1.9 (`download Django 3.1.9 <https://www.djangoproject.com/m/releases/3.1/Django-3.1.9.tar.gz>`_ | `3.1.9 checksums <https://www.djangoproject.com/m/pgp/Django-3.1.9.checksum.txt>`_)
-* Django 2.2.21 (`download Django 2.2.21 <https://www.djangoproject.com/m/releases/2.2/Django-2.2.21.tar.gz>`_ | `2.2.21 checksums <https://www.djangoproject.com/m/pgp/Django-2.2.21.checksum.txt>`_)
-
-The PGP key ID used for these releases is Carlton Gibson: `E17DF5C82B4F9D00
-<https://github.com/carltongibson.gpg>`_.
-
-General notes regarding security reporting
-==========================================
-
-As always, we ask that potential security issues be reported via
-private email to ``security@...ngoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
-
-
+Gordon
