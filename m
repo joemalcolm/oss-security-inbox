@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1702" "Saturday" "22" "October" "2016" "21:18:11" "+1000" "Allan McRae" "allan@archlinux.org" "<f6e1aee5-5842-b46d-27fa-24ffe08c4762@archlinux.org>" "50" "[oss-security] Addition to linux-distros for Arch Linux" nil nil nil "10" "2016102211:18:11" "[oss-security] Addition to linux-distros for Arch Linux" (number mark "U       allan@archli Oct 22   50/1702  " thread-indent "\"[oss-security] Addition to linux-distros for Arch Linux\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1534" "Saturday" "27" "March" "2021" "15:28:52" "-0700" "Gordon Tetlow" "gordon@tetlows.org" nil "32" "Re: [oss-security] OpenSSL 1.1.1 CVE-2021-3450 CA certificate check bypass with X509_V_FLAG_X509_STRICT, CVE-2021-3449 NULL pointer deref in signature_algorithms processing" nil nil nil "3" nil nil (number mark "U       gordon@tetlo Mar 27   32/1534  " thread-indent "\"Re: [oss-security] OpenSSL 1.1.1 CVE-2021-3450 CA certificate check bypass with X509_V_FLAG_X509_STRICT, CVE-2021-3449 NULL pointer deref in signature_algorithms processing\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] OpenSSL 1.1.1 CVE-2021-3450 CA certificate check bypass with X509_V_FLAG_X509_STRICT, CVE-2021-3449 NULL pointer deref in signature_algorithms processing" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11470 invoked by uid 550); 22 Oct 2016 11:28:37 -0000
+Received: (qmail 30265 invoked by uid 550); 27 Mar 2021 22:36:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,82 +12,71 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5618 invoked from network); 22 Oct 2016 11:18:30 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=archlinux.org;
-	s=nymeria2; t=1477135097;
-	bh=qHMoE8QqhBF5iZHpUUu9u1F3t6lvQ7HO+rblL8nTsws=;
-	h=To:Cc:From:Subject:Date;
-	b=OFJgx+iJ+mm0jqW7NBE9yqWJcW0A3R0+VT1YHYG1REQJn4A+RuiA5UkMaO/ibCi2S
-	 JLJgRMnIswBDatnUSvD/OQFQcZIQnoHTrvtHDZS3ZV8WnkZaR1lWqRlAs3CH28BHET
-	 O8uxMPGBHZH/9V9eqTTVKB3ExEYld6JgUOTpZyhh1ZLJNox/s7cjsm54SzaTdvABR0
-	 czoAULkLp0cTnBgEcC0KiMfZThTxmWAioV0OlgAGnfOb+VAsxgT6BbSgk+xCto1uNM
-	 yseaEFpyTgatQUMaoadB/rf3zlIUnO24KV82yuqNWso4e76Tx87KM4FIl7wTCPgszE
-	 AvsrVr0I+jvmmoRrIA3VsSMIQ1Y3D2gZJVi15NAnsULNzVwzDkUQc1+KPm1XXrpnAx
-	 4fFPLjJ7WPJft3tB+tI82jm0SVogSl/F4uFzZQYvFoJZY35pQ/3UPeX4+htBtxgSih
-	 47cWRNgksMDZ8R369Ds9Kmf61qMkMqx6HfwpuxULfzMH5uPepEA7cZu5PqcNd2U96Z
-	 Q4+5Pg8XvAi9Pt07TQUgfGfJx3GTlkELJxgUF5JwXwN2T98mMlKZ3TZ/AK/ebhv+4b
-	 TQ3wFsTzjWXUppODjct6fGSRTOzKposIWHrnotuIku0MbzhwYWEGGIKcdMneOp6CpD
-	 ZVKveQxegc0VhMg7CkcqnTwI=
-To: oss-security@lists.openwall.com
-Cc: Levente Polyak <anthraxx@archlinux.org>
-From: Allan McRae <allan@archlinux.org>
-Message-ID: <f6e1aee5-5842-b46d-27fa-24ffe08c4762@archlinux.org>
-Date: Sat, 22 Oct 2016 21:18:11 +1000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
+Received: (qmail 27821 invoked from network); 27 Mar 2021 22:29:15 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=tetlows.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=VUb5/+ICJ1oxV93z824G9zadgRweh5hfVOdfU1xS1M0=;
+        b=VqjYl+M3Mcyu+rfcOipqbjNO6MRex48yMaGniXDn8ATXmVFrsRPr5f+FAjKgFgUcg7
+         noZ0AzSbn9oMV8D8fqsH+0qCZjFdqoWNjOrxzHWmJh/zHJJ+oLGz7X306s97yoeN3ndo
+         rKSRjo4Uikp+jRbXmcjFHXSWI0MpJyp2b0mn4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=VUb5/+ICJ1oxV93z824G9zadgRweh5hfVOdfU1xS1M0=;
+        b=k6Dt3AAuTVpEYca5XX7EepI6S/3+OPGSGWy6Uo71r7NkhmWuBQ/hdEdXYNgRvJsXBk
+         noTy8pBGrENDPEjNPnkL8VWvXD3FpJ/7gu1+XctK+1oQHIFqh86sn8nX5USrVP9SQxCs
+         ovMzgFv3pCdlxune/cZw4r0lFsFnXtsm4eHxLNVTkd5HQI0Wui99uow5Uux+65zyQbfj
+         3IPFp646Qy9seyhZ7A5ApAtQKSyJ3KYsgOtbBOpg3dRI0sGk88IGrjd2viTPgO8dQizK
+         MUN0qVmcs2383JXFlTy4NqI5sy21jCmobE4opxdbhpENeDqyx14W27FlchOeYjPPR89V
+         r6/Q==
+X-Gm-Message-State: AOAM531N5sXlFhLklk/flvwig0Ql5qj0qq3kCHd5EavOt7lRCSmzTWgB
+	/MSVNjHnDUtP2+PdkHrOjjW+gtqMR1WTi9pUkT1v1jOa+hSW
+X-Google-Smtp-Source: ABdhPJwurWuf60X1WW1hxFN9rdakPCccU7MnJZJXt2C6bR+jSjwzXCshw5S0I9vWe7HfEgnMxdovGh4hKcT/YzcZpeI=
+X-Received: by 2002:a67:d393:: with SMTP id b19mr11711229vsj.60.1616884143647;
+ Sat, 27 Mar 2021 15:29:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="tw2JfISL9eL34HpXCVg79OaUwEecBg97p"
-Subject: [oss-security] Addition to linux-distros for Arch Linux
-
---tw2JfISL9eL34HpXCVg79OaUwEecBg97p
-Content-Type: multipart/mixed; boundary="UsNkURtpUSpmxOa4enXqL520rlSxAUqkB";
- protected-headers="v1"
-From: Allan McRae <allan@archlinux.org>
+References: <20210327180255.GA12647@openwall.com>
+In-Reply-To: <20210327180255.GA12647@openwall.com>
+From: Gordon Tetlow <gordon@tetlows.org>
+Date: Sat, 27 Mar 2021 15:28:52 -0700
+Message-ID: <CAKghNw2tx1MqnRF-osqZQ4x5PWak8jTT1nvjrcZrJtrFOQdZdQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Cc: Levente Polyak <anthraxx@archlinux.org>
-Message-ID: <f6e1aee5-5842-b46d-27fa-24ffe08c4762@archlinux.org>
-Subject: Addition to linux-distros for Arch Linux
+Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [oss-security] OpenSSL 1.1.1 CVE-2021-3450 CA certificate check
+ bypass with X509_V_FLAG_X509_STRICT, CVE-2021-3449 NULL pointer deref in
+ signature_algorithms processing
 
---UsNkURtpUSpmxOa4enXqL520rlSxAUqkB
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: quoted-printable
+On Sat, Mar 27, 2021 at 11:05 AM Solar Designer <solar@openwall.com> wrote:
+>
+> One other detail I feel I have to bring up in here, and expect a
+> response to, is Wind River's apparent leak of the vulnerability detail
+> two days prior to scheduled public disclosure.  This was brought up on
+> the distros list back then, and I was also asked about it on Twitter
+> when the vulnerabilities were finally made public appropriately on the
+> scheduled date.
+>
+> Since the vulnerability detail wasn't on the distros list, it's not
+> exactly a case of a list member leaking from there, but it's closely
+> related.  And regardless of where this happened, it's a concern, which
+> we probably should discuss on oss-security.
+>
+> So I'd appreciate an explanation/statement from Wind River on what
+> happened and what measures, if any, are being taken to prevent this from
+> happening again.  I'd also appreciate a comment from OpenSSL.
+>
+> The leak was on a web page archived here:
+>
+> https://web.archive.org/web/20210324105700/https://support2.windriver.com/index.php?page=security-notices&on=view&id=7055
 
-Hi,
+While I am neither Wind River nor OpenSSL, I did notice on the linked
+page that the upper right hand corner says:
+Released: Apr 22, 2020     Updated: Mar 22, 2021
 
-Can Levente Polyak (CCed) please be added to the linux-distros list
-representing Arch Linux [1]?  He leads the Arch Linux Security team,
-which monitors and fixes all security issues in our packages [2].
+Without knowing much else, it feels like someone accidentally put a
+"released" date as last year and the content management system went
+ahead and made the article public. Hard to say without confirmation,
+but I could definitely see that being the chain of events.
 
-His PGP fingerprint is E240B57E2C4630BA768E2F26FC1B547C8D8172C8.
-
-Thanks,
-Allan
-
-[1] https://www.archlinux.org/people/developers/#anthraxx
-[2]
-https://lists.archlinux.org/pipermail/arch-security/2016-September/thread.h=
-tml
-
-
---UsNkURtpUSpmxOa4enXqL520rlSxAUqkB--
-
---tw2JfISL9eL34HpXCVg79OaUwEecBg97p
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQExBAEBCAAbBQJYC0rzFBxhbGxhbkBhcmNobGludXgub3JnAAoJEPmf/g/q6Zm9
-R+8IAJUAMh/EOzRKJgPV27ZtdcpA49WMtIRXB70uCGjv3nJAqpxcpMggzuumGFWv
-kCPX6FvbdqK8MRCpSQCt9GbAP93c5vLIOk81T1sUDTkRWTk8kc6UhjVZQaukuNxt
-5vofzZT9rhYv9nV4nQFw5M1j/xuC3ZgdjYBcozxIeNUJLCkKk0uV2kiMimNuRC0D
-wlaqZr4vqxU1NW+hEF0QHsSIDBet/guaYWUvvLnqTcVfhsasUck/yImRaXM5c+G+
-+Qnoniqj4TLXP6za7no5aEtMWVPcFLG08YKL6P3lzvUrytLQeI1zuvZMcE63CQcg
-0Obfq40U3SC7OH6fpBPPlQ4HkVE=
-=tmJD
------END PGP SIGNATURE-----
-
---tw2JfISL9eL34HpXCVg79OaUwEecBg97p--
+Gordon
