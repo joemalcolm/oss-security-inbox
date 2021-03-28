@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4633" "Saturday" "15" "June" "2019" "19:39:56" "+0200" "Solar Designer" "solar@openwall.com" "<20190615173956.GA28900@openwall.com>" "106" "Re: [oss-security] Apache::Session's use of md5 and more" "^Cc:" nil nil "6" "2019061517:39:56" "[oss-security] Apache::Session's use of md5 and more" (number mark "        solar@openwa Jun 15  106/4633  " thread-indent "\"Re: [oss-security] Apache::Session's use of md5 and more\"\n") "<CAA7hUgH2dCyNr0m_HmhLuVXO+ZD_TVOWdfrB-jzrLPnz7de4Dw@mail.gmail.com>" ("<CAA7hUgH2dCyNr0m_HmhLuVXO+ZD_TVOWdfrB-jzrLPnz7de4Dw@mail.gmail.com>") nil nil nil nil nil nil nil "Re: [oss-security] Apache::Session's use of md5 and more" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1211" "Sunday" "28" "March" "2021" "11:47:22" "+0800" "- Nop" "nopitydays@gmail.com" nil "37" "[oss-security] Linux Kernel: out of bounds array access in dm-ioctl.c" nil nil nil "3" nil nil (number mark "U       nopitydays@g Mar 28   37/1211  " thread-indent "\"[oss-security] Linux Kernel: out of bounds array access in dm-ioctl.c\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux Kernel: out of bounds array access in dm-ioctl.c" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 16162 invoked by uid 550); 15 Jun 2019 17:41:22 -0000
+Received: (qmail 21534 invoked by uid 550); 28 Mar 2021 03:51:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,124 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15790 invoked from network); 15 Jun 2019 17:41:00 -0000
-Message-ID: <20190615173956.GA28900@openwall.com>
-References: <CAA7hUgH2dCyNr0m_HmhLuVXO+ZD_TVOWdfrB-jzrLPnz7de4Dw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA7hUgH2dCyNr0m_HmhLuVXO+ZD_TVOWdfrB-jzrLPnz7de4Dw@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Cc: security@bestpractical.com
-Date: Sat, 15 Jun 2019 19:39:56 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Apache::Session's use of md5 and more
+Received: (qmail 19759 invoked from network); 28 Mar 2021 03:47:45 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=sTNkNFS+5TJzu1iEJjlb9bdWk+2emq9Fi4CgIsrzj/8=;
+        b=PqqYr23rV2MptoB6QWqZzAItb9u4MIHpCcH/v+fM4vxBYXDxPSY4yzyccmJRcDAzus
+         EspiXtU2G+HPlXgcoQIjBdTm2njPG4MhaKZp5yMR6bpJA6mvUFeA5KBIwWAYvHIIxaa9
+         nSYsA/YMhgF+wYHWUUcedrg+bO3CkZUvhDjdYyh4FujFq21lozKGj28KmcDtBb9aWa2f
+         pBFaBg2zXeuh6fDFU4SUlrbwhZrWy8oOb9Ex0dX6J0RvgTP5stz/VvJn1Ht9fyQ5Lqdy
+         gyEsp+84pYsQG4WptJunmH7aCdppoVbo108xqrNTRo5vWdpp4MRY3sws8vlpSWhDTjm3
+         DNrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=sTNkNFS+5TJzu1iEJjlb9bdWk+2emq9Fi4CgIsrzj/8=;
+        b=ZrNWGy8ulY30nXDE+tbI0E/3weiPIa7iDC9OvEI7L1fIAusKz/Ao4CgRRLym7dVi0i
+         VjH4EdKUJsuXDj12s4wHQ7RINRYGnNTTL8xykwGQSy7keZlpkDWCoppc7yA6R9rSzJLE
+         z0GVDRS3IbjvsSdy4CyQyox4Ccf12VUeszBrOtJq/IQFHPjwkh7zt7bNui3Lef0ak1lk
+         AXy3KpV0/uIMft5NptOYX5s4dCk78kuj0LUnI/32Cua0hHUqxwpd7lA3jDN60EtbRrT4
+         EPu4ev18vu4bvadYWOrERRLuN8MD2u3iUCn27NCSpk5H82XMpvR7UpBdvgsHYEf101/z
+         UDdA==
+X-Gm-Message-State: AOAM532O3YivHO0M0ImNknQIITup+BEFACo4MoSzGi9gl0nOeAr6rCFv
+	8n7gHWT+XhhZr7rsmFMLNW1CNI9E5sfTFn8UV8z6v8iMJPGLgw==
+X-Google-Smtp-Source: ABdhPJxBT/sksY+BFK6uOZSPHPhBpeT92W2Teh+5CZux5zDbdnnLbiNB5VKeg3FTNkLf1tsHxyVlXFv/AodTiyubcsg=
+X-Received: by 2002:adf:ee4f:: with SMTP id w15mr22160867wro.199.1616903253777;
+ Sat, 27 Mar 2021 20:47:33 -0700 (PDT)
+MIME-Version: 1.0
+From: - Nop <nopitydays@gmail.com>
+Date: Sun, 28 Mar 2021 11:47:22 +0800
+Message-ID: <CA+-U7QC-zxn_XYLJifSm=cDmsW0_Rs+juQuoCUTw1+TQmdfpGg@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="00000000000013df4205be90a0ee"
+Subject: [oss-security] Linux Kernel: out of bounds array access in dm-ioctl.c
+
+--00000000000013df4205be90a0ee
+Content-Type: text/plain; charset="UTF-8"
 
 Hi,
 
-On Sat, Jun 15, 2019 at 05:09:53PM +0200, Raphael Geissert wrote:
-> I just stumbled upon Apache::Session's Generate::MD5 module, which
-> appears to be used to generate the session ids for cookies and the
-> like.
-> 
-> Not only does it use MD5,
+We found an out of bounds array accessing bug in drivers/md/dm-ioctl.c, and
+reproduced it in the latest kernel (v5.11.10).
 
-Which is perfectly fine for this use case, except that it distracts
-attention from real issues, so might need to be "fixed" to be e.g.
-SHA-256 for that reason.
+The root cause of this BUG is :
 
-Let's not confuse technical and psychological aspects.
+The field "data_size" in function ctl_ioctl is fully controlled by users
+and this argument controls the size of kvmalloc in function copy_params.
 
-> but its source of entropy is weak
+When the data_size is in a range of [0x131,0x138], the allocated memory
+which is pointed by the variable "param" used in ioctl
+"DM_LIST_DEVICES_CMD" is too small, causing an oob bug at line "nl->dev =
+0; /* Flags no data */" (
+https://github.com/torvalds/linux/blob/0d02ec6b3136c73c09e7859f0d0e4e2c4c07b49b/drivers/md/dm-ioctl.c#L538
+)
 
-That's the real issue.
+Attachments are the poc, kernel config and Kernel report.
 
-> and does two rounds of hashing.
+The patch:
+https://github.com/torvalds/linux/commit/4edbe1d7bcffcd6269f3b5eb63f710393ff2ec7a
+     * Grab our output buffer.
+     */
+     nl = orig_nl = get_result_buffer(param, param_size, &len);
+-    if (len < needed) {
++    if (len < needed || len < sizeof(nl->dev)) {
+         param->flags |= DM_BUFFER_FULL_FLAG;
+         goto out;
+     }
 
-This is fine, but can be optimized out along with the move to SHA-256.
+Regards,
+Bodong Zhao of NISL lab, Tsinghua University
 
-> From the source code[1]:
-> 
->     $session->{data}->{_session_id} =
->         substr(Digest::MD5::md5_hex(Digest::MD5::md5_hex(time(). {}.
-> rand(). $$)), 0, $length);
-> 
-> (where $length is 32 by default)
-
-This uses 3 or 4 pieces of data: time in seconds since Unix epoch, an
-address within the process, whatever seed rand() was initialized with
-(might also be time, or not), and PID.  This might be insufficient to
-prevent successfully inferring these inputs from the hash (by probing
-likely inputs), in which case this also leaks these inputs - kind of a
-remote ASLR leak, which matters if the process is persistent, etc. - on
-top of the more obvious impact of being able to predict session IDs.
-
-Also, does this generate unique session IDs if called twice in a row
-from the same process?  It appears that due to the "{}" and the "rand()"
-call it usually does, but perhaps not reliably to an extent where we'd
-rely on that for security.
-
-> Am I missing something, or has this code actually been in use for ages
-> and gone unnoticed ? I couldn't find any CVE for this.
-> 
-> So far I found this reference, but only mentions the use of MD5 as a weakness:
-> https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/issues/695
-
-That thread focuses on MD5 to an extent where everyone in there seems to
-think that replacing MD5 with SHA-256 would magically fix whatever issue
-they're thinking there is.  They're wrong.
-
-This is especially surprising given that Nuel Guillaume who opened the
-issue writes in one of the comments (5 years ago):
-
-| We can easily determine time()
-| 
-| {} A memory allocation for a hash (dict).
-| The output looks like "HASH (0x97b27ec)."
-| The last 3 characters: "7EC" are fixed to each machine.
-| 
-| Rand Perl function calls directly to the rand () function in libc.
-| rand() is not secure at all. Just find 30 values of rand() to determine the srand (the seed).
-| But it can be easier if we have Perl prior to 5.004. ( => srand(time() ).
-| If we have Perl 5.004 or upper, /dev/urandom is used for the default srand.
-| See:
-| http://turtle.ee.ncku.edu.tw/docs/perl/manual/pod/perlfunc/srand.html
-| http://stackoverflow.com/questions/12497045/what-are-the-weaknesses-of-perls-srand-default-seed-post-version-5-004
-| 
-| $$ Is the PID of the process and his value is between 1000 and 32768 (/proc/sys/kernel/pid_max = 32768)
-
-but then even with this understanding goes on to suggest merely "Replace
-md5 with SHA1 or SHA256 and keep your Perl version update."
-
-I didn't review Perl's rand(), but apparently Nuel thought the
-initialization from /dev/urandom on newer Perl somehow made rand() safe
-from having its seed inferred?  I doubt this is the case, as I expect
-the seed and/or the internal state is tiny either way.  And I doubt it
-takes as many as "30 values of rand() to determine the srand (the
-seed)."  I'd expect 1 to be enough.  But we need to review the code
-before making any claims.
-
-...OK, I just took a look.  Perl's util.c: Perl_seed() reads just 32
-bits from /dev/urandom, with compile-time and runtime fallbacks to
-gettimeofday() and getpid() and some more ASLR leaks.  (Fun fact: the
-fallbacks will also occur when the 32-bit value read from /dev/urandom
-just happens to be 0.  As a result, the seed is almost never a 0.)
-
-> From a quick look at the reverse dependencies of the Debian package,
-> there are some users of Apache::Session:
-> * RequestTracker (RT) : from a quick look at the session id in the
-> cookie set by rt.cpan.org I'd say it does use Generate::MD5
-> * Torrus: no idea if the Generate::MD5 module is used
-> * LemonLdap::NG : they replaced Generate::MD5 by a similar code using
-> SHA256, but still using two rounds of hashing
-> 
-> CC'ing BestPractical. Will open an issue on LemonLdap::NG's gitlab.
-
-Please focus on lack of (explicit) use of a CSPRNG such as /dev/urandom,
-not on use of MD5 nor the double-hashing (which are non-issues).
-
-> [1]https://metacpan.org/source/CHORNY/Apache-Session-1.93/lib/Apache/Session/Generate/MD5.pm
-
-Alexander
+--00000000000013df4205be90a0ee--
