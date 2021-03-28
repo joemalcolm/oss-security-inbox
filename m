@@ -1,44 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/24/2
-Message-ID: <CAGUWgD_tV+cJjM_=TDrcNBhpcZOFm+JR2+Jv1tnpaSeXtM8EfQ@mail.gmail.com>
-Date: Sat, 24 Jul 2021 18:33:44 +0300
-From: Georgi Guninski <gguninski@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Potential symlink attack in python3 __pycache__
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/28/4
+Message-ID: <20210328213159.1957204a@wim.jer>
+Date: Sun, 28 Mar 2021 21:31:59 +0200
+From: Jeroen Roovers <jer@...all.nl>
+To: Mark J Cox <mark@...nssl.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: OpenSSL 1.1.1 CVE-2021-3450 CA certificate check bypass with X509_V_FLAG_X509_STRICT, CVE-2021-3449 NULL pointer deref in signature_algorithms processing
 Content-Type: text/plain; charset=utf-8
 
-Not sure if this is vulnerability, but it looks like
-classical symlink attack.
+On Sun, 28 Mar 2021 18:35:29 +0000
+Mark J Cox <mark@...nssl.org> wrote:
 
-In python3, if a script in directory DIR1 does "import another",
-then python3 creates directory __pycache__ in DIR1 and puts
-some files in __pycache__.
+> Usually that process of waiting for responses takes an extra trip
+> around the sun due to timezones
 
-According to our tests, if DIR1/__pycache__ is symlink to something,
-then python3 follows the symlink.
+Surely you meant to indicate a day (approximately one full rotation of
+the Earth) here and not a year (one orbit of the Earth around the Sun).
 
-We suspect the attacker has little to no control on the created files,
-except that the files are created.
 
-Here is an artificial session of root shooting herself in the leg
-on ubuntu 20:
-
-root@...lokote:~# python3 --version
-Python 3.8.10
-root@...lokote:~# cat /tmp/a.py
-try:  import joro2
-except:  print("error in import (2)")
-root@...lokote:~# cat /tmp/joro2.py
-print("in joro 2")
-blah=0
-root@...lokote:~# rm ~/tests/*
-root@...lokote:~# rm /tmp/__pycache__ #XXX
-root@...lokote:~# ls -l ~/tests
-total 0
-root@...lokote:~# ln -s ~/tests/ /tmp/__pycache__ #XXX shooting in leg
-root@...lokote:~# python3 /tmp/a.py
-in joro 2
-root@...lokote:~# ls -l ~/tests
-total 4
--rw-r--r-- 1 root root 144 Jul 24 16:58 joro2.cpython-38.pyc
-root@...lokote:~#
+Kind regards,
+     jer
