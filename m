@@ -1,137 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/08/5
-Message-Id: <E1lqf9Q-0004pg-7A@xenbits.xenproject.org>
-Date: Tue, 08 Jun 2021 17:04:28 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 372 v3 (CVE-2021-28693) - xen/arm: Boot modules are not scrubbed
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/28/3
+Message-ID: <CABU6YOakUYGG7UAbUe0kZ5j5QfM2x9NytNzri8m4Ei0LaJRXeg@mail.gmail.com>
+Date: Sun, 28 Mar 2021 18:35:29 +0000
+From: Mark J Cox <mark@...nssl.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: OpenSSL 1.1.1 CVE-2021-3450 CA certificate check bypass with X509_V_FLAG_X509_STRICT, CVE-2021-3449 NULL pointer deref in signature_algorithms processing
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+The usual process for OpenSSL pre-notifications (as per our security policy
+at https://www.openssl.org/policies/secpolicy.html ) is to give a heads up
+message to the private distros list and ask vendors who want details to
+reconfirm they will abide by the embargo guidelines.  For those that do, we
+then add to a private github fork where they can view the advisory and
+patches and also comment (since the comments and testing from such
+packagers are very valuable in making sure we get the right fix the first
+time).
 
-            Xen Security Advisory CVE-2021-28693 / XSA-372
-                               version 3
+However this time we faced a little bit of a time crunch, we want to get
+fixes for High issues out as soon as we can, but with the Easter public
+holidays looming for several of our team, and some already pre-planned
+OpenSSL team holidays, we decided to give less than our usual one-full-week
+prenotification.  Usually that process of waiting for responses takes an
+extra trip around the sun due to timezones, so I decided to skip it and
+added all the same folks who had access to the last issue to this issue,
+and the mail to distros@ asked the members to let me know if I needed to
+make any add/remove changes to that list.  Those who accessed the link were
+reminded of the embargo and guidelines in a few places.
 
-                xen/arm: Boot modules are not scrubbed
+We were alerted to the Wind River security advisory being public by a
+vendor after they saw a tweet about it.  The page stated there were two
+issues, gave the CVE names for the two issues, and gave the one line
+description of each issue.  It also, as you stated, listed the commit
+hashes and the URL to the private github advisory and fork.  However those
+commits and the URLs were part of the private github branch therefore
+protected and only accessible to the specific github ids for the vendors
+we'd added.
 
-UPDATES IN VERSION 3
-====================
+At that point we were only 24 hours away from the scheduled release date,
+and the extra details on the page were not sufficient for us to call the
+embargo broken nor to bring forward the release date.  We did however ask
+Wind River to remove the page and provide an explanation, which they did.
+We continued to monitor to see if the CVE names were being discussed in
+case we had to change the plan.  The final publication and hence end of the
+embargo happened to the planned schedule.
 
-Public release.
+Mark
 
-ISSUE DESCRIPTION
-=================
 
-The bootloader will load boot modules (e.g. kernel, initramfs...) in a
-temporary area before they are copied by Xen to each domain memory.
-To ensure sensitive data is not leaked from the modules, Xen must
-"scrub" them before handing the page over to the allocator.
+> On Sat, Mar 27, 2021 at 6:05 PM Solar Designer <solar@...nwall.com> wrote:
+>
+...
 
-Unfortunately, it was discovered that modules will not be scrubbed on
-Arm.
+> So I'd appreciate an explanation/statement from Wind River on what
+>> happened and what measures, if any, are being taken to prevent this from
+>> happening again.  I'd also appreciate a comment from OpenSSL.
+>>
+>> The leak was on a web page archived here:
+>>
+>>
+>> https://web.archive.org/web/20210324105700/https://support2.windriver.com/index.php?page=security-notices&on=view&id=7055
+>>
+>> As I recall, the private GitHub links in there gave me "404 Not Found"
+>> soon after the windriver.com link (which was live at the time, not
+>> needing archive.org) was sent to the distros list by a concerned fellow
+>> distro.  This means that either OpenSSL promptly brought them down or
+>> they were only ever accessible under appropriately privileged GitHub
+>> accounts.  In the latter case, the existence of that web page with its
+>> content might not have been that much of a leak, as in addition to the
+>> public pre-notification the web page only contained CVE IDs and one-line
+>> vulnerability titles and commit hashes and those GitHub links.  If the
+>> actual commits and the links were never publicly accessible, then it
+>> wasn't that much of an issue and reasonably didn't require considering
+>> the embargo broken.
+>>
+>> Another concern I have is that I have to write this to ever hear from
+>> Wind River.  I'd have expected them to comment on the distros list the
+>> moment this was brought up in there - but they kept silent.  Did they
+>> even see the message?  (Of course, I could ask privately, but the
+>> concerns are already public and we need to discuss this in public.)
+>>
+>> To summarize, this is probably not a big deal, but let's figure out what
+>> happened and what can be done better next time.
+>>
+>> Thanks,
+>>
+>> Alexander
+>>
+>
 
-IMPACT
-======
-
-Sensitive information from the boot modules might be visible to another
-domain after boot.
-
-VULNERABLE SYSTEMS
-==================
-
-Only Arm systems are vulnerable.  System running with "bootscrub=off"
-(disabling boot scrubbing) are not vulnerable.
-
-All versions of Xen since 4.12 are vulnerable.
-
-MITIGATION
-==========
-
-There is no mitigation available.
-
-CREDITS
-=======
-
-This issue was discovered by Julien Grall of Amazon.
-
-RESOLUTION
-==========
-
-Applying the appropriate set of attached patches resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa372/*.patch         xen-unstable
-xsa372-4.15/*.patch    Xen 4.15.x
-xsa372-4.14/*.patch    Xen 4.14.x - Xen 4.13.x
-xsa372-4.12/*.patch    Xen 4.12.x
-
-$ sha256sum xsa372* xsa372*/*
-06e43684c2d8a3085d55b8b40f57e1b9f1ee47519fac844dcbc21b57fb039915  xsa372.meta
-8f872c7abe6c795dbef2e401f2223fda0dbb9d7c57dfebd8047eef37e1caf952  xsa372-4.12/0001-xen-arm-Create-dom0less-domUs-earlier.patch
-a43c6c11481cc3f13900908cee79cc6c5401921f6f4e8858c0796cf301cfe923  xsa372-4.12/0002-xen-arm-Boot-modules-should-always-be-scrubbed-if-bo.patch
-6d1fad53795ebd251520022b6be901215426ba78ccbbc075841698973b74d2a2  xsa372-4.14/0001-xen-arm-Create-dom0less-domUs-earlier.patch
-2ceb5d4d8d4f8a18046721daa3bb29633a620c4794b54e1265f5d4d69a314c3b  xsa372-4.14/0002-xen-arm-Boot-modules-should-always-be-scrubbed-if-bo.patch
-7feae5f9f7f2df0ec38c0b9358dc32671a9955f966b3120e17bb3fd820ce33ff  xsa372-4.15/0001-xen-arm-Create-dom0less-domUs-earlier.patch
-0cc73b4751fa49f68c6584b1c7882606c6e1f18561d8a6547017ab068de4eb4b  xsa372-4.15/0002-xen-arm-Boot-modules-should-always-be-scrubbed-if-bo.patch
-950672405c695ebf6ae59eebeb454bc0738b7afc3efa35ef9680d76eef4d4ec0  xsa372/0001-xen-arm-Create-dom0less-domUs-earlier.patch
-9ceccd39c795e7756052a2f00256e043c8dda42e2c691df30e3f8b59190d6e8e  xsa372/0002-xen-arm-Boot-modules-should-always-be-scrubbed-if-bo.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmC/oxIMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZmdYIAMlZ2woM1hnb97BytpKkRM3v8AnyP4xhm29OoVI+
-eaclrapZBPxi8qxv0+fxhe/2/t9gf98miEJftI8VRz5btiStmsgIjlEXUGpC6iwE
-u7HmLzu7QBX7r2FzpSTFnVVdbFwXCU3scYuO4qM8frCpxH4kevSSxPrT5E/oFVvA
-Y83ux8aKg041WTVQvK0gEVA7CgRVoxmbiYeag2JIaRGt8WnEKprbmGWQ5+DYq+pr
-8tsLppHtyxppqSa7d6L67xdiNoRqAacfIezNFTpSIdyfS1m0QIIAJTr6Bg7Fd6zi
-F2AYcoZiNO53OSnobH3c64axIc5iBINZeXisVMnTDzKU3XE=
-=eQ/r
------END PGP SIGNATURE-----
-
-Download attachment "xsa372.meta" of type "application/octet-stream" (1331 bytes)
-
-Download attachment "xsa372-4.12/0001-xen-arm-Create-dom0less-domUs-earlier.patch" of type "application/octet-stream" (2998 bytes)
-
-Download attachment "xsa372-4.12/0002-xen-arm-Boot-modules-should-always-be-scrubbed-if-bo.patch" of type "application/octet-stream" (1945 bytes)
-
-Download attachment "xsa372-4.14/0001-xen-arm-Create-dom0less-domUs-earlier.patch" of type "application/octet-stream" (2992 bytes)
-
-Download attachment "xsa372-4.14/0002-xen-arm-Boot-modules-should-always-be-scrubbed-if-bo.patch" of type "application/octet-stream" (1945 bytes)
-
-Download attachment "xsa372-4.15/0001-xen-arm-Create-dom0less-domUs-earlier.patch" of type "application/octet-stream" (3059 bytes)
-
-Download attachment "xsa372-4.15/0002-xen-arm-Boot-modules-should-always-be-scrubbed-if-bo.patch" of type "application/octet-stream" (1963 bytes)
-
-Download attachment "xsa372/0001-xen-arm-Create-dom0less-domUs-earlier.patch" of type "application/octet-stream" (4098 bytes)
-
-Download attachment "xsa372/0002-xen-arm-Boot-modules-should-always-be-scrubbed-if-bo.patch" of type "application/octet-stream" (1963 bytes)
