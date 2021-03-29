@@ -1,17 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/15/1
-Message-ID: <92d6d5d6-bee4-aa21-96f5-d1a5975b6eb5@apache.org>
-Date: Fri, 15 Oct 2021 13:02:54 +0000
-From: Daniel Gaspar <dpgaspar@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-32609: Apache Superset: XSS vulnerability on Explore page 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/29/3
+Message-ID: <d715b87f-7b4c-e566-fb3c-92b495c0fedc@igalia.com>
+Date: Mon, 29 Mar 2021 23:38:05 +0200
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2021-0003
 Content-Type: text/plain; charset=utf-8
 
-Description:
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2021-0003
+------------------------------------------------------------------------
 
-Apache Superset up to and including 1.1 does not sanitize titles correctly on the Explore page. This allows an attacker with Explore access to save a chart with a malicious title, injecting html (including scripts) into the page.
+Date reported           : March 29, 2021
+Advisory ID             : WSA-2021-0003
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2021-0003.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2021-0003.html
+CVE identifiers         : CVE-2021-1788, CVE-2021-1844, CVE-2021-1871.
 
-Credit:
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-Apache Superset team would like to thank Oscar Arnflo for reporting this issue
+CVE-2021-1788
+    Versions affected: WebKitGTK before 2.32.0 and WPE WebKit before 2.32.0.
+    Credit to Francisco Alonso (@revskills).
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A use after free issue was
+    addressed with improved memory management.
 
+CVE-2021-1844
+    Versions affected: WebKitGTK before 2.32.0 and WPE WebKit before 2.32.0.
+    Credit to Clément Lecigne of Google’s Threat Analysis Group, Alison
+    Huffman of Microsoft Browser Vulnerability Research.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A memory corruption issue was
+    addressed with improved validation.
+
+CVE-2021-1871
+    Versions affected: WebKitGTK before 2.32.0 and WPE WebKit before 2.32.0.
+    Credit to an anonymous researcher.
+    Impact: A remote attacker may be able to cause arbitrary code
+    execution. Apple is aware of a report that this issue may have been
+    actively exploited. Description: A logic issue was addressed with
+    improved restrictions.
+
+
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
+
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+March 29, 2021
