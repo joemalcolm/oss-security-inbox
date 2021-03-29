@@ -1,49 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/23/1
-Message-ID: <CAC_jp4h3O6FSCLb=JV2HoUA1wZUin2yW2=MqtwW7N=8Bq0F9sg@mail.gmail.com>
-Date: Tue, 23 Nov 2021 11:29:57 +0800
-From: Zhiyuan Ju <juzhiyuan@...che.org>
-To: dev@...six.apache.org
-Cc: announce@...che.org, Apache Security Team <security@...che.org>,  oss-security@...ts.openwall.com, Marcin Niemiec <niemiec.marcin@...il.com>
-Subject: Re: CVE-2021-43557: Apache APISIX: Path traversal in request_uri variable
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/29/1
+Message-ID: <6C2649B1-621E-40B3-A9CD-7252FC4FBA66@oracle.com>
+Date: Mon, 29 Mar 2021 12:57:46 +0000
+From: John Haxby <john.haxby@...cle.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Linux Kernel: out of bounds array access in dm-ioctl.c
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-Thanks to Marcin, and Apache APISIX's Website just published his blog about
-this CVE[1].
-
- Welcome to read this post :)
-
-[1] https://apisix.apache.org/blog/2021/11/23/cve-2021-43557-research-report
-
-Best Regards!
-@ Zhiyuan Ju <https://github.com/juzhiyuan>
 
 
-Zexuan Luo <spacewander@...che.org> 于2021年11月22日周一 下午2:30写道：
+> On 28 Mar 2021, at 04:47, - Nop <nopitydays@...il.com> wrote:
+> 
+> Hi,
+> 
+> We found an out of bounds array accessing bug in drivers/md/dm-ioctl.c, and
+> reproduced it in the latest kernel (v5.11.10).
+> 
+> The root cause of this BUG is :
+> 
+> The field "data_size" in function ctl_ioctl is fully controlled by users
+> and this argument controls the size of kvmalloc in function copy_params.
+> 
+> When the data_size is in a range of [0x131,0x138], the allocated memory
+> which is pointed by the variable "param" used in ioctl
+> "DM_LIST_DEVICES_CMD" is too small, causing an oob bug at line "nl->dev =
+> 0; /* Flags no data */" (
+> https://github.com/torvalds/linux/blob/0d02ec6b3136c73c09e7859f0d0e4e2c4c07b49b/drivers/md/dm-ioctl.c#L538
+> )
+> 
 
-> Severity: moderate
->
-> Description:
->
-> The uri-block plugin in APISIX uses $request_uri without verification.
-> The $request_uri is the full original request URI without
-> normalization.
-> This makes it possible to construct a URI to bypass the block list on
-> some occasions. For instance, when the block list contains
-> "^/internal/", a URI like `//internal/` can be used to bypass it.
->
-> Some other plugins also have the same issue. And it may affect the
-> developer's custom plugin.
->
-> This issue is fixed in APISIX 2.10.2.
-> Thanks to Marcin Niemiec for reporting the vulnerability.
->
-> Mitigation:
->
-> 1. Upgrade to APISIX 2.10.2
-> 2. Carefully review custom code, find & fix the usage of $request_uri
-> without verification.
->
+DM_LIST_DEVICES_CMD, and in fact, any function called from ctl_ioctl is limited to users with CAP_SYS_ADMIN.  Without that root-equivalent privilege I don't see any way to exploit this bug.   Did you find a way to exploit it as an unprivileged user?
 
+jch
+
+> Attachments are the poc, kernel config and Kernel report.
+> 
+> The patch:
+> https://github.com/torvalds/linux/commit/4edbe1d7bcffcd6269f3b5eb63f710393ff2ec7a
+>     * Grab our output buffer.
+>     */
+>     nl = orig_nl = get_result_buffer(param, param_size, &len);
+> -    if (len < needed) {
+> +    if (len < needed || len < sizeof(nl->dev)) {
+>         param->flags |= DM_BUFFER_FULL_FLAG;
+>         goto out;
+>     }
+> 
+> Regards,
+> Bodong Zhao of NISL lab, Tsinghua University
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
