@@ -1,33 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/01/6
-Message-ID: <b3684dd2-0215-a119-2301-8c2ad2ef957e@kuix.de>
-Date: Wed, 1 Dec 2021 18:37:27 +0100
-From: Kai Engert <kaie@...x.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/29/2
+Message-ID: <CACZfFK7iNuZ33z5H7b8spJxGZhPyc51O-9zfRq-Cp4Cf-tTqTw@mail.gmail.com>
+Date: Mon, 29 Mar 2021 12:19:36 -0700
+From: Jihoon Son <jihoonson@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-43527: Heap overflow in NSS when verifying DSA/RSA-PSS DER-encoded signatures
+Subject: [CVE-2021-26919] Authenticated users can execute arbitrary code from malicious MySQL database systems
 Content-Type: text/plain; charset=utf-8
 
->> https://bugs.chromium.org/p/project-zero/issues/detail?id=2237 states that
->> "It's been 30 days since the initial thunderbird patches have been released".
->>
->> Is there a corresponding Thunderbird patch/advisory/release distros should be
->> shipping as well?
+Severity: Medium
 
-Thunderbird 91.3.0 had shipped a workaround, that should protect against 
-the most risky attack vector (executing the vulnerable code path when 
-importing certificates contained in a received S/MIME message).
+Vendor:
+The Apache Software Foundation
 
-The workaround commits are here:
-https://hg.mozilla.org/releases/comm-esr91/rev/54507526da82
-https://hg.mozilla.org/releases/comm-esr91/rev/bea1eb4e98a3
+Versions Affected:
+Druid 0.20.1 and earlier
 
-We intend to add a separate CVE to the corresponding tracking bug
-https://bugzilla.mozilla.org/show_bug.cgi?id=1738501
-and also amend the release notes of the 91.3.0 release.
+Description:
+Druid allows users to read data from other database systems using
+JDBC. This functionality is to allow trusted users with the proper
+permissions to set up lookups or submit ingestion tasks. The MySQL
+JDBC driver supports certain properties, which, if left unmitigated,
+can allow an attacker to execute arbitrary code from a
+hacker-controlled malicious MySQL server within Druid server
+processes.
 
-In addition, to ensure that potential secondary attack vectors will be 
-protected as well, it is recommended that Thunderbird uses NSS binaries 
-that contain the NSS level patch. The Thunderbird team will ship NSS 
-3.68.1 in the upcoming 91.4.0 release.
+Mitigation:
+Users should upgrade to Druid 0.20.2 and enable new Druid
+configurations to mitigate vulnerable MySQL JDBC properties.
+Whenever possible, network access to cluster machines should be
+restricted to trusted hosts only.
+Ensure that users have the minimum set of Druid permissions necessary,
+and are not granted access to functionality that they do not require.
 
-Kai
+Credit:
+This issue was discovered by fantasyC4t from the Ant FG Security Lab.
