@@ -1,4 +1,9 @@
-Received: (qmail 13522 invoked by uid 550); 18 Mar 2026 14:53:49 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4488" "Tuesday" "30" "March" "2021" "12:52:09" "+0200" "Daniel Beck" "ml@beckweb.net" nil "120" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "3" nil nil (number mark "U       ml@beckweb.n Mar 30  120/4488  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 26082 invoked by uid 550); 30 Mar 2021 10:52:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,42 +12,40 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 13480 invoked from network); 18 Mar 2026 14:53:49 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=beckweb.net;
-	s=kas202511021112; t=1773845619;
-	bh=k/2+YYC4XfcFSvbV3SwHORGJpfc4+4EVqzC2p1MkomQ=;
-	h=From:Subject:Date:To:From;
-	b=OsnR8Dr6JsE/xeM/1hgMSVnaWPCI7MLEENWZICyYexGGX0IqweCwFyllrvwtsz6Gp
-	 hgfXHMD84Qp+3QhLDq91INMe44dUTIjGB8TvWRdxkqOZnDvCobet3U1f9k2uFvNIta
-	 EX9ih3vzedyeVF9PPUrJZSb/eb5z6fYiwvX7AiyoVb91AfKtLj08w9B+wYWiv0ZXLS
-	 aTyNMUuINa7Ps/oNs5aJG6F+cJUsxyZfB/7MnmEeiTojyGVwn0USWV2x1ZtWr049Nm
-	 wdrmelQMkF9UYtm3jNu/Ahv/4QXmRZzVaG4pIwMlapUl/zjsQCgdv3WaCwfacGUjOp
-	 FfbAJUdHKIc9A==
+Received: (qmail 26050 invoked from network); 30 Mar 2021 10:52:21 -0000
 From: Daniel Beck <ml@beckweb.net>
 Content-Type: text/plain;
 	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.3\))
-Message-Id: <44D7997A-04B0-4192-AE9F-B0B24A2E6F74@beckweb.net>
-Date: Wed, 18 Mar 2026 15:53:29 +0100
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.15\))
+Message-Id: <53E5A455-9A38-4A00-9D2C-E12BFA7EE5B0@beckweb.net>
+Date: Tue, 30 Mar 2021 12:52:09 +0200
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3826.700.81.1.3)
-Subject: [oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins
+X-Mailer: Apple Mail (2.3445.104.15)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1617101541;2da466cf;
+X-HE-SMSGID: 1lRByj-0007xt-FS
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
 Jenkins is an open source automation server which enables developers around
 the world to reliably build, test, and deploy their software.
 
 The following releases contain fixes for security vulnerabilities:
 
-* Jenkins 2.555
-* Jenkins LTS 2.541.3
-* LoadNinja Plugin 2.2
+* Build With Parameters Plugin 1.5.1
+* Cloud Statistics Plugin 0.27
+* Extra Columns Plugin 1.23
+* Jabber (XMPP) notifier and control Plugin 1.42
+* OWASP Dependency-Track Plugin 3.1.1
+* REST List Parameter Plugin 1.3.1
 
+Additionally, we announce unresolved security issues in the following
+plugins:
+
+* Team Foundation Server Plugin
 
 Summaries of the vulnerabilities are below. More details, severity, and
 attribution can be found here:
-https://www.jenkins.io/security/advisory/2026-03-18/
+https://www.jenkins.io/security/advisory/2021-03-30/
 
 We provide advance notification for security updates on this mailing list:
 https://groups.google.com/d/forum/jenkinsci-advisories
@@ -53,82 +56,93 @@ https://www.jenkins.io/security/#reporting-vulnerabilities
 
 ---
 
-SECURITY-3657 / CVE-2026-33001
-Jenkins 2.554 and earlier, LTS 2.541.2 and earlier does not safely handle
-symbolic links during the extraction of `.tar` and `.tar.gz` archives. This
-allows crafted archives to write files to arbitrary locations on the
-filesystem, restricted only by file system access permissions of the user
-running Jenkins. For archives extracted on the controller, this can result
-in code execution by, e.g., writing malicious scripts to the
-`JENKINS_HOME/init.groovy.d/` directory, or deploying plugins to
-`JENKINS_HOME/plugins/`.
+SECURITY-2231 / CVE-2021-21628
+Build With Parameters Plugin 1.5 and earlier does not escape parameter
+names and descriptions.
 
-A number of features and plugins use the affected functionality, most
-prominently the "Archive the artifacts" post-build action, and the
-`archiveArtifacts` and `archive` Pipeline steps, when using the standard
-artifact manager (i.e., archiving artifacts on the controller file system).
-This allows attackers with Item/Configure permission, or able to control
-agent processes, to exploit this vulnerability.
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Job/Configure permission.
 
 
-SECURITY-3674 / CVE-2026-33002
-Jenkins has a built-in CLI to access Jenkins from a script or shell
-environment. Since Jenkins 2.217 and LTS 2.222.1, one of the ways to
-communicate with the CLI is through a WebSocket endpoint. This endpoint
-relies on the default Jenkins web request authentication functionality,
-like HTTP Basic authentication with API tokens, or session cookies. This
-endpoint is enabled when running on a version of Jetty for which Jenkins
-supports WebSockets. This is the case when using the provided native
-installers, packages, or the Docker containers, as well as when running
-Jenkins with the command `java -jar jenkins.war`.
+SECURITY-2257 / CVE-2021-21629
+Build With Parameters Plugin 1.5 and earlier does not require POST requests
+for its form submission endpoint, resulting in a cross-site request forgery
+(CSRF) vulnerability.
 
-Jenkins 2.442 and LTS 2.426.3 introduced origin validation of requests made
-through the CLI WebSocket endpoint to prevent cross-site WebSocket
-hijacking (CSWSH) attacks (SECURITY-3315 in the 2024-01-24 security advisor=
-y).
-This validation is intended to ensure that only requests from the
-Jenkins web interface itself can access the CLI WebSocket endpoint,
-preventing malicious websites from establishing connections.
-
-Jenkins 2.442 through 2.554 (both inclusive), LTS 2.426.3 through LTS
-2.541.2 (both inclusive) performs this origin validation by computing the
-expected origin for comparison using the `Host` or `X-Forwarded-Host` HTTP
-request headers. This allows attackers to bypass the origin validation
-using DNS rebinding attacks. By causing a victim to visit a malicious
-website that uses DNS rebinding to resolve to the Jenkins controller's IP
-address, attackers can establish a WebSocket connection to the CLI endpoint
-from an untrusted origin and execute CLI commands as the anonymous user.
-
-This is impactful when Jenkins controllers are deployed on private networks
-with the anonymous user granted permissions.
-
-Exploitation requires all of the following conditions:
-
-* Jenkins is accessible over plain HTTP (not HTTPS).
-* The CLI WebSocket endpoint is accessible.
-
-The impact depends on the permissions of the anonymous user. With an
-authorization strategy like "Anyone can do anything", or when the anonymous
-user has explicitly been granted additional permissions, attackers can
-execute the CLI commands that these permissions allow using, up to and
-including Groovy scripting capabilities (`groovy` and `groovysh` commands)
-resulting in arbitrary code execution.
-
-If the anonymous user has no permissions, attackers can execute the
-`who-am-i` CLI command, obtaining limited information about the anonymous
-user in Jenkins.
+This vulnerability allows attackers to build a project with
+attacker-specified parameters.
 
 
-SECURITY-3642 / CVE-2026-33003 (storage) & CVE-2026-33004 (masking)
-LoadNinja Plugin 2.1 and earlier stores LoadNinja API keys unencrypted in
-job `config.xml` files on the Jenkins controller as part of its
-configuration.
+SECURITY-2222 / CVE-2021-21630
+Extra Columns Plugin 1.22 and earlier does not escape parameter values in
+the build parameters column.
 
-These API keys can be viewed by users with Item/Extended Read permission or
-access to the Jenkins controller file system.
-
-Additionally, the job configuration form does not mask these API keys,
-increasing the potential for attackers to observe and capture them.
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Job/Configure permission. Additionally, a
+view containing such a job needs to be configured with the build parameters
+column, or the attacker also needs View/Configure permission.
 
 
+SECURITY-2246 / CVE-2021-21631
+Cloud Statistics Plugin 0.26 and earlier does not perform a permission
+check in an HTTP endpoint.
 
+This allows attackers with Overall/Read permission and knowledge of random
+activity IDs to view related provisioning exception error messages.
+
+
+SECURITY-2250 / CVE-2021-21632 (permission check) & CVE-2021-21633 (CSRF)
+OWASP Dependency-Track Plugin 3.1.0 and earlier does not perform permission
+checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified credentials IDs obtained
+through another method, capturing "Secret text" credentials stored in
+Jenkins. If no credentials ID is specified, the globally configured
+credential is used, if set up, and can likewise be captured.
+
+Additionally, these HTTP endpoints do not require POST requests, resulting
+in a cross-site request forgery (CSRF) vulnerability.
+
+
+SECURITY-2162 / CVE-2021-21634
+Jabber (XMPP) notifier and control Plugin 1.41 and earlier stores passwords
+unencrypted in its global configuration file
+`hudson.plugins.jabber.im.transport.JabberPublisher.xml` on the Jenkins
+controller as part of its configuration.
+
+These passwords can be viewed by users with access to the Jenkins
+controller file system.
+
+
+SECURITY-2261 / CVE-2021-21635
+REST List Parameter Plugin 1.3.0 and earlier does not escape a parameter
+name reference in embedded JavaScript.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Job/Configure permission.
+
+
+SECURITY-2283 (1) / CVE-2021-21636
+Team Foundation Server Plugin 5.157.1 and earlier does not perform a
+permission check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2283 (2) / CVE-2021-21637 (permission check) & CVE-2021-21638 (CSRF)
+Team Foundation Server Plugin 5.157.1 and earlier does not perform a
+permission check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified credentials IDs obtained
+through another method, capturing credentials stored in Jenkins.
+
+Additionally, this HTTP endpoint does not require POST requests, resulting
+in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
