@@ -1,40 +1,10 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/05/4
-Message-ID: <CAKx+4-p+SyakmdxCd0XDm-1U3inx6uMdCNbhg_Y6270aXkaNJg@mail.gmail.com>
-Date: Fri, 5 Feb 2021 20:27:57 +0530
-From: Rohit Keshri <rkeshri@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/30/4
+Message-ID: <YGN5CFulL20wXopl@zen.localdomain>
+Date: Tue, 30 Mar 2021 21:16:24 +0200
+From: ortmann@...teo.de
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-20226 kernel: use-after-free in io_uring feature
+Subject: Re: Remote DoS Vulnerability in bitchx, ircii < 20210314 and scrollz
 Content-Type: text/plain; charset=utf-8
 
-Hello Team,
-
-A use-after-free flaw was found in the io_uring in Linux kernel, where a
-local attacker with a user privilege could cause a denial of service
-problem on the system
-
-The issue results from the lack of validating the existence of an object
-prior to performing operations on the object by not incrementing the file
-reference counter while in use.
-
-The highest threat from this vulnerability is to data integrity,
-confidentiality and system availability.
-
-
-'CVE-2021-20226' was assigned by Red Hat.
-
-This issue was reported by Ryota Shiga of Flatt Security Team.
-
-
-Reference:
-
-https://www.zerodayinitiative.com/advisories/ZDI-21-001/
-
-
-Thanks and Regards
-..
-Rohit Keshri / Red Hat Product Security Team
-PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
-
-secalert@...hat.com for urgent response
-
+CVE Name: CVE-2021-29376
