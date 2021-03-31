@@ -1,18 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/01/1
-Message-ID: <1b24ecb4-786e-33ba-0e7c-6724f787a5bc@apache.org>
-Date: Mon, 1 Mar 2021 11:13:18 +0000
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/01/1
+Message-ID: <s6oo8s-46ps-5o2p-2164-31s0no13r759@inai.de>
+Date: Thu, 1 Apr 2021 01:20:24 +0200 (CEST)
+From: Jan Engelhardt <jengelh@...i.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-25122: Apache Tomcat h2c request mix-up
+Subject: Re: kopano-core 11.0.1: Remote DoS by memory exhaustion
 Content-Type: text/plain; charset=utf-8
 
-When responding to new h2c connection requests, Apache Tomcat versions 
-10.0.0-M1 to 10.0.0, 9.0.0.M1 to 9.0.41 and 8.5.0 to 8.5.61 could 
-duplicate request headers and a limited amount of request body from one 
-request to another meaning user A and user B could both see the results 
-of user A's request.
+On Friday 2021-03-19 13:44, Jan Engelhardt wrote:
+>Initial publication, no CVE number yet (will request).
+>[…]
+>The "kopano-ical" program implements a network service/trivial HTTP server.
+>It imposes no length restrictions on HTTP headers, which can be exploited
+>to memory-exhaust the process and have it terminate.
 
-References:
-
-https://lists.apache.org/thread.html/r7b95bc248603360501f18c8eb03bb6001ec0ee3296205b34b07105b7%40%3Cannounce.tomcat.apache.org%3E
+This was assigned CVE-2021-28994.
