@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1940" "Sunday" "6" "March" "2016" "16:33:46" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160306213346.BF6846C0559@smtpvmsrv1.mitre.org>" "57" "[oss-security] Re: Aufs Union Filesystem Privilege Escalation In User Namespaces" nil nil nil "3" "2016030621:33:46" "[oss-security] Re: Aufs Union Filesystem Privilege Escalation In User Namespaces" (number mark "U       cve-assign@m Mar  6   57/1940  " thread-indent "\"[oss-security] Re: Aufs Union Filesystem Privilege Escalation In User Namespaces\"\n") "<80fa3a77-b8df-722e-0e9f-a0af21bfced3@halfdog.net>" ("<80fa3a77-b8df-722e-0e9f-a0af21bfced3@halfdog.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["965" "Friday" "2" "April" "2021" "10:47:26" "+0100" "Colm O hEigeartaigh" "coheigea@apache.org" nil "25" "[oss-security] CVE-2021-22696: Apache CXF: OAuth 2 authorization service vulnerable to DDos attacks" nil nil nil "4" nil nil (number mark "U       coheigea@apa Apr  2   25/965   " thread-indent "\"[oss-security] CVE-2021-22696: Apache CXF: OAuth 2 authorization service vulnerable to DDos attacks\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-22696: Apache CXF: OAuth 2 authorization service vulnerable to DDos attacks" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26096 invoked by uid 550); 6 Mar 2016 21:34:03 -0000
+Received: (qmail 15876 invoked by uid 550); 2 Apr 2021 10:21:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,69 +12,43 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26040 invoked from network); 6 Mar 2016 21:33:58 -0000
-From: cve-assign@mitre.org
+Received: (qmail 17735 invoked from network); 2 Apr 2021 09:47:49 -0000
+X-Gm-Message-State: AOAM533d418xznDMFe1K0ss1W1gFvR/FeUAe5Z0d2JT5pc95SHX4jybZ
+	qyQh5PxG6oCcaCp8dqshLb3EbCZ9XSP2+32bg9E=
+X-Google-Smtp-Source: ABdhPJzOnCQFJ7yQ/WjIUHIEsCZRYu80dkeX93/Rkz4hi5X/fKFsUxJtetVJt0mtLdupbLtmXC4q0ughmbJePScti6s=
+X-Received: by 2002:a05:6602:3314:: with SMTP id b20mr10487250ioz.78.1617356857222;
+ Fri, 02 Apr 2021 02:47:37 -0700 (PDT)
+MIME-Version: 1.0
+From: Colm O hEigeartaigh <coheigea@apache.org>
+Date: Fri, 2 Apr 2021 10:47:26 +0100
+X-Gmail-Original-Message-ID: <CAB8XdGDCDzOUGVH75fagN1yyXb07dDHXnE20AVzmU59=1WOkvw@mail.gmail.com>
+Message-ID: <CAB8XdGDCDzOUGVH75fagN1yyXb07dDHXnE20AVzmU59=1WOkvw@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-In-Reply-To: <80fa3a77-b8df-722e-0e9f-a0af21bfced3@halfdog.net>
-Message-Id: <20160306213346.BF6846C0559@smtpvmsrv1.mitre.org>
-Date: Sun,  6 Mar 2016 16:33:46 -0500 (EST)
-Subject: [oss-security] Re: Aufs Union Filesystem Privilege Escalation In User Namespaces
+Content-Type: multipart/alternative; boundary="000000000000f32c7905befa3c15"
+Subject: [oss-security] CVE-2021-22696: Apache CXF: OAuth 2 authorization service vulnerable to DDos attacks
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--000000000000f32c7905befa3c15
+Content-Type: text/plain; charset="UTF-8"
 
-> http://www.halfdog.net/Security/2016/AufsPrivilegeEscalationInUserNamespaces/
+Description:
 
-> AUFS Over Fuse: Loss of Nosuid
+CXF supports (via JwtRequestCodeFilter) passing OAuth 2 parameters via a
+JWT token as opposed to query parameters (see: The OAuth 2.0 Authorization
+Framework: JWT Secured Authorization Request (JAR)). Instead of sending a
+JWT token as a "request" parameter, the spec also supports specifying a URI
+from which to retrieve a JWT token from via the "request_uri" parameter.
 
-> Those files can be exposed
-> using aufs including the problematic SUID properties.
+CXF was not validating the "request_uri" parameter (apart from ensuring it
+uses "https) and was making a REST request to the parameter in the request
+to retrieve a token.
 
->     Mount aufs on top of fuse
->     Execute the SUID binary via aufs from outside the namespace
+This means that CXF was vulnerable to DDos attacks on the authorization
+server, as specified in section 10.4.1 of the spec.
 
-> In my optionion the workarounds should be to restrict access to fuse
-> also only to the mount namespace where it was created.
+This issue affects Apache CXF versions prior to 3.4.3; Apache CXF versions
+prior to 3.3.10.
 
-> https://sourceforge.net/p/aufs/mailman/message/34864744/
+Reference:
+http://cxf.apache.org/security-advisories.data/CVE-2021-22696.txt.asc
 
->> test mnt_ns in open(2) for fuse branch
-
-Use CVE-2016-2853.
-
-
-> AUFS Xattr Setgid Privilege Escalation
-
-> Due to inheritance of Posix ACL information (xattrs) when aufs is
-> copying files and not cleaning those additional and unintended ACL
-> attribues, SGID directories may become user writable
-
-> https://sourceforge.net/p/aufs/mailman/message/34864744/
-
->> copy-up resets ACL
-
-Use CVE-2016-2854.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJW3KG9AAoJEL54rhJi8gl5uk0P/j2vNmJ1Q5x3eWMfnlfoobCr
-+GjgC7LPHk6Y1t3P1Rvkd1+Di7oqABso7FnZrHmfRuCk8txuzxOx/nAhQ7Jw8ROJ
-607J36pYSWoCvkOo6tGdrisfaqDT+z0RmVVw8jhecZUE4n8m2BwLcHhMVHBehoDp
-nOhzwMvxMNjNWw+qhVPFFOUM2gOxv1NQFdQ9YBflMgszb+8LW7AdTQgHrKuwCose
-2ynF0JwbeVdtIcOPyqVlUNJOvqclOVEPQOyd7Y6P1v4ykDPhfI8pgObyLU9Kt6vL
-MY1lCmKGfkuM0/nGlTlvF5jhKqUPJeBzVsjnY7/uI2/zxDSboTsFGCaOx8nbL3Ut
-diKtUDaKmQwn8Tm00JPWBm7cFPVdtGsQTfosfbbZC4rjerzV831dh69zTA+hn79k
-nrH9QeRGPSZVh/sl3WzP2QvlWNoFyBUPUrb4Q+oOS8ttC5cnOwuynHyva951ZBC0
-B9223w347nise9fclv3tYr1XIRV/o0wmn6N39aQUdNOhplNGu5lqflwC/rIz2rYB
-eubUoXGBsBB/dSBSLEFhGt2oQZVqtEH9b0FjFpSI0jpKwPR0U2Mt/OKGPnlRznvI
-20w2wZBh4nxtsxSOcTP8MRqPwWgo695vdKviDPXLd7JXQ8v5ctozY1RypVKPJus8
-8E6zCgbi02SxlmhHG+5l
-=6N7V
------END PGP SIGNATURE-----
+--000000000000f32c7905befa3c15--
