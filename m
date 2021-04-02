@@ -1,70 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/17/7
-Message-ID: <CABBoStiNOoDZWc+ehgQSYDLaLSz0prSGR+fTS0wbuyCmB9muwQ@mail.gmail.com>
-Date: Mon, 17 May 2021 15:34:12 -0400
-From: Ana McTaggart <amctagga@...hat.com>
-To: oss-security@...ts.openwall.com, felix.huettner@...l.schwarz
-Subject: Re: CVE-2021-3531: Ceph: RGW unauthenticated denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/02/2
+Message-ID: <CAB8XdGDCDzOUGVH75fagN1yyXb07dDHXnE20AVzmU59=1WOkvw@mail.gmail.com>
+Date: Fri, 2 Apr 2021 10:47:26 +0100
+From: Colm O hEigeartaigh <coheigea@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-22696: Apache CXF: OAuth 2 authorization service vulnerable to DDos attacks
 Content-Type: text/plain; charset=utf-8
 
-To clarify, the correct patch may be found in the following commit.
-https://github.com/ceph/ceph/commit/f44a8ae8aa27ecef69528db9aec220f12492810e
+Description:
 
-Ana McTaggart
+CXF supports (via JwtRequestCodeFilter) passing OAuth 2 parameters via a
+JWT token as opposed to query parameters (see: The OAuth 2.0 Authorization
+Framework: JWT Secured Authorization Request (JAR)). Instead of sending a
+JWT token as a "request" parameter, the spec also supports specifying a URI
+from which to retrieve a JWT token from via the "request_uri" parameter.
 
-Red Hat Product Security
+CXF was not validating the "request_uri" parameter (apart from ensuring it
+uses "https) and was making a REST request to the parameter in the request
+to retrieve a token.
 
-Red Hat Remote <https://www.redhat.com>
+This means that CXF was vulnerable to DDos attacks on the authorization
+server, as specified in section 10.4.1 of the spec.
 
+This issue affects Apache CXF versions prior to 3.4.3; Apache CXF versions
+prior to 3.3.10.
 
-secalert@...hat.com for urgent response
-
-
-amct@...hat.com
-
-
-M: +1 (774)279-0791 <7742790791>     IM: amctagga
-
-
-Pronouns:They/Them/Theirs
-
-
-
-On Fri, May 14, 2021 at 3:16 PM Ana McTaggart <amctagga@...hat.com> wrote:
-
-> Hello,
-> A flaw was found in the Red Hat Ceph Storage RGW. When processing a GET
-> Request for a swift URL that ends with two slashes it can cause the rgw to
-> crash, resulting in a denial of service.
->
-> We have assigned it a CVE of CVE-2021-3531 and a patch is attached.
->
-> Fixes may be found here:
->
-> Nautilus:
-> https://github.com/ceph/ceph/commit/f44a8ae8aa27ecef69528db9aec220f12492810e
-> Octopus:
-> https://github.com/ceph/ceph/commit/b87e64e3206210580f4a6df2d77f9ae3f1033039
-> Pacific:
-> https://github.com/ceph/ceph/commit/bf06990ab41d7ac299e4441ad9cd434e926a18e7
->
-> Ana McTaggart
->
-> Red Hat Product Security
->
-> Red Hat Remote <https://www.redhat.com>
->
->
-> secalert@...hat.com for urgent response
->
->
-> amct@...hat.com
->
->
-> M: +1 (774)279-0791 <7742790791>     IM: amctagga
->
->
-> Pronouns:They/Them/Theirs
->
->
+Reference:
+http://cxf.apache.org/security-advisories.data/CVE-2021-22696.txt.asc
 
