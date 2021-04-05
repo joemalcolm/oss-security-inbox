@@ -1,30 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/14/3
-Message-ID: <CAJt9-x5u_Q_ngXJy6UkhnigtqE_Xgei0D4VFZ1JdCv_kBiMKkg@mail.gmail.com>
-Date: Fri, 14 May 2021 11:50:08 +0100
-From: Matthew Wild <mwild1@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/05/3
+Message-ID: <o1q7r6r3-2n27-rs9-58n1-5oron278p642@inai.de>
+Date: Mon, 5 Apr 2021 20:31:29 +0200 (CEST)
+From: Jan Engelhardt <jengelh@...i.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Prosody XMPP server advisory 2021-05-12 (multiple vulnerabilities)
+Subject: Re: Risk of local privilege escalation in GNU Guix
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 14 May 2021 at 11:08, Robert G. <robert.groesser@...glemail.com> wrote:
->
-> Hey guys,
->
-> thank you for fixing this!
->
-> >This flaw was discovered by Matthew Wild, a member of the Prosody team.
-> The issue with MUC passwords was also previously identified by Robert
-> GrÃ¶sser.
->
-> This wasn't identified by me, to be fair. I only reported this.
-> The flaw was initially found by my colleague Marvin Zerulla.
 
-Thanks for the clarification Robert! I've updated the advisory with this info.
+On Monday 2021-04-05 19:55, Henri Salo wrote:
+>On Mon, Apr 05, 2021 at 12:43:15PM -0400, Leo Famulari wrote:
+>> We applied for a CVE ID via MITRE's web form [0] on March 18, 2021.
+>> We have not yet received a reply. Does anybody know if that is expected?
+>
+>This is not normal.
 
-Your quote also highlighted that the text advisory is being served
-without an explicit character encoding. Thanks for finding that issue,
-now fixed :)
-
-Regards,
-Matthew
+Maybe it is? A recent requesto f mine took 13 days to complete.
+With Leo's request being 2 weeks old now as well, and considering
+there is some public holiday thing going on, his request might
+get a response tomorrow.
