@@ -1,31 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/10/1
-Message-ID: <20210510042443.GA19253@lorien.valinor.li>
-Date: Mon, 10 May 2021 06:24:43 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/05/1
+Message-ID: <YGs+I9NUYzddLP9P@jasmine.lan>
+Date: Mon, 5 Apr 2021 12:43:15 -0400
+From: Leo Famulari <leo@...ulari.name>
 To: oss-security@...ts.openwall.com
-Cc: Nadav Markus <nmarkus@...oaltonetworks.com>, Or Cohen <orcohen@...oaltonetworks.com>
-Subject: Re: CVE-2021-23133: Linux kernel: race condition in sctp sockets
+Subject: Re: Risk of local privilege escalation in GNU Guix
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-On Sun, Apr 18, 2021 at 11:41:06AM +0300, Or Cohen wrote:
-> Hello,
+On Thu, Mar 18, 2021 at 05:27:09PM -0400, Leo Famulari wrote:
+> # Vulnerability
 > 
-> This is an announcement about CVE-2021-23133 which is a race-condition
-> I found in Linux kernel sctp sockets (net/sctp/socket.c). It can lead to kernel
-> privilege escalation from the context of a network service or from
-> an unprivileged process if certain conditions are met.
-> 
-> The bug was fixed on April 13, 2021:
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b166a20b07382b8bc1dcee2a448715c9c2c81b5b
+> The attack consists in having an unprivileged user spawn a build process, for 
+> instance with `guix build`, that makes its build directory world-writable.  The 
+> user then creates a hardlink to a root-owned file such as `/etc/shadow` in that
+> build directory.  If the user passed the `--keep-failed` option and the build
+> eventually fails, the daemon changes ownership of the whole build tree,
+> including the hardlink, to the user.  At that point, the user has write access
+> to the target file.
 
-It looks that additionally
-https://git.kernel.org/linus/34e5b01186858b36c4d7c87e1a025071e8e2401f
-refer to CVE-2021-23133.
+We applied for a CVE ID via MITRE's web form [0] on March 18, 2021.
 
-Are both commits necessary?
+We have not yet received a reply. Does anybody know if that is expected?
 
-Regards,
-Salvatore
+Is there another method for independent projects to receive CVE IDs?
+
+[0] https://cveform.mitre.org/
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
