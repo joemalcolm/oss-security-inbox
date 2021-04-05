@@ -1,56 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/28/1
-Message-ID: <YXofzUCGm3N7lfNf@elende.valinor.li>
-Date: Thu, 28 Oct 2021 05:58:05 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: Michael Ellerman <mpe@...erman.id.au>
-Cc: oss-security@...ts.openwall.com, linuxppc-dev@...ts.ozlabs.org, John Paul Adrian Glaubitz <glaubitz@...sik.fu-berlin.de>
-Subject: Re: Linux kernel: powerpc: KVM guest can trigger host crash on Power8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/05/2
+Message-ID: <YGtPL7ZucGDYmkmw@ryzen.bugs.fi>
+Date: Mon, 5 Apr 2021 20:55:59 +0300
+From: Henri Salo <henri@...v.fi>
+To: Leo Famulari <leo@...ulari.name>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Risk of local privilege escalation in GNU Guix
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-On Mon, Oct 25, 2021 at 10:18:54PM +1100, Michael Ellerman wrote:
-> The Linux kernel for powerpc since v5.2 has a bug which allows a
-> malicious KVM guest to crash the host, when the host is running on
-> Power8.
-> 
-> Only machines using Linux as the hypervisor, aka. KVM, powernv or bare
-> metal, are affected by the bug. Machines running PowerVM are not
-> affected.
-> 
-> The bug was introduced in:
-> 
->     10d91611f426 ("powerpc/64s: Reimplement book3s idle code in C")
-> 
-> Which was first released in v5.2.
-> 
-> The upstream fix is:
-> 
->   cdeb5d7d890e ("KVM: PPC: Book3S HV: Make idle_kvm_start_guest() return 0 if it went to guest")
->   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=cdeb5d7d890e14f3b70e8087e745c4a6a7d9f337
-> 
-> Which will be included in the v5.16 release.
-> 
-> Note to backporters, the following commits are required:
-> 
->   73287caa9210ded6066833195f4335f7f688a46b
->   ("powerpc64/idle: Fix SP offsets when saving GPRs")
-> 
->   9b4416c5095c20e110c82ae602c254099b83b72f
->   ("KVM: PPC: Book3S HV: Fix stack handling in idle_kvm_start_guest()")
-> 
->   cdeb5d7d890e14f3b70e8087e745c4a6a7d9f337
->   ("KVM: PPC: Book3S HV: Make idle_kvm_start_guest() return 0 if it went to guest")
-> 
->   496c5fe25c377ddb7815c4ce8ecfb676f051e9b6
->   ("powerpc/idle: Don't corrupt back chain when going idle")
-> 
-> 
-> I have a test case to trigger the bug, which I can share privately with
-> anyone who would like to test the fix.
+On Mon, Apr 05, 2021 at 12:43:15PM -0400, Leo Famulari wrote:
+> We applied for a CVE ID via MITRE's web form [0] on March 18, 2021.
+> We have not yet received a reply. Does anybody know if that is expected?
 
-The issue has been assigned CVE-2021-43056.
+This is not normal. Please send inquiry to cve-request@...re.org and
+cve@...re.org. Include the request ID that you received after submitting CVE
+request. Spam filtering or something might be involved in this case. Feel free
+to contact me off list if you need help. It usually takes 1-2 days to get CVEs
+via cveform.
 
-Regards,
-Salvatore
+- -- 
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEE/aVSDznAZReWTkxKJ633pE6qdXQFAmBrTy0ACgkQJ633pE6q
+dXSpmhAAh7aFS3mHg5sAnymvwLuEy2OsuZfw+LxdnkleffALYMh+q8BdIoPEpkTz
+aKavJgx4zZMnRkVULFx0kKmFORFxEtKFeQULnBf7V+0NqCVnMRsg1V8GbsI5JLu0
+WgC0HpXQwCW1Rfqvge19NDPIxd9ey/02p3wPITIBQO93/OuN1dyCJNN+dyELpACH
+WiiLB1zGHAJ486wcbJ0j0l9HlmGSpRetOEKaKfojilEF/dcMqya0288EfK9gjJTA
+CgIjpryc69K/P90ooX86LX6alcKWq1Y5wgvH6pFUt8VNM7I89bP0wPCMaSaNFd4u
+CC0WZzKoSy7+9kkHBPhqe4sQAKdE7swxNVPG432q6hmRxpnB4l4GILVtQkB/iflg
+t/TQ9lTLG6Y1u+nF5DCrJW7zyKaXqyvNdFGH1ONYCp/BCKP+LLQ6HH/9ubJYgWTp
+lz19hOISPk2l47SZWIIl651XBz/XBZ5eSExZ3UKWLTaZcMrLszKUXGpUftqUldYN
+hVEDU3JCnS48BCw2tNfshlxKkns0EW4VN9jVabT2zZfmogseeQZTLx16gKK+lijv
+kP+b3x5CLezUb1eZNEPIK2BKIz4Q7qUesGvWE4uctpZeCGLiQQRCUR3N0kScEBen
+7aI7JcvR6vZrY8rmoUFwc1jCL4Im4RQHuPprS7UyKJkSpJELD0o=
+=lR+P
+-----END PGP SIGNATURE-----
