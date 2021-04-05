@@ -1,32 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/10/7
-Message-ID: <1622544226.VFAMUJAF@httpd.apache.org>
-Date: Wed, 09 Jun 2021 23:11:00 +0200
-From: Christophe JAILLET <jailletc36@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-26691: Apache httpd: mod_session response handling heap overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/05/4
+Message-ID: <YGtk43iV9VQNus3i@jasmine.lan>
+Date: Mon, 5 Apr 2021 15:28:35 -0400
+From: Leo Famulari <leo@...ulari.name>
+To: Henri Salo <henri@...v.fi>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Risk of local privilege escalation in GNU Guix
 Content-Type: text/plain; charset=utf-8
 
+On Mon, Apr 05, 2021 at 08:55:59PM +0300, Henri Salo wrote:
+> This is not normal. Please send inquiry to cve-request@...re.org and
+> cve@...re.org. Include the request ID that you received after submitting CVE
+> request. Spam filtering or something might be involved in this case. Feel free
+> to contact me off list if you need help. It usually takes 1-2 days to get CVEs
+> via cveform.
 
-CVE-2021-26691: mod_session response handling heap overflow
+We did send a followup to <cve-request@...re.org> a few days after using
+the web form. MITRE did not reply.
 
-Severity: low
+Our request ID was 1045371.
 
-Vendor: The Apache Software Foundation
-
-Versions Affected:
-httpd 2.4.0 to 2.4.46
-
-Description:
-Apache HTTP Server 2.4.0 to 2.4.46
-A specially crafted SessionHeader sent by an origin server could cause a heap overflow
-    
-Mitigation:
-None
-
-Credit:
-Discovered internally by Christophe Jaillet
-
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
