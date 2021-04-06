@@ -1,47 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/07/5
-Message-ID: <Pine.BSM.4.64L.2108070356370.904@herc.mirbsd.org>
-Date: Sat, 7 Aug 2021 03:58:07 +0000 (UTC)
-From: Thorsten Glaser <tg@...bsd.de>
-To: Axel Beckert <abe@...ian.org>
-cc: oss-security@...ts.openwall.com, security@...ian.org
-Subject: Re: bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/06/2
+Message-ID: <20210406111140.ymqmw3sliu4tskck@yavin>
+Date: Tue, 6 Apr 2021 21:11:40 +1000
+From: Aleksa Sarai <cyphar@...har.com>
+To: oss-security@...ts.openwall.com
+Cc: dev@...ncontainers.org
+Subject: CVE-2021-29136: umoci: malicious layer with symlink entry for "/" allows overwriting of host files
 Content-Type: text/plain; charset=utf-8
 
-Hi XTaran,
+umoci 0.4.7 has been released[1], which contains a patch[2] for this
+vulnerability. See [3] for more details about this vulnerability.
 
->> I *ALWAYS* SAID SNI IS A SHIT THING […]
->
->Don't blame the messenger. ;-)
+---
 
-Not blaming you in the slightest, rather the contrary, thanks for
-vindicating me ☻☺
+umoci 0.4.6 and earlier can be tricked into modifying host files by
+creating a malicious layer that has a symlink with the name "." (or
+"/"). Because umoci deletes inodes if they change types, this results in
+the rootfs directory being replaced with an attacker-controlled symlink.
+Subsequent image layers will then be applied on top of the target of the
+symlink (which could be any directory on the host filesystem the user
+running umoci has access to).
 
->> Other browsers also need checking.
->
->Good idea.
-[…]
->I didn't find any such issue in any of these tools. All cases verified
->via Wireshark's "follow TCP stream" against an Apache 2.4.48 (from
->Debian Unstable as well).
->
->But yeah, there are probably many more to check. But so far it looks
->like a lynx-specific issue.
+While umoci does have defences against symlink-based attacks, they are
+all implemented by resolving things relative to the rootfs directory --
+if the rootfs itself is a symlink, umoci resolves it first.
 
-Good to know.
+This vulnerability affects both "umoci unpack" and "umoci raw unpack".
+Note that if you use umoci as an unprivileged user (using the --rootless
+flag) then umoci will not be able to overwrite any files that your user
+doesn't have access to. Other possible mitigations are to run umoci
+under an LSM profile such as AppArmor or SELinux to restrict the level
+of access it has outside of container image directories.
 
->> Thanks for the detective work,
->
->You're welcome. Thanks for stumbling over this issue and triggering my
->digging. :-)
+Thanks to Robin Peraglie from Cure53 for discovering and reporting this
+vulnerability.
 
-Heh, I know the feeling. *adds more mksh commits because a user is
-porting it to another weird hobbyist OS…*
+[1]: https://github.com/opencontainers/umoci/releases/tag/v0.4.7
+[2]: https://github.com/opencontainers/umoci/commit/d9efc31daf2206f7d3fdb839863cf7a576a2eb57
+[3]: https://github.com/opencontainers/umoci/security/advisories/GHSA-9m95-8hx6-7p9v
 
-bye,
-//mirabilos
 -- 
-„Cool, /usr/share/doc/mksh/examples/uhr.gz ist ja ein Grund,
-mksh auf jedem System zu installieren.“
-	-- XTaran auf der OpenRheinRuhr, ganz begeistert
-(EN: “[…]uhr.gz is a reason to install mksh on every system.”)
+Aleksa Sarai
+Senior Software Engineer (Containers)
+SUSE Linux GmbH
+<https://www.cyphar.com/>
+
+Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
