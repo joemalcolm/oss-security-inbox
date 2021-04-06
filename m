@@ -1,201 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/21/1
-Message-ID: <20210920230413.GA50332@bluezbox.com>
-Date: Mon, 20 Sep 2021 16:04:13 -0700
-From: Oleksandr Tymoshenko <gonzo@...ezbox.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com, Kees Cook <keescook@...omium.org>
-Subject: Re: Containers-optimized OS (COS) membership in the linux-distros list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/06/1
+Message-ID: <9cf42d53-70e3-538d-5c61-c83dff7575cd@gmail.com>
+Date: Tue, 6 Apr 2021 09:54:31 +0200
+From: Mariusz Felisiak <felisiak.mariusz@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Django: CVE-2021-28658: Potential directory-traversal via uploaded files
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer (solar@...nwall.com) wrote:
-> Hello Oleksandr,
-> 
-> You posted this from @google.com, which probably means many subscribers
-> didn't receive the message because of that domain's strict DMARC policy.
-> So I fully quote your message below for others to possibly comment.
-> 
-> BTW, you will similarly need to be posting from another domain (e.g.,
-> gmail.com) to the linux-distros list.
- 
-Sorry, I wasn't aware about the problem with @google.com. Replying
-from the email address I use for my OSS communications (supposedly
-has DKIM and SPF configured). If this one is OK, I'll use it instead.
+https://www.djangoproject.com/weblog/2021/apr/06/security-releases/
 
-> Overall, your proposal looks reasonable to me at first glance.
-> 
-> Please also propose which specific contributing-back task(s) your team
-> would like to help with.
+In accordance with `our security release policy 
+<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
+Django team is issuing
+`Django 3.1.8 <https://docs.djangoproject.com/en/dev/releases/3.1.8/>`_,
+`Django 3.0.14 
+<https://docs.djangoproject.com/en/dev/releases/3.0.14/>`_ and
+`Django 2.2.20 <https://docs.djangoproject.com/en/dev/releases/2.2.20/>`_.
+These releases address the security issue with severity "low" detailed 
+below. We encourage all users of Django to upgrade as soon as possible.
 
-I think we can help with the following tasks:
+CVE-2021-28658: Potential directory-traversal via uploaded files
+================================================================
 
-Help ensure that each message posted to oss-security contains the most
-essential information (e.g., vulnerability detail and/or exploit)
-directly in the message itself (and in plain text) rather than only by
-reference to an external resource, and add the missing information
-(e.g., in your own words, by quoting with proper attribution, and/or
-by creating and attaching a properly attributed text/plain export of a
-previously referenced web page) and remind the original sender of this
-requirement (for further occasions) in a “reply” posting when
-necessary
+``MultiPartParser`` allowed directory-traversal via uploaded files with
+suitably crafted file names.
 
-Determine if the reported issues are Linux-specific, and if so help
-ensure that (further) private discussion goes on the linux-distros
-sub-list only (thus, not spamming and unnecessarily disclosing to the
-non-Linux distros) 
+Built-in upload handlers were not affected by this vulnerability.
 
-Promptly review new issue reports for meeting the list's requirements
-and confirm receipt of the report and, when necessary, inform the
-reporter of any issues with their report (e.g., obviously not actionable
-by the distros) and request and/or propose any required yet missing
-information (most notably, a tentative public disclosure date/time) 
+Thank you to Dennis Brinkrolf for the report.
 
- 
-> Thanks,
-> 
-> Alexander
-> 
-> On Thu, Sep 16, 2021 at 11:12:21PM -0700, Oleksandr Tymoshenko wrote:
-> > Hello,
-> > 
-> > 
-> > I???d like to propose Container-Optimized OS (COS)  for membership in
-> > linux-distros. Text below addresses items listed in the ???Membership
-> > criteria??? section of
-> > https://oss-security.openwall.org/wiki/mailing-lists/distros
-> > 
-> > 
-> > > 1. Be an actively maintained Unix-like operating system distro with
-> > > substantial use of Open Source components
-> > 
-> > 
-> > Container-Optimized OS (COS) s a Chromium OS based
-> > server operating system. Google distributes COS as a pre-built cloud image,
-> > but also provides sources for users to customize and build their own
-> > specialized versions of the OS.
-> > 
-> > 
-> > URL: https://cloud.google.com/container-optimized-os
-> > 
-> > 
-> > Source code:  https://cos.googlesource.com
-> > Build instructions:
-> > https://cloud.google.com/container-optimized-os/docs/how-to/building-from-open-source
-> > 
-> > 
-> > COS has a 6-month major release cadence and 3 LTS branches with their own
-> > 3-month refresh cadence. Critical security vulnerabilities addressed in
-> > patch releases, independently from the release/refresh cycle.
-> > 
-> > 
-> > Release notes: https://cloud.google.com/container-optimized-os/docs/release-notes
-> > 
-> > 
-> > > 2. Have a user base not limited to your own organization
-> > 
-> > 
-> > COS is available directly to external customers as a base VM image for the
-> > Google Compute Engine and indirectly as a base OS for managed services such
-> > as Google Kubernetes Engine (GKE), CloudSQL, Google Cloud Filestore.
-> > Overall usage of COS adds up to millions of cloud instances.
-> > 
-> > 
-> > > 3. Have a publicly verifiable track record, dating back at least 1 year and
-> > > continuing to present day, of fixing security issues (including some that
-> > > had been handled on (linux-)distros, meaning that membership would have
-> > > been relevant to you) and releasing the fixes within 10 days (and
-> > > preferably much less than that) of the issues being made public (if it
-> > > takes you ages to fix an issue, your users wouldn't substantially benefit
-> > > from the additional time, often around 7 days and sometimes up to 14 days,
-> > > that list membership could give you)
-> > 
-> > 
-> > Some of the examples of COS reacting quickly (less than 7 days) to CVEs
-> > with high impact:
-> > 
-> > 
-> > CVE-2021-33909(Sequoia):
-> > https://cloud.google.com/container-optimized-os/docs/release-notes/m85#cos-85-13310-1308-6
-> > 
-> > 
-> > CVE-2020-14308, CVE-2020-14311, CVE-2020-15705 (GRUB2):
-> > https://cloud.google.com/container-optimized-os/docs/release-notes/m81#cos-81-12871-1185-0
-> > 
-> > 
-> > CVE-2020-14386:
-> > https://cloud.google.com/container-optimized-os/docs/release-notes/m81#cos-81-12871-1196-0
-> > 
-> > 
-> > Having access to embargoed CVEs would have helped us to plan and prepare
-> > for patch releases in a more proactive way.
-> > 
-> > 
-> > > 4. Not be (only) downstream or a rebuild of another distro (or else we need
-> > > convincing additional justification of how the list membership would enable
-> > > you to release fixes sooner, presumably not relying on the upstream distro
-> > > having released their fixes first?)
-> > 
-> > 
-> > Although COS is derived from Chromium OS we switched to maintaining our own
-> > kernel package that tracks more recent versions of the Linux kernel. We
-> > make an effort to keep it as close to the upstream kernel as possible. We
-> > also track releases of other open-source packages relevant for our use
-> > cases independently from Chromium OS or Gentoo.
-> > 
-> > 
-> > > 5. Be a participant and preferably an active contributor in relevant public
-> > > communities (most notably, if you're not watching for issues being made
-> > > public on oss-security, which are a superset of those that had been handled
-> > > on (linux-)distros, then there's no valid reason for you to be on
-> > > (linux-)distros)
-> > 
-> > 
-> > We are actively monitoring multiple sources of information about
-> > vulnerabilities but haven???t contributed much directly because we didn't
-> > have anything to add to discussions.  We contributed to OSTIF Linux Kernel
-> > Vuln Reporting/Remediation Practices review, and also monitor the
-> > oss-security indirectly via ChromeOS.
-> > 
-> > 
-> > 
-> > 
-> > > 6. Accept the list policy:
-> > > http://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-instructions-for-members
-> > 
-> > 
-> > Please consider this note as acceptance of the list policy.
-> > 
-> > 
-> > > 7. Be able and willing to contribute back, preferably in specific ways
-> > > announced in advance (so that you're responsible for a specific area and so
-> > > that we know what to expect from which member), and demonstrate actual
-> > > contributions once you've been a member for a while:
-> > > http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
-> > 
-> > 
-> > Our team can perform administrative tasks that benefit the wider community
-> > and also can draw upon Google???s internal kernel expertise if required (on
-> > the need-to-know basis, maintaining confidentiality).
-> > 
-> > 
-> > > 8. Be able and willing to handle PGP-encrypted e-mail
-> > 
-> > 
-> > We???ll provide relevant GPG keys separately if our membership is accepted.
-> > 
-> > 
-> > > 9. Have someone already on the private list, or at least someone else who
-> > > has been active on oss-security for years but is not affiliated with your
-> > > distro nor your organization, vouch for at least one of the people
-> > > requesting membership on behalf of your distro (then that one vouched-for
-> > > person will be able to vouch for others on your team, in case you'd like
-> > > multiple people subscribed)
-> > 
-> > 
-> > Kees Cook (Cc-ed) can vouch for the proposed candidates.
-> > 
-> > 
-> > Thank you
+Affected supported versions
+===========================
 
--- 
-gonzo
+* Django main branch
+* Django 3.2 (currently at release candidate status)
+* Django 3.1
+* Django 3.0
+* Django 2.2
+
+Resolution
+==========
+
+Patches to resolve the issue have been applied to Django's main branch and
+the 3.2, 3.1, 3.0, and 2.2 release branches. The patches may be obtained 
+from the following changesets:
+
+* On the `main branch 
+<https://github.com/django/django/commit/d4d800ca1addc4141e03c5440a849bb64d1582cd>`__
+* On the `3.2 release branch 
+<https://github.com/django/django/commit/2820fd1be5dfccbf1216c3845fad8580502473e1>`__
+* On the `3.1 release branch 
+<https://github.com/django/django/commit/cca0d98118cccf9ae0c6dcf2d6c57fc50469fbf0>`__
+* On the `3.0 release branch 
+<https://github.com/django/django/commit/e7fba62248f604c76da4f23dcf1db4a57b0808ea>`__
+* On the `2.2 release branch 
+<https://github.com/django/django/commit/4036d62bda0e9e9f6172943794b744a454ca49c2>`__
+
+The following releases have been issued:
+
+* Django 3.1.8 (`download Django 3.1.8 
+<https://www.djangoproject.com/m/releases/3.1/Django-3.1.8.tar.gz>`_ | 
+`3.1.8 checksums 
+<https://www.djangoproject.com/m/pgp/Django-3.1.8.checksum.txt>`_)
+* Django 3.0.14 (`download Django 3.0.14 
+<https://www.djangoproject.com/m/releases/3.0/Django-3.0.14.tar.gz>`_ | 
+`3.0.14 checksums 
+<https://www.djangoproject.com/m/pgp/Django-3.0.14.checksum.txt>`_)
+* Django 2.2.20 (`download Django 2.2.20 
+<https://www.djangoproject.com/m/releases/2.2/Django-2.2.20.tar.gz>`_ | 
+`2.2.20 checksums 
+<https://www.djangoproject.com/m/pgp/Django-2.2.20.checksum.txt>`_)
+
+The PGP key ID used for this release is Mariusz Felisiak: 
+`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
+
+General notes regarding security reporting
+==========================================
+
+As always, we ask that potential security issues be reported via
+private email to ``security@...ngoproject.com``, and not via Django's
+Trac instance or the django-developers list. Please see `our security
+policies <https://www.djangoproject.com/security/>`_ for further
+information.
+
