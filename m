@@ -1,4 +1,9 @@
-Received: (qmail 18200 invoked by uid 550); 16 May 2025 17:14:27 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2742" "Wednesday" "7" "April" "2021" "15:16:47" "+0200" "Daniel Beck" "ml@beckweb.net" nil "73" "[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins" nil nil nil "4" nil nil (number mark "U       ml@beckweb.n Apr  7   73/2742  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1304 invoked by uid 550); 7 Apr 2021 13:16:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,76 +12,90 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 5292 invoked from network); 16 May 2025 16:32:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=netbsd.org;
-	s=20240131; t=1747413117;
-	bh=MCiltId1skLyUvmq/2j2lOV947NcppFocyJRJPG02JU=;
-	h=To:In-reply-to:Subject:Date:From;
-	b=sAQ+FR6GXNuKNB6hrDalc+vdpz4PVCPJmO4EGQ3ICgyYTnVxH8mbr28KCwyg6rgKR
-	 HET1Q9c2QRDBPKVVm+ywhbuJ2k7J844UzJCTYQLI5KqUU6B5TZBn/AlxcGkec2Y2gC
-	 aMcmSqfjrUlXu7MbSGAioXJCHfPaJB0P7YIuHRUo=
-To: oss-security@lists.openwall.com
-In-reply-to: <c72f7000-a909-478d-a487-bf4d5b244223@gentoo.org> (eschwartz@gentoo.org)
-Date: Fri, 16 May 2025 16:31:56 +0000
-From: Taylor R Campbell <riastradh@NetBSD.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Received: (qmail 1266 invoked from network); 7 Apr 2021 13:16:59 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250516163157.BA80D8564D@mail.netbsd.org>
-Subject: Re: [oss-security] screen: Multiple Security Issues in Screen (mostly
-	affecting release 5.0.0 and setuid-root installations)
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.15\))
+Message-Id: <20F4F8CE-A291-4DE5-97B1-FFA7AB76C638@beckweb.net>
+Date: Wed, 7 Apr 2021 15:16:47 +0200
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3445.104.15)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1617801419;4a001406;
+X-HE-SMSGID: 1lU835-0001pZ-K1
+Subject: [oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins
 
-> Date: Fri, 16 May 2025 11:34:29 -0400
-> From: Eli Schwartz <eschwartz@gentoo.org>
-> 
-> On 5/16/25 11:01 AM, Jan Schaumann wrote:
-> > I think it's useful to clarify here that NetBSD does
-> > _not_ ship with GNU screen(1) at all.  NetBSD's
-> > third-party package manager pkgsrc[1] includes
-> > screen(1), allowing users to install additional
-> > software on top of the base OS.
-> > 
-> > That package as included in _pkgsrc_ was installed
-> > setuid[2], but a NetBSD base installation does not
-> > include that package.  (NetBSD happens to include
-> > tmux(1) _in the base OS_, but not screen(1).)
-> > 
-> > This distinction between a base OS and add-on software
-> > that is optionally available for users to choose tends
-> > to cause confusion for some people, so I figured
-> > it's worth noting.
-> 
-> This is a nonsensical claim, but if I accept it as stated then I will
-> counter-assert that zero (0) Linux distros are vulnerable as they don't
-> preinstall screen in the base OS.
-> 
-> The definition of "the NetBSD base installation" is "nobody uses it".
-> People use computing devices in order to run software on it. You cannot
-> consider your OS in a bubble and go "well ackshually it's perfectly
-> secure unless you use the builtin software to install official software,
-> but we don't support that as a secure option".
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-It is not nonsensical, and it is not the inconsequential pedantry you
-are suggesting.  Please consider avoiding sarcastic disparagement when
-publicly discussing the factual matters of security reports.
+The following releases contain fixes for security vulnerabilities:
 
-The report says that `NetBSD 10.1' is affected.  This is not quite
-right, _and it matters_ even if you set aside the fact that NetBSD
-10.1 itself (which does ship tmux!) does not ship screen, because:
+* Jenkins 2.287
+* Jenkins LTS 2.277.2
+* Micro Focus Application Automation Tools Plugin 6.8
+* promoted builds Plugin 3.9.1
 
-(a) the same pkgsrc packages are available on, e.g., NetBSD 9.x (which
-    is not EOL); and
 
-(b) pkgsrc is used on platforms other than NetBSD, including macOS,
-    SmartOS, and various Linux distributions (e.g., for unprivileged
-    use on HPC clusters where it is more flexible and up-to-date than
-    the Linux distribution's package manager).
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2021-04-07/
 
-That is why it would be more accurate for the report to say
-`pkgsrc-2025Q1', not `NetBSD 10.1'.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-All that said, I think any further discussion of this point -- and any
-other distributor-specific matters -- can reasonably be taken off-list
-to keep the thread focussed on the details of the screen
-vulnerabilities themselves.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-1721 / CVE-2021-21639
+Jenkins 2.286 and earlier, LTS 2.277.1 and earlier does not validate the
+type of object created after loading the data submitted to the `config.xml`
+REST API endpoint of a node.
+
+This allows attackers with Computer/Configure permission to replace a node
+with one of a different type.
+
+
+SECURITY-1871 / CVE-2021-21640
+Jenkins 2.286 and earlier, LTS 2.277.1 and earlier does not properly check
+that a newly created view has an allowed name. When a form to create a view
+is submitted, the name is included twice in the submission. One instance is
+validated, but the other instance is used to create the value.
+
+This allows attackers with View/Create permission to create views with
+invalid or already-used names.
+
+
+SECURITY-2293 / CVE-2021-21641
+promoted builds Plugin 3.9 and earlier does not require POST requests for
+HTTP endpoints implementing promotion (regular, forced, and re-execute),
+resulting in cross-site request forgery (CSRF) vulnerabilities.
+
+These vulnerabilities allow attackers to promote builds.
+
+
+SECURITY-2132 / CVE-2021-22512 (CSRF) & CVE-2021-22513 (permission check)
+Micro Focus Application Automation Tools Plugin 6.7 and earlier does not
+perform permission checks in methods implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to
+attacker-specified URLs using attacker-specified username and password.
+
+Additionally, these form validation methods do not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+
+SECURITY-2175 / CVE-2021-22510
+Micro Focus Application Automation Tools Plugin 6.7 and earlier does not
+escape user input in a form validation response.
+
+This results in a reflected cross-site scripting (XSS) vulnerability.
+
+
+SECURITY-2176 / CVE-2021-22511
+Micro Focus Application Automation Tools Plugin 6.7 and earlier
+unconditionally disables SSL/TLS certificate validation for connections to
+Service Virtualization servers.
