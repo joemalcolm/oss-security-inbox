@@ -1,40 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/04/5
-Message-ID: <f36fc3fefc0b5c429cb16adfe62bde6f4ab0bbd2.camel@amazon.com>
-Date: Mon, 4 Oct 2021 18:57:19 +0000
-From: "Karp, Samuel" <skarp@...zon.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Moby (Docker Engine) CVE-2021-41089
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/07/1
+Message-ID: <CAMhUBj=2rfJDZyO01nDEof8c-bS5Y+tLL0NKJzDXJqTgTTariQ@mail.gmail.com>
+Date: Wed, 7 Apr 2021 19:16:07 +0800
+From: 马哲宇 <zheyuma97@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-3483: Linux kernel: a use-after-free bug in nosy driver
 Content-Type: text/plain; charset=utf-8
 
-A bug was found in Moby (Docker Engine) where attempting to copy files
-using docker cp into a specially-crafted container can result in Unix
-file permission changes for existing files in the host's filesystem,
-widening access to others. This bug does not directly allow files to be
-read, modified, or executed without an additional cooperating process.
+Hello,
 
-Patches
-This bug has been fixed in Moby (Docker Engine) 20.10.9. Users should
-update to this version as soon as possible. Running containers do not
-need to be restarted.
+I found a bug in the latest Linux kernel. The
+location of the bug is Linux/drivers/firewire/nosy.c.   Nosy is an
+IEEE 1394 packet sniffer which is used for protocol analysis and in the
+development of IEEE 1394 drivers, applications, or firmware.
 
-Workarounds
-Ensure you only run trusted containers.
+For each device, the nosy driver allocates a pcilynx structure. A
+use-after-free might happen in the following scenario:
 
-Credits
-The Moby project would like to thank Lei Wang and Ruizhi Xiao for
-responsibly disclosing this issue in accordance with the ﻿Moby security
-policy.
+1. Open nosy device for the first time and call ioctl with command
+NOSY_IOC_START, then a new client A will be malloced and added to
+doubly linked list.
+2. Open nosy device for the second time and call ioctl with command
+NOSY_IOC_START, then a new client B will be malloced and added to
+doubly linked list.
+3. Call ioctl with command NOSY_IOC_START for client A, then client A
+will be readded to the doubly linked list. Now the doubly linked list
+is messed up.
+4. Close the first nosy device and nosy_release will be called. In
+nosy_release, client A will be unlinked and freed.
+5. Close the second nosy device, and client A will be referenced,
+resulting in UAF.
 
-If you have any questions or comments about this advisory:
-Open an issue [1]
-Email us at ﻿ security@...ker.com ﻿ if you think you’ve found a
-security bug
+The root cause of this bug is that the element in the doubly linked
+list is reentered into the list.
 
-View this advisory on the web:
-https://github.com/moby/moby/security/advisories/GHSA-v994-f8vw-g7j4
+Here is the commit to patch this BUG:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=829933ef05a951c8ff140e814656d73e74915faf
 
-On behalf of the Moby project,
-Samuel Karp
+Regards,
 
-[1] https://github.com/moby/moby/issues/new
+Zheyu Ma
