@@ -1,43 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/25/3
-Message-ID: <CAFcO6XP=t-BCX=NP=B6qH5WVQ1jc=pOS24d0d=6MS2dm66A_mQ@mail.gmail.com>
-Date: Wed, 25 Aug 2021 10:49:04 +0800
-From: butt3rflyh4ck <butterflyhuangxx@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/09/1
+Message-ID: <YG9wlSsUVoqEtZuG@jasmine.lan>
+Date: Thu, 8 Apr 2021 17:07:33 -0400
+From: Leo Famulari <leo@...ulari.name>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel: fs/btrfs: null-ptr-dereference bug in btrfs_rm_device in fs/btrfs/volumes.c
+Subject: Re: Risk of local privilege escalation in GNU Guix
 Content-Type: text/plain; charset=utf-8
 
-Hello, there is a null pointer dereference bug in the btrfs_rm_device
-function in fs/btrfs/volumes.c in linux-5.14.0-rc4+ and reproduce too.
-Fortunately, triggering the bug requires ‘CAP_SYS_ADMIN’.
+On Mon, Apr 05, 2021 at 12:43:15PM -0400, Leo Famulari wrote:
+> We applied for a CVE ID via MITRE's web form [0] on March 18, 2021.
+> 
+> We have not yet received a reply. Does anybody know if that is expected?
 
-#Root Cause
-When a user invokes a BTRFS_IOC_RM_DEV_V2 ioctl to remove a non-exist
-volume device,
-it would call btrfs_ioctl_rm_dev_v2 function to implement. And
-btrfs_ioctl_rm_dev_v2 would call btrfs_rm_device,
-if the id of the volume device is illegal, it would trigger a
-null-ptr-deref bug to cause DoS.
+Well, there is an LWN article about it, but still no CVE:
 
-# Analyse
-https://lore.kernel.org/linux-btrfs/CAFcO6XO5TC5sEo-C9JGC75JkNAzkOSSLA3a=bwQqXFFbRTZ7Gw@mail.gmail.com/T/#md4b850f33616b7364f86e6fed144abc925f3669c
+https://lwn.net/Articles/851849/
 
-#Fix
-the patch for this issue, not available upstream now.
-https://lore.kernel.org/linux-btrfs/20210806102415.304717-1-wqu@suse.com/T/#u
+🤷
 
-
-#Timeline
-*2021/8/6 - Vulnerability reported to maintainer and CC to
-linux-btrfs@...r.kernel.org.
-*2021/8/6 - Vulnerability confirmed and patched.
-*2021/8/10 - Vulnerability reported to secalert@...hat.com.
-*2021/8/25 - Opened on oss-security@...ts.openwall.com.
-
-#Credit
-the issue is reported by Active Defense Lab of Venustech.
-
-Regards,
- butt3rflyh4ck.
--- 
-Active Defense Lab of Venustech
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
