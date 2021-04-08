@@ -1,59 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/16/3
-Message-ID: <CAEK7nyk2LssfkKk46u177Fd63CqUHzJXv9xFOcE0GX1cvqQjMA@mail.gmail.com>
-Date: Sun, 16 May 2021 12:29:32 -0700
-From: Ivan Novikov <in@...larm.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/08/1
+Message-ID: <CAFzhf4pqTAOivUgVSOLw74yCOoGOS1Fm-8-xWpy-JOADMkKrKA@mail.gmail.com>
+Date: Thu, 8 Apr 2021 16:24:26 +0100
+From: Piotr Krysiuk <piotras@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Open Source WAF testing tools
+Subject: [CVE-2021-29154] Linux kernel incorrect computation of branch displacements in BPF JIT compiler can be abused to execute arbitrary code in Kernel mode
 Content-Type: text/plain; charset=utf-8
 
-Hi Martin,
+An issue has been discovered in the Linux kernel that can be abused by
+unprivileged local users to escalate privileges.
 
-We made GoTestWAF with no any vendor-specific things. It's mainly cover
-OWASP Top-10 and API data encodings such as REST/JSON, SOAP/XML, GraphQL,
-and WebSockets since the latest versions. You can add your payloads as easy
-as making Yaml files.
+The issue is with how BPF JIT compilers for some architectures compute
+branch displacements when generating machine code. This can be abused
+to craft anomalous machine code and execute it in the Kernel mode,
+where the control flow is hijacked to execute unsafe code.
 
-At the end of the last year, it was significantly improved by community
-detects
-https://github.com/wallarm/gotestwaf/pull/29 , thanks Vulners team and
-a https://github.com/waf-bypass-maker/waf-community-bypasses project.
+I developed PoCs for x86-64 and x86-32 architectures to demonstrate
+shellcode execution in Kernel mode by unprivileged local users.
 
-We are actively working on the project and any advice or suggestions in a
-form of GitHub issue or pull-requests will be highly appreciated.
+One of these PoCs has been shared privately with <security@...nel.org>
+to assist with fix development.
 
-Have a great weekend everyone!
+Patches to mitigate the issue for x86-64 and x86-32 architectures are
+available. These patches do not attempt to correct the underlying
+algorithm and instead assert that all computations were performed
+correctly, such that all unsafe inputs are rejected.
 
-On Sun, May 16, 2021 at 12:07 PM Martin O'Neil <martinoneil.cyber@...il.com>
-wrote:
+The patches were published via BPF subsystem public git repository:
+* https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=e4d4d456436bfb2fe412ee2cd489f7658449b098
+* https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=26f55a59dc65ff77cd1c4b37991e26497fc68049
 
-> Hi, list,
->
-> Does anybody know an open-source tool for testing Web Application
-> Firewalls?
->
-> In an ideal case, with an out-of-the-box-ready CLI/UI, PDF reports, and a
-> configurable set of payloads to test. I need it to check if my WAF
-> deployment and rules work well.
->
-> I found at least 5 projects, all made by WAF vendors.
->
-> 1. https://github.com/wallarm/gotestwaf byWallarm
-> 2. https://github.com/signalsciences/waf-testing-framework by Signal
-> Sciences
-> 3. https://github.com/fastly/ftw by Fastly
-> 4. https://microsoft.github.io/WAFBench/ by Microsoft Azure WAF team
-> 5. https://github.com/f5devcentral/f5-waf-tester by F5
->
-> The GoTestWAF project looks more active and supported by the community.
-> Does anybody recommend some other GitHub repositories, preferably made by
-> 3rd party folks?
->
-> Thanks
-> Martin.
->
--- 
-Ivan Novikov
-Wallarm, CEO
-+1.650.454.9339
+# Discoverer
 
+Piotr Krysiuk <piotras@...il.com>
+
+# References
+
+CVE-2021-29154 (reserved via https://cveform.mitre.org/)
