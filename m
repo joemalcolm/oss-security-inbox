@@ -1,67 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/25/1
-Message-ID: <CAKpyPV-Z18FXae0t7vCozupvZ6+_9eeaoAQ=8_1sPM8Xfbn3ZQ@mail.gmail.com>
-Date: Tue, 24 Aug 2021 20:14:02 -0300
-From: Jean Diogo <j@....com.br>
-To: oss-security@...ts.openwall.com
-Subject: Possible memory leak on getspnam / getspnam_r
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/09/2
+Message-ID: <299a447a-3084-12c0-013f-b98162f365d1@linux.com>
+Date: Fri, 9 Apr 2021 13:06:09 +0300
+From: Alexander Popov <alex.popov@...ux.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Cc: linux-distros@...openwall.org, Linus Torvalds <torvalds@...uxfoundation.org>, Greg KH <greg@...ah.com>, "security@...nel.org" <security@...nel.org>, Norbert Slusarek <nslusarek@....net>, Stefano Garzarella <sgarzare@...hat.com>, Eric Dumazet <edumazet@...gle.com>, Anthony Liguori <aliguori@...zon.com>, David Miller <davem@...emloft.net>, Jakub Kicinski <kuba@...nel.org>, Jorgen Hansen <jhansen@...are.com>, Stefan Schmidt <stefan@...enfreihafen.org>, Jeff Vander Stoep <jeffv@...gle.com>, Andrey Konovalov <andreyknvl@...gle.com>
+Subject: Re: Linux kernel: Exploitable vulnerabilities in AF_VSOCK implementation
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello!
 
-The function getspnam() and it's reentrant sister getspnam_r() do not clean
-the content of allocated memory before returning to the user, resulting in
-the leak of /etc/shadow content. In some cases this might be an issue.
+I published a detailed article about exploiting CVE-2021-26708 in AF_VSOCK
+implementation: https://a13xp0p0v.github.io/2021/02/09/CVE-2021-26708.html
 
->From my tests, it doesn't matter whether the user calls getspnam_r (which
-buffer is controlled by the user) rather than getspnam, both functions
-malloc the buffer on itself (apparently the heap pointer is stored on
-<respbuf> in libc by _nss_files_getspnam_r from libnss) and does not zero
-it before returning.
+In this article I describe how to gain local privilege escalation on Fedora 33
+Server for x86_64, bypassing SMEP and SMAP.
 
-I understand that this may be a desired behavior, caching, however there
-might be some situations where that's not desired and the user has no
-control over this buffer.
+The race condition may cause write-after-free of a 4-byte controlled value to a
+64-byte kernel object at offset 40. That's quite limited memory corruption. I
+had a hard time turning it into arbitrary read/write of kernel memory.
 
-Let me put ProFTPd as an example: it's daemon starts as root, when it
-receives a connection it forks, opens all the files that it'll need, then
-it calls getspnam with the provided FTP user to validate the provided
-password. Later on it setreuid(nobody) abandoning root privileges [1]. Here
-it doesn't matter whether it calls getspnam or getspnam_r, the malloced
-buffer will remain on heap memory (and it's pointer in libc <buffer> and
-<respbuf>, I suppose). So now the child process is running on a low
-privileged user and has a copy of /etc/shadow on it's heap memory.
-The vulnerability CVE-2020-9273 [2] (an use-after-free on heap) allowed me
-to get RCE on ProFTPd, in an exploit I created last year. Additionally,
-thanks to getspnam caching it is possible to read the root cryptogram (and
-other users).
+In this article I also describe possible exploit mitigations that could prevent
+exploitation of CVE-2021-26708 or at least make it harder.
 
-I'm not suggesting that ProFTPd architecture is correct [3]. The problem is
-that even if ProFTPd calls getspnam_r it has no mechanism to zero the cache
-before forking, since internal pointers are not known to the user (read
-developer).
-
-Thus, although caching is mostly required for performance, maybe this
-(caching) should happen only on getspnam function but not on getspnam_r.
-That's because on getspnam_r the user wants to have control over this
-buffering, then the user has a way to clean up it's memory when this
-caching is not desired.
-
-Thanks guys, and sorry if I slipped into any concept.
-dukpt.
-
-References:
-[1] - ProFTPd opens root-writable-only files while running as root. I
-understand that the permissions are validated during opening, so read /
-write operations to duplicated file descriptors after fork are guaranteed
-(thanks to Rick Altherr for pointing me out);
-[2] - https://nvd.nist.gov/vuln/detail/CVE-2020-9273 ;
-[3] - It is a good programming practice to exec right after fork.
-
-N.B.: Perhaps another option could be creating a function similar to
-endspent but that not only close() /etc/shadow but also bzero() internal
-allocated memory. Since endspent does not wipe memory it's very likely that
-[gs]etpent family also have the same behavior (I didn't test all functions
-from the manual, so there might be others in similar situations). Also,
-from the tests I did I think getspent and getspnam share the same buffer.
-
+Best regards,
+Alexander
