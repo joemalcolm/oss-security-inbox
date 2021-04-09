@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5844" "Tuesday" "12" "February" "2019" "17:36:06" "+0100" "Solar Designer" "solar@openwall.com" "<20190212163606.GA4443@openwall.com>" "169" "Re: [oss-security] CVE-2019-5736: runc container breakout (all versions)" "^Cc:" nil nil "2" "2019021216:36:06" "[oss-security] CVE-2019-5736: runc container breakout (all versions)" (number mark "        solar@openwa Feb 12  169/5844  " thread-indent "\"Re: [oss-security] CVE-2019-5736: runc container breakout (all versions)\"\n") "<20190211130520.xwi6vpay3sc56pza@yavin>" ("<20190211130520.xwi6vpay3sc56pza@yavin>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["677" "Friday" "9" "April" "2021" "13:06:09" "+0300" "Alexander Popov" "alex.popov@linux.com" nil "17" "[oss-security] Re: Linux kernel: Exploitable vulnerabilities in AF_VSOCK implementation" nil nil nil "4" nil nil (number mark "U       alex.popov@l Apr  9   17/677   " thread-indent "\"[oss-security] Re: Linux kernel: Exploitable vulnerabilities in AF_VSOCK implementation\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: Linux kernel: Exploitable vulnerabilities in AF_VSOCK implementation" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7967 invoked by uid 550); 12 Feb 2019 16:37:19 -0000
+Received: (qmail 12233 invoked by uid 550); 9 Apr 2021 10:06:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,188 +11,66 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7485 invoked from network); 12 Feb 2019 16:36:27 -0000
-Message-ID: <20190212163606.GA4443@openwall.com>
-References: <20190211130520.xwi6vpay3sc56pza@yavin>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190211130520.xwi6vpay3sc56pza@yavin>
-User-Agent: Mutt/1.4.2.3i
-Cc: Aleksa Sarai <cyphar@cyphar.com>, dev@opencontainers.org,
-	Christian Brauner <christian.brauner@ubuntu.com>
-Date: Tue, 12 Feb 2019 17:36:06 +0100
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2019-5736: runc container breakout (all versions)
-To: oss-security@lists.openwall.com
+Received: (qmail 12203 invoked from network); 9 Apr 2021 10:06:24 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=UVFw0LR3i3BE+ZM8Jb8oNH1P0MSVpaZmhsY+AQ/h+go=;
+        b=pwpUaf/CTpIZJTxh0Tq47i9Nwb8oz8vTuAMrssEFjDtxkxo+LDKxLCmBmk/3I7CZK1
+         3hakOFUis+8OGIy3bwRc9Dr5ChknNiizSOi+8nFWHHuiSq2dioZPJ69xL/MRhScuMHMa
+         9s6WOQT8BNVEgSPJS2i8qtYQO/Kc0XzF+nDXXObiYJEnkC0R6Eh7IoPma5XOO3O3XY9v
+         tK2LT8AggegwmW5sJvOgZTbnCujx3Y5tilcgc9TqHqWKPQN2e8onWj2ejGcCpZELoG4b
+         j1MxPoCLtEZh2hKtod1CqhlNQ2Bxm37SQXN5n+QHQAPwhU+uW+HdtN3cYuj9BM//5Drh
+         vMpQ==
+X-Gm-Message-State: AOAM531IKgO/SWfU4bTkDGMAUAT/KuvsdtVrFY/b81geyjGl8iDRqHe8
+	pJ3lVpPqGQ1KU9nTUkZJhvQ=
+X-Google-Smtp-Source: ABdhPJwno3l0eOIYyV+KzbeUJv0ti3SJMHwnco3zsej8X+zUNt5bE0v7UR9hhA1fELh8oD70Jr5ViA==
+X-Received: by 2002:adf:ec0f:: with SMTP id x15mr16756127wrn.233.1617962773272;
+        Fri, 09 Apr 2021 03:06:13 -0700 (PDT)
+From: Alexander Popov <alex.popov@linux.com>
+To: oss-security <oss-security@lists.openwall.com>
+Cc: linux-distros@vs.openwall.org,
+ Linus Torvalds <torvalds@linuxfoundation.org>, Greg KH <greg@kroah.com>,
+ "security@kernel.org" <security@kernel.org>,
+ Norbert Slusarek <nslusarek@gmx.net>,
+ Stefano Garzarella <sgarzare@redhat.com>, Eric Dumazet
+ <edumazet@google.com>, Anthony Liguori <aliguori@amazon.com>,
+ David Miller <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>,
+ Jorgen Hansen <jhansen@vmware.com>,
+ Stefan Schmidt <stefan@datenfreihafen.org>,
+ Jeff Vander Stoep <jeffv@google.com>,
+ Andrey Konovalov <andreyknvl@google.com>
+References: <f345a0d3-34f2-a013-545b-bf49ec5a4818@linux.com>
+ <F228DD28-51EB-41AC-9092-8E5EC9ACDE79@linux.com>
+Message-ID: <299a447a-3084-12c0-013f-b98162f365d1@linux.com>
+Date: Fri, 9 Apr 2021 13:06:09 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.8.1
+MIME-Version: 1.0
+In-Reply-To: <F228DD28-51EB-41AC-9092-8E5EC9ACDE79@linux.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] Re: Linux kernel: Exploitable vulnerabilities in AF_VSOCK
+ implementation
 
-On Tue, Feb 12, 2019 at 12:05:20AM +1100, Aleksa Sarai wrote:
-> The vulnerability allows a malicious container to (with minimal user
-> interaction) overwrite the host runc binary and thus gain root-level
-> code execution on the host. The level of user interaction is being able
-> to run any command (it doesn't matter if the command is not
-> attacker-controlled) as root within a container in either of these
-> contexts:
-> 
->   * Creating a new container using an attacker-controlled image.
->   * Attaching (docker exec) into an existing container which the
->     attacker had previous write access to.
+Hello!
 
-[...]
+I published a detailed article about exploiting CVE-2021-26708 in AF_VSOCK
+implementation: https://a13xp0p0v.github.io/2021/02/09/CVE-2021-26708.html
 
-> == IMPACT ON OTHER PROJECTS ==
-> 
-> It should be noted that upon further investigation I've discovered that
-> LXC has a similar vulnerability, and they have also pushed a similar
-> patch[2] which we co-developed. LXC is a bit harder to exploit, but the
-> same fundamental flaw exists.
-> 
-> After some discussion with the systemd-nspawn folks, it appears that
-> they aren't vulnerable (because their method of attaching to a container
-> uses a different method to LXC and runc).
-> 
-> I have been contacted by folks from Apache Mesos who said they were also
-> vulnerable (I believe just using the exploit code that will be
-> provided). It is quite likely that most container runtimes are
-> vulnerable to this flaw, unless they took very strange mitigations
-> before-hand.
+In this article I describe how to gain local privilege escalation on Fedora 33
+Server for x86_64, bypassing SMEP and SMAP.
 
-While runc, LXC, and maybe other projects fix CVE-2019-5736 in userspace,
-Virtuozzo/OpenVZ 7 has just released a kernel fix instead - please see
-the forwarded message below.  Following links from there, I found the
-following description of the issue in context of Virtuozzo and OpenVZ:
+The race condition may cause write-after-free of a 4-byte controlled value to a
+64-byte kernel object at offset 40. That's quite limited memory corruption. I
+had a hard time turning it into arbitrary read/write of kernel memory.
 
----
-Security vulnerability: potential breakage of container isolation via symlinks to /proc/self/exe
+In this article I also describe possible exploit mitigations that could prevent
+exploitation of CVE-2021-26708 or at least make it harder.
 
-Affected products:
-* Virtuozzo 7 Update 8 and older
-* OpenVZ 7
-
-Not affected:
-* Virtuozzo Infrastructure Platform 2.5
-* Virtuozzo 6 and earlier versions
-* OpenVZ 6
-
-1. Overview
-It was discovered that a malicious user inside a Virtuozzo container could
-potentially overwrite "vzctl" binary on the host. The attacker could replace
-executables in that container with symlinks to /proc/self/exe. After that,
-"vzctl exec" called from the host to run one of such executables would try to
-run the host's "vzctl" there instead. If the attacker managed to intercept
-that, they would be able to change the contents of the host's "vzctl" binary.
-
-CVSS v3 score: 7.2 (AV:L/AC:H/PR:L/UI:R/S:C/C:N/I:H/A:H)
-
-The issue is similar to CVE-2019-5736 , but affects "vzctl" rather than "runc".
----
-
-I was curious about the kernel fix.  It doesn't appear to be in the
-public git repository yet, where the latest is
-3.10.0-862.20.2.vz7.73.25, whereas the fixed version is .27.  So I
-downloaded the .src.rpm and found what I think is the fix in there:
-
----
-* Mon Feb 11 2019 Konstantin Khorenko <khorenko@virtuozzo.com> [3.10.0-862.20.2.vz7.73.27]
-- proc/self/exe link validation (Vasily Averin) [PSBM-91042]
----
-
----
---- a/fs/proc/base.c
-+++ b/fs/proc/base.c
-[...]
-@@ -1617,6 +1749,26 @@ static const struct file_operations
-proc_pid_set_comm_operations = {
-        .release        = single_release,
- };
- 
-+#if CONFIG_VE
-+#include "../mount.h"
-+
-+static inline int path_in_ve(struct path *path)
-+{
-+       struct ve_struct *ve = get_exec_env();
-+
-+       if (ve_is_super(ve) ||
-+           (real_mount(path->mnt)->ve_owner == ve))
-+               return 0;
-+       else
-+               return -EINVAL;
-+}
-+#else
-+static inline int path_in_ve(struct path * path)
-+{
-+       return 0;
-+}
-+#endif
-+
- static int proc_exe_link(struct dentry *dentry, struct path *exe_path)
- {
-        struct task_struct *task;
-@@ -1628,10 +1780,15 @@ static int proc_exe_link(struct dentry *dentry,
-struct path *exe_path)
-        exe_file = get_task_exe_file(task);
-        put_task_struct(task);
-        if (exe_file) {
--               *exe_path = exe_file->f_path;
--               path_get(&exe_file->f_path);
-+               int result;
-+
-+               result = path_in_ve(&exe_file->f_path);
-+               if (result == 0) {
-+                       *exe_path = exe_file->f_path;
-+                       path_get(&exe_file->f_path);
-+               }
-                fput(exe_file);
--               return 0;
-+               return result;
-        } else
-                return -ENOENT;
- }
----
-
-This uses Virtuozzo/OpenVZ specific APIs, so won't be directly usable
-elsewhere, but maybe a similar approach could be used upstream?
-
-Alexander
-
------ Forwarded message from Konstantin Khorenko <khorenko@virtuozzo.com> -----
-
-From: Konstantin Khorenko <khorenko@virtuozzo.com>
-To: OpenVZ users <users@openvz.org>
-Date: Tue, 12 Feb 2019 06:58:05 +0000
-Subject: [Users] [NEW KERNEL] vzkernel-3.10.0-862.20.2.vz7.73.27 (with fix
- for CVE-2019-5736)
-
-Hi All,
-
-guess you are aware of recent security vulnerability CVE-2019-5736:
-potential breakage of container isolation via symlinks to /proc/self/exe.
-
-https://virtuozzosupport.force.com/s/article/000017636
-
-We've built full vzkernel for OpenVZ users:
-https://download.openvz.org/virtuozzo/factory/x86_64/os/Packages/v/vzkernel-3.10.0-862.20.2.vz7.73.27.x86_64.rpm
-
-The kernel is based on stable kernel released as a part of Virtuozzo Infrastructure Platform product:
-https://www.virtuozzo.com/products/virtuozzo-infrastructure-platform.html
-http://repo.virtuozzo.com/vz-platform/releases/2.5/x86_64/os/Packages/v/
-
-+ includes fixes provided via ReadyKernel for this kernel up to now:
-https://readykernel.com/patch/Virtuozzo-7/readykernel-patch-73.24-72.0-1.vl7/
-
-The kernel is based on stable kernel and passed basic validation.
-
---
 Best regards,
-
-Konstantin Khorenko,
-Virtuozzo Linux Kernel Team
-
-_______________________________________________
-Users mailing list
-Users@openvz.org
-https://lists.openvz.org/mailman/listinfo/users
-
------ End forwarded message -----
+Alexander
