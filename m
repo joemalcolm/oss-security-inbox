@@ -1,70 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/29/2
-Message-ID: <20210729173331.7vwinmrmow3gtfni@yuggoth.org>
-Date: Thu, 29 Jul 2021 17:33:32 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/10/1
+Message-ID: <YHHnUFzvU0prUY/j@jasmine.lan>
+Date: Sat, 10 Apr 2021 13:58:40 -0400
+From: Leo Famulari <leo@...ulari.name>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA-2021-002] Nova: Open Redirect in noVNC proxy (CVE-2021-3654)
+Subject: Re: Risk of local privilege escalation in GNU Guix
 Content-Type: text/plain; charset=utf-8
 
-===========================================
-OSSA-2021-002: Open Redirect in noVNC proxy
-===========================================
+On Thu, Mar 18, 2021 at 05:27:09PM -0400, Leo Famulari wrote:
+> # Vulnerability
+> 
+> The attack consists in having an unprivileged user spawn a build process, for 
+> instance with `guix build`, that makes its build directory world-writable.  The 
+> user then creates a hardlink to a root-owned file such as `/etc/shadow` in that
+> build directory.  If the user passed the `--keep-failed` option and the build
+> eventually fails, the daemon changes ownership of the whole build tree,
+> including the hardlink, to the user.  At that point, the user has write access
+> to the target file.
 
-:Date: July 29, 2021
-:CVE: CVE-2021-3654
+This is CVE-2021-27851.
 
+We are very grateful for the invaluable assistance of CERT/CC in getting
+this assigned.
 
-Affects
-~~~~~~~
-- Nova: <21.2.3, >=22.0.0 <22.2.3, >=23.0.0 <23.0.2
-
-
-Description
-~~~~~~~~~~~
-Swe Aung, Shahaan Ayyub, and Salman Khan with the Monash University
-Cyber Security team reported a vulnerability affecting Nova's noVNC
-proxying implementation which exposed access to a well-known
-redirect behavior in the Python standard library's
-http.server.SimpleHTTPRequestHandler and thus noVNC's
-WebSockifyRequestHandler which uses it. By convincing a user to
-follow a specially-crafted novncproxy URL, the user could be
-redirected to an unrelated site under control of the attacker in an
-attempt to convince them to divulge credentials or other sensitive
-data. All Nova deployments with novncproxy enabled are affected.
-
-
-Patches
-~~~~~~~
-- https://review.opendev.org/791807 (Train)
-- https://review.opendev.org/791806 (Ussuri)
-- https://review.opendev.org/791805 (Victoria)
-- https://review.opendev.org/791577 (Wallaby)
-- https://review.opendev.org/791297 (Xena)
-
-
-Credits
-~~~~~~~
-- Swe Aung from Monash University Cyber Security team (CVE-2021-3654)
-- Shahaan Ayyub from Monash University Cyber Security team (CVE-2021-3654)
-- Salman Khan from Monash University Cyber Security team (CVE-2021-3654)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1927677
-- https://bugs.python.org/issue32084
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-3654
-
-
-Notes
-~~~~~
-- The stable/train branch is under extended maintenance and will
-  receive no new point releases, but a patch for it is provided as a
-  courtesy.
-
-
--- 
-Jeremy Stanley
-
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
