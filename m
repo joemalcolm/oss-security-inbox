@@ -1,123 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/19/4
-Message-Id: <E1l1txT-0002xV-JD@xenbits.xenproject.org>
-Date: Tue, 19 Jan 2021 16:34:19 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 355 v3 (CVE-2020-29040) - stack corruption from XSA-346 change
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/12/2
+Message-ID: <CAJRvFdqhi0PfOmZsxOyVYxW3Jyv6E9GAR_UKnM0LqD_Ti5io6w@mail.gmail.com>
+Date: Mon, 12 Apr 2021 16:09:56 -0500
+From: Mike Drob <mdrob@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-29943: Apache Solr Unprivileged users may be able to perform unauthorized read/write to collections
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Description:
 
-            Xen Security Advisory CVE-2020-29040 / XSA-355
-                              version 3
+When using ConfigurableInternodeAuthHadoopPlugin for authentication,
+Apache Solr versions prior to 8.8.2 would forward/proxy distributed
+requests using server credentials instead of original client
+credentials. This would result in incorrect authorization resolution
+on the receiving hosts.
 
-                 stack corruption from XSA-346 change
+This issue is being tracked as SOLR-15233
 
-UPDATES IN VERSION 3
-====================
+Credit:
 
-CVE assigned.
+Geza Nagy
 
-ISSUE DESCRIPTION
-=================
-
-One of the two changes for XSA-346 introduced an on-stack array.  The
-check for guarding against overrunning this array was off by one,
-allowing for corruption of the first stack slot immediately following
-this array.
-
-IMPACT
-======
-
-A malicious or buggy HVM or PVH guest can cause Xen to crash, resulting
-in a Denial of Service (DoS) to the entire host.  Privilege escalation
-as well as information leaks cannot be excluded.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions which have the patches for XSA-346 applied are
-vulnerable.
-
-Only x86 HVM and PVH guests can leverage the vulnerability.  Arm guests
-and x86 PV guests cannot leverage the vulnerability.
-
-Only x86 HVM and PVH guests which have physical devices passed through
-to them can leverage the vulnerability.
-
-MITIGATION
-==========
-
-Not passing through physical devices to untrusted guests will avoid
-the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa355.patch           xen-unstable - Xen 4.10.x
-
-$ sha256sum xsa355*
-a93bfc376897e7cffd095d395f1a66476adb9503d7d80a59b7861e64c2675323  xsa355.meta
-dae633c11cf2eff3e304737265e18ab09213e8e4640458080a944ae7a40819a4  xsa355.patch
-$
-
-NOTE CONCERNING SHORT EMBARGO
-=============================
-
-This issue is likely to be re-discovered as the changes for XSA-346
-are deployed more widely, since the issue is also triggerable without
-any malice or bugginess.
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmAHB6UMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZpMAH/AwWuyJ0tQS95kJmfCSe9gxFkIZwnoOlxAIF1fQ8
-0W7OXmgrr9giz3lVR6Kjannq3HextHuLoVttg3soJ6pCqPBOH84/k0vyHEb9ChBF
-ypkvH0iG1wnpVo+DdYOnY7OnaBHrPsB0E83WfKohP05e+Ymcroq09vKw02fR6B+z
-+D3uNzbNi1kZz1DcTZFsCAmHJsc3zS+D8jyEwOFQwlVckugJ+zDuylKtSDau56CN
-WGG3nkoDldWm1687ui4stnal8WIBP6sMgErwnv9hpzfL5glc/m0PSELQ8hZgNmAX
-KMoWvdjPenwPQEhrii92P15DbXGz6uktIZFrKRgCUx2u5ss=
-=1hd2
------END PGP SIGNATURE-----
-
-Download attachment "xsa355.meta" of type "application/octet-stream" (1542 bytes)
-
-Download attachment "xsa355.patch" of type "application/octet-stream" (821 bytes)
