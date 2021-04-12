@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4997" "Monday" "10" "April" "2017" "07:38:26" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<1843.42902818457-sendEmail@localhost>" "109" "[oss-security] elfutils: heap-based buffer overflow in check_symtab_shndx (elflint.c)" nil nil nil "4" "2017041007:38:26" "[oss-security] elfutils: heap-based buffer overflow in check_symtab_shndx (elflint.c)" (number mark "U       ago@gentoo.o Apr 10  109/4997  " thread-indent "\"[oss-security] elfutils: heap-based buffer overflow in check_symtab_shndx (elflint.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["727" "Monday" "12" "April" "2021" "16:09:58" "-0500" "Mike Drob" "mdrob@apache.org" nil "25" "[oss-security] CVE-2021-29262: Apache Solr: Misapplied Zookeeper ACLs can result in leakage of configured authentication and authorization settings" nil nil nil "4" nil nil (number mark "U       mdrob@apache Apr 12   25/727   " thread-indent "\"[oss-security] CVE-2021-29262: Apache Solr: Misapplied Zookeeper ACLs can result in leakage of configured authentication and authorization settings\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-29262: Apache Solr: Misapplied Zookeeper ACLs can result in leakage of configured authentication and authorization settings" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19898 invoked by uid 550); 10 Apr 2017 07:38:46 -0000
+Received: (qmail 5636 invoked by uid 550); 12 Apr 2021 21:55:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,121 +12,44 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19875 invoked from network); 10 Apr 2017 07:38:45 -0000
-Message-ID: <1843.42902818457-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Mon, 10 Apr 2017 07:38:26 +0000
+Received: (qmail 19505 invoked from network); 12 Apr 2021 21:10:21 -0000
+X-Gm-Message-State: AOAM530AllYfjecAxrJBCf/v0yfDh96Y6boxmqlecYtKLUShOk+Q29h+
+	IFGqYWy9sREo0mvHURqi7xYJ+hWhUA0x8liQEt0TdA==
+X-Google-Smtp-Source: ABdhPJzPLIQwxGZTydTl5W96jqtCwQnSeaS2tYxOHXSk+fXddVUC4rzLjTeA4TwCsFzulyIhjihrB1Ux/VKS+1rP+mM=
+X-Received: by 2002:a17:90a:e7cc:: with SMTP id kb12mr1143217pjb.31.1618261809074;
+ Mon, 12 Apr 2021 14:10:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-960968.44186923"
-Subject: [oss-security] elfutils: heap-based buffer overflow in check_symtab_shndx (elflint.c)
+From: Mike Drob <mdrob@apache.org>
+Date: Mon, 12 Apr 2021 16:09:58 -0500
+X-Gmail-Original-Message-ID: <CAJRvFdpVe6LQf3TDoPyhhQBeMTLQe+kRdyMH+Ge5kJ8L5NYcog@mail.gmail.com>
+Message-ID: <CAJRvFdpVe6LQf3TDoPyhhQBeMTLQe+kRdyMH+Ge5kJ8L5NYcog@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="00000000000048ac2605bfccf09b"
+Subject: [oss-security] CVE-2021-29262: Apache Solr: Misapplied Zookeeper ACLs can result in
+ leakage of configured authentication and authorization settings
 
-------MIME delimiter for sendEmail-960968.44186923
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+--00000000000048ac2605bfccf09b
+Content-Type: text/plain; charset="UTF-8"
 
 Description:
-elfutils is a set of libraries/utilities to handle ELF objects (drop in replacement for libelf).
 
-A fuzz on eu-elflint showed an heap overflow.
+When starting Apache Solr versions prior to 8.8.2, configured with the
+SaslZkACLProvider or VMParamsAllAndReadonlyDigestZkACLProvider and no
+existing security.json znode, if the optional read-only user is
+configured then Solr would not treat that node as a sensitive path and
+would allow it to be readable.
 
-The complete ASan output:
+Additionally, with any ZkACLProvider, if the security.json is already
+present, Solr will not automatically update the ACLs.
 
-# eu-elflint -d $FILE
-==14342==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60200000efd0 at pc 0x0000004267ec bp 0x7ffdf36a7ad0 sp 0x7ffdf36a7ac8
-READ of size 4 at 0x60200000efd0 thread T0
-    #0 0x4267eb in check_symtab_shndx /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:1961
-    #1 0x4267eb in check_sections /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:4114
-    #2 0x42961f in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:4697
-    #3 0x42961f in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:242
-    #4 0x402d33 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:175
-    #5 0x7f625ef4678f in __libc_start_main (/lib64/libc.so.6+0x2078f)
-    #6 0x403498 in _start (/usr/bin/eu-elflint+0x403498)
+This issue is being tracked as SOLR-15249
 
-0x60200000efd2 is located 0 bytes to the right of 2-byte region [0x60200000efd0,0x60200000efd2)
-allocated by thread T0 here:
-    #0 0x7f6260633288 in malloc (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xc2288)
-    #1 0x7f626028fb46 in convert_data /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:166
-    #2 0x7f626028fb46 in __libelf_set_data_list_rdlock /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:434
-    #3 0x7f6260290662 in __elf_getdata_rdlock /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:541
-    #4 0x7f6260290776 in elf_getdata /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:559
-    #5 0x7f62602bc035 in elf32_getchdr /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf32_getchdr.c:72
-    #6 0x7f62602bc55c in gelf_getchdr /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/gelf_getchdr.c:52
-    #7 0x420edf in check_sections /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:3911
-    #8 0x42961f in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:4697
-    #9 0x42961f in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:242
-    #10 0x402d33 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:175
-    #11 0x7f625ef4678f in __libc_start_main (/lib64/libc.so.6+0x2078f)
+Mitigation:
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/elflint.c:1961 in check_symtab_shndx
-Shadow bytes around the buggy address:
-  0x0c047fff9da0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9db0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9dc0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9dd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9de0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-=>0x0c047fff9df0: fa fa fa fa fa fa fa fa fa fa[02]fa fa fa 00 01
-  0x0c047fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff9e40: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==14342==ABORTING
-Affected version:
-0.168
-
-Fixed version:
-0.169 (not released atm)
-
-Commit fix:
-https://sourceware.org/ml/elfutils-devel/2017-q1/msg00129.html
+Manually set appropriate ACLs on /security.json znode.
 
 Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
 
-CVE:
-CVE-2017-7611
+Timothy Potter and Mike Drob, Apple Cloud Services
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00234-elfutils-heapoverflow-check_symtab_shndx
-
-Timeline:
-2017-03-27: bug discovered and reported to upstream
-2017-04-04: blog post about the issue
-2017-04-09: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/03/elfutils-heap-based-buffer-overflow-in-check_symtab_shndx-elflint-c
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-960968.44186923--
-
+--00000000000048ac2605bfccf09b--
