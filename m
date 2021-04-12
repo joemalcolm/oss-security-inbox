@@ -1,49 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/04/3
-Message-ID: <CAFRnB2XvL8zOW9oW6sAMuDcCRfp3d7MFbS6GVTskNghY4U4P9Q@mail.gmail.com>
-Date: Mon, 4 Oct 2021 12:04:33 -0400
-From: Alex Gaynor <alex.gaynor@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/12/1
+Message-ID: <CAF8HOZJj80sVyRL4MWH2YdkY4dfvJ96+85Ms6jywGX9=uiPC3w@mail.gmail.com>
+Date: Mon, 12 Apr 2021 20:25:55 +0200
+From: Jochen Wiedmann <jochen.wiedmann@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: 3 new CVE's in vim
+Subject: CVE-2021-29425 (Possible limited path traversal in Apache Commons IO 2.2 to 2.6)
 Content-Type: text/plain; charset=utf-8
 
-It seems a bit like huntr.dev makes an incentive, that has always
-existed, explicit: There are rewards for getting CVEs issued. Folks
-put them on their resumes, include them in audit reports they do, etc.
-At least they're paying for fixes as well!
+Hi,
 
-Alex
+I'd like to inform you about a possible limited path traversal
+vulnerability, that has been detected in Apache Commons IO 2.2 to 2.6.
+This is now being tracked as CVE-2021-29425. Fortunately, this has
+already been covered in versions 2.7, and 2.8.
 
-On Mon, Oct 4, 2021 at 11:50 AM Alan Coopersmith
-<alan.coopersmith@...cle.com> wrote:
->
-> On 9/30/2021 7:39 PM, Alan Coopersmith wrote:
-> > I haven't seen these make it to the list yet, but three CVE's were
-> > recently assigned for bugs in vim.  [I personally don't see how
-> > there's a security boundary crossed in normal vim usage here, but
-> > could see issues if someone had configured vim to run with raised
-> > privileges for editing system/application configuration files or
-> > similar.]
->
-> I do note all three of these were submitted via huntr.dev, which offers
-> bounties for both reporting & fixing security bugs.  As a maintainer of
-> an upstream open source project which is struggling with finding people
-> to fix reported security bugs [1], I do appreciate the additional
-> incentive to provide fixes here.  But as a maintainer of a distro, I see
-> a mismatch with the incentives here, as you get bounties for accepting
-> everything as a security bug and not pushing back, and flooding the
-> distros with CVE's - even if your distro policy isn't to handle every
-> CVE that applies, security auditors will often make your users query
-> about every CVE that they think applies, costing your time to respond.
->
-> [1] https://indico.freedesktop.org/event/1/contributions/28/
-> https://www.youtube.com/watch?v=IU3NeVvDSp0
->
-> --
->        -Alan Coopersmith-               alan.coopersmith@...cle.com
->         Oracle Solaris Engineering - https://blogs.oracle.com/alanc
+On behalf of the Apache Commons team,
+
+Jochen Wiedmann
 
 
+Description:
+
+In Apache Commons IO before 2.7, When invoking the method
+FileNameUtils.normalize with an improper input string, like
+"//../foo", or "\\..\foo", the result would be the same value, thus
+possibly providing access to files in the parent directory, but not
+further above (thus "limited" path traversal), if the calling code
+would use the result to construct a path value.
+
+This issue is being tracked as IO-556,IO-559
+
+Mitigation:
+
+Neither the method in question (FileNameUtils.normalize) nor any
+methods, that invoke it, do actually access any files. There's only a
+string returned, from which a path can be constructed. In other words,
+a possible workaround would be not passing any unsafe input to
+FileNameUtils.normalize.
+
+
+
+Upgrade to Apache Commons IO 2.7, or later, where the same method
+returns the value null, as an indication of "invalid input".
+
+References:
+
+https://issues.apache.org/jira/browse/IO-556
 
 -- 
-All that is necessary for evil to succeed is for good people to do nothing.
+
+Look, that's why there's rules, understand? So that you think before
+you break 'em.
+
+    -- (Terry Pratchett, Thief of Time)
