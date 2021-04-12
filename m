@@ -1,34 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/19/6
-Message-ID: <CAKx+4-rj0qAZMmpuW9txO6ep1rkFD6dJa0nviEfmDmo7NUvsPg@mail.gmail.com>
-Date: Fri, 19 Feb 2021 17:54:27 +0530
-From: Rohit Keshri <rkeshri@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/12/4
+Message-ID: <CAJRvFdp+WMVa5n5DRT53Ov4h59doeLGOz11A89Oa4ou2k++t_Q@mail.gmail.com>
+Date: Mon, 12 Apr 2021 16:09:59 -0500
+From: Mike Drob <mdrob@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-3411 kernel: broken KRETPROBES reports corruption of .text section while running a FTRACE stress tester
+Subject: CVE-2021-27905: Apache Solr: SSRF vulnerability with the Replication handler
 Content-Type: text/plain; charset=utf-8
 
-Hello Team,
+Description:
 
-A violation of memory access flaw was found while detecting a padding of
-int3 in the linking state in function can_optimize in
-arch/x86/kernel/kprobes/opt.c. In this problem a local attacker with a
-special user privilege may cause a threat to a system Integrity and
-Confidentiality, and may even lead to a denial of service problem.
+The ReplicationHandler (normally registered at "/replication" under a
+Solr core) has a "masterUrl" (also "leaderUrl" alias) parameter that
+is used to designate another ReplicationHandler on another Solr core
+to replicate index data into the local core.  To prevent a SSRF
+vulnerability, Solr ought to check these parameters against a similar
+configuration it uses for the "shards" parameter.  Prior to this bug
+getting fixed, it did not.
 
-'CVE-2021-3411' was assigned by Red Hat.
+This problem affects essentially all Solr versions prior to it getting
+fixed in 8.8.2.
 
-Credit: Adam 'pi3' Zabrocki
+This issue is being tracked as SOLR-15217
 
+Mitigation:
 
-References:
-https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg2410570.html
-https://lists.openwall.net/linux-kernel/2020/12/11/265
-http://blog.pi3.com.pl/?p=831
+Ensure that any access to the replication handler is purely internal
+to Solr.  Typically, it's only accessed externally for
+diagnostic/informational purposes.
 
-Regards,
-..
-Rohit Keshri / Red Hat Product Security Team
-PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
+Credit:
 
-secalert@...hat.com for urgent response
+Reported by Caolinhong(Skay) from QI-ANXIN Cert (QI-ANXIN Technology Group Inc.)
 
