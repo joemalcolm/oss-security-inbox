@@ -1,63 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/01/4
-Message-ID: <CAON8YFPiCCj4q3Z52c4dh9ArmDF2ybS_KDN1RWYe-D52fDt2qw@mail.gmail.com>
-Date: Wed, 1 Dec 2021 16:43:46 +0000
-From: Dennis Jackson <djackson@...illa.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/12/3
+Message-ID: <CAJRvFdpVe6LQf3TDoPyhhQBeMTLQe+kRdyMH+Ge5kJ8L5NYcog@mail.gmail.com>
+Date: Mon, 12 Apr 2021 16:09:58 -0500
+From: Mike Drob <mdrob@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: Benjamin Beurdouche <beurdouche@...illa.com>, Daniel Veditz <dveditz@...illa.com>
-Subject: CVE-2021-43527: Heap overflow in NSS when verifying DSA/RSA-PSS DER-encoded signatures
+Subject: CVE-2021-29262: Apache Solr: Misapplied Zookeeper ACLs can result in leakage of configured authentication and authorization settings
 Content-Type: text/plain; charset=utf-8
 
-Summary:
+Description:
 
-NSS (Network Security Services) versions prior to 3.73 are vulnerable
-to a heap overflow when handling DER-encoded DSA or RSA-PSS
-signatures. Applications using NSS for handling signatures encoded
-within CMS, S/MIME, PKCS #7, or PKCS #12 are likely to be impacted.
-Applications using NSS for certificate validation or other TLS, X.509,
-OCSP or CRL functionality may be impacted, depending on how they
-configure NSS.
+When starting Apache Solr versions prior to 8.8.2, configured with the
+SaslZkACLProvider or VMParamsAllAndReadonlyDigestZkACLProvider and no
+existing security.json znode, if the optional read-only user is
+configured then Solr would not treat that node as a sensitive path and
+would allow it to be readable.
 
-This vulnerability does NOT impact Mozilla Firefox, Tor Browser or
-Chromium. However, other applications that use NSS for signature
-verification are likely to be impacted.
+Additionally, with any ZkACLProvider, if the security.json is already
+present, Solr will not automatically update the ACLs.
 
-Technical Details:
+This issue is being tracked as SOLR-15249
 
-When verifying a DER-encoded signature, NSS decodes the signature into
-a fixed-size buffer and passes the buffer to the underlying PKCS #11
-module. The length of the signature is not correctly checked when
-processing DSA and RSA-PSS signatures. DSA and RSA-PSS signatures
-larger than 16384 bits will overflow the buffer in VFYContextStr. The
-vulnerable code is located within secvfy.c:vfy_CreateContext.
+Mitigation:
 
-Test cases are attached (tests.zip) and can be tested using the
-vfychain tool shipped with NSS. Running `vfychain -a {input.cert}`
-will cause a segfault on vulnerable versions and a failed verification
-on fixed versions.
+Manually set appropriate ACLs on /security.json znode.
 
-Remediation:
+Credit:
 
-NSS 3.73 [1] and NSS ESR 3.68.1 [2] have been released and contain the
-fix. A patch suitable for backporting is also attached (patch.diff).
+Timothy Potter and Mike Drob, Apple Cloud Services
 
-Acknowledgements:
-
-This vulnerability was reported to the NSS team by Tavis Ormandy of
-Project Zero.
-
-Links:
-
-Advisory: https://www.mozilla.org/en-US/security/advisories/mfsa2021-51/
-[1] https://hg.mozilla.org/projects/nss/shortlog/NSS_3_73_BRANCH
-[2] https://hg.mozilla.org/projects/nss/shortlog/NSS_3_68_1_BRANCH
-
---
-
-Kind regards,
-Dennis Jackson
-On behalf of the NSS Team at Mozilla
-
-Download attachment "tests.zip" of type "application/zip" (6210 bytes)
-
-Download attachment "patch.diff" of type "application/octet-stream" (9509 bytes)
