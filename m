@@ -1,19 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/04/1
-Message-ID: <CAGUWgD8z-3C+dPis2DFEkUbBDhRRvdp1Y6otJxm4cd_w23A_JA@mail.gmail.com>
-Date: Thu, 4 Nov 2021 13:36:37 +0200
-From: Georgi Guninski <gguninski@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/15/1
+Message-ID: <CAE_88GZCZPNLtUbT9K_dJ9Y=b18pKu3Us3BkE5ueZAUnvnSsnQ@mail.gmail.com>
+Date: Wed, 14 Apr 2021 19:08:10 -0300
+From: "Thiago H. de Paula Figueiredo" <thiagohp@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Trojan Source Attacks
+Subject: CVE-2021-27850: Apache Tapestry: Bypass of the fix for CVE-2019-0195
 Content-Type: text/plain; charset=utf-8
 
-Similar attack is known, search the web for "homograph attack"
-or check:  https://dev.to/logan/homographs-attack--5a1p
+Description:
 
-The basic idea is that Cyrillic А looks like Latin A.
+A critical unauthenticated remote code execution vulnerability was found
 
-Can you tell first from second:
-True   Тrue
-False  Fаlse
-Zero   Zеro
-google gооgle
+all recent versions of Apache Tapestry.
+
+The affected versions include 5.4.5, 5.5.0, 5.6.2 and 5.7.0.
+
+The vulnerability I have found is a bypass of the fix for CVE-2019-0195.
+
+Recap:
+
+Before the fix of CVE-2019-0195 it was possible to download arbitrary
+
+class files from the classpath by providing a crafted
+
+asset file URL.
+
+An attacker was able to download the file `AppModule.class` by
+
+requesting the URL
+
+`http://localhost:8080/assets/something/services/AppModule.class`
+
+which contains a HMAC secret key.
+
+The fix for that bug was a blacklist filter that checks if the URL
+
+ends with `.class`, `.properties` or `.xml`.
+
+Bypass:
+
+Unfortunately, the blacklist solution can simply be bypassed by
+
+appending a `/` at the end of the URL:
+
+`http://localhost:8080/assets/something/services/AppModule.class/`
+
+The slash is stripped after the blacklist check and the file
+
+`AppModule.class` is loaded into the response.
+
+This class usually contains the HMAC secret key which is used to sign
+
+serialized Java objects.
+
+With the knowledge of that key an attacker can sign a Java gadget
+
+chain that leads to RCE (e.g. CommonsBeanUtils1 from ysoserial).
+
+Solution for this vulnerability:
+
+* For Apache Tapestry 5.4.0 to 5.6.2, upgrade to 5.6.2 or later.
+
+* For Apache Tapestry 5.7.0, upgrade to 5.7.1 or later.
+
+This issue is being tracked as TAP5-2663
+
+Credit:
+
+Apache Tapestry would like to thank Johannes Moritz for finding and
+notifying this vulnerability
+-- 
+Thiago
+
