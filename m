@@ -1,31 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/25/4
-Message-ID: <CAJVHGGx-d9_mBWHU=hr74CsrsxvLwsq65+ZHhOGiKU3qgkw=nQ@mail.gmail.com>
-Date: Tue, 25 May 2021 21:32:35 +0800
-From: PengHui Li <penghui@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/14/1
+Message-ID: <CALXpagwmiKsVvPB4BooBhtTshuzg7JNPhTO_MZKZNmSMo7YCRw@mail.gmail.com>
+Date: Wed, 14 Apr 2021 09:06:02 -0700
+From: Tim Allclair <timallclair@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-22160 Apache Pulsar Information Disclosure
+Subject: [kubernetes] CVE-2021-25735: Validating Admission Webhook does not observe some previous fields
 Content-Type: text/plain; charset=utf-8
 
-CVE-2021-22160 Apache Pulsar Information Disclosure
+A security issue was discovered in kube-apiserver that could allow node
+updates to bypass a Validating Admission Webhook. You are only affected by
+this vulnerability if you run a Validating Admission Webhook for Nodes that
+denies admission based at least partially on the old state of the Node
+object.
 
-Severity: High
+This issue has been rated Medium (
+CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:N/I:H/A:H
+<https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:N/I:H/A:H>),
+and assigned CVE-2021-25735.
 
-Versions Affected:
-Apache Pulsar < 2.7.1
+Note: This only impacts validating admission plugins that rely on old
+values in certain fields, and does not impact calls from kubelets that go
+through the built-in NodeRestriction admission plugin.
+Affected Versions
 
-Description:
-If Apache Pulsar is configured to authenticate clients using tokens
-based on JSON Web Tokens (JWT), the signature of the token is not
-validated if the algorithm of the presented token is set to "none".
-This allows an attacker to connect to Pulsar instances as any user
-(incl. admins).
+   -
 
-Mitigation:
-Users of the affected versions should apply one of the following
-mitigations:
-Upgrade to Apache Pulsar 2.7.1 or later
+   kube-apiserver v1.20.0 - v1.20.5
+   -
 
-Credit:
-This issue was identified by Peter Stöckli
+   kube-apiserver v1.19.0 - v1.19.9
+   -
+
+   kube-apiserver <= v1.18.17
+
+Fixed Versions
+
+This issue is fixed in the following versions:
+
+   -
+
+   kube-apiserver v1.21.0
+   -
+
+   kube-apiserver v1.20.6
+   -
+
+   kube-apiserver v1.19.10
+   -
+
+   kube-apiserver v1.18.18
+
+Detection
+
+If you find evidence that this vulnerability has been exploited, please
+contact security@...ernetes.io
+Additional Details
+
+See Kubernetes Issue #100096
+<https://github.com/kubernetes/kubernetes/issues/100096> for more details.
+Acknowledgements
+
+This vulnerability was reported by Rogerio Bastos & Ari Lima from RedHat
+
+Thank You,
+
+Tim Allclair on behalf of the Kubernetes Product Security Committee
 
