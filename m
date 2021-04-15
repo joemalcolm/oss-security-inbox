@@ -1,32 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/10/5
-Message-ID: <CAKx+4-rJk=tc6uRfvNFZhr33g4-vi7ZMpBzFu2bjZ=a_-Fu-8Q@mail.gmail.com>
-Date: Wed, 10 Feb 2021 20:34:37 +0530
-From: Rohit Keshri <rkeshri@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/16/2
+Message-ID: <20210415213306.GB5315@nxnw.org>
+Date: Thu, 15 Apr 2021 14:33:06 -0700
+From: Steve Beattie <steve.beattie@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-20200: Linux kernel: close race between munmap() and expand_upwards()/downwards()
+Subject: [CVE-2021-3492] Ubuntu shiftfs Linux kernel file system double free vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello Team,
+Hello,
 
-A use-after-free flaw may be seen due to a race problem while in
-detach_vmas_to_be_unmapped() in mm/mmap.c in VMA access while
-munmap(). This flaw could allow a local attacker with a user privilege
-to crash the system, because VMA with VM_GROWSDOWN or VM_GROWSUP flag
-set may change their size under mmap_read_lock(). This vulnerability
-could even lead to a kernel information leak problem.
+Shiftfs is an out-of-tree stacking file system for the Linux kernel
+included in Ubuntu kernels that can be mounted by unprivileged users
+within unprivileged user namespaces.
 
+Vincent Dehors discovered that shiftfs, when passing through
+ioctls to the underlying file system, did not properly handle faults
+occurring during copy_from_user() correctly, leading to a double-free
+vulnerability or not freeing memory at all. An attacker could use
+this to cause a denial of service (memory consumption) or execute
+arbitrary code.
 
-'CVE-2021-20200' was assigned by Red Hat.
+The commits to address this issue are as follows:
 
-References:
-https://bugs.chromium.org/p/project-zero/issues/detail?id=2056
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=246c320a8cfe0b11d81a4af38fa9985ef0cc9a4c
+ Ubuntu 20.10:
+  5c4ddd2d104e ("UBUNTU: SAUCE: shiftfs: free allocated memory in shiftfs_btrfs_ioctl_fd_replace() error paths")
+  https://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux/+git/groovy/commit/?id=5c4ddd2d104e5561724c636c9a83ab722255dc2e
+  a92f3ddbb391 ("UBUNTU: SAUCE: shiftfs: handle copy_to_user() return values correctly")
+  https://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux/+git/groovy/commit/?id=a92f3ddbb391ce466a470e578cb24a37d7eb813c
 
-Thanks and Regards
-..
-Rohit Keshri / Red Hat Product Security Team
-PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
+ Ubuntu 20.04 LTS:
+  8fee52ab9da8 ("UBUNTU: SAUCE: shiftfs: free allocated memory in shiftfs_btrfs_ioctl_fd_replace() error paths")
+  https://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux/+git/focal/commit/?id=8fee52ab9da87d82bc6de9ebb3480fff9b4d53e6
+  25c891a949bf ("UBUNTU: SAUCE: shiftfs: handle copy_to_user() return values correctly")
+  https://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux/+git/focal/commit/?id=25c891a949bf918b59cbc6e4932015ba4c35c333
 
-secalert@...hat.com for urgent response
+As shiftfs has not been accepted in the upstream Linux kernel, the
+upstream Linux kernel is not affected by CVE-2021-3492.
 
+This issue is also identified as ZDI-CAN-13562.
+-- 
+Steve Beattie
+<sbeattie@...ntu.com>
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
