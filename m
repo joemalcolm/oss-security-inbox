@@ -1,32 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/25/2
-Message-ID: <CAGUWgD-yaGXfdXkL6Z4qsXSh6PXPda8HTAn8_0miCmYf9W-d8A@mail.gmail.com>
-Date: Sun, 25 Jul 2021 18:32:43 +0300
-From: Georgi Guninski <gguninski@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/16/1
+Message-ID: <20210415213114.GA5315@nxnw.org>
+Date: Thu, 15 Apr 2021 14:31:14 -0700
+From: Steve Beattie <steve.beattie@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: ipython3 may execute code from the current working directory
+Subject: [CVE-2021-3493] Ubuntu Linux kernel overlayfs fs caps privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jul 23, 2021 at 11:43 PM Mats Wichmann <mats@...hmann.us> wrote:
+Hello,
 
->
-> there have been more than one security concern about the way this makes
-> it possible for untrusted modules to get loaded.
->
-> [1]  https://docs.python.org/3/library/sys.html#sys.path
+An independent security researcher reported via the SSD Secure
+Disclosure program that the overlayfs stacking file system within the
+Linux kernel as used within Ubuntu did not properly validate the
+application of file capabilities against user namespaces.
 
-Is the interactive python shell vulnerable to the same problem:
+This issue is likely Ubuntu specific, as Ubuntu carries a patch to
+enable unprivileged overlayfs mounts. The combination of that patch
+plus allowing unprivileged user namespaces by default in Ubuntu allows
+an unprivileged attacker to gain elevated privileges.
 
-guest3@...ntu20:~/tests$ cat path.py
-import sys
-print(sys.path)
-guest3@...ntu20:~/tests$ python3
-Python 3.8.10 (default, Jun  2 2021, 10:49:15)
-[GCC 9.4.0] on linux
-Type "help", "copyright", "credits" or "license" for more information.
->>> import path
-['', '/usr/lib/python38.zip', '/usr/lib/python3.8',
-'/usr/lib/python3.8/lib-dynload',
-'/usr/local/lib/python3.8/dist-packages',
-'/usr/lib/python3/dist-packages']
->>>
+A commit that addresses the issue was applied in the upstream kernel:
+
+  7c03e2cda4a5 ("vfs: move cap_convert_nscap() call into vfs_setxattr()") (v5.10)
+
+It was added prior to the upstream kernel commit allowing unprivileged
+overlayfs mounts:
+
+  459c7c565ac3 ("ovl: unprivieged mounts") (v5.11)
+
+Thus the upstream Linux kernel is not affected.
+
+-- 
+Steve Beattie
+<sbeattie@...ntu.com>
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
