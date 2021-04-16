@@ -1,26 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/20/4
-Message-ID: <CAA8xKjWvos8zXnwjbRydi-edZhpn259KLKoLfbhspEnQwuAmwg@mail.gmail.com>
-Date: Tue, 20 Jul 2021 14:57:39 +0200
-From: Mauro Matteo Cascella <mcascell@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/16/5
+Message-ID: <20210416150450.GC5315@nxnw.org>
+Date: Fri, 16 Apr 2021 08:04:50 -0700
+From: Steve Beattie <steve.beattie@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-33910: Denial of service (stack exhaustion) in systemd (PID 1)
+Subject: Re: [CVE-2021-3493] Ubuntu Linux kernel overlayfs fs caps privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 20, 2021 at 2:41 PM Qualys Security Advisory <qsa@...lys.com> wrote:
->
->
-> Qualys Security Advisory
->
-> CVE-2021-33910: Denial of service (stack exhaustion) in systemd (PID 1)
->
+On Fri, Apr 16, 2021 at 04:53:50PM +0200, Salvatore Bonaccorso wrote:
+> Hi Steve,
+> 
+> On Thu, Apr 15, 2021 at 02:31:14PM -0700, Steve Beattie wrote:
+> > Hello,
+> > 
+> > An independent security researcher reported via the SSD Secure
+> > Disclosure program that the overlayfs stacking file system within the
+> > Linux kernel as used within Ubuntu did not properly validate the
+> > application of file capabilities against user namespaces.
+> > 
+> > This issue is likely Ubuntu specific, as Ubuntu carries a patch to
+> > enable unprivileged overlayfs mounts. The combination of that patch
+> > plus allowing unprivileged user namespaces by default in Ubuntu allows
+> > an unprivileged attacker to gain elevated privileges.
+> > 
+> > A commit that addresses the issue was applied in the upstream kernel:
+> > 
+> >   7c03e2cda4a5 ("vfs: move cap_convert_nscap() call into vfs_setxattr()") (v5.10)
+> 
+> For completeness, this though was in v5.11-rc1 right?
 
-Upstream commit:
-https://github.com/systemd/systemd/pull/20256/commits/441e0115646d54f080e5c3bb0ba477c892861ab9
+Yes, sorry, thanks for the correction.
 
-Regards.
 -- 
-Mauro Matteo Cascella
-Red Hat Product Security
-PGP-Key ID: BB3410B0
+Steve Beattie
+<sbeattie@...ntu.com>
 
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
