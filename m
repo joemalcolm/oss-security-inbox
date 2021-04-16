@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2208" "Saturday" "4" "November" "2017" "23:44:28" "+0100" "Jakub Wilk" "jwilk@jwilk.net" "<20171104224428.g5w7ptjctzgzgfxy@jwilk.net>" "57" "Re: [oss-security] nvi crash recovery" "^Date:" nil nil "11" "2017110422:44:28" "[oss-security] nvi crash recovery" (number mark "        jwilk@jwilk. Nov  4   57/2208  " thread-indent "\"Re: [oss-security] nvi crash recovery\"\n") "<20171103204159.rnszmrzvcwkxkaak@jwilk.net>" ("<2ECE9D9EEF1F524185270138AE23265955B0B9CE@S0MSMAIL112.arc.local>" "<20171103181243.lwtf3a5f4zjr4pzi@matica.foolinux.mooo.com>" "<20171103212659.378593da@pc1>" "<20171103204159.rnszmrzvcwkxkaak@jwilk.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["858" "Friday" "16" "April" "2021" "16:53:50" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" nil "23" "Re: [oss-security] [CVE-2021-3493] Ubuntu Linux kernel overlayfs fs caps privilege escalation" nil nil nil "4" nil nil (number mark "U       carnil@debia Apr 16   23/858   " thread-indent "\"Re: [oss-security] [CVE-2021-3493] Ubuntu Linux kernel overlayfs fs caps privilege escalation\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] [CVE-2021-3493] Ubuntu Linux kernel overlayfs fs caps privilege escalation" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32236 invoked by uid 550); 4 Nov 2017 22:44:44 -0000
+Received: (qmail 30682 invoked by uid 550); 16 Apr 2021 14:54:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,82 +11,68 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32204 invoked from network); 4 Nov 2017 22:44:43 -0000
-Message-ID: <20171104224428.g5w7ptjctzgzgfxy@jwilk.net>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <2ECE9D9EEF1F524185270138AE23265955B0B9CE@S0MSMAIL112.arc.local>
- <20171103181243.lwtf3a5f4zjr4pzi@matica.foolinux.mooo.com>
- <20171103212659.378593da@pc1>
- <20171103204159.rnszmrzvcwkxkaak@jwilk.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20171103204159.rnszmrzvcwkxkaak@jwilk.net>
-User-Agent: NeoMutt/20170609 (1.8.3)
-X-Ovh-Tracer-Id: 4814348002151159718
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedttddrhedugddtvdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemuceftddtnecu
-Date: Sat, 4 Nov 2017 23:44:28 +0100
-From: Jakub Wilk <jwilk@jwilk.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] nvi crash recovery
+Received: (qmail 30664 invoked from network); 16 Apr 2021 14:54:04 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=GP8AsJzhlEwuvW3ycZmv28llRI1zjAWHjS2xdF/TzFk=;
+        b=eiZRdTCpnsufF4HvZ3UdqAAG4aucs8oNnHcZZlJbVTsqyuOwLolU2bE/am7aLtckVu
+         yuN+VLZTxUicYDoxJqUgMQ7ePnAz7qTNG/oHek+PdSnU232ACvy8dYzzysGR87XJDH3X
+         mAHB3u4kVQRTYf5alopdxuRp3Yvix3ZQ/qKNJUaJHpA4UTk9hT8QGuSd2A1yp+vy+UqT
+         DnFNN6VgompKEJuXcTBrCiKrvhEifuxyAvHJBccq9EA+GWxeISIudVtnShkHukpPw+Os
+         3PRzFOTk1M3ETXbwTtLnUZUhYWGRIao3KyTGaF4835W8PG5gruh7EDdyqO388Hc/sK4j
+         zXWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to;
+        bh=GP8AsJzhlEwuvW3ycZmv28llRI1zjAWHjS2xdF/TzFk=;
+        b=CDr2sQhdqGLE0b7GFMnGIa+6Om/SqXRtnDmpOMyJHVOQ5W+dmSiXDGh3RIRYs3eL24
+         ZaAQ3SCi3pV+GZnK2vh1+ls8O/ZY3NZ1FI7ROjZV0sSQ8VA11L+sF/NHMsQ5E6VmucYh
+         RdO6AvQ4OhB3DQsGWrjg30tJnMdDueTTloIYefhHf3QwjQwfvtiuEAOV9NkmwAjDiRcb
+         Gv4axvoqkDJB2QJdgOe3L9tnBk2D6eF+73TibA68kxmFDVKvz9DcKHKiGLTnrIYSjkwl
+         6hsD2sBSg2VMKhgldRlYSi7ZnwduI21Bj4FIMYCrze0b1EznOeEClOrsc931cjZYDBRb
+         xdKA==
+X-Gm-Message-State: AOAM531dFfAUQjWmwZ2ALWylzVxb3QREs4WIU2u08SYXY39d5Zx9hjWu
+	BACDDGUDAC+k+ydDWbotzl07PB/2j570kw0u
+X-Google-Smtp-Source: ABdhPJyLvbbRT86761L4/3/4aqMYPrcIzPCmh6pszw4btchP4xvNgPA09Qq/aBPMsVhOCYDewGOo5w==
+X-Received: by 2002:a17:906:7016:: with SMTP id n22mr8604860ejj.23.1618584832902;
+        Fri, 16 Apr 2021 07:53:52 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Fri, 16 Apr 2021 16:53:50 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
 To: oss-security@lists.openwall.com
+Message-ID: <YHmk/nNvde4ohgSP@eldamar.lan>
+References: <20210415213114.GA5315@nxnw.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210415213114.GA5315@nxnw.org>
+Subject: Re: [oss-security] [CVE-2021-3493] Ubuntu Linux kernel overlayfs fs
+ caps privilege escalation
 
-* Jakub Wilk <jwilk@jwilk.net>, 2017-11-03, 21:41:
->>nvi saves recovery files to /var/tmp/vi.recover and creates them 
->>with 600 permissions.
->>So all the problems discussed don't really apply here.
->>However the dir itself gets created by the first user using nvi.
->
->Sounds like a recipe for disaster.
+Hi Steve,
 
-I took a closer look at what nvi does. As I expected, it's hilariously 
-bad.
+On Thu, Apr 15, 2021 at 02:31:14PM -0700, Steve Beattie wrote:
+> Hello,
+> 
+> An independent security researcher reported via the SSD Secure
+> Disclosure program that the overlayfs stacking file system within the
+> Linux kernel as used within Ubuntu did not properly validate the
+> application of file capabilities against user namespaces.
+> 
+> This issue is likely Ubuntu specific, as Ubuntu carries a patch to
+> enable unprivileged overlayfs mounts. The combination of that patch
+> plus allowing unprivileged user namespaces by default in Ubuntu allows
+> an unprivileged attacker to gain elevated privileges.
+> 
+> A commit that addresses the issue was applied in the upstream kernel:
+> 
+>   7c03e2cda4a5 ("vfs: move cap_convert_nscap() call into vfs_setxattr()") (v5.10)
 
-1) The documentation says: "If the recovery directory does not exist, 
-ex/vi will attempt to create it. This can result in the recovery 
-directory being owned by a normal user, which means that that user will 
-be able to remove other user's recovery and backup files. This is 
-annoying, but is not a security issue as the user cannot otherwise 
-access or modify the files."
+For completeness, this though was in v5.11-rc1 right?
 
-Nope, it's not only annoying. For example, in strace I see:
-
-open("/var/tmp/vi.recover/vi.zwHPc3", O_RDWR|O_CREAT|O_EXCL, 0600) = 3
-...
-open("/var/tmp/vi.recover/vi.zwHPc3", O_RDWR|O_LARGEFILE) = 3
-
-Between the two syscalls, malicious owner of /var/tmp/vi.recover could 
-delete vi.zwHPc3 and replace it with their own.
-
-
-2) "When the system is rebooted, all of the files in /var/tmp/vi.recover 
-named recover.XXXXXX should be sent to their owners, by email, using the 
--t option of sendmail (or a similar mechanism in other mailers)."
-
-The script that upstream provides to implement this mailing happily 
-reads the /var/tmp/vi.recover/recover.* without checking file type, or 
-lowering privileges. This provides opportunity for denial of service, or 
-exploiting MTA bugs.
-
-Debian patched some of this in 2005:
-https://bugs.debian.org/298114
-
-(Debian's test for symlinks is racy, but hopefully it doesn't matter at 
-boot time.)
-
-Oh, at some point Debian broke the script in such a way it won't send 
-any legitimate mails; but OTOH, now it lets users execute arbitrary code 
-as user "nobody":
-https://bugs.debian.org/769719
-
-
-3) The recovery files have random names, which should make you wonder 
-how does nvi know which one to open when you actually want to recover 
-something. It turns out it tries reading every 
-/var/tmp/vi.recover/recover.* file until it finds something that 
-matches. There are no ownership or file type checks.
-
--- 
-Jakub Wilk
+Regards,
+Salvatore
