@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2421" "Wednesday" "30" "December" "2015" "15:37:23" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151230203723.D7A576C0192@smtpvmsrv1.mitre.org>" "58" "[oss-security] Re: CVE Request: Squashfs 4.2 Race Condition" nil nil nil "12" "2015123020:37:23" "[oss-security] Re: CVE Request: Squashfs 4.2 Race Condition" (number mark "U       cve-assign@m Dec 30   58/2421  " thread-indent "\"[oss-security] Re: CVE Request: Squashfs 4.2 Race Condition\"\n") "<EECDD1E6-9C66-47B4-AB55-D64951749EEB@member.fsf.org>" ("<EECDD1E6-9C66-47B4-AB55-D64951749EEB@member.fsf.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1427" "Friday" "16" "April" "2021" "15:28:15" "+0200" "Mauro Matteo Cascella" "mcascell@redhat.com" nil "38" "[oss-security] QEMU: ESP security fixes" nil nil nil "4" nil nil (number mark "U       mcascell@red Apr 16   38/1427  " thread-indent "\"[oss-security] QEMU: ESP security fixes\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] QEMU: ESP security fixes" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28295 invoked by uid 550); 30 Dec 2015 20:37:36 -0000
+Received: (qmail 1684 invoked by uid 550); 16 Apr 2021 13:29:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,70 +12,83 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28271 invoked from network); 30 Dec 2015 20:37:35 -0000
-From: cve-assign@mitre.org
-To: limeburst@member.fsf.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <EECDD1E6-9C66-47B4-AB55-D64951749EEB@member.fsf.org>
-Message-Id: <20151230203723.D7A576C0192@smtpvmsrv1.mitre.org>
-Date: Wed, 30 Dec 2015 15:37:23 -0500 (EST)
-Subject: [oss-security] Re: CVE Request: Squashfs 4.2 Race Condition
+Received: (qmail 1305 invoked from network); 16 Apr 2021 13:28:47 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1618579715;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=2gFOa8RoIC7TjfEo8tWgHwUQlnWn8sZI+0DRUTefTOs=;
+	b=DiKocJUGFA5Dz7S1syLTi0pLyaBkWgD5tjMRJo7bwPzmjqDgp8i+dp9tggsYBYj7N/btIT
+	qd//HF38yglFUNaaGl1w3G6BMxnYHc7G5osIO2bB1r+WqhT5Em/zVSgAhDM4yg+xYshXEC
+	e0mvRBNGpANIms7YgV23fylqjj0d694=
+X-MC-Unique: n41TjE-9NBihoThG-7LQNQ-1
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=2gFOa8RoIC7TjfEo8tWgHwUQlnWn8sZI+0DRUTefTOs=;
+        b=cNmpsXQvXGIBObLoGC/+UEwaR/2MLjYIJCpT13y7YFG9yKNvtok65JJEgDcPL0Krwm
+         TfNdBAjNhh4SuYrDm5gZqIB3Almz4ylrriMyh11d1hOw/xFmo+3z6waYzb8mW0ELfNvH
+         wEQPXGzUhzOz/ubq8cF+3USLYgL9hSXEuiqlO26sWIDEE2hQRCnlaZo00xwAOw6QnIRO
+         YWc2h0WkdMX5p3UnTHoUNLmApJ8Wb8VMqbAjylvNuN7BHV7gRNl9sA8WftSTaOwikmk4
+         9n+xYLgrAIBGJLSYsY/QA/Za5yKQ3CNnvMTXGktcRKeomMw6NeX74i/tHegiF2GeICUV
+         LtYg==
+X-Gm-Message-State: AOAM532AAama3JTiA620NQzKDEYV//jRrhZrqyu/5DCUINm2T3vx3Ec7
+	xLmCNE5dKTRALwMI9y1i4lhljc8786Q7B0cl4kcOAL1phGThX+JrUPdFYw/TXreqqcFF8VutCbN
+	uY0EM7vJoxEm4oQ8sy6EHNPiDpXD+WqRTsDat+X3AD1FF
+X-Received: by 2002:a17:902:848a:b029:e9:914b:7421 with SMTP id c10-20020a170902848ab02900e9914b7421mr9577898plo.78.1618579706629;
+        Fri, 16 Apr 2021 06:28:26 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJzwm+lzQyWFppicLZIBzgp411sioSxxoILIWQJWa3ySGAWvz7DUj3YRtkmAJrgWL4CFV1H16K45G0xzhA29KHc=
+X-Received: by 2002:a17:902:848a:b029:e9:914b:7421 with SMTP id
+ c10-20020a170902848ab02900e9914b7421mr9577867plo.78.1618579706313; Fri, 16
+ Apr 2021 06:28:26 -0700 (PDT)
+MIME-Version: 1.0
+From: Mauro Matteo Cascella <mcascell@redhat.com>
+Date: Fri, 16 Apr 2021 15:28:15 +0200
+Message-ID: <CAA8xKjVxi7xuZ-SFHGa63jFv9G2t4tEwVZ7qMaJP=ssynYGvKA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Cc: Cheolwoo Myung <cwmyung@snu.ac.kr>, Alexander Bulekov <alxndr@bu.edu>
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=mcascell@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] QEMU: ESP security fixes
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-> A malformed Squashfs filesystem can cause a race condition in unsquashfs.
-> 
-> This is caused by the decompress thread attempting to access a shared
-> queue, resulting in a SIGSEGV.
-> 
->     struct cache_entry *entry = queue_get(to_deflate);
+Several issues, including assertion failures, NULL pointer
+dereferences, and memory corruption flaws were identified in the
+am53c974 (ESP) device emulation of QEMU. A privileged guest user could
+use these flaws to crash the QEMU process on the host, resulting in a
+denial of service. Potential code execution with the privileges of the
+QEMU process cannot be ruled out.
 
-Do you have any information about a scenario in which this bug crosses
-a privilege boundary?
+These issues are going to be fixed in the coming 6.0 release, see
+https://wiki.qemu.org/Planning/6.0#Fixed_in_rc3.
 
-Do you mean that, because of the details of the SIGSEGV, there's a
-reasonable likelihood of code execution when a victim runs unsquashfs
-on an untrusted SquashFS filesystem image?
+Patch series:
+https://lists.gnu.org/archive/html/qemu-devel/2021-04/msg01000.html
 
-Other possibilities in which there could be a CVE ID assigned include:
+Upstream commits:
+https://git.qemu.org/?p=qemu.git;a=commit;h=0db895361b
+https://git.qemu.org/?p=qemu.git;a=commit;h=e392255766
+https://git.qemu.org/?p=qemu.git;a=commit;h=e5455b8c1c
+https://git.qemu.org/?p=qemu.git;a=commit;h=c5fef9112b
+https://git.qemu.org/?p=qemu.git;a=commit;h=7b320a8e67
+https://git.qemu.org/?p=qemu.git;a=commit;h=9954575173
+https://git.qemu.org/?p=qemu.git;a=commit;h=fa7505c154
+https://git.qemu.org/?p=qemu.git;a=commit;h=fbc6510e33
+https://git.qemu.org/?p=qemu.git;a=commit;h=0ebb5fd805
+https://git.qemu.org/?p=qemu.git;a=commit;h=324c880989
+https://git.qemu.org/?p=qemu.git;a=commit;h=607206948c
 
-  - if the affected unsquashfs code were also available as a library
-    that was used to build a program that was supposed to remain
-    running to handle multiple unsquash operations
 
-  - if the affected unsquashfs code were also used to support a
-    SquashFS filesystem that was mounted on a system, and an
-    unprivileged user could crash the system by reading from the
-    filesystem
+Acknowledgements: Cheolwoo Myung and Alexander Bulekov (cc'd).
+CVE-2020-35504, CVE-2020-35505, CVE-2020-35506 assigned by Red Hat, Inc.
 
-  - (again for this use of the affected code) if a system exists that
-    automatically mounts SquashFS filesystems found on removable
-    media, and inserting removable media could crash the system
+Best regards.
+-- 
+Mauro Matteo Cascella
+Red Hat Product Security
+PGP-Key ID: BB3410B0
 
-  - (again for this use of the affected code) maybe a scenario in
-    which the SIGSEGV ultimately leads to disclosure of private data
-    that wasn't contained in the SquashFS filesystem
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWhEAZAAoJEL54rhJi8gl51ikP/icQQJUyV/Zw43KeOs5BmVJg
-dWCI2KqVbhjDWW0esdrzL/LAzYMSvH+jXfNBZthzg2e5pFb3+YjkvKiejS5CZszT
-DTfWTFEfbjDKtIbrISqMAOM7SS9dCy3Zqu37VA1riqzpDRjD4PyoQTn5d95ck8Y9
-1aPEEgkTv9Z+VbAv1ONvOK6vLeHXcyovkyXyBdJxPYoXXCQjn3CC6TAYW9HF9qrL
-AYgSLCogHI3e1PnjA+EHsBqRBYeh70nkH8yrYWj0WDxZFwmnMTb1p+KE5rOwJw/a
-Gpvq5cM4rtWdV//XFMdBsyg4q/hbJ1leY9W5invnAeeqe8wkVGuJCApS7neRB5pU
-TV9wvGudvn73hkE61yDSR6Hp2qUGcIYZ1FHK9+uSrYmO6zczJJy7F6lax90BmgWD
-bvJUvquYRCwV+OUWLMkN7vctY5BXTiM47wLIi6bJMUma65e3Q5TXHcBd6F3p8pCe
-7OoNfuzqSDRU1FHz8oxuzLtVMIEzRT9sz9JMTo6ZtdLfzDZBet1qM9p9dXo8Nyej
-2Kpm1jN2mlvlnHCQzN1XtweCM/eAbQaxM0/WZzhJ3ipIJQnMLCFSeZH7QS6BbuDC
-AAnHD8BIH70VYhmZrHLDaRrW08RYWtyaAdiJMeygsiFIxdNxpPUjmFOHHvElkzw1
-LhwDS57lxKg9o5p1S+zH
-=riOK
------END PGP SIGNATURE-----
