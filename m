@@ -1,26 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/03/2
-Message-ID: <YaoAAoib+m56pU/g@ugly>
-Date: Fri, 3 Dec 2021 12:31:14 +0100
-From: Oswald Buddenhagen <oswald.buddenhagen@....de>
-To: isync-devel@...ts.sourceforge.net
-Cc: oss-security@...ts.openwall.com
-Subject: CVE-2021-44143: heap overflow in isync/mbsync
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/17/1
+Message-ID: <20210417143105.GB3276@thinkstation>
+Date: Sat, 17 Apr 2021 07:31:05 -0700
+From: Tavis Ormandy <taviso@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: security@...ian.org
+Subject: xscreensaver package caps gets raw socket
 Content-Type: text/plain; charset=utf-8
 
-description:
+Hello, I noticed that at least debian (maybe others) ship xscreensaver
+hack with cap_net_raw enabled:
 
-A flaw was found in mbsync versions 1.4.0 through 1.4.3. Due to an
-unchecked condition, a malicious or compromised IMAP server could use
-a crafted mail message that lacks headers (i.e., one that
-starts with an empty line) to provoke a heap overflow, which could
-conceivably be exploited for remote code execution.
+$ getcap /usr/libexec/xscreensaver/sonar
+/usr/libexec/xscreensaver/sonar cap_net_raw=p
 
-mitigation:
+That seems like a bug, you can just load some driver and get a raw
+socket. I wrote a quick exploit, this script will run tcpdump without
+needing root.
 
-upgrade to the freshly released v1.4.4 available from 
-https://sourceforge.net/projects/isync/files/isync/ , or apply the 
-attached patch.
+$ bash sock.sh
+17:43:55.000000 IP (tos 0x0, ttl 64, id 14541, offset 0, flags [DF], proto ICMP (1), length 84)
+    debian > sfo07s17-in-f78.1e100.net: ICMP echo request, id 59166, seq 1, length 64
+17:43:55.000000 IP (tos 0x0, ttl 128, id 42276, offset 0, flags [none], proto ICMP (1), length 84)
+    sfo07s17-in-f78.1e100.net > debian: ICMP echo reply, id 59166, seq 1, length 64
 
+I sent a report to debian, jwz and mesa. We concluded no embargo is
+necessary, so continuing the discussion here.
 
-View attachment "CVE-2021-44143-buffer-overflow-on-invalid-1.4.patch" of type "text/x-diff" (2692 bytes)
+Summary of discussion so far:
+
+- In theory, mesa support running in a privileged context, their
+  documentation says they disable dangerous features in setuid/setgid
+  binaries:
+
+    https://mesa-docs.readthedocs.io/en/latest/egl.html
+
+  In fact, this is broken because they only check if (geteuid() !=
+  getuid()) { ... }. That check doesn't even handle setgid, let alone file
+  caps. If mesa agree this is a bug, simply changing their checks to if
+  (getauxval(AT_SECURE)) { ... } might make this bug go away, and handle
+  file caps and setgid for free. I filed a bug for that, but there
+  hasn't been a response:
+  https://gitlab.freedesktop.org/mesa/mesa/-/issues/4549
+
+- The code could use ping sockets instead, but they're still rarely
+  enabled by default, and users have to set the ping_group_range sysctl.
+  I personally think it's time to enable them by default, but that's a
+  different discussion :-)
+
+- If neither of those two options work, then I guess we will have to
+  try to make using mesa safe...but it sounds really hard. The obvious
+  fix for right now is trying to clean up the environment, e.g.:
+
+  (Note: untested)
+
+    char *allowed[][2] = {
+        { "DISPLAY", 0 },
+        { "XAUTHORITY", 0 },
+        NULL,
+    };
+    for (int i = 0; allowed[i][0]; i++)  {
+        if (getenv(allowed[i][0])) {
+            allowed[i][1] = strdup(getenv(allowed[i][0]));
+        }
+    }
+    if (clearenv() != 0) {
+        abort();
+    }
+    for (int i = 0; allowed[i][0]; i++)  {
+        if (allowed[i][1]) {
+            setenv(allowed[i][0], allowed[i][1], 1);
+            free(allowed[i][1]);
+        }
+    }
+
+    // ...
+    MesaInitWhatever();
+
+I *think* this will work in main(), but it's possible there are some
+constructors somewhere that execute before main() I've missed. If that's
+the case, then I guess we will need a wrapper binary that does execve()
+and passes a non-cloexec fd with a sanitized environment?
+
+The problem is that even if we make cleaning up the environment work,
+you're always going to need $DISPLAY, and any code exec bug connecting
+to a malicious X server will be a security bug.... and that sounds super
+hard to get right?
+
+I dunno, thoughts on fixing this appreciated...
+
+Tavis.
+
+-- 
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@....org
+_\_V _( ) _( )  @taviso
+
+View attachment "sonar-sock-demo.sh" of type "text/plain" (3253 bytes)
