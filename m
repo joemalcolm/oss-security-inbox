@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1838" "Tuesday" "12" "January" "2021" "19:10:07" "+0000" "John Haxby" "john.haxby@oracle.com" "<8B21CEC4-A114-4E09-AE2F-5FF64DC9989F@oracle.com>" "54" "Re: [oss-security] CVE-2020-28374: Linux SCSI target (LIO) unrestricted copy offload" nil nil nil "1" "2021011219:10:07" "[oss-security] CVE-2020-28374: Linux SCSI target (LIO) unrestricted copy offload" (number mark "U       john.haxby@o Jan 12   54/1838  " thread-indent "\"Re: [oss-security] CVE-2020-28374: Linux SCSI target (LIO) unrestricted copy offload\"\n") "<20210112190134.585e5a60@suse.de>" ("<20210112190134.585e5a60@suse.de>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2020-28374: Linux SCSI target (LIO) unrestricted copy offload" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["559" "Saturday" "17" "April" "2021" "07:41:15" "-0700" "Tavis Ormandy" "taviso@gmail.com" nil "16" "[oss-security] Re: xscreensaver package caps gets raw socket" nil nil nil "4" nil nil (number mark "U       taviso@gmail Apr 17   16/559   " thread-indent "\"[oss-security] Re: xscreensaver package caps gets raw socket\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: xscreensaver package caps gets raw socket" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3643 invoked by uid 550); 12 Jan 2021 19:12:27 -0000
+Received: (qmail 3324 invoked by uid 550); 17 Apr 2021 17:38:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,93 +12,60 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3622 invoked from network); 12 Jan 2021 19:12:26 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : content-type :
- mime-version : subject : date : references : to : in-reply-to :
- message-id; s=corp-2020-01-29;
- bh=1CDY86p2pzWQdCfjFRgWNHXIxRoIm1httEPso/18QFk=;
- b=RKbd4v1aAuJIsyv2gzlEdRJvXPj7CPMJLszMUlEC6yH4akRis2bBJkfTpI/V8D7vfysp
- 6Rck4q/x2gfC9v6dXWUL5s7oBXYlWGRD71guHc8IX39DChekTJmRSHiqGFLxsELkN7nH
- wgkNF/MZ/R9p/7Fw2FaXOZXmEVLJj4Hd5Z8tw9l2OYXxzqfH1agPedxWgQi85qQZhba+
- iq6AZUCXEORKwnk07T7nGoqxdIxXK1xvo6Do0zb5gC8qlVDWseeRB36Xsdn9peizGx2s
- iBUnFCB4S3kQl+SB94NzKWXoYoKBySIB7Ybt0QHWuG3slrFCrmqsCK8aejYZCfFwRrdU YQ== 
-From: John Haxby <john.haxby@oracle.com>
-Content-Type: multipart/signed;
-	boundary="Apple-Mail=_88B6A466-563D-4344-A99D-2CCA4625A37A";
-	protocol="application/pgp-signature";
-	micalg=pgp-sha256
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.40.0.2.32\))
-Date: Tue, 12 Jan 2021 19:10:07 +0000
-References: <20210112190134.585e5a60@suse.de>
+Received: (qmail 15473 invoked from network); 17 Apr 2021 14:41:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=epMP+lrNgJpmOmrxBItGhCOIosBvJUecEuG0uCeMv7Y=;
+        b=vElEhiZFRoNxYONWeyGjz2qVQoXPDRLVcjlzgdzOUGpkWSiuRyiMbkWl+OQkeoNiyA
+         ZTWFPVeUc7DIxaxCY0shUgKN8KsqChz2E7qIwJVi3U3cq0Wmh2o6Qm/Pp9HOPOORgemy
+         /w+j4oI/uOAeQ9AHVFygZOHWadAiTRum4kxCgcs+OnYPWrkmmjvx3EWsk4J3pgmWZ8Tr
+         bgGAgKXtTCJW7fyTOFm1BaMvmzRPxFhyPrjRVg7epKsGhQgBVb+qzZASxdHalTi6KuK5
+         cK4wxIcw2g4fOqTb3iWpB1GfUA2QdBrlf35/HoIM1f0zwWH3zNAa/MwwITgk9rhuV0NA
+         2a8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=epMP+lrNgJpmOmrxBItGhCOIosBvJUecEuG0uCeMv7Y=;
+        b=W2q/NNAzABqpeQOfsbBBm/BQx3ppRxGPtT0OTHH26CVAlEalUf0J0tC1ybP341sOL7
+         RkNiMcJO1P64K7EBVgagoAxlCaIrxatpbIdU0Onle98o+SpZWoawTPjwaSBdaNl61bOY
+         4qFkk6XvdT+GPf1Vm4YKivuVcjTNSCdKCDWfrs5lP+6mxGY4C7epr5dcfSdwPkC4ucgs
+         JBV5Hmhu6MwerNIa1tZNh1VtPu5yZXPYpsvN1D3xignlkjGWSkxz8MOHycASwXy4Vpay
+         HxHZWgCbS2wW6hqvFs7wmvZF3ztIC27Ywvn6nM25+F3BgvP0TfCtlfCSFNuBbT/HmxmV
+         oQQA==
+X-Gm-Message-State: AOAM532G5rsL4rPPVRS9okQzWNvKDOOdiBiQoRBIGeIef7uTpRYuRTNG
+	R4YHenVC2ShgRHHxD3l7jI8EQ7WO1W8OM2t5
+X-Google-Smtp-Source: ABdhPJxYwfIn0JW1NRvcXmzzOKSu96hrt8sSKH96CdjIhZkBoA8Qy0+cUrckq49O2Pe+O0bpria9sQ==
+X-Received: by 2002:a17:902:f2c1:b029:eb:7b66:9c0a with SMTP id h1-20020a170902f2c1b02900eb7b669c0amr12949841plc.50.1618670475941;
+        Sat, 17 Apr 2021 07:41:15 -0700 (PDT)
+Date: Sat, 17 Apr 2021 07:41:15 -0700
+From: Tavis Ormandy <taviso@gmail.com>
 To: oss-security@lists.openwall.com
-In-Reply-To: <20210112190134.585e5a60@suse.de>
-Message-Id: <8B21CEC4-A114-4E09-AE2F-5FF64DC9989F@oracle.com>
-X-Mailer: Apple Mail (2.3654.40.0.2.32)
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9862 signatures=668683
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 bulkscore=0 malwarescore=0
- suspectscore=0 adultscore=0 spamscore=0 mlxlogscore=999 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
- definitions=main-2101120111
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9862 signatures=668683
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0 suspectscore=0
- clxscore=1034 impostorscore=0 spamscore=0 priorityscore=1501 mlxscore=0
- phishscore=0 mlxlogscore=999 bulkscore=0 adultscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
- definitions=main-2101120111
-Subject: Re: [oss-security] CVE-2020-28374: Linux SCSI target (LIO)
- unrestricted copy offload
+Cc: security@debian.org
+Message-ID: <20210417144115.GA3514@thinkstation>
+References: <20210417143105.GB3276@thinkstation>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210417143105.GB3276@thinkstation>
+User-Agent: Mutt/1.13.2 (2019-12-18)
+Subject: [oss-security] Re: xscreensaver package caps gets raw socket
 
---Apple-Mail=_88B6A466-563D-4344-A99D-2CCA4625A37A
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+On Sat, Apr 17, 2021 at 07:31:05AM -0700, Tavis Ormandy wrote:
+> - The code could use ping sockets instead, but they're still rarely
+>   enabled by default, and users have to set the ping_group_range sysctl.
+>   I personally think it's time to enable them by default, but that's a
+>   different discussion :-)
+> 
 
+Oh, I also pitched using popen("/bin/ping" ..), but I think nobody is
+really convinced that will work, but I kinda like it :)
 
+Tavis.
 
-> On 12 Jan 2021, at 18:01, David Disseldorp <ddiss@suse.de> wrote:
->=20
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D
-> =3D=3D Subject:     Linux SCSI target (LIO) unrestricted copy offload
-> =3D=3D
-> =3D=3D
-> =3D=3D CVE ID#:     CVE-2020-28374
-> =3D=3D
-> =3D=3D Versions:    Linux: v3.12 and later
-> =3D=3D              tcmu-runner: v1.3.0 and later
-> =3D=3D
-> =3D=3D Summary:     An attacker with access to a LUN and knowledge of Uni=
-t Serial
-> =3D=3D              Number assignments can read and write to any LIO back=
-store,
-> =3D=3D              regardless of SCSI transport settings.
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D
->=20
-
-David -- did you mean to attach the patches you posted to linux-distros?
-
-jch
-
---Apple-Mail=_88B6A466-563D-4344-A99D-2CCA4625A37A
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP
-
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - http://gpgtools.org
-
-iHUEAREIAB0WIQT+pxvb11CFWUkNSOVFC7t+lC+jyAUCX/30DwAKCRBFC7t+lC+j
-yHxDAP9hrny5+XkATlK/9Y2496KbR6CB+gPrlk4/mdEhq1QXrwEAsIVFUu3uStuM
-z6fnKdp27lAZKZ9hJp+ssg6h2GrfZ40=
-=780T
------END PGP SIGNATURE-----
-
---Apple-Mail=_88B6A466-563D-4344-A99D-2CCA4625A37A--
+-- 
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@sdf.org
+_\_V _( ) _( )  @taviso
