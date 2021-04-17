@@ -1,47 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/31/1
-Message-ID: <CAA8xKjVo8bEb+3B7GbdeHnkG8iScT4Ctt53NoQCMAB5Tqmog=Q@mail.gmail.com>
-Date: Mon, 31 May 2021 18:40:04 +0200
-From: Mauro Matteo Cascella <mcascell@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/17/2
+Message-ID: <20210417144115.GA3514@thinkstation>
+Date: Sat, 17 Apr 2021 07:41:15 -0700
+From: Tavis Ormandy <taviso@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Li Qiang <liq3ea@...il.com>
-Subject: QEMU: security issues in vhost-user-gpu
+Cc: security@...ian.org
+Subject: Re: xscreensaver package caps gets raw socket
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Sat, Apr 17, 2021 at 07:31:05AM -0700, Tavis Ormandy wrote:
+> - The code could use ping sockets instead, but they're still rarely
+>   enabled by default, and users have to set the ping_group_range sysctl.
+>   I personally think it's time to enable them by default, but that's a
+>   different discussion :-)
+> 
 
-Multiple security issues were identified in the virtio vhost-user GPU
-device (vhost-user-gpu) of QEMU. A malicious guest could use these
-flaws to leak memory from the host system or potentially crash the
-QEMU process on the host, resulting in a denial of service condition.
+Oh, I also pitched using popen("/bin/ping" ..), but I think nobody is
+really convinced that will work, but I kinda like it :)
 
-Patch series:
-https://lists.nongnu.org/archive/html/qemu-devel/2021-05/msg04536.html
+Tavis.
 
-The following CVEs have been assigned by Red Hat, Inc.
-
-* CVE-2021-3544 - combined CVE for multiple memory leaks
-   Upstream commits:
-   https://gitlab.com/qemu-project/qemu/-/commit/86dd8fac
-   https://gitlab.com/qemu-project/qemu/-/commit/b9f79858
-   https://gitlab.com/qemu-project/qemu/-/commit/b7afebcf
-   https://gitlab.com/qemu-project/qemu/-/commit/f6091d86
-   https://gitlab.com/qemu-project/qemu/-/commit/63736af5
-
-* CVE-2021-3545 - information disclosure due to uninitialized memory read
-   Upstream commit:
-   https://gitlab.com/qemu-project/qemu/-/commit/121841b2
-
-* CVE-2021-3546 - oob write while processing VIRTIO_GPU_CMD_GET_CAPSET
-   Upstream commit:
-   https://gitlab.com/qemu-project/qemu/-/commit/9f22893a
-
-Acknowledgements: Li Qiang of Tianchen Security Lab (Ant Group).
-
-Thank  you,
-Best regards.
 -- 
-Mauro Matteo Cascella
-Red Hat Product Security
-PGP-Key ID: BB3410B0
-
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@....org
+_\_V _( ) _( )  @taviso
