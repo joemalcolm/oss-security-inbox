@@ -1,34 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/28/5
-Message-ID: <159047aa-6cbd-420f-0589-9dc6a43e2b23@physik.fu-berlin.de>
-Date: Thu, 28 Oct 2021 15:52:11 +0200
-From: John Paul Adrian Glaubitz <glaubitz@...sik.fu-berlin.de>
-To: mpe@...erman.id.au
-Cc: linuxppc-dev@...ts.ozlabs.org, oss-security@...ts.openwall.com, "debian-powerpc@...ts.debian.org" <debian-powerpc@...ts.debian.org>
-Subject: Re: Linux kernel: powerpc: KVM guest can trigger host crash on Power8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/18/4
+Message-ID: <CAFzhf4qZyCD-V0jZJp1QbiTXTOugkme7=Me-XJ-YfP=pofQpdw@mail.gmail.com>
+Date: Sun, 18 Apr 2021 13:16:39 +0100
+From: Piotr Krysiuk <piotras@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2021-29155] Linux kernel protection for sequences of pointer arithmetic operations against speculatively out-of-bounds loads can be bypassed to leak content of kernel memory
 Content-Type: text/plain; charset=utf-8
 
-Hello!
+An issue has been discovered in the Linux kernel mechanism to mitigate
+speculatively out-of-bounds loads (Spectre mitigation).
 
-An update to this post with oss-security CC'ed.
+Unprivileged BPF programs running on affected systems can bypass
+the protection and execute speculatively out-of-bounds loads from
+the kernel memory. This can be abused to extract contents of kernel
+memory via side-channel.
 
-On 10/26/21 10:48, John Paul Adrian Glaubitz wrote:
-> I have tested these patches against 5.14 but it seems the problem [1] still remains for me
-> for big-endian guests. I built a patched kernel yesterday, rebooted the KVM server and let
-> the build daemons do their work over night.
+The identified gap is that when protecting sequences of pointer
+arithmetic operations against speculatively out-of-bounds loads,
+the pointer modification performed by the first operation is not
+correctly accounted for when restricting subsequent operations.
 
-I have done thorough testing and I'm no longer seeing the problem with the patched kernel.
+I developed a PoC that allows unprivileged local users to extract
+contents of 31 KByte window within the kernel memory.
 
-I am not sure what triggered my previous crash but I don't think it's related to this
-particular bug. I will keep monitoring the server in any case and open a new bug report
-in case I'm running into similar issues.
+The PoC has been shared privately with <security@...nel.org> to
+assist with fix development.
 
-Thanks,
-Adrian
+The patches are available from Linux kernel mainline public git
+repository.
 
--- 
- .''`.  John Paul Adrian Glaubitz
-: :' :  Debian Developer - glaubitz@...ian.org
-`. `'   Freie Universitaet Berlin - glaubitz@...sik.fu-berlin.de
-  `-    GPG: 62FF 8A75 84E0 2956 9546  0006 7426 3B37 F5B5 F913
+The upstream fix depends on refactoring of the BPF verifier logic.
+The full patch series is as follows:
 
+* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/kernel/bpf/verifier.c?id=9601148392520e2e134936e76788fc2a6371e7be
+* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/kernel/bpf/verifier.c?id=6f55b2f2a1178856c19bbce2f71449926e731914
+* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/kernel/bpf/verifier.c?id=24c109bb1537c12c02aeed2d51a347b4d6a9b76e
+* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/kernel/bpf/verifier.c?id=b658bbb844e28f1862867f37e8ca11a8e2aa94a3
+* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/kernel/bpf/verifier.c?id=a6aaece00a57fa6f22575364b3903dfbccf5345d
+* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/kernel/bpf/verifier.c?id=073815b756c51ba9d8384d924c5d1c03ca3d1ae4
+* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/kernel/bpf/verifier.c?id=f528819334881fd622fdadeddb3f7edaed8b7c9b
+* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/kernel/bpf/verifier.c?id=7fedb63a8307dda0ec3b8969a3b233a1dd7ea8e0
+
+# Discoverers
+
+Piotr Krysiuk <piotras@...il.com>
+Benedict Schlueter (independent report)
+
+# References
+
+CVE-2021-29155 (reserved via https://cveform.mitre.org/)
