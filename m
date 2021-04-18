@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["774" "Monday" "13" "November" "2017" "07:46:28" "-0800" "Anthony Liguori" "anthony@codemonkey.ws" "<CA+aC4kvjfSt0ijv_tUNRNNLzSh9-qhuC1X_tpzPVT0hU2iskRw@mail.gmail.com>" "26" "Re: [oss-security] (linux-)distros list use statistics" "^Date:" nil nil "11" "2017111315:46:28" "[oss-security] (linux-)distros list use statistics" (number mark "        anthony@code Nov 13   26/774   " thread-indent "\"Re: [oss-security] (linux-)distros list use statistics\"\n") "<20171113151047.GA23493@openwall.com>" ("<20171113151047.GA23493@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2299" "Sunday" "18" "April" "2021" "13:16:39" "+0100" "Piotr Krysiuk" "piotras@gmail.com" nil "42" "[oss-security] [CVE-2021-29155] Linux kernel protection for sequences of pointer arithmetic operations against speculatively out-of-bounds loads can be bypassed to leak content of kernel memory" nil nil nil "4" nil nil (number mark "U       piotras@gmai Apr 18   42/2299  " thread-indent "\"[oss-security] [CVE-2021-29155] Linux kernel protection for sequences of pointer arithmetic operations against speculatively out-of-bounds loads can be bypassed to leak content of kernel memory\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2021-29155] Linux kernel protection for sequences of pointer arithmetic operations against speculatively out-of-bounds loads can be bypassed to leak content of kernel memory" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 12268 invoked by uid 550); 13 Nov 2017 16:16:41 -0000
+Received: (qmail 16227 invoked by uid 550); 18 Apr 2021 12:31:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17769 invoked from network); 13 Nov 2017 15:46:40 -0000
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 30557 invoked from network); 18 Apr 2021 12:17:02 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=codemonkey-ws.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=R/S1zcVDCS7h61PzLgsqFcKCHyTxfHhFP7drTsSFvA8=;
-        b=zbY7Q9TsBhk5gnc5oOuiL6XipvOvPUjb3YzCBDdus8KSjCR7Nsfov5wHbitHoWf8sh
-         /Z52vDN3MhImoSbxDouCbMQ9GrAdWRL6IKtit+Z899pWwGbslNd3Wo0cMbtM/eHOjmJQ
-         PE/Sx7jnwsjStUKVhF2bXgOJOJTKMYQPEhge2Y2gf2Y0u/sw92sFWUGfC5PmJMyix7En
-         NrvHzM7N11LEhZUm2E6hO9T3oZBh9ILwev6nF6cA9zAbXnSDxGaEKieZrbAKXIn9+1uf
-         pyRTwvgneZGv0/9xrS8/CZtRunhHBoxTj6yEa6hsWpDsZazPFVh2xQI6V2cmrOOOHfOV
-         8F2g==
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=WTPo2rXyC8mAPgXSmb7Fosa4w6TxE6/vewdWjGazb2s=;
+        b=tpDnihc73xG0dppWBEo9jTzim90gHmBolpBmpxU1wxntvpKg0boGt0f077NVTjckir
+         K1nTyasRwLuhPLxPyh9ttgueY05e5G1zaXYGVfp0SPRFahJiMCz53gfjElWxdTlHLpnF
+         iqcw0I/DBY0GHROM4plIY+WCSnuWE9sd8v89Zt6Y51ayeLaxX4rQcvEwrOE1jcl0AYhi
+         USZAwXW5XyOxbWSaXQJkNQWnxggtDqNyw46+jLCxAWmzj6VoBiEl3738lv4zP8V+qQwD
+         wsCKRC8r66tM82aX2X/HYeK2Maw1AFisxY3QfXgfbQ5tMx3s38s1YYjfl6pp4uga4ero
+         1+OA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=R/S1zcVDCS7h61PzLgsqFcKCHyTxfHhFP7drTsSFvA8=;
-        b=TZNDKs8qUrZkRr5VY4OGvNgcHNEkV+bAqjgUlQUgau3dW/CBJ5Ogdb2CpHCI3rkyaM
-         lJ+Ko6TQsfkX5Sy+G+EbGoQZ9cMBsiv4BIZJ6Y8hcqrsiZW5TDaG9ueKmThU7uPElQkO
-         cO5OrHiRsnWTy+SBJH2+PX7rYRArjjlHdxdHiwnYrIc1xXegKIUc3p6CYlMOhl4hHbyu
-         9cNlA2MVFEFHTZMxYFMNr0Wy1Sv+OUpy8dIGnzzvVrnI1raMlqouwlTufp6CfhJl/lQb
-         l/eAa71T6a2ltO2ESJo3/hwsfbJx6lMGmwpaDbK7sTNSj2dFOgDT9DX0SztnsLFoahGe
-         Q58w==
-X-Gm-Message-State: AJaThX4RUSSi0pJUCn/Hfrp2HYkz6+BiDFivIVxaPDg9W/Ng1oLVGZP5
-	hSkyjG0x608W0pPfuHUUPf6QIOJ9XQ6QAuGoa3iJHg==
-X-Google-Smtp-Source: AGs4zMZMdQS46U7RgVT9iHq1/NQZ7/kLhpVMEYXkOyE+4US+Nqd58uWIhXO4Zub40DVJ3gn93oCHCke5VVPGpzs2ncM=
-X-Received: by 10.46.17.70 with SMTP id f67mr1599221lje.160.1510587988834;
- Mon, 13 Nov 2017 07:46:28 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=WTPo2rXyC8mAPgXSmb7Fosa4w6TxE6/vewdWjGazb2s=;
+        b=kUdgs5q6BTv6/94GxjBmqL57V0VvoPu29Vkivj+Bdd+/igk2ilwzA2t4jP19sY97w+
+         iAlitN8CU0vt8iYiQIPrzn3YX94ondutntTTcR9VKuX142004mNERMNHzahPiT9G6pmp
+         8Q8fgaKKD+mW1lRt/hLOeI/8Cdzha/qa9q+Em0oHafvxAxc80XL9NtX+DPlV/g4N8lxB
+         QqUZXz52E6TDfTxgidz37cxBNLByxBWZj+GzXHfZFoJhOmxhpmkwsJ1h/9NaFku4YWup
+         0l49qiWi5G8z2t1Jnx7J2f7PLbTjLQOQcYuQjkltg+OY1UHtM9jrgj57gN/+C7wu1Bhq
+         KHJA==
+X-Gm-Message-State: AOAM53031Z+PYAteRKU4P85JupYz64m0X41nDYumxaNKrHCuwupvokWv
+	DrM4TA2LKiqCOhr6CWyw4uOZ1oG7lp4gNv7sTlwKE8YHChJIgQ==
+X-Google-Smtp-Source: ABdhPJzbsVsuvyZ/70t2bRvPkTf7ToKjzQVtj0b5j1Pjq6KqvQlIHk2IXp1v6MXM7d58EzTh7vmQnoP/nnZkbhgsp/E=
+X-Received: by 2002:adf:f302:: with SMTP id i2mr8604109wro.423.1618748210343;
+ Sun, 18 Apr 2021 05:16:50 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20171113151047.GA23493@openwall.com>
-References: <20171113151047.GA23493@openwall.com>
-Message-ID: <CA+aC4kvjfSt0ijv_tUNRNNLzSh9-qhuC1X_tpzPVT0hU2iskRw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Mon, 13 Nov 2017 07:46:28 -0800
-From: Anthony Liguori <anthony@codemonkey.ws>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] (linux-)distros list use statistics
+From: Piotr Krysiuk <piotras@gmail.com>
+Date: Sun, 18 Apr 2021 13:16:39 +0100
+Message-ID: <CAFzhf4qZyCD-V0jZJp1QbiTXTOugkme7=Me-XJ-YfP=pofQpdw@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] [CVE-2021-29155] Linux kernel protection for sequences of pointer
+ arithmetic operations against speculatively out-of-bounds loads can be
+ bypassed to leak content of kernel memory
 
-On Mon, Nov 13, 2017 at 7:10 AM, Solar Designer <solar@openwall.com> wrote:
-> Hi,
->
-> I think it's time for Gentoo and/or Amazon to share with all of us the
-> statistics they should have collected so far as per:
->
-> http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
->
-> "13. Keep track of per-report and per-issue handling and disclosure
-> timelines (at least times of notification of the private list and of
-> actual public disclosure), at regular intervals produce and share
-> statistics (most notably, the average embargo duration) as well as the
-> raw data (except on issues that are still under embargo) by posting to
-> oss-security - primary: Gentoo, backup: Amazon"
->
-> Please do.
+An issue has been discovered in the Linux kernel mechanism to mitigate
+speculatively out-of-bounds loads (Spectre mitigation).
 
-Ack.
+Unprivileged BPF programs running on affected systems can bypass
+the protection and execute speculatively out-of-bounds loads from
+the kernel memory. This can be abused to extract contents of kernel
+memory via side-channel.
 
-Regards,
+The identified gap is that when protecting sequences of pointer
+arithmetic operations against speculatively out-of-bounds loads,
+the pointer modification performed by the first operation is not
+correctly accounted for when restricting subsequent operations.
 
-Anthony Liguori
+I developed a PoC that allows unprivileged local users to extract
+contents of 31 KByte window within the kernel memory.
 
-> Thanks,
->
-> Alexander
+The PoC has been shared privately with <security@kernel.org> to
+assist with fix development.
+
+The patches are available from Linux kernel mainline public git
+repository.
+
+The upstream fix depends on refactoring of the BPF verifier logic.
+The full patch series is as follows:
+
+* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/kernel/bpf/verifier.c?id=9601148392520e2e134936e76788fc2a6371e7be
+* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/kernel/bpf/verifier.c?id=6f55b2f2a1178856c19bbce2f71449926e731914
+* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/kernel/bpf/verifier.c?id=24c109bb1537c12c02aeed2d51a347b4d6a9b76e
+* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/kernel/bpf/verifier.c?id=b658bbb844e28f1862867f37e8ca11a8e2aa94a3
+* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/kernel/bpf/verifier.c?id=a6aaece00a57fa6f22575364b3903dfbccf5345d
+* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/kernel/bpf/verifier.c?id=073815b756c51ba9d8384d924c5d1c03ca3d1ae4
+* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/kernel/bpf/verifier.c?id=f528819334881fd622fdadeddb3f7edaed8b7c9b
+* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/kernel/bpf/verifier.c?id=7fedb63a8307dda0ec3b8969a3b233a1dd7ea8e0
+
+# Discoverers
+
+Piotr Krysiuk <piotras@gmail.com>
+Benedict Schlueter (independent report)
+
+# References
+
+CVE-2021-29155 (reserved via https://cveform.mitre.org/)
