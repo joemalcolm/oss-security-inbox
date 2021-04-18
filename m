@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1954" "Tuesday" "10" "December" "2019" "12:09:22" "-0600" "Tyler Hicks" "tyhicks@canonical.com" nil "51" nil "^Date:" nil nil "12" nil nil (number mark "U       tyhicks@cano Dec 10   51/1954  " thread-indent "\"Re: [oss-security] CVE-2019-19338 Kernel: KVM: export MSR_IA32_TSX_CTRL to guest - incomplete fix for TAA (CVE-2019-11135)\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2019-19338 Kernel: KVM: export MSR_IA32_TSX_CTRL to guest - incomplete fix for TAA (CVE-2019-11135)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2386" "Sunday" "18" "April" "2021" "14:51:52" "+0200" "Solar Designer" "solar@openwall.com" nil "54" "Re: [oss-security] xscreensaver package caps gets raw socket" nil nil nil "4" nil nil (number mark "U       solar@openwa Apr 18   54/2386  " thread-indent "\"Re: [oss-security] xscreensaver package caps gets raw socket\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] xscreensaver package caps gets raw socket" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11824 invoked by uid 550); 10 Dec 2019 18:09:38 -0000
+Received: (qmail 4036 invoked by uid 550); 18 Apr 2021 12:53:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,69 +11,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11800 invoked from network); 10 Dec 2019 18:09:37 -0000
-Message-ID: <20191210180921.GA23197@elm>
-References: <nycvar.YSQ.7.76.1912101658430.54987@xnncv>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <nycvar.YSQ.7.76.1912101658430.54987@xnncv>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Date: Tue, 10 Dec 2019 12:09:22 -0600
-From: Tyler Hicks <tyhicks@canonical.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2019-19338 Kernel: KVM: export
- MSR_IA32_TSX_CTRL to guest - incomplete fix for TAA (CVE-2019-11135)
+Received: (qmail 3767 invoked from network); 18 Apr 2021 12:52:29 -0000
+Date: Sun, 18 Apr 2021 14:51:52 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Message-ID: <20210418125151.GA20535@openwall.com>
+References: <20210417143105.GB3276@thinkstation> <35f3ef89-12b5-5bbd-2ddb-88a9128dd849@disroot.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <35f3ef89-12b5-5bbd-2ddb-88a9128dd849@disroot.org>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] xscreensaver package caps gets raw socket
 
-On 2019-12-10 17:10:40, P J P wrote:
->   Hello,
+On Sat, Apr 17, 2021 at 09:51:38PM -0300, Érico Nogueira wrote:
+> Em 17/04/2021 11:31, Tavis Ormandy escreveu:
+> >Summary of discussion so far:
+> >
+> >- In theory, mesa support running in a privileged context, their
+> >   documentation says they disable dangerous features in setuid/setgid
+> >   binaries:
+> >
+> >     https://mesa-docs.readthedocs.io/en/latest/egl.html
+> >
+> >   In fact, this is broken because they only check if (geteuid() !=
+> >   getuid()) { ... }. That check doesn't even handle setgid, let alone file
+> >   caps. If mesa agree this is a bug, simply changing their checks to if
+> >   (getauxval(AT_SECURE)) { ... } might make this bug go away, and handle
+> >   file caps and setgid for free. I filed a bug for that, but there
+> >   hasn't been a response:
+> >   https://gitlab.freedesktop.org/mesa/mesa/-/issues/4549
+> 
+> The linked issue appears to be private... Not sure it makes sense, since 
+> the problem has been explained in this public email. FWIW, libglvnd has 
+> the same issue, though it at leasts (E)GID as well. Sending it here 
+> because I couldn't find a security contact.
+> 
+> https://github.com/NVIDIA/libglvnd/blob/acc654454867c7cdd681cc1f60f858bcd6e5e729/src/EGL/libeglvendor.c
+> 
+>     if (getuid() == geteuid() && getgid() == getegid()) {
+>         env = getenv("__EGL_VENDOR_LIBRARY_FILENAMES");
+>     }
+> 
+> I will look into opening an issue with them and finding a fix.
 
-Hello!
+Related:
 
-> Transaction Asynchronous Abort (TAA) h/w issue, which affects Intel CPUs, is
-> mitigated in two ways. One is by disabling Transactional Synchronisation
-> Extensions (TSX) feature of the CPU. And second is by clearing the affected
-> Store/Fill/Load port architectural buffers, which may hold sensitive
-> information bits.
-> 
-> It was found that the current kernel fixes don't completely fix TAA issue
-> for guest VMs. When a guest is running on a host CPU affected by TAA (ie.
-> TAA_NO=0) but not affected by MDS issue (ie MDS_NO=1), to mitigate TAA
-> issue, guest was to clear the affected buffers by using VERW instruction
-> mechanism. But when MDS_NO=1 bit was exported to the guests, it did not
-> quite use the VERW mechanism to clear the affected buffers.
-> 
-> This issue affects guests running on Cascade Lake CPUs, which are affected
-> by the TAA (ie. TAA_NO=0) issue, but are not affected by the MDS (ie.
-> MDS_NO=1) issue.
-> 
-> It requires that host has 'TSX' enabled.
-> 
-> Upstream patches:
-> -----------------
->   -> https://git.kernel.org/linus/cbbaa2727aa3ae9e0a844803da7cef7fd3b94f2b
->   -> https://git.kernel.org/linus/c11f83e0626bdc2b6c550fc8b9b6eeefbd8cefaa
->   -> https://git.kernel.org/linus/b07a5c53d42a8c87b208614129e947dd2338ff9c
-> 
-> Another option: Export MDS_NO=0 to guests when TSX is enabled
->   -> https://git.kernel.org/linus/e1d38b63acd843cfdd4222bf19a26700fd5c699e
+https://www.openwall.com/lists/oss-security/2019/12/04/6
 
-If this commit, which was part of the initial set of mitigation patches
-for TAA, is a valid option then I'm not understanding how there was an
-incomplete fix.
+"search for LIBGL_DRIVERS_PATH finds that Mesa appears to have the same
+issue, and it also finds that we should also search for GBM_DRIVERS_PATH
+(apparently, for older Mesa) and maybe EGL_DRIVERS_PATH and EGL_DRIVER,
+and LIBVA_DRIVERS_PATH and LIBVA_DRIVER_NAME.  There are probably more."
 
-Is the CVE assignment specifically for a distro kernel that didn't
-include commit e1d38b63acd8 ("kvm/x86: Export MDS_NO=0 to guests when
-TSX is enabled")?
+> Using `secure_getenv` in some of these cases would probably work as well 
+> as checking `getauxval(AT_SECURE)`, especially because it seems (from my 
+> quick search over at <https://man.bsd.lv>) that both are Linux specific 
+> anyway.
+> 
+> It would be nice to define a `is_privileged_context()` function that 
+> works on most platforms to be shared across projects or used as a 
+> library.
 
-Tyler
+Historically, that's __libc_enable_secure on glibc (although if
+secure_getenv() does what's needed in a given context, then you don't
+need to use __libc_enable_secure directly) and issetugid(2) on OpenBSD.
 
-> 
-> 'CVE-2019-19338' is assigned by Red Hat Inc.
-> 
-> Thank you.
-> --
-> Prasad J Pandit / Red Hat Product Security Team
-> 8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
-> 
+Alexander
