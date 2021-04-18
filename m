@@ -1,187 +1,119 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/15/3
-Message-ID: <9b8f4c6c-1a65-321a-c7e7-601700aeb34d@rs-labs.com>
-Date: Fri, 15 Oct 2021 20:00:59 +0200
-From: Roman Medina-Heigl Hernandez <roman@...labs.com>
-To: Yann Ylavic <ylavic.dev@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-42013: Path Traversal and Remote Code Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/18/1
+Message-ID: <35f3ef89-12b5-5bbd-2ddb-88a9128dd849@disroot.org>
+Date: Sat, 17 Apr 2021 21:51:38 -0300
+From: Érico Nogueira <ericonr@...root.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: xscreensaver package caps gets raw socket
 Content-Type: text/plain; charset=utf-8
 
-Hi Yann,
+Em 17/04/2021 11:31, Tavis Ormandy escreveu:
+> Hello, I noticed that at least debian (maybe others) ship xscreensaver
+> hack with cap_net_raw enabled:
+> 
+> $ getcap /usr/libexec/xscreensaver/sonar
+> /usr/libexec/xscreensaver/sonar cap_net_raw=p
+> 
+> That seems like a bug, you can just load some driver and get a raw
+> socket. I wrote a quick exploit, this script will run tcpdump without
+> needing root.
+> 
+> $ bash sock.sh
+> 17:43:55.000000 IP (tos 0x0, ttl 64, id 14541, offset 0, flags [DF], proto ICMP (1), length 84)
+>      debian > sfo07s17-in-f78.1e100.net: ICMP echo request, id 59166, seq 1, length 64
+> 17:43:55.000000 IP (tos 0x0, ttl 128, id 42276, offset 0, flags [none], proto ICMP (1), length 84)
+>      sfo07s17-in-f78.1e100.net > debian: ICMP echo reply, id 59166, seq 1, length 64
+> 
+> I sent a report to debian, jwz and mesa. We concluded no embargo is
+> necessary, so continuing the discussion here.
+> 
+> Summary of discussion so far:
+> 
+> - In theory, mesa support running in a privileged context, their
+>    documentation says they disable dangerous features in setuid/setgid
+>    binaries:
+> 
+>      https://mesa-docs.readthedocs.io/en/latest/egl.html
+> 
+>    In fact, this is broken because they only check if (geteuid() !=
+>    getuid()) { ... }. That check doesn't even handle setgid, let alone file
+>    caps. If mesa agree this is a bug, simply changing their checks to if
+>    (getauxval(AT_SECURE)) { ... } might make this bug go away, and handle
+>    file caps and setgid for free. I filed a bug for that, but there
+>    hasn't been a response:
+>    https://gitlab.freedesktop.org/mesa/mesa/-/issues/4549
 
-Re [1], I think this:
+The linked issue appears to be private... Not sure it makes sense, since 
+the problem has been explained in this public email. FWIW, libglvnd has 
+the same issue, though it at leasts (E)GID as well. Sending it here 
+because I couldn't find a security contact.
 
-"critical: Path traversal and file disclosure vulnerability in Apache
-HTTP Server 2.4.49 (CVE-2021-41773
-<https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-41773>)"
+https://github.com/NVIDIA/libglvnd/blob/acc654454867c7cdd681cc1f60f858bcd6e5e729/src/EGL/libeglvendor.c
 
-is still misleading and should read:
+     if (getuid() == geteuid() && getgid() == getegid()) {
+         env = getenv("__EGL_VENDOR_LIBRARY_FILENAMES");
+     }
 
-"critical: Path traversal and *Remote Code Execution* vulnerability in
-Apache HTTP Server 2.4.49 (CVE-2021-41773
-<https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-41773>)"
+I will look into opening an issue with them and finding a fix.
 
+Using `secure_getenv` in some of these cases would probably work as well 
+as checking `getauxval(AT_SECURE)`, especially because it seems (from my 
+quick search over at <https://man.bsd.lv>) that both are Linux specific 
+anyway.
 
-PS: Dear Alexander, feel free to drop this from OSS-ml if you think this
-kind of detail is not relevant.
+It would be nice to define a `is_privileged_context()` function that 
+works on most platforms to be shared across projects or used as a 
+library. Especially because technically speaking a process running as 
+root could want to call `setuid()` and still tweak the environment to 
+control how mesa and libglvnd work, which would be blocked by their 
+"naive" checks for a privileged process.
 
-Cheers,
-
--r
-
-
-El 11/10/2021 a las 10:57, Yann Ylavic escribió:
-> On Sat, Oct 9, 2021 at 8:00 PM Roman Medina-Heigl Hernandez
-> <roman@...labs.com> wrote:
->> I just wanted to clarify that the impact of both CVEs is exactly the
->> same: RCE and/or arbitrary file read and/or none, depending on httpd
->> config :-).
-> I appreciate this nuance in your tweetS. For completeness :) I'll note
-> that most configs (default, vendors, distros) are not vulnerable to
-> the RCE.
-> The removal of "<Directory/> require all denied" is an exploit httpd
-> can do nothing about. httpd provides default/examples config [3] and
-> docs (no "don't do that" there I concede).
->
->> There's no difference between Apache 2.4.49 and 2.4.50 in
->> that regard.
-> Ack.
->
->> But reading the blog post by Stefan
->> (https://github.com/icing/blog/blob/main/httpd-2.4.50.md) and Apache
->> HTTP 2.4 vulns security page
->> (https://httpd.apache.org/security/vulnerabilities_24.html) as well, I
->> feel like you are associating the RCE impact to 2.4.50 and the arbitrary
->> file read to 2.4.49. That's misleading. Examples:
-> I feel obligated to Alexander and reference [1], plain text of the
-> current httpd vulnerabilities (w.r.t. CVE-2021-42013 &
-> CVE-2021-41773), as of "Fri, 8 Oct 2021 15:44:24 +0200" [2].
->
->> - blog post
->>
->> "Affection, 2.4.49" -> You go for arbitrary file read example.
->>
->> "Affection, 2.4.50" -> Then you go for RCE example.
-> The blog port has the form of a chronological post mortem (it happened
-> in this order from the httpd team POV), it's an editorial choice (by
-> Stefan) which makes sense to me as it describes the case progressively
-> and finally quite exhaustively.
-> It's not the same goal as the vulnerabilities page anyway.
->
->> - security page
-> Please see [1], both CVEs are aligned now.
->
->> I'm sure this is unintentional and yes, it's only matter of wording but
->> it's kind of misleading, imho. I'd kindly advise for it to be fixed.
-> That's the case (I think) on the vulnerabilities page now.
->
->> And
->> I also take this opportunity to thank ASF and particularly the folks
->> like Yann and Stefan whose work makes Apache httpd possible.
->>
->> C'u in apache-nosejob-202x.c !!! :-)
-> Thanks for the kind words! Well, I suppose :)
->
-> Regards;
-> Yann.
->
->
-> [1] https://httpd.apache.org/security/vulnerabilities_24.html (8 Oct) :
-> """
-> critical: Path Traversal and Remote Code Execution in Apache HTTP
-> Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)
-> (CVE-2021-42013)
->
->     It was found that the fix for CVE-2021-41773 in Apache HTTP Server
-> 2.4.50 was insufficient. An attacker could use a path traversal attack
-> to map URLs to files outside the directories configured by Alias-like
-> directives.
->
->     If files outside of these directories are not protected by the
-> usual default configuration "require all denied", these requests can
-> succeed. If CGI scripts are also enabled for these aliased paths, this
-> could allow for remote code execution.
->
->     This issue only affects Apache 2.4.49 and Apache 2.4.50 and not
-> earlier versions.
->
->     Acknowledgements:
->
->         Reported by Juan Escobar from Dreamlab Technologies
->         Reported by Fernando Muñoz from NULL Life CTF Team
->         Reported by Shungo Kumasaka
->         Reported by Nattapon Jongcharoen
->
->     Reported to security team    2021-10-06
->     fixed by r1893977, r1893980, r1893982 in 2.4.x    2021-10-07
->     Update 2.4.51 released    2021-10-07
->     Affects    2.4.50, 2.4.49
->
-> critical: Path traversal and file disclosure vulnerability in Apache
-> HTTP Server 2.4.49 (CVE-2021-41773)
->
->     A flaw was found in a change made to path normalization in Apache
-> HTTP Server 2.4.49. An attacker could use a path traversal attack to
-> map URLs to files outside the directories configured by Alias-like
-> directives.
->
->     If files outside of these directories are not protected by the
-> usual default configuration "require all denied", these requests can
-> succeed. If CGI scripts are also enabled for these aliased paths, this
-> could allow for remote code execution.
->
->     This issue is known to be exploited in the wild.
->
->     This issue only affects Apache 2.4.49 and not earlier versions.
->
->     Acknowledgements: This issue was reported by Ash Daulton along
-> with the cPanel Security Team
->     Reported to security team    2021-09-29
->     fixed by r1893775 in 2.4.x    2021-10-01
->     Update 2.4.50 released    2021-10-04
->     Affects    2.4.49
-> """
->
-> [2] https://github.com/apache/httpd-site/commit/74a166fab7443838c660c88df81961ddaa8df7fd.patch
-> :
-> """
-> Date: Fri, 8 Oct 2021 15:44:24 +0200
-> Subject: [PATCH] Revert "Trigger rebuild"
->
-> This reverts commit 151e1ff7cdacf68fc615cc1513dbf81b8f307907.
-> ---
->  content/security/json/CVE-2021-42013.json | 1 -
->  1 file changed, 1 deletion(-)
->
-> diff --git a/content/security/json/CVE-2021-42013.json
-> b/content/security/json/CVE-2021-42013.json
-> index 09b4792..31e9295 100644
-> --- a/content/security/json/CVE-2021-42013.json
-> +++ b/content/security/json/CVE-2021-42013.json
-> @@ -112,4 +112,3 @@
+> 
+> - The code could use ping sockets instead, but they're still rarely
+>    enabled by default, and users have to set the ping_group_range sysctl.
+>    I personally think it's time to enable them by default, but that's a
+>    different discussion :-)
+> 
+> - If neither of those two options work, then I guess we will have to
+>    try to make using mesa safe...but it sounds really hard. The obvious
+>    fix for right now is trying to clean up the environment, e.g.:
+> 
+>    (Note: untested)
+> 
+>      char *allowed[][2] = {
+>          { "DISPLAY", 0 },
+>          { "XAUTHORITY", 0 },
+>          NULL,
+>      };
+>      for (int i = 0; allowed[i][0]; i++)  {
+>          if (getenv(allowed[i][0])) {
+>              allowed[i][1] = strdup(getenv(allowed[i][0]));
+>          }
 >      }
->    ]
->  }
-> -
-> """
-> To make sure every single byte was published :)
->
-> [3] https://github.com/apache/httpd/blob/2.4.x/docs/conf/httpd.conf.in#L110 :
-> """
-> #
-> # Deny access to the entirety of your server's filesystem. You must
-> # explicitly permit access to web content directories in other
-> # <Directory> blocks below.
-> #
-> <Directory />
->     AllowOverride none
->     Require all denied
-> </Directory>
-> """
-
--- 
-Saludos,
--Román
-
-
+>      if (clearenv() != 0) {
+>          abort();
+>      }
+>      for (int i = 0; allowed[i][0]; i++)  {
+>          if (allowed[i][1]) {
+>              setenv(allowed[i][0], allowed[i][1], 1);
+>              free(allowed[i][1]);
+>          }
+>      }
+> 
+>      // ...
+>      MesaInitWhatever();
+> 
+> I *think* this will work in main(), but it's possible there are some
+> constructors somewhere that execute before main() I've missed. If that's
+> the case, then I guess we will need a wrapper binary that does execve()
+> and passes a non-cloexec fd with a sanitized environment?
+> 
+> The problem is that even if we make cleaning up the environment work,
+> you're always going to need $DISPLAY, and any code exec bug connecting
+> to a malicious X server will be a security bug.... and that sounds super
+> hard to get right?
+> 
+> I dunno, thoughts on fixing this appreciated...
+> 
+> Tavis.
+> 
