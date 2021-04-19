@@ -1,81 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/05/2
-Message-ID: <CALBaBG_xu-7Dzbo_3qDSYYuDO30fChi8nis7C_zixhBe8zAOyg@mail.gmail.com>
-Date: Wed, 5 May 2021 09:38:05 -0700
-From: Aaron Patterson <aaron.patterson@...il.com>
-To: ruby-security-ann@...glegroups.com, rubyonrails-security@...glegroups.com,  oss-security@...ts.openwall.com
-Subject: [CVE-2021-22903] Possible Open Redirect Vulnerability in Action Pack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/19/2
+Message-ID: <CA+-U7QBGWLJkSvg+7g8K-Aj02Svp9e6HhSRbXYPVBp8gZUBQVA@mail.gmail.com>
+Date: Mon, 19 Apr 2021 15:19:58 +0800
+From: - Nop <nopitydays@...il.com>
+To: oss-security@...ts.openwall.com, John Haxby <john.haxby@...cle.com>
+Subject: Re: Linux Kernel: out of bounds array access in dm-ioctl.c
 Content-Type: text/plain; charset=utf-8
 
-There is a possible Open Redirect Vulnerability in Action Pack. This
-vulnerability has been assigned the CVE identifier CVE-2021-22903.
+Hi,
 
-Versions Affected:  >= v6.1.0.rc2
-Not affected:       < v6.1.0.rc2
-Fixed Versions:     6.1.3.2
+sorry for the late reply.
 
-Impact
-------
-This is similar to CVE-2021-22881: Specially crafted Host headers in
-combination with certain "allowed host" formats can cause the Host
-Authorization middleware in Action Pack to redirect users to a malicious
-website.
+> DM_LIST_DEVICES_CMD, and in fact, any function called from ctl_ioctl is limited to users with CAP_SYS_ADMIN.  Without that root-equivalent privilege I don't see any way to exploit this bug. Did you find a way to exploit it as an unprivileged user?
 
-Since rails/rails@...7ea5, strings in config.hosts that do not have a
-leading
-dot are converted to regular expressions without proper escaping. This
-causes,
-for example, config.hosts << "sub.example.com" to permit a request with a
-Host
-header value of sub-example.com.
+Yes, this IOCTL does need CAP_SYS_ADMIN capability which is very close
+to the real root user.
+
+The only possible exploitable scenario that I can imagine is, a user
+with CAP_SYS_ADMIN cap in a container attacks the shared kernel to
+break through the seccomp limitation.
+
+However, it is quite rare.
 
 
-Releases
---------
-The fixed releases are available at the normal locations.
+Thanks,
 
-Workarounds
------------
-The following monkey patch put in an initializer can be used as a
-workaround:
+Bodong
 
-```ruby
-class ActionDispatch::HostAuthorization::Permissions
-  def sanitize_string(host)
-    if host.start_with?(".")
-      /\A(.+\.)?#{Regexp.escape(host[1..-1])}\z/i
-    else
-      /\A#{Regexp.escape host}\z/i
-    end
-  end
-end
-```
 
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided
-patches for
-the two supported release series. They are in git-am format and consist of a
-single changeset.
+On Sun, Mar 28, 2021 at 11:47 AM - Nop <nopitydays@...il.com> wrote:
 
-* 6-1-open-redirect.patch - Patch for 6.1 series
+> Hi,
+>
+> We found an out of bounds array accessing bug in drivers/md/dm-ioctl.c,
+> and reproduced it in the latest kernel (v5.11.10).
+>
+> The root cause of this BUG is :
+>
+> The field "data_size" in function ctl_ioctl is fully controlled by users
+> and this argument controls the size of kvmalloc in function copy_params.
+>
+> When the data_size is in a range of [0x131,0x138], the allocated memory
+> which is pointed by the variable "param" used in ioctl
+> "DM_LIST_DEVICES_CMD" is too small, causing an oob bug at line "nl->dev =
+> 0; /* Flags no data */" (
+> https://github.com/torvalds/linux/blob/0d02ec6b3136c73c09e7859f0d0e4e2c4c07b49b/drivers/md/dm-ioctl.c#L538
+> )
+>
+> Attachments are the poc, kernel config and Kernel report.
+>
+> The patch:
+>
+> https://github.com/torvalds/linux/commit/4edbe1d7bcffcd6269f3b5eb63f710393ff2ec7a
+>      * Grab our output buffer.
+>      */
+>      nl = orig_nl = get_result_buffer(param, param_size, &len);
+> -    if (len < needed) {
+> +    if (len < needed || len < sizeof(nl->dev)) {
+>          param->flags |= DM_BUFFER_FULL_FLAG;
+>          goto out;
+>      }
+>
+> Regards,
+> Bodong Zhao of NISL lab, Tsinghua University
+>
+>
 
-Please note that only the 6.1.Z, 6.0.Z, and 5.2.Z series are supported at
-present. Users of earlier unsupported releases are advised to upgrade as
-soon
-as possible as we cannot guarantee the continued availability of security
-fixes for unsupported releases.
-
-Credits
--------
-
-Thanks Jonathan Hefner (https://hackerone.com/jonathanhefner) for reporting
-this bug!
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-Content of type "text/html" skipped
-
-Download attachment "6-1-open-redirect.patch" of type "application/octet-stream" (1923 bytes)
