@@ -1,214 +1,176 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/15/4
-Message-ID: <942e362d-2a16-883f-5ff9-a466ee6202f8@gmail.com>
-Date: Wed, 15 Dec 2021 22:22:33 +0100
-From: Szymon Heidrich <szymon.heidrich@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/19/1
+Message-ID: <94b0350fe3033c2b@cvs.openbsd.org>
+Date: Sun, 18 Apr 2021 18:53:14 -0600 (MDT)
+From: Damien Miller <djm@....openbsd.org>
 To: oss-security@...ts.openwall.com
-Cc: Greg KH <greg@...ah.com>
-Subject: CVE-2021-39685 : Linux Kernel USB Gadget buffer overflow
+Subject: Announce: OpenSSH 8.6 released
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+OpenSSH 8.6 has just been released. It will be available from the
+mirrors listed at https://www.openssh.com/ shortly.
 
-As some of you might have already observed a buffer overflow vulnerability
-was recently patched in the Linux USB Gadget subsystem.
+OpenSSH is a 100% complete SSH protocol 2.0 implementation and
+includes sftp client and server support.
 
-TLTR; The issue reported to the Linux security team allowed one to read 
-and/or write up to 65kB of kernel memory past buffer boundaries by exploiting
-lack of limiting of the usb control transfer request wLength in certain
-gadget functions.
+Once again, we would like to thank the OpenSSH community for their
+continued support of the project, especially those who contributed
+code or patches, reported bugs, tested snapshots or donated to the
+project. More information on donations may be found at:
+https://www.openssh.com/donations.html
 
-You can find more details below. I also attached a sample exploit script
-based on pyusb to this message. You can also find a up to date version
-on my github under https://github.com/szymonh/inspector-gadget.
+Future deprecation notice
+=========================
 
-Best regards,
-Szymon
+It is now possible[1] to perform chosen-prefix attacks against the
+SHA-1 algorithm for less than USD$50K.
 
----
+In the SSH protocol, the "ssh-rsa" signature scheme uses the SHA-1
+hash algorithm in conjunction with the RSA public key algorithm.
+OpenSSH will disable this signature scheme by default in the near
+future.
 
-Summary
+Note that the deactivation of "ssh-rsa" signatures does not necessarily
+require cessation of use for RSA keys. In the SSH protocol, keys may be
+capable of signing using multiple algorithms. In particular, "ssh-rsa"
+keys are capable of signing using "rsa-sha2-256" (RSA/SHA256),
+"rsa-sha2-512" (RSA/SHA512) and "ssh-rsa" (RSA/SHA1). Only the last of
+these is being turned off by default.
 
-An attacker can access kernel memory bypassing valid buffer boundaries by exploiting implementation of control request handlers in the following usb gadgets - rndis, hid, uac1, uac1_legacy and uac2. Processing of malicious control transfer requests with unexpectedly large wLength lacks assurance that this value does not exceed the buffer size. Due to this fact one is capable of reading and/or writing (depending on particular case) up to 65k of kernel memory.
+This algorithm is unfortunately still used widely despite the
+existence of better alternatives, being the only remaining public key
+signature algorithm specified by the original SSH RFCs that is still
+enabled by default.
 
-Description
+The better alternatives include:
 
-Some execution paths of usb control transfer handlers of gadgets such as rndis, hid, uac1, uac1_legacy and uac2 do not include proper handling of request length (wLength). This value should be limited to buffer size to prevent buffer overflow vulnerabilities in the data transfer phase. 
+ * The RFC8332 RSA SHA-2 signature algorithms rsa-sha2-256/512. These
+   algorithms have the advantage of using the same key type as
+   "ssh-rsa" but use the safe SHA-2 hash algorithms. These have been
+   supported since OpenSSH 7.2 and are already used by default if the
+   client and server support them.
 
-The buffer used by endpoint 0 is allocated in composite.c with size of USB_COMP_EP0_BUFSIZ (4096) bytes so
-setting wLength to a value greater than USB_COMP_EP0_BUFSIZ will result in a buffer overflow.
+ * The RFC8709 ssh-ed25519 signature algorithm. It has been supported
+   in OpenSSH since release 6.5.
 
-For example in the case of f_uac1.c, execution of the f_audio_setup function allows one to perform both reads and writes past buffer boundaries. Neither f_audio_setup nor none of the called functions - audio_set_endpoint_req, audio_get_endpoint_req, out_rq_cur, ac_rq_in limit the return value to be smaller than the buffer size. Consequently the data transfer phase uses req->length = value = ctrl->wLength which is controlled by the attacker. This allows one to either read or write up to 65k bytes of kernel memory depending on the control transfer direction.
+ * The RFC5656 ECDSA algorithms: ecdsa-sha2-nistp256/384/521. These
+   have been supported by OpenSSH since release 5.7.
 
-    static int
-    f_audio_setup(struct usb_function *f, const struct usb_ctrlrequest *ctrl)
-    {
-            struct usb_composite_dev *cdev = f->config->cdev;
-            struct usb_request      *req = cdev->req;
-            int                     value = -EOPNOTSUPP;
-            u16                     w_index = le16_to_cpu(ctrl->wIndex);
-            u16                     w_value = le16_to_cpu(ctrl->wValue);
-            u16                     w_length = le16_to_cpu(ctrl->wLength);
+To check whether a server is using the weak ssh-rsa public key
+algorithm, for host authentication, try to connect to it after
+removing the ssh-rsa algorithm from ssh(1)'s allowed list:
 
-            /* composite driver infrastructure handles everything; interface
-             * activation uses set_alt().
-             */
-            switch (ctrl->bRequestType) {
-            case USB_DIR_OUT | USB_TYPE_CLASS | USB_RECIP_ENDPOINT:
-                    value = audio_set_endpoint_req(f, ctrl);
-                    break;
+    ssh -oHostKeyAlgorithms=-ssh-rsa user@...t
 
-            case USB_DIR_IN | USB_TYPE_CLASS | USB_RECIP_ENDPOINT:
-                    value = audio_get_endpoint_req(f, ctrl);
-                    break;
-            case USB_DIR_OUT | USB_TYPE_CLASS | USB_RECIP_INTERFACE:
-                    if (ctrl->bRequest == UAC_SET_CUR)
-                            value = out_rq_cur(f, ctrl);
-                    break;
-            case USB_DIR_IN | USB_TYPE_CLASS | USB_RECIP_INTERFACE:
-                    value = ac_rq_in(f, ctrl);
-                    break;
-            default:
-                    ERROR(cdev, "invalid control req%02x.%02x v%04x i%04x l%d\n",
-                            ctrl->bRequestType, ctrl->bRequest,
-                            w_value, w_index, w_length);
-            }
+If the host key verification fails and no other supported host key
+types are available, the server software on that host should be
+upgraded.
 
-            /* respond with data transfer or status phase? */
-            if (value >= 0) {
-                    DBG(cdev, "audio req%02x.%02x v%04x i%04x l%d\n",
-                            ctrl->bRequestType, ctrl->bRequest,
-                            w_value, w_index, w_length);
-                    req->zero = 0;
-                    req->length = value;
-                    value = usb_ep_queue(cdev->gadget->ep0, req, GFP_ATOMIC);
+OpenSSH recently enabled the UpdateHostKeys option by default to assist
+the client by automatically migrating to better algorithms.
 
-                    if (value < 0)
-                            ERROR(cdev, "audio response on err %d\n", value);
-            }
+[1] "SHA-1 is a Shambles: First Chosen-Prefix Collision on SHA-1 and
+    Application to the PGP Web of Trust" Leurent, G and Peyrin, T
+    (2020) https://eprint.iacr.org/2020/014.pdf
 
-            /* device either stalls (value < 0) or reports success */
-            return value;
-    } 
+Security
+========
 
- 
-Execution of the sample readout exploit allows dumping of up to 65k of memory.
+ * sshd(8): OpenSSH 8.5 introduced the LogVerbose keyword. When this
+   option was enabled with a set of patterns that activated logging
+   in code that runs in the low-privilege sandboxed sshd process, the
+   log messages were constructed in such a way that printf(3) format
+   strings could effectively be specified the low-privilege code.
 
-    $ ./gadget.py -v 0x1b67 -p 0x400c -f uac1 | wc -c
-    65535
+   An attacker who had sucessfully exploited the low-privilege
+   process could use this to escape OpenSSH's sandboxing and attack
+   the high-privilege process. Exploitation of this weakness is
+   highly unlikely in practice as the LogVerbose option is not
+   enabled by default and is typically only used for debugging. No
+   vulnerabilities in the low-privilege process are currently known
+   to exist.
 
-     
+   Thanks to Ilja Van Sprundel for reporting this bug.
 
-    $ ./gadget.py -v 0x1b67 -p 0x400c -f uac1 | strings
+Changes since OpenSSH 8.5
+=========================
 
-    nsole=tty1 root=PARTUUID=e02024cb-02 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait modules-load=dwc2
-    tem.slice/system-getty.slice/getty@...GS0.service
-    !rE*
-    ?& .4!
-    0usb_composite_setup_continue
-    composite_setup
-    usb_gadget_get_string
-    usb_otg_descriptor_init
-    usb_otg_descriptor_alloc
-    usb_free_all_descriptors
-    usb_assign_descriptors
-    usb_copy_descriptors
+This release contains mostly bug fixes.
 
-    usb_gadget_config_buf 
+New features
+------------
 
+ * sftp-server(8): add a new limits@...nssh.com protocol extension
+   that allows a client to discover various server limits, including
+   maximum packet size and maximum read/write length.
 
-On the other hand, execution of the overwrite exploit allows one to write arbitrary data past expected buffer boundaries.
+ * sftp(1): use the new limits@...nssh.com extension (when available)
+   to select better transfer lengths in the client.
 
-    $ ./gadget.py -v 0x1b67 -p 0x400c -f uac1 -d write
+ * sshd(8): Add ModuliFile keyword to sshd_config to specify the
+   location of the "moduli" file containing the groups for DH-GEX.
 
+ * unit tests: Add a TEST_SSH_ELAPSED_TIMES environment variable to
+   enable printing of the elapsed time in seconds of each test.
 
-    Message from syslogd@...o at Dec  6 19:56:01 ...
-     kernel:[  103.850206] Internal error: Oops: 5 [#1] ARM
+Bugfixes
+--------
 
+ * ssh_config(5), sshd_config(5): sync CASignatureAlgorithms lists in
+   manual pages with the current default. GHPR#174
 
-Similarly in case of the rndis gadget the rndis_setup function can be exploited to write past buffer boundaries using control transfer request with direction out, type class, recipient interface and bRequest set to USB_CDC_SEND_ENCAPSULATED_COMMAND. 
+ * ssh(1): ensure that pkcs11_del_provider() is called before exit.
+   GHPR#234
 
-    static int
-    rndis_setup(struct usb_function *f, const struct usb_ctrlrequest *ctrl)
-    {
-            struct f_rndis          *rndis = func_to_rndis(f);
-            struct usb_composite_dev *cdev = f->config->cdev;
-            struct usb_request      *req = cdev->req;
-            int                     value = -EOPNOTSUPP;
-            u16                     w_index = le16_to_cpu(ctrl->wIndex);
-            u16                     w_value = le16_to_cpu(ctrl->wValue);
-            u16                     w_length = le16_to_cpu(ctrl->wLength);
-            /* composite driver infrastructure handles everything except
-             * CDC class messages; interface activation uses set_alt().
-             */
-            switch ((ctrl->bRequestType << 8) | ctrl->bRequest) {
-            /* RNDIS uses the CDC command encapsulation mechanism to implement
-             * an RPC scheme, with much getting/setting of attributes by OID.
-             */
-            case ((USB_DIR_OUT | USB_TYPE_CLASS | USB_RECIP_INTERFACE) << 8)
-                            | USB_CDC_SEND_ENCAPSULATED_COMMAND:
-                    if (w_value || w_index != rndis->ctrl_id)
-                            goto invalid;
-                    /* read the request; process it later */
-                    value = w_length;
-                    req->complete = rndis_command_complete;
-                    req->context = rndis;
-                    /* later, rndis_response_available() sends a notification */
-                    break;
+ * ssh(1), sshd(8): fix problems in string->argv conversion. Multiple
+   backslashes were not being dequoted correctly and quoted space in
+   the middle of a string was being incorrectly split. GHPR#223
 
-     ... 
+ * ssh(1): return non-zero exit status when killed by signal; bz#3281
 
-     ...
+ * sftp-server(8): increase maximum SSH2_FXP_READ to match the maximum
+   packet size. Also handle zero-length reads that are not explicitly
+   banned by the spec.
 
-            /* respond with data transfer or status phase? */
-            if (value >= 0) {
-                    DBG(cdev, "rndis req%02x.%02x v%04x i%04x l%d\n",
-                            ctrl->bRequestType, ctrl->bRequest,
-                            w_value, w_index, w_length);
-                    req->zero = (value < w_length);
-                    req->length = value;
-                    value = usb_ep_queue(cdev->gadget->ep0, req, GFP_ATOMIC);
-                    if (value < 0)
-                            ERROR(cdev, "rndis response on err %d\n", value);
-            }
-            /* device either stalls (value < 0) or reports success */
-            return value;
+Portability
+-----------
 
-    } 
+ * sshd(8): don't mistakenly exit on transient read errors on the
+   network socket (e.g. EINTR, EAGAIN); bz3297
 
+ * Create a dedicated contrib/gnome-ssk-askpass3.c source instead of
+   building it from the same file as used for GNOME2. Use the GNOME3
+   gdk_seat_grab() to manage keyboard/mouse/server grabs for better
+   compatibility with Wayland.
 
-Vulnerable execution paths:
-- f_rndis.c
-    - rndis_setup
-- f_uac1.c
-    - out_rq_cur
-    - ac_rq_in
-    - audio_set_endpoint_req
-    - audio_get_endpoint_req
-- f_uac1_legacy.c
-    - audio_set_intf_req
-    - audio_set_endpoint_req
-    - audio_get_endpoint_req
-- f_uac2.c
-    - out_rq_cur
-- f_hid.c
-    - hid_gsetup for HID_REQ_SET_REPORT case
+ * Fix portability build errors bz3293 bz3292 bz3291 bz3278
 
-Impact
+ * sshd(8): soft-disallow the fstatat64 syscall in the Linux
+   seccomp-bpf sandbox. bz3276
 
-Devices implementing affected usb device gadget classes (rndis, hid, uac1, uac1_legacy, uac2) may be affected by buffer overflow vulnerabilities resulting in information disclosure, denial of service or execution of arbitrary code in kernel context.
+ * unit tests: enable autoopt and misc unit tests that were
+   previously skipped
 
-Expected resolution
+Checksums:
+==========
 
-Limit the transfer phase size to min(len, buffer_size) in affected control request handlers to assure that a buffer overflow will not occur.
+ - SHA1 (openssh-8.6.tar.gz) = a3e93347eed6296faaaceb221e8786391530fccb
+ - SHA256 (openssh-8.6.tar.gz) = ihmgdEgKfCBRpC0qzdQRwYownrpBf+rsihvk4Rmim8M=
 
-Key dates
+ - SHA1 (openssh-8.6p1.tar.gz) = 8f9f0c94317baeb97747d6258f3997b4542762c0
+ - SHA256 (openssh-8.6p1.tar.gz) = w+bk2hYhdiyFDQO0fu0eSN/0zJYI3etUcgKiNN+O164=
 
-- 07.12.2021 - reported the issue to Kernel security team
-- 09.12.2021 - draft patch provided by Kernel security team
-- 12.12.2021 - fix merged to main Linux kernel tree (public)
+Please note that the SHA256 signatures are base64 encoded and not
+hexadecimal (which is the default for most checksum tools). The PGP
+key used to sign the releases is available from the mirror sites:
+https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
 
+Please note that the OpenPGP key used to sign releases has been
+rotated for this release. The new key has been signed by the previous
+key to provide continuity.
 
-I attached sample exploits based on pyusb. For optimal results libusb on the malicious host should be compiled with support for large request transfer messages (MAX_CTRL_BUFFER_LENGTH). 
+Reporting Bugs:
+===============
 
-View attachment "gadget.py" of type "text/x-python-script" (6081 bytes)
+- Please read https://www.openssh.com/report.html
+  Security bugs should be reported directly to openssh@...nssh.com
