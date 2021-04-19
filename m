@@ -1,112 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/14/3
-Message-ID: <d7da9abe-5635-5062-bc9d-ef9038f2d678@oracle.com>
-Date: Tue, 14 Dec 2021 08:37:18 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com, Povilas Kanapickas <povilas@...ix.lt>
-Cc: "X.Org Security Team" <xorg-security@...ts.x.org>
-Subject: Re: Fwd: X.Org Security Advisory: December 14, 2021
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/19/8
+Message-ID: <3eff829a-7795-2437-4aea-433849ffdd5b@archlinux.org>
+Date: Mon, 19 Apr 2021 14:31:30 -0400
+From: Eli Schwartz <eschwartz@...hlinux.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: xscreensaver package caps gets raw socket
 Content-Type: text/plain; charset=utf-8
 
-The fixes are also provided for XWayland users in the XWayland 21.1.4 release:
-https://lists.x.org/archives/xorg-announce/2021-December/003123.html
+On 4/19/21 2:15 PM, Ariadne Conill wrote:
+> Hello,
+> 
+> On Mon, 19 Apr 2021, David A. Wheeler wrote:
+> 
+>>>> On Apr 18, 2021, at 8:25 AM, Simon McVittie <smcv@...ian.org> wrote:
+>>>> Scraping is undesirable, but sometimes needed. If this is a common
+>>>> need, a
+>>>> long-term solution might be to create an option on ping to generate
+>>>> a standard
+>>>> format that’s easier to machine-parse.
+>>>
+>>> On Apr 19, 2021, at 1:35 PM, Ariadne Conill
+>>> <ariadne@...eferenced.org> wrote:
+>>> This already exists as fping(1), for example:
+>>
+>> The problem for application developers is that “ping” exists
+>> practically everywhere,
+>> while fping does not.
+> 
+> Absolutely true, but fping is packaged in most Linux distributions, as
+> well as all of the BSDs, due to its use by various network monitoring
+> programs such as smokeping and nagios, so it seems like a reasonable
+> dependency for cases like these.
+> 
+> IMO, it's better that programs declare something like fping as a
+> dependency, so that we don't have to deal with yet another program years
+> from now having elevated privileges and being abused to run tcpdump... :)
+> 
+> Seriously, if anyone on this list ever finds themselves writing a
+> program where they need to fire off some pings, instead of making their
+> program SUID or granting it cap_net_raw, just use fping instead.  At the
+> very least, you'll be happier because you don't have to write your own
+> ping code, and the distribution maintainers of the world will be happier
+> because you *didn't* write your own ping code.
 
-	-Alan Coopersmith-              alan.coopersmith@...cle.com
-	  X.Org Security Response Team - xorg-security@...ts.x.org
 
-On 12/14/21 5:14 AM, Povilas Kanapickas wrote:
-> 
-> -------- Forwarded Message --------
-> Subject: X.Org Security Advisory: December 14, 2021
-> Date: Tue, 14 Dec 2021 15:11:35 +0200
-> From: Povilas Kanapickas <povilas@...ix.lt>
-> To: xorg-announce@...ts.x.org
-> CC: xorg-devel@...ts.x.org <xorg-devel@...ts.x.org>, xorg@...ts.x.org
-> 
-> X.Org Security Advisory: December 14, 2021
-> 
-> Multiple input validation failures in X server extensions
-> =========================================================
-> 
-> All of the following issues can lead to local privileges elevation on
-> systems where the X server is running privileged and remote code
-> execution for ssh X forwarding sessions.
-> 
-> * CVE-2021-4008/ZDI-CAN-14192 SProcRenderCompositeGlyphs out-of-bounds
-> access
-> 
-> The handler for the CompositeGlyphs request of the Render extension does
-> not properly validate the request length leading to out of bounds memory
-> write.
-> 
-> * CVE-2021-4009/ZDI-CAN 14950 SProcXFixesCreatePointerBarrier
-> out-of-bounds access
-> 
-> The handler for the CreatePointerBarrier request of the XFixes extension
-> does not properly validate the request length leading to out of bounds
-> memory write.
-> 
-> * CVE-2021-4010/ZDI-CAN-14951 SProcScreenSaverSuspend out-of-bounds access
-> 
-> The handler for the Suspend request of the Screen Saver extension does
-> not properly validate the request length leading to out of bounds memory
-> write.
-> 
-> * CVE-2021-4011/ZDI-CAN-14952 SwapCreateRegister out-of-bounds access
-> 
-> The handlers for the RecordCreateContext and RecordRegisterClients
-> requests of the Record extension do not properly validate the request
-> length leading to out of bounds memory write.
-> 
-> Patches
-> -------
-> 
-> Patches for this issues have been commited to the xorg server git
-> repository (https://gitlab.freedesktop.org/xorg/xserver). xorg-server
-> 21.1.2 will be released shortly and will include these patches.
-> 
-> commit ebce7e2d80e7c80e1dda60f2f0bc886f1106ba60
-> 
->      render: Fix out of bounds access in SProcRenderCompositeGlyphs()
-> 
->      ZDI-CAN-14192, CVE-2021-4008
-> 
->      This vulnerability was discovered and the fix was suggested by:
->      Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
-> 
-> commit b5196750099ae6ae582e1f46bd0a6dad29550e02
-> 
->      xfixes: Fix out of bounds access in *ProcXFixesCreatePointerBarrier()
-> 
->      ZDI-CAN-14950, CVE-2021-4009
-> 
->      This vulnerability was discovered and the fix was suggested by:
->      Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
-> 
-> commit 6c4c53010772e3cb4cb8acd54950c8eec9c00d21
-> 
->      Xext: Fix out of bounds access in SProcScreenSaverSuspend()
-> 
->      ZDI-CAN-14951, CVE-2021-4010
-> 
->      This vulnerability was discovered and the fix was suggested by:
->      Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
-> 
-> commit e56f61c79fc3cee26d83cda0f84ae56d5979f768
-> 
->      record: Fix out of bounds access in SwapCreateRegister()
-> 
->      ZDI-CAN-14952, CVE-2021-4011
-> 
->      This vulnerability was discovered and the fix was suggested by:
->      Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
-> 
-> Thanks
-> ======
-> 
-> This vulnerability was discovered by Jan-Niklas Sohn working with
-> Trend Micro Zero Day Initiative.
-> 
-> --
-> Povilas Kanapickas
-> 
+Also fping is the standard fping, but there is no standard ping so one
+would need to coordinate adding the option to a number of different
+descendant forks of 4.3BSD ping, before it could be reliably used.
+
+If the answer to your question is ever "for X number of independent
+implementations of Y, add the same new feature to all of them", then the
+problem will not be coming up with wonderful ideas to solve problems --
+the problem will be getting people to implement those wonderful ideas.
+
+-- 
+Eli Schwartz
+Arch Linux Bug Wrangler and Trusted User
+
+
+
+Download attachment "OpenPGP_signature" of type "application/pgp-signature" (834 bytes)
