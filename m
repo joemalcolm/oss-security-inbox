@@ -1,87 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/26/1
-Message-ID: <05b88724-90b6-a38a-bb3b-7392f85c1934@physik.fu-berlin.de>
-Date: Tue, 26 Oct 2021 10:48:23 +0200
-From: John Paul Adrian Glaubitz <glaubitz@...sik.fu-berlin.de>
-To: mpe@...erman.id.au
-Cc: linuxppc-dev@...ts.ozlabs.org, oss-security@...ts.openwall.com, "debian-powerpc@...ts.debian.org" <debian-powerpc@...ts.debian.org>
-Subject: Re: Linux kernel: powerpc: KVM guest can trigger host crash on Power8
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/19/5
+Message-ID: <fba0d965-fe1-a7af-bda3-5871ba9450d6@dereferenced.org>
+Date: Mon, 19 Apr 2021 11:35:32 -0600 (MDT)
+From: Ariadne Conill <ariadne@...eferenced.org>
+To: oss-security@...ts.openwall.com
+cc: security@...ian.org
+Subject: Re: xscreensaver package caps gets raw socket
 Content-Type: text/plain; charset=utf-8
 
-Hi Michael!
+Hello,
 
-> The Linux kernel for powerpc since v5.2 has a bug which allows a
-> malicious KVM guest to crash the host, when the host is running on
-> Power8.
-> 
-> Only machines using Linux as the hypervisor, aka. KVM, powernv or bare
-> metal, are affected by the bug. Machines running PowerVM are not
-> affected.
-> 
-> The bug was introduced in:
-> 
->     10d91611f426 ("powerpc/64s: Reimplement book3s idle code in C")
-> 
-> Which was first released in v5.2.
-> 
-> The upstream fix is:
-> 
->   cdeb5d7d890e ("KVM: PPC: Book3S HV: Make idle_kvm_start_guest() return 0 if it went to guest")
->   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=cdeb5d7d890e14f3b70e8087e745c4a6a7d9f337
-> 
-> Which will be included in the v5.16 release.
+On Mon, 19 Apr 2021, David A. Wheeler wrote:
 
-I have tested these patches against 5.14 but it seems the problem [1] still remains for me
-for big-endian guests. I built a patched kernel yesterday, rebooted the KVM server and let
-the build daemons do their work over night.
+>> On Sat, 17 Apr 2021 at 07:41:15 -0700, Tavis Ormandy wrote:
+>>> Oh, I also pitched using popen("/bin/ping" ..), but I think nobody is
+>>> really convinced that will work, but I kinda like it :)
+>
+> On Apr 18, 2021, at 8:25 AM, Simon McVittie <smcv@...ian.org> wrote:
+>
+>> That's consistent with the principle of least-privilege, and the widely
+>> cited Unix philosophy of having programs that do one thing well.
+>>
+>> If you need to gain privileges, then I think that's a much, much better
+>> approach - ideally a new ping-like program that prints a machine-readable
+>> syntax rather than having to screen-scrape human-readable output, but
+>> if that's not available then ping itself is the next best thing.
+>
+>
+> I agree, running “ping” in a separate process
+> is FAR better than giving the “main” process
+> extra permissions it doesn’t actually need.
+> You’d have to be careful about the parameters sent, but that’s necessary anyway.
+> I don’t see the problem of calling /bin/ping, that sounds like the right answer.
+>
+> Scraping is undesirable, but sometimes needed. If this is a common need, a
+> long-term solution might be to create an option on ping to generate a standard
+> format that’s easier to machine-parse.
 
-When I got up this morning, I noticed the machine was down, so I checked the serial console
-via IPMI and saw the same messages again as reported in [1]:
+This already exists as fping(1), for example:
 
-[41483.963562] watchdog: BUG: soft lockup - CPU#104 stuck for 25521s! [migration/104:175]
-[41507.963307] watchdog: BUG: soft lockup - CPU#104 stuck for 25544s! [migration/104:175]
-[41518.311200] rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
-[41518.311216] rcu:     136-...0: (135 ticks this GP) idle=242/1/0x4000000000000000 softirq=32031/32033 fqs=2729959 
-[41547.962882] watchdog: BUG: soft lockup - CPU#104 stuck for 25581s! [migration/104:175]
-[41571.962627] watchdog: BUG: soft lockup - CPU#104 stuck for 25603s! [migration/104:175]
-[41581.330530] rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
-[41581.330546] rcu:     136-...0: (135 ticks this GP) idle=242/1/0x4000000000000000 softirq=32031/32033 fqs=2736378 
-[41611.962202] watchdog: BUG: soft lockup - CPU#104 stuck for 25641s! [migration/104:175]
-[41635.961947] watchdog: BUG: soft lockup - CPU#104 stuck for 25663s! [migration/104:175]
-[41644.349859] rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
-[41644.349876] rcu:     136-...0: (135 ticks this GP) idle=242/1/0x4000000000000000 softirq=32031/32033 fqs=2742753 
-[41671.961564] watchdog: BUG: soft lockup - CPU#104 stuck for 25697s! [migration/104:175]
-[41695.961309] watchdog: BUG: soft lockup - CPU#104 stuck for 25719s! [migration/104:175]
-[41707.369190] rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
-[41707.369206] rcu:     136-...0: (135 ticks this GP) idle=242/1/0x4000000000000000 softirq=32031/32033 fqs=2749151 
-[41735.960884] watchdog: BUG: soft lockup - CPU#104 stuck for 25756s! [migration/104:175]
-[41759.960629] watchdog: BUG: soft lockup - CPU#104 stuck for 25778s! [migration/104:175]
-[41770.388520] rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
-[41770.388548] rcu:     136-...0: (135 ticks this GP) idle=242/1/0x4000000000000000 softirq=32031/32033 fqs=2755540 
-[41776.076307] rcu: rcu_sched kthread timer wakeup didn't happen for 1423 jiffies! g49897 f0x0 RCU_GP_WAIT_FQS(5) ->state=0x402
-[41776.076327] rcu:     Possible timer handling issue on cpu=32 timer-softirq=1056014
-[41776.076336] rcu: rcu_sched kthread starved for 1424 jiffies! g49897 f0x0 RCU_GP_WAIT_FQS(5) ->state=0x402 ->cpu=32
-[41776.076350] rcu:     Unless rcu_sched kthread gets sufficient CPU time, OOM is now expected behavior.
-[41776.076360] rcu: RCU grace-period kthread stack dump:
-[41776.076434] rcu: Stack dump where RCU GP kthread last ran:
-[41783.960374] watchdog: BUG: soft lockup - CPU#104 stuck for 25801s! [migration/104:175]
-[41807.960119] watchdog: BUG: soft lockup - CPU#104 stuck for 25823s! [migration/104:175]
-[41831.959864] watchdog: BUG: soft lockup - CPU#104 stuck for 25846s! [migration/104:175]
-[41833.407851] rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
-[41833.407868] rcu:     136-...0: (135 ticks this GP) idle=242/1/0x4000000000000000 softirq=32031/32033 fqs=2760381 
-[41863.959524] watchdog: BUG: soft lockup - CPU#104 stuck for 25875s! [migration/104:175]
+$ fping -C4 -q google.com
+google.com : 46.8 41.4 45.8 43.7
 
-It seems that in this case, it was the testsuite of the git package [2] that triggered the bug. As you
-can see from the overview, the git package has been in the building state for 8 hours meaning the
-build server crashed and is no longer giving feedback to the database.
-
-Adrian
-
-> [1] https://bugzilla.kernel.org/show_bug.cgi?id=206669
-> [2] https://buildd.debian.org/status/package.php?p=git&suite=experimental
-
--- 
- .''`.  John Paul Adrian Glaubitz
-: :' :  Debian Developer - glaubitz@...ian.org
-`. `'   Freie Universitaet Berlin - glaubitz@...sik.fu-berlin.de
-  `-    GPG: 62FF 8A75 84E0 2956 9546  0006 7426 3B37 F5B5 F913
+Ariadne
