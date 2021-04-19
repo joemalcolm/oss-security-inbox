@@ -1,4 +1,9 @@
-Received: (qmail 9494 invoked by uid 550); 7 Apr 2025 14:34:38 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2801" "Monday" "19" "April" "2021" "17:36:42" "+0200" "Solar Designer" "solar@openwall.com" nil "61" "Re: [oss-security] xscreensaver package caps gets raw socket" nil nil nil "4" nil nil (number mark "U       solar@openwa Apr 19   61/2801  " thread-indent "\"Re: [oss-security] xscreensaver package caps gets raw socket\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] xscreensaver package caps gets raw socket" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 22174 invoked by uid 550); 19 Apr 2021 15:37:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,44 +12,77 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 7576 invoked from network); 7 Apr 2025 13:15:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=openeuler-sh.20200927.dkim.feishu.cn; t=1744031728;
-  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=wP68Ua1+9HE9Z32j6JnP7wii0PWIROs5LI6OUVVksQY=;
- b=ayy/N1rvi65evX0Ve5FjKXRD/TM9TFJlNji9Y2o55mQKf1hBhdDtWZQhef0+drt4m9fpnH
- ha4ADntpk4E681iwjH3WH3oa1xbeDRkhzTwVi7zZQWAEZEu0D+aU6zpaSDFJelvTX/hdO8
- zuA4qsoNlUX//TcGBFlFzFRBYlkmCyA/hpYEwpjI9T076+DVa21J7ECADDI5VhCC4abT5M
- lytvjwVbyNdY8VHJBm15UbpgCGgjlulHlX+cKdyPsUAQ08NiDhqr2Av7VL0hLiYhTwn9Ma
- 9/z0Vxu/PCs++6ZU8J0kK9hFBMVYFwKmEAjv/gjcvDtXz5HyjQtSiYuY473gsQ==
-X-Lms-Return-Path: <lba+167f3cfee+d76408+lists.openwall.com+liyajie@openeuler.sh>
-Content-Type: multipart/alternative;
- boundary=250c5cb909781d6173a6261a0d47a1ff27ce7ef2e4c8761de19d1bbacfe2
-Date: Mon, 07 Apr 2025 21:15:25 +0800
-Message-Id: <c91c769394051f886c25f8bf895ec770dce36a73.04827fe8.a43c.41dd.9fe9.7f451462d2d9@feishu.cn>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-From: =?utf-8?q?=E6=9D=8E=E4=BA=9A=E6=9D=B0?= <liyajie@openeuler.sh>
+Received: (qmail 22078 invoked from network); 19 Apr 2021 15:36:52 -0000
+Date: Mon, 19 Apr 2021 17:36:42 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20210419153642.GA25158@openwall.com>
+References: <20210417143105.GB3276@thinkstation>
 Mime-Version: 1.0
-Subject: [oss-security] CVE-2025-31344: giflib: The giflib open-source component has a buffer overflow vulnerability.
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210417143105.GB3276@thinkstation>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] xscreensaver package caps gets raw socket
 
---250c5cb909781d6173a6261a0d47a1ff27ce7ef2e4c8761de19d1bbacfe2
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset=UTF-8
+On Sat, Apr 17, 2021 at 07:31:05AM -0700, Tavis Ormandy wrote:
+> Hello, I noticed that at least debian (maybe others) ship xscreensaver
+> hack with cap_net_raw enabled:
+> 
+> $ getcap /usr/libexec/xscreensaver/sonar
+> /usr/libexec/xscreensaver/sonar cap_net_raw=p
 
-Affected Versions:
-- giflib 5.2.2 and below
+> - The code could use ping sockets instead, but they're still rarely
+>   enabled by default, and users have to set the ping_group_range sysctl.
+>   I personally think it's time to enable them by default, but that's a
+>   different discussion :-)
 
-Description:
-In the function DumpScreen2RGB of the giflib software, an attempt is made to access the color map through ColorMapEntry. The size of ColorMap is 6 bytes (from 0x602000000030 to 0x602000000036). However, when accessing ColorMap->Colors[GifRow[j]], the value of GifRow[j] exceeds the actual number of colors stored. The address pointed to by ColorMapEntry, 0x602000000039, goes beyond the allocated memory range for color data. As a result, accessing ColorMapEntry->Red leads to out-of-bounds access, causing a heap-buffer-overflow.
+I think the distro should set a ping_group_range by default to just one
+GID it can allocate for the purpose - e.g., on Owl we had:
 
-Credits:
-JiaXuan Song(m202372152@hust.edu.cn)
-bale.cen(cenxianlong@huawei.com)
+In /etc/group:
 
-Best Regards,
-Yajie Li
+_icmp:x:111:
 
+In /etc/sysctl.conf:
 
---250c5cb909781d6173a6261a0d47a1ff27ce7ef2e4c8761de19d1bbacfe2--
+# Range of group IDs permitted to access non-raw (datagram) ICMP sockets.
+#
+# These are an Openwall extension to the Linux kernel.  Our ping(1) program is
+# able to use these sockets, which enables it to start and run without
+# requiring root privileges nor a capability.  Access to these sockets is
+# restricted at all primarily in order to reduce direct exposure of the added
+# kernel code to potential attacks.  In other words, we gain privilege
+# separation due to keeping this access restricted and installing ping(1) SGID.
+#
+net.ipv4.ping_group_range = 111 111
+
+Then the distro should ideally make use of this in ping(1), like we did,
+installing it SGID _icmp.  (Note: ping(1) should also be patched to drop
+its elevated egid after obtaining the socket.)
+
+Then, as an option, the distro could also make use of ping sockets in
+/usr/libexec/xscreensaver/sonar and change it from cap_net_raw=p to SGID
+_icmp (with similar early dropping of the elevated egid).  It should
+also patch the known ways for an attacker to execute arbitrary code that
+could access the ping socket, in case of ping socket vulnerabilities in
+the kernel.
+
+If the ICMP ping functionality remains in sonar itself and isn't made
+available to all users by default (ping_group_range isn't set to cover
+the entire groups range anyway), then its added security risk shouldn't
+be taken by default - if a user really wants the sonar screensaver on
+their system, they should enable it explicitly.
+
+There are some valid reasons to just expose ICMP sockets to all users by
+default (but maybe exclude a range of system pseudo-user group IDs that
+certainly have no need for this, not to ease sandbox escapes) - such as
+to allow ICMP ping from users' QEMU VMs by default - but this sonar toy
+isn't a sufficiently good reason to take security risks, in my opinion.
+
+Other options would be to execute /bin/ping like you mention or maybe to
+ping by other means (non-ICMP, or only needing ICMP responses - e.g.
+like Olaf Kirch's unprivileged Linux 2.4+ traceroute(1) does - BTW, I
+think distros should adopt it, better late than never).
+
+Alexander
