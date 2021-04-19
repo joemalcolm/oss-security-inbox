@@ -1,39 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/04/5
-Message-ID: <f345a0d3-34f2-a013-545b-bf49ec5a4818@linux.com>
-Date: Fri, 5 Feb 2021 00:43:31 +0300
-From: Alexander Popov <alex.popov@...ux.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: linux-distros@...openwall.org, Linus Torvalds <torvalds@...uxfoundation.org>, Greg KH <greg@...ah.com>, "security@...nel.org" <security@...nel.org>, Norbert Slusarek <nslusarek@....net>, Stefano Garzarella <sgarzare@...hat.com>, Eric Dumazet <edumazet@...gle.com>, Anthony Liguori <aliguori@...zon.com>, David Miller <davem@...emloft.net>, Jakub Kicinski <kuba@...nel.org>, Jorgen Hansen <jhansen@...are.com>, Stefan Schmidt <stefan@...enfreihafen.org>, Jeff Vander Stoep <jeffv@...gle.com>, Andrey Konovalov <andreyknvl@...gle.com>
-Subject: Linux kernel: Exploitable vulnerabilities in AF_VSOCK implementation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/19/7
+Message-ID: <7b5533cb-2b98-ce2e-20ba-bef0fb133e3@dereferenced.org>
+Date: Mon, 19 Apr 2021 12:15:59 -0600 (MDT)
+From: Ariadne Conill <ariadne@...eferenced.org>
+To: oss-security@...ts.openwall.com
+cc: security@...ian.org
+Subject: Re: xscreensaver package caps gets raw socket
 Content-Type: text/plain; charset=utf-8
 
-Hello!
+Hello,
 
-Let me inform you about the Linux kernel vulnerabilities that I've found in
-AF_VSOCK implementation. I managed to exploit one of them for a local privilege
-escalation on Fedora Server 33 for x86_64, bypassing SMEP and SMAP. I'm going to
-share all the details about the exploit techniques later.
+On Mon, 19 Apr 2021, David A. Wheeler wrote:
 
-CONFIG_VSOCKETS and CONFIG_VIRTIO_VSOCKETS are shipped as kernel modules in all
-major GNU/Linux distributions. The vulnerable modules are automatically loaded
-when you create a socket for AF_VSOCK. That is available for unprivileged users
-and user namespaces are not needed for that.
+>>> On Apr 18, 2021, at 8:25 AM, Simon McVittie <smcv@...ian.org> wrote:
+>>> Scraping is undesirable, but sometimes needed. If this is a common need, a
+>>> long-term solution might be to create an option on ping to generate a standard
+>>> format that’s easier to machine-parse.
+>>
+>> On Apr 19, 2021, at 1:35 PM, Ariadne Conill <ariadne@...eferenced.org> wrote:
+>> This already exists as fping(1), for example:
+>
+> The problem for application developers is that “ping” exists practically everywhere,
+> while fping does not.
 
-These vulnerabilities are race conditions caused by wrong locking in
-net/vmw_vsock/af_vsock.c. The race conditions were implicitly introduced in
-November 2019 in the commits c0cfa2d8a788fcf4 and 6a2c0962105ae8ce that added
-VSOCK multi-transport support. These commits were merged in the Linux kernel
-v5.5-rc1.
+Absolutely true, but fping is packaged in most Linux distributions, as 
+well as all of the BSDs, due to its use by various network monitoring 
+programs such as smokeping and nagios, so it seems like a reasonable 
+dependency for cases like these.
 
-I prepared the fixing patch and made responsible disclosure to
-security@...nel.org. Now the patch is merged into the mainline kernel:
-  "vsock: fix the race conditions in multi-transport support"
+IMO, it's better that programs declare something like fping as a 
+dependency, so that we don't have to deal with yet another program years 
+from now having elevated privileges and being abused to run tcpdump... :)
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c518adafa39f37858697ac9309c6cf1805581446
-This patch is also backported into the affected stable trees.
+Seriously, if anyone on this list ever finds themselves writing a program 
+where they need to fire off some pings, instead of making their program 
+SUID or granting it cap_net_raw, just use fping instead.  At the very 
+least, you'll be happier because you don't have to write your own ping 
+code, and the distribution maintainers of the world will be happier 
+because you *didn't* write your own ping code.
 
-I've requested a CVE ID for these vulnerabilities at https://cveform.mitre.org/.
-
-Best regards,
-Alexander
+Ariadne
