@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3522" "Wednesday" "25" "January" "2017" "10:39:01" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20170125093901.GA30424@lorien.valinor.li>" "89" "Re: [oss-security] jasper: NULL pointer dereference in jp2_cdef_destroy (jp2_cod.c)" nil nil nil "1" "2017012509:39:01" "[oss-security] jasper: NULL pointer dereference in jp2_cdef_destroy (jp2_cod.c)" (number mark "U       carnil@debia Jan 25   89/3522  " thread-indent "\"Re: [oss-security] jasper: NULL pointer dereference in jp2_cdef_destroy (jp2_cod.c)\"\n") "<4852597.N8d9Bx2SxP@blackgate>" ("<4852597.N8d9Bx2SxP@blackgate>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6463" "Sunday" "18" "April" "2021" "18:53:14" "-0600" "Damien Miller" "djm@cvs.openbsd.org" nil "167" "[oss-security] Announce: OpenSSH 8.6 released" nil nil nil "4" nil nil (number mark "U       djm@cvs.open Apr 18  167/6463  " thread-indent "\"[oss-security] Announce: OpenSSH 8.6 released\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Announce: OpenSSH 8.6 released" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18245 invoked by uid 550); 25 Jan 2017 09:39:16 -0000
+Received: (qmail 23955 invoked by uid 550); 19 Apr 2021 00:53:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,132 +12,177 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18227 invoked from network); 25 Jan 2017 09:39:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=a/NRKuDwZvyacAiSM3g+IEUHhl7va0mEnFTY9PYh8KU=;
-        b=TVINBUsfcAI/eawl0cs5/RatTPfPVbo9LRZBGPl8KZv21UcmwkSUPLkotiZF2uc1YS
-         OB5yJjCJTgKjOYGf3IKdPedkob6KilfUbDjJQ21KbFR5a9CszPQKj0GUc2rTmCLwJrdp
-         riotAiP9g5CGu3pfUCYc8+D4ZpgbT6vr/fz0qg9uofnQ4ckXF6yaZnOXK7KUdy56JR2k
-         U/wS+TWf9rqHHEPj1lMUuVOvhCvcZ8Vzw1kB30cHoGTNFxJ0A9xRRCQL3OHMC2wl0VyZ
-         bhmxmJ9AUCtzl+AHDrzMl9tZ30hVNpb1/HVMKihYOlY/PXrLmcUO0LJVOoqkJwTzGpzx
-         XRMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=a/NRKuDwZvyacAiSM3g+IEUHhl7va0mEnFTY9PYh8KU=;
-        b=RN+sINRDzj96mUpeYf7N/QNiQRd02y9HOFUKr5eKjiQpPLxow3FRBLigEgP0R8WNao
-         EwGTpXdK1H7m2LsEQNJq2p+ljaosAxiVGGTgTDzWmkvMtAdjx38qDTJDWozWdLN7sfxZ
-         lo00ERud9CC1zUxf09glmsPqe0SsOyuuny3F0xldWk1m/vER2WoW0ierP1nOXfjw6B1s
-         LPuvb47Mjx6i/sQ3Z1BT9qG21phrBz/rxkDb/bBJTfUk/dKpfYW9l+8jv3vxdV9EVDiM
-         rCfgPH7VMdg4MuAScNnIL792Ls1s7+0NF05bW8KJ3N3r35kME6F2QISRmQh+KJ6woRjr
-         9WDA==
-X-Gm-Message-State: AIkVDXK7l+j9hfL08UzHxWofKKeIa+7d0cxUrT6pgKCHI84PH3CGuQLkRLYqnEl9lpb/jw==
-X-Received: by 10.13.219.213 with SMTP id d204mr29554859ywe.155.1485337143906;
-        Wed, 25 Jan 2017 01:39:03 -0800 (PST)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Wed, 25 Jan 2017 10:39:01 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
+Received: (qmail 23923 invoked from network); 19 Apr 2021 00:53:27 -0000
+From: Damien Miller <djm@cvs.openbsd.org>
+Date: Sun, 18 Apr 2021 18:53:14 -0600 (MDT)
 To: oss-security@lists.openwall.com
-Message-ID: <20170125093901.GA30424@lorien.valinor.li>
-References: <4852597.N8d9Bx2SxP@blackgate>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4852597.N8d9Bx2SxP@blackgate>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Subject: Re: [oss-security] jasper: NULL pointer dereference in
- jp2_cdef_destroy (jp2_cod.c)
+Message-ID: <94b0350fe3033c2b@cvs.openbsd.org>
+Subject: [oss-security] Announce: OpenSSH 8.6 released
 
-Hi Agostino
+OpenSSH 8.6 has just been released. It will be available from the
+mirrors listed at https://www.openssh.com/ shortly.
 
-On Wed, Jan 25, 2017 at 10:10:35AM +0100, Agostino Sarubbo wrote:
-> Description:
-> jasper is an open-source initiative to provide a free software-based reference 
-> implementation of the codec specified in the JPEG-2000 Part-1 standard.
-> 
-> Another round of fuzzing shows that a crafted image causes a NULL pointer 
-> access.
-> 
-> The complete ASan output:
-> 
-> # imginfo -f $FILE
-> cannot parse box data
-> ASAN:DEADLYSIGNAL
-> =================================================================
-> ==6697==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
-> 0x00000041da35 bp 0xbebebebebebebeae sp 0x7fff60ad6480 T0)
->     #0 0x41da34 in atomic_compare_exchange_strong /tmp/portage/sys-
-> devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-
-> rt/lib/asan/../sanitizer_common/sanitizer_atomic_clang.h:81
->     #1 0x41da34 in 
-> __asan::Allocator::AtomicallySetQuarantineFlagIfAllocated(__asan::AsanChunk*, 
-> void*, __sanitizer::BufferedStackTrace*) /tmp/portage/sys-
-> devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-
-> rt/lib/asan/asan_allocator.cc:468
->     #2 0x41da34 in __asan::Allocator::Deallocate(void*, unsigned long, 
-> __sanitizer::BufferedStackTrace*, __asan::AllocType) /tmp/portage/sys-
-> devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-
-> rt/lib/asan/asan_allocator.cc:522
->     #3 0x41da34 in __asan::asan_free(void*, __sanitizer::BufferedStackTrace*, 
-> __asan::AllocType) /tmp/portage/sys-
-> devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-
-> rt/lib/asan/asan_allocator.cc:725
->     #4 0x4d271c in free /tmp/portage/sys-
-> devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-
-> rt/lib/asan/asan_malloc_linux.cc:50
->     #5 0x7f86ef11c995 in jp2_cdef_destroy /tmp/portage/media-
-> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jp2/jp2_cod.c:230:3
->     #6 0x7f86ef11e18e in jp2_box_destroy /tmp/portage/media-
-> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jp2/jp2_cod.c:212:3
->     #7 0x7f86ef11e18e in jp2_box_get /tmp/portage/media-
-> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jp2/jp2_cod.c:319
->     #8 0x7f86ef1219f6 in jp2_decode /tmp/portage/media-
-> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/jp2/jp2_dec.c:159:16
->     #9 0x7f86ef0e4214 in jas_image_decode /tmp/portage/media-
-> libs/jasper-2.0.10/work/jasper-2.0.10/src/libjasper/base/jas_image.c:444:16
->     #10 0x50a3be in main /tmp/portage/media-
-> libs/jasper-2.0.10/work/jasper-2.0.10/src/appl/imginfo.c:238:16
->     #11 0x7f86ee1c478f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-
-> r3/work/glibc-2.23/csu/../csu/libc-start.c:289
->     #12 0x419cd8 in _start (/usr/bin/imginfo+0x419cd8)
-> 
-> AddressSanitizer can not provide additional info.
-> SUMMARY: AddressSanitizer: SEGV /tmp/portage/sys-
-> devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-
-> rt/lib/asan/../sanitizer_common/sanitizer_atomic_clang.h:81 in 
-> atomic_compare_exchange_strong
-> ==6697==ABORTING
-> 
-> Affected version:
-> 2.0.10
-> 
-> Fixed version:
-> N/A
-> 
-> Commit fix:
-> N/A
-> 
-> Credit:
-> This bug was discovered by Agostino Sarubbo of Gentoo.
-> 
-> CVE:
-> N/A
-> 
-> Reproducer:
-> https://github.com/asarubbo/poc/blob/master/00124-jasper-nullptr-jp2_cdef_destroy
-> 
-> Timeline:
-> 2017-01-18: bug discovered and reported upstream
+OpenSSH is a 100% complete SSH protocol 2.0 implementation and
+includes sftp client and server support.
 
-This should be: https://github.com/mdadams/jasper/issues/112
+Once again, we would like to thank the OpenSSH community for their
+continued support of the project, especially those who contributed
+code or patches, reported bugs, tested snapshots or donated to the
+project. More information on donations may be found at:
+https://www.openssh.com/donations.html
 
-Could you please reference as well the upstream issues, if they are
-reported in an upstream issue tracker? That would help much in
-tracking the issues.
+Future deprecation notice
+=========================
 
-Regards,
-Salvatore
+It is now possible[1] to perform chosen-prefix attacks against the
+SHA-1 algorithm for less than USD$50K.
+
+In the SSH protocol, the "ssh-rsa" signature scheme uses the SHA-1
+hash algorithm in conjunction with the RSA public key algorithm.
+OpenSSH will disable this signature scheme by default in the near
+future.
+
+Note that the deactivation of "ssh-rsa" signatures does not necessarily
+require cessation of use for RSA keys. In the SSH protocol, keys may be
+capable of signing using multiple algorithms. In particular, "ssh-rsa"
+keys are capable of signing using "rsa-sha2-256" (RSA/SHA256),
+"rsa-sha2-512" (RSA/SHA512) and "ssh-rsa" (RSA/SHA1). Only the last of
+these is being turned off by default.
+
+This algorithm is unfortunately still used widely despite the
+existence of better alternatives, being the only remaining public key
+signature algorithm specified by the original SSH RFCs that is still
+enabled by default.
+
+The better alternatives include:
+
+ * The RFC8332 RSA SHA-2 signature algorithms rsa-sha2-256/512. These
+   algorithms have the advantage of using the same key type as
+   "ssh-rsa" but use the safe SHA-2 hash algorithms. These have been
+   supported since OpenSSH 7.2 and are already used by default if the
+   client and server support them.
+
+ * The RFC8709 ssh-ed25519 signature algorithm. It has been supported
+   in OpenSSH since release 6.5.
+
+ * The RFC5656 ECDSA algorithms: ecdsa-sha2-nistp256/384/521. These
+   have been supported by OpenSSH since release 5.7.
+
+To check whether a server is using the weak ssh-rsa public key
+algorithm, for host authentication, try to connect to it after
+removing the ssh-rsa algorithm from ssh(1)'s allowed list:
+
+    ssh -oHostKeyAlgorithms=-ssh-rsa user@host
+
+If the host key verification fails and no other supported host key
+types are available, the server software on that host should be
+upgraded.
+
+OpenSSH recently enabled the UpdateHostKeys option by default to assist
+the client by automatically migrating to better algorithms.
+
+[1] "SHA-1 is a Shambles: First Chosen-Prefix Collision on SHA-1 and
+    Application to the PGP Web of Trust" Leurent, G and Peyrin, T
+    (2020) https://eprint.iacr.org/2020/014.pdf
+
+Security
+========
+
+ * sshd(8): OpenSSH 8.5 introduced the LogVerbose keyword. When this
+   option was enabled with a set of patterns that activated logging
+   in code that runs in the low-privilege sandboxed sshd process, the
+   log messages were constructed in such a way that printf(3) format
+   strings could effectively be specified the low-privilege code.
+
+   An attacker who had sucessfully exploited the low-privilege
+   process could use this to escape OpenSSH's sandboxing and attack
+   the high-privilege process. Exploitation of this weakness is
+   highly unlikely in practice as the LogVerbose option is not
+   enabled by default and is typically only used for debugging. No
+   vulnerabilities in the low-privilege process are currently known
+   to exist.
+
+   Thanks to Ilja Van Sprundel for reporting this bug.
+
+Changes since OpenSSH 8.5
+=========================
+
+This release contains mostly bug fixes.
+
+New features
+------------
+
+ * sftp-server(8): add a new limits@openssh.com protocol extension
+   that allows a client to discover various server limits, including
+   maximum packet size and maximum read/write length.
+
+ * sftp(1): use the new limits@openssh.com extension (when available)
+   to select better transfer lengths in the client.
+
+ * sshd(8): Add ModuliFile keyword to sshd_config to specify the
+   location of the "moduli" file containing the groups for DH-GEX.
+
+ * unit tests: Add a TEST_SSH_ELAPSED_TIMES environment variable to
+   enable printing of the elapsed time in seconds of each test.
+
+Bugfixes
+--------
+
+ * ssh_config(5), sshd_config(5): sync CASignatureAlgorithms lists in
+   manual pages with the current default. GHPR#174
+
+ * ssh(1): ensure that pkcs11_del_provider() is called before exit.
+   GHPR#234
+
+ * ssh(1), sshd(8): fix problems in string->argv conversion. Multiple
+   backslashes were not being dequoted correctly and quoted space in
+   the middle of a string was being incorrectly split. GHPR#223
+
+ * ssh(1): return non-zero exit status when killed by signal; bz#3281
+
+ * sftp-server(8): increase maximum SSH2_FXP_READ to match the maximum
+   packet size. Also handle zero-length reads that are not explicitly
+   banned by the spec.
+
+Portability
+-----------
+
+ * sshd(8): don't mistakenly exit on transient read errors on the
+   network socket (e.g. EINTR, EAGAIN); bz3297
+
+ * Create a dedicated contrib/gnome-ssk-askpass3.c source instead of
+   building it from the same file as used for GNOME2. Use the GNOME3
+   gdk_seat_grab() to manage keyboard/mouse/server grabs for better
+   compatibility with Wayland.
+
+ * Fix portability build errors bz3293 bz3292 bz3291 bz3278
+
+ * sshd(8): soft-disallow the fstatat64 syscall in the Linux
+   seccomp-bpf sandbox. bz3276
+
+ * unit tests: enable autoopt and misc unit tests that were
+   previously skipped
+
+Checksums:
+==========
+
+ - SHA1 (openssh-8.6.tar.gz) = a3e93347eed6296faaaceb221e8786391530fccb
+ - SHA256 (openssh-8.6.tar.gz) = ihmgdEgKfCBRpC0qzdQRwYownrpBf+rsihvk4Rmim8M=
+
+ - SHA1 (openssh-8.6p1.tar.gz) = 8f9f0c94317baeb97747d6258f3997b4542762c0
+ - SHA256 (openssh-8.6p1.tar.gz) = w+bk2hYhdiyFDQO0fu0eSN/0zJYI3etUcgKiNN+O164=
+
+Please note that the SHA256 signatures are base64 encoded and not
+hexadecimal (which is the default for most checksum tools). The PGP
+key used to sign the releases is available from the mirror sites:
+https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
+
+Please note that the OpenPGP key used to sign releases has been
+rotated for this release. The new key has been signed by the previous
+key to provide continuity.
+
+Reporting Bugs:
+===============
+
+- Please read https://www.openssh.com/report.html
+  Security bugs should be reported directly to openssh@openssh.com
