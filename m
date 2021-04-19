@@ -1,46 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/10/10
-Message-ID: <90160ae63614ca1098c87f5c60002b9a35e922ef.camel@mittwald.de>
-Date: Thu, 10 Jun 2021 08:04:37 +0000
-From: Sven Kieske <S.Kieske@...twald.de>
-To: "xen-announce@...ts.xen.org" <xen-announce@...ts.xen.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "xen-users@...ts.xen.org" <xen-users@...ts.xen.org>, "xen-devel@...ts.xen.org" <xen-devel@...ts.xen.org>
-CC: "security-team-members@....org" <security-team-members@....org>
-Subject: Re: Xen Security Advisory 375 v3 (CVE-2021-0089,CVE-2021-26313) - Speculative Code Store Bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/19/3
+Message-Id: <CEA32CF0-DCF5-4746-9BDB-5AF9CEA1118A@dwheeler.com>
+Date: Mon, 19 Apr 2021 11:01:54 -0400
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: oss-security@...ts.openwall.com
+Cc: security@...ian.org
+Subject: Re: xscreensaver package caps gets raw socket
 Content-Type: text/plain; charset=utf-8
 
-On Mi, 2021-06-09 at 13:50 +0000, Xen.org security team wrote:
-> For more details, see:
-[..]
->   https://www.amd.com/en/corporate-product-security-bulletin-amd-sb-1003
+> On Sat, 17 Apr 2021 at 07:41:15 -0700, Tavis Ormandy wrote:
+>> Oh, I also pitched using popen("/bin/ping" ..), but I think nobody is
+>> really convinced that will work, but I kinda like it :)
 
-The above link turns into a "Page not found", at least for me, I believe the correct link is:
+On Apr 18, 2021, at 8:25 AM, Simon McVittie <smcv@...ian.org> wrote:
 
-https://www.amd.com/en/corporate/product-security/bulletin/amd-sb-1003
-
-HTH
-
-Mit freundlichen Grüßen / Regards
-
-Sven Kieske
-Systementwickler
- 
- 
-Mittwald CM Service GmbH & Co. KG
-Königsberger Straße 4-6
-32339 Espelkamp
- 
-Tel.: 05772 / 293-900
-Fax: 05772 / 293-333
- 
-https://www.mittwald.de
- 
-Geschäftsführer: Robert Meyer, Florian Jürgens
- 
-St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
-Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
-
-Informationen zur Datenverarbeitung im Rahmen unserer Geschäftstätigkeit 
-gemäß Art. 13-14 DSGVO sind unter www.mittwald.de/ds abrufbar.
+> That's consistent with the principle of least-privilege, and the widely
+> cited Unix philosophy of having programs that do one thing well.
+> 
+> If you need to gain privileges, then I think that's a much, much better
+> approach - ideally a new ping-like program that prints a machine-readable
+> syntax rather than having to screen-scrape human-readable output, but
+> if that's not available then ping itself is the next best thing.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+I agree, running “ping” in a separate process
+is FAR better than giving the “main” process
+extra permissions it doesn’t actually need.
+You’d have to be careful about the parameters sent, but that’s necessary anyway.
+I don’t see the problem of calling /bin/ping, that sounds like the right answer.
+
+Scraping is undesirable, but sometimes needed. If this is a common need, a
+long-term solution might be to create an option on ping to generate a standard
+format that’s easier to machine-parse.
+
+--- David A. Wheeler
+
