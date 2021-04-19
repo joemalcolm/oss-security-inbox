@@ -1,92 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/05/5
-Message-Id: <E1mXpPC-0006vg-20@xenbits.xenproject.org>
-Date: Tue, 05 Oct 2021 18:43:10 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 386 v1 (CVE-2021-28702) - PCI devices with RMRRs not deassigned correctly
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/19/4
+Message-ID: <20210419153642.GA25158@openwall.com>
+Date: Mon, 19 Apr 2021 17:36:42 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: xscreensaver package caps gets raw socket
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Sat, Apr 17, 2021 at 07:31:05AM -0700, Tavis Ormandy wrote:
+> Hello, I noticed that at least debian (maybe others) ship xscreensaver
+> hack with cap_net_raw enabled:
+> 
+> $ getcap /usr/libexec/xscreensaver/sonar
+> /usr/libexec/xscreensaver/sonar cap_net_raw=p
 
-            Xen Security Advisory CVE-2021-28702 / XSA-386
+> - The code could use ping sockets instead, but they're still rarely
+>   enabled by default, and users have to set the ping_group_range sysctl.
+>   I personally think it's time to enable them by default, but that's a
+>   different discussion :-)
 
-            PCI devices with RMRRs not deassigned correctly
+I think the distro should set a ping_group_range by default to just one
+GID it can allocate for the purpose - e.g., on Owl we had:
 
-ISSUE DESCRIPTION
-=================
+In /etc/group:
 
-Certain PCI devices in a system might be assigned Reserved Memory
-Regions (specified via Reserved Memory Region Reporting, "RMRR").
-These are typically used for platform tasks such as legacy USB
-emulation.
+_icmp:x:111:
 
-If such a device is passed through to a guest, then on guest shutdown
-the device is not properly deassigned.  The IOMMU configuration for
-these devices which are not properly deassigned ends up pointing to a
-freed data structure, including the IO Pagetables.
+In /etc/sysctl.conf:
 
-Subsequent DMA or interrupts from the device will have unpredictable
-behaviour, ranging from IOMMU faults to memory corruption.
+# Range of group IDs permitted to access non-raw (datagram) ICMP sockets.
+#
+# These are an Openwall extension to the Linux kernel.  Our ping(1) program is
+# able to use these sockets, which enables it to start and run without
+# requiring root privileges nor a capability.  Access to these sockets is
+# restricted at all primarily in order to reduce direct exposure of the added
+# kernel code to potential attacks.  In other words, we gain privilege
+# separation due to keeping this access restricted and installing ping(1) SGID.
+#
+net.ipv4.ping_group_range = 111 111
 
-IMPACT
-======
+Then the distro should ideally make use of this in ping(1), like we did,
+installing it SGID _icmp.  (Note: ping(1) should also be patched to drop
+its elevated egid after obtaining the socket.)
 
-Administrators of guests which have been assigned RMRR-using PCI
-devices can cause denial of service and other problems, possibly
-including escalation of privilege.
+Then, as an option, the distro could also make use of ping sockets in
+/usr/libexec/xscreensaver/sonar and change it from cap_net_raw=p to SGID
+_icmp (with similar early dropping of the elevated egid).  It should
+also patch the known ways for an attacker to execute arbitrary code that
+could access the ping socket, in case of ping socket vulnerabilities in
+the kernel.
 
-VULNERABLE SYSTEMS
-==================
+If the ICMP ping functionality remains in sonar itself and isn't made
+available to all users by default (ping_group_range isn't set to cover
+the entire groups range anyway), then its added security risk shouldn't
+be taken by default - if a user really wants the sonar screensaver on
+their system, they should enable it explicitly.
 
-All versions of Xen from at least 4.4 onwards are vulnerable.
+There are some valid reasons to just expose ICMP sockets to all users by
+default (but maybe exclude a range of system pseudo-user group IDs that
+certainly have no need for this, not to ease sandbox escapes) - such as
+to allow ICMP ping from users' QEMU VMs by default - but this sonar toy
+isn't a sufficiently good reason to take security risks, in my opinion.
 
-Only Intel x86 systems are affected.  AMD x86 systems, and Arm
-systems, are all unaffected.
+Other options would be to execute /bin/ping like you mention or maybe to
+ping by other means (non-ICMP, or only needing ICMP responses - e.g.
+like Olaf Kirch's unprivileged Linux 2.4+ traceroute(1) does - BTW, I
+think distros should adopt it, better late than never).
 
-Only systems using PCI passthrough are affected.  (And then, only if
-the assigned devices have RMRRs, but whether a device advertises RMRRs
-is not easy to discern.)
-
-MITIGATION
-==========
-
-There is no mitigation (other than not passing through PCI devices
-with RMRRs to guests).
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa386.patch           xen-unstable - Xen 4.12.x
-
-$ sha256sum xsa386*
-f2f83c825e249bba9454437b48bbd8307fe7a224f56484388a67af124dfd279b  xsa386.patch
-$
-
-NOTE CONCERNING LACK OF EMBARGO
-===============================
-
-This issue was reported and debugged in public before the security nature
-became apparent.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmFcnH8MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZje0H+QE5A0ZvoaJ5VupZYjAt5ynbQjVqxwxqAxZDTvP7
-t3gtpsHSYgrHW+3giULxjGU0ZUGF9daO1JEIZCPCbUdIlmGqGEXdDoqtz0GrXCJJ
-swQFeXQVmn9lV4KMTHO0BvGw5aZOft1VgGNrixd3vckFl7c5G8sWFdl7IU7FPDTQ
-LiLMg6f1oOntBYjNZUZ2210jqct9GZ4ugURRufwZrwYIpc9H5pFnZAFHKismX/2m
-x/PCdmOCeivytmUPA4k62oJVpJdysAL+31XkZz8bbAhjFsUmYBJscW2T5mSfaYIp
-TaSrg9WBV+TVW7aNE2iittE2O0/YyOWfpUVh6lliECeFdd0=
-=aNEo
------END PGP SIGNATURE-----
-
-Download attachment "xsa386.patch" of type "application/octet-stream" (1183 bytes)
+Alexander
