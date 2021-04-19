@@ -1,4 +1,9 @@
-Received: (qmail 11569 invoked by uid 550); 27 Jun 2022 20:31:12 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1565" "Monday" "19" "April" "2021" "11:35:32" "-0600" "Ariadne Conill" "ariadne@dereferenced.org" nil "40" "Re: [oss-security] xscreensaver package caps gets raw socket" nil nil nil "4" nil nil (number mark "U       ariadne@dere Apr 19   40/1565  " thread-indent "\"Re: [oss-security] xscreensaver package caps gets raw socket\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] xscreensaver package caps gets raw socket" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 18076 invoked by uid 550); 19 Apr 2021 17:42:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,30 +12,65 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11545 invoked from network); 27 Jun 2022 20:31:11 -0000
-Content-Type: text/plain; charset=utf-8
-From: Tim Allison <tallison@apache.org>
+Received: (qmail 15912 invoked from network); 19 Apr 2021 17:35:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=dereferenced.org;
+	s=mailbun; t=1618853733;
+	bh=sz+KTajF5Xhrdv7xLynGlu6a8D4fwMhaWAz9pcwCVro=;
+	h=Date:From:To:cc:Subject:In-Reply-To:References;
+	b=S7WtwyzmrOzOmPfvntOqpI53Y3PexCaXkGoAxsR43iuTsfHQsgB1DEU6GRGnn79ol
+	 RRNhIVgX+wLVcbg+RbdqrUoVF23FCOMMglq/rF1dVLzHl5LENwME1EfaQ6Pr448wEF
+	 ehATqdjTvfkbl8AdnOmSBVqlc1ukooE7XvEqe1KpmO/OyT6BhRo7ENw2QqbtGRnjnV
+	 dWN0jHP+Ggllq08/+0V/u/7oHhgHeMh+klIr/DKSOeZWBVGwzyucFIzSv/ACaOhpz/
+	 IZPSfzJXmKurMDzVvImaTFTAMuz7k+4zc2XSeHZF9FD7jtb9VNJKb+Saox1n/CnPDf
+	 G4EKwQdQBpydg==
+Date: Mon, 19 Apr 2021 11:35:32 -0600 (MDT)
+From: Ariadne Conill <ariadne@dereferenced.org>
 To: oss-security@lists.openwall.com
-Message-ID: <98a8ea54-34b2-8826-b198-19d5a1acbbf6@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 27 Jun 2022 20:30:57 +0000
+cc: security@debian.org
+In-Reply-To: <CEA32CF0-DCF5-4746-9BDB-5AF9CEA1118A@dwheeler.com>
+Message-ID: <fba0d965-fe1-a7af-bda3-5871ba9450d6@dereferenced.org>
+References: <YHwlS06UV25JUeqh@momentum.pseudorandom.co.uk> <CEA32CF0-DCF5-4746-9BDB-5AF9CEA1118A@dwheeler.com>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2022-33879: Apache Tika: Incomplete fix and new regex DoS in
- StandardsExtractingContentHandler 
+Content-Type: multipart/mixed; boundary="0-607704200-1618853734=:15938"
+Subject: Re: [oss-security] xscreensaver package caps gets raw socket
 
-Severity: low
+--0-607704200-1618853734=:15938
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Description:
+Hello,
 
-The initial fixes in CVE-2022-30126 and CVE-2022-30973 for regexes in the S=
-tandardsExtractingContentHandler were insufficient, and we found a separate=
-, new regex DoS in a different regex in the StandardsExtractingContentHandl=
-er. These are now fixed in 1.28.4 and 2.4.1.
+On Mon, 19 Apr 2021, David A. Wheeler wrote:
 
-Credit:
+>> On Sat, 17 Apr 2021 at 07:41:15 -0700, Tavis Ormandy wrote:
+>>> Oh, I also pitched using popen("/bin/ping" ..), but I think nobody is
+>>> really convinced that will work, but I kinda like it :)
+>
+> On Apr 18, 2021, at 8:25 AM, Simon McVittie <smcv@debian.org> wrote:
+>
+>> That's consistent with the principle of least-privilege, and the widely
+>> cited Unix philosophy of having programs that do one thing well.
+>>
+>> If you need to gain privileges, then I think that's a much, much better
+>> approach - ideally a new ping-like program that prints a machine-readable
+>> syntax rather than having to screen-scrape human-readable output, but
+>> if that's not available then ping itself is the next best thing.
+>
+>
+> I agree, running “ping” in a separate process
+> is FAR better than giving the “main” process
+> extra permissions it doesn’t actually need.
+> You’d have to be careful about the parameters sent, but that’s necessary anyway.
+> I don’t see the problem of calling /bin/ping, that sounds like the right answer.
+>
+> Scraping is undesirable, but sometimes needed. If this is a common need, a
+> long-term solution might be to create an option on ping to generate a standard
+> format that’s easier to machine-parse.
 
-This incomplete fix was discovered and reported by the CodeQL team member [=
-@atorralba (Tony Torralba)](https://github.com/atorralba) and [@jarlob (Jar=
-oslav Loba=C4=8Devski)](https://github.com/jarlob) from Github Security Lab=
-.  The new ReDos was discovered by the Apache Tika team.
+This already exists as fping(1), for example:
 
+$ fping -C4 -q google.com
+google.com : 46.8 41.4 45.8 43.7
+
+Ariadne
+--0-607704200-1618853734=:15938--
