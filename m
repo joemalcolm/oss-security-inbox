@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1474" "Monday" "22" "August" "2016" "12:11:47" "+0200" "Werner Koch" "wk@gnupg.org" "<8760qtaza4.fsf@wheatstone.g10code.de>" "43" "[oss-security] Re: memory issues in libksba 1.3.4 and git" nil nil nil "8" "2016082210:11:47" "[oss-security] Re: memory issues in libksba 1.3.4 and git" (number mark "U       wk@gnupg.org Aug 22   43/1474  " thread-indent "\"[oss-security] Re: memory issues in libksba 1.3.4 and git\"\n") "<E28562C2-12D4-407B-BD2B-E154F5FCF884@trust-in-soft.com>" ("<E28562C2-12D4-407B-BD2B-E154F5FCF884@trust-in-soft.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1294" "Monday" "19" "April" "2021" "11:01:54" "-0400" "David A. Wheeler" "dwheeler@dwheeler.com" nil "30" "Re: [oss-security] xscreensaver package caps gets raw socket" nil nil nil "4" nil nil (number mark "U       dwheeler@dwh Apr 19   30/1294  " thread-indent "\"Re: [oss-security] xscreensaver package caps gets raw socket\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] xscreensaver package caps gets raw socket" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5357 invoked by uid 550); 22 Aug 2016 10:56:25 -0000
+Received: (qmail 25824 invoked by uid 550); 19 Apr 2021 15:02:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,66 +12,48 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17744 invoked from network); 22 Aug 2016 10:17:35 -0000
-From: Werner Koch <wk@gnupg.org>
-To: Pascal Cuoq <cuoq@trust-in-soft.com>
-Cc: "oss-security\@lists.openwall.com" <oss-security@lists.openwall.com>,
-  =?utf-8?Q?Rapha=C3=ABl?= Rieu-Helft <raphael.rieu-helft@trust-in-soft.com>
-References: <E28562C2-12D4-407B-BD2B-E154F5FCF884@trust-in-soft.com>
-Organisation: g10 Code GmbH
-X-message-flag: Mails containing HTML will not be read!
-	 Please send only plain text.
-OpenPGP: url=https://k.gnupg.net/80615870F5BAD690333686D0F2AD85AC1E42B367
-Date: Mon, 22 Aug 2016 12:11:47 +0200
-In-Reply-To: <E28562C2-12D4-407B-BD2B-E154F5FCF884@trust-in-soft.com> (Pascal
-	Cuoq's message of "Sat, 20 Aug 2016 14:06:42 +0000")
-Message-ID: <8760qtaza4.fsf@wheatstone.g10code.de>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=SRI-target-ANDVT-Freeh-anthrax-[Hello-to-all-my-friends-and-fans-in=";
-	micalg=pgp-sha1; protocol="application/pgp-signature"
-Subject: [oss-security] Re: memory issues in libksba 1.3.4 and git
+Received: (qmail 25804 invoked from network); 19 Apr 2021 15:02:28 -0000
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
+In-Reply-To: <YHwlS06UV25JUeqh@momentum.pseudorandom.co.uk>
+Date: Mon, 19 Apr 2021 11:01:54 -0400
+Cc: security@debian.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <CEA32CF0-DCF5-4746-9BDB-5AF9CEA1118A@dwheeler.com>
+References: <YHwlS06UV25JUeqh@momentum.pseudorandom.co.uk>
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3608.120.23.2.4)
+Subject: Re: [oss-security] xscreensaver package caps gets raw socket
+
+> On Sat, 17 Apr 2021 at 07:41:15 -0700, Tavis Ormandy wrote:
+>> Oh, I also pitched using popen("/bin/ping" ..), but I think nobody is
+>> really convinced that will work, but I kinda like it :)
+
+On Apr 18, 2021, at 8:25 AM, Simon McVittie <smcv@debian.org> wrote:
+
+> That's consistent with the principle of least-privilege, and the widely
+> cited Unix philosophy of having programs that do one thing well.
+>=20
+> If you need to gain privileges, then I think that's a much, much better
+> approach - ideally a new ping-like program that prints a machine-readable
+> syntax rather than having to screen-scrape human-readable output, but
+> if that's not available then ping itself is the next best thing.
 
 
-On Sat, 20 Aug 2016 16:06, cuoq@trust-in-soft.com said:
+I agree, running =E2=80=9Cping=E2=80=9D in a separate process
+is FAR better than giving the =E2=80=9Cmain=E2=80=9D process
+extra permissions it doesn=E2=80=99t actually need.
+You=E2=80=99d have to be careful about the parameters sent, but that=E2=80=
+=99s necessary anyway.
+I don=E2=80=99t see the problem of calling /bin/ping, that sounds like the =
+right answer.
 
-> These inputs have been set to Werner Koch, privately as per his
-> request, on May 25, June 11 and July 11. I am publishing them now so
+Scraping is undesirable, but sometimes needed. If this is a common need, a
+long-term solution might be to create an option on ping to generate a stand=
+ard
+format that=E2=80=99s easier to machine-parse.
 
-I am sorry about the delays.  I asked Pascal to discuss this privately
-for the simple matter that I would anyway be the one to fix the things.
-In the future I will take care to CC my co-hackers on such private mails
-so they can jump in or remind me of such delays.
-
-> that anyone who uses or might want to use libksba to parse messages
-> (received pre-authentification by definition) can make an informed
-> choice considering the risks of denial of service and information
-
-I just release libksba 1.3.5 which limits the allocation to a 16 MiB
-which is the best solution I could come up with.  Note that this parser
-is only used for smallish ASN.1 objects like certificates or small parts
-of of larger ASN.1 objects (like CRLs).
-
-Thanks to Pascal for looking at Libksba.
-
-
-Shalom-Salam,
-
-   Werner
-
-
-=2D-=20
-Die Gedanken sind frei.  Ausnahmen regelt ein Bundesgesetz.
- /* Join us at OpenPGP.conf  <https://openpgp-conf.org> */
-
---=SRI-target-ANDVT-Freeh-anthrax-[Hello-to-all-my-friends-and-fans-in=
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-
-iEYEARECAAYFAle6z+QACgkQTwVA1Xf5X5VfLACeJ2hnudBTxAh46ZTqkiO+1zqY
-vLQAnRCtB/wREfKRPoVvr2vCtRtfrcOx
-=k0xn
------END PGP SIGNATURE-----
---=SRI-target-ANDVT-Freeh-anthrax-[Hello-to-all-my-friends-and-fans-in=--
+--- David A. Wheeler
 
