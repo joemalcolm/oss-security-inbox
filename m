@@ -1,25 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/22/3
-Message-ID: <76117b25-4176-1f57-5800-ba1e7dc04f5a@apache.org>
-Date: Thu, 22 Jul 2021 09:41:43 +0000
-From: Zoltán Borók-Nagy <boroknagyz@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/19/6
+Message-Id: <93DB9621-4F4E-492B-94E9-EB86E5D09CE0@dwheeler.com>
+Date: Mon, 19 Apr 2021 13:56:00 -0400
+From: "David A. Wheeler" <dwheeler@...eeler.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-28131: Apache Impala: Impala logs contain secrets 
+Cc: security@...ian.org
+Subject: Re: xscreensaver package caps gets raw socket
 Content-Type: text/plain; charset=utf-8
 
-Severity: high
 
-Description:
+>> On Apr 18, 2021, at 8:25 AM, Simon McVittie <smcv@...ian.org> wrote:
+>> Scraping is undesirable, but sometimes needed. If this is a common need, a
+>> long-term solution might be to create an option on ping to generate a standard
+>> format that’s easier to machine-parse.
+> 
+> On Apr 19, 2021, at 1:35 PM, Ariadne Conill <ariadne@...eferenced.org> wrote:
+> This already exists as fping(1), for example:
 
-Impala sessions use a 16 byte secret to verify that the session is not being hijacked by another user. However, these secrets appear in the Impala logs, therefore Impala users with access to the logs can use another authenticated user's sessions with specially constructed requests. This means the attacker is able to execute statements for which they don't have the necessary privileges otherwise.
+The problem for application developers is that “ping” exists practically everywhere,
+while fping does not.
 
-Impala deployments with Apache Sentry or Apache Ranger authorization enabled may be vulnerable to privilege escalation if an authenticated attacker is able to hijack a session or query from another authenticated user with privileges not assigned to the attacker.
+--- David A. Wheeler
 
-Impala deployments with audit logging enabled may be vulnerable to incorrect audit logging as a user could undertake actions that were logged under the name of a different authenticated user.
-
-Constructing an attack requires a high degree of technical sophistication and access to the Impala system as an authenticated user.
-
-Mitigation: If an Impala deployment uses Apache Sentry, Apache Ranger or audit logging, then users should upgrade to a version of Impala with the fix for IMPALA-10600. The Impala 4.0 release includes this fix. This hides session secrets from the logs to eliminate the risk of any attack using this mechanism.
-
-In lieu of an upgrade, restricting access to logs that expose secrets will reduce the risk of an attack. Restricting access to the Impala deployment to trusted users will also reduce the risk of an attack. Log redaction techniques can be used to redact secrets from the logs.
 
