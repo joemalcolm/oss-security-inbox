@@ -1,4 +1,9 @@
-Received: (qmail 1976 invoked by uid 550); 22 Nov 2023 21:13:03 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3710" "Tuesday" "20" "April" "2021" "09:58:05" "+0800" "Luo Likang" "luolikang@nsfocus.com" nil "186" "[oss-security] Linux kernel:  a heap buffer overflow in firedtv driver" nil nil nil "4" nil nil (number mark "U       luolikang@ns Apr 20  186/3710  " thread-indent "\"[oss-security] Linux kernel: a heap buffer overflow in firedtv driver\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux kernel: a heap buffer overflow in firedtv driver" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 18397 invoked by uid 550); 20 Apr 2021 07:16:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,43 +12,202 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1946 invoked from network); 22 Nov 2023 21:13:02 -0000
-Date: Wed, 22 Nov 2023 22:12:49 +0100
-From: Christian Brabandt <cb@256bit.org>
-To: oss-sec <oss-security@lists.openwall.com>
-Message-ID: <ZV5u0W1aT9xFCSTK@256bit.org>
+Received: (qmail 31928 invoked from network); 20 Apr 2021 01:58:28 -0000
+From: "Luo Likang" <luolikang@nsfocus.com>
+To: <oss-security@lists.openwall.com>
+Date: Tue, 20 Apr 2021 09:58:05 +0800
+Message-ID: <000001d73588$9b95a920$d2c0fb60$@nsfocus.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: cb@256bit.org
-X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
-Subject: [oss-security] [vim-security] use-after-free in ex_substitute in Vim < v9.0.2121
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_000_0001_01D735CB.A9BC92A0"
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: Adc1huIsvDN/CuFbRi20NQ44tqoZIQ==
+Content-Language: zh-cn
+Subject: [oss-security] Linux kernel:  a heap buffer overflow in firedtv driver
 
-CVE-2023-48706: Use-After-Free in ex_substitute()
-=================================================
-Date: 22.11.2023
-Severity: Low
+------=_NextPart_000_0001_01D735CB.A9BC92A0
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 
-When executing a :s command for the very first time and using a 
-sub-replace-special atom inside the substitution part, it is possible 
-that the recursive :s call causes freeing of memory which may later then 
-be accessed by the initial :s command.
+I found a buffer overflow vulnerability in function
+avc_ca_pmt(drivers/media/fireware/firedtv-avc.c). 
 
-Impact is low since the user must intentionally execute the payload and
-the whole process is a bit tricky to do (since it seems to work only
-reliably for the very first :s command). It may also cause a crash of 
-Vim.
+The bounds checking in avc_ca_pmt() is not strict enough.  It should be
+checking "read_pos + 4" because it's reading 5 bytes. If the
+"es_info_length" is non-zero then it reads a 6th byte so there needs to be
+an additional check for that.
 
-The Vim project would like to thank github user gandalf4a for reporting 
-this issue which is now fixed in Vim patch 9.0.2121.
+ 
 
-URLs: https://github.com/vim/vim/commit/26c11c56888d01e298cd8044caf8
-      https://github.com/vim/vim/security/advisories/GHSA-c8qm-x72m-q53q
+a)      static int fdtv_ca_pmt(struct firedtv *fdtv, void *arg)
+
+{
+
+       struct ca_msg *msg = arg;
+
+       int data_pos;
+
+       int data_length;
+
+       int i;
+
+ 
+
+       data_pos = 4;
+
+       if (msg->msg[3] & 0x80) { 
+
+              data_length = 0;
+
+              for (i = 0; i < (msg->msg[3] & 0x7f); i++)
+
+                     data_length = (data_length << 8) +
+msg->msg[data_pos++];
+
+       } else {
+
+              data_length = msg->msg[3];
+
+       }
+
+ 
+
+       return avc_ca_pmt(fdtv, &msg->msg[data_pos], data_length); <== setp
+in
+
+}
+
+In this function, the content of `arg` is still the original data passed in
+by the user. If msg->msg[3] = 0x84, msg->[4] = 0xff, msg->msg[5]=0xff,
+msg->msg[6]=0xff, msg->msg[7]=0xff , will enter the for loop four times, and
+data_length will be equal to 0xffffffff, and then call avc_ca_pmt(fdtv,
+&msg->msg[8], 0xffffffff)
+
+ 
+
+b)      int avc_ca_pmt(struct firedtv *fdtv, char *msg, int length)
+
+{
+
+       ..
+
+       int program_info_length;
+
+       int pmt_cmd_id;
+
+       int read_pos;
+
+       int write_pos;
+
+       int es_info_length;
+
+       int crc32_csum;
+
+       int ret;
+
+ 
+
+       ..
+
+       program_info_length = ((msg[4] & 0x0f) << 8) + msg[5]; /////////////
+[0]
+
+       if (program_info_length > 0)
+
+              program_info_length--; /* Remove pmt_cmd_id */
+
+       pmt_cmd_id = msg[6];                             //////////////[1]
+
+ 
+
+       c->operand[0] = SFE_VENDOR_DE_COMPANYID_0;
+
+       ..
+
+       c->operand[23] = (program_info_length & 0xff);
+
+ 
+
+       /* CA descriptors at programme level */
+
+       read_pos = 6;
+
+       write_pos = 24;
+
+       if (program_info_length > 0) {
+
+              pmt_cmd_id = msg[read_pos++];
+
+              if (pmt_cmd_id != 1 && pmt_cmd_id != 4)
+////////////[2]
+
+                     dev_err(fdtv->device,
+
+                            "invalid pmt_cmd_id %d\n", pmt_cmd_id);
+
+              if (program_info_length > sizeof(c->operand) - 4 - write_pos)
+{  ///[3]
+
+                     ret = -EINVAL;
+
+                     goto out;
+
+              }
+
+ 
+
+              memcpy(&c->operand[write_pos], &msg[read_pos], 
+
+                     program_info_length);
+
+              read_pos += program_info_length;
+
+              write_pos += program_info_length;             //////[4]
+
+       }
+
+       while (read_pos < length) {                      ////////[5]
+
+              c->operand[write_pos++] = msg[read_pos++]; ///[6]
+
+              c->operand[write_pos++] = msg[read_pos++];
+
+              c->operand[write_pos++] = msg[read_pos++];
+
+..
+
+              }
+
+       }
+
+In [0] and [1] : We can full control the program_info_length and pmt_cmd_id
+;
+
+In [2] : for bypass it, pmt_cmd_id must be 1 or 4 ;
+
+In [3] : program_info_length > sizeof(c->operand) - 4 - write_pos)
+
+==> program_info_length <= 509 - 4 - 24 = 0x1e1, so you can control its
+value to be 0x1e1 .
+
+           In [4] : write_pos will be updated to 24+0x1e1 = 505
+
+           In [5]: at this time, length=0xffffffff, read_pos is much smaller
+than it, so in[6] will overwrite the c->oprand many bytes.
+
+ 
+
+Patch : https://lore.kernel.org/linux-media/YHaulytonFcW+lyZ@mwanda/
+
+ 
+
+Credit :
+
+LuoLikang @ NSFOCUS SECURITY TEAM
+
+ 
 
 
-Thanks,
-Christian
--- 
-Wie man sein Kind nicht nennen sollte: 
-  Jupp Heidi 
+------=_NextPart_000_0001_01D735CB.A9BC92A0--
+
