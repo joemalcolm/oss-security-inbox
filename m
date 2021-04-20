@@ -1,56 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/31/2
-Message-ID: <20210831150038.5aqn2pqqfrupkjqm@yuggoth.org>
-Date: Tue, 31 Aug 2021 15:00:38 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/20/3
+Message-Id: <58F4A3F7-04B6-4CF1-B422-D8403105F09F@beckweb.net>
+Date: Tue, 20 Apr 2021 19:53:53 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA-2021-005] Neutron: Arbitrary dnsmasq reconfiguration via extra_dhcp_opts (CVE-2021-40085)
+Subject: Vulnerability in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-====================================================================
-OSSA-2021-005: Arbitrary dnsmasq reconfiguration via extra_dhcp_opts
-====================================================================
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-:Date: August 31, 2021
-:CVE: CVE-2021-40085
+The following releases contain fixes for security vulnerabilities:
 
+* Jenkins 2.286
+* Jenkins LTS 2.277.3
 
-Affects
-~~~~~~~
-- Neutron: <16.4.1, >=17.0.0 <17.2.1, >=18.0.0 <18.1.1
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2021-04-20/
 
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-Description
-~~~~~~~~~~~
-Pavel Toporkov reported a vulnerability in Neutron. By supplying a
-specially crafted extra_dhcp_opts value, an authenticated user may add
-arbitrary configuration to the dnsmasq process in order to crash the
-service, change parameters for other tenants sharing the same
-interface, or otherwise alter that daemon's behavior. This
-vulnerability may also be used to trigger a configuration parsing
-buffer overflow in versions of dnsmasq prior to 2.81, which could lead
-to remote code execution. All Neutron deployments are affected.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
+---
 
-Patches
-~~~~~~~
-- https://review.opendev.org/806750 (Ussuri)
-- https://review.opendev.org/806749 (Victoria)
-- https://review.opendev.org/806748 (Wallaby)
-- https://review.opendev.org/806746 (Xena)
+JENKINS-65280 / CVE-2021-28165
+Jenkins bundles Winstone-Jetty, a wrapper around Jetty, to act as HTTP and
+servlet server when started using `java -jar jenkins.war`. This is how
+Jenkins is run when using any of the installers or packages, but not when
+run using servlet containers such as Tomcat.
 
+Jenkins 2.285 and earlier, LTS 2.277.2 and earlier bundles Jetty 9.4.38 or
+earlier with multiple security vulnerabilities, including CVE-2021-28165.
+This vulnerability may allow unauthenticated attackers to cause a denial of
+service if Winstone-Jetty is configured to handle SSL/TLS connections.
 
-Credits
-~~~~~~~
-- Pavel Toporkov (CVE-2021-40085)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1939733
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-40085
-
--- 
-Jeremy Stanley
-
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
