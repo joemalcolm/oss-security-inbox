@@ -1,39 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/22/7
-Message-ID: <20210722222807.GA23469@localhost.localdomain>
-Date: Thu, 22 Jul 2021 22:30:45 +0000
-From: Qualys Security Advisory <qsa@...lys.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE-2021-33909: size_t-to-int vulnerability in Linux's filesystem layer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/20/4
+Message-ID: <bfe1a38e-f10a-cc67-d0f2-05089977383c@enst-bretagne.fr>
+Date: Tue, 20 Apr 2021 22:35:17 +0200
+From: Gabriel Corona <gabriel.corona@...t-bretagne.fr>
+To: oss-security@...ts.openwall.com
+Subject: DNS rebinding vulnerability in pupnp
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+The server-part of pupnp, a library used to implement UPnP clients and
+servers, is vulnerable to DNS rebinding attacks.
 
-A few people have asked us how we discovered CVE-2021-33909
-(size_t-to-int conversion vulnerability in Linux's filesystem layer):
+Impact: A remote web server can exploit this vulnerability to trick the
+user browser into triggering actions on the local UPnP services
+implemented using this library or exfiltrate resources exposed using the
+embedded web server.
 
-- We were reading (not auditing) the kernel code that generates some of
-  the files in /proc/pid. We eventually reached seq_read_iter() and
-  noticed the "while (1) { ... m->size <<= 1 ... }".
+This is fixed in v1.14.6
 
-- We immediately wondered if there was a limit to this exponential
-  growth; there was none. Next, we searched for /proc/pid seq_files
-  whose records could become very large; and we knew from CVE-2020-28010
-  that directory paths on Linux can be much longer than PATH_MAX.
+This is CVE-2021-29462.
 
-- So we found show_mountinfo() (which generates /proc/pid/mountinfo) and
-  the signed int buflen in the subsequent dentry_path(), which led to
-  the out-of-bounds write of the "//deleted" string.
+References:
 
-We are at your disposal for questions, comments, and further
-discussions. Thank you very much! With best regards,
-
---
-the Qualys Security Advisory team
-
-
-[https://d1dejaj6dcqv24.cloudfront.net/asset/image/email-banner-384-2x.png]<https://www.qualys.com/email-banner>
-
-
-
-This message may contain confidential and privileged information. If it has been sent to you in error, please reply to advise the sender of the error and then immediately delete it. If you are not the intended recipient, do not read, copy, disclose or otherwise use this message. The sender disclaims any liability for such unauthorized use. NOTE that all incoming emails sent to Qualys email accounts will be archived and may be scanned by us and/or by external service providers to detect and prevent threats to our systems, investigate illegal or inappropriate behavior, and/or eliminate unsolicited promotional emails (“spam”). If you have any concerns about this process, please contact us.
+https://github.com/pupnp/pupnp/security/advisories/GHSA-6hqq-w3jq-9fhg
+https://github.com/pupnp/pupnp
