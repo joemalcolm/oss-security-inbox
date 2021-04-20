@@ -1,36 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/01/3
-Message-ID: <CAH9eYVpH-8Trnfzi_9PznBjBt8KNJf4ySGPtAqT308Afzm2wpQ@mail.gmail.com>
-Date: Mon, 1 Feb 2021 11:07:59 -0500
-From: Brian Demers <bdemers@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/20/2
+Message-ID: <729765b4-00fc-bf19-d0b0-0f3923f685b9@enst-bretagne.fr>
+Date: Tue, 20 Apr 2021 09:54:56 +0200
+From: Gabriel Corona <gabriel.corona@...t-bretagne.fr>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-17523] Apache Shiro authentication bypass
+Subject: DNS rebinding vulnerability in npupnp
 Content-Type: text/plain; charset=utf-8
 
-The Shiro team is pleased to announce the release of Apache Shiro version
-1.7.1.
+The server-part of npupnp, a library used to implement UUPnP clients and
+servers, is vulnerable to DNS rebinding attacks.
 
-This security release contains 1 fix since the 1.7.0 release and is
-available for Download now [1].
+Impact: A remote web server can exploit this vulnerability to trick the
+user browser into triggering actions on the local UPnP services
+implemented using this library.
 
-Bug
-    [SHIRO-797] - Shiro 1.7.0 is lower than using springboot version
-2.0.7 dependency error
+This is fixed in v4.1.4.
 
-CVE-2020-17523:
-    Apache Shiro before 1.7.1, when using Apache Shiro with Spring, a
-specially crafted HTTP request may cause an authentication bypass.
+https://framagit.org/medoc92/npupnp
+https://www.lesbonscomptes.com/upmpdcli/npupnp-doc/libnpupnp.html
 
-The Apache Shiro team thanks differ from the Zorelworld iLab team for
-reporting this issue!
-
-Release binaries (.jars) are also available through Maven Central and
-source bundles through Apache distribution mirrors.
-
-For more information on Shiro, please read the documentation [2].
-
--The Apache Shiro Team
-
-[1] http://shiro.apache.org/download.html
-[2] http://shiro.apache.org/documentation.html
-
+A CVE as been requested.
