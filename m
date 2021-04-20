@@ -1,55 +1,188 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/05/6
-Message-ID: <F228DD28-51EB-41AC-9092-8E5EC9ACDE79@linux.com>
-Date: Fri, 05 Feb 2021 18:33:26 +0300
-From: Alexander Popov <alex.popov@...ux.com>
-To: oss-security <oss-security@...ts.openwall.com>
-CC: linux-distros@...openwall.org,Linus Torvalds <torvalds@...uxfoundation.org>,Greg KH <greg@...ah.com>,"security@...nel.org" <security@...nel.org>,Norbert Slusarek <nslusarek@....net>,Stefano Garzarella <sgarzare@...hat.com>,Eric Dumazet <edumazet@...gle.com>,Anthony Liguori <aliguori@...zon.com>,David Miller <davem@...emloft.net>,Jakub Kicinski <kuba@...nel.org>,Jorgen Hansen <jhansen@...are.com>,Stefan Schmidt <stefan@...enfreihafen.org>,Jeff Vander Stoep <jeffv@...gle.com>,Andrey Konovalov <andreyknvl@...gle.com>
-Subject: Re: Linux kernel: Exploitable vulnerabilities in AF_VSOCK implementation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/20/1
+Message-ID: <000001d73588$9b95a920$d2c0fb60$@nsfocus.com>
+Date: Tue, 20 Apr 2021 09:58:05 +0800
+From: "Luo Likang" <luolikang@...ocus.com>
+To: <oss-security@...ts.openwall.com>
+Subject: Linux kernel:  a heap buffer overflow in firedtv driver
 Content-Type: text/plain; charset=utf-8
 
+I found a buffer overflow vulnerability in function
+avc_ca_pmt(drivers/media/fireware/firedtv-avc.c). 
+
+The bounds checking in avc_ca_pmt() is not strict enough.  It should be
+checking "read_pos + 4" because it's reading 5 bytes. If the
+"es_info_length" is non-zero then it reads a 6th byte so there needs to be
+an additional check for that.
+
+ 
+
+a)      static int fdtv_ca_pmt(struct firedtv *fdtv, void *arg)
+
+{
+
+       struct ca_msg *msg = arg;
+
+       int data_pos;
+
+       int data_length;
+
+       int i;
+
+ 
+
+       data_pos = 4;
+
+       if (msg->msg[3] & 0x80) { 
+
+              data_length = 0;
+
+              for (i = 0; i < (msg->msg[3] & 0x7f); i++)
+
+                     data_length = (data_length << 8) +
+msg->msg[data_pos++];
+
+       } else {
+
+              data_length = msg->msg[3];
+
+       }
+
+ 
+
+       return avc_ca_pmt(fdtv, &msg->msg[data_pos], data_length); <== setp
+in
+
+}
+
+In this function, the content of `arg` is still the original data passed in
+by the user. If msg->msg[3] = 0x84, msg->[4] = 0xff, msg->msg[5]=0xff,
+msg->msg[6]=0xff, msg->msg[7]=0xff , will enter the for loop four times, and
+data_length will be equal to 0xffffffff, and then call avc_ca_pmt(fdtv,
+&msg->msg[8], 0xffffffff)
+
+ 
+
+b)      int avc_ca_pmt(struct firedtv *fdtv, char *msg, int length)
+
+{
+
+       ..
+
+       int program_info_length;
+
+       int pmt_cmd_id;
+
+       int read_pos;
+
+       int write_pos;
+
+       int es_info_length;
+
+       int crc32_csum;
+
+       int ret;
+
+ 
+
+       ..
+
+       program_info_length = ((msg[4] & 0x0f) << 8) + msg[5]; /////////////
+[0]
+
+       if (program_info_length > 0)
+
+              program_info_length--; /* Remove pmt_cmd_id */
+
+       pmt_cmd_id = msg[6];                             //////////////[1]
+
+ 
+
+       c->operand[0] = SFE_VENDOR_DE_COMPANYID_0;
+
+       ..
+
+       c->operand[23] = (program_info_length & 0xff);
+
+ 
+
+       /* CA descriptors at programme level */
+
+       read_pos = 6;
+
+       write_pos = 24;
+
+       if (program_info_length > 0) {
+
+              pmt_cmd_id = msg[read_pos++];
+
+              if (pmt_cmd_id != 1 && pmt_cmd_id != 4)
+////////////[2]
+
+                     dev_err(fdtv->device,
+
+                            "invalid pmt_cmd_id %d\n", pmt_cmd_id);
+
+              if (program_info_length > sizeof(c->operand) - 4 - write_pos)
+{  ///[3]
+
+                     ret = -EINVAL;
+
+                     goto out;
+
+              }
+
+ 
+
+              memcpy(&c->operand[write_pos], &msg[read_pos], 
+
+                     program_info_length);
+
+              read_pos += program_info_length;
+
+              write_pos += program_info_length;             //////[4]
+
+       }
+
+       while (read_pos < length) {                      ////////[5]
+
+              c->operand[write_pos++] = msg[read_pos++]; ///[6]
+
+              c->operand[write_pos++] = msg[read_pos++];
+
+              c->operand[write_pos++] = msg[read_pos++];
+
+..
+
+              }
+
+       }
+
+In [0] and [1] : We can full control the program_info_length and pmt_cmd_id
+;
+
+In [2] : for bypass it, pmt_cmd_id must be 1 or 4 ;
+
+In [3] : program_info_length > sizeof(c->operand) - 4 - write_pos)
+
+==> program_info_length <= 509 - 4 - 24 = 0x1e1, so you can control its
+value to be 0x1e1 .
+
+           In [4] : write_pos will be updated to 24+0x1e1 = 505
+
+           In [5]: at this time, length=0xffffffff, read_pos is much smaller
+than it, so in[6] will overwrite the c->oprand many bytes.
+
+ 
+
+Patch : https://lore.kernel.org/linux-media/YHaulytonFcW+lyZ@mwanda/
+
+ 
+
+Credit :
+
+LuoLikang @ NSFOCUS SECURITY TEAM
+
+ 
 
 
-On February 5, 2021 12:43:31 AM GMT+03:00, Alexander Popov <alex.popov@...ux.com> wrote:
->Hello!
->
->Let me inform you about the Linux kernel vulnerabilities that I've
->found in
->AF_VSOCK implementation. I managed to exploit one of them for a local
->privilege
->escalation on Fedora Server 33 for x86_64, bypassing SMEP and SMAP. I'm
->going to
->share all the details about the exploit techniques later.
->
->CONFIG_VSOCKETS and CONFIG_VIRTIO_VSOCKETS are shipped as kernel
->modules in all
->major GNU/Linux distributions. The vulnerable modules are automatically
->loaded
->when you create a socket for AF_VSOCK. That is available for
->unprivileged users
->and user namespaces are not needed for that.
->
->These vulnerabilities are race conditions caused by wrong locking in
->net/vmw_vsock/af_vsock.c. The race conditions were implicitly
->introduced in
->November 2019 in the commits c0cfa2d8a788fcf4 and 6a2c0962105ae8ce that
->added
->VSOCK multi-transport support. These commits were merged in the Linux
->kernel
->v5.5-rc1.
->
->I prepared the fixing patch and made responsible disclosure to
->security@...nel.org. Now the patch is merged into the mainline kernel:
->  "vsock: fix the race conditions in multi-transport support"
->
->https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c518adafa39f37858697ac9309c6cf1805581446
->This patch is also backported into the affected stable trees.
->
->I've requested a CVE ID for these vulnerabilities at
->https://cveform.mitre.org/.
-
-CVE-2021-26708 is assigned to these issues:
-https://nvd.nist.gov/vuln/detail/CVE-2021-26708
-
-Best regards,
-Alexander
