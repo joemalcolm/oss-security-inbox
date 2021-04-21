@@ -1,135 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/23/4
-Message-Id: <E1mpUdk-0004TE-9S@xenbits.xenproject.org>
-Date: Tue, 23 Nov 2021 12:11:12 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 385 v2 (CVE-2021-28706) - guests may exceed their designated memory limit
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/21/3
+Message-ID: <YIB0RV1MqfmtfYDG@eldamar.lan>
+Date: Wed, 21 Apr 2021 20:51:49 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: xscreensaver package caps gets raw socket
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-            Xen Security Advisory CVE-2021-28706 / XSA-385
-                               version 2
+On Sat, Apr 17, 2021 at 07:31:05AM -0700, Tavis Ormandy wrote:
+> Hello, I noticed that at least debian (maybe others) ship xscreensaver
+> hack with cap_net_raw enabled:
+> 
+> $ getcap /usr/libexec/xscreensaver/sonar
+> /usr/libexec/xscreensaver/sonar cap_net_raw=p
+> 
+> That seems like a bug, you can just load some driver and get a raw
+> socket. I wrote a quick exploit, this script will run tcpdump without
+> needing root.
+> 
+> $ bash sock.sh
+> 17:43:55.000000 IP (tos 0x0, ttl 64, id 14541, offset 0, flags [DF], proto ICMP (1), length 84)
+>     debian > sfo07s17-in-f78.1e100.net: ICMP echo request, id 59166, seq 1, length 64
+> 17:43:55.000000 IP (tos 0x0, ttl 128, id 42276, offset 0, flags [none], proto ICMP (1), length 84)
+>     sfo07s17-in-f78.1e100.net > debian: ICMP echo reply, id 59166, seq 1, length 64
+> 
+> I sent a report to debian, jwz and mesa. We concluded no embargo is
+> necessary, so continuing the discussion here.
+> 
+> Summary of discussion so far:
+> 
+> - In theory, mesa support running in a privileged context, their
+>   documentation says they disable dangerous features in setuid/setgid
+>   binaries:
+> 
+>     https://mesa-docs.readthedocs.io/en/latest/egl.html
+> 
+>   In fact, this is broken because they only check if (geteuid() !=
+>   getuid()) { ... }. That check doesn't even handle setgid, let alone file
+>   caps. If mesa agree this is a bug, simply changing their checks to if
+>   (getauxval(AT_SECURE)) { ... } might make this bug go away, and handle
+>   file caps and setgid for free. I filed a bug for that, but there
+>   hasn't been a response:
+>   https://gitlab.freedesktop.org/mesa/mesa/-/issues/4549
+> 
+> - The code could use ping sockets instead, but they're still rarely
+>   enabled by default, and users have to set the ping_group_range sysctl.
+>   I personally think it's time to enable them by default, but that's a
+>   different discussion :-)
+> 
+> - If neither of those two options work, then I guess we will have to
+>   try to make using mesa safe...but it sounds really hard. The obvious
+>   fix for right now is trying to clean up the environment, e.g.:
+> 
+>   (Note: untested)
+> 
+>     char *allowed[][2] = {
+>         { "DISPLAY", 0 },
+>         { "XAUTHORITY", 0 },
+>         NULL,
+>     };
+>     for (int i = 0; allowed[i][0]; i++)  {
+>         if (getenv(allowed[i][0])) {
+>             allowed[i][1] = strdup(getenv(allowed[i][0]));
+>         }
+>     }
+>     if (clearenv() != 0) {
+>         abort();
+>     }
+>     for (int i = 0; allowed[i][0]; i++)  {
+>         if (allowed[i][1]) {
+>             setenv(allowed[i][0], allowed[i][1], 1);
+>             free(allowed[i][1]);
+>         }
+>     }
+> 
+>     // ...
+>     MesaInitWhatever();
+> 
+> I *think* this will work in main(), but it's possible there are some
+> constructors somewhere that execute before main() I've missed. If that's
+> the case, then I guess we will need a wrapper binary that does execve()
+> and passes a non-cloexec fd with a sanitized environment?
+> 
+> The problem is that even if we make cleaning up the environment work,
+> you're always going to need $DISPLAY, and any code exec bug connecting
+> to a malicious X server will be a security bug.... and that sounds super
+> hard to get right?
+> 
+> I dunno, thoughts on fixing this appreciated...
 
-             guests may exceed their designated memory limit
+FTR, the xscreenserver part has been assigned CVE-2021-31523 by MITRE.
 
-UPDATES IN VERSION 2
-====================
-
-Add CVE numbers to patches.
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-When a guest is permitted to have close to 16TiB of memory, it may be
-able to issue hypercalls to increase its memory allocation beyond the
-administrator established limit.  This is a result of a calculation
-done with 32-bit precision, which may overflow.  It would then only
-be the overflowed (and hence small) number which gets compared against
-the established upper bound.
-
-IMPACT
-======
-
-A guest may be able too allocate unbounded amounts of memory to itself.
-This may result in a Denial of Service (DoS) affecting the entire host.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions from at least 3.2 onwards are affected.
-
-On x86, only Xen builds with the BIGMEM configuration option enabled are
-affected.  (This option is off by default.)
-
-Only hosts with more than 16 TiB of memory are affected.
-
-MITIGATION
-==========
-
-Setting the maximum amount of memory a guest may allocate to strictly
-less than 1023 GiB will avoid the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Julien Grall of Amazon.
-
-RESOLUTION
-==========
-
-Applying the appropriate first attached patch resolves this specific
-issue.  The second patch in addition documents altered support status of
-Xen on huge memory systems.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa385-?.patch           xen-unstable
-xsa385-4.15.patch        Xen 4.15.x - 4.14.x
-xsa385-4.13.patch        Xen 4.13.x
-xsa385-4.12.patch        Xen 4.12.x
-
-$ sha256sum xsa385*
-b278902e293730a117605200910180bb842cf95db4bdedfd54b42b7314041d8c  xsa385-1.patch
-46a5ccfbb763b857f6cd0df46a9b7eed155b9de399ca4c68c9925faf4d1d9adb  xsa385-2.patch
-69ebe63dc7dca71f74260af19205a6387be56c7dc67b97fa7695ab1acd3c4da4  xsa385-4.12.patch
-858eaad715e7cc62c4ab9784360f4ec77df70b2636b0755afe780d5c618cf9b4  xsa385-4.13.patch
-831e86c3adfec532b1a48a0b967b7c58c37db3733aee8d78216eb9d535b34f12  xsa385-4.15.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches described above (or others which are
-substantially similar) is permitted during the embargo, even on public-
-facing systems with untrusted guest users and administrators.
-
-HOWEVER, deployment of the mitigation described above is NOT permitted
-during the embargo on public-facing systems with untrusted guest users
-and administrators.  This is because such a configuration change is
-recognizable by the affected guests.
-
-AND: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmGc2jYMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZEd4IAMwrHHAqFvSHgZ8Uw+DzMeT54db9nowudP9i/kYy
-+KobbVlGkxwLAU3mvh5lRkOLYzoIonrcA99cajZQNIcOKt3Mfi/8qzGGUN+hWZvh
-6EZo3m7+7vx9mhtAeDBUbjkcZBLiVyxRAWALMS67ScBEX9lZTvbyj9nGkdQJmmfR
-pKt98z2Da2uR9YF521KWobuPYC0AFXujYBoavaTQpU/M8SiM+Wp1A2Fc6ZG+9ZKo
-frMeqFbHvwj94Hbqpn6CoLu2d/XnykMvttuLlqCKTccQc3puHXdQRz14W8IxxGYx
-gqYaIShZCFw/bUCu8mYHroDUlELJI3PIWQ1nJxy02bd5+N0=
-=7E6A
------END PGP SIGNATURE-----
-
-Download attachment "xsa385-1.patch" of type "application/octet-stream" (3944 bytes)
-
-Download attachment "xsa385-2.patch" of type "application/octet-stream" (735 bytes)
-
-Download attachment "xsa385-4.12.patch" of type "application/octet-stream" (3069 bytes)
-
-Download attachment "xsa385-4.13.patch" of type "application/octet-stream" (2967 bytes)
-
-Download attachment "xsa385-4.15.patch" of type "application/octet-stream" (3558 bytes)
+Regards,
+Salvatore
