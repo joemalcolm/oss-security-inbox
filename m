@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3116" "Wednesday" "2" "October" "2019" "23:00:22" "+0200" "=?UTF-8?B?SsOhbiBKYW7EjcOhcg==?=" "445358@mail.muni.cz" "<06a94797-a7f9-2b5e-855d-9e779914d36a@mail.muni.cz>" "93" "[oss-security] Minerva: ECDSA key recovery from bit-length leakage" nil nil nil "10" "2019100221:00:22" "[oss-security] Minerva: ECDSA key recovery from bit-length leakage" (number mark "U       445358@mail. Oct  2   93/3116  " thread-indent "\"[oss-security] Minerva: ECDSA key recovery from bit-length leakage\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Minerva: ECDSA key recovery from bit-length leakage" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2713" "Wednesday" "21" "April" "2021" "13:48:55" "+0200" "Heiko Schlittermann" "hs@nodmarc.schlittermann.de" nil "87" "[oss-security] Exim security update ahead" nil nil nil "4" nil nil (number mark "U       hs@nodmarc.s Apr 21   87/2713  " thread-indent "\"[oss-security] Exim security update ahead\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Exim security update ahead" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3661 invoked by uid 550); 2 Oct 2019 21:20:32 -0000
+Received: (qmail 25783 invoked by uid 550); 21 Apr 2021 11:49:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,110 +12,123 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32197 invoked from network); 2 Oct 2019 21:00:34 -0000
-To: oss-security@lists.openwall.com
-From: =?UTF-8?B?SsOhbiBKYW7EjcOhcg==?= <445358@mail.muni.cz>
-Openpgp: preference=signencrypt
-Message-ID: <06a94797-a7f9-2b5e-855d-9e779914d36a@mail.muni.cz>
-Date: Wed, 2 Oct 2019 23:00:22 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+Received: (qmail 25747 invoked from network); 21 Apr 2021 11:49:09 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=nodmarc.schlittermann.de; s=2020-06-19; h=Content-Type:MIME-Version:
+	Message-ID:Subject:To:From:Date:Cc:Content-Description:Content-ID:
+	Content-Transfer-Encoding:In-Reply-To:References:Resent-Cc:Resent-To;
+	bh=Dk0V8reIyoOgycfq+SAJlnlS2ZAKix23SDJbHeKGiuo=; b=WSOztpgNUBmWr5jD08kZx0Tizl
+	g5PMX5p0AV3KyvR1PfnpzqQ39VACdE+0/rUdoF+YR8ZGTAqojp7Rw7R1//ex0NhdZ8TiRV0BaC9dj
+	H+RdQBb+lVOCFGiVgat5iwIYZSXfMOyknp1p24Ji+TNq5Or5mjgysyjFazcPNKcAVqsL38R+iVZT4
+	jl78TAM6wXYsoteiagZBUrvmbhBIVtDxTVFVwencVGlVDgAcrx7LPHxGw+O7FSGdmKdeiOAOAm4s/
+	0PMIsr8Xqsb64Lekmy5NTyET0+E2/j1nA8YvX3kJuyAgpZKvqg4sWFjt6Wiry16Ozh4kBHqZOOveI
+	ACqiXc2Q==;
+Date: Wed, 21 Apr 2021 13:48:55 +0200
+From: Heiko Schlittermann <hs@nodmarc.schlittermann.de>
+To: oss-security <oss-security@lists.openwall.com>
+Message-ID: <20210421114855.GW3280@jumper.schlittermann.de>
+Mail-Followup-To: oss-security <oss-security@lists.openwall.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="PD8tBQWbk6jAZOZ16wbWSJwnNqJ4RrS77"
-Subject: [oss-security] Minerva: ECDSA key recovery from bit-length leakage
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="L0mHLbha4YKvhGtu"
+Content-Disposition: inline
+Organization: schlittermann -- internet & unix support
+X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
+ QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
+ y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
+ X?H&`
+X-Telegram: @HeikoSchlittermann
+X-Threema: T5RPWMSS
+X-Phone: +49.172.7909055
+X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
+X-GPG-Key-ID: F69376CE
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Subject: [oss-security] Exim security update ahead
 
---PD8tBQWbk6jAZOZ16wbWSJwnNqJ4RrS77
-Content-Type: multipart/mixed; boundary="263QToEPTMmWQYW4ab4MwdLCQcItXNviz";
- protected-headers="v1"
-From: =?UTF-8?B?SsOhbiBKYW7EjcOhcg==?= <445358@mail.muni.cz>
-To: oss-security@lists.openwall.com
-Message-ID: <06a94797-a7f9-2b5e-855d-9e779914d36a@mail.muni.cz>
-Subject: Minerva: ECDSA key recovery from bit-length leakage
-
---263QToEPTMmWQYW4ab4MwdLCQcItXNviz
+--L0mHLbha4YKvhGtu
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US-large
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-*Webpage*
-=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Dear Exim-Users and maintainers,
 
-https://minerva.crocs.fi.muni.cz/
+this is a *heads up* notice only. No action is required on your part
+right now.
 
+Abstract
+--------
 
-*Vulnerability*
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Several exploitable vulnerabilities in Exim were reported to us and are
+fixed.
 
-Minerva is a group of vulnerabilities in ECDSA/EdDSA implementations that a=
-llows
-for practical recovery of the long-term private key.
+We have prepared a security release, tagged as "exim-4.94.1".
 
-We have found implementations which leak the bit-length of the scalar during
-scalar multiplication on an elliptic curve. This leakage might seem minuscu=
-le as
-the bit-length presents a very small amount of information present in the
-scalar. However, in the case of ECDSA/EdDSA signature generation, the leaked
-bit-length of the random nonce is enough for full recovery of the private k=
-ey
-used after observing a few hundreds to a few thousands of signatures on kno=
-wn
-messages, due to the application of lattice techniques.
+This release contains all changes on the exim-4.94+fixes branch plus
+security fixes.
 
-https://minerva.crocs.fi.muni.cz/
+Schedule
+--------
 
+2021-04-27 13.30 UTC:   Grant access to the security repos
+                        for distro maintainers
 
-*Affected*
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+2021-05-04 13:30 UTC:   Publish the release on the public
+                        repos/website/etc
 
- * Cards
-   - Athena IDProtect
- * Libraries
-   - libgcrypt upto 1.8.4, fixed in 1.8.5
-   - wolfSSL/wolfCrypt upto 4.0.0, fixed in 4.1.0
-   - MatrixSSL upto 4.2.1
-   - SunEC/OpenJDK/OracleJDK upto JDK 12
-   - Crypto++ upto 8.2.0
- * Other
-   - https://github.com/indutny/elliptic/ 875 stars,2670640 uses
-   - https://github.com/kjur/jsrsasign 2015 stars,7406 uses
+Repositories
+------------
 
+The sources *will* be available on our security repo:
 
-*CVEs*
-=3D=3D=3D=3D=3D=3D
+        tarballs: git@git.exim.org:exim-packages-security.git
+        source:   git@git.exim.org:exim-security.git
+                  tag: exim-4.94.1
 
- * CVE-2019-15809 - Athena IDProtect cards
- * CVE-2019-13627 - libgcrypt
- * CVE-2019-13628 - wolfSSL/wolfCrypt
- * CVE-2019-13629 - MatrixSSL
- * CVE-2019-2894  - SunEC/OpenJDK/OracleJDK
- * CVE-2019-14318 - Crypto++
+Access to these security Git repos will be granted for the known set of
+Exim maintainers and distro packagers first. Please reach out to us, if
+you need further details or if you think, you should be part of this
+set.
+
+One week after granting access to the distro packagers the release will
+be pushed to the well known public repos as usual.
 
 
+Details
+-------
 
---263QToEPTMmWQYW4ab4MwdLCQcItXNviz--
+The current Exim versions (and likely older versions too) suffer from
+several exploitable vulnerabilities. These vulnerabilities were reported
+by Qualys via security@exim.org back in October 2020.
 
---PD8tBQWbk6jAZOZ16wbWSJwnNqJ4RrS77
+Due to several internal reasons it took more time than usual for the Exim
+development team to work on these reported issues in a timely manner.
+
+We explicitly thank Qualys for reporting *and* for providing patches for
+most of the reported vulnerabilities.
+
+Thank you for using Exim.
+
+    Best regards from Dresden/Germany
+    Viele Gr=C3=BC=C3=9Fe aus Dresden
+    Heiko Schlittermann
+--
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+
+--L0mHLbha4YKvhGtu
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCAAdFiEENiBWrajy9OQhVl74f0pEj+aPMp0FAl2VD+YACgkQf0pEj+aP
-Mp3fthAAuWUaSCQF/pK2NkBoPQ0CahFJRkrb1QwQ+Cp+Ck5+hvBO/hMKRJZbbMzP
-gWrctkUSjwmtXL6/XpQvpf7eou25LrUri0oN/WF2yuR3aKuVjAdvXGT8+NZdjgG8
-z6rxKhBlZqRhiVnhC6TYZV75cKM0coSNVcqvKCJIBViCQDPyKmAe0lKnMznDhiQ4
-oHThToa+utmedo2dLSATT/1//dFE8EOTyZtsT/iM7lR/BiHimnH440VreTmrbx0d
-j4gvd/qX7WwMoMa4ms/wTyFvuTCUrbFKxkjoMJW0DBL/e/yn1xMPT+1/88njSqxm
-w3SzEjQFdjRaBYvXEo0O+WeCUEqRRxzrW9B7+Vdh4F0Bt+MIN5t9ATqs6GGHPDdp
-rVWBVITd6oucV4rAJD0IbPKHtrEEAin+cggp9cUFynYHdai/ecO7vbqelVyY0fzz
-gLwGTFbNRnD+HuUwa5BCODhJ7Zpcx9tBkzJWe71tCaNlgXmqCfTpFvTNJsJMn9d7
-p+Hd08HWW3DJk/V5lkP/MJpqr2DNmEMsLkUnwfNyxpsbXW8eNCd4QMrmcjvTDK8E
-te/LbaE8LsrshMK+18xktnI/cnbMyr11zQZVoAMc/RVtAiccn3d49lP5BYeNf5hY
-B5Om+b8bkUrQWpr1Eye3/n9FBo1vAEUzItC3M+cmYNYk6LsYhlk=
-=4zVy
+iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAmCAEScACgkQr0zGdqa2
+wUJ7bQf+PLiZn+mvLCg9W1PgxFpOY8rxoOpBkPNRrXQq3KHCNYhA47/mDMiUb24Y
+cd+voDKx4WTmhNAzFeLrbFFlyzWsDln/t/MT8/8JYFH9vZ9MZPgpiSiruy44NWzC
+zIG63juOMcPRy1+fwqGWOSIlbt3Aie/jeGASHghtCPcswxYTw95DKNyc6ZTk3iNB
+KymKyzyNUpEIhjTNPxE5mnTX7Pgol4iXuOwchb079Tn66895bQIRXMeInZ6sm9X7
+54H4PA7mU2zm4ZR4DAkoqZlp6iNL5y5QeCVZCQ1tT3S52UQrwgtS5cmJr2hmzOVj
+yI3+NYjQ7X8nzGrtJPY79EEDm7yJ+A==
+=sv3a
 -----END PGP SIGNATURE-----
 
---PD8tBQWbk6jAZOZ16wbWSJwnNqJ4RrS77--
+--L0mHLbha4YKvhGtu--
