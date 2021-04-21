@@ -1,33 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/18/1
-Message-ID: <202109180736.BC80F1E90@keescook>
-Date: Sat, 18 Sep 2021 07:38:57 -0700
-From: Kees Cook <keescook@...omium.org>
-To: Solar Designer <solar@...nwall.com>
-Cc: Oleksandr Tymoshenko <ovt@...gle.com>, oss-security@...ts.openwall.com
-Subject: Re: Containers-optimized OS (COS) membership in the linux-distros list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/21/2
+Message-Id: <5949CABA-13A8-410A-BEED-7178D7423094@beckweb.net>
+Date: Wed, 21 Apr 2021 16:13:32 +0200
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 17, 2021 at 06:18:48PM +0200, Solar Designer wrote:
-> On Thu, Sep 16, 2021 at 11:12:21PM -0700, Oleksandr Tymoshenko wrote:
-> > I???d like to propose Container-Optimized OS (COS)  for membership in
-> > linux-distros. Text below addresses items listed in the ???Membership
-> > criteria??? section of
-> > https://oss-security.openwall.org/wiki/mailing-lists/distros
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-> > > 9. Have someone already on the private list, or at least someone else who
-> > > has been active on oss-security for years but is not affiliated with your
-> > > distro nor your organization, vouch for at least one of the people
-> > > requesting membership on behalf of your distro (then that one vouched-for
-> > > person will be able to vouch for others on your team, in case you'd like
-> > > multiple people subscribed)
-> > 
-> > Kees Cook (Cc-ed) can vouch for the proposed candidates.
+The following releases contain fixes for security vulnerabilities:
 
-I can vouch for Oleksandr and the COS team. They're active and
-responsive.
+* CloudBees CD Plugin 1.1.22
+* Config File Provider Plugin 3.7.1
+* Templating Engine Plugin 2.2
 
--Kees
 
--- 
-Kees Cook
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2021-04-21/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-2204 / CVE-2021-21642
+Config File Provider Plugin 3.7.0 and earlier does not configure its XML
+parser to prevent XML external entity (XXE) attacks.
+
+This allows attackers with the ability to define Maven configuration files
+to have Jenkins parse a crafted configuration file that uses external
+entities for extraction of secrets from the Jenkins controller or
+server-side request forgery.
+
+
+SECURITY-2254 / CVE-2021-21643
+Config File Provider Plugin 3.7.0 and earlier does not correctly perform
+permission checks in several HTTP endpoints.
+
+This allows attackers with global Job/Configure permission to enumerate
+system-scoped credentials IDs of credentials stored in Jenkins. Those can
+be used as part of an attack to capture the credentials using another
+vulnerability.
+
+
+SECURITY-2202 / CVE-2021-21644
+Config File Provider Plugin 3.7.0 and earlier does not require POST
+requests for an HTTP endpoint, resulting in a cross-site request forgery
+(CSRF) vulnerability.
+
+This vulnerability allows attackers to delete configuration files
+corresponding to an attacker-specified ID.
+
+
+SECURITY-2203 / CVE-2021-21645
+Config File Provider Plugin 3.7.0 and earlier does not perform permission
+checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to enumerate
+configuration file IDs.
+
+
+SECURITY-2311 / CVE-2021-21646
+Templating Engine Plugin 2.1 and earlier does not protect its pipeline
+configurations using Script Security Plugin.
+
+This vulnerability allows attackers with Job/Configure permission to
+execute arbitrary code in the context of the Jenkins controller JVM.
+
+
+SECURITY-2309 / CVE-2021-21647
+CloudBees CD Plugin 1.1.21 and earlier does not perform a permission check
+in an HTTP endpoint.
+
+This allows attackers with Item/Read permission to schedule builds of
+projects without having Item/Build permission.
+
+
