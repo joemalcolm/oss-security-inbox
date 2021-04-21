@@ -1,33 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/01/2
-Message-ID: <CAH5JyZqJHpFTWJxZ19CDhZ5N9Q=V9mLQybPYdSNw+8G1iEpBkw@mail.gmail.com>
-Date: Sat, 1 May 2021 21:36:56 +0100
-From: Kaxil Naik <kaxilnaik@...che.org>
-To: oss-security@...ts.openwall.com
-Cc: users@...flow.apache.org
-Subject: CVE-2021-28359: Apache Airflow Reflected XSS via Origin Query Argument in URL
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/21/1
+Message-ID: <20210421114855.GW3280@jumper.schlittermann.de>
+Date: Wed, 21 Apr 2021 13:48:55 +0200
+From: Heiko Schlittermann <hs@...marc.schlittermann.de>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: Exim security update ahead
 Content-Type: text/plain; charset=utf-8
 
-Versions Affected: <1.10.15, 2.0.0, 2.0.1
+Dear Exim-Users and maintainers,
 
-Description:
-The "origin" parameter passed to some of the endpoints like '/trigger' was
-vulnerable to XSS exploit. This issue affects Apache Airflow versions
-<1.10.15 in 1.x series and affects 2.0.0 and 2.0.1 and 2.x series. Update
-to Airflow 1.10.15 or 2.0.2.
+this is a *heads up* notice only. No action is required on your part
+right now.
 
-This is the same as CVE-2020-13944 & CVE-2020-17515 but the implemented fix
-did not account for certain cases.
+Abstract
+--------
 
-Please also update your Python version to the latest available PATCH
-releases of the installed MINOR versions, for example, update to Python
-3.6.13 if you are on Python 3.6.10. (Those contain the fix
-for CVE-2021-23336 (https://nvd.nist.gov/vuln/detail/CVE-2021-23336).
+Several exploitable vulnerabilities in Exim were reported to us and are
+fixed.
 
-Credit:
-Vasileios Daskalakis
+We have prepared a security release, tagged as "exim-4.94.1".
 
-Thanks,
-Kaxil,
-on behalf of Apache Airflow PMC
+This release contains all changes on the exim-4.94+fixes branch plus
+security fixes.
 
+Schedule
+--------
+
+2021-04-27 13.30 UTC:   Grant access to the security repos
+                        for distro maintainers
+
+2021-05-04 13:30 UTC:   Publish the release on the public
+                        repos/website/etc
+
+Repositories
+------------
+
+The sources *will* be available on our security repo:
+
+        tarballs: git@....exim.org:exim-packages-security.git
+        source:   git@....exim.org:exim-security.git
+                  tag: exim-4.94.1
+
+Access to these security Git repos will be granted for the known set of
+Exim maintainers and distro packagers first. Please reach out to us, if
+you need further details or if you think, you should be part of this
+set.
+
+One week after granting access to the distro packagers the release will
+be pushed to the well known public repos as usual.
+
+
+Details
+-------
+
+The current Exim versions (and likely older versions too) suffer from
+several exploitable vulnerabilities. These vulnerabilities were reported
+by Qualys via security@...m.org back in October 2020.
+
+Due to several internal reasons it took more time than usual for the Exim
+development team to work on these reported issues in a timely manner.
+
+We explicitly thank Qualys for reporting *and* for providing patches for
+most of the reported vulnerabilities.
+
+Thank you for using Exim.
+
+    Best regards from Dresden/Germany
+    Viele Grüße aus Dresden
+    Heiko Schlittermann
+--
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
