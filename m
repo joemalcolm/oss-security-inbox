@@ -1,29 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/05/2
-Message-ID: <11be742f-d8d0-2a6b-2ea0-dabbdeafebad@apache.org>
-Date: Tue, 05 Oct 2021 09:03:14 +0000
-From: Stefan Eissing <icing@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/22/14
+Message-ID: <CAFvHPjvbJiaq6Jt_U9ybSBbwzD1JDVTiq5SeAJscU2NQyfJUdw@mail.gmail.com>
+Date: Thu, 22 Apr 2021 14:09:19 -0400
+From: Francis Booth <influencedchaos@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-41773: Path traversal and file disclosure vulnerability in Apache HTTP Server 2.4.49 
+Subject: Re: Malicious commits to Linux kernel as part of university study
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+Mark,
 
-Description:
+>From my understanding from the LKML there were at least 3 patches submitted
+by Aditya which did manage to make it into the stable trees.
 
-A flaw was found in a change made to path normalization in Apache HTTP Server 2.4.49. An attacker could use a path traversal attack to map URLs to files outside the expected document root.  
+https://lore.kernel.org/linux-nfs/CADVatmNgU7t-Co84tSS6VW=3NcPu=17qyVyEEtVMVR_g51Ma6Q@mail.gmail.com/
 
-If files outside of the document root are not protected by "require all denied" these requests can succeed. Additionally this flaw could leak the source of interpreted files like CGI scripts.
+So I think we can agree that there may be more submissions that have made
+it through that we aren't yet aware of.
 
-This issue is known to be exploited in the wild.
 
-This issue only affects Apache 2.4.49 and not earlier versions.  
+On Thu, Apr 22, 2021 at 1:58 PM Mark Steward <marksteward@...il.com> wrote:
 
-Credit:
-
-This issue was reported by Ash Daulton along with the cPanel Security Team
-
-References:
-
-https://httpd.apache.org/security/vulnerabilities_24.html
+> On Thu, Apr 22, 2021 at 6:23 PM Ariadne Conill <ariadne@...eferenced.org>
+> wrote:
+> ...
+> > By mining the LKML archive, it may be possible to find the original set
+> of
+> > patch submissions by searching for similar keywords as the messages from
+> > Aditya.  If somebody can do that, then we would be able to determine at
+> > least some of the emails likely to have originated the patches.
+> >
+>
+> This looks like a good guess to me, and if correct, means none of the
+> submissions in the paper were successful:
+>
+>   https://lore.kernel.org/linux-nfs/YIEqt8iAPVq8sG+t@sol.localdomain/
+>
+>
+> Mark
+>
 
