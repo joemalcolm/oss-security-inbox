@@ -1,66 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/17/4
-Message-ID: <20210817151717.m4qgvhye2svlvxmp@yuggoth.org>
-Date: Tue, 17 Aug 2021 15:17:17 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/22/8
+Message-ID: <YIGnUqbkYtqOAQCx@meme-cluster>
+Date: Thu, 22 Apr 2021 12:41:54 -0400
+From: Santiago Torres <torresariass@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA-2021-004] Neutron: Linuxbridge ARP filter bypass on Netfilter platforms (CVE-2021-38598)
+Subject: Re: Malicious commits to Linux kernel as part of university study
 Content-Type: text/plain; charset=utf-8
 
-===================================================================
-OSSA-2021-004: Linuxbridge ARP filter bypass on Netfilter platforms
-===================================================================
+> *ALL* OSS projects should review proposed changes for potential security
+> issues, and harden their software & supply chain against attacks.
+> I also welcome research to make that better!
+> But we don’t need researchers who perform attacks
+> on production systems without authorization, or perform
+> attacks on developers without their consent.
 
-:Date: August 17, 2021
-:CVE: CVE-2021-38598
+Agreed, when I first heard about the paper in November I was very
+excited to read about it, as I sometimes face skepticism about SC
+attacks (less so, now that they appear more in the news). 
 
+Research in the space is important, but this is akin to cutting the
+brakes on a bus to see when the drivers or the passengers find out...
 
-Affects
-~~~~~~~
-- Neutron: <16.4.1, >=17.0.0 <17.1.3, ==18.0.0
+To add to things, I don't think the researchers themselves are aware on
+how the lkml actually works. They wouldn't be able to assess the result
+of their experiment, or prepare a meaningful explanation for the IRB
+with such a flawed model. I'm not trying to point fingers at anybody
+here, but us academics need to do some soul-seeking in terms of how we
+engage with the rest of the software-world.
 
+Thanks,
+-Santiago
 
-Description
-~~~~~~~~~~~
-Jake Yip with ARDC and Justin Mammarella with the University of
-Melbourne reported a vulnerability in Neutron's linuxbridge driver
-on newer Netfilter-based platforms (the successor to IPTables). By
-sending carefully crafted packets, anyone in control of a server
-instance connected to the virtual switch can impersonate the
-hardware addresses of other systems on the network, resulting in
-denial of service or in some cases possibly interception of traffic
-intended for other destinations. Only deployments using the
-linuxbridge driver with ebtables-nft are affected.
-
-
-Patches
-~~~~~~~
-- https://review.opendev.org/804058 (Train)
-- https://review.opendev.org/804057 (Ussuri)
-- https://review.opendev.org/804056 (Victoria)
-- https://review.opendev.org/785917 (Wallaby)
-- https://review.opendev.org/785177 (Xena)
-
-
-Credits
-~~~~~~~
-- Jake Yip from ARDC (CVE-2021-38598)
-- Justin Mammarella from University of Melbourne (CVE-2021-38598)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1938670
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-38598
-
-
-Notes
-~~~~~
-- The stable/train branch is under extended maintenance and will
-  receive no new point releases, but a patch for it is provided as a
-  courtesy.
-
--- 
-Jeremy Stanley
-
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
