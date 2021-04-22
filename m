@@ -1,97 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/02/5
-Message-Id: <D57DA3B6-A316-4E54-8DFC-AD70D0D08AC4@dwheeler.com>
-Date: Tue, 2 Nov 2021 08:55:41 -0700
-From: "David A. Wheeler" <dwheeler@...eeler.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/23/1
+Message-ID: <659r691-on94-p2nq-p9p4-845811pnn7q6@inai.de>
+Date: Fri, 23 Apr 2021 01:02:36 +0200 (CEST)
+From: Jan Engelhardt <jengelh@...i.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Trojan Source Attacks
+Subject: Re: Malicious commits to Linux kernel as part of university study
 Content-Type: text/plain; charset=utf-8
 
 
+On Thursday 2021-04-22 17:02, David A. Wheeler wrote:
+>Peter Bex:
+>> The university of Minnesota has been banned from making any commits to
+>> the Linux kernel after it was found out they'd been submitting bogus
+>> patches to the LKML to knowingly introduce security issues:
+>> https://lore.kernel.org/linux-nfs/YH%2FfM%2FTsbmcZzwnX@kroah.com/
+>
+>I support research, but I personally think this work goes way beyond
+>any ethical boundaries. While I don’t know if it’s *illegal* (I’m
+>not a lawyer!), it seems clear to me that these U of MN researchers
+>were conducting experiments on people without their prior consent.
 
-> On Nov 1, 2021, at 10:27 AM, Nicholas Boucher <nicholas.boucher@...cam.ac.uk> wrote:
-> 
-> OSS Security teams,
-> 
-> We have identified an issue affecting all compilers and interpreters that support Unicode. We believe that the techniques described hereafter can be used to generate adversarial encodings of source code files that can be used to craft targeted attacks against source code that cannot be seen by human reviewers in rendered text. This is of concern to the open source community because, absent defenses, supply chain attacks can be imperceptibly mounted against the ecosystem.
+If you alert the crowd that something is about to happen, you can no 
+longer observe how the crowd acts in an unalerted state, dooming the 
+research effort.
 
-The “Trojan Source” paper is interesting. Unicode bidirectional commands have been exploited in other contexts, this is the first paper I can recall that specifically discusses bidi in source code.
-
-However, I think it’s important to realize this is a special case of “underhanded code” aka “underhanded source code” aka “maliciously misleading code”. Underhanded code is source code crafted so that the source code looks like it does one thing to human reviewers, but it actually does something else. Homoglyphs are a common mechanism of attack (e.g., 1/l or O/0), as are misleading indentation, etc.
-
-The first reference I can find to underhanded code is the 2004 Obfuscated V Contest (http://graphics.stanford.edu/~danielh/vote/vote.html) created by Daniel Horn.
-
-Below are some of the related works that discuss underhanded code / maliciously misleading code; see my 2020 paper for a more complete list. My 2020 paper cites more examples, and it also describes a brief experiment in *countering* underhanded code. It turns out that a lot of underhanded code can be countered by relatively simpler measures... but those measures have to be implemented to work :-). My 2020 paper is here:
-https://www.ida.org/research-and-publications/publications/all/i/in/initial-analysis-of-underhanded-source-code
-https://www.ida.org/-/media/feature/publications/i/in/initial-analysis-of-underhanded-source-code/d-13166.ashx
-
---- David A. Wheeler
-
-
-
-=== SOME RELATED WORKS ===
-
-The Obfuscated V Contest (http://graphics.stanford.edu/~danielh/vote/vote.html) was created by Daniel Horn in 2004 and is the earliest “underhanded” programming contest that I found. It was a contest to create source code that looked like it did one thing, but actually did another.
-
-Underhanded C Contest (http://www.underhanded-c.org/) has run in many years. Per its FAQ, "The Underhanded C Contest is an annual contest to write innocent-looking C code 
-implementing  malicious  behavior.”
-
-Underhanded Crypto Contest (https://underhandedcrypto.com/). As of this 
-time, it has run from 2014 to 2018. The contest website does not directly note 
-the 2018 winners; however, the 2018 winners are presented and discussed in 
-a DefCon 26 presentation [Caudill 2018]. The set of all entries is available on 
-GitHub (https://github.com/UnderhandedCrypto/entries).
-
-Underhanded Solidity Coding Contest (USCC) (https://u.solidity.cc/; details 
-are available at its GitHub site https://github.com/Arachnid/uscc). Solidity is 
-a contract-oriented programming language for writing smart contracts that can 
-be implemented on blockchain platforms such as Ethereum. The 
-announcement of the winners of the first (2017) contest is available at 
-[Johnson 2017], and the complete set of 2017 winners is posted on GitHub at 
-https://github.com/Arachnid/uscc/tree/master/submissions-2017/. The 
-developers of Solidity used the contest results to improve their tooling. 
-• The “Write a program that makes 2+2=5” discussion on StackExchange at 
-https://codegolf.stackexchange.com/questions/28786/write-a-program-that-
-makes-2-2-5 shows how to do that in a variety of programming languages. 
-• The “Underhanded code contest: Not-so-quick sort” (https:// 
-codegolf.stackexchange.com/questions/19569/underhanded-code-contest-
-not-so-quick-sort) is a small underhanded code contest. The goal of this 
-contest was to “Write a program, in the language of your choice, that reads
-lines of input from standard input until EOF, and then writes them to standard 
-output in ASCIIbetical order, similar to the sort command-line program. ... 
-The underhanded part... is to prove that your favored platform is `better,’ by 
-having your program deliberately run much more slowly on a competing 
-platform.” 
-
-“April Fools Day!” (https://codegolf.stackexchange.com/questions/114891 
-/april-fools-day) is a small underhanded code contest with a few underhanded 
-code samples. The goal is to “write a program or function which appears to 
-print the first ten numbers of any integer sequence (on OEIS, the answerer 
-may choose which sequence), but instead prints the exact text “Happy April 
-Fool’s Day!” if and only if it is run on April 1st of any year.” 
-
-The “Underhanded Python” posting (https://gist.github.com/L3viathan 
-/e47d359470d5e18a357c67d9e4328c16) is quite clever. It uses the fact that 
-“//” opens a comment in other languages to fool the reader. It is revealed by 
-syntax coloring but even vim syntax coloring was not obvious enough to 
-immediately reveal the attack. 
-
-The 2003 attack on the Linux kernel source code. An attacker attempted to 
-subvert the Linux kernel in 2003 through underhanded code that used = 
-instead of ==. This is discussed in [Corbet 2003] and [Felten 2013].
-
-My PhD dissertation "Fully Countering Trusting Trust through Diverse Double-Compiling" discusses how to counter the "trusting trust" problem & includes a section about maliciously misleading source code. See: https://dwheeler.com/trusting-trust/
-
-The JavaScript Misdirection Contest announced the winner on September 27, 2015 http://misdirect.ion.land/
-
-My paper "Initial Analysis of Underhanded Source Code", (by David A. Wheeler, April, 2020, IDA document: D-13166),
-discusses underhanded code and the effectiveness of several potential countermeasures. It also includes a number of citations to other works on underhanded code. See:
-https://www.ida.org/research-and-publications/publications/all/i/in/initial-analysis-of-underhanded-source-code
-https://www.ida.org/-/media/feature/publications/i/in/initial-analysis-of-underhanded-source-code/d-13166.ashx
-
-Note that my 2020 paper includes references to many other related works (it includes a literature survey of such work).
-
---- David A. Wheeler
+Not to encourage UMN's conduct, but I'd find that the prank shows on TV 
+(let alone Youtube) are a much more severe intrusion, but somehow those 
+shows still run.
 
 
-
+What's more, with the pitchfork way this incident is being responded to, 
+future researchers may choose to operate more stealthily; no more 
+mailings from an edu mail address, more elaborate internet avatars (did 
+we ever prove who George Spelvin was?), up to the point that the 
+identities become indistinguishable from a foreign malignent elite 
+hacker group.
