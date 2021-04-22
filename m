@@ -1,29 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/29/6
-Message-ID: <CACZfFK5qhiaNND7Tsf4AKG=Jh9Nk4pHKSLKKCmZS7Au6pEgVqA@mail.gmail.com>
-Date: Fri, 29 Jan 2021 09:57:45 -0800
-From: Jihoon Son <jihoonson@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/22/7
+Message-ID: <20210422162518.GC10297@suse.de>
+Date: Thu, 22 Apr 2021 18:25:19 +0200
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-25646: Authenticated users can override system configurations in their requests which allows them to execute arbitrary code.
+Subject: Re: Malicious commits to Linux kernel as part of university study
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Hi,
 
-Apache Druid includes the ability to execute user-provided JavaScript
-code embedded in various types of requests. This functionality is
-intended for use in high-trust environments, and is disabled by
-default. However, in Druid 0.20.0 and earlier, it is possible for an
-authenticated user to send a specially-crafted request that forces
-Druid to run user-provided JavaScript code for that request,
-regardless of server configuration. This can be leveraged to execute
-code on the target machine with the privileges of the Druid server
-process.
+to follow the "give complete content" requirement, here their statement on their website:
 
-Mitigation:
+https://cse.umn.edu/cs/statement-cse-linux-kernel-research-april-21-2021
 
-Users should upgrade to Druid 0.20.1. Whenever possible, network
-access to cluster machines should be restricted to trusted hosts only.
+"
+Statement from CS&E on Linux Kernel research - April 21, 2021
 
-Credit:
+Leadership in the University of Minnesota Department of Computer Science & Engineering learned today about the details of research being conducted by one of its faculty members and graduate students into the security of the Linux Kernel. The research method used raised serious concerns in the Linux Kernel community and, as of today, this has resulted in the University being banned from contributing to the Linux Kernel.
 
-This issue was discovered by Litch1 from the Security Team of Alibaba Cloud.
+We take this situation extremely seriously. We have immediately suspended this line of research. We will investigate the research method and the process by which this research method was approved, determine appropriate remedial action, and safeguard against future issues, if needed. We will report our findings back to the community as soon as practical.
+
+Sincerely,
+
+Mats Heimdahl, Department Head
+Loren Terveen, Associate Department Head
+"
+
+Ciao, Marcus
+
+On Thu, Apr 22, 2021 at 05:11:42PM +0200, Marcus Meissner wrote:
+> Hi,
+> 
+> https://twitter.com/UMNComputerSci/status/1384948683821694976
+> 
+> Ciao, Marcus
+> 
+> 
+> On Thu, Apr 22, 2021 at 02:55:03PM +0000, David H wrote:
+> > Has anyone reported this to https://research.umn.edu/ethics-compliance/reporting-research-misconduct ?
+> > 
+> > 
+> > ﻿On 4/22/21, 3:00 AM, "Peter Bex" <peter@...e-magic.net> wrote:
+> > 
+> >     Hi all,
+> > 
+> >     Probably a lot of you know this already but I consider it serious enough
+> >     to point out to the OSS security community at large.
+> > 
+> >     The university of Minnesota has been banned from making any commits to
+> >     the Linux kernel after it was found out they'd been submitting bogus
+> >     patches to the LKML to knowingly introduce security issues:
+> >     https://lore.kernel.org/linux-nfs/YH%2FfM%2FTsbmcZzwnX@kroah.com/
+> > 
+> >     They also published a paper:
+> >     https://raw.githubusercontent.com/QiushiWu/qiushiwu.github.io/main/papers/OpenSourceInsecurity.pdf
+> > 
+> >     I don't know the scope of this research, but it could involve other OSS
+> >     projects, now or in the future, as well.  Hence this e-mail.  If you feel
+> >     it's spam or needless drama, feel free to ignore.
+> > 
+> >     Cheers,
+> >     Peter
+> 
