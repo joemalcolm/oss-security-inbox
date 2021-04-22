@@ -1,103 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/15/4
-Message-ID: <001201d7a9fe$90f98d20$b2eca760$@nsfocus.com>
-Date: Wed, 15 Sep 2021 14:54:43 +0800
-From: "Luo Likang" <luolikang@...ocus.com>
-To: <oss-security@...ts.openwall.com>
-Subject: CVE-2021-3752: Linux kernel: a uaf bug in bluetooth
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/22/4
+Message-Id: <4DCB6EF3-73EE-4038-8437-FEB339F20F90@dwheeler.com>
+Date: Thu, 22 Apr 2021 11:02:11 -0400
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Malicious commits to Linux kernel as part of university study
 Content-Type: text/plain; charset=utf-8
 
-A uaf vulnerability in the linux kernel Bluetooth module.
+Peter Bex:
+> The university of Minnesota has been banned from making any commits to
+> the Linux kernel after it was found out they'd been submitting bogus
+> patches to the LKML to knowingly introduce security issues:
+> https://lore.kernel.org/linux-nfs/YH%2FfM%2FTsbmcZzwnX@kroah.com/
 
-# Analyse
+I support research, but I personally think this work goes way beyond any ethical boundaries.
+While I don’t know if it’s *illegal* (I’m not a lawyer!), it seems clear to me that these
+U of MN researchers were conducting experiments on people without their prior consent.
+In the US, experiments on people without their consent is generally forbidden.
+These researchers did their experiment *before* even consulting their Institutional Review Board (IRB),
+a *huge* no-no, and then their IRB approved the non-consensual experiment anyway (!!!).
 
-## l2cap_sock_alloc
+GregKH’s response to this attack from the U of MN here:
+https://lore.kernel.org/linux-nfs/YH%2FfM%2FTsbmcZzwnX@kroah.com/
+which reads in part:
+> Our community welcomes developers who wish to help and enhance Linux.
+> That is NOT what you are attempting to do here...
+> Our community does not appreciate being experimented on...
 
-l2cap_sock_alloc will create a sock and chan object,
-sk->chan = chan;
-chan->data = sock;
+More discussion: https://news.ycombinator.com/item?id=26887670
 
-##l2cap_sock_release
+Peter Bex:
+> I don't know the scope of this research, but it could involve other OSS
+> projects, now or in the future, as well.  Hence this e-mail.  If you feel
+> it's spam or needless drama, feel free to ignore.
 
-static int l2cap_sock_release(struct socket *sock) {
-       struct sock *sk = sock->sk;
-……
-       bt_sock_unlink(&l2cap_sk_list, sk);
-       ……
-       sock_orphan(sk);
-       l2cap_sock_kill(sk); // if sock_zapped in sock->flags and
-sk->refcnt-1 == 0 ,it will free the sk object ……
-       l2cap_chan_put(chan);// if chan->kref -1 == 0, it will free the chan
-obj
-       ……
-}
-So if sk->skc_refcnt=1,sk->flags&sock_zapped >= 1, and chan->kref=2, then sk
-will be freed, 
-but chan will not be freed, chan->data is not set to NULL, which means chan
-still retains sk's pointer and will trigger uaf .
+Since the researchers failed to get prior consent from the people
+being experimented on, I don’t think we can presume ethical behavior.
+I have no faith that these researchers limited their attacks.
+I hope they did, but I think we can take more proactive measures.
 
-So we need to find how to increase chan->kref and set sk->flags=SOCK_ZAPPED 
+I used the following shell command to search for potentially-concerning commits in git:
 
-## l2cap_sock_connect 
-This func will increase the chan->kref
-l2cap_sock_connect
-	|->l2cap_chan_connect
-		|->__l2cap_chan_add
-			|->l2cap_chan_hold => increase chan->kref
+git shortlog --summary --numbered --email | grep -E '(wu000273|kjlu|@....edu)'
 
-## l2cap_sock_shutdown
+I recommend other OSS projects do something similar, just in case, unless
+we can have better verification that no other OSS projects were attacked.
+I welcome improved methods to find concerning proposals or patches;
+this is just a quick attempt to detect potential damage.
 
-l2cap_sock_shutdown 
-	|->l2cap_chan_close : if chan->state == BT_OPEN
-    	|-> l2cap_sock_teardown_cb 
-              |-> sock_set_flag(sk, SOCK_ZAPPED)
 
-# CRASH LOG
-The latest version of the kernel and ubuntu20/21 can trigger this
-vulnerability，（I have not tested on other linux kernel distributions）
+On Thu, Apr 22, 2021 at 11:44:49AM +0200, Albert Veli wrote:
+> Supply chain attacks are a real threat to open source projects.
 
-[621459.431656] refcount_t: underflow; use-after-free.
-[621459.432963] WARNING: CPU: 5 PID: 29819 at lib/refcount.c:28
-refcount_warn_saturate+0xae/0xf0 [621459.434028] Modules linked in: ……
-[621459.434087] CPU: 5 PID: 29819 Comm: kworker/5:1 Not tainted
-5.11.0-27-generic #29~20.04.1-Ubuntu [621459.434480] Hardware name: VMware,
-Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00
-02/27/2020 [621459.434538] Workqueue: events l2cap_chan_timeout [bluetooth]
-[621459.436472] RIP: 0010:refcount_warn_saturate+0xae/0xf0
-[621459.436480] Code: a8 27 38 01 01 e8 67 21 60 00 0f 0b 5d c3 80 3d 95 27
-38 01 00 75 91 48 c7 c7 18 23 40 ac c6 05 85 27 38 01 01 e8 47 21 60 00 <0f>
-0b 5d c3 80 3d 73 27 38 01 00 0f 85 6d ff ff ff 48 c7 c7 70 23
-[621459.436482] 
-RSP: 0018:ffffa38c8416bdf8 EFLAGS: 00010282 [621459.436909] RAX:
-0000000000000000 RBX: ffff8f098fe08910
-RCX: 0000000000000027 [621459.436911] RDX: 0000000000000027 RSI:
-00000000ffff7fff RDI: ffff8f09b9f58ac8
-[621459.436912] RBP: ffffa38c8416bdf8 R08: ffff8f09b9f58ac0 R09:
-ffffa38c8416bbb8 
-[621459.436913] R10: 0000000000000001 R11: 0000000000000001 R12:
-ffff8f098fe0bc00 
-[621459.436914] R13: ffff8f098fe08800 R14: ffff8f098fe08af8 R15:
-ffff8f09b9f6bc40 
-[621459.436915] FS:  0000000000000000(0000) GS:ffff8f09b9f40000(0000)
-knlGS:0000000000000000 
-[621459.436916] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033 
-[621459.436917] CR2: 00007f44474b1290 CR3: 000000008c010001 CR4:
-00000000003706e0 
-[621459.436937] Call Trace:
-[621459.436940]  l2cap_sock_kill.part.0+0x94/0xa0 [bluetooth] 
-[621459.436970]  l2cap_sock_close_cb+0x29/0x30 [bluetooth] 
-[621459.436992]  l2cap_chan_timeout+0x8e/0xf0 [bluetooth] 
-[621459.437013]  process_one_work+0x220/0x3c0
-[621459.440820]  worker_thread+0x4d/0x3f0 
-[621459.440824]  kthread+0x114/0x150 
-[621459.440863]  ? process_one_work+0x3c0/0x3c0
-[621459.440865]  ? kthread_park+0x90/0x90
-[621459.440867]  ret_from_fork+0x22/0x30 
-[621459.440872] ---[ end trace c336fca232c893f5 ]---
+I completely agree. My work title is “Director of Open Source Supply Chain Security”,
+so I guess I’d have to say that :-), but I agree anyway :-).
 
-#CVE
-CVE-2021-3752 is assigned by Redhat
+*ALL* OSS projects should review proposed changes for potential security
+issues, and harden their software & supply chain against attacks.
+I also welcome research to make that better!
+But we don’t need researchers who perform attacks
+on production systems without authorization, or perform
+attacks on developers without their consent.
 
-#CREDIT
-Likang Luo @NSFOCUS Security Team
+--- David A. Wheeler
 
