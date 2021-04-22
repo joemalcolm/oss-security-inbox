@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1683" "Monday" "11" "July" "2016" "12:51:57" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20160711125157.7ed792f4@pc1>" "49" "Re: [oss-security] CVE-2016-5011: util-linux: Extended partition loop in MBR partition table leads to DoS" nil nil nil "7" "2016071110:51:57" "[oss-security] CVE-2016-5011: util-linux: Extended partition loop in MBR partition table leads to DoS" (number mark "U       hanno@hboeck Jul 11   49/1683  " thread-indent "\"Re: [oss-security] CVE-2016-5011: util-linux: Extended partition loop in MBR partition table leads to DoS\"\n") "<CAKG8Do6jzQUGa-hgGxa8oxYAhkz3qm8sMMXmbC8HuNJZKGqbLw@mail.gmail.com>" ("<CAKG8Do6jzQUGa-hgGxa8oxYAhkz3qm8sMMXmbC8HuNJZKGqbLw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2175" "Thursday" "22" "April" "2021" "12:41:54" "-0400" "Santiago Torres" "torresariass@gmail.com" nil "50" "Re: [oss-security] Malicious commits to Linux kernel as part of university study" nil nil nil "4" nil nil (number mark "U       torresariass Apr 22   50/2175  " thread-indent "\"Re: [oss-security] Malicious commits to Linux kernel as part of university study\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Malicious commits to Linux kernel as part of university study" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5540 invoked by uid 550); 11 Jul 2016 10:52:14 -0000
+Received: (qmail 3631 invoked by uid 550); 22 Apr 2021 16:45:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,66 +12,97 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5516 invoked from network); 11 Jul 2016 10:52:13 -0000
-Date: Mon, 11 Jul 2016 12:51:57 +0200
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
-To: oss-security@lists.openwall.com,
-  Cedric Buissart <cbuissar@redhat.com>
-Message-ID: <20160711125157.7ed792f4@pc1>
-In-Reply-To: <CAKG8Do6jzQUGa-hgGxa8oxYAhkz3qm8sMMXmbC8HuNJZKGqbLw@mail.gmail.com>
-References: <CAKG8Do6jzQUGa-hgGxa8oxYAhkz3qm8sMMXmbC8HuNJZKGqbLw@mail.gmail.com>
-X-Mailer: Claws Mail 3.13.2 (GTK+ 2.24.30; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-12592-1468234323-0001-2"
-Subject: Re: [oss-security] CVE-2016-5011: util-linux: Extended partition
- loop in MBR partition table leads to DoS
+Received: (qmail 1801 invoked from network); 22 Apr 2021 16:42:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=3aZLrBf5oIeGQ1fkI5EpvjpxT8sSBYHcLF5AaN7tFCE=;
+        b=H2Yax5Ptl/V/oZtu+NyV28mZLLDBuwsFDz6b0a91tHARu6odw7eoO7YBN7LcxMJnL8
+         MlaAaKCwRQOuGFKBvVCfFvPXFDwJJfKXfDTH3NgtYIEg79FW+cO/QGJmRq0uylfFhY8z
+         10NmG1OLn5n9fDkXkH7aZLFcScbtTcwJxODLD8A9MmRi1AZk9G/jGCOMDpp95TKOvlmB
+         /kCTEIrLbM9r3neLWWlSK5qdVRt8/lJGgWbKO0PdBKkcioZgZsrQayM0vB9jyWHq9/Ec
+         wui4asgo5zYREHNUV52HoRQBfF5cCg3yXs2y06CoivF/0s2LrBxpcPMYlZ01RO206ajU
+         3p1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=3aZLrBf5oIeGQ1fkI5EpvjpxT8sSBYHcLF5AaN7tFCE=;
+        b=OO8iGwdSjhnsWmvAT5mxppZ2LB3TSWr6y1uI1jdSVMWMzo5I5jx9nItHEr9uWVaDAE
+         yRX4RFGGjnPQCYuPAzynS1O15yBL5op0lCS9kSXdcxIG6+3pDiPgla59UGmZsmwsM01W
+         VzilBLlEKOYG5V8fj2BSyDeVxCwt7WQ1sMPguQ1F2pZ+sF3OYO2P4dko5samVb4qsAbm
+         2ReecsJDyq9BlGPykiD7E1uoTebk3BnFZE9Sa8rm1Dsuoh7x3hhwAyVGO5b3l7BU5bRf
+         wsIec2VRpGNDeB2bU/rNWvbELAOSvPJKjv1FcZaCDQicEwgNA+bVO8sgBoeuD3ncPtIW
+         fdIQ==
+X-Gm-Message-State: AOAM531oZZCm5WBaZ73hyL9cjC5IHj2mj1PWcGaCeKpELWdu+Xk69l4a
+	KXrPccjbi+4uP6kBVCyafaqF2mRkyP99Zw==
+X-Google-Smtp-Source: ABdhPJwxHl1BFVsvnELjDcSKjuEhkWlWx8vu/7QJ3f3TNpevpATqRF0GmbLej4rAhnWrTNyd2CMzaA==
+X-Received: by 2002:a5e:880c:: with SMTP id l12mr3499695ioj.195.1619109716131;
+        Thu, 22 Apr 2021 09:41:56 -0700 (PDT)
+Date: Thu, 22 Apr 2021 12:41:54 -0400
+From: Santiago Torres <torresariass@gmail.com>
+To: oss-security@lists.openwall.com
+Message-ID: <YIGnUqbkYtqOAQCx@meme-cluster>
+References: <20210422065959.GI13079@scully.more-magic.net>
+ <CAEo4CePqice09K5PPhmxwwF3jg=USrqRqM5FgVX_jCB8sZfDeA@mail.gmail.com>
+ <20210422095945.GA2495@scully.more-magic.net>
+ <4DCB6EF3-73EE-4038-8437-FEB339F20F90@dwheeler.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="J+97X6upPOwVy6Zy"
+Content-Disposition: inline
+In-Reply-To: <4DCB6EF3-73EE-4038-8437-FEB339F20F90@dwheeler.com>
+Subject: Re: [oss-security] Malicious commits to Linux kernel as part of
+ university study
 
---=_zucker.schokokeks.org-12592-1468234323-0001-2
-Content-Type: text/plain; charset=UTF-8
+--J+97X6upPOwVy6Zy
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, 11 Jul 2016 12:11:43 +0200
-Cedric Buissart <cbuissar@redhat.com> wrote:
+> *ALL* OSS projects should review proposed changes for potential security
+> issues, and harden their software & supply chain against attacks.
+> I also welcome research to make that better!
+> But we don=E2=80=99t need researchers who perform attacks
+> on production systems without authorization, or perform
+> attacks on developers without their consent.
 
-> CVE-2016-5011: util-linux: Extended partition loop in MBR partition
-> table leads to DoS
+Agreed, when I first heard about the paper in November I was very
+excited to read about it, as I sometimes face skepticism about SC
+attacks (less so, now that they appear more in the news).=20
 
-Have you discovered this bug or do you know how it was discovered?
+Research in the space is important, but this is akin to cutting the
+brakes on a bus to see when the drivers or the passengers find out...
 
-Was it found with fuzzing or code inspection?
+To add to things, I don't think the researchers themselves are aware on
+how the lkml actually works. They wouldn't be able to assess the result
+of their experiment, or prepare a meaningful explanation for the IRB
+with such a flawed model. I'm not trying to point fingers at anybody
+here, but us academics need to do some soul-seeking in terms of how we
+engage with the rest of the software-world.
 
-I have done fuzzing on partitioning tools before, however I hadn't
-found anything, this bug indicates I haven't looked enough :-)
+Thanks,
+-Santiago
 
-
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
-
-mail/jabber: hanno@hboeck.de
-GPG: BBB51E42
-
---=_zucker.schokokeks.org-12592-1468234323-0001-2
-Content-Type: application/pgp-signature
-Content-Transfer-Encoding: 7bit
-Content-Description: OpenPGP digital signature
+--J+97X6upPOwVy6Zy
+Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
 
-iQIcBAEBCgAGBQJXg3pNAAoJEKWIAHK7tR5CWSYQALj923znGZQq+WOslG9xCpIx
-8kEgJr3ZZ9j0Z41b6CtdszB+YWRMYzBJkUpXgAwX4l/pfy0CIcF/oSdGC+Dc9/Ih
-UY9YlgOd4UqWpXE0eCtaQaqf/dAvtWDZUeEW6FHq4sM2+zxulwHR1SbvaTdW1wwi
-J8D5NQHq6/j6cPAxDM+GS+gLNogKscyeU0A5KJtf0ifcgVSGY4+NIxZ4f/cPIB3H
-vyGOSIBEsQ5y2BcpAgu87cUNnyL2G0O8DTY/BAfqaVDr8NiCVM0kua5AM6E3YSuv
-ziUlaZssy60rm/qEwM2Na0ELib5WxfiqVYYJR9nLYVXPQuRBx9TRRZ3JNGnqj2jp
-O7uMnXWckd49hzZoI7B5E1i43HTb+TSXAOLE+HQJQhgMWS8Pq7EWgDTubPeTGGJv
-29BHyK5jK3BggXbUR1ovxZvrPKIvg7Y8RP0ThntilTtX6+Ho0lOJ7dhp3fmFSv4k
-FxpW82W3OvZWQl2prWwcYGQUcOsT7hd1zNsSsn99YuWIT9KzUNE3ntsasmIQSrME
-F5eJ9R1EfvP6IYWzXzU0L83a7k7mDUx3meJsJDQwDFfIvWP+1EpN4d69p0LgqTJZ
-urLSJY1nDy+sOsroIiw1xySXPhugRVSUnnWM/dsSI4seZKdmL4VYE3YxqtAD0upR
-Ktd/s2pPNapAQuGMSYkb
-=nK3B
+iQIzBAABCAAdFiEEkDurc2QOttZVM+/zRo8SLOgWIpUFAmCBp00ACgkQRo8SLOgW
+IpWJQRAAjWbdgyPJakBNZCnhgxSFHHa0jsY6dYHomFjXWZ4JK6pRUPZJojQTfZST
+kdfugbe4TqBLIlB7hn835l5WhuaZKfqx/8RMrQLGHum6vBl/ZLZckgQVrxeOY4R4
+gbGf1anna/dDSFNx20i4HMhUGf/oLRC3gbRI9cX2z+6g6XW901znJC/3sDWMN9Dh
+tZSd/il10N2m1wnixv5SY9SmcSk3orNm9uJ3EWy2b//kpU0Q5DsYDdGDCq9POoND
+QDBM3b9jmW7GdN7KRYWCG5yf2zibO3yt/cEG2yZYHSUiY9dgm4keLCRvrrfvToC9
+nffjj75usb5z/EMUL+vt5Mz8H37goXjgczhWXqAYa+bnpzeZD8exWt7L7wRMJ6FO
+/tagTYDl+iVhRKH+FsLE4g763CbNUtsuKjSoGXYxi/+MO4AGfZsTd9a+saeQo/Lw
+/gUeNj96gb4l29z2DCZo+QK/Kz+dbWnANDMua8qQeq0j1KOxUvcXvvCrggp2i1st
+xxVr3OPpnwY66LH/Bj3MB4rVqNZd4fhQFk3u2EqvRHNbPlHPahGLSgtlrWayD2Fh
+NMLtEGKDKJHMhfrci9KcRkvuoeMbX3xUZ1h+n7C0KnLu24k2v0RWHMRjblfKPYbn
+ZNRNQgGoJOSiCQ2EVuIjkt7UjhbUN4NxFIIaINNoHgoWSXGkUdc=
+=JcBu
 -----END PGP SIGNATURE-----
 
---=_zucker.schokokeks.org-12592-1468234323-0001-2--
+--J+97X6upPOwVy6Zy--
