@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1097" "Tuesday" "5" "January" "2016" "13:05:11" "+0100" "Yves-Alexis Perez" "corsac@debian.org" "<1451995511.3914.25.camel@debian.org>" "38" "[oss-security] CVE request for radicale" nil nil nil "1" "2016010512:05:11" "[oss-security] CVE request for radicale" (number mark "U       corsac@debia Jan  5   38/1097  " thread-indent "\"[oss-security] CVE request for radicale\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1313" "Friday" "23" "April" "2021" "01:02:36" "+0200" "Jan Engelhardt" "jengelh@inai.de" nil "28" "Re: [oss-security] Malicious commits to Linux kernel as part of university study" nil nil nil "4" nil nil (number mark "U       jengelh@inai Apr 23   28/1313  " thread-indent "\"Re: [oss-security] Malicious commits to Linux kernel as part of university study\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Malicious commits to Linux kernel as part of university study" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17867 invoked by uid 550); 5 Jan 2016 12:05:29 -0000
+Received: (qmail 12036 invoked by uid 550); 23 Apr 2021 08:01:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,52 +12,45 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17846 invoked from network); 5 Jan 2016 12:05:28 -0000
-Message-ID: <1451995511.3914.25.camel@debian.org>
-From: Yves-Alexis Perez <corsac@debian.org>
+Received: (qmail 16021 invoked from network); 22 Apr 2021 23:02:48 -0000
+Date: Fri, 23 Apr 2021 01:02:36 +0200 (CEST)
+From: Jan Engelhardt <jengelh@inai.de>
 To: oss-security@lists.openwall.com
-Date: Tue, 05 Jan 2016 13:05:11 +0100
-Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-iEgFeIsUdxZOYZgtAACf"
-X-Mailer: Evolution 3.18.3-1 
-Mime-Version: 1.0
-Subject: [oss-security] CVE request for radicale
-
---=-iEgFeIsUdxZOYZgtAACf
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Hi,
-
-multiple security fixes were done in radicale (a calendar/contact server) 1=
-.1,
-released on dec 31st:
-
-https://github.com/Kozea/Radicale/pull/343
-http://radicale.org/news/#2015-12-31@11:54:03
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D809920
-
-Can CVE be assigned for those issues?
-
-Thank in advance,
---=20
-Yves-Alexis
+In-Reply-To: <4DCB6EF3-73EE-4038-8437-FEB339F20F90@dwheeler.com>
+Message-ID: <659r691-on94-p2nq-p9p4-845811pnn7q6@vanv.qr>
+References: <20210422065959.GI13079@scully.more-magic.net> <CAEo4CePqice09K5PPhmxwwF3jg=USrqRqM5FgVX_jCB8sZfDeA@mail.gmail.com> <20210422095945.GA2495@scully.more-magic.net> <4DCB6EF3-73EE-4038-8437-FEB339F20F90@dwheeler.com>
+User-Agent: Alpine 2.24 (LSU 510 2020-10-10)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+Subject: Re: [oss-security] Malicious commits to Linux kernel as part of
+ university study
 
 
---=-iEgFeIsUdxZOYZgtAACf
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
+On Thursday 2021-04-22 17:02, David A. Wheeler wrote:
+>Peter Bex:
+>> The university of Minnesota has been banned from making any commits to
+>> the Linux kernel after it was found out they'd been submitting bogus
+>> patches to the LKML to knowingly introduce security issues:
+>> https://lore.kernel.org/linux-nfs/YH%2FfM%2FTsbmcZzwnX@kroah.com/
+>
+>I support research, but I personally think this work goes way beyond
+>any ethical boundaries. While I don’t know if it’s *illegal* (I’m
+>not a lawyer!), it seems clear to me that these U of MN researchers
+>were conducting experiments on people without their prior consent.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+If you alert the crowd that something is about to happen, you can no 
+longer observe how the crowd acts in an unalerted state, dooming the 
+research effort.
 
-iQEcBAABCAAGBQJWi7F4AAoJEG3bU/KmdcClLBAIAIQupBkOScMXt8KlS6YmhBQj
-YQ9oBvNKfkGVZFcxkjWz5gdhVsZgDO2vP1aaiqyVk1Ln5YCb785Gi1SmHMqSkiED
-omVhRW+Y7gc4CnDa6Udf2Qves+9trin4NbkM0mnHab+F7hUTVQuzeFAdCETqmXtj
-D46NOsaS6C9u2tO7wveSAMjwZfMb+BVZCaZvzC8WVe723YeT6EH89E7p8GjEC+gy
-ZbfCvJmge7A5gvN/ZYwPJVwaOqoU+H8pTFc8R+fguElIr2HsbMz3o5sOHhJ+Vj4W
-yT6zydKFDqtWhu8Waup9bTzodFS17HvVEYX5PuNTZeQqGU+1NBDaOmOwnE+S8d8=
-=bFYe
------END PGP SIGNATURE-----
+Not to encourage UMN's conduct, but I'd find that the prank shows on TV 
+(let alone Youtube) are a much more severe intrusion, but somehow those 
+shows still run.
 
---=-iEgFeIsUdxZOYZgtAACf--
+
+What's more, with the pitchfork way this incident is being responded to, 
+future researchers may choose to operate more stealthily; no more 
+mailings from an edu mail address, more elaborate internet avatars (did 
+we ever prove who George Spelvin was?), up to the point that the 
+identities become indistinguishable from a foreign malignent elite 
+hacker group.
