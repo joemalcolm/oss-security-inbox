@@ -1,56 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/05/3
-Message-Id: <EE41A0A9-8E0F-4C15-8FE0-258A6B3C6FEB@consensys.net>
-Date: Fri, 5 Feb 2021 10:42:28 +0100
-From: Martin Ortner <martin.ortner@...sensys.net>
-To: oss-security@...ts.openwall.com
-Subject: [no-cve] Nim - Insecure SSL/TLS Defaults, MitM, and nimble shell command injection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/22/5
+Message-ID:  <BN7PR14MB243454DA1540F0722C1FA2DEFB469@BN7PR14MB2434.namprd14.prod.outlook.com>
+Date: Thu, 22 Apr 2021 14:55:03 +0000
+From: David H <ispcolohost@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Malicious commits to Linux kernel as part of university study
 Content-Type: text/plain; charset=utf-8
 
-title: "Nim - Insecure SSL/TLS Defaults, MitM, and nimble shell command injection"
-date: 2021-02-04T14:13:23+01:00
-
-cve: 
-vendor: nim-lang
-vendorUrl: https://nim-lang.org/
-authors: tintinweb
-affectedVersions: [ "<= 1.2.6", "nimble <=v0.12.0"]
-vulnClass: CWE-295, CWE-78, CWE-348
-
-Vulnerability Note: https://consensys.net/diligence/vulnerabilities/nim-insecure-ssl-tls-defaults-remote-code-execution/
-Vulnerability Note: https://github.com/tintinweb/pub/
-Group: https://consensys.net/diligence/research/
+Has anyone reported this to https://research.umn.edu/ethics-compliance/reporting-research-misconduct ?
 
 
+﻿On 4/22/21, 3:00 AM, "Peter Bex" <peter@...e-magic.net> wrote:
 
-# Vulnerability Note
+    Hi all,
 
-## Summary 
+    Probably a lot of you know this already but I consider it serious enough
+    to point out to the OSS security community at large.
 
-We found a couple of critical security issues in the defaults for one of the standard-lib components that allows peer-impersonation (MitM) on secure transports. This also affects the languages package manager. Additionally, the package manager is vulnerable to shell command injection when fetching remote repositories before installing packages:
+    The university of Minnesota has been banned from making any commits to
+    the Linux kernel after it was found out they'd been submitting bogus
+    patches to the LKML to knowingly introduce security issues:
+    https://lore.kernel.org/linux-nfs/YH%2FfM%2FTsbmcZzwnX@kroah.com/
 
-* 2.1 - `httpClient` does no validate peer certificates by default (appears to be fixed in 1.4.x)
-* 2.2 - the package manager `nimble` relies on the insecure `httpClient` defaults (unfixed; latest 0.12.0 has not been re-compiled with a fixed nim-c)
-* 2.3 - `nimble` falls back to insecure transports if `https` is blocked (unfixed)
-* 2.4 - `nimble` shell command injection when fetching a package for installation (unfixed)
+    They also published a paper:
+    https://raw.githubusercontent.com/QiushiWu/qiushiwu.github.io/main/papers/OpenSourceInsecurity.pdf
 
+    I don't know the scope of this research, but it could involve other OSS
+    projects, now or in the future, as well.  Hence this e-mail.  If you feel
+    it's spam or needless drama, feel free to ignore.
 
-**TLDR;** The Nim (`at least <=1.2.6`) `httpClient` default SSL/TLS configuration does not enforce peer certificate verification by default. Non-secure settings should not be the default as this might unexpectedly expose other projects to security risks. If you're using `nimble <= 0.12.0` anyone can block your TLS session and it will fall back to an insecure transport. Because of the insecure `httpClient` defaults, one can also just intercept your TLS session as the peer verification is too lax. Additionally, nimble appears to be vulnerable to a direct shell command injection when installing a package (but one can as well just provide a malicious package).
-
-## Details
-
-see https://consensys.net/diligence/vulnerabilities/nim-insecure-ssl-tls-defaults-remote-code-execution/
-
-## Proof of Concept
-
-see https://consensys.net/diligence/vulnerabilities/nim-insecure-ssl-tls-defaults-remote-code-execution/
-
-### Timeline
-
-```
-JUL/09/2020 - contact nim developers @telegram; provided details, PoC
-FEB/04/2021 - deadline met. full disclosure.
-```
-
-
-
+    Cheers,
+    Peter
