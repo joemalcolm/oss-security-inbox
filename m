@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1643" "Tuesday" "4" "October" "2016" "22:23:22" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161005022322.18575ABC00D@smtpvmsrv1.mitre.org>" "48" "[oss-security] Re: Handful of libass issues" "^Cc:" nil nil "10" "2016100502:23:22" "[oss-security] Re: Handful of libass issues" (number mark "        cve-assign@m Oct  4   48/1643  " thread-indent "\"[oss-security] Re: Handful of libass issues\"\n") "<BE57ECE4-C327-4C99-993B-D8C96A8E6465@gmail.com>" ("<BE57ECE4-C327-4C99-993B-D8C96A8E6465@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["703" "Thursday" "22" "April" "2021" "14:18:39" "-0400" "Michael Orlitzky" "michael@orlitzky.com" nil "21" "Re: [oss-security] Malicious commits to Linux kernel as part of university study" nil nil nil "4" nil nil (number mark "U       michael@orli Apr 22   21/703   " thread-indent "\"Re: [oss-security] Malicious commits to Linux kernel as part of university study\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Malicious commits to Linux kernel as part of university study" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5253 invoked by uid 550); 5 Oct 2016 02:23:34 -0000
+Received: (qmail 19578 invoked by uid 550); 22 Apr 2021 18:18:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,61 +11,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5227 invoked from network); 5 Oct 2016 02:23:33 -0000
-In-Reply-To: <BE57ECE4-C327-4C99-993B-D8C96A8E6465@gmail.com>
-Message-Id: <20161005022322.18575ABC00D@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue,  4 Oct 2016 22:23:22 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Handful of libass issues
-To: bperry.volatile@gmail.com
+Received: (qmail 19557 invoked from network); 22 Apr 2021 18:18:52 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
+	t=1619115520; bh=BEEgixfWEpMeW38rDzbNoIIWOc+exi04eLwwbcX0eR4=;
+	h=Subject:From:To:Date:In-Reply-To:References;
+	b=QxP0YFYra7Xx9Hl/lxHCR0fqla1QHdypjv7DKzpXMlvIY5wtRj1Rs/VaOOS/tGqar
+	 jZ2o7IqtJzrZ/SLjVai7ocI/5cJ/eDvoMOJqtIeFRRFm06IQLe4a51gJQDCIN17lNN
+	 5ys0phf7QmE0HM8pZ2az7oxwJDf4aHkgELdFyGgg=
+Message-ID: <dccb1d817eee4171cb99263fc059fac660cdb223.camel@orlitzky.com>
+From: Michael Orlitzky <michael@orlitzky.com>
+To: oss-security@lists.openwall.com
+Date: Thu, 22 Apr 2021 14:18:39 -0400
+In-Reply-To: <CAPyX2neD99tn_FY3FZ9WO5HaB2WXSgvSOejOiOE_9QHxqRjpdA@mail.gmail.com>
+References: <20210422065959.GI13079@scully.more-magic.net>
+	 <CAEo4CePqice09K5PPhmxwwF3jg=USrqRqM5FgVX_jCB8sZfDeA@mail.gmail.com>
+	 <20210422095945.GA2495@scully.more-magic.net>
+	 <4DCB6EF3-73EE-4038-8437-FEB339F20F90@dwheeler.com>
+	 <627170ea-4e1e-1a3d-8291-494eac38c9b@dereferenced.org>
+	 <CAPyX2neD99tn_FY3FZ9WO5HaB2WXSgvSOejOiOE_9QHxqRjpdA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.38.4 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] Malicious commits to Linux kernel as part of
+ university study
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu, 2021-04-22 at 18:49 +0100, Mark Steward wrote:
+> 
+> 
+> This looks like a good guess to me, and if correct, means none of the
+> submissions in the paper were successful:
+> 
+>   https://lore.kernel.org/linux-nfs/YIEqt8iAPVq8sG+t@sol.localdomain/
+> 
 
-> One is in wrap_lines_smart()
-> https://github.com/libass/libass/pull/240/commits/b72b283b936a600c730e00875d7d067bded3fc26
+If you believe them, the researchers never intended to allow the bad
+commits into the kernel:
 
-Use CVE-2016-7969.
+  https://www-users.cs.umn.edu/~kjlu/papers/clarifications-hc.pdf
 
-
-> One is coeff_blur121()
-> https://github.com/libass/libass/pull/240/commits/08e754612019ed84d1db0d1fc4f5798248decd75
-
-Use CVE-2016-7970.
-
-
-> The third is a huge memory allocation leading to a crash that wasn't
-> fixed because a good solution is unavailable at the moment.
-
-Use CVE-2016-7971.
+On the one hand, they're wasting everyone's time to report a
+vulnerability that everyone knows exists already and finding
+conclusions that are all obvious and/or useless. But on the other hand,
+they don't sound quite as daft as the headlines make them seem. Overly
+naive for sure.
 
 
-> The fourth is in check_allocations()
-> https://github.com/libass/libass/pull/240/commits/aa54e0b59200a994d50a346b5d7ac818ebcf2d4b
-
-Use CVE-2016-7972.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJX9GN/AAoJEHb/MwWLVhi27igP/0aqAYD3zoMNk7XowyJnZxKx
-xpO94xWthIYcxmPgllTuzCWeM/vn4OLQ5rHUzWHp678mcepx46jUPqeOivFad272
-rOfP31o7vOOFQ3wfEcPq4tDmSTXJ44HZEJDR0aORHdZfQzm5aV0xsUR40JVEHPTQ
-+lj1TZQYVYzixrWjp1yC0x7QG/c791+9ue+pU2qeUM8XHRpg69+wCw3e4Uom/gK9
-bxMI7Hzm+rJayUZG5VGdfun0/77oeh2Rl6OAcuJx+m6/EljkHJluGfy6gDmsj7qW
-cG+Svo57+JWQwl9lN5tmAx6qiEOZld4IDpdwglseqDYtsOo71AMhaM5/2mh2xR07
-VwxWBK59Kn+Fy6WLV7qeGwhqND6vyCxfjFalixu+HNKsqPr02vBn5UBrMY5c7WRW
-u7bGmxYx6SlfhH7GvThzGOq9Ks0wLXL6A7WMI2RKG6k3+P96WQNZRW37FbE6U+gJ
-c0ce2tLqD1P9NGTENjcdHzse9VhERswmt8TWV7MYzTQS9dQnZwjo6MPkQmEisbE3
-jCQebWjTYXvVWu9ZkVqXCfxBtUeEWJ5gyq0fiQ/kbA0teHHD/g4KgiafU0gDmNCU
-GIM3HlpBV8rNs9ZzoTXgx+wnMQaZO1eVf6fYPaBHVEAzfsD8IQb81GBV7QsR3u4Z
-QkSgtZKJ3TCUPgi/hxwY
-=msJI
------END PGP SIGNATURE-----
