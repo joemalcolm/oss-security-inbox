@@ -1,39 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/11/1
-Message-ID: <20923736.EfDdHjke4D@logout>
-Date: Mon, 11 Jan 2021 13:38:40 +0100
-From: Jaroslav Tulach <jaroslav.tulach@...il.com>
-To: Apache NetBeans <dev@...beans.apache.org>, Jonathan Leitschuh <jonathan.leitschuh@...il.com>, Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
-Subject: [CVE-2020-17534] HTML/Java API 1.7: A race condition between deletion of the temporary file and creation of the temporary directory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/22/2
+Message-ID: <CAEo4CePqice09K5PPhmxwwF3jg=USrqRqM5FgVX_jCB8sZfDeA@mail.gmail.com>
+Date: Thu, 22 Apr 2021 11:44:49 +0200
+From: Albert Veli <albert.veli@...il.com>
+To: Open Source Security <oss-security@...ts.openwall.com>
+Subject: Re: Malicious commits to Linux kernel as part of university study
 Content-Type: text/plain; charset=utf-8
 
-CVE-ID------CVE-2020-17534
+Hi
 
-Summary-------A race condition between the deletion of the temporary file and creation of 
-the temporary directory
+On Thu, Apr 22, 2021 at 9:01 AM Peter Bex <peter@...e-magic.net> wrote:
+>
+> They also published a paper:
+> https://raw.githubusercontent.com/QiushiWu/qiushiwu.github.io/main/papers/OpenSourceInsecurity.pdf
+>
+> I don't know the scope of this research, but it could involve other OSS
+> projects, now or in the future, as well.
 
+Supply chain attacks are a real threat to open source projects. The
+Linux kernel is not the easiest way to introduce malicious commits.
+But other projects like much used pip python modules, npm javascript
+modules and ruby gem modules might be less vetted before they accept
+commits and that is a serious risk.
 
-There exists a race condition between the deletion of the temporary file and the creation 
-of the temporary directory in `webkit` subproject of HTML/Java API version 1.7.  
-
-
-A similar vulnerability has recently been disclosed in other Java projects and the fix in 
-HTML/Java API version 1.7.1 follows theirs: To avoid local privilege escalation version 1.7.1 
-creates the temporary directory atomically without dealing with the temporary file: https://
-github.com/apache/netbeans-html4j/commit/
-fa70e507e5555e1adb4f6518479fc408a7abd0e6[1]
-
-
------------
-
-- Avoid using webkit presenter 1.7
-- Update to HTML/Java API 1.7.1
-
-Credit:-------The problem was identified by Jonathan Leitschuh
-
-
-
---------
-[1] https://github.com/apache/netbeans-html4j/commit/
-fa70e507e5555e1adb4f6518479fc408a7abd0e6
-
+Proprietary projects are not immune to supply chain attacks either. An
+example is the Encrochat proprietary chat application that was
+subjected to a state sponsored supply chain attack last year which
+compromised their user's data. Everything that uses automated updates
+could be targeted by supply chain attacks.
