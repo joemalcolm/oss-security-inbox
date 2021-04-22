@@ -1,118 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/07/2
-Message-Id: <E1mYUaC-0002lK-RC@xenbits.xenproject.org>
-Date: Thu, 07 Oct 2021 14:41:16 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 386 v2 (CVE-2021-28702) - PCI devices with RMRRs not deassigned correctly
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/22/13
+Message-ID: <dccb1d817eee4171cb99263fc059fac660cdb223.camel@orlitzky.com>
+Date: Thu, 22 Apr 2021 14:18:39 -0400
+From: Michael Orlitzky <michael@...itzky.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Malicious commits to Linux kernel as part of university study
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu, 2021-04-22 at 18:49 +0100, Mark Steward wrote:
+> 
+> 
+> This looks like a good guess to me, and if correct, means none of the
+> submissions in the paper were successful:
+> 
+>   https://lore.kernel.org/linux-nfs/YIEqt8iAPVq8sG+t@sol.localdomain/
+> 
 
-            Xen Security Advisory CVE-2021-28702 / XSA-386
-                               version 2
+If you believe them, the researchers never intended to allow the bad
+commits into the kernel:
 
-            PCI devices with RMRRs not deassigned correctly
+  https://www-users.cs.umn.edu/~kjlu/papers/clarifications-hc.pdf
 
-UPDATES IN VERSION 2
-====================
+On the one hand, they're wasting everyone's time to report a
+vulnerability that everyone knows exists already and finding
+conclusions that are all obvious and/or useless. But on the other hand,
+they don't sound quite as daft as the headlines make them seem. Overly
+naive for sure.
 
-Updated/corrected information about vulnerable versions.
-Upstream Xen 4.12 is not affected.
 
-There is no harm from applying the patch to an unaffected version.
-
-ISSUE DESCRIPTION
-=================
-
-Certain PCI devices in a system might be assigned Reserved Memory
-Regions (specified via Reserved Memory Region Reporting, "RMRR").
-These are typically used for platform tasks such as legacy USB
-emulation.
-
-If such a device is passed through to a guest, then on guest shutdown
-the device is not properly deassigned.  The IOMMU configuration for
-these devices which are not properly deassigned ends up pointing to a
-freed data structure, including the IO Pagetables.
-
-Subsequent DMA or interrupts from the device will have unpredictable
-behaviour, ranging from IOMMU faults to memory corruption.
-
-This bug has existed since at least Xen 4.4 But it was previously
-masked by a tangentially-related misbehaviour; that misbehaviour was
-corrected in f591755823a7
- IOMMU/PCI: don't let domain cleanup continue when device de-assignment failed
-which was backported to supported stable branches.
-
-IMPACT
-======
-
-Administrators of guests which have been assigned RMRR-using PCI
-devices can cause denial of service and other problems, possibly
-including escalation of privilege.
-
-VULNERABLE SYSTEMS
-==================
-
-For stable Xen releases: 4.13.4, 4.14.3 and 4.15.1 are vulnerable.
-Other versions of Xen released by the Xen Project are not affected.
-
-For Xen git branches: the HEADs of 4.13 and later (including
-xen-unstable) were vulnerable, up until 2021-10-05 (when the patch in
-this advisory was committed).  4.12 and earlier are not affected.
-
-In detail: code that has the following patch applied, is vulnerable:
- IOMMU/PCI: don't let domain cleanup continue when device de-assignment failed
-That patch is currently in upstream stable branches 4.13 onwards and
-was included in the most recent stable point releases of each Xen version.
-Other downstream Xen builds may be affected if that patch was backported.
-
-Only Intel x86 systems are affected.  AMD x86 systems, and Arm
-systems, are all unaffected.
-
-Only systems using PCI passthrough are affected.  (And then, only if
-the assigned devices have RMRRs, but whether a device advertises RMRRs
-is not easy to discern.)
-
-MITIGATION
-==========
-
-There is no mitigation (other than not passing through PCI devices
-with RMRRs to guests).
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa386.patch           xen-unstable - Xen 4.13.x
-
-$ sha256sum xsa386*
-f2f83c825e249bba9454437b48bbd8307fe7a224f56484388a67af124dfd279b  xsa386.patch
-$
-
-NOTE CONCERNING LACK OF EMBARGO
-===============================
-
-This issue was reported and debugged in public before the security nature
-became apparent.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmFfBvkMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZY20H/jWe2XVSU6R+cOv4GbhWL5sWBv4skLZ07yq77p8i
-JB9nJXdVkyHJPSkENzggGGiygiHMJFSD5cLvczJp1IbAlQKQlZt/oVG9oTWHHeqO
-joabwgZ9UyNW8/beCigRo1PYdiWI7tMsLp3D/LAjE8+ZhBRjD0NKLyWK26Uw0R8A
-Su5tApmlBGx0BJzQm4BUWiyog86fPoNcBkP1hRJfj1BfXRjVYB5MsaPCtMhsqBlG
-CFjDJ51Wn4Esxkg22e/429MbbExIAJUZoxuOWDk/D7nQShQNBTfqci4pfcaf5E+f
-Mxi32bIr/XY5LLgf0Opu5Sl2JP3s7Ik3IDlSa+wYoGIZWB4=
-=Ti35
------END PGP SIGNATURE-----
-
-Download attachment "xsa386.patch" of type "application/octet-stream" (1183 bytes)
