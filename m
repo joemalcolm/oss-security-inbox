@@ -1,47 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/27/1
-Message-ID: <YXjQiwOj3gF/phTC@elende.valinor.li>
-Date: Wed, 27 Oct 2021 06:07:39 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: Carlos Alberto Lopez Perez <clopez@...lia.com>
-Cc: security@...kit.org, oss-security@...ts.openwall.com, Alberto Garcia <berto@...lia.com>
-Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2021-0006
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/23/4
+Message-ID: <CAJAvU=ZQiMR7PdKBz9=4wm3MX9VvmuAF4Q70V3sAwudjuJp4QQ@mail.gmail.com>
+Date: Fri, 23 Apr 2021 09:40:45 -0400
+From: James Feister <openjaf@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Malicious commits to Linux kernel as part of university study
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+> "Someone else might be even more unethical later" is a horrible reason
+> to refrain from calling out unethical research methods.  This community
+> needs to make it absolutely clear that nonconsensual adversarial
+> "research" is completely unacceptable, or next year you'll see five
+> hundred grant applications intending to throw government-sponsored
+> wrenches into every piece of collaboratively-written software on Earth.
 
-[dropping most other recipients]
+It is naive to think this adversarial behavior is not already taking place.
 
-On Tue, Oct 26, 2021 at 08:05:36PM +0100, Carlos Alberto Lopez Perez wrote:
-> ------------------------------------------------------------------------
-> WebKitGTK and WPE WebKit Security Advisory                 WSA-2021-0006
-> ------------------------------------------------------------------------
-> 
-> Date reported           : October 26, 2021
-> Advisory ID             : WSA-2021-0006
-> WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2021-0006.html
-> WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2021-0006.html
-> CVE identifiers         : CVE-2021-30846, CVE-2021-30848,
->                           CVE-2021-30849, CVE-2021-30851,
->                           CVE-2021-30858, CVE-2021-42762.
-> 
-> Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
-[...]
-> CVE-2021-30851
->     Versions affected: WebKitGTK and WPE WebKit before 2.34.0.
->     Credit to Samuel Groß of Google Project Zero.
->     Impact: Processing maliciously crafted web content may lead to code
->     execution. Description: A memory corruption vulnerability was
->     addressed with improved locking.
+The overall response I have seen to this should be encouraging to all of
+us that live in these open-source and free software communities.  It
+shows how our system works. In this case, the actors were identified,
+attributed to a publicly known group, and weeded out.  The key part is
+the information was freely shared, everyone knows about it and can take
+what they feel are appropriate actions.  Just like the submissions to this
+very mailing list help facilitate and the discussions that follow.
 
-CVE-2021-30851 seems to be REJECTED (cf.
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-30851). Is
-there a typo in the CVE id for this one or did the CVE got rejected
-later on? The CVE entry only states "Reason: This candidate was
-withdrawn by the CVE program." so might give a light indication
-towards that the CVE used has a typo and should be another one?
+As much as we can blame the University or group for the efficacy of their
+intent, we should assume this behavior has and is already happening.
+There is no other reason not to.  It is a wake-up call to those who think
+otherwise, in public, private, and government sectors.  In this case, the
+project's maturity ensured the proper people were able to identify
+the actor and take appropriate actions.
 
-Can you clarify or have any insights here?
+My suggestion to part of the solution would not be any single technical
+process.  It would be to ask that more commercial and government
+agencies ensure some of their budgeted resources (aka people) are
+used to help maintain the free software and open-source software they
+leverage. Yes, it will bring a whole new set of challenges, but it may tip
+the scale to favor those who are there to help.
 
-Regards,
-Salvatore
+- Jim
+
