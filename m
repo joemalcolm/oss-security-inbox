@@ -1,54 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/21/1
-Message-ID: <0919707c-0f29-ac46-35f5-d6890faf0f4e@vanrees.org>
-Date: Fri, 21 May 2021 16:07:57 +0200
-From: Maurits van Rees <maurits@...rees.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/23/5
+Message-ID: <CAMk_BejpF0w9DGjHXTiqhsvSOeWK=MsggpD4RDhhfSzYPbYX_w@mail.gmail.com>
+Date: Fri, 23 Apr 2021 10:21:24 -0400
+From: Brian Fox <brianf@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Plone security hotfix 20210518
+Subject: CVE-2021-26291: Apache Maven: block repositories using http by default
 Content-Type: text/plain; charset=utf-8
 
-A Plone security hotfix was released on Tuesday, May 18 2021.
-For details, see https://plone.org/security/hotfix/20210518
-Most CVE numbers are not yet issued. I will request them from Mitre shortly.
+Subject: CVE-2021-26291: Apache Maven: block repositories using http by default
 
-BTW, I am following the instructions at 
-https://oss-security.openwall.org/wiki/mailing-lists/oss-security#cve-requests 
-to first post to this list, then request CVEs at Mitre, then reply to my 
-own post.
-I don't see many other people doing it in this order. Is that page still 
-accurate?
+Description:
 
-Versions Affected: All supported Plone versions (4.3.20 and any earlier 
-4.3.x version, 5.2.4 and any earlier 5.x version).
+Apache Maven will follow repositories that are defined in a
+dependency’s Project Object Model (pom) which may be surprising to
+some users, resulting in potential risk if a malicious actor takes
+over that repository or is able to insert themselves into a position
+to pretend to be that repository. Maven is changing the default
+behavior in 3.8.1+ to no longer follow http (non-SSL) repository
+references by default. More details available in the referenced urls.
 
-Versions Not Affected: None. Earlier versions may be affected, but the 
-hotfix has not been tested on them.
+If you are currently using a repository manager to govern the
+repositories used by your builds, you are unaffected by the risks
+present in the legacy behavior, and are unaffected by this
+vulnerability and change to default behavior. See this link for more
+information about repository management:
+https://maven.apache.org/repository-management.html
 
-The patch addresses several security issues:
+This issue is being tracked as MNG-7118
 
-- Remote Code Execution via traversal in expressions. Reported by David 
-Miller. CVE-2021-32633.
-- Writing arbitrary files via docutils and Python Script. Reported by 
-Calum Hutton.
-- Various information disclosures: mostly installation logs. Reported by 
-Calum Hutton. CVE-2021-21360 and CVE-2021-21336.
-- Stored XSS from file upload (svg, html). Reported separately by Emir 
-Cüneyt Akkutlu and Tino Kautschke.
-- Reflected XSS in various spots. Reported by Calum Hutton.
-- XSS vulnerability in CMFDiffTool. Reported by Igor Margitich.
-- Stored XSS from user fullname. Reported by Tino Kautschke.
-- Blind SSRF via feedparser accessing an internal URL. Reported by 
-Subodh Kumar Shree.
-- Server Side Request Forgery via event ical URL. Reported by MisakiKata 
-and David Miller.
-- Server Side Request Forgery via lxml parser. Reported by MisakiKata 
-and David Miller.
+Credit:
 
-A hotfix package has been created at 
-https://pypi.org/project/Products.PloneHotfix20210518/
-The fixes will be incorporated in future release Plone 5.2.5.
+Apache Maven would like to thank Jonathan Leitschuh for highlighting
+the need for this change.
 
--- 
-Maurits van Rees https://maurits.vanrees.org/
-Plone Security Team security@...ne.org
+References:
 
+https://lists.apache.org/thread.html/r9a027668558264c4897633e66bcb7784099fdec9f9b22c38c2442f00%40%3Cusers.maven.apache.org%3E
+
+ASF-EmailInstructionsChanges
