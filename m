@@ -1,27 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/18/1
-Message-ID: <CALKeL-OMTh-2TSdo8KvxX4U905KhtEF2h7EgsFUV7Q9H_xgCfw@mail.gmail.com>
-Date: Mon, 18 Jan 2021 02:41:32 -0800
-From: Mike Jumper <mjumper@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/23/3
+Message-ID: <YIKLYaIKVSeA9Ctr@kroah.com>
+Date: Fri, 23 Apr 2021 10:54:57 +0200
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2020-11997: Apache Guacamole: Inconsistent restriction of connection history visibility
+Subject: Re: Malicious commits to Linux kernel as part of university study
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-11997: Inconsistent restriction of connection history visibility
+On Fri, Apr 23, 2021 at 01:02:36AM +0200, Jan Engelhardt wrote:
+> Not to encourage UMN's conduct, but I'd find that the prank shows on TV 
+> (let alone Youtube) are a much more severe intrusion, but somehow those 
+> shows still run.
 
-Versions affected:
-Apache Guacamole 1.2.0 and earlier
+The people involved agree after-the-fact to the airing of those things.
+No such thing happened here at all.
 
-Description:
-Apache Guacamole 1.2.0 and older do not consistently restrict access
-to connection history based on user visibility. If multiple users
-share access to the same connection, those users may be able to see
-which other users have accessed that connection, as well as the IP
-addresses from which that connection was accessed, even if those users
-do not otherwise have permission to see other users.
+> What's more, with the pitchfork way this incident is being responded to, 
+> future researchers may choose to operate more stealthily; no more 
+> mailings from an edu mail address, more elaborate internet avatars (did 
+> we ever prove who George Spelvin was?)
 
-Mitigation:
-Users of versions of Apache Guacamole 1.2.0 and older should upgrade to 1.3.0.
+Those who need to know, know who "George Spelvin" is, that is not an
+issue.
 
-Credit:
-We would like to thank William Le Berre (Synetis) for reporting this issue.
+greg k-h
