@@ -1,71 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/04/6
-Message-ID: <74012016-4a10-f216-cb42-0426d698c048@pietroalbini.org>
-Date: Mon, 4 Jan 2021 16:20:28 +0100
-From: Pietro Albini <pietro@...troalbini.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/23/2
+Message-ID: <YIKH4FHGjJ0d4p4n@wopr>
+Date: Fri, 23 Apr 2021 01:40:00 -0700
+From: Kurt H Maier <khm@...ops.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-26297: mdBook XSS
+Subject: Re: Malicious commits to Linux kernel as part of university study
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+On Fri, Apr 23, 2021 at 01:02:36AM +0200, Jan Engelhardt wrote:
+> 
+> If you alert the crowd that something is about to happen, you can no 
+> longer observe how the crowd acts in an unalerted state, dooming the 
+> research effort.
 
-The Rust Security Response Working Group was recently notified of a security
-issue affecting the search feature of mdBook, which could allow an attacker to
-execute arbitrary JavaScript code on the page.
+This could have been coordinated with kernel maintainers who were
+willing to participate, for instance by placing sabotaged code in a
+time-locked escrow to be revealed after a set window.  This is not
+an all-or-nothing proposition.  Red team protocols vary, but none of
+them start with "first, pick an unsuspecting cadre of strangers trying to
+build something, then attack it."
 
-The CVE for this vulnerability is [CVE-2020-26297][1].
+> Not to encourage UMN's conduct, but I'd find that the prank shows on TV 
+> (let alone Youtube) are a much more severe intrusion, but somehow those 
+> shows still run.
 
-## Overview
+Those prank shows are generally not produced with money from the
+National Science Foundation.
 
-The search feature of mdBook (introduced in version 0.1.4) was affected by a
-cross site scripting vulnerability that allowed an attacker to execute
-arbitrary JavaScript code on an user's browser by tricking the user into typing
-a malicious search query, or tricking the user into clicking a link to the
-search page with the malicious search query prefilled.
+> What's more, with the pitchfork way this incident is being responded to, 
+> future researchers may choose to operate more stealthily; no more 
+> mailings from an edu mail address, more elaborate internet avatars (did 
+> we ever prove who George Spelvin was?), up to the point that the 
+> identities become indistinguishable from a foreign malignent elite 
+> hacker group.
 
-mdBook 0.4.5 fixes the vulnerability by properly escaping the search query.
+"Someone else might be even more unethical later" is a horrible reason
+to refrain from calling out unethical research methods.  This community
+needs to make it absolutely clear that nonconsensual adversarial
+"research" is completely unacceptable, or next year you'll see five
+hundred grant applications intending to throw government-sponsored
+wrenches into every piece of collaboratively-written software on Earth.
 
-## Mitigations
+I'm more disappointed with the IEEE S&P for accepting this paper than I
+am with the researchers who wrote it, but giving them a pass sets the
+worst possible standards for future work.
 
-Owners of websites built with mdBook have to upgrade to mdBook 0.4.5 or greater
-and rebuild their website contents with it. It's possible to install mdBook
-0.4.5 on the local system with:
-
-```
-cargo install mdbook --version 0.4.5 --force
-```
-
-## Acknowledgements
-
-Thanks to Kamil Vavra for responsibly disclosing the vulnerability to us
-according to [our security policy][2].
-
-## Timeline of events
-
-All times are listed in UTC.
-
-* 2020-12-30 20:14 - The issue is reported to the Rust Security Response WG
-* 2020-12-30 20:32 - The issue is acknowledged and the investigation began
-* 2020-12-30 21:21 - Found the cause of the vulnerability and prepared the patch
-* 2021-01-04 15:00 - Patched version released and vulnerability disclosed
-
-[1]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-26297
-[2]: https://www.rust-lang.org/policies/security
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEV2nIi/XdPRSiNKes77mGCudSDawFAl/zJ2oACgkQ77mGCudS
-DaxtCRAAwRayTKHncQjLla6SG0HwUYX5q3Q2zsDOhrMNnQmPb4Db0hBI4tuYy6O3
-hQO0yOIuhvJKS17aMzsGL1qCYrc50d8Em3OW758FYP/VtsfJh0rvbqRl4hDvEcx1
-ZBcNlrbf5y7esrsAFneeezxKbYqkWB1RnSjc87Rbs0Yph7shGKDA/aURZb83vCCr
-28aEBaFUpCYP+mNzTVfhh2ZsPJ9J5xaLbFbz2kune0QrrAlUzR2rj+yz0wuKOMi5
-nvL5akfpqq1eV4XkV1pheo+FeZVW797VmNTmOfW1V2q+sMhZhpwjJTb4D2b/6k4m
-s1IUfCZbL2FqR8NkGybb2yoPAInDh6NQcj8v2RM0N2MHFgx25CATuQHg+oHshBv4
-ycuLHzzEtSkg1YcPjzqmBOSi8zRHY5cAJnZQc36bXqzoKtkQxDdyhP2sLvaXLhJj
-H8nQq80TKkWHgZGDTTR2QUw/D6z2SF8YFYKRz4stuP4H1bOBLwyqFrAl+4HTeheW
-B/3LEL7ObvaENXGagfampNuCru7XXcPpuhwSacs8azKrcSKa7MSnT/ALyTSZ4hAP
-Uy/PuQPaX4gVCYL4QYD4xlY6T+QMLzY07CRTcuDuA+M0b4cHrMfBRNWX0SA9Hi1a
-6sXVC5cWuOWzDso7hRSjpvkkG5MRXfU+MgHn3C/ZOjmuLfjO0V0=
-=sM0q
------END PGP SIGNATURE-----
-
+khm
