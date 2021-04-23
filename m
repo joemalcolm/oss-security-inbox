@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1402" "Thursday" "24" "November" "2016" "15:24:04" "+0800" "haojun hou" "haojunhou@gmail.com" "<92067071-434D-4B7B-BF05-39E1BD7FE449@gmail.com>" "47" "[oss-security] CVE request - itdb 1.23  Cross-Site Scripting (XSS)" nil nil nil "11" "2016112407:24:04" "[oss-security] CVE request - itdb 1.23 Cross-Site Scripting (XSS)" (number mark "U       haojunhou@gm Nov 24   47/1402  " thread-indent "\"[oss-security] CVE request - itdb 1.23  Cross-Site Scripting (XSS)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1913" "Friday" "23" "April" "2021" "09:40:45" "-0400" "James Feister" "openjaf@gmail.com" nil "37" "Re: [oss-security] Malicious commits to Linux kernel as part of university study" nil nil nil "4" nil nil (number mark "U       openjaf@gmai Apr 23   37/1913  " thread-indent "\"Re: [oss-security] Malicious commits to Linux kernel as part of university study\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Malicious commits to Linux kernel as part of university study" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28168 invoked by uid 550); 24 Nov 2016 10:39:46 -0000
+Received: (qmail 8063 invoked by uid 550); 23 Apr 2021 13:43:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,84 +12,80 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13605 invoked from network); 24 Nov 2016 07:24:21 -0000
+Received: (qmail 7642 invoked from network); 23 Apr 2021 13:41:09 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:mime-version:subject:message-id:date:to;
-        bh=VLJjE3RNCV8NLTYC+0Gi3LOVbBh1NjWx1OwSZazXLM8=;
-        b=rZIfaBZmceNsbZHlrBOs45B5Xaa+urqkneg8ks0HKOdcPcEv6itz5bEAUGP4i2y+fJ
-         B9AcH5BuhRNUtS/WK8qXXwn4pU8m6hFnrEv5gRLcOkV+ZcFGEFtzKoErVrK/xbozpyOc
-         AXOnylxHGbHpk8pyKsUw1M8NBm6SeoprIS603CQSXaro0DEl5pvBYewDbUWjjQvKeK72
-         18K6hz4zvaACYSIqzKRJNm+w61/+g+5lVaR9UnYJenEHHVooPDvN1q8K/+34N/5OivXA
-         QxNTBx9t+Tai2KkpwpV1uwrhT+KVDjbBXc3lzuNNIm7+owCK3FXBixCZhXNkER1IWyDp
-         ZX2Q==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=nheoMYNw/60d8b/Oar1W/30J+yv8G7hwMBKyBSnzpGM=;
+        b=tHmBxOiTBwRI3nIIcBIbrfO3LGjzhGLEVFaQTcF7rE3eXKnZ2sPfINmGP738hjszkB
+         UPN1OT1o/YKmAqBZgTmQFdHPaFVbNvIpV9GXf4C65dUbbMxVoqN+UJVhsdWFxZMgpm67
+         YDABN0Ln2ZUTuyxynlQgP0CucvsKabfkyBE+v4W3Dh4oqQ3J9i/mvBXItX1QB+jItOHy
+         6wO5IC6PG49/uDit23n0FyeToWuzftIjDP4TMp2dU2IqoycpWC3VwQpp/p4475OAowww
+         pUiFusjoXw4lUNA8nZ3u8Xg9Qbe8akqP/CvS8TQO+QoU5QGLZEdwL94TzKiwsA1HbJjQ
+         Zcww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:mime-version:subject:message-id:date:to;
-        bh=VLJjE3RNCV8NLTYC+0Gi3LOVbBh1NjWx1OwSZazXLM8=;
-        b=b+XMkW5qsVPMk4L8INNvrQw8DTrtEcAQMG86cL0Eez2qTeD9GpewUO7sRoV3rSY9cs
-         mIR/XJZPfLiK4lxuHtzKLyvPVH1jZGBuls4XhScG9Eoj9Oi2CeUtEyMvA4l77O/bCv7C
-         BP3p34o9l8MM/Bl0H9X3SuMfve/dIUpshCguwGD0dKuBzJQlkKCvKdNDYc/1vzU0oE6s
-         3M+Ry3oWlGf5+cTQsw77hruMSWJmqCT8dcV4eg7B5e5TMtqT+QQXlxzpG5v+UyV+35ox
-         LClmD9sZVxrOvLXdA7SnFYKzM92IPygc1KlrQhMHIHg/85KMs942+mNhq4naeYvoeyA7
-         7GDg==
-X-Gm-Message-State: AKaTC02OZyfQH/Gmm3NcyfXNZmKcTiPEhkRiXBFk1aeoSWkdZNDs+I7ZJbwwxD30woHLSg==
-X-Received: by 10.84.129.34 with SMTP id 31mr2381884plb.104.1479972249241;
-        Wed, 23 Nov 2016 23:24:09 -0800 (PST)
-From: haojun hou <haojunhou@gmail.com>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_4E3A5905-363A-429E-BD5C-5EA4AF2380AB"
-Mime-Version: 1.0 (Mac OS X Mail 10.1 \(3251\))
-Message-Id: <92067071-434D-4B7B-BF05-39E1BD7FE449@gmail.com>
-Date: Thu, 24 Nov 2016 15:24:04 +0800
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=nheoMYNw/60d8b/Oar1W/30J+yv8G7hwMBKyBSnzpGM=;
+        b=dPmIZ+bzg3rzobDHHCj+L+gC/dci+2xtfghr9YM0zmHJp+G80BDdKTW8Y3W45vugKa
+         0AKF75Bjmeze7dKqtqIGmEy3KXYwF2dleAWmlF0SObKijZrBhv/Ib6mIhT25gtIBDfJe
+         WwwMx5bHPAS4Yo5ZQzPn8wlkw5sBm+9v9auNddKTe2cS1y1hQvLOL4J66MaVsaisndFU
+         tXm+anuNeYbIdI/BSk0RUKFGeOE9q5SCL6V9s8LCmutprszGgjN+H1JW0/bwV8ViocpX
+         CWVsXjga7JoKkod4+IqJZscLZSkxtDthfxcEagCFzejL2Z1BvEMTuWWROTuxqUmHwrTN
+         Os2Q==
+X-Gm-Message-State: AOAM531Jt3KUdGYfetknMUaYYutlPOcA960Lr+yOOMqJTt3QpcJKoeCt
+	gmJ7Ae40gRdhMd70u9hx+bBMdcmbahfdKPgTDLK8ZFXFm2k=
+X-Google-Smtp-Source: ABdhPJwsAgs146suDhJS0bUaPMm9L3LV/J3yJE6dVdTLpOGQlbRUBV1CJ/6pDCX7VYhvvVrsWk8WkBZpaKPDSUy7YNc=
+X-Received: by 2002:a05:6830:15d3:: with SMTP id j19mr3505656otr.23.1619185256965;
+ Fri, 23 Apr 2021 06:40:56 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210422065959.GI13079@scully.more-magic.net> <CAEo4CePqice09K5PPhmxwwF3jg=USrqRqM5FgVX_jCB8sZfDeA@mail.gmail.com>
+ <20210422095945.GA2495@scully.more-magic.net> <4DCB6EF3-73EE-4038-8437-FEB339F20F90@dwheeler.com>
+ <659r691-on94-p2nq-p9p4-845811pnn7q6@vanv.qr> <YIKH4FHGjJ0d4p4n@wopr>
+In-Reply-To: <YIKH4FHGjJ0d4p4n@wopr>
+From: James Feister <openjaf@gmail.com>
+Date: Fri, 23 Apr 2021 09:40:45 -0400
+Message-ID: <CAJAvU=ZQiMR7PdKBz9=4wm3MX9VvmuAF4Q70V3sAwudjuJp4QQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3251)
-Subject: [oss-security] CVE request - itdb 1.23  Cross-Site Scripting (XSS)
+Content-Type: multipart/alternative; boundary="0000000000001129cc05c0a3f208"
+Subject: Re: [oss-security] Malicious commits to Linux kernel as part of
+ university study
 
---Apple-Mail=_4E3A5905-363A-429E-BD5C-5EA4AF2380AB
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=gb2312
+--0000000000001129cc05c0a3f208
+Content-Type: text/plain; charset="UTF-8"
 
-Hi:
-itdb 1.23 - Cross-Site Scripting (XSS)=20
+> "Someone else might be even more unethical later" is a horrible reason
+> to refrain from calling out unethical research methods.  This community
+> needs to make it absolutely clear that nonconsensual adversarial
+> "research" is completely unacceptable, or next year you'll see five
+> hundred grant applications intending to throw government-sponsored
+> wrenches into every piece of collaboratively-written software on Earth.
 
-Procuct: IT Items DataBase
+It is naive to think this adversarial behavior is not already taking place.
 
-Vendor: ITDB http://www.sivann.gr/software/itdb/
+The overall response I have seen to this should be encouraging to all of
+us that live in these open-source and free software communities.  It
+shows how our system works. In this case, the actors were identified,
+attributed to a publicly known group, and weeded out.  The key part is
+the information was freely shared, everyone knows about it and can take
+what they feel are appropriate actions.  Just like the submissions to this
+very mailing list help facilitate and the discussions that follow.
 
-Vunlerable Version: 1.23 and probably prior
+As much as we can blame the University or group for the efficacy of their
+intent, we should assume this behavior has and is already happening.
+There is no other reason not to.  It is a wake-up call to those who think
+otherwise, in public, private, and government sectors.  In this case, the
+project's maturity ensured the proper people were able to identify
+the actor and take appropriate actions.
 
-Tested Version: 1.23
+My suggestion to part of the solution would not be any single technical
+process.  It would be to ask that more commercial and government
+agencies ensure some of their budgeted resources (aka people) are
+used to help maintain the free software and open-source software they
+leverage. Yes, it will bring a whole new set of challenges, but it may tip
+the scale to favor those who are there to help.
 
-Author: Haojun Hou in ADLab of Venustech
+- Jim
 
-
-Advisory Details:
-
-Haojun Hou in ADLab of Venustech discovered a Cross-Site Scripting (XSS) in=
- itdb <>, which can be exploited to add,modify or delete information in app=
-lication`s database and gain complete control over the application.
-
-
-
-The vulnerability exists due to insufficientfiltration of user-supplied dat=
-a in =A1=B0value=A1=B1 HTTP POST parameter passed to =A1=B0itdb-1.23/js/Dat=
-aTables-1.8.2/examples/examples_support/editable_ajax.php=A1=B1 url. An att=
-acker could execute arbitrary HTML and script code in browser in context of=
- the vulnerable website.
-
-The exploitation example below uses the "alert()" JavaScript function to se=
-e a  pop-up messagebox:
-
-POST value=3D"><script>alert(1);</script><"
-
-http://localhost/itdb-1.23/js/DataTables-1.8.2/examples/examples_support/ed=
-itable_ajax.php <http://localhost/itdb-1.23/js/DataTables-1.8.2/examples/ex=
-amples_support/editable_ajax.php>
-
-Could you please help me assign a  CVE for this issue?
-
-=20=
-
---Apple-Mail=_4E3A5905-363A-429E-BD5C-5EA4AF2380AB--
+--0000000000001129cc05c0a3f208--
