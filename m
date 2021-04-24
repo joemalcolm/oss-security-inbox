@@ -1,32 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/27/1
-Message-ID: <CABK_9Y-q9o4T33KCOQ-p1bi5DUu8EyujZtU2g7qvG3WjXeKc6A@mail.gmail.com>
-Date: Tue, 27 Apr 2021 09:26:59 +0530
-From: Bharat Viswanadham <bharat@...che.org>
-To: users@...ne.apache.org
-Cc: oss-security@...ts.openwall.com
-Subject: CVE-2020-17517: Apache Ozone: Ozone S3 Gateway allows bucket and key access to non authenticated users
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/24/1
+Message-ID: <335f4394-781c-2366-f5e5-cc3025ced3f1@blacklistthisdomain.com>
+Date: Fri, 23 Apr 2021 23:32:27 -0400
+From: Silas <silas.cutler@...cklistthisdomain.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Malicious commits to Linux kernel as part of university study
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Hello,
 
-The S3 buckets and keys in a secure Apache Ozone Cluster must be
-inaccessible to anonymous access by default. The current security
-vulnerability allows access to keys and buckets through a curl command
-or an unauthenticated HTTP request. This enables unauthorized access
-to buckets and keys thereby exposing data to anonymous clients or
-users.  This affected Apache Ozone prior to the 1.1.0 release.
+They issued a clarification as well:
+https://www-users.cs.umn.edu/~kjlu/papers/clarifications-hc.pdf
 
-Mitigation:
-
-Upgrade to the latest Apache Ozone 1.1.0 release.
-
-Credit:
-
-Apache Ozone would like to thank Kota Uenishi for reporting this issue.
+- S
 
 
-Thanks,
 
-Apache Ozone Team.
+On 4/22/21 12:25 PM, Marcus Meissner wrote:
+> Hi,
+> 
+> to follow the "give complete content" requirement, here their statement on their website:
+> 
+> https://cse.umn.edu/cs/statement-cse-linux-kernel-research-april-21-2021
+> 
+> "
+> Statement from CS&E on Linux Kernel research - April 21, 2021
+> 
+> Leadership in the University of Minnesota Department of Computer Science & Engineering learned today about the details of research being conducted by one of its faculty members and graduate students into the security of the Linux Kernel. The research method used raised serious concerns in the Linux Kernel community and, as of today, this has resulted in the University being banned from contributing to the Linux Kernel.
+> 
+> We take this situation extremely seriously. We have immediately suspended this line of research. We will investigate the research method and the process by which this research method was approved, determine appropriate remedial action, and safeguard against future issues, if needed. We will report our findings back to the community as soon as practical.
+> 
+> Sincerely,
+> 
+> Mats Heimdahl, Department Head
+> Loren Terveen, Associate Department Head
+> "
+> 
+> Ciao, Marcus
+> 
+> On Thu, Apr 22, 2021 at 05:11:42PM +0200, Marcus Meissner wrote:
+>> Hi,
+>>
+>> https://twitter.com/UMNComputerSci/status/1384948683821694976
+>>
+>> Ciao, Marcus
+>>
+>>
+>> On Thu, Apr 22, 2021 at 02:55:03PM +0000, David H wrote:
+>>> Has anyone reported this to https://research.umn.edu/ethics-compliance/reporting-research-misconduct ?
+>>>
+>>>
+>>> ﻿On 4/22/21, 3:00 AM, "Peter Bex" <peter@...e-magic.net> wrote:
+>>>
+>>>     Hi all,
+>>>
+>>>     Probably a lot of you know this already but I consider it serious enough
+>>>     to point out to the OSS security community at large.
+>>>
+>>>     The university of Minnesota has been banned from making any commits to
+>>>     the Linux kernel after it was found out they'd been submitting bogus
+>>>     patches to the LKML to knowingly introduce security issues:
+>>>     https://lore.kernel.org/linux-nfs/YH%2FfM%2FTsbmcZzwnX@kroah.com/
+>>>
+>>>     They also published a paper:
+>>>     https://raw.githubusercontent.com/QiushiWu/qiushiwu.github.io/main/papers/OpenSourceInsecurity.pdf
+>>>
+>>>     I don't know the scope of this research, but it could involve other OSS
+>>>     projects, now or in the future, as well.  Hence this e-mail.  If you feel
+>>>     it's spam or needless drama, feel free to ignore.
+>>>
+>>>     Cheers,
+>>>     Peter
+>>
 
+Download attachment "pEpkey.asc" of type "application/pgp-keys" (2469 bytes)
