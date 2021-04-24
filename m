@@ -1,52 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/02/2
-Message-ID: <2073738.irdbgypaU6@x2>
-Date: Tue, 02 Mar 2021 10:18:10 -0500
-From: Steve Grubb <sgrubb@...hat.com>
-To: oss-security@...ts.openwall.com, Salvatore Bonaccorso <carnil@...ian.org>
-Cc: Felix Kosterhon <felix.kosterhon@...uinfra.com>
-Subject: Re: Vulnerability in the Linux Audit Framework Auditd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/24/2
+Message-ID: <b11bd2b0-1f34-4d41-9555-d31de13d43da@thomas-ward.net>
+Date: Sat, 24 Apr 2021 12:20:38 -0400
+From: Thomas Ward <teward@...mas-ward.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Malicious commits to Linux kernel as part of university study
 Content-Type: text/plain; charset=utf-8
+
+Clarification is from 2020.  That clarification doesn't address the fact that this is still technically research misconduct regardless of the clarifications.  The Linux Kernel has banned commits from University of Michigan because of a large volume of noise and useless patch requests among other things.  So it still requires a misconduct evaluation.
+
+⁣Get BlueMail for Android ​
+
+
+-------- Original Message --------
+From: Silas <silas.cutler@...cklistthisdomain.com>
+Sent: Fri Apr 23 23:32:27 EDT 2021
+To: oss-security@...ts.openwall.com
+Subject: Re: [oss-security] Malicious commits to Linux kernel as part of university study
 
 Hello,
 
-On Thursday, February 25, 2021 3:48:38 PM EST Salvatore Bonaccorso wrote:
-> On Thu, Feb 18, 2021 at 03:52:54PM +0000, Felix Kosterhon wrote:
-> > Hello Mr. Grubb,
-> > 
-> > thank you for your insight.
-> > First and foremost we would like to clarify that our intent is not
-> > to put blame on anyone but to improve the level of security for the
-> > affected systems and the organisations utilising Auditd.
-> > According to the rules.conf manual page, file-watch rules are meant
-> > to monitor any accesses to files based on their permission level.
-> > For the syscalls mentioned in this report this is not the case.
-> > 
-> > RedHat Inc. shares our perspective on this issue and has assigned a
-> > CVE for the vulnerability. Additionally they informed us that they
-> > will work together with the Upstream Linux Kernel Developers on
-> > behalf of fixing this issue.
+They issued a clarification as well:
+https://www-users.cs.umn.edu/~kjlu/papers/clarifications-hc.pdf
+
+- S
+
+
+
+On 4/22/21 12:25 PM, Marcus Meissner wrote:
+> Hi,
 > 
-> Is there a reference to this which can be followed/tracked? Asking
-> because the Red Hat bugzilla entry for CVE-2020-35501 for now would
-> still be restricted, but would like to get a better idea on how to
-> track this issue within Debian.
-
-Not sure who is supposed to answer this. I started an upstream audit 
-discussion:
-
-https://listman.redhat.com/archives/linux-audit/2021-February/msg00079.html
-
-The current thinking is perhaps just document this in a man page. End users 
-can always use a syscall audit rule and pick up any use. The shipped rules 
-have open_by_handle_at as part of the syscalls being watched for quite some 
-time. Typically people don't write their own rules, they have to meet the 
-DISA STIG or CIS which prescribes the rules you need to be using. So, I don't 
-know if there really is anything to do.
-
-Maybe we can get a patch adding open_by_handle_at to the permission filter in 
-the kernel. We'll just have to see how the upstream discussion unfolds.
-
--Steve
-
+> to follow the "give complete content" requirement, here their statement on their website:
+> 
+> https://cse.umn.edu/cs/statement-cse-linux-kernel-research-april-21-2021
+> 
+> "
+> Statement from CS&E on Linux Kernel research - April 21, 2021
+> 
+> Leadership in the University of Minnesota Department of Computer Science & Engineering learned today about the details of research being conducted by one of its faculty members and graduate students into the security of the Linux Kernel. The research method used raised serious concerns in the Linux Kernel community and, as of today, this has resulted in the University being banned from contributing to the Linux Kernel.
+> 
+> We take this situation extremely seriously. We have immediately suspended this line of research. We will investigate the research method and the process by which this research method was approved, determine appropriate remedial action, and safeguard against future issues, if needed. We will report our findings back to the community as soon as practical.
+> 
+> Sincerely,
+> 
+> Mats Heimdahl, Department Head
+> Loren Terveen, Associate Department Head
+> "
+> 
+> Ciao, Marcus
+> 
+> On Thu, Apr 22, 2021 at 05:11:42PM +0200, Marcus Meissner wrote:
+>> Hi,
+>>
+>> https://twitter.com/UMNComputerSci/status/1384948683821694976
+>>
+>> Ciao, Marcus
+>>
+>>
+>> On Thu, Apr 22, 2021 at 02:55:03PM +0000, David H wrote:
+>>> Has anyone reported this to https://research.umn.edu/ethics-compliance/reporting-research-misconduct ?
+>>>
+>>>
+>>> ﻿On 4/22/21, 3:00 AM, "Peter Bex" <peter@...e-magic.net> wrote:
+>>>
+>>>     Hi all,
+>>>
+>>>     Probably a lot of you know this already but I consider it serious enough
+>>>     to point out to the OSS security community at large.
+>>>
+>>>     The university of Minnesota has been banned from making any commits to
+>>>     the Linux kernel after it was found out they'd been submitting bogus
+>>>     patches to the LKML to knowingly introduce security issues:
+>>>     https://lore.kernel.org/linux-nfs/YH%2FfM%2FTsbmcZzwnX@kroah.com/
+>>>
+>>>     They also published a paper:
+>>>     https://raw.githubusercontent.com/QiushiWu/qiushiwu.github.io/main/papers/OpenSourceInsecurity.pdf
+>>>
+>>>     I don't know the scope of this research, but it could involve other OSS
+>>>     projects, now or in the future, as well.  Hence this e-mail.  If you feel
+>>>     it's spam or needless drama, feel free to ignore.
+>>>
+>>>     Cheers,
+>>>     Peter
+>>
 
