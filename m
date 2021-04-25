@@ -1,70 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/19/4
-Message-ID: <20210419153642.GA25158@openwall.com>
-Date: Mon, 19 Apr 2021 17:36:42 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/25/2
+Message-ID: <787be56d-f920-3846-6a0e-82ce30be6c40@enst-bretagne.fr>
+Date: Sun, 25 Apr 2021 12:56:35 +0200
+From: Gabriel Corona <gabriel.corona@...t-bretagne.fr>
 To: oss-security@...ts.openwall.com
-Subject: Re: xscreensaver package caps gets raw socket
+Subject: Re: DNS rebinding vulnerability in npupnp
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Apr 17, 2021 at 07:31:05AM -0700, Tavis Ormandy wrote:
-> Hello, I noticed that at least debian (maybe others) ship xscreensaver
-> hack with cap_net_raw enabled:
+Le 20/04/2021 à 09:54, Gabriel Corona a écrit :
+> The server-part of npupnp, a library used to implement UUPnP clients and
+> servers, is vulnerable to DNS rebinding attacks.
 > 
-> $ getcap /usr/libexec/xscreensaver/sonar
-> /usr/libexec/xscreensaver/sonar cap_net_raw=p
+> Impact: A remote web server can exploit this vulnerability to trick the
+> user browser into triggering actions on the local UPnP services
+> implemented using this library.
+> 
+> This is fixed in v4.1.4.
+> 
+> https://framagit.org/medoc92/npupnp
+> https://www.lesbonscomptes.com/upmpdcli/npupnp-doc/libnpupnp.html
+> 
+> A CVE as been requested.
+> 
 
-> - The code could use ping sockets instead, but they're still rarely
->   enabled by default, and users have to set the ping_group_range sysctl.
->   I personally think it's time to enable them by default, but that's a
->   different discussion :-)
+This is CVE-2021-31718.
 
-I think the distro should set a ping_group_range by default to just one
-GID it can allocate for the purpose - e.g., on Owl we had:
+Gabriel
 
-In /etc/group:
-
-_icmp:x:111:
-
-In /etc/sysctl.conf:
-
-# Range of group IDs permitted to access non-raw (datagram) ICMP sockets.
-#
-# These are an Openwall extension to the Linux kernel.  Our ping(1) program is
-# able to use these sockets, which enables it to start and run without
-# requiring root privileges nor a capability.  Access to these sockets is
-# restricted at all primarily in order to reduce direct exposure of the added
-# kernel code to potential attacks.  In other words, we gain privilege
-# separation due to keeping this access restricted and installing ping(1) SGID.
-#
-net.ipv4.ping_group_range = 111 111
-
-Then the distro should ideally make use of this in ping(1), like we did,
-installing it SGID _icmp.  (Note: ping(1) should also be patched to drop
-its elevated egid after obtaining the socket.)
-
-Then, as an option, the distro could also make use of ping sockets in
-/usr/libexec/xscreensaver/sonar and change it from cap_net_raw=p to SGID
-_icmp (with similar early dropping of the elevated egid).  It should
-also patch the known ways for an attacker to execute arbitrary code that
-could access the ping socket, in case of ping socket vulnerabilities in
-the kernel.
-
-If the ICMP ping functionality remains in sonar itself and isn't made
-available to all users by default (ping_group_range isn't set to cover
-the entire groups range anyway), then its added security risk shouldn't
-be taken by default - if a user really wants the sonar screensaver on
-their system, they should enable it explicitly.
-
-There are some valid reasons to just expose ICMP sockets to all users by
-default (but maybe exclude a range of system pseudo-user group IDs that
-certainly have no need for this, not to ease sandbox escapes) - such as
-to allow ICMP ping from users' QEMU VMs by default - but this sonar toy
-isn't a sufficiently good reason to take security risks, in my opinion.
-
-Other options would be to execute /bin/ping like you mention or maybe to
-ping by other means (non-ICMP, or only needing ICMP responses - e.g.
-like Olaf Kirch's unprivileged Linux 2.4+ traceroute(1) does - BTW, I
-think distros should adopt it, better late than never).
-
-Alexander
