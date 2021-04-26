@@ -1,23 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/19/4
-Message-ID: <c75fc85e-1072-99b1-83ad-20da58aebf23@apache.org>
-Date: Thu, 18 Nov 2021 23:06:09 +0000
-From: Siddharth Wagle <swagle@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/26/2
+Message-ID: <YIbC/ejOYMYVFOPM@f195.suse.de>
+Date: Mon, 26 Apr 2021 15:41:17 +0200
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-39233: Apache Ozone: Container-related datanode operations can be called without authorization 
+Subject: virtualbox: CVE-2021-25319: missing sticky bit in openSUSE packaging for /etc/box allows local root exploit for members of vboxusers group
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Hi,
 
-Container related Datanode requests of Ozone Datanode were not properly authorized and can be called by any client. 
+somewhat related to CVE-2021-2264 I noticed an openSUSE specific
+security issue in the openSUSE packaging for virtualbox [1]. To enable
+the autostart feature in virtualbox as outlined in the upstream manual
+[2] our packagers introduced a group 'vboxusers' that is granted write
+access to the directory /etc/vbox as the "autostart DB". Contrary to
+what the manual says the directory was not packaged with the sticky bit
+set, however.
 
-This issue is being tracked as HDDS-4729,HDDS-5236
+The file /etc/vbox/vbox.cfg is a configuration file for virtualbox. This
+file is sourced by other virtualbox bash scripts running as root like
+'vboxautostart.sh', 'vboxdrv.sh' and 'vboxweb-service.sh'. Due to the
+missing sticky bit any member of the vboxusers group can replace the
+/etc/vbox/vbox.cfg file by a manipulated one, allowing for full code
+execution in the context of the root user once e.g. the vboxautostart
+systemd service runs.
 
-Mitigation:
+Reproducer:
 
-Upgrade to Apache Ozone release version 1.2.0
+    root# su -g vboxusers nobody
+    nobody$ cd /etc/vbox
+    nobody$ cp vbox.cfg vbox.cfg.new
+    nobody$ rm -f vbox.cfg
+    nobody$ mv vbox.cfg.new vbox.cfg
+    nobody$ echo "touch /root/evil" >>vbox.cfg
+    
+    nobody$ exit
+    root# systemctl start vboxautostart.service
+    root# ls -lh /root/evil
+    -rw-r--r-- 1 root root 0  2. Mär 12:14 /root/evil
 
-Credit:
+I have been looking into other distributions like Arch Linux, Fedora and
+also some of the RPMs distributed on www.virtualbox.org. They all
+package /etc/vbox as root:root mode 755 and are therefore not affected.
 
-Apache Ozone would like to thank Marton Elek for reporting this issue.
+Updates for the openSUSE virtualbox packages are underway [3] that will
+fix the packaging error and also move the "autostart DB" directory from
+/etc/vbox to /etc/vbox/autostart.d to avoid mixing the autostart related
+files with the virtualbox system configuration file in the same
+directory.
 
+Cheers
+
+Matthias
+
+[1]: https://build.opensuse.org/package/show/Virtualization/virtualbox
+[2]: https://www.virtualbox.org/manual/ch09.html#autostart-linux
+[3]: https://bugzilla.suse.com/show_bug.cgi?id=1182918
+
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Phone: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
+ 
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG Nürnberg
+Geschäftsführer: Felix Imendörffer
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
