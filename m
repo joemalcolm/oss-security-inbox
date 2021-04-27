@@ -1,4 +1,9 @@
-Received: (qmail 14153 invoked by uid 550); 14 Apr 2026 02:48:54 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["474" "Tuesday" "27" "April" "2021" "21:00:22" "+0200" "jleroux@apache.org" "jleroux@apache.org" nil "22" "[oss-security] [CVE-2021-30128] Unsafe deserialization in OFBiz" nil nil nil "4" nil nil (number mark "U       jleroux@apac Apr 27   22/474   " thread-indent "\"[oss-security] [CVE-2021-30128] Unsafe deserialization in OFBiz\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2021-30128] Unsafe deserialization in OFBiz" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 23949 invoked by uid 550); 27 Apr 2021 19:09:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,41 +12,38 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 25882 invoked from network); 14 Apr 2026 02:43:17 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Abhishek Choudhary <shreemaanabhishek@apache.org>
+Received: (qmail 7529 invoked from network); 27 Apr 2021 19:00:49 -0000
+From: "jleroux@apache.org" <jleroux@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <e5f58634-0c77-fa8b-3af8-b54c6cb60682@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 14 Apr 2026 02:40:32 +0000
+Message-ID: <b484727f-90d2-1a27-4bb2-c5e2b1579df6@apache.org>
+Date: Tue, 27 Apr 2021 21:00:22 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.0
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2026-31924: Apache APISIX: Plugin tencent-cloud-cls log export
- uses plaintext HTTP 
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
+Subject: [oss-security] [CVE-2021-30128] Unsafe deserialization in OFBiz
 
-Severity: moderate=20
+Severity:
+High, possible RCE
 
-Affected versions:
+Vendor:
+The Apache Software Foundation
 
-- Apache APISIX 2.99.0 through 3.15.0
+Versions Affected:
+OFBiz versions prior to 17.12.07
 
 Description:
+Apache OFBiz has unsafe deserialization prior to 17.12.07 version
 
-Cleartext Transmission of Sensitive Information vulnerability in Apache API=
-SIX.
-
-tencent-cloud-cls log export uses plaintext HTTP
-This issue affects Apache APISIX: from 2.99.0 through 3.15.0.
-
-Users are recommended to upgrade to version 3.16.0, which fixes the issue.
+Mitigation:
+Upgrade to at least 17.12.07
+or apply patches at https://issues.apache.org/jira/browse/OFBIZ-12212 & OFBIZ-12221
 
 Credit:
-
-Oleh Konko (finder)
+Litch1 from the Security Team of Alibaba Cloud <litch1chk@gmail.com>
 
 References:
-
-https://apisix.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2026-31924
+http://ofbiz.apache.org/download.html#vulnerabilities
 
