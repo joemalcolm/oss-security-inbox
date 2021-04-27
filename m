@@ -1,62 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/09/1
-Message-ID: <20211209130218.6d96ea6c@fabiankeil.de>
-Date: Thu, 9 Dec 2021 13:02:18 +0100
-From: Fabian Keil <freebsd-listen@...iankeil.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/27/5
+Message-ID: <b484727f-90d2-1a27-4bb2-c5e2b1579df6@apache.org>
+Date: Tue, 27 Apr 2021 21:00:22 +0200
+From: "jleroux@...che.org" <jleroux@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Multiple issues fixed in Privoxy 3.0.33 stable
+Subject: [CVE-2021-30128] Unsafe deserialization in OFBiz
 Content-Type: text/plain; charset=utf-8
 
-               Announcing Privoxy 3.0.33 stable
---------------------------------------------------------------------
+Severity:
+High, possible RCE
 
-Privoxy 3.0.33 fixes an XSS issue, multiple DoS issues and a
-couple of other bugs. The issues also affect earlier Privoxy releases.
-Privoxy 3.0.33 also comes with a couple of general improvements and
-new features.
+Vendor:
+The Apache Software Foundation
 
---------------------------------------------------------------------
-ChangeLog for Privoxy 3.0.33
---------------------------------------------------------------------
-- Security/Reliability:
-  - cgi_error_no_template(): Encode the template name to prevent
-    XSS (cross-site scripting) when Privoxy is configured to servce
-    the user-manual itself.
-    Commit 0e668e9409c. OVE-20211102-0001. CVE-2021-44543.
-    Reported by: Artem Ivanov
-  - get_url_spec_param(): Free memory of compiled pattern spec
-    before bailing.
-    Reported by Joshua Rogers (Opera) who also provided the fix.
-    Commit 652b4b7cb0. OVE-20211201-0003. CVE-2021-44540.
-  - process_encrypted_request_headers(): Free header memory when
-    failing to get the request destination.
-    Reported by Joshua Rogers (Opera) who also provided the fix.
-    Commit 0509c58045. OVE-20211201-0002. CVE-2021-44541.
-  - send_http_request(): Prevent memory leaks when handling errors
-    Reported by Joshua Rogers (Opera) who also provided the fix.
-    Commit c48d1d6d08. OVE-20211201-0001. CVE-2021-44542.
+Versions Affected:
+OFBiz versions prior to 17.12.07
 
-[...]
+Description:
+Apache OFBiz has unsafe deserialization prior to 17.12.07 version
 
------------------------------------------------------------------
-About Privoxy:
------------------------------------------------------------------
+Mitigation:
+Upgrade to at least 17.12.07
+or apply patches at https://issues.apache.org/jira/browse/OFBIZ-12212 & OFBIZ-12221
 
-Privoxy is a non-caching web proxy with advanced filtering capabilities for
-enhancing privacy, modifying web page data and HTTP headers, controlling
-access, and removing ads and other obnoxious Internet junk. Privoxy has a
-flexible configuration and can be customized to suit individual needs and
-tastes. It has application for both stand-alone systems and multi-user
-networks.
+Credit:
+Litch1 from the Security Team of Alibaba Cloud <litch1chk@...il.com>
 
-Privoxy is Free Software and licensed under the GNU GPLv2.
+References:
+http://ofbiz.apache.org/download.html#vulnerabilities
 
-[...]
-
-Home Page: 
-   https://www.privoxy.org/
-
-Complete announcement:
-   https://lists.privoxy.org/pipermail/privoxy-announce/2021-December/000009.html
-
-Content of type "application/pgp-signature" skipped
