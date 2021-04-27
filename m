@@ -1,54 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/04/4
-Message-ID: <dc873b12-e46f-b058-768f-2c877da7c750@dovecot.fi>
-Date: Mon, 4 Jan 2021 14:03:22 +0200
-From: Aki Tuomi <aki.tuomi@...ecot.fi>
-To: oss-security@...ts.openwall.com, fulldisclosure@...lists.org
-Subject: CVE-2020-24386: Dovecot: IMAP hibernation allows accessing other peoples mail
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/27/3
+Message-ID: <CAE_88GYP-ZX9=b7LfepVqRZyBeOmGTWRV92BONJCBGkLULcQ3Q@mail.gmail.com>
+Date: Tue, 27 Apr 2021 14:35:20 -0300
+From: "Thiago H. de Paula Figueiredo" <thiagohp@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-30638: An Information Disclosure due to insufficient input validation exists in Apache Tapestry 5.4.0 and later
 Content-Type: text/plain; charset=utf-8
 
-Open-Xchange Security Advisory 2021-01-04
+Description:
 
-Product: Dovecot
-Vendor: OX Software GmbH
-Internal reference: DOP-2009 (Bug ID)
-Vulnerability type: CWE-150: Improper Neutralization of Escape, Meta, or
-Control Sequences
-Vulnerable version: 2.2.26-2.3.11.3
-Vulnerable component: imap
-Report confidence: Confirmed
-Solution status: Fixed by Vendor
-Fixed version: 2.3.13
-Vendor notification: 2020-08-17
-Solution date: 2020-08-27
-Public disclosure: 2021-01-04
-CVE reference: CVE-2020-24386
-CVSS: 8.2 (CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:N)
-
-Vulnerability Details:
-
-When imap hibernation is active, an attacker can cause Dovecot to
-discover file
-system directory structure and access other users' emails using
-specially crafted
-command. The attacker must have valid credentials to access the mail server.
-
-Risk:
-
-Attacker can access other users' emails and filesystem information.
-
-Workaround:
-
-Operators can choose to disable IMAP hibernation. IMAP hibernation is
-not on by
-default. To ensure imap hibernation is disabled, make sure
-imap_hibernate_timeout
-is set to 0 or unset.
+Information Exposure vulnerability in context asset handling of Apache
+Tapestry allows an attacker to download files inside WEB-INF if using a
+specially-constructed URL.  This was caused by an incomplete fix for
+CVE-2020-13953.  This issue affects Apache Tapestry Apache Tapestry 5.4.0
+version to Apache Tapestry 5.6.3; Apache Tapestry 5.7.0 version and Apache
+Tapestry 5.7.1.
 
 Solution:
 
-Operators should update to 2.3.13 or later version.
+For Tapestry 5.4.0 to 5.6.3: upgrade to 5.6.4
 
+For Tapestry 5.7.0 and 5.7.1: upgrade to 5.7.2
 
+************ Problem Description ************
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+An Information Disclosure due to insufficient input validation exists
+
+in Apache Tapestry 5.6.1 and later (latest)
+
+A recent patch for CVE-2020-13953
+
+(
+https://github.com/apache/tapestry-5/commit/cf1912291af9146ee86a4aef471ae2ab31d3a28b
+)
+
+fails to account for the backslash character in the filtering regex
+
+An attacker is therefore able to list and download web app files from
+
+the WEB-INF and META-INF directory using a crafted payload.
+
+Credit:
+
+This vulnerability was discovered by Kc Udonsi of Trend Micro
+
+-- 
+Thiago
+
