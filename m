@@ -1,40 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/09/3
-Message-ID: <rvubtf$lnv$1@ciao.gmane.io>
-Date: Tue, 9 Feb 2021 16:06:07 -0000 (UTC)
-From: Tavis Ormandy <taviso@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/27/4
+Message-ID: <4f613530-d896-24c0-c500-19ce517dbd3a@apache.org>
+Date: Tue, 27 Apr 2021 21:00:03 +0200
+From: "jleroux@...che.org" <jleroux@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: screen crash processing combining characters
+Subject: [CVE-2021-29200] RCE vulnerability in latest Apache OFBiz due to Java serialisation using RMI
 Content-Type: text/plain; charset=utf-8
 
-Hello, I noticed someone posted this to the screen-devel list. I can
-reproduce it here, just catting the testcase does crash my screen
-session.
+Severity:
+High, possible RCE
 
-https://lists.gnu.org/archive/html/screen-devel/2021-02/msg00000.html
+Vendor:
+The Apache Software Foundation
 
-(I think it wasn't supposed to be public, but it is, so better it's
-visible to security teams)
+Versions Affected:
+OFBiz versions prior to 17.12.07
 
-It looks like it might be exploitable at first glance, I see a crash
-here in encoding.c, because i is out of range.
+Description:
+Apache OFBiz has unsafe deserialization prior to 17.12.07 version
+An unauthenticated user can perform a RCE attack
 
-1411   else if (!combchars[i])
-1412     {
-1413       combchars[i] = (struct combchar *)malloc(sizeof(struct combchar));
-1414       if (!combchars[i])
-1415            return;
-1416       combchars[i]->prev = i;
-1417       combchars[i]->next = i;
-1418     }
+Mitigation:
+Upgrade to at least 17.12.07
+or apply one of the patches at https://issues.apache.org/jira/browse/OFBIZ-12216
 
-Exploitable or not, it would be annoying if someone stuffed this into logfiles
-being tailed, or whatever.
+Credit:
+r00t4dm at Cloud-Penetrating Arrow Lab <r00t4dm@...il.com>
+asd of MoyunSec V-Lab <root@...scode.cc>
+赖涵 <1044309102@...com>
 
-Tavis.
-
--- 
- _o)            $ lynx lock.cmpxchg8b.com
- /\\  _o)  _o)  $ finger taviso@....org
-_\_V _( ) _( )  @taviso
+References:
+http://ofbiz.apache.org/download.html#vulnerabilities
 
