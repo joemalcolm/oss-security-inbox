@@ -1,20 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/27/4
-Message-ID: <CAAHN_R0exjG2uBAqMWF-4Pznew5==DzzH8dNQdj=4vXXoX1dyw@mail.gmail.com>
-Date: Wed, 27 Jan 2021 21:08:48 +0530
-From: Siddhesh Poyarekar <siddhesh.poyarekar@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/27/2
+Message-ID: <CALSkbjrM=-cXMznHXnRyoKvAqOkoczWJXzyLpRsmSLubvftkdg@mail.gmail.com>
+Date: Tue, 27 Apr 2021 09:44:07 +0100
+From: daniel gaspar <danielvazgaspar@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: glibc iconv crash with ISO-2022-JP-3
+Subject: CVE-2021-28125: Apache Superset Open Redirect
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 27 Jan 2021 at 21:03, Tavis Ormandy <taviso@...il.com> wrote:
-> The impact is just that you can't open your mail client, because it
-> crashes as soon as it sees the subject.
->
-> Upstream bug: https://sourceware.org/bugzilla/show_bug.cgi?id=27256
-> Patch: https://sourceware.org/pipermail/libc-alpha/2021-January/122058.html
+Description:
 
-FYI, I have filed a CVE request for this with Mitre.
+Apache Superset up to and including 1.0.1 allowed for the creation of
+an external URL that could be malicious. By not checking user input
+for open redirects the URL shortener functionality would allow for a
+malicious user to create a short URL for a dashboard that could
+convince the user to click the link.
 
-Thanks,
-Siddhesh
+
+Mitigation:
+
+Upgrade to 1.1.0 or above
+
+Credit:
+
+Found and reported by Gianluca Veltri, Dario Castrogiovanni
+
+Reply to: users@...erset.apache.org
+
