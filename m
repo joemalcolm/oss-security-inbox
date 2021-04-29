@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2022" "Thursday" "29" "September" "2016" "11:50:02" "-0400" "Mike Kienenberger" "mkienenb@gmail.com" "<CAM1yOjZBQC8v0TAyi95b=1G11j-8wTrhZG4kJWG=Y8K8W5mYPw@mail.gmail.com>" "53" "[oss-security] [ANNOUNCE][CVE-2016-5019] Apache MyFaces Trinidad 2.1.2 released" nil nil nil "9" "2016092915:50:02" "[oss-security] [ANNOUNCE][CVE-2016-5019] Apache MyFaces Trinidad 2.1.2 released" (number mark "U       mkienenb@gma Sep 29   53/2022  " thread-indent "\"[oss-security] [ANNOUNCE][CVE-2016-5019] Apache MyFaces Trinidad 2.1.2 released\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["699" "Thursday" "29" "April" "2021" "08:15:10" "-0600" "Ariadne Conill" "ariadne@dereferenced.org" nil "21" "Re: [oss-security] ISC discloses three BIND vulnerabilities (CVE-2021-25214, CVE-2021-25215, and CVE-2021-25216)" nil nil nil "4" nil nil (number mark "U       ariadne@dere Apr 29   21/699   " thread-indent "\"Re: [oss-security] ISC discloses three BIND vulnerabilities (CVE-2021-25214, CVE-2021-25215, and CVE-2021-25216)\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] ISC discloses three BIND vulnerabilities (CVE-2021-25214, CVE-2021-25215, and CVE-2021-25216)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17672 invoked by uid 550); 29 Sep 2016 16:24:55 -0000
+Received: (qmail 31776 invoked by uid 550); 29 Apr 2021 14:23:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,94 +12,48 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24420 invoked from network); 29 Sep 2016 15:50:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=q4LpoE7ipFmMYRVsGD6rgM/pSThyJQYWle/njMy8uPM=;
-        b=Vm9hPMkpWtXxAMqFKyEKYpVhrduNPSyrJxWUS5YQrwLiKRStEzZ2BRS2PINB1HVL0W
-         /NuJx481XkSgMsDpfOWOF4qD0teX0E1GDMcZg/mOaUqXCD7tQUyYCtJ71Of3OX3zfj9L
-         QSAZrn7pf5V/njG+yPkRbSsy24b+UQwewrshSLpCH8k31qV5XCvkrBmrMqNEGLLoJ9Vs
-         lp09OFugA0YhaRwVXyXuC63JRFZs+oSkzrIT22Eq5Nm/TB3N6UTwVVh9EPZqZVEcsL2w
-         W7XsaDf6Kkl1VnViZMubBoHHy6MbKoeppv3up/qUJ691CvqjIO+0e9H3xXNbDVfY9d4u
-         l24g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=q4LpoE7ipFmMYRVsGD6rgM/pSThyJQYWle/njMy8uPM=;
-        b=N2kUwADd6LrG4SH8icksMx++5qSgHtI1fhuA3DUCzAui7uhYLp6+9fWjqvI6a5CAMJ
-         tf66USuvopgYFh4uNwSOeTiVAeXQMW2JWom5LYteLdrX9Y6+LFv1UgJIU9y/45azezo4
-         MjQn0BUIcBI01367RUneKJ5ENvZpdBvZhUxP5iSIO/quiJTrfyNedJ6eQWbeIbegySwr
-         OFaRKB9phVr8jFNeHaV8fIkW9v+CeTIBiCu6IvpFDY/k5JDGWjJ/c4Vfctrliapkq+YK
-         a7zBeJlJKwXXBLogjl8T9viCqM2nL0+P5Xun3g+I/EPLFkdP38U2gkkviQHnQzb797Fm
-         j5yw==
-X-Gm-Message-State: AA6/9Rlt8D7jOz7ULNV96XRqYGLjaVdnv/hPu0Vy6R8VxogO1E8ULb8rzDt5XZ2+cw6DHCnZcGumz8raelpVUQ==
-X-Received: by 10.157.47.165 with SMTP id r34mr1525326otb.64.1475164222898;
- Thu, 29 Sep 2016 08:50:22 -0700 (PDT)
+Received: (qmail 28355 invoked from network); 29 Apr 2021 14:15:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=dereferenced.org;
+	s=mailbun; t=1619705711;
+	bh=9B1OGwu5EZF2gFhwW06m26uK21ltW7TJQG4IuN7k0B8=;
+	h=Date:From:To:cc:Subject:In-Reply-To:References;
+	b=L/iu8lkkFxMOsNKZno2sLfVxcZl0y9EFrNCXRSelYIdkJ04dMa1gZHqCJPAqcpw16
+	 RKc5jKIiABkx2bB76IcnMlfYpM//1YEGqVQeofvVMGbZ7d1VUBbjLLBrBPvypvm5XQ
+	 mpFIHYQSjseXLsn4fCN1QiU6ynyGm6uIU4vHUiOrkNIiZ7WS9h4IW0QUsS51G5367i
+	 PBpCZkGO9bRLA5D5JPc5yb6uIh9FpiFTvPVMhE7ExMNR8SGp5OIrWEa6kTFBqUls1G
+	 g5hglJLmKChmSgYefcA2Xl2/V17SJKOvHSOaZQTHlFQ7+gvi+4DNaEVzSibSQg9pzB
+	 frEXLTuMfn00w==
+Date: Thu, 29 Apr 2021 08:15:10 -0600 (MDT)
+From: Ariadne Conill <ariadne@dereferenced.org>
+To: oss-security@lists.openwall.com
+cc: Ariadne Conill <ariadne@dereferenced.org>, 
+    "security-officer@isc.org" <security-officer@isc.org>
+In-Reply-To: <10CA3DFF-8822-4BB2-8659-8C311199769F@isc.org>
+Message-ID: <c2f4a07b-45e-0b1-a7eb-22db2e584460@dereferenced.org>
+References: <bb03954a-2db8-8c4c-3937-a3c59072abb4@isc.org> <4ba1f3b4-9452-c630-cf7a-aa2f7e8b5835@dereferenced.org> <10CA3DFF-8822-4BB2-8659-8C311199769F@isc.org>
 MIME-Version: 1.0
-From: Mike Kienenberger <mkienenb@gmail.com>
-Date: Thu, 29 Sep 2016 11:50:02 -0400
-Message-ID: <CAM1yOjZBQC8v0TAyi95b=1G11j-8wTrhZG4kJWG=Y8K8W5mYPw@mail.gmail.com>
-To: announce@myfaces.apache.org, MyFaces Development <dev@myfaces.apache.org>, 
-	MyFaces Discussion <users@myfaces.apache.org>
-Cc: "security@apache.org" <security@apache.org>, oss-security@lists.openwall.com, 
-	bugtraq@securityfocus.com
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] [ANNOUNCE][CVE-2016-5019] Apache MyFaces Trinidad 2.1.2 released
+Content-Type: multipart/mixed; boundary="0-1993481371-1619705712=:15938"
+Subject: Re: [oss-security] ISC discloses three BIND vulnerabilities
+ (CVE-2021-25214, CVE-2021-25215, and CVE-2021-25216)
 
-The Apache MyFaces team is pleased to announce the release of Apache
-MyFaces Trinidad 2.1.2.
-=2E
-MyFaces Trinidad is a feature-rich renderkit for JavaServer(tm) Faces
-that provides an extendibles framework and extensive skinning support.
-This version is designed to be used with the JSF 2.1 specification.
+--0-1993481371-1619705712=:15938
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-CVE-2016-5019:
-Trinidad=E2=80=99s CoreResponseStateManager both reads and writes view state
-strings using
-ObjectInputStream/ObjectOutputStream directly.  By doing so, Trinidad
-bypasses the
-view state security features provided by the JSF implementations - ie. the =
-view
-state is not encrypted and is not MAC=E2=80=99ed.  Trinidad=E2=80=99s
-CoreResponseStateManager will
-blindly deserialize untrusted view state strings, which makes Trinidad-based
-applications vulnerable to deserialization attacks.
+Hello,
 
-Apache MyFaces Trinidad is available in both binary and source
-distributions, and there are examples available as well:
+On Thu, 29 Apr 2021, Ondřej Surý wrote:
 
-    * http://myfaces.apache.org/trinidad/download.html
+> Hi Ariande,
+>
+> BIND 9.17.x was using the system SPNEGO since 9.17.2 (I think).
+>
+> Also for older versions, it should be enough to use --disable-isc-spnego if you can’t patch it (that’s what I am doing for Debian buster).  It just won’t work with Heimdal krb5, but it compiles just fine with MIT krb5.
 
-Apache MyFaces Trinidad is available in the central Maven repository
-under Group ID "org.apache.myfaces.trinidad"
+Yeah, we've always built with --disable-isc-spnego, so no problem there.
 
-Release Notes - MyFaces Trinidad - Version 2.1.2
+I wound up just upgrading every branch still supportd to 9.16.15.  Seemed 
+like the easiest way.
 
-Bug
-    [TRINIDAD-2542] - CVE-2016-5019: MyFaces Trinidad view state
-deserialization security vulnerability
-
-    [TRINIDAD-2228] - java.lang.UnsupportedOperationException
-    [TRINIDAD-2282] - In validateLength, a default hintRange message
-is displayed instead of hintMaximum even when minimum value is not set
-    [TRINIDAD-2436] - We should update Table's selection state during
-invoke application phase
-    [TRINIDAD-2445] - Prevent exceptions from propagating out of the
-ServletFilter
-    [TRINIDAD-2541] - Check UTF-8 encoding in example files
-
-Improvement
-
-    [TRINIDAD-2239] - Improve the ancestor based change filtering
-mechanism by introducing a formal ComponentChangeFilter
-    [TRINIDAD-2441] - URLUtil to escape a URL and remove invalid characters
-    [TRINIDAD-2540] - Align Trinidad 2.1.x so it can be editable using
-Netbeans 8
-
-regards,
-
-Mike Kienenberger
+Ariadne
+--0-1993481371-1619705712=:15938--
