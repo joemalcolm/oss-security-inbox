@@ -1,49 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/11/7
-Message-ID: <20210811153158.gt6uk4qqaqw7lzo2@redhat.com>
-Date: Wed, 11 Aug 2021 10:31:58 -0500
-From: Eric Blake <eblake@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/29/1
+Message-ID: <bb03954a-2db8-8c4c-3937-a3c59072abb4@isc.org>
+Date: Wed, 28 Apr 2021 17:09:42 -0800
+From: Michael McNally <mcnally@....org>
 To: oss-security@...ts.openwall.com
-Subject: Re: STARTTLS vulnerabilities
+Cc: "security-officer@....org" <security-officer@....org>
+Subject: ISC discloses three BIND vulnerabilities (CVE-2021-25214, CVE-2021-25215, and CVE-2021-25216)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Aug 11, 2021 at 08:16:34AM +0200, Hanno Böck wrote:
-> Of course it's a very obvious idea for further research to look if one
-> finds similar vulnerabilities to the ones we found in other protocols.
-> So I'd really like to encourage other people to look for this.
-> 
-> FWIW there are a lot of protocols with a STARTTLS mechanism, here's the
-> list of supported protocols by OpenSSL:
-> 	smtp
-> 	pop3
-> 	imap
-> 	ftp
-> 	xmpp
-> 	xmpp-server
-> 	telnet
-> 	irc
-> 	mysql
-> 	postgres
-> 	lmtp
-> 	nntp
-> 	sieve
-> 	ldap
+On April 28, 2021, we (Internet Systems Consortium) disclosed three
+vulnerabilities affecting our BIND 9 software:
 
-Not mentioned in that list was ndb, but as far as I can tell, that
-project has already documented the ramifications of opportunistic
-encryption as being a security risk, and all known implementations
-(both servers and clients) with TLS support have a mode of execution
-that ensures the connection is dropped if a downgrade attack is
-attempted:
+    CVE-2021-25214: A broken inbound incremental zone update (IXFR)
+    can cause named to terminate unexpectedly
+    https://kb.isc.org/docs/cve-2021-25214
 
-https://github.com/NetworkBlockDevice/nbd/blob/master/doc/proto.md#security-considerations
-https://lists.debian.org/nbd/2021/08/msg00031.html
+    CVE-2021-25215: An assertion check can fail while answering queries for
+    DNAME records that require the DNAME to be processed to resolve itself
+    https://kb.isc.org/docs/cve-2021-25215
 
-But I welcome review from those with more experience from the security
-side of things.
+    CVE-2021-25216: A second vulnerability in BIND's GSSAPI security policy
+    negotiation can be targeted by a buffer overflow attack
+    https://kb.isc.org/docs/cve-2021-25216
 
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.           +1-919-301-3266
-Virtualization:  qemu.org | libvirt.org
+New versions of BIND are available from https://www.isc.org/downloads
+
+Operators and package maintainers who prefer to apply patches selectively can
+find individual vulnerability-specific patches in the "patches" subdirectory
+of the release directories for our two stable release branches (9.11 and 9.16)
+
+   https://downloads.isc.org/isc/bind9/9.11.31/patches
+   https://downloads.isc.org/isc/bind9/9.16.15/patches
+
+With the public announcement of these vulnerabilities, the embargo
+period is ended and any updated software packages that have been
+prepared may be released.
 
