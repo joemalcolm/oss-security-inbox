@@ -1,35 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/17/6
-Message-ID: <20210817180250.qm2d6wicxwjif3jq@yuggoth.org>
-Date: Tue, 17 Aug 2021 18:02:51 +0000
-From: Jeremy Stanley <fungi@...goth.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: [OSSA-2021-004] Neutron: Linuxbridge ARP filter bypass on Netfilter platforms (CVE-2021-38598)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/29/3
+Message-Id: <10CA3DFF-8822-4BB2-8659-8C311199769F@isc.org>
+Date: Thu, 29 Apr 2021 12:36:56 +0200
+From: Ondřej Surý <ondrej@....org>
+To: Ariadne Conill <ariadne@...eferenced.org>
+Cc: oss-security@...ts.openwall.com, "security-officer@....org" <security-officer@....org>
+Subject: Re: ISC discloses three BIND vulnerabilities (CVE-2021-25214, CVE-2021-25215, and CVE-2021-25216)
 Content-Type: text/plain; charset=utf-8
 
-On 2021-08-17 19:30:21 +0200 (+0200), Jan Engelhardt wrote:
+Hi Ariande,
+
+BIND 9.17.x was using the system SPNEGO since 9.17.2 (I think).
+
+Also for older versions, it should be enough to use --disable-isc-spnego if you can’t patch it (that’s what I am doing for Debian buster).  It just won’t work with Heimdal krb5, but it compiles just fine with MIT krb5.
+
+Cheers,
+Ondrej
+--
+Ondřej Surý (He/Him)
+ondrej@....org
+
+> On 29. 4. 2021, at 12:34, Ariadne Conill <ariadne@...eferenced.org> wrote:
 > 
-> On Tuesday 2021-08-17 17:17, Jeremy Stanley wrote:
-> >Description
-> >~~~~~~~~~~~
-> >Jake Yip with ARDC and Justin Mammarella with the University of
-> >Melbourne reported a vulnerability in Neutron's linuxbridge driver
-> >on newer Netfilter-based platforms (the successor to IPTables).
+> Hello,
 > 
-> ip_tables is running atop the netfilter API, so.... it's
-> not an ordered set with predecessors and successors.
+> On Wed, 28 Apr 2021, Michael McNally wrote:
+> 
+>> On April 28, 2021, we (Internet Systems Consortium) disclosed three
+>> vulnerabilities affecting our BIND 9 software:
+>> 
+>>  CVE-2021-25214: A broken inbound incremental zone update (IXFR)
+>>  can cause named to terminate unexpectedly
+>>  https://kb.isc.org/docs/cve-2021-25214
+>> 
+>>  CVE-2021-25215: An assertion check can fail while answering queries for
+>>  DNAME records that require the DNAME to be processed to resolve itself
+>>  https://kb.isc.org/docs/cve-2021-25215
+>> 
+>>  CVE-2021-25216: A second vulnerability in BIND's GSSAPI security policy
+>>  negotiation can be targeted by a buffer overflow attack
+>>  https://kb.isc.org/docs/cve-2021-25216
+>> 
+>> New versions of BIND are available from https://www.isc.org/downloads
+>> 
+>> Operators and package maintainers who prefer to apply patches selectively can
+>> find individual vulnerability-specific patches in the "patches" subdirectory
+>> of the release directories for our two stable release branches (9.11 and 9.16)
+>> 
+>> https://downloads.isc.org/isc/bind9/9.11.31/patches
+>> https://downloads.isc.org/isc/bind9/9.16.15/patches
+> 
+> These directories only have patches for CVE-2021-25214 and CVE-2021-25215. A patch for CVE-2021-25216 appears to be missing.  In some supported branches of Alpine, we erroneously followed a development branch of BIND, so I am trying to determine if there is anything I need to backport to cover CVE-2021-25216.
+> 
+> Thanks in advance for any advice you can provide on this.
+> 
+> Ariadne
 
-Yes, thanks. It would have been more accurate to draw the comparison
-between ebtables and ebtables-nft, which is where the underlying
-problem arises. I was trying not to get too into the weeds with
-technical detail for the general user audience, who may not be
-particularly aware of the names for layer 2 filtering mechanisms,
-but I agree this wording is also mildly misleading as a result.
 
-Should I have said "Netfilter-based platforms (the successor to
-legacy IPTables)" instead, to differentiate it from Netfilter-based
-IPTables?
--- 
-Jeremy Stanley
-
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
