@@ -1,4 +1,9 @@
-Received: (qmail 16046 invoked by uid 550); 12 Apr 2022 12:12:17 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1523" "Thursday" "29" "April" "2021" "04:34:11" "-0600" "Ariadne Conill" "ariadne@dereferenced.org" nil "38" "Re: [oss-security] ISC discloses three BIND vulnerabilities (CVE-2021-25214, CVE-2021-25215, and CVE-2021-25216)" nil nil nil "4" nil nil (number mark "U       ariadne@dere Apr 29   38/1523  " thread-indent "\"Re: [oss-security] ISC discloses three BIND vulnerabilities (CVE-2021-25214, CVE-2021-25215, and CVE-2021-25216)\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] ISC discloses three BIND vulnerabilities (CVE-2021-25214, CVE-2021-25215, and CVE-2021-25216)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 21800 invoked by uid 550); 29 Apr 2021 10:52:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,76 +12,64 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15977 invoked from network); 12 Apr 2022 12:12:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
-	:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm1; t=1649765524; x=1649851924; bh=p4zAWFFkk3
-	KJidQD1jndhGbjsIZd9aVSvyqamhaK5bI=; b=EQL9uqUkAi5/3Qy5rjwIBK90aA
-	mge07kNQBEZpzWPn2txKFqLgK3k52iJOWikgTuke0sSKb1+Ha76o8EkT6BuqLElw
-	YIXRgvm0dZT5Lg4fKDXxyB5H+PIw8MJo8ThKMN2jJIlloK2O+eZj3OUyQYr5X7yP
-	Nu8vh2k/MHtqkTZG4UDjFk88AYsicxu4+PKuOuHfe6d5eYRRU+ZA+VraBl2jtg7S
-	f0hxRdIdTRc2N9qp59Q4DtqGgT3JozRwLmdLFmdHrxOIf0Lxu9hhv7Fsb2K9ARX9
-	IZWxWo64ZMIF78lradLJ4nZ0NDP98L472zTd74IP1RaSeIUPFa8TClMSzpmw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1649765524; x=
-	1649851924; bh=p4zAWFFkk3KJidQD1jndhGbjsIZd9aVSvyqamhaK5bI=; b=k
-	HU3rhBocNSYN2LQo3Omirq5LsfKsdcfIZYb+15JKTb15FZ/KAnK0gyzN3K53n7iH
-	Q+CQcmsfjCgP6sxMG0C2bqe/xVLO4LOQtBEICSwHxoB4ve0Nka7gT01l8U3KvE0/
-	ppyf5ZTDcP+w3kcsUoWzayRe9DVhCkzhNG7FiTmnAU+lvKrqoWOWh8S1mZIaPJlv
-	0ClGJa4pT5pvtBB8zoobf+KCWU9YTje5Y3yon7b9pasqrAz3YLSZdoRrKapBobPX
-	rnd78RfQwNZMnbU7wJP0DhRZ6EmcxI1q4GET5cWNshbF4qyDoc66Gi0IET7SbtkA
-	7WBkFkn/2gW1eVmSxbKpQ==
-X-ME-Sender: <xms:lGxVYjF1tBy69RyRWEb7NQ0sbs9yQd7jPZjTnnB17MPqFHm6Yvq5ZA>
-    <xme:lGxVYgUIQinHJhcwwPChXGc_xk24s39oRY46argQoJUcdgekW0f6rmmeZ8zzgDcH2
-    QTJeRSdHcG4HA>
-X-ME-Received: <xmr:lGxVYlJATpZ0jAtscr9D2_9svT2HJPwYpFMVoGSN1cW8rj95jtaLkC_ujYICwpOwXlyjimugDM36t_7mINGxX3WYEGuTL2H6>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrudekkedggeekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesthdtre
-    dttddtvdenucfhrhhomhepifhrvghgucfmjfcuoehgrhgvgheskhhrohgrhhdrtghomheq
-    necuggftrfgrthhtvghrnhepveeuheejgfffgfeivddukedvkedtleelleeghfeljeeiue
-    eggeevueduudekvdetnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
-    lhhfrhhomhepghhrvghgsehkrhhorghhrdgtohhm
-X-ME-Proxy: <xmx:lGxVYhF7lvnexFnhw1BvSoAD6DbDaFkpWyI8GR29UVSD6Wmt3Io3Xg>
-    <xmx:lGxVYpVwk-UbfX40rFUQturb8-CtngDohAHJfSjcRkZLCjzSe9HP0Q>
-    <xmx:lGxVYsNpL7dorMpHN6DdQtKZOojTcReR9Y4mzW1ccXabNLeGgbXKuQ>
-    <xmx:lGxVYqdVMFzl-O0R6O2WNnAVc7cdnlsLPEyGlDKPdI9PCyMi4KRutw>
-Date: Tue, 12 Apr 2022 14:12:02 +0200
-From: Greg KH <greg@kroah.com>
+Received: (qmail 13611 invoked from network); 29 Apr 2021 10:34:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=dereferenced.org;
+	s=mailbun; t=1619692451;
+	bh=BUfK4umx/98jUPF5BB2GHi6bEqSco+3tNkDVXN9Dj2A=;
+	h=Date:From:To:cc:Subject:In-Reply-To:References;
+	b=gZcqy+d92KuW3RvQfJrkc3xtOrhQWAkGhKR1j7B6cXIFPmCMNH6L0B0jmNZsvIEFy
+	 6MCnPnBTQJT17mQ37ghotXJMqOh5J1UUs4XF5kirUsc2tz7jOccaodf0dkSXUWfsGj
+	 lGFFuM3pAEPXGCGbybkdrPCZ7weNaXSekTwXJubXLLbqZBXe5WhiHGTm4BB6WyDHnh
+	 2ShmJ1wZfhUK+Cpqe2z2srIn14NDJMmVEZNszVxyTOcfTy5wuotlboPZdHKZj/fmRG
+	 IemLDlvICanDeoliHsj77c9d22ROfvOn/9x/gXBG/L14OaMTRnzUGDSCUIhU9y7zZV
+	 5J9QrtHPLfUiA==
+Date: Thu, 29 Apr 2021 04:34:11 -0600 (MDT)
+From: Ariadne Conill <ariadne@dereferenced.org>
 To: oss-security@lists.openwall.com
-Message-ID: <YlVskpTa7twfTtwK@kroah.com>
-References: <CAH5WSp6-nveUGNR8cEdXbFQs0m3AsDmhoN9sDx+WXfn2JsdjHg@mail.gmail.com>
+cc: "security-officer@isc.org" <security-officer@isc.org>
+In-Reply-To: <bb03954a-2db8-8c4c-3937-a3c59072abb4@isc.org>
+Message-ID: <4ba1f3b4-9452-c630-cf7a-aa2f7e8b5835@dereferenced.org>
+References: <bb03954a-2db8-8c4c-3937-a3c59072abb4@isc.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAH5WSp6-nveUGNR8cEdXbFQs0m3AsDmhoN9sDx+WXfn2JsdjHg@mail.gmail.com>
-Subject: Re: [oss-security] Linux kernel: A concurrency use-after-free
- between drm_setmaster_ioctl and drm_mode_getresources
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Subject: Re: [oss-security] ISC discloses three BIND vulnerabilities
+ (CVE-2021-25214, CVE-2021-25215, and CVE-2021-25216)
 
-On Tue, Apr 12, 2022 at 07:42:04PM +0800, Minh Yuan wrote:
-> Hi guys,
-> 
-> We recently discovered a concurrency uaf in drm of the latest kernel
-> version (Linux 4.19.237).
+Hello,
 
-Note, this issue is not a problem for kernel versions 5.15 and newer,
-the relevant commits have not yet been backported to older stable kernel
-trees.  I have a list (as does the author of this report) of the needed
-commits if anyone wishes to help in backporting (and testing.)
+On Wed, 28 Apr 2021, Michael McNally wrote:
 
-5.10.y and 5.4.y have some of the needed changes (as does 4.19.y), but
-not all of them, so I do not know if the reproducer works on those trees
-at this point in time.
+> On April 28, 2021, we (Internet Systems Consortium) disclosed three
+> vulnerabilities affecting our BIND 9 software:
+>
+>   CVE-2021-25214: A broken inbound incremental zone update (IXFR)
+>   can cause named to terminate unexpectedly
+>   https://kb.isc.org/docs/cve-2021-25214
+>
+>   CVE-2021-25215: An assertion check can fail while answering queries for
+>   DNAME records that require the DNAME to be processed to resolve itself
+>   https://kb.isc.org/docs/cve-2021-25215
+>
+>   CVE-2021-25216: A second vulnerability in BIND's GSSAPI security policy
+>   negotiation can be targeted by a buffer overflow attack
+>   https://kb.isc.org/docs/cve-2021-25216
+>
+> New versions of BIND are available from https://www.isc.org/downloads
+>
+> Operators and package maintainers who prefer to apply patches selectively can
+> find individual vulnerability-specific patches in the "patches" subdirectory
+> of the release directories for our two stable release branches (9.11 and 
+> 9.16)
+>
+>  https://downloads.isc.org/isc/bind9/9.11.31/patches
+>  https://downloads.isc.org/isc/bind9/9.16.15/patches
 
-> int fd1 = open("/dev/dri/card0",0);
-> fd = open("/dev/dri/card0",0);
+These directories only have patches for CVE-2021-25214 and CVE-2021-25215. 
+A patch for CVE-2021-25216 appears to be missing.  In some supported 
+branches of Alpine, we erroneously followed a development branch of BIND, 
+so I am trying to determine if there is anything I need to backport to 
+cover CVE-2021-25216.
 
-Also note that this issue requires access to these device nodes.
+Thanks in advance for any advice you can provide on this.
 
-thanks,
-
-greg k-h
+Ariadne
