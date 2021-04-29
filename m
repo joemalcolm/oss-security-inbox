@@ -1,118 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/07/3
-Message-Id: <c745f28a-d357-4a9e-b4c4-6c9647b0ba36@www.fastmail.com>
-Date: Tue, 07 Sep 2021 10:37:52 -0600
-From: "Jeremy Soller" <jeremy@...tem76.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Pop!_OS Membership to linux-distros list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/30/1
+Message-ID: <d3f1107ee2eb7ca5308d8346ed1d8f7b5549dc3e.camel@decadent.org.uk>
+Date: Fri, 30 Apr 2021 01:47:34 +0200
+From: Ben Hutchings <ben@...adent.org.uk>
+To: klibc mailing list <klibc@...or.com>
+Cc: initramfs@...r.kernel.org, oss-security <oss-security@...ts.openwall.com>
+Subject: [ANNOUNCE] klibc 2.0.9
 Content-Type: text/plain; charset=utf-8
 
-Hello Alexander,
+I have released version 2.0.9.  This is available in the git
+repository at:
 
-I'm keeping this in mind. We may hire someone to handle this task, and I will get back to you when we do.
+    https://git.kernel.org/pub/scm/libs/klibc/klibc.git
 
-Thanks,
+and as a tarball at:
+
+    https://mirrors.kernel.org/pub/linux/libs/klibc/2.0/
+
+Security fixes:
+- Integer overflows in heap functions (CVE-2021-31870, CVE-2021-31873)
+- Integer overflows in cpio (CVE-2021-31871, CVE-2021-31872)
+
+New features:
+- Signal handling on alpha, s390(x), and sparc no longer requires
+  stack trampolines, and the stack should no longer be executable
+- The finit_module() system call has a wrapper function
+- arm64 builds can be done using LLVM's lld; other architectures may
+  also work
+
+Other bug fixes:
+- Signal handling on alpha and ia64
+- Crash in vfork on ia64
+- Build failure with older versions of make
+- Build failure for some binutils configurations
+
+Other changes:
+- riscv64 builds now use linker relaxation
+- Various warning fixes
+- dash build uses mktemp command instead of tempfile
+- Static library builds are now always reproducible, rather than this
+  being optional
+
+Thanks to Microsoft Vulnerability Research for reporting the heap bugs
+and going some of the way to identifying the cpio bugs.
+
+A git shortlog of changes since version 2.0.8 follows.
+
+Ben.
+
+Andrej Shadura (1):
+      [klibc] dash: builtin: Default to mktemp, not tempfile
+
+Andrew Delgadillo (1):
+      [klibc] support llvm's lld for arm64
+
+Ben Hutchings (32):
+      [klibc] 2.0.8 released, next version is 2.0.9
+      [klibc] alpha: Fix definitions of _NSIG and struct sigaction
+      [klibc] signal: Add compile-time check on signal types
+      [klibc] signal: Note another reason to define _KLIBC_NEEDS_SA_RESTORER
+      [klibc] signal: Add sysconfig setting to force SA_SIGINFO on
+      [klibc] s390: Set sa_restorer for signals and disable executable stack
+      [klibc] alpha: Pass restorer to rt_sigaction() and disable executable stack
+      [klibc] sparc: Set sa_restorer for signals and disable executable stack
+      [klibc] signal: Move rt_sigaction() argument mangling to arch directories
+      [klibc] signal: Add config flag for additional sigaction fixup
+      [klibc] ia64: Fix definition of struct sigaction
+      [klibc] ia64: sigaction: Make signal updates atomic
+      [klibc] README.klibc: List alpha and ia64 as "working"
+      [klibc] README.klibc: Refresh architecture list
+      [klibc] Kbuild, klcc: Support multiple objects in KLIBCCRTSHARED
+      [klibc] riscv64: Make linker relaxation work and enable it
+      [klibc] klcc: Force make to use a shell to run 'command'
+      [klibc] Move linker option probing to Kbuild.klibc
+      [klibc] Kbuild: Rename LLD to LD_IS_LLD
+      [klibc] Replace all the remaining instances of -Ttext-segment
+      [klibc] Make typesize extraction more robust
+      [klibc] zlib: Suppress implicit-fallthrough warning
+      [klibc] Kbuild: Always build static library reproducibly
+      [klibc] losetup: Fix warnings about __u64 arguments to printf
+      [klibc] Define SIZE_MAX in <stdint.h>
+      [klibc] tests: Add test for malloc size arithmetic
+      [klibc] malloc: Set errno on failure
+      [klibc] malloc: Fail if requested size > PTRDIFF_MAX
+      [klibc] calloc: Fail if multiplication overflows
+      [klibc] malloc: Fail if block size is out of range for sbrk
+      [klibc] cpio: Fix possible integer overflow on 32-bit systems
+      [klibc] cpio: Fix possible crash on 64-bit systems
+
+Bill Wendling (3):
+      [klibc] dash: shell: Fix clang warnings
+      [klibc] dash: shell: Fix clang warnings about format string
+      [klibc] kinit: use an enum to silence a clang warning
+
+Jessica Clarke (2):
+      [klibc] ia64: Fix sigaction function implementation
+      [klibc] ia64: Fix invalid memory access in vfork
+
+Nikita Ermakov (1):
+      [klibc] SYSCALLS.def: Add finit_module() system call
 
 -- 
-  Jeremy Soller
-  System76
-  Principal Engineer
-  jeremy@...tem76.com
+Ben Hutchings
+I'm not a reverse psychological virus.
+Please don't copy me into your signature.
 
-On Tue, Aug 17, 2021, at 6:31 AM, Solar Designer wrote:
-> Hi Jeremy,
-> 
-> I'm sorry about the delay.  I was hoping someone else would chime in.
-> 
-> On Wed, Aug 04, 2021 at 09:59:02AM -0600, Jeremy Soller wrote:
-> > On Tue, Jul 27, 2021, at 11:59 AM, Solar Designer wrote:
-> > > On Tue, Jul 20, 2021 at 02:23:26PM -0600, Jeremy Soller wrote:
-> > > > Over the history of Pop!_OS, dating back to 2017, we have maintained critical
-> > > > packages and applied security patches soon after they are made public. Our
-> > > > membership to this list would significantly help our users stay secure by
-> > > > allowing us to prepare and test security updates ahead of public disclosure.
-> > > > Please see our GitHub organization for more evidence: https://github.com/pop-os
-> > > 
-> > > I think it'd be most convincing for us all to see specific examples of
-> > > you having "applied security patches soon after they are made public",
-> > > with dates public vs. fixed in Pop!_OS.
-> > 
-> > How many examples should I provide? The last security patch I did was for
-> > systemd. We have patches on systemd which means we cannot use the Ubuntu
-> > version directly, so when, for example, CVE-2020-13529 and CVE-2021-33910
-> > patches arrived in Ubuntu 21.04 on July 20, 2021, I applied them to our own
-> > fork of systemd for Pop!_OS 21.04 that same day:
-> > 
-> > - https://launchpad.net/ubuntu/+source/systemd/247.3-3ubuntu3.4
-> > - https://github.com/pop-os/systemd/commit/bf008f836b8740f6634d02526d1f38c98fa6699a
-> > 
-> > Pop!_OS needs to participate in linux-distros to ensure we have patches ready
-> > for our forks of packages that do not come straight from Ubuntu. I listed the
-> > relevant packages in my original email, many of which we have had to do
-> > security updates for after some embargo lifts, with very little time to prepare.
-> 
-> There's no specific requirement on the number of examples.  The above
-> looks reasonable to me.
-> 
-> > > > 7. Be able and willing to contribute back (see above), preferably in specific
-> > > > ways announced in advance (so that you're responsible for a specific area and
-> > > > so that we know what to expect from which member), and demonstrate actual
-> > > > contributions once you've been a member for a while
-> > > > 
-> > > > I am able and willing to contribute back.
-> > > 
-> > > Please choose a specific task (or several).
-> > > 
-> > > I suggest the statistics task:
-> > > 
-> > > "13. Keep track of per-report and per-issue handling and disclosure
-> > > timelines (at least times of notification of the private list and of
-> > > actual public disclosure), at regular intervals produce and share
-> > > statistics (most notably, the average embargo duration) as well as the
-> > > raw data (except on issues that are still under embargo) by posting to
-> > > oss-security - primary: Amazon, backup: Gentoo"
-> > > 
-> > > As you can see, it is currently assigned to Amazon and Gentoo, but as
-> > > far as I can see neither is actually handling it now, so I'd like to
-> > > formally unassign it from them and have another distro handle it.
-> > 
-> > That would be fine, but I would be curious if there is some reason they have
-> > not been fulfilling this task.
-> 
-> I cannot speak for them, but the task does require some effort on every
-> issue, and perhaps the specific people are just not putting the effort.
-> As you can see, this was different in 2017-2019 when Gentoo had a person
-> actually working on this task.
-> 
-> Besides statistics per se, an important desirable side-effect of working
-> on this task is that you'd end up double-checking that every issue does
-> in fact get reported to oss-security.
->  
-> > > > 9. Have someone already on the private list, or at least someone else who has
-> > > > been active on oss-security for years but is not affiliated with your distro
-> > > > nor your organization, vouch for at least one of the people requesting
-> > > > membership on behalf of your distro (then that one vouched-for person will be
-> > > > able to vouch for others on your team, in case you'd like multiple people
-> > > > subscribed)
-> > > > 
-> > > > I do not know if I have contacts that are already on the linux-distros list.
-> > > 
-> > > It can also be "someone else who has been active on oss-security for
-> > > years but is not affiliated".  Anyone?
-> > 
-> > I believe Tyler Hicks is willing to do this.
-> 
-> Like he says, he'd "be a lot more comfortable if someone could provide a
-> stronger vouch."
-> 
-> However, overall I think Pop!_OS and you personally (also considering
-> your work on Redox OS) do meet the requirements.  So let's proceed with
-> the subscription.  Please e-mail me off-list with your e-mail address
-> and PGP key to use.  Please also confirm in this thread that we're
-> getting the statistics task assigned to you, and we can discuss some
-> specifics on what's to be done on it.
-> 
-> Thanks,
-> 
-> Alexander
-> 
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
