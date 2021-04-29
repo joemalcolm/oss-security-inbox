@@ -1,54 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/22/9
-Message-ID: <ae30ef63-77c-cc1b-ef7b-5ed387f7fc95@dereferenced.org>
-Date: Thu, 22 Apr 2021 10:47:06 -0600 (MDT)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/29/4
+Message-ID: <c2f4a07b-45e-0b1-a7eb-22db2e584460@dereferenced.org>
+Date: Thu, 29 Apr 2021 08:15:10 -0600 (MDT)
 From: Ariadne Conill <ariadne@...eferenced.org>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re: Malicious commits to Linux kernel as part of university study
+To: oss-security@...ts.openwall.com
+cc: Ariadne Conill <ariadne@...eferenced.org>,  "security-officer@....org" <security-officer@....org>
+Subject: Re: ISC discloses three BIND vulnerabilities (CVE-2021-25214, CVE-2021-25215, and CVE-2021-25216)
 Content-Type: text/plain; charset=utf-8
 
 Hello,
 
-On Thu, 22 Apr 2021, Peter Bex wrote:
+On Thu, 29 Apr 2021, Ondřej Surý wrote:
 
-> Hi all,
+> Hi Ariande,
 >
-> Probably a lot of you know this already but I consider it serious enough
-> to point out to the OSS security community at large.
+> BIND 9.17.x was using the system SPNEGO since 9.17.2 (I think).
 >
-> The university of Minnesota has been banned from making any commits to
-> the Linux kernel after it was found out they'd been submitting bogus
-> patches to the LKML to knowingly introduce security issues:
-> https://lore.kernel.org/linux-nfs/YH%2FfM%2FTsbmcZzwnX@kroah.com/
+> Also for older versions, it should be enough to use --disable-isc-spnego if you can’t patch it (that’s what I am doing for Debian buster).  It just won’t work with Heimdal krb5, but it compiles just fine with MIT krb5.
 
-While it's disappointing that they chose to go about this experiment in a 
-way that violated research ethics, it does raise a point that has been 
-discussed in the community but frequently shrugged off: the possibility 
-that a bad actor might submit legitimate patches until such time that 
-they can sneak insecure code through review.
+Yeah, we've always built with --disable-isc-spnego, so no problem there.
 
-Hopefully a positive of this research is that people will be more likely 
-to think about the possibilities of insecure code being walked through the 
-front door.
-
-With that said, I think UMN should fire Kangjie Lu.  The approach they 
-used in their experiment is literally a textbook example of how *not* to 
-do this kind of research.  At least, that's not what *I* remember from 
-university.  I suspect they will likely fire Kangjie Lu as a result of 
-their investigation.
-
->
-> They also published a paper:
-> https://raw.githubusercontent.com/QiushiWu/qiushiwu.github.io/main/papers/OpenSourceInsecurity.pdf
->
-> I don't know the scope of this research, but it could involve other OSS
-> projects, now or in the future, as well.  Hence this e-mail.  If you feel
-> it's spam or needless drama, feel free to ignore.
-
-It seems likely.  However, we may not ever know for sure, because the 
-paper says they submitted the patches using a random Gmail account instead 
-of their UMN email accounts.  I assume any other attempts they made to 
-troll other FOSS projects would have come from random Gmail throwaway 
-accounts as well.
+I wound up just upgrading every branch still supportd to 9.16.15.  Seemed 
+like the easiest way.
 
 Ariadne
