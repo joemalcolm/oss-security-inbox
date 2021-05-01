@@ -1,89 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/06/2
-Message-ID: <20210906190730.GA18928@openwall.com>
-Date: Mon, 6 Sep 2021 21:07:30 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Jean Diogo <j@....com.br>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Possible memory leak on getspnam / getspnam_r
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/01/2
+Message-ID: <CAH5JyZqJHpFTWJxZ19CDhZ5N9Q=V9mLQybPYdSNw+8G1iEpBkw@mail.gmail.com>
+Date: Sat, 1 May 2021 21:36:56 +0100
+From: Kaxil Naik <kaxilnaik@...che.org>
+To: oss-security@...ts.openwall.com
+Cc: users@...flow.apache.org
+Subject: CVE-2021-28359: Apache Airflow Reflected XSS via Origin Query Argument in URL
 Content-Type: text/plain; charset=utf-8
 
-Hi Jean,
+Versions Affected: <1.10.15, 2.0.0, 2.0.1
 
-On Tue, Aug 24, 2021 at 08:14:02PM -0300, Jean Diogo wrote:
-> The function getspnam() and it's reentrant sister getspnam_r() do not clean
-> the content of allocated memory before returning to the user, resulting in
-> the leak of /etc/shadow content. In some cases this might be an issue.
+Description:
+The "origin" parameter passed to some of the endpoints like '/trigger' was
+vulnerable to XSS exploit. This issue affects Apache Airflow versions
+<1.10.15 in 1.x series and affects 2.0.0 and 2.0.1 and 2.x series. Update
+to Airflow 1.10.15 or 2.0.2.
 
-There's no reliable way for a program to ensure nothing sensitive is
-left in memory.  However, the library can make a better effort to make
-it unlikely that password hashes would be left in memory.  Like you
-suggested in another message (somehow detached from this thread),
-endspent() could be a place to zeroize any knowingly cached sensitive
-data, although it would only be usable that way by programs, not by
-higher-level libraries where thread-safety matters.
+This is the same as CVE-2020-13944 & CVE-2020-17515 but the implemented fix
+did not account for certain cases.
 
-> Let me put ProFTPd as an example: it's daemon starts as root, when it
-> receives a connection it forks, opens all the files that it'll need, then
-> it calls getspnam with the provided FTP user to validate the provided
-> password. Later on it setreuid(nobody) abandoning root privileges [1]. Here
-> it doesn't matter whether it calls getspnam or getspnam_r, the malloced
-> buffer will remain on heap memory (and it's pointer in libc <buffer> and
-> <respbuf>, I suppose). So now the child process is running on a low
-> privileged user and has a copy of /etc/shadow on it's heap memory.
-> The vulnerability CVE-2020-9273 [2] (an use-after-free on heap) allowed me
-> to get RCE on ProFTPd, in an exploit I created last year. Additionally,
-> thanks to getspnam caching it is possible to read the root cryptogram (and
-> other users).
-> 
-> I'm not suggesting that ProFTPd architecture is correct [3]. The problem is
-> that even if ProFTPd calls getspnam_r it has no mechanism to zero the cache
-> before forking, since internal pointers are not known to the user (read
-> developer).
+Please also update your Python version to the latest available PATCH
+releases of the installed MINOR versions, for example, update to Python
+3.6.13 if you are on Python 3.6.10. (Those contain the fix
+for CVE-2021-23336 (https://nvd.nist.gov/vuln/detail/CVE-2021-23336).
 
-> [3] - It is a good programming practice to exec right after fork.
+Credit:
+Vasileios Daskalakis
 
-An alternative programming practice is to fork() a child process for
-authentication, then let that child process (with sensitive data in it)
-terminate and have the service proceed to authenticated state (with
-nothing from /etc/shadow having ever been loaded into its memory).  This
-is what I implemented in popa3d from the start, see its auth_shadow.c
-and DESIGN:
+Thanks,
+Kaxil,
+on behalf of Apache Airflow PMC
 
-			 startup as root
-				|
-			-----------------
-			|child          |parent
-			v               v
-	drop to user popa3d,            still as root,
-	handle the AUTHORIZATION        wait for and
-	state, write the results, - - > read the authentication
-	and exit                        information
-					|
-			-----------------
-			|child          |parent
-			v               v
-	getspnam(3), crypt(3),          wait for and
-	check, write the result,  - - > read the authentication
-	and exit (to clean up)          result
-					|
-					v
-					drop to the authenticated user,
-					handle the TRANSACTION state,
-					possibly UPDATE the mailbox,
-					and exit
-
-This is also what we have in pam_tcb, enabled with the "fork" option:
-
-       fork   Create child processes for accessing shadow files.   Using  this
-              option  one can be sure that after a call to pam_end(3) there is
-              no sensitive data left in the process' address space.   However,
-              this  option  may  confuse some of the more complicated applica-
-              tions and it has some performance overhead.
-
-Maybe we should finally get pam_tcb into Linux-PAM, now that it no
-longer depends on custom glibc patches since libxcrypt finally provides
-our crypt_gensalt*() API.  Maybe we can have it fully replace pam_unix
-in there, just like it had on Owl and ALT Linux 20 years ago.
-
-Alexander
