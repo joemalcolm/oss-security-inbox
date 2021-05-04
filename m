@@ -1,33 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/22/5
-Message-ID:  <BN7PR14MB243454DA1540F0722C1FA2DEFB469@BN7PR14MB2434.namprd14.prod.outlook.com>
-Date: Thu, 22 Apr 2021 14:55:03 +0000
-From: David H <ispcolohost@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Malicious commits to Linux kernel as part of university study
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/04/2
+Message-ID: <YJD9guSqBQ4XsUWg@itl-email>
+Date: Tue, 4 May 2021 03:53:38 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
+To: oss-security@...ts.openwall.com
+Cc: Marek Marczykowski-Górecki <marmarek@...isiblethingslab.com>, Simon Gaiser <simon@...isiblethingslab.com>, "Srivasta S. Bhat" <srivatsa@...il.mit.edu>
+Subject: Multiple vulnerabilities in RPM
 Content-Type: text/plain; charset=utf-8
 
-Has anyone reported this to https://research.umn.edu/ethics-compliance/reporting-research-misconduct ?
+Through a combination of manual audits and fuzzing, I found several
+vulnerabilities in RPM:
 
+- RPM does not reject packages that have a signed header, but neither a
+  header+payload signature nor a payload digest.  Furthermore, `rpmkeys
+  -K` reports `digests signatures OK` for such packages. Such a package
+  is obviously not validly signed, but RPM nevertheless accepts it.
+  This can be mitigated by setting `%_pkgverify_level` to `signature`
+  or `all`.  I consider it a vulnerability as it violates an assumption
+  made by much of the RPM ecosystem: if a package has any signatures,
+  RPM will (by default) error out when trying to install it, unless
+  the entire package has been properly signed by a trusted key.
+  
+- RPM’s parser for OpenPGP packets has multiple memory unsafety
+  issues, including out-of-bounds reads and out-of-bounds pointer
+  arithmetic.  On 32-bit systems, integer overflows and an infinite
+  loop are also possible.  It may be possible to use this vulnerability
+  to modify a package (that is signed by a trusted key) such that
+  it still validates as properly signed, but installing it corrupts
+  the RPMDB.
+  
+I also found two issues that are not vulnerabilities per se, but which
+I still believe should be fixed:
 
-﻿On 4/22/21, 3:00 AM, "Peter Bex" <peter@...e-magic.net> wrote:
+- RPM accepts signatures that are followed by other OpenPGP packets,
+  which are not valid.  This opens additional attack surface.
 
-    Hi all,
+- RPM does not (obviously) reject signatures that are of an incorrect
+  type.  I am not sure that they do not wind up being rejected in other
+  ways, and even if they are not, I am not sure if this is helpful to
+  an attacker.  But the fix is trivial, so I included it in the patch.
+  
+The attached patches fix both issues.  The patch sent to distros@ had a
+(non-exploitable) integer overflow bug on 32-bit systems, as was pointed
+out by Seth Arnold.
 
-    Probably a lot of you know this already but I consider it serious enough
-    to point out to the OSS security community at large.
+Sincerely,
 
-    The university of Minnesota has been banned from making any commits to
-    the Linux kernel after it was found out they'd been submitting bogus
-    patches to the LKML to knowingly introduce security issues:
-    https://lore.kernel.org/linux-nfs/YH%2FfM%2FTsbmcZzwnX@kroah.com/
+Demi Marie Obenour
+she/her/hers
+Qubes OS Developer, Invisible Things Lab
 
-    They also published a paper:
-    https://raw.githubusercontent.com/QiushiWu/qiushiwu.github.io/main/papers/OpenSourceInsecurity.pdf
+View attachment "0001-Fix-OpenPGP-parsing-bugs.patch" of type "text/plain" (9354 bytes)
 
-    I don't know the scope of this research, but it could involve other OSS
-    projects, now or in the future, as well.  Hence this e-mail.  If you feel
-    it's spam or needless drama, feel free to ignore.
+View attachment "0002-Header-signatures-alone-are-not-sufficient.patch" of type "text/plain" (7244 bytes)
 
-    Cheers,
-    Peter
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
