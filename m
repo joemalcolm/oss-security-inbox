@@ -1,44 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/17/4
-Message-ID: <eb9b5bdc-aee2-8295-4711-276759fbeae0@isc.org>
-Date: Wed, 17 Feb 2021 11:25:57 -0900
-From: Michael McNally <mcnally@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/04/4
+Message-ID: <CAFzhf4qipkzzR1r8mowFaMNmUxXMhR9agw=gqJs1CSLNF0=rWA@mail.gmail.com>
+Date: Tue, 4 May 2021 11:06:52 +0100
+From: Piotr Krysiuk <piotras@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "security-officer@....org" <security-officer@....org>
-Subject: One BIND vulnerability (CVE-2020-8625) has been publicly disclosed
+Subject: [CVE-2021-31829] Linux kernel protection of stack pointer against speculative pointer arithmetic can be bypassed to leak content of kernel memory
 Content-Type: text/plain; charset=utf-8
 
-On February 17, 2021, Internet Systems Consortium has disclosed a
-vulnerability in our BIND 9 software about which we previously
-provided advance notice.
+An issue has been discovered in the Linux kernel mechanism to mitigate
+speculative loads (Spectre mitigation).
 
-    CVE-2020-8625: A vulnerability in BIND's GSSAPI security policy
-    negotiation can be targeted by a buffer overflow attack
-    https://kb.isc.org/docs/cve-2020-8625
+Unprivileged BPF programs running on affected systems can bypass
+the protection and execute speculative loads from the kernel stack.
+This can be abused to extract contents of the stack via side-channel.
+The extracted contents may include addresses of kernel structures
+that could be used to defeat Kernel Address Space Layout Randomization
+(KASLR) to facilitate exploitation of other vulnerabilities.
 
-With the public announcement of this vulnerability, the embargo
-period is ended and any updated software packages that have been
-prepared may be released.
+The identified gap is that when protecting BPF stack pointer against
+speculative pointer arithmetic, the BPF stack area itself is not
+protected against speculative loads. This could be abused to perform
+speculative loads from any location within the BPF stack. And so
+any restricted data from the BPF stack could be disclosed, such as
+addresses of data structures referred by the BPF program. Further,
+the original content of kernel memory is not wiped when allocating
+the BPF stack, and could be disclosed as well.
 
-ISC's own releases containing fixes are:
+I developed a PoC that allows unprivileged local users to extract
+contents of 511 bytes from the BPF stack.
 
-    -  BIND 9.11.28
-    -  BIND 9.16.12
-    -  BIND 9.17.10
+The PoC has been shared privately with <security@...nel.org> to assist
+with fix development.
 
-each of which can be downloaded via the ISC downloads page,
-https://www.isc.org/downloads
+The patches are available from the BPF subsystem public git repository.
 
-For package maintainers who want *only* the fixes for the
-CVE vulnerabilities, patch diffs are available for each branch
-in the "patches" subdirectory of the branch's February 2021
-maintenance release, e.g.:
+The fix has dependency of another recent commit fixing a separate
+issue. The full patch series is as follows:
 
-   9.11 branch:  https://downloads.isc.org/isc/bind9/9.11.28/patches
-   9.16 branch:  https://downloads.isc.org/isc/bind9/9.16.12/patches
-   9.17 branch:  no patch necessary for versions >= 9.17.2
+* https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=b9b34ddbe2076ade359cd5ce7537d5ed019e9807
+* https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=801c6058d14a82179a7ee17a4b532cac6fad067f
 
-Sincerely,
+# Discoverers
 
-Michael McNally
-ISC Security Officer
+Piotr Krysiuk <piotras@...il.com>
+
+# References
+
+CVE-2021-31829 (reserved via https://cveform.mitre.org/)
