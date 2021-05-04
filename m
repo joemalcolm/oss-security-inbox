@@ -1,4 +1,9 @@
-Received: (qmail 3784 invoked by uid 550); 1 Jan 2026 06:41:43 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5700" "Tuesday" "4" "May" "2021" "15:39:05" "+0200" "Heiko Schlittermann" "hs@nodmarc.schlittermann.de" nil "154" "[oss-security] Exim 4.94.2 - security update released" nil nil nil "5" nil nil (number mark "U       hs@nodmarc.s May  4  154/5700  " thread-indent "\"[oss-security] Exim 4.94.2 - security update released\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Exim 4.94.2 - security update released" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 32429 invoked by uid 550); 4 May 2021 13:39:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,99 +12,190 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 11702 invoked from network); 1 Jan 2026 01:03:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767229395; x=1767834195; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Eni49HKEy/2mxzSupvuKVI2SG0h9JQgv4WVfgk4PWKI=;
-        b=CaFAYk7fAPjSfeZtrKDjYsZwPRdUm+VAQl1fR7kcVyxbdG+TBQ03rar1Usj1W14UV4
-         N1DKWGcTLp7OCScvWOfP+La/ZJA5EUMmz5+y6u9UnnzgbaKUKuiwuXHeh4UVPpX3zo4v
-         Dym4N1jIVCL6gfX7NTRNEXa1RQh2LzOi81eIf6ecOmcn3q637kW/4vd21aWFmytDyV+/
-         NzrXolGhIUp3X9tBni6wDdRv3QI2Vs1SvTt9dV550rZpgyH+8Ww9Esdbweqe0TmIThKs
-         +UaeSl0GPERbsLigyPS+5ojp448J66/2cmpZvKaNjDRyvii9l+VVZWlSZbWuFNX1sZrb
-         RqDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767229395; x=1767834195;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Eni49HKEy/2mxzSupvuKVI2SG0h9JQgv4WVfgk4PWKI=;
-        b=B+e7BWCT5v6F3ymPQmxfHNIsLSETJTuNW07qf8o4WflbhUkaljrO9RzP6dnTiiZrjd
-         tw8Fnp1G829sSXGHrdp84Sxxacx6cuoJHzlPuyqDIPYtwqGivU6e1vKzjLauU79Yt/8B
-         IZYS1bsoe6zvq7uD7f2GTetwJ5U0oz5IlWfHTSNo3RGJXZkGL50o/q8ykMW+L/kK+ZO6
-         QOqQiKO1XvPwMigXCN+f62qjneYLLEL7WsIjOGzBks/dGfP7mTcj8eWb2CMvYl3fzLEN
-         PIopSqL7mj2IhCOUQTmKCINmHma1At/+7/gwMK9KByCq/jWBlcghesi3Uhj/gvLrhRXE
-         HT8Q==
-X-Gm-Message-State: AOJu0YzaETeSEknkp3msY7mJsPEAO1qD4QqXYCX2yfdKjwStPf197tBi
-	2V1YdDr6eu1jjuSyoctvabcu1KQHDMmSJ/L9mZYxJE3tP4TGA7O6BYlVIRCtBDRTDD3BjC34Qxl
-	Y65kQKCwR02vQSPcSQihu2ImfCs1EgQHpj0Aj
-X-Gm-Gg: AY/fxX7do8Zojbd1OWjoQk4mSugLUzwAqGRzEZz9/JU3hIWktHsJdvGKA7g/mOvesG+
-	WWm/nAW0/tJp82rBUgWx90SJ7HW3WN8bwL6rHdNonXimDWIX+hWJwy3F0+MAXiTx2zlVNv43+Eb
-	H3HdaKmnUk4QVcCziD3E/DzIfKWE8xOmIie1Pq4neKdORD0EYZ0gY1vVlMj/+hSPBHA8fmeHatH
-	wCcVrVLDOZ6VEFRFAkKJVhbrA6obRAQTi2PWDT4nUBJmIBdixH19nvAWMaF6GARFqiqj4UnkHlW
-	K2xWUgoo
-X-Google-Smtp-Source: AGHT+IEmx7G4lAV2+FV9967qXkulvrJU9ik/ZZU2qaptaXND2MWT7l3v84ygTp7P4JMRpct1LMQsHq/W8QJ0rZE1PZg=
-X-Received: by 2002:a05:600c:4447:b0:47a:9560:ec22 with SMTP id
- 5b1f17b1804b1-47d1954a2fdmr410049885e9.14.1767229394958; Wed, 31 Dec 2025
- 17:03:14 -0800 (PST)
+Received: (qmail 32394 invoked from network); 4 May 2021 13:39:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=nodmarc.schlittermann.de; s=2020-06-19; h=Content-Type:MIME-Version:
+	Message-ID:Subject:To:From:Date:Cc:Content-Description:Content-ID:
+	Content-Transfer-Encoding:In-Reply-To:References:Resent-Cc:Resent-To;
+	bh=4rEmEDQ7GWe/yGTv0SmqvTDRIe7XtXavorKXi48yYVY=; b=Z03jwcEgKCj/vQ08hvX3uJQ8Tz
+	ZxjV+rHknMKPDbcDjvtxilYvyk9E80Paz9p19HsRpu3qc2YAeaeR78HM013KR0HDg3/azQR0AR6c9
+	H4DexWiJDzJefUT3vEhrDDkh0JkjiUtpFH9jre42UoHyrSUx4CtMve7RUdFCxhHRm/ElitVIa2COq
+	LKILaCcKF0XTkLtkxmgRQnLlRZNlpSVmbAqsQvDEv5cyEgkgkC6xBkM2CEpydsYDJjvsLA+G+73qF
+	L3WeDvKdi5C2IhFL8Kzj+FJzyce+NekurrQRw3HA+TtVm+M99MYL8QK5ED/wA+Hl1HV1yKR1LMiZO
+	hwHFOMbQ==;
+Date: Tue, 4 May 2021 15:39:05 +0200
+From: Heiko Schlittermann <hs@nodmarc.schlittermann.de>
+To: oss-security <oss-security@lists.openwall.com>
+Message-ID: <20210504133905.GY30431@jumper.schlittermann.de>
+Mail-Followup-To: oss-security <oss-security@lists.openwall.com>
 MIME-Version: 1.0
-References: <CAM=PXV50+jaVYFueXFbZpioBX3PMrUG2Ey8WoQ5NT89J9gFwCA@mail.gmail.com>
- <974a2abd-7449-4cf7-bbe6-e329aa4af59e@gmail.com> <SN7PR14MB73782CD825FF151648AB323596BFA@SN7PR14MB7378.namprd14.prod.outlook.com>
- <CAM=PXV705V7Su6kwyKAipXtAqi+DU644Qxv_4LsqC=FVG5bg0Q@mail.gmail.com>
- <CADz+4x-t+9rW+OSef9A1rf4wV6zwxZQLnSk_NsxYm4ONv3HH8w@mail.gmail.com>
- <CAM=PXV4yADSZ2udrWhiWNocroCj4ceefd2V5ANOUYYcTF_+SHA@mail.gmail.com>
- <937f78c2-45fc-4062-8941-f6f419004318@gmail.com> <73140d6f-dd6d-4d67-8b24-63368c99bc3d@gmail.com>
-In-Reply-To: <73140d6f-dd6d-4d67-8b24-63368c99bc3d@gmail.com>
-From: Pat Gunn <pgunn01@gmail.com>
-Date: Wed, 31 Dec 2025 20:03:02 -0500
-X-Gm-Features: AQt7F2q_oF3_hXsqIGeJY8qz2AwtIHGn0hU7Gj1W1rRK_2snzdfQdEi7ainquP0
-Message-ID: <CADz+4x-k76tPYd3JL0F5320U4fzzJo_-Kvzg8A8iuDudmxnEUA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="00000000000052bcdf06474928f2"
-Subject: Re: [oss-security] Systemd vsock sshd
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="USQ0BwiCE5W4XvtQ"
+Content-Disposition: inline
+Organization: schlittermann -- internet & unix support
+X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
+ QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
+ y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
+ X?H&`
+X-Telegram: @HeikoSchlittermann
+X-Threema: T5RPWMSS
+X-Phone: +49.172.7909055
+X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
+X-GPG-Key-ID: F69376CE
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Subject: [oss-security] Exim 4.94.2 - security update released
 
---00000000000052bcdf06474928f2
-Content-Type: text/plain; charset="UTF-8"
+--USQ0BwiCE5W4XvtQ
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-There's another option; someone could reach out to the OpenSSH team and see
-if they'd be open to having OpenSSH refuse to permit it without explicit
-configuration, getting rid of the need to deal with the systemd project on
-the topic, although what the systemd team may do in response to such a move
-is anybody's guess. It's arguably within the OpenSSH project's scope if
-because of the misdesign of systemd OpenSSH becomes part of an attack
-vector for a lot of systems, and we know that the OpenSSH team takes
-security seriously.
+Dear Exim-Users
 
-On Wed, 31 Dec 2025 at 01:04, Demi Marie Obenour <demiobenour@gmail.com>
-wrote:
+Abstract
+--------
 
-> On 12/30/25 01:33, Jacob Bachmeyer wrote:
-> > On 12/29/25 13:53, Greg Dahlman wrote:
-> >> I did reach out to the systemd team, while I was working with the kernel
-> >> security team and I encouraged others to do so if they think it will be
-> >> productive.
-> >>
-> >> There are sensitivities and frustrations that span all groups that make
-> >> that conversation difficult, but I think someone with an established
-> trust
-> >> with the project could make forward progress.
-> >
-> > I certainly agree that the systemd team's apparent "cavalier" attitude
-> > towards security (and sound architecture) makes lots of frustrations.
-> > (For example, the "katamari" architecture that made the xz-utils sshd
-> > backdoor possible is definitely a bad practice, although a distressingly
-> > common one not unique to systemd.)
-> >
-> > To *really* set things off here, this vsock listener that crosses what
-> > is otherwise a security boundary *looks* like an attempt at a backdoor,
-> > although I believe it to be ignorance/negligence rather than malice.
->
-> If systemd *also* configured OpenSSH to only allow key-based login,
-> this would be unexploitable unless OpenSSH has a vulnerability.
-> --
-> Sincerely,
-> Demi Marie Obenour (she/her/hers)
+Several exploitable vulnerabilities in Exim were reported to us and are
+fixed.
 
---00000000000052bcdf06474928f2--
+We have prepared a security release, tagged as "exim-4.94.2".
+
+This release contains all changes on the exim-4.94+fixes branch plus
+security fixes.
+
+You should update your Exim instances as soon as possible. (See below
+for short upgrade notes.)
+
+
+Distro users
+------------
+
+Several distros will provide updated packages: Just do the update.
+If the update contains a version change from <4.94 to 4.94.2, you may
+want to read the upgrade notes below.
+
+Self-built Exim
+---------------
+
+Fetch the exim-4.94.2 from the known repositories, build and install
+the fixed version. If you need to upgrade from versions <4.94 to 4.94.2,
+you may want to read the upgrade notes below.
+
+
+Schedule
+--------
+
+2021-05-04 13:30 UTC:   Publish the release on the public
+                        repos/website/etc
+
+Repositories
+------------
+
+The sources are available:
+
+        tarballs: https://ftp.exim.org/pub/exim/exim4/
+                  (the mirrors will follow with some delay)
+        source:   https://git.exim.org/exim.git
+                  tag: exim-4.94.2
+                  branch: exim-4.94.2+fixes
+
+The +fixes branch contains fixes for an issue, that we experienced
+occasionally with outgoing SMTP (using DANE, TLS SNI and an unusual
+certificate setup on the remote server. See
+https://lists.exim.org/lurker/message/20210503.163324.f7021753.en.html)
+
+In case you're running exim-4.92.3 currently and you do not see any
+option in updating this to 4.94.2, you *can* try using the branch
+exim-4.92.3+fixes. This branch contains the minimal set of backported
+security patches, but isn't officially supported by the Exim project
+and didn't get the same testing as the official release.
+
+Details
+-------
+
+The current Exim versions (and likely older versions too) suffer from
+several exploitable vulnerabilities. These vulnerabilities were reported
+by Qualys via security@exim.org back in October 2020.
+
+Due to several internal reasons it took more time than usual for the Exim
+development team to work on these reported issues in a timely manner.
+
+We explicitly thank Qualys for reporting *and* for providing patches for
+most of the reported vulnerabilities.
+
+The details about the vulnerabilities *will* be published in the near
+future (on http://exim.org/static/doc/security/), but not today. This
+should give you the chance to update your systems.
+
+Another source of information *will* be on the reporter's site:
+https://www.qualys.com/2021/05/04/21nails/21nails.txt
+
+For further reference a list of related CVEs:
+
+    Local vulnerabilities
+    - CVE-2020-28007: Link attack in Exim's log directory
+    - CVE-2020-28008: Assorted attacks in Exim's spool directory
+    - CVE-2020-28014: Arbitrary PID file creation
+    - CVE-2020-28011: Heap buffer overflow in queue_run()
+    - CVE-2020-28010: Heap out-of-bounds write in main()
+    - CVE-2020-28013: Heap buffer overflow in parse_fix_phrase()
+    - CVE-2020-28016: Heap out-of-bounds write in parse_fix_phrase()
+    - CVE-2020-28015: New-line injection into spool header file (local)
+    - CVE-2020-28012: Missing close-on-exec flag for privileged pipe
+    - CVE-2020-28009: Integer overflow in get_stdinput()
+    Remote vulnerabilities
+    - CVE-2020-28017: Integer overflow in receive_add_recipient()
+    - CVE-2020-28020: Integer overflow in receive_msg()
+    - CVE-2020-28023: Out-of-bounds read in smtp_setup_msg()
+    - CVE-2020-28021: New-line injection into spool header file (remote)
+    - CVE-2020-28022: Heap out-of-bounds read and write in extract_option()
+    - CVE-2020-28026: Line truncation and injection in spool_read_header()
+    - CVE-2020-28019: Failure to reset function pointer after BDAT error
+    - CVE-2020-28024: Heap buffer underflow in smtp_ungetc()
+    - CVE-2020-28018: Use-after-free in tls-openssl.c
+    - CVE-2020-28025: Heap out-of-bounds read in pdkim_finish_bodyhash()
+
+
+Upgrade notes
+-------------
+
+In case you need to upgrade from a version <4.94, you may encounter
+issues with *tainted data*. This is a security measure which we
+introduced with 4.94.
+
+Your configuration needs to be reworked.
+
+Alternatively you can use the exim-4.94.2+taintwarn branch. This branch
+tracks exim-4.94.2+fixes and adds a new main config option (the option
+is deprecated already today and will be ignored in a future release of
+Exim): "allow_insecure_tainted_data". This option allows you to turn the
+taint errors into warnings. (Debian is set to include this "taintwarn"
+patch in its Exim 4.94.2 release).
+
+Thank you for using Exim.
+Thanks to Qualys for reporting the issues.
+
+    Best regards from Dresden/Germany
+    Viele Gr=C3=BC=C3=9Fe aus Dresden
+    Heiko Schlittermann
+--
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+
+--USQ0BwiCE5W4XvtQ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAmCRTnkACgkQr0zGdqa2
+wUJ3mAf+IQ8WOdScYeUZTVANBFIMWxW1EX4NSfeBMVD2wSRb910ALA+M+0Am7+FC
+S+YiemmASfNyOb8QQBYTWVAerGC9/0sygaxyaSaI3+wqNEJFXhcbQamDaOPVoazZ
+ZdDYUWE8RyxNHNHDeC3a66wjNdXaLzc9JawF/8pXpWRdevAu/BYj0vaXIdqxPwCK
+m2TdUrforioTSto9F7alFhTD5EAfgQYiG1TCe9hB7UZgYM3amp2gFVGkEyTWBdf/
+z3SHAG2q0ChCJDm79/At+G8HQUN5MsReLcuqGSuc4foKu1vuyUMvL3XRFnMAk0RP
+ZDVM2upbBTmT7elczEI3MP6RMCxfwA==
+=d8sH
+-----END PGP SIGNATURE-----
+
+--USQ0BwiCE5W4XvtQ--
