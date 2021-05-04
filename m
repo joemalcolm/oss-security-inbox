@@ -1,26 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/29/4
-Message-ID: <c2f4a07b-45e-0b1-a7eb-22db2e584460@dereferenced.org>
-Date: Thu, 29 Apr 2021 08:15:10 -0600 (MDT)
-From: Ariadne Conill <ariadne@...eferenced.org>
-To: oss-security@...ts.openwall.com
-cc: Ariadne Conill <ariadne@...eferenced.org>,  "security-officer@....org" <security-officer@....org>
-Subject: Re: ISC discloses three BIND vulnerabilities (CVE-2021-25214, CVE-2021-25215, and CVE-2021-25216)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/04/8
+Message-ID: <38C135A5-0FAA-4848-A3B5-712E85E3330C@amazon.com>
+Date: Tue, 4 May 2021 16:51:09 +0000
+From: "Hausler, Micah" <mhausler@...zon.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: [kubernetes] CVE-2020-8562: Bypass of Kubernetes API Server proxy TOCTOU
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hello Kubernetes Community,
 
-On Thu, 29 Apr 2021, Ondřej Surý wrote:
+ 
 
-> Hi Ariande,
->
-> BIND 9.17.x was using the system SPNEGO since 9.17.2 (I think).
->
-> Also for older versions, it should be enough to use --disable-isc-spnego if you can’t patch it (that’s what I am doing for Debian buster).  It just won’t work with Heimdal krb5, but it compiles just fine with MIT krb5.
+A security issue was discovered in Kubernetes where an authorized user may be able to access private networks on the Kubernetes control plane components. Kubernetes clusters are only affected if an untrusted user can create or modify Node objects and proxy to them, or an untrusted user can create or modify StorageClass objects and access KubeControllerManager logs. 
 
-Yeah, we've always built with --disable-isc-spnego, so no problem there.
+ 
 
-I wound up just upgrading every branch still supportd to 9.16.15.  Seemed 
-like the easiest way.
+This issue has been rated Low (CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:L/I:N/A:N) and assigned CVE-2020-8562.
 
-Ariadne
+ 
+
+As mitigations to a report from 2019 and CVE-2020-8555, Kubernetes attempts to prevent proxied connections from accessing link-local or localhost networks when making user-driven connections to Services, Pods, Nodes, or StorageClass service providers. As part of this mitigation Kubernetes does a DNS name resolution check and validates that response IPs are not in the link-local (169.254.0.0/16) or localhost (127.0.0.0/8) range. Kubernetes then performs a second DNS resolution without validation for the actual connection. If a non-standard DNS server returns different non-cached responses, a user may be able to bypass the proxy IP restriction and access private networks on the control plane.
+
+ 
+
+Am I vulnerable?
+
+ 
+
+Kubernetes clusters are only affected if an untrusted user can create or modify Node objects and proxy to them, or an untrusted user can create or modify StorageClass objects and access KubeControllerManager logs.
+
+ 
+
+Affected Versions:
+
+ 
+Kubernetes <= v1.21.0
+Kubernetes <= v1.20.6
+Kubernetes <= v1.19.10
+Kubernetes <= v1.18.18
+ 
+
+How do I mitigate this vulnerability?
+
+ 
+
+If this issue affects your clusters’ control planes, you can use dnsmasq for name resolution and configure the min-cache-ttl and neg-ttl parameters to a low non-zero value to enforce cached replies for proxied connections
+
+ 
+
+Detection
+
+ 
+
+This issue is not known to be directly detectable, but proxied calls will appear in the Kubernetes API Audit log. Kubernetes will respond with “address not allowed” when the validation successfully prevents a connection.
+
+ 
+
+Additional Details
+
+ See the GitHub issue for more details: https://github.com/kubernetes/kubernetes/issues/101493
+
+ 
+
+Acknowledgements
+
+This vulnerability was reported by Javier Provecho (Telefonica).
+
+ 
+
+Thank you,
+
+Micah Hausler on behalf of the Kubernetes Product Security Committee
+
+ 
+
+ 
+
+
+Content of type "text/html" skipped
+
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (4700 bytes)
