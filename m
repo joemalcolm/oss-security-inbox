@@ -1,45 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/25/2
-Message-ID: <CAGXsc+aitBM=VqO-TjvY2GjpdUsDiBtDrHS_24Tp7=ZVwi3hqg@mail.gmail.com>
-Date: Tue, 25 May 2021 10:17:06 +0200
-From: Emond Papegaaij <papegaaij@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-23937: Apache Wicket: DNS proxy and possible amplification attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/05/2
+Message-ID: <CALBaBG_xu-7Dzbo_3qDSYYuDO30fChi8nis7C_zixhBe8zAOyg@mail.gmail.com>
+Date: Wed, 5 May 2021 09:38:05 -0700
+From: Aaron Patterson <aaron.patterson@...il.com>
+To: ruby-security-ann@...glegroups.com, rubyonrails-security@...glegroups.com,  oss-security@...ts.openwall.com
+Subject: [CVE-2021-22903] Possible Open Redirect Vulnerability in Action Pack
 Content-Type: text/plain; charset=utf-8
 
-Description:
+There is a possible Open Redirect Vulnerability in Action Pack. This
+vulnerability has been assigned the CVE identifier CVE-2021-22903.
 
-A DNS proxy and possible amplification attack vulnerability in
-WebClientInfo of Apache Wicket allows an attacker to trigger arbitrary
-DNS lookups from the server when the X-Forwarded-For header is not
-properly sanitized. This DNS lookup can be engineered to overload an
-internal DNS server or to slow down request processing of the Apache
-Wicket application causing a possible denial of service on either the
-internal infrastructure or the web application itself.
+Versions Affected:  >= v6.1.0.rc2
+Not affected:       < v6.1.0.rc2
+Fixed Versions:     6.1.3.2
 
-This issue affects Apache Wicket Apache Wicket 9.x version 9.2.0 and
-prior versions; Apache Wicket 8.x version 8.11.0 and prior versions;
-Apache Wicket 7.x version 7.17.0 and prior versions and Apache Wicket
-6.x version 6.2.0 and later versions.
+Impact
+------
+This is similar to CVE-2021-22881: Specially crafted Host headers in
+combination with certain "allowed host" formats can cause the Host
+Authorization middleware in Action Pack to redirect users to a malicious
+website.
 
-Mitigation:
+Since rails/rails@...7ea5, strings in config.hosts that do not have a
+leading
+dot are converted to regular expressions without proper escaping. This
+causes,
+for example, config.hosts << "sub.example.com" to permit a request with a
+Host
+header value of sub-example.com.
 
-Sanitize the X-Forwarded-For header by running an Apache Wicket
-application behind a reverse HTTP proxy. This proxy should put the
-client IP address in the X-Forwarded-For header and not pass through
-the contents of the header as received by the client.
 
-The application developers are recommended to upgrade to:
-- Apache Wicket 7.18.0
-<https://wicket.apache.org/news/2021/04/06/wicket-7.18.0-released.html>
-- Apache Wicket 8.12.0
-<https://wicket.apache.org/news/2021/03/31/wicket-8.12.0-released.html>
-- Apache Wicket 9.0.0
-<https://wicket.apache.org/news/2021/03/30/wicket-9.3.0-released.html>
+Releases
+--------
+The fixed releases are available at the normal locations.
 
-Credit:
+Workarounds
+-----------
+The following monkey patch put in an initializer can be used as a
+workaround:
 
-Apache Wicket would like to thank Jonathan Juursema from
-Topicus.Healthcare for reporting this issue.
+```ruby
+class ActionDispatch::HostAuthorization::Permissions
+  def sanitize_string(host)
+    if host.start_with?(".")
+      /\A(.+\.)?#{Regexp.escape(host[1..-1])}\z/i
+    else
+      /\A#{Regexp.escape host}\z/i
+    end
+  end
+end
+```
 
-Apache Wicket Team
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided
+patches for
+the two supported release series. They are in git-am format and consist of a
+single changeset.
+
+* 6-1-open-redirect.patch - Patch for 6.1 series
+
+Please note that only the 6.1.Z, 6.0.Z, and 5.2.Z series are supported at
+present. Users of earlier unsupported releases are advised to upgrade as
+soon
+as possible as we cannot guarantee the continued availability of security
+fixes for unsupported releases.
+
+Credits
+-------
+
+Thanks Jonathan Hefner (https://hackerone.com/jonathanhefner) for reporting
+this bug!
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+Content of type "text/html" skipped
+
+Download attachment "6-1-open-redirect.patch" of type "application/octet-stream" (1923 bytes)
