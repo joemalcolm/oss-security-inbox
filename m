@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1119" "Thursday" "9" "February" "2017" "11:58:36" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1702091150030.8306@wniryva>" "22" "Re: [oss-security] MITRE is adding data intake to its CVE ID process" "^cc:" nil nil "2" "2017020906:28:36" "[oss-security] MITRE is adding data intake to its CVE ID process" (number mark "        ppandit@redh Feb  9   22/1119  " thread-indent "\"Re: [oss-security] MITRE is adding data intake to its CVE ID process\"\n") "<e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>" ("<e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["957" "Wednesday" "5" "May" "2021" "19:09:40" "+0200" "Mauro Matteo Cascella" "mcascell@redhat.com" nil "27" "[oss-security] CVE-2021-3527 QEMU: usb: unbounded stack allocation in usbredir" nil nil nil "5" nil nil (number mark "U       mcascell@red May  5   27/957   " thread-indent "\"[oss-security] CVE-2021-3527 QEMU: usb: unbounded stack allocation in usbredir\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-3527 QEMU: usb: unbounded stack allocation in usbredir" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25724 invoked by uid 550); 9 Feb 2017 06:28:55 -0000
+Received: (qmail 11806 invoked by uid 550); 5 May 2021 17:11:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,42 +11,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25703 invoked from network); 9 Feb 2017 06:28:54 -0000
-X-X-Sender: pjp@javelin
-In-Reply-To: <e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>
-Message-ID: <alpine.LFD.2.20.1702091150030.8306@wniryva>
-References: <e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.74 on 10.5.11.28
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Thu, 09 Feb 2017 06:28:43 +0000 (UTC)
-cc: cve-assign@mitre.org
-Date: Thu, 9 Feb 2017 11:58:36 +0530 (IST)
-From: P J P <ppandit@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] MITRE is adding data intake to its CVE ID
- process
-To: oss security list <oss-security@lists.openwall.com>
+Received: (qmail 10198 invoked from network); 5 May 2021 17:10:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1620234596;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=EuqnvcKJFnJ04BIlXQbpcZTnGDw9c59uKEJn/kUMhcw=;
+	b=TKUNYsaDYUFs3RaMS7iyN7PRfw4Z64yroOI2RCawa+SYHaMLIH4YuSB6lnbJqysCZjOQfo
+	GEeOZgx7WuNK6G2est1umezjYhghxO7WbBDS4SZ2YaEE0+QqY8VNaeYVgh7eiVxrtHMQey
+	CAW8TJjTYjD/NTW/4HcSkgKVnMGx3xs=
+X-MC-Unique: 9tM69AHbNbqF9IZV3r-4hA-1
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=EuqnvcKJFnJ04BIlXQbpcZTnGDw9c59uKEJn/kUMhcw=;
+        b=oxWZmDw45yWO2mujv27xsbWIqh+DWYybG/kWkvWVwNw1Xdc7qo19CMarooGmDWvh5j
+         trYMiJB/WSatw0YPBUsYL+c+IELLGZTI3S4wZPdbrTKmHygnI5ygJ2IhrWuhiq2Ryezg
+         hgwPed8e/DL9CheSzAoKgfxv6wi7ddXl/FjNs1RoKW9rd1xGPGcamJTh+f3YfzvdqCQX
+         MNkmMAx0uhm0blpv6Br8EnpafSGC2v7Roz+phcfJ2LIuYrfmHfpzMI/+4kAJiXcicOeP
+         rAPFVCYVvINGcuTyzRtN6OjaqSoCsp1boEqCjBctnhMzDI+7/cmM5ov1MNLnVVE4leiR
+         zFDQ==
+X-Gm-Message-State: AOAM530lyHXm8SQVS6x/10beVGYLn4/NXmHX5oys89Gy6tY94elSExNa
+	qXyqODsvTFmzpJorOR+qkvljACC6sUJTskGSQQJdzDQK6uIzegZPvLOhciFVxB5tN6l4qrZ+GMT
+	d3j88D7cmFhF0DX76+TRwYHgn9AsOAcSuTtKFAcSFGgaU
+X-Received: by 2002:a17:90b:3615:: with SMTP id ml21mr12445709pjb.28.1620234591899;
+        Wed, 05 May 2021 10:09:51 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJz1yNEpiOxp0nw/WxOrGyq66RhwVlEiXTx2iYBvml5gF9C0iHdU172zhXKQbUJMVUaMr5s82GuX/kvUf098M9E=
+X-Received: by 2002:a17:90b:3615:: with SMTP id ml21mr12445681pjb.28.1620234591544;
+ Wed, 05 May 2021 10:09:51 -0700 (PDT)
+MIME-Version: 1.0
+From: Mauro Matteo Cascella <mcascell@redhat.com>
+Date: Wed, 5 May 2021 19:09:40 +0200
+Message-ID: <CAA8xKjUSqF7rMsSbUqsU_rr4me+Db+K-b0FH2HkmXkESkCbNrQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Cc: Remy Noel <remy.noel@blade-group.com>
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=mcascell@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2021-3527 QEMU: usb: unbounded stack allocation in usbredir
 
-+-- On Thu, 9 Feb 2017, cve-assign@mitre.org wrote --+
-| To more efficiently assign and publish CVE IDs and to enable
-| automation and data sharing within CVE operations, MITRE is changing
-| the way it accepts CVE ID requests on the oss-security mailing list.
-| Starting today, please direct CVE ID requests to this web form
-| <https://cveform.mitre.org/>. Through this form, you can request a new
-| CVE ID, update a CVE ID that was already assigned, and submit
-| questions or feedback to the CVE Team.
-| 
-| We understand that oss-security is for vulnerabilities that should
-| have immediate public disclosure. You can continue to send details to
-| oss-security and propose that a CVE ID should exist. To actually
-| obtain the CVE ID, please also visit the web form at
-| <https://cveform.mitre.org/>.
+Hello,
 
-Boy, a web form with captcha wouldn't be really efficient to obtain CVE-IDs. 
-Especially when there is huge influx of issues. It might help structure data 
-and automate, but for requesting CVEs, it's not really. :(
+A flaw was found in the USB redirector device (usb-redir) of QEMU.
+Small USB packets are combined into a single, large transfer request,
+to reduce the overhead and improve performance. The combined size of
+the bulk transfer is used to dynamically allocate a variable length
+array (VLA) on the stack without proper validation. Since the total
+size is not bounded, a malicious guest could use this flaw to
+influence the array length and cause the QEMU process to perform an
+excessive allocation on the stack, resulting in a denial of service.
 
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Note: in addition to usb-redir, the patchset below fixes other places
+in the code where stack-allocated VLAs were used (notably, usb/hid and
+usb/mtp).
+
+Upstream patchset:
+https://lists.nongnu.org/archive/html/qemu-devel/2021-05/msg00564.html
+
+Acknowledgements: Remy Noel (cc'd).
+CVE-2021-3527 assigned by Red Hat, Inc.
+
+Best regards.
+-- 
+Mauro Matteo Cascella
+Red Hat Product Security
+PGP-Key ID: BB3410B0
+
