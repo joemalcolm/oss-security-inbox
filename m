@@ -1,129 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/19/2
-Message-ID: <20210519100013.7qu6n5xtqwezmq4e@yavin>
-Date: Wed, 19 May 2021 20:00:33 +1000
-From: Aleksa Sarai <cyphar@...har.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-30465: runc <1.0.0-rc95 vulnerable to symlink-exchange attack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/05/1
+Message-ID: <CALBaBG8=MYzxc7UAA_iMMX_SO1YzN2KPN0zfXAGBOzOqctWDsg@mail.gmail.com>
+Date: Wed, 5 May 2021 09:36:49 -0700
+From: Aaron Patterson <aaron.patterson@...il.com>
+To: rubyonrails-security@...glegroups.com, oss-security@...ts.openwall.com,  ruby-security-ann@...glegroups.com
+Subject: [CVE-2021-22902] Possible Denial of Service vulnerability in Action Dispatch
 Content-Type: text/plain; charset=utf-8
 
-This vulnerability was made public on 2021-05-19 10:00:00 UTC.
+There is a possible Denial of Service vulnerability in the Mime type parser
+of
+Action Dispatch. This vulnerability has been assigned the CVE identifier
+CVE-2021-22902.
 
-[ Summary ]
+Versions Affected:  >= 6.0.0
+Not affected:       < 6.0.0
+Fixed Versions:     6.0.3.7, 6.1.0.2
 
-runc 1.0.0-rc94 and earlier are vulnerable to a symlink exchange attack whereby
-an attacker can request a seemingly-innocuous container configuration that
-actually results in the host filesystem being bind-mounted into the container
-(allowing for a container escape). CVE-2021-30465 has been assigned for this
-issue.
+Impact
+------
+There is a possible Denial of Service vulnerability in Action Dispatch.
+Carefully crafted Accept headers can cause the mime type parser in Action
+Dispatch to do catastrophic backtracking in the regular expression engine.
 
-An attacker must have the ability to start containers using some kind of custom
-volume configuration, and while recommended container hardening mechanisms such
-as LSMs (AppArmor/SELinux) and user namespaces will restrict the amount of
-damage an attacker could do, they do not block this attack outright. We have a
-reproducer using Kubernetes (and the below description mentions
-Kubernetes-specific paths), but this is not a Kubernetes-specific issue.
+Releases
+--------
+The fixed releases are available at the normal locations.
 
-The now-released runc v1.0.0-rc95[1] contains a fix for this issue, we
-recommend users update as soon as possible. I have also attached the standalone
-patch. If you have any questions please direct them to the public runc
-bug-tracker or <security@...ncontainers.org> if they are security-critical.
+Workarounds
+-----------
+The following monkey patch placed in an initializer can be used to work
+around
+the issue:
 
-[ Details ]
+```ruby
+module Mime
+  class Type
+    MIME_REGEXP =
+/\A(?:\*\/\*|#{MIME_NAME}\/(?:\*|#{MIME_NAME})(?>\s*#{MIME_PARAMETER}\s*)*)\z/
+  end
+end
+```
 
-In circumstances where a container is being started, and runc is mounting
-inside a volume shared with another container (which is conducting a
-symlink-exchange attack), runc can be tricked into mounting outside of the
-container rootfs by swapping the target of a mount with a symlink due to a
-time-of-check-to-time-of-use (TOCTTOU) flaw. This is fairly similar in style to
-previous TOCTTOU attacks (and is a problem we are working on solving with
-libpathrs[2]).
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided
+patches for
+the two supported release series. They are in git-am format and consist of a
+single changeset.
 
-However, this alone is not useful because this happens inside a mount namespace
-with `MS_SLAVE` propagation applied to `/` (meaning that the mount doesn't
-appear on the host -- it's only a "host-side mount" inside the container's
-namespace). To exploit this, you must have additional mount entries in the
-configuration that use some subpath of the mounted-over host path as a source
-for a subsequent mount.
+* 6-0-Prevent-catastrophic-backtracking-during-mime-parsin.patch - Patch
+for 6.0 series
+* 6-1-Prevent-catastrophic-backtracking-during-mime-parsin.patch - Patch
+for 6.1 series
 
-However, it turns out with some container orchestrators (such as Kubernetes --
-though it is very likely that other downstream users of runc could have similar
-behaviour be accessible to untrusted users), the existence of additional volume
-management infrastructure allows this attack to be applied to gain access to
-the host filesystem without requiring the attacker to have completely arbitrary
-control over container configuration.
+Please note that only the 6.1.Z, 6.0.Z, and 5.2.Z series are supported at
+present. Users of earlier unsupported releases are advised to upgrade as
+soon
+as possible as we cannot guarantee the continued availability of security
+fixes for unsupported releases.
 
-In the case of Kubernetes, this is exploitable by creating a symlink in a
-volume to the top-level (well-known) directory where volumes are sourced from
-(for instance,
-`/var/lib/kubelet/pods/$MY_POD_UID/volumes/kubernetes.io~empty-dir`), and then
-using that symlink as the target of a mount. The source of the mount is an
-attacker controlled directory, and thus the source directory from which
-subsequent mounts will occur is an attacker-controlled directory. Thus the
-attacker can first place a symlink to `/` in their malicious source directory
-with the name of a volume, and a subsequent mount in the container will
-bind-mount `/` into the container.
+Credits
+-------
 
-Applying this attack requires the attacker to start containers with a slightly
-peculiar volume configuration (though not explicitly malicious-looking such as
-bind-mounting `/` into the container explicitly), and be able to run malicious
-code in a container that shares volumes with said volume configuration. It
-helps the attacker if the host paths used for volume management are well known,
-though this is not a hard requirement.
-
-[ Patches ]
-
-I have attached the upstream patch (CVE-2021-30465.patch), a patch which
-applies cleanly on 1.0.0-rc94 (rc94-*.patch) and a patchset which applies on
-rc93 (rc93-*.patch). But for obvious reasons we highly recommend just updating
-to runc 1.0.0-rc95.
-
-[ Workarounds ]
-
-There are no known workarounds for this issue.
-
-However, users who enforce running containers with more confined security
-profiles (such as reduced capabilities, not running code as root in the
-container, user namespaces, AppArmor/SELinux, and seccomp) will restrict what
-an attacker can do in the case of a container breakout -- we recommend users
-make use of strict security profiles if possible (most notably user namespaces
--- which can massively restrict the impact a container breakout can have on the
-host system).
-
-[ Credit ]
-
-Thanks to Etienne Champetier for discovering and disclosing this vulnerability,
-to Noah Meyerhans for writing the first draft of this patch, and to Samuel Karp
-for testing it.
-
-[ References ]
-
-The GitHub security advisory for this vulnerability has been posted[3].
-
-[1]: https://github.com/opencontainers/runc/releases/tag/v1.0.0-rc95
-[2]: https://github.com/openSUSE/libpathrs
-[3]: https://github.com/opencontainers/runc/security/advisories/GHSA-c3xm-pvg7-gh7r
+Thanks to Security Curious <security-curious@...me> for reporting this!
 
 -- 
-Aleksa Sarai
-Senior Software Engineer (Containers)
-SUSE Linux GmbH
-<https://www.cyphar.com/>
+Aaron Patterson
+http://tenderlovemaking.com/
 
-View attachment "CVE-2021-30465.patch" of type "text/x-patch" (22574 bytes)
+Content of type "text/html" skipped
 
-View attachment "rc94-CVE-2021-30465.patch" of type "text/x-patch" (22574 bytes)
+Download attachment "6-0-Prevent-catastrophic-backtracking-during-mime-parsin.patch" of type "application/octet-stream" (2246 bytes)
 
-View attachment "rc93-0000-cover-letter.patch" of type "text/x-patch" (1479 bytes)
-
-View attachment "rc93-0001-libct-newInitConfig-nit.patch" of type "text/x-patch" (1394 bytes)
-
-View attachment "rc93-0002-libct-rootfs-introduce-and-use-mountConfig.patch" of type "text/x-patch" (5240 bytes)
-
-View attachment "rc93-0003-libct-rootfs-mountCgroupV2-minor-refactor.patch" of type "text/x-patch" (1974 bytes)
-
-View attachment "rc93-0004-Fix-cgroup2-mount-for-rootless-case.patch" of type "text/x-patch" (6077 bytes)
-
-View attachment "rc93-0005-rootfs-add-mount-destination-validation.patch" of type "text/x-patch" (20832 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
+Download attachment "6-1-Prevent-catastrophic-backtracking-during-mime-parsin.patch" of type "application/octet-stream" (2290 bytes)
