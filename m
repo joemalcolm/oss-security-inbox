@@ -1,60 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/19/3
-Message-ID: <c856bf26-33e3-cc79-d597-e023c61fe210@isc.org>
-Date: Thu, 18 Feb 2021 23:26:44 -0900
-From: Michael McNally <mcnally@....org>
-To: Hanno Böck <hanno@...eck.de>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: BIND Operational Notification: Enabling the new BIND option "stale-answer-client-timeout" can result in unexpected server termination
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/05/4
+Message-ID: <CALBaBG-wC+E2CToPvR5u_4Oz4J-CURY_2i8qUDt7vYd_wfgw0Q@mail.gmail.com>
+Date: Wed, 5 May 2021 09:40:31 -0700
+From: Aaron Patterson <aaron.patterson@...il.com>
+To: ruby-security-ann@...glegroups.com, rubyonrails-security@...glegroups.com,  oss-security@...ts.openwall.com
+Subject: [CVE-2021-22904] Possible DoS Vulnerability in Action Controller Token Authentication
 Content-Type: text/plain; charset=utf-8
 
-On 2/18/21 11:17 PM, Hanno Böck wrote:
-> On Thu, 18 Feb 2021 20:09:47 -0900
-> ISC Security Officer <security-officer@....org> wrote:
-> 
->> 2)  If you already have packages based on 9.16.12, we expect to have
->> a patch ready well before the next maintenance release.  A candidate
->> patch is under review now and can be delivered after review and
->> quality assurance testing.  If you wish to receive updates on the
->> progress of this patch, please e-mail your request to
->> security-officer@....org
-> 
-> I am confused by your actions here.
-> 
-> You warn people about a messed up release (can happen, no problem), you
-> say you have a preliminary patch, but you make it extra complicated to
-> get that patch? Why not just post the patch?
+There is a possible DoS vulnerability in the Token Authentication logic in
+Action Controller.  This vulnerability has been assigned the CVE identifier
+CVE-2021-22904.
 
-In brief:
+Versions Affected:  >= 4.0.0
+Not affected:       < 4.0.0
+Fixed Versions:     6.1.3.2, 6.0.3.7, 5.2.4.6, 5.2.6
 
-- the flawed releases were issued yesterday
-- this morning the first customer reported the crash to us
-- we isolated the root cause of the reported crash a short time after that
-- we have written a candidate patch, but it has not yet been reviewed
-   or put through our QA process.
+Impact
+------
+Impacted code uses `authenticate_or_request_with_http_token` or
+`authenticate_with_http_token` for request authentication.  Impacted code
+will
+look something like this:
 
-I think people here will not fault us for being understandably gun-shy
-about compounding our error further.
+```
+class PostsController < ApplicationController
+  before_action :authenticate
 
-We certainly don't want to make it more complicated than necessary
-to obtain a patch, once we have one we are satisfied will safely
-correct the problem without introducing other issues, but we don't
-have that at this moment in time.
+  private
 
-However, we were concerned that packagers would very likely be
-scrambling to issue updated patches which correct the CVE we also
-disclosed yesterday, if they had not already prepared them in advance.
-So we thought it was imperative to announce the issue ASAP, even
-while we work on reviewing and testing the candidate patch.
+  def authenticate
+    authenticate_or_request_with_http_token do |token, options|
+      # ...
+    end
+  end
+end
+```
 
-All the same, we know that there will be interest in a patch, so we
-encourage people to request it now and it will be delivered when we
-are satisfied we have screened it properly.
+All users running an affected release should either upgrade or use one of
+the
+workarounds immediately.
 
-I hope that explains our actions better.  We've been scrambling to
-deal with this and don't have everything perfectly lined up but we
-wanted to be transparent and not compound the problem by sitting
-on information until we had everything neatly tied up.
+Releases
+--------
+The fixed releases are available at the normal locations.
 
-Michael McNally
-(for ISC Security Officer)
+Workarounds
+-----------
+The following monkey patch placed in an initializer can be used to work
+around
+the issue:
+
+```ruby
+module ActionController::HttpAuthentication::Token
+  AUTHN_PAIR_DELIMITERS = /(?:,|;|\t)/
+end
+```
+
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided
+patches for
+the two supported release series. They are in git-am format and consist of a
+single changeset.
+
+* 5-2-http-authentication-dos.patch - Patch for 5.2 series
+* 6-0-http-authentication-dos.patch - Patch for 6.0 series
+* 6-1-http-authentication-dos.patch - Patch for 6.1 series
+
+Please note that only the 6.1.Z, 6.0.Z, and 5.2.Z series are supported at
+present. Users of earlier unsupported releases are advised to upgrade as
+soon
+as possible as we cannot guarantee the continued availability of security
+fixes for unsupported releases.
+
+Credits
+-------
+Thank you to https://hackerone.com/wonda_tea_coffee for reporting this
+issue!
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+Content of type "text/html" skipped
+
+Download attachment "6-1-http-authentication-dos.patch" of type "application/octet-stream" (2136 bytes)
+
+Download attachment "6-0-http-authentication-dos.patch" of type "application/octet-stream" (2136 bytes)
+
+Download attachment "5-2-http-authentication-dos.patch" of type "application/octet-stream" (2136 bytes)
