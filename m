@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4990" "Monday" "18" "December" "2017" "20:21:56" "+0000" "halfdog" "me@halfdog.net" "<814-1513628516.856754@MaI1.D5wz.7Roo>" "105" "Re: [oss-security] Recommendations GnuPG-2 replacement" "^Date:" nil nil "12" "2017121820:21:56" "[oss-security] Recommendations GnuPG-2 replacement" (number mark "        me@halfdog.n Dec 18  105/4990  " thread-indent "\"Re: [oss-security] Recommendations GnuPG-2 replacement\"\n") "<87tvwoowng.fsf@fifthhorseman.net>" ("<20171207210134.GA7079@openwall.com>" "<2172-1513501568.968862@pLoG.Le7g.f3CQ>" "<87tvwoowng.fsf@fifthhorseman.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3319" "Thursday" "6" "May" "2021" "09:50:26" "+0200" "Mariusz Felisiak" "felisiak.mariusz@gmail.com" nil "86" "[oss-security] Django: CVE-2021-32052: Header injection possibility since URLValidator accepted newlines in input on Python 3.9.5+" nil nil nil "5" nil nil (number mark "U       felisiak.mar May  6   86/3319  " thread-indent "\"[oss-security] Django: CVE-2021-32052: Header injection possibility since URLValidator accepted newlines in input on Python 3.9.5+\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Django: CVE-2021-32052: Header injection possibility since URLValidator accepted newlines in input on Python 3.9.5+" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1989 invoked by uid 550); 18 Dec 2017 20:22:27 -0000
+Received: (qmail 30277 invoked by uid 550); 6 May 2021 08:04:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,122 +11,131 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1970 invoked from network); 18 Dec 2017 20:22:26 -0000
-In-reply-to: <87tvwoowng.fsf@fifthhorseman.net>
-References: <20171207210134.GA7079@openwall.com> <2172-1513501568.968862@pLoG.Le7g.f3CQ> <87tvwoowng.fsf@fifthhorseman.net>
-Comments: In-reply-to Daniel Kahn Gillmor <dkg@fifthhorseman.net>
-   message dated "Mon, 18 Dec 2017 10:58:43 -0500."
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Message-ID: <814-1513628516.856754@MaI1.D5wz.7Roo>
-Date: Mon, 18 Dec 2017 20:21:56 +0000
-From: halfdog <me@halfdog.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Recommendations GnuPG-2 replacement
+Received: (qmail 25958 invoked from network); 6 May 2021 07:50:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-transfer-encoding:content-language;
+        bh=JrTGy6tbnR4FSCgI7KbOi0413l4dgvLuKScBXspVlpQ=;
+        b=ZnwNpi7clmrYyTJ9CFuHWzdqzgxJh9kGAFWE6mhUI2cxQ/LXphD0+E4FjdMjh8LZhG
+         hITbENAPyhFppc5gozDbJgI1k05paTSzc9EtzYJ5aRbyEaSelxRyERoxRMp8ytpO3bvl
+         CtMebqq5GDAdVNJrXSEOl9gxHICmvRKyVEi1C8iKJervST69WHCktPmSXjz6Qwc3UJEP
+         EBTdNoRF7YBJ6GS/H6jXgExUQ4XkoloT/tHdqN4O9WVxmdNnAxNkcjDfc7dZhekeb+IL
+         pMbquMESJN1g+JSMyvLn6Mck3+YxfVkCwv8eiL5ARMGLqlTWaSYcM4EDe5WcwAT896ir
+         BcAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-transfer-encoding:content-language;
+        bh=JrTGy6tbnR4FSCgI7KbOi0413l4dgvLuKScBXspVlpQ=;
+        b=i8IHa9VrEE7qChzx+izn4Pn7ULVLuYsTQjmpt7TMk0NnUDQBSZ3xKT4wYllWyUOzBi
+         UL2uYdMCrysfTEMaN94HpbTN2NUUxyoKhvqAigNNYhgLXNAc7VRs0lV0sXVAP7C+BfeK
+         FVz0r6AIBxsrx5GOxtS+kRcwlZGK/VduLhq/y/PMFd+3p8xBk7tl5BjuA42vgdbx2ImD
+         xIo8mMTK+j4YAqBzbmwR/BsIK0Qf0KSkxHpmz3awmibYEZ9U47ki2cCT4OeHiAhqjnB7
+         +vf6+4bo3TZZrdgyj9Jwz04cErV8soZSc6yq53DyAZXi13NJhai02uXd+2kvdg8u2ql3
+         RVVQ==
+X-Gm-Message-State: AOAM531Y0/X7eeUINUn76m1OukqxmB5Lw84/RFyeXRnVvAk93ccUbbFs
+	5F029HKlsOxBEy9G/d+Kimg0JLaa2mA=
+X-Google-Smtp-Source: ABdhPJwmVJmFTtYZ4m8HtKClwM5+2jNghaXu1qB4+9kcRO5IiGh27QKVc+B/gaVf4rkbkNpJA6X/tg==
+X-Received: by 2002:a05:651c:33a:: with SMTP id b26mr2344354ljp.220.1620287427511;
+        Thu, 06 May 2021 00:50:27 -0700 (PDT)
 To: oss-security@lists.openwall.com
+From: Mariusz Felisiak <felisiak.mariusz@gmail.com>
+Message-ID: <30ef71a2-8d53-f39d-1ba0-3faa6939d136@gmail.com>
+Date: Thu, 6 May 2021 09:50:26 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+Subject: [oss-security] Django: CVE-2021-32052: Header injection possibility since
+ URLValidator accepted newlines in input on Python 3.9.5+
 
-Daniel Kahn Gillmor writes:
-> On Sun 2017-12-17 09:06:08 +0000, halfdog wrote:
-> > Solar Designer writes:
-> >> On Thu, Dec 07, 2017 at 06:32:11AM +0000, halfdog wrote:
-> >> > After getting gpg and agent running, I noticed, that not reliably
-> >> > stopping the gpg-agent on initrd would introduce a private key
-> >> > data leak via /proc from early boot process to running system
-> >> > when stopping fails.
-> >>=20
-> >> Can you elaborate on this, please?
-> >
-> > As the agent process stays alive and initrd PID namespace is the
-> > same as final init-process PID namespace, the agent will stay
-> > via /proc and traceable by root using PTRACE.
-> 
-> I think what you're saying is basically that the key (or its passphrase)
-> remains in RAM while the agent is running.
-> 
-> This is also true for things like ssh-agent.
-> 
-> Keeping the key in RAM enables convenient, simple reuse -- this is a
-> security benefit, because it means it is possible to do things like read
-> a series of encrypted e-mails without entering your password for each
-> message.  Without this, reading encrypted mail is an extreme nuisance
-> (esp. at the rate at which some people send and receive mail), and it
-> encourages people to just revert to cleartext mail in the first place.
+https://www.djangoproject.com/weblog/2021/may/06/security-releases/
 
-The features you describe are a clear must for desktop/enduser
-usecases, that require frequent access to the key. It is clear
-to me, that those features are required, no discussion to this
-point.
+In accordance with `our security release policy
+<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
+Django team
+is issuing
+`Django 3.2.2 <https://docs.djangoproject.com/en/dev/releases/3.2.2/>`_,
+`Django 3.1.10 
+<https://docs.djangoproject.com/en/dev/releases/3.1.10/>`_, and
+`Django 2.2.22 <https://docs.djangoproject.com/en/dev/releases/2.2.22/>`_.
+These releases address the security issue with severity "moderate" 
+detailed below. We encourage all users of Django to upgrade as soon as 
+possible.
 
-The point in starting this thread was, that GnuPG does NOT conveniently
-cover usecases for headless or scripting operation. Thus it seems
-that the time has come to look for replacement, as GnuPG is moving
-more in the "desktop" direction, as also your comments indicate.
+CVE-2021-32052: Header injection possibility since ``URLValidator`` 
+accepted newlines in input on Python 3.9.5+
+===============================================================================================================
 
-> >> Personally, I intend to stay with GnuPG 1 for now.
-> >
-> > As Debian marked the packages with "gnupg1 - GNU privacy guard -
-> > a PGP implementation (deprecated "classic" version)" I wanted to
-> > anticipate the changes now, giving me more time to evaluate the
-> > changes and to find alternatives when needed.
-> 
-> Hi!  I'm the person who marked gpg1 "deprecated" in debian.  i consider
-> it deprecated for several reasons, including:
-> 
->  * upstream is not devoting much time to it ...
-> 
->  * gpg1 does not support any of the newer cryptographic primitives,
->    ... You will not be able to verify elliptic-curve signatures, nor ...
-> 
->  * gpg1's network interaction is entirely one-shot, ...
-> 
->  * gpg1 always holds private key material in-process. it can be PTRACE'd
->    by the user themselves (not just as root) for full recovery of the
->    secret key.  gpg2 never sees the private key material, since it
->    delegates that task to the agent.  This process separation means it's
->    possible to create gpg-agent backend processes that run in isolated
->    namespaces, that hook into hardware, that store keys in the kernel,
->    etc.  While these steps haven't been taken yet, they will only be
->    possible with gpg2, since gpg1 expects to handle the private keys
->    directly.
+On Python 3.9.5+, ``URLValidator`` didn't prohibit
+newlines and tabs. If you used values with newlines in HTTP response, 
+you could
+suffer from header injection attacks. Django itself wasn't vulnerable 
+because
+``HttpResponse`` prohibits newlines in HTTP headers.
 
-That's really a strange argument. You fear PTRACING for key extraction
-of a short-lived, per-key instance of gpg1 process and solve that
-by putting all the key material into a single long-lived gpg-agent
-process, not even providing convenient commands to flush the keys
-from there? Hence not even PTRACING is needed, you can just access
-the socket to make the process give you the keys (directly or
-by requesting decrypts/signatures - I did not check on that).
+Moreover, the ``URLField`` form field which uses ``URLValidator`` silently
+removes newlines and tabs on Python 3.9.5+, so the possibility of newlines
+entering your data only existed if you are using this validator outside 
+of the
+form fields.
 
-Even with namespaces, PTRACE is still allowed unless you are running
-the agent as SUID-binary, causing other risks again. In my opinion,
-for server operation both schemes would not improve security the
-same way as on desktops: if the automated tasks is implemented to
-be run as root, PTRACE and namespaces do not help in any way.
-If run as distinct user, there are only two usecases:
+This issue was introduced by the `bpo-43882 
+<https://bugs.python.org/issue43882>`_ fix.
 
-* The service just does encryption/signature verification: here
-  the unavoidable agent just provides additional attack surface,
-  e.g. by replacing verification keys in the agent only, thus
-  everything looks nice on disk but your signature verification
-  is broken.
+Affected supported versions
+===========================
 
-* The service does signing/decryption: the key is passwordless
-  (or password is within user-readable configuration) or HW-token.
-  In both cases, the initial security of the key material before
-  being transfered to gpg-agent only depends on file system level
-  access restrictions. Gaining access to UID or PTRACE is already
-  equivalent to full key material compromise. So also here the
-  agent only adds attack surface and that's it.
+* Django main branch
+* Django 3.2
+* Django 3.1
+* Django 2.2
 
-To reduce the attack surface, a "gpg --one-shot" argument could
-be added, which will terminate the agent immediately after use,
-maybe not even exposing it via sockets visible to other processes
-but only connected to its "parent" gpg process via pipes.
+Resolution
+==========
 
->  * gpg1 retains and provides backward compatibility for known-broken
->    formats, like PGP-2, and will likely never effectively drop them...
-> ...
+Patches to resolve the issue have been applied to Django's main branch 
+and to
+the 3.2, 3.1, and 2.2 release branches. The patches may be obtained from the
+following changesets:
 
-hd
+* On the `main branch 
+<https://github.com/django/django/commit/e1e81aa1c4427411e3c68facdd761229ffea6f6f>`__
+* On the `3.2 release branch 
+<https://github.com/django/django/commit/2d2c1d0c97832860fbd6597977e2aae17dd7e5b2>`__
+* On the `3.1 release branch 
+<https://github.com/django/django/commit/afb23f5929944a407e4990edef1c7806a94c9879>`__
+* On the `2.2 release branch 
+<https://github.com/django/django/commit/d9594c4ea57b6309d93879805302cec9ae9f23ff>`__
 
+The following releases have been issued:
+
+* Django 3.2.2 (`download Django 3.2.2 
+<https://www.djangoproject.com/m/releases/3.2/Django-3.2.2.tar.gz>`_ | 
+`3.2.2 checksums 
+<https://www.djangoproject.com/m/pgp/Django-3.2.2.checksum.txt>`_)
+* Django 3.1.10 (`download Django 3.1.10 
+<https://www.djangoproject.com/m/releases/3.1/Django-3.1.10.tar.gz>`_ | 
+`3.1.10 checksums 
+<https://www.djangoproject.com/m/pgp/Django-3.1.10.checksum.txt>`_)
+* Django 2.2.22 (`download Django 2.2.22 
+<https://www.djangoproject.com/m/releases/2.2/Django-2.2.22.tar.gz>`_ | 
+`2.2.22 checksums 
+<https://www.djangoproject.com/m/pgp/Django-2.2.22.checksum.txt>`_)
+
+The PGP key ID used for this release is Mariusz Felisiak: 
+`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
+
+General notes regarding security reporting
+==========================================
+
+As always, we ask that potential security issues be reported via
+private email to ``security@djangoproject.com``, and not via Django's
+Trac instance or the django-developers list. Please see `our security
+policies <https://www.djangoproject.com/security/>`_ for further
+information.
 
