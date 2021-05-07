@@ -1,30 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/22/1
-Message-ID: <20210422065959.GI13079@scully.more-magic.net>
-Date: Thu, 22 Apr 2021 08:59:59 +0200
-From: Peter Bex <peter@...e-magic.net>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Malicious commits to Linux kernel as part of university study
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/07/1
+Message-ID: <CAA8xKjWKrn+JxskDdH1ULYUSFDvqTZ-doGTd=e_vrSSc8PD-EA@mail.gmail.com>
+Date: Fri, 7 May 2021 16:07:04 +0200
+From: Mauro Matteo Cascella <mcascell@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Remy Noel <remy.noel@...de-group.com>
+Subject: Re: CVE-2021-3527 QEMU: usb: unbounded stack allocation in usbredir
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On Wed, May 5, 2021 at 7:09 PM Mauro Matteo Cascella
+<mcascell@...hat.com> wrote:
+>
+> Upstream patchset:
+> https://lists.nongnu.org/archive/html/qemu-devel/2021-05/msg00564.html
 
-Probably a lot of you know this already but I consider it serious enough
-to point out to the OSS security community at large.
+Note that the xhci patch was dropped [1] and a new USB patchset has
+been proposed without it [2]. As discussed upstream, this could leave
+room for unbound allocation on the heap, although more difficult to
+exploit by the guest to crash the QEMU process on the host.
 
-The university of Minnesota has been banned from making any commits to
-the Linux kernel after it was found out they'd been submitting bogus
-patches to the LKML to knowingly introduce security issues:
-https://lore.kernel.org/linux-nfs/YH%2FfM%2FTsbmcZzwnX@kroah.com/
+[1] https://lists.nongnu.org/archive/html/qemu-devel/2021-05/msg01372.html
+[2] https://lists.nongnu.org/archive/html/qemu-devel/2021-05/msg01373.html
 
-They also published a paper:
-https://raw.githubusercontent.com/QiushiWu/qiushiwu.github.io/main/papers/OpenSourceInsecurity.pdf
+-- 
+Mauro Matteo Cascella
+Red Hat Product Security
+PGP-Key ID: BB3410B0
 
-I don't know the scope of this research, but it could involve other OSS
-projects, now or in the future, as well.  Hence this e-mail.  If you feel
-it's spam or needless drama, feel free to ignore.
-
-Cheers,
-Peter
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
