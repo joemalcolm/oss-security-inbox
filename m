@@ -1,34 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/26/6
-Message-ID: <69a91eea-3377-2ad1-cf21-8a1c929e2152@isc.org>
-Date: Wed, 26 May 2021 14:15:38 -0800
-From: Michael McNally <mcnally@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/07/2
+Message-ID: <CAFcO6XOOjFd7XKuMVDyGXka+jdk3=RXFAe2a11SV20_JZzYHqw@mail.gmail.com>
+Date: Sat, 8 May 2021 00:24:11 +0800
+From: butt3rflyh4ck <butterflyhuangxx@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "security-officer@....org" <security-officer@....org>
-Subject: ISC has disclosed a vulnerability in ISC DHCP (CVE-2021-25217)
+Subject: Re: Linux kernel: f2fs: out-of-bounds memory access bug
 Content-Type: text/plain; charset=utf-8
 
-On May 26, 2021, we (Internet Systems Consortium) disclosed a
-vulnerability affecting our ISC DHCP software:
+The patch is for this issue in upstream linux:
 
-    CVE-2021-25217: A buffer overrun in lease file parsing code can be
-    used to exploit a common vulnerability shared by dhcpd and dhclient
-    https://kb.isc.org/docs/cve-2021-25217
+https://git.kernel.org/pub/scm/linux/kernel/git/jaegeuk/f2fs.git/commit/?h=dev&id=b862676e371715456c9dade7990c8004996d0d9e
 
-New versions of ISC DHCP are available from https://www.isc.org/downloads
+Regards,
+ butt3rflyh4ck.
 
-Operators and package maintainers who prefer to apply patches selectively can
-find individual vulnerability-specific patches in the "patches" subdirectory
-of the release directories for our two stable release branches (4.4 and 4.1-ESV)
 
-   https://downloads.isc.org/isc/dhcp/4.4.2-P1/patches
-   https://downloads.isc.org/isc/dhcp/4.1-ESV-R16-P1/patches
+On Mon, Mar 29, 2021 at 12:00 AM butt3rflyh4ck
+<butterflyhuangxx@...il.com> wrote:
+>
+> Hi,
+>
+> I reported an out of bounds memory access bug in get_next_net_page()
+> in fs/f2fs/node.c and reproduce in 5.12.0-rc3. Now the patch is out
+> and tested it in 5.12.0-rc4.
+>
+> Root Cause:
+>  the f2fs_flush_nat_entries()  function is called during the
+> checkpointing process,
+> when it flush dirty nats in nat entry sets, it will call
+> __flush_nat_entry_set(), but before call it,the legality of nids is
+> not correctly tested. If the nids is out of range, may access
+> out-of-bounds memory.
+>
+> Some details and Patch for this issue:
+> https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg2520013.html
+> Now the patch is not available in upstream, CVE is not assigned.
+>
+> Now announced on oss-security@...ts.openwl.com.
+>
+> This issue was discovered by the ADLab of venustech.
+>
+> Regards,
+>  butt3rflyh4ck.
 
-With the public announcement of this vulnerability, the embargo
-period is ended and any updated software packages that have been
-prepared may be released.
 
---
 
-Michael McNally
-(for ISC Security Officer)
+-- 
+Active Defense Lab of Venustech
