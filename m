@@ -1,4 +1,9 @@
-Received: (qmail 25934 invoked by uid 550); 7 May 2024 10:49:30 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1426" "Saturday" "8" "May" "2021" "14:32:45" "+0800" "butt3rflyh4ck" "butterflyhuangxx@gmail.com" nil "55" "Re: [oss-security] Linux kernel: f2fs: out-of-bounds memory access bug" nil nil nil "5" nil nil (number mark "U       butterflyhua May  8   55/1426  " thread-indent "\"Re: [oss-security] Linux kernel: f2fs: out-of-bounds memory access bug\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: f2fs: out-of-bounds memory access bug" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 18289 invoked by uid 550); 8 May 2021 06:59:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,67 +12,96 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11706 invoked from network); 7 May 2024 07:38:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=notcom.org;
-	s=jk; h=Sender:Content-Type:MIME-Version:Message-ID:Subject:To:From:Date:
-	Reply-To:Cc:Content-Transfer-Encoding:Content-ID:Content-Description:
-	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=apFJ1Jmd5RvFghb95jeM8vHZJskUjevniB3NAl4SLkc=; t=1715067506; x=1715715506; 
-	b=bL1WVc+DroBF+yaTaUHcUaU63K05APS2AIuLC1lD487WA3jpxiLMXw30x9OxQUg7GjFNBQ0avzX
-	qVX9fDRahZZLzr6g10dltZv2DmlU9fFLRk9KS9isV6Me9/0Pq2LcBT7eFr+yfTmmUrpEvciFWRdIX
-	95766BsDqmMkK+OJNpg6an3DjPZN/+LJDENiZG/jEY2ojlRSoCHjL4gEnMWdG4eTjuEGNclRjM8X2
-	MbyspBZdk6sv8f5r5tEVK0x8klqC/JXNIg6mmX9Ha2s4hBkK8WEsnMdJ68zgmdtq5GUzY47M6xCNI
-	uah+0lG9U9ApAkbAW2nZo7HmN/1tuUva97Lg==;
-Date: Tue, 7 May 2024 10:38:08 +0300
-From: Valtteri Vuorikoski <vuori@notcom.org>
-To: oss-security@lists.openwall.com
-Message-ID: <2ib7foyctkfjgsicr3ucl7tqj6rld2w64so4hgth2jxboyeqe3@tgl57zzlwo7h>
-Mail-Followup-To: oss-security@lists.openwall.com
+Received: (qmail 9558 invoked from network); 8 May 2021 06:33:07 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=tSKJboQl3IAQe781/NiDkIN6zV7VYXpyqGWbIlk1E98=;
+        b=bK6WYN2/cQk9MiSahv/KChaofvNd2SPry/RxDSHCjdE49JqsvWRGShgLnNCsTwLPj+
+         WObdu2FDBI+4/rFQX82CDpzcu+0VXLQdWRqDg7p5WlNimnhZtVug7eNtzHKkm52c7kfy
+         +noaWYwFrazgcQFd8sApbMlGIl9Pw6TvzD0PTUEepzjQETz3acXQOMrQQiY+lHeiSYZO
+         ovtBC+yxC/udNdhGNX74JstEL/CC1KQkW2HlXzRSRlAe05fxu5pNYG4ijBpVD2CVij7H
+         KTgmCZPyPYaXTsBo+H2T+fnktGy0KWuS0pWQ0sbosyRNQc9efNHHeFzaEpKGtFZ2VD8E
+         lyrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=tSKJboQl3IAQe781/NiDkIN6zV7VYXpyqGWbIlk1E98=;
+        b=fzwfNANpOUA996NltZ4vtjQmhlE+GWRSfRIXgd4iyjIQwf6UzhzV4DfTmm2SQTMWKj
+         O2o2XHG0MZkmkluXpbGnWC6JD+5g2PCINnEfvFZzUJ5EGrjFAwy4g+PexC78WwsKb9Nm
+         c7a+4NmBY4S6m1yrUbY+hTpAWMFgBCu6RW8l9QvQRkPIpUbyxUOyZ0zK7FAW09YxEXmb
+         SGXUl/pJxriG/6g+2n/vcBOGTj08RHCYqY2o5yxluuk64LXFzZ4mHfHdTHWpVEY2FBBh
+         hDA/s/2DO7GgLUy8M8i3oVAyijQSy8XizxtDE8A5D/nIML8boYcNDMqwRwc3Q0GjzlYE
+         rQ1A==
+X-Gm-Message-State: AOAM533apcZvdP9cNGjLnviXqb/sm6kmV21dRZmrHBQNI0GAIAzHJtXk
+	qt6Ibv+EMxGpMDozY7hWSu/6lEY7lWsUshUrcp9B7WgJSpE=
+X-Google-Smtp-Source: ABdhPJwq95Y9incJ08gG0T/CV9oJVEZBk4UkU48ylRaF21XjyB/dh8ggYlIhED/rtKnKTxsI8YQAufPHzegp93BYR6g=
+X-Received: by 2002:a5b:ccf:: with SMTP id e15mr10922094ybr.365.1620455575313;
+ Fri, 07 May 2021 23:32:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: NeoMutt/20240323-4-c04f3b
-Sender: server-megadon@notcom.org
-Subject: [oss-security] CVE-2023-49606, CVE-2023-40533: memory safety vulnerabilities in
- tinyproxy <=1.11.1
+References: <CAFcO6XO2k=X2H24tg_GTgoTQMLv=0ajAyuyeK0YKgvqiM5vPWg@mail.gmail.com>
+ <CAFcO6XOOjFd7XKuMVDyGXka+jdk3=RXFAe2a11SV20_JZzYHqw@mail.gmail.com>
+In-Reply-To: <CAFcO6XOOjFd7XKuMVDyGXka+jdk3=RXFAe2a11SV20_JZzYHqw@mail.gmail.com>
+From: butt3rflyh4ck <butterflyhuangxx@gmail.com>
+Date: Sat, 8 May 2021 14:32:45 +0800
+Message-ID: <CAFcO6XNzAKQ2Pwxbi-KPqCtY_8Ex3UribKrFGgr28ghsnNaK=w@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [oss-security] Linux kernel: f2fs: out-of-bounds memory access bug
 
-Cisco Talos reports two memory safety vulnerabilities in tinyproxy, a small HTTP
-proxy server, in versions prior to 1.11.2 (not yet released). Quotes from the
-two advisories below.
+Hi, RedHat has assigned CVE-2021-3506 to this issue.
 
-First advisory <https://talosintelligence.com/vulnerability_reports/TALOS-2023-1889>:
+Regards,
+ butt3rflyh4ck.
 
-  CVE-2023-49606
 
-  A use-after-free vulnerability exists in the HTTP Connection Headers parsing
-  in Tinyproxy 1.11.1 and Tinyproxy 1.10.0. A specially crafted HTTP header can
-  trigger reuse of previously freed memory, which leads to memory corruption and
-  could lead to remote code execution. An attacker needs to make an
-  unauthenticated HTTP request to trigger this vulnerability.
 
-  9.8 - CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:Hv
+On Sat, May 8, 2021 at 12:24 AM butt3rflyh4ck
+<butterflyhuangxx@gmail.com> wrote:
+>
+> The patch is for this issue in upstream linux:
+>
+> https://git.kernel.org/pub/scm/linux/kernel/git/jaegeuk/f2fs.git/commit/?h=dev&id=b862676e371715456c9dade7990c8004996d0d9e
+>
+> Regards,
+>  butt3rflyh4ck.
+>
+>
+> On Mon, Mar 29, 2021 at 12:00 AM butt3rflyh4ck
+> <butterflyhuangxx@gmail.com> wrote:
+> >
+> > Hi,
+> >
+> > I reported an out of bounds memory access bug in get_next_net_page()
+> > in fs/f2fs/node.c and reproduce in 5.12.0-rc3. Now the patch is out
+> > and tested it in 5.12.0-rc4.
+> >
+> > Root Cause:
+> >  the f2fs_flush_nat_entries()  function is called during the
+> > checkpointing process,
+> > when it flush dirty nats in nat entry sets, it will call
+> > __flush_nat_entry_set(), but before call it,the legality of nids is
+> > not correctly tested. If the nids is out of range, may access
+> > out-of-bounds memory.
+> >
+> > Some details and Patch for this issue:
+> > https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg2520013.html
+> > Now the patch is not available in upstream, CVE is not assigned.
+> >
+> > Now announced on oss-security@lists.openwl.com.
+> >
+> > This issue was discovered by the ADLab of venustech.
+> >
+> > Regards,
+> >  butt3rflyh4ck.
+>
+>
+>
+> --
+> Active Defense Lab of Venustech
 
-Second advisory <https://talosintelligence.com/vulnerability_reports/TALOS-2023-1902>:
 
-  CVE-2023-40533
 
-  An uninitialized memory use vulnerability exists in Tinyproxy 1.11.1 while
-  parsing HTTP requests. In certain configurations, a specially crafted HTTP
-  request can result in disclosure of data allocated on the heap, which could
-  contain sensitive information. An attacker can make an unauthenticated HTTP
-  request to trigger this vulnerability.
-
-  5.9 - CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N
-
-Upstream has an issue open at
-<https://github.com/tinyproxy/tinyproxy/issues/533>.  Talos claims to have
-contacted them in December 2023, but according to the developer there was no
-contact before the above advisories were released. The developer also disputes
-the veracity of CVE-2023-40533. Whatever the case,
-<https://github.com/tinyproxy/tinyproxy/commit/12a8484265f7b00591293da492bb3c9987001956>
-is the official fix for CVE-2023-49606.
-
- -Valtteri
- 
+--
+Active Defense Lab of Venustech
