@@ -1,22 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/24/3
-Message-ID: <438578f3-f595-87bd-c22f-508b92d872a1@apache.org>
-Date: Thu, 25 Mar 2021 06:08:53 +1300
-From: Sidney Markowitz <sidney@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/08/1
+Message-ID: <CAFcO6XNzAKQ2Pwxbi-KPqCtY_8Ex3UribKrFGgr28ghsnNaK=w@mail.gmail.com>
+Date: Sat, 8 May 2021 14:32:45 +0800
+From: butt3rflyh4ck <butterflyhuangxx@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-1946: Apache SpamAssassin has an OS Command Injection vulnerability
+Subject: Re: Linux kernel: f2fs: out-of-bounds memory access bug
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Hi, RedHat has assigned CVE-2021-3506 to this issue.
 
-In Apache SpamAssassin before 3.4.5, malicious rule configuration (.cf) files can be configured to run system commands without any output or errors. With this, exploits can be injected in a number of scenarios.  In addition to upgrading to SA version 3.4.5, users should only use update channels or 3rd party .cf files from trusted places.
+Regards,
+ butt3rflyh4ck.
 
-This issue is being tracked as https://bz.apache.org/SpamAssassin/show_bug.cgi?id=7793
 
-Credit:
 
-Apache SpamAssassin would like to thank Damian Lukowski at credativ for ethically reporting this issue.
+On Sat, May 8, 2021 at 12:24 AM butt3rflyh4ck
+<butterflyhuangxx@...il.com> wrote:
+>
+> The patch is for this issue in upstream linux:
+>
+> https://git.kernel.org/pub/scm/linux/kernel/git/jaegeuk/f2fs.git/commit/?h=dev&id=b862676e371715456c9dade7990c8004996d0d9e
+>
+> Regards,
+>  butt3rflyh4ck.
+>
+>
+> On Mon, Mar 29, 2021 at 12:00 AM butt3rflyh4ck
+> <butterflyhuangxx@...il.com> wrote:
+> >
+> > Hi,
+> >
+> > I reported an out of bounds memory access bug in get_next_net_page()
+> > in fs/f2fs/node.c and reproduce in 5.12.0-rc3. Now the patch is out
+> > and tested it in 5.12.0-rc4.
+> >
+> > Root Cause:
+> >  the f2fs_flush_nat_entries()  function is called during the
+> > checkpointing process,
+> > when it flush dirty nats in nat entry sets, it will call
+> > __flush_nat_entry_set(), but before call it,the legality of nids is
+> > not correctly tested. If the nids is out of range, may access
+> > out-of-bounds memory.
+> >
+> > Some details and Patch for this issue:
+> > https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg2520013.html
+> > Now the patch is not available in upstream, CVE is not assigned.
+> >
+> > Now announced on oss-security@...ts.openwl.com.
+> >
+> > This issue was discovered by the ADLab of venustech.
+> >
+> > Regards,
+> >  butt3rflyh4ck.
+>
+>
+>
+> --
+> Active Defense Lab of Venustech
 
-References:
 
-https://s.apache.org/3r1wh
+
+--
+Active Defense Lab of Venustech
