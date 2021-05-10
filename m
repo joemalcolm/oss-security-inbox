@@ -1,64 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/25/1
-Message-ID: <EF0C4A70-7268-4894-A006-1540CD68CB45@vmware.com>
-Date: Thu, 25 Nov 2021 19:15:19 +0000
-From: Nadav Amit <namit@...are.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: Mike Kravetz <mike.kravetz@...cle.com>, Greg Kroah-Hartman <gregkh@...uxfoundation.org>, Security Officers <security@...nel.org>, Andrew Morton <akpm@...ux-foundation.org>
-Subject: CVE-2021-4002: Linux kernel: Missing TLB flush on hugetlbfs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/10/2
+Message-ID: <20210510061053.GA23700@lorien.valinor.li>
+Date: Mon, 10 May 2021 08:10:53 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: Alex Murray <alex.murray@...onical.com>
+Cc: oss-security@...ts.openwall.com, Nadav Markus <nmarkus@...oaltonetworks.com>, Or Cohen <orcohen@...oaltonetworks.com>
+Subject: Re: CVE-2021-23133: Linux kernel: race condition in sctp sockets
 Content-Type: text/plain; charset=utf-8
 
-On Linux kernel 3.6 and later it is possible for an attacker to leak or change
-data that resides on hugetlbfs. Such data can reside on hugetlbfs, for
-instance, if the victim runs mmap() using the MAP_HUGETLB or shmget() with
-SHM_HUGETLB. If a victim maps executable code onto hugetlbfs, the executable
-can be modified as well.
+Hi Alex,
 
-The bug is caused due to a missing TLB flush when unmapping of a page of PMDs
-is performed by clearing a PUD. While the comment in the code claims that it
-is safe, it is not, since no flush would take place under these circumstances
-(unless, of course, it was needed for some other reason).
+On Mon, May 10, 2021 at 03:28:02PM +0930, Alex Murray wrote:
+> 
+> On Mon, 2021-05-10 at 13:54:43 +0930, Salvatore Bonaccorso wrote:
+> 
+> > Hi,
+> > 
+> > On Sun, Apr 18, 2021 at 11:41:06AM +0300, Or Cohen wrote:
+> > > Hello,
+> > > 
+> > > This is an announcement about CVE-2021-23133 which is a race-condition
+> > > I found in Linux kernel sctp sockets (net/sctp/socket.c). It can
+> > > lead to kernel
+> > > privilege escalation from the context of a network service or from
+> > > an unprivileged process if certain conditions are met.
+> > > 
+> > > The bug was fixed on April 13, 2021:
+> > > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b166a20b07382b8bc1dcee2a448715c9c2c81b5b
+> > 
+> > It looks that additionally
+> > https://git.kernel.org/linus/34e5b01186858b36c4d7c87e1a025071e8e2401f
+> > refer to CVE-2021-23133.
+> 
+> It seems b166a20b07382b8bc1dcee2a448715c9c2c81b5b got reverted in the
+> follow-up commit
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/net/sctp/socket.c?id=01bfe5e8e428b475982a98a46cca5755726f3f7f
+> and so 34e5b01186858b36c4d7c87e1a025071e8e2401f would appear to be the
+> most correct fix from what I can tell.
 
-Apparently the bug existed since commit 24669e58477e ("hugetlb: use mmu_gather
-instead of a temporary linked list for accumulating pages)” which means that
-it existed since kernel 3.6. There might be some mitigating factors in
-certain older kernels on certain architectures. For instance, x86 performed
-TLB flushes on huge-pages more eagerly in the past.
+Ah right, I missed the revert of the original commit.
 
+Thanks for pointing that to me.
 
-Fix:
-
-The fix is upstreamed as commit a4a118f2eead ("hugetlbfs: flush TLBs correctly
-after huge_pmd_unshare”). Backporting of the fix to older kernels is in
-progress.
-
-To fix the bug a call to tlb_flush_pmd_range() is needed from
-__unmap_hugepage_range() when huge_pmd_unshare() succeeds, and forcing a flush
-before returning from __unmap_hugepage_range().
-
-
-Details:
-
-An attacker can using shmget() 512 pages of 2MB map twice which are aligned to
-PUD alignment and fault in some of the pages. As the pages are properly
-aligned, the kernel would share a PUD between the mappings. Later the
-attacker would remove the mappings and the shared memory segments. 
-
-The first mapping that is removed does not trigger a TLB flush due to a bug
-in __unmap_hugepage_range(). Later, if the kernel reallocates the huge-pages
-to another process shortly after, an attacker would be able to read and write
-these huge-pages for some time (until TLB flush happens for some other reason
-later on).
-
-A proof of concept is attached. The PoC creates a child process that allocates
-a huge-page and this data is leaked back to the parent. There is no need for
-the attacker to be the parent of the child and this is only implemented in
-such manner for simplicity. The PoC fails on the first iteration on my system
-repeatedly (although it is written to make multiple attack attempts).
-
-To make it work the PoC work, configure the number of pages to 512
-("echo 512 > /proc/sys/vm/nr_hugepages"), so huge-pages will be available for
-the PoC and will be reused by the victim.
-
-
-Download attachment "poc.c" of type "application/octet-stream" (3271 bytes)
+Regards,
+Salvatore
