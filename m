@@ -1,38 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/17/1
-Message-ID: <CAH5JyZq+Jr3Y8FdHhJ_axMN-a97aBLmnDzCAV4OdR0u8e9=SeQ@mail.gmail.com>
-Date: Wed, 17 Feb 2021 13:15:33 +0000
-From: Kaxil Naik <kaxilnaik@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/10/3
+Message-ID: <87fsyvnn9x.fsf@canonical.com>
+Date: Mon, 10 May 2021 15:28:02 +0930
+From: Alex Murray <alex.murray@...onical.com>
 To: oss-security@...ts.openwall.com
-Cc: users@...flow.apache.org
-Subject: CVE-2021-26559: Apache Airflow 2.0.0: CWE-284 Improper Access Control on Configurations Endpoint for the Stable API
+Cc: Nadav Markus <nmarkus@...oaltonetworks.com>, Or Cohen <orcohen@...oaltonetworks.com>, Salvatore Bonaccorso <carnil@...ian.org>
+Subject: Re: CVE-2021-23133: Linux kernel: race condition in sctp sockets
 Content-Type: text/plain; charset=utf-8
 
-Versions Affected: 2.0.0
 
-*Description*:
+On Mon, 2021-05-10 at 13:54:43 +0930, Salvatore Bonaccorso wrote:
 
-Improper Access Control on Configurations Endpoint for the Stable API
-of Apache Airflow allows users with Viewer or User role to get Airflow
-Configurations including sensitive information even when `[webserver]
-expose_config` is set to `False` in `airflow.cfg`.
+> Hi,
+>
+> On Sun, Apr 18, 2021 at 11:41:06AM +0300, Or Cohen wrote:
+>> Hello,
+>> 
+>> This is an announcement about CVE-2021-23133 which is a race-condition
+>> I found in Linux kernel sctp sockets (net/sctp/socket.c). It can lead to 
+>> kernel
+>> privilege escalation from the context of a network service or from
+>> an unprivileged process if certain conditions are met.
+>> 
+>> The bug was fixed on April 13, 2021:
+>> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b166a20b07382b8bc1dcee2a448715c9c2c81b5b
+>
+> It looks that additionally
+> https://git.kernel.org/linus/34e5b01186858b36c4d7c87e1a025071e8e2401f
+> refer to CVE-2021-23133.
 
-This allowed a privilege escalation attack.
+It seems b166a20b07382b8bc1dcee2a448715c9c2c81b5b got reverted in the
+follow-up commit
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/net/sctp/socket.c?id=01bfe5e8e428b475982a98a46cca5755726f3f7f
+and so 34e5b01186858b36c4d7c87e1a025071e8e2401f would appear to be the
+most correct fix from what I can tell.
 
-This issue affects Apache Airflow 2.0.0.
-
-
-*Mitigation*:
-
-Upgrade to Airflow 2.0.1 or remove `can read on Configurations`
-permission from the roles like Viewer and Users if you want to
-restrict users with those roles to view configurations in 2.0.0.
-
-
-*Credit*:
-Apache Airflow would like to thank Ian Carroll for reporting this issue.
-
-Thanks,
-Kaxil,
-on behalf of Apache Airflow PMC
+>
+> Are both commits necessary?
+>
+> Regards,
+> Salvatore
 
