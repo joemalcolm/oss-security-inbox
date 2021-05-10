@@ -1,30 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/02/2
-Message-ID: <CAB8XdGDCDzOUGVH75fagN1yyXb07dDHXnE20AVzmU59=1WOkvw@mail.gmail.com>
-Date: Fri, 2 Apr 2021 10:47:26 +0100
-From: Colm O hEigeartaigh <coheigea@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/10/4
+Message-ID: <87cztznkrf.fsf@canonical.com>
+Date: Mon, 10 May 2021 16:22:20 +0930
+From: Alex Murray <alex.murray@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-22696: Apache CXF: OAuth 2 authorization service vulnerable to DDos attacks
+Cc: Nadav Markus <nmarkus@...oaltonetworks.com>, Or Cohen <orcohen@...oaltonetworks.com>, Salvatore Bonaccorso <carnil@...ian.org>
+Subject: Re: CVE-2021-23133: Linux kernel: race condition in sctp sockets
 Content-Type: text/plain; charset=utf-8
 
-Description:
 
-CXF supports (via JwtRequestCodeFilter) passing OAuth 2 parameters via a
-JWT token as opposed to query parameters (see: The OAuth 2.0 Authorization
-Framework: JWT Secured Authorization Request (JAR)). Instead of sending a
-JWT token as a "request" parameter, the spec also supports specifying a URI
-from which to retrieve a JWT token from via the "request_uri" parameter.
+On Mon, 2021-05-10 at 15:40:53 +0930, Salvatore Bonaccorso wrote:
 
-CXF was not validating the "request_uri" parameter (apart from ensuring it
-uses "https) and was making a REST request to the parameter in the request
-to retrieve a token.
+> Hi Alex,
+>
+> On Mon, May 10, 2021 at 03:28:02PM +0930, Alex Murray wrote:
+>> 
+>> On Mon, 2021-05-10 at 13:54:43 +0930, Salvatore Bonaccorso wrote:
+>> 
+>> > Hi,
+>> > 
+>> > On Sun, Apr 18, 2021 at 11:41:06AM +0300, Or Cohen wrote:
+>> > > Hello,
+>> > > 
+>> > > This is an announcement about CVE-2021-23133 which is a 
+>> > > race-condition
+>> > > I found in Linux kernel sctp sockets (net/sctp/socket.c). It can
+>> > > lead to kernel
+>> > > privilege escalation from the context of a network service or from
+>> > > an unprivileged process if certain conditions are met.
+>> > > 
+>> > > The bug was fixed on April 13, 2021:
+>> > > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b166a20b07382b8bc1dcee2a448715c9c2c81b5b
+>> > 
+>> > It looks that additionally
+>> > https://git.kernel.org/linus/34e5b01186858b36c4d7c87e1a025071e8e2401f
+>> > refer to CVE-2021-23133.
+>> 
+>> It seems b166a20b07382b8bc1dcee2a448715c9c2c81b5b got reverted in the
+>> follow-up commit
+>> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/net/sctp/socket.c?id=01bfe5e8e428b475982a98a46cca5755726f3f7f
+>> and so 34e5b01186858b36c4d7c87e1a025071e8e2401f would appear to be the
+>> most correct fix from what I can tell.
+>
+> Ah right, I missed the revert of the original commit.
+>
+> Thanks for pointing that to me.
 
-This means that CXF was vulnerable to DDos attacks on the authorization
-server, as specified in section 10.4.1 of the spec.
+No worries - thanks for pointing out the new commit otherwise I wouldn't
+have gone investigating to find the revert ;)
 
-This issue affects Apache CXF versions prior to 3.4.3; Apache CXF versions
-prior to 3.3.10.
-
-Reference:
-http://cxf.apache.org/security-advisories.data/CVE-2021-22696.txt.asc
+>
+> Regards,
+> Salvatore
 
