@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1051" "Thursday" "9" "May" "2019" "21:42:58" "+0200" "Michael Vorburger" "vorburger@apache.org" nil "35" nil nil nil nil "5" nil nil (number mark "U       vorburger@ap May  9   35/1051  " thread-indent "\"[oss-security] [CVE-2018-11800] and [CVE-2018-11801] Apache Fineract SQL Injection Vulnerabilities fixed in v1.3.0\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2018-11800] and [CVE-2018-11801] Apache Fineract SQL Injection Vulnerabilities fixed in v1.3.0" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1551" "Monday" "10" "May" "2021" "16:22:20" "+0930" "Alex Murray" "alex.murray@canonical.com" nil "45" "Re: [oss-security] CVE-2021-23133: Linux kernel: race condition in sctp sockets" nil nil nil "5" nil nil (number mark "U       alex.murray@ May 10   45/1551  " thread-indent "\"Re: [oss-security] CVE-2021-23133: Linux kernel: race condition in sctp sockets\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-23133: Linux kernel: race condition in sctp sockets" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13498 invoked by uid 550); 9 May 2019 20:21:34 -0000
+Received: (qmail 23761 invoked by uid 550); 10 May 2021 08:24:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,56 +12,65 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19684 invoked from network); 9 May 2019 19:43:47 -0000
-X-Gm-Message-State: APjAAAV02LZBswJLh4aTb5zlyG4UHRJW4qRjcxXFYxswx+FzWhpX6Gz5
-	v7y8yxE2r0b0cUshcDPk4UE7VfvZDpqduIvCuTo=
-X-Google-Smtp-Source: APXvYqw+4AJXEuMxNZ60Vn7ncODrzSdeMRRCp8jYPHzN6X1RQeWcD1doiWPz+V92rsqHkEk05DcUi+U1D8kqkxrqop8=
-X-Received: by 2002:a6b:6d06:: with SMTP id a6mr3912290iod.11.1557431013922;
- Thu, 09 May 2019 12:43:33 -0700 (PDT)
-MIME-Version: 1.0
-References: <CALiX4iYsXMWKtYNQMukHgx54_P=5896UB6rBfpjEkfC1kPzSDg@mail.gmail.com>
-In-Reply-To: <CALiX4iYsXMWKtYNQMukHgx54_P=5896UB6rBfpjEkfC1kPzSDg@mail.gmail.com>
-From: Michael Vorburger <vorburger@apache.org>
-Date: Thu, 9 May 2019 21:42:58 +0200
-X-Gmail-Original-Message-ID: <CALiX4iavwQ6UVboSJCkO2S_e5vkH61BCKtAsq1G058npDKp0bA@mail.gmail.com>
-Message-ID: <CALiX4iavwQ6UVboSJCkO2S_e5vkH61BCKtAsq1G058npDKp0bA@mail.gmail.com>
+Received: (qmail 13799 invoked from network); 10 May 2021 06:52:39 -0000
+References: <CAM6JnLex-+TM+p5aNrcifxG3qmpL+gfXzSTzWpVpbj3_hsp_Fw@mail.gmail.com>
+ <20210510042443.GA19253@lorien.valinor.li> <87fsyvnn9x.fsf@canonical.com>
+ <20210510061053.GA23700@lorien.valinor.li>
+User-agent: mu4e 1.4.15; emacs 28.0.50
+From: Alex Murray <alex.murray@canonical.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="00000000000058e29e058879aad5"
-Subject: [oss-security] [CVE-2018-11800] and [CVE-2018-11801] Apache Fineract SQL Injection
- Vulnerabilities fixed in v1.3.0
-
---00000000000058e29e058879aad5
-Content-Type: text/plain; charset="UTF-8"
-
-Hello oss-security@lists.openwall.com,
-
-As suggested on https://apache.org/security/committers.html, forwarding you
-the below:
-
----------- Forwarded message ---------
-From: Michael Vorburger <vorburger@apache.org>
-Date: Thu, May 9, 2019 at 9:35 PM
-Subject: [CVE-2018-11800] and [CVE-2018-11801] Apache Fineract SQL
-Injection Vulnerabilities fixed in v1.3.0
-To: <dev@fineract.apache.org>
-Cc: Apache Security Team <security@apache.org>
+Cc: Nadav Markus <nmarkus@paloaltonetworks.com>, Or Cohen
+ <orcohen@paloaltonetworks.com>, Salvatore Bonaccorso <carnil@debian.org>
+In-reply-to: <20210510061053.GA23700@lorien.valinor.li>
+Date: Mon, 10 May 2021 16:22:20 +0930
+Message-ID: <87cztznkrf.fsf@canonical.com>
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed
+Subject: Re: [oss-security] CVE-2021-23133: Linux kernel: race condition in
+ sctp sockets
 
 
-Hello,
+On Mon, 2021-05-10 at 15:40:53 +0930, Salvatore Bonaccorso wrote:
 
-The Apache Fineract project would like to hereby disclose that our 1.3.0
-release includes fixes for the CVE-2018-11800 and CVE-2018-11801 SQL
-Injection vulnerabilities (the first one in a query on the
-GroupSummaryCounts table, the second on the m_center data table).
+> Hi Alex,
+>
+> On Mon, May 10, 2021 at 03:28:02PM +0930, Alex Murray wrote:
+>> 
+>> On Mon, 2021-05-10 at 13:54:43 +0930, Salvatore Bonaccorso wrote:
+>> 
+>> > Hi,
+>> > 
+>> > On Sun, Apr 18, 2021 at 11:41:06AM +0300, Or Cohen wrote:
+>> > > Hello,
+>> > > 
+>> > > This is an announcement about CVE-2021-23133 which is a 
+>> > > race-condition
+>> > > I found in Linux kernel sctp sockets (net/sctp/socket.c). It can
+>> > > lead to kernel
+>> > > privilege escalation from the context of a network service or from
+>> > > an unprivileged process if certain conditions are met.
+>> > > 
+>> > > The bug was fixed on April 13, 2021:
+>> > > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b166a20b07382b8bc1dcee2a448715c9c2c81b5b
+>> > 
+>> > It looks that additionally
+>> > https://git.kernel.org/linus/34e5b01186858b36c4d7c87e1a025071e8e2401f
+>> > refer to CVE-2021-23133.
+>> 
+>> It seems b166a20b07382b8bc1dcee2a448715c9c2c81b5b got reverted in the
+>> follow-up commit
+>> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/net/sctp/socket.c?id=01bfe5e8e428b475982a98a46cca5755726f3f7f
+>> and so 34e5b01186858b36c4d7c87e1a025071e8e2401f would appear to be the
+>> most correct fix from what I can tell.
+>
+> Ah right, I missed the revert of the original commit.
+>
+> Thanks for pointing that to me.
 
-We would like to thank Niels Heinen from Google for reporting this issue
-and the Apache Security team for their assistance.
+No worries - thanks for pointing out the new commit otherwise I wouldn't
+have gone investigating to find the revert ;)
 
-See also
-https://cwiki.apache.org/confluence/display/FINERACT/Apache+Fineract+Security+Report
-.
+>
+> Regards,
+> Salvatore
 
-Best,
-M.
-
---00000000000058e29e058879aad5--
