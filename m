@@ -1,74 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/12/2
-Message-ID: <20210712191614.z2bgvg2tvuiwa3wi@yuggoth.org>
-Date: Mon, 12 Jul 2021 19:16:14 +0000
-From: Jeremy Stanley <fungi@...goth.org>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA-2021-001] Neutron: Anti-spoofing bypass for Open vSwitch networks (CVE-2021-20267)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/11/17
+Message-ID: <20210511222021.GA23723@localhost.localdomain>
+Date: Tue, 11 May 2021 22:22:19 +0000
+From: Qualys Security Advisory <qsa@...lys.com>
+To: null p0int3r <nullp0int3rx@...il.com>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: [CVE-2020-28018] Use-After-Free on Exim Question
 Content-Type: text/plain; charset=utf-8
 
-=============================================================
-OSSA-2021-001: Anti-spoofing bypass for Open vSwitch networks
-=============================================================
+Hi,
 
-:Date: July 12, 2021
-:CVE: CVE-2021-20267
+On Tue, May 11, 2021 at 11:18:12PM +0200, null p0int3r wrote:
+> In the advisory it is mentioned the use of the name=value pair, but reading
+> the code I see just string based functions used for allocations.
 
+One of the name=value parameters for MAIL FROM is special, because it
+can allocate arbitrary (binary) characters (hint: we also used it to
+exploit another vulnerability in the advisory)!
 
-Affects
-~~~~~~~
-- Neutron: <16.3.3, >=17.0.0 <17.1.3, =18.0.0
+With best regards,
 
-
-Description
-~~~~~~~~~~~
-David Sinquin with Gandi.net reported a vulnerability in Neutron's
-default Open vSwitch firewall rules. By sending carefully crafted
-packets, anyone in control of a server instance connected to the
-virtual switch can impersonate the IPv6 addresses of other systems
-on the network, resulting in denial of service or in some cases
-possibly interception of traffic intended for other destinations.
-Only deployments using the Open vSwitch driver are affected.
+--
+the Qualys Security Advisory team
 
 
-Patches
-~~~~~~~
-- https://review.opendev.org/777873 (Queens)
-- https://review.opendev.org/791470 (Queens)
-- https://review.opendev.org/777786 (Rocky)
-- https://review.opendev.org/791469 (Rocky)
-- https://review.opendev.org/777872 (Stein)
-- https://review.opendev.org/791500 (Stein)
-- https://review.opendev.org/777785 (Train)
-- https://review.opendev.org/791468 (Train)
-- https://review.opendev.org/777784 (Ussuri)
-- https://review.opendev.org/791467 (Ussuri)
-- https://review.opendev.org/777783 (Victoria)
-- https://review.opendev.org/791465 (Victoria)
-- https://review.opendev.org/776599 (Wallaby)
-- https://review.opendev.org/791464 (Wallaby)
-- https://review.opendev.org/783743 (Xena)
+[https://d1dejaj6dcqv24.cloudfront.net/asset/image/email-banner-384-2x.png]<https://www.qualys.com/email-banner>
 
 
-Credits
-~~~~~~~
-- David Sinquin from Gandi.net (CVE-2021-20267)
 
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1902917
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-20267
-
-
-Notes
-~~~~~
-- The stable/train, stable/stein, stable/rocky, and stable/queens
-  branches are under extended maintenance and will receive no new
-  point releases, but patches for them are provided as a courtesy.
-
-
--- 
-Jeremy Stanley
-
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
+This message may contain confidential and privileged information. If it has been sent to you in error, please reply to advise the sender of the error and then immediately delete it. If you are not the intended recipient, do not read, copy, disclose or otherwise use this message. The sender disclaims any liability for such unauthorized use. NOTE that all incoming emails sent to Qualys email accounts will be archived and may be scanned by us and/or by external service providers to detect and prevent threats to our systems, investigate illegal or inappropriate behavior, and/or eliminate unsolicited promotional emails (“spam”). If you have any concerns about this process, please contact us.
