@@ -1,31 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/11/9
-Message-ID: <cf809005-8196-8fa2-7a3e-fef076488bca@apache.org>
-Date: Wed, 11 Aug 2021 18:07:27 +0200
-From: "jleroux@...che.org" <jleroux@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/11/16
+Message-ID: <trinity-10aeed49-cb96-47d9-818e-b938913e6fce-1620770433273@3c-app-gmx-bap63>
+Date: Wed, 12 May 2021 00:00:33 +0200
+From: Norbert Slusarek <nslusarek@....net>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2021-37608] Arbitrary file upload vulnerability in OFBiz
+Cc: netdev@...r.kernel.org, socketcan@...tkopp.net, mkl@...gutronix.de, alex.popov@...ux.com, linux-can@...r.kernel.org, seth.arnold@...onical.com, steve.beattie@...onical.com, cascardo@...onical.com
+Subject: Linux kernel: net/can/isotp: race condition leads to local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Severity:
-High, possible RCE
+A race condition in the CAN ISOTP networking protocol was discovered which
+allows forbidden changing of socket members after binding the socket.
 
-Vendor:
-The Apache Software Foundation
+In particular, the lack of locking behavior in isotp_setsockopt() makes it
+feasible to assign the flag CAN_ISOTP_SF_BROADCAST to the socket, despite having
+previously registered a can receiver. After closing the isotp socket, the can
+receiver will still be registered and use-after-free's can be triggered in
+isotp_rcv() on the freed isotp_sock structure.
+This leads to arbitrary kernel execution by overwriting the sk_error_report()
+pointer, which can be misused in order to execute a user-controlled ROP chain to
+gain root privileges.
 
-Versions Affected:
-OFBiz versions prior to 17.12.08
+The vulnerability was introduced with the introduction of SF_BROADCAST support
+in commit 921ca574cd38 ("can: isotp: add SF_BROADCAST support for functional
+addressing") in 5.11-rc1.
+In fact, commit 323a391a220c ("can: isotp: isotp_setsockopt():
+block setsockopt on bound sockets") did not effectively prevent isotp_setsockopt()
+from modifying socket members before isotp_bind().
 
-Description:
-Apache OFBiz has unsafe deserialization prior to 17.12.08 version
+The requested CVE ID will be revealed along with further exploitation details
+as a response to this notice on 13th May of 2021.
 
-Mitigation:
-Upgrade to at least 17.12.08
-or apply patches at https://issues.apache.org/jira/browse/OFBIZ-12297
+Credits: Norbert Slusarek
 
-Credit:
-Zhujie from galaxylab <galaxylab@...a.com>
+*** exploit log ***
 
-References:
-http://ofbiz.apache.org/download.html#vulnerabilities
+Adjusted to work with openSUSE Tumbleweed.
 
+noprivs@...e:~/expl> uname -a
+Linux suse 5.12.0-1-default #1 SMP Mon Apr 26 04:25:46 UTC 2021 (5d43652) x86_64 x86_64 x86_64 GNU/Linux
+noprivs@...e:~/expl> ./lpe
+[+] entering setsockopt
+[+] entering bind
+[+] left bind with ret = 0
+[+] left setsockopt with flags = 838
+[+] race condition hit, closing and spraying socket
+[+] sending msg to run softirq with isotp_rcv()
+[+] check sudo su for root rights
+noprivs@...e:~/expl> sudo su
+suse:/home/noprivs/expl # id
+uid=0(root) gid=0(root) groups=0(root)
+suse:/home/noprivs/expl # cat /root/check
+high school student living in germany looking for an internship in info sec.
+if interested please reach out to nslusarek@....net.
+
+Regards,
+Norbert Slusarek
