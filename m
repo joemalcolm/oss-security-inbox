@@ -1,108 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/30/1
-Message-ID: <d3f1107ee2eb7ca5308d8346ed1d8f7b5549dc3e.camel@decadent.org.uk>
-Date: Fri, 30 Apr 2021 01:47:34 +0200
-From: Ben Hutchings <ben@...adent.org.uk>
-To: klibc mailing list <klibc@...or.com>
-Cc: initramfs@...r.kernel.org, oss-security <oss-security@...ts.openwall.com>
-Subject: [ANNOUNCE] klibc 2.0.9
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/11/3
+Message-ID: <99169547-a9b0-ca29-0b09-035e6d58ac98@enst-bretagne.fr>
+Date: Tue, 11 May 2021 07:37:47 +0200
+From: Gabriel Corona <gabriel.corona@...t-bretagne.fr>
+To: oss-security@...ts.openwall.com
+Subject: Re: Code execution through Thunar
 Content-Type: text/plain; charset=utf-8
 
-I have released version 2.0.9.  This is available in the git
-repository at:
+Le 09/05/2021 à 21:38, Gabriel Corona a écrit :
+> When called with a regular file as command line argument, Thunar
+> would delegate to some other program without user confirmation
+> based on the file type. This could be exploited to trigger code
+> execution in a chain of vulnerabilities.
+> 
+> This is fixed in 4.16.7 and 4.17.2. When called with a regular
+> file, Thunar now opens the containing directory and selects the
+> file.
+> 
+> A CVE ID has been requested.
 
-    https://git.kernel.org/pub/scm/libs/klibc/klibc.git
+This is CVE-2021-32563.
 
-and as a tarball at:
-
-    https://mirrors.kernel.org/pub/linux/libs/klibc/2.0/
-
-Security fixes:
-- Integer overflows in heap functions (CVE-2021-31870, CVE-2021-31873)
-- Integer overflows in cpio (CVE-2021-31871, CVE-2021-31872)
-
-New features:
-- Signal handling on alpha, s390(x), and sparc no longer requires
-  stack trampolines, and the stack should no longer be executable
-- The finit_module() system call has a wrapper function
-- arm64 builds can be done using LLVM's lld; other architectures may
-  also work
-
-Other bug fixes:
-- Signal handling on alpha and ia64
-- Crash in vfork on ia64
-- Build failure with older versions of make
-- Build failure for some binutils configurations
-
-Other changes:
-- riscv64 builds now use linker relaxation
-- Various warning fixes
-- dash build uses mktemp command instead of tempfile
-- Static library builds are now always reproducible, rather than this
-  being optional
-
-Thanks to Microsoft Vulnerability Research for reporting the heap bugs
-and going some of the way to identifying the cpio bugs.
-
-A git shortlog of changes since version 2.0.8 follows.
-
-Ben.
-
-Andrej Shadura (1):
-      [klibc] dash: builtin: Default to mktemp, not tempfile
-
-Andrew Delgadillo (1):
-      [klibc] support llvm's lld for arm64
-
-Ben Hutchings (32):
-      [klibc] 2.0.8 released, next version is 2.0.9
-      [klibc] alpha: Fix definitions of _NSIG and struct sigaction
-      [klibc] signal: Add compile-time check on signal types
-      [klibc] signal: Note another reason to define _KLIBC_NEEDS_SA_RESTORER
-      [klibc] signal: Add sysconfig setting to force SA_SIGINFO on
-      [klibc] s390: Set sa_restorer for signals and disable executable stack
-      [klibc] alpha: Pass restorer to rt_sigaction() and disable executable stack
-      [klibc] sparc: Set sa_restorer for signals and disable executable stack
-      [klibc] signal: Move rt_sigaction() argument mangling to arch directories
-      [klibc] signal: Add config flag for additional sigaction fixup
-      [klibc] ia64: Fix definition of struct sigaction
-      [klibc] ia64: sigaction: Make signal updates atomic
-      [klibc] README.klibc: List alpha and ia64 as "working"
-      [klibc] README.klibc: Refresh architecture list
-      [klibc] Kbuild, klcc: Support multiple objects in KLIBCCRTSHARED
-      [klibc] riscv64: Make linker relaxation work and enable it
-      [klibc] klcc: Force make to use a shell to run 'command'
-      [klibc] Move linker option probing to Kbuild.klibc
-      [klibc] Kbuild: Rename LLD to LD_IS_LLD
-      [klibc] Replace all the remaining instances of -Ttext-segment
-      [klibc] Make typesize extraction more robust
-      [klibc] zlib: Suppress implicit-fallthrough warning
-      [klibc] Kbuild: Always build static library reproducibly
-      [klibc] losetup: Fix warnings about __u64 arguments to printf
-      [klibc] Define SIZE_MAX in <stdint.h>
-      [klibc] tests: Add test for malloc size arithmetic
-      [klibc] malloc: Set errno on failure
-      [klibc] malloc: Fail if requested size > PTRDIFF_MAX
-      [klibc] calloc: Fail if multiplication overflows
-      [klibc] malloc: Fail if block size is out of range for sbrk
-      [klibc] cpio: Fix possible integer overflow on 32-bit systems
-      [klibc] cpio: Fix possible crash on 64-bit systems
-
-Bill Wendling (3):
-      [klibc] dash: shell: Fix clang warnings
-      [klibc] dash: shell: Fix clang warnings about format string
-      [klibc] kinit: use an enum to silence a clang warning
-
-Jessica Clarke (2):
-      [klibc] ia64: Fix sigaction function implementation
-      [klibc] ia64: Fix invalid memory access in vfork
-
-Nikita Ermakov (1):
-      [klibc] SYSCALLS.def: Add finit_module() system call
-
--- 
-Ben Hutchings
-I'm not a reverse psychological virus.
-Please don't copy me into your signature.
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Gabriel
