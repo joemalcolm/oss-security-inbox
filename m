@@ -1,111 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/16/5
-Message-Id: <E1lBzZj-0002cK-EW@xenbits.xenproject.org>
-Date: Tue, 16 Feb 2021 12:35:31 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 364 v3 (CVE-2021-26933) - arm: The cache may not be cleaned for newly allocated scrubbed pages
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/11/14
+Message-ID: <20210511205319.GA22017@localhost.localdomain>
+Date: Tue, 11 May 2021 20:55:17 +0000
+From: Qualys Security Advisory <qsa@...lys.com>
+To: null p0int3r <nullp0int3rx@...il.com>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: [CVE-2020-28018] Use-After-Free on Exim Question
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-            Xen Security Advisory CVE-2021-26933 / XSA-364
-                               version 3
+On Tue, May 11, 2021 at 01:23:43PM +0200, null p0int3r wrote:
+> So I suppose that command is the first you send after the second
+> "STARTTLS" command being sent right?
 
- arm: The cache may not be cleaned for newly allocated scrubbed pages
+Yes! After the second STARTTLS we send an invalid MAIL FROM command (for
+example, "MAIL FROM:(\"${run{...}}\")\n"). Exim then responds with a 501
+error message that includes our "${run{...}}" string, and since corked
+in tls_write() is still non-NULL, this string is written to where the
+used-after-free corked points to.
 
-UPDATES IN VERSION 3
-====================
+Hopefully this helps!
 
-Public release.
+> PD: Congrats for those nice bugs discovered.
 
-ISSUE DESCRIPTION
-=================
+Thank you very much for your mail!
 
-On Arm, a guest is allowed to control whether memory access bypass the
-cache.  This means that Xen needs to ensure that all writes (such as
-the ones during scrubbing) have reached memory before handing over the
-page to a guest.
+With best regards,
 
-Unfortunately the operation to clean the cache happens before checking
-if the page was scrubbed.  Therefore there is no guarantee when all
-the writes will reach the memory.
+--
+the Qualys Security Advisory team
 
-IMPACT
-======
 
-A malicious guest may be able to read sensitive data from memory that
-previously belonged to another guest.
+[https://d1dejaj6dcqv24.cloudfront.net/asset/image/email-banner-384-2x.png]<https://www.qualys.com/email-banner>
 
-VULNERABLE SYSTEMS
-==================
 
-Xen version 4.9 onwards are vulnerable. Only Arm systems are vulnerable.
 
-MITIGATION
-==========
-
-There is no known mitigation.
-
-CREDITS
-=======
-
-This issue was discovered by Julien Grall of Amazon.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa364.patch           xen-unstable - 4.11
-
-$ sha256sum xsa364*
-c9dcb3052bb6ca4001e02b3ad889c70b4eebf1931bef83dfb7de86452851f3c8  xsa364.meta
-dc313c70bb07b4096bbc4612cbbc180589923277411dede2fda37f04ecc846d6  xsa364.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmAru/UMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZT0UH/0Lzw4sShqmyO06n0HWcXyzXKx7Qh67tjBglmB0D
-XHKrlTKR0Cs1S2NR3GCSZCSPNKXcXU689qEXlvK07EpheO/xCUgpZNkt/Eab/JFK
-NngYbuev1z6+bGeCi70b6RItCXoWiwDWEJqLlLKROwBXMZaodwgjY7/o3GR2D8ZV
-Qyz2EcAdJUIYmMsLC3hJ7gTLXvdySp+0lZ9oO6qe4YYQ3CIwPJnlflWFTzcASfML
-D9lMVG6u6ratiqt4N1egE0gxBe3/QP8KoptSqiV+MDdwPnsK009g/G+0Ea430ZEh
-lviVSgCxhdELx2Tv+Q7qSSbnfMSdnibSHAxipcbyhvjiEJU=
-=mHyv
------END PGP SIGNATURE-----
-
-Download attachment "xsa364.meta" of type "application/octet-stream" (1302 bytes)
-
-Download attachment "xsa364.patch" of type "application/octet-stream" (2493 bytes)
+This message may contain confidential and privileged information. If it has been sent to you in error, please reply to advise the sender of the error and then immediately delete it. If you are not the intended recipient, do not read, copy, disclose or otherwise use this message. The sender disclaims any liability for such unauthorized use. NOTE that all incoming emails sent to Qualys email accounts will be archived and may be scanned by us and/or by external service providers to detect and prevent threats to our systems, investigate illegal or inappropriate behavior, and/or eliminate unsolicited promotional emails (“spam”). If you have any concerns about this process, please contact us.
