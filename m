@@ -1,87 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/09/1
-Message-ID: <bbb8b568-9512-02e4-60ec-3df480af3430@rs-labs.com>
-Date: Sat, 9 Oct 2021 19:42:47 +0200
-From: Roman Medina-Heigl Hernandez <roman@...labs.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-42013: Path Traversal and Remote Code Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/11/6
+Message-ID: <20210511114017.GA4908@openwall.com>
+Date: Tue, 11 May 2021 13:40:17 +0200
+From: Solar Designer <solar@...nwall.com>
+To: null p0int3r <nullp0int3rx@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: [CVE-2020-28018] Use-After-Free on Exim Question
 Content-Type: text/plain; charset=utf-8
 
-Thanks Yann, I'm happy you agree with my analysis. It also seems to
-match the one by your colleage Stefan (that you referenced).
+Hi,
 
-I just wanted to clarify that the impact of both CVEs is exactly the
-same: RCE and/or arbitrary file read and/or none, depending on httpd
-config :-). There's no difference between Apache 2.4.49 and 2.4.50 in
-that regard.
+Replying as a list moderator:
 
-But reading the blog post by Stefan
-(https://github.com/icing/blog/blob/main/httpd-2.4.50.md) and Apache
-HTTP 2.4 vulns security page
-(https://httpd.apache.org/security/vulnerabilities_24.html) as well, I
-feel like you are associating the RCE impact to 2.4.50 and the arbitrary
-file read to 2.4.49. That's misleading. Examples:
+On Tue, May 11, 2021 at 01:23:43PM +0200, null p0int3r wrote:
+> I have a question to the Qualys researchers that discovered and
+> successfully achieved RCE on CVE-2020-28018 (Use-After-Free vulnerability
+> on tls-openssl.c).
+> 
+> This question is nor avisory related nor vulnerability discovery but about
+> exploitation, so I am not sure if it is on the scope of this mailing list.
 
-- blog post
+Yes, this is in scope.  So if anyone (not only the Qualys researchers)
+wants to reply for real, please feel free.
 
-"With Apache 2.4.50 the team fixed CVE-2021-41773, a critical security
-flaw that allowed under certain conditions an outside to access files on
-your server outside of the configured document roots." -> You forget to
-mention the RCE.
-
-"Affection, 2.4.49" -> You go for arbitrary file read example.
-
-"Affection, 2.4.50" -> Then you go for RCE example.
-
-- security page
-
-"Fixed in Apache HTTP Server 2.4.51
-critical: Path Traversal and Remote Code Execution in Apache HTTP Server
-2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773) (CVE-2021-42013)"
--> It states RCE (right) but perhaps you should also note the arbitrary
-file read impact.
-
-"Fixed in Apache HTTP Server 2.4.50
-...
-critical: Path traversal and file disclosure vulnerability in Apache
-HTTP Server 2.4.49 (CVE-2021-41773)" -> It doesn't states the RCE
-(wrong), only the arbitrary file read ("file disclosure").
-
-
-I'm sure this is unintentional and yes, it's only matter of wording but
-it's kind of misleading, imho. I'd kindly advise for it to be fixed. And
-I also take this opportunity to thank ASF and particularly the folks
-like Yann and Stefan whose work makes Apache httpd possible.
-
-C'u in apache-nosejob-202x.c !!! :-)
-
-Cheers,
--r
-
-
-El 08/10/2021 a las 23:27, Yann Ylavic escribió:
-> On Fri, Oct 8, 2021 at 11:10 PM Solar Designer <solar@...nwall.com> wrote:
->> On Fri, Oct 08, 2021 at 08:37:33PM +0200, Yann Ylavic wrote:
->>> On Fri, Oct 8, 2021 at 8:53 AM Roman Medina-Heigl Hernandez
->>> <roman@...labs.com> wrote:
->>>> I posted RCE exploit for this (it works for both CVEs: 41773 & 42013)
->>>> and some other details regarding requirements / exploitability, which
->>>> you may find useful at:
->>>>
->>>> https://twitter.com/roman_soft/status/1446252280597078024
->>> Thanks, that's fair analysis.
->> Yann is probably referring to the full tweet thread by Roman, not just
->> the one tweet that Roman posted in here.  Let me correct that:
-> Exactly, thanks Alexander and sorry if I wasn't clear enough.
->
-> For completeness I'll add this tweet/blog from Stefan (OP) about the
-> vulnerability and the fixes in httpd:
-> https://twitter.com/icing/status/1446504661448593408
->
-> Regards;
-> Yann.
-
--- 
-Saludos,
--Román
-
+Alexander
