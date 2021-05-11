@@ -1,21 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/28/1
-Message-ID: <YQD5JUAfS954qxkQ@eldamar.lan>
-Date: Wed, 28 Jul 2021 08:28:53 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/11/5
+Message-ID: <CAOni+oNB4JCe+Z=V+_bQGHBJ-HfN0AwVLC_H0qwVBsF0KKEoYQ@mail.gmail.com>
+Date: Tue, 11 May 2021 13:23:43 +0200
+From: null p0int3r <nullp0int3rx@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: developers@...sody.im
-Subject: Re: Prosody XMPP server advisory 2021-07-22 (Remote Information Disclosure) (CVE Request)
+Subject: [CVE-2020-28018] Use-After-Free on Exim Question
 Content-Type: text/plain; charset=utf-8
 
-Hi Jonas,
+Hi,
 
-On Thu, Jul 22, 2021 at 05:03:36PM +0200, Jonas Schäfer wrote:
-> (NB: [1] suggested that posting to this list is still an acceptable way to 
-> request a CVE, especially if disclosure should happen immediately. Please let 
-> me know if that's not going to work, then I'll fill out the form.)
+I have a question to the Qualys researchers that discovered and
+successfully achieved RCE on CVE-2020-28018 (Use-After-Free vulnerability
+on tls-openssl.c).
 
-Can you request a CVE directly through https://cveform.mitre.org/ ?
+This question is nor avisory related nor vulnerability discovery but about
+exploitation, so I am not sure if it is on the scope of this mailing list.
 
-Regards,
-Salvatore
+I am developing a Proof-of-Concept exploit for the previously mentioned bug.
+
+I know once you reach tls_write() again, the UAF is lost as the pointer is
+NULL'ed
+
+"- finally, we send a MAIL FROM command whose response overwrites Exim's
+
+  configuration with our arbitrary "${run{...}}" (which is eventually
+  executed by expand_string())."
+
+In the advisory it says that you sent a second "MAIL FROM"  command to the
+server so the response on tls_write() is written to the area pointed to by
+the s pointer on the UAF'ed gstring struct.
+
+So I suppose that command is the first you send after the second "STARTTLS"
+command being sent right?
+
+I was able to overwrite gstring struct using a "MAIL FROM" command but
+after the "STARTTLS", which makes it difficult to use the same response for
+it to overwrite the target buffer as a NULL byte not allowed message is
+returned instead.
+
+So my question in summary, you corrupted the gstring struct before the
+STARTTLS and then sent another MAIL FROM command after the STARTTLS? Or you
+used two "MAIL FROM" commands after the STARTTLS or a pipelined one both
+after?
+
+I guess pipelining cannot be used as you would first need a EHLO response
+saying the PIPELINING module is available. Doing so requires the use of
+tls_write() which means breaking the UAF.
+
+PD: Congrats for those nice bugs discovered.
+
+Thanks
+
