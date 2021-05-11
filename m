@@ -1,156 +1,107 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/26/1
-Message-ID: <94b230a84bd78c43@cvs.openbsd.org>
-Date: Sun, 26 Sep 2021 08:52:50 -0600 (MDT)
-From: Damien Miller <djm@....openbsd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/11/9
+Message-Id: <59CE18A6-1040-41CB-9058-F0E116A6E51A@beckweb.net>
+Date: Tue, 11 May 2021 15:44:37 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: Announce: OpenSSH 8.8 released
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-OpenSSH 8.8 has just been released. It will be available from the
-mirrors listed at https://www.openssh.com/ shortly.
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-OpenSSH is a 100% complete SSH protocol 2.0 implementation and
-includes sftp client and server support.
+The following releases contain fixes for security vulnerabilities:
 
-Once again, we would like to thank the OpenSSH community for their
-continued support of the project, especially those who contributed
-code or patches, reported bugs, tested snapshots or donated to the
-project. More information on donations may be found at:
-https://www.openssh.com/donations.html
+* Credentials Plugin 2.3.19
+* Dashboard View Plugin 2.16
+* P4 Plugin 1.11.5
+* S3 publisher Plugin 0.11.7
+* Xcode integration Plugin 2.0.15
+* Xray - Test Management for Jira Plugin 2.4.1
 
-Future deprecation notice
-=========================
 
-A near-future release of OpenSSH will switch scp(1) from using the
-legacy scp/rcp protocol to using SFTP by default.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2021-05-11/
 
-Legacy scp/rcp performs wildcard expansion of remote filenames (e.g.
-"scp host:* .") through the remote shell. This has the side effect of
-requiring double quoting of shell meta-characters in file names
-included on scp(1) command-lines, otherwise they could be interpreted
-as shell commands on the remote side.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-This creates one area of potential incompatibility: scp(1) when using
-the SFTP protocol no longer requires this finicky and brittle quoting,
-and attempts to use it may cause transfers to fail. We consider the
-removal of the need for double-quoting shell characters in file names
-to be a benefit and do not intend to introduce bug- compatibility for
-legacy scp/rcp in scp(1) when using the SFTP protocol.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-Another area of potential incompatibility relates to the use of remote
-paths relative to other user's home directories, for example -
-"scp host:~user/file /tmp". The SFTP protocol has no native way to
-expand a ~user path. However, sftp-server(8) in OpenSSH 8.7 and later
-support a protocol extension "expand-path@...nssh.com" to support
-this.
+---
 
-Security
-========
+SECURITY-2349 / CVE-2021-21648
+Credentials Plugin 2.3.18 and earlier does not escape user-controlled
+information on a view it provides.
 
-sshd(8) from OpenSSH 6.2 through 8.7 failed to correctly initialise
-supplemental groups when executing an AuthorizedKeysCommand or
-AuthorizedPrincipalsCommand, where a AuthorizedKeysCommandUser or
-AuthorizedPrincipalsCommandUser directive has been set to run the
-command as a different user. Instead these commands would inherit
-the groups that sshd(8) was started with.
+This results in a reflected cross-site scripting (XSS) vulnerability.
 
-Depending on system configuration, inherited groups may allow
-AuthorizedKeysCommand/AuthorizedPrincipalsCommand helper programs to
-gain unintended privilege.
 
-Neither AuthorizedKeysCommand nor AuthorizedPrincipalsCommand are
-enabled by default in sshd_config(5).
+SECURITY-2233 / CVE-2021-21649
+Dashboard View Plugin 2.15 and earlier does not escape URLs referenced in
+Image Dashboard Portlets.
 
-Potentially-incompatible changes
-================================
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with View/Configure permission.
 
-This release disables RSA signatures using the SHA-1 hash algorithm
-by default. This change has been made as the SHA-1 hash algorithm is
-cryptographically broken, and it is possible to create chosen-prefix
-hash collisions for <USD$50K [1]
 
-For most users, this change should be invisible and there is
-no need to replace ssh-rsa keys. OpenSSH has supported RFC8332
-RSA/SHA-256/512 signatures since release 7.2 and existing ssh-rsa keys
-will automatically use the stronger algorithm where possible.
+SECURITY-2200 / CVE-2021-21650
+S3 publisher Plugin 0.11.6 and earlier does not perform Run/Artifacts
+permission checks in various HTTP endpoints and API models.
 
-Incompatibility is more likely when connecting to older SSH
-implementations that have not been upgraded or have not closely tracked
-improvements in the SSH protocol. For these cases, it may be necessary
-to selectively re-enable RSA/SHA1 to allow connection and/or user
-authentication via the HostkeyAlgorithms and PubkeyAcceptedAlgorithms
-options. For example, the following stanza in ~/.ssh/config will enable
-RSA/SHA1 for host and user authentication for a single destination host:
+This allows attackers with Item/Read permission to obtain information about
+artifacts uploaded to S3, if the optional Run/Artifacts permission is
+enabled.
 
-    Host old-host
-        HostkeyAlgorithms +ssh-rsa
-	PubkeyAcceptedAlgorithms +ssh-rsa
 
-We recommend enabling RSA/SHA1 only as a stopgap measure until legacy
-implementations can be upgraded or reconfigured with another key type
-(such as ECDSA or Ed25519).
+SECURITY-2201 / CVE-2021-21651
+S3 publisher Plugin 0.11.6 and earlier does not perform a permission check
+in an HTTP endpoint.
 
-[1] "SHA-1 is a Shambles: First Chosen-Prefix Collision on SHA-1 and
-    Application to the PGP Web of Trust" Leurent, G and Peyrin, T
-    (2020) https://eprint.iacr.org/2020/014.pdf
+This allows attackers with Overall/Read permission to obtain the list of
+configured profiles.
 
-Changes since OpenSSH 8.7
-=========================
 
-This release is motivated primarily by the above deprecation and
-security fix.
+SECURITY-2251 (1) / CVE-2021-21652
+Xray - Test Management for Jira Plugin 2.4.0 and earlier does not require
+POST requests for a connection test method, resulting in a cross-site
+request forgery (CSRF) vulnerability.
 
-New features
-------------
- * ssh(1): allow the ssh_config(5) CanonicalizePermittedCNAMEs
-   directive to accept a "none" argument to specify the default
-   behaviour.
+This vulnerability allows attackers to connect to an attacker-specified URL
+using attacker-specified credentials IDs obtained through another method,
+capturing credentials stored in Jenkins.
 
-Bugfixes
---------
 
- * scp(1): when using the SFTP protocol, continue transferring files
-   after a transfer error occurs, better matching original scp/rcp
-   behaviour.
-    
- * ssh(1): fixed a number of memory leaks in multiplexing,
+SECURITY-2251 (2) / CVE-2021-21653
+Xray - Test Management for Jira Plugin 2.4.0 and earlier does not perform a
+permission check in an HTTP endpoint.
 
- * ssh-keygen(1): avoid crash when using the -Y find-principals
-   command.
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
 
- * A number of documentation and manual improvements, including
-   bz#3340, PR#139, PR#215, PR#241, PR#257
 
-Portability
------------
+SECURITY-2327 / CVE-2021-21654 (permission check) & CVE-2021-21655 (CSRF)
+P4 Plugin 1.11.4 and earlier does not perform permission checks in multiple
+HTTP endpoints implementing connection tests.
 
- * ssh-agent(1): on FreeBSD, use procctl to disable ptrace(2)
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified Perforce server using attacker-specified username and
+password.
 
- * ssh(1)/sshd(8): some fixes to the pselect(2) replacement
-   compatibility code. bz#3345
+Additionally, these HTTP endpoints do not require POST requests, resulting
+in a cross-site request forgery (CSRF) vulnerability.
 
-Checksums:
-==========
 
- - SHA1 (openssh-8.8.tar.gz) = 732947082a8998047e839cc0b4c066bf0a7e1a5b
- - SHA256 (openssh-8.8.tar.gz) = AngyrPSQH255hnzU1l7y+LlVAUNcGWtuYQIFEl22nRo=
+SECURITY-2335 / CVE-2021-21656
+Xcode integration Plugin 2.0.14 and earlier does not configure its XML
+parser to prevent XML external entity (XXE) attacks.
 
- - SHA1 (openssh-8.8p1.tar.gz) = 1eb964897a4372f6fb96c7effeb509ec71c379c9
- - SHA256 (openssh-8.8p1.tar.gz) = RZCJDqm7ms5Pca4zF4WjpYIyMkNRYZYO1fyGWI8zH+k=
-
-Please note that the SHA256 signatures are base64 encoded and not
-hexadecimal (which is the default for most checksum tools). The PGP
-key used to sign the releases is available from the mirror sites:
-https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
-
-Please note that the OpenPGP key used to sign releases has been
-rotated for this release. The new key has been signed by the previous
-key to provide continuity.
-
-Reporting Bugs:
-===============
-
-- Please read https://www.openssh.com/report.html
-  Security bugs should be reported directly to openssh@...nssh.com
+This allows attackers able to control the input files for the Xcode build
+step to have Jenkins parse a crafted Xcode Workspace File that uses
+external entities for extraction of secrets from the Jenkins controller or
+server-side request forgery.
 
