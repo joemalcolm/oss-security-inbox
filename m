@@ -1,24 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/16/1
-Message-ID: <CAKpcJVYTkZzBaWmt_fLqLw4BNmXuXGzCSvLe9YOB-4sew8w_sQ@mail.gmail.com>
-Date: Tue, 15 Jun 2021 22:50:07 -0400
-From: Robert Middleton <rmiddleton@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2020-9493: Apache Chainsaw: Java deserialization in Chainsaw
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/11/1
+Message-ID:  <MW4PR21MB1921FF91E9E9F1C1C133A28BB6539@MW4PR21MB1921.namprd21.prod.outlook.com>
+Date: Tue, 11 May 2021 03:39:45 +0000
+From: Swamy Shivaganga Nagaraju <gaswamy@...rosoft.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: [Kubernetes] CVE-2021-25736: Windows kube-proxy LoadBalancer contention
 Content-Type: text/plain; charset=utf-8
 
-Reply-to: general@...ging.apache.org
+Hello,
 
-Description:
+A security issue was discovered in the Windows version of kube-proxy where a process on a Node may be able to accept traffic intended for a LoadBalancer Service. Clusters without Windows nodes are unaffected.
 
-A deserialization flaw was found in Apache Chainsaw versions prior to
-2.1.0 which could lead to malicious code execution.
 
-Mitigation:
+This issue has been rated Medium (CVSS:3.0/AV:N/AC:H/PR:H/UI:N/S:C/C:H/I:N/A:N<https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:H/UI:N/S:C/C:H/I:N/A:N>)), and assigned CVE-2021-25736.
 
-Don't configure Chainsaw to read serialized log events.  Use a
-different receiver, such as XMLSocketReceiver
 
-Credit:
 
-This issue was reported by @kingkk
+Kube-proxy on Windows can unintentionally forward traffic to local processes listening on the same port ("spec.ports[*].port") as a LoadBalancer Service when the LoadBalancer controller does not set the "status.loadBalancer.ingress[].ip" field. Clusters where the LoadBalancer controller sets the "status.loadBalancer.ingress[].ip" field are unaffected.
+
+
+
+Affected Components and Configurations
+
+Windows kube-proxy. Clusters with Windows nodes are affected by this vulnerability.
+
+
+
+Affected Versions
+
+  *   Kubernetes <= v1.20.5
+  *   Kubernetes <= v1.19.9
+  *   Kubernetes <= v1.18.17
+
+
+
+Fixed Versions
+
+This issue has been fixed in the following versions:
+
+  *   v1.21.0
+  *   v1.20.6
+  *   v1.19.10
+  *   v1.18.18
+
+
+
+Mitigations
+
+None
+
+Detection
+
+Unexpected processes listening on the same port as used by a LoadBalancer service could indicate exploitation of this issue, and should be investigated.
+
+If you find evidence that this vulnerability has been exploited, please contact security@...ernetes.io<mailto:security@...ernetes.io>
+
+Additional Details
+See the GitHub issue for more details: https://github.com/kubernetes/kubernetes/pull/99958
+
+Acknowledgements
+
+This vulnerability was discovered by  Eric Paris & Christian Hernandez from Red Hat.
+
+
+
+
+
+Thank You,
+
+  Swamy Shivaganga Nagaraju, on behalf of the Kubernetes Product Security Committee
+
+
