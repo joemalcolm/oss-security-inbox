@@ -1,29 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/26/1
-Message-ID: <5s13663-1p72-s775-1762-6sp1qr114s39@redhat.com>
-Date: Fri, 26 Feb 2021 20:16:15 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2021-3416 QEMU: net: infinite loop in loopback mode may lead tostack overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/11/13
+Message-ID: <20210511181346.GM12149@mussarela>
+Date: Tue, 11 May 2021 15:13:46 -0300
+From: Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-3491 - Linux kernel io_uring PROVIDE_BUFFERS MAX_RW_COUNT bypass
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+It was discovered that io_uring PROVIDE_BUFFERS operation allowed the
+MAX_RW_COUNT limit to be bypassed, which led to negative values being used
+in mem_rw when reading /proc/<PID>/mem.
 
-A potential stack overflow via infinite loop issue was found in various NIC 
-emulators of QEMU. The said issue occurs in loopback mode of a NIC wherein 
-reentrant DMA checks may get bypassed. A guest user/process may use this flaw 
-to consume cpu cycles or crash the QEMU process on the host resulting in DoS 
-scenario.
+Billy Jheng Bing-Jhong (@st424204) of STAR Labs working with Trend Micro's
+Zero Day Initiative discovered that this vulnerability could be turned into
+a heap overflow. This has been reported as ZDI-CAN-13546, and assigned
+CVE-2021-3491.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2021-02/msg07431.html
-   -> https://lists.gnu.org/archive/html/qemu-devel/2021-02/msg07484.html
+IORING_OP_PROVIDE_BUFFERS was introduced in commit ddf0322db79c ("io_uring:
+add IORING_OP_PROVIDE_BUFFERS") where lengths larger than MAX_RW_COUNT
+could be used and accepted. This commit was introduced in 5.7-rc1. It was
+not backported to any upstream LTS kernels.
 
-'CVE-2021-3416' assigned via Red Hat Inc.
+This has been fixed by commit:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d1f82808877bb10d3deee7cf3374a4eb3fb582db
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
-
+Cascardo.
