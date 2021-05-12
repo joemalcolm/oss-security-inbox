@@ -1,99 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/24/3
-Message-Id: <5DAF172D-4EC3-48C9-9A8C-C55B14478B40@beckweb.net>
-Date: Wed, 24 Feb 2021 15:52:03 +0100
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/12/2
+Message-ID: <-PX6HwUqABskTVCZ1I6D8RgZ1ZqDwqGw56VKpf4-39X_dCz7PBtqXbtP_W5lRNHPOgaR4t4IpwbDJ0o-CTmJbT9BYJbUZYutrWS4_hBl-FU=@protonmail.com>
+Date: Wed, 12 May 2021 14:46:31 +0000
+From: "harris.johnson.x" <harris.johnson.x@...tonmail.com>
+To: "qsa@...lys.com" <qsa@...lys.com>
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: [CVE-2020-28018] Use-After-Free on Exim Question
 Content-Type: text/plain; charset=utf-8
 
+Greetings OSS-Security!
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+I took a look at that flaw too...but I wonder if there is a good technique to groom the heap to get that allocation right before the objective data. There are some limits on using a MAIL cmd, first u cannot use it if another MAIL cmd was successful. Second it calls smtp_reset() after finished. The only way 'd be using RSET so u can use MAIL again, but it will free all the subsequent heap buffers and return yield to the ptr specified on smtp_reset().
 
-The following releases contain fixes for security vulnerabilities:
+The only time in which u can send a MAIL cmd to alloc it would be between the second part of the cmd sent in the first TLS session, and the initialization of the new TLS session. After the initialization of the first TLS session lot of allocations happen, this will in fact extend the heap from the top chunk.
 
-* Active Choices Plugin 2.5.3
-* Artifact Repository Parameter Plugin 1.0.1
-* Claim Plugin 2.18.2
-* Configuration Slicing Plugin 1.52
-* Repository Connector Plugin 2.0.3
-* Support Core Plugin 2.72.1
+Once TLS connection is dropped out, and we start on plaintext again, after sending the EHLO cmd, smtp_reset() will be called, which will finally end up on freeing all subsequent heap buffers, except from the one pointed to by reset_point in the middle, which it's yield is just restored to point to it. At this point, top chunk size increased thanks to all the recently released chunks consequent to each other. And the objective struct is intact on the top chunk.
 
+As u mentioned to "null p0int3r", there is an interesting parameter for MAIL cmd that lets you use encoding so it is an string, but then converted to binary data when copied to the allocated memory, so it bypasses any stuff related to parsing or NULL bytes. That specific parameter uses store_get(), so it hangs from the POOL_MAIN memory. This means the only way to perform an independent malloc() (so memory from top chunk is stolen, including the objective data) is first filling the current block, so in the store.c code, size will be > yield_length[store_pool], and will call malloc, so finally returning to us pointer to objective data to be overwrite with ours. Also, it will be better for that malloc() to have a really high request size, so the malloc() request does not reuse a freed chunk with specific requirements to be returned (if any).
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2021-02-24/
+R u guys using any specific technique to groom the heap / get the chunk returned by store_get() on that struct?
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+Good luck!
 
 ---
-
-SECURITY-2192 / CVE-2021-21616
-Active Choices Plugin 2.5.2 and earlier does not escape reference parameter
-values.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Job/Configure permission.
-
-
-SECURITY-2003 / CVE-2021-21617
-Configuration Slicing Plugin 1.51 and earlier does not require POST
-requests for the form submission endpoint reconfiguring slices, resulting
-in a cross-site request forgery (CSRF) vulnerability.
-
-This vulnerability allows attackers to apply different slice configurations
-to attacker-specified jobs.
-
-
-SECURITY-2183 / CVE-2021-21618
-Repository Connector Plugin 2.0.2 and earlier does not escape parameter
-names and descriptions for past builds.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Item/Configure permission.
-
-
-SECURITY-2188 (1) / CVE-2021-21619
-Claim Plugin 2.18.1 and earlier does not escape the user display name shown
-in claims.
-
-This results in a cross-site scripting (XSS) vulnerability exploitable by
-attackers who are able to control the display names of Jenkins users,
-either via the security realm, or directly inside Jenkins.
-
-NOTE: Everyone with a Jenkins account can change their own display name.
-
-
-SECURITY-2188 (2) / CVE-2021-21620
-Claim Plugin 2.18.1 and earlier does not require POST requests for the form
-submission endpoint assigning claims, resulting in a cross-site request
-forgery (CSRF) vulnerability.
-
-This vulnerability allows attackers to change claims.
-
-
-SECURITY-2150 / CVE-2021-21621
-Support Core Plugin 2.72 and earlier provides the serialized user
-authentication as part of the "About user (basic authentication details
-only)" information (`user.md`).
-
-In some configurations, this can include the session ID of the user
-creating the support bundle. Attackers with access to support bundle
-content and the Jenkins instance could use this information to impersonate
-the user who created the support bundle.
-
-
-SECURITY-2168 / CVE-2021-21622
-Artifact Repository Parameter Plugin 1.0.0 and earlier does not escape
-parameter names and descriptions.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Job/Configure permission.
-
-
+Harris Johnson
