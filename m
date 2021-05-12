@@ -1,29 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/08/5
-Message-ID: <20211008214414.GA3004@openwall.com>
-Date: Fri, 8 Oct 2021 23:44:15 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/12/1
+Message-ID: <20210512041608.GA1420@lorien.valinor.li>
+Date: Wed, 12 May 2021 06:16:08 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-42013: Path Traversal and Remote Code Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)
+Cc: netdev@...r.kernel.org, socketcan@...tkopp.net, mkl@...gutronix.de, alex.popov@...ux.com, linux-can@...r.kernel.org, seth.arnold@...onical.com, steve.beattie@...onical.com, cascardo@...onical.com
+Subject: Re: Linux kernel: net/can/isotp: race condition leads to local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct 08, 2021 at 11:27:37PM +0200, Yann Ylavic wrote:
-> For completeness I'll add this tweet/blog from Stefan (OP) about the
-> vulnerability and the fixes in httpd:
-> https://twitter.com/icing/status/1446504661448593408
+Hi,
 
-Thanks, but you just did that again...  For completeness, let's have the
-actual content on the list, not only links to content.
+On Wed, May 12, 2021 at 12:00:33AM +0200, Norbert Slusarek wrote:
+> A race condition in the CAN ISOTP networking protocol was discovered which
+> allows forbidden changing of socket members after binding the socket.
+> 
+> In particular, the lack of locking behavior in isotp_setsockopt() makes it
+> feasible to assign the flag CAN_ISOTP_SF_BROADCAST to the socket, despite having
+> previously registered a can receiver. After closing the isotp socket, the can
+> receiver will still be registered and use-after-free's can be triggered in
+> isotp_rcv() on the freed isotp_sock structure.
+> This leads to arbitrary kernel execution by overwriting the sk_error_report()
+> pointer, which can be misused in order to execute a user-controlled ROP chain to
+> gain root privileges.
+> 
+> The vulnerability was introduced with the introduction of SF_BROADCAST support
+> in commit 921ca574cd38 ("can: isotp: add SF_BROADCAST support for functional
+> addressing") in 5.11-rc1.
+> In fact, commit 323a391a220c ("can: isotp: isotp_setsockopt():
+> block setsockopt on bound sockets") did not effectively prevent isotp_setsockopt()
+> from modifying socket members before isotp_bind().
+> 
+> The requested CVE ID will be revealed along with further exploitation details
+> as a response to this notice on 13th May of 2021.
+> 
+> Credits: Norbert Slusarek
+> 
+> *** exploit log ***
+> 
+> Adjusted to work with openSUSE Tumbleweed.
+> 
+> noprivs@...e:~/expl> uname -a
+> Linux suse 5.12.0-1-default #1 SMP Mon Apr 26 04:25:46 UTC 2021 (5d43652) x86_64 x86_64 x86_64 GNU/Linux
+> noprivs@...e:~/expl> ./lpe
+> [+] entering setsockopt
+> [+] entering bind
+> [+] left bind with ret = 0
+> [+] left setsockopt with flags = 838
+> [+] race condition hit, closing and spraying socket
+> [+] sending msg to run softirq with isotp_rcv()
+> [+] check sudo su for root rights
+> noprivs@...e:~/expl> sudo su
+> suse:/home/noprivs/expl # id
+> uid=0(root) gid=0(root) groups=0(root)
+> suse:/home/noprivs/expl # cat /root/check
+> high school student living in germany looking for an internship in info sec.
+> if interested please reach out to nslusarek@....net.
 
-That tweet above refers to "Apache httpd 2.4.50 post mortem" at:
+FTR, this issue has CVE-2021-32606[1] assigned.
 
-https://github.com/icing/blog/blob/main/httpd-2.4.50.md
+ [1]: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-32606
 
-I'm attaching the httpd-2.4.50.md file above to this message.
-
-This way, historians will be able to make full sense of the thread in
-here even after Twitter and GitHub are gone. ;-)
-
-Alexander
-
-View attachment "httpd-2.4.50.md" of type "text/plain" (12917 bytes)
+Regards,
+Salvatore
