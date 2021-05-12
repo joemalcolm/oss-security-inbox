@@ -1,81 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/27/2
-Message-ID: <CAFcO6XO5QjES9w1CCJ9Ypt4bVEMkzQbv1HcioeaUKgj8Yj4NkA@mail.gmail.com>
-Date: Fri, 27 Aug 2021 16:09:34 +0800
-From: butt3rflyh4ck <butterflyhuangxx@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: qrtr: another out-of-bound Read in qrtr_endpoint_post in net/qrtr/qrtr.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/12/3
+Message-ID: <20210512234414.GB1175@localhost.localdomain>
+Date: Wed, 12 May 2021 23:46:13 +0000
+From: Qualys Security Advisory <qsa@...lys.com>
+To: harris.johnson.x <harris.johnson.x@...tonmail.com>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: [CVE-2020-28018] Use-After-Free on Exim Question
 Content-Type: text/plain; charset=utf-8
 
-Hi, Red Hat has assigned CVE-2021-3743 to this issue.
+Hi,
 
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-3743
+On Wed, May 12, 2021 at 02:46:31PM +0000, harris.johnson.x wrote:
+> R u guys using any specific technique to groom the heap / get the
+> chunk returned by store_get() on that struct?
 
-Regards,
-   butt3rflyh4ck.
+We first send a large EHLO command to make sure that the next allocation
+will overwrite the freed struct gstring, and then we send the MAIL FROM
+command (with an AUTH parameter) to actually overwrite the freed struct
+gstring (with arbitrary characters).
 
-On Fri, Aug 27, 2021 at 1:51 PM butt3rflyh4ck
-<butterflyhuangxx@...il.com> wrote:
->
-> The patch is available upstream.
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=7e78c597c3ebfd0cb329aa09a838734147e4f117
->
-> Regards,
->  butt3rflyh4ck.
->
->
-> On Wed, Aug 25, 2021 at 10:40 AM butt3rflyh4ck
-> <butterflyhuangxx@...il.com> wrote:
-> >
-> > Hi, There was another out-of-bound read bug in qrtr_endpoint_post in
-> > net/qrtr/qrtr.c in 5.14.0-rc6+ and reproduced it.
-> >
-> > This check in  qrtr_endpoint_post was incomplete, did not consider size is 0:
-> > ```
-> > if (len != ALIGN(size, 4) + hdrlen)
-> >                 goto err;
-> > ```
-> > if size from qrtr_hdr is 0, the result of ALIGN(size, 4) will be 0,
-> > In case of len == hdrlen and size == 0 in header this check won't fail and
-> > ```
-> >  if (cb->type == QRTR_TYPE_NEW_SERVER) { /* Remote node endpoint can
-> > bridge other distant nodes */
-> >              const struct qrtr_ctrl_pkt *pkt = data + hdrlen;
-> >              qrtr_node_assign(node, le32_to_cpu(pkt->server.node));
-> >  }
-> > ```
-> > will also read out of bound from data, which is hdrlen allocated block.
-> >
-> >
-> > #analyze and some details
-> > https://lists.openwall.net/netdev/2021/08/17/124
-> >
-> > #patch
-> > https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=7e78c597c3eb
-> > now not available upstream.
-> >
-> > #Timeline
-> > *2021/8/17 - Vulnerability reported to netdev@...r.kernel.org.
-> > *2021/8/20 - Vulnerability confirmed and patched.
-> > *2021/8/23 - Vulnerability reported to secalert@...hat.com.
-> > *2021/8/25 - Opened on oss-security@...ts.openwall.com.
-> >
-> > #Credit
-> > Active Defense Lab of Venustech.
-> >
-> >
-> > Regards,
-> >  butt3rflyh4ck.
-> >
-> > --
-> > Active Defense Lab of Venustech
->
->
->
-> --
-> Active Defense Lab of Venustech
+Hopefully this helps! With best regards,
+
+--
+the Qualys Security Advisory team
+
+
+[https://d1dejaj6dcqv24.cloudfront.net/asset/image/email-banner-384-2x.png]<https://www.qualys.com/email-banner>
 
 
 
--- 
-Active Defense Lab of Venustech
+This message may contain confidential and privileged information. If it has been sent to you in error, please reply to advise the sender of the error and then immediately delete it. If you are not the intended recipient, do not read, copy, disclose or otherwise use this message. The sender disclaims any liability for such unauthorized use. NOTE that all incoming emails sent to Qualys email accounts will be archived and may be scanned by us and/or by external service providers to detect and prevent threats to our systems, investigate illegal or inappropriate behavior, and/or eliminate unsolicited promotional emails (“spam”). If you have any concerns about this process, please contact us.
