@@ -1,90 +1,445 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/21/3
-Message-ID: <nycvar.QRO.7.76.2107210914210.25537@fvyyl>
-Date: Wed, 21 Jul 2021 09:14:51 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>,  curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: Bad connection reuse due to flawed path name checks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/13/1
+Message-ID: <CAJt9-x5wmruq=9sraBHjRQwZYnVaO=QG5wn5LLw=vfAF=nynrg@mail.gmail.com>
+Date: Thu, 13 May 2021 15:20:23 +0100
+From: Matthew Wild <mwild1@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Prosody XMPP server advisory 2021-05-12 (multiple vulnerabilities)
 Content-Type: text/plain; charset=utf-8
 
-Bad connection reuse due to flawed path name checks
-===================================================
+Prosody security advisory 2021-05-12
+====================================
 
-Project curl Security Advisory, July 21st 2021 -
-[Permalink](https://curl.se/docs/CVE-2021-22924.html)
+Project
+:   Prosody XMPP server
 
-VULNERABILITY
--------------
+URL
+:   https://prosody.im/
 
-libcurl keeps previously used connections in a connection pool for subsequent
-transfers to reuse, if one of them matches the setup.
+Date
+:   2021-05-12
 
-Due to errors in the logic, the config matching function did not take 'issuer
-cert' into account and it compared the involved paths *case insensitively*,
-which could lead to libcurl reusing wrong connections.
+This advisory details 5 new security vulnerabilities discovered in the
+Prosody.im XMPP server software. All issues are fixed in the 0.11.9 release
+default configuration.
 
-File paths are, or can be, case sensitive on many systems but not all, and can
-even vary depending on used file systems.
+**References**
 
-The comparison also didn't include the 'issuer cert' which a transfer can set
-to qualify how to verify the server certificate.
+ - Release announcement: https://blog.prosody.im/prosody-0.11.9-released/
+ - Advisory (HTML): https://prosody.im/security/advisory_20210512/
+ - Advisory (text): https://prosody.im/security/advisory_20210512.txt
 
-We are not aware of any exploit of this flaw.
+1/5: DoS via insufficient memory consumption controls
+-----------------------------------------------------
 
-INFO
-----
+CVE
+: CVE-2021-32918
 
-This flaw has existed in curl since commit
-[89721ff04af70f](https://github.com/curl/curl/commit/89721ff04af70f) in
-libcurl 7.10.4, released on April 2, 2003.
+CVSS
+: 7.0 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H/E:F/RL:O/RC:C)
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2021-22924 to this issue.
+CWEs
+: CWE-400
 
-CWE-295: Improper Certificate Validation
+Affected versions
+: All versions prior to 0.11.9
 
-Severity: Medium
+Fixed versions
+: 0.11.9, 0.11 nightly build 130, trunk nightly build 1434
 
-AFFECTED VERSIONS
------------------
+**Description**
 
-- Affected versions: curl 7.10.4 to and including 7.77.0
-- Not affected versions: curl < 7.10.4 and curl >= 7.78.0
+It was discovered that default settings leave Prosody susceptible to remote
+unauthenticated denial-of-service (DoS) attacks via memory exhaustion when
+running under Lua 5.2 or Lua 5.3. Lua 5.2 is the default and recommended Lua
+version for Prosody 0.11.x series.
 
-Also note that libcurl is used by many applications, and not always advertised
-as such.
+**Affected configurations**
 
-THE SOLUTION
-------------
+The default configuration is susceptible to this issue.
 
-The SSL configs are compared appropriately.
+Configurations with stricter settings for stanza size limits, rate limits and
+garbage collection parameters are at decreased risk from this attack. For more
+details please review the 'Mitigation' section for recommended values.
 
-A [fix for CVE-2021-22924](https://github.com/curl/curl/commit/5ea3145850ebff1dc2b13d17440300a01ca38161)
+**Mitigation**
 
-RECOMMENDATIONS
---------------
+Mitigation is possible through configuration changes (on 0.11.7+). All the
+configuration changes described in this section are applied by default in
+Prosody 0.11.9.
 
-  A - Upgrade curl to version 7.78.0
+1) Enable more aggressive garbage collection
 
-  B - Apply the patch to your local version
+   On Lua 5.2 and 5.3, the garbage collector does not free unused memory fast
+   enough by default. This allowed Prosody's memory usage to grow excessively
+   during certain traffic patterns.
 
-TIMELINE
---------
+   It is recommended to set a garbage collection speed of at least 500 in the
+   global section of your configuration file:
 
-This issue was reported to the curl project on June 11, 2021.
+   ```
+     gc = {
+       speed = 500;
+     }
+   ```
 
-This advisory was posted on July 21, 2021.
+   Be aware that this setting may increase CPU usage if the other mitigations
+   in this section are not applied.
 
-CREDITS
--------
+2) Enable stricter stanza size limits
 
-This issue was reported by Harry Sintonen. Patched by Daniel Stenberg.
+   By default Prosody ships with extremely permissive stanza size limits (up
+   to 10MB). This value was introduced as a way to place a limit on memory
+   usage without affecting legitimate use of the server. However testing
+   demonstrates that the default limit is too high for most deployments.
 
-Thanks a lot!
+   Our recommendation (and the default in 0.11.9) is to adopt the same default
+   size limits that are already enforced by ejabberd, one of the other major
+   XMPP servers on the network.
 
--- 
+   To enable the new limits explicitly, add to the global section of your
+   configuration file the following options:
 
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://www.wolfssl.com/contact/
+     c2s_stanza_size_limit = 256 * 1024
+     s2s_stanza_size_limit = 512 * 1024
+
+   Be aware that reducing limits has the potential to introduce
+   interoperability issues with deployments that do not enforce the same size
+   limits. For example, remote contacts with large avatars.
+
+3) Enable rate limits
+
+   By default Prosody does not enable any rate limits. However we recommend
+   enabling them for all production and public deployments to ensure fair
+   consumption of resources across all connections.
+
+   First, ensure that mod_limits is enabled by adding "limits" to your
+   global modules_enabled configuration option:
+
+   ```
+     modules_enabled = {
+       ...
+       "limits";
+       ...
+     }
+   ```
+
+   Next, configure the limits:
+
+   ```
+     limits = {
+       c2s = {
+         rate = "10kb/s";
+       };
+       s2sin = {
+         rate = "30kb/s";
+       }
+     }
+   ```
+
+**Advice**
+
+All public deployments should upgrade to 0.11.9 or apply the above
+configuration changes.
+
+Deployments using nightly builds should upgrade to the latest available
+builds.
+
+**Credits**
+
+Many thanks to Travis Burtrum (moparisthebest) for discovering and reporting
+this issue, and providing a test case.
+
+**Commits**
+
+- https://hg.prosody.im/trunk/rev/db8e41eb6eff
+- https://hg.prosody.im/trunk/rev/b0d8920ed5e5
+- https://hg.prosody.im/trunk/rev/929de6ade6b6
+- https://hg.prosody.im/trunk/rev/63fd4c8465fb
+- https://hg.prosody.im/trunk/rev/1937b3c3efb5
+- https://hg.prosody.im/trunk/rev/3413fea9e6db
+
+----------------------------------------------------------------------------
+
+2/5: DoS via repeated TLS renegotiation causing excessive CPU consumption
+----------------------------------------------------------------------------
+
+CVE
+: CVE-2021-32920
+
+CVSS
+: 5.1 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L/E:H/RL:O/RC:C)
+
+CWEs
+: CWE-400
+
+Affected versions
+: All versions prior to 0.11.9
+
+Fixed versions
+: 0.11.9, 0.11 nightly build 130, trunk nightly build 1434
+
+**Description**
+
+It was discovered that Prosody does not disable SSL/TLS renegotiation, even
+though this is not used in XMPP. A malicious client may flood a connection
+with renegotiation requests to consume excessive CPU resources on the server.
+
+Support for disabling renegotiation depends on OpenSSL 1.1.1+ and LuaSec 0.7+.
+
+**Affected configurations**
+
+The default configuration is susceptible to this issue.
+
+**Temporary mitigation**
+
+Ensure you have OpenSSL 1.1.1 or higher and LuaSec 0.7 or higher, and set the
+following ssl option (or add to your existing one if you have one):
+
+```
+  ssl = {
+    options = {
+      no_renegotiation = true;
+    }
+  }
+```
+
+This configuration is applied by default in 0.11.9.
+
+**Advice**
+
+All public deployments should upgrade to 0.11.9 or apply the above
+configuration changes.
+
+Deployments using nightly builds should upgrade to the latest available
+builds.
+
+**Credits**
+
+This flaw was discovered by Kim Alvefur, a member of the Prosody team.
+
+**Commits**
+
+- https://hg.prosody.im/trunk/rev/55ef50d6cf65
+- https://hg.prosody.im/trunk/rev/5a484bd050a7
+- https://hg.prosody.im/trunk/rev/aaf9c6b6d18d
+
+-----------------------------------------------------------------------
+
+3/5: Use of timing-dependent string comparison with sensitive values
+-----------------------------------------------------------------------
+
+CVE
+: CVE-2021-32921
+
+CVSS
+: 4.7 (CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N/E:U/RL:O/RC:U)
+
+CWEs
+: CWE-1254
+
+Affected versions
+: All versions prior to 0.11.9
+
+Fixed versions
+: 0.11.9, 0.11 nightly build 130, trunk nightly build 1434
+
+**Description**
+
+It was discovered that Prosody does not use a constant-time algorithm for
+comparing certain secret strings when running under Lua 5.2 or later. This can
+potentially be used in a timing attack to reveal the contents of secret
+strings to an attacker.
+
+Lua 5.1 utilizes a technique called "string interning", which protected string
+comparisons from timing attacks. In Lua 5.2 and later versions, strings over
+40 bytes in length are excluded from interning.
+
+With Prosody running under Lua 5.2, this makes any secret string over 40 bytes
+in length vulnerable to potential discovery via timing attacks.
+
+Note that if a secret string contains non-ASCII (unicode) characters, it may
+be longer than 40 bytes when encoded as UTF-8 (Prosody's internal encoding)
+even if it is fewer than 40 characters long.
+
+It should be noted that to successfully perform a timing attack, a significant
+number of failed attempts must typically be made to "guess" at the contents of
+the secret string.
+
+We are not aware of any attempts to exploit this vulnerability (which would
+likely be noticeable), and no known proof-of-concept exploit exists.
+
+**Affected configurations**
+
+This flaw affects the following modules:
+
+  - mod_auth_internal_plain (disabled by default)
+
+    mod_auth_internal_plain performs a timing-dependent comparison to the
+    user's password if the user's password is longer than 40 bytes. This may
+    allow an attacker to discover a user's password via a timing attack.
+
+    We do not generally recommend mod_auth_internal_plain for new deployments,
+    and mod_auth_internal_hashed has been the default for Prosody 0.11.x.
+
+  - mod_muc (disabled by default)
+
+    mod_muc supports password-protection of MUCs. The password validity check
+    is performed using a timing-dependent comparison, which may allow an
+    attacker to discover the MUC password via a timing attack if the password
+    is longer than 40 bytes.
+
+    We do not generally recommend using password-protected MUCs. Instead use
+    affiliations to directly grant access to specific JIDs whenever possible.
+
+  - mod_auth_internal_hashed (enabled by default but not typically vulnerable)
+
+    mod_auth_internal_hashed has been updated for safety, but it is
+    not vulnerable in the default configuration of Lua 5.2 as the password
+    hashes it compares do not exceed 40 bytes.
+
+  - mod_dialback (enabled by default but not typically vulnerable)
+
+    mod_dialback has been updated for safety, but due to the single-use nature
+    of s2s dialback verification strings a timing attack on this module is not
+    believed to be possible, or to grant an attacker any advantage if it were.
+
+**Temporary mitigation**
+
+mod_auth_internal_plain: we recommend that people upgrade to
+mod_auth_internal_hashed due to this and also to benefit from its other
+security properties.
+
+mod_muc: use affiliations to grant access to a MUC instead of passwords. If
+passwords must be used, ensure they are shorter than 40 bytes.
+
+Rate limits can greatly lengthen the amount of time required to successfully
+complete a timing attack. Enable and configure mod_limits.
+
+**Advice**
+
+All deployments should upgrade to 0.11.9.
+
+Deployments using nightly builds should upgrade to the latest available
+builds.
+
+**Credits**
+
+This flaw was discovered by Matthew Wild, a member of the Prosody team. The
+issue with MUC passwords was also previously identified by Robert GrÃ¶sser.
+
+**Commits**
+
+- https://hg.prosody.im/trunk/rev/c98aebe601f9
+- https://hg.prosody.im/trunk/rev/13b84682518e
+- https://hg.prosody.im/trunk/rev/6f56170ea986
+
+-------------------------------------------------------------------
+
+4/5: Use of mod_proxy65 is unrestricted in default configuration
+-------------------------------------------------------------------
+
+CVE
+: CVE-2021-32917
+
+CVSS
+: 5.1 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L/E:H/RL:O/RC:C)
+
+CWEs
+: CWE-862, CWE-400
+
+Affected versions
+: All versions prior to 0.11.9
+
+Fixed versions
+: 0.11.9, 0.11 nightly build 130, trunk nightly build 1434
+
+**Description**
+
+mod_proxy65 is a file transfer proxy provided with Prosody to facilitate the
+transfer of files and other data between XMPP clients.
+
+It was discovered that the proxy65 component of Prosody allows open access
+by default, even if neither of the users have an XMPP account on the local
+server, allowing unrestricted use of the server's bandwidth.
+
+**Affected configurations**
+
+The default configuration does not enable mod_proxy65 and is not affected.
+
+With mod_proxy65 enabled, all configurations without a 'proxy65_acl' setting
+configured are affected.
+
+**Temporary mitigation**
+
+Configure 'proxy65_acl' to a list of XMPP domains that should be allowed
+to use the file transfer proxy.
+
+**Advice**
+
+All deployments should upgrade to 0.11.9 and/or configure a 'proxy65_acl' as
+desired.
+
+Deployments using nightly builds should upgrade to the latest available
+builds.
+
+The default behaviour in 0.11.9 allows all local clients to initiate a data
+stream through the proxy if proxy65_acl is unconfigured.
+
+**Credits**
+
+This flaw was discovered by the Prosody team.
+
+**Commits**
+
+- https://hg.prosody.im/trunk/rev/65dcc175ef5b
+
+--------------------------------------------------------------
+
+5/5: Undocumented dialback-without-dialback option insecure
+--------------------------------------------------------------
+
+CVE
+: CVE-2021-32919
+
+Affected versions
+: Prosody 0.10.x, Prosody 0.11.x prior to 0.11.9
+
+Fixed versions
+: 0.11.9, 0.11 nightly build 130, trunk nightly build 1434
+
+**Description**
+
+The undocumented option 'dialback_without_dialback' enabled an experimental
+feature for server-to-server authentication. A flaw in this feature meant it
+did not correctly authenticate remote servers, allowing a remote server to
+impersonate another server when this option is enabled.
+
+**Affected configurations**
+
+The default configuration is not affected.
+
+Configurations with the setting 'dialback_without_dialback' set to true are
+affected.
+
+**Temporary mitigation**
+
+Remove or disable the 'dialback_without_dialback' option.
+
+**Advice**
+
+All deployments should upgrade to 0.11.9 or disable this feature.
+
+Deployments using nightly builds should upgrade to the latest available
+builds.
+
+The affected feature has been removed in 0.11.9.
+
+**Credits**
+
+This flaw was discovered by the Prosody team.
+
+**Commits**
+
+- https://hg.prosody.im/trunk/rev/6be890ca492e
+- https://hg.prosody.im/trunk/rev/d0e9ffccdef9
