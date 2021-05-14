@@ -1,42 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/15/3
-Message-ID: <21a077b5-6921-04b4-9149-571ee259da97@igalia.com>
-Date: Mon, 15 Feb 2021 16:26:27 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2021-0001
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/14/3
+Message-ID: <CAJt9-x5u_Q_ngXJy6UkhnigtqE_Xgei0D4VFZ1JdCv_kBiMKkg@mail.gmail.com>
+Date: Fri, 14 May 2021 11:50:08 +0100
+From: Matthew Wild <mwild1@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Prosody XMPP server advisory 2021-05-12 (multiple vulnerabilities)
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2021-0001
-------------------------------------------------------------------------
+On Fri, 14 May 2021 at 11:08, Robert G. <robert.groesser@...glemail.com> wrote:
+>
+> Hey guys,
+>
+> thank you for fixing this!
+>
+> >This flaw was discovered by Matthew Wild, a member of the Prosody team.
+> The issue with MUC passwords was also previously identified by Robert
+> GrÃ¶sser.
+>
+> This wasn't identified by me, to be fair. I only reported this.
+> The flaw was initially found by my colleague Marvin Zerulla.
 
-Date reported           : February 15, 2021
-Advisory ID             : WSA-2021-0001
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2021-0001.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2021-0001.html
-CVE identifiers         : CVE-2020-13558.
+Thanks for the clarification Robert! I've updated the advisory with this info.
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+Your quote also highlighted that the text advisory is being served
+without an explicit character encoding. Thanks for finding that issue,
+now fixed :)
 
-CVE-2020-13558
-    Versions affected: WebKitGTK before 2.30.5 and WPE WebKit before 2.30.5.
-    Credit to Marcin 'Icewall' Noga of Cisco Talos.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: An use after free issue in
-    the AudioSourceProviderGStreamer class was addressed with improved
-    memory management.
-
-
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
-
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
-
-The WebKitGTK and WPE WebKit team,
-February 15, 2021
+Regards,
+Matthew
