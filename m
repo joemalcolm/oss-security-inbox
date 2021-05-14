@@ -1,23 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/23/1
-Message-ID: <798669d5-4ba0-a023-3002-d351f72ced5f@apache.org>
-Date: Mon, 23 Aug 2021 09:35:34 +0000
-From: Joe Orton <jorton@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/14/1
+Message-ID: <20210514083118.GA18622@openwall.com>
+Date: Fri, 14 May 2021 10:31:18 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-35940: Apache Portable Runtime (APR): Regression of CVE-2017-12613 
+Cc: Norbert Slusarek <nslusarek@....net>
+Subject: Re: Linux kernel: net/can/isotp: race condition leads to local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Description:
+On Fri, May 14, 2021 at 01:52:04AM +0200, Norbert Slusarek wrote:
+> As Salvatore already mentioned, the assigned CVE ID is CVE-2021-32606.
+> The exploitation details are published in an article available on github
+> via this link:
+> https://git.io/JsYYB
 
-An out-of-bounds array read in the apr_time_exp*() functions was fixed in the Apache Portable Runtime 1.6.3 release (CVE-2017-12613).  The fix for this issue was not carried forward to the APR 1.7.x branch, and hence version 1.7.0 regressed compared to 1.6.3 and is vulnerable to the same issue.
+Thanks, Norbert!
 
-Credit:
+I'm attaching files from the above link to this message for archival,
+per this content guideline:
 
-The Apache Portable Runtime project would like to thank Iveta Cesalova (Red Hat) for reporting this issue.
+https://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
 
-References:
+"At least the most essential part of your message (e.g., vulnerability
+detail and/or exploit) should be directly included in the message itself
+(and in plain text), rather than only included by reference to an
+external resource.  Posting links to relevant external resources as well
+is acceptable, but posting only links is not.  Your message should
+remain valuable even with all of the external resources gone."
 
-http://svn.apache.org/viewvc?view=revision&revision=1891198 
-http://mail-archives.apache.org/mod_mbox/www-announce/201710.mbox/%3CCACsi251B8UaLvM-rrH9fv57-zWi0zhyF3275_jPg1a9VEVVoxw@mail.gmail.com%3E
-https://dist.apache.org/repos/dist/release/apr/patches/apr-1.7.0-CVE-2021-35940.patch
+Alexander
 
+View attachment "cve-2021-32606.md" of type "text/plain" (20004 bytes)
