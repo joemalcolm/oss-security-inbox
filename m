@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1289" "Saturday" "7" "January" "2017" "12:57:10" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<6c33ffd08b9d43af97e2de8c4e70c464@imshyb02.MITRE.ORG>" "35" "[oss-security] Re: Firejail local root exploit" "^CC:" nil nil "1" "2017010717:57:10" "[oss-security] Re: Firejail local root exploit" (number mark "        cve-assign@m Jan  7   35/1289  " thread-indent "\"[oss-security] Re: Firejail local root exploit\"\n") "<1483787608.8979.95.camel@juliet.mcarpenter.org>" ("<1483787608.8979.95.camel@juliet.mcarpenter.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["956" "Friday" "14" "May" "2021" "14:55:13" "-0400" "Ana McTaggart" "amctagga@redhat.com" nil "39" "[oss-security] CVE-2021-3509: Ceph: Cross Site Scripting via token Cookie" nil nil nil "5" nil nil (number mark "U       amctagga@red May 14   39/956   " thread-indent "\"[oss-security] CVE-2021-3509: Ceph: Cross Site Scripting via token Cookie\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-3509: Ceph: Cross Site Scripting via token Cookie" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30617 invoked by uid 550); 7 Jan 2017 17:57:23 -0000
+Received: (qmail 1386 invoked by uid 550); 14 May 2021 19:21:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +11,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30583 invoked from network); 7 Jan 2017 17:57:21 -0000
-In-Reply-To: <1483787608.8979.95.camel@juliet.mcarpenter.org>
-Message-ID: <6c33ffd08b9d43af97e2de8c4e70c464@imshyb02.MITRE.ORG>
-MIME-Version: 1.0
-Content-Type: text/plain
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-Date: Sat, 7 Jan 2017 12:57:10 -0500
-From: <cve-assign@mitre.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Firejail local root exploit
-To: <mcarpenter@free.fr>
+Received: (qmail 27768 invoked from network); 14 May 2021 18:55:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1621018528;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type;
+	bh=f16XCns5LsdArXAoAO/x2mAsiDXrn+EZb4ciP3vWXco=;
+	b=PuBVd5J8crcjZk9NKK6qZowpJfAGdLlvw5jQdZZx23JALgJnTW8DzUCpIta6hvomRjDYLI
+	wPpvE9/3r4d40Pci879PyXrISXT7zdweZfIOdGIX9547MypcRdVoeO8q3gXNkLXXCCewUM
+	LnUuDQOChcxvKA2rUkuyazCXZ1F+e9o=
+X-MC-Unique: -90gnWmqMgi8BvFCyjJPng-1
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=f16XCns5LsdArXAoAO/x2mAsiDXrn+EZb4ciP3vWXco=;
+        b=etVE5Dbq6d6vvOju4rPkbvM6TQNP5qdOCKxNqj1AwohKtKfXVSvl4UzkowU/xjfZqy
+         22FgvqZehcPi4oTr2LVk1wjhWhcnAPCn/na+oy7evzSZmS81XQGd3/2Sh6ZO6Hxy3jnP
+         mGicJccKjaAaFTC7Tf0oJeMOpj2A2t1yp3J5ZJg6W9/lZuyRxlRiKy5OafrKFxnAq+6J
+         sFtJLjjDSlM5FSdf3pMue2HsVkJ5iujSnUXXfUPi8u7KXAZtAxP0TX/kQDQUGxv/aqQc
+         iHw10k01v/MQNgj0CG0El477q7rF1h4011AwezhpCM+7xaHt3xQmKyMwpkPItrODG3r7
+         sLKQ==
+X-Gm-Message-State: AOAM531Z4JltHQtg9YUcY3ajmkPwDmEz/DBNP0ML/8tp4Y2FusoZGK5T
+	SHVBNKPEbpnD5TQRCf52bZrpo4RYWWV0z4tHprkY+DJGyPJQ4ycCdiEoIGJYh45CcQrWvzC4O1q
+	a+9GBX3m52+tdgIUvJAnXm/HshEpmOknXise1OBAhy8/o
+X-Received: by 2002:a05:6214:a62:: with SMTP id ef2mr48254018qvb.31.1621018524460;
+        Fri, 14 May 2021 11:55:24 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJxkCyWH327hG0GI3XMtITik37pXaynJwfdPKIL2zzl07eyHJGU39p+3ou8enIAomtWY0ONeMdRqW47Wee/xBr0=
+X-Received: by 2002:a05:6214:a62:: with SMTP id ef2mr48253993qvb.31.1621018524170;
+ Fri, 14 May 2021 11:55:24 -0700 (PDT)
+MIME-Version: 1.0
+From: Ana McTaggart <amctagga@redhat.com>
+Date: Fri, 14 May 2021 14:55:13 -0400
+Message-ID: <CABBoSthTBNKwjLs40gL6n7KZ9ojiSomYyNVdG=1Jfr7eN6ha1w@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=amctagga@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: multipart/alternative; boundary="0000000000004ecc7a05c24ec937"
+Subject: [oss-security] CVE-2021-3509: Ceph: Cross Site Scripting via token Cookie
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--0000000000004ecc7a05c24ec937
+Content-Type: text/plain; charset="UTF-8"
 
-> 6. Root shell via --bandwidth and --shell
-> 
-> Reported at:
-> https://github.com/netblue30/firejail/issues/1023
-> 
-> Fixed at:
->   https://github.com/netblue30/firejail/commit/5d43fdcd215203868d440ffc42036f5f5ffc89fc
+Hello,
 
-Use CVE-2017-5207.
+A flaw was found in the Red Hat Ceph Storage Dashboard. In response to
+CVE-2020-27839, the JWT token was moved  from localStorage to an httpOnly
+cookie. However, token cookies are used in the body  of the HTTP response
+for the documentation, ensuring that the vulnerability remains.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+We have assigned it a CVE of CVE-2021-3509, and released patches for it.
 
-iQIcBAEBCAAGBQJYcSqgAAoJEHb/MwWLVhi2/v4QAJK4oISptZjq0MUeAnSnOtAT
-DypS2YyDgmfXARVnW9Mo6h50XJFBStzBXF4bZMovBLXDNyoVnUNcJ3mGZVWvKAFj
-cWSHH7oLv+9FBNQNpSW1C+HOdDUr1TVNaXY9h8qPl0jxP2qMKqRS2E9eOJ9OTMzX
-v9bgKyJGECbv8njzju7EKzbjDgGgrB5X2Y1cTSZnNXwSAc1OZ2cXZDx4Q8Ai/G0f
-8OqI5yO74iEEHjSwL0SljhjGX2/YZyOMJZASlI6zzNe15HLcqS4ewZQAWr25NsBz
-7Pf5sxHCUBSEi10kDlZrL9PAZRuZtD/aRMG51robZg0abTrIp+WM7oI5HVPh65Ep
-SOYLMi/ZyaBEDAc0S+mktCv7AmGiiyWDFyYkX9y7adZedURCNzbaGzi9RGXtj7nA
-9tFmC48kiCdo7RYV/fQCZt+aYiEKZUmsJr6NTOvodIEJVoGBILefLCn8BGMBJer9
-SCilgTO8XNQrR+jpampIX4txM9Ne4xgASz3do31Drzlkt4Uxcf/aG2NckOoKNrAl
-jan/zdDnoDXyedp+DIjn9r9P0OJwic+kq1aLfXs2SlRmaqXsEMVi2IzE45SYbsBZ
-SxDG7EwslqEnEA0s7us4I71M3r7NeDyhCV+NzIOoY/0PF5VbU8q5wQA7zPRis5Jz
-OCu6RFZSA6OjdSLAe5fy
-=5Uph
------END PGP SIGNATURE-----
+Nautilus:
+https://github.com/ceph/ceph/commit/adda853e64bdba1288d46bc7d462d23d8f2f10ca
+Octopus:
+https://github.com/ceph/ceph/commit/7a1ca8d372da3b6a4fc3d221a0e5f72d1d61c27b
+Pacific:
+https://github.com/ceph/ceph/commit/af3fffab3b0f13057134d96e5d481e400d8bfd27
+
+Ana McTaggart
+
+Red Hat Product Security
+
+Red Hat Remote <https://www.redhat.com>
+
+
+secalert@redhat.com for urgent response
+
+
+amct@redhat.com
+
+
+M: +1 (774)279-0791 <7742790791>     IM: amctagga
+
+
+Pronouns:They/Them/Theirs
+
+--0000000000004ecc7a05c24ec937--
+
