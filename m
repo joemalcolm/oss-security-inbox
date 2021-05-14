@@ -1,48 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/29/4
-Message-ID: <20210129170111.GO2759@suse.de>
-Date: Fri, 29 Jan 2021 18:01:11 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux Kernel: local priv escalation via futexes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/14/5
+Message-ID: <CABBoStjJjmxfF-4OLiBq4D_uJ4LuUqrxftAeh5UCxntLsyoshQ@mail.gmail.com>
+Date: Fri, 14 May 2021 15:16:37 -0400
+From: Ana McTaggart <amctagga@...hat.com>
+To: oss-security@...ts.openwall.com, felix.huettner@...l.schwarz
+Subject: CVE-2021-3531: Ceph: RGW unauthenticated denial of service
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello,
+A flaw was found in the Red Hat Ceph Storage RGW. When processing a GET
+Request for a swift URL that ends with two slashes it can cause the rgw to
+crash, resulting in a denial of service.
 
-Mitre has now assigned CVE-2021-3347.
+We have assigned it a CVE of CVE-2021-3531 and a patch is attached.
 
-On Fri, Jan 29, 2021 at 05:42:08PM +0100, Solar Designer wrote:
-> Hi,
-> 
-> I'm not familiar with futexes, but just to save others a few minutes on
-> looking this up:
+Fixes may be found here:
 
-(Is anyone? Futex are too complex for me at least, I would guess also 
- using them is error prone.)
+Nautilus:
+https://github.com/ceph/ceph/commit/f44a8ae8aa27ecef69528db9aec220f12492810e
+Octopus:
+https://github.com/ceph/ceph/commit/b87e64e3206210580f4a6df2d77f9ae3f1033039
+Pacific:
+https://github.com/ceph/ceph/commit/bf06990ab41d7ac299e4441ad9cd434e926a18e7
 
-> On Fri, Jan 29, 2021 at 11:09:28AM +0100, Marcus Meissner wrote:
-> >        - Address a longstanding issue where the user space part of the PI
-> >          futex is not writeable. The kernel returns with inconsistent state
-> >          which can in the worst case result in a UAF of a tasks kernel
-> >          stack.
-> > 
-> >          The solution is to establish consistent kernel state which makes
-> >          future operations on the futex fail because user space and kernel
-> >          space state are inconsistent. Not a problem as PI futexes
-> >          fundamentaly require a functional RW mapping and if user space
-> >          pulls the rug under it, then it can keep the pieces it asked for.
-> 
-> >     * tag 'locking-urgent-2021-01-28' of git://git.kernel.org/pub/scm/linux/kernel/git/tip/tip:
-> >       futex: Handle faults correctly for PI futexes
-> 
-> FWIW, this commit has:
-> 
-> Fixes: 1b7558e457ed ("futexes: fix fault handling in futex_lock_pi")
-> 
-> and that other commit is from 2008.  So probably all currently
-> maintained Linux distros and deployments are affected, unless something
-> else mitigated the issue in some kernel versions.
+Ana McTaggart
 
-Yes, goes back to a long history, sorry for leaving this out.
+Red Hat Product Security
 
-Ciao, Marcus
+Red Hat Remote <https://www.redhat.com>
+
+
+secalert@...hat.com for urgent response
+
+
+amct@...hat.com
+
+
+M: +1 (774)279-0791 <7742790791>     IM: amctagga
+
+
+Pronouns:They/Them/Theirs
+
+Content of type "text/html" skipped
+
+Download attachment "0001-rgw-sanitize-r-in-s3-CORSConfiguration-s-ExposeHeade.patch" of type "application/x-patch" (1265 bytes)
