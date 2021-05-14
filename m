@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1588" "Thursday" "18" "April" "2019" "21:33:19" "+0800" "Fuqian Huang" "huangfq.daxian@gmail.com" "<CABXRUiTEQs=qocLyQuGSXaAkk_tkA+=dQO=6EyhqfGeU3Pm_dg@mail.gmail.com>" "47" "[oss-security] Linux kernel < 4.14.111 drivers/net/ethernet/chelsio/libcxgb/libcxgb_ppm.c kernel address dumps to user space" nil nil nil "4" "2019041813:33:19" "[oss-security] Linux kernel < 4.14.111 drivers/net/ethernet/chelsio/libcxgb/libcxgb_ppm.c kernel address dumps to user space" (number mark "U       huangfq.daxi Apr 18   47/1588  " thread-indent "\"[oss-security] Linux kernel < 4.14.111 drivers/net/ethernet/chelsio/libcxgb/libcxgb_ppm.c kernel address dumps to user space\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux kernel < 4.14.111 drivers/net/ethernet/chelsio/libcxgb/libcxgb_ppm.c kernel address dumps to user space" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["681" "Friday" "14" "May" "2021" "11:50:08" "+0100" "Matthew Wild" "mwild1@gmail.com" nil "23" "Re: [oss-security] Prosody XMPP server advisory 2021-05-12 (multiple vulnerabilities)" "^Date:" nil nil "5" nil nil (number mark "        mwild1@gmail May 14   23/681   " thread-indent "\"Re: [oss-security] Prosody XMPP server advisory 2021-05-12 (multiple vulnerabilities)\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Prosody XMPP server advisory 2021-05-12 (multiple vulnerabilities)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 13512 invoked by uid 550); 18 Apr 2019 16:36:58 -0000
+Received: (qmail 11818 invoked by uid 550); 14 May 2021 13:04:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,86 +11,66 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23603 invoked from network); 18 Apr 2019 13:33:42 -0000
+Received: (qmail 23702 invoked from network); 14 May 2021 10:50:32 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=GI8nmLuxDPm1sPNnOCKArldJiHl2HialwTubMJD0Lvo=;
-        b=hDlWxkh3B1qcAYaZN83bo8JtILYTiJQWbMIn4heCKkhEDmQ5MAkSiEbmoYrkxb8kJX
-         zUnJ6C3SnJNxN7OV5VyJeUe1f3/kzZ9AZ1CNFSzy+mWDYJ/AZvNu6x1ec/bjJZNT3Rp3
-         yQj94C3xdFc+VKApgDva3zldAzpKjP0Z7nihFpaaxw/D9fNWtLta6kNRjsEQ4HHmtuwj
-         g4ppIoqgEG324L3Fu9ve6j29XP7M2oNuh5Z9sf7Yeoy3w6qiQpcifvrTLuySYzWeqEd5
-         NMBpzjfjmQvLhpBAoGrjTZusTADEBJdi6EX7uTBjev74c4Cf3Bu2Y+PhQ6rgMfBFIzjs
-         rbUw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=J6zNlW19lmWMRe8gnSiVW3ukgMJjIiPaqSfb92KGxNg=;
+        b=bieRbMVvGTtQCwbUDcK5RYbUIsVtngYFHcNfP+eZkoYRTH3Aj0hdl0jUfyTNlu7fNq
+         pY+n27xzkWhCAwoEW9l34IprqKc/zwr1u6esWRiSHmp4uiGA9bNRw2/kkWTfVx+4aWFB
+         zJP6s7Ap4tYP5FnmcPjpqQyqu4NtJjAAqe/CnVyLl53p66gC8f1DieHJ5WZUO8zGL4LW
+         VA09WJSjFLrGhBWn1SWkB5Ou1R+XYStRGp2/g6vxDyL9WUcGMpnmurUpx1Htmy70hLME
+         dDiVvjBBYAUZKcYupm0lqgB+p1s6D7B6WE9D7QMT0UVy1B/n9Rx1A76KxdaWyV/OZbID
+         7COA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=GI8nmLuxDPm1sPNnOCKArldJiHl2HialwTubMJD0Lvo=;
-        b=dQTP2ld4gPf6LoHeiIxqVwuK/Vt9vDsYnkrAVuliNWcJSAwcGKIeHi5mt1OPsw/as5
-         EyMAhA9rpyBuFhUxWtrYFgk91NuNb2XwP1ljOtH9LrjQ6i3MWGK9KyNa/TDuD9wzLWKb
-         POHwQQDkXjBTt3mMVgOB9RbFzjBaLUAdFDwmdsjcHmtmc2GyUnNo4rCOST2nmA3uZI+4
-         Pi0zw11qaSqMGIoFxw49435HUjzk2PC5sQoucmQUceV8Da5nMid6qZAKP5F99Sf77OFY
-         GiEopFyOyojPAvxTUOeEi9mPyIP4qYBJwhk0LCB2GivKTJbt8IrLAaamM/tebMrJ+MER
-         77UQ==
-X-Gm-Message-State: APjAAAWBCZYgHl6o3c4alIPCN/yVIHqTjoWGlTaGJXguViIj8TGnzF9a
-	31CgwxWJ6bsSR4f15zTv90LyzeNnioLuyhXlIAFq4CjgeDg=
-X-Google-Smtp-Source: APXvYqzBgCx9zXRtnqvJNNlm/3mpxcgGN+JC7F3rKn0udvkpqU6bEpNfpF0NQF8qLIuoh6TFwDmq9dXOZWDJKnSnrD4=
-X-Received: by 2002:a81:69d5:: with SMTP id e204mr75755077ywc.267.1555594410243;
- Thu, 18 Apr 2019 06:33:30 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=J6zNlW19lmWMRe8gnSiVW3ukgMJjIiPaqSfb92KGxNg=;
+        b=XltKERlKY7AUbtXt1L4TkYtkj8sb3MFaJoDaqmLBf/x9QH1E6XNGU9ng9mrAEgMOvb
+         ElTElp4/DleutLVG6YNKEelnlSz+MB6TXDAQsjb04gtx1ew4o0BMUq5d+c2KzSm/xVe5
+         DjZnvDQP1Ry27TaL+UZi84et60m+W3+vuldj8SlgTIR6N5PAAQS689o7MJs4QxkdYxYO
+         qrp6jHhNhfqVRyogPQQyeXcIIkUlgipOyOf8UdNp9oEm+CvPEoossi9t/s1x2qMfM2uQ
+         n6nP/V64pnbED63+XUyM+rs4+EPvSiEeR+xrXfQN3EwrnNLyhrU6nht+2zT3hG1cHUp0
+         UBeA==
+X-Gm-Message-State: AOAM5312405cGv6AbMUD75LdPxkVvEGq5F6CzlL9GL+hzBDgoHSj/wt4
+	06rmewk7ofc473J50y95OlsokQgvFlypz/Ls4vcAm/AQjuQ=
+X-Google-Smtp-Source: ABdhPJwHMKWX/RMuwfT4v/9UFSliouB/xZbMiXdFEAgN8pxrDFVd7x1xi2mP85VxI8BrBNEfqDrldNeeK81rhu1PutI=
+X-Received: by 2002:ac8:1206:: with SMTP id x6mr42554182qti.261.1620989419986;
+ Fri, 14 May 2021 03:50:19 -0700 (PDT)
 MIME-Version: 1.0
-From: Fuqian Huang <huangfq.daxian@gmail.com>
-Date: Thu, 18 Apr 2019 21:33:19 +0800
-Message-ID: <CABXRUiTEQs=qocLyQuGSXaAkk_tkA+=dQO=6EyhqfGeU3Pm_dg@mail.gmail.com>
-To: oss-security@lists.openwall.com
+References: <20210514110545.3f4412d1@LXKA-4PGK1N2> <CAGBF=vy+s6NBrn-1KyMdwRufeg8VTZME_9rKL=kfvd4ankkHRg@mail.gmail.com>
+In-Reply-To: <CAGBF=vy+s6NBrn-1KyMdwRufeg8VTZME_9rKL=kfvd4ankkHRg@mail.gmail.com>
+Message-ID: <CAJt9-x5u_Q_ngXJy6UkhnigtqE_Xgei0D4VFZ1JdCv_kBiMKkg@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] Linux kernel < 4.14.111 drivers/net/ethernet/chelsio/libcxgb/libcxgb_ppm.c
- kernel address dumps to user space
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 14 May 2021 11:50:08 +0100
+From: Matthew Wild <mwild1@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] Prosody XMPP server advisory 2021-05-12 (multiple vulnerabilities)
+To: oss-security@lists.openwall.com
 
-In drivers/net/ethernet/chelsio/libcxgb/libcxgb_ppm.c:320
-ppm_destory will dump the address of ppm into dmesg,
-which allows local user to read the kernel address via dmesg.
-static void ppm_destroy(struct kref *kref)
-{
-    ...
-    pr_info("ippm: kref 0, destroy %s ppm 0x%p.\n",
-        ppm->ndev->name, ppm);
-    ...
-}
+On Fri, 14 May 2021 at 11:08, Robert G. <robert.groesser@googlemail.com> wr=
+ote:
+>
+> Hey guys,
+>
+> thank you for fixing this!
+>
+> >This flaw was discovered by Matthew Wild, a member of the Prosody team.
+> The issue with MUC passwords was also previously identified by Robert
+> Gr=C3=83=C2=B6sser.
+>
+> This wasn't identified by me, to be fair. I only reported this.
+> The flaw was initially found by my colleague Marvin Zerulla.
 
-In drivers/net/ethernet/chelsio/libcxgb/libcxgb_ppm.c:396
-and drivers/net/ethernet/chelsio/libcxgb/libcxgb_ppm.c:458
-and drivers/net/ethernet/chelsio/libcxgb/libcxgb_ppm.c:468,
-cxgbi_ppm_init will dump the address of ppm into dmesg,
-which allows local user to read the kernel address via dmesg.
-int cxgbi_ppm_init(void **ppm_pp, struct net_device *ndev,
-           struct pci_dev *pdev, void *lldev,
-           struct cxgbi_tag_format *tformat,
-           unsigned int ppmax,
-           unsigned int llimit,
-           unsigned int start,
-           unsigned int reserve_factor)
-{
-    ...
-    if (ppm) {
-        pr_info("ippm: %s, ppm 0x%p,0x%p already initialized, %u/%u.\n",
-            ndev->name, ppm_pp, ppm, ppm->ppmax, ppmax);
-        kref_get(&ppm->refcnt);
-        return 1;
-    }
-    ...
-    if (*ppm_pp) {
-        ...
-        pr_info("ippm: %s, ppm 0x%p,0x%p already initialized, %u/%u.\n",
-            ndev->name, ppm_pp, *ppm_pp, ppm->ppmax, ppmax);
+Thanks for the clarification Robert! I've updated the advisory with this in=
+fo.
 
-        kref_get(&ppm->refcnt);
-        return 1;
-    }
-    ...
-    pr_info("ippm %s: ppm 0x%p, 0x%p, base %u/%u, pg %lu,%u, rsvd %u,%u.\n",
-        ndev->name, ppm_pp, ppm, ppm->base_idx, ppm->ppmax, PAGE_SIZE,
-        ppm->tformat.pgsz_idx_dflt, ppm->pool_rsvd,
-        ppm->pool_index_max);
-    ...
-}
+Your quote also highlighted that the text advisory is being served
+without an explicit character encoding. Thanks for finding that issue,
+now fixed :)
+
+Regards,
+Matthew
