@@ -1,73 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/06/1
-Message-ID: <CAAWM14eMK8bt1=DE7_sTA33fGf4=pJQcyPK6x-W3hBE4N0Erfw@mail.gmail.com>
-Date: Wed, 6 Oct 2021 23:11:37 +0200
-From: Wadeck Follonier <wfollonier@...udbees.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/14/4
+Message-ID: <CABBoSthTBNKwjLs40gL6n7KZ9ojiSomYyNVdG=1Jfr7eN6ha1w@mail.gmail.com>
+Date: Fri, 14 May 2021 14:55:13 -0400
+From: Ana McTaggart <amctagga@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins and Jenkins plugins
+Subject: CVE-2021-3509: Ceph: Cross Site Scripting via token Cookie
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+Hello,
 
-The following releases contain fixes for security vulnerabilities:
+A flaw was found in the Red Hat Ceph Storage Dashboard. In response to
+CVE-2020-27839, the JWT token was moved  from localStorage to an httpOnly
+cookie. However, token cookies are used in the body  of the HTTP response
+for the documentation, ensuring that the vulnerability remains.
 
-* Jenkins 2.315
-* Jenkins LTS 2.303.2
-* Git Plugin 4.8.3
+We have assigned it a CVE of CVE-2021-3509, and released patches for it.
 
+Nautilus:
+https://github.com/ceph/ceph/commit/adda853e64bdba1288d46bc7d462d23d8f2f10ca
+Octopus:
+https://github.com/ceph/ceph/commit/7a1ca8d372da3b6a4fc3d221a0e5f72d1d61c27b
+Pacific:
+https://github.com/ceph/ceph/commit/af3fffab3b0f13057134d96e5d481e400d8bfd27
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2021-10-06/
-<https://www.jenkins.io/security/advisory/2021-10-06/?>
+Ana McTaggart
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Red Hat Product Security
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-2424 / CVE-2021-21682
-Jenkins stores jobs and other entities on disk using their name shown on
-the UI as file and folder names.
-
-On Windows, when specifying a file or folder with a trailing dot character
-(`example.`), the file or folder will be treated as if that character was
-not present (`example`). As both are legal names for jobs and other
-entities in Jenkins 2.314 and earlier, LTS 2.303.1 and earlier, this could
-allow users with the appropriate permissions to change or replace
-configurations of jobs and other entities.
+Red Hat Remote <https://www.redhat.com>
 
 
-SECURITY-2475 / CVE-2014-3577
-Jenkins 2.314 and earlier, LTS 2.303.1 and earlier bundles a version of the
-commons-httpclient library with the vulnerability CVE-2014-3577 that
-incorrectly verified SSL/TLS certificates, making it susceptible to
-man-in-the-middle attacks.
-
-This library is widely used as a transitive dependency in Jenkins plugins.
+secalert@...hat.com for urgent response
 
 
-SECURITY-2481 / CVE-2021-21683
-The file browser for workspaces, archived artifacts, and `userContent/` in
-Jenkins 2.314 and earlier, LTS 2.303.1 and earlier may interpret some paths
-to files as absolute on Windows.
-
-This results in a path traversal vulnerability allowing attackers with
-Overall/Read permission (Windows controller) or Job/Workspace permission
-(Windows agents) to obtain the contents of arbitrary files.
+amct@...hat.com
 
 
-SECURITY-2499 / CVE-2021-21684
-Git Plugin 4.8.2 and earlier does not escape the Git SHA-1 checksum
-parameters provided to commit notifications when displaying them in a build
-cause.
+M: +1 (774)279-0791 <7742790791>     IM: amctagga
 
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to submit crafted commit notifications to the
-`/git/notifyCommit` endpoint.
+
+Pronouns:They/Them/Theirs
 
