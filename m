@@ -1,31 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/10/2
-Message-ID: <CADDz7Zt75GX5nwYzvYhU81iCSsWq+1DotfC0LoTwntk_gp6RrA@mail.gmail.com>
-Date: Tue, 9 Mar 2021 22:48:43 -0800
-From: Will Glass-Husain <wglass@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/16/1
+Message-ID: <CANnFHybun4hjZqFqOsLOhdPfPX-Q3tGpxzyxjqbepZ+nK2VJQQ@mail.gmail.com>
+Date: Sun, 16 May 2021 12:01:23 -0700
+From: "Martin O'Neil" <martinoneil.cyber@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-13959: Velocity Tools XSS Vulnerability
+Subject: Open Source WAF testing tools
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Hi, list,
 
-The default error page for VelocityView reflects back the vm file that
-was entered as part of the URL.  An attacker can set an XSS payload
-file as this vm file in the URL which results in this payload being
-executed.
+Does anybody know an open-source tool for testing Web Application Firewalls?
 
-XSS vulnerabilities allow attackers to execute arbitrary JavaScript in
-the context of the attacked website and the attacked user. This can be
-abused to steal session cookies, perform requests in the name of the
-victim or for phishing attacks.
+In an ideal case, with an out-of-the-box-ready CLI/UI, PDF reports, and a
+configurable set of payloads to test. I need it to check if my WAF
+deployment and rules work well.
 
-Mitigation:
+I found at least 5 projects, all made by WAF vendors.
 
-Applications based on Apache Velocity Tools should upgrade to version
-3.1.  This version escapes the reflected text on the default error
-page, preventing potential javascript execution.
+1. https://github.com/wallarm/gotestwaf byWallarm
+2. https://github.com/signalsciences/waf-testing-framework by Signal
+Sciences
+3. https://github.com/fastly/ftw by Fastly
+4. https://microsoft.github.io/WAFBench/ by Microsoft Azure WAF team
+5. https://github.com/f5devcentral/f5-waf-tester by F5
 
-Credit:
+The GoTestWAF project looks more active and supported by the community.
+Does anybody recommend some other GitHub repositories, preferably made by
+3rd party folks?
 
-This issue was reported and a patch was submitted by Jackson Henry,
-member of Sakura Samurai.
+Thanks
+Martin.
+
