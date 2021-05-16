@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2454" "Friday" "23" "October" "2015" "17:30:23" "-0500" "Brad Knowles" "brad@shub-internet.org" "<3AE0D41C-293B-4118-A3D6-78BF130850E5@shub-internet.org>" "63" "Re: [oss-security] Duplicate CVE: CVE-2015-7703 in NTP" nil nil nil "10" "2015102322:30:23" "[oss-security] Duplicate CVE: CVE-2015-7703 in NTP" (number mark "        brad@shub-in Oct 23   63/2454  " thread-indent "\"Re: [oss-security] Duplicate CVE: CVE-2015-7703 in NTP\"\n") "<562AAC40.4000002@redhat.com>" ("<874mhidqhp.fsf@redhat.com>" "<20151023160608.06B6D52E093@smtpvbsrv1.mitre.org>" "<CANO=Ty1DejyNjY5SHGSpbADx+Ece9B6+N837HqTkzecJaABKvQ@mail.gmail.com>" "<562AAC40.4000002@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2250" "Sunday" "16" "May" "2021" "14:26:14" "-0500" "Brandon Perry" "bperry.volatile@gmail.com" nil "62" "Re: [oss-security] Open Source WAF testing tools" nil nil nil "5" nil nil (number mark "U       bperry.volat May 16   62/2250  " thread-indent "\"Re: [oss-security] Open Source WAF testing tools\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Open Source WAF testing tools" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11398 invoked by uid 550); 23 Oct 2015 22:35:27 -0000
+Received: (qmail 3985 invoked by uid 550); 16 May 2021 19:26:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,102 +11,107 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7943 invoked from network); 23 Oct 2015 22:30:41 -0000
-X-ASG-Debug-ID: 1445639428-061c41417edbe00001-Ebmqpw
-X-Barracuda-Envelope-From: brad@shub-internet.org
-X-Barracuda-RBL-Trusted-Forwarder: 216.194.196.20
-X-Barracuda-RBL-Trusted-Forwarder: 216.194.248.141
-X-Virus-Scanned: amavisd-new at mail-sterling.his.com
-Content-Type: multipart/signed; boundary="Apple-Mail=_7E816F51-D779-4BEB-90E0-C298E5681D6B"; protocol="application/pgp-signature"; micalg=pgp-sha256
-X-Barracuda-RBL-IP: 172.16.1.6
-Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2104\))
-X-Pgp-Agent: GPGMail 2.5.2
-X-ASG-Orig-Subj: Re: [oss-security] Duplicate CVE: CVE-2015-7703 in NTP
-In-Reply-To: <562AAC40.4000002@redhat.com>
-X-Mao-Original-Outgoing-Id: 467332222.96658-71270d8e746896629cd90d4e086d1fb3
-Message-Id: <3AE0D41C-293B-4118-A3D6-78BF130850E5@shub-internet.org>
-References: <874mhidqhp.fsf@redhat.com> <20151023160608.06B6D52E093@smtpvbsrv1.mitre.org> <CANO=Ty1DejyNjY5SHGSpbADx+Ece9B6+N837HqTkzecJaABKvQ@mail.gmail.com> <562AAC40.4000002@redhat.com>
-X-Mailer: Apple Mail (2.2104)
-X-Barracuda-Connect: smtp-nf-202.his.com[216.194.196.20]
-X-Barracuda-Start-Time: 1445639428
-X-Barracuda-URL: https://spam.his.com:443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at his.com
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Spam-Score: 0.01
-X-Barracuda-Spam-Status: No, SCORE=0.01 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=7.0 tests=BSF_SC0_MISMATCH_TO, BSF_SC2_SA022a
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.23761
-	Rule breakdown below
-	 pts rule name              description
-	---- ---------------------- --------------------------------------------------
-	0.00 BSF_SC0_MISMATCH_TO    Envelope rcpt doesn't match header
-	0.01 BSF_SC2_SA022a         Custom Rule SA022a
-Cc: Brad Knowles <brad@shub-internet.org>
-Date: Fri, 23 Oct 2015 17:30:23 -0500
-From: Brad Knowles <brad@shub-internet.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Duplicate CVE: CVE-2015-7703 in NTP
+Received: (qmail 3967 invoked from network); 16 May 2021 19:26:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:mime-version:subject:date:references:to:in-reply-to:message-id;
+        bh=6JtH+zZdQQjc4xxvxorM7XDMd09JV6p6jZy8lpCnrME=;
+        b=AyWrBhByAA63vdy6gICMEOzv/ogUDUwYImm+IaIuu5y3dL3CelCvO6x4HNVYVxXfpE
+         eYzKZ4e5Ej+b3mHmNYvQmpL8iNCDdIloQ8zu7OJde2JfrKZ8buiAs2muXutpXIek+w8Y
+         dJPbUH+KCizz34Hp83/z+bFeIhkF9IvlE0/6fqgTnIKuh+Ly85PobfDoV1vcW3L0BVi8
+         47LE9ojEpncQeOwX9s1pFHfTCJudjpB7jyWQxxyAsAzUhw1jovUhEbhVGuwZKvHH48a+
+         xP14pfbwRTEhCeHVT1sJiesKKvYK3VBGE8APmWi+STlsZokfHETF9WhhXMHCOakYTwf9
+         YU0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:mime-version:subject:date:references:to
+         :in-reply-to:message-id;
+        bh=6JtH+zZdQQjc4xxvxorM7XDMd09JV6p6jZy8lpCnrME=;
+        b=GPsAW2qHVAMpxu40QGOyspQVz4w4LG0y7lCYriJFchMaclnb3vmP6OWrut9dJ46LLY
+         +fW0uiijcqfXRtcQwy4JFExPud3fPWt3TUiZNYJKEECao+C8wqtBREMtFvoacROv94QM
+         qp+7HPpojkXqA4GoYYJE8DQgAdGppuIQSp4zRRXfqDd2IpblPTiLUus2bs9YgjJdup5l
+         OiJABqrXDokTKwHyYohOimjiDv6L875OHh7p9eoZhy2PdUsGZF48BhUlyFr8OG6dmdj0
+         AG5ymyCkDBKMc/TZdCliMmKGSjEDg27e4qq7q70VIF+1gMniwp6xgtQ4CDZlXfs48giL
+         XFcg==
+X-Gm-Message-State: AOAM533sPcBMioV77gDvmeNj+LvfS3LV4tNK63rJpIL+1Bu8zywdV842
+	gyb/XphbNAKayWch2zydxl4BzdxckYa+wg==
+X-Google-Smtp-Source: ABdhPJx/Bgtuvy5UZ30R2CueGuUjEjagCWaLguxQ00K1sPQ4Wn2F6MTeyme8HI4ivr99QL78hNIauQ==
+X-Received: by 2002:ad4:5613:: with SMTP id ca19mr16131313qvb.3.1621193176764;
+        Sun, 16 May 2021 12:26:16 -0700 (PDT)
+From: Brandon Perry <bperry.volatile@gmail.com>
+Content-Type: multipart/signed;
+	boundary="Apple-Mail=_4757F89C-30CF-43B2-8A26-8956BDDD5B49";
+	protocol="application/pgp-signature";
+	micalg=pgp-sha256
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.17\))
+Date: Sun, 16 May 2021 14:26:14 -0500
+References: <CANnFHybun4hjZqFqOsLOhdPfPX-Q3tGpxzyxjqbepZ+nK2VJQQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
+In-Reply-To: <CANnFHybun4hjZqFqOsLOhdPfPX-Q3tGpxzyxjqbepZ+nK2VJQQ@mail.gmail.com>
+Message-Id: <C713881E-C4D4-4CCA-B8F7-D315B0AD975F@gmail.com>
+X-Mailer: Apple Mail (2.3445.104.17)
+Subject: Re: [oss-security] Open Source WAF testing tools
 
---Apple-Mail=_7E816F51-D779-4BEB-90E0-C298E5681D6B
+--Apple-Mail=_4757F89C-30CF-43B2-8A26-8956BDDD5B49
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain;
-	charset=utf-8
+	charset=us-ascii
 
-On Oct 23, 2015, at 4:53 PM, Florian Weimer <fweimer@redhat.com> wrote:
+Use Burp and test by hand?
 
-> This is not the case.  <security@ntp.org> was notified on 2015-08-20.
-> As the flaws were of low impact and there was no reaction, we disclosed
-> the issues here:
+> On May 16, 2021, at 2:01 PM, Martin O'Neil <martinoneil.cyber@gmail.com> =
+wrote:
 >=20
->  <http://openwall.com/lists/oss-security/2015/08/25/3>
+> Hi, list,
+>=20
+> Does anybody know an open-source tool for testing Web Application Firewal=
+ls?
+>=20
+> In an ideal case, with an out-of-the-box-ready CLI/UI, PDF reports, and a
+> configurable set of payloads to test. I need it to check if my WAF
+> deployment and rules work well.
+>=20
+> I found at least 5 projects, all made by WAF vendors.
+>=20
+> 1. https://github.com/wallarm/gotestwaf byWallarm
+> 2. https://github.com/signalsciences/waf-testing-framework by Signal
+> Sciences
+> 3. https://github.com/fastly/ftw by Fastly
+> 4. https://microsoft.github.io/WAFBench/ by Microsoft Azure WAF team
+> 5. https://github.com/f5devcentral/f5-waf-tester by F5
+>=20
+> The GoTestWAF project looks more active and supported by the community.
+> Does anybody recommend some other GitHub repositories, preferably made by
+> 3rd party folks?
+>=20
+> Thanks
+> Martin.
 
-And I followed that up by taking your post from this list and forwarding th=
-at to security@ntp.org on Tue Aug 25 15:42:13 UTC 2015.
 
-If anyone has any security issues with NTP and you would like to discuss th=
-ings with us privately, our current daily-use operational key is:
-
-sec   3072R/0066B2FD 2015-08-12 [expires: 2017-08-11]
-      Key fingerprint =3D 0E21 6278 E81F 12C9 DD2A  AEF5 AE63 639D 0066 B2FD
-uid                  NTP.org Security Team (2015 Daily Use Operational Key)=
- <security@ntp.org>
-ssb   3072R/C17304B1 2015-08-12
-
-> I don't know what else we can do to avoid duplicates.
-
-Good question.  Sometimes, you only discover after-the-fact that your XXX i=
-s someone else=E2=80=99s YYY, and so you have to be prepared to deal with t=
-he occasional collision.
-
---
-Brad Knowles <brad@shub-internet.org>
-LinkedIn Profile: <http://tinyurl.com/y8kpxu>
-
-
---Apple-Mail=_7E816F51-D779-4BEB-90E0-C298E5681D6B
+--Apple-Mail=_4757F89C-30CF-43B2-8A26-8956BDDD5B49
 Content-Transfer-Encoding: 7bit
 Content-Disposition: attachment;
 	filename=signature.asc
 Content-Type: application/pgp-signature;
 	name=signature.asc
-Content-Description: Message signed with OpenPGP using GPGMail
+Content-Description: Message signed with OpenPGP
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG/MacGPG2 v2.0.28
 
-iQIcBAEBCAAGBQJWKrT/AAoJEKOyg2+mWTCTGIkP/0o2By5taYCPajHKzMRPeFZ/
-DDauS0PnzcmsR1neRihVP2o2i7CGlza4CEqIZNgg9LWLfxHxXJDvlMSapNnJHyFZ
-5TQf2OlduVbTcoJDwMV4I8l3pHtCAdpy4eiTmzCqdYp4eMhc5mxk1bWrNdqM8YpJ
-Z4jtt0WyCZoiH7DBNGPkKGqNFcVsidTqs5ceZ9SzhzNC7Pg58sHDAKKslRc1xkI+
-OSErx784NVWy2hgPsmkJHSmY2okriqHO5FOQyl/eLyQIVPHjWM7do46DtvPnw7B5
-5PZEwfGyGq+z+60o1Cg22Z7MDFYSGQG2Cgek4o2DCQKRFx3RwCjfYp+J/9k0SSQK
-P7FyKLky+AVSh1LTbEmrYGglKwVuxY+zz8xZX2C3pLUTgBqJtW9Q7i3pwwucRa42
-fgDjR9TA3kDZ7nrdvznVmVbeEd+N78NiByaWaIh/olD9sqXoUg8k6kT1mvGKRZPH
-P+r07M3wngzS6pM5M9ckKF0Izi6ESH0hW9be74YL19ncjo/YiiCcnIEfWJuwtGGB
-lWI/b73zIRcug0NJSWXM/nyMvj2Mzns7LL74X4cCVct/sYl1Oq+WU09dTD7/IyjY
-9a70JAA2LUYvMHWGuToC7j6c67mENWcImJuTmDAt4D4LRmmldwO064us2AxekirR
-1TweJ0W8gwEYWsK/c/G+
-=l9CU
+iQIzBAEBCAAdFiEEoMgt+2k+7USJTPNpDj2JIDyRmS0FAmChcdYACgkQDj2JIDyR
+mS153g//cgy7X7eXKbhlAzPLojG31nqPU25bC+pf5B7P8lsohyU1vLzqiD58LRGP
+kTFAHXj9Cz305h+xTqUHPH40mPGB6luF0hSrwRe7zx3kAxBDFFC0O15zLxX0pUzH
+aXKakAYs0DxdSbN6UuIrxPMdziotVlja/m6QODUb8ecpAPyO+HpxTdNysA7C5cOo
+mX/M2pazqJT6kQjhjV9M5q/wkU8IOlPOEyl4ZWXTsIVlulkgmLR1sB4tcv1w1t+V
+3JghVsryLvzvRTUzRFfGaNX0IhZjGJMtUu1nTyecolBbvJCcw91ZDApQBWhCO6A6
+l62O4+LYmLc+7lXJnuJWcsb7OF7Eoc28tzbJ4V3f7guPzA0mMxCgFtcYMV79fODH
+ensKJbHXLjnrNUfkNI1a1n4DxfZx8nWRw7mDWqKhldtJEFUEiQOnqYUZH4MD9s/2
+t3PW1GiupmMrOGtHl+I9tIra0iYAflkGaMF6icEfZZtUI23zrrYfuIyP+0PG+jjG
+Xfsp7QEt/ui5qx04bgx8xL6F+q+qH0HEzPWAFengObwMoJi08Q7C3KqOfKcR5XLy
+cfXTh0OcBpmeiLKZWxSbRq7ZWsnYck27CmIrmj81W8QNCWwthf1XyLtIz9EzlthX
+zXxZHHyIIEO63+jvYTAX9oitPyJ8xcLBugEy8HmGUw/y/0AX2oU=
+=UZsI
 -----END PGP SIGNATURE-----
 
---Apple-Mail=_7E816F51-D779-4BEB-90E0-C298E5681D6B--
+--Apple-Mail=_4757F89C-30CF-43B2-8A26-8956BDDD5B49--
