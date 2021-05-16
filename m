@@ -1,51 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/30/1
-Message-ID: <87wnkp8kmj.fsf@oldenburg.str.redhat.com>
-Date: Tue, 30 Nov 2021 21:16:20 +0100
-From: Florian Weimer <fweimer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/16/3
+Message-ID: <CAEK7nyk2LssfkKk46u177Fd63CqUHzJXv9xFOcE0GX1cvqQjMA@mail.gmail.com>
+Date: Sun, 16 May 2021 12:29:32 -0700
+From: Ivan Novikov <in@...larm.com>
 To: oss-security@...ts.openwall.com
-Subject: IMA gadgets
+Subject: Re: Open Source WAF testing tools
 Content-Type: text/plain; charset=utf-8
 
-There's an idea floating around that you can take an established Linux
-distribution, create IMA signatures for all installed files in its
-packages, and use those signatures to lock out bad content at run time
-using IMA verification in the kernel.
+Hi Martin,
 
-I do not think this works in the sense that it can detect serve for more
-than just detecting file corruption (as an unsigned hash would).  First
-of all, there is the issue that IMA signatures (at least as they exist
-in RPM today) are content-only and do not cover file permissions or file
-capabilities.  This means an attacker can turn any binary into a SUID
-binary.  The signatures do not cover these file attributes, so they will
-still verify.
+We made GoTestWAF with no any vendor-specific things. It's mainly cover
+OWASP Top-10 and API data encodings such as REST/JSON, SOAP/XML, GraphQL,
+and WebSockets since the latest versions. You can add your payloads as easy
+as making Yaml files.
 
-The signatures do not cover the file names, either.  Therefore, an
-attacker can take a file and put it into a difference place in a file
-system.  For example, there's a debug-shell.service file that, when
-dropped into the right directory, will open a root shell on /dev/tty9.
-This may seem a bit silly, but I think the intent behind the IMA
-signatures is to combine them with remote attestation, and make
-(remote) interaction with devices in places without physical security
-trustworthy.
+At the end of the last year, it was significantly improved by community
+detects
+https://github.com/wallarm/gotestwaf/pull/29 , thanks Vulners team and
+a https://github.com/waf-bypass-maker/waf-community-bypasses project.
 
-Another example is /usr/share/perl5/vendor_perl/App/cpanminus.pod from a
-typical distribution of the App::cpanminus package.  If this is dropped
-into /etc/sysconfig/run-parts, after a while, the system will download
-untrusted code over the network and execute it, as far as I can see.
-(CPAN does not seem to be authenticated.)  The file does nothing when
-parsed by perl on the command line, but bash will try to run it and
-invoke a cpan shell command that triggers the download and code
-execution.  I don't think this kind of file type confusion is addressed
-by the proposed trusted_for system call, either.
+We are actively working on the project and any advice or suggestions in a
+form of GitHub issue or pull-requests will be highly appreciated.
 
-I'm sure there are many gadgets like this.  These two are just the first
-examples I found.
+Have a great weekend everyone!
 
-So in short, I don't really see how IMA signatures shipped as part of
-all distribution packages, on all files, can provide value beyond that
-of the hash that the already contain.
+On Sun, May 16, 2021 at 12:07 PM Martin O'Neil <martinoneil.cyber@...il.com>
+wrote:
 
-Thanks,
-Florian
+> Hi, list,
+>
+> Does anybody know an open-source tool for testing Web Application
+> Firewalls?
+>
+> In an ideal case, with an out-of-the-box-ready CLI/UI, PDF reports, and a
+> configurable set of payloads to test. I need it to check if my WAF
+> deployment and rules work well.
+>
+> I found at least 5 projects, all made by WAF vendors.
+>
+> 1. https://github.com/wallarm/gotestwaf byWallarm
+> 2. https://github.com/signalsciences/waf-testing-framework by Signal
+> Sciences
+> 3. https://github.com/fastly/ftw by Fastly
+> 4. https://microsoft.github.io/WAFBench/ by Microsoft Azure WAF team
+> 5. https://github.com/f5devcentral/f5-waf-tester by F5
+>
+> The GoTestWAF project looks more active and supported by the community.
+> Does anybody recommend some other GitHub repositories, preferably made by
+> 3rd party folks?
+>
+> Thanks
+> Martin.
+>
+-- 
+Ivan Novikov
+Wallarm, CEO
++1.650.454.9339
 
