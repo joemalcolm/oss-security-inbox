@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2375" "Friday" "9" "November" "2018" "13:45:01" "+0100" "Karol Babioch" "kbabioch@suse.de" "<314613aa-0068-e4b3-f892-a1fd2d7ce5b0@suse.de>" "64" "[oss-security] Re: Squid Proxy multiple vulnerabilities" "^Cc:" nil nil "11" "2018110912:45:01" "[oss-security] Re: Squid Proxy multiple vulnerabilities" (number mark "        kbabioch@sus Nov  9   64/2375  " thread-indent "\"[oss-security] Re: Squid Proxy multiple vulnerabilities\"\n") "<a25ed246-3326-c643-076e-b0d90afc692c@suse.de>" ("<ffa9731a-99c9-f60c-2454-25609835ac93@treenet.co.nz>" "<a25ed246-3326-c643-076e-b0d90afc692c@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["901" "Sunday" "16" "May" "2021" "12:01:23" "-0700" "Martin O'Neil" "martinoneil.cyber@gmail.com" nil "28" "[oss-security] Open Source WAF testing tools" nil nil nil "5" nil nil (number mark "U       martinoneil. May 16   28/901   " thread-indent "\"[oss-security] Open Source WAF testing tools\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Open Source WAF testing tools" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 8142 invoked by uid 550); 9 Nov 2018 12:48:03 -0000
+Received: (qmail 17503 invoked by uid 550); 16 May 2021 19:07:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,87 +11,66 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5510 invoked from network); 9 Nov 2018 12:45:15 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-References: <ffa9731a-99c9-f60c-2454-25609835ac93@treenet.co.nz>
- <a25ed246-3326-c643-076e-b0d90afc692c@suse.de>
-Openpgp: preference=signencrypt
-Message-ID: <314613aa-0068-e4b3-f892-a1fd2d7ce5b0@suse.de>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
-MIME-Version: 1.0
-In-Reply-To: <a25ed246-3326-c643-076e-b0d90afc692c@suse.de>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="Vq7MSa7XTHKqeco8L5bDa7EuPCw7aJJAm"
-Cc: Amos Jeffries <squid3@treenet.co.nz>
-Date: Fri, 9 Nov 2018 13:45:01 +0100
-From: Karol Babioch <kbabioch@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Squid Proxy multiple vulnerabilities
+Received: (qmail 15605 invoked from network); 16 May 2021 19:01:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=/a9ZngerTVqh6TxzWVoPT/gKV1sxsKX3dLGkMhz/iKQ=;
+        b=WuNFirETC/Py80/nyybVtJt4ui0KwLb0sFVB8CDqV4GPPHjqPk1UUzB8p9CRnYvZK6
+         N8KjRw4I+vuqvn18dehCRqvaRwoZoam4oPBqKjaAQVvM8I5m4I/Qf6dfkBj36Qgdycs7
+         siidFbr2spN31pOSjwqHgFybw7OzqC+BGlwHReu5bxrLB3yFTImQc5/glPYeaatjL938
+         Pn5UnR7o9Ply7A9s1zR4D7sYxpmGwtSAV5vCfFNatErXZrQbP7RqqSnUWoJ1wRTEqO8b
+         tGoEYqIDgKVxGWpwwnL+vYS6fCmZkOAEhFuH7FyOfJYRAQ6uoDDsi2rlVd0yRqrmjS6T
+         wB0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=/a9ZngerTVqh6TxzWVoPT/gKV1sxsKX3dLGkMhz/iKQ=;
+        b=sBRnkOId6OlEaGElJmFkf+KOtQ6etlB81fIdG3t1gEouG4xYSSdDWc0ffYoq04pQn1
+         QrU1obibhX5Oe8hD17tBgrurjN6Ayn/MebuRN9dfvYU4rp7o3LyFJ+s2uttKai6qy3zV
+         IlHXpcCa8D70M3xHRVtygd994hvuIy7x04cmp4/lEFgZNyYzoutSCrCnN/u28QKyS007
+         BlPSQeT+X7+rYVaoGXjqOa4NaLAc3W6kZeGme0SOt9lH63MCcru0CmwHhHsvuCeAVdTL
+         lR9rlGzH0LfaX4B2O2hKLE6H05/36QQbXyNKcWVHdZ5D2c8yGEYdxfkTKrQklbTYfCF3
+         PyyA==
+X-Gm-Message-State: AOAM533iMnFdj8xEHcQe21lKCouEbsiHNUe/hErl2jxKD38VkhYaCwlN
+	iTqK8MGdv8WrwdsrdN4hchChsFLwexs0yS2J92bfHXdGevw=
+X-Google-Smtp-Source: ABdhPJyd2SEVWzoJy+c91s3zZNz7aDiSD1WJlcfXV2IThRb+8ow3q7Pr4YrbrIMkTggQC0g0MUCq2tq8P1fDd204erU=
+X-Received: by 2002:aca:d68a:: with SMTP id n132mr12484937oig.105.1621191694315;
+ Sun, 16 May 2021 12:01:34 -0700 (PDT)
+MIME-Version: 1.0
+From: "Martin O'Neil" <martinoneil.cyber@gmail.com>
+Date: Sun, 16 May 2021 12:01:23 -0700
+Message-ID: <CANnFHybun4hjZqFqOsLOhdPfPX-Q3tGpxzyxjqbepZ+nK2VJQQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="0000000000000d768505c2771ba6"
+Subject: [oss-security] Open Source WAF testing tools
 
---Vq7MSa7XTHKqeco8L5bDa7EuPCw7aJJAm
-Content-Type: multipart/mixed; boundary="MfpdAJNE74ji5iJ2MCEA87xk75v68I2EO";
- protected-headers="v1"
-From: Karol Babioch <kbabioch@suse.de>
-To: oss-security@lists.openwall.com
-Cc: Amos Jeffries <squid3@treenet.co.nz>
-Message-ID: <314613aa-0068-e4b3-f892-a1fd2d7ce5b0@suse.de>
-Subject: Re: Squid Proxy multiple vulnerabilities
-References: <ffa9731a-99c9-f60c-2454-25609835ac93@treenet.co.nz>
- <a25ed246-3326-c643-076e-b0d90afc692c@suse.de>
-In-Reply-To: <a25ed246-3326-c643-076e-b0d90afc692c@suse.de>
+--0000000000000d768505c2771ba6
+Content-Type: text/plain; charset="UTF-8"
 
---MfpdAJNE74ji5iJ2MCEA87xk75v68I2EO
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+Hi, list,
 
-Hi all,
+Does anybody know an open-source tool for testing Web Application Firewalls?
 
-Am 31.10.18 um 11:37 schrieb Karol Babioch:
-> Am 28.10.18 um 17:13 schrieb Amos Jeffries:
->> CVE have been requested and awaiting assignment by the DWF project.
-> Is there any update and/or ETA on this ;-)?
+In an ideal case, with an out-of-the-box-ready CLI/UI, PDF reports, and a
+configurable set of payloads to test. I need it to check if my WAF
+deployment and rules work well.
 
-Since the assignment from DWF hasn't happened yet, I've requested CVEs
-via Mitre in the mean time. They have assigned CVE-2018-19131 and
-CVE-2018-19132 for this.
+I found at least 5 projects, all made by WAF vendors.
 
-Best regards,
-Karol Babioch
+1. https://github.com/wallarm/gotestwaf byWallarm
+2. https://github.com/signalsciences/waf-testing-framework by Signal
+Sciences
+3. https://github.com/fastly/ftw by Fastly
+4. https://microsoft.github.io/WAFBench/ by Microsoft Azure WAF team
+5. https://github.com/f5devcentral/f5-waf-tester by F5
 
---=20
-OpenPGP: 4687 CA1E A0F7 3B1E BB7D E179 DF49 418F 6267 267B
+The GoTestWAF project looks more active and supported by the community.
+Does anybody recommend some other GitHub repositories, preferably made by
+3rd party folks?
 
-SUSE Linux GmbH
-GF: Felix Imend=C3=B6rffer, Jane Smithard, Graham Norton
-HRB 21284 (AG N=C3=BCrnberg)
+Thanks
+Martin.
 
-
---MfpdAJNE74ji5iJ2MCEA87xk75v68I2EO--
-
---Vq7MSa7XTHKqeco8L5bDa7EuPCw7aJJAm
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEnUhp7WLQVtMYEQ0oVBnvwITBRQIFAlvlgU0ACgkQVBnvwITB
-RQJo0g//Qdc3bD8cTfxLF2me/G2+dVDqoqLfkyekN64E8fB9g4B9Nv08vbjjEPM9
-1ihq0koGKQkj0oR2PcCMse3n3nMnttVpHlqwr5sY4ZoB674RLXF2G7ZdAN8uEU+9
-5JzIgjrgEP52R/jadLCUng8iEuYMxKAbdYY6lEWcY0afQIap26uxoBOp9jI6j80l
-K5Gi290BP235CV6Z20B5Nu30xR9SXQEd9qFqdlo2V/MZ/V8njob3cPJVFp9ALPnL
-aOp3xy08x7bb/AwlRxIu1dsyVDkKfGnydMoMa3wl6IbHdN0R75XjtO8UOD1+99kr
-fJS4bOl3YfAJdbXLgwLaXtU9ORUB5jCwXTFNFRvVBLZVVkQzvWCWBdfpax49PaYV
-14+B3o8E56P2Ro/GXm5usS8N9G9HfkzM8CxvJO54VA3QjQSw8XeFufHVBKZy2QF2
-bdo04v5jmFJhimN/GmrnOrN+wVkRy/ooq+gjBWoxKL9DqlmgP+vZ6dD+Y0k1r3rP
-1s2LlRsS+bp2/vZskVG574oVbDh7+P0gxll9n79utWyFSV+SfSBMyhXuKL5E69sb
-yJHamXOydeUUwCRHykN929LdkzRGDg9WYm2MAyZ+mya//G4dTQz/+migGizkwmpP
-Gd3kMcIrGt+t0LW2otMy9tPi+2DPXUoDaJZ7XMG479Haje2OZn4=
-=pz6K
------END PGP SIGNATURE-----
-
---Vq7MSa7XTHKqeco8L5bDa7EuPCw7aJJAm--
+--0000000000000d768505c2771ba6--
