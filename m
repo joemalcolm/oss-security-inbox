@@ -1,28 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/27/2
-Message-ID: <CALSkbjrM=-cXMznHXnRyoKvAqOkoczWJXzyLpRsmSLubvftkdg@mail.gmail.com>
-Date: Tue, 27 Apr 2021 09:44:07 +0100
-From: daniel gaspar <danielvazgaspar@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/17/6
+Message-ID: <BA6125DF-2119-46AF-A87F-59876DF57168@lightwave.net.ru>
+Date: Mon, 17 May 2021 22:50:20 +0300
+From: Dan Yefihmov <dan@...htwave.net.ru>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-28125: Apache Superset Open Redirect
+Subject: Re: rxvt terminal (+bash) remoteish code execution 0day
 Content-Type: text/plain; charset=utf-8
 
-Description:
+On May 17, 2021 10:28:10 PM GMT+03:00, Jakub Wilk <jwilk@...lk.net> wrote:
+>* def <def@...meet.info>, 2021-05-17, 17:33:
+>>The bug is not technically a 0day for rxvt-unicode and has been known 
+>>at least since 2017-05-01 when it was discussed publicly in 
+>>oss-security:
+>>
+>>    https://www.openwall.com/lists/oss-security/2017/05/01/20
+>>
+>>The issue was quietly fixed in rxvt-unicode upstream in 2017.
+>
+>Or was it 2019?
+>
+>http://cvs.schmorp.de/rxvt-unicode/src/command.C?view=log#rev1.585
+>
+No, that was in fact 2017:
+http://cvs.schmorp.de/rxvt-unicode/src/command.C?view=log#rev1.583
 
-Apache Superset up to and including 1.0.1 allowed for the creation of
-an external URL that could be malicious. By not checking user input
-for open redirects the URL shortener functionality would allow for a
-malicious user to create a short URL for a dashboard that could
-convince the user to click the link.
+The commit you mentioned just eradicates the faulty code to protect unwise and careless users.
 
 
-Mitigation:
-
-Upgrade to 1.1.0 or above
-
-Credit:
-
-Found and reported by Gianluca Veltri, Dario Castrogiovanni
-
-Reply to: users@...erset.apache.org
-
+Sincerely Yours, Dan.
