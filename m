@@ -1,85 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/06/1
-Message-ID: <9cf42d53-70e3-538d-5c61-c83dff7575cd@gmail.com>
-Date: Tue, 6 Apr 2021 09:54:31 +0200
-From: Mariusz Felisiak <felisiak.mariusz@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Django: CVE-2021-28658: Potential directory-traversal via uploaded files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/17/7
+Message-ID: <CABBoStiNOoDZWc+ehgQSYDLaLSz0prSGR+fTS0wbuyCmB9muwQ@mail.gmail.com>
+Date: Mon, 17 May 2021 15:34:12 -0400
+From: Ana McTaggart <amctagga@...hat.com>
+To: oss-security@...ts.openwall.com, felix.huettner@...l.schwarz
+Subject: Re: CVE-2021-3531: Ceph: RGW unauthenticated denial of service
 Content-Type: text/plain; charset=utf-8
 
-https://www.djangoproject.com/weblog/2021/apr/06/security-releases/
+To clarify, the correct patch may be found in the following commit.
+https://github.com/ceph/ceph/commit/f44a8ae8aa27ecef69528db9aec220f12492810e
 
-In accordance with `our security release policy 
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
-Django team is issuing
-`Django 3.1.8 <https://docs.djangoproject.com/en/dev/releases/3.1.8/>`_,
-`Django 3.0.14 
-<https://docs.djangoproject.com/en/dev/releases/3.0.14/>`_ and
-`Django 2.2.20 <https://docs.djangoproject.com/en/dev/releases/2.2.20/>`_.
-These releases address the security issue with severity "low" detailed 
-below. We encourage all users of Django to upgrade as soon as possible.
+Ana McTaggart
 
-CVE-2021-28658: Potential directory-traversal via uploaded files
-================================================================
+Red Hat Product Security
 
-``MultiPartParser`` allowed directory-traversal via uploaded files with
-suitably crafted file names.
+Red Hat Remote <https://www.redhat.com>
 
-Built-in upload handlers were not affected by this vulnerability.
 
-Thank you to Dennis Brinkrolf for the report.
+secalert@...hat.com for urgent response
 
-Affected supported versions
-===========================
 
-* Django main branch
-* Django 3.2 (currently at release candidate status)
-* Django 3.1
-* Django 3.0
-* Django 2.2
+amct@...hat.com
 
-Resolution
-==========
 
-Patches to resolve the issue have been applied to Django's main branch and
-the 3.2, 3.1, 3.0, and 2.2 release branches. The patches may be obtained 
-from the following changesets:
+M: +1 (774)279-0791 <7742790791>     IM: amctagga
 
-* On the `main branch 
-<https://github.com/django/django/commit/d4d800ca1addc4141e03c5440a849bb64d1582cd>`__
-* On the `3.2 release branch 
-<https://github.com/django/django/commit/2820fd1be5dfccbf1216c3845fad8580502473e1>`__
-* On the `3.1 release branch 
-<https://github.com/django/django/commit/cca0d98118cccf9ae0c6dcf2d6c57fc50469fbf0>`__
-* On the `3.0 release branch 
-<https://github.com/django/django/commit/e7fba62248f604c76da4f23dcf1db4a57b0808ea>`__
-* On the `2.2 release branch 
-<https://github.com/django/django/commit/4036d62bda0e9e9f6172943794b744a454ca49c2>`__
 
-The following releases have been issued:
+Pronouns:They/Them/Theirs
 
-* Django 3.1.8 (`download Django 3.1.8 
-<https://www.djangoproject.com/m/releases/3.1/Django-3.1.8.tar.gz>`_ | 
-`3.1.8 checksums 
-<https://www.djangoproject.com/m/pgp/Django-3.1.8.checksum.txt>`_)
-* Django 3.0.14 (`download Django 3.0.14 
-<https://www.djangoproject.com/m/releases/3.0/Django-3.0.14.tar.gz>`_ | 
-`3.0.14 checksums 
-<https://www.djangoproject.com/m/pgp/Django-3.0.14.checksum.txt>`_)
-* Django 2.2.20 (`download Django 2.2.20 
-<https://www.djangoproject.com/m/releases/2.2/Django-2.2.20.tar.gz>`_ | 
-`2.2.20 checksums 
-<https://www.djangoproject.com/m/pgp/Django-2.2.20.checksum.txt>`_)
 
-The PGP key ID used for this release is Mariusz Felisiak: 
-`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
 
-General notes regarding security reporting
-==========================================
+On Fri, May 14, 2021 at 3:16 PM Ana McTaggart <amctagga@...hat.com> wrote:
 
-As always, we ask that potential security issues be reported via
-private email to ``security@...ngoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
+> Hello,
+> A flaw was found in the Red Hat Ceph Storage RGW. When processing a GET
+> Request for a swift URL that ends with two slashes it can cause the rgw to
+> crash, resulting in a denial of service.
+>
+> We have assigned it a CVE of CVE-2021-3531 and a patch is attached.
+>
+> Fixes may be found here:
+>
+> Nautilus:
+> https://github.com/ceph/ceph/commit/f44a8ae8aa27ecef69528db9aec220f12492810e
+> Octopus:
+> https://github.com/ceph/ceph/commit/b87e64e3206210580f4a6df2d77f9ae3f1033039
+> Pacific:
+> https://github.com/ceph/ceph/commit/bf06990ab41d7ac299e4441ad9cd434e926a18e7
+>
+> Ana McTaggart
+>
+> Red Hat Product Security
+>
+> Red Hat Remote <https://www.redhat.com>
+>
+>
+> secalert@...hat.com for urgent response
+>
+>
+> amct@...hat.com
+>
+>
+> M: +1 (774)279-0791 <7742790791>     IM: amctagga
+>
+>
+> Pronouns:They/Them/Theirs
+>
+>
 
