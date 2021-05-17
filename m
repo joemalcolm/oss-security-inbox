@@ -1,19 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/17/5
-Message-ID: <o474q87p-558p-onp5-19q4-n235o9r12r@inai.de>
-Date: Tue, 17 Aug 2021 19:30:21 +0200 (CEST)
-From: Jan Engelhardt <jengelh@...i.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/17/4
+Message-ID: <20210517183627.GA31237@huumeet.info>
+Date: Mon, 17 May 2021 21:36:27 +0300
+From: def <def@...meet.info>
 To: oss-security@...ts.openwall.com
-Subject: Re: [OSSA-2021-004] Neutron: Linuxbridge ARP filter bypass on Netfilter platforms (CVE-2021-38598)
+Subject: Re: Re: rxvt terminal (+bash) remoteish code execution 0day
 Content-Type: text/plain; charset=utf-8
 
+On Mon, May 17, 2021 at 05:30:48PM +0000, Priedhorsky, Reid wrote:
+> Hello,
+> 
+> Thanks for the bug report. However —
+> 
+> > On May 17, 2021, at 7:49 AM, def <def@...meet.info> wrote:
+> > 
+> > # However, rxvt responds to the query with a newline-terminated message, which
+> > # is retarded and exposes goatse-wide gaping security holes in many popular CLI
+> 
+> Can we please report bugs in a professional manner, including without
+> insults of any kind, let alone insults containing slurs and sexual
+> metaphors.
+> 
+> IMO such reporting standards should be added to the list content guidelines.
+> 
+> Thanks,
+> Reid
 
-On Tuesday 2021-08-17 17:17, Jeremy Stanley wrote:
->Description
->~~~~~~~~~~~
->Jake Yip with ARDC and Justin Mammarella with the University of
->Melbourne reported a vulnerability in Neutron's linuxbridge driver
->on newer Netfilter-based platforms (the successor to IPTables).
+I'd have preferred to shitpost @ full-disclosure but their moderation
+process is too slow nowadays (last update May 13). Hopefully it improves
+in the future.
 
-ip_tables is running atop the netfilter API, so.... it's
-not an ordered set with predecessors and successors.
+> Can we please report bugs in a professional manner
+
+    Because if you want me to "act professional", I can tell you that I'm
+    not interested. I'm sitting in my home office wearing a bathrobe. The
+    same way I'm not going to start wearing ties, I'm *also* not going to
+    buy into the fake politeness, the lying, the office politics and
+    backstabbing, the passive aggressiveness, and the buzzwords. Because
+    THAT is what "acting professionally" results in: people resort to all
+    kinds of really nasty things because they are forced to act out their
+    normal urges in unnatural ways.        - Torvalds, Linus (2013-07-15)
+
+Professionally,
+- def
