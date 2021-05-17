@@ -1,49 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/04/4
-Message-ID: <CAFzhf4qipkzzR1r8mowFaMNmUxXMhR9agw=gqJs1CSLNF0=rWA@mail.gmail.com>
-Date: Tue, 4 May 2021 11:06:52 +0100
-From: Piotr Krysiuk <piotras@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2021-31829] Linux kernel protection of stack pointer against speculative pointer arithmetic can be bypassed to leak content of kernel memory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/17/3
+Message-ID: <E4A97F5B-5187-411A-9122-B9C3EE047171@lanl.gov>
+Date: Mon, 17 May 2021 17:30:48 +0000
+From: "Priedhorsky, Reid" <reidpr@...l.gov>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: rxvt terminal (+bash) remoteish code execution 0day
 Content-Type: text/plain; charset=utf-8
 
-An issue has been discovered in the Linux kernel mechanism to mitigate
-speculative loads (Spectre mitigation).
+Hello,
 
-Unprivileged BPF programs running on affected systems can bypass
-the protection and execute speculative loads from the kernel stack.
-This can be abused to extract contents of the stack via side-channel.
-The extracted contents may include addresses of kernel structures
-that could be used to defeat Kernel Address Space Layout Randomization
-(KASLR) to facilitate exploitation of other vulnerabilities.
+Thanks for the bug report. However —
 
-The identified gap is that when protecting BPF stack pointer against
-speculative pointer arithmetic, the BPF stack area itself is not
-protected against speculative loads. This could be abused to perform
-speculative loads from any location within the BPF stack. And so
-any restricted data from the BPF stack could be disclosed, such as
-addresses of data structures referred by the BPF program. Further,
-the original content of kernel memory is not wiped when allocating
-the BPF stack, and could be disclosed as well.
+> On May 17, 2021, at 7:49 AM, def <def@...meet.info> wrote:
+> 
+> # However, rxvt responds to the query with a newline-terminated message, which
+> # is retarded and exposes goatse-wide gaping security holes in many popular CLI
 
-I developed a PoC that allows unprivileged local users to extract
-contents of 511 bytes from the BPF stack.
+Can we please report bugs in a professional manner, including without insults of any kind, let alone insults containing slurs and sexual metaphors.
 
-The PoC has been shared privately with <security@...nel.org> to assist
-with fix development.
+IMO such reporting standards should be added to the list content guidelines.
 
-The patches are available from the BPF subsystem public git repository.
+Thanks,
+Reid
 
-The fix has dependency of another recent commit fixing a separate
-issue. The full patch series is as follows:
-
-* https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=b9b34ddbe2076ade359cd5ce7537d5ed019e9807
-* https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=801c6058d14a82179a7ee17a4b532cac6fad067f
-
-# Discoverers
-
-Piotr Krysiuk <piotras@...il.com>
-
-# References
-
-CVE-2021-31829 (reserved via https://cveform.mitre.org/)
+—
+he/his
