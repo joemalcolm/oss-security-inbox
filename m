@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2328" "Monday" "2" "November" "2015" "02:37:08" "-0600" "Austin English" "austinenglish@gmail.com" "<CACC5Q1dRGnLHyxwEznn5Hm+Pym_ijXAsQuAT=AD16zaeUWSLgw@mail.gmail.com>" "66" "Re: [oss-security] Re: CVE request for wget" nil nil nil "11" "2015110208:37:08" "[oss-security] Re: CVE request for wget" (number mark "        austinenglis Nov  2   66/2328  " thread-indent "\"Re: [oss-security] Re: CVE request for wget\"\n") "<CACC5Q1dPzS3C_9L_vVx4scx7UaE38OqXcC0g6zFPE-Eb-tYRSw@mail.gmail.com>" ("<CACC5Q1eQ8jf-nxub=viXgnSt6pZGzSzbV=RD2YXV76NVHw7WTQ@mail.gmail.com>" "<20151001225726.9EF7AB2E0A6@smtpvbsrv1.mitre.org>" "<20151001231046.GB16643@hunt>" "<CACC5Q1dPzS3C_9L_vVx4scx7UaE38OqXcC0g6zFPE-Eb-tYRSw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["722" "Monday" "17" "May" "2021" "22:50:20" "+0300" "Dan Yefihmov" "dan@lightwave.net.ru" nil "22" "=?US-ASCII?Q?Re:_[oss-security]_rxvt_terminal_(+?==?US-ASCII?Q?bash)_remoteish_code_execution_0day?=" nil nil nil "5" nil nil (number mark "U       dan@lightwav May 17   22/722   " thread-indent "\"=?US-ASCII?Q?Re:?= =?US-ASCII?Q?[oss-security]?= =?US-ASCII?Q?rxvt?= =?US-ASCII?Q?terminal?= =?US-ASCII?Q?(+?==?US-ASCII?Q?bash)?= =?US-ASCII?Q?remoteish?= =?US-ASCII?Q?code?= =?US-ASCII?Q?execution?= =?US-ASCII?Q?0day?=\"\n") nil nil nil nil nil nil nil nil nil "=?US-ASCII?Q?Re:?= =?US-ASCII?Q?[oss-security]?= =?US-ASCII?Q?rxvt?= =?US-ASCII?Q?terminal?= =?US-ASCII?Q?(+?==?US-ASCII?Q?bash)?= =?US-ASCII?Q?remoteish?= =?US-ASCII?Q?code?= =?US-ASCII?Q?execution?= =?US-ASCII?Q?0day?=" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24570 invoked by uid 550); 2 Nov 2015 08:38:01 -0000
+Received: (qmail 19529 invoked by uid 550); 17 May 2021 19:57:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,97 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24546 invoked from network); 2 Nov 2015 08:38:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        bh=tlGKkPbXuuhPGLF+CS3oaT2OR2bhtvmCK1f/1MwHeLc=;
-        b=Dq4Crl/x82WpD1uYfCvFdhZPdwSA/erNNWGsyy433SCAeX3n4eFl+IvOsyNoTApkmb
-         vEu9/90DXGques/zM5Z9KFeq45Rotb1WEdCT8Lo2GDgyFTxisVgHZKQWahWy5Sxwv0d2
-         G7qlVO/18F3MkD42nzaBB1uo2kdlH6HNQPJieGydmtej9x3EwyPHIRgD047AJT10O048
-         43SW36UDO67lryTHGRYMjtNgwwXdvjJqS5kM+SJwojjX0COOmUMneDANtaZZALzE1Tqu
-         2RovdC0tvTpHrWHDjYEQP8FendsQPT4ssgJAlN/K9z3SAHZr9YD5z7xQA1SdqEvWwhIY
-         wtAQ==
-X-Received: by 10.107.35.16 with SMTP id j16mr21446643ioj.120.1446453467454;
- Mon, 02 Nov 2015 00:37:47 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <CACC5Q1dPzS3C_9L_vVx4scx7UaE38OqXcC0g6zFPE-Eb-tYRSw@mail.gmail.com>
-References: <CACC5Q1eQ8jf-nxub=viXgnSt6pZGzSzbV=RD2YXV76NVHw7WTQ@mail.gmail.com>
- <20151001225726.9EF7AB2E0A6@smtpvbsrv1.mitre.org> <20151001231046.GB16643@hunt>
- <CACC5Q1dPzS3C_9L_vVx4scx7UaE38OqXcC0g6zFPE-Eb-tYRSw@mail.gmail.com>
-Message-ID: <CACC5Q1dRGnLHyxwEznn5Hm+Pym_ijXAsQuAT=AD16zaeUWSLgw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a11405fc01ca08e05238ab1cb
-Date: Mon, 2 Nov 2015 02:37:08 -0600
-From: Austin English <austinenglish@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE request for wget
-To: cve-assign@mitre.org, Austin English <austinenglish@gmail.com>, 
-	oss-security@lists.openwall.com
+Received: (qmail 15720 invoked from network); 17 May 2021 19:50:32 -0000
+Date: Mon, 17 May 2021 22:50:20 +0300
+From: Dan Yefihmov <dan@lightwave.net.ru>
+To: oss-security@lists.openwall.com
+In-Reply-To: <20210517192810.6zus3mumaq6l63zi@jwilk.net>
+References: <20210517134904.GA24667@huumeet.info> <20210517143348.GB24667@huumeet.info> <20210517192810.6zus3mumaq6l63zi@jwilk.net>
+Message-ID: <BA6125DF-2119-46AF-A87F-59876DF57168@lightwave.net.ru>
+MIME-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Autocrypt: addr=dan@lightwave.net.ru; prefer-encrypt=mutual; keydata=
+ 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
+ zIn8AQWfM0BAQ2IY9LBfM2bLYUsJ/A==
+Subject: =?US-ASCII?Q?Re=3A_=5Boss-security=5D_rxvt_terminal_=28+?= =?US-ASCII?Q?bash=29_remoteish_code_execution_0day?=
 
---001a11405fc01ca08e05238ab1cb
-Content-Type: text/plain; charset=UTF-8
-
-The fix has been released in 1.7-rc1,
-https://tails.boum.org/news/test_1.7-rc1/index.en.html
-
-On Mon, Oct 26, 2015 at 3:21 PM, Austin English <austinenglish@gmail.com>
-wrote:
-
-> On Thu, Oct 1, 2015 at 6:10 PM, Seth Arnold <seth.arnold@canonical.com>
-> wrote:
-> > On Thu, Oct 01, 2015 at 06:57:26PM -0400, cve-assign@mitre.org wrote:
-> >> If there is any additional Tails vulnerability related to this,
-> >> another CVE ID may be needed. For example,
-> >>
-> >>   https://lists.gnu.org/archive/html/bug-wget/2015-08/msg00050.html
-> >>
-> >> says
-> >>
-> >>   to be 100% sure, you should add --passive-ftp to your command line.
-> >>   If you don't do that, your /etc/wgetrc or ~/.wgetrc could include
-> >>   --no-passive-ftp (or passiveftp = off).
-> >>
-> >> If Tails is supposed to try to ensure that, perhaps there's a
-> >> requirement to have something like:
-> >>
-> >>   alias wget="wget --passive-ftp"
-> >>
-> >> in a system-wide location (possibly /etc/bash.bashrc). The concept of
-> >> CVE IDs for "failure of a torify step" issues is new, and we aren't
-> >> sure of the best approach.
-> >
-> > I suspect using a bash alias in a site-wide config might then qualify for
-> > another CVE in the future, along the lines of "programs that spawn wget
-> > via system(3), popen(3), or exec family of functions can use unsafe
-> active
-> > mode by accident". If Tails is in the business of fixing these things
-> > for safety, removing active ftp support from tools seems like better fix.
-> >
-> > Thanks
+On May 17, 2021 10:28:10 PM GMT+03:00, Jakub Wilk <jwilk@jwilk.net> wrote:
+>* def <def@huumeet.info>, 2021-05-17, 17:33:
+>>The bug is not technically a 0day for rxvt-unicode and has been known=20
+>>at least since 2017-05-01 when it was discussed publicly in=20
+>>oss-security:
+>>
+>>    https://www.openwall.com/lists/oss-security/2017/05/01/20
+>>
+>>The issue was quietly fixed in rxvt-unicode upstream in 2017.
 >
-> A fix has been applied to Tails git:
+>Or was it 2019?
 >
-> https://labs.riseup.net/code/projects/tails/repository/revisions/b9fd6312435d55dd0bc0b6abdb7994da4d66e2b2
+>http://cvs.schmorp.de/rxvt-unicode/src/command.C?view=3Dlog#rev1.585
 >
-> In short, the wget binary is moved to /usr/lib/wget/wget, and a
-> wrapper script is put in place in /usr/bin/wget. The wrapper ensures
-> that wget is called via torsocks, and additionally, also forces
-> --passive-ftp.
->
-> Moving wget to /usr/lib/wget/wget gets the potentially dangerous wget
-> binary out of $PATH. A dedicated attacker could check if /usr/bin/wget
-> is a script and then parse it to find the actual binary, but that
-> would need to be a very dedicated attacker and at that point, there
-> are more feasible attacks available.
->
-> --
-> -Austin
->
+No, that was in fact 2017:
+http://cvs.schmorp.de/rxvt-unicode/src/command.C?view=3Dlog#rev1.583
+
+The commit you mentioned just eradicates the faulty code to protect unwise =
+and careless users.
 
 
-
--- 
--Austin
-
---001a11405fc01ca08e05238ab1cb--
+Sincerely Yours, Dan.
