@@ -1,44 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/18/2
-Message-ID: <CALoOwW45LdmFC6nmi8H71FVLmaWZh1xTSA74CAZTfN3r4cwZGQ@mail.gmail.com>
-Date: Sat, 18 Sep 2021 14:31:00 -0500
-From: Valentina Palmiotti <chompie@...plsecurity.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/17/2
+Message-ID: <20210517143348.GB24667@huumeet.info>
+Date: Mon, 17 May 2021 17:33:48 +0300
+From: def <def@...meet.info>
 To: oss-security@...ts.openwall.com
-Subject: Linux Kernel: Exploitable vulnerability in io_uring
+Subject: Re: rxvt terminal (+bash) remoteish code execution 0day
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Some minor clarifications.
 
-I'm writing to disclose a Linux Kernel vulnerability I found in the
-io_uring subsystem.
+The bug is not technically a 0day for rxvt-unicode and has been known at
+least since 2017-05-01 when it was discussed publicly in oss-security:
 
-The vulnerability is in fs/io_uring.c at loop_rw_iter. It is a controllable
-kernel buffer free.
+    https://www.openwall.com/lists/oss-security/2017/05/01/20
 
-Most files implement the file op function read_iter. However, if they don't
-(such as a procfs file like /proc/<pid>/maps), loop_rw_iter is called to
-manually perform the iterative read/write of a file. The pointer
-in req->rw.addr is incremented by the size of the read/write after each
-segment. In normal cases, req->rw.addr contains a pointer to a userspace
-buffer to read/write from. However, a user can use the
-IORING_OP_PROVIDE_BUFFERS command to preselect buffers for I/O operations.
-If this is the case, req->rw.addr contains a pointer to a kernel buffer
-(io_buffer structure). This buffer is later freed in io_put_kbuf after the
-read/write request completes.
+The issue was quietly fixed in rxvt-unicode upstream in 2017. Most Linux
+distributions ship unpatched rxvt-unicode 9.22 (2016-01-23) because the
+first official fixed release version is rxvt-unicode 9.25 (2021-05-14).
+Yes, version numbers 9.23 & 9.24 were skipped in upstream. In any case,
+the vulnerability still counts as 0day against non-unicode rxvt 2.7.10,
+and forks such as mrxvt 0.5.4 and Enlightenment's eterm 0.9.7 terminal.
 
-This gives the ability to free adjacent buffers at a controllable offset.
-It is accessible from unprivileged, and straight forward to exploit for
-local privilege escalation. I plan to share the specifics for exploitation
-in the future.
+Finally, the vulnerability can be exploited in any context in which the
+attacker can plant payload scripts in a subdirectory of CWD and trigger
+code execution by writing (unescaped) ANSI escape sequences to stdout or
+stderr. Suitable target programs besides `scp` include popular CLI tools
+such as `unrar` and `busybox tar` as demonstrated in the PoCs here:
 
-I disclosed the vulnerability to security () kernel org, and the patch has
-been merged into the mainline kernel. It has also been backported into the
-affected stable trees:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=16c8d2df7ec0eed31b7d3b61cb13206a7fb930cc
+    https://huumeet.info/~def/rxvt0day/
 
-CVE-2021-41073 has been reserved by MITRE for this vulnerability
+Note that GNU tar is not exploitable due to properly escaped filenames.
 
-Best,
-
-Valentina
-
+- def
