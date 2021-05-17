@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5711" "Wednesday" "10" "April" "2019" "18:13:24" "+0300" "Jouni Malinen" "j@w1.fi" nil "126" nil nil nil nil "4" nil nil (number mark "U       j@w1.fi      Apr 10  126/5711  " thread-indent "\"[oss-security] wpa_supplicant/hostapd: SAE side-channel attacks\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] wpa_supplicant/hostapd: SAE side-channel attacks" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1149" "Monday" "17" "May" "2021" "17:33:48" "+0300" "def" "def@huumeet.info" nil "25" "Re: [oss-security] rxvt terminal (+bash) remoteish code execution 0day" nil nil nil "5" nil nil (number mark "U       def@huumeet. May 17   25/1149  " thread-indent "\"Re: [oss-security] rxvt terminal (+bash) remoteish code execution 0day\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] rxvt terminal (+bash) remoteish code execution 0day" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 26233 invoked by uid 550); 10 Apr 2019 15:13:40 -0000
+Received: (qmail 19959 invoked by uid 550); 17 May 2021 14:36:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,140 +12,42 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26202 invoked from network); 10 Apr 2019 15:13:40 -0000
-X-Virus-Scanned: Debian amavisd-new at w1.fi
-Date: Wed, 10 Apr 2019 18:13:24 +0300
-From: Jouni Malinen <j@w1.fi>
+Received: (qmail 15766 invoked from network); 17 May 2021 14:33:59 -0000
+Date: Mon, 17 May 2021 17:33:48 +0300
+From: def <def@huumeet.info>
 To: oss-security@lists.openwall.com
-Message-ID: <20190410151324.GA5686@w1.fi>
+Message-ID: <20210517143348.GB24667@huumeet.info>
+References: <20210517134904.GA24667@huumeet.info>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Subject: [oss-security] wpa_supplicant/hostapd: SAE side-channel attacks
+In-Reply-To: <20210517134904.GA24667@huumeet.info>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Subject: Re: [oss-security] rxvt terminal (+bash) remoteish code execution
+ 0day
 
-Published: April 10, 2019
-Identifiers:
-- VU#871675
-- CVE-2019-9494 (cache attack against SAE)
-Latest version available from: https://w1.fi/security/2019-1/
+Some minor clarifications.
 
-Vulnerability
+The bug is not technically a 0day for rxvt-unicode and has been known at
+least since 2017-05-01 when it was discussed publicly in oss-security:
 
-Number of potential side channel attacks were discovered in the SAE
-implementations used by both hostapd (AP) and wpa_supplicant
-(infrastructure BSS station/mesh station). SAE (Simultaneous
-Authentication of Equals) is also known as WPA3-Personal. The discovered
-side channel attacks may be able to leak information about the used
-password based on observable timing differences and cache access
-patterns. This might result in full password recovery when combined with
-an offline dictionary attack and if the password is not strong enough to
-protect against dictionary attacks.
+    https://www.openwall.com/lists/oss-security/2017/05/01/20
 
+The issue was quietly fixed in rxvt-unicode upstream in 2017. Most Linux
+distributions ship unpatched rxvt-unicode 9.22 (2016-01-23) because the
+first official fixed release version is rxvt-unicode 9.25 (2021-05-14).
+Yes, version numbers 9.23 & 9.24 were skipped in upstream. In any case,
+the vulnerability still counts as 0day against non-unicode rxvt 2.7.10,
+and forks such as mrxvt 0.5.4 and Enlightenment's eterm 0.9.7 terminal.
 
-Cache attack
+Finally, the vulnerability can be exploited in any context in which the
+attacker can plant payload scripts in a subdirectory of CWD and trigger
+code execution by writing (unescaped) ANSI escape sequences to stdout or
+stderr. Suitable target programs besides `scp` include popular CLI tools
+such as `unrar` and `busybox tar` as demonstrated in the PoCs here:
 
-A novel cache-based attack against SAE handshake was discovered. This
-attack targets SAE with ECC groups. ECC group 19 being the mandatory
-group to support and the most likely used group for SAE today, so this
-attack applies to the most common SAE use case. Even though the PWE
-derivation iteration in SAE has protections against timing attacks, this
-new cache-based attack enables an attacker to determine which code
-branch is taken in the iteration if the attacker is able to run
-unprivileged code on the victim machine (e.g., an app installed on a
-smart phone or potentially a JavaScript code on a web site loaded by a
-web browser). This depends on the used CPU not providing sufficient
-protection to prevent unprivileged applications from observing memory
-access patterns through the shared cache (which is the most likely case
-with today's designs).
+    https://huumeet.info/~def/rxvt0day/
 
-The attacker can use information about the selected branch to learn
-information about the password and combine this information from number
-of handshake instances with an offline dictionary attack. With
-sufficient number of handshakes and sufficiently weak password, this
-might result in full discovery of the used password.
+Note that GNU tar is not exploitable due to properly escaped filenames.
 
-This attack requires the attacker to be able to run a program on the
-target device. This is not commonly the case on access points, so the
-most likely target for this would be a client device using SAE in an
-infrastructure BSS or mesh BSS.
-
-The commits listed in the end of this advisory change the SAE
-implementation shared by hostapd and wpa_supplicant to perform the PWE
-derivation loop using operations that use constant time and memory
-access pattern to minimize the externally observable differences from
-operations that depend on the password even for the case where the
-attacker might be able to run unprivileged code on the same device.
-
-
-Timing attack
-
-The timing attack applies to the MODP groups 22, 23, and 24 where the
-PWE generation algorithm defined for SAE can have sufficient timing
-differences for an attacker to be able to determine how many rounds were
-needed to find the PWE based on the used password and MAC
-addresses. When the attack is repeated with multiple times, the attacker
-may be able to gather enough information about the password to be able
-to recover it fully using an offline dictionary attack if the password
-is not strong enough to protect against dictionary attacks. This attack
-could be performed by an attacker in radio range of an access point or a
-station enabling the specific MODP groups.
-
-This timing attack requires the applicable MODP groups to be enabled
-explicitly in hostapd/wpa_supplicant configuration (sae_groups
-parameter). All versions of hostapd/wpa_supplicant have disabled these
-groups by default.
-
-While this security advisory lists couple of commits introducing
-additional protection for MODP groups in SAE, it should be noted that
-the groups 22, 23, and 24 are not considered strong enough to meet the
-current expectation for a secure system. As such, their use is
-discouraged even if the additional protection mechanisms in the
-implementation are included.
-
-
-Vulnerable versions/configurations
-
-All wpa_supplicant and hostapd versions with SAE support (CONFIG_SAE=y
-in the build configuration and SAE being enabled in the runtime
-configuration).
-
-
-Acknowledgments
-
-Thanks to Mathy Vanhoef (New York University Abu Dhabi) and Eyal Ronen
-(Tel Aviv University) for discovering the issues and for discussions on
-how to address them.
-
-
-Possible mitigation steps
-
-- Merge the following commits to wpa_supplicant/hostapd and rebuild:
-
-  OpenSSL: Use constant time operations for private bignums
-  Add helper functions for constant time operations
-  OpenSSL: Use constant time selection for crypto_bignum_legendre()
-  SAE: Minimize timing differences in PWE derivation
-  SAE: Avoid branches in is_quadratic_residue_blind()
-  SAE: Mask timing of MODP groups 22, 23, 24
-  SAE: Use const_time selection for PWE in FFC
-  SAE: Use constant time operations in sae_test_pwd_seed_ffc()
-
-  These patches are available from https://w1.fi/security/2019-1/
-
-- Update to wpa_supplicant/hostapd v2.8 or newer, once available
-
-- In addition to either of the above alternatives, disable MODP groups
-  1, 2, 5, 22, 23, and 24 by removing them from hostapd/wpa_supplicant
-  sae_groups runtime configuration parameter, if they were explicitly
-  enabled since those groups are not considered strong enough to meet
-  current security expectations. The groups 22, 23, and 24 are related
-  to the discovered side channel (timing) attack. The other groups in
-  the list are consider too weak to provide sufficient security. Note
-  that all these groups have been disabled by default in all
-  hostapd/wpa_supplicant versions and these would be used only if
-  explicitly enabled in the configuration.
-
-- Use strong passwords to prevent dictionary attacks
-
--- 
-Jouni Malinen                                            PGP id EFC895FA
+- def
