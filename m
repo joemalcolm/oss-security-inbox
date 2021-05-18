@@ -1,22 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/27/4
-Message-ID: <CA+4-CWyF62m0igSi0Fh3BG6Cj71h2_YHyxTxX=oBJ0MeBHrsFA@mail.gmail.com>
-Date: Fri, 27 Aug 2021 08:18:51 +0200
-From: Daniel Bevenius <dbeveniu@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/18/3
+Message-ID: <1344-1621353797.024973@P5sK.WRwe.lknU>
+Date: Tue, 18 May 2021 16:03:17 +0000
+From: Unparalleled IT Security Research <info@...aralleled.eu>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: Node.js security updates for versions 12.x, and 14.x releases lines, August 31 2021
+Subject: libx11 API Protocol Command Injection
 Content-Type: text/plain; charset=utf-8
 
----------- Forwarded message ---------
-From: Daniel Bevenius <dbeveniu@...hat.com>
-Date: Fri, Aug 27, 2021 at 7:58 AM
-Subject: Node.js security updates for versions 12.x, and 14.x releases
-lines, August 31 2021
-To: nodejs-sec <nodejs-sec@...glegroups.com>
+Hello list,
+
+Due to missing request length checks in libX11 injection of X
+protocol commands is possible, e.g. by using long color names
+in color lookup API calls. The color names in some cases may
+be (remotely) attacker controlled, e.g. when xterm receives OCS
+(operating system command sequences) from an SSH session to
+a compromised server or a careless "tail -f" on a log file containing
+OCS. A crafted OCS color name can be used to disable X server
+authentication, mess up the keyboard layout, ...
+
+Luckily only very few data flow pathes were found to trigger
+such bogus color lookup calls. Color specifications in PDF, HTML,
+SVG, ... were not suitable to reach the API in a problematic way
+for those applications tested.
+
+See the attached UNPAR-2021-1 advisory or the blog entry describing
+how exploitation works in detail:
+
+https://unparalleled.eu/blog/2021/20210518-using-xterm-to-navigate-the-huge-color-space/
 
 
-The Node.js project will release new versions of 12.x, and 14.x releases
-lines on or shortly after Tuesday August 31th, 2021.
-For more information see:
-https://nodejs.org/en/blog/vulnerability/aug-2021-security-releases2
+Kind regards,
 
+| |  DI Roman Fiedler
+| /  roman.fiedler at unparalleled.eu  +43 677 63 29 28 29
+/ |  Unparalleled IT Services e.U.     FN: 516074h           VAT: ATU75050524
+| |  https://unparalleled.eu/          Felix-Dahn-Platz 4, 8010 Graz, Austria
+
+View attachment "advisory-unpar-2021-1.txt" of type "text/plain" (11000 bytes)
