@@ -1,43 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/06/1
-Message-ID: <YLy29j6QgKnN432K@dojo.mi.org>
-Date: Sun, 6 Jun 2021 07:52:22 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/18/2
+Message-ID: <YKPP+hCgfAaW0OiB@blues>
+Date: Tue, 18 May 2021 16:32:26 +0200
+From: Matthieu Herrb <matthieu@...rb.eu>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: XScreenSaver 5.45: Disconnecting a video output can cause XScreenSaver to crash and unlock
+Subject: libX11 security advisory: May 18, 2021
 Content-Type: text/plain; charset=utf-8
 
-:On Sat, Jun 05, 2021 at 02:55:10AM +0200, Marek Marczykowski-Górecki wrote:
-:> The issue affects only XScreenSaver version 5.45. Versions 5.44 and
-:> older, as well as 6.00, are not affected. The XScreenSaver author was
-:> notified about this issue and decided not to publish an advisory, as the
-:> issue does not affect the most recent version.
-:> 
-:> The Qubes Security Team has decided to address this issue in Qubes OS by
-:> patching this specific bug rather than immediately upgrading to the 6.00
-:> version.
-:
-:And here is the patch applied in Qubes OS:
-:https://github.com/QubesOS/qubes-xscreensaver/blob/master/0001-Fix-updating-outputs-info.patch
+X.Org libX11 security advisory: May 18, 2021
 
-Having said that, one of the big changes in XScreenSaver 6.00 involves
-security improvements for this situation, so it's worth noting here:
+Missing request length checks in libX11
+=======================================
 
-https://www.jwz.org/blog/2021/04/xscreensaver-6-00-out-now/
+CVE-2021-31535
 
-	I have significantly refactored the XScreenSaver daemon, the
-	component of the XScreenSaver suite that provides screen
-	locking on X11 systems.
+XLookupColor() and other X libraries function lack proper validation
+of the length of their string parameters. If those parameters can be
+controlled by an external application (for instance a color name that
+can be emitted via a terminal control sequence) it can lead to the
+emission of extra X protocol requests to the X server.
 
-	These changes greatly reduce the amount of code running in the
-	"critical" section: the part of the code where a crash would
-	cause the screen to unlock. That critical section is now only
-	around 1,800 lines of code, a reduction of roughly 87%.
+Patch
+-----
 
-etc.
+A patch for XLookupColor() and other potentially vulnerable functions
+has been committed to libX11. libX11 1.7.1 will be released shortly
+and contains a fix for this issue.
 
+https://gitlab.freedesktop.org/xorg/lib/libx11
+
+commit: 8d2e02ae650f00c4a53deb625211a0527126c605
+
+    Reject string longer than USHRT_MAX before sending them on the wire
+
+XTerm version 367 contains extra validation for the length of color
+names passed to XLookupColor() from terminal control sequences.  XTerm
+version 366 and earlier are vulnerable.
+
+Tests conducted by Roman Fiedler on other terminal emulator
+applications have not found other cases of passing un-checked color
+names to XLookupColor().
+
+Thanks
+======
+
+This vulnerability has been discovered by Roman Fiedler from
+Unparalleled IT Services e.U.
 
 -- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"I never look back, darling.  It distracts me from the now."       -Edna Mode
+Matthieu Herrb
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
