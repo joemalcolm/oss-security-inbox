@@ -1,83 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/26/9
-Message-ID: <03eb1900-5593-09ff-8814-008632c46c5c@igalia.com>
-Date: Tue, 26 Oct 2021 20:05:36 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2021-0006
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/18/4
+Message-ID: <CABdrxGC=YmZPJC9Vs3rYmFatqkmgkEULnnXq8_Ux5wZOD+EvsA@mail.gmail.com>
+Date: Tue, 18 May 2021 12:28:20 -0700
+From: CJ Cullen <cjcullen@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: [kubernetes] CVE-2021-25737: Holes in EndpointSlice Validation Enable Host Network Hijack
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2021-0006
-------------------------------------------------------------------------
+A security issue was discovered in Kubernetes where a user may be able to
+redirect pod traffic to private networks on a Node. Kubernetes already
+prevents creation of Endpoint IPs in the localhost or link-local range, but
+the same validation was not performed on EndpointSlice IPs.
 
-Date reported           : October 26, 2021
-Advisory ID             : WSA-2021-0006
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2021-0006.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2021-0006.html
-CVE identifiers         : CVE-2021-30846, CVE-2021-30848,
-                          CVE-2021-30849, CVE-2021-30851,
-                          CVE-2021-30858, CVE-2021-42762.
+*This issue has been rated Low
+(CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:L/I:N/A:N
+<https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:L/I:N/A:N>),
+and assigned CVE-2021-25737.*Affected Component
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
-
-CVE-2021-30846
-    Versions affected: WebKitGTK and WPE WebKit before 2.34.0.
-    Credit to Sergei Glazunov of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A memory corruption issue was
-    addressed with improved memory handling.
-
-CVE-2021-30848
-    Versions affected: WebKitGTK and WPE WebKit before 2.32.4.
-    Credit to Sergei Glazunov of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to code
-    execution. Description: A memory corruption issue was addressed with
-    improved memory handling.
-
-CVE-2021-30849
-    Versions affected: WebKitGTK and WPE WebKit before 2.32.4.
-    Credit to Sergei Glazunov of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
-
-CVE-2021-30851
-    Versions affected: WebKitGTK and WPE WebKit before 2.34.0.
-    Credit to Samuel Groß of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to code
-    execution. Description: A memory corruption vulnerability was
-    addressed with improved locking.
-
-CVE-2021-30858
-    Versions affected: WebKitGTK and WPE WebKit before 2.32.4.
-    Credit to an anonymous researcher.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Apple is aware of a report that this issue
-    may have been actively exploited. Description: A use after free
-    issue was addressed with improved memory management.
-
-CVE-2021-42762
-    Versions affected: WebKitGTK and WPE WebKit before 2.34.1.
-    Credit to an anonymous reporter.
-    BubblewrapLauncher.cpp allows a limited sandbox bypass that allows a
-    sandboxed process to trick host processes into thinking the
-    sandboxed process is not confined by the sandbox, by abusing VFS
-    syscalls that manipulate its filesystem namespace. The impact is
-    limited to host services that create UNIX sockets that WebKit mounts
-    inside its sandbox, and the sandboxed process remains otherwise
-    confined. NOTE: this is similar to CVE-2021-41133.
+*kube-apiserver*Affected Versions
 
 
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
+* - v1.21.0- v1.20.0 - v1.20.6- v1.19.0 - v1.19.10- v1.16.0 - v1.18.18
+(Note: EndpointSlices were not enabled by default in 1.16-1.18)*Fixed
+Versions
 
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
 
-The WebKitGTK and WPE WebKit team,
-October 26, 2021
+
+*This issue is fixed in the following versions: - v1.21.1- v1.20.7-
+v1.19.11- v1.18.19*Mitigation
+
+*To mitigate this vulnerability without upgrading kube-apiserver, you can
+create a validating admission webhook that prevents EndpointSlices with
+endpoint addresses in the 127.0.0.0/8 <http://127.0.0.0/8> and
+169.254.0.0/16 <http://169.254.0.0/16> ranges. If you have an existing
+admission policy mechanism (like OPA Gatekeeper) you can create a policy
+that enforces this restriction.*Detection
+
+*To detect whether this vulnerability has been exploited, you can list
+EndpointSlices and check for endpoint addresses in the 127.0.0.0/8
+<http://127.0.0.0/8> and 169.254.0.0/16 <http://169.254.0.0/16> ranges. If
+you find evidence that this vulnerability has been exploited, please
+contact security@...ernetes.io <security@...ernetes.io>*Additional Details
+
+See Kubernetes Issue #102106
+<https://github.com/kubernetes/kubernetes/issues/102106> for more details.
+Acknowledgements
+
+This vulnerability was reported by John Howard of Google.
+
+Thank You,
+
+CJ Cullen on behalf of the Kubernetes Product Security Committee
+
