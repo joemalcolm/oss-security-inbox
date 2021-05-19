@@ -1,28 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/07/3
-Message-ID: <ae35f181-47fa-7dcf-480a-5db441744cb0@apache.org>
-Date: Thu, 07 Oct 2021 15:15:30 +0000
-From: Dave Fisher <wave@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/19/1
+Message-ID: <20210519080813.GA17356@oxygen>
+Date: Wed, 19 May 2021 10:08:13 +0200
+From: Julien Pivotto <roidelapluie@...metheus.io>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-33035: Apache OpenOffice: Buffer overflow from a crafted DBF file 
+Subject: Prometheus 2.26.1-2.27.1 released to fix an Open Redirect security issue
 Content-Type: text/plain; charset=utf-8
 
-Severity: high
+Hello,
 
-Description:
+The Prometheus team has released bugfix releases about an Open Redirect
+(CWE-601) security issue.
+The issue has been assigned the CVE number CVE-2021-29622.
 
-Apache OpenOffice opens dBase/DBF documents and shows the contents as spreadsheets.  DBF are database files with data organized in fields.  When reading DBF data the size of certain fields is not checked: the data is just copied into local variables. A carefully crafted document could overflow the allocated space, leading to the execution of arbitrary code by altering the contents of the program stack.  
+---
 
-This issue affects Apache OpenOffice up to and including version 4.1.10
+In 2.23.0, Prometheus changed its default UI to the New ui. To ensure a
+seamless transition, the URL's prefixed by /new redirect to /.
+Due to a bug in the code, it is possible for an attacker to craft an URL
+that can redirect to any other URL, in the /new endpoint.
 
-This issue is fixed in Apache OpenOffice 4.1.11
+If a user visits a prometheus server with a specially crafted address
+(e.g.: http://127.0.0.1:9090/new/new<url>), they can be redirected to an
+arbitrary URL.
 
+e.g. if a user visits
+http://127.0.0.1:9090/new/newhttp://www.google.com/, they will be
+redirected to http://google.com.
 
-Credit:
+---
 
-Apache OpenOffice would like to thank Eugene Lim, Government Technology Agency of Singapore for reporting this issue.
+The security issue affects Prometheus v2.23.0 to v2.26.0, and v2.27.0.
 
-References:
+Please find more information here:
+https://github.com/prometheus/prometheus/security/advisories/GHSA-vx57-7f4q-fpc7
 
-https://github.com/apache/openoffice/commit/efddaef0151af3be16078cc4d88c6bae0f911e56#diff-ea66e734dd358922aba12ad4ba39c96bdc6cbde587d07dbc63d04daa0a30e90f
+The Prometheus team thanks Aaron Devaney from MDSec for reporting this
+issue.
 
+Timeline:
+May 12, 2021: Issue reported privately to Prometheus team
+May 12, 2021: A fix is proposed and reviewed
+May 13, 2021: CVE-2021-29622 issued by GitHub staff
+May 18, 2021: Bugfix released for the last two minor releases of
+Prometheus.
+
+The releases can be found in the usual locations:
+
+v2.26.1: https://github.com/prometheus/prometheus/releases/tag/v2.26.1
+v2.27.1: https://github.com/prometheus/prometheus/releases/tag/v2.27.1
+
+Thanks,
+
+The Prometheus Team
+
+Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
