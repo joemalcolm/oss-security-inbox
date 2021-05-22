@@ -1,127 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/26/2
-Message-ID: <CABU6YOa0q0=aWxSqcWN7AbNAZS1Yx6nuqBUkAfsfbzJKywwBhw@mail.gmail.com>
-Date: Wed, 25 Aug 2021 21:20:09 +0100
-From: Mark J Cox <mark@...nssl.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/22/1
+Message-ID: <dbbd5c0a-cebb-dfed-3c21-967513642d38@vanrees.org>
+Date: Sat, 22 May 2021 13:34:10 +0200
+From: Maurits van Rees <maurits@...rees.org>
 To: oss-security@...ts.openwall.com
-Subject: OpenSSL SM2 Decryption Buffer Overflow (CVE-2021-3711), Read buffer overruns processing ASN.1 strings (CVE-2021-3712)
+Subject: Re: Plone security hotfix 20210518
 Content-Type: text/plain; charset=utf-8
 
-OpenSSL Security Advisory [24 August 2021]
-==========================================
+CVE numbers inline below. Thanks.
 
-SM2 Decryption Buffer Overflow (CVE-2021-3711)
-==============================================
+On 21/05/2021 16:07, Maurits van Rees wrote:
+> A Plone security hotfix was released on Tuesday, May 18 2021.
+> For details, see https://plone.org/security/hotfix/20210518
+> Most CVE numbers are not yet issued. I will request them from Mitre 
+> shortly.
+>
+> BTW, I am following the instructions at 
+> https://oss-security.openwall.org/wiki/mailing-lists/oss-security#cve-requests 
+> to first post to this list, then request CVEs at Mitre, then reply to 
+> my own post.
+> I don't see many other people doing it in this order. Is that page 
+> still accurate?
+>
+> Versions Affected: All supported Plone versions (4.3.20 and any 
+> earlier 4.3.x version, 5.2.4 and any earlier 5.x version).
+>
+> Versions Not Affected: None. Earlier versions may be affected, but the 
+> hotfix has not been tested on them.
+>
+> The patch addresses several security issues:
+>
+> - Remote Code Execution via traversal in expressions. Reported by 
+> David Miller. CVE-2021-32633.
+> - Writing arbitrary files via docutils and Python Script. Reported by 
+> Calum Hutton.
 
-Severity: High
+CVE-2021-33509
 
-In order to decrypt SM2 encrypted data an application is expected to call the
-API function EVP_PKEY_decrypt(). Typically an application will call this
-function twice. The first time, on entry, the "out" parameter can be NULL and,
-on exit, the "outlen" parameter is populated with the buffer size required to
-hold the decrypted plaintext. The application can then allocate a sufficiently
-sized buffer and call EVP_PKEY_decrypt() again, but this time passing a non-NULL
-value for the "out" parameter.
+> - Various information disclosures: mostly installation logs. Reported 
+> by Calum Hutton. CVE-2021-21360 and CVE-2021-21336.
+> - Stored XSS from file upload (svg, html). Reported separately by Emir 
+> Cüneyt Akkutlu and Tino Kautschke.
 
-A bug in the implementation of the SM2 decryption code means that the
-calculation of the buffer size required to hold the plaintext returned by the
-first call to EVP_PKEY_decrypt() can be smaller than the actual size required by
-the second call. This can lead to a buffer overflow when EVP_PKEY_decrypt() is
-called by the application a second time with a buffer that is too small.
+CVE-2021-33512
 
-A malicious attacker who is able present SM2 content for decryption to an
-application could cause attacker chosen data to overflow the buffer by up to a
-maximum of 62 bytes altering the contents of other data held after the
-buffer, possibly changing application behaviour or causing the application to
-crash. The location of the buffer is application dependent but is typically
-heap allocated.
+> - Reflected XSS in various spots. Reported by Calum Hutton.
 
-OpenSSL versions 1.1.1k and below are affected by this issue. Users of these
-versions should upgrade to OpenSSL 1.1.1l.
+CVE-2021-33507
 
-OpenSSL 1.0.2 is not impacted by this issue.
+> - XSS vulnerability in CMFDiffTool. Reported by Igor Margitich.
 
-OpenSSL 3.0 alpha/beta releases are also affected but this issue will be
-addressed before the final release.
+CVE-2021-33513
 
-This issue was reported to OpenSSL on 12th August 2021 by John Ouyang. The fix
-was developed by Matt Caswell.
+> - Stored XSS from user fullname. Reported by Tino Kautschke.
 
-Read buffer overruns processing ASN.1 strings (CVE-2021-3712)
-=============================================================
+CVE-2021-33508 issued, but I forgot that the original reporter already reserved CVE-2021-3313 which is public now with his report.  My bad.
 
-Severity: Moderate
+> - Blind SSRF via feedparser accessing an internal URL. Reported by 
+> Subodh Kumar Shree.
+The reporter prefered to request the CVE for this one, so waiting to 
+hear back.
+> - Server Side Request Forgery via event ical URL. Reported by 
+> MisakiKata and David Miller.
 
-ASN.1 strings are represented internally within OpenSSL as an ASN1_STRING
-structure which contains a buffer holding the string data and a field holding
-the buffer length. This contrasts with normal C strings which are repesented as
-a buffer for the string data which is terminated with a NUL (0) byte.
+CVE-2021-33510
 
-Although not a strict requirement, ASN.1 strings that are parsed using OpenSSL's
-own "d2i" functions (and other similar parsing functions) as well as any string
-whose value has been set with the ASN1_STRING_set() function will additionally
-NUL terminate the byte array in the ASN1_STRING structure.
+> - Server Side Request Forgery via lxml parser. Reported by MisakiKata 
+> and David Miller.
 
-However, it is possible for applications to directly construct valid ASN1_STRING
-structures which do not NUL terminate the byte array by directly setting the
-"data" and "length" fields in the ASN1_STRING array. This can also happen by
-using the ASN1_STRING_set0() function.
+CVE-2021-33511
 
-Numerous OpenSSL functions that print ASN.1 data have been found to assume that
-the ASN1_STRING byte array will be NUL terminated, even though this is not
-guaranteed for strings that have been directly constructed. Where an application
-requests an ASN.1 structure to be printed, and where that ASN.1 structure
-contains ASN1_STRINGs that have been directly constructed by the application
-without NUL terminating the "data" field, then a read buffer overrun can occur.
+>
+> A hotfix package has been created at 
+> https://pypi.org/project/Products.PloneHotfix20210518/
+> The fixes will be incorporated in future release Plone 5.2.5.
+>
+-- 
+Maurits van Rees https://maurits.vanrees.org/
 
-The same thing can also occur during name constraints processing of certificates
-(for example if a certificate has been directly constructed by the application
-instead of loading it via the OpenSSL parsing functions, and the certificate
-contains non NUL terminated ASN1_STRING structures). It can also occur in the
-X509_get1_email(), X509_REQ_get1_email() and X509_get1_ocsp() functions.
 
-If a malicious actor can cause an application to directly construct an
-ASN1_STRING and then process it through one of the affected OpenSSL functions
-then this issue could be hit. This might result in a crash (causing a Denial of
-Service attack). It could also result in the disclosure of private memory
-contents (such as private keys, or sensitive plaintext).
-
-OpenSSL versions 1.1.1k and below are affected by this issue. Users of these
-versions should upgrade to OpenSSL 1.1.1l.
-
-OpenSSL versions 1.0.2y and below are affected by this issue. However OpenSSL
-1.0.2 is out of support and no longer receiving public updates. Premium support
-customers of OpenSSL 1.0.2 should upgrade to 1.0.2za. Other users should upgrade
-to 1.1.1l.
-
-An initial instance of this issue in the X509_aux_print() function was reported
-to OpenSSL on 18th July 2021 by Ingo Schwarze. The bugfix was developed by Ingo
-Schwarze and first publicly released in OpenBSD-current on 10th July 2021 and
-subsequently in OpenSSL on 20th July 2021 (commit d9d838ddc). Subsequent
-analysis by David Benjamin on 17th August 2021 identified more instances of the
-same bug. Additional analysis was performed by Matt Caswell. Fixes for the
-additional instances of this issue were developed by Matt Caswell.
-
-Note
-====
-
-OpenSSL 1.0.2 is out of support and no longer receiving public updates. Extended
-support is available for premium support customers:
-https://www.openssl.org/support/contracts.html
-
-OpenSSL 1.1.0 is out of support and no longer receiving updates of any kind.
-The impact of these issues on OpenSSL 1.1.0 has not been analysed.
-
-Users of these versions should upgrade to OpenSSL 1.1.1.
-
-References
-==========
-
-URL for this Security Advisory:
-https://www.openssl.org/news/secadv/20210824.txt
-
-Note: the online version of the advisory may be updated with additional details
-over time.
-
-For details of OpenSSL severity classifications please see:
-https://www.openssl.org/policies/secpolicy.html
