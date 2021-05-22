@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1976" "Thursday" "14" "May" "2015" "10:39:42" "+0300" "DaKnOb" "daknob.mac@gmail.com" "<8F31836E-B883-469C-A4D4-54A1C91DA217@gmail.com>" "55" "Re: [oss-security] Request 2 CVE-IDs for Zeus Voting System" nil nil nil "5" "2015051407:39:42" "[oss-security] Request 2 CVE-IDs for Zeus Voting System" (number mark "        daknob.mac@g May 14   55/1976  " thread-indent "\"Re: [oss-security] Request 2 CVE-IDs for Zeus Voting System\"\n") "<20150514071347.GE889@lakka.kapsi.fi>" ("<63E299CE-40BE-4F1D-BFC0-5278B8E51C57@gmail.com>" "<20150514071347.GE889@lakka.kapsi.fi>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2497" "Saturday" "22" "May" "2021" "13:34:10" "+0200" "Maurits van Rees" "maurits@vanrees.org" nil "77" "Re: [oss-security] Plone security hotfix 20210518" nil nil nil "5" nil nil (number mark "U       maurits@vanr May 22   77/2497  " thread-indent "\"Re: [oss-security] Plone security hotfix 20210518\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Plone security hotfix 20210518" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22226 invoked by uid 550); 14 May 2015 07:39:58 -0000
+Received: (qmail 22345 invoked by uid 550); 22 May 2021 15:45:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,87 +11,107 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22199 invoked from network); 14 May 2015 07:39:57 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=content-type:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=6IGA2WQq5Kg6W3eIsViowMC25WvItJZjrtNm/CJfNx4=;
-        b=Z+pS7V4Klpdu7UEzrN93K0x8El4s/GiRFk6Yekmsr/ej8HeFI0prseVS8BgqgIV6oy
-         NO8erKzDpyc5/Vw37LzyW/Sj5Gn3cnJAvWoOimMACykylMIurwvwLQHoIIgGkOMVQTt2
-         yMaMaDkN8gIoX7EC+ffEtMNymakaYDQAs8/rnOEPwT440/D2WsHyfdpWuuLLUXsB/Q56
-         BYaUj8aEK1F/25bd/bDJ6cepSZBVzj/jsBQzGWImbzeeC5ytOddT7qEmeZGt2RgFpN+3
-         e2+bSgTqKtJULrbfhaidaJl6TnfzgVgGx6Lx9/AywZ6PHaG7LZD9zPffgeQ2bX9V1XfK
-         iPsg==
-X-Received: by 10.180.37.101 with SMTP id x5mr21637596wij.74.1431589186096;
-        Thu, 14 May 2015 00:39:46 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (1.0)
-X-Mailer: iPhone Mail (12B440)
-In-Reply-To: <20150514071347.GE889@lakka.kapsi.fi>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <8F31836E-B883-469C-A4D4-54A1C91DA217@gmail.com>
-References: <63E299CE-40BE-4F1D-BFC0-5278B8E51C57@gmail.com> <20150514071347.GE889@lakka.kapsi.fi>
-Cc: OSS Security List <oss-security@lists.openwall.com>
-Date: Thu, 14 May 2015 10:39:42 +0300
-From: DaKnOb <daknob.mac@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Request 2 CVE-IDs for Zeus Voting System
-To: Henri Salo <henri@nerv.fi>
+Received: (qmail 20147 invoked from network); 22 May 2021 11:34:30 -0000
+X-Virus-Scanned: amavisd-new at heinlein-support.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vanrees.org; s=MBO0001;
+	t=1621683256;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=5CX+ns020C5J1/qQ1QpYiHV9zoOLZsp1fjJyq80xLrU=;
+	b=XQjRjC+jWDhy0WUQGigPCNXNBhDjghqbM70Zvs05oi0qy1maO4UQMdRQ4qEbGfp7e9OuEL
+	MWZqMJWTeEo4kTY7buL9n/d9uQ/cRIIndViQQrboJXS1ZGM/J3i6T1L8o1RvM74OY/491b
+	kdsbxjGA4T5pXKQawlirPDtqw9Yq/NflGa7f1XlK0h26JJ4L31//+5IlF3o3vwJq1S7jkT
+	Ci3Nd0CfuDC+50rZ55XO07dodexgTEbM6l+hvj2INObVklADouSVrGrQJr3CL3QE0VBK3A
+	ExlObesU8zViJoVBJUA1qp+aJWhSJ7V1U+YPCoztShfe5sgj+DVaDmglBRGimg==
+To: oss-security@lists.openwall.com
+References: <0919707c-0f29-ac46-35f5-d6890faf0f4e@vanrees.org>
+From: Maurits van Rees <maurits@vanrees.org>
+Message-ID: <dbbd5c0a-cebb-dfed-3c21-967513642d38@vanrees.org>
+Date: Sat, 22 May 2021 13:34:10 +0200
+MIME-Version: 1.0
+In-Reply-To: <0919707c-0f29-ac46-35f5-d6890faf0f4e@vanrees.org>
+Content-Type: multipart/alternative;
+ boundary="------------2855B2E14ACCF0F89A70733A"
+Content-Language: en-US
+X-MBO-SPAM-Probability: 
+Subject: Re: [oss-security] Plone security hotfix 20210518
 
-Thank you for your interest, replies inline.=20
+--------------2855B2E14ACCF0F89A70733A
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Antonios A. Chariton
+CVE numbers inline below. Thanks.
 
-> On 14 =CE=9C=CE=B1=CE=90 2015, at 10:13, Henri Salo <henri@nerv.fi> wrote:
->=20
->> On Wed, May 13, 2015 at 07:09:49PM +0300, DaKnOb wrote:
->> Zeus (https://github.com/grnet/zeus) is a fork of Helios that is actively
->> developed by GRNET (http://www.grnet.gr/) and is considered to be used in
->> Greek Elections (starts with small and rolls out to larger elections).
->=20
-> Really? They are seriously considering open source application in the ele=
-ctions?
+On 21/05/2021 16:07, Maurits van Rees wrote:
+> A Plone security hotfix was released on Tuesday, May 18 2021.
+> For details, see https://plone.org/security/hotfix/20210518
+> Most CVE numbers are not yet issued. I will request them from Mitre 
+> shortly.
+>
+> BTW, I am following the instructions at 
+> https://oss-security.openwall.org/wiki/mailing-lists/oss-security#cve-requests 
+> to first post to this list, then request CVEs at Mitre, then reply to 
+> my own post.
+> I don't see many other people doing it in this order. Is that page 
+> still accurate?
+>
+> Versions Affected: All supported Plone versions (4.3.20 and any 
+> earlier 4.3.x version, 5.2.4 and any earlier 5.x version).
+>
+> Versions Not Affected: None. Earlier versions may be affected, but the 
+> hotfix has not been tested on them.
+>
+> The patch addresses several security issues:
+>
+> - Remote Code Execution via traversal in expressions. Reported by 
+> David Miller. CVE-2021-32633.
+> - Writing arbitrary files via docutils and Python Script. Reported by 
+> Calum Hutton.
 
-Yes, the prime minister rejected the software but their argument is that it=
-'s open source and anyone can verify the code.=20
+CVE-2021-33509
 
-> Is there english news about this?
+> - Various information disclosures: mostly installation logs. Reported 
+> by Calum Hutton. CVE-2021-21360 and CVE-2021-21336.
+> - Stored XSS from file upload (svg, html). Reported separately by Emir 
+> Cüneyt Akkutlu and Tino Kautschke.
 
-I will try to find some. So far the software was used in the university ele=
-ctions (across Greece for important decisions, within universities for dean=
- / ...)
+CVE-2021-33512
 
-> Have they ordered or requested real security
-> audits for this product?
+> - Reflected XSS in various spots. Reported by Calum Hutton.
 
-Of course not, their argument is that "It is mathematically proven that nob=
-ody can alter the votes" yet they forget the huge stack from processor erro=
-rs all the way up to code errors (as I have proved to exist).
+CVE-2021-33507
 
-> Do you know if there is official contact person who I
-> could give my (free) services to get this codebase secured.
+> - XSS vulnerability in CMFDiffTool. Reported by Igor Margitich.
 
-I believe in the website https://zeus.grnet.gr/ there are emails but since =
-it's Open Source and you offer your services for free, I believe it is a lo=
-t better if you do this on GitHub repo because:
+CVE-2021-33513
 
-1. Everybody can see that you have contributed to this.
-2. Everybody can see your findings and do not use this software unless all =
-bugs are closed.=20
-3. They are easily trackable and assignable to their developers.=20
-4. If they don't do it, people can fork the code and use your opened issues=
- to make a secure copy of it.
-5. [...]
+> - Stored XSS from user fullname. Reported by Tino Kautschke.
 
-> I have some
-> resources from our company, which I probably can assign to audit this for=
- a few
-> days.
+CVE-2021-33508 issued, but I forgot that the original reporter already reserved CVE-2021-3313 which is public now with his report.  My bad.
 
-I believe that would be great!
+> - Blind SSRF via feedparser accessing an internal URL. Reported by 
+> Subodh Kumar Shree.
+The reporter prefered to request the CVE for this one, so waiting to 
+hear back.
+> - Server Side Request Forgery via event ical URL. Reported by 
+> MisakiKata and David Miller.
 
->=20
-> --=20
-> Henri Salo
+CVE-2021-33510
+
+> - Server Side Request Forgery via lxml parser. Reported by MisakiKata 
+> and David Miller.
+
+CVE-2021-33511
+
+>
+> A hotfix package has been created at 
+> https://pypi.org/project/Products.PloneHotfix20210518/
+> The fixes will be incorporated in future release Plone 5.2.5.
+>
+-- 
+Maurits van Rees https://maurits.vanrees.org/
+
+
+--------------2855B2E14ACCF0F89A70733A--
