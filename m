@@ -1,444 +1,313 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/02/3
-Message-ID: <97D7257C-2D75-4DD8-AEE8-B06DEDADB7A6@oracle.com>
-Date: Tue, 2 Mar 2021 18:13:44 +0000
-From: John Haxby <john.haxby@...cle.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Multiple GRUB2 vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/25/1
+Message-ID: <CAMMGaruFZnpyZd958Lckk=eVPgMQHf+-Bhth_p2xTW=2bJcgig@mail.gmail.com>
+Date: Tue, 25 May 2021 15:18:22 +0800
+From: Mart111n <mmmart11nnnnn@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-3564 Linux Bluetooth device initialization implementation bug
 Content-Type: text/plain; charset=utf-8
 
-On 2021-02-23 we notified the distros list about multiple grub vulnerabilities.  This is the formal announcement sent to grub-devel which explains in a little more detail what has been done.
+Hello there,
 
-jch
+Our team (BlockSec) found an implementation bug that resides in the kernel
+BlueTooth subsystem when the HCI device initialization fails. It can lead
+to unexpected results, like double-free memory corruption vulnerability.
+
+=*=*=*=*=*=*=*=*=  BUG DETAILS  =*=*=*=*=*=*=*=*=
+
+This implementation bug is inside hci_dev_do_open() function.
+
+static int hci_dev_do_open(struct hci_dev *hdev)
+{
+...
+    } else {
+        /* Init failed, cleanup */
+        flush_work(&hdev->tx_work);
+        flush_work(&hdev->cmd_work);  // {1}
+        flush_work(&hdev->rx_work);   // {2}
+
+        skb_queue_purge(&hdev->cmd_q);
+        skb_queue_purge(&hdev->rx_q);
+
+        if (hdev->flush)
+          hdev->flush(hdev);
+
+        if (hdev->sent_cmd) {
+          kfree_skb(hdev->sent_cmd);
+          hdev->sent_cmd = NULL;
+        }
+...
+}
+
+The purpose of flush_work(struct work_struct *work) is to wait for the
+accomplishment of the work_struct. Hence, the accomplishment of the code
+flush_work(&hdev->cmd_work) {1} means the cmd_work is finished. However, we
+discover an implementation bug that can result in activating hci_cmd_work()
+even the hdev->cmd_work has already been flushed {2}.
+
+The process is as follows:
+hci_rx_work() -> hci_event_packet() -> hci_event_packet() ->
+hci_cmd_complete_evt() -> queue_work(hdev->workqueue, &hdev->cmd_work)
+
+We found this implementation bug can lead to double-free memory corruption,
+which resulted from a data race of the hdev->sent_cmd. Here is the code
+snippet for this race.
+
+static void hci_cmd_work(struct work_struct *work)
+{
+...
+    if (atomic_read(&hdev->cmd_cnt)) {
+        skb = skb_dequeue(&hdev->cmd_q);
+        if (!skb)
+            return;
+
+        kfree_skb(hdev->sent_cmd);
+
+        hdev->sent_cmd = skb_clone(skb, GFP_KERNEL);
+...
+}
 
 
-> Begin forwarded message:
-> 
-> From: Daniel Kiper <daniel.kiper@...cle.com>
-> Subject: [SECURITY PATCH 000/117] Multiple GRUB2 vulnerabilities - 2021/03/02 round
-> Date: 2 March 2021 at 18:00:56 GMT
-> To: grub-devel@....org
-> [snip]
+We use thread-A to represent hci_dev_do_open() function and the thread-B
+for hci_cmd_work().
+The normal sequence should be like this:
 
-> Hi all,
-> 
-> The BootHole vulnerability [1][2] announced last year encouraged many people to
-> take a closer look at the security of boot process in general and the GRUB
-> bootloader in particular. Due to that, during past few months we were getting
-> reports of, and also discovering various security flaws in the GRUB ourselves.
-> You can find the list of most severe ones which got CVEs assigned at the end of
-> this message. The patch bundle fixing all these issues in the upstream GRUB
-> contains 117 patches.
-> 
-> In addition, we have been working on a generation number based revocation
-> scheme termed UEFI Secure Boot Advanced Targeting (SBAT) [3]. This will require
-> an UEFI dbx release and resigning all the artifacts -- shim, GRUB, kernel,
-> etc. -- needed to boot the system. This is the same as we did for the BootHole
-> series of vulnerabilities, but the SBAT work is designed to make this process
-> much less painful in the future.
-> 
-> Details of exactly what needs updating will be provided by the respective
-> distros and vendors when updates become available. Here [4] we are listing at
-> least some links to the messaging known at the time of this posting.
-> 
-> It is important to know that shim and SBAT development is still ongoing.
-> 
-> Full mitigation against all the CVEs will require an updated UEFI revocation
-> list (dbx) which, in at least some cases, will not allow Secure Boot with
-> today's boot artifacts. Vendor shims may explicitly permit known older boot
-> artifacts to boot. At some stage, the dbx on new hardware will be updated.
-> 
-> Updated GRUB2, shim and other boot artifacts from all the affected vendors will
-> be made available when the embargo lifts or some time thereafter. An updated
-> dbx from the various affected vendors will also ship, although possibly not at
-> the same time. The new Microsoft dbx will be provided for download here [5].
-> 
-> I am posting all the GRUB2 upstream patches which fixes all security bugs found
-> and reported up until now. Major Linux distros carry or will carry soon one
-> form or another of these patches. Now all the GRUB2 upstream patches are in
-> the GRUB2 git repository [6] too.
-> 
-[snip]
-> 
-> Daniel
-> 
-> [1] https://lists.gnu.org/archive/html/grub-devel/2020-07/msg00034.html
-> 
-> [2] https://www.eclypsium.com/2020/07/29/theres-a-hole-in-the-boot/
-> 
-> [3] https://github.com/rhboot/shim/blob/main/SBAT.md
-> 
-> [4] Canonical: https://wiki.ubuntu.com/SecurityTeam/KnowledgeBase/GRUB2SecureBootBypass2021
->    Debian:    https://www.debian.org/security/2021-GRUB-UEFI-SecureBoot
->    Red Hat:   https://access.redhat.com/security/vulnerabilities/RHSB-2021-003
->    SUSE:      https://www.suse.com/support/kb/doc/?id=000019892
-> 
-> [5] https://uefi.org/revocationlistfile
-> 
-> [6] https://git.savannah.gnu.org/gitweb/?p=grub.git&view=view+git+repository
->    https://git.savannah.gnu.org/git/grub.git
-> 
-> *******************************************************************************
-> 
-> CVE-2020-14372 grub2: The acpi command allows privileged user to load crafted
->               ACPI tables when Secure Boot is enabled
-> CWE-184
-> 7.5/CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:C/C:H/I:H/A:H
-> 
-> GRUB2 enables the use of the command acpi even when Secure Boot is signaled by
-> the firmware. An attacker with local root privileges to can drop a small SSDT
-> in /boot/efi and modify grub.cfg to instruct grub to load said SSDT. The SSDT
-> then gets run by the kernel and it overwrites the kernel lock down configuration
-> enabling the attacker to load unsigned kernel modules and kexec unsigned code.
-> 
-> Reported-by: Máté Kukri
-> 
-> *******************************************************************************
-> 
-> CVE-2020-25632 grub2: Use-after-free in rmmod command
-> CWE-416
-> 7.5/CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:C/C:H/I:H/A:H
-> 
-> The rmmod implementation for GRUB2 is flawed, allowing an attacker to unload
-> a module used as dependency without checking if any other dependent module is
-> still loaded. This leads to an use-after-free scenario possibly allowing an
-> attacker to execute arbitrary code and by-pass Secure Boot protections.
-> 
-> Reported-by: Chris Coulson (Canonical)
-> 
-> *******************************************************************************
-> 
-> CVE-2020-25647 grub2: Out-of-bound write in grub_usb_device_initialize()
-> CWE-787
-> 6.9/CVSS:3.1/AV:P/AC:H/PR:H/UI:N/S:C/C:H/I:H/A:H
-> 
-> grub_usb_device_initialize() is called to handle USB device initialization. It
-> reads out the descriptors it needs from the USB device and uses that data to
-> fill in some USB data structures. grub_usb_device_initialize() performs very
-> little bounds checking and simply assumes the USB device provides sane values.
-> This behavior can trigger memory corruption. If properly exploited, this would
-> lead to arbitrary code execution allowing the attacker to by-pass Secure Boot
-> mechanism.
-> 
-> Reported-by: Joseph Tartaro (IOActive) and Ilja van Sprundel (IOActive)
-> 
-> *******************************************************************************
-> 
-> CVE-2020-27749 grub2: Stack buffer overflow in grub_parser_split_cmdline
-> CWE-121
-> 7.5/CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:C/C:H/I:H/A:H
-> 
-> grub_parser_split_cmdline() expands variable names present in the supplied
-> command line in to their corresponding variable contents and uses a 1kB stack
-> buffer for temporary storage without sufficient bounds checking. If the
-> function is called with a command line that references a variable with a
-> sufficiently large payload, it is possible to overflow the stack buffer,
-> corrupt the stack frame and control execution. An attacker may use this to
-> circumvent Secure Boot protections.
-> 
-> Reported-by: Chris Coulson (Canonical)
-> 
-> *******************************************************************************
-> 
-> CVE-2020-27779 grub2: The cutmem command allows privileged user to remove
->               memory regions when Secure Boot is enabled
-> CWE-285
-> 7.5/CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:C/C:H/I:H/A:H
-> 
-> The GRUB2's cutmem command does not honor Secure Boot locking. This allows an
-> privileged attacker to remove address ranges from memory creating an
-> opportunity to circumvent Secure Boot protections after proper triage about
-> grub's memory layout.
-> 
-> Reported-by: Teddy Reed
-> 
-> *******************************************************************************
-> 
-> CVE-2021-3418 - grub2: GRUB 2.05 reintroduced CVE-2020-15705
-> CWE-281
-> 6.4/CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:U/C:H/I:H/A:H
-> 
-> The GRUB2 upstream reintroduced the CVE-2020-15705. This refers to a distro
-> specific flaw which made upstream in the mentioned version.
-> 
-> If certificates that signed GRUB2 are installed into db, GRUB2 can be booted
-> directly. It will then boot any kernel without signature validation. The booted
-> kernel will think it was booted in Secure Boot mode and will implement lock
-> down, yet it could have been tampered.
-> 
-> This flaw only affects upstream and distributions using the shim_lock verifier.
-> 
-> Reported-by: Dimitri John Ledkov (Canonical)
-> 
-> *******************************************************************************
-> 
-> CVE-2021-20225 grub2: Heap out-of-bounds write in short form option parser
-> CWE-787
-> 7.5/CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:C/C:H/I:H/A:H
-> 
-> The option parser in GRUB2 allows an attacker to write past the end of
-> a heap-allocated buffer by calling certain commands with a large number
-> of specific short forms of options.
-> 
-> Reported-by: Daniel Axtens (IBM)
-> 
-> *******************************************************************************
-> 
-> CVE-2021-20233 grub2: Heap out-of-bound write due to mis-calculation of
->               space required for quoting
-> CWE-787
-> 7.5/CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:C/C:H/I:H/A:H
-> 
-> There's a flaw on GRUB2 menu rendering code setparam_prefix() in the menu
-> rendering code performs a length calculation on the assumption that expressing
-> a quoted single quote will require 3 characters, while it actually requires
-> 4 characters. This allow an attacker to corrupt memory by one byte for each
-> quote in the input.
-> 
-> Reported-by: Daniel Axtens (IBM)
-> 
-> *******************************************************************************
-> 
-> acinclude.m4                                       |  38 ++-
-> bootstrap.conf                                     |   3 +-
-> conf/Makefile.common                               |   2 +
-> conf/Makefile.extra-dist                           |   5 +
-> configure.ac                                       |  44 ++-
-> docs/grub-dev.texi                                 |  27 ++
-> docs/grub.texi                                     | 106 +++++--
-> grub-core/Makefile.am                              |   7 +-
-> grub-core/Makefile.core.def                        |  14 +-
-> grub-core/bus/usb/usb.c                            |  15 +-
-> grub-core/commands/acpi.c                          |  15 +-
-> grub-core/commands/efi/loadbios.c                  |  16 +-
-> grub-core/commands/efi/shim_lock.c                 | 133 ---------
-> grub-core/commands/extcmd.c                        |  23 ++
-> grub-core/commands/hashsum.c                       |  15 +-
-> grub-core/commands/hdparm.c                        |   6 +-
-> grub-core/commands/i386/wrmsr.c                    |   5 +-
-> grub-core/commands/iorw.c                          |  19 +-
-> grub-core/commands/ls.c                            |   2 +-
-> grub-core/commands/memrw.c                         |  19 +-
-> grub-core/commands/menuentry.c                     |   2 +-
-> grub-core/commands/minicmd.c                       |   7 +-
-> grub-core/commands/probe.c                         |   6 +-
-> grub-core/commands/setpci.c                        |   8 +-
-> grub-core/disk/cryptodisk.c                        |   8 +-
-> grub-core/disk/ldm.c                               |  62 +++-
-> grub-core/disk/lvm.c                               | 101 ++++++-
-> grub-core/fs/affs.c                                |  18 +-
-> grub-core/fs/btrfs.c                               |   7 +-
-> grub-core/fs/fshelp.c                              |  12 +
-> grub-core/fs/hfs.c                                 |   7 +-
-> grub-core/fs/hfsplus.c                             |  27 ++
-> grub-core/fs/jfs.c                                 |  19 +-
-> grub-core/fs/nilfs2.c                              |  56 ++--
-> grub-core/fs/sfs.c                                 |   9 +-
-> grub-core/fs/zfs/zfs.c                             |  43 ++-
-> grub-core/fs/zfs/zfsinfo.c                         |   4 +-
-> grub-core/gdb/gdb.c                                |  32 ++-
-> grub-core/gfxmenu/gui_label.c                      |   4 +
-> grub-core/gfxmenu/gui_list.c                       |   2 +-
-> grub-core/gfxmenu/gui_progress_bar.c               |   3 +
-> grub-core/io/gzio.c                                |  44 ++-
-> grub-core/io/lzopio.c                              |   4 -
-> grub-core/kern/buffer.c                            | 117 ++++++++
-> grub-core/kern/command.c                           |  24 ++
-> grub-core/kern/dl.c                                |   9 +
-> grub-core/kern/efi/efi.c                           |   1 +
-> grub-core/kern/efi/init.c                          |  66 +++++
-> grub-core/kern/efi/mm.c                            |  19 +-
-> grub-core/kern/efi/sb.c                            |  79 +++++
-> grub-core/kern/lockdown.c                          |  84 ++++++
-> grub-core/kern/main.c                              |   4 +
-> grub-core/kern/misc.c                              | 110 ++++++-
-> grub-core/kern/mm.c                                |   2 +-
-> grub-core/kern/parser.c                            | 203 ++++++++-----
-> grub-core/kern/partition.c                         |   5 +-
-> grub-core/{commands => kern}/verifiers.c           |   8 +-
-> grub-core/lib/arg.c                                |  13 +
-> .../lib/gnulib-patches/fix-null-state-deref.patch  |  12 +
-> .../gnulib-patches/fix-regcomp-uninit-token.patch  |  15 +
-> .../gnulib-patches/fix-regexec-null-deref.patch    |  12 +
-> .../lib/gnulib-patches/fix-uninit-structure.patch  |  11 +
-> .../lib/gnulib-patches/fix-unused-value.patch      |  14 +
-> grub-core/lib/libgcrypt/mpi/mpicoder.c             |   5 +-
-> grub-core/lib/syslinux_parse.c                     |   6 +-
-> grub-core/lib/zstd/zstd_decompress.c               |   2 +-
-> grub-core/loader/arm/linux.c                       |   6 +-
-> grub-core/loader/efi/fdt.c                         |   4 +-
-> grub-core/loader/i386/bsd.c                        |   4 +-
-> grub-core/loader/xnu.c                             |  65 +++--
-> grub-core/mmap/mmap.c                              |  15 +-
-> grub-core/net/net.c                                |   9 +-
-> grub-core/net/tftp.c                               |   1 +
-> grub-core/normal/completion.c                      |  10 +-
-> grub-core/script/execute.c                         |   7 +-
-> grub-core/term/gfxterm.c                           |   9 +
-> grub-core/video/efi_gop.c                          |  25 +-
-> grub-core/video/fb/fbfill.c                        |  17 +-
-> grub-core/video/fb/video_fb.c                      |  60 ++--
-> grub-core/video/readers/jpeg.c                     |  26 ++
-> include/grub/buffer.h                              | 144 ++++++++++
-> include/grub/command.h                             |   5 +
-> include/grub/dl.h                                  |   8 +-
-> include/grub/efi/api.h                             |  19 ++
-> include/grub/efi/sb.h                              |   3 +
-> include/grub/extcmd.h                              |   7 +
-> include/grub/hfsplus.h                             |   2 +
-> include/grub/kernel.h                              |   3 +-
-> include/grub/lockdown.h                            |  44 +++
-> include/grub/misc.h                                |  16 ++
-> include/grub/stack_protector.h                     |  30 ++
-> include/grub/usb.h                                 |  10 +-
-> include/grub/util/install.h                        |  11 +-
-> include/grub/util/mkimage.h                        |   1 +
-> include/grub/verify.h                              |   9 +-
-> util/glue-efi.c                                    |  14 +-
-> util/grub-editenv.c                                |   8 +-
-> util/grub-install-common.c                         |  22 +-
-> util/grub-install.c                                |   4 +
-> util/grub-mkimage.c                                |  21 +-
-> util/grub.d/30_os-prober.in                        |   5 +-
-> util/mkimage.c                                     | 317 +++++++++++----------
-> 102 files changed, 2115 insertions(+), 666 deletions(-)
-> 
-> Alex Burmashev (1):
->      templates: Disable the os-prober by default
-> 
-> Chris Coulson (8):
->      commands/hashsum: Fix a memory leak
->      kern/parser: Fix a memory leak
->      kern/parser: Introduce process_char() helper
->      kern/parser: Introduce terminate_arg() helper
->      kern/parser: Refactor grub_parser_split_cmdline() cleanup
->      kern/buffer: Add variable sized heap buffer
->      kern/parser: Fix a stack buffer overflow
->      kern/efi: Add initial stack protector implementation
-> 
-> Daniel Axtens (35):
->      script/execute: Fix NULL dereference in grub_script_execute_cmdline()
->      commands/ls: Require device_name is not NULL before printing
->      script/execute: Avoid crash when using "$#" outside a function scope
->      lib/arg: Block repeated short options that require an argument
->      script/execute: Don't crash on a "for" loop with no items
->      commands/menuentry: Fix quoting in setparams_prefix()
->      kern/misc: Always set *end in grub_strtoull()
->      video/readers/jpeg: Catch files with unsupported quantization or Huffman tables
->      video/readers/jpeg: Catch OOB reads/writes in grub_jpeg_decode_du()
->      video/readers/jpeg: Don't decode data before start of stream
->      term/gfxterm: Don't set up a font with glyphs that are too big
->      fs/fshelp: Catch impermissibly large block sizes in read helper
->      fs/hfsplus: Don't fetch a key beyond the end of the node
->      fs/hfsplus: Don't use uninitialized data on corrupt filesystems
->      fs/hfs: Disable under lockdown
->      fs/sfs: Fix over-read of root object name
->      fs/jfs: Do not move to leaf level if name length is negative
->      fs/jfs: Limit the extents that getblk() can consider
->      fs/jfs: Catch infinite recursion
->      fs/nilfs2: Reject too-large keys
->      fs/nilfs2: Don't search children if provided number is too large
->      fs/nilfs2: Properly bail on errors in grub_nilfs2_btree_node_lookup()
->      io/gzio: Bail if gzio->tl/td is NULL
->      io/gzio: Add init_dynamic_block() clean up if unpacking codes fails
->      io/gzio: Catch missing values in huft_build() and bail
->      io/gzio: Zero gzio->tl/td in init_dynamic_block() if huft_build() fails
->      disk/lvm: Don't go beyond the end of the data we read from disk
->      disk/lvm: Don't blast past the end of the circular metadata buffer
->      disk/lvm: Bail on missing PV list
->      disk/lvm: Do not crash if an expected string is not found
->      disk/lvm: Do not overread metadata
->      disk/lvm: Sanitize rlocn->offset to prevent wild read
->      disk/lvm: Do not allow a LV to be it's own segment's node's LV
->      fs/btrfs: Validate the number of stripes/parities in RAID5/6
->      fs/btrfs: Squash some uninitialized reads
-> 
-> Daniel Kiper (1):
->      util/grub-install: Fix NULL pointer dereferences
-> 
-> Darren Kenny (36):
->      mmap: Fix memory leak when iterating over mapped memory
->      net/net: Fix possible dereference to of a NULL pointer
->      net/tftp: Fix dangling memory pointer
->      kern/parser: Fix resource leak if argc == 0
->      kern/efi: Fix memory leak on failure
->      kern/efi/mm: Fix possible NULL pointer dereference
->      gnulib/regexec: Resolve unused variable
->      gnulib/regcomp: Fix uninitialized token structure
->      gnulib/argp-help: Fix dereference of a possibly NULL state
->      gnulib/regexec: Fix possible null-dereference
->      gnulib/regcomp: Fix uninitialized re_token
->      io/lzopio: Resolve unnecessary self-assignment errors
->      zstd: Initialize seq_t structure fully
->      kern/partition: Check for NULL before dereferencing input string
->      disk/ldm: Fix memory leak on uninserted lv references
->      disk/cryptodisk: Fix potential integer overflow
->      hfsplus: Check that the volume name length is valid
->      zfs: Fix possible negative shift operation
->      zfs: Fix possible integer overflows
->      zfsinfo: Correct a check for error allocating memory
->      affs: Fix memory leaks
->      libgcrypt/mpi: Fix possible unintended sign extension
->      libgcrypt/mpi: Fix possible NULL dereference
->      syslinux: Fix memory leak while parsing
->      normal/completion: Fix leaking of memory when processing a completion
->      commands/probe: Fix a resource leak when probing disks
->      video/efi_gop: Remove unnecessary return value of grub_video_gop_fill_mode_info()
->      video/fb/fbfill: Fix potential integer overflow
->      video/fb/video_fb: Fix multiple integer overflows
->      video/fb/video_fb: Fix possible integer overflow
->      video/readers/jpeg: Test for an invalid next marker reference from a jpeg file
->      gfxmenu/gui_list: Remove code that coverity is flagging as dead
->      loader/bsd: Check for NULL arg up-front
->      loader/xnu: Fix memory leak
->      util/grub-editenv: Fix incorrect casting of a signed value
->      util/glue-efi: Fix incorrect use of a possibly negative value
-> 
-> Dimitri John Ledkov (2):
->      grub-install-common: Add --sbat option
->      shim_lock: Only skip loading shim_lock verifier with explicit consent
-> 
-> Javier Martinez Canillas (15):
->      kern: Add lockdown support
->      kern/lockdown: Set a variable if the GRUB is locked down
->      efi: Lockdown the GRUB when the UEFI Secure Boot is enabled
->      efi: Use grub_is_lockdown() instead of hardcoding a disabled modules list
->      acpi: Don't register the acpi command when locked down
->      mmap: Don't register cutmem and badram commands when lockdown is enforced
->      commands: Restrict commands that can load BIOS or DT blobs when locked down
->      commands/setpci: Restrict setpci command when locked down
->      commands/hdparm: Restrict hdparm command when locked down
->      gdb: Restrict GDB access when locked down
->      loader/xnu: Don't allow loading extension and packages when locked down
->      docs: Document the cutmem command
->      dl: Only allow unloading modules that are not dependencies
->      usb: Avoid possible out-of-bound accesses caused by malicious devices
->      util/mkimage: Remove unused code to add BSS section
-> 
-> Marco A Benatto (5):
->      verifiers: Move verifiers API to kernel image
->      efi: Move the shim_lock verifier to the GRUB core
->      disk/ldm: Make sure comp data is freed before exiting from make_vg()
->      loader/xnu: Free driverkey data when an error is detected in grub_xnu_writetree_toheap()
->      kern/mm: Fix grub_debug_calloc() compilation error
-> 
-> Paulo Flabiano Smorigo (3):
->      disk/ldm: If failed then free vg variable too
->      zfs: Fix resource leaks while constructing path
->      loader/xnu: Check if pointer is NULL before using it
-> 
-> Peter Jones (7):
->      util/mkimage: Use grub_host_to_target32() instead of grub_cpu_to_le32()
->      util/mkimage: Always use grub_host_to_target32() to initialize PE stack and heap stuff
->      util/mkimage: Unify more of the PE32 and PE32+ header set-up
->      util/mkimage: Reorder PE optional header fields set-up
->      util/mkimage: Improve data_size value calculation
->      util/mkimage: Refactor section setup to use a helper
->      util/mkimage: Add an option to import SBAT metadata into a .sbat section
-> 
-> Thomas Frauendorfer | Miray Software (4):
->      kern/misc: Split parse_printf_args() into format parsing and va_list handling
->      kern/misc: Add STRING type for internal printf() format handling
->      kern/misc: Add function to check printf() format against expected format
->      gfxmenu/gui: Check printf() format in the gui_progress_bar and gui_label
+----------------------------------------------------------------------------------------------------
+thread-A                               |  thread-B
+                                       |  kfree_skb(hdev->sent_cmd); (FREE)
+                                       |
+                                       |  hdev->sent_cmd = skb_clone(skb,
+GFP_KERNEL); (WRITE)
+if (hdev->sent_cmd) { (READ)           |
+                                       |
+kfree_skb(hdev->sent_cmd); (FREE)      |
+                                       |
+hdev->sent_cmd = NULL; (WRITE)         |
+                                       |
+----------------------------------------------------------------------------------------------------
+
+However, if the sequence is like this:
+
+----------------------------------------------------------------------------------------------------
+thread-A                               |  thread-B
+                                       |  kfree_skb(hdev->sent_cmd); (FREE)
+if (hdev->sent_cmd) { (READ)           |
+                                       |
+kfree_skb(hdev->sent_cmd); (FREE)      |
+                                       |  hdev->sent_cmd = skb_clone(skb,
+GFP_KERNEL); (WRITE)
+                                       |
+hdev->sent_cmd = NULL; (WRITE)         |
+                                       |
+----------------------------------------------------------------------------------------------------
+
+If the FREE operation in thread-A is before WRITE operation in thread-B, it
+can lead to double-free memory corruption in the kernel.
+
+
+=*=*=*=*=*=*=*=*=  BUG EFFECTS  =*=*=*=*=*=*=*=*=
+
+For now, we can successfully trigger the vulnerability to corrupt the
+kernel memory and thus crash the kernel. Although this bug is related to
+Bluetooth device initialization, the attacker can trigger it without extra
+privileges.
+
+That is because the Linux kernel does not ask for the privilege when
+attaching the HCI device as the attached device is default set to
+HCI_AUTO_OFF state. This bug is inside in the very first attaching
+procedure and requires no syscalls.
+
+The crash log is presented below.
+
+==================================================================
+[  500.906562] hci0 type 1 len 3
+[  500.904986] BUG: KASAN: use-after-free in kfree_skb+0x33/0x1c0
+[  500.904986] Read of size 4 at addr ffff888009d3599c by task
+kworker/u5:0/54
+[  500.904986]
+[  500.909997] CPU: 0 PID: 54 Comm: kworker/u5:0 Not tainted 5.11.11+ #16
+[  500.909997] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+1.13.0-1ubuntu1.1 04/01/2014
+[  500.909997] Workqueue: hci0 hci_power_on
+[  500.909997] Call Trace:
+[  500.909997]  dump_stack+0x16c/0x1be
+[  500.924511]  print_address_description+0x7b/0x3a0
+[  500.924511]  __kasan_report+0x14e/0x200
+[  500.924511]  ? kfree_skb+0x33/0x1c0
+[  500.924511]  ? skb_queue_purge+0x193/0x1c0
+[  500.924511]  kasan_report+0x47/0x60
+[  500.924511]  ? skb_queue_purge+0x193/0x1c0
+[  500.924511]  check_memory_region+0x2e2/0x330
+[  500.924511]  kfree_skb+0x33/0x1c0
+[  500.924511]  hci_dev_do_open+0x1008/0x1570
+[  500.924511]  ? printk+0x62/0x83
+[  500.924511]  hci_power_on+0x183/0x580
+[  500.924511]  ? strscpy+0x7f/0x240
+[  500.924511]  process_one_work+0x722/0x1150
+[  500.924511]  worker_thread+0xb5c/0x17d0
+[  500.924511]  ? process_one_work+0x1150/0x1150
+[  500.924511]  kthread+0x2fc/0x320
+[  500.924511]  ? process_one_work+0x1150/0x1150
+[  500.924511]  ? kthread_unuse_mm+0x1d0/0x1d0
+[  500.924511]  ret_from_fork+0x22/0x30
+[  500.924511]
+[  500.924511] Allocated by task 273:
+[  500.924511]  ____kasan_kmalloc+0xc6/0x100
+[  500.924511]  kmem_cache_alloc+0xfe/0x1f0
+[  500.924511]  skb_clone+0x1b5/0x360
+[  500.924511]  hci_cmd_work+0x15d/0x350
+[  500.924511]  process_one_work+0x722/0x1150
+[  500.924511]  worker_thread+0xb5c/0x17d0
+[  500.924511]  kthread+0x2fc/0x320
+[  500.924511]  ret_from_fork+0x22/0x30
+[  500.924511]
+[  500.924511] Freed by task 273:
+[  500.924511]  kasan_set_track+0x3d/0x70
+[  500.924511]  kasan_set_free_info+0x1f/0x40
+[  500.924511]  ____kasan_slab_free+0x10e/0x140
+[  500.924511]  kmem_cache_free+0xca/0x210
+[  500.924511]  hci_cmd_work+0x150/0x350
+[  500.924511]  process_one_work+0x722/0x1150
+[  500.924511]  worker_thread+0xb5c/0x17d0
+[  500.924511]  kthread+0x2fc/0x320
+[  500.924511]  ret_from_fork+0x22/0x30
+[  500.924511]
+[  500.924511] The buggy address belongs to the object at ffff888009d358c0
+[  500.924511]  which belongs to the cache skbuff_head_cache of size 232
+[  500.924511] The buggy address is located 220 bytes inside of
+[  500.924511]  232-byte region [ffff888009d358c0, ffff888009d359a8)
+[  500.924511] The buggy address belongs to the page:
+[  500.924511] page:00000000b691648a refcount:1 mapcount:0
+mapping:0000000000000000 index:0x0 pfn:0x9d35
+[  500.924511] flags: 0x100000000000200(slab)
+[  500.924511] raw: 0100000000000200 dead000000000100 dead000000000122
+ffff888006d64640
+[  500.924511] raw: 0000000000000000 00000000000c000c 00000001ffffffff
+0000000000000000
+[  500.924511] page dumped because: kasan: bad access detected
+[  500.924511]
+[  500.924511] Memory state around the buggy address:
+[  500.924511]  ffff888009d35880: fc fc fc fc fc fc fc fc fa fb fb fb fb fb
+fb fb
+[  500.924511]  ffff888009d35900: fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+fb fb
+[  500.924511] >ffff888009d35980: fb fb fb fb fb fc fc fc fc fc fc fc fc fc
+fc fc
+[  500.924511]                             ^
+[  500.924511]  ffff888009d35a00: fa fb fb fb fb fb fb fb fb fb fb fb fb fb
+fb fb
+[  500.924511]  ffff888009d35a80: fb fb fb fb fb fb fb fb fb fb fb fb fb fc
+fc fc
+[  500.924511]
+==================================================================
+[  500.924511] Disabling lock debugging due to kernel taint
+[  501.014277]
+==================================================================
+[  501.014929] BUG: KASAN: double-free or invalid-free in
+hci_dev_do_open+0x1008/0x1570
+[  501.014929]
+[  501.014929] CPU: 0 PID: 54 Comm: kworker/u5:0 Tainted: G    B
+  5.11.11+ #16
+[  501.014929] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+1.13.0-1ubuntu1.1 04/01/2014
+[  501.014929] Workqueue: hci0 hci_power_on
+[  501.014929] Call Trace:
+[  501.014929]  dump_stack+0x16c/0x1be
+[  501.014929]  ? hci_dev_do_open+0x1008/0x1570
+[  501.014929]  ? hci_dev_do_open+0x1008/0x1570
+[  501.014929]  print_address_description+0x7b/0x3a0
+[  501.014929]  ? hci_dev_do_open+0x1008/0x1570
+[  501.014929]  ? hci_dev_do_open+0x1008/0x1570
+[  501.014929]  kasan_report_invalid_free+0x54/0xd0
+[  501.014929]  ____kasan_slab_free+0xe7/0x140
+[  501.014929]  kmem_cache_free+0xca/0x210
+[  501.014929]  ? hci_dev_do_open+0x1008/0x1570
+[  501.014929]  hci_dev_do_open+0x1008/0x1570
+[  501.014929]  ? printk+0x62/0x83
+[  501.014929]  hci_power_on+0x183/0x580
+[  501.014929]  ? strscpy+0x7f/0x240
+[  501.014929]  process_one_work+0x722/0x1150
+[  501.014929]  worker_thread+0xb5c/0x17d0
+[  501.014929]  ? process_one_work+0x1150/0x1150
+[  501.014929]  kthread+0x2fc/0x320
+[  501.014929]  ? process_one_work+0x1150/0x1150
+[  501.014929]  ? kthread_unuse_mm+0x1d0/0x1d0
+[  501.014929]  ret_from_fork+0x22/0x30
+[  501.014929]
+[  501.014929] Allocated by task 273:
+[  501.014929]  ____kasan_kmalloc+0xc6/0x100
+[  501.014929]  kmem_cache_alloc+0xfe/0x1f0
+[  501.014929]  skb_clone+0x1b5/0x360
+[  501.014929]  hci_cmd_work+0x15d/0x350
+[  501.014929]  process_one_work+0x722/0x1150
+[  501.014929]  worker_thread+0xb5c/0x17d0
+[  501.014929]  kthread+0x2fc/0x320
+[  501.014929]  ret_from_fork+0x22/0x30
+[  501.014929]
+[  501.014929] Freed by task 273:
+[  501.014929]  kasan_set_track+0x3d/0x70
+[  501.066803]  kasan_set_free_info+0x1f/0x40
+[  501.066803]  ____kasan_slab_free+0x10e/0x140
+[  501.066803]  kmem_cache_free+0xca/0x210
+[  501.066803]  hci_cmd_work+0x150/0x350
+[  501.066803]  process_one_work+0x722/0x1150
+[  501.066803]  worker_thread+0xb5c/0x17d0
+[  501.066803]  kthread+0x2fc/0x320
+[  501.066803]  ret_from_fork+0x22/0x30
+[  501.066803]
+[  501.066803] The buggy address belongs to the object at ffff888009d358c0
+[  501.066803]  which belongs to the cache skbuff_head_cache of size 232
+[  501.066803] The buggy address is located 0 bytes inside of
+[  501.066803]  232-byte region [ffff888009d358c0, ffff888009d359a8)
+[  501.066803] The buggy address belongs to the page:
+[  501.066803] page:00000000b691648a refcount:1 mapcount:0
+mapping:0000000000000000 index:0x0 pfn:0x9d35
+[  501.066803] flags: 0x100000000000200(slab)
+[  501.066803] raw: 0100000000000200 dead000000000100 dead000000000122
+ffff888006d64640
+[  501.066803] raw: 0000000000000000 00000000000c000c 00000001ffffffff
+0000000000000000
+[  501.066803] page dumped because: kasan: bad access detected
+[  501.066803]
+[  501.066803] Memory state around the buggy address:
+[  501.066803]  ffff888009d35780: fa fb fb fb fb fb fb fb fb fb fb fb fb fb
+fb fb
+[  501.066803]  ffff888009d35800: fb fb fb fb fb fb fb fb fb fb fb fb fb fc
+fc fc
+[  501.066803] >ffff888009d35880: fc fc fc fc fc fc fc fc fa fb fb fb fb fb
+fb fb
+[  501.066803]                                            ^
+[  501.066803]  ffff888009d35900: fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+fb fb
+[  501.066803]  ffff888009d35980: fb fb fb fb fb fc fc fc fc fc fc fc fc fc
+fc fc
+[  501.066803]
+==================================================================
+
+=*=*=*=*=*=*=*=*=  Timeline  =*=*=*=*=*=*=*=*=
+
+2021-05-17: Bug reported to security () kernel org and linux-distros
+() vs openwall org
+
+2021-05-25: CVE-2021-3564 assigned
+
+We informed security@...nel.org on May 17, 2021. Now the 7-day embargo
+period is over, we are being asked to bring the issue to public.
+
+Since our patch has not been applied to upstream yet, we will release
+the POC later.
+
+=*=*=*=*=*=*=*=*=  Credit  =*=*=*=*=*=*=*=*=
+
+HaoXiong@...ckSec Team
+
+LinMa@...cksec Team
+
+syzkaller
+
+
+
+Best regards.
+
+Mart111n
 
