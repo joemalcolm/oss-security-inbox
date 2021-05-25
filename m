@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2172" "Thursday" "14" "September" "2017" "07:02:46" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<696458.548397885-sendEmail@localhost>" "65" "[oss-security] mp3gain: invalid memory write in copy_mp (mpglibDBL/interface.c)" nil nil nil "9" "2017091407:02:46" "[oss-security] mp3gain: invalid memory write in copy_mp (mpglibDBL/interface.c)" (number mark "U       ago@gentoo.o Sep 14   65/2172  " thread-indent "\"[oss-security] mp3gain: invalid memory write in copy_mp (mpglibDBL/interface.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1467" "Tuesday" "25" "May" "2021" "10:17:06" "+0200" "Emond Papegaaij" "papegaaij@apache.org" nil "36" "[oss-security] CVE-2021-23937: Apache Wicket: DNS proxy and possible amplification attack" nil nil nil "5" nil nil (number mark "U       papegaaij@ap May 25   36/1467  " thread-indent "\"[oss-security] CVE-2021-23937: Apache Wicket: DNS proxy and possible amplification attack\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-23937: Apache Wicket: DNS proxy and possible amplification attack" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21994 invoked by uid 550); 14 Sep 2017 07:03:04 -0000
+Received: (qmail 7878 invoked by uid 550); 25 May 2021 09:24:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,77 +12,54 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21912 invoked from network); 14 Sep 2017 07:03:03 -0000
-Message-ID: <696458.548397885-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Thu, 14 Sep 2017 07:02:46 +0000
+Received: (qmail 24569 invoked from network); 25 May 2021 08:17:29 -0000
+X-Gm-Message-State: AOAM5314gADSHeWTBRQMzfGdISx6eU8Scuo99b4Sz4fDIOg6hYS7eHP2
+	c9crXFn2u3pbBB+2c4aV44O2FWPhwFkD7pNk8ZY=
+X-Google-Smtp-Source: ABdhPJxHOMW2p4J9tNn9TXORpCZaA5B5c1NM4H+KBth8ur2ON9I0ha4u+smrnlXhhvByyhfzDqAUjC0jT2cDOAA/b7k=
+X-Received: by 2002:a05:6638:1382:: with SMTP id w2mr30924681jad.78.1621930637279;
+ Tue, 25 May 2021 01:17:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-309371.439580904"
-Subject: [oss-security] mp3gain: invalid memory write in copy_mp (mpglibDBL/interface.c)
-
-------MIME delimiter for sendEmail-309371.439580904
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+From: Emond Papegaaij <papegaaij@apache.org>
+Date: Tue, 25 May 2021 10:17:06 +0200
+X-Gmail-Original-Message-ID: <CAGXsc+aitBM=VqO-TjvY2GjpdUsDiBtDrHS_24Tp7=ZVwi3hqg@mail.gmail.com>
+Message-ID: <CAGXsc+aitBM=VqO-TjvY2GjpdUsDiBtDrHS_24Tp7=ZVwi3hqg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2021-23937: Apache Wicket: DNS proxy and possible amplification attack
 
 Description:
-mp3gain is a program to analyze and adjust MP3 files to same volume.
 
-The fuzz was done via the aacgain command-line tool which uses mp3gain which bundles an old-modified version of mpg123 called mpglibDBL.
-The upstream project seems to be dead, so the issue wasn’t communicated to them.
+A DNS proxy and possible amplification attack vulnerability in
+WebClientInfo of Apache Wicket allows an attacker to trigger arbitrary
+DNS lookups from the server when the X-Forwarded-For header is not
+properly sanitized. This DNS lookup can be engineered to overload an
+internal DNS server or to slow down request processing of the Apache
+Wicket application causing a possible denial of service on either the
+internal infrastructure or the web application itself.
 
-The complete ASan output of the issue:
+This issue affects Apache Wicket Apache Wicket 9.x version 9.2.0 and
+prior versions; Apache Wicket 8.x version 8.11.0 and prior versions;
+Apache Wicket 7.x version 7.17.0 and prior versions and Apache Wicket
+6.x version 6.2.0 and later versions.
 
-# aacgain -f $FILE
-ASAN:DEADLYSIGNAL
-=================================================================
-==15053==ERROR: AddressSanitizer: SEGV on unknown address 0x104db559357d (pc 0x7f06b1457af7 bp 0x7ffed0c702a0 sp 0x7ffed0c6fa30 T0)
-    #0 0x7f06b1457af6  (/usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/libasan.so.3+0x5caf6)
-    #1 0x8a8ad0 in copy_mp /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/interface.c:188
-    #2 0x8ad77e in decodeMP3 /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mpglibDBL/interface.c:538
-    #3 0x43e767 in main /var/tmp/portage/media-sound/aacgain-1.9/work/aacgain-1.9/mp3gain/mp3gain.c:2262
-    #4 0x7f06b0770680 in __libc_start_main (/lib64/libc.so.6+0x20680)
-    #5 0x4426c8 in _start (/usr/bin/aacgain+0x4426c8)
+Mitigation:
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV (/usr/lib/gcc/x86_64-pc-linux-gnu/6.4.0/libasan.so.3+0x5caf6) 
-==15053==ABORTING
+Sanitize the X-Forwarded-For header by running an Apache Wicket
+application behind a reverse HTTP proxy. This proxy should put the
+client IP address in the X-Forwarded-For header and not pass through
+the contents of the header as received by the client.
 
-Affected version:
-1.5.2
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
+The application developers are recommended to upgrade to:
+- Apache Wicket 7.18.0
+<https://wicket.apache.org/news/2021/04/06/wicket-7.18.0-released.html>
+- Apache Wicket 8.12.0
+<https://wicket.apache.org/news/2021/03/31/wicket-8.12.0-released.html>
+- Apache Wicket 9.0.0
+<https://wicket.apache.org/news/2021/03/30/wicket-9.3.0-released.html>
 
 Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
 
-CVE:
-CVE-2017-14412
+Apache Wicket would like to thank Jonathan Juursema from
+Topicus.Healthcare for reporting this issue.
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00352-aacgain-invalidwrite-copy_mp
-
-Timeline:
-2017-08-28: bug discovered
-2017-09-08: blog post about the issue
-2017-09-13: CVE Assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/09/08/mp3gain-invalid-memory-write-in-copy_mp-mpglibdblinterface-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-309371.439580904--
-
+Apache Wicket Team
