@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2926" "Wednesday" "28" "September" "2016" "15:15:39" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160928191539.9875452E01B@smtpvbsrv1.mitre.org>" "70" "[oss-security] Re: CVE Request: docker2aci: Path traversals present in image converting" "^Cc:" nil nil "9" "2016092819:15:39" "[oss-security] Re: CVE Request: docker2aci: Path traversals present in image converting" (number mark "U       cve-assign@m Sep 28   70/2926  " thread-indent "\"[oss-security] Re: CVE Request: docker2aci: Path traversals present in image converting\"\n") "<5EDB84F4B23F5B4DB6500A89258280E0BFB7FF@EX02.corp.qihoo.net>" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2584" "Tuesday" "25" "May" "2021" "15:51:38" "+0200" "Daniel Beck" "ml@beckweb.net" nil "65" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "5" nil nil (number mark "U       ml@beckweb.n May 25   65/2584  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11615 invoked by uid 550); 28 Sep 2016 19:15:51 -0000
+Received: (qmail 21794 invoked by uid 550); 25 May 2021 13:51:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,83 +11,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11597 invoked from network); 28 Sep 2016 19:15:51 -0000
-In-Reply-To: <5EDB84F4B23F5B4DB6500A89258280E0BFB7FF@EX02.corp.qihoo.net>
-Message-Id: <20160928191539.9875452E01B@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Wed, 28 Sep 2016 15:15:39 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: docker2aci: Path traversals present in image converting
-To: zhangkaixiang@360.cn
+Received: (qmail 21758 invoked from network); 25 May 2021 13:51:49 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.15\))
+Message-Id: <B2FAC626-36E6-404C-ADE2-9C47AD1095A9@beckweb.net>
+Date: Tue, 25 May 2021 15:51:38 +0200
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3445.104.15)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1621950709;47cf9a43;
+X-HE-SMSGID: 1llXT8-0003g7-8x
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-> https://github.com/appc/docker2aci/issues/201
-> 
-> tmpLayerPath := path.Join(tmpDir, layerIDs[i])
-> 
->          tmpLayerPath += ".tar"
-> 
->          layerFile, err := extractEmbeddedLayer(lb.file, layerIDs[i], tmpLayerPath)// without essential check
->                                                                                    // for layerpath, may breakout
->                                                                                    // tmpDir.
-> 
-> Build or downloading a malicious image as an archive file, containing
-> some layer files with relative names, like "../../../etc/ filename",
-> as well modifying the content of some corresponding json file related
-> to it. then running docker2aci to convert the docker's image to aci.
-> Overview of the content of malicious image:
-> 
-> ../../../etc
-> 
-> ../../../etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625
-> 
-> ../../../etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625/json
-> 
-> ../../../etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625/VERSION
-> 
-> ../../../etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625/layer.tar
-> 
-> 
-> and logs:
->          tmpDir:  /tmp/docker2aci-878549369
-> tmpLayerPath:  /etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625.tar
-> Extracting ../../../etc
-> 
-> then check the results:  ls /etc/*.tar
-> /etc/0ca87058da90257128ca83a1d0e1bd55236f43c75b915120c70498af6ad37625.tar
+The following releases contain fixes for security vulnerabilities:
 
->> From: Alex Crawford
->> 
->> Our initial analysis confirms there is a path traversal bug in the
->> docker layer conversion library. However, due to the specific nature
->> of how a malicious image must be crafted to exploit this bug (i.e.,
->> invalid format), the attack vector is largely mitigated ... the bug
->> has limited impact and will not affect typical usage of docker2aci.
+* Filesystem Trigger Plugin 0.41
+* Markdown Formatter Plugin 0.2.0
+* Nuget Plugin 1.1
+* URLTrigger Plugin 0.49
 
-Use CVE-2016-7569.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2021-05-25/
 
-iQIcBAEBCAAGBQJX7BZQAAoJEHb/MwWLVhi2j48QAJMAr2JXCS3f8oYQ0pClZyyv
-giFGlitDkJiq0ieJWq8YGeS/5319DiGYSuDftn/eQMMgTdTAO5pNDQMi6B/SO/e0
-g5Wjl3clShOTT8uYdLrsSA3MzG8XENseOsjWBJRrXifPdEPQWCP1iTsyKewIEa1O
-LRe04oGRW7snRbhsAsf4cgY2F4MW4yrlx0Gyi+6uZg4YQS4/FUaGcWtlM6+ax0Up
-+S5QSrX8SMRSczLsPod+gD9x/x+SufrmmXGVU9iyFt55SYV1ZIVVG5IPsijU7uvT
-YHEV/1kX4cLQ0QY7LByd7Pcaoz+njMV7XRYi3HuYyKg85TRxITfw8cXXaHEUDimi
-c7hPSyKZ3vttWC70v+ACaKk22IGP5LoRLsNUUngWJgY+TEpNgFIAKOVVnJZyWzGB
-ROvmEYA+9cO6Niyfs/nh2G+ASDbnlyaHUDya5Ps85kw5n782eKTUe+aWXZPuYpqa
-DwT5tqLmp3UpEQTfjKRvOQG5KYvBKWPV3kPz2yBVybEFUSZgRIiaSXqazqpjNIyZ
-ZW4TXEVGANjtuSrSUHe59AKChShEC4ZSop1WtKcDwQBg45YLsuudrZ3vtV6YybJR
-Ndd4sEU0H3CWAKcaytnbu6IDcCucCfHwkXeel3LdX2MVLw10yRNvOwBA1mCBdBs3
-isEgR9ts2t3oSQlVYbB2
-=oBJi
------END PGP SIGNATURE-----
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-2339 / CVE-2021-21657
+Filesystem Trigger Plugin 0.40 and earlier does not configure its XML
+parser to prevent XML external entity (XXE) attacks.
+
+This allows attackers with Job/Configure permission or otherwise able to
+control the contents of an XML file being polled for changes to have
+Jenkins parse a crafted XML document that uses external entities for
+extraction of secrets from the polling Jenkins controller or agent,
+server-side request forgery, or denial-of-service attacks.
+
+
+SECURITY-2340 / CVE-2021-21658
+Nuget Plugin 1.0 and earlier does not configure its XML parser to prevent
+XML external entity (XXE) attacks. This XML parser is used for the "Build
+on NuGet updates" feature.
+
+This allows attackers with the ability to control the contents of the
+`packages.config` file in a workspace to have Jenkins parse a crafted XML
+document that uses external entities for extraction of secrets from the
+Jenkins controller or server-side request forgery.
+
+
+SECURITY-2341 / CVE-2021-21659
+URLTrigger Plugin 0.48 and earlier does not configure its XML parser to
+prevent XML external entity (XXE) attacks.
+
+This allows attackers with Job/Configure permission or otherwise able to
+control the contents of an URL to an XML document being examined for
+changes to have Jenkins parse a crafted XML document that uses external
+entities for extraction of secrets from the polling Jenkins controller or
+agent, server-side request forgery, or denial-of-service attacks.
+
+
+SECURITY-2198 / CVE-2021-21660
+Markdown Formatter Plugin 0.1.0 and earlier uses a Markdown library to
+parse Markdown that does not escape crafted link target URLs.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with the ability to edit any description rendered
+using the configured markup formatter.
+
