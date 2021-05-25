@@ -1,23 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/19/3
-Message-ID: <f8bd21d5-0fd8-d02d-f4c9-b54deff5a097@apache.org>
-Date: Thu, 18 Nov 2021 23:04:45 +0000
-From: Siddharth Wagle <swagle@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/25/3
+Message-Id: <B2FAC626-36E6-404C-ADE2-9C47AD1095A9@beckweb.net>
+Date: Tue, 25 May 2021 15:51:38 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-39232: Apache Ozone: Missing admin check for SCM related admin commands 
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-Certain admin related SCM commands can be executed by any authenticated users, not just by admins. 
+The following releases contain fixes for security vulnerabilities:
 
-This issue is being tracked as HDDS-4530
+* Filesystem Trigger Plugin 0.41
+* Markdown Formatter Plugin 0.2.0
+* Nuget Plugin 1.1
+* URLTrigger Plugin 0.49
 
-Mitigation:
 
-Upgrade to Apache Ozone release version 1.2.0
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2021-05-25/
 
-Credit:
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-    Apache Ozone would like to thank Wei-Chiu Chuang for reporting this issue.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-2339 / CVE-2021-21657
+Filesystem Trigger Plugin 0.40 and earlier does not configure its XML
+parser to prevent XML external entity (XXE) attacks.
+
+This allows attackers with Job/Configure permission or otherwise able to
+control the contents of an XML file being polled for changes to have
+Jenkins parse a crafted XML document that uses external entities for
+extraction of secrets from the polling Jenkins controller or agent,
+server-side request forgery, or denial-of-service attacks.
+
+
+SECURITY-2340 / CVE-2021-21658
+Nuget Plugin 1.0 and earlier does not configure its XML parser to prevent
+XML external entity (XXE) attacks. This XML parser is used for the "Build
+on NuGet updates" feature.
+
+This allows attackers with the ability to control the contents of the
+`packages.config` file in a workspace to have Jenkins parse a crafted XML
+document that uses external entities for extraction of secrets from the
+Jenkins controller or server-side request forgery.
+
+
+SECURITY-2341 / CVE-2021-21659
+URLTrigger Plugin 0.48 and earlier does not configure its XML parser to
+prevent XML external entity (XXE) attacks.
+
+This allows attackers with Job/Configure permission or otherwise able to
+control the contents of an URL to an XML document being examined for
+changes to have Jenkins parse a crafted XML document that uses external
+entities for extraction of secrets from the polling Jenkins controller or
+agent, server-side request forgery, or denial-of-service attacks.
+
+
+SECURITY-2198 / CVE-2021-21660
+Markdown Formatter Plugin 0.1.0 and earlier uses a Markdown library to
+parse Markdown that does not escape crafted link target URLs.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with the ability to edit any description rendered
+using the configured markup formatter.
 
