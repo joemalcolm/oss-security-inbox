@@ -1,32 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/10/2
-Message-ID: <1622544225.CLGKNUAI@httpd.apache.org>
-Date: Wed, 09 Jun 2021 23:11:00 +0200
-From: Christophe JAILLET <jailletc36@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/25/4
+Message-ID: <CAJVHGGx-d9_mBWHU=hr74CsrsxvLwsq65+ZHhOGiKU3qgkw=nQ@mail.gmail.com>
+Date: Tue, 25 May 2021 21:32:35 +0800
+From: PengHui Li <penghui@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2019-17567: Apache httpd: mod_proxy_wstunnel tunneling of non Upgraded connections
+Subject: CVE-2021-22160 Apache Pulsar Information Disclosure
 Content-Type: text/plain; charset=utf-8
 
+CVE-2021-22160 Apache Pulsar Information Disclosure
 
-CVE-2019-17567: mod_proxy_wstunnel tunneling of non Upgraded connections
-
-Severity: moderate
-
-Vendor: The Apache Software Foundation
+Severity: High
 
 Versions Affected:
-httpd 2.4.6 to 2.4.46
+Apache Pulsar < 2.7.1
 
 Description:
-Apache HTTP Server 2.4.6 to 2.4.46
-mod_proxy_wstunnel configured on an URL that is not necessarily Upgraded by the origin server was tunneling the whole connection regardless, thus allowing for subsequent requests on the same connection to pass through with no HTTP validation, authentication or authorization possibly configured.
-    
+If Apache Pulsar is configured to authenticate clients using tokens
+based on JSON Web Tokens (JWT), the signature of the token is not
+validated if the algorithm of the presented token is set to "none".
+This allows an attacker to connect to Pulsar instances as any user
+(incl. admins).
+
 Mitigation:
-Configure mod_proxy_wstunnel on URLs that are always Upgraded by the origin server
+Users of the affected versions should apply one of the following
+mitigations:
+Upgrade to Apache Pulsar 2.7.1 or later
 
 Credit:
-Reported by Mikhail Egorov (<0ang3el gmail.com>)
-
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html
+This issue was identified by Peter Stöckli
 
