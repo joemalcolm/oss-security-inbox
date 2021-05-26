@@ -1,28 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/17/11
-Message-ID: <YFIdcSI6NvjeqFKp@kroah.com>
-Date: Wed, 17 Mar 2021 16:17:05 +0100
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/26/5
+Message-ID: <9046efe7-a418-af68-910a-39e955f5fad9@redhat.com>
+Date: Wed, 26 May 2021 18:25:58 +0200
+From: Paolo Bonzini <pbonzini@...hat.com>
+To: oss-security@...ts.openwall.com, evn@...gle.com
+Subject: Re: CVE-2021-22543 - /dev/kvm LPE
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 17, 2021 at 07:45:59PM +0530, Rohit Keshri wrote:
-> Hello Team,
+On 26/05/21 15:48, Eduardo' Vela" <Nava> wrote:
+> Hi
 > 
-> A denial of service vulnerability was found in n_tty_receive_char_special
-> in drivers/tty/n_tty.c of the Linux kernel.  In this flaw a local attacker
-> with a normal user privilege could delay the loop (due to a changing
-> ldata->read_head, and a missing sanity check) and cause a threat to the
-> system availability.
+> I believe this still doesn't have a patch, but +Paolo Bonzini 
+> <mailto:pbonzini@...hat.com> has been working on one for some time now.
 > 
-> 'CVE-2021-20219' was assigned by Red Hat.
+> Please use CVE-2021-22543 to refer to this issue.
 > 
-> Acknowledgements: Evgenii Shatokhin (Virtuozzo Research LLC)
+> Advisory: 
+> https://github.com/google/security-research/security/advisories/GHSA-7wq5-phmq-m584 
+> <https://github.com/google/security-research/security/advisories/GHSA-7wq5-phmq-m584>
 
-Really?  Not the tools or people that reported this issue and fixed it
-in the community back in 2018?
+Indeed, I had to put that on hold :( but I'm aware of the issue and I'm 
+working on it.
 
-{sigh}
+Paolo
 
-greg k-h
