@@ -1,52 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/06/1
-Message-ID: <cig3328s95zvj3.fsf@u54e1add816995a33037d.ant.amazon.com>
-Date: Wed, 6 Jan 2021 11:59:28 -0800
-From: Anthony Liguori <aliguori@...zon.com>
-To: <oss-security@...ts.openwall.com>
-CC: <security@...nel.org>, <luolikang@...ocus.com>
-Subject: A security vulnerability in linux kernel 5.8.10
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/26/3
+Message-ID: <CAFswPa_QOAgf6wgng+KJcPJKykNG3zQWyQfiXWHj8VK0W+_tKg@mail.gmail.com>
+Date: Wed, 26 May 2021 15:48:22 +0200
+From: "Eduardo' Vela\" <Nava>" <evn@...gle.com>
+To: oss-security@...ts.openwall.com, Paolo Bonzini <pbonzini@...hat.com>
+Subject: CVE-2021-22543 - /dev/kvm LPE
 Content-Type: text/plain; charset=utf-8
 
-The following message was sent to the distros@ list.  Unfortunate the
-sender was not responsive and it's unclear if it's actually an issue.
-The report overall did not follow the policies of the list with the
-information provided.
+Hi
 
-Per the distros list policy, we've past the 14 day mark and even with a
-little extra time due to the holiday, this needs to be made public.
+I believe this still doesn't have a patch, but +Paolo Bonzini
+<pbonzini@...hat.com> has been working on one for some time now.
 
-Posting follows below.
+Please use CVE-2021-22543 to refer to this issue.
 
-Regards,
-
-Anthony Liguori
-
-Subject: A security vulnerability in linux kernel 5.8.10
-To: security@...nel.org
-Cc: linux-distros@...openwall.org
-Date: Fri, 18 Dec 2020 16:53:59 +0800
-
-���: 梵 <luolikang@...ocus.com> 
-��ʱ�: 2020�12�18� 13:23
-ռ�: 'security@...nel.org' <security@...nel.org>
-��: change the poc
-
-Sorry , please use this poc
-
-���: 梵 <luolikang@...ocus.com <mailto:luolikang@...ocus.com> > 
-��ʱ�: 2020�12�18� 11:46
-ռ�: 'security@...nel.org' <security@...nel.org
-<mailto:security@...nel.org> >
-��: A security vulnerability in linux kernel 5.8.10
-
-Hello,
-I have found a security vulnerability in linux kernel 5.8.10. When I use the
-DCCP protocol to establish a connection, the kernel will crash.
-
-My analysis are followed: When call the  ___slab_alloc function, it will
-enter the new_slab branch, and the new_slab_objects will return a normal
-freelist, but in  alloc_debug_processing, it will change the second object
-ptr in freelist to an invalid address,and then cause dos.
-
+Advisory:
+https://github.com/google/security-research/security/advisories/GHSA-7wq5-phmq-m584
 
