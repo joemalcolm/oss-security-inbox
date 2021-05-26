@@ -1,30 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/16/1
-Message-ID: <CAKQ1sVPSjUzdxyb7n7xa5bPzPV4xwXg7cgniwNeuyhg46dBjwQ@mail.gmail.com>
-Date: Sat, 16 Oct 2021 01:31:50 +0200
-From: Yann Ylavic <ylavic.dev@...il.com>
-To: Roman Medina-Heigl Hernandez <roman@...labs.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-42013: Path Traversal and Remote Code Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/26/4
+Message-ID: <20210526155535.GA26800@openwall.com>
+Date: Wed, 26 May 2021 17:55:35 +0200
+From: Solar Designer <solar@...nwall.com>
+To: "Eduardo' Vela <Nava>" <evn@...gle.com>
+Cc: oss-security@...ts.openwall.com, Paolo Bonzini <pbonzini@...hat.com>
+Subject: Re: CVE-2021-22543 - /dev/kvm LPE
 Content-Type: text/plain; charset=utf-8
 
-Hi Román,
+Hi,
 
-On Fri, Oct 15, 2021 at 8:01 PM Roman Medina-Heigl Hernandez
-<roman@...labs.com> wrote:
->
-> Re [1], I think this:
->
-> "critical: Path traversal and file disclosure vulnerability in Apache HTTP Server 2.4.49 (CVE-2021-41773)"
->
-> is still misleading and should read:
->
-> "critical: Path traversal and Remote Code Execution vulnerability in Apache HTTP Server 2.4.49 (CVE-2021-41773)"
+On Wed, May 26, 2021 at 03:48:22PM +0200, Eduardo' Vela <Nava> wrote:
+> I believe this still doesn't have a patch, but +Paolo Bonzini
+> <pbonzini@...hat.com> has been working on one for some time now.
+> 
+> Please use CVE-2021-22543 to refer to this issue.
+> 
+> Advisory:
+> https://github.com/google/security-research/security/advisories/GHSA-7wq5-phmq-m584
 
-I (for one) would argue that admins/vendors that ship a RCE-vulnerable
-custom configuration should reserve a CVE like this to notify their
-users.
-httpd does not, at least.
+To comply with the no link-only postings policy we have here, attached
+is a text export of the above web page, for archival.
 
-Cheers;
-Yann.
+Alexander
+
+View attachment "GHSA-7wq5-phmq-m584.txt" of type "text/plain" (9520 bytes)
