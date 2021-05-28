@@ -1,42 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/30/2
-Message-ID: <20210730192358.GB5486@sequoia>
-Date: Fri, 30 Jul 2021 14:23:58 -0500
-From: Tyler Hicks <code@...icks.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Pop!_OS Membership to linux-distros list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/28/2
+Message-ID: <20210528161930.hhbu5mkoub2ty653@pengutronix.de>
+Date: Fri, 28 May 2021 18:19:30 +0200
+From: Marc Kleine-Budde <mkl@...gutronix.de>
+To: Oliver Hartkopp <socketcan@...tkopp.net>
+Cc: Greg Kroah-Hartman <gregkh@...uxfoundation.org>, alex.popov@...ux.com, seth.arnold@...onical.com, steve.beattie@...onical.com, cascardo@...onical.com, oss-security@...ts.openwall.com, Norbert Slusarek <nslusarek@....net>, "David S. Miller" <davem@...emloft.net>, Jakub Kicinski <kuba@...nel.org>, security@...nel.org
+Subject: Re: Linux kernel: net/can/isotp: race condition leads to local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-On 2021-07-27 19:59:24, Solar Designer wrote:
-> Hi Jeremy,
+On 28.05.2021 17:41:03, Oliver Hartkopp wrote:
+> this patch ("can: isotp: prevent race between isotp_bind() and
+> isotp_setsockopt()") has hit Linus' tree ~36h ago:
 > 
-> On Tue, Jul 20, 2021 at 02:23:26PM -0600, Jeremy Soller wrote:
-> > 9. Have someone already on the private list, or at least someone else who has
-> > been active on oss-security for years but is not affiliated with your distro
-> > nor your organization, vouch for at least one of the people requesting
-> > membership on behalf of your distro (then that one vouched-for person will be
-> > able to vouch for others on your team, in case you'd like multiple people
-> > subscribed)
-> > 
-> > I do not know if I have contacts that are already on the linux-distros list.
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/net/can?id=2b17c400aeb44daf041627722581ade527bb3c1d
 > 
-> It can also be "someone else who has been active on oss-security for
-> years but is not affiliated".  Anyone?
-
-I recognize Jeremy's name and IRC nick (jackpot51) from a few
-discussions that we've had in the Ubuntu bug tracker and Ubuntu related
-IRC channels. Our interactions don't go very deep but they were security
-related. This was right around the time Pop!_OS would have been in
-initial development (2017, according to Wikipedia).
-
-I typically only "vouch" for people on linux-distros when I personally
-know and have worked closely with them. That's not the case with Jeremy
-but I do believe that he's in the correct line of work for membership
-purposes.
-
-Tyler
-
+> It has a CVE number and is potentially exploitable - but it was not in the
+> latest batch of stable kernels about ~4h ago.
 > 
-> Thanks,
-> 
-> Alexander
+> It was obviously not tagged properly for stable kernels but has a
+> fixes-tag:
+
+Oh - there was a change if networking stable handling:
+
+| dbbe7c962c3a docs: networking: drop special stable handling
+
+I've missed the memo, sorry.
+
+regards,
+Marc
+
+-- 
+Pengutronix e.K.                 | Marc Kleine-Budde           |
+Embedded Linux                   | https://www.pengutronix.de  |
+Vertretung West/Dortmund         | Phone: +49-231-2826-924     |
+Amtsgericht Hildesheim, HRA 2686 | Fax:   +49-5121-206917-5555 |
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
