@@ -1,23 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/20/4
-Message-ID: <30b33714-e372-c864-5111-94b8bf062b80@apache.org>
-Date: Mon, 20 Dec 2021 10:36:28 +0000
-From: Stefan Eissing <icing@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-44790: Apache HTTP Server: Possible buffer overflow when parsing multipart content in mod_lua of Apache HTTP Server 2.4.51 and earlier 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/28/1
+Message-ID: <173ce2fa-fe90-4e00-e5a3-1f3163dfe13d@hartkopp.net>
+Date: Fri, 28 May 2021 17:41:03 +0200
+From: Oliver Hartkopp <socketcan@...tkopp.net>
+To: Greg Kroah-Hartman <gregkh@...uxfoundation.org>
+Cc: mkl@...gutronix.de, alex.popov@...ux.com, seth.arnold@...onical.com, steve.beattie@...onical.com, cascardo@...onical.com, oss-security@...ts.openwall.com, Norbert Slusarek <nslusarek@....net>, "David S. Miller" <davem@...emloft.net>, Jakub Kicinski <kuba@...nel.org>, security@...nel.org
+Subject: Re: Linux kernel: net/can/isotp: race condition leads to local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Severity: high
+Hello Greg,
 
-Description:
+this patch ("can: isotp: prevent race between isotp_bind() and 
+isotp_setsockopt()") has hit Linus' tree ~36h ago:
 
-A carefully crafted request body can cause a buffer overflow in the mod_lua multipart parser (r:parsebody() called from Lua scripts).
-The Apache httpd team is not aware of an exploit for the vulnerabilty though it might be possible to craft one.
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/net/can?id=2b17c400aeb44daf041627722581ade527bb3c1d
 
-This issue affects Apache HTTP Server 2.4.51 and earlier.
+It has a CVE number and is potentially exploitable - but it was not in 
+the latest batch of stable kernels about ~4h ago.
 
-Credit:
+It was obviously not tagged properly for stable kernels but has a fixes-tag:
 
-Chamal
-Anonymous working with Trend Micro Zero Day Initiative
+Fixes: 921ca574cd38 ("can: isotp: add SF_BROADCAST support for 
+functional addressing")
 
+which was introduced in 5.11
+
+Thanks for taking care!
+
+Best,
+Oliver
+
+On 14.05.21 01:52, Norbert Slusarek wrote:
+> As Salvatore already mentioned, the assigned CVE ID is CVE-2021-32606.
+> The exploitation details are published in an article available on github
+> via this link:
+> https://git.io/JsYYB 
+> <https://deref-gmx.net/mail/client/ulc_0Gq1TD4/dereferrer/?redirectUrl=https%3A%2F%2Fgit.io%2FJsYYB>
+> 
+> Regards,
+> Norbert Slusarek
