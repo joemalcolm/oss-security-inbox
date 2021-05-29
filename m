@@ -1,104 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/22/11
-Message-ID: <CANfkquBFg9cU6YncwaEhFW_OcgV=NNJwpxf2WGq3r=Ax27kG4g@mail.gmail.com>
-Date: Fri, 23 Apr 2021 01:46:15 +0800
-From: r00t4dm <r00t4dm@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Malicious commits to Linux kernel as part of university study
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/29/1
+Message-ID: <YLJGrad5G0KL5Ls3@kroah.com>
+Date: Sat, 29 May 2021 15:50:37 +0200
+From: Greg Kroah-Hartman <gregkh@...uxfoundation.org>
+To: Oliver Hartkopp <socketcan@...tkopp.net>
+Cc: mkl@...gutronix.de, alex.popov@...ux.com, seth.arnold@...onical.com, steve.beattie@...onical.com, cascardo@...onical.com, oss-security@...ts.openwall.com, Norbert Slusarek <nslusarek@....net>, "David S. Miller" <davem@...emloft.net>, Jakub Kicinski <kuba@...nel.org>, security@...nel.org
+Subject: Re: Linux kernel: net/can/isotp: race condition leads to local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Fri, May 28, 2021 at 05:41:03PM +0200, Oliver Hartkopp wrote:
+> Hello Greg,
+> 
+> this patch ("can: isotp: prevent race between isotp_bind() and
+> isotp_setsockopt()") has hit Linus' tree ~36h ago:
+> 
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/net/can?id=2b17c400aeb44daf041627722581ade527bb3c1d
+> 
+> It has a CVE number and is potentially exploitable - but it was not in the
+> latest batch of stable kernels about ~4h ago.
 
-This case demonstrates that the possibility of a supply chain attack is
-very high.
-If the supply chain attack is sophisticated enough, this case may succeed.
-e.g:
+Give us a chance :)
 
-One day I committed some code, This code is a normal function.
-After Five days, I committed some code, This code also is a normal function.
+> 
+> It was obviously not tagged properly for stable kernels but has a fixes-tag:
+> 
+> Fixes: 921ca574cd38 ("can: isotp: add SF_BROADCAST support for functional
+> addressing")
+> 
+> which was introduced in 5.11
 
-...
+Now queued up, thanks.
 
-After three month, I committed it dozens of times,  But These committed
-code together to form a vulnerability.
-I don't know how to better guard against this kind of attack method,  Just
-only rely on Human code review?
-
-r00t4dm
-
-Cloud-Penetrating Arrow Lab of Meituan Corp Information Security Department
-
-
-Ariadne Conill <ariadne@...eferenced.org> 于2021年4月23日周五 上午1:23写道：
-
-> Hello,
->
-> On Thu, 22 Apr 2021, David A. Wheeler wrote:
->
-> > Peter Bex:
-> >> The university of Minnesota has been banned from making any commits to
-> >> the Linux kernel after it was found out they'd been submitting bogus
-> >> patches to the LKML to knowingly introduce security issues:
-> >> https://lore.kernel.org/linux-nfs/YH%2FfM%2FTsbmcZzwnX@kroah.com/
-> >
-> > I support research, but I personally think this work goes way beyond any
-> ethical boundaries.
-> > While I don’t know if it’s *illegal* (I’m not a lawyer!), it seems clear
-> to me that these
-> > U of MN researchers were conducting experiments on people without their
-> prior consent.
-> > In the US, experiments on people without their consent is generally
-> forbidden.
-> > These researchers did their experiment *before* even consulting their
-> Institutional Review Board (IRB),
-> > a *huge* no-no, and then their IRB approved the non-consensual
-> experiment anyway (!!!).
-> >
-> > GregKH’s response to this attack from the U of MN here:
-> > https://lore.kernel.org/linux-nfs/YH%2FfM%2FTsbmcZzwnX@kroah.com/
-> > which reads in part:
-> >> Our community welcomes developers who wish to help and enhance Linux.
-> >> That is NOT what you are attempting to do here...
-> >> Our community does not appreciate being experimented on...
-> >
-> > More discussion: https://news.ycombinator.com/item?id=26887670
-> >
-> > Peter Bex:
-> >> I don't know the scope of this research, but it could involve other OSS
-> >> projects, now or in the future, as well.  Hence this e-mail.  If you
-> feel
-> >> it's spam or needless drama, feel free to ignore.
-> >
-> > Since the researchers failed to get prior consent from the people
-> > being experimented on, I don’t think we can presume ethical behavior.
-> > I have no faith that these researchers limited their attacks.
-> > I hope they did, but I think we can take more proactive measures.
-> >
-> > I used the following shell command to search for potentially-concerning
-> commits in git:
-> >
-> > git shortlog --summary --numbered --email | grep -E '(wu000273|kjlu|@
-> umn.edu)'
-> >
-> > I recommend other OSS projects do something similar, just in case, unless
-> > we can have better verification that no other OSS projects were attacked.
-> > I welcome improved methods to find concerning proposals or patches;
-> > this is just a quick attempt to detect potential damage.
->
-> The paper says that they used throwaway Gmail accounts to submit the
-> patches.  Frustratingly, they have not identified which patches they
-> succeeded in landing in that paper.
->
-> However, the paper also claims that they generated these "hypocrite"
-> commits using an LLVM-based static analysis tool.
->
-> Which means the work introduced by Aditya is likely directly related to
-> this experiment, since it has the same "feel" to it.
->
-> By mining the LKML archive, it may be possible to find the original set of
-> patch submissions by searching for similar keywords as the messages from
-> Aditya.  If somebody can do that, then we would be able to determine at
-> least some of the emails likely to have originated the patches.
->
-> Ariadne
-
+greg k-h
