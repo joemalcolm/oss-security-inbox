@@ -1,4 +1,9 @@
-Received: (qmail 32757 invoked by uid 550); 30 Jan 2023 20:13:15 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1262" "Monday" "31" "May" "2021" "18:40:04" "+0200" "Mauro Matteo Cascella" "mcascell@redhat.com" nil "37" "[oss-security] QEMU: security issues in vhost-user-gpu" nil nil nil "5" nil nil (number mark "U       mcascell@red May 31   37/1262  " thread-indent "\"[oss-security] QEMU: security issues in vhost-user-gpu\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] QEMU: security issues in vhost-user-gpu" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 23791 invoked by uid 550); 31 May 2021 16:40:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,67 +12,82 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23932 invoked from network); 30 Jan 2023 19:58:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=markhack.com; s=dkim; h=Sender:Content-Transfer-Encoding:MIME-Version:
-	Content-Type:References:In-Reply-To:Date:To:From:Subject:Message-ID:Reply-To:
-	Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=AZIReKRyRZhBXi1Yu33Uy3pi2eJIv1okanay/hYC3KA=; b=EF2bqBzT1DRb82ZDAd/RMIrPAo
-	FlH4jXnG2/tbJoOqmnPadHiUIMOAtGrpwXxnb4uiOoJbKVgZCZ/q3L7I5EBKI91WeMCJi3jdSRiiK
-	ZhHuMhBWjYxywIccxQpbAGLlZ12BY5v4q0FM44DShevUvlxkRWvjk1UkbGJKSOe2Io5eLTE1F37NO
-	mLI3HzfFqtaZastZ7HaaEUZkLIOjFh3STrTLDpAdKQCvQj+aG85LolA/tkQSB8uaMU+ziPGfTCpRv
-	/2z3atm/0aciZpQg3CI2xJHvl9sTKPfCxih4QdNfdwngyU1FYIJxZBnjGp5sFnMNLk49XgPJujyun
-	VxoWZkmw==;
-X-Authority-Analysis: v=2.3 cv=H7JAP9Qi c=1 sm=1 tr=0
- a=UH8/iCWBfdUmbm4Ft4Vi3Q==:117 a=0LpTLZtb7PxyfqalD3XYnQ==:17
- a=IkcTkHD0fZMA:10 a=RvmDmJFTN0MA:10 a=sdm2wQysh9cA:10 a=Ntg_Zx-WAAAA:8
- a=EeEuzAbTNdrx133j8BAA:9 a=QEXdDO2ut3YA:10 a=y0XBr-qCkQwA:10
- a=hjxXh4IufaEA:10 a=bUGGqQBGB0UA:10 a=RUfouJl5KNV7104ufCm4:22
-Message-ID: <933f5586e2b664ab5fe6a7ce40c741bb92e2e412.camel@markhack.com>
-From: Mark Hack <markhack@markhack.com>
-To: oss-security@lists.openwall.com, Solar Designer <solar@openwall.com>
-Date: Mon, 30 Jan 2023 13:58:34 -0600
-In-Reply-To: <Y9gWyhCK9X8onWos@itl-email>
-References: <Y9GEU0G9N5etu+H3@sol.localdomain>
-	 <20230125214445.GA8487@openwall.com> <Y9L5/9/Oi732Y+a5@gmail.com>
-	 <ef62abb418ad781fa159cc57b2270e05b0f88d49.camel@markhack.com>
-	 <Y9gWyhCK9X8onWos@itl-email>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.5-0ubuntu1 
+Received: (qmail 23773 invoked from network); 31 May 2021 16:40:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1622479219;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=fkHLk5tWSgC0iPtXUOM7SX/+yeb7kamtGeKq8mm8fog=;
+	b=PLpxpeTQKA1dg6V3xd1TR8MMOajLKDwCRHLgP2ayK4h8TbowvRFtp3z/lqmQVzOJswc20G
+	yjOedip8IjZLP9YPR5TqAGzXFBGSdg11GRyQJCFO21glfFJcnSstd8vDHgQFgA1smcjprg
+	Xc9i6aXjDx+FsPDrTxVoEklpod68LX0=
+X-MC-Unique: 0_BGLqGmNMmgc3ZyyI4btg-1
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=fkHLk5tWSgC0iPtXUOM7SX/+yeb7kamtGeKq8mm8fog=;
+        b=i/deKXtL9Sug59768W6um2h3Vt0spXVBZszXHfBZZYPcND1PThDKXHQHSJRyPUsSWf
+         a/W/htjCLWTznj6XpyG+Ki2rKQ295icTaC/d7SKxh14VGu/f8dJBEfaqi+Ep6wWAewFD
+         +DUBKS9LWFip1TQVhBTJRLRMvWAgwAICJX6n1DIEb6exDpS0WL1ZcR/MK0KnMZ6dDN4w
+         6S6rNQLYYFo4NqDXYGRG3F+mHG1waSGT+MxfVCVsAkXw95XDjK/zerIs+ASErcnvbXuD
+         +ZiL7QM0eQKgyL3C3XkMOBc7o74YoLQOapbNGCnbflxiz5bG9YY96I9u2gS4d4bMWgD2
+         cEWQ==
+X-Gm-Message-State: AOAM53339CBKa1vsbvCDMZCaV7i1KjpL2OlmfqwqFU2+KIA8E++OgDQx
+	odSPUxtcu627shpii2fBYH+So5ejFS/PUfmS13P+h7RH14OhTFkmQew79/E3ke1iLWpqXeFEOj5
+	cfJTJiXHgtL/Qd0dRUfKoPkeY2U2R4mUfGelKv/0/2/eb
+X-Received: by 2002:a17:902:c951:b029:106:513f:58ff with SMTP id i17-20020a170902c951b0290106513f58ffmr2590279pla.37.1622479215302;
+        Mon, 31 May 2021 09:40:15 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJyZohLNr3TWOs2iyuivAyG51w1xc6+6LkKfl0b3Rc+DhiuIjsANv56MyccTs/f5xbCDoCyBi8HhJKelJ+BTr0M=
+X-Received: by 2002:a17:902:c951:b029:106:513f:58ff with SMTP id
+ i17-20020a170902c951b0290106513f58ffmr2590262pla.37.1622479215001; Mon, 31
+ May 2021 09:40:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-EN-UserInfo: 9a4d7356ca47e8f598bc04fc7024e3f1:931c98230c6409dcc37fa7e93b490c27
-X-EN-AuthUser: markhack@markhack.com
-Sender:  Mark Hack <markhack@markhack.com>
-X-EN-OrigIP: 75.81.95.68
-X-EN-OrigHost: 075-081-095-068.res.spectrum.com
-Subject: Re: [oss-security] Data operand dependent timing on Intel and Arm
- CPUs
+From: Mauro Matteo Cascella <mcascell@redhat.com>
+Date: Mon, 31 May 2021 18:40:04 +0200
+Message-ID: <CAA8xKjVo8bEb+3B7GbdeHnkG8iScT4Ctt53NoQCMAB5Tqmog=Q@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Cc: Li Qiang <liq3ea@gmail.com>
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=mcascell@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] QEMU: security issues in vhost-user-gpu
 
+Hello,
 
-The blinding I have seen was for RSA 
-https://www.openssl.org/docs/man1.1.1/man3/RSA_blinding_on.html and at
-least for ECDSA signatures
+Multiple security issues were identified in the virtio vhost-user GPU
+device (vhost-user-gpu) of QEMU. A malicious guest could use these
+flaws to leak memory from the host system or potentially crash the
+QEMU process on the host, resulting in a denial of service condition.
 
-For symmetric keys such as AES which are mostly table lookup and XOR
-based, I have not seen any blinding.
+Patch series:
+https://lists.nongnu.org/archive/html/qemu-devel/2021-05/msg04536.html
 
+The following CVEs have been assigned by Red Hat, Inc.
 
+* CVE-2021-3544 - combined CVE for multiple memory leaks
+   Upstream commits:
+   https://gitlab.com/qemu-project/qemu/-/commit/86dd8fac
+   https://gitlab.com/qemu-project/qemu/-/commit/b9f79858
+   https://gitlab.com/qemu-project/qemu/-/commit/b7afebcf
+   https://gitlab.com/qemu-project/qemu/-/commit/f6091d86
+   https://gitlab.com/qemu-project/qemu/-/commit/63736af5
 
-Regards
+* CVE-2021-3545 - information disclosure due to uninitialized memory read
+   Upstream commit:
+   https://gitlab.com/qemu-project/qemu/-/commit/121841b2
 
-Mark Hack
+* CVE-2021-3546 - oob write while processing VIRTIO_GPU_CMD_GET_CAPSET
+   Upstream commit:
+   https://gitlab.com/qemu-project/qemu/-/commit/9f22893a
 
-On Mon, 2023-01-30 at 14:13 -0500, Demi Marie Obenour wrote:
-> On Mon, Jan 30, 2023 at 10:43:16AM -0600, Mark Hack wrote:
-> > This is a concern, but if you look into the crypto implementations,
-> > data blinding is applied to mitigate both instruction and power
-> > side
-> > channel attacks
-> 
-> Can you provide examples?  I have never seen blinding used for
-> symmetric
-> cryptography outside of embedded systems.
+Acknowledgements: Li Qiang of Tianchen Security Lab (Ant Group).
+
+Thank  you,
+Best regards.
+-- 
+Mauro Matteo Cascella
+Red Hat Product Security
+PGP-Key ID: BB3410B0
 
