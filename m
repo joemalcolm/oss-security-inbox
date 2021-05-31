@@ -1,25 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/21/1
-Message-ID: <c61a63b1-3370-9ced-d672-d2c6a6f91c94@apache.org>
-Date: Thu, 21 Oct 2021 03:02:08 +0000
-From: Derek Dagit <dagit@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/31/1
+Message-ID: <CAA8xKjVo8bEb+3B7GbdeHnkG8iScT4Ctt53NoQCMAB5Tqmog=Q@mail.gmail.com>
+Date: Mon, 31 May 2021 18:40:04 +0200
+From: Mauro Matteo Cascella <mcascell@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-38294: Apache Storm: Shell Command Injection Vulnerability in Nimbus Thrift Server 
+Cc: Li Qiang <liq3ea@...il.com>
+Subject: QEMU: security issues in vhost-user-gpu
 Content-Type: text/plain; charset=utf-8
 
-Severity: high
+Hello,
 
-Description:
+Multiple security issues were identified in the virtio vhost-user GPU
+device (vhost-user-gpu) of QEMU. A malicious guest could use these
+flaws to leak memory from the host system or potentially crash the
+QEMU process on the host, resulting in a denial of service condition.
 
-A Command Injection vulnerability exists in the getTopologyHistory service of the Apache Storm 2.x prior to 2.2.1 and Apache Storm 1.x prior to 1.2.4. A specially crafted thrift request to the Nimbus server allows Remote Code Execution (RCE) prior to authentication. 
+Patch series:
+https://lists.nongnu.org/archive/html/qemu-devel/2021-05/msg04536.html
 
-Mitigation:
+The following CVEs have been assigned by Red Hat, Inc.
 
-Apache Storm 2.2.x users should upgrade to version 2.2.1 or 2.3.0
-Apache Storm 2.1.x users should upgrade to version 2.1.1
-Apache Storm 1.x users should upgrade to version 1.2.4
+* CVE-2021-3544 - combined CVE for multiple memory leaks
+   Upstream commits:
+   https://gitlab.com/qemu-project/qemu/-/commit/86dd8fac
+   https://gitlab.com/qemu-project/qemu/-/commit/b9f79858
+   https://gitlab.com/qemu-project/qemu/-/commit/b7afebcf
+   https://gitlab.com/qemu-project/qemu/-/commit/f6091d86
+   https://gitlab.com/qemu-project/qemu/-/commit/63736af5
 
-Credit:
+* CVE-2021-3545 - information disclosure due to uninitialized memory read
+   Upstream commit:
+   https://gitlab.com/qemu-project/qemu/-/commit/121841b2
 
-Apache Storm would like to thank @pwntester Alvaro Muñoz of the GitHub Security Lab team for reporting this issue.
+* CVE-2021-3546 - oob write while processing VIRTIO_GPU_CMD_GET_CAPSET
+   Upstream commit:
+   https://gitlab.com/qemu-project/qemu/-/commit/9f22893a
+
+Acknowledgements: Li Qiang of Tianchen Security Lab (Ant Group).
+
+Thank  you,
+Best regards.
+-- 
+Mauro Matteo Cascella
+Red Hat Product Security
+PGP-Key ID: BB3410B0
 
