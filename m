@@ -1,44 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/12/6
-Message-ID: <20210112160429.GM4035784@sasha-vm>
-Date: Tue, 12 Jan 2021 11:04:29 -0500
-From: Sasha Levin <sashal@...nel.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/01/1
+Message-ID: <CAFcO6XOFPEGiO_HwajTB3zA9d3jyhUwDX742huVhaNtQy0=TfQ@mail.gmail.com>
+Date: Tue, 1 Jun 2021 15:37:06 +0800
+From: butt3rflyh4ck <butterflyhuangxx@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-20177 kernel: iptables string match rule could result in kernel panic
+Subject: Linux kernel: nfc: null ptr dereference in llcp_sock_getname
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 12, 2021 at 03:23:16PM +0000, John Haxby wrote:
->> On 12 Jan 2021, at 08:04, Greg KH <greg@...ah.com> wrote:
->>
->> I still do not understand why you report issues that are fixed over a
->> year ago (October 2019) and assign them a CVE like this.  Who does this
->> help out?  And what about the thousands of other issues that are fixed
->> in the kernel and not assigned a CVE like this, are they somehow not as
->> important to your group?
->>
->> What determines what you want to give a CVE to and what you do not?
->
->
->I think I can answer that.   There's nothing technical going on here, it's down to the behaviour of the end users of enterprise systems.
->
->A lot of those people have a hard time understanding that they do actually want bug fixes and an even harder time understanding that they need to actually do something to install those fixes.   (I was once asked if I could fix a problem without changing anything, anything at all when the fix was a one-off chmod.)   A CVE number gets attention: think of it as getting hold of the customer by the lapels and going nose-to-nose to explain in words of one syllable they if they don't update their systems that they will crash and they will get hacked.
->
->Ooh, no, they say, we can't possibly take the risk of updating our systems.  Suppose something goes wrong?   Sheesh.   Suppose, instead, someone comes along and sees a known, fixed bug is unfixed and uses that to trash your systems.    Or that you've got a bug that crashes the machine once a week for which there's a fix.   But, no, apparently the mythical risk of a tested update vs the actual quantifiable risk of leaving the bug unfixed is so great that they'd rather take the real, quantifiable risk.   I suppose that's understandable, after a fashion, even though actual regressions are quite rare.
->
->If you present a customer with a CVE number (with or without a score) then they have SLAs which will ensure that that fix gets applied.
+ Hi, there was a null pointer dereference in llcp_sock_getname in
+net/nfc/llcp_sock.c and reproduced it in linux-5.13.0-rc2. An
+unprivileged user can trigger this bug and cause denial of service.
 
-The subject of this thread is a "vulnerability" that requires root to
-exploit and was fixed ages ago.
+#Root Cause
+After creating an nfc socket, bind the address by calling bind(), if
+LLCP_SAP_MAX was used as SAP, it cause the bind() failed and there
+would set llcp_sock->service_name  as NULL.
 
-If we all agree that CVEs (in the context of the kernel, not userspace)
-aren't here to provide technical value but rather a marketing scheme,
-maybe we should just start treating them as such?
+Although bind() returns an error here, it does not affect calling
+other socket functions. sock_getname() would invoke
+llcp_sock_getname(), llcp_sock_getname copied service  name from
+llcp_sock->service_name by memcpy but llcp_sock->service_name is NULL.
 
-About 95% of the commits that go in the stable tree qualify as CVEs,
-maybe the path forward here is to request CVEs for a handful of those,
-for each stable release and encourage customers to upgrade more often
-that way?
+#Fix
+the patch for this issue:
+https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=4ac06a1e013c
 
--- 
-Thanks,
-Sasha
+#CVE
+CVE not assigned.
+
+#Credits
+Active Defense Lab of Venustech.
+
+
+
+Regards,
+   butt3rflyh4ck.
+
+--
+Active Defense Lab of Venustech
