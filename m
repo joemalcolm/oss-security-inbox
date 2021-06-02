@@ -1,53 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/12/1
-Message-ID: <CALJHwhR0d-q7dPhC1wXWm63WA9cLh9cQX_GYRJO7Mw0O8kDL4w@mail.gmail.com>
-Date: Tue, 12 Jan 2021 16:58:07 +1000
-From: Wade Mealing <wmealing@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/02/1
+Message-Id: <4BDB3183-6E14-41DC-AE08-D67E551EF3B7@gmail.com>
+Date: Wed, 2 Jun 2021 11:34:09 +0200
+From: Carlton Gibson <carlton.gibson@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-20177 kernel: iptables string match rule could result in kernel panic
+Subject: Django security releases 3.2.4, 3.1.12, and 2.2.24 for CVE-2021-33203 and CVE-2021-33571
 Content-Type: text/plain; charset=utf-8
 
-Gday,
+In accordance with `our security release policy
+<https://docs.djangoproject.com/en/dev/internals/security/>`_, the Django team
+is issuing
+`Django 3.2.4 <https://docs.djangoproject.com/en/dev/releases/3.2.4/>`_,
+`Django 3.1.12 <https://docs.djangoproject.com/en/dev/releases/3.1.12/>`_, and
+`Django 2.2.24 <https://docs.djangoproject.com/en/dev/releases/2.2.24/>`_.
+These release addresses the security issue detailed below. We encourage all
+users of Django to upgrade as soon as possible.
 
-A flaw was found in the Linux kernels implementation of string matching
-within a packet. A privileged user
-(with root or CAP_NET_ADMIN ) when inserting iptables rules could insert a
-rule which can panic the system.
+CVE-2021-33203: Potential directory traversal via ``admindocs``
+===============================================================
 
-Likely a user with these permissions could do worse, however it crashes the
-system (DOS) and the user is going to have a bad day
-especially if the rule is inserted and restored on every boot.
+Staff members could use the ``admindocs``
+``TemplateDetailView`` view to check the existence of arbitrary files.
+Additionally, if (and only if) the default admindocs templates have been
+customized by the developers to also expose the file contents, then not only
+the existence but also the file contents would have been exposed.
 
-At this time it doesn't affect RHEL releases, and there are fixes already
-in multiple upstream trees.
+As a mitigation, path sanitation is now applied and only files within the
+template root directories can be loaded.
 
-Thanks,
+This issue has low severity, according to the Django security policy.
 
-Wade Mealing
+Thanks to Rasmus Lerchedahl Petersen and Rasmus Wriedt Larsen from the CodeQL Python team for the report.
 
-Upstream patch:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ca58fbe06c54
+CVE-2021-33571: Possible indeterminate SSRF, RFI, and LFI attacks since validators accepted leading zeros in IPv4 addresses
+===========================================================================================================================
 
-Upstream bugzilla:
-https://bugzilla.kernel.org/show_bug.cgi?id=209823
+``URLValidator``, ``validate_ipv4_address()``, and ``validate_ipv46_address()``
+didn't prohibit leading zeros in octal literals. If you used such values you
+could suffer from indeterminate SSRF, RFI, and LFI attacks.
 
-Red Hat Bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=1914719
+``validate_ipv4_address()`` and ``validate_ipv46_address()`` validators were not
+affected on Python 3.9.5+.
 
+This issue has medium severity, according to the Django security policy.
 
--- 
+Affected supported versions
+===========================
 
-Wade Mealing
+* Django main branch
+* Django 3.2
+* Django 3.1
+* Django 2.2
 
-Product Security - Kernel, RHCE
+Resolution
+==========
 
-Red Hat
+Patches to resolve the issue have been applied to Django's main branch and to
+the 3.2, 3.1, and 2.2 release branches. The patches may be obtained from the
+following changesets.
 
-<https://www.redhat.com>
+CVE-2021-33203:
 
-wmealing@...hat.com
-<https://red.ht/sig>
-TRIED. TESTED. TRUSTED. <https://redhat.com/trusted>
+* On the `main branch <https://github.com/django/django/commit/46572de2e92fdeaf047f80c44d52269e54ad68db>`__
+* On the `3.2 release branch <https://github.com/django/django/commit/dfaba12cda060b8b292ae1d271b44bf810b1c5b9>`__
+* On the `3.1 release branch <https://github.com/django/django/commit/20c67a0693c4ede2b09af02574823485e82e4c8f>`__
+* On the `2.2 release branch <https://github.com/django/django/commit/053cc9534d174dc89daba36724ed2dcb36755b90>`__
 
-secalert@...hat.com for urgent response
+CVE-2021-33571:
 
+* On the `main branch <https://github.com/django/django/commit/e1d787f1b36d13b95187f8f425425ae1b98da188>`__
+* On the `3.2 release branch <https://github.com/django/django/commit/9f75e2e562fa0c0482f3dde6fc7399a9070b4a3d>`__
+* On the `3.1 release branch <https://github.com/django/django/commit/203d4ab9ebcd72fc4d6eb7398e66ed9e474e118e>`__
+* On the `2.2 release branch <https://github.com/django/django/commit/f27c38ab5d90f68c9dd60cabef248a570c0be8fc>`__
+
+The following releases have been issued:
+
+* Django 3.2.4 (`download Django 3.2.4 <https://www.djangoproject.com/m/releases/3.2/Django-3.2.4.tar.gz>`_ | `3.2.4 checksums <https://www.djangoproject.com/m/pgp/Django-3.2.4.checksum.txt>`_)
+* Django 3.1.12 (`download Django 3.1.12 <https://www.djangoproject.com/m/releases/3.1/Django-3.1.12.tar.gz>`_ | `3.1.12 checksums <https://www.djangoproject.com/m/pgp/Django-3.1.12.checksum.txt>`_)
+* Django 2.2.24 (`download Django 2.2.24 <https://www.djangoproject.com/m/releases/2.2/Django-2.2.24.tar.gz>`_ | `2.2.24 checksums <https://www.djangoproject.com/m/pgp/Django-2.2.24.checksum.txt>`_)
+
+The PGP key ID used for these releases is Carlton Gibson: `E17DF5C82B4F9D00
+<https://github.com/carltongibson.gpg>`_.
+
+General notes regarding security reporting
+==========================================
+
+As always, we ask that potential security issues be reported via
+private email to ``security@...ngoproject.com``, and not via Django's
+Trac instance or the django-developers list. Please see `our security
+policies <https://www.djangoproject.com/security/>`_ for further
+information.
+ 
