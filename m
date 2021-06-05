@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5816" "Wednesday" "11" "July" "2018" "10:21:56" "+0200" "Matthias Gerstner" "mgerstner@suse.de" "<20180711082156.GA8145@f195.suse.de>" "140" "[oss-security] polkit: CVE-2018-1116: polkitd trusting client-supplied UID allows spoofed authentication dialogs" nil nil nil "7" "2018071108:21:56" "[oss-security] polkit: CVE-2018-1116: polkitd trusting client-supplied UID allows spoofed authentication dialogs" (number mark "U       mgerstner@su Jul 11  140/5816  " thread-indent "\"[oss-security] polkit: CVE-2018-1116: polkitd trusting client-supplied UID allows spoofed authentication dialogs\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7262" "Saturday" "5" "June" "2021" "02:55:10" "+0200" "Marek =?utf-8?B?TWFyY3p5a293c2tpLUfDs3JlY2tp?=" "marmarek@invisiblethingslab.com" nil "182" "[oss-security] XScreenSaver 5.45: Disconnecting a video output can cause XScreenSaver to crash and unlock" nil nil nil "6" nil nil (number mark "U       marmarek@inv Jun  5  182/7262  " thread-indent "\"[oss-security] XScreenSaver 5.45: Disconnecting a video output can cause XScreenSaver to crash and unlock\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] XScreenSaver 5.45: Disconnecting a video output can cause XScreenSaver to crash and unlock" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9227 invoked by uid 550); 11 Jul 2018 08:22:10 -0000
+Received: (qmail 24029 invoked by uid 550); 5 Jun 2021 08:12:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,157 +12,224 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 8179 invoked from network); 11 Jul 2018 08:22:09 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Wed, 11 Jul 2018 10:21:56 +0200
-From: Matthias Gerstner <mgerstner@suse.de>
+Received: (qmail 3758 invoked from network); 5 Jun 2021 00:55:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-type:date:from:message-id
+	:mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; bh=UWttYD3vcam0CRYF2aRAbejSEvuD6
+	GasQFWXpjvSUYQ=; b=s2jSlVrjWCqEwwZrWJEzqljrCQAqrHHnA1A/sLnjucZ5t
+	vkMOnJ6MSHY9OtYhOsK1Ox6KbIOwiSl3cgUR5A7sBHmtJeu8B2rLhRkNqDDYkYpb
+	yN7m0LKNopRl/tVunHK2uyVHAzzmOjASXu8G7i3YQtgDQeW8NTPEYrfRb5D494sS
+	5fJaWZKxFaFmbzfkiiUBroK/ehnECd3h6NvVrpoIGyZTQ9Cln8ZeVFOpGUW06M0J
+	5VT+QgZi6ep6Z3F5au7gfOboFfBbAfrs3o4daQDq0kAxUd7UKKhlBVFdjmQRsQD/
+	iWrhBypLl8RMHYy8AV6RV9v8WZXvG1uIdmvkHswOQ==
+X-ME-Sender: <xms:ccu6YFXuHBN5Thok7nwqScIh5xwwXytMf7I6UpRCx1qXx1c_76K9TA>
+    <xme:ccu6YFn0w9V7q-klSrNvtoctUIyHo42gjtv-3nuiJt6PPdKwQMBS9pM-dGU75ZHhj
+    WFFQeJwl_OiwQ>
+X-ME-Received: <xmr:ccu6YBZYY3mtnOcbvzG1etW7BkVDVGFSWDRz6D8hg6JYEKCRVstR0hpPIL3620-6icficNkzv6dawyRiXS-51paGgsyTrcwq>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduledrfedtvddgfeelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtugesghdtreertd
+    dtjeenucfhrhhomhepofgrrhgvkhcuofgrrhgtiiihkhhofihskhhiqdfikphrvggtkhhi
+    uceomhgrrhhmrghrvghksehinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomheqne
+    cuggftrfgrthhtvghrnhepteduteeiudevkeegvefhtdekhfelgffhhedukedvvdeuuddv
+    jeehvddtieehudfgnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvg
+    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehmrghrmhgrrhgvkhesihhn
+    vhhishhisghlvghthhhinhhgshhlrggsrdgtohhm
+X-ME-Proxy: <xmx:ccu6YIWxm31uThgPQO0QYTRr0PzX08xN5Mf6uxjGNaeFzCWcD19Jhw>
+    <xmx:ccu6YPnXp5UxBxAcrpuizSWZYHCgm1MLv9r9-Tim7ZohiRr0j_vkTA>
+    <xmx:ccu6YFdH8wyrJox8ppyoGZR7AwFnw_Bo3C4CLLsAyyMXTlhctQSqVw>
+    <xmx:csu6YLzuWjjXLWey903to-DjCp_ZhHqlN7EkzgWaHikqGrXjc8jPPw>
+Date: Sat, 5 Jun 2021 02:55:10 +0200
+From: Marek =?utf-8?Q?Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>
 To: oss-security@lists.openwall.com
-Message-ID: <20180711082156.GA8145@f195.suse.de>
+Message-ID: <YLrLbpUuAbLO3RR8@mail-itl>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="gBBFr7Ir9EOA20Yy"
+	protocol="application/pgp-signature"; boundary="w4utwrCeTSq9wwFN"
 Content-Disposition: inline
-User-Agent: Mutt/1.9.4 (2018-02-28)
-Subject: [oss-security] polkit: CVE-2018-1116: polkitd trusting client-supplied UID allows
- spoofed authentication dialogs
+Subject: [oss-security] XScreenSaver 5.45: Disconnecting a video output can cause
+ XScreenSaver to crash and unlock
 
---gBBFr7Ir9EOA20Yy
-Content-Type: text/plain; charset=utf-8
+--w4utwrCeTSq9wwFN
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+Date: Sat, 5 Jun 2021 02:55:10 +0200
+From: Marek =?utf-8?Q?Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>
+To: oss-security@lists.openwall.com
+Subject: XScreenSaver 5.45: Disconnecting a video output can cause
+ XScreenSaver to crash and unlock
 
-Hello,
+Summary
+=3D=3D=3D=3D=3D=3D=3D=3D
 
-during a code reviewing related to polkit
-<https://www.freedesktop.org/wiki/Software/polkit/> I found a spoofed
-authentication vulnerability in the implementation of the polkitd
-daemon. It allows a local attacker to trigger authentication dialogs for
-other users' processes. This way the attacker can obtain certain
-information about the polkit rules configuration of other users, confuse
-other users or DoS other users by infinitely triggering authentication
-dialogs.
+XScreenSaver is the default screen locker in dom0. It tracks which video
+outputs are connected to the system in order to blank them properly. In
+some specific hardware configurations, disconnecting an output can cause
+XScreenSaver to crash, leaving the screen unlocked.
 
-Basically the issue is that an attacker is able to specify
-arbitrary target process UIDs when talking to polkitd via D-Bus like
-this:
+The issue affects XScreenSaver 5.45 only.
 
-$ gdbus call --system --dest org.freedesktop.PolicyKit1 \
-	--object-path /org/freedesktop/PolicyKit1/Authority \
-	--method org.freedesktop.PolicyKit1.Authority.CheckAuthorization \
-	'("unix-process", {"pid": <uint32 ${PID}>, "start-time": <uint64 0>, "uid"=
-: <${UID}>})' \
-	org.freedesktop.timedate1.set-time '[]' 1 ''
+Impact
+=3D=3D=3D=3D=3D=3D=3D
 
-Where ${PID} needs to be the process ID of the target process and ${UID}
-the user ID of the calling process i.e. `id -u`.
+On hardware configurations with more than 10 video outputs that can be
+disconnected, an attacker with physical access to a screen-locked system
+may be able to unlock it by physically disconnecting one or more
+outputs, bypassing standard screen lock authentication.
 
-Upstream just released version 0.115 of polkit that addresses this issue
-by way of commit bc7ffad53643a9c80231fc41f5582d6a8931c32c. The issue was
-introduced with a fix for CVE-2013-4288 in polkit version 0.112.
+Details
+=3D=3D=3D=3D=3D=3D=3D=3D
 
-Further below you can find the upstream commit message with a more
-detailed explanation of the issue and its fix. I want to thank the
-upstream developers for the constructive communication and quick
-handling of the issue.
+On X11, screen locking and blanking is done by creating a window that
+obscures the whole screen, which is a standard practice. In
+XScreenSaver, each such window is assigned a specific property. When a
+video output is disconnected, its corresponding blanking window is
+destroyed, and its XScreenSaver-specific property is removed so that it
+will not be used by `xscreensaver-command` anymore. This is handled by
+the `update_screen_layout()` function in the `driver/screens.c` file:
 
-Best regards
+     985 /* Synchronize the contents of si->ssi to the current state of the=
+ monitors.
+     986    Doesn't change anything if nothing has changed; otherwise, alte=
+rs and
+     987    reuses existing saver_screen_info structs as much as possible.
+     988    Returns True if anything changed.
+     989  */
+     990 Bool
+     991 update_screen_layout (saver_info *si)
+     992 {
+     993   monitor **monitors =3D scan_monitors (si);
+     994   int count =3D 0;
+     995   int good_count =3D 0;
+    ...
+    1009   while (monitors[count])
+    1010     {
+    1011       if (monitors[count]->sanity =3D=3D S_SANE)
+    1012         good_count++;
+    1013       count++;
+    1014     }
+    1015=20
+    1016   if (si->ssi_count =3D=3D 0)
+    1017     {
+    1018       si->ssi_count =3D 10;
+    1019       si->screens =3D (saver_screen_info *)
+    1020         calloc (sizeof(*si->screens), si->ssi_count);
+    1021     }
+    1022=20
+    1023   if (si->ssi_count <=3D good_count)
+    1024     {
+    1025       si->ssi_count =3D good_count + 10;
+    1026       si->screens =3D (saver_screen_info *)
+    1027         realloc (si->screens, sizeof(*si->screens) * si->ssi_count=
+);
+    1028       memset (si->screens + si->nscreens, 0,
+    1029               sizeof(*si->screens) * (si->ssi_count - si->nscreens=
+));
+    1030     }
+    ...
+    1092   for (; j < count; j++)
+    1093     {
+    1094       saver_screen_info *ssi =3D &si->screens[j];
+    1095       if (!ssi->screensaver_window)
+    1096         continue;
+    1097       fprintf (stderr, "%s: %d: screen now unused, disabling.\n",
+    1098                blurb(), j);
+    1099       /* Undo store_saver_id() so that xscreensaver-command doesn'=
+t attempt
+    1100          to communicate with us through this window. It might make=
+ more
+    1101          sense to destroy the window, but I'm not 100% sure that t=
+here are
+    1102          no outstanding grabs on it that have yet been transferred.
+    1103        */
+    1104       XDeleteProperty (si->dpy, ssi->screensaver_window,
+    1105                        XA_SCREENSAVER_VERSION);
+    1106     }
 
-Matthias
+The initial portion of the function counts how many outputs are defined
+(the `count` variable) and how many of them are connected (the
+`good_count` variable). Then, the `si->screens` array is allocated or
+re-allocated to fit information about connected outputs, with an extra
+margin of 10 entries. However, the loop at the end iterates over the
+array up to the total number of outputs, not just the ones that are
+connected.
 
-Timeline:
+If there are 10 or fewer disconnected outputs, this works fine. However,
+if there are more than 10, it will access the array beyond its end,
+reading unrelated data from memory. It will interpret this data as an
+XScreenSaver window ID. If that unrelated data happens to be non-zero
+(which is very likely), then the condition at line 1095 will not skip
+it, and the `XDeleteProperty` call will operate on that (most likely
+invalid) window ID. This, in turn, will cause the XScreenSaver process
+to crash, as that's what the error handler is programmed to do (the
+`saver_ehandler()` function in the `driver/xscreensaver.c` file).
 
-2018-06-21: I discovered and analyzed the issue
-2018-06-22: I reported the issue privately to upstream via
-    dbus-security@lists.freedesktop.org. In the following days upstream
-    devised a patch that was discussed and reviewed on the mailing list.
-    Publication has been scheduled for 2018-07-10 together with the
-    release of the fixed polkit version.
-2018-07-10: The upstream release was published as scheduled.
+The error message will look like this:
 
-References:
+    #######################################################################=
+#######
+=20=20=20=20
+    xscreensaver: 11:17:59: X Error!  PLEASE REPORT THIS BUG.
+    xscreensaver: 11:17:59: screen 0/0: 0x2ae, 0x0, 0x6600001
+    xscreensaver: 11:17:59: screen 0/1: 0x2ae, 0x0, 0x0
+=20=20=20=20
+    #######################################################################=
+#######
+=20=20=20=20
+    X Error of failed request:  BadWindow (invalid Window parameter)
+      Major opcode of failed request:  19 (X_DeleteProperty)
+      Resource id in failed request:  0x188dba0
+      Serial number of failed request:  4284
+      Current serial number in output stream:  4286
+=20=20=20=20
+    #######################################################################
 
-- Upstream Release Notice: https://lists.freedesktop.org/archives/polkit-de=
-vel/2018-July/000583.html
-- Upstream Fix: https://cgit.freedesktop.org/polkit/commit/?id=3Dbc7ffad536=
-43a9c80231fc41f5582d6a8931c32c
-- SUSE Bug for the issue: https://bugzilla.suse.com/show_bug.cgi?id=3D10990=
-31
 
-Upstream Commit Message:
+The issue affects only XScreenSaver version 5.45. Versions 5.44 and
+older, as well as 6.00, are not affected. The XScreenSaver author was
+notified about this issue and decided not to publish an advisory, as the
+issue does not affect the most recent version.
 
-     Fix CVE-2018-1116: Trusting client-supplied UID
-=20=20=20=20=20=20
-     As part of CVE-2013-4288, the D-Bus clients were allowed (and
-     encouraged) to submit the UID of the subject of authorization checks
-     to avoid races against UID changes (notably using executables
-     set-UID to root).
-=20=20=20=20=20
-     However, that also allowed any client to submit an arbitrary UID, and
-     that could be used to bypass "can only ask about / affect the same UID"
-     checks in CheckAuthorization / RegisterAuthenticationAgent /
-     UnregisterAuthenticationAgent.  This allowed an attacker:
-=20=20=20=20=20
-     - With CheckAuthorization, to cause the registered authentication
-       agent in victim's session to pop up a dialog, or to determine whether
-       the victim currently has a temporary authorization to perform an
-       operation.
-=20=20=20=20=20
-       (In principle, the attacker can also determine whether JavaScript
-       rules allow the victim process to perform an operation; however,
-       usually rules base their decisions on information determined from
-       the supplied UID, so the attacker usually won't learn anything new.)
-=20=20=20=20=20
-     - With RegisterAuthenticationAgent, to prevent the victim's
-       authentication agent to work (for a specific victim process),
-       or to learn about which operations requiring authorization
-       the victim is attempting.
-=20=20=20=20=20
-     To fix this, expose internal _polkit_unix_process_get_owner() /
-     obsolete polkit_unix_process_get_owner() as a private
-     polkit_unix_process_get_racy_uid__() (being more explicit about the
-     dangers on relying on it), and use it in
-     polkit_backend_session_monitor_get_user_for_subject() to return
-     a boolean indicating whether the subject UID may be caller-chosen.
-=20=20=20=20=20
-     Then, in the permission checks that require the subject to be
-     equal to the caller, fail on caller-chosen UIDs (and continue
-     through the pre-existing code paths which allow root, or root-designat=
-ed
-     server processes, to ask about arbitrary subjects.)
-=20=20=20=20=20
-     Signed-off-by: Miloslav Trma=C4=8D <mitr@redhat.com>
+The Qubes Security Team has decided to address this issue in Qubes OS by
+patching this specific bug rather than immediately upgrading to the 6.00
+version. The reason is that XScreenSaver 6.00 is a major update with
+major architectural changes. As such, it poses an increased risk of
+introducing unrelated problems. However, this decision does not preclude
+the possibility of updating to XScreenSaver 6.00 at some point in the
+future, independently of this particular security patch.
+
+Credits
+=3D=3D=3D=3D=3D=3D=3D=3D
+
+The issue was reported by Mustafa Kuscu:
+https://github.com/QubesOS/qubes-issues/issues/6595
+
+
+This is mostly repost of Qubes Security Bulletin 068 (with minor edits),
+as it may be relevant to other distributions:
+https://github.com/QubesOS/qubes-secpack/blob/master/QSBs/qsb-068-2021.txt
 
 
 --=20
-Matthias Gerstner <matthias.gerstner@suse.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Telefon: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
+Best Regards,
+Marek Marczykowski-G=C3=B3recki
+Invisible Things Lab
 
-SUSE Linux GmbH
-GF: Felix Imend=C3=B6rffer, Jane Smithard, Graham Norton
-HRB 21284 (AG Nuernberg)
-
-
---gBBFr7Ir9EOA20Yy
+--w4utwrCeTSq9wwFN
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAltFviQACgkQFMQFyXGS
-NVPRCxAAjpc3YNgRd/9c3B4wxbJDlWxcmLhtkKcsVDP4ukwAzNsuBmLqtOBvdrjC
-O0F1bLBUFM6yPcmPwHDPqrSswlbfB9yw3178SDppmMF/RZuMkcyBn67FtwFqFeH8
-sBqRz/ernV5Xx7MwZikA3WZwUYHf5C8WXnEGLOdADKtKehGjfjFG1ka2xvJa0Lro
-HyC3m94h6HjxJ2M0lyT8mHsdUpd0eC8tE1EZG3gE2/eQL6Nzcif9qzyWB+W6ScVb
-XYncvNW6Db3sL8nQRrxAXVFFjKL6IOWgGbQ74hoeWyd3MlBbt96g8mRPALpvXm5T
-2NnrTRjNpBV9HhSlGqo8HylSmTl/gpaQdBCXf3epjXseAqQem3vjjXnI7d9V1Vi2
-YQqBIZu+qhezTtmqm3NuoGPGi5X5tcGppuDm9UoTeELWqL7jGdkxMDJX35bPbzO2
-CuOrs7r/vpSW4C5/Y7nl7Pg41L2HqA72/SRh0goX3DMnjAQOlXdPqhkKXWGDAfWW
-wVdLVQgI5VxvsEKsduBxKnpkFj7aOuwH6YL9zOCD238sApssV3foX5bU0kwamfob
-t8VLlnpGjFXSWnLNZa9/LjAJgNyrFatuU1fP8i3M0G+3NbWEWXLhiSg6IVRqtesX
-LN348msJkr5vAMeahk79WqGH7eK8EpZColLM3Isc2SMEO+rM1qo=
-=I088
+iQEzBAEBCAAdFiEEhrpukzGPukRmQqkK24/THMrX1ywFAmC6y20ACgkQ24/THMrX
+1yzMQgf/SlIikdMVtU/fHejXtoxuvAhRDmI0xx119ULyDaoz673DkbAru3ncDEqN
+mEkEgyZ8VlOptmA02wDJMR22+OWshDPmqUl+Krw+lK4vDN2MHI1Pnk4PY7PBzHvz
+uq080NAr/UzWfUd4vonA4/kapMLWU14RqQ8t+3xGGthzk10/lrauXLNcBxkMfLE0
+uFo5F6ZQ7IZg4XJ73iZyB7oz8t6v8G16i335HzOgObqnbzOtAPP2FZLW4UNJYQXM
+CxAKbW5IPwXfm7QcigRUshjqxV5Ej0xLRjsFpUbEWD+9fQdPeKl3U+n9YyA+xpEt
+LKRmNwXCUHJUGDC3o04/WuQ761XZrw==
+=87SV
 -----END PGP SIGNATURE-----
 
---gBBFr7Ir9EOA20Yy--
+--w4utwrCeTSq9wwFN--
