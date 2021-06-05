@@ -1,34 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/31/1
-Message-ID: <YX6tLtG34BETJzoE@eldamar.lan>
-Date: Sun, 31 Oct 2021 15:50:22 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/05/2
+Message-ID: <YLrbf2Yirc4LuA16@mail-itl>
+Date: Sat, 5 Jun 2021 04:03:42 +0200
+From: Marek Marczykowski-Górecki <marmarek@...isiblethingslab.com>
 To: oss-security@...ts.openwall.com
-Cc: Samuel Groß <saelo@...gle.com>, Francis Perron <francis.perron@...pify.com>, Carlos Alberto Lopez Perez <clopez@...lia.com>, security@...kit.org, Alberto Garcia <berto@...lia.com>
-Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2021-0006
+Subject: Re: XScreenSaver 5.45: Disconnecting a video output can cause XScreenSaver to crash and unlock
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-On Thu, Oct 28, 2021 at 06:24:24AM +0200, Salvatore Bonaccorso wrote:
-> Hi Samuel,
+On Sat, Jun 05, 2021 at 02:55:10AM +0200, Marek Marczykowski-Górecki wrote:
+> The issue affects only XScreenSaver version 5.45. Versions 5.44 and
+> older, as well as 6.00, are not affected. The XScreenSaver author was
+> notified about this issue and decided not to publish an advisory, as the
+> issue does not affect the most recent version.
 > 
-> On Wed, Oct 27, 2021 at 04:40:55PM +0200, Samuel Groß wrote:
-> > Hi!
-> > 
-> > I don't know what happened to CVE-2021-30851 as these CVEs are allocated by
-> > Apple usually. I think the CVE would correspond to this issue though:
-> > https://bugs.webkit.org/show_bug.cgi?id=227988
-> 
-> I pinged now product-security@...le.com as well on this (as Apple Inc
-> is the responsible CNA for the CVE).
+> The Qubes Security Team has decided to address this issue in Qubes OS by
+> patching this specific bug rather than immediately upgrading to the 6.00
+> version.
 
-I did not got a reply but apparently the CVE entry got re-populated
-at https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-30851 and
-now reads as "A memory corruption vulnerability was addressed with
-improved locking. This issue is fixed in Safari 15, tvOS 15, watchOS
-8, iOS 15 and iPadOS 15. Processing maliciously crafted web content
-may lead to code execution."
+And here is the patch applied in Qubes OS:
+https://github.com/QubesOS/qubes-xscreensaver/blob/master/0001-Fix-updating-outputs-info.patch
 
-Regards,
-Salvatore
+-- 
+Best Regards,
+Marek Marczykowski-Górecki
+Invisible Things Lab
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
