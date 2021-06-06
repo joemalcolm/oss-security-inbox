@@ -1,30 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/17/6
-Message-ID: <BA6125DF-2119-46AF-A87F-59876DF57168@lightwave.net.ru>
-Date: Mon, 17 May 2021 22:50:20 +0300
-From: Dan Yefihmov <dan@...htwave.net.ru>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/06/1
+Message-ID: <YLy29j6QgKnN432K@dojo.mi.org>
+Date: Sun, 6 Jun 2021 07:52:22 -0400
+From: "Mike O'Connor" <mjo@...o.mi.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: rxvt terminal (+bash) remoteish code execution 0day
+Subject: Re: Re: XScreenSaver 5.45: Disconnecting a video output can cause XScreenSaver to crash and unlock
 Content-Type: text/plain; charset=utf-8
 
-On May 17, 2021 10:28:10 PM GMT+03:00, Jakub Wilk <jwilk@...lk.net> wrote:
->* def <def@...meet.info>, 2021-05-17, 17:33:
->>The bug is not technically a 0day for rxvt-unicode and has been known 
->>at least since 2017-05-01 when it was discussed publicly in 
->>oss-security:
->>
->>    https://www.openwall.com/lists/oss-security/2017/05/01/20
->>
->>The issue was quietly fixed in rxvt-unicode upstream in 2017.
->
->Or was it 2019?
->
->http://cvs.schmorp.de/rxvt-unicode/src/command.C?view=log#rev1.585
->
-No, that was in fact 2017:
-http://cvs.schmorp.de/rxvt-unicode/src/command.C?view=log#rev1.583
+:On Sat, Jun 05, 2021 at 02:55:10AM +0200, Marek Marczykowski-Górecki wrote:
+:> The issue affects only XScreenSaver version 5.45. Versions 5.44 and
+:> older, as well as 6.00, are not affected. The XScreenSaver author was
+:> notified about this issue and decided not to publish an advisory, as the
+:> issue does not affect the most recent version.
+:> 
+:> The Qubes Security Team has decided to address this issue in Qubes OS by
+:> patching this specific bug rather than immediately upgrading to the 6.00
+:> version.
+:
+:And here is the patch applied in Qubes OS:
+:https://github.com/QubesOS/qubes-xscreensaver/blob/master/0001-Fix-updating-outputs-info.patch
 
-The commit you mentioned just eradicates the faulty code to protect unwise and careless users.
+Having said that, one of the big changes in XScreenSaver 6.00 involves
+security improvements for this situation, so it's worth noting here:
+
+https://www.jwz.org/blog/2021/04/xscreensaver-6-00-out-now/
+
+	I have significantly refactored the XScreenSaver daemon, the
+	component of the XScreenSaver suite that provides screen
+	locking on X11 systems.
+
+	These changes greatly reduce the amount of code running in the
+	"critical" section: the part of the code where a crash would
+	cause the screen to unlock. That critical section is now only
+	around 1,800 lines of code, a reduction of roughly 87%.
+
+etc.
 
 
-Sincerely Yours, Dan.
+-- 
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"I never look back, darling.  It distracts me from the now."       -Edna Mode
