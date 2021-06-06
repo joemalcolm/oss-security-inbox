@@ -1,31 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/27/5
-Message-ID: <b484727f-90d2-1a27-4bb2-c5e2b1579df6@apache.org>
-Date: Tue, 27 Apr 2021 21:00:22 +0200
-From: "jleroux@...che.org" <jleroux@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/06/2
+Message-ID: <CAFcO6XP_-WSEzDB2E=r90Yk4sXwUjo6fRsY=E+ZoAYunpry=qw@mail.gmail.com>
+Date: Sun, 6 Jun 2021 23:40:24 +0800
+From: butt3rflyh4ck <butterflyhuangxx@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2021-30128] Unsafe deserialization in OFBiz
+Subject: Re: Linux kernel: nfc: null ptr dereference in llcp_sock_getname
 Content-Type: text/plain; charset=utf-8
 
-Severity:
-High, possible RCE
+Hi, the patch for this issue in upstream:
 
-Vendor:
-The Apache Software Foundation
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=4ac06a1e013cf5fdd963317ffd3b968560f33bba
 
-Versions Affected:
-OFBiz versions prior to 17.12.07
+Regards,
+ butt3rflyh4ck.
 
-Description:
-Apache OFBiz has unsafe deserialization prior to 17.12.07 version
 
-Mitigation:
-Upgrade to at least 17.12.07
-or apply patches at https://issues.apache.org/jira/browse/OFBIZ-12212 & OFBIZ-12221
+On Tue, Jun 1, 2021 at 3:37 PM butt3rflyh4ck <butterflyhuangxx@...il.com> wrote:
+>
+>  Hi, there was a null pointer dereference in llcp_sock_getname in
+> net/nfc/llcp_sock.c and reproduced it in linux-5.13.0-rc2. An
+> unprivileged user can trigger this bug and cause denial of service.
+>
+> #Root Cause
+> After creating an nfc socket, bind the address by calling bind(), if
+> LLCP_SAP_MAX was used as SAP, it cause the bind() failed and there
+> would set llcp_sock->service_name  as NULL.
+>
+> Although bind() returns an error here, it does not affect calling
+> other socket functions. sock_getname() would invoke
+> llcp_sock_getname(), llcp_sock_getname copied service  name from
+> llcp_sock->service_name by memcpy but llcp_sock->service_name is NULL.
+>
+> #Fix
+> the patch for this issue:
+> https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=4ac06a1e013c
+>
+> #CVE
+> CVE not assigned.
+>
+> #Credits
+> Active Defense Lab of Venustech.
+>
+>
+>
+> Regards,
+>    butt3rflyh4ck.
+>
+> --
+> Active Defense Lab of Venustech
 
-Credit:
-Litch1 from the Security Team of Alibaba Cloud <litch1chk@...il.com>
 
-References:
-http://ofbiz.apache.org/download.html#vulnerabilities
 
+-- 
+Active Defense Lab of Venustech
