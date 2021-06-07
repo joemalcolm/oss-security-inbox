@@ -1,80 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/14/2
-Message-ID: <6c9845d6-fc90-38f1-e90c-3ff65d0a9eca@suse.com>
-Date: Thu, 14 Oct 2021 19:47:12 +0200
-From: Wolfgang Frisch <wolfgang.frisch@...e.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-42257: check_smart.pl: unprivileged user can alter hard drive settings
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/07/1
+Message-ID: <YL4HIzhrA7I83MF0@ugly>
+Date: Mon, 7 Jun 2021 13:46:43 +0200
+From: Oswald Buddenhagen <oswald.buddenhagen@....de>
+To: isync-devel@...ts.sourceforge.net
+Cc: oss-security@...ts.openwall.com
+Subject: CVE-2021-3578: possible remote code execution in isync/mbsync
 Content-Type: text/plain; charset=utf-8
 
-Hello oss-security,
+description:
 
-during a routine audit of scripts in openSUSE, I discovered a
-vulnerability in `check_smart.pl` [4], a plugin for systems monitoring
-software to monitor the values of SMART attributes of hard and solid
-state drives, using smartmontools in the background.
+A flaw was found in mbsync before v1.3.6 and v1.4.2, where an unchecked
+pointer cast allows a malicious or compromised server to write an
+arbitrary integer value past the end of a heap-allocated structure by
+issuing an unexpected APPENDUID response. This could be plausibly
+exploited for remote code execution on the client.
 
-## Brief
-`check_smart.pl` [1][2] from version 6.1 through 6.9 contained an
-insufficient input validation that allowed an unprivileged user to
-modify SMART settings, disable SMART monitoring entirely, shut down a
-drive or degrade a drive's performance by disabling its read cache. The
-bug was fixed with the release of version 6.9.1 [3].
+mitigation:
 
-## Detailed description
-`check_smart.pl` needs to run as root in order to execute `smartctl`.
-This is achieved with an entry in `/etc/sudoers`, which allows a lesser
-privileged user, e.g. the one the monitoring system runs under, to
-execute it. User input that is passed to `smartctl` is sufficiently
-validated apart from one minor oversight.
+upgrade to the freshly released v1.3.6 or v1.4.2 available from 
+https://sourceforge.net/projects/isync/files/isync/ , or apply the 
+matching attached patch.
 
-The -d parameter is validated as follows:
-> if (-b $opt_dl || -c $opt_dl || $opt_dl =~ m/\/dev\/bus\/\d/) {
->   # OK
-> } else {
->   # NOT OK
-> }
+credit:
 
-Later on, this parameter is passed verbatim to smartctl:
-> my $full_command = "$smart_command -d $interface -Hi $device"
+This problem was found by Lukas Braun <koomi@...hbit.net> using a
+fuzzer.
 
-So an acceptable device name would be a block special device, a char
-special device or match the regex `/dev/bus/\d`. Critically, this regex
-matches even when /dev/bus/\d is just a _substring_ of any arbitrary
-directory, for example `/tmp/dev/bus/1/sda`.
 
-This can be exploited to pass arbitrary parameters to smartctl, some of
-which affect the drive's behavior negatively:
+View attachment "fix-handling-of-unexpected-APPENDUID-response-code--1.3.patch" of type "text/x-diff" (3187 bytes)
 
-### Steps to reproduce
-> su -l -s /bin/bash nagios
-> mkdir -p /tmp/dev/bus/1/
-> ln -s /dev/sda /tmp/dev/bus/1/
-> ls -l /tmp/dev/bus/1/sda
-> 
-> /usr/lib/nagios/plugins/check_smart --debug -i auto -d "/tmp/dev/bus/1/sda -s off"
-> 
-> SMART Disabled.
-
-The upstream developer Claudio Kuenzler was very responsive and quickly
-remediated the problem with the release of check_smart-6.9.1 [3].
-
-[1] https://github.com/Napsty/check_smart
-[2] https://www.claudiokuenzler.com/monitoring-plugins/check_smart.php
-[3] 
-https://www.claudiokuenzler.com/blog/1068/check_smart-6.9.1-security-fix-release-pseudo-device-path
-[4] https://bugzilla.suse.com/show_bug.cgi?id=1183057
-
-Best regards,
-Wolfgang
-
--- 
-Wolfgang Frisch <wolfgang.frisch@...e.com>
-Security Engineer
-OpenPGP fingerprint: A2E6 B7D4 53E9 544F BC13  D26B D9B3 56BD 4D4A 2D15
-SUSE Software Solutions Germany GmbH
-Maxfeldstr. 5, 90409 Nuremberg, Germany
-(HRB 36809, AG Nürnberg)
-Managing Director: Felix Imendörffer
-
-Download attachment "OpenPGP_signature" of type "application/pgp-signature" (841 bytes)
+View attachment "fix-handling-of-unexpected-APPENDUID-response-code--1.4.patch" of type "text/x-diff" (3167 bytes)
