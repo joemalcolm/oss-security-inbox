@@ -1,79 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/18/3
-Message-ID: <YHwlS06UV25JUeqh@momentum.pseudorandom.co.uk>
-Date: Sun, 18 Apr 2021 13:25:47 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: security@...ian.org
-Subject: Re: xscreensaver package caps gets raw socket
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/08/4
+Message-ID: <CAMikTu5EMKjehMu5gHGo5RUPOtVbwhdhibmrOX3du1HAWqqdbQ@mail.gmail.com>
+Date: Tue, 8 Jun 2021 22:42:05 +0800
+From: JunXu Chen <chenjunxu@...che.org>
+To: announce@...che.org, dev@...six.apache.org, security@...che.org,  oss-security@...ts.openwall.com, vernhk@...com
+Subject: CVE-2021-33190: Apache APISIX Dashboard: Bypass network access control
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 17 Apr 2021 at 07:31:05 -0700, Tavis Ormandy wrote:
-> Hello, I noticed that at least debian (maybe others) ship xscreensaver
-> hack with cap_net_raw enabled:
-> 
-> $ getcap /usr/libexec/xscreensaver/sonar
-> /usr/libexec/xscreensaver/sonar cap_net_raw=p
-...
-> - In theory, mesa support running in a privileged context, their
->   documentation says they disable dangerous features in setuid/setgid
->   binaries:
-> 
->     https://mesa-docs.readthedocs.io/en/latest/egl.html
+Severity: important
 
-I don't think it's actually very realistic to expect something the size of
-Mesa to be safe to use in a process that elevates its capabilities above
-those of its caller, because to achieve that, it would have to distrust
-the entire execution environment (environment variables, inherited file
-descriptors, rlimits...), and this level of distrust would have to be
-maintained across all of Mesa, including all its drivers, plugins and
-dependencies.
+Description:
 
-I've seen this before in multiple implementations of D-Bus (at least
-dbus and GLib), where reading environment variables is part of the "API"
-and so cannot be stopped without consequences. We tried to harden the
-libraries by distrusting the environment when AT_SECURE, but had to revert
-the hardening because it caused otherwise-working programs to regress as
-a result of refusing to read environment variables. A frequent example
-was gnome-keyring, which historically had CAP_SYS_RESOURCE, to be able
-to mlock more memory when ordinary user processes couldn't.
+In Apache APISIX Dashboard version 2.6, we changed the default value of
+listen host to 0.0.0.0 in order to facilitate users to configure external
+network access. In the IP allowed list restriction, a risky function was
+used for the IP acquisition, which made it possible to bypass the network
+limit. At the same time, the default account and password are
+fixed.Ultimately these factors lead to the issue of security risks.  This
+issue is fixed in APISIX Dashboard 2.6.1.
 
-In both dbus and GLib, maintainers took the position that distrusting
-environment variables while AT_SECURE is hardening against insufficiently
-careful callers, rather than a security guarantee. If a program is
-setuid, setgid, setcap, or has a privilege-escalating AppArmor or SELinux
-transition, then it's the maintainer/packager of that program that has
-chosen to put the program in the position of being a security boundary,
-so it seems reasonable to expect the program to take responsibility for
-enforcing the security boundary by cleaning up its attacker-supplied
-execution environment before calling into arbitrary libraries.
+Mitigation:
 
-> The problem is that even if we make cleaning up the environment work,
-> you're always going to need $DISPLAY, and any code exec bug connecting
-> to a malicious X server will be a security bug.... and that sounds super
-> hard to get right?
+1. Change the account password after installation, do not use the default
+password.
 
-See also e.g. <https://www.gtk.org/setuid.html> for the logical conclusion
-of this line of thought. I think that's a lot more realistic than
-expecting large libraries to maintain a sufficient level of paranoia
-throughout their codebase.
+2. Upgrade to 2.6.1 or newer.
 
-On Sat, 17 Apr 2021 at 07:41:15 -0700, Tavis Ormandy wrote:
-> Oh, I also pitched using popen("/bin/ping" ..), but I think nobody is
-> really convinced that will work, but I kinda like it :)
-
-That's consistent with the principle of least-privilege, and the widely
-cited Unix philosophy of having programs that do one thing well.
-
-If you need to gain privileges, then I think that's a much, much better
-approach - ideally a new ping-like program that prints a machine-readable
-syntax rather than having to screen-scrape human-readable output, but
-if that's not available then ping itself is the next best thing.
-
-IPC to a more-privileged service would be safer still, because
-setuid/setgid/setcap has a default-allow-like behaviour (everything
-that is not explicitly special-cased is inherited), whereas IPC can be
-seen as default-deny (everything that is not explicitly sent/received
-is not shared).
-
-    smcv
