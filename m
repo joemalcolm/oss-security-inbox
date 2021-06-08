@@ -1,42 +1,125 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/07/1
-Message-ID: <CAMhUBj=2rfJDZyO01nDEof8c-bS5Y+tLL0NKJzDXJqTgTTariQ@mail.gmail.com>
-Date: Wed, 7 Apr 2021 19:16:07 +0800
-From: 马哲宇 <zheyuma97@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-3483: Linux kernel: a use-after-free bug in nosy driver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/08/8
+Message-Id: <E1lqf9T-0004vc-JX@xenbits.xenproject.org>
+Date: Tue, 08 Jun 2021 17:04:31 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 377 v2 (CVE-2021-28690) - x86: TSX Async Abort protections not restored after S3
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I found a bug in the latest Linux kernel. The
-location of the bug is Linux/drivers/firewire/nosy.c.   Nosy is an
-IEEE 1394 packet sniffer which is used for protocol analysis and in the
-development of IEEE 1394 drivers, applications, or firmware.
+            Xen Security Advisory CVE-2021-28690 / XSA-377
+                               version 2
 
-For each device, the nosy driver allocates a pcilynx structure. A
-use-after-free might happen in the following scenario:
+        x86: TSX Async Abort protections not restored after S3
 
-1. Open nosy device for the first time and call ioctl with command
-NOSY_IOC_START, then a new client A will be malloced and added to
-doubly linked list.
-2. Open nosy device for the second time and call ioctl with command
-NOSY_IOC_START, then a new client B will be malloced and added to
-doubly linked list.
-3. Call ioctl with command NOSY_IOC_START for client A, then client A
-will be readded to the doubly linked list. Now the doubly linked list
-is messed up.
-4. Close the first nosy device and nosy_release will be called. In
-nosy_release, client A will be unlinked and freed.
-5. Close the second nosy device, and client A will be referenced,
-resulting in UAF.
+UPDATES IN VERSION 2
+====================
 
-The root cause of this bug is that the element in the doubly linked
-list is reentered into the list.
+Public release.
 
-Here is the commit to patch this BUG:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=829933ef05a951c8ff140e814656d73e74915faf
+ISSUE DESCRIPTION
+=================
 
-Regards,
+This issue relates to the TSX Async Abort speculative security vulnerability.
+Please see https://xenbits.xen.org/xsa/advisory-305.html for details.
 
-Zheyu Ma
+Mitigating TAA by disabling TSX (the default and preferred option) requires
+selecting a non-default setting in MSR_TSX_CTRL.  This setting isn't restored
+after S3 suspend.
+
+IMPACT
+======
+
+After using S3 suspend at least once, CPU0 remains vulnerable to TAA.
+
+This is an information leak.  For full details of the impact, see
+XSA-305.
+
+VULNERABLE SYSTEMS
+==================
+
+See XSA-305 for details of susceptibility to TAA.
+
+Only systems which are susceptible to TAA and have the XSA-305 fix are
+vulnerable.  Only systems which support S3 suspend/resume are vulnerable.
+
+The vulnerability is only exposed if S3 suspend/resume is used.
+
+MITIGATION
+==========
+
+Not using S3 suspend/resume avoids the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa377.patch           xen-unstable - Xen 4.13.x
+xsa377-4.12.patch      Xen 4.12.x
+xsa377-4.11.patch      Xen 4.11.x
+
+$ sha256sum xsa377*
+532cb030f97d72e8e534ad97182cd5e3aa0efeef405e255bb49649b4f0dd9947  xsa377.meta
+21a30dbf80f6e78057cc7e785c8fda475d5a8a0b6b9442af3bd8ca31dd69becf  xsa377.patch
+3279317d56e7b8d0a2b0152b64b4c577381b8b01fa0a1a21ec6f855bb964278a  xsa377-4.11.patch
+65f61f1cb7bb0e068fd32e40755b9a9aae464d15ccd42c94dae68e495c5a45e0  xsa377-4.12.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmC/oxIMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZZ0wH/AyYmZO221SvMaSa1kGaV9+tATBWtxKEmUr2I+/Y
+jOHJ4Ydw2RarJtZ6reYJ+J0qlTdgI65ceo87VEm1bm+LyvxhlLRmkBfavdTg66aX
+VU6uPGqJ9HMUY4rwN7aUgsc/qhquMZQYSWd5A/QknhNHlOtXhX0bnaIqgXoAroi7
+PRVs3sawkEizIn1Rqc8nLk+xkOrV3xvu+ollj/VNHgPDKU7SFKZiraBzUW7bErCZ
+AjCsgM7SalHDKIMpUqco4hutVJ7ykPE/pbEdC7q93TQ+PWE4/QY3JXcjC7L6KN1/
+v9rRTIFTR6fc5EcJfhH2zpWi69OWfE/vjM7k9XhpMoAdUZc=
+=fqiA
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa377.meta" of type "application/octet-stream" (1918 bytes)
+
+Download attachment "xsa377.patch" of type "application/octet-stream" (908 bytes)
+
+Download attachment "xsa377-4.11.patch" of type "application/octet-stream" (908 bytes)
+
+Download attachment "xsa377-4.12.patch" of type "application/octet-stream" (909 bytes)
