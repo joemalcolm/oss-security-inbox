@@ -1,29 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/31/1
-Message-ID: <20210131131329.56c9be0d@fabiankeil.de>
-Date: Sun, 31 Jan 2021 13:13:29 +0100
-From: Fabian Keil <freebsd-listen@...iankeil.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE request experience
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/08/6
+Message-Id: <E1lqf9S-0004tH-13@xenbits.xenproject.org>
+Date: Tue, 08 Jun 2021 17:04:30 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 374 v2 (CVE-2021-28691) - Guest triggered use-after-free in Linux xen-netback
 Content-Type: text/plain; charset=utf-8
 
-Nick Tait <ntait@...hat.com> wrote on 2020-12-23:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> That is a rather poor experience Fabian, sorry! Took a look at that
-> incident number and no encrypted message appears on our end. I believe
-> you did actually send a message but not sure what went wrong. While I
-> can't directly help, did request the appropriate people follow up with
-> you.
+            Xen Security Advisory CVE-2021-28691 / XSA-374
+                               version 2
 
-Thanks a lot for your help, Nick.
+          Guest triggered use-after-free in Linux xen-netback
 
-I was contacted by someone from Red Hat Product Security
-on 2020-12-24 and received a CVE.
+UPDATES IN VERSION 2
+====================
 
-I replied and requested CVEs for the other issues fixed in
-Privoxy 3.0.29 but did not receive a reply yet. I just
-forwarded the request to <secalert@...hat.com>.
+Public release.
 
-Fabian
+ISSUE DESCRIPTION
+=================
 
-Content of type "application/pgp-signature" skipped
+A malicious or buggy network PV frontend can force Linux netback to
+disable the interface and terminate the receive kernel thread
+associated with queue 0 in response to the frontend sending a
+malformed packet.
+
+Such kernel thread termination will lead to a use-after-free in Linux
+netback when the backend is destroyed, as the kernel thread associated
+with queue 0 will have already exited and thus the call to
+kthread_stop will be performed against a stale pointer.
+
+IMPACT
+======
+
+A malicious or buggy frontend driver can trigger a dom0 crash.
+Privilege escalation and information leaks cannot be ruled out.
+
+VULNERABLE SYSTEMS
+==================
+
+Systems using Linux version 5.5 or newer are vulnerable.
+
+MITIGATION
+==========
+
+On x86 running only HVM guests with emulated network cards will avoid the
+issue.  There's however no option in the upstream toolstack to offer only
+emulated network cards to guests.
+
+CREDITS
+=======
+
+This issue was discovered by Michael Brown of iPXE and diagnosed by
+Olivier Benjamin, Michael Kurth and Martin Mazein of AWS.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa374-linux.patch     Linux 5.5.0 - 5.12.2
+
+$ sha256sum xsa374*
+156cee65022359a5901cce97714d2abb16fef786246b1c4bf509083d21e085d6  xsa374-linux.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Deployment of the mitigation to disable PV network interfaces is NOT
+permitted (except where all the affected systems and VMs are
+administered and used only by organisations which are members of the
+Xen Project Security Issues Predisclosure List).  Specifically,
+deployment on public cloud systems is NOT permitted.
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmC/oxIMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZigoIAKNYimzTYl6VQYaqgwMdNzqXCF/PdlQF/tf8PSwm
+5VP0ZPbLq6Zn4HOgMBtBzs/GCFtrIWsQGnZji611dkaAh21N1YErXW5jFYMnf1DI
+rruCXE1GuL5B4sFvWw7CnMXax6vYe0q5KPoGmyZRV77aT5T+gNMONlGl6raw7/Ne
+UAtAv4JDSR5Nc53X0HNK7tNU9tdr4VaLqEKWs+C0W+azOFNGvrTeNDVjBiLqDZbA
+st62i3PIFTXu+XzbjZNdM/RMpVVxFSkfdWn53RDVJ2JaFBMxrcVs75aVo3Nfr34Z
+Iho+eTPDywP9+4zl/FoModMYHg4rTMHf+jmbi3M/aCOal2U=
+=1Dhy
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa374-linux.patch" of type "application/octet-stream" (1678 bytes)
