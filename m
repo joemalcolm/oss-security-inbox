@@ -1,46 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/22/2
-Message-ID: <CAC8fJNZ9WakxS9tLqYtxkj3zQBU+==ZHvNM_-DA=-FiWzvTySw@mail.gmail.com>
-Date: Mon, 22 Nov 2021 07:57:25 +0100
-From: Marcin Niemiec <niemiec.marcin@...il.com>
-To: Zexuan Luo <spacewander@...che.org>
-Cc: announce@...che.org, dev@...six.apache.org,  Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-43557: Apache APISIX: Path traversal in request_uri variable
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/08/3
+Message-ID: <CAFcO6XOoDp3LDitRWWg0O7uXtL0c7+zosg3_+qwXeB=PYaezxQ@mail.gmail.com>
+Date: Tue, 8 Jun 2021 11:02:12 +0800
+From: butt3rflyh4ck <butterflyhuangxx@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel: nfc: null ptr dereference in llcp_sock_getname
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi, RedHat has assigned CVE-2021-3587 to this issue.
 
-Looks good to me.
 
-It's really awesome that you verified this issue and provided fix so
-quickly!
+Regards,
+ butt3rflyh4ck.
 
-Best,
-Marcin
 
-pon., 22 lis 2021 o 07:30 Zexuan Luo <spacewander@...che.org> napisał(a):
+On Sun, Jun 6, 2021 at 11:40 PM butt3rflyh4ck
+<butterflyhuangxx@...il.com> wrote:
+>
+> Hi, the patch for this issue in upstream:
+>
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=4ac06a1e013cf5fdd963317ffd3b968560f33bba
+>
+> Regards,
+>  butt3rflyh4ck.
+>
+>
+> On Tue, Jun 1, 2021 at 3:37 PM butt3rflyh4ck <butterflyhuangxx@...il.com> wrote:
+> >
+> >  Hi, there was a null pointer dereference in llcp_sock_getname in
+> > net/nfc/llcp_sock.c and reproduced it in linux-5.13.0-rc2. An
+> > unprivileged user can trigger this bug and cause denial of service.
+> >
+> > #Root Cause
+> > After creating an nfc socket, bind the address by calling bind(), if
+> > LLCP_SAP_MAX was used as SAP, it cause the bind() failed and there
+> > would set llcp_sock->service_name  as NULL.
+> >
+> > Although bind() returns an error here, it does not affect calling
+> > other socket functions. sock_getname() would invoke
+> > llcp_sock_getname(), llcp_sock_getname copied service  name from
+> > llcp_sock->service_name by memcpy but llcp_sock->service_name is NULL.
+> >
+> > #Fix
+> > the patch for this issue:
+> > https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=4ac06a1e013c
+> >
+> > #CVE
+> > CVE not assigned.
+> >
+> > #Credits
+> > Active Defense Lab of Venustech.
+> >
+> >
+> >
+> > Regards,
+> >    butt3rflyh4ck.
+> >
+> > --
+> > Active Defense Lab of Venustech
+>
+>
+>
+> --
+> Active Defense Lab of Venustech
 
-> Severity: moderate
->
-> Description:
->
-> The uri-block plugin in APISIX uses $request_uri without verification.
-> The $request_uri is the full original request URI without
-> normalization.
-> This makes it possible to construct a URI to bypass the block list on
-> some occasions. For instance, when the block list contains
-> "^/internal/", a URI like `//internal/` can be used to bypass it.
->
-> Some other plugins also have the same issue. And it may affect the
-> developer's custom plugin.
->
-> This issue is fixed in APISIX 2.10.2.
-> Thanks to Marcin Niemiec for reporting the vulnerability.
->
-> Mitigation:
->
-> 1. Upgrade to APISIX 2.10.2
-> 2. Carefully review custom code, find & fix the usage of $request_uri
-> without verification.
->
 
+
+--
+Active Defense Lab of Venustech
