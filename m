@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["502" "Tuesday" "12" "December" "2017" "08:13:02" "+0100" "Lukasz Lenart" "lukaszlenart@apache.org" "<CAMopvkMb_CDw9UNZMUec8UApNZ8Xmr2M-wTCXPuhB9fCTr2Eqg@mail.gmail.com>" "16" "[oss-security] [ANN] [APACHE STRUTS] Security Bulletin S2-055: impact increased to High (related to CVE-2017-7525 - JSON Jackson library)" nil nil nil "12" "2017121207:13:02" "[oss-security] [ANN] [APACHE STRUTS] Security Bulletin S2-055: impact increased to High (related to CVE-2017-7525 - JSON Jackson library)" (number mark "U       lukaszlenart Dec 12   16/502   " thread-indent "\"[oss-security] [ANN] [APACHE STRUTS] Security Bulletin S2-055: impact increased to High (related to CVE-2017-7525 - JSON Jackson library)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["10641" "Tuesday" "8" "June" "2021" "17:04:31" "+0000" "Xen.org security team" "security@xen.org" nil "244" "[oss-security] Xen Security Advisory 377 v2 (CVE-2021-28690) - x86: TSX Async Abort protections not restored after S3" nil nil nil "6" nil nil (number mark "U       security@xen Jun  8  244/10641 " thread-indent "\"[oss-security] Xen Security Advisory 377 v2 (CVE-2021-28690) - x86: TSX Async Abort protections not restored after S3\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 377 v2 (CVE-2021-28690) - x86: TSX Async Abort protections not restored after S3" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 24560 invoked by uid 550); 12 Dec 2017 10:55:16 -0000
+Received: (qmail 5601 invoked by uid 550); 8 Jun 2021 17:04:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,38 +12,267 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3556 invoked from network); 12 Dec 2017 07:13:42 -0000
-X-Gm-Message-State: AKGB3mJdBdIYBI2Sx8yhj0iumLYRkrVgmb5C1uSJaH1pw989gbYTGutB
-	ebRbaOXoE7XalskpbeugS1l0CXtZ4qvMEymL1vI=
-X-Google-Smtp-Source: ACJfBovO6KVT19btfK13dQHHsYVCMLSMG+rgC6nTI7TobWUg8QgiBiUzM9wQZDhf5Hrd+wIXwhYOScRwEJ0Bzqb+wKA=
-X-Received: by 10.25.202.14 with SMTP id a14mr1197551lfg.83.1513062803584;
- Mon, 11 Dec 2017 23:13:23 -0800 (PST)
+Received: (qmail 5506 invoked from network); 8 Jun 2021 17:04:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
+	Content-Transfer-Encoding:Content-Type;
+	bh=YQPfBSO74QvjUcDBr5ntUsPt+VI0GpRiGD3hrWKvTk0=; b=iQOQHvopS5dPP5RekZ3mQlKPNl
+	uu1nhvctPYmkry7eCRLjsiHeB+k4O1jZ/Hh3DLEH19sTRbbm+dFCg3ujsKXGD5bjSqizrgVHwPzFO
+	X52P3MGlYhlZySwrQLuv8IjYlz6RccNNzji1Th+24/3HF4q1HokQX5Eh97V774abJCwg=;
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-From: Lukasz Lenart <lukaszlenart@apache.org>
-Date: Tue, 12 Dec 2017 08:13:02 +0100
-X-Gmail-Original-Message-ID: <CAMopvkMb_CDw9UNZMUec8UApNZ8Xmr2M-wTCXPuhB9fCTr2Eqg@mail.gmail.com>
-Message-ID: <CAMopvkMb_CDw9UNZMUec8UApNZ8Xmr2M-wTCXPuhB9fCTr2Eqg@mail.gmail.com>
-To: Struts Users Mailing List <user@struts.apache.org>
-Cc: announce@apache.org, announcements@struts.apache.org, 
-	oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] [ANN] [APACHE STRUTS] Security Bulletin S2-055: impact increased to
- High (related to CVE-2017-7525 - JSON Jackson library)
+X-Mailer: MIME-tools 5.509 (Entity 5.509)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1lqf9T-0004vc-JX@xenbits.xenproject.org>
+Date: Tue, 08 Jun 2021 17:04:31 +0000
+Subject: [oss-security] Xen Security Advisory 377 v2 (CVE-2021-28690) - x86: TSX Async
+ Abort protections not restored after S3
 
-Hi,
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-After further clarification we increased impact of a vulnerability
-reported to us and described as S2-055 to High. The vulnerability
-exists in a JSON Jackson library and it's registered under
-CVE-2017-7525. Please read the bulletin [1] and apply possible
-solutions. This vulnerability impacts anyone using the vulnerable
-Jackson JSON library (not only Struts users).
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-[1] https://cwiki.apache.org/confluence/display/WW/S2-055
+            Xen Security Advisory CVE-2021-28690 / XSA-377
+                               version 2
+
+        x86: TSX Async Abort protections not restored after S3
+
+UPDATES IN VERSION 2
+====================
+
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+This issue relates to the TSX Async Abort speculative security vulnerability.
+Please see https://xenbits.xen.org/xsa/advisory-305.html for details.
+
+Mitigating TAA by disabling TSX (the default and preferred option) requires
+selecting a non-default setting in MSR_TSX_CTRL.  This setting isn't restored
+after S3 suspend.
+
+IMPACT
+======
+
+After using S3 suspend at least once, CPU0 remains vulnerable to TAA.
+
+This is an information leak.  For full details of the impact, see
+XSA-305.
+
+VULNERABLE SYSTEMS
+==================
+
+See XSA-305 for details of susceptibility to TAA.
+
+Only systems which are susceptible to TAA and have the XSA-305 fix are
+vulnerable.  Only systems which support S3 suspend/resume are vulnerable.
+
+The vulnerability is only exposed if S3 suspend/resume is used.
+
+MITIGATION
+==========
+
+Not using S3 suspend/resume avoids the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa377.patch           xen-unstable - Xen 4.13.x
+xsa377-4.12.patch      Xen 4.12.x
+xsa377-4.11.patch      Xen 4.11.x
+
+$ sha256sum xsa377*
+532cb030f97d72e8e534ad97182cd5e3aa0efeef405e255bb49649b4f0dd9947  xsa377.meta
+21a30dbf80f6e78057cc7e785c8fda475d5a8a0b6b9442af3bd8ca31dd69becf  xsa377.patch
+3279317d56e7b8d0a2b0152b64b4c577381b8b01fa0a1a21ec6f855bb964278a  xsa377-4.11.patch
+65f61f1cb7bb0e068fd32e40755b9a9aae464d15ccd42c94dae68e495c5a45e0  xsa377-4.12.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
-Regards
---=20
-=C5=81ukasz
-+ 48 606 323 122 http://www.lenart.org.pl/
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmC/oxIMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZZ0wH/AyYmZO221SvMaSa1kGaV9+tATBWtxKEmUr2I+/Y
+jOHJ4Ydw2RarJtZ6reYJ+J0qlTdgI65ceo87VEm1bm+LyvxhlLRmkBfavdTg66aX
+VU6uPGqJ9HMUY4rwN7aUgsc/qhquMZQYSWd5A/QknhNHlOtXhX0bnaIqgXoAroi7
+PRVs3sawkEizIn1Rqc8nLk+xkOrV3xvu+ollj/VNHgPDKU7SFKZiraBzUW7bErCZ
+AjCsgM7SalHDKIMpUqco4hutVJ7ykPE/pbEdC7q93TQ+PWE4/QY3JXcjC7L6KN1/
+v9rRTIFTR6fc5EcJfhH2zpWi69OWfE/vjM7k9XhpMoAdUZc=
+=fqiA
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa377.meta"
+Content-Disposition: attachment; filename="xsa377.meta"
+Content-Transfer-Encoding: base64
+
+ewogICJYU0EiOiAzNzcsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
+Im1hc3RlciIsCiAgICAiNC4xNSIsCiAgICAiNC4xNCIsCiAgICAiNC4xMyIs
+CiAgICAiNC4xMiIsCiAgICAiNC4xMSIKICBdLAogICJUcmVlcyI6IFsKICAg
+ICJ4ZW4iCiAgXSwKICAiUmVjaXBlcyI6IHsKICAgICI0LjExIjogewogICAg
+ICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0
+YWJsZVJlZiI6ICJiMWU0NmJjMzY5YmI0OTBiNzIxYzc3ZjE1ZDI1ODNiYmY0
+NjYxNTJkIiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAz
+NzIsCiAgICAgICAgICAgIDM3MywKICAgICAgICAgICAgMzc1CiAgICAgICAg
+ICBdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2Ez
+NzctNC4xMS5wYXRjaCIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIH0K
+ICAgIH0sCiAgICAiNC4xMiI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAg
+ICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiNTk4NDkwNWIy
+NjM4ZGY4N2EwMjYyZDFlZTkxZjBhNmUxNGE4NmRmNiIsCiAgICAgICAgICAi
+UHJlcmVxcyI6IFsKICAgICAgICAgICAgMzcyLAogICAgICAgICAgICAzNzMs
+CiAgICAgICAgICAgIDM3NQogICAgICAgICAgXSwKICAgICAgICAgICJQYXRj
+aGVzIjogWwogICAgICAgICAgICAieHNhMzc3LTQuMTIucGF0Y2giCiAgICAg
+ICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQuMTMiOiB7
+CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAg
+ICAiU3RhYmxlUmVmIjogIjI4NDEzMjkzODkwMGNlOGMzYjExYmFiZjcyNTVm
+NWM2ZGJiMjE3MTYiLAogICAgICAgICAgIlByZXJlcXMiOiBbCiAgICAgICAg
+ICAgIDM3MiwKICAgICAgICAgICAgMzczLAogICAgICAgICAgICAzNzUKICAg
+ICAgICAgIF0sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAg
+InhzYTM3Ny5wYXRjaCIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIH0K
+ICAgIH0sCiAgICAiNC4xNCI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAg
+ICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiMTBmMGIyZDQ5
+Mzc2ODY1ZDQ5NjgwZjA2YzUyYjQ1MWZhYmNlM2JiNSIsCiAgICAgICAgICAi
+UHJlcmVxcyI6IFsKICAgICAgICAgICAgMzcyLAogICAgICAgICAgICAzNzMs
+CiAgICAgICAgICAgIDM3NQogICAgICAgICAgXSwKICAgICAgICAgICJQYXRj
+aGVzIjogWwogICAgICAgICAgICAieHNhMzc3LnBhdGNoIgogICAgICAgICAg
+XQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICI0LjE1IjogewogICAg
+ICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0
+YWJsZVJlZiI6ICIyODBkNDcyZjRmY2EwNzBhMTAzNzdlMzE4ZDkwY2FiZmMy
+NTQwODEwIiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAz
+NzIsCiAgICAgICAgICAgIDM3MywKICAgICAgICAgICAgMzc1CiAgICAgICAg
+ICBdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2Ez
+NzcucGF0Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9
+LAogICAgIm1hc3RlciI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAg
+InhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiYWE3N2FjYzI4MDk4
+ZDA0OTQ1YWY5OThmM2ZjMGRiZDM3NTliNWI0MSIsCiAgICAgICAgICAiUHJl
+cmVxcyI6IFsKICAgICAgICAgICAgMzcyLAogICAgICAgICAgICAzNzMsCiAg
+ICAgICAgICAgIDM3NQogICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVz
+IjogWwogICAgICAgICAgICAieHNhMzc3LnBhdGNoIgogICAgICAgICAgXQog
+ICAgICAgIH0KICAgICAgfQogICAgfQogIH0KfQ==
+
+--=separator
+Content-Type: application/octet-stream; name="xsa377.patch"
+Content-Disposition: attachment; filename="xsa377.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
+bT4KU3ViamVjdDogeDg2L3NwZWMtY3RybDogTWl0aWdhdGUgVEFBIGFmdGVy
+IFMzIHJlc3VtZQoKVGhlIHVzZXIgY2hvc2VuIHNldHRpbmcgZm9yIE1TUl9U
+U1hfQ1RSTCBuZWVkcyByZXN0b3JpbmcgYWZ0ZXIgUzMuCgpBbGwgQVBzIGdl
+dCB0aGUgY29ycmVjdCBzZXR0aW5nIHZpYSBzdGFydF9zZWNvbmRhcnkoKSwg
+YnV0IHRoZSBCU1Agd2FzIG1pc3NlZApvdXQuCgpUaGlzIGlzIFhTQS0zNzcg
+LyBDVkUtMjAyMS0yODY5MC4KCkZpeGVzOiA4YzQzMzA4MThmNiAoIng4Ni9z
+cGVjLWN0cmw6IE1pdGlnYXRlIHRoZSBUU1ggQXN5bmNocm9ub3VzIEFib3J0
+IHNpZGVjaGFubmVsIikKU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3BlciA8
+YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBC
+ZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KCmRpZmYgLS1naXQgYS94ZW4v
+YXJjaC94ODYvYWNwaS9wb3dlci5jIGIveGVuL2FyY2gveDg2L2FjcGkvcG93
+ZXIuYwppbmRleCA5MWE4YzRkMGJkLi4zMWE1NmYwMmQwIDEwMDY0NAotLS0g
+YS94ZW4vYXJjaC94ODYvYWNwaS9wb3dlci5jCisrKyBiL3hlbi9hcmNoL3g4
+Ni9hY3BpL3Bvd2VyLmMKQEAgLTI4OCw2ICsyODgsOCBAQCBzdGF0aWMgaW50
+IGVudGVyX3N0YXRlKHUzMiBzdGF0ZSkKIAogICAgIG1pY3JvY29kZV91cGRh
+dGVfb25lKCk7CiAKKyAgICB0c3hfaW5pdCgpOyAvKiBOZWVkcyBtaWNyb2Nv
+ZGUuICBNYXkgY2hhbmdlIEhMRS9SVE0gZmVhdHVyZSBiaXRzLiAqLworCiAg
+ICAgaWYgKCAhcmVjaGVja19jcHVfZmVhdHVyZXMoMCkgKQogICAgICAgICBw
+YW5pYygiTWlzc2luZyBwcmV2aW91c2x5IGF2YWlsYWJsZSBmZWF0dXJlKHMp
+XG4iKTsKIAo=
+
+--=separator
+Content-Type: application/octet-stream; name="xsa377-4.11.patch"
+Content-Disposition: attachment; filename="xsa377-4.11.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
+bT4KU3ViamVjdDogeDg2L3NwZWMtY3RybDogTWl0aWdhdGUgVEFBIGFmdGVy
+IFMzIHJlc3VtZQoKVGhlIHVzZXIgY2hvc2VuIHNldHRpbmcgZm9yIE1TUl9U
+U1hfQ1RSTCBuZWVkcyByZXN0b3JpbmcgYWZ0ZXIgUzMuCgpBbGwgQVBzIGdl
+dCB0aGUgY29ycmVjdCBzZXR0aW5nIHZpYSBzdGFydF9zZWNvbmRhcnkoKSwg
+YnV0IHRoZSBCU1Agd2FzIG1pc3NlZApvdXQuCgpUaGlzIGlzIFhTQS0zNzcg
+LyBDVkUtMjAyMS0yODY5MC4KCkZpeGVzOiA4YzQzMzA4MThmNiAoIng4Ni9z
+cGVjLWN0cmw6IE1pdGlnYXRlIHRoZSBUU1ggQXN5bmNocm9ub3VzIEFib3J0
+IHNpZGVjaGFubmVsIikKU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3BlciA8
+YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBC
+ZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KCmRpZmYgLS1naXQgYS94ZW4v
+YXJjaC94ODYvYWNwaS9wb3dlci5jIGIveGVuL2FyY2gveDg2L2FjcGkvcG93
+ZXIuYwppbmRleCAzMGUxYmQ1Y2QzLi40NTFjYmE2MjJjIDEwMDY0NAotLS0g
+YS94ZW4vYXJjaC94ODYvYWNwaS9wb3dlci5jCisrKyBiL3hlbi9hcmNoL3g4
+Ni9hY3BpL3Bvd2VyLmMKQEAgLTI1OSw2ICsyNTksOCBAQCBzdGF0aWMgaW50
+IGVudGVyX3N0YXRlKHUzMiBzdGF0ZSkKIAogICAgIG1pY3JvY29kZV9yZXN1
+bWVfY3B1KDApOwogCisgICAgdHN4X2luaXQoKTsgLyogTmVlZHMgbWljcm9j
+b2RlLiAgTWF5IGNoYW5nZSBITEUvUlRNIGZlYXR1cmUgYml0cy4gKi8KKwog
+ICAgIGlmICggIXJlY2hlY2tfY3B1X2ZlYXR1cmVzKDApICkKICAgICAgICAg
+cGFuaWMoIk1pc3NpbmcgcHJldmlvdXNseSBhdmFpbGFibGUgZmVhdHVyZShz
+KS4iKTsKIAo=
+
+--=separator
+Content-Type: application/octet-stream; name="xsa377-4.12.patch"
+Content-Disposition: attachment; filename="xsa377-4.12.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
+bT4KU3ViamVjdDogeDg2L3NwZWMtY3RybDogTWl0aWdhdGUgVEFBIGFmdGVy
+IFMzIHJlc3VtZQoKVGhlIHVzZXIgY2hvc2VuIHNldHRpbmcgZm9yIE1TUl9U
+U1hfQ1RSTCBuZWVkcyByZXN0b3JpbmcgYWZ0ZXIgUzMuCgpBbGwgQVBzIGdl
+dCB0aGUgY29ycmVjdCBzZXR0aW5nIHZpYSBzdGFydF9zZWNvbmRhcnkoKSwg
+YnV0IHRoZSBCU1Agd2FzIG1pc3NlZApvdXQuCgpUaGlzIGlzIFhTQS0zNzcg
+LyBDVkUtMjAyMS0yODY5MC4KCkZpeGVzOiA4YzQzMzA4MThmNiAoIng4Ni9z
+cGVjLWN0cmw6IE1pdGlnYXRlIHRoZSBUU1ggQXN5bmNocm9ub3VzIEFib3J0
+IHNpZGVjaGFubmVsIikKU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3BlciA8
+YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBC
+ZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KCmRpZmYgLS1naXQgYS94ZW4v
+YXJjaC94ODYvYWNwaS9wb3dlci5jIGIveGVuL2FyY2gveDg2L2FjcGkvcG93
+ZXIuYwppbmRleCBhMDdhYTNiOWVkLi42NjAzNjNhM2RmIDEwMDY0NAotLS0g
+YS94ZW4vYXJjaC94ODYvYWNwaS9wb3dlci5jCisrKyBiL3hlbi9hcmNoL3g4
+Ni9hY3BpL3Bvd2VyLmMKQEAgLTI1OSw2ICsyNTksOCBAQCBzdGF0aWMgaW50
+IGVudGVyX3N0YXRlKHUzMiBzdGF0ZSkKIAogICAgIG1pY3JvY29kZV9yZXN1
+bWVfY3B1KDApOwogCisgICAgdHN4X2luaXQoKTsgLyogTmVlZHMgbWljcm9j
+b2RlLiAgTWF5IGNoYW5nZSBITEUvUlRNIGZlYXR1cmUgYml0cy4gKi8KKwog
+ICAgIGlmICggIXJlY2hlY2tfY3B1X2ZlYXR1cmVzKDApICkKICAgICAgICAg
+cGFuaWMoIk1pc3NpbmcgcHJldmlvdXNseSBhdmFpbGFibGUgZmVhdHVyZShz
+KVxuIik7CiAK
+
+--=separator--
