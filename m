@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1257" "Wednesday" "30" "March" "2022" "20:11:36" "+0000" "Seth Arnold" "seth.arnold@canonical.com" nil "37" nil "^Cc:" nil nil "3" nil nil (number mark "        seth.arnold@ Mar 30   37/1257  " thread-indent "\"Re: [oss-security] SpringShell and recent OpenJDK updates\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] SpringShell and recent OpenJDK updates" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["394" "Tuesday" "8" "June" "2021" "13:44:32" "+1000" "Wade Mealing" "wmealing@redhat.com" nil "26" "Re: [oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname" nil nil nil "6" nil nil (number mark "U       wmealing@red Jun  8   26/394   " thread-indent "\"Re: [oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11691 invoked by uid 550); 30 Mar 2022 20:11:57 -0000
+Received: (qmail 25860 invoked by uid 550); 8 Jun 2021 03:44:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,68 +11,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11670 invoked from network); 30 Mar 2022 20:11:56 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20210705; t=1648671103;
-	bh=WkYZg4NXq04ZP55WSZhvA3UNPKX3JTn2rvu9p0sNLk4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:In-Reply-To;
-	b=ZQtTdE3VoxNpdLzH4N3aFUJcSrGCMcrW9Sh+hL++SJ4upX3WB2fYejRDbxpHiAfzW
-	 CVRyAlo1g6CpG9l0F6onFV8kKAvjyKUwalyBCG7SQb4vuc0IwuxPClHZn1ordjTZ51
-	 aG9LBD0LNZIyANSHD83v6AlRMgyst/AqE8bv+48MfHsZH4tgv9oLwE+/l2ni2Q0uNo
-	 WYyOEaDtFRqGbZwOPj4AUwNoWCIKygAaueThnUveA9lerSg8wJs15EUuK9QkAVadT+
-	 JKMZ3dgz1JgpTMJYPRE8bt4eB9jxSFmoSNAJ5bN71/yQJROCgrIXl8xqYagXcemfu0
-	 aNHDsRWZL4tkw==
-Message-ID: <20220330201136.GA3061879@millbarge>
-Mail-Followup-To: Jeffrey Walton <noloader@gmail.com>,
-	oss-security@lists.openwall.com
-References: <CAH8yC8ngu__9q3C-pDGEAOnM=ZvuXt0m2V=BmJHH_bVa4CE1eQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="dDRMvlgZJXvWKvBx"
-Content-Disposition: inline
-In-Reply-To: <CAH8yC8ngu__9q3C-pDGEAOnM=ZvuXt0m2V=BmJHH_bVa4CE1eQ@mail.gmail.com>
-Cc: oss-security@lists.openwall.com
-Date: Wed, 30 Mar 2022 20:11:36 +0000
-From: Seth Arnold <seth.arnold@canonical.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] SpringShell and recent OpenJDK updates
-To: Jeffrey Walton <noloader@gmail.com>
+Received: (qmail 25839 invoked from network); 8 Jun 2021 03:44:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1623123886;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=/SVvxcs87pIcJwZ+Exp15mtoCoAVtUGQOmk6vGB4GEM=;
+	b=gDR10OyymvcuXy3/815FRyjFlJgcwh6Zb9SAWpUmM1a4h4o2H1fExf3uC3lFCf+ucKI2+x
+	+NKyn+52Y5ZAXWptqBnKvokz/r0EJRqgz0GmoEGNJfitQf6nWpji7tM9WI6bNdFR0Ka2Ih
+	C04ReVQKbXY9I61hlHauj+XnPP7ZKTY=
+X-MC-Unique: xcpbLIlRON-qvaGV5zNoAw-1
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=/SVvxcs87pIcJwZ+Exp15mtoCoAVtUGQOmk6vGB4GEM=;
+        b=Bis6Q1uWtYDh9uLkF/POPpSKlYU9XElDE7y+eO6SvfbV0soD+qgUXtKL0RzUJ1K+ZR
+         NSp9Nl/Br5Cg/kXPfC9movmcZPoD8mzhjnRW0JoU2yrvbv4gqWUb56BePNt3f8zxsjdz
+         Q3BaVNH6N8MlaoTxm0K8TE/Ahl0PZqbZ8larr7wfBD2gYnkLCNLidO6ktCgKGDruBhMo
+         bymOSAju0wFsbkPsiep7ChIJeufGm0N5RTQ1OgqOYe2jjIGhXUsamPqhK3HzMnKlRydt
+         Xcx9vHsPpPJdkZLQVa5Fyfll6QEwJgMJKN0/J7UM6Sus0qOdcuOGfPgM68jBt/yqLHDZ
+         hNNw==
+X-Gm-Message-State: AOAM5326+8q2G3X1uRAbvQt7u9e0RuVpj34L6TGj7pMLbgvIHU+hmN53
+	QNqMkNxmm23+GJoJvMTVtjp/te3CMI90zdx8ylXAEgF2+ca9lvUY4XaEmDqr8c7UCCAFIcvlwgo
+	2/XeUXr1XPjNq17PY8Kp18+OLtqY9kC5OMrb2t32ML/YP
+X-Received: by 2002:a5d:85da:: with SMTP id e26mr17183059ios.79.1623123883620;
+        Mon, 07 Jun 2021 20:44:43 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJyA1dw+GTkOCIRg+b/fMX0h3kXKYl6R6qjaiEvLkJRYaAItWS4BxLdzkl/Z+mz/cwuxCi184sJ90yHkqkirt1Q=
+X-Received: by 2002:a5d:85da:: with SMTP id e26mr17183043ios.79.1623123883293;
+ Mon, 07 Jun 2021 20:44:43 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAFcO6XOFPEGiO_HwajTB3zA9d3jyhUwDX742huVhaNtQy0=TfQ@mail.gmail.com>
+ <CAFcO6XP_-WSEzDB2E=r90Yk4sXwUjo6fRsY=E+ZoAYunpry=qw@mail.gmail.com>
+In-Reply-To: <CAFcO6XP_-WSEzDB2E=r90Yk4sXwUjo6fRsY=E+ZoAYunpry=qw@mail.gmail.com>
+From: Wade Mealing <wmealing@redhat.com>
+Date: Tue, 8 Jun 2021 13:44:32 +1000
+Message-ID: <CALJHwhSkYWmBk3u5nBnOZfSskksFPP6k9oFfWGdtDpbr1yVFAA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=wmealing@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: multipart/alternative; boundary="0000000000007d94b005c438fa82"
+Subject: Re: [oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname
 
---dDRMvlgZJXvWKvBx
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+--0000000000007d94b005c438fa82
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Mar 30, 2022 at 02:31:41PM -0400, Jeffrey Walton wrote:
-> I saw Ubuntu patched OpenJDK 11 recently. [1] Was that due to SpringShell=
-? [2]
->=20
-> Or stepping back a bit, did the SpringShell folks work with distros?
-> Or did they really drop a 0-day?
->=20
-> [1] https://ubuntu.com/security/notices/USN-5313-2
-> [2] https://www.cyberkendra.com/2022/03/springshell-rce-0-day-vulnerabili=
-ty.html
+Red Hat has assigned CVE-2021-3587 to this issue
 
-Hello Jeff, as far as I know, Ubuntu received no communication from
-anyone about SpringShell. These are just bugfixes.
+Thank you!
 
-Thanks
 
---dDRMvlgZJXvWKvBx
-Content-Type: application/pgp-signature; name="signature.asc"
+-- 
 
------BEGIN PGP SIGNATURE-----
+Wade Mealing
 
-iQEzBAABCgAdFiEEQVAQ8bojyMcg37H18yFyWZ2NLpcFAmJEuXUACgkQ8yFyWZ2N
-Lpfwugf7BM6vsOPr5vxhafMpqa9v+Lv7uaKT/wgDtOXfWo13V4O6Ja9RrEUN58Op
-3FW1r4TtPwLOKz1vUCnlKPs1GiI7X4jIFbDWWneQLrtLFAa75vkVAp3jHmVpdCtj
-GDy3HDYZSF3hC/injgRo/wEz86A4V2dvST18TsVzd+B7itXnM5HSMD1FvqQDPFdY
-o5y9E+nUFVrO2SWzrm9R+5wC0rUMFMggKeZ7DaVRcS7RnnfsD/xeXxb8HbxSF99T
-kN/Yt5q9Cu+cAQd6Rg4VQ3VA3ZC4seragZLSL1VtDnsV1lMlz8C/UkgiBIVDwm/8
-JEGX8w2BAuvToSHPYwK7oMx/yJdqsw==
-=xOTL
------END PGP SIGNATURE-----
+Product Security - Kernel, RHCE
 
---dDRMvlgZJXvWKvBx--
+Red Hat
+
+<https://www.redhat.com>
+
+wmealing@redhat.com
+<https://red.ht/sig>
+TRIED. TESTED. TRUSTED. <https://redhat.com/trusted>
+
+secalert@redhat.com for urgent response
+
+--0000000000007d94b005c438fa82--
+
