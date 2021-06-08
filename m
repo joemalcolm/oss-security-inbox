@@ -1,63 +1,137 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/18/5
-Message-ID: <20210418125151.GA20535@openwall.com>
-Date: Sun, 18 Apr 2021 14:51:52 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: xscreensaver package caps gets raw socket
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/08/5
+Message-Id: <E1lqf9Q-0004pg-7A@xenbits.xenproject.org>
+Date: Tue, 08 Jun 2021 17:04:28 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 372 v3 (CVE-2021-28693) - xen/arm: Boot modules are not scrubbed
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Apr 17, 2021 at 09:51:38PM -0300, Érico Nogueira wrote:
-> Em 17/04/2021 11:31, Tavis Ormandy escreveu:
-> >Summary of discussion so far:
-> >
-> >- In theory, mesa support running in a privileged context, their
-> >   documentation says they disable dangerous features in setuid/setgid
-> >   binaries:
-> >
-> >     https://mesa-docs.readthedocs.io/en/latest/egl.html
-> >
-> >   In fact, this is broken because they only check if (geteuid() !=
-> >   getuid()) { ... }. That check doesn't even handle setgid, let alone file
-> >   caps. If mesa agree this is a bug, simply changing their checks to if
-> >   (getauxval(AT_SECURE)) { ... } might make this bug go away, and handle
-> >   file caps and setgid for free. I filed a bug for that, but there
-> >   hasn't been a response:
-> >   https://gitlab.freedesktop.org/mesa/mesa/-/issues/4549
-> 
-> The linked issue appears to be private... Not sure it makes sense, since 
-> the problem has been explained in this public email. FWIW, libglvnd has 
-> the same issue, though it at leasts (E)GID as well. Sending it here 
-> because I couldn't find a security contact.
-> 
-> https://github.com/NVIDIA/libglvnd/blob/acc654454867c7cdd681cc1f60f858bcd6e5e729/src/EGL/libeglvendor.c
-> 
->     if (getuid() == geteuid() && getgid() == getegid()) {
->         env = getenv("__EGL_VENDOR_LIBRARY_FILENAMES");
->     }
-> 
-> I will look into opening an issue with them and finding a fix.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Related:
+            Xen Security Advisory CVE-2021-28693 / XSA-372
+                               version 3
 
-https://www.openwall.com/lists/oss-security/2019/12/04/6
+                xen/arm: Boot modules are not scrubbed
 
-"search for LIBGL_DRIVERS_PATH finds that Mesa appears to have the same
-issue, and it also finds that we should also search for GBM_DRIVERS_PATH
-(apparently, for older Mesa) and maybe EGL_DRIVERS_PATH and EGL_DRIVER,
-and LIBVA_DRIVERS_PATH and LIBVA_DRIVER_NAME.  There are probably more."
+UPDATES IN VERSION 3
+====================
 
-> Using `secure_getenv` in some of these cases would probably work as well 
-> as checking `getauxval(AT_SECURE)`, especially because it seems (from my 
-> quick search over at <https://man.bsd.lv>) that both are Linux specific 
-> anyway.
-> 
-> It would be nice to define a `is_privileged_context()` function that 
-> works on most platforms to be shared across projects or used as a 
-> library.
+Public release.
 
-Historically, that's __libc_enable_secure on glibc (although if
-secure_getenv() does what's needed in a given context, then you don't
-need to use __libc_enable_secure directly) and issetugid(2) on OpenBSD.
+ISSUE DESCRIPTION
+=================
 
-Alexander
+The bootloader will load boot modules (e.g. kernel, initramfs...) in a
+temporary area before they are copied by Xen to each domain memory.
+To ensure sensitive data is not leaked from the modules, Xen must
+"scrub" them before handing the page over to the allocator.
+
+Unfortunately, it was discovered that modules will not be scrubbed on
+Arm.
+
+IMPACT
+======
+
+Sensitive information from the boot modules might be visible to another
+domain after boot.
+
+VULNERABLE SYSTEMS
+==================
+
+Only Arm systems are vulnerable.  System running with "bootscrub=off"
+(disabling boot scrubbing) are not vulnerable.
+
+All versions of Xen since 4.12 are vulnerable.
+
+MITIGATION
+==========
+
+There is no mitigation available.
+
+CREDITS
+=======
+
+This issue was discovered by Julien Grall of Amazon.
+
+RESOLUTION
+==========
+
+Applying the appropriate set of attached patches resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa372/*.patch         xen-unstable
+xsa372-4.15/*.patch    Xen 4.15.x
+xsa372-4.14/*.patch    Xen 4.14.x - Xen 4.13.x
+xsa372-4.12/*.patch    Xen 4.12.x
+
+$ sha256sum xsa372* xsa372*/*
+06e43684c2d8a3085d55b8b40f57e1b9f1ee47519fac844dcbc21b57fb039915  xsa372.meta
+8f872c7abe6c795dbef2e401f2223fda0dbb9d7c57dfebd8047eef37e1caf952  xsa372-4.12/0001-xen-arm-Create-dom0less-domUs-earlier.patch
+a43c6c11481cc3f13900908cee79cc6c5401921f6f4e8858c0796cf301cfe923  xsa372-4.12/0002-xen-arm-Boot-modules-should-always-be-scrubbed-if-bo.patch
+6d1fad53795ebd251520022b6be901215426ba78ccbbc075841698973b74d2a2  xsa372-4.14/0001-xen-arm-Create-dom0less-domUs-earlier.patch
+2ceb5d4d8d4f8a18046721daa3bb29633a620c4794b54e1265f5d4d69a314c3b  xsa372-4.14/0002-xen-arm-Boot-modules-should-always-be-scrubbed-if-bo.patch
+7feae5f9f7f2df0ec38c0b9358dc32671a9955f966b3120e17bb3fd820ce33ff  xsa372-4.15/0001-xen-arm-Create-dom0less-domUs-earlier.patch
+0cc73b4751fa49f68c6584b1c7882606c6e1f18561d8a6547017ab068de4eb4b  xsa372-4.15/0002-xen-arm-Boot-modules-should-always-be-scrubbed-if-bo.patch
+950672405c695ebf6ae59eebeb454bc0738b7afc3efa35ef9680d76eef4d4ec0  xsa372/0001-xen-arm-Create-dom0less-domUs-earlier.patch
+9ceccd39c795e7756052a2f00256e043c8dda42e2c691df30e3f8b59190d6e8e  xsa372/0002-xen-arm-Boot-modules-should-always-be-scrubbed-if-bo.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmC/oxIMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZmdYIAMlZ2woM1hnb97BytpKkRM3v8AnyP4xhm29OoVI+
+eaclrapZBPxi8qxv0+fxhe/2/t9gf98miEJftI8VRz5btiStmsgIjlEXUGpC6iwE
+u7HmLzu7QBX7r2FzpSTFnVVdbFwXCU3scYuO4qM8frCpxH4kevSSxPrT5E/oFVvA
+Y83ux8aKg041WTVQvK0gEVA7CgRVoxmbiYeag2JIaRGt8WnEKprbmGWQ5+DYq+pr
+8tsLppHtyxppqSa7d6L67xdiNoRqAacfIezNFTpSIdyfS1m0QIIAJTr6Bg7Fd6zi
+F2AYcoZiNO53OSnobH3c64axIc5iBINZeXisVMnTDzKU3XE=
+=eQ/r
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa372.meta" of type "application/octet-stream" (1331 bytes)
+
+Download attachment "xsa372-4.12/0001-xen-arm-Create-dom0less-domUs-earlier.patch" of type "application/octet-stream" (2998 bytes)
+
+Download attachment "xsa372-4.12/0002-xen-arm-Boot-modules-should-always-be-scrubbed-if-bo.patch" of type "application/octet-stream" (1945 bytes)
+
+Download attachment "xsa372-4.14/0001-xen-arm-Create-dom0less-domUs-earlier.patch" of type "application/octet-stream" (2992 bytes)
+
+Download attachment "xsa372-4.14/0002-xen-arm-Boot-modules-should-always-be-scrubbed-if-bo.patch" of type "application/octet-stream" (1945 bytes)
+
+Download attachment "xsa372-4.15/0001-xen-arm-Create-dom0less-domUs-earlier.patch" of type "application/octet-stream" (3059 bytes)
+
+Download attachment "xsa372-4.15/0002-xen-arm-Boot-modules-should-always-be-scrubbed-if-bo.patch" of type "application/octet-stream" (1963 bytes)
+
+Download attachment "xsa372/0001-xen-arm-Create-dom0less-domUs-earlier.patch" of type "application/octet-stream" (4098 bytes)
+
+Download attachment "xsa372/0002-xen-arm-Boot-modules-should-always-be-scrubbed-if-bo.patch" of type "application/octet-stream" (1963 bytes)
