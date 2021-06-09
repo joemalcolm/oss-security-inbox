@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1505" "Thursday" "1" "October" "2015" "16:58:51" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151001205851.2DC476C0094@smtpvmsrv1.mitre.org>" "39" "[oss-security] Re: CVE Request: Unauthorized access to IPC objects with SysV shm" nil nil nil "10" "2015100120:58:51" "[oss-security] Re: CVE Request: Unauthorized access to IPC objects with SysV shm" (number mark "        cve-assign@m Oct  1   39/1505  " thread-indent "\"[oss-security] Re: CVE Request: Unauthorized access to IPC objects with SysV shm\"\n") "<CA+8ESAygaJUpjTzx7Stti=hgiGNb=dA67S5S7-_0YSxjETfawA@mail.gmail.com>" ("<CA+8ESAygaJUpjTzx7Stti=hgiGNb=dA67S5S7-_0YSxjETfawA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1135" "Wednesday" "9" "June" "2021" "23:11:00" "+0200" "Christophe JAILLET" "jailletc36@apache.org" nil "27" "[oss-security] CVE-2021-31618: Apache httpd: NULL pointer dereference on specially crafted HTTP/2 request" nil nil nil "6" nil nil (number mark "U       jailletc36@a Jun  9   27/1135  " thread-indent "\"[oss-security] CVE-2021-31618: Apache httpd: NULL pointer dereference on specially crafted HTTP/2 request\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-31618: Apache httpd: NULL pointer dereference on specially crafted HTTP/2 request" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32467 invoked by uid 550); 1 Oct 2015 20:59:04 -0000
+Received: (qmail 13486 invoked by uid 550); 10 Jun 2021 11:44:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,52 +11,38 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32435 invoked from network); 1 Oct 2015 20:59:03 -0000
-In-Reply-To: <CA+8ESAygaJUpjTzx7Stti=hgiGNb=dA67S5S7-_0YSxjETfawA@mail.gmail.com>
-Message-Id: <20151001205851.2DC476C0094@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, keescook@chromium.org
-Date: Thu,  1 Oct 2015 16:58:51 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: Unauthorized access to IPC objects with SysV shm
-To: julien@cr0.org
+Received: (qmail 29954 invoked from network); 9 Jun 2021 21:20:42 -0000
+From: Christophe JAILLET <jailletc36@apache.org>
+To: oss-security@lists.openwall.com
+Date: Wed, 09 Jun 2021 23:11:00 +0200
+Message-ID: <1622544226.KAPKHQKN@httpd.apache.org>
+Subject: [oss-security] CVE-2021-31618: Apache httpd: NULL pointer dereference on specially crafted HTTP/2 request
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
 
-> ipc_addid installs new ipc object with idr_alloc, from this point on
-> it is accessible to other threads. At this point the object contains
-> unitialized garbage. Then it fills in uid, etc:
-> 
-> new->cuid = new->uid = euid;
-> new->gid = new->cgid = egid;
-> new->seq = ids->seq++;
-> 
-> While this happens another thread can get access to the object and do
-> uid check on the unitialized garbage, which can give falsely give
-> accesses
+CVE-2021-31618: NULL pointer dereference on specially crafted HTTP/2 request
 
-Use CVE-2015-7613.
+Severity: important
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Vendor: The Apache Software Foundation
 
-iQIcBAEBCAAGBQJWDZ4iAAoJEL54rhJi8gl5hkYQAMoU1mZjjTUlq/ck9SYn90XL
-ouAOm6oMb01EMri/Kn0HLq6B8n/R27vc+ytALytg41B/QYIU8xFeCYTPIfy4+Zg6
-RxhLtkQlKuO94m7eBtc83NjLy4Xb1lTfFG1cZGyX3/IYZdNactX9qpurP5KUfDGD
-FXsrfan6539SiF6+2LqRPEIFpYQIQOhVMIVGtoqb0kiIii4MEWT3NZv1sL+Wwt4E
-Nv7WF2gew+jUpMahssiAy608zThbI8W26trFpTVR7wLOnu9KThajugYCwKskfDqX
-2T/YD4dc10M/kyP4li+OwRV8yQOjb8gRuO6VUaCXLEIwLoTTgz+xQrj4mCH1IJRT
-Ft9mpLMa8XGSLeJNT8qtlKid91EEW1tRo/dF1bA7ybKQgahyvH6uiE5j8TifL8RK
-YLU9XU3OOMdtqvuoKlh12qEb5D0h4hBUM6S0lzdNVbUP28DXYeyH47qB6Kt86HOp
-jkBEFtzUP6VzVXUM8TjGSsiR4WsyOuNtV0MkI5LGiOzPb4Dd/nrPdzdsG4XWm2tA
-Ri/V912iWQhYXbh7zkT2eLGQtR1NYjJahvrE5pN9hI/4xRqerEVNyMIgp7y6UF25
-bX6lgjKREqbSElUtBvnSQJmegxt+FaergwgaHfnxESYIDSee9u9+zovPl8gpyJaA
-q4qC9UqKZDK7tsCErOVo
-=/fAD
------END PGP SIGNATURE-----
+Versions Affected:
+2.4.47
+httpd 
+Description:
+Apache HTTP Server 2.4.47
+Apache HTTP Server protocol handler for the HTTP/2 protocol checks received request headers against the size limitations as configured for the server and used for the HTTP/1 protocol as well. On violation of these restrictions and HTTP response is sent to the client with a status code indicating why the request was rejected.
+
+This rejection response was not fully initialised in the HTTP/2 protocol handler if the offending header was the very first one received or appeared in a a footer. This led to a NULL pointer dereference on initialised memory, crashing reliably the child process. Since such a triggering HTTP/2 request is easy to craft and submit, this can be exploited to DoS the server.
+
+This affected versions prior to 2.4.47
+
+Mitigation:
+none
+
+Credit:
+Apache HTTP server would like to thank  LI ZHI XIN from NSFocus for reporting this.
+
+References:
+https://httpd.apache.org/security/vulnerabilities_24.html
+
