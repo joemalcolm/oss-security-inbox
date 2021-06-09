@@ -1,19 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/13/2
-Message-ID: <c80114dd-4a97-714d-232c-f4c6cf354332@gmx.net>
-Date: Fri, 14 May 2021 01:52:04 +0200
-From: Norbert Slusarek <nslusarek@....net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/10/7
+Message-ID: <1622544226.VFAMUJAF@httpd.apache.org>
+Date: Wed, 09 Jun 2021 23:11:00 +0200
+From: Christophe JAILLET <jailletc36@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: socketcan@...tkopp.net, mkl@...gutronix.de, alex.popov@...ux.com, linux-can@...r.kernel.org, seth.arnold@...onical.com, steve.beattie@...onical.com, cascardo@...onical.com
-Subject: Re: Linux kernel: net/can/isotp: race condition leads to local privilege escalation
+Subject: CVE-2021-26691: Apache httpd: mod_session response handling heap overflow
 Content-Type: text/plain; charset=utf-8
 
-As Salvatore already mentioned, the assigned CVE ID is CVE-2021-32606.
-The exploitation details are published in an article available on github
-via this link:
-https://git.io/JsYYB
-<https://deref-gmx.net/mail/client/ulc_0Gq1TD4/dereferrer/?redirectUrl=https%3A%2F%2Fgit.io%2FJsYYB>
 
-Regards,
-Norbert Slusarek
+CVE-2021-26691: mod_session response handling heap overflow
+
+Severity: low
+
+Vendor: The Apache Software Foundation
+
+Versions Affected:
+httpd 2.4.0 to 2.4.46
+
+Description:
+Apache HTTP Server 2.4.0 to 2.4.46
+A specially crafted SessionHeader sent by an origin server could cause a heap overflow
+    
+Mitigation:
+None
+
+Credit:
+Discovered internally by Christophe Jaillet
+
+References:
+https://httpd.apache.org/security/vulnerabilities_24.html
 
