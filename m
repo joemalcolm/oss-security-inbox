@@ -1,21 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/05/3
-Message-ID: <o1q7r6r3-2n27-rs9-58n1-5oron278p642@inai.de>
-Date: Mon, 5 Apr 2021 20:31:29 +0200 (CEST)
-From: Jan Engelhardt <jengelh@...i.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/10/5
+Message-ID: <1622544226.GVTSKDOC@httpd.apache.org>
+Date: Wed, 09 Jun 2021 23:11:00 +0200
+From: Christophe JAILLET <jailletc36@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Risk of local privilege escalation in GNU Guix
+Subject: CVE-2020-35452: Apache httpd: mod_auth_digest possible stack overflow by one nul byte
 Content-Type: text/plain; charset=utf-8
 
 
-On Monday 2021-04-05 19:55, Henri Salo wrote:
->On Mon, Apr 05, 2021 at 12:43:15PM -0400, Leo Famulari wrote:
->> We applied for a CVE ID via MITRE's web form [0] on March 18, 2021.
->> We have not yet received a reply. Does anybody know if that is expected?
->
->This is not normal.
+CVE-2020-35452: mod_auth_digest possible stack overflow by one nul byte
 
-Maybe it is? A recent requesto f mine took 13 days to complete.
-With Leo's request being 2 weeks old now as well, and considering
-there is some public holiday thing going on, his request might
-get a response tomorrow.
+Severity: low
+
+Vendor: The Apache Software Foundation
+
+Versions Affected:
+httpd 2.4.0 to 2.4.46
+
+Description:
+Apache HTTP Server 2.4.0 to 2.4.46
+A specially crafted Digest nonce can cause a stack overflow in mod_auth_digest. There is no report of this overflow being exploitable, nor the Apache HTTP Server team could create one, though some particular compiler and/or compilation option might make it possible, with limited consequences anyway due to the size (a single byte) and the value (zero byte) of the overflow
+    
+Mitigation:
+None
+
+Credit:
+This issue was discovered and reported by GHSL team member @antonio-morales (Antonio Morales)
+
+References:
+https://httpd.apache.org/security/vulnerabilities_24.html
+
