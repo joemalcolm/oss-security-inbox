@@ -1,35 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/09/1
-Message-ID: <20210609081909.GH25582@suse.de>
-Date: Wed, 9 Jun 2021 10:19:09 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: connman stack buffer overflow in dnsproxy CVE-2021-33833
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/10/3
+Message-ID: <1622544226.UEWE0TNK@httpd.apache.org>
+Date: Wed, 09 Jun 2021 23:11:00 +0200
+From: Christophe JAILLET <jailletc36@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2020-13938: Apache httpd: Improper Handling of Insufficient Privileges
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-On behalf of my colleague Daniel Wagner, connman maintainer.
+CVE-2020-13938: Improper Handling of Insufficient Privileges
 
-CVE-2021-33833
+Severity: moderate
 
-Found by Mike Evdokimov at Digital Security.
+Vendor: The Apache Software Foundation
 
-The issue affects the dnsproxy component in releases 1.32 to 1.39 of connman.
+Versions Affected:
+httpd 2.4.0 to 2.4.47
 
-Unpacking of NAME and RDATA/RDLENGTH fields with TYPE A/AAAA in the uncompress
-function uses a memcpy with insufficient bounds checking, which can overflow
-a stack buffer.
+Description:
+Apache HTTP Server 2.4.0 to 2.4.47
+Unprivileged local users can stop httpd on Windows
+    
+Mitigation:
+n/a
 
-Researcher has written a POC, works with stack overflow heuristics and PIE disabled,
-so stack overflow protection seems to mitigate it.
+Credit:
+Discovered by Ivan Zhakov
 
-attached is 0001-dnsproxy-Check-the-length-of-buffers-before-memcpy.patch by
-r.alyautdin@...russia.ru will be used by upstream connman team.
+References:
+https://httpd.apache.org/security/vulnerabilities_24.html
 
-Note that it touches the same function and piece of code as a previous CVE in connman,
-the earlier fix was apparently not complete.
-
-Ciao, Marcus
-
-View attachment "0001-dnsproxy-Check-the-length-of-buffers-before-memcpy.patch" of type "text/x-patch" (1802 bytes)
