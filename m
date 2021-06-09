@@ -1,70 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/19/2
-Message-ID: <YM4Z/IKm2cxFrB8D@mussarela>
-Date: Sat, 19 Jun 2021 13:23:24 -0300
-From: Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/10/2
+Message-ID: <1622544225.CLGKNUAI@httpd.apache.org>
+Date: Wed, 09 Jun 2021 23:11:00 +0200
+From: Christophe JAILLET <jailletc36@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: Oliver Hartkopp <socketcan@...tkopp.net>, Marc Kleine-Budde <mkl@...gutronix.de>, Norbert Slusarek <nslusarek@....net>
-Subject: Re: CVE-2021-3609: Race condition in net/can/bcm.c leads to local privilege escalation
+Subject: CVE-2019-17567: Apache httpd: mod_proxy_wstunnel tunneling of non Upgraded connections
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jun 19, 2021 at 04:40:53PM +0200, Norbert Slusarek wrote:
-> Hello,
-> 
-> this is an announcement for the recently reported bug (CVE-2021-3609)
-> in the CAN BCM networking protocol in the Linux kernel ranging from
-> version 2.6.25 to mainline 5.13-rc6.
-> The vulnerability is a race condition in net/can/bcm.c allowing for local
-> privilege escalation to root. The issue was initially reported by syzbot and
-> proven to be exploitable by Norbert Slusarek.
-> 
-> The CAN BCM networking protocol allows to register a CAN message receiver for a
-> specified socket. The function bcm_rx_handler() is run for incoming CAN messages.
-> Simultaneously to running this function, the socket can be closed and
-> bcm_release() will be called. Inside bcm_release(), struct bcm_op and
-> struct bcm_sock are freed while bcm_rx_handler() is still running,
-> finally leading to multiple use-after-free's.
-> 
-> Reproduction
-> ------------
-> 
-> - setup unprivileged user namespace
-> - setup vcan network interface
-> - open two CAN BCM sockets and connect each to the interface
-> - call sendmsg() on socket 1 with RX_SETUP to setup CAN receiver
-> - call sendmsg() on socket 2 to send message to socket 1
-> 
-> Here comes the race condition:
-> 
-> - bcm_rx_handler() is run automatically for socket 1 to receive the message
-> - call close() -> bcm_release() on socket 1 to free struct bcm_op and struct bcm_sock
-> 
-> => bcm_rx_handler() is still running and will access struct bcm_op and struct
->    bcm_sock which were previously freed
-> 
-> Exploitation
-> ------------
-> 
-> My exploitation attempt concentrates on kernels with version >= 5.4-rc1
-> since commit bf74aa86e111 ("can: bcm: switch timer to HRTIMER_MODE_SOFT and
-> remove hrtimer_tasklet"). I didn't investigate into exploiting kernels older
-> than 5.4-rc1 which used tasklets, nevertheless exploitation on older kernels
-> looks feasible as well. My specific exploitation approach was adjusted to work
-> with Ubuntu 20.04.02 LTS but other known distributions could also be targeted.
-> 
-> More exploitation details can be found at
-> 
-> https://github.com/nrb547/kernel-exploitation/blob/main/cve-2021-3609/cve-2021-3609.md
-> 
-> or in the attachments (plain text and attached image).
-> 
-> Regards,
-> Norbert Slusarek
 
+CVE-2019-17567: mod_proxy_wstunnel tunneling of non Upgraded connections
 
-And here is the proposed fix:
+Severity: moderate
 
-https://lore.kernel.org/netdev/20210619161813.2098382-1-cascardo@canonical.com/T/#u
+Vendor: The Apache Software Foundation
 
-Regards.
-Thadeu Cascardo.
+Versions Affected:
+httpd 2.4.6 to 2.4.46
+
+Description:
+Apache HTTP Server 2.4.6 to 2.4.46
+mod_proxy_wstunnel configured on an URL that is not necessarily Upgraded by the origin server was tunneling the whole connection regardless, thus allowing for subsequent requests on the same connection to pass through with no HTTP validation, authentication or authorization possibly configured.
+    
+Mitigation:
+Configure mod_proxy_wstunnel on URLs that are always Upgraded by the origin server
+
+Credit:
+Reported by Mikhail Egorov (<0ang3el gmail.com>)
+
+References:
+https://httpd.apache.org/security/vulnerabilities_24.html
+
