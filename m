@@ -1,49 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/08/1
-Message-ID: <CAA8xKjXLrzagaAMMSFBoFT=vgq4ksj8ZjCuFit1Hz-Mvot2vyA@mail.gmail.com>
-Date: Mon, 8 Mar 2021 15:35:38 +0100
-From: Mauro Matteo Cascella <mcascell@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/10/9
+Message-ID: <1622544226.KAPKHQKN@httpd.apache.org>
+Date: Wed, 09 Jun 2021 23:11:00 +0200
+From: Christophe JAILLET <jailletc36@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: "Dr. David Alan Gilbert" <dgilbert@...hat.com>
-Subject: CVE-2021-20263 QEMU: virtiofsd: 'security.capabilities' is not dropped with xattrmap option
+Subject: CVE-2021-31618: Apache httpd: NULL pointer dereference on specially crafted HTTP/2 request
 Content-Type: text/plain; charset=utf-8
 
-Hello,
 
-A flaw was found in the virtio-fs shared file system daemon
-(virtiofsd) of QEMU. Virtio-fs is meant to share a host file system
-directory with a guest virtual machine. The new 'xattrmap' option may
-cause the 'security.capability' xattr in the guest to not drop on file
-write, potentially leading to a modified, privileged executable in the
-guest. In rare circumstances, this flaw could be used by a malicious
-user to elevate their privileges within the guest.
+CVE-2021-31618: NULL pointer dereference on specially crafted HTTP/2 request
 
-For the problem to happen virtiofsd needs to be running with '-o
-xattr' and '-o xattrmap' (to enable and rename xattrs, respectively).
-The problem only occurs if 'security.capability' is one of the xattrs
-that's being renamed. Different caching modes cause different guest
-behavior: '-o cache=none' makes the issue easy to reproduce. There's a
-suspicion the flaw could be reproduced with the default option '-o
-cache=auto' as well.
+Severity: important
 
-The impact of this flaw is limited by the fact that xattrmap is a
-recent feature that's little used so far. Additionally, unprivileged
-users shouldn't be granted write permission on privileged executables
-in the first place.
+Vendor: The Apache Software Foundation
 
-Virtiofsd 'xattrmap' feature in QEMU 5.2:
-https://gitlab.com/virtio-fs/qemu/-/commit/6084633dff3a05d6317
+Versions Affected:
+2.4.47
+httpd 
+Description:
+Apache HTTP Server 2.4.47
+Apache HTTP Server protocol handler for the HTTP/2 protocol checks received request headers against the size limitations as configured for the server and used for the HTTP/1 protocol as well. On violation of these restrictions and HTTP response is sent to the client with a status code indicating why the request was rejected.
 
-Upstream patch:
-https://lists.gnu.org/archive/html/qemu-devel/2021-03/msg01244.html
+This rejection response was not fully initialised in the HTTP/2 protocol handler if the offending header was the very first one received or appeared in a a footer. This led to a NULL pointer dereference on initialised memory, crashing reliably the child process. Since such a triggering HTTP/2 request is easy to craft and submit, this can be exploited to DoS the server.
 
-This issue was reported by Dr. David Alan Gilbert (CC'd).
+This affected versions prior to 2.4.47
 
-CVE-2021-20263 assigned by Red Hat, Inc.
+Mitigation:
+none
 
-Best regards.
--- 
-Mauro Matteo Cascella
-Red Hat Product Security
-PGP-Key ID: BB3410B0
+Credit:
+Apache HTTP server would like to thank  LI ZHI XIN from NSFocus for reporting this.
+
+References:
+https://httpd.apache.org/security/vulnerabilities_24.html
 
