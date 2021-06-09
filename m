@@ -1,4 +1,9 @@
-Received: (qmail 30331 invoked by uid 550); 9 Apr 2024 17:48:25 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2892" "Wednesday" "9" "June" "2021" "10:19:09" "+0200" "Marcus Meissner" "meissner@suse.de" nil "94" "[oss-security] connman stack buffer overflow in dnsproxy CVE-2021-33833" nil nil nil "6" nil nil (number mark "U       meissner@sus Jun  9   94/2892  " thread-indent "\"[oss-security] connman stack buffer overflow in dnsproxy CVE-2021-33833\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] connman stack buffer overflow in dnsproxy CVE-2021-33833" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 32368 invoked by uid 550); 9 Jun 2021 08:19:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,143 +12,126 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26349 invoked from network); 9 Apr 2024 17:00:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	pietroalbini.org; h=cc:content-type:content-type:date:date:from
-	:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm3; t=1712682051; x=1712768451; bh=Non1OVZnXz
-	u8RbCbWXLL5jhMdNLOAni20NjK1FZKo6Q=; b=NpHSFpXh97WzShdI0edTo2DGHG
-	p247b41BIAo0wToeAzfZO0MEzvjc8wxZWRJzoCHQvz6/CCS40bYMPiCeuhW9+e8a
-	4FMDfcF4u1/CDkC+QEhEPTVMCvWY72JQyZkWadu3mzN9sGwGxHcbkQWrdCtxBjmG
-	DfrbdWHpcOEtEu3Ez5dm+KXkrKHrUILBTFcAIuwcKOUCL4qLG+tk45nUJUeWzW5w
-	zRZJ5rdiaLTdWuXRUcnWX7DtQFBu9HgaCJhVgu84bjIqC4vg94xi+qhzryF0yVEr
-	sgUCY5PCwmwRRYiDbLQTF6ASRDLMVi+OoNvd9laOSMpd3YLa1+0rExUQLcAw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1712682051; x=1712768451; bh=Non1OVZnXzu8RbCbWXLL5jhMdNLOAni20Nj
-	K1FZKo6Q=; b=DAfUSx6c5gxKbeGdmBuYX6AtQR3gK8r+ojuKbg2rlsweSYlIXtZ
-	Alw28jLKmhkMG3Xu68XhQWixzfmhJ+qvxmvpgnTMtSA6GaGeT99m3vbNVYaTbNAN
-	S6xlozwQxiHV1k04h6lnaJOiAz54y1CpTKSN7/UgoYF8f9LbQh1Pff6jl+l9cO1z
-	j1QGco9mtfLNoVO3Iy9gJy/aja6iP8k21xQ/i+zetqkA/p10LF7TYecqeZIfz2fn
-	ePxe58H/6SQRU7fYe6E8KxJlUJWD/CF8iSJLHd9C2MvWmype1wZaRzXW7DHgFskP
-	03epLM2jbM6SZ75RpzzT/7mtXHdCQKFQOhw==
-X-ME-Sender: <xms:QnQVZoGrjcNnL0nJedmqt7Wk-AikCsqJl9iaRmXgxO9zvVZMh-b_7A>
-    <xme:QnQVZhUISsx5cKQnIWkYPvoN-Oxfddk5vW6g0t7NhA9AwYHCoUQxjv2OaRfjXJnhV
-    ntbLK2hIyAWcSQSUhc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudehfedgudeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfffhffvufgtsehttdertd
-    erredtnecuhfhrohhmpedfrfhivghtrhhoucetlhgsihhnihdfuceophhivghtrhhosehp
-    ihgvthhrohgrlhgsihhnihdrohhrgheqnecuggftrfgrthhtvghrnhepheduhfdvkeegtd
-    ekleetffelkeelhfeuuedufeevtdffiefghfdvieetffdugeegnecuffhomhgrihhnpehr
-    uhhsthdqlhgrnhhgrdhorhhgnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhivghtrhhosehpihgvthhrohgrlhgsihhnihdrohhrgh
-X-ME-Proxy: <xmx:QnQVZiKnhB9XtU4w6MUPiqh5PsBKLY9ojW9fRtvbfNL0tCnpLbbmUQ>
-    <xmx:QnQVZqEh322dmpXydwwnxN8ORPlA5FwySP0w3GLzcDW9B7QSQfRZ1g>
-    <xmx:QnQVZuW75xry0XXI_glNR5H99spRoZwb8TGjd_WCKLw1tpwRDB6gMw>
-    <xmx:QnQVZtNaffU0LuxhnYVXQZcKsyAjG1pgr2O95ZBG_CNxgWzm4Jke6A>
-    <xmx:Q3QVZnfGHuLPdMxgc9h2z4vzY0QfTVLMvnusMXhyjaCVKblG4uBQxVym>
-Feedback-ID: i6b794706:Fastmail
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-379-gabd37849b7-fm-20240408.001-gabd37849
+Received: (qmail 32350 invoked from network); 9 Jun 2021 08:19:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1623226750; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=kbzeviV0m6S8TftHnXg1FcNc5dLJK3WnLhogfsjr/jI=;
+	b=iWQiNu9MyZXib7I7m/cfmVxY0G0Z6qM8uWJBAFvowhQYZxOY6e9SgRIs69udde7bezNRm0
+	Iu76CPIgbbdbRvLZLi7yEJLpFh05vwuXO6+jbXHrf5ui6CWFORjyX2pUerjaqPlPhE+X/9
+	JJjOySZgIkEVzgXXXXLkDS1TP5Wmres=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1623226750;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=kbzeviV0m6S8TftHnXg1FcNc5dLJK3WnLhogfsjr/jI=;
+	b=VdlPgeMGT3qPY5tqGanjnoqG8uLN3xx76YhZNVHWHipd3k59TxOMFv3HrqQRYV852kWwF0
+	J2WIhgU5BbOrGWAg==
+Date: Wed, 9 Jun 2021 10:19:09 +0200
+From: Marcus Meissner <meissner@suse.de>
+To: OSS Security List <oss-security@lists.openwall.com>
+Message-ID: <20210609081909.GH25582@suse.de>
 MIME-Version: 1.0
-Message-Id: <72f63dcb-9831-49cd-a435-9190104663ec@app.fastmail.com>
-Date: Tue, 09 Apr 2024 18:00:26 +0100
-From: "Pietro Albini" <pietro@pietroalbini.org>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain
-Subject: [oss-security] CVE-2024-24576: Rust 1.77.1 and earlier did not properly escape arguments of
- batch files on Windows
+Content-Type: multipart/mixed; boundary="uXxzq0nDebZQVNAZ"
+Content-Disposition: inline
+Organization: SUSE Software Solutions =?iso-8859-1?Q?Ger?=
+ =?iso-8859-1?Q?many_GmbH=2C_Maxfeldstr=2E_5=2C_90409_Nuernberg=2C_Germany?=
+ =?iso-8859-1?Q?=2C_GF=3A_Felix_Imend=F6rffer=2C_HRB_36809=2C_AG_N=FCrnber?=
+ =?iso-8859-1?Q?g?=
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Subject: [oss-security] connman stack buffer overflow in dnsproxy CVE-2021-33833
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+--uXxzq0nDebZQVNAZ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-The Rust Security Response WG was notified that the Rust standard library did
-not properly escape arguments when invoking batch files (with the `bat` and
-`cmd` extensions) on Windows using the [`Command`][1] API. An attacker able to
-control the arguments passed to the spawned process could execute arbitrary
-shell commands by bypassing the escaping.
+Hi,
 
-The severity of this vulnerability is **critical** if you are invoking batch
-files on Windows with untrusted arguments. No other platform or use is
-affected.
+On behalf of my colleague Daniel Wagner, connman maintainer.
 
-This vulnerability is identified by CVE-2024-24576.
+CVE-2021-33833
 
-## Overview
+Found by Mike Evdokimov at Digital Security.
 
-The [`Command::arg`][2] and [`Command::args`][3] APIs state in their
-documentation that the arguments will be passed to the spawned process as-is,
-regardless of the content of the arguments, and will not be evaluated by a
-shell. This means it should be safe to pass untrusted input as an argument.
+The issue affects the dnsproxy component in releases 1.32 to 1.39 of connman.
 
-On Windows, the implementation of this is more complex than other platforms,
-because the Windows API only provides a single string containing all the
-arguments to the spawned process, and it's up to the spawned process to split
-them. Most programs use the standard C run-time argv, which in practice results
-in a mostly consistent way arguments are splitted.
+Unpacking of NAME and RDATA/RDLENGTH fields with TYPE A/AAAA in the uncompress
+function uses a memcpy with insufficient bounds checking, which can overflow
+a stack buffer.
 
-One exception though is `cmd.exe` (used among other things to execute batch
-files), which has its own argument splitting logic. That forces the standard
-library to implement custom escaping for arguments passed to batch files.
-Unfortunately it was reported that our escaping logic was not thorough enough,
-and it was possible to pass malicious arguments that would result in arbitrary
-shell execution.
+Researcher has written a POC, works with stack overflow heuristics and PIE disabled,
+so stack overflow protection seems to mitigate it.
 
-## Mitigations
+attached is 0001-dnsproxy-Check-the-length-of-buffers-before-memcpy.patch by
+r.alyautdin@omprussia.ru will be used by upstream connman team.
 
-Due to the complexity of `cmd.exe`, we didn't identify a solution that would
-correctly escape arguments in all cases. To maintain our API guarantees, we
-improved the robustness of the escaping code, and changed the `Command` API to
-return an [`InvalidInput`][4] error when it cannot safely escape an argument.
-This error will be emitted when spawning the process.
+Note that it touches the same function and piece of code as a previous CVE in connman,
+the earlier fix was apparently not complete.
 
-The fix will be included in Rust 1.77.2, to be released later today.
+Ciao, Marcus
 
-If you implement the escaping yourself or only handle trusted inputs, on
-Windows you can also use the [`CommandExt::raw_arg`][5] method to bypass the
-standard library's escaping logic. 
+--uXxzq0nDebZQVNAZ
+Content-Type: text/x-patch; charset=us-ascii
+Content-Disposition: attachment; filename="0001-dnsproxy-Check-the-length-of-buffers-before-memcpy.patch"
 
-## Affected Versions
+commit 91e719c96136d9e265cd781c5d6ce3d6c082af94
+Author: Valery Kashcheev <v.kascheev@omp.ru>
+Date:   Mon May 31 16:08:43 2021 +0300
 
-All Rust versions before 1.77.2 on Windows are affected, if your code or one of
-your dependencies executes batch files with untrusted arguments. Other
-platforms or other uses on Windows are not affected.
+    dnsproxy: Check the length of buffers before memcpy
+    
+    Fix using a stack-based buffer overflow attack by checking the length of
+    the ptr and uptr buffers.
+    
+    Fix debug message output.
 
-## Acknowledgments
+diff --git a/src/dnsproxy.c b/src/dnsproxy.c
+index de52df5a..38dbdd71 100644
+--- a/src/dnsproxy.c
++++ b/src/dnsproxy.c
+@@ -1788,17 +1788,15 @@ static char *uncompress(int16_t field_count, char *start, char *end,
+ 		 * tmp buffer.
+ 		 */
+ 
+-		debug("pos %d ulen %d left %d name %s", pos, ulen,
+-			(int)(uncomp_len - (uptr - uncompressed)), uptr);
+-
+-		ulen = strlen(name);
+-		if ((uptr + ulen + 1) > uncomp_end) {
++		ulen = strlen(name) + 1;
++		if ((uptr + ulen) > uncomp_end)
+ 			goto out;
+-		}
+-		strncpy(uptr, name, uncomp_len - (uptr - uncompressed));
++		strncpy(uptr, name, ulen);
++
++		debug("pos %d ulen %d left %d name %s", pos, ulen,
++			(int)(uncomp_end - (uptr + ulen)), uptr);
+ 
+ 		uptr += ulen;
+-		*uptr++ = '\0';
+ 
+ 		ptr += pos;
+ 
+@@ -1841,7 +1839,7 @@ static char *uncompress(int16_t field_count, char *start, char *end,
+ 		} else if (dns_type == ns_t_a || dns_type == ns_t_aaaa) {
+ 			dlen = uptr[-2] << 8 | uptr[-1];
+ 
+-			if (ptr + dlen > end) {
++			if ((ptr + dlen) > end || (uptr + dlen) > uncomp_end) {
+ 				debug("data len %d too long", dlen);
+ 				goto out;
+ 			}
+@@ -1880,6 +1878,10 @@ static char *uncompress(int16_t field_count, char *start, char *end,
+ 			 * refresh interval, retry interval, expiration
+ 			 * limit and minimum ttl). They are 20 bytes long.
+ 			 */
++			if ((uptr + 20) > uncomp_end || (ptr + 20) > end) {
++				debug("soa record too long");
++				goto out;
++			}
+ 			memcpy(uptr, ptr, 20);
+ 			uptr += 20;
+ 			ptr += 20;
 
-We want to thank RyotaK for responsibly disclosing this to us according to the
-[Rust security policy][6], and Simon Sawicki (Grub4K) for identifying some of
-the escaping rules we adopted in our fix.
-
-We also want to thank the members of the Rust project who helped us disclose
-the vulnerability: Chris Denton for developing the fix; Mara Bos for reviewing
-the fix; Pietro Albini for writing this advisory; Pietro Albini, Manish
-Goregaokar and Josh Stone for coordinating this disclosure; Amanieu d'Antras
-for advising during the disclosure.
-
-[1]: https://doc.rust-lang.org/std/process/struct.Command.html
-[2]: https://doc.rust-lang.org/std/process/struct.Command.html#method.arg
-[3]: https://doc.rust-lang.org/std/process/struct.Command.html#method.args
-[4]: https://doc.rust-lang.org/std/io/enum.ErrorKind.html#variant.InvalidInput
-[5]: https://doc.rust-lang.org/std/os/windows/process/trait.CommandExt.html#tymethod.raw_arg
-[6]: https://www.rust-lang.org/policies/security
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEV2nIi/XdPRSiNKes77mGCudSDawFAmYUdNIACgkQ77mGCudS
-DaxcXQ//Zar/RHbbjT9A322z74STJx2lJyzpn1dRfgya0+9DoeSgXrFoXgeOIWoI
-IigWX8lhmMB28ZDRfbCXJZ23FLkIOGFwE/b6NFBByWBIzMuHWyU00LB/FiJJLTKW
-Ss1FtS1LSAAI9Mu/W4nja+xuCoppkIHVfqAVQVgxyCA4SA9cgUeAJyqjbd+EqD2p
-TTkGeH4cuxJAMz+O9nfeFI5eVwi6dYrl7LRUjKEauykSLxFpAlZdNtv0FOGL+9IH
-3gFk/U7kxG3YMfgbOeXHjf7SOluyxBHqEG/jS28K7Q16zwZhEogGqDDURuPdP2vD
-k27alPjNrFwlwDLH42v5sj3X797M3C8XinbvcSjJIRscPVllJy3/PoQ4b6+idsVd
-VhO/N7NMzTJmX6EVbbjfR66L3uUBpjqZg+tFU1vbsbE/9upk1KhsMT5sPDLOjR99
-0Lp9ikZHzYqtReTbXv0j3XtYdgR0+5RR3BHOTbz5ba9/N4YsWghOeZ4Wu69Qo4xc
-c/HAwg8xRGGvfELFHctu039EuT5d1BXP4zLaRmnRSCUCVJ0huHiWrB1c33PO0l+j
-VNEloYJn5OzZ5ESWEuLSVOdWFEw0qwi6XTvb4YhV1AH6ABKuc25+h0EBKmTaFdez
-YeTNJTgIomw4zGKYhLl3BQdsfpcrktbZxTLyUpuWbbqJjycvRXA=
-=w9G7
------END PGP SIGNATURE-----
+--uXxzq0nDebZQVNAZ--
