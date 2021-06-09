@@ -1,29 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/01/8
-Message-ID: <CAG8=FRj-qsUUXTt0dUPV3u67GfZUZi0kV76smZD_ZWSbkq+a+Q@mail.gmail.com>
-Date: Mon, 1 Nov 2021 21:44:31 +0100
-From: Emmanuel Lecharny <elecharny@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-41973: Apache MINA HTTP listener DOS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/09/1
+Message-ID: <20210609081909.GH25582@suse.de>
+Date: Wed, 9 Jun 2021 10:19:09 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: connman stack buffer overflow in dnsproxy CVE-2021-33833
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical
+Hi,
 
-Description:
+On behalf of my colleague Daniel Wagner, connman maintainer.
 
-In Apache MINA, a specifically crafted, malformed HTTP request may
-cause the HTTP Header decoder to loop indefinitely. The decoder
-assumed that the HTTP Header begins at the beginning of the buffer and
-loops if there is more data than expected. Please update MINA to 2.1.5
-or greater.
+CVE-2021-33833
 
-References:
+Found by Mike Evdokimov at Digital Security.
 
-https://lists.apache.org/thread.html/r0b907da9340d5ff4e6c1a4798ef4e79700a668657f27cca8a39e9250%40%3Cdev.mina.apache.org%3E
+The issue affects the dnsproxy component in releases 1.32 to 1.39 of connman.
 
+Unpacking of NAME and RDATA/RDLENGTH fields with TYPE A/AAAA in the uncompress
+function uses a memcpy with insufficient bounds checking, which can overflow
+a stack buffer.
 
--- 
-Regards,
-Cordialement,
-Emmanuel Lécharny
-www.iktek.com
+Researcher has written a POC, works with stack overflow heuristics and PIE disabled,
+so stack overflow protection seems to mitigate it.
+
+attached is 0001-dnsproxy-Check-the-length-of-buffers-before-memcpy.patch by
+r.alyautdin@...russia.ru will be used by upstream connman team.
+
+Note that it touches the same function and piece of code as a previous CVE in connman,
+the earlier fix was apparently not complete.
+
+Ciao, Marcus
+
+View attachment "0001-dnsproxy-Check-the-length-of-buffers-before-memcpy.patch" of type "text/x-patch" (1802 bytes)
