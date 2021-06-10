@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["441" "Wednesday" "19" "July" "2017" "23:37:28" "+1200" "Matthew Daley" "mattd@bugfuzz.com" "<CAD3CancmhjKRJd1oXmxpFXp3vUB7Q_rFNAyduavPUtKE_9gycg@mail.gmail.com>" "17" "[oss-security] Re: ATutor CVE-2017-1000002, CVE-2017-1000003, CVE-2017-1000004" "^Cc:" nil nil "7" "2017071911:37:28" "[oss-security] Re: ATutor CVE-2017-1000002, CVE-2017-1000003, CVE-2017-1000004" (number mark "        mattd@bugfuz Jul 19   17/441   " thread-indent "\"[oss-security] Re: ATutor CVE-2017-1000002, CVE-2017-1000003, CVE-2017-1000004\"\n") "<20170716120139.ivmlgyaqwxrp2mhl@tunkki>" ("<20170716120139.ivmlgyaqwxrp2mhl@tunkki>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2174" "Thursday" "10" "June" "2021" "14:34:58" "+0200" "Gianluca Gabrielli" "ggabrielli@suse.de" nil "51" "[oss-security] Re: XScreenSaver 5.45: Disconnecting a video output can cause XScreenSaver to crash and unlock" nil nil nil "6" nil nil (number mark "U       ggabrielli@s Jun 10   51/2174  " thread-indent "\"[oss-security] Re: XScreenSaver 5.45: Disconnecting a video output can cause XScreenSaver to crash and unlock\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: XScreenSaver 5.45: Disconnecting a video output can cause XScreenSaver to crash and unlock" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28022 invoked by uid 550); 19 Jul 2017 11:37:41 -0000
+Received: (qmail 15542 invoked by uid 550); 10 Jun 2021 12:56:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +11,105 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28004 invoked from network); 19 Jul 2017 11:37:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bugfuzz-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=IjB8C62zzMJIEP7Zx47Yc1BSy3JnS/kF/PqKeC8JAj8=;
-        b=LIDkEDjV7YR5+0UnXdbJX+LK+d6Cps4eG46Q6fvKBv9SsTP49XfV8a874KHPwBh3ge
-         BEU0KlpBbEGsPMNNjXFnGnsSaSuM6RTO/8PYgTntOp7KC4WfiOuwc+EkIZFiCjEy5WUn
-         SrEqPZ+Odai4RH0Nj/3Til1fnYZ0o2567KwPnXL2hbkypzLyX6dSC3Grjc+ujFHoOZq6
-         t0HhIa+Mrhly9U1x8L32ohz7X2YFu4F/dC3hUPjuvVvUGK7huKgywFHCmeFTHuYIaIjb
-         ZA8rq0HS5TLspdml29b5exJOwSwUvYlPr2CtUgKS0lNS4SiVCbS7n3P8I07ShmFTJ7KP
-         rXJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=IjB8C62zzMJIEP7Zx47Yc1BSy3JnS/kF/PqKeC8JAj8=;
-        b=jSU+CxhUwgpF05uXepvhkLopPBNTjHnS35DMht0v82act+8+uwtVsVL1lxq/qmNMXb
-         2uiVtITDKZS/o3Dn4NMDnrgFub0O5+MYG6zrRZtszm9nYW1kSW5SChWJjzwkuvIZTTi2
-         MNfhP5snCSzMKTbaM4e/tZy/Cyf8GjUgXF5lpNlnBUXXAK1VyFXoD/QK3Np/IfBvStts
-         ovvDW/YpnUMCq18FbW1c36y5TF9w8p2gPxVzqg6RajTeAPVjKGyFY+tqxAGxw6AgYVNy
-         AAnmm1t26x5aMV9oMYwMRg3PAY4bZpUl7E6+sSZXTd4FsW9vwA3OC4DITWXjjHzRZ1gT
-         N1OQ==
-X-Gm-Message-State: AIVw110sgRctJXeUNYcAe1sdMep/vCoLN+Dt3OoghxqnerrrtFiAHMJD
-	Q1bLLgBbSAsQMCI65iT3Co2HLfOzLWf6
-X-Received: by 10.176.85.15 with SMTP id t15mr1307287uaa.104.1500464249340;
- Wed, 19 Jul 2017 04:37:29 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <20170716120139.ivmlgyaqwxrp2mhl@tunkki>
-References: <20170716120139.ivmlgyaqwxrp2mhl@tunkki>
-Message-ID: <CAD3CancmhjKRJd1oXmxpFXp3vUB7Q_rFNAyduavPUtKE_9gycg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: Kurt Seifried <kurt@seifried.org>, oss-security@lists.openwall.com
-Date: Wed, 19 Jul 2017 23:37:28 +1200
-From: Matthew Daley <mattd@bugfuzz.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: ATutor CVE-2017-1000002, CVE-2017-1000003, CVE-2017-1000004
-To: Henri Salo <henri@nerv.fi>
+Received: (qmail 5333 invoked from network); 10 Jun 2021 12:35:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1623328499; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=6Vr9azs6yP/cEFPmss56ypXsA5L/87fUStJRit0auuU=;
+	b=hFFSi5nxZ/hMF9zsUH5hKJAWQ5VfY1rWVmjUexabY4val+/flzgkC0zfCDJkwvMzt9I8yP
+	TL4iPvnxRoITfWMrcqvlhgYXzMNeYPWRv/3nB/Wa+BjHEe2pNcCUYlIdPk0zBMgFU3/wpA
+	bRosGBaqgGoN46fhbb1dYV2bgpORCII=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1623328499;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=6Vr9azs6yP/cEFPmss56ypXsA5L/87fUStJRit0auuU=;
+	b=NbK5ZzIbCL0whZp9kyn2z/kKVu/bFI4k6lldt9tmjqSqF/Lfm3oNVseqU402G39FElz9Cm
+	ft6Fc1qGozzPVmCg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1623328499; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=6Vr9azs6yP/cEFPmss56ypXsA5L/87fUStJRit0auuU=;
+	b=hFFSi5nxZ/hMF9zsUH5hKJAWQ5VfY1rWVmjUexabY4val+/flzgkC0zfCDJkwvMzt9I8yP
+	TL4iPvnxRoITfWMrcqvlhgYXzMNeYPWRv/3nB/Wa+BjHEe2pNcCUYlIdPk0zBMgFU3/wpA
+	bRosGBaqgGoN46fhbb1dYV2bgpORCII=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1623328499;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=6Vr9azs6yP/cEFPmss56ypXsA5L/87fUStJRit0auuU=;
+	b=NbK5ZzIbCL0whZp9kyn2z/kKVu/bFI4k6lldt9tmjqSqF/Lfm3oNVseqU402G39FElz9Cm
+	ft6Fc1qGozzPVmCg==
+To: =?UTF-8?Q?Marek_Marczykowski-G=c3=b3recki?=
+ <marmarek@invisiblethingslab.com>, oss-security@lists.openwall.com
+References: <YLrLbpUuAbLO3RR8@mail-itl>
+From: Gianluca Gabrielli <ggabrielli@suse.de>
+Organization: SUSE LINUX s.r.o.
+Message-ID: <31aef962-511f-e7d7-455a-23d309f03aa5@suse.de>
+Date: Thu, 10 Jun 2021 14:34:58 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
+MIME-Version: 1.0
+In-Reply-To: <YLrLbpUuAbLO3RR8@mail-itl>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="tvDDcTB1vvrTlmKYfwXEkF4BukqcFIOyU"
+Subject: [oss-security] Re: XScreenSaver 5.45: Disconnecting a video output can cause
+ XScreenSaver to crash and unlock
 
-JFTR:
+--tvDDcTB1vvrTlmKYfwXEkF4BukqcFIOyU
+Content-Type: multipart/mixed; boundary="9IcCeBZNxwuS7BIZb1MjcILYLa7OuWfPr";
+ protected-headers="v1"
+From: Gianluca Gabrielli <ggabrielli@suse.de>
+To: =?UTF-8?Q?Marek_Marczykowski-G=c3=b3recki?=
+ <marmarek@invisiblethingslab.com>, oss-security@lists.openwall.com
+Message-ID: <31aef962-511f-e7d7-455a-23d309f03aa5@suse.de>
+Subject: Re: XScreenSaver 5.45: Disconnecting a video output can cause
+ XScreenSaver to crash and unlock
+References: <YLrLbpUuAbLO3RR8@mail-itl>
+In-Reply-To: <YLrLbpUuAbLO3RR8@mail-itl>
 
-On 17 July 2017 at 00:01, Henri Salo <henri@nerv.fi> wrote:
-> Is this assigment somehow related to this oss-security post?
-> http://www.openwall.com/lists/oss-security/2016/07/01/3
+--9IcCeBZNxwuS7BIZb1MjcILYLa7OuWfPr
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
-Yes.
+Thank Marek for having shared this with the list. I don't see a CVE ID
+assigned to this bug, have requested one?
 
-CVE-2017-1000002 = issues #26 and #32
-CVE-2017-1000003 = issues #29 to #31
-CVE-2017-1000004 = issues #1 to #25, #27 and #28 (but issue #25 should
-probably be in CVE-2017-1000003 as it's a missing auth check, not a
-SQL injection)
+--=20
+. o .  Gianluca Gabrielli                      gianlu.ca
+. . o  Software security engineer               suse.com
+o o o  D78D 3FDC 2591 7EBA B52F 2362 6E17 38B8 2B60 B31D
+-Dance like no one's watching, encrypt like everyone is-
 
-HTH,
 
-- Matthew
+--9IcCeBZNxwuS7BIZb1MjcILYLa7OuWfPr--
+
+--tvDDcTB1vvrTlmKYfwXEkF4BukqcFIOyU
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
+
+-----BEGIN PGP SIGNATURE-----
+
+wsF5BAABCAAjFiEE/Gtkry+LfDI9iHEuQPoqj4mlKX4FAmDCBvIFAwAAAAAACgkQQPoqj4mlKX7m
+7w/8DZ8gcci53boNthCFFd0HXMQ5b6TKqdXuiY1bADD6QvOgvLxJZuaRqO1/9tqjFNvgADpWvevM
+28D4f5J5Q1d1l4Oq6VoovS0P4FOfYY8mXr2blBScb4TuQ2d+ZTgFv6QNUrpt/eTirEWmJBvTrJ7S
+NorZCjuFX3DVKNbQsCgc+UqhvR1MnmrzJfc+juqC7/dNpvm9dHmHlc58rYVNH5Tqn5eioh8Hw9HC
+RhVfRMM1H1JPybHGPTPHWMEUwqiuYx+HyEkKMhXjOCtlCfJyMEh3+u4rEHIqlfj6fzdQFrXSvcUs
+k492u/taA3phLVhNIWT8PKc/Ylfdh3qqRxu9ZWu5DVDaKLoF5omYfolO+JFcx/l6QIN/CBgEyoQi
+thMQH0liz9wCHuz+pJr6bNdH6ti0hcm2sSjbbNf9ol0Xq26MHumCCxFYSqOx7z8AX+FNHUAKEGD0
+tOJcmtJnWVWb15OZdo5tNBiNZ+7KfLuv51RgIzoDAMhWhds7T+67auWr7NEHvnjmFsCkd+oEy6Ih
+j7yyUIaHjvochsyhZcU9gyKW+ZmoyURTGXkGts/hXyoDYyolc8HkG4CkXa8dsyZg7WZsdX0g8siH
+NI/EPetjBd+hd96k2YigbwNADFqzwcEwYTXtEIbZBzi3Jhzj1tY5hUfTPRuE/HFEkxS75jZ9eJFc
+5Rg=
+=f57i
+-----END PGP SIGNATURE-----
+
+--tvDDcTB1vvrTlmKYfwXEkF4BukqcFIOyU--
