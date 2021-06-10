@@ -1,36 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/12/2
-Message-Id: <A2600194-3759-4165-A437-9BCAE3F97429@apache.org>
-Date: Tue, 12 Oct 2021 10:56:13 +0200
-From: Jan Lehnardt <jan@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-38295 Apache CouchDB <= 3.1.1 privilege escalation 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/10/11
+Message-ID: <0f39a2b1-9e82-f909-8d5b-4c74ef6b5535@citrix.com>
+Date: Thu, 10 Jun 2021 09:32:14 +0100
+From: Andrew Cooper <andrew.cooper3@...rix.com>
+To: Sven Kieske <S.Kieske@...twald.de>, "xen-announce@...ts.xen.org" <xen-announce@...ts.xen.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "xen-users@...ts.xen.org" <xen-users@...ts.xen.org>, "xen-devel@...ts.xen.org" <xen-devel@...ts.xen.org>
+CC: "security-team-members@....org" <security-team-members@....org>
+Subject: Re: Xen Security Advisory 375 v3 (CVE-2021-0089,CVE-2021-26313) - Speculative Code Store Bypass
 Content-Type: text/plain; charset=utf-8
 
-Description
-===========
+On 10/06/2021 09:04, Sven Kieske wrote:
+> On Mi, 2021-06-09 at 13:50 +0000, Xen.org security team wrote:
+>> For more details, see:
+> [..]
+>>   https://www.amd.com/en/corporate-product-security-bulletin-amd-sb-1003
+> The above link turns into a "Page not found", at least for me, I believe the correct link is:
+>
+> https://www.amd.com/en/corporate/product-security/bulletin/amd-sb-1003
 
-A malicious user with permission to create documents in a
-database is able to attach a HTML attachment to a document.
-If a CouchDB admin opens that attachment in a browser, e.g.
-via the CouchDB admin interface Fauxton, any JavaScript code
-embedded in that HTML attachment will be executed within the
-security context of that admin. A similar route is available
-with thealready deprecated `_show` and `_list` functionality.
+Ah - the link changed, and I thought I'd fixed it.  Clearly not.
 
-This *privilege escalation* vulnerability allows an attacker
-to add or remove data in any database or make configuration
-changes.
+Thanks - I'll issue a correction to the XSA.
 
-Mitigation
-==========
-
-CouchDB 3.2.0  and onwards adds `Content-Security-Policy`
-headers for all attachment, `_show` and `_list` requests.
-This breaks certain niche use-cases and there are
-configuration options to restore the previous behaviour for
-those who need it.
-
-CouchDB 3.1.2 defaults to the previous behaviour, but adds
-configuration options to turn `Content-Security-Policy` headers
-on for all affected requests.
+~Andrew
