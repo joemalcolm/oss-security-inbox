@@ -1,4 +1,9 @@
-Received: (qmail 19858 invoked by uid 550); 11 Feb 2025 15:50:45 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2130" "Thursday" "10" "June" "2021" "08:04:37" "+0000" "Sven Kieske" "S.Kieske@mittwald.de" nil "65" "Re: [oss-security] Xen Security Advisory 375 v3 (CVE-2021-0089,CVE-2021-26313) - Speculative Code Store Bypass" nil nil nil "6" nil nil (number mark "U       S.Kieske@mit Jun 10   65/2130  " thread-indent "\"Re: [oss-security] Xen Security Advisory 375 v3 (CVE-2021-0089,CVE-2021-26313) - Speculative Code Store Bypass\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Xen Security Advisory 375 v3 (CVE-2021-0089,CVE-2021-26313) - Speculative Code Store Bypass" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 18424 invoked by uid 550); 10 Jun 2021 11:45:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,53 +12,93 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 19539 invoked from network); 11 Feb 2025 15:47:36 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Paulo Motta <paulo@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <d6cd6d04-0fe3-625d-60f1-1092c9292982@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 11 Feb 2025 15:47:26 +0000
+Received: (qmail 7221 invoked from network); 10 Jun 2021 08:04:49 -0000
+From: Sven Kieske <S.Kieske@mittwald.de>
+To: "xen-announce@lists.xen.org" <xen-announce@lists.xen.org>,
+	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
+	"xen-users@lists.xen.org" <xen-users@lists.xen.org>,
+	"xen-devel@lists.xen.org" <xen-devel@lists.xen.org>
+CC: "security-team-members@xen.org" <security-team-members@xen.org>
+Thread-Topic: [oss-security] Xen Security Advisory 375 v3
+ (CVE-2021-0089,CVE-2021-26313) - Speculative Code Store Bypass
+Thread-Index: AQHXXTa+QYm8IqItZ0WWKzH19j3F/KsMwoyA
+Date: Thu, 10 Jun 2021 08:04:37 +0000
+Message-ID: <90160ae63614ca1098c87f5c60002b9a35e922ef.camel@mittwald.de>
+References: <E1lqybO-0000fZ-5i@xenbits.xenproject.org>
+In-Reply-To: <E1lqybO-0000fZ-5i@xenbits.xenproject.org>
+Accept-Language: de-DE, en-US
+Content-Language: de-DE
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2a03:2a00:2:1::48]
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="=-0l3DJMvbZ87xKiFC2jeo"
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2025-26467: Apache Cassandra: User with MODIFY permission on
- ALL KEYSPACES can escalate privileges to superuser via unsafe actions
- (4.0.16 only) 
+Subject: Re: [oss-security] Xen Security Advisory 375 v3
+ (CVE-2021-0089,CVE-2021-26313) - Speculative Code Store Bypass
 
-Severity: moderate
+--=-0l3DJMvbZ87xKiFC2jeo
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Affected versions:
+On Mi, 2021-06-09 at 13:50 +0000, Xen.org security team wrote:
+> For more details, see:
+[..]
+>   https://www.amd.com/en/corporate-product-security-bulletin-amd-sb-1003
 
-- Apache Cassandra 4.0.16
+The above link turns into a "Page not found", at least for me, I believe th=
+e correct link is:
 
-Description:
+https://www.amd.com/en/corporate/product-security/bulletin/amd-sb-1003
 
-Privilege Defined With Unsafe Actions vulnerability in Apache Cassandra. An=
- user with MODIFY permission ON ALL KEYSPACES can escalate privileges to su=
-peruser within a targeted Cassandra cluster via unsafe actions to a system =
-resource. Operators granting data MODIFY permission on all keyspaces on aff=
-ected versions should review data access rules for potential breaches.
+HTH
+
+Mit freundlichen Gr=C3=BC=C3=9Fen / Regards
+
+Sven Kieske
+Systementwickler
+=20
+=20
+Mittwald CM Service GmbH & Co. KG
+K=C3=B6nigsberger Stra=C3=9Fe 4-6
+32339 Espelkamp
+=20
+Tel.: 05772 / 293-900
+Fax: 05772 / 293-333
+=20
+https://www.mittwald.de
+=20
+Gesch=C3=A4ftsf=C3=BChrer: Robert Meyer, Florian J=C3=BCrgens
+=20
+St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
+Komplement=C3=A4rin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynh=
+ausen
+
+Informationen zur Datenverarbeitung im Rahmen unserer Gesch=C3=A4ftst=C3=A4=
+tigkeit=20
+gem=C3=A4=C3=9F Art. 13-14 DSGVO sind unter www.mittwald.de/ds abrufbar.
 
 
+--=-0l3DJMvbZ87xKiFC2jeo
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
 
-This issue affects Apache Cassandra 3.0.30, 3.11.17, 4.0.16, 4.1.7, 5.0.2, =
-but this advisory is only for 4.0.16 because the fix to CVE-2025-23015 was =
-incorrectly applied to 4.0.16, so that version is still affected.
+-----BEGIN PGP SIGNATURE-----
 
-Users in the 4.0 series are recommended to upgrade to version 4.0.17 which =
-fixes the issue. Users from 3.0, 3.11, 4.1 and 5.0 series should follow rec=
-ommendation from CVE-2025-23015.
+iQIzBAABCAAdFiEEdKGxKl7rK5iwbpcWxvL1MwMBtBEFAmDBx5MACgkQxvL1MwMB
+tBESWRAA1dpFqCNLMZBg07fdyqYg4VJ2uM+jRKRrPFBLev0QNYF/VRjs7vtO/R/4
+/gHlFoOX4uxaMO0GFlPgQ8bZ6qKmNTQ4CDIsLgWvIPf4Ldy0p3Qs92AQxyEGLHpL
+IFc1qNdn07koYU+KxfPKNMFH1TZAqrU+hGZec68LtyhVBSpYKby/co2iZ6bH/88l
+6Houy2etNAKkztiEUEEKBPPXTFG8v3AqEXq/mwfOUYU9IfuRPcaxcyvTmKdpwLun
+24kU2fbifpwV7YDP1J/Q97p4YwD6Y2TSPDlxEu0eOlWCLQTs1dHx2UPBCZf85CjK
+ZgHewt7oFcnwdWmtLtm3Q8/ALWZJdoERDUTOXds8pjjt84Pn9iiHdhNJE7LE0hnR
+XFUha/OjQw9NxIer+K4YPo5bbG9wAY0lkFYPYZ05D3Ebnncmk58VXJUkWo+4E3zW
+LL0AO2DdcP4UOZef7zwhtDD6BNlBxJSz+YvGtNn1KoS7JkdPFsD61x+MBWZXeqY1
+ke8Pdq8BnZPCq/6ked5iJtxOpwkjQWz9Owvr1lKRQOfyw4G5G7hr7eB/6/eXyTRw
+Yj29vqAI0F/FtqqaSahtXYlvneLePX5vgajH/C3sdVLkVQvQBVlwF4eqCQRmkmCo
+iG658IfWJvD6DsYTGM50PjXunfaSsWKz8j7QDRr6RaHEu3O7Tdk=
+=o3nj
+-----END PGP SIGNATURE-----
 
-Credit:
-
-Adam Pond of Apple Services Engineering Security (finder)
-Ali Mirheidari of Apple Services Engineering Security (finder)
-Terry Thibault of Apple Services Engineering Security (finder)
-Will Brattain of Apple Services Engineering Security (finder)
-
-References:
-
-https://cassandra.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2025-26467
-
+--=-0l3DJMvbZ87xKiFC2jeo--
