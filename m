@@ -1,70 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/23/2
-Message-ID: <CAN_LGv3XWN9ptJL-FpHpzYdO8CatqW0ZJ7xo=yQt+d-07cAcbQ@mail.gmail.com>
-Date: Thu, 23 Dec 2021 23:06:59 +0500
-From: "Alexander E. Patrakov" <patrakov@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/10/15
+Message-ID: <YMIj1mZsQrmj6PBA@sol.nexus.lan>
+Date: Thu, 10 Jun 2021 14:38:14 +0000
+From: John Helmert III <jchelmert3@...teo.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-44273: e2guardian did not validate TLS hostnames
+Subject: Re: CVE-2021-31618: Apache httpd: NULL pointer dereference on specially crafted HTTP/2 request
 Content-Type: text/plain; charset=utf-8
 
-Hello!
+On Wed, Jun 09, 2021 at 11:11:00PM +0200, Christophe JAILLET wrote:
+> 
+> CVE-2021-31618: NULL pointer dereference on specially crafted HTTP/2 request
+> 
+> Severity: important
+> 
+> Vendor: The Apache Software Foundation
+> 
+> Versions Affected:
+> 2.4.47
+> httpd 
+> Description:
+> Apache HTTP Server 2.4.47
+> Apache HTTP Server protocol handler for the HTTP/2 protocol checks received request headers against the size limitations as configured for the server and used for the HTTP/1 protocol as well. On violation of these restrictions and HTTP response is sent to the client with a status code indicating why the request was rejected.
+> 
+> This rejection response was not fully initialised in the HTTP/2 protocol handler if the offending header was the very first one received or appeared in a a footer. This led to a NULL pointer dereference on initialised memory, crashing reliably the child process. Since such a triggering HTTP/2 request is easy to craft and submit, this can be exploited to DoS the server.
+> 
+> This affected versions prior to 2.4.47
 
-Some time ago I was trying to make a certain Arch Linux system compliant
-with CyberEssentials security requirements from the UK [1], and this
-includes the requirement for anti-virus scanning of all web browser
-traffic. I interpreted this literally: break TLS using MITM on the
-(transparent) proxy, scan everything with ClamAV. Note: I may be
-mis-interpreting and over-complying, there is an unverified opinion that
-anti-malware browser extensions are enough and that it is not needed to
-break TLS. I don't know.
+The announcement on the website indicates the affected versions for
+CVE-2021-31618 are <2.4.48 and in the below table it indicates <=2.4.48
+are affected. Both of these are different from the mail advisory, can
+you clarify the affected versions, please?
 
-Anyway, I have decided to try e2guardian 5.4.3r and later a 5.5 git
-snapshot, in the standalone mode (where it functions as a transparent
-proxy, as opposed to an ICAP server), because of the apparent simplicity of
-its setup. While testing it, I found that it significantly lowered the
-security of the system it purported to protect: I was able to access,
-through this transparent proxy, a significant amount of badssl.com
-subdomains that should not be accessible.
+> Mitigation:
+> none
+> 
+> Credit:
+> Apache HTTP server would like to thank  LI ZHI XIN from NSFocus for reporting this.
+> 
+> References:
+> https://httpd.apache.org/security/vulnerabilities_24.html
+> 
 
-In particular, I was able to access wrong.host.badssl.com, which meant that
-SSL certificate hostname validation was not working, and an attacker could
-trivially MITM the connection from the origin server to e2guardian. I have
-reported this [2], and it is now fixed in the v5.4 branch [3]. There is
-still no formal release with the fix.
-
-I do not see anything relevant on the v5.5dev branch, though, and I have
-not tested any other branches. The issue exists only if e2guardian is
-compiled against OpenSSL 1.1.x, and is operating in the standalone mode.
-Builds using OpenSSL 1.0.2 or operating as ICAP servers (as opposed to
-standalone transparent proxies) are not affected.
-
-This issue with missing TLS hostname validation is now known as
-CVE-2021-44273. Distribution package maintainers, please see if your
-e2guardian package is vulnerable.
-
-I have also reported [4] another issue, that certain badssl.com subdomains
-that implement bad crypto (dh2048, dh-small-subgroup, dh-composite,
-tls-v1-0, tls-v1-1), normally rejected by browsers, are still accessible
-through the e2guardian transparent proxy. However, we have agreed that it
-is not a bug in e2guardian, but just insecure OpenSSL defaults (and no
-user-oriented documentation how to change them via openssl.cnf), because
-the same subdomains can be accessed via curl. Interestingly, Squid (with
-ssl-bump enabled) does disallow such bad crypto.
-
-In my personal opinion (which may be different from the official opinion of
-any company that I work or worked for), the incident described above, plus
-a similar recent incident with Squid (CVE-2021-41611), should be treated as
-an evidence that such "please MITM all SSL traffic" requirements actually
-lower the security and should be abandoned, merely because browsers
-de-facto have the best available quality of TLS implementations.
-
-[1]
-https://www.ncsc.gov.uk/files/Cyber-Essentials-Requirements-for-IT-infrastructure-2-2.pdf
-[2] https://github.com/e2guardian/e2guardian/issues/707
-[3]
-https://github.com/e2guardian/e2guardian/commit/eae46a7e2a57103aadca903c4a24cca94dc502a2
-[4] https://github.com/e2guardian/e2guardian/issues/708
-
--- 
-Alexander E. Patrakov
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
