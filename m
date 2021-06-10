@@ -1,4 +1,9 @@
-Received: (qmail 5785 invoked by uid 550); 27 Nov 2024 16:34:53 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2538" "Thursday" "10" "June" "2021" "16:19:43" "+0200" "Daniel Beck" "ml@beckweb.net" nil "66" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "6" nil nil (number mark "U       ml@beckweb.n Jun 10   66/2538  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9738 invoked by uid 550); 10 Jun 2021 14:19:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,79 +12,83 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 32751 invoked from network); 27 Nov 2024 13:41:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Type:MIME-Version:References:Subject:Cc:To:From:
-	Message-ID:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:In-Reply-To:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=8uo9Zg2Q3b2FyoRSXk4uvIefkZb/P7IWg/nOXeg2jBc=; b=IcNJn/WNUzmnE/jBXr0t1rpt8o
-	dSIcCwhgmQAwLw+JsgAp/oZGqBULAV81FU/uPRi+Ur8RYjB8I6s5rC4wEdrYM8KlZhkD/rKVM76EX
-	9XfQEW/DC7bjdPl7ZHQSFHt/k0vqdLtgjFmBR6BG1k/Y8u9yiZAcUV0jxqzUcxvskvaiIrDKK1AJk
-	I/JP3ngBamAxQytVBuKf5EMpgtS0CB2hSeS9PaTNnnu9bjENGBgA+53ixiIreHQQ3wPuM97EHC2mV
-	kMU+mGDeeRbxuo0q4cZ+lUYHHtfLCgNlEbyEggC5FrVd3elUN62Eo+zLqiAk/4QuB9tlbB6zUsWgP
-	sjR43FNQ==;
-Date: Wed, 27 Nov 2024 15:40:50 +0200
-Message-ID: <20241127154050.GD1511343@igalia.com>
-From: Adrian Perez de Castro <aperez@igalia.com>
-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
-Cc: security@webkit.org, oss-security@lists.openwall.com
-References:
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="KTivM/Yky/wrQp6y"; micalg="pgp-ripemd160"; protocol="application/pgp-signature"
-Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2024-0007
+Received: (qmail 9708 invoked from network); 10 Jun 2021 14:19:55 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.15\))
+Message-Id: <65194E9D-493D-49FA-9921-C75F737DEC56@beckweb.net>
+Date: Thu, 10 Jun 2021 16:19:43 +0200
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3445.104.15)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1623334795;30b0bfe3;
+X-HE-SMSGID: 1lrLX5-0002ZA-V3
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
---KTivM/Yky/wrQp6y
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: base64
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tCldlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBTZWN1cml0eSBBZHZpc29y
-eSAgICAgICAgICAgICAgICAgV1NBLTIwMjQtMDAwNwotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCkRhdGUgcmVw
-b3J0ZWQgICAgICAgICAgIDogTm92ZW1iZXIgMjcsIDIwMjQKQWR2aXNvcnkgSUQgICAgICAgICAg
-ICAgOiBXU0EtMjAyNC0wMDA3CldlYktpdEdUSyBBZHZpc29yeSBVUkwgIDogaHR0cHM6Ly93ZWJr
-aXRndGsub3JnL3NlY3VyaXR5L1dTQS0yMDI0LTAwMDcuaHRtbApXUEUgV2ViS2l0IEFkdmlzb3J5
-IFVSTCA6IGh0dHBzOi8vd3Bld2Via2l0Lm9yZy9zZWN1cml0eS9XU0EtMjAyNC0wMDA3Lmh0bWwK
-Q1ZFIGlkZW50aWZpZXJzICAgICAgICAgOiBDVkUtMjAyNC00NDMwOCwgQ1ZFLTIwMjQtNDQzMDku
-CgpTZXZlcmFsIHZ1bG5lcmFiaWxpdGllcyB3ZXJlIGRpc2NvdmVyZWQgaW4gV2ViS2l0R1RLIGFu
-ZCBXUEUgV2ViS2l0LgoKQ1ZFLTIwMjQtNDQzMDgKICAgIFZlcnNpb25zIGFmZmVjdGVkOiBXZWJL
-aXRHVEsgYW5kIFdQRSBXZWJLaXQgYmVmb3JlIDIuNDYuNC4KICAgIENyZWRpdCB0byBDbMOpbWVu
-dCBMZWNpZ25lIGFuZCBCZW5vw650IFNldmVucyBvZiBHb29nbGUncyBUaHJlYXQgQW5hbHlzaXMg
-R3JvdXAuCiAgICBJbXBhY3Q6IFByb2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29u
-dGVudCBtYXkgbGVhZCB0bwogICAgYXJiaXRyYXJ5IGNvZGUgZXhlY3V0aW9uLiBBcHBsZSBpcyBh
-d2FyZSBvZiBhIHJlcG9ydCB0aGF0IHRoaXMgaXNzdWUKICAgIG1heSBoYXZlIGJlZW4gYWN0aXZl
-bHkgZXhwbG9pdGVkIG9uIEludGVsLWJhc2VkIE1hYyBzeXN0ZW1zLgogICAgRGVzY3JpcHRpb246
-IFRoZSBpc3N1ZSB3YXMgYWRkcmVzc2VkIHdpdGggaW1wcm92ZWQgY2hlY2tzLgogICAgV2ViS2l0
-IEJ1Z3ppbGxhOiAyODMwNjMKCkNWRS0yMDI0LTQ0MzA5CiAgICBWZXJzaW9ucyBhZmZlY3RlZDog
-V2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjQ2LjQuCiAgICBDcmVkaXQgdG8gQ2zD
-qW1lbnQgTGVjaWduZSBhbmQgQmVub8OudCBTZXZlbnMgb2YgR29vZ2xlJ3MgVGhyZWF0IEFuYWx5
-c2lzIEdyb3VwLgogICAgSW1wYWN0OiBQcm9jZXNzaW5nIG1hbGljaW91c2x5IGNyYWZ0ZWQgd2Vi
-IGNvbnRlbnQgbWF5IGxlYWQgdG8gYQogICAgY3Jvc3Mgc2l0ZSBzY3JpcHRpbmcgYXR0YWNrLiBB
-cHBsZSBpcyBhd2FyZSBvZiBhIHJlcG9ydCB0aGF0IHRoaXMKICAgIGlzc3VlIG1heSBoYXZlIGJl
-ZW4gYWN0aXZlbHkgZXhwbG9pdGVkIG9uIEludGVsLWJhc2VkIE1hYyBzeXN0ZW1zLgogICAgRGVz
-Y3JpcHRpb246IEEgY29va2llIG1hbmFnZW1lbnQgaXNzdWUgd2FzIGFkZHJlc3NlZCB3aXRoIGlt
-cHJvdmVkCiAgICBzdGF0ZSBtYW5hZ2VtZW50LgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyODMwOTUK
-CldlIHJlY29tbWVuZCB1cGRhdGluZyB0byB0aGUgbGF0ZXN0IHN0YWJsZSB2ZXJzaW9ucyBvZiBX
-ZWJLaXRHVEsgYW5kIFdQRQpXZWJLaXQuIEl0IGlzIHRoZSBiZXN0IHdheSB0byBlbnN1cmUgdGhh
-dCB5b3UgYXJlIHJ1bm5pbmcgc2FmZSB2ZXJzaW9ucwpvZiBXZWJLaXQuIFBsZWFzZSBjaGVjayBv
-dXIgd2Vic2l0ZXMgZm9yIGluZm9ybWF0aW9uIGFib3V0IHRoZSBsYXRlc3QKc3RhYmxlIHJlbGVh
-c2VzLgoKRnVydGhlciBpbmZvcm1hdGlvbiBhYm91dCBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQg
-c2VjdXJpdHkgYWR2aXNvcmllcwpjYW4gYmUgZm91bmQgYXQ6IGh0dHBzOi8vd2Via2l0Z3RrLm9y
-Zy9zZWN1cml0eS5odG1sIG9yCmh0dHBzOi8vd3Bld2Via2l0Lm9yZy9zZWN1cml0eS4KClRoZSBX
-ZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgdGVhbSwK
+The following releases contain fixes for security vulnerabilities:
 
---KTivM/Yky/wrQp6y
-Content-Type: application/pgp-signature; name="signature.asc"
+* Kiuwan Plugin 1.6.1
+* Kubernetes CLI Plugin 1.10.1
+* XebiaLabs XL Deploy Plugin 10.0.2
 
------BEGIN PGP SIGNATURE-----
 
-iF0EABEDAB0WIQRao7wzT9fjNp58d7KRxVnb5MkSOwUCZ0chYgAKCRCRxVnb5MkS
-O9QIAJ9x+2BvpIAWpe6J90fD15l0CG2PxwCdGWYqT+qGSdSdonMV3xXTyzllesk=
-=JkgI
------END PGP SIGNATURE-----
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2021-06-10/
 
---KTivM/Yky/wrQp6y--
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-2370 / CVE-2021-21661
+Kubernetes CLI Plugin 1.10.0 and earlier does not perform permission checks
+in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+
+SECURITY-1981 / CVE-2021-21662
+XebiaLabs XL Deploy Plugin 10.0.1 and earlier does not perform a permission
+check in a method implementing form validation.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+
+SECURITY-1982 / CVE-2021-21663 (missing permission check) & CVE-2021-21664 =
+(incorrect permission check) & CVE-2021-21665 (CSRF)
+XebiaLabs XL Deploy Plugin 10.0.1 and earlier does not (correctly) perform
+a permission check in a method implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified credentials IDs obtained
+through another method, capturing Username/password credentials stored in
+Jenkins.
+
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+
+SECURITY-2367 / CVE-2021-21666
+Kiuwan Plugin 1.6.0 and earlier does not escape output that can indirectly
+be controlled through query parameters in an error message for a form
+validation endpoint.
+
+This results in a reflected cross-site scripting (XSS) vulnerability.
+
+NOTE: Only older releases of Jenkins are affected by this vulnerability.
+Jenkins 2.275 and newer, LTS 2.263.2 and newer include a protection
+preventing this from being exploitable.
+
