@@ -1,41 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/06/1
-Message-ID: <20210705223014.GA18898@hoboy.vegasvil.org>
-Date: Mon, 5 Jul 2021 15:30:14 -0700
-From: Richard Cochran <richardcochran@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: linuxptp-devel@...ts.sourceforge.net, linuxptp-users@...ts.sourceforge.net
-Subject: linuxptp: Fixes published for CVE-2021-3570 and CVE-2021-3571
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/10/16
+Message-ID: <8feb8989-3b53-a97a-4421-ef8e47cce53d@wanadoo.fr>
+Date: Thu, 10 Jun 2021 19:18:55 +0200
+From: Christophe JAILLET <christophe.jaillet@...adoo.fr>
+To: oss-security@...ts.openwall.com, John Helmert III <jchelmert3@...teo.net>
+Subject: Re: CVE-2021-31618: Apache httpd: NULL pointer dereference on specially crafted HTTP/2 request
 Content-Type: text/plain; charset=utf-8
 
-Dear list,
 
-Now that the embargo period has expired, I published fixes for:
+Le 10/06/2021 à 16:38, John Helmert III a écrit :
+> On Wed, Jun 09, 2021 at 11:11:00PM +0200, Christophe JAILLET wrote:
+>> CVE-2021-31618: NULL pointer dereference on specially crafted HTTP/2 request
+>>
+>> Severity: important
+>>
+>> Vendor: The Apache Software Foundation
+>>
+>> Versions Affected:
+>> 2.4.47
+>> httpd
+>> Description:
+>> Apache HTTP Server 2.4.47
+>> Apache HTTP Server protocol handler for the HTTP/2 protocol checks received request headers against the size limitations as configured for the server and used for the HTTP/1 protocol as well. On violation of these restrictions and HTTP response is sent to the client with a status code indicating why the request was rejected.
+>>
+>> This rejection response was not fully initialised in the HTTP/2 protocol handler if the offending header was the very first one received or appeared in a a footer. This led to a NULL pointer dereference on initialised memory, crashing reliably the child process. Since such a triggering HTTP/2 request is easy to craft and submit, this can be exploited to DoS the server.
+>>
+>> This affected versions prior to 2.4.47
+> The announcement on the website indicates the affected versions for
+> CVE-2021-31618 are <2.4.48 and in the below table it indicates <=2.4.48
+> are affected. Both of these are different from the mail advisory, can
+> you clarify the affected versions, please?
 
-   CVE-2021-3570 linuxptp: missing length check of forwarded messages
-   CVE-2021-3571 linuxptp: wrong length of one-step follow-up in transparent clock
+Hi,
 
-The fixes have been published to SourceForge and to GitHub:
+in fact it was fixed in 2.4.47, BUT this version was never announced and 
+has never been visible from the httpd.apache.org website.
 
-   https://sourceforge.net/projects/linuxptp
-   https://github.com/richardcochran/linuxptp
+So from an end-user point of view if was really fixed in 2.4.48 (and 
+2.4.47 does not exist).
 
-The tags with the fixes are as follows:
+We'll clarify internally how we should proceed in such cases to avoid 
+such questions.
+The information should be consistent wherever you look for it.
 
-   v1.5.1
-   v1.6.1
-   v1.7.1
-   v1.8.1
-   v1.9.3
-   v2.0.1
-   v3.1.1
+Hope this clarify the situation.
 
-In addition, the head of the master branch (soon to be version 3.2)
-also includes the fixes.
+Best regards,
 
-Although it is possible to apply the fix to versions 1.2, 1.3, and
-1.4, those versions are obsolete and do not pass our CI tests.  For
-this reason I decided to withdraw them instead.
+CJ
 
-Thanks,
-Richard
+
+>> Mitigation:
+>> none
+>>
+>> Credit:
+>> Apache HTTP server would like to thank  LI ZHI XIN from NSFocus for reporting this.
+>>
+>> References:
+>> https://httpd.apache.org/security/vulnerabilities_24.html
+>>
