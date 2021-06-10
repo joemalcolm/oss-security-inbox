@@ -1,21 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/10/7
-Message-ID: <CAPP0f95myr-waB5z3qVvXp3BGNzyU5f8UwSTdMzV_zGb1wCt9w@mail.gmail.com>
-Date: Wed, 10 Feb 2021 21:25:57 +0530
-From: Utkarsh Gupta <utkarsh@...ian.org>
-To: taviso@...il.com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/10/13
+Message-ID: <YMIJ0OV72O2XK7m+@mail-itl>
+Date: Thu, 10 Jun 2021 14:47:11 +0200
+From: Marek Marczykowski-Górecki <marmarek@...isiblethingslab.com>
+To: Gianluca Gabrielli <ggabrielli@...e.de>
 Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: screen crash processing combining characters
+Subject: Re: XScreenSaver 5.45: Disconnecting a video output can cause XScreenSaver to crash and unlock
 Content-Type: text/plain; charset=utf-8
 
-Hi Tavis,
+On Thu, Jun 10, 2021 at 02:34:58PM +0200, Gianluca Gabrielli wrote:
+> Thank Marek for having shared this with the list. I don't see a CVE ID
+> assigned to this bug, have requested one?
 
-On Wed, Feb 10, 2021 at 4:37 AM Tavis Ormandy <taviso@...il.com> wrote:
-> Fyi, Thomas (XTerm maintainer) replied - he was able to repro, and said
-> the fix is going to be in patch #366, a bug fix release coming soon.
+I have not (nor has the vendor).
 
-Great, thanks! Could you also tell Thomas that CVE-2021-27135 has been
-assigned for that?
+-- 
+Best Regards,
+Marek Marczykowski-Górecki
+Invisible Things Lab
 
-
-- u
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
