@@ -1,27 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/11/13
-Message-ID: <20210511181346.GM12149@mussarela>
-Date: Tue, 11 May 2021 15:13:46 -0300
-From: Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-3491 - Linux kernel io_uring PROVIDE_BUFFERS MAX_RW_COUNT bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/10/12
+Message-ID: <31aef962-511f-e7d7-455a-23d309f03aa5@suse.de>
+Date: Thu, 10 Jun 2021 14:34:58 +0200
+From: Gianluca Gabrielli <ggabrielli@...e.de>
+To: Marek Marczykowski-Górecki <marmarek@...isiblethingslab.com>, oss-security@...ts.openwall.com
+Subject: Re: XScreenSaver 5.45: Disconnecting a video output can cause XScreenSaver to crash and unlock
 Content-Type: text/plain; charset=utf-8
 
-It was discovered that io_uring PROVIDE_BUFFERS operation allowed the
-MAX_RW_COUNT limit to be bypassed, which led to negative values being used
-in mem_rw when reading /proc/<PID>/mem.
+Thank Marek for having shared this with the list. I don't see a CVE ID
+assigned to this bug, have requested one?
 
-Billy Jheng Bing-Jhong (@st424204) of STAR Labs working with Trend Micro's
-Zero Day Initiative discovered that this vulnerability could be turned into
-a heap overflow. This has been reported as ZDI-CAN-13546, and assigned
-CVE-2021-3491.
+-- 
+. o .  Gianluca Gabrielli                      gianlu.ca
+. . o  Software security engineer               suse.com
+o o o  D78D 3FDC 2591 7EBA B52F 2362 6E17 38B8 2B60 B31D
+-Dance like no one's watching, encrypt like everyone is-
 
-IORING_OP_PROVIDE_BUFFERS was introduced in commit ddf0322db79c ("io_uring:
-add IORING_OP_PROVIDE_BUFFERS") where lengths larger than MAX_RW_COUNT
-could be used and accepted. This commit was introduced in 5.7-rc1. It was
-not backported to any upstream LTS kernels.
 
-This has been fixed by commit:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d1f82808877bb10d3deee7cf3374a4eb3fb582db
 
-Cascardo.
+Download attachment "OpenPGP_signature" of type "application/pgp-signature" (841 bytes)
