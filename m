@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2505" "Wednesday" "5" "February" "2020" "13:45:21" "+0100" "Matthias Gerstner" "mgerstner@suse.de" nil "72" nil "^Date:" nil nil "2" nil nil (number mark "        mgerstner@su Feb  5   72/2505  " thread-indent "\"[oss-security] CVE-2019-18901: mariadb: possible symlink attack for the mysql user in the SUSE specific mysql-systemd-helper script\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-18901: mariadb: possible symlink attack for the mysql user in the SUSE specific mysql-systemd-helper script" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2421" "Friday" "11" "June" "2021" "09:13:18" "+0200" "Gianluca Gabrielli" "ggabrielli@suse.de" nil "58" "[oss-security] Re: XScreenSaver 5.45: Disconnecting a video output can cause XScreenSaver to crash and unlock" nil nil nil "6" nil nil (number mark "U       ggabrielli@s Jun 11   58/2421  " thread-indent "\"[oss-security] Re: XScreenSaver 5.45: Disconnecting a video output can cause XScreenSaver to crash and unlock\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: XScreenSaver 5.45: Disconnecting a video output can cause XScreenSaver to crash and unlock" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13850 invoked by uid 550); 5 Feb 2020 12:45:49 -0000
+Received: (qmail 5503 invoked by uid 550); 11 Jun 2021 11:49:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,90 +11,113 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13832 invoked from network); 5 Feb 2020 12:45:49 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Message-ID: <20200205124521.GA16369@f195.suse.de>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="pf9I7BMVVzbSWLtt"
-Content-Disposition: inline
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Date: Wed, 5 Feb 2020 13:45:21 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2019-18901: mariadb: possible symlink attack for the mysql user
- in the SUSE specific mysql-systemd-helper script
-To: oss-security@lists.openwall.com
+Received: (qmail 13834 invoked from network); 11 Jun 2021 07:13:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1623395599; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Senv2xH2KXnnsa9j5Z80EXHEi2cactg0Em1LXyeJPuY=;
+	b=MDAel7/16D7iIOhiW8FSMYfId2iUmETDEXNow2BHAtMqakMmIebVnma/qop4LNba2TKy5H
+	yIdNpZtWRKoZVsDCP/Lm/2RDHTuWIVlndGkFYJiuoHrix2NOF/tpGkOiIqeT9Rrua7dlOR
+	HXkOOxOg2nW90ydu1EJBbaMc9lx7nGg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1623395599;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Senv2xH2KXnnsa9j5Z80EXHEi2cactg0Em1LXyeJPuY=;
+	b=kZiPu5jUHNlUvQmBK5hwHDRCDD565Dre/4rhrkpt2UfWV/dy0+9b8xf8psZKfbRCg5n3Zu
+	Dj4dO7texM9SibBQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1623395599; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Senv2xH2KXnnsa9j5Z80EXHEi2cactg0Em1LXyeJPuY=;
+	b=MDAel7/16D7iIOhiW8FSMYfId2iUmETDEXNow2BHAtMqakMmIebVnma/qop4LNba2TKy5H
+	yIdNpZtWRKoZVsDCP/Lm/2RDHTuWIVlndGkFYJiuoHrix2NOF/tpGkOiIqeT9Rrua7dlOR
+	HXkOOxOg2nW90ydu1EJBbaMc9lx7nGg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1623395599;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Senv2xH2KXnnsa9j5Z80EXHEi2cactg0Em1LXyeJPuY=;
+	b=kZiPu5jUHNlUvQmBK5hwHDRCDD565Dre/4rhrkpt2UfWV/dy0+9b8xf8psZKfbRCg5n3Zu
+	Dj4dO7texM9SibBQ==
+To: oss-security@lists.openwall.com,
+ =?UTF-8?Q?Marek_Marczykowski-G=c3=b3recki?= <marmarek@invisiblethingslab.com>
+References: <YLrLbpUuAbLO3RR8@mail-itl>
+ <31aef962-511f-e7d7-455a-23d309f03aa5@suse.de> <YMIJ0OV72O2XK7m+@mail-itl>
+From: Gianluca Gabrielli <ggabrielli@suse.de>
+Organization: SUSE LINUX s.r.o.
+Message-ID: <8aa1cc5b-fa58-771d-a52a-fcfd4276eb76@suse.de>
+Date: Fri, 11 Jun 2021 09:13:18 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
+MIME-Version: 1.0
+In-Reply-To: <YMIJ0OV72O2XK7m+@mail-itl>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="8aOBdyBOkFHVfLCamExpMXCfXAh5Y15Gh"
+Subject: [oss-security] Re: XScreenSaver 5.45: Disconnecting a video output can cause
+ XScreenSaver to crash and unlock
 
---pf9I7BMVVzbSWLtt
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+--8aOBdyBOkFHVfLCamExpMXCfXAh5Y15Gh
+Content-Type: multipart/mixed; boundary="swzxkH5HsWT11I25uUYlClRUNDA9oLSLN";
+ protected-headers="v1"
+From: Gianluca Gabrielli <ggabrielli@suse.de>
+To: oss-security@lists.openwall.com,
+ =?UTF-8?Q?Marek_Marczykowski-G=c3=b3recki?= <marmarek@invisiblethingslab.com>
+Message-ID: <8aa1cc5b-fa58-771d-a52a-fcfd4276eb76@suse.de>
+Subject: Re: XScreenSaver 5.45: Disconnecting a video output can cause
+ XScreenSaver to crash and unlock
+References: <YLrLbpUuAbLO3RR8@mail-itl>
+ <31aef962-511f-e7d7-455a-23d309f03aa5@suse.de> <YMIJ0OV72O2XK7m+@mail-itl>
+In-Reply-To: <YMIJ0OV72O2XK7m+@mail-itl>
+
+--swzxkH5HsWT11I25uUYlClRUNDA9oLSLN
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
 
-Hello list,
+Marek Marczykowski-G=C3=B3recki wrote:
+> On Thu, Jun 10, 2021 at 02:34:58PM +0200, Gianluca Gabrielli wrote:
+>> Thank Marek for having shared this with the list. I don't see a CVE ID
+>> assigned to this bug, have requested one?
+>=20
+> I have not (nor has the vendor).
 
-in the course of a review of the mariadb packaging in the SUSE Linux
-distribution I discovered that a SUSE specific helper script
-"mysql-systemd-helper" unsafely operates with root privileges in
-the /var/lib/mysql directory [1].
-
-During initial package installation and during upgrade scenarios the
-file /var/lib/mysql/mysql_upgrade_info is created/overwritten and
-modified using the following shell commands:
-
-```
-echo -n "$MYSQLVER" > "$datadir"/mysql_upgrade_info
-chmod 640 "$datadir/mysql_upgrade_info"
-```
-
-Since the unprivileged mysql user owns the parent directory it can
-remove this file and replace it with a symlink to write/overwrite in
-privileged file systems locations. This could mostly be used for
-denial-of-service purposes, a full privilege escalation should not be
-easily achieved by this vulnerability, since the file content cannot be
-controlled by a potential attacker.
-
-Future SUSE mariadb packages will keep this file in a safe location in
-/var/lib/misc. Older, still supported packages will be fixed soon.
-
-Cheers
-
-Matthias
-
-References
-----------
-
-[1]: https://bugzilla.suse.com/show_bug.cgi?id=3D1160895
+CVE-2021-34557
 
 --=20
-Matthias Gerstner <matthias.gerstner@suse.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
+. o .  Gianluca Gabrielli                      gianlu.ca
+. . o  Software security engineer               suse.com
+o o o  D78D 3FDC 2591 7EBA B52F 2362 6E17 38B8 2B60 B31D
+-Dance like no one's watching, encrypt like everyone is-
 
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG N=FCrnberg
-Gesch=E4ftsf=FChrer: Felix Imend=F6rffer
 
---pf9I7BMVVzbSWLtt
-Content-Type: application/pgp-signature; name="signature.asc"
+--swzxkH5HsWT11I25uUYlClRUNDA9oLSLN--
+
+--8aOBdyBOkFHVfLCamExpMXCfXAh5Y15Gh
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAl46uOEACgkQFMQFyXGS
-NVNePBAAh4MPGcKeYKznG/bgkZ3Rw8D+b70kaJ6pVDoUnBo3D1yrg5lxu4B0quKm
-oAp0jWyyE+mSl0ww/YntCq7jeVDqOVfr3hn7aNgBJBQLTX5Zrv9hVWmHKPyA/ePr
-oCaHueOL/9wNB6k1iVdexjzcboulLZfRkDheUbTTCoVWBrARJ5b1RM34zs/EIyZx
-PE2bxubqFNOvWkuEBD4IQguzkInGXYfyoHMslB2NoMSkfQ+++zGqospJ5c0wHlVq
-JLP0Y+hw44R/bzBT+xOG+HOHlhpsslIh/RkB63R023YZd2vZEBL2pMaR7hlHHyNH
-DX0/dyZget9piwChX3A5zuzofq6Wfdl6x9TplG+va5+yJ0Lj11BHqcHDBlK4erXX
-nv5KOFlRMlNE/o/p2xPT4Ow/ThPu0QTVIHWN55Fe7U/2RBXnVr+HHtpb4iUJV09z
-d4/3Lch2208TfdHWQpet8/Y5vC6/zWpv2ATkqNii/5bqSjSRoEIH5SY6LA3y+675
-8ujAgQVBilfChjuFdKpD2eL/1ZqZaNkdiFhPeA0MpSv07ekMXuGhfJRUc6TSIVO2
-0wcv/lGjUErLFtHG4JassGbQYwscbNoFNgEcoe0K4iD5V11MzLRExO3/pePg3+Hr
-A4MvCvw/7Do80i5zNLjkrjJi2nNxQt5ps0wy6N21EOJYU6+dEFI=
-=LtuU
+wsF5BAABCAAjFiEE/Gtkry+LfDI9iHEuQPoqj4mlKX4FAmDDDQ4FAwAAAAAACgkQQPoqj4mlKX7v
+phAAtjTyLjMy+SB++y6GwkEje8K+VRVRxqZ5kdvU2Be04oVjp57V3BUbz+EQRVmD5F9nuVuB9ny7
+kJGHiaDthKdNdrlI8nKUXBoYfR8WZsqRAtGMw1ogMyNQOT9gvvXXswvU9ViN8cMqZyxBbnm+gle1
+v+jqLrC9PntI6e1GE68CdHKBHSnFwogOJags90NEaSNEC/fP/Tqvbd7Hoa1D+G1b/93mwNz8138p
+P+JZ+erSk0MgswP+3LVlmWM299I1n9HgAl79jYHCRR/3QPDkQ2mbj8Ayzkg+VZLjLWMqL5UNO44s
+CwYAhb8uLmvFkMTiczfJpekF+OC41quhwvxr3OSG1/Z1/Ki8Y7JjXPLOZIteD1CAOp0OJg1wtYOd
+R7wqECzFHwJdUa8Hf8f8HvTk3xvTxHb9S0oHgKGKcMF690wxqA7jlS6StCYSJgT9iIObSDbKLK+j
+M+dibfN4nCSZJVj5Wvyv3TFajYUUabwMJhof2Eo/NizfQVzedzBbqAJim113lkYJ9tJlC8yjjXqr
+DREH2Bz8/uMii/elD7f6r40+8gmm78VtNZCUN4AgQftBN3+yfjVPhpIttf9CStOmzFzD6evSOr+7
+ezevfDi4ELjbxSWAhEoX2b0gTJ4Vgo9T0/VJwLZuGEOs8F5POZ1fYkTQ4Bz9W8PmuxJ5EevXTpHI
++2c=
+=1V7H
 -----END PGP SIGNATURE-----
 
---pf9I7BMVVzbSWLtt--
+--8aOBdyBOkFHVfLCamExpMXCfXAh5Y15Gh--
