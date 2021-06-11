@@ -1,80 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/01/6
-Message-ID: <c2d12374-0ed6-d6d4-60ea-799934b6f173@cl.cam.ac.uk>
-Date: Mon, 1 Nov 2021 17:27:53 +0000
-From: Nicholas Boucher <nicholas.boucher@...cam.ac.uk>
-To: oss-security@...ts.openwall.com
-Subject: Trojan Source Attacks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/11/1
+Message-ID: <8aa1cc5b-fa58-771d-a52a-fcfd4276eb76@suse.de>
+Date: Fri, 11 Jun 2021 09:13:18 +0200
+From: Gianluca Gabrielli <ggabrielli@...e.de>
+To: oss-security@...ts.openwall.com, Marek Marczykowski-Górecki <marmarek@...isiblethingslab.com>
+Subject: Re: XScreenSaver 5.45: Disconnecting a video output can cause XScreenSaver to crash and unlock
 Content-Type: text/plain; charset=utf-8
 
-OSS Security teams,
+Marek Marczykowski-Górecki wrote:
+> On Thu, Jun 10, 2021 at 02:34:58PM +0200, Gianluca Gabrielli wrote:
+>> Thank Marek for having shared this with the list. I don't see a CVE ID
+>> assigned to this bug, have requested one?
+> 
+> I have not (nor has the vendor).
 
-We have identified an issue affecting all compilers and interpreters 
-that support Unicode. We believe that the techniques described hereafter 
-can be used to generate adversarial encodings of source code files that 
-can be used to craft targeted attacks against source code that cannot be 
-seen by human reviewers in rendered text. This is of concern to the open 
-source community because, absent defenses, supply chain attacks can be 
-imperceptibly mounted against the ecosystem.
+CVE-2021-34557
 
-This vulnerability has undergone a coordinated disclosure process that 
-has concluded today. The security advisory can be found at 
-https://trojansource.codes.
+-- 
+. o .  Gianluca Gabrielli                      gianlu.ca
+. . o  Software security engineer               suse.com
+o o o  D78D 3FDC 2591 7EBA B52F 2362 6E17 38B8 2B60 B31D
+-Dance like no one's watching, encrypt like everyone is-
 
-Multiple organizations will be releasing parallel security advisories, 
-such as Rust's advisory at 
-https://blog.rust-lang.org/2021/11/01/cve-2021-42574.html, Red Hat's 
-advisory at 
-https://access.redhat.com/security/vulnerabilities/RHSB-2021-007 
-<https://access.redhat.com/security/vulnerabilities/RHSB-2021-007>, and 
-GitHub's advisory at 
-https://github.blog/changelog/2021-10-31-warning-about-bidirectional-unicode-text/ 
-<https://github.blog/changelog/2021-10-31-warning-about-bidirectional-unicode-text/>.
 
-The attached paper describes an attack paradigm -- which we believe to 
-be novel -- discovered by security researchers at the University of 
-Cambridge. There are two techniques for attack, both of which exploit 
-Unicode's high expressiveness to craft source code files for which 
-rendered text displays divergent logic from the underlying encoded bytes 
-seen by compilers.
-
-The first and primary technique, which we dub the Trojan Source attack, 
-uses Unicode Bidirectional (Bidi) control characters embedded in 
-comments and string literals to produce visually deceptive source code 
-files. This technique enables an adversary to encode constructs that 
-visually appear to be comments or string literals but execute as code, 
-or vice versa. Complete details, as well as recommended mitigations, can 
-be found in the attachment 001 Trojan Source.pdf. This vulnerability is 
-tracked under CVE-2021-42574.
-
-The second technique, to which we refer as the homoglyph variant, uses 
-homoglyphs (characters that render to the same glyph but are represented 
-by different Unicode values) to define adversarial identifiers. In this 
-technique, an adversary defines an identifier such as a function name 
-that appears visually identical to a target function, but is defined 
-using Unicode homoglyphs. This adversarial function then performs some 
-malicious action, then optionally calls the original function it is 
-impersonating. When defined in upstream dependencies such as open source 
-software, these adversarial functions can be imported into downstream 
-software and invoked without visual indication of malicious code. 
-Complete details, as well as recommended mitigations, can also be found 
-in the attachment 001 Trojan Source.pdf. This vulnerability is tracked 
-under CVE-2021-42694.
-
-Proofs-of-concept can be found at 
-https://github.com/nickboucher/trojan-source.
-
-We hope that this information proves useful in building and applying 
-defenses where applicable.
-
-Best,
-Nicholas Boucher
-University of Cambridge
-
-Content of type "text/html" skipped
-
-Download attachment "001 Trojan Source.pdf" of type "application/pdf" (737637 bytes)
-
-Download attachment "OpenPGP_0x5662BCEC5F1D2BEA.asc" of type "application/pgp-keys" (3160 bytes)
 
 Download attachment "OpenPGP_signature" of type "application/pgp-signature" (841 bytes)
