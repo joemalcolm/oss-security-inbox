@@ -1,92 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/20/5
-Message-Id: <E1mzHOv-0005Fc-RG@xenbits.xenproject.org>
-Date: Mon, 20 Dec 2021 12:04:21 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 376 v1 - frontends vulnerable to backends
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/12/2
+Message-ID: <8324dd87-9dce-280d-de27-4e3281419f93@lehmi.de>
+Date: Sat, 12 Jun 2021 11:04:42 +0200
+From: Andreas Lehmkuehler <andreas@...mi.de>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-31811: Apache PDFBox: A carefully crafted PDF file can trigger an OutOfMemory-Exception while loading a tiny file
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Description:
 
-                    Xen Security Advisory XSA-376
+A carefully crafted PDF file can trigger an OutOfMemory-Exception while loading 
+the file. This issue affects Apache PDFBox version 2.0.23 and prior 2.0.x versions.
 
-                   frontends vulnerable to backends
+This issue is being tracked as PDFBOX-5177
 
-ISSUE DESCRIPTION
-=================
+Mitigation:
 
-Xen offers the ability to run PV backends in regular unprivileged
-guests, typically referred to as "driver domains". Running PV backends
-in driver domains has one primary security advantage: if a driver domain
-gets compromised, it doesn't have the privileges to take over the
-system.
+This issue was fixed in 2.0.24. All users are recommended to upgrade to Apache 
+PDFBox 2.0.24
 
-However, a malicious driver domain could try to attack other guests via
-the PV protocol. Many PV frontends are hardened against misbehaving PV
-backends, but a few of them are not and might be susceptible to Denial
-of Service attacks and metadata manipulation triggered by malicious PV
-backends.
+Credit:
 
-IMPACT
-======
+Apache PDFBox would like to thank Chaoyuan Peng for reporting this issue
 
-Potentially malicious PV backends can cause guest DoS due to unhardened
-frontends in the guests, even though this ought to have been prevented by
-containing them within a driver domain.
-
-VULNERABLE SYSTEMS
-==================
-
-All guests with non-hardened frontends being serviced by potentially
-malicious backends are vulnerable, even if those backends are running in a
-less privileged environment. The vulnerability is not affecting the host,
-but the guests using non-hardened frontends.
-
-The console, block and net frontends have been hardened in the Linux kernel
-5.16, so guests running Linux with kernel 5.16 or newer are not currently
-known to be vulnerable to potentially malicious console, block or net
-backends.
-
-MITIGATION
-==========
-
-In case of running potentially malicious backends, using only hardened
-frontend counterparts in guests will mitigate the problem.
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-This issue was discussed in public already.
-
-RESOLUTION
-==========
-
-The related patch is just a clarification of the security statement,
-so it will NOT mitigate anything.
-
-As there is no urgent need for this patch to go into the Xen tree it
-will be posted on the xen-devel mailing list after disclosure of this
-advisory.
-
-xsa376.patch           xen-unstable
-
-$ sha256sum xsa376*
-b18551f7800d5a232bbe6953b1222ecb2c5a2058285c6fbc8d64f9b7dea2415f  xsa376.patch
-$
-
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmG8rFMMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZSP4H/RcD4WLHi3TuSeNspsv/+dNb906LIueHFn/3U5Pg
-5Jv8EHjv16apUhzgwTfTtx0pcCCDY2aEq0rdCziGpnTKiYzEarhTuVvc5igy9U0p
-jqazRTyUkU1pV6HwFIGi/kHXTUpO60amWgKoFzyM9ZMl6WKDejb2rTu6TJC5FyiE
-cxpe79GC98ECw8d131EfQgRx2/TIZuVQmKZlx3vVNG1lBlMZpFX2iioR7ajCQmdu
-XWt14kDYdLvmZ1UzlrOH9+jhMRIyFZ1jBZXtXEUN0zSC+aTje6nPO3WSf/gXbmNF
-COUrd7JPIMEO8PvnjzM3l1PS3XltIf2wTaVr5LjmkyBoMyM=
-=J4gx
------END PGP SIGNATURE-----
-
-Download attachment "xsa376.patch" of type "application/octet-stream" (5207 bytes)
+References:
+https://lists.apache.org/thread.html/re3bd16f0cc8f1fbda46b06a4b8241cd417f71402809baa81548fc20e%40%3Cusers.pdfbox.apache.org%3E
