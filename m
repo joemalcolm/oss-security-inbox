@@ -1,33 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/13/2
-Message-ID: <e7d04b16-bcc3-c334-9e64-e57824ac1195@apache.org>
-Date: Tue, 13 Jul 2021 04:01:04 +0000
-From: Stefan Bodewig <bodewig@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/14/1
+Message-ID: <20210614121256.75640f6b@computer>
+Date: Mon, 14 Jun 2021 12:12:56 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-35516: Apache Commons Compress 1.6 to 1.20 denial of service vulnerability 
+Subject: xscreensaver: filename command injection in vidwhacker screensaver
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+The "vidwhacker" screensaver in xscreensaver does not properly escape
+filenames of input images, allowing command injection via filenames.
 
-Description:
+The autor of xscreensaver considers this a non-issue.
 
-When reading a specially crafted 7Z archive, Compress can be made to allocate large amounts of memory that finally leads to an out of memory error even for very small inputs. This could be used to mount a denial of service attack against services that use Compress' sevenz package.
+xscreensaver contains a screensaver called "vidwhacker" which uses
+image files as an input and passes them to various command line tools
+for decoding. A user can configure a directory with images.
 
+The filenames are passed to the command line tools without any
+escaping. This allows injecting commands, e.g. via subshells.
 
-This issue is being tracked as COMPRESS-542
+PoC:
+* Create a dir with a file named '$(touch pwn).png'
+* Run xscreensaver-demo, configure the vidwhacker directory to above
+  dir and run preview.
+* File "pwn" gets created.
 
-Mitigation:
+I believe this is a low risk security issue. A possible attack
+scenario would be e.g. someone providing an image collection to a
+victim which is large enough that an unusual filename wouldn't be noted.
 
-Commons Compress users should upgrade to 1.21 or later.
+The author of xscreensaver disagrees and wrote me he considers this a
+non-issue.
 
-With Compress 1.19 we introduced a feature that tries to recover broken 7z archives, which makes it far easier to exploit this weakness. As a result we have disabled the recovery code by default and users need to enable it explicitly. In addition users are able to control the amount of memory SevenZFile may use and we strongly recommend using this feature when trying to recover broken archives.
-
-
-Credit:
-
-This issue was first reported to the project's issue tracker as COMPRESS-542 by Robin Schimpf. Later OSS Fuzz detected ways to exploit this issue which managed to escape the initial attempt to fix it.
-
-References:
-
-https://commons.apache.org/proper/commons-compress/security-reports.html
-
+-- 
+Hanno Böck
+https://hboeck.de/
