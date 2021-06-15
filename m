@@ -1,129 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/07/1
-Message-ID: <xruvR7mNefMgnPSDcQHi8D4x11IH398iLrOkXxNz32ze9DqlhfN5xuyS0DOChRmxszawewy5CWK2O_PCUGQ0eU63mGRAJvqlIXs2kQxmMAc=@trovent.io>
-Date: Thu, 07 Jan 2021 16:45:48 +0000
-From: Stefan Pietsch <s.pietsch@...vent.io>
-To: "fulldisclosure@...lists.org" <fulldisclosure@...lists.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "submissions@...ketstormsecurity.com" <submissions@...ketstormsecurity.com>
-Subject: Trovent Security Advisory 2010-01 / CVE-2020-28208: Rocket.Chat email address enumeration vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/15/1
+Message-ID: <trinity-755bb2d7-d377-4996-952b-6a5cebfff497-1623789198841@3c-app-gmx-bap35>
+Date: Tue, 15 Jun 2021 22:33:18 +0200
+From: Norbert Slusarek <nslusarek@....net>
+To: oss-security@...ts.openwall.com
+Cc: socketcan@...tkopp.net, mkl@...gutronix.de, menschel.p@...teo.de
+Subject: CVE-2021-34693: Infoleak in CAN BCM protocol in Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-# Trovent Security Advisory 2010-01 #
-#####################################
+Hello,
 
+this is an announcement for recently reported infoleaks in the CAN BCM
+networking protocol in the Linux kernel.
 
-Email address enumeration in reset password
-###########################################
+The vulnerability has been assigned CVE-2021-34693 and was found in kernels
+ranging from 2.6.25-rc1 to 5.12.10.
 
+The infoleak can be found in struct bcm_msg_head, which is a structure used to
+describe CAN BCM messages. Due to an automatically introduced padding,
+the structure contains a 4-byte hole which is never initialized. The 4-byte hole
+will contain data from the kernel stack as the structure is allocated on the
+stack. Depending on the architecture, the leak happens at different places
+within the structure.
 
-Overview
-########
+On 64-bit systems,
+the 4-byte hole can be found between struct members count and ival1.
+In this case, kernel addresses can be partially revealed.
 
-Advisory ID: TRSA-2010-01
-Advisory version: 1.0
-Advisory status: Public
-Advisory URL: https://trovent.io/security-advisory-2010-01
-Affected product: Web application Rocket.Chat
-Affected version: <= 3.7.1
-Vendor: Rocket.Chat Technologies Corp., https://rocket.chat
-Credits: Trovent Security GmbH, Nick Decker, Stefan Pietsch
+On 32-bit systems,
+the 4-byte hole can be found between struct members nframes and frames[0].
+In this case, kernel addresses can be fully revealed, resulting in a feasible
+KASLR bypass.
 
+The leak can be reached by an unprivileged user by
+reproducing the following steps:
 
-Detailed description
-####################
+- open and connect a CAN BCM socket
+- sendmsg() with RX_SETUP on socket to setup CAN BCM message receiver
+- message will be received by the message receiver, packed with struct
+  bcm_msg_head and queued for reception
+- recvmsg() to receive the message, finally leaking the uninitialized bytes to
+  userspace
 
-Trovent Security GmbH discovered an email address enumeration vulnerability
-in the password reset function of the chat application Rocket.Chat. This vulnerability lets
-an unauthorized user enumerate registered email addresses on the instance of Rocket.Chat.
+The patch can be found in the link below or in the attachments.
+https://lore.kernel.org/netdev/trinity-87eaea25-2a7d-4aa9-92a5-269b822e5d95-1623609211076@3c-app-gmx-bs04/T/#me01c68ad3b6784f533f1b1509c95943bb5911457
 
-Severity: Medium
-CVSS Score: 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N)
-CVE ID: CVE-2020-28208
-CWE ID: CWE-204
+A short PoC can be found in the link below or in the attachments.
+https://github.com/nrb547/kernel-exploitation/tree/main/cve-2021-34693
 
+Credits go out to Norbert Slusarek and Patrick Menschel.
 
-Proof of concept
-################
+View attachment "0001-fix-infoleak.patch" of type "text/x-patch" (1851 bytes)
 
-Sample HTTP request sent with a registered email address:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-POST /api/v1/method.callAnon/sendForgotPasswordEmail HTTP/1.1
-Host: localhost:3000
-Content-Length: 122
-Accept: */*
-Content-Type: application/json
-
-
-{"message":"{\"msg\":\"method\",\"method\":\"sendForgotPasswordEmail\",\"params\":[\"positive@...t.de\"],\"id\":\"3\"}"}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The server response to a valid email address:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-HTTP/1.1 200 OK
-X-XSS-Protection: 1
-X-Content-Type-Options: nosniff
-X-Frame-Options: sameorigin
-X-Instance-ID: DQDfuEfNLdbZr3zYH
-Cache-Control: no-store
-Pragma: no-cache
-content-type: application/json
-Vary: Accept-Encoding
-Date: Tue, 03 Nov 2020 12:01:25 GMT
-Connection: keep-alive
-Content-Length: 78
-
-{"message":"{\"msg\":\"result\",\"id\":\"3\",\"result\":true}","success":true}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Sample HTTP request sent with a non registered email address:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-POST /api/v1/method.callAnon/sendForgotPasswordEmail HTTP/1.1
-Host: localhost:3000
-Content-Length: 119
-Accept: */*
-Content-Type: application/json
-
-
-{"message":"{\"msg\":\"method\",\"method\":\"sendForgotPasswordEmail\",\"params\":[\"false@...t.de\"],\"id\":\"3\"}"}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The server response to an invalid email address:
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-HTTP/1.1 200 OK
-X-XSS-Protection: 1
-X-Content-Type-Options: nosniff
-X-Frame-Options: sameorigin
-X-Instance-ID: DQDfuEfNLdbZr3zYH
-Cache-Control: no-store
-Pragma: no-cache
-content-type: application/json
-Vary: Accept-Encoding
-Date: Tue, 03 Nov 2020 12:03:08 GMT
-Connection: keep-alive
-Content-Length: 79
-
-{"message":"{\"msg\":\"result\",\"id\":\"3\",\"result\":false}","success":true}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-Solution / Workaround
-#####################
-
-Ensure the application returns consistent generic server responses independent
-of the email address entered during the password reset process.
-
-
-History
-#######
-
-2020-10-27: Vulnerability found
-2020-11-03: Advisory created and CVE ID requested
-2020-11-06: Vendor contacted and informed about planned disclosure date
-2020-11-06: Vendor confirmed vulnerability, working on a fix
-2021-01-07: Advisory published
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (856 bytes)
+View attachment "poc.c" of type "text/plain" (1543 bytes)
