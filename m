@@ -1,68 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/20/1
-Message-ID: <CAJfpegutjX3oaJzBWdr1Ra2zNS2wm=2W4DoWV=PSMd-JVZ8nGQ@mail.gmail.com>
-Date: Wed, 20 Oct 2021 13:37:06 +0200
-From: Miklos Szeredi <miklos@...redi.hu>
-To: Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
-Cc: oss-security@...ts.openwall.com, linux-fsdevel@...r.kernel.org,  overlayfs <linux-unionfs@...r.kernel.org>, Alon Zahavi <Alon.Zahavi@...erark.com>,  Vegard Nossum <vegard.nossum@...cle.com>, Nir Chako <Nir.Chako@...erark.com>,  Alon Zahavi <zahavi.alon@...il.com>
-Subject: Re: CVE-2021-3847: OverlayFS - Potential Privilege Escalation using overlays copy_up
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/16/3
+Message-Id: <F09E188B-8CA8-4E1F-B7E3-714E5A04ACB2@beckweb.net>
+Date: Wed, 16 Jun 2021 15:32:20 +0200
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 19 Oct 2021 at 18:35, Thadeu Lima de Souza Cascardo
-<cascardo@...onical.com> wrote:
->
-> On Tue, Oct 19, 2021 at 05:23:27PM +0200, Miklos Szeredi wrote:
-> > On Thu, Oct 14, 2021 at 06:30:53PM +0000, Alon Zahavi wrote:
-> > >
-> > > After disclosing the issue with the linux-distros mailing list, I am reporting the security issue publicly to here.
-> > > There is no patch available and may not be available for a long time because the kernel can’t enforce the mitigation proposed, as that would be a layering violation and could also possibly cause a regression.
-> > > This vulnerability was attached with CVE-2021-3847.
-> > > Here is the report that was initially sent:
-> > >
-> > > ## Bug Class
-> > > Escalation of privileges - Bypassing the security extended attribute attachment restrictions (in order to modify the security.capability xattr, a process will need CAP_SYS_ADMIN or CAP_SETFCAP).
-> > > # Technical Details
-> > > ## Summary:
-> > > An attacker with a low-privileged user on a Linux machine with an overlay mount which has a file capability in one of its layers may escalate his privileges up to root when copying a capable file from a nosuid mount into another mount.
-> > > ## In details:
-> > > If there is an overlay mount that one of its lower layers contains a file with capabilities and in case that the lower layer is a nosuid mount (which means the file capabilities are being ignored at execution), an attacker with low-privileges user can touch the file, which causes the overlayFS driver to copy_up the file with its capabilities into the upper layer. That way the attacker can now execute the file with the file's capabilities, thus escalating its privileges.
-> >
-> > I think this is a misunderstanding about how overlayfs operates.  Mounting
-> > overlayfs is effectively a just-in-time version of "cp -a lowerdir upperdir".
-> > In other words if the admin creates an overlay where the lower layer is
-> > untrusted and the upper layer is trusted, then that act itself is the
-> > privilege escalation.
-> >
-> > This is more formally documented in "Documentation/filesystems/overlayfs.rst"
-> > in the "Permission model" section.
-> >
-> > If this model is not clear, then maybe it needs to be spelled out more
-> > explicitly.  Perhaps even a warning message could be added to the kernel logs
-> > in case the lower mount is "nosuid".  But IMO erroring out on the copy-up or
-> > skipping copy up of certain attributes would make the cure worse than the
-> > disease.
->
-> Should we fail (and log it) when the lower mount and upper mount have different
-> suid settings, and require a force option to be used?
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-"cp -a" doesn't fail if used to copy from a nosuid mount to a suid
-mount, right?  Should it?
+The following releases contain fixes for security vulnerabilities:
 
-I understand the psychology behind this: people think copy-up is done
-by the current (unprivileged) user, because it's triggered by the
-current user.   But copy up isn't done by the current user, it's done
-by the mounting user (i.e .with the privileges of the mounting task).
+* Scriptler Plugin 3.2 and 3.3
 
-The reason for this is that in many cases copy up *can not* be
-performed by the current task.  Just think of the case where e.g. root
-owned parent directory needs to be copied up before the user writable
-file is copied up.
 
-This means that it's the responsibility of the mounting user to ensure
-that copy-up does not compromise security, since the current
-(unprivileged) user will be able to *trigger* operations done with the
-privileges of the mounting user, such as the scenario described in
-this CVE.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2021-06-16/
 
-Thanks,
-Miklos
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-2224 / CVE-2021-21667
+Scriptler Plugin 3.2 and earlier does not escape parameter names shown in
+job configuration forms.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Scriptler/Configure permission.
+
+
+SECURITY-2390 / CVE-2021-21668
+Scriptler Plugin 3.1 and earlier does not escape script content.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Scriptler/Configure permission.
+
+
