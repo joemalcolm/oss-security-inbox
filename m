@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1628" "Tuesday" "19" "July" "2016" "14:51:19" "+0200" "Sebastian Krahmer" "krahmer@suse.com" "<20160719125119.GA7146@suse.de>" "43" "Re: [oss-security] subuid security patches for shadow package" nil nil nil "7" "2016071912:51:19" "[oss-security] subuid security patches for shadow package" (number mark "U       krahmer@suse Jul 19   43/1628  " thread-indent "\"Re: [oss-security] subuid security patches for shadow package\"\n") "<20160719093915.GA29047@suse.de>" ("<20160719093915.GA29047@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["428" "Wednesday" "16" "June" "2021" "10:49:44" "+0100" "Colm O hEigeartaigh" "coheigea@apache.org" nil "10" "[oss-security] CVE-2021-30468: Apache CXF Denial of service vulnerability in parsing JSON via JsonMapObjectReaderWriter" nil nil nil "6" nil nil (number mark "U       coheigea@apa Jun 16   10/428   " thread-indent "\"[oss-security] CVE-2021-30468: Apache CXF Denial of service vulnerability in parsing JSON via JsonMapObjectReaderWriter\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-30468: Apache CXF Denial of service vulnerability in parsing JSON via JsonMapObjectReaderWriter" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28043 invoked by uid 550); 19 Jul 2016 12:51:32 -0000
+Received: (qmail 8133 invoked by uid 550); 16 Jun 2021 11:29:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,64 +12,29 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28022 invoked from network); 19 Jul 2016 12:51:31 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Tue, 19 Jul 2016 14:51:19 +0200
-From: Sebastian Krahmer <krahmer@suse.com>
-To: oss-security@lists.openwall.com
-Cc: ebiederm@xmission.com
-Message-ID: <20160719125119.GA7146@suse.de>
-References: <20160719093915.GA29047@suse.de>
+Received: (qmail 11653 invoked from network); 16 Jun 2021 09:50:12 -0000
+X-Gm-Message-State: AOAM533VngNofKd5Xr/U39X6H0TvD499zZsy87OcLJcbc2MAUcxEqsMJ
+	o/0+QoeRe86bRvgRKp7+ycdbdKl8w+JBFwql9mE=
+X-Google-Smtp-Source: ABdhPJyXhAabA8laPBGMPywyiJqnyEO+lCTo4yDnzFy9cpdctqKMS15njgTUldbtMwXUUMGlgLxIUGa9jUsyZBNpkG8=
+X-Received: by 2002:adf:ed91:: with SMTP id c17mr2681802wro.146.1623836995256;
+ Wed, 16 Jun 2021 02:49:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20160719093915.GA29047@suse.de>
-Organization: SUSE Linux GmbH, GF: Felix =?utf-8?Q?Imend?=
- =?utf-8?Q?=F6rffer?= =?utf-8?Q?=2C?= Jane Smithard, Graham Norton, HRB 21284
- (AG Nuernberg)
-User-Agent: Outlook
-Subject: Re: [oss-security] subuid security patches for shadow package
+From: Colm O hEigeartaigh <coheigea@apache.org>
+Date: Wed, 16 Jun 2021 10:49:44 +0100
+X-Gmail-Original-Message-ID: <CAB8XdGAOHxx1sk1-RpZyJtvXiZ7sSKKN3aRCnUTLwXBuraAWGw@mail.gmail.com>
+Message-ID: <CAB8XdGAOHxx1sk1-RpZyJtvXiZ7sSKKN3aRCnUTLwXBuraAWGw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2021-30468: Apache CXF Denial of service vulnerability in parsing
+ JSON via JsonMapObjectReaderWriter
 
-On Tue, Jul 19, 2016 at 11:39:15AM +0200, Sebastian Krahmer wrote:
-> Hi
-> 
-> The shadow package contains newuidmap and newgidmap suid
-> binaries in order to allow users to take advantage of the
-> userns feature of uid-mappings.
-> 
-> I added patches here:
-> 
-> https://bugzilla.suse.com/show_bug.cgi?id=979282
-> 
-> they consist of:
-> 
-> 1) Removing getlogin() to find out about users.
->    It relies on utmp, which is not a trusted base of info (group writable).
-> 
-> 2) Cleaning up UID retrieval and computation. The 'long long' code was
->    totally unclear to me, as the numbers are converted to ulong right
->    afterwards anyway. Additionally there was a *int overflow*, which can be
->    tested via 'newuidmap $$ 0 10000 -1' (given that 10000 is listed as allowed)
->    which produces no error but tries to write large "count" values to the uid_map
->    file. Kernel may check for overflows itself, but it should not be allowed
->    by a suid binary to be written in the first place.
+A vulnerability in the JsonMapObjectReaderWriter of Apache CXF allows
+an attacker to submit malformed JSON to a web service, which results
+in the thread getting stuck in an infinite loop, consuming CPU
+indefinitely.
 
-After checking some kernels, it looks like this int wrap is exploitable as a LPE,
-as kernel is using 32bit uid's that are truncated from unsigned longs (64bit on x64)
-as returned by simple_strtoul() [map_write()]. So newuidmap and kernel have an entire
-different view on the upper and lower bounds, making newuidmap overflow (and pass)
-and still being in bounds inside the kernel.
+This issue affects Apache CXF versions prior to 3.4.4; Apache CXF
+versions prior to 3.3.11.
 
-Maybe it would be wise to align integer widths of kernel and the userspace
-tools.
-
-So everyone shipping newuidmap as mode 04755 should fix it. :)
-
-Sebastian
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@suse.com - SuSE Security Team
-
+For more information please refer to the CXF security advisories page:
+http://cxf.apache.org/security-advisories.html
