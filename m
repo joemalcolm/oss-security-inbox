@@ -1,63 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/08/3
-Message-ID: <20211008210821.GA2660@openwall.com>
-Date: Fri, 8 Oct 2021 23:08:21 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/16/1
+Message-ID: <CAKpcJVYTkZzBaWmt_fLqLw4BNmXuXGzCSvLe9YOB-4sew8w_sQ@mail.gmail.com>
+Date: Tue, 15 Jun 2021 22:50:07 -0400
+From: Robert Middleton <rmiddleton@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-42013: Path Traversal and Remote Code Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)
+Subject: CVE-2020-9493: Apache Chainsaw: Java deserialization in Chainsaw
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct 08, 2021 at 08:37:33PM +0200, Yann Ylavic wrote:
-> On Fri, Oct 8, 2021 at 8:53 AM Roman Medina-Heigl Hernandez
-> <roman@...labs.com> wrote:
-> >
-> > I posted RCE exploit for this (it works for both CVEs: 41773 & 42013)
-> > and some other details regarding requirements / exploitability, which
-> > you may find useful at:
-> >
-> > https://twitter.com/roman_soft/status/1446252280597078024
-> 
-> Thanks, that's fair analysis.
+Reply-to: general@...ging.apache.org
 
-Yann is probably referring to the full tweet thread by Roman, not just
-the one tweet that Roman posted in here.  Let me correct that:
+Description:
 
----
-Román Medina-Heigl Hernández
-@roman_soft
+A deserialization flaw was found in Apache Chainsaw versions prior to
+2.1.0 which could lead to malicious code execution.
 
-RCE exploit both for Apache 2.4.49 (CVE-2021-41773) and 2.4.50 (CVE-2021-42013):
-root@...06:~# curl 'http://192.168.0.191/cgi-bin/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/bin/sh' --data 'echo Content-Type: text/plain; echo; id'
-uid=1(daemon) gid=1(daemon) groups=1(daemon)
+Mitigation:
 
-Requirements: 1/ mod_cgi enabled (not default but easy) AND 2/ target
-binary should be +x (default for /bin/sh) AND 3/ apache permissions
-granted for /bin or / (not default and difficult/unrealistic)
+Don't configure Chainsaw to read serialized log events.  Use a
+different receiver, such as XMLSocketReceiver
 
-So IMHO only "special" setups will be vulnerable to this RCE. Same
-happens for the "arbitrary file read" exploits you have seen in last few
-days because all of them need requirement #3
+Credit:
 
-Both CVEs are indeed almost the same path-traversal vulnerability (2nd
-one is the uncomplete fix for 1st one).
-
-Path traversal only work from a mapped URI (e.g. via "Alias" or
-"ScriptAlias" Apache directives). DocumentRoot only is not sufficient.
-
-"/cgi-bin/" is mapped by default (ScriptAlias) so that's why it's being
-used before the path traversal string. Besides, ScriptAlias marks as
-Exec (for Apache) all the contents for the given directory (regardless
-the file extensions).
-
-So (if mod_cgi is enabled) Apache will run our target
-(cgi-bin/../../../../../bin/sh) instead of just reading it.
-
-Perhaps the more realistic (ab)use-case for this vuln could be leaking
-CGI sources on a cgi-enabled web-server. But you'd need to find a
-non-executable mapped URI (via Alias) and then craft a payload similar
-to: aliaseddir/../../../../../usr/local/apache2/cgi-bin/cgitobeleaked
-
-End of fun :-)
----
-
-Alexander
+This issue was reported by @kingkk
