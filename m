@@ -1,64 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/05/7
-Message-ID: <YB12hcO6rarPbHg8@eldamar.lan>
-Date: Fri, 5 Feb 2021 17:47:01 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/17/1
+Message-ID: <CACsGmeQW_WKZMtCKEEXzNdxE2QKOGX_88U7-dEScg4cL93uvUg@mail.gmail.com>
+Date: Thu, 17 Jun 2021 17:28:01 +0100
+From: Andrew Zayine <scholarshipchile@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-20226 kernel: use-after-free in io_uring feature
+Subject: New Open-Source Forensic Tool for SQLite Data Recovery
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi All,
 
-On Fri, Feb 05, 2021 at 08:27:57PM +0530, Rohit Keshri wrote:
-> Hello Team,
-> 
-> A use-after-free flaw was found in the io_uring in Linux kernel, where a
-> local attacker with a user privilege could cause a denial of service
-> problem on the system
-> 
-> The issue results from the lack of validating the existence of an object
-> prior to performing operations on the object by not incrementing the file
-> reference counter while in use.
-> 
-> The highest threat from this vulnerability is to data integrity,
-> confidentiality and system availability.
-> 
-> 
-> 'CVE-2021-20226' was assigned by Red Hat.
-> 
-> This issue was reported by Ryota Shiga of Flatt Security Team.
-> 
-> 
-> Reference:
-> 
-> https://www.zerodayinitiative.com/advisories/ZDI-21-001/
+As an editorial assistant in the International Journal of Cyber
+Forensics and Advanced Threat Investigations (ISSN: 2753-9997), I
+would like to advertise a new open-source tool presented recently in
+the journal.
 
-Can you point to the upstream fixes for this issue? The above
-reference claims it to be fixed in 5.10.2 (but I guess this is just
-the version where it was re-verified to be fixed). The timeline would
-indicate that the issue would be fixed earlier (and there seem to be
-no io_uring changes between 5.10.1 and 5.10.2).
+(FQLite) is a tool to find and restore deleted records in SQLite
+databases. It, therefore, examines the database for entries marked as
+deleted. Those entries can be recovered and displayed. It is written
+with the Java programming language. The program can operate in two
+different modes. It can be started from the command line (CLI mode). A
+simple graphical user interface is also supported (GUI mode).
 
-It was reported on 2020-07-17 to the vendor, as the maximum embargo
-time would be 7 days if this was via security@k.o does this means that
-it was possibly fixed somehwere already around the 5.9-rc1 release?
+The program is able to search an SQLite database file for regular as
+well as deleted records.
 
-The Red Hat report has a bit more details:
+Official Project Webpage
+---------------------------------
+Check out the latest binary version (as a runnable jar-Archive) from
+the official project homepage:
+https://www.staff.hs-mittweida.de/~pawlaszc/fqlite/
 
-A use-after-free flaw was found in io_grab_files in fs/io_uring.c in
-io_uring I/O access. This flaw could allow a local attacker with a
-user privilege to crash the system at device IORING_OP_CLOSE operation
-where a file reference counter was not incremented while in use. This
-vulnerability could even lead to a kernel information leak problem.
+Technical Background
+------------------------------------
+On overview article highlighting the technical background of FQLite
+can be retrieved from
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1873476
+Pawlaszczyk, D., & Hummert, C. (2021). Making the Invisible Visible
+–Techniques for Recovering Deleted SQLite Data Records. International
+Journal of Cyber Forensics and Advanced Threat Investigations, 1(1-3),
+27-41. DOI: https://doi.org/10.46386/ijcfati.v1i1-3.17
 
-Is the fix included thus in the merge from
+Prerequisites
+------------------
+To run the tool you need at least a Java Runtime Environment 1.8 or higher.
 
-https://git.kernel.org/linus/cdc8fcb49905c0b67e355e027cb462ee168ffaa3
-(v5.9-rc1)?
+Example Usage
+----------------------
+To run the FQLite in GUI mode the executable jar can normally be
+started with a double-click on the jar-archive file. If this does not
+work, since javaw is not linked correctly to .jar files, you can use
+the command line as well:
 
-Many thanks in advance!
+$>java -jar fqlite.jar
 
-Regards,
-Salvatore
+To run the FQLite from the command line you can use the following command:
+
+$>java -cp fqlite.jar fqlite.base.MAIN <database.db>
+
+Licence and Author
+--------------------------
+Author: Dirk Pawlaszczyk pawlaszc@...mittweida.de
+
+FQLite for SQLite is bi-licensed under the Mozilla Public License
+Version 2, as well as the GNU General Public License Version 3 or
+later.
+
+You can modify or redistribute it under the conditions of these licenses.
+
+Best Regards
+Andrew Zayine, Ph.D., CISSP, CISM, CRISC, CDPSE, PMP
