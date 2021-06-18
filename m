@@ -1,48 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/16/1
-Message-ID: <YFAWyCjSHiyfJeE9@fullerene.field.pennock-tech.net>
-Date: Mon, 15 Mar 2021 22:24:08 -0400
-From: Phil Pennock <oss-security-phil@...dhuis.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/18/1
+Message-Id: <42A78409-118C-4CF3-B50F-3AB2FC614CCB@beckweb.net>
+Date: Fri, 18 Jun 2021 11:16:07 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Cc: Phil Pennock <pdp@...adia.com>
-Subject: [CVE-2020-28466][CVE-2021-3127] NATS.io vulnerabilities
+Subject: Vulnerability in Jenkins Generic Webhook Trigger Plugin
 Content-Type: text/plain; charset=utf-8
 
-Folks,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-Two new CVEs for the NATS project for issues fixed with the
-2.2.0 release.  The full text of the advisories should be attached.
-These, and other advisories, can be found at
-<https://advisories.nats.io/>.
+The following releases contain fixes for security vulnerabilities:
 
- * CVE-2020-28466
-   + import loops between accounts, expressed in the account JWT, could
-     DoS the server
-   + this was fixed in public git some time ago without initially
-     thinking of the security impact, this was the first
-     release since then
-   + realistically, the current situation is that if you have untrusted
-     third parties with control over their account JWTs, then while
-     we'll hurry security releases for severe flaws (compromise,
-     disclosure), for DoS protection folks need to follow closer to git
-     mainline
+* Generic Webhook Trigger Plugin 1.74
 
- * CVE-2021-3127
-   + this one is far more serious: information disclosure between
-     accounts
-   + something which should have been an error was a disregarded
-     warning, letting people reuse binding tokens to bypass access
-     controls on data exports from an account because the binding was
-     not enforced
-   + the bug is in the JWT library, the current NATS server has the fix
-     in as as a dependency; the advisory includes a Python script which
-     can be pointed at your account server's account pack URL, or a pack
-     on local disk, to audit all the accounts to find instances of
-     someone exploiting this
 
-Regards,
--Phil Pennock
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2021-06-18/
 
-View attachment "CVE-2020-28466.txt" of type "text/plain" (1969 bytes)
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-View attachment "CVE-2021-3127.txt" of type "text/plain" (7627 bytes)
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-2330 / CVE-2021-21669
+Generic Webhook Trigger Plugin 1.72 and earlier does not configure its XML
+parser to prevent XML external entity (XXE) attacks.
+
+This allows attackers with the ability to call webhooks configured to
+extract parameters using XPath to have Jenkins parse a crafted XML request
+body that uses external entities for extraction of secrets from the Jenkins
+controller or server-side request forgery.
+
+
