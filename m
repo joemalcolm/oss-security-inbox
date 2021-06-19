@@ -1,54 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/19/8
-Message-ID: <20210319144311.GA22152@grsecurity.net>
-Date: Fri, 19 Mar 2021 10:43:11 -0400
-From: Brad Spengler <spender@...ecurity.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/19/1
+Message-ID: <trinity-2ae31df0-82cc-4381-9124-4b24e0bdeb45-1624113653558@3c-app-gmx-bs01>
+Date: Sat, 19 Jun 2021 16:40:53 +0200
+From: Norbert Slusarek <nslusarek@....net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS
+Cc: Oliver Hartkopp <socketcan@...tkopp.net>, Marc Kleine-Budde <mkl@...gutronix.de>, Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
+Subject: CVE-2021-3609: Race condition in net/can/bcm.c leads to local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Hi Sasha,
+Hello,
 
-I'm sorry, but I can't let this email demonstrating a complete lack of
-self-awareness go without comment.
+this is an announcement for the recently reported bug (CVE-2021-3609)
+in the CAN BCM networking protocol in the Linux kernel ranging from
+version 2.6.25 to mainline 5.13-rc6.
+The vulnerability is a race condition in net/can/bcm.c allowing for local
+privilege escalation to root. The issue was initially reported by syzbot and
+proven to be exploitable by Norbert Slusarek.
 
-> I suppose we can't *require* them, but it's a matter of curtesy, right?
-> They already have that information, and instead of making a bunch of
-> other people do the same job they could just share the information to
-> begin with.
+The CAN BCM networking protocol allows to register a CAN message receiver for a
+specified socket. The function bcm_rx_handler() is run for incoming CAN messages.
+Simultaneously to running this function, the socket can be closed and
+bcm_release() will be called. Inside bcm_release(), struct bcm_op and
+struct bcm_sock are freed while bcm_rx_handler() is still running,
+finally leading to multiple use-after-free's.
 
-I'm seriously baffled that you could type those words out with a straight
-face.  As we know happens often, including with the recent iSCSI
-vulnerabilities, upstream has intentionally omitted CVE information
-from kernel commit messages -- in other words:
-"they already have the information, and instead of making a bunch of
-other people do the same job they could just share the information to
-begin with."
+Reproduction
+------------
 
-Do none of you understand at all that the problems that exist are entirely
-of your own creation?  Neither you nor Greg ever come to this list with
-announcements of your own.  That you have to endure a tiny fraction of what
-the rest of the world is inflicted with from your intentional actions --
-sorry, you are not the victims here, and it's completely ridiculous to
-paint yourselves as one.
+- setup unprivileged user namespace
+- setup vcan network interface
+- open two CAN BCM sockets and connect each to the interface
+- call sendmsg() on socket 1 with RX_SETUP to setup CAN receiver
+- call sendmsg() on socket 2 to send message to socket 1
 
-Greg started his tirade yesterday with a false assumption that the stable
-kernels had already fixed the one issue August of last year.  That was not
-true (stable kernels < 5.7 were all missing the fix).  Then he claimed SuSE
-didn't bother to backport the fix.  That was not true:
-https://github.com/SUSE/kernel/commit/b93bddd7ae24aa8ebe48d13dcff4011a34861482
+Here comes the race condition:
 
-If you guys want to complain about bad information, leaving it out of useless
-snarky replies would be a good start.
+- bcm_rx_handler() is run automatically for socket 1 to receive the message
+- call close() -> bcm_release() on socket 1 to free struct bcm_op and struct bcm_sock
 
-> Exactly, they already must have this information, which is where some of
-> the frustration around these notifications comes from: it reads as
-> nothing more than a lip service.
+=> bcm_rx_handler() is still running and will access struct bcm_op and struct
+   bcm_sock which were previously freed
 
-You're assuming too much -- it's quite clearly someone new at RH doing these
-recent advisories.
+Exploitation
+------------
 
-Thanks,
--Brad
+My exploitation attempt concentrates on kernels with version >= 5.4-rc1
+since commit bf74aa86e111 ("can: bcm: switch timer to HRTIMER_MODE_SOFT and
+remove hrtimer_tasklet"). I didn't investigate into exploiting kernels older
+than 5.4-rc1 which used tasklets, nevertheless exploitation on older kernels
+looks feasible as well. My specific exploitation approach was adjusted to work
+with Ubuntu 20.04.02 LTS but other known distributions could also be targeted.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+More exploitation details can be found at
+
+https://github.com/nrb547/kernel-exploitation/blob/main/cve-2021-3609/cve-2021-3609.md
+
+or in the attachments (plain text and attached image).
+
+Regards,
+Norbert Slusarek
+Download attachment "cve-2021-3609-exploitation" of type "application/octet-stream" (13509 bytes)
