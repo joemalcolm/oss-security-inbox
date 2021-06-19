@@ -1,59 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/26/2
-Message-ID: <9120e36f89c0b082a73fa2dfaf46036d09d6f22e.camel@powerdns.com>
-Date: Mon, 26 Jul 2021 14:47:04 +0200
-From: Peter van Dijk <peter.van.dijk@...erdns.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/19/2
+Message-ID: <YM4Z/IKm2cxFrB8D@mussarela>
+Date: Sat, 19 Jun 2021 13:23:24 -0300
+From: Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: security advisory 2021-01 for PowerDNS Authoritative Server 4.5.0
+Cc: Oliver Hartkopp <socketcan@...tkopp.net>, Marc Kleine-Budde <mkl@...gutronix.de>, Norbert Slusarek <nslusarek@....net>
+Subject: Re: CVE-2021-3609: Race condition in net/can/bcm.c leads to local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Sat, Jun 19, 2021 at 04:40:53PM +0200, Norbert Slusarek wrote:
+> Hello,
+> 
+> this is an announcement for the recently reported bug (CVE-2021-3609)
+> in the CAN BCM networking protocol in the Linux kernel ranging from
+> version 2.6.25 to mainline 5.13-rc6.
+> The vulnerability is a race condition in net/can/bcm.c allowing for local
+> privilege escalation to root. The issue was initially reported by syzbot and
+> proven to be exploitable by Norbert Slusarek.
+> 
+> The CAN BCM networking protocol allows to register a CAN message receiver for a
+> specified socket. The function bcm_rx_handler() is run for incoming CAN messages.
+> Simultaneously to running this function, the socket can be closed and
+> bcm_release() will be called. Inside bcm_release(), struct bcm_op and
+> struct bcm_sock are freed while bcm_rx_handler() is still running,
+> finally leading to multiple use-after-free's.
+> 
+> Reproduction
+> ------------
+> 
+> - setup unprivileged user namespace
+> - setup vcan network interface
+> - open two CAN BCM sockets and connect each to the interface
+> - call sendmsg() on socket 1 with RX_SETUP to setup CAN receiver
+> - call sendmsg() on socket 2 to send message to socket 1
+> 
+> Here comes the race condition:
+> 
+> - bcm_rx_handler() is run automatically for socket 1 to receive the message
+> - call close() -> bcm_release() on socket 1 to free struct bcm_op and struct bcm_sock
+> 
+> => bcm_rx_handler() is still running and will access struct bcm_op and struct
+>    bcm_sock which were previously freed
+> 
+> Exploitation
+> ------------
+> 
+> My exploitation attempt concentrates on kernels with version >= 5.4-rc1
+> since commit bf74aa86e111 ("can: bcm: switch timer to HRTIMER_MODE_SOFT and
+> remove hrtimer_tasklet"). I didn't investigate into exploiting kernels older
+> than 5.4-rc1 which used tasklets, nevertheless exploitation on older kernels
+> looks feasible as well. My specific exploitation approach was adjusted to work
+> with Ubuntu 20.04.02 LTS but other known distributions could also be targeted.
+> 
+> More exploitation details can be found at
+> 
+> https://github.com/nrb547/kernel-exploitation/blob/main/cve-2021-3609/cve-2021-3609.md
+> 
+> or in the attachments (plain text and attached image).
+> 
+> Regards,
+> Norbert Slusarek
 
-today we have released PowerDNS Authoritative Server 4.5.1, fixing a
-remotely triggered crash present in version 4.5.0. No other versions
-are affected.
 
-Tarballs and signatures are available at 
-https://downloads.powerdns.com/releases/, and a single patch is
-available at https://downloads.powerdns.com/patches/2021-01/. However,
-4.5.1 contains no other changes.
+And here is the proposed fix:
 
-Please find the full text of the advisory below.
+https://lore.kernel.org/netdev/20210619161813.2098382-1-cascardo@canonical.com/T/#u
 
-PowerDNS Security Advisory 2021-01: Specific query crashes
-Authoritative Server
-
--  CVE: CVE-2021-36754
--  Date: July 26th, 2021
--  Affects: PowerDNS Authoritative version 4.5.0
--  Not affected: 4.4.x and below, 4.5.1
--  Severity: High
--  Impact: Denial of service
--  Exploit: This problem can be triggered via a specific query packet
--  Risk of system compromise: None
--  Solution: Upgrade to 4.5.1, or filter queries in ``dnsdist``
-
-PowerDNS Authoritative Server 4.5.0 (and the alpha/beta/rc1/rc2
-prereleases that came before it) will crash with an uncaught out of
-bounds exception if it receives a query with QTYPE 65535. The offending
-code was not present in earlier versions, and they are not affected.
-
-Users that cannot upgrade immediately, but do have dnsdist in place,
-can use dnsdist to filter such queries before they do harm, with
-something like ``addAction(QTypeRule(65535),
-RCodeAction(DNSRCode.REFUSED))``.
-
-When the PowerDNS Authoritative Server is run inside a supervisor like
-supervisord or systemd, an uncaught exception crash will lead to an
-automatic restart, limiting the impact to a somewhat degraded service.
-
-We would like to thank Reinier Schoof and Robin Geuze of TransIP for
-noticing crashes in production, immediately letting us know, and
-helping us figure out what was happening.
-
-Kind regards,
--- 
-Peter van Dijk
-PowerDNS.COM BV - https://www.powerdns.com/
-
-Download attachment "signature.asc" of type "application/pgp-signature" (915 bytes)
+Regards.
+Thadeu Cascardo.
