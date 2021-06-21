@@ -1,40 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/23/5
-Message-ID: <CAMk_BejpF0w9DGjHXTiqhsvSOeWK=MsggpD4RDhhfSzYPbYX_w@mail.gmail.com>
-Date: Fri, 23 Apr 2021 10:21:24 -0400
-From: Brian Fox <brianf@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/21/2
+Message-ID: <262c7ab7f2cbc14ba3fe9deb29d173067918b289.camel@apache.org>
+Date: Mon, 21 Jun 2021 08:37:01 -0700
+From: Brennan Ashton <btashton@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-26291: Apache Maven: block repositories using http by default
+Subject: CVE-2021-26461: Apache NuttX (incubating): malloc, realloc and memalign implementations are vulnerable to integer wrap-arounds
 Content-Type: text/plain; charset=utf-8
-
-Subject: CVE-2021-26291: Apache Maven: block repositories using http by default
 
 Description:
 
-Apache Maven will follow repositories that are defined in a
-dependency’s Project Object Model (pom) which may be surprising to
-some users, resulting in potential risk if a malicious actor takes
-over that repository or is able to insert themselves into a position
-to pretend to be that repository. Maven is changing the default
-behavior in 3.8.1+ to no longer follow http (non-SSL) repository
-references by default. More details available in the referenced urls.
+Apache Nuttx (incubating) versions prior to 10.1.0 are vulnerable to
+integer wrap-around in functions malloc, realloc and memalign. This
+improper memory assignment can lead to arbitrary memory allocation,
+resulting in unexpected behavior such as a crash or a remote code
+injection/execution. 
 
-If you are currently using a repository manager to govern the
-repositories used by your builds, you are unaffected by the risks
-present in the legacy behavior, and are unaffected by this
-vulnerability and change to default behavior. See this link for more
-information about repository management:
-https://maven.apache.org/repository-management.html
-
-This issue is being tracked as MNG-7118
+This issue is also known as BadAlloc
 
 Credit:
 
-Apache Maven would like to thank Jonathan Leitschuh for highlighting
-the need for this change.
+Apache NuttX would like to thank Omri Ben-Bassat of Section 52 at Azure
+Defender for IoT of Microsoft Corp for bringing this issue to our
+attention.
 
-References:
+--Brennan Ashton
 
-https://lists.apache.org/thread.html/r9a027668558264c4897633e66bcb7784099fdec9f9b22c38c2442f00%40%3Cusers.maven.apache.org%3E
-
-ASF-EmailInstructionsChanges
