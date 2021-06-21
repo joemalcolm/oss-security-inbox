@@ -1,41 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/28/1
-Message-ID: <173ce2fa-fe90-4e00-e5a3-1f3163dfe13d@hartkopp.net>
-Date: Fri, 28 May 2021 17:41:03 +0200
-From: Oliver Hartkopp <socketcan@...tkopp.net>
-To: Greg Kroah-Hartman <gregkh@...uxfoundation.org>
-Cc: mkl@...gutronix.de, alex.popov@...ux.com, seth.arnold@...onical.com, steve.beattie@...onical.com, cascardo@...onical.com, oss-security@...ts.openwall.com, Norbert Slusarek <nslusarek@....net>, "David S. Miller" <davem@...emloft.net>, Jakub Kicinski <kuba@...nel.org>, security@...nel.org
-Subject: Re: Linux kernel: net/can/isotp: race condition leads to local privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/21/1
+Message-ID: <CAHMfzJkhZ01FG62sfMdXayK_NwD3g=5NcpGmg+-PVZLBpjJ9Fw@mail.gmail.com>
+Date: Mon, 21 Jun 2021 17:47:27 +0300
+From: Adam Morrison <mad@...tau.ac.il>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2021-33624] Linux kernel BPF protection against speculative execution attacks can be bypassed to read arbitrary kernel memory
 Content-Type: text/plain; charset=utf-8
 
-Hello Greg,
+The Linux kernel BPF subsystem's protection against speculative
+execution attacks (Spectre mitigation) can be bypassed.
 
-this patch ("can: isotp: prevent race between isotp_bind() and 
-isotp_setsockopt()") has hit Linus' tree ~36h ago:
+On affected systems, an unprivileged BPF program can exploit this
+vulnerability to leak the contents of arbitrary kernel memory (and
+therefore, of all physical memory) via a side-channel.
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/net/can?id=2b17c400aeb44daf041627722581ade527bb3c1d
+The issue is that when the kernel's BPF verifier enumerates the
+possible execution paths of a BPF program, it skips any branch
+outcomes that are impossible according to the ISA semantics.
+However, when the BPF program executes, such branch outcomes may be
+mispredicted and so a path could speculatively execute that was
+missed by the verifier.
 
-It has a CVE number and is potentially exploitable - but it was not in 
-the latest batch of stable kernels about ~4h ago.
+For example, when analyzing a memory load instruction, the paths
+inspected by the verifier could use an address register that is always
+in-bounds, and so the instruction is deemed safe. Whereas a path
+missed by the verifier could put an arbitrary attacker-controlled
+scalar into the address register before a branch that mispredicts
+to the load instruction. This can be abused to read and leak the
+contents of any kernel address via a side-channel.
 
-It was obviously not tagged properly for stable kernels but has a fixes-tag:
+Several PoCs of this vulnerability have been shared privately with
+<security@...nel.org> and the BPF maintainers to assist developing
+the fix.
 
-Fixes: 921ca574cd38 ("can: isotp: add SF_BROADCAST support for 
-functional addressing")
+The following patch series (available from the mainline git
+repository) fixes the vulnerability (the 3rd one is the main patch):
 
-which was introduced in 5.11
+* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/?id=d203b0fd863a2261e5d00b97f3d060c4c2a6db71
+* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/?id=fe9a5ca7e370e613a9a75a13008a3845ea759d6e
+* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/?id=9183671af6dbf60a1219371d4ed73e23f43b49db
+* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/?id=973377ffe8148180b2651825b92ae91988141b05
 
-Thanks for taking care!
+Thanks to Piotr Krysiuk for collaborating on this advisory.
 
-Best,
-Oliver
+# Discoverers
 
-On 14.05.21 01:52, Norbert Slusarek wrote:
-> As Salvatore already mentioned, the assigned CVE ID is CVE-2021-32606.
-> The exploitation details are published in an article available on github
-> via this link:
-> https://git.io/JsYYB 
-> <https://deref-gmx.net/mail/client/ulc_0Gq1TD4/dereferrer/?redirectUrl=https%3A%2F%2Fgit.io%2FJsYYB>
-> 
-> Regards,
-> Norbert Slusarek
+Ofek Kirzner <ofekkir@...il.com> and Adam Morrison <mad@...tau.ac.il>
+Benedict Schlueter <benedict.schlueter@....de> (independent report)
+Piotr Krysiuk <piotras@...il.com> (independent report)
+
+# References
+
+CVE-2021-33624 (reserved via https://cveform.mitre.org/)
