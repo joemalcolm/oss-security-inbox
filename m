@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1798" "Thursday" "28" "July" "2016" "11:08:30" "-0400" "Daniel J Walsh" "dwalsh@redhat.com" "<bb3afc7b-f1ad-4102-1c47-af1080fe5cff@redhat.com>" "38" "Re: [oss-security] cve request: systemd-machined: information exposure for docker containers" "^Date:" nil nil "7" "2016072815:08:30" "[oss-security] cve request: systemd-machined: information exposure for docker containers" (number mark "        dwalsh@redha Jul 28   38/1798  " thread-indent "\"Re: [oss-security] cve request: systemd-machined: information exposure for docker containers\"\n") "<20160728144249.GB23522@perpetual.pseudorandom.co.uk>" ("<1304293369.8684866.1469539505676.JavaMail.zimbra@redhat.com>" "<20160726192413.2CD1A72E006@smtpvbsrv1.mitre.org>" "<20160727170537.GA3330@motoko>" "<398a8ff1-a2ea-9140-c695-c1969ffc58af@redhat.com>" "<20160727200021.GB3330@motoko>" "<B760F07C-908F-431A-8BCE-A3AE9E93E33F@nccgroup.trust>" "<CAEk6tEx0JRNX9q0k8JH2PNkGJO59WVVMhh4=3DkoQFMNkqY9LA@mail.gmail.com>" "<4b0070a9-e8c3-ac69-a410-2269d9d08b71@redhat.com>" "<20160728144249.GB23522@perpetual.pseudorandom.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2201" "Monday" "21" "June" "2021" "17:47:27" "+0300" "Adam Morrison" "mad@cs.tau.ac.il" nil "45" "[oss-security] [CVE-2021-33624] Linux kernel BPF protection against speculative execution attacks can be bypassed to read arbitrary kernel memory" nil nil nil "6" nil nil (number mark "U       mad@cs.tau.a Jun 21   45/2201  " thread-indent "\"[oss-security] [CVE-2021-33624] Linux kernel BPF protection against speculative execution attacks can be bypassed to read arbitrary kernel memory\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2021-33624] Linux kernel BPF protection against speculative execution attacks can be bypassed to read arbitrary kernel memory" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9667 invoked by uid 550); 28 Jul 2016 15:08:43 -0000
+Received: (qmail 3239 invoked by uid 550); 21 Jun 2021 14:56:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,77 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9646 invoked from network); 28 Jul 2016 15:08:42 -0000
-References: <1304293369.8684866.1469539505676.JavaMail.zimbra@redhat.com>
- <20160726192413.2CD1A72E006@smtpvbsrv1.mitre.org>
- <20160727170537.GA3330@motoko>
- <398a8ff1-a2ea-9140-c695-c1969ffc58af@redhat.com>
- <20160727200021.GB3330@motoko>
- <B760F07C-908F-431A-8BCE-A3AE9E93E33F@nccgroup.trust>
- <CAEk6tEx0JRNX9q0k8JH2PNkGJO59WVVMhh4=3DkoQFMNkqY9LA@mail.gmail.com>
- <4b0070a9-e8c3-ac69-a410-2269d9d08b71@redhat.com>
- <20160728144249.GB23522@perpetual.pseudorandom.co.uk>
-Message-ID: <bb3afc7b-f1ad-4102-1c47-af1080fe5cff@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
-MIME-Version: 1.0
-In-Reply-To: <20160728144249.GB23522@perpetual.pseudorandom.co.uk>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.27]); Thu, 28 Jul 2016 15:08:31 +0000 (UTC)
-Date: Thu, 28 Jul 2016 11:08:30 -0400
-From: Daniel J Walsh <dwalsh@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] cve request: systemd-machined: information
- exposure for docker containers
+Received: (qmail 32206 invoked from network); 21 Jun 2021 14:47:48 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=A/hBA8QdigmJwDK+xAYuDfqr8x0thxMTs6fz02iW2fk=;
+        b=PKpvJ64P2dmi1ntmSLCP+umr5EtqAx2mDEEjzMBNMvgHG+azbrCD6CQ5cS5x90tq66
+         Pgk4fihOD92JLMF3+a9sm18+vCf1YBeJ9eho/o4HBODeEKfVNUmhLems7PHEhv0Jw3vg
+         X2gppzPeFzERzPOuQfkr9aws7MtfiRTaJ3cxrYYTp3iHv4xZlLIpdRkM421atwE92uiU
+         7KGoDFX+QPJkMHZFHs7O/CDYXMnyNSWZ026mdth//GEvOuyGqRQ9vc9FAzNG33W2J2lN
+         hENQntWit5hT/xsakW6UNLM2js4CQHKLMk7cN1q/m8lfEHE+ieAJyp6XsBeaZQ/JYqVN
+         C/Og==
+X-Gm-Message-State: AOAM5330H3FQH9lh1+A/EoJDGy4AaMR3+TiBlLhyTAG5rgPRum6WjXNe
+	dwFThJMnDjLvZY3lUv1704MHhL8DoSn3qA==
+X-Google-Smtp-Source: ABdhPJxYb69S0tHFRBCAntd7tw6uXi5qyHcKnJmTVi4kC1Is88aKWZSTOiOsHBXRK/i9EcDYEj6f5A==
+X-Received: by 2002:a17:906:6847:: with SMTP id a7mr21231845ejs.268.1624286856880;
+        Mon, 21 Jun 2021 07:47:36 -0700 (PDT)
+X-Received: by 2002:a1c:7c12:: with SMTP id x18mr18261940wmc.122.1624286855965;
+ Mon, 21 Jun 2021 07:47:35 -0700 (PDT)
+MIME-Version: 1.0
+From: Adam Morrison <mad@cs.tau.ac.il>
+Date: Mon, 21 Jun 2021 17:47:27 +0300
+X-Gmail-Original-Message-ID: <CAHMfzJkhZ01FG62sfMdXayK_NwD3g=5NcpGmg+-PVZLBpjJ9Fw@mail.gmail.com>
+Message-ID: <CAHMfzJkhZ01FG62sfMdXayK_NwD3g=5NcpGmg+-PVZLBpjJ9Fw@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] [CVE-2021-33624] Linux kernel BPF protection against speculative
+ execution attacks can be bypassed to read arbitrary kernel memory
 
+The Linux kernel BPF subsystem's protection against speculative
+execution attacks (Spectre mitigation) can be bypassed.
 
+On affected systems, an unprivileged BPF program can exploit this
+vulnerability to leak the contents of arbitrary kernel memory (and
+therefore, of all physical memory) via a side-channel.
 
-On 07/28/2016 10:42 AM, Simon McVittie wrote:
-> On Thu, 28 Jul 2016 at 08:34:35 -0400, Daniel J Walsh wrote:
->> Lennart is wrong when he states that this only effects "user"
->> containers, any container that registers with
->> machinectl, will have this information revealed to non privileged user
->> processes.
-> *Which* unprivileged user processes?
->
-> If the unprivileged user processes are not in a container, they can get a
-> significant amount of the same information by reading the host's /proc.
->
-> If the unprivileged user processes are in a container or other confinement
-> that prevents them from looking at the host's /proc, then one of the other
-> things that confinement can/should prevent is unfiltered access to the host
-> system's D-Bus system bus, which is how machinectl talks to systemd-machined.
->
-> Lennart also points out on the systemd bug that the
-> methods in question can be access-controlled (at your
-> own risk, the policy language is horrible) by modifying
-> /etc/dbus-1/system.d/org.freedesktop.machine1.conf. They don't appear to
-> be mediated by /usr/share/polkit-1/actions/org.freedesktop.machine1.policy
-> too, but they could be; that would be an enhancement request for systemd
-> upstream.
->
-> I think the bottom line here is that if the author of a container integration
-> tool chooses to publish information in a central registry (systemd-machined),
-> then they shouldn't be surprised to find the central registry's security model
-> getting applied to that information.
->
->     S
-So we can add documentation to oci-register-machine that if you use it,
-this information
-will not be available to the system.  If you don't want this information
-revealed you can
-uninstall the package, but tools like journalctl -M will no longer work
-for docker/runc containers.
+The issue is that when the kernel's BPF verifier enumerates the
+possible execution paths of a BPF program, it skips any branch
+outcomes that are impossible according to the ISA semantics.
+However, when the BPF program executes, such branch outcomes may be
+mispredicted and so a path could speculatively execute that was
+missed by the verifier.
+
+For example, when analyzing a memory load instruction, the paths
+inspected by the verifier could use an address register that is always
+in-bounds, and so the instruction is deemed safe. Whereas a path
+missed by the verifier could put an arbitrary attacker-controlled
+scalar into the address register before a branch that mispredicts
+to the load instruction. This can be abused to read and leak the
+contents of any kernel address via a side-channel.
+
+Several PoCs of this vulnerability have been shared privately with
+<security@kernel.org> and the BPF maintainers to assist developing
+the fix.
+
+The following patch series (available from the mainline git
+repository) fixes the vulnerability (the 3rd one is the main patch):
+
+* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/?id=d203b0fd863a2261e5d00b97f3d060c4c2a6db71
+* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/?id=fe9a5ca7e370e613a9a75a13008a3845ea759d6e
+* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/?id=9183671af6dbf60a1219371d4ed73e23f43b49db
+* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/?id=973377ffe8148180b2651825b92ae91988141b05
+
+Thanks to Piotr Krysiuk for collaborating on this advisory.
+
+# Discoverers
+
+Ofek Kirzner <ofekkir@gmail.com> and Adam Morrison <mad@cs.tau.ac.il>
+Benedict Schlueter <benedict.schlueter@rub.de> (independent report)
+Piotr Krysiuk <piotras@gmail.com> (independent report)
+
+# References
+
+CVE-2021-33624 (reserved via https://cveform.mitre.org/)
