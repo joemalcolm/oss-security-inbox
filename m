@@ -1,90 +1,144 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/07/9
-Message-ID: <YQ7OO1DgWDwm7vvy@eldamar.lan>
-Date: Sat, 7 Aug 2021 20:17:31 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: Axel Beckert <abe@...ian.org>, 991971@...s.debian.org
-Cc: lynx-dev@...gnu.org, oss-security@...ts.openwall.com, security@...ian.org
-Subject: Re: Bug#991971: [Lynx-dev] bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/25/1
+Message-ID: <001f01d7696d$ca7f4890$5f7dd9b0$@nsfocus.com>
+Date: Fri, 25 Jun 2021 10:57:09 +0800
+From: "Luo Likang" <luolikang@...ocus.com>
+To: <oss-security@...ts.openwall.com>
+Subject: FW: An out-of-bound read/write in fsi driver
 Content-Type: text/plain; charset=utf-8
 
-Hi Axel,
+ 
 
-On Sat, Aug 07, 2021 at 03:51:07AM +0200, Axel Beckert wrote:
-> Hi,
-> 
-> On Fri, Aug 06, 2021 at 05:14:32PM +0000, Thorsten Glaser
-> <tg@...bsd.de> wrote in
-> https://lists.nongnu.org/archive/html/lynx-dev/2021-08/msg00000.html:
-> > this affects both OpenSSL and Debian’s nonGNUtls builds:
-> > 
-> > lynx https://user:pass@...t/
-> > 
-> > … will lead to…
-> > 
-> > SSL error:host(user:pass@...t)!=cert(CN<mainhost>:SAN<DNS=host>:SAN<DNS=otherhost>
-> > 
-> > … for OpenSSL lynx and…
-> > 
-> > SSL error:host(user:pass@...t)!=cert(CN<mainhost>)-Continue? (n)
-> > 
-> > … for nonGNUtls lynx.
-> > 
-> > Obviously, user:pass@ need to be stripped before comparing.
-> 
-> This is more severe than it initially looked like: Due to TLS Server
-> Name Indication (SNI) the hostname as parsed by Lynx (i.e with
-> "user:pass@" included) is sent in _clear_ text over the wire even
-> _before_ I can even said "n" for "no, don't continue to talk with this
-> server" in Lynx's prompt as shown above.
-> 
-> I was able to capture the password given on the commandline in traffic
-> of an TLS handshake using tcpdump and analysing it with Wireshark:
-> 
-> From Wiresharks TLS dissector:
-> 
-> Server Name Indication extension
->     Server Name list length: 28
->     Server Name Type: host_name (0)
->     Server Name length: 25
->     Server Name: user:pass@....example.org
->                  ^^^^^^^^^^
-> 
-> From Wiresharks "Follow TCP stream":
-> 
-> ...........a
-> ....jV.. ......../.......D.&....R.+.,.....	.
-> .../.0...............z.{./.5.A...
-> .....|.}.3.9.E.............2.8.D.......p............$."...user:pass@....example.org......#...
-> ...
-> .................
-> ..............................
-> 
-> (PCAPs available on request. Actually did the test with a local server
-> of mine. But it should be easy to reproduce, be it with any Linux
-> distribution.)
-> 
-> I did this test with Lynx from Debian Experimental (which has the
-> current Lynx upstream release 2.9.0dev.8) as well as with Lynx from
-> Debian 8 Jessie ELTS (which has Lynx 2.8.9dev.1) and both leak the
-> password via SNI. I though assume that older releases of Lynx are
-> probably also affected as well, at least if they or the according
-> crypto libraries support SNI.
-> 
-> But given that the symptoms Thorsten discovered stayed unreported for
-> quite some years, I assume that this use case is a rather seldom one.
-> Nevertheless only trying to use Lynx that way (and seeing it fail)
-> already leaks the used password.
-> 
-> IMHO this nevertheless needs a CVE-ID.
+Because of my mistake, I took a normal bug as a security bug and reported it
+to linux-distros，linux-distros requested me notify oss-security since these
+bugs were deemed to not be a security vulnerability, and no embargo was set.
 
-MITRE did assign CVE-2021-38165. MITRE raised the question: Does
-2.9.0dev.9 (mentioned on the
-https://lynx.invisible-island.net/current/CHANGES.html page) fix the
-entire problem?
-https://www.openwall.com/lists/oss-security/2021/08/07/7 claims that
-credentials appear in the HTTP Host header to an http:// (i.e.,
-non-SSL) website. 
 
-Regards,
-Salvatore
+ 
+
+Because of copy_ from_user has some check, so - 1 does not cause
+cross-border access, and lots of check in fsi_check_access().
+
+ 
+
+The following is the original of my report:
+
+ 
+
+I found an oob read/write bug in function cfam_read/cfam_write of
+drivers/fsi/fsi-core.c
+
+It lack of the check of count and offset.
+
+ 
+
+```
+
+/* Create chardev for userspace access */
+
+       cdev_init(&slave->cdev, &cfam_fops);
+
+- - - -  - - - - - - - - - - - -- - - - - - - - - - - 
+
+static const struct file_operations cfam_fops = {
+
+       .owner           = THIS_MODULE,
+
+       .open             = cfam_open,
+
+       .llseek            = cfam_llseek,
+
+       .read       = cfam_read,
+
+       .write             = cfam_write,
+
+};
+
+```
+
+In userspace, we can open this chardev can invoke read to use cfam_read.
+
+ 
+
+cfam_read
+
+```
+
+static ssize_t cfam_read(struct file *filep, char __user *buf, size_t count,
+
+                     loff_t *offset)
+
+{
+
+       struct fsi_slave *slave = filep->private_data;
+
+       size_t total_len, read_len;
+
+       loff_t off = *offset;
+
+       ssize_t rc;
+
+ 
+
+       if (off < 0)
+
+              return -EINVAL;
+
+ 
+
+       if (off > 0xffffffff || count > 0xffffffff || off + count >
+0xffffffff)//[0]
+
+              return -EINVAL;
+
+ 
+
+       for (total_len = 0; total_len < count; total_len += read_len) {
+
+              __be32 data;
+
+ 
+
+              read_len = min_t(size_t, count, 4); //[1]
+
+              read_len -= off & 0x3;          //[2]
+
+ 
+
+              rc = fsi_slave_read(slave, off, &data, read_len);//[3]
+
+              if (rc)
+
+                     goto fail;
+
+              rc = copy_to_user(buf + total_len, &data, read_len);//[4]
+
+              ………
+
+       }
+
+       ……..
+
+       return count;
+
+}
+
+```
+
+In [0]: This line will check the parameters to prevent integer overflow, but
+it did not compare the size of count and offset, wo can pass count=2,
+offset=3 to this function.
+
+In [1]: read_len will be assigned a value of 2
+
+In [2]: read_len-=offset&3  => read_len-=3 => read_len=-1.
+
+In[3]/[4]: will OOB access
+
+ 
+
+Cfam_write :
+
+The reason for the vulnerability of cfam_write is the same as cfam_read.
+
+
