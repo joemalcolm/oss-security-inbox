@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6484" "Tuesday" "9" "May" "2017" "08:23:34" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<290801.443715708-sendEmail@localhost>" "129" "[oss-security] lrzip: use-after-free in read_stream (stream.c)" nil nil nil "5" "2017050908:23:34" "[oss-security] lrzip: use-after-free in read_stream (stream.c)" (number mark "U       ago@gentoo.o May  9  129/6484  " thread-indent "\"[oss-security] lrzip: use-after-free in read_stream (stream.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2657" "Friday" "25" "June" "2021" "10:57:09" "+0800" "Luo Likang" "luolikang@nsfocus.com" nil "143" "[oss-security] FW: An out-of-bound read/write in fsi driver" nil nil nil "6" nil nil (number mark "U       luolikang@ns Jun 25  143/2657  " thread-indent "\"[oss-security] FW: An out-of-bound read/write in fsi driver\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] FW: An out-of-bound read/write in fsi driver" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21834 invoked by uid 550); 9 May 2017 08:23:53 -0000
+Received: (qmail 15462 invoked by uid 550); 25 Jun 2021 10:58:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,141 +12,161 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21749 invoked from network); 9 May 2017 08:23:51 -0000
-Message-ID: <290801.443715708-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Tue, 9 May 2017 08:23:34 +0000
+Received: (qmail 1481 invoked from network); 25 Jun 2021 02:57:24 -0000
+From: "Luo Likang" <luolikang@nsfocus.com>
+To: <oss-security@lists.openwall.com>
+References: 
+In-Reply-To: 
+Date: Fri, 25 Jun 2021 10:57:09 +0800
+Message-ID: <001f01d7696d$ca7f4890$5f7dd9b0$@nsfocus.com>
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-73256.6046799583"
-Subject: [oss-security] lrzip: use-after-free in read_stream (stream.c)
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_000_0020_01D769B0.D8A3C110"
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AddmTinWfrHWIxSrRDGKBPwNu9crzADHwhlw
+Content-Language: zh-cn
+Subject: [oss-security] FW: An out-of-bound read/write in fsi driver
 
-------MIME delimiter for sendEmail-73256.6046799583
+------=_NextPart_000_0020_01D769B0.D8A3C110
 Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+	charset="gb2312"
+Content-Transfer-Encoding: quoted-printable
 
-Description:
-lrzip is a compression utility that excels at compressing large files.
+=20
 
-The complete ASan output of the issue:
-
-# lrzip -t $FILE
-==4026==ERROR: AddressSanitizer: heap-use-after-free on address 0x62100000dd00 at pc 0x0000004bccc5 bp 0x7ffcf3b4d9f0 sp 0x7ffcf3b4d1a0
-READ of size 1 at 0x62100000dd00 thread T0
-    #0 0x4bccc4 in __asan_memcpy /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413
-    #1 0x53cff6 in read_stream /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1747:4
-    #2 0x5307fc in read_vchars /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:79:6
-    #3 0x5307fc in unzip_match /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:208
-    #4 0x5307fc in runzip_chunk /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:329
-    #5 0x5307fc in runzip_fd /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:382
-    #6 0x519b41 in decompress_file /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/lrzip.c:826:6
-    #7 0x511074 in main /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/main.c:669:4
-    #8 0x7f743a5d278f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #9 0x41abf8 in _init (/usr/bin/lrzip+0x41abf8)
-
-0x62100000dd00 is located 0 bytes inside of 4096-byte region [0x62100000dd00,0x62100000ed00)
-freed by thread T0 here:
-    #0 0x4d3660 in free /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:47
-    #1 0x53d186 in fill_buffer /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1574:3
-    #2 0x53d186 in read_stream /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1755
-    #3 0x5307fc in read_vchars /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:79:6
-    #4 0x5307fc in unzip_match /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:208
-    #5 0x5307fc in runzip_chunk /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:329
-    #6 0x5307fc in runzip_fd /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:382
-    #7 0x519b41 in decompress_file /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/lrzip.c:826:6
-    #8 0x511074 in main /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/main.c:669:4
-    #9 0x7f743a5d278f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-
-previously allocated by thread T1 here:
-    #0 0x4d39b8 in malloc /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
-    #1 0x54b0d7 in lzma_decompress_buf /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:546:20
-    #2 0x54b0d7 in ucompthread /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1522
-    #3 0x7f743b36e4a3 in start_thread /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/nptl/pthread_create.c:333
-
-Thread T1 created by T0 here:
-    #0 0x42d49d in pthread_create /tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:245
-    #1 0x53e70f in create_pthread /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:133:6
-    #2 0x53e70f in fill_buffer /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1673
-    #3 0x53e70f in read_stream /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/stream.c:1755
-    #4 0x5303e3 in read_u8 /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:55:6
-    #5 0x5303e3 in read_header /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:144
-    #6 0x5303e3 in runzip_chunk /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:314
-    #7 0x5303e3 in runzip_fd /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/runzip.c:382
-    #8 0x519b41 in decompress_file /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/lrzip.c:826:6
-    #9 0x511074 in main /tmp/portage/app-arch/lrzip-0.631/work/lrzip-0.631/main.c:669:4
-    #10 0x7f743a5d278f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-
-SUMMARY: AddressSanitizer: heap-use-after-free 
-/tmp/portage/sys-devel/llvm-3.9.1-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:413 in __asan_memcpy
-Shadow bytes around the buggy address:
-  0x0c427fff9b50: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c427fff9b60: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c427fff9b70: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c427fff9b80: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c427fff9b90: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-=>0x0c427fff9ba0:[fd]fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c427fff9bb0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c427fff9bc0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c427fff9bd0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c427fff9be0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c427fff9bf0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==4026==ABORTING
-
-Affected version:
-0.631
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-8846
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00233-lrzip-UAF-read_stream
-
-Timeline:
-2017-03-24: bug discovered and reported to upstream
-2017-05-07: blog post about the issue
-2017-05-08: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/05/07/lrzip-use-after-free-in-read_stream-stream-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+Because of my mistake, I took a normal bug as a security bug and reported it
+to linux-distros=A3=AClinux-distros requested me notify oss-security since =
+these
+bugs were deemed to not be a security vulnerability, and no embargo was set.
 
 
-------MIME delimiter for sendEmail-73256.6046799583--
+=20
+
+Because of copy_ from_user has some check, so - 1 does not cause
+cross-border access, and lots of check in fsi_check_access().
+
+=20
+
+The following is the original of my report:
+
+=20
+
+I found an oob read/write bug in function cfam_read/cfam_write of
+drivers/fsi/fsi-core.c
+
+It lack of the check of count and offset.
+
+=20
+
+```
+
+/* Create chardev for userspace access */
+
+       cdev_init(&slave->cdev, &cfam_fops);
+
+- - - -  - - - - - - - - - - - -- - - - - - - - - - -=20
+
+static const struct file_operations cfam_fops =3D {
+
+       .owner           =3D THIS_MODULE,
+
+       .open             =3D cfam_open,
+
+       .llseek            =3D cfam_llseek,
+
+       .read       =3D cfam_read,
+
+       .write             =3D cfam_write,
+
+};
+
+```
+
+In userspace, we can open this chardev can invoke read to use cfam_read.
+
+=20
+
+cfam_read
+
+```
+
+static ssize_t cfam_read(struct file *filep, char __user *buf, size_t count,
+
+                     loff_t *offset)
+
+{
+
+       struct fsi_slave *slave =3D filep->private_data;
+
+       size_t total_len, read_len;
+
+       loff_t off =3D *offset;
+
+       ssize_t rc;
+
+=20
+
+       if (off < 0)
+
+              return -EINVAL;
+
+=20
+
+       if (off > 0xffffffff || count > 0xffffffff || off + count >
+0xffffffff)//[0]
+
+              return -EINVAL;
+
+=20
+
+       for (total_len =3D 0; total_len < count; total_len +=3D read_len) {
+
+              __be32 data;
+
+=20
+
+              read_len =3D min_t(size_t, count, 4); //[1]
+
+              read_len -=3D off & 0x3;          //[2]
+
+=20
+
+              rc =3D fsi_slave_read(slave, off, &data, read_len);//[3]
+
+              if (rc)
+
+                     goto fail;
+
+              rc =3D copy_to_user(buf + total_len, &data, read_len);//[4]
+
+              =A1=AD=A1=AD=A1=AD
+
+       }
+
+       =A1=AD=A1=AD..
+
+       return count;
+
+}
+
+```
+
+In [0]: This line will check the parameters to prevent integer overflow, but
+it did not compare the size of count and offset, wo can pass count=3D2,
+offset=3D3 to this function.
+
+In [1]: read_len will be assigned a value of 2
+
+In [2]: read_len-=3Doffset&3  =3D> read_len-=3D3 =3D> read_len=3D-1.
+
+In[3]/[4]: will OOB access
+
+=20
+
+Cfam_write :
+
+The reason for the vulnerability of cfam_write is the same as cfam_read.
+
+
+------=_NextPart_000_0020_01D769B0.D8A3C110--
 
