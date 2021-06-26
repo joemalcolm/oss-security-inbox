@@ -1,71 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/19/1
-Message-ID: <YFPFrYcJK1e+qedn@jasmine.lan>
-Date: Thu, 18 Mar 2021 17:27:09 -0400
-From: Leo Famulari <leo@...ulari.name>
-To: oss-security@...ts.openwall.com
-Subject: Risk of local privilege escalation in GNU Guix
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/26/1
+Message-ID: <CAFswPa8TSUk2UUuLXbzBPx2R8zqiR6de9Co_TBWUOYeEJvu-VA@mail.gmail.com>
+Date: Sat, 26 Jun 2021 09:27:40 +0200
+From: "Eduardo' Vela\" <Nava>" <evn@...gle.com>
+To: Paolo Bonzini <pbonzini@...hat.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2021-22543 - /dev/kvm LPE
 Content-Type: text/plain; charset=utf-8
 
-A security vulnerability that can lead to local privilege escalation has
-been found in `guix-daemon` [0]. It affects multi-user setups in which
-`guix-daemon` runs locally.
+https://github.com/torvalds/linux/commit/f8be156be163a052a067306417cd0ff679068c97
+fixed
+this issue.
 
-It does _not_ affect multi-user setups where `guix-daemon` runs on a
-separate machine and is accessed over the network via
-`GUIX_DAEMON_SOCKET`, as is customary on cluster setups [1].
+On Wed, 26 May 2021, 18:26 Paolo Bonzini, <pbonzini@...hat.com> wrote:
 
-Exploitation is more difficult, but not impossible, on machines where
-the Linux protected hardlinks [2] feature is enabled, which is common —
-this is the case when the contents of `/proc/sys/fs/protected_hardlinks`
-are `1`.
+> On 26/05/21 15:48, Eduardo' Vela" <Nava> wrote:
+> > Hi
+> >
+> > I believe this still doesn't have a patch, but +Paolo Bonzini
+> > <mailto:pbonzini@...hat.com> has been working on one for some time now.
+> >
+> > Please use CVE-2021-22543 to refer to this issue.
+> >
+> > Advisory:
+> >
+> https://github.com/google/security-research/security/advisories/GHSA-7wq5-phmq-m584
+> > <
+> https://github.com/google/security-research/security/advisories/GHSA-7wq5-phmq-m584
+> >
+>
+> Indeed, I had to put that on hold :( but I'm aware of the issue and I'm
+> working on it.
+>
+> Paolo
+>
+>
 
-# Vulnerability
-
-The attack consists in having an unprivileged user spawn a build process, for 
-instance with `guix build`, that makes its build directory world-writable.  The 
-user then creates a hardlink to a root-owned file such as `/etc/shadow` in that
-build directory.  If the user passed the `--keep-failed` option and the build
-eventually fails, the daemon changes ownership of the whole build tree,
-including the hardlink, to the user.  At that point, the user has write access
-to the target file.
-
-# Fix
-
-This bug [3] has been fixed [4].
-
-The fix consists in adding a root-owned “wrapper” directory in which the build
-directory itself is located.  If the user passed the `--keep-failed` option and 
-the build fails, the `guix-daemon` first changes ownership of the build
-directory, and then, in two stages, moves the build directory into the location
-where users expect to find failed builds, roughly like this:
-
-1. `chown -R USER /tmp/guix-build-foo.drv-0/top`
-2. `mv /tmp/guix-build-foo.drv-0{,.pivot}`
-3. `mv /tmp/guix-build-foo.drv-0.pivot/top /tmp/guix-build-foo.drv-0`
-
-In step #1, `/tmp/guix-build-foo.drv-0` remains root-owned, with permissions of
-`#o700`.  Thus, only root can change directory into it or into `top`.  Likewise in
-step #2.
-
-The build tree becomes accessible to the user once step #3 has succeeded, not
-before.  These steps are performed after the package build scripts have stopped
-running.
-
-More information may be available on the Guix blog:
-
-https://guix.gnu.org/en/blog/2021/risk-of-local-privilege-escalation-via-guix-daemon/
-
-We are grateful to Nathan Nye of WhiteBeam Security for reporting
-this bug and discussing fixes with us!
-
-Your feedback is welcome.
-
-On behalf of the Guix team,
-Leo Famulari
-
-[0] https://guix.gnu.org/manual/en/html_node/Invoking-guix_002ddaemon.html
-[1] https://hpc.guix.info/blog/2017/11/installing-guix-on-a-cluster/
-[2] https://sysctl-explorer.net/fs/protected_hardlinks/
-[3] https://issues.guix.gnu.org/47229
-[4] https://git.savannah.gnu.org/cgit/guix.git/commit/?id=ec7fb669945bfb47c5e1fdf7de3a5d07f7002ccf
