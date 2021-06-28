@@ -1,23 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/13/1
-Message-ID: <cd490e11-90d5-946a-eeaf-d17e4391f788@apache.org>
-Date: Mon, 13 Dec 2021 16:10:57 +0000
-From: Ralph Goers <rgoers@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-4104: Deserialization of untrusted data in JMSAppender in Apache Log4j 1.2 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/28/2
+Message-ID: <921291111.13398.1624863599048@appsuite-dev-gw2.open-xchange.com>
+Date: Mon, 28 Jun 2021 09:59:59 +0300 (EEST)
+From: Aki Tuomi <aki.tuomi@...n-xchange.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2021-33515: Dovecot SMTP Submission service STARTTLS injection.
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Open-Xchange Security Advisory 2021-06-28
 
-JMSAppender in Log4j 1.2 is vulnerable to deserialization of untrusted data when the attacker has write access to the Log4j configuration. The attacker can provide TopicBindingName and TopicConnectionFactoryBindingName configurations causing JMSAppender to perform JNDI requests that result in remote code execution in a similar fashion to CVE-2021-44228.  
+Affected product: Dovecot IMAP Server
+Vendor: OX Software GmbH
 
-Note this issue only affects Log4j 1.2 when specifically configured to use JMSAppender, which is not the default.
+Internal reference: DOP-2421
+Vulnerability type: Cryptographic Issues (CWE-310)
+Vulnerable version: 2.3
+Vulnerable component: submission
+Report confidence: Confirmed
+Solution status: Fixed in 2.3.x
+Researcher credits: Fabian Ising and Damian Poddebniak of Münster University of Applied Sciences.
+Vendor notification: 2021-05-21
+CVE reference: CVE-2021-33515
+CVSS: 4.2 (CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:L/A:N)
 
-Apache Log4j 1.2 reached end of life in August 2015. Users should upgrade to Log4j 2 as it addresses numerous other issues from the previous versions.
+Vulnerability Details:
+Dovecot's lib-smtp is vulnerable to STARTTLS command injection. If more commands are pipelined as plaintext after STARTTLS, those commands are run inside the TLS session.
 
-References:
+Risk:
+A MiTM attacker can inject preamble commands to be executed prior to user's commands, these can be used to redirect the actual mail and other user commands to attacker controlled address.
+Proof of concept script exists.
 
-https://www.cve.org/CVERecord?id=CVE-2021-44228
-https://github.com/apache/logging-log4j2/pull/608#issuecomment-990494126
-https://access.redhat.com/security/cve/CVE-2021-4104
-
+Solution:
+Upgrade to fixed version, or disable STARTTLS support.
