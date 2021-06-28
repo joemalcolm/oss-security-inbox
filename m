@@ -1,58 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/01/1
-Message-ID: <d413938d59a8d5447909877220a59f5a40809357.camel@bzed.de>
-Date: Sun, 01 Aug 2021 20:25:00 +0200
-From: Bernd Zeimetz <bernd@...d.de>
-To: oss-security@...ts.openwall.com
-Subject: GPSD time will jump back 1024 weeks at after week=2180 (23-October-2021)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/28/3
+Message-ID: <1174037964.13457.1624863727539@appsuite-dev-gw2.open-xchange.com>
+Date: Mon, 28 Jun 2021 10:02:07 +0300 (EEST)
+From: Aki Tuomi <aki.tuomi@...n-xchange.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2020-28200: Dovecot Pigeonhole Sieve excessive resource usage
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Open-Xchange Security Advisory 2021-06-28
 
-the following mail is from the gpsd-users list, forwarding it as this will
-most likely affect a lot of ntp servers and various self driving/navigating
-vehicles/submarines/.... Please note that I did not check how chrony/ntpd
-handle sudden jumps back in time from gps.
+Affected product: Dovecot IMAP Server
+Vendor: OX Software GmbH
 
-I know that upstream does not care about CVEs, but due to the widespread use
-of gpsd assigning a CVE might be warranted.
+Internal reference: DOV-4159 
+Vulnerability type: Uncontrolled Resource Consumption (CWE-400)
+Vulnerable version: ancient
+Vulnerable component: sieve
+Report confidence: Confirmed
+Solution status: Fix available
+Researcher credits: Innokentii Sennovskii from BI.ZONE (rumata)
+Vendor notification: 2020-09-23
+CVE reference: CVE-2020-28200
+CVSS: 4.3 (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L)
 
+Vulnerability Details:
+Sieve interpreter is not protected against abusive scripts that claim excessive resource usage.
+Fixed by limiting both the CPU system+user time per single script execution and cumulatively over
+several script runs within a configurable timeout period. Sufficiently large CPU time usage is
+summed in the Sieve script binary and execution is blocked when the sum exceeds the limit within that time.
+The block is lifted when the script is updated after the resource usage times out.
 
--------
-From:    Gary E. Miller
-Subject: GPSD time will jump back 1024 weeks at after week=2180 (23-October-
-2021)
-Date:     Mon, 26 Jul 2021 14:32:10 -0700
+Risk:
+Attacker can cause uncontrolled CPU resource consumption to cause partial or complete denial of service.
 
-Yo All!
+Steps to reproduce:
+Use sufficiently CPU intensive regular expression.
 
-Fair warning.  Issue 144: https://gitlab.com/gpsd/gpsd/-/issues/144
+Solution:
+Install patched version of Dovecot
 
-"GPSD time will jump back 1024 weeks at after week=2180 (23-October-2021)"
-
-The offending commit was after 3.19, so only 3.20, 3.21 and 3.22 are
-affected:
-
-    commit cb7367496f6dd5f90c6b067c031b327921a857b2
-    Author: Gary E. Miller <gem@...lim.com>
-    Date:   Tue Oct 8 17:04:54 2019 -0700
-
-The commit 7f30d88d fixes the problem for those that want to try to back port
-the fix. You'll just be without all the other bug fixes..
-
-This is a real good reason to get 3.23 out very soon.  Please test!
--------
-
-
-Cheers,
-
-Bernd
-
-
-
--- 
- Bernd Zeimetz                            Debian GNU/Linux Developer
- http://bzed.de                                http://www.debian.org
- GPG Fingerprint: ECA1 E3F2 8E11 2432 D485  DD95 EB36 171A 6FF9 435F
-
-
+Workaround:
+Disable sieve "regex" extension.
