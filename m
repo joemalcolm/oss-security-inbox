@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["763" "Tuesday" "24" "January" "2017" "23:37:45" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1701242332030.18573@wniryva>" "24" "[oss-security] CVE request Qemu: serial: host memory leakage in 16550A UART emulation" nil nil nil "1" "2017012418:07:45" "[oss-security] CVE request Qemu: serial: host memory leakage in 16550A UART emulation" (number mark "U       ppandit@redh Jan 24   24/763   " thread-indent "\"[oss-security] CVE request Qemu: serial: host memory leakage in 16550A UART emulation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1045" "Monday" "28" "June" "2021" "09:58:23" "+0300" "Aki Tuomi" "aki.tuomi@dovecot.fi" nil "32" "[oss-security] CVE-2021-29157: Dovecot oauth2 JWT local validation path traversal" nil nil nil "6" nil nil (number mark "U       aki.tuomi@do Jun 28   32/1045  " thread-indent "\"[oss-security] CVE-2021-29157: Dovecot oauth2 JWT local validation path traversal\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-29157: Dovecot oauth2 JWT local validation path traversal" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32515 invoked by uid 550); 24 Jan 2017 18:08:04 -0000
+Received: (qmail 19634 invoked by uid 550); 28 Jun 2021 09:58:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,41 +12,49 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32497 invoked from network); 24 Jan 2017 18:08:03 -0000
-Date: Tue, 24 Jan 2017 23:37:45 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: Li Qiang <liqiang6-s@360.cn>
-Message-ID: <alpine.LFD.2.20.1701242332030.18573@wniryva>
+Received: (qmail 23795 invoked from network); 28 Jun 2021 06:58:35 -0000
+Date: Mon, 28 Jun 2021 09:58:23 +0300 (EEST)
+From: Aki Tuomi <aki.tuomi@dovecot.fi>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Message-ID: <915539867.13379.1624863503635@appsuite-dev.open-xchange.com>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.38]); Tue, 24 Jan 2017 18:07:52 +0000 (UTC)
-Subject: [oss-security] CVE request Qemu: serial: host memory leakage in 16550A UART
- emulation
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+Importance: Normal
+X-Mailer: Open-Xchange Mailer v7.10.6-Rev0
+X-Originating-Client: open-xchange-appsuite
+Subject: [oss-security] CVE-2021-29157: Dovecot oauth2 JWT local validation path traversal
 
-   Hello,
+Open-Xchange Security Advisory 2021-06-28
 
-Quick Emulator(Qemu) built with the 16550A UART serial device emulation 
-support is vulnerable to a memory leakage issue. It could occur while doing a 
-device unplug operation; Doing so repeatedly would result in leaking host 
-memory, affecting other services on the host.
+Affected product: Dovecot IMAP Server
+Vendor: OX Software GmbH
 
-A privileged user inside guest could use this flaw to cause a DoS and/or 
-potentially crash the Qemu process on the host.
+Internal reference: DOP-2159 
+Vulnerability type: Path Traversal (CWE-24)
+Vulnerable version: 2.3.11
+Vulnerable component: oauth2
+Report confidence: Confirmed
+Solution status: Fixed in 2.3.15
+Researcher credits: Kirin of Tencent Security Xuanwu Lab.
+Vendor notification: 2021-03-22
+CVE reference: CVE-2021-29157
+CVSS: 6.7 (CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N)
 
-Upstream patch:
----------------
-   -> https://lists.nongnu.org/archive/html/qemu-devel/2017-01/msg01945.html
+Vulnerability Details:
+If attacker can gain access to local filesystem, it is possible to trick Dovecot to use attacker specified key to validate tokens.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1416157
+Steps to reproduce:
 
-This issue was reported by Li Qiang of 360.cn Inc.
+Configure Dovecot to perform OAUTH2 authentication with local JWT validation using posix fs driver.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Place base64 encoded HS256 shared key in a location that is readable by dovecot, and use ../../../../../location/to/path as key azp. 
+
+You can now forge tokens and authenticate as any valid user.
+
+Risk:
+Attacker can gain access using forged credentials.
+
+Solution:
+Upgrade to fixed version.
