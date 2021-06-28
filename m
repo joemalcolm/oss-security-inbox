@@ -1,42 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/28/1
-Message-ID: <CA+-U7QC-zxn_XYLJifSm=cDmsW0_Rs+juQuoCUTw1+TQmdfpGg@mail.gmail.com>
-Date: Sun, 28 Mar 2021 11:47:22 +0800
-From: - Nop <nopitydays@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Linux Kernel: out of bounds array access in dm-ioctl.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/28/1
+Message-ID: <915539867.13379.1624863503635@appsuite-dev.open-xchange.com>
+Date: Mon, 28 Jun 2021 09:58:23 +0300 (EEST)
+From: Aki Tuomi <aki.tuomi@...ecot.fi>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2021-29157: Dovecot oauth2 JWT local validation path traversal
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Open-Xchange Security Advisory 2021-06-28
 
-We found an out of bounds array accessing bug in drivers/md/dm-ioctl.c, and
-reproduced it in the latest kernel (v5.11.10).
+Affected product: Dovecot IMAP Server
+Vendor: OX Software GmbH
 
-The root cause of this BUG is :
+Internal reference: DOP-2159 
+Vulnerability type: Path Traversal (CWE-24)
+Vulnerable version: 2.3.11
+Vulnerable component: oauth2
+Report confidence: Confirmed
+Solution status: Fixed in 2.3.15
+Researcher credits: Kirin of Tencent Security Xuanwu Lab.
+Vendor notification: 2021-03-22
+CVE reference: CVE-2021-29157
+CVSS: 6.7 (CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N)
 
-The field "data_size" in function ctl_ioctl is fully controlled by users
-and this argument controls the size of kvmalloc in function copy_params.
+Vulnerability Details:
+If attacker can gain access to local filesystem, it is possible to trick Dovecot to use attacker specified key to validate tokens.
 
-When the data_size is in a range of [0x131,0x138], the allocated memory
-which is pointed by the variable "param" used in ioctl
-"DM_LIST_DEVICES_CMD" is too small, causing an oob bug at line "nl->dev =
-0; /* Flags no data */" (
-https://github.com/torvalds/linux/blob/0d02ec6b3136c73c09e7859f0d0e4e2c4c07b49b/drivers/md/dm-ioctl.c#L538
-)
+Steps to reproduce:
 
-Attachments are the poc, kernel config and Kernel report.
+Configure Dovecot to perform OAUTH2 authentication with local JWT validation using posix fs driver.
 
-The patch:
-https://github.com/torvalds/linux/commit/4edbe1d7bcffcd6269f3b5eb63f710393ff2ec7a
-     * Grab our output buffer.
-     */
-     nl = orig_nl = get_result_buffer(param, param_size, &len);
--    if (len < needed) {
-+    if (len < needed || len < sizeof(nl->dev)) {
-         param->flags |= DM_BUFFER_FULL_FLAG;
-         goto out;
-     }
+Place base64 encoded HS256 shared key in a location that is readable by dovecot, and use ../../../../../location/to/path as key azp. 
 
-Regards,
-Bodong Zhao of NISL lab, Tsinghua University
+You can now forge tokens and authenticate as any valid user.
 
+Risk:
+Attacker can gain access using forged credentials.
+
+Solution:
+Upgrade to fixed version.
