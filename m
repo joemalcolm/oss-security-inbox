@@ -1,30 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/22/2
-Message-ID: <CAEo4CePqice09K5PPhmxwwF3jg=USrqRqM5FgVX_jCB8sZfDeA@mail.gmail.com>
-Date: Thu, 22 Apr 2021 11:44:49 +0200
-From: Albert Veli <albert.veli@...il.com>
-To: Open Source Security <oss-security@...ts.openwall.com>
-Subject: Re: Malicious commits to Linux kernel as part of university study
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/30/1
+Message-Id: <071030FD-1E7C-4FD5-98C3-E2E6630E9BBF@beckweb.net>
+Date: Wed, 30 Jun 2021 18:28:03 +0200
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins and Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-Hi
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-On Thu, Apr 22, 2021 at 9:01 AM Peter Bex <peter@...e-magic.net> wrote:
->
-> They also published a paper:
-> https://raw.githubusercontent.com/QiushiWu/qiushiwu.github.io/main/papers/OpenSourceInsecurity.pdf
->
-> I don't know the scope of this research, but it could involve other OSS
-> projects, now or in the future, as well.
+The following releases contain fixes for security vulnerabilities:
 
-Supply chain attacks are a real threat to open source projects. The
-Linux kernel is not the easiest way to introduce malicious commits.
-But other projects like much used pip python modules, npm javascript
-modules and ruby gem modules might be less vetted before they accept
-commits and that is a serious risk.
+* Jenkins 2.300
+* Jenkins LTS 2.289.2
+* CAS Plugin 1.6.1
+* requests-plugin 2.2.7, 2.2.8, and 2.2.13
+* Selenium HTML report Plugin 1.1
 
-Proprietary projects are not immune to supply chain attacks either. An
-example is the Encrochat proprietary chat application that was
-subjected to a state sponsored supply chain attack last year which
-compromised their user's data. Everything that uses automated updates
-could be targeted by supply chain attacks.
+
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2021-06-30/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-2278 / CVE-2021-21670
+Jenkins 2.299 and earlier, LTS 2.289.1 and earlier allows users to cancel
+queue items and abort builds of jobs for which they have Item/Cancel
+permission even when they do not have Item/Read permission.
+
+
+SECURITY-2371 / CVE-2021-21671
+Jenkins 2.299 and earlier, LTS 2.289.1 and earlier does not invalidate the
+existing session on login. This allows attackers to use social engineering
+techniques to gain administrator access to Jenkins.
+
+This vulnerability was introduced in Jenkins 2.266 and LTS 2.277.1.
+
+
+SECURITY-2329 / CVE-2021-21672
+Selenium HTML report Plugin 1.0 and earlier does not configure its XML
+parser to prevent XML external entity (XXE) attacks.
+
+This allows attackers with the ability to control the report files parsed
+using this plugin to have Jenkins parse a crafted report file that uses
+external entities for extraction of secrets from the Jenkins controller or
+server-side request forgery.
+
+
+SECURITY-2387 / CVE-2021-21673
+CAS Plugin 1.6.0 and earlier improperly determines that a redirect URL
+after login is legitimately pointing to Jenkins.
+
+This allows attackers to perform phishing attacks by having users go to a
+Jenkins URL that will forward them to a different site after successful
+authentication.
+
+
+SECURITY-1995 / CVE-2021-21674
+requests-plugin 2.2.6 and earlier does not perform a permission
+check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to view the list of
+pending requests.
+
+
+SECURITY-2136 (1) / CVE-2021-21675
+requests-plugin 2.2.12 and earlier does not require POST requests to
+request and apply changes, resulting in cross-site request forgery (CSRF)
+vulnerabilities.
+
+These vulnerabilities allow attackers to create requests and/or have
+administrators apply pending requests, like renaming or deleting jobs,
+deleting builds, etc.
+
+
+SECURITY-2136 (2) / CVE-2021-21676
+requests-plugin 2.2.7 and earlier does not perform a permission
+check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to send test emails to
+an attacker-specified email address.
+
