@@ -1,54 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/30/1
-Message-ID: <4e14406504524640@localhost>
-Date: Thu, 30 Sep 2021 23:01:37 +0200
-From: Philipp Takacs <philipp+enjoy-digital@...eaucracy.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/02/2
+Message-ID: <f599998d-84c3-8123-a3f9-b14330690367@gmail.com>
+Date: Thu, 1 Jul 2021 10:08:07 +0200
+From: Mariusz Felisiak <felisiak.mariusz@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: florent@...oy-digital.fr
-Subject: security issues in Litex IP stack
+Subject: Django: CVE-2021-35042: Potential SQL injection via unsanitized QuerySet.order_by() input
 Content-Type: text/plain; charset=utf-8
 
-Hi
+https://www.djangoproject.com/weblog/2021/jul/01/security-releases/
 
-I have found some security issues by a code review of litex[0]. The
-issues where reported to Enjoy-Digital on 21.02.2021 but not fixed yet.
-I haven't tested, if these issues are exploitable.
+In accordance with `our security release policy
+<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
+Django team
+is issuing
+`Django 3.2.5 <https://docs.djangoproject.com/en/dev/releases/3.2.5/>`_ and
+`Django 3.1.13 <https://docs.djangoproject.com/en/dev/releases/3.1.13/>`_.
+These releases address the security issue with severity "high" detailed 
+below. We encourage all users of Django to upgrade as soon as possible.
 
-1. oob read over IP/UDP length
+CVE-2021-35042: Potential SQL injection via unsanitized 
+``QuerySet.order_by()`` input
+=====================================================================================
 
-The IP/UDP implementation only checks if the receive data and declared
-sizes are big enough to contain a full UDP header. An attacker can set
-this to 0xffff, which leads to an out of bound read. (see rx_callback()
-in tftp.c and process_ip() in udp.c)
+Unsanitized user input passed to ``QuerySet.order_by()`` could bypass 
+intended
+column reference validation in path marked for deprecation resulting in a
+potential SQL injection even if a deprecation warning is emitted.
 
-2. out of bounds write
+As a mitigation the strict column reference validation was restored for the
+duration of the deprecation period. This regression appeared in 3.1 as a 
+side
+effect of fixing `#31426 <https://code.djangoproject.com/ticket/31426>`_.
 
-In boot.c tftp_get() is called with "char json_buffer[1024]" as buffer.
-Because of missing bound checks in tftp_get() an attacker can overflow
-this buffer (see rx_callback() in tftp.c and netboot_from_json() in bios.c).
+The issue is not present in the main branch as the deprecated path has been
+removed.
 
-3. sender check
-  
-The tftp client don't check if the packages are from the sender he
-requested data. If an attacker sends faster then the requested tftpd, he
-can completely control the data.
+Thanks to Joel Saunders for the report.
 
-4. tftp total_length overflow
+Affected supported versions
+===========================
 
-May only be a theoretical bug, because the result is checked against <= 0.
-But if an attacker uses the missing IP/UDP length check he can overflow
-the total_length in rx_callback() (see tftp.c).
+* Django 3.2
+* Django 3.1
 
-5. override already received data
+Resolution
+==========
 
-The tftp client don't check if he receives data multiple times. An attacker
-can send a block the client has already received and override it.
+Patches to resolve the issue have been applied to Django's 3.2 and 3.1
+release branches. The patches may be obtained from the
+following changesets:
 
-6. arp cache poisoning
+* On the `3.2 release branch 
+<https://github.com/django/django/commit/a34a5f724c5d5adb2109374ba3989ebb7b11f81f>`__
+* On the `3.1 release branch 
+<https://github.com/django/django/commit/0bd57a879a0d54920bb9038a732645fb917040e9>`__
 
-It looks like it's possible to just send an arp reply to override the
-mac address of the tftp server (see process_arp() in udp.c).
+The following releases have been issued:
 
-Philipp Takacs
+* Django 3.2.5 (`download Django 3.2.5 
+<https://www.djangoproject.com/m/releases/3.2/Django-3.2.5.tar.gz>`_ | 
+`3.2.5 checksums 
+<https://www.djangoproject.com/m/pgp/Django-3.2.5.checksum.txt>`_)
+* Django 3.1.13 (`download Django 3.1.13 
+<https://www.djangoproject.com/m/releases/3.1/Django-3.1.13.tar.gz>`_ | 
+`3.1.13 checksums 
+<https://www.djangoproject.com/m/pgp/Django-3.1.13.checksum.txt>`_)
 
-[0] https://github.com/enjoy-digital/litex
+The PGP key ID used for this release is Mariusz Felisiak: 
+`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
+
+General notes regarding security reporting
+==========================================
+
+As always, we ask that potential security issues be reported via
+private email to ``security@...ngoproject.com``, and not via Django's
+Trac instance or the django-developers list. Please see `our security
+policies <https://www.djangoproject.com/security/>`_ for further
+information.
+
