@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["15875" "Wednesday" "27" "June" "2018" "21:03:58" "+0000" "Xen.org security team" "security@xen.org" "<E1fYHba-0005FA-Vk@xenbits.xenproject.org>" "319" "[oss-security] Xen Security Advisory 265 (CVE-2018-12893) - x86: #DB exception safety check can be triggered by a guest" nil nil nil "6" "2018062721:03:58" "[oss-security] Xen Security Advisory 265 (CVE-2018-12893) - x86: #DB exception safety check can be triggered by a guest" (number mark "U       security@xen Jun 27  319/15875 " thread-indent "\"[oss-security] Xen Security Advisory 265 (CVE-2018-12893) - x86: #DB exception safety check can be triggered by a guest\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2673" "Thursday" "1" "July" "2021" "10:08:07" "+0200" "Mariusz Felisiak" "felisiak.mariusz@gmail.com" nil "71" "[oss-security] Django: CVE-2021-35042: Potential SQL injection via unsanitized QuerySet.order_by() input" nil nil nil "7" nil nil (number mark "U       felisiak.mar Jul  1   71/2673  " thread-indent "\"[oss-security] Django: CVE-2021-35042: Potential SQL injection via unsanitized QuerySet.order_by() input\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Django: CVE-2021-35042: Potential SQL injection via unsanitized QuerySet.order_by() input" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28289 invoked by uid 550); 27 Jun 2018 21:04:25 -0000
+Received: (qmail 15818 invoked by uid 550); 2 Jul 2021 05:58:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,336 +12,115 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28139 invoked from network); 27 Jun 2018 21:04:22 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 5170 invoked from network); 1 Jul 2021 08:08:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-transfer-encoding:content-language;
+        bh=AKFSaAQZUh/m4pI7dswC16UKNwpStplA6obY2whJ/gI=;
+        b=EuX3HI2TN1lcC/+7Nlcg2fgj+VPmZrf77eIp0vly/BJ3DLAxxYUkRmRB68iMjg/7B2
+         cg9nSth5Gu/XQe9e7zzJKFcLjxPIYua3B7UfOop8mzhuC69pb7sD6IriDdYAp1+oGgnc
+         Do4OwJzJR2PUwtwHXez/DmKczhHs/aGgOT9lncz5xPzXrWsdKu7Eql4qw1RlHpimzWR+
+         XjfWy7GKpcDn5cxIalhQwh//aPUKQwgm0+HUkmd0F/DBugvswhm1RHC0yzruouLcnZWN
+         P5AmZJ/xIQZaiQ8Qgl1FFjjMuk093DV3S7WfecZSkewVtBhl+1NCcG5dGp2tEDmaexj3
+         4AYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-transfer-encoding:content-language;
+        bh=AKFSaAQZUh/m4pI7dswC16UKNwpStplA6obY2whJ/gI=;
+        b=FoRt5XNVB68KZt32aC0zu9wYH7aoS/YhxSeTLbvx0wD3N6cCzjclihAc8bzUgGxWL2
+         O29XFDAml5a9s2ihbwM98YjQFHMqosLLzZXMohOgQCZZwtLdidHivCffx4qFziO92MUl
+         tYuY7entUqt7kev+7J7Km1spNuz08pIbLOxWwIZq9E+byYaGjBJtf0F13n39/6f52jeL
+         +22VEX+76iqJjmOxClahojLqbxBPi7/zyrzsuHYjylJ+CdgPRxAkRmxKEcYtg95t7SaO
+         wz6D0qDWfOSLUVqGLamOeSRsn818yMsLHwuOgqGsdlCJUY00FCXhJeW1tEjGQIj6Dn7q
+         V2pw==
+X-Gm-Message-State: AOAM5300Y6Br1kct5oNpDn8tucQDL1nbG8hoqGx+lv9YvPJK8FYi7uHz
+	I2E9LPiOFZNF/LfF+w3MDD5qVJrnz40=
+X-Google-Smtp-Source: ABdhPJxQojXAAy2pymq9/Pdv3On0ZyT4kqHnfSutZ1cRh0PpIi9vaYlaN8e3Ez4+mcIvFY68ycpwiQ==
+X-Received: by 2002:a19:c352:: with SMTP id t79mr3372713lff.537.1625126888731;
+        Thu, 01 Jul 2021 01:08:08 -0700 (PDT)
+To: oss-security@lists.openwall.com
+From: Mariusz Felisiak <felisiak.mariusz@gmail.com>
+Message-ID: <f599998d-84c3-8123-a3f9-b14330690367@gmail.com>
+Date: Thu, 1 Jul 2021 10:08:07 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.508 (Entity 5.508)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1fYHba-0005FA-Vk@xenbits.xenproject.org>
-Date: Wed, 27 Jun 2018 21:03:58 +0000
-Subject: [oss-security] Xen Security Advisory 265 (CVE-2018-12893) - x86: #DB exception
- safety check can be triggered by a guest
-
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+Subject: [oss-security] Django: CVE-2021-35042: Potential SQL injection via unsanitized
+ QuerySet.order_by() input
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+https://www.djangoproject.com/weblog/2021/jul/01/security-releases/
 
-            Xen Security Advisory CVE-2018-12893 / XSA-265
-                               version 3
+In accordance with `our security release policy
+<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
+Django team
+is issuing
+`Django 3.2.5 <https://docs.djangoproject.com/en/dev/releases/3.2.5/>`_ and
+`Django 3.1.13 <https://docs.djangoproject.com/en/dev/releases/3.1.13/>`_.
+These releases address the security issue with severity "high" detailed 
+below. We encourage all users of Django to upgrade as soon as possible.
 
-      x86: #DB exception safety check can be triggered by a guest
+CVE-2021-35042: Potential SQL injection via unsanitized 
+``QuerySet.order_by()`` input
+=====================================================================================
 
-UPDATES IN VERSION 3
-====================
+Unsanitized user input passed to ``QuerySet.order_by()`` could bypass 
+intended
+column reference validation in path marked for deprecation resulting in a
+potential SQL injection even if a deprecation warning is emitted.
 
-Public release.
+As a mitigation the strict column reference validation was restored for the
+duration of the deprecation period. This regression appeared in 3.1 as a 
+side
+effect of fixing `#31426 <https://code.djangoproject.com/ticket/31426>`_.
 
-ISSUE DESCRIPTION
-=================
+The issue is not present in the main branch as the deprecated path has been
+removed.
 
-One of the fixes in XSA-260 added some safety checks to help prevent Xen
-livelocking with debug exceptions.  Unfortunately, due to an oversight, at
-least one of these safety checks can be triggered by a guest.
+Thanks to Joel Saunders for the report.
 
-IMPACT
-======
+Affected supported versions
+===========================
 
-A malicious PV guest can crash Xen, leading to a Denial of Service.
+* Django 3.2
+* Django 3.1
 
-VULNERABLE SYSTEMS
-==================
-
-All Xen systems which have applied the XSA-260 fix are vulnerable.
-
-Only x86 systems are vulnerable.  ARM systems are not vulnerable.
-
-Only x86 PV guests can exploit the vulnerability.  x86 HVM and PVH
-guests cannot exploit the vulnerability.
-
-An attacker needs to be able to control hardware debugging facilities to
-exploit the vulnerability, but such permissions are typically available
-to unprivileged users.
-
-MITIGATION
+Resolution
 ==========
 
-Running only x86 HVM or PVH guests will avoid the vulnerability.
+Patches to resolve the issue have been applied to Django's 3.2 and 3.1
+release branches. The patches may be obtained from the
+following changesets:
 
-CREDITS
-=======
+* On the `3.2 release branch 
+<https://github.com/django/django/commit/a34a5f724c5d5adb2109374ba3989ebb7b11f81f>`__
+* On the `3.1 release branch 
+<https://github.com/django/django/commit/0bd57a879a0d54920bb9038a732645fb917040e9>`__
 
-This issue was discovered by Andrew Cooper of Citrix.
+The following releases have been issued:
 
-RESOLUTION
-==========
+* Django 3.2.5 (`download Django 3.2.5 
+<https://www.djangoproject.com/m/releases/3.2/Django-3.2.5.tar.gz>`_ | 
+`3.2.5 checksums 
+<https://www.djangoproject.com/m/pgp/Django-3.2.5.checksum.txt>`_)
+* Django 3.1.13 (`download Django 3.1.13 
+<https://www.djangoproject.com/m/releases/3.1/Django-3.1.13.tar.gz>`_ | 
+`3.1.13 checksums 
+<https://www.djangoproject.com/m/pgp/Django-3.1.13.checksum.txt>`_)
 
-Applying the appropriate attached patch resolves this issue.
+The PGP key ID used for this release is Mariusz Felisiak: 
+`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
 
-xsa265.patch           xen-unstable, Xen 4.10.x, 4.9.x, 4.8.x
-xsa265-4.7.patch       Xen 4.7.x, 4.6.x
+General notes regarding security reporting
+==========================================
 
-$ sha256sum xsa265*
-3eb66ed7251dcc4259eeffe608b2747857e269307d894a1cb950973420184aa7  xsa265.patch
-00faf2a4159698b6540565ece06de103c3547855e2084324ca44772b8a24aa18  xsa265-4.7.patch
-$
+As always, we ask that potential security issues be reported via
+private email to ``security@djangoproject.com``, and not via Django's
+Trac instance or the django-developers list. Please see `our security
+policies <https://www.djangoproject.com/security/>`_ for further
+information.
 
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCAAGBQJbM+5JAAoJEIP+FMlX6CvZtSgIAMF8d/3Jor6b0EbW55JSLh76
-56I8QfkqX4Xv/yWri3sXGJmPz7Af/qjDO+Ix5IScq54ugN5C8z7OBcbXFpX1WxNJ
-xCv6QjsbPmGCZHsT+NdWrl/ac6ZH3xlhE+S1awQ+9SkC+r6bRH/iROO+4DhpYQde
-CGoyYIwFq2VJoovh8lWHMsVl8VUXisyDk3bPK17VlAEFF1LuOkaan1UGEKRsciGX
-12IlNw/I6c8a85wWpFtph1AOVZfrodWdwyj8vgLY3MHnEs+86/cm5O4+GxKHezHf
-P5dJDZ38HBPRL1qC+yFRV2sLxLgrc7fYlSWr3/xtOGo23aDLjCvS+FsMfIpyjPQ=
-=sf+j
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa265.patch"
-Content-Disposition: attachment; filename="xsa265.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
-bT4KU3ViamVjdDogeDg2OiBSZWZpbmUgY2hlY2tzIGluICNEQiBoYW5kbGVy
-IGZvciBmYXVsdGluZyBjb25kaXRpb25zCgpPbmUgb2YgdGhlIGZpeCBmb3Ig
-WFNBLTI2MCAoYy9zIDc1ZDY4MjhiYzIgIng4Ni90cmFwczogRml4IGhhbmRs
-aW5nIG9mICNEQgpleGNlcHRpb25zIGluIGh5cGVydmlzb3IgY29udGV4dCIp
-IGFkZGVkIHNvbWUgc2FmZXR5IGNoZWNrcyB0byBoZWxwIGF2b2lkCmxpdmVs
-b2NrcyBvZiAjREIgZmF1bHRzLgoKV2hpbGUgYSBHZW5lcmFsIERldGVjdCAj
-REIgZXhjZXB0aW9uIGRvZXMgaGF2ZSBmYXVsdCBzZW1hbnRpY3MsIGhhcmR3
-YXJlCmNsZWFycyAlZHI3LmdkIG9uIGVudHJ5IHRvIHRoZSBoYW5kbGVyLCBt
-ZWFuaW5nIHRoYXQgaXQgaXMgYWN0dWFsbHkgc2FmZSB0bwpyZXR1cm4gdG8u
-ICBGdXJ0aGVybW9yZSwgJWRyNi5nZCBpcyBndWVzdCBjb250cm9sbGVkIGFu
-ZCBzdGlja3kgKG5ldmVyIGNsZWFyZWQKYnkgaGFyZHdhcmUpLiAgQSBtYWxp
-Y2lvdXMgUFYgZ3Vlc3QgY2FuIHRoZXJlZm9yZSB0cmlnZ2VyIHRoZSBmYXRh
-bF90cmFwKCkgYW5kCmNyYXNoIFhlbi4KCkluc3RydWN0aW9uIGJyZWFrcG9p
-bnRzIGFyZSBtb3JlIHRyaWNreS4gIFRoZSBicmVha3BvaW50IG1hdGNoIGJp
-dHMgaW4gJWRyNgphcmUgbm90IHN0aWNreSwgYnV0IHRoZSBJbnRlbCBtYW51
-YWwgd2FybnMgdGhhdCB0aGV5IG1heSBiZSBzZXQgZm9yCm5vbi1lbmFibGVk
-IGJyZWFrcG9pbnRzLCBzbyBhZGQgYSBicmVha3BvaW50IGVuYWJsZWQgY2hl
-Y2suCgpCZXlvbmQgdGhhdCwgYmVjYXVzZSBvZiB0aGUgcmVzdHJpY3Rpb24g
-b24gdGhlIGxpbmVhciBhZGRyZXNzZXMgUFYgZ3Vlc3RzIGNhbgpzZXQsIGFu
-ZCB0aGUgZmF1bHQgKHJhdGhlciB0aGFuIHRyYXApIG5hdHVyZSBvZiBpbnN0
-cnVjdGlvbiBicmVha3BvaW50cwooaS5lLiBjYW4ndCBiZSBkZWZlcnJlZCBi
-eSBhIE1vdlNTIHNoYWRvdyksIHRoZXJlIHNob3VsZCBiZSBubyB3YXkgdG8K
-ZW5jb3VudGVyIGFuIGluc3RydWN0aW9uIGJyZWFrcG9pbnQgaW4gWGVuIGNv
-bnRleHQuICBIb3dldmVyLCBmb3IgZXh0cmEKcm9idXN0bmVzcywgZGVhbCB3
-aXRoIHRoaXMgc2l0dWF0aW9uIGJ5IGNsZWFyaW5nIHRoZSBicmVha3BvaW50
-IGNvbmZpZ3VyYXRpb24sCnJhdGhlciB0aGFuIGNyYXNoaW5nLgoKVGhpcyBp
-cyBYU0EtMjY1CgpTaWduZWQtb2ZmLWJ5OiBBbmRyZXcgQ29vcGVyIDxhbmRy
-ZXcuY29vcGVyM0BjaXRyaXguY29tPgpSZXZpZXdlZC1ieTogSmFuIEJldWxp
-Y2ggPGpiZXVsaWNoQHN1c2UuY29tPgoKZGlmZiAtLWdpdCBhL3hlbi9hcmNo
-L3g4Ni90cmFwcy5jIGIveGVuL2FyY2gveDg2L3RyYXBzLmMKaW5kZXggZTc5
-Y2E4OC4uM2UwNWNmMSAxMDA2NDQKLS0tIGEveGVuL2FyY2gveDg2L3RyYXBz
-LmMKKysrIGIveGVuL2FyY2gveDg2L3RyYXBzLmMKQEAgLTE4MDksNiArMTgw
-OSwxMyBAQCB2b2lkIGRvX2RlYnVnKHN0cnVjdCBjcHVfdXNlcl9yZWdzICpy
-ZWdzKQogCiAgICAgaWYgKCAhZ3Vlc3RfbW9kZShyZWdzKSApCiAgICAgewor
-ICAgICAgICAvKgorICAgICAgICAgKiAhISEgV0FSTklORyAhISEKKyAgICAg
-ICAgICoKKyAgICAgICAgICogJWRyNiBpcyBtb3N0bHkgZ3Vlc3QgY29udHJv
-bGxlZCBhdCB0aGlzIHBvaW50LiAgQW55IGRlY3Npb25zIGJhc2UKKyAgICAg
-ICAgICogb24gaXRzIHZhbHVlIG11c3QgYmUgY3Jvc3NjaGVja2VkIHdpdGgg
-bm9uLWd1ZXN0IGNvbnRyb2xsZWQgc3RhdGUuCisgICAgICAgICAqLworCiAg
-ICAgICAgIGlmICggcmVncy0+ZWZsYWdzICYgWDg2X0VGTEFHU19URiApCiAg
-ICAgICAgIHsKICAgICAgICAgICAgIC8qIEluIFNZU0VOVEVSIGVudHJ5IHBh
-dGggd2UgY2FuJ3QgemFwIFRGIHVudGlsIEVGTEFHUyBpcyBzYXZlZC4gKi8K
-QEAgLTE4MzAsMzMgKzE4MzcsNDQgQEAgdm9pZCBkb19kZWJ1ZyhzdHJ1Y3Qg
-Y3B1X3VzZXJfcmVncyAqcmVncykKICAgICAgICAgICogQ2hlY2sgZm9yIGZh
-dWx0IGNvbmRpdGlvbnMuICBHZW5lcmFsIERldGVjdCwgYW5kIGluc3RydWN0
-aW9uCiAgICAgICAgICAqIGJyZWFrcG9pbnRzIGFyZSBmYXVsdHMgcmF0aGVy
-IHRoYW4gdHJhcHMsIGF0IHdoaWNoIHBvaW50IGF0dGVtcHRpbmcKICAgICAg
-ICAgICogdG8gaWdub3JlIGFuZCBjb250aW51ZSB3aWxsIHJlc3VsdCBpbiBh
-IGxpdmVsb2NrLgorICAgICAgICAgKgorICAgICAgICAgKiBIb3dldmVyLCBv
-biBlbnRlcmluZyB0aGUgI0RCIGhhbmRsZXIsIGhhcmR3YXJlIGNsZWFycyAl
-ZHI3LmdkIGZvcgorICAgICAgICAgKiB1cyAoYXMgY29uZmlybWVkIGJ5IHRo
-ZSBlYXJsaWVyICVkcjYgYWNjZXNzZXMgc3VjY2VlZGluZyksIG1lYW5pbmcK
-KyAgICAgICAgICogdGhhdCBhIHJlYWwgR2VuZXJhbCBEZXRlY3QgZXhjZXB0
-aW9uIGlzIHJlc3RhcnRhYmxlLgorICAgICAgICAgKgorICAgICAgICAgKiBQ
-ViBndWVzdHMgYXJlIG5vdCBwZXJtaXR0ZWQgdG8gcG9pbnQgJWRyezAuLjN9
-IGF0IFhlbiBsaW5lYXIKKyAgICAgICAgICogYWRkcmVzc2VzLCBhbmQgSW5z
-dHJ1Y3Rpb24gQnJlYWtwb2ludHMgKGJlaW5nIGZhdWx0cykgZG9uJ3QgZ2V0
-CisgICAgICAgICAqIGRlbGF5ZWQgYnkgYSBNb3ZTUyBzaGFkb3csIHNvIHdl
-IHNob3VsZCBuZXZlciBlbmNvdW50ZXIgb25lIGluCisgICAgICAgICAqIGh5
-cGVydmlzb3IgY29udGV4dC4KKyAgICAgICAgICoKKyAgICAgICAgICogSWYg
-aG93ZXZlciB3ZSBkbywgc2FmZXR5IG1lYXN1cmVzIG5lZWQgdG8gYmUgZW5h
-Y3RlZC4gIFVzZSBhIGJpZworICAgICAgICAgKiBoYW1tZXIgYW5kIGNsZWFy
-IGFsbCBkZWJ1ZyBzZXR0aW5ncy4KICAgICAgICAgICovCi0gICAgICAgIGlm
-ICggZHI2ICYgRFJfR0VORVJBTF9ERVRFQ1QgKQotICAgICAgICB7Ci0gICAg
-ICAgICAgICBwcmludGsoWEVOTE9HX0VSUiAiSGl0IEdlbmVyYWwgRGV0ZWN0
-IGluIFhlbiBjb250ZXh0XG4iKTsKLSAgICAgICAgICAgIGZhdGFsX3RyYXAo
-cmVncywgMCk7Ci0gICAgICAgIH0KLQogICAgICAgICBpZiAoIGRyNiAmIChE
-Ul9UUkFQMyB8IERSX1RSQVAyIHwgRFJfVFJBUDEgfCBEUl9UUkFQMCkgKQog
-ICAgICAgICB7Ci0gICAgICAgICAgICB1bnNpZ25lZCBpbnQgYnAsIGRyNyA9
-IHJlYWRfZGVidWdyZWcoNykgPj4gRFJfQ09OVFJPTF9TSElGVDsKKyAgICAg
-ICAgICAgIHVuc2lnbmVkIGludCBicCwgZHI3ID0gcmVhZF9kZWJ1Z3JlZyg3
-KTsKIAogICAgICAgICAgICAgZm9yICggYnAgPSAwOyBicCA8IDQ7ICsrYnAg
-KQogICAgICAgICAgICAgewogICAgICAgICAgICAgICAgIGlmICggKGRyNiAm
-ICgxdSA8PCBicCkpICYmIC8qIEJyZWFrcG9pbnQgdHJpZ2dlcmVkPyAqLwot
-ICAgICAgICAgICAgICAgICAgICAgKChkcjcgJiAoM3UgPDwgKGJwICogRFJf
-Q09OVFJPTF9TSVpFKSkpID09IDApIC8qIEluc24/ICovICkKKyAgICAgICAg
-ICAgICAgICAgICAgIChkcjcgJiAoM3UgPDwgKGJwICogRFJfRU5BQkxFX1NJ
-WkUpKSkgJiYgLyogRW5hYmxlZD8gKi8KKyAgICAgICAgICAgICAgICAgICAg
-ICgoZHI3ICYgKDN1IDw8ICgoYnAgKiBEUl9DT05UUk9MX1NJWkUpICsgLyog
-SW5zbj8gKi8KKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICBEUl9DT05UUk9MX1NISUZUKSkpID09IERSX1JXX0VYRUNVVEUpICkKICAg
-ICAgICAgICAgICAgICB7CisgICAgICAgICAgICAgICAgICAgIEFTU0VSVF9V
-TlJFQUNIQUJMRSgpOworCiAgICAgICAgICAgICAgICAgICAgIHByaW50ayhY
-RU5MT0dfRVJSCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAiSGl0IGlu
-c3RydWN0aW9uIGJyZWFrcG9pbnQgaW4gWGVuIGNvbnRleHRcbiIpOwotICAg
-ICAgICAgICAgICAgICAgICBmYXRhbF90cmFwKHJlZ3MsIDApOworICAgICAg
-ICAgICAgICAgICAgICB3cml0ZV9kZWJ1Z3JlZyg3LCAwKTsKKyAgICAgICAg
-ICAgICAgICAgICAgYnJlYWs7CiAgICAgICAgICAgICAgICAgfQogICAgICAg
-ICAgICAgfQogICAgICAgICB9CiAKICAgICAgICAgLyoKLSAgICAgICAgICog
-V2hhdGV2ZXIgY2F1c2VkIHRoaXMgI0RCIHNob3VsZCBiZSBhIHRyYXAuICBO
-b3RlIGl0IGFuZCBjb250aW51ZS4KLSAgICAgICAgICogR3Vlc3RzIGNhbiB0
-cmlnZ2VyIHRoaXMgaW4gY2VydGFpbiBjb3JuZXIgY2FzZXMsIHNvIGVuc3Vy
-ZSB0aGUKLSAgICAgICAgICogbWVzc2FnZSBpcyByYXRlbGltaXRlZC4KKyAg
-ICAgICAgICogV2hhdGV2ZXIgY2F1c2VkIHRoaXMgI0RCIHNob3VsZCBiZSBy
-ZXN0YXJ0YWJsZSBieSB0aGlzIHBvaW50LiAgTm90ZQorICAgICAgICAgKiBp
-dCBhbmQgY29udGludWUuICBHdWVzdHMgY2FuIHRyaWdnZXIgdGhpcyBpbiBj
-ZXJ0YWluIGNvcm5lciBjYXNlcywKKyAgICAgICAgICogc28gZW5zdXJlIHRo
-ZSBtZXNzYWdlIGlzIHJhdGVsaW1pdGVkLgogICAgICAgICAgKi8KICAgICAg
-ICAgZ3ByaW50ayhYRU5MT0dfV0FSTklORywKICAgICAgICAgICAgICAgICAi
-SGl0ICNEQiBpbiBYZW4gY29udGV4dDogJTA0eDolcCBbJXBzXSwgc3RrICUw
-NHg6JXAsIGRyNiAlbHhcbiIsCg==
-
---=separator
-Content-Type: application/octet-stream; name="xsa265-4.7.patch"
-Content-Disposition: attachment; filename="xsa265-4.7.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
-bT4KU3ViamVjdDogeDg2OiBSZWZpbmUgY2hlY2tzIGluICNEQiBoYW5kbGVy
-IGZvciBmYXVsdGluZyBjb25kaXRpb25zCgpPbmUgb2YgdGhlIGZpeCBmb3Ig
-WFNBLTI2MCAoYy9zIDc1ZDY4MjhiYzIgIng4Ni90cmFwczogRml4IGhhbmRs
-aW5nIG9mICNEQgpleGNlcHRpb25zIGluIGh5cGVydmlzb3IgY29udGV4dCIp
-IGFkZGVkIHNvbWUgc2FmZXR5IGNoZWNrcyB0byBoZWxwIGF2b2lkCmxpdmVs
-b2NrcyBvZiAjREIgZmF1bHRzLgoKV2hpbGUgYSBHZW5lcmFsIERldGVjdCAj
-REIgZXhjZXB0aW9uIGRvZXMgaGF2ZSBmYXVsdCBzZW1hbnRpY3MsIGhhcmR3
-YXJlCmNsZWFycyAlZHI3LmdkIG9uIGVudHJ5IHRvIHRoZSBoYW5kbGVyLCBt
-ZWFuaW5nIHRoYXQgaXQgaXMgYWN0dWFsbHkgc2FmZSB0bwpyZXR1cm4gdG8u
-ICBGdXJ0aGVybW9yZSwgJWRyNi5nZCBpcyBndWVzdCBjb250cm9sbGVkIGFu
-ZCBzdGlja3kgKG5ldmVyIGNsZWFyZWQKYnkgaGFyZHdhcmUpLiAgQSBtYWxp
-Y2lvdXMgUFYgZ3Vlc3QgY2FuIHRoZXJlZm9yZSB0cmlnZ2VyIHRoZSBmYXRh
-bF90cmFwKCkgYW5kCmNyYXNoIFhlbi4KCkluc3RydWN0aW9uIGJyZWFrcG9p
-bnRzIGFyZSBtb3JlIHRyaWNreS4gIFRoZSBicmVha3BvaW50IG1hdGNoIGJp
-dHMgaW4gJWRyNgphcmUgbm90IHN0aWNreSwgYnV0IHRoZSBJbnRlbCBtYW51
-YWwgd2FybnMgdGhhdCB0aGV5IG1heSBiZSBzZXQgZm9yCm5vbi1lbmFibGVk
-IGJyZWFrcG9pbnRzLCBzbyBhZGQgYSBicmVha3BvaW50IGVuYWJsZWQgY2hl
-Y2suCgpCZXlvbmQgdGhhdCwgYmVjYXVzZSBvZiB0aGUgcmVzdHJpY3Rpb24g
-b24gdGhlIGxpbmVhciBhZGRyZXNzZXMgUFYgZ3Vlc3RzIGNhbgpzZXQsIGFu
-ZCB0aGUgZmF1bHQgKHJhdGhlciB0aGFuIHRyYXApIG5hdHVyZSBvZiBpbnN0
-cnVjdGlvbiBicmVha3BvaW50cwooaS5lLiBjYW4ndCBiZSBkZWZlcnJlZCBi
-eSBhIE1vdlNTIHNoYWRvdyksIHRoZXJlIHNob3VsZCBiZSBubyB3YXkgdG8K
-ZW5jb3VudGVyIGFuIGluc3RydWN0aW9uIGJyZWFrcG9pbnQgaW4gWGVuIGNv
-bnRleHQuICBIb3dldmVyLCBmb3IgZXh0cmEKcm9idXN0bmVzcywgZGVhbCB3
-aXRoIHRoaXMgc2l0dWF0aW9uIGJ5IGNsZWFyaW5nIHRoZSBicmVha3BvaW50
-IGNvbmZpZ3VyYXRpb24sCnJhdGhlciB0aGFuIGNyYXNoaW5nLgoKVGhpcyBp
-cyBYU0EtMjY1CgpTaWduZWQtb2ZmLWJ5OiBBbmRyZXcgQ29vcGVyIDxhbmRy
-ZXcuY29vcGVyM0BjaXRyaXguY29tPgpSZXZpZXdlZC1ieTogSmFuIEJldWxp
-Y2ggPGpiZXVsaWNoQHN1c2UuY29tPgoKZGlmZiAtLWdpdCBhL3hlbi9hcmNo
-L3g4Ni90cmFwcy5jIGIveGVuL2FyY2gveDg2L3RyYXBzLmMKaW5kZXggNzMx
-ZDA1NC4uZDUyOGJlOSAxMDA2NDQKLS0tIGEveGVuL2FyY2gveDg2L3RyYXBz
-LmMKKysrIGIveGVuL2FyY2gveDg2L3RyYXBzLmMKQEAgLTM4NzIsNiArMzg3
-MiwxMyBAQCB2b2lkIGRvX2RlYnVnKHN0cnVjdCBjcHVfdXNlcl9yZWdzICpy
-ZWdzKQogCiAgICAgaWYgKCAhZ3Vlc3RfbW9kZShyZWdzKSApCiAgICAgewor
-ICAgICAgICAvKgorICAgICAgICAgKiAhISEgV0FSTklORyAhISEKKyAgICAg
-ICAgICoKKyAgICAgICAgICogJWRyNiBpcyBtb3N0bHkgZ3Vlc3QgY29udHJv
-bGxlZCBhdCB0aGlzIHBvaW50LiAgQW55IGRlY3Npb25zIGJhc2UKKyAgICAg
-ICAgICogb24gaXRzIHZhbHVlIG11c3QgYmUgY3Jvc3NjaGVja2VkIHdpdGgg
-bm9uLWd1ZXN0IGNvbnRyb2xsZWQgc3RhdGUuCisgICAgICAgICAqLworCiAg
-ICAgICAgIGlmICggcmVncy0+ZWZsYWdzICYgWDg2X0VGTEFHU19URiApCiAg
-ICAgICAgIHsKICAgICAgICAgICAgIC8qIEluIFNZU0VOVEVSIGVudHJ5IHBh
-dGggd2UgY2FuJ3QgemFwIFRGIHVudGlsIEVGTEFHUyBpcyBzYXZlZC4gKi8K
-QEAgLTM4OTMsMzMgKzM5MDAsNDQgQEAgdm9pZCBkb19kZWJ1ZyhzdHJ1Y3Qg
-Y3B1X3VzZXJfcmVncyAqcmVncykKICAgICAgICAgICogQ2hlY2sgZm9yIGZh
-dWx0IGNvbmRpdGlvbnMuICBHZW5lcmFsIERldGVjdCwgYW5kIGluc3RydWN0
-aW9uCiAgICAgICAgICAqIGJyZWFrcG9pbnRzIGFyZSBmYXVsdHMgcmF0aGVy
-IHRoYW4gdHJhcHMsIGF0IHdoaWNoIHBvaW50IGF0dGVtcHRpbmcKICAgICAg
-ICAgICogdG8gaWdub3JlIGFuZCBjb250aW51ZSB3aWxsIHJlc3VsdCBpbiBh
-IGxpdmVsb2NrLgorICAgICAgICAgKgorICAgICAgICAgKiBIb3dldmVyLCBv
-biBlbnRlcmluZyB0aGUgI0RCIGhhbmRsZXIsIGhhcmR3YXJlIGNsZWFycyAl
-ZHI3LmdkIGZvcgorICAgICAgICAgKiB1cyAoYXMgY29uZmlybWVkIGJ5IHRo
-ZSBlYXJsaWVyICVkcjYgYWNjZXNzZXMgc3VjY2VlZGluZyksIG1lYW5pbmcK
-KyAgICAgICAgICogdGhhdCBhIHJlYWwgR2VuZXJhbCBEZXRlY3QgZXhjZXB0
-aW9uIGlzIHJlc3RhcnRhYmxlLgorICAgICAgICAgKgorICAgICAgICAgKiBQ
-ViBndWVzdHMgYXJlIG5vdCBwZXJtaXR0ZWQgdG8gcG9pbnQgJWRyezAuLjN9
-IGF0IFhlbiBsaW5lYXIKKyAgICAgICAgICogYWRkcmVzc2VzLCBhbmQgSW5z
-dHJ1Y3Rpb24gQnJlYWtwb2ludHMgKGJlaW5nIGZhdWx0cykgZG9uJ3QgZ2V0
-CisgICAgICAgICAqIGRlbGF5ZWQgYnkgYSBNb3ZTUyBzaGFkb3csIHNvIHdl
-IHNob3VsZCBuZXZlciBlbmNvdW50ZXIgb25lIGluCisgICAgICAgICAqIGh5
-cGVydmlzb3IgY29udGV4dC4KKyAgICAgICAgICoKKyAgICAgICAgICogSWYg
-aG93ZXZlciB3ZSBkbywgc2FmZXR5IG1lYXN1cmVzIG5lZWQgdG8gYmUgZW5h
-Y3RlZC4gIFVzZSBhIGJpZworICAgICAgICAgKiBoYW1tZXIgYW5kIGNsZWFy
-IGFsbCBkZWJ1ZyBzZXR0aW5ncy4KICAgICAgICAgICovCi0gICAgICAgIGlm
-ICggZHI2ICYgRFJfR0VORVJBTF9ERVRFQ1QgKQotICAgICAgICB7Ci0gICAg
-ICAgICAgICBwcmludGsoWEVOTE9HX0VSUiAiSGl0IEdlbmVyYWwgRGV0ZWN0
-IGluIFhlbiBjb250ZXh0XG4iKTsKLSAgICAgICAgICAgIGZhdGFsX3RyYXAo
-cmVncyk7Ci0gICAgICAgIH0KLQogICAgICAgICBpZiAoIGRyNiAmIChEUl9U
-UkFQMyB8IERSX1RSQVAyIHwgRFJfVFJBUDEgfCBEUl9UUkFQMCkgKQogICAg
-ICAgICB7Ci0gICAgICAgICAgICB1bnNpZ25lZCBpbnQgYnAsIGRyNyA9IHJl
-YWRfZGVidWdyZWcoNykgPj4gRFJfQ09OVFJPTF9TSElGVDsKKyAgICAgICAg
-ICAgIHVuc2lnbmVkIGludCBicCwgZHI3ID0gcmVhZF9kZWJ1Z3JlZyg3KTsK
-IAogICAgICAgICAgICAgZm9yICggYnAgPSAwOyBicCA8IDQ7ICsrYnAgKQog
-ICAgICAgICAgICAgewogICAgICAgICAgICAgICAgIGlmICggKGRyNiAmICgx
-dSA8PCBicCkpICYmIC8qIEJyZWFrcG9pbnQgdHJpZ2dlcmVkPyAqLwotICAg
-ICAgICAgICAgICAgICAgICAgKChkcjcgJiAoM3UgPDwgKGJwICogRFJfQ09O
-VFJPTF9TSVpFKSkpID09IDApIC8qIEluc24/ICovICkKKyAgICAgICAgICAg
-ICAgICAgICAgIChkcjcgJiAoM3UgPDwgKGJwICogRFJfRU5BQkxFX1NJWkUp
-KSkgJiYgLyogRW5hYmxlZD8gKi8KKyAgICAgICAgICAgICAgICAgICAgICgo
-ZHI3ICYgKDN1IDw8ICgoYnAgKiBEUl9DT05UUk9MX1NJWkUpICsgLyogSW5z
-bj8gKi8KKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBE
-Ul9DT05UUk9MX1NISUZUKSkpID09IERSX1JXX0VYRUNVVEUpICkKICAgICAg
-ICAgICAgICAgICB7CisgICAgICAgICAgICAgICAgICAgIEFTU0VSVF9VTlJF
-QUNIQUJMRSgpOworCiAgICAgICAgICAgICAgICAgICAgIHByaW50ayhYRU5M
-T0dfRVJSCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAiSGl0IGluc3Ry
-dWN0aW9uIGJyZWFrcG9pbnQgaW4gWGVuIGNvbnRleHRcbiIpOwotICAgICAg
-ICAgICAgICAgICAgICBmYXRhbF90cmFwKHJlZ3MpOworICAgICAgICAgICAg
-ICAgICAgICB3cml0ZV9kZWJ1Z3JlZyg3LCAwKTsKKyAgICAgICAgICAgICAg
-ICAgICAgYnJlYWs7CiAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAg
-fQogICAgICAgICB9CiAKICAgICAgICAgLyoKLSAgICAgICAgICogV2hhdGV2
-ZXIgY2F1c2VkIHRoaXMgI0RCIHNob3VsZCBiZSBhIHRyYXAuICBOb3RlIGl0
-IGFuZCBjb250aW51ZS4KLSAgICAgICAgICogR3Vlc3RzIGNhbiB0cmlnZ2Vy
-IHRoaXMgaW4gY2VydGFpbiBjb3JuZXIgY2FzZXMsIHNvIGVuc3VyZSB0aGUK
-LSAgICAgICAgICogbWVzc2FnZSBpcyByYXRlbGltaXRlZC4KKyAgICAgICAg
-ICogV2hhdGV2ZXIgY2F1c2VkIHRoaXMgI0RCIHNob3VsZCBiZSByZXN0YXJ0
-YWJsZSBieSB0aGlzIHBvaW50LiAgTm90ZQorICAgICAgICAgKiBpdCBhbmQg
-Y29udGludWUuICBHdWVzdHMgY2FuIHRyaWdnZXIgdGhpcyBpbiBjZXJ0YWlu
-IGNvcm5lciBjYXNlcywKKyAgICAgICAgICogc28gZW5zdXJlIHRoZSBtZXNz
-YWdlIGlzIHJhdGVsaW1pdGVkLgogICAgICAgICAgKi8KICAgICAgICAgZ3By
-aW50ayhYRU5MT0dfV0FSTklORywKICAgICAgICAgICAgICAgICAiSGl0ICNE
-QiBpbiBYZW4gY29udGV4dDogJTA0eDolcCBbJXBzXSwgc3RrICUwNHg6JXAs
-IGRyNiAlbHhcbiIsCg==
-
---=separator--
