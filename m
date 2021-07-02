@@ -1,19 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/02/2
-Message-ID: <9836bef6-e46b-f226-2426-892481234559@apache.org>
-Date: Thu, 02 Sep 2021 16:02:16 +0000
-From: Jeff Zhang <zjffdu@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/02/1
+Message-ID: <ca3815f4-4b9a-83ac-1f79-72a24a8d3f6c@apache.org>
+Date: Fri, 02 Jul 2021 03:22:35 +0000
+From: Jihoon Son <jihoonson@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-13929: Apache Zeppelin: Notebook permissions bypass 
+Subject: CVE-2021-26920: Apache Druid: The HTTP inputSource allows authenticated users to read data from other sources than intended 
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical
+Severity: low
 
 Description:
 
-Authentication bypass vulnerability in Apache Zeppelin allows an attacker to bypass Zeppelin authentication mechanism to act as another user.  This issue affects Apache Zeppelin Apache Zeppelin version 0.9.0 and prior versions.
+In the Druid ingestion system, the InputSource is used for reading data from a certain data source. However, the HTTP InputSource allows authenticated users to read data from other sources than intended, such as the local file system, with the privileges of the Druid server process. This is not an elevation of privilege when users access Druid directly, since Druid also provides the Local InputSource, which allows the same level of access. But it is problematic when users interact with Druid indirectly through an application that allows users to specify the HTTP InputSource, but not the Local InputSource. In this case, users could bypass the application-level restriction by passing a file URL to the HTTP InputSource.
+
+Mitigation:
+
+Users can avoid the issue by upgrading to 0.21.0 or a higher version.
+
+In an earlier version than 0.21.0, when the user application wants to restrict the access to the local file system, it should disallow all InputSources that can read local files, that is the Local, HTTP, and HDFS InputSources.
 
 Credit:
 
-Apache Zeppelin would like to thank David Woodhouse for reporting this issue 
+This issue was discovered by chybeta from the Security Team of Alibaba Cloud.
 
