@@ -1,22 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/08/2
-Message-ID: <CAKQ1sVMn=09uimvWxVZrrVRGSDk5HLCB0TQViFJp1WFNG7jvWg@mail.gmail.com>
-Date: Fri, 8 Oct 2021 20:37:33 +0200
-From: Yann Ylavic <ylavic.dev@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/04/1
+Message-ID: <14378199-be13-16b2-fd4e-c57b92064820@apache.org>
+Date: Sun, 04 Jul 2021 12:50:26 +0000
+From: Andy Seaborne <andy@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-42013: Path Traversal and Remote Code Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)
+Subject: CVE-2021-33192: Apache Jena Fuseki: Display information UI XSS 
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct 8, 2021 at 8:53 AM Roman Medina-Heigl Hernandez
-<roman@...labs.com> wrote:
->
-> I posted RCE exploit for this (it works for both CVEs: 41773 & 42013)
-> and some other details regarding requirements / exploitability, which
-> you may find useful at:
->
-> https://twitter.com/roman_soft/status/1446252280597078024
+Severity: Medium
 
-Thanks, that's fair analysis.
+Description:
 
-Cheers;
-Yann.
+A vulnerability in the HTML pages of Apache Jena Fuseki allows an attacker to execute arbitrary javascript on certain page views.  This issue affects Apache Jena Fuseki from version 2.0.0 to version 4.0.0 (inclusive).
+
+Mitigation:
+
+Users are advised to upgrade to Apache Jena 4.1.0 or later.
+
+Credit:
+
+Apache Jena would like to thank Luka Safonov for reporting this issue.
+
