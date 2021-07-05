@@ -1,49 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/24/5
-Message-ID: <CAFzhf4p-q+Lf35mfjUQwdV-yqYHQUW06BEs9rJG9OO4LL2YoNQ@mail.gmail.com>
-Date: Wed, 24 Mar 2021 19:38:11 +0000
-From: Piotr Krysiuk <piotras@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/06/1
+Message-ID: <20210705223014.GA18898@hoboy.vegasvil.org>
+Date: Mon, 5 Jul 2021 15:30:14 -0700
+From: Richard Cochran <richardcochran@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [CVE-2020-27171] Numeric error when restricting speculative pointer arithmetic allows unprivileged local users to leak content of kernel memory
+Cc: linuxptp-devel@...ts.sourceforge.net, linuxptp-users@...ts.sourceforge.net
+Subject: linuxptp: Fixes published for CVE-2021-3570 and CVE-2021-3571
 Content-Type: text/plain; charset=utf-8
 
-Some details of how CVE-2020-27171 could be exploited in practice were
-provided via linux-distros mailing list with 7 days embargo. This was
-intended to help any affected Linux distributions to assess the risk
-and decide about any appropriate actions.
+Dear list,
 
-As the embargo expires today, I was asked to share these details
-publically on oss-security.
+Now that the embargo period has expired, I published fixes for:
 
-The CVE-2020-27171 vulnerability has been successfully reproduced
-against Linux kernel v5.12-rc3 using the following logic for BPF
-program attached to a socket:
+   CVE-2021-3570 linuxptp: missing length check of forwarded messages
+   CVE-2021-3571 linuxptp: wrong length of one-step follow-up in transparent clock
 
-    load pointer to our big array into BPF_REG_MAP_PTR,
-    load offset of data to leak into BPF_REG_OFFSET,
+The fixes have been published to SourceForge and to GitHub:
 
-    BPF_MOV64_REG(BPF_REG_OOB_ADDRESS, BPF_REG_MAP_PTR),
+   https://sourceforge.net/projects/linuxptp
+   https://github.com/richardcochran/linuxptp
 
-    // load any slowly-loaded value...
-    BPF_LDX_MEM(BPF_DW, BPF_REG_SLOW_CHECK, BPF_REG_MAP_PTR, 0x1200),
+The tags with the fixes are as follows:
 
-    // ... and turn it into known zero for verifier,
-    // while preserving slowly-loaded dependency for affected hardware
-    BPF_ALU64_IMM(BPF_AND, BPF_REG_SLOW_CHECK, 1),
-    BPF_ALU64_IMM(BPF_AND, BPF_REG_SLOW_CHECK, 2),
+   v1.5.1
+   v1.6.1
+   v1.7.1
+   v1.8.1
+   v1.9.3
+   v2.0.1
+   v3.1.1
 
-    // speculatively bypassed offset check
-    BPF_JMP_REG(BPF_JNE, BPF_REG_OFFSET, BPF_REG_SLOW_CHECK,
-                skip_speculation),
+In addition, the head of the master branch (soon to be version 3.2)
+also includes the fixes.
 
-    // speculatively subtract masked BPF_REG_OFFSET from BPF_REG_OOB_ADDRESS,
-    // where incorrect mask value 0xffffffff is used due to integer underflow
-    BPF_ALU64_REG(BPF_SUB, BPF_REG_OOB_ADDRESS, BPF_REG_OFFSET),
+Although it is possible to apply the fix to versions 1.2, 1.3, and
+1.4, those versions are obsolete and do not pass our CI tests.  For
+this reason I decided to withdraw them instead.
 
-    // speculatively out-of-bounds load
-    BPF_LDX_MEM(BPF_B, BPF_REG_LEAKED_BYTE, BPF_REG_OOB_ADDRESS, 0),
-
-    transmit speculatively loaded BPF_REG_LEAKED_BYTE via side-channel,
-
-The full reproducers were shared with a number of Linux distributions
-for protection purposes.
+Thanks,
+Richard
