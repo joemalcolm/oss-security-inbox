@@ -1,37 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/19/3
-Message-Id: <CEA32CF0-DCF5-4746-9BDB-5AF9CEA1118A@dwheeler.com>
-Date: Mon, 19 Apr 2021 11:01:54 -0400
-From: "David A. Wheeler" <dwheeler@...eeler.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/06/3
+Message-ID: <deba4116-70d2-0d08-4e80-ca8da698d5ec@linux.vnet.ibm.com>
+Date: Tue, 6 Jul 2021 19:16:00 -0400
+From: Nayna <nayna@...ux.vnet.ibm.com>
 To: oss-security@...ts.openwall.com
-Cc: security@...ian.org
-Subject: Re: xscreensaver package caps gets raw socket
+Cc: George Wilson <gcwilson@...ux.ibm.com>, Mimi Zohar <zohar@...ux.ibm.com>, naynjain@....com
+Subject: CVE-2021-35039: Linux kernel loading unsigned kernel modules via init_module syscall
 Content-Type: text/plain; charset=utf-8
 
-> On Sat, 17 Apr 2021 at 07:41:15 -0700, Tavis Ormandy wrote:
->> Oh, I also pitched using popen("/bin/ping" ..), but I think nobody is
->> really convinced that will work, but I kinda like it :)
+Vulnerability: Linux Kernel loading unsigned kernel modules via 
+init_module syscall
 
-On Apr 18, 2021, at 8:25 AM, Simon McVittie <smcv@...ian.org> wrote:
+Fixes: 7c9bc0983f89 ("ima: check signature enforcement against cmdline 
+param instead of CONFIG")
 
-> That's consistent with the principle of least-privilege, and the widely
-> cited Unix philosophy of having programs that do one thing well.
-> 
-> If you need to gain privileges, then I think that's a much, much better
-> approach - ideally a new ping-like program that prints a machine-readable
-> syntax rather than having to screen-scrape human-readable output, but
-> if that's not available then ping itself is the next best thing.
+Commit:  0c18f29aae7c ("module: limit enabling module.sig_enforce")
 
+CVE:  CVE-2021-35039
 
-I agree, running “ping” in a separate process
-is FAR better than giving the “main” process
-extra permissions it doesn’t actually need.
-You’d have to be careful about the parameters sent, but that’s necessary anyway.
-I don’t see the problem of calling /bin/ping, that sounds like the right answer.
+Details:
+The IMA arch specific policy rules, when enabled on x86, arm or powerpc, 
+kernels with IMA_APPRAISE_REQUIRE_MODULE_SIGS configured, or systems 
+with custom IMA policies containing a similar module rule, require all 
+kernel modules to be signed. IMA, currently, only verifies kernel module 
+signatures loaded via finit_module and relies on CONFIG_MODULE_SIG to 
+verify kernel modules signatures loaded via init_module. The patch 
+addresses the situation where MODULE_SIG is not enabled, but 
+"module.sig_enforce=1" is specified on the boot command line.
 
-Scraping is undesirable, but sometimes needed. If this is a common need, a
-long-term solution might be to create an option on ping to generate a standard
-format that’s easier to machine-parse.
-
---- David A. Wheeler
-
+Affected Kernel Versions: 4.15 through 5.12
