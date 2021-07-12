@@ -1,70 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/06/1
-Message-ID: <YB7BNW/c2BsiVj4I@eldamar.lan>
-Date: Sat, 6 Feb 2021 17:17:57 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/12/2
+Message-ID: <20210712191614.z2bgvg2tvuiwa3wi@yuggoth.org>
+Date: Mon, 12 Jul 2021 19:16:14 +0000
+From: Jeremy Stanley <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: wpa_supplicant P2P group information processing vulnerability
+Subject: [OSSA-2021-001] Neutron: Anti-spoofing bypass for Open vSwitch networks (CVE-2021-20267)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+=============================================================
+OSSA-2021-001: Anti-spoofing bypass for Open vSwitch networks
+=============================================================
 
-On Thu, Feb 04, 2021 at 01:09:32AM +0200, Jouni Malinen wrote:
-> Published: February 4, 2021
-> Latest version available from: https://w1.fi/security/2020-2/
-> 
-> 
-> Vulnerability
-> 
-> A vulnerability was discovered in how wpa_supplicant processing P2P
-> (Wi-Fi Direct) group information from active group owners. The actual
-> parsing of that information validates field lengths appropriately, but
-> a copy of the secondary device types. This can result in writing
-> attacker controlled data into the peer entry after the area assigned for
-> the secondary device type. The overflow can result in corrupting
-> pointers for heap allocations. This can result in an attacker within
-> radio range of the device running P2P discovery being able to cause
-> unexpected behavior, including termination of the wpa_supplicant process
-> and potentially arbitrary code execution.
-> 
-> 
-> Vulnerable versions/configurations
-> 
-> wpa_supplicant v1.0-v2.9 with CONFIG_P2P build option enabled
-> 
-> An attacker (or a system controlled by the attacker) needs to be within
-> radio range of the vulnerable system to send a suitably constructed
-> management frame that triggers a P2P peer device information to be
-> created or updated.
-> 
-> 
-> Acknowledgments
-> 
-> This issue was discovered by fuzz testing of wpa_supplicant by Google's
-> OSS-Fuzz.
-> 
-> Possible mitigation steps
-> 
-> - Merge the following commit to wpa_supplicant and rebuild it:
-> 
->   P2P: Fix copying of secondary device types for P2P group client
->   
->   This patch is available from https://w1.fi/security/2020-2/
->   
-> - Update to wpa_supplicant v2.10 or newer, once available
-> 
-> - Disable P2P (control interface command "P2P_SET disabled 1" or
->   "p2p_disabled=1" in (each, if multiple interfaces used) wpa_supplicant
->   configuration file)
-> 
-> - Disable P2P from the build (remove CONFIG_P2P=y)
+:Date: July 12, 2021
+:CVE: CVE-2021-20267
 
->From https://source.android.com/security/bulletin/2021-02-01
-following/referencing to
-https://android.googlesource.com/platform/external/wpa_supplicant_8/+/0b60cb210510c68871c8d735285bc4915de3bd80
-and the information on
-https://bugzilla.redhat.com/show_bug.cgi?id=1925152 this looks that it
-hs CVE-2021-0326 assigned.
 
-Regards,
-Salvatore
+Affects
+~~~~~~~
+- Neutron: <16.3.3, >=17.0.0 <17.1.3, =18.0.0
+
+
+Description
+~~~~~~~~~~~
+David Sinquin with Gandi.net reported a vulnerability in Neutron's
+default Open vSwitch firewall rules. By sending carefully crafted
+packets, anyone in control of a server instance connected to the
+virtual switch can impersonate the IPv6 addresses of other systems
+on the network, resulting in denial of service or in some cases
+possibly interception of traffic intended for other destinations.
+Only deployments using the Open vSwitch driver are affected.
+
+
+Patches
+~~~~~~~
+- https://review.opendev.org/777873 (Queens)
+- https://review.opendev.org/791470 (Queens)
+- https://review.opendev.org/777786 (Rocky)
+- https://review.opendev.org/791469 (Rocky)
+- https://review.opendev.org/777872 (Stein)
+- https://review.opendev.org/791500 (Stein)
+- https://review.opendev.org/777785 (Train)
+- https://review.opendev.org/791468 (Train)
+- https://review.opendev.org/777784 (Ussuri)
+- https://review.opendev.org/791467 (Ussuri)
+- https://review.opendev.org/777783 (Victoria)
+- https://review.opendev.org/791465 (Victoria)
+- https://review.opendev.org/776599 (Wallaby)
+- https://review.opendev.org/791464 (Wallaby)
+- https://review.opendev.org/783743 (Xena)
+
+
+Credits
+~~~~~~~
+- David Sinquin from Gandi.net (CVE-2021-20267)
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1902917
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-20267
+
+
+Notes
+~~~~~
+- The stable/train, stable/stein, stable/rocky, and stable/queens
+  branches are under extended maintenance and will receive no new
+  point releases, but patches for them are provided as a courtesy.
+
+
+-- 
+Jeremy Stanley
+
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
