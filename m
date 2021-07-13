@@ -1,68 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/19/2
-Message-ID: <CA+-U7QBGWLJkSvg+7g8K-Aj02Svp9e6HhSRbXYPVBp8gZUBQVA@mail.gmail.com>
-Date: Mon, 19 Apr 2021 15:19:58 +0800
-From: - Nop <nopitydays@...il.com>
-To: oss-security@...ts.openwall.com, John Haxby <john.haxby@...cle.com>
-Subject: Re: Linux Kernel: out of bounds array access in dm-ioctl.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/13/1
+Message-ID: <1ac81e10-674c-00d1-5073-057cbaf17674@apache.org>
+Date: Tue, 13 Jul 2021 04:00:47 +0000
+From: Stefan Bodewig <bodewig@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-35515: Apache Commons Compress 1.6 to 1.20 denial of service vulnerability 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: low
 
-sorry for the late reply.
+Description:
 
-> DM_LIST_DEVICES_CMD, and in fact, any function called from ctl_ioctl is limited to users with CAP_SYS_ADMIN.  Without that root-equivalent privilege I don't see any way to exploit this bug. Did you find a way to exploit it as an unprivileged user?
-
-Yes, this IOCTL does need CAP_SYS_ADMIN capability which is very close
-to the real root user.
-
-The only possible exploitable scenario that I can imagine is, a user
-with CAP_SYS_ADMIN cap in a container attacks the shared kernel to
-break through the seccomp limitation.
-
-However, it is quite rare.
+When reading a specially crafted 7Z archive, the construction of the list of codecs that decompress an entry can result in an infinite loop.  This could be used to mount a denial of service attack against services that use Compress' sevenz package.
 
 
-Thanks,
+Mitigation:
 
-Bodong
+Commons Compress users should upgrade to 1.21 or later.
 
 
-On Sun, Mar 28, 2021 at 11:47 AM - Nop <nopitydays@...il.com> wrote:
+Credit:
 
-> Hi,
->
-> We found an out of bounds array accessing bug in drivers/md/dm-ioctl.c,
-> and reproduced it in the latest kernel (v5.11.10).
->
-> The root cause of this BUG is :
->
-> The field "data_size" in function ctl_ioctl is fully controlled by users
-> and this argument controls the size of kvmalloc in function copy_params.
->
-> When the data_size is in a range of [0x131,0x138], the allocated memory
-> which is pointed by the variable "param" used in ioctl
-> "DM_LIST_DEVICES_CMD" is too small, causing an oob bug at line "nl->dev =
-> 0; /* Flags no data */" (
-> https://github.com/torvalds/linux/blob/0d02ec6b3136c73c09e7859f0d0e4e2c4c07b49b/drivers/md/dm-ioctl.c#L538
-> )
->
-> Attachments are the poc, kernel config and Kernel report.
->
-> The patch:
->
-> https://github.com/torvalds/linux/commit/4edbe1d7bcffcd6269f3b5eb63f710393ff2ec7a
->      * Grab our output buffer.
->      */
->      nl = orig_nl = get_result_buffer(param, param_size, &len);
-> -    if (len < needed) {
-> +    if (len < needed || len < sizeof(nl->dev)) {
->          param->flags |= DM_BUFFER_FULL_FLAG;
->          goto out;
->      }
->
-> Regards,
-> Bodong Zhao of NISL lab, Tsinghua University
->
->
+This issue was discovered by OSS Fuzz.
+
+References:
+
+https://commons.apache.org/proper/commons-compress/security-reports.html
 
