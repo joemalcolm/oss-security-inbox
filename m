@@ -1,34 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/29/1
-Message-ID: <YLJGrad5G0KL5Ls3@kroah.com>
-Date: Sat, 29 May 2021 15:50:37 +0200
-From: Greg Kroah-Hartman <gregkh@...uxfoundation.org>
-To: Oliver Hartkopp <socketcan@...tkopp.net>
-Cc: mkl@...gutronix.de, alex.popov@...ux.com, seth.arnold@...onical.com, steve.beattie@...onical.com, cascardo@...onical.com, oss-security@...ts.openwall.com, Norbert Slusarek <nslusarek@....net>, "David S. Miller" <davem@...emloft.net>, Jakub Kicinski <kuba@...nel.org>, security@...nel.org
-Subject: Re: Linux kernel: net/can/isotp: race condition leads to local privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/13/2
+Message-ID: <e7d04b16-bcc3-c334-9e64-e57824ac1195@apache.org>
+Date: Tue, 13 Jul 2021 04:01:04 +0000
+From: Stefan Bodewig <bodewig@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-35516: Apache Commons Compress 1.6 to 1.20 denial of service vulnerability 
 Content-Type: text/plain; charset=utf-8
 
-On Fri, May 28, 2021 at 05:41:03PM +0200, Oliver Hartkopp wrote:
-> Hello Greg,
-> 
-> this patch ("can: isotp: prevent race between isotp_bind() and
-> isotp_setsockopt()") has hit Linus' tree ~36h ago:
-> 
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/net/can?id=2b17c400aeb44daf041627722581ade527bb3c1d
-> 
-> It has a CVE number and is potentially exploitable - but it was not in the
-> latest batch of stable kernels about ~4h ago.
+Severity: low
 
-Give us a chance :)
+Description:
 
-> 
-> It was obviously not tagged properly for stable kernels but has a fixes-tag:
-> 
-> Fixes: 921ca574cd38 ("can: isotp: add SF_BROADCAST support for functional
-> addressing")
-> 
-> which was introduced in 5.11
+When reading a specially crafted 7Z archive, Compress can be made to allocate large amounts of memory that finally leads to an out of memory error even for very small inputs. This could be used to mount a denial of service attack against services that use Compress' sevenz package.
 
-Now queued up, thanks.
 
-greg k-h
+This issue is being tracked as COMPRESS-542
+
+Mitigation:
+
+Commons Compress users should upgrade to 1.21 or later.
+
+With Compress 1.19 we introduced a feature that tries to recover broken 7z archives, which makes it far easier to exploit this weakness. As a result we have disabled the recovery code by default and users need to enable it explicitly. In addition users are able to control the amount of memory SevenZFile may use and we strongly recommend using this feature when trying to recover broken archives.
+
+
+Credit:
+
+This issue was first reported to the project's issue tracker as COMPRESS-542 by Robin Schimpf. Later OSS Fuzz detected ways to exploit this issue which managed to escape the initial attempt to fix it.
+
+References:
+
+https://commons.apache.org/proper/commons-compress/security-reports.html
+
