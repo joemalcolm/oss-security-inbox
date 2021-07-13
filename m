@@ -1,57 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/04/2
-Message-ID: <YJD9guSqBQ4XsUWg@itl-email>
-Date: Tue, 4 May 2021 03:53:38 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/13/4
+Message-ID: <b713094b-a7d1-a7db-4ff9-3a1fe3523d6d@apache.org>
+Date: Tue, 13 Jul 2021 04:01:33 +0000
+From: Stefan Bodewig <bodewig@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: Marek Marczykowski-Górecki <marmarek@...isiblethingslab.com>, Simon Gaiser <simon@...isiblethingslab.com>, "Srivasta S. Bhat" <srivatsa@...il.mit.edu>
-Subject: Multiple vulnerabilities in RPM
+Subject: CVE-2021-36090: Apache Commons Compress 1.0 to 1.20 denial of service vulnerability 
 Content-Type: text/plain; charset=utf-8
 
-Through a combination of manual audits and fuzzing, I found several
-vulnerabilities in RPM:
+Description:
 
-- RPM does not reject packages that have a signed header, but neither a
-  header+payload signature nor a payload digest.  Furthermore, `rpmkeys
-  -K` reports `digests signatures OK` for such packages. Such a package
-  is obviously not validly signed, but RPM nevertheless accepts it.
-  This can be mitigated by setting `%_pkgverify_level` to `signature`
-  or `all`.  I consider it a vulnerability as it violates an assumption
-  made by much of the RPM ecosystem: if a package has any signatures,
-  RPM will (by default) error out when trying to install it, unless
-  the entire package has been properly signed by a trusted key.
-  
-- RPM’s parser for OpenPGP packets has multiple memory unsafety
-  issues, including out-of-bounds reads and out-of-bounds pointer
-  arithmetic.  On 32-bit systems, integer overflows and an infinite
-  loop are also possible.  It may be possible to use this vulnerability
-  to modify a package (that is signed by a trusted key) such that
-  it still validates as properly signed, but installing it corrupts
-  the RPMDB.
-  
-I also found two issues that are not vulnerabilities per se, but which
-I still believe should be fixed:
+When reading a specially crafted ZIP archive, Compress can be made to allocate large amounts of memory that finally leads to an out of memory error even for very small inputs. This could be used to mount a denial of service attack against services that use Compress' zip package.
 
-- RPM accepts signatures that are followed by other OpenPGP packets,
-  which are not valid.  This opens additional attack surface.
 
-- RPM does not (obviously) reject signatures that are of an incorrect
-  type.  I am not sure that they do not wind up being rejected in other
-  ways, and even if they are not, I am not sure if this is helpful to
-  an attacker.  But the fix is trivial, so I included it in the patch.
-  
-The attached patches fix both issues.  The patch sent to distros@ had a
-(non-exploitable) integer overflow bug on 32-bit systems, as was pointed
-out by Seth Arnold.
+Mitigation:
 
-Sincerely,
+Commons Compress users should upgrade to 1.21 or later.
 
-Demi Marie Obenour
-she/her/hers
-Qubes OS Developer, Invisible Things Lab
+Credit:
 
-View attachment "0001-Fix-OpenPGP-parsing-bugs.patch" of type "text/plain" (9354 bytes)
+This issue was discovered by OSS Fuzz.
 
-View attachment "0002-Header-signatures-alone-are-not-sufficient.patch" of type "text/plain" (7244 bytes)
+References:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+https://commons.apache.org/proper/commons-compress/security-reports.html
+
