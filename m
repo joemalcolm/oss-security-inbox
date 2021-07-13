@@ -1,55 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/15/1
-Message-ID: <trinity-755bb2d7-d377-4996-952b-6a5cebfff497-1623789198841@3c-app-gmx-bap35>
-Date: Tue, 15 Jun 2021 22:33:18 +0200
-From: Norbert Slusarek <nslusarek@....net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/13/3
+Message-ID: <9fb69386-9b78-787a-deef-23433dbecba1@apache.org>
+Date: Tue, 13 Jul 2021 04:01:23 +0000
+From: Stefan Bodewig <bodewig@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: socketcan@...tkopp.net, mkl@...gutronix.de, menschel.p@...teo.de
-Subject: CVE-2021-34693: Infoleak in CAN BCM protocol in Linux kernel
+Subject: CVE-2021-35517: Apache Commons Compress 1.1 to 1.20 denial of service vulnerability 
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Description:
 
-this is an announcement for recently reported infoleaks in the CAN BCM
-networking protocol in the Linux kernel.
+When reading a specially crafted TAR archive, Compress can be made to allocate large amounts of memory that finally leads to an out of memory error even for very small inputs. This could be used to mount a denial of service attack against services that use Compress' tar package.
 
-The vulnerability has been assigned CVE-2021-34693 and was found in kernels
-ranging from 2.6.25-rc1 to 5.12.10.
 
-The infoleak can be found in struct bcm_msg_head, which is a structure used to
-describe CAN BCM messages. Due to an automatically introduced padding,
-the structure contains a 4-byte hole which is never initialized. The 4-byte hole
-will contain data from the kernel stack as the structure is allocated on the
-stack. Depending on the architecture, the leak happens at different places
-within the structure.
+Mitigation:
 
-On 64-bit systems,
-the 4-byte hole can be found between struct members count and ival1.
-In this case, kernel addresses can be partially revealed.
+Commons Compress users should upgrade to 1.21 or later.
 
-On 32-bit systems,
-the 4-byte hole can be found between struct members nframes and frames[0].
-In this case, kernel addresses can be fully revealed, resulting in a feasible
-KASLR bypass.
+Credit:
 
-The leak can be reached by an unprivileged user by
-reproducing the following steps:
+This issue was discovered by OSS Fuzz.
 
-- open and connect a CAN BCM socket
-- sendmsg() with RX_SETUP on socket to setup CAN BCM message receiver
-- message will be received by the message receiver, packed with struct
-  bcm_msg_head and queued for reception
-- recvmsg() to receive the message, finally leaking the uninitialized bytes to
-  userspace
+References:
 
-The patch can be found in the link below or in the attachments.
-https://lore.kernel.org/netdev/trinity-87eaea25-2a7d-4aa9-92a5-269b822e5d95-1623609211076@3c-app-gmx-bs04/T/#me01c68ad3b6784f533f1b1509c95943bb5911457
+https://commons.apache.org/proper/commons-compress/security-reports.html
 
-A short PoC can be found in the link below or in the attachments.
-https://github.com/nrb547/kernel-exploitation/tree/main/cve-2021-34693
-
-Credits go out to Norbert Slusarek and Patrick Menschel.
-
-View attachment "0001-fix-infoleak.patch" of type "text/x-patch" (1851 bytes)
-
-View attachment "poc.c" of type "text/plain" (1543 bytes)
