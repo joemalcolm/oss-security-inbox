@@ -1,76 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/21/1
-Message-ID: <20210421114855.GW3280@jumper.schlittermann.de>
-Date: Wed, 21 Apr 2021 13:48:55 +0200
-From: Heiko Schlittermann <hs@...marc.schlittermann.de>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Exim security update ahead
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/14/1
+Message-ID: <CABdrxGDe8UB=+AcQUVk87ExyEMmE3MJQ16ON7aGTuRORnbK9iw@mail.gmail.com>
+Date: Wed, 14 Jul 2021 14:27:43 -0700
+From: CJ Cullen <cjcullen@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: [kubernetes] CVE-2021-25740: Endpoint & EndpointSlice permissions allow cross-Namespace forwarding
 Content-Type: text/plain; charset=utf-8
 
-Dear Exim-Users and maintainers,
+Hello Kubernetes Community,
 
-this is a *heads up* notice only. No action is required on your part
-right now.
+A security issue was discovered with Kubernetes that could enable users to
+send network traffic to locations they would otherwise not have access to
+via a confused deputy attack.
 
-Abstract
---------
+This issue has been rated Low severity (
+CVSS:3.0/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:N/A:N
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:N/A:N>),
+and assigned CVE-2021-25740.
+Am I vulnerable?
 
-Several exploitable vulnerabilities in Exim were reported to us and are
-fixed.
+If a potential attacker can create or edit Endpoints or EndpointSlices in
+the Kubernetes API, they can potentially direct a LoadBalancer or Ingress
+implementation to expose backend IPs the attacker should not have access to.
 
-We have prepared a security release, tagged as "exim-4.94.1".
+Importantly, if the target’s NetworkPolicy already trusts the Load Balancer
+or Ingress implementation, NetworkPolicy can not be used to prevent
+exposure from other namespaces, potentially bypassing any security controls
+such as LoadBalancerSourceRanges.
 
-This release contains all changes on the exim-4.94+fixes branch plus
-security fixes.
+This issue is a design flaw that cannot be fully mitigated without
+user-facing changes. With this public announcement, we can begin
+conversations about a long-term fix.
+Affected Versions
 
-Schedule
---------
+All Kubernetes versions are affected.
+How do I mitigate this vulnerability?
 
-2021-04-27 13.30 UTC:   Grant access to the security repos
-                        for distro maintainers
+There is no patch for this issue, and it can currently only be mitigated by
+restricting access to the vulnerable features. To mitigate the exposure, we
+recommend restricting write access to Endpoints and EndpointSlices by
+updating the system:aggregate-to-edit role using the attached file. This
+will remove write access to Endpoints from the admin and edit roles:
 
-2021-05-04 13:30 UTC:   Publish the release on the public
-                        repos/website/etc
+# Allow kubectl auth reconcile to work
 
-Repositories
-------------
+kubectl annotate --overwrite clusterrole/system:aggregate-to-edit
+rbac.authorization.kubernetes.io/autoupdate=true
 
-The sources *will* be available on our security repo:
+# Test reconcile, then run for real if happy
 
-        tarballs: git@....exim.org:exim-packages-security.git
-        source:   git@....exim.org:exim-security.git
-                  tag: exim-4.94.1
+kubectl auth reconcile --remove-extra-permissions -f aggregate_to_edit.yaml
+--dry-run
 
-Access to these security Git repos will be granted for the known set of
-Exim maintainers and distro packagers first. Please reach out to us, if
-you need further details or if you think, you should be part of this
-set.
+kubectl auth reconcile --remove-extra-permissions -f aggregate_to_edit.yaml
 
-One week after granting access to the distro packagers the release will
-be pushed to the well known public repos as usual.
+# Prevent autoreconciliation back to old state
+
+kubectl annotate --overwrite clusterrole/system:aggregate-to-edit
+rbac.authorization.kubernetes.io/autoupdate=false
+
+Note: This will prevent new versions of Kubernetes from reconciling new
+default permissions to this role. No new default permissions have been
+added to this role since v1.14.0, but we recommend you remove the
+autoupdate=false
+annotation as soon as a fix or other mitigation is possible.
+
+For use-cases that need to edit these resources, we recommend creating a
+new purpose-built Role with the desired permissions, and using it only for
+those cases.
+Detection
+
+Services with an empty selector rely on custom endpoints and are vulnerable
+to the attack described above. We recommend manually auditing any such
+usage. The following kubectl command will list all Services in a cluster
+with their selector:
+
+kubectl get svc --all-namespaces -o=custom-columns='NAME:metadata.name
+,NAMESPACE:metadata.namespace,SELECTOR:spec.selector'
+
+Note: Some Services without selectors specified may have their Endpoints
+managed by other controllers or tools. For example, endpoints for the
+default/kubernetes Service are managed by the Kubernetes API Server.
+
+If you find evidence that this vulnerability has been exploited, please
+contact security@...ernetes.io
+Additional Advisory
+
+A similar attack is possible using Ingress implementations that support
+forwarding to ExternalName Services. This can be used to forward to
+Services in other namespaces or, in some cases, sensitive endpoints within
+the Ingress implementation. If you are using the Ingress API, we recommend
+confirming that the implementation you’re using either does not support
+forwarding to ExternalName Services or supports disabling the functionality.
+Additional Details
+
+See the GitHub issue for more updates:
+https://github.com/kubernetes/kubernetes/issues/103675
 
 
-Details
--------
 
-The current Exim versions (and likely older versions too) suffer from
-several exploitable vulnerabilities. These vulnerabilities were reported
-by Qualys via security@...m.org back in October 2020.
+Thank You,
 
-Due to several internal reasons it took more time than usual for the Exim
-development team to work on these reported issues in a timely manner.
+Rob Scott on behalf of Kubernetes SIG Network and CJ Cullen on behalf of
+the Kubernetes Product Security Committee
 
-We explicitly thank Qualys for reporting *and* for providing patches for
-most of the reported vulnerabilities.
+Content of type "text/html" skipped
 
-Thank you for using Exim.
-
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Download attachment "aggregate_to_edit.yaml" of type "application/x-yaml" (2142 bytes)
