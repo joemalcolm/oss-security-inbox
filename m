@@ -1,20 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/28/4
-Message-ID: <3446569.6mGmU18rGX@sinistra>
-Date: Wed, 28 Jul 2021 17:06:25 +0200
-From: Jonas Schäfer <jonas@...licki.name>
-To: oss-sec <oss-security@...ts.openwall.com>
-Cc: developers@...sody.im
-Subject: Re: Prosody XMPP server advisory 2021-07-22 (Remote Information Disclosure) (CVE-2021-37601)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/19/1
+Message-ID: <CAH8yC8nDTF9-aBtuKG+81rEYmf4QigMfwB3EEw8hwYiGHP+AeQ@mail.gmail.com>
+Date: Mon, 19 Jul 2021 14:18:05 -0400
+From: Jeffrey Walton <noloader@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Polipo: denial-of-service using range
 Content-Type: text/plain; charset=utf-8
 
-On Donnerstag, 22. Juli 2021 17:03:36 CEST Jonas Schäfer wrote:
-> CVE
-> 
-> : We have not requested a CVE yet and hereby do so.
+> I found a vulnerability in the Polipo [1],
+> lightweight, caching web proxy.
+> ...
+>
+> Polipo doesn't ignore/reject the malformed header. Instead, it has
+> an assertion:
+>
+>     server.c:1473: assert(from >= 0 && (to < 0 || to > from));
+>
+> So, a malformed Range header ("Range: bytes=3-2" for example) will
+> cause an assertion failed.  This error handling allows an attacker
+> to cause a denial of service.
 
-MITRE assigned CVE-2021-37601 after requesting via Web form.
+I would be interested to know what happens when NDEBUG is defined so
+the assert goes away. Does the server crash, does it lead to memory
+corruption, an information leakage (like a private key), or something
+else?
 
-kind regards,
-Jonas
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Jeff
