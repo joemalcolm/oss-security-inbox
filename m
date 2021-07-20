@@ -1,28 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/01/3
-Message-ID: <73c78b13-5086-02eb-a496-4367a5712949@caret.be>
-Date: Wed, 1 Dec 2021 12:52:18 +0100
-From: Jens Timmerman <jens@...et.be>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/20/3
+Message-ID: <YPbHA3xDqvcwPFLQ@nada-new>
+Date: Tue, 20 Jul 2021 14:52:19 +0200
+From: Petr Matousek <pmatouse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: IMA gadgets
+Subject: Re: CVE-2021-33909: size_t-to-int vulnerability in Linux's filesystem layer
 Content-Type: text/plain; charset=utf-8
 
+On Tue, Jul 20, 2021 at 12:36:11PM +0000, Qualys Security Advisory wrote:
+> 
+> Qualys Security Advisory
+> 
+> Sequoia: A deep root in Linux's filesystem layer (CVE-2021-33909)
+> 
 
-On 11/30/21 22:27, Grant Taylor wrote:
->
->> This means an attacker can turn any binary into a SUID binary. The 
->> signatures do not cover these file attributes, so they will still 
->> verify.
->
-> It may be possible to add SUID and / or capabilities to a signed file. 
-> But I have to question how such a questionable non-SUID binary would 
-> be given a signature in the first place?  Or asked another why, why 
-> would a questionable file be given a IMA signature in the first place? 
+upstream patch:
 
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=8cae8cd89f05f6de223d63e6d15e31c8ba9cf53b
 
-An attacker doesn't need to SUID a questionable binary, just any binary 
-that would then allow to execute commands. e.g. /usr/bin/bash  or less 
-obvious but still obvious perl, python, vim, sudoedit,  and 100's of 
-other default tools that could be used to an attackers advantage once 
-they are SUID.
+-- 
+Petr Matousek / Red Hat Product Security
+PGP: 0xC44977CA 8107 AF16 A416 F9AF 18F3  D874 3E78 6F42 C449 77CA
 
