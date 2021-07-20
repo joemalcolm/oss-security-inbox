@@ -1,33 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/11/1
-Message-ID: <CAGaRif2A+2iWiYZsKSjYzHu+0_A0SxMNWr7ivdiqw7-iK7qA0g@mail.gmail.com>
-Date: Fri, 10 Sep 2021 13:37:15 -0700
-From: lewis john mcgibbney <lewismc@...che.org>
-To: user@...23.apache.org, dev@...23.apache.org,  oss-security@...ts.openwall.com, w3c@...che.org
-Subject: CVE-2021-38555: An XML external entity (XXE) injection vulnerability exists in Apache Any23 StreamUtils.java
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/20/4
+Message-ID: <CAA8xKjWvos8zXnwjbRydi-edZhpn259KLKoLfbhspEnQwuAmwg@mail.gmail.com>
+Date: Tue, 20 Jul 2021 14:57:39 +0200
+From: Mauro Matteo Cascella <mcascell@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2021-33910: Denial of service (stack exhaustion) in systemd (PID 1)
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical
+On Tue, Jul 20, 2021 at 2:41 PM Qualys Security Advisory <qsa@...lys.com> wrote:
+>
+>
+> Qualys Security Advisory
+>
+> CVE-2021-33910: Denial of service (stack exhaustion) in systemd (PID 1)
+>
 
-Description:
+Upstream commit:
+https://github.com/systemd/systemd/pull/20256/commits/441e0115646d54f080e5c3bb0ba477c892861ab9
 
-An XML external entity (XXE) injection vulnerability was discovered in
-the Any23 StreamUtils.java file and is known to affect Any23 versions
-< 2.5. XML external entity injection (also known as XXE) is a web
-security vulnerability that allows an attacker to interfere with an
-application's processing of XML data. It often allows an attacker to
-view files on the application server filesystem, and to interact with
-any back-end or external systems that the application itself can
-access.
-
-Credit:
-
-The Apache Any23 Project Management Committee would like to thank
-Zhuxuan Wu for reporting the security vulnerability.
-
-
-
+Regards.
 -- 
-http://home.apache.org/~lewismc/
-http://people.apache.org/keys/committer/lewismc
+Mauro Matteo Cascella
+Red Hat Product Security
+PGP-Key ID: BB3410B0
 
