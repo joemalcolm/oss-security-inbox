@@ -1,42 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/12/9
-Message-ID: <CAHQ_-nSbZpFA7rqYD3OfqROuzXd_J2UXmYiGkpBFgESCxxMrxQ@mail.gmail.com>
-Date: Tue, 12 Jan 2021 08:40:41 -0800
-From: Philip Pettersson <philip.pettersson@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-20177 kernel: iptables string match rule could result in kernel panic
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/21/3
+Message-ID: <nycvar.QRO.7.76.2107210914210.25537@fvyyl>
+Date: Wed, 21 Jul 2021 09:14:51 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>,  curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>,  oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: Bad connection reuse due to flawed path name checks
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 12, 2021 at 8:06 AM Sasha Levin <sashal@...nel.org> wrote:
->
-> On Tue, Jan 12, 2021 at 03:23:16PM +0000, John Haxby wrote:
-> >> On 12 Jan 2021, at 08:04, Greg KH <greg@...ah.com> wrote:
-> >>
-> >> I still do not understand why you report issues that are fixed over a
-> >> year ago (October 2019) and assign them a CVE like this.  Who does this
-> >> help out?  And what about the thousands of other issues that are fixed
-> >> in the kernel and not assigned a CVE like this, are they somehow not as
-> >> important to your group?
-> >>
-> >> What determines what you want to give a CVE to and what you do not?
-> >
-> >
-> >I think I can answer that.   There's nothing technical going on here, it's down to the behaviour of the end users of enterprise systems.
-> >
-> >A lot of those people have a hard time understanding that they do actually want bug fixes and an even harder time understanding that they need to actually do something to install those fixes.   (I was once asked if I could fix a problem without changing anything, anything at all when the fix was a one-off chmod.)   A CVE number gets attention: think of it as getting hold of the customer by the lapels and going nose-to-nose to explain in words of one syllable they if they don't update their systems that they will crash and they will get hacked.
-> >
-> >Ooh, no, they say, we can't possibly take the risk of updating our systems.  Suppose something goes wrong?   Sheesh.   Suppose, instead, someone comes along and sees a known, fixed bug is unfixed and uses that to trash your systems.    Or that you've got a bug that crashes the machine once a week for which there's a fix.   But, no, apparently the mythical risk of a tested update vs the actual quantifiable risk of leaving the bug unfixed is so great that they'd rather take the real, quantifiable risk.   I suppose that's understandable, after a fashion, even though actual regressions are quite rare.
-> >
-> >If you present a customer with a CVE number (with or without a score) then they have SLAs which will ensure that that fix gets applied.
->
-> The subject of this thread is a "vulnerability" that requires root to
-> exploit and was fixed ages ago.
+Bad connection reuse due to flawed path name checks
+===================================================
 
-I didn't take a look at this specific bug very closely, but on certain
-distributions (Ubuntu etc) it has been possible to get CAP_NET_ADMIN
-in your own network namespace for years. An unprivileged user can
-become root with all capabilities in their own user/network namespace
-and modify local iptables rules. On Redhat systems you still need
-root.
+Project curl Security Advisory, July 21st 2021 -
+[Permalink](https://curl.se/docs/CVE-2021-22924.html)
 
-Philip
+VULNERABILITY
+-------------
+
+libcurl keeps previously used connections in a connection pool for subsequent
+transfers to reuse, if one of them matches the setup.
+
+Due to errors in the logic, the config matching function did not take 'issuer
+cert' into account and it compared the involved paths *case insensitively*,
+which could lead to libcurl reusing wrong connections.
+
+File paths are, or can be, case sensitive on many systems but not all, and can
+even vary depending on used file systems.
+
+The comparison also didn't include the 'issuer cert' which a transfer can set
+to qualify how to verify the server certificate.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+This flaw has existed in curl since commit
+[89721ff04af70f](https://github.com/curl/curl/commit/89721ff04af70f) in
+libcurl 7.10.4, released on April 2, 2003.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2021-22924 to this issue.
+
+CWE-295: Improper Certificate Validation
+
+Severity: Medium
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.10.4 to and including 7.77.0
+- Not affected versions: curl < 7.10.4 and curl >= 7.78.0
+
+Also note that libcurl is used by many applications, and not always advertised
+as such.
+
+THE SOLUTION
+------------
+
+The SSL configs are compared appropriately.
+
+A [fix for CVE-2021-22924](https://github.com/curl/curl/commit/5ea3145850ebff1dc2b13d17440300a01ca38161)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 7.78.0
+
+  B - Apply the patch to your local version
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on June 11, 2021.
+
+This advisory was posted on July 21, 2021.
+
+CREDITS
+-------
+
+This issue was reported by Harry Sintonen. Patched by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://www.wolfssl.com/contact/
