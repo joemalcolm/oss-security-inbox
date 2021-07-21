@@ -1,26 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/21/2
-Message-ID: <nycvar.QRO.7.76.2107210913520.25537@fvyyl>
-Date: Wed, 21 Jul 2021 09:14:18 +0200 (CEST)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/21/1
+Message-ID: <nycvar.QRO.7.76.2107210912470.25537@fvyyl>
+Date: Wed, 21 Jul 2021 09:13:38 +0200 (CEST)
 From: Daniel Stenberg <daniel@...x.se>
 To: curl security announcements -- curl users <curl-users@...l.haxx.se>,  curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: Metalink download sends credentials
+Subject: [SECURITY ADVISORY] curl: Wrong content via metalink not discarded
 Content-Type: text/plain; charset=utf-8
 
-Metalink download sends credentials
-===================================
+Wrong content via metalink not discarded
+========================================
 
 Project curl Security Advisory, July 21th 2021 -
-[Permalink](https://curl.se/docs/CVE-2021-22923.html)
+[Permalink](https://curl.se/docs/CVE-2021-22922.html)
 
 VULNERABILITY
 -------------
 
-When curl is instructed to get content using the metalink feature, and a user
-name and password are used to download the metalink XML file, those same
-credentials are then subsequently passed on to each of the servers from which
-curl will download or try to download the contents from. Often contrary to the
-user's expectations and intentions and without telling the user it happened.
+When curl is instructed to download content using the metalink feature, the
+contents is verified against a hash provided in the metalink XML file.
+
+The metalink XML file points out to the client how to get the same content
+from a set of different URLs, potentially hosted by different servers and the
+client can then download the file from one or several of them. In a serial or
+parallel manner.
+
+If one of the servers hosting the contents has been breached and the contents
+of the specific file on that server is replaced with a modified payload, curl
+should detect this when the hash of the file mismatches after a completed
+download. It should remove the contents and instead try getting the contents
+from another URL. This is not done, and instead such a hash mismatch is only
+mentioned in text and the potentially malicious content is kept in the file on
+disk.
+
+There's a risk the user doesn't notice the message and instead assumes the
+file is fine.
 
 We are not aware of any exploit of this flaw.
 
@@ -34,9 +47,9 @@ This flaw has existed in curl since commit
 7.27.0, released on July 27, 2012.
 
 The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2021-22923 to this issue.
+CVE-2021-22922 to this issue.
 
-CWE-522: Insufficiently Protected Credentials
+CWE-20: Improper Input Validation
 
 Severity: Medium
 
