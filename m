@@ -1,4 +1,9 @@
-Received: (qmail 3416 invoked by uid 550); 16 Jan 2025 00:40:41 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2563" "Wednesday" "21" "July" "2021" "09:13:38" "+0200" "Daniel Stenberg" "daniel@haxx.se" nil "90" "[oss-security] [SECURITY ADVISORY] curl: Wrong content via metalink not discarded" nil nil nil "7" nil nil (number mark "U       daniel@haxx. Jul 21   90/2563  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: Wrong content via metalink not discarded\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY ADVISORY] curl: Wrong content via metalink not discarded" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 7179 invoked by uid 550); 21 Jul 2021 07:13:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,70 +12,107 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 25922 invoked from network); 15 Jan 2025 22:12:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1736979136; x=1768515136;
-  h=from:to:subject:date:message-id:mime-version;
-  bh=Uw8dcUI21zZluW43GjPk1GHnfIJLicEvf/vv30w3w2E=;
-  b=b/oKbvkUNw/4aMSNKWxPicLsBffRqn8JJWwJWE7AgNtax0EDHbJipgwx
-   6kGAkWbSi90FMiN9BZsT1rhwKr0BLTVV+nvgeqpM8ghMgOYybGmtmgKQq
-   i4kQgFVi679xtsewhH638e+y2tQ/nrCgSVyN+SiFvkPiSvJIz73Ba+kq6
-   I=;
-X-IronPort-AV: E=Sophos;i="6.13,207,1732579200"; 
-   d="scan'208,217";a="689545177"
-X-Farcaster-Flow-ID: fdea9631-6bb2-4129-9ad2-b20634548430
-From: "Vellore Rajakumar, Sri Saran Balaji" <srajakum@amazon.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: [kubernetes] CVE-2024-9042: Command Injection affecting Windows
- nodes via nodes/*/logs/query API
-Thread-Index: AQHbZ5p95NuXpgNIDEahWoNbVEE8rg==
-Date: Wed, 15 Jan 2025 22:11:57 +0000
-Message-ID: <3E7469E3-7A05-4823-843A-FEE4B752EBE9@amazon.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-user-agent: Microsoft-MacOutlook/16.91.24111020
-x-originating-ip: [10.13.138.196]
-Content-Type: multipart/alternative;
-	boundary="_000_3E7469E37A054823843AFEE4B752EBE9amazoncom_"
+Received: (qmail 6122 invoked from network); 21 Jul 2021 07:13:50 -0000
+Date: Wed, 21 Jul 2021 09:13:38 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+X-X-Sender: dast@silly
+To: curl security announcements -- curl users <curl-users@cool.haxx.se>, 
+    curl-announce@cool.haxx.se, libcurl hacking <curl-library@cool.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <nycvar.QRO.7.76.2107210912470.25537@fvyyl>
+User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-Subject: [oss-security] [kubernetes] CVE-2024-9042: Command Injection affecting Windows nodes
- via nodes/*/logs/query API
-X-Spam: Yes
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl: Wrong content via metalink not discarded
 
---_000_3E7469E37A054823843AFEE4B752EBE9amazoncom_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Wrong content via metalink not discarded
+========================================
 
-SGVsbG8gS3ViZXJuZXRlcyBDb21tdW5pdHksDQpBIHNlY3VyaXR5IHZ1bG5lcmFiaWxpdHkgaGFz
-IGJlZW4gZGlzY292ZXJlZCBpbiBLdWJlcm5ldGVzIHdpbmRvd3Mgbm9kZXMgdGhhdCBjb3VsZCBh
-bGxvdyBhIHVzZXIgd2l0aCB0aGUgYWJpbGl0eSB0byBxdWVyeSBhIG5vZGUncyAnL2xvZ3MnIGVu
-ZHBvaW50IHRvIGV4ZWN1dGUgYXJiaXRyYXJ5IGNvbW1hbmRzIG9uIHRoZSBob3N0Lg0KDQpUaGlz
-IGlzc3VlIGhhcyBiZWVuIHJhdGVkIE1lZGl1bSB3aXRoIGEgQ1ZTUyB2My4xIHNjb3JlIG9mIDUu
-OSAoQ1ZTUzozLjEvQVY6Ti9BQzpIL1BSOkgvVUk6Ti9TOlUvQzpIL0k6SC9BOk48aHR0cHM6Ly93
-d3cuZmlyc3Qub3JnL2N2c3MvY2FsY3VsYXRvci8zLjEjQ1ZTUzozLjEvQVY6Ti9BQzpIL1BSOkgv
-VUk6Ti9TOlUvQzpIL0k6SC9BOk4+KSBhbmQgYXNzaWduZWQgQ1ZFLTIwMjQtOTA0Mi4NCg0KQW0g
-SSB2dWxuZXJhYmxlPw0KVGhpcyBDVkUgYWZmZWN0cyBvbmx5IFdpbmRvd3Mgd29ya2VyIG5vZGVz
-LiBZb3VyIHdvcmtlciBub2RlIGlzIHZ1bG5lcmFibGUgdG8gdGhpcyBpc3N1ZSBpZiBpdCBpcyBy
-dW5uaW5nIG9uZSBvZiB0aGUgYWZmZWN0ZWQgdmVyc2lvbnMgbGlzdGVkIGJlbG93Lg0KDQpBZmZl
-Y3RlZCBDb21wb25lbnRzDQoNCiAgKiAgIEt1YmVsZXQNCg0KQWZmZWN0ZWQgVmVyc2lvbnMNCg0K
-ICAqICAgdjEuMzIuMA0KICAqICAgdjEuMzEuMCB0byB2MS4zMS40DQogICogICB2MS4zMC4wIHRv
-IHYxLjMwLjgNCiAgKiAgIDw9djEuMjkuMTINCg0KSG93IGRvIEkgbWl0aWdhdGUgdGhpcyB2dWxu
-ZXJhYmlsaXR5Pw0KVG8gbWl0aWdhdGUgdGhpcyB2dWxuZXJhYmlsaXR5LCB5b3UgbmVlZCB0byB1
-cGdyYWRlIHRoZSBLdWJlbGV0IG9uIHlvdXIgV2luZG93cyB3b3JrZXIgbm9kZXMgdG8gb25lIG9m
-IHRoZSBmaXhlZCB2ZXJzaW9ucyBsaXN0ZWQgYmVsb3cuDQoNCkZpeGVkIFZlcnNpb25zDQoNCiAg
-KiAgIHYxLjMyLjENCiAgKiAgIHYxLjMxLjUNCiAgKiAgIHYxLjMwLjkNCiAgKiAgIHYxLjI5LjEz
-DQoNCkRldGVjdGlvbg0KVG8gZGV0ZWN0IHdoZXRoZXIgdGhpcyB2dWxuZXJhYmlsaXR5IGhhcyBi
-ZWVuIGV4cGxvaXRlZCwgeW91IGNhbiBleGFtaW5lIHlvdXIgY2x1c3RlcidzIGF1ZGl0IGxvZ3Mg
-dG8gc2VhcmNoIGZvciBub2RlICdsb2dzJyBxdWVyaWVzIHdpdGggc3VzcGljaW91cyBpbnB1dHMu
-DQoNCklmIHlvdSBmaW5kIGV2aWRlbmNlIHRoYXQgdGhpcyB2dWxuZXJhYmlsaXR5IGhhcyBiZWVu
-IGV4cGxvaXRlZCwgcGxlYXNlIGNvbnRhY3Qgc2VjdXJpdHlAa3ViZXJuZXRlcy5pbzxtYWlsdG86
-c2VjdXJpdHlAa3ViZXJuZXRlcy5pbz4NCg0KQWNrbm93bGVkZ2VtZW50cw0KVGhpcyB2dWxuZXJh
-YmlsaXR5IHdhcyByZXBvcnRlZCBieSBQZWxlZCwgVG9tZXIgYW5kIG1pdGlnYXRlZCBieSBBcmF2
-aW5kaCBQdXRoaXlhcHJhbWJpbC4NCg0KVGhhbmsgWW91LA0KQmFsYWppIG9uIGJlaGFsZiBvZiB0
-aGUgS3ViZXJuZXRlcyBTZWN1cml0eSBSZXNwb25zZSBDb21taXR0ZWUNCg0K
+Project curl Security Advisory, July 21th 2021 -
+[Permalink](https://curl.se/docs/CVE-2021-22922.html)
 
---_000_3E7469E37A054823843AFEE4B752EBE9amazoncom_--
+VULNERABILITY
+-------------
+
+When curl is instructed to download content using the metalink feature, the
+contents is verified against a hash provided in the metalink XML file.
+
+The metalink XML file points out to the client how to get the same content
+from a set of different URLs, potentially hosted by different servers and the
+client can then download the file from one or several of them. In a serial or
+parallel manner.
+
+If one of the servers hosting the contents has been breached and the contents
+of the specific file on that server is replaced with a modified payload, curl
+should detect this when the hash of the file mismatches after a completed
+download. It should remove the contents and instead try getting the contents
+from another URL. This is not done, and instead such a hash mismatch is only
+mentioned in text and the potentially malicious content is kept in the file on
+disk.
+
+There's a risk the user doesn't notice the message and instead assumes the
+file is fine.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+This flaw exists only in the curl tool. libcurl is not affected.
+
+This flaw has existed in curl since commit
+[b5fdbe848bc3d](https://github.com/curl/curl/commit/b5fdbe848bc3d) in curl
+7.27.0, released on July 27, 2012.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2021-22922 to this issue.
+
+CWE-20: Improper Input Validation
+
+Severity: Medium
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.27.0 to and including 7.77.0
+- Not affected versions: curl < 7.27.0 and curl >= 7.78.0
+
+THE SOLUTION
+------------
+
+curl has completely removed the metalink feature as of 7.78.0. No fix for this
+flaw will be produced by the curl project.
+
+The fix for earlier versions is to rebuild curl with the metalink support
+switched off!
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 7.78.0
+
+  B - Make sure you do not use metalink with curl
+
+  C - Disable metalink in your build
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on May 30, 2021.
+
+This advisory was posted on Jul 21, 2021.
+
+CREDITS
+-------
+
+This issue was reported by Harry Sintonen. Patched by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://www.wolfssl.com/contact/
