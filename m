@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1565" "Friday" "28" "August" "2015" "11:14:36" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150828151436.42A516C0001@smtpvmsrv1.mitre.org>" "37" "[oss-security] Re: CVE request: XSS vulnerability in jsoup related to incomplete tags at EOF" nil nil nil "8" "2015082815:14:36" "[oss-security] Re: CVE request: XSS vulnerability in jsoup related to incomplete tags at EOF" (number mark "U       cve-assign@m Aug 28   37/1565  " thread-indent "\"[oss-security] Re: CVE request: XSS vulnerability in jsoup related to incomplete tags at EOF\"\n") "<55E0165B.1020601@redhat.com>" ("<55E0165B.1020601@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2436" "Wednesday" "21" "July" "2021" "09:15:24" "+0200" "Daniel Stenberg" "daniel@haxx.se" nil "88" "[oss-security] [SECURITY ADVISORY] curl: TELNET stack contents disclosure again" nil nil nil "7" nil nil (number mark "U       daniel@haxx. Jul 21   88/2436  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: TELNET stack contents disclosure again\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY ADVISORY] curl: TELNET stack contents disclosure again" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 16289 invoked by uid 550); 28 Aug 2015 15:14:49 -0000
+Received: (qmail 19994 invoked by uid 550); 21 Jul 2021 07:15:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +11,106 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16256 invoked from network); 28 Aug 2015 15:14:48 -0000
-In-Reply-To: <55E0165B.1020601@redhat.com>
-Message-Id: <20150828151436.42A516C0001@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri, 28 Aug 2015 11:14:36 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: XSS vulnerability in jsoup related to incomplete tags at EOF
-To: fweimer@redhat.com
+Received: (qmail 19929 invoked from network); 21 Jul 2021 07:15:36 -0000
+Date: Wed, 21 Jul 2021 09:15:24 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+X-X-Sender: dast@silly
+To: curl security announcements -- curl users <curl-users@cool.haxx.se>, 
+    curl-announce@cool.haxx.se, libcurl hacking <curl-library@cool.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <nycvar.QRO.7.76.2107210915010.25537@fvyyl>
+User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl: TELNET stack contents disclosure again
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+TELNET stack contents disclosure again
+======================================
 
-> https://github.com/jhy/jsoup/pull/582
-> https://hibernate.atlassian.net/browse/HV-1012
-> https://issues.jboss.org/browse/WFLY-5223
+Project curl Security Advisory, July 21st 2021 -
+[Permalink](https://curl.se/docs/CVE-2021-22925.html)
 
-Use CVE-2015-6748 for this jsoup vulnerability.
+VULNERABILITY
+-------------
 
-(Although the http://www.openwall.com/lists/oss-security/2015/08/28/3
-message mentions "We use Hibernate Validator (HV) ..." in its quoted
-text, this does not mean that the Hibernate Validator product is used
-by the jsoup product. The actual relationship is that jsoup is used by
-Hibernate Validator (and jsoup is used by WildFly).)
+curl supports the `-t` command line option, known as `CURLOPT_TELNETOPTIONS`
+in libcurl. This rarely used option is used to send variable=content pairs to
+TELNET servers.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Due to flaw in the option parser for sending `NEW_ENV` variables, libcurl
+could be made to pass on uninitialized data from a stack based buffer to the
+server. Therefore potentially revealing sensitive internal information to the
+server using a clear-text network protocol.
 
-iQIcBAEBCAAGBQJV4HpBAAoJEL54rhJi8gl5sAIQAL66ByVY6dMH+ufoKvpFodZW
-1qtTauto6+8hGgE6mqRFnkVJmca3ZrgsPZG0k6KnQTWuLq9PT0rwmd/WRNZGwV0n
-mqaJ+lLM59p3sztISPICkboCR+/03RDlmWXwlbrsZfFrLbfWb9qYv5R3cvNjJrA/
-mKNLCwznnkv4T5yWSwkRMZVctZwnv/YXqKTFHBRoUdhgV8iVLRJJIT2WapeATWpu
-ksL/wjP4TBqfZCPm7fqlQdHStzuBXioFhb/7l3icg2gF1zOS+tgb1unPmUY7KtHE
-3qVGzF171KmTUkzyInWk1jiGvXSGt98T0lyBDpHcmiJ++dW/a+gZczg8vdrL+O7x
-KVwjmI+dvEpYozwQCNNySzZfvwOo1u42Dm34Djyheg3nW/kKl/YEod032aR4nodg
-S4ZUG5+nCf//TGQ0/SUKB7iTBE03ZYGn6mnZ149sfg0c+kTM+y9RCSUaaobZubZx
-5vq1sKVKV9YgSs3TCUr90Hcp5OKSXG+GNayo2R+bsf2A8I796NSEZodu6Wfgm3MM
-B3CGmI7/EcLYWObdj0hZp5XjrM+8IEp10rkSfQeIetUoX+TX7RWKHX1ltG/ZTXSS
-qt/HhKJmIx0PkbDqOOi8Nb8WOgtuaok81bJgYFQ/TH/0USQA4vGMOeYyd8YzjSmb
-R8MYLER1ri1zeY6i0aPt
-=P+gf
------END PGP SIGNATURE-----
+This could happen because curl did not call and use sscanf() correctly when
+parsing the string provided by the application.
+
+The previous curl security vulnerability
+[CVE-2021-22898](https://curl.se/docs/CVE-2021-22898.html) is almost identical
+to this one but the fix was insufficient so this security vulnerability
+remained.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+This flaw has existed in curl since commit
+[a1d6ad2610](https://github.com/curl/curl/commit/a1d6ad2610) in libcurl 7.7,
+released on March 22, 2001. There was a previous attempt to fix this issue in
+curl 7.77.0 but it was not done proper.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2021-22925 to this issue.
+
+CWE-457: Use of Uninitialized Variable
+
+Severity: Medium
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.7 to and including 7.77.0
+- Not affected versions: curl < 7.7 and curl >= 7.78.0
+
+Also note that libcurl is used by many applications, and not always advertised
+as such.
+
+THE SOLUTION
+------------
+
+Use sscanf() properly and only use properly filled-in buffers.
+
+A [fix for CVE-2021-22925](https://github.com/curl/curl/commit/894f6ec730597eb243618d33cc84d71add8d6a8a)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 7.78.0
+
+  B - Apply the patch to your local version
+
+  C - Avoid using `CURLOPT_TELNETOPTIONS`
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on June 11, 2021.
+
+This advisory was posted on July 21, 2021.
+
+CREDITS
+-------
+
+This issue was reported and patched by Red Hat Product Security.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://www.wolfssl.com/contact/
