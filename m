@@ -1,53 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/17/9
-Message-ID: <20210317130514.GA1279@grsecurity.net>
-Date: Wed, 17 Mar 2021 09:05:14 -0400
-From: Brad Spengler <spender@...ecurity.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-3428 Linux kernel: integer overflow in ext4_es_cache_extent
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/21/4
+Message-ID: <nycvar.QRO.7.76.2107210915010.25537@fvyyl>
+Date: Wed, 21 Jul 2021 09:15:24 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>,  curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>,  oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: TELNET stack contents disclosure again
 Content-Type: text/plain; charset=utf-8
 
-Hi Greg,
+TELNET stack contents disclosure again
+======================================
 
-> Please include what kernel version things like this were "found in" and
-> when it was fixed, otherwise you force everyone to go scramble just to
-> find that this was reported in July of 2020 and fixed then in the 5.9
-> kernel release and has already been backported to all relevant stable
-> kernel releases in August of last year.
+Project curl Security Advisory, July 21st 2021 -
+[Permalink](https://curl.se/docs/CVE-2021-22925.html)
 
-Those are a lot of assumptions there.  I do wonder how you feel you can
-ignore the CVE process the rest of the world is engaged in, while at the
-same time boss around those engaged in it.  But setting aside the irony
-of someone telling the world "if you want to know what was fixed or not,
-we publish the source, figure it out for yourself" being irate at being
-handed the same terms, I went ahead and did the investigation for you.
+VULNERABILITY
+-------------
 
-The fix (part of the patch series https://www.spinics.net/lists/linux-ext4/msg73471.html):
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ce9f24cccdc019229b70a5c15e2b09ad9c0ab5d1
-was included in 5.9, and was backported through to 5.7.  However, you'll
-note the fixes tag points to a commit first appearing in 5.2.  That commit
-commit itself was backported to some earlier stable kernels, like 4.14.
+curl supports the `-t` command line option, known as `CURLOPT_TELNETOPTIONS`
+in libcurl. This rarely used option is used to send variable=content pairs to
+TELNET servers.
 
-Why wasn't the fix for this CVE backported to kernels older than 5.7? For
-the same reason many other bugs/vulnerabilities don't get backported: small,
-often trivial conflicts.
+Due to flaw in the option parser for sending `NEW_ENV` variables, libcurl
+could be made to pass on uninitialized data from a stack based buffer to the
+server. Therefore potentially revealing sensitive internal information to the
+server using a clear-text network protocol.
 
-In this instance, it becomes clear the reason why it wasn't backported any
-further than 5.7 is because 5.7 contained the following commit:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=54d3adbc29f0c7c53890da1683e629cd220d7201
+This could happen because curl did not call and use sscanf() correctly when
+parsing the string provided by the application.
 
-without which there is a small conflict in fs/ext4/block_validity.c:
-<<<<<<< HEAD
-                else {
-                        sbi->s_es->s_last_error_block = cpu_to_le64(start_blk);
-                        return 0;
-                }
-=======
-                else
-                        return entry->ino == ino;
->>>>>>> ce9f24cccdc0... ext4: check journal inode extents more carefully
+The previous curl security vulnerability
+[CVE-2021-22898](https://curl.se/docs/CVE-2021-22898.html) is almost identical
+to this one but the fix was insufficient so this security vulnerability
+remained.
 
-Thanks,
--Brad
+We are not aware of any exploit of this flaw.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+INFO
+----
+
+This flaw has existed in curl since commit
+[a1d6ad2610](https://github.com/curl/curl/commit/a1d6ad2610) in libcurl 7.7,
+released on March 22, 2001. There was a previous attempt to fix this issue in
+curl 7.77.0 but it was not done proper.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2021-22925 to this issue.
+
+CWE-457: Use of Uninitialized Variable
+
+Severity: Medium
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.7 to and including 7.77.0
+- Not affected versions: curl < 7.7 and curl >= 7.78.0
+
+Also note that libcurl is used by many applications, and not always advertised
+as such.
+
+THE SOLUTION
+------------
+
+Use sscanf() properly and only use properly filled-in buffers.
+
+A [fix for CVE-2021-22925](https://github.com/curl/curl/commit/894f6ec730597eb243618d33cc84d71add8d6a8a)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 7.78.0
+
+  B - Apply the patch to your local version
+
+  C - Avoid using `CURLOPT_TELNETOPTIONS`
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on June 11, 2021.
+
+This advisory was posted on July 21, 2021.
+
+CREDITS
+-------
+
+This issue was reported and patched by Red Hat Product Security.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://www.wolfssl.com/contact/
