@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4883" "Wednesday" "25" "January" "2017" "07:23:03" "+0100" "Solar Designer" "solar@openwall.com" "<20170125062303.GA2590@openwall.com>" "138" "Re: [oss-security] CVE request: GNU screen escalation" "^Cc:" nil nil "1" "2017012506:23:03" "[oss-security] CVE request: GNU screen escalation" (number mark "        solar@openwa Jan 25  138/4883  " thread-indent "\"Re: [oss-security] CVE request: GNU screen escalation\"\n") "<20170124212856.ocstdst36umdvuvs@pisco.westfalen.local>" ("<20170124212856.ocstdst36umdvuvs@pisco.westfalen.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1994" "Wednesday" "21" "July" "2021" "09:14:18" "+0200" "Daniel Stenberg" "daniel@haxx.se" nil "77" "[oss-security] [SECURITY ADVISORY] curl: Metalink download sends credentials" nil nil nil "7" nil nil (number mark "U       daniel@haxx. Jul 21   77/1994  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: Metalink download sends credentials\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY ADVISORY] curl: Metalink download sends credentials" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3641 invoked by uid 550); 25 Jan 2017 06:23:40 -0000
+Received: (qmail 12077 invoked by uid 550); 21 Jul 2021 07:14:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,156 +11,95 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3437 invoked from network); 25 Jan 2017 06:23:14 -0000
-Message-ID: <20170125062303.GA2590@openwall.com>
-References: <20170124212856.ocstdst36umdvuvs@pisco.westfalen.local>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170124212856.ocstdst36umdvuvs@pisco.westfalen.local>
-User-Agent: Mutt/1.4.2.3i
-Cc: abe@debian.org
-Date: Wed, 25 Jan 2017 07:23:03 +0100
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE request: GNU screen escalation
-To: oss-security@lists.openwall.com
+Received: (qmail 12012 invoked from network); 21 Jul 2021 07:14:29 -0000
+Date: Wed, 21 Jul 2021 09:14:18 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+X-X-Sender: dast@silly
+To: curl security announcements -- curl users <curl-users@cool.haxx.se>, 
+    curl-announce@cool.haxx.se, libcurl hacking <curl-library@cool.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <nycvar.QRO.7.76.2107210913520.25537@fvyyl>
+User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl: Metalink download sends credentials
 
-On Tue, Jan 24, 2017 at 10:28:56PM +0100, Moritz Muehlenhoff wrote:
-> please assign a CVE ID for this vulnerability in GNU screen:
-> https://lists.gnu.org/archive/html/screen-devel/2017-01/msg00025.html
+Metalink download sends credentials
+===================================
 
-Per oss-security list content guidelines:
+Project curl Security Advisory, July 21th 2021 -
+[Permalink](https://curl.se/docs/CVE-2021-22923.html)
 
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
+VULNERABILITY
+-------------
 
-"At least the most essential part of your message (e.g., vulnerability
-detail and/or exploit) should be directly included in the message itself
-(and in plain text), rather than only included by reference to an
-external resource.  Posting links to relevant external resources as well
-is acceptable, but posting only links is not.  Your message should remain
-valuable even with all of the external resources gone."
+When curl is instructed to get content using the metalink feature, and a user
+name and password are used to download the metalink XML file, those same
+credentials are then subsequently passed on to each of the servers from which
+curl will download or try to download the contents from. Often contrary to the
+user's expectations and intentions and without telling the user it happened.
 
-let's be including the actual content in here, in addition to links.
+We are not aware of any exploit of this flaw.
 
-The screen-devel above is:
+INFO
+----
 
----
-From:	anonymous
-Subject: 	[screen-devel] [bug #50142] root exploit 4.5.0
-Date: 	Tue, 24 Jan 2017 19:05:10 +0000 (UTC)
+This flaw exists only in the curl tool. libcurl is not affected.
 
-URL:
-  <http://savannah.gnu.org/bugs/?50142>
+This flaw has existed in curl since commit
+[b5fdbe848bc3d](https://github.com/curl/curl/commit/b5fdbe848bc3d) in curl
+7.27.0, released on July 27, 2012.
 
-                 Summary: root exploit 4.5.0
-                 Project: GNU Screen
-            Submitted by: None
-            Submitted on: Tue 24 Jan 2017 07:05:09 PM UTC
-                Category: Program Logic
-                Severity: 3 - Normal
-                Priority: 5 - Normal
-                  Status: None
-                 Privacy: Private
-             Assigned to: None
-             Open/Closed: Open
-         Discussion Lock: Any
-                 Release: None
-           Fixed Release: None
-         Planned Release: None
-           Work Required: None
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2021-22923 to this issue.
 
-    _______________________________________________________
+CWE-522: Insufficiently Protected Credentials
 
-Details:
+Severity: Medium
 
-Commit f86a374 ("screen.c: adding permissions check for the logfile
-name",
-2015-11-04)
+AFFECTED VERSIONS
+-----------------
 
-The check opens the logfile with full root privileges. This allows us to
-truncate any file or create a root-owned file with any contents in any
-directory and can be easily exploited to full root access in several
-ways.
+- Affected versions: curl 7.27.0 to and including 7.77.0
+- Not affected versions: curl < 7.27.0 and curl >= 7.78.0
 
-> address@hidden:~$ screen --version
-> Screen version 4.05.00 (GNU) 10-Dec-16
-> address@hidden:~$ id
-> uid=125(buczek) gid=125(buczek)
-groups=125(buczek),15(users),19(adm),42(admin),154(Omp3grp),200(algrgrp),209(cdgrp),242(gridgrp),328(nchemgrp),407(hoeheweb),446(spwgrp),453(helpdesk),512(twikigrp),584(zmgrp),598(edv),643(megamgrp),677(greedgrp),5000(abt_srv),16003(framesgr),16012(chrigrp),17001(priv_cpw)
-> address@hidden:~$ cd /etc
-> address@hidden:/etc (master)$ screen -D -m -L bla.bla echo fail
-> address@hidden:/etc (master)$ ls -l bla.bla
-> -rw-rw---- 1 root buczek 6 Jan 24 19:58 bla.bla
-> address@hidden:/etc (master)$ cat bla.bla
-> fail
-> address@hidden:/etc (master)$ 
+THE SOLUTION
+------------
 
-Donald Buczek <address@hidden>
----
+curl has completely removed the metalink feature as of 7.78.0. No fix for this
+flaw will be produced by the curl project.
 
-There are some follow-ups, notably Axel Beckert pointing out that the
-issue appears to have been introduced on 2016-11-04 (not 2015-11-04):
+The fix for earlier versions is to rebuild curl with the metalink support
+switched off!
 
----
-> Commit f86a374 ("screen.c: adding permissions check for the logfile name",
-> 2015-11-04)
+RECOMMENDATIONS
+--------------
 
-There is no such commit id, neither in the master branch nor in the
-screen-v4 branch.
+  A - Upgrade curl to version 7.78.0
 
-I assume you meant one of these two commits instead:
+  B - Make sure you do not use metalink with curl
 
-master: 
-http://git.savannah.gnu.org/cgit/screen.git/commit/?id=c575c40c9bd7653470639da32e06faed0a9b2ec4
-screen-v4: 
-http://git.savannah.gnu.org/cgit/screen.git/commit/?h=screen-v4&id=5460f5d28c01a9a58e021eb1dffef2965e629d58
+  C - Disable metalink in your build
 
-The latter is the one included in Screen 4.5.0.
----
+TIMELINE
+--------
 
-The commits add this code:
+This issue was reported to the curl project on May 30, 2021.
 
----
-+              FILE *w_check;
-+              if ((w_check = fopen(screenlogfile, "w")) == NULL)
-+                Panic(0, "-L: logfile name access problem");
-+              else
-+                fclose(w_check);
----
+This advisory was posted on Jul 21, 2021.
 
-apparently into command-line option parsing in main(), thus apparently
-prior to dropping the privileges.  (I didn't review this in context.)
+CREDITS
+-------
 
-Last but not least, I hope distros don't install screen SUID root these
-days.  If any distro does, this is yet another reminder to reconsider.
+This issue was reported by Harry Sintonen. Patched by Daniel Stenberg.
 
-Some install it SGID utmp.  Some take it a step further - Owl and ALT
-Linux install it SGID to group screen, which only grants the ability to
-invoke utempter (SGID utmp) and tcp_chkpwd (SGID shadow).  Thus, it'd
-take a vulnerability in those other tools to make much use of a screen
-vulnerability.  Here's an excerpt from ALT Linux's spec file:
+Thanks a lot!
 
-%post
-ln -f %_libexecdir/chkpwd/tcb_chkpwd %_libexecdir/screen/
-ln -f %_libexecdir/utempter/utempter %_libexecdir/screen/
+-- 
 
-%preun
-if [ $1 -eq 0 ]; then
-rm -f %_libexecdir/screen/{tcb_chkpwd,utempter}
-fi
-
-%triggerin -- pam_tcb >= 0.9.7.1
-ln -f %_libexecdir/chkpwd/tcb_chkpwd %_libexecdir/screen/
-
-%triggerin -- libutempter >= 1.0.6
-ln -f %_libexecdir/utempter/utempter %_libexecdir/screen/
-
-%files
-%attr(2711,root,screen) %_bindir/screen
-%attr(710,root,screen) %dir %_libexecdir/screen
-%attr(2711,root,shadow) %ghost %_libexecdir/screen/tcb_chkpwd
-%attr(2711,root,utmp) %ghost %_libexecdir/screen/utempter
-%attr(775,root,screen) %dir /var/run/screen/
-
-Alexander
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://www.wolfssl.com/contact/
