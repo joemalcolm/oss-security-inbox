@@ -1,40 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/18/1
-Message-ID: <CAF1aazDWpE1kmRv92N2sGtH_B4OC0cJJVrK8qJfxvXt33s_B5A@mail.gmail.com>
-Date: Tue, 17 Aug 2021 18:09:32 -0400
-From: Dave <snoopdave@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-33580: Apache Roller: regex injection leading to DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/21/2
+Message-ID: <nycvar.QRO.7.76.2107210913520.25537@fvyyl>
+Date: Wed, 21 Jul 2021 09:14:18 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...l.haxx.se>,  curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>,  oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: Metalink download sends credentials
 Content-Type: text/plain; charset=utf-8
 
-Severity: Low: This attack will only work if Banned-words Referrer
-processing is turned on in Roller and it is off-by-default.
+Metalink download sends credentials
+===================================
 
-Description:
+Project curl Security Advisory, July 21th 2021 -
+[Permalink](https://curl.se/docs/CVE-2021-22923.html)
 
-User controlled `request.getHeader("Referer")`,
-`request.getRequestURL()` and `request.getQueryString()` are used to
-build and run a regex expression.
+VULNERABILITY
+-------------
 
-The attacker doesn't have to use a browser and may send a specially
-crafted Referer header programmatically. Since the attacker controls
-the string and the regex pattern he may cause a ReDoS by regex
-catastrophic backtracking on the server side.
+When curl is instructed to get content using the metalink feature, and a user
+name and password are used to download the metalink XML file, those same
+credentials are then subsequently passed on to each of the servers from which
+curl will download or try to download the contents from. Often contrary to the
+user's expectations and intentions and without telling the user it happened.
 
+We are not aware of any exploit of this flaw.
 
-Mitigation:
+INFO
+----
 
-This problem has been fixed in Roller 6.0.2. If you are not able to
-upgrade then you can "work around" the problem.
+This flaw exists only in the curl tool. libcurl is not affected.
 
-If Banned-Words Referrer processing is enabled and you are concerned
-about this type of attack then disable it.
+This flaw has existed in curl since commit
+[b5fdbe848bc3d](https://github.com/curl/curl/commit/b5fdbe848bc3d) in curl
+7.27.0, released on July 27, 2012.
 
-In the Roller properties, set this property
-site.bannedwordslist.enable.referrers=false
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2021-22923 to this issue.
 
-Credit:
+CWE-522: Insufficiently Protected Credentials
 
-Apache Roller would like to thank Ed Ra (https://github.com/edvraa)
-for reporting this.
+Severity: Medium
 
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.27.0 to and including 7.77.0
+- Not affected versions: curl < 7.27.0 and curl >= 7.78.0
+
+THE SOLUTION
+------------
+
+curl has completely removed the metalink feature as of 7.78.0. No fix for this
+flaw will be produced by the curl project.
+
+The fix for earlier versions is to rebuild curl with the metalink support
+switched off!
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 7.78.0
+
+  B - Make sure you do not use metalink with curl
+
+  C - Disable metalink in your build
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on May 30, 2021.
+
+This advisory was posted on Jul 21, 2021.
+
+CREDITS
+-------
+
+This issue was reported by Harry Sintonen. Patched by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://www.wolfssl.com/contact/
