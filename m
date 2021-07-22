@@ -1,34 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/21/1
-Message-ID: <ab4895c3-fe33-99c7-6182-0d4aa05fff32@les7arts.com>
-Date: Sun, 21 Mar 2021 14:01:37 +0100
-From: Jacques Le Roux <jacques.le.roux@...7arts.com>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2021-26295] RCE vulnerability in latest Apache OFBiz due to Java serialisation using RMI
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/22/4
+Message-ID: <20210722113545.hewzinrjmy7jon6c@jwilk.net>
+Date: Thu, 22 Jul 2021 13:35:45 +0200
+From: Jakub Wilk <jwilk@...lk.net>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: ipython3 may execute code from the current working directory
 Content-Type: text/plain; charset=utf-8
 
-Severity:
-High
+* Georgi Guninski <gguninski@...il.com>, 2021-07-22, 11:52:
+>Summary: under certain circumstances, ipython3 may execute code from 
+>the current working directory.
 
-Vendor:
-The Apache Software Foundation
+Looks like this might be intentional? Or at least there's an option to 
+turn off this behavior:
 
-Versions Affected:
-OFBiz versions prior to 17.12.06
+https://github.com/ipython/ipython/blob/7.25.0/IPython/core/shellapp.py#L219
+https://ipython.readthedocs.io/en/stable/config/options/kernel.html#configtrait-InteractiveShellApp.ignore_cwd
 
-Description:
-Apache OFBiz has unsafe deserialization prior to 17.12.06.
-An unauthenticated attacker can use this vulnerability to successfully take over Apache OFBiz.
+However, in some Debian packages (at least 5.8.0-1 from Debian buster), 
+even --ignore-cwd doesn't help, because /usr/bin/python3 looks like 
+this:
 
-Mitigation:
-Upgrade to at least 17.12.06
-or apply the patch at https://github.com/apache/ofbiz-framework/commit/af9ed4e/
+   VERSION="3"
+   if [ ! -f /usr/bin/python$VERSION ]
+   then
+           echo "Please install the python$VERSION package." >&2
+           exit 1
+   else
+           exec python$VERSION -c "import sys; sys.argv[0] = '/usr/bin/ipython$VERSION'; from IPython.terminal.ipapp import launch_new_instance; launch_new_instance()" "$@"
+   fi
 
-Credit:
-r00t4dm at Cloud-Penetrating Arrow Lab <r00t4dm@...il.com>
-MagicZero from SGLAB of Legendsec at Qi'anxin Group.
-Longofo at Knownsec 404 Team
+But "python3 -c" adds cwd to sys.path.
 
-References:
-http://ofbiz.apache.org/download.html#vulnerabilities
-
+-- 
+Jakub Wilk
