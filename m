@@ -1,35 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/19/10
-Message-ID: <CAPP0f96WPsiSAzNkmPrPiPcFQ7g7NGG8yfVjPH85U2GOCtExJQ@mail.gmail.com>
-Date: Tue, 19 Jan 2021 21:00:46 +0530
-From: Utkarsh Gupta <utkarsh@...ian.org>
-To: taviso@...il.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: mutt recipient parsing memory leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/22/2
+Message-ID: <CAGUWgD9MsQts5_jV9=nr8X6mwZyW-NU2JzYnosdMqQ0G06nH6w@mail.gmail.com>
+Date: Thu, 22 Jul 2021 11:52:05 +0300
+From: Georgi Guninski <gguninski@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: ipython3 may execute code from the current working directory
 Content-Type: text/plain; charset=utf-8
 
-Hi Tavis,
+Summary: under certain circumstances, ipython3 may execute
+code from the current working directory. This might be a
+problem if the current working directory is not trusted.
 
-On Mon, Jan 18, 2021 at 1:11 AM Tavis Ormandy <taviso@...il.com> wrote:
-> Hello, I noticed mutt was leaking memory whenever I opened a particular
-> mailbox. I tracked down the problem: Using rfc822 groups without the madatory
-> labels wasn't being parsed properly.
->
-> https://tools.ietf.org/html/rfc822#section-6.2.6
->
-> (A spammer had just put some junk in there, they weren't deliberately using
-> exotic addressing schemes.. haha).
->
-> It turns out that you can send a small message that leaks a *lot* of memory. A
-> small message can leak GBs of memory, effectively preventing you from opening
-> your mailbox. You would need to use a different mail client to clean up the
-> malformed message before you can use mutt again.
->
-> I sent this upstream as a DoS, but they don't want to treat it as a security
-> isssue. I though I'd just send a FYI here instead in case anyone wants to
-> backport the patch.
+python3 is safe.
 
-Got CVE-2021-3181 assigned for this!
+Tested on ubuntu 20.
 
+The following session illustrates it:
 
-- u
+joro@...lokote:~/tests/dir2$ pwd
+/home/joro/tests/dir2
+joro@...lokote:~/tests/dir2$ ipython3 --version
+7.13.0
+joro@...lokote:~/tests/dir2$ ls ~/tests/dir1
+a.py  joro-orig.py  __pycache__
+joro@...lokote:~/tests/dir2$ ls ~/tests/dir2
+joro.py  __pycache__
+joro@...lokote:~/tests/dir2$ cat ~/tests/dir1/a.py
+try:  import joro
+except:  print("error in import")
+joro@...lokote:~/tests/dir2$ cat ~/tests/dir2/joro.py
+print("imported joro :)")
+joro@...lokote:~/tests/dir2$ ipython3 ~/tests/dir1/a.py
+imported joro :)
+joro@...lokote:~/tests/dir2$
