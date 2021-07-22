@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7044" "Wednesday" "30" "March" "2016" "15:24:54" "-0300" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdQ1V7zLe=vy3msAAEF+vPpaYmftukhMBtRre=eKbk7MyQ@mail.gmail.com>" "126" "[oss-security] Re: CVE request: Heap overflow in VLC 2.1.6 processing wav files" "^Date:" nil nil "3" "2016033018:24:54" "[oss-security] Re: CVE request: Heap overflow in VLC 2.1.6 processing wav files" (number mark "U       gustavo.grie Mar 30  126/7044  " thread-indent "\"[oss-security] Re: CVE request: Heap overflow in VLC 2.1.6 processing wav files\"\n") "<CACn5sdTHZPTK7+u1ANCU-T-czJ_vT_-VQp8CisHreKKPAPpazw@mail.gmail.com>" ("<CACn5sdTHZPTK7+u1ANCU-T-czJ_vT_-VQp8CisHreKKPAPpazw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6774" "Thursday" "22" "July" "2021" "17:03:36" "+0200" "Jonas =?ISO-8859-1?Q?Sch=E4fer?=" "j.wielicki@sotecware.net" nil "184" "[oss-security] Prosody XMPP server advisory 2021-07-22 (Remote Information Disclosure) (CVE Request)" "^Cc:" nil nil "7" nil nil (number mark "        j.wielicki@s Jul 22  184/6774  " thread-indent "\"[oss-security] Prosody XMPP server advisory 2021-07-22 (Remote Information Disclosure) (CVE Request)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Prosody XMPP server advisory 2021-07-22 (Remote Information Disclosure) (CVE Request)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 26530 invoked by uid 550); 30 Mar 2016 18:25:06 -0000
+Received: (qmail 16349 invoked by uid 550); 22 Jul 2021 15:40:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,165 +11,199 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26509 invoked from network); 30 Mar 2016 18:25:06 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to;
-        bh=qQlOj4pVPTRh5bkGeHuTZl4ByaffPO6KkUZssBzF8yc=;
-        b=RtrWKjZ9+MbzhJwj8kmActjl056Vj6T//oxZGNES76FG3qpxDn54djDWuwzhiqsPtj
-         hCOyROhN3kQHDYb+nL5VjGoEjv5qP4AAJo42vnVy2N30lWTlFkuU7S4NSXgzIHO8Ffsd
-         6pRaFL35SCPt+iCXYcryCH+De4pHwMoL9XuezE+uZzXkx1rL1Y8PhwGsZPGhqiqn1hJa
-         IbtP4N+OEVnIXcHOtcuY6aPVS2oTS39I4afIXtrSrKIrEsTbFdgK2s2yPDRMovEoFM78
-         FgLYNz75TCqxQW3IQfknvGPGIiK3ZdhRxkX3SkuqbHOCFyPXrk4nRbCEzjfm+u6MV2rW
-         4dbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to;
-        bh=qQlOj4pVPTRh5bkGeHuTZl4ByaffPO6KkUZssBzF8yc=;
-        b=W7jihPzY3KdSub4qqsM1AzUxChKyF6HMGu2DR54+KrnWKYnz781P9yqbI9o09Ak+l7
-         5ksty0shmSnDSQMzK2m6m94OH8kh1J+EDWkkOJ6dHkHWWVlIYVf8dLKdnwJqvIePExgE
-         A1SeucfzIe8o0x6DOniNWa4rde9PL5fvGR/suiwxzg33QqasrHuvbWQD/RFb7vBnSqRS
-         PrjkP2DUvtm3dFbL2NDtt+NAFJkOqxNFlXz9YXDXanMGbLsN7DKI+r2dMqYn6Ya3mc4e
-         yHZ0pJle+KIsq7qiAl7PptkCZ/lFt6VG/nQjsRwW50xL7cC3IDopp4e9ZBg+8TVVR9Pz
-         d0bw==
-X-Gm-Message-State: AD7BkJI97ZXLNGxNKcziA8bnQS6CvKWaissis0LFDmHwTI1kG3XqbSAkkLgC8/h4QP7a0X8uu5rnco2U8+IXgQ==
+Received: (qmail 26465 invoked from network); 22 Jul 2021 15:03:59 -0000
+Message-ID: <3576736.366f73iyps@sinistra>
 MIME-Version: 1.0
-X-Received: by 10.25.212.213 with SMTP id l204mr4842777lfg.118.1459362294735;
- Wed, 30 Mar 2016 11:24:54 -0700 (PDT)
-In-Reply-To: <CACn5sdTHZPTK7+u1ANCU-T-czJ_vT_-VQp8CisHreKKPAPpazw@mail.gmail.com>
-References: <CACn5sdTHZPTK7+u1ANCU-T-czJ_vT_-VQp8CisHreKKPAPpazw@mail.gmail.com>
-Message-ID: <CACn5sdQ1V7zLe=vy3msAAEF+vPpaYmftukhMBtRre=eKbk7MyQ@mail.gmail.com>
-Content-Type: multipart/mixed; boundary=001a1140c8ec2da890052f484361
-Date: Wed, 30 Mar 2016 15:24:54 -0300
-From: Gustavo Grieco <gustavo.grieco@gmail.com>
+Content-Type: multipart/signed; boundary="nextPart4876771.fbC7LsiPbl"; micalg="pgp-sha512"; protocol="application/pgp-signature"
+X-Clacks-Overhead: GNU Terry Pratchett
+Cc: developers@prosody.im
+Date: Thu, 22 Jul 2021 17:03:36 +0200
+From: Jonas =?ISO-8859-1?Q?Sch=E4fer?= <j.wielicki@sotecware.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: Heap overflow in VLC 2.1.6 processing wav files
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Prosody XMPP server advisory 2021-07-22 (Remote Information Disclosure) (CVE Request)
+To: oss-sec <oss-security@lists.openwall.com>
 
---001a1140c8ec2da890052f484361
-Content-Type: multipart/alternative; boundary=001a1140c8ec2da889052f48435f
+--nextPart4876771.fbC7LsiPbl
+Content-Type: multipart/mixed; boundary="nextPart3023446.NBNXtMRvBc"; protected-headers="v1"
+Content-Transfer-Encoding: 7Bit
+From: Jonas =?ISO-8859-1?Q?Sch=E4fer?= <j.wielicki@sotecware.net>
+To: oss-sec <oss-security@lists.openwall.com>
+Cc: developers@prosody.im
+Subject: Prosody XMPP server advisory 2021-07-22 (Remote Information Disclosure) (CVE Request)
+Date: Thu, 22 Jul 2021 17:03:36 +0200
+Message-ID: <3576736.366f73iyps@sinistra>
 
---001a1140c8ec2da889052f48435f
-Content-Type: text/plain; charset=UTF-8
+This is a multi-part message in MIME format.
 
-For some reason, the attached test case did not go to the mailing list.
-Let's try again..
+--nextPart3023446.NBNXtMRvBc
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 
-2016-03-30 14:43 GMT-03:00 Gustavo Grieco <gustavo.grieco@gmail.com>:
+(NB: [1] suggested that posting to this list is still an acceptable way to 
+request a CVE, especially if disclosure should happen immediately. Please let 
+me know if that's not going to work, then I'll fill out the form.)
 
-> Hi,
->
-> We found a buffer overflow in the parsing and processing of wav files in
-> VLC (version 2.1.6-0). It was tested in Ubuntu 14.04 (x86_64), but it will
-> probably affects other versions as well. Fortunately, it seems to be fixed
-> in the last release of VLC. Here you can see the gdb stack trace:
->
-> __memcpy_sse2_unaligned () at
-> ../sysdeps/x86_64/multiarch/memcpy-sse2-unaligned.S:116
-> 116 ../sysdeps/x86_64/multiarch/memcpy-sse2-unaligned.S: No existe el
-> archivo o el directorio.
-> (gdb) bt
-> #0 __memcpy_sse2_unaligned () at
-> ../sysdeps/x86_64/multiarch/memcpy-sse2-unaligned.S:116
-> #1 0x00007ffff71436e9 in memcpy (__len=4290773038, __src=<optimized out>,
-> __dest=<optimized out>) at /usr/include/x86_64-linux-gnu/bits/string3.h:51
-> #2 AStreamPeekStream (s=<optimized out>, pp_peek=0x7fffea824988,
-> i_read=4294967276) at input/stream.c:1115
-> #3 0x00007fffdebb42b3 in ChunkFind (p_demux=p_demux@entry=0x7fffd4c01828,
-> fcc=fcc@entry=0x7fffdebb576b "fmt ", pi_size=pi_size@entry=0x7fffea824a3c)
-> at wav.c:522
-> #4 0x00007fffdebb4761 in Open (p_this=0x7fffd4c01828) at wav.c:166
-> #5 0x00007ffff716d178 in module_load (obj=obj@entry=0x7fffd4c01828,
-> m=m@entry=0x7b92b0, init=init@entry=0x7ffff716d0d0 <generic_start>,
-> args=args@entry=0x7fffea824b50) at modules/modules.c:185
-> #6 0x00007ffff716d72e in vlc_module_load (obj=obj@entry=0x7fffd4c01828,
-> capability=capability@entry=0x7ffff71a4059 "demux", name=0x7ffff71a43bb
-> "",
-> name@entry=0x7fffd4c018e0 "", strict=<optimized out>, probe=probe@entry=0x7ffff716d0d0
-> <generic_start>) at modules/modules.c:277
-> #7 0x00007ffff716dc04 in module_need (obj=obj@entry=0x7fffd4c01828,
-> cap=cap@entry=0x7ffff71a4059 "demux", name=name@entry=0x7fffd4c018e0 "",
-> strict=<optimized out>) at modules/modules.c:366
-> #8 0x00007ffff712cfbe in demux_New (p_obj=p_obj@entry=0x7fffd00009b8,
-> p_parent_input=p_parent_input@entry=0x7fffd00009b8,
-> psz_access=<optimized out>, psz_demux=0x7ffff71b9ca5 "",
-> psz_location=<optimized out>, s=<optimized out>, out=0x7fffd4000aa0,
-> b_quick=false)
-> at input/demux.c:188
-> #9 0x00007ffff7139d5d in InputSourceInit (p_input=p_input@entry=0x7fffd00009b8,
-> in=<optimized out>, psz_mrl=<optimized out>,
-> psz_forced_demux=psz_forced_demux@entry=0x0,
-> b_in_can_fail=b_in_can_fail@entry=false) at input/input.c:2535
-> #10 0x00007ffff713ab6b in Init (p_input=p_input@entry=0x7fffd00009b8) at
-> input/input.c:1225
-> #11 0x00007ffff713e0e6 in Run (obj=0x7fffd00009b8) at input/input.c:521
-> #12 0x00007ffff79a9182 in start_thread (arg=0x7fffea825700) at
-> pthread_create.c:312
-> #13 0x00007ffff74d247d in clone () at
-> ../sysdeps/unix/sysv/linux/x86_64/clone.S:111
->
-> It is evident that the memcpy operation has an abnormally large size
-> parameter (4290773038). Find attached a test case to reproduce it.
->
-> Regards,
-> Gustavo.
->
+Project
+:   Prosody XMPP server
 
---001a1140c8ec2da889052f48435f
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+URL
+:   https://prosody.im/
 
-<div dir=3D"ltr">For some reason, the attached test case did not go to the =
-mailing list. Let&#39;s try again..<br>
-</div><div class=3D"gmail_extra"><br><div class=3D"gmail_quote">2016-03-30 =
-14:43 GMT-03:00 Gustavo Grieco <span dir=3D"ltr">&lt;<a href=3D"mailto:gust=
-avo.grieco@gmail.com" target=3D"_blank">gustavo.grieco@gmail.com</a>&gt;</s=
-pan>:<br><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;borde=
-r-left:1px #ccc solid;padding-left:1ex"><div dir=3D"ltr">Hi,<br><br>We foun=
-d a buffer overflow in the parsing and processing of wav files in VLC (vers=
-ion 2.1.6-0). It was tested in Ubuntu 14.04 (x86_64), but it will probably =
-affects other versions as well. Fortunately, it seems to be fixed in the la=
-st release of VLC. Here you can see the gdb stack trace:<br><br>__memcpy_ss=
-e2_unaligned () at ../sysdeps/x86_64/multiarch/memcpy-sse2-unaligned.S:116<=
-br>116 ../sysdeps/x86_64/multiarch/memcpy-sse2-unaligned.S: No existe el ar=
-chivo o el directorio.<br>(gdb) bt<br>#0 __memcpy_sse2_unaligned () at ../s=
-ysdeps/x86_64/multiarch/memcpy-sse2-unaligned.S:116<br>#1 0x00007ffff71436e=
-9 in memcpy (__len=3D4290773038, __src=3D&lt;optimized out&gt;, __dest=3D&l=
-t;optimized out&gt;) at /usr/include/x86_64-linux-gnu/bits/string3.h:51<br>=
-#2 AStreamPeekStream (s=3D&lt;optimized out&gt;, pp_peek=3D0x7fffea824988, =
-i_read=3D4294967276) at input/stream.c:1115<br>#3 0x00007fffdebb42b3 in Chu=
-nkFind (p_demux=3Dp_demux@entry=3D0x7fffd4c01828, fcc=3Dfcc@entry=3D0x7fffd=
-ebb576b &quot;fmt &quot;, pi_size=3Dpi_size@entry=3D0x7fffea824a3c)<br>at w=
-av.c:522<br>#4 0x00007fffdebb4761 in Open (p_this=3D0x7fffd4c01828) at wav.=
-c:166<br>#5 0x00007ffff716d178 in module_load (obj=3Dobj@entry=3D0x7fffd4c0=
-1828, m=3Dm@entry=3D0x7b92b0, init=3Dinit@entry=3D0x7ffff716d0d0 &lt;generi=
-c_start&gt;, <br>args=3Dargs@entry=3D0x7fffea824b50) at modules/modules.c:1=
-85<br>#6 0x00007ffff716d72e in vlc_module_load (obj=3Dobj@entry=3D0x7fffd4c=
-01828, capability=3Dcapability@entry=3D0x7ffff71a4059 &quot;demux&quot;, na=
-me=3D0x7ffff71a43bb &quot;&quot;, <br>name@entry=3D0x7fffd4c018e0 &quot;&qu=
-ot;, strict=3D&lt;optimized out&gt;, probe=3Dprobe@entry=3D0x7ffff716d0d0 &=
-lt;generic_start&gt;) at modules/modules.c:277<br>#7 0x00007ffff716dc04 in =
-module_need (obj=3Dobj@entry=3D0x7fffd4c01828, cap=3Dcap@entry=3D0x7ffff71a=
-4059 &quot;demux&quot;, name=3Dname@entry=3D0x7fffd4c018e0 &quot;&quot;, <b=
-r>strict=3D&lt;optimized out&gt;) at modules/modules.c:366<br>#8 0x00007fff=
-f712cfbe in demux_New (p_obj=3Dp_obj@entry=3D0x7fffd00009b8, p_parent_input=
-=3Dp_parent_input@entry=3D0x7fffd00009b8, <br>psz_access=3D&lt;optimized ou=
-t&gt;, psz_demux=3D0x7ffff71b9ca5 &quot;&quot;, psz_location=3D&lt;optimize=
-d out&gt;, s=3D&lt;optimized out&gt;, out=3D0x7fffd4000aa0, b_quick=3Dfalse=
-)<br>at input/demux.c:188<br>#9 0x00007ffff7139d5d in InputSourceInit (p_in=
-put=3Dp_input@entry=3D0x7fffd00009b8, in=3D&lt;optimized out&gt;, psz_mrl=
-=3D&lt;optimized out&gt;, <br>psz_forced_demux=3Dpsz_forced_demux@entry=3D0=
-x0, b_in_can_fail=3Db_in_can_fail@entry=3Dfalse) at input/input.c:2535<br>#=
-10 0x00007ffff713ab6b in Init (p_input=3Dp_input@entry=3D0x7fffd00009b8) at=
- input/input.c:1225<br>#11 0x00007ffff713e0e6 in Run (obj=3D0x7fffd00009b8)=
- at input/input.c:521<br>#12 0x00007ffff79a9182 in start_thread (arg=3D0x7f=
-ffea825700) at pthread_create.c:312<br>#13 0x00007ffff74d247d in clone () a=
-t ../sysdeps/unix/sysv/linux/x86_64/clone.S:111<br><br>It is evident that t=
-he memcpy operation has an abnormally large size parameter (4290773038). Fi=
-nd attached a test case to reproduce it.<br><br>Regards,<br>Gustavo.</div>
-</blockquote></div><br></div>
+Date
+:   2021-07-22
 
---001a1140c8ec2da889052f48435f--
+**References**
 
---001a1140c8ec2da890052f484361--
+ - Advisory (HTML): https://prosody.im/security/advisory_20210722/
+ - Advisory (text): https://prosody.im/security/advisory_20210722.txt
+ - Patch: https://prosody.im/security/advisory_20210722/1.patch
+
+This advisory details a new security vulnerability discovered in the 
+Prosody.im XMPP server software. **There is no fixed version released yet**. 
+We are disclosing the issue because it has been mentioned in public and admins 
+can apply a workaround (see below).
+
+Information Disclosure in the Multi-User-Chat component
+-------------------------------------------------------
+
+CVE
+: We have not requested a CVE yet and hereby do so.
+
+CVSS
+: 8.7 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N/E:F/RL:T/RC:C/CR:H/IR:X/
+AR:X/MAV:N/MAC:L/MPR:N/MUI:N/MS:U/MC:H/MI:N/MA:N)
+
+CWEs
+: CWE-284
+
+Affected versions
+: All versions since 0.11.0
+
+Fixed versions
+: None released yet
+
+**Description**
+
+It was discovered that Prosody exposes the list of entities (Jabber/XMPP
+addresses) affiliated (part of) a Multi-User chat to any user, even if they
+are currently not part of the chat or if their affiliation would not let
+them become part of the chat, if the `whois` room configuration was set to
+`anyone`.
+
+This allows any entity to access the list of admins, members, owners and
+banned entities of any federated XMPP group chat of which they know the
+address if it is hosted on a vulnerable Prosody server.
+
+**Affected configurations**
+
+All Multi-User chat rooms hosted on an affected Prosody version which are
+configured to share the real addresses of occupants with all other
+occupants ("non-anonymous").
+
+The impact is particularly high for rooms which have this option set in
+combination with "members-only" (to allow only entities which have at least
+"members" affiliation to take part in the chat). Unfortunately, this
+configuration is a pre-requisite for using the state-of-the-art OMEMO
+end-to-end encryption system.
+
+**Mitigating factors**
+
+A client may choose a sufficiently random name for such private group
+chats and set it to be not listed publicly. This prevents unaffiliated
+attackers from exploiting the vulnerability, as long as the address of the
+room is not leaked.
+
+The public jabber chat room search engine has been modified to not return
+any members-only rooms for now.
+
+**Workaround**
+
+As there is no release yet, operators of Prosody servers are advised to
+apply the following workaround.
+
+This email has a patch attached. It can be applied to any Prosody 0.11.x
+installation. If the installation is managed by a package manager (such
+as apt or dnf), a future update will revert the change (though a future
+update should bring the fix anyway).
+
+To do so, open a normal shell on the server and locate the file
+muc.lib.lua. It should exist in a directory structure
+
+    `modules/muc/muc.lib.lua`.
+
+On debian, it is found in
+
+    `/usr/lib/prosody/modules/muc/muc.lib.lua`.
+
+Navigate to the directory containing muc.lib.lua and apply the attached
+patch using `patch -p1 < 1.patch`.
+
+Now reload the MUC component (this can be done without any downtime or
+impact on operations. This can be done via Ad-Hoc commands or the telnet
+console using `module:reload("muc")`. If you have neither enabled,
+a restart of prosody is required.
+
+After the reload of the module or restart of prosody, the Information
+Disclosure vulnerability is fixed.
+
+**Fix**
+
+The attached patch is considered a viable fix of the issue.
+Distributions are encouraged to pick it up ASAP, even before an
+official release by the Prosody team.
+
+**Attribution**
+
+This vulnerability was disclosed to the Prosody team indirectly and we
+have no yet had a chance to ascertain if and how the original reporter
+wants to be attributed. Due to the severity of the information
+disclosure and the fact that it has also been talked about in public,
+we wanted to announce the issue widely and officially. A proper
+attribution will be filled in here once it has been agreed upon.
+--nextPart3023446.NBNXtMRvBc
+Content-Disposition: attachment; filename="1.patch"
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/x-patch; charset="UTF-8"; name="1.patch"
+
+diff muc.lib.lua
+--- a/muc.lib.lua
++++ b/muc.lib.lua
+@@ -970,7 +970,7 @@
+ 		-- e.g. an admin can't ask for a list of owners
+ 		local affiliation_rank = valid_affiliations[affiliation or "none"];
+ 		if (affiliation_rank >= valid_affiliations.admin and affiliation_rank >= _aff_rank)
++		or (self:get_members_only() and self:get_whois() == "anyone" and affiliation_rank >= valid_affiliations.member) then
+-		or (self:get_whois() == "anyone") then
+ 			local reply = st.reply(stanza):query("http://jabber.org/protocol/muc#admin");
+ 			for jid in self:each_affiliation(_aff or "none") do
+ 				local nick = self:get_registered_nick(jid);
+
+
+--nextPart3023446.NBNXtMRvBc--
+
+--nextPart4876771.fbC7LsiPbl
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part.
+Content-Transfer-Encoding: 7Bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEG/EPV+Xzd5wEoQQIwGIDJZdiWIoFAmD5iMgACgkQwGIDJZdi
+WIqSDA/8CCHyKXKsfdYiNxz63fRXWKqIWNKFHh8zy6QBQVCf0yHRP/E6qLe/0x/3
+U/pYUoz2cI61Y6bhIyUoYMR2tJVZwT4RnQYfXwCsxg6q6eDapfFRqhv19jM79t0j
+w0sXLfKkVAObw3qNSf5eYJnNrlQuWcWu5uNLIv1/ryOs1Oak8jmg0C2O/HvmeMYO
+OzCmVGYKb6vtuDmxQN/O6UVddsrHmXnLsmzB9E/djzpwnPqtf1mrDC8Lf6uB1g+5
+Rz7q7F3qK4M4ddksDvkQf6vG/sr39Bf3i4va+q5ytJSmXCJb+Ome7R5anxOrs+5Y
+rU5V2GqDmC05qtxP44bQyxpn4qplCtF+U5I6GuQ6Az0PK0l/j5YesLxPB6S7K6GU
+wEFKcga05sGDEMCQyCdRW8XOuPxbpCBVKygjJvwUV2G4k0sM0dYTs0f3qI3TL/Oe
+ykDED7eHodAg9BGDkSddDy2n7ircL5lOVxL4W84iyjB3tMbkFOVEBfM2pmz2yqi/
+cOU1mb0wOmxuOtB/IwgTe7NbksS+AwmEc8wkAiP5PIfOsxXuBnjHH1XN7vvkTN7O
+YeolqbTJCO5ineELPINe2nE7a/40KOoLuervOWPUlZY1qempxlNc/s5M4ovEzU5H
+vLJ8ELUrdbbp6L/yD5D/8rn8jRT5t/z1JftaXgxxpyEp2uolSX0=
+=uZ1N
+-----END PGP SIGNATURE-----
+
+--nextPart4876771.fbC7LsiPbl--
+
+
+
