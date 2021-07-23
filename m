@@ -1,56 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/04/1
-Message-Id: <1628031289.fehtmg1vfv.none@localhost>
-Date: Tue, 03 Aug 2021 19:48:45 -0400
-From: "Alex Xu (Hello71)" <alex_y_xu@...oo.ca>
-To: oss-security@...ts.openwall.com
-Subject: Reminder: QtWebKit known vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/23/2
+Message-ID: <20210723201414.lnpdaxfnxiremhsp@jwilk.net>
+Date: Fri, 23 Jul 2021 22:14:14 +0200
+From: Jakub Wilk <jwilk@...lk.net>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: ipython3 may execute code from the current working directory
 Content-Type: text/plain; charset=utf-8
 
-Quoting Christophe Giboudeaux [0] (excerpted, rewrapped),
+* Jakub Wilk <jwilk@...lk.net>, 2021-07-22, 13:35:
+>* Georgi Guninski <gguninski@...il.com>, 2021-07-22, 11:52:
+>>Summary: under certain circumstances, ipython3 may execute code from 
+>>the current working directory.
+>
+>Looks like this might be intentional? Or at least there's an option to 
+>turn off this behavior:
+>
+>https://github.com/ipython/ipython/blob/7.25.0/IPython/core/shellapp.py#L219
+>https://ipython.readthedocs.io/en/stable/config/options/kernel.html#configtrait-InteractiveShellApp.ignore_cwd
 
-> QtWebKit was a rendering engine for web content released with Qt until 
-> 5.6. It was replaced with QtWebEngine after that.
-> 
-> Despite a community fork in 2016, nothing really happened to keep it 
-> alive and secure.
-> Quoting the QtWebKit release page on Github:
-> 
-> "WARNING: This release is based on old WebKit revision with known 
-> unpatched vulnerabilities.
-> Please use it carefully and avoid visiting untrusted websites and 
-> using it for transmission of sensitive data."
+On a second thought, --ignore-cwd is a relatively new invention (added 
+in 7.13.0, I think), ...
 
-As of today, Repology reports that 246 packages still exist for 
-qt5-webkit, in dozens of Linux distros (most of them overcounted, e.g. 
-qt5-qtwebkit-dev).
+>However, in some Debian packages (at least 5.8.0-1 from Debian 
+>buster), even --ignore-cwd doesn't help,
 
-Of particular concern is the 104 packages known for wkhtmltopdf. As 
-repeated multiple times on the website (unfortunately not prominently 
-enough), "Do not use wkhtmltopdf with any untrusted HTML". However, it's 
-fair to say that many users likely do not follow this advice.
+...so it couldn't have been used in this old version.
 
-Readers of this list will likely be familiar with the regular postings 
-regarding WebKitGTK vulnerabilities: many of them are likely applicable 
-to QtWebKit too, especially the WebKitGTK-based fork.
-
-Fortunately, as opposed to the webkitgtk issues a few years ago, most 
-programs now support Qt WebEngine, QTextBrowser (part of Qt Widgets), or 
-don't require any browser engine anymore. Almost all exceptions are no 
-longer maintained upstream. wkhtmltopdf is likely the most used package 
-that still requires QtWebKit, but in my opinion is the most dangerous, 
-as users may unknowingly install it from distro repositories and use it 
-to process untrusted data. Users can migrate to weasyprint, puppeteer, 
-or another alternative.
-
-Alpine Linux has removed QtWebKit [1], Gentoo Linux has masked it [2] 
-(meaning users must manually approve the installation), and OpenSUSE 
-will be removing it soon [0]. In the absence of a maintained QtWebKit, 
-I urge other distros to follow suit to protect Linux users.
-
-[0] https://lists.opensuse.org/archives/list/factory@lists.opensuse.org/thread/GXVEFT7VY5DQNATX6FHJBQBRDHRC3NRN/
-[1] https://gitlab.alpinelinux.org/alpine/aports/-/issues/12888
-[2] https://bugs.gentoo.org/684580
-
-Regards,
-Alex.
+-- 
+Jakub Wilk
