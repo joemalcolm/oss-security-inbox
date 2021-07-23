@@ -1,19 +1,218 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/19/9
-Message-ID: <YH3hHq9VyQnz4kjY@symphytum.spacehopper.org>
-Date: Mon, 19 Apr 2021 20:59:26 +0100
-From: Stuart Henderson <stu@...cehopper.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: xscreensaver package caps gets raw socket
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/23/1
+Message-ID: <9ee4be36-545e-bd74-9293-c2cdf4d03172@igalia.com>
+Date: Fri, 23 Jul 2021 16:17:54 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2021-0004
 Content-Type: text/plain; charset=utf-8
 
-On 2021/04/19 14:31, Eli Schwartz wrote:
-> Also fping is the standard fping, but there is no standard ping so one
-> would need to coordinate adding the option to a number of different
-> descendant forks of 4.3BSD ping, before it could be reliably used.
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2021-0004
+------------------------------------------------------------------------
 
-Unfortunately fping isn't really standard either (e.g. flent uses it but
-has a bunch of checks to make sure the installed version works as expected;
-https://github.com/tohojo/flent/blob/master/flent/runners.py#L1210)
-though it's less of a challenge than the many different pings.
+Date reported           : July 23, 2021
+Advisory ID             : WSA-2021-0004
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2021-0004.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2021-0004.html
+CVE identifiers         : CVE-2021-1817, CVE-2021-1820, CVE-2021-1825,
+                          CVE-2021-1826, CVE-2021-21775, CVE-2021-21779,
+                          CVE-2021-21806, CVE-2021-30661,
+                          CVE-2021-30663, CVE-2021-30665,
+                          CVE-2021-30666, CVE-2021-30682,
+                          CVE-2021-30689, CVE-2021-30720,
+                          CVE-2021-30734, CVE-2021-30744,
+                          CVE-2021-30749, CVE-2021-30758,
+                          CVE-2021-30761, CVE-2021-30762,
+                          CVE-2021-30795, CVE-2021-30797,
+                          CVE-2021-30799.
 
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+
+CVE-2021-1817
+    Versions affected: WebKitGTK and WPE WebKit before 2.30.0.
+    Credit to zhunki.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A memory corruption issue was
+    addressed with improved state management.
+
+CVE-2021-1820
+    Versions affected: WebKitGTK and WPE WebKit before 2.30.0.
+    Credit to André Bargull.
+    Impact: Processing maliciously crafted web content may result in the
+    disclosure of process memory. Description: A memory initialization
+    issue was addressed with improved memory handling.
+
+CVE-2021-1825
+    Versions affected: WebKitGTK and WPE WebKit before 2.30.0.
+    Credit to Alex Camboe of Aon’s Cyber Solutions.
+    Impact: Processing maliciously crafted web content may lead to a
+    cross site scripting attack. Description: An input validation issue
+    was addressed with improved input validation.
+
+CVE-2021-1826
+    Versions affected: WebKitGTK and WPE WebKit before 2.30.0.
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may lead to
+    universal cross site scripting. Description: A logic issue was
+    addressed with improved restrictions.
+
+CVE-2021-21775
+    Versions affected: WebKitGTK and WPE WebKit before 2.32.3.
+    Credit to Marcin Towalski of Cisco Talos.
+    A use-after-free vulnerability exists in the way certain events are
+    processed for ImageLoader objects of WebKit. A specially crafted web
+    page can lead to a potential information leak and further memory
+    corruption. In order to trigger the vulnerability, a victim must be
+    tricked into visiting a malicious webpage.
+
+CVE-2021-21779
+    Versions affected: WebKitGTK and WPE WebKit before 2.32.3.
+    Credit to Marcin Towalski of Cisco Talos.
+    A use-after-free vulnerability exists in the way that WebKit
+    GraphicsContext handles certain events. A specially crafted web page
+    can lead to a potential information leak and further memory
+    corruption. A victim must be tricked into visiting a malicious web
+    page to trigger this vulnerability.
+
+CVE-2021-21806
+    Versions affected: WebKitGTK and WPE WebKit before 2.30.6.
+    Credit to Marcin 'Icewall' Noga of Cisco Talos.
+    An exploitable use-after-free vulnerability exists in WebKit. A
+    specially crafted HTML web page can cause a use-after-free
+    condition, resulting in remote code execution. The victim needs to
+    visit a malicious web site to trigger the vulnerability.
+
+CVE-2021-30661
+    Versions affected: WebKitGTK and WPE WebKit before 2.30.0.
+    Credit to yangkang(@dnpushme) of 360 ATA.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Apple is aware of a report that this issue
+    may have been actively exploited. Description: A use after free
+    issue was addressed with improved memory management.
+
+CVE-2021-30663
+    Versions affected: WebKitGTK and WPE WebKit before 2.32.3.
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: An integer overflow was
+    addressed with improved input validation.
+
+CVE-2021-30665
+    Versions affected: WebKitGTK and WPE WebKit before 2.32.3.
+    Credit to yangkang (@dnpushme)&zerokeeper&bianliang of 360 ATA.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Apple is aware of a report that this issue
+    may have been actively exploited. Description: A memory corruption
+    issue was addressed with improved state management.
+
+CVE-2021-30666
+    Versions affected: WebKitGTK and WPE WebKit before 2.26.0.
+    Credit to yangkang (@dnpushme)&zerokeeper&bianliang of 360 ATA.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Apple is aware of a report that this issue
+    may have been actively exploited. Description: A buffer overflow
+    issue was addressed with improved memory handling.
+
+CVE-2021-30682
+    Versions affected: WebKitGTK and WPE WebKit before 2.32.0.
+    Credit to an anonymous researcher and 1lastBr3ath.
+    Impact: A malicious application may be able to leak sensitive user
+    information. Description: A logic issue was addressed with improved
+    restrictions.
+
+CVE-2021-30689
+    Versions affected: WebKitGTK and WPE WebKit before 2.32.3.
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may lead to
+    universal cross site scripting. Description: A logic issue was
+    addressed with improved state management.
+
+CVE-2021-30720
+    Versions affected: WebKitGTK and WPE WebKit before 2.32.3.
+    Credit to David Schütz (@xdavidhu).
+    Impact: A malicious website may be able to access restricted ports
+    on arbitrary servers. Description: A logic issue was addressed with
+    improved restrictions.
+
+CVE-2021-30734
+    Versions affected: WebKitGTK and WPE WebKit before 2.32.3.
+    Credit to Jack Dates of RET2 Systems, Inc. (@ret2systems) working
+    with Trend Micro Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2021-30744
+    Versions affected: WebKitGTK and WPE WebKit before 2.32.3.
+    Credit to Dan Hite of jsontop.
+    Impact: Processing maliciously crafted web content may lead to
+    universal cross site scripting. Description: A cross-origin issue
+    with iframe elements was addressed with improved tracking of
+    security origins.
+
+CVE-2021-30749
+    Versions affected: WebKitGTK and WPE WebKit before 2.32.3.
+    Credit to an anonymous researcher and mipu94 of SEFCOM lab, ASU.
+    working with Trend Micro Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+CVE-2021-30758
+    Versions affected: WebKitGTK and WPE WebKit before 2.32.2.
+    Credit to Christoph Guttandin of Media Codings.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A type confusion issue was
+    addressed with improved state handling.
+
+CVE-2021-30761
+    Versions affected: WebKitGTK and WPE WebKit before 2.26.0.
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Apple is aware of a report that this issue
+    may have been actively exploited. Description: A memory corruption
+    issue was addressed with improved state management.
+
+CVE-2021-30762
+    Versions affected: WebKitGTK and WPE WebKit before 2.28.0.
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Apple is aware of a report that this issue
+    may have been actively exploited. Description: A use after free
+    issue was addressed with improved memory management.
+
+CVE-2021-30795
+    Versions affected: WebKitGTK and WPE WebKit before 2.32.3.
+    Credit to Sergei Glazunov of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A use after free issue was
+    addressed with improved memory management.
+
+CVE-2021-30797
+    Versions affected: WebKitGTK and WPE WebKit before 2.32.3.
+    Credit to Ivan Fratric of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to code
+    execution. Description: This issue was addressed with improved
+    checks.
+
+CVE-2021-30799
+    Versions affected: WebKitGTK and WPE WebKit before 2.32.3.
+    Credit to Sergei Glazunov of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
+
+
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
+
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+July 23, 2021
