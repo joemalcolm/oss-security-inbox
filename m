@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["800" "Monday" "18" "April" "2016" "23:25:32" "+0200" "Matthias Geerdsen" "matthias@vorlons.info" "<571550CC.1080801@vorlons.info>" "27" "[oss-security] CVE request: opam - missing certificate validation" nil nil nil "4" "2016041821:25:32" "[oss-security] CVE request: opam - missing certificate validation" (number mark "U       matthias@vor Apr 18   27/800   " thread-indent "\"[oss-security] CVE request: opam - missing certificate validation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["970" "Friday" "23" "July" "2021" "14:39:33" "-0600" "Mats Wichmann" "mats@wichmann.us" nil "23" "Re: [oss-security] ipython3 may execute code from the current working directory" nil nil nil "7" nil nil (number mark "U       mats@wichman Jul 23   23/970   " thread-indent "\"Re: [oss-security] ipython3 may execute code from the current working directory\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] ipython3 may execute code from the current working directory" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 10155 invoked by uid 550); 18 Apr 2016 21:25:46 -0000
+Received: (qmail 19971 invoked by uid 550); 23 Jul 2021 20:42:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,52 +12,54 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10134 invoked from network); 18 Apr 2016 21:25:45 -0000
-X-Virus-Scanned: Debian amavisd-new at mail.vorlons.info
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vorlons.info;
-	s=mail; t=1461014733;
-	bh=t1GgV1iFq1FnD2zQxzitJhV/nmf8ConaGZE4mtUHI+I=;
-	h=From:Subject:To:Cc:Date:From;
-	b=GwzcoEyuVv/DhM2XHnONZ4ok11UzD66ENVMxpqkjfTmbkw4dX8A6PooNuAZLafuzm
-	 oU95wv2fikN062wFNkP4qMUbmvPmJvLQwvQz1qZl640ZVwT9TY7RhcA4rkRB5JHu54
-	 9yvgCFf/2I2xlYLDzcfQfqFuJ0J/Z5CURfbYLnkw=
-From: Matthias Geerdsen <matthias@vorlons.info>
-X-Enigmail-Draft-Status: N1110
+Received: (qmail 18233 invoked from network); 23 Jul 2021 20:39:51 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+	:references:subject:message-id:date:mime-version:in-reply-to
+	:content-type:content-transfer-encoding; s=sasl; bh=Hn9lSBTQixcy
+	lVDo6pcrJ1IMkNPKpfaiUNZSXIUj4eg=; b=LR9nq9U/r07Nc9ElSXgoEdxy7JXO
+	1pp4qbWPlfCid9U/HONwBOIEW+VaW2Bvl0hxC4073N9iOwomU1nM6eZ5pcNoDhn4
+	aNOjHUI7Gn5Hi3OU2hp7AJUF936I/olapMN18H5gya7Tj8Al/8mmSiQX07elT3cd
+	5T0nq2fWgcA2bvc=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=wichmann.us;
+ h=from:to:references:subject:message-id:date:mime-version:in-reply-to:content-type:content-transfer-encoding; s=2018-07.pbsmtp; bh=AqgJ1amydBDqGvtzJKYy4kCnjl7Ai29irR+ruO3l7XM=; b=XQnkv6fOgzXgF8oUnuy2lLox89QHll1+qNSNUXEbaLBkVEVU0J52ixENOAlGnwM0s2HbS+fv9BigcpBqCAselbsr+oq/a/sJKYRxzfM965KwldP0ec3PdXZQWYaUtbEeWrfkMx5RoV4nVrsNVhCzjytIEOvyPzj1t5phJNcszoY=
+From: Mats Wichmann <mats@wichmann.us>
 To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Message-ID: <571550CC.1080801@vorlons.info>
-Date: Mon, 18 Apr 2016 23:25:32 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.7.0
+References: <CAGUWgD9MsQts5_jV9=nr8X6mwZyW-NU2JzYnosdMqQ0G06nH6w@mail.gmail.com>
+ <20210722113545.hewzinrjmy7jon6c@jwilk.net>
+Message-ID: <85b3215f-530e-a698-ac60-57a03763fd3b@wichmann.us>
+Date: Fri, 23 Jul 2021 14:39:33 -0600
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE request: opam - missing certificate validation
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-Hi,
-
-please assign a CVE ID for this missing certicate validation issue in
-ocaml:
-
-- - upstream commit:
-<https://github.com/ocaml/opam/commit/3d43295df3bb9e67e60801d319bf82c2c8
-a84d24>
-- - Debian bug: <https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=818081>
+In-Reply-To: <20210722113545.hewzinrjmy7jon6c@jwilk.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+X-Pobox-Relay-ID: 
+ 184DA886-EBF6-11EB-9BC5-FA9E2DDBB1FC-81526775!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] ipython3 may execute code from the current working
+ directory
 
 
-Thanks
-Matthias
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+On 7/22/21 5:35 AM, Jakub Wilk wrote:
+> * Georgi Guninski <gguninski@gmail.com>, 2021-07-22, 11:52:
+>> Summary: under certain circumstances, ipython3 may execute code from=20
+>> the current working directory.
+>=20
+> Looks like this might be intentional? Or at least there's an option to=20
+> turn off this behavior:
+>=20
+> https://github.com/ipython/ipython/blob/7.25.0/IPython/core/shellapp.py#L=
+219=20
 
-iQEcBAEBCAAGBQJXFVDHAAoJEDVYuxv9Aw7quJsH/RvH7BSmAFfLfWdm1PNsE8Uy
-zOI+bv/JDCKJlitDOX5SOyofXNG0RWzcEVQCHw6D52pgfkRIoFeFfPHYyaMtM3Zp
-jBLqEczh7CMNXq47c0TkEzlKg5y7i+Qk2sSBQYLBju+UxwzfTWV/J/1eEC7XHWug
-Vc+myOvp7+zm8vZKMXFvRiGozJfzEutTxMVuXjomlOqoJunWoF1fWVXaSKSLjUW0
-RRNZSeK+Y89l850RlIQ3KLvbdWIsSVWvqVtDEACyDIeIpyOtYnfJ2aN8ISa9vP2G
-1pBbh/r29ZUTmC9feqExlOw5rlL3zdcq8tedSS38F5tpANnEHgulZktxByPTJA4=
-=PALs
------END PGP SIGNATURE-----
+normally (cpython), an empty string in sys.path doesn't mean "current=20
+directory", it means "script directory", the directory the script you're=20
+running is found in [1].  that only falls back to current directory in=20
+case there is no script directory - which happens if you invoke the=20
+interpreter interactively . So maybe ipython isn't interpreting this the=20
+same way?
+
+there have been more than one security concern about the way this makes=20
+it possible for untrusted modules to get loaded.
+
+[1]  https://docs.python.org/3/library/sys.html#sys.path
