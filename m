@@ -1,51 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/18/4
-Message-ID: <CAFzhf4qZyCD-V0jZJp1QbiTXTOugkme7=Me-XJ-YfP=pofQpdw@mail.gmail.com>
-Date: Sun, 18 Apr 2021 13:16:39 +0100
-From: Piotr Krysiuk <piotras@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2021-29155] Linux kernel protection for sequences of pointer arithmetic operations against speculatively out-of-bounds loads can be bypassed to leak content of kernel memory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/24/4
+Message-ID: <20210724165955.sgskdvbjhp6dolud@jwilk.net>
+Date: Sat, 24 Jul 2021 18:59:55 +0200
+From: Jakub Wilk <jwilk@...lk.net>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: ipython3 may execute code from the current working directory
 Content-Type: text/plain; charset=utf-8
 
-An issue has been discovered in the Linux kernel mechanism to mitigate
-speculatively out-of-bounds loads (Spectre mitigation).
+* Mats Wichmann <mats@...hmann.us>, 2021-07-23, 14:39:
+>>https://github.com/ipython/ipython/blob/7.25.0/IPython/core/shellapp.py#L219
+>
+>normally (cpython), an empty string in sys.path doesn't mean "current 
+>directory", it means "script directory", the directory the script 
+>you're running is found in [1].
 
-Unprivileged BPF programs running on affected systems can bypass
-the protection and execute speculatively out-of-bounds loads from
-the kernel memory. This can be abused to extract contents of kernel
-memory via side-channel.
+No, empty string in sys.path always means cwd.
 
-The identified gap is that when protecting sequences of pointer
-arithmetic operations against speculatively out-of-bounds loads,
-the pointer modification performed by the first operation is not
-correctly accounted for when restricting subsequent operations.
+sys.path[0] is the script directory (if available), but that's a 
+non-empty string.
 
-I developed a PoC that allows unprivileged local users to extract
-contents of 31 KByte window within the kernel memory.
+But you might be right that this is IPython's failure to mimic how the 
+normal Python interpreter initializes sys.path.
 
-The PoC has been shared privately with <security@...nel.org> to
-assist with fix development.
-
-The patches are available from Linux kernel mainline public git
-repository.
-
-The upstream fix depends on refactoring of the BPF verifier logic.
-The full patch series is as follows:
-
-* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/kernel/bpf/verifier.c?id=9601148392520e2e134936e76788fc2a6371e7be
-* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/kernel/bpf/verifier.c?id=6f55b2f2a1178856c19bbce2f71449926e731914
-* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/kernel/bpf/verifier.c?id=24c109bb1537c12c02aeed2d51a347b4d6a9b76e
-* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/kernel/bpf/verifier.c?id=b658bbb844e28f1862867f37e8ca11a8e2aa94a3
-* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/kernel/bpf/verifier.c?id=a6aaece00a57fa6f22575364b3903dfbccf5345d
-* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/kernel/bpf/verifier.c?id=073815b756c51ba9d8384d924c5d1c03ca3d1ae4
-* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/kernel/bpf/verifier.c?id=f528819334881fd622fdadeddb3f7edaed8b7c9b
-* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/kernel/bpf/verifier.c?id=7fedb63a8307dda0ec3b8969a3b233a1dd7ea8e0
-
-# Discoverers
-
-Piotr Krysiuk <piotras@...il.com>
-Benedict Schlueter (independent report)
-
-# References
-
-CVE-2021-29155 (reserved via https://cveform.mitre.org/)
+-- 
+Jakub Wilk
