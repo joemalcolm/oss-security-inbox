@@ -1,4 +1,9 @@
-Received: (qmail 1973 invoked by uid 550); 26 Nov 2024 10:55:53 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["651" "Saturday" "24" "July" "2021" "11:23:16" "+0200" "Stefan Seelmann" "seelmann@apache.org" nil "20" "[oss-security] CVE-2021-33900: Apache Directory Studio: StartTLS and SASL confidentiality protection bypass" nil nil nil "7" nil nil (number mark "U       seelmann@apa Jul 24   20/651   " thread-indent "\"[oss-security] CVE-2021-33900: Apache Directory Studio: StartTLS and SASL confidentiality protection bypass\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-33900: Apache Directory Studio: StartTLS and SASL confidentiality protection bypass" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9844 invoked by uid 550); 24 Jul 2021 09:53:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,43 +12,37 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 13540 invoked from network); 26 Nov 2024 08:17:07 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Szymon Janc <janc@apache.org>
+Received: (qmail 24207 invoked from network); 24 Jul 2021 09:23:29 -0000
 To: oss-security@lists.openwall.com
-Message-ID: <c04ee654-deff-ce5a-e4c2-4f6ec9c61f08@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 26 Nov 2024 08:16:55 +0000
+From: Stefan Seelmann <seelmann@apache.org>
+Message-ID: <7b9ad310-d697-ba48-be22-4d85b77a205a@apache.org>
+Date: Sat, 24 Jul 2021 11:23:16 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2024-47248: Apache NimBLE: Buffer overflow in NimBLE MESH
- Bluetooth stack 
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2021-33900: Apache Directory Studio: StartTLS and SASL
+ confidentiality protection bypass
 
-Severity: important
-
-Affected versions:
-
-- Apache NimBLE through 1.7.0
+Severity: high
 
 Description:
 
-Buffer Copy without Checking Size of Input ('Classic Buffer Overflow') vuln=
-erability in Apache NimBLE.
+While investigating DIRSTUDIO-1219 it was noticed that configured
+StartTLS encryption was not applied when any SASL authentication
+mechanism (DIGEST-MD5, GSSAPI) was used. While investigating
+DIRSTUDIO-1220 it was noticed that any configured SASL confidentiality
+layer was not applied. This issue affects Apache Directory Studio
+version 2.0.0.v20210213-M16 and prior versions.
 
-Specially crafted MESH message could result in memory corruption when non-d=
-efault build configuration is used.
-This issue affects Apache NimBLE: through 1.7.0.
+Mitigation:
 
-Users are recommended to upgrade to version 1.8.0, which fixes the issue.
+This issue was fixed in 2.0.0.v20210717-M17. All users using SASL are
+recommended to upgrade to Apache Directory Studio 2.0.0.v20210717-M17.
 
 Credit:
 
-Wei Che Kao (Xiaobye), graduate student from National Yang Ming Chiao Tung =
-University, Dept. of CS, Security and Systems Lab. (reporter)
-
-References:
-
-https://mynewt.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2024-47248
-
+Apache Directory would like to thank Hugh Cole-Baker for reporting this
+issue.
