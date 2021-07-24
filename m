@@ -1,37 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/16/1
-Message-ID: <20210415213114.GA5315@nxnw.org>
-Date: Thu, 15 Apr 2021 14:31:14 -0700
-From: Steve Beattie <steve.beattie@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/24/3
+Message-ID: <a373710a137a096ee8a530d960481a05566c1bae.camel@orlitzky.com>
+Date: Sat, 24 Jul 2021 12:32:34 -0400
+From: Michael Orlitzky <michael@...itzky.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2021-3493] Ubuntu Linux kernel overlayfs fs caps privilege escalation
+Subject: Re: Potential symlink attack in python3 __pycache__
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Sat, 2021-07-24 at 18:33 +0300, Georgi Guninski wrote:
+> Not sure if this is vulnerability, but it looks like
+> classical symlink attack.
+> 
+> In python3, if a script in directory DIR1 does "import another",
+> then python3 creates directory __pycache__ in DIR1 and puts
+> some files in __pycache__.
+> 
+> According to our tests, if DIR1/__pycache__ is symlink to something,
+> then python3 follows the symlink.
 
-An independent security researcher reported via the SSD Secure
-Disclosure program that the overlayfs stacking file system within the
-Linux kernel as used within Ubuntu did not properly validate the
-application of file capabilities against user namespaces.
+When subdirectories of DIR1 are writable by anyone other than the
+person running the script, you have a bunch of problems:
 
-This issue is likely Ubuntu specific, as Ubuntu carries a patch to
-enable unprivileged overlayfs mounts. The combination of that patch
-plus allowing unprivileged user namespaces by default in Ubuntu allows
-an unprivileged attacker to gain elevated privileges.
+  https://bugs.python.org/issue16202
 
-A commit that addresses the issue was applied in the upstream kernel:
 
-  7c03e2cda4a5 ("vfs: move cap_convert_nscap() call into vfs_setxattr()") (v5.10)
-
-It was added prior to the upstream kernel commit allowing unprivileged
-overlayfs mounts:
-
-  459c7c565ac3 ("ovl: unprivieged mounts") (v5.11)
-
-Thus the upstream Linux kernel is not affected.
-
--- 
-Steve Beattie
-<sbeattie@...ntu.com>
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
