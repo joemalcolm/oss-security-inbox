@@ -1,4 +1,9 @@
-Received: (qmail 26295 invoked by uid 550); 26 Feb 2024 17:38:28 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["579" "Saturday" "24" "July" "2021" "18:59:55" "+0200" "Jakub Wilk" "jwilk@jwilk.net" nil "17" "Re: [oss-security] ipython3 may execute code from the current working directory" nil nil nil "7" nil nil (number mark "U       jwilk@jwilk. Jul 24   17/579   " thread-indent "\"Re: [oss-security] ipython3 may execute code from the current working directory\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] ipython3 may execute code from the current working directory" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 21588 invoked by uid 550); 24 Jul 2021 17:00:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,47 +12,48 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9533 invoked from network); 26 Feb 2024 17:06:44 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Benoit Tellier <btellier@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <860984fc-1094-4724-3ab9-d948a43d304b@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 26 Feb 2024 17:10:05 +0000
+Received: (qmail 21560 invoked from network); 24 Jul 2021 17:00:09 -0000
+Authentication-Results: garm.ovh; auth=pass (GARM-105G006ce9ae3e9-12a7-48fe-bd8b-27f880d2e912,
+                    8D5CC3B75530A0E1625F73973F455CDD864D3173) smtp.auth=jwilk@jwilk.net
+X-OVh-ClientIp: 5.173.65.118
+Date: Sat, 24 Jul 2021 18:59:55 +0200
+From: Jakub Wilk <jwilk@jwilk.net>
+To: <oss-security@lists.openwall.com>
+Message-ID: <20210724165955.sgskdvbjhp6dolud@jwilk.net>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <CAGUWgD9MsQts5_jV9=nr8X6mwZyW-NU2JzYnosdMqQ0G06nH6w@mail.gmail.com>
+ <20210722113545.hewzinrjmy7jon6c@jwilk.net>
+ <85b3215f-530e-a698-ac60-57a03763fd3b@wichmann.us>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-51518: Apache James server: Privilege escalation via JMX
- pre-authentication deserialisation 
+Content-Type: text/plain; charset="us-ascii"; format=flowed
+Content-Disposition: inline
+In-Reply-To: <85b3215f-530e-a698-ac60-57a03763fd3b@wichmann.us>
+User-Agent: NeoMutt/20180716
+X-Originating-IP: [37.59.142.105]
+X-ClientProxiedBy: DAG4EX1.mxp6.local (172.16.2.31) To DAG4EX2.mxp6.local
+ (172.16.2.32)
+X-Ovh-Tracer-GUID: 96b8e9a8-d0a3-4ea9-9267-b5ec3bbf6ea5
+X-Ovh-Tracer-Id: 5119748352905369367
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvtddrgedtgddutdehucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpeffhffvuffkfhggtggujggfihesthdtredttdervdenucfhrhhomheplfgrkhhusgcuhghilhhkuceojhifihhlkhesjhifihhlkhdrnhgvtheqnecuggftrfgrthhtvghrnhepiefhveefveekteduvdfhteeuudevjedvheekleektdeivdehtdelfeeflefhfeetnecuffhomhgrihhnpehgihhthhhusgdrtghomhdpshhhvghllhgrphhprdhphienucfkpheptddrtddrtddrtddpfeejrdehledrudegvddruddtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhhouggvpehsmhhtphdqohhuthdphhgvlhhopehmgihplhgrnheirdhmrghilhdrohhvhhdrnhgvthdpihhnvghtpedtrddtrddtrddtpdhmrghilhhfrhhomhepjhifihhlkhesjhifihhlkhdrnhgvthdprhgtphhtthhopehoshhsqdhsvggtuhhrihhthieslhhishhtshdrohhpvghnfigrlhhlrdgtohhm
+Subject: Re: [oss-security] ipython3 may execute code from the current
+ working directory
 
-Severity: low
+* Mats Wichmann <mats@wichmann.us>, 2021-07-23, 14:39:
+>>https://github.com/ipython/ipython/blob/7.25.0/IPython/core/shellapp.py#L219
+>
+>normally (cpython), an empty string in sys.path doesn't mean "current 
+>directory", it means "script directory", the directory the script 
+>you're running is found in [1].
 
-Affected versions:
+No, empty string in sys.path always means cwd.
 
-- Apache James server through 3.7.4
-- Apache James server 3.8 through 3.8.0
+sys.path[0] is the script directory (if available), but that's a 
+non-empty string.
 
-Description:
+But you might be right that this is IPython's failure to mimic how the 
+normal Python interpreter initializes sys.path.
 
-Apache James prior to version 3.7.5 and 3.8.0 exposes a JMX endpoint on loc=
-alhost subject to pre-authentication deserialisation of untrusted data.
-Given a deserialisation gadjet, this could be leveraged as part of an explo=
-it chain that could result in privilege escalation.
-Note that by default JMX endpoint is only bound locally.
-
-We recommend users to:
-=C2=A0- Upgrade to a non-vulnerable Apache James version
-
-=C2=A0- Run Apache James isolated from other processes (docker - dedicated =
-virtual machine)
-=C2=A0- If possible turn off JMX
-
-Credit:
-
-Mal Aware (reporter)
-Arnout Engelen (analyst)
-
-References:
-
-https://james.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2023-51518
-
+-- 
+Jakub Wilk
