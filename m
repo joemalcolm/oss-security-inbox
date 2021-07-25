@@ -1,32 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/10/8
-Message-ID: <1622544226.JAKONVOQ@httpd.apache.org>
-Date: Wed, 09 Jun 2021 23:11:00 +0200
-From: Christophe JAILLET <jailletc36@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/25/2
+Message-ID: <CAGUWgD-yaGXfdXkL6Z4qsXSh6PXPda8HTAn8_0miCmYf9W-d8A@mail.gmail.com>
+Date: Sun, 25 Jul 2021 18:32:43 +0300
+From: Georgi Guninski <gguninski@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-30641: Apache httpd: Unexpected URL matching with 'MergeSlashes OFF'
+Subject: Re: ipython3 may execute code from the current working directory
 Content-Type: text/plain; charset=utf-8
 
+On Fri, Jul 23, 2021 at 11:43 PM Mats Wichmann <mats@...hmann.us> wrote:
 
-CVE-2021-30641: Unexpected URL matching with 'MergeSlashes OFF'
+>
+> there have been more than one security concern about the way this makes
+> it possible for untrusted modules to get loaded.
+>
+> [1]  https://docs.python.org/3/library/sys.html#sys.path
 
-Severity: moderate
+Is the interactive python shell vulnerable to the same problem:
 
-Vendor: The Apache Software Foundation
-
-Versions Affected:
-httpd 2.4.39 to 2.4.46
-
-Description:
-Apache HTTP Server 2.4.39 to 2.4.46
-Unexpected matching behavior with 'MergeSlashes OFF'
-    
-Mitigation:
-n/a
-
-Credit:
-Discovered by Christoph Anton Mitterer
-
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html
-
+guest3@...ntu20:~/tests$ cat path.py
+import sys
+print(sys.path)
+guest3@...ntu20:~/tests$ python3
+Python 3.8.10 (default, Jun  2 2021, 10:49:15)
+[GCC 9.4.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import path
+['', '/usr/lib/python38.zip', '/usr/lib/python3.8',
+'/usr/lib/python3.8/lib-dynload',
+'/usr/local/lib/python3.8/dist-packages',
+'/usr/lib/python3/dist-packages']
+>>>
