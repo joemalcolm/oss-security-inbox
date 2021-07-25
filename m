@@ -1,30 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/23/2
-Message-ID: <20210723201414.lnpdaxfnxiremhsp@jwilk.net>
-Date: Fri, 23 Jul 2021 22:14:14 +0200
-From: Jakub Wilk <jwilk@...lk.net>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: ipython3 may execute code from the current working directory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/25/1
+Message-ID: <8210b8faa036552aaa23c2b1b26b2a32.squirrel@_>
+Date: Sun, 25 Jul 2021 09:21:33 -0000
+From: "Jonas Dellinger" <jdellinger@...l2tor.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2020-28020: Integer overflow in Exim that can lead to RCE: Some questions to the Qualys researchers who designed the exploit
 Content-Type: text/plain; charset=utf-8
 
-* Jakub Wilk <jwilk@...lk.net>, 2021-07-22, 13:35:
->* Georgi Guninski <gguninski@...il.com>, 2021-07-22, 11:52:
->>Summary: under certain circumstances, ipython3 may execute code from 
->>the current working directory.
+Hi all,
+
+I've been reading through the 21Nails Exim security advisory [1] and
+one vulnerability particularly interested me: CVE-2020-28020, an integer
+overflow in receive_msg() that can lead to RCE when sending crafted
+emails. I'm having a hard time fully understanding the exploit outlined
+by the Qualys researchers and have a couple of questions to them (quoting
+the advisory):
+
+> we first allocate a 1GB mmap block (mblock1) by sending a mail that
+> contains a 256MB header of bare '\n' characters; the next member of
+> mblock1's storeblock structure initially points to a heap block
+> (hblock, which immediately follows data that we control);
+
+What data precedes hblock and how is it controlled by the attacker?
+
+> we allocate a third 1GB mmap block (mblock3) by sending a mail that
+> contains a 512MB header; this overflows the integer header_size, and
+> forward-overflows mblock3 (Digression 1a), into mblock2 and mblock1:
+> we overwrite mblock2's next pointer with NULL (to avoid a crash in
+> store_release() at line 1788) and we partially overwrite mblock1's
+> next pointer (with a single null byte).
+
+How do you remotely make allocations that overwrite the desired pointers?
+Is my understanding correct that you overwrite the first byte of mblock1's
+next pointer with zero? How does that ensure that it points to the "fake
+storeblock" structure?
+
+> 3/ Information disclosure:
 >
->Looks like this might be intentional? Or at least there's an option to 
->turn off this behavior:
+> - First, we send an EHLO command that allocates a large string in raw
+> malloc() memory.
 >
->https://github.com/ipython/ipython/blob/7.25.0/IPython/core/shellapp.py#L219
->https://ipython.readthedocs.io/en/stable/config/options/kernel.html#configtrait-InteractiveShellApp.ignore_cwd
+> - Second, we send an invalid RCPT TO command that allocates a small
+> string in POOL_MAIN memory (an error message); this small POOL_MAIN
+> string overwrites the beginning of the large malloc() string.
 
-On a second thought, --ignore-cwd is a relatively new invention (added 
-in 7.13.0, I think), ...
+Why does the POOL_MAIN allocation collide with the raw malloc() one?
+I understand that you make the entire heap look like free POOL_MAIN
+memory using the "fake storeblock" structure, but how come that the
+small POOL_MAIN string lands exactly on the large raw malloc() string?
 
->However, in some Debian packages (at least 5.8.0-1 from Debian 
->buster), even --ignore-cwd doesn't help,
+Thanks a lot!
 
-...so it couldn't have been used in this old version.
+[1] https://www.qualys.com/2021/05/04/21nails/21nails.txt
 
--- 
-Jakub Wilk
