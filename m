@@ -1,4 +1,9 @@
-Received: (qmail 1604 invoked by uid 550); 7 Aug 2024 14:29:38 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["746" "Sunday" "25" "July" "2021" "18:32:43" "+0300" "Georgi Guninski" "gguninski@gmail.com" nil "23" "Re: [oss-security] ipython3 may execute code from the current working directory" nil nil nil "7" nil nil (number mark "U       gguninski@gm Jul 25   23/746   " thread-indent "\"Re: [oss-security] ipython3 may execute code from the current working directory\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] ipython3 may execute code from the current working directory" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 24460 invoked by uid 550); 25 Jul 2021 15:45:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,75 +12,64 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32249 invoked from network); 7 Aug 2024 14:28:22 -0000
+Received: (qmail 21879 invoked from network); 25 Jul 2021 15:33:06 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=fA0SWD9IsyfUCQJnMLkCP6peL3hntI890ESBL9LAeRA=;
+        b=S61uHz30xSjuXwkxFpnQgHTHqpDC7u7Po+LQTDEefZZ2pC50gxhW48r3oSuBvpBIqT
+         xjmio/enw7KU3Z9K0lvSASWT0AsxbPNDPwxSE43WQFipRBfzctpwQ/1Z7sR0Y93hK4pA
+         eo1vlOS+0kK7v2AeTVLKK2XUSv8UhtJwJ8dxukvnMeb66ybXvFAhvHKQ3pVmkgeJMV62
+         OWlfOJI9/9xs74osj0NyDzMnKTBBWjTlkypRKrtd3VRdk4mc5SKVeNPzEi7t2Ap4/7V9
+         r5uZ4vBAzSerDh/ZtteyzzQQkJPhCg7xRmPuTfD2xSw7ZYf6paSRScCXkG6UG1DwSjd0
+         W98w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723040893; x=1723645693;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4qz2S+tb749HKkO5nrbBmnTcqHCirU4p6HJbLuml5+4=;
-        b=Xai3/QdHu9fdxfW1Ovr0oaVOmDqzQQjIioa18rrt1rB/jabIj3lttAgapQTiwBJeyz
-         2I7yHCkhFCljDFyJPA65XzChOJ955L2CjoIfzsUAFr5TpB08Use0VeQ1rlSxq2fJGLwl
-         1zWG0u/QLaL3ncjjGWZYmiV7t0GrmKmU8M9RSQ9Ex7R2zgf6TowXUNAmL4WtVxiRVrM2
-         zY8j2rumhacj9l6jfYsan1orJGNd32yEE3zHCipLGxszfpcnjKyHWEgtkNiqzDYsS7dj
-         BxvmdmZoMlE0/580o3yDjwr5zrh9tBrLkUDpCNoEXil2WzDcwxEnRPcDEGpJFvtPpk6i
-         bxxA==
-X-Gm-Message-State: AOJu0YzkYySQUvLd6/pfxzZdTCh+fltGs64v+Vl/F1kFlQPmnLmrLW6Q
-	6ALXjnm6f6fKHJB/4sDEy7+PZPlpz2+BIP/La1waPq7EYJoFiQO0GYIKgtJqRsjRtX+Ay2/FDFa
-	P1vLUhaQCOf66t2ElzkHLFUowQLmkzQ==
-X-Google-Smtp-Source: AGHT+IEH1aY4pRDtRDHqc3J2gPmSDfz/a8Yys3jxdmZImYseZttmimhulgZLXNz/lEVUr49tCJJP1o/F6F+I6DuNWbM=
-X-Received: by 2002:a17:907:2dac:b0:a6f:586b:6c2 with SMTP id
- a640c23a62f3a-a7dc510131cmr1279808366b.60.1723040892990; Wed, 07 Aug 2024
- 07:28:12 -0700 (PDT)
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=fA0SWD9IsyfUCQJnMLkCP6peL3hntI890ESBL9LAeRA=;
+        b=Rcm6YsTibbOMOpjejeAw6wodOmqyGTdKg841sDz8qztFaWXChnOaTHloPv2YowqYKG
+         yi9/iIQ/xq4/U2dO+dS09QSeToynPdR6/FE+QC+f4rQ4O/t0VQ4ZIE+qKzvctUNn4rmh
+         BzeyuxwMIVF7hTS2NDDZr42aA8tlixJaC4xzWxGvr3g02s3zqLxe3Ii5BMkvaMTII6qh
+         h0mYumYQtjASfZKx7Chx5mYxwe5mGzAzL0wRc5U8PiXTcFmKKyhrHcgKmEN95HtKm/yn
+         FmRJlBQYOH+uzOrtQ3HkLtg6UJKD88bspr2mjyQBXnvAi9N+/h+kki2rVaZRlezJDcgJ
+         7EOA==
+X-Gm-Message-State: AOAM532wBbDtAR3YzuVS/AXQT7CzdRi1Q5/TYsg9BYAVFrtK/FSxtbeG
+	Ll7wjAnibuk6odH9SDOA1I6s0fQRapuwQ8cLx7uz3IeY++o=
+X-Google-Smtp-Source: ABdhPJx+Me+lxjI6hmwA6E+JRH2avxgbSrqEZbyrAdUhhJc6ZyiTppPSstEO8MZPhluanKzsqJCQfKj4C/tAFz0+kLY=
+X-Received: by 2002:a1c:4b04:: with SMTP id y4mr23306144wma.185.1627227174766;
+ Sun, 25 Jul 2021 08:32:54 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAJbOq16ebWS21u439bcV764HhaeQHF+eO64LdMAAKFgjdDLrMg@mail.gmail.com>
- <20240806171232.6bd08942@zbook> <ZrJv8PDeCxQQJVxH@itl-email>
- <CAHCA8E7m5n5tuGEZ-YJM_Nu9e1nmxLKJZwOK6XFifCkujP-2eg@mail.gmail.com> <CAH8yC8mtNuTegS129MQjHiLDqFM6XL+LPmUwzyPJgKkjTU7zdQ@mail.gmail.com>
-In-Reply-To: <CAH8yC8mtNuTegS129MQjHiLDqFM6XL+LPmUwzyPJgKkjTU7zdQ@mail.gmail.com>
-From: Dan Kegel <dank@kegel.com>
-Date: Wed, 7 Aug 2024 07:28:00 -0700
-Message-ID: <CAPF-yOZeREVi=jSjM28FCttwHF22Ke64tOEpiTKdjOemXy7axA@mail.gmail.com>
+References: <CAGUWgD9MsQts5_jV9=nr8X6mwZyW-NU2JzYnosdMqQ0G06nH6w@mail.gmail.com>
+ <20210722113545.hewzinrjmy7jon6c@jwilk.net> <85b3215f-530e-a698-ac60-57a03763fd3b@wichmann.us>
+In-Reply-To: <85b3215f-530e-a698-ac60-57a03763fd3b@wichmann.us>
+From: Georgi Guninski <gguninski@gmail.com>
+Date: Sun, 25 Jul 2021 18:32:43 +0300
+Message-ID: <CAGUWgD-yaGXfdXkL6Z4qsXSh6PXPda8HTAn8_0miCmYf9W-d8A@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000005c3e8d061f18b816"
-Subject: Re: [oss-security] feedback requested regarding deprecation of TLS 1.0/1.1
-
---0000000000005c3e8d061f18b816
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] ipython3 may execute code from the current working directory
 
-https://www.reddit.com/r/browsers/comments/r5vzqx/any_browsers_left_that_ca=
-n_do_ssl_1020/
-has some non-medical examples of impacted devices, and a workaround using
-firefox... which might still work.  If it does, it could be mentioned in
-release notes as a courtesy to possibly affected users.
+On Fri, Jul 23, 2021 at 11:43 PM Mats Wichmann <mats@wichmann.us> wrote:
 
-On Wed, Aug 7, 2024, 6:28=E2=80=AFAM Jeffrey Walton <noloader@gmail.com> wr=
-ote:
+>
+> there have been more than one security concern about the way this makes
+> it possible for untrusted modules to get loaded.
+>
+> [1]  https://docs.python.org/3/library/sys.html#sys.path
 
-> On Wed, Aug 7, 2024 at 8:44=E2=80=AFAM Chad Sheridan <chadapsheridan@gmai=
-l.com>
-> wrote:
-> >
-> > As a sysadmin, I welcome all of the changes. As far as warnings/alerts,=
- I
-> > can safely say, most of our clients don't read them anyway.
-> >
-> > > Can those machines be put behind a proxy?
-> >
-> > As for this, of course they can, but some clients will be tied up with =
-so
-> > much red tape and budgetary BS that it's a solution that isn't feasible
-> in
-> > a reasonable time frame.
->
-> ++. Medical devices certified 10 or 15 years ago won't be able to
-> pivot as quickly as most people would like. And as I understand
-> things, the certifications for medical equipment can be lengthier and
-> more expensive than NIST's Cryptographic Module Validation Program.
->
-> (It's somewhat amazing how often Windows CE and Windows Mobile crop up
-> every now and again).
->
-> Jeff
->
+Is the interactive python shell vulnerable to the same problem:
 
---0000000000005c3e8d061f18b816--
+guest3@ubuntu20:~/tests$ cat path.py
+import sys
+print(sys.path)
+guest3@ubuntu20:~/tests$ python3
+Python 3.8.10 (default, Jun  2 2021, 10:49:15)
+[GCC 9.4.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import path
+['', '/usr/lib/python38.zip', '/usr/lib/python3.8',
+'/usr/lib/python3.8/lib-dynload',
+'/usr/local/lib/python3.8/dist-packages',
+'/usr/lib/python3/dist-packages']
+>>>
