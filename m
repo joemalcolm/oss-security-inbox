@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3513" "Thursday" "12" "January" "2017" "13:24:54" "+0100" "Ailin Nemui" "ailin.nemui@gmail.com" "<1484223894.26049.11.camel@gmail.com>" "127" "[oss-security] CVE Request: Irssi out of bounds read in format string" nil nil nil "1" "2017011212:24:54" "[oss-security] CVE Request: Irssi out of bounds read in format string" (number mark "U       ailin.nemui@ Jan 12  127/3513  " thread-indent "\"[oss-security] CVE Request: Irssi out of bounds read in format string\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1449" "Monday" "26" "July" "2021" "12:21:04" "-0400" "Santiago Torres" "torresariass@gmail.com" nil "38" "Re: [oss-security] Potential symlink attack in python3 __pycache__" nil nil nil "7" nil nil (number mark "U       torresariass Jul 26   38/1449  " thread-indent "\"Re: [oss-security] Potential symlink attack in python3 __pycache__\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Potential symlink attack in python3 __pycache__" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21685 invoked by uid 550); 12 Jan 2017 14:35:48 -0000
+Received: (qmail 19876 invoked by uid 550); 26 Jul 2021 16:23:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,166 +12,83 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10116 invoked from network); 12 Jan 2017 12:25:08 -0000
+Received: (qmail 19468 invoked from network); 26 Jul 2021 16:21:18 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:date:mime-version
-         :content-transfer-encoding;
-        bh=/9YdKNkH9rl/jdVrp8XUf0yLB2pXcZtAfbLE525gooA=;
-        b=Cgm7/m6PaFeDLTn4w4tUHaacR/0M7VMClzQRQRykIs7+SK1N1zYkKIMUDNHAlC7DME
-         uFIN6umPJPKfS0+JecvjUKBPTMZAVl6DC3nEInYpte3eFPieTLaeHL1KTflEEPLofz8I
-         Aw+kfDMYdN7dTk/q5vXLsRFFEWJMG3sB1rA2CiOBZ98PC4cSI2JzP04kNYrIJ8kSowae
-         pV89T82xaYBQJxdO6MJaxcz58VQvKCiPfpgzxsl+gpLyNsWJRJoHgG6Fn4MFVrda9Doz
-         8zkbN41HR/PKry0ZElqq1g0BFtLha87ZBhjx3OuqZSvXNFgMp/NSM/FhaDdzf6Kwe8/O
-         pfAg==
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=pjRWQMSTbhFZrOM4yVG0NMw+Mcr/DgvYBKcfuZPPbrQ=;
+        b=IrZdsFO0lBAqoKqQIVF1l0GQOyQDmi7ZJRrP1wZWqmbp99HNpTBBIzOaE8rRZykNi+
+         EPtFz8T2TbRGKnWEScyJkp2AnucpTqGYi+YXsFzMJ6Rc+fJ+f7dnEl8ll7uZix05Bggn
+         6t3HHZbVz+4S740Advp6mjVjwVdMhNFJyBXnVGh4L9f5QwOJRyXz9xzaooxL7GK5O33G
+         39vj/95uM0nmed348GLewcOYMlZdmgAUeHrDZDIvRkJnm9GhMlahqQX5/B3cC7t0iDqn
+         70tRonILlKTrLMH/aPe+SoGMK5PMIqs+CzYfeRv9HF7HP6VgbRUO+1sroL16V+HmXgz/
+         qZAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:date:mime-version
-         :content-transfer-encoding;
-        bh=/9YdKNkH9rl/jdVrp8XUf0yLB2pXcZtAfbLE525gooA=;
-        b=Jk2yvc+TrCfwZ3gDmUU92tMUB32/JFfEhkMY0QgvH6Cx3SlAOCEmULi5RMZ4cXVdK3
-         zvFY1fdGl3dbPCogjEEq2cYvbjkEQ/aolIRyqtCDUpOwQmGV4682pKYb7UBgOmDNBXUe
-         4CP/dXLjdEXR7DemeZVJc1QLzDOyvRROu6k9jwHfk8YBQwQO2GaqIlKOZVp7CmKDd+mT
-         Ixe8WE+HZtypD85HdU8e/YjsnPIHAwbEimxTF58UkJYmL92Jop7l5k+0DOe2WElup+Ta
-         RsZDJzBR5zKi4jPB3hUpNS6yao4S/oGEY7m7sE6RJNUr4T/D+ZLXB9aembczkXPaNZJU
-         g1+A==
-X-Gm-Message-State: AIkVDXKN0PuUBC8wAAWWt4YEbq6GCAIHJWTOE4JkHyeE47FteLcA5nIJYFuZfJ754CK6OQ==
-X-Received: by 10.223.130.204 with SMTP id 70mr7106252wrc.128.1484223896489;
-        Thu, 12 Jan 2017 04:24:56 -0800 (PST)
-Message-ID: <1484223894.26049.11.camel@gmail.com>
-From: Ailin Nemui <ailin.nemui@gmail.com>
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=pjRWQMSTbhFZrOM4yVG0NMw+Mcr/DgvYBKcfuZPPbrQ=;
+        b=LvCr1ZwIrQZYqK7UECspOpoHj+E/ygWvMWTykNK0qZ0w/vVTwwyEmZYWC2E2WzXbiy
+         SnhhdTebGXA3PdKlkFcK+T3GptRXSpz6vlTV4HXsXxgh4sek+W8ZgTlv+sLTFqdJKDIK
+         7m6ut/oasA4dDK2XoRU8D+YtA2DINjCrWD4ii4TtZyBMLsRaZgnHikEX8FMH6+RE0FCN
+         mXQrHzRSc6TuVVjvEau5f4QqNG5XvoYnYwgA8+jSlBgytYfZ23PfrqQIKPe9jFpaLSkv
+         SK8cLJrhALQSzN40jPj22FXNssomrGBLg+gotUP4gBnbkJCPN01OQPkDjwwqVePZ2zfN
+         zwiA==
+X-Gm-Message-State: AOAM532xZt7/dVhwtzyXLdhLET6Knp7DpJ5VB8R7WWLxNT6+hocickuw
+	b1RESJgNKYnQ6EODaIpDKmqiOvN05LFByA==
+X-Google-Smtp-Source: ABdhPJwjh+zcuEMA7DaY9pLzJNt1bfh2CnHDQvrpZ3QkiBrtwT/wcIivOi+2m4rrX4HG/ZfPF6blSA==
+X-Received: by 2002:a05:620a:172a:: with SMTP id az42mr17864143qkb.3.1627316466609;
+        Mon, 26 Jul 2021 09:21:06 -0700 (PDT)
+Date: Mon, 26 Jul 2021 12:21:04 -0400
+From: Santiago Torres <torresariass@gmail.com>
 To: oss-security@lists.openwall.com
-Date: Thu, 12 Jan 2017 13:24:54 +0100
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.2 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] CVE Request: Irssi out of bounds read in format string
+Message-ID: <YP7g8GUPcY+UJpg8@LykOS.localdomain>
+References: <CAGUWgD_tV+cJjM_=TDrcNBhpcZOFm+JR2+Jv1tnpaSeXtM8EfQ@mail.gmail.com>
+ <a373710a137a096ee8a530d960481a05566c1bae.camel@orlitzky.com>
+ <CAGUWgD_G65OBZcMXhErz14E+-6MncSHwr9ZZvogDQOMvaDWaHA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="Yon1sK176kCk2qyY"
+Content-Disposition: inline
+In-Reply-To: <CAGUWgD_G65OBZcMXhErz14E+-6MncSHwr9ZZvogDQOMvaDWaHA@mail.gmail.com>
+Subject: Re: [oss-security] Potential symlink attack in python3 __pycache__
 
-Hi,
+--Yon1sK176kCk2qyY
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-can you please check whether the following Irssi issue needs a CVE
+On Mon, Jul 26, 2021 at 06:59:30PM +0300, Georgi Guninski wrote:
+> thanks.
+> python3 shell is still vulnerable from modules in the current
+> directory, but some of them like |sys| and |os| can't be spoofed.
 
-- Printing the value %[ leads to oob read
-
-This has been reported to the Irssi project by Hanno Böck and is
-already fixed as part of the last CVE request, however I failed to
-include this issue in the initial report. Hanno has blogged about this
-at [1] and linked it to the other issue which we credited him for (but
-it is in fact a separate issue).
+Is this a consequence of sys/os being special exceptions, or the fact
+that they are (if my memory doesn't fail me) a bunch of bindings to C
+so's?=20
 
 Thanks,
+-Santiago
 
-[1] https://blog.fuzzing-project.org/55-Fuzzing-Irssi-with-Perl-Scripts.html
+--Yon1sK176kCk2qyY
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
 
-On Thu, 2017-01-05 at 15:45 +0100, Ailin Nemui wrote:
-> Dear oss-security List,
-> 
-> Please provide some CVEs for the following issues.
-> 
-> Thanks,
-> 
-> 
-> Multiple vulnerabilities in Irssi [1]
-> =====================================
-> 
-> 
-> Description
-> -----------
-> 
-> Four vulnerabilities have been located in Irssi.
-> 
-> (a) A NULL pointer dereference in the nickcmp function found by Joseph
->     Bisch. (CWE-690)
-> 
-> (b) Use after free when receiving invalid nick message (Issue #466, CWE-146)
-> 
-> (c) Out of bounds read in certain incomplete control codes found by
->     Joseph Bisch. (CWE-126)
-> 
-> (d) Out of bounds read in certain incomplete character sequences found
->     by Hanno Böck and independently by J. Bisch. (CWE-126)
-> 
-> 
-> Impact
-> ------
-> 
-> These issues may result in denial of service (remote crash).
-> 
-> 
-> Affected versions
-> -----------------
-> 
-> (a) All Irssi versions that we observed
-> (b) All Irssi versions that we observed
-> (c) Irssi 0.8.17 and later
-> (d) Irssi 0.8.18 and later
-> 
-> 
-> Fixed in
-> --------
-> 
-> Irssi 0.8.21, Irssi 1.0.0
-> 
-> 
-> Recommended action
-> ------------------
-> 
-> Upgrade to Irssi 0.8.21. Irssi 0.8.21 is a maintenance release
-> without any new features.
-> 
-> After installing the updated packages, one can issue the /upgrade
-> command to load the new binary. TLS connections will require
-> /reconnect.
-> 
-> 
-> A Note to Distributors
-> ----------------------
-> 
-> First of all, thanks to every maintainer for their awesome job in
-> packaging Irssi and backporting security fixes.
-> 
-> When we had to release a security advisory last year with Irssi
-> 0.8.20, we noticed there was a huge confusion amongst Ubuntu users
-> about whether their Irssi version was safe to use.
-> 
-> Since all our releases 0.8.19, 0.8.20 and 0.8.21 have been bug
-> fix only, we think distributions should just ship the release.
-> 
-> But if the security fixes only are backported on top of an old
-> version, we would like to urge distributions to consider indicating
-> this in a way that is visible inside Irssi. One way to do this would
-> be to manually overwrite the PACKAGE_VERSION and marking your package
-> as patched. This can be done for example like this:
-> 
->   ./configure PACKAGE_VERSION=0.8.17-sa201701
-> 
-> 
-> You can then check the version from inside Irssi with /eval echo $J
-> 
-> As an added benefit over relying on dpkg, this will also correctly
-> report whether you had /upgrade done or not. We are looking for a ways
-> to make this easier to handle for both packagers and us, so if you
-> have a good idea on this matter please speak forth.
-> 
-> 
-> Mitigating facts
-> ----------------
-> 
-> (a) requires control over the ircd
-> 
-> (b), (d) require control over the ircd or otherwise can be triggered /
->     avoided by the user themselves
-> 
-> 
-> Patch
-> -----
-> 
-> https://github.com/irssi/irssi/commit/6c6c42e3d1b49d90aacc0b67f8540471cae02a1d
-> 
-> 
-> References
-> ----------
-> 
-> [1] https://irssi.org/security/irssi_sa_2017_01.txt
+iQIzBAABCAAdFiEEkDurc2QOttZVM+/zRo8SLOgWIpUFAmD+4PAACgkQRo8SLOgW
+IpUlxA/9HpP+OmojDj5cV2gAuw3fdOZwPfV+b1EScUJ7jSxUzARGW2oO7BNrNEZx
+anZpi52uZQzinczGwgAvFCGwsPu5f61xQ91/VozSx12noifdae/8HqeTATkwR23O
+d/PZer0c2VocpGltULmUzwDxlOxMP+Swqq2Zne9SAxQCQ0NQzIwNH68mphR2pRVi
+wYXKKNu7ng8/FREjZqO9us5MV4FB4asa9qn+ikcajce1lFpa6UPmCY3UkOxEPyRG
+kQOQ9PjCEQkbdB1/dAbMzvENGPttsx57A4XIV/P5iBGiep7aVaZf909OsHllsuAm
+nVlPsl41Ym/LdpSFz2M2hLZNaOwJppTQOoP/II+M41vqjcxv9uSZrJwnoAkfhSoI
+/KS8pAhDC3MP8Cy5HTGkRMd5XB8V6GOaymMTI0IeEYKEe6MPVVay5iqkfsSxd+RF
+ZwZdUbL85yB3l5b61U/sUf7CMFWqnVJwZq+0tBY9HQCHTI9fmrguwAlciJS6qp4W
+hFTDZLwhet4KlJeSpyzUSHhZb5BGIf0u8+8Kgya0m2yZjvalADvFcyEYWfVRr5ro
+z8jh/RCxTQISaAdZgyiH3nP369MxRplUMhjxKSuzDMnfm/+hu7Sbh+vFozjXqVvp
+hVilDjGrU9KPe7q8j82PLsxvWDT7Jr87cqghfB5NGxp0R5IhniY=
+=g8je
+-----END PGP SIGNATURE-----
+
+--Yon1sK176kCk2qyY--
