@@ -1,31 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/11/17
-Message-ID: <20210511222021.GA23723@localhost.localdomain>
-Date: Tue, 11 May 2021 22:22:19 +0000
-From: Qualys Security Advisory <qsa@...lys.com>
-To: null p0int3r <nullp0int3rx@...il.com>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: [CVE-2020-28018] Use-After-Free on Exim Question
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/26/5
+Message-ID: <20210726171303.sbqu537tv7dl3yyp@jwilk.net>
+Date: Mon, 26 Jul 2021 19:13:03 +0200
+From: Jakub Wilk <jwilk@...lk.net>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: Potential symlink attack in python3 __pycache__
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+* Santiago Torres <torresariass@...il.com>, 2021-07-26, 12:21:
+>On Mon, Jul 26, 2021 at 06:59:30PM +0300, Georgi Guninski wrote:
+>>python3 shell is still vulnerable from modules in the current 
+>>directory, but some of them like |sys| and |os| can't be spoofed.
+>
+>Is this a consequence of sys/os being special exceptions, or the fact 
+>that they are (if my memory doesn't fail me) a bunch of bindings to C 
+>so's?
 
-On Tue, May 11, 2021 at 11:18:12PM +0200, null p0int3r wrote:
-> In the advisory it is mentioned the use of the name=value pair, but reading
-> the code I see just string based functions used for allocations.
+The "sys" module is compiled into the Python interpreter itself. 
+Importing it never involves traversing sys.path.
 
-One of the name=value parameters for MAIL FROM is special, because it
-can allocate arbitrary (binary) characters (hint: we also used it to
-exploit another vulnerability in the advisory)!
+The "os" module is another story. This module is imported during the 
+interpreter initialization, apparently before cwd is added to sys.path, 
+so subsequent "import os" is no-op. But if you tried reloading it, the 
+code from cwd would be executed:
 
-With best regards,
+   $ echo 'print("moo")' > os.py
+   $ python3 -c 'import os; print(os)'
+   <module 'os' from '/usr/lib/python3.9/os.py'>
+   $ python3 -c 'import os, importlib; importlib.reload(os)'
+   moo
 
---
-the Qualys Security Advisory team
-
-
-[https://d1dejaj6dcqv24.cloudfront.net/asset/image/email-banner-384-2x.png]<https://www.qualys.com/email-banner>
-
-
-
-This message may contain confidential and privileged information. If it has been sent to you in error, please reply to advise the sender of the error and then immediately delete it. If you are not the intended recipient, do not read, copy, disclose or otherwise use this message. The sender disclaims any liability for such unauthorized use. NOTE that all incoming emails sent to Qualys email accounts will be archived and may be scanned by us and/or by external service providers to detect and prevent threats to our systems, investigate illegal or inappropriate behavior, and/or eliminate unsolicited promotional emails (“spam”). If you have any concerns about this process, please contact us.
+-- 
+Jakub Wilk
