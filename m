@@ -1,81 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/22/1
-Message-ID: <dbbd5c0a-cebb-dfed-3c21-967513642d38@vanrees.org>
-Date: Sat, 22 May 2021 13:34:10 +0200
-From: Maurits van Rees <maurits@...rees.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/26/2
+Message-ID: <9120e36f89c0b082a73fa2dfaf46036d09d6f22e.camel@powerdns.com>
+Date: Mon, 26 Jul 2021 14:47:04 +0200
+From: Peter van Dijk <peter.van.dijk@...erdns.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Plone security hotfix 20210518
+Subject: security advisory 2021-01 for PowerDNS Authoritative Server 4.5.0
 Content-Type: text/plain; charset=utf-8
 
-CVE numbers inline below. Thanks.
+Hello,
 
-On 21/05/2021 16:07, Maurits van Rees wrote:
-> A Plone security hotfix was released on Tuesday, May 18 2021.
-> For details, see https://plone.org/security/hotfix/20210518
-> Most CVE numbers are not yet issued. I will request them from Mitre 
-> shortly.
->
-> BTW, I am following the instructions at 
-> https://oss-security.openwall.org/wiki/mailing-lists/oss-security#cve-requests 
-> to first post to this list, then request CVEs at Mitre, then reply to 
-> my own post.
-> I don't see many other people doing it in this order. Is that page 
-> still accurate?
->
-> Versions Affected: All supported Plone versions (4.3.20 and any 
-> earlier 4.3.x version, 5.2.4 and any earlier 5.x version).
->
-> Versions Not Affected: None. Earlier versions may be affected, but the 
-> hotfix has not been tested on them.
->
-> The patch addresses several security issues:
->
-> - Remote Code Execution via traversal in expressions. Reported by 
-> David Miller. CVE-2021-32633.
-> - Writing arbitrary files via docutils and Python Script. Reported by 
-> Calum Hutton.
+today we have released PowerDNS Authoritative Server 4.5.1, fixing a
+remotely triggered crash present in version 4.5.0. No other versions
+are affected.
 
-CVE-2021-33509
+Tarballs and signatures are available at 
+https://downloads.powerdns.com/releases/, and a single patch is
+available at https://downloads.powerdns.com/patches/2021-01/. However,
+4.5.1 contains no other changes.
 
-> - Various information disclosures: mostly installation logs. Reported 
-> by Calum Hutton. CVE-2021-21360 and CVE-2021-21336.
-> - Stored XSS from file upload (svg, html). Reported separately by Emir 
-> Cüneyt Akkutlu and Tino Kautschke.
+Please find the full text of the advisory below.
 
-CVE-2021-33512
+PowerDNS Security Advisory 2021-01: Specific query crashes
+Authoritative Server
 
-> - Reflected XSS in various spots. Reported by Calum Hutton.
+-  CVE: CVE-2021-36754
+-  Date: July 26th, 2021
+-  Affects: PowerDNS Authoritative version 4.5.0
+-  Not affected: 4.4.x and below, 4.5.1
+-  Severity: High
+-  Impact: Denial of service
+-  Exploit: This problem can be triggered via a specific query packet
+-  Risk of system compromise: None
+-  Solution: Upgrade to 4.5.1, or filter queries in ``dnsdist``
 
-CVE-2021-33507
+PowerDNS Authoritative Server 4.5.0 (and the alpha/beta/rc1/rc2
+prereleases that came before it) will crash with an uncaught out of
+bounds exception if it receives a query with QTYPE 65535. The offending
+code was not present in earlier versions, and they are not affected.
 
-> - XSS vulnerability in CMFDiffTool. Reported by Igor Margitich.
+Users that cannot upgrade immediately, but do have dnsdist in place,
+can use dnsdist to filter such queries before they do harm, with
+something like ``addAction(QTypeRule(65535),
+RCodeAction(DNSRCode.REFUSED))``.
 
-CVE-2021-33513
+When the PowerDNS Authoritative Server is run inside a supervisor like
+supervisord or systemd, an uncaught exception crash will lead to an
+automatic restart, limiting the impact to a somewhat degraded service.
 
-> - Stored XSS from user fullname. Reported by Tino Kautschke.
+We would like to thank Reinier Schoof and Robin Geuze of TransIP for
+noticing crashes in production, immediately letting us know, and
+helping us figure out what was happening.
 
-CVE-2021-33508 issued, but I forgot that the original reporter already reserved CVE-2021-3313 which is public now with his report.  My bad.
-
-> - Blind SSRF via feedparser accessing an internal URL. Reported by 
-> Subodh Kumar Shree.
-The reporter prefered to request the CVE for this one, so waiting to 
-hear back.
-> - Server Side Request Forgery via event ical URL. Reported by 
-> MisakiKata and David Miller.
-
-CVE-2021-33510
-
-> - Server Side Request Forgery via lxml parser. Reported by MisakiKata 
-> and David Miller.
-
-CVE-2021-33511
-
->
-> A hotfix package has been created at 
-> https://pypi.org/project/Products.PloneHotfix20210518/
-> The fixes will be incorporated in future release Plone 5.2.5.
->
+Kind regards,
 -- 
-Maurits van Rees https://maurits.vanrees.org/
+Peter van Dijk
+PowerDNS.COM BV - https://www.powerdns.com/
 
-
+Download attachment "signature.asc" of type "application/pgp-signature" (915 bytes)
