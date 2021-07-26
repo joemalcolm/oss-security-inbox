@@ -1,4 +1,9 @@
-Received: (qmail 32763 invoked by uid 550); 27 Feb 2026 21:42:48 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3051" "Monday" "26" "July" "2021" "14:47:04" "+0200" "Peter van Dijk" "peter.van.dijk@powerdns.com" nil "79" "[oss-security] security advisory 2021-01 for PowerDNS Authoritative Server 4.5.0" nil nil nil "7" nil nil (number mark "U       peter.van.di Jul 26   79/3051  " thread-indent "\"[oss-security] security advisory 2021-01 for PowerDNS Authoritative Server 4.5.0\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] security advisory 2021-01 for PowerDNS Authoritative Server 4.5.0" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 18334 invoked by uid 550); 26 Jul 2021 13:21:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,71 +12,93 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 32706 invoked from network); 27 Feb 2026 21:42:48 -0000
-Date: Fri, 27 Feb 2026 22:41:01 +0100
-From: Christian Brabandt <cb@256bit.org>
+Received: (qmail 7287 invoked from network); 26 Jul 2021 12:47:17 -0000
+Message-ID: <9120e36f89c0b082a73fa2dfaf46036d09d6f22e.camel@powerdns.com>
+From: Peter van Dijk <peter.van.dijk@powerdns.com>
 To: oss-security@lists.openwall.com
-Message-ID: <aaIPbS8JzoWltKS3@256bit.org>
+Date: Mon, 26 Jul 2021 14:47:04 +0200
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-lrO9/G6P5JSZq0igEc3A"
+User-Agent: Evolution 3.30.5-1.1 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Subject: [oss-security] security advisory 2021-01 for PowerDNS Authoritative Server 4.5.0
+
+--=-lrO9/G6P5JSZq0igEc3A
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: cb@256bit.org
-X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
-Subject: [oss-security] [vim-security] Heap-based Buffer Overflow and OOB Read in :terminal
- affects Vim < 9.2.0076
 
-Heap-based Buffer Overflow and OOB Read in :terminal affects Vim < 9.2.0076
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Date: 27.02.2026
-Severity: Moderate
-CVE: CVE-2026-28420
-CWE: Heap-based Buffer Overflow (CWE-122) / Out-of-bounds Read (CWE-125)
+Hello,
 
-### Summary
-A heap-based buffer overflow WRITE and an out-of-bounds READ exist in=20
-Vim=E2=80=99s terminal emulator when processing maximum combining character=
-s=20
-from Unicode supplementary planes.
+today we have released PowerDNS Authoritative Server 4.5.1, fixing a
+remotely triggered crash present in version 4.5.0. No other versions
+are affected.
 
-### Description
-The vulnerabilities are located in handle_pushline() in src/terminal.c.=20
+Tarballs and signatures are available at=20
+https://downloads.powerdns.com/releases/, and a single patch is
+available at https://downloads.powerdns.com/patches/2021-01/. However,
+4.5.1 contains no other changes.
 
-1) Heap Overflow: Vim reserves 21 bytes (MB_MAXBYTES) per cell via=20
-ga_grow(). This assumes characters stay within the BMP (3 bytes max).=20
-However, a cell can contain up to 6 characters from supplementary planes=20
-(4 bytes each). This requires 24 bytes, causing a 3-byte heap overflow=20
-during conversion.
+Please find the full text of the advisory below.
 
-2) OOB Read: The loop iterating over cell characters fails to check the=20
-boundary of the vterm_screen_cell_t.chars array. When a cell is fully=20
-populated, the loop condition reads index 6 of a 6-element array.
+PowerDNS Security Advisory 2021-01: Specific query crashes
+Authoritative Server
 
-### Impact
-An attacker who can control the output of a program running inside a Vim=20
-:terminal buffer can trigger a heap buffer overflow. This can result in=20
-a crash (Denial of Service) or potential memory corruption.
+-  CVE: CVE-2021-36754
+-  Date: July 26th, 2021
+-  Affects: PowerDNS Authoritative version 4.5.0
+-  Not affected: 4.4.x and below, 4.5.1
+-  Severity: High
+-  Impact: Denial of service
+-  Exploit: This problem can be triggered via a specific query packet
+-  Risk of system compromise: None
+-  Solution: Upgrade to 4.5.1, or filter queries in ``dnsdist``
 
-### Acknowledgements
-The Vim project would like to thank the reporter Github users ehdgks0627=20
-and un3xploitable for identifying the vulnerability and providing a=20
-proof-of-concept.
+PowerDNS Authoritative Server 4.5.0 (and the alpha/beta/rc1/rc2
+prereleases that came before it) will crash with an uncaught out of
+bounds exception if it receives a query with QTYPE 65535. The offending
+code was not present in earlier versions, and they are not affected.
 
-### References
-The issue has been fixed as of Vim patch=20
-[v9.2.0076](https://github.com/vim/vim/releases/tag/v9.2.0076)
+Users that cannot upgrade immediately, but do have dnsdist in place,
+can use dnsdist to filter such queries before they do harm, with
+something like ``addAction(QTypeRule(65535),
+RCodeAction(DNSRCode.REFUSED))``.
 
-[Commit](https://github.com/vim/vim/commit/bb6de2105b160e729c34063)
-[Github Advisory](https://github.com/vim/vim/security/advisories/GHSA-rvj2-=
-jrf9-2phg)
+When the PowerDNS Authoritative Server is run inside a supervisor like
+supervisord or systemd, an uncaught exception crash will lead to an
+automatic restart, limiting the impact to a somewhat degraded service.
 
-Thanks,
-Christian
+We would like to thank Reinier Schoof and Robin Geuze of TransIP for
+noticing crashes in production, immediately letting us know, and
+helping us figure out what was happening.
+
+Kind regards,
 --=20
-Bei uns wird Hand in Hand gearbeitet: Was die eine nicht schafft, l=C3=A4=
-=C3=9Ft
-die andere liegen. Was keiner kann, das kann ich auch!
+Peter van Dijk
+PowerDNS.COM BV - https://www.powerdns.com/
+
+--=-lrO9/G6P5JSZq0igEc3A
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - http://gpgtools.org
+
+iQJQBAABCgA6FiEE+64DI4IcdwalyhUb3PUT+n7tGfMFAmD+rsgcHHBldGVyLnZh
+bi5kaWprQHBvd2VyZG5zLmNvbQAKCRDc9RP6fu0Z8zE/EADMHmZvEv33MWSftdEy
+ND1er1tois+HDOAjaKqGXHB6TXTeK0XnndzbrpRZvJwOQrmVyxLhtq2uDbHc5k9c
+Pz8Yb9qN/C5eYyLm0U5icABufalV8LLehR5gZgI/btmTMHdrTD6Npt/Hkq0eerAX
+n6IQrGkeiZuuzfgAMBcgKHRUpB7RrkFwsVxkRT4+2/scBmyIhwh7J+ZUn5yg2q3F
+wmY9MKRTQ7wmgvNo5+5V5xeFfFj6nX6VZbr4TY7p84reupCdBWGhEJJ2A6TUJIQm
+zfXciZo9qs+2Qe43cB3z61uJrtbFms5LRjFg2dZp4HPx99h7FuwyCeQsfF4G5vgd
+DQ3m8SOWVNu07AFUx5jJMgibUbA9WVCCWQ6Nh4M1xgvUm+T2uQAoZhzG5DCrXffX
+rgIH73iD/WEO0CpeIZw2l5n5M1ZmnqDEswUPHi6FSLvsLaqm7qbUHJo6qPmDicWC
+C/HG2qrCANUHQyFIcE26840B3LFdBF+kfieURMRtcfNuV2Q5PxEzRbGKw7hH0LAU
+SvIwWWJFLs95UoFXDmVlTk8ExQMRWa7oZkTim0rpzOl4mz5TOKFRLsOENo0T5hPB
++36gOqyTVPH6ZZwelcBYXZOK+GzrBAlWm+6T1bBfY+DR3EEsVZ8EDwzBl1Gb0xdt
+b/9M5TweGpomVe2hqe/UcD8VNQ==
+=00j3
+-----END PGP SIGNATURE-----
+
+--=-lrO9/G6P5JSZq0igEc3A--
+
