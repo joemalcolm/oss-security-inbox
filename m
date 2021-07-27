@@ -1,25 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/17/3
-Message-ID: <CAB8XdGAMZrPaNOxowgAaotbePiiC4EOTYw7Ri3DNqAVZQb0y8g@mail.gmail.com>
-Date: Fri, 17 Sep 2021 11:07:19 +0100
-From: Colm O hEigeartaigh <coheigea@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/27/1
+Message-ID: <YP+5rj1ASK3d710l@f195.suse.de>
+Date: Tue, 27 Jul 2021 09:45:50 +0200
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-40690: Apache Santuario: Bypass of the secureValidation property
+Subject: replay-sorcery: CVE-2021-36983: kms service in version 0.6.0 allows local root exploit and other local attack vectors
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Hello list,
 
-All versions of Apache Santuario - XML Security for Java prior to
-2.2.3 and 2.1.7 are vulnerable to an issue where the
-"secureValidation" property is not passed correctly when creating a
-KeyInfo from a KeyInfoReference element. This allows an attacker to
-abuse an XPath Transform to extract any local .xml files in a
-RetrievalMethod element.
+ReplaySorcery [1] upstream version 0.6.0 has introduced new security
+issues. I already reviewed version 0.5.0 a while ago and found issues in
+its implementation of a setuid-root program [2].
 
-Credit:
+By now this setuid-root program has been deprecated by upstream and has
+been replaced by a systemd service running as root called
+"replay-sorcery-kms" that is supposed to provide the same functionality
+(opening a DRI device with the ffmpeg library for hardware acceleration
+support when recording screen contents).
 
-An Trinh, Calif.
+# Findings in Version 0.6.0
 
-References:
+The upstream author asked me to check up on the security of the new
+systemd service. The basic idea is that the kms system service opens any
+DRI devices via the ffmpeg library and passes back the open file
+descriptors to clients of a UNIX domain socket that the service provides
+in the system. I have found the following issues:
 
-https://lists.apache.org/thread.html/r8848751b6a5dd78cc9e99d627e74fecfaffdfa1bb615dce827aad633%40%3Cdev.santuario.apache.org%3E
+a) The UNIX domain socket is placed into the fixed path
+  /tmp/replace-sorcery/device.sock.
+  /tmp/replay-sorcery is a predictable path in a world writable
+  directory, i.e. any other user in the system can precreate it
+  and thus take control of the directory and its contents. For example
+  by removing the intended device.sock and creating a different socket
+  there, clients in the system will then communicate with other parties
+  than intended.
+
+b) The service calls the `kmsChmod()` function for both /tmp/replay-sorcery
+  and /tmp/replay-sorcery/device.sock. This function performs a
+  `chmod(path, 0777)`. Thus a local attacker can stage symlink attacks
+  in both locations. The attack via /tmp/replay-sorcery is thwarted by
+  the Linux kernel's symlink protection. The attack via the socket
+  filename is not, because /tmp/replay-sorcery will not have a sticky
+  bit set. So the attacker only has to win a race condition between the
+  kms service binding the socket and performing the chown() during
+  startup. This allows for a local root exploit achievable every time
+  when the kms service is starting up.
+
+c) During receiption of the RSServiceDeviceInfo data structure from a
+  client, the (size_t) deviceLength parameter has no upper limit i.e.
+  clients can cause denial-of-service by causing large memory
+  allocations in the service.
+
+d) When accepting client connections the service does not make
+  sure that the client is somehow authorized to access the local
+  display. E.g. by it being a member of a special restricted
+  group, or by it owning a local active graphical session. This could
+  allow unprivileged local processes to access display contents of
+  logged in interactive users.
+
+# CVE Assignment
+
+I received CVE-2021-36983 from Mitre for the local root exploit in
+issue b).
+
+# Bugfixes
+
+To my knowledge there are currently no bugfixes available for this. I
+recommend neither to use the setuid-root option nor the systemd service
+until these issues are handled.
+
+# Timeline
+
+2021-07-12: Received review request from the upstream author by e-mail.
+2021-07-20: I reported these findings to the upstream author.
+2021-07-21: I received the CVE from Mitre and offered the upstream
+            author an embargo until 2021-07-26.
+2021-07-27: No reply from the upstream author so far, publication of the
+            findings.
+
+Cheers
+
+Matthias
+
+[1]: https://github.com/matanui159/ReplaySorcery
+[2]: https://www.openwall.com/lists/oss-security/2021/02/10/1
+
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Phone: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
+ 
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG Nürnberg
+Geschäftsführer: Felix Imendörffer
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
