@@ -1,56 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/10/5
-Message-ID: <20210810145441.lcjfteb3v7szp2bi@yuggoth.org>
-Date: Tue, 10 Aug 2021 14:54:41 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/27/2
+Message-ID: <87eebk1t49.fsf@mpe.ellerman.id.au>
+Date: Tue, 27 Jul 2021 10:46:14 +1000
+From: Michael Ellerman <mpe@...erman.id.au>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA-2021-003] Keystone: Account name and UUID oracles in account locking (CVE-2021-38155)
+Cc: linuxppc-dev@...ts.ozlabs.org
+Subject: Re: Linux kernel: powerpc: KVM guest to host memory corruption
 Content-Type: text/plain; charset=utf-8
 
-===============================================================
-OSSA-2021-003: Account name and UUID oracles in account locking
-===============================================================
+Michael Ellerman <mpe@...erman.id.au> writes:
+> The Linux kernel for powerpc since v3.10 has a bug which allows a malicious KVM guest to
+> corrupt host memory.
+>
+> In the handling of the H_RTAS hypercall, args.rets is made to point into the args.args
+> buffer which is located on the stack:
+>
+> 	args.rets = &args.args[be32_to_cpu(args.nargs)];
+>
+> However args.nargs has not been range checked. That allows the guest to point args.rets
+> anywhere up to +16GB from args.args.
+>
+> The guest does not have control of what is written to args.rets, it is always (u32)-3,
+> because subsequent code does check nargs. Additionally the guest will be killed as a
+> result of the nargs being out of range, so a given guest only has a single shot at
+> corrupting memory.
+>
+> Only machines using Linux as the hypervisor, aka. KVM or bare metal, are affected by the
+> bug.
+>
+> The bug was introduced in:
+>
+>     8e591cb72047 ("KVM: PPC: Book3S: Add infrastructure to implement kernel-side RTAS calls")
+>
+> Which was first released in v3.10.
+>
+> The upstream fix is:
+>
+>   f62f3c20647e ("KVM: PPC: Book3S: Fix H_RTAS rets buffer overflow")
+>
+>   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f62f3c20647ebd5fb6ecb8f0b477b9281c44c10a
+>
+> Which will be included in the v5.14 release.
 
-:Date: August 10, 2021
-:CVE: CVE-2021-38155
+This has been assigned CVE-2021-37576.
 
-
-Affects
-~~~~~~~
-- Keystone: >=10.0.0 <16.0.2, >=17.0.0 <17.0.1, >=18.0.0 <18.0.1, >=19.0.0 <19.0.1
-
-
-Description
-~~~~~~~~~~~
-Samuel de Medeiros Queiroz with Oi Cloud reported a vulnerability
-affecting Keystone account locking. By guessing the name of an
-account and failing to authenticate multiple times, any
-unauthenticated actor could both confirm the account exists and
-obtain that account's corresponding UUID, which might be leveraged
-for other unrelated attacks. All Keystone deployments enabling
-security_compliance.lockout_failure_attempts are affected.
-
-
-Patches
-~~~~~~~
-- https://review.opendev.org/790444 (Train)
-- https://review.opendev.org/790443 (Ussuri)
-- https://review.opendev.org/790442 (Victoria)
-- https://review.opendev.org/790440 (Wallaby)
-- https://review.opendev.org/759940 (Xena)
-
-
-Credits
-~~~~~~~
-- Samuel de Medeiros Queiroz from Oi Cloud (CVE-2021-38155)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1688137
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-38155
-
--- 
-Jeremy Stanley
-
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
+cheers
