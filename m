@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["755" "Friday" "29" "June" "2018" "18:51:28" "+0200" "Andreas Lehmkuehler" "lehmi@apache.org" "<2e123ab7-5492-d35a-1c85-7b13dbd438ec@apache.org>" "29" "[oss-security] [CVE-2018-8036] DoS (OOM) Vulnerability in Apache PDFBox's AFMParser" nil nil nil "6" "2018062916:51:28" "[oss-security] [CVE-2018-8036] DoS (OOM) Vulnerability in Apache PDFBox's AFMParser" (number mark "U       lehmi@apache Jun 29   29/755   " thread-indent "\"[oss-security] [CVE-2018-8036] DoS (OOM) Vulnerability in Apache PDFBox's AFMParser\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1348" "Tuesday" "27" "July" "2021" "10:46:14" "+1000" "Michael Ellerman" "mpe@ellerman.id.au" nil "37" "[oss-security] Re: Linux kernel: powerpc: KVM guest to host memory corruption" nil nil nil "7" nil nil (number mark "U       mpe@ellerman Jul 27   37/1348  " thread-indent "\"[oss-security] Re: Linux kernel: powerpc: KVM guest to host memory corruption\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: Linux kernel: powerpc: KVM guest to host memory corruption" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1607 invoked by uid 550); 29 Jun 2018 16:53:57 -0000
+Received: (qmail 15708 invoked by uid 550); 27 Jul 2021 10:10:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,47 +12,62 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32204 invoked from network); 29 Jun 2018 16:51:44 -0000
-From: Andreas Lehmkuehler <lehmi@apache.org>
-To: announce@apache.org, security@apache.org,
- oss-security@lists.openwall.com, bugtraq@securityfocus.com
-Organization: Apache Software Foundation
-Message-ID: <2e123ab7-5492-d35a-1c85-7b13dbd438ec@apache.org>
-Date: Fri, 29 Jun 2018 18:51:28 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+Received: (qmail 1317 invoked from network); 27 Jul 2021 00:46:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ellerman.id.au;
+	s=201909; t=1627346779;
+	bh=9Ngvnk/KaSiH9PtAbbUjpuSC8Mf0FxRg7kOKlrs9ZOI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+	b=ire/ZMXQ31CRLukuxOOp1Lir5CBQxP+hTYJo5zUe+FxZ2lvE8jEVtVgbPXFQLZxb1
+	 pi5uSsy9DuKAIn6ohaHIFBLFSNWGoqICdSKt2pj8QOml5HG5iddB/4h1PK6xTV9iGI
+	 vlBI9tgvc6ntet5ieZkJXSXC48B3iRcII8qFSE0YurDGV2XXTGyhRzYxvM3E/6G5I4
+	 Pg2X6FBSswzuTvDRhgANrhrIMSLwtSBRwnzNR9/yPnSNDGQoMK2Rm9p7JiZSufD7WC
+	 1zlSeQMR5ar9aTm3q4jBQqriUqiS/wrC7uDIPhumJvsVrpKIXR9p7877XmbGTFwdoW
+	 7L/a6jsxI8Opw==
+From: Michael Ellerman <mpe@ellerman.id.au>
+To: oss-security@lists.openwall.com
+Cc: linuxppc-dev@lists.ozlabs.org
+In-Reply-To: <87im0x1lqi.fsf@mpe.ellerman.id.au>
+References: <87im0x1lqi.fsf@mpe.ellerman.id.au>
+Date: Tue, 27 Jul 2021 10:46:14 +1000
+Message-ID: <87eebk1t49.fsf@mpe.ellerman.id.au>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-MW
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] [CVE-2018-8036] DoS (OOM) Vulnerability in Apache PDFBox's AFMParser
+Content-Type: text/plain
+Subject: [oss-security] Re: Linux kernel: powerpc: KVM guest to host memory corruption
 
-[CVE-2018-8036] DoS (OOM) Vulnerability in Apache PDFBox's AFMParser
+Michael Ellerman <mpe@ellerman.id.au> writes:
+> The Linux kernel for powerpc since v3.10 has a bug which allows a malicious KVM guest to
+> corrupt host memory.
+>
+> In the handling of the H_RTAS hypercall, args.rets is made to point into the args.args
+> buffer which is located on the stack:
+>
+> 	args.rets = &args.args[be32_to_cpu(args.nargs)];
+>
+> However args.nargs has not been range checked. That allows the guest to point args.rets
+> anywhere up to +16GB from args.args.
+>
+> The guest does not have control of what is written to args.rets, it is always (u32)-3,
+> because subsequent code does check nargs. Additionally the guest will be killed as a
+> result of the nargs being out of range, so a given guest only has a single shot at
+> corrupting memory.
+>
+> Only machines using Linux as the hypervisor, aka. KVM or bare metal, are affected by the
+> bug.
+>
+> The bug was introduced in:
+>
+>     8e591cb72047 ("KVM: PPC: Book3S: Add infrastructure to implement kernel-side RTAS calls")
+>
+> Which was first released in v3.10.
+>
+> The upstream fix is:
+>
+>   f62f3c20647e ("KVM: PPC: Book3S: Fix H_RTAS rets buffer overflow")
+>
+>   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f62f3c20647ebd5fb6ecb8f0b477b9281c44c10a
+>
+> Which will be included in the v5.14 release.
 
-Severity: Important
+This has been assigned CVE-2021-37576.
 
-Vendor:
-The Apache Software Foundation
-
-Versions Affected:
-Apache PDFBox 1.8.0 to 1.8.14
-Apache PDFBox 2.0.0 to 2.0.10
-Earlier, unsupported Apache PDFBox versions may be affected as well
-
-Description:
-A carefully crafted (or fuzzed) file can trigger an infinite loop which leads to 
-an out of memory exception in Apache PDFBox's AFMParser.
-
-Mitigation:
-Upgrade to Apache PDFBox 1.8.15 respectively 2.0.11
-
-Credit:
-This issue was discovered by Tobias Ospelt
-
-Website:
-https://pdfbox.apache.org/
-
-Download:
-https://pdfbox.apache.org/download.cgi
-https://www.apache.org/dist/pdfbox/2.0.11/RELEASE-NOTES.txt
-https://www.apache.org/dist/pdfbox/1.8.15/RELEASE-NOTES.txt
+cheers
