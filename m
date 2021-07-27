@@ -1,4 +1,9 @@
-Received: (qmail 11856 invoked by uid 550); 25 Aug 2023 22:24:28 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4726" "Tuesday" "27" "July" "2021" "09:45:50" "+0200" "Matthias Gerstner" "mgerstner@suse.de" nil "116" "[oss-security] replay-sorcery: CVE-2021-36983: kms service in version 0.6.0 allows local root exploit and other local attack vectors" nil nil nil "7" nil nil (number mark "U       mgerstner@su Jul 27  116/4726  " thread-indent "\"[oss-security] replay-sorcery: CVE-2021-36983: kms service in version 0.6.0 allows local root exploit and other local attack vectors\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] replay-sorcery: CVE-2021-36983: kms service in version 0.6.0 allows local root exploit and other local attack vectors" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 18141 invoked by uid 550); 27 Jul 2021 07:46:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,218 +12,145 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11670 invoked from network); 25 Aug 2023 22:24:12 -0000
-Date: Sat, 26 Aug 2023 00:23:59 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 18123 invoked from network); 27 Jul 2021 07:46:02 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1627371951; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=Q5hUBexL91oY5zTRKjhr+eb8fsVYDmeuTdtojBtSXMg=;
+	b=UXkcVpxeQy/3ovxQkvbX+yKbaqM1cdmNvrKChC+NUO+I2HL7FYdJCrCaMGEz9/2uA24Du6
+	YjrJ0yjDfI++dpUrf9I2paF33/IiadOpjHuTtM7vi0dlb3YQQgFV3zNztVkU9rcOkeozm7
+	zof9Fbdj32t1Fm26zhpDtoxqVJM0tYI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1627371951;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=Q5hUBexL91oY5zTRKjhr+eb8fsVYDmeuTdtojBtSXMg=;
+	b=iFIc+U2DJ1Y75iGj+LIF6tokI4nw3Svfp8qiUc0jf89JhSqTLq2XEBnC3CwGzs6WagH9AP
+	fWoZyWHFNqsBmJAw==
+Date: Tue, 27 Jul 2021 09:45:50 +0200
+From: Matthias Gerstner <mgerstner@suse.de>
 To: oss-security@lists.openwall.com
-Cc: Vegard Nossum <vegard.nossum@oracle.com>, Jiri Kosina <jkosina@suse.cz>,
-	Donald Buczek <buczek@molgen.mpg.de>,
-	Greg KH <gregkh@linuxfoundation.org>
-Message-ID: <20230825222359.GA10424@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Message-ID: <YP+5rj1ASK3d710l@f195.suse.de>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="xJ1+WpYeFoAJkmXN"
 Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] linux-distros list policy and Linux kernel, again
+Subject: [oss-security] replay-sorcery: CVE-2021-36983: kms service in version 0.6.0 allows
+ local root exploit and other local attack vectors
 
-Hi,
+--xJ1+WpYeFoAJkmXN
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This is sort of continuation to a thread I started in here last year, at
-the time focusing on allowing "embargoes" on publicly fixed Linux kernel
-issues, which we ended up agreeing to:
+Hello list,
 
-https://www.openwall.com/lists/oss-security/2022/05/15/1
+ReplaySorcery [1] upstream version 0.6.0 has introduced new security
+issues. I already reviewed version 0.5.0 a while ago and found issues in
+its implementation of a setuid-root program [2].
 
-BTW, this recent thread on "Quality standards for embargoed code" is
-relevant to that previous topic:
+By now this setuid-root program has been deprecated by upstream and has
+been replaced by a systemd service running as root called
+"replay-sorcery-kms" that is supposed to provide the same functionality
+(opening a DRI device with the ffmpeg library for hardware acceleration
+support when recording screen contents).
 
-https://lore.kernel.org/ksummit/2023081527-amendment-professed-0a42@gregkh/T/#t
+# Findings in Version 0.6.0
 
-(It's harder/worse to test code changes that are not yet public, which
-is something we also recently discussed in context of and granted an
-exception to the curl project.)
+The upstream author asked me to check up on the security of the new
+systemd service. The basic idea is that the kms system service opens any
+DRI devices via the ffmpeg library and passes back the open file
+descriptors to clients of a UNIX domain socket that the service provides
+in the system. I have found the following issues:
 
-This time, there are at least two more points of contention to discuss.
+a) The UNIX domain socket is placed into the fixed path
+  /tmp/replace-sorcery/device.sock.
+  /tmp/replay-sorcery is a predictable path in a world writable
+  directory, i.e. any other user in the system can precreate it
+  and thus take control of the directory and its contents. For example
+  by removing the intended device.sock and creating a different socket
+  there, clients in the system will then communicate with other parties
+  than intended.
 
-Thank you Donald Buczek for bringing this to oss-security (and beating
-me to it), with your specific needs explained:
+b) The service calls the `kmsChmod()` function for both /tmp/replay-sorcery
+  and /tmp/replay-sorcery/device.sock. This function performs a
+  `chmod(path, 0777)`. Thus a local attacker can stage symlink attacks
+  in both locations. The attack via /tmp/replay-sorcery is thwarted by
+  the Linux kernel's symlink protection. The attack via the socket
+  filename is not, because /tmp/replay-sorcery will not have a sticky
+  bit set. So the attacker only has to win a race condition between the
+  kms service binding the socket and performing the chown() during
+  startup. This allows for a local root exploit achievable every time
+  when the kms service is starting up.
 
-https://www.openwall.com/lists/oss-security/2023/08/25/1
-https://lore.kernel.org/ksummit/nycvar.YFH.7.76.2308160014330.14207@cbobk.fhfr.pm/T/#t
+c) During receiption of the RSServiceDeviceInfo data structure from a
+  client, the (size_t) deviceLength parameter has no upper limit i.e.
+  clients can cause denial-of-service by causing large memory
+  allocations in the service.
 
-Here I'd like to start a new thread just on oss-security (no cross-post,
-but some people CC'ed) and with more context given.
+d) When accepting client connections the service does not make
+  sure that the client is somehow authorized to access the local
+  display. E.g. by it being a member of a special restricted
+  group, or by it owning a local active graphical session. This could
+  allow unprivileged local processes to access display contents of
+  logged in interactive users.
 
-For some years until recently, the Linux kernel's
-Documentation/admin-guide/security-bugs.rst directed people to also
-report "sensitive bugs, such as those that might lead to privilege
-escalations" to linux-distros.  On one hand, that was great -
-cooperation between Linux kernel upstream and Linux distros.  On the
-other hand, the specific wording did not fully match linux-distros
-policy, yet it bypassed a visit to the wiki page on linux-distros with
-the instructions and policy on it by directly giving out the posting
-address.  This resulted in people reporting issues to linux-distros
-without having actually read and accepted the policy.
+# CVE Assignment
 
-Last year, Vegard Nossum suggested edits (and then revised them this
-year) to try and make things much clearer for reporters:
+I received CVE-2021-36983 from Mitre for the local root exploit in
+issue b).
 
-https://lore.kernel.org/all/20230305220010.20895-1-vegard.nossum@oracle.com/
-https://vegard.github.io/security-v3/Documentation/output/process/security-bugs.html
+# Bugfixes
 
-As I recall, when Vegard offered this edited documentation (the second
-URL above) to people who reported something to linux-distros but were
-confused, they said that version of the documentation was indeed much
-clearer.  However, the changes didn't get merged, which I speculate is
-in part a result of them changing several things at once and thus making
-it harder for all reviewers to agree on them.  Besides, I am not sure
-this was the right direction: maybe rather than duplicate and explain
-linux-distros policy aspects in Linux kernel documentation, it was
-better to refer to linux-distros instructions and omit the linux-distros
-posting address from the kernel documentation.
+To my knowledge there are currently no bugfixes available for this. I
+recommend neither to use the setuid-root option nor the systemd service
+until these issues are handled.
 
-Then there was the recent lengthy linux-distros and s@k.o thread on the
-StackRot (CVE-2023-3269) vulnerability, publicly disclosed here:
+# Timeline
 
-https://www.openwall.com/lists/oss-security/2023/07/05/1
+2021-07-12: Received review request from the upstream author by e-mail.
+2021-07-20: I reported these findings to the upstream author.
+2021-07-21: I received the CVE from Mitre and offered the upstream
+            author an embargo until 2021-07-26.
+2021-07-27: No reply from the upstream author so far, publication of the
+            findings.
 
-In that private thread, two linux-distros policy aspects came up as
-being inconsistent with s@k.o preferences:
+Cheers
 
-1. For s@k.o, public disclosure is typically in up to 7 days since fix
-is ready, but for linux-distros the deadline is 14 days max since
-linux-distros is notified even if the fix is not ready.  Apparently,
-this one makes Greg KH particularly unhappy about linux-distros.
+Matthias
 
-2. _If_ the reporter shares PoCs/exploits with linux-distros, then per
-current policy those should also be made public (within up to 7 days
-more after the vulnerability is publicly disclosed as such).  Linus
-Torvalds said that this must be up to the reporter only, and we should
-not be imposing such policy.  In a sense, this is already up to the
-reporter - if they disagree, they just shouldn't post PoCs/exploits to
-linux-distros - can instead post an offer to share with individual
-distros if they want to, or not share at all.  However, this is
-problematic in practice because not everyone reads the rules before
-posting and sometimes people change their mind during the embargo time
-(or are required to "change their mind" by their employer, etc.)
+[1]: https://github.com/matanui159/ReplaySorcery
+[2]: https://www.openwall.com/lists/oss-security/2021/02/10/1
 
-I had already recognized both of these as problems - e.g., the latter
-one also came up in Mathias Krause's disclosure of another Linux kernel
-vulnerability in 2022:
+--=20
+Matthias Gerstner <matthias.gerstner@suse.de>
+Dipl.-Wirtsch.-Inf. (FH), Security Engineer
+https://www.suse.com/security
+Phone: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
+=20
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG N=FCrnberg
+Gesch=E4ftsf=FChrer: Felix Imend=F6rffer
 
-https://www.openwall.com/lists/oss-security/2022/02/03/1
+--xJ1+WpYeFoAJkmXN
+Content-Type: application/pgp-signature; name="signature.asc"
 
-At the time, I thought that maybe increasing the maximum delay for
-PoC/exploit publication from 7 to 30 days would be appropriate, but we
-did not formally do it.  I effectively granted a similar exception to
-Ruihan Li for StackRot this time, even though the full exploit wasn't
-even shared with linux-distros and Ruihan was willing to publish the
-PoCs that he did share on time.  I also informed Ruihan of this policy
-aspect early enough, so we dodged that bullet that time, but at the same
-time made Linus aware of this general issue, triggering his criticism.
-(That's fine, it's good to have criticism.)
+-----BEGIN PGP SIGNATURE-----
 
-Overall, even though these issues were mostly avoided for StackRot in
-particular, bringing them up in this thread ended up being the last
-straw for the Linux kernel security folks to say they don't want to deal
-with linux-distros anymore, resulting in this edit to the documentation:
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmD/ua4ACgkQFMQFyXGS
+NVOmkw//elRSkIJQMrtuQCkxOcvDoYuAdvd0r0nTC9cfzd/sQH4QYU7YD1zt0/JF
+m5sLkhUYvYIvilCDaXJxwK//zgdE/yaCnRAY12Ooj8PP+4hZq9TIs9gSsDv0lRiq
+lscg4JSKxZr2Ah9KCwYVSK9C+6PcUKgZ7HTLEUsThmBNbDQNR9UshyW1aMsOFrlL
+AMLf58jvaCacVOQrSnrtp70fZQm6ljpKaCEhql/nRi/5dUlrM97BkUz7hT9nJ9Ac
+rJEZ+atBwkyvQd2XxFnKxjwqR9mzt/kY0Hz6r+TGsmoDFbTBEBXpuB5o5eh0J69H
+ywTyqXEPPL3mMDcN2DDaZ6wMXIBbD5Ba1lLq4wc5M4fDaij64aAWEB46xaElU5X4
+vqA+BwT83GI6QdwIbg58Xvxc1MQUPz95vFx45PCu/mkJwxvJoHVssUPpbGOiX/5T
+nhtqS7I/wwzscoX1JTHkQVMitc0RYmSK0gwBdAjtWAX4pY5GIl4mYBEHgGPu+ZsY
+BJterSQjPZ/K+BTx5IgnjItaXg09Zsyw6bo+5hXKT80GjtZGakEuwUWk48i30Vzy
+tTOpEmNcxMFXV4G/R2+T+KjJ/WUZI7i3Q3cDGbJn12SB4qeGVn8oviuamfpOZTUm
+ROW3a3VeXkdUBAD97Anx1qGlXI0BLfsAmodzB0Csd5jSEzERl74=
+=fR3c
+-----END PGP SIGNATURE-----
 
-https://git.kernel.org/linus/4fee0915e649b
-
-This has a spiteful commit message and a calmer almost constructive
-actual change.  Knowing that the status quo was problematic and not
-having a better solution ready (other than Vegard's elaborate edits), I
-actually approved of this edit as well.  It says:
-
----
-The kernel security team strongly recommends that reporters of potential
-security issues NEVER contact the "linux-distros" mailing list until
-AFTER discussing it with the kernel security team.  Do not Cc: both
-lists at once.  You may contact the linux-distros mailing list after a
-fix has been agreed on and you fully understand the requirements that
-doing so will impose on you and the kernel community.
-
-The different lists have different goals and the linux-distros rules do
-not contribute to actually fixing any potential security problems.
----
-
-(I take issue with the second paragraph, as I explained in the message
-Donald forwarded in here earlier today.)
-
-So the kernel security team can, after having arrived at a fix, choose
-to direct the reporter to also contact linux-distros.  I don't know
-whether this would actually be happening or not.  Maybe some friendly
-dialogue (which I hope this message can be a part of) and agreeing on
-things could make that more likely.
-
-I think the two linux-distros policy aspects above do not preclude such
-cooperation.  However, I am willing to discuss possible policy changes
-(or perhaps Linux kernel exceptions).
-
-I recognize that 14 days might not always be enough to get a fix ready,
-especially not for many of the CPU microarchitectural issues being
-handled since mid-2017 and affecting many proprietary OSes as well (who
-may be used to much longer disclosure timelines and would object to
-Linux's earlier fix and disclosure).  I am glad that almost none of such
-issues were brought to (linux-)distros, and never when it was still more
-than 14 days until public disclosure.  We had a lot of luck there.
-Linux kernel security team has its own mailing list (encrypted, so more
-secure than s@k.o) for handling of those, which is great:
-
-https://www.kernel.org/doc/html/latest/process/embargoed-hardware-issues.html
-
-I mean, this is "great" within the constraints of the rest of the
-industry.  Of course, I'd very much like disclosure timelines for that
-kind of issues to also become much shorter.  This is just not the case.
-
-In terms of (linux-)distros list policy, what can we do here?  Accept up
-to 7 days since fix is ready and thus accept arbitrarily long embargoes
-and more likely have issues "requiring" such embargoes brought to the
-list?  BTW, for CPU microarchitectural issues, that would probably need
-to be for the full distros list, not limited to Linux, and from what I
-know disclosure timelines for such issues may be 3 to 12+ months.
-
-As to publishing PoCs/exploits, this is already mitigated by the Linux
-kernel documentation edit making it less likely (but far from
-impossible) that people would send stuff to linux-distros without being
-aware of the policy.  We could further mitigate this issue by allowing
-up to 30 days (but perhaps suggesting at most 7 days?)  As I recall, how
-much time to allow here was first discussed in context of an Exim issue
-that was expected to be so easy to independently come up with an exploit
-for that even 7 days seemed excessive, so 24 hours was agreed upon for
-that occasion:
-
-https://www.openwall.com/lists/oss-security/2019/06/05/4
-
-However, issues vary, and maybe 1 to 30 days on a case-by-case basis is
-reasonable?
-
-Another option is to completely remove this requirement (only for Linux
-kernel issues or for all), but there are reasons to keep it:
-
-1. To reduce the value of information staying in linux-distros members'
-mailboxes/computers to potential attackers.
-
-The issues with highly valuable information staying in there are that
-such people/resources become more lucrative attack targets, and that
-compromises/leaks might not be detected, in which case the situation is
-worse than with full publication (only bad actors benefit).
-
-2. To let the wider community benefit from those PoCs/exploits.
-
-There are many uses for PoCs/exploits other than testing by upstream
-developers or attacking systems in the wild.  Other uses include:
-testing of (possibly different or backported) fixes by other distros
-(not all of which are on linux-distros for a variety of reasons) and by
-advanced users, reuses by other developers and security researchers to
-better understand the problem and as templates for further PoC/exploit
-development (such as in determining and demonstrating exploitability of
-further related bugs), testing and improvement of (non-)effectiveness of
-general security hardening mitigations and of security monitoring tools.
-
-I'd appreciate any well-reasoned votes and constructive suggestions.
-Maybe there are good ideas that didn't cross my mind yet.
-
-Thanks,
-
-Alexander
+--xJ1+WpYeFoAJkmXN--
