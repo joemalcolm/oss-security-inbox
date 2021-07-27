@@ -1,42 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/23/4
-Message-ID: <CAJAvU=ZQiMR7PdKBz9=4wm3MX9VvmuAF4Q70V3sAwudjuJp4QQ@mail.gmail.com>
-Date: Fri, 23 Apr 2021 09:40:45 -0400
-From: James Feister <openjaf@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/27/3
+Message-ID: <20210727175924.GA16557@openwall.com>
+Date: Tue, 27 Jul 2021 19:59:24 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Malicious commits to Linux kernel as part of university study
+Subject: Re: Pop!_OS Membership to linux-distros list
 Content-Type: text/plain; charset=utf-8
 
-> "Someone else might be even more unethical later" is a horrible reason
-> to refrain from calling out unethical research methods.  This community
-> needs to make it absolutely clear that nonconsensual adversarial
-> "research" is completely unacceptable, or next year you'll see five
-> hundred grant applications intending to throw government-sponsored
-> wrenches into every piece of collaboratively-written software on Earth.
+Hi Jeremy,
 
-It is naive to think this adversarial behavior is not already taking place.
+On Tue, Jul 20, 2021 at 02:23:26PM -0600, Jeremy Soller wrote:
+> 3. Have a publicly verifiable track record, dating back at least 1 year and
+> continuing to present day, of fixing security issues (including some that had
+> been handled on (linux-)distros, meaning that membership would have been
+> relevant to you) and releasing the fixes within 10 days (and preferably much
+> less than that) of the issues being made public (if it takes you ages to fix an
+> issue, your users wouldn't substantially benefit from the additional time,
+> often around 7 days and sometimes up to 14 days, that list membership could
+> give you)
+> 
+> Over the history of Pop!_OS, dating back to 2017, we have maintained critical
+> packages and applied security patches soon after they are made public. Our
+> membership to this list would significantly help our users stay secure by
+> allowing us to prepare and test security updates ahead of public disclosure.
+> Please see our GitHub organization for more evidence: https://github.com/pop-os
 
-The overall response I have seen to this should be encouraging to all of
-us that live in these open-source and free software communities.  It
-shows how our system works. In this case, the actors were identified,
-attributed to a publicly known group, and weeded out.  The key part is
-the information was freely shared, everyone knows about it and can take
-what they feel are appropriate actions.  Just like the submissions to this
-very mailing list help facilitate and the discussions that follow.
+I think it'd be most convincing for us all to see specific examples of
+you having "applied security patches soon after they are made public",
+with dates public vs. fixed in Pop!_OS.
 
-As much as we can blame the University or group for the efficacy of their
-intent, we should assume this behavior has and is already happening.
-There is no other reason not to.  It is a wake-up call to those who think
-otherwise, in public, private, and government sectors.  In this case, the
-project's maturity ensured the proper people were able to identify
-the actor and take appropriate actions.
+> 7. Be able and willing to contribute back (see above), preferably in specific
+> ways announced in advance (so that you're responsible for a specific area and
+> so that we know what to expect from which member), and demonstrate actual
+> contributions once you've been a member for a while
+> 
+> I am able and willing to contribute back.
 
-My suggestion to part of the solution would not be any single technical
-process.  It would be to ask that more commercial and government
-agencies ensure some of their budgeted resources (aka people) are
-used to help maintain the free software and open-source software they
-leverage. Yes, it will bring a whole new set of challenges, but it may tip
-the scale to favor those who are there to help.
+Please choose a specific task (or several).
 
-- Jim
+I suggest the statistics task:
 
+"13. Keep track of per-report and per-issue handling and disclosure
+timelines (at least times of notification of the private list and of
+actual public disclosure), at regular intervals produce and share
+statistics (most notably, the average embargo duration) as well as the
+raw data (except on issues that are still under embargo) by posting to
+oss-security - primary: Amazon, backup: Gentoo"
+
+As you can see, it is currently assigned to Amazon and Gentoo, but as
+far as I can see neither is actually handling it now, so I'd like to
+formally unassign it from them and have another distro handle it.
+
+> 9. Have someone already on the private list, or at least someone else who has
+> been active on oss-security for years but is not affiliated with your distro
+> nor your organization, vouch for at least one of the people requesting
+> membership on behalf of your distro (then that one vouched-for person will be
+> able to vouch for others on your team, in case you'd like multiple people
+> subscribed)
+> 
+> I do not know if I have contacts that are already on the linux-distros list.
+
+It can also be "someone else who has been active on oss-security for
+years but is not affiliated".  Anyone?
+
+Thanks,
+
+Alexander
