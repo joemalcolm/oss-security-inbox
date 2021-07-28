@@ -1,26 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/24/4
-Message-ID: <20210724165955.sgskdvbjhp6dolud@jwilk.net>
-Date: Sat, 24 Jul 2021 18:59:55 +0200
-From: Jakub Wilk <jwilk@...lk.net>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: ipython3 may execute code from the current working directory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/28/4
+Message-ID: <3446569.6mGmU18rGX@sinistra>
+Date: Wed, 28 Jul 2021 17:06:25 +0200
+From: Jonas Schäfer <jonas@...licki.name>
+To: oss-sec <oss-security@...ts.openwall.com>
+Cc: developers@...sody.im
+Subject: Re: Prosody XMPP server advisory 2021-07-22 (Remote Information Disclosure) (CVE-2021-37601)
 Content-Type: text/plain; charset=utf-8
 
-* Mats Wichmann <mats@...hmann.us>, 2021-07-23, 14:39:
->>https://github.com/ipython/ipython/blob/7.25.0/IPython/core/shellapp.py#L219
->
->normally (cpython), an empty string in sys.path doesn't mean "current 
->directory", it means "script directory", the directory the script 
->you're running is found in [1].
+On Donnerstag, 22. Juli 2021 17:03:36 CEST Jonas Schäfer wrote:
+> CVE
+> 
+> : We have not requested a CVE yet and hereby do so.
 
-No, empty string in sys.path always means cwd.
+MITRE assigned CVE-2021-37601 after requesting via Web form.
 
-sys.path[0] is the script directory (if available), but that's a 
-non-empty string.
-
-But you might be right that this is IPython's failure to mimic how the 
-normal Python interpreter initializes sys.path.
-
--- 
-Jakub Wilk
+kind regards,
+Jonas
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
