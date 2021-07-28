@@ -1,67 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/16/2
-Message-ID: <DBFB8E2C-E74B-4C2C-AB6D-0545B692B717@amazon.com>
-Date: Wed, 15 Sep 2021 21:21:53 +0000
-From: "Hausler, Micah" <mhausler@...zon.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: [kubernetes] CVE-2020-8561: Webhook redirect in kube-apiserver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/28/3
+Message-ID: <4476367.Zi2SHl5Nu6@sinistra>
+Date: Wed, 28 Jul 2021 15:08:01 +0200
+From: Jonas Schäfer <jonas@...licki.name>
+To: oss-security@...ts.openwall.com
+Cc: developers@...sody.im
+Subject: Re: Prosody XMPP server advisory 2021-07-22 (Remote Information Disclosure) (CVE Request)
 Content-Type: text/plain; charset=utf-8
 
-Hello Kubernetes Community,
+On Mittwoch, 28. Juli 2021 08:28:53 CEST Salvatore Bonaccorso wrote:
+> Hi Jonas,
+> 
+> On Thu, Jul 22, 2021 at 05:03:36PM +0200, Jonas Schäfer wrote:
+> > (NB: [1] suggested that posting to this list is still an acceptable way to
+> > request a CVE, especially if disclosure should happen immediately. Please
+> > let me know if that's not going to work, then I'll fill out the form.)
+> Can you request a CVE directly through https://cveform.mitre.org/ ?
 
- 
+Will do, thanks.
 
-A security issue was discovered in Kubernetes where actors that control the responses of MutatingWebhookConfiguration or ValidatingWebhookConfiguration requests are able to redirect kube-apiserver requests to private networks of the apiserver. If that user can view kube-apiserver logs when the log level is set to 10, they can view the redirected responses and headers in the logs.
+Where to go to get a CVE for a "random" open source project is always a bit 
+opaque for me. I noticed that I managed to omit the link in my original email, 
+this is the guide I was referring to:
 
- 
+(sorry for the broken link)
 
-This issue has been rated Medium (https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:L/I:N/A:N) (4.1), and assigned CVE-2020-8561
-Am I vulnerable?
- 
+https://github.com/CVEProject/cveproject.github.io/blob/gh-pages/requester/
+reservation-guidelines.md#4-requests-to-third-party-coordinator-cnas-or-email-
+lists
 
-You may be vulnerable if `--profiling` is enabled on the kube-apiserver and actors who control a validating or mutating webhook can access the kube-apiserver process logs.
-Affected Versions
- 
-
-This issue affects all known versions of kube-apiserver. 
-How do I mitigate this vulnerability?
- 
-
-This issue can be mitigated by not allowing kube-apiserver access to sensitive resources or networks, or to reduce the “-v” flag value to less than 10 and set the “--profiling” flag value to “false” (default value is “true”). Setting the profiling flag to “false” prevents users from dynamically modifying the kube-apiserver log level, and the flag value Webhook requests may still be redirected to private networks with a log level less than 10, but the response body will not be logged.
-Fixed Versions
- 
-
-There is no fix for this issue at this time.
-Detection
- 
-
-Examining kube-apiserver log responses is the only known method of detection for this issue.
-
-If you find evidence that this vulnerability has been exploited, please contact security@...ernetes.io
-Additional Details
- 
-
-See the GitHub issue for more details: https://github.com/kubernetes/kubernetes/issues/104720
-Acknowledgements
- 
-
-This vulnerability was reported by QiQi Xu
-
- 
-
-Thank You,
-
- 
-
-Micah Hausler on behalf of the Kubernetes Security Response Committee
-
- 
-
- 
-
- 
-
-
-Content of type "text/html" skipped
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (4700 bytes)
+kind regards,
+Jonas
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
