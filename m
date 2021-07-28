@@ -1,84 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/14/2
-Message-ID: <CAFcO6XOttbdqHNGP=J0oN5+AKuUHysJM3FwVYc8qNr3wYyRTXQ@mail.gmail.com>
-Date: Tue, 14 Dec 2021 23:26:10 +0800
-From: butt3rflyh4ck <butterflyhuangxx@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-4095: kernel: KVM: NULL pointer dereference in kvm_dirty_ring_get() in virt/kvm/dirty_ring.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/28/2
+Message-ID: <20210728150151.3eadaae2@gmail.com>
+Date: Wed, 28 Jul 2021 15:01:51 +0300
+From: "Alexandr Savca (chinarulezzz)" <alexandr.savca89@...il.com>
+To: Jeffrey Walton <noloader@...il.com>
+Cc: oss-security@...ts.openwall.com, jchelmert3@...teo.net
+Subject: Re: Polipo: denial-of-service using range
 Content-Type: text/plain; charset=utf-8
 
-Hi, there was a null-ptr-deref bug in kvm_dirty_ring_get in
-virt/kvm/dirty_ring.c and I reproduced it on 5.15.0-rc5+.
+Hi Jeff,
 
-#Root Cause
-When dirty ring logging is enabled, any dirty logging without an active
-vCPU context will cause a kernel oops via a KVM KVM_XEN_HVM_SET_ATTR ioctl.
+There is Heap Buffer Overflow:
 
-we can call KVM_XEN_HVM_SET_ATTR ioctl and it would invoke
-kvm_xen_hvm_set_attr(), it would call mark_page_dirty_in_slot().
-Call chains is like this:
-KVM_XEN_HVM_SET_ATTR ioctl
-  --->kvm_xen_hvm_set_attr
-      --->kvm_write_wall_clock
-         --->kvm_write_guest
-            -->__kvm_write_guest_page
-               --->mark_page_dirty_in_slot
-mark_page_dirty_in_slot().
-if kvm->dirty_ring_size is sat.
-```
-void mark_page_dirty_in_slot(struct kvm *kvm,
-     struct kvm_memory_slot *memslot,
-     gfn_t gfn)
-{
-if (memslot && kvm_slot_dirty_track_enabled(memslot)) {
-unsigned long rel_gfn = gfn - memslot->base_gfn;
-u32 slot = (memslot->as_id << 16) | memslot->id;
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-if (kvm->dirty_ring_size)
-kvm_dirty_ring_push(kvm_dirty_ring_get(kvm),
-    slot, rel_gfn);
-else
-set_bit_le(rel_gfn, memslot->dirty_bitmap);
-}
-}
-```
-mark_page_dirty_in_slot() would call kvm_dirty_ring_push() to push a
-dirty-page to dirty ring
-then kvm_dirty_ring_get() would get vcpu->dirty_ring.
+==2450==ERROR: AddressSanitizer: heap-buffer-overflow on address
+0x602000000277 at pc 0x7fe440a56332 bp 0x7ffd71e73b10 sp 0x7ffd71e732c8
+WRITE of size 10 at 0x602000000277 thread T0
+    #0 0x7fe440a56331  (/usr/lib/libasan.so.6+0x42331)
+    #1 0x5582d71d4b05  (/usr/bin/polipo+0x150b05)
+    #2 0x5582d71d0de7  (/usr/bin/polipo+0x14cde7)
+    #3 0x5582d71c34d2  (/usr/bin/polipo+0x13f4d2)
+    #4 0x7fe43ff05e09 in __libc_start_main (/lib/libc.so.6+0x23e09)
+    #5 0x5582d71c3c99  (/usr/bin/polipo+0x13fc99)
 
-kvm_dirty_ring_get()
-```
-struct kvm_dirty_ring *kvm_dirty_ring_get(struct kvm *kvm)
-{
-struct kvm_vcpu *vcpu = kvm_get_running_vcpu();  //-------> invoke
-kvm_get_running_vcpu() to get a vcpu.
+0x602000000277 is located 0 bytes to the right of 7-byte region [0x602000000270,0x602000000277)
+allocated by thread T0 here:
+    #0 0x7fe440ac61a7 in __interceptor_malloc (/usr/lib/libasan.so.6+0xb21a7)
+    #1 0x5582d72a876c  (/usr/bin/polipo+0x22476c)
 
-WARN_ON_ONCE(vcpu->kvm != kvm); [1]
+SUMMARY: AddressSanitizer: heap-buffer-overflow (/usr/lib/libasan.so.6+0x42331)
+Shadow bytes around the buggy address:
+  0x0c047fff7ff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c047fff8000: fa fa 00 00 fa fa fd fd fa fa 00 00 fa fa 00 00
+  0x0c047fff8010: fa fa 00 00 fa fa fd fd fa fa 00 00 fa fa 00 00
+  0x0c047fff8020: fa fa 00 00 fa fa fd fa fa fa fd fa fa fa fd fa
+  0x0c047fff8030: fa fa fd fd fa fa fd fd fa fa fd fd fa fa 00 fa
+=>0x0c047fff8040: fa fa 01 fa fa fa 00 02 fa fa fd fa fa fa[07]fa
+  0x0c047fff8050: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff8060: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff8070: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff8080: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c047fff8090: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+  Shadow gap:              cc
+==2450==ABORTING
 
-return &vcpu->dirty_ring;
-}
-```
-If vCPU stat did not work, kvm_get_running_vcpu() would get a NULL
-vcpu pointer .
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-#Details
-Analyze and some discussion on this issue.
-https://lore.kernel.org/kvm/CAFcO6XOmoS7EacN_n6v4Txk7xL7iqRa2gABg3F7E3Naf5uG94g@mail.gmail.com/
-
-#Fix
-The patch for this issue, not available upstream now.
-https://patchwork.kernel.org/project/kvm/patch/20211121125451.9489-12-dwmw2@infradead.org/
-
-#CVE
-Red Hat has assigned CVE-2021-4095 to this issue.
-https://access.redhat.com/security/cve/CVE-2021-4095
-https://bugzilla.redhat.com/show_bug.cgi?id=2031194
-
-#Cedit
-Active Defense Lab of Venustech.
+Built with CFLAGS: -O2 -march=x86-64 -pipe -fdiagnostics-color=always -fsanitize=address
+-fsanitize=leak -fsanitize=undefined -fsanitize-recover=address -DNDEBUG
 
 
-Regards,
- butt3rflyh4ck.
---
-Active Defense Lab of Venustech
+Kind Regards,
+Alex.
+
+
+On Mon, 19 Jul 2021 14:18:05 -0400
+Jeffrey Walton <noloader@...il.com> wrote:
+
+> > I found a vulnerability in the Polipo [1],
+> > lightweight, caching web proxy.
+> > ...
+> >
+> > Polipo doesn't ignore/reject the malformed header. Instead, it has
+> > an assertion:
+> >
+> >     server.c:1473: assert(from >= 0 && (to < 0 || to > from));
+> >
+> > So, a malformed Range header ("Range: bytes=3-2" for example) will
+> > cause an assertion failed.  This error handling allows an attacker
+> > to cause a denial of service.
+> 
+> I would be interested to know what happens when NDEBUG is defined so
+> the assert goes away. Does the server crash, does it lead to memory
+> corruption, an information leakage (like a private key), or something
+> else?
+> 
+> Jeff
