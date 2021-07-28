@@ -1,56 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/11/1
-Message-ID: <CALJHwhTXW8pi-7KJkkNpafM8SSiMM4edX4JbnPTFisGPV+RBjw@mail.gmail.com>
-Date: Thu, 11 Mar 2021 15:59:47 +1000
-From: Wade Mealing <wmealing@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-20261: kernel: panic in start_motor+0x21 when /dev/fd0 is read by multiple threads.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/29/1
+Message-ID: <CALLT8kikyVve2ZhJi-tK8RzrYQQOxpbgKciMA6DwxAZmSJP=sg@mail.gmail.com>
+Date: Wed, 28 Jul 2021 18:35:17 -0400
+From: "Alex O'Ree" <alexoree@...che.org>
+To: "user@...di.apache.org" <user@...di.apache.org>, dev@...di.apache.org,  security <security@...che.org>, oss-security@...ts.openwall.com,  Artem Smotrakov <artem.smotrakov@...il.com>
+Subject: [SECURITY] CVE-2021-37578 Apache jUDDI Remote code execution
 Content-Type: text/plain; charset=utf-8
 
-Gday,
+CVE-2021-37578 Apache jUDDI Remote code execution
 
-A race condition was found in the Linux kernels implementation of the
-floppy disk drive controller driver software.  The impact of this issue is
-lessened by the fact that the default permissions on the floppy device
-(/dev/fd0) are restricted to root.  If the permissions on the device have
-changed the impact changes greatly.  In the default configuration root (or
-equivalent) permissions are required to attack this flaw.
+Severity: Low
 
-From:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a0c80efe5956ccce9fe7ae5c78542578c07bc20a
+VERSION:  older than 3.3.10
 
-"In case of multiple threads trying to open("/dev/fdX"), this leads to
-serious corruptions all over the place, because all of a sudden there is no
-critical section protection (that'd otherwise be guaranteed by locked fd)
-whatsoever."
+PROBLEMTYPE: Remote Code Execution
 
-It is likely that this memory corruption will at minimum crash the system,
-at worse corrupt memory and lead to possible privilege escalation.
+REFERENCES: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-37578
+https://juddi.apache.org/security.html
 
-Fixed in:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a0c80efe5956ccce9fe7ae5c78542578c07bc20a
+DESCRIPTION:
+Apache jUDDI uses several classes related to Java's Remote Method
+Invocation (RMI) which (as an extension to UDDI) provides an alternate
+transport for accessing UDDI services.
 
-Red Hat Bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=1932150
+RMI uses the default Java serialization mechanism to pass parameters in RMI
+invocations. A remote attacker can send a malicious serialized object to
+the above RMI entries. The objects get deserialized without any check on
+the incoming data. In the worst case, it may let the attacker run arbitrary
+code remotely.
 
-To answer the inevitable question that is coming: I'm reporting this
-because it is my job.   ;)
+For both jUDDI web service applications and jUDDI clients, the usage of RMI
+is disabled by default. Since this is an optional feature and an extension
+to the UDDI protocol, the likelihood of impact is low. Starting with
+3.3.10, all RMI related code was removed.
 
-Thank you
+Mitigation:
 
--- 
+jUDDI Clients, disable RMITransports (found in uddi.xml) and use alternate
+transports such as HTTPS.
+jUDDI Server (juddiv3.war/WEB-INF/classes/juddiv3.xml), disable JNDI and
+RMI settings in juddiv3.xml.
+The appropriate settings are located below in xpath style notation.
 
-Wade Mealing
+    juddi/jndi/registration=false
+    juddi/rmi/registration=false
 
-Product Security - Kernel, RHCE
+If the settings are not present, then JNDI and RMI are already disabled.
+This is the default setting.
 
-Red Hat
 
-<https://www.redhat.com>
-
-wmealing@...hat.com
-<https://red.ht/sig>
-TRIED. TESTED. TRUSTED. <https://redhat.com/trusted>
-
-secalert@...hat.com for urgent response
+Reported by Artem Smotrakov
 
