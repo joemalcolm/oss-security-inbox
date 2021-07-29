@@ -1,144 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/25/1
-Message-ID: <001f01d7696d$ca7f4890$5f7dd9b0$@nsfocus.com>
-Date: Fri, 25 Jun 2021 10:57:09 +0800
-From: "Luo Likang" <luolikang@...ocus.com>
-To: <oss-security@...ts.openwall.com>
-Subject: FW: An out-of-bound read/write in fsi driver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/29/2
+Message-ID: <20210729173331.7vwinmrmow3gtfni@yuggoth.org>
+Date: Thu, 29 Jul 2021 17:33:32 +0000
+From: Jeremy Stanley <fungi@...goth.org>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA-2021-002] Nova: Open Redirect in noVNC proxy (CVE-2021-3654)
 Content-Type: text/plain; charset=utf-8
 
- 
+===========================================
+OSSA-2021-002: Open Redirect in noVNC proxy
+===========================================
 
-Because of my mistake, I took a normal bug as a security bug and reported it
-to linux-distros，linux-distros requested me notify oss-security since these
-bugs were deemed to not be a security vulnerability, and no embargo was set.
+:Date: July 29, 2021
+:CVE: CVE-2021-3654
 
 
- 
+Affects
+~~~~~~~
+- Nova: <21.2.3, >=22.0.0 <22.2.3, >=23.0.0 <23.0.2
 
-Because of copy_ from_user has some check, so - 1 does not cause
-cross-border access, and lots of check in fsi_check_access().
 
- 
+Description
+~~~~~~~~~~~
+Swe Aung, Shahaan Ayyub, and Salman Khan with the Monash University
+Cyber Security team reported a vulnerability affecting Nova's noVNC
+proxying implementation which exposed access to a well-known
+redirect behavior in the Python standard library's
+http.server.SimpleHTTPRequestHandler and thus noVNC's
+WebSockifyRequestHandler which uses it. By convincing a user to
+follow a specially-crafted novncproxy URL, the user could be
+redirected to an unrelated site under control of the attacker in an
+attempt to convince them to divulge credentials or other sensitive
+data. All Nova deployments with novncproxy enabled are affected.
 
-The following is the original of my report:
 
- 
+Patches
+~~~~~~~
+- https://review.opendev.org/791807 (Train)
+- https://review.opendev.org/791806 (Ussuri)
+- https://review.opendev.org/791805 (Victoria)
+- https://review.opendev.org/791577 (Wallaby)
+- https://review.opendev.org/791297 (Xena)
 
-I found an oob read/write bug in function cfam_read/cfam_write of
-drivers/fsi/fsi-core.c
 
-It lack of the check of count and offset.
+Credits
+~~~~~~~
+- Swe Aung from Monash University Cyber Security team (CVE-2021-3654)
+- Shahaan Ayyub from Monash University Cyber Security team (CVE-2021-3654)
+- Salman Khan from Monash University Cyber Security team (CVE-2021-3654)
 
- 
 
-```
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1927677
+- https://bugs.python.org/issue32084
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-3654
 
-/* Create chardev for userspace access */
 
-       cdev_init(&slave->cdev, &cfam_fops);
+Notes
+~~~~~
+- The stable/train branch is under extended maintenance and will
+  receive no new point releases, but a patch for it is provided as a
+  courtesy.
 
-- - - -  - - - - - - - - - - - -- - - - - - - - - - - 
 
-static const struct file_operations cfam_fops = {
+-- 
+Jeremy Stanley
 
-       .owner           = THIS_MODULE,
-
-       .open             = cfam_open,
-
-       .llseek            = cfam_llseek,
-
-       .read       = cfam_read,
-
-       .write             = cfam_write,
-
-};
-
-```
-
-In userspace, we can open this chardev can invoke read to use cfam_read.
-
- 
-
-cfam_read
-
-```
-
-static ssize_t cfam_read(struct file *filep, char __user *buf, size_t count,
-
-                     loff_t *offset)
-
-{
-
-       struct fsi_slave *slave = filep->private_data;
-
-       size_t total_len, read_len;
-
-       loff_t off = *offset;
-
-       ssize_t rc;
-
- 
-
-       if (off < 0)
-
-              return -EINVAL;
-
- 
-
-       if (off > 0xffffffff || count > 0xffffffff || off + count >
-0xffffffff)//[0]
-
-              return -EINVAL;
-
- 
-
-       for (total_len = 0; total_len < count; total_len += read_len) {
-
-              __be32 data;
-
- 
-
-              read_len = min_t(size_t, count, 4); //[1]
-
-              read_len -= off & 0x3;          //[2]
-
- 
-
-              rc = fsi_slave_read(slave, off, &data, read_len);//[3]
-
-              if (rc)
-
-                     goto fail;
-
-              rc = copy_to_user(buf + total_len, &data, read_len);//[4]
-
-              ………
-
-       }
-
-       ……..
-
-       return count;
-
-}
-
-```
-
-In [0]: This line will check the parameters to prevent integer overflow, but
-it did not compare the size of count and offset, wo can pass count=2,
-offset=3 to this function.
-
-In [1]: read_len will be assigned a value of 2
-
-In [2]: read_len-=offset&3  => read_len-=3 => read_len=-1.
-
-In[3]/[4]: will OOB access
-
- 
-
-Cfam_write :
-
-The reason for the vulnerability of cfam_write is the same as cfam_read.
-
-
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
