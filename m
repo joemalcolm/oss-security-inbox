@@ -1,30 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/11/4
-Message-ID: <f74590e7-e57b-08cf-aec0-9ebd251ca9ac@gentoo.org>
-Date: Mon, 11 Jan 2021 22:09:18 +0100
-From: Thomas Deutschmann <whissi@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Gentoo's "contributing back" linux-distros tasks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/30/1
+Message-Id: <0e698f6d-0c20-4e74-83ed-322ff637ead0n@googlegroups.com>
+Date: Thu, 29 Jul 2021 22:14:01 -0700 (PDT)
+From: Daniel Bevenius <dbeveniu@...hat.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Node.js: Security updates for all active release lines, 30 July 2021
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-On 2021-01-10 19:44, Solar Designer wrote:
-> Gentoo, please let us all know whether you'd like to stay primary for
-> these tasks, be moved to backup, or something else?
-
-I think we will be able to act as backup.
-
-We will need to figure out a workflow to ensure we notice when we are on 
-call but I am sure we will find a way. I'll contact Anthony directly for 
-the details.
 
 
--- 
-Regards,
-Thomas Deutschmann / Gentoo Security Team
-fpr: C4DD 695F A713 8F24 2AA1 5638 5849 7EE5 1D5D 74A5
+---------- Forwarded message ---------
+From: Daniel Bevenius <dbeveniu@...hat.com>
+Date: Friday, July 30, 2021 at 7:07:19 AM UTC+2
+Subject: Security updates for all active release lines, 30 July 2021
+To: nodejs-sec <nodejs-sec@...glegroups.com>
 
 
+Updates are now available for v16.x, v14.x, and v12.x Node.js release lines.
 
-Download attachment "OpenPGP_signature" of type "application/pgp-signature" (496 bytes)
+We normally like to give advance notice and provide releases in which the 
+only  changes are security fixes, but since this vulnerability was already 
+public we felt it was more important to get this fix out fast in releases 
+that were  already planned.
+
+For more information see: 
+https://nodejs.org/en/blog/vulnerability/july-2021-security-releases-2
+
+Content of type "text/html" skipped
