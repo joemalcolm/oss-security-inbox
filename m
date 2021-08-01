@@ -1,29 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/11/2
-Message-ID: <CAGaRif362BLKb+aaprbykjHDv+SDjex3BKRCH6Zpaazz82_Uvg@mail.gmail.com>
-Date: Fri, 10 Sep 2021 13:40:14 -0700
-From: lewis john mcgibbney <lewismc@...che.org>
-To: user@...23.apache.org, dev@...23.apache.org,  oss-security@...ts.openwall.com, w3c@...che.org
-Subject: CVE-2021-40146: A Remote Code Execution (RCE) vulnerability exists in Apache Any23 YAMLExtractor.java
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/01/3
+Message-ID: <CAFzhf4pDZV74SeGurKt1iW=Egt5NwZ=Zvz3Y9dsq86wLfxupOQ@mail.gmail.com>
+Date: Sun, 1 Aug 2021 20:40:13 +0100
+From: Piotr Krysiuk <piotras@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2021-34556,CVE-2021-35477] Linux kernel BPF protection against Speculative Store Bypass can be bypassed to disclose arbitrary kernel memory
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Two separate issues have been discovered in the Linux kernel mechanism
+to mitigate Speculative Store Bypass in BPF.
 
-A Remote Code Execution (RCE) vulnerability was discovered in the
-Any23 YAMLExtractor.java file and is known to affect Any23 versions <
-2.5. RCE vulnerabilities allow a malicious actor to execute any code
-of their choice on a remote machine over LAN, WAN, or internet. RCE
-belongs to the broader class of arbitrary code execution (ACE)
-vulnerabilities.
+On affected systems, an unprivileged BPF program can exploit any of
+these issues to disclose the content of arbitrary kernel memory via a
+side-channel.
 
-Credit:
+The first issue is that when protecting memory operations against
+Speculative Store Bypass, the technique used by the BPF verifier to
+manage speculation is unreliable. Specifically, each potentially
+problematic memory store operations is sanitized by inserting a
+preempting store of zero value. The preempting store is incorrectly
+assumed to complete "fast" as it only depends on the BPF stack frame
+pointer. However a few different scenarios have been identified where
+this assumption is invalid, by demonstrating a dependent load
+instruction to speculatively execute ahead of the preempting store.
+Practical attacks have been shown to disclose content of arbitrary
+kernel memory via a side-channel. CVE-2021-35477 has been reserved for
+this issue.
 
-The Apache Any23 Project Management Committee would like to thank
-Zhuxuan Wu for reporting the security vulnerability.
+The second issue is that when identifying memory store operations to
+be protected against Speculative Store Bypass, any uninitialized BPF
+stack locations are not considered. And so for each BPF stack
+location, the BPF verifier never attempts to protect the first store
+operation. Further, the BPF stack is allocated without any sanitation
+of preexisting memory content. Thus any later load instruction, that
+depends on the unprotected store, may speculatively execute ahead of
+the store to use unsanitized memory. Whenever it is possible to
+control content of the unsanitized memory before running the BPF
+program, this issue can be abused to perform speculative load from
+arbitrary memory location. A practical attack has been demonstrated to
+disclose content of arbitrary kernel memory via a side-channel.
+CVE-2021-34556 has been reserved for this issue.
 
+Note that each issue can be abused independently of the other, relying
+on non-overlapping bugs.
 
+The PoCs have been shared privately with BPF subsystem maintainers to
+assist with fix development.
 
--- 
-http://home.apache.org/~lewismc/
-http://people.apache.org/keys/committer/lewismc
+The available fix reimplements the mitigation to follow techniques
+recommended by the CPU vendors and is available from mainline kernel
+git repository:
 
+* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/?id=f5e81d1117501546b7be050c5fbafa6efd2c722c
+* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/?id=2039f26f3aca5b0e419b98f65dd36481337b86ee
+
+# Discoverers
+
+Benedict Schlueter <benedict.schlueter@....de> (CVE-2021-34556)
+Piotr Krysiuk <piotras@...il.com> (CVE-2021-35477)
+
+# References
+
+CVE-2021-34556 (reserved via https://cveform.mitre.org/)
+CVE-2021-35477 (reserved via https://cveform.mitre.org/)
