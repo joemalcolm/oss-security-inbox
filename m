@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2015" "Friday" "19" "August" "2016" "09:59:16" "+1000" "x ksi" "s3810@pjwstk.edu.pl" "<CAN10O-b=zyuz3qvV3C_i0z8c-KJgwxkqppY3FVKF9=+RAKFPEw@mail.gmail.com>" "50" "Re: [oss-security] Re: CVE request - slock, all versions NULL pointer dereference" nil nil nil "8" "2016081823:59:16" "[oss-security] Re: CVE request - slock, all versions NULL pointer dereference" (number mark "U       s3810@pjwstk Aug 19   50/2015  " thread-indent "\"Re: [oss-security] Re: CVE request - slock, all versions NULL pointer dereference\"\n") "<20160818211312.5589DABCA54@smtpvmsrv1.mitre.org>" ("<20160818184456.GA16393@sinister.codevat.com>" "<20160818211312.5589DABCA54@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4411" "Sunday" "1" "August" "2021" "18:31:27" "+0000" "John Helmert III" "jchelmert3@posteo.net" nil "89" "Re: [oss-security] Polipo: denial-of-service using range" nil nil nil "8" nil nil (number mark "U       jchelmert3@p Aug  1   89/4411  " thread-indent "\"Re: [oss-security] Polipo: denial-of-service using range\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Polipo: denial-of-service using range" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5832 invoked by uid 550); 19 Aug 2016 07:05:43 -0000
+Received: (qmail 5783 invoked by uid 550); 1 Aug 2021 20:32:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,87 +12,116 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20014 invoked from network); 18 Aug 2016 23:59:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=pjwstk.edu.pl; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=NtXPHoJMPUqYB02u9OREDzoNeau1UOcZa8JdeXSgu/E=;
-        b=CshMcl+8kyPlYoOR9WT1k7mfJyRxnQ5RNQRKdkKnH+VONR8MZKakrfQMTo5x3o4vlo
-         7QB61UVygPbYbxVLCR5qtSLHB/ZOj3VUyHhdT6qiqlgJfgmSW1DWj5v4FTv7IXkbXbt5
-         FfO9w4G43wcN7fM4lUP8tSZyrgP4pHspGGbws=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=NtXPHoJMPUqYB02u9OREDzoNeau1UOcZa8JdeXSgu/E=;
-        b=V7pxOKNrA7Ck4bQhL38ee4tODpEZxGWVwNrVaStq4rM7jPC9H0Jdv+FmAXLdZ+Gfxe
-         Jxta2NUZ+UHkBu94+x6MRiI7b5Ow9z3FXX1G4JU/TFQb9Gq8btzJwx1A2FzLqHBa/MRx
-         R1/F56OHuFnsjLfnmztGuseoalM5hOleqJtWnwqISd3EMmQbIMgZqFcKFCtlaQXZwvBQ
-         DXliSyCDVhv4lXD7ok25rXWu77TUfRU4+LREgui/En66zqElnQ84NkhPIBxfjyPB+25n
-         WvQ2LhT8aefAzB8VqQMlAogwUsk3KYmcN9coCzyzNrCSNgjiyoh/Q2XYhT7mtK9V1paV
-         q+Hg==
-X-Gm-Message-State: AEkoouvSTAAu2rLhYkx6sAPrCGHuFvYFyTt9GABJkZmutypXQFzqRWP4DkUAgNJNWTrQPSfRuCnSwa5neuy7Vw==
-X-Received: by 10.36.144.68 with SMTP id x65mr2644592itd.70.1471564756476;
- Thu, 18 Aug 2016 16:59:16 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <20160818211312.5589DABCA54@smtpvmsrv1.mitre.org>
-References: <20160818184456.GA16393@sinister.codevat.com> <20160818211312.5589DABCA54@smtpvmsrv1.mitre.org>
-From: x ksi <s3810@pjwstk.edu.pl>
-Date: Fri, 19 Aug 2016 09:59:16 +1000
-Message-ID: <CAN10O-b=zyuz3qvV3C_i0z8c-KJgwxkqppY3FVKF9=+RAKFPEw@mail.gmail.com>
+Received: (qmail 32701 invoked from network); 1 Aug 2021 18:31:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.net; s=2017;
+	t=1627842692; bh=loPe+pVdRcapaRt1esFhuYladXkOyoKaojZkT8p+6ns=;
+	h=Date:From:To:Subject:From;
+	b=SX9BT6nrNpyewSZjecLUkLHnrBx30cNEKFjedJ8S0o1aTIik++FtgtN5hKFX3uM2v
+	 1/50G9JrFXCQsNHJmYfFLSX24MiT9v8Gz+HkzCysRmSHJjIAwuu7tAczZgkfFOXvkC
+	 LnVZjQaNLQ5RxVDS5D/f70P2cu2V1TB0capcV7vG0tpuFmqVijZQLxTsD0yQMS6ked
+	 3gwECw6eigS+o0jQA/iEAfBYDKf6QHF3jmxtWwXDTgxQm8m3R2K87Fxl2uN2ZDlVUI
+	 IoF7G5kab7/8rXCAjP8IibKOwe1VEElTrHrx8gCdIEBXkskLJlo2R+xKnHfoJ+xvDf
+	 8GBULK+nHSx4w==
+Date: Sun,  1 Aug 2021 18:31:27 +0000
+From: John Helmert III <jchelmert3@posteo.net>
 To: oss-security@lists.openwall.com
-Cc: eric.pruitt@gmail.com, cve-assign@mitre.org
-Content-Type: text/plain; charset=UTF-8
-Subject: Re: [oss-security] Re: CVE request - slock, all versions NULL pointer dereference
+Message-ID: <YQbnc3DxV6iEaA3B@sol.nexus.lan>
+References: <20201118171206.443be0215d1b142b5ce7584e@gmail.com>
+ <CAH8yC8nDTF9-aBtuKG+81rEYmf4QigMfwB3EEw8hwYiGHP+AeQ@mail.gmail.com>
+ <20210728150151.3eadaae2@gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="FNUf+iWh0REszXUg"
+Content-Disposition: inline
+In-Reply-To: <20210728150151.3eadaae2@gmail.com>
+Subject: Re: [oss-security] Polipo: denial-of-service using range
 
-Hey,
+--FNUf+iWh0REszXUg
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Just for the record... http://s1m0n.dft-labs.eu/files/slock/ . Vendor
-was notified about this issue on 2015-11-13.
+How did you produce this? I can't seem to reproduce with the original
+PoC script. Running it, polipo outputs:
+
+Empty DNS name.
+Host (unknown) lookup failed: empty name (22).
+
+The script outputs:
+
+HTTP/1.1 504 Host (unknown) lookup failed: empty name
+Connection: keep-alive
+Date: Sun, 01 Aug 2021 18:07:07 GMT
+Content-Type: text/html
+Content-Length: 515
+Expires: 0
+Cache-Control: no-cache
+Pragma: no-cache
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<title>Proxy error: 504 Host (unknown) lookup failed: empty name.</title>
+</head><body>
+<h1>504 Host (unknown) lookup failed: empty name</h1>
+<p>The following error occurred while trying to access <strong>http://</strong>:<br><br>
+<strong>504 Host (unknown) lookup failed: empty name</strong></p>
+<hr>Generated Sun, 01 Aug 2021 13:07:07 CDT by Polipo on <em>localhost:8123</em>.
+</body></html>
 
 
-Thanks,
-F
+Fixing the script to GET a real website shows a bunch of memory alignment
+issues, but no heap overflow as far as I can tell:
 
-2016-08-19 7:13 GMT+10:00  <cve-assign@mitre.org>:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
->> The screen locking application slock (http://tools.suckless.org/slock/)
->> calls crypt(3) and uses the return value for strcmp(3) without checking
->> to see if the return value of crypt(3) was a NULL pointer. If the hash
->> returned by (getspnam()->sp_pwdp) is invalid, crypt(3) will return NULL
->> and set errno to EINVAL. This will cause slock to segfault which then
->> leaves the machine unprotected. A couple of common scenarios where this
->> might happen are:
->>
->> - a machine using NSS for authentication; on the machine I discovered
->>   this bug, (getspnam()->sp_pwdp) returns "*".
->> - the user's account has been disabled for one reason or another; maybe
->>   account expiry or password expiry.
->
-> Use CVE-2016-6866.
->
-> - --
-> CVE Assignment Team
-> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-> [ A PGP key is available for encrypted communications at
->   http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
->
-> iQIcBAEBCAAGBQJXtiRVAAoJEHb/MwWLVhi2sacP+gMeIHHCDQ9cy+JpK1eCnSCS
-> sazQCwgyDrGdrT9a842vGgkenEmHfeIwJHlpsMsmB4SBhRjUkWSMDKwh/VYyIFAI
-> U3bIi2B3jqG70onrQJnHPYisz/shOdyv5m4GxTCFVn17i0R4iJ9h3yO7coFG2QMT
-> GxMlm+QkxvUiTz4hEKI6pt7Cpca/5819cqs7fJr368zP1KB54b0dIRNFzFYMOyqk
-> Q6M9SvJICMz5j5rrxYFijhfTrB8AiuU0XNgwZs/sJhRXy8xdf1n+m5C60eDLG+o4
-> Qx2KzHhlDScl680OQNi77MCSHq8Ffb5bEWZDsxujqcN3p4JDGMTBKAJ2vWfDajog
-> 7Ugaqz4ddnj2EY8+ZL6jPzxq1HqBbUmwCCCwvoeltF6etclaGB4Hps6p7ffB3zQy
-> rXsAUC659T/xPURObeHB+krNEadz/lcx1/ucA7+DXmtBmd/oHDYsbwU91M/z+oCQ
-> 6K/CIT2ZTKbUPDP8mdQfpgPsURRXc+oMl8AsUf9OBlnNPn1MGeGfbNOUZz8tJnuT
-> coI//OylyihxjQaOK36vxTu4WtMtvH+bR6tH39TSTxyyKiOFG4xavWCJpshUwDa0
-> tx9QK6RbbWLfIm+PaSkiFqpsZ+oy25DI2FmUPe47u8qStCAVm5TSnOi3/YuPfTMr
-> osR1b1FAQ/zhY7kYhD1n
-> =HbWC
-> -----END PGP SIGNATURE-----
+dns.c:1467:5: runtime error: store to misaligned address 0x7ffe1de13c69 for type 'short unsigned int', which requires 2 byte alignment
+0x7ffe1de13c69: note: pointer points here
+ 63 6f 6d  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00
+              ^
+dns.c:1468:5: runtime error: store to misaligned address 0x7ffe1de13c6b for type 'short unsigned int', which requires 2 byte alignment
+0x7ffe1de13c6b: note: pointer points here
+ 6d  00 00 01 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00
+              ^
+dns.c:1554:5: runtime error: load of misaligned address 0x7ffe1de13b69 for type 'short unsigned int', which requires 2 byte alignment
+0x7ffe1de13b69: note: pointer points here
+ 63 6f 6d  00 00 01 00 01 c0 0c 00  01 00 01 00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe
+              ^
+dns.c:1555:5: runtime error: load of misaligned address 0x7ffe1de13b6b for type 'short unsigned int', which requires 2 byte alignment
+0x7ffe1de13b6b: note: pointer points here
+ 6d  00 00 01 00 01 c0 0c 00  01 00 01 00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe 7f 00
+              ^
+dns.c:1596:9: runtime error: load of misaligned address 0x7ffe1de13b6f for type 'short unsigned int', which requires 2 byte alignment
+0x7ffe1de13b6f: note: pointer points here
+ 00 01 c0 0c 00  01 00 01 00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe 7f 00 00  22 3d 00
+             ^
+dns.c:1596:9: runtime error: load of misaligned address 0x7ffe1de13b71 for type 'short unsigned int', which requires 2 byte alignment
+0x7ffe1de13b71: note: pointer points here
+ c0 0c 00  01 00 01 00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe 7f 00 00  22 3d 00 00 40
+              ^
+dns.c:1596:9: runtime error: load of misaligned address 0x7ffe1de13b73 for type 'unsigned int', which requires 4 byte alignment
+0x7ffe1de13b73: note: pointer points here
+ 00  01 00 01 00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe 7f 00 00  22 3d 00 00 40 60 00
+              ^
+dns.c:1596:9: runtime error: load of misaligned address 0x7ffe1de13b77 for type 'short unsigned int', which requires 2 byte alignment
+0x7ffe1de13b77: note: pointer points here
+ 00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe 7f 00 00  22 3d 00 00 40 60 00 00  6b 3c e1
+             ^
+
+--FNUf+iWh0REszXUg
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEElFuPenBj6NvNLoABXP0dAeB+IzgFAmEG6HsACgkQXP0dAeB+
+Izjg1Q/+PLHfrc0fwC6uaIbUbV0tchnoiI5O5NN+LMYGOn3cQ62GTF5pdk+0/kDG
+/NvoVMtC1CJADJu+a/s0Ah+rsbcH4hAvgQ31WAKiBjzSt2m8Bc7YKh/zsL5LMrF8
+6IPUfrhOV0KQmjeOOn62r+sjiSzhIZBKb4fa1tWWTxpQ4XMFPVhW+U/sjzxe5l+L
+hkpbe8cMyB4OT1ntycMjpROayuH8iTpCEdaGUZV66Unx89kU1VMU8C39bfYcbkEe
+ky5mzMPKo7/KCrgxpU7xeZZlBw50tfFYZZIkkjrz0LWoovc9xL4IBikkcC7srcIF
+323JzPV+XmqacW0sHh7ZaoGxUg36sVyxu3wyS4tKm8iHvFH3Co65ND2lApX1GTGD
+xGCmmW54dyUE6kPfL3X3i7mLzn+L1LWF+CmaOpFuJXRNn0WaPKWjFa8I91dKqrXj
+0njciQUx5rCOiz2OeZ6NC08gZ9Zxec+dTRYVBa0VKBnG+w0WoYxq2lV6yv7epuZd
+Myb15cZVFAy5EXtLw/WbUQc0ci0oKVUoSwkDx9eRi8GMJA0wrUX+81xuue+f62cA
+NsONGOmXP1FM57sxXKVX8ziW8WMoI4wW1uKVB0JgXabfdn08ztCPpbQEbuQscgRm
+Ea1S7cnaq0iznGcQNv9Vsmvd5SH7R4KX3wVuN0wdWhiI5eZ9teE=
+=upkR
+-----END PGP SIGNATURE-----
+
+--FNUf+iWh0REszXUg--
