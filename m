@@ -1,4 +1,9 @@
-Received: (qmail 7228 invoked by uid 550); 15 Sep 2022 22:02:10 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2729" "Sunday" "1" "August" "2021" "20:40:13" "+0100" "Piotr Krysiuk" "piotras@gmail.com" nil "56" "[oss-security] [CVE-2021-34556,CVE-2021-35477] Linux kernel BPF protection against Speculative Store Bypass can be bypassed to disclose arbitrary kernel memory" nil nil nil "8" nil nil (number mark "U       piotras@gmai Aug  1   56/2729  " thread-indent "\"[oss-security] [CVE-2021-34556,CVE-2021-35477] Linux kernel BPF protection against Speculative Store Bypass can be bypassed to disclose arbitrary kernel memory\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2021-34556,CVE-2021-35477] Linux kernel BPF protection against Speculative Store Bypass can be bypassed to disclose arbitrary kernel memory" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9799 invoked by uid 550); 1 Aug 2021 20:33:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,93 +12,94 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1095 invoked from network); 15 Sep 2022 21:49:59 -0000
+Received: (qmail 17810 invoked from network); 1 Aug 2021 19:40:35 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date;
-        bh=qKwdOHCrshvw6xe+mpSAANsytKwdSb4zefX6SBMXBys=;
-        b=PgVt2lyJszUu4OyPqminIyoHt9yunzeUMzXQ/34AWEHM1MiOgI/kyAQJbzISF7kS7M
-         3bZmPJUAJ9bxCMCntGAJePaRp5KX5kwfueqoskxnwQ5w7pmj4+KHc/BWa9yBjmNZj3XQ
-         Tp8jtctaNhII4SLhh3U2N6Md6+LzoDy5IG8DGc4P/vFWGBhcjMZ6QEqbe96dNP/VLbOo
-         PksltmPO4XAJXP0pbaK2qcCjGAflLjFNUPNIP/wPvKd3vhIgXZexnBtrzlp6+RC10u8E
-         JuwwSf6VtH11/4HssEg1TAO/5nj0pgylT0LGdNJr+x3kZg98Ee2eU3zejAlztf65x6mk
-         gnqg==
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=MRN5iDj8y0Gc5mEbs+2fIh3Y/QU5QIQ758n+5sq85Y0=;
+        b=bN2cA0hlfQfBdpvFsI4F2qkx1OOglWo1jCa2HBQPZNPwhlCZhiIfruDpWQAgbsZElo
+         uVGufXCzg/1Cr6XRExdCwrrcg0aMSk4+jc7x+QWZbE4GCpc+9gaH38i9+47ZWkVU8OXc
+         rixHgYtaea8kV1jeqinrSKaoNU3khACNfCcy048GjwwXBu8wdZpF0rCMzRIUzAy3b7Wr
+         4qLqTxvA807dX7fNFZXXyL5GMP2FReS9OU/PzhYWgZZI/DPRjJMI2LtjnZdcCF9A5vxZ
+         3QPIBBrKs+OoNFLuKYEKzJBSe8/KWdiMA96CyQX2cxeo1TX22gI2gBiEG7z2HfJFml3r
+         ObXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date;
-        bh=qKwdOHCrshvw6xe+mpSAANsytKwdSb4zefX6SBMXBys=;
-        b=X7Vvs9wUec+X0Mw0K9Bfq9gV9r0ls3QyYCwML9l2C9FnbRdUBnOUO4VIbiEfZ+Faap
-         YRaZn9ODtQLZmqElntgVIR67j5gT3Alc9a3OfdwFeErN949AQ8kirhx6lH/nWkZLWDE5
-         Ho5PvSs9L4m85otpC3T26Y7JFnNf6ELxeRpy2x3k6sUC9sKL8cDZ2uNWjWKnf0vMybP3
-         qaF+KNyYDt3x17uIabfYL1RdfQGZ4MoZtci4R2rnpndx1HI+6PJ6XESd2x8gnzbEtjKR
-         gZ2gGxsIafeuetvMdkIDv5NqCnQZQEG66nj5L7DzJQYFK6kgYobnNMd16sqlEKYRNdKJ
-         eEsQ==
-X-Gm-Message-State: ACrzQf330DiUcSrgYk5AC8xTekgKrpcwkmX8YNbSHrsq/S9C9EhtGCsM
-	hOngLIGb8MjObcEwRu4+0yi18/paDhX9AAXEmK0HCtQXSjE=
-X-Google-Smtp-Source: AMsMyM7crFXwIynk/AlE5zxSIZDWL2b0rT8aIW5ZbAahMq+qqUGX54YBi25ibO5gbmFGK+/I3Suc1vbeyaj0bs7iJd4=
-X-Received: by 2002:a05:6214:27ed:b0:4ac:7fd7:7d8b with SMTP id
- jt13-20020a05621427ed00b004ac7fd77d8bmr1422223qvb.129.1663278587417; Thu, 15
- Sep 2022 14:49:47 -0700 (PDT)
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=MRN5iDj8y0Gc5mEbs+2fIh3Y/QU5QIQ758n+5sq85Y0=;
+        b=Q7Zspkalrtwb3JUhz/Z61qt/h/AZqAS9S5KRNaAvcQ5fhRDO3l136yVn8wQvJnOoOO
+         scu/4y9bEjU8zf6mjbcl+5wR7kzZ77iBGCJDKeQnLL5PkIjn1Y6NAscq+p/ZNpOVYFKl
+         UX1Vv2f45Y7EepiNwH+Nqn3PppJ1idAsn5UW4wuQXeXZIrT3TTgnUrUHTRT5n2Y9kYr1
+         aGKC9sbX9ks5Z7Ee8BjVP+1u928fJXRZ9vOvBN5EO91tsue+3S5deE0wB9g4dhqCjiRz
+         sv1G06uFGQgx88KitZFx42AxFsH7s1Iy0QoIF7zhdyL7eoag1lFG6TzzLrd062l/i5Le
+         Zdqw==
+X-Gm-Message-State: AOAM533gehhs9KDXT053I/DKOGF4hdjwPm+5Jbgy0ngZQFlZl2XpJbsH
+	EqXxp+RoC6I9m17HePoirWZPjsfeToNZSAo+e5AVQDBXEtCiwQ==
+X-Google-Smtp-Source: ABdhPJxBAPKZr35Vamfx8mNKf5o9HyiJriG5wfH1vRcog8SI/HRjwwmaPrQbIZEs8IHyH2R3IIl8oYxoZu9xK52nd6s=
+X-Received: by 2002:adf:ef0d:: with SMTP id e13mr14310941wro.390.1627846824043;
+ Sun, 01 Aug 2021 12:40:24 -0700 (PDT)
 MIME-Version: 1.0
-From: Pushkar Joglekar <pushkarj.at.work@gmail.com>
-Date: Thu, 15 Sep 2022 14:49:36 -0700
-Message-ID: <CAGsPOT3VSqGbvGySuZsJ4mkqBb5PApH66VyNrxTPFT2sCPo09Q@mail.gmail.com>
+From: Piotr Krysiuk <piotras@gmail.com>
+Date: Sun, 1 Aug 2021 20:40:13 +0100
+Message-ID: <CAFzhf4pDZV74SeGurKt1iW=Egt5NwZ=Zvz3Y9dsq86wLfxupOQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000005d9a2105e8be39bf"
-Subject: [oss-security] [kubernetes] CVE-2021-25749: runAsNonRoot logic bypass for Windows containers
-
---0000000000005d9a2105e8be39bf
 Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] [CVE-2021-34556,CVE-2021-35477] Linux kernel BPF protection against
+ Speculative Store Bypass can be bypassed to disclose arbitrary kernel memory
 
-Hello Kubernetes Community,
+Two separate issues have been discovered in the Linux kernel mechanism
+to mitigate Speculative Store Bypass in BPF.
 
-A security issue was discovered in Kubernetes that could allow Windows
-workloads to run as ContainerAdministrator even when those workloads set
-the runAsNonRoot option to true .
+On affected systems, an unprivileged BPF program can exploit any of
+these issues to disclose the content of arbitrary kernel memory via a
+side-channel.
 
-This issue has been rated low and assigned CVE-2021-25749
-<https://hackmd.io/ndl5QD3tTUKqYdO7rfGX7A#Am-I-vulnerable>Am I vulnerable?
+The first issue is that when protecting memory operations against
+Speculative Store Bypass, the technique used by the BPF verifier to
+manage speculation is unreliable. Specifically, each potentially
+problematic memory store operations is sanitized by inserting a
+preempting store of zero value. The preempting store is incorrectly
+assumed to complete "fast" as it only depends on the BPF stack frame
+pointer. However a few different scenarios have been identified where
+this assumption is invalid, by demonstrating a dependent load
+instruction to speculatively execute ahead of the preempting store.
+Practical attacks have been shown to disclose content of arbitrary
+kernel memory via a side-channel. CVE-2021-35477 has been reserved for
+this issue.
 
-All Kubernetes clusters with following versions, running Windows workloads
-with runAsNonRoot are impacted.
-Affected Versions
+The second issue is that when identifying memory store operations to
+be protected against Speculative Store Bypass, any uninitialized BPF
+stack locations are not considered. And so for each BPF stack
+location, the BPF verifier never attempts to protect the first store
+operation. Further, the BPF stack is allocated without any sanitation
+of preexisting memory content. Thus any later load instruction, that
+depends on the unprotected store, may speculatively execute ahead of
+the store to use unsanitized memory. Whenever it is possible to
+control content of the unsanitized memory before running the BPF
+program, this issue can be abused to perform speculative load from
+arbitrary memory location. A practical attack has been demonstrated to
+disclose content of arbitrary kernel memory via a side-channel.
+CVE-2021-34556 has been reserved for this issue.
 
-   - kubelet v1.20 - v1.21
-   - kubelet v1.22.0 - v1.22.13
-   - kubelet v1.23.0 - v1.23.10
-   - kubelet v1.24.0 - v1.24.4
+Note that each issue can be abused independently of the other, relying
+on non-overlapping bugs.
 
-How do I mitigate this vulnerability?
+The PoCs have been shared privately with BPF subsystem maintainers to
+assist with fix development.
 
-There are no known mitigations to this vulnerability.
-<https://hackmd.io/ndl5QD3tTUKqYdO7rfGX7A#Fixed-Versions>Fixed Versions
+The available fix reimplements the mitigation to follow techniques
+recommended by the CPU vendors and is available from mainline kernel
+git repository:
 
-   - kubelet v1.22.14
-   - kubelet v1.23.11
-   - kubelet v1.23.5
-   - kubelet v1.25.0
+* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/?id=f5e81d1117501546b7be050c5fbafa6efd2c722c
+* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/?id=2039f26f3aca5b0e419b98f65dd36481337b86ee
 
-To upgrade, refer to this documentation. *For core Kubernetes:*
-https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#upgrading-a-cluster
-Detection
+# Discoverers
 
-Kubernetes Audit logs may indicate if the user name was misspelled to
-bypass the restriction placed on which user is a pod allowed to run as.
+Benedict Schlueter <benedict.schlueter@rub.de> (CVE-2021-34556)
+Piotr Krysiuk <piotras@gmail.com> (CVE-2021-35477)
 
-If you find evidence that this vulnerability has been exploited, please
-contact security@kubernetes.io
-Additional Details
+# References
 
-See the GitHub issue for more details:
-https://github.com/kubernetes/kubernetes/issues/112192
-Acknowledgements
-
-This vulnerability was reported and fixed by Mark Rosetti (@marosset)
-
-Thank You,
-
-Pushkar Joglekar on behalf of the Kubernetes Security Response Committee
-
---0000000000005d9a2105e8be39bf--
+CVE-2021-34556 (reserved via https://cveform.mitre.org/)
+CVE-2021-35477 (reserved via https://cveform.mitre.org/)
