@@ -1,20 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/17/1
-Message-ID: <CAH9eYVrHUMa9_E7ZHb=shpMS18TF7MXkM_9mcpJbcCTG8b6z3Q@mail.gmail.com>
-Date: Thu, 16 Sep 2021 16:19:53 -0400
-From: Brian Demers <bdemers@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/01/1
+Message-ID: <d413938d59a8d5447909877220a59f5a40809357.camel@bzed.de>
+Date: Sun, 01 Aug 2021 20:25:00 +0200
+From: Bernd Zeimetz <bernd@...d.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-41303: Apache Shiro before 1.8.0, when using Apache Shiro with Spring Boot, a specially crafted HTTP request may cause an authentication bypass
+Subject: GPSD time will jump back 1024 weeks at after week=2180 (23-October-2021)
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Hi,
 
-Apache Shiro before 1.8.0, when using Apache Shiro with Spring Boot, a
-specially crafted HTTP request may cause an authentication bypass.
+the following mail is from the gpsd-users list, forwarding it as this will
+most likely affect a lot of ntp servers and various self driving/navigating
+vehicles/submarines/.... Please note that I did not check how chrony/ntpd
+handle sudden jumps back in time from gps.
 
-Users should update to Apache Shiro 1.8.0.
+I know that upstream does not care about CVEs, but due to the widespread use
+of gpsd assigning a CVE might be warranted.
 
-Credit:
 
-Apache Shiro would like to thank tsug0d for reporting this issue.
+-------
+From:    Gary E. Miller
+Subject: GPSD time will jump back 1024 weeks at after week=2180 (23-October-
+2021)
+Date:     Mon, 26 Jul 2021 14:32:10 -0700
+
+Yo All!
+
+Fair warning.  Issue 144: https://gitlab.com/gpsd/gpsd/-/issues/144
+
+"GPSD time will jump back 1024 weeks at after week=2180 (23-October-2021)"
+
+The offending commit was after 3.19, so only 3.20, 3.21 and 3.22 are
+affected:
+
+    commit cb7367496f6dd5f90c6b067c031b327921a857b2
+    Author: Gary E. Miller <gem@...lim.com>
+    Date:   Tue Oct 8 17:04:54 2019 -0700
+
+The commit 7f30d88d fixes the problem for those that want to try to back port
+the fix. You'll just be without all the other bug fixes..
+
+This is a real good reason to get 3.23 out very soon.  Please test!
+-------
+
+
+Cheers,
+
+Bernd
+
+
+
+-- 
+ Bernd Zeimetz                            Debian GNU/Linux Developer
+ http://bzed.de                                http://www.debian.org
+ GPG Fingerprint: ECA1 E3F2 8E11 2432 D485  DD95 EB36 171A 6FF9 435F
+
 
