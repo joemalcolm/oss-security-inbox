@@ -1,19 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/14/1
-Message-ID: <45b1d9ce-3088-112e-132e-bba47ad22054@apache.org>
-Date: Thu, 14 Oct 2021 15:27:04 +0100
-From: Mark Thomas <markt@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-42340: Apache Tomcat: DoS via memory leak with WebSocket connections
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/03/1
+Message-ID: <20210802234451.GA24339@localhost.localdomain>
+Date: Mon, 2 Aug 2021 23:59:53 +0000
+From: Qualys Security Advisory <qsa@...lys.com>
+To: Jonas Dellinger <jdellinger@...l2tor.com>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2020-28020: Integer overflow in Exim that can lead to RCE: Some questions to the Qualys researchers who designed the exploit
 Content-Type: text/plain; charset=utf-8
 
-The fix for bug 63362 present in Apache Tomcat 10.1.0-M1 to 10.1.0-M5, 
-10.0.0-M1 to 10.0.11, 9.0.40 to 9.0.53 and 8.5.60 to 8.5.71 introduced a 
-memory leak. The object introduced to collect metrics for HTTP upgrade 
-connections was not released for WebSocket connections once the 
-connection was closed. This created a memory leak that, over time, could 
-lead to a denial of service via an OutOfMemoryError.
+Hi Jonas,
 
-References:
+Sorry for the late reply. Our answers are inlined below.
 
-https://lists.apache.org/thread.html/r83a35be60f06aca2065f188ee542b9099695d57ced2e70e0885f905c%40%3Cannounce.tomcat.apache.org%3E
+On Sun, Jul 25, 2021 at 09:21:33AM -0000, Jonas Dellinger wrote:
+> What data precedes hblock and how is it controlled by the attacker?
+
+Immediately before hblock, we store many fake storeblock structures
+("|N|L|N|L|N|L|N|L|N|L|" in our advisory). A storeblock structure is
+just a "next" pointer and a "length" size. Our fake "next" (N) is NULL
+and our fake "length" (L) is 0x7050505070505050.
+
+To store these fake storeblock structures in the heap, we simply use a
+mail header. In other words, we send something like:
+
+print "helloworldhello:"; print "\0\0\0\0\0\0\0\0PPPpPPPp" x (4096/16)
+
+> How do you remotely make allocations that overwrite the desired pointers?
+
+Through the buffer overflow that is a natural consequence of the integer
+overflow itself:
+
+Our third 1GB mmap block (mblock3) overflows the integer header_size,
+which becomes negative. As explained in Digression 1a/ of our advisory,
+this results in a "forward-overflow" (an mmap-based buffer overflow, in
+this particular case): if we send more bytes in this third header (after
+the integer overflow), these bytes will overflow mblock3, into mblock2
+and mblock1.
+
+> Is my understanding correct that you overwrite the first byte of mblock1's
+> next pointer with zero? How does that ensure that it points to the "fake
+> storeblock" structure?
+
+Yes, we overwrite the first byte of mblock1's "next" pointer with zero.
+On x86_64, this first byte is the pointer's least significant byte: we
+effectively decrease this pointer, by 255 at most. Since this pointer
+initially points to hblock, and since our fake storeblock structures
+immediately precede hblock, the decreased pointer points to a fake
+storeblock structure with high probability.
+
+(If we are unlucky, the pointer's least significant byte was initially
+already zero, and our partial overwrite does not actually decrease the
+pointer; in this case, we simply retry and allocate more memory at the
+beginning of the heap, to shift it slightly.)
+
+> Why does the POOL_MAIN allocation collide with the raw malloc() one?
+
+From malloc()'s point of view, the end of the heap (the "top" chunk) is
+a large free chunk of memory where new chunks can be allocated. From the
+Exim allocator's point of view (after our overflow), the end of the heap
+is also a large free chunk of memory. In other words, one allocator can
+return the same chunk of memory as the other allocator: one allocation
+can overwrite the other one.
+
+> I understand that you make the entire heap look like free POOL_MAIN
+> memory using the "fake storeblock" structure, but how come that the
+> small POOL_MAIN string lands exactly on the large raw malloc() string?
+
+malloc()'s top chunk coincides roughly with Exim's large free chunk of
+POOL_MAIN memory (after our overflow). If we carefully choose the length
+of our subsequent EHLO and MAIL FROM commands, then the large malloc()
+string coincides exactly with the small POOL_MAIN string.
+
+Hopefully this helps! With best regards,
+
+--
+the Qualys Security Advisory team
+
+
+[https://d1dejaj6dcqv24.cloudfront.net/asset/image/email-banner-384-2x.png]<https://www.qualys.com/email-banner>
+
+
+
+This message may contain confidential and privileged information. If it has been sent to you in error, please reply to advise the sender of the error and then immediately delete it. If you are not the intended recipient, do not read, copy, disclose or otherwise use this message. The sender disclaims any liability for such unauthorized use. NOTE that all incoming emails sent to Qualys email accounts will be archived and may be scanned by us and/or by external service providers to detect and prevent threats to our systems, investigate illegal or inappropriate behavior, and/or eliminate unsolicited promotional emails (“spam”). If you have any concerns about this process, please contact us.
