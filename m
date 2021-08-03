@@ -1,65 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/01/3
-Message-ID: <CAFzhf4pDZV74SeGurKt1iW=Egt5NwZ=Zvz3Y9dsq86wLfxupOQ@mail.gmail.com>
-Date: Sun, 1 Aug 2021 20:40:13 +0100
-From: Piotr Krysiuk <piotras@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/04/1
+Message-Id: <1628031289.fehtmg1vfv.none@localhost>
+Date: Tue, 03 Aug 2021 19:48:45 -0400
+From: "Alex Xu (Hello71)" <alex_y_xu@...oo.ca>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2021-34556,CVE-2021-35477] Linux kernel BPF protection against Speculative Store Bypass can be bypassed to disclose arbitrary kernel memory
+Subject: Reminder: QtWebKit known vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Two separate issues have been discovered in the Linux kernel mechanism
-to mitigate Speculative Store Bypass in BPF.
+Quoting Christophe Giboudeaux [0] (excerpted, rewrapped),
 
-On affected systems, an unprivileged BPF program can exploit any of
-these issues to disclose the content of arbitrary kernel memory via a
-side-channel.
+> QtWebKit was a rendering engine for web content released with Qt until 
+> 5.6. It was replaced with QtWebEngine after that.
+> 
+> Despite a community fork in 2016, nothing really happened to keep it 
+> alive and secure.
+> Quoting the QtWebKit release page on Github:
+> 
+> "WARNING: This release is based on old WebKit revision with known 
+> unpatched vulnerabilities.
+> Please use it carefully and avoid visiting untrusted websites and 
+> using it for transmission of sensitive data."
 
-The first issue is that when protecting memory operations against
-Speculative Store Bypass, the technique used by the BPF verifier to
-manage speculation is unreliable. Specifically, each potentially
-problematic memory store operations is sanitized by inserting a
-preempting store of zero value. The preempting store is incorrectly
-assumed to complete "fast" as it only depends on the BPF stack frame
-pointer. However a few different scenarios have been identified where
-this assumption is invalid, by demonstrating a dependent load
-instruction to speculatively execute ahead of the preempting store.
-Practical attacks have been shown to disclose content of arbitrary
-kernel memory via a side-channel. CVE-2021-35477 has been reserved for
-this issue.
+As of today, Repology reports that 246 packages still exist for 
+qt5-webkit, in dozens of Linux distros (most of them overcounted, e.g. 
+qt5-qtwebkit-dev).
 
-The second issue is that when identifying memory store operations to
-be protected against Speculative Store Bypass, any uninitialized BPF
-stack locations are not considered. And so for each BPF stack
-location, the BPF verifier never attempts to protect the first store
-operation. Further, the BPF stack is allocated without any sanitation
-of preexisting memory content. Thus any later load instruction, that
-depends on the unprotected store, may speculatively execute ahead of
-the store to use unsanitized memory. Whenever it is possible to
-control content of the unsanitized memory before running the BPF
-program, this issue can be abused to perform speculative load from
-arbitrary memory location. A practical attack has been demonstrated to
-disclose content of arbitrary kernel memory via a side-channel.
-CVE-2021-34556 has been reserved for this issue.
+Of particular concern is the 104 packages known for wkhtmltopdf. As 
+repeated multiple times on the website (unfortunately not prominently 
+enough), "Do not use wkhtmltopdf with any untrusted HTML". However, it's 
+fair to say that many users likely do not follow this advice.
 
-Note that each issue can be abused independently of the other, relying
-on non-overlapping bugs.
+Readers of this list will likely be familiar with the regular postings 
+regarding WebKitGTK vulnerabilities: many of them are likely applicable 
+to QtWebKit too, especially the WebKitGTK-based fork.
 
-The PoCs have been shared privately with BPF subsystem maintainers to
-assist with fix development.
+Fortunately, as opposed to the webkitgtk issues a few years ago, most 
+programs now support Qt WebEngine, QTextBrowser (part of Qt Widgets), or 
+don't require any browser engine anymore. Almost all exceptions are no 
+longer maintained upstream. wkhtmltopdf is likely the most used package 
+that still requires QtWebKit, but in my opinion is the most dangerous, 
+as users may unknowingly install it from distro repositories and use it 
+to process untrusted data. Users can migrate to weasyprint, puppeteer, 
+or another alternative.
 
-The available fix reimplements the mitigation to follow techniques
-recommended by the CPU vendors and is available from mainline kernel
-git repository:
+Alpine Linux has removed QtWebKit [1], Gentoo Linux has masked it [2] 
+(meaning users must manually approve the installation), and OpenSUSE 
+will be removing it soon [0]. In the absence of a maintained QtWebKit, 
+I urge other distros to follow suit to protect Linux users.
 
-* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/?id=f5e81d1117501546b7be050c5fbafa6efd2c722c
-* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/?id=2039f26f3aca5b0e419b98f65dd36481337b86ee
+[0] https://lists.opensuse.org/archives/list/factory@lists.opensuse.org/thread/GXVEFT7VY5DQNATX6FHJBQBRDHRC3NRN/
+[1] https://gitlab.alpinelinux.org/alpine/aports/-/issues/12888
+[2] https://bugs.gentoo.org/684580
 
-# Discoverers
-
-Benedict Schlueter <benedict.schlueter@....de> (CVE-2021-34556)
-Piotr Krysiuk <piotras@...il.com> (CVE-2021-35477)
-
-# References
-
-CVE-2021-34556 (reserved via https://cveform.mitre.org/)
-CVE-2021-35477 (reserved via https://cveform.mitre.org/)
+Regards,
+Alex.
