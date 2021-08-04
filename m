@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["920" "Sunday" "24" "September" "2017" "22:15:08" "+0200" "Ludovic =?utf-8?B?Q291cnTDqHM=?=" "ludo@gnu.org" "<874lrr3lbn.fsf@gnu.org>" "25" "Re: [oss-security] Why send bugs embargoed to distros?" "^Cc:" nil nil "9" "2017092420:15:08" "[oss-security] Why send bugs embargoed to distros?" (number mark "        ludo@gnu.org Sep 24   25/920   " thread-indent "\"Re: [oss-security] Why send bugs embargoed to distros?\"\n") "<20170923134418.6e460656@pc1>" ("<20170923134418.6e460656@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 27849 invoked by uid 550); 24 Sep 2017 21:29:46 -0000
+Received: (qmail 24437 invoked by uid 550); 18 Nov 2025 20:33:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +6,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9448 invoked from network); 24 Sep 2017 20:15:24 -0000
-References: <20170923134418.6e460656@pc1>
-X-URL: http://www.fdn.fr/~lcourtes/
-X-Revolutionary-Date: 3 =?utf-8?Q?Vend=C3=A9miaire?= an 226 de la
- =?utf-8?Q?R=C3=A9volution?=
-X-PGP-Key-ID: 0x090B11993D9AEBB5
-X-PGP-Key: http://www.fdn.fr/~lcourtes/ludovic.asc
-X-PGP-Fingerprint: 3CE4 6455 8A84 FDC6 9DB4  0CFB 090B 1199 3D9A EBB5
-X-OS: x86_64-pc-linux-gnu
-In-Reply-To: <20170923134418.6e460656@pc1> ("Hanno \=\?utf-8\?Q\?B\=C3\=B6ck\=22'\?\=
- \=\?utf-8\?Q\?s\?\= message of "Sat, 23
-	Sep 2017 13:44:18 +0200")
-Message-ID: <874lrr3lbn.fsf@gnu.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.3 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-detected-operating-system: by eggs.gnu.org: GNU/Linux 2.2.x-3.x [generic]
-X-Received-From: 2001:4830:134:3::e
-Cc: oss-security@lists.openwall.com
-Date: Sun, 24 Sep 2017 22:15:08 +0200
-From: ludo@gnu.org (Ludovic =?utf-8?Q?Court=C3=A8s?=)
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Why send bugs embargoed to distros?
-To: Hanno =?utf-8?Q?B=C3=B6ck?= <hanno@hboeck.de>
+x-ms-reactions: disallow
+Received: (qmail 13916 invoked from network); 18 Nov 2025 20:29:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=snkmail.com; s=mail;
+	t=1763497744; bh=nroinMfItQhfYe1q+RRALTKaT24oTOScN6+TdljlW+k=;
+	h=From:To:Subject:In-Reply-To:References:Date:From;
+	b=Bv0dp+gIlqXGNZD7t4VmUTnJV+DVjAUiwRO0ouOs+jGV/N/c3pPkteQx0xbrTRN3/
+	 HYdcHS2s86vW6/nAt3CSC+OeDhZrXIoZuT6DK5vdnn+/owRClp0vG0R0IZbpfNgYTf
+	 bm3gYgobJHESVZPzarmK+FbLZg1JReXvafz6Rjb+nwfOzq6cl+FLJnea2lfEHG1xa/
+	 qL8mcgoyXRy7aSFFbTawguIRhP2+podPJinprZd3jKOM+GTfjASfUd/0HgnOSDKaNn
+	 U6KSn1WiDp+wCfOGHm/eXMQMBml7bhTt50oF/xVpDbukfLlTI+Too6cfCMDQcG4T1h
+	 G0iGk1EtYLxiQ==
+Message-ID: <30678-1763497743-514888@sneakemail.com>
+From: "John Hein" <josec-ml0@snkmail.com>
+To: oss-security@lists.openwall.com
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+In-Reply-To: <d5189e3b-44e0-4c3d-a36c-18b03f0d9a48@oracle.com>
+References: <d5189e3b-44e0-4c3d-a36c-18b03f0d9a48@oracle.com>
+Date: Tue, 3 Aug 2021 21:31:46 -0600
+X-Mailer: Perl5 Mail::Internet v
+Subject: Re: [oss-security] SQLite - Integer Overflow in FTS5 Extension
+ [CVE-2025-7709]
 
-Hi,
+Alan Coopersmith wrote at 00:29 +0000 on Sep  6, 2025:
+ > https://github.com/google/security-research/security/advisories/GHSA-v2c8-vqqp-hv3g
+ > was published on August 15 ...
 
-Hanno B=C3=B6ck <hanno@hboeck.de> skribis:
+That posting indicates that the affected sqlite versions are in the
+range [3.49.1 - 3.50.2].
 
-> I had informed the distros mailing list one week earlier about the
-> upcoming disclosure with a bug description and links to the already
-> available patch.
-> My understanding is that the purpose of the distros list is that
-> updates can be prepared so after a disclosure the time between "vuln is
-> known" and "patch is available" is short.
-> However from all I can see this largely didn't happen.
+Looking back in git history for sqlite, I see the affected code
+present back to 3.43.0.
 
-FWIW, for GNU=C2=A0Guix (which doesn=E2=80=99t have anyone yet on the distr=
-os list),
-we pushed the patch less than 30 minutes after the public disclosure on
-oss-sec=C2=B9.
+It may be I did not look deep enough, but I don't see any rationale
+for declaring versions less that 3.49.1 unaffected.
 
-The fact that your message to oss-sec was very clear on the issue and
-its consequences, and contained a link to the (small) patch surely made
-it easier to prepare the fix.
+A question has been posted where GHSA-v2c8-vqqp-hv3g was generated:
+https://github.com/google/security-research/issues/278
 
-Ludo=E2=80=99.
+I could not find a reference to CVE-2025-7709 at sqlite.org (in git or
+elsewhere).  So it's not clear how much they agree (or not) with the GHSA-v2c8-vqqp-hv3g advisory.
 
-=C2=B9 https://git.savannah.gnu.org/cgit/guix.git/commit/?id=3De14ab0ad070b=
-4eafa19fc1df81b7b5c3de1dc1b2
+I think the following blurb in sqlite.org release notes
+(https://sqlite.org/releaselog/3_50_3.html) refers to the issue:
+
+========
+Changes in this specific patch release, version 3.50.3 (2025-07-17):
+
+27. Fix a possible memory error that can occur if a query is made against against FTS5 index that has been deliberately corrupted in a very specific way. 
+========
+
+But that doesn't reference a particular commit nor what range of
+versions include this error.
+
+This is the commit I think:
+
+https://www.sqlite.org/src/info/63595b74956a9391f
+
+And the commit message says:
+
+" Optimize allocation of large tombstone arrays in fts5. "
+
+Nothing about this being an overflow of 32 bit values or that
+it addresses the CVE.
+
+If that is the fix for CVE-2025-7709 (as GHSA-v2c8-vqqp-hv3g
+indicates), then as far as I can see this problem exists back to
+sqlite 3.43.0
+
