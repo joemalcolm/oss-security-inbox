@@ -1,4 +1,9 @@
-Received: (qmail 15906 invoked by uid 550); 14 May 2026 03:50:11 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3979" "Wednesday" "4" "August" "2021" "09:59:02" "-0600" "Jeremy Soller" "jeremy@system76.com" nil "80" "Re: [oss-security] Pop!_OS Membership to linux-distros list" nil nil nil "8" nil nil (number mark "U       jeremy@syste Aug  4   80/3979  " thread-indent "\"Re: [oss-security] Pop!_OS Membership to linux-distros list\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Pop!_OS Membership to linux-distros list" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 32515 invoked by uid 550); 4 Aug 2021 16:31:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,173 +12,124 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 17912 invoked from network); 14 May 2026 03:17:31 -0000
-ARC-Seal: i=1; a=rsa-sha256; t=1778728643; cv=none;
-        d=google.com; s=arc-20240605;
-        b=XWa82fBbhqX0PGtjzPsD9cgvyarmgG6SP1fenkd3WKawrhbidEeIINMOG/AF8ihYXI
-         LYFz6skZX7HhxNTiJBMTUO6Y6JRCmtinBmgfOsLPZQgtBUFOz7UIlakKf18ijcOhzc8q
-         mmhROZMNe+XPx5SZcxpcD4XeLjfBxEIMkLqKfKaIN6Y0VxFESQN3XMZGm3Z2aC8weYt9
-         /0eC+00nsXwOiOhG0qjhVVqhjf9kHXC6UOyQT/2MBpG6cdy9SvobC3NwXI+FEwvHdkj9
-         OMkIRa099OzT0zCj9mNPuJZi1siZA7pVPJVHSFQy7FBq1Ssy4X4JmjT7wtUwUhLXhYuk
-         D3aQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :dkim-signature;
-        bh=1y74g1oZaxUEKTIVzu+Du0ISMYEne+66NsMm0z2I4HA=;
-        fh=9jsPTyo6edd9xvAeG+KFFrRrXMmgB/RdwUKOrvy9dcA=;
-        b=K8jy9jHOHrMknsf5pwTgJ20h33GsmMOlbDXijBiMn0E8WkMUiU+muFTqpJ2Cx1zAkL
-         PGG/A27FWwiSwrtM8HYN1YuVwQFCQxH9z6gBqcfWowFQKoAGHh8/HhUYy1TDX1kwUkcd
-         a+BnFiJXzQD2ZSGQ9TT2MZ4sEuwZCin2XBIPdksm8aELYJqS7Ki++JqZ3gMpX2lByRX6
-         szJZ6D4whDbJD0MtyiOKegLCghlnOpRgiypoVN0coWjksN0WwZSPIn8VzYzDo6Rw2sAz
-         L+zhdttDGjyk/ZtSgbl8v1RvBAykZHB6mWO41LmCVpE1YxxlEDh/u9UcL4KDe4q5If7U
-         b9xg==;
-        darn=lists.openwall.com
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778728643; x=1779333443; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1y74g1oZaxUEKTIVzu+Du0ISMYEne+66NsMm0z2I4HA=;
-        b=K8GgU1OKBjNZy6lSA9i3bomehxwTNMGGCsYfzdyKgjksyzBKo61UETzDjC/6m2h9b4
-         eNdd7OFs/E3xB5QqdCBsaDNsI/bPGXnIBvTs/1wQuQBxTlWsUcdSYUvOHw5w5d1SfUDJ
-         lwfhXT6ALI1lgVo/Rcfx+m7JAe2ZoExp9WSNpbhl2KqcuwUi7ZbfNYE+DgaW6ReFXCx+
-         PAusu1udkxmJ/HUlVTbDyoly3DZO4nYAqdWk+ceC7n4T5hSwXrKm9655Y0OZj2BXgRz8
-         rxE+EDOH1rLF9Z1WJRbFpxMGM1xVqu7nf+eMdv4bpVrGxNaLIOnkYxxpGsWTaPdSbnnM
-         hGCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778728643; x=1779333443;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1y74g1oZaxUEKTIVzu+Du0ISMYEne+66NsMm0z2I4HA=;
-        b=MbhS/tJSgum7oRx6D+JDmMk6ePC8geLcEwRNn4EfxIEqN2wGJa8NzXhDIgdrRXYT56
-         itdfnXolCUtOG/EqkJ5RXWsQBOfsygQ5J1qJokH6lfsG/Lo4ebYw9ztbLJ/KWhxfvZyz
-         FeDunqMGQ0VPBH10hq0ecjX8u1IoLghuKa3uon/J2qthPz2bigOn+GWJfIGYYmCFZMVK
-         nSjCtJdSVVxK9Gpo6LFNeNF6FpRataBD8zQ8FwFuWvJRZ3G+h6M/680X1JPiqfZwe3vt
-         uFOA63lBXNJAZjBLQOHZvN9t8xYfpCLv70hnAJBzdbxAC6Tx8w+9MWp+dqNv2aYWoCez
-         bV2w==
-X-Gm-Message-State: AOJu0Yww3kygDC0eteeBD8FxX9IKmIdMDqQRB4Lue5NOCCodKTcdrggi
-	0avwNtoSMxYm10KQtRrDWCUgoTlZJjcMySzbra1PM+Sx+imovzluecbXitf9yW1mUrby/pytiZQ
-	r2Lc1TC+w2QYKrdxmbVZQUomgZ4DGIdTcV5dCoAzJ8Q==
-X-Gm-Gg: Acq92OGCLNAQ96T7hZHtOI2tqwcXRr81B/y+cPIX/CP/9ywJlTk8CbACfSgU2AQZ06c
-	Qmog9kFyXfBHoC7LoF+ZoybssvnEsSqwPeOR2Y+ucAB+DCX7CEmUJ5cvZUC8h7DWTdOw6j7auT+
-	dhfFNUl8kh8A58YeOUSAwEZigK65EnqKcjKkM+5plwnBOcv/KwoElnQUbn6+zGZKLPQEw/NPPyL
-	1AzjuhbJ9HW/m7dFFS5CbxRIMw2Yp0t6O8DbLWw7INY8vi3g3HUUoByz7OSLS3faiPbb+CIbhua
-	SSGpB6rK
-X-Received: by 2002:a05:6102:d94:b0:633:8c42:183a with SMTP id
- ada2fe7eead31-637a745d9acmr2975369137.9.1778728643005; Wed, 13 May 2026
- 20:17:23 -0700 (PDT)
-MIME-Version: 1.0
-References: <afzkg48dgcKJF/6E@256bit.org>
-In-Reply-To: <afzkg48dgcKJF/6E@256bit.org>
-From: Tianyu Chen <billchenchina2001@gmail.com>
-Date: Thu, 14 May 2026 11:16:57 +0800
-X-Gm-Features: AVHnY4JbWndEv1jK-k-Wr2kS8xkUQzMHcp9ABl1ZGJF0iF6A3mvJxiFatec6QJo
-Message-ID: <CAG-20GToEuBW5jHN2kMj3avJn8ay7uEPqSwbnNSdx_OmnePwgA@mail.gmail.com>
+Received: (qmail 20275 invoked from network); 4 Aug 2021 15:59:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=pkwH0C
+	vGgFZhjzgrqqqgwCZl9i8vpGyMjKbTwqw/6nU=; b=hj0oZcn3KvLQVUfC9ikkvJ
+	uZBEujRo7lhpn2fxTGdaYaHZebe3XQOz69Ig+Jk3dLNLnHz0AdPPNXaMHC65xPo0
+	DeGo3OlRwhx3cgoUmOLvG3TZEeul9Nf0NRaUlV/6yIBs/cgFyDFIOset8sr0PrFs
+	9lPTvo7jZZps5T5BaBDT6I+cS4PvjdEYEAGHlg9MDRlp3uS05oig2rX8mpyuXwGt
+	0zfWGmUZV02yDuTP472x6PYhScGEvjuYS+qL9/Ai1WpidrvwlhUEzP4+idZHH63I
+	e/n1yGKKTaFJWEaJzue00POP1ymzuV3Qt8C2b/yoNFQ6sy1KHGgp7y932Y1+9jVQ
+	==
+X-ME-Sender: <xms:WrkKYWrsRUCYrJ-7UKT07hUlbb3wdIX5CbxfLPo9pdVc3iIRFZHN3A>
+    <xme:WrkKYUoB21UOe_LyFXjNoxYRxaiVKyOW3KJvjhBNibJ4D6ov_FDuKGsfQ9xKjdzwr
+    eipexz_cjKKHJU-gg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrieejgdejiecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvffutgesthdtre
+    dtreertdenucfhrhhomhepfdflvghrvghmhicuufholhhlvghrfdcuoehjvghrvghmhies
+    shihshhtvghmjeeirdgtohhmqeenucggtffrrghtthgvrhhnpefgfedtheehteejgeevgf
+    ekhfffteegudejvdduteegjeffkeeiheeugeevteefheenucffohhmrghinhepghhithhh
+    uhgsrdgtohhmpdhlrghunhgthhhprggurdhnvghtnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepjhgvrhgvmhihsehshihsthgvmhejiedrtgho
+    mh
+X-ME-Proxy: <xmx:WrkKYbNgAKUsocp4YsHkXj8F34i1Z98IThH184LIRBHI9lRrw0eG7g>
+    <xmx:WrkKYV5q8TslPn9mlTpyT24ZSo6-1cfGPLtN3KqWnnDn9hkIs5xOAw>
+    <xmx:WrkKYV6CRjoFiABAVtGJdAcyJSWw_MfGU-Gz-VqqsMbz72bOAfob_Q>
+    <xmx:W7kKYXG6e0Q1Ntr24AwJ4lChMTZxz8QzsqjnZcZwufgs48022GjiBQ>
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-548-g3a0b1fef7b-fm-20210802.001-g3a0b1fef
+Mime-Version: 1.0
+Message-Id: <26f2884d-ddb7-498a-8a73-ad02e0242ed6@www.fastmail.com>
+In-Reply-To: <20210727175924.GA16557@openwall.com>
+References: <cf53fe7b-371e-48dd-90d7-fa2719747d9d@www.fastmail.com>
+ <20210727175924.GA16557@openwall.com>
+Date: Wed, 04 Aug 2021 09:59:02 -0600
+From: "Jeremy Soller" <jeremy@system76.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000eb10260651be88f7"
-Subject: Re: [oss-security] [vim-security] Heap Buffer Overflow in spell file
- loading affects Vim < 9.2.0450
+Content-Type: text/plain
+Subject: Re: [oss-security] Pop!_OS Membership to linux-distros list
 
---000000000000eb10260651be88f7
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Tue, Jul 27, 2021, at 11:59 AM, Solar Designer wrote:
+> Hi Jeremy,
+> 
+> On Tue, Jul 20, 2021 at 02:23:26PM -0600, Jeremy Soller wrote:
+> > 3. Have a publicly verifiable track record, dating back at least 1 year and
+> > continuing to present day, of fixing security issues (including some that had
+> > been handled on (linux-)distros, meaning that membership would have been
+> > relevant to you) and releasing the fixes within 10 days (and preferably much
+> > less than that) of the issues being made public (if it takes you ages to fix an
+> > issue, your users wouldn't substantially benefit from the additional time,
+> > often around 7 days and sometimes up to 14 days, that list membership could
+> > give you)
+> > 
+> > Over the history of Pop!_OS, dating back to 2017, we have maintained critical
+> > packages and applied security patches soon after they are made public. Our
+> > membership to this list would significantly help our users stay secure by
+> > allowing us to prepare and test security updates ahead of public disclosure.
+> > Please see our GitHub organization for more evidence: https://github.com/pop-os
+> 
+> I think it'd be most convincing for us all to see specific examples of
+> you having "applied security patches soon after they are made public",
+> with dates public vs. fixed in Pop!_OS.
 
-According to GHSA, this has been assigned CVE-2026-45130.
+How many examples should I provide? The last security patch I did was for
+systemd. We have patches on systemd which means we cannot use the Ubuntu
+version directly, so when, for example, CVE-2020-13529 and CVE-2021-33910
+patches arrived in Ubuntu 21.04 on July 20, 2021, I applied them to our own
+fork of systemd for Pop!_OS 21.04 that same day:
 
-Best Regards,
-Tianyu Chen
+- https://launchpad.net/ubuntu/+source/systemd/247.3-3ubuntu3.4
+- https://github.com/pop-os/systemd/commit/bf008f836b8740f6634d02526d1f38c98fa6699a
 
+Pop!_OS needs to participate in linux-distros to ensure we have patches ready
+for our forks of packages that do not come straight from Ubuntu. I listed the
+relevant packages in my original email, many of which we have had to do
+security updates for after some embargo lifts, with very little time to prepare.
 
-Christian Brabandt <cb@256bit.org> =E4=BA=8E2026=E5=B9=B45=E6=9C=888=E6=97=
-=A5=E5=91=A8=E4=BA=94 03:14=E5=86=99=E9=81=93=EF=BC=9A
+> > 7. Be able and willing to contribute back (see above), preferably in specific
+> > ways announced in advance (so that you're responsible for a specific area and
+> > so that we know what to expect from which member), and demonstrate actual
+> > contributions once you've been a member for a while
+> > 
+> > I am able and willing to contribute back.
+> 
+> Please choose a specific task (or several).
+> 
+> I suggest the statistics task:
+> 
+> "13. Keep track of per-report and per-issue handling and disclosure
+> timelines (at least times of notification of the private list and of
+> actual public disclosure), at regular intervals produce and share
+> statistics (most notably, the average embargo duration) as well as the
+> raw data (except on issues that are still under embargo) by posting to
+> oss-security - primary: Amazon, backup: Gentoo"
+> 
+> As you can see, it is currently assigned to Amazon and Gentoo, but as
+> far as I can see neither is actually handling it now, so I'd like to
+> formally unassign it from them and have another distro handle it.
 
-> Heap Buffer Overflow in spell file loading affects Vim < 9.2.0450
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> Date: 07.05.2026
-> Severity: Medium
-> CVE: *requested, not yet assigned*
-> CWE: Integer Overflow or Wraparound (CWE-190) leading to Heap-based Buffer
-> Overflow (CWE-122)
->
-> ## Summary
-> A heap buffer overflow exists in `read_compound()` in `src/spellfile.c`
-> when loading a crafted spell file (`.spl`) with UTF-8 encoding active.
-> An attacker-controlled length field in the spell file's compound section
-> overflows a 32-bit signed integer multiplication, causing a small buffer
-> to be allocated for a write loop that runs many iterations, overflowing
-> the heap.  Because the `'spelllang'` option can be set from a modeline,
-> a text file modeline can trigger spell file loading if a malicious
-> `.spl` file has been planted on the runtimepath.
->
-> ## Description
-> In `read_compound()` (`src/spellfile.c`), the buffer size for the regex
-> pattern `pat` is computed from the attacker-controlled `sectionlen`
-> field of an `SN_COMPOUND` section.  Both `todo` and the size variable
-> `c` are declared as `int`:
->
->     c =3D todo * 2 + 7;
->     if (enc_utf8)
->         c +=3D todo * 2;
->     pat =3D alloc(c);
->
-> When `todo` is sufficiently large (e.g. `0x40000005`), the multiplication
-> `todo * 4 + 7` overflows the 32-bit signed integer and wraps to a small
-> positive value (e.g. 27).  `alloc(27)` succeeds, but the subsequent loop
-> iterates `todo` (~1 billion) times, writing bytes into the 27-byte
-> buffer and corrupting adjacent heap memory.
->
-> The overflow only manifests when UTF-8 encoding is active (`enc_utf8`).
-> Without it, the intermediate value remains negative, sign-extends to a
-> huge `size_t`, and `alloc()` returns NULL harmlessly.  UTF-8 is the
-> default on virtually all modern Linux and macOS systems.
->
-> A modeline in an unrelated text file can set `'spelllang'` and enable
-> `'spell'`, causing Vim to load a spell file under the attacker's control
-> if one has been planted on the runtimepath (e.g. `~/.vim/spell/`).
->
-> ## Impact
-> The vulnerability allows a heap buffer overflow of approximately 75
-> bytes with partially attacker-controlled content when Vim loads a
-> crafted spell file under UTF-8 encoding.  The practical impact is a
-> crash of the Vim process (denial of service).
->
-> Exploitation requires a malicious `.spl` file to be present on the
-> runtimepath and the victim to either:
->
-> - explicitly enable spell checking with the matching language, or
-> - open any text file containing a modeline that sets `'spelllang'`
->   and enables `'spell'`, while `'modeline'` is enabled.
->
-> The severity is rated Medium because exploitation requires both a
-> planted spell file and a separate triggering action by the victim, and
-> the practical outcome is a crash rather than code execution.
->
-> ## Acknowledgements
-> The Vim project would like to thank Daniel Cervera (@daniel-msft) of
-> Microsoft Security Engineering for reporting and analyzing the issue and
-> suggesting a fix.
->
-> ## References
-> The issue has been fixed as of Vim patch [v9.2.0450](
-> https://github.com/vim/vim/releases/tag/v9.2.0450).
-> - [Commit](
-> https://github.com/vim/vim/commit/92993329178cb1f72d700fff45ca86e1c2d369f8
-> )
-> - [Github Security Advisory](
-> https://github.com/vim/vim/security/advisories/GHSA-q4jv-r9gj-6cwv)
->
->
->
-> Best,
-> Christian
-> --
-> Man soll die Wahrheit mehr als sich selbst lieben, aber seinen
-> N=C3=A4chsten mehr als die Wahrheit.
->                 -- Romain Rolland
->
+That would be fine, but I would be curious if there is some reason they have
+not been fulfilling this task.
+ 
+> > 9. Have someone already on the private list, or at least someone else who has
+> > been active on oss-security for years but is not affiliated with your distro
+> > nor your organization, vouch for at least one of the people requesting
+> > membership on behalf of your distro (then that one vouched-for person will be
+> > able to vouch for others on your team, in case you'd like multiple people
+> > subscribed)
+> > 
+> > I do not know if I have contacts that are already on the linux-distros list.
+> 
+> It can also be "someone else who has been active on oss-security for
+> years but is not affiliated".  Anyone?
 
---000000000000eb10260651be88f7--
+I believe Tyler Hicks is willing to do this.
+
+> Thanks,
+> 
+> Alexander
+> 
