@@ -1,31 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/02/6
-Message-ID: <CAKoP-y8CEv=h4a-ckLe+_p4WJk-CwzuXVCbBXTd8HrG+TSNmTw@mail.gmail.com>
-Date: Tue, 2 Nov 2021 11:23:50 -0500
-From: Josh Bressers <josh@...ss.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/04/3
+Message-ID: <20210804164951.GG5486@sequoia>
+Date: Wed, 4 Aug 2021 11:49:51 -0500
+From: Tyler Hicks <code@...icks.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Trojan Source Attacks
+Subject: Re: Pop!_OS Membership to linux-distros list
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 2, 2021 at 10:56 AM David A. Wheeler <dwheeler@...eeler.com>
-wrote:
+On 2021-08-04 09:59:02, Jeremy Soller wrote:
+> On Tue, Jul 27, 2021, at 11:59 AM, Solar Designer wrote:
+> > > 9. Have someone already on the private list, or at least someone else who has
+> > > been active on oss-security for years but is not affiliated with your distro
+> > > nor your organization, vouch for at least one of the people requesting
+> > > membership on behalf of your distro (then that one vouched-for person will be
+> > > able to vouch for others on your team, in case you'd like multiple people
+> > > subscribed)
+> > > 
+> > > I do not know if I have contacts that are already on the linux-distros list.
+> > 
+> > It can also be "someone else who has been active on oss-security for
+> > years but is not affiliated".  Anyone?
+> 
+> I believe Tyler Hicks is willing to do this.
 
->
-> However, I think it’s important to realize this is a special case of
-> “underhanded code” aka “underhanded source code” aka “maliciously
-> misleading code”. Underhanded code is source code crafted so that the
-> source code looks like it does one thing to human reviewers, but it
-> actually does something else. Homoglyphs are a common mechanism of attack
-> (e.g., 1/l or O/0), as are misleading indentation, etc.
->
-> The first reference I can find to underhanded code is the 2004 Obfuscated
-> V Contest (http://graphics.stanford.edu/~danielh/vote/vote.html) created
-> by Daniel Horn.
->
->
-You could argue the obfuscated C contest is related, that goes back to 1984.
-https://www.ioccc.org/years.html#1984
+With the caveats that I mentioned in my earlier reply to the thread as
+I'm not clear on what "vouch" means here.
 
--- 
-     Josh
+In the past, I've vouched for people that I personally know and have
+worked closely with.
 
+I need to make it clear that this "vouch" for Jeremy doesn't meet that
+bar. I've digitally crossed paths with Jeremy a few times and, based on
+those interactions, can believe that he'd be doing security response
+work for Pop!_OS. That's all I can say. I'd be a lot more comfortable if
+someone could provide a stronger vouch.
+
+Tyler
+
+> 
+> > Thanks,
+> > 
+> > Alexander
+> > 
