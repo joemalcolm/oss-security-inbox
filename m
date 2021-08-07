@@ -1,43 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/23/2
-Message-ID: <20210323170306.GA2473828@nxnw.org>
-Date: Tue, 23 Mar 2021 10:03:06 -0700
-From: Steve Beattie <steve.beattie@...onical.com>
-To: oss-security@...ts.openwall.com
-Cc: ONE K <n4ke4mry@...il.com>
-Subject: [CVE-2021-3444] Linux kernel bpf verifier incorrect mod32 truncation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/07/12
+Message-ID: <bd75b23c-3e7d-a52d-7df8-501d5e30a7f3@dereferenced.org>
+Date: Sat, 7 Aug 2021 15:26:09 -0500 (CDT)
+From: Ariadne Conill <ariadne@...eferenced.org>
+To: Axel Beckert <abe@...ian.org>
+cc: Salvatore Bonaccorso <carnil@...ian.org>, oss-security@...ts.openwall.com,  Ariadne Conill <ariadne@...eferenced.org>, 991971@...s.debian.org,  lynx-dev@...gnu.org, security@...ian.org
+Subject: Re: Re: Bug#991971: [Lynx-dev] bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
 
-CVE-2021-3444 - Linux kernel bpf verifier incorrect mod32 truncation
+On Sat, 7 Aug 2021, Axel Beckert wrote:
 
-Recently, it was discovered that bpf verifier in the Linux kernel
-did not properly handle mod32 destination register truncation when
-the source register was known to be 0. De4dCr0w of 360 Alpha Lab
-discovered that this vulnerability could be turned into out-of-bounds
-reads in the kernel, and out-of-bounds writes can not be ruled out.
+> Hi Salvatore, Dear Ariadne,
+>
+> Salvatore Bonaccorso wrote:
+>>> This is more severe than it initially looked like: Due to TLS Server
+>>> Name Indication (SNI) the hostname as parsed by Lynx (i.e with
+>>> "user:pass@" included) is sent in _clear_ text over the wire even
+>>> _before_ I can even said "n" for "no, don't continue to talk with this
+>>> server" in Lynx's prompt as shown above.
+> […]
+>>> IMHO this nevertheless needs a CVE-ID.
+>>
+>> MITRE did assign CVE-2021-38165.
+>
+> Thanks Salvatore. I updated the debian/changelog entry for the next
+> upload as well as the title of the Debian bug report.
 
-It was fixed in upstream commit:
++1, thanks for getting a CVE for this.
 
-  9b00f1b78809 ("bpf: Fix truncation handling for mod32 dst reg wrt zero")
+>> MITRE raised the question: Does 2.9.0dev.9 (mentioned on the
+>> https://lynx.invisible-island.net/current/CHANGES.html page) fix the
+>> entire problem?
+>
+> At this point a huge thanks to Thomas Dickey (Lynx upstream) for
+> providing a fixed version so quickly!
 
-and also landed in the 5.11.2, 5.10.19, and 5.4.101 stable kernels.
+I think 2.9.0dev.9 fixes the problem, even if the fix is, well, not the 
+way I would do it.
 
-The commit itself references
+>
+>> https://www.openwall.com/lists/oss-security/2021/08/07/7 claims that
+>> credentials appear in the HTTP Host header to an http:// (i.e.,
+>> non-SSL) website.
+>
+> Indeed and a good point.
+>
+> Citing from Ariadne's mail:
+>> The issue itself is far more severe: HTParse() does not understand
+>> the authn part of the URI at all.
+> […]
+>> But it will also leak in the Host: header on unencrypted
+>> connections, and also probably SSL ones too.
+>
+> But that looks to me as if Ariadne just refers to the code and hasn't
+> actually checked it by trying it. Nevertheless thanks to Ariadne for
+> having had a look and proposing a patch!
 
-  468f6eafa6c4 ("bpf: fix 32-bit ALU op verification") (v4.15-rc5)
+Yes, this was my guess since HTParse() doesn't understand the authn part. 
+But this seems like a rather unfortunate design: parse the URI wrong, and 
+then "fix" it later?  Why not just parse the URI right, to begin with?
 
-as introducing the issue, but further analysis seemed to indicate that
+So strange...
 
-  f6b1b3bf0d5f ("bpf: fix subprog verifier bypass by div/mod by 0 exception") (v4.16-rc1)
-
-was also necessary to take advantage of the vulnerability.
-
-Thanks.
-
--- 
-Steve Beattie
-<sbeattie@...ntu.com>
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Ariadne
