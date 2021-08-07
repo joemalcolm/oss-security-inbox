@@ -1,45 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/16/2
-Message-ID: <20210415213306.GB5315@nxnw.org>
-Date: Thu, 15 Apr 2021 14:33:06 -0700
-From: Steve Beattie <steve.beattie@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2021-3492] Ubuntu shiftfs Linux kernel file system double free vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/07/2
+Message-ID: <Pine.BSM.4.64L.2108070210210.904@herc.mirbsd.org>
+Date: Sat, 7 Aug 2021 02:14:12 +0000 (UTC)
+From: Thorsten Glaser <tg@...bsd.de>
+To: Axel Beckert <abe@...ian.org>
+cc: lynx-dev@...gnu.org, oss-security@...ts.openwall.com, security@...ian.org, 991971@...s.debian.org
+Subject: Re: [Lynx-dev] bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Axel Beckert dixit:
 
-Shiftfs is an out-of-tree stacking file system for the Linux kernel
-included in Ubuntu kernels that can be mounted by unprivileged users
-within unprivileged user namespaces.
+>This is more severe than it initially looked like: Due to TLS Server
+>Name Indication (SNI) the hostname as parsed by Lynx (i.e with
+>"user:pass@" included) is sent in _clear_ text over the wire even
 
-Vincent Dehors discovered that shiftfs, when passing through
-ioctls to the underlying file system, did not properly handle faults
-occurring during copy_from_user() correctly, leading to a double-free
-vulnerability or not freeing memory at all. An attacker could use
-this to cause a denial of service (memory consumption) or execute
-arbitrary code.
+I *ALWAYS* SAID SNI IS A SHIT THING ONLY USED AS BAD EXCUSE FOR NAT
+BY PEOPLE WHO ARE TOO STUPID TO CONFIGURE THEIR SERVERS RIGHT AND AS
+BAD EXCUSE FOR LACKING IPv6 SUPPORT, AND THEN THE FUCKING IDIOTS WENT
+AND MADE SNI *MANDATORY* FOR TLSv1.3, AND I FEEL *SO* VINDICATED RIGHT
+NOW! IDIOTS IN CHARGE OF SECURITY, FUCKING IDIOTS…
 
-The commits to address this issue are as follows:
+>But given that the symptoms Thorsten discovered stayed unreported for
+>quite some years, I assume that this use case is a rather seldom one.
 
- Ubuntu 20.10:
-  5c4ddd2d104e ("UBUNTU: SAUCE: shiftfs: free allocated memory in shiftfs_btrfs_ioctl_fd_replace() error paths")
-  https://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux/+git/groovy/commit/?id=5c4ddd2d104e5561724c636c9a83ab722255dc2e
-  a92f3ddbb391 ("UBUNTU: SAUCE: shiftfs: handle copy_to_user() return values correctly")
-  https://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux/+git/groovy/commit/?id=a92f3ddbb391ce466a470e578cb24a37d7eb813c
+Nah, SNI is a rather recent thing. But…
 
- Ubuntu 20.04 LTS:
-  8fee52ab9da8 ("UBUNTU: SAUCE: shiftfs: free allocated memory in shiftfs_btrfs_ioctl_fd_replace() error paths")
-  https://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux/+git/focal/commit/?id=8fee52ab9da87d82bc6de9ebb3480fff9b4d53e6
-  25c891a949bf ("UBUNTU: SAUCE: shiftfs: handle copy_to_user() return values correctly")
-  https://git.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux/+git/focal/commit/?id=25c891a949bf918b59cbc6e4932015ba4c35c333
+>IMHO this nevertheless needs a CVE-ID.
 
-As shiftfs has not been accepted in the upstream Linux kernel, the
-upstream Linux kernel is not affected by CVE-2021-3492.
+… it probably does. Other browsers also need checking.
 
-This issue is also identified as ZDI-CAN-13562.
+Thanks for the detective work,
+//mirabilos
 -- 
-Steve Beattie
-<sbeattie@...ntu.com>
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+<diogenese> Beware of ritual lest you forget the meaning behind it.
+<igli> yeah but it means if you really care about something, don't
+    ritualise it, or you will lose it. don't fetishise it, don't
+    obsess. or you'll forget why you love it in the first place.
