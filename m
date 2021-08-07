@@ -1,82 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/11/6
-Message-ID: <dde792a9-3531-9057-70a4-c4a9b60b90fd@sit.fraunhofer.de>
-Date: Wed, 11 Aug 2021 16:41:16 +0200
-From: "Philipp Jeitner (SIT)" <philipp.jeitner@....fraunhofer.de>
-To: <oss-security@...ts.openwall.com>
-Subject: CVE-2021-20314: Remote stack buffer overflow in libspf2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/07/8
+Message-ID: <CAH8yC8nTm=upoz34jXs5cXnQBTZzQHKx-nUrsacD0=GEUZ9f_g@mail.gmail.com>
+Date: Sat, 7 Aug 2021 12:08:25 -0400
+From: Jeffrey Walton <noloader@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Axel Beckert <abe@...ian.org>, lynx-dev@...gnu.org,  Debian Security Team <security@...ian.org>, 991971@...s.debian.org
+Subject: Re: SNI is a security vulnerability all by itself (was Re: [Lynx-dev] bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances))
 Content-Type: text/plain; charset=utf-8
 
-#### Description
+On Sat, Aug 7, 2021 at 8:29 AM Thorsten Glaser <tg@...bsd.de> wrote:
+>
+> >Axel Beckert dixit:
+>
+> >>IMHO this nevertheless needs a CVE-ID.
+>
+> I wonder… perhaps the use of SNI, both in the TLSv1.3 standard
+> and in some TLSv1.2 implementations, should receive CVEs as well?
 
-Stack buffer overflow in libspf2 versions below 1.2.11 when processing 
-certain SPF macros can lead to Denial of service and potentially code 
-execution via malicious crafted SPF explanation messages. CVE-2021-20314 
-has been assigned to this issue.
+As far as I know, the only problem associated with SNI is leaking the
+server name to a passive adversary in TLS 1.2 and below. TLS 1.3 and
+above provide for encrypted server names.
 
-#### Attack type
+> It certainly ought to be disabled by default. Perhaps add some
+> environment variable to enable SNI in the SSL library, and if
+> it’s not present or explicitly set to 0, disable SNI (which also
+> would disable TLSv1.3 as it requires SNI). Hmm, yes, this sounds
+> completely like a good idea.
 
-Remote
+If you disable SNI, then you won't be able to setup an encrypted
+channel. SNI is needed to setup the encrypted channel. During the
+client_hello, the server needs to know which server/virtual host to
+route the client_hello to.
 
-#### Impact
+The user:password@ is for the application layer or HTTP/HTTPS. It
+should not be present in the transport layer. It is a bug in the
+application layer, not the transport layer.
 
-(x) Code Execution (x) Denial of Service
+The transport layer does have a password based authentication scheme,
+but it is going to be either Thomas Wu's Secure Remote Password (SRP)
+or Preshared Key (PSK). SRP is based on Diffie-Hellman (something like
+a^password), while PSK uses a symmetric cipher (something like
+enc_k(password)).
 
-#### Attack vector(s):
+> (Considering SNI also leaks the vhost addressed by the end user,
+> which is otherwise hidden with wildcard certificates or grouped
+> with tone others in multi-subjectAltName certificates, it ought
+> to have been anyway.)
 
-Attackers need to cause a mail server to process a malicious SPF record, 
-ie. via sending an email from an attacker-controlled domain. Thus, any 
-mail server accepting mails and processing them via libspf2 is vulnerable.
+Yes, the client will learn the server's IP address. That is not
+related to SNI. That's just how TLS works under the IETF's threat
+model.
 
-#### Patch
+Maybe you are thinking of (or need) something like a Tor hidden
+service. Transport Layer Security does not provide a guarantee like a
+hidden service.
 
-The issue has been fixed in github commit c37b7c1:
+Wildcards are garbage. You should be wary of an operator that uses
+them nowadays. A wildcard certificate could be used by an attacker to
+have you connect to the receptionist's machine in the lobby running a
+fake site rather than the organization's web server.
 
-https://github.com/shevek/libspf2/commit/c37b7c13c30e225183899364b9f2efdfa85552ef
-
-An updated version of libspf2 (1.2.11) which also fixes other security 
-related issues is available from github 
-(https://github.com/shevek/libspf2). The libspf2 website 
-(https://www.libspf2.org/download.html) and latest release there is NOT 
-UPDATED YET.
-
-#### Discoverer(s)/Credits
-
-Philipp Jeitner and Haya Shulman, Fraunhofer SIT
-
-philipp.jeitner@....fraunhofer.de
-haya.shulman@....fraunhofer.de
-
-#### Reference(s)
-
-  - libspf2: https://www.libspf2.org/, https://github.com/shevek/libspf2
-  - patch: 
-https://github.com/shevek/libspf2/commit/c37b7c13c30e225183899364b9f2efdfa85552ef
-  - Injection Attacks Reloaded: Tunneling Malicious Payloads over DNS 
-https://www.usenix.org/conference/usenixsecurity21/presentation/jeitner
-
-#### Details and information to reproduce the vulnerability
-
-To reproduce, set the SPF record of a domain you control like listed below:
-
-     example.com. 300    IN      TXT     "v=spf1 exp=exp.example.com"
-     exp=exp.example.com.   300     IN      TXT 
-"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" 
-"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-
-Then trigger SPF processing in libspf2, ie. via the command line 
-`spfquery` tool.
-
-     # spfquery --sender someone@...mple.com -ip 1.2.3.4
-     *** stack smashing detected ***: terminated
-     Aborted (core dumped)
-
-The record causes a 4-byte stack buffer overflow of local variable `buf` 
-in `SPF_record_compile_macro`, which is responsible for parsing the 
-potential macros included in the SPF explanation message. The overflow 
-is caused by an incorrect buffer length adjustment in the 
-`SPF_INIT_STRING_LITERAL` macro  which  places  a  4-byte  header of 
-type `SPF_data_str` into  the  buffer inside `buf` without  decreasing 
-the  available size `ds_avail` by 4. Exploiting this vulnerability 
-therefore allows  the  attacker to  override  up to  4  bytes  on  the 
-stack of `SPF_record_compile_macro` directly after `buf`.
+Jeff
