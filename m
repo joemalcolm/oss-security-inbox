@@ -1,106 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/19/9
-Message-Id: <E1mo4bO-0006a8-Pf@xenbits.xenproject.org>
-Date: Fri, 19 Nov 2021 14:10:54 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 390 v1 (CVE-2021-28710) - certain VT-d IOMMUs may not work in shared page table mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/07/1
+Message-ID: <20210807015102.ea4f5immh2l5ku4n@sym.noone.org>
+Date: Sat, 7 Aug 2021 03:51:07 +0200
+From: Axel Beckert <abe@...ian.org>
+To: lynx-dev@...gnu.org
+Cc: oss-security@...ts.openwall.com, security@...ian.org, 991971@...s.debian.org
+Subject: Re: [Lynx-dev] bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-            Xen Security Advisory CVE-2021-28710 / XSA-390
+On Fri, Aug 06, 2021 at 05:14:32PM +0000, Thorsten Glaser
+<tg@...bsd.de> wrote in
+https://lists.nongnu.org/archive/html/lynx-dev/2021-08/msg00000.html:
+> this affects both OpenSSL and Debian’s nonGNUtls builds:
+> 
+> lynx https://user:pass@...t/
+> 
+> … will lead to…
+> 
+> SSL error:host(user:pass@...t)!=cert(CN<mainhost>:SAN<DNS=host>:SAN<DNS=otherhost>
+> 
+> … for OpenSSL lynx and…
+> 
+> SSL error:host(user:pass@...t)!=cert(CN<mainhost>)-Continue? (n)
+> 
+> … for nonGNUtls lynx.
+> 
+> Obviously, user:pass@ need to be stripped before comparing.
 
-      certain VT-d IOMMUs may not work in shared page table mode
+This is more severe than it initially looked like: Due to TLS Server
+Name Indication (SNI) the hostname as parsed by Lynx (i.e with
+"user:pass@" included) is sent in _clear_ text over the wire even
+_before_ I can even said "n" for "no, don't continue to talk with this
+server" in Lynx's prompt as shown above.
 
-ISSUE DESCRIPTION
-=================
+I was able to capture the password given on the commandline in traffic
+of an TLS handshake using tcpdump and analysing it with Wireshark:
 
-For efficiency reasons, address translation control structures (page
-tables) may (and, on suitable hardware, by default will) be shared
-between CPUs, for second-level translation (EPT), and IOMMUs.  These
-page tables are presently set up to always be 4 levels deep.  However,
-an IOMMU may require the use of just 3 page table levels.  In such a
-configuration the lop level table needs to be stripped before
-inserting the root table's address into the hardware pagetable base
-register.  When sharing page tables, Xen erroneously skipped this
-stripping.  Consequently, the guest is able to write to leaf page
-table entries.
+From Wiresharks TLS dissector:
 
-IMPACT
-======
+Server Name Indication extension
+    Server Name list length: 28
+    Server Name Type: host_name (0)
+    Server Name length: 25
+    Server Name: user:pass@....example.org
+                 ^^^^^^^^^^
 
-A malicious guest may be able to escalate its privileges to that of
-the host.
+From Wiresharks "Follow TCP stream":
 
-VULNERABLE SYSTEMS
-==================
+...........a
+....jV.. ......../.......D.&....R.+.,.....	.
+.../.0...............z.{./.5.A...
+.....|.}.3.9.E.............2.8.D.......p............$."...user:pass@....example.org......#...
+...
+.................
+..............................
 
-Xen version 4.15 is vulnerable.  Xen versions 4.14 and earlier are not
-vulnerable.
+(PCAPs available on request. Actually did the test with a local server
+of mine. But it should be easy to reproduce, be it with any Linux
+distribution.)
 
-Only x86 Intel systems with IOMMU(s) in use are affected.  Arm
-systems, non-Intel x86 systems, and x86 systems without IOMMU are not
-affected.
+I did this test with Lynx from Debian Experimental (which has the
+current Lynx upstream release 2.9.0dev.8) as well as with Lynx from
+Debian 8 Jessie ELTS (which has Lynx 2.8.9dev.1) and both leak the
+password via SNI. I though assume that older releases of Lynx are
+probably also affected as well, at least if they or the according
+crypto libraries support SNI.
 
-Only HVM guests with passed-through PCI devices and configured to share
-IOMMU and EPT page tables are able to leverage the vulnerability on
-affected hardware.  Note that page table sharing is the default
-configuration on capable hardware.
+But given that the symptoms Thorsten discovered stayed unreported for
+quite some years, I assume that this use case is a rather seldom one.
+Nevertheless only trying to use Lynx that way (and seeing it fail)
+already leaks the used password.
 
-Systems are only affected if the IOMMU used for a passed through
-device requires the use of page tables less than 4 levels deep.  We
-are informed that this is the case for some at least Ivybridge and
-earlier "client" chips; additionally it might be possible for such a
-situation to arise when Xen is running nested under another
-hypervisor, if an (emulated) Intel IOMMU is made available to Xen.
+IMHO this nevertheless needs a CVE-ID.
 
-MITIGATION
-==========
+Cc'ing Debian Security Team as well as the OSS Security mailing list
+for making them aware of this issue. I also updated the subject of
+this thread to make it less ambigous on other mailing lists.
 
-Suppressing the use of shared page tables avoids the vulnerability.
-This can be achieved globally by passing "iommu=no-sharept" on the
-hypervisor command line.  This can also be achieved on a per-guest basis
-via the "passthrough=sync_pt" xl guest configuration file option.
+And I'm also Cc'ing the according Debian bug report which I created
+for tracking this issue in Debian: https://bugs.debian.org/991971
 
-RESOLUTION
-==========
+		Kind regards, Axel
+-- 
+ ,''`.  |  Axel Beckert <abe@...ian.org>, https://people.debian.org/~abe/
+: :' :  |  Debian Developer, ftp.ch.debian.org Admin
+`. `'   |  4096R: 2517 B724 C5F6 CA99 5329  6E61 2FF9 CD59 6126 16B5
+  `-    |  1024D: F067 EA27 26B9 C3FC 1486  202E C09E 1D89 9593 0EDE
 
-Applying the attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa390.patch           xen-unstable - Xen 4.15.x
-
-$ sha256sum xsa390*
-34d3b59a52c79bd7f9d963ca44ee5cfee08274d49961726e81c34eeff6e6cd37  xsa390.patch
-$
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-This fix for issue was submitted in public before realizing the security
-aspect.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmGXsGUMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZiMkH/2t+q/yAO7srnKdt1yLhOcG/tok0pdSLe5b3ayES
-ZktW69wnSlQ/TeH96A64pZKxXbQpRh3cDbjn2xedCDGIOyaKuObgPY7aYfuvtOxN
-/6a3P3qUf2oxm5/nS0KG6kHX69gptXupvgCPwl2i1KWARi4uMEm76N7lCe3o8fFd
-s8HNfLvJ0tX6pXtOQjeQEt73fDWQ/hwKGGJctFI1hrvy01erqHDdZrYiJAO6vp8z
-c9LU1o8dIQSUg2dm5GSX5DCX6xEzOh6sT53CDQ7W5gTn+SnCGr7FT1iTeXYeTFSN
-EaYZVynkaxQeCXsoJO0K2o7lwwKvUrQ6GNhqdd4iOR/annY=
-=P/qb
------END PGP SIGNATURE-----
-
-Download attachment "xsa390.patch" of type "application/octet-stream" (1482 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
