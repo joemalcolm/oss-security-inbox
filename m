@@ -1,4 +1,9 @@
-Received: (qmail 17517 invoked by uid 550); 2 Feb 2024 18:11:30 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1172" "Saturday" "7" "August" "2021" "02:14:12" "+0000" "Thorsten Glaser" "tg@mirbsd.de" nil "28" "[oss-security] Re: [Lynx-dev] bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)" nil nil nil "8" nil nil (number mark "U       tg@mirbsd.de Aug  7   28/1172  " thread-indent "\"[oss-security] Re: [Lynx-dev] bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: [Lynx-dev] bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 31842 invoked by uid 550); 7 Aug 2021 12:23:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,133 +12,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15601 invoked from network); 2 Feb 2024 18:10:22 -0000
-Date: Fri, 2 Feb 2024 19:12:44 +0100
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Cc: lennart@poettering.net
-Message-ID: <20240202181244.GA10788@openwall.com>
-References: <Za-XWUEPml2pcATt@kasco.suse.de> <20240124084235.360eb42b.hanno@hboeck.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240124084235.360eb42b.hanno@hboeck.de>
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] systemd and other system services (in)compatibility with Linux procfs hidepid (was: darkhttpd: timing attack and local leak of HTTP basic auth credentials)
+Received: (qmail 23799 invoked from network); 7 Aug 2021 02:16:21 -0000
+Date: Sat, 7 Aug 2021 02:14:12 +0000 (UTC)
+From: Thorsten Glaser <tg@mirbsd.de>
+X-X-Sender: tg@herc.mirbsd.org
+To: Axel Beckert <abe@debian.org>
+cc: lynx-dev@nongnu.org, oss-security@lists.openwall.com, security@debian.org,
+        991971@bugs.debian.org
+In-Reply-To: <20210807015102.ea4f5immh2l5ku4n@sym.noone.org>
+Message-ID: <Pine.BSM.4.64L.2108070210210.904@herc.mirbsd.org>
+References: <Pine.BSM.4.64L.2108061711590.28219@herc.mirbsd.org>
+ <20210807015102.ea4f5immh2l5ku4n@sym.noone.org>
+Content-Language: de-DE-1901, en-GB
+X-Message-Flag: Your mailer is broken. Get an update at http://www.washington.edu/pine/getpine/pcpine.html for free.
+MIME-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Subject: [oss-security] Re: [Lynx-dev] bug in Lynx' SSL certificate validation -> leaks
+ password in clear text via SNI (under some circumstances)
 
-Hi,
+Axel Beckert dixit:
 
-Since I'm adding to a thread started with Matthias' security review of
-darkhttpd, I'd like to say that I'm impressed by his consistent effort
-to review code that few others look at and the consistently high quality
-of his findings and write-ups.  Thank you, Matthias!  Also, thank you
-SUSE for (apparently) enabling Matthias to spend time on this.
+>This is more severe than it initially looked like: Due to TLS Server
+>Name Indication (SNI) the hostname as parsed by Lynx (i.e with
+>"user:pass@" included) is sent in _clear_ text over the wire even
 
-On Wed, Jan 24, 2024 at 08:42:35AM +0100, Hanno Bock wrote:
-> On Tue, 23 Jan 2024 11:39:19 +0100 Matthias Gerstner <mgerstner@suse.de> wrote:
-> 
-> > The only way to configure the HTTP basic auth string in darkhttpd is
-> > to pass it via the `--auth` command line parameter. On Linux all local
-> > users can view the parameters of other programs running on the system.
-> 
-> I'd like to comment on that.
-> While "on Linux" *in most distros default settings* this is true, the
-> Linux Kernel actually has a mitigation for this since quite a while.
-> 
-> This is a feature that I believe was initially introduced by
-> grsecurity, but was lated ported as an option to the mainline kernel.
+I *ALWAYS* SAID SNI IS A SHIT THING ONLY USED AS BAD EXCUSE FOR NAT
+BY PEOPLE WHO ARE TOO STUPID TO CONFIGURE THEIR SERVERS RIGHT AND AS
+BAD EXCUSE FOR LACKING IPv6 SUPPORT, AND THEN THE FUCKING IDIOTS WENT
+AND MADE SNI *MANDATORY* FOR TLSv1.3, AND I FEEL *SO* VINDICATED RIGHT
+NOW! IDIOTS IN CHARGE OF SECURITY, FUCKING IDIOTS=E2=80=A6
 
-In mid to late 1990s, there were several patches floating around that
-restricted /proc permissions, such as one by route here:
+>But given that the symptoms Thorsten discovered stayed unreported for
+>quite some years, I assume that this use case is a rather seldom one.
 
-https://phrack.org/issues/52/6.html#article
+Nah, SNI is a rather recent thing. But=E2=80=A6
 
-However, as I recall at the time Linux wouldn't handle gid=
-automatically, so I had to add code for supporting that in procfs in my
-patches, apparently later in 1998.  There wasn't the name Openwall yet,
-so it took until 1999 for these patches to be named -ow.  Then this got
-into grsecurity.  Finally upstreaming this, in revised form, was one of
-the tasks Vasiliy Kulikov completed in his GSoC 2011 project with us:
+>IMHO this nevertheless needs a CVE-ID.
 
-https://www.openwall.com/lists/kernel-hardening/2011/06/
+=E2=80=A6 it probably does. Other browsers also need checking.
 
-> /proc can be mounted with the hidepid option (ideally set to hidepid=2)
-> [1], with it enabled users cannot see processes of other users.
-
-Right.
-
-> Unfortunately, this has not been widely applied by linux distributions.
-> There is a website by redhat that explicitly discourages its use [2].
-> 
-> it hints to some problems that could show up because daemons could not
-> access information about the clients accessing them. But that sounds
-> very nonspecific and they don't reference any examples, so it's hard to
-> tell what exactly these problems would be.
-> 
-> Furthermore, they point out that the same information can be queried
-> via systemd without any access control. That sounds more like a weakness
-> in systemd that should be fixed than an issue with hidepid.
-> 
-> I think it would be desirable that Linux distributions start using
-> hidepid and mitigate the whole class of bugs like the one mentioned
-> above.
-> 
-> [1] https://www.kernel.org/doc/html/latest/filesystems/proc.html
-> [2] https://access.redhat.com/solutions/6704531
-
-I agree.
-
-Per my reading, the Red Hat "solution" above points out two problems:
-
-1. Some system services need permissions to access more of /proc.
-
-2. systemd exposes the information anyway.
-
-It ends in:
-
-> This guidance may change in future as we work on improvements to
-> kernel's proc filesystem implementation as well as on systemd and other
-> system services (e.g. PolicyKit and D-Bus) that are negatively affected
-> by enabling hidepid= mount option.
-
-Here's the closed systemd issue, where Lennart didn't agree to fix this:
-
-https://github.com/systemd/systemd/issues/29893
-
-poettering commented on Nov 7, 2023:
-
-> I am sorry, but no. global "hidepid" doesn't really work on a general
-> purpose Linux system, because tons of tools need to check /proc/, for
-> example pid1, journald, polkit and similar. We do not support it, full
-> stop.
-> 
-> use per-service ProtectProc= and ProcSubset=, which use it per-service,
-> but the global switch is simply not supported.
-
-I disagree with Lennart here.  This functionality used to work just
-fine before systemd and polkit, so we need to fix this as a regression.
-
-Perhaps for systemd a good start would be to enumerate the exposures and
-the needs for them.  Then think of ways to address them.  Then come up
-with pull request(s).  Maybe prevent the exposure at some acceptable
-loss of functionality, only when hidepid is enabled?  Maybe that will
-have a better chance of being accepted than a mere issue with no fix?
-
-For other services, perhaps setup and grant them the special group if
-needed.  This may be best done at distro level.
-
-On Wed, Jan 24, 2024 at 09:39:38AM -0800, nightmare.yeah27@aceecat.org wrote:
-> Do not the various implementations of the *ident* protocol (example: oidentd)
-> rely on this interface? They are often, or always, intentionally configured
-> to run as nobody or a dedicated UID.
-
-On Wed, Jan 24, 2024 at 07:15:49PM +0100, Anton Luka Sijanec wrote:
-> I can see UID numbers in /proc/net/tcp6 as a non-root user even though my procfs is mounted with hidepid=invisible (ps aux only shows my processes). My system is Gentoo Linux with kernel 6.1.69. Peeking at the source, it looks like oidentd indeed reads from /proc/net/tcp6. I run oidentd on a system with hidepid=invisible and oidentd runs as a separate oidentd user and does work (tested by trying to connect to an IrcNet server).
-
-So apparently oidentd on current kernels is fine as-is, but whatever
-identd I was using with -ow patches before did need to be in the special
-group in order for it to access whatever parts of /proc it needed.
-Still it was just a trivial configuration issue (documented in README
-for -ow patches), not a show-stopper.
-
-Alexander
+Thanks for the detective work,
+//mirabilos
+--=20
+<diogenese> Beware of ritual lest you forget the meaning behind it.
+<igli> yeah but it means if you really care about something, don't
+    ritualise it, or you will lose it. don't fetishise it, don't
+    obsess. or you'll forget why you love it in the first place.
