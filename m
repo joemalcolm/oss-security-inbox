@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["370" "Sunday" "25" "September" "2016" "17:11:38" "-0700" "Michal Zalewski" "lcamtuf@coredump.cx" "<CALx_OUDn=wBw4XdZw6YJdRTHQigpHqYHoED6JUNEx9LppY0ERA@mail.gmail.com>" "11" "Re: [oss-security] ffmpeg afl bugs" "^Cc:" nil nil "9" "2016092600:11:38" "[oss-security] ffmpeg afl bugs" (number mark "        lcamtuf@core Sep 25   11/370   " thread-indent "\"Re: [oss-security] ffmpeg afl bugs\"\n") "<20160925233516.GA10278@openwall.com>" ("<trinity-791b10d9-ee4c-4418-ab3c-338e17152b44-1474834018724@3capp-gmx-bs68>" "<20160925233516.GA10278@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["971" "Saturday" "7" "August" "2021" "02:50:16" "+0000" "Thorsten Glaser" "tg@mirbsd.de" nil "25" "[oss-security] SNI is a security vulnerability all by itself (was Re: [Lynx-dev] bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances))" nil nil nil "8" nil nil (number mark "U       tg@mirbsd.de Aug  7   25/971   " thread-indent "\"[oss-security] SNI is a security vulnerability all by itself (was Re: [Lynx-dev] bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances))\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] SNI is a security vulnerability all by itself (was Re: [Lynx-dev] bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances))" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18220 invoked by uid 550); 26 Sep 2016 00:20:34 -0000
+Received: (qmail 3842 invoked by uid 550); 7 Aug 2021 12:24:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14166 invoked from network); 26 Sep 2016 00:12:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=coredump-cx.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=WIjg2pVDygNMmFXfp1JUc9pktKg/1twODEP64lcO++4=;
-        b=QZdRXNYFiaTAEkGSJF916rsxUXhaTJgM/8hJntQYXE1CJFI8cngQWO2mL8EayCGgAW
-         Bjcy6TEt+urGTB2eAZOxHxxcTWw4gWY3Evk9Y9d6ZTtqyai5cdijjMy/jioJRbp0LlRX
-         T5rOshSvd6fHjWrazSbc8dtagGbeh29TWP2MmfJLJkaokmIgB4LBJF/AwzJ6TovYh30A
-         uuGtJgYkGG/xDcciYJyENZ/UWGys3cMSIoXinScsmBP7hih3v5iCRQsZItR1jpg0vuk3
-         HxsYNdz6H4FIFk/KZPx+oXTeK24BTKwZmnxP5nu9Yjubisi1bensGS3coY/0kxHvj/1p
-         h5nA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=WIjg2pVDygNMmFXfp1JUc9pktKg/1twODEP64lcO++4=;
-        b=IlYWjB685JDiKDcMh3Yu/VqOdMKeVRZkOXEPFFUUQvSHwRIBm0A4Xa9eYx5p/AGhZt
-         hlBwjFgp+75hU52L9UhdOCecMstAFCIxFK0hFVrNlzpV4TZ7I5iwJUKbHWRLdkyzHS8b
-         phTEPqtljXFPETX8A8tsp+EgFCgSsM6oMlYpb0T+nKbvO4YmogaT1Idp8/aRAjaZ9YRy
-         j2XtBX2+27yh2GhxiRrhPsWhCv8TaGe3uR8r0Sagm9mJ0lK8yep3oYqkaYVNdNZlcZXf
-         IsV6Lz937PwRJFT7uAh3Wv0yu2MuGSpXmWEw3InhK2sZH+dgk+DMyxo4LfjrQgoGzjww
-         IBfQ==
-X-Gm-Message-State: AE9vXwPDJt38Wu5+g/55H9NIDuTOx6mle5O+rtjpniG+Gn10P0rNQaBvV6oP0nMUN3ajBS7kwDrTCGaJb513Kw==
-X-Received: by 10.194.178.65 with SMTP id cw1mr15568700wjc.215.1474848718483;
- Sun, 25 Sep 2016 17:11:58 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <20160925233516.GA10278@openwall.com>
-References: <trinity-791b10d9-ee4c-4418-ab3c-338e17152b44-1474834018724@3capp-gmx-bs68>
- <20160925233516.GA10278@openwall.com>
-Message-ID: <CALx_OUDn=wBw4XdZw6YJdRTHQigpHqYHoED6JUNEx9LppY0ERA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Cc: cookieopfer@gmx.net
-Date: Sun, 25 Sep 2016 17:11:38 -0700
-From: Michal Zalewski <lcamtuf@coredump.cx>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] ffmpeg afl bugs
-To: oss-security <oss-security@lists.openwall.com>
+Received: (qmail 3650 invoked from network); 7 Aug 2021 02:50:55 -0000
+Date: Sat, 7 Aug 2021 02:50:16 +0000 (UTC)
+From: Thorsten Glaser <tg@mirbsd.de>
+X-X-Sender: tg@herc.mirbsd.org
+To: Axel Beckert <abe@debian.org>
+cc: lynx-dev@nongnu.org, oss-security@lists.openwall.com, security@debian.org,
+        991971@bugs.debian.org
+In-Reply-To: <Pine.BSM.4.64L.2108070210210.904@herc.mirbsd.org>
+Message-ID: <Pine.BSM.4.64L.2108070246110.904@herc.mirbsd.org>
+References: <Pine.BSM.4.64L.2108061711590.28219@herc.mirbsd.org>
+ <20210807015102.ea4f5immh2l5ku4n@sym.noone.org> <Pine.BSM.4.64L.2108070210210.904@herc.mirbsd.org>
+Content-Language: de-DE-1901, en-GB
+X-Message-Flag: Your mailer is broken. Get an update at http://www.washington.edu/pine/getpine/pcpine.html for free.
+MIME-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Subject: [oss-security] SNI is a security vulnerability all by itself (was Re: [Lynx-dev]
+ bug in Lynx' SSL certificate validation -> leaks password in clear text via
+ SNI (under some circumstances))
 
->> Have fun with ffmpeg-h264-call-stack-overflow.mp4
->
-> Perhaps you meant to share this file with this community?
+>Axel Beckert dixit:
 
-Hmm... I think that
-docs/vuln_samples/ffmpeg-h264-call-stack-overflow.mp4 is just a sample
-file that comes with AFL (and dates back to December 2014). I doubt it
-still crashes anything, and I'm not sure what the original reporter
-was trying to say.
+>>IMHO this nevertheless needs a CVE-ID.
 
-/mz
+I wonder=E2=80=A6 perhaps the use of SNI, both in the TLSv1.3 standard
+and in some TLSv1.2 implementations, should receive CVEs as well?
+
+It certainly ought to be disabled by default. Perhaps add some
+environment variable to enable SNI in the SSL library, and if
+it=E2=80=99s not present or explicitly set to 0, disable SNI (which also
+would disable TLSv1.3 as it requires SNI). Hmm, yes, this sounds
+completely like a good idea.
+
+(Considering SNI also leaks the vhost addressed by the end user,
+which is otherwise hidden with wildcard certificates or grouped
+with tone others in multi-subjectAltName certificates, it ought
+to have been anyway.)
+
+bye,
+//mirabilos
+--=20
+=E2=80=9CIt is inappropriate to require that a time represented as
+ seconds since the Epoch precisely represent the number of
+ seconds between the referenced time and the Epoch.=E2=80=9D
+	-- IEEE Std 1003.1b-1993 (POSIX) Section B.2.2.2
