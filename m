@@ -1,19 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/16/3
-Message-ID: <4ef585a0-4e3f-1fba-af99-be43895bf464@apache.org>
-Date: Thu, 16 Sep 2021 11:55:10 +0000
-From: Andy Seaborne <andy@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-39239: Apache Jena: XML External Entity (XXE) vulnerability 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/07/9
+Message-ID: <YQ7OO1DgWDwm7vvy@eldamar.lan>
+Date: Sat, 7 Aug 2021 20:17:31 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: Axel Beckert <abe@...ian.org>, 991971@...s.debian.org
+Cc: lynx-dev@...gnu.org, oss-security@...ts.openwall.com, security@...ian.org
+Subject: Re: Bug#991971: [Lynx-dev] bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)
 Content-Type: text/plain; charset=utf-8
 
-Severity: high
+Hi Axel,
 
-Description:
+On Sat, Aug 07, 2021 at 03:51:07AM +0200, Axel Beckert wrote:
+> Hi,
+> 
+> On Fri, Aug 06, 2021 at 05:14:32PM +0000, Thorsten Glaser
+> <tg@...bsd.de> wrote in
+> https://lists.nongnu.org/archive/html/lynx-dev/2021-08/msg00000.html:
+> > this affects both OpenSSL and Debian’s nonGNUtls builds:
+> > 
+> > lynx https://user:pass@...t/
+> > 
+> > … will lead to…
+> > 
+> > SSL error:host(user:pass@...t)!=cert(CN<mainhost>:SAN<DNS=host>:SAN<DNS=otherhost>
+> > 
+> > … for OpenSSL lynx and…
+> > 
+> > SSL error:host(user:pass@...t)!=cert(CN<mainhost>)-Continue? (n)
+> > 
+> > … for nonGNUtls lynx.
+> > 
+> > Obviously, user:pass@ need to be stripped before comparing.
+> 
+> This is more severe than it initially looked like: Due to TLS Server
+> Name Indication (SNI) the hostname as parsed by Lynx (i.e with
+> "user:pass@" included) is sent in _clear_ text over the wire even
+> _before_ I can even said "n" for "no, don't continue to talk with this
+> server" in Lynx's prompt as shown above.
+> 
+> I was able to capture the password given on the commandline in traffic
+> of an TLS handshake using tcpdump and analysing it with Wireshark:
+> 
+> From Wiresharks TLS dissector:
+> 
+> Server Name Indication extension
+>     Server Name list length: 28
+>     Server Name Type: host_name (0)
+>     Server Name length: 25
+>     Server Name: user:pass@....example.org
+>                  ^^^^^^^^^^
+> 
+> From Wiresharks "Follow TCP stream":
+> 
+> ...........a
+> ....jV.. ......../.......D.&....R.+.,.....	.
+> .../.0...............z.{./.5.A...
+> .....|.}.3.9.E.............2.8.D.......p............$."...user:pass@....example.org......#...
+> ...
+> .................
+> ..............................
+> 
+> (PCAPs available on request. Actually did the test with a local server
+> of mine. But it should be easy to reproduce, be it with any Linux
+> distribution.)
+> 
+> I did this test with Lynx from Debian Experimental (which has the
+> current Lynx upstream release 2.9.0dev.8) as well as with Lynx from
+> Debian 8 Jessie ELTS (which has Lynx 2.8.9dev.1) and both leak the
+> password via SNI. I though assume that older releases of Lynx are
+> probably also affected as well, at least if they or the according
+> crypto libraries support SNI.
+> 
+> But given that the symptoms Thorsten discovered stayed unreported for
+> quite some years, I assume that this use case is a rather seldom one.
+> Nevertheless only trying to use Lynx that way (and seeing it fail)
+> already leaks the used password.
+> 
+> IMHO this nevertheless needs a CVE-ID.
 
-A vulnerability in XML processing in Apache Jena, in versions up to 4.1.0, may allow an attacker to execute XML External Entities (XXE), including exposing the contents of local files to a remote server.
+MITRE did assign CVE-2021-38165. MITRE raised the question: Does
+2.9.0dev.9 (mentioned on the
+https://lynx.invisible-island.net/current/CHANGES.html page) fix the
+entire problem?
+https://www.openwall.com/lists/oss-security/2021/08/07/7 claims that
+credentials appear in the HTTP Host header to an http:// (i.e.,
+non-SSL) website. 
 
-Mitigation:
-
-Users are advised to upgrade to Apache Jena 4.2.0 or later.
-
+Regards,
+Salvatore
