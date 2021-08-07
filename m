@@ -1,4 +1,9 @@
-Received: (qmail 3477 invoked by uid 550); 13 Mar 2024 14:36:17 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2497" "Saturday" "7" "August" "2021" "04:49:39" "+0200" "Axel Beckert" "abe@debian.org" nil "74" "[oss-security] Re: bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)" nil nil nil "8" nil nil (number mark "U       abe@debian.o Aug  7   74/2497  " thread-indent "\"[oss-security] Re: bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1499 invoked by uid 550); 7 Aug 2021 12:23:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,91 +12,102 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17503 invoked from network); 13 Mar 2024 14:09:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=greenbone.net;
-	s=MBO0001; t=1710339230;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=lxxuWRwTLKQJkx+ItGF/EezzKT0HcCZLhBHo16qoks8=;
-	b=pky5CEikZlSvxXv006xu+p/DWrdkK90x0zKCAIIAK5BFLDWyvsEf0HihRnnrP87ya7nY+e
-	YHxtnxdwrpyLUsUWUc2fzjI2in44WiuuL7LJ41qtTZpp6deEWIOjxW8wAtXf75n4cCVHw4
-	HbTM5ckyaZxWng9MFUM8PfrdxmJd6VKh8WmkCXOdqHUwAt0SIY4VfN4YSkcI3XCkgHgqQ7
-	QKwkWhl+sCq+gLMQqSzvYtAol6Vp86rbEHineFwcX2OX5AqQDhLkkXkePztEF7MNHLCFRs
-	z08DfHiGR9N5xj+bgcoocWPSDqikfA7lJAflzsf6iLgdb3MfDTBNqWU7a0nfig==
-Message-ID: <985334e2-41f0-49e0-a522-924d708a41b8@greenbone.net>
-Date: Wed, 13 Mar 2024 15:13:48 +0100
+Received: (qmail 3388 invoked from network); 7 Aug 2021 02:49:53 -0000
+Date: Sat, 7 Aug 2021 04:49:39 +0200
+From: Axel Beckert <abe@debian.org>
+To: Thorsten Glaser <tg@mirbsd.de>
+Cc: oss-security@lists.openwall.com, security@debian.org
+Message-ID: <20210807024937.g43ooqppdm7zozbh@sym.noone.org>
+Mail-Followup-To: Thorsten Glaser <tg@mirbsd.de>,
+	oss-security@lists.openwall.com, security@debian.org
+References: <Pine.BSM.4.64L.2108061711590.28219@herc.mirbsd.org>
+ <20210807015102.ea4f5immh2l5ku4n@sym.noone.org>
+ <Pine.BSM.4.64L.2108070210210.904@herc.mirbsd.org>
 MIME-Version: 1.0
-Content-Language: en-US
-To: oss-security@lists.openwall.com
-References: <1622544226.KAPKHQKN@httpd.apache.org>
- <YMIj1mZsQrmj6PBA@sol.nexus.lan>
- <8feb8989-3b53-a97a-4421-ef8e47cce53d@wanadoo.fr>
-From: Christian Fischer <christian.fischer@greenbone.net>
-Autocrypt: addr=christian.fischer@greenbone.net; keydata=
- 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
- nSh/BvVF+Xp6Dow=
-In-Reply-To: <8feb8989-3b53-a97a-4421-ef8e47cce53d@wanadoo.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] CVE-2021-31618: Apache httpd: NULL pointer
- dereference on specially crafted HTTP/2 request
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="ml6qlbhhymoycc7e"
+Content-Disposition: inline
+In-Reply-To: <Pine.BSM.4.64L.2108070210210.904@herc.mirbsd.org>
+X-Operating-System: Linux 4.9.0-16-amd64
+X-Machine: sym2 x86_64
+X-Editor: GNU Emacs 25.1.1
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAAAAAC3mUtaAAAABGdBTUEAALGPC/xhBQAAADh0RVh0U29mdHdhcmUAWFYgVmVyc2lvbiAzLjEwYSAgUmV2OiAxMi8yOS85NCAoUE5HIHBhdGNoIDEuMindFS5JAAACGElEQVQ4jXXQMU8UYRDG8f8shNjdDH4AbpfGDjAWlKiJiZ0ajL1aGCvsNCbGaCGG1koLaztaTYz6ATy+gOyehYmF3MxVxgg3FnDsHcTpJr/M+8w7Rf6nCsaVTTDqxbg9hoOXmw83H71+Eyfg4E1d7/Z2fG9rGkZbTQiu+K+3U/C+76lmkvAhJuDndnoAiftou4V84okAGclop4U/jYACZDTxrYWP0gkxVfAm/W//GLZpxIzwIN0Hn8dw0B+IWkZmQmRsj2HfhwokEklHfNCCiQCRgAR7YyhQVRVTCKCzP4Y5zBBE0t0zY3Q8oQaBqqAMlVEcgVQd9706zGirAFium8HXumlMIeMwqQCInju+2+uB6MRENupdpMt8pRlHZyuAW0F+Mb6XSIVqtxjD+iVmVqqystLEzFTGT92YqRaXpNT5eTVjeJhbALPnrTxLUZUKZsgxcNm64hAOYisT/xhF+oKTGU5RegtC3Rt6eEDi/QnIevdTx9Md2EMmYBRmCQR1026FCGQQJJExsRUqgkMGaWSbwYLnoO4T6VgpbQbdELPMBAHWWrhYrcxXnYgAsatPWygkFCBD4K62MAsOTqA6szYRPpsu6e6Y8mPiVrBMNuGIMrgwBUu4p2DgG1Ownu6hpuTv7hScefHAzAC/yRRw5U5pALMbJ4AUALvHSZhxgHPXTsHcdWD1GadAHr9avP+c0wCr7263Df8ASLwXWHWs+KIAAAAHdElNRQfYBQEBODPr
+Organization: The Debian Project
+User-Agent: NeoMutt/20170113 (1.7.2)
+Subject: [oss-security] Re: bug in Lynx' SSL certificate validation -> leaks password in
+ clear text via SNI (under some circumstances)
 
-Hello,
+--ml6qlbhhymoycc7e
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-i'm usually not a fan of bumping such old threads but i'm recently 
-stumbled over this and it seems that this:
+Hi Thorsten,
 
-On 10.06.21 7:18 PM, Christophe JAILLET wrote:
-> in fact it was fixed in 2.4.47
+I'm dropping the lynx-specific recipients, i.e. lynx-dev and the bug
+report=E2=80=A6
 
-doesn't reflect what's currently getting stated on [1] which is:
+Thorsten Glaser wrote:
+> Axel Beckert dixit:
+> > This is more severe than it initially looked like: Due to TLS Server
+> > Name Indication (SNI) the hostname as parsed by Lynx (i.e with
+> > "user:pass@" included) is sent in _clear_ text over the wire even
+>=20
+> I *ALWAYS* SAID SNI IS A SHIT THING [=E2=80=A6]
 
- > This issue affected *snip* Apache HTTP Server version 2.4.47 only
- > *snip*
- > Affects 2.4.47
+Don't blame the messenger. ;-)
 
-Regards,
+> Other browsers also need checking.
 
-[1] https://httpd.apache.org/security/vulnerabilities_24.html
+Good idea.
+
+I just checked in Debian Unstable those tools I'd mostly expect with
+such URLs and commandline usage:
+
+* Axel (sic! :-) 2.17.10-2
+* ELinks 0.13.2-1+b1
+* LibWWW-Perl (aka LWP) 6.53-1 via /usr/bin/GET
+* Links/Links2 2.21-1+b1
+* Wget (1.21-1+b1)
+* Wget2 (1.99.1-2.2)
+
+I didn't find any such issue in any of these tools. All cases verified
+via Wireshark's "follow TCP stream" against an Apache 2.4.48 (from
+Debian Unstable as well).
+
+But yeah, there are probably many more to check. But so far it looks
+like a lynx-specific issue.
+
+> Thanks for the detective work,
+
+You're welcome. Thanks for stumbling over this issue and triggering my
+digging. :-)
+
+		Regards, Axel
+--=20
+ ,''`.  |  Axel Beckert <abe@debian.org>, https://people.debian.org/~abe/
+: :' :  |  Debian Developer, ftp.ch.debian.org Admin
+`. `'   |  4096R: 2517 B724 C5F6 CA99 5329  6E61 2FF9 CD59 6126 16B5
+  `-    |  1024D: F067 EA27 26B9 C3FC 1486  202E C09E 1D89 9593 0EDE
+
+--ml6qlbhhymoycc7e
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEERoyJeTtCmBnp12Ema+Zjx1o1yXUFAmEN9LoACgkQa+Zjx1o1
+yXVYaRAAlloegg8x4NXmkkyP8EHZUiTZ2CRmSAA/DnQWzFHT2USBCEI+XoYR4YVI
+5pjN//xXd1+NdX4yIzSD/oSpi6akbzJo+WauJtjCsSVnKS64QKuRUsUkhBzovx6J
+mtbS1dVE4ZAjAliOLNlSpksaP94TXLa+e0F4YDEQ7Xb2Ah2CkYWk7NujGJEJFKFv
+p9tMrLc7Dwaf3Cqh5ZROcd6uF1rENwWsK9mPfLGciOmoMHQ3pMWc/g2woPcQiD0Y
+leohPLThlWYAjVRM4ozmjV7Vg/9+kz0YDXmVyZihToZWAHYpvefuw/Su4lE2jUKv
+bBgrEupHRUn+SdcpuPC7Mu/4McL6yZxSL8iDL+uMh3Hw3bcJaN8hdabW43McRSls
+agci6DtqLqSIysOUBbbQybneJICX9f9XfR7UY/5tYUWprsh1jo7DOsnjBCARvFD2
+fyJSRHmPBy+/F2YFunsMLo+zlxtOZeCftOm9EVZ9EhldvWQfHeQs/Y11NWdfHlkF
+cnMtZV3e8dcK+yCIMFp95kLFuzZtK3WE/ypn6/XRUTjsxfRWwoU+9FWhPE/RjxYl
+7pAcEPzAubb7GYAPQLkfEMPbqel8pTGhp2gqV6CTe7cOZy5JAkVZbsqW0LccR/EA
+0F80a5QjrMxW/5jYZCms4Tv+F9d0NGxrFp+3g3vwSiVXsTenRe4=
+=C4/p
+-----END PGP SIGNATURE-----
+
+--ml6qlbhhymoycc7e--
