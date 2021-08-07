@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["928" "Wednesday" "25" "November" "2015" "12:04:06" "+0100" "Fabian Keil" "freebsd-listen@fabiankeil.de" "<20151125120406.1a8af6bd@fabiankeil.de>" "36" "Re: [oss-security] Heap Overflow in PCRE" "^Date:" nil nil "11" "2015112511:04:06" "[oss-security] Heap Overflow in PCRE" (number mark "        freebsd-list Nov 25   36/928   " thread-indent "\"Re: [oss-security] Heap Overflow in PCRE\"\n") "<20151124130038.00866a2c@pc1>" ("<20151124113343.4382bed3@pc1>" "<20151124125709.0448ee5c@fabiankeil.de>" "<20151124130038.00866a2c@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1164" "Saturday" "7" "August" "2021" "18:49:57" "+0000" "Thorsten Glaser" "tg@mirbsd.de" nil "32" "[oss-security] Re: [Lynx-dev] [oss-security] Re: bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)" nil nil nil "8" nil nil (number mark "U       tg@mirbsd.de Aug  7   32/1164  " thread-indent "\"[oss-security] Re: [Lynx-dev] [oss-security] Re: bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: [Lynx-dev] [oss-security] Re: bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29778 invoked by uid 550); 25 Nov 2015 11:04:25 -0000
+Received: (qmail 9362 invoked by uid 550); 7 Aug 2021 20:10:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,55 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29741 invoked from network); 25 Nov 2015 11:04:24 -0000
-Message-ID: <20151125120406.1a8af6bd@fabiankeil.de>
-In-Reply-To: <20151124130038.00866a2c@pc1>
-References: <20151124113343.4382bed3@pc1>
-	<20151124125709.0448ee5c@fabiankeil.de>
-	<20151124130038.00866a2c@pc1>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- boundary="Sig_/_Vy+cjz=tiwTHGp6ynJi=eg"; protocol="application/pgp-signature"
-X-Df-Sender: Nzc1MDY3
-Date: Wed, 25 Nov 2015 12:04:06 +0100
-From: Fabian Keil <freebsd-listen@fabiankeil.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Heap Overflow in PCRE
-To: oss-security@lists.openwall.com
+Received: (qmail 32484 invoked from network); 7 Aug 2021 18:55:49 -0000
+Date: Sat, 7 Aug 2021 18:49:57 +0000 (UTC)
+From: Thorsten Glaser <tg@mirbsd.de>
+X-X-Sender: tg@herc.mirbsd.org
+To: Ariadne Conill <ariadne@dereferenced.org>
+cc: oss-security@lists.openwall.com, Axel Beckert <abe@debian.org>,
+        lynx-dev@nongnu.org, security@debian.org, 991971@bugs.debian.org
+In-Reply-To: <ab519dc0-7354-8e5-8855-ffea2534ea34@dereferenced.org>
+Message-ID: <Pine.BSM.4.64L.2108071847450.4154@herc.mirbsd.org>
+References: <Pine.BSM.4.64L.2108061711590.28219@herc.mirbsd.org>
+ <20210807015102.ea4f5immh2l5ku4n@sym.noone.org> <Pine.BSM.4.64L.2108070210210.904@herc.mirbsd.org>
+ <ab519dc0-7354-8e5-8855-ffea2534ea34@dereferenced.org>
+Content-Language: de-DE-1901, en-GB
+X-Message-Flag: Your mailer is broken. Get an update at http://www.washington.edu/pine/getpine/pcpine.html for free.
+MIME-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Subject: [oss-security] Re: [Lynx-dev] [oss-security] Re: bug in Lynx' SSL certificate
+ validation -> leaks password in clear text via SNI (under some circumstances)
 
---Sig_/_Vy+cjz=tiwTHGp6ynJi=eg
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Ariadne Conill dixit:
 
-Hanno B=C3=B6ck <hanno@hboeck.de> wrote:
+> It turns out SNI is only marginally related to this issue.  The issue
+> itself is far more severe: HTParse() does not understand the authn
+> part of the URI at all.
 
-> On Tue, 24 Nov 2015 12:57:09 +0100
-> Fabian Keil <freebsd-listen@fabiankeil.de> wrote:
->=20
-> > The last sentence seems overly broad to me as many (most?)
-> > applications use trusted PCRE patterns (that get parsed and executed)
-> > to parse untrusted input.
-> >=20
-> > For this use case the issues above don't seem to require immediate
-> > action.=20=20
->=20
-> True.
-> I changed the wording to better reflect that.
+Yes, of course. But without SNI, nothing would have been sent *in
+plaintext* at all. The certificate validation fails=C2=B9, the connection
+stops and the user is asked whether to continue.
 
-Thanks.
+=E2=91=A0 Tested on an OS without SNI in its libssl.
 
-Fabian
+> As a workaround, I taught HTParse() how to parse the authn part of URIs, =
+but
+> Lynx itself needs to actually properly support the authn part really.
+>
+> I have attached the patch Alpine is using to work around this infoleak.
 
---Sig_/_Vy+cjz=tiwTHGp6ynJi=eg
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
+Thanks!
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+I recall having to work manually to strip the port from the hostname
+for SSL certificate validation, ages ago, but I had not tested with
+HTTP Auth sites back then.
 
-iEYEARECAAYFAlZVlacACgkQBYqIVf93VJ3iTwCggZkHYIsUMOWpwk5ShVCOr4/9
-mG8An2AiMN5ItW8llnI7RjGHSN/5FnAC
-=bAEB
------END PGP SIGNATURE-----
-
---Sig_/_Vy+cjz=tiwTHGp6ynJi=eg--
+bye,
+//mirabilos
+--=20
+Gestern Nacht ist mein IRC-Netzwerk explodiert. Ich hatte nicht damit
+gerechnet, darum bin ich blutverschmiert=E2=80=A6 wer konnte ahnen, da=C3=
+=9F SIE so
+reagier=E2=80=99n=E2=80=A6 gestern Nacht ist mein IRC-Netzwerk explodiert~~~
+	(as of 2021-06-15 The MirOS Project temporarily reconvenes on OFTC)
