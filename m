@@ -1,48 +1,130 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/30/1
-Message-ID: <62710acf-0fbb-3d20-26f1-85ce01d2bae0@oracle.com>
-Date: Fri, 29 Oct 2021 17:37:37 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE website transition from cve.mitre.org to cve.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/07/11
+Message-ID: <20210807201317.ow27rxtpcdkgsxuj@sym.noone.org>
+Date: Sat, 7 Aug 2021 22:13:18 +0200
+From: Axel Beckert <abe@...ian.org>
+To: Salvatore Bonaccorso <carnil@...ian.org>, oss-security@...ts.openwall.com, Ariadne Conill <ariadne@...eferenced.org>
+Cc: 991971@...s.debian.org, lynx-dev@...gnu.org, security@...ian.org
+Subject: Re: Re: Bug#991971: [Lynx-dev] bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)
 Content-Type: text/plain; charset=utf-8
 
-FYI for those who aren't subscribed to the CVE newsletter or blog and
-don't follow https://twitter.com/CVEannounce/ - they've sent out this
-announcement in this month's newsletter:
+Hi Salvatore, Dear Ariadne,
 
- > Introducing the all-new CVE Program website at its new “CVE.ORG” web address:
- > WWW.CVE.ORG. The new website includes many new features and is optimized for
- > users.
- >
- > This is the first step in transitioning from the old CVE.MITRE.ORG website.
- > The phased quarterly transition process began today and will last for up to
- > one year. During the quarterly transition, new releases of this website will
- > occur every quarter, and the new CVE.ORG website will operate concurrently
- > with the CVE.MITRE.ORG website. Upon completion of the phased transition,
- > the CVE.MITRE.ORG website will be archived and retired.
- >
- > Items moved to this new site will no longer be maintained on the old the
- > website; for example, news, blogs, podcasts, and the list of CVE Numbering
- > Authorities (CNAs). Examples of major items that will temporarily remain on
- > the old CVE.MITRE.ORG site until later in the transition include the CVE List
- > keyword search and the individual CVE List download files. CVE Records will be
- > published on both sites during the transition.
+Salvatore Bonaccorso wrote:
+> > This is more severe than it initially looked like: Due to TLS Server
+> > Name Indication (SNI) the hostname as parsed by Lynx (i.e with
+> > "user:pass@" included) is sent in _clear_ text over the wire even
+> > _before_ I can even said "n" for "no, don't continue to talk with this
+> > server" in Lynx's prompt as shown above.
+[…]
+> > IMHO this nevertheless needs a CVE-ID.
+>
+> MITRE did assign CVE-2021-38165.
 
-The full article can be read at:
-https://www.cve.org/Media/News/item/news/2021/09/29/Welcome-to-the-New-CVE
+Thanks Salvatore. I updated the debian/changelog entry for the next
+upload as well as the title of the Debian bug report.
 
-Most important for members of this mailing list are:
+> MITRE raised the question: Does 2.9.0dev.9 (mentioned on the
+> https://lynx.invisible-island.net/current/CHANGES.html page) fix the
+> entire problem?
 
-https://www.cve.org/ResourcesSupport/ReportRequest
-  - documentation of the process to request assignment or updating of a CVE id
+At this point a huge thanks to Thomas Dickey (Lynx upstream) for
+providing a fixed version so quickly!
 
-https://www.cve.org/PartnerInformation/ListofPartners
-  - list of CNAs to request a CVE assignment or update from.
+> https://www.openwall.com/lists/oss-security/2021/08/07/7 claims that
+> credentials appear in the HTTP Host header to an http:// (i.e.,
+> non-SSL) website. 
 
-https://cveform.mitre.org/ appears to still be the form to request those from
-Mitre if another CNA is not more appropriate.
+Indeed and a good point.
 
+Citing from Ariadne's mail:
+> The issue itself is far more severe: HTParse() does not understand
+> the authn part of the URI at all.
+[…]
+> But it will also leak in the Host: header on unencrypted
+> connections, and also probably SSL ones too.
+
+But that looks to me as if Ariadne just refers to the code and hasn't
+actually checked it by trying it. Nevertheless thanks to Ariadne for
+having had a look and proposing a patch!
+
+To be on the safe side I tested Lynx 2.9.0dev.6-2 as in Debian
+Unstable/Testing (yet unpatched for CVE-2021-38165) and the (claimed
+to be fixed) Lynx 2.9.0dev.9-1 as uploaded to Debian Experimental by
+Andreas Metzler very recently (still only on incoming.debian.org,
+fetched it from there). And I also tested Lynx 2.8.9dev1 from Debian 8
+Jessie ELTS, the oldest compiled version of Lynx I could easily get my
+hands on.
+
+Neither of them leaked the user name or password in Host header of a
+plain HTTP request. (So I assume that the versions inbetween don't do
+that either.)
+
+I also kinda would have expected that if this would have been the case
+in the plain HTTP Host header, it would have been noticed way earlier
+than with the TLS SNI extension, namely before the HTTPS era. Then
+again, the much more obvious facet of this issue which Thorsten
+initially found was reported way later than I'd expected, so maybe my
+gut feeling is wrong here, too. :-)
+
+So I also looked in the code (of the unpatched 2.9.0dev.8). The patch
+for 2.9.0dev.9 added a function StripUserAuthents and added it only
+into the HTTPS code path. So I looked for "strip" and "Strip" in the
+HTTP code path and found this code in WWW/Library/Implementation/HTTP.c
+(which also has the HTTPS code btw.):
+
+   1353         if ((host = HTParse(anAnchor->address, "", PARSE_HOST)) != NULL) {
+-> 1354             strip_userid(host, TRUE);
+-> 1355             HTBprintf(&command, "Host: %s%c%c", host, CR, LF);
+   1356             FREE(host);
+   1357         }
+
+So from my point of view, this also invalidates that claim that the
+HTTP Host header contains username or password. HTParse (as mentioned
+by Ariadne occurs quite often in the code and its exact workings are
+unclear to me from just looking at how it is called as it seems very
+variable in what it parses and it appears before and after the above
+mentioned code snippet for printing the Host header.
+
+$ fgrep -n 'HTParse(' WWW/Library/Implementation/HTTP.c
+891:        connect_host = HTParse(connect_url, "https", PARSE_HOST);
+900:        connect_host = HTParse(connect_url, "snews", PARSE_HOST);
+977:    ssl_host = HTParse(url, "", PARSE_HOST);
+1319:   char *p1 = (HTParse(url, "", PARSE_PATH | PARSE_PUNCTUATION));
+1371:   if ((host = HTParse(anAnchor->address, "", PARSE_HOST)) != NULL) {
+1564:       abspath = HTParse(arg, "", PARSE_PATH | PARSE_PUNCTUATION);
+1565:       docname = HTParse(arg, "", PARSE_PATH);
+1566:       hostname = HTParse(arg, "", PARSE_HOST);
+1590:           host2 = HTParse(docname, "", PARSE_HOST);
+1591:           path2 = HTParse(docname, "", PARSE_PATH | PARSE_PUNCTUATION);
+2370:                       !HTAA_HaveUserinfo(HTParse(arg, "", PARSE_HOST)) &&
+
+So from my point of view the user and password are stripped only once
+(in 2.9.0dev8), namely directly before printing the Host header (in
+both HTTP and HTTPS code paths). Which also seems the reason why it
+got forgotten for SNI and why Thomas added a new, way less complex
+function for stripping them of the SNI header. Calling strip_userid
+again would extract the credentials again which likely isn't wanted.
+(The same IMHO applies to the often called HTParse function.)
+
+I assume that Ariadne just oversaw that call to strip_userid just
+before printing the HTTP Host header when looking at the code. (And I
+clearly had the advantage of having looked at the code _after_ the
+official upstream patch has been published, so I clearly had an
+advantage when looking at the code, too.)
+
+I though didn't check the strip_userid function in detail as it's way
+more complex than the rather simple StripUserAuthents function added
+in 2.9.0dev.9. This likely because strip_userid does not only strip
+those credentials, it also seems to extract them. And it clearly looks
+for an "@" as delimiter. Together with the PCAPs of Lynx HTTP traffic
+I analysed, I'm quite confident, that it's fine.
+
+		Regards, Axel
 -- 
-	-Alan Coopersmith-               alan.coopersmith@...cle.com
-	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
+ ,''`.  |  Axel Beckert <abe@...ian.org>, https://people.debian.org/~abe/
+: :' :  |  Debian Developer, ftp.ch.debian.org Admin
+`. `'   |  4096R: 2517 B724 C5F6 CA99 5329  6E61 2FF9 CD59 6126 16B5
+  `-    |  1024D: F067 EA27 26B9 C3FC 1486  202E C09E 1D89 9593 0EDE
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
