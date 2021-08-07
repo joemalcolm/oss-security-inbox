@@ -1,139 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/27/3
-Message-ID: <YSgWSPw20D2QdgyZ@ryzen.an3e.de>
-Date: Fri, 27 Aug 2021 00:31:36 +0200
-From: Matthias Andree <matthias.andree@....de>
-To: fetchmail-devel@...ts.sourceforge.net, fetchmail-users@...ts.sourceforge.net, fetchmail-announce@...ts.sourceforge.net, oss-security@...ts.openwall.com
-Subject: ANNOUNCE: fetchmail security announcement 2021-02 (CVE-2021-39272) - TLS bypass vulnerabilities ("NO STARTTLS")
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/07/5
+Message-ID: <Pine.BSM.4.64L.2108070356370.904@herc.mirbsd.org>
+Date: Sat, 7 Aug 2021 03:58:07 +0000 (UTC)
+From: Thorsten Glaser <tg@...bsd.de>
+To: Axel Beckert <abe@...ian.org>
+cc: oss-security@...ts.openwall.com, security@...ian.org
+Subject: Re: bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)
 Content-Type: text/plain; charset=utf-8
 
-fetchmail-SA-2021-02: STARTTLS session encryption bypassing
+Hi XTaran,
 
-Topics:		fetchmail fails to enforce an encrypted connection
+>> I *ALWAYS* SAID SNI IS A SHIT THING […]
+>
+>Don't blame the messenger. ;-)
 
-Author:		Matthias Andree
-Version:	0.9
-Announced:	2021-08-26
-Type:		failure to enforce configured security policy
-Impact:		fetchmail continues an unencrypted connection,
-		thus reading unauthenticated input and sending
-		information unencrypted over its transport
-Danger:		medium
-Acknowledgment:	Andrew C. Aitchison for reporting this against fetchmail
-		Damian Poddebniak, Fabian Ising, Hanno Böck, and Sebastian 
-		Schinzel for their Usenix Security 21 paper NO STARTTLS
+Not blaming you in the slightest, rather the contrary, thanks for
+vindicating me ☻☺
 
-CVE Name:	CVE-2021-39272
-URL:		https://www.fetchmail.info/fetchmail-SA-2021-02.txt
-Project URL:	https://www.fetchmail.info/
+>> Other browsers also need checking.
+>
+>Good idea.
+[…]
+>I didn't find any such issue in any of these tools. All cases verified
+>via Wireshark's "follow TCP stream" against an Apache 2.4.48 (from
+>Debian Unstable as well).
+>
+>But yeah, there are probably many more to check. But so far it looks
+>like a lynx-specific issue.
 
-Affects:	- fetchmail releases up to and including 6.4.21
+Good to know.
 
-Not affected:	- fetchmail releases 6.4.22 and newer
+>> Thanks for the detective work,
+>
+>You're welcome. Thanks for stumbling over this issue and triggering my
+>digging. :-)
 
-Corrected in:	2021-08-26	fetchmail 6.4.22.rc1 release candidate
-		TBD		fetchmail 6.4.22 release tarball
+Heh, I know the feeling. *adds more mksh commits because a user is
+porting it to another weird hobbyist OS…*
 
-0. History of this announcement
-===============================
-
-2021-08-10	Andrew C. Aitchison contacts fetchmail maintainer with pointer 
-		to Usenix Security 21 paper by Damian Poddebniak et al.
-2021-08-16	a simplified recommendation to configure --ssl where possible
-		(see section 3b. below) to mitigate impact was sent to the 
-		 fetchmail mailing lists
-2021-08-26 0.9	initial release along with fetchmail 6.4.22.rc1
-
-
-1. Background
-=============
-
-fetchmail is a software package to retrieve mail from remote POP3, IMAP,
-ETRN or ODMR servers and forward it to local SMTP, LMTP servers or
-message delivery agents. fetchmail supports SSL and TLS security layers
-through the OpenSSL library, if enabled at compile time and if also
-enabled at run time, in both SSL/TLS-wrapped mode on dedicated ports as
-well as in-band-negotiated "STARTTLS" and "STLS" modes through the
-regular protocol ports.
-
-
-2. Problem description and Impact
-=================================
-
-fetchmail permits requiring that an IMAP or POP3 protocol exchange uses 
-a TLS-encrypted transport, in 6.4 by way of an --sslproto auto or similar 
-configuration.
-  This TLS encryption can be established either as Implicit TLS connection,
-which negotiates TLS first, or as a STARTTLS which starts as cleartext
-protocol exchange that gets upgraded in the same TCP stream to TLS.
-
-Without special configuration, fetchmail would opportunistically try to
-upgrade cleartext connections to TLS by STARTTLS, but allow cleartext protocol 
-exchange, which is documented.
-
-IMAP also supports sessions that start in "authenticated state" (PREAUTH).
-In this latter case, IMAP (RFC-3501) does not permit sending STARTTLS 
-negotiations, which are only permissible in not-authenticated state.
-  In such a combination of circumstances (1. IMAP protocol in use, 2. the 
-server greets with PREAUTH, announcing authenticated state, 3. the user 
-configured TLS mandatory, 4. the user did not configure "ssl" mode that uses 
-separate ports for Implicit SSL/TLS), fetchmail 6.4.21 and older would
-not encrypt the session.
-
-There was a similar situation for POP3: if the remote name contained 
-@compuserve.com, and if the server supported a non-standard "AUTH" command 
-without mechanism argument and if it responded with a list that contained "RPA" 
-(also in mixed or lower case), then fetchmail would not attempt STARTTLS.  
-While the password itself is then protected by the RPA scheme (which employs 
-MD5 however), fetchmail 6.4.21 and older would not encrypt the session.
-
-Also, a configuration containing --auth ssh (meaning that fetchmail should not 
-authenticate, on the assumption that the session will be pre-authenticated for 
-instance through SSH running a mail server with --plugin, or TLS client 
-certificates), would also defeat STARTTLS as result of an implementation defect.
-This affected both POP3 and IMAP.
-
-
-3. Solutions
-============
-
-PREFACE: distributors backporting fixes to old versions are asked to diff the 
-manual page and review the changes, and the NEWS file, because the manual page 
-has been updated with newer recommendations.  The same backport recommendations 
-hold for the README.SSL file.
-
-
-3a. Install fetchmail 6.4.22 or newer.
-
-The fetchmail source code is available from
-<https://sourceforge.net/projects/fetchmail/files/>.
-
-The Git-based source code repository is currently published via
-https://gitlab.com/fetchmail/fetchmail/-/tree/legacy_64 (primary)
-https://sourceforge.net/p/fetchmail/git/ci/legacy_64/tree/ (copy)
-
-
-3b. Where the IMAP or POP3 server supports this form of access,
-fetchmail can be configured to use Implicit TLS, called "ssl" mode, meaning it 
-will connect to a dedicated port (default: 993 for IMAP, 995 for POP3) and 
-negotiate TLS without prior clear-text protocol exchange.
-  Also, --ssl can be given on the command line, which switches all
-configured server statements to this Implicit TLS mode.
-
-
-A. Copyright, License and Non-Warranty
-======================================
-
-(C) Copyright 2021 by Matthias Andree, <matthias.andree@....de>.
-Some rights reserved.
-
-© Copyright 2021 by Matthias Andree. This file is licensed under CC
-BY-ND 4.0. To view a copy of this license, visit
-http://creativecommons.org/licenses/by-nd/4.0/
-
-THIS WORK IS PROVIDED FREE OF CHARGE AND WITHOUT ANY WARRANTIES.
-Use the information herein at your own risk.
-
-END of fetchmail-SA-2021-02
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+bye,
+//mirabilos
+-- 
+„Cool, /usr/share/doc/mksh/examples/uhr.gz ist ja ein Grund,
+mksh auf jedem System zu installieren.“
+	-- XTaran auf der OpenRheinRuhr, ganz begeistert
+(EN: “[…]uhr.gz is a reason to install mksh on every system.”)
