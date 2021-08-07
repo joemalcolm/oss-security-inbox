@@ -1,34 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/17/12
-Message-ID: <YFIgdvb3HG4js+Y2@eldamar.lan>
-Date: Wed, 17 Mar 2021 16:29:58 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/07/4
+Message-ID: <Pine.BSM.4.64L.2108070246110.904@herc.mirbsd.org>
+Date: Sat, 7 Aug 2021 02:50:16 +0000 (UTC)
+From: Thorsten Glaser <tg@...bsd.de>
+To: Axel Beckert <abe@...ian.org>
+cc: lynx-dev@...gnu.org, oss-security@...ts.openwall.com, security@...ian.org, 991971@...s.debian.org
+Subject: SNI is a security vulnerability all by itself (was Re: [Lynx-dev] bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances))
 Content-Type: text/plain; charset=utf-8
 
-Hi Rohit,
+>Axel Beckert dixit:
 
-On Wed, Mar 17, 2021 at 04:17:05PM +0100, Greg KH wrote:
-> On Wed, Mar 17, 2021 at 07:45:59PM +0530, Rohit Keshri wrote:
-> > Hello Team,
-> > 
-> > A denial of service vulnerability was found in n_tty_receive_char_special
-> > in drivers/tty/n_tty.c of the Linux kernel.  In this flaw a local attacker
-> > with a normal user privilege could delay the loop (due to a changing
-> > ldata->read_head, and a missing sanity check) and cause a threat to the
-> > system availability.
-> > 
-> > 'CVE-2021-20219' was assigned by Red Hat.
-> > 
-> > Acknowledgements: Evgenii Shatokhin (Virtuozzo Research LLC)
-> 
-> Really?  Not the tools or people that reported this issue and fixed it
-> in the community back in 2018?
+>>IMHO this nevertheless needs a CVE-ID.
 
-Can you clarify, would 3d63b7e4ae0d ("n_tty: Fix stall at
-n_tty_receive_char_special().") be the upstream fix you are referring
-to for it?
+I wonder… perhaps the use of SNI, both in the TLSv1.3 standard
+and in some TLSv1.2 implementations, should receive CVEs as well?
 
-Regards,
-Salvatore
+It certainly ought to be disabled by default. Perhaps add some
+environment variable to enable SNI in the SSL library, and if
+it’s not present or explicitly set to 0, disable SNI (which also
+would disable TLSv1.3 as it requires SNI). Hmm, yes, this sounds
+completely like a good idea.
+
+(Considering SNI also leaks the vhost addressed by the end user,
+which is otherwise hidden with wildcard certificates or grouped
+with tone others in multi-subjectAltName certificates, it ought
+to have been anyway.)
+
+bye,
+//mirabilos
+-- 
+“It is inappropriate to require that a time represented as
+ seconds since the Epoch precisely represent the number of
+ seconds between the referenced time and the Epoch.”
+	-- IEEE Std 1003.1b-1993 (POSIX) Section B.2.2.2
