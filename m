@@ -1,132 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/28/5
-Message-ID: <YQHLpBUl3OTBTl7m@ryzen.an3e.de>
-Date: Wed, 28 Jul 2021 23:27:00 +0200
-From: Matthias Andree <matthias.andree@....de>
-To: oss-security@...ts.openwall.com
-Subject: ANNOUNCE: fetchmail <= 6.4.19 security announcement 2021-01 (CVE-2021-36386) - fetchmail 6.4.20 released. DoS or information disclosure in some configurations
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/07/13
+Message-ID: <20210807215316.gfuujxnzj6lkb57x@sym.noone.org>
+Date: Sat, 7 Aug 2021 23:53:18 +0200
+From: Axel Beckert <abe@...ian.org>
+To: Ariadne Conill <ariadne@...eferenced.org>
+Cc: Salvatore Bonaccorso <carnil@...ian.org>, oss-security@...ts.openwall.com, lynx-dev@...gnu.org
+Subject: Re: Re: Bug#991971: [Lynx-dev] bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)
 Content-Type: text/plain; charset=utf-8
 
-Greetings,
+Hi Ariadne,
 
-I have announced fetchmail 6.4.20 today, which fixes the issue shown in 
-the security announcement below.
+[Dropping the Debian-specific recipients as this is no more related to
+the maintenance of Debian's lynx package.]
 
-fetchmail 6.4.20 is available from
-<https://sourceforge.net/projects/fetchmail/files/branch_6.4/>.
+Ariadne Conill wrote:
+> > Citing from Ariadne's mail:
+> > > The issue itself is far more severe: HTParse() does not understand
+> > > the authn part of the URI at all.
+> > […]
+> > > But it will also leak in the Host: header on unencrypted
+> > > connections, and also probably SSL ones too.
+> > 
+> > But that looks to me as if Ariadne just refers to the code and hasn't
+> > actually checked it by trying it. Nevertheless thanks to Ariadne for
+> > having had a look and proposing a patch!
+> 
+> Yes, this was my guess since HTParse() doesn't understand the authn part.
+> But this seems like a rather unfortunate design: parse the URI wrong, and
+> then "fix" it later?  Why not just parse the URI right, to begin with?
 
-The source archive is available at:
-<https://sourceforge.net/projects/fetchmail/files/branch_6.4/fetchmail-6.4.20.tar.xz/download>
-<https://sourceforge.net/projects/fetchmail/files/branch_6.4/fetchmail-6.4.20.tar.lz/download>
+I agree that it looks a bit unconventional and unintuitive. But I
+assume this is because Lynx is actually older than the WWW. According
+to Wikipedia[1], Lynx "is oldest web browser still being maintained,
+having started in 1992". It was initially written for another
+hypertext protocol (something university-internal and gopher-ish
+according to Wikipedia -- English and German Wikipedia tell slightly
+different stories here).
 
-Detached GnuPG signatures for the respective tarballs are at:
-<https://sourceforge.net/projects/fetchmail/files/branch_6.4/fetchmail-6.4.20.tar.xz.asc/download>
-<https://sourceforge.net/projects/fetchmail/files/branch_6.4/fetchmail-6.4.20.tar.lz.asc/download>
+So it has quite some amount of history in its code and probably
+especially in its code structure. And compared to those nearly 30
+years, the Host header probably came in only after 5 years of
+developement with HTTP/1.1 in 1997 or so. (And SNI much, much later,
+kinda "just recently".) So I kinda have some understanding for this
+unintuitive locations as most of the code is historically grown.
 
-SHA256 hash values for the tarballs:
-SHA256(fetchmail-6.4.20.tar.lz)= 497973353c0538216e7d7f2289a21d9acc5edd78f06d7ec008001f4f19e91b11
-SHA256(fetchmail-6.4.20.tar.xz)= c82141ae2e8f0039ceb0c5c2eda43c5e93ad0bf7f9c6bb628092b3be74386176
+Then again, big kudos to Thomas Dickey for still maintaining and
+developing Lynx. It can't be that easy to maintain a niche program
+with a code base which such a long history.
 
-------------------------------------------------------------------------------------------------
-fetchmail-SA-2021-01: DoS or information disclosure logging long messages
+[1] https://en.wikipedia.org/wiki/Lynx_(web_browser)
 
-Topics:		fetchmail denial of service or information disclosure when logging long messages
-
-Author:		Matthias Andree
-Version:	1.1
-Announced:	2021-07-28
-Type:		missing variable initialization can cause read from bad memory 
-		locations
-Impact:		fetchmail logs random information, or segfaults and aborts, 
-		stalling inbound mail
-Danger:		low
-Acknowledgment:	Christian Herdtweck, Intra2net AG, Tübingen, Germany
-		for analysis and report and a patch suggestion
-
-CVE Name:	CVE-2021-36386
-URL:		https://www.fetchmail.info/fetchmail-SA-2021-01.txt
-Project URL:	https://www.fetchmail.info/
-
-Affects:	- fetchmail releases up to and including 6.4.19
-
-Not affected:	- fetchmail releases 6.4.20 and newer
-
-Corrected in:	c546c829 Git commit hash
-
-		2021-07-28 fetchmail 6.4.20 release tarball
-
-
-0. Release history
-==================
-
-2021-07-07	initial report to maintainer
-2021-07-28 1.0	release
-2021-07-28 1.1	update Git commit hash with correction
-
-
-1. Background
-=============
-
-fetchmail is a software package to retrieve mail from remote POP3, IMAP,
-ETRN or ODMR servers and forward it to local SMTP, LMTP servers or
-message delivery agents. fetchmail supports SSL and TLS security layers
-through the OpenSSL library, if enabled at compile time and if also
-enabled at run time, in both SSL/TLS-wrapped mode on dedicated ports as
-well as in-band-negotiated "STARTTLS" and "STLS" modes through the
-regular protocol ports.
-
-
-2. Problem description and Impact
-=================================
-
-Fetchmail has long had support to assemble log/error messages that are 
-generated piecemeal, and takes care to reallocate the output buffer as needed.  
-In the reallocation case, i. e. when long log messages are assembled that can 
-stem from very long headers, and on systems that have a varargs.h/stdarg.h 
-interface (all modern systems), fetchmail's code would fail to reinitialize 
-the va_list argument to vsnprintf. 
-
-The exact effects depend on the verbose mode (how many -v are given) of 
-fetchmail, computer architecture, compiler, operating system and 
-configuration.  On some systems, the code just works without ill effects, some 
-systems log a garbage message (potentially disclosing sensitive information), 
-some systems log literally "(null)", some systems trigger SIGSEGV (signal 
-#11), which crashes fetchmail, causing a denial of service on fetchmail's end.
-
-
-3. Solution
-===========
-
-Install fetchmail 6.4.20 or newer.
-
-The fetchmail source code is available from
-<https://sourceforge.net/projects/fetchmail/files/>.
-
-Distributors are encouraged to review the NEWS file and move forward to 
-6.4.20, rather than backport individual security fixes, because doing so 
-routinely misses other fixes crucial to fetchmail's proper operation, 
-for which no security announcements are issued, or documentation,
-or translation updates.
-
-Fetchmail 6.4.X releases have been made with a focus on unchanged user and 
-program interfaces so as to avoid disruptions when upgrading from 6.3.Z or 
-6.4.X to 6.4.Y with Y > X.  Care was taken to not change the interface 
-incompatibly.
-
-
-A. Copyright, License and Non-Warranty
-======================================
-
-(C) Copyright 2021 by Matthias Andree, <matthias.andree@....de>.
-Some rights reserved.
-
-fetchmail-SA-2021-01 © 2021 by Matthias Andree is licensed under CC 
-BY-ND 4.0. To view a copy of this license, visit 
-http://creativecommons.org/licenses/by-nd/4.0/
-
-THIS WORK IS PROVIDED FREE OF CHARGE AND WITHOUT ANY WARRANTIES.
-Use the information herein at your own risk.
-
-END of fetchmail-SA-2021-01
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+		Regards, Axel
+-- 
+ ,''`.  |  Axel Beckert <abe@...ian.org>, https://people.debian.org/~abe/
+: :' :  |  Debian Developer, ftp.ch.debian.org Admin
+`. `'   |  4096R: 2517 B724 C5F6 CA99 5329  6E61 2FF9 CD59 6126 16B5
+  `-    |  1024D: F067 EA27 26B9 C3FC 1486  202E C09E 1D89 9593 0EDE
