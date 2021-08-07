@@ -1,18 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/25/1
-Message-ID: <2f0de58430174b1c22dd671ec3c23a04@cs.fsu.edu>
-Date: Fri, 24 Dec 2021 22:20:14 -0500
-From: Wenqing Liu <liu@...fsu.edu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/07/6
+Message-ID: <YQ6CSB+ZJfSV0pEE@symphytum.spacehopper.org>
+Date: Sat, 7 Aug 2021 13:53:28 +0100
+From: Stuart Henderson <stu@...cehopper.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-45469: Linux kernel: an out-of-bounds memory access in fs/f2fs/xattr.c __f2fs_setxattr
+Subject: Re: Re: bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)
 Content-Type: text/plain; charset=utf-8
 
-Description:
-In __f2fs_setxattr in fs/f2fs/xattr.c in the Linux kernel through 
-5.15.11, there is an out-of-bounds memory access when an inode has an 
-invalid last xattr entry. Could cause denial of service or other issues 
-when mounting and operate on the crafted image.
+On 2021/08/07 04:49, Axel Beckert wrote:
+> Hi Thorsten,
+> 
+> I'm dropping the lynx-specific recipients, i.e. lynx-dev and the bug
+> report…
+> 
+> Thorsten Glaser wrote:
+> > Axel Beckert dixit:
+> > > This is more severe than it initially looked like: Due to TLS Server
+> > > Name Indication (SNI) the hostname as parsed by Lynx (i.e with
+> > > "user:pass@" included) is sent in _clear_ text over the wire even
+> > 
+> > I *ALWAYS* SAID SNI IS A SHIT THING […]
+> 
+> Don't blame the messenger. ;-)
+> 
+> > Other browsers also need checking.
+> 
+> Good idea.
+> 
+> I just checked in Debian Unstable those tools I'd mostly expect with
+> such URLs and commandline usage:
+> 
+> * Axel (sic! :-) 2.17.10-2
+> * ELinks 0.13.2-1+b1
+> * LibWWW-Perl (aka LWP) 6.53-1 via /usr/bin/GET
+> * Links/Links2 2.21-1+b1
+> * Wget (1.21-1+b1)
+> * Wget2 (1.99.1-2.2)
 
-References:
-https://bugzilla.kernel.org/show_bug.cgi?id=215235
-https://git.kernel.org/pub/scm/linux/kernel/git/chao/linux.git/commit/?h=dev&id=5598b24efaf4892741c798b425d543e4bed357a1
+I've checked w3m 0.5.3+git20210102, curl 7.78.0, lftp 4.9.2 and OpenBSD's
+ftp, those are okay too.
+
