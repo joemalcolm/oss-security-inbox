@@ -1,79 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/01/3
-Message-ID: <CAFcO6XM70_Zwo6JuhkH53DCtRmWSTXc616gi4sfuwOyxPAAvzA@mail.gmail.com>
-Date: Wed, 1 Sep 2021 14:38:33 +0800
-From: butt3rflyh4ck <butterflyhuangxx@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/07/7
+Message-ID: <ab519dc0-7354-8e5-8855-ffea2534ea34@dereferenced.org>
+Date: Sat, 7 Aug 2021 09:17:55 -0500 (CDT)
+From: Ariadne Conill <ariadne@...eferenced.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: fs/btrfs: null-ptr-dereference bug in btrfs_rm_device in fs/btrfs/volumes.c
+cc: Axel Beckert <abe@...ian.org>, lynx-dev@...gnu.org, security@...ian.org,  991971@...s.debian.org
+Subject: Re: Re: [Lynx-dev] bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)
 Content-Type: text/plain; charset=utf-8
 
-The patch for this issue is available upstream.
+Hi,
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e4571b8c5e9ffa1e85c0c671995bd4dcc5c75091
+On Sat, 7 Aug 2021, Thorsten Glaser wrote:
 
+> Axel Beckert dixit:
+>
+>> This is more severe than it initially looked like: Due to TLS Server
+>> Name Indication (SNI) the hostname as parsed by Lynx (i.e with
+>> "user:pass@" included) is sent in _clear_ text over the wire even
+>
+> I *ALWAYS* SAID SNI IS A SHIT THING ONLY USED AS BAD EXCUSE FOR NAT
+> BY PEOPLE WHO ARE TOO STUPID TO CONFIGURE THEIR SERVERS RIGHT AND AS
+> BAD EXCUSE FOR LACKING IPv6 SUPPORT, AND THEN THE FUCKING IDIOTS WENT
+> AND MADE SNI *MANDATORY* FOR TLSv1.3, AND I FEEL *SO* VINDICATED RIGHT
+> NOW! IDIOTS IN CHARGE OF SECURITY, FUCKING IDIOTS…
 
-Regards,
- butt3rflyh4ck.
+It turns out SNI is only marginally related to this issue.  The issue 
+itself is far more severe: HTParse() does not understand the authn part of 
+the URI at all.  And so, when you call:
 
-On Thu, Aug 26, 2021 at 5:36 PM butt3rflyh4ck
-<butterflyhuangxx@...il.com> wrote:
->
-> Hi, RedHat has assigned  CVE-2021-3739   to this issue.
->
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-3739.
->
-> Please track the below link for more information.
-> https://bugzilla.redhat.com/show_bug.cgi?id=1997958
->
-> Regards,
->   butt3rflyh4ck.
->
->
->
-> On Wed, Aug 25, 2021 at 10:49 AM butt3rflyh4ck
-> <butterflyhuangxx@...il.com> wrote:
-> >
-> > Hello, there is a null pointer dereference bug in the btrfs_rm_device
-> > function in fs/btrfs/volumes.c in linux-5.14.0-rc4+ and reproduce too.
-> > Fortunately, triggering the bug requires ‘CAP_SYS_ADMIN’.
-> >
-> > #Root Cause
-> > When a user invokes a BTRFS_IOC_RM_DEV_V2 ioctl to remove a non-exist
-> > volume device,
-> > it would call btrfs_ioctl_rm_dev_v2 function to implement. And
-> > btrfs_ioctl_rm_dev_v2 would call btrfs_rm_device,
-> > if the id of the volume device is illegal, it would trigger a
-> > null-ptr-deref bug to cause DoS.
-> >
-> > # Analyse
-> > https://lore.kernel.org/linux-btrfs/CAFcO6XO5TC5sEo-C9JGC75JkNAzkOSSLA3a=bwQqXFFbRTZ7Gw@mail.gmail.com/T/#md4b850f33616b7364f86e6fed144abc925f3669c
-> >
-> > #Fix
-> > the patch for this issue, not available upstream now.
-> > https://lore.kernel.org/linux-btrfs/20210806102415.304717-1-wqu@suse.com/T/#u
-> >
-> >
-> > #Timeline
-> > *2021/8/6 - Vulnerability reported to maintainer and CC to
-> > linux-btrfs@...r.kernel.org.
-> > *2021/8/6 - Vulnerability confirmed and patched.
-> > *2021/8/10 - Vulnerability reported to secalert@...hat.com.
-> > *2021/8/25 - Opened on oss-security@...ts.openwall.com.
-> >
-> > #Credit
-> > the issue is reported by Active Defense Lab of Venustech.
-> >
-> > Regards,
-> >  butt3rflyh4ck.
-> > --
-> > Active Defense Lab of Venustech
->
->
->
-> --
-> Active Defense Lab of Venustech
+   HTParse("https://foo:bar@...mple.com", "", PARSE_HOST)
 
+It returns:
 
+   foo:bar@...mple.com
 
--- 
-Active Defense Lab of Venustech
+Which is then handed directly to SSL_set_tlsext_host_name() or 
+gnutls_server_name_set().  But it will also leak in the Host: header on 
+unencrypted connections, and also probably SSL ones too.
+
+As a workaround, I taught HTParse() how to parse the authn part of URIs, 
+but Lynx itself needs to actually properly support the authn part really.
+
+I have attached the patch Alpine is using to work around this infoleak.
+
+Ariadne
+View attachment "fix-auth-data-leaks.patch" of type "text/plain" (1480 bytes)
