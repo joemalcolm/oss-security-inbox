@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2830" "Thursday" "4" "February" "2016" "12:44:06" "+0000" "Tristan Cacqueray" "tdecacqu@redhat.com" "<56B34796.7080408@redhat.com>" "86" "[oss-security] [OSSA 2016-006] Glance image status manipulation through locations removal (CVE-2016-0757)" "^Date:" nil nil "2" "2016020412:44:06" "[oss-security] [OSSA 2016-006] Glance image status manipulation through locations removal (CVE-2016-0757)" (number mark "U       tdecacqu@red Feb  4   86/2830  " thread-indent "\"[oss-security] [OSSA 2016-006] Glance image status manipulation through locations removal (CVE-2016-0757)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2089" "Saturday" "7" "August" "2021" "15:26:09" "-0500" "Ariadne Conill" "ariadne@dereferenced.org" nil "62" "Re: [oss-security] Re: Bug#991971: [Lynx-dev] bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)" nil nil nil "8" nil nil (number mark "U       ariadne@dere Aug  7   62/2089  " thread-indent "\"Re: [oss-security] Re: Bug#991971: [Lynx-dev] bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Re: Bug#991971: [Lynx-dev] bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 12286 invoked by uid 550); 4 Feb 2016 12:43:49 -0000
+Received: (qmail 15689 invoked by uid 550); 7 Aug 2021 20:29:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,106 +11,92 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 12259 invoked from network); 4 Feb 2016 12:43:48 -0000
-X-Enigmail-Draft-Status: N1110
-Message-ID: <56B34796.7080408@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="CCJGBrWmkb7Cj2s1FGKk9I0AFpOWvGmmJ"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-Date: Thu, 4 Feb 2016 12:44:06 +0000
-From: Tristan Cacqueray <tdecacqu@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [OSSA 2016-006] Glance image status manipulation through locations
- removal (CVE-2016-0757)
-To: oss-security@lists.openwall.com
+Received: (qmail 13596 invoked from network); 7 Aug 2021 20:26:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=dereferenced.org;
+	s=mailbun; t=1628367971;
+	bh=ubErt+ILzkvD/QEghFE1pjx4bPAPY3OeDJsifhKcl0M=;
+	h=Date:From:To:cc:Subject:In-Reply-To:References;
+	b=DbNy6Uu98wx8z9OFNd9vSrH7id8vmOUhQg2KKYgfZWzJrRFU3ko3WdFkfGRdK5otj
+	 ED7kgzgnU39Z/6w8/RL/g3n5C0KPbDwkx1B9hqQpnhn8IfFrWWPRCqhzzzwSkPTCVv
+	 7WXjwzJLrnu8o/3YnLpM1U+O+R9F0KLREV6YT4ugrpfT4gRbzUIKl+e3VAfgmlu74G
+	 2gBtpYG40bndu7d4GiOReARnULrqskX+hayMyo8PcnqLkM14ZwJ1TUwGTlKtgBRks9
+	 j29rj3xWQE92uLXStYgNJFQzHjPaN+pha73DBJbdUCFdJBV1HeY2llhKDe1y7kKI/o
+	 vo1sjUt8GgKLA==
+Date: Sat, 7 Aug 2021 15:26:09 -0500 (CDT)
+From: Ariadne Conill <ariadne@dereferenced.org>
+To: Axel Beckert <abe@debian.org>
+cc: Salvatore Bonaccorso <carnil@debian.org>, oss-security@lists.openwall.com, 
+    Ariadne Conill <ariadne@dereferenced.org>, 991971@bugs.debian.org, 
+    lynx-dev@nongnu.org, security@debian.org
+In-Reply-To: <20210807201317.ow27rxtpcdkgsxuj@sym.noone.org>
+Message-ID: <bd75b23c-3e7d-a52d-7df8-501d5e30a7f3@dereferenced.org>
+References: <20210807201317.ow27rxtpcdkgsxuj@sym.noone.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="0-973822402-1628367971=:44151"
+Subject: Re: [oss-security] Re: Bug#991971: [Lynx-dev] bug in Lynx' SSL
+ certificate validation -> leaks password in clear text via SNI (under some
+ circumstances)
 
---CCJGBrWmkb7Cj2s1FGKk9I0AFpOWvGmmJ
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+--0-973822402-1628367971=:44151
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-OSSA-2016-006: Glance image status manipulation through locations
-               removal
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Hi,
 
-:Date: February 03, 2016
-:CVE: CVE-2016-0757
+On Sat, 7 Aug 2021, Axel Beckert wrote:
 
+> Hi Salvatore, Dear Ariadne,
+>
+> Salvatore Bonaccorso wrote:
+>>> This is more severe than it initially looked like: Due to TLS Server
+>>> Name Indication (SNI) the hostname as parsed by Lynx (i.e with
+>>> "user:pass@" included) is sent in _clear_ text over the wire even
+>>> _before_ I can even said "n" for "no, don't continue to talk with this
+>>> server" in Lynx's prompt as shown above.
+> […]
+>>> IMHO this nevertheless needs a CVE-ID.
+>>
+>> MITRE did assign CVE-2021-38165.
+>
+> Thanks Salvatore. I updated the debian/changelog entry for the next
+> upload as well as the title of the Debian bug report.
 
-Affects
-~~~~~~~
-- Glance: <=3D2015.1.2, >=3D11.0.0 <=3D 11.0.1
++1, thanks for getting a CVE for this.
 
+>> MITRE raised the question: Does 2.9.0dev.9 (mentioned on the
+>> https://lynx.invisible-island.net/current/CHANGES.html page) fix the
+>> entire problem?
+>
+> At this point a huge thanks to Thomas Dickey (Lynx upstream) for
+> providing a fixed version so quickly!
 
-Description
-~~~~~~~~~~~
-Erno Kuvaja from HPE reported a vulnerability in Glance. By removing
-the last location of an image, an authenticated user may change the
-image status back to queued and may be able to upload new image data
-resulting in a broken Glance's immutability promise. A malicious
-tenant may exploit this flaw to silently replace image data it owns,
-regardless of the original creator or the visibility settings. Only
-setups with show_multiple_locations enabled (not default) are
-affected.
+I think 2.9.0dev.9 fixes the problem, even if the fix is, well, not the 
+way I would do it.
 
+>
+>> https://www.openwall.com/lists/oss-security/2021/08/07/7 claims that
+>> credentials appear in the HTTP Host header to an http:// (i.e.,
+>> non-SSL) website.
+>
+> Indeed and a good point.
+>
+> Citing from Ariadne's mail:
+>> The issue itself is far more severe: HTParse() does not understand
+>> the authn part of the URI at all.
+> […]
+>> But it will also leak in the Host: header on unencrypted
+>> connections, and also probably SSL ones too.
+>
+> But that looks to me as if Ariadne just refers to the code and hasn't
+> actually checked it by trying it. Nevertheless thanks to Ariadne for
+> having had a look and proposing a patch!
 
-Patches
-~~~~~~~
-- https://review.openstack.org/275735 (Kilo)
-- https://review.openstack.org/275736 (Liberty)
-- https://review.openstack.org/275737 (Mitaka)
+Yes, this was my guess since HTParse() doesn't understand the authn part. 
+But this seems like a rather unfortunate design: parse the URI wrong, and 
+then "fix" it later?  Why not just parse the URI right, to begin with?
 
+So strange...
 
-Credits
-~~~~~~~
-- Erno Kuvaja from HPE (CVE-2016-0757)
-
-
-References
-~~~~~~~~~~
-- https://bugs.launchpad.net/bugs/1525915
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2016-0757
-
-
-Notes
-~~~~~
-- This fix will be included in future 2015.1.3 (kilo) and 11.0.2
-  (liberty) releases.
-- The proposed fix prevents the removal of the last location of an
-  image so that an active image is always available. This action was
-  previously incorrectly allowed and the fix might break some users who
-  are relying on the false assumption that it would be ok to replace
-  the data of existing image in the special case that the multiple
-  locations has been configured.
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
---CCJGBrWmkb7Cj2s1FGKk9I0AFpOWvGmmJ
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQEcBAEBCAAGBQJWs0eXAAoJECK5oFySXMXYj2oH/AtooRqmXhaNs6CedsrxlBMP
-Usn9aIFEYELxHsPiIh7RRM2ecsax1aJqAdHAhmZMFZw6vYYCeFREh6DqZzhxCnRH
-iej/30BjW6l9B3q0CrlO224HmLqdfe7ZFw8gB5GEng1j1kq/xSjZXcSntxoc12D6
-a+wIwDOpGaLApBAwy9H2yx5vwAC1CJ6y06e1NdiumEgggAqvbDRLzgvkh1WPRWyc
-xRozROu6RePaHb1oOl4Oo0YCzgB0f2psnK6TMDdIzIeN1GNZ64Bb8wdXCzroZP2+
-wE3oz70dj2+ndhIsgkoIz2ME8xAe8iJs8apjWivuwHScimgRQQ349qpLZyx8JLQ=
-=ZLd6
------END PGP SIGNATURE-----
-
---CCJGBrWmkb7Cj2s1FGKk9I0AFpOWvGmmJ--
+Ariadne
+--0-973822402-1628367971=:44151--
