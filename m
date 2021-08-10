@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1568" "Friday" "29" "January" "2016" "14:21:01" "+0000" "Hazel" "hazel@meddlingmojo.com" "<CAJMyd9Yje0QY+Th_QUYuO6JspRvysKqkkxtXq-xgANBASM_Nrw@mail.gmail.com>" "40" "Re: [oss-security] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes" "^Cc:" nil nil "1" "2016012914:21:01" "[oss-security] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes" (number mark "        hazel@meddli Jan 29   40/1568  " thread-indent "\"Re: [oss-security] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes\"\n") "<CANO=Ty1ZFtpeUespB+nn0gZ8oC7PAkkr7+eTR1U+RyLtGKHKtA@mail.gmail.com>" ("<2413003.GtkKFizscD@chimera>" "<CANO=Ty1ZFtpeUespB+nn0gZ8oC7PAkkr7+eTR1U+RyLtGKHKtA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2744" "Tuesday" "10" "August" "2021" "14:54:41" "+0000" "Jeremy Stanley" "fungi@yuggoth.org" nil "79" "[oss-security] [OSSA-2021-003] Keystone: Account name and UUID oracles in account locking (CVE-2021-38155)" nil nil nil "8" nil nil (number mark "U       fungi@yuggot Aug 10   79/2744  " thread-indent "\"[oss-security] [OSSA-2021-003] Keystone: Account name and UUID oracles in account locking (CVE-2021-38155)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [OSSA-2021-003] Keystone: Account name and UUID oracles in account locking (CVE-2021-38155)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18218 invoked by uid 550); 29 Jan 2016 14:25:38 -0000
+Received: (qmail 7941 invoked by uid 550); 10 Aug 2021 14:54:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,83 +11,100 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15968 invoked from network); 29 Jan 2016 14:21:32 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=meddlingmojo-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=xO8xT1kLP5SWT0mWv/i2EnVF3SMIXF3TCSaJshT4+Ec=;
-        b=2NW5uSdvjpQrDDTJOIUyL1z61IAa+IYH1Z/ZSIJ68w4HgomfnUkFbkyUN2oZEeei4z
-         IVr62TcjPXczpPhICnjCiM9xv4qB1jvXShWOY+sNkeKAxeuG2/n1ItdB96RjQKQzK/PQ
-         KdPysOQF9dfjmyouTfmcc3imV7WLROh/5ve0QJkMXH8G3g9qv+YYXjJPtK0i5SCrmNzP
-         zv7e+pNzwRd3fMnRhANj5i/g3M76bnw9LyG5hhR0xlvybFIsQXd6tR0Jh4HVUIbqLlpN
-         18l85emhO7xKs6KKGoVT/EhxU/IkUHaP+hqx9aW7E49lBAZH+gAiRW0jI1sRDWeN4yPs
-         d4qA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=xO8xT1kLP5SWT0mWv/i2EnVF3SMIXF3TCSaJshT4+Ec=;
-        b=D7Z90W8VmUfBhoyv7XohqAtn8K9iAHDOfZGAMbpfbnKf1/617qh3xF8LKd2cbpesXU
-         dayWWA0NF8QBs64CHuqp7NJ828klr1v5Q//d0oeHBbo0MLc5tSPiWjOPuC3Pr3sWHK2e
-         SrDyX+wW2AatQb0n72J51gGar3s1v41A8ammJnLNV9+7bGz8VR8pODTuXoY1ISKCfEfX
-         /iFWi+CSKNiDkMVv5W6Z9ilWYwkpuuSioj1mzsB8OPFbY/sWkwd4gOAdUAP/WxyhtevE
-         1JJgoexL67dHPYDPsFfCh5bKZEkgKJjGqW2yKU/2/6RhUuuXk0iFxO4Ar5XsyL4rvZ7e
-         cJFA==
-X-Gm-Message-State: AG10YOQ4jqfk3tUvBieT9s95Rq5zlnYm7ZDktvFP1KZYGvzKx1hnamqNPivX4sCoAs7veyyuOJRRmM2NUNQPtQ==
-X-Received: by 10.28.188.70 with SMTP id m67mr9699874wmf.24.1454077281182;
- Fri, 29 Jan 2016 06:21:21 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <CANO=Ty1ZFtpeUespB+nn0gZ8oC7PAkkr7+eTR1U+RyLtGKHKtA@mail.gmail.com>
-References: <2413003.GtkKFizscD@chimera> <CANO=Ty1ZFtpeUespB+nn0gZ8oC7PAkkr7+eTR1U+RyLtGKHKtA@mail.gmail.com>
-Message-ID: <CAJMyd9Yje0QY+Th_QUYuO6JspRvysKqkkxtXq-xgANBASM_Nrw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Cc: pool@lists.ntp.org, linuxbrad@gmail.com, team@security.debian.org, 
-	secalert <secalert@redhat.com>
-Date: Fri, 29 Jan 2016 14:21:01 +0000
-From: Hazel <hazel@meddlingmojo.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] shodan.io actively infiltrating ntp.org IPv6 pools
- for scanning purposes
+Received: (qmail 7907 invoked from network); 10 Aug 2021 14:54:54 -0000
+Date: Tue, 10 Aug 2021 14:54:41 +0000
+From: Jeremy Stanley <fungi@yuggoth.org>
 To: oss-security@lists.openwall.com
+Message-ID: <20210810145441.lcjfteb3v7szp2bi@yuggoth.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="x3hom6x4thrpqupc"
+Content-Disposition: inline
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
+X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
+X-SA-Exim-Mail-From: fungi@yuggoth.org
+X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
+Subject: [oss-security] [OSSA-2021-003] Keystone: Account name and UUID oracles in account
+ locking (CVE-2021-38155)
 
-On 27 January 2016 at 14:43, Kurt Seifried <kseifried@redhat.com> wrote:
-> On Wed, Jan 27, 2016 at 4:24 AM, Luca BRUNO <lucab@debian.org> wrote:
-> > For oss-sec crowd: is there anything we can do to improve the situation
-> > and avoid
-> > similar cases in the future? Should crowd-sourced and fundamental services
-> > like this
-> > be encouraged to move to a stronger WoT?
->
-> [...]
->
-> Sadly we can't really rely on the IoT device makers to fix this, they have
-> basically 0 incentive to prevent scanners from hitting their products
-> (they're already sold, to late for the customer to make an informed
-> decision).
+--x3hom6x4thrpqupc
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I hope you'll forgive me making a modest proposal here, but it seems
-to me that there might be an opportunity here for Linux distributions
-that are upstream of IoT vendors to modify their default configuration
-to address this.
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+OSSA-2021-003: Account name and UUID oracles in account locking
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-My somewhat off-the-cuff suggestion would be to...
-
-1. Add an *additional, secondary* IPv6 address to external interfaces that is:
--> a. generated in accordance with the IPv6 Privacy Extensions (i.e. RFC 4941)
--> b. firewalled by default against all traffic except NTP in either direction
-
-2. Configure the NTP *client* to use this secondary address as the
-source for outgoing NTP traffic, instead of the default address?
-
-...thereby avoiding revealing the primary address of the host to
-would-be scanners?
-
-I realise that that is a rather drastic approach, and might be too
-bold a change for Debian or RHEL, but perhaps in the case of
-distributions like Raspbian which focus on IoT, it might be tenable?
+:Date: August 10, 2021
+:CVE: CVE-2021-38155
 
 
-Cheers,
+Affects
+~~~~~~~
+- Keystone: >=3D10.0.0 <16.0.2, >=3D17.0.0 <17.0.1, >=3D18.0.0 <18.0.1, >=
+=3D19.0.0 <19.0.1
 
-Hazel
+
+Description
+~~~~~~~~~~~
+Samuel de Medeiros Queiroz with Oi Cloud reported a vulnerability
+affecting Keystone account locking. By guessing the name of an
+account and failing to authenticate multiple times, any
+unauthenticated actor could both confirm the account exists and
+obtain that account's corresponding UUID, which might be leveraged
+for other unrelated attacks. All Keystone deployments enabling
+security_compliance.lockout_failure_attempts are affected.
+
+
+Patches
+~~~~~~~
+- https://review.opendev.org/790444 (Train)
+- https://review.opendev.org/790443 (Ussuri)
+- https://review.opendev.org/790442 (Victoria)
+- https://review.opendev.org/790440 (Wallaby)
+- https://review.opendev.org/759940 (Xena)
+
+
+Credits
+~~~~~~~
+- Samuel de Medeiros Queiroz from Oi Cloud (CVE-2021-38155)
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1688137
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2021-38155
+
+--=20
+Jeremy Stanley
+
+--x3hom6x4thrpqupc
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmESkzFfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
+QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
+WCn46w//YM0/bi2+V2ND+mK61k7RNI4ojgwL7VFtblIqCXFA3J0GbiJxv4LIIOWK
+2RUTQrYZPXgEW57ekHW3Vdizz2mS3xuLGXq+tHM+eRszInY5x5g1aNqWV+Tu69uS
+ZmdDDSenKe07jqZ0t4n8jtoH1XEHUbp+wv2FmycFeCiWh0RYTyXRKh65pxoWsloe
+VLlcayc4TSCPKMYU0vXg4jHIA8gbGBJecQ388Yujy159AMMUGop3KGwLw2zLDXTH
+UB+0LhRnMD2lNOUSwjEglpVzvpZ7L2feOigx45nTj83b8GTum7N1/EgB/Jhs7FEt
+NF4kU1Ma5rUSpNwM0up0+miBVD/+JdBYuxjB8hsYF14pEqhihw6kklujTdT1M6J1
+Rk1vgqPJzqyGuHT68/xQV8jDpa8tlT/HpyDySoGOuJWHYZ5Je+aJ9efcu35U+iNB
+l/kSKLJGv9pNsXXOx/CU9Tm94HwuF1YDmwD1ZuT2CDVrdm9NCuRyNF6ByLSuh0RB
+lJHhTbPC5ZJDlfK5DCO12kGp5k7huO5DA+UvMSedJy0gmTXbly57An4V++rDGc8n
+DaJUx6nW9iGfkGcD1cKAECth4DGBnBRyfUSzVZ6dRwKvW9lBmPxEX/27VD62nLHF
+eTSlxRLj9sCgflyY/QmAapfVDAyrnYe99xEPnkTKUI6H0t1Modk=
+=7Fk6
+-----END PGP SIGNATURE-----
+
+--x3hom6x4thrpqupc--
