@@ -1,39 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/16/2
-Message-Id: <C713881E-C4D4-4CCA-B8F7-D315B0AD975F@gmail.com>
-Date: Sun, 16 May 2021 14:26:14 -0500
-From: Brandon Perry <bperry.volatile@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/10/5
+Message-ID: <20210810145441.lcjfteb3v7szp2bi@yuggoth.org>
+Date: Tue, 10 Aug 2021 14:54:41 +0000
+From: Jeremy Stanley <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Open Source WAF testing tools
+Subject: [OSSA-2021-003] Keystone: Account name and UUID oracles in account locking (CVE-2021-38155)
 Content-Type: text/plain; charset=utf-8
 
-Use Burp and test by hand?
+===============================================================
+OSSA-2021-003: Account name and UUID oracles in account locking
+===============================================================
 
-> On May 16, 2021, at 2:01 PM, Martin O'Neil <martinoneil.cyber@...il.com> wrote:
-> 
-> Hi, list,
-> 
-> Does anybody know an open-source tool for testing Web Application Firewalls?
-> 
-> In an ideal case, with an out-of-the-box-ready CLI/UI, PDF reports, and a
-> configurable set of payloads to test. I need it to check if my WAF
-> deployment and rules work well.
-> 
-> I found at least 5 projects, all made by WAF vendors.
-> 
-> 1. https://github.com/wallarm/gotestwaf byWallarm
-> 2. https://github.com/signalsciences/waf-testing-framework by Signal
-> Sciences
-> 3. https://github.com/fastly/ftw by Fastly
-> 4. https://microsoft.github.io/WAFBench/ by Microsoft Azure WAF team
-> 5. https://github.com/f5devcentral/f5-waf-tester by F5
-> 
-> The GoTestWAF project looks more active and supported by the community.
-> Does anybody recommend some other GitHub repositories, preferably made by
-> 3rd party folks?
-> 
-> Thanks
-> Martin.
+:Date: August 10, 2021
+:CVE: CVE-2021-38155
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Affects
+~~~~~~~
+- Keystone: >=10.0.0 <16.0.2, >=17.0.0 <17.0.1, >=18.0.0 <18.0.1, >=19.0.0 <19.0.1
+
+
+Description
+~~~~~~~~~~~
+Samuel de Medeiros Queiroz with Oi Cloud reported a vulnerability
+affecting Keystone account locking. By guessing the name of an
+account and failing to authenticate multiple times, any
+unauthenticated actor could both confirm the account exists and
+obtain that account's corresponding UUID, which might be leveraged
+for other unrelated attacks. All Keystone deployments enabling
+security_compliance.lockout_failure_attempts are affected.
+
+
+Patches
+~~~~~~~
+- https://review.opendev.org/790444 (Train)
+- https://review.opendev.org/790443 (Ussuri)
+- https://review.opendev.org/790442 (Victoria)
+- https://review.opendev.org/790440 (Wallaby)
+- https://review.opendev.org/759940 (Xena)
+
+
+Credits
+~~~~~~~
+- Samuel de Medeiros Queiroz from Oi Cloud (CVE-2021-38155)
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1688137
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-38155
+
+-- 
+Jeremy Stanley
+
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
