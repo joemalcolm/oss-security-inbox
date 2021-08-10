@@ -1,66 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/19/2
-Message-ID: <CAFzhf4pJm_SLYd_tE69gspYvXm0VRvxhEi6c2JFL4cx_5=wwQg@mail.gmail.com>
-Date: Thu, 18 Mar 2021 22:06:13 +0000
-From: Piotr Krysiuk <piotras@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-27170] Protection against speculatively out-of-bounds loads in the Linux kernel can be bypassed by unprivileged local users to leak content of kernel memory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/10/1
+Message-ID: <nycvar.QRO.7.76.2108100817550.28722@fvyyl>
+Date: Tue, 10 Aug 2021 08:19:32 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: c-ares development <c-ares@...l.haxx.se>, oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] c-ares: Missing input validation on hostnames returned by DNS servers
 Content-Type: text/plain; charset=utf-8
 
-A gap in the Linux kernel mechanism to mitigate speculatively
-out-of-bounds loads (Spectre mitigation) has been identified.
+Missing input validation on hostnames returned by DNS servers
+=============================================================
 
-Unprivileged BPF programs running on affected systems can bypass
-the protection and execute speculatively out-of-bounds loads from
-any location within the kernel memory. This can be abused to extract
-contents of kernel memory via side-channel.
+Project c-ares Security Advisory, August 10, 2021 -
+[Permalink](https://c-ares.haxx.se/adv_20210810.html)
 
-The identified gap is that unprivileged BPF programs are allowed to
-perform pointer arithmetic on particular pointer types not defining
-ptr_limit. Pointer arithmetic on such pointer types is not protected
-against out-of-bounds speculation.
+VULNERABILITY
+-------------
 
-I developed a PoC to demonstrate the issue using ctx pointers that
-allows unprivileged local users to extract contents of kernel memory.
+Missing input validation of host names returned by Domain Name Servers in
+the c-ares library can lead to output of wrong hostnames (leading to Domain
+Hijacking).
 
-The PoC has been shared privately with <security@...nel.org> to assist
-with fix development.
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2021-3672 to this issue.
 
-The patches are available from BPF subsystem public git repository. The
-minimal fix is:
 
-* bpf: Prohibit alu ops for pointer types not defining ptr_limit [
-https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=f232326f6966cf2a1d1db7bc917a4ce5f9f55f76
-]
+STEPS TO REPRODUCE
+------------------
 
-However it is recommended to apply the whole series as it includes
-fix for another speculatively out-of-bounds vulnerability in BPF that
-I reported at the same time and some additional hardening of the
-affected code:
+An example domain which has a cname including a zero byte:
 
-* bpf: Prohibit alu ops for pointer types not defining ptr_limit [
-https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=f232326f6966cf2a1d1db7bc917a4ce5f9f55f76
-]
-* bpf: Fix off-by-one for area size in creating mask to left [
-https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=10d2bb2e6b1d8c4576c56a748f697dbeb8388899
-]
-* bpf: Simplify alu_limit masking for pointer arithmetic [
-https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=b5871dca250cd391885218b99cc015aca1a51aea
-]
-* bpf: Add sanity check for upper ptr_limit [
-https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=1b1597e64e1a610c7a96710fc4717158e98a08b3
-]
-* bpf, selftests: Fix up some test_verifier cases for unprivileged [
-https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/patch/?id=0a13e3537ea67452d549a6a80da3776d6b7dedb3
-]
+```
+$ adig cnamezero.test2.xdi-attack.net
 
-Details of the other vulnerability to be provided in a separate email.
+Answers:
+      cnamezero.test2.xdi-attack.net. 0 CNAME 
+victim.test2.xdi-attack.net\000.test2.xdi-attack.net.
+      victim.test2.xdi-attack.net\000.test2.xdi-attack.net. 0 A 141.12.174.88
+```
 
-# Discoverer
+When resolved via a vulnerable implementation, the CNAME alias and name of the
+A record will seem to be `victim.test2.xdi-attack.net` instead of
+`victim.test2.xdi-attack.net\000.test2.xdi-attack.net`, a totally different
+domain.
 
-Piotr Krysiuk <piotras@...il.com>
+This is a clear error in zero-byte handling and can potentially lead to
+DNS-cache injections in case an application implements a cache based on the
+library.
 
-# References
 
-CVE-2020-27170 (reserved via https://cveform.mitre.org/)
+AFFECTED VERSIONS
+-----------------
 
+This flaw exists in the following c-ares versions.
+
+- Affected versions: c-ares 1.0.0 to and including 1.17.1
+- Not affected versions: c-ares >= 1.17.2
+
+
+THE SOLUTION
+------------
+
+In version 1.17.2, the function has been corrected and a test case have been
+added to verify.
+
+A [patch for
+CVE-2021-3672](https://github.com/c-ares/c-ares/compare/809d5e8..44c009b.patch)
+is available.
+
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+   A - Upgrade c-ares to version 1.17.2
+
+   B - Apply the patch to your version and rebuild
+
+
+TIME LINE
+---------
+
+It was reported to the c-ares project on June 11, 2021 by Philipp Jeitner and
+Haya Shulman, Fraunhofer SIT.
+
+c-ares 1.17.2 was released on August 10 2021, coordinated with the publication
+of this advisory.
+
+
+CREDITS
+-------
+
+Thanks to Philipp Jeitner and Haya Shulman, Fraunhofer SIT for the report.
+
+-- 
+
+  / daniel.haxx.se
