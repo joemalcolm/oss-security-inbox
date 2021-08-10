@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4657" "Thursday" "31" "March" "2016" "21:01:38" "+0200" "Carlos Alberto Lopez Perez" "clopez@igalia.com" "<56FD7412.2080905@igalia.com>" "110" "[oss-security] WebKitGTK+ Security Advisory WSA-2016-0003" "^Cc:" nil nil "3" "2016033119:01:38" "[oss-security] WebKitGTK+ Security Advisory WSA-2016-0003" (number mark "U       clopez@igali Mar 31  110/4657  " thread-indent "\"[oss-security] WebKitGTK+ Security Advisory WSA-2016-0003\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2532" "Tuesday" "10" "August" "2021" "12:21:13" "+0200" "Hanno =?iso-8859-1?Q?B=F6ck?=" "hanno@hboeck.de" nil "57" "[oss-security] STARTTLS vulnerabilities" "^Date:" nil nil "8" nil nil (number mark "        hanno@hboeck Aug 10   57/2532  " thread-indent "\"[oss-security] STARTTLS vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] STARTTLS vulnerabilities" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 9415 invoked by uid 550); 31 Mar 2016 19:02:05 -0000
+Received: (qmail 3730 invoked by uid 550); 10 Aug 2021 10:21:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,138 +11,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9353 invoked from network); 31 Mar 2016 19:01:59 -0000
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: A2DADAAJc/1W/5tjdVtdHYMXU32zS4dKDhQZgUQSD4VsgUU4FAEBAQEBAQFlJ4RrVQE8FgsCCwMCAQIBWAgCiCcBCbIAhTGLSQEBCAIBFQiCIIN+hX2GB4JWBYdrhWeKIIMggWZtiBWBZk6Df4c/gRuPFR4BQ4IRgVg6MIhtAQEB
-X-IPAS-Result: A2DADAAJc/1W/5tjdVtdHYMXU32zS4dKDhQZgUQSD4VsgUU4FAEBAQEBAQFlJ4RrVQE8FgsCCwMCAQIBWAgCiCcBCbIAhTGLSQEBCAIBFQiCIIN+hX2GB4JWBYdrhWeKIIMggWZtiBWBZk6Df4c/gRuPFR4BQ4IRgVg6MIhtAQEB
-X-IronPort-AV: E=Sophos;i="5.24,423,1454972400"; 
-   d="asc'?scan'208";a="124029010"
-Openpgp: id=B5D2B50BC48EC7F1EE90D9AB965089CE6B95F882;
- url=http://key.neutrino.es
-X-Enigmail-Draft-Status: N1110
-Organization: Igalia S.L.
-Message-ID: <56FD7412.2080905@igalia.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.6.0
+Received: (qmail 3696 invoked from network); 10 Aug 2021 10:21:26 -0000
+Message-ID: <20210810122113.3fe65cc9@computer>
+X-Mailer: Claws Mail 3.18.0 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="cb5clDwUTP0Gs8hNAkCCP13DAqAMjkj0U"
-Cc: security@webkit.org, distributor-list@gnome.org,
- oss-security@lists.openwall.com, bugtraq@securityfocus.com
-Date: Thu, 31 Mar 2016 21:01:38 +0200
-From: Carlos Alberto Lopez Perez <clopez@igalia.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] WebKitGTK+ Security Advisory WSA-2016-0003
-To: webkit-gtk@lists.webkit.org
-
---cb5clDwUTP0Gs8hNAkCCP13DAqAMjkj0U
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+Date: Tue, 10 Aug 2021 12:21:13 +0200
+From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] STARTTLS vulnerabilities
+To: oss-security@lists.openwall.com
 
-------------------------------------------------------------------------
-WebKitGTK+ Security Advisory                               WSA-2016-0003
-------------------------------------------------------------------------
+Hi,
 
-Date reported      : March 31, 2016
-Advisory ID        : WSA-2016-0003
-Advisory URL       : http://webkitgtk.org/security/WSA-2016-0003.html
-CVE identifiers    : CVE-2016-1778, CVE-2016-1779, CVE-2016-1781,
-                     CVE-2016-1782, CVE-2016-1783, CVE-2016-1785,
-                     CVE-2016-1786.
+I wanted to share some research that we did on the security of
+STARTTLS. While we didn't specifically look at open source software,
+many of the vulnerabilities found are in open source mail servers and
+clients:
 
-Several vulnerabilities were discovered in WebKitGTK+.
+https://nostarttls.secvuln.info/
 
-CVE-2016-1778
-    Versions affected: WebKitGTK+ before 2.10.5.
-    Credit to 0x1byte working with Trend Micro's Zero Day Initiative
-    (ZDI).
-    WebKit in Apple iOS before 9.3 and Safari before 9.1 allows remote
-    attackers to execute arbitrary code or cause a denial of service
-    (memory corruption) via a crafted web site.
+Our starting point was an old vulnerability in Postfix [1]. In
+2011 Postfix developer Wietse Venema found that it's possible to inject
+plaintext content into the TCP packet of a STARTTLS command and a
+server would interpret it as if it was part of the TLS session.
 
-CVE-2016-1779
-    Versions affected: WebKitGTK+ before 2.10.5.
-    Credit to xisigr of Tencent's Xuanwu Lab (http://www.tencent.com).
-    WebKit in Apple iOS before 9.3 and Safari before 9.1 allows remote
-    attackers to bypass the Same Origin Policy and obtain physical-
-    location data via a crafted geolocation request.
+This command injection vulnerability was subsequently found in many
+other mail servers, but as we learned it was still not fixed
+everywhere. It is most severe in IMAP and SMTP/Submission servers,
+where it can be used for credential stealing.
 
-CVE-2016-1781
-    Versions affected: WebKitGTK+ before 2.10.5.
-    Credit to Devdatta Akhawe of Dropbox, Inc.
-    WebKit in Apple iOS before 9.3 and Safari before 9.1 mishandles
-    attachment URLs, which makes it easier for remote web servers to
-    track users via unspecified vectors.
+We subsequently also found that a very similar (but somewhat less
+severe) vulnerability exists in mail clients that also would interpret
+plaintext injected into the answer to a STARTTLS command as if they
+were part of the TLS connection. We call this a response injection.
 
-CVE-2016-1782
-    Versions affected: WebKitGTK+ before 2.10.5.
-    Credit to Muneaki Nishimura (nishimunea) of Recruit Technologies
-    Co.,Ltd.
-    WebKit in Apple iOS before 9.3 and Safari before 9.1 does not
-    properly restrict redirects that specify a TCP port number, which
-    allows remote attackers to bypass intended port restrictions via a
-    crafted web site.
+Furthermore we learned that the IMAP PREAUTH feature is problematic in
+combination with STARTTLS. PREAUTH can be sent by a server in response
+to a client connection to signal the client that it is already
+authenticated without login credentials. However the standards say that
+in an authenticated state a client cannot send a STARTTLS command. Thus
+PREAUTH allows a MitM attacker to prevent STARTTLS from happening. This
+was originaly found in the Trojita mail client, but we found many other
+mail clients are vulnerable.
 
-CVE-2016-1783
-    Versions affected: WebKitGTK+ before 2.10.5.
-    Credit to Mihai Parparita of Google.
-    WebKit in Apple iOS before 9.3, Safari before 9.1, and tvOS before
-    9.2 allows remote attackers to execute arbitrary code or cause a
-    denial of service (memory corruption) via a crafted web site.
-
-CVE-2016-1785
-    Versions affected: WebKitGTK+ before 2.10.5.
-    Credit to an anonymous researcher.
-    The Page Loading implementation in WebKit in Apple iOS before 9.3
-    and Safari before 9.1 mishandles character encoding during access to
-    cached data, which allows remote attackers to bypass the Same Origin
-    Policy and obtain sensitive information via a crafted web site.
-
-CVE-2016-1786
-    Versions affected: WebKitGTK+ before 2.10.5.
-    Credit to ma.la of LINE Corporation.
-    The Page Loading implementation in WebKit in Apple iOS before 9.3
-    and Safari before 9.1 mishandles HTTP responses with a 3xx (aka
-    redirection) status code, which allows remote attackers to spoof the
-    displayed URL, bypass the Same Origin Policy, and obtain sensitive
-    cached information via a crafted web site.
+Noteworthy open source projects that were impacted by at least one of
+the vulnerabilities we found include Mozilla Thunderbird, Claws-Mail,
+Mutt, LibEtPan (mail protocol library used by many other clients),
+Exim, Dovecot, s/qmail, Courier. Our webpage lists all the
+STARTTLS vulnerabilities we found and as far as we know them the state
+of fixes and CVEs.
 
 
-We recommend updating to the last stable version of WebKitGTK+. It is
-the best way of ensuring that you are running a safe version of
-WebKitGTK+. Please check our website for information about the last
-stable releases.
+Our focus was the communication between mail clients and servers. We
+came to the conclusion that in this situation the dedicated / implicit
+TLS ports (465, 993, 995) for mail protocols should be preferred as
+they avoid all STARTTLS vulnerabilities and have no real downside
+(it's even faster because you avoid roundtrips). Ideally STARTTLS
+should be deprecated in the long term.
 
-Further information about WebKitGTK+ Security Advisories can be found
-at: http://webkitgtk.org/security.html
+Communication from server to server (esp. in combionation with
+MTA-STS) and STARTTLS in other protocols would be good avenues for
+further research.
 
-The WebKitGTK+ team,
-March 31, 2016
+[1] http://www.postfix.org/CVE-2011-0411.html
 
-
---cb5clDwUTP0Gs8hNAkCCP13DAqAMjkj0U
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-Comment: You can fetch my GnuPG key from http://key.neutrino.es
-
-iQIcBAEBCgAGBQJW/XQSAAoJEJZQic5rlfiCnG8P/1YMzpsrv0tRjISzy5YnAHOr
-nyU9kyFcV+Iwk6Q1TM7visQxEpKnEMZQkiQk6/wEABCDJi55/m5dNgfAIslnbAA3
-88XBdcLiBT7Nak7I+zF9y3S6TvBOkk/iD84V1K/nnNOGRrACeKErr54eeFvwTbRZ
-Hf4oylsN/ItuoY1PXSuOSCqknxr6wAPw3MklLl3wQEeDWg3eP/I+8+/mASRIs7ET
-RFbCM3r3ZH2n4sG/2H1kh7LWLGGGUUvCPakAOu2IE+Hrdxgz2p802EcrSC9nWGCP
-xl2lZF6RZuJrdKBXWYLLlJEMsRf8tTT6UUwPATj0dPXgLQ59MSJ2t43ndGd6lv88
-Ns1CyJcX6lIBnmYnUKIadWsGYNEdWftUS6r/0yArjHNKnI54/5CaVpQB+T5cOdUX
-aePwn1SKEQ5qBmBKJdv8T3fOOxqgL66Kz0kteNO+fp08Jw4PElwAnenp1DpLGUQI
-JdHHh1ZCqDp3xKdl4SzHVmqqbWeFnGMVrHQ9euETgzHvK7G736itiZYuX/sR5DoJ
-UyYq4qAChdqW20inUsIEJIFtLAvCZg7/JjPS/TfDXjk7n/49a2Fl6pUty5efNRMn
-QyxgWYEN26G6HCxsyt5kqftflKxXwLVHvV5lM7GmaUx7ERmR+91Yn4idixrJFxWE
-m0btEe3335gRhRtGaf4i
-=coYc
------END PGP SIGNATURE-----
-
---cb5clDwUTP0Gs8hNAkCCP13DAqAMjkj0U--
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
