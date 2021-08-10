@@ -1,86 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/10/3
-Message-ID: <YCPhfDAncjgPysNr@byrne.stsp.name>
-Date: Wed, 10 Feb 2021 14:37:00 +0100
-From: Stefan Sperling <stsp@...che.org>
-To: announce@...version.apache.org, users@...version.apache.org, dev@...version.apache.org, announce@...che.org
-Cc: security@...che.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: [SECURITY][ANNOUNCE] Apache Subversion 1.10.7 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/10/2
+Message-ID: <20210810122113.3fe65cc9@computer>
+Date: Tue, 10 Aug 2021 12:21:13 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: STARTTLS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-I'm happy to announce the release of Apache Subversion 1.10.7.
-Please choose the mirror closest to you by visiting:
+Hi,
 
-    https://subversion.apache.org/download.cgi#supported-releases
+I wanted to share some research that we did on the security of
+STARTTLS. While we didn't specifically look at open source software,
+many of the vulnerabilities found are in open source mail servers and
+clients:
 
-This is a stable bugfix and security release of the Apache Subversion
-open source version control system.
+https://nostarttls.secvuln.info/
 
-THIS RELEASE CONTAINS AN IMPORTANT SECURITY FIX:
+Our starting point was an old vulnerability in Postfix [1]. In
+2011 Postfix developer Wietse Venema found that it's possible to inject
+plaintext content into the TCP packet of a STARTTLS command and a
+server would interpret it as if it was part of the TLS session.
 
-  CVE-2020-17525
-  "Remote unauthenticated denial-of-service in Subversion mod_authz_svn"
+This command injection vulnerability was subsequently found in many
+other mail servers, but as we learned it was still not fixed
+everywhere. It is most severe in IMAP and SMTP/Submission servers,
+where it can be used for credential stealing.
 
-The full security advisory for CVE-2020-17525 is available at:
-  https://subversion.apache.org/security/CVE-2020-17525-advisory.txt
+We subsequently also found that a very similar (but somewhat less
+severe) vulnerability exists in mail clients that also would interpret
+plaintext injected into the answer to a STARTTLS command as if they
+were part of the TLS connection. We call this a response injection.
 
-A brief summary of this advisory follows:
+Furthermore we learned that the IMAP PREAUTH feature is problematic in
+combination with STARTTLS. PREAUTH can be sent by a server in response
+to a client connection to signal the client that it is already
+authenticated without login credentials. However the standards say that
+in an authenticated state a client cannot send a STARTTLS command. Thus
+PREAUTH allows a MitM attacker to prevent STARTTLS from happening. This
+was originaly found in the Trojita mail client, but we found many other
+mail clients are vulnerable.
 
-  Subversion's mod_authz_svn module will crash if the server is using
-  in-repository authz rules with the AuthzSVNReposRelativeAccessFile
-  option and a client sends a request for a non-existing repository URL.
+Noteworthy open source projects that were impacted by at least one of
+the vulnerabilities we found include Mozilla Thunderbird, Claws-Mail,
+Mutt, LibEtPan (mail protocol library used by many other clients),
+Exim, Dovecot, s/qmail, Courier. Our webpage lists all the
+STARTTLS vulnerabilities we found and as far as we know them the state
+of fixes and CVEs.
 
-  This can lead to disruption for users of the service.
 
-  We recommend all users to upgrade to the 1.10.7 or 1.14.1 release
-  of the Subversion mod_dav_svn server.
+Our focus was the communication between mail clients and servers. We
+came to the conclusion that in this situation the dedicated / implicit
+TLS ports (465, 993, 995) for mail protocols should be preferred as
+they avoid all STARTTLS vulnerabilities and have no real downside
+(it's even faster because you avoid roundtrips). Ideally STARTTLS
+should be deprecated in the long term.
 
-  As a workaround, the use of in-repository authz rules files with
-  the AuthzSVNReposRelativeAccessFile can be avoided by switching
-  to an alternative configuration which fetches an authz rules file
-  from the server's filesystem, rather than from an SVN repository.
+Communication from server to server (esp. in combionation with
+MTA-STS) and STARTTLS in other protocols would be good avenues for
+further research.
 
-  This issue was reported by Thomas Åkesson.
+[1] http://www.postfix.org/CVE-2011-0411.html
 
-SHA-512 checksums are available at:
-
-    https://www.apache.org/dist/subversion/subversion-1.10.7.tar.bz2.sha512
-    https://www.apache.org/dist/subversion/subversion-1.10.7.tar.gz.sha512
-    https://www.apache.org/dist/subversion/subversion-1.10.7.zip.sha512
-
-PGP Signatures are available at:
-
-    https://www.apache.org/dist/subversion/subversion-1.10.7.tar.bz2.asc
-    https://www.apache.org/dist/subversion/subversion-1.10.7.tar.gz.asc
-    https://www.apache.org/dist/subversion/subversion-1.10.7.zip.asc
-
-For this release, the following people have provided PGP signatures:
-
-   Stefan Sperling [2048R/4F7DBAA99A59B973] with fingerprint:
-    8BC4 DAE0 C5A4 D65F 4044  0107 4F7D BAA9 9A59 B973
-   Branko Čibej [4096R/1BCA6586A347943F] with fingerprint:
-    BA3C 15B1 337C F0FB 222B  D41A 1BCA 6586 A347 943F
-   Johan Corveleyn [4096R/B59CE6D6010C8AAD] with fingerprint:
-    8AA2 C10E EAAD 44F9 6972  7AEA B59C E6D6 010C 8AAD
-
-These public keys are available at:
-
-    https://www.apache.org/dist/subversion/subversion-1.10.7.KEYS
-
-Release notes for the 1.10.x release series may be found at:
-
-    https://subversion.apache.org/docs/release-notes/1.10.html
-
-You can find the list of changes between 1.10.7 and earlier versions at:
-
-    https://svn.apache.org/repos/asf/subversion/tags/1.10.7/CHANGES
-
-Questions, comments, and bug reports to users@...version.apache.org.
-
-Thanks,
-- The Subversion Team
-
---
-To unsubscribe, please see:
-
-    https://subversion.apache.org/mailing-lists.html#unsubscribing
+-- 
+Hanno Böck
+https://hboeck.de/
