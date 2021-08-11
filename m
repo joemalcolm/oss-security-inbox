@@ -1,100 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/19/15
-Message-ID: <20210319210008.GA646@grsecurity.net>
-Date: Fri, 19 Mar 2021 17:00:08 -0400
-From: Brad Spengler <spender@...ecurity.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/11/6
+Message-ID: <dde792a9-3531-9057-70a4-c4a9b60b90fd@sit.fraunhofer.de>
+Date: Wed, 11 Aug 2021 16:41:16 +0200
+From: "Philipp Jeitner (SIT)" <philipp.jeitner@....fraunhofer.de>
+To: <oss-security@...ts.openwall.com>
+Subject: CVE-2021-20314: Remote stack buffer overflow in libspf2
 Content-Type: text/plain; charset=utf-8
 
-Hi Sasha,
+#### Description
 
-> So this CVE link above is exactly what I referred to: how do you go from
-> CVE-2021-3428 to the commit in question?
+Stack buffer overflow in libspf2 versions below 1.2.11 when processing 
+certain SPF macros can lead to Denial of service and potentially code 
+execution via malicious crafted SPF explanation messages. CVE-2021-20314 
+has been assigned to this issue.
 
-For that particular one, the original email was:
-https://seclists.org/oss-sec/2021/q1/212
-to which I had already replied here:
-https://seclists.org/oss-sec/2021/q1/220
+#### Attack type
 
-The investigation for that email took only a few minutes.  It didn't have to
-be done via the CVE link, as https://bugzilla.suse.com/show_bug.cgi?id=1173485
-was provided in the email.  At that link was the report from Wolfgang Frisch.
-A simple git log --grep "Wolfgang Frisch" -- fs/ext4 immediately gets you:
+Remote
 
-commit ce9f24cccdc019229b70a5c15e2b09ad9c0ab5d1
-Author: Jan Kara <jack@...e.cz>
-Date:   Tue Jul 28 15:04:34 2020 +0200
+#### Impact
 
-    ext4: check journal inode extents more carefully
-    
-    Currently, system zones just track ranges of block, that are "important"
-    fs metadata (bitmaps, group descriptors, journal blocks, etc.). This
-    however complicates how extent tree (or indirect blocks) can be checked
-    for inodes that actually track such metadata - currently the journal
-    inode but arguably we should be treating quota files or resize inode
-    similarly. We cannot run __ext4_ext_check() on such metadata inodes when
-    loading their extents as that would immediately trigger the validity
-    checks and so we just hack around that and special-case the journal
-    inode. This however leads to a situation that a journal inode which has
-    extent tree of depth at least one can have invalid extent tree that gets
-    unnoticed until ext4_cache_extents() crashes.
-    
-    To overcome this limitation, track inode number each system zone belongs
-    to (0 is used for zones not belonging to any inode). We can then verify
-    inode number matches the expected one when verifying extent tree and
-    thus avoid the false errors. With this there's no need to to
-    special-case journal inode during extent tree checking anymore so remove
-    it.
-    
-    Fixes: 0a944e8a6c66 ("ext4: don't perform block validity checks on the journal inode")
-    Reported-by: Wolfgang Frisch <wolfgang.frisch@...e.com>
+(x) Code Execution (x) Denial of Service
 
-Or you could look at the comment from the bugzilla:
-https://bugzilla.suse.com/show_bug.cgi?id=1173485#c6
+#### Attack vector(s):
 
-which provided commit titles to grep for, including the one above.
+Attackers need to cause a mail server to process a malicious SPF record, 
+ie. via sending an email from an attacker-controlled domain. Thus, any 
+mail server accepting mails and processing them via libspf2 is vulnerable.
 
-For https://seclists.org/oss-sec/2021/q1/228, it was already familiar to me,
-but visiting: https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2020-35519
-an (upstream) patch is included to net/x25/af_x25.c.  Even something very
-basic like:
-git log --grep "x25_bind" -- net/x25/af_x25.c gets you the same patch posted:
+#### Patch
 
-commit 07632721dc2d4d2e30ec3010edfbd2f251884912
-Author: Dan Carpenter <dan.carpenter@...cle.com>
-Date:   Tue Dec 1 18:15:12 2020 +0300
+The issue has been fixed in github commit c37b7c1:
 
-    net/x25: prevent a couple of overflows
-    
-    The .x25_addr[] address comes from the user and is not necessarily
-    NUL terminated.  This leads to a couple problems.  The first problem is
-    that the strlen() in x25_bind() can read beyond the end of the buffer.
-    
-    The second problem is more subtle and could result in memory corruption.
-    The call tree is:
-      x25_connect()
-      --> x25_write_internal()
-          --> x25_addr_aton()
-    
-    The .x25_addr[] buffers are copied to the "addresses" buffer from
-    x25_write_internal() so it will lead to stack corruption.
-    
-    Verify that the strings are NUL terminated and return -EINVAL if they
-    are not.
-    
-    Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-    Fixes: a9288525d2ae ("X25: Dont let x25_bind use addresses containing characters")
-    Reported-by: "kiyin(尹亮)" <kiyin@...cent.com>
-    Signed-off-by: Dan Carpenter <dan.carpenter@...cle.com>
-    Acked-by: Martin Schiller <ms@....tdt.de>
-    Link: https://lore.kernel.org/r/X8ZeAKm8FnFpN//B@mwanda
-    Signed-off-by: Jakub Kicinski <kuba@...nel.org>
+https://github.com/shevek/libspf2/commit/c37b7c13c30e225183899364b9f2efdfa85552ef
 
-I would expect stable maintainers to be capable of this same basic analysis with similar
-speed :)
+An updated version of libspf2 (1.2.11) which also fixes other security 
+related issues is available from github 
+(https://github.com/shevek/libspf2). The libspf2 website 
+(https://www.libspf2.org/download.html) and latest release there is NOT 
+UPDATED YET.
 
-Thanks,
--Brad
+#### Discoverer(s)/Credits
 
-Download attachment "signature.asc" of type "application/pgp-signature" (837 bytes)
+Philipp Jeitner and Haya Shulman, Fraunhofer SIT
+
+philipp.jeitner@....fraunhofer.de
+haya.shulman@....fraunhofer.de
+
+#### Reference(s)
+
+  - libspf2: https://www.libspf2.org/, https://github.com/shevek/libspf2
+  - patch: 
+https://github.com/shevek/libspf2/commit/c37b7c13c30e225183899364b9f2efdfa85552ef
+  - Injection Attacks Reloaded: Tunneling Malicious Payloads over DNS 
+https://www.usenix.org/conference/usenixsecurity21/presentation/jeitner
+
+#### Details and information to reproduce the vulnerability
+
+To reproduce, set the SPF record of a domain you control like listed below:
+
+     example.com. 300    IN      TXT     "v=spf1 exp=exp.example.com"
+     exp=exp.example.com.   300     IN      TXT 
+"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" 
+"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+
+Then trigger SPF processing in libspf2, ie. via the command line 
+`spfquery` tool.
+
+     # spfquery --sender someone@...mple.com -ip 1.2.3.4
+     *** stack smashing detected ***: terminated
+     Aborted (core dumped)
+
+The record causes a 4-byte stack buffer overflow of local variable `buf` 
+in `SPF_record_compile_macro`, which is responsible for parsing the 
+potential macros included in the SPF explanation message. The overflow 
+is caused by an incorrect buffer length adjustment in the 
+`SPF_INIT_STRING_LITERAL` macro  which  places  a  4-byte  header of 
+type `SPF_data_str` into  the  buffer inside `buf` without  decreasing 
+the  available size `ds_avail` by 4. Exploiting this vulnerability 
+therefore allows  the  attacker to  override  up to  4  bytes  on  the 
+stack of `SPF_record_compile_macro` directly after `buf`.
