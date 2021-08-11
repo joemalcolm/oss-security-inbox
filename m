@@ -1,43 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/24/1
-Message-ID: <CACxuw4V2_8j_Q=o2OcsDKE3NJ5fynk6Nf74UpYCDkM1gvhsPLg@mail.gmail.com>
-Date: Thu, 23 Sep 2021 16:02:27 -0700
-From: Clint Wylie <cwylie@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/11/9
+Message-ID: <cf809005-8196-8fa2-7a3e-fef076488bca@apache.org>
+Date: Wed, 11 Aug 2021 18:07:27 +0200
+From: "jleroux@...che.org" <jleroux@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-36749: Apache Druid: The HTTP inputSource allows authenticated users to read data from other sources than intended (incomplete fix of CVE-2021-26920)
+Subject: [CVE-2021-37608] Arbitrary file upload vulnerability in OFBiz
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+Severity:
+High, possible RCE
+
+Vendor:
+The Apache Software Foundation
+
+Versions Affected:
+OFBiz versions prior to 17.12.08
 
 Description:
-
-In the Druid ingestion system, the InputSource is used for reading
-data from a certain data source. However, the HTTP InputSource allows
-authenticated users to read data from other sources than intended,
-such as the local file system, with the privileges of the Druid server
-process. This is not an elevation of privilege when users access Druid
-directly, since Druid also provides the Local InputSource, which
-allows the same level of access. But it is problematic when users
-interact with Druid indirectly through an application that allows
-users to specify the HTTP InputSource, but not the Local InputSource.
-In this case, users could bypass the application-level restriction by
-passing a file URL to the HTTP InputSource.
-
-This issue was previously mentioned as being fixed in 0.21.0 as per
-CVE-2021-26920 but was not fixed in 0.21.0 or 0.21.1.
+Apache OFBiz has unsafe deserialization prior to 17.12.08 version
 
 Mitigation:
-
-Users can avoid the issue by upgrading to 0.22.0 or a higher version.
-
-In an earlier version than 0.22.0, when the user application wants to
-restrict the access to the local file system, it should disallow all
-InputSources that can read local files, that is the Local, HTTP, and
-HDFS InputSources.
+Upgrade to at least 17.12.08
+or apply patches at https://issues.apache.org/jira/browse/OFBIZ-12297
 
 Credit:
+Zhujie from galaxylab <galaxylab@...a.com>
 
-This issue was originally discovered by chybeta from the Security Team
-of Alibaba Cloud.
-ABKing and g0udan from the Security Team of Xiaomi discovered that it
-was still an issue after CVE-2021-26920.
+References:
+http://ofbiz.apache.org/download.html#vulnerabilities
+
