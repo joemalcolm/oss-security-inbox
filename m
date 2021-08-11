@@ -1,22 +1,119 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/02/10
-Message-ID: <cb5b46fd-8e2c-2638-c23-f557483c6fa@gathman.org>
-Date: Tue, 2 Nov 2021 16:52:33 -0400 (EDT)
-From: Stuart D Gathman <stuart@...hman.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/11/4
+Message-ID: <CAKws9z0ZM_Vj0jE8NO6jPHaqsvnUvTdEvEY9WE_-mW871u92tQ@mail.gmail.com>
+Date: Wed, 11 Aug 2021 06:36:25 -0400
+From: Paragon Initiative Enterprises Security Team <security@...agonie.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Trojan Source Attacks
+Cc: fulldisclosure@...lists.org
+Subject: firebase/php-jwt Algorithm Confusion with Key IDs
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 1 Nov 2021, Nicholas Boucher wrote:
+__Background__
 
-> The first and primary technique, which we dub the Trojan Source attack, uses
-> Unicode Bidirectional (Bidi) control characters embedded in comments and
-> string literals to produce visually deceptive source code files. This
-> technique enables an adversary to encode constructs that visually appear to
-> be comments or string literals but execute as code, or vice versa. Complete
-> details, as well as recommended mitigations, can be found in the attachment
-> 001 Trojan Source.pdf. This vulnerability is tracked under CVE-2021-42574.
+Once upon a time, the Auth0 team demonstrated several attacks against JWT
+libraries that are still found to this day. You can read about their
+research here:
+https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/
 
-Syntax coloring thus becomes a critical security tool.  And bugs in
-syntax coloring for an editor/viewer should be consider security flaws
-and reported on oss-security.
+Or for a more fun spin on the issue, you can just check
+https://www.howmanydayssinceajwtalgnonevuln.com
+
+The two issues that were identified there were alg=none and substituting
+HMAC over an asymmetric alg header (RS256, PS256, ES256, etc.). We like to
+distinguish the two by referring to the alg=none as a Downgrade Attack, and
+the other as Algorithm Confusion (even though, strictly speaking, they're
+both examples of Algorithm Confusion).
+
+Now let's talk about Firebase's PHP-JWT Library.
+
+__PHP-JWT__
+
+To their credit, the Firebase team attempts to side-step the Algorithm
+Confusion issue:
+https://github.com/firebase/php-jwt/blob/d2113d9b2e0e349796e72d2a63cf9319100382d2/src/JWT.php#L103-L108
+
+The above code will check the alg header of a token and make sure it's in
+the allow-list of acceptable algorithm identifiers. If the developer
+talking to this library hard-codes support for only RS256, you can't just
+swap an alg header.
+
+But then there's this:
+https://github.com/firebase/php-jwt/blob/d2113d9b2e0e349796e72d2a63cf9319100382d2/src/JWT.php#L114-L123
+
+If you provide a `kid` header, the key is retrieved from the associative
+array. Since keys are just strings (which means your HMAC keys can be
+extremely weak passwords), there is no mechanism to prevent a very silly
+form of misuse.
+
+Imagine you have two different endpoints. (This can also work against
+middleware, but two different endpoints is easier to visualize.)
+
+The first endpoint expects HS256 tokens, because of some JWT-based
+middleware (e.g. tamper-proof session IDs), and rejects any other algorithm.
+The second is an OAuth2/OIDC processor that expects RS256, and rejects any
+other algorithm.
+
+Now imagine you implement these requirements with a common PHP framework
+design: Dependency injection of a configuration object in both places
+derived from a single file.
+
+If you have the same map of "key id" => "key material" in both endpoints,
+then attacking this is trivial: Instead of swapping the alg header, just
+swap the kid header, and now you've confused an asymmetric public key for a
+symmetric shared key. Oops!
+
+Github issue: https://github.com/firebase/php-jwt/issues/351
+Proposed patch: https://github.com/firebase/php-jwt/pull/352
+Proof of Concept (demo app with exploit code):
+https://github.com/firebase/php-jwt/files/6966712/php-jwt-poc.zip
+
+__Timeline__
+
+2021-08-03 - Issue identified in response to a Reddit question (link:
+https://www.reddit.com/r/PHP/comments/owuuem/paseto_v200_released_lengthy_release_notes/h7me0p2/
+)
+2021-08-04 - Given no security vulnerability reporting information on the
+firebase/php-jwt repository, we published it on a Github issue
+2021-08-04 - Pull request with patch sent
+2021-08-06 - Github issue bumped, still no response
+2021-08-10 - We identify and notify several of the more than 1100 open
+source PHP libraries that depend on firebase/php-jwt that may be affected
+by this issue
+2021-08-11 - Proof-of-Concept shared on the Github issue
+2021-08-11 - Immediate mitigation published at
+https://github.com/paragonie/php-jwt-guard
+2021-08-11 - Email sent to oss-security@ and fulldisclosure@
+
+__Mitigations__
+
+If you aren't using this library in the exact way that's vulnerable, it's a
+non-issue. But if you are, it could be a critical vulnerability in your
+application. Not fun.
+
+For the time being, consider only supporting one cryptography key in each
+distinct JWT::decode() code path.
+
+If you MUST use Key IDs with JWT, we wrote a library that wraps
+Firebase's library and applies the security mitigation we proposed in #352:
+https://github.com/paragonie/php-jwt-guard
+
+We will maintain our wrapper library for as long as we have to, but if the
+PHP community ends up not needing it, all the better.
+
+__Long-Term Remediation__
+
+If you don't need JWT in particular, consider PASETO for your applications
+instead:
+
+- https://github.com/paragonie/paseto
+-
+https://github.com/paseto-standard/paseto-spec/blob/master/docs/02-Implementation-Guide/03-Algorithm-Lucidity.md
+
+If you need JWT because of compatibility with a third party, look into
+https://github.com/lcobucci/jwt instead of firebase/php-jwt.
+
+That's all from us right now.
+
+Security Team
+Paragon Initiative Enterprises <https://paragonie.com/security>
+
