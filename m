@@ -1,27 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/09/2
-Message-ID: <299a447a-3084-12c0-013f-b98162f365d1@linux.com>
-Date: Fri, 9 Apr 2021 13:06:09 +0300
-From: Alexander Popov <alex.popov@...ux.com>
-To: oss-security <oss-security@...ts.openwall.com>
-Cc: linux-distros@...openwall.org, Linus Torvalds <torvalds@...uxfoundation.org>, Greg KH <greg@...ah.com>, "security@...nel.org" <security@...nel.org>, Norbert Slusarek <nslusarek@....net>, Stefano Garzarella <sgarzare@...hat.com>, Eric Dumazet <edumazet@...gle.com>, Anthony Liguori <aliguori@...zon.com>, David Miller <davem@...emloft.net>, Jakub Kicinski <kuba@...nel.org>, Jorgen Hansen <jhansen@...are.com>, Stefan Schmidt <stefan@...enfreihafen.org>, Jeff Vander Stoep <jeffv@...gle.com>, Andrey Konovalov <andreyknvl@...gle.com>
-Subject: Re: Linux kernel: Exploitable vulnerabilities in AF_VSOCK implementation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/11/7
+Message-ID: <20210811153158.gt6uk4qqaqw7lzo2@redhat.com>
+Date: Wed, 11 Aug 2021 10:31:58 -0500
+From: Eric Blake <eblake@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: STARTTLS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hello!
+On Wed, Aug 11, 2021 at 08:16:34AM +0200, Hanno Böck wrote:
+> Of course it's a very obvious idea for further research to look if one
+> finds similar vulnerabilities to the ones we found in other protocols.
+> So I'd really like to encourage other people to look for this.
+> 
+> FWIW there are a lot of protocols with a STARTTLS mechanism, here's the
+> list of supported protocols by OpenSSL:
+> 	smtp
+> 	pop3
+> 	imap
+> 	ftp
+> 	xmpp
+> 	xmpp-server
+> 	telnet
+> 	irc
+> 	mysql
+> 	postgres
+> 	lmtp
+> 	nntp
+> 	sieve
+> 	ldap
 
-I published a detailed article about exploiting CVE-2021-26708 in AF_VSOCK
-implementation: https://a13xp0p0v.github.io/2021/02/09/CVE-2021-26708.html
+Not mentioned in that list was ndb, but as far as I can tell, that
+project has already documented the ramifications of opportunistic
+encryption as being a security risk, and all known implementations
+(both servers and clients) with TLS support have a mode of execution
+that ensures the connection is dropped if a downgrade attack is
+attempted:
 
-In this article I describe how to gain local privilege escalation on Fedora 33
-Server for x86_64, bypassing SMEP and SMAP.
+https://github.com/NetworkBlockDevice/nbd/blob/master/doc/proto.md#security-considerations
+https://lists.debian.org/nbd/2021/08/msg00031.html
 
-The race condition may cause write-after-free of a 4-byte controlled value to a
-64-byte kernel object at offset 40. That's quite limited memory corruption. I
-had a hard time turning it into arbitrary read/write of kernel memory.
+But I welcome review from those with more experience from the security
+side of things.
 
-In this article I also describe possible exploit mitigations that could prevent
-exploitation of CVE-2021-26708 or at least make it harder.
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.           +1-919-301-3266
+Virtualization:  qemu.org | libvirt.org
 
-Best regards,
-Alexander
