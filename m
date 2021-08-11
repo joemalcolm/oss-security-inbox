@@ -1,32 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/10/3
-Message-ID: <1622544226.UEWE0TNK@httpd.apache.org>
-Date: Wed, 09 Jun 2021 23:11:00 +0200
-From: Christophe JAILLET <jailletc36@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/11/3
+Message-ID: <20210811095104.4401b1cb@computer>
+Date: Wed, 11 Aug 2021 09:51:04 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-13938: Apache httpd: Improper Handling of Insufficient Privileges
+Subject: Re: STARTTLS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
+On Wed, 11 Aug 2021 08:09:57 +0100
+Matthew Wild <mwild1@...il.com> wrote:
 
-CVE-2020-13938: Improper Handling of Insufficient Privileges
+> XMPP has some additional protections against this in its design. It is
+> required, after TLS negotiation, for both parties to discard the
+> pre-TLS XML stream and negotiate a new one after TLS has been
+> established[1].
 
-Severity: moderate
+This is actually not much different from how STARTTLS works in SMTP or
+IMAP. You are basically advised to throw away all state from pre-TLS.
+But yet here we are with > 40 vulnerabilities.
 
-Vendor: The Apache Software Foundation
+The buffering issue is really subtle if you look at how such code is
+written. It's basically "if you implement this with C API file
+descriptors you will very likely create this bug *unless* you're aware
+of it and actively avoid it". And I don't see how XMPP would be any
+different here.
 
-Versions Affected:
-httpd 2.4.0 to 2.4.47
 
-Description:
-Apache HTTP Server 2.4.0 to 2.4.47
-Unprivileged local users can stop httpd on Windows
-    
-Mitigation:
-n/a
-
-Credit:
-Discovered by Ivan Zhakov
-
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html
-
+-- 
+Hanno Böck
+https://hboeck.de/
