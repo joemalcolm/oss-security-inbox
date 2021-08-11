@@ -1,35 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/02/1
-Message-Id: <DFF27630-BB03-4FC8-9A1D-75F16C947044@apache.org>
-Date: Mon, 1 Feb 2021 23:49:20 +0000
-From: Aleksey Yeschenko <aleksey@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/12/1
+Message-Id: <D0B48415-57AD-43DE-9C28-20C8205FF772@cmpct.info>
+Date: Thu, 12 Aug 2021 00:18:46 +0100
+From: Sam James <sam@...ct.info>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-17516] Apache Cassandra internode encryption enforcement vulnerability 
+Subject: Re: CVE-2021-20314: Remote stack buffer overflow in libspf2
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-17516: Apache Cassandra doesn't enforce encryption setting on inbound internode connections
 
-Severity:
-Important
 
-Vendor:
-The Apache Software Foundation
+> On 11 Aug 2021, at 15:41, Philipp Jeitner (SIT) <philipp.jeitner@....fraunhofer.de> wrote:
+> 
+> #### Description
+> 
+> Stack buffer overflow in libspf2 versions below 1.2.11 when processing certain SPF macros can lead to Denial of service and potentially code execution via malicious crafted SPF explanation messages. CVE-2021-20314 has been assigned to this issue.
+> [...]
+> #### Patch
+> 
+> The issue has been fixed in github commit c37b7c1:
+> 
+> https://github.com/shevek/libspf2/commit/c37b7c13c30e225183899364b9f2efdfa85552ef
+> 
+> An updated version of libspf2 (1.2.11) which also fixes other security related issues is available from github (https://github.com/shevek/libspf2). The libspf2 website (https://www.libspf2.org/download.html) and latest release there is NOT UPDATED YET.
+> 
 
-Versions Affected:
-Cassandra 2.1.0 to 2.1.22
-Cassandra 2.2.0 to 2.2.19
-Cassandra 3.0.0 to 3.0.23
-Cassandra 3.11.0 to 3.11.9
+I don't see this as either a tag or a release on the GitHub repository. Possibly the maintainer forgot to run git push --tags?
 
-Description:
-When using ‘dc’ or ‘rack’ internode_encryption setting, a Cassandra instance allows both encrypted
-and unencrypted connections. A misconfigured node or a malicious user can use the unencrypted
-connection despite not being in the same rack or dc, and bypass mutual TLS requirement.
+Thanks for your work on this issue.
 
-Mitigation:
-Users of ALL versions should switch from ‘dc’ or ‘rack’ to ‘all’ internode_encryption setting, as they are inherently insecure
-3.0.x users should additionally upgrade to 3.0.24
-3.11.x users should additionally upgrade to 3.11.10
+best,
+sam
 
-Credit:
-This issue was discoverd by Jon Meredith
+Download attachment "signature.asc" of type "application/pgp-signature" (619 bytes)
