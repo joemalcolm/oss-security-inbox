@@ -1,90 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/05/1
-Message-Id: <E1lIDvZ-0006Cd-QZ@xenbits.xenproject.org>
-Date: Fri, 05 Mar 2021 17:07:49 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 367 v2 (CVE-2021-28038) - Linux: netback fails to honor grant mapping errors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/11/5
+Message-ID: <CAJt9-x5ATDMgrJM=toFR++V6S_Gv_PSYE5StNFUgMGybaZjGsA@mail.gmail.com>
+Date: Wed, 11 Aug 2021 10:06:18 +0100
+From: Matthew Wild <mwild1@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: STARTTLS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Wed, 11 Aug 2021 at 08:52, Hanno Böck <hanno@...eck.de> wrote:
 
-            Xen Security Advisory CVE-2021-28038 / XSA-367
-                              version 2
+> On Wed, 11 Aug 2021 08:09:57 +0100
+> Matthew Wild <mwild1@...il.com> wrote:
+>
+> > XMPP has some additional protections against this in its design. It is
+> > required, after TLS negotiation, for both parties to discard the
+> > pre-TLS XML stream and negotiate a new one after TLS has been
+> > established[1].
+>
+> This is actually not much different from how STARTTLS works in SMTP or
+> IMAP. You are basically advised to throw away all state from pre-TLS.
+> But yet here we are with > 40 vulnerabilities.
+>
 
-          Linux: netback fails to honor grant mapping errors
+The difference with XMPP is that it is a highly structured protocol, so
+it's less vulnerable to simple injection compared to line-based protocols.
+It is not just advised to throw away pre-TLS state, but a required step of
+the TLS upgrade is starting a new XML stream from scratch after TLS
+negotiates successfully. When implemented with commonly-used XML parsers,
+this means instantiating a new parser instance, and that step will
+naturally discard any data that was fed to the pre-TLS parser instance.
 
-UPDATES IN VERSION 2
-====================
+I'm not claiming that bugs are impossible, or that they don't exist - only
+a dedicated review of implementations would be able to confirm this. But I
+stand by my original statement that XMPP has more protection against such
+attacks than SMTP, IMAP and many other protocols using STARTTLS.
 
-CVE assigned.
+Regardless, XMPP is gradually moving away from STARTTLS for other reasons.
+Recent advances such as ESNI, round-trip reduction, the ability to use
+generic TLS middleware (load balancers, etc.) and generally reach through
+restrictive network environments are all drivers of this change. I think
+this is ultimately a good thing.
 
-ISSUE DESCRIPTION
-=================
+Regards,
+Matthew
 
-XSA-362 tried to address issues here, but in the case of the netback
-driver the changes were insufficient: It left the relevant function
-invocation with, effectively, no error handling at all.  As a result,
-memory allocation failures there could still lead to frontend-induced
-crashes of the backend.
-
-IMPACT
-======
-
-A malicious or buggy networking frontend driver may be able to crash
-the corresponding backend driver, potentially affecting the entire
-domain running the backend driver.  In a typical (non-disaggregated)
-system that is a host-wide denial of service (DoS).
-
-VULNERABLE SYSTEMS
-==================
-
-Linux versions from at least 2.6.39 onwards are vulnerable, when run in
-PV mode.  Earlier versions differ significantly in behavior and may
-therefore instead surface other issues under the same conditions.  Linux
-run in HVM / PVH modes is not vulnerable.
-
-MITIGATION
-==========
-
-For Linux, running the backends in HVM or PVH domains will avoid the
-vulnerability.  For example, by running the dom0 in PVH mode.
-
-In all other cases there is no known mitigation.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa367-linux.patch           Linux 5.12-rc
-
-$ sha256sum xsa367*
-b0244bfddee91cd7986172893e70664b74e698c5d44f25865870f179f80f9a92  xsa367-linux.patch
-$
-
-CREDITS
-=======
-
-This issue was reported by Intel's kernel test robot and recognized as a
-security issue by Jan Beulich of SUSE.
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-This issue was reported publicly, before the XSA could be issued.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmBCZVEMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZfqAH/i7ypTUP90UIxeyMB9XmNRiqD+LaTSBExt8xTowd
-zbsWrxFYnZRPSLqs/dVHlDQfF65eD40Agh/Hxp5f0hGHjv8x1kepvpo2di1ovA2h
-C8/WpOK2nFq77/GTG2mAsJA3ltDF0WJsr5oqaBNVf/lwQSmiescTWtI6+LDFmmpd
-q1EyKPUClKZW3PoZkCVmiWDtqhVJc3LaJJcy4x/Zd4EgV+uGi2wsYsiQzObrwPss
-2D5laUr8RJcSTE7+bXlMA8KnzrOZ6UqK1YIPSGIYBOJnhizGf9CBZCxcNTONWQFC
-zh1d9GAv93fugE37xRHE7PRjgl/RVO5rn0k5EQw5GTa676A=
-=GKdV
------END PGP SIGNATURE-----
-
-Download attachment "xsa367-linux.patch" of type "application/octet-stream" (3974 bytes)
