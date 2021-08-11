@@ -1,50 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/18/1
-Message-ID: <4095-1634579571.798266@3V_h.d15S.uAgJ>
-Date: Mon, 18 Oct 2021 17:52:51 +0000
-From: halfdog <me@...fdog.net>
-To: Alon Zahavi <Alon.Zahavi@...erark.com>
-cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-3847: OverlayFS - Potential Privilege Escalation using overlays copy_up
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/11/8
+Message-ID: <20210811180235.65375940@computer>
+Date: Wed, 11 Aug 2021 18:02:35 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: STARTTLS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Alon Zahavi writes:
->
-> After disclosing the issue with the linux-distros mailing list,
-> I am reporting the security issue publicly to here. There is
-> no patch available and may not be available for a long time
-> because the kernel can't enforce the mitigation proposed, as
-> that would be a layering violation and could also possibly
-> cause a regression. This vulnerability was attached with
-> CVE-2021-3847. Here is the report that was initially sent:
-> ...
+On Wed, 11 Aug 2021 10:31:58 -0500
+Eric Blake <eblake@...hat.com> wrote:
 
-Just funny, just hours before this mail I got 3 mails on different
-overlayfs copy-up vuln, e.g.
+> Not mentioned in that list was ndb, but as far as I can tell, that
+> project has already documented the ramifications of opportunistic
+> encryption as being a security risk, and all known implementations
+> (both servers and clients) with TLS support have a mode of execution
+> that ensures the connection is dropped if a downgrade attack is
+> attempted:
 
-"""
-The Precise Pangolin has reached end of life, so this bug will not be
-fixed for that release
+I should point out that our research is not on simple downgrade attacks.
+These are kinda obvious by the design of STARTTLS if you implement it
+in an opportunistic way.
 
-** Changed in: linux (Ubuntu Precise)
-       Status: New => Won't Fix
+The buffering vulnerabilities we found are in STARTTLS implementations
+that have the expectation to enforce a secure connection, but suffer
+from various vulnerabilities in the implementation.
 
 -- 
-You received this bug notification because you are subscribed to the bug
-report.
-https://bugs.launchpad.net/bugs/1534961
-"""
-...
-
-[Bug 1534961] Re: CVE-2016-1575
-[Bug 1547400] Re: CVE-2016-2853
-[Bug 1535150] Re: CVE-2016-1576
-
-So it is 5 years and not so much changed :-)
-
-Overlayfs and alike where lower privileged user can simultaneously
-access lower/upper AND the mounted file system is extremely dangerous
-and prone to so many vulns, that nobody should use/allow that.
-
-hd
-
+Hanno Böck
+https://hboeck.de/
