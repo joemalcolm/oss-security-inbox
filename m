@@ -1,101 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/22/1
-Message-ID: <YDPiwBU5Mk3lIoEQ@ugly>
-Date: Mon, 22 Feb 2021 17:58:40 +0100
-From: Oswald Buddenhagen <oswald.buddenhagen@....de>
-To: isync-devel@...ts.sourceforge.net
-Cc: oss-security@...ts.openwall.com
-Subject: CVE-2021-20247: isync/mbsync data leak/destruction vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/11/2
+Message-ID: <CAJt9-x5xY3ikisc=RZ1=tqNO+8Tm8YLfjVw=3=UQ2_nAP_7Oiw@mail.gmail.com>
+Date: Wed, 11 Aug 2021 08:09:57 +0100
+From: Matthew Wild <mwild1@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: STARTTLS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-description:
+On Tue, 10 Aug 2021 at 14:52, Guido Berhoerster <
+guido+openwall.com@...hoerster.name> wrote:
 
-mbsync didn't validate the mailbox names returned by IMAP LIST/LSUB, 
-which would allow a malicious/compromised server to use specially 
-crafted mailbox names containing '..' path components to access data 
-outside the designated mailbox on the opposite end of the 
-synchronization channel. gory details follow below.
-the attack vector is rather narrow, but the effects can be disastrous.
-the vulnerability has been there "forever", though it wasn't of much 
-concern prior to 1.3 used with a specific configuration.
-
-mitigation:
-
-upgrade to the freshly released v1.3.5 or v1.4.1 available from 
-https://sourceforge.net/projects/isync/files/isync/ , or apply one of 
-the attached patches (patches for earlier versions can be produced 
-easily, should anyone care).
-
-credit:
-
-the possible existence of the vulnerability was suggested by a user who 
-does not wish to be credited. :-D
-
-vulnerability details:
-
-- the victim must be using the Pattern channel option containing the '*' 
-    wildcard. this is fairly likely (even though only those who actually 
-    use hierarchical mailboxes (presumably a minority) actually need that 
-    - others may use the '%' wildcard).
-- if the opposite end is also an IMAP server (which is presumed to be 
-    rare), the exact impact depends on the server. most servers will 
-    expose only a very restricted amount of data to any particular user, 
-    and will likely reject weird paths. also, most servers use '.' as the 
-    hierarchy delimiter, which would make mbsync reject the crafted paths 
-    as non-representable after delimiter translation. however, 
-    uw-imap/panda-imap for example would be vulnerable, as it basically 
-    just exposes the file system via IMAP.
-- the much more common case is the opposite end being a local Maildir 
-    store, which is somewhat similar to the uw-imap case:
-    - users who don't actually use hierarchical mailboxes locally are 
-      usually not vulnerable, as they won't set the SubFolders option, 
-      which will make mbsync reject any mailbox names containing 
-      hierarchy delimiters. (not applicable before v1.3.)
-    - if SubFolders is Maildir++, no attack is possible, as periods are 
-      hierarchy delimiters and are consequently rejected by the 
-      translation. (not applicable before v1.3.)
-    - if SubFolders is Legacy, an attack is limited to hidden 
-      directories, as a '.' is prepended to each subfolder when mapping 
-      to file system paths.
-    - if SubFolders is Verbatim, exposure is unlimited. (not applicable 
-      before v1.3.)
-    - the most likely target are Maildir folders that are synchronized to 
-      other servers (e.g., work vs. private mail stores)
-      - if the victim is using '*' for the SyncState option (which most 
-        users seem to do judging by support requests; the example config 
-        file suggests it), all previously synchronized messages will be 
-        deleted from that folder (that this happens is a seperate bug 
-        that v1.4.1 also fixes), while new messages will be stolen.
-      - otherwise, all messages from that folder will be stolen. i 
-        consider this the main danger of this vulnerability.
-    - non-Maildir paths can be attacked only if they end with one of 
-      {cur,new,tmp}, as this is imposed by the expected Maildir structure.
-      - if no 'cur' is present, the victim must have the Create option set 
-        for that end of the channel (this is likely).
-      - all files from 'tmp' will be deleted
-      - all files from 'cur' and 'new' will be stolen, and in the process 
-        renamed to add some Maildir "decorations"
-      - subdirectories are not affected
-      - in principle the attacker can deposit dangerous files, but these 
-        will also have "weird" names that cannot be influenced much, so 
-        they are unlikely to pose an actual threat. (general content 
-        attacks are neglected here, as they don't require this 
-        vulnerability to be executed.)
-    - the attacked paths must be guessed or known in advance. if guessing 
-      is used and the victim has Create enabled, every attempted target 
-      path will be actually created, so the attacker will leave rather 
-      obvious traces, and might be even noticed before landing a single 
-      hit.
-    - users who run mbsync interactively in verbose mode will likely spot 
-      an attack immediately (this is presumed to be rare; cron jobs are 
-      more likely).
-
-i got an NVSS score of 'high', but there are lots of caveats that would 
-qualify as mitigating factors if the criteria are not interpreted quite 
-as literally (the case of a malicious server does not seem to fit very 
-well).
+> Hi,
+>
+> have you or are you planning to look into XMPP client/server
+> implementations as well?  The use of STARTTLS for both c2s and s2s
+> connections is still prevalent both in terms of implementation
+> support and actual practice and could potentially suffer form the
+> same issues (command injection or downgrade attacks).
 
 
-View attachment "reject-funny-mailbox-names--1.3.patch" of type "text/x-diff" (2222 bytes)
+XMPP has some additional protections against this in its design. It is
+required, after TLS negotiation, for both parties to discard the pre-TLS
+XML stream and negotiate a new one after TLS has been established[1].
+Combined with TLS being considered mandatory by practically all modern
+implementations and deployments[2], I'd hope that the attacks described
+here do not translate well to the XMPP ecosystem.
 
-View attachment "reject-funny-mailbox-names--1.4.patch" of type "text/x-diff" (2116 bytes)
+However we all know standards are not always reflective of the real world.
+We (the XMPP Standards Foundation and community) are always open to
+researchers interested in this kind of thing, and have collaborated in the
+past for coordinating disclosure of cross-implementation vulnerabilities.
+
+Regards,
+Matthew
+
+[1]: https://xmpp.org/rfcs/rfc6120.html#tls-process-neg-success
+[2]: https://xmpp.org/2013/11/xmpp-ubiquitous-encryption-a-manifesto/
+
