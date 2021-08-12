@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1204" "Friday" "1" "March" "2019" "11:07:04" "+0100" "Hanno =?iso-8859-1?Q?B=F6ck?=" "hanno@hboeck.de" "<20190301110704.4ff5b4ef@computer>" "34" "Re: [oss-security] Squirrelmail XSS Fixes" "^Date:" nil nil "3" "2019030110:07:04" "[oss-security] Squirrelmail XSS Fixes" (number mark "        hanno@hboeck Mar  1   34/1204  " thread-indent "\"Re: [oss-security] Squirrelmail XSS Fixes\"\n") "<20190301110340.0b3fa581@computer>" ("<20190301110340.0b3fa581@computer>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1206" "Thursday" "12" "August" "2021" "20:35:28" "+0000" "John Helmert III" "jchelmert3@posteo.net" nil "29" "Re: [oss-security] Polipo: denial-of-service using range" nil nil nil "8" nil nil (number mark "U       jchelmert3@p Aug 12   29/1206  " thread-indent "\"Re: [oss-security] Polipo: denial-of-service using range\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Polipo: denial-of-service using range" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1808 invoked by uid 550); 1 Mar 2019 10:07:18 -0000
+Received: (qmail 32445 invoked by uid 550); 13 Aug 2021 08:28:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +11,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1785 invoked from network); 1 Mar 2019 10:07:17 -0000
-Message-ID: <20190301110704.4ff5b4ef@computer>
-In-Reply-To: <20190301110340.0b3fa581@computer>
-References: <20190301110340.0b3fa581@computer>
-X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 1 Mar 2019 11:07:04 +0100
-From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Squirrelmail XSS Fixes
+Received: (qmail 32202 invoked from network); 12 Aug 2021 20:37:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.net; s=2017;
+	t=1628800644; bh=WLEA5Jetrsx+jdl/swvnVAGzEDZhUCdYuvzM5hrovvw=;
+	h=Date:From:To:Subject:From;
+	b=UGUTV3QjLGl8l2pDeJb4gi4jIAL7iuMnwzWaSgIi5Ng9Bo/qJaPJ+mwv+J1yyoodC
+	 qS12Lf4X5MaWGisjevP/dMQ5fmbVXCYjvfNPyKXHr/xx4uTV7GuHtS/ttnB5iXOnG8
+	 LIUMk+dCXlhVCQ6dQ2p38zmVpXjIGIgWFvcKD9kygsXO6yTbv28skDgpZoQwTnhhlO
+	 rjxN0seLw+MzblbFwT0bkXjw4S2nGwjCg0Z5dUbsgq7nuCUvUkwFtZC3GafGO0N/sG
+	 whID7ccIXIGtDjMMarwAZwekCbRzaKbrDdT5njgfNTNDHVgFg87VkGi8OsVTLmpiXO
+	 p30u9wKSQfVxg==
+Date: Thu, 12 Aug 2021 20:35:28 +0000
+From: John Helmert III <jchelmert3@posteo.net>
 To: oss-security@lists.openwall.com
+Message-ID: <YRWF6v8z5rgdewsM@sol.nexus.lan>
+References: <20201118171206.443be0215d1b142b5ce7584e@gmail.com>
+ <CAH8yC8nDTF9-aBtuKG+81rEYmf4QigMfwB3EEw8hwYiGHP+AeQ@mail.gmail.com>
+ <20210728150151.3eadaae2@gmail.com>
+ <YQbnc3DxV6iEaA3B@sol.nexus.lan>
+ <20210803153701.12f8cac5@gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="hUkMw1K/EzwktMur"
+Content-Disposition: inline
+In-Reply-To: <20210803153701.12f8cac5@gmail.com>
+Subject: Re: [oss-security] Polipo: denial-of-service using range
 
-Sorry... I was struck by "hit the send button while still writing the
-mail"... Let's retry:
+--hUkMw1K/EzwktMur
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
+I'm only able to reproduce such a heap overflow when specifying a Range
+header with a valid range, e.g. "2-3" whereas the original Perl script
+tested an invalid range of "3-2".
 
-Hi,
+--hUkMw1K/EzwktMur
+Content-Type: application/pgp-signature; name="signature.asc"
 
-A while ago I saw that there were some very old XSS reports in the
-squirrelmail bugtracker and reported it to this list:
-https://www.openwall.com/lists/oss-security/2018/06/27/5
+-----BEGIN PGP SIGNATURE-----
 
-If anyone's interested, squirrelmail upstream has now fixed those (in
-SVN, they don't do releases):
-https://sourceforge.net/p/squirrelmail/bugs/2831/
+iQIzBAABCAAdFiEElFuPenBj6NvNLoABXP0dAeB+IzgFAmEVhgwACgkQXP0dAeB+
+Izhl7g/8DI6Ct6+qEapmXIZgAmCjNw+kNQrl3HEXOxLHBMw90Jq8RXxpNcpFh51i
+DN9P5KsSBrXpDd4gNYEWgTXmp2p7q9H0B1oWb3bEHokCjUcG/s5BE52Bidfob1jX
+2UTw6L6KEPbLt0dnBtdfxBgEAHe2PW5aQQaDzHU3l6Mzow+DCShEvxAiXnZMS+jD
+wqE4c+IXX4RkgOEXRlT9j0V3TRetbMY2H56B7KnF/rApKUTrsmJhR1JjQ4tzmycj
+/3HSklMsc/Y/MYGKcC1r1xojOzOP8UOSolEkxK+qhffwPcjtLQAy84zrHZPmeTFb
+eUn0AR9V4o8KxxpJtStjtv8n0CCPIguiaZ7i7JlshN2kdd8JjFUUuqLZaRPjbvwQ
+Yv7XDxrqQwtm0UhKhS5jr3dQ1BLRrIjIL6LzqqhIZjtXymbHOfDUs1J4kzRjDlSH
+saKOmqa8bmonXpGcLU89pvfmkNnLwT17vq29xeM/gv418Gu1s8Aw33fRCi8lT48a
+K+MlgQ33z/alu9EgaB21QWbAiSK7681ZFfOkyJ7VIr57OH4LwI6cDcd7VWUqIrjw
+kD3/syjraAhTh+lgjRxXnIZZNUAtxzFSWcArRq9Jfp4pu+E84PIu45laAvG3ESkH
+xIu97HDyDaEsYHHp7zA9BkP4iwhyEiDV96K06u3hy/MUjkF5m6Q=
+=zBjz
+-----END PGP SIGNATURE-----
 
-I had proposed a different (and imho simpler) patch, I never got any
-feedback from the developer why he didn't like it. I also sent multiple
-fixes for warnings and issues with newer PHP versions that mostly
-haven't been applied, in case you are interested, see
-https://github.com/hannob/squirrelpatches
-
-I tried a few XSS vectors and it seems they're all closed, though I'd
-appreciate more eyes on it. Overall the whole filtering isn't ideal,
-it's a blacklisting approach and thus obviously error-prone.
-
-If any XSS ninjas want to play with it and don't have a squirrelmail
-installation you can mail me directly and I can give you a temporary
-test account.
-
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
-
-mail/jabber: hanno@hboeck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+--hUkMw1K/EzwktMur--
