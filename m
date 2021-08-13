@@ -1,48 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/23/2
-Message-ID: <YIKH4FHGjJ0d4p4n@wopr>
-Date: Fri, 23 Apr 2021 01:40:00 -0700
-From: Kurt H Maier <khm@...ops.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/14/1
+Message-ID: <7b76d2e2-1438-b059-0e65-a2986c815f76@apache.org>
+Date: Fri, 13 Aug 2021 12:20:03 +0000
+From: Kaxil Naik <kaxilnaik@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Malicious commits to Linux kernel as part of university study
+Subject: CVE-2021-35936: Apache Airflow: No Authentication on Logging Server 
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 23, 2021 at 01:02:36AM +0200, Jan Engelhardt wrote:
-> 
-> If you alert the crowd that something is about to happen, you can no 
-> longer observe how the crowd acts in an unalerted state, dooming the 
-> research effort.
+Description:
 
-This could have been coordinated with kernel maintainers who were
-willing to participate, for instance by placing sabotaged code in a
-time-locked escrow to be revealed after a set window.  This is not
-an all-or-nothing proposition.  Red team protocols vary, but none of
-them start with "first, pick an unsuspecting cadre of strangers trying to
-build something, then attack it."
+If remote logging is not used, the worker (in the case of CeleryExecutor) or the scheduler (in the case of LocalExecutor) runs a Flask logging server and is listening on a specific port and also binds on 0.0.0.0 by default.
+This logging server had no authentication and allows reading log files of DAG jobs.
 
-> Not to encourage UMN's conduct, but I'd find that the prank shows on TV 
-> (let alone Youtube) are a much more severe intrusion, but somehow those 
-> shows still run.
+This issue affects Apache Airflow < 2.1.2.
 
-Those prank shows are generally not produced with money from the
-National Science Foundation.
+Mitigation:
 
-> What's more, with the pitchfork way this incident is being responded to, 
-> future researchers may choose to operate more stealthily; no more 
-> mailings from an edu mail address, more elaborate internet avatars (did 
-> we ever prove who George Spelvin was?), up to the point that the 
-> identities become indistinguishable from a foreign malignent elite 
-> hacker group.
+Use remote logging with GCS, S3, Elasticsearch etc. This is recommended for production environments.
 
-"Someone else might be even more unethical later" is a horrible reason
-to refrain from calling out unethical research methods.  This community
-needs to make it absolutely clear that nonconsensual adversarial
-"research" is completely unacceptable, or next year you'll see five
-hundred grant applications intending to throw government-sponsored
-wrenches into every piece of collaboratively-written software on Earth.
+And do not publicly expose any other ports apart from Webserver port, Flower port etc.
 
-I'm more disappointed with the IEEE S&P for accepting this paper than I
-am with the researchers who wrote it, but giving them a pass sets the
-worst possible standards for future work.
+Credit:
 
-khm
+Apache Airflow would like to thank Dolev Farhi for reporting this issue.
+
