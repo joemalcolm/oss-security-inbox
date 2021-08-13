@@ -1,4 +1,9 @@
-Received: (qmail 6094 invoked by uid 550); 6 Nov 2023 20:27:06 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["663" "Friday" "13" "August" "2021" "12:20:03" "+0000" "Kaxil Naik" "kaxilnaik@apache.org" nil "22" "[oss-security] CVE-2021-35936: Apache Airflow: No Authentication on Logging Server " nil nil nil "8" nil nil (number mark "U       kaxilnaik@ap Aug 13   22/663   " thread-indent "\"[oss-security] CVE-2021-35936: Apache Airflow: No Authentication on Logging Server \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-35936: Apache Airflow: No Authentication on Logging Server " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9649 invoked by uid 550); 14 Aug 2021 08:26:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,58 +12,36 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5703 invoked from network); 6 Nov 2023 20:26:36 -0000
-Date: Mon, 6 Nov 2023 21:26:21 +0100
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 11505 invoked from network); 13 Aug 2021 12:20:17 -0000
+Content-Type: text/plain; charset=utf-8
+From: Kaxil Naik <kaxilnaik@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20231106202621.GA31244@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] announcing sponsorship; distros list statistics for 2023
+Message-ID: <7b76d2e2-1438-b059-0e65-a2986c815f76@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 13 Aug 2021 12:20:03 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2021-35936: Apache Airflow: No Authentication on Logging
+ Server 
 
-Hi,
+Description:
 
-After 15+ years of being a 100% volunteer effort, Openwall's maintenance
-of oss-security and (linux-)distros is finally sponsored by the OpenSSF,
-a project of the Linux Foundation.  This sponsorship does not provide
-the Linux Foundation with the ability to set policies for community
-resources managed by Openwall.  I am grateful for the support, which
-will help ensure continued operation of these resources on a new level
-while retaining independence.
+If remote logging is not used, the worker (in the case of CeleryExecutor) o=
+r the scheduler (in the case of LocalExecutor) runs a Flask logging server =
+and is listening on a specific port and also binds on 0.0.0.0 by default.
+This logging server had no authentication and allows reading log files of D=
+AG jobs.
 
-As part of the sponsored effort, Openwall (currently me) took
-responsibility for the "statistics" contributing-back task:
+This issue affects Apache Airflow < 2.1.2.
 
-"Keep track of per-report and per-issue handling and disclosure timelines
-(at least times of notification of (linux-)distros and of public
-disclosure on oss-security), at regular intervals produce and share
-statistics (most notably, the average embargo duration) as well as the
-input data (except on issues that are still under embargo) by posting to
-oss-security - primary: Openwall, backup: vacant"
+Mitigation:
 
-At different times, this time-consuming task was handled by Gentoo and
-later by Amazon (thanks!) but was lately left unhandled.  Due to the
-sponsorship, I've now retroactively produced statistics for 2023 so far:
+Use remote logging with GCS, S3, Elasticsearch etc. This is recommended for=
+ production environments.
 
-https://oss-security.openwall.org/wiki/mailing-lists/distros/stats/2023
+And do not publicly expose any other ports apart from Webserver port, Flowe=
+r port etc.
 
-As expected, this uncovered a few mishandled issues, which I've recently
-pushed out to oss-security.  That's why there are several reports (out
-of a total of 86) with embargo duration way in excess of the allowed
-maximum.  This inflated the average duration accordingly, but the median
-stayed sane at 7 days.  This is also why we need to, and now will, take
-care of the statistics task in real time, not only retroactively, so
-that any mishandling is identified and corrected promptly.
+Credit:
 
-Also for the first time (something I haven't seen Gentoo and Amazon do)
-included are the source files I manually created based on review of the
-e-mail threads and external resources referenced from there.  These
-files were processed with the also included (and permissively licensed)
-Perl script I wrote, so that others can reproduce the calculations or
-easily process the data differently.
+Apache Airflow would like to thank Dolev Farhi for reporting this issue.
 
-Stay tuned for further updates.
-
-Alexander
