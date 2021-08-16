@@ -1,59 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/18/1
-Message-ID: <41A7FAA9-5814-47A7-A9A5-B36D9DE550A8@secuinfra.com>
-Date: Thu, 18 Feb 2021 10:15:20 +0000
-From: Felix Kosterhon <felix.kosterhon@...uinfra.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Vulnerability in the Linux Audit Framework Auditd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/16/2
+Message-ID: <20210816190406.fmt3myvwvycywfv4@redhat.com>
+Date: Mon, 16 Aug 2021 14:04:06 -0500
+From: Eric Blake <eblake@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: STARTTLS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Dear Sir or Madam,
+On Wed, Aug 11, 2021 at 06:02:35PM +0200, Hanno Böck wrote:
+> On Wed, 11 Aug 2021 10:31:58 -0500
+> Eric Blake <eblake@...hat.com> wrote:
+> 
+> > Not mentioned in that list was ndb, but as far as I can tell, that
+> > project has already documented the ramifications of opportunistic
+> > encryption as being a security risk, and all known implementations
+> > (both servers and clients) with TLS support have a mode of execution
+> > that ensures the connection is dropped if a downgrade attack is
+> > attempted:
+> 
+> I should point out that our research is not on simple downgrade attacks.
+> These are kinda obvious by the design of STARTTLS if you implement it
+> in an opportunistic way.
+> 
+> The buffering vulnerabilities we found are in STARTTLS implementations
+> that have the expectation to enforce a secure connection, but suffer
+> from various vulnerabilities in the implementation.
 
-my name is Felix Kosterhon and i am Cyber Defense Analyst at SECUINFRA GmbH, Germany. 
+Thank you for persisting.  As a result, I have found a security bug in
+nbdkit, which improperly cached the result of NBD_OPT_STRUCTURED_REPLY
+from a plaintext MitM attacker prior to acting on NBD_OPT_STARTTLS, to
+the potential confusion of a client that does not expect structured
+replies.  I will follow up again when I have a CVE number.
 
-We discovered a security vulnerability in the Linux Audit Framework (Auditd). During our research we discovered that the usage of a certain open-syscall (open_by_handle_at) is not covered by the current file watch implementation of Auditd. This allows a local attacker with elevated privileges (CAP_DAC_READ_SEARCH capability) to read and modify files without being noticed by the implemented Auditd file watches.
+https://listman.redhat.com/archives/libguestfs/2021-August/msg00077.html
 
-We disclosed our finding to RedHat, Inc. in November and it will be published today, Feb 18, under CVE-2020-35501. As suggested by RedHat, Inc., we want to inform you about this security flaw. If you have any further questions, we are happy to help you.
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.           +1-919-301-3266
+Virtualization:  qemu.org | libvirt.org
 
-We would also like to subscribe to your mailing list to stay informed about current security topics.
-
-Best Regards,
-
- 
-
-Felix Kosterhon
-
-Cyber Defense Analyst
-
- 
-
- 
-
-SECUINFRA GmbH
-
-Münchener Straße 36
-
-60329 Frankfurt/Main
-
- 
-
-Mobile:  +49 151 18975666
-
- 
-
-felix.kosterhon@...uinfra.com
-
-www.secuinfra.com
-
- 
-
-Follow us on XING.
-
-
-Content of type "text/html" skipped
-
-Download attachment "image001.jpg" of type "image/jpeg" (46782 bytes)
-
-Download attachment "image002.png" of type "image/png" (201747 bytes)
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (4196 bytes)
