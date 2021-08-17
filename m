@@ -1,4 +1,9 @@
-Received: (qmail 9263 invoked by uid 550); 17 Apr 2026 22:53:00 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4648" "Tuesday" "17" "August" "2021" "14:31:35" "+0200" "Solar Designer" "solar@openwall.com" nil "95" "Re: [oss-security] Pop!_OS Membership to linux-distros list" nil nil nil "8" nil nil (number mark "U       solar@openwa Aug 17   95/4648  " thread-indent "\"Re: [oss-security] Pop!_OS Membership to linux-distros list\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Pop!_OS Membership to linux-distros list" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9245 invoked by uid 550); 17 Aug 2021 12:33:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,151 +12,111 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 6009 invoked from network); 17 Apr 2026 19:04:17 -0000
-Message-ID: <545dcd82-c8f3-4702-ae81-8b5207791d95@gentoo.org>
-Date: Fri, 17 Apr 2026 15:04:04 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+Received: (qmail 7658 invoked from network); 17 Aug 2021 12:31:39 -0000
+Date: Tue, 17 Aug 2021 14:31:35 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-References: <82bd2839-9db9-4ab4-9a7a-915e225a4450@oracle.com>
- <20260410025803.GA20948@openwall.com> <aeILrE9J6sYYPmEh@xoff>
-Content-Language: en-US
-From: Eli Schwartz <eschwartz@gentoo.org>
-Autocrypt: addr=eschwartz@gentoo.org; keydata=
- xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
- I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
- CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
- CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
- mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
- 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
- Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
- TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
-In-Reply-To: <aeILrE9J6sYYPmEh@xoff>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------27lg0796rLgvLWS6kgpkYiaH"
-Subject: Re: [oss-security] Go 1.26.2 and Go 1.25.9 are released with 10
- security fixes
+Message-ID: <20210817123135.GA15072@openwall.com>
+References: <cf53fe7b-371e-48dd-90d7-fa2719747d9d@www.fastmail.com> <20210727175924.GA16557@openwall.com> <26f2884d-ddb7-498a-8a73-ad02e0242ed6@www.fastmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <26f2884d-ddb7-498a-8a73-ad02e0242ed6@www.fastmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Pop!_OS Membership to linux-distros list
 
---------------27lg0796rLgvLWS6kgpkYiaH
-Content-Type: multipart/mixed; boundary="------------AE4s2i3Z6Lv5R0cvQuT2oPl0";
- protected-headers="v1"
-Message-ID: <545dcd82-c8f3-4702-ae81-8b5207791d95@gentoo.org>
-Date: Fri, 17 Apr 2026 15:04:04 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [oss-security] Go 1.26.2 and Go 1.25.9 are released with 10
- security fixes
-To: oss-security@lists.openwall.com
-References: <82bd2839-9db9-4ab4-9a7a-915e225a4450@oracle.com>
- <20260410025803.GA20948@openwall.com> <aeILrE9J6sYYPmEh@xoff>
-Content-Language: en-US
-From: Eli Schwartz <eschwartz@gentoo.org>
-Autocrypt: addr=eschwartz@gentoo.org; keydata=
- xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
- I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
- CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
- CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
- mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
- 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
- Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
- TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
-In-Reply-To: <aeILrE9J6sYYPmEh@xoff>
+Hi Jeremy,
 
---------------AE4s2i3Z6Lv5R0cvQuT2oPl0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+I'm sorry about the delay.  I was hoping someone else would chime in.
 
-On 4/17/26 6:30 AM, Matthias Ferdinand wrote:
-> On Fri, Apr 10, 2026 at 04:58:03AM +0200, Solar Designer wrote:
->> On Wed, Apr 08, 2026 at 04:24:34PM -0700, Alan Coopersmith wrote:
->>> https://groups.google.com/g/golang-announce/c/0uYbvbPZRWU announces:
->>>> We have just released Go versions 1.26.2 and 1.25.9, minor point relea=
-ses.
->>>>
->>>> These releases include 10 security fixes following the security policy:
->>
->> This includes 2 issues in the compiler itself, which made some Go
->> programs not memory safe:
->   ...
->=20
->=20
-> I did not see any Linux distribution advisories for compiled Go programs
-> yet, but some projects using Go have released upates:
->=20
->   - https://rclone.org/changelog/#v1-73-4-2026-04-08
->         Update to go 1.25.9 to fix multiple CVEs
->=20
->   - https://github.com/grafana/grafana/releases/tag/v12.4.3
->         2026-04-14: Go: Update to 1.25.9
->=20
-> I looked at https://github.com/gopasspw/gopass and
-> https://github.com/restic/restic, but they have not yet issued updated
-> releases.
->=20
-> Perhaps the message did not spread wide enough. Or are many Go programs
-> just not affected?
+On Wed, Aug 04, 2021 at 09:59:02AM -0600, Jeremy Soller wrote:
+> On Tue, Jul 27, 2021, at 11:59 AM, Solar Designer wrote:
+> > On Tue, Jul 20, 2021 at 02:23:26PM -0600, Jeremy Soller wrote:
+> > > Over the history of Pop!_OS, dating back to 2017, we have maintained critical
+> > > packages and applied security patches soon after they are made public. Our
+> > > membership to this list would significantly help our users stay secure by
+> > > allowing us to prepare and test security updates ahead of public disclosure.
+> > > Please see our GitHub organization for more evidence: https://github.com/pop-os
+> > 
+> > I think it'd be most convincing for us all to see specific examples of
+> > you having "applied security patches soon after they are made public",
+> > with dates public vs. fixed in Pop!_OS.
+> 
+> How many examples should I provide? The last security patch I did was for
+> systemd. We have patches on systemd which means we cannot use the Ubuntu
+> version directly, so when, for example, CVE-2020-13529 and CVE-2021-33910
+> patches arrived in Ubuntu 21.04 on July 20, 2021, I applied them to our own
+> fork of systemd for Pop!_OS 21.04 that same day:
+> 
+> - https://launchpad.net/ubuntu/+source/systemd/247.3-3ubuntu3.4
+> - https://github.com/pop-os/systemd/commit/bf008f836b8740f6634d02526d1f38c98fa6699a
+> 
+> Pop!_OS needs to participate in linux-distros to ensure we have patches ready
+> for our forks of packages that do not come straight from Ubuntu. I listed the
+> relevant packages in my original email, many of which we have had to do
+> security updates for after some embargo lifts, with very little time to prepare.
 
+There's no specific requirement on the number of examples.  The above
+looks reasonable to me.
 
-Updated *releases* don't really make sense, generically. The bug is in
-the compiler, not the package, so one would rebuild the existing release
-with a new compiler. Consider how you handle this if a package had a
-security vulnerability in the GCC version it was compiled in. Or, it
-depended on libarchive and libarchive had a security release. Do you tag
-a brand new version of rclone because the dependencies it was compiled
-against got updated? No. Well, given gomodules or rust crate locking,
-maybe, because those are "vendored libraries", but that is a bug in both
-of those languages. :)
+> > > 7. Be able and willing to contribute back (see above), preferably in specific
+> > > ways announced in advance (so that you're responsible for a specific area and
+> > > so that we know what to expect from which member), and demonstrate actual
+> > > contributions once you've been a member for a while
+> > > 
+> > > I am able and willing to contribute back.
+> > 
+> > Please choose a specific task (or several).
+> > 
+> > I suggest the statistics task:
+> > 
+> > "13. Keep track of per-report and per-issue handling and disclosure
+> > timelines (at least times of notification of the private list and of
+> > actual public disclosure), at regular intervals produce and share
+> > statistics (most notably, the average embargo duration) as well as the
+> > raw data (except on issues that are still under embargo) by posting to
+> > oss-security - primary: Amazon, backup: Gentoo"
+> > 
+> > As you can see, it is currently assigned to Amazon and Gentoo, but as
+> > far as I can see neither is actually handling it now, so I'd like to
+> > formally unassign it from them and have another distro handle it.
+> 
+> That would be fine, but I would be curious if there is some reason they have
+> not been fulfilling this task.
 
-If I look at rclone, I see they only updated go 1.25.9 in the CI
-workflow that builds precompiled binaries and attaches them as github
-releases assets. The actual rclone release was noteworthy more for
-fixing a denial of service that required pulling in a newer version of a
-vendored library.
+I cannot speak for them, but the task does require some effort on every
+issue, and perhaps the specific people are just not putting the effort.
+As you can see, this was different in 2017-2019 when Gentoo had a person
+actually working on this task.
 
-On the compiler side of things, Gentoo Linux policy is to offer a
-standard approach to rebuilding all packages that use golang:
+Besides statistics per se, an important desirable side-effect of working
+on this task is that you'd end up double-checking that every issue does
+in fact get reported to oss-security.
+ 
+> > > 9. Have someone already on the private list, or at least someone else who has
+> > > been active on oss-security for years but is not affiliated with your distro
+> > > nor your organization, vouch for at least one of the people requesting
+> > > membership on behalf of your distro (then that one vouched-for person will be
+> > > able to vouch for others on your team, in case you'd like multiple people
+> > > subscribed)
+> > > 
+> > > I do not know if I have contacts that are already on the linux-distros list.
+> > 
+> > It can also be "someone else who has been active on oss-security for
+> > years but is not affiliated".  Anyone?
+> 
+> I believe Tyler Hicks is willing to do this.
 
-$ emerge @golang-rebuild
+Like he says, he'd "be a lot more comfortable if someone could provide a
+stronger vouch."
 
-which should be run after all golang updates that one suspects deserve a
-global rebuild. Likely all golang updates because Reasons(tm). This is
-just the name of the game when installing golang software -- the usual
-rule of thumb is to assume all golang releases contain CVEs that need
-fixing. It is regular like clockwork, so do people really need an
-invitation to do so?
+However, overall I think Pop!_OS and you personally (also considering
+your work on Redox OS) do meet the requirements.  So let's proceed with
+the subscription.  Please e-mail me off-list with your e-mail address
+and PGP key to use.  Please also confirm in this thread that we're
+getting the statistics task assigned to you, and we can discuss some
+specifics on what's to be done on it.
 
-Other distros should be bumping the build number and recompiling the
-package in place, using the same infrastructure otherwise used for
-things like rebuilding ten thousand packages against a new major edition
-of perl or python or ruby.
+Thanks,
 
-IIRC it is possible to determine which packages actually need rebuilding
-for any given CVE, but to do so you need to locally extract the entire
-recursive deps-included source code of every package, and run some
-arcane undocumented `go ....` invocation. Functionally, what you're
-doing is checking which programs link to an internal static library
-distributed with the go compiler. (This is not exactly correct, but it
-is a useful mental model.)
-
-
---=20
-Eli Schwartz
-
---------------AE4s2i3Z6Lv5R0cvQuT2oPl0--
-
---------------27lg0796rLgvLWS6kgpkYiaH
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCaeKEJAUDAAAAAAAKCRCEp9ErcA0vV5V8
-AP0dtZbeeiKXuSrmyfZEYA3nmsXMzt7U+yWaaMTt00lUhwEAwvdtzKS7eadaPAmkn76cJ7xAbHUM
-x+u1hqGB2IRTXgQ=
-=ADXT
------END PGP SIGNATURE-----
-
---------------27lg0796rLgvLWS6kgpkYiaH--
+Alexander
