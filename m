@@ -1,22 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/28/1
-Message-ID: <5814f3ea-59ae-7533-1ea5-6e7203561a5e@apache.org>
-Date: Tue, 28 Dec 2021 19:26:40 +0000
-From: Matt Sicker <mattsicker@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/17/6
+Message-ID: <20210817180250.qm2d6wicxwjif3jq@yuggoth.org>
+Date: Tue, 17 Aug 2021 18:02:51 +0000
+From: Jeremy Stanley <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-44832: Apache Log4j2 vulnerable to RCE via JDBC Appender when attacker controls configuration 
+Subject: Re: [OSSA-2021-004] Neutron: Linuxbridge ARP filter bypass on Netfilter platforms (CVE-2021-38598)
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+On 2021-08-17 19:30:21 +0200 (+0200), Jan Engelhardt wrote:
+> 
+> On Tuesday 2021-08-17 17:17, Jeremy Stanley wrote:
+> >Description
+> >~~~~~~~~~~~
+> >Jake Yip with ARDC and Justin Mammarella with the University of
+> >Melbourne reported a vulnerability in Neutron's linuxbridge driver
+> >on newer Netfilter-based platforms (the successor to IPTables).
+> 
+> ip_tables is running atop the netfilter API, so.... it's
+> not an ordered set with predecessors and successors.
 
-Description:
+Yes, thanks. It would have been more accurate to draw the comparison
+between ebtables and ebtables-nft, which is where the underlying
+problem arises. I was trying not to get too into the weeds with
+technical detail for the general user audience, who may not be
+particularly aware of the names for layer 2 filtering mechanisms,
+but I agree this wording is also mildly misleading as a result.
 
-Apache Log4j2 versions 2.0-beta7 through 2.17.0 (excluding security fix releases 2.3.2 and 2.12.4) are vulnerable to a remote code execution (RCE) attack where an attacker with permission to modify the logging configuration file can construct a malicious configuration using a JDBC Appender with a data source referencing a JNDI URI which can execute remote code. This issue is fixed by limiting JNDI data source names to the java protocol in Log4j2 versions 2.17.1, 2.12.4, and 2.3.2.
+Should I have said "Netfilter-based platforms (the successor to
+legacy IPTables)" instead, to differentiate it from Netfilter-based
+IPTables?
+-- 
+Jeremy Stanley
 
-This issue is being tracked as LOG4J2-3293,
-
-References:
-
-https://lists.apache.org/thread/s1o5vlo78ypqxnzn6p8zf6t9shtq5143
-https://issues.apache.org/jira/browse/LOG4J2-3293
-
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
