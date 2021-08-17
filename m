@@ -1,45 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/19/5
-Message-ID: <fba0d965-fe1-a7af-bda3-5871ba9450d6@dereferenced.org>
-Date: Mon, 19 Apr 2021 11:35:32 -0600 (MDT)
-From: Ariadne Conill <ariadne@...eferenced.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/18/1
+Message-ID: <CAF1aazDWpE1kmRv92N2sGtH_B4OC0cJJVrK8qJfxvXt33s_B5A@mail.gmail.com>
+Date: Tue, 17 Aug 2021 18:09:32 -0400
+From: Dave <snoopdave@...il.com>
 To: oss-security@...ts.openwall.com
-cc: security@...ian.org
-Subject: Re: xscreensaver package caps gets raw socket
+Subject: CVE-2021-33580: Apache Roller: regex injection leading to DoS
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Severity: Low: This attack will only work if Banned-words Referrer
+processing is turned on in Roller and it is off-by-default.
 
-On Mon, 19 Apr 2021, David A. Wheeler wrote:
+Description:
 
->> On Sat, 17 Apr 2021 at 07:41:15 -0700, Tavis Ormandy wrote:
->>> Oh, I also pitched using popen("/bin/ping" ..), but I think nobody is
->>> really convinced that will work, but I kinda like it :)
->
-> On Apr 18, 2021, at 8:25 AM, Simon McVittie <smcv@...ian.org> wrote:
->
->> That's consistent with the principle of least-privilege, and the widely
->> cited Unix philosophy of having programs that do one thing well.
->>
->> If you need to gain privileges, then I think that's a much, much better
->> approach - ideally a new ping-like program that prints a machine-readable
->> syntax rather than having to screen-scrape human-readable output, but
->> if that's not available then ping itself is the next best thing.
->
->
-> I agree, running “ping” in a separate process
-> is FAR better than giving the “main” process
-> extra permissions it doesn’t actually need.
-> You’d have to be careful about the parameters sent, but that’s necessary anyway.
-> I don’t see the problem of calling /bin/ping, that sounds like the right answer.
->
-> Scraping is undesirable, but sometimes needed. If this is a common need, a
-> long-term solution might be to create an option on ping to generate a standard
-> format that’s easier to machine-parse.
+User controlled `request.getHeader("Referer")`,
+`request.getRequestURL()` and `request.getQueryString()` are used to
+build and run a regex expression.
 
-This already exists as fping(1), for example:
+The attacker doesn't have to use a browser and may send a specially
+crafted Referer header programmatically. Since the attacker controls
+the string and the regex pattern he may cause a ReDoS by regex
+catastrophic backtracking on the server side.
 
-$ fping -C4 -q google.com
-google.com : 46.8 41.4 45.8 43.7
 
-Ariadne
+Mitigation:
+
+This problem has been fixed in Roller 6.0.2. If you are not able to
+upgrade then you can "work around" the problem.
+
+If Banned-Words Referrer processing is enabled and you are concerned
+about this type of attack then disable it.
+
+In the Roller properties, set this property
+site.bannedwordslist.enable.referrers=false
+
+Credit:
+
+Apache Roller would like to thank Ed Ra (https://github.com/edvraa)
+for reporting this.
+
