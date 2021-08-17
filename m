@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["880" "Sunday" "29" "January" "2017" "13:14:25" "+0000" "Ion Ionescu" "netblue30@yahoo.com" "<1207006894.2769604.1485695665647@mail.yahoo.com>" "33" "[oss-security] Re: Firejail local root exploit" nil nil nil "1" "2017012913:14:25" "[oss-security] Re: Firejail local root exploit" (number mark "U       netblue30@ya Jan 29   33/880   " thread-indent "\"[oss-security] Re: Firejail local root exploit\"\n") "<20170104131248.GA28596@suse.de>" ("<20170104131248.GA28596@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["764" "Tuesday" "17" "August" "2021" "16:17:38" "+0800" "butt3rflyh4ck" "butterflyhuangxx@gmail.com" nil "39" "Re: [oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname" nil nil nil "8" nil nil (number mark "U       butterflyhua Aug 17   39/764   " thread-indent "\"Re: [oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1826 invoked by uid 550); 29 Jan 2017 13:22:51 -0000
+Received: (qmail 5471 invoked by uid 550); 17 Aug 2021 09:19:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,60 +12,82 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26150 invoked from network); 29 Jan 2017 13:17:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1485695836; bh=oiJUDy4sobSyCwzlfZ/hGvLFiqWv+wkVGi2K6XTUY/4=; h=Date:From:Reply-To:To:In-Reply-To:References:Subject:From:Subject; b=gW1vCHnHJH/GBgrvJ5mgu3YG+c3Q5OFOoheLl6/wm1lvJODk77YYptcA1O+XkkSbw9GB2UGEIQH850YXZL1nSemws43R4fVRbcOXOCA8TIqUjGbURsdssZq8P5EhmSlgT5JAuOX1ESUn2pfBYWzHN/J4EJKqd5nOYFNBLZHA0HBiWmWmpXGnJussX5vZcv/sr8CMfMCNXo1zZF1uiliJ4CdNegP5zTLpbwGEdJxiBzrVsl0cjf2hE9AiRy9eSVhIc4A54zwwOOJ9FXsv3SrPFdAUXEvEB91n0KVTb07Iap3jH6JCtvNoSPoPeTC9LyZU810EdOsSPy1BmQJm+vAYhg==
-X-Yahoo-Newman-Property: ymail-4
-X-Yahoo-Newman-Id: 332893.4978.bm@omp1055.mail.ne1.yahoo.com
-X-YMail-OSG: kavWvtkVM1m2y7bBFGJnjLs1a2dcAwRw9n9aBkBPqtTpo7pTQFWmzgSvkAxYutt
- BZ0lkMwkgno0fU_Nv9cKj6x1.7FMAH0VHqLI0O6fUolCcy0LjvBL5ydYRO7Gv4lZrBqdQesohfTT
- .5ZNIw0izaa.soRImS29mdSxDYvDXgnRiajSr41McVnxWw1Cynd6EwYAlmt2yVYk3FSTF.uZLSp9
- SuCyxJcqt7Z_Ev.1mNKemvE_UFLAsdCYJeJgxgqO25sCTyETuV473vAw8rkRRRVG4VVo7I2dECIc
- OX1c4jJbXFeyCbGSkIjqkP_L03ovTv_oaZqYoM5YWVXCjbj3LT_zTcvcyHxeNVSaBw7ydxYZ4AH2
- oZzpgSjZKgJgov6psZ4xkD5sua.DbzMZGGSKCybjMhaf5J.X111W1Ab81XYgPOwWwB_W.vR1JC3D
- FyEm8JijGb.9fdvGLHxZMjZ9YeITLlXtIFcNvTfSnG0CneFV1bVJobq2LApck7N9pPosG_Vfueze
- fwK87BVeqlThjiMOn_JqRw6UULMTmRaNC.IBnplnY36G4
-Date: Sun, 29 Jan 2017 13:14:25 +0000 (UTC)
-From: Ion Ionescu <netblue30@yahoo.com>
-To: Sebastian Krahmer <krahmer@suse.com>, 
-	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Message-ID: <1207006894.2769604.1485695665647@mail.yahoo.com>
-In-Reply-To: <20170104131248.GA28596@suse.de>
-References: <20170104131248.GA28596@suse.de>
+Received: (qmail 8036 invoked from network); 17 Aug 2021 08:18:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=0iOnKfc5Wm8KHAKYB+XKrcxzkVRR2Hb7lv6ZdqtZs1M=;
+        b=I979JDFAsVQMvz1S5mzAS7HwTXqTOrIR6uhmYNhv3MoBqUck8HvgQ5pPYddJc8JIku
+         J0YRfTNVlr/m6enT6G3L7VVsYJSWf1kj+Vcb5GED/b8om+3+REv8Ch8YJZo6tM8Ig77b
+         5Drvu/iR2sp5KuwRD3LyxwTvD41ZbMJjTDcl9AqdSjyqpl9ixFCdV8WU78VkA7N0VLaQ
+         9Tj9t4LfX7ttbLToyeUixr8GMhVxlEcdN2FRWXamsXLVImVeosY0UGNDFBWe9FHWftiY
+         8YdDO1VdfhA7dWdLx79C8/a5UaicXIDsDslwpjzjSSswdUsXwaTCl37VSkCGMfb8ezsi
+         LJJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=0iOnKfc5Wm8KHAKYB+XKrcxzkVRR2Hb7lv6ZdqtZs1M=;
+        b=gs00yh5jk0cGPc4LZoIvTJ+KNVyhY4q8uWpVctLvYO+zHW4ZWuT4dsZ3WfZ9D0iwWU
+         Pdl+LQTLp/jPwakD4fulmm5phhSD7kmT3vLVhHSaM5AhIilSWY6cGfO3Ak1swKusRwvH
+         onl4t+Ww7mPV2KxtjrnwAyltGhl+pQRNN2Xvqm5yxjgd+z2L0SnL0/Bz4q5Iy0SU6f9l
+         R7sCHaG0xwGIQtWyIFE+GPCYsQG0WliKMjosC4JbfslJVtNRVwjvhN8oMLTVzQ00655x
+         X+9yi67Ot2fIMHDdKMA3W4yNAYxn7c5Wrxdk9QWnSGoDwIxIBqMM8wDzhQjWgcaBiJw2
+         spdQ==
+X-Gm-Message-State: AOAM5329ROhb7GwAPyTNs6lo9xk6+QgKkTJqGnuR0EcApyJvsmpDGcqm
+	Yy0QCn8oSu4jc573NWNWRzScLNyCdUn+UsBo/mK7EKbVPvo=
+X-Google-Smtp-Source: ABdhPJwgFYFEEoQwu/+cUhDpP3SP+NZQlnq7dXKJTOEhcyiTTL+ZeXxXXgmrHj6rcYsNHNMO6pC6qK8ovIAnn9O+aKI=
+X-Received: by 2002:a05:6902:509:: with SMTP id x9mr3202373ybs.267.1629188268453;
+ Tue, 17 Aug 2021 01:17:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_2769603_126837928.1485695665644"
-Subject: [oss-security] Re: Firejail local root exploit
+References: <CAFcO6XOFPEGiO_HwajTB3zA9d3jyhUwDX742huVhaNtQy0=TfQ@mail.gmail.com>
+ <CAFcO6XP_-WSEzDB2E=r90Yk4sXwUjo6fRsY=E+ZoAYunpry=qw@mail.gmail.com> <CALJHwhSkYWmBk3u5nBnOZfSskksFPP6k9oFfWGdtDpbr1yVFAA@mail.gmail.com>
+In-Reply-To: <CALJHwhSkYWmBk3u5nBnOZfSskksFPP6k9oFfWGdtDpbr1yVFAA@mail.gmail.com>
+From: butt3rflyh4ck <butterflyhuangxx@gmail.com>
+Date: Tue, 17 Aug 2021 16:17:38 +0800
+Message-ID: <CAFcO6XOYL=EN3xkkyE72gR_tau+3=BhrgNub3NYtR1isr77MbA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Cc: Wade Mealing <wmealing@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [oss-security] Linux kernel: nfc: null ptr dereference in llcp_sock_getname
 
-------=_Part_2769603_126837928.1485695665644
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Hi, MITRE has assigned CVE-2021-38208 to this issue,
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-38208
 
-Hello,
-The first fix for CVE-2017-5180 in Firejail version 0.9.44.4 and 0.9.38.8 (LTS) was incomplete. Changing .Xauthority to .bashrc in the exploit code, the problem is still there - credit Sebastian Krahmer.
-New releases are out: 0.9.44.8 and 0.9.38.10 (LTS). Please assign a new CVE.
-Thank you,
-Ion Ionescu
+The CVE-2021-3587 assigned by Redhat was 'RESERVED' now.
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-3587
 
-      From: Sebastian Krahmer <krahmer@suse.com>
- To: oss-security@lists.openwall.com 
-Cc: netblue30@yahoo.com
- Sent: Wednesday, January 4, 2017 8:12 AM
- Subject: Firejail local root exploit
-   
-Hi
+There was some confusion here, Maybe CVE-2021-3587 should be 'REJECT'.
 
-Please find attached PoC for firejail, which seems to be quite
-popular sandboxing tool.
+Regards,
+ butt3rflyh4ck.
 
-Sebastian
+
+On Tue, Jun 8, 2021 at 11:45 AM Wade Mealing <wmealing@redhat.com> wrote:
+>
+> Red Hat has assigned CVE-2021-3587 to this issue
+>
+> Thank you!
+>
+>
+> --
+>
+> Wade Mealing
+>
+> Product Security - Kernel, RHCE
+>
+> Red Hat
+>
+> <https://www.redhat.com>
+>
+> wmealing@redhat.com
+> <https://red.ht/sig>
+> TRIED. TESTED. TRUSTED. <https://redhat.com/trusted>
+>
+> secalert@redhat.com for urgent response
+
+
 
 -- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@suse.com - SuSE Security Team
-
-
-
-   
-------=_Part_2769603_126837928.1485695665644--
+Active Defense Lab of Venustech
