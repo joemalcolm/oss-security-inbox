@@ -1,36 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/18/3
-Message-ID: <15904ddc-8bdb-9661-48fa-d43a79f23aea@isc.org>
-Date: Wed, 18 Aug 2021 10:08:11 -0800
-From: Michael McNally <mcnally@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/17/2
+Message-ID: <YRurAomxEDQrxY+i@eldamar.lan>
+Date: Tue, 17 Aug 2021 14:26:42 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: ISC has disclosed a vulnerability in BIND (CVE-2021-25218)
+Cc: Wade Mealing <wmealing@...hat.com>
+Subject: Re: Linux kernel: nfc: null ptr dereference in llcp_sock_getname
 Content-Type: text/plain; charset=utf-8
 
-On August 18, 2021, we (Internet Systems Consortium) have disclosed a
-vulnerability affecting our BIND software:
+Hi,
 
-    CVE-2021-25218: A too-strict assertion check could be triggered when
-    responses in BIND 9.16.19 and 9.17.16 require UDP fragmentation if
-    RRL is in use
+On Tue, Aug 17, 2021 at 04:17:38PM +0800, butt3rflyh4ck wrote:
+> Hi, MITRE has assigned CVE-2021-38208 to this issue,
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-38208
+> 
+> The CVE-2021-3587 assigned by Redhat was 'RESERVED' now.
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-3587
+> 
+> There was some confusion here, Maybe CVE-2021-3587 should be 'REJECT'.
 
-    https://kb.isc.org/docs/cve-2021-25218
+I wonder if it would actually be better the other way around, but
+leaving the decision to MITRE CNA and Red Hat: Several downstream
+Linux distrubutions seem to have already used CVE-2021-3587 in their
+advisories, so rejecting CVE-2021-38208 would seem to cause less
+turnarounds). But I have a biased view here, at least Debian, Ubuntu,
+Slackware, Fedora and Mageia used already accordingly CVE-2021-3587.
 
-New versions of BIND are available from https://www.isc.org/downloads
-
-Operators and package maintainers who prefer to apply patches selectively can
-find individual vulnerability-specific patches in the "patches" subdirectory
-of the release directories for our two affected release branches (9.16 and 9.17)
-The BIND 9.11 branch was not affected by CVE-2021-25218.
-
-   9.16: https://downloads.isc.org/isc/bind9/9.16.20/patches/
-   9.17: https://downloads.isc.org/isc/bind9/9.17.17/patches/
-
-With the public announcement of this vulnerability, the embargo
-period is ended and any updated software packages that have been
-prepared may be released.
-
--- 
-
-Michael McNally
-(for ISC Security Officer)
+Regards,
+Salvatore
