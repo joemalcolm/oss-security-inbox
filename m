@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3111" "Wednesday" "30" "March" "2016" "13:47:29" "+0000" "Tristan Cacqueray" "tdecacqu@redhat.com" "<56FBD8F1.4060603@redhat.com>" "101" "[oss-security] [OSSA 2016-007.2] Nova host data leak through resize/migration (CVE-2016-2140) ERRATA #2" "^Date:" nil nil "3" "2016033013:47:29" "[oss-security] [OSSA 2016-007.2] Nova host data leak through resize/migration (CVE-2016-2140) ERRATA #2" (number mark "U       tdecacqu@red Mar 30  101/3111  " thread-indent "\"[oss-security] [OSSA 2016-007.2] Nova host data leak through resize/migration (CVE-2016-2140) ERRATA #2\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2428" "Wednesday" "18" "August" "2021" "10:26:12" "-0500" "Eric Blake" "eblake@redhat.com" nil "49" "Re: [oss-security] STARTTLS vulnerabilities" "^Date:" nil nil "8" nil nil (number mark "        eblake@redha Aug 18   49/2428  " thread-indent "\"Re: [oss-security] STARTTLS vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] STARTTLS vulnerabilities" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 28370 invoked by uid 550); 30 Mar 2016 13:47:18 -0000
+Received: (qmail 9255 invoked by uid 550); 18 Aug 2021 15:26:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,121 +11,88 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28351 invoked from network); 30 Mar 2016 13:47:17 -0000
-X-Enigmail-Draft-Status: N1110
-Message-ID: <56FBD8F1.4060603@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.0
+Received: (qmail 9237 invoked from network); 18 Aug 2021 15:26:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1629300378;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=NtT/e7jbsPggXw0MOZZbVo3kIGLizk6/A/WfY+/4E0s=;
+	b=eewcNKsXRbFDXOwLsg+DZUj4E7S6+j7B21/knbG443HwdeMXPrnRhTzgqawOcT4bWT1SPA
+	z6/ErbNWQt9OUECc8ph2gxZRAXgibPd0BFPmsWewHZUiR9o1z/0JdD7I3+jdd5tAXrP1GB
+	4VUbAw2vGgVDQiKJhV0vH+BjtUFjO28=
+X-MC-Unique: wF8F7sYXMUC4sdDdLQlIdw-1
+Message-ID: <20210818152612.5v3noomg4xt4a6pi@redhat.com>
+References: <20210810122113.3fe65cc9@computer>
+ <20210810134156.GF1599104@hal>
+ <20210811081634.15143171@computer>
+ <20210811153158.gt6uk4qqaqw7lzo2@redhat.com>
+ <20210811180235.65375940@computer>
+ <20210816190406.fmt3myvwvycywfv4@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="NDKX8CT3bQKt5f4HJdG1vL5iGugEvTJAw"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
-Date: Wed, 30 Mar 2016 13:47:29 +0000
-From: Tristan Cacqueray <tdecacqu@redhat.com>
+In-Reply-To: <20210816190406.fmt3myvwvycywfv4@redhat.com>
+User-Agent: NeoMutt/20210205-719-68949a
+X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=eblake@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+Date: Wed, 18 Aug 2021 10:26:12 -0500
+From: Eric Blake <eblake@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [OSSA 2016-007.2] Nova host data leak through resize/migration
- (CVE-2016-2140) ERRATA #2
+Subject: Re: [oss-security] STARTTLS vulnerabilities
 To: oss-security@lists.openwall.com
 
---NDKX8CT3bQKt5f4HJdG1vL5iGugEvTJAw
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+On Mon, Aug 16, 2021 at 02:04:06PM -0500, Eric Blake wrote:
+> On Wed, Aug 11, 2021 at 06:02:35PM +0200, Hanno Böck wrote:
+> > On Wed, 11 Aug 2021 10:31:58 -0500
+> > Eric Blake <eblake@redhat.com> wrote:
+> > 
+> > > Not mentioned in that list was ndb, but as far as I can tell, that
+> > > project has already documented the ramifications of opportunistic
+> > > encryption as being a security risk, and all known implementations
+> > > (both servers and clients) with TLS support have a mode of execution
+> > > that ensures the connection is dropped if a downgrade attack is
+> > > attempted:
+> > 
+> > I should point out that our research is not on simple downgrade attacks.
+> > These are kinda obvious by the design of STARTTLS if you implement it
+> > in an opportunistic way.
+> > 
+> > The buffering vulnerabilities we found are in STARTTLS implementations
+> > that have the expectation to enforce a secure connection, but suffer
+> > from various vulnerabilities in the implementation.
+> 
+> Thank you for persisting.  As a result, I have found a security bug in
+> nbdkit, which improperly cached the result of NBD_OPT_STRUCTURED_REPLY
+> from a plaintext MitM attacker prior to acting on NBD_OPT_STARTTLS, to
+> the potential confusion of a client that does not expect structured
+> replies.  I will follow up again when I have a CVE number.
+> 
+> https://listman.redhat.com/archives/libguestfs/2021-August/msg00077.html
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-OSSA-2016-007.2: Nova host data leak through resize/migration
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Now designated as CVE-2021-3716, affecting nbdkit versions 1.12
+through 1.26.4; fixed nbdkit 1.26.5 will be released later today.
 
-:Date: March 08, 2016
-:CVE: CVE-2016-2140
+Mitigating factors: the bug is only possible when nbdkit is used in
+opportunistic mode (--tls=on); you can avoid it by requesting that
+nbdkit use forced tls mode (--tls=require on the command line).
+Furthermore, all impacted nbdkit versions give successful replies to
+repeated NBD_OPT_STRUCTURED_REPLY requests even though the NBD
+protocol did not mandate that, so any client that requests structured
+replies after STARTTLS will not see any change in behavior in spite of
+the MitM injection.  In short, the bug will only impact really old
+clients that understand TLS but not structured replies (at this point,
+I'm aware of qemu 2.6 through 2.10, where most distros have moved to
+newer versions of qemu; and all versions of nbd-client 3.15 to the
+present).
 
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.           +1-919-301-3266
+Virtualization:  qemu.org | libvirt.org
 
-Affects
-~~~~~~~
-- Nova: <=3D2015.1.3, >=3D12.0.0 <=3D12.0.2
-
-
-Description
-~~~~~~~~~~~
-Matthew Booth from Red Hat reported a vulnerability in Nova instance
-resize/migration. By overwriting an ephemeral or root disk with a
-malicious image before requesting a resize, an authenticated user may
-be able to read arbitrary files from the compute host. Only setups
-using libvirt driver with raw storage and setting "use_cow_images =3D
-False" (not default) are affected.
-
-
-Errata
-~~~~~~
-The former fix did not take into account the usage of non-disk-image
-backends and caused a regression for this use-case. This update
-provides an additional fix for that issue. Moreover, the kilo backport
-caused a regression in live migration where the disk info file is JSON
-encoded. This second update provides an additional fix for
-stable/kilo.
-
-
-Patches
-~~~~~~~
-- https://review.openstack.org/289960 - original (Kilo)
-- https://review.openstack.org/290847 - errata (Kilo)
-- https://review.openstack.org/294205 - errata#2 (Kilo)
-- https://review.openstack.org/289958 - original (Liberty)
-- https://review.openstack.org/290843 - errata (Liberty)
-- https://review.openstack.org/289957 - original (Mitaka)
-- https://review.openstack.org/290715 - errata (Mitaka)
-
-
-Credits
-~~~~~~~
-- Matthew Booth from Red Hat (CVE-2016-2140)
-
-
-References
-~~~~~~~~~~
-- https://bugs.launchpad.net/bugs/1548450
-- https://bugs.launchpad.net/bugs/1555287
-- https://bugs.launchpad.net/bugs/1558697
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2016-2140
-
-
-Notes
-~~~~~
-- This fix will be included in future 2015.1.4 (kilo) and 12.0.3
-  (liberty) releases.
-
-
-OSSA History
-~~~~~~~~~~~~
-- 2016-03-30 - Errata 2
-- 2016-03-09 - Errata 1
-- 2016-03-08 - Original Version
-
-
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
-
-
---NDKX8CT3bQKt5f4HJdG1vL5iGugEvTJAw
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQEcBAEBCAAGBQJW+9jxAAoJECK5oFySXMXYGDQIAK+N356ZAJMCYklXy5zSMRx9
-HRTwIR95+5T1jqj4NM9JNmh01ERl+3Hq+dHkwO9OGA6lrT/m5fKMjPrrZogHWEzp
-hCZ1QSIizffht0fHUpPdiMPb2440GuJzPvmHuKYyKaWnUnSuFOTWkL5NRXI7zeik
-yBVgWqomMo15qKb8X3MGVbRHFrNhvA+nX26cQ4EXa7fNd50jT+5EXurkfj8mwdZG
-mz/KtCG8j1WAMS3bnkj5baFzyVNdukh5NpqmgIAeri+FTfQ1Nke1CNbHQ2EFY9Yu
-n7BkS4Bk6KKhGxkDzuCuoaOCJ7tZUVELPgtkjjiNPZ43KasNMZYNgZXZbtyINXA=
-=1Rnm
------END PGP SIGNATURE-----
-
---NDKX8CT3bQKt5f4HJdG1vL5iGugEvTJAw--
