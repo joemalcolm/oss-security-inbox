@@ -1,41 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/28/1
-Message-ID: <915539867.13379.1624863503635@appsuite-dev.open-xchange.com>
-Date: Mon, 28 Jun 2021 09:58:23 +0300 (EEST)
-From: Aki Tuomi <aki.tuomi@...ecot.fi>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2021-29157: Dovecot oauth2 JWT local validation path traversal
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/18/2
+Message-ID: <20210818152612.5v3noomg4xt4a6pi@redhat.com>
+Date: Wed, 18 Aug 2021 10:26:12 -0500
+From: Eric Blake <eblake@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: STARTTLS vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Open-Xchange Security Advisory 2021-06-28
+On Mon, Aug 16, 2021 at 02:04:06PM -0500, Eric Blake wrote:
+> On Wed, Aug 11, 2021 at 06:02:35PM +0200, Hanno Böck wrote:
+> > On Wed, 11 Aug 2021 10:31:58 -0500
+> > Eric Blake <eblake@...hat.com> wrote:
+> > 
+> > > Not mentioned in that list was ndb, but as far as I can tell, that
+> > > project has already documented the ramifications of opportunistic
+> > > encryption as being a security risk, and all known implementations
+> > > (both servers and clients) with TLS support have a mode of execution
+> > > that ensures the connection is dropped if a downgrade attack is
+> > > attempted:
+> > 
+> > I should point out that our research is not on simple downgrade attacks.
+> > These are kinda obvious by the design of STARTTLS if you implement it
+> > in an opportunistic way.
+> > 
+> > The buffering vulnerabilities we found are in STARTTLS implementations
+> > that have the expectation to enforce a secure connection, but suffer
+> > from various vulnerabilities in the implementation.
+> 
+> Thank you for persisting.  As a result, I have found a security bug in
+> nbdkit, which improperly cached the result of NBD_OPT_STRUCTURED_REPLY
+> from a plaintext MitM attacker prior to acting on NBD_OPT_STARTTLS, to
+> the potential confusion of a client that does not expect structured
+> replies.  I will follow up again when I have a CVE number.
+> 
+> https://listman.redhat.com/archives/libguestfs/2021-August/msg00077.html
 
-Affected product: Dovecot IMAP Server
-Vendor: OX Software GmbH
+Now designated as CVE-2021-3716, affecting nbdkit versions 1.12
+through 1.26.4; fixed nbdkit 1.26.5 will be released later today.
 
-Internal reference: DOP-2159 
-Vulnerability type: Path Traversal (CWE-24)
-Vulnerable version: 2.3.11
-Vulnerable component: oauth2
-Report confidence: Confirmed
-Solution status: Fixed in 2.3.15
-Researcher credits: Kirin of Tencent Security Xuanwu Lab.
-Vendor notification: 2021-03-22
-CVE reference: CVE-2021-29157
-CVSS: 6.7 (CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N)
+Mitigating factors: the bug is only possible when nbdkit is used in
+opportunistic mode (--tls=on); you can avoid it by requesting that
+nbdkit use forced tls mode (--tls=require on the command line).
+Furthermore, all impacted nbdkit versions give successful replies to
+repeated NBD_OPT_STRUCTURED_REPLY requests even though the NBD
+protocol did not mandate that, so any client that requests structured
+replies after STARTTLS will not see any change in behavior in spite of
+the MitM injection.  In short, the bug will only impact really old
+clients that understand TLS but not structured replies (at this point,
+I'm aware of qemu 2.6 through 2.10, where most distros have moved to
+newer versions of qemu; and all versions of nbd-client 3.15 to the
+present).
 
-Vulnerability Details:
-If attacker can gain access to local filesystem, it is possible to trick Dovecot to use attacker specified key to validate tokens.
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.           +1-919-301-3266
+Virtualization:  qemu.org | libvirt.org
 
-Steps to reproduce:
-
-Configure Dovecot to perform OAUTH2 authentication with local JWT validation using posix fs driver.
-
-Place base64 encoded HS256 shared key in a location that is readable by dovecot, and use ../../../../../location/to/path as key azp. 
-
-You can now forge tokens and authenticate as any valid user.
-
-Risk:
-Attacker can gain access using forged credentials.
-
-Solution:
-Upgrade to fixed version.
