@@ -1,76 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/26/6
-Message-ID: <CAFcO6XO9KQwwcwYrSc00j1y_xAf+wU4AN7YLSCgWOEqUAANMOQ@mail.gmail.com>
-Date: Thu, 26 Aug 2021 23:18:53 +0800
-From: butt3rflyh4ck <butterflyhuangxx@...il.com>
-To: John Haxby <john.haxby@...cle.com>
-Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Linux kernel: qrtr: another out-of-bound Read in qrtr_endpoint_post in net/qrtr/qrtr.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/18/3
+Message-ID: <15904ddc-8bdb-9661-48fa-d43a79f23aea@isc.org>
+Date: Wed, 18 Aug 2021 10:08:11 -0800
+From: Michael McNally <mcnally@....org>
+To: oss-security@...ts.openwall.com
+Subject: ISC has disclosed a vulnerability in BIND (CVE-2021-25218)
 Content-Type: text/plain; charset=utf-8
 
-No, I didn't. I have reported to Red Hat, they said that if they
-confirmed and would assign a CVE for this issue.
+On August 18, 2021, we (Internet Systems Consortium) have disclosed a
+vulnerability affecting our BIND software:
 
-Regards,
-  butt3rflyh4ck.
+    CVE-2021-25218: A too-strict assertion check could be triggered when
+    responses in BIND 9.16.19 and 9.17.16 require UDP fragmentation if
+    RRL is in use
 
-On Thu, Aug 26, 2021 at 10:41 PM John Haxby <john.haxby@...cle.com> wrote:
->
->
->
-> > On 25 Aug 2021, at 03:40, butt3rflyh4ck <butterflyhuangxx@...il.com> wrote:
-> >
-> > Hi, There was another out-of-bound read bug in qrtr_endpoint_post in
-> > net/qrtr/qrtr.c in 5.14.0-rc6+ and reproduced it.
-> >
-> > This check in  qrtr_endpoint_post was incomplete, did not consider size is 0:
-> > ```
-> > if (len != ALIGN(size, 4) + hdrlen)
-> >                goto err;
-> > ```
-> > if size from qrtr_hdr is 0, the result of ALIGN(size, 4) will be 0,
-> > In case of len == hdrlen and size == 0 in header this check won't fail and
-> > ```
-> > if (cb->type == QRTR_TYPE_NEW_SERVER) { /* Remote node endpoint can
-> > bridge other distant nodes */
-> >             const struct qrtr_ctrl_pkt *pkt = data + hdrlen;
-> >             qrtr_node_assign(node, le32_to_cpu(pkt->server.node));
-> > }
-> > ```
-> > will also read out of bound from data, which is hdrlen allocated block.
-> >
-> >
-> > #analyze and some details
-> > https://lists.openwall.net/netdev/2021/08/17/124
-> >
-> > #patch
-> > https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=7e78c597c3eb
-> > now not available upstream.
->
-> Hi,
->
-> Did you ask for a CVE for this bug?
->
-> jch
->
-> >
-> > #Timeline
-> > *2021/8/17 - Vulnerability reported to netdev@...r.kernel.org.
-> > *2021/8/20 - Vulnerability confirmed and patched.
-> > *2021/8/23 - Vulnerability reported to secalert@...hat.com.
-> > *2021/8/25 - Opened on oss-security@...ts.openwall.com.
-> >
-> > #Credit
-> > Active Defense Lab of Venustech.
-> >
-> >
-> > Regards,
-> > butt3rflyh4ck.
-> >
-> > --
-> > Active Defense Lab of Venustech
->
+    https://kb.isc.org/docs/cve-2021-25218
 
+New versions of BIND are available from https://www.isc.org/downloads
 
---
-Active Defense Lab of Venustech
+Operators and package maintainers who prefer to apply patches selectively can
+find individual vulnerability-specific patches in the "patches" subdirectory
+of the release directories for our two affected release branches (9.16 and 9.17)
+The BIND 9.11 branch was not affected by CVE-2021-25218.
+
+   9.16: https://downloads.isc.org/isc/bind9/9.16.20/patches/
+   9.17: https://downloads.isc.org/isc/bind9/9.17.17/patches/
+
+With the public announcement of this vulnerability, the embargo
+period is ended and any updated software packages that have been
+prepared may be released.
+
+-- 
+
+Michael McNally
+(for ISC Security Officer)
