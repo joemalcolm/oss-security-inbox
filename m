@@ -1,32 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/10/5
-Message-ID: <1622544226.GVTSKDOC@httpd.apache.org>
-Date: Wed, 09 Jun 2021 23:11:00 +0200
-From: Christophe JAILLET <jailletc36@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2020-35452: Apache httpd: mod_auth_digest possible stack overflow by one nul byte
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/20/1
+Message-ID: <CALBaBG8tfVjMWjpaJ1Rg9VjD7XqQSBqz3MpOWJgOtB9V=Mw54A@mail.gmail.com>
+Date: Thu, 19 Aug 2021 09:37:07 -0700
+From: Aaron Patterson <aaron.patterson@...il.com>
+To: ruby-security-ann@...glegroups.com, rubyonrails-security@...glegroups.com,  oss-security@...ts.openwall.com
+Subject: [CVE-2021-22942] Possible Open Redirect in Host Authorization Middleware
 Content-Type: text/plain; charset=utf-8
 
+# Possible Open Redirect in Host Authorization Middleware
 
-CVE-2020-35452: mod_auth_digest possible stack overflow by one nul byte
+There is a possible open redirect vulnerability in the Host Authorization
+middleware in Action Pack. This vulnerability has been assigned the CVE
+identifier CVE-2021-22942.
 
-Severity: low
+Versions Affected:  >= 6.0.0.
+Not affected:       < 6.0.0
+Fixed Versions:     6.1.4.1, 6.0.4.1
 
-Vendor: The Apache Software Foundation
+Impact
+------
+Specially crafted "X-Forwarded-Host" headers in combination with certain
+"allowed host" formats can cause the Host Authorization middleware in Action
+Pack to redirect users to a malicious website.
 
-Versions Affected:
-httpd 2.4.0 to 2.4.46
+Impacted applications will have allowed hosts with a leading dot. For
+example,
+configuration files that look like this:
 
-Description:
-Apache HTTP Server 2.4.0 to 2.4.46
-A specially crafted Digest nonce can cause a stack overflow in mod_auth_digest. There is no report of this overflow being exploitable, nor the Apache HTTP Server team could create one, though some particular compiler and/or compilation option might make it possible, with limited consequences anyway due to the size (a single byte) and the value (zero byte) of the overflow
-    
-Mitigation:
-None
+```
+config.hosts <<  '.EXAMPLE.com'
+```
 
-Credit:
-This issue was discovered and reported by GHSL team member @antonio-morales (Antonio Morales)
+When an allowed host contains a leading dot, a specially crafted Host header
+can be used to redirect to a malicious website.
 
-References:
-https://httpd.apache.org/security/vulnerabilities_24.html
+This vulnerability is similar to CVE-2021-22881, but CVE-2021-22881 did not
+take in to account domain name case sensitivity.
 
+Releases
+--------
+The fixed releases are available at the normal locations.
+
+Workarounds
+-----------
+In the case a patch can’t be applied, the following monkey patch can be used
+in an initializer:
+
+```ruby
+module ActionDispatch
+  class HostAuthorization
+    HOSTNAME = /[a-z0-9.-]+|\[[a-f0-9]*:[a-f0-9.:]+\]/i
+    VALID_ORIGIN_HOST = /\A(#{HOSTNAME})(?::\d+)?\z/
+    VALID_FORWARDED_HOST = /(?:\A|,[ ]?)(#{HOSTNAME})(?::\d+)?\z/
+
+    private
+      def authorized?(request)
+        origin_host =
+request.get_header("HTTP_HOST")&.slice(VALID_ORIGIN_HOST, 1) || ""
+        forwarded_host =
+request.x_forwarded_host&.slice(VALID_FORWARDED_HOST, 1) || ""
+        @permissions.allows?(origin_host) && (forwarded_host.blank? ||
+@permissions.allows?(forwarded_host))
+      end
+  end
+end
+```
+
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided
+patches for
+the two supported release series. They are in git-am format and consist of a
+single changeset.
+
+* 6-0-host-authorzation-open-redirect.patch - Patch for 6.0 series
+* 6-1-host-authorzation-open-redirect.patch - Patch for 6.1 series
+
+Please note that only the 6.1.Z, 6.0.Z, and 5.2.Z series are supported at
+present. Users of earlier unsupported releases are advised to upgrade as
+soon
+as possible as we cannot guarantee the continued availability of security
+fixes for unsupported releases.
+
+Credits
+-------
+Thanks to [@mshtawy](https://hackerone.com/mshtawy?type=user) for reporting
+this!
+
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
+
+Content of type "text/html" skipped
+
+Download attachment "6-1-host-authorzation-open-redirect.patch" of type "application/octet-stream" (6201 bytes)
+
+Download attachment "6-0-host-authorzation-open-redirect.patch" of type "application/octet-stream" (6035 bytes)
