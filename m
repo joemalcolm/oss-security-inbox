@@ -1,102 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/04/2
-Message-Id: <E1lHlgJ-0003KK-Ms@xenbits.xenproject.org>
-Date: Thu, 04 Mar 2021 10:58:11 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 369 v1 - Linux: special config may crash when trying to map foreign pages
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/20/2
+Message-ID: <608e7f5a-3e5f-b904-7032-213040a49f2a@isc.org>
+Date: Fri, 20 Aug 2021 13:24:07 -0800
+From: Michael McNally <mcnally@....org>
+To: oss-security@...ts.openwall.com
+Cc: "security-officer@....org" <security-officer@....org>
+Subject: August BIND maintenance releases contain a defect affecting servers using the map zone file format (was: A vulnerability in BIND (CVE-2021-25218) will be announced 18 August 2021)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello oss-security subscribers --
 
-                    Xen Security Advisory XSA-369
+Earlier in the week we (Internet Systems Consortium) posted information to this list
+about new versions of our BIND software which contained a fix for an exploitable
+denial-of-service vector, CVE-2021-25218.
 
-   Linux: special config may crash when trying to map foreign pages
+The replacement versions contained other fixes, one of which has caused a new
+problem of which we would like to make you aware.  It is not an exploitable security
+vulnerability but we would like to make sure that packagers who prepared replacement
+versions of BIND after receiving our previous message are aware of this additional
+issue, as it will affect users who use a specific BIND feature.
 
-ISSUE DESCRIPTION
-=================
+Originally the message below was sent to the distros list; I am informed that this
+list was a more appropriate destination for it.
 
-With CONFIG_XEN_BALLOON_MEMORY_HOTPLUG disabled and
-CONFIG_XEN_UNPOPULATED_ALLOC enabled the Linux kernel will use guest
-physical addresses allocated via the ZONE_DEVICE functionality for
-mapping foreign guest's pages.
+Apologies for our confusion over which list to use, as well as the additional work
+caused by the new defect, but if you package and redistribute BIND please take note
+of the Operational Notification linked from the message quoted below.
 
-This will result in problems, as the p2m list will only cover the initial
-memory size of the domain plus some padding at the end. Most ZONE_DEVICE
-allocated addresses will be outside the p2m range and thus a mapping can't
-be established with those memory addresses, resulting in a crash.
+Thank you,
 
-The attack involves doing I/O requiring large amounts of data to be
-mapped by the Dom0 or driver domain.  The amount of data needed to
-result in a crash can vary depending on the memory layout of the
-affected Dom0 or driver domain.
+Michael McNally
+ISC Security Officer
 
-IMPACT
-======
 
-A Dom0 or driver domain based on a Linux kernel (configured as
-described above) can be crashed by a malicious guest administrator, or
-possibly malicious unprivileged guest processes.
+-------- Forwarded Message --------
+Subject: [vs] August BIND maintenance releases contain a defect affecting servers using 
+the map zone file format (was: A vulnerability in BIND (CVE-2021-25218) will be announced 
+18 August 2021)
+Date: Fri, 20 Aug 2021 02:37:19 -0800
+From: ISC Security Officer <security-officer@....org>
+To: Michael McNally <mcnally@....org>, distros@...openwall.org
 
-VULNERABLE SYSTEMS
-==================
+To the packagers and redistributors of BIND 9:
 
-Only x86 paravirtualized (PV) Dom0 or driver domains are
-affected.
+We recently contacted this list with information about CVE-2021-25218,
+a vulnerability affecting the 9.16.x and 9.17.x branches of BIND,
+and provided new versions of the software containing a fix for that
+vulnerability.
 
-Only Linux kernels configured *with* CONFIG_XEN_UNPOPULATED_ALLOC and
-*without* CONFIG_XEN_BALLOON_MEMORY_HOTPLUG are vulnerable.  Only
-kernels from kernel version 5.9 onwards are affected.
+Unfortunately an issue has been discovered in the releases which
+corrected that CVE bug.  The new defect is not a remotely exploitable
+attack vector, and so is arguably off-topic for this list, but as we
+had previously advised packagers to update their packages based on
+the new versions we wanted to inform you about a problem discovered in
+those versions.
 
-CONFIG_XEN_BALLOON_MEMORY_HOTPLUG is enabled by default in upstream
-Linux when Xen support is enabled, so kernels using upstream default
-Kconfig are not affected.  Most distribution kernels supporting Xen
-dom0 use are likewise not vulnerable.
+The new defect arises from a failure to properly increment the API
+version of the file format for zones stored in BIND's "map" format.
+As a consequence of this oversight, affected servers can terminate
+with an assertion failure when trying to read zone data stored in a
+file written by a previous version of the software.
 
-Arm systems or x86 PVH or x86 HVM driver domains are not affected.
+More complete details are available in this Operational Notification
+in the ISC Knowledge Base:
 
-MITIGATION
-==========
+    https://kb.isc.org/docs/map-zone-format-incompatibility-in-bind-9-16-20-and-9-17-17
 
-There is no mitigation available.
+For the benefit of packagers we have prepared patch diffs which
+increment the API version of the map format.  BIND packages built
+from patched source will detect that files written in obsolete
+versions of the map file format are incompatible, will log a
+message and move the file to an archive version, and will retransfer
+the zone from its source on a primary server, which is the normally
+expected behavior when the map zone file format changes.
 
-RESOLUTION
-==========
+Patches are available in the patches subdirectories of the recent
+releases, i.e.:
 
-Applying the appropriate attached patch resolves this issue.
+9.16.20: https://downloads.isc.org/isc/bind9/9.16.20/patches
+9.17.17: https://downloads.isc.org/isc/bind9/9.17.17/patches
 
-xsa369-linux.patch           Linux 5.9-stable - 5.12-rc
+We're sorry for the error and for the extra work created for those
+repackaging our software.
 
-$ sha256sum xsa369*
-937df4f078a070cf47bdd718c6b8a042ec6bee255eedc422d833c2ae3dd561c7  xsa369-linux.patch
-$
+If you have further questions about this after reading the Operational
+Notification, please direct them to security-officer@....org
 
-CREDITS
-=======
+Thank you,
 
-This issue was discovered by Marek Marczykowski-Górecki of Invisible
-Things Lab.
-
-For patch:
-Reported-by: Marek Marczykowski-Górecki <marmarek@...isiblethingslab.com>
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-This was reported publicly multiple times, before the XSA could be
-issued.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmBAvMQMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ5PoH/2EY28X1Fe+2RW5SrnAo2dZWLXeIrXQIXbsDCdlI
-GKhFChUhYHJP3wLhE4F7J5SAjl48ta/gtdpbpJWXsZSS+2KIdV/dDZ3ZA6cxWFAI
-DuVvqqt5O0xpF02bgTZrL1GUL8975L0O7cwtGmsIbPjVSF5UktuLS0Q1zRAiYvG9
-l5Xu32nekxz2fGebMYrJTIPYNc8LOg3d+MIAE4W1u3Wj46S8yRJhyNQmsPQXZTEk
-nlTp0ed8ScAt7pIZn7dbnLz8zUAQ64h2yar0UBih51kd3Bss5E4PXsS0zlXlVNfk
-046nBhbFfB3dgM49NlJ3oHhiZh6dN5LpMblmGK4Tb+FJqNE=
-=QwG+
------END PGP SIGNATURE-----
-
-Download attachment "xsa369-linux.patch" of type "application/octet-stream" (5098 bytes)
+Michael McNally
+ISC Security Officer
