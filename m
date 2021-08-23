@@ -1,37 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/13/2
-Message-ID: <20210113104130.61f82484@suse.de>
-Date: Wed, 13 Jan 2021 10:41:30 +0100
-From: David Disseldorp <ddiss@...e.de>
-To: john.haxby@...cle.com
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2020-28374: Linux SCSI target (LIO) unrestricted copy offload
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/23/1
+Message-ID: <798669d5-4ba0-a023-3002-d351f72ced5f@apache.org>
+Date: Mon, 23 Aug 2021 09:35:34 +0000
+From: Joe Orton <jorton@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-35940: Apache Portable Runtime (APR): Regression of CVE-2017-12613 
 Content-Type: text/plain; charset=utf-8
 
-[replying via parent, as I'm not on this list]
+Description:
 
-Hi John,
+An out-of-bounds array read in the apr_time_exp*() functions was fixed in the Apache Portable Runtime 1.6.3 release (CVE-2017-12613).  The fix for this issue was not carried forward to the APR 1.7.x branch, and hence version 1.7.0 regressed compared to 1.6.3 and is vulnerable to the same issue.
 
-> On Tue, 12 Jan 2021 19:01:34 +0100, David Disseldorp wrote:
->
-> > ===============================================================================
-> > == Subject:     Linux SCSI target (LIO) unrestricted copy offload
-> > ==
-> > ==
-> > == CVE ID#:     CVE-2020-28374
-> > ==
-> > == Versions:    Linux: v3.12 and later
-> > ==              tcmu-runner: v1.3.0 and later
-> > ==
-> > == Summary:     An attacker with access to a LUN and knowledge of Unit Serial
-> > ==              Number assignments can read and write to any LIO backstore,
-> > ==              regardless of SCSI transport settings.
-> > ===============================================================================
+Credit:
 
-> David -- did you mean to attach the patches you posted to linux-distros?
+The Apache Portable Runtime project would like to thank Iveta Cesalova (Red Hat) for reporting this issue.
 
-No, the kernel patches have gone out via the regular mainline and stable
-repositories. The tcmu-runner fix is queued at
-https://github.com/open-iscsi/tcmu-runner/pull/644
+References:
 
-Cheers, David
+http://svn.apache.org/viewvc?view=revision&revision=1891198 
+http://mail-archives.apache.org/mod_mbox/www-announce/201710.mbox/%3CCACsi251B8UaLvM-rrH9fv57-zWi0zhyF3275_jPg1a9VEVVoxw@mail.gmail.com%3E
+https://dist.apache.org/repos/dist/release/apr/patches/apr-1.7.0-CVE-2021-35940.patch
+
