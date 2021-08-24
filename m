@@ -1,24 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/10/11
-Message-ID: <0f39a2b1-9e82-f909-8d5b-4c74ef6b5535@citrix.com>
-Date: Thu, 10 Jun 2021 09:32:14 +0100
-From: Andrew Cooper <andrew.cooper3@...rix.com>
-To: Sven Kieske <S.Kieske@...twald.de>, "xen-announce@...ts.xen.org" <xen-announce@...ts.xen.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "xen-users@...ts.xen.org" <xen-users@...ts.xen.org>, "xen-devel@...ts.xen.org" <xen-devel@...ts.xen.org>
-CC: "security-team-members@....org" <security-team-members@....org>
-Subject: Re: Xen Security Advisory 375 v3 (CVE-2021-0089,CVE-2021-26313) - Speculative Code Store Bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/24/2
+Message-ID: <CAC5HUDwRAzx657HLVrADOUrnJBKfEEu_dbpV-_B7D1R6ygzpFQ@mail.gmail.com>
+Date: Tue, 24 Aug 2021 14:19:59 +0530
+From: Mohammad Tausif Siddiqui <msiddiqu@...hat.com>
+To: oss-security@...ts.openwall.com
+Cc: Wade Mealing <wmealing@...hat.com>
+Subject: Re: Linux kernel: nfc: null ptr dereference in llcp_sock_getname
 Content-Type: text/plain; charset=utf-8
 
-On 10/06/2021 09:04, Sven Kieske wrote:
-> On Mi, 2021-06-09 at 13:50 +0000, Xen.org security team wrote:
->> For more details, see:
-> [..]
->>   https://www.amd.com/en/corporate-product-security-bulletin-amd-sb-1003
-> The above link turns into a "Page not found", at least for me, I believe the correct link is:
+[Update] Root CNA MITRE marked rejected CVE-2021-3587 for CVE-2021-38208.
+
+CVE-2021-38208 to be used for this issue.
+
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-3587
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-38208
+
+
+On Tue, Aug 17, 2021 at 5:57 PM Salvatore Bonaccorso <carnil@...ian.org>
+wrote:
+
+> Hi,
 >
-> https://www.amd.com/en/corporate/product-security/bulletin/amd-sb-1003
+> On Tue, Aug 17, 2021 at 04:17:38PM +0800, butt3rflyh4ck wrote:
+> > Hi, MITRE has assigned CVE-2021-38208 to this issue,
+> > https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-38208
+> >
+> > The CVE-2021-3587 assigned by Redhat was 'RESERVED' now.
+> > https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-3587
+> >
+> > There was some confusion here, Maybe CVE-2021-3587 should be 'REJECT'.
+>
+> I wonder if it would actually be better the other way around, but
+> leaving the decision to MITRE CNA and Red Hat: Several downstream
+> Linux distrubutions seem to have already used CVE-2021-3587 in their
+> advisories, so rejecting CVE-2021-38208 would seem to cause less
+> turnarounds). But I have a biased view here, at least Debian, Ubuntu,
+> Slackware, Fedora and Mageia used already accordingly CVE-2021-3587.
+>
+> Regards,
+> Salvatore
+>
+>
 
-Ah - the link changed, and I thought I'd fixed it.  Clearly not.
+-- 
 
-Thanks - I'll issue a correction to the XSA.
+*Tausif Siddiqui* | RED HAT PRODUCT SECURITY
 
-~Andrew
+0EE1 F6BF 8991 9A65 0A79 A0A7 5849 60EC 88B8 2C71
+
+secalert@...hat.com <https://access.redhat.com/security/team/contact> for
+urgent response.
+
