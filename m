@@ -1,35 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/23/1
-Message-ID: <CAPycaENa4y8oq9OFvgHNf+Y6ehO1zhJPE4ZTpTbr4jRzDqp+-Q@mail.gmail.com>
-Date: Thu, 23 Dec 2021 15:33:30 +0300
-From: Pavel Mayorov <pmayorov@...udlinux.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/25/1
+Message-ID: <CAKpyPV-Z18FXae0t7vCozupvZ6+_9eeaoAQ=8_1sPM8Xfbn3ZQ@mail.gmail.com>
+Date: Tue, 24 Aug 2021 20:14:02 -0300
+From: Jean Diogo <j@....com.br>
 To: oss-security@...ts.openwall.com
-Subject: binutils: Stack-overflow in debug_write_type in debug.c
+Subject: Possible memory leak on getspnam / getspnam_r
 Content-Type: text/plain; charset=utf-8
 
-Hello!
+Hi,
 
-It was observed that CVE-2018-12700 in binutils package wasn't completely fixed.
-I was able to reproduce that issue by following instructions I had
-described in https://sourceware.org/bugzilla/show_bug.cgi?id=28718
-I assessed that this issue is only locally exploitable. Its impact is
-to resource availability and
-observable effects of objdump which I've tested range from fatal
-signal reception to livelock (due to optimization of recursions).
-The exact effect depends on compiler version and operating system.
+The function getspnam() and it's reentrant sister getspnam_r() do not clean
+the content of allocated memory before returning to the user, resulting in
+the leak of /etc/shadow content. In some cases this might be an issue.
 
-Due to the nature of binutils which are normally used by developers
-only and don't affect production environments, I've decided to
-publicly report that issue.
+>From my tests, it doesn't matter whether the user calls getspnam_r (which
+buffer is controlled by the user) rather than getspnam, both functions
+malloc the buffer on itself (apparently the heap pointer is stored on
+<respbuf> in libc by _nss_files_getspnam_r from libnss) and does not zero
+it before returning.
 
--- 
-Best regards,
+I understand that this may be a desired behavior, caching, however there
+might be some situations where that's not desired and the user has no
+control over this buffer.
 
-Pavel Mayorov
-Senior C Developer
+Let me put ProFTPd as an example: it's daemon starts as root, when it
+receives a connection it forks, opens all the files that it'll need, then
+it calls getspnam with the provided FTP user to validate the provided
+password. Later on it setreuid(nobody) abandoning root privileges [1]. Here
+it doesn't matter whether it calls getspnam or getspnam_r, the malloced
+buffer will remain on heap memory (and it's pointer in libc <buffer> and
+<respbuf>, I suppose). So now the child process is running on a low
+privileged user and has a copy of /etc/shadow on it's heap memory.
+The vulnerability CVE-2020-9273 [2] (an use-after-free on heap) allowed me
+to get RCE on ProFTPd, in an exploit I created last year. Additionally,
+thanks to getspnam caching it is possible to read the root cryptogram (and
+other users).
 
+I'm not suggesting that ProFTPd architecture is correct [3]. The problem is
+that even if ProFTPd calls getspnam_r it has no mechanism to zero the cache
+before forking, since internal pointers are not known to the user (read
+developer).
 
-CloudLinux.com  |  KernelCare.com  |  Imunify360  | AlmaLinux
+Thus, although caching is mostly required for performance, maybe this
+(caching) should happen only on getspnam function but not on getspnam_r.
+That's because on getspnam_r the user wants to have control over this
+buffering, then the user has a way to clean up it's memory when this
+caching is not desired.
 
-helpdesk.cloudlinux.com: 24/7 Free, exceptionally good support
-Follow twitter.com/CloudLinuxOS for technical updates
+Thanks guys, and sorry if I slipped into any concept.
+dukpt.
+
+References:
+[1] - ProFTPd opens root-writable-only files while running as root. I
+understand that the permissions are validated during opening, so read /
+write operations to duplicated file descriptors after fork are guaranteed
+(thanks to Rick Altherr for pointing me out);
+[2] - https://nvd.nist.gov/vuln/detail/CVE-2020-9273 ;
+[3] - It is a good programming practice to exec right after fork.
+
+N.B.: Perhaps another option could be creating a function similar to
+endspent but that not only close() /etc/shadow but also bzero() internal
+allocated memory. Since endspent does not wipe memory it's very likely that
+[gs]etpent family also have the same behavior (I didn't test all functions
+from the manual, so there might be others in similar situations). Also,
+from the tests I did I think getspent and getspnam share the same buffer.
+
