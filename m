@@ -1,34 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/26/5
-Message-ID: <CAOGQQ2-5630=HhmZbaxWr2bB3vHdzd=FE1hZ2jgCn71hxPZ2WA@mail.gmail.com>
-Date: Thu, 26 Aug 2021 11:58:35 -0300
-From: Marco Benatto <mbenatto@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/24/1
+Message-ID: <b9120cdb-8cca-699e-bcc2-f4e173b1f2bc@apache.org>
+Date: Tue, 24 Aug 2021 08:32:18 +0000
+From: Arpad Boda <aboda@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: libssh: Possible heap-buffer overflow when rekeying (CVE-2021-3634)
+Subject: CVE-2021-33191: Apache NiFi - MiNiFi C++: MiNiFi CPP arbitrary script execution is possible on the agent's host machine through the c2 protocol 
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+Description:
 
-a new vulnerability was made public today for libssh. It involves a
-possible heap-buffer overflow when rekeying and had CVE-2021-3634
-assigned to it.
-
-Vulnerability summary:
-
-"A malicious attacker can request rekey with key exchange algorithm
-with digest of different size, causing libssh reading or writing
-behind the buffer limits."
-
-CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:L/ (5.3)
-
-You can find more detailed information regarding this issue on
-libssh's security advisory:
-https://www.libssh.org/security/advisories/CVE-2021-3634.txt
-https://www.libssh.org/2021/08/26/libssh-0-9-6-security-release/
-
-Thanks,
-
-Marco Benatto
-Red Hat Product Security
-secalert@...hat.com for urgent response
+>From Apache NiFi MiNiFi C++ version 0.5.0 the c2 protocol implements an "agent-update" command which was designed to patch the application binary. 
+This "patching" command defaults to calling a trusted binary, but might be modified to an arbitrary value through a "c2-update"
+command. Said command is then executed using the same privileges as the application binary.  This was addressed in version 0.10.0
 
