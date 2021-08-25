@@ -1,4 +1,9 @@
-Received: (qmail 9957 invoked by uid 550); 15 Jan 2026 21:36:53 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["10212" "Wednesday" "25" "August" "2021" "12:01:35" "+0000" "Xen.org security team" "security@xen.org" nil "230" "[oss-security] Xen Security Advisory 382 v2 (CVE-2021-28699) - inadequate grant-v2 status frames array bounds check" nil nil nil "8" nil nil (number mark "U       security@xen Aug 25  230/10212 " thread-indent "\"[oss-security] Xen Security Advisory 382 v2 (CVE-2021-28699) - inadequate grant-v2 status frames array bounds check\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 382 v2 (CVE-2021-28699) - inadequate grant-v2 status frames array bounds check" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 29883 invoked by uid 550); 25 Aug 2021 12:01:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,107 +12,253 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 15690 invoked from network); 15 Jan 2026 21:27:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sdaoden.eu;
- s=citron; t=1768512426; x=1769179092; h=date:author:from:to:subject:
-  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
-  author:from:subject:date:to:cc:resent-author:resent-date:resent-from:
-  resent-sender:resent-to:resent-cc:resent-reply-to:resent-message-id:
-  in-reply-to:references:mime-version:content-type:
-  content-transfer-encoding:content-disposition:content-id:
-  content-description:message-id:mail-followup-to:openpgp:blahblahblah;
- bh=QbDwVcyIzEEazPCJ8qkiwzbakjiKv9TdSrSLE2krzBM=;
- b=jcxystP2wkW2k8domj/KURVLsO/rdqvrqhyZkNJZSxPQUgz7S/BBVOd9i9I444cO5LlhySRR
-  /N7b2vWTO8ZRKqum6iBD6qO5JztVKZzifT2+f/6Kon0n5CoCB34cVTsaF013qun9XaxuRPgwNC
-  0J+8KTE6Q/s3eEyTpwyliNFXeZP/yEHmGjMLIFdy9/jGnAeLeZWmyJ8tngrjKrNMIXW2Z0RTKo
-  5QDHQ9ZvL30MsW8D3RRQA4iGn237pQrDEEiDwENQA3ATJtI/zUvAFUUY5x0k2Qn7ml4UbZMfye
-  D9gB4eHX6RY7Un+5HJTD0qfgSBDUBWnQS9QOA5DF9ulQrmBQ==
-Date: Thu, 15 Jan 2026 22:27:05 +0100
-Author: Steffen Nurpmeso <steffen@sdaoden.eu>
-From: Steffen Nurpmeso <steffen@sdaoden.eu>
-To: oss-security@lists.openwall.com
-Message-ID: <20260115212705.TKR365wo@steffen%sdaoden.eu>
-In-Reply-To: <01e3014e-85d8-484c-b755-bd8eb6ddd10d@oracle.com>
-References: <01e3014e-85d8-484c-b755-bd8eb6ddd10d@oracle.com>
-Mail-Followup-To: oss-security@lists.openwall.com
-User-Agent: s-nail v14.9.25-743-g1489053f65-dirty
-OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
- url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
-BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
- the world can make no bugs.
-Subject: Re: [oss-security] Go 1.25.6 and Go 1.24.12 are released
- with 6 CVE fixes
+Received: (qmail 29717 invoked from network); 25 Aug 2021 12:01:55 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
+	Content-Transfer-Encoding:Content-Type;
+	bh=/ygqsxQibXAMTApsIgpDRBToW/55r09ChcsqTbbvviU=; b=CN5HmSYCxsaF20MF+MpudYF9I9
+	Q1VGIfyIbDd6pTbxjsgdVm/wgoQuZtsa+ZDE4iubsvObPbfO8wMs/O/H9ETooQU3SlB0NyowH0pjt
+	9I0I+jPcIb3czd/dhWoafKBX2k1ZcvFfgjrg5ZTja+ioiHftP+orZ1rXKuvMuwVQsTq4=;
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
+MIME-Version: 1.0
+X-Mailer: MIME-tools 5.509 (Entity 5.509)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1mIrb5-00066J-MJ@xenbits.xenproject.org>
+Date: Wed, 25 Aug 2021 12:01:35 +0000
+Subject: [oss-security] Xen Security Advisory 382 v2 (CVE-2021-28699) - inadequate
+ grant-v2 status frames array bounds check
 
-Alan Coopersmith wrote in
- <01e3014e-85d8-484c-b755-bd8eb6ddd10d@oracle.com>:
- |https://groups.google.com/g/golang-announce/c/Vd2tYVM8eUc announces:
- |> Hello gophers,
- |> 
- |> We have just released Go versions 1.25.6 and 1.24.12, minor point \
- |> releases.
- |> 
- |> These releases include 6 security fixes following the security policy:
- |> 
- |>   - archive/zip: denial of service when parsing arbitrary ZIP archives
- |> 
- |>     archive/zip used a super-linear file name indexing algorithm \
- |>     that is invoked
- |>     the first time a file in an archive is opened. This can lead \
- |>     to a denial of
- |>     service when consuming a maliciously constructed ZIP archive.
- |> 
- |>     Thanks to Thanks to Jakub Ciolek for reporting this issue.
- |> 
- |>     This is CVE-2025-61728 and Go issue https://go.dev/issue/77102.
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-Go is thrilling you know, those personalities involved in the past
-and present (also including Plan9 history, and all that) ...
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-It is a little bit off-topic, but it reminds me of kinds of
-"detoriation", as well as "spreaded complication" i have
-introduced myself when fixing bugs of all sort.  So looking at the
-link bug report, i see
+            Xen Security Advisory CVE-2021-28699 / XSA-382
+                               version 2
 
-  for dir := path.Dir(name); dir != "."; dir = path.Dir(dir) {
+         inadequate grant-v2 status frames array bounds check
 
-being replaced with an unrolled
+UPDATES IN VERSION 2
+====================
 
-  if idx := strings.LastIndex(dir, "/"); idx < 0 {
-    ...
+Public release.
 
-But Go supports "modification in place", and doesn't the above
-imply that the Go standard library interface is missing important
-functionality to avoid such security glitches in any code that
-makes use of path.?  Ie, path.Dir() is
+ISSUE DESCRIPTION
+=================
 
-  Dir returns all but the last element of path, typically the
-  path's directory. After dropping the final element using Split,
-  the path is Cleaned and trailing slashes are removed. If the
-  path is empty, Dir returns ".". If the path consists entirely of
-  slashes followed by non-slash bytes, Dir returns a single
-  slash. In any other case, the returned path does not end in
-  a slash.
+The v2 grant table interface separates grant attributes from grant
+status.  That is, when operating in this mode, a guest has two tables.
+As a result, guests also need to be able to retrieve the addresses that
+the new status tracking table can be accessed through.
 
-and path.Split() is
+For 32-bit guests on x86, translation of requests has to occur because
+the interface structure layouts commonly differ between 32- and 64-bit.
 
-  Split splits path immediately following the final slash,
-  separating it into a directory and file name component. If there
-  is no slash in path, Split returns an empty dir and file set to
-  path. The returned values have the property that path
-  = dir+file.
+The translation of the request to obtain the frame numbers of the
+grant status table involves translating the resulting array of frame
+numbers.  Since the space used to carry out the translation is limited,
+the translation layer tells the core function the capacity of the array
+within translation space.  Unfortunately the core function then only
+enforces array bounds to be below 8 times the specified value, and would
+write past the available space if enough frame numbers needed storing.
 
-And i note that the committed bugfix not only avoids all the
-canonicalization cleanup of Dir(), but also the creation of new
-(temporary) result strings.  In order to do that creates (yet
-another?) place that fiddles with indices.
+IMPACT
+======
 
-Just a (well-known, granted) thought in all the overdriven
-"memory-safe" noise.
+Malicious or buggy guest kernels may be able to mount a Denial of
+Service (DoS) attack affecting the entire system.  Privilege escalation
+and information leaks cannot be ruled out.
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions from 4.10 onwards are affected.  Xen versions 4.9 and
+older are not affected.
+
+Only 32-bit x86 guests permitted to use grant table version 2 interfaces
+can leverage this vulnerability.  64-bit x86 guests cannot leverage this
+vulnerability, but note that HVM and PVH guests are free to alter their
+bitness as they see fit.  On Arm, grant table v2 use is explicitly
+unsupported.
+
+Only guests permitted to have 8177 or more grant table frames can
+leverage this vulnerability.
+
+MITIGATION
+==========
+
+The problem can be avoided by not increasing too much the number of
+grants Xen would allow guests to establish.  The limit is controlled by
+the "gnttab_max_frames" Xen command line option and the
+"max_grant_frames" xl domain configuration setting.
+
+- From Xen 4.14 onwards it is also possible to alter the system wide upper
+bound of the number of grants Xen would allow guests to establish by
+writing to the /params/gnttab_max_frames hypervisor file system node.
+Note however that changing the value this way will only affect guests
+yet to be created on the respective host.
+
+Suppressing use of grant table v2 interfaces for 32-bit x86 guests will
+also avoid this vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa382.patch           xen-unstable - Xen 4.11.x
+
+$ sha256sum xsa382*
+1254d62c8ec2c6b45c117d1483af9a71f5de0e4142c9451dd5a75ee334219542  xsa382.meta
+9e500ba2bfe36bebf27262afcb9be7b02f950aed4a7b6c1738606d5ed538c2b8  xsa382.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or grant-frames-limiting mitigation
+described above (or others which are substantially similar) is permitted
+during the embargo, even on public-facing systems with untrusted guest
+users and administrators.
+
+HOWEVER, care has to be taken to avoid restricting guests too much, as
+them suddenly being unable to establish grants they used to be able to
+establish may lead to re-discovery of the issue.
+
+AND: Deployment of the grant table v2 disabling mitigation described
+above is NOT permitted during the embargo on public-facing systems with
+untrusted guest users and administrators.  This is because such a
+configuration change is recognizable by the affected guests.
+
+AND: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmEmMPYMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZwnkIALnDReUPP6qoQzBWHf9s93UPwM6YVdHl/ao1Nh9l
+IyMGtTKjJjtYR9at0tIJDmVecFZzsBtLhQlKWe5DvNP84ZQ99EGDjzsqYKGdJMZK
+QIfyUz74UKN5PwEzxeT2C3Q9tOIq2NA41Vax19MjAXSbvAi3jp/0CSj7i6h+bK5f
+WoBX9Av8Ie2ykF3Fe5i7yNl9gMpCyqEl3dijWwjezLIxlxzdBrjbKni+yBvmLBS9
+XdS++bu9LwAbQXeDc5oB0b6mvy+7oHzEJfvCH+tA6o6V6bls94sF8owi5H52rn1n
+23HzFQwbwqX9wmW5OKSS/NBzI9vJwzRCyOEVQw+eaZQGiHw=
+=kWGv
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa382.meta"
+Content-Disposition: attachment; filename="xsa382.meta"
+Content-Transfer-Encoding: base64
+
+ewogICJYU0EiOiAzODIsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
+Im1hc3RlciIsCiAgICAiNC4xNSIsCiAgICAiNC4xNCIsCiAgICAiNC4xMyIs
+CiAgICAiNC4xMiIsCiAgICAiNC4xMSIKICBdLAogICJUcmVlcyI6IFsKICAg
+ICJ4ZW4iCiAgXSwKICAiUmVjaXBlcyI6IHsKICAgICI0LjExIjogewogICAg
+ICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0
+YWJsZVJlZiI6ICJlZjMyYzdhZmEyNzMxYjc1ODIyNmQ2ZTEwYTFlNDg5YjFh
+MTVmYzQxIiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAz
+NzgsCiAgICAgICAgICAgIDM3OSwKICAgICAgICAgICAgMzgwCiAgICAgICAg
+ICBdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2Ez
+ODIucGF0Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9
+LAogICAgIjQuMTIiOiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4
+ZW4iOiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjogImVhMjBlZWU5N2U5ZTA4
+NjExMjdhODA3MGNjN2I5YWUzNTU3YjA5ZmIiLAogICAgICAgICAgIlByZXJl
+cXMiOiBbCiAgICAgICAgICAgIDM3OCwKICAgICAgICAgICAgMzc5LAogICAg
+ICAgICAgICAzODAKICAgICAgICAgIF0sCiAgICAgICAgICAiUGF0Y2hlcyI6
+IFsKICAgICAgICAgICAgInhzYTM4Mi5wYXRjaCIKICAgICAgICAgIF0KICAg
+ICAgICB9CiAgICAgIH0KICAgIH0sCiAgICAiNC4xMyI6IHsKICAgICAgIlJl
+Y2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVS
+ZWYiOiAiMzJkNTgwOTAyYjk1OTAwMGQ3OWQ1MWRmZjAzYTM1NjA2NTNjNGZj
+YiIsCiAgICAgICAgICAiUHJlcmVxcyI6IFsKICAgICAgICAgICAgMzc4LAog
+ICAgICAgICAgICAzNzksCiAgICAgICAgICAgIDM4MAogICAgICAgICAgXSwK
+ICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNhMzgyLnBh
+dGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAg
+ICI0LjE0IjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjog
+ewogICAgICAgICAgIlN0YWJsZVJlZiI6ICI0OTI5OWM0ODEzYjc4NDdkMjlk
+ZjA3YmY3OTBmNTQ4OTA2MGYyYTljIiwKICAgICAgICAgICJQcmVyZXFzIjog
+WwogICAgICAgICAgICAzNzgsCiAgICAgICAgICAgIDM3OSwKICAgICAgICAg
+ICAgMzgwCiAgICAgICAgICBdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAg
+ICAgICAgICAgICJ4c2EzODIucGF0Y2giCiAgICAgICAgICBdCiAgICAgICAg
+fQogICAgICB9CiAgICB9LAogICAgIjQuMTUiOiB7CiAgICAgICJSZWNpcGVz
+IjogewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjog
+ImRiYTc3NDg5NmY3ZGQ3NDc3M2MxNGQ1Mzc2NDNiN2Q3NDc3ZmVmY2QiLAog
+ICAgICAgICAgIlByZXJlcXMiOiBbCiAgICAgICAgICAgIDM3OCwKICAgICAg
+ICAgICAgMzc5LAogICAgICAgICAgICAzODAKICAgICAgICAgIF0sCiAgICAg
+ICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTM4Mi5wYXRjaCIK
+ICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAgICAibWFz
+dGVyIjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewog
+ICAgICAgICAgIlN0YWJsZVJlZiI6ICIyNWRhOTQ1NWYxYmI4YTZkMzMwMzk1
+NzVhN2IyOGJkZmM0ZTNmY2ZlIiwKICAgICAgICAgICJQcmVyZXFzIjogWwog
+ICAgICAgICAgICAzNzgsCiAgICAgICAgICAgIDM3OSwKICAgICAgICAgICAg
+MzgwCiAgICAgICAgICBdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAg
+ICAgICAgICJ4c2EzODIucGF0Y2giCiAgICAgICAgICBdCiAgICAgICAgfQog
+ICAgICB9CiAgICB9CiAgfQp9
+
+--=separator
+Content-Type: application/octet-stream; name="xsa382.patch"
+Content-Disposition: attachment; filename="xsa382.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
+OiBnbnR0YWI6IGZpeCBhcnJheSBjYXBhY2l0eSBjaGVjayBpbiBnbnR0YWJf
+Z2V0X3N0YXR1c19mcmFtZXMoKQoKVGhlIG51bWJlciBvZiBncmFudCBmcmFt
+ZXMgaXMgb2Ygbm8gaW50ZXJlc3QgaGVyZTsgY29udmVydGluZyB0aGUgcGFz
+c2VkCmluIG9wLm5yX2ZyYW1lcyB0aGlzIHdheSBtZWFucyB3ZSBhbGxvdyBm
+b3IgOCB0aW1lcyBhcyBtYW55IEdGTnMgdG8gYmUKd3JpdHRlbiBhcyBhY3R1
+YWxseSBmaXQgaW4gdGhlIGFycmF5LiBXZSB3b3VsZCBjb3JydXB0IHhsYXQg
+YXJlYXMgb2YKaGlnaGVyIHZDUFUtcyAoYWZ0ZXIgaGF2aW5nIGZhdWx0ZWQg
+bWFueSB0aW1lcyB3aGlsZSB0cnlpbmcgdG8gd3JpdGUgdG8KdGhlIGd1YXJk
+IHBhZ2VzIGJldHdlZW4gYW55IHR3byBhcmVhcykgZm9yIDMyLWJpdCBQViBn
+dWVzdHMuIEZvciBIVk0KZ3Vlc3RzIHdlJ2Qgc2ltcGx5IGNyYXNoIGFzIHNv
+b24gYXMgd2UgaGl0IHRoZSBmaXJzdCBndWFyZCBwYWdlLCBhcwphY2Nlc3Nl
+cyB0byB0aGUgeGxhdCBhcmVhIGFyZSBzaW1wbHkgbWVtY3B5KCkgdGhlcmUu
+CgpUaGlzIGlzIENWRS0yMDIxLTI4Njk5IC8gWFNBLTM4Mi4KCkZpeGVzOiAx
+OGIxYmU1ZTMyNGIgKCJnbnR0YWI6IG1ha2UgcmVzb3VyY2UgbGltaXRzIHBl
+ciBkb21haW4iKQpTaWduZWQtb2ZmLWJ5OiBKYW4gQmV1bGljaCA8amJldWxp
+Y2hAc3VzZS5jb20+CgotLS0gYS94ZW4vY29tbW9uL2dyYW50X3RhYmxlLmMK
+KysrIGIveGVuL2NvbW1vbi9ncmFudF90YWJsZS5jCkBAIC0zMjQzLDEyICsz
+MjQzLDExIEBAIGdudHRhYl9nZXRfc3RhdHVzX2ZyYW1lcyhYRU5fR1VFU1Rf
+SEFOREwKICAgICAgICAgZ290byB1bmxvY2s7CiAgICAgfQogCi0gICAgaWYg
+KCB1bmxpa2VseShsaW1pdF9tYXggPCBncmFudF90b19zdGF0dXNfZnJhbWVz
+KG9wLm5yX2ZyYW1lcykpICkKKyAgICBpZiAoIHVubGlrZWx5KGxpbWl0X21h
+eCA8IG9wLm5yX2ZyYW1lcykgKQogICAgIHsKICAgICAgICAgZ2RwcmludGso
+WEVOTE9HX1dBUk5JTkcsCi0gICAgICAgICAgICAgICAgICJncmFudF90b19z
+dGF0dXNfZnJhbWVzKCV1KSBmb3IgZCVkIGlzIHRvbyBsYXJnZSAoJXUsJXUp
+XG4iLAotICAgICAgICAgICAgICAgICBvcC5ucl9mcmFtZXMsIGQtPmRvbWFp
+bl9pZCwKLSAgICAgICAgICAgICAgICAgZ3JhbnRfdG9fc3RhdHVzX2ZyYW1l
+cyhvcC5ucl9mcmFtZXMpLCBsaW1pdF9tYXgpOworICAgICAgICAgICAgICAg
+ICAibnJfc3RhdHVzX2ZyYW1lcyBmb3IgJXBkIGlzIHRvbyBsYXJnZSAoJXUs
+JXUpXG4iLAorICAgICAgICAgICAgICAgICBkLCBvcC5ucl9mcmFtZXMsIGxp
+bWl0X21heCk7CiAgICAgICAgIG9wLnN0YXR1cyA9IEdOVFNUX2dlbmVyYWxf
+ZXJyb3I7CiAgICAgICAgIGdvdG8gdW5sb2NrOwogICAgIH0K
+
+--=separator--
