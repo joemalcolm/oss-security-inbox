@@ -1,51 +1,118 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/24/2
-Message-ID: <YFpulxkoFSCwxeto@zen.localdomain>
-Date: Tue, 23 Mar 2021 23:41:27 +0100
-From: ortmann@...teo.de
-To: oss-security@...ts.openwall.com
-Subject: Remote DoS Vulnerability in bitchx, ircii < 20210314 and scrollz
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/25/6
+Message-Id: <E1mIrb6-00067W-Nc@xenbits.xenproject.org>
+Date: Wed, 25 Aug 2021 12:01:36 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 383 v2 (CVE-2021-28700) - xen/arm: No memory limit for dom0less domUs
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-i discovered a remote DoS vulnerability (crash) that effects bitchx, ircii and
-scrollz.
+            Xen Security Advisory CVE-2021-28700 / XSA-383
+                               version 2
 
-Its unknown if this could also be used for arbitrary code execution.
+              xen/arm: No memory limit for dom0less domUs
 
-Affected Versions:
+UPDATES IN VERSION 2
+====================
 
-  This bug is very old and affects any version, except
-  ircii-20210314, which got a fix.
+Public release.
 
-CVE Name:
+ISSUE DESCRIPTION
+=================
 
-  none yet
+The dom0less feature allows an administrator to create multiple
+unprivileged domains directly from Xen.  Unfortunately, the
+memory limit from them is not set. This allow a domain to allocate
+memory beyond what an administrator originally configured.
 
-Problem Description:
+IMPACT
+======
 
-  ircii has a bug in parsing CTCP UTC messages. bitchx and scrollz are forks of
-  ircii and inherited that feature and bug.
+Malicious dom0less guest could drive Xen out of memory and may
+result to a Denial of Service (DoS) attack affecting the entire
+system.
 
-Impact:
+VULNERABLE SYSTEMS
+==================
 
-  A malicious irc user could nuke any other irc user that uses bitchx, ircii or
-  scrollz out of irc (crash their irc client) by connecting to the same irc
-  network and sending a malicious CTCP UTC message.
+Only Arm systems are vulnerable. Only domains created using the
+dom0less feature are affected.
 
-Solution:
+Only domains created using the dom0less feature can leverage the
+vulnerability.
 
-  For ircii: Update to ircii-20210314
-  For bitchx and scrollz: none yet
+All versions of Xen since 4.12 are vulnerable.
 
-History:
+MITIGATION
+==========
 
-  20210302 Vulnerability and PoC reported to:
-    bitchx - security@...chx.org
-    ircii - mrg@...rna.com.au
-    scrollz - flier@...ollz.info
-  20210314 ircii released a fixed version
+There is no known mitigation.
 
-light and love,
-Michael Ortmann
+CREDITS
+=======
+
+This issue was discovered by Julien Grall of Amazon.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa383.patch           xen-unstable - Xen 4.13.x
+xsa383-4.12.patch      Xen 4.12.x
+
+$ sha256sum xsa383*
+773fe38d5d182ce43b5552fcdf6ed08c33126ed728e40d94c5050f89bfb3bd4d  xsa383.meta
+cfd0632d250cc36d88269ae08e19e742c6bd07ba130c2604d51a10ba64d4e413  xsa383.patch
+d18f72fa595f330fa8ed13c9412a36fba58a8baf9ad30b9fc2fd4e4533c0ee1a  xsa383-4.12.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmEmMPYMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZmboIALCcOpac8K7jPXZ+D5S5S1kGExOHYCLDBCZ6LyPt
+jUmuR3r7xnkpJmcwSqGBHF5/PR6Sug+AjiggR8WHAFYiKod7yt1NjR4dm92Jy89x
+t4mpyQ2ZX7PIMOiTfxlsmzsDspBxjk9sV6Pt7w4o25MiWdmY41hEkE+qtJ0OBto0
+btzbaInKko6SXZWPGGpAToKlKPnwcApe2DehGYO98xl8eUZ8Ql/1lieHjuSK60Nx
+RlboPeGDZwDgDroRj8GFNGxl2hESULVof0tG3w2IXPmYoa9iTKNUnO3KFL4kAJ/p
+ZWzyRuHbX9FjQXBFnJJ5pyTHrc1aYzXJCwxAoSt436aRX2c=
+=NGUO
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa383.meta" of type "application/octet-stream" (1696 bytes)
+
+Download attachment "xsa383.patch" of type "application/octet-stream" (1859 bytes)
+
+Download attachment "xsa383-4.12.patch" of type "application/octet-stream" (1855 bytes)
