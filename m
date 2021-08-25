@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1837" "Tuesday" "15" "December" "2015" "13:15:07" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151215181507.A136936E040@smtpvbsrv1.mitre.org>" "40" "[oss-security] Re: CVE Request: Linux Kernel: information leak from getsockname" "^Cc:" nil nil "12" "2015121518:15:07" "[oss-security] Re: CVE Request: Linux Kernel: information leak from getsockname" (number mark "        cve-assign@m Dec 15   40/1837  " thread-indent "\"[oss-security] Re: CVE Request: Linux Kernel: information leak from getsockname\"\n") "<20151215143002.GM11263@suse.de>" ("<20151215143002.GM11263@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1220" "Wednesday" "25" "August" "2021" "10:49:04" "+0800" "butt3rflyh4ck" "butterflyhuangxx@gmail.com" nil "36" "[oss-security] Linux kernel: fs/btrfs: null-ptr-dereference bug in btrfs_rm_device in fs/btrfs/volumes.c" nil nil nil "8" nil nil (number mark "U       butterflyhua Aug 25   36/1220  " thread-indent "\"[oss-security] Linux kernel: fs/btrfs: null-ptr-dereference bug in btrfs_rm_device in fs/btrfs/volumes.c\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux kernel: fs/btrfs: null-ptr-dereference bug in btrfs_rm_device in fs/btrfs/volumes.c" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 29727 invoked by uid 550); 15 Dec 2015 18:15:19 -0000
+Received: (qmail 27865 invoked by uid 550); 25 Aug 2021 08:15:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +11,78 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29707 invoked from network); 15 Dec 2015 18:15:19 -0000
-In-Reply-To: <20151215143002.GM11263@suse.de>
-Message-Id: <20151215181507.A136936E040@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue, 15 Dec 2015 13:15:07 -0500 (EST)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: Linux Kernel: information leak from getsockname
-To: meissner@suse.de
+Received: (qmail 1043 invoked from network); 25 Aug 2021 02:49:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=V04UcMDq90anfFIOtyfOqKKd3rkIbEnJYzjflWOco9U=;
+        b=Zl9J13/1spBx7W2rEroebZoaaPYmkFCqeMboYP9I7N8HiNd+wXacsUPHB6e3T54xyT
+         3c86OxEUaFEhuHzwQKzvQzh+iYxn4QDax+EFFijJvisHDdePlu6G8qqhBEFk9WnGp4QX
+         8QIGc0O6vyboMJxCQpjtBnsZv+tseOXNs702WGlDwld5cbqbWYlRk3bjmCKI4mZ157Q0
+         fGAH/F3XSnc7JTFBHRpdepKE5TPdmhe7CUUyh2TpaZXt1fYPl/yxjyxcQsespVcjHkWu
+         xBJQJ39M8U1ON9tpqsTr87wzIiMtzl5DKtGWjm2zIDtGPdtqjlsVsLQHQnmxV4ShRI34
+         xgNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=V04UcMDq90anfFIOtyfOqKKd3rkIbEnJYzjflWOco9U=;
+        b=YaBg5buxxpzIPW6Zd9GOu7GWYFzbq1roPTbSYpeipGFQBEMwgnYpD2w+lTB2ONci94
+         f5JjXg+DmRDlRlwVi00aeH2x4Fru1gZFd8hopC4sgIIiMsl4y7OgIdiMIiE2UqMfnjpH
+         BMNqppuDY9iBl+i1x6Le7dh/AfbI6+dD3W/CTSoomw2l7Xno09BrhC7mipbroaTPkMLw
+         Y5zJQJj2nbVNC2vUT4YrnY/e4Zk5XZjpBKBLrlV64kktzg0DcnztxkKMXirK+MoL1zva
+         dwhdVELMHsBQ/meWu7pltXxMGGqf5r8fvM4sfzvCs7WydA+LjKjPbujdEpZj5H6R8u6j
+         X+YQ==
+X-Gm-Message-State: AOAM533ekRP+dab+WNd92kvxJ0qcqv/pv3VsglZE6++KbNzVXM1GjqGA
+	85owW2QFtQvABsgmiR7+Rs7deHzO+yJzhidbuVVArDhKYRQMKg==
+X-Google-Smtp-Source: ABdhPJwSQYxpMq8+f+/kut1u+1pwet01L6jq9vmm9Vs0ly0zQesVWIAWOxqXsaS18wUD2XlSry78qiTurkCbb3eetis=
+X-Received: by 2002:a25:2a90:: with SMTP id q138mr5563940ybq.379.1629859755598;
+ Tue, 24 Aug 2021 19:49:15 -0700 (PDT)
+MIME-Version: 1.0
+From: butt3rflyh4ck <butterflyhuangxx@gmail.com>
+Date: Wed, 25 Aug 2021 10:49:04 +0800
+Message-ID: <CAFcO6XP=t-BCX=NP=B6qH5WVQ1jc=pOS24d0d=6MS2dm66A_mQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] Linux kernel: fs/btrfs: null-ptr-dereference bug in
+ btrfs_rm_device in fs/btrfs/volumes.c
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello, there is a null pointer dereference bug in the btrfs_rm_device
+function in fs/btrfs/volumes.c in linux-5.14.0-rc4+ and reproduce too.
+Fortunately, triggering the bug requires =E2=80=98CAP_SYS_ADMIN=E2=80=99.
 
-> http://twitter.com/grsecurity/statuses/676744240802750464
-> https://lkml.org/lkml/2015/12/14/252
-> http://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=09ccfd238e5a0e670d8178cf50180ea81ae09ae1
+#Root Cause
+When a user invokes a BTRFS_IOC_RM_DEV_V2 ioctl to remove a non-exist
+volume device,
+it would call btrfs_ioctl_rm_dev_v2 function to implement. And
+btrfs_ioctl_rm_dev_v2 would call btrfs_rm_device,
+if the id of the volume device is illegal, it would trigger a
+null-ptr-deref bug to cause DoS.
 
-(not yet available at
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/drivers/net/ppp/pptp.c)
+# Analyse
+https://lore.kernel.org/linux-btrfs/CAFcO6XO5TC5sEo-C9JGC75JkNAzkOSSLA3a=3D=
+bwQqXFFbRTZ7Gw@mail.gmail.com/T/#md4b850f33616b7364f86e6fed144abc925f3669c
 
-> getsockname() for some socket families did not check the length of the passed sockaddr,
-> copying out more kernel memory than required, leaking information from the kernel stack,
-> including kernel addresses. This can be used for KASLR bypass or other information leaks.
+#Fix
+the patch for this issue, not available upstream now.
+https://lore.kernel.org/linux-btrfs/20210806102415.304717-1-wqu@suse.com/T/=
+#u
 
-Use CVE-2015-8569 for both the pptp_bind issue and the pptp_connect
-issue. (We don't know whether the pptp_connect issue would've been
-exploitable if only the pptp_bind issue were fixed.)
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+#Timeline
+*2021/8/6 - Vulnerability reported to maintainer and CC to
+linux-btrfs@vger.kernel.org.
+*2021/8/6 - Vulnerability confirmed and patched.
+*2021/8/10 - Vulnerability reported to secalert@redhat.com.
+*2021/8/25 - Opened on oss-security@lists.openwall.com.
 
-iQIcBAEBCAAGBQJWcFbvAAoJEL54rhJi8gl5ipsQALG7+8zUMjL85EDHbBd6N5CC
-sLcprIeZvir4u9alc/ElVojU3QYChlJumkHRB0BAxhVmUkrGbn6P0BEilbEff5vm
-L5VHhBkFhNSxcJtx1cehUOQOuxyQ0phiol5JojOjXAhXwTZbhMyVCuiw7qdP3OJj
-ltdLTon3a0Ctt5MPZSGCHJzDCCheUd9cVdpbzM1ynPIZPiRookaSt34SRDit8ADg
-9pybsyev7KV0eanVPB1iaxej5HEu4B2KUYwzA/5Y2g1Qx51R9GpwcPqw7OKXjoMe
-gu0JKbHmbVxj3oHl+GcMZaNEhsO5lRJ5qJ5ulq+MtAQ2rFpAaYlP/uFmm0A3J6Gz
-r0BqKs4R2zc1fo4/aB5ieTKBeVHjj5xIXyGOhjHqyBkpVKwS7dOAoDq9jT6f6an4
-Ibavbs0vk4imUOg6dfU3tvstvN++j2iEgK7OPuI68YQvu47PiaEYGm+uuZeFtASs
-ZDWekpHPfHAsrUADaSx6aO8s7k1/fSzKSf+KnI3Sf9DPjiCA7mMEM5xo/epiEqZk
-nMlwju5T2iChN7/q61LLnJPoilfdkpwruayM0xNs/SVmfkvKXmQt6R7ykfhLe1eu
-Byg1HcyTZV5jiQOqUI2nWTuTiqTDRUKS0qjHmO7bfnA/7lzId8ilCZfyt6IwciV4
-YccJUdQEqfUy1+I5unzr
-=bV38
------END PGP SIGNATURE-----
+#Credit
+the issue is reported by Active Defense Lab of Venustech.
+
+Regards,
+ butt3rflyh4ck.
+--=20
+Active Defense Lab of Venustech
