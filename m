@@ -1,28 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/13/5
-Message-ID: <b34423ad-6a9c-8ad5-d97b-1aee0e4722b1@apache.org>
-Date: Tue, 13 Jul 2021 17:15:27 +0000
-From: Stefan Bodewig <bodewig@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/25/3
+Message-ID: <CAFcO6XP=t-BCX=NP=B6qH5WVQ1jc=pOS24d0d=6MS2dm66A_mQ@mail.gmail.com>
+Date: Wed, 25 Aug 2021 10:49:04 +0800
+From: butt3rflyh4ck <butterflyhuangxx@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-36373: Apache Ant TAR archive denial of service vulnerability 
+Subject: Linux kernel: fs/btrfs: null-ptr-dereference bug in btrfs_rm_device in fs/btrfs/volumes.c
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Hello, there is a null pointer dereference bug in the btrfs_rm_device
+function in fs/btrfs/volumes.c in linux-5.14.0-rc4+ and reproduce too.
+Fortunately, triggering the bug requires ‘CAP_SYS_ADMIN’.
 
-When reading a specially crafted TAR archive an Apache Ant build can be made to allocate large amounts of memory that finally leads to an out of memory error, even for small inputs. This can be used to disrupt builds using Apache Ant.
+#Root Cause
+When a user invokes a BTRFS_IOC_RM_DEV_V2 ioctl to remove a non-exist
+volume device,
+it would call btrfs_ioctl_rm_dev_v2 function to implement. And
+btrfs_ioctl_rm_dev_v2 would call btrfs_rm_device,
+if the id of the volume device is illegal, it would trigger a
+null-ptr-deref bug to cause DoS.
+
+# Analyse
+https://lore.kernel.org/linux-btrfs/CAFcO6XO5TC5sEo-C9JGC75JkNAzkOSSLA3a=bwQqXFFbRTZ7Gw@mail.gmail.com/T/#md4b850f33616b7364f86e6fed144abc925f3669c
+
+#Fix
+the patch for this issue, not available upstream now.
+https://lore.kernel.org/linux-btrfs/20210806102415.304717-1-wqu@suse.com/T/#u
 
 
-Mitigation:
+#Timeline
+*2021/8/6 - Vulnerability reported to maintainer and CC to
+linux-btrfs@...r.kernel.org.
+*2021/8/6 - Vulnerability confirmed and patched.
+*2021/8/10 - Vulnerability reported to secalert@...hat.com.
+*2021/8/25 - Opened on oss-security@...ts.openwall.com.
 
-Apache Ant 1.9.x users should upgrade to 1.9.16 or later.
-Apache Ant 1.10.x users should upgrade to 1.10.11 or later.
+#Credit
+the issue is reported by Active Defense Lab of Venustech.
 
-Credit:
-
-This issue is similar to https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-35517 present in Apache Commons Compress which has been detected by OSS Fuzz.
-
-References:
-
-https://ant.apache.org/security.html
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-35517
-
+Regards,
+ butt3rflyh4ck.
+-- 
+Active Defense Lab of Venustech
