@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1632" "Monday" "10" "October" "2016" "13:53:32" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161010175332.3A7F46C074E@smtpvmsrv1.mitre.org>" "40" "[oss-security] Re: CVE request Qemu: 9pfs: potential NULL dereferencein 9pfs routines" nil nil nil "10" "2016101017:53:32" "[oss-security] Re: CVE request Qemu: 9pfs: potential NULL dereferencein 9pfs routines" (number mark "U       cve-assign@m Oct 10   40/1632  " thread-indent "\"[oss-security] Re: CVE request Qemu: 9pfs: potential NULL dereferencein 9pfs routines\"\n") "<alpine.LFD.2.20.1610101656300.27939@wniryva>" ("<alpine.LFD.2.20.1610101656300.27939@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["795" "Wednesday" "25" "August" "2021" "17:11:43" "-0300" "Jean D'Elboux" "j@bsd.com.br" nil "26" "Re: [oss-security] Possible memory leak on getspnam / getspnam_r" nil nil nil "8" nil nil (number mark "U       j@bsd.com.br Aug 25   26/795   " thread-indent "\"Re: [oss-security] Possible memory leak on getspnam / getspnam_r\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Possible memory leak on getspnam / getspnam_r" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 10152 invoked by uid 550); 10 Oct 2016 17:53:44 -0000
+Received: (qmail 15484 invoked by uid 550); 26 Aug 2021 07:26:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,52 +12,64 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10134 invoked from network); 10 Oct 2016 17:53:43 -0000
-From: cve-assign@mitre.org
-To: ppandit@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, liqiang6-s@360.cn
-In-Reply-To: <alpine.LFD.2.20.1610101656300.27939@wniryva>
-Message-Id: <20161010175332.3A7F46C074E@smtpvmsrv1.mitre.org>
-Date: Mon, 10 Oct 2016 13:53:32 -0400 (EDT)
-Subject: [oss-security] Re: CVE request Qemu: 9pfs: potential NULL dereferencein 9pfs routines
+Received: (qmail 1515 invoked from network); 25 Aug 2021 20:12:06 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bsd.com.br; s=capeta;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=y4ZxY85ZNu9+Gxcbov2EdZ48p0FvFHZuUOYLTuj27Xg=;
+        b=aYwFSpmjBNC5azSNMysBNBd8OhuX/H7QPXxdgXLYFLZ5WSfPb1cKJM7hPeZNh9Xn1+
+         MdRQy+ul5qzt6nGI9hocq2bXxgQpjexTCUYbLjhUx6NpRQmbssLRMk4T0BYAqfD8SaSK
+         vxdltivcxT+T1+uYd0BIaXV7V8s0hhXsWtEJg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=y4ZxY85ZNu9+Gxcbov2EdZ48p0FvFHZuUOYLTuj27Xg=;
+        b=gf8nJ7EKT7Odrw7Hxxs3rucNvl3/pgvunsqTdVVOmS4Tx2KtdaA6sOhX2hH91S3GSW
+         HQLe2YYc9yuKHN1fhRb1cAwldF7AmrPHi43Y2CacwXTnoKYfJ5CMCHnRwwp34PViGO0q
+         oZSFRLHCcYVrz/REF6RejXs4M8P6jU5FAOJm5GfsgEmfjwz92gbQ9686279AVp/oXJTJ
+         Z8cNJc6/H4gPyuD/RHX9Ub3y1FglfkNGDPkSX94bjBJcjzGoLVe6cTCyWjoRHWU9QqzX
+         kZiooiMjCYAQXpPMSHqRyee1mkODwwTToGuDH3FA2f13C4Z7jCtZDueYQmXU0Jc7efow
+         lo3Q==
+X-Gm-Message-State: AOAM531VyLfmOhhP5L8vuncQF1UvZuGekB1rPnAO04yizyjbvxfptFQr
+	EhgLgb2PHIzH8yyYQcMycXfT87Optfr/lerTHqMjXmECsqg=
+X-Google-Smtp-Source: ABdhPJxQOsZftmmj6Fk0QWb1ChVd5NF0NqSAiIHYMSgT9uqJ0v5sf8hUjBT4bVGH4KSrCm7917eoxAuo+ieRMml0m4w=
+X-Received: by 2002:a2e:bc18:: with SMTP id b24mr16374026ljf.437.1629922314701;
+ Wed, 25 Aug 2021 13:11:54 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAKpyPV-Z18FXae0t7vCozupvZ6+_9eeaoAQ=8_1sPM8Xfbn3ZQ@mail.gmail.com>
+ <38355066-A140-44A7-8E3D-58339304E77E@juniper.net> <CA+bc5v9Jqo0e0Nw1vo8FS11Th0fRKtyW+rUkXtX52WzVsbTspA@mail.gmail.com>
+In-Reply-To: <CA+bc5v9Jqo0e0Nw1vo8FS11Th0fRKtyW+rUkXtX52WzVsbTspA@mail.gmail.com>
+From: "Jean D'Elboux" <j@bsd.com.br>
+Date: Wed, 25 Aug 2021 17:11:43 -0300
+Message-ID: <CAKpyPV-pT1d3ysnUVJ7rWufZMv8t7mFdZu1xnST0grO=GoH31Q@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="00000000000094600305ca67dc6a"
+Subject: Re: [oss-security] Possible memory leak on getspnam / getspnam_r
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--00000000000094600305ca67dc6a
+Content-Type: text/plain; charset="UTF-8"
 
-> Quick Emulator(Qemu) built with the virtio-9p back-end support is vulnerable
-> to a null pointer dereference issue. It could occur while doing an I/O vector
-> unmarshalling operation in v9fs_iov_vunmarshal() routine.
-> 
-> A privileged user/process inside guest could use this flaw to crash the Qemu
-> process instance resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg07143.html
+Thanks for your email Travis.
 
-Use CVE-2016-8578.
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=fsdev/9p-iov-marshal.c but
-that may be an expected place for a later update.
+> Alternatively, a new function cleanup_and_zeroize_caches() could added. A
+> user
+> could call this after fork().
+>
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Yes, I've suggested something similar as an alternative (please check NB at
+the end of my email).
 
-iQIcBAEBCAAGBQJX+9Q5AAoJEHb/MwWLVhi2mwMP/0jl7A1btTRICOrx2gAEjWOR
-+q8XeDpGWNXOKf1+XKpVPwrwLZ7jDuvuR3VfBgwOtpA7hMoLAcIX8G6m+FlLHwlX
-dJafKAaunKt0L4LFV0l8Qbe2vSITJHF8yY8ftfEkRjx+yozwh4waJYPsmU4M1Akr
-atzlUD24VsiW7UFfITEFC6N428ms2ReYL5P6o0uRgoXWVo8/3uBpaj7daH6BaCzb
-1MBBcbV5Zn/qSDSM115WcN2rO3W3jBL2chUPAd/rJlr0JqiVFCVxodFvrW0Tl0Jp
-K5InpRCqpBrPZrWMRFDaZj8Saf+6IWI5Q0WI15DqJXQtnJMgndEksAIJWT7SboIL
-FVROFUlO7XkICK0riBgJVAV+ZII7u8IJ0dchxV555dErvsVneJllpQag9iisN9Hj
-PAXg2I+kbPAb1DWoXhUDbzg/HcNgvHUk+6GYZUHAMVbp6ENggCrHmEj9R5zxRatD
-vmpgv+OVhlRTCBsvDNDILSALk6TRWM5Ol6/iLHC+qBXbcRNi5kYdGAXZk5bvT1IW
-BnQeRLlotkFFmY3BWVvj9r4phLfjS4AHDIslI+oRYRroe4Dm+sSYky3N6+yZVMuH
-Cyh1g1X7sI7fiBA9lCJzMCYBsmnsE6Fk6tA+NqHmk3zU3lR8tSXtVpbNv15vL4XO
-AgAKlVBqomng0+P1MIeh
-=L1Fq
------END PGP SIGNATURE-----
+
+> Of course, introducing a new function complicates the APIs and requires
+> developers to add them. Also, to support multiple versions of libraries,
+> developers would need to protect the call with an '#ifdef
+> SUPPORTS_NEW_FUNCTION'.
+>
+
+In order to avoid more complexity to the API, instead of creating a new
+function, endspent() could be bzero() internal buffer, since the user is
+expressing he/she is done processing when calling it.
+
+--00000000000094600305ca67dc6a--
