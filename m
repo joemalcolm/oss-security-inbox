@@ -1,26 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/13/4
-Message-ID: <b713094b-a7d1-a7db-4ff9-3a1fe3523d6d@apache.org>
-Date: Tue, 13 Jul 2021 04:01:33 +0000
-From: Stefan Bodewig <bodewig@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/26/1
+Message-ID: <CAKpyPV-pT1d3ysnUVJ7rWufZMv8t7mFdZu1xnST0grO=GoH31Q@mail.gmail.com>
+Date: Wed, 25 Aug 2021 17:11:43 -0300
+From: "Jean D'Elboux" <j@....com.br>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-36090: Apache Commons Compress 1.0 to 1.20 denial of service vulnerability 
+Subject: Re: Possible memory leak on getspnam / getspnam_r
 Content-Type: text/plain; charset=utf-8
 
-Description:
-
-When reading a specially crafted ZIP archive, Compress can be made to allocate large amounts of memory that finally leads to an out of memory error even for very small inputs. This could be used to mount a denial of service attack against services that use Compress' zip package.
+Thanks for your email Travis.
 
 
-Mitigation:
+> Alternatively, a new function cleanup_and_zeroize_caches() could added. A
+> user
+> could call this after fork().
+>
 
-Commons Compress users should upgrade to 1.21 or later.
+Yes, I've suggested something similar as an alternative (please check NB at
+the end of my email).
 
-Credit:
 
-This issue was discovered by OSS Fuzz.
+> Of course, introducing a new function complicates the APIs and requires
+> developers to add them. Also, to support multiple versions of libraries,
+> developers would need to protect the call with an '#ifdef
+> SUPPORTS_NEW_FUNCTION'.
+>
 
-References:
-
-https://commons.apache.org/proper/commons-compress/security-reports.html
+In order to avoid more complexity to the API, instead of creating a new
+function, endspent() could be bzero() internal buffer, since the user is
+expressing he/she is done processing when calling it.
 
