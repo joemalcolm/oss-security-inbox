@@ -1,66 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/10/2
-Message-ID: <20210810122113.3fe65cc9@computer>
-Date: Tue, 10 Aug 2021 12:21:13 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/25/2
+Message-ID: <CAFcO6XMiLJqwy=QW0Mv-yruhytSFRwb3yJsdMRVg3Gghm_5u7g@mail.gmail.com>
+Date: Wed, 25 Aug 2021 10:40:29 +0800
+From: butt3rflyh4ck <butterflyhuangxx@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: STARTTLS vulnerabilities
+Subject: Linux kernel: qrtr: another out-of-bound Read in qrtr_endpoint_post in net/qrtr/qrtr.c
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi, There was another out-of-bound read bug in qrtr_endpoint_post in
+net/qrtr/qrtr.c in 5.14.0-rc6+ and reproduced it.
 
-I wanted to share some research that we did on the security of
-STARTTLS. While we didn't specifically look at open source software,
-many of the vulnerabilities found are in open source mail servers and
-clients:
-
-https://nostarttls.secvuln.info/
-
-Our starting point was an old vulnerability in Postfix [1]. In
-2011 Postfix developer Wietse Venema found that it's possible to inject
-plaintext content into the TCP packet of a STARTTLS command and a
-server would interpret it as if it was part of the TLS session.
-
-This command injection vulnerability was subsequently found in many
-other mail servers, but as we learned it was still not fixed
-everywhere. It is most severe in IMAP and SMTP/Submission servers,
-where it can be used for credential stealing.
-
-We subsequently also found that a very similar (but somewhat less
-severe) vulnerability exists in mail clients that also would interpret
-plaintext injected into the answer to a STARTTLS command as if they
-were part of the TLS connection. We call this a response injection.
-
-Furthermore we learned that the IMAP PREAUTH feature is problematic in
-combination with STARTTLS. PREAUTH can be sent by a server in response
-to a client connection to signal the client that it is already
-authenticated without login credentials. However the standards say that
-in an authenticated state a client cannot send a STARTTLS command. Thus
-PREAUTH allows a MitM attacker to prevent STARTTLS from happening. This
-was originaly found in the Trojita mail client, but we found many other
-mail clients are vulnerable.
-
-Noteworthy open source projects that were impacted by at least one of
-the vulnerabilities we found include Mozilla Thunderbird, Claws-Mail,
-Mutt, LibEtPan (mail protocol library used by many other clients),
-Exim, Dovecot, s/qmail, Courier. Our webpage lists all the
-STARTTLS vulnerabilities we found and as far as we know them the state
-of fixes and CVEs.
+This check in  qrtr_endpoint_post was incomplete, did not consider size is 0:
+```
+if (len != ALIGN(size, 4) + hdrlen)
+                goto err;
+```
+if size from qrtr_hdr is 0, the result of ALIGN(size, 4) will be 0,
+In case of len == hdrlen and size == 0 in header this check won't fail and
+```
+ if (cb->type == QRTR_TYPE_NEW_SERVER) { /* Remote node endpoint can
+bridge other distant nodes */
+             const struct qrtr_ctrl_pkt *pkt = data + hdrlen;
+             qrtr_node_assign(node, le32_to_cpu(pkt->server.node));
+ }
+```
+will also read out of bound from data, which is hdrlen allocated block.
 
 
-Our focus was the communication between mail clients and servers. We
-came to the conclusion that in this situation the dedicated / implicit
-TLS ports (465, 993, 995) for mail protocols should be preferred as
-they avoid all STARTTLS vulnerabilities and have no real downside
-(it's even faster because you avoid roundtrips). Ideally STARTTLS
-should be deprecated in the long term.
+#analyze and some details
+https://lists.openwall.net/netdev/2021/08/17/124
 
-Communication from server to server (esp. in combionation with
-MTA-STS) and STARTTLS in other protocols would be good avenues for
-further research.
+#patch
+https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=7e78c597c3eb
+now not available upstream.
 
-[1] http://www.postfix.org/CVE-2011-0411.html
+#Timeline
+*2021/8/17 - Vulnerability reported to netdev@...r.kernel.org.
+*2021/8/20 - Vulnerability confirmed and patched.
+*2021/8/23 - Vulnerability reported to secalert@...hat.com.
+*2021/8/25 - Opened on oss-security@...ts.openwall.com.
 
--- 
-Hanno Böck
-https://hboeck.de/
+#Credit
+Active Defense Lab of Venustech.
+
+
+Regards,
+ butt3rflyh4ck.
+
+--
+Active Defense Lab of Venustech
