@@ -1,63 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/26/3
-Message-ID: <CAFcO6XNHPFyFvFUJhPVQ+YHLZw=fnxGoig+ZjWjv7rXZcxmX2g@mail.gmail.com>
-Date: Thu, 26 Aug 2021 17:36:02 +0800
-From: butt3rflyh4ck <butterflyhuangxx@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: fs/btrfs: null-ptr-dereference bug in btrfs_rm_device in fs/btrfs/volumes.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/25/10
+Message-ID: <20210825213708.GA3330@localhost.localdomain>
+Date: Wed, 25 Aug 2021 21:52:26 +0000
+From: Qualys Security Advisory <qsa@...lys.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2021-33909: size_t-to-int vulnerability in Linux's filesystem layer
 Content-Type: text/plain; charset=utf-8
 
-Hi, RedHat has assigned  CVE-2021-3739   to this issue.
+Hi all,
 
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-3739.
+Our exploit for CVE-2021-33909 (Sequoia) is attached to this email.
+Alternatively, it is available at:
 
-Please track the below link for more information.
-https://bugzilla.redhat.com/show_bug.cgi?id=1997958
+https://www.qualys.com/research/security-advisories/
 
-Regards,
-  butt3rflyh4ck.
+We are at your disposal for questions, comments, and further
+discussions. Thank you very much!
 
-
-
-On Wed, Aug 25, 2021 at 10:49 AM butt3rflyh4ck
-<butterflyhuangxx@...il.com> wrote:
->
-> Hello, there is a null pointer dereference bug in the btrfs_rm_device
-> function in fs/btrfs/volumes.c in linux-5.14.0-rc4+ and reproduce too.
-> Fortunately, triggering the bug requires ‘CAP_SYS_ADMIN’.
->
-> #Root Cause
-> When a user invokes a BTRFS_IOC_RM_DEV_V2 ioctl to remove a non-exist
-> volume device,
-> it would call btrfs_ioctl_rm_dev_v2 function to implement. And
-> btrfs_ioctl_rm_dev_v2 would call btrfs_rm_device,
-> if the id of the volume device is illegal, it would trigger a
-> null-ptr-deref bug to cause DoS.
->
-> # Analyse
-> https://lore.kernel.org/linux-btrfs/CAFcO6XO5TC5sEo-C9JGC75JkNAzkOSSLA3a=bwQqXFFbRTZ7Gw@mail.gmail.com/T/#md4b850f33616b7364f86e6fed144abc925f3669c
->
-> #Fix
-> the patch for this issue, not available upstream now.
-> https://lore.kernel.org/linux-btrfs/20210806102415.304717-1-wqu@suse.com/T/#u
->
->
-> #Timeline
-> *2021/8/6 - Vulnerability reported to maintainer and CC to
-> linux-btrfs@...r.kernel.org.
-> *2021/8/6 - Vulnerability confirmed and patched.
-> *2021/8/10 - Vulnerability reported to secalert@...hat.com.
-> *2021/8/25 - Opened on oss-security@...ts.openwall.com.
->
-> #Credit
-> the issue is reported by Active Defense Lab of Venustech.
->
-> Regards,
->  butt3rflyh4ck.
-> --
-> Active Defense Lab of Venustech
-
-
+With best regards,
 
 --
-Active Defense Lab of Venustech
+the Qualys Security Advisory team
+
+
+[https://d1dejaj6dcqv24.cloudfront.net/asset/image/email-banner-384-2x.png]<https://www.qualys.com/email-banner>
+
+
+
+This message may contain confidential and privileged information. If it has been sent to you in error, please reply to advise the sender of the error and then immediately delete it. If you are not the intended recipient, do not read, copy, disclose or otherwise use this message. The sender disclaims any liability for such unauthorized use. NOTE that all incoming emails sent to Qualys email accounts will be archived and may be scanned by us and/or by external service providers to detect and prevent threats to our systems, investigate illegal or inappropriate behavior, and/or eliminate unsolicited promotional emails (“spam”). If you have any concerns about this process, please contact us.
+
+Download attachment "CVE-2021-33909-exploit.tar.gz" of type "application/gzip" (13610 bytes)
