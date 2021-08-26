@@ -1,48 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/16/3
-Message-ID: <CAA8xKjVxi7xuZ-SFHGa63jFv9G2t4tEwVZ7qMaJP=ssynYGvKA@mail.gmail.com>
-Date: Fri, 16 Apr 2021 15:28:15 +0200
-From: Mauro Matteo Cascella <mcascell@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Cheolwoo Myung <cwmyung@....ac.kr>, Alexander Bulekov <alxndr@...edu>
-Subject: QEMU: ESP security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/26/4
+Message-ID: <66DDFEAA-E5B2-4348-B5D9-ECCE66231F44@oracle.com>
+Date: Thu, 26 Aug 2021 14:40:59 +0000
+From: John Haxby <john.haxby@...cle.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: butt3rflyh4ck <butterflyhuangxx@...il.com>
+Subject: Re: Linux kernel: qrtr: another out-of-bound Read in qrtr_endpoint_post in net/qrtr/qrtr.c
 Content-Type: text/plain; charset=utf-8
 
-Hello,
-
-Several issues, including assertion failures, NULL pointer
-dereferences, and memory corruption flaws were identified in the
-am53c974 (ESP) device emulation of QEMU. A privileged guest user could
-use these flaws to crash the QEMU process on the host, resulting in a
-denial of service. Potential code execution with the privileges of the
-QEMU process cannot be ruled out.
-
-These issues are going to be fixed in the coming 6.0 release, see
-https://wiki.qemu.org/Planning/6.0#Fixed_in_rc3.
-
-Patch series:
-https://lists.gnu.org/archive/html/qemu-devel/2021-04/msg01000.html
-
-Upstream commits:
-https://git.qemu.org/?p=qemu.git;a=commit;h=0db895361b
-https://git.qemu.org/?p=qemu.git;a=commit;h=e392255766
-https://git.qemu.org/?p=qemu.git;a=commit;h=e5455b8c1c
-https://git.qemu.org/?p=qemu.git;a=commit;h=c5fef9112b
-https://git.qemu.org/?p=qemu.git;a=commit;h=7b320a8e67
-https://git.qemu.org/?p=qemu.git;a=commit;h=9954575173
-https://git.qemu.org/?p=qemu.git;a=commit;h=fa7505c154
-https://git.qemu.org/?p=qemu.git;a=commit;h=fbc6510e33
-https://git.qemu.org/?p=qemu.git;a=commit;h=0ebb5fd805
-https://git.qemu.org/?p=qemu.git;a=commit;h=324c880989
-https://git.qemu.org/?p=qemu.git;a=commit;h=607206948c
 
 
-Acknowledgements: Cheolwoo Myung and Alexander Bulekov (cc'd).
-CVE-2020-35504, CVE-2020-35505, CVE-2020-35506 assigned by Red Hat, Inc.
+> On 25 Aug 2021, at 03:40, butt3rflyh4ck <butterflyhuangxx@...il.com> wrote:
+> 
+> Hi, There was another out-of-bound read bug in qrtr_endpoint_post in
+> net/qrtr/qrtr.c in 5.14.0-rc6+ and reproduced it.
+> 
+> This check in  qrtr_endpoint_post was incomplete, did not consider size is 0:
+> ```
+> if (len != ALIGN(size, 4) + hdrlen)
+>                goto err;
+> ```
+> if size from qrtr_hdr is 0, the result of ALIGN(size, 4) will be 0,
+> In case of len == hdrlen and size == 0 in header this check won't fail and
+> ```
+> if (cb->type == QRTR_TYPE_NEW_SERVER) { /* Remote node endpoint can
+> bridge other distant nodes */
+>             const struct qrtr_ctrl_pkt *pkt = data + hdrlen;
+>             qrtr_node_assign(node, le32_to_cpu(pkt->server.node));
+> }
+> ```
+> will also read out of bound from data, which is hdrlen allocated block.
+> 
+> 
+> #analyze and some details
+> https://lists.openwall.net/netdev/2021/08/17/124
+> 
+> #patch
+> https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=7e78c597c3eb
+> now not available upstream.
 
-Best regards.
--- 
-Mauro Matteo Cascella
-Red Hat Product Security
-PGP-Key ID: BB3410B0
+Hi,
 
+Did you ask for a CVE for this bug?
+
+jch
+
+> 
+> #Timeline
+> *2021/8/17 - Vulnerability reported to netdev@...r.kernel.org.
+> *2021/8/20 - Vulnerability confirmed and patched.
+> *2021/8/23 - Vulnerability reported to secalert@...hat.com.
+> *2021/8/25 - Opened on oss-security@...ts.openwall.com.
+> 
+> #Credit
+> Active Defense Lab of Venustech.
+> 
+> 
+> Regards,
+> butt3rflyh4ck.
+> 
+> --
+> Active Defense Lab of Venustech
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
