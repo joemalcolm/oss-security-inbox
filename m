@@ -1,22 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/20/2
-Message-ID: <729765b4-00fc-bf19-d0b0-0f3923f685b9@enst-bretagne.fr>
-Date: Tue, 20 Apr 2021 09:54:56 +0200
-From: Gabriel Corona <gabriel.corona@...t-bretagne.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/26/5
+Message-ID: <CAOGQQ2-5630=HhmZbaxWr2bB3vHdzd=FE1hZ2jgCn71hxPZ2WA@mail.gmail.com>
+Date: Thu, 26 Aug 2021 11:58:35 -0300
+From: Marco Benatto <mbenatto@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: DNS rebinding vulnerability in npupnp
+Subject: libssh: Possible heap-buffer overflow when rekeying (CVE-2021-3634)
 Content-Type: text/plain; charset=utf-8
 
-The server-part of npupnp, a library used to implement UUPnP clients and
-servers, is vulnerable to DNS rebinding attacks.
+Hello all,
 
-Impact: A remote web server can exploit this vulnerability to trick the
-user browser into triggering actions on the local UPnP services
-implemented using this library.
+a new vulnerability was made public today for libssh. It involves a
+possible heap-buffer overflow when rekeying and had CVE-2021-3634
+assigned to it.
 
-This is fixed in v4.1.4.
+Vulnerability summary:
 
-https://framagit.org/medoc92/npupnp
-https://www.lesbonscomptes.com/upmpdcli/npupnp-doc/libnpupnp.html
+"A malicious attacker can request rekey with key exchange algorithm
+with digest of different size, causing libssh reading or writing
+behind the buffer limits."
 
-A CVE as been requested.
+CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:L/ (5.3)
+
+You can find more detailed information regarding this issue on
+libssh's security advisory:
+https://www.libssh.org/security/advisories/CVE-2021-3634.txt
+https://www.libssh.org/2021/08/26/libssh-0-9-6-security-release/
+
+Thanks,
+
+Marco Benatto
+Red Hat Product Security
+secalert@...hat.com for urgent response
+
