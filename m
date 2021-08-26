@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1724" "Saturday" "11" "June" "2016" "11:37:06" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160611153706.6DDF16C084B@smtpvmsrv1.mitre.org>" "44" "[oss-security] Re: MantisBT: XSS in custom fields management" nil nil nil "6" "2016061115:37:06" "[oss-security] Re: MantisBT: XSS in custom fields management" (number mark "U       cve-assign@m Jun 11   44/1724  " thread-indent "\"[oss-security] Re: MantisBT: XSS in custom fields management\"\n") "<njfkjh$lk7$1@ger.gmane.org>" ("<njfkjh$lk7$1@ger.gmane.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1659" "Thursday" "26" "August" "2021" "17:36:02" "+0800" "butt3rflyh4ck" "butterflyhuangxx@gmail.com" nil "57" "Re: [oss-security] Linux kernel: fs/btrfs: null-ptr-dereference bug in btrfs_rm_device in fs/btrfs/volumes.c" nil nil nil "8" nil nil (number mark "U       butterflyhua Aug 26   57/1659  " thread-indent "\"Re: [oss-security] Linux kernel: fs/btrfs: null-ptr-dereference bug in btrfs_rm_device in fs/btrfs/volumes.c\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: fs/btrfs: null-ptr-dereference bug in btrfs_rm_device in fs/btrfs/volumes.c" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 19954 invoked by uid 550); 11 Jun 2016 15:37:25 -0000
+Received: (qmail 26033 invoked by uid 550); 26 Aug 2021 09:44:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,56 +12,100 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19915 invoked from network); 11 Jun 2016 15:37:21 -0000
-From: cve-assign@mitre.org
-To: dregad@mantisbt.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <njfkjh$lk7$1@ger.gmane.org>
-Message-Id: <20160611153706.6DDF16C084B@smtpvmsrv1.mitre.org>
-Date: Sat, 11 Jun 2016 11:37:06 -0400 (EDT)
-Subject: [oss-security] Re: MantisBT: XSS in custom fields management
+Received: (qmail 21561 invoked from network); 26 Aug 2021 09:36:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=6guOID6CeHEHkB2/3uRpvYh8ivxo36dVNf8Sch4v5PM=;
+        b=b1r0ffQLRy0ZVGoURCyilcMIFyDsTnaGdYNZySAIJ9BiRG2HMCaVuBipdABVjX9BTt
+         WbYofJVBUFL9hUV8XhNRqW4poLBcO/dHIsJ+c5xlHOpXdROgnKyVDu3mQuZdiP/d2iXJ
+         vbjamXWIaHZpcuIkLS8wJydFzdIy8Be5jaYg4a8/+j/u1tCo9PVQXtnMhFuj+3I27dOM
+         3vFhwHYF1QAnreZ4INvrS8w4HiBY2YPqtRgDV3VMT3WYaOB2L5jcHgp0rfK8bThu+GLl
+         y5PUwiZLBRNO/a4zNLv89C1vfae2JhZHfRCKAlztWpcFusiWus9M+fO9PKaMo0TPlnnV
+         93HQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=6guOID6CeHEHkB2/3uRpvYh8ivxo36dVNf8Sch4v5PM=;
+        b=QOoWPZn0/ePVxFNxsgl/Uut/aUPdwMgVpR2TdT7RBj1mc995LwizWxPE0bNN5Anp7q
+         nZeghE3LgkPoX9iE06daROdtjvwE711WH5Pjz1dLruBnfJjLKtwoO6In96NbLEYXe72o
+         j31vuaEaVAFEPKX+qmioG0kTU4maf57jT6dpWnahvXCl7qcQyRxW0rVO9KErlQDgV3ap
+         8Grn9R61n3z0SCvnWCTIz7/raQQFL2txrXIsdohKquvyIn4cQO53uob/uIt1CciKTymS
+         tTRPaUBKguUFNrfW2XPyQVy/A+Yf59nA9+ii/CkEabcb2qOKPFglVH5KIDbUDRltWUm5
+         tYMw==
+X-Gm-Message-State: AOAM533Igh0iU7B8+HqUVyvhNC9Qf45/aYUTHz5K7Syyyze9s+DJp/oD
+	9AsbFnNW1U3dsxHdMDhvdtrNj3/2Yo3k5Q1oCVEuEJLN8+EKDw==
+X-Google-Smtp-Source: ABdhPJyYZE4RgojdvQ6q8pBZ8FkqTxn6yRGtPOq/LWFwUg1D7nk5vT8m8EfV4Rq7A/rpAk28kJpbz7HRJ4l+jnHukHg=
+X-Received: by 2002:a25:a241:: with SMTP id b59mr3947020ybi.522.1629970572105;
+ Thu, 26 Aug 2021 02:36:12 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAFcO6XP=t-BCX=NP=B6qH5WVQ1jc=pOS24d0d=6MS2dm66A_mQ@mail.gmail.com>
+In-Reply-To: <CAFcO6XP=t-BCX=NP=B6qH5WVQ1jc=pOS24d0d=6MS2dm66A_mQ@mail.gmail.com>
+From: butt3rflyh4ck <butterflyhuangxx@gmail.com>
+Date: Thu, 26 Aug 2021 17:36:02 +0800
+Message-ID: <CAFcO6XNHPFyFvFUJhPVQ+YHLZw=fnxGoig+ZjWjv7rXZcxmX2g@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] Linux kernel: fs/btrfs: null-ptr-dereference bug
+ in btrfs_rm_device in fs/btrfs/volumes.c
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi, RedHat has assigned  CVE-2021-3739   to this issue.
 
-> Please assign a CVE ID for the following issue.
-> 
-> unescaped output of 'return URL' GPC parameter
-> 
-> https://mantisbt.org/bugs/view.php?id=20956
-> https://github.com/mantisbt/mantisbt/commit/5068df2dcf79c34741c746c9b27e0083f2a374da
-> https://github.com/mantisbt/mantisbt/commit/11ab3d6c82a1d3a89b1024f77349fb60a83743c5
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2021-3739.
 
-As far as we can tell, this is best interpreted as a single XSS
-vulnerability, even though:
+Please track the below link for more information.
+https://bugzilla.redhat.com/show_bug.cgi?id=3D1997958
 
-  - "Also `print_bracket_link()` function doesn't check if link is
-     `data:` or `javascript:`" is a separate observation
+Regards,
+  butt3rflyh4ck.
 
-  - the number of .php files changed in 1.2.x is different from the
-    number of .php files changed in 1.3.x
 
-Use CVE-2016-5364.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+On Wed, Aug 25, 2021 at 10:49 AM butt3rflyh4ck
+<butterflyhuangxx@gmail.com> wrote:
+>
+> Hello, there is a null pointer dereference bug in the btrfs_rm_device
+> function in fs/btrfs/volumes.c in linux-5.14.0-rc4+ and reproduce too.
+> Fortunately, triggering the bug requires =E2=80=98CAP_SYS_ADMIN=E2=80=99.
+>
+> #Root Cause
+> When a user invokes a BTRFS_IOC_RM_DEV_V2 ioctl to remove a non-exist
+> volume device,
+> it would call btrfs_ioctl_rm_dev_v2 function to implement. And
+> btrfs_ioctl_rm_dev_v2 would call btrfs_rm_device,
+> if the id of the volume device is illegal, it would trigger a
+> null-ptr-deref bug to cause DoS.
+>
+> # Analyse
+> https://lore.kernel.org/linux-btrfs/CAFcO6XO5TC5sEo-C9JGC75JkNAzkOSSLA3a=
+=3DbwQqXFFbRTZ7Gw@mail.gmail.com/T/#md4b850f33616b7364f86e6fed144abc925f366=
+9c
+>
+> #Fix
+> the patch for this issue, not available upstream now.
+> https://lore.kernel.org/linux-btrfs/20210806102415.304717-1-wqu@suse.com/=
+T/#u
+>
+>
+> #Timeline
+> *2021/8/6 - Vulnerability reported to maintainer and CC to
+> linux-btrfs@vger.kernel.org.
+> *2021/8/6 - Vulnerability confirmed and patched.
+> *2021/8/10 - Vulnerability reported to secalert@redhat.com.
+> *2021/8/25 - Opened on oss-security@lists.openwall.com.
+>
+> #Credit
+> the issue is reported by Active Defense Lab of Venustech.
+>
+> Regards,
+>  butt3rflyh4ck.
+> --
+> Active Defense Lab of Venustech
 
-iQIcBAEBCAAGBQJXXC9xAAoJEHb/MwWLVhi2D7YP/2UaDjwKLEa6K+aUJG+Zbk87
-BGlRRVrzTY6co+uErHZIG/XgAho7QERN68LhjVrI3IYqBgogOlNDLtiyusM2T8W7
-1gQA+paYuhcIVlI53IxsMM6ooww4rTyp4pR1fGxyRt7BhVVBs7XJzv+AJy+qxBM9
-3TF/TwDvTGV0agcefOkQq0Y2iXbvWDf3R8/rX/IOYabYDXvODgzYR+szWrm9BanR
-GV1Ls2Lzty5FU+/uK0KC9/WFx9JhifO19S+8J7hR9eptpgt2eMX2pxHWdTzFp//b
-iSJXlInaXzueSy6UIuuDExOmKATtwl7P/0fn1GIkBzmeVoid/BQNircidhvx8ddJ
-yTNKEwFNShNKevCLuDabwSXqAfmnXyfz8K+7KmsYnj9gzV+jQkmfM6o0/nV1mfp1
-mEErz8WD7UqO+K1s8noZQZjmjzlpCFM8WKTPYnWP/Z6HU75qfQl3SBJV9wEiuBB6
-ulcnQpzRFveAeZIjTuPfhLir7t8Lufl8Dx28iavlPmTBeSHlQL1oolEBvMD1svcX
-s1H3tMqxj+MW3FJ+ZJKqqHEeaOpSZNaMmKE1NFa/S8YEo19aU7UFquxFspC0KvWk
-86aAwfboUlUm5o9bHjiSr0X48DHl7ZzFcjxvoANM6cA49UWhMQK6H7LzDBgYIZRb
-K+G0fIbWtCCpW1a5DvNl
-=VLAF
------END PGP SIGNATURE-----
+
+
+--
+Active Defense Lab of Venustech
