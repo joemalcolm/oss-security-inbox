@@ -1,52 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/01/2
-Message-ID: <CAG8=FRjgTaOnJft3zCTqe9LSBsWxUatSe66WfdSBCF1ZTB1+8Q@mail.gmail.com>
-Date: Mon, 1 Nov 2021 04:16:08 +0100
-From: Emmanuel Lecharny <elecharny@...che.org>
-To: "dev@...a.apache.org" <dev@...a.apache.org>, "users@...a.apache.org" <users@...a.apache.org>,  Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com, announce@...che.org
-Subject: [ANNOUNCE] Apache MINA 2.0.22 & 2.1.5 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/26/6
+Message-ID: <CAFcO6XO9KQwwcwYrSc00j1y_xAf+wU4AN7YLSCgWOEqUAANMOQ@mail.gmail.com>
+Date: Thu, 26 Aug 2021 23:18:53 +0800
+From: butt3rflyh4ck <butterflyhuangxx@...il.com>
+To: John Haxby <john.haxby@...cle.com>
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Linux kernel: qrtr: another out-of-bound Read in qrtr_endpoint_post in net/qrtr/qrtr.c
 Content-Type: text/plain; charset=utf-8
 
-The Apache MINA project is pleased to announce MINA 2.0.22 and 2.1.5 !
+No, I didn't. I have reported to Red Hat, they said that if they
+confirmed and would assign a CVE for this issue.
 
+Regards,
+  butt3rflyh4ck.
 
-Apache MINA (http://mina.apache.org) is a network application
-framework which helps users develop high performance and high
-scalability network applications easily by providing an abstract,
-event-driven, asynchronous API over various transports such as TCP/IP
-and UDP/IP vis Java NIO.
+On Thu, Aug 26, 2021 at 10:41 PM John Haxby <john.haxby@...cle.com> wrote:
+>
+>
+>
+> > On 25 Aug 2021, at 03:40, butt3rflyh4ck <butterflyhuangxx@...il.com> wrote:
+> >
+> > Hi, There was another out-of-bound read bug in qrtr_endpoint_post in
+> > net/qrtr/qrtr.c in 5.14.0-rc6+ and reproduced it.
+> >
+> > This check in  qrtr_endpoint_post was incomplete, did not consider size is 0:
+> > ```
+> > if (len != ALIGN(size, 4) + hdrlen)
+> >                goto err;
+> > ```
+> > if size from qrtr_hdr is 0, the result of ALIGN(size, 4) will be 0,
+> > In case of len == hdrlen and size == 0 in header this check won't fail and
+> > ```
+> > if (cb->type == QRTR_TYPE_NEW_SERVER) { /* Remote node endpoint can
+> > bridge other distant nodes */
+> >             const struct qrtr_ctrl_pkt *pkt = data + hdrlen;
+> >             qrtr_node_assign(node, le32_to_cpu(pkt->server.node));
+> > }
+> > ```
+> > will also read out of bound from data, which is hdrlen allocated block.
+> >
+> >
+> > #analyze and some details
+> > https://lists.openwall.net/netdev/2021/08/17/124
+> >
+> > #patch
+> > https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=7e78c597c3eb
+> > now not available upstream.
+>
+> Hi,
+>
+> Did you ask for a CVE for this bug?
+>
+> jch
+>
+> >
+> > #Timeline
+> > *2021/8/17 - Vulnerability reported to netdev@...r.kernel.org.
+> > *2021/8/20 - Vulnerability confirmed and patched.
+> > *2021/8/23 - Vulnerability reported to secalert@...hat.com.
+> > *2021/8/25 - Opened on oss-security@...ts.openwall.com.
+> >
+> > #Credit
+> > Active Defense Lab of Venustech.
+> >
+> >
+> > Regards,
+> > butt3rflyh4ck.
+> >
+> > --
+> > Active Defense Lab of Venustech
+>
 
-The Apache MINA project website includes resources such as
-introductory presentation slides, tutorials, and examples to help you
-learn MINA as soon as possible.
-
-This is a bug fix release for MINA 2.1.5 backported to MINA 2.0.22. it
-fixes a CVE in the HTTP listener:
-
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-41973
-
-
-Information relative to the API changes, and migration, are available
-on the following page:
-http://mina.apache.org/mina-project/2.1-vs-2.0.html
-
-
-Downloads are available at
-https://mina.apache.org/downloads-mina_2_1.html
-https://mina.apache.org/downloads-mina_2_0.html
-
-The Apache MINA PMC
-
-Thanks !
 
 --
-Regards,
-Cordialement,
-Emmanuel Lécharny
-www.iktek.com
-
--- 
-Regards,
-Cordialement,
-Emmanuel Lécharny
-www.iktek.com
+Active Defense Lab of Venustech
