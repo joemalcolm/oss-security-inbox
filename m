@@ -1,26 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/24/3
-Message-ID: <a373710a137a096ee8a530d960481a05566c1bae.camel@orlitzky.com>
-Date: Sat, 24 Jul 2021 12:32:34 -0400
-From: Michael Orlitzky <michael@...itzky.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/26/3
+Message-ID: <CAFcO6XNHPFyFvFUJhPVQ+YHLZw=fnxGoig+ZjWjv7rXZcxmX2g@mail.gmail.com>
+Date: Thu, 26 Aug 2021 17:36:02 +0800
+From: butt3rflyh4ck <butterflyhuangxx@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Potential symlink attack in python3 __pycache__
+Subject: Re: Linux kernel: fs/btrfs: null-ptr-dereference bug in btrfs_rm_device in fs/btrfs/volumes.c
 Content-Type: text/plain; charset=utf-8
 
-On Sat, 2021-07-24 at 18:33 +0300, Georgi Guninski wrote:
-> Not sure if this is vulnerability, but it looks like
-> classical symlink attack.
-> 
-> In python3, if a script in directory DIR1 does "import another",
-> then python3 creates directory __pycache__ in DIR1 and puts
-> some files in __pycache__.
-> 
-> According to our tests, if DIR1/__pycache__ is symlink to something,
-> then python3 follows the symlink.
+Hi, RedHat has assigned  CVE-2021-3739   to this issue.
 
-When subdirectories of DIR1 are writable by anyone other than the
-person running the script, you have a bunch of problems:
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-3739.
 
-  https://bugs.python.org/issue16202
+Please track the below link for more information.
+https://bugzilla.redhat.com/show_bug.cgi?id=1997958
+
+Regards,
+  butt3rflyh4ck.
 
 
+
+On Wed, Aug 25, 2021 at 10:49 AM butt3rflyh4ck
+<butterflyhuangxx@...il.com> wrote:
+>
+> Hello, there is a null pointer dereference bug in the btrfs_rm_device
+> function in fs/btrfs/volumes.c in linux-5.14.0-rc4+ and reproduce too.
+> Fortunately, triggering the bug requires ‘CAP_SYS_ADMIN’.
+>
+> #Root Cause
+> When a user invokes a BTRFS_IOC_RM_DEV_V2 ioctl to remove a non-exist
+> volume device,
+> it would call btrfs_ioctl_rm_dev_v2 function to implement. And
+> btrfs_ioctl_rm_dev_v2 would call btrfs_rm_device,
+> if the id of the volume device is illegal, it would trigger a
+> null-ptr-deref bug to cause DoS.
+>
+> # Analyse
+> https://lore.kernel.org/linux-btrfs/CAFcO6XO5TC5sEo-C9JGC75JkNAzkOSSLA3a=bwQqXFFbRTZ7Gw@mail.gmail.com/T/#md4b850f33616b7364f86e6fed144abc925f3669c
+>
+> #Fix
+> the patch for this issue, not available upstream now.
+> https://lore.kernel.org/linux-btrfs/20210806102415.304717-1-wqu@suse.com/T/#u
+>
+>
+> #Timeline
+> *2021/8/6 - Vulnerability reported to maintainer and CC to
+> linux-btrfs@...r.kernel.org.
+> *2021/8/6 - Vulnerability confirmed and patched.
+> *2021/8/10 - Vulnerability reported to secalert@...hat.com.
+> *2021/8/25 - Opened on oss-security@...ts.openwall.com.
+>
+> #Credit
+> the issue is reported by Active Defense Lab of Venustech.
+>
+> Regards,
+>  butt3rflyh4ck.
+> --
+> Active Defense Lab of Venustech
+
+
+
+--
+Active Defense Lab of Venustech
