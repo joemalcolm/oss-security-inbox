@@ -1,38 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/16/5
-Message-ID: <20210416150450.GC5315@nxnw.org>
-Date: Fri, 16 Apr 2021 08:04:50 -0700
-From: Steve Beattie <steve.beattie@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/27/2
+Message-ID: <CAFcO6XO5QjES9w1CCJ9Ypt4bVEMkzQbv1HcioeaUKgj8Yj4NkA@mail.gmail.com>
+Date: Fri, 27 Aug 2021 16:09:34 +0800
+From: butt3rflyh4ck <butterflyhuangxx@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [CVE-2021-3493] Ubuntu Linux kernel overlayfs fs caps privilege escalation
+Subject: Re: Linux kernel: qrtr: another out-of-bound Read in qrtr_endpoint_post in net/qrtr/qrtr.c
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 16, 2021 at 04:53:50PM +0200, Salvatore Bonaccorso wrote:
-> Hi Steve,
-> 
-> On Thu, Apr 15, 2021 at 02:31:14PM -0700, Steve Beattie wrote:
-> > Hello,
-> > 
-> > An independent security researcher reported via the SSD Secure
-> > Disclosure program that the overlayfs stacking file system within the
-> > Linux kernel as used within Ubuntu did not properly validate the
-> > application of file capabilities against user namespaces.
-> > 
-> > This issue is likely Ubuntu specific, as Ubuntu carries a patch to
-> > enable unprivileged overlayfs mounts. The combination of that patch
-> > plus allowing unprivileged user namespaces by default in Ubuntu allows
-> > an unprivileged attacker to gain elevated privileges.
-> > 
-> > A commit that addresses the issue was applied in the upstream kernel:
-> > 
-> >   7c03e2cda4a5 ("vfs: move cap_convert_nscap() call into vfs_setxattr()") (v5.10)
-> 
-> For completeness, this though was in v5.11-rc1 right?
+Hi, Red Hat has assigned CVE-2021-3743 to this issue.
 
-Yes, sorry, thanks for the correction.
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-3743
+
+Regards,
+   butt3rflyh4ck.
+
+On Fri, Aug 27, 2021 at 1:51 PM butt3rflyh4ck
+<butterflyhuangxx@...il.com> wrote:
+>
+> The patch is available upstream.
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=7e78c597c3ebfd0cb329aa09a838734147e4f117
+>
+> Regards,
+>  butt3rflyh4ck.
+>
+>
+> On Wed, Aug 25, 2021 at 10:40 AM butt3rflyh4ck
+> <butterflyhuangxx@...il.com> wrote:
+> >
+> > Hi, There was another out-of-bound read bug in qrtr_endpoint_post in
+> > net/qrtr/qrtr.c in 5.14.0-rc6+ and reproduced it.
+> >
+> > This check in  qrtr_endpoint_post was incomplete, did not consider size is 0:
+> > ```
+> > if (len != ALIGN(size, 4) + hdrlen)
+> >                 goto err;
+> > ```
+> > if size from qrtr_hdr is 0, the result of ALIGN(size, 4) will be 0,
+> > In case of len == hdrlen and size == 0 in header this check won't fail and
+> > ```
+> >  if (cb->type == QRTR_TYPE_NEW_SERVER) { /* Remote node endpoint can
+> > bridge other distant nodes */
+> >              const struct qrtr_ctrl_pkt *pkt = data + hdrlen;
+> >              qrtr_node_assign(node, le32_to_cpu(pkt->server.node));
+> >  }
+> > ```
+> > will also read out of bound from data, which is hdrlen allocated block.
+> >
+> >
+> > #analyze and some details
+> > https://lists.openwall.net/netdev/2021/08/17/124
+> >
+> > #patch
+> > https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=7e78c597c3eb
+> > now not available upstream.
+> >
+> > #Timeline
+> > *2021/8/17 - Vulnerability reported to netdev@...r.kernel.org.
+> > *2021/8/20 - Vulnerability confirmed and patched.
+> > *2021/8/23 - Vulnerability reported to secalert@...hat.com.
+> > *2021/8/25 - Opened on oss-security@...ts.openwall.com.
+> >
+> > #Credit
+> > Active Defense Lab of Venustech.
+> >
+> >
+> > Regards,
+> >  butt3rflyh4ck.
+> >
+> > --
+> > Active Defense Lab of Venustech
+>
+>
+>
+> --
+> Active Defense Lab of Venustech
+
+
 
 -- 
-Steve Beattie
-<sbeattie@...ntu.com>
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Active Defense Lab of Venustech
