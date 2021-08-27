@@ -1,26 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/10/1
-Message-ID: <YHHnUFzvU0prUY/j@jasmine.lan>
-Date: Sat, 10 Apr 2021 13:58:40 -0400
-From: Leo Famulari <leo@...ulari.name>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/27/4
+Message-ID: <CA+4-CWyF62m0igSi0Fh3BG6Cj71h2_YHyxTxX=oBJ0MeBHrsFA@mail.gmail.com>
+Date: Fri, 27 Aug 2021 08:18:51 +0200
+From: Daniel Bevenius <dbeveniu@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Risk of local privilege escalation in GNU Guix
+Subject: Fwd: Node.js security updates for versions 12.x, and 14.x releases lines, August 31 2021
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 18, 2021 at 05:27:09PM -0400, Leo Famulari wrote:
-> # Vulnerability
-> 
-> The attack consists in having an unprivileged user spawn a build process, for 
-> instance with `guix build`, that makes its build directory world-writable.  The 
-> user then creates a hardlink to a root-owned file such as `/etc/shadow` in that
-> build directory.  If the user passed the `--keep-failed` option and the build
-> eventually fails, the daemon changes ownership of the whole build tree,
-> including the hardlink, to the user.  At that point, the user has write access
-> to the target file.
+---------- Forwarded message ---------
+From: Daniel Bevenius <dbeveniu@...hat.com>
+Date: Fri, Aug 27, 2021 at 7:58 AM
+Subject: Node.js security updates for versions 12.x, and 14.x releases
+lines, August 31 2021
+To: nodejs-sec <nodejs-sec@...glegroups.com>
 
-This is CVE-2021-27851.
 
-We are very grateful for the invaluable assistance of CERT/CC in getting
-this assigned.
+The Node.js project will release new versions of 12.x, and 14.x releases
+lines on or shortly after Tuesday August 31th, 2021.
+For more information see:
+https://nodejs.org/en/blog/vulnerability/aug-2021-security-releases2
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
