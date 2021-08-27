@@ -1,44 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/10/15
-Message-ID: <YMIj1mZsQrmj6PBA@sol.nexus.lan>
-Date: Thu, 10 Jun 2021 14:38:14 +0000
-From: John Helmert III <jchelmert3@...teo.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/27/1
+Message-ID: <CAFcO6XOfkH52NQbQj+e4U+TQ=EZizZ-YQbYygS9Mpgwsw040iA@mail.gmail.com>
+Date: Fri, 27 Aug 2021 13:51:16 +0800
+From: butt3rflyh4ck <butterflyhuangxx@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-31618: Apache httpd: NULL pointer dereference on specially crafted HTTP/2 request
+Subject: Re: Linux kernel: qrtr: another out-of-bound Read in qrtr_endpoint_post in net/qrtr/qrtr.c
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 09, 2021 at 11:11:00PM +0200, Christophe JAILLET wrote:
-> 
-> CVE-2021-31618: NULL pointer dereference on specially crafted HTTP/2 request
-> 
-> Severity: important
-> 
-> Vendor: The Apache Software Foundation
-> 
-> Versions Affected:
-> 2.4.47
-> httpd 
-> Description:
-> Apache HTTP Server 2.4.47
-> Apache HTTP Server protocol handler for the HTTP/2 protocol checks received request headers against the size limitations as configured for the server and used for the HTTP/1 protocol as well. On violation of these restrictions and HTTP response is sent to the client with a status code indicating why the request was rejected.
-> 
-> This rejection response was not fully initialised in the HTTP/2 protocol handler if the offending header was the very first one received or appeared in a a footer. This led to a NULL pointer dereference on initialised memory, crashing reliably the child process. Since such a triggering HTTP/2 request is easy to craft and submit, this can be exploited to DoS the server.
-> 
-> This affected versions prior to 2.4.47
+The patch is available upstream.
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=7e78c597c3ebfd0cb329aa09a838734147e4f117
 
-The announcement on the website indicates the affected versions for
-CVE-2021-31618 are <2.4.48 and in the below table it indicates <=2.4.48
-are affected. Both of these are different from the mail advisory, can
-you clarify the affected versions, please?
+Regards,
+ butt3rflyh4ck.
 
-> Mitigation:
-> none
-> 
-> Credit:
-> Apache HTTP server would like to thank  LI ZHI XIN from NSFocus for reporting this.
-> 
-> References:
-> https://httpd.apache.org/security/vulnerabilities_24.html
-> 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+On Wed, Aug 25, 2021 at 10:40 AM butt3rflyh4ck
+<butterflyhuangxx@...il.com> wrote:
+>
+> Hi, There was another out-of-bound read bug in qrtr_endpoint_post in
+> net/qrtr/qrtr.c in 5.14.0-rc6+ and reproduced it.
+>
+> This check in  qrtr_endpoint_post was incomplete, did not consider size is 0:
+> ```
+> if (len != ALIGN(size, 4) + hdrlen)
+>                 goto err;
+> ```
+> if size from qrtr_hdr is 0, the result of ALIGN(size, 4) will be 0,
+> In case of len == hdrlen and size == 0 in header this check won't fail and
+> ```
+>  if (cb->type == QRTR_TYPE_NEW_SERVER) { /* Remote node endpoint can
+> bridge other distant nodes */
+>              const struct qrtr_ctrl_pkt *pkt = data + hdrlen;
+>              qrtr_node_assign(node, le32_to_cpu(pkt->server.node));
+>  }
+> ```
+> will also read out of bound from data, which is hdrlen allocated block.
+>
+>
+> #analyze and some details
+> https://lists.openwall.net/netdev/2021/08/17/124
+>
+> #patch
+> https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=7e78c597c3eb
+> now not available upstream.
+>
+> #Timeline
+> *2021/8/17 - Vulnerability reported to netdev@...r.kernel.org.
+> *2021/8/20 - Vulnerability confirmed and patched.
+> *2021/8/23 - Vulnerability reported to secalert@...hat.com.
+> *2021/8/25 - Opened on oss-security@...ts.openwall.com.
+>
+> #Credit
+> Active Defense Lab of Venustech.
+>
+>
+> Regards,
+>  butt3rflyh4ck.
+>
+> --
+> Active Defense Lab of Venustech
+
+
+
+-- 
+Active Defense Lab of Venustech
