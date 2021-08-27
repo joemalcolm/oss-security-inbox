@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3261" "Saturday" "18" "February" "2017" "12:38:45" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<3712113.HmbQZlNGGF@arcadia>" "98" "[oss-security] mupdf: mujstest: stack-based buffer overflow in main (jstest_main.c)" nil nil nil "2" "2017021811:38:45" "[oss-security] mupdf: mujstest: stack-based buffer overflow in main (jstest_main.c)" (number mark "U       ago@gentoo.o Feb 18   98/3261  " thread-indent "\"[oss-security] mupdf: mujstest: stack-based buffer overflow in main (jstest_main.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2022" "Friday" "27" "August" "2021" "16:09:34" "+0800" "butt3rflyh4ck" "butterflyhuangxx@gmail.com" nil "72" "Re: [oss-security] Linux kernel: qrtr: another out-of-bound Read in qrtr_endpoint_post in net/qrtr/qrtr.c" nil nil nil "8" nil nil (number mark "U       butterflyhua Aug 27   72/2022  " thread-indent "\"Re: [oss-security] Linux kernel: qrtr: another out-of-bound Read in qrtr_endpoint_post in net/qrtr/qrtr.c\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: qrtr: another out-of-bound Read in qrtr_endpoint_post in net/qrtr/qrtr.c" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9900 invoked by uid 550); 18 Feb 2017 11:39:04 -0000
+Received: (qmail 19952 invoked by uid 550); 27 Aug 2021 08:13:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,113 +11,115 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9875 invoked from network); 18 Feb 2017 11:39:03 -0000
-Message-ID: <3712113.HmbQZlNGGF@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.24; x86_64; ; )
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Date: Sat, 18 Feb 2017 12:38:45 +0100
-From: Agostino Sarubbo <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] mupdf: mujstest: stack-based buffer overflow in main (jstest_main.c)
+Received: (qmail 15644 invoked from network); 27 Aug 2021 08:09:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=Q3NhYJv9uMFUzYtNPnYMO0vxQDGbVI0EDXcNEPVaQ64=;
+        b=Pt5vz/izTDjASOPjV6/H02EBVSg8xrE28IY9ihb5/7pWKVY63jzU1qguKtwiz4i82w
+         WV0MS4Fo2MwnPjOE/R7ptnC/mBt3TByo6sydgzCpN3F3tcCh0SunD3gLO0hDg/H21Otj
+         LzLvYystybLK/KIRFa7VLR436y/f5l5etnWwKjOMrHyFXkW8XCqOmRzwNeIM/yjxn0Ag
+         wt0e3fZeFdw/uCgiBByMcr5D8xTzhuuHuKEqvFAxjNcfzY4tV6a6a4Vc9JWJR0ldd506
+         M6xhRVTt6iizLB9xu5wTzS0oir8fexB7w1L3QoX5uRFkaS9whbrh6zbviMW3AwJk17nZ
+         mqMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=Q3NhYJv9uMFUzYtNPnYMO0vxQDGbVI0EDXcNEPVaQ64=;
+        b=bjbIRzZhWzztg86wt1ASsv03riGBAldephtPEohgISbtZ6PNwgI/IS3gpgL3a25V2u
+         mMieejjEELzwVYQ3by4KpfVBYj1DBvuXX7aIfIpfg3Nwcaa8JACUdFSgaE8HtvkBjnkO
+         bYEO2L0oj6YN2fc1a3pyCsJXppJ8qEXwoQq3ysjjmUEtNluyCYhZxvzoCEfNOkJb7bEF
+         aXnLT//PCeAjvT06QCh+hQMB0LDRtYIwirPpXzdvlDIh/8ZWX+VBEOeZ7SI9mI57H6qL
+         +Lj4cAeeRJKnHWujIVb6V8TAx3hP7k1NYQm+FI7ckdS5Nf+h3Db7Db9rlbn+Ku97gIap
+         uCvQ==
+X-Gm-Message-State: AOAM532wBoJjuWrwO/Q7YMqUbPtN88JnwkjfvivKlRethD2m43MIA2K2
+	7DgMjm9N18ViHmfTPwFRAO5dc0yUfSvZ5RPnxv3dg8EY3tNPL2be
+X-Google-Smtp-Source: ABdhPJznAZUkZa2BJIJCmTl506gWtUbPI+pAT8A6JyDfHkzoHCvuiPLGdHcdrZC35ieKjXnNx/DBQPAPh6tb8VF0/D8=
+X-Received: by 2002:a05:6902:513:: with SMTP id x19mr3761340ybs.90.1630051786880;
+ Fri, 27 Aug 2021 01:09:46 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAFcO6XMiLJqwy=QW0Mv-yruhytSFRwb3yJsdMRVg3Gghm_5u7g@mail.gmail.com>
+ <CAFcO6XOfkH52NQbQj+e4U+TQ=EZizZ-YQbYygS9Mpgwsw040iA@mail.gmail.com>
+In-Reply-To: <CAFcO6XOfkH52NQbQj+e4U+TQ=EZizZ-YQbYygS9Mpgwsw040iA@mail.gmail.com>
+From: butt3rflyh4ck <butterflyhuangxx@gmail.com>
+Date: Fri, 27 Aug 2021 16:09:34 +0800
+Message-ID: <CAFcO6XO5QjES9w1CCJ9Ypt4bVEMkzQbv1HcioeaUKgj8Yj4NkA@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [oss-security] Linux kernel: qrtr: another out-of-bound Read in
+ qrtr_endpoint_post in net/qrtr/qrtr.c
 
-Description:
-Mujstest, which is part of mupdf is a scriptable tester for mupdf + js.
+Hi, Red Hat has assigned CVE-2021-3743 to this issue.
 
-A crafted image posted early for another issue, causes a stack overflow.
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-3743
 
-The complete ASan output:
+Regards,
+   butt3rflyh4ck.
 
-# mujstest $FILE
-==32127==ERROR: AddressSanitizer: stack-buffer-overflow on address 
-0x7fff29560b00 at pc 0x00000047cbf3 bp 0x7fff29560630 sp 0x7fff2955fde0
-WRITE of size 1453 at 0x7fff29560b00 thread T0
-    #0 0x47cbf2 in __interceptor_strcpy /tmp/portage/sys-devel/llvm-3.9.1-
-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:548
-    #1 0x50e903 in main /tmp/portage/app-text/mupdf-1.10a/work/mupdf-1.10a-
-source/platform/x11/jstest_main.c:358:7
-    #2 0x7f68df3c578f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-
-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #3 0x41bc18 in _init (/usr/bin/mujstest+0x41bc18)
+On Fri, Aug 27, 2021 at 1:51 PM butt3rflyh4ck
+<butterflyhuangxx@gmail.com> wrote:
+>
+> The patch is available upstream.
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=7e78c597c3ebfd0cb329aa09a838734147e4f117
+>
+> Regards,
+>  butt3rflyh4ck.
+>
+>
+> On Wed, Aug 25, 2021 at 10:40 AM butt3rflyh4ck
+> <butterflyhuangxx@gmail.com> wrote:
+> >
+> > Hi, There was another out-of-bound read bug in qrtr_endpoint_post in
+> > net/qrtr/qrtr.c in 5.14.0-rc6+ and reproduced it.
+> >
+> > This check in  qrtr_endpoint_post was incomplete, did not consider size is 0:
+> > ```
+> > if (len != ALIGN(size, 4) + hdrlen)
+> >                 goto err;
+> > ```
+> > if size from qrtr_hdr is 0, the result of ALIGN(size, 4) will be 0,
+> > In case of len == hdrlen and size == 0 in header this check won't fail and
+> > ```
+> >  if (cb->type == QRTR_TYPE_NEW_SERVER) { /* Remote node endpoint can
+> > bridge other distant nodes */
+> >              const struct qrtr_ctrl_pkt *pkt = data + hdrlen;
+> >              qrtr_node_assign(node, le32_to_cpu(pkt->server.node));
+> >  }
+> > ```
+> > will also read out of bound from data, which is hdrlen allocated block.
+> >
+> >
+> > #analyze and some details
+> > https://lists.openwall.net/netdev/2021/08/17/124
+> >
+> > #patch
+> > https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=7e78c597c3eb
+> > now not available upstream.
+> >
+> > #Timeline
+> > *2021/8/17 - Vulnerability reported to netdev@vger.kernel.org.
+> > *2021/8/20 - Vulnerability confirmed and patched.
+> > *2021/8/23 - Vulnerability reported to secalert@redhat.com.
+> > *2021/8/25 - Opened on oss-security@lists.openwall.com.
+> >
+> > #Credit
+> > Active Defense Lab of Venustech.
+> >
+> >
+> > Regards,
+> >  butt3rflyh4ck.
+> >
+> > --
+> > Active Defense Lab of Venustech
+>
+>
+>
+> --
+> Active Defense Lab of Venustech
 
-Address 0x7fff29560b00 is located in stack of thread T0 at offset 1056 in 
-frame
-    #0 0x50c45f in main /tmp/portage/app-text/mupdf-1.10a/work/mupdf-1.10a-
-source/platform/x11/jstest_main.c:293
 
-  This frame has 7 object(s):
-    [32, 1056) 'path'
-    [1184, 2208) 'text' <== Memory access at offset 1056 partially underflows 
-this variable
-    [2336, 2340) 'w' <== Memory access at offset 1056 partially underflows 
-this variable
-    [2352, 2356) 'h' <== Memory access at offset 1056 partially underflows 
-this variable
-    [2368, 2372) 'x' <== Memory access at offset 1056 partially underflows 
-this variable
-    [2384, 2388) 'y' <== Memory access at offset 1056 partially underflows 
-this variable
-    [2400, 2404) 'b' 0x1000652a4160:[f2]f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 f2 
-f2 f2
-  0x1000652a4170: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x1000652a4180: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x1000652a4190: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x1000652a41a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x1000652a41b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==32127==ABORTING
-
-Affected version:
-1.10a
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-6060
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00147-mupdf-mujstest-stackoverflow-main
-
-Timeline:
-2017-02-05: bug discovered and reported to upstream
-2017-02-17: blog post about the issue
-2017-02-17: CVE assigned via cveform.mitre.org
-
-Note:
-This bug was found with Address Sanitizer.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/17/mupdf-mujstest-stack-based-buffer-overflow-in-main-jstest_main-c
 
 -- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Active Defense Lab of Venustech
