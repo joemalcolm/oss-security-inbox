@@ -1,49 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/19/10
-Message-ID: <20211119151820.cge3zrsfcsh4y4go@sshbastion>
-Date: Fri, 19 Nov 2021 10:18:20 -0500
-From: Vincent Batts <vbatts@...hbangbash.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-41190 OCI distribution and image spec: "content-type" confusion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/30/1
+Message-ID: <6a9f2b22-ca6d-24e5-5eb3-3b1bc7da2805@tuxera.com>
+Date: Mon, 30 Aug 2021 21:45:53 +0300
+From: Jussi Hietanen <jussi.hietanen@...era.com>
+To: <oss-security@...ts.openwall.com>
+CC: Szabolcs Szakacsits <szaka@...era.com>, Jean-Pierre André <jean-pierre.andre@...adoo.fr>
+Subject: NTFS3G-SA-2021-0001: Multiple buffer overflows in all versions of NTFS-3G
 Content-Type: text/plain; charset=utf-8
 
-Severity: MEDIUM (moderate in Github GHSA)
+Security vulnerabilities were identified in the open source NTFS-3G and 
+NTFSPROGS software. These vulnerabilities were confirmed and resolved. 
+To our knowledge, these vulnerabilities have not been exploited.
 
-Description:
+These vulnerabilities may allow an attacker using a maliciously crafted 
+NTFS-formatted image file or external storage to potentially execute 
+arbitrary privileged code, if the attacker has either local access and 
+the ntfs-3g binary is setuid root, or if the attacker has physical 
+access to an external port to a computer which is configured to run the 
+ntfs-3g binary or one of the ntfsprogs tools when the external storage 
+is plugged into the computer. These vulnerabilities result from 
+incorrect validation of some of the NTFS metadata that could potentially 
+cause buffer overflows, which could be exploited by an attacker. Common 
+ways for attackers to gain physical access to a machine is through 
+social engineering or an evil maid attack on an unattended computer.
 
-The specifications themselves needed additional clarification so that
-implementations of container registries, and the clients that parse data
-received from registries can have more securely defined behavior.
+We recommend installing and applying the update with the security fixes, 
+and advise to follow security guidance and frameworks such as NIST for 
+assessing and improving an organization’s abilities to prevent, detect, 
+and respond to security threats and cyber attacks.
 
-The undefined behavior this advisory addresses is a "type confusion"
-where a JSON document for a container's manifest could masquerade as
-both an image-index or a manifest without modification to the digest,
-relying only on the HTTP `Content-type` header provided by the registry.
+AFFECTED PRODUCTS: All previous versions of open source NTFS-3G and 
+NTFSPROGS.
 
-This behavior would have been mitigated by the presence of the
-`mediaType` field in these JSON documents. As such a notable, but
-non-breaking change introduced in these releases is un-reserving the
-`mediaType` field for use, and actively encouraging it's use.
+WORKAROUND: None
 
-Advisory links:
-- https://github.com/opencontainers/distribution-spec/security/advisories/GHSA-mc8v-mgrf-8f4m
-- https://github.com/opencontainers/image-spec/security/advisories/GHSA-77vh-xpmg-72qh
-- https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-41190
-- https://groups.google.com/a/opencontainers.org/g/dev/c/ugWJ5ujnqV8/m/Yot9yHkGAAAJ
+SOLUTION: Upgrade to 2021.8.22
 
-Release links:
-- https://github.com/opencontainers/distribution-spec/releases/tag/v1.0.1
-- https://github.com/opencontainers/image-spec/releases/tag/v1.0.2
+PROJECT URL: https://github.com/tuxera/ntfs-3g
 
-Workarounds:
+ADVISORY ID: NTFS3G-SA-2021-0001
 
-Software attempting to deserialize an ambiguous document may reject the
-document if it contains both “manifests” and “layers” fields or
-“manifests” and “config” fields.
+ISSUE DATE: 2021-08-30
 
-Expect releases of container clients that can fetch from registries, as
-well as registries themselves.
+SEVERITY: Moderate
 
+CVEs: CVE-2021-33285, CVE-2021-35269, CVE-2021-35268, CVE-2021-33289, 
+CVE-2021-33286, CVE-2021-35266, CVE-2021-33287, CVE-2021-35267, 
+CVE-2021-39251, CVE-2021-39252, CVE-2021-39253, CVE-2021-39254, 
+CVE-2021-39255, CVE-2021-39256, CVE-2021-39257, CVE-2021-39258, 
+CVE-2021-39259, CVE-2021-39260, CVE-2021-39261, CVE-2021-39262, 
+CVE-2021-39263
 
+CVSS SCORE: 3.9-6.7
 
-Download attachment "signature.asc" of type "application/pgp-signature" (196 bytes)
+ACKNOWLEDGMENT: Jeremy Galindo, Akshay Ajayan, Kyle Zeng and Fish Wang 
+for reporting these vulnerabilities.
