@@ -1,43 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/02/1
-Message-ID: <op516nqr-96s1-3r69-4np9-314p89o96951@inai.de>
-Date: Fri, 2 Apr 2021 10:26:29 +0200 (CEST)
-From: Jan Engelhardt <jengelh@...i.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/31/3
+Message-ID: <CA+4-CWyqf=PE5S6pYVctCUoyq8rNi+odqg2YnS7aF5ADbu+kTw@mail.gmail.com>
+Date: Tue, 31 Aug 2021 17:37:55 +0200
+From: Daniel Bevenius <dbeveniu@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: kopano-core 11.0.1.77: Remote DoS with out-of-bounds access
+Subject: Fwd: Node.js security updates for versions 12.x, and 14.x releases lines, August 31 2021
 Content-Type: text/plain; charset=utf-8
 
-Initial publication, no CVE number yet.
-
-# Affected versions
-
-  * kopano-core 11.0.1
-  * kopano-core 8.7.20
-  * it is believed this affects all other versions too,
-    including 10.0.7, 9.1.0, and zarafa 7.2.6.
-
-The "kopano-ical" program implements a network service/trivial HTTP 
-server. It fails to properly check HTTP headers, and with a crafted 
-request, can be exploited to drive the process into an exception and 
-have it terminate.
+---------- Forwarded message ---------
+From: Daniel Bevenius <dbeveniu@...hat.com>
+Date: Tue, Aug 31, 2021 at 5:36 PM
+Subject: Re: Node.js security updates for versions 12.x, and 14.x releases
+lines, August 31 2021
+To: nodejs-sec <nodejs-sec@...glegroups.com>
 
 
-# Trigger
+The Node.js project has now released new versions of v14, and v12 release
+lines.
+For more information see:
+https://nodejs.org/en/blog/vulnerability/aug-2021-security-releases2/
 
-» ./kopano-ical -F &
-» telnet localhost 8000
-Trying ::1...
-Connected to localhost.
-Escape character is '^]'.
-GET / HTTP/1.0
-Foo:
-Connection closed by foreign host.
-terminate called after throwing an instance of 'std::out_of_range'
-  what():  basic_string::substr: __pos (which is 6) > this->size() (which is 5)
+On Friday, August 27, 2021 at 7:58:18 AM UTC+2 Daniel Bevenius wrote:
 
+> The Node.js project will release new versions of 12.x, and 14.x releases
+> lines on or shortly after Tuesday August 31th, 2021.
+> For more information see:
+> https://nodejs.org/en/blog/vulnerability/aug-2021-security-releases2
+>
 
-# Mitigation
-
-In conjunction with a proxy, the issue does not occur as they often 
-filter lines (LF->CRLF, giving an extra byte). Tested ones: 
-nginx-1.19.8 squid-4.14 apache2-2.4.46 tinyproxy-1.10.0
