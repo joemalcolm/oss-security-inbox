@@ -1,145 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/19/6
-Message-Id: <E1l1txQ-0002rl-Jk@xenbits.xenproject.org>
-Date: Tue, 19 Jan 2021 16:34:16 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 332 v4 (CVE-2020-27673) - Rogue guests can cause DoS of Dom0 via high frequency events
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/31/1
+Message-Id: <50166790-02D0-4268-BA79-FF5236A664D5@beckweb.net>
+Date: Tue, 31 Aug 2021 15:45:02 +0200
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-            Xen Security Advisory CVE-2020-27673 / XSA-332
-                              version 4
+The following releases contain fixes for security vulnerabilities:
 
-     Rogue guests can cause DoS of Dom0 via high frequency events
-
-UPDATES IN VERSION 4
-====================
-
-CVE assigned.
-
-ISSUE DESCRIPTION
-=================
-
-The handling of Xen events in the Linux kernel runs with interrupts
-disabled in a loop until no further event is pending.
-
-Whenever an event has been accepted by the kernel, another event can
-come in via the same event channel.  This can result in the event
-handling loop running for an extended time if new events are coming in
-at a high rate.  In extreme cases this can lead to a complete hang of
-the kernel, resulting in a DoS situation of the host when dom0 is
-affected.
-
-IMPACT
-======
-
-Malicious guests can hang the host by sending events to dom0 at a high
-frequency.
-
-VULNERABLE SYSTEMS
-==================
-
-All systems with a Linux dom0 are affected.
-
-All Linux kernel versions are affected.
-
-MITIGATION
-==========
-
-There is no known mitigation.
-
-CREDITS
-=======
-
-This issue was discovered by Julien Grall from Arm
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patches resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa332-linux-??.patch  Linux
-
-$ sha256sum xsa332*
-92d0789e8e5b9ec7ae0cd8b01ef31e27930dbe9b81b727521d46328107f3c719  xsa332-linux-01.patch
-0bd82febcaf7fc72b88082f46cae9b67f39786d03b3e6aae5f0789cf855e6143  xsa332-linux-02.patch
-e646b7caf11ded7f22b209635b209f50ac583cbaeb3270148ce66a3cd922f0c1  xsa332-linux-03.patch
-9bed2213774a8107a2f2c157aeb0ebfda7cc6384cee0a245017b3a9eb28cff7f  xsa332-linux-04.patch
-8839af506b71946db35f223ff614aa92b4386aaf95e4d8b1408fbf31436ff80f  xsa332-linux-05.patch
-b261706bd7f7120fadff0e928be366924cfc13418c81a67ad45724b4179e8a5c  xsa332-linux-06.patch
-fc0c963a9a965fc7a72468b1a1ce0834dc866e77392ca0c1d9c8162457a526a0  xsa332-linux-07.patch
-5d821c58dd7fcdb157c2844ba34675305c320de25f54409305ffcba610d5922b  xsa332-linux-08.patch
-242eb83eca8e3b6d2d303e2943aa041b5f19ea54242cd0de20252d2ae3d128d1  xsa332-linux-09.patch
-70a042006d1df3dbbefc4c7d4dfd50da8f3a8e47ee77c2d6d0ba1eda405ae574  xsa332-linux-10.patch
-ebbfa66d11b8c81353b72ed5f381672e6784a67895df482f7e791a9fb4c6fbf0  xsa332-linux-11.patch
-cda1cbcca19860d43804e80ec2d7d13b295a140b42aa7d16118bb2d20bd63cae  xsa332-linux-12.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+* Azure AD Plugin 180.v8b1e80e6f242
+* Code Coverage API Plugin 1.4.1
+* Nested View Plugin 1.21
+* Nomad Plugin 0.7.5
+* SAML Plugin 2.0.8
 
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2021-08-31/
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmAHB6QMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZbAwIAIDvNzGNP3XXzGzMbI3yiEBTzixf3W/75IqO8sHA
-fFGJVPv9GEk2miB9NbwX/3opX1LXOlX+l4Uq+Zh+LnVO3tOYFwpzNaL+ji6D0BCp
-Pi1i8B1MRhvHITcmoB76I9bZYWnAOKwMSoPIYWVInh5STFSosERmccvFAA5ar7Rw
-aJYcs9Cuxt/8cJTpETD9nvm1m7vmXuqcj7szAd0DSVmaJwidHwTiIr4Qs1pVSk3K
-RqPeHkjfg7/KRhQkpwwZbELDVRRylo5oEL9RklBwUPyiS297EFLFJut6w5rmycbS
-vTK7w7Sby5Z2hv6oUn+2w6Y62LzHWZIFp5fwbvO5x6EdGRc=
-=/68h
------END PGP SIGNATURE-----
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-Download attachment "xsa332-linux-01.patch" of type "application/octet-stream" (1501 bytes)
+---
 
-Download attachment "xsa332-linux-02.patch" of type "application/octet-stream" (1993 bytes)
+SECURITY-2376 / CVE-2021-21677
+Code Coverage API Plugin 1.4.0 and earlier does not apply JEP-200
+deserialization protection to Java objects it deserializes from disk.
 
-Download attachment "xsa332-linux-03.patch" of type "application/octet-stream" (11307 bytes)
+This results in a remote code execution (RCE) vulnerability exploitable by
+attackers able to control agent processes.
 
-Download attachment "xsa332-linux-04.patch" of type "application/octet-stream" (4380 bytes)
 
-Download attachment "xsa332-linux-05.patch" of type "application/octet-stream" (8590 bytes)
+SECURITY-2469 / CVE-2021-21678
+An extension point in Jenkins allows selectively disabling cross-site
+request forgery (CSRF) protection for specific URLs. SAML Plugin implements
+this extension point for the URL that users are redirected to after login.
 
-Download attachment "xsa332-linux-06.patch" of type "application/octet-stream" (3443 bytes)
+In SAML Plugin 2.0.7 and earlier this implementation is too permissive,
+allowing attackers to craft URLs that would bypass the CSRF protection of
+any target URL.
 
-Download attachment "xsa332-linux-07.patch" of type "application/octet-stream" (6972 bytes)
 
-Download attachment "xsa332-linux-08.patch" of type "application/octet-stream" (8401 bytes)
+SECURITY-2470 / CVE-2021-21679
+An extension point in Jenkins allows selectively disabling cross-site
+request forgery (CSRF) protection for specific URLs. Azure AD Plugin
+implements this extension point for URLs used by a JavaScript component.
 
-Download attachment "xsa332-linux-09.patch" of type "application/octet-stream" (1844 bytes)
+In Azure AD Plugin 179.vf6841393099e and earlier this implementation is too
+permissive, allowing attackers to craft URLs that would bypass the CSRF
+protection of any target URL.
 
-Download attachment "xsa332-linux-10.patch" of type "application/octet-stream" (5171 bytes)
 
-Download attachment "xsa332-linux-11.patch" of type "application/octet-stream" (15368 bytes)
+SECURITY-2411 / CVE-2021-21680
+Nested View Plugin 1.20 and earlier does not configure its XML transformer
+to prevent XML external entity (XXE) attacks.
 
-Download attachment "xsa332-linux-12.patch" of type "application/octet-stream" (3739 bytes)
+This allows attackers able to configure views to have Jenkins parse a
+crafted view XML definition that uses external entities for extraction of
+secrets from the Jenkins controller or server-side request forgery.
+
+
+SECURITY-2396 / CVE-2021-21681
+Nomad Plugin 0.7.4 and earlier stores the passwords to authenticate against
+the Docker registry unencrypted in the global `config.xml` file on the
+Jenkins controller as part of its worker templates configuration.
+
+These passwords can be viewed by users with access to the Jenkins
+controller file system.
+
+
