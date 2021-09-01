@@ -1,99 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/21/1
-Message-ID: <nycvar.QRO.7.76.2107210912470.25537@fvyyl>
-Date: Wed, 21 Jul 2021 09:13:38 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>,  curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: Wrong content via metalink not discarded
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/01/5
+Message-ID: <CAKf6xpsAz7oPX+PdZokm+BAqreqL8rnrAd9UYvdz=F0M-bcMUQ@mail.gmail.com>
+Date: Wed, 1 Sep 2021 09:22:14 -0400
+From: Jason Andryuk <jandryuk@...il.com>
+To: "Xen.org security team" <security@....org>
+Cc: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org,  xen-users@...ts.xen.org, oss-security@...ts.openwall.com,  "Xen.org security team" <security-team-members@....org>
+Subject: Re: Xen Security Advisory 378 v3 (CVE-2021-28694,CVE-2021-28695,CVE-2021-28696) - IOMMU page mapping issues on x86
 Content-Type: text/plain; charset=utf-8
 
-Wrong content via metalink not discarded
-========================================
+On Wed, Sep 1, 2021 at 5:34 AM Xen.org security team <security@....org> wrote:
+>
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+>
+>  Xen Security Advisory CVE-2021-28694,CVE-2021-28695,CVE-2021-28696 / XSA-378
+>                                    version 3
+>
+>                    IOMMU page mapping issues on x86
+>
+> UPDATES IN VERSION 3
+> ====================
+>
+> Warn about dom0=pvh breakage in Resolution section.
+>
+> ISSUE DESCRIPTION
+> =================
+>
+> Both AMD and Intel allow ACPI tables to specify regions of memory
+> which should be left untranslated, which typically means these
+> addresses should pass the translation phase unaltered.  While these
+> are typically device specific ACPI properties, they can also be
+> specified to apply to a range of devices, or even all devices.
+>
+> On all systems with such regions Xen failed to prevent guests from
+> undoing/replacing such mappings (CVE-2021-28694).
 
-Project curl Security Advisory, July 21th 2021 -
-[Permalink](https://curl.se/docs/CVE-2021-22922.html)
+Hi,
 
-VULNERABILITY
--------------
+Is there a way to identify if a system's ACPI tables have untranslated
+regions?  Does it show up in xen or linux dmesg or can it be
+identified in sysfs?
 
-When curl is instructed to download content using the metalink feature, the
-contents is verified against a hash provided in the metalink XML file.
-
-The metalink XML file points out to the client how to get the same content
-from a set of different URLs, potentially hosted by different servers and the
-client can then download the file from one or several of them. In a serial or
-parallel manner.
-
-If one of the servers hosting the contents has been breached and the contents
-of the specific file on that server is replaced with a modified payload, curl
-should detect this when the hash of the file mismatches after a completed
-download. It should remove the contents and instead try getting the contents
-from another URL. This is not done, and instead such a hash mismatch is only
-mentioned in text and the potentially malicious content is kept in the file on
-disk.
-
-There's a risk the user doesn't notice the message and instead assumes the
-file is fine.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-This flaw exists only in the curl tool. libcurl is not affected.
-
-This flaw has existed in curl since commit
-[b5fdbe848bc3d](https://github.com/curl/curl/commit/b5fdbe848bc3d) in curl
-7.27.0, released on July 27, 2012.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2021-22922 to this issue.
-
-CWE-20: Improper Input Validation
-
-Severity: Medium
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.27.0 to and including 7.77.0
-- Not affected versions: curl < 7.27.0 and curl >= 7.78.0
-
-THE SOLUTION
-------------
-
-curl has completely removed the metalink feature as of 7.78.0. No fix for this
-flaw will be produced by the curl project.
-
-The fix for earlier versions is to rebuild curl with the metalink support
-switched off!
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 7.78.0
-
-  B - Make sure you do not use metalink with curl
-
-  C - Disable metalink in your build
-
-TIMELINE
---------
-
-This issue was reported to the curl project on May 30, 2021.
-
-This advisory was posted on Jul 21, 2021.
-
-CREDITS
--------
-
-This issue was reported by Harry Sintonen. Patched by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://www.wolfssl.com/contact/
+Thanks,
+Jason
