@@ -1,129 +1,120 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/16/4
-Message-Id: <E1lBzZi-0002aT-2R@xenbits.xenproject.org>
-Date: Tue, 16 Feb 2021 12:35:30 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 362 v3 (CVE-2021-26931) - Linux: backends treating grant mapping errors as bugs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/01/4
+Message-ID: <CAH5WSp4XsLN42kbnDknq2c32mZs_5uvyEzgBSQ9ar_ypASbYRw@mail.gmail.com>
+Date: Wed, 1 Sep 2021 17:15:57 +0800
+From: Minh Yuan <yuanmingbuaa@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-3753: A out-of-bounds caused by the race of KDSETMODE in vt for latest Linux
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-            Xen Security Advisory CVE-2021-26931 / XSA-362
-                               version 3
+We recently discovered a race oob read in vt in the latest kernel (
+v4.19.205 for now ), and the patch
+<https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=ffb324e6f874121f7dce5bdae5e05d02baae7269>
+can't
+handle this bug.
 
-         Linux: backends treating grant mapping errors as bugs
+The root cause of this vulnerability is that the write access to vc_mode is
+not protected by lock in vt_ioctl (KDSETMDE).
+To trigger the oob, we set the crafted vc_visible_origin by using the
+following steps:
 
-UPDATES IN VERSION 3
-====================
+  Thread 1                                        Thread 2
+                                                                      Thread
+3
+vt_ioctl()
+    case KDSETMODE:
+        vc->vc_mode = KD_GRAPHICS
 
-Public release.
+                                            vt_ioctl()
+                                                case TIOCL_BLANKSCREEN:
+                                                    if (
+vc->vc_mode != KD_TEXT)
 
-ISSUE DESCRIPTION
-=================
+console_blanked = fg_console + 1;
+                                                ... ...
+                                                case VT_RESIZE
+                                                    set_origin()
+                                                        vgacon_set_origin()
 
-Block, net, and SCSI backends consider certain errors a plain bug,
-deliberately causing a kernel crash.  For errors potentially being at
-least under the influence of guests, like out of memory conditions, it
-isn't correct to assume so.  Memory allocations potentially causing
-such crashes occur only when Linux is running in PV mode, though.
+// make vc_visible_origin not equal to vga_vram_base
+                                                            if (
+console_blanked && !vga_palette_blanked)
+                                                                return 0;
 
-IMPACT
-======
 
-A malicious or buggy frontend driver may be able to crash the
-corresponding backend driver, potentially affecting the entire domain
-running the backend driver.
 
-VULNERABLE SYSTEMS
-==================
+                                                     vt_ioctl()
 
-Linux versions from at least 2.6.39 onwards are vulnerable, when run in
-PV mode.  Earlier versions differ significantly in behavior and may
-therefore instead surface other issues under the same conditions.  Linux
-run in HVM / PVH modes is not vulnerable.
+                                                         case
+KDSETMODE:
 
-MITIGATION
-==========
 
-For Linux, running the backends in HVM or PVH domains will avoid the
-vulnerability.
+vc->vc_mode = KD_TEXT
 
-For protocols where non-Linux-kernel based backends are available,
-reconfiguring guests to use alternative (e.g. qemu-based) backends may
-allow to avoid the vulnerability.
+                                            write()
+                                                do_con_write()
+                                                    do_con_troll()
+                                                        lf()
+                                                            con_scroll()
 
-In all other cases there is no known mitigation.
+// set vga_rolled_over
+                                                                vgacon_scroll()
+                                                                    if (
+c->vc_mode != KD_TEXT)
 
-CREDITS
-=======
+return false;
 
-This issue was discovered by Jan Beulich of SUSE.
+oldo = c->vc_origin;
 
-RESOLUTION
-==========
+vga_rolled_over = oldo - vga_vram_base;
 
-Applying the appropriate attached patches resolves this issue.
+                                            vt_ioctl()
+                                                case TIOCL_SCROLLCONSOLE:
+wrap = rolled_over + c->vc_size_row
 
-Applying the attached patches resolves this issue.
+// set vc_visible_origin to oob
+                                                    c->vc_
+visible_origin = vga_vram_base + (from + from_off) % wrap
 
-xsa362-linux-1.patch           Linux 5.11-rc - 5.10
-xsa362-linux-2.patch           Linux 5.11-rc - 3.16
-xsa362-linux-3.patch           Linux 5.11-rc - 4.1
+                                                case TIOCL_SETSEL:
+                                                    // trigger oob
+                                                    sel_pos(ps)
 
-$ sha256sum xsa362*
-d64334807f16ff9909503b3cc9b8b93fd42d2c36e1fb0e508b89a765a53071a8  xsa362-linux-1.patch
-b6d02952e7fbede55b868cb2dc4d8853284996883dc72518a0cd5b14d6c7fdd4  xsa362-linux-2.patch
-0a2661380d8f786fefe12e5a8b1528d4a79f1ad058c26b417c52449a7e16a302  xsa362-linux-3.patch
-$
 
-DEPLOYMENT DURING EMBARGO
-=========================
 
-Deployment of the patches described above (or others which are
-substantially similar) is permitted during the embargo, even on
-public-facing systems with untrusted guest users and administrators.
 
-Deployment of the mitigation to switch to HVM / PVH backend domains
-is also permitted during the embargo, even on public-facing systems with
-untrusted guest users and administrators.
 
-HOWEVER, deployment of the non-kernel-based backends mitigation
-described above is NOT permitted during the embargo on public-facing
-systems with untrusted guest users and administrators.  This is because
-such a configuration change may be recognizable by the affected guests.
 
-AND: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
 
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmAru/UMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZszQH/jwCgehGBbejtpFjiOqEPdqIQhd0X+Q1feFD9PB6
-07gfGanmSds5mitr0ezTHbfLw85CoFbAJhalNdx9XeQrZTIvRAizkCi779rE9UYZ
-H0CN73GoObF4E8q+tVRpZni0Rcnb77bETRsmlYjRYRjtZNZ1+7vbn4tf4JMccoo0
-qhz1/bqY3e4yHPcdxb9P3T/DQKNG+nJjkn4kNueYo1PUGUetxw6HXbXWHh6WvbOr
-mfd+sTxRSf+Nk2OZhtofjIYEIeL058axZoSuARBIPphBmOCumUTGzrypZwe5BTuF
-GMQqlguxPU0rFscGd/Js05suFhQQR4ccJlSGRs7pswt9i0M=
-=KnG3
------END PGP SIGNATURE-----
+console_lock();
 
-Download attachment "xsa362-linux-1.patch" of type "application/octet-stream" (1165 bytes)
+                                                         ...
 
-Download attachment "xsa362-linux-2.patch" of type "application/octet-stream" (984 bytes)
 
-Download attachment "xsa362-linux-3.patch" of type "application/octet-stream" (1028 bytes)
+console_unlock();
+
+
+
+        console_lock();
+        ...
+        console_unlock();
+
+
+And the patch for this issue is available now. (
+https://github.com/torvalds/linux/commit/2287a51ba822384834dafc1c798453375d1107c7
+)
+
+Timeline:
+* 08.30.21 - Vulnerability reported to security@...nel.org.
+* 08.31.21 - CVE-2021-3753 assigned.
+* 09.01.21 - Vulnerability opened.
+
+Regards,
+
+Yuan Ming, Tsinghua University
+
