@@ -1,104 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/21/3
-Message-ID: <CABdrxGAGO99O4ZfiCMO2tqmjSZtDZE+q9vL3cUP0AkMGjFCPMg@mail.gmail.com>
-Date: Thu, 21 Oct 2021 09:26:08 -0700
-From: CJ Cullen <cjcullen@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/01/3
+Message-ID: <CAFcO6XM70_Zwo6JuhkH53DCtRmWSTXc616gi4sfuwOyxPAAvzA@mail.gmail.com>
+Date: Wed, 1 Sep 2021 14:38:33 +0800
+From: butt3rflyh4ck <butterflyhuangxx@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [kubernetes] CVE-2021-25742: Ingress-nginx custom snippets allows retrieval of ingress-nginx serviceaccount token and secrets across all namespaces
+Subject: Re: Linux kernel: fs/btrfs: null-ptr-dereference bug in btrfs_rm_device in fs/btrfs/volumes.c
 Content-Type: text/plain; charset=utf-8
 
-Hello Kubernetes Community,
+The patch for this issue is available upstream.
 
-A security issue was discovered in ingress-nginx where a user that can
-create or update ingress objects can use the custom snippets feature to
-obtain all secrets in the cluster.
-
-This issue has been rated High (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L
-<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L>),
-and assigned CVE-2021-25742.
-Affected Components and Configurations
-
-This bug affects ingress-nginx.
-
-Multitenant environments where non-admin users have permissions to create
-Ingress objects are most affected by this issue.
-Affected Versions with no mitigation
-
-   -
-
-   v1.0.0
-   -
-
-   <= v0.49.0
-
-Versions allowing mitigation
-
-This issue cannot be fixed solely by upgrading ingress-nginx. It can be
-mitigated in the following versions:
-
-   -
-
-   v1.0.1
-   -
-
-   v0.49.1
-
-Mitigation
-
-To mitigate this vulnerability:
-
-   1.
-
-   Upgrade to a version that allows mitigation, (>= v0.49.1 or >= v1.0.1)
-   2.
-
-   Set allow-snippet-annotations
-   <https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#allow-snippet-annotations>
-   to false in your ingress-nginx ConfigMap based on how you deploy
-   ingress-nginx:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=e4571b8c5e9ffa1e85c0c671995bd4dcc5c75091
 
 
-Static Deploy Files
+Regards,
+ butt3rflyh4ck.
 
-Edit the ConfigMap for ingress-nginx after deployment
+On Thu, Aug 26, 2021 at 5:36 PM butt3rflyh4ck
+<butterflyhuangxx@...il.com> wrote:
+>
+> Hi, RedHat has assigned  CVE-2021-3739   to this issue.
+>
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-3739.
+>
+> Please track the below link for more information.
+> https://bugzilla.redhat.com/show_bug.cgi?id=1997958
+>
+> Regards,
+>   butt3rflyh4ck.
+>
+>
+>
+> On Wed, Aug 25, 2021 at 10:49 AM butt3rflyh4ck
+> <butterflyhuangxx@...il.com> wrote:
+> >
+> > Hello, there is a null pointer dereference bug in the btrfs_rm_device
+> > function in fs/btrfs/volumes.c in linux-5.14.0-rc4+ and reproduce too.
+> > Fortunately, triggering the bug requires ‘CAP_SYS_ADMIN’.
+> >
+> > #Root Cause
+> > When a user invokes a BTRFS_IOC_RM_DEV_V2 ioctl to remove a non-exist
+> > volume device,
+> > it would call btrfs_ioctl_rm_dev_v2 function to implement. And
+> > btrfs_ioctl_rm_dev_v2 would call btrfs_rm_device,
+> > if the id of the volume device is illegal, it would trigger a
+> > null-ptr-deref bug to cause DoS.
+> >
+> > # Analyse
+> > https://lore.kernel.org/linux-btrfs/CAFcO6XO5TC5sEo-C9JGC75JkNAzkOSSLA3a=bwQqXFFbRTZ7Gw@mail.gmail.com/T/#md4b850f33616b7364f86e6fed144abc925f3669c
+> >
+> > #Fix
+> > the patch for this issue, not available upstream now.
+> > https://lore.kernel.org/linux-btrfs/20210806102415.304717-1-wqu@suse.com/T/#u
+> >
+> >
+> > #Timeline
+> > *2021/8/6 - Vulnerability reported to maintainer and CC to
+> > linux-btrfs@...r.kernel.org.
+> > *2021/8/6 - Vulnerability confirmed and patched.
+> > *2021/8/10 - Vulnerability reported to secalert@...hat.com.
+> > *2021/8/25 - Opened on oss-security@...ts.openwall.com.
+> >
+> > #Credit
+> > the issue is reported by Active Defense Lab of Venustech.
+> >
+> > Regards,
+> >  butt3rflyh4ck.
+> > --
+> > Active Defense Lab of Venustech
+>
+>
+>
+> --
+> Active Defense Lab of Venustech
 
-kubectl edit configmap -n ingress-nginx ingress-nginx-controller
-
-Add directive:
-
-data:
-
-  allow-snippet-annotations: “false”
 
 
-
-More information on the ConfigMap here
-<https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/>
-
-
-Deploying Via Helm
-
-Set controller.allowSnippetAnnotations to false in the Values.yaml or add
-the directive to the helm deploy
-
-helm install [RELEASE_NAME] --set controller.allowSnippetAnnotations=false
-ingress-nginx/ingress-nginx
-
-https://github.com/kubernetes/ingress-nginx/blob/controller-v1.0.1/charts/ingress-nginx/values.yaml#L76
-
-Detection
-
-If you find evidence that this vulnerability has been exploited, please
-contact security@...ernetes.io
-Additional Details
-
-See ingress-nginx Issue #7837
-<https://github.com/kubernetes/ingress-nginx/issues/7837> for more details.
-Acknowledgements
-
-This vulnerability was reported by Mitch Hulscher.
-
-Thank You,
-
-CJ Cullen on behalf of the Kubernetes Security Response Committee
-
+-- 
+Active Defense Lab of Venustech
