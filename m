@@ -1,60 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/10/6
-Message-ID: <9e832bad-8dc7-dd8a-eadd-feab14ab2507@suse.de>
-Date: Wed, 10 Feb 2021 16:18:20 +0100
-From: Alexandros Toptsoglou <atoptsoglou@...e.de>
-To: oss-security@...ts.openwall.com, Rohit Keshri <rkeshri@...hat.com>
-Subject: Re: CVE-2021-20200: Linux kernel: close race between munmap() and expand_upwards()/downwards()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/02/3
+Message-ID: <d3343a7b-214a-e0fd-5b43-0a6ec27aaded@apache.org>
+Date: Thu, 02 Sep 2021 16:07:42 +0000
+From: Jeff Zhang <zjffdu@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-27578: Apache Zeppelin: Cross Site Scripting in markdown interpreter 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Description:
 
-is the information listed here correct? Especially the CVE-2021-20200
-assignment.
+Cross Site Scripting vulnerability in markdown interpreter of Apache Zeppelin allows an attacker to inject malicious scripts.  This issue affects Apache Zeppelin Apache Zeppelin versions prior to 0.9.0.
 
-In project-zero reference at the last comment CVE-2020-29369 is mentioned.
+Credit:
 
-Best regards,
+Apache Zeppelin would like to thank Paulo Pacheco for reporting this issue 
 
-Alexandros
-
-On 2/10/21 4:04 PM, Rohit Keshri wrote:
-> Hello Team,
-> 
-> A use-after-free flaw may be seen due to a race problem while in
-> detach_vmas_to_be_unmapped() in mm/mmap.c in VMA access while
-> munmap(). This flaw could allow a local attacker with a user privilege
-> to crash the system, because VMA with VM_GROWSDOWN or VM_GROWSUP flag
-> set may change their size under mmap_read_lock(). This vulnerability
-> could even lead to a kernel information leak problem.
-> 
-> 
-> 'CVE-2021-20200' was assigned by Red Hat.
-> 
-> References:
-> https://bugs.chromium.org/p/project-zero/issues/detail?id=2056
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=246c320a8cfe0b11d81a4af38fa9985ef0cc9a4c
-> 
-> Thanks and Regards
-> ..
-> Rohit Keshri / Red Hat Product Security Team
-> PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
-> 
-> secalert@...hat.com for urgent response
-> 
-
--- 
-Alexandros Toptsoglou <atoptsoglou@...e.de>
-Security Engineer
-OpenPGP fingerprint: C270 3848 AA4A 783A 9848  BB06 56A3 3D9C B652 1869
-
-SUSE Software Solutions Germany GmbH
-Maxfeldstr. 5
-90409 Nuremberg
-Germany
-(HRB 36809, AG Nürnberg)
-Managing Director: Felix Imendörffer
-
-
-
-Download attachment "OpenPGP_signature" of type "application/pgp-signature" (841 bytes)
