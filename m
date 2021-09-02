@@ -1,37 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/17/3
-Message-ID: <5d2e2615-eed6-40ac-2788-3e4a882e2f80@census-labs.com>
-Date: Wed, 17 Feb 2021 20:06:00 +0200
-From: Dimitrios Glynos <dimitris@...sus-labs.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/02/1
+Message-ID: <a2614ff1-32d6-1e76-35f6-4dfaf4f3e5cd@apache.org>
+Date: Thu, 02 Sep 2021 15:56:50 +0000
+From: Jeff Zhang <zjffdu@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-26911: Canary Mail with IMAP STARTTLS missing certificate validation
+Subject: CVE-2019-10095: Apache Zeppelin: bash command injection in spark interpreter 
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Description:
 
-Rayd Debbas of CENSUS identified that Canary Mail versions 3.20 and 3.21
-(and possibly previous versions) do not perform a certificate validation
-check when configured for IMAP in STARTTLS mode. This bug affects Canary
-Mail builds for Apple MacOS and iOS.
+bash command injection vulnerability in Apache Zeppelin allows an attacker to inject system commands into Spark interpreter settings.  This issue affects Apache Zeppelin Apache Zeppelin version 0.9.0 and prior versions.
 
-It is thus possible to carry out a man-in-the-middle attack in such
-scenarios, and victim users receive no warning. More information
-about the issue can be found here:
+Credit:
 
-https://census-labs.com/news/2021/02/17/canary-mail-app-missing-certificate-validation-check-on-imap-starttls/
+Apache Zeppelin would like to thank HERE Security team for reporting this issue 
 
-The creators of Canary Mail, have released version 3.22
-of the software which addresses the issue. The relevant git commit
-can be found here:
-
-https://github.com/canarymail/mailcore2/commit/45acb4efbcaa57a20ac5127dc976538671fce018?branch=45acb4efbcaa57a20ac5127dc976538671fce018&diff=split
-
-CVE-2021-26911 was assigned to this issue by MITRE.
-
-Kind regards,
-
-Dimitris
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
