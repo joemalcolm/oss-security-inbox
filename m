@@ -1,56 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/07/1
-Message-ID: <BL1PR11MB541646CE3C8151DEAD755133DAB19@BL1PR11MB5416.namprd11.prod.outlook.com>
-Date: Thu, 7 Oct 2021 06:01:43 +0000
-From: "Tim Wadhwa-Brown (twadhwab)" <twadhwab@...co.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: CVE-2021-41773: Path traversal and file disclosure vulnerability in Apache HTTP Server 2.4.49 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/02/2
+Message-ID: <9836bef6-e46b-f226-2426-892481234559@apache.org>
+Date: Thu, 02 Sep 2021 16:02:16 +0000
+From: Jeff Zhang <zjffdu@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2020-13929: Apache Zeppelin: Notebook permissions bypass 
 Content-Type: text/plain; charset=utf-8
 
-Hi oss-security folks,
-
-Closing the loop on this one. Will Dormann, Hacker Fantastic and I successfully managed to turn this into RCE on both Windows and Linux. With mod_cgi (and maybe other similar extensions) enabled, Will showed he could get calc to pop on Windows and HF and I subsequently figured out how to trigger the bug on Linux to reach /bin/sh and POST a shell payload. Whilst the configuration may not be default it's probably worth doubling down on any efforts to get the patch rolled out if you're affected. There's a whole series of Twitter that I shan't bore you with but https://twitter.com/hackerfantastic/status/1445523890759819264?s=20 should be a good starting point if you want to read back.
-
-Tim
-
-PS Apologies for any email mangling, first time posting here in quite some time and sadly corporate mail client is no longer KMail ☹. Not sure if it will become a regular habit again.
-
-Tim Wadhwa-Brown
-Security Research Lead, CX Technology & Transformation Group
-twadhwab@...co.com
-Tel: +44 208 824 0239
-Mail Stop UXB10/3
-82 Oxford Road,
-Uxbridge,
-UB8 1UX,
-United Kingdom
-cisco.com | labs.portcullis.co.uk
-
------Original Message-----
-From: Stefan Eissing <icing@...che.org> 
-Sent: 05 October 2021 10:03
-To: oss-security@...ts.openwall.com
-Subject: [oss-security] CVE-2021-41773: Path traversal and file disclosure vulnerability in Apache HTTP Server 2.4.49 
-
-Severity: important
+Severity: critical
 
 Description:
 
-A flaw was found in a change made to path normalization in Apache HTTP Server 2.4.49. An attacker could use a path traversal attack to map URLs to files outside the expected document root.  
-
-If files outside of the document root are not protected by "require all denied" these requests can succeed. Additionally this flaw could leak the source of interpreted files like CGI scripts.
-
-This issue is known to be exploited in the wild.
-
-This issue only affects Apache 2.4.49 and not earlier versions.  
+Authentication bypass vulnerability in Apache Zeppelin allows an attacker to bypass Zeppelin authentication mechanism to act as another user.  This issue affects Apache Zeppelin Apache Zeppelin version 0.9.0 and prior versions.
 
 Credit:
 
-This issue was reported by Ash Daulton along with the cPanel Security Team
+Apache Zeppelin would like to thank David Woodhouse for reporting this issue 
 
-References:
-
-https://httpd.apache.org/security/vulnerabilities_24.html
-
-
-Download attachment "PGP.sig" of type "application/pgp-signature" (822 bytes)
