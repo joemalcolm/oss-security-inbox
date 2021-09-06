@@ -1,61 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/07/2
-Message-ID: <392f934a-f937-7b29-5f7f-5df3ee60d8a8@larma.de>
-Date: Mon, 7 Jun 2021 10:54:03 -0600
-From: Dino Team <team@...o.im>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2021-33896] Path traversal in Dino file transfers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/06/2
+Message-ID: <20210906190730.GA18928@openwall.com>
+Date: Mon, 6 Sep 2021 21:07:30 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Jean Diogo <j@....com.br>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Possible memory leak on getspnam / getspnam_r
 Content-Type: text/plain; charset=utf-8
 
-### Affected software
+Hi Jean,
 
-Dino (Instant Messenger) - https://dino.im/
+On Tue, Aug 24, 2021 at 08:14:02PM -0300, Jean Diogo wrote:
+> The function getspnam() and it's reentrant sister getspnam_r() do not clean
+> the content of allocated memory before returning to the user, resulting in
+> the leak of /etc/shadow content. In some cases this might be an issue.
 
-### Severity
+There's no reliable way for a program to ensure nothing sensitive is
+left in memory.  However, the library can make a better effort to make
+it unlikely that password hashes would be left in memory.  Like you
+suggested in another message (somehow detached from this thread),
+endspent() could be a place to zeroize any knowingly cached sensitive
+data, although it would only be usable that way by programs, not by
+higher-level libraries where thread-safety matters.
 
-Medium (4.7): AV:N/AC:L/PR:N/UI:R/S:C/C:N/I:L/A:N
+> Let me put ProFTPd as an example: it's daemon starts as root, when it
+> receives a connection it forks, opens all the files that it'll need, then
+> it calls getspnam with the provided FTP user to validate the provided
+> password. Later on it setreuid(nobody) abandoning root privileges [1]. Here
+> it doesn't matter whether it calls getspnam or getspnam_r, the malloced
+> buffer will remain on heap memory (and it's pointer in libc <buffer> and
+> <respbuf>, I suppose). So now the child process is running on a low
+> privileged user and has a copy of /etc/shadow on it's heap memory.
+> The vulnerability CVE-2020-9273 [2] (an use-after-free on heap) allowed me
+> to get RCE on ProFTPd, in an exploit I created last year. Additionally,
+> thanks to getspnam caching it is possible to read the root cryptogram (and
+> other users).
+> 
+> I'm not suggesting that ProFTPd architecture is correct [3]. The problem is
+> that even if ProFTPd calls getspnam_r it has no mechanism to zero the cache
+> before forking, since internal pointers are not known to the user (read
+> developer).
 
-### Affected versions
-- Release version 0.2.0
-- Release version 0.1.1 and earlier
-- Nightly version 0.2.0~git113.20210601.1ac16ecd and earlier
+> [3] - It is a good programming practice to exec right after fork.
 
-### Fixed versions
-- Release version 0.2.1
-- Release version 0.1.2
-- Nightly version 0.2.0~git114.20210607.0c8d25b7
+An alternative programming practice is to fork() a child process for
+authentication, then let that child process (with sensitive data in it)
+terminate and have the service proceed to authenticated state (with
+nothing from /etc/shadow having ever been loaded into its memory).  This
+is what I implemented in popa3d from the start, see its auth_shadow.c
+and DESIGN:
 
-### Description
+			 startup as root
+				|
+			-----------------
+			|child          |parent
+			v               v
+	drop to user popa3d,            still as root,
+	handle the AUTHORIZATION        wait for and
+	state, write the results, - - > read the authentication
+	and exit                        information
+					|
+			-----------------
+			|child          |parent
+			v               v
+	getspnam(3), crypt(3),          wait for and
+	check, write the result,  - - > read the authentication
+	and exit (to clean up)          result
+					|
+					v
+					drop to the authenticated user,
+					handle the TRANSACTION state,
+					possibly UPDATE the mailbox,
+					and exit
 
-It was discovered that when a user receives and downloads a file in
-Dino, URI-encoded path separators in the file name will be decoded,
-allowing an attacker to traverse directories and create arbitrary files
-in the context of the user.
+This is also what we have in pam_tcb, enabled with the "fork" option:
 
-This vulnerability does not allow to overwrite or modify existing files
-and the attacker cannot control the executable flag of created files.
-However, third-party software may be affected by newly created
-configuration files, potentially allowing for code execution.
+       fork   Create child processes for accessing shadow files.   Using  this
+              option  one can be sure that after a call to pam_end(3) there is
+              no sensitive data left in the process' address space.   However,
+              this  option  may  confuse some of the more complicated applica-
+              tions and it has some performance overhead.
 
-The file name, including path separators, is displayed to the user,
-however, long file names are ellipsized in the middle of the file name,
-allowing the attacker to hide the malicious path separators, as long as
-the resulting file name has sufficient length.
+Maybe we should finally get pam_tcb into Linux-PAM, now that it no
+longer depends on custom glibc patches since libxcrypt finally provides
+our crypt_gensalt*() API.  Maybe we can have it fully replace pam_unix
+in there, just like it had on Owl and ALT Linux 20 years ago.
 
-### Advice
-
-All deployments should upgrade to a fixed version or apply the patch
-from commit 0c8d25b7a3e7a10a506f1e19b868fe9b0c761495.
-
-### Credits
-
-Many thanks to CTurt (Google) for discovering and reporting this issue.
-
-### Links
-
-- https://dino.im/security/cve-2021-33896/
-- https://github.com/dino/dino/commit/0c8d25b7
-- https://github.com/dino/dino/releases/tag/v0.2.1
-- https://github.com/dino/dino/releases/tag/v0.1.2
-- https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-33896
-- https://nvd.nist.gov/vuln/detail/CVE-2021-33896
+Alexander
