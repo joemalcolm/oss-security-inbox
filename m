@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["670" "Friday" "2" "December" "2016" "13:40:12" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1612021331570.5998@wniryva>" "23" "[oss-security] CVE request Qemu: net: mcf_fec: infinite loop while receiving data in mcf_fec_receive" nil nil nil "12" "2016120208:10:12" "[oss-security] CVE request Qemu: net: mcf_fec: infinite loop while receiving data in mcf_fec_receive" (number mark "U       ppandit@redh Dec  2   23/670   " thread-indent "\"[oss-security] CVE request Qemu: net: mcf_fec: infinite loop while receiving data in mcf_fec_receive\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3650" "Monday" "6" "September" "2021" "21:07:30" "+0200" "Solar Designer" "solar@openwall.com" nil "79" "Re: [oss-security] Possible memory leak on getspnam / getspnam_r" nil nil nil "9" nil nil (number mark "U       solar@openwa Sep  6   79/3650  " thread-indent "\"Re: [oss-security] Possible memory leak on getspnam / getspnam_r\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Possible memory leak on getspnam / getspnam_r" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27766 invoked by uid 550); 2 Dec 2016 08:10:28 -0000
+Received: (qmail 9540 invoked by uid 550); 6 Sep 2021 19:08:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,40 +12,96 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27748 invoked from network); 2 Dec 2016 08:10:28 -0000
-Date: Fri, 2 Dec 2016 13:40:12 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: wjjzhang <wjjzhang@tencent.com>
-Message-ID: <alpine.LFD.2.20.1612021331570.5998@wniryva>
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Fri, 02 Dec 2016 08:10:16 +0000 (UTC)
-Subject: [oss-security] CVE request Qemu: net: mcf_fec: infinite loop while receiving data
- in mcf_fec_receive
+Received: (qmail 8091 invoked from network); 6 Sep 2021 19:07:37 -0000
+Date: Mon, 6 Sep 2021 21:07:30 +0200
+From: Solar Designer <solar@openwall.com>
+To: Jean Diogo <j@bsd.com.br>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20210906190730.GA18928@openwall.com>
+References: <CAKpyPV-Z18FXae0t7vCozupvZ6+_9eeaoAQ=8_1sPM8Xfbn3ZQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAKpyPV-Z18FXae0t7vCozupvZ6+_9eeaoAQ=8_1sPM8Xfbn3ZQ@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Possible memory leak on getspnam / getspnam_r
 
-   Hello,
+Hi Jean,
 
-Quick Emulator(Qemu) built with the ColdFire Fast Ethernet Controller emulator 
-support is vulnerable to an infinite loop issue. It could occur while 
-receiving packets in 'mcf_fec_receive'.
+On Tue, Aug 24, 2021 at 08:14:02PM -0300, Jean Diogo wrote:
+> The function getspnam() and it's reentrant sister getspnam_r() do not clean
+> the content of allocated memory before returning to the user, resulting in
+> the leak of /etc/shadow content. In some cases this might be an issue.
 
-A privileged user/process inside guest could use this issue to crash the Qemu 
-process on the host leading to DoS.
+There's no reliable way for a program to ensure nothing sensitive is
+left in memory.  However, the library can make a better effort to make
+it unlikely that password hashes would be left in memory.  Like you
+suggested in another message (somehow detached from this thread),
+endspent() could be a place to zeroize any knowingly cached sensitive
+data, although it would only be usable that way by programs, not by
+higher-level libraries where thread-safety matters.
 
-Upstream patch
---------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2016-11/msg05324.html
+> Let me put ProFTPd as an example: it's daemon starts as root, when it
+> receives a connection it forks, opens all the files that it'll need, then
+> it calls getspnam with the provided FTP user to validate the provided
+> password. Later on it setreuid(nobody) abandoning root privileges [1]. Here
+> it doesn't matter whether it calls getspnam or getspnam_r, the malloced
+> buffer will remain on heap memory (and it's pointer in libc <buffer> and
+> <respbuf>, I suppose). So now the child process is running on a low
+> privileged user and has a copy of /etc/shadow on it's heap memory.
+> The vulnerability CVE-2020-9273 [2] (an use-after-free on heap) allowed me
+> to get RCE on ProFTPd, in an exploit I created last year. Additionally,
+> thanks to getspnam caching it is possible to read the root cryptogram (and
+> other users).
+> 
+> I'm not suggesting that ProFTPd architecture is correct [3]. The problem is
+> that even if ProFTPd calls getspnam_r it has no mechanism to zero the cache
+> before forking, since internal pointers are not known to the user (read
+> developer).
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1400829
+> [3] - It is a good programming practice to exec right after fork.
 
-This issue was reported by Wjjzhang of Tencent.com.
+An alternative programming practice is to fork() a child process for
+authentication, then let that child process (with sensitive data in it)
+terminate and have the service proceed to authenticated state (with
+nothing from /etc/shadow having ever been loaded into its memory).  This
+is what I implemented in popa3d from the start, see its auth_shadow.c
+and DESIGN:
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+			 startup as root
+				|
+			-----------------
+			|child          |parent
+			v               v
+	drop to user popa3d,            still as root,
+	handle the AUTHORIZATION        wait for and
+	state, write the results, - - > read the authentication
+	and exit                        information
+					|
+			-----------------
+			|child          |parent
+			v               v
+	getspnam(3), crypt(3),          wait for and
+	check, write the result,  - - > read the authentication
+	and exit (to clean up)          result
+					|
+					v
+					drop to the authenticated user,
+					handle the TRANSACTION state,
+					possibly UPDATE the mailbox,
+					and exit
+
+This is also what we have in pam_tcb, enabled with the "fork" option:
+
+       fork   Create child processes for accessing shadow files.   Using  this
+              option  one can be sure that after a call to pam_end(3) there is
+              no sensitive data left in the process' address space.   However,
+              this  option  may  confuse some of the more complicated applica-
+              tions and it has some performance overhead.
+
+Maybe we should finally get pam_tcb into Linux-PAM, now that it no
+longer depends on custom glibc patches since libxcrypt finally provides
+our crypt_gensalt*() API.  Maybe we can have it fully replace pam_unix
+in there, just like it had on Owl and ALT Linux 20 years ago.
+
+Alexander
