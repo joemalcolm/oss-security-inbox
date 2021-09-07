@@ -1,32 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/16/4
-Message-ID: <YHmk/nNvde4ohgSP@eldamar.lan>
-Date: Fri, 16 Apr 2021 16:53:50 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/07/1
+Message-ID: <CAKx+4-qZVEvOx+zD1R0r2UzNpT8eLUe+sTp78KJHjaEun7BVPA@mail.gmail.com>
+Date: Tue, 7 Sep 2021 14:09:52 +0530
+From: Rohit Keshri <rkeshri@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [CVE-2021-3493] Ubuntu Linux kernel overlayfs fs caps privilege escalation
+Subject: CVE-2021-3715 Linux kernel: use-after-free in route4_change() in net/sched/cls_route.c
 Content-Type: text/plain; charset=utf-8
 
-Hi Steve,
+Hello Team,
 
-On Thu, Apr 15, 2021 at 02:31:14PM -0700, Steve Beattie wrote:
-> Hello,
-> 
-> An independent security researcher reported via the SSD Secure
-> Disclosure program that the overlayfs stacking file system within the
-> Linux kernel as used within Ubuntu did not properly validate the
-> application of file capabilities against user namespaces.
-> 
-> This issue is likely Ubuntu specific, as Ubuntu carries a patch to
-> enable unprivileged overlayfs mounts. The combination of that patch
-> plus allowing unprivileged user namespaces by default in Ubuntu allows
-> an unprivileged attacker to gain elevated privileges.
-> 
-> A commit that addresses the issue was applied in the upstream kernel:
-> 
->   7c03e2cda4a5 ("vfs: move cap_convert_nscap() call into vfs_setxattr()") (v5.10)
+A flaw was found in the "Routing decision" classifier in the Linux kernel's
+Traffic Control networking subsystem in the way it handled changing of
+classification filters, leading to a use-after-free condition. This flaw
+allows unprivileged local users to escalate their privileges on the system.
+The highest threat from this vulnerability is confidentiality, integrity,
+as well as system availability.
 
-For completeness, this though was in v5.11-rc1 right?
+This issue was fixed in the upstream Kernel 5.10 onward with ef299cc3fa1a9
+~~~
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ef299cc3fa1a9e1288665a9fdc8bff55629fd359
+~~~
+
+This problem is considered a security threat because unprivileged
+user/network namespaces can escalate privileges on the system.
+
+'CVE-2021-3715' was assigned by Red Hat.
+
+* acks (Zhenpeng Lin)
+
+* Description from the reporter:
+
+"Originally the bug was found by Syzkaller in
+https://syzkaller.appspot.com/bug?id=6a039858238a38cbc7f372607fc5d49f4469cf2c
+.
+It shows a warning bug effect that is not exploitable, seemingly.
+However, the bug can be turned into a use-after-free bug and eventually
+results in a working exploit, with all the mitigation in centos being
+bypassed." from zhenpeng
+
+Updated packages for Red Hat are currently in QE and will be released when
+available.
 
 Regards,
-Salvatore
+..
+Rohit Keshri / Red Hat Product Security Team
+PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
+
+secalert@...hat.com for urgent response
+
