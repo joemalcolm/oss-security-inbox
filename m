@@ -1,23 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/20/2
-Message-ID: <5c63230e-b733-4b15-1f5a-e885929bf474@apache.org>
-Date: Mon, 20 Dec 2021 10:00:38 +0000
-From: Christofer Dutz <cdutz@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/08/1
+Message-ID: <CAKx+4-riLe6E466yDMO=_zV-ZDisOESHT82=Wofc=o5G3BDWGA@mail.gmail.com>
+Date: Wed, 8 Sep 2021 13:15:34 +0530
+From: Rohit Keshri <rkeshri@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-43083: Apache PLC4X 0.9.0 Buffer overflow in PLC4C via crafted server response 
+Subject: Re: CVE-2021-3715 Linux kernel: use-after-free in route4_change() in net/sched/cls_route.c
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Thank you Greg,
 
-Apache PLC4X - PLC4C (Only the C language implementation was effected) was vulnerable to an unsigned integer underflow flaw inside the tcp transport. Users should update to 0.9.1, which addresses this issue.
+Correction please,  This issue was fixed in the upstream Kernel 5.6 onward
+with ef299cc3fa1a9
+..
+Rohit Keshri / Red Hat Product Security Team
+PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
 
-However, in order to exploit this vulnerability, a user would have to actively connect to a mallicious device which could send a response with invalid content. Currently we consider the probability of this being exploited as quite minimal, however this could change in the future, especially with the industrial networks growing more and more together.
+secalert@...hat.com for urgent response
 
-Credit:
 
-Apache PLC4X would like to thank Eugene Lim for reporting this issue.
+On Tue, Sep 7, 2021 at 3:47 PM Greg KH <greg@...ah.com> wrote:
 
-References:
-
-https://lists.apache.org/thread/jxx6qc84z60xbbhn6vp2s5qf09psrtc7
+> On Tue, Sep 07, 2021 at 02:09:52PM +0530, Rohit Keshri wrote:
+> > Hello Team,
+> >
+> > A flaw was found in the "Routing decision" classifier in the Linux
+> kernel's
+> > Traffic Control networking subsystem in the way it handled changing of
+> > classification filters, leading to a use-after-free condition. This flaw
+> > allows unprivileged local users to escalate their privileges on the
+> system.
+> > The highest threat from this vulnerability is confidentiality, integrity,
+> > as well as system availability.
+> >
+> > This issue was fixed in the upstream Kernel 5.10 onward with
+> ef299cc3fa1a9
+>
+> Note, commit ef299cc3fa1a ("net_sched: cls_route: remove the right
+> filter from hashtable") came out in the 5.6 kernel release, in March of
+> 2020, and was also backported to all relevant stable kernel releases at
+> the beginning of April, 2020:
+>         4.4.218 4.9.218 4.14.175 4.19.114 5.4.29 5.5.14
+>
+> How did 5.10 get messed up in this, it was not released until December
+> 2020?
+>
+> thanks,
+>
+> greg k-h
+>
+>
 
