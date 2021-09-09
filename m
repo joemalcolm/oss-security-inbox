@@ -1,66 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/26/4
-Message-ID: <66DDFEAA-E5B2-4348-B5D9-ECCE66231F44@oracle.com>
-Date: Thu, 26 Aug 2021 14:40:59 +0000
-From: John Haxby <john.haxby@...cle.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: butt3rflyh4ck <butterflyhuangxx@...il.com>
-Subject: Re: Linux kernel: qrtr: another out-of-bound Read in qrtr_endpoint_post in net/qrtr/qrtr.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/09/2
+Message-ID: <20210909141609.tiluhoctwxabsu6g@yuggoth.org>
+Date: Thu, 9 Sep 2021 14:16:09 +0000
+From: Jeremy Stanley <fungi@...goth.org>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA-2021-006] Neutron: Routes middleware memory leak for nonexistent controllers (CVE-2021-40797)
 Content-Type: text/plain; charset=utf-8
 
+========================================================================
+OSSA-2021-006: Routes middleware memory leak for nonexistent controllers
+========================================================================
+
+:Date: September 09, 2021
+:CVE: CVE-2021-40797
 
 
-> On 25 Aug 2021, at 03:40, butt3rflyh4ck <butterflyhuangxx@...il.com> wrote:
-> 
-> Hi, There was another out-of-bound read bug in qrtr_endpoint_post in
-> net/qrtr/qrtr.c in 5.14.0-rc6+ and reproduced it.
-> 
-> This check in  qrtr_endpoint_post was incomplete, did not consider size is 0:
-> ```
-> if (len != ALIGN(size, 4) + hdrlen)
->                goto err;
-> ```
-> if size from qrtr_hdr is 0, the result of ALIGN(size, 4) will be 0,
-> In case of len == hdrlen and size == 0 in header this check won't fail and
-> ```
-> if (cb->type == QRTR_TYPE_NEW_SERVER) { /* Remote node endpoint can
-> bridge other distant nodes */
->             const struct qrtr_ctrl_pkt *pkt = data + hdrlen;
->             qrtr_node_assign(node, le32_to_cpu(pkt->server.node));
-> }
-> ```
-> will also read out of bound from data, which is hdrlen allocated block.
-> 
-> 
-> #analyze and some details
-> https://lists.openwall.net/netdev/2021/08/17/124
-> 
-> #patch
-> https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=7e78c597c3eb
-> now not available upstream.
-
-Hi,
-
-Did you ask for a CVE for this bug?
-
-jch
-
-> 
-> #Timeline
-> *2021/8/17 - Vulnerability reported to netdev@...r.kernel.org.
-> *2021/8/20 - Vulnerability confirmed and patched.
-> *2021/8/23 - Vulnerability reported to secalert@...hat.com.
-> *2021/8/25 - Opened on oss-security@...ts.openwall.com.
-> 
-> #Credit
-> Active Defense Lab of Venustech.
-> 
-> 
-> Regards,
-> butt3rflyh4ck.
-> 
-> --
-> Active Defense Lab of Venustech
+Affects
+~~~~~~~
+- Neutron: <16.4.1, >=17.0.0 <17.2.1, >=18.0.0 <18.1.1
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
+Description
+~~~~~~~~~~~
+Slawek Kaplonski with Red Hat reported a vulnerability in Neutron's
+routes middleware. By making API requests involving nonexistent
+controllers, an authenticated user may cause the API worker to
+consume increasing amounts of memory, resulting in API performance
+degradation or denial of service. All Neutron deployments are
+affected.
+
+
+Patches
+~~~~~~~
+- https://review.opendev.org/807638 (Queens)
+- https://review.opendev.org/807637 (Rocky)
+- https://review.opendev.org/807636 (Stein)
+- https://review.opendev.org/807635 (Train)
+- https://review.opendev.org/807634 (Ussuri)
+- https://review.opendev.org/807633 (Victoria)
+- https://review.opendev.org/807632 (Wallaby)
+- https://review.opendev.org/807335 (Xena)
+
+
+Credits
+~~~~~~~
+- Slawek Kaplonski from Red Hat (CVE-2021-40797)
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1942179
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-40797
+
+
+Notes
+~~~~~
+- The stable/train, stable/stein, stable/rocky, and stable/queens
+  branches are under extended maintenance and will receive no new
+  point releases, but patches for them are provided as a courtesy.
+
+-- 
+Jeremy Stanley
+
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
