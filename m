@@ -1,35 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/22/2
-Message-ID: <CAGUWgD9MsQts5_jV9=nr8X6mwZyW-NU2JzYnosdMqQ0G06nH6w@mail.gmail.com>
-Date: Thu, 22 Jul 2021 11:52:05 +0300
-From: Georgi Guninski <gguninski@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/09/1
+Message-ID: <e2aab54c-0042-d9fd-7df6-386cb1b498e1@apache.org>
+Date: Thu, 09 Sep 2021 11:22:49 +0000
+From: Kaxil Naik <kaxilnaik@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: ipython3 may execute code from the current working directory
+Subject: CVE-2021-38540: Apache Airflow: Variable Import endpoint missed authentication check 
 Content-Type: text/plain; charset=utf-8
 
-Summary: under certain circumstances, ipython3 may execute
-code from the current working directory. This might be a
-problem if the current working directory is not trusted.
+Description:
 
-python3 is safe.
+The variable import endpoint was not protected by authentication in Airflow >=2.0.0, <2.1.3. This allowed unauthenticated users to hit that endpoint to add/modify Airflow variables used in DAGs, potentially
+resulting in a denial of service, information disclosure or remote code execution.
 
-Tested on ubuntu 20.
+This issue affects Apache Airflow >=2.0.0, <2.1.3.
 
-The following session illustrates it:
+Credit:
 
-joro@...lokote:~/tests/dir2$ pwd
-/home/joro/tests/dir2
-joro@...lokote:~/tests/dir2$ ipython3 --version
-7.13.0
-joro@...lokote:~/tests/dir2$ ls ~/tests/dir1
-a.py  joro-orig.py  __pycache__
-joro@...lokote:~/tests/dir2$ ls ~/tests/dir2
-joro.py  __pycache__
-joro@...lokote:~/tests/dir2$ cat ~/tests/dir1/a.py
-try:  import joro
-except:  print("error in import")
-joro@...lokote:~/tests/dir2$ cat ~/tests/dir2/joro.py
-print("imported joro :)")
-joro@...lokote:~/tests/dir2$ ipython3 ~/tests/dir1/a.py
-imported joro :)
-joro@...lokote:~/tests/dir2$
+Apache Airflow would like to thank Nathan Jones, National Australia Bank’s Offensive Security Team
+
