@@ -1,17 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/01/1
-Message-ID: <s6oo8s-46ps-5o2p-2164-31s0no13r759@inai.de>
-Date: Thu, 1 Apr 2021 01:20:24 +0200 (CEST)
-From: Jan Engelhardt <jengelh@...i.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: kopano-core 11.0.1: Remote DoS by memory exhaustion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/11/1
+Message-ID: <CAGaRif2A+2iWiYZsKSjYzHu+0_A0SxMNWr7ivdiqw7-iK7qA0g@mail.gmail.com>
+Date: Fri, 10 Sep 2021 13:37:15 -0700
+From: lewis john mcgibbney <lewismc@...che.org>
+To: user@...23.apache.org, dev@...23.apache.org,  oss-security@...ts.openwall.com, w3c@...che.org
+Subject: CVE-2021-38555: An XML external entity (XXE) injection vulnerability exists in Apache Any23 StreamUtils.java
 Content-Type: text/plain; charset=utf-8
 
-On Friday 2021-03-19 13:44, Jan Engelhardt wrote:
->Initial publication, no CVE number yet (will request).
->[…]
->The "kopano-ical" program implements a network service/trivial HTTP server.
->It imposes no length restrictions on HTTP headers, which can be exploited
->to memory-exhaust the process and have it terminate.
+Severity: critical
 
-This was assigned CVE-2021-28994.
+Description:
+
+An XML external entity (XXE) injection vulnerability was discovered in
+the Any23 StreamUtils.java file and is known to affect Any23 versions
+< 2.5. XML external entity injection (also known as XXE) is a web
+security vulnerability that allows an attacker to interfere with an
+application's processing of XML data. It often allows an attacker to
+view files on the application server filesystem, and to interact with
+any back-end or external systems that the application itself can
+access.
+
+Credit:
+
+The Apache Any23 Project Management Committee would like to thank
+Zhuxuan Wu for reporting the security vulnerability.
+
+
+
+-- 
+http://home.apache.org/~lewismc/
+http://people.apache.org/keys/committer/lewismc
+
