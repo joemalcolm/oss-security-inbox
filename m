@@ -1,4 +1,9 @@
-Received: (qmail 13379 invoked by uid 550); 12 Apr 2026 23:11:18 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2329" "Wednesday" "15" "September" "2021" "08:20:53" "+0200" "Daniel Stenberg" "daniel@haxx.se" nil "81" "[oss-security] [SECURITY ADVISORY] curl: STARTTLS protocol injection via MITM" "^Date:" nil nil "9" nil nil (number mark "        daniel@haxx. Sep 15   81/2329  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: STARTTLS protocol injection via MITM\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY ADVISORY] curl: STARTTLS protocol injection via MITM" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 9710 invoked by uid 550); 15 Sep 2021 06:21:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,41 +11,99 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 28601 invoked from network); 12 Apr 2026 16:14:31 -0000
-DKIM-Filter: OpenDKIM Filter v2.10.3 mail.cs.ucla.edu 0B1F43C033C26
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cs.ucla.edu;
-	s=9D0B346E-2AEB-11ED-9476-E14B719DCE6C; t=1776010461;
-	bh=dcXmyJSF0JD553E/nxlICoyn1IamQxxdwBBtJfNl76Y=;
-	h=Message-ID:Date:MIME-Version:To:From;
-	b=P0M6YmK0D48yOC1J2Hbvhg7Ivy211+7SHiLzUgSlp8ywBAsg+IcXlo+7Xb/bWfz/5
-	 okARiKnZjpuo2zAKxefrLLfQlTuxfUCEPiMjXFf3YWlvhduQH28zi+ajchbmz1Sh5s
-	 zCoLGfYZhVUj5pawqbL5758bHqqsWGMSEiAYRl+FHuvnvoRAYAJw/JBWYLtQYTKz62
-	 KWdgQ8VREylJkxAy21I3kj6s8sch7EJJwGQZxgISlst7MkKOUDKiSigVYqMlvrxXzN
-	 B5e2o3qT/WMAy/iLVnsJZI0KMNYmM2n9MRD+bWlMzNEu/RvUI0RHzFeCUE8dqVJKEK
-	 MGlG3iVJDpSxw==
-X-Virus-Scanned: amavis at mail.cs.ucla.edu
-Message-ID: <fa8031b0-b1fb-4412-ad30-5fb11c3e5752@cs.ucla.edu>
-Date: Sun, 12 Apr 2026 09:14:20 -0700
+Received: (qmail 9646 invoked from network); 15 Sep 2021 06:21:05 -0000
+X-X-Sender: dast@silly
+Message-ID: <nycvar.QRO.7.76.2109142337370.9650@fvyyl>
+User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Collin Funk <collin.funk1@gmail.com>, oss-security@lists.openwall.com
-Cc: Vahagn Vardanian <vahagn@redrays.io>
-References: <e9445380-c50f-4385-93fb-02fbeec634af@oracle.com>
- <20260412030203.GA27554@openwall.com> <87ik9wzumr.fsf@gmail.com>
-Content-Language: en-US
-From: Paul Eggert <eggert@cs.ucla.edu>
-Organization: UCLA Computer Science Department
-In-Reply-To: <87ik9wzumr.fsf@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] GNU tar: listing/extraction desynchronization
- allows hidden file injection
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Date: Wed, 15 Sep 2021 08:20:53 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] [SECURITY ADVISORY] curl: STARTTLS protocol injection via MITM
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
 
-On 2026-04-11 21:10, Collin Funk wrote:
-> I didn't look much at the others since I am not very familiar with tar.
-> Hopefully Paul can quickly tell if they are bogus or not.
+STARTTLS protocol injection via MITM
+====================================
 
-Yes, it's on my list of things to look at. As Collin hinted, much of 
-that bug report is AI slop and this is why it's low priority for me.
+Project curl Security Advisory, September 15th 2021 -
+[Permalink](https://curl.se/docs/CVE-2021-22947.html)
+
+VULNERABILITY
+-------------
+
+When curl connects to an IMAP, POP3, SMTP or FTP server to exchange data
+securely using STARTTLS to upgrade the connection to TLS level, the server can
+still respond and send back multiple responses before the TLS upgrade. Such
+multiple "pipelined" responses are cached by curl. curl would then upgrade to
+TLS but not flush the in-queue of cached responses and instead use and trust
+the responses it got *before* the TLS handshake as if they were authenticated.
+
+Using this flaw, it allows a Man-In-The-Middle attacker to first inject the
+fake responses, then pass-through the TLS traffic from the legitimate server
+and trick curl into sending data back to the user thinking the attacker's
+injected data comes from the TLS-protected server.
+
+Over POP3 and IMAP an attacker can inject fake response data.
+
+We are not aware of any case of this flaw having been exploited in the wild.
+
+INFO
+----
+
+This flaw was first introduced in commit
+[ec3bb8f727405](https://github.com/curl/curl/commit/ec3bb8f727405).
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2021-22947 to this issue.
+
+CWE-349: Acceptance of Extraneous Untrusted Data With Trusted Data
+
+Severity: Medium
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.20.0 to and including 7.78.0
+- Not affected versions: curl < 7.20.0 and curl >= 7.79.0
+
+Also note that libcurl is used by many applications, and not always advertised
+as such.
+
+THE SOLUTION
+------------
+
+A [fix for CVE-2021-22947](https://github.com/curl/curl/commit/8ef147c43646e91)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 7.79.0
+
+  B - Apply the patch to your local version
+
+  C - Do not use IMAP, POP3, SMTP or FTP with explicit TLS
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on September 7, 2021.
+
+This advisory was posted on September 15, 2021.
+
+CREDITS
+-------
+
+This issue was reported and patched by Patrick Monnerat.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
