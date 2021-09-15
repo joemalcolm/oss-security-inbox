@@ -1,55 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/06/2
-Message-ID: <CAFcO6XP_-WSEzDB2E=r90Yk4sXwUjo6fRsY=E+ZoAYunpry=qw@mail.gmail.com>
-Date: Sun, 6 Jun 2021 23:40:24 +0800
-From: butt3rflyh4ck <butterflyhuangxx@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: nfc: null ptr dereference in llcp_sock_getname
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/16/2
+Message-ID: <DBFB8E2C-E74B-4C2C-AB6D-0545B692B717@amazon.com>
+Date: Wed, 15 Sep 2021 21:21:53 +0000
+From: "Hausler, Micah" <mhausler@...zon.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: [kubernetes] CVE-2020-8561: Webhook redirect in kube-apiserver
 Content-Type: text/plain; charset=utf-8
 
-Hi, the patch for this issue in upstream:
+Hello Kubernetes Community,
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=4ac06a1e013cf5fdd963317ffd3b968560f33bba
+ 
 
-Regards,
- butt3rflyh4ck.
+A security issue was discovered in Kubernetes where actors that control the responses of MutatingWebhookConfiguration or ValidatingWebhookConfiguration requests are able to redirect kube-apiserver requests to private networks of the apiserver. If that user can view kube-apiserver logs when the log level is set to 10, they can view the redirected responses and headers in the logs.
+
+ 
+
+This issue has been rated Medium (https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:L/I:N/A:N) (4.1), and assigned CVE-2020-8561
+Am I vulnerable?
+ 
+
+You may be vulnerable if `--profiling` is enabled on the kube-apiserver and actors who control a validating or mutating webhook can access the kube-apiserver process logs.
+Affected Versions
+ 
+
+This issue affects all known versions of kube-apiserver. 
+How do I mitigate this vulnerability?
+ 
+
+This issue can be mitigated by not allowing kube-apiserver access to sensitive resources or networks, or to reduce the “-v” flag value to less than 10 and set the “--profiling” flag value to “false” (default value is “true”). Setting the profiling flag to “false” prevents users from dynamically modifying the kube-apiserver log level, and the flag value Webhook requests may still be redirected to private networks with a log level less than 10, but the response body will not be logged.
+Fixed Versions
+ 
+
+There is no fix for this issue at this time.
+Detection
+ 
+
+Examining kube-apiserver log responses is the only known method of detection for this issue.
+
+If you find evidence that this vulnerability has been exploited, please contact security@...ernetes.io
+Additional Details
+ 
+
+See the GitHub issue for more details: https://github.com/kubernetes/kubernetes/issues/104720
+Acknowledgements
+ 
+
+This vulnerability was reported by QiQi Xu
+
+ 
+
+Thank You,
+
+ 
+
+Micah Hausler on behalf of the Kubernetes Security Response Committee
+
+ 
+
+ 
+
+ 
 
 
-On Tue, Jun 1, 2021 at 3:37 PM butt3rflyh4ck <butterflyhuangxx@...il.com> wrote:
->
->  Hi, there was a null pointer dereference in llcp_sock_getname in
-> net/nfc/llcp_sock.c and reproduced it in linux-5.13.0-rc2. An
-> unprivileged user can trigger this bug and cause denial of service.
->
-> #Root Cause
-> After creating an nfc socket, bind the address by calling bind(), if
-> LLCP_SAP_MAX was used as SAP, it cause the bind() failed and there
-> would set llcp_sock->service_name  as NULL.
->
-> Although bind() returns an error here, it does not affect calling
-> other socket functions. sock_getname() would invoke
-> llcp_sock_getname(), llcp_sock_getname copied service  name from
-> llcp_sock->service_name by memcpy but llcp_sock->service_name is NULL.
->
-> #Fix
-> the patch for this issue:
-> https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=4ac06a1e013c
->
-> #CVE
-> CVE not assigned.
->
-> #Credits
-> Active Defense Lab of Venustech.
->
->
->
-> Regards,
->    butt3rflyh4ck.
->
-> --
-> Active Defense Lab of Venustech
+Content of type "text/html" skipped
 
-
-
--- 
-Active Defense Lab of Venustech
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (4700 bytes)
