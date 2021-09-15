@@ -1,55 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/25/1
-Message-ID: <8210b8faa036552aaa23c2b1b26b2a32.squirrel@_>
-Date: Sun, 25 Jul 2021 09:21:33 -0000
-From: "Jonas Dellinger" <jdellinger@...l2tor.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/16/1
+Message-ID: <CABdrxGDyYMjUeuWmRtbmwmcCAXGiWEqtCqJnFcTQaadi401bNg@mail.gmail.com>
+Date: Wed, 15 Sep 2021 14:17:55 -0700
+From: CJ Cullen <cjcullen@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-28020: Integer overflow in Exim that can lead to RCE: Some questions to the Qualys researchers who designed the exploit
+Subject: [kubernetes] CVE-2021-25741: Symlink Exchange Can Allow Host Filesystem Access
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Hello Kubernetes Community,
 
-I've been reading through the 21Nails Exim security advisory [1] and
-one vulnerability particularly interested me: CVE-2020-28020, an integer
-overflow in receive_msg() that can lead to RCE when sending crafted
-emails. I'm having a hard time fully understanding the exploit outlined
-by the Qualys researchers and have a couple of questions to them (quoting
-the advisory):
+A security issue was discovered in Kubernetes where a user may be able to
+create a container with subpath volume mounts to access files & directories
+outside of the volume, including on the host filesystem.
 
-> we first allocate a 1GB mmap block (mblock1) by sending a mail that
-> contains a 256MB header of bare '\n' characters; the next member of
-> mblock1's storeblock structure initially points to a heap block
-> (hblock, which immediately follows data that we control);
+This issue has been rated High (CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H
+<https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H>),
+and assigned CVE-2021-25741.
+Affected Components and Configurations
 
-What data precedes hblock and how is it controlled by the attacker?
+This bug affects kubelet.
 
-> we allocate a third 1GB mmap block (mblock3) by sending a mail that
-> contains a 512MB header; this overflows the integer header_size, and
-> forward-overflows mblock3 (Digression 1a), into mblock2 and mblock1:
-> we overwrite mblock2's next pointer with NULL (to avoid a crash in
-> store_release() at line 1788) and we partially overwrite mblock1's
-> next pointer (with a single null byte).
+Environments where cluster administrators have restricted the ability to
+create hostPath mounts are the most seriously affected. Exploitation allows
+hostPath-like access without use of the hostPath feature, thus bypassing
+the restriction.
 
-How do you remotely make allocations that overwrite the desired pointers?
-Is my understanding correct that you overwrite the first byte of mblock1's
-next pointer with zero? How does that ensure that it points to the "fake
-storeblock" structure?
+In a default Kubernetes environment, exploitation could be used to obscure
+misuse of already-granted privileges.
+Affected Versions
 
-> 3/ Information disclosure:
->
-> - First, we send an EHLO command that allocates a large string in raw
-> malloc() memory.
->
-> - Second, we send an invalid RCPT TO command that allocates a small
-> string in POOL_MAIN memory (an error message); this small POOL_MAIN
-> string overwrites the beginning of the large malloc() string.
+   -
 
-Why does the POOL_MAIN allocation collide with the raw malloc() one?
-I understand that you make the entire heap look like free POOL_MAIN
-memory using the "fake storeblock" structure, but how come that the
-small POOL_MAIN string lands exactly on the large raw malloc() string?
+   v1.22.0 - v1.22.1
+   -
 
-Thanks a lot!
+   v1.21.0 - v1.21.4
+   -
 
-[1] https://www.qualys.com/2021/05/04/21nails/21nails.txt
+   v1.20.0 - v1.20.10
+   -
+
+   <= v1.19.14
+
+Fixed Versions
+
+This issue is fixed in the following versions:
+
+   -
+
+   v1.22.2
+   -
+
+   v1.21.5
+   -
+
+   v1.20.11
+   -
+
+   v1.19.15
+
+Mitigation
+
+To mitigate this vulnerability without upgrading kubelet, you can disable
+the VolumeSubpath feature gate on kubelet and kube-apiserver, and remove
+any existing Pods making use of the feature.
+
+You can also use admission control to prevent less-trusted users from
+running containers as root to reduce the impact of successful exploitation.
+Detection
+
+If you find evidence that this vulnerability has been exploited, please
+contact security@...ernetes.io
+Additional Details
+
+See Kubernetes Issue #104980
+<https://github.com/kubernetes/kubernetes/issues/104980> for more details.
+Acknowledgements
+
+This vulnerability was reported by Fabricio Voznika and Mark Wolters of
+Google.
+
+Thanks as well to Ian Coldwater, Duffie Cooley, Brad Geesaman, and Rory
+McCune for the thorough security research that led to the discovery of this
+vulnerability.
+
+Thank You,
+
+CJ Cullen on behalf of the Kubernetes Security Response Committee
 
