@@ -1,97 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/21/3
-Message-ID: <YIB0RV1MqfmtfYDG@eldamar.lan>
-Date: Wed, 21 Apr 2021 20:51:49 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: xscreensaver package caps gets raw socket
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/15/1
+Message-ID: <nycvar.QRO.7.76.2109142335500.9650@fvyyl>
+Date: Wed, 15 Sep 2021 08:20:45 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: UAF and double-free in MQTT sending
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+UAF and double-free in MQTT sending
+===================================
 
-On Sat, Apr 17, 2021 at 07:31:05AM -0700, Tavis Ormandy wrote:
-> Hello, I noticed that at least debian (maybe others) ship xscreensaver
-> hack with cap_net_raw enabled:
-> 
-> $ getcap /usr/libexec/xscreensaver/sonar
-> /usr/libexec/xscreensaver/sonar cap_net_raw=p
-> 
-> That seems like a bug, you can just load some driver and get a raw
-> socket. I wrote a quick exploit, this script will run tcpdump without
-> needing root.
-> 
-> $ bash sock.sh
-> 17:43:55.000000 IP (tos 0x0, ttl 64, id 14541, offset 0, flags [DF], proto ICMP (1), length 84)
->     debian > sfo07s17-in-f78.1e100.net: ICMP echo request, id 59166, seq 1, length 64
-> 17:43:55.000000 IP (tos 0x0, ttl 128, id 42276, offset 0, flags [none], proto ICMP (1), length 84)
->     sfo07s17-in-f78.1e100.net > debian: ICMP echo reply, id 59166, seq 1, length 64
-> 
-> I sent a report to debian, jwz and mesa. We concluded no embargo is
-> necessary, so continuing the discussion here.
-> 
-> Summary of discussion so far:
-> 
-> - In theory, mesa support running in a privileged context, their
->   documentation says they disable dangerous features in setuid/setgid
->   binaries:
-> 
->     https://mesa-docs.readthedocs.io/en/latest/egl.html
-> 
->   In fact, this is broken because they only check if (geteuid() !=
->   getuid()) { ... }. That check doesn't even handle setgid, let alone file
->   caps. If mesa agree this is a bug, simply changing their checks to if
->   (getauxval(AT_SECURE)) { ... } might make this bug go away, and handle
->   file caps and setgid for free. I filed a bug for that, but there
->   hasn't been a response:
->   https://gitlab.freedesktop.org/mesa/mesa/-/issues/4549
-> 
-> - The code could use ping sockets instead, but they're still rarely
->   enabled by default, and users have to set the ping_group_range sysctl.
->   I personally think it's time to enable them by default, but that's a
->   different discussion :-)
-> 
-> - If neither of those two options work, then I guess we will have to
->   try to make using mesa safe...but it sounds really hard. The obvious
->   fix for right now is trying to clean up the environment, e.g.:
-> 
->   (Note: untested)
-> 
->     char *allowed[][2] = {
->         { "DISPLAY", 0 },
->         { "XAUTHORITY", 0 },
->         NULL,
->     };
->     for (int i = 0; allowed[i][0]; i++)  {
->         if (getenv(allowed[i][0])) {
->             allowed[i][1] = strdup(getenv(allowed[i][0]));
->         }
->     }
->     if (clearenv() != 0) {
->         abort();
->     }
->     for (int i = 0; allowed[i][0]; i++)  {
->         if (allowed[i][1]) {
->             setenv(allowed[i][0], allowed[i][1], 1);
->             free(allowed[i][1]);
->         }
->     }
-> 
->     // ...
->     MesaInitWhatever();
-> 
-> I *think* this will work in main(), but it's possible there are some
-> constructors somewhere that execute before main() I've missed. If that's
-> the case, then I guess we will need a wrapper binary that does execve()
-> and passes a non-cloexec fd with a sanitized environment?
-> 
-> The problem is that even if we make cleaning up the environment work,
-> you're always going to need $DISPLAY, and any code exec bug connecting
-> to a malicious X server will be a security bug.... and that sounds super
-> hard to get right?
-> 
-> I dunno, thoughts on fixing this appreciated...
+Project curl Security Advisory, September 15th 2021 -
+[Permalink](https://curl.se/docs/CVE-2021-22945.html)
 
-FTR, the xscreenserver part has been assigned CVE-2021-31523 by MITRE.
+VULNERABILITY
+-------------
 
-Regards,
-Salvatore
+When sending data to an MQTT server, libcurl could in some circumstances
+erroneously keep a pointer to an already freed memory area and both use that
+again in a subsequent call to send data and also free it *again*.
+
+We are not aware of any case of this flaw having been exploited in the wild.
+
+INFO
+----
+
+This flaw was introduced in commit
+[2522903b79](https://github.com/curl/curl/commit/2522903b79) but since MQTT
+support was marked 'experimental' then and not enabled in the build by default
+until curl 7.73.0 (October 14, 2020) we count that as the first flawed
+version.
+
+The fixed libcurl version properly clears the pointer when the data has been
+sent.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2021-22945 to this issue.
+
+CWE-415: Double Free
+
+Severity: Medium
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.73.0 to and including 7.78.0
+- Not affected versions: curl < 7.73.0 and curl >= 7.79.0
+
+Also note that libcurl is used by many applications, and not always advertised
+as such.
+
+THE SOLUTION
+------------
+
+A [fix for CVE-2021-22945](https://github.com/curl/curl/commit/43157490a5054bd)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 7.79.0
+
+  B - Apply the patch to your local version
+
+  C - Do not use MQTT
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on July 19, 2021.
+
+This advisory was posted on September 15, 2021.
+
+CREDITS
+-------
+
+This issue was reported and patched by z2_.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
