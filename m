@@ -1,24 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/09/10
-Message-ID: <rvv5tr$9tn$1@ciao.gmane.io>
-Date: Tue, 9 Feb 2021 23:30:03 -0000 (UTC)
-From: Tavis Ormandy <taviso@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: charset.alias in pkexec/glib/gnulib
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/15/3
+Message-ID: <nycvar.QRO.7.76.2109142337370.9650@fvyyl>
+Date: Wed, 15 Sep 2021 08:20:53 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: STARTTLS protocol injection via MITM
 Content-Type: text/plain; charset=utf-8
 
-On 2021-02-09, Jakub Wilk wrote:
->
-> I believe this was fixed in glib 2.63.6:
-> https://gitlab.gnome.org/GNOME/glib/commit/3529bb4450a51995
+STARTTLS protocol injection via MITM
+====================================
 
-Thanks Jakub!
+Project curl Security Advisory, September 15th 2021 -
+[Permalink](https://curl.se/docs/CVE-2021-22947.html)
 
-Tavis.
+VULNERABILITY
+-------------
 
+When curl connects to an IMAP, POP3, SMTP or FTP server to exchange data
+securely using STARTTLS to upgrade the connection to TLS level, the server can
+still respond and send back multiple responses before the TLS upgrade. Such
+multiple "pipelined" responses are cached by curl. curl would then upgrade to
+TLS but not flush the in-queue of cached responses and instead use and trust
+the responses it got *before* the TLS handshake as if they were authenticated.
+
+Using this flaw, it allows a Man-In-The-Middle attacker to first inject the
+fake responses, then pass-through the TLS traffic from the legitimate server
+and trick curl into sending data back to the user thinking the attacker's
+injected data comes from the TLS-protected server.
+
+Over POP3 and IMAP an attacker can inject fake response data.
+
+We are not aware of any case of this flaw having been exploited in the wild.
+
+INFO
+----
+
+This flaw was first introduced in commit
+[ec3bb8f727405](https://github.com/curl/curl/commit/ec3bb8f727405).
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2021-22947 to this issue.
+
+CWE-349: Acceptance of Extraneous Untrusted Data With Trusted Data
+
+Severity: Medium
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.20.0 to and including 7.78.0
+- Not affected versions: curl < 7.20.0 and curl >= 7.79.0
+
+Also note that libcurl is used by many applications, and not always advertised
+as such.
+
+THE SOLUTION
+------------
+
+A [fix for CVE-2021-22947](https://github.com/curl/curl/commit/8ef147c43646e91)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 7.79.0
+
+  B - Apply the patch to your local version
+
+  C - Do not use IMAP, POP3, SMTP or FTP with explicit TLS
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on September 7, 2021.
+
+This advisory was posted on September 15, 2021.
+
+CREDITS
+-------
+
+This issue was reported and patched by Patrick Monnerat.
+
+Thanks a lot!
 
 -- 
- _o)            $ lynx lock.cmpxchg8b.com
- /\\  _o)  _o)  $ finger taviso@....org
-_\_V _( ) _( )  @taviso
 
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
