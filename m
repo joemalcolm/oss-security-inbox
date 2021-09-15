@@ -1,66 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/12/8
-Message-ID: <20210112163450.GB2212@openwall.com>
-Date: Tue, 12 Jan 2021 17:34:50 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/15/6
+Message-ID: <a144491b-8efb-dff2-cda5-e0d5be744359@apache.org>
+Date: Wed, 15 Sep 2021 18:57:33 +0100
+From: Mark Thomas <markt@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-20177 kernel: iptables string match rule could result in kernel panic
+Subject: CVE-2021-41079: Apache Tomcat DoS with unexpected TLS packet
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 12, 2021 at 09:04:49AM +0100, Greg KH wrote:
-> On Tue, Jan 12, 2021 at 04:58:07PM +1000, Wade Mealing wrote:
-> > A flaw was found in the Linux kernels implementation of string matching
-> > within a packet. A privileged user
-> > (with root or CAP_NET_ADMIN ) when inserting iptables rules could insert a
-> > rule which can panic the system.
-> > 
-> > Likely a user with these permissions could do worse, however it crashes the
-> > system (DOS) and the user is going to have a bad day
-> > especially if the rule is inserted and restored on every boot.
-> > 
-> > At this time it doesn't affect RHEL releases, and there are fixes already
-> > in multiple upstream trees.
-> > 
-> > Thanks,
-> > 
-> > Wade Mealing
-> > 
-> > Upstream patch:
-> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ca58fbe06c54
-> > 
-> > Upstream bugzilla:
-> > https://bugzilla.kernel.org/show_bug.cgi?id=209823
-> > 
-> > Red Hat Bugzilla:
-> > https://bugzilla.redhat.com/show_bug.cgi?id=1914719
-> 
-> I still do not understand why you report issues that are fixed over a
-> year ago (October 2019) and assign them a CVE like this.  Who does this
-> help out?
+Severity: high
 
-I think this specific issue is relevant to projects providing container
-virtualization with a security boundary, yet letting container root
-manage the local iptables rules for the container.  Wade's posting is a
-useful heads-up for such projects.  I've just forwarded it to
-Virtuozzo/OpenVZ developers, so they don't miss it.
+Description:
 
-> And what about the thousands of other issues that are fixed
-> in the kernel and not assigned a CVE like this, are they somehow not as
-> important to your group?
-> 
-> What determines what you want to give a CVE to and what you do not?
+Apache Tomcat 8.5.0 to 8.5.63, 9.0.0-M1 to 9.0.43 and 10.0.0-M1 to 
+10.0.2 did not properly validate incoming TLS packets. When Tomcat was 
+configured to use NIO+OpenSSL or NIO2+OpenSSL for TLS, a specially 
+crafted packet could be used to trigger an infinite loop resulting in a 
+denial of service.
 
-These are good questions.  My guess is most issues simply haven't been
-analyzed enough, or not considered at all, for CVE ID (non-)allocation.
+Credit:
 
-Visiting the URLs above, the upstream commit message does not make it
-clear the issue's security relevance was understood back then.  Perhaps
-it simply was not.  The two Bugzilla entries make the security relevance
-much clearer, and are more recent.  So perhaps this is not sudden CVE ID
-assignment to an old issue; this is recent new understanding and its
-correspondingly timely assignment.
+The Apache Tomcat security team would like to thank Thomas Wozenilek for 
+originally reporting this issue and David Frankson of Infinite Campus 
+for also providing a test case that reproduced the issue.
 
-I have no idea why Red Hat in particular looked into this now.  My guess
-is it's because the issue was recently reported to Red Hat by some means.
+References:
 
-Alexander
+https://lists.apache.org/thread.html/rccdef0349fdf4fb73a4e4403095446d7fe6264e0a58e2df5c6799434%40%3Cannounce.tomcat.apache.org%3E
