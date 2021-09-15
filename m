@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["645" "Monday" "7" "August" "2017" "09:51:30" "-0400" "Vladis Dronov" "vdronov@redhat.com" "<514529694.39760564.1502113890222.JavaMail.zimbra@redhat.com>" "15" "Re: [oss-security] [CVE-2017-7533] kernel: inotify: a race between inotify_handle_event() and sys_rename()" nil nil nil "8" "2017080713:51:30" "[oss-security] [CVE-2017-7533] kernel: inotify: a race between inotify_handle_event() and sys_rename()" (number mark "U       vdronov@redh Aug  7   15/645   " thread-indent "\"Re: [oss-security] [CVE-2017-7533] kernel: inotify: a race between inotify_handle_event() and sys_rename()\"\n") "<754818373.38559522.1501768802232.JavaMail.zimbra@redhat.com>" ("<754818373.38559522.1501768802232.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1884" "Wednesday" "15" "September" "2021" "08:20:45" "+0200" "Daniel Stenberg" "daniel@haxx.se" nil "77" "[oss-security] [SECURITY ADVISORY] curl: UAF and double-free in MQTT sending" nil nil nil "9" nil nil (number mark "U       daniel@haxx. Sep 15   77/1884  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: UAF and double-free in MQTT sending\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY ADVISORY] curl: UAF and double-free in MQTT sending" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7367 invoked by uid 550); 7 Aug 2017 13:51:42 -0000
+Received: (qmail 7932 invoked by uid 550); 15 Sep 2021 06:20:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,39 +12,94 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7347 invoked from network); 7 Aug 2017 13:51:42 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com AA68B6148C
-Authentication-Results: ext-mx10.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx10.extmail.prod.ext.phx2.redhat.com; spf=fail smtp.mailfrom=vdronov@redhat.com
-Date: Mon, 7 Aug 2017 09:51:30 -0400 (EDT)
-From: Vladis Dronov <vdronov@redhat.com>
-To: oss-security@lists.openwall.com
-Message-ID: <514529694.39760564.1502113890222.JavaMail.zimbra@redhat.com>
-In-Reply-To: <754818373.38559522.1501768802232.JavaMail.zimbra@redhat.com>
-References: <754818373.38559522.1501768802232.JavaMail.zimbra@redhat.com>
+Received: (qmail 7902 invoked from network); 15 Sep 2021 06:20:56 -0000
+Date: Wed, 15 Sep 2021 08:20:45 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+X-X-Sender: dast@silly
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <nycvar.QRO.7.76.2109142335500.9650@fvyyl>
+User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.40.4.119, 10.4.195.12]
-Thread-Topic: kernel: inotify: a race between inotify_handle_event() and sys_rename()
-Thread-Index: iX7Gyza0ZBokhRfEuzpqP3ISP6NaIO9HtdvP
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Mon, 07 Aug 2017 13:51:30 +0000 (UTC)
-Subject: Re: [oss-security] [CVE-2017-7533] kernel: inotify: a race between
- inotify_handle_event() and sys_rename()
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl: UAF and double-free in MQTT sending
 
-Hello,
+UAF and double-free in MQTT sending
+===================================
 
-1) We would like to make an additional announcement that an important part of this flaw
-research was conducted by Leilei Lin <leilei.lin@alibaba-inc.com> of Alibaba Group, who
-developed the initial patches:
+Project curl Security Advisory, September 15th 2021 -
+[Permalink](https://curl.se/docs/CVE-2021-22945.html)
 
-https://patchwork.kernel.org/patch/9755753/
-https://patchwork.kernel.org/patch/9755757/
+VULNERABILITY
+-------------
 
-2) Unfortunately, the wording "in the wild" in this announcement is probably incorrect.
-The mentioned exploit was developed by the flaw researchers and we are not aware of it
-being available publicly or used by a wider audience. We are sorry for this misinformation.
+When sending data to an MQTT server, libcurl could in some circumstances
+erroneously keep a pointer to an already freed memory area and both use that
+again in a subsequent call to send data and also free it *again*.
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+We are not aware of any case of this flaw having been exploited in the wild.
+
+INFO
+----
+
+This flaw was introduced in commit
+[2522903b79](https://github.com/curl/curl/commit/2522903b79) but since MQTT
+support was marked 'experimental' then and not enabled in the build by default
+until curl 7.73.0 (October 14, 2020) we count that as the first flawed
+version.
+
+The fixed libcurl version properly clears the pointer when the data has been
+sent.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2021-22945 to this issue.
+
+CWE-415: Double Free
+
+Severity: Medium
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.73.0 to and including 7.78.0
+- Not affected versions: curl < 7.73.0 and curl >= 7.79.0
+
+Also note that libcurl is used by many applications, and not always advertised
+as such.
+
+THE SOLUTION
+------------
+
+A [fix for CVE-2021-22945](https://github.com/curl/curl/commit/43157490a5054bd)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 7.79.0
+
+  B - Apply the patch to your local version
+
+  C - Do not use MQTT
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on July 19, 2021.
+
+This advisory was posted on September 15, 2021.
+
+CREDITS
+-------
+
+This issue was reported and patched by z2_.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
