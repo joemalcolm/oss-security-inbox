@@ -1,24 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/23/1
-Message-ID: <YNNcTuAZq1NaI8d1@mussarela>
-Date: Wed, 23 Jun 2021 13:07:42 -0300
-From: Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/16/3
+Message-ID: <4ef585a0-4e3f-1fba-af99-be43895bf464@apache.org>
+Date: Thu, 16 Sep 2021 11:55:10 +0000
+From: Andy Seaborne <andy@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-3600 - Linux kernel eBPF 32-bit source register truncation on div/mod
+Subject: CVE-2021-39239: Apache Jena: XML External Entity (XXE) vulnerability 
 Content-Type: text/plain; charset=utf-8
 
-It was discovered that eBPF 32-bit div/mod source register truncation could
-lead to out-of-bounds reads and writes in the kernel.
+Severity: high
 
-It was introduced by commit 68fda450a7df ("bpf: fix 32-bit divide by zero"). It
-was first introduced in 4.15-rc9, but backported and applied to v4.14.y, v4.9.y
-and v4.4.y. However, this specific attack will not work on v4.4.y and v4.9.y
-kernels as pointer arithmetic is prohibited on those kernels. This was
-introduced by commit f1174f77b50c ("bpf/verifier: rework value tracking"), in
-v4.14-rc1.
+Description:
 
-The fix is commit e88b2c6e5a4d ("bpf: Fix 32 bit src register truncation on
-div/mod"), introduced in v5.11. It was backported and applied on v5.10.y and
-v5.4.y, but not v4.19.y and v4.14.y.
+A vulnerability in XML processing in Apache Jena, in versions up to 4.1.0, may allow an attacker to execute XML External Entities (XXE), including exposing the contents of local files to a remote server.
 
-Cascardo.
+Mitigation:
+
+Users are advised to upgrade to Apache Jena 4.2.0 or later.
+
