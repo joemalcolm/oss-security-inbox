@@ -1,55 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/12/1
-Message-ID: <CAF8HOZJj80sVyRL4MWH2YdkY4dfvJ96+85Ms6jywGX9=uiPC3w@mail.gmail.com>
-Date: Mon, 12 Apr 2021 20:25:55 +0200
-From: Jochen Wiedmann <jochen.wiedmann@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/17/1
+Message-ID: <CAH9eYVrHUMa9_E7ZHb=shpMS18TF7MXkM_9mcpJbcCTG8b6z3Q@mail.gmail.com>
+Date: Thu, 16 Sep 2021 16:19:53 -0400
+From: Brian Demers <bdemers@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-29425 (Possible limited path traversal in Apache Commons IO 2.2 to 2.6)
+Subject: CVE-2021-41303: Apache Shiro before 1.8.0, when using Apache Shiro with Spring Boot, a specially crafted HTTP request may cause an authentication bypass
 Content-Type: text/plain; charset=utf-8
-
-Hi,
-
-I'd like to inform you about a possible limited path traversal
-vulnerability, that has been detected in Apache Commons IO 2.2 to 2.6.
-This is now being tracked as CVE-2021-29425. Fortunately, this has
-already been covered in versions 2.7, and 2.8.
-
-On behalf of the Apache Commons team,
-
-Jochen Wiedmann
-
 
 Description:
 
-In Apache Commons IO before 2.7, When invoking the method
-FileNameUtils.normalize with an improper input string, like
-"//../foo", or "\\..\foo", the result would be the same value, thus
-possibly providing access to files in the parent directory, but not
-further above (thus "limited" path traversal), if the calling code
-would use the result to construct a path value.
+Apache Shiro before 1.8.0, when using Apache Shiro with Spring Boot, a
+specially crafted HTTP request may cause an authentication bypass.
 
-This issue is being tracked as IO-556,IO-559
+Users should update to Apache Shiro 1.8.0.
 
-Mitigation:
+Credit:
 
-Neither the method in question (FileNameUtils.normalize) nor any
-methods, that invoke it, do actually access any files. There's only a
-string returned, from which a path can be constructed. In other words,
-a possible workaround would be not passing any unsafe input to
-FileNameUtils.normalize.
+Apache Shiro would like to thank tsug0d for reporting this issue.
 
-
-
-Upgrade to Apache Commons IO 2.7, or later, where the same method
-returns the value null, as an indication of "invalid input".
-
-References:
-
-https://issues.apache.org/jira/browse/IO-556
-
--- 
-
-Look, that's why there's rules, understand? So that you think before
-you break 'em.
-
-    -- (Terry Pratchett, Thief of Time)
