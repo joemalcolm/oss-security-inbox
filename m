@@ -1,4 +1,9 @@
-Received: (qmail 19816 invoked by uid 550); 22 Jun 2023 02:45:41 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["313" "Thursday" "16" "September" "2021" "11:55:10" "+0000" "Andy Seaborne" "andy@apache.org" nil "12" "[oss-security] CVE-2021-39239: Apache Jena: XML External Entity (XXE) vulnerability " nil nil nil "9" nil nil (number mark "U       andy@apache. Sep 16   12/313   " thread-indent "\"[oss-security] CVE-2021-39239: Apache Jena: XML External Entity (XXE) vulnerability \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-39239: Apache Jena: XML External Entity (XXE) vulnerability " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5274 invoked by uid 550); 16 Sep 2021 11:56:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,80 +12,26 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19792 invoked from network); 22 Jun 2023 02:45:40 -0000
-From: Russ Allbery <eagle@eyrie.org>
-To: Taylor R Campbell <riastradh@NetBSD.org>
-Cc: oss-security@lists.openwall.com
-In-Reply-To: <20230621214131.C670B6033F@jupiter.mumble.net> (Taylor
-	R. Campbell's message of "Wed, 21 Jun 2023 21:41:30 +0000")
-Organization: The Eyrie
-References: <20230621214131.C670B6033F@jupiter.mumble.net>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-Date: Wed, 21 Jun 2023 19:45:26 -0700
-Message-ID: <87edm49pvd.fsf@hope.eyrie.org>
+Received: (qmail 5131 invoked from network); 16 Sep 2021 11:55:24 -0000
+Content-Type: text/plain; charset=utf-8
+From: Andy Seaborne <andy@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <4ef585a0-4e3f-1fba-af99-be43895bf464@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 16 Sep 2021 11:55:10 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: Re: [oss-security] Re: PAM/Kerberos issue on NetBSD
+Subject: [oss-security] CVE-2021-39239: Apache Jena: XML External Entity (XXE)
+ vulnerability 
 
-Taylor R Campbell <riastradh@NetBSD.org> writes:
+Severity: high
 
-> Linux pam_krb5[1] and sssd-krb5[2] are both affected by the same attack,
-> but they have always been _documented_ to be affected; unlike BSD
-> pam_krb5, it's just not news that they are affected.
+Description:
 
-Yes, this is a long-standing and well-known issue with Kerberos PAM
-modules.  It's hard to solve properly because PAM modules are often
-invoked as non-root users for other good security reasons and thus do not
-have access to the system keytab, which means that doing proper KDC
-verification requires providing them with a separate keytab for some other
-principal that is safe to expose to whatever unprivileged user the PAM
-module is running as.  Sometimes there is no safe option.
+A vulnerability in XML processing in Apache Jena, in versions up to 4.1.0, =
+may allow an attacker to execute XML External Entities (XXE), including exp=
+osing the contents of local files to a remote server.
 
-The correct fix without requiring protocol changes is probably a system
-service running in a different privilege domain that exposes an API that
-allows the PAM module to verify tickets with a keytab but protects the
-keytab from being read by the PAM module.  I am aware of private
-implementations of this approach, but I don't know if anyone has put one
-in a public module.  I was going to do that at one point and never found
-the time.
+Mitigation:
 
-There are other ways to fix this problem by using more sophisticated
-Keberos protocols.  For example, I think (although am not 100% sure) that
-using FAST for the authentication protects against this attack because I
-believe the FAST armor will authenticate the Kerberos KDC.
+Users are advised to upgrade to Apache Jena 4.2.0 or later.
 
-> (Side note: pam_krb5 (and sssd-krb5) is not and never has been the
-> normal way to do Kerberos authentication in network services.  (E.g., in
-> sshd, you set `GSSAPIAuthentication yes' for that.)  pam_krb5 has always
-> been an abuse of Kerberos as a method to check a password, which
-> Kerberos was designed to avoid, through SSO.)
-
-This is only mostly true.  The primary exception is using a Kerberos PAM
-module with console / desktop environment login on a Linux desktop or
-laptop, where often people do prefer to use their Kerberos password as
-their local system password so that they acquire Kerberos credentials at
-the same time that they gain access to their local system.  In that case,
-pam_krb5 is a replacement for kinit, and is using Kerberos as intended.
-This used to be a fairly popular configuration for people using Linux at
-institutions that used Kerberos for the site-wide authentication system.
-It's been a while since I've worked for one of those institutions, so I'm
-not sure if it still is.
-
-But yes, a lot of the uses are places that should use GSSAPI but don't for
-various reasons (usually because the client is not capable of GSSAPI, such
-as lots of mail clients).
-
-> The verify_ap_req_nofail option rates pretty high among the worst-named
-> knobs I have ever seen, and has been confusing people for
-> decades[9][10].  I filed an issue to make it default-secure in
-> Heimdal[11]; this could pose compatibility issues, but sites that
-> continue rely on the insecure option can always set it in their
-> krb5.conf.
-
-The primary thing that I would expect this to break is screen lock
-programs for people who use Kerberos for local authentication.  (Also IMAP
-and POP servers not configured with their own keytab and not running as
-root, but there the solution is generally to get them a keytab.)
-
--- 
-Russ Allbery (eagle@eyrie.org)             <https://www.eyrie.org/~eagle/>
