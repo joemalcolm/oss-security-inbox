@@ -1,4 +1,9 @@
-Received: (qmail 12215 invoked by uid 550); 26 Aug 2024 15:16:12 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6077" "Friday" "17" "September" "2021" "18:18:48" "+0200" "Solar Designer" "solar@openwall.com" nil "159" "Re: [oss-security] Containers-optimized OS (COS) membership in the linux-distros list" nil nil nil "9" nil nil (number mark "U       solar@openwa Sep 17  159/6077  " thread-indent "\"Re: [oss-security] Containers-optimized OS (COS) membership in the linux-distros list\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Containers-optimized OS (COS) membership in the linux-distros list" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 5555 invoked by uid 550); 17 Sep 2021 16:19:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,48 +12,176 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23962 invoked from network); 26 Aug 2024 13:50:01 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Eric Covener <covener@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <cf030995-28b2-f9f7-342a-5713f6461264@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 26 Aug 2024 13:49:01 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-49582: Apache Portable Runtime (APR): Unexpected lax
- shared memory permissions 
+Received: (qmail 5434 invoked from network); 17 Sep 2021 16:18:51 -0000
+Date: Fri, 17 Sep 2021 18:18:48 +0200
+From: Solar Designer <solar@openwall.com>
+To: Oleksandr Tymoshenko <ovt@google.com>
+Cc: oss-security@lists.openwall.com, Kees Cook <keescook@chromium.org>
+Message-ID: <20210917161848.GB9168@openwall.com>
+References: <CACGj0Cg_OgsYUAw8R6cbHr+ihPjfrKUJw0RjVewzuWYVi8tXpg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACGj0Cg_OgsYUAw8R6cbHr+ihPjfrKUJw0RjVewzuWYVi8tXpg@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Containers-optimized OS (COS) membership in the linux-distros list
 
-Severity: moderate
+Hello Oleksandr,
 
-Affected versions:
+You posted this from @google.com, which probably means many subscribers
+didn't receive the message because of that domain's strict DMARC policy.
+So I fully quote your message below for others to possibly comment.
 
-- Apache Portable Runtime (APR) 0.9.0 through 1.7.4
+BTW, you will similarly need to be posting from another domain (e.g.,
+gmail.com) to the linux-distros list.
 
-Description:
+Overall, your proposal looks reasonable to me at first glance.
 
-Lax permissions set by the Apache Portable Runtime library on Unix platform=
-s would allow local users read access to named shared memory segments, pote=
-ntially revealing sensitive application data.=20
+Please also propose which specific contributing-back task(s) your team
+would like to help with.
 
-This issue does not affect non-Unix platforms, or builds with=C2=A0APR_USE_=
-SHMEM_SHMGET=3D1 (apr.h)
+Thanks,
 
-Users are recommended to upgrade to APR version 1.7.5, which fixes this iss=
-ue.
+Alexander
 
-Credit:
-
-Thomas Stangner (reporter)
-
-References:
-
-https://apr.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2023-49582
-
-Timeline:
-
-2023-02-08: Discussion on public mailing list https://lists.apache.org/thre=
-ad/h5f1c2dqm8bf5yfosw3rg85927p612l0
-2023-11-15: Reported to security team
-
+On Thu, Sep 16, 2021 at 11:12:21PM -0700, Oleksandr Tymoshenko wrote:
+> Hello,
+> 
+> 
+> I???d like to propose Container-Optimized OS (COS)  for membership in
+> linux-distros. Text below addresses items listed in the ???Membership
+> criteria??? section of
+> https://oss-security.openwall.org/wiki/mailing-lists/distros
+> 
+> 
+> > 1. Be an actively maintained Unix-like operating system distro with
+> > substantial use of Open Source components
+> 
+> 
+> Container-Optimized OS (COS) s a Chromium OS based
+> server operating system. Google distributes COS as a pre-built cloud image,
+> but also provides sources for users to customize and build their own
+> specialized versions of the OS.
+> 
+> 
+> URL: https://cloud.google.com/container-optimized-os
+> 
+> 
+> Source code:  https://cos.googlesource.com
+> Build instructions:
+> https://cloud.google.com/container-optimized-os/docs/how-to/building-from-open-source
+> 
+> 
+> COS has a 6-month major release cadence and 3 LTS branches with their own
+> 3-month refresh cadence. Critical security vulnerabilities addressed in
+> patch releases, independently from the release/refresh cycle.
+> 
+> 
+> Release notes: https://cloud.google.com/container-optimized-os/docs/release-notes
+> 
+> 
+> > 2. Have a user base not limited to your own organization
+> 
+> 
+> COS is available directly to external customers as a base VM image for the
+> Google Compute Engine and indirectly as a base OS for managed services such
+> as Google Kubernetes Engine (GKE), CloudSQL, Google Cloud Filestore.
+> Overall usage of COS adds up to millions of cloud instances.
+> 
+> 
+> > 3. Have a publicly verifiable track record, dating back at least 1 year and
+> > continuing to present day, of fixing security issues (including some that
+> > had been handled on (linux-)distros, meaning that membership would have
+> > been relevant to you) and releasing the fixes within 10 days (and
+> > preferably much less than that) of the issues being made public (if it
+> > takes you ages to fix an issue, your users wouldn't substantially benefit
+> > from the additional time, often around 7 days and sometimes up to 14 days,
+> > that list membership could give you)
+> 
+> 
+> Some of the examples of COS reacting quickly (less than 7 days) to CVEs
+> with high impact:
+> 
+> 
+> CVE-2021-33909(Sequoia):
+> https://cloud.google.com/container-optimized-os/docs/release-notes/m85#cos-85-13310-1308-6
+> 
+> 
+> CVE-2020-14308, CVE-2020-14311, CVE-2020-15705 (GRUB2):
+> https://cloud.google.com/container-optimized-os/docs/release-notes/m81#cos-81-12871-1185-0
+> 
+> 
+> CVE-2020-14386:
+> https://cloud.google.com/container-optimized-os/docs/release-notes/m81#cos-81-12871-1196-0
+> 
+> 
+> Having access to embargoed CVEs would have helped us to plan and prepare
+> for patch releases in a more proactive way.
+> 
+> 
+> > 4. Not be (only) downstream or a rebuild of another distro (or else we need
+> > convincing additional justification of how the list membership would enable
+> > you to release fixes sooner, presumably not relying on the upstream distro
+> > having released their fixes first?)
+> 
+> 
+> Although COS is derived from Chromium OS we switched to maintaining our own
+> kernel package that tracks more recent versions of the Linux kernel. We
+> make an effort to keep it as close to the upstream kernel as possible. We
+> also track releases of other open-source packages relevant for our use
+> cases independently from Chromium OS or Gentoo.
+> 
+> 
+> > 5. Be a participant and preferably an active contributor in relevant public
+> > communities (most notably, if you're not watching for issues being made
+> > public on oss-security, which are a superset of those that had been handled
+> > on (linux-)distros, then there's no valid reason for you to be on
+> > (linux-)distros)
+> 
+> 
+> We are actively monitoring multiple sources of information about
+> vulnerabilities but haven???t contributed much directly because we didn't
+> have anything to add to discussions.  We contributed to OSTIF Linux Kernel
+> Vuln Reporting/Remediation Practices review, and also monitor the
+> oss-security indirectly via ChromeOS.
+> 
+> 
+> 
+> 
+> > 6. Accept the list policy:
+> > http://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-instructions-for-members
+> 
+> 
+> Please consider this note as acceptance of the list policy.
+> 
+> 
+> > 7. Be able and willing to contribute back, preferably in specific ways
+> > announced in advance (so that you're responsible for a specific area and so
+> > that we know what to expect from which member), and demonstrate actual
+> > contributions once you've been a member for a while:
+> > http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+> 
+> 
+> Our team can perform administrative tasks that benefit the wider community
+> and also can draw upon Google???s internal kernel expertise if required (on
+> the need-to-know basis, maintaining confidentiality).
+> 
+> 
+> > 8. Be able and willing to handle PGP-encrypted e-mail
+> 
+> 
+> We???ll provide relevant GPG keys separately if our membership is accepted.
+> 
+> 
+> > 9. Have someone already on the private list, or at least someone else who
+> > has been active on oss-security for years but is not affiliated with your
+> > distro nor your organization, vouch for at least one of the people
+> > requesting membership on behalf of your distro (then that one vouched-for
+> > person will be able to vouch for others on your team, in case you'd like
+> > multiple people subscribed)
+> 
+> 
+> Kees Cook (Cc-ed) can vouch for the proposed candidates.
+> 
+> 
+> Thank you
