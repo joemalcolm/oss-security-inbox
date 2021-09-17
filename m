@@ -1,86 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/01/2
-Message-ID: <27226ce7-d477-5cb5-fbf2-050d8096a151@gmail.com>
-Date: Mon, 1 Feb 2021 10:44:09 +0100
-From: Mariusz Felisiak <felisiak.mariusz@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/17/3
+Message-ID: <CAB8XdGAMZrPaNOxowgAaotbePiiC4EOTYw7Ri3DNqAVZQb0y8g@mail.gmail.com>
+Date: Fri, 17 Sep 2021 11:07:19 +0100
+From: Colm O hEigeartaigh <coheigea@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Django: CVE-2021-3281: Potential directory-traversal via archive.extract()
+Subject: CVE-2021-40690: Apache Santuario: Bypass of the secureValidation property
 Content-Type: text/plain; charset=utf-8
 
-https://www.djangoproject.com/weblog/2021/feb/01/security-releases/
+Description:
 
-In accordance with `our security release policy 
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
-Django team is issuing
-`Django 3.1.6 <https://docs.djangoproject.com/en/dev/releases/3.1.6/>`_,
-`Django 3.0.12 
-<https://docs.djangoproject.com/en/dev/releases/3.0.12/>`_ and
-`Django 2.2.18 <https://docs.djangoproject.com/en/dev/releases/2.2.18/>`_.
-These releases address the security issue with severity "low" detailed 
-below. We encourage all users of Django to upgrade as soon as possible.
+All versions of Apache Santuario - XML Security for Java prior to
+2.2.3 and 2.1.7 are vulnerable to an issue where the
+"secureValidation" property is not passed correctly when creating a
+KeyInfo from a KeyInfoReference element. This allows an attacker to
+abuse an XPath Transform to extract any local .xml files in a
+RetrievalMethod element.
 
-CVE-2021-3281: Potential directory-traversal via ``archive.extract()``
-======================================================================
+Credit:
 
-The ``django.utils.archive.extract()`` function, used by
-``startapp --template`` and ``startproject --template``, allowed
-directory-traversal via an archive with absolute paths or relative paths 
-with
-dot segments.
+An Trinh, Calif.
 
-Thank you to Wang Baohua for the report.
+References:
 
-Affected supported versions
-===========================
-
-* Django master branch
-* Django 3.2 (currently at alpha status)
-* Django 3.1
-* Django 3.0
-* Django 2.2
-
-Resolution
-==========
-
-Patches to resolve the issue have been applied to Django's master branch and
-the 3.2, 3.1, 3.0, and 2.2 release branches. The patches may be obtained 
-from the following changesets:
-
-* On the `master branch 
-<https://github.com/django/django/commit/05413afa8c18cdb978fcdf470e09f7a12b234a23>`__
-* On the `3.2 release branch 
-<https://github.com/django/django/commit/f944f79e555c91571192022a6bb9ddf2178db7ed>`__
-* On the `3.1 release branch 
-<https://github.com/django/django/commit/02e6592835b4559909aa3aaaf67988fef435f624>`__
-* On the `3.0 release branch 
-<https://github.com/django/django/commit/52e409ed17287e9aabda847b6afe58be2fa9f86a>`__
-* On the `2.2 release branch 
-<https://github.com/django/django/commit/21e7622dec1f8612c85c2fc37fe8efbfd3311e37>`__
-
-The following releases have been issued:
-
-* Django 3.1.6 (`download Django 3.1.6 
-<https://www.djangoproject.com/m/releases/3.1/Django-3.1.6.tar.gz>`_ | 
-`3.1.6 checksums 
-<https://www.djangoproject.com/m/pgp/Django-3.1.6.checksum.txt>`_)
-* Django 3.0.12 (`download Django 3.0.12 
-<https://www.djangoproject.com/m/releases/3.0/Django-3.0.12.tar.gz>`_ | 
-`3.0.12 checksums 
-<https://www.djangoproject.com/m/pgp/Django-3.0.12.checksum.txt>`_)
-* Django 2.2.18 (`download Django 2.2.18 
-<https://www.djangoproject.com/m/releases/2.2/Django-2.2.18.tar.gz>`_ | 
-`2.2.18 checksums 
-<https://www.djangoproject.com/m/pgp/Django-2.2.18.checksum.txt>`_)
-
-The PGP key ID used for this release is Mariusz Felisiak: 
-`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
-
-General notes regarding security reporting
-==========================================
-
-As always, we ask that potential security issues be reported via
-private email to ``security@...ngoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
-
+https://lists.apache.org/thread.html/r8848751b6a5dd78cc9e99d627e74fecfaffdfa1bb615dce827aad633%40%3Cdev.santuario.apache.org%3E
