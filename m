@@ -1,99 +1,169 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/17/1
-Message-ID: <20210417143105.GB3276@thinkstation>
-Date: Sat, 17 Apr 2021 07:31:05 -0700
-From: Tavis Ormandy <taviso@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: security@...ian.org
-Subject: xscreensaver package caps gets raw socket
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/17/4
+Message-ID: <20210917161848.GB9168@openwall.com>
+Date: Fri, 17 Sep 2021 18:18:48 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Oleksandr Tymoshenko <ovt@...gle.com>
+Cc: oss-security@...ts.openwall.com, Kees Cook <keescook@...omium.org>
+Subject: Re: Containers-optimized OS (COS) membership in the linux-distros list
 Content-Type: text/plain; charset=utf-8
 
-Hello, I noticed that at least debian (maybe others) ship xscreensaver
-hack with cap_net_raw enabled:
+Hello Oleksandr,
 
-$ getcap /usr/libexec/xscreensaver/sonar
-/usr/libexec/xscreensaver/sonar cap_net_raw=p
+You posted this from @google.com, which probably means many subscribers
+didn't receive the message because of that domain's strict DMARC policy.
+So I fully quote your message below for others to possibly comment.
 
-That seems like a bug, you can just load some driver and get a raw
-socket. I wrote a quick exploit, this script will run tcpdump without
-needing root.
+BTW, you will similarly need to be posting from another domain (e.g.,
+gmail.com) to the linux-distros list.
 
-$ bash sock.sh
-17:43:55.000000 IP (tos 0x0, ttl 64, id 14541, offset 0, flags [DF], proto ICMP (1), length 84)
-    debian > sfo07s17-in-f78.1e100.net: ICMP echo request, id 59166, seq 1, length 64
-17:43:55.000000 IP (tos 0x0, ttl 128, id 42276, offset 0, flags [none], proto ICMP (1), length 84)
-    sfo07s17-in-f78.1e100.net > debian: ICMP echo reply, id 59166, seq 1, length 64
+Overall, your proposal looks reasonable to me at first glance.
 
-I sent a report to debian, jwz and mesa. We concluded no embargo is
-necessary, so continuing the discussion here.
+Please also propose which specific contributing-back task(s) your team
+would like to help with.
 
-Summary of discussion so far:
+Thanks,
 
-- In theory, mesa support running in a privileged context, their
-  documentation says they disable dangerous features in setuid/setgid
-  binaries:
+Alexander
 
-    https://mesa-docs.readthedocs.io/en/latest/egl.html
-
-  In fact, this is broken because they only check if (geteuid() !=
-  getuid()) { ... }. That check doesn't even handle setgid, let alone file
-  caps. If mesa agree this is a bug, simply changing their checks to if
-  (getauxval(AT_SECURE)) { ... } might make this bug go away, and handle
-  file caps and setgid for free. I filed a bug for that, but there
-  hasn't been a response:
-  https://gitlab.freedesktop.org/mesa/mesa/-/issues/4549
-
-- The code could use ping sockets instead, but they're still rarely
-  enabled by default, and users have to set the ping_group_range sysctl.
-  I personally think it's time to enable them by default, but that's a
-  different discussion :-)
-
-- If neither of those two options work, then I guess we will have to
-  try to make using mesa safe...but it sounds really hard. The obvious
-  fix for right now is trying to clean up the environment, e.g.:
-
-  (Note: untested)
-
-    char *allowed[][2] = {
-        { "DISPLAY", 0 },
-        { "XAUTHORITY", 0 },
-        NULL,
-    };
-    for (int i = 0; allowed[i][0]; i++)  {
-        if (getenv(allowed[i][0])) {
-            allowed[i][1] = strdup(getenv(allowed[i][0]));
-        }
-    }
-    if (clearenv() != 0) {
-        abort();
-    }
-    for (int i = 0; allowed[i][0]; i++)  {
-        if (allowed[i][1]) {
-            setenv(allowed[i][0], allowed[i][1], 1);
-            free(allowed[i][1]);
-        }
-    }
-
-    // ...
-    MesaInitWhatever();
-
-I *think* this will work in main(), but it's possible there are some
-constructors somewhere that execute before main() I've missed. If that's
-the case, then I guess we will need a wrapper binary that does execve()
-and passes a non-cloexec fd with a sanitized environment?
-
-The problem is that even if we make cleaning up the environment work,
-you're always going to need $DISPLAY, and any code exec bug connecting
-to a malicious X server will be a security bug.... and that sounds super
-hard to get right?
-
-I dunno, thoughts on fixing this appreciated...
-
-Tavis.
-
--- 
- _o)            $ lynx lock.cmpxchg8b.com
- /\\  _o)  _o)  $ finger taviso@....org
-_\_V _( ) _( )  @taviso
-
-View attachment "sonar-sock-demo.sh" of type "text/plain" (3253 bytes)
+On Thu, Sep 16, 2021 at 11:12:21PM -0700, Oleksandr Tymoshenko wrote:
+> Hello,
+> 
+> 
+> I???d like to propose Container-Optimized OS (COS)  for membership in
+> linux-distros. Text below addresses items listed in the ???Membership
+> criteria??? section of
+> https://oss-security.openwall.org/wiki/mailing-lists/distros
+> 
+> 
+> > 1. Be an actively maintained Unix-like operating system distro with
+> > substantial use of Open Source components
+> 
+> 
+> Container-Optimized OS (COS) s a Chromium OS based
+> server operating system. Google distributes COS as a pre-built cloud image,
+> but also provides sources for users to customize and build their own
+> specialized versions of the OS.
+> 
+> 
+> URL: https://cloud.google.com/container-optimized-os
+> 
+> 
+> Source code:  https://cos.googlesource.com
+> Build instructions:
+> https://cloud.google.com/container-optimized-os/docs/how-to/building-from-open-source
+> 
+> 
+> COS has a 6-month major release cadence and 3 LTS branches with their own
+> 3-month refresh cadence. Critical security vulnerabilities addressed in
+> patch releases, independently from the release/refresh cycle.
+> 
+> 
+> Release notes: https://cloud.google.com/container-optimized-os/docs/release-notes
+> 
+> 
+> > 2. Have a user base not limited to your own organization
+> 
+> 
+> COS is available directly to external customers as a base VM image for the
+> Google Compute Engine and indirectly as a base OS for managed services such
+> as Google Kubernetes Engine (GKE), CloudSQL, Google Cloud Filestore.
+> Overall usage of COS adds up to millions of cloud instances.
+> 
+> 
+> > 3. Have a publicly verifiable track record, dating back at least 1 year and
+> > continuing to present day, of fixing security issues (including some that
+> > had been handled on (linux-)distros, meaning that membership would have
+> > been relevant to you) and releasing the fixes within 10 days (and
+> > preferably much less than that) of the issues being made public (if it
+> > takes you ages to fix an issue, your users wouldn't substantially benefit
+> > from the additional time, often around 7 days and sometimes up to 14 days,
+> > that list membership could give you)
+> 
+> 
+> Some of the examples of COS reacting quickly (less than 7 days) to CVEs
+> with high impact:
+> 
+> 
+> CVE-2021-33909(Sequoia):
+> https://cloud.google.com/container-optimized-os/docs/release-notes/m85#cos-85-13310-1308-6
+> 
+> 
+> CVE-2020-14308, CVE-2020-14311, CVE-2020-15705 (GRUB2):
+> https://cloud.google.com/container-optimized-os/docs/release-notes/m81#cos-81-12871-1185-0
+> 
+> 
+> CVE-2020-14386:
+> https://cloud.google.com/container-optimized-os/docs/release-notes/m81#cos-81-12871-1196-0
+> 
+> 
+> Having access to embargoed CVEs would have helped us to plan and prepare
+> for patch releases in a more proactive way.
+> 
+> 
+> > 4. Not be (only) downstream or a rebuild of another distro (or else we need
+> > convincing additional justification of how the list membership would enable
+> > you to release fixes sooner, presumably not relying on the upstream distro
+> > having released their fixes first?)
+> 
+> 
+> Although COS is derived from Chromium OS we switched to maintaining our own
+> kernel package that tracks more recent versions of the Linux kernel. We
+> make an effort to keep it as close to the upstream kernel as possible. We
+> also track releases of other open-source packages relevant for our use
+> cases independently from Chromium OS or Gentoo.
+> 
+> 
+> > 5. Be a participant and preferably an active contributor in relevant public
+> > communities (most notably, if you're not watching for issues being made
+> > public on oss-security, which are a superset of those that had been handled
+> > on (linux-)distros, then there's no valid reason for you to be on
+> > (linux-)distros)
+> 
+> 
+> We are actively monitoring multiple sources of information about
+> vulnerabilities but haven???t contributed much directly because we didn't
+> have anything to add to discussions.  We contributed to OSTIF Linux Kernel
+> Vuln Reporting/Remediation Practices review, and also monitor the
+> oss-security indirectly via ChromeOS.
+> 
+> 
+> 
+> 
+> > 6. Accept the list policy:
+> > http://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-instructions-for-members
+> 
+> 
+> Please consider this note as acceptance of the list policy.
+> 
+> 
+> > 7. Be able and willing to contribute back, preferably in specific ways
+> > announced in advance (so that you're responsible for a specific area and so
+> > that we know what to expect from which member), and demonstrate actual
+> > contributions once you've been a member for a while:
+> > http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+> 
+> 
+> Our team can perform administrative tasks that benefit the wider community
+> and also can draw upon Google???s internal kernel expertise if required (on
+> the need-to-know basis, maintaining confidentiality).
+> 
+> 
+> > 8. Be able and willing to handle PGP-encrypted e-mail
+> 
+> 
+> We???ll provide relevant GPG keys separately if our membership is accepted.
+> 
+> 
+> > 9. Have someone already on the private list, or at least someone else who
+> > has been active on oss-security for years but is not affiliated with your
+> > distro nor your organization, vouch for at least one of the people
+> > requesting membership on behalf of your distro (then that one vouched-for
+> > person will be able to vouch for others on your team, in case you'd like
+> > multiple people subscribed)
+> 
+> 
+> Kees Cook (Cc-ed) can vouch for the proposed candidates.
+> 
+> 
+> Thank you
