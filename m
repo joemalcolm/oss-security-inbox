@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2325" "Sunday" "1" "October" "2017" "09:25:07" "+0200" "chbi@chbi.eu" "chbi@chbi.eu" "<fa5c4e07-a487-cba4-88da-4868ed2b383a@chbi.eu>" "71" "[oss-security] Stored XSS vulnerability in BlogoText <= 3.7.5" nil nil nil "10" "2017100107:25:07" "[oss-security] Stored XSS vulnerability in BlogoText <= 3.7.5" (number mark "U       chbi@chbi.eu Oct  1   71/2325  " thread-indent "\"[oss-security] Stored XSS vulnerability in BlogoText <= 3.7.5\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1579" "Saturday" "18" "September" "2021" "14:31:00" "-0500" "Valentina Palmiotti" "chompie@graplsecurity.com" nil "39" "[oss-security] Linux Kernel: Exploitable vulnerability in io_uring" nil nil nil "9" nil nil (number mark "U       chompie@grap Sep 18   39/1579  " thread-indent "\"[oss-security] Linux Kernel: Exploitable vulnerability in io_uring\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux Kernel: Exploitable vulnerability in io_uring" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 27671 invoked by uid 550); 1 Oct 2017 13:10:25 -0000
+Received: (qmail 26304 invoked by uid 550); 18 Sep 2021 19:44:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,87 +12,76 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32573 invoked from network); 1 Oct 2017 07:25:26 -0000
-To: oss-security@lists.openwall.com
-From: chbi@chbi.eu
-Message-ID: <fa5c4e07-a487-cba4-88da-4868ed2b383a@chbi.eu>
-Date: Sun, 1 Oct 2017 09:25:07 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+Received: (qmail 20183 invoked from network); 18 Sep 2021 19:31:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=graplsecurity-com.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=MjEeS5nZvhdF4seWZkGslHZC2FQWimvLWP+PZupl0W8=;
+        b=qR+dezl/HpL6njPIxWoy1PHhB7BfR7RLTDM9/a8x1jIzrolTjKdNv8uocEw7IPLmSw
+         d/miRYg4Oo6xMmkjym0cuQc00Y37CWGNFJVnCUhvBZgdqxppoz1jJZqcJzzR0PKWf+lK
+         /OFsfcOV/pVijB6azZj0Y8vVITvi1iOuszNBPAGNX+WdLVwxklbPODjk3fq/n3RvMpL8
+         mn++u5ZRutnu7wipFCMYpiTROVviNwToYnPVwCkOInS1sHRRGCGiEkAD2PnvTXLEJKbz
+         ub1jzmuk8nXYd50z+Wg3SLOqTxfARx9jKjLhcivYBaGZsRNhisjARxKdt+DOxC264XGy
+         lFJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=MjEeS5nZvhdF4seWZkGslHZC2FQWimvLWP+PZupl0W8=;
+        b=j/okvSObxGK71e7Xyxtqn5pOxzTIbVuaeUPArZHC1H/kfnwvd3gKf5SLxTjlloKPvE
+         /I2a5AGPCa1RwirSCjsnFSmbRAWX/NgofgnFfPxe8poVRZFPSikPboDGbpbI/FpU2qTf
+         9VgfAvYIdxeEtrV4yAhCQnGGUsiG1YHdjgo5L0enrzL6mruvJuI+c6pPtZgrnF8JYdth
+         ef1tHgWYfT4RLl/rcqXZMtCIXEfR8uhOA4pmdh1zpkcxKb9X0kCKrNhN1L/YTTHghWmf
+         /PXCNUj9d2d6XNkUbj5fZv3g5eddZIrCJzesKXbYYolyB8EHQrlAUN370Q2JgIyoUf7K
+         wTyQ==
+X-Gm-Message-State: AOAM5304WXxipVYOZBeEf97fXD80joJKM5Cu+iV5WuCNTSK6c53FjFEe
+	fi/CduYt5YdAULOLUz9ioT23aMj/8Aq+w4MqlVkD8xJCbWT7ig==
+X-Google-Smtp-Source: ABdhPJxvvLd5v/3Qhx97NNwZ2NLYL/XU+mkWSMUGcEmiMyHn8FFaIKtNuXK1AcG0i0iEd7iKtIOAEJmqzKxoZaSXEug=
+X-Received: by 2002:a05:6512:3d12:: with SMTP id d18mr13521228lfv.542.1631993471652;
+ Sat, 18 Sep 2021 12:31:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="Tt1im53EFkG18RpeHrvCHTnhTM9LrAo42"
-Subject: [oss-security] Stored XSS vulnerability in BlogoText <= 3.7.5
-
---Tt1im53EFkG18RpeHrvCHTnhTM9LrAo42
-Content-Type: multipart/mixed; boundary="R0hgfH5Mg790h4sNPUrjqFh6BUDEpPi0q";
- protected-headers="v1"
-From: chbi@chbi.eu
+From: Valentina Palmiotti <chompie@graplsecurity.com>
+Date: Sat, 18 Sep 2021 14:31:00 -0500
+Message-ID: <CALoOwW45LdmFC6nmi8H71FVLmaWZh1xTSA74CAZTfN3r4cwZGQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Message-ID: <fa5c4e07-a487-cba4-88da-4868ed2b383a@chbi.eu>
-Subject: Stored XSS vulnerability in BlogoText <= 3.7.5
+Content-Type: multipart/alternative; boundary="000000000000276ce105cc4a1713"
+Subject: [oss-security] Linux Kernel: Exploitable vulnerability in io_uring
 
---R0hgfH5Mg790h4sNPUrjqFh6BUDEpPi0q
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-
+--000000000000276ce105cc4a1713
+Content-Type: text/plain; charset="UTF-8"
 
 Hi,
 
-I've discovered a security issue in BlogoText <=3D 3.7.5
-(https://github.com/BlogoText/blogotext/)
+I'm writing to disclose a Linux Kernel vulnerability I found in the
+io_uring subsystem.
 
+The vulnerability is in fs/io_uring.c at loop_rw_iter. It is a controllable
+kernel buffer free.
 
-A Stored XSS vulnerability via comment allows an unauthenticated
-attacker to inject JavaScript. If it is triggered as administrator an
-attacker can for example, change global settings or create/delete posts.
-It is also possible to execute JavaScript against unauthenticated users
-of the blog.
+Most files implement the file op function read_iter. However, if they don't
+(such as a procfs file like /proc/<pid>/maps), loop_rw_iter is called to
+manually perform the iterative read/write of a file. The pointer
+in req->rw.addr is incremented by the size of the read/write after each
+segment. In normal cases, req->rw.addr contains a pointer to a userspace
+buffer to read/write from. However, a user can use the
+IORING_OP_PROVIDE_BUFFERS command to preselect buffers for I/O operations.
+If this is the case, req->rw.addr contains a pointer to a kernel buffer
+(io_buffer structure). This buffer is later freed in io_put_kbuf after the
+read/write request completes.
 
-Fix:
-https://github.com/BlogoText/blogotext/pull/320/commits/1a283cc8ad2cda37e0a=
-6aff8f4558b98ecbfd9c2
+This gives the ability to free adjacent buffers at a controllable offset.
+It is accessible from unprivileged, and straight forward to exploit for
+local privilege escalation. I plan to share the specifics for exploitation
+in the future.
 
+I disclosed the vulnerability to security () kernel org, and the patch has
+been merged into the mainline kernel. It has also been backported into the
+affected stable trees:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=16c8d2df7ec0eed31b7d3b61cb13206a7fb930cc
 
-The issue is fixed in BlogoText 3.7.6.
+CVE-2021-41073 has been reserved by MITRE for this vulnerability
 
-https://github.com/BlogoText/blogotext/releases/tag/3.7.6
+Best,
 
+Valentina
 
-I've requested a CVE ID (MITRE).
-
---=20
-chbi
-https://chbi.eu
-
-GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
-     https://chbi.eu/chbi.asc
-
-
---R0hgfH5Mg790h4sNPUrjqFh6BUDEpPi0q--
-
---Tt1im53EFkG18RpeHrvCHTnhTM9LrAo42
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEPemRh0vp6uY8qNwgunuT+ZA3rn4FAlnQmFkACgkQunuT+ZA3
-rn5BgBAAjeW5YTR00qeatrYlgt/H2qyqmogGdpPjaiIRo6yRsba9ps8BiSDehMBq
-VgMU3Czmj09O5OAvxJijG2NjaOOyFFuFh8m2Yb8OQgD95KN6bHSlGWA7MR48qjbc
-KAkF08b/bnFC2xz/iHn0bbyrRVIaPVyHH76EmA1ZVr6SxywFq9Vshbtu8zCaCd2m
-Ld4D1606xFdKePrhxFDkrS2KS2BF6IF3/rP8Xk3AFvDKikoomAsjxn2BnjwDvnc2
-6ao5cnidBvyMieHl0y5bQfsQJGQrNzeAN4DVobrQpfu6Q656X/iujC/Ko7kMzXdy
-jsK7Hsk/rGyLcg2xPD0xqs9NmlXX/2cwq+LjTVb4CvYDIRBxjYtyaSg2F2cuXDqc
-L9afUJc1GucpfumUCYEBzLWUPmxDJFJ9MLDDUxmHa5gZpAwcLQi648EO24l0vXM8
-dejjogvQazXCXqrypQoDEFDfSr4DpV7i4Sb6KVlaNCb3khTqK2JYMxAAQDKtlToj
-rvZ/V2pi4ZFuxU8ayEc+b5zdsTNS1qFkvXdoOku7oLwadtiojH6ZIuMCtCDOEtDG
-brI+MboL7XwJCjz2Ryl169gTILc9G+wyAxGIBCjQTCfs6ZKapVVtL0u8lhdE9PK7
-hoZ0C8URsJ4PgFbk3EuQwA+Mk/RbxTdA1nqWVGh47K6XyJwtOKc=
-=yYSB
------END PGP SIGNATURE-----
-
---Tt1im53EFkG18RpeHrvCHTnhTM9LrAo42--
+--000000000000276ce105cc4a1713--
