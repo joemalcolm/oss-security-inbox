@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4671" "Monday" "4" "January" "2021" "11:27:50" "+0000" "Ferruh Yigit" "ferruh.yigit@intel.com" "<69a35308-0697-780d-8e72-422c7a2173d8@intel.com>" "129" "[oss-security] Re: [dpdk-dev] [oss-security] DPDK security advisory for multiple vhost crypto issues" nil nil nil "1" "2021010411:27:50" "[oss-security] Re: [dpdk-dev] [oss-security] DPDK security advisory for multiple vhost crypto issues" (number mark "U       ferruh.yigit Jan  4  129/4671  " thread-indent "\"[oss-security] Re: [dpdk-dev] [oss-security] DPDK security advisory for multiple vhost crypto issues\"\n") "<CAA8xKjULPZw04YY9fd1d83893mmqXX_qp1UjRZdAWP7fU3yC_A@mail.gmail.com>" ("<73386a14-6e5a-83e4-051d-125b5c5fe5d9@intel.com>" "<CAA8xKjULPZw04YY9fd1d83893mmqXX_qp1UjRZdAWP7fU3yC_A@mail.gmail.com>") nil nil nil nil nil nil nil "[oss-security] Re: [dpdk-dev] [oss-security] DPDK security advisory for multiple vhost crypto issues" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["967" "Saturday" "18" "September" "2021" "07:38:57" "-0700" "Kees Cook" "keescook@chromium.org" nil "23" "Re: [oss-security] Containers-optimized OS (COS) membership in the linux-distros list" nil nil nil "9" nil nil (number mark "U       keescook@chr Sep 18   23/967   " thread-indent "\"Re: [oss-security] Containers-optimized OS (COS) membership in the linux-distros list\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Containers-optimized OS (COS) membership in the linux-distros list" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1235 invoked by uid 550); 4 Jan 2021 12:22:08 -0000
+Received: (qmail 11828 invoked by uid 550); 18 Sep 2021 14:54:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,159 +12,65 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30107 invoked from network); 4 Jan 2021 11:28:09 -0000
-IronPort-SDR: LbFZJsjnBXk8p306yyiyU1c5zJUBSi6KAMZhIvsqMUaWURjPS5FnycMz+IcOZcgwo83pt6GC6x
- xdZftL51GMWw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9853"; a="174364370"
-X-IronPort-AV: E=Sophos;i="5.78,473,1599548400"; 
-   d="scan'208";a="174364370"
-IronPort-SDR: PIXFe52iCDDwtP1chaBaHfNuIer/kHTQQBpKv+915PGmkDd/cp96CC+w76UYfv/+s40ORkPM9W
- UBIKX2pxpTxg==
-X-IronPort-AV: E=Sophos;i="5.78,473,1599548400"; 
-   d="scan'208";a="378382351"
-To: Mauro Matteo Cascella <mcascell@redhat.com>,
- oss-security@lists.openwall.com
-Cc: security@dpdk.org, security-prerelease@dpdk.org,
- "dev@dpdk.org" <dev@dpdk.org>, Ryan Hall <ryan.e.hall@intel.com>
-References: <73386a14-6e5a-83e4-051d-125b5c5fe5d9@intel.com>
- <CAA8xKjULPZw04YY9fd1d83893mmqXX_qp1UjRZdAWP7fU3yC_A@mail.gmail.com>
-From: Ferruh Yigit <ferruh.yigit@intel.com>
-Message-ID: <69a35308-0697-780d-8e72-422c7a2173d8@intel.com>
-Date: Mon, 4 Jan 2021 11:27:50 +0000
+Received: (qmail 7302 invoked from network); 18 Sep 2021 14:39:11 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=NkcMHpxLeFnduRxkCHesERb+nqhPjQypNaN2b3ChG/w=;
+        b=kNJ6Q/p3mUZxP6weY/4tURsCDjn6vvmmG4QYFl0yqJTs1qpoVCjNnuXjGNkzNGNG28
+         fPmjPIAViX/WMR8x6bkRiiawFWNMHxWt3Bn43WTksLIalj0KOCHb+RHRnRfLf3TWZSG3
+         F6guf7z+2EbyPMD9pIS6QAIZZcwV8MUJyaMq0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=NkcMHpxLeFnduRxkCHesERb+nqhPjQypNaN2b3ChG/w=;
+        b=c589FhzEEFKvnRt7oa2vXmS1vQK3L1+o1bZH+1MYlGDCf9/APsMb8Sj0V5IfQgW6I9
+         IUOQEVrwm5dyQ9qXg8bhJHPrT49ues+8mSO9doWkzTDGmeiXjm6O3rr87fuwrg1zLqfa
+         x4HMcD1hOZi9VH2b0qEAIZTLNpIbCdnZLZovow5FrmRc0S9zwq1Q64dIIRHnzr/gsZaK
+         MCP8upRXNybZmkF/43CHzPsbiPGvlL2e+wcSl7GW3xQnPL6nkxK5Hea15KMZtVsxzqE6
+         i3zlftv6EelDKtXP7fj6tFgPwKurtx9AsuWLsDb9Kj/McGNboLYYwlL1wyOkJR2V+4Kk
+         dp9A==
+X-Gm-Message-State: AOAM531gdVIk9DzntgvlCy7p+l25T9hOUrFMKGgZ48p93wFhxQCXf7Xc
+	oWBo9GRUTDmornUfs8BHEhvE1g==
+X-Google-Smtp-Source: ABdhPJzhDlVwGACwuiW9gAcb5DzmWbMQK0xsKhqofiMo7Mkz6MsbcscVAHHxTrnUVIKlhGKEzr+deg==
+X-Received: by 2002:a63:da0a:: with SMTP id c10mr15082003pgh.255.1631975939324;
+        Sat, 18 Sep 2021 07:38:59 -0700 (PDT)
+Date: Sat, 18 Sep 2021 07:38:57 -0700
+From: Kees Cook <keescook@chromium.org>
+To: Solar Designer <solar@openwall.com>
+Cc: Oleksandr Tymoshenko <ovt@google.com>, oss-security@lists.openwall.com
+Message-ID: <202109180736.BC80F1E90@keescook>
+References: <CACGj0Cg_OgsYUAw8R6cbHr+ihPjfrKUJw0RjVewzuWYVi8tXpg@mail.gmail.com>
+ <20210917161848.GB9168@openwall.com>
 MIME-Version: 1.0
-In-Reply-To: <CAA8xKjULPZw04YY9fd1d83893mmqXX_qp1UjRZdAWP7fU3yC_A@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] Re: [dpdk-dev] [oss-security] DPDK security advisory for multiple
- vhost crypto issues
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210917161848.GB9168@openwall.com>
+Subject: Re: [oss-security] Containers-optimized OS (COS) membership in the
+ linux-distros list
 
-On 1/4/2021 8:28 AM, Mauro Matteo Cascella wrote:
-> Hello,
-> 
-> Is there any particular reason for the Scope metric to be Unchanged
-> (S:U) for CVE-2020-14377 and CVE-2020-14378?
-> 
+On Fri, Sep 17, 2021 at 06:18:48PM +0200, Solar Designer wrote:
+> On Thu, Sep 16, 2021 at 11:12:21PM -0700, Oleksandr Tymoshenko wrote:
+> > I???d like to propose Container-Optimized OS (COS)  for membership in
+> > linux-distros. Text below addresses items listed in the ???Membership
+> > criteria??? section of
+> > https://oss-security.openwall.org/wiki/mailing-lists/distros
 
-removed dpdk-announce mail list
+> > > 9. Have someone already on the private list, or at least someone else who
+> > > has been active on oss-security for years but is not affiliated with your
+> > > distro nor your organization, vouch for at least one of the people
+> > > requesting membership on behalf of your distro (then that one vouched-for
+> > > person will be able to vouch for others on your team, in case you'd like
+> > > multiple people subscribed)
+> > 
+> > Kees Cook (Cc-ed) can vouch for the proposed candidates.
 
-Hi Mauro,
+I can vouch for Oleksandr and the COS team. They're active and
+responsive.
 
-CVE-2020-14377, the memory over read is in the scope of the same application, 
-that is the reason of the unchanged scope. There is another CVE below that can 
-use this information to figure out where to overwrite for remote execution which 
-has scope set as 'Changed'.
+-Kees
 
-CVE-2020-14378, can cause loop taken longer time and delays the service, since 
-it is eating the core cycles, if there is something else using that specific 
-core technically it may delay it too, but DPDK mostly uses all core for itself 
-and since mainly the vhost crypto service is affected, scope selected as Unchanged.
-
-Is there a concern on the selected scope metric?
-
-Thanks.
-
-> Thank you,
-> 
-> On Mon, Sep 28, 2020 at 5:43 PM Ferruh Yigit <ferruh.yigit@intel.com> wrote:
->>
->> A set of vulnerabilities are fixed in DPDK:
->> - CVE-2020-14374
->> - CVE-2020-14375
->> - CVE-2020-14376
->> - CVE-2020-14377
->> - CVE-2020-14378
->>
->> Some downstream stakeholders were warned in advance in order to coordinate the
->> release of fixes and reduce the vulnerability window.
->>
->> Problem:
->> A malicious guest can harm the host using vhost crypto, this includes
->> executing code in host (VM Escape), reading host application memory
->> space to guest and causing partially denial of service in the host.
->>
->> All users of the vhost library are strongly encouraged to upgrade as soon as
->> possible.
->>
->> Thanks to "Ryan Hall <ryan.e.hall@intel.com>" for reporting the issues.
->>
->>
->> Stable releases download links:
->>
->> DPDK 18.11.10 (LTS)
->> http://fast.dpdk.org/rel/dpdk-18.11.10.tar.xz
->>
->> DPDK 19.11.5 (LTS)
->> https://fast.dpdk.org/rel/dpdk-19.11.5.tar.xz
->>
->>
->> Details:
->>
->> CVE: CVE-2020-14374
->> Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=272
->> Severity: 8.8 (High)
->> CVSS scores: CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H
->> Summary : Remote Code Execution in vhost_crypto (VM Escape)
->> Reporter: Ryan Hall <ryan.e.hall@intel.com>
->>
->> CVE: CVE-2020-14375
->> Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=272
->> Severity: 7.8 (High)
->> CVSS scores: CVSS:3.0/AV:L/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H
->> Summary : Time-of-check time-of-use vulnerabilities throughout vhost_crypto.c
->> Reporter: Ryan Hall <ryan.e.hall@intel.com>
->>
->> CVE: CVE-2020-14376
->> Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=272
->> Severity: 7.8 (High)
->> CVSS scores: CVSS:3.0/AV:L/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H
->> Summary : Buffer overflow copying iv_data from guest to
->>             host(prepare_sym_cipher_op & prepare_sym_chain_op)
->> Reporter: Ryan Hall <ryan.e.hall@intel.com>
->>
->> CVE: CVE-2020-14377
->> Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=272
->> Severity: 7.1 (High)
->> CVSS scores: CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:H
->> Summary: write_back_data buffer over read (cipher->para.dst_data_len &
->>            desc->len)
->> Reporter: Ryan Hall <ryan.e.hall@intel.com>
->>
->> CVE: CVE-2020-14378
->> Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=272
->> Severity: 3.3 (Low)
->> CVSS scores: CVSS:3.0/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L
->> Summary : Partial Denial of Service due to Integer Underflow
->> Reporter: Ryan Hall <ryan.e.hall@intel.com>
->>
->>
->> Commits:
->> main repo (will be 20.11.0)
->> https://git.dpdk.org/dpdk/commit/?id=57680e34498
->> https://git.dpdk.org/dpdk/commit/?id=5677e68c05d
->> https://git.dpdk.org/dpdk/commit/?id=b2866f47336
->> https://git.dpdk.org/dpdk/commit/?id=409c47c7c5b
->> https://git.dpdk.org/dpdk/commit/?id=e15b7c01120
->> https://git.dpdk.org/dpdk/commit/?id=2d962bb7365
->>
->> DPDK 18.11.10 (LTS)
->> https://git.dpdk.org/dpdk-stable/commit/?h=18.11&id=ab6314978567
->> https://git.dpdk.org/dpdk-stable/commit/?h=18.11&id=7a5af91f8bf4
->> https://git.dpdk.org/dpdk-stable/commit/?h=18.11&id=7e7c75edc635
->> https://git.dpdk.org/dpdk-stable/commit/?h=18.11&id=ff65dc28bc71
->> https://git.dpdk.org/dpdk-stable/commit/?h=18.11&id=75f8df70a2c8
->> https://git.dpdk.org/dpdk-stable/commit/?h=18.11&id=6e8a4da39e68
->>
->> DPDK 19.11.5 (LTS)
->> https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=3f2635c5a9c3
->> https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=81e969483020
->> https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=e4a7c14f0248
->> https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=319b498e4b16
->> https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=6a3a414698e4
->> https://git.dpdk.org/dpdk-stable/commit/?h=19.11&id=e2666ec24535
->>
->> --
->> DPDK Security Team
->> http://core.dpdk.org/security/
->>
-
+-- 
+Kees Cook
