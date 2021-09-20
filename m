@@ -1,54 +1,201 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/25/3
-Message-ID: <20210225190350.GB474115@w1.fi>
-Date: Thu, 25 Feb 2021 21:03:50 +0200
-From: Jouni Malinen <j@...fi>
-To: oss-security@...ts.openwall.com
-Subject: wpa_supplicant P2P provision discovery processing vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/21/1
+Message-ID: <20210920230413.GA50332@bluezbox.com>
+Date: Mon, 20 Sep 2021 16:04:13 -0700
+From: Oleksandr Tymoshenko <gonzo@...ezbox.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com, Kees Cook <keescook@...omium.org>
+Subject: Re: Containers-optimized OS (COS) membership in the linux-distros list
 Content-Type: text/plain; charset=utf-8
 
-Published: February 25, 2021
-Latest version available from: https://w1.fi/security/2021-1/
+Solar Designer (solar@...nwall.com) wrote:
+> Hello Oleksandr,
+> 
+> You posted this from @google.com, which probably means many subscribers
+> didn't receive the message because of that domain's strict DMARC policy.
+> So I fully quote your message below for others to possibly comment.
+> 
+> BTW, you will similarly need to be posting from another domain (e.g.,
+> gmail.com) to the linux-distros list.
+ 
+Sorry, I wasn't aware about the problem with @google.com. Replying
+from the email address I use for my OSS communications (supposedly
+has DKIM and SPF configured). If this one is OK, I'll use it instead.
 
+> Overall, your proposal looks reasonable to me at first glance.
+> 
+> Please also propose which specific contributing-back task(s) your team
+> would like to help with.
 
-Vulnerability
+I think we can help with the following tasks:
 
-A vulnerability was discovered in how wpa_supplicant processes P2P
-(Wi-Fi Direct) provision discovery requests. Under a corner case
-condition, an invalid Provision Discovery Request frame could end up
-reaching a state where the oldest peer entry needs to be removed. With
-a suitably constructed invalid frame, this could result in use
-(read+write) of freed memory. This can result in an attacker within
-radio range of the device running P2P discovery being able to cause
-unexpected behavior, including termination of the wpa_supplicant process
-and potentially code execution.
+Help ensure that each message posted to oss-security contains the most
+essential information (e.g., vulnerability detail and/or exploit)
+directly in the message itself (and in plain text) rather than only by
+reference to an external resource, and add the missing information
+(e.g., in your own words, by quoting with proper attribution, and/or
+by creating and attaching a properly attributed text/plain export of a
+previously referenced web page) and remind the original sender of this
+requirement (for further occasions) in a “reply” posting when
+necessary
 
+Determine if the reported issues are Linux-specific, and if so help
+ensure that (further) private discussion goes on the linux-distros
+sub-list only (thus, not spamming and unnecessarily disclosing to the
+non-Linux distros) 
 
-Vulnerable versions/configurations
+Promptly review new issue reports for meeting the list's requirements
+and confirm receipt of the report and, when necessary, inform the
+reporter of any issues with their report (e.g., obviously not actionable
+by the distros) and request and/or propose any required yet missing
+information (most notably, a tentative public disclosure date/time) 
 
-wpa_supplicant v1.0-v2.9 with CONFIG_P2P build option enabled
-
-An attacker (or a system controlled by the attacker) needs to be within
-radio range of the vulnerable system to send a set of suitably
-constructed management frames that trigger the corner case to be reached
-in the management of the P2P peer table.
-
-
-Possible mitigation steps
-
-- Merge the following commit to wpa_supplicant and rebuild it:
-
-  P2P: Fix a corner case in peer addition based on PD Request
-  
-  This patch is available from https://w1.fi/security/2021-1/
-  
-- Update to wpa_supplicant v2.10 or newer, once available
-
-- Disable P2P (control interface command "P2P_SET disabled 1" or
-  "p2p_disabled=1" in (each, if multiple interfaces used) wpa_supplicant
-  configuration file)
-
-- Disable P2P from the build (remove CONFIG_P2P=y)
+ 
+> Thanks,
+> 
+> Alexander
+> 
+> On Thu, Sep 16, 2021 at 11:12:21PM -0700, Oleksandr Tymoshenko wrote:
+> > Hello,
+> > 
+> > 
+> > I???d like to propose Container-Optimized OS (COS)  for membership in
+> > linux-distros. Text below addresses items listed in the ???Membership
+> > criteria??? section of
+> > https://oss-security.openwall.org/wiki/mailing-lists/distros
+> > 
+> > 
+> > > 1. Be an actively maintained Unix-like operating system distro with
+> > > substantial use of Open Source components
+> > 
+> > 
+> > Container-Optimized OS (COS) s a Chromium OS based
+> > server operating system. Google distributes COS as a pre-built cloud image,
+> > but also provides sources for users to customize and build their own
+> > specialized versions of the OS.
+> > 
+> > 
+> > URL: https://cloud.google.com/container-optimized-os
+> > 
+> > 
+> > Source code:  https://cos.googlesource.com
+> > Build instructions:
+> > https://cloud.google.com/container-optimized-os/docs/how-to/building-from-open-source
+> > 
+> > 
+> > COS has a 6-month major release cadence and 3 LTS branches with their own
+> > 3-month refresh cadence. Critical security vulnerabilities addressed in
+> > patch releases, independently from the release/refresh cycle.
+> > 
+> > 
+> > Release notes: https://cloud.google.com/container-optimized-os/docs/release-notes
+> > 
+> > 
+> > > 2. Have a user base not limited to your own organization
+> > 
+> > 
+> > COS is available directly to external customers as a base VM image for the
+> > Google Compute Engine and indirectly as a base OS for managed services such
+> > as Google Kubernetes Engine (GKE), CloudSQL, Google Cloud Filestore.
+> > Overall usage of COS adds up to millions of cloud instances.
+> > 
+> > 
+> > > 3. Have a publicly verifiable track record, dating back at least 1 year and
+> > > continuing to present day, of fixing security issues (including some that
+> > > had been handled on (linux-)distros, meaning that membership would have
+> > > been relevant to you) and releasing the fixes within 10 days (and
+> > > preferably much less than that) of the issues being made public (if it
+> > > takes you ages to fix an issue, your users wouldn't substantially benefit
+> > > from the additional time, often around 7 days and sometimes up to 14 days,
+> > > that list membership could give you)
+> > 
+> > 
+> > Some of the examples of COS reacting quickly (less than 7 days) to CVEs
+> > with high impact:
+> > 
+> > 
+> > CVE-2021-33909(Sequoia):
+> > https://cloud.google.com/container-optimized-os/docs/release-notes/m85#cos-85-13310-1308-6
+> > 
+> > 
+> > CVE-2020-14308, CVE-2020-14311, CVE-2020-15705 (GRUB2):
+> > https://cloud.google.com/container-optimized-os/docs/release-notes/m81#cos-81-12871-1185-0
+> > 
+> > 
+> > CVE-2020-14386:
+> > https://cloud.google.com/container-optimized-os/docs/release-notes/m81#cos-81-12871-1196-0
+> > 
+> > 
+> > Having access to embargoed CVEs would have helped us to plan and prepare
+> > for patch releases in a more proactive way.
+> > 
+> > 
+> > > 4. Not be (only) downstream or a rebuild of another distro (or else we need
+> > > convincing additional justification of how the list membership would enable
+> > > you to release fixes sooner, presumably not relying on the upstream distro
+> > > having released their fixes first?)
+> > 
+> > 
+> > Although COS is derived from Chromium OS we switched to maintaining our own
+> > kernel package that tracks more recent versions of the Linux kernel. We
+> > make an effort to keep it as close to the upstream kernel as possible. We
+> > also track releases of other open-source packages relevant for our use
+> > cases independently from Chromium OS or Gentoo.
+> > 
+> > 
+> > > 5. Be a participant and preferably an active contributor in relevant public
+> > > communities (most notably, if you're not watching for issues being made
+> > > public on oss-security, which are a superset of those that had been handled
+> > > on (linux-)distros, then there's no valid reason for you to be on
+> > > (linux-)distros)
+> > 
+> > 
+> > We are actively monitoring multiple sources of information about
+> > vulnerabilities but haven???t contributed much directly because we didn't
+> > have anything to add to discussions.  We contributed to OSTIF Linux Kernel
+> > Vuln Reporting/Remediation Practices review, and also monitor the
+> > oss-security indirectly via ChromeOS.
+> > 
+> > 
+> > 
+> > 
+> > > 6. Accept the list policy:
+> > > http://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-instructions-for-members
+> > 
+> > 
+> > Please consider this note as acceptance of the list policy.
+> > 
+> > 
+> > > 7. Be able and willing to contribute back, preferably in specific ways
+> > > announced in advance (so that you're responsible for a specific area and so
+> > > that we know what to expect from which member), and demonstrate actual
+> > > contributions once you've been a member for a while:
+> > > http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+> > 
+> > 
+> > Our team can perform administrative tasks that benefit the wider community
+> > and also can draw upon Google???s internal kernel expertise if required (on
+> > the need-to-know basis, maintaining confidentiality).
+> > 
+> > 
+> > > 8. Be able and willing to handle PGP-encrypted e-mail
+> > 
+> > 
+> > We???ll provide relevant GPG keys separately if our membership is accepted.
+> > 
+> > 
+> > > 9. Have someone already on the private list, or at least someone else who
+> > > has been active on oss-security for years but is not affiliated with your
+> > > distro nor your organization, vouch for at least one of the people
+> > > requesting membership on behalf of your distro (then that one vouched-for
+> > > person will be able to vouch for others on your team, in case you'd like
+> > > multiple people subscribed)
+> > 
+> > 
+> > Kees Cook (Cc-ed) can vouch for the proposed candidates.
+> > 
+> > 
+> > Thank you
 
 -- 
-Jouni Malinen                                            PGP id EFC895FA
+gonzo
