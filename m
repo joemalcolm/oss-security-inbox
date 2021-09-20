@@ -1,36 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/11/10
-Message-ID: <20210511175549.GK12149@mussarela>
-Date: Tue, 11 May 2021 14:55:49 -0300
-From: Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-3489 - Linux kernel eBPF RINGBUF map oversized allocation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/20/1
+Message-ID: <6fe1e735-82c6-91e0-d6e7-b0b237f2870c@igalia.com>
+Date: Mon, 20 Sep 2021 12:49:39 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2021-0005
 Content-Type: text/plain; charset=utf-8
 
-It was discovered that eBPF RINGBUF bpf_ringbuf_reserve did not check
-that the allocated size was smaller than the ringbuf size.
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2021-0005
+------------------------------------------------------------------------
 
-Ryota Shiga(@Ga_ryo_) of Flatt Security working with Trend Micro's Zero Day
-Initiative discovered that this vulnerability could be turned into
-out-of-bounds writes in the kernel. This has been originally reported as
-ZDI-CAN-13586, and assigned CVE-2021-3489.
+Date reported           : September 20, 2021
+Advisory ID             : WSA-2021-0005
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2021-0005.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2021-0005.html
+CVE identifiers         : CVE-2021-30858.
 
-It was introduced by commit 457f44363a88 ("bpf: Implement BPF ring buffer
-and verifier support for it"), so affects any kernels later than 5.8-rc1.
-It was not backported to any upstream LTS kernel.
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-The proposed fix is that the allocating size cannot be larger than the
-ringbuf size. Also, in order to prevent other exploits that change the
-producer pointer or record headers, deny writable maps of those pages, as
-was documented and is used by libbpf.
+CVE-2021-30858
+    Versions affected: WebKitGTK and WPE WebKit before 2.32.4.
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Apple is aware of a report that this issue
+    may have been actively exploited. Description: A use after free
+    issue was addressed with improved memory management.
 
-This is fixed by the following commit:
-https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/commit/?id=4b81ccebaeee885ab1aa1438133f2991e3a2b6ea
 
-The commit below is also helpful in preventing other exploits:
-https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/commit/?id=04ea3086c4d73da7009de1e84962a904139af219
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
 
-And the following commit to bpf selftests is useful for validating the above fix:
-https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/commit/?id=98a34e93da83e50e197584c7c362668bf12c1d54
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
 
-Cascardo.
+The WebKitGTK and WPE WebKit team,
+September 20, 2021
