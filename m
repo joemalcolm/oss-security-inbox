@@ -1,97 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/21/4
-Message-ID: <nycvar.QRO.7.76.2107210915010.25537@fvyyl>
-Date: Wed, 21 Jul 2021 09:15:24 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>,  curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: TELNET stack contents disclosure again
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/21/2
+Message-ID: <de8ffe7a-5058-ccb8-f3a8-c59a6564ed9c@apache.org>
+Date: Tue, 21 Sep 2021 16:33:57 +0000
+From: Randall Hauch <rhauch@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-38153: Timing Attack Vulnerability for Apache Kafka Connect and Clients 
 Content-Type: text/plain; charset=utf-8
 
-TELNET stack contents disclosure again
-======================================
+Severity: moderate
 
-Project curl Security Advisory, July 21st 2021 -
-[Permalink](https://curl.se/docs/CVE-2021-22925.html)
+Description:
 
-VULNERABILITY
--------------
+Some components in Apache Kafka use `Arrays.equals` to validate a password or key, which is vulnerable to timing attacks that make brute force attacks for such credentials more likely to be successful. Users should upgrade to 2.8.1 or higher, or 3.0.0 or higher where this vulnerability has been fixed. The affected versions include Apache Kafka 2.0.0, 2.0.1, 2.1.0, 2.1.1, 2.2.0, 2.2.1, 2.2.2, 2.3.0, 2.3.1, 2.4.0, 2.4.1, 2.5.0, 2.5.1, 2.6.0, 2.6.1, 2.6.2, 2.7.0, 2.7.1, and 2.8.0.
 
-curl supports the `-t` command line option, known as `CURLOPT_TELNETOPTIONS`
-in libcurl. This rarely used option is used to send variable=content pairs to
-TELNET servers.
+Credit:
 
-Due to flaw in the option parser for sending `NEW_ENV` variables, libcurl
-could be made to pass on uninitialized data from a stack based buffer to the
-server. Therefore potentially revealing sensitive internal information to the
-server using a clear-text network protocol.
+Apache Kafka would like to thank J. Santilli for reporting this issue.
 
-This could happen because curl did not call and use sscanf() correctly when
-parsing the string provided by the application.
+References:
 
-The previous curl security vulnerability
-[CVE-2021-22898](https://curl.se/docs/CVE-2021-22898.html) is almost identical
-to this one but the fix was insufficient so this security vulnerability
-remained.
+https://kafka.apache.org/cve-list
 
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-This flaw has existed in curl since commit
-[a1d6ad2610](https://github.com/curl/curl/commit/a1d6ad2610) in libcurl 7.7,
-released on March 22, 2001. There was a previous attempt to fix this issue in
-curl 7.77.0 but it was not done proper.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2021-22925 to this issue.
-
-CWE-457: Use of Uninitialized Variable
-
-Severity: Medium
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.7 to and including 7.77.0
-- Not affected versions: curl < 7.7 and curl >= 7.78.0
-
-Also note that libcurl is used by many applications, and not always advertised
-as such.
-
-THE SOLUTION
-------------
-
-Use sscanf() properly and only use properly filled-in buffers.
-
-A [fix for CVE-2021-22925](https://github.com/curl/curl/commit/894f6ec730597eb243618d33cc84d71add8d6a8a)
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 7.78.0
-
-  B - Apply the patch to your local version
-
-  C - Avoid using `CURLOPT_TELNETOPTIONS`
-
-TIMELINE
---------
-
-This issue was reported to the curl project on June 11, 2021.
-
-This advisory was posted on July 21, 2021.
-
-CREDITS
--------
-
-This issue was reported and patched by Red Hat Product Security.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://www.wolfssl.com/contact/
