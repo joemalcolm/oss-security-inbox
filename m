@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1710" "Wednesday" "27" "June" "2018" "12:56:07" "+0200" "Marcus Meissner" "meissner@suse.de" "<20180627105607.kfnby2kf3arj3awc@suse.de>" "73" "[oss-security] KVM L1 guest escape - CVE-2018-12904" nil nil nil "6" "2018062710:56:07" "[oss-security] KVM L1 guest escape - CVE-2018-12904" (number mark "U       meissner@sus Jun 27   73/1710  " thread-indent "\"[oss-security] KVM L1 guest escape - CVE-2018-12904\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1401" "Thursday" "23" "September" "2021" "16:02:27" "-0700" "Clint Wylie" "cwylie@apache.org" nil "34" "[oss-security] CVE-2021-36749: Apache Druid: The HTTP inputSource allows authenticated users to read data from other sources than intended (incomplete fix of CVE-2021-26920)" nil nil nil "9" nil nil (number mark "U       cwylie@apach Sep 23   34/1401  " thread-indent "\"[oss-security] CVE-2021-36749: Apache Druid: The HTTP inputSource allows authenticated users to read data from other sources than intended (incomplete fix of CVE-2021-26920)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-36749: Apache Druid: The HTTP inputSource allows authenticated users to read data from other sources than intended (incomplete fix of CVE-2021-26920)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23974 invoked by uid 550); 27 Jun 2018 10:56:20 -0000
+Received: (qmail 25809 invoked by uid 550); 24 Sep 2021 04:39:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,91 +12,54 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23884 invoked from network); 27 Jun 2018 10:56:19 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Wed, 27 Jun 2018 12:56:07 +0200
-From: Marcus Meissner <meissner@suse.de>
-To: OSS Security List <oss-security@lists.openwall.com>
-Message-ID: <20180627105607.kfnby2kf3arj3awc@suse.de>
+Received: (qmail 11376 invoked from network); 23 Sep 2021 23:02:53 -0000
+X-Gm-Message-State: AOAM532QbDXOwXhhmaBEBdn1ErHpuTC/cWJW3++Ruq01pQsYft/xMByM
+	xZI/5SCxAcFl9wMrA7lfyntTuVDZ+kdTOI/1GUA=
+X-Google-Smtp-Source: ABdhPJw0KKmfFJejOTDmUnnECX88IfihH/c0YANlRGpphgnYSP+e6t7QmAv8bMsloEYVoGuEDGY0C76LQp72tXvw6kQ=
+X-Received: by 2002:a17:90b:4ac1:: with SMTP id mh1mr20881285pjb.238.1632438158609;
+ Thu, 23 Sep 2021 16:02:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: NeoMutt/20170421 (1.8.2)
-Subject: [oss-security] KVM L1 guest escape - CVE-2018-12904
+From: Clint Wylie <cwylie@apache.org>
+Date: Thu, 23 Sep 2021 16:02:27 -0700
+X-Gmail-Original-Message-ID: <CACxuw4V2_8j_Q=o2OcsDKE3NJ5fynk6Nf74UpYCDkM1gvhsPLg@mail.gmail.com>
+Message-ID: <CACxuw4V2_8j_Q=o2OcsDKE3NJ5fynk6Nf74UpYCDkM1gvhsPLg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2021-36749: Apache Druid: The HTTP inputSource allows
+ authenticated users to read data from other sources than intended (incomplete
+ fix of CVE-2021-26920)
 
-Hi,
+Severity: low
 
-KVM in Linux Kernel between 4.12 and 4.18rc1 has a guest escape allowing
-privilege escalation, found by Felix Wilhelm of Google Project Zero.
+Description:
 
-mitre entry:
+In the Druid ingestion system, the InputSource is used for reading
+data from a certain data source. However, the HTTP InputSource allows
+authenticated users to read data from other sources than intended,
+such as the local file system, with the privileges of the Druid server
+process. This is not an elevation of privilege when users access Druid
+directly, since Druid also provides the Local InputSource, which
+allows the same level of access. But it is problematic when users
+interact with Druid indirectly through an application that allows
+users to specify the HTTP InputSource, but not the Local InputSource.
+In this case, users could bypass the application-level restriction by
+passing a file URL to the HTTP InputSource.
 
-[Suggested description]
-In
-arch/x86/kvm/vmx.c in
-the Linux kernel before 4.17.2, when nested virtualization is used,
-local attackers could cause L1 KVM guests to VMEXIT, potentially
-allowing privilege escalations and denial of service attacks due to
-lack of checking of CPL.
+This issue was previously mentioned as being fixed in 0.21.0 as per
+CVE-2021-26920 but was not fixed in 0.21.0 or 0.21.1.
 
-------------------------------------------
+Mitigation:
 
-[Vulnerability Type]
-Incorrect Access Control
+Users can avoid the issue by upgrading to 0.22.0 or a higher version.
 
-------------------------------------------
+In an earlier version than 0.22.0, when the user application wants to
+restrict the access to the local file system, it should disallow all
+InputSources that can read local files, that is the Local, HTTP, and
+HDFS InputSources.
 
-[Vendor of Product]
-Linux
+Credit:
 
-------------------------------------------
-
-[Affected Product Code Base]
-Kernel - before 4.18.rc1
-
-------------------------------------------
-
-[Affected Component]
-KVM implementation in the Linux Kernel
-
-------------------------------------------
-
-[Attack Type]
-Local
-
-------------------------------------------
-
-[Impact Denial of Service]
-true
-
-------------------------------------------
-
-[Impact Escalation of Privileges]
-true
-
-------------------------------------------
-
-[Attack Vectors]
-local attacker able to execute code
-
-------------------------------------------
-
-[Reference]
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1589
-https://github.com/torvalds/linux/commit/727ba748e110b4de50d142edca9d6a9b7e6111d8
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=727ba748e110b4de50d142edca9d6a9b7e6111d8
-https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.17.2
-
-------------------------------------------
-
-[Has vendor confirmed or acknowledged the vulnerability?]
-true
-
-------------------------------------------
-
-[Discoverer]
-Felix Wilhelm of Google Project Zero
-
+This issue was originally discovered by chybeta from the Security Team
+of Alibaba Cloud.
+ABKing and g0udan from the Security Team of Xiaomi discovered that it
+was still an issue after CVE-2021-26920.
