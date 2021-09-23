@@ -1,74 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/01/2
-Message-ID: <YQbnc3DxV6iEaA3B@sol.nexus.lan>
-Date: Sun,  1 Aug 2021 18:31:27 +0000
-From: John Helmert III <jchelmert3@...teo.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/24/1
+Message-ID: <CACxuw4V2_8j_Q=o2OcsDKE3NJ5fynk6Nf74UpYCDkM1gvhsPLg@mail.gmail.com>
+Date: Thu, 23 Sep 2021 16:02:27 -0700
+From: Clint Wylie <cwylie@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Polipo: denial-of-service using range
+Subject: CVE-2021-36749: Apache Druid: The HTTP inputSource allows authenticated users to read data from other sources than intended (incomplete fix of CVE-2021-26920)
 Content-Type: text/plain; charset=utf-8
 
-How did you produce this? I can't seem to reproduce with the original
-PoC script. Running it, polipo outputs:
+Severity: low
 
-Empty DNS name.
-Host (unknown) lookup failed: empty name (22).
+Description:
 
-The script outputs:
+In the Druid ingestion system, the InputSource is used for reading
+data from a certain data source. However, the HTTP InputSource allows
+authenticated users to read data from other sources than intended,
+such as the local file system, with the privileges of the Druid server
+process. This is not an elevation of privilege when users access Druid
+directly, since Druid also provides the Local InputSource, which
+allows the same level of access. But it is problematic when users
+interact with Druid indirectly through an application that allows
+users to specify the HTTP InputSource, but not the Local InputSource.
+In this case, users could bypass the application-level restriction by
+passing a file URL to the HTTP InputSource.
 
-HTTP/1.1 504 Host (unknown) lookup failed: empty name
-Connection: keep-alive
-Date: Sun, 01 Aug 2021 18:07:07 GMT
-Content-Type: text/html
-Content-Length: 515
-Expires: 0
-Cache-Control: no-cache
-Pragma: no-cache
+This issue was previously mentioned as being fixed in 0.21.0 as per
+CVE-2021-26920 but was not fixed in 0.21.0 or 0.21.1.
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html><head>
-<title>Proxy error: 504 Host (unknown) lookup failed: empty name.</title>
-</head><body>
-<h1>504 Host (unknown) lookup failed: empty name</h1>
-<p>The following error occurred while trying to access <strong>http://</strong>:<br><br>
-<strong>504 Host (unknown) lookup failed: empty name</strong></p>
-<hr>Generated Sun, 01 Aug 2021 13:07:07 CDT by Polipo on <em>localhost:8123</em>.
-</body></html>
+Mitigation:
 
+Users can avoid the issue by upgrading to 0.22.0 or a higher version.
 
-Fixing the script to GET a real website shows a bunch of memory alignment
-issues, but no heap overflow as far as I can tell:
+In an earlier version than 0.22.0, when the user application wants to
+restrict the access to the local file system, it should disallow all
+InputSources that can read local files, that is the Local, HTTP, and
+HDFS InputSources.
 
-dns.c:1467:5: runtime error: store to misaligned address 0x7ffe1de13c69 for type 'short unsigned int', which requires 2 byte alignment
-0x7ffe1de13c69: note: pointer points here
- 63 6f 6d  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00
-              ^
-dns.c:1468:5: runtime error: store to misaligned address 0x7ffe1de13c6b for type 'short unsigned int', which requires 2 byte alignment
-0x7ffe1de13c6b: note: pointer points here
- 6d  00 00 01 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00
-              ^
-dns.c:1554:5: runtime error: load of misaligned address 0x7ffe1de13b69 for type 'short unsigned int', which requires 2 byte alignment
-0x7ffe1de13b69: note: pointer points here
- 63 6f 6d  00 00 01 00 01 c0 0c 00  01 00 01 00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe
-              ^
-dns.c:1555:5: runtime error: load of misaligned address 0x7ffe1de13b6b for type 'short unsigned int', which requires 2 byte alignment
-0x7ffe1de13b6b: note: pointer points here
- 6d  00 00 01 00 01 c0 0c 00  01 00 01 00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe 7f 00
-              ^
-dns.c:1596:9: runtime error: load of misaligned address 0x7ffe1de13b6f for type 'short unsigned int', which requires 2 byte alignment
-0x7ffe1de13b6f: note: pointer points here
- 00 01 c0 0c 00  01 00 01 00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe 7f 00 00  22 3d 00
-             ^
-dns.c:1596:9: runtime error: load of misaligned address 0x7ffe1de13b71 for type 'short unsigned int', which requires 2 byte alignment
-0x7ffe1de13b71: note: pointer points here
- c0 0c 00  01 00 01 00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe 7f 00 00  22 3d 00 00 40
-              ^
-dns.c:1596:9: runtime error: load of misaligned address 0x7ffe1de13b73 for type 'unsigned int', which requires 4 byte alignment
-0x7ffe1de13b73: note: pointer points here
- 00  01 00 01 00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe 7f 00 00  22 3d 00 00 40 60 00
-              ^
-dns.c:1596:9: runtime error: load of misaligned address 0x7ffe1de13b77 for type 'short unsigned int', which requires 2 byte alignment
-0x7ffe1de13b77: note: pointer points here
- 00 00 fe a7 00  04 5d b8 d8 22 7f 00 00  50 3c e1 1d fe 7f 00 00  22 3d 00 00 40 60 00 00  6b 3c e1
-             ^
+Credit:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+This issue was originally discovered by chybeta from the Security Team
+of Alibaba Cloud.
+ABKing and g0udan from the Security Team of Xiaomi discovered that it
+was still an issue after CVE-2021-26920.
