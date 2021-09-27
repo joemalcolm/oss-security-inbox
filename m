@@ -1,31 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/17/18
-Message-ID: <YFJxUTwEHsaHhO7/@sashalap>
-Date: Wed, 17 Mar 2021 17:14:57 -0400
-From: Sasha Levin <sashal@...nel.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/27/1
+Message-ID: <20210927171624.v6hor5ehfoa65ijs@yuggoth.org>
+Date: Mon, 27 Sep 2021 17:16:25 +0000
+From: Jeremy Stanley <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2020-35519 Linux kernel: x25_bind out-of-bounds read
+Subject: [OSSA-2021-002] Nova: Open Redirect in noVNC proxy (CVE-2021-3654)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 18, 2021 at 01:20:18AM +0530, Rohit Keshri wrote:
->Hello Team,
->
->An out-of-bounds (OOB) memory access flaw was found in x25_bind in
->net/x25/af_x25.c in the Linux kernel. A bounds check failure allows a local
->attacker with a user account on the system to gain access to out-of-bounds
->memory, leading to a system crash or a leak of internal kernel information.
->The highest threat from this vulnerability is to confidentiality,
->integrity, as well as system availability.
->
->'CVE-2020-35519' was assigned by Red Hat.
+===========================================
+OSSA-2021-002: Open Redirect in noVNC proxy
+===========================================
 
-This mail doesn't even mention where/how this is fixed. Is this
-6ee50c8e262a ("net/x25: prevent a couple of overflows")?
+:Date: July 29, 2021
+:CVE: CVE-2021-3654
 
-If so, it's already fixed in all stable kernels.
 
-How can the issue cause a leak btw?
+Affects
+~~~~~~~
+- Nova: <21.2.3, >=22.0.0 <22.2.3, >=23.0.0 <23.0.3
+
+
+Description
+~~~~~~~~~~~
+Swe Aung, Shahaan Ayyub, and Salman Khan with the Monash University
+Cyber Security team reported a vulnerability affecting Nova's noVNC
+proxying implementation which exposed access to a well-known
+redirect behavior in the Python standard library's
+http.server.SimpleHTTPRequestHandler and thus noVNC's
+WebSockifyRequestHandler which uses it. By convincing a user to
+follow a specially-crafted novncproxy URL, the user could be
+redirected to an unrelated site under control of the attacker in an
+attempt to convince them to divulge credentials or other sensitive
+data. All Nova deployments with novncproxy enabled are affected.
+
+
+Errata
+~~~~~~
+The initial fix did not take into account the possibility of bypass
+using exactly three slashes. This update provides a more thorough
+revised fix for the issue. The affected versions list has been
+updated to indicate versions expected to include the newer solution.
+
+
+Patches
+~~~~~~~
+- https://review.opendev.org/791807 (Train)
+- https://review.opendev.org/806629 (errata 1) (Train)
+- https://review.opendev.org/791806 (Ussuri)
+- https://review.opendev.org/806628 (errata 1) (Ussuri)
+- https://review.opendev.org/791805 (Victoria)
+- https://review.opendev.org/806626 (errata 1) (Victoria)
+- https://review.opendev.org/791577 (Wallaby)
+- https://review.opendev.org/805818 (errata 1) (Wallaby)
+- https://review.opendev.org/791297 (Xena)
+- https://review.opendev.org/805654 (errata 1) (Xena)
+
+
+Credits
+~~~~~~~
+- Swe Aung from Monash University Cyber Security team (CVE-2021-3654)
+- Shahaan Ayyub from Monash University Cyber Security team (CVE-2021-3654)
+- Salman Khan from Monash University Cyber Security team (CVE-2021-3654)
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1927677
+- https://bugs.python.org/issue32084
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-3654
+
+
+Notes
+~~~~~
+- The stable/train branch is under extended maintenance and will
+  receive no new point releases, but a patch for it is provided as a
+  courtesy.
+
+
+OSSA History
+~~~~~~~~~~~~
+- 2021-09-27 - Errata 1
+- 2021-07-29 - Original Version
 
 -- 
-Thanks,
-Sasha
+Jeremy Stanley
+
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
