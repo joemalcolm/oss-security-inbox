@@ -1,4 +1,9 @@
-Received: (qmail 1213 invoked by uid 550); 20 Nov 2025 17:02:55 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1093" "Wednesday" "29" "September" "2021" "20:20:22" "+0200" "Przemyslaw Roguski" "proguski@redhat.com" nil "42" "[oss-security] CVE-2021-3762 quay/claircore: directory traversal when scanning crafted container image" nil nil nil "9" nil nil (number mark "U       proguski@red Sep 29   42/1093  " thread-indent "\"[oss-security] CVE-2021-3762 quay/claircore: directory traversal when scanning crafted container image\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-3762 quay/claircore: directory traversal when scanning crafted container image" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 21744 invoked by uid 550); 29 Sep 2021 18:33:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,100 +12,86 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 9440 invoked from network); 20 Nov 2025 15:05:38 -0000
+Received: (qmail 9431 invoked from network); 29 Sep 2021 18:20:50 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1763651128;
+	s=mimecast20190719; t=1632939639;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:autocrypt:autocrypt;
-	bh=h/DJpfgmp58hacGL3Loz+DZz3TaHZ4NwSVaBsZkMvMs=;
-	b=RuRFr/9pJIEXaJi/oWwXWifG0lFwMHkHjyMGfnnQE4P/3LGiKHQ3gxUSL10RkbzgP0kJc3
-	311Nyl55A7GK0gtH7AS2FdYBsqYOGgmx15adXMjVtpw9wsT9XfMXVedPLuvnjHzY69OX8Q
-	rgm5eGMev0HLhktS6fPwWpjzxqA2+dI=
-X-MC-Unique: IebCcC3YOFartmOic9Rbng-1
-X-Mimecast-MFC-AGG-ID: IebCcC3YOFartmOic9Rbng_1763650970
+	 to:to:cc:mime-version:mime-version:content-type:content-type;
+	bh=i1SJosJyfd+prWQxZxPPuzhgSY+IDPbFmUaEywpeksM=;
+	b=ZavLZ9JO3A2p7OnYefLLtXw90cg+MhzBLBwbGAqXA+FBX4HFwLslAOPbaSXS5NsKqwSTvv
+	lNSCL65ohRgG8j8uta3rLVrcdvZExmWmzcjc78KZc22xYoKTZc2gqIUNtEuB+tPZDMcO8s
+	+C9bkeRQt0Ii3QbtkOBKHyEoDPOGbnA=
+X-MC-Unique: 3M-ueUIoP8S_DFltg9aVCw-1
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763650969; x=1764255769;
-        h=content-transfer-encoding:autocrypt:subject:from:to
-         :content-language:user-agent:mime-version:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=h/DJpfgmp58hacGL3Loz+DZz3TaHZ4NwSVaBsZkMvMs=;
-        b=aTvPDGEMLxVdXGpntqZeJOWe4s5SDBWJa5hsDwR2MZyGlNbWwBo7QkUI2kSl7yjRLD
-         3CSjLmcCvevc5tfcDkeFoGBOMgwtOp4XgD5bj1KH7KipgNQJ/L1tgSVm5o1L5REBvddb
-         I011lq2iDH4CetVDIwcnZFD816ELeB5tp4kZ13wH6CpJqQ8C/l+FFp4DFsWQSPJ5/02R
-         51Y8eMQhCrk5/Bbiu2SeTkhXSIW6u19chgmqO21+1yab7QmUXWcFZ3y1KPIRGgOmDHOc
-         dATpaql+cq19qIHP7qKtCL/set3FDjtJ67xS/kOPLg5v4L9TSLC3PIYbKDfZbu56GHsr
-         zm2w==
-X-Gm-Message-State: AOJu0YwhxHpWwmPaBpFMCZBjAMnjzSGirYdasjfG/dif/Lkt92yF8ijW
-	4UKWbGaVFda4fbPuFFGTMg0XFx1z7ianR6Kq1y503tdn8epfx+H7tACNUbzjHtu1jp1UW9PfYW0
-	DeMWhtVtkKqPik+sYlEOSRtlAwS/sDdkHEQ020DykoGSrXD9YzA4GZif4/Adi7HfxXw0a+7Qwxn
-	M3Ot/DdQdUXtgT9k31cY1dVvbtnKtCh9R9Q6VxMZl9pqFBD3dowvzp
-X-Gm-Gg: ASbGncuNYzx1AbVElneWG/V22fuZnrYfoetczCEcmBC/udQFS75l9P2rLhZ3CedOmHV
-	GFKFjCwnIFXjV4DxXEOzSSiCCBGow+GN0TcCoEZI1Tybycw3AHGbkMwCRHH4I/EQIOI204XHH5U
-	flAdIZuXhtYdQsNmdzocQ03A+ntMCzyiM2qMNiQGgVEM/WUCk66kR8r48ROZsvyA0q5t/4Q6XtR
-	gthIhj/zwFNVzJMVHANvLZT7hOrKarA+NJvzCsNn+gSTBWwPKPKfOccWXhE2/TMbHWS+xdUEgN7
-	8Q8iAE4XSvqGnVGeGHQpRUGTsXfNUt9ZPBY9fL+QqLRnUGKYQE8ov8kT6XY9EWENIkh59zS6Fpe
-	4RsXNYhM=
-X-Received: by 2002:a05:600c:35c6:b0:477:9a28:b09a with SMTP id 5b1f17b1804b1-477ba849309mr31851545e9.0.1763650969174;
-        Thu, 20 Nov 2025 07:02:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFJRm6gEt9jEtbsrufY8vZQcOBvHRjXl0X9U8uAM8C7HU2TwPix05OqgEbT6hKB7MWwlEkl4A==
-X-Received: by 2002:a05:600c:35c6:b0:477:9a28:b09a with SMTP id 5b1f17b1804b1-477ba849309mr31850725e9.0.1763650968480;
-        Thu, 20 Nov 2025 07:02:48 -0800 (PST)
-Message-ID: <59bf2e19-e8b4-4277-a52e-11efa6c07af9@redhat.com>
-Date: Thu, 20 Nov 2025 16:02:46 +0100
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=i1SJosJyfd+prWQxZxPPuzhgSY+IDPbFmUaEywpeksM=;
+        b=5mcEUxhMaIz1EpAIXcvvfxG5MUJgX8ncZFmVrIU91OoF6bXJxA996D21whUmiv4zIC
+         MdPawM0183nQRk0cOJYzQyCvaXHP479rG5xzviBPYeBGbJGZgPPu0RtxGDLk3ziksBJH
+         9qm3It9+MYPEo9RuwJvbj9vt7VHaWmer6wIUhlsw/c/LF45Jc5FfAu1DI9zyzOpbHs6W
+         fQBzwzlfSrZwgxDIzbmK9iGuleJiwnscGUve4uhKWeaHz/nCIkuS/+kq1Jb5HXMLMUr0
+         THNjlVIcdAqHdWkwkOZCsUytbhYwZYJhw+Kl2W9K1ETf1uCUXpDpXZ0TtpMdenAViZrU
+         d2hw==
+X-Gm-Message-State: AOAM532D9sLhHYGjHi02mcwlwF+OiV8YoHvBLuw4Wn8uHGWGvCgjGoMM
+	u8uF0C56h5WVTkrOzboscNhPwX9FUxil1N0lZ+IWb1kG8ckGgXdYz42LNi/aEagO+TXawRfJqDt
+	HYJv3VY1UeYy+i0RbbylDkJSkFOAMFjYCOvRhBvLYcTFv
+X-Received: by 2002:a25:c986:: with SMTP id z128mr1505107ybf.112.1632939633356;
+        Wed, 29 Sep 2021 11:20:33 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJxGXKOHzXLHUwb4wktN6IvufxC8UkbgSTy2kzLRTZO4FkAXRa9YzMKFBwXPpE3DvghZ9sE3Jj0ooKRRSjXiqlg=
+X-Received: by 2002:a25:c986:: with SMTP id z128mr1505064ybf.112.1632939632919;
+ Wed, 29 Sep 2021 11:20:32 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+From: Przemyslaw Roguski <proguski@redhat.com>
+Date: Wed, 29 Sep 2021 20:20:22 +0200
+Message-ID: <CAGGkMiuFnMtwuUOeP7zdtf0dryKk0JLHfnHAk0uCzioKWeWKfw@mail.gmail.com>
 To: oss-security@lists.openwall.com
-From: Zdenek Dohnal <zdohnal@redhat.com>
-Autocrypt: addr=zdohnal@redhat.com; keydata=
- xjMEYfKEjRYJKwYBBAHaRw8BAQdAJggn9NALyWqrgrFGPJ9RvPb7wYbskxKRKQcLv+8HpbrN
- QVpkZW5layBEb2huYWwgKFRoZSBvbGQgNEQ0MjI3RDcga2V5IHJldm9rZWQpIDx6ZG9obmFs
- QHJlZGhhdC5jb20+wpQEExYKADwWIQRwgqClCi6SZA84gODkUi3MmyRv9wUCYfKEjQIbAwUL
- CQgHAgMiAgEGFQoJCAsCBBYCAwECHgcCF4AACgkQ5FItzJskb/fbUQEAm6R78JoZSIOpu68g
- tUUp1qbfDdsfoQkbdyfws/myB6gA/A6/9QiIk50DNCmBTisZk5CFP51YNvwnyxafmE3cDn8G
- zjgEYfKEjRIKKwYBBAGXVQEFAQEHQF6Qgj5UQqUdvqvnDqygQ6Vm59nRGHbPVDTwendtM5cC
- AwEIB8J4BBgWCgAgFiEEcIKgpQoukmQPOIDg5FItzJskb/cFAmHyhI0CGwwACgkQ5FItzJsk
- b/e2CwD/SyRi/I5Il5XY5VXEL/eBsnNvvtaO0T10V4/vBMiDb+sBAK3YmRl6WStfRiEvMXQv
- OhMT+sEjx6ufQXkuPeXHvrgK
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=proguski@redhat.com
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: mIiCbnertQWQAXWbYWQAWrctSANrgv5aCRiUinL_fOk_1763650970
 X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2025-64524 cups-filters: Heap Buffer Overflow in rastertopclx
- Filter Leading to Potential Arbitrary Code Execution
+Content-Type: multipart/alternative; boundary="000000000000c2996905cd2662f3"
+Subject: [oss-security] CVE-2021-3762 quay/claircore: directory traversal when scanning
+ crafted container image
 
-Hi all,
+--000000000000c2996905cd2662f3
+Content-Type: text/plain; charset="UTF-8"
 
-we have CVE-2025-64524 in cups-filters project regarding heap buffer 
-overflow in rastertopclx reported by frostb1ten.
+Hello,
 
-Since the issue requires user to have additional permissions to install 
-printer with PPD file calling rastertopclx filter and the filter is run 
-under lp user which does not have root permissions, the vulnerability is 
-Low with CVSS score 3.3 CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L .
+A directory traversal vulnerability was found in the ClairCore engine of
+Clair.
+An attacker can exploit this by supplying a crafted container image which,
+when scanned by Clair, allows for arbitrary file write on the filesystem,
+potentially allowing for remote code execution.
 
-More details in the advisory: 
-https://github.com/OpenPrinting/cups-filters/security/advisories/GHSA-rq44-2q5p-x3hv
+Red Hat has assigned CVE-2021-3762 to this vulnerability.
+These issues have been rated Critical, with a CVSS:
+9.8CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
 
-Commits with fixes in the project:
+### Affected Versions
+ClairCore 0.4.6 release and higher (Clair v4.1.4 and higher)
+ClairCore 0.5.3 release and higher (Clair v4.2.1 and higher)
 
-master: 
-https://github.com/OpenPrinting/cups-filters/commit/0fe46c511e81062575b05936f804eb18c9f0a011
+### Fixed Versions
+ClairCore v0.4.8 (shipped in Clair v4.1.6)
+ClairCore v0.5.5 (shipped in Clair v4.2.3)
 
-1.x: 
-https://github.com/OpenPrinting/cups-filters/commit/b03866fd2e251a6d822a5e8c807c8d47b4d2dce2
+### Fixes
+https://github.com/quay/claircore/pull/478
+https://github.com/quay/clair/pull/1379
+https://github.com/quay/clair/pull/1380
+
+## Acknowledgements
+Yanir Tsarimi
+twitter.com/Yanir_
+(Orca Security)
 
 
-Have a nice day!
+Best regards,
+Przemyslaw Roguski
 
+--
+Przemyslaw Roguski / Red Hat Product Security
 
-Zdenek
-
--- 
-Zdenek Dohnal
-Senior Software Engineer
-Red Hat, BRQ-TPBC
+--000000000000c2996905cd2662f3--
 
