@@ -1,45 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/06/1
-Message-ID: <20210306083924.GC26482@suse.de>
-Date: Sat, 6 Mar 2021 09:39:24 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: Linux iscsi security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/30/1
+Message-ID: <4e14406504524640@localhost>
+Date: Thu, 30 Sep 2021 23:01:37 +0200
+From: Philipp Takacs <philipp+enjoy-digital@...eaucracy.de>
+To: oss-security@...ts.openwall.com
+Cc: florent@...oy-digital.fr
+Subject: security issues in Litex IP stack
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi
 
-The iscsi developers have just published 3 security fixes to Linux Kernel mainline git.
+I have found some security issues by a code review of litex[0]. The
+issues where reported to Enjoy-Digital on 21.02.2021 but not fixed yet.
+I haven't tested, if these issues are exploitable.
 
-Reported-by: Adam Nichols <adam@...mm-co.com>
+1. oob read over IP/UDP length
 
-(I think) the researcher had requested CVEs, the kernel devs however ommitted them from the commits.
+The IP/UDP implementation only checks if the receive data and declared
+sizes are big enough to contain a full UDP header. An attacker can set
+this to 0xffff, which leads to an out of bound read. (see rx_callback()
+in tftp.c and process_ip() in udp.c)
 
-CVE-2021-27365: iscsi_host_get_param() allows sysfs params larger than 4k
+2. out of bounds write
 
-	The linux kernel iscsi initiator code allows initiator/target parameters to be negotiated than can be longer than 4k, since no limit is imposed. But when these values are displayed via sysfs, the sysfs subsystem limits that output to 4k, so the memory above that gets leaked.
+In boot.c tftp_get() is called with "char json_buffer[1024]" as buffer.
+Because of missing bound checks in tftp_get() an attacker can overflow
+this buffer (see rx_callback() in tftp.c and netboot_from_json() in bios.c).
 
-	https://bugzilla.suse.com/show_bug.cgi?id=1182715
-	https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ec98ea7070e94cc25a422ec97d1421e28d97b7ee
-	https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f9dbdf97a5bd92b1a49cee3d591b55b11fd7a6d5
+3. sender check
+  
+The tftp client don't check if the packages are from the sender he
+requested data. If an attacker sends faster then the requested tftpd, he
+can completely control the data.
 
-	(not sure if both directly associated, but both fix the same class of issues)
+4. tftp total_length overflow
 
-(2 fixes in 1 upstream commit, just in 2 seperate hunks:)
+May only be a theoretical bug, because the result is checked against <= 0.
+But if an attacker uses the missing IP/UDP length check he can overflow
+the total_length in rx_callback() (see tftp.c).
 
-CVE-2021-27363: kernel-source: show_transport_handle() shows iSCSI transport handle to non-root users
+5. override already received data
 
-	The iscsi initiator kernel subsystem makes the transport handle available via sysfs so that the iscsid daemon can access it, but it makes this visible to all users, making it possible for non-root users to attack the iscsi subsystem using this knowledge, particularly together with CVE-2021-27364, which allows non-root users to user the netlink socket to talk to the iscsi kernel subsystem.
+The tftp client don't check if he receives data multiple times. An attacker
+can send a block the client has already received and override it.
 
-	https://bugzilla.suse.com/show_bug.cgi?id=1182716
-	https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=688e8128b7a92df982709a4137ea4588d16f24aa
+6. arp cache poisoning
 
+It looks like it's possible to just send an arp reply to override the
+mac address of the tftp server (see process_arp() in udp.c).
 
-CVE-2021-27364: kernel-source: iscsi_if_recv_msg() allows non-root users to connect and send commands
-	This vulnerability allows any user to connect to the iscsi NETLINK socket and send commands to the kernel, such as "end a session", which is not good.
+Philipp Takacs
 
-	Together with CVE-2021-27363, this allows non-root bad actors to end sessions arbitrarily. (See bsc#1182716).
-	https://bugzilla.suse.com/show_bug.cgi?id=1182717
-	https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=688e8128b7a92df982709a4137ea4588d16f24aa
-
-Ciao, Marcus
+[0] https://github.com/enjoy-digital/litex
