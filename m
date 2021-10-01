@@ -1,4 +1,9 @@
-Received: (qmail 9310 invoked by uid 550); 8 Dec 2022 16:19:08 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2174" "Thursday" "30" "September" "2021" "19:39:07" "-0700" "Alan Coopersmith" "alan.coopersmith@oracle.com" nil "47" "[oss-security] 3 new CVE's in vim" nil nil nil "9" nil nil (number mark "U       alan.coopers Sep 30   47/2174  " thread-indent "\"[oss-security] 3 new CVE's in vim\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] 3 new CVE's in vim" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 32496 invoked by uid 550); 1 Oct 2021 02:39:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,231 +12,157 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5322 invoked from network); 8 Dec 2022 16:12:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
-	t=1670515953; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=3D56ixHg4GEvROv0g+h9EpASNrVkm5n82P5FiEPpmwA=;
-	b=XgNzeg1x/da/TA6tHQZzVItq+Q5Zb/6H0T/+iaEhWFYR8jZzifjloG3dcVsuKWMJWUwec4
-	kCKeR4nnzAQg/GLyBGoca52lrB653EWvsXb4YzHeixg9tKN8EY9pR4mvANFH+YYfE35x0/
-	t2SGmvUXS17H4HTroHQBfSeREc6rAQw=
-Message-ID: <e22fcdce-f029-de46-81a6-60f5ffc9c9a2@suse.com>
-Date: Thu, 8 Dec 2022 17:12:32 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
+Received: (qmail 32454 invoked from network); 1 Oct 2021 02:39:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=to : from : subject :
+ message-id : date : content-type : content-transfer-encoding :
+ mime-version; s=corp-2021-07-09;
+ bh=TdLq56KVYDKs/ESIQUDtznZtsVjab+oBzBa7XQ8N4Kk=;
+ b=P89Uv4uD8GIN6k2Lld28FJmlBxXUptDRvmBKXxrjD5bXcbimVbULvHIM2FrtulpZyNp2
+ kqUEC1AhDT1rAnnhwEGNWHAMOo27XVCVe1Jw9qb2nnSRfJ6rYIiBRPipwG3yVK839hFZ
+ DEm3JSsUrofzNqw+rWGmUfcMD+KyM37cmXtBFxD2fyjUuFMXTZfw75Coww2yAgxMT5lp
+ p1DB+1jyUtOs6nQklhLH4GSFTJbIkMjlu3VTMKxWUHykr1/BJFR4ObBuS9ntVRxpaCvA
+ 3QOY84WrDHt3GLSTqXSEwEoeVaZLuvEt4VUL7iGtRG9FR3o9JwzYrA5mH5ueXH2xEm7M ZQ== 
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=hW1qnLWsIKMvmrca09UiehgJTrtHzAWOLy6DL/Lb+pyp6GYNKOZnJGSml4s2AFLYz1BX2hkyXXQtgX2oxLwOZ3B1YlU3mIOjmTSM7/0FhVbBlNXYL2MfySaffeKr5JDIrQRZ64mSdw3sArxFXUkF5RdUN6yXD3klXZrJp1t2wJJBPdVaBjKeef6xDoVoFj6qPB6MRH+2kMV6LbpJe+UBtWC3I8zBjNO9cRXzfDc0PdY85gUld+gJaH2T9NYhITgNlFe1Sxmo0srXUrAxR7TghhVmaMqYjx5eN/e3zGbdD2/kn2jHG08O2LbM3BLzKPUEEvDVPSmmheeqBi4pux3IuQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=TdLq56KVYDKs/ESIQUDtznZtsVjab+oBzBa7XQ8N4Kk=;
+ b=eObYxQsdxDqr35kVMKRv+y5ZsQqKxGAUnsJsFvBH+DId/KSr711oMnoBxUUSw7nBTnZ1XniZd6u58uKov1viVYdI6ZSxAwG7GzW9eyU2mjFFQ5AGshb08DYguWOcn4de7rz9BLRyZLhEyUXLTzRs8/kvCAs4obYIfU99RXzfFVSWvBAeM+XhOdYqOrusGsKUw1pmDZAPYzZlBYTnT2OlynEI5AP3P1T1GKwt5e8+AkW4J6MIJYgi5XqiNNQZvoeYyUWyS1wjuQR6iI8G2Q6GmobSlhLe+00VWfWWPBKVn8ZNLJ6m4+xHTaDroa/KzFM/uEMMQmB0YESYk5UikUavlw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=TdLq56KVYDKs/ESIQUDtznZtsVjab+oBzBa7XQ8N4Kk=;
+ b=hKbOSUF25xzoqXhwMi0BQN+uq2+kZw+CvSa1UPEGj76VMT+Q0Awe1RZYZP7GxBq49zE9belUzbELRgouTs8hizv6GRpcStksZpu9R3E0Zns4Dug5w3HDjX5ByojsnT94RAwgc9uk4D1G9tJ8/C0FLLOeyC0kNkh236srW56RJ7M=
+Authentication-Results: lists.openwall.com; dkim=none (message not signed)
+ header.d=none;lists.openwall.com; dmarc=none action=none
+ header.from=oracle.com;
+To: oss-security@lists.openwall.com
+From: Alan Coopersmith <alan.coopersmith@oracle.com>
+Message-ID: <51bbd9bf-fa31-a1ac-a667-7b4b9b425623@oracle.com>
+Date: Thu, 30 Sep 2021 19:39:07 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-To: Pratyush Yadav <ptyadav@amazon.de>,
- "Xen.org security team" <security@xen.org>
-Cc: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com,
- "Xen.org security team" <security-team-members@xen.org>
-References: <E1p2ZhW-0005Xe-FG@xenbits.xenproject.org>
- <mafs0lenhlwcv.fsf@dev-dsk-ptyadav-1c-37607b33.eu-west-1.amazon.com>
-From: Juergen Gross <jgross@suse.com>
-In-Reply-To: <mafs0lenhlwcv.fsf@dev-dsk-ptyadav-1c-37607b33.eu-west-1.amazon.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------Epe70gCUpcHe4aA3CqDhOehN"
-Subject: [oss-security] Re: Xen Security Advisory 424 v1 (CVE-2022-42328,CVE-2022-42329) -
- Guests can trigger deadlock in Linux netback driver
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SN7PR04CA0202.namprd04.prod.outlook.com
+ (2603:10b6:806:126::27) To SJ0PR10MB4464.namprd10.prod.outlook.com
+ (2603:10b6:a03:2d0::6)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 76703e7f-447e-4a63-e529-08d98484a57b
+X-MS-TrafficTypeDiagnostic: BYAPR10MB3221:
+X-Microsoft-Antispam-PRVS: 
+	<BYAPR10MB3221A7D01B3B2F67C6A670F0E0AB9@BYAPR10MB3221.namprd10.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:121;
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 
+	cTmfaj1mIyYmrsJ19GnIBqJSl7hexICuCscy6BEWP70LK1VVQXYvI/nza9IMnJkd9kO8Cng87Tb5dXqBBiB+Q05pMPsSdzrvoq98smTKZStte+VSXWffs0ABSCJQqBqTnoYysStYA6kKflZtuge7W5H2exoTtcqhNp7W3j0y2/1r+pkGM/HSPKilNYP8Q5Sek8TDLIpk0kh29OsI9BdtJ1bUzbcjaP4yiCg8fLNPjzEWJg9hlt3P9eIyPJ4mbTeeAWxKLfPPZ1qJyBClk4ie0M13evGD06ymTW3fCyNTW+Uu3TSI1UlXlIfhm/sxA8eRezGuM3hCVZc/QR0tLTngrqeONZq4Q6FaoHjvszPBnU5fmVj3AlyG/DoWtXeEP4TrG5suYqO8T7kmJQ8OetaruAiI+Pwa9v1qaE8C807whb9eFt5aDvgKlmkBJz++VZ19NjId9nIf1jfR4XGsq3+Dls/ywFUDW+QeUCpJpvUXXUHBFSWlAP0siA8mx+N2ovjn3+62fjBtKPw4XDUmVHZn3qGRbZ80akMerRoc7EOIOGiMScnU8WD0k/OGWUZcb0PZeqGckO+ly13vniF8TNMJuxqu45e0+JzemU7IIim0rTK2zW5rl3kD2LRRMqNHyU9rVJ+5EgnyQ4fGQVgYWuxos3MjPSdaUIxZ3VKaRXtejwFwqytO7DkrewvP76UYh9bQtVfE5rtcfx7JttWsv7wUOhOHCxiy97DZFvMILvNC9C2lZroWxjVKwAEPAWSomlrXd0mCTGpKNXhqar/Vt/CDCumapZCiSf1+Et9KKIZ0W1aJdxGPrNO4ccNCE16NEbVHr6BN69BNpqPXz1WM2DD42oTojP+Gb1gw4mTw5MRYAQhukzf/IteGFgegGlFRlRAl
+X-Forefront-Antispam-Report: 
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR10MB4464.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(366004)(6916009)(66476007)(6486002)(316002)(31686004)(2906002)(86362001)(8936002)(66946007)(2616005)(8676002)(966005)(44832011)(36756003)(83380400001)(66556008)(186003)(508600001)(38100700002)(5660300002)(31696002)(43740500002)(45980500001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 
+	=?utf-8?B?d3pKb0lCeGhCaHpUcmU2MWU0UEdKVkY2ZHN0ZVQzUFUzeTB5R0VHbm5EeEts?=
+ =?utf-8?B?R0s5eXRUTEczaTJ4bUVlSSszMmQxdUx5T00wNnpLbysxbEtkbUxJc2F1R3pJ?=
+ =?utf-8?B?dUczQjdSREk2Z3lueDhVRStGYW1qZDlhcEVVRkFnODZkVmNNUk9TUStFOHpm?=
+ =?utf-8?B?UHpWYmZ3bVU0Vk1QMElaT1ZpSm4zaWtyalU3Nm5uVGNEajlXVXlnNzhtdk1Y?=
+ =?utf-8?B?cWFhTU5wS1ZyWTRIZGFBUDloN1JNbjF1UW1mSGlWYTRRakN0M1dZUUhUUjJV?=
+ =?utf-8?B?M1MzQ1R4RzdKMmQvcU1KTzVWMzVTSmtoamNUNDViTXVXU1JzZkNJS2R1SWEz?=
+ =?utf-8?B?MDB1eHJMZjJSeXdXcFdqcWd3RCtYaWVUQ1BPOFdnM01vRS9xcnpWRUt5WTZ2?=
+ =?utf-8?B?ZTlMUzl3eUJ4dVRGNkFpV0VmUEM4UXYyeUNxRmxsaEwvMUJqUTJFc1AxYmxa?=
+ =?utf-8?B?d0hheFQrK3lBL0hkZGIrVHh3bHVaTGJOWFFkVDdxSTZZUC8zbVNjNlBOOEJZ?=
+ =?utf-8?B?U1BlTFRpLzFmSXdndXk0QldjWjFJQkNLVUQrREFORkVEd2NnaW1oay8yaDJL?=
+ =?utf-8?B?ZDYyWUFtUTRHQmdtRXY5dU9WU3ErcUFWZG9DYXJIR2FwVk94dkVvTlhNV2xh?=
+ =?utf-8?B?aGt2bVZ1elBudXRXL0dQNmI0STArZlFjazlJQ3hUdjhISTgyZndjbW5vOWVB?=
+ =?utf-8?B?azVId1p0aE1BdFhyejVRM25scmd4WGt3R3dNRXRhNjJNNElQZWJvU3N2NWVW?=
+ =?utf-8?B?SHRGVG5pNkVEZDFPbEpaZlJoRzk3QlFDcmFIRUNFdGgvcnIzV2FhSUQ5ZDJi?=
+ =?utf-8?B?aSs2bG9zTithbUZlZnhLNytIQ3hWR3p5R3ZVQXl3c2I3QnMxcGVuMCtjZ0JC?=
+ =?utf-8?B?TS9ydkpHWFdsQmluTFZDeU93RnpTNGZ5Vm9TWnFMckNzVXBKcXpaRzRmQzRi?=
+ =?utf-8?B?bnV2K3lzNTVHdVgwcCtaVS9SaEJXWWt5ckxpRGNlZkpEdk1FTGNhTnBEWExr?=
+ =?utf-8?B?SnZDSDU2R1NvVVpmcDBVd242eTBCVGRYdGE1WmRkbmdFejQwbXRVZmF0RHRz?=
+ =?utf-8?B?Z0d6R1AxRDJVdVVWd0R2QmtvMmF0UGZRdlFPQTJrM1VuSHN5UzJnd1UxVldS?=
+ =?utf-8?B?SFlaZkxYYjNVRlhGSHNDRUNLd3EvcXFJOW95SVVlL0ZpTDgySHdWT0FvdVMv?=
+ =?utf-8?B?YU5ia0RxVGVORWFxbEZHaWZVVENKWU5WTldFMkZpUC9ZeDhTVzkzTG9RTGZE?=
+ =?utf-8?B?TGUyNzdvOUt6VG5EcWJjUDlwOG0vZUM5emFRMjNCZUZ6anMyaXFyLzVLa2lM?=
+ =?utf-8?B?WGF0UGp3ZzduOUk2OVNBQjJzYTdYSHJHWWpyTGlDR25uY0Z1Y2ZFNEFoTEJz?=
+ =?utf-8?B?WHZPWVpweEYxR1Z5NUdRb28wN1EzR2NwbFliaXROMW1nQ0dSM1pRaUI3ZDFK?=
+ =?utf-8?B?M2VjSVVxOXgxWUYvSVgvelRXM09wYXNMam0zdnVUWlZBK24yQ0JhazM1ekZT?=
+ =?utf-8?B?THJqTUc2L3F3U1VZWmpjQWx0c3pPR0pKNHQvblpOT3hEMkdzV1Zoc2dWbk84?=
+ =?utf-8?B?YlprODBYYTQzNHJnRUFuQ2hIMGw0ckdhOHFsQU9tN1grZFRvY1FnelVlTXZT?=
+ =?utf-8?B?R0taYW1QaUdGT3lOcHViUWpnTm1zWFN0dzVlVnQ1dHRyQVVxdGN2S1czZGFi?=
+ =?utf-8?B?bXFsOWZ1MFBMVXBkWSsrczlOOS8wQjBSb0FPVTQ1cE9YbXNDbmJNZkxYbEJD?=
+ =?utf-8?B?UTZQdVZYWm1rMDhCclNCc0dpdnkxNWZWb2x5a1p1ckljWURZSGtXYUhTbHJp?=
+ =?utf-8?Q?bO/aielHnFLQpE9UgKhGiiMhgUYoCZr2wNa0I=3D?=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 76703e7f-447e-4a63-e529-08d98484a57b
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR10MB4464.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Oct 2021 02:39:09.7820
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: zQajFnSnHnppykyZxG6aPnGSqSY4y/cfYX9AW10C1DnPltK2qs+btgDY9jc0ghjFCjGX0MhN1oetLOAw3m/pEgCuIDjXyZ5JKYK1b/RSYDA=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR10MB3221
+X-Proofpoint-Virus-Version: vendor=nai engine=6300 definitions=10123 signatures=668683
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 suspectscore=0 spamscore=0
+ adultscore=0 bulkscore=0 mlxscore=0 malwarescore=0 mlxlogscore=912
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2109230001
+ definitions=main-2110010011
+X-Proofpoint-GUID: qzw4QrLiKT1ap-C_SUhyhUJcw3OeJPEe
+X-Proofpoint-ORIG-GUID: qzw4QrLiKT1ap-C_SUhyhUJcw3OeJPEe
+Subject: [oss-security] 3 new CVE's in vim
 
---------------Epe70gCUpcHe4aA3CqDhOehN
-Content-Type: multipart/mixed; boundary="------------BBFSoseI0wFH390kzl0Q9A3S";
- protected-headers="v1"
-From: Juergen Gross <jgross@suse.com>
-To: Pratyush Yadav <ptyadav@amazon.de>,
- "Xen.org security team" <security@xen.org>
-Cc: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com,
- "Xen.org security team" <security-team-members@xen.org>
-Message-ID: <e22fcdce-f029-de46-81a6-60f5ffc9c9a2@suse.com>
-Subject: Re: Xen Security Advisory 424 v1 (CVE-2022-42328,CVE-2022-42329) -
- Guests can trigger deadlock in Linux netback driver
-References: <E1p2ZhW-0005Xe-FG@xenbits.xenproject.org>
- <mafs0lenhlwcv.fsf@dev-dsk-ptyadav-1c-37607b33.eu-west-1.amazon.com>
-In-Reply-To: <mafs0lenhlwcv.fsf@dev-dsk-ptyadav-1c-37607b33.eu-west-1.amazon.com>
+I haven't seen these make it to the list yet, but three CVE's were
+recently assigned for bugs in vim.  [I personally don't see how
+there's a security boundary crossed in normal vim usage here, but
+could see issues if someone had configured vim to run with raised
+privileges for editing system/application configuration files or
+similar.]
 
---------------BBFSoseI0wFH390kzl0Q9A3S
-Content-Type: multipart/mixed; boundary="------------FOIUDD6mMxRMmhHZoX2ZnxJ0"
+     -Alan Coopersmith-               alan.coopersmith@oracle.com
+      Oracle Solaris Engineering - https://blogs.oracle.com/alanc
 
---------------FOIUDD6mMxRMmhHZoX2ZnxJ0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+CVE-2021-3770: vim: Heap-based Buffer Overflow in ex_retab()
+Report: https://huntr.dev/bounties/016ad2f2-07c1-4d14-a8ce-6eed10729365/
+Fix: patch 8.2.3402: invalid memory access when using :retab with large value
+https://github.com/vim/vim/commit/b7081e135a16091c93f6f5f7525a5c58fb7ca9f9
 
-T24gMDguMTIuMjIgMTY6NTksIFByYXR5dXNoIFlhZGF2IHdyb3RlOg0KPiAN
-Cj4gSGksDQo+IA0KPiBJIG5vdGljZWQgb25lIGludGVyZXN0aW5nIHRoaW5n
-IGFib3V0IHRoaXMgcGF0Y2ggYnV0IEknbSBub3QgZmFtaWxpYXINCj4gZW5v
-dWdoIHdpdGggdGhlIGRyaXZlciB0byBzYXkgZm9yIHN1cmUgd2hhdCB0aGUg
-cmlnaHQgdGhpbmcgaXMuDQo+IA0KPiBPbiBUdWUsIERlYyAwNiAyMDIyLCBY
-ZW4ub3JnIHNlY3VyaXR5IHRlYW0gd3JvdGU6DQo+IA0KPiBbLi4uXQ0KPj4N
-Cj4+ICBGcm9tIGNmZGY4ZmQ4MTg0NTczNGI2MTUyYjQ2MTc3NDZjMTEyN2Vj
-NTIyMjggTW9uIFNlcCAxNyAwMDowMDowMCAyMDAxDQo+PiBGcm9tOiBKdWVy
-Z2VuIEdyb3NzIDxqZ3Jvc3NAc3VzZS5jb20+DQo+PiBEYXRlOiBUdWUsIDYg
-RGVjIDIwMjIgMDg6NTQ6MjQgKzAxMDANCj4+IFN1YmplY3Q6IFtQQVRDSF0g
-eGVuL25ldGJhY2s6IGRvbid0IGNhbGwga2ZyZWVfc2tiKCkgd2l0aCBpbnRl
-cnJ1cHRzIGRpc2FibGVkDQo+Pg0KPj4gSXQgaXMgbm90IGFsbG93ZWQgdG8g
-Y2FsbCBrZnJlZV9za2IoKSBmcm9tIGhhcmR3YXJlIGludGVycnVwdA0KPj4g
-Y29udGV4dCBvciB3aXRoIGludGVycnVwdHMgYmVpbmcgZGlzYWJsZWQuIFNv
-IHJlbW92ZSBrZnJlZV9za2IoKQ0KPj4gZnJvbSB0aGUgc3Bpbl9sb2NrX2ly
-cXNhdmUoKSBzZWN0aW9uIGFuZCB1c2UgdGhlIGFscmVhZHkgZXhpc3RpbmcN
-Cj4+ICJkcm9wIiBsYWJlbCBpbiB4ZW52aWZfc3RhcnRfeG1pdCgpIGZvciBk
-cm9wcGluZyB0aGUgU0tCLiBBdCB0aGUNCj4+IHNhbWUgdGltZSByZXBsYWNl
-IHRoZSBkZXZfa2ZyZWVfc2tiKCkgY2FsbCB0aGVyZSB3aXRoIGEgY2FsbCBv
-Zg0KPj4gZGV2X2tmcmVlX3NrYl9hbnkoKSwgYXMgeGVudmlmX3N0YXJ0X3ht
-aXQoKSBjYW4gYmUgY2FsbGVkIHdpdGgNCj4+IGRpc2FibGVkIGludGVycnVw
-dHMuDQo+Pg0KPj4gVGhpcyBpcyBYU0EtNDI0IC8gQ1ZFLTIwMjItNDIzMjgg
-LyBDVkUtMjAyMi00MjMyOS4NCj4+DQo+PiBGaXhlczogYmU4MTk5MmY5MDg2
-ICgieGVuL25ldGJhY2s6IGRvbid0IHF1ZXVlIHVubGltaXRlZCBudW1iZXIg
-b2YgcGFja2FnZXMiKQ0KPj4gUmVwb3J0ZWQtYnk6IFlhbmcgWWluZ2xpYW5n
-IDx5YW5neWluZ2xpYW5nQGh1YXdlaS5jb20+DQo+PiBTaWduZWQtb2ZmLWJ5
-OiBKdWVyZ2VuIEdyb3NzIDxqZ3Jvc3NAc3VzZS5jb20+DQo+PiBSZXZpZXdl
-ZC1ieTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPg0KPj4gLS0t
-DQo+PiAgIGRyaXZlcnMvbmV0L3hlbi1uZXRiYWNrL2NvbW1vbi5oICAgIHwg
-MiArLQ0KPj4gICBkcml2ZXJzL25ldC94ZW4tbmV0YmFjay9pbnRlcmZhY2Uu
-YyB8IDYgKysrKy0tDQo+PiAgIGRyaXZlcnMvbmV0L3hlbi1uZXRiYWNrL3J4
-LmMgICAgICAgIHwgOCArKysrKy0tLQ0KPj4gICAzIGZpbGVzIGNoYW5nZWQs
-IDEwIGluc2VydGlvbnMoKyksIDYgZGVsZXRpb25zKC0pDQo+Pg0KPj4gZGlm
-ZiAtLWdpdCBhL2RyaXZlcnMvbmV0L3hlbi1uZXRiYWNrL2NvbW1vbi5oIGIv
-ZHJpdmVycy9uZXQveGVuLW5ldGJhY2svY29tbW9uLmgNCj4+IGluZGV4IDE1
-NDVjYmVlNzdhNC4uM2RiZmM4YTY5MjRlIDEwMDY0NA0KPj4gLS0tIGEvZHJp
-dmVycy9uZXQveGVuLW5ldGJhY2svY29tbW9uLmgNCj4+ICsrKyBiL2RyaXZl
-cnMvbmV0L3hlbi1uZXRiYWNrL2NvbW1vbi5oDQo+PiBAQCAtMzg2LDcgKzM4
-Niw3IEBAIGludCB4ZW52aWZfZGVhbGxvY19rdGhyZWFkKHZvaWQgKmRhdGEp
-Ow0KPj4gICBpcnFyZXR1cm5fdCB4ZW52aWZfY3RybF9pcnFfZm4oaW50IGly
-cSwgdm9pZCAqZGF0YSk7DQo+Pg0KPj4gICBib29sIHhlbnZpZl9oYXZlX3J4
-X3dvcmsoc3RydWN0IHhlbnZpZl9xdWV1ZSAqcXVldWUsIGJvb2wgdGVzdF9r
-dGhyZWFkKTsNCj4+IC12b2lkIHhlbnZpZl9yeF9xdWV1ZV90YWlsKHN0cnVj
-dCB4ZW52aWZfcXVldWUgKnF1ZXVlLCBzdHJ1Y3Qgc2tfYnVmZiAqc2tiKTsN
-Cj4+ICtib29sIHhlbnZpZl9yeF9xdWV1ZV90YWlsKHN0cnVjdCB4ZW52aWZf
-cXVldWUgKnF1ZXVlLCBzdHJ1Y3Qgc2tfYnVmZiAqc2tiKTsNCj4+DQo+PiAg
-IHZvaWQgeGVudmlmX2NhcnJpZXJfb24oc3RydWN0IHhlbnZpZiAqdmlmKTsN
-Cj4+DQo+PiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9uZXQveGVuLW5ldGJhY2sv
-aW50ZXJmYWNlLmMgYi9kcml2ZXJzL25ldC94ZW4tbmV0YmFjay9pbnRlcmZh
-Y2UuYw0KPj4gaW5kZXggNjUwZmExODAyMjBmLi5mM2YyYzA3NDIzYTYgMTAw
-NjQ0DQo+PiAtLS0gYS9kcml2ZXJzL25ldC94ZW4tbmV0YmFjay9pbnRlcmZh
-Y2UuYw0KPj4gKysrIGIvZHJpdmVycy9uZXQveGVuLW5ldGJhY2svaW50ZXJm
-YWNlLmMNCj4+IEBAIC0yNTQsMTQgKzI1NCwxNiBAQCB4ZW52aWZfc3RhcnRf
-eG1pdChzdHJ1Y3Qgc2tfYnVmZiAqc2tiLCBzdHJ1Y3QgbmV0X2RldmljZSAq
-ZGV2KQ0KPj4gICAJaWYgKHZpZi0+aGFzaC5hbGcgPT0gWEVOX05FVElGX0NU
-UkxfSEFTSF9BTEdPUklUSE1fTk9ORSkNCj4+ICAgCQlza2JfY2xlYXJfaGFz
-aChza2IpOw0KPj4NCj4+IC0JeGVudmlmX3J4X3F1ZXVlX3RhaWwocXVldWUs
-IHNrYik7DQo+PiArCWlmICgheGVudmlmX3J4X3F1ZXVlX3RhaWwocXVldWUs
-IHNrYikpDQo+PiArCQlnb3RvIGRyb3A7DQo+PiArDQo+PiAgIAl4ZW52aWZf
-a2lja190aHJlYWQocXVldWUpOw0KPj4NCj4+ICAgCXJldHVybiBORVRERVZf
-VFhfT0s7DQo+Pg0KPj4gICAgZHJvcDoNCj4+ICAgCXZpZi0+ZGV2LT5zdGF0
-cy50eF9kcm9wcGVkKys7DQo+IA0KPiBOb3cgdHhfZHJvcHBlZCBpcyBpbmNy
-ZW1lbnRlZCBvbiBwYWNrZXQgZHJvcC4uLg0KPiANCj4+IC0JZGV2X2tmcmVl
-X3NrYihza2IpOw0KPj4gKwlkZXZfa2ZyZWVfc2tiX2FueShza2IpOw0KPj4g
-ICAJcmV0dXJuIE5FVERFVl9UWF9PSzsNCj4+ICAgfQ0KPj4NCj4+IGRpZmYg
-LS1naXQgYS9kcml2ZXJzL25ldC94ZW4tbmV0YmFjay9yeC5jIGIvZHJpdmVy
-cy9uZXQveGVuLW5ldGJhY2svcnguYw0KPj4gaW5kZXggOTMyNzYyMTc3MTEw
-Li4wYmE3NTRlYmM1YmEgMTAwNjQ0DQo+PiAtLS0gYS9kcml2ZXJzL25ldC94
-ZW4tbmV0YmFjay9yeC5jDQo+PiArKysgYi9kcml2ZXJzL25ldC94ZW4tbmV0
-YmFjay9yeC5jDQo+PiBAQCAtODIsOSArODIsMTAgQEAgc3RhdGljIGJvb2wg
-eGVudmlmX3J4X3Jpbmdfc2xvdHNfYXZhaWxhYmxlKHN0cnVjdCB4ZW52aWZf
-cXVldWUgKnF1ZXVlKQ0KPj4gICAJcmV0dXJuIGZhbHNlOw0KPj4gICB9DQo+
-Pg0KPj4gLXZvaWQgeGVudmlmX3J4X3F1ZXVlX3RhaWwoc3RydWN0IHhlbnZp
-Zl9xdWV1ZSAqcXVldWUsIHN0cnVjdCBza19idWZmICpza2IpDQo+PiArYm9v
-bCB4ZW52aWZfcnhfcXVldWVfdGFpbChzdHJ1Y3QgeGVudmlmX3F1ZXVlICpx
-dWV1ZSwgc3RydWN0IHNrX2J1ZmYgKnNrYikNCj4+ICAgew0KPj4gICAJdW5z
-aWduZWQgbG9uZyBmbGFnczsNCj4+ICsJYm9vbCByZXQgPSB0cnVlOw0KPj4N
-Cj4+ICAgCXNwaW5fbG9ja19pcnFzYXZlKCZxdWV1ZS0+cnhfcXVldWUubG9j
-aywgZmxhZ3MpOw0KPj4NCj4+IEBAIC05Miw4ICs5Myw3IEBAIHZvaWQgeGVu
-dmlmX3J4X3F1ZXVlX3RhaWwoc3RydWN0IHhlbnZpZl9xdWV1ZSAqcXVldWUs
-IHN0cnVjdCBza19idWZmICpza2IpDQo+PiAgIAkJc3RydWN0IG5ldF9kZXZp
-Y2UgKmRldiA9IHF1ZXVlLT52aWYtPmRldjsNCj4+DQo+PiAgIAkJbmV0aWZf
-dHhfc3RvcF9xdWV1ZShuZXRkZXZfZ2V0X3R4X3F1ZXVlKGRldiwgcXVldWUt
-PmlkKSk7DQo+PiAtCQlrZnJlZV9za2Ioc2tiKTsNCj4+IC0JCXF1ZXVlLT52
-aWYtPmRldi0+c3RhdHMucnhfZHJvcHBlZCsrOw0KPiANCj4gLi4uIGJ1dCBl
-YXJsaWVyIHJ4X2Ryb3BwZWQgd2FzIGluY3JlbWVudGVkLg0KPiANCj4gV2hp
-Y2ggb25lIGlzIGFjdHVhbGx5IGNvcnJlY3Q/IFRoaXMgbGluZSB3YXMgYWRk
-ZWQgYnkgYmU4MTk5MmY5MDg2Yg0KPiAoInhlbi9uZXRiYWNrOiBkb24ndCBx
-dWV1ZSB1bmxpbWl0ZWQgbnVtYmVyIG9mIHBhY2thZ2VzIiksIHdoaWNoIHdh
-cyB0aGUNCj4gZml4IGZvciBYU0EtMzkyLiBJIHRoaW5rIGluY3JlbWVudGlu
-ZyB0eF9kcm9wcGVkIGlzIHRoZSByaWdodCB0aGluZyB0bw0KPiBkbywgYXMg
-d2FzIGRvbmUgYmVmb3JlIFhTQS0zOTIgYnV0IGl0IHdvdWxkIGJlIG5pY2Ug
-aWYgc29tZW9uZSBlbHNlDQo+IHRha2VzIGEgbG9vayBhdCB0aGlzIGFzIHdl
-bGwuDQoNClllcywgSSB0aGluayB0aGUgWFNBLTM5MiBwYXRjaCB3YXMgd3Jv
-bmcgaW4gdGhpcyByZWdhcmQuDQoNCg0KSnVlcmdlbg0K
+When vim 8.1 or 8.2 is built with --with-features=huge --enable-gui=none
+and address sanitizer, a heap-buffer overflow occurs when running:
 
---------------FOIUDD6mMxRMmhHZoX2ZnxJ0
-Content-Type: application/pgp-keys; name="OpenPGP_0xB0DE9DD628BF132F.asc"
-Content-Disposition: attachment; filename="OpenPGP_0xB0DE9DD628BF132F.asc"
-Content-Description: OpenPGP public key
-Content-Transfer-Encoding: quoted-printable
+echo "bGMKc2YICnJldDgwMDAwMDAwMDAwMDAwMDAwMDAw" | base64 -d \
+   > fuzz448.txt
+vim -u NONE -X -Z -e -s -S fuzz448.txt -c :qa!
 
------BEGIN PGP PUBLIC KEY BLOCK-----=0A=
-=0A=
-xsBNBFOMcBYBCACgGjqjoGvbEouQZw/ToiBg9W98AlM2QHV+iNHsEs7kxWhKMjri=0A=
-oyspZKOBycWxw3ie3j9uvg9EOB3aN4xiTv4qbnGiTr3oJhkB1gsb6ToJQZ8uxGq2=0A=
-kaV2KL9650I1SJvedYm8Of8Zd621lSmoKOwlNClALZNew72NjJLEzTalU1OdT7/i=0A=
-1TXkH09XSSI8mEQ/ouNcMvIJNwQpd369y9bfIhWUiVXEK7MlRgUG6MvIj6Y3Am/B=0A=
-BLUVbDa4+gmzDC9ezlZkTZG2t14zWPvxXP3FAp2pkW0xqG7/377qptDmrk42GlSK=0A=
-N4z76ELnLxussxc7I2hx18NUcbP8+uty4bMxABEBAAHNHEp1ZXJnZW4gR3Jvc3Mg=0A=
-PGpnQHBmdXBmLm5ldD7CwHkEEwECACMFAlOMcBYCGwMHCwkIBwMCAQYVCAIJCgsE=0A=
-FgIDAQIeAQIXgAAKCRCw3p3WKL8TL0KdB/93FcIZ3GCNwFU0u3EjNbNjmXBKDY4F=0A=
-UGNQH2lvWAUy+dnyThpwdtF/jQ6j9RwE8VP0+NXcYpGJDWlNb9/JmYqLiX2Q3Tye=0A=
-vpB0CA3dbBQp0OW0fgCetToGIQrg0MbD1C/sEOv8Mr4NAfbauXjZlvTj30H2jO0u=0A=
-+6WGM6nHwbh2l5O8ZiHkH32iaSTfN7Eu5RnNVUJbvoPHZ8SlM4KWm8rG+lIkGurq=0A=
-qu5gu8q8ZMKdsdGC4bBxdQKDKHEFExLJK/nRPFmAuGlId1E3fe10v5QL+qHI3EIP=0A=
-tyfE7i9Hz6rVwi7lWKgh7pe0ZvatAudZ+JNIlBKptb64FaiIOAWDCx1SzR9KdWVy=0A=
-Z2VuIEdyb3NzIDxqZ3Jvc3NAc3VzZS5jb20+wsB5BBMBAgAjBQJTjHCvAhsDBwsJ=0A=
-CAcDAgEGFQgCCQoLBBYCAwECHgECF4AACgkQsN6d1ii/Ey/HmQf/RtI7kv5A2PS4=0A=
-RF7HoZhPVPogNVbC4YA6lW7DrWf0teC0RR3MzXfy6pJ+7KLgkqMlrAbN/8Dvjoz7=0A=
-8X+5vhH/rDLa9BuZQlhFmvcGtCF8eR0T1v0nC/nuAFVGy+67q2DH8As3KPu0344T=0A=
-BDpAvr2uYM4tSqxK4DURx5INz4ZZ0WNFHcqsfvlGJALDeE0LhITTd9jLzdDad1pQ=0A=
-SToCnLl6SBJZjDOX9QQcyUigZFtCXFst4dlsvddrxyqT1f17+2cFSdu7+ynLmXBK=0A=
-7abQ3rwJY8SbRO2iRulogc5vr/RLMMlscDAiDkaFQWLoqHHOdfO9rURssHNN8WkM=0A=
-nQfvUewRz80hSnVlcmdlbiBHcm9zcyA8amdyb3NzQG5vdmVsbC5jb20+wsB5BBMB=0A=
-AgAjBQJTjHDXAhsDBwsJCAcDAgEGFQgCCQoLBBYCAwECHgECF4AACgkQsN6d1ii/=0A=
-Ey8PUQf/ehmgCI9jB9hlgexLvgOtf7PJnFOXgMLdBQgBlVPO3/D9R8LtF9DBAFPN=0A=
-hlrsfIG/SqICoRCqUcJ96Pn3P7UUinFG/I0ECGF4EvTE1jnDkfJZr6jrbjgyoZHi=0A=
-w/4BNwSTL9rWASyLgqlA8u1mf+c2yUwcGhgkRAd1gOwungxcwzwqgljf0N51N5Jf=0A=
-VRHRtyfwq/ge+YEkDGcTU6Y0sPOuj4Dyfm8fJzdfHNQsWq3PnczLVELStJNdapwP=0A=
-OoE+lotufe3AM2vAEYJ9rTz3Cki4JFUsgLkHFqGZarrPGi1eyQcXeluldO3m91NK=0A=
-/1xMI3/+8jbO0tsn1tqSEUGIJi7ox80eSnVlcmdlbiBHcm9zcyA8amdyb3NzQHN1=0A=
-c2UuZGU+wsB5BBMBAgAjBQJTjHDrAhsDBwsJCAcDAgEGFQgCCQoLBBYCAwECHgEC=0A=
-F4AACgkQsN6d1ii/Ey+LhQf9GL45eU5vOowA2u5N3g3OZUEBmDHVVbqMtzwlmNC4=0A=
-k9Kx39r5s2vcFl4tXqW7g9/ViXYuiDXb0RfUpZiIUW89siKrkzmQ5dM7wRqzgJpJ=0A=
-wK8Bn2MIxAKArekWpiCKvBOB/Cc+3EXE78XdlxLyOi/NrmSGRIov0karw2RzMNOu=0A=
-5D+jLRZQd1Sv27AR+IP3I8U4aqnhLpwhK7MEy9oCILlgZ1QZe49kpcumcZKORmzB=0A=
-TNh30FVKK1EvmV2xAKDoaEOgQB4iFQLhJCdP1I5aSgM5IVFdn7v5YgEYuJYx37Io=0A=
-N1EblHI//x/e2AaIHpzK5h88NEawQsaNRpNSrcfbFmAg987ATQRTjHAWAQgAyzH6=0A=
-AOODMBjgfWE9VeCgsrwH3exNAU32gLq2xvjpWnHIs98ndPUDpnoxWQugJ6MpMncr=0A=
-0xSwFmHEgnSEjK/PAjppgmyc57BwKII3sV4on+gDVFJR6Y8ZRwgnBC5mVM6JjQ5x=0A=
-Dk8WRXljExRfUX9pNhdE5eBOZJrDRoLUmmjDtKzWaDhIg/+1Hzz93X4fCQkNVbVF=0A=
-LELU9bMaLPBG/x5q4iYZ2k2ex6d47YE1ZFdMm6YBYMOljGkZKwYde5ldM9mo45mm=0A=
-we0icXKLkpEdIXKTZeKDO+Hdv1aqFuAcccTg9RXDQjmwhC3yEmrmcfl0+rPghO0I=0A=
-v3OOImwTEe4co3c1mwARAQABwsBfBBgBAgAJBQJTjHAWAhsMAAoJELDendYovxMv=0A=
-Q/gH/1ha96vm4P/L+bQpJwrZ/dneZcmEwTbe8YFsw2V/Buv6Z4Mysln3nQK5ZadD=0A=
-534CF7TDVft7fC4tU4PONxF5D+/tvgkPfDAfF77zy2AH1vJzQ1fOU8lYFpZXTXIH=0A=
-b+559UqvIB8AdgR3SAJGHHt4RKA0F7f5ipYBBrC6cyXJyyoprT10EMvU8VGiwXvT=0A=
-yJz3fjoYsdFzpWPlJEBRMedCot60g5dmbdrZ5DWClAr0yau47zpWj3enf1tLWaqc=0A=
-suylWsviuGjKGw7KHQd3bxALOknAp4dN3QwBYCKuZ7AddY9yjynVaD5X7nF9nO5B=0A=
-jR/i1DG86lem3iBDXzXsZDn8R38=3D=0A=
-=3D2wuH=0A=
------END PGP PUBLIC KEY BLOCK-----=0A=
+-----------------------------------------------------------------------
+CVE-2021-3778: vim: Heap-based Buffer Overflow in utf_ptr2char()
+Report: https://huntr.dev/bounties/d9c17308-2c99-4f9f-a706-f7f72c24c273/
+Fix: patch 8.2.3409: reading beyond end of line with invalid utf-8 character
+https://github.com/vim/vim/commit/65b605665997fad54ef39a93199e305af2fe4d7f
 
---------------FOIUDD6mMxRMmhHZoX2ZnxJ0--
+When vim 8.2 is built with --with-features=huge --enable-gui=none
+and address sanitizer, a heap-buffer overflow occurs when running:
 
---------------BBFSoseI0wFH390kzl0Q9A3S--
+echo "Ywp2XTCqCi4KeQpAMA==" | base64 -d > fuzz000.txt
+vim -u NONE -X -Z -e -s -S fuzz000.txt -c :qa!
 
---------------Epe70gCUpcHe4aA3CqDhOehN
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
+-----------------------------------------------------------------------
 
------BEGIN PGP SIGNATURE-----
+CVE-2021-3796: vim: Use After Free in nv_replace()
+Report: https://huntr.dev/bounties/ab60b7f3-6fb1-4ac2-a4fa-4d592e08008d/
+Fix: patch 8.2.3428: using freed memory when replacing
+https://github.com/vim/vim/commit/35a9a00afcb20897d462a766793ff45534810dc3
 
-wsB5BAABCAAjFiEEhRJncuj2BJSl0Jf3sN6d1ii/Ey8FAmOSDPAFAwAAAAAACgkQsN6d1ii/Ey8i
-lAf+JGrVjdHrOS8tbLhxv5V2MZGPw9Q2D8Jwnvh/nURZ87DAwKjuYM4RQ3w/skkWkaqLC+8TR193
-4r73qKq/ROxwwaxwmN+gjVSL/OZlP7NKYqiWdLegPMqH3l2GQBo9GiInC/fDT7wxvDCtTwYgSiXx
-XyIo3pOHYE1WSfi5r8q3/aNE/mAzpbVrZGPBMz76yqmsrDzGcv0LlX13Ax4g2DBHKCd8SMsvXbH7
-4OpRZ9BWmc1WS/ilWqG4jB38iFYD9Tkqra60piHbG7WY5slRCSe/+yCnQ8kog8OVNSB+zBGYYH6L
-3pHcKh9bD6wqvVBMDk7M1gddgaHHibHKFgr6YxNhzQ==
-=2PYd
------END PGP SIGNATURE-----
+When vim 8.2 is built with --with-features=huge --enable-gui=none
+and address sanitizer, a use-after-free occurs when running:
 
---------------Epe70gCUpcHe4aA3CqDhOehN--
+LC_ALL=C vim -U NONE -X -Z -e -s -S poc -c :qa!
+
+with the poc file provided in the report.
