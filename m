@@ -1,24 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/17/5
-Message-ID: <20210517192810.6zus3mumaq6l63zi@jwilk.net>
-Date: Mon, 17 May 2021 21:28:10 +0200
-From: Jakub Wilk <jwilk@...lk.net>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: rxvt terminal (+bash) remoteish code execution 0day
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/01/1
+Message-ID: <51bbd9bf-fa31-a1ac-a667-7b4b9b425623@oracle.com>
+Date: Thu, 30 Sep 2021 19:39:07 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: 3 new CVE's in vim
 Content-Type: text/plain; charset=utf-8
 
-* def <def@...meet.info>, 2021-05-17, 17:33:
->The bug is not technically a 0day for rxvt-unicode and has been known 
->at least since 2017-05-01 when it was discussed publicly in 
->oss-security:
->
->    https://www.openwall.com/lists/oss-security/2017/05/01/20
->
->The issue was quietly fixed in rxvt-unicode upstream in 2017.
+I haven't seen these make it to the list yet, but three CVE's were
+recently assigned for bugs in vim.  [I personally don't see how
+there's a security boundary crossed in normal vim usage here, but
+could see issues if someone had configured vim to run with raised
+privileges for editing system/application configuration files or
+similar.]
 
-Or was it 2019?
+     -Alan Coopersmith-               alan.coopersmith@...cle.com
+      Oracle Solaris Engineering - https://blogs.oracle.com/alanc
 
-http://cvs.schmorp.de/rxvt-unicode/src/command.C?view=log#rev1.585
+CVE-2021-3770: vim: Heap-based Buffer Overflow in ex_retab()
+Report: https://huntr.dev/bounties/016ad2f2-07c1-4d14-a8ce-6eed10729365/
+Fix: patch 8.2.3402: invalid memory access when using :retab with large value
+https://github.com/vim/vim/commit/b7081e135a16091c93f6f5f7525a5c58fb7ca9f9
 
--- 
-Jakub Wilk
+When vim 8.1 or 8.2 is built with --with-features=huge --enable-gui=none
+and address sanitizer, a heap-buffer overflow occurs when running:
+
+echo "bGMKc2YICnJldDgwMDAwMDAwMDAwMDAwMDAwMDAw" | base64 -d \
+   > fuzz448.txt
+vim -u NONE -X -Z -e -s -S fuzz448.txt -c :qa!
+
+-----------------------------------------------------------------------
+CVE-2021-3778: vim: Heap-based Buffer Overflow in utf_ptr2char()
+Report: https://huntr.dev/bounties/d9c17308-2c99-4f9f-a706-f7f72c24c273/
+Fix: patch 8.2.3409: reading beyond end of line with invalid utf-8 character
+https://github.com/vim/vim/commit/65b605665997fad54ef39a93199e305af2fe4d7f
+
+When vim 8.2 is built with --with-features=huge --enable-gui=none
+and address sanitizer, a heap-buffer overflow occurs when running:
+
+echo "Ywp2XTCqCi4KeQpAMA==" | base64 -d > fuzz000.txt
+vim -u NONE -X -Z -e -s -S fuzz000.txt -c :qa!
+
+-----------------------------------------------------------------------
+
+CVE-2021-3796: vim: Use After Free in nv_replace()
+Report: https://huntr.dev/bounties/ab60b7f3-6fb1-4ac2-a4fa-4d592e08008d/
+Fix: patch 8.2.3428: using freed memory when replacing
+https://github.com/vim/vim/commit/35a9a00afcb20897d462a766793ff45534810dc3
+
+When vim 8.2 is built with --with-features=huge --enable-gui=none
+and address sanitizer, a use-after-free occurs when running:
+
+LC_ALL=C vim -U NONE -X -Z -e -s -S poc -c :qa!
+
+with the poc file provided in the report.
