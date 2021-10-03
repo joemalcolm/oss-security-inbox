@@ -1,96 +1,117 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/31/1
-Message-ID: <nycvar.QRO.7.76.2103310010410.30524@fvyyl>
-Date: Wed, 31 Mar 2021 08:01:59 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>,  curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: Automatic referer leaks credentials
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/03/1
+Message-ID: <20211003120011.gb6vljzhs2tedfis@localhost>
+Date: Sun, 3 Oct 2021 12:00:11 +0000
+From: Samanta Navarro <ferivoz@...eup.net>
+To: oss-security@...ts.openwall.com
+Subject: Supply Chain Security and Tar
 Content-Type: text/plain; charset=utf-8
 
-Automatic referer leaks credentials
-===================================
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-Project curl Security Advisory, March 31st 2021 -
-[Permalink](https://curl.se/docs/CVE-2021-22876.html)
+Introduction
+============
 
-VULNERABILITY
--------------
+Tar files are commonly used to transport files throughout the supply
+chain. They are used for source code archives but also for containers.
 
-libcurl does not strip off user credentials from the URL when automatically
-populating the `Referer:` HTTP request header field in outgoing HTTP requests,
-and therefore risks leaking sensitive data to the server that is the target of
-the second HTTP request.
+Many different tar formats evolved to satisfy different demands, just
+like many different tar implementations have been written. Some of
+these programs and libraries try to support as many formats as possible
+and even previous implementation mistakes for backward compatibility.
 
-libcurl automatically sets the `Referer:` HTTP request header field in
-outgoing HTTP requests if the `CURLOPT_AUTOREFERER` option is set. With the
-curl tool, it is enabled with `--referer ";auto"`.
+This allows a malicious actor to create a single tar archive which leads
+to different file outputs based on the implementation in use. A clever
+combination even allows the creation of a tar file which leads to no
+error message among the most common tar implementations.
 
-We are not aware of any exploit of this flaw.
+Proof of Concept
+================
 
-INFO
-----
+A specially crafted file can be downloaded here:
+https://github.com/ferivoz/alquitran-samples/blob/master/v7_001/archive.tar
 
-This flaw has existed in libcurl since commit
-[f30ffef477](https://github.com/curl/curl/commit/f30ffef477) in libcurl 7.1.1,
-released on August 21, 2000.
+The archive itself contains a hello world C program. It depends on your
+tar implementation whether the program returns 0 or 1. Known tools which
+lead to a "return 1" version are bsdtar and p7zip.
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2021-22876 to this issue.
+The archive abuses two implementation mistakes:
 
-CWE-359: Exposure of Private Personal Information to an Unauthorized Actor
+1. directory entries may have a size, which must not be interpreted as
+   data size, i.e. no data blocks follow a directory
+2. GNU extensions exist which allow "long names". Implementations do not
+   consider an archive as invalid if no actual entry follows it
 
-Severity: Low
+The archive is not fully stealthy (star shows warnings) on purpose but
+should highlight the possibility of creating such archives.
 
-AFFECTED VERSIONS
------------------
+Attack Scenario
+===============
 
-- Affected versions: curl 7.1.1 to and including 7.75.0
-- Not affected versions: curl < 7.1.1 and curl >= 7.76.0
+Arch Linux uses libarchive (bsdtar) in its build environment. The
+default tar program installed is GNU tar. It is possible to create a
+source distribution which leads to different files seen by the build
+environment than compared to a careful reviewer and other Linux
+distributions.
 
-Also note that libcurl is used by many applications, and not always
-advertised as such.
+The code is reproducibly built and hopefully reviewed, yet it differs
+in its functionality.
 
-THE SOLUTION
-------------
+If all source distributions could be rebuilt from a repository then this
+attack would be harder to implement, but common distributions use
+prepared tar archives offered by maintainers, e.g. signed archives with
+autoconf generated files.
 
-If a provided URL contains credentials, they will be blanked out before the
-URL is used to populate the header field.
+I have inspected some projects and xscreensaver gets closest to this
+scenario: Extracting xscreensaver-6.01.tar.gz with bsdtar leads to an
+error because a hardlink exists which points to itself. The repository
+itself is not available, so it is the only point of trust available.
 
-A [fix for CVE-2021-22876](https://github.com/curl/curl/commit/7214288898f5625a6cc196e22a74232eada7861c)
+Mitigation
+==========
 
-(The patch URL will change in the final published version of this advisory)
+I have submitted bug reports and patches to some projects but eventually
+I had to conclude that the problem itself cannot be fixed by these
+implementations alone. The best choice for these tools would be to only
+allow archives which are fully compatible to standards but this in turn
+would render a lot of archives broken.
 
-RECOMMENDATIONS
---------------
+The best possibility from my point of view is that maintainers switch
+to ustar format because it is at least standardized and offers enough
+features required for source distributions. If path lengths are too long,
+then pax format (super set of ustar) should be used, because it is
+covered by POSIX as well.
 
-We suggest you take one of the following actions immediately, in order of
-preference:
+The ustar format is also supported by all common tar implementations.
 
-  A - Upgrade libcurl to version 7.76.0
+Analysis of existing archives
+=============================
 
-  B - Apply the patch to your local version
+I have written a diagnosis tool called "alquitran" which is available
+here: https://github.com/ferivoz/alquitran
 
-  C - Provide the credentials with `-u` or `CURLOPT_USERPWD`
+It scans a given tar archive for standards compatibility towards the
+ustar format as specified by POSIX. The attack scenarios which are known
+to me at this point are properly detected.
 
-  D - Avoid `CURLOPT_AUTOREFERER` and `--referer ";auto"`,
+The previously mentioned "alquitran-samples" project contains crafted
+tar archives and a check.sh script which can be used to inspect an
+individual tar program regarding its handling of malicious tar archives.
 
-TIMELINE
---------
+Conclusion
+==========
 
-This issue was reported to the curl project on February 12, 2021.
+I am not aware of an already performed attack based on a malicious tar
+archive. The mentioned scenarios should be carefully reviewed and the
+community should find a way to safely and securely transport sources.
 
-This advisory was posted on March 31st 2021.
+Sincerely,
+Samanta
+-----BEGIN PGP SIGNATURE-----
 
-CREDITS
--------
-
-This issue was reported and patched by Viktor Szakats.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://www.wolfssl.com/contact/
+iHUEARYKAB0WIQRmzXViX+AZPnBGVbhlTlmbj2CavQUCYVmbHwAKCRBlTlmbj2Ca
+vXVvAQDPHY8HioRMpzQ7Xfjlf3UoODI07plEQRdhFRQhYipmZwD/VAOt1lqOGozb
+mB0w8DHMAQ4pe4r8NdljdUTJLrntFgc=
+=Jkat
+-----END PGP SIGNATURE-----
