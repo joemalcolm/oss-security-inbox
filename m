@@ -1,35 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/25/4
-Message-ID: <YDgNJsbBFtYumXCp@eldamar.lan>
-Date: Thu, 25 Feb 2021 21:48:38 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/04/2
+Message-ID: <102a76f4-b371-8c54-7dcd-78010b428849@oracle.com>
+Date: Mon, 4 Oct 2021 08:48:50 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Cc: Steve Grubb <sgrubb@...hat.com>, Felix Kosterhon <felix.kosterhon@...uinfra.com>
-Subject: Re: Vulnerability in the Linux Audit Framework Auditd
+Subject: Re: 3 new CVE's in vim
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 9/30/2021 7:39 PM, Alan Coopersmith wrote:
+> I haven't seen these make it to the list yet, but three CVE's were
+> recently assigned for bugs in vim.  [I personally don't see how
+> there's a security boundary crossed in normal vim usage here, but
+> could see issues if someone had configured vim to run with raised
+> privileges for editing system/application configuration files or
+> similar.]
 
-On Thu, Feb 18, 2021 at 03:52:54PM +0000, Felix Kosterhon wrote:
-> Hello Mr. Grubb,
->  
-> thank you for your insight.
-> First and foremost we would like to clarify that our intent is not
-> to put blame on anyone but to improve the level of security for the
-> affected systems and the organisations utilising Auditd.
-> According to the rules.conf manual page, file-watch rules are meant
-> to monitor any accesses to files based on their permission level.
-> For the syscalls mentioned in this report this is not the case.
->  
-> RedHat Inc. shares our perspective on this issue and has assigned a
-> CVE for the vulnerability. Additionally they informed us that they
-> will work together with the Upstream Linux Kernel Developers on
-> behalf of fixing this issue.
+I do note all three of these were submitted via huntr.dev, which offers
+bounties for both reporting & fixing security bugs.  As a maintainer of
+an upstream open source project which is struggling with finding people
+to fix reported security bugs [1], I do appreciate the additional
+incentive to provide fixes here.  But as a maintainer of a distro, I see
+a mismatch with the incentives here, as you get bounties for accepting
+everything as a security bug and not pushing back, and flooding the
+distros with CVE's - even if your distro policy isn't to handle every
+CVE that applies, security auditors will often make your users query
+about every CVE that they think applies, costing your time to respond.
 
-Is there a reference to this which can be followed/tracked? Asking
-because the Red Hat bugzilla entry for CVE-2020-35501 for now would
-still be restricted, but would like to get a better idea on how to
-track this issue within Debian.
+[1] https://indico.freedesktop.org/event/1/contributions/28/
+https://www.youtube.com/watch?v=IU3NeVvDSp0
 
-Regards,
-Salvatore
+-- 
+       -Alan Coopersmith-               alan.coopersmith@...cle.com
+        Oracle Solaris Engineering - https://blogs.oracle.com/alanc
