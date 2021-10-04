@@ -1,61 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/03/4
-Message-ID: <20210203230932.GB431400@w1.fi>
-Date: Thu, 4 Feb 2021 01:09:32 +0200
-From: Jouni Malinen <j@...fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/04/4
+Message-ID: <ebd36c0a-458e-c7ca-d3dd-42298abee061@oracle.com>
+Date: Mon, 4 Oct 2021 09:17:26 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: wpa_supplicant P2P group information processing vulnerability
+Subject: Re: 3 new CVE's in vim
 Content-Type: text/plain; charset=utf-8
 
-Published: February 4, 2021
-Latest version available from: https://w1.fi/security/2020-2/
+Those incentives for reporting bugs as security vulnerabilities
+haven't changed.  But previously maintainers had more incentive
+to push back on claiming a bug was a security vulnerability - its
+often more work for them to put out an advisory/new release than
+just checking in a non-security fix.  Certainly I know as one of
+the X.Org security team we'd not list things as security bugs if
+they didn't let an attacker do something outside the bounds of
+expected operation - for example, the X11 protocol already lets
+a client terminate the connection of another client, so a bug
+letting you do that is just a bug, not a vulnerability.
 
+	-alan-
 
-Vulnerability
-
-A vulnerability was discovered in how wpa_supplicant processing P2P
-(Wi-Fi Direct) group information from active group owners. The actual
-parsing of that information validates field lengths appropriately, but
-processing of the parsed information misses a length check when storing
-a copy of the secondary device types. This can result in writing
-attacker controlled data into the peer entry after the area assigned for
-the secondary device type. The overflow can result in corrupting
-pointers for heap allocations. This can result in an attacker within
-radio range of the device running P2P discovery being able to cause
-unexpected behavior, including termination of the wpa_supplicant process
-and potentially arbitrary code execution.
-
-
-Vulnerable versions/configurations
-
-wpa_supplicant v1.0-v2.9 with CONFIG_P2P build option enabled
-
-An attacker (or a system controlled by the attacker) needs to be within
-radio range of the vulnerable system to send a suitably constructed
-management frame that triggers a P2P peer device information to be
-created or updated.
-
-
-Acknowledgments
-
-This issue was discovered by fuzz testing of wpa_supplicant by Google's
-OSS-Fuzz.
-
-Possible mitigation steps
-
-- Merge the following commit to wpa_supplicant and rebuild it:
-
-  P2P: Fix copying of secondary device types for P2P group client
-  
-  This patch is available from https://w1.fi/security/2020-2/
-  
-- Update to wpa_supplicant v2.10 or newer, once available
-
-- Disable P2P (control interface command "P2P_SET disabled 1" or
-  "p2p_disabled=1" in (each, if multiple interfaces used) wpa_supplicant
-  configuration file)
-
-- Disable P2P from the build (remove CONFIG_P2P=y)
-
--- 
-Jouni Malinen                                            PGP id EFC895FA
+On 10/4/2021 9:04 AM, Alex Gaynor wrote:
+> It seems a bit like huntr.dev makes an incentive, that has always
+> existed, explicit: There are rewards for getting CVEs issued. Folks
+> put them on their resumes, include them in audit reports they do, etc.
+> At least they're paying for fixes as well!
+> 
+> Alex
+> 
+> On Mon, Oct 4, 2021 at 11:50 AM Alan Coopersmith
+> <alan.coopersmith@...cle.com> wrote:
+>>
+>> On 9/30/2021 7:39 PM, Alan Coopersmith wrote:
+>>> I haven't seen these make it to the list yet, but three CVE's were
+>>> recently assigned for bugs in vim.  [I personally don't see how
+>>> there's a security boundary crossed in normal vim usage here, but
+>>> could see issues if someone had configured vim to run with raised
+>>> privileges for editing system/application configuration files or
+>>> similar.]
+>>
+>> I do note all three of these were submitted via huntr.dev, which offers
+>> bounties for both reporting & fixing security bugs.  As a maintainer of
+>> an upstream open source project which is struggling with finding people
+>> to fix reported security bugs [1], I do appreciate the additional
+>> incentive to provide fixes here.  But as a maintainer of a distro, I see
+>> a mismatch with the incentives here, as you get bounties for accepting
+>> everything as a security bug and not pushing back, and flooding the
+>> distros with CVE's - even if your distro policy isn't to handle every
+>> CVE that applies, security auditors will often make your users query
+>> about every CVE that they think applies, costing your time to respond.
+>>
+>> [1] https://indico.freedesktop.org/event/1/contributions/28/
+>> https://www.youtube.com/watch?v=IU3NeVvDSp0
+>>
+>> --
+>>         -Alan Coopersmith-               alan.coopersmith@...cle.com
+>>          Oracle Solaris Engineering - https://blogs.oracle.com/alanc
+> 
+> 
+> 
