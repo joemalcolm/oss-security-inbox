@@ -1,46 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/08/5
-Message-ID: <NKuWiXQK3sAwyMdDQT07Bdnnl5XSSBmKbvUMqaIhhCSShwaQMmOUKOVT9TCVVDGv43RDuHjy42O3GILwnaZiA2dadJ42Mqn09BhGaGu8BhE=@protonmail.com>
-Date: Mon, 08 Feb 2021 14:15:05 +0000
-From: netblue30 <netblue30@...tonmail.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/04/5
+Message-ID: <f36fc3fefc0b5c429cb16adfe62bde6f4ab0bbd2.camel@amazon.com>
+Date: Mon, 4 Oct 2021 18:57:19 +0000
+From: "Karp, Samuel" <skarp@...zon.com>
 To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: [cve-pending] Firejail: root privilege escalation in OverlayFS code
+Subject: Moby (Docker Engine) CVE-2021-41089
 Content-Type: text/plain; charset=utf-8
 
+A bug was found in Moby (Docker Engine) where attempting to copy files
+using docker cp into a specially-crafted container can result in Unix
+file permission changes for existing files in the host's filesystem,
+widening access to others. This bug does not directly allow files to be
+read, modified, or executed without an additional cooperating process.
 
-Security Advisory - Feb 8, 2021
+Patches
+This bug has been fixed in Moby (Docker Engine) 20.10.9. Users should
+update to this version as soon as possible. Running containers do not
+need to be restarted.
 
-Summary: A vulnerability resulting in root privilege escalation was discovered in Firejail's OverlayFS code,
+Workarounds
+Ensure you only run trusted containers.
 
-Versions affected: Firejail software versions starting with 0.9.30.
-Long Term Support (LTS) Firejail branch is not affected by this bug.
+Credits
+The Moby project would like to thank Lei Wang and Ruizhi Xiao for
+responsibly disclosing this issue in accordance with the ﻿Moby security
+policy.
 
-Workaround: Disable overlayfs feature at runtime. In a text editor open /etc/firejail/firejail.config file,
-and set "overlayfs" entry to "no".
+If you have any questions or comments about this advisory:
+Open an issue [1]
+Email us at ﻿ security@...ker.com ﻿ if you think you’ve found a
+security bug
 
-      $ grep overlayfs /etc/firejail/firejail.config
-      # Enable or disable overlayfs features, default enabled.
-      overlayfs no
+View this advisory on the web:
+https://github.com/moby/moby/security/advisories/GHSA-v994-f8vw-g7j4
 
-Fix: The bug is fixed in Firejail version 0.9.64.4
+On behalf of the Moby project,
+Samuel Karp
 
-GitHub commit: (file configure.ac)
-https://github.com/netblue30/firejail/commit/97d8a03cad19501f017587cc4e47d8418273834b
-
-Credit:  Security researcher Roman Fiedler analyzed the code and discovered the vulnerability.
-Functional PoC exploit code was provided to Firejail development team.
-A description of the problem is here on Roman's blog:
-
-https://unparalleled.eu/publications/2021/advisory-unpar-2021-0.txt
-https://unparalleled.eu/blog/2021/20210208-rigged-race-against-firejail-for-local-root/
-
-
-Regards,
-
-netblue30
-(https://github.com/netblue30/firejail)
-
-
-Sent with ProtonMail Secure Email.
-
-
+[1] https://github.com/moby/moby/issues/new
