@@ -1,100 +1,175 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/27/1
-Message-ID: <YP+5rj1ASK3d710l@f195.suse.de>
-Date: Tue, 27 Jul 2021 09:45:50 +0200
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/04/1
+Message-ID: <60f2cec9-f775-81b1-4efc-708babceaa18@treenet.co.nz>
+Date: Mon, 4 Oct 2021 14:31:52 +1300
+From: Amos Jeffries <squid3@...enet.co.nz>
 To: oss-security@...ts.openwall.com
-Subject: replay-sorcery: CVE-2021-36983: kms service in version 0.6.0 allows local root exploit and other local attack vectors
+Subject: CVE-2021-28116 / ZDI-CAN-11610 / SQUID-2020:12 Out-Of-Bounds memory access in WCCPv2
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
+__________________________________________________________________
 
-ReplaySorcery [1] upstream version 0.6.0 has introduced new security
-issues. I already reviewed version 0.5.0 a while ago and found issues in
-its implementation of a setuid-root program [2].
+### Squid Proxy Cache Security Update Advisory SQUID-2020:12
+__________________________________________________________________
 
-By now this setuid-root program has been deprecated by upstream and has
-been replaced by a systemd service running as root called
-"replay-sorcery-kms" that is supposed to provide the same functionality
-(opening a DRI device with the ffmpeg library for hardware acceleration
-support when recording screen contents).
+Advisory ID:       | SQUID-2020:12
+Date:              | Oct 03, 2021
+Summary:           | Out-Of-Bounds memory access in WCCPv2
+Affected versions: | Squid 2.6 -> 2.7.STABLE9
+                    | Squid 3.x -> 3.5.28
+                    | Squid 4.x -> 4.16
+                    | Squid 5.x -> 5.1
+Fixed in version:  | Squid 4.17 and 5.2
+__________________________________________________________________
 
-# Findings in Version 0.6.0
+   <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-28116>
+   <https://www.zerodayinitiative.com/advisories/ZDI-CAN-11610>
+__________________________________________________________________
 
-The upstream author asked me to check up on the security of the new
-systemd service. The basic idea is that the kms system service opens any
-DRI devices via the ffmpeg library and passes back the open file
-descriptors to clients of a UNIX domain socket that the service provides
-in the system. I have found the following issues:
+### Problem Description:
 
-a) The UNIX domain socket is placed into the fixed path
-  /tmp/replace-sorcery/device.sock.
-  /tmp/replay-sorcery is a predictable path in a world writable
-  directory, i.e. any other user in the system can precreate it
-  and thus take control of the directory and its contents. For example
-  by removing the intended device.sock and creating a different socket
-  there, clients in the system will then communicate with other parties
-  than intended.
+  Due to an out of bounds memory access Squid is vulnerable to an
+  information leak vulnerability when processing WCCPv2 messages.
 
-b) The service calls the `kmsChmod()` function for both /tmp/replay-sorcery
-  and /tmp/replay-sorcery/device.sock. This function performs a
-  `chmod(path, 0777)`. Thus a local attacker can stage symlink attacks
-  in both locations. The attack via /tmp/replay-sorcery is thwarted by
-  the Linux kernel's symlink protection. The attack via the socket
-  filename is not, because /tmp/replay-sorcery will not have a sticky
-  bit set. So the attacker only has to win a race condition between the
-  kms service binding the socket and performing the chown() during
-  startup. This allows for a local root exploit achievable every time
-  when the kms service is starting up.
+__________________________________________________________________
 
-c) During receiption of the RSServiceDeviceInfo data structure from a
-  client, the (size_t) deviceLength parameter has no upper limit i.e.
-  clients can cause denial-of-service by causing large memory
-  allocations in the service.
+### Severity:
 
-d) When accepting client connections the service does not make
-  sure that the client is somehow authorized to access the local
-  display. E.g. by it being a member of a special restricted
-  group, or by it owning a local active graphical session. This could
-  allow unprivileged local processes to access display contents of
-  logged in interactive users.
+  This problem allows a WCCPv2 sender to corrupt Squids list of
+  known WCCP routers and divert client traffic to attacker
+   controlled routers.
 
-# CVE Assignment
+  This attack is limited to Squid proxy with WCCPv2 enabled and
+  IP spoofing of a router IP address configured as trusted in
+  squid.conf.
 
-I received CVE-2021-36983 from Mitre for the local root exploit in
-issue b).
+CVSS Score of 7.7
+<https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?vector=AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:N/E:X/RL:O/RC:C/CR:H/IR:H/AR:X/MAV:N/MAC:H/MPR:N/MUI:X/MS:U/MC:H/MI:H/MA:X&version=3.1>
 
-# Bugfixes
+__________________________________________________________________
 
-To my knowledge there are currently no bugfixes available for this. I
-recommend neither to use the setuid-root option nor the systemd service
-until these issues are handled.
+### Updated Packages:
 
-# Timeline
+#### This bug is fixed by Squid versions 4.17 and 5.2.
 
-2021-07-12: Received review request from the upstream author by e-mail.
-2021-07-20: I reported these findings to the upstream author.
-2021-07-21: I received the CVE from Mitre and offered the upstream
-            author an embargo until 2021-07-26.
-2021-07-27: No reply from the upstream author so far, publication of the
-            findings.
+  In addition, patches addressing this problem for the stable
+  releases can be found in our patch archives:
 
-Cheers
+#### Squid 4:
+  <http://www.squid-cache.org/Versions/v4/changesets/SQUID-2020_12.patch>
 
-Matthias
-
-[1]: https://github.com/matanui159/ReplaySorcery
-[2]: https://www.openwall.com/lists/oss-security/2021/02/10/1
-
--- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
+#### Squid 5:
  
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG Nürnberg
-Geschäftsführer: Felix Imendörffer
+<http://www.squid-cache.org/Versions/v5/changesets/squid-5-7a73a54cefff6bb83c03de219a73276e42d183d0.patch>
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+  If you are using a prepackaged version of Squid then please
+  refer to the package vendor for availability information on
+  updated packages.
+
+__________________________________________________________________
+
+### Determining if your version is vulnerable:
+
+  All Squid built with --disable-wccpv2 are not vulnerable.
+
+  All Squid-3.x up to and including 3.5.28 built with
+  --enable-wccpv2 and configured with wccp2_router in squid.conf
+  are vulnerable.
+
+  All Squid-3.x up to and including 3.5.28 built without
+  --disable-wccpv2 and configured with wccp2_router in squid.conf
+  are vulnerable.
+
+  All Squid-4.x up to and including 4.16 built with
+  --enable-wccpv2 and configured with wccp2_router in squid.conf
+  are vulnerable.
+
+  All Squid-4.x up to and including 4.16 built without
+  --disable-wccpv2 and configured with wccp2_router in squid.conf
+  are vulnerable.
+
+  All Squid-5.x up to and including 5.1 built with
+  --enable-wccpv2 and configured with wccp2_router in squid.conf
+  are vulnerable.
+
+  All Squid-5.x up to and including 5.1 built without
+  --disable-wccpv2 and configured with wccp2_router in squid.conf
+  are vulnerable.
+
+__________________________________________________________________
+
+### Workaround:
+
+Either,
+
+The following network security Best Practices will greatly
+restrict the ability of any attacker utilizing this
+vulnerability. They can be considered workarounds for this
+issue:
+
+  * Use Private IP address for control communications (eg WCCPv2)
+    with routers.
+
+  * Firewall restriction of UDP traffic on port 2048 and any
+    other UDP ports used for WCCP(v2) control messages to only
+    permit known devices to communicate with WCCP(v2).
+
+    Note that ports used by clients and diverted by WCCP (eg 80
+    or 443) are not relevant.
+
+  * Ensure the network implements BCP 38 spoofing protection.
+    Include protection against LAN traffic spoofing as much as
+    possible.
+    See also <http://www.bcp38.info> and 
+<https://tools.ietf.org/html/bcp38>.
+
+Or,
+
+  Build Squid with --disable-wccpv2
+
+Or,
+
+  Remove all lines for wccp2_* directives from squid.conf.
+  The default configuration is not to enable WCCPv2.
+
+__________________________________________________________________
+
+### Contact details for the Squid project:
+
+  For installation / upgrade support on binary packaged versions
+  of Squid: Your first point of contact should be your binary
+  package vendor.
+
+  If you install and build Squid from the original Squid sources
+  then the <squid-users@...ts.squid-cache.org> mailing list is
+  your primary support point. For subscription details see
+  <http://www.squid-cache.org/Support/mailing-lists.html>.
+
+  For reporting of non-security bugs in the latest STABLE release
+  the squid bugzilla database should be used
+  <http://bugs.squid-cache.org/>.
+
+  For reporting of security sensitive bugs send an email to the
+  <squid-bugs@...ts.squid-cache.org> mailing list. It's a closed
+  list (though anyone can post) and security related bug reports
+  are treated in confidence until the impact has been established.
+
+__________________________________________________________________
+
+### Credits:
+
+  This vulnerability was discovered by Lyu working with Trend
+  Micro Zero Day Initiative.
+
+  Fixed by Amos Jeffries of Treehouse Networks Ltd.
+
+__________________________________________________________________
+
+### Revision history:
+
+  2020-08-17 10:43:36 UTC Initial Report
+  2021-02-09 00:00:00 UTC Advisory Release by ZDI
+  2021-10-03 00:00:00 UTC Packages Released
+
+__________________________________________________________________
+END
