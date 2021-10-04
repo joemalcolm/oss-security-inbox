@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3004" "Monday" "4" "May" "2015" "02:14:30" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150504061430.6B87013A562@smtpvmsrv1.mitre.org>" "67" "[oss-security] Re: CVE requests / Advisory: phpMyBackupPro" nil nil nil "5" "2015050406:14:30" "[oss-security] Re: CVE requests / Advisory: phpMyBackupPro" (number mark "        cve-assign@m May  4   67/3004  " thread-indent "\"[oss-security] Re: CVE requests / Advisory: phpMyBackupPro\"\n") "<CAD3Canczf0QMBQUJdP_BdbN0nFE-ZgzSwBGXyJJZ4qES=y5_cA@mail.gmail.com>" ("<CAD3Canczf0QMBQUJdP_BdbN0nFE-ZgzSwBGXyJJZ4qES=y5_cA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1820" "Monday" "4" "October" "2021" "12:04:33" "-0400" "Alex Gaynor" "alex.gaynor@gmail.com" nil "40" "Re: [oss-security] 3 new CVE's in vim" nil nil nil "10" nil nil (number mark "U       alex.gaynor@ Oct  4   40/1820  " thread-indent "\"Re: [oss-security] 3 new CVE's in vim\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] 3 new CVE's in vim" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9225 invoked by uid 550); 4 May 2015 06:14:42 -0000
+Received: (qmail 19951 invoked by uid 550); 4 Oct 2021 16:04:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,80 +11,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 8177 invoked from network); 4 May 2015 06:14:42 -0000
-In-Reply-To: <CAD3Canczf0QMBQUJdP_BdbN0nFE-ZgzSwBGXyJJZ4qES=y5_cA@mail.gmail.com>
-Message-Id: <20150504061430.6B87013A562@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Mon,  4 May 2015 02:14:30 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE requests / Advisory: phpMyBackupPro
-To: mattd@bugfuzz.com
+Received: (qmail 19930 invoked from network); 4 Oct 2021 16:04:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=nmX1wxXPdDfGV2Vw023YPDdp+WvJTVsVyYrQ3Negnb0=;
+        b=YG3t5jl3YKNylJMw1/Bh6u29gGCRa91wRL8u9VztwCN16OtKrNcJQ+Z3CgPiWTHdYa
+         C8nfrVv/QSfV9UnCoYcbFVeveMmVT4OKQ9kXYiKBcogohlRAjpVv99APzs2Kq7MITtAs
+         3zj6+Rfw8NkKNuATYgPcx9nQDK8/4IIv78LJLQ+XPJ7aow8nKes0Wil7mCq0BZJh5Viv
+         RkCwJaBuUhSdlStf/bj2I2teOq/afMDbT68/kdKt0jSLk3xo2+wnT9tduTqYfOsVIWdF
+         rMW08NCGKTW5GJ7avoTFqsIbQMPkCucz1kWGEk+RfeW5mpCl9H5D1gV2zyh3fwCkOg5g
+         tlzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=nmX1wxXPdDfGV2Vw023YPDdp+WvJTVsVyYrQ3Negnb0=;
+        b=R0fLS5tGcZmKghrngXyePmiGesj0OMzMmxsaLgGbzCQZTHuxfdMmcc7j+FUpc9RUCZ
+         Q5eSUTFX1x9aJkCySeOEQ9B7nmjNi2a3KoV6DXR7x6NxFvPHok1ESSsNK4mLjiZatkgb
+         4qRlZ//Wmi7ltDbjzhb3UNX3fpCOughdIHxvN2FL7FFoGinZv3WTa48/THVC/VNSooYb
+         f/ETrSYSC2AruFENCfDprjtdksQV95mcrIYz387ralMm2io2nmdgkE5mlDh00sdIdeOw
+         mg7M0m9XvqpIyQ6TaiedhKfY1bAqdwco/loVzw1bhqOJAzWJD9IqwyaSgN0fOlrj1Z0z
+         3+Cg==
+X-Gm-Message-State: AOAM53197cdAGAru54GGYbNq6LeqMUaH4zdH1C5Mht/DneclP9jBBk+5
+	YaOI1689XRQlSyZGbWb7fJnpoYrXZcIvmQOQUhcsCUun
+X-Google-Smtp-Source: ABdhPJw1F3KaVNHM+MB1BrTiWL/MG0bkXFuIcTBdxxFu3JZZE7LtL2PhZ3jjCxWNpCBX8Iw5d/hkrGkdko1lGiaH7Fk=
+X-Received: by 2002:a05:6a00:2389:b0:44c:434:6c5d with SMTP id
+ f9-20020a056a00238900b0044c04346c5dmr22525370pfc.29.1633363484886; Mon, 04
+ Oct 2021 09:04:44 -0700 (PDT)
+MIME-Version: 1.0
+References: <51bbd9bf-fa31-a1ac-a667-7b4b9b425623@oracle.com> <102a76f4-b371-8c54-7dcd-78010b428849@oracle.com>
+In-Reply-To: <102a76f4-b371-8c54-7dcd-78010b428849@oracle.com>
+From: Alex Gaynor <alex.gaynor@gmail.com>
+Date: Mon, 4 Oct 2021 12:04:33 -0400
+Message-ID: <CAFRnB2XvL8zOW9oW6sAMuDcCRfp3d7MFbS6GVTskNghY4U4P9Q@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [oss-security] 3 new CVE's in vim
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+It seems a bit like huntr.dev makes an incentive, that has always
+existed, explicit: There are rewards for getting CVEs issued. Folks
+put them on their resumes, include them in audit reports they do, etc.
+At least they're paying for fixes as well!
 
-> http://openwall.com/lists/oss-security/2015/04/25/1
+Alex
 
-This post was, for the purpose of CVE mapping, somewhat complex, but
-we currently feel that it needs at least 5 CVE IDs, and maybe 6.
+On Mon, Oct 4, 2021 at 11:50 AM Alan Coopersmith
+<alan.coopersmith@oracle.com> wrote:
+>
+> On 9/30/2021 7:39 PM, Alan Coopersmith wrote:
+> > I haven't seen these make it to the list yet, but three CVE's were
+> > recently assigned for bugs in vim.  [I personally don't see how
+> > there's a security boundary crossed in normal vim usage here, but
+> > could see issues if someone had configured vim to run with raised
+> > privileges for editing system/application configuration files or
+> > similar.]
+>
+> I do note all three of these were submitted via huntr.dev, which offers
+> bounties for both reporting & fixing security bugs.  As a maintainer of
+> an upstream open source project which is struggling with finding people
+> to fix reported security bugs [1], I do appreciate the additional
+> incentive to provide fixes here.  But as a maintainer of a distro, I see
+> a mismatch with the incentives here, as you get bounties for accepting
+> everything as a security bug and not pushing back, and flooding the
+> distros with CVE's - even if your distro policy isn't to handle every
+> CVE that applies, security auditors will often make your users query
+> about every CVE that they think applies, costing your time to respond.
+>
+> [1] https://indico.freedesktop.org/event/1/contributions/28/
+> https://www.youtube.com/watch?v=IU3NeVvDSp0
+>
+> --
+>        -Alan Coopersmith-               alan.coopersmith@oracle.com
+>         Oracle Solaris Engineering - https://blogs.oracle.com/alanc
 
-> Issue #1: SQL injection in multi-user mode
-
-Use CVE-2015-3637. Affected versions are "before 2.5."
 
 
-Issue #2 and Issue #4 begin by describing essentially the same type of
-problem. The user is supposed to be providing an integer value that
-can be used within a .php file, but the unpatched product let the user
-specify arbitrary PHP code instead of an integer. For this problem,
-with affected versions of "before 2.5," use CVE-2015-3638.
-
-The remaining errors in version 2.5 seem to have two distinct types,
-at least from the perspective of the advisory (we did not
-independently study the complete code).
-
-For the Issue #2 section, apparently the 2.5 code was attempting to
-safely include untrusted input inside of a string literal, but a wrong
-approach was used. Use CVE-2015-3639 for this problem.
-
-For the Issue #4 section, apparently the 2.5 code was attempting to
-identify specific characters that may be special to PHP (or may be
-special to a shell) but did not achieve a complete solution. (For
-example, the ';' character was blocked in 2.5, but the '.' character
-was not blocked.) Use CVE-2015-3640 for this problem.
-
-The final concern is Issue #3. We believe it's valuable to search for
-duplicate CVEs, but there was no comment about whether CVE-2009-4050
-is the same issue. If that 2009 issue was fixed and then reintroduced
-between versions 2.1 and 2.5, then there can be two new CVE IDs for
-the 2015 report.
-
-If that 2009 issue was never fixed, then there was a duplicate
-discovery. We believe that CVE-2009-4050 applies to the larger
-problem: an attacker could use any number of "../" sequences after the
-"get_file.php?view=" part of the URI, including zero "../" sequences.
-There would then be one additional CVE ID for the behavior in 2.5,
-because that behavior represents an incomplete fix for CVE-2009-4050.
-
-By default, we would use the second interpretation for Issue #3. In
-other words, unless someone can establish that CVE-2009-4050 was fixed
-in 2.2, 2.3, or 2.4, we'll conclude that Issue #3 is a duplicate
-discovery, and we'll send the one ID for the "incomplete fix" CVE.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVRw1yAAoJEKllVAevmvmsncYIAL0S3sT+Yp3tSStdGriLLlgF
-qTAIhzrOS1zexRzTeqNBClmmEYPSRe1hZ05LsaELMGof2HgUFi9Yf9meHQpwcVJD
-fRkmJ3lrg8KkqGC5/4+idvb/XlAqyZZRo8HpcH52zf6GCad4aYEe2mrEbE2qQZ72
-g2IvOvnoQHLAs/4fQaqXcClOgzrFGGGKN9caHuZklVDL6yLzwOK0xeXgbJfTppwl
-3zNwD/bMcnrUglz5nPhnPZfkWG/erJiVT81mfh0WhpJHn4BvhM0ESRNVtuWI9j7E
-Ql0Nh0Ivm0FrBgACyaiQM0oGNuLSZWj13YUWoY1jhesaH49gM2b8RnRpyCEWsE8=
-=kMZ4
------END PGP SIGNATURE-----
+-- 
+All that is necessary for evil to succeed is for good people to do nothing.
