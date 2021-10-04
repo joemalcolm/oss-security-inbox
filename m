@@ -1,49 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/04/3
-Message-ID: <0ae0a000-6574-8df2-5b00-51157f562339@dovecot.fi>
-Date: Mon, 4 Jan 2021 14:03:19 +0200
-From: Aki Tuomi <aki.tuomi@...ecot.fi>
-To: oss-security@...ts.openwall.com, fulldisclosure@...lists.org
-Subject: CVE-2020-25275: Dovecot: MIME parsing crash
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/04/3
+Message-ID: <CAFRnB2XvL8zOW9oW6sAMuDcCRfp3d7MFbS6GVTskNghY4U4P9Q@mail.gmail.com>
+Date: Mon, 4 Oct 2021 12:04:33 -0400
+From: Alex Gaynor <alex.gaynor@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: 3 new CVE's in vim
 Content-Type: text/plain; charset=utf-8
 
-Open-Xchange Security Advisory 2021-01-04
+It seems a bit like huntr.dev makes an incentive, that has always
+existed, explicit: There are rewards for getting CVEs issued. Folks
+put them on their resumes, include them in audit reports they do, etc.
+At least they're paying for fixes as well!
 
-Product: Dovecot
-Vendor: OX Software GmbH
-Internal reference: DOV-4113 (Bug ID)
-Vulnerability type: CWE-20: Improper Input Validation
-Vulnerable version: 2.3.11-2.3.11.3
-Vulnerable component: lda, lmtp, imap
-Report confidence: Confirmed
-Solution status: Fixed by Vendor
-Fixed version: 2.3.13
-Vendor notification: 2020-09-10
-Solution date: 2020-09-14
-Public disclosure: 2021-01-04
-CVE reference: CVE-2020-25275
-CVSS: 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L)
-Researcher credit: Innokentii Sennovskiy (Rumata888) from BI.ZONE
+Alex
 
-Vulnerability Details:
-
-Mail delivery / parsing crashed when the 10 000th MIME part was
-message/rfc822 (or if parent was multipart/digest). This happened
-due to earlier MIME parsing changes for CVE-2020-12100.
-
-Risk:
-
-Malicious sender can crash dovecot repeatedly by sending / uploading
-message with more than 10 000 MIME parts.
-
-Workaround:
-
-These are usually dropped by MTA, where the mitigation can also be applied.
-
-Solution:
-
-Operators should update to 2.3.13 or later version.
-
+On Mon, Oct 4, 2021 at 11:50 AM Alan Coopersmith
+<alan.coopersmith@...cle.com> wrote:
+>
+> On 9/30/2021 7:39 PM, Alan Coopersmith wrote:
+> > I haven't seen these make it to the list yet, but three CVE's were
+> > recently assigned for bugs in vim.  [I personally don't see how
+> > there's a security boundary crossed in normal vim usage here, but
+> > could see issues if someone had configured vim to run with raised
+> > privileges for editing system/application configuration files or
+> > similar.]
+>
+> I do note all three of these were submitted via huntr.dev, which offers
+> bounties for both reporting & fixing security bugs.  As a maintainer of
+> an upstream open source project which is struggling with finding people
+> to fix reported security bugs [1], I do appreciate the additional
+> incentive to provide fixes here.  But as a maintainer of a distro, I see
+> a mismatch with the incentives here, as you get bounties for accepting
+> everything as a security bug and not pushing back, and flooding the
+> distros with CVE's - even if your distro policy isn't to handle every
+> CVE that applies, security auditors will often make your users query
+> about every CVE that they think applies, costing your time to respond.
+>
+> [1] https://indico.freedesktop.org/event/1/contributions/28/
+> https://www.youtube.com/watch?v=IU3NeVvDSp0
+>
+> --
+>        -Alan Coopersmith-               alan.coopersmith@...cle.com
+>         Oracle Solaris Engineering - https://blogs.oracle.com/alanc
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+
+-- 
+All that is necessary for evil to succeed is for good people to do nothing.
