@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1870" "Thursday" "9" "July" "2015" "12:25:49" "+0200" "Jann Horn" "jann@thejh.net" "<20150709102450.GA3412@laptop.thejh.net>" "42" "Re: [oss-security] TR : CVE request for dash 0.5.7-3  x86-64 local buffer overflow" nil nil nil "7" "2015070910:25:49" "[oss-security] TR : CVE request for dash 0.5.7-3 x86-64 local buffer overflow" (number mark "        jann@thejh.n Jul  9   42/1870  " thread-indent "\"Re: [oss-security] TR : CVE request for dash 0.5.7-3  x86-64 local buffer overflow\"\n") "<F19FF46A5F9A584F817BC291F2EE2EBB519D23@server.exchange.local>" ("<F19FF46A5F9A584F817BC291F2EE2EBB5199AD@server.exchange.local>" "<F19FF46A5F9A584F817BC291F2EE2EBB519D23@server.exchange.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5601" "Monday" "4" "October" "2021" "14:31:52" "+1300" "Amos Jeffries" "squid3@treenet.co.nz" nil "166" "[oss-security] CVE-2021-28116 / ZDI-CAN-11610 / SQUID-2020:12 Out-Of-Bounds memory access in WCCPv2" nil nil nil "10" nil nil (number mark "U       squid3@treen Oct  4  166/5601  " thread-indent "\"[oss-security] CVE-2021-28116 / ZDI-CAN-11610 / SQUID-2020:12 Out-Of-Bounds memory access in WCCPv2\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-28116 / ZDI-CAN-11610 / SQUID-2020:12 Out-Of-Bounds memory access in WCCPv2" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 28451 invoked by uid 550); 9 Jul 2015 10:26:08 -0000
+Received: (qmail 24220 invoked by uid 550); 4 Oct 2021 05:46:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +11,184 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28433 invoked from network); 9 Jul 2015 10:26:08 -0000
-Message-ID: <20150709102450.GA3412@laptop.thejh.net>
-References: <F19FF46A5F9A584F817BC291F2EE2EBB5199AD@server.exchange.local>
- <F19FF46A5F9A584F817BC291F2EE2EBB519D23@server.exchange.local>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="eAbsdosE1cNLO4uF"
-Content-Disposition: inline
-In-Reply-To: <F19FF46A5F9A584F817BC291F2EE2EBB519D23@server.exchange.local>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Date: Thu, 9 Jul 2015 12:25:49 +0200
-From: Jann Horn <jann@thejh.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] TR : CVE request for dash 0.5.7-3  x86-64 local
- buffer overflow
+Received: (qmail 11860 invoked from network); 4 Oct 2021 01:37:19 -0000
 To: oss-security@lists.openwall.com
+From: Amos Jeffries <squid3@treenet.co.nz>
+Message-ID: <60f2cec9-f775-81b1-4efc-708babceaa18@treenet.co.nz>
+Date: Mon, 4 Oct 2021 14:31:52 +1300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2021-28116 / ZDI-CAN-11610 / SQUID-2020:12 Out-Of-Bounds memory
+ access in WCCPv2
 
---eAbsdosE1cNLO4uF
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+__________________________________________________________________
 
-On Mon, Jul 06, 2015 at 12:58:07PM +0000, jean-marie.bourbon@armaturetech.com wrote:
-> ==9241== Stack overflow in thread 1: can't grow stack to 0x7fe801ef8
-> ==9241==
-> ==9241== Process terminating with default action of signal 11 (SIGSEGV): dumping core
-> [...]
-> It appear that the binary has only the NoeXecutable protection (and ASLR) with an interesting buffer overflow... that's why I'd like to
-> know how to make my small contribution on this subject.
+### Squid Proxy Cache Security Update Advisory SQUID-2020:12
+__________________________________________________________________
 
-That looks like a stack overflow to me, not a buffer overflow on the stack. (So in
-X86 terms, the problem isn't that a pointer to the right of a buffer on a stack is
-used, the problem is that the stack pointer was decremented past the *left* end of
-the stack. To the left end of the stack of the main thread is a really big area of
-unallocated memory, so you get a segfault.)
+Advisory ID:       | SQUID-2020:12
+Date:              | Oct 03, 2021
+Summary:           | Out-Of-Bounds memory access in WCCPv2
+Affected versions: | Squid 2.6 -> 2.7.STABLE9
+                    | Squid 3.x -> 3.5.28
+                    | Squid 4.x -> 4.16
+                    | Squid 5.x -> 5.1
+Fixed in version:  | Squid 4.17 and 5.2
+__________________________________________________________________
 
-Are you sure this is a buffer overflow?
+   <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-28116>
+   <https://www.zerodayinitiative.com/advisories/ZDI-CAN-11610>
+__________________________________________________________________
 
---eAbsdosE1cNLO4uF
-Content-Type: application/pgp-signature
+### Problem Description:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+  Due to an out of bounds memory access Squid is vulnerable to an
+  information leak vulnerability when processing WCCPv2 messages.
 
-iQIcBAEBAgAGBQJVnkwtAAoJED4KNFJOeCOoMngQANmjrOHJn7Tep0VDjTxQA8kv
-evybh7KyoBRTcteB+22p+Reccm7xVGoFKrt+B6DFnRcaTJPamx792WNJnY7r0te/
-5xE7rSBiR7OsiuNJHH1/XzDIa/3Cj6vSYmEnW4xnYH7ClVK6iU1mWh1HgqG24197
-wFHahUae+lb5BWo3GaGfR8INXB36UvQ6i3D5Lfuk4ibrenTxKqoJ2LRk0j4KCk8u
-VQ1Vx8AG645yhDXIUx2u7oPHex4zamvLyK6uoDmV/vnv1e3DerrShcldU3lr7hCY
-+WpAXHiA8fAAYKevmSQLpMsb+F11SReqCuTKY8UZ7feohIzRvHtKbvw8ozzJs1l5
-FvEu7W23CBVviDqi1puGOU//AMChSQ2BgUeN8ViIB9c8KGB3fJAZpTPNEwz/iLWQ
-U+7uSZc70J1Qx2r6ThAWFR6qYoghtHPD8HGFWbndibLtjQLQmAeLHHPibwUy1T3H
-O+zCc+0hunfwiZtMJb7kOSrDsWLGWsQLi9TirZJSVhRNoT907BF9bIXjSByHlgp7
-9eGV9PZtPmus86j4uPoDzdwKQEZT7XJunY/FTX+L5JGZF77sO51PFegQ7ag5ugM0
-bB2HOz2QiIUidPmxX0Pj077GK2KwRBBZ/vnsLlsYfpaSWiWbOSvcIWu04DYvg3Oy
-tMwLin4QyGTQ5ah0nMXo
-=Y0KX
------END PGP SIGNATURE-----
+__________________________________________________________________
 
---eAbsdosE1cNLO4uF--
+### Severity:
+
+  This problem allows a WCCPv2 sender to corrupt Squids list of
+  known WCCP routers and divert client traffic to attacker
+   controlled routers.
+
+  This attack is limited to Squid proxy with WCCPv2 enabled and
+  IP spoofing of a router IP address configured as trusted in
+  squid.conf.
+
+CVSS Score of 7.7
+<https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?vector=AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:H/A:N/E:X/RL:O/RC:C/CR:H/IR:H/AR:X/MAV:N/MAC:H/MPR:N/MUI:X/MS:U/MC:H/MI:H/MA:X&version=3.1>
+
+__________________________________________________________________
+
+### Updated Packages:
+
+#### This bug is fixed by Squid versions 4.17 and 5.2.
+
+  In addition, patches addressing this problem for the stable
+  releases can be found in our patch archives:
+
+#### Squid 4:
+  <http://www.squid-cache.org/Versions/v4/changesets/SQUID-2020_12.patch>
+
+#### Squid 5:
+ 
+<http://www.squid-cache.org/Versions/v5/changesets/squid-5-7a73a54cefff6bb83c03de219a73276e42d183d0.patch>
+
+  If you are using a prepackaged version of Squid then please
+  refer to the package vendor for availability information on
+  updated packages.
+
+__________________________________________________________________
+
+### Determining if your version is vulnerable:
+
+  All Squid built with --disable-wccpv2 are not vulnerable.
+
+  All Squid-3.x up to and including 3.5.28 built with
+  --enable-wccpv2 and configured with wccp2_router in squid.conf
+  are vulnerable.
+
+  All Squid-3.x up to and including 3.5.28 built without
+  --disable-wccpv2 and configured with wccp2_router in squid.conf
+  are vulnerable.
+
+  All Squid-4.x up to and including 4.16 built with
+  --enable-wccpv2 and configured with wccp2_router in squid.conf
+  are vulnerable.
+
+  All Squid-4.x up to and including 4.16 built without
+  --disable-wccpv2 and configured with wccp2_router in squid.conf
+  are vulnerable.
+
+  All Squid-5.x up to and including 5.1 built with
+  --enable-wccpv2 and configured with wccp2_router in squid.conf
+  are vulnerable.
+
+  All Squid-5.x up to and including 5.1 built without
+  --disable-wccpv2 and configured with wccp2_router in squid.conf
+  are vulnerable.
+
+__________________________________________________________________
+
+### Workaround:
+
+Either,
+
+The following network security Best Practices will greatly
+restrict the ability of any attacker utilizing this
+vulnerability. They can be considered workarounds for this
+issue:
+
+  * Use Private IP address for control communications (eg WCCPv2)
+    with routers.
+
+  * Firewall restriction of UDP traffic on port 2048 and any
+    other UDP ports used for WCCP(v2) control messages to only
+    permit known devices to communicate with WCCP(v2).
+
+    Note that ports used by clients and diverted by WCCP (eg 80
+    or 443) are not relevant.
+
+  * Ensure the network implements BCP 38 spoofing protection.
+    Include protection against LAN traffic spoofing as much as
+    possible.
+    See also <http://www.bcp38.info> and 
+<https://tools.ietf.org/html/bcp38>.
+
+Or,
+
+  Build Squid with --disable-wccpv2
+
+Or,
+
+  Remove all lines for wccp2_* directives from squid.conf.
+  The default configuration is not to enable WCCPv2.
+
+__________________________________________________________________
+
+### Contact details for the Squid project:
+
+  For installation / upgrade support on binary packaged versions
+  of Squid: Your first point of contact should be your binary
+  package vendor.
+
+  If you install and build Squid from the original Squid sources
+  then the <squid-users@lists.squid-cache.org> mailing list is
+  your primary support point. For subscription details see
+  <http://www.squid-cache.org/Support/mailing-lists.html>.
+
+  For reporting of non-security bugs in the latest STABLE release
+  the squid bugzilla database should be used
+  <http://bugs.squid-cache.org/>.
+
+  For reporting of security sensitive bugs send an email to the
+  <squid-bugs@lists.squid-cache.org> mailing list. It's a closed
+  list (though anyone can post) and security related bug reports
+  are treated in confidence until the impact has been established.
+
+__________________________________________________________________
+
+### Credits:
+
+  This vulnerability was discovered by Lyu working with Trend
+  Micro Zero Day Initiative.
+
+  Fixed by Amos Jeffries of Treehouse Networks Ltd.
+
+__________________________________________________________________
+
+### Revision history:
+
+  2020-08-17 10:43:36 UTC Initial Report
+  2021-02-09 00:00:00 UTC Advisory Release by ZDI
+  2021-10-03 00:00:00 UTC Packages Released
+
+__________________________________________________________________
+END
