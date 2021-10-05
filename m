@@ -1,62 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/27/2
-Message-ID: <CAJAmgfgpTF--5HsAaWrmWaoM5dHswtdNB2==gUdhSCiDYG6X+A@mail.gmail.com>
-Date: Wed, 27 Oct 2021 09:02:02 -0400
-From: Francis Perron <francis.perron@...pify.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/05/1
+Message-ID: <bdea6093-16a6-a6c7-bd9f-a774fd158aec@apache.org>
+Date: Tue, 05 Oct 2021 09:02:50 +0000
+From: Stefan Eissing <icing@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: Carlos Alberto Lopez Perez <clopez@...lia.com>, security@...kit.org,  Alberto Garcia <berto@...lia.com>
-Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2021-0006
+Subject: CVE-2021-41524: Apache HTTP Server: null pointer dereference in h2 fuzzing 
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 27, 2021 at 12:09 AM Salvatore Bonaccorso <carnil@...ian.org> wrote:
->
-> Hi,
->
-> [dropping most other recipients]
->
-> On Tue, Oct 26, 2021 at 08:05:36PM +0100, Carlos Alberto Lopez Perez wrote:
-> > ------------------------------------------------------------------------
-> > WebKitGTK and WPE WebKit Security Advisory                 WSA-2021-0006
-> > ------------------------------------------------------------------------
-> >
-> > Date reported           : October 26, 2021
-> > Advisory ID             : WSA-2021-0006
-> > WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2021-0006.html
-> > WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2021-0006.html
-> > CVE identifiers         : CVE-2021-30846, CVE-2021-30848,
-> >                           CVE-2021-30849, CVE-2021-30851,
-> >                           CVE-2021-30858, CVE-2021-42762.
-> >
-> > Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
-> [...]
-> > CVE-2021-30851
-> >     Versions affected: WebKitGTK and WPE WebKit before 2.34.0.
-> >     Credit to Samuel Groß of Google Project Zero.
-> >     Impact: Processing maliciously crafted web content may lead to code
-> >     execution. Description: A memory corruption vulnerability was
-> >     addressed with improved locking.
->
-> CVE-2021-30851 seems to be REJECTED (cf.
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-30851). Is
-> there a typo in the CVE id for this one or did the CVE got rejected
-> later on?
+Severity: moderate
 
-BCC'ing Samuel Groß
+Description:
 
+While fuzzing the 2.4.49 httpd, a new null pointer dereference was detected during HTTP/2 request processing,
+allowing an external source to DoS the server. This requires a specially crafted request. 
 
-Salvatore -
-  I think 30851 was not issued, and it may have been a mistake here.
-There was no other CVE issued as part of WSA-2021-0006 according to
-the GitHub repo for the CVE program:
-https://github.com/CVEProject/cvelist/search?q=wsa-2021-0006
+The vulnerability was recently introduced in version 2.4.49. No exploit is known to the project.
 
-if you need a CVE for this, Samuel may be able to sort this out with
-the WebKit folks, who also seem to advertise 30851 on their security
-advisory site: https://webkitgtk.org/security/WSA-2021-0006.html
+Mitigation:
 
+Disable the HTTP/2 protocol.
 
-Have a good Wednesday,
+Credit:
 
--- 
-Francis Perron
-  Engineering Program Manager | Security Incident Response
+Apache httpd team would like to thank LI ZHI XIN from NSFocus Security Team for reporting this issue.
+
+References:
+
+https://httpd.apache.org/security/vulnerabilities_24.html
+
