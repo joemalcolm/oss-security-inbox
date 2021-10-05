@@ -1,4 +1,9 @@
-Received: (qmail 32589 invoked by uid 550); 12 Dec 2024 15:55:05 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["571" "Tuesday" "5" "October" "2021" "09:02:50" "+0000" "Stefan Eissing" "icing@apache.org" nil "25" "[oss-security] CVE-2021-41524: Apache HTTP Server: null pointer dereference in h2 fuzzing " nil nil nil "10" nil nil (number mark "U       icing@apache Oct  5   25/571   " thread-indent "\"[oss-security] CVE-2021-41524: Apache HTTP Server: null pointer dereference in h2 fuzzing \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-41524: Apache HTTP Server: null pointer dereference in h2 fuzzing " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 24188 invoked by uid 550); 5 Oct 2021 11:54:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,44 +12,39 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 1332 invoked from network); 12 Dec 2024 14:10:33 -0000
-Authentication-Results: apache.org; auth=none
+Received: (qmail 15781 invoked from network); 5 Oct 2021 09:03:03 -0000
 Content-Type: text/plain; charset=utf-8
-From: Daniel Gaspar <dpgaspar@apache.org>
+From: Stefan Eissing <icing@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <14c22304-1c6a-d3d8-312d-d5c5975fb290@apache.org>
+Message-ID: <bdea6093-16a6-a6c7-bd9f-a774fd158aec@apache.org>
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 12 Dec 2024 14:09:29 +0000
+Date: Tue, 05 Oct 2021 09:02:50 +0000
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2024-55633: Apache Superset: SQLLab Improper readonly query
- validation allows unauthorized write access 
+Subject: [oss-security] CVE-2021-41524: Apache HTTP Server: null pointer dereference in h2
+ fuzzing 
 
-Affected versions:
-
-- Apache Superset before 4.1.0
+Severity: moderate
 
 Description:
 
-Improper Authorization vulnerability in Apache Superset. On Postgres analyt=
-ic databases an attacker with SQLLab access can=C2=A0craft a specially desi=
-gned SQL DML statement=C2=A0that is Incorrectly identified as a read-only q=
-uery, enabling its execution. Non postgres analytics database connections a=
-nd postgres analytics database connections set with a readonly user (advise=
-d) are not vulnerable.=C2=A0
+While fuzzing the 2.4.49 httpd, a new null pointer dereference was detected=
+ during HTTP/2 request processing,
+allowing an external source to DoS the server. This requires a specially cr=
+afted request.=20
 
-This issue affects Apache Superset: before 4.1.0.
+The vulnerability was recently introduced in version 2.4.49. No exploit is =
+known to the project.
 
-Users are recommended to upgrade to version 4.1.0, which fixes the issue.
+Mitigation:
+
+Disable the HTTP/2 protocol.
 
 Credit:
 
-Beto de Almeida (remediation developer)
-Daniel Gaspar (coordinator)
-James Ford (Striveworks) (finder)
+Apache httpd team would like to thank LI ZHI XIN from NSFocus Security Team=
+ for reporting this issue.
 
 References:
 
-https://superset.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2024-55633
+https://httpd.apache.org/security/vulnerabilities_24.html
 
