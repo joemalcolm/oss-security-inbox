@@ -1,28 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/15/6
-Message-ID: <a144491b-8efb-dff2-cda5-e0d5be744359@apache.org>
-Date: Wed, 15 Sep 2021 18:57:33 +0100
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/07/4
+Message-ID: <88785c14-8198-8f86-6a0f-33daf51dfb30@apache.org>
+Date: Thu, 07 Oct 2021 15:20:29 +0000
+From: Dave Fisher <wave@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-41079: Apache Tomcat DoS with unexpected TLS packet
+Subject: CVE-2021-40439: Apache OpenOffice: Billion Laughs 
 Content-Type: text/plain; charset=utf-8
 
-Severity: high
+Severity: medium
 
 Description:
 
-Apache Tomcat 8.5.0 to 8.5.63, 9.0.0-M1 to 9.0.43 and 10.0.0-M1 to 
-10.0.2 did not properly validate incoming TLS packets. When Tomcat was 
-configured to use NIO+OpenSSL or NIO2+OpenSSL for TLS, a specially 
-crafted packet could be used to trigger an infinite loop resulting in a 
-denial of service.
+Apache OpenOffice has a dependency on expat software. Versions prior to 2.1.0 were subject to CVE-2013-0340 a "Billion Laughs" entity expansion denial of service attack and exploit via crafted XML files. ODF files consist of a set of XML files.
 
-Credit:
+All versions of Apache OpenOffice up to 4.1.10 are subject to this issue.
 
-The Apache Tomcat security team would like to thank Thomas Wozenilek for 
-originally reporting this issue and David Frankson of Infinite Campus 
-for also providing a test case that reproduced the issue.
+expat in version 4.1.11 is patched.
 
-References:
-
-https://lists.apache.org/thread.html/rccdef0349fdf4fb73a4e4403095446d7fe6264e0a58e2df5c6799434%40%3Cannounce.tomcat.apache.org%3E
