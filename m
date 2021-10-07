@@ -1,117 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/31/2
-Message-ID: <nycvar.QRO.7.76.2103310012180.30524@fvyyl>
-Date: Wed, 31 Mar 2021 08:02:03 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...l.haxx.se>,  curl-announce@...l.haxx.se, libcurl hacking <curl-library@...l.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: TLS 1.3 session ticket proxy host mixup
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/07/1
+Message-ID: <BL1PR11MB541646CE3C8151DEAD755133DAB19@BL1PR11MB5416.namprd11.prod.outlook.com>
+Date: Thu, 7 Oct 2021 06:01:43 +0000
+From: "Tim Wadhwa-Brown (twadhwab)" <twadhwab@...co.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: RE: CVE-2021-41773: Path traversal and file disclosure vulnerability in Apache HTTP Server 2.4.49 
 Content-Type: text/plain; charset=utf-8
 
-TLS 1.3 session ticket proxy host mixup
-=======================================
+Hi oss-security folks,
 
-Project curl Security Advisory, March 31st 2021 -
-[Permalink](https://curl.se/docs/CVE-2021-22890.html)
+Closing the loop on this one. Will Dormann, Hacker Fantastic and I successfully managed to turn this into RCE on both Windows and Linux. With mod_cgi (and maybe other similar extensions) enabled, Will showed he could get calc to pop on Windows and HF and I subsequently figured out how to trigger the bug on Linux to reach /bin/sh and POST a shell payload. Whilst the configuration may not be default it's probably worth doubling down on any efforts to get the patch rolled out if you're affected. There's a whole series of Twitter that I shan't bore you with but https://twitter.com/hackerfantastic/status/1445523890759819264?s=20 should be a good starting point if you want to read back.
 
-VULNERABILITY
--------------
+Tim
 
-Enabled by default, libcurl supports the use of TLS 1.3 session tickets to
-resume previous TLS sessions to speed up subsequent TLS handshakes.
+PS Apologies for any email mangling, first time posting here in quite some time and sadly corporate mail client is no longer KMail ☹. Not sure if it will become a regular habit again.
 
-When using a HTTPS proxy and TLS 1.3, libcurl can confuse session tickets
-arriving from the HTTPS proxy but work as if they arrived from the remote
-server and then wrongly "short-cut" the host handshake. The reason for this
-confusion is the modified sequence from TLS 1.2 when the session ids would
-provided only during the TLS handshake, while in TLS 1.3 it happens post
-hand-shake and the code was not updated to take that changed behavior into
-account.
+Tim Wadhwa-Brown
+Security Research Lead, CX Technology & Transformation Group
+twadhwab@...co.com
+Tel: +44 208 824 0239
+Mail Stop UXB10/3
+82 Oxford Road,
+Uxbridge,
+UB8 1UX,
+United Kingdom
+cisco.com | labs.portcullis.co.uk
 
-When confusing the tickets, a HTTPS proxy can trick libcurl to use the wrong
-session ticket resume for the host and thereby circumvent the server TLS
-certificate check and make a MITM attack to be possible to perform unnoticed.
+-----Original Message-----
+From: Stefan Eissing <icing@...che.org> 
+Sent: 05 October 2021 10:03
+To: oss-security@...ts.openwall.com
+Subject: [oss-security] CVE-2021-41773: Path traversal and file disclosure vulnerability in Apache HTTP Server 2.4.49 
 
-This flaw can allow a malicious HTTPS proxy to MITM the traffic. Such a
-malicious HTTPS proxy needs to provide a certificate that curl will accept for
-the MITMed server for an attack to work - unless curl has been told to ignore
-the server certificate check.
+Severity: important
 
-We are not aware of any exploit of this flaw.
+Description:
 
-INFO
-----
+A flaw was found in a change made to path normalization in Apache HTTP Server 2.4.49. An attacker could use a path traversal attack to map URLs to files outside the expected document root.  
 
-This flaw has existed in libcurl since commit
-[549310e907e](https://github.com/curl/curl/commit/549310e907e) in libcurl 7.63.0,
-released on December 12, 2018.
+If files outside of the document root are not protected by "require all denied" these requests can succeed. Additionally this flaw could leak the source of interpreted files like CGI scripts.
 
-It can only trigger when TLS 1.3 is used with the HTTPS proxy and not with
-earlier TLS versions. It *cannot* trigger with TLS 1.2 or earlier versions.
+This issue is known to be exploited in the wild.
 
-It might be worth highlighting that an HTTPS proxy is a proxy which libcurl
-communicates with over TLS specifically, and then speaks HTTPS through, making
-it two layers of TLS. It is different than the more common HTTP proxy setup,
-where libcurl just does normal TCP with the proxy.
+This issue only affects Apache 2.4.49 and not earlier versions.  
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2021-22890 to this issue.
+Credit:
 
-CWE-290: Authentication Bypass by Spoofing
+This issue was reported by Ash Daulton along with the cPanel Security Team
 
-Severity: Low
+References:
 
-AFFECTED VERSIONS
------------------
+https://httpd.apache.org/security/vulnerabilities_24.html
 
-This issue only exists when libcurl is built to use OpenSSL or one of its
-forks.
 
-- Affected versions: curl 7.63.0 to and including 7.75.0
-- Not affected versions: curl < 7.63.0 and curl >= 7.76.0
-
-Also note that libcurl is used by many applications, and not always
-advertised as such.
-
-THE SOLUTION
-------------
-
-Make sure the proxy/host distinction is done correctly.
-
-A [fix for CVE-2021-22890](https://github.com/curl/curl/commit/b09c8ee15771c614c4bf3ddac893cdb12187c844)
-
-(The patch URL will change in the final published version of this advisory)
-
-RECOMMENDATIONS
---------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade libcurl to version 7.76.0
-
-  B - Apply the patch to your local version
-
-  C - Use another TLS backend
-
-  D - Avoid TLS 1.3 with HTTPS proxies
-
-TIMELINE
---------
-
-This issue was reported to the curl project on March 17, 2021.
-
-This advisory was posted on March 31st 2021.
-
-CREDITS
--------
-
-This issue was reported by Mingtao Yang, Facebook. Patch by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://www.wolfssl.com/contact/
+Download attachment "PGP.sig" of type "application/pgp-signature" (822 bytes)
