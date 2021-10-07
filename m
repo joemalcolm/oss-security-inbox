@@ -1,29 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/04/2
-Message-ID: <20211104133046.GA2412204@orca>
-Date: Thu, 4 Nov 2021 13:30:46 +0000
-From: "Leonid Isaev (ifax)" <leonid.isaev@...x.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/07/3
+Message-ID: <ae35f181-47fa-7dcf-480a-5db441744cb0@apache.org>
+Date: Thu, 07 Oct 2021 15:15:30 +0000
+From: Dave Fisher <wave@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Trojan Source Attacks
+Subject: CVE-2021-33035: Apache OpenOffice: Buffer overflow from a crafted DBF file 
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 04, 2021 at 01:36:37PM +0200, Georgi Guninski wrote:
-> Similar attack is known, search the web for "homograph attack"
-> or check:  https://dev.to/logan/homographs-attack--5a1p
-> 
-> The basic idea is that Cyrillic M-PM-^P looks like Latin A.
-> 
-> Can you tell first from second:
-> True   M-PM-"rue
-> False  FM-PM-0lse
-> Zero   ZM-PM-5ro
-> google gM-PM->M-PM->gle
+Severity: high
 
-Yeah. And this is why when replying, my mutt(1) is configured to pipe messages
-to "cat -v" before launching vi(1)...
+Description:
 
-Sincerely,
-L.
+Apache OpenOffice opens dBase/DBF documents and shows the contents as spreadsheets.  DBF are database files with data organized in fields.  When reading DBF data the size of certain fields is not checked: the data is just copied into local variables. A carefully crafted document could overflow the allocated space, leading to the execution of arbitrary code by altering the contents of the program stack.  
 
--- 
-Leonid Isaev
+This issue affects Apache OpenOffice up to and including version 4.1.10
+
+This issue is fixed in Apache OpenOffice 4.1.11
+
+
+Credit:
+
+Apache OpenOffice would like to thank Eugene Lim, Government Technology Agency of Singapore for reporting this issue.
+
+References:
+
+https://github.com/apache/openoffice/commit/efddaef0151af3be16078cc4d88c6bae0f911e56#diff-ea66e734dd358922aba12ad4ba39c96bdc6cbde587d07dbc63d04daa0a30e90f
+
