@@ -1,49 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/07/2
-Message-ID: <CAFcO6XOOjFd7XKuMVDyGXka+jdk3=RXFAe2a11SV20_JZzYHqw@mail.gmail.com>
-Date: Sat, 8 May 2021 00:24:11 +0800
-From: butt3rflyh4ck <butterflyhuangxx@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/07/5
+Message-ID: <55c86d5f-1d0a-fb45-e58e-e44d9667e5ef@apache.org>
+Date: Thu, 07 Oct 2021 15:23:08 +0000
+From: Dave Fisher <wave@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: f2fs: out-of-bounds memory access bug
+Subject: CVE-2021-28129: DEB packaging for Apache OpenOffice 4.1.8 installed with a non-root userid and groupid 
 Content-Type: text/plain; charset=utf-8
 
-The patch is for this issue in upstream linux:
+Severity: low
 
-https://git.kernel.org/pub/scm/linux/kernel/git/jaegeuk/f2fs.git/commit/?h=dev&id=b862676e371715456c9dade7990c8004996d0d9e
+Description:
 
-Regards,
- butt3rflyh4ck.
+While working on Apache OpenOffice 4.1.8 a developer discovered that the DEB package did not install using root, but instead used a userid and groupid of 500. This both caused issues with desktop integration and could allow a crafted attack on files owned by that user or group if they exist.
 
+Users who installed the Apache OpenOffice 4.1.8 DEB packaging should upgrade to the latest version of Apache OpenOffice.
 
-On Mon, Mar 29, 2021 at 12:00 AM butt3rflyh4ck
-<butterflyhuangxx@...il.com> wrote:
->
-> Hi,
->
-> I reported an out of bounds memory access bug in get_next_net_page()
-> in fs/f2fs/node.c and reproduce in 5.12.0-rc3. Now the patch is out
-> and tested it in 5.12.0-rc4.
->
-> Root Cause:
->  the f2fs_flush_nat_entries()  function is called during the
-> checkpointing process,
-> when it flush dirty nats in nat entry sets, it will call
-> __flush_nat_entry_set(), but before call it,the legality of nids is
-> not correctly tested. If the nids is out of range, may access
-> out-of-bounds memory.
->
-> Some details and Patch for this issue:
-> https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg2520013.html
-> Now the patch is not available in upstream, CVE is not assigned.
->
-> Now announced on oss-security@...ts.openwl.com.
->
-> This issue was discovered by the ADLab of venustech.
->
-> Regards,
->  butt3rflyh4ck.
+Credit:
 
+Arrigo Marchiori
 
-
--- 
-Active Defense Lab of Venustech
