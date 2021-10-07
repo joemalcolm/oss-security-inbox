@@ -1,188 +1,118 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/09/1
-Message-ID: <YRFeBeiw4NuBZ2YG@ryzen.an3e.de>
-Date: Mon, 9 Aug 2021 18:55:33 +0200
-From: Matthias Andree <matthias.andree@....de>
-To: oss-security@...ts.openwall.com
-Subject: fetchmail 6.4.21 released/regression fix for 6.4.20's security fix, and UPDATE: fetchmail <= 6.4.19 security announcement 2021-01 (CVE-2021-36386)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/07/2
+Message-Id: <E1mYUaC-0002lK-RC@xenbits.xenproject.org>
+Date: Thu, 07 Oct 2021 14:41:16 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 386 v2 (CVE-2021-28702) - PCI devices with RMRRs not deassigned correctly
 Content-Type: text/plain; charset=utf-8
 
-UPDATE:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-While fetchmail 6.4.20 fixed CVE-2021-36386, it
-introduced a bug WRT buffered logging that got fixed in 6.4.21.
+            Xen Security Advisory CVE-2021-28702 / XSA-386
+                               version 2
 
-Packagers should either upgrade all the way to 6.4.21, or pick the
-near-trivial regression fix from section #3 below or Git commit d3db2da1
-can be cherry-picked from the GitLab or SourceForge repos.
+            PCI devices with RMRRs not deassigned correctly
 
-fetchmail 6.4.21 is available from
-<https://sourceforge.net/projects/fetchmail/files/branch_6.4/>.
+UPDATES IN VERSION 2
+====================
 
-The source archive is available at:
-<https://sourceforge.net/projects/fetchmail/files/branch_6.4/fetchmail-6.4.21.tar.xz/download>
-<https://sourceforge.net/projects/fetchmail/files/branch_6.4/fetchmail-6.4.21.tar.lz/download>
+Updated/corrected information about vulnerable versions.
+Upstream Xen 4.12 is not affected.
 
-Detached GnuPG signatures for the respective tarballs are at:
-<https://sourceforge.net/projects/fetchmail/files/branch_6.4/fetchmail-6.4.21.tar.xz.asc/download>
-<https://sourceforge.net/projects/fetchmail/files/branch_6.4/fetchmail-6.4.21.tar.lz.asc/download>
+There is no harm from applying the patch to an unaffected version.
 
-SHA256 hash values for the tarballs:
-SHA256(fetchmail-6.4.21.tar.lz)= 3abbe5f7bb003bdf3b8b71a2edd896fba55cbd3d19d59fe2ff8925fca4983af7
-SHA256(fetchmail-6.4.21.tar.xz)= 6a459c1cafd7a1daa5cd137140da60c18c84b5699cd8e7249a79c33342c99d1d
+ISSUE DESCRIPTION
+=================
 
-Release notes follow:
----------------------
+Certain PCI devices in a system might be assigned Reserved Memory
+Regions (specified via Reserved Memory Region Reporting, "RMRR").
+These are typically used for platform tasks such as legacy USB
+emulation.
 
-fetchmail-6.4.21 (released 2021-08-09, 30042 LoC):
+If such a device is passed through to a guest, then on guest shutdown
+the device is not properly deassigned.  The IOMMU configuration for
+these devices which are not properly deassigned ends up pointing to a
+freed data structure, including the IO Pagetables.
 
-# REGRESSION FIX:
-* The new security fix in 6.4.20 for CVE-2021-36386 caused truncation of
-  messages logged to buffered outputs, predominantly --logfile.
+Subsequent DMA or interrupts from the device will have unpredictable
+behaviour, ranging from IOMMU faults to memory corruption.
 
-  This also caused lines in the logfile to run into one another because
-  the fragment containing the '\n' line-end character was usually lost.
+This bug has existed since at least Xen 4.4 But it was previously
+masked by a tangentially-related misbehaviour; that misbehaviour was
+corrected in f591755823a7
+ IOMMU/PCI: don't let domain cleanup continue when device de-assignment failed
+which was backported to supported stable branches.
 
-  Reason is that on all modern systems (with <stdarg.h> header and vsnprintf()
-  interface), the length of log message fragments was added up twice, so
-  that these ended too deep into a freshly allocated buffer, after the '\0'
-  byte.  Unbuffered outputs flushed the fragments right away, which masked the
-  bug.
+IMPACT
+======
 
-  Reported by: Jürgen Edner, Erik Christiansen.
+Administrators of guests which have been assigned RMRR-using PCI
+devices can cause denial of service and other problems, possibly
+including escalation of privilege.
 
-
-Updated security announcement follows:
---------------------------------------
-
-fetchmail-SA-2021-01: DoS or information disclosure logging long messages
-
-Topics:		fetchmail denial of service or information disclosure when logging long messages
-
-Author:		Matthias Andree
-Version:	1.3
-Announced:	2021-07-28 (original), 2021-08-09 (last update)
-Type:		missing variable initialization can cause read from bad memory
-		locations
-Impact:		fetchmail logs random information, or segfaults and aborts,
-		stalling inbound mail
-Danger:		low
-Acknowledgment:	Christian Herdtweck, Intra2net AG, Tübingen, Germany
-		for analysis and report and a patch suggestion
-
-CVE Name:	CVE-2021-36386 and CVE-2008-2711
-URL:		https://www.fetchmail.info/fetchmail-SA-2021-01.txt
-URL:		https://www.fetchmail.info/fetchmail-SA-2008-01.txt
-Project URL:	https://www.fetchmail.info/
-
-Affects:	- fetchmail releases up to and including 6.3.8
-		- fetchmail releases 6.3.17 up to incl. 6.4.19
-		  (but note 6.4.20 regresses for buffered output,
-		   f.i. with --logfile)
-
-Not affected:	- fetchmail releases 6.4.21 and newer
-		  (fetchmail 6.4.20 fixes the immediate bug but regresses
-		   and causes message truncation on buffered output)
-		- fetchmail releases 6.3.9 to 6.3.16
-
-Corrected in:	c546c829 + d3db2da1 Git commit hash (both needed)
-		2021-08-09 fetchmail 6.4.21 release tarball
-		2021-08-03 7.0.0-alpha9/6.5.0-beta4 snapshots
-
-0. Release history
+VULNERABLE SYSTEMS
 ==================
 
-2021-07-07	initial report to maintainer
-2021-07-28 1.0	release
-2021-07-28 1.1	update Git commit hash with correction
-2021-08-03 1.2  add references to CVE-2008-2711/fetchmail-SA-2008-01
-2021-08-09 1.3  mention buffered logging regression (--logfile)
+For stable Xen releases: 4.13.4, 4.14.3 and 4.15.1 are vulnerable.
+Other versions of Xen released by the Xen Project are not affected.
 
+For Xen git branches: the HEADs of 4.13 and later (including
+xen-unstable) were vulnerable, up until 2021-10-05 (when the patch in
+this advisory was committed).  4.12 and earlier are not affected.
 
-1. Background
-=============
+In detail: code that has the following patch applied, is vulnerable:
+ IOMMU/PCI: don't let domain cleanup continue when device de-assignment failed
+That patch is currently in upstream stable branches 4.13 onwards and
+was included in the most recent stable point releases of each Xen version.
+Other downstream Xen builds may be affected if that patch was backported.
 
-fetchmail is a software package to retrieve mail from remote POP3, IMAP,
-ETRN or ODMR servers and forward it to local SMTP, LMTP servers or
-message delivery agents. fetchmail supports SSL and TLS security layers
-through the OpenSSL library, if enabled at compile time and if also
-enabled at run time, in both SSL/TLS-wrapped mode on dedicated ports as
-well as in-band-negotiated "STARTTLS" and "STLS" modes through the
-regular protocol ports.
+Only Intel x86 systems are affected.  AMD x86 systems, and Arm
+systems, are all unaffected.
 
+Only systems using PCI passthrough are affected.  (And then, only if
+the assigned devices have RMRRs, but whether a device advertises RMRRs
+is not easy to discern.)
 
-2. Problem description and Impact
-=================================
+MITIGATION
+==========
 
-Fetchmail has long had support to assemble log/error messages that are
-generated piecemeal, and takes care to reallocate the output buffer as needed.
-In the reallocation case, i. e. when long log messages are assembled that can
-stem from very long headers, and on systems that have a varargs.h/stdarg.h
-interface (all modern systems), fetchmail's code would fail to reinitialize
-the va_list argument to vsnprintf.
+There is no mitigation (other than not passing through PCI devices
+with RMRRs to guests).
 
-The exact effects depend on the verbose mode (how many -v are given) of
-fetchmail, computer architecture, compiler, operating system and
-configuration.  On some systems, the code just works without ill effects, some
-systems log a garbage message (potentially disclosing sensitive information),
-some systems log literally "(null)", some systems trigger SIGSEGV (signal
-#11), which crashes fetchmail, causing a denial of service on fetchmail's end.
+RESOLUTION
+==========
 
-The same bug then named CVE-2008-2711 had already been fixed in fetchmail 6.3.9,
-but a code refactoring in fetchmail 6.3.17 (commit 414a3809 in 2010)
-reintroduced the bug.
-Fetchmail versions 6.4.19 and older are no longer supported, however.
+Applying the appropriate attached patch resolves this issue.
 
-The bugfix used in 6.4.20 uses a different, more thorough, approach.
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
 
+xsa386.patch           xen-unstable - Xen 4.13.x
 
-3. Solution
-===========
+$ sha256sum xsa386*
+f2f83c825e249bba9454437b48bbd8307fe7a224f56484388a67af124dfd279b  xsa386.patch
+$
 
-Install fetchmail 6.4.21 or newer.
+NOTE CONCERNING LACK OF EMBARGO
+===============================
 
-The fetchmail source code is available from
-<https://sourceforge.net/projects/fetchmail/files/>.
+This issue was reported and debugged in public before the security nature
+became apparent.
+-----BEGIN PGP SIGNATURE-----
 
-Distributors are encouraged to review the NEWS file and move forward to
-6.4.21, rather than backport individual security fixes, because doing so
-routinely misses other fixes crucial to fetchmail's proper operation,
-for which no security announcements are issued, or documentation,
-or translation updates.
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmFfBvkMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZY20H/jWe2XVSU6R+cOv4GbhWL5sWBv4skLZ07yq77p8i
+JB9nJXdVkyHJPSkENzggGGiygiHMJFSD5cLvczJp1IbAlQKQlZt/oVG9oTWHHeqO
+joabwgZ9UyNW8/beCigRo1PYdiWI7tMsLp3D/LAjE8+ZhBRjD0NKLyWK26Uw0R8A
+Su5tApmlBGx0BJzQm4BUWiyog86fPoNcBkP1hRJfj1BfXRjVYB5MsaPCtMhsqBlG
+CFjDJ51Wn4Esxkg22e/429MbbExIAJUZoxuOWDk/D7nQShQNBTfqci4pfcaf5E+f
+Mxi32bIr/XY5LLgf0Opu5Sl2JP3s7Ik3IDlSa+wYoGIZWB4=
+=Ti35
+-----END PGP SIGNATURE-----
 
-The regression fix for the new non-security bug in 6.4.20 that causes
-log message truncation simply consists of editing report.c to rotate lines 289
-through 291, such that the /corrected/ report.c then looks like this:
-
-   286	    n = snprintf (partial_message + partial_message_size_used,
-   287			    partial_message_size - partial_message_size_used,
-   288			    message, a1, a2, a3, a4, a5, a6, a7, a8);
-   289
-   290	    if (n > 0) partial_message_size_used += n;
-   291	#endif
-   292
-   293	    if (unbuffered && partial_message_size_used != 0)
-
-
-Fetchmail 6.4.X releases have been made with a focus on unchanged user and
-program interfaces so as to avoid disruptions when upgrading from 6.3.Z or
-6.4.X to 6.4.Y with Y > X.  Care was taken to not change the interface
-incompatibly.
-
-
-A. Copyright, License and Non-Warranty
-======================================
-
-(C) Copyright 2021 by Matthias Andree, <matthias.andree@....de>.
-Some rights reserved.
-
-fetchmail-SA-2021-01 © 2021 by Matthias Andree is licensed under CC
-BY-ND 4.0. To view a copy of this license, visit
-http://creativecommons.org/licenses/by-nd/4.0/
-
-THIS WORK IS PROVIDED FREE OF CHARGE AND WITHOUT ANY WARRANTIES.
-Use the information herein at your own risk.
-
-END of fetchmail-SA-2021-01
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Download attachment "xsa386.patch" of type "application/octet-stream" (1183 bytes)
