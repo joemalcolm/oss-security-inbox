@@ -1,51 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/15/3
-Message-ID: <fc29939d-fac1-737a-a583-ea14a6a0baa9@eenterphace.org>
-Date: Wed, 15 Dec 2021 19:45:58 +0100
-From: Moritz Bechler <mbechler@...terphace.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/08/2
+Message-ID: <CAKQ1sVMn=09uimvWxVZrrVRGSDk5HLCB0TQViFJp1WFNG7jvWg@mail.gmail.com>
+Date: Fri, 8 Oct 2021 20:37:33 +0200
+From: Yann Ylavic <ylavic.dev@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-45046: Apache Log4j2 Thread Context Message Pattern and Context Lookup Pattern vulnerable to a denial of service attack
+Subject: Re: CVE-2021-42013: Path Traversal and Remote Code Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Fri, Oct 8, 2021 at 8:53 AM Roman Medina-Heigl Hernandez
+<roman@...labs.com> wrote:
+>
+> I posted RCE exploit for this (it works for both CVEs: 41773 & 42013)
+> and some other details regarding requirements / exploitability, which
+> you may find useful at:
+>
+> https://twitter.com/roman_soft/status/1446252280597078024
 
-> 
->> It was found that the fix to address CVE-2021-44228 in
->> Apache Log4j 2.15.0 was incomplete in certain non-default
->> configurations. This could allows [DoS]...
-> 
-> Is there any information on the non-default configuration that triggers the DoS?
-> 
-> What I am trying to understand is, if we clear the first CVE through,
-> say, envar LOG4J_FORMAT_MSG_NO_LOOKUPS=true or
-> -Dlog4j2.formatMsgNoLookups=true, then where does the vulnerability
-> lie for the second CVE? What configuration change needs to be done to
-> reduce risk on the second CVE after the first CVE has been mitigated?
+Thanks, that's fair analysis.
 
-[not affiliated with log4j, but maybe I can still shed some light]
-
-The issue is that expansion of the lookup expressions was only disabled 
-for the message contents, not within the layout pattern formatting.
-
-The thread local MDC context may contain information that can be 
-controlled by an attacker (if used). If you then have a layout pattern 
-configured that includes such information, e.g. $${ctx:name} [the 
-mentioned vectors via %X, %mdc, or %MDC I personally (and I think 
-others) could not easily replicate, maybe there is some trick to it], 
-expansion of an attacker provided expression will still happen and can 
-be exploited.
-
-For versions <2.15 this renders log4j2.formatMsgNoLookups=true 
-ineffective if such a layout configuration is used.
-
-For =2.15 this is mostly mitigated by the fact protocol and target host 
-to which lookups are possible are also restricted to localhost by 
-default. There still seems to be a way to hang/crash the process, thou.
-
-You could probably check whether any of the layouts used contain any MDC 
-data, but imho, if you want to avoid surprises you would really be 
-better off patching. Not sure why you would not be able to update.
-
-
-
-Moritz
+Cheers;
+Yann.
