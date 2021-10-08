@@ -1,10 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/30/4
-Message-ID: <YGN5CFulL20wXopl@zen.localdomain>
-Date: Tue, 30 Mar 2021 21:16:24 +0200
-From: ortmann@...teo.de
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/08/6
+Message-ID: <CAKQ1sVP9YFXTvqqfHDSpGDv=552iL48xdDtQyqV7-MAVg4jWCA@mail.gmail.com>
+Date: Fri, 8 Oct 2021 23:59:03 +0200
+From: Yann Ylavic <ylavic.dev@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Remote DoS Vulnerability in bitchx, ircii < 20210314 and scrollz
+Subject: Re: CVE-2021-42013: Path Traversal and Remote Code Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)
 Content-Type: text/plain; charset=utf-8
 
-CVE Name: CVE-2021-29376
+On Fri, Oct 8, 2021 at 11:46 PM Solar Designer <solar@...nwall.com> wrote:
+>
+> On Fri, Oct 08, 2021 at 11:27:37PM +0200, Yann Ylavic wrote:
+> > For completeness I'll add this tweet/blog from Stefan (OP) about the
+> > vulnerability and the fixes in httpd:
+> > https://twitter.com/icing/status/1446504661448593408
+>
+> Thanks, but you just did that again...  For completeness, let's have the
+> actual content on the list, not only links to content.
+>
+> That tweet above refers to "Apache httpd 2.4.50 post mortem" at:
+>
+> https://github.com/icing/blog/blob/main/httpd-2.4.50.md
+>
+> I'm attaching the httpd-2.4.50.md file above to this message.
+>
+> This way, historians will be able to make full sense of the thread in
+> here even after Twitter and GitHub are gone. ;-)
+
+Noted, thanks for correcting me (again).
+
+Regards;
+Yann.
