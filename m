@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2142" "Thursday" "21" "January" "2016" "20:57:17" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160122015717.0586842E03A@smtpvbsrv1.mitre.org>" "50" "[oss-security] Re: CVE request Qemu: net: e1000 infinite loop in start_xmit and e1000_receive_iov routines" nil nil nil "1" "2016012201:57:17" "[oss-security] Re: CVE request Qemu: net: e1000 infinite loop in start_xmit and e1000_receive_iov routines" (number mark "U       cve-assign@m Jan 21   50/2142  " thread-indent "\"[oss-security] Re: CVE request Qemu: net: e1000 infinite loop in start_xmit and e1000_receive_iov routines\"\n") "<alpine.LFD.2.20.1601192253240.22604@wniryva>" ("<alpine.LFD.2.20.1601192253240.22604@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["824" "Friday" "8" "October" "2021" "23:59:03" "+0200" "Yann Ylavic" "ylavic.dev@gmail.com" nil "23" "Re: [oss-security] CVE-2021-42013: Path Traversal and Remote Code Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)" nil nil nil "10" nil nil (number mark "U       ylavic.dev@g Oct  8   23/824   " thread-indent "\"Re: [oss-security] CVE-2021-42013: Path Traversal and Remote Code Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-42013: Path Traversal and Remote Code Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 10130 invoked by uid 550); 22 Jan 2016 01:57:29 -0000
+Received: (qmail 24329 invoked by uid 550); 8 Oct 2021 22:08:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,62 +12,67 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10112 invoked from network); 22 Jan 2016 01:57:29 -0000
-From: cve-assign@mitre.org
-To: ppandit@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, lersek@redhat.com
-In-Reply-To: <alpine.LFD.2.20.1601192253240.22604@wniryva>
-Message-Id: <20160122015717.0586842E03A@smtpvbsrv1.mitre.org>
-Date: Thu, 21 Jan 2016 20:57:17 -0500 (EST)
-Subject: [oss-security] Re: CVE request Qemu: net: e1000 infinite loop in start_xmit and e1000_receive_iov routines
+Received: (qmail 18403 invoked from network); 8 Oct 2021 21:59:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=J9GLY8KQ9s4w8UtweTutckRvNRWe0QM9IiqIh+fobbA=;
+        b=L9Qu8oeZC+lbAUwdjFdSWRradWn2GKdJG9j8ZABtNyh3TaviOsqd7I0Ph6Em2OKEvW
+         xrkpj6VE/2nFzA6kmdxEH3MCWDaBn/l0svFSzpyTYQOZ0WZnJc3eA9Z5WrG42MBILeIw
+         vk4GynIWijq89YbzGb7UnIjHJKQe/YnqQ04L/l74BgYKg5+z7nvJ6MdUwE8bpX27JCzp
+         deI4W9eLqjkvltG2gM3jV+u7y3n0dVIkluGTwWIlAgwnSwTqh+/ScotcXXypHDAiPjHJ
+         s95Pn9CQPP25CLUBP575zAr89TtROjn9jEwtNe8p6dfkWQ9NSRcQy94GHNAxU0hf17rK
+         BfaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=J9GLY8KQ9s4w8UtweTutckRvNRWe0QM9IiqIh+fobbA=;
+        b=EeEVD7b671Fqp3ZI1OD62QQwR6mY72ehHSZRm8AZqzMLoh/mlcpWdCSxDnmnRZyXyp
+         qJ31Wlx/cG7wIV0Guzpf5mw2BZtTbC1pjGXRu8ltvipiJ80tnRV9Pj3oCN640OEuz+61
+         EDviHT2jmdAZjfiNx1sMbMHQTmO74hcNpdoNtwWA8yBIQpM9H9tXP92z6jAR1OQa6JO1
+         LL8d2xJakIcNA25O1TxVcSH6lDU8hioIRzUhB9DcHC/KgP3O5reWYXGwIHrGcSc4Xqln
+         hEKJbfBcuo5JokYohNTbGGc4lKr5p8lXIVLsXGntuHNnXg7E/OwnjWUYVV4dGm3I6fcm
+         kTNg==
+X-Gm-Message-State: AOAM53394f2Rw+8IY8spmjWugtrdOwBIG6V4vtw3PyBE1mCg8Wuxtbll
+	CCg3ui4RLtqGtxXk9AdBGjf/U+4XeXwcbF4BAfskNse3
+X-Google-Smtp-Source: ABdhPJzKG00cxfy7DaXN+BD8PdYXjEDK01DEE+CSoqR9obHQM3UrqnWhqKdxGyjz7BEwgQs8hTDP6cbrfhgLP+7QcpY=
+X-Received: by 2002:a17:906:7632:: with SMTP id c18mr7642363ejn.317.1633730354423;
+ Fri, 08 Oct 2021 14:59:14 -0700 (PDT)
+MIME-Version: 1.0
+References: <a2cd6ccf-b381-5513-3c7c-598a6da8c9c9@apache.org>
+ <0d7be57c-87ae-c4aa-7207-2337c1a51c6d@rs-labs.com> <CAKQ1sVMn=09uimvWxVZrrVRGSDk5HLCB0TQViFJp1WFNG7jvWg@mail.gmail.com>
+ <20211008210821.GA2660@openwall.com> <CAKQ1sVOHOU+iVCkeK1AqFDWhHq4uM8p9Hrx+XTen=fsJ=VxQyA@mail.gmail.com>
+ <20211008214414.GA3004@openwall.com>
+In-Reply-To: <20211008214414.GA3004@openwall.com>
+From: Yann Ylavic <ylavic.dev@gmail.com>
+Date: Fri, 8 Oct 2021 23:59:03 +0200
+Message-ID: <CAKQ1sVP9YFXTvqqfHDSpGDv=552iL48xdDtQyqV7-MAVg4jWCA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [oss-security] CVE-2021-42013: Path Traversal and Remote Code
+ Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Fri, Oct 8, 2021 at 11:46 PM Solar Designer <solar@openwall.com> wrote:
+>
+> On Fri, Oct 08, 2021 at 11:27:37PM +0200, Yann Ylavic wrote:
+> > For completeness I'll add this tweet/blog from Stefan (OP) about the
+> > vulnerability and the fixes in httpd:
+> > https://twitter.com/icing/status/1446504661448593408
+>
+> Thanks, but you just did that again...  For completeness, let's have the
+> actual content on the list, not only links to content.
+>
+> That tweet above refers to "Apache httpd 2.4.50 post mortem" at:
+>
+> https://github.com/icing/blog/blob/main/httpd-2.4.50.md
+>
+> I'm attaching the httpd-2.4.50.md file above to this message.
+>
+> This way, historians will be able to make full sense of the thread in
+> here even after Twitter and GitHub are gone. ;-)
 
-> Qemu emulator built with the e1000 NIC emulation support is vulnerable to an
-> infinite loop issue. It could occur while processing data via transmit or
-> receive descriptors, provided the initial receive/transmit descriptor
-> head(TDH/RDH) is set outside the allocated descriptor buffer.
-> 
-> A privileged user inside guest could use this flaw to crash the Qemu instance
-> resulting in DoS.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1298570
-> https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg03454.html
+Noted, thanks for correcting me (again).
 
->> What both directions miss is that the guest could program TDLEN and RDLEN
->> so low, and the initial TDH and RDH so high, that these registers will
->> immediately be truncated to zero, and then never reassume their initial
->> values in the loop -- a full wraparound will never occur.
-
->> i.e., TDH or RDH start out after the last whole rx or tx descriptor that
->> fits into the TDLEN or RDLEN sized area.
-
-Use CVE-2016-1981.
-
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/net/e1000.c but
-that may be an expected place for a later update.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWoYr+AAoJEL54rhJi8gl5nWkP/RME1UtFdyDgcAJIQm1H06jB
-XaPffjyISNyiTDLOFBO+5be6yON1SLrZCHcatbSoGO0acCU0a9A1L3xwUFVKIokE
-yoU/oAF939VC+bE/aFsd6psR3Jy9IskODQn6wWE5kL0gz71xWrJWdna7mm5ysqZQ
-aM9I2tYaUtZs9C7QWglvojrMVMUTjmS5Ta2vvUCzSoyZHtMjZ1s2nkBeVk/OLUmi
-jE9h2TtEujSkROHKCqFrMHOzrZcUZax8nXC2OoJ+U92/uWLnVwUPnAKnLVuepjfO
-hpqFlW/ohFtDa5ymEavZDGbxQf0aR/AeHbJeNvLEI05hktt1/0y+IgoilfDPx9HD
-mhQE+L/rW3GVA1soCPv6FABHD4Gb6W50IFfssE9HHjqoLNHNynVUfgSXod20WNyd
-4hoaYcHvHKqKJ3eVKItmMwHtJHxLvtBPoQHObQaHdp0QQ23KloXbc9q4zrnQ+IfV
-ueK+pSahmfChammbzkQIIv9UVgtVhWeTp5u6VByO8QUo82osTudMUmkEjFgeBjjq
-65dE+RUhdxpRTKXBRYNLDBS5t3Tnb5Y8d3M9TpX0saZhFyhe0HvrW25w17MK0TtI
-dQ1T6A0B/GrDArTVzyucn4hUeyuTEBK0EtHADe3Y7DfRhYgL8kh3nlWBVxmGxnYp
-ArvGC+n7c3hDqtkK9ZQs
-=pZgV
------END PGP SIGNATURE-----
+Regards;
+Yann.
