@@ -1,46 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/18/1
-Message-ID: <20210318060359.GA7529@lorien.valinor.li>
-Date: Thu, 18 Mar 2021 07:04:00 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/08/3
+Message-ID: <20211008210821.GA2660@openwall.com>
+Date: Fri, 8 Oct 2021 23:08:21 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2020-35519 Linux kernel: x25_bind out-of-bounds read
+Subject: Re: CVE-2021-42013: Path Traversal and Remote Code Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-On Wed, Mar 17, 2021 at 05:14:57PM -0400, Sasha Levin wrote:
-> On Thu, Mar 18, 2021 at 01:20:18AM +0530, Rohit Keshri wrote:
-> > Hello Team,
-> > 
-> > An out-of-bounds (OOB) memory access flaw was found in x25_bind in
-> > net/x25/af_x25.c in the Linux kernel. A bounds check failure allows a local
-> > attacker with a user account on the system to gain access to out-of-bounds
-> > memory, leading to a system crash or a leak of internal kernel information.
-> > The highest threat from this vulnerability is to confidentiality,
-> > integrity, as well as system availability.
-> > 
-> > 'CVE-2020-35519' was assigned by Red Hat.
+On Fri, Oct 08, 2021 at 08:37:33PM +0200, Yann Ylavic wrote:
+> On Fri, Oct 8, 2021 at 8:53 AM Roman Medina-Heigl Hernandez
+> <roman@...labs.com> wrote:
+> >
+> > I posted RCE exploit for this (it works for both CVEs: 41773 & 42013)
+> > and some other details regarding requirements / exploitability, which
+> > you may find useful at:
+> >
+> > https://twitter.com/roman_soft/status/1446252280597078024
 > 
-> This mail doesn't even mention where/how this is fixed. Is this
-> 6ee50c8e262a ("net/x25: prevent a couple of overflows")?
-> 
-> If so, it's already fixed in all stable kernels.
-> 
-> How can the issue cause a leak btw?
+> Thanks, that's fair analysis.
 
-Just as additional reference: I think this goes back to this report:
-https://www.openwall.com/lists/oss-security/2020/11/15/2 
+Yann is probably referring to the full tweet thread by Roman, not just
+the one tweet that Roman posted in here.  Let me correct that:
 
-In upstream this was fixed then if the above is correct in
+---
+Román Medina-Heigl Hernández
+@roman_soft
 
-	v4.4.248
-	v4.9.248
-	v4.14.211
-	v4.19.162
-	v5.4.82
-	v5.9.13
-	v5.10-rc7
+RCE exploit both for Apache 2.4.49 (CVE-2021-41773) and 2.4.50 (CVE-2021-42013):
+root@...06:~# curl 'http://192.168.0.191/cgi-bin/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/bin/sh' --data 'echo Content-Type: text/plain; echo; id'
+uid=1(daemon) gid=1(daemon) groups=1(daemon)
 
-Regards,
-Salvatore
+Requirements: 1/ mod_cgi enabled (not default but easy) AND 2/ target
+binary should be +x (default for /bin/sh) AND 3/ apache permissions
+granted for /bin or / (not default and difficult/unrealistic)
+
+So IMHO only "special" setups will be vulnerable to this RCE. Same
+happens for the "arbitrary file read" exploits you have seen in last few
+days because all of them need requirement #3
+
+Both CVEs are indeed almost the same path-traversal vulnerability (2nd
+one is the uncomplete fix for 1st one).
+
+Path traversal only work from a mapped URI (e.g. via "Alias" or
+"ScriptAlias" Apache directives). DocumentRoot only is not sufficient.
+
+"/cgi-bin/" is mapped by default (ScriptAlias) so that's why it's being
+used before the path traversal string. Besides, ScriptAlias marks as
+Exec (for Apache) all the contents for the given directory (regardless
+the file extensions).
+
+So (if mod_cgi is enabled) Apache will run our target
+(cgi-bin/../../../../../bin/sh) instead of just reading it.
+
+Perhaps the more realistic (ab)use-case for this vuln could be leaking
+CGI sources on a cgi-enabled web-server. But you'd need to find a
+non-executable mapped URI (via Alias) and then craft a payload similar
+to: aliaseddir/../../../../../usr/local/apache2/cgi-bin/cgitobeleaked
+
+End of fun :-)
+---
+
+Alexander
