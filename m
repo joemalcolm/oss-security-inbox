@@ -1,26 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/27/6
-Message-ID: <CAH+vQmOyG58Sa5CF=LACmsmfBBCY=FPoiYUXMnro5reDXhqDqg@mail.gmail.com>
-Date: Wed, 27 Jan 2021 16:54:21 +0000
-From: Gary Tully <gtully@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/08/4
+Message-ID: <CAKQ1sVOHOU+iVCkeK1AqFDWhHq4uM8p9Hrx+XTen=fsJ=VxQyA@mail.gmail.com>
+Date: Fri, 8 Oct 2021 23:27:37 +0200
+From: Yann Ylavic <ylavic.dev@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-26117: ActiveMQ: LDAP-Authentication does not verify passwords on servers with anonymous bind
+Subject: Re: CVE-2021-42013: Path Traversal and Remote Code Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)
 Content-Type: text/plain; charset=utf-8
 
-Description:
+On Fri, Oct 8, 2021 at 11:10 PM Solar Designer <solar@...nwall.com> wrote:
+>
+> On Fri, Oct 08, 2021 at 08:37:33PM +0200, Yann Ylavic wrote:
+> > On Fri, Oct 8, 2021 at 8:53 AM Roman Medina-Heigl Hernandez
+> > <roman@...labs.com> wrote:
+> > >
+> > > I posted RCE exploit for this (it works for both CVEs: 41773 & 42013)
+> > > and some other details regarding requirements / exploitability, which
+> > > you may find useful at:
+> > >
+> > > https://twitter.com/roman_soft/status/1446252280597078024
+> >
+> > Thanks, that's fair analysis.
+>
+> Yann is probably referring to the full tweet thread by Roman, not just
+> the one tweet that Roman posted in here.  Let me correct that:
 
-The optional ActiveMQ LDAP login module can be configured to use
-anonymous access to the LDAP server. In this case, for Apache ActiveMQ
-Artemis prior to version 2.16.0 and Apache ActiveMQ prior to versions
-5.16.1 and 5.15.14, the anonymous context is used to verify a valid
-users password in error, resulting in no check on the password.
+Exactly, thanks Alexander and sorry if I wasn't clear enough.
 
+For completeness I'll add this tweet/blog from Stefan (OP) about the
+vulnerability and the fixes in httpd:
+https://twitter.com/icing/status/1446504661448593408
 
-This issue is being tracked as
-https://issues.apache.org/jira/browse/ARTEMIS-2895,
-https://issues.apache.org/jira/browse/AMQ-8035
-
-Credit:
-
-Apache ActiveMQ would like to thank Gregor Tudan
-<gregor.tudan@...inpro.de> for reporting this issue.
+Regards;
+Yann.
