@@ -1,24 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/09/9
-Message-ID: <rvv4ba$vs$1@ciao.gmane.io>
-Date: Tue, 9 Feb 2021 23:03:06 -0000 (UTC)
-From: Tavis Ormandy <taviso@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/12/2
+Message-Id: <A2600194-3759-4165-A437-9BCAE3F97429@apache.org>
+Date: Tue, 12 Oct 2021 10:56:13 +0200
+From: Jan Lehnardt <jan@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: screen crash processing combining characters
+Subject: CVE-2021-38295 Apache CouchDB <= 3.1.1 privilege escalation 
 Content-Type: text/plain; charset=utf-8
 
-On 2021-02-09, Tavis Ormandy wrote:
-> I'll send a report to Thomas Dickey.
->
+Description
+===========
 
-Fyi, Thomas (XTerm maintainer) replied - he was able to repro, and said
-the fix is going to be in patch #366, a bug fix release coming soon.
+A malicious user with permission to create documents in a
+database is able to attach a HTML attachment to a document.
+If a CouchDB admin opens that attachment in a browser, e.g.
+via the CouchDB admin interface Fauxton, any JavaScript code
+embedded in that HTML attachment will be executed within the
+security context of that admin. A similar route is available
+with thealready deprecated `_show` and `_list` functionality.
 
-Tavis.
+This *privilege escalation* vulnerability allows an attacker
+to add or remove data in any database or make configuration
+changes.
 
+Mitigation
+==========
 
--- 
- _o)            $ lynx lock.cmpxchg8b.com
- /\\  _o)  _o)  $ finger taviso@....org
-_\_V _( ) _( )  @taviso
+CouchDB 3.2.0  and onwards adds `Content-Security-Policy`
+headers for all attachment, `_show` and `_list` requests.
+This breaks certain niche use-cases and there are
+configuration options to restore the previous behaviour for
+those who need it.
 
+CouchDB 3.1.2 defaults to the previous behaviour, but adds
+configuration options to turn `Content-Security-Policy` headers
+on for all affected requests.
