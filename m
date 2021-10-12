@@ -1,37 +1,13 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/05/5
-Message-ID: <CAA8xKjUSqF7rMsSbUqsU_rr4me+Db+K-b0FH2HkmXkESkCbNrQ@mail.gmail.com>
-Date: Wed, 5 May 2021 19:09:40 +0200
-From: Mauro Matteo Cascella <mcascell@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/12/1
+Message-ID: <2fc32b22-64ac-3761-6e7d-e07cb0799f11@apache.org>
+Date: Tue, 12 Oct 2021 00:29:24 +0000
+From: Eric Friedrich <friede@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: Remy Noel <remy.noel@...de-group.com>
-Subject: CVE-2021-3527 QEMU: usb: unbounded stack allocation in usbredir
+Subject: CVE-2021-42009: Apache Traffic Control Arbitrary Email Content Insertion in /deliveryservices/request 
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Description:
 
-A flaw was found in the USB redirector device (usb-redir) of QEMU.
-Small USB packets are combined into a single, large transfer request,
-to reduce the overhead and improve performance. The combined size of
-the bulk transfer is used to dynamically allocate a variable length
-array (VLA) on the stack without proper validation. Since the total
-size is not bounded, a malicious guest could use this flaw to
-influence the array length and cause the QEMU process to perform an
-excessive allocation on the stack, resulting in a denial of service.
-
-Note: in addition to usb-redir, the patchset below fixes other places
-in the code where stack-allocated VLAs were used (notably, usb/hid and
-usb/mtp).
-
-Upstream patchset:
-https://lists.nongnu.org/archive/html/qemu-devel/2021-05/msg00564.html
-
-Acknowledgements: Remy Noel (cc'd).
-CVE-2021-3527 assigned by Red Hat, Inc.
-
-Best regards.
--- 
-Mauro Matteo Cascella
-Red Hat Product Security
-PGP-Key ID: BB3410B0
+An authenticated Traffic Ops user with Portal-level privileges can send a request with a specially-crafted email subject to the /deliveryservices/request Traffic Ops endpoint to send an email, from the Traffic Ops server, with an arbitrary body to an arbitrary email address.
 
