@@ -1,36 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/19/2
-Message-ID: <20210219091737.5582f481@computer>
-Date: Fri, 19 Feb 2021 09:17:37 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: ISC Security Officer <security-officer@....org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: BIND Operational Notification: Enabling the new BIND option "stale-answer-client-timeout" can result in unexpected server termination
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/14/1
+Message-ID: <45b1d9ce-3088-112e-132e-bba47ad22054@apache.org>
+Date: Thu, 14 Oct 2021 15:27:04 +0100
+From: Mark Thomas <markt@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-42340: Apache Tomcat: DoS via memory leak with WebSocket connections
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 18 Feb 2021 20:09:47 -0900
-ISC Security Officer <security-officer@....org> wrote:
+The fix for bug 63362 present in Apache Tomcat 10.1.0-M1 to 10.1.0-M5, 
+10.0.0-M1 to 10.0.11, 9.0.40 to 9.0.53 and 8.5.60 to 8.5.71 introduced a 
+memory leak. The object introduced to collect metrics for HTTP upgrade 
+connections was not released for WebSocket connections once the 
+connection was closed. This created a memory leak that, over time, could 
+lead to a denial of service via an OutOfMemoryError.
 
-> 2)  If you already have packages based on 9.16.12, we expect to have
-> a patch ready well before the next maintenance release.  A candidate
-> patch is under review now and can be delivered after review and
-> quality assurance testing.  If you wish to receive updates on the
-> progress of this patch, please e-mail your request to
-> security-officer@....org
+References:
 
-I am confused by your actions here.
-
-You warn people about a messed up release (can happen, no problem), you
-say you have a preliminary patch, but you make it extra complicated to
-get that patch? Why not just post the patch?
-
-Also I read into your words that you don't plan to publish a quick
-followup release, which would be the right thing to do ("we expect to
-have a patch ready well before the next maintenance release" - I read
-that as you don't plan to make a new maintenance release as soon as
-the patch is ready, which would be the right thing to do).
-
-
--- 
-Hanno Böck
-https://hboeck.de/
+https://lists.apache.org/thread.html/r83a35be60f06aca2065f188ee542b9099695d57ced2e70e0885f905c%40%3Cannounce.tomcat.apache.org%3E
