@@ -1,26 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/17/1
-Message-ID: <CAEhjM2Am_ixc+KirjdR_i+=6pw+bjixDBN34dBXhEDpRjO9ArQ@mail.gmail.com>
-Date: Thu, 16 Dec 2021 19:01:33 -0500
-From: Nathan Gough <thenatog@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/15/1
+Message-ID: <92d6d5d6-bee4-aa21-96f5-d1a5975b6eb5@apache.org>
+Date: Fri, 15 Oct 2021 13:02:54 +0000
+From: Daniel Gaspar <dpgaspar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-44145: Apache NiFi information disclosure by XXE
+Subject: CVE-2021-32609: Apache Superset: XSS vulnerability on Explore page 
 Content-Type: text/plain; charset=utf-8
-
-Severity: Low
 
 Description:
 
-In the TransformXML processor an authenticated user could configure an
-XSLT file which, if it included malicious external entity calls, may
-reveal sensitive information.
-
-This issue is being tracked as NIFI-9399
+Apache Superset up to and including 1.1 does not sanitize titles correctly on the Explore page. This allows an attacker with Explore access to save a chart with a malicious title, injecting html (including scripts) into the page.
 
 Credit:
 
-This issue was discovered by DangKhai at Viettel Cyber Security.
-
-References:
-https://nifi.apache.org/security.html#1.15.1-vulnerabilities
+Apache Superset team would like to thank Oscar Arnflo for reporting this issue
 
