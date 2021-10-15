@@ -1,36 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/02/2
-Message-ID: <4rs9o8oo-3q9s-1276-r921-6r9n436o758@inai.de>
-Date: Tue, 2 Nov 2021 02:21:58 +0100 (CET)
-From: Jan Engelhardt <jengelh@...i.de>
-To: "Perry E. Metzger" <perry@...rmont.com>
-cc: oss-security@...ts.openwall.com
-Subject: Re: Trojan Source Attacks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/15/2
+Message-ID: <32945ab5-3cec-2ba1-cc35-b01dec67ed86@apache.org>
+Date: Fri, 15 Oct 2021 13:06:39 +0000
+From: Daniel Gaspar <dpgaspar@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-41971: Apache Superset: Possible SQL Injection when template processing is enabled 
 Content-Type: text/plain; charset=utf-8
 
-On Tuesday 2021-11-02 00:50, Perry E. Metzger wrote:
+Severity: low
 
-> On 11/1/21 16:51, Jan Engelhardt wrote:
->>> We have identified an issue affecting all compilers and interpreters that
->>> support Unicode.
->>> [...]
->>> The attached paper describes an attack paradigm -- which we believe to be
->>> novel -- discovered by security researchers at the
->>> University of Cambridge.
->> Not so novel. At one time, this picture made the rounds
->> (https://twitter.com/acronis/status/1019152990022787072 - the pic is likely
->> older than this 2018 tweet), and anyone who knew that Unicode had zero-width
->> characters already made the connection.
->
-> If it was known to everyone, then why are so many language interpreters and
-> compilers impacted? [...] (Claims that people who write
-> compilers are fools will be cheerfully ignored.)
+Description:
 
-Perhaps a case of "not my problem".
+Apache Superset up to and including 1.3.0 when configured with ENABLE_TEMPLATE_PROCESSING on (disabled by default) allowed SQL injection when a malicious authenticated user sends an http request with a custom URL.
 
-The filesystem layer of many an operating system does not care about filenames.
-The only rules, if any, are the special meaning of the hierarchy separator (if
-any) and perhaps a string terminator (if any).
 
-Compilers - could be the same thing. As long as the grammar is satisfied,
-why should they bother what comes in. ("Write/use better editors and frontends")
+Mitigation:
+
+Don't enable ENABLE_TEMPLATE_PROCESSING (disabled by default).
+Or upgrade to Apache Superset 1.3.1 
+
+Credit:
+
+Apache Superset would like to thank Kevin Kusnardi for reporting this issue
+
