@@ -1,34 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/24/1
-Message-ID: <CAGaRif2XUBMb+AqvioCesPjRi9p_cQzUJHOaDz2aChr1m7H1DA@mail.gmail.com>
-Date: Sun, 24 Jan 2021 13:37:50 -0800
-From: lewis john mcgibbney <lewismc@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-23901: An XML external entity (XXE) injection vulnerability exists in the Nutch DmozParser
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/16/1
+Message-ID: <CAKQ1sVPSjUzdxyb7n7xa5bPzPV4xwXg7cgniwNeuyhg46dBjwQ@mail.gmail.com>
+Date: Sat, 16 Oct 2021 01:31:50 +0200
+From: Yann Ylavic <ylavic.dev@...il.com>
+To: Roman Medina-Heigl Hernandez <roman@...labs.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2021-42013: Path Traversal and Remote Code Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Hi Román,
 
-An XML external entity (XXE) injection vulnerability was discovered in the
-Nutch DmozParser and is known to affect Nutch versions < 1.18. XML external
-entity injection (also known as XXE) is a web security vulnerability that
-allows an attacker to interfere with an application's processing of XML
-data. It often allows an attacker to view files on the application server
-filesystem, and to interact with any back-end or external systems that the
-application itself can access.
+On Fri, Oct 15, 2021 at 8:01 PM Roman Medina-Heigl Hernandez
+<roman@...labs.com> wrote:
+>
+> Re [1], I think this:
+>
+> "critical: Path traversal and file disclosure vulnerability in Apache HTTP Server 2.4.49 (CVE-2021-41773)"
+>
+> is still misleading and should read:
+>
+> "critical: Path traversal and Remote Code Execution vulnerability in Apache HTTP Server 2.4.49 (CVE-2021-41773)"
 
+I (for one) would argue that admins/vendors that ship a RCE-vulnerable
+custom configuration should reserve a CVE like this to notify their
+users.
+httpd does not, at least.
 
-This issue is being tracked as NUTCH-2841
-
-Credit:
-
-The Apache Nutch Project Management Committee would like to thank Martin
-Heyden for reporting this issue to the Apache Security Team. We are
-indebted.
-
-
-
---
-http://home.apache.org/~lewismc/
-http://people.apache.org/keys/committer/lewismc
-
+Cheers;
+Yann.
