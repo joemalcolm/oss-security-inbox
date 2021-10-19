@@ -1,4 +1,9 @@
-Received: (qmail 12033 invoked by uid 550); 19 Apr 2023 09:37:36 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1688" "Tuesday" "19" "October" "2021" "23:21:52" "+0800" "butt3rflyh4ck" "butterflyhuangxx@gmail.com" nil "51" "[oss-security] Linux kernel: isdn: cpai: array-index-out-of-bounds in detach_capi_ctr in drivers/isdn/capi/kcapi.c" nil nil nil "10" nil nil (number mark "U       butterflyhua Oct 19   51/1688  " thread-indent "\"[oss-security] Linux kernel: isdn: cpai: array-index-out-of-bounds in detach_capi_ctr in drivers/isdn/capi/kcapi.c\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux kernel: isdn: cpai: array-index-out-of-bounds in detach_capi_ctr in drivers/isdn/capi/kcapi.c" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 21543 invoked by uid 550); 19 Oct 2021 15:30:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,94 +12,89 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13326 invoked from network); 19 Apr 2023 05:45:25 -0000
+Received: (qmail 16139 invoked from network); 19 Oct 2021 15:22:14 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1681883126; x=1713419126;
-  h=from:to:subject:date:message-id:mime-version;
-  bh=mAzAYKjH6hmzsTZUacx5d/cKy44ypLJO5cHIInkS+2I=;
-  b=KpkTjDCzbTMLgMUsPkCRefj+WY4RrmMSlHqAYVuCyzG+ed0chWEg/Iha
-   exCZkgwO0mlVhn2CX1U5bG5LmM9rH3jSRDvnS/qfKrm6J1puejamziv+R
-   ZSey2glCCvbxz/bx6aT00aF5gBv+CoFg64XBvBrdPMqUixQTKKproD92R
-   Q=;
-X-IronPort-AV: E=Sophos;i="5.99,208,1677542400"; 
-   d="scan'208,217";a="330889173"
-From: "Vellore Rajakumar, Sri Saran Balaji" <srajakum@amazon.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: [kubernetes] CVE-2023-1174, CVE-2023-1944: Network port exposure
- and ssh access using default password
-Thread-Index: AQHZcoIb/dZvFqrq6UWXHq9juLBWHA==
-Date: Wed, 19 Apr 2023 05:45:10 +0000
-Message-ID: <F2B8265A-672C-4667-8083-51015773475A@amazon.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-user-agent: Microsoft-MacOutlook/16.70.23021201
-x-originating-ip: [10.106.100.9]
-Content-Type: multipart/alternative;
-	boundary="_000_F2B8265A672C4667808351015773475Aamazoncom_"
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=8mIv2Z3sO5RaCA7Go1jxwLsZsGk1qBmm7S8i4rTMFBY=;
+        b=AP5Ibqkx+jrdRGkTYke04SQYafM2z4l1gV6MJWyGwB39R7lkDhmZ/hSUG5RTM+3CHj
+         LCdqtW5gwsPQledqGCSE1lZUPYxqFmD4vpvVO3VHVBEM5mSAdNdc3N/DicthTLcoz/5I
+         PdC8bBdVpoHV2FtsQKCE6R0I29BY4GvNPuUFJJnryZ4PMRo870stvM4cBexsu/xw4ehk
+         zWcwNSq70PeNBNDg8bQ7N99OgDCl1rP4SyvYyKwdRIULS6PVyzwWibPxPuf3f/Su9HXf
+         ZbZHr0hYtJTbEVH0O44FiDZZpJpAh4NrjnfG/WkxTzcltpzC4/IG1GXYUNFCeZhCGT7U
+         LaqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=8mIv2Z3sO5RaCA7Go1jxwLsZsGk1qBmm7S8i4rTMFBY=;
+        b=zwhsiQwdsDxIdUjZZkkoGP9kovZwki21AHWpVXmrZTCDlD0M3xXKcT57WgKPt//Pz/
+         AO1sGgvv+NMh7F3ILqK2kD004rOYzIRpJg6VvSXU8NBudwDiAYkiakwXA6FJbjaWPllp
+         Raju2E0uJwJKyVbsG2ki7S7mNK3mlaCwlfUbGI6S6NmguS3UKabOs3YrxJIQqdHKzK3q
+         7qqQEvmDPwFe0mDYcEjI+/a+bG+lJLJmYUpcSkiatBUDBqcx2XYTeGwrXnsc9ZWQsacM
+         JCACQkPvAPbkiU/4OqQWeDE+7v36RWTOHpXPr4dBqkuCUS7v0uQgAX9A5dAMVUUazrMc
+         8TcA==
+X-Gm-Message-State: AOAM532eGT4u9rl6xtS89z0kEujdbRcLKleZKlkNVOpWJzgHmxVW2mUI
+	Ge1h9FWDDxrtBAYHt8mechY3n/+LceWqV2x1GqdWQwBfkIAVfQ==
+X-Google-Smtp-Source: ABdhPJwJ1+ZvVygOYw2Hur2SLcnitZkWfOL0tRu5kBqnALkK6sxErNgJ9+ob55w4y84294Y/P7ewHHoni3Q9NhsycH0=
+X-Received: by 2002:a25:1d8a:: with SMTP id d132mr34075281ybd.56.1634656922582;
+ Tue, 19 Oct 2021 08:22:02 -0700 (PDT)
 MIME-Version: 1.0
-Subject: [oss-security] [kubernetes] CVE-2023-1174, CVE-2023-1944: Network port exposure and
- ssh access using default password
+From: butt3rflyh4ck <butterflyhuangxx@gmail.com>
+Date: Tue, 19 Oct 2021 23:21:52 +0800
+Message-ID: <CAFcO6XNFySfp80uRssnz5jhgndpCvmgNbSE88ttMhXdZzqcfhw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Linux kernel: isdn: cpai: array-index-out-of-bounds in
+ detach_capi_ctr in drivers/isdn/capi/kcapi.c
 
---_000_F2B8265A672C4667808351015773475Aamazoncom_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Hi, there is an array-index-out-bounds bug in detach_capi_ctr in
+drivers/isdn/capi/kcapi.c and I reproduce it on 5.15.0-rc2+.
 
-SGVsbG8gS3ViZXJuZXRlcyBDb21tdW5pdHksDQoNCg0KDQpXZSBoYXZlIHJl
-bGVhc2VkIG1pbmlrdWJlIHYxLjMwLjA8aHR0cHM6Ly9naXRodWIuY29tL2t1
-YmVybmV0ZXMvbWluaWt1YmUvcmVsZWFzZXMvdGFnL3YxLjMwLjA+IHRvIGFk
-ZHJlc3MgdHdvIHNlY3VyaXR5IGlzc3VlcyBpbiBtaW5pa3ViZS4gV2UgcmVj
-b21tZW5kIGFsbCB0byB1cGdyYWRlIG1pbmlrdWJlIHRvIHRoZSBsYXRlc3Qg
-dmVyc2lvbiBhbmQgZGVsZXRlIGFueSBLdWJlcm5ldGVzIGNsdXN0ZXJzIGNy
-ZWF0ZWQgd2l0aCBhbiBhZmZlY3RlZCB2ZXJzaW9uLiBNaW5pa3ViZSBpcyBh
-IHV0aWxpdHkgdG9vbCB0aGF0IHNldHMgdXAgYSBLdWJlcm5ldGVzIGVudmly
-b25tZW50IG9uIGEgbG9jYWwgbWFjaGluZSBmb3IgZGV2ZWxvcGluZyBhbmQg
-dGVzdGluZyBLdWJlcm5ldGVzIGFwcGxpY2F0aW9ucy4gTWluaWt1YmUgaXMg
-bm90IGludGVuZGVkIGZvciBwcm9kdWN0aW9uIHVzZS4NCg0KDQoNCkNWRS0y
-MDIzLTExNzQ6IE5ldHdvcmsgcG9ydCBleHBvc3VyZQ0KDQoNCg0KVGhpcyB2
-dWxuZXJhYmlsaXR5IGV4cG9zZXMgYSBuZXR3b3JrIHBvcnQgaW4gbWluaWt1
-YmUgcnVubmluZyBvbiBtYWNPUyB3aXRoIERvY2tlciBkcml2ZXIgdGhhdCBj
-b3VsZCBlbmFibGUgdW5leHBlY3RlZCByZW1vdGUgYWNjZXNzIHRvIHRoZSBt
-aW5pa3ViZSBjb250YWluZXIuIFRoaXMgaXNzdWUgaGFzIGJlZW4gcmF0ZWQg
-Q1JJVElDQUwgKENWU1M6My4xL0FWOk4vQUM6TC9QUjpOL1VJOk4vUzpVL0M6
-SC9JOkgvQTpIPGh0dHBzOi8vd3d3LmZpcnN0Lm9yZy9jdnNzL2NhbGN1bGF0
-b3IvMy4xI0NWU1M6My4xL0FWOk4vQUM6TC9QUjpOL1VJOk4vUzpVL0M6SC9J
-OkgvQTpIPikgKHNjb3JlOiA5LjgpLg0KDQoNCg0KQW0gSSB2dWxuZXJhYmxl
-Pw0KDQpUaGlzIENWRSBvbmx5IGFmZmVjdHMgY2x1c3RlcnMgcnVubmluZyBv
-biBtYWNPUyB3aXRoIERvY2tlciBkcml2ZXJzLiBJZiB5b3UgaGF2ZSBjcmVh
-dGVkIHRoZSBLdWJlcm5ldGVzIGNsdXN0ZXIgdXNpbmcgb25lIG9mIHRoZSBi
-ZWxvdyBtZW50aW9uZWQgbWluaWt1YmUgdmVyc2lvbnMsIHRoZW4geW91IGFy
-ZSBhZmZlY3RlZCBieSB0aGlzIHZ1bG5lcmFiaWxpdHkuDQoNCg0KDQpBZmZl
-Y3RlZCBWZXJzaW9ucw0KDQrigKIgdjEuMjguMA0KDQrigKIgdjEuMjcuMQ0K
-DQrigKIgdjEuMjcuMA0KDQrigKIgdjEuMjYuMQ0KDQrigKIgdjEuMjYuMA0K
-DQoNCg0KWW91IGNhbiBhbHNvIHJ1biB0aGUgZm9sbG93aW5nIGNvbW1hbmQg
-dG8ga25vdyBpZiB5b3UgYXJlIGFmZmVjdGVkLiBJZiB0aGUgY29tbWFuZCBy
-ZXR1cm5zIDAuMC4wLjAgdGhlbiB5b3UgYXJlIGFmZmVjdGVkIGJ5IHRoaXMg
-dnVsbmVyYWJpbGl0eS4NCg0KYGRvY2tlciBpbnNwZWN0IC0tZm9ybWF0PSd7
-eyhpbmRleCAoaW5kZXggLk5ldHdvcmtTZXR0aW5ncy5Qb3J0cyAiODQ0My90
-Y3AiKSAwKS5Ib3N0SXB9fScgbWluaWt1YmVgDQoNCg0KDQpDVkUtMjAyMy0x
-OTQ0OiBTU0ggYWNjZXNzIHVzaW5nIGRlZmF1bHQgcGFzc3dvcmQNCg0KDQoN
-ClRoaXMgdnVsbmVyYWJpbGl0eSBlbmFibGVzIHNzaCBhY2Nlc3MgdG8gbWlu
-aWt1YmUgY29udGFpbmVyIHVzaW5nIGEgZGVmYXVsdCBwYXNzd29yZC4gVGhp
-cyBpc3N1ZSBoYXMgYmVlbiByYXRlZCBISUdIIChDVlNTOjMuMS9BVjpML0FD
-OkwvUFI6Ti9VSTpOL1M6VS9DOkgvSTpIL0E6SDxodHRwczovL3d3dy5maXJz
-dC5vcmcvY3Zzcy9jYWxjdWxhdG9yLzMuMSNDVlNTOjMuMS9BVjpML0FDOkwv
-UFI6Ti9VSTpOL1M6VS9DOkgvSTpIL0E6SD4pIChzY29yZTogOC40KS4NCg0K
-DQoNCkFtIEkgdnVsbmVyYWJsZT8NCg0KDQoNCkFsbCB2ZXJzaW9ucyBwcmlv
-ciB0byB2LjEuMzAuMCBhcmUgYWZmZWN0ZWQuDQoNCg0KDQpUbyBmaW5kIHRo
-ZSB2ZXJzaW9uIGRlcGxveWVkIGluIHlvdXIgZW52aXJvbm1lbnQsIHJ1biB0
-aGUgZm9sbG93aW5nIGNvbW1hbmQgLQ0KDQpgbWluaWt1YmUgdmVyc2lvbmAN
-Cg0KDQoNCkhvdyBkbyBJIHJlbWVkaWF0ZSB0aGVzZSB2dWxuZXJhYmlsaXRp
-ZXM/DQoNCg0KDQpUbyBtaXRpZ2F0ZSB0aGVzZSB2dWxuZXJhYmlsaXRpZXMs
-IHlvdSBtdXN0IHVwZ3JhZGUgbWluaWt1YmUgdG8gdGhlIGxhdGVzdCB2ZXJz
-aW9uIGFuZCBkZWxldGUgYW55IGNsdXN0ZXJzIGNyZWF0ZWQgdXNpbmcgYW4g
-YWZmZWN0ZWQgdmVyc2lvbi4NCg0KDQoNCkZpeGVkIFZlcnNpb24NCg0K4oCi
-IHYxLjMwLjANCg0KDQoNCk5vdGU6IFRvIGRlbGV0ZSBjbHVzdGVycyBjcmVh
-dGVkIHVzaW5nIHByaW9yIHZlcnNpb25zLCBydW4gYG1pbmlrdWJlIGRlbGV0
-ZSAtLWFsbGANCg0KDQoNClRoYW5rIFlvdSwNCg0KQmFsYWppIG9uIGJlaGFs
-ZiBvZiB0aGUgS3ViZXJuZXRlcyBTZWN1cml0eSBSZXNwb25zZSBDb21taXR0
-ZWUNCg0KDQo=
+#Root Cause
+we can call CMTPCONNADD ioctl and it would invoke
+do_cmtp_sock_ioctl(), it would call cmtp_add_connection().
+The chain of call is as follows.
+ioctl(CMTPCONNADD)
+   ->cmtp_sock_ioctl()
+         -->do_cmtp_sock_ioctl()
+            --->cmtp_add_connection()
+                ---->kthread_run()
+                ---->cmtp_attach_device()
+the function would add a cmtp session to a controller.
 
---_000_F2B8265A672C4667808351015773475Aamazoncom_--
+The cmtp_add_connection() would add a cmtp session to a controller
+and run a kernel thread to process cmtp.
+
+        __module_get(THIS_MODULE);
+        session->task = kthread_run(cmtp_session, session, "kcmtpd_ctr_%d",
+                                                                session->num);
+
+During this process, the kernel thread would call detach_capi_ctr()
+to detach a register controller. if the controller
+was not attached yet, detach_capi_ctr() would
+trigger an array-index-out-bounds bug.
+
+
+#analyze
+https://lore.kernel.org/netdev/CAFcO6XOvGQrRTaTkaJ0p3zR7y7nrAWD79r48=L_BbOyrK9X-vA@mail.gmail.com/
+
+#patch
+The patch is available upstream now.
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=1f3e2e97c003f80c4b087092b225c8787ff91e4d
+
+#Timeline
+*2021/9/24 - Vulnerability reported to netdev@vger.kernel.org.
+*2021/9/24 - Vulnerability confirmed.
+*2021/10/8 - Vulnerability patched.
+*2021/10/9 - Vulnerability reported to secalert@redhat.com and confirmed
+*2021/10/19 - Opened on oss-security@lists.openwall.com.
+
+#Credit
+Active Defense Lab of Venustech.
+
+
+Regards,
+ butt3rflyh4ck.
+
+--
+Active Defense Lab of Venustech
