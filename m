@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1039" "Monday" "27" "April" "2020" "13:07:00" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<2033222.irdbgypaU6@spectre>" "29" "[oss-security] re2c: infinite loop" nil nil nil "4" "2020042711:07:00" "[oss-security] re2c: infinite loop" (number mark "U       ago@gentoo.o Apr 27   29/1039  " thread-indent "\"[oss-security] re2c: infinite loop\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] re2c: infinite loop" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3571" "Wednesday" "20" "October" "2021" "13:37:06" "+0200" "Miklos Szeredi" "miklos@szeredi.hu" nil "79" "Re: [oss-security] CVE-2021-3847: OverlayFS - Potential Privilege Escalation using overlays copy_up" nil nil nil "10" nil nil (number mark "U       miklos@szere Oct 20   79/3571  " thread-indent "\"Re: [oss-security] CVE-2021-3847: OverlayFS - Potential Privilege Escalation using overlays copy_up\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-3847: OverlayFS - Potential Privilege Escalation using overlays copy_up" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1208 invoked by uid 550); 27 Apr 2020 11:07:22 -0000
+Received: (qmail 26489 invoked by uid 550); 20 Oct 2021 11:44:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,42 +12,125 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1174 invoked from network); 27 Apr 2020 11:07:21 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Date: Mon, 27 Apr 2020 13:07:00 +0200
-Message-ID: <2033222.irdbgypaU6@spectre>
+Received: (qmail 24523 invoked from network); 20 Oct 2021 11:37:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=szeredi.hu; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=sgh0E4WzTxkz/1nH7Mg+y9YH3c6ZU+fCxLPTMDK0UIs=;
+        b=Pg4XCvk7v04pHdpqK/2dL1K6wTIEOCxnNkotjI+q0PVHQQ+Fnc+p2SZFAZbVc8fjka
+         oFHeKVfllqvc/7NcRdJ0i3LRAJ6R7LR40f3FYJNLr5ffORZemorpuunIAT6CK+ZNp80X
+         I2Bsvi/Na1hf011xtOItbeN4uXa1OKlCx9xDE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=sgh0E4WzTxkz/1nH7Mg+y9YH3c6ZU+fCxLPTMDK0UIs=;
+        b=rVytWe3GSECGIXXNja4p/no8dtzx5M4Bfxjfy245VQcsCcLbGt6tD/V/ZtplTL87A4
+         pX4y8qxO+dOy/u4bvzZpUvNZTr+9R6A5SKUrtiDgrW/u1yy+FvaatY1ZJxfSWSoB64MS
+         OOssUELKE7hjnTDo7bu0nVP27m9Rqav7A0xPHC4jdLX9vmFkwMxnI4sKi7gakqFbwhG2
+         gJCRpHYC3Bj0AqjpJmE3fEa3F9I51wTtJGNa/SfqL1QdMwuh+V97P1Dpc5C7WOtJG4Xg
+         d/fgH56020GnN7/DWNL6qRBMM4nM3vgp/mii8R/PTHiVsLHJOK4TX2iTG8kmVXw07m7D
+         fZRQ==
+X-Gm-Message-State: AOAM531ct6h4GBato556lVSZzhTe2KnNybOtojgPm85qCU8gqkI64S2/
+	LJxSvefnN+XCWapt4LBjuiQwmtOJfd1BR12EjnAfGg==
+X-Google-Smtp-Source: ABdhPJyCxYleL/0URzjEwPiKX5bnIFKIkI5XUl0ft13LtfDoe7baWMaJLQjsvskuwnHIWgBwHWwhPaBnVtSyhzSMzxg=
+X-Received: by 2002:a67:c284:: with SMTP id k4mr41762162vsj.24.1634729837141;
+ Wed, 20 Oct 2021 04:37:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-Subject: [oss-security] re2c: infinite loop
+References: <DB9P193MB140461EEF44F153D9F66FF958DB89@DB9P193MB1404.EURP193.PROD.OUTLOOK.COM>
+ <PAXP193MB1405A3EC41713BE9D524FBE48DB89@PAXP193MB1405.EURP193.PROD.OUTLOOK.COM>
+ <YW7i72bOgRGmCs2O@miu.piliscsaba.redhat.com> <YW7zuLv8TYDNzyqC@mussarela>
+In-Reply-To: <YW7zuLv8TYDNzyqC@mussarela>
+From: Miklos Szeredi <miklos@szeredi.hu>
+Date: Wed, 20 Oct 2021 13:37:06 +0200
+Message-ID: <CAJfpegutjX3oaJzBWdr1Ra2zNS2wm=2W4DoWV=PSMd-JVZ8nGQ@mail.gmail.com>
+To: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
+Cc: oss-security@lists.openwall.com, linux-fsdevel@vger.kernel.org, 
+	overlayfs <linux-unionfs@vger.kernel.org>, Alon Zahavi <Alon.Zahavi@cyberark.com>, 
+	Vegard Nossum <vegard.nossum@oracle.com>, Nir Chako <Nir.Chako@cyberark.com>, 
+	Alon Zahavi <zahavi.alon@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] CVE-2021-3847: OverlayFS - Potential Privilege
+ Escalation using overlays copy_up
 
-Hello all,
+On Tue, 19 Oct 2021 at 18:35, Thadeu Lima de Souza Cascardo
+<cascardo@canonical.com> wrote:
+>
+> On Tue, Oct 19, 2021 at 05:23:27PM +0200, Miklos Szeredi wrote:
+> > On Thu, Oct 14, 2021 at 06:30:53PM +0000, Alon Zahavi wrote:
+> > >
+> > > After disclosing the issue with the linux-distros mailing list, I am =
+reporting the security issue publicly to here.
+> > > There is no patch available and may not be available for a long time =
+because the kernel can=E2=80=99t enforce the mitigation proposed, as that w=
+ould be a layering violation and could also possibly cause a regression.
+> > > This vulnerability was attached with CVE-2021-3847.
+> > > Here is the report that was initially sent:
+> > >
+> > > ## Bug Class
+> > > Escalation of privileges - Bypassing the security extended attribute =
+attachment restrictions (in order to modify the security.capability xattr, =
+a process will need CAP_SYS_ADMIN or CAP_SETFCAP).
+> > > # Technical Details
+> > > ## Summary:
+> > > An attacker with a low-privileged user on a Linux machine with an ove=
+rlay mount which has a file capability in one of its layers may escalate hi=
+s privileges up to root when copying a capable file from a nosuid mount int=
+o another mount.
+> > > ## In details:
+> > > If there is an overlay mount that one of its lower layers contains a =
+file with capabilities and in case that the lower layer is a nosuid mount (=
+which means the file capabilities are being ignored at execution), an attac=
+ker with low-privileges user can touch the file, which causes the overlayFS=
+ driver to copy_up the file with its capabilities into the upper layer. Tha=
+t way the attacker can now execute the file with the file's capabilities, t=
+hus escalating its privileges.
+> >
+> > I think this is a misunderstanding about how overlayfs operates.  Mount=
+ing
+> > overlayfs is effectively a just-in-time version of "cp -a lowerdir uppe=
+rdir".
+> > In other words if the admin creates an overlay where the lower layer is
+> > untrusted and the upper layer is trusted, then that act itself is the
+> > privilege escalation.
+> >
+> > This is more formally documented in "Documentation/filesystems/overlayf=
+s.rst"
+> > in the "Permission model" section.
+> >
+> > If this model is not clear, then maybe it needs to be spelled out more
+> > explicitly.  Perhaps even a warning message could be added to the kerne=
+l logs
+> > in case the lower mount is "nosuid".  But IMO erroring out on the copy-=
+up or
+> > skipping copy up of certain attributes would make the cure worse than t=
+he
+> > disease.
+>
+> Should we fail (and log it) when the lower mount and upper mount have dif=
+ferent
+> suid settings, and require a force option to be used?
 
-re2c is affected by an infinite loop.
+"cp -a" doesn't fail if used to copy from a nosuid mount to a suid
+mount, right?  Should it?
 
-It was initially discovered by Sergei Trofimovich (slyfox) and reported by me 
-privately to upstream.
-The upstream reference is at: https://github.com/skvadrik/re2c/issues/219
-There is no CVE assigned.
+I understand the psychology behind this: people think copy-up is done
+by the current (unprivileged) user, because it's triggered by the
+current user.   But copy up isn't done by the current user, it's done
+by the mounting user (i.e .with the privileges of the mounting task).
 
-Here is the additional upstream comment:
+The reason for this is that in many cases copy up *can not* be
+performed by the current task.  Just think of the case where e.g. root
+owned parent directory needs to be copied up before the user writable
+file is copied up.
 
-I fixed enough recursive functions to make the ASAN-instrumented re2c
-pass on this file (but that doesn't fully fix #219, as some other
-recursive functions still need rewriting, work in progress).
-This is the list of fixes:
-fd634998f813340768c333cdad638498602856e5 Rewrite recursion into iteration 
-(Tarjan's SCC algorithm and YYFILL states).
-637d4e468835690eac102aba83535dfd26afbbdb Rewrite recursion into iteration 
-(paths for -Wundefined-control-flow).
-e3e43bcbb746dd6692f2d60ed1fa2e26c8cbe987 Rewrite recursion into iteration 
-(skeleton max path length computation).
-f39b522cd40d04e80b77db926ce2d7d766954852 Rewrite recursion into iteration 
-(insertion of negative tags in RE).
-They will appear in the next release, re2c-2.0.
+This means that it's the responsibility of the mounting user to ensure
+that copy-up does not compromise security, since the current
+(unprivileged) user will be able to *trigger* operations done with the
+privileges of the mounting user, such as the scenario described in
+this CVE.
 
-
-Agostino
-
-
+Thanks,
+Miklos
