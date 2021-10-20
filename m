@@ -1,64 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/22/7
-Message-ID: <20210422162518.GC10297@suse.de>
-Date: Thu, 22 Apr 2021 18:25:19 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Malicious commits to Linux kernel as part of university study
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/20/1
+Message-ID: <CAJfpegutjX3oaJzBWdr1Ra2zNS2wm=2W4DoWV=PSMd-JVZ8nGQ@mail.gmail.com>
+Date: Wed, 20 Oct 2021 13:37:06 +0200
+From: Miklos Szeredi <miklos@...redi.hu>
+To: Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
+Cc: oss-security@...ts.openwall.com, linux-fsdevel@...r.kernel.org,  overlayfs <linux-unionfs@...r.kernel.org>, Alon Zahavi <Alon.Zahavi@...erark.com>,  Vegard Nossum <vegard.nossum@...cle.com>, Nir Chako <Nir.Chako@...erark.com>,  Alon Zahavi <zahavi.alon@...il.com>
+Subject: Re: CVE-2021-3847: OverlayFS - Potential Privilege Escalation using overlays copy_up
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, 19 Oct 2021 at 18:35, Thadeu Lima de Souza Cascardo
+<cascardo@...onical.com> wrote:
+>
+> On Tue, Oct 19, 2021 at 05:23:27PM +0200, Miklos Szeredi wrote:
+> > On Thu, Oct 14, 2021 at 06:30:53PM +0000, Alon Zahavi wrote:
+> > >
+> > > After disclosing the issue with the linux-distros mailing list, I am reporting the security issue publicly to here.
+> > > There is no patch available and may not be available for a long time because the kernel can’t enforce the mitigation proposed, as that would be a layering violation and could also possibly cause a regression.
+> > > This vulnerability was attached with CVE-2021-3847.
+> > > Here is the report that was initially sent:
+> > >
+> > > ## Bug Class
+> > > Escalation of privileges - Bypassing the security extended attribute attachment restrictions (in order to modify the security.capability xattr, a process will need CAP_SYS_ADMIN or CAP_SETFCAP).
+> > > # Technical Details
+> > > ## Summary:
+> > > An attacker with a low-privileged user on a Linux machine with an overlay mount which has a file capability in one of its layers may escalate his privileges up to root when copying a capable file from a nosuid mount into another mount.
+> > > ## In details:
+> > > If there is an overlay mount that one of its lower layers contains a file with capabilities and in case that the lower layer is a nosuid mount (which means the file capabilities are being ignored at execution), an attacker with low-privileges user can touch the file, which causes the overlayFS driver to copy_up the file with its capabilities into the upper layer. That way the attacker can now execute the file with the file's capabilities, thus escalating its privileges.
+> >
+> > I think this is a misunderstanding about how overlayfs operates.  Mounting
+> > overlayfs is effectively a just-in-time version of "cp -a lowerdir upperdir".
+> > In other words if the admin creates an overlay where the lower layer is
+> > untrusted and the upper layer is trusted, then that act itself is the
+> > privilege escalation.
+> >
+> > This is more formally documented in "Documentation/filesystems/overlayfs.rst"
+> > in the "Permission model" section.
+> >
+> > If this model is not clear, then maybe it needs to be spelled out more
+> > explicitly.  Perhaps even a warning message could be added to the kernel logs
+> > in case the lower mount is "nosuid".  But IMO erroring out on the copy-up or
+> > skipping copy up of certain attributes would make the cure worse than the
+> > disease.
+>
+> Should we fail (and log it) when the lower mount and upper mount have different
+> suid settings, and require a force option to be used?
 
-to follow the "give complete content" requirement, here their statement on their website:
+"cp -a" doesn't fail if used to copy from a nosuid mount to a suid
+mount, right?  Should it?
 
-https://cse.umn.edu/cs/statement-cse-linux-kernel-research-april-21-2021
+I understand the psychology behind this: people think copy-up is done
+by the current (unprivileged) user, because it's triggered by the
+current user.   But copy up isn't done by the current user, it's done
+by the mounting user (i.e .with the privileges of the mounting task).
 
-"
-Statement from CS&E on Linux Kernel research - April 21, 2021
+The reason for this is that in many cases copy up *can not* be
+performed by the current task.  Just think of the case where e.g. root
+owned parent directory needs to be copied up before the user writable
+file is copied up.
 
-Leadership in the University of Minnesota Department of Computer Science & Engineering learned today about the details of research being conducted by one of its faculty members and graduate students into the security of the Linux Kernel. The research method used raised serious concerns in the Linux Kernel community and, as of today, this has resulted in the University being banned from contributing to the Linux Kernel.
+This means that it's the responsibility of the mounting user to ensure
+that copy-up does not compromise security, since the current
+(unprivileged) user will be able to *trigger* operations done with the
+privileges of the mounting user, such as the scenario described in
+this CVE.
 
-We take this situation extremely seriously. We have immediately suspended this line of research. We will investigate the research method and the process by which this research method was approved, determine appropriate remedial action, and safeguard against future issues, if needed. We will report our findings back to the community as soon as practical.
-
-Sincerely,
-
-Mats Heimdahl, Department Head
-Loren Terveen, Associate Department Head
-"
-
-Ciao, Marcus
-
-On Thu, Apr 22, 2021 at 05:11:42PM +0200, Marcus Meissner wrote:
-> Hi,
-> 
-> https://twitter.com/UMNComputerSci/status/1384948683821694976
-> 
-> Ciao, Marcus
-> 
-> 
-> On Thu, Apr 22, 2021 at 02:55:03PM +0000, David H wrote:
-> > Has anyone reported this to https://research.umn.edu/ethics-compliance/reporting-research-misconduct ?
-> > 
-> > 
-> > ﻿On 4/22/21, 3:00 AM, "Peter Bex" <peter@...e-magic.net> wrote:
-> > 
-> >     Hi all,
-> > 
-> >     Probably a lot of you know this already but I consider it serious enough
-> >     to point out to the OSS security community at large.
-> > 
-> >     The university of Minnesota has been banned from making any commits to
-> >     the Linux kernel after it was found out they'd been submitting bogus
-> >     patches to the LKML to knowingly introduce security issues:
-> >     https://lore.kernel.org/linux-nfs/YH%2FfM%2FTsbmcZzwnX@kroah.com/
-> > 
-> >     They also published a paper:
-> >     https://raw.githubusercontent.com/QiushiWu/qiushiwu.github.io/main/papers/OpenSourceInsecurity.pdf
-> > 
-> >     I don't know the scope of this research, but it could involve other OSS
-> >     projects, now or in the future, as well.  Hence this e-mail.  If you feel
-> >     it's spam or needless drama, feel free to ignore.
-> > 
-> >     Cheers,
-> >     Peter
-> 
+Thanks,
+Miklos
