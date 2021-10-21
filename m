@@ -1,76 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/24/1
-Message-ID: <335f4394-781c-2366-f5e5-cc3025ced3f1@blacklistthisdomain.com>
-Date: Fri, 23 Apr 2021 23:32:27 -0400
-From: Silas <silas.cutler@...cklistthisdomain.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/21/4
+Message-ID: <a27e3c69-2e14-929c-0a57-42427760b778@oracle.com>
+Date: Thu, 21 Oct 2021 12:04:47 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Malicious commits to Linux kernel as part of university study
+Subject: Mailman 2.1.35 security release
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Quoting from Mark Sapiro's emails at:
+https://mail.python.org/archives/list/mailman-announce@python.org/thread/IKCO6JU755AP5G5TKMBJL6IEZQTTNPDQ/
 
-They issued a clarification as well:
-https://www-users.cs.umn.edu/~kjlu/papers/clarifications-hc.pdf
+> A couple of vulnerabilities have recently been reported. Thanks to Andre 
+> Protas, Richard Cloke and Andy Nuttall of Apple for reporting these and 
+> helping with the development of a fix.
+> 
+> CVE-2021-42096 could allow a list member to discover the list admin 
+> password.
+> 
+> CVE-2021-42097 could allow a list member to create a successful CSRF 
+> attack against another list member enabling takeover of the members account.
+> 
+> These attacks can't be carried out by non-members so may not be of 
+> concern for sites with only trusted list members.
 
-- S
 
+> I am pleased to announce the release of Mailman 2.1.35.
+> 
+> This is a security and minor bug fix release. See the attached 
+> README.txt for details. For those who just want a patch for the security 
+> issues, see 
+> https://bazaar.launchpad.net/~mailman-coders/mailman/2.1/revision/1873.
+> The patch is also attached to the bug reports at 
+> https://bugs.launchpad.net/mailman/+bug/1947639 and 
+> https://bugs.launchpad.net/mailman/+bug/1947640. The patch is the same 
+> on both and fixes both issues.
+> 
+> As noted Mailman 2.1.30 was the last feature release of the Mailman 2.1
+> branch from the GNU Mailman project. There has been some discussion as
+> to what this means. It means there will be no more releases from the GNU
+> Mailman project containing any new features. There may be future patch
+> releases to address the following:
+> 
+> i18n updates.
+> security issues.
+> bugs affecting operation for which no satisfactory workaround exists.
+> 
+> Mailman 2.1.35 is the fifth such patch release.
+> 
+> Mailman is free software for managing email mailing lists and
+> e-newsletters. Mailman is used for all the python.org and
+> SourceForge.net mailing lists, as well as at hundreds of other sites.
+> 
+> For more information, please see our web site at one of:
+> 
+> http://www.list.org
+> https://www.gnu.org/software/mailman
+> http://mailman.sourceforge.net/
+> 
+> Mailman 2.1.35 can be downloaded from
+> 
+> https://launchpad.net/mailman/2.1/
+> https://ftp.gnu.org/gnu/mailman/
+> https://sourceforge.net/projects/mailman/
 
-
-On 4/22/21 12:25 PM, Marcus Meissner wrote:
-> Hi,
-> 
-> to follow the "give complete content" requirement, here their statement on their website:
-> 
-> https://cse.umn.edu/cs/statement-cse-linux-kernel-research-april-21-2021
-> 
-> "
-> Statement from CS&E on Linux Kernel research - April 21, 2021
-> 
-> Leadership in the University of Minnesota Department of Computer Science & Engineering learned today about the details of research being conducted by one of its faculty members and graduate students into the security of the Linux Kernel. The research method used raised serious concerns in the Linux Kernel community and, as of today, this has resulted in the University being banned from contributing to the Linux Kernel.
-> 
-> We take this situation extremely seriously. We have immediately suspended this line of research. We will investigate the research method and the process by which this research method was approved, determine appropriate remedial action, and safeguard against future issues, if needed. We will report our findings back to the community as soon as practical.
-> 
-> Sincerely,
-> 
-> Mats Heimdahl, Department Head
-> Loren Terveen, Associate Department Head
-> "
-> 
-> Ciao, Marcus
-> 
-> On Thu, Apr 22, 2021 at 05:11:42PM +0200, Marcus Meissner wrote:
->> Hi,
->>
->> https://twitter.com/UMNComputerSci/status/1384948683821694976
->>
->> Ciao, Marcus
->>
->>
->> On Thu, Apr 22, 2021 at 02:55:03PM +0000, David H wrote:
->>> Has anyone reported this to https://research.umn.edu/ethics-compliance/reporting-research-misconduct ?
->>>
->>>
->>> ﻿On 4/22/21, 3:00 AM, "Peter Bex" <peter@...e-magic.net> wrote:
->>>
->>>     Hi all,
->>>
->>>     Probably a lot of you know this already but I consider it serious enough
->>>     to point out to the OSS security community at large.
->>>
->>>     The university of Minnesota has been banned from making any commits to
->>>     the Linux kernel after it was found out they'd been submitting bogus
->>>     patches to the LKML to knowingly introduce security issues:
->>>     https://lore.kernel.org/linux-nfs/YH%2FfM%2FTsbmcZzwnX@kroah.com/
->>>
->>>     They also published a paper:
->>>     https://raw.githubusercontent.com/QiushiWu/qiushiwu.github.io/main/papers/OpenSourceInsecurity.pdf
->>>
->>>     I don't know the scope of this research, but it could involve other OSS
->>>     projects, now or in the future, as well.  Hence this e-mail.  If you feel
->>>     it's spam or needless drama, feel free to ignore.
->>>
->>>     Cheers,
->>>     Peter
->>
-
-Download attachment "pEpkey.asc" of type "application/pgp-keys" (2469 bytes)
+-- 
+	-Alan Coopersmith-               alan.coopersmith@...cle.com
+	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
