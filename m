@@ -1,29 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/30/1
-Message-Id: <0e698f6d-0c20-4e74-83ed-322ff637ead0n@googlegroups.com>
-Date: Thu, 29 Jul 2021 22:14:01 -0700 (PDT)
-From: Daniel Bevenius <dbeveniu@...hat.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Node.js: Security updates for all active release lines, 30 July 2021
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/21/3
+Message-ID: <CABdrxGAGO99O4ZfiCMO2tqmjSZtDZE+q9vL3cUP0AkMGjFCPMg@mail.gmail.com>
+Date: Thu, 21 Oct 2021 09:26:08 -0700
+From: CJ Cullen <cjcullen@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: [kubernetes] CVE-2021-25742: Ingress-nginx custom snippets allows retrieval of ingress-nginx serviceaccount token and secrets across all namespaces
 Content-Type: text/plain; charset=utf-8
 
+Hello Kubernetes Community,
+
+A security issue was discovered in ingress-nginx where a user that can
+create or update ingress objects can use the custom snippets feature to
+obtain all secrets in the cluster.
+
+This issue has been rated High (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L>),
+and assigned CVE-2021-25742.
+Affected Components and Configurations
+
+This bug affects ingress-nginx.
+
+Multitenant environments where non-admin users have permissions to create
+Ingress objects are most affected by this issue.
+Affected Versions with no mitigation
+
+   -
+
+   v1.0.0
+   -
+
+   <= v0.49.0
+
+Versions allowing mitigation
+
+This issue cannot be fixed solely by upgrading ingress-nginx. It can be
+mitigated in the following versions:
+
+   -
+
+   v1.0.1
+   -
+
+   v0.49.1
+
+Mitigation
+
+To mitigate this vulnerability:
+
+   1.
+
+   Upgrade to a version that allows mitigation, (>= v0.49.1 or >= v1.0.1)
+   2.
+
+   Set allow-snippet-annotations
+   <https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#allow-snippet-annotations>
+   to false in your ingress-nginx ConfigMap based on how you deploy
+   ingress-nginx:
 
 
----------- Forwarded message ---------
-From: Daniel Bevenius <dbeveniu@...hat.com>
-Date: Friday, July 30, 2021 at 7:07:19 AM UTC+2
-Subject: Security updates for all active release lines, 30 July 2021
-To: nodejs-sec <nodejs-sec@...glegroups.com>
+Static Deploy Files
+
+Edit the ConfigMap for ingress-nginx after deployment
+
+kubectl edit configmap -n ingress-nginx ingress-nginx-controller
+
+Add directive:
+
+data:
+
+  allow-snippet-annotations: “false”
 
 
-Updates are now available for v16.x, v14.x, and v12.x Node.js release lines.
 
-We normally like to give advance notice and provide releases in which the 
-only  changes are security fixes, but since this vulnerability was already 
-public we felt it was more important to get this fix out fast in releases 
-that were  already planned.
+More information on the ConfigMap here
+<https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/>
 
-For more information see: 
-https://nodejs.org/en/blog/vulnerability/july-2021-security-releases-2
 
-Content of type "text/html" skipped
+Deploying Via Helm
+
+Set controller.allowSnippetAnnotations to false in the Values.yaml or add
+the directive to the helm deploy
+
+helm install [RELEASE_NAME] --set controller.allowSnippetAnnotations=false
+ingress-nginx/ingress-nginx
+
+https://github.com/kubernetes/ingress-nginx/blob/controller-v1.0.1/charts/ingress-nginx/values.yaml#L76
+
+Detection
+
+If you find evidence that this vulnerability has been exploited, please
+contact security@...ernetes.io
+Additional Details
+
+See ingress-nginx Issue #7837
+<https://github.com/kubernetes/ingress-nginx/issues/7837> for more details.
+Acknowledgements
+
+This vulnerability was reported by Mitch Hulscher.
+
+Thank You,
+
+CJ Cullen on behalf of the Kubernetes Security Response Committee
+
