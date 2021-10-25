@@ -1,29 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/23/2
-Message-ID: <CAMufup7TMstLf9vu=y=7qwwpiZP_EOn+pdJuYToqwERseYab+w@mail.gmail.com>
-Date: Tue, 23 Nov 2021 12:25:18 +0100
-From: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
-To: announce@...che.org, dev@...wiki.apache.org, user@...wiki.apache.org,  Apache Security Team <security@...che.org>, root@...ymaple.pw, oss-security@...ts.openwall.com
-Subject: [CVE-2021-40369] Apache JSPWiki Cross-site scripting vulnerability on Denounce plugin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/25/1
+Message-ID: <87pmrtbbdt.fsf@mpe.ellerman.id.au>
+Date: Mon, 25 Oct 2021 22:18:54 +1100
+From: Michael Ellerman <mpe@...erman.id.au>
+To: oss-security@...ts.openwall.com
+Cc: linuxppc-dev@...ts.ozlabs.org
+Subject: Linux kernel: powerpc: KVM guest can trigger host crash on Power8 
 Content-Type: text/plain; charset=utf-8
 
-Severity
-Medium
+The Linux kernel for powerpc since v5.2 has a bug which allows a
+malicious KVM guest to crash the host, when the host is running on
+Power8.
 
-Vendor
-The Apache Software Foundation
+Only machines using Linux as the hypervisor, aka. KVM, powernv or bare
+metal, are affected by the bug. Machines running PowerVM are not
+affected.
 
-Versions Affected
-Apache JSPWiki up to 2.11.0.M8
+The bug was introduced in:
 
-Description
-A carefully crafted plugin link invocation could trigger an XSS
-vulnerability on Apache JSPWiki, related to the Denounce plugin, which
-could allow the attacker to execute javascript in the victim's browser
-and get some sensitive information about the victim.
+    10d91611f426 ("powerpc/64s: Reimplement book3s idle code in C")
 
-Mitigation
-Apache JSPWiki users should upgrade to 2.11.0 or later.
+Which was first released in v5.2.
 
-Credit
-This issue was discovered by map1e (root@...ymaple.pw).
+The upstream fix is:
+
+  cdeb5d7d890e ("KVM: PPC: Book3S HV: Make idle_kvm_start_guest() return 0 if it went to guest")
+  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=cdeb5d7d890e14f3b70e8087e745c4a6a7d9f337
+
+Which will be included in the v5.16 release.
+
+Note to backporters, the following commits are required:
+
+  73287caa9210ded6066833195f4335f7f688a46b
+  ("powerpc64/idle: Fix SP offsets when saving GPRs")
+
+  9b4416c5095c20e110c82ae602c254099b83b72f
+  ("KVM: PPC: Book3S HV: Fix stack handling in idle_kvm_start_guest()")
+
+  cdeb5d7d890e14f3b70e8087e745c4a6a7d9f337
+  ("KVM: PPC: Book3S HV: Make idle_kvm_start_guest() return 0 if it went to guest")
+
+  496c5fe25c377ddb7815c4ce8ecfb676f051e9b6
+  ("powerpc/idle: Don't corrupt back chain when going idle")
+
+
+I have a test case to trigger the bug, which I can share privately with
+anyone who would like to test the fix.
+
+cheers
