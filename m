@@ -1,77 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/19/7
-Message-ID: <YFSyTOoNtyrQvrH3@sashalap>
-Date: Fri, 19 Mar 2021 10:16:44 -0400
-From: Sasha Levin <sashal@...nel.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/26/3
+Message-ID: <20211026115947.GA29482@openwall.com>
+Date: Tue, 26 Oct 2021 13:59:47 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS
+Cc: Lin Horse <kylin.formalin@...il.com>
+Subject: Re: CVE-2021-3760: Linux kernel: Use-After-Free vulnerability of ndev->rf_conn_info object
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 18, 2021 at 08:21:36PM +0100, Solar Designer wrote:
->On Thu, Mar 18, 2021 at 02:33:21PM -0400, Sasha Levin wrote:
->> Red Hat runs on a forked version of the kernel that has it's own set of
->> backports, features, and bugs. As you pointed out I think it would make
->> a lot of sense if they would instead start assigning CVEs for "Red Hat
->> Linux Kernel".
->
->Oh, no.  Just no.  Red Hat (nor others) shouldn't start to
->indiscriminately label their CVE assignments for Linux kernel issues
->(nor for issues in other software they modify and package) like that.
->
->I think what we really want is encourage Red Hat (and other distros) to
->put more effort into figuring out and documenting whether each issue is
->specific to them or (was) also present in mainline (any version or git
+On Tue, Oct 26, 2021 at 02:37:20PM +0800, Lin Horse wrote:
+> 2021-09-01 Report to security and linux-distro
+> 2021-09-01 CVE-2021-3760 assigned
+> 2021-10-26 patch upstream
+> 
+> Sorry for the delay of this report T.T
 
-Agreed. And while we can't require that, it would be awesome if it were
-done systematically instead of picking a random commit here and there
-and assign it a CVE.
+Ouch.  Let's use this opportunity to learn from the mishandling of this
+issue and avoid that for other issues.  Many things went wrong here:
 
->commit, but not requiring a review of any branches other than what they
->possibly took code from).  I think they usually already have that
+1. The original notification by Lin to linux-distros did include "I'd
+like to ask for 14 days of the embargo", which is OK'ish, but ideally
+such messages should include the proposed public disclosure date/time -
+and that's what the instructions ask for.  When it's just "N days", I
+guess people think "that's OK'ish" and move on.  When it's a specific
+date/time, it's easier for everyone to notice it approaching - not only
+for people specifically tasked with that.  That's just a psychological
+detail that I guess nevertheless statistically affects the outcomes.
 
-I suppose we can't *require* them, but it's a matter of curtesy, right?
-They already have that information, and instead of making a bunch of
-other people do the same job they could just share the information to
-begin with.
+So I think that the distros tasked with reviewing initial notifications
+should insist on the actual date/time being present in there, or add it
+on their own in an immediate follow-up.  Those distros currently are
+Oracle and Wind River.  I'd appreciate them confirming that they accept
+this clarification.
 
->information internally.  It's just that it didn't propagate into this
->thread's original message now.  It should.
+"Promptly review new issue reports for meeting the list's requirements
+and confirm receipt of the report and, when necessary, inform the
+reporter of any issues with their report (e.g., obviously not actionable
+by the distros) and request and/or propose any required yet missing
+information (most notably, a tentative public disclosure date/time) -
+primary: Oracle, backup: Wind River"
 
-Exactly, they already must have this information, which is where some of
-the frustration around these notifications comes from: it reads as
-nothing more than a lip service.
+2. While Lin's original message to linux-distros included a "SUGGESTED
+FIX" section (with a patch in it) and "I will do my best to work with
+the developer on fixing this", no further messages on a fix were sent to
+linux-distros.  Lin, if you did in fact work with upstream on this, you
+should have kept linux-distros aware of the progress, and especially of
+the fix getting to public Linux kernel mailing lists or public commits,
+as that ends the embargo.
 
->Then, for issues that (ever) exist(ed) in upstream kernels, or in any
->upstream Open Source software for that matter, they should be brought to
->oss-security.  It's very kind of a distro to help us all with that.  We
->should encourage that.
+Further, distros failed to handle the corresponding "contributing back"
+tasks.  There was no activity by Gentoo lately at all, and while there
+is recent helpful activity by Amazon, they didn't act this time.
 
-They should, but look at the original announcement mail in this thread:
-it's so generic and lacks so much information that it can't possibly
-inform anyone of an issue.
+"Stay on top of issues to ensure progress is being made, remind others
+when there's no apparent progress, as well as when the public disclosure
+date for an issue is approaching and when it's finally reached (unless
+the reporter beats you to it by making their mandatory posting to
+oss-security first) - primary: Gentoo, backup: Amazon
 
-"There's a bug in the kernel and we assigned a CVE!"
+Monitor relevant public channels (mailing lists, code repositories,
+etc.) and inform the reporter and the list in case an issue is made
+public prematurely (that is, leaks or is independently rediscovered) -
+primary: Amazon, backup: SUSE
 
->For issues that are distro-specific, it's a grey area.  First, like you
->correctly say, they should be labeled accordingly.  Then the question of
->their relevance to oss-security comes up.  Among the published content
->guidelines for oss-security we actually have one asking not to post in
->here distro-specific advisories aimed at end-users.  As I recall, when
->at some point years ago FreeBSD started sending their advisories in
->here, I asked them not to.  Indeed, we're also not seeing e.g. Red Hat's
->advisories in here, although they do produce those and send them to
->proper channels.  However, what about distro-specific vulnerability
->notifications not meant for end-users, but for downstream distros?
->Using my two examples, both FreeBSD and RHEL do have some downstream or
->otherwise related distros, who might need to know to merge the fixes.
+Make sure the mandatory oss-security posting is made promptly and is
+sufficiently detailed, and remind the reporter if not - primary: Gentoo,
+backup: Amazon"
 
-Sure, that makes sense. I'm not disagreeing that distro specific issues
-are relevant here, but pretend that you're a downstream of RHEL and read
-the original announcement in this thread, how would you act? would you
-know what to merge? on to which versions?
+I'd like replies by Gentoo and Amazon on this, please.  They should
+either state that they'd be handling these tasks from this point on, or
+we should reassign the tasks.
 
-What's the value of these announcements then?
+Incidentally, I've already unassigned the statistics task from Gentoo
+and Amazon a while ago, as that one was obviously not handled by them.
+We still need another distro or two to volunteer for this one.  As I had
+mentioned, an important desirable side-effect of keeping the statistics
+up-to-date is that this would catch issues that were not reported to
+oss-security in time or at all.  For example, if someone were updating
+statistics for September on October 15 (by which point nothing from
+September is supposed to still be embargoed), they'd catch this issue
+10 days earlier.
 
--- 
-Thanks,
-Sasha
+3. The only "contributing back" activity on this issue consisted of 3
+postings to linux-distros: prompt CVE ID assignment by Red Hat, a
+reminder about 14 days having passed by SUSE on September 17 (that is,
+already 3 days past the embargo period end), and another reminder by (a
+different engineer from) SUSE on October 25 (this one worked).
+
+SUSE isn't formally tasked with this - Gentoo and Amazon are - but SUSE
+happened to do it - thanks!  SUSE is formally a backup for "Monitor
+relevant public channels ...", which I guess could have worked as well,
+but in this case the embargo period was already over by the time SUSE
+first commented, so that aspect was irrelevant by then.
+
+4. There's still no (reference to) fix for this issue on oss-security.
+Lin, you write "2021-10-26 patch upstream" - can you please refer to the
+actual upstream commit?  Also, can you please let us all know when the
+patch became public (possibly first on a public mailing list)?
+
+This issue itself is not that important, which is part of why it almost
+slipped through the cracks, but it's our reminder and opportunity to fix
+things before anything more important is mishandled.
+
+Alexander
+
+P.S. The Subject of this message as sent by Lin to oss-security
+contained only the CVE ID and no description.  I took the liberty to
+edit it, adding the Subject string that was used on linux-distros,
+before approving the message as list moderator.
