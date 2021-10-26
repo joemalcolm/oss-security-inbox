@@ -1,33 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/26/1
-Message-ID: <CAP+3qq5E8oXmyo4XU4FKzy9ZyDVUYLY+RtUuHeTPycc9gagFNA@mail.gmail.com>
-Date: Tue, 26 Jan 2021 09:34:07 +0900
-From: Akira Ajisaka <aajisaka@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-9492] Apache Hadoop Potential privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/26/8
+Message-ID: <pwfk72ee87ixom.fsf@ua5189936247a55.ant.amazon.com>
+Date: Tue, 26 Oct 2021 08:59:53 -0700
+From: Anthony Liguori <aliguori@...zon.com>
+To: Solar Designer <solar@...nwall.com>, <oss-security@...ts.openwall.com>
+CC: Lin Horse <kylin.formalin@...il.com>
+Subject: RE: CVE-2021-3760: Linux kernel: Use-After-Free vulnerability of ndev->rf_conn_info object
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-9492. Apache Hadoop Potential privilege escalation
+Solar Designer <solar@...nwall.com> writes:
 
-Severity: Important
+> CAUTION: This email originated from outside of the organization. Do not click links or open attachments unless you can confirm the sender and know the content is safe.
+>
+>
+>
+> On Tue, Oct 26, 2021 at 02:37:20PM +0800, Lin Horse wrote:
+>> 2021-09-01 Report to security and linux-distro
+>> 2021-09-01 CVE-2021-3760 assigned
+>> 2021-10-26 patch upstream
+>>
+>> Sorry for the delay of this report T.T
+>
+> Ouch.  Let's use this opportunity to learn from the mishandling of this
+> issue and avoid that for other issues.  Many things went wrong here:
+>
+> 1. The original notification by Lin to linux-distros did include "I'd
+> like to ask for 14 days of the embargo", which is OK'ish, but ideally
+> such messages should include the proposed public disclosure date/time -
+> and that's what the instructions ask for.  When it's just "N days", I
+> guess people think "that's OK'ish" and move on.  When it's a specific
+> date/time, it's easier for everyone to notice it approaching - not only
+> for people specifically tasked with that.  That's just a psychological
+> detail that I guess nevertheless statistically affects the outcomes.
+>
+> So I think that the distros tasked with reviewing initial notifications
+> should insist on the actual date/time being present in there, or add it
+> on their own in an immediate follow-up.  Those distros currently are
+> Oracle and Wind River.  I'd appreciate them confirming that they accept
+> this clarification.
+>
+> "Promptly review new issue reports for meeting the list's requirements
+> and confirm receipt of the report and, when necessary, inform the
+> reporter of any issues with their report (e.g., obviously not actionable
+> by the distros) and request and/or propose any required yet missing
+> information (most notably, a tentative public disclosure date/time) -
+> primary: Oracle, backup: Wind River"
+>
+> 2. While Lin's original message to linux-distros included a "SUGGESTED
+> FIX" section (with a patch in it) and "I will do my best to work with
+> the developer on fixing this", no further messages on a fix were sent to
+> linux-distros.  Lin, if you did in fact work with upstream on this, you
+> should have kept linux-distros aware of the progress, and especially of
+> the fix getting to public Linux kernel mailing lists or public commits,
+> as that ends the embargo.
+>
+> Further, distros failed to handle the corresponding "contributing back"
+> tasks.  There was no activity by Gentoo lately at all, and while there
+> is recent helpful activity by Amazon, they didn't act this time.
+>
+> "Stay on top of issues to ensure progress is being made, remind others
+> when there's no apparent progress, as well as when the public disclosure
+> date for an issue is approaching and when it's finally reached (unless
+> the reporter beats you to it by making their mandatory posting to
+> oss-security first) - primary: Gentoo, backup: Amazon
 
-Vendor: The Apache Software Foundation
+Yes, we totally missed this.
 
-Versions Affected:
-3.2.0 to 3.2.1, 3.0.0-alpha1 to 3.1.3, 2.0.0-alpha to 2.10.0
+>
+> Monitor relevant public channels (mailing lists, code repositories,
+> etc.) and inform the reporter and the list in case an issue is made
+> public prematurely (that is, leaks or is independently rediscovered) -
+> primary: Amazon, backup: SUSE
+>
+> Make sure the mandatory oss-security posting is made promptly and is
+> sufficiently detailed, and remind the reporter if not - primary: Gentoo,
+> backup: Amazon"
+>
+> I'd like replies by Gentoo and Amazon on this, please.  They should
+> either state that they'd be handling these tasks from this point on, or
+> we should reassign the tasks.
 
-Description:
-WebHDFS client might send SPNEGO authorization header to remote URL
-without proper verification. A crafty user can trigger services to
-send server credentials to a webhdfs path for capturing the service
-principal.
+This is one I think we've been able to handle previously and would like
+to keep handling.
 
-Mitigation:
-Users of the affected versions should apply either of the following mitigations:
-- Set different http signature secrets and use dedicated hosts for
-each privileged impersonation service (such as HiveServer2).
-- Upgrade to 3.3.0, 3.2.2, 3.1.4, 2.10.1, or newer with TLS encryption
-enabled and configure dfs.http.policy to HTTPS_ONLY.
+Regards,
 
-Credit:
-This issue was discovered by Kevin Risden.
+Anthony Liguori
