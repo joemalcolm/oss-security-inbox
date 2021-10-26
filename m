@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["632" "Thursday" "11" "July" "2019" "18:14:30" "-0400" "Dave" "snoopdave@gmail.com" "<CAF1aazCqSfmaE00r_bkV2n3sbQzaUXFALBOkffKef79AcSuWxg@mail.gmail.com>" "20" "[oss-security] [CVE-2019-0234] Reflected Cross-site Scripting (XSS) Vulnerabiulity in Apache Roller" nil nil nil "7" "2019071122:14:30" "[oss-security] [CVE-2019-0234] Reflected Cross-site Scripting (XSS) Vulnerabiulity in Apache Roller" (number mark "U       snoopdave@gm Jul 11   20/632   " thread-indent "\"[oss-security] [CVE-2019-0234] Reflected Cross-site Scripting (XSS) Vulnerabiulity in Apache Roller\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2019-0234] Reflected Cross-site Scripting (XSS) Vulnerabiulity in Apache Roller" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3663" "Tuesday" "26" "October" "2021" "08:59:53" "-0700" "Anthony Liguori" "aliguori@amazon.com" nil "78" "RE: [oss-security] CVE-2021-3760: Linux kernel: Use-After-Free vulnerability of ndev->rf_conn_info object" nil nil nil "10" nil nil (number mark "U       aliguori@ama Oct 26   78/3663  " thread-indent "\"RE: [oss-security] CVE-2021-3760: Linux kernel: Use-After-Free vulnerability of ndev->rf_conn_info object\"\n") nil nil nil nil nil nil nil nil nil "RE: [oss-security] CVE-2021-3760: Linux kernel: Use-After-Free vulnerability of ndev->rf_conn_info object" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13956 invoked by uid 550); 12 Jul 2019 10:58:43 -0000
+Received: (qmail 7749 invoked by uid 550); 26 Oct 2021 16:16:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,58 +12,107 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1237 invoked from network); 11 Jul 2019 22:14:53 -0000
+Received: (qmail 28305 invoked from network); 26 Oct 2021 16:00:08 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=obLV6NG2s/vvH4+Fr/Ma6o0tN4O4IU4huuF0GnPej3A=;
-        b=BPIg+lk336QnAvmEqEUPN5kSq/FxbxyEqSQQJHqJLG1TUlOC/D2hZoJJd831kg1pe1
-         Nml936Oh1sps/fTfpjT0OJt1pfo0OfrS8L5rrPBTUWCuiwBuD13mabeXajSsG5Qwa2g1
-         TKxae0XqPc94axS8yauJV2xKpNz5mulFIzs3Nq1pCCnrZ5ZZ2ywIJ5dQJmWtpfT/zthK
-         S1qBK6a9EONj8Hu1WPMOsjc9Pc3jGti2yJNbPuz4LXRBagVBunO+DkbJ6hIbIszSGsxx
-         4Y+QIIuI5ddJXnLwEV38npNOTEanaKezTieUP0Ko8jMCEw+SdChyt7vBT54oI7JxJsiW
-         FiVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=obLV6NG2s/vvH4+Fr/Ma6o0tN4O4IU4huuF0GnPej3A=;
-        b=iMKBAQJXiqf9THhUwBeFjnxqHPEG/5bzwjsfXyJg6hTUx8dRsAYv4MDplNFht7PQPC
-         ekePmT46+d2xbxW0fXtdBPmJtj8jnfYbgkDqHMjafmW6uPNJ7uw9b/J1z3/1Ff5C+iwq
-         fvNHT3SKZpNLRuo+/FpDBIie5W5j2c2QFMORkH4O9gF++dtFXf0dCwhLnnYnIIOouh2J
-         Tu9tlOUK0AIruUtVXM90elDGXwEkXxojhgQ8WXubinyBAZPtZNOOiWMgy+xHXRuqpfrh
-         8J0Nv7OA5uZ57pAvS3X2aDipB3UVhb5UognOKrHO/CngyJfFQav99mzb5bQZOFrVBcUy
-         mJIw==
-X-Gm-Message-State: APjAAAVR6JUjqsVRXY5ZmE9KD+1BWzGRimI35LfCoQ0FpiQzePNWW6Sf
-	lNCFJybcbPHITdtfMjNV5vrYze8WiNBf89DP7PLE60+6v5o=
-X-Google-Smtp-Source: APXvYqxJft8kPhxRybsnCpQUy7d9Ezs6+Rn1now+yMoQ57IQ7u0YadWWJuZaeNIIJXf0Tc0oO/4s6Zo5UKnZqiPOdYI=
-X-Received: by 2002:a6b:e60b:: with SMTP id g11mr7057950ioh.9.1562883281326;
- Thu, 11 Jul 2019 15:14:41 -0700 (PDT)
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+  t=1635264008; x=1666800008;
+  h=from:to:cc:in-reply-to:references:date:message-id:
+   mime-version:subject;
+  bh=tRhupi8pzzS5XQO1ii3AEUEGx8A9aLs/ZHd4ehPHwcA=;
+  b=WVFmsUMp5mYikA1swQKo6/9fd1vPEFauB/Pa4if3wJlkWpkUWd7jJOv4
+   /tey3dL7EYCbcuwnWlaXpP3pqWNsDy8JWqqKUVoHoaGIMyzpV+84ntTZn
+   3GgbaaHGIKB7hRnuqSbZLNph/EZ5HXifKksFlPAdoXHzKUFiH/TG0OjrY
+   I=;
+X-IronPort-AV: E=Sophos;i="5.87,184,1631577600"; 
+   d="scan'208";a="169760037"
+From: Anthony Liguori <aliguori@amazon.com>
+To: Solar Designer <solar@openwall.com>, <oss-security@lists.openwall.com>
+CC: Lin Horse <kylin.formalin@gmail.com>
+In-Reply-To: <20211026115947.GA29482@openwall.com>
+References: <CAJjojJsrNyz+ML+Q81JB9iF2-DTKfAEkUP1cSTgyvCL6NebhzQ@mail.gmail.com>
+ <20211026115947.GA29482@openwall.com>
+Date: Tue, 26 Oct 2021 08:59:53 -0700
+Message-ID: <pwfk72ee87ixom.fsf@ua5189936247a55.ant.amazon.com>
 MIME-Version: 1.0
-From: Dave <snoopdave@gmail.com>
-Date: Thu, 11 Jul 2019 18:14:30 -0400
-Message-ID: <CAF1aazCqSfmaE00r_bkV2n3sbQzaUXFALBOkffKef79AcSuWxg@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000cf1a0e058d6f1edd"
-Subject: [oss-security] [CVE-2019-0234] Reflected Cross-site Scripting (XSS) Vulnerabiulity
- in Apache Roller
+Content-Type: text/plain
+Subject: RE: [oss-security] CVE-2021-3760: Linux kernel: Use-After-Free vulnerability
+ of ndev->rf_conn_info object
 
---000000000000cf1a0e058d6f1edd
-Content-Type: text/plain; charset="UTF-8"
+Solar Designer <solar@openwall.com> writes:
 
-Severity: Important
+> CAUTION: This email originated from outside of the organization. Do not click links or open attachments unless you can confirm the sender and know the content is safe.
+>
+>
+>
+> On Tue, Oct 26, 2021 at 02:37:20PM +0800, Lin Horse wrote:
+>> 2021-09-01 Report to security and linux-distro
+>> 2021-09-01 CVE-2021-3760 assigned
+>> 2021-10-26 patch upstream
+>>
+>> Sorry for the delay of this report T.T
+>
+> Ouch.  Let's use this opportunity to learn from the mishandling of this
+> issue and avoid that for other issues.  Many things went wrong here:
+>
+> 1. The original notification by Lin to linux-distros did include "I'd
+> like to ask for 14 days of the embargo", which is OK'ish, but ideally
+> such messages should include the proposed public disclosure date/time -
+> and that's what the instructions ask for.  When it's just "N days", I
+> guess people think "that's OK'ish" and move on.  When it's a specific
+> date/time, it's easier for everyone to notice it approaching - not only
+> for people specifically tasked with that.  That's just a psychological
+> detail that I guess nevertheless statistically affects the outcomes.
+>
+> So I think that the distros tasked with reviewing initial notifications
+> should insist on the actual date/time being present in there, or add it
+> on their own in an immediate follow-up.  Those distros currently are
+> Oracle and Wind River.  I'd appreciate them confirming that they accept
+> this clarification.
+>
+> "Promptly review new issue reports for meeting the list's requirements
+> and confirm receipt of the report and, when necessary, inform the
+> reporter of any issues with their report (e.g., obviously not actionable
+> by the distros) and request and/or propose any required yet missing
+> information (most notably, a tentative public disclosure date/time) -
+> primary: Oracle, backup: Wind River"
+>
+> 2. While Lin's original message to linux-distros included a "SUGGESTED
+> FIX" section (with a patch in it) and "I will do my best to work with
+> the developer on fixing this", no further messages on a fix were sent to
+> linux-distros.  Lin, if you did in fact work with upstream on this, you
+> should have kept linux-distros aware of the progress, and especially of
+> the fix getting to public Linux kernel mailing lists or public commits,
+> as that ends the embargo.
+>
+> Further, distros failed to handle the corresponding "contributing back"
+> tasks.  There was no activity by Gentoo lately at all, and while there
+> is recent helpful activity by Amazon, they didn't act this time.
+>
+> "Stay on top of issues to ensure progress is being made, remind others
+> when there's no apparent progress, as well as when the public disclosure
+> date for an issue is approaching and when it's finally reached (unless
+> the reporter beats you to it by making their mandatory posting to
+> oss-security first) - primary: Gentoo, backup: Amazon
 
-Vendor: The Apache Software Foundation
+Yes, we totally missed this.
 
-Versions affected: Roller 5.2, 5.2.1, 5.2.2. The unsupported pre-Roller 5.1
-versions may also be affected.
+>
+> Monitor relevant public channels (mailing lists, code repositories,
+> etc.) and inform the reporter and the list in case an issue is made
+> public prematurely (that is, leaks or is independently rediscovered) -
+> primary: Amazon, backup: SUSE
+>
+> Make sure the mandatory oss-security posting is made promptly and is
+> sufficiently detailed, and remind the reporter if not - primary: Gentoo,
+> backup: Amazon"
+>
+> I'd like replies by Gentoo and Amazon on this, please.  They should
+> either state that they'd be handling these tasks from this point on, or
+> we should reassign the tasks.
 
-Description: Roller's Math Comment Authenticator did not property sanitize
-user input and could be exploited to perform Reflected Cross Site Scripting
-(XSS).
+This is one I think we've been able to handle previously and would like
+to keep handling.
 
-Mitigation: The mitigation for this vulnerability is to upgrade to the
-lastest version of Roller, which is now Roller 5.2.3.
+Regards,
 
-Credit: This issue was discovered and reported by Muthukumar Marikani
-
---000000000000cf1a0e058d6f1edd--
+Anthony Liguori
