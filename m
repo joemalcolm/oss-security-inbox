@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1647" "Monday" "2" "July" "2018" "16:38:01" "+0200" "Matthias Gerstner" "mgerstner@suse.de" "<20180702143801.GG8324@f195.suse.de>" "46" "Re: [oss-security] accountsservice: insufficient path check in user_change_icon_file_authorized_cb()" "^Date:" nil nil "7" "2018070214:38:01" "[oss-security] accountsservice: insufficient path check in user_change_icon_file_authorized_cb()" (number mark "        mgerstner@su Jul  2   46/1647  " thread-indent "\"Re: [oss-security] accountsservice: insufficient path check in user_change_icon_file_authorized_cb()\"\n") "<20180702141024.iudvf2tx7fsf3q66@jwilk.net>" ("<20180702122122.GD8324@f195.suse.de>" "<20180702141024.iudvf2tx7fsf3q66@jwilk.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3375" "Tuesday" "26" "October" "2021" "20:05:36" "+0100" "Carlos Alberto Lopez Perez" "clopez@igalia.com" nil "73" "[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2021-0006" nil nil nil "10" nil nil (number mark "U       clopez@igali Oct 26   73/3375  " thread-indent "\"[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2021-0006\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2021-0006" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11355 invoked by uid 550); 2 Jul 2018 17:30:51 -0000
+Received: (qmail 10185 invoked by uid 550); 26 Oct 2021 19:06:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +11,99 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32029 invoked from network); 2 Jul 2018 14:38:13 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Message-ID: <20180702143801.GG8324@f195.suse.de>
-References: <20180702122122.GD8324@f195.suse.de>
- <20180702141024.iudvf2tx7fsf3q66@jwilk.net>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="yzvKDKJiLNESc64M"
-Content-Disposition: inline
-In-Reply-To: <20180702141024.iudvf2tx7fsf3q66@jwilk.net>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-Date: Mon, 2 Jul 2018 16:38:01 +0200
-From: Matthias Gerstner <mgerstner@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] accountsservice: insufficient path check in
- user_change_icon_file_authorized_cb()
-To: oss-security@lists.openwall.com
+Received: (qmail 10135 invoked from network); 26 Oct 2021 19:06:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; s=20170329;
+	h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:Message-ID:Subject:From:Cc:To; bh=n8302K4z6T6rcdZGbbCEjgz0tlprj692t12zHcRHg3k=;
+	b=N8xWjA1zejnGPLxmY+Wb9LfMTiXI1L66fLj6YliydLHVuRc3UKC4EOMkCzFszrpOcIlChajkOHWznXnOPX+u/aZQoQ8Su9WGGazzprzQSv+7ESYrVHQpI6C7gQCyEgds1a48s9W14y7sFrP1VNDlA8Y6UOq2OYHIdD7hSZlhYMRcaq6O6SQls3Q1uEYwpqBImgVSA+bfP241Ic8vGykhUQ2gzN5HOEvbImCzJtDvvIUEaZOnNnmVHlBlhHy3miUjcxRE0zJGBfJ84M0K/8Pwpvny3lNSXG1RbmI6qtOeWdvWXVYX8zeWzcSRN+mr8BVBqOOKOtYLpKo3cOZa4bcBjg==;
+To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Cc: security@webkit.org, distributor-list@gnome.org,
+ oss-security@lists.openwall.com, bugtraq@securityfocus.com
+From: Carlos Alberto Lopez Perez <clopez@igalia.com>
+Organization: Igalia S.L.
+Mail-Followup-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org,
+ security@webkit.org, distributor-list@gnome.org,
+ oss-security@lists.openwall.com, bugtraq@securityfocus.com
+Message-ID: <03eb1900-5593-09ff-8814-008632c46c5c@igalia.com>
+Date: Tue, 26 Oct 2021 20:05:36 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2021-0006
 
---yzvKDKJiLNESc64M
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2021-0006
+------------------------------------------------------------------------
 
-Hi,
+Date reported           : October 26, 2021
+Advisory ID             : WSA-2021-0006
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2021-0006.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2021-0006.html
+CVE identifiers         : CVE-2021-30846, CVE-2021-30848,
+                          CVE-2021-30849, CVE-2021-30851,
+                          CVE-2021-30858, CVE-2021-42762.
 
-> >I think the easiest way to fix this is to normalize the user supplied=20
-> >filename e.g. using realpath()
->=20
-> Using realpath(3) for access control is almost always a mistake: this=20
-> function expands symlinks, including attacker-controlled symlinks.
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-can you elaborate what your main worry of using realpath is in this
-context?
+CVE-2021-30846
+    Versions affected: WebKitGTK and WPE WebKit before 2.34.0.
+    Credit to Sergei Glazunov of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A memory corruption issue was
+    addressed with improved memory handling.
 
-It surely is better not to expand attacker controlled symlinks or
-perform and system calls if it is not necessary. But I fail to see the
-security issue of just calling realpath(3) on an attacker controlled
-path.
+CVE-2021-30848
+    Versions affected: WebKitGTK and WPE WebKit before 2.32.4.
+    Credit to Sergei Glazunov of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to code
+    execution. Description: A memory corruption issue was addressed with
+    improved memory handling.
 
-Regards
+CVE-2021-30849
+    Versions affected: WebKitGTK and WPE WebKit before 2.32.4.
+    Credit to Sergei Glazunov of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: Multiple memory corruption
+    issues were addressed with improved memory handling.
 
-Matthias
+CVE-2021-30851
+    Versions affected: WebKitGTK and WPE WebKit before 2.34.0.
+    Credit to Samuel Groß of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to code
+    execution. Description: A memory corruption vulnerability was
+    addressed with improved locking.
 
---yzvKDKJiLNESc64M
-Content-Type: application/pgp-signature; name="signature.asc"
+CVE-2021-30858
+    Versions affected: WebKitGTK and WPE WebKit before 2.32.4.
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Apple is aware of a report that this issue
+    may have been actively exploited. Description: A use after free
+    issue was addressed with improved memory management.
 
------BEGIN PGP SIGNATURE-----
+CVE-2021-42762
+    Versions affected: WebKitGTK and WPE WebKit before 2.34.1.
+    Credit to an anonymous reporter.
+    BubblewrapLauncher.cpp allows a limited sandbox bypass that allows a
+    sandboxed process to trick host processes into thinking the
+    sandboxed process is not confined by the sandbox, by abusing VFS
+    syscalls that manipulate its filesystem namespace. The impact is
+    limited to host services that create UNIX sockets that WebKit mounts
+    inside its sandbox, and the sandboxed process remains otherwise
+    confined. NOTE: this is similar to CVE-2021-41133.
 
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAls6OMYACgkQFMQFyXGS
-NVN2ThAAyxWTUKcMxl9Sxu6wB9INJLBv67zn86jDCkUfUMfxb0kBCVQt1qQfEGeQ
-oMgxa5ehFzX5GBJ2asDCpo8omGwHTN+zQNOj6edg+Q3R/6Pzp3uDVZyvlsIJjIRW
-xHUQpd69ViZzyzSCKqaHK4RjWFS/TPmKAmNlSOt7CeFpbXaJvUYn0600QUkufJ3S
-Ja4WqOV/NXT+B1OG55RI1SlK+aNwGi0go7qZeTxc1klseHB7EsfmfyW9mlz++Mtq
-quforX6ZmRyrjj91d2nQLZ2pv3SRdU0t3AARVO6vbLtVTBFkv9wEZ6fAWCQzqra9
-Jc1RSJ88fT/o3DhamsGu2DKqPwFnHWsr69T2WxCTIap+lGYHIYrww6Prf6uwipBO
-DZd/yXovYzovEOFG2KXpZ7HyNjElcYT1wVdjJexAoheciB6YF36X2JNL+vMaU8tX
-5SsIA0ByCqTOWto/9egYvsUN5tHXG8vUYSjjmWIHFtCcaP7Lzdx1gcfU953FkjQ3
-UEGyuKcS1vh/6gnk1+yi3j2x4d4jlM6h071FmzyWkOXGN3quMZw0ETiVS0M3i3oQ
-TaHj6Yz0VnJlP9knLt+pyJ3cM1ze8XRrhdaNI19z6AZt229FHFdHp+REXj4a7Wku
-zXLpSlEb5PBaPmlH+JS/StYwai8Vt7NV7p6wP4vgZLlFhIunOys=
-=CKba
------END PGP SIGNATURE-----
 
---yzvKDKJiLNESc64M--
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
+
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+October 26, 2021
