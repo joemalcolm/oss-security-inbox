@@ -1,4 +1,9 @@
-Received: (qmail 18361 invoked by uid 550); 9 Apr 2026 09:27:17 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4691" "Tuesday" "26" "October" "2021" "10:48:23" "+0200" "John Paul Adrian Glaubitz" "glaubitz@physik.fu-berlin.de" nil "77" "[oss-security] Re: Linux kernel: powerpc: KVM guest can trigger host crash on Power8" nil nil nil "10" nil nil (number mark "U       glaubitz@phy Oct 26   77/4691  " thread-indent "\"[oss-security] Re: Linux kernel: powerpc: KVM guest can trigger host crash on Power8\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: Linux kernel: powerpc: KVM guest can trigger host crash on Power8" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1724 invoked by uid 550); 26 Oct 2021 10:51:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,49 +12,99 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 13824 invoked from network); 9 Apr 2026 08:58:21 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Rahul Vats <rahulvats@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <2acf7656-23bd-438e-36e7-c88c31cfdeb4@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 09 Apr 2026 08:57:57 +0000
+Received: (qmail 19591 invoked from network); 26 Oct 2021 08:48:41 -0000
+Message-ID: <05b88724-90b6-a38a-bb3b-7392f85c1934@physik.fu-berlin.de>
+Date: Tue, 26 Oct 2021 10:48:23 +0200
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2026-34538: Apache Airflow: Authorization bypass in DagRun
- wait endpoint (XCom exposure) 
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.0
+To: mpe@ellerman.id.au
+Cc: linuxppc-dev@lists.ozlabs.org, oss-security@lists.openwall.com,
+ "debian-powerpc@lists.debian.org" <debian-powerpc@lists.debian.org>
+References: <87pmrtbbdt.fsf@mpe.ellerman.id.au>
+Content-Language: en-US
+From: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+In-Reply-To: <87pmrtbbdt.fsf@mpe.ellerman.id.au>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Original-Sender: glaubitz@physik.fu-berlin.de
+X-Originating-IP: 87.189.151.54
+Subject: [oss-security] Re: Linux kernel: powerpc: KVM guest can trigger host crash on Power8
 
-Severity: low=20
+Hi Michael!
 
-Affected versions:
+> The Linux kernel for powerpc since v5.2 has a bug which allows a
+> malicious KVM guest to crash the host, when the host is running on
+> Power8.
+> 
+> Only machines using Linux as the hypervisor, aka. KVM, powernv or bare
+> metal, are affected by the bug. Machines running PowerVM are not
+> affected.
+> 
+> The bug was introduced in:
+> 
+>     10d91611f426 ("powerpc/64s: Reimplement book3s idle code in C")
+> 
+> Which was first released in v5.2.
+> 
+> The upstream fix is:
+> 
+>   cdeb5d7d890e ("KVM: PPC: Book3S HV: Make idle_kvm_start_guest() return 0 if it went to guest")
+>   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=cdeb5d7d890e14f3b70e8087e745c4a6a7d9f337
+> 
+> Which will be included in the v5.16 release.
 
-- Apache Airflow (apache-airflow) 3.0.0 before 3.2.0
+I have tested these patches against 5.14 but it seems the problem [1] still remains for me
+for big-endian guests. I built a patched kernel yesterday, rebooted the KVM server and let
+the build daemons do their work over night.
 
-Description:
+When I got up this morning, I noticed the machine was down, so I checked the serial console
+via IPMI and saw the same messages again as reported in [1]:
 
-Apache Airflow versions 3.0.0 through 3.1.8 DagRun wait endpoint returns XC=
-om result values even to users who only have DAG Run read permissions, such=
- as the Viewer role.This behavior conflicts with the FAB RBAC model, which =
-treats XCom as a separate protected resource, and with the security model d=
-ocumentation that defines the Viewer role as read-only.
+[41483.963562] watchdog: BUG: soft lockup - CPU#104 stuck for 25521s! [migration/104:175]
+[41507.963307] watchdog: BUG: soft lockup - CPU#104 stuck for 25544s! [migration/104:175]
+[41518.311200] rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
+[41518.311216] rcu:     136-...0: (135 ticks this GP) idle=242/1/0x4000000000000000 softirq=32031/32033 fqs=2729959 
+[41547.962882] watchdog: BUG: soft lockup - CPU#104 stuck for 25581s! [migration/104:175]
+[41571.962627] watchdog: BUG: soft lockup - CPU#104 stuck for 25603s! [migration/104:175]
+[41581.330530] rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
+[41581.330546] rcu:     136-...0: (135 ticks this GP) idle=242/1/0x4000000000000000 softirq=32031/32033 fqs=2736378 
+[41611.962202] watchdog: BUG: soft lockup - CPU#104 stuck for 25641s! [migration/104:175]
+[41635.961947] watchdog: BUG: soft lockup - CPU#104 stuck for 25663s! [migration/104:175]
+[41644.349859] rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
+[41644.349876] rcu:     136-...0: (135 ticks this GP) idle=242/1/0x4000000000000000 softirq=32031/32033 fqs=2742753 
+[41671.961564] watchdog: BUG: soft lockup - CPU#104 stuck for 25697s! [migration/104:175]
+[41695.961309] watchdog: BUG: soft lockup - CPU#104 stuck for 25719s! [migration/104:175]
+[41707.369190] rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
+[41707.369206] rcu:     136-...0: (135 ticks this GP) idle=242/1/0x4000000000000000 softirq=32031/32033 fqs=2749151 
+[41735.960884] watchdog: BUG: soft lockup - CPU#104 stuck for 25756s! [migration/104:175]
+[41759.960629] watchdog: BUG: soft lockup - CPU#104 stuck for 25778s! [migration/104:175]
+[41770.388520] rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
+[41770.388548] rcu:     136-...0: (135 ticks this GP) idle=242/1/0x4000000000000000 softirq=32031/32033 fqs=2755540 
+[41776.076307] rcu: rcu_sched kthread timer wakeup didn't happen for 1423 jiffies! g49897 f0x0 RCU_GP_WAIT_FQS(5) ->state=0x402
+[41776.076327] rcu:     Possible timer handling issue on cpu=32 timer-softirq=1056014
+[41776.076336] rcu: rcu_sched kthread starved for 1424 jiffies! g49897 f0x0 RCU_GP_WAIT_FQS(5) ->state=0x402 ->cpu=32
+[41776.076350] rcu:     Unless rcu_sched kthread gets sufficient CPU time, OOM is now expected behavior.
+[41776.076360] rcu: RCU grace-period kthread stack dump:
+[41776.076434] rcu: Stack dump where RCU GP kthread last ran:
+[41783.960374] watchdog: BUG: soft lockup - CPU#104 stuck for 25801s! [migration/104:175]
+[41807.960119] watchdog: BUG: soft lockup - CPU#104 stuck for 25823s! [migration/104:175]
+[41831.959864] watchdog: BUG: soft lockup - CPU#104 stuck for 25846s! [migration/104:175]
+[41833.407851] rcu: INFO: rcu_sched detected stalls on CPUs/tasks:
+[41833.407868] rcu:     136-...0: (135 ticks this GP) idle=242/1/0x4000000000000000 softirq=32031/32033 fqs=2760381 
+[41863.959524] watchdog: BUG: soft lockup - CPU#104 stuck for 25875s! [migration/104:175]
 
-Airflow uses the FAB Auth Manager to manage access control on a per-resourc=
-e basis. The Viewer role is intended to be read-only by default, and the se=
-curity model documentation defines Viewer users as those who can inspect DA=
-Gs without accessing sensitive execution results.
+It seems that in this case, it was the testsuite of the git package [2] that triggered the bug. As you
+can see from the overview, the git package has been in the building state for 8 hours meaning the
+build server crashed and is no longer giving feedback to the database.
 
-Users are recommended to upgrade to Apache Airflow 3.2.0 which resolves thi=
-s issue.
+Adrian
 
-Credit:
+> [1] https://bugzilla.kernel.org/show_bug.cgi?id=206669
+> [2] https://buildd.debian.org/status/package.php?p=git&suite=experimental
 
-selen (finder)
-Kevin Yang (remediation developer)
-
-References:
-
-https://github.com/apache/airflow/pull/64415
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2026-34538
-
+-- 
+ .''`.  John Paul Adrian Glaubitz
+: :' :  Debian Developer - glaubitz@debian.org
+`. `'   Freie Universitaet Berlin - glaubitz@physik.fu-berlin.de
+  `-    GPG: 62FF 8A75 84E0 2956 9546  0006 7426 3B37 F5B5 F913
