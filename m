@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6406" "Thursday" "1" "December" "2016" "17:02:08" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<2120688.Q6lq1CWMpO@arcadia>" "185" "[oss-security] libming: listswf: heap-based buffer overflow in parseSWF_RGBA (parser.c)" nil nil nil "12" "2016120116:02:08" "[oss-security] libming: listswf: heap-based buffer overflow in parseSWF_RGBA (parser.c)" (number mark "U       ago@gentoo.o Dec  1  185/6406  " thread-indent "\"[oss-security] libming: listswf: heap-based buffer overflow in parseSWF_RGBA (parser.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["406" "Wednesday" "27" "October" "2021" "15:10:11" "+0200" "Alberto Garcia" "berto@igalia.com" nil "11" "Re: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2021-0006" nil nil nil "10" nil nil (number mark "U       berto@igalia Oct 27   11/406   " thread-indent "\"Re: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2021-0006\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2021-0006" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3477 invoked by uid 550); 1 Dec 2016 16:01:05 -0000
+Received: (qmail 27941 invoked by uid 550); 27 Oct 2021 13:12:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,200 +12,35 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3389 invoked from network); 1 Dec 2016 16:01:04 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Date: Thu, 01 Dec 2016 17:02:08 +0100
-Message-ID: <2120688.Q6lq1CWMpO@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.24; x86_64; ; )
+Received: (qmail 17867 invoked from network); 27 Oct 2021 13:10:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; s=20170329;
+	h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=xMqh9p2KYF4UCqBh+m/bZxrG1k50u+ZQmABSRaZ1RGI=;
+	b=Fnw6xTLCSkPJpY8MxcNOZKgf/ruVZbH9cEWxOHzgK3y50ydijq45MFVUe1IayPkva4+7tgF/ZYF02IzAeA2hicictbgM3yeJaTHIWRTRSWLWXictRHBS3lKZjtgh875IMRrF27dUQkZf1QX007BuiP4JhzKR9TfVWHJnPNh/mJtH5SHwPYT6gwE7+LCcYb+FcnLxFVPtfj+Y8h/gDqRFjUFQ63a+oArhGZS7s2pEPCKzGrXcbIsm2L7tIr55QDVuDmhmZ4eArA2r2POH0zdDIjvKAU+uCQGzORFb36fIR6MgJUL+3wD4NuE0v9762pTOBZjbUcWmnpbANSYchTAtVw==;
+Date: Wed, 27 Oct 2021 15:10:11 +0200
+From: Alberto Garcia <berto@igalia.com>
+To: Francis Perron <francis.perron@shopify.com>
+Cc: oss-security@lists.openwall.com,
+	Carlos Alberto Lopez Perez <clopez@igalia.com>, security@webkit.org
+Message-ID: <20211027131011.GA24452@igalia.com>
+References: <03eb1900-5593-09ff-8814-008632c46c5c@igalia.com>
+ <YXjQiwOj3gF/phTC@elende.valinor.li>
+ <CAJAmgfgpTF--5HsAaWrmWaoM5dHswtdNB2==gUdhSCiDYG6X+A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] libming: listswf: heap-based buffer overflow in parseSWF_RGBA (parser.c)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAJAmgfgpTF--5HsAaWrmWaoM5dHswtdNB2==gUdhSCiDYG6X+A@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Subject: Re: [oss-security] WebKitGTK and WPE WebKit Security Advisory
+ WSA-2021-0006
 
-If suitable for a CVE please assign one. Thanks.
+On Wed, Oct 27, 2021 at 09:02:02AM -0400, Francis Perron wrote:
 
-Description:
-libming is a Flash (SWF) output library. It can be used from PHP, Perl, Ruby, 
-Python, C, C++, Java, and probably more on the way..
+> Salvatore -
+>   I think 30851 was not issued, and it may have been a mistake here.
+> There was no other CVE issued as part of WSA-2021-0006 according to
+> the GitHub repo for the CVE program:
+> https://github.com/CVEProject/cvelist/search?q=wsa-2021-0006
 
-A fuzzing revealed an overflow in listswf. The bug does not reside in any 
-shared object but if you have a web application that calls directly the 
-listswf binary to parse untrusted swf, then you are affected.
+FWIW Apple listed that CVE as well https://support.apple.com/en-us/HT212816
 
-The complete ASan output:
-
-# listswf $FILE
-header indicates a filesize of 237 but filesize is 191
-File version: 6
-File size: 191
-Frame size: (3493,-4999)x(-5076,9541)
-Frame rate: 39.625000 / sec.
-Total frames: 33032
- Stream out of sync after parse of blocktype 18 (SWF_SOUNDSTREAMHEAD). 29 but 
-expecting 27.
-
-Offset: 21 (0x0015)
-Block type: 18 (SWF_SOUNDSTREAMHEAD)
-Block length: 4
-
-  PlaybackSoundRate 5.5 kHz
-  PlaybackSoundSize 16 bit
-  PlaybackSoundType stereo
-  StreamSoundCompression MP3
-  StreamSoundRate 44 kHz
-  StreamSoundSize error
-  StreamSoundType mono
-  StreamSoundSampleCount 10838
-  LatencySeek 53805
-
-Offset: 27 (0x001b)
-Block type: 840 (Unknown Block Type)
-Block length: 45
-
-
-0000: 2c 37 a6 30 3a 29 ab d2  54 6e 8e 88 0a f5 1b 6a    ,7.0:).. Tn.....j
-0010: a2 f7 a1 a3 a3 a1 e1 06  70 04 8e 90 82 03 40 47    ........ p.....@G
-0020: e0 30 c6 a6 83 57 ac 46  4f 8a 91 76 07             .0...W.F O..v.
-
-
-
-Offset: 74 (0x004a)
-Block type: 514 (Unknown Block Type)
-Block length: 27
-
-
-0000: b2 05 12 c2 3e 3a 01 20  d8 a7 7d 63 01 11 5c fc    ....>:.  ..}c..\.
-0010: 15 8e 90 43 8f 64 8e 58  49 ad 95                   ...C.d.X I..
-
-
-
-Offset: 103 (0x0067)
-Block type: 297 (Unknown Block Type)
-Block length: 20
-
-
-0000: 27 79 a2 e3 2c 56 2a 2d  d2 2c 37 a6 30 3a 29 ab    'y..,V*- .,7.0:).
-0010: d2 54 6e 8e                                        .Tn.
-
-
-skipping 8 bytes
-
-Offset: 125 (0x007d)
-Block type: 42 (SWF_DEFINETEXTFORMAT)
-Block length: 8
-
-255 gradients in SWF_MORPHGRADiENT, expected a max of 
-8=================================================================
-==31250==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x62400000df10 at pc 0x00000057f342 bp 0x7ffe24b21ef0 sp 0x7ffe24b21ee8
-WRITE of size 1 at 0x62400000df10 thread T0
-    #0 0x57f341 in parseSWF_RGBA /tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/parser.c:66:12
-    #1 0x57f341 in parseSWF_MORPHGRADIENTRECORD /tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/parser.c:746
-    #2 0x57f341 in parseSWF_MORPHGRADIENT /tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/parser.c:761
-    #3 0x57e25a in parseSWF_MORPHFILLSTYLE /tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/parser.c:777:7
-    #4 0x58b9b8 in parseSWF_MORPHFILLSTYLES /tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/parser.c:804:7
-    #5 0x58b9b8 in parseSWF_DEFINEMORPHSHAPE /tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/parser.c:2098
-    #6 0x5302cb in blockParse /tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/blocktypes.c:145:14
-    #7 0x527d4f in readMovie /tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/main.c:265:11
-    #8 0x527d4f in main /tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/main.c:350
-    #9 0x7f39cc7da61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #10 0x419b38 in _init (/usr/bin/listswf+0x419b38)
-
-0x62400000df10 is located 0 bytes to the right of 7696-byte region 
-[0x62400000c100,0x62400000df10)
-allocated by thread T0 here:
-    #0 0x4d2af5 in calloc /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:72
-    #1 0x58b90a in parseSWF_MORPHFILLSTYLES /tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/parser.c:801:28
-    #2 0x58b90a in parseSWF_DEFINEMORPHSHAPE /tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/parser.c:2098
-    #3 0x5302cb in blockParse /tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/blocktypes.c:145:14
-    #4 0x527d4f in readMovie /tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/main.c:265:11
-    #5 0x527d4f in main /tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/main.c:350
-    #6 0x7f39cc7da61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-
-libs/ming-0.4.7/work/ming-0_4_7/util/parser.c:66:12 in parseSWF_RGBA
-Shadow bytes around the buggy address:
-  0x0c487fff9b90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c487fff9ba0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c487fff9bb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c487fff9bc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c487fff9bd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c487fff9be0: 00 00[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c487fff9bf0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c487fff9c00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c487fff9c10: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c487fff9c20: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c487fff9c30: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==31250==ABORTING
-
-Affected version:
-0.4.7
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00076-libming-heapoverflow-parseSWF_RGBA
-
-Timeline:
-2016-11-24: bug discovered and reported to upstream
-2016-12-01: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/12/01/libming-listswf-heap-based-buffer-overflow-in-parseswf_rgba-parser-c
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Berto
