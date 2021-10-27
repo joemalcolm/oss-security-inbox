@@ -1,27 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/11/1
-Message-ID: <8aa1cc5b-fa58-771d-a52a-fcfd4276eb76@suse.de>
-Date: Fri, 11 Jun 2021 09:13:18 +0200
-From: Gianluca Gabrielli <ggabrielli@...e.de>
-To: oss-security@...ts.openwall.com, Marek Marczykowski-Górecki <marmarek@...isiblethingslab.com>
-Subject: Re: XScreenSaver 5.45: Disconnecting a video output can cause XScreenSaver to crash and unlock
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/27/3
+Message-ID: <20211027131011.GA24452@igalia.com>
+Date: Wed, 27 Oct 2021 15:10:11 +0200
+From: Alberto Garcia <berto@...lia.com>
+To: Francis Perron <francis.perron@...pify.com>
+Cc: oss-security@...ts.openwall.com, Carlos Alberto Lopez Perez <clopez@...lia.com>, security@...kit.org
+Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2021-0006
 Content-Type: text/plain; charset=utf-8
 
-Marek Marczykowski-Górecki wrote:
-> On Thu, Jun 10, 2021 at 02:34:58PM +0200, Gianluca Gabrielli wrote:
->> Thank Marek for having shared this with the list. I don't see a CVE ID
->> assigned to this bug, have requested one?
-> 
-> I have not (nor has the vendor).
+On Wed, Oct 27, 2021 at 09:02:02AM -0400, Francis Perron wrote:
 
-CVE-2021-34557
+> Salvatore -
+>   I think 30851 was not issued, and it may have been a mistake here.
+> There was no other CVE issued as part of WSA-2021-0006 according to
+> the GitHub repo for the CVE program:
+> https://github.com/CVEProject/cvelist/search?q=wsa-2021-0006
 
--- 
-. o .  Gianluca Gabrielli                      gianlu.ca
-. . o  Software security engineer               suse.com
-o o o  D78D 3FDC 2591 7EBA B52F 2362 6E17 38B8 2B60 B31D
--Dance like no one's watching, encrypt like everyone is-
+FWIW Apple listed that CVE as well https://support.apple.com/en-us/HT212816
 
-
-
-Download attachment "OpenPGP_signature" of type "application/pgp-signature" (841 bytes)
+Berto
