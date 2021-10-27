@@ -1,33 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/25/1
-Message-ID: <2rp5411p-484n-19p8-s592-2851o39opo8@redhat.com>
-Date: Thu, 25 Feb 2021 16:41:43 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-cc: bugs-syssec@....de
-Subject: CVE-2021-20255 QEMU: net: eepro100: stack overflow via infiniterecursion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/27/2
+Message-ID: <CAJAmgfgpTF--5HsAaWrmWaoM5dHswtdNB2==gUdhSCiDYG6X+A@mail.gmail.com>
+Date: Wed, 27 Oct 2021 09:02:02 -0400
+From: Francis Perron <francis.perron@...pify.com>
+To: oss-security@...ts.openwall.com
+Cc: Carlos Alberto Lopez Perez <clopez@...lia.com>, security@...kit.org,  Alberto Garcia <berto@...lia.com>
+Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2021-0006
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+On Wed, Oct 27, 2021 at 12:09 AM Salvatore Bonaccorso <carnil@...ian.org> wrote:
+>
+> Hi,
+>
+> [dropping most other recipients]
+>
+> On Tue, Oct 26, 2021 at 08:05:36PM +0100, Carlos Alberto Lopez Perez wrote:
+> > ------------------------------------------------------------------------
+> > WebKitGTK and WPE WebKit Security Advisory                 WSA-2021-0006
+> > ------------------------------------------------------------------------
+> >
+> > Date reported           : October 26, 2021
+> > Advisory ID             : WSA-2021-0006
+> > WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2021-0006.html
+> > WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2021-0006.html
+> > CVE identifiers         : CVE-2021-30846, CVE-2021-30848,
+> >                           CVE-2021-30849, CVE-2021-30851,
+> >                           CVE-2021-30858, CVE-2021-42762.
+> >
+> > Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+> [...]
+> > CVE-2021-30851
+> >     Versions affected: WebKitGTK and WPE WebKit before 2.34.0.
+> >     Credit to Samuel Groß of Google Project Zero.
+> >     Impact: Processing maliciously crafted web content may lead to code
+> >     execution. Description: A memory corruption vulnerability was
+> >     addressed with improved locking.
+>
+> CVE-2021-30851 seems to be REJECTED (cf.
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-30851). Is
+> there a typo in the CVE id for this one or did the CVE got rejected
+> later on?
 
-A stack overflow via infinite recursion issue was found in the eepro100 i8255x 
-device emulator of QEMU. It could occur while processing controller commands 
-due to DMA re-entrancy issue. A guest user/process may use this flaw to 
-consume cpu cycles or crash the QEMU process on the host resulting in DoS 
-scenario.
-
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2021-02/msg06098.html
-
-'CVE-2021-20255' assigned by Red Hat Inc.
-
-This issue was reported by Sergej Schumilo, Cornelius Aschermann and Simon 
-Werner of Ruhr-University Bochum.
+BCC'ing Samuel Groß
 
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+Salvatore -
+  I think 30851 was not issued, and it may have been a mistake here.
+There was no other CVE issued as part of WSA-2021-0006 according to
+the GitHub repo for the CVE program:
+https://github.com/CVEProject/cvelist/search?q=wsa-2021-0006
 
+if you need a CVE for this, Samuel may be able to sort this out with
+the WebKit folks, who also seem to advertise 30851 on their security
+advisory site: https://webkitgtk.org/security/WSA-2021-0006.html
+
+
+Have a good Wednesday,
+
+-- 
+Francis Perron
+  Engineering Program Manager | Security Incident Response
