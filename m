@@ -1,22 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/28/2
-Message-ID: <CAAHN_R0By+J-YoqZ-8amdM9SrZ8_EnHdTgiVtufPPZF-ZwEgPw@mail.gmail.com>
-Date: Thu, 28 Jan 2021 08:24:10 +0530
-From: Siddhesh Poyarekar <siddhesh.poyarekar@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: glibc iconv crash with ISO-2022-JP-3
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/27/4
+Message-ID: <CAMyKh9dsqQfJQ1-aTomc_Ou3q3_m0iofZtuAwxPaFrm0mi4B1Q@mail.gmail.com>
+Date: Wed, 27 Oct 2021 16:40:55 +0200
+From: Samuel Groß <saelo@...gle.com>
+To: Francis Perron <francis.perron@...pify.com>
+Cc: oss-security@...ts.openwall.com,  Carlos Alberto Lopez Perez <clopez@...lia.com>, security@...kit.org, Alberto Garcia <berto@...lia.com>
+Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2021-0006
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 27 Jan 2021 at 21:08, Siddhesh Poyarekar
-<siddhesh.poyarekar@...il.com> wrote:
->
-> On Wed, 27 Jan 2021 at 21:03, Tavis Ormandy <taviso@...il.com> wrote:
-> > The impact is just that you can't open your mail client, because it
-> > crashes as soon as it sees the subject.
-> >
-> > Upstream bug: https://sourceware.org/bugzilla/show_bug.cgi?id=27256
-> > Patch: https://sourceware.org/pipermail/libc-alpha/2021-January/122058.html
->
-> FYI, I have filed a CVE request for this with Mitre.
+Hi!
 
-This is now CVE-2021-3326.
+I don't know what happened to CVE-2021-30851 as these CVEs are allocated by
+Apple usually. I think the CVE would correspond to this issue though:
+https://bugs.webkit.org/show_bug.cgi?id=227988
+
+Best!
+Samuel
+
+On Wed, Oct 27, 2021 at 3:02 PM Francis Perron <francis.perron@...pify.com>
+wrote:
+
+> On Wed, Oct 27, 2021 at 12:09 AM Salvatore Bonaccorso <carnil@...ian.org>
+> wrote:
+> >
+> > Hi,
+> >
+> > [dropping most other recipients]
+> >
+> > On Tue, Oct 26, 2021 at 08:05:36PM +0100, Carlos Alberto Lopez Perez
+> wrote:
+> > >
+> ------------------------------------------------------------------------
+> > > WebKitGTK and WPE WebKit Security Advisory
+>  WSA-2021-0006
+> > >
+> ------------------------------------------------------------------------
+> > >
+> > > Date reported           : October 26, 2021
+> > > Advisory ID             : WSA-2021-0006
+> > > WebKitGTK Advisory URL  :
+> https://webkitgtk.org/security/WSA-2021-0006.html
+> > > WPE WebKit Advisory URL :
+> https://wpewebkit.org/security/WSA-2021-0006.html
+> > > CVE identifiers         : CVE-2021-30846, CVE-2021-30848,
+> > >                           CVE-2021-30849, CVE-2021-30851,
+> > >                           CVE-2021-30858, CVE-2021-42762.
+> > >
+> > > Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+> > [...]
+> > > CVE-2021-30851
+> > >     Versions affected: WebKitGTK and WPE WebKit before 2.34.0.
+> > >     Credit to Samuel Groß of Google Project Zero.
+> > >     Impact: Processing maliciously crafted web content may lead to code
+> > >     execution. Description: A memory corruption vulnerability was
+> > >     addressed with improved locking.
+> >
+> > CVE-2021-30851 seems to be REJECTED (cf.
+> > https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-30851). Is
+> > there a typo in the CVE id for this one or did the CVE got rejected
+> > later on?
+>
+> BCC'ing Samuel Groß
+>
+>
+> Salvatore -
+>   I think 30851 was not issued, and it may have been a mistake here.
+> There was no other CVE issued as part of WSA-2021-0006 according to
+> the GitHub repo for the CVE program:
+> https://github.com/CVEProject/cvelist/search?q=wsa-2021-0006
+>
+> if you need a CVE for this, Samuel may be able to sort this out with
+> the WebKit folks, who also seem to advertise 30851 on their security
+> advisory site: https://webkitgtk.org/security/WSA-2021-0006.html
+>
+>
+> Have a good Wednesday,
+>
+> --
+> Francis Perron
+>   Engineering Program Manager | Security Incident Response
+>
+
