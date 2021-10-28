@@ -1,117 +1,128 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/03/1
-Message-ID: <20211003120011.gb6vljzhs2tedfis@localhost>
-Date: Sun, 3 Oct 2021 12:00:11 +0000
-From: Samanta Navarro <ferivoz@...eup.net>
-To: oss-security@...ts.openwall.com
-Subject: Supply Chain Security and Tar
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/28/3
+Message-ID: <E446D456-2566-469A-8252-412E394DDB6B@oracle.com>
+Date: Thu, 28 Oct 2021 02:23:10 +0000
+From: Roxana Bradescu <roxana.bradescu@...cle.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: Lin Horse <kylin.formalin@...il.com>
+Subject: Re: CVE-2021-3760: Linux kernel: Use-After-Free vulnerability of ndev->rf_conn_info object
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+> So I think that the distros tasked with reviewing initial notifications
+> should insist on the actual date/time being present in there, or add it
+> on their own in an immediate follow-up.  Those distros currently are
+> Oracle and Wind River.  I'd appreciate them confirming that they accept
+> this clarification.
 
-Introduction
-============
+Acknowledged and agreed.
 
-Tar files are commonly used to transport files throughout the supply
-chain. They are used for source code archives but also for containers.
+---
+Regards, Roxana
 
-Many different tar formats evolved to satisfy different demands, just
-like many different tar implementations have been written. Some of
-these programs and libraries try to support as many formats as possible
-and even previous implementation mistakes for backward compatibility.
 
-This allows a malicious actor to create a single tar archive which leads
-to different file outputs based on the implementation in use. A clever
-combination even allows the creation of a tar file which leads to no
-error message among the most common tar implementations.
 
-Proof of Concept
-================
+> On Oct 26, 2021, at 4:59 AM, Solar Designer <solar@...nwall.com> wrote:
+> 
+> On Tue, Oct 26, 2021 at 02:37:20PM +0800, Lin Horse wrote:
+>> 2021-09-01 Report to security and linux-distro
+>> 2021-09-01 CVE-2021-3760 assigned
+>> 2021-10-26 patch upstream
+>> 
+>> Sorry for the delay of this report T.T
+> 
+> Ouch.  Let's use this opportunity to learn from the mishandling of this
+> issue and avoid that for other issues.  Many things went wrong here:
+> 
+> 1. The original notification by Lin to linux-distros did include "I'd
+> like to ask for 14 days of the embargo", which is OK'ish, but ideally
+> such messages should include the proposed public disclosure date/time -
+> and that's what the instructions ask for.  When it's just "N days", I
+> guess people think "that's OK'ish" and move on.  When it's a specific
+> date/time, it's easier for everyone to notice it approaching - not only
+> for people specifically tasked with that.  That's just a psychological
+> detail that I guess nevertheless statistically affects the outcomes.
+> 
+> So I think that the distros tasked with reviewing initial notifications
+> should insist on the actual date/time being present in there, or add it
+> on their own in an immediate follow-up.  Those distros currently are
+> Oracle and Wind River.  I'd appreciate them confirming that they accept
+> this clarification.
+> 
+> "Promptly review new issue reports for meeting the list's requirements
+> and confirm receipt of the report and, when necessary, inform the
+> reporter of any issues with their report (e.g., obviously not actionable
+> by the distros) and request and/or propose any required yet missing
+> information (most notably, a tentative public disclosure date/time) -
+> primary: Oracle, backup: Wind River"
+> 
+> 2. While Lin's original message to linux-distros included a "SUGGESTED
+> FIX" section (with a patch in it) and "I will do my best to work with
+> the developer on fixing this", no further messages on a fix were sent to
+> linux-distros.  Lin, if you did in fact work with upstream on this, you
+> should have kept linux-distros aware of the progress, and especially of
+> the fix getting to public Linux kernel mailing lists or public commits,
+> as that ends the embargo.
+> 
+> Further, distros failed to handle the corresponding "contributing back"
+> tasks.  There was no activity by Gentoo lately at all, and while there
+> is recent helpful activity by Amazon, they didn't act this time.
+> 
+> "Stay on top of issues to ensure progress is being made, remind others
+> when there's no apparent progress, as well as when the public disclosure
+> date for an issue is approaching and when it's finally reached (unless
+> the reporter beats you to it by making their mandatory posting to
+> oss-security first) - primary: Gentoo, backup: Amazon
+> 
+> Monitor relevant public channels (mailing lists, code repositories,
+> etc.) and inform the reporter and the list in case an issue is made
+> public prematurely (that is, leaks or is independently rediscovered) -
+> primary: Amazon, backup: SUSE
+> 
+> Make sure the mandatory oss-security posting is made promptly and is
+> sufficiently detailed, and remind the reporter if not - primary: Gentoo,
+> backup: Amazon"
+> 
+> I'd like replies by Gentoo and Amazon on this, please.  They should
+> either state that they'd be handling these tasks from this point on, or
+> we should reassign the tasks.
+> 
+> Incidentally, I've already unassigned the statistics task from Gentoo
+> and Amazon a while ago, as that one was obviously not handled by them.
+> We still need another distro or two to volunteer for this one.  As I had
+> mentioned, an important desirable side-effect of keeping the statistics
+> up-to-date is that this would catch issues that were not reported to
+> oss-security in time or at all.  For example, if someone were updating
+> statistics for September on October 15 (by which point nothing from
+> September is supposed to still be embargoed), they'd catch this issue
+> 10 days earlier.
+> 
+> 3. The only "contributing back" activity on this issue consisted of 3
+> postings to linux-distros: prompt CVE ID assignment by Red Hat, a
+> reminder about 14 days having passed by SUSE on September 17 (that is,
+> already 3 days past the embargo period end), and another reminder by (a
+> different engineer from) SUSE on October 25 (this one worked).
+> 
+> SUSE isn't formally tasked with this - Gentoo and Amazon are - but SUSE
+> happened to do it - thanks!  SUSE is formally a backup for "Monitor
+> relevant public channels ...", which I guess could have worked as well,
+> but in this case the embargo period was already over by the time SUSE
+> first commented, so that aspect was irrelevant by then.
+> 
+> 4. There's still no (reference to) fix for this issue on oss-security.
+> Lin, you write "2021-10-26 patch upstream" - can you please refer to the
+> actual upstream commit?  Also, can you please let us all know when the
+> patch became public (possibly first on a public mailing list)?
+> 
+> This issue itself is not that important, which is part of why it almost
+> slipped through the cracks, but it's our reminder and opportunity to fix
+> things before anything more important is mishandled.
+> 
+> Alexander
+> 
+> P.S. The Subject of this message as sent by Lin to oss-security
+> contained only the CVE ID and no description.  I took the liberty to
+> edit it, adding the Subject string that was used on linux-distros,
+> before approving the message as list moderator.
 
-A specially crafted file can be downloaded here:
-https://github.com/ferivoz/alquitran-samples/blob/master/v7_001/archive.tar
 
-The archive itself contains a hello world C program. It depends on your
-tar implementation whether the program returns 0 or 1. Known tools which
-lead to a "return 1" version are bsdtar and p7zip.
-
-The archive abuses two implementation mistakes:
-
-1. directory entries may have a size, which must not be interpreted as
-   data size, i.e. no data blocks follow a directory
-2. GNU extensions exist which allow "long names". Implementations do not
-   consider an archive as invalid if no actual entry follows it
-
-The archive is not fully stealthy (star shows warnings) on purpose but
-should highlight the possibility of creating such archives.
-
-Attack Scenario
-===============
-
-Arch Linux uses libarchive (bsdtar) in its build environment. The
-default tar program installed is GNU tar. It is possible to create a
-source distribution which leads to different files seen by the build
-environment than compared to a careful reviewer and other Linux
-distributions.
-
-The code is reproducibly built and hopefully reviewed, yet it differs
-in its functionality.
-
-If all source distributions could be rebuilt from a repository then this
-attack would be harder to implement, but common distributions use
-prepared tar archives offered by maintainers, e.g. signed archives with
-autoconf generated files.
-
-I have inspected some projects and xscreensaver gets closest to this
-scenario: Extracting xscreensaver-6.01.tar.gz with bsdtar leads to an
-error because a hardlink exists which points to itself. The repository
-itself is not available, so it is the only point of trust available.
-
-Mitigation
-==========
-
-I have submitted bug reports and patches to some projects but eventually
-I had to conclude that the problem itself cannot be fixed by these
-implementations alone. The best choice for these tools would be to only
-allow archives which are fully compatible to standards but this in turn
-would render a lot of archives broken.
-
-The best possibility from my point of view is that maintainers switch
-to ustar format because it is at least standardized and offers enough
-features required for source distributions. If path lengths are too long,
-then pax format (super set of ustar) should be used, because it is
-covered by POSIX as well.
-
-The ustar format is also supported by all common tar implementations.
-
-Analysis of existing archives
-=============================
-
-I have written a diagnosis tool called "alquitran" which is available
-here: https://github.com/ferivoz/alquitran
-
-It scans a given tar archive for standards compatibility towards the
-ustar format as specified by POSIX. The attack scenarios which are known
-to me at this point are properly detected.
-
-The previously mentioned "alquitran-samples" project contains crafted
-tar archives and a check.sh script which can be used to inspect an
-individual tar program regarding its handling of malicious tar archives.
-
-Conclusion
-==========
-
-I am not aware of an already performed attack based on a malicious tar
-archive. The mentioned scenarios should be carefully reviewed and the
-community should find a way to safely and securely transport sources.
-
-Sincerely,
-Samanta
------BEGIN PGP SIGNATURE-----
-
-iHUEARYKAB0WIQRmzXViX+AZPnBGVbhlTlmbj2CavQUCYVmbHwAKCRBlTlmbj2Ca
-vXVvAQDPHY8HioRMpzQ7Xfjlf3UoODI07plEQRdhFRQhYipmZwD/VAOt1lqOGozb
-mB0w8DHMAQ4pe4r8NdljdUTJLrntFgc=
-=Jkat
------END PGP SIGNATURE-----
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
