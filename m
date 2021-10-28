@@ -1,50 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/13/1
-Message-ID: <YHWk8MteMZ+3ScCn@zuma.herrb.net>
-Date: Tue, 13 Apr 2021 16:04:32 +0200
-From: Matthieu Herrb <matthieu@...rb.eu>
-To: oss-security@...ts.openwall.com
-Subject: X.Org server security advisory: April 13, 2021
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/28/2
+Message-ID: <YXol+JUnMvgDcDJ+@eldamar.lan>
+Date: Thu, 28 Oct 2021 06:24:24 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: Samuel Groß <saelo@...gle.com>
+Cc: Francis Perron <francis.perron@...pify.com>, oss-security@...ts.openwall.com, Carlos Alberto Lopez Perez <clopez@...lia.com>, security@...kit.org, Alberto Garcia <berto@...lia.com>
+Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2021-0006
 Content-Type: text/plain; charset=utf-8
 
-X.Org server security advisory: April 13, 2021
+Hi Samuel,
 
+On Wed, Oct 27, 2021 at 04:40:55PM +0200, Samuel Groß wrote:
+> Hi!
+> 
+> I don't know what happened to CVE-2021-30851 as these CVEs are allocated by
+> Apple usually. I think the CVE would correspond to this issue though:
+> https://bugs.webkit.org/show_bug.cgi?id=227988
 
-Input validation failures in X server XInput extension
-======================================================
+I pinged now product-security@...le.com as well on this (as Apple Inc
+is the responsible CNA for the CVE).
 
-
-Insufficient checks on the lengths of the XInput extension
-ChangeFeedbackControl request can lead to out of bounds memory
-accesses in the X server.
-
-These issues can lead to privilege escalation for authorized clients
-on systems where the X server is running privileged.
-
-* CVE-2021-3472 / ZDI CAN 12549 XChangeFeedbackControl Integer Underflow
-
-Patch
------
-
-A patch for this issue has been committed to the xorg server git
-repository. xorg-server 1.20.11 and xwayland 21.1.1 will be released
-shortly and will include this patch.
-
-https://gitlab.freedesktop.org/xorg/xserver.git
-
-commit 7aaf54a1884f71dc363f0b884e57bcb67407a6cd
-
-Fix XChangeFeedbackControl() request underflow
-
-CVE-2021-3472 / ZDI-CAN-1259
-
-Thanks
-======
-
-These vulnerabilities have been discovered by Jan-Niklas Sohn working
-with Trend Micro Zero Day Initiative.
-
--- 
-Matthieu Herrb
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Regards,
+Salvatore
