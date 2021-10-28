@@ -1,37 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/17/2
-Message-ID: <YFHVuDKj+oMwxBZX@kroah.com>
-Date: Wed, 17 Mar 2021 11:11:04 +0100
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-3428 Linux kernel: integer overflow in ext4_es_cache_extent
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/28/5
+Message-ID: <159047aa-6cbd-420f-0589-9dc6a43e2b23@physik.fu-berlin.de>
+Date: Thu, 28 Oct 2021 15:52:11 +0200
+From: John Paul Adrian Glaubitz <glaubitz@...sik.fu-berlin.de>
+To: mpe@...erman.id.au
+Cc: linuxppc-dev@...ts.ozlabs.org, oss-security@...ts.openwall.com, "debian-powerpc@...ts.debian.org" <debian-powerpc@...ts.debian.org>
+Subject: Re: Linux kernel: powerpc: KVM guest can trigger host crash on Power8
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 17, 2021 at 11:21:23AM +0530, Rohit Keshri wrote:
-> Hello Team,
-> 
-> A flaw was found in the Linux kernel. A denial of service problem is
-> identified if an extent tree is corrupted in a crafted ext4 filesystem in
-> fs/ext4/extents.c in ext4_es_cache_extent. Fabricating an integer overflow,
-> A local attacker with a special user privilege may cause a system crash
-> problem which can lead to an availability threat.
+Hello!
 
-Please include what kernel version things like this were "found in" and
-when it was fixed, otherwise you force everyone to go scramble just to
-find that this was reported in July of 2020 and fixed then in the 5.9
-kernel release and has already been backported to all relevant stable
-kernel releases in August of last year.
+An update to this post with oss-security CC'ed.
 
-In other words, no one running an updated kernel version from kernel.org
-is vulnerable today, right?  Are you saying that specific distro kernels
-are vulnerable to this?  If so, which ones?
+On 10/26/21 10:48, John Paul Adrian Glaubitz wrote:
+> I have tested these patches against 5.14 but it seems the problem [1] still remains for me
+> for big-endian guests. I built a patched kernel yesterday, rebooted the KVM server and let
+> the build daemons do their work over night.
 
-> 'CVE-2021-3428' was assigned by Red Hat.
+I have done thorough testing and I'm no longer seeing the problem with the patched kernel.
 
-Are you sure that SUSE didn't already assign one to this?
+I am not sure what triggered my previous crash but I don't think it's related to this
+particular bug. I will keep monitoring the server in any case and open a new bug report
+in case I'm running into similar issues.
 
-And if not, why not and why do this now?  Who is this report for?
+Thanks,
+Adrian
 
-thanks,
+-- 
+ .''`.  John Paul Adrian Glaubitz
+: :' :  Debian Developer - glaubitz@...ian.org
+`. `'   Freie Universitaet Berlin - glaubitz@...sik.fu-berlin.de
+  `-    GPG: 62FF 8A75 84E0 2956 9546  0006 7426 3B37 F5B5 F913
 
-greg k-h
