@@ -1,38 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/29/3
-Message-ID: <20210129164208.GA8779@openwall.com>
-Date: Fri, 29 Jan 2021 17:42:08 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux Kernel: local priv escalation via futexes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/28/6
+Message-ID: <8d54a913-85a9-a2f4-f696-793322ca5d9e@physik.fu-berlin.de>
+Date: Thu, 28 Oct 2021 16:00:51 +0200
+From: John Paul Adrian Glaubitz <glaubitz@...sik.fu-berlin.de>
+To: mpe@...erman.id.au
+Cc: linuxppc-dev@...ts.ozlabs.org, oss-security@...ts.openwall.com, "debian-powerpc@...ts.debian.org" <debian-powerpc@...ts.debian.org>
+Subject: Re: Linux kernel: powerpc: KVM guest can trigger host crash on Power8
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello!
 
-I'm not familiar with futexes, but just to save others a few minutes on
-looking this up:
+On 10/28/21 15:52, John Paul Adrian Glaubitz wrote:
+> I am not sure what triggered my previous crash but I don't think it's related to this
+> particular bug. I will keep monitoring the server in any case and open a new bug report
+> in case I'm running into similar issues.
 
-On Fri, Jan 29, 2021 at 11:09:28AM +0100, Marcus Meissner wrote:
->        - Address a longstanding issue where the user space part of the PI
->          futex is not writeable. The kernel returns with inconsistent state
->          which can in the worst case result in a UAF of a tasks kernel
->          stack.
-> 
->          The solution is to establish consistent kernel state which makes
->          future operations on the futex fail because user space and kernel
->          space state are inconsistent. Not a problem as PI futexes
->          fundamentaly require a functional RW mapping and if user space
->          pulls the rug under it, then it can keep the pieces it asked for.
+This is very unfortunate, but just after I sent this mail, the machine crashed again.
 
->     * tag 'locking-urgent-2021-01-28' of git://git.kernel.org/pub/scm/linux/kernel/git/tip/tip:
->       futex: Handle faults correctly for PI futexes
+Sorry for the premature success report. I will have to check now what happened
+and get in touch with Michael.
 
-FWIW, this commit has:
+Adrian
 
-Fixes: 1b7558e457ed ("futexes: fix fault handling in futex_lock_pi")
+-- 
+ .''`.  John Paul Adrian Glaubitz
+: :' :  Debian Developer - glaubitz@...ian.org
+`. `'   Freie Universitaet Berlin - glaubitz@...sik.fu-berlin.de
+  `-    GPG: 62FF 8A75 84E0 2956 9546  0006 7426 3B37 F5B5 F913
 
-and that other commit is from 2008.  So probably all currently
-maintained Linux distros and deployments are affected, unless something
-else mitigated the issue in some kernel versions.
-
-Alexander
