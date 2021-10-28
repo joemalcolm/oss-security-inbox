@@ -1,85 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/16/1
-Message-ID: <CAA8xKjVxPtO+VpLsn1Ta+2Tv9YB2Q_fg2BOcC7=z6BzR7Qm8OQ@mail.gmail.com>
-Date: Mon, 16 Aug 2021 16:13:56 +0200
-From: Mauro Matteo Cascella <mcascell@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Maxim Levitsky <mlevitsk@...hat.com>, Paolo Bonzini <pbonzini@...hat.com>
-Subject: [CVE-2021-3653, CVE-2021-3656] SVM nested virtualization issues in KVM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/28/1
+Message-ID: <YXofzUCGm3N7lfNf@elende.valinor.li>
+Date: Thu, 28 Oct 2021 05:58:05 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: Michael Ellerman <mpe@...erman.id.au>
+Cc: oss-security@...ts.openwall.com, linuxppc-dev@...ts.ozlabs.org, John Paul Adrian Glaubitz <glaubitz@...sik.fu-berlin.de>
+Subject: Re: Linux kernel: powerpc: KVM guest can trigger host crash on Power8
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
 
-Two vulnerabilities were found in the KVM's AMD code for supporting
-SVM nested virtualization. They occur due to missing sanity checks of
-some VMCB (virtual machine control block) fields provided by the L1
-guest to handle a nested L2 guest.
+On Mon, Oct 25, 2021 at 10:18:54PM +1100, Michael Ellerman wrote:
+> The Linux kernel for powerpc since v5.2 has a bug which allows a
+> malicious KVM guest to crash the host, when the host is running on
+> Power8.
+> 
+> Only machines using Linux as the hypervisor, aka. KVM, powernv or bare
+> metal, are affected by the bug. Machines running PowerVM are not
+> affected.
+> 
+> The bug was introduced in:
+> 
+>     10d91611f426 ("powerpc/64s: Reimplement book3s idle code in C")
+> 
+> Which was first released in v5.2.
+> 
+> The upstream fix is:
+> 
+>   cdeb5d7d890e ("KVM: PPC: Book3S HV: Make idle_kvm_start_guest() return 0 if it went to guest")
+>   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=cdeb5d7d890e14f3b70e8087e745c4a6a7d9f337
+> 
+> Which will be included in the v5.16 release.
+> 
+> Note to backporters, the following commits are required:
+> 
+>   73287caa9210ded6066833195f4335f7f688a46b
+>   ("powerpc64/idle: Fix SP offsets when saving GPRs")
+> 
+>   9b4416c5095c20e110c82ae602c254099b83b72f
+>   ("KVM: PPC: Book3S HV: Fix stack handling in idle_kvm_start_guest()")
+> 
+>   cdeb5d7d890e14f3b70e8087e745c4a6a7d9f337
+>   ("KVM: PPC: Book3S HV: Make idle_kvm_start_guest() return 0 if it went to guest")
+> 
+>   496c5fe25c377ddb7815c4ce8ecfb676f051e9b6
+>   ("powerpc/idle: Don't corrupt back chain when going idle")
+> 
+> 
+> I have a test case to trigger the bug, which I can share privately with
+> anyone who would like to test the fix.
 
-----------------------
-CVE-2021-3653
-----------------------
-This issue is caused by missing validation of the `int_ctl` VMCB field
-and allows a malicious L1 guest to enable AVIC support (Advanced
-Virtual Interrupt Controller) for the L2 guest. The L2 guest is able
-to write to a limited but still relatively large subset of the host
-physical memory. Note that AVIC is currently not supported with
-nesting and it is not advertised in the L1 CPUID.
+The issue has been assigned CVE-2021-43056.
 
-This bug dates back to kernel 2.6.30 where it was first introduced via
-commit: https://github.com/torvalds/linux/commit/3d6368ef580a.
-
-CVE-2021-3653 has been assigned by Red Hat, Inc.
-
-----------------------
-CVE-2021-3656
-----------------------
-This issue is caused by missing validation of the the `virt_ext` VMCB
-field and allows a malicious L1 guest to disable both VMLOAD/VMSAVE
-intercepts and VLS (Virtual VMLOAD/VMSAVE) for the L2 guest. Under
-these circumstances, the L2 guest is able to run VMLOAD/VMSAVE
-unintercepted, and thus read/write portions of the host physical
-memory.
-
-This bug was introduced in kernel version 4.13 while enabling the
-Virtual VMLOAD/VMSAVE feature:
-https://github.com/torvalds/linux/commit/89c8a4984fc9.
-
-CVE-2021-3656 has been assigned by Red Hat, Inc.
-
----------
-Impact
----------
-The nested guest (L2) could use these flaws to read/write physical
-pages of the host, resulting in a crash of the entire system, leak of
-sensitive data or potential guest-to-host escape.
-
--------------
-Mitigation
--------------
-Both vulnerabilities can be mitigated by disabling the nested
-virtualization feature when loading kvm:
-# modprobe kvm_amd nested=0
-
-Disabling VLS (Virtual VMLOAD/VMSAVE) is an alternative mitigation for
-CVE-2021-3656:
-# modprobe kvm_amd vls=0
-
-----------
-Credits
-----------
-CVE-2021-3653: Maxim Levitsky (Red Hat)
-CVE-2021-3656: Maxim Levitsky (Red Hat) and Paolo Bonzini (Red Hat)
-
---------
-Patch
---------
-CVE-2021-3653: https://git.kernel.org/pub/scm/virt/kvm/kvm.git/commit/?id=0f923e07124df069ba68d8bb12324398f4b6b709
-CVE-2021-3656: https://git.kernel.org/pub/scm/virt/kvm/kvm.git/commit/?id=c7dfa4009965a9b2d7b329ee970eb8da0d32f0bc
-
-Thank you,
-Best regards.
--- 
-Mauro Matteo Cascella
-Red Hat Product Security
-PGP-Key ID: BB3410B0
-
+Regards,
+Salvatore
