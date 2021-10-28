@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2261" "Saturday" "17" "December" "2016" "20:06:22" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<a8863765bf6848cba87939df890af51d@imshyb02.MITRE.ORG>" "62" "[oss-security] Re: CVE Request - squid HTTP proxy multiple Information Disclosure issues" nil nil nil "12" "2016121801:06:22" "[oss-security] Re: CVE Request - squid HTTP proxy multiple Information Disclosure issues" (number mark "U       cve-assign@m Dec 17   62/2261  " thread-indent "\"[oss-security] Re: CVE Request - squid HTTP proxy multiple Information Disclosure issues\"\n") "<7cc09c7a-01f9-de00-5dfd-d022104c66ea@treenet.co.nz>" ("<7cc09c7a-01f9-de00-5dfd-d022104c66ea@treenet.co.nz>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["881" "Thursday" "28" "October" "2021" "15:52:11" "+0200" "John Paul Adrian Glaubitz" "glaubitz@physik.fu-berlin.de" nil "24" "[oss-security] Re: Linux kernel: powerpc: KVM guest can trigger host crash on Power8" nil nil nil "10" nil nil (number mark "U       glaubitz@phy Oct 28   24/881   " thread-indent "\"[oss-security] Re: Linux kernel: powerpc: KVM guest can trigger host crash on Power8\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: Linux kernel: powerpc: KVM guest can trigger host crash on Power8" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11347 invoked by uid 550); 18 Dec 2016 01:06:35 -0000
+Received: (qmail 8006 invoked by uid 550); 28 Oct 2021 14:03:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,76 +12,47 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11326 invoked from network); 18 Dec 2016 01:06:35 -0000
-From: <cve-assign@mitre.org>
-To: <squid3@treenet.co.nz>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <7cc09c7a-01f9-de00-5dfd-d022104c66ea@treenet.co.nz>
-Message-ID: <a8863765bf6848cba87939df890af51d@imshyb02.MITRE.ORG>
-Date: Sat, 17 Dec 2016 20:06:22 -0500
+Received: (qmail 26448 invoked from network); 28 Oct 2021 13:52:28 -0000
+Message-ID: <159047aa-6cbd-420f-0589-9dc6a43e2b23@physik.fu-berlin.de>
+Date: Thu, 28 Oct 2021 15:52:11 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE Request - squid HTTP proxy multiple Information Disclosure issues
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.2.0
+Content-Language: en-US
+From: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+To: mpe@ellerman.id.au
+Cc: linuxppc-dev@lists.ozlabs.org, oss-security@lists.openwall.com,
+ "debian-powerpc@lists.debian.org" <debian-powerpc@lists.debian.org>
+References: <87pmrtbbdt.fsf@mpe.ellerman.id.au>
+ <05b88724-90b6-a38a-bb3b-7392f85c1934@physik.fu-berlin.de>
+In-Reply-To: <05b88724-90b6-a38a-bb3b-7392f85c1934@physik.fu-berlin.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Original-Sender: glaubitz@physik.fu-berlin.de
+X-Originating-IP: 87.189.151.54
+Subject: [oss-security] Re: Linux kernel: powerpc: KVM guest can trigger host crash on Power8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello!
 
-> http://www.squid-cache.org/Advisories/SQUID-2016_11.txt
+An update to this post with oss-security CC'ed.
 
-> Incorrect processing of responses to If-None-Modified HTTP conditional
-> requests leads to client-specific Cookie data being leaked to other
-> clients. Attack requests can easily be crafted by a client to probe a
-> cache for this information.
+On 10/26/21 10:48, John Paul Adrian Glaubitz wrote:
+> I have tested these patches against 5.14 but it seems the problem [1] still remains for me
+> for big-endian guests. I built a patched kernel yesterday, rebooted the KVM server and let
+> the build daemons do their work over night.
 
-> the CVE critical leak was due to these lines in
-> src/client_side_reply.cc:
-> 
->      bool matchedIfNoneMatch = false;
->      if (r.header.has(HDR_IF_NONE_MATCH)) {
->         if (!e->hasIfNoneMatchEtag(r)) {
-> ...
-> -            http->logType = LOG_TCP_MISS;
-> -            sendMoreData(result);
-> 
-> This last line should have called "  processMiss(result); "
+I have done thorough testing and I'm no longer seeing the problem with the patched kernel.
 
-Use CVE-2016-10002.
+I am not sure what triggered my previous crash but I don't think it's related to this
+particular bug. I will keep monitoring the server in any case and open a new bug report
+in case I'm running into similar issues.
 
+Thanks,
+Adrian
 
-> http://www.squid-cache.org/Advisories/SQUID-2016_10.txt
+-- 
+ .''`.  John Paul Adrian Glaubitz
+: :' :  Debian Developer - glaubitz@debian.org
+`. `'   Freie Universitaet Berlin - glaubitz@physik.fu-berlin.de
+  `-    GPG: 62FF 8A75 84E0 2956 9546  0006 7426 3B37 F5B5 F913
 
-> Incorrect HTTP Request header comparison results in Collapsed
-> Forwarding feature mistakenly identifying some private responses as
-> being suitable for delivery to multiple clients.
-
-Use CVE-2016-10003.
-
-
-> The current fix is not quite complete. However we believe the remaining
-> headers leaked are not a serious security issue.
-
-If anyone needs a CVE ID for this issue (involving other headers) that
-was not fixed in 3.5.23 and 4.0.17, please let us know.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYVdwRAAoJEHb/MwWLVhi2sBwP/33e42WWt+2xK8LMWIt2opxE
-F8YSXBoIMKVh8V9i9dYeFrTcXPNMSOsNLawZgUaPIIdIzMy3ipKxfJ0dHlWjIUrk
-3QIPAlri8tEOJiy0gR3x1xzdYaZUq5hLpBxWvUJz/GS4OPpvlMPO8VvSYzfKVYUi
-Mxw9izK9E41WCUYFTCpzWhI+M248W4CCKYul8gHbDIaV1ED+3pRLkmfgaozP1TxW
-ozAB8REzpOyG+Erl5rxZ3e8Zgpf3ox6Rmv260Ue4mhZLCsK2AWR72PJs9zXRK+LQ
-1cwTROdWg78iMuoB4E77L77L98OEj5sSLlo6fc5mew8lyteq7QwbfaWjuCk3ga79
-BVisJvqXW7dyzLxyZ5yiMGLmHJQd4C6FaKBM6D9xSlaUaicEPvLUU+zwNHtWi0dT
-3KKI4GzvBk3x62c4bjjjGpNWoK0sNiDFK465MfA343XfeEjnA+URgrzNJO8ocvMI
-booClyeDs7VKwv+yGVMI+3v+YQ/kUKjERdRr4StzSEWF45GPtXnWj7F7bj/JCR4m
-/mwZ9237ED5Yhq81e5/OPfJ/dnduJYoI5vjcZmVekTxh3+3AUcLXH1JxfV7Rk6z4
-+Tk+X443j3cuB//zMDR8oN7RCl64R2Cx29HwCFukU6nA+wL2hVLHBrVsR+mw6fQX
-7LGySLYqm7FhLtuSKhQa
-=GwOM
------END PGP SIGNATURE-----
