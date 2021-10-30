@@ -1,133 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/12/12
-Message-ID: <20210112190134.585e5a60@suse.de>
-Date: Tue, 12 Jan 2021 19:01:34 +0100
-From: David Disseldorp <ddiss@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/30/1
+Message-ID: <62710acf-0fbb-3d20-26f1-85ce01d2bae0@oracle.com>
+Date: Fri, 29 Oct 2021 17:37:37 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2020-28374: Linux SCSI target (LIO) unrestricted copy offload
+Subject: CVE website transition from cve.mitre.org to cve.org
 Content-Type: text/plain; charset=utf-8
 
-===============================================================================
-== Subject:     Linux SCSI target (LIO) unrestricted copy offload
-==
-==
-== CVE ID#:     CVE-2020-28374
-==
-== Versions:    Linux: v3.12 and later
-==              tcmu-runner: v1.3.0 and later
-==
-== Summary:     An attacker with access to a LUN and knowledge of Unit Serial
-==              Number assignments can read and write to any LIO backstore,
-==              regardless of SCSI transport settings.
-===============================================================================
+FYI for those who aren't subscribed to the CVE newsletter or blog and
+don't follow https://twitter.com/CVEannounce/ - they've sent out this
+announcement in this month's newsletter:
 
+ > Introducing the all-new CVE Program website at its new “CVE.ORG” web address:
+ > WWW.CVE.ORG. The new website includes many new features and is optimized for
+ > users.
+ >
+ > This is the first step in transitioning from the old CVE.MITRE.ORG website.
+ > The phased quarterly transition process began today and will last for up to
+ > one year. During the quarterly transition, new releases of this website will
+ > occur every quarter, and the new CVE.ORG website will operate concurrently
+ > with the CVE.MITRE.ORG website. Upon completion of the phased transition,
+ > the CVE.MITRE.ORG website will be archived and retired.
+ >
+ > Items moved to this new site will no longer be maintained on the old the
+ > website; for example, news, blogs, podcasts, and the list of CVE Numbering
+ > Authorities (CNAs). Examples of major items that will temporarily remain on
+ > the old CVE.MITRE.ORG site until later in the transition include the CVE List
+ > keyword search and the individual CVE List download files. CVE Records will be
+ > published on both sites during the transition.
 
-Description
------------
-SCSI "EXTENDED COPY" (XCOPY) requests sent to a Linux SCSI target (LIO) allow an
-attacker to read or write anywhere on any LIO backstore configured on the
-host, provided the attacker has access to one LUN and knowledge of the victim
-backstore's vpd_unit_serial (AKA "wwn"). This is possible regardless of the
-transport/HBA settings for the victim backstore.
-- with vhost-scsi this can allow VM guests to read or write to images assigned
-  to other qemu processes
-- with iSCSI this allows CHAP, ACL and network portal isolation bypass
-- backstores with no corresponding transport LUN mapping remain vulnerable
-- all other LIO transports and backstores which allow for XCOPY processing by
-  LIO's target_core_xcopy handler should be considered vulnerable
-- tcmu-runner based user backstores are also vulnerable via a similar logic bug
+The full article can be read at:
+https://www.cve.org/Media/News/item/news/2021/09/29/Welcome-to-the-New-CVE
 
-This is due to the way that LIO behaves when processing XCOPY
-copy-source/copy-destination (CSCD) descriptors; when attempting to match
-CSCD descriptors with corresponding se_devices, target_xcopy_locate_se_dev_e4()
-iterates over LIO's global devices list, which includes all configured
-backstores, instead of only considering backstores which are exposed to the
-initiator via transport layer ACL settings.
+Most important for members of this mailing list are:
 
-Similarly, when LIO is configured to forward SCSI requests to the user-space
-tcmu-runner daemon (via target_core_user), tcmu-runner's xcopy_locate_udev()
-iterates over all tcmu-runner devices, without considering any transport layer
-restrictions.
+https://www.cve.org/ResourcesSupport/ReportRequest
+  - documentation of the process to request assignment or updating of a CVE id
 
+https://www.cve.org/PartnerInformation/ListofPartners
+  - list of CNAs to request a CVE assignment or update from.
 
-Exploitation
-------------
-The attacker sends an XCOPY request with two CSCD descriptors.
-One CSCD descriptor must correspond to the NAA IEEE identifier for the LUN to
-which the attacker has access. The other (victim) CSCD descriptor must be an
-NAA IEEE identifier which matches another configured backstore within LIO's
-global device inventory.
+https://cveform.mitre.org/ appears to still be the form to request those from
+Mitre if another CNA is not more appropriate.
 
-For successful exploitation of this bug an attacker must be able to provide a
-matching NAA identifier for the victim backstore.
-
-
-Affected Versions
------------------
-Linux Kernel (LIO target_core_xcopy)
-- Exploitable as of
-  f99715ac8d6f ("target: Enable global EXTENDED_COPY setup/release")
-  + mainline v3.12-rc1 and later
-
-tcmu-runner (user-space SCSI target, coupled with LIO's target_core_user)
-- Exploitable as of 9c86bd0db97a ("tcmur: Add emulate XCOPY command support")
-  + tcmu-runner v1.3.0 and later
-
-
-Relevance
----------
-Linux kernel LIO deployments are affected under the following conditions:
-- Linux kernel with f99715ac8d6f, i.e. mainline v3.12-rc1 or later
-- LIO SCSI target (target_core_mod) loaded
-- at least two configured backstores
-- one "attacker backstore" must be exposed via a SCSI transport (e.g. iSCSI)
-  which permits access to a potential attacker
-  + the attacker backstore must allow and use in-kernel LIO XCOPY command
-    emulation
-    - all backstores except special "pscsi" passthrough and "user" types
-    - emulate_3pc=1 must be set (default)
-- one or more "victim backstores" must be configured
-  + transport settings for victim backstores are irrelevant
-  + all backstore types are vulnerable, including "iblock", "fileio", "rd_mcp",
-    "pscsi" and "user"
-  + emulate_3pc=1 must be set the victim backstore (default)
-
-tcmu-runner deployments are affected under the following conditions:
-- tcmu-runner with 9c86bd0db97a, i.e. v1.3.0 or later
-- one "attacker backstore" must be exposed via a SCSI transport (e.g. iSCSI)
-  which permits access to a potential attacker
-- one or more "victim backstores" must be configured
-  + transport settings for victim backstores are irrelevant
-  + the victim backstore must also be managed by the same tcmu-runner instance
-    - e.g. an XCOPY request to a "user"+tcmu-runner backstore can't be used to
-      read or write to an "iblock" backstore, only to other backstores handled
-      by the same tcmu-runner instance.
-
-
-Mitigation
-----------
-Caveat: instructions below do *not* affect XCOPY requests sent to tcmu-runner
-        based backstores. They are only suitable for disabling kernel
-	(target_core_xcopy) support for XCOPY requests.
-
-Requires acb3f2600eb8 ("target: Reject EXTENDED_COPY when emulate_3pc is disabled")
-- v3.12-rc7 or later
-
-XCOPY support is enabled by default, but can be disabled via:
-  echo 0 > /sys/kernel/config/target/core/<backstore>/<name>/attrib/emulate_3pc
-or
-  targetcli /backstores/<backstore>/<name> set attribute emulate_3pc=0
-
-...where <backstore> and <name> should be filled appropriately.
-
-
-Fixes
------
-Linux kernel and tcmu-runner fixes will be provided following the coordinated
-release date: 2021-01-12 10:00 Pacific Standard Time.
-
-
-Credits
--------
-Research and patches by David Disseldorp of SUSE.
-Patch review by Mike Christie of Oracle, and Lee Duncan of SUSE.
+-- 
+	-Alan Coopersmith-               alan.coopersmith@...cle.com
+	 Oracle Solaris Engineering - https://blogs.oracle.com/alanc
