@@ -1,68 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/14/1
-Message-ID: <CALXpagwmiKsVvPB4BooBhtTshuzg7JNPhTO_MZKZNmSMo7YCRw@mail.gmail.com>
-Date: Wed, 14 Apr 2021 09:06:02 -0700
-From: Tim Allclair <timallclair@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/31/1
+Message-ID: <YX6tLtG34BETJzoE@eldamar.lan>
+Date: Sun, 31 Oct 2021 15:50:22 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: [kubernetes] CVE-2021-25735: Validating Admission Webhook does not observe some previous fields
+Cc: Samuel Groß <saelo@...gle.com>, Francis Perron <francis.perron@...pify.com>, Carlos Alberto Lopez Perez <clopez@...lia.com>, security@...kit.org, Alberto Garcia <berto@...lia.com>
+Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2021-0006
 Content-Type: text/plain; charset=utf-8
 
-A security issue was discovered in kube-apiserver that could allow node
-updates to bypass a Validating Admission Webhook. You are only affected by
-this vulnerability if you run a Validating Admission Webhook for Nodes that
-denies admission based at least partially on the old state of the Node
-object.
+Hi,
 
-This issue has been rated Medium (
-CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:N/I:H/A:H
-<https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:N/I:H/A:H>),
-and assigned CVE-2021-25735.
+On Thu, Oct 28, 2021 at 06:24:24AM +0200, Salvatore Bonaccorso wrote:
+> Hi Samuel,
+> 
+> On Wed, Oct 27, 2021 at 04:40:55PM +0200, Samuel Groß wrote:
+> > Hi!
+> > 
+> > I don't know what happened to CVE-2021-30851 as these CVEs are allocated by
+> > Apple usually. I think the CVE would correspond to this issue though:
+> > https://bugs.webkit.org/show_bug.cgi?id=227988
+> 
+> I pinged now product-security@...le.com as well on this (as Apple Inc
+> is the responsible CNA for the CVE).
 
-Note: This only impacts validating admission plugins that rely on old
-values in certain fields, and does not impact calls from kubelets that go
-through the built-in NodeRestriction admission plugin.
-Affected Versions
+I did not got a reply but apparently the CVE entry got re-populated
+at https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-30851 and
+now reads as "A memory corruption vulnerability was addressed with
+improved locking. This issue is fixed in Safari 15, tvOS 15, watchOS
+8, iOS 15 and iPadOS 15. Processing maliciously crafted web content
+may lead to code execution."
 
-   -
-
-   kube-apiserver v1.20.0 - v1.20.5
-   -
-
-   kube-apiserver v1.19.0 - v1.19.9
-   -
-
-   kube-apiserver <= v1.18.17
-
-Fixed Versions
-
-This issue is fixed in the following versions:
-
-   -
-
-   kube-apiserver v1.21.0
-   -
-
-   kube-apiserver v1.20.6
-   -
-
-   kube-apiserver v1.19.10
-   -
-
-   kube-apiserver v1.18.18
-
-Detection
-
-If you find evidence that this vulnerability has been exploited, please
-contact security@...ernetes.io
-Additional Details
-
-See Kubernetes Issue #100096
-<https://github.com/kubernetes/kubernetes/issues/100096> for more details.
-Acknowledgements
-
-This vulnerability was reported by Rogerio Bastos & Ari Lima from RedHat
-
-Thank You,
-
-Tim Allclair on behalf of the Kubernetes Product Security Committee
-
+Regards,
+Salvatore
