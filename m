@@ -1,43 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/17/1
-Message-ID: <20210117182007.GA25304@openwall.com>
-Date: Sun, 17 Jan 2021 19:20:07 +0100
-From: Solar Designer <solar@...nwall.com>
-To: Anthony Liguori <aliguori@...zon.com>
-Cc: oss-security@...ts.openwall.com, Abby Fuller <abbyfull@...zon.com>
-Subject: Re: Adding an additional Amazon Linux member to distros@
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/02/1
+Message-ID: <YYBhTMCXrf9TPicd@LykOS.localdomain>
+Date: Mon, 1 Nov 2021 17:51:08 -0400
+From: Santiago Torres <torresariass@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Trojan Source Attacks
 Content-Type: text/plain; charset=utf-8
 
-Hi,
-
-On Fri, Jan 15, 2021 at 02:13:35PM -0800, Anthony Liguori wrote:
-> I'm splitting off from the previous thread.  I would like to propose
-> adding Abby Fuller from the Amazon Linux security as the second member
-> of distros@ from Amazon.  Abby would back me up for the Amazon assigned
-> tasks which is important as I'll be going on parental leave in March for
-> 6-12 weeks and will be slow to respond.
-
-I've just subscribed Abby.  I assume she's familiar with and has
-accepted the list policy.
-
-https://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-instructions-for-members
-
-BTW, normally adding/removing people for a previously accepted distro is
-done off-list.
-
-> We will also take primary on item 13:
+On Mon, Nov 01, 2021 at 09:51:38PM +0100, Jan Engelhardt wrote:
 > 
-> "Keep track of per-report and per-issue handling and disclosure
-> timelines (at least times of notification of the private list and of
-> actual public disclosure), at regular intervals produce and share
-> statistics (most notably, the average embargo duration) as well as the
-> raw data (except on issues that are still under embargo) by posting to
-> oss-security"
+> On Monday 2021-11-01 18:27, Nicholas Boucher wrote:
+> >
+> >We have identified an issue affecting all compilers and interpreters that support Unicode.
+> >[...]
+> >The attached paper describes an attack paradigm -- which we believe to be novel -- discovered by security researchers at the
+> >University of Cambridge.
+> 
+> Not so novel. At one time, this picture made the rounds
+> (https://twitter.com/acronis/status/1019152990022787072 - the pic is likely
+> older than this 2018 tweet), and anyone who knew that Unicode had zero-width
+> characters already made the connection.
 
-Great.  I've just updated the wiki swapping Amazon and Gentoo for that
-task.  I think we'll need further edits as it relates to Gentoo's
-involvement - I expect to hear from Gentoo on that in the other thread.
+Along the same lines, there were a myriad of attacks using bash-style
+sequences to obscure parts of patches inside of git show/git log/less/
+other pagers not too long ago (circa 2017, maybe?). We even discussed
+similar possibilities on this paper[1] (sec 4.3) when mentioning git
+commit signing of content displayed on collaborative coding platforms.
 
-Thanks,
+Overall there's a plethora of work around "punycode meets tool X" that
+I'm surprised this is called novel.
 
-Alexander
+Cheers!
+-Santiago
+
+[1] https://ssl.engineering.nyu.edu/papers/afzali_asiaccs_2018.pdf
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
