@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3613" "Thursday" "28" "May" "2015" "07:51:53" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150528115153.D4AA46C0032@smtpvmsrv1.mitre.org>" "77" "[oss-security] Re: CVE Request, multiple WordPress plugins and themes" nil nil nil "5" "2015052811:51:53" "[oss-security] Re: CVE Request, multiple WordPress plugins and themes" (number mark "        cve-assign@m May 28   77/3613  " thread-indent "\"[oss-security] Re: CVE Request, multiple WordPress plugins and themes\"\n") "<20150528063540.GD27861@lakka.kapsi.fi>" ("<20150528063540.GD27861@lakka.kapsi.fi>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1042" "Monday" "1" "November" "2021" "16:10:02" "+0100" "Jakub Wilk" "jwilk@jwilk.net" nil "23" "Re: [oss-security] CVE-2021-42574: rustc 1.56.0 and bidirectional-override codepoints in source code" nil nil nil "11" nil nil (number mark "U       jwilk@jwilk. Nov  1   23/1042  " thread-indent "\"Re: [oss-security] CVE-2021-42574: rustc 1.56.0 and bidirectional-override codepoints in source code\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-42574: rustc 1.56.0 and bidirectional-override codepoints in source code" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 9500 invoked by uid 550); 28 May 2015 11:52:08 -0000
+Received: (qmail 3758 invoked by uid 550); 1 Nov 2021 15:10:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,90 +11,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9476 invoked from network); 28 May 2015 11:52:06 -0000
-In-Reply-To: <20150528063540.GD27861@lakka.kapsi.fi>
-Message-Id: <20150528115153.D4AA46C0032@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu, 28 May 2015 07:51:53 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request, multiple WordPress plugins and themes
-To: henri@nerv.fi
+Received: (qmail 3737 invoked from network); 1 Nov 2021 15:10:16 -0000
+Authentication-Results: garm.ovh; auth=pass (GARM-103G0056e6e7ce3-fe6b-4aeb-abcc-4e32a65b2211,
+                    763B6099D94F4A007CEA2B234D1EB904B03D927D) smtp.auth=jwilk@jwilk.net
+X-OVh-ClientIp: 37.30.2.250
+Date: Mon, 1 Nov 2021 16:10:02 +0100
+From: Jakub Wilk <jwilk@jwilk.net>
+To: <oss-security@lists.openwall.com>
+Message-ID: <20211101151002.po6yfo7lgenrucet@jwilk.net>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <aa5e1a0e-daba-41f2-1f98-91d36584f119@pietroalbini.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"; format=flowed
+Content-Disposition: inline
+In-Reply-To: <aa5e1a0e-daba-41f2-1f98-91d36584f119@pietroalbini.org>
+X-Originating-IP: [37.59.142.103]
+X-ClientProxiedBy: DAG4EX2.mxp6.local (172.16.2.32) To DAG4EX2.mxp6.local
+ (172.16.2.32)
+X-Ovh-Tracer-GUID: 63eb9fce-6e86-456b-bdb7-d6237e09caad
+X-Ovh-Tracer-Id: 237846355782457111
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvtddrvdehvddgjeduucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpeffhffvuffkfhggtggujghisehttdertddttddvnecuhfhrohhmpeflrghkuhgsucghihhlkhcuoehjfihilhhksehjfihilhhkrdhnvghtqeenucggtffrrghtthgvrhhnpeelffduueelheevhfdvjeejfeduvdfhuedvjedttdehgedugfetgefgudfgjeffudenucfkpheptddrtddrtddrtddpfeejrdehledrudegvddruddtfeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhhouggvpehsmhhtphhouhhtpdhhvghlohepmhigphhlrghniedrmhgrihhlrdhovhhhrdhnvghtpdhinhgvtheptddrtddrtddrtddpmhgrihhlfhhrohhmpehjfihilhhksehjfihilhhkrdhnvghtpdhrtghpthhtohepohhsshdqshgvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomh
+Subject: Re: [oss-security] CVE-2021-42574: rustc 1.56.0 and
+ bidirectional-override codepoints in source code
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+>+    ('\u{202A}', ""), // The following unicode text flow control characters are inconsistently
+>+    ('\u{202B}', ""), // supported accross CLIs and can cause confusion due to the bytes on disk
+>+    ('\u{202D}', ""), // not corresponding to the visible source code, so we replace them always.
+>+    ('\u{202E}', ""),
+>+    ('\u{2066}', ""),
+>+    ('\u{2067}', ""),
+>+    ('\u{2068}', ""),
+>+    ('\u{202C}', ""),
+>+    ('\u{2069}', ""),
 
-> One email with all needed details for CVE request per plugin is better
-> way to get these assigned.
+Is it intentional that (here and elsewhere in the patch) they didn't 
+include all the characters with the Bidi_Control property?
 
-The MITRE CVE team currently prefers that this request not be re-sent
-as a separate message for each plugin.
+    $ grep -w Bidi_Control /usr/share/unicode/PropList.txt
+    061C          ; Bidi_Control # Cf       ARABIC LETTER MARK
+    200E..200F    ; Bidi_Control # Cf   [2] LEFT-TO-RIGHT MARK..RIGHT-TO-LEFT MARK
+    202A..202E    ; Bidi_Control # Cf   [5] LEFT-TO-RIGHT EMBEDDING..RIGHT-TO-LEFT OVERRIDE
+    2066..2069    ; Bidi_Control # Cf   [4] LEFT-TO-RIGHT ISOLATE..POP DIRECTIONAL ISOLATE
 
-> https://github.com/RedHatProductSecurity/CVE-HOWTO#how-to-write-a-cve-request
+So U+061C, U+200E and U+200F appear to be missing from the patch.
 
-That document is directly applicable to CVE request responses by Kurt
-Seifried (including the ones he sent to oss-security up until 2013).
-Although the document contains a large amount of useful information,
-it is not a document that has been reviewed by the MITRE CVE team. For
-the specific topic of WordPress plugins, we would typically need to
-know what privileges are required to conduct each attack and -- in
-situations with more than one security issue for a single plugin --
-whether the vulnerabilities are independently exploitable.
-
-> does not have enough information for CVE request
-
-For the majority of the plugins, the amount of vulnerability detail is
-similar to the http://openwall.com/lists/oss-security/2015/05/22/4
-case that we discussed here last week. The situation isn't identical,
-so we'll try to clarify. As always, MITRE does not make decisions
-about the policies of the oss-security list. The current status is
-that nobody has objected to the message pattern starting with (for
-example) the http://openwall.com/lists/oss-security/2015/05/18/8 post,
-in which version information was originally included and the
-vulnerability had already been fixed. The
-http://openwall.com/lists/oss-security/2015/05/27/6 reporting pattern
-is not always the same. First, version information is not directly
-included. Second, some of the plugins apparently do not have a
-changelog entry indicating that any security problem was recently
-fixed. Putting all of this together, the most critical difference may
-be that some of these plugin reports are not about "Public security
-issues" and would potentially fall outside the scope of this list. So,
-our guess is that we can send a response here (with a CVE mapping) for
-a subset of this message, e.g.,
-
-    * extended-catagories-widget [PLUGINS] + url:
-    https://wordpress.org/plugins/extended-categories-widget/ +
-    vuln found: :--|- post auth admin SQLi
-
-seems to map to this public issue:
-
-    https://wordpress.org/plugins/extended-categories-widget/changelog/
-       Last Updated: 2015-5-27
-       Version 4.0.1
-       Post-Auth SQL Injection Vulnerability
-       Only occurs for WordPress versions lower than 3.3
-
-but we must not send a response here (with a CVE mapping) for some of
-the other parts. If we have misinterpreted that, you can (among other
-options) send e-mail directly to only cve-assign@mitre.org to tell us.
-We will leave it at that for now. There are obviously open questions,
-e.g., if someone prefers to send a very large number of
-low-information but public WordPress plugin findings, is it still best
-to use oss-security.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVZwALAAoJEKllVAevmvmsNLUH/3sPYVAJdvAzrBsr5gA8I0Pi
-2KDWEA+nolK70uhf+fcGLJtw0HJY+q1C/gtWVVd2VaNCojsBwA0Xz5GyWqk8bzVx
-UZX5WgbFbyy5gOQE1Gp49NM5V2KvoZ8YJvLw7hds9XPmpX7lH3MbjXmzDy+p2e1Y
-BUlg2Js4noI0VjOBJBreaXNWVoHyI6YbSSRuJWXGEiMWah8dhTvh/i+Kkjr/tO1g
-t6kfThgZzdEErBQBbm/hjDxvy5zNRyZiePSRUnEYoTmD3Pj12B5/B861T/d5An8N
-BDT+JCb2hcXe5zEXEwu0QFXW3B41z/K0nNGIoD/ZS18rZza1hhY8WBnf3KkQ8Ns=
-=Sw75
------END PGP SIGNATURE-----
+-- 
+Jakub Wilk
