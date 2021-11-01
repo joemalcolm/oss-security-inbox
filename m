@@ -1,36 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/24/1
-Message-ID: <20210324063110.6af05039@fabiankeil.de>
-Date: Wed, 24 Mar 2021 06:31:10 +0100
-From: Fabian Keil <freebsd-listen@...iankeil.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/01/6
+Message-ID: <c2d12374-0ed6-d6d4-60ea-799934b6f173@cl.cam.ac.uk>
+Date: Mon, 1 Nov 2021 17:27:53 +0000
+From: Nicholas Boucher <nicholas.boucher@...cam.ac.uk>
 To: oss-security@...ts.openwall.com
-Subject: Re: Multiple memory leaks fixed in Privoxy 3.0.29 stable
+Subject: Trojan Source Attacks
 Content-Type: text/plain; charset=utf-8
 
-Alan Coopersmith <alan.coopersmith@...cle.com> wrote on 2021-03-23:
+OSS Security teams,
 
-> It looks like Red Hat has assigned CVE ids for these issues now, but
-> not yet told Mitre to publish them:
+We have identified an issue affecting all compilers and interpreters 
+that support Unicode. We believe that the techniques described hereafter 
+can be used to generate adversarial encodings of source code files that 
+can be used to craft targeted attacks against source code that cannot be 
+seen by human reviewers in rendered text. This is of concern to the open 
+source community because, absent defenses, supply chain attacks can be 
+imperceptibly mounted against the ecosystem.
 
-I ran into issues getting CVE ids for Privoxy 3.0.29 as described in:
-https://seclists.org/oss-sec/2020/q4/234 and
-https://seclists.org/oss-sec/2021/q1/90
+This vulnerability has undergone a coordinated disclosure process that 
+has concluded today. The security advisory can be found at 
+https://trojansource.codes.
 
-I've sent CVE ids to this list in February after I finally got them all:
-https://seclists.org/oss-sec/2021/q1/101
+Multiple organizations will be releasing parallel security advisories, 
+such as Rust's advisory at 
+https://blog.rust-lang.org/2021/11/01/cve-2021-42574.html, Red Hat's 
+advisory at 
+https://access.redhat.com/security/vulnerabilities/RHSB-2021-007 
+<https://access.redhat.com/security/vulnerabilities/RHSB-2021-007>, and 
+GitHub's advisory at 
+https://github.blog/changelog/2021-10-31-warning-about-bidirectional-unicode-text/ 
+<https://github.blog/changelog/2021-10-31-warning-about-bidirectional-unicode-text/>.
 
-CVE ids for Privoxy 3.0.31 and 3.0.32 were assigned within days, though.
+The attached paper describes an attack paradigm -- which we believe to 
+be novel -- discovered by security researchers at the University of 
+Cambridge. There are two techniques for attack, both of which exploit 
+Unicode's high expressiveness to craft source code files for which 
+rendered text displays divergent logic from the underlying encoded bytes 
+seen by compilers.
 
-In related news Canonical seems to have published an advisory for
-multiple Privoxy releases including 3.0.29 on 2021-03-22 which claims
-that "An attacker could possibly use this issue to cause a denial of
-service or obtain sensitive information.":
-https://ubuntu.com/security/notices/USN-4886-1
+The first and primary technique, which we dub the Trojan Source attack, 
+uses Unicode Bidirectional (Bidi) control characters embedded in 
+comments and string literals to produce visually deceptive source code 
+files. This technique enables an adversary to encode constructs that 
+visually appear to be comments or string literals but execute as code, 
+or vice versa. Complete details, as well as recommended mitigations, can 
+be found in the attachment 001 Trojan Source.pdf. This vulnerability is 
+tracked under CVE-2021-42574.
 
-Obviously the memory leaks can be used for denial of service attacks
-but I'm not sure what the "obtain sensitive information" part is all
-about ...
+The second technique, to which we refer as the homoglyph variant, uses 
+homoglyphs (characters that render to the same glyph but are represented 
+by different Unicode values) to define adversarial identifiers. In this 
+technique, an adversary defines an identifier such as a function name 
+that appears visually identical to a target function, but is defined 
+using Unicode homoglyphs. This adversarial function then performs some 
+malicious action, then optionally calls the original function it is 
+impersonating. When defined in upstream dependencies such as open source 
+software, these adversarial functions can be imported into downstream 
+software and invoked without visual indication of malicious code. 
+Complete details, as well as recommended mitigations, can also be found 
+in the attachment 001 Trojan Source.pdf. This vulnerability is tracked 
+under CVE-2021-42694.
 
-Fabian
+Proofs-of-concept can be found at 
+https://github.com/nickboucher/trojan-source.
 
-Content of type "application/pgp-signature" skipped
+We hope that this information proves useful in building and applying 
+defenses where applicable.
+
+Best,
+Nicholas Boucher
+University of Cambridge
+
+Content of type "text/html" skipped
+
+Download attachment "001 Trojan Source.pdf" of type "application/pdf" (737637 bytes)
+
+Download attachment "OpenPGP_0x5662BCEC5F1D2BEA.asc" of type "application/pgp-keys" (3160 bytes)
+
+Download attachment "OpenPGP_signature" of type "application/pgp-signature" (841 bytes)
