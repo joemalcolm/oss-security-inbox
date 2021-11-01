@@ -1,33 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/05/2
-Message-ID: <CAGr9p8CrKpXdkd2aP9P7ke9M+fADrYHd9D=AAv+VJe3kRsqndA@mail.gmail.com>
-Date: Tue, 5 Jan 2021 12:20:58 +0100
-From: Robert Metzger <rmetzger@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/01/8
+Message-ID: <CAG8=FRj-qsUUXTt0dUPV3u67GfZUZi0kV76smZD_ZWSbkq+a+Q@mail.gmail.com>
+Date: Mon, 1 Nov 2021 21:44:31 +0100
+From: Emmanuel Lecharny <elecharny@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2020-17519] Apache Flink directory traversal attack: reading remote files through the REST API
+Subject: CVE-2021-41973: Apache MINA HTTP listener DOS
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-17519: Apache Flink directory traversal attack: reading remote
-files through the REST API
-
-Vendor:
-The Apache Software Foundation
-
-Versions Affected:
-1.11.0, 1.11.1, 1.11.2
+Severity: critical
 
 Description:
-A change introduced in Apache Flink 1.11.0 (and released in 1.11.1 and
-1.11.2 as well) allows attackers to read any file on the local filesystem
-of the JobManager through the REST interface of the JobManager process.
-Access is restricted to files accessible by the JobManager process.
 
-Mitigation:
-All users should upgrade to Flink 1.11.3 or 1.12.0 if their Flink
-instance(s) are exposed.
-The issue was fixed in commit b561010b0ee741543c3953306037f00d7a9f0801 from
-apache/flink:master.
+In Apache MINA, a specifically crafted, malformed HTTP request may
+cause the HTTP Header decoder to loop indefinitely. The decoder
+assumed that the HTTP Header begins at the beginning of the buffer and
+loops if there is more data than expected. Please update MINA to 2.1.5
+or greater.
 
-Credits:
-This issue was discovered by 0rich1 of Ant Security FG Lab
+References:
 
+https://lists.apache.org/thread.html/r0b907da9340d5ff4e6c1a4798ef4e79700a668657f27cca8a39e9250%40%3Cdev.mina.apache.org%3E
+
+
+-- 
+Regards,
+Cordialement,
+Emmanuel Lécharny
+www.iktek.com
