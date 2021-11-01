@@ -1,4 +1,9 @@
-Received: (qmail 15930 invoked by uid 550); 11 Jul 2023 16:20:50 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["303" "Monday" "1" "November" "2021" "09:08:24" "+0000" "Calvin Kirs" "kirs@apache.org" nil "13" "[oss-security] CVE-2021-27644: Apache DolphinScheduler: DolphinScheduler mysql jdbc connector parameters deserialize remote code execution " nil nil nil "11" nil nil (number mark "U       kirs@apache. Nov  1   13/303   " thread-indent "\"[oss-security] CVE-2021-27644: Apache DolphinScheduler: DolphinScheduler mysql jdbc connector parameters deserialize remote code execution \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-27644: Apache DolphinScheduler: DolphinScheduler mysql jdbc connector parameters deserialize remote code execution " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 27833 invoked by uid 550); 1 Nov 2021 11:48:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,49 +12,27 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 4072 invoked from network); 11 Jul 2023 15:50:29 -0000
-Authentication-Results: apache.org; auth=none
+Received: (qmail 25670 invoked from network); 1 Nov 2021 09:08:38 -0000
 Content-Type: text/plain; charset=utf-8
-From: Dave Fisher <wave@apache.org>
+From: Calvin Kirs <kirs@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <6ced3d94-54c0-3b5d-2582-25dc94110b03@apache.org>
+Message-ID: <7c81caa1-0079-eaf0-73f1-b4d176c0b569@apache.org>
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 11 Jul 2023 15:50:17 +0000
+Date: Mon, 01 Nov 2021 09:08:24 +0000
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-31007: Apache Pulsar: Broker does not always disconnect
- client when authentication data expires 
+Subject: [oss-security] CVE-2021-27644: Apache DolphinScheduler: DolphinScheduler mysql
+ jdbc connector parameters deserialize remote code execution 
 
-Affected versions:
-
-- Apache Pulsar before 2.9.5
-- Apache Pulsar 2.10.0 through 2.10.3
-- Apache Pulsar 2.11.0
+Severity: low
 
 Description:
 
-Improper Authentication vulnerability in Apache Software Foundation Apache =
-Pulsar Broker allows a client to stay connected to a broker after authentic=
-ation data expires if the client connected through the Pulsar Proxy when th=
-e broker is configured with authenticateOriginalAuthData=3Dfalse or if a cl=
-ient connects directly to a broker with a specially crafted connect command=
- when the broker is configured with authenticateOriginalAuthData=3Dfalse.
+In Apache DolphinScheduler before 1.3.6 versions, authorized users can use =
+SQL injection in the data source center. (Only applicable to MySQL data sou=
+rce with internal login account password)
 
-This issue affects Apache Pulsar: through 2.9.4, from 2.10.0 through 2.10.3=
-, 2.11.0.
-
-2.9 Pulsar Broker users should upgrade to at least 2.9.5.
-2.10 Pulsar Broker users should upgrade to at least 2.10.4.
-2.11 Pulsar Broker users should upgrade to at least 2.11.1.
-3.0 Pulsar Broker users are unaffected.
-Any users running the Pulsar Broker for 2.8.* and earlier should upgrade to=
- one of the above patched versions.
 
 Credit:
 
-Michael Marshall of DataStax (finder)
-
-References:
-
-https://pulsar.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2023-31007
+This issue was discovered by Jinchen Sheng of Ant FG Security Lab
 
