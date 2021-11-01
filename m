@@ -1,39 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/24/1
-Message-ID: <000901d70aa4$f97e3070$ec7a9150$@gmail.com>
-Date: Wed, 24 Feb 2021 12:02:49 -0000
-From: "Simon Steiner" <simonsteiner1984@...il.com>
-To: <oss-security@...ts.openwall.com>
-Subject: [CVE-2020-11988] Apache XML Graphics Commons SSRF vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/01/2
+Message-ID: <CAG8=FRjgTaOnJft3zCTqe9LSBsWxUatSe66WfdSBCF1ZTB1+8Q@mail.gmail.com>
+Date: Mon, 1 Nov 2021 04:16:08 +0100
+From: Emmanuel Lecharny <elecharny@...che.org>
+To: "dev@...a.apache.org" <dev@...a.apache.org>, "users@...a.apache.org" <users@...a.apache.org>,  Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com, announce@...che.org
+Subject: [ANNOUNCE] Apache MINA 2.0.22 & 2.1.5 released
 Content-Type: text/plain; charset=utf-8
 
-CVE-2020-11988:
-        Apache XML Graphics Commons SSRF vulnerability
-
-Severity:
-        Medium
-
-Vendor:
-        The Apache Software Foundation
-
-Versions Affected:
-        XML Graphics Commons 2.4 and earlier
-
-Description:
-        The Apache XML Graphics Commons library is vulnerable to SSRF via the XMPParser that allow an
-attacker to cause the underlying server to make arbitrary GET requests.
-
-Mitigation:
-        Users should upgrade to XML Graphics Commons 2.6 or later
-
-Credit:
-        This issue was independently reported by 张相浩
-
-References:
-        http://xmlgraphics.apache.org/security.html
-
-The Apache XML Graphics team.
+The Apache MINA project is pleased to announce MINA 2.0.22 and 2.1.5 !
 
 
+Apache MINA (http://mina.apache.org) is a network application
+framework which helps users develop high performance and high
+scalability network applications easily by providing an abstract,
+event-driven, asynchronous API over various transports such as TCP/IP
+and UDP/IP vis Java NIO.
+
+The Apache MINA project website includes resources such as
+introductory presentation slides, tutorials, and examples to help you
+learn MINA as soon as possible.
+
+This is a bug fix release for MINA 2.1.5 backported to MINA 2.0.22. it
+fixes a CVE in the HTTP listener:
+
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-41973
 
 
+Information relative to the API changes, and migration, are available
+on the following page:
+http://mina.apache.org/mina-project/2.1-vs-2.0.html
+
+
+Downloads are available at
+https://mina.apache.org/downloads-mina_2_1.html
+https://mina.apache.org/downloads-mina_2_0.html
+
+The Apache MINA PMC
+
+Thanks !
+
+--
+Regards,
+Cordialement,
+Emmanuel Lécharny
+www.iktek.com
+
+-- 
+Regards,
+Cordialement,
+Emmanuel Lécharny
+www.iktek.com
