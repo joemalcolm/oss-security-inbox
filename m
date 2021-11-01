@@ -1,19 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/26/3
-Message-ID: <CAFswPa_QOAgf6wgng+KJcPJKykNG3zQWyQfiXWHj8VK0W+_tKg@mail.gmail.com>
-Date: Wed, 26 May 2021 15:48:22 +0200
-From: "Eduardo' Vela\" <Nava>" <evn@...gle.com>
-To: oss-security@...ts.openwall.com, Paolo Bonzini <pbonzini@...hat.com>
-Subject: CVE-2021-22543 - /dev/kvm LPE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/01/9
+Message-ID: <58836a21-c9df-41cc-d6ea-edd7b01f2105@piermont.com>
+Date: Mon, 1 Nov 2021 19:50:36 -0400
+From: "Perry E. Metzger" <perry@...rmont.com>
+To: Jan Engelhardt <jengelh@...i.de>, oss-security@...ts.openwall.com
+Subject: Re: Trojan Source Attacks
 Content-Type: text/plain; charset=utf-8
 
-Hi
+On 11/1/21 16:51, Jan Engelhardt wrote:
+>> We have identified an issue affecting all compilers and interpreters that support Unicode.
+>> [...]
+>> The attached paper describes an attack paradigm -- which we believe to be novel -- discovered by security researchers at the
+>> University of Cambridge.
+> Not so novel. At one time, this picture made the rounds
+> (https://twitter.com/acronis/status/1019152990022787072 - the pic is likely
+> older than this 2018 tweet), and anyone who knew that Unicode had zero-width
+> characters already made the connection.
 
-I believe this still doesn't have a patch, but +Paolo Bonzini
-<pbonzini@...hat.com> has been working on one for some time now.
+If it was known to everyone, then why are so many language interpreters 
+and compilers impacted? Surely if this was truly something that was well 
+understood by the community, then it wouldn't be a problem. (Claims that 
+people who write compilers are fools will be cheerfully ignored.)
 
-Please use CVE-2021-22543 to refer to this issue.
+There's a phenomenon in many social groupings of there being "folklore" 
+that people don't seem to find worth writing down because "everyone" 
+knows it, except then it turns out that most people don't actually know 
+it, and people get hurt because that which "everyone" knows isn't 
+actually something everyone knows. "Why should we have put the safety 
+stop on the cutting machine? Everyone is aware of the needed precautions 
+when using it."
 
-Advisory:
-https://github.com/google/security-research/security/advisories/GHSA-7wq5-phmq-m584
+In my opinion, if someone writes down the "obvious" thing that most 
+people don't know and makes sure everyone is _actually_ warned about it, 
+they get full credit, because the previous "discoverers" didn't bother 
+to tell people in such a way that most people who might come to harm 
+would be protected.
+
+
+Perry
+
 
