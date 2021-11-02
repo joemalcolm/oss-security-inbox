@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1719" "Thursday" "21" "May" "2015" "10:16:53" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150521141653.0EB24B2E24E@smtpvbsrv1.mitre.org>" "46" "[oss-security] Re: CVE Request: zeromq downgrade attack" nil nil nil "5" "2015052114:16:53" "[oss-security] Re: CVE Request: zeromq downgrade attack" (number mark "        cve-assign@m May 21   46/1719  " thread-indent "\"[oss-security] Re: CVE Request: zeromq downgrade attack\"\n") "<20150507144908.GA1677@kronk.local>" ("<20150507144908.GA1677@kronk.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["452" "Tuesday" "2" "November" "2021" "14:51:16" "-0400" "Michael Orlitzky" "michael@orlitzky.com" nil "15" "Re: [oss-security] Trojan Source Attacks" nil nil nil "11" nil nil (number mark "U       michael@orli Nov  2   15/452   " thread-indent "\"Re: [oss-security] Trojan Source Attacks\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Trojan Source Attacks" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21775 invoked by uid 550); 21 May 2015 14:17:05 -0000
+Received: (qmail 25733 invoked by uid 550); 2 Nov 2021 18:51:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,59 +11,41 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21747 invoked from network); 21 May 2015 14:17:04 -0000
-In-Reply-To: <20150507144908.GA1677@kronk.local>
-Message-Id: <20150521141653.0EB24B2E24E@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu, 21 May 2015 10:16:53 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: zeromq downgrade attack
-To: alessandro@ghedini.me
+Received: (qmail 25715 invoked from network); 2 Nov 2021 18:51:29 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
+	t=1635879077; bh=/bNpF2cRZ2OAGUlk9pCw4IicNw5ICcVfF/BeLkgJz8g=;
+	h=Subject:From:To:Date:In-Reply-To:References;
+	b=Q0DfnJWyVFIYXDdnfCmkUicsXMtJjQauBOOLpMw6onBZtIa6ZMnBEUQj1v/jg9gah
+	 zHzvfmdo+TUARtJLwLG516HQV49yTohJwMnCS5rUR0hnB8Xpo1meKIaxVTHH0ES2pS
+	 BPTQYvfnlXJVBlGW6kOOA8a6NarHPfTB5RaGnfK4=
+Message-ID: <1dfb5a3c1148b0517cfcca5a971ba74fbc55b420.camel@orlitzky.com>
+From: Michael Orlitzky <michael@orlitzky.com>
+To: oss-security@lists.openwall.com
+Date: Tue, 02 Nov 2021 14:51:16 -0400
+In-Reply-To: <02CDFB7D-3E27-4C74-A7FA-11FE08043AC2@dwheeler.com>
+References: <c2d12374-0ed6-d6d4-60ea-799934b6f173@cl.cam.ac.uk>
+	 <D57DA3B6-A316-4E54-8DFC-AD70D0D08AC4@dwheeler.com>
+	 <CAKoP-y8CEv=h4a-ckLe+_p4WJk-CwzuXVCbBXTd8HrG+TSNmTw@mail.gmail.com>
+	 <02CDFB7D-3E27-4C74-A7FA-11FE08043AC2@dwheeler.com>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.40.4 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] Trojan Source Attacks
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
-
-> https://github.com/zeromq/libzmq/issues/1273
-> https://github.com/zeromq/zeromq4-x/commit/b6e3e0f601e2c1ec1f3aac880ed6a3fe63043e51
-> https://www.debian.org/security/2015/dsa-3255
-
-Use CVE-2014-9721.
-
-> // Is the peer using ZMTP/1.0 with no revision number?
-> if (greeting_recv [0] != 0xff || !(greeting_recv [9] & 0x01)) {
->     if (session->zap_enabled ()) {
->         // Reject ZMTP 1.0 connections if ZAP is enabled
->         error ();
+On Tue, 2021-11-02 at 10:05 -0700, David A. Wheeler wrote:
 > 
-> if (greeting_recv [revision_pos] == ZMTP_1_0) {
->     if (session->zap_enabled ()) {
->         // Reject ZMTP 1.0 connections if ZAP is enabled
->         error ();
+> Underhanded code is, I think, significantly different. Instead of being clearly hard to understand,
+> It’s designed to be (1) easy to understand WRONGLY, (2) look innocent, and
+> (3) do something malevolent.
 > 
-> if (greeting_recv [revision_pos] == ZMTP_2_0) {
->     if (session->zap_enabled ()) {
->         // Reject ZMTP 1.0 connections if ZAP is enabled
->         error ();
 
-We think there is essentially only one vulnerability, and it was fixed
-by that commit, but it is somewhat confusing because of an apparent
-typo in a comment. Shouldn't the "== ZMTP_2_0" test have a "Reject
-ZMTP 2.0" comment?
+I'm reminded also of this attack, where the "source code" is some
+command you're supposed to execute via copy/paste:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+  http://thejh.net/misc/website-terminal-copy-paste
 
-iQEcBAEBAgAGBQJVXehxAAoJEKllVAevmvmsbfgH/2jRFmbbcvY3qV4yGoEhupxS
-xiI4z5Emf7dgQ/J06/qK4EBCBbr4UfWD9MlEWPOJF1jC5x4ILz7R44nfLtNwvv+H
-weBUUI7VcCIbzs4/aIhznHExz849e9ze2wQLURaZ+v9d7tuc9QpTGfDdOqI/Mu7h
-9LKrZPKmbbx6HyQVZVCf3UETiNeSndbmF/Up8A8QPIkBDDUUNiigZTj3JRXCUyuP
-3MtLHGECAg5+qst2CPaLgdp64CTRinHzNXffF6kOS71CaqPPj4O5sbUAaLQBEHsw
-cyvTGsFyoM2NaefGnlG06Snk7EEfANwX9whCoQneHDNDK0Fr/L5sCwd+BYdQzlI=
-=rSCR
------END PGP SIGNATURE-----
+
+
+
