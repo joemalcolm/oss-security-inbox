@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1647" "Tuesday" "28" "April" "2015" "08:52:34" "+0300" "Solar Designer" "solar@openwall.com" "<20150428055234.GA6754@openwall.com>" "37" "Re: [oss-security] CVE request: kernel overestimates the available entropy in random pools" nil nil nil "4" "2015042805:52:34" "[oss-security] CVE request: kernel overestimates the available entropy in random pools" (number mark "        solar@openwa Apr 28   37/1647  " thread-indent "\"Re: [oss-security] CVE request: kernel overestimates the available entropy in random pools\"\n") "<802401219.7793841.1430186530208.JavaMail.zimbra@redhat.com>" ("<1516477121.7790170.1430184468415.JavaMail.zimbra@redhat.com>" "<802401219.7793841.1430186530208.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1217" "Tuesday" "2" "November" "2021" "02:21:58" "+0100" "Jan Engelhardt" "jengelh@inai.de" nil "26" "Re: [oss-security] Trojan Source Attacks" nil nil nil "11" nil nil (number mark "U       jengelh@inai Nov  2   26/1217  " thread-indent "\"Re: [oss-security] Trojan Source Attacks\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Trojan Source Attacks" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11590 invoked by uid 550); 28 Apr 2015 05:52:40 -0000
+Received: (qmail 3272 invoked by uid 550); 2 Nov 2021 06:22:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +11,43 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11567 invoked from network); 28 Apr 2015 05:52:40 -0000
-Message-ID: <20150428055234.GA6754@openwall.com>
-References: <1516477121.7790170.1430184468415.JavaMail.zimbra@redhat.com> <802401219.7793841.1430186530208.JavaMail.zimbra@redhat.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <802401219.7793841.1430186530208.JavaMail.zimbra@redhat.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Tue, 28 Apr 2015 08:52:34 +0300
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE request: kernel overestimates the available entropy in random pools
-To: oss-security@lists.openwall.com
+Received: (qmail 23892 invoked from network); 2 Nov 2021 01:22:09 -0000
+Date: Tue, 2 Nov 2021 02:21:58 +0100 (CET)
+From: Jan Engelhardt <jengelh@inai.de>
+To: "Perry E. Metzger" <perry@piermont.com>
+cc: oss-security@lists.openwall.com
+In-Reply-To: <58836a21-c9df-41cc-d6ea-edd7b01f2105@piermont.com>
+Message-ID: <4rs9o8oo-3q9s-1276-r921-6r9n436o758@vanv.qr>
+References: <c2d12374-0ed6-d6d4-60ea-799934b6f173@cl.cam.ac.uk> <3n67pqq3-9ro6-p138-npo0-n4314s77638n@vanv.qr> <58836a21-c9df-41cc-d6ea-edd7b01f2105@piermont.com>
+User-Agent: Alpine 2.25 (LSU 592 2021-09-18)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Subject: Re: [oss-security] Trojan Source Attacks
 
-On Mon, Apr 27, 2015 at 10:02:10PM -0400, Wade Mealing wrote:
-> "When we write entropy into a non-empty pool, we currently don't
-> account at all for the fact that we will probabilistically overwrite
-> some of the entropy in that pool.  This means that unless the pool is
-> fully empty, we are currently *guaranteed* to overestimate the amount
-> of entropy in the pool!"
+On Tuesday 2021-11-02 00:50, Perry E. Metzger wrote:
 
-This is a fine description, albeit one not explaining whether there's
-practical impact or not, and what it is.  This might be fatal or it
-might be a non-issue depending on what exactly happens under the hood.
+> On 11/1/21 16:51, Jan Engelhardt wrote:
+>>> We have identified an issue affecting all compilers and interpreters that
+>>> support Unicode.
+>>> [...]
+>>> The attached paper describes an attack paradigm -- which we believe to be
+>>> novel -- discovered by security researchers at the
+>>> University of Cambridge.
+>> Not so novel. At one time, this picture made the rounds
+>> (https://twitter.com/acronis/status/1019152990022787072 - the pic is likely
+>> older than this 2018 tweet), and anyone who knew that Unicode had zero-width
+>> characters already made the connection.
+>
+> If it was known to everyone, then why are so many language interpreters and
+> compilers impacted? [...] (Claims that people who write
+> compilers are fools will be cheerfully ignored.)
 
-> The impact of this issue could be to a downgrade the kernels true
-> RNG to a pseudo-RNG. 
+Perhaps a case of "not my problem".
 
-To me, this is a non-description continuing the usual confusion about
-/dev/random vs. /dev/urandom.  These do differ, but not in that way.
+The filesystem layer of many an operating system does not care about filenames.
+The only rules, if any, are the special meaning of the hierarchy separator (if
+any) and perhaps a string terminator (if any).
 
-http://www.2uo.de/myths-about-urandom/
-
-"Myths about /dev/urandom
-[...]
-/dev/urandom is a pseudo random number generator, a PRNG, while
-/dev/random is a true random number generator. 
-
-Fact: Both /dev/urandom and /dev/random are using the exact same CSPRNG
-(a cryptographically secure pseudorandom number generator). They only
-differ in very few ways that have nothing to do with true randomness."
-
-I don't object to this getting a CVE ID assigned and being treated as a
-vulnerability (which might or might not be required).  I object to us
-trying to use simple and wrong wording to paper over a non-trivial and
-controversial topic.  (There are also simple words that are not wrong,
-but they won't address this specific bug's impact or lack thereof.)
-
-If we don't know whether there's impact and what it is, just say so.
-
-Alexander
+Compilers - could be the same thing. As long as the grammar is satisfied,
+why should they bother what comes in. ("Write/use better editors and frontends")
