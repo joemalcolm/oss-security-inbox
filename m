@@ -1,88 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/26/8
-Message-ID: <pwfk72ee87ixom.fsf@ua5189936247a55.ant.amazon.com>
-Date: Tue, 26 Oct 2021 08:59:53 -0700
-From: Anthony Liguori <aliguori@...zon.com>
-To: Solar Designer <solar@...nwall.com>, <oss-security@...ts.openwall.com>
-CC: Lin Horse <kylin.formalin@...il.com>
-Subject: RE: CVE-2021-3760: Linux kernel: Use-After-Free vulnerability of ndev->rf_conn_info object
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/02/9
+Message-ID: <2dddaf8c-9220-f776-b0b4-13ad94d17e15@gathman.org>
+Date: Tue, 2 Nov 2021 16:43:48 -0400 (EDT)
+From: Stuart D Gathman <stuart@...hman.org>
+To: oss-security@...ts.openwall.com
+cc: Jan Engelhardt <jengelh@...i.de>
+Subject: Re: Trojan Source Attacks
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer <solar@...nwall.com> writes:
+> That's because unicode rendering is a UI element and calling compilers
+> "impacted" is misunderstanding the issue.  There's scope for adding
+> new diagnostics to square with UI representation of unicode, but
+> that's at best an optional warning and it may not even be feasible in
+> all cases.  A comprehensive language aware CI lint check is perhaps
+> more suitable but if such a check devolves into "7-bit ascii only
+> allowed" for all cases then we've regressed.
 
-> CAUTION: This email originated from outside of the organization. Do not click links or open attachments unless you can confirm the sender and know the content is safe.
->
->
->
-> On Tue, Oct 26, 2021 at 02:37:20PM +0800, Lin Horse wrote:
->> 2021-09-01 Report to security and linux-distro
->> 2021-09-01 CVE-2021-3760 assigned
->> 2021-10-26 patch upstream
->>
->> Sorry for the delay of this report T.T
->
-> Ouch.  Let's use this opportunity to learn from the mishandling of this
-> issue and avoid that for other issues.  Many things went wrong here:
->
-> 1. The original notification by Lin to linux-distros did include "I'd
-> like to ask for 14 days of the embargo", which is OK'ish, but ideally
-> such messages should include the proposed public disclosure date/time -
-> and that's what the instructions ask for.  When it's just "N days", I
-> guess people think "that's OK'ish" and move on.  When it's a specific
-> date/time, it's easier for everyone to notice it approaching - not only
-> for people specifically tasked with that.  That's just a psychological
-> detail that I guess nevertheless statistically affects the outcomes.
->
-> So I think that the distros tasked with reviewing initial notifications
-> should insist on the actual date/time being present in there, or add it
-> on their own in an immediate follow-up.  Those distros currently are
-> Oracle and Wind River.  I'd appreciate them confirming that they accept
-> this clarification.
->
-> "Promptly review new issue reports for meeting the list's requirements
-> and confirm receipt of the report and, when necessary, inform the
-> reporter of any issues with their report (e.g., obviously not actionable
-> by the distros) and request and/or propose any required yet missing
-> information (most notably, a tentative public disclosure date/time) -
-> primary: Oracle, backup: Wind River"
->
-> 2. While Lin's original message to linux-distros included a "SUGGESTED
-> FIX" section (with a patch in it) and "I will do my best to work with
-> the developer on fixing this", no further messages on a fix were sent to
-> linux-distros.  Lin, if you did in fact work with upstream on this, you
-> should have kept linux-distros aware of the progress, and especially of
-> the fix getting to public Linux kernel mailing lists or public commits,
-> as that ends the embargo.
->
-> Further, distros failed to handle the corresponding "contributing back"
-> tasks.  There was no activity by Gentoo lately at all, and while there
-> is recent helpful activity by Amazon, they didn't act this time.
->
-> "Stay on top of issues to ensure progress is being made, remind others
-> when there's no apparent progress, as well as when the public disclosure
-> date for an issue is approaching and when it's finally reached (unless
-> the reporter beats you to it by making their mandatory posting to
-> oss-security first) - primary: Gentoo, backup: Amazon
+Bingo.  For many current languages, unicode is supported in string
+constants and comments only - so syntax coloring should highlight 
+anything beyond 7 or 8-bit outside of those elements.
 
-Yes, we totally missed this.
+Some support unicode variable/function names, and again syntax coloring
+should be able to highlight sequences that cross word boundaries.
 
->
-> Monitor relevant public channels (mailing lists, code repositories,
-> etc.) and inform the reporter and the list in case an issue is made
-> public prematurely (that is, leaks or is independently rediscovered) -
-> primary: Amazon, backup: SUSE
->
-> Make sure the mandatory oss-security posting is made promptly and is
-> sufficiently detailed, and remind the reporter if not - primary: Gentoo,
-> backup: Amazon"
->
-> I'd like replies by Gentoo and Amazon on this, please.  They should
-> either state that they'd be handling these tasks from this point on, or
-> we should reassign the tasks.
-
-This is one I think we've been able to handle previously and would like
-to keep handling.
-
-Regards,
-
-Anthony Liguori
+Having some sample source files to test your code editor/viewer on would be
+helpful.
