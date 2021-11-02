@@ -1,57 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/19/1
-Message-ID: <20210519080813.GA17356@oxygen>
-Date: Wed, 19 May 2021 10:08:13 +0200
-From: Julien Pivotto <roidelapluie@...metheus.io>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/02/8
+Message-ID: <1dfb5a3c1148b0517cfcca5a971ba74fbc55b420.camel@orlitzky.com>
+Date: Tue, 02 Nov 2021 14:51:16 -0400
+From: Michael Orlitzky <michael@...itzky.com>
 To: oss-security@...ts.openwall.com
-Subject: Prometheus 2.26.1-2.27.1 released to fix an Open Redirect security issue
+Subject: Re: Trojan Source Attacks
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Tue, 2021-11-02 at 10:05 -0700, David A. Wheeler wrote:
+> 
+> Underhanded code is, I think, significantly different. Instead of being clearly hard to understand,
+> It’s designed to be (1) easy to understand WRONGLY, (2) look innocent, and
+> (3) do something malevolent.
+> 
 
-The Prometheus team has released bugfix releases about an Open Redirect
-(CWE-601) security issue.
-The issue has been assigned the CVE number CVE-2021-29622.
+I'm reminded also of this attack, where the "source code" is some
+command you're supposed to execute via copy/paste:
 
----
+  http://thejh.net/misc/website-terminal-copy-paste
 
-In 2.23.0, Prometheus changed its default UI to the New ui. To ensure a
-seamless transition, the URL's prefixed by /new redirect to /.
-Due to a bug in the code, it is possible for an attacker to craft an URL
-that can redirect to any other URL, in the /new endpoint.
 
-If a user visits a prometheus server with a specially crafted address
-(e.g.: http://127.0.0.1:9090/new/new<url>), they can be redirected to an
-arbitrary URL.
 
-e.g. if a user visits
-http://127.0.0.1:9090/new/newhttp://www.google.com/, they will be
-redirected to http://google.com.
 
----
-
-The security issue affects Prometheus v2.23.0 to v2.26.0, and v2.27.0.
-
-Please find more information here:
-https://github.com/prometheus/prometheus/security/advisories/GHSA-vx57-7f4q-fpc7
-
-The Prometheus team thanks Aaron Devaney from MDSec for reporting this
-issue.
-
-Timeline:
-May 12, 2021: Issue reported privately to Prometheus team
-May 12, 2021: A fix is proposed and reviewed
-May 13, 2021: CVE-2021-29622 issued by GitHub staff
-May 18, 2021: Bugfix released for the last two minor releases of
-Prometheus.
-
-The releases can be found in the usual locations:
-
-v2.26.1: https://github.com/prometheus/prometheus/releases/tag/v2.26.1
-v2.27.1: https://github.com/prometheus/prometheus/releases/tag/v2.27.1
-
-Thanks,
-
-The Prometheus Team
-
-Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
