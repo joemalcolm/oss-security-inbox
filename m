@@ -1,42 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/19/7
-Message-ID: <7b5533cb-2b98-ce2e-20ba-bef0fb133e3@dereferenced.org>
-Date: Mon, 19 Apr 2021 12:15:59 -0600 (MDT)
-From: Ariadne Conill <ariadne@...eferenced.org>
-To: oss-security@...ts.openwall.com
-cc: security@...ian.org
-Subject: Re: xscreensaver package caps gets raw socket
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/02/2
+Message-ID: <4rs9o8oo-3q9s-1276-r921-6r9n436o758@inai.de>
+Date: Tue, 2 Nov 2021 02:21:58 +0100 (CET)
+From: Jan Engelhardt <jengelh@...i.de>
+To: "Perry E. Metzger" <perry@...rmont.com>
+cc: oss-security@...ts.openwall.com
+Subject: Re: Trojan Source Attacks
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Tuesday 2021-11-02 00:50, Perry E. Metzger wrote:
 
-On Mon, 19 Apr 2021, David A. Wheeler wrote:
-
->>> On Apr 18, 2021, at 8:25 AM, Simon McVittie <smcv@...ian.org> wrote:
->>> Scraping is undesirable, but sometimes needed. If this is a common need, a
->>> long-term solution might be to create an option on ping to generate a standard
->>> format that’s easier to machine-parse.
->>
->> On Apr 19, 2021, at 1:35 PM, Ariadne Conill <ariadne@...eferenced.org> wrote:
->> This already exists as fping(1), for example:
+> On 11/1/21 16:51, Jan Engelhardt wrote:
+>>> We have identified an issue affecting all compilers and interpreters that
+>>> support Unicode.
+>>> [...]
+>>> The attached paper describes an attack paradigm -- which we believe to be
+>>> novel -- discovered by security researchers at the
+>>> University of Cambridge.
+>> Not so novel. At one time, this picture made the rounds
+>> (https://twitter.com/acronis/status/1019152990022787072 - the pic is likely
+>> older than this 2018 tweet), and anyone who knew that Unicode had zero-width
+>> characters already made the connection.
 >
-> The problem for application developers is that “ping” exists practically everywhere,
-> while fping does not.
+> If it was known to everyone, then why are so many language interpreters and
+> compilers impacted? [...] (Claims that people who write
+> compilers are fools will be cheerfully ignored.)
 
-Absolutely true, but fping is packaged in most Linux distributions, as 
-well as all of the BSDs, due to its use by various network monitoring 
-programs such as smokeping and nagios, so it seems like a reasonable 
-dependency for cases like these.
+Perhaps a case of "not my problem".
 
-IMO, it's better that programs declare something like fping as a 
-dependency, so that we don't have to deal with yet another program years 
-from now having elevated privileges and being abused to run tcpdump... :)
+The filesystem layer of many an operating system does not care about filenames.
+The only rules, if any, are the special meaning of the hierarchy separator (if
+any) and perhaps a string terminator (if any).
 
-Seriously, if anyone on this list ever finds themselves writing a program 
-where they need to fire off some pings, instead of making their program 
-SUID or granting it cap_net_raw, just use fping instead.  At the very 
-least, you'll be happier because you don't have to write your own ping 
-code, and the distribution maintainers of the world will be happier 
-because you *didn't* write your own ping code.
-
-Ariadne
+Compilers - could be the same thing. As long as the grammar is satisfied,
+why should they bother what comes in. ("Write/use better editors and frontends")
