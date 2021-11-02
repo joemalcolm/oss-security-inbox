@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["706" "Wednesday" "1" "July" "2020" "20:14:11" "-0700" "Mike Jumper" "mjumper@apache.org" "<CALKeL-PCDy9Y1bd1Nuj196_giWr4fSYyvrk74jfoLxpSysJf=A@mail.gmail.com>" "19" "[oss-security] [SECURITY] CVE-2020-9497: Apache Guacamole: Improper input validation of RDP static virtual channels" nil nil nil "7" "2020070203:14:11" "[oss-security] [SECURITY] CVE-2020-9497: Apache Guacamole: Improper input validation of RDP static virtual channels" (number mark "U       mjumper@apac Jul  1   19/706   " thread-indent "\"[oss-security] [SECURITY] CVE-2020-9497: Apache Guacamole: Improper input validation of RDP static virtual channels\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY] CVE-2020-9497: Apache Guacamole: Improper input validation of RDP static virtual channels" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["881" "Tuesday" "2" "November" "2021" "16:43:48" "-0400" "Stuart D Gathman" "stuart@gathman.org" nil "17" "Re: [oss-security] Trojan Source Attacks" nil nil nil "11" nil nil (number mark "U       stuart@gathm Nov  2   17/881   " thread-indent "\"Re: [oss-security] Trojan Source Attacks\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Trojan Source Attacks" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25979 invoked by uid 550); 2 Jul 2020 07:37:31 -0000
+Received: (qmail 23906 invoked by uid 550); 2 Nov 2021 20:59:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,40 +12,42 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19543 invoked from network); 2 Jul 2020 03:15:00 -0000
-X-Gm-Message-State: AOAM530rYda0aZpbk+ekexPj9EAffO8/O4ISB4U6zZLYa+rU8O8PVJsR
-	m05O5hINbxsO5/WUWLIhzVNQDcoyQ7ydhkmPeaTfsQ==
-X-Google-Smtp-Source: ABdhPJwhD8+P3HF7AtDFRu12NlvHjFjemBvViJFIIAhFZblL7hlcTO4OChwGQwqLCmzuWEkqfPq73vjEYnutQC9mUC4=
-X-Received: by 2002:a17:906:ca0e:: with SMTP id jt14mr25041907ejb.325.1593659687238;
- Wed, 01 Jul 2020 20:14:47 -0700 (PDT)
+Received: (qmail 16108 invoked from network); 2 Nov 2021 20:48:51 -0000
+Authentication-Results: mail.gathman.org; iprev=pass policy.iprev="2001:470:8:809::1010" (mail.gathman.org); auth=pass (CRAM-MD5 sslbits=256) smtp.auth=stuart
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gathman.org; 
+ i=@gathman.org; q=dns/txt; s=default; t=1635885834; 
+ h=date : from : to : cc : subject : in-reply-to : 
+ message-id : references : mime-version : content-type : 
+ date : from : subject; 
+ bh=IaMi9gZG/KQtficI/4qd+EZ87RZ6pTxXLDPKqbA1NYE=; 
+ b=BcohvEAhwflyjduxZxexSBDzsy5opCQf2K1z04RAqUvFszGMiBW23dVW
+ rBBKTb5ZclG6/sNfb8N+676ApMsLJtBDr+t2tZNLACGOXwvcu+THVmye/4
+ N8YGlNZsyFl3tx1PBdlOgizcPSpsPN2VsNwC8ZvwCKUIW5QozyZK8oJAY=
+Date: Tue, 2 Nov 2021 16:43:48 -0400 (EDT)
+From: Stuart D Gathman <stuart@gathman.org>
+To: oss-security@lists.openwall.com
+cc: Jan Engelhardt <jengelh@inai.de>
+In-Reply-To: <CAAHN_R1S7Jf96Y1raEuBrJ5VmTNUJJL8bp2Qbhh_Y-42FWfp2w@mail.gmail.com>
+Message-ID: <2dddaf8c-9220-f776-b0b4-13ad94d17e15@gathman.org>
+References: <c2d12374-0ed6-d6d4-60ea-799934b6f173@cl.cam.ac.uk> <3n67pqq3-9ro6-p138-npo0-n4314s77638n@vanv.qr> <58836a21-c9df-41cc-d6ea-edd7b01f2105@piermont.com> <CAAHN_R1S7Jf96Y1raEuBrJ5VmTNUJJL8bp2Qbhh_Y-42FWfp2w@mail.gmail.com>
 MIME-Version: 1.0
-From: Mike Jumper <mjumper@apache.org>
-Date: Wed, 1 Jul 2020 20:14:11 -0700
-X-Gmail-Original-Message-ID: <CALKeL-PCDy9Y1bd1Nuj196_giWr4fSYyvrk74jfoLxpSysJf=A@mail.gmail.com>
-Message-ID: <CALKeL-PCDy9Y1bd1Nuj196_giWr4fSYyvrk74jfoLxpSysJf=A@mail.gmail.com>
-To: announce@apache.org, announce@guacamole.apache.org, 
-	dev@guacamole.apache.org, user@guacamole.apache.org
-Cc: security@guacamole.apache.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] [SECURITY] CVE-2020-9497: Apache Guacamole: Improper input validation
- of RDP static virtual channels
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Subject: Re: [oss-security] Trojan Source Attacks
 
-CVE-2020-9497: Improper input validation of RDP static virtual channels
+> That's because unicode rendering is a UI element and calling compilers
+> "impacted" is misunderstanding the issue.  There's scope for adding
+> new diagnostics to square with UI representation of unicode, but
+> that's at best an optional warning and it may not even be feasible in
+> all cases.  A comprehensive language aware CI lint check is perhaps
+> more suitable but if such a check devolves into "7-bit ascii only
+> allowed" for all cases then we've regressed.
 
-Versions affected:
-Apache Guacamole 1.1.0 and earlier
+Bingo.  For many current languages, unicode is supported in string
+constants and comments only - so syntax coloring should highlight 
+anything beyond 7 or 8-bit outside of those elements.
 
-Description:
-Apache Guacamole 1.1.0 and older do not properly validate data
-received from RDP servers via static virtual channels. If a user
-connects to a malicious or compromised RDP server, specially-crafted
-PDUs could result in disclosure of information within the memory of
-the guacd process handling the connection.
+Some support unicode variable/function names, and again syntax coloring
+should be able to highlight sequences that cross word boundaries.
 
-Mitigation:
-Users of versions of Apache Guacamole 1.1.0 and older that provide
-access to untrusted RDP servers should upgrade to 1.2.0.
-
-Credit:
-We would like to thank the GitHub Security Lab and Eyal Itkin (Check
-Point Research) for reporting this issue.
+Having some sample source files to test your code editor/viewer on would be
+helpful.
