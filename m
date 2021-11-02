@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1782" "Monday" "2" "October" "2017" "18:14:47" "+0300" "John Torakis" "johntorakis@census-labs.com" "<3f64b550-039b-25b5-cd70-82ae5575fa62@census-labs.com>" "55" "[oss-security] CVE-2017-9807: e2openplugin-OpenWebif: Remote code execution through HTTP GET parameter manipulation" "^Cc:" nil nil "10" "2017100215:14:47" "[oss-security] CVE-2017-9807: e2openplugin-OpenWebif: Remote code execution through HTTP GET parameter manipulation" (number mark "U       johntorakis@ Oct  2   55/1782  " thread-indent "\"[oss-security] CVE-2017-9807: e2openplugin-OpenWebif: Remote code execution through HTTP GET parameter manipulation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["987" "Tuesday" "2" "November" "2021" "10:05:52" "-0700" "David A. Wheeler" "dwheeler@dwheeler.com" nil "28" "Re: [oss-security] Trojan Source Attacks" nil nil nil "11" nil nil (number mark "U       dwheeler@dwh Nov  2   28/987   " thread-indent "\"Re: [oss-security] Trojan Source Attacks\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Trojan Source Attacks" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1844 invoked by uid 550); 2 Oct 2017 15:18:10 -0000
+Received: (qmail 17789 invoked by uid 550); 2 Nov 2021 17:06:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,74 +11,48 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32080 invoked from network); 2 Oct 2017 15:15:00 -0000
-Message-ID: <3f64b550-039b-25b5-cd70-82ae5575fa62@census-labs.com>
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0)
- Gecko/20100101 Thunderbird/52.3.0
-MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="------------2C4A48F1594CE90D09FD73E8"
-Content-Language: el-GR
-Cc: bugtraq@securityfocus.com, fulldisclosure@seclists.org
-Date: Mon, 2 Oct 2017 18:14:47 +0300
-From: John Torakis <johntorakis@census-labs.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2017-9807: e2openplugin-OpenWebif: Remote code execution through
- HTTP GET parameter manipulation
-To: oss-security@lists.openwall.com
-
---------------2C4A48F1594CE90D09FD73E8
-Content-Type: text/plain; charset=utf-8
+Received: (qmail 17771 invoked from network); 2 Nov 2021 17:06:25 -0000
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
+Content-Type: text/plain;
+	charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-
-Hello all,
-
-e2openplugin-OpenWebif is an open source web interface plugin for IP TVs
-and media centers. It is found in several IP TV software images and
-hardware products including the commercial Dreambox devices.
-
-
-A remote code injection vulnerability was found in the "key" HTTP GET
-parameter of the "/api/saveconfig" API call.
-
-Further analysis of the vulnerability can be found here:
-https://census-labs.com/news/2017/10/02/e2openplugin-openwebif-saveconfig-r=
-emote-code-execution/
-
-The vulnerability allows remote code execution on hosts running the
-aforementioned plugin. Some devices affected also run the plugin under
-root privileges (e.g: Dreambox DM800 HD se), allowing for complete
-remote takeover of the host.
-
-This defect has been patched by the vendor with the git commit:
-09a050c8f04afd3bb4a14af98994be255aae10d9
-(https://github.com/E2OpenPlugins/e2openplugin-OpenWebif/commit/09a050c8f04=
-afd3bb4a14af98994be255aae10d9).
-
-Administrators of affected devices are strongly advised to update their
-running instance of e2openplugin-OpenWebif to the latest version of the
-code. An official release containing the fix has not been released yet.
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.7\))
+Date: Tue, 2 Nov 2021 10:05:52 -0700
+References: <c2d12374-0ed6-d6d4-60ea-799934b6f173@cl.cam.ac.uk>
+ <D57DA3B6-A316-4E54-8DFC-AD70D0D08AC4@dwheeler.com>
+ <CAKoP-y8CEv=h4a-ckLe+_p4WJk-CwzuXVCbBXTd8HrG+TSNmTw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+In-Reply-To: <CAKoP-y8CEv=h4a-ckLe+_p4WJk-CwzuXVCbBXTd8HrG+TSNmTw@mail.gmail.com>
+Message-Id: <02CDFB7D-3E27-4C74-A7FA-11FE08043AC2@dwheeler.com>
+X-Mailer: Apple Mail (2.3608.120.23.2.7)
+Subject: Re: [oss-security] Trojan Source Attacks
 
 
-References:
-https://github.com/E2OpenPlugins/e2openplugin-OpenWebif/issues/620
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2017-9807
-https://census-labs.com/news/2017/10/02/e2openplugin-openwebif-saveconfig-r=
-emote-code-execution/
 
-Disclosure Timeline:
-Vendor Contact: June 21st, 2017
-CVE assignment: June 22nd, 2017
-Vendor Patch: September 15th, 2017
-Public Advisory: October 2nd, 2017
+> On Nov 2, 2021, at 9:23 AM, Josh Bressers <josh@bress.net> wrote:
+> You could argue the obfuscated C contest is related, that goes back to 19=
+84.
+> https://www.ioccc.org/years.html#1984
 
+You could certainly make that argument :-). At the least,
+I think the obfuscated V contest was heavily inspired by the obfuscated C c=
+ontest.
+After all, just look at the similarities of the name!=20
 
-Regards,
---
-John Torakis
+I didn=E2=80=99t make that argument.  The obfuscated C contest doesn=E2=80=
+=99t bill itself
+as trying to fool anything as thinking some code did something *different*.
+Most entries are so bizarre that you have to deeply analyze it to figure ou=
+t what it does at all.
+It=E2=80=99s usually painfully obvious that obfuscated C entries are hard t=
+o read.
 
-Security Researcher
-CENSUS S.A.
+Underhanded code is, I think, significantly different. Instead of being cle=
+arly hard to understand,
+It=E2=80=99s designed to be (1) easy to understand WRONGLY, (2) look innoce=
+nt, and
+(3) do something malevolent.
 
+--- David A. Wheeler
 
---------------2C4A48F1594CE90D09FD73E8--
