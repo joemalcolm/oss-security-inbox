@@ -1,29 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/13/6
-Message-ID: <ffc7668f-036a-0b0b-c512-2eb652d3e885@apache.org>
-Date: Tue, 13 Jul 2021 17:15:51 +0000
-From: Stefan Bodewig <bodewig@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/02/3
+Message-ID: <CAAHN_R1S7Jf96Y1raEuBrJ5VmTNUJJL8bp2Qbhh_Y-42FWfp2w@mail.gmail.com>
+Date: Tue, 2 Nov 2021 07:53:45 +0530
+From: Siddhesh Poyarekar <siddhesh.poyarekar@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-36374: Apache Ant ZIP, and ZIP based, archive denial of service vulerability 
+Cc: Jan Engelhardt <jengelh@...i.de>
+Subject: Re: Trojan Source Attacks
 Content-Type: text/plain; charset=utf-8
 
-Description:
+On Tue, 2 Nov 2021 at 05:21, Perry E. Metzger <perry@...rmont.com> wrote:
+>
+> On 11/1/21 16:51, Jan Engelhardt wrote:
+> >> We have identified an issue affecting all compilers and interpreters that support Unicode.
+> >> [...]
+> >> The attached paper describes an attack paradigm -- which we believe to be novel -- discovered by security researchers at the
+> >> University of Cambridge.
+> > Not so novel. At one time, this picture made the rounds
+> > (https://twitter.com/acronis/status/1019152990022787072 - the pic is likely
+> > older than this 2018 tweet), and anyone who knew that Unicode had zero-width
+> > characters already made the connection.
+>
+> If it was known to everyone, then why are so many language interpreters
+> and compilers impacted? Surely if this was truly something that was well
 
-When reading a specially crafted ZIP archive, or a derived formats, an Apache Ant build can be made to allocate large amounts of memory that leads to an out of memory error, even for small inputs. This can be used to disrupt builds using Apache Ant.
+That's because unicode rendering is a UI element and calling compilers
+"impacted" is misunderstanding the issue.  There's scope for adding
+new diagnostics to square with UI representation of unicode, but
+that's at best an optional warning and it may not even be feasible in
+all cases.  A comprehensive language aware CI lint check is perhaps
+more suitable but if such a check devolves into "7-bit ascii only
+allowed" for all cases then we've regressed.
 
-Commonly used derived formats from ZIP archives are for instance JAR files and many office files.
+Also, this is not just about compilers, the idea of such obfuscation
+is central to any content that a human and a computer program are
+required to see consistently.  A rootkit could obfuscate configuration
+files in a way that's invisible to a human and evades visual or basic
+syntax based audit, or example configuration files of daemon programs
+could be similarly compromised at source, resulting in the compromised
+files landing on various systems.  Likewise for build configuration,
+makefiles, etc.
 
-Mitigation:
-
-Apache Ant 1.9.x users should upgrade to 1.9.16 or later.
-Apache Ant 1.10.x users should upgrade to 1.10.11 or later.
-
-Credit:
-
-This issue is similar to https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-36090 present in Apache Commons Compress which has been detected by OSS Fuzz.
-
-References:
-
-https://ant.apache.org/security.html
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-36090
-
+Siddhesh
