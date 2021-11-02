@@ -1,51 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/19/1
-Message-ID: <CACmp6kqFOo0+SsDk-xEuBTvwz6zDRSEpsKobu=dcjVza=TN1pA@mail.gmail.com>
-Date: Sat, 18 Dec 2021 18:02:02 -0600
-From: Matt Sicker <mattsicker@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/02/11
+Message-Id: <FE20B052-A91A-4772-AEE7-37B56AD91754@apache.org>
+Date: Tue, 2 Nov 2021 14:25:48 -0700
+From: Bryan Call <bcall@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-45105: Apache Log4j2 does not always protect from infinite recursion in lookup evaluation
+Subject: Apache Traffic Server is vulnerable to various smuggle, DOS, and validation attacks
 Content-Type: text/plain; charset=utf-8
 
-Severity: high
-
 Description:
+Apache Traffic Server is vulnerable to various smuggle, DOS, and validation attacks
 
-Apache Log4j2 versions 2.0-alpha1 through 2.16.0 (excluding 2.12.3)
-did not protect from uncontrolled recursion from self-referential
-lookups. This allows an attacker with control over Thread Context Map
-data to cause a denial of service when a crafted string is
-interpreted. This issue was fixed in Log4j 2.17.0 and 2.12.3.
+CVE (8.1.x and 9.1.x):
+CVE-2021-37147 Request Smuggling - LF line ending
+CVE-2021-37148 Request Smuggling - transfer encoding validation
+CVE-2021-37149 Request Smuggling - multiple attacks
+CVE-2021-41585 ATS stops accepting connections on FreeBSD
+CVE-2021-43082 heap-buffer-overflow with stats-over-http plugin
 
-This issue is being tracked as LOG4J2-3230
+CVE (8.1.x):
+CVE-2021-38161 Not validating origin TLS certificate
+
+Reported By:
+Mattias Grenfeldt and Asta Olofsson (CVE-2021-37147, CVE-2021-37148, CVE-2021-37149)
+Asbjorn Bjornstad (CVE-2021-41585)
+Masaori Koshiba (CVE-2021-43082)
+Robert Butts (CVE-2021-38161)
+
+Vendor:
+The Apache Software Foundation
+
+Version Affected:
+ATS 8.0.0 to 8.1.2
+ATS 9.0.0 to 9.1.0
 
 Mitigation:
-
-Implement one of the following mitigation techniques:
-
-* Java 8 (or later) users should upgrade to release 2.17.0.
-
-Alternatively, this can be mitigated in configuration:
-
-* In PatternLayout in the logging configuration, replace Context
-Lookups like `${ctx:loginId}` or `$${ctx:loginId}` with Thread Context
-Map patterns (%X, %mdc, or %MDC).
-* Otherwise, in the configuration, remove references to Context
-Lookups like `${ctx:loginId}` or `$${ctx:loginId}` where they
-originate
-from sources external to the application such as HTTP headers or user input.
-
-Credit:
-
-Independently discovered by Hideki Okamoto of Akamai Technologies, Guy
-Lederfein of Trend Micro Research working with Trend Micro’s Zero Day
-Initiative, and another anonymous vulnerability researcher
+8.x users should upgrade to 8.1.3 or later versions
+9.x users should upgrade to 9.1.1 or later versions
 
 References:
-
-https://logging.apache.org/log4j/2.x/security.html
-
-
--- 
-Matt Sicker
-PMC Member, Logging Services, Apache Software Foundation
+  Downloads:
+    https://trafficserver.apache.org/downloads
+    (Please use backup sites from the link only if the mirrors are unavailable) 
+  CVE:
+    https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-37147
+    https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-37148
+    https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-37149
+    https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-41585
+    https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-43082
+    https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-38161
