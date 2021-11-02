@@ -1,47 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/07/7
-Message-ID: <ab519dc0-7354-8e5-8855-ffea2534ea34@dereferenced.org>
-Date: Sat, 7 Aug 2021 09:17:55 -0500 (CDT)
-From: Ariadne Conill <ariadne@...eferenced.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/02/6
+Message-ID: <CAKoP-y8CEv=h4a-ckLe+_p4WJk-CwzuXVCbBXTd8HrG+TSNmTw@mail.gmail.com>
+Date: Tue, 2 Nov 2021 11:23:50 -0500
+From: Josh Bressers <josh@...ss.net>
 To: oss-security@...ts.openwall.com
-cc: Axel Beckert <abe@...ian.org>, lynx-dev@...gnu.org, security@...ian.org,  991971@...s.debian.org
-Subject: Re: Re: [Lynx-dev] bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)
+Subject: Re: Trojan Source Attacks
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Tue, Nov 2, 2021 at 10:56 AM David A. Wheeler <dwheeler@...eeler.com>
+wrote:
 
-On Sat, 7 Aug 2021, Thorsten Glaser wrote:
-
-> Axel Beckert dixit:
 >
->> This is more severe than it initially looked like: Due to TLS Server
->> Name Indication (SNI) the hostname as parsed by Lynx (i.e with
->> "user:pass@" included) is sent in _clear_ text over the wire even
+> However, I think it’s important to realize this is a special case of
+> “underhanded code” aka “underhanded source code” aka “maliciously
+> misleading code”. Underhanded code is source code crafted so that the
+> source code looks like it does one thing to human reviewers, but it
+> actually does something else. Homoglyphs are a common mechanism of attack
+> (e.g., 1/l or O/0), as are misleading indentation, etc.
 >
-> I *ALWAYS* SAID SNI IS A SHIT THING ONLY USED AS BAD EXCUSE FOR NAT
-> BY PEOPLE WHO ARE TOO STUPID TO CONFIGURE THEIR SERVERS RIGHT AND AS
-> BAD EXCUSE FOR LACKING IPv6 SUPPORT, AND THEN THE FUCKING IDIOTS WENT
-> AND MADE SNI *MANDATORY* FOR TLSv1.3, AND I FEEL *SO* VINDICATED RIGHT
-> NOW! IDIOTS IN CHARGE OF SECURITY, FUCKING IDIOTS…
+> The first reference I can find to underhanded code is the 2004 Obfuscated
+> V Contest (http://graphics.stanford.edu/~danielh/vote/vote.html) created
+> by Daniel Horn.
+>
+>
+You could argue the obfuscated C contest is related, that goes back to 1984.
+https://www.ioccc.org/years.html#1984
 
-It turns out SNI is only marginally related to this issue.  The issue 
-itself is far more severe: HTParse() does not understand the authn part of 
-the URI at all.  And so, when you call:
+-- 
+     Josh
 
-   HTParse("https://foo:bar@...mple.com", "", PARSE_HOST)
-
-It returns:
-
-   foo:bar@...mple.com
-
-Which is then handed directly to SSL_set_tlsext_host_name() or 
-gnutls_server_name_set().  But it will also leak in the Host: header on 
-unencrypted connections, and also probably SSL ones too.
-
-As a workaround, I taught HTParse() how to parse the authn part of URIs, 
-but Lynx itself needs to actually properly support the authn part really.
-
-I have attached the patch Alpine is using to work around this infoleak.
-
-Ariadne
-View attachment "fix-auth-data-leaks.patch" of type "text/plain" (1480 bytes)
