@@ -1,49 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/31/2
-Message-ID: <20210131131308.47c79861@fabiankeil.de>
-Date: Sun, 31 Jan 2021 13:13:08 +0100
-From: Fabian Keil <freebsd-listen@...iankeil.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/02/7
+Message-Id: <02CDFB7D-3E27-4C74-A7FA-11FE08043AC2@dwheeler.com>
+Date: Tue, 2 Nov 2021 10:05:52 -0700
+From: "David A. Wheeler" <dwheeler@...eeler.com>
 To: oss-security@...ts.openwall.com
-Subject: Two DoS issues fixed in Privoxy 3.0.31 stable
+Subject: Re: Trojan Source Attacks
 Content-Type: text/plain; charset=utf-8
 
-               Announcing Privoxy 3.0.31 stable
---------------------------------------------------------------------
 
-Privoxy 3.0.31 fixes two security issues that were discovered while
-preparing the 3.0.30 release. The issues also affect earlier Privoxy
-releases.
 
---------------------------------------------------------------------
-ChangeLog for Privoxy 3.0.31
---------------------------------------------------------------------
+> On Nov 2, 2021, at 9:23 AM, Josh Bressers <josh@...ss.net> wrote:
+> You could argue the obfuscated C contest is related, that goes back to 1984.
+> https://www.ioccc.org/years.html#1984
 
-- Security/Reliability:
-  - Prevent an assertion from getting triggered by a crafted CGI request.
-    Commit 5bba5b89193fa. OVE-20210130-0001.
-    Reported by: Joshua Rogers (Opera)
-  - Fixed a memory leak when decompression fails "unexpectedly".
-    Commit f431d61740cc0. OVE-20210128-0001.
-[...]
------------------------------------------------------------------
-About Privoxy:
------------------------------------------------------------------
+You could certainly make that argument :-). At the least,
+I think the obfuscated V contest was heavily inspired by the obfuscated C contest.
+After all, just look at the similarities of the name! 
 
-Privoxy is a non-caching web proxy with advanced filtering capabilities for
-enhancing privacy, modifying web page data and HTTP headers, controlling
-access, and removing ads and other obnoxious Internet junk. Privoxy has a
-flexible configuration and can be customized to suit individual needs and
-tastes. It has application for both stand-alone systems and multi-user
-networks.
+I didn’t make that argument.  The obfuscated C contest doesn’t bill itself
+as trying to fool anything as thinking some code did something *different*.
+Most entries are so bizarre that you have to deeply analyze it to figure out what it does at all.
+It’s usually painfully obvious that obfuscated C entries are hard to read.
 
-Privoxy is Free Software and licensed under the GNU GPLv2.
+Underhanded code is, I think, significantly different. Instead of being clearly hard to understand,
+It’s designed to be (1) easy to understand WRONGLY, (2) look innocent, and
+(3) do something malevolent.
 
-[...]
+--- David A. Wheeler
 
-Home Page: 
-https://www.privoxy.org/
-
-ChangeLog:
-https://www.privoxy.org/3.0.31/user-manual/whatsnew.html
-
-Content of type "application/pgp-signature" skipped
