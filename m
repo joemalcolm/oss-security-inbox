@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["10641" "Tuesday" "8" "June" "2021" "17:04:31" "+0000" "Xen.org security team" "security@xen.org" nil "244" "[oss-security] Xen Security Advisory 377 v2 (CVE-2021-28690) - x86: TSX Async Abort protections not restored after S3" nil nil nil "6" nil nil (number mark "U       security@xen Jun  8  244/10641 " thread-indent "\"[oss-security] Xen Security Advisory 377 v2 (CVE-2021-28690) - x86: TSX Async Abort protections not restored after S3\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 377 v2 (CVE-2021-28690) - x86: TSX Async Abort protections not restored after S3" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7031" "Wednesday" "3" "November" "2021" "15:24:55" "+0100" "Daniel Lee" "daniel@grafana.com" nil "182" "[oss-security] CVE-2021-41174 Grafana XSS vulnerability" nil nil nil "11" nil nil (number mark "U       daniel@grafa Nov  3  182/7031  " thread-indent "\"[oss-security] CVE-2021-41174 Grafana XSS vulnerability\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-41174 Grafana XSS vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5601 invoked by uid 550); 8 Jun 2021 17:04:51 -0000
+Received: (qmail 24388 invoked by uid 550); 3 Nov 2021 14:31:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,267 +12,219 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5506 invoked from network); 8 Jun 2021 17:04:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
-	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
-	Content-Transfer-Encoding:Content-Type;
-	bh=YQPfBSO74QvjUcDBr5ntUsPt+VI0GpRiGD3hrWKvTk0=; b=iQOQHvopS5dPP5RekZ3mQlKPNl
-	uu1nhvctPYmkry7eCRLjsiHeB+k4O1jZ/Hh3DLEH19sTRbbm+dFCg3ujsKXGD5bjSqizrgVHwPzFO
-	X52P3MGlYhlZySwrQLuv8IjYlz6RccNNzji1Th+24/3HF4q1HokQX5Eh97V774abJCwg=;
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 17887 invoked from network); 3 Nov 2021 14:25:18 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=grafana.com; s=g1;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=9D3DOXMoRJSY+lKwpJ7Fp564PJNHXwIqntyNGdKkkdc=;
+        b=eq3XoCQVC35K1FeTuZS19ldDlbCkTSjrPA5IRWmn6Zw+vB4Hy5+85mwiaKQTVSgXAa
+         ljhzesa3/JIUersuP0/zFSnpbie09GCPlqJuIMkk3Ipg58dBzvRL11AqhbAoNADpbIuF
+         G8dTfYBec2vS82dywdfCdlo094klWvfJaMB5cf5eSzAYQs7hdMqFnoAIO8Z4XXZwkMbl
+         lA84XOtd02QN10qC/NonRRfQsP0J3XULEHHIK/VIFCDvb0XI0BuDi7uHoUSrhJQPWRm/
+         UBUyMwXnCbT+GUn5s4ZOhrFF/hdJ5bQGI8OsUDjR+rfjY3XShCMF233rhy2UdaoYo0sZ
+         YMLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=9D3DOXMoRJSY+lKwpJ7Fp564PJNHXwIqntyNGdKkkdc=;
+        b=VqG5NAVNQuTYtWR8oUgiEP7eEQjwygcHaN/VPBDq9Sy+3yTI7YgWOk5E9g3v5st/Xl
+         i4AsAh+ZRHuGI/ERSBXGPjOxGMbWgkuKYwdM/fpl3kvjgs+50eqFs/fABprzvI+VJwAO
+         jejK0R92ZGWkgu2+wFUcy9CncrbvwQvTpTrjE6fVb6VTMvywvztdSFHa4/nEmBRiRctS
+         QYkLBwkvKzB4+W2IzScHXCB+knkGXoBPRK8cgviUo50sWZvn65EgRCvE5G3pHqJ53OrX
+         aUAuQ2JBKnupF890/BnRVSTiR15RcPtJDaMj+3w0tK+zy3A9OLfgoAIDGgd2+MKp+5Q5
+         aBUA==
+X-Gm-Message-State: AOAM53129LRZ0X3VlF+TQGBtxYA1vzPddCPBAmPXpR+VGSzcSNZ5RckG
+	1TEkdrpq5m6vFsYbDjl9lNGUDlbaxO8POKrsV6GN/N0hGjYJXw==
+X-Google-Smtp-Source: ABdhPJwlS3CMS0CgjfH9eA7e2DkfXyZbMStJsmkeTZq1qx87t+fvVBPksSGZ4I3GinltMso3xS/uALwHLr+DJwWPSVE=
+X-Received: by 2002:a25:6b4e:: with SMTP id o14mr21098518ybm.86.1635949506302;
+ Wed, 03 Nov 2021 07:25:06 -0700 (PDT)
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.509 (Entity 5.509)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1lqf9T-0004vc-JX@xenbits.xenproject.org>
-Date: Tue, 08 Jun 2021 17:04:31 +0000
-Subject: [oss-security] Xen Security Advisory 377 v2 (CVE-2021-28690) - x86: TSX Async
- Abort protections not restored after S3
+From: Daniel Lee <daniel@grafana.com>
+Date: Wed, 3 Nov 2021 15:24:55 +0100
+Message-ID: <CAD7TOkzbi4foTWrCYt9_H1C=khRXDVCER7aZYuQ11qTQXMzSBA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="00000000000031b95205cfe32dae"
+Subject: [oss-security] CVE-2021-41174 Grafana XSS vulnerability
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+--00000000000031b95205cfe32dae
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Today we are releasing Grafana 8.2.3. This patch release includes an
+important security fix for an issue that affects all Grafana versions from
+8.0.0-beta1.
 
-            Xen Security Advisory CVE-2021-28690 / XSA-377
-                               version 2
+[Grafana Cloud](https://grafana.com/cloud) instances have already been
+patched and an audit did not find any usage of this attack vector. [Grafana
+Enterprise](https://grafana.com/products/enterprise) customers were
+provided with updated binaries under embargo.
 
-        x86: TSX Async Abort protections not restored after S3
+## CVE-2021-41174 XSS vulnerability on unauthenticated pages
 
-UPDATES IN VERSION 2
-====================
+### Summary
 
-Public release.
+CVSS Score: 6.9 Medium
+CVSS:[CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:C/C:L/I:H/A:N/E:U/RL:O/RC:R/CR:L/MAV:N=
+/MAC:H/MPR:N/MUI:R/MS:C/MC:N/MI:H/MA:L](
+https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:C/=
+C:L/I:H/A:N/E:U/RL:O/RC:R/CR:L/MAV:N/MAC:H/MPR:N/MUI:R/MS:C/MC:N/MI:H/MA:L
+)
 
-ISSUE DESCRIPTION
-=================
+We received a security report to security@grafana.com on 2021-10-21 about a
+vulnerability in Grafana regarding the XSS vulnerability.
 
-This issue relates to the TSX Async Abort speculative security vulnerability.
-Please see https://xenbits.xen.org/xsa/advisory-305.html for details.
+It was later identified as affecting Grafana versions from 8.0.0-beta1 to
+8.2.2. [CVE-2021-41174](
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2021-41174) has been
+assigned to this vulnerability.
 
-Mitigating TAA by disabling TSX (the default and preferred option) requires
-selecting a non-default setting in MSR_TSX_CTRL.  This setting isn't restored
-after S3 suspend.
+### Impact
 
-IMPACT
-======
+If an attacker is able to convince a victim to visit a URL referencing a
+vulnerable page, arbitrary JavaScript content may be executed within the
+context of the victim's browser.
 
-After using S3 suspend at least once, CPU0 remains vulnerable to TAA.
+The user visiting the malicious link must be unauthenticated and the link
+must be for a page that contains the login button in the menu bar.
 
-This is an information leak.  For full details of the impact, see
-XSA-305.
+There are two ways an unauthenticated user can open a page in Grafana that
+contains the login button:
+- Anonymous authentication is enabled. This means all pages in Grafana
+would be open for the attack.
+- The link is to an unauthenticated page. The following pages are
+vulnerable:
+  - `/dashboard-solo/snapshot/*`
+  - `/dashboard/snapshot/*`
+  - `/invite/:code`
 
-VULNERABLE SYSTEMS
-==================
+The url has to be crafted to exploit AngularJS rendering and contain the
+interpolation binding for AngularJS expressions. AngularJS uses double
+curly braces for interpolation binding: {{ }}
 
-See XSA-305 for details of susceptibility to TAA.
+An example of an expression would be:
+`{{constructor.constructor(=E2=80=98alert(1)=E2=80=99)()}}`. This can be in=
+cluded in the
+link URL like this:
 
-Only systems which are susceptible to TAA and have the XSA-305 fix are
-vulnerable.  Only systems which support S3 suspend/resume are vulnerable.
+https://play.grafana.org/dashboard/snapshot/%7B%7Bconstructor.constructor('=
+alert(1)')()%7D%7D?orgId=3D1
 
-The vulnerability is only exposed if S3 suspend/resume is used.
+When the user follows the link and the page renders, the login button will
+contain the original link with a query parameter to force a redirect to the
+login page. The URL is not validated and the AngularJS rendering engine
+will execute the JavaScript expression contained in the URL.
 
-MITIGATION
-==========
+### Attack audit
 
-Not using S3 suspend/resume avoids the vulnerability.
+We can not guarantee that the below will identify all attacks, so if you
+find something using the audit process described below, you should consider
+doing a full assessment.
 
-CREDITS
-=======
+#### Through reverse proxy/load balancer logs
 
-This issue was discovered by Andrew Cooper of Citrix.
+To determine if your Grafana installation has been exploited for this
+vulnerability, search through your reverse proxy/load balancer access logs
+for instances where the path contains `{{` followed by something that would
+invoke JavaScript code. For example, this could be code that attempts to
+show a fake login page or to steal browser or session data. The [OWASP
+cheat sheet](
+https://cheatsheetseries.owasp.org/cheatsheets/XSS_Filter_Evasion_Cheat_She=
+et.html)
+has several examples of XSS attacks.
 
-RESOLUTION
-==========
+#### Through the Grafana Enterprise audit feature
 
-Applying the appropriate attached patch resolves this issue.
+If you enabled =E2=80=9CLog web requests=E2=80=9D in your configuration with
+`router_logging =3D true`, look for requests where `path` contains `{{`
+followed by something that would invoke JavaScript code.
 
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
+### Patched versions
 
-xsa377.patch           xen-unstable - Xen 4.13.x
-xsa377-4.12.patch      Xen 4.12.x
-xsa377-4.11.patch      Xen 4.11.x
+Release 8.2.3:
 
-$ sha256sum xsa377*
-532cb030f97d72e8e534ad97182cd5e3aa0efeef405e255bb49649b4f0dd9947  xsa377.meta
-21a30dbf80f6e78057cc7e785c8fda475d5a8a0b6b9442af3bd8ca31dd69becf  xsa377.patch
-3279317d56e7b8d0a2b0152b64b4c577381b8b01fa0a1a21ec6f855bb964278a  xsa377-4.11.patch
-65f61f1cb7bb0e068fd32e40755b9a9aae464d15ccd42c94dae68e495c5a45e0  xsa377-4.12.patch
-$
+- [Download Grafana 8.2.3](https://grafana.com/grafana/download/8.2.3)
+- [Release notes](
+https://grafana.com/docs/grafana/latest/release-notes/release-notes-8-2-3/)
 
-DEPLOYMENT DURING EMBARGO
-=========================
+### Solutions and mitigations
 
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
+Download and install the appropriate patch for your version of Grafana.
 
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
+[Grafana Cloud](https://grafana.com/cloud) instances have already been
+patched, and [Grafana Enterprise](https://grafana.com/products/enterprise)
+customers were provided with updated binaries under embargo.
 
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+### Workaround
 
+If for some reason you cannot upgrade, you can use a reverse proxy or
+similar to block access to block the literal string `{{` in the path.
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
+Example of an Nginx rule to block the literal string `{{`:
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
+```
+location ~ \{\{ {
+    deny all;
+}
+```
+### Timeline and postmortem
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmC/oxIMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZZ0wH/AyYmZO221SvMaSa1kGaV9+tATBWtxKEmUr2I+/Y
-jOHJ4Ydw2RarJtZ6reYJ+J0qlTdgI65ceo87VEm1bm+LyvxhlLRmkBfavdTg66aX
-VU6uPGqJ9HMUY4rwN7aUgsc/qhquMZQYSWd5A/QknhNHlOtXhX0bnaIqgXoAroi7
-PRVs3sawkEizIn1Rqc8nLk+xkOrV3xvu+ollj/VNHgPDKU7SFKZiraBzUW7bErCZ
-AjCsgM7SalHDKIMpUqco4hutVJ7ykPE/pbEdC7q93TQ+PWE4/QY3JXcjC7L6KN1/
-v9rRTIFTR6fc5EcJfhH2zpWi69OWfE/vjM7k9XhpMoAdUZc=
-=fqiA
------END PGP SIGNATURE-----
+Here is a detailed timeline starting from when we originally learned of the
+issue. All times in UTC.
 
---=separator
-Content-Type: application/octet-stream; name="xsa377.meta"
-Content-Disposition: attachment; filename="xsa377.meta"
-Content-Transfer-Encoding: base64
+* 2021-10-21 23:13: Security researcher sends the initial report about an
+XSS vulnerability.
+* 2021-10-21 23:13: Confirmed to be reproducible in at least versions 8.0.5
+and 8.2.2.
+* 2021-10-22 02:02 MEDIUM severity declared.
+* 2021-10-22 09:22: it is discovered that Grafana instances with anonymous
+auth turned on are vulnerable. This includes https://play.grafana.org/ .
+* 2021-10-22 09:50: Anonymous access disabled for all instances on Grafana
+Cloud as a mitigation measure.
+* 2021-10-22 11:15: Workaround deployed on Grafana Cloud that blocks
+malicious requests.
+* 2021-10-22 12:35: Enabled anonymous access for instances on Grafana
+Cloud.
+* 2021-10-22 12:51: All instances protected by the workaround. From this
+point forward, Grafana Cloud is no longer affected.
+* 2021-10-22 14:05 Grafana Cloud instances updated with a fix.
+* 2021-10-22 19:23 :Determination that no weekend work is needed as the
+issue is of MEDIUM severity and the root cause has been identified.
+* 2021-10-25 14:13: Audit of Grafana Cloud concluded, no evidence of
+exploitation.
+* 2021-10-27 12:00: Grafana Enterprise images released to customers under
+embargo.
+* 2021-11-03 12:00: Public release.
 
-ewogICJYU0EiOiAzNzcsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
-Im1hc3RlciIsCiAgICAiNC4xNSIsCiAgICAiNC4xNCIsCiAgICAiNC4xMyIs
-CiAgICAiNC4xMiIsCiAgICAiNC4xMSIKICBdLAogICJUcmVlcyI6IFsKICAg
-ICJ4ZW4iCiAgXSwKICAiUmVjaXBlcyI6IHsKICAgICI0LjExIjogewogICAg
-ICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0
-YWJsZVJlZiI6ICJiMWU0NmJjMzY5YmI0OTBiNzIxYzc3ZjE1ZDI1ODNiYmY0
-NjYxNTJkIiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAz
-NzIsCiAgICAgICAgICAgIDM3MywKICAgICAgICAgICAgMzc1CiAgICAgICAg
-ICBdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2Ez
-NzctNC4xMS5wYXRjaCIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIH0K
-ICAgIH0sCiAgICAiNC4xMiI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAg
-ICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiNTk4NDkwNWIy
-NjM4ZGY4N2EwMjYyZDFlZTkxZjBhNmUxNGE4NmRmNiIsCiAgICAgICAgICAi
-UHJlcmVxcyI6IFsKICAgICAgICAgICAgMzcyLAogICAgICAgICAgICAzNzMs
-CiAgICAgICAgICAgIDM3NQogICAgICAgICAgXSwKICAgICAgICAgICJQYXRj
-aGVzIjogWwogICAgICAgICAgICAieHNhMzc3LTQuMTIucGF0Y2giCiAgICAg
-ICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQuMTMiOiB7
-CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAg
-ICAiU3RhYmxlUmVmIjogIjI4NDEzMjkzODkwMGNlOGMzYjExYmFiZjcyNTVm
-NWM2ZGJiMjE3MTYiLAogICAgICAgICAgIlByZXJlcXMiOiBbCiAgICAgICAg
-ICAgIDM3MiwKICAgICAgICAgICAgMzczLAogICAgICAgICAgICAzNzUKICAg
-ICAgICAgIF0sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAg
-InhzYTM3Ny5wYXRjaCIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIH0K
-ICAgIH0sCiAgICAiNC4xNCI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAg
-ICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiMTBmMGIyZDQ5
-Mzc2ODY1ZDQ5NjgwZjA2YzUyYjQ1MWZhYmNlM2JiNSIsCiAgICAgICAgICAi
-UHJlcmVxcyI6IFsKICAgICAgICAgICAgMzcyLAogICAgICAgICAgICAzNzMs
-CiAgICAgICAgICAgIDM3NQogICAgICAgICAgXSwKICAgICAgICAgICJQYXRj
-aGVzIjogWwogICAgICAgICAgICAieHNhMzc3LnBhdGNoIgogICAgICAgICAg
-XQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICI0LjE1IjogewogICAg
-ICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0
-YWJsZVJlZiI6ICIyODBkNDcyZjRmY2EwNzBhMTAzNzdlMzE4ZDkwY2FiZmMy
-NTQwODEwIiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAz
-NzIsCiAgICAgICAgICAgIDM3MywKICAgICAgICAgICAgMzc1CiAgICAgICAg
-ICBdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2Ez
-NzcucGF0Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9
-LAogICAgIm1hc3RlciI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAg
-InhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiYWE3N2FjYzI4MDk4
-ZDA0OTQ1YWY5OThmM2ZjMGRiZDM3NTliNWI0MSIsCiAgICAgICAgICAiUHJl
-cmVxcyI6IFsKICAgICAgICAgICAgMzcyLAogICAgICAgICAgICAzNzMsCiAg
-ICAgICAgICAgIDM3NQogICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVz
-IjogWwogICAgICAgICAgICAieHNhMzc3LnBhdGNoIgogICAgICAgICAgXQog
-ICAgICAgIH0KICAgICAgfQogICAgfQogIH0KfQ==
+## Reporting security issues
 
---=separator
-Content-Type: application/octet-stream; name="xsa377.patch"
-Content-Disposition: attachment; filename="xsa377.patch"
-Content-Transfer-Encoding: base64
+If you think you have found a security vulnerability, please send a report
+to [security@grafana.com](mailto:security@grafana.com). This address can be
+used for all of
+Grafana Labs' open source and commercial products (including but not
+limited to Grafana, Tempo, Loki, k6, Tanka, and  Grafana Cloud, Grafana
+Enterprise, and grafana.com). We only accept vulnerability reports at this
+address. We would prefer that you encrypt your message to us using our PGP
+key. The key fingerprint is:
 
-RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
-bT4KU3ViamVjdDogeDg2L3NwZWMtY3RybDogTWl0aWdhdGUgVEFBIGFmdGVy
-IFMzIHJlc3VtZQoKVGhlIHVzZXIgY2hvc2VuIHNldHRpbmcgZm9yIE1TUl9U
-U1hfQ1RSTCBuZWVkcyByZXN0b3JpbmcgYWZ0ZXIgUzMuCgpBbGwgQVBzIGdl
-dCB0aGUgY29ycmVjdCBzZXR0aW5nIHZpYSBzdGFydF9zZWNvbmRhcnkoKSwg
-YnV0IHRoZSBCU1Agd2FzIG1pc3NlZApvdXQuCgpUaGlzIGlzIFhTQS0zNzcg
-LyBDVkUtMjAyMS0yODY5MC4KCkZpeGVzOiA4YzQzMzA4MThmNiAoIng4Ni9z
-cGVjLWN0cmw6IE1pdGlnYXRlIHRoZSBUU1ggQXN5bmNocm9ub3VzIEFib3J0
-IHNpZGVjaGFubmVsIikKU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3BlciA8
-YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBC
-ZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KCmRpZmYgLS1naXQgYS94ZW4v
-YXJjaC94ODYvYWNwaS9wb3dlci5jIGIveGVuL2FyY2gveDg2L2FjcGkvcG93
-ZXIuYwppbmRleCA5MWE4YzRkMGJkLi4zMWE1NmYwMmQwIDEwMDY0NAotLS0g
-YS94ZW4vYXJjaC94ODYvYWNwaS9wb3dlci5jCisrKyBiL3hlbi9hcmNoL3g4
-Ni9hY3BpL3Bvd2VyLmMKQEAgLTI4OCw2ICsyODgsOCBAQCBzdGF0aWMgaW50
-IGVudGVyX3N0YXRlKHUzMiBzdGF0ZSkKIAogICAgIG1pY3JvY29kZV91cGRh
-dGVfb25lKCk7CiAKKyAgICB0c3hfaW5pdCgpOyAvKiBOZWVkcyBtaWNyb2Nv
-ZGUuICBNYXkgY2hhbmdlIEhMRS9SVE0gZmVhdHVyZSBiaXRzLiAqLworCiAg
-ICAgaWYgKCAhcmVjaGVja19jcHVfZmVhdHVyZXMoMCkgKQogICAgICAgICBw
-YW5pYygiTWlzc2luZyBwcmV2aW91c2x5IGF2YWlsYWJsZSBmZWF0dXJlKHMp
-XG4iKTsKIAo=
+F988 7BEA 027A 049F AE8E  5CAA D125 8932 BE24 C5CA
 
---=separator
-Content-Type: application/octet-stream; name="xsa377-4.11.patch"
-Content-Disposition: attachment; filename="xsa377-4.11.patch"
-Content-Transfer-Encoding: base64
+The key is available from [ keyserver.ubuntu.com](
+https://keyserver.ubuntu.com/pks/lookup?op=3Dget&fingerprint=3Don&search=3D=
+0xD1258932BE24C5CA)
+by searching for [security@grafana](
+https://keyserver.ubuntu.com/pks/lookup?search=3Dsecurity@grafana&fingerpri=
+nt=3Don&op=3Dindex
+).
 
-RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
-bT4KU3ViamVjdDogeDg2L3NwZWMtY3RybDogTWl0aWdhdGUgVEFBIGFmdGVy
-IFMzIHJlc3VtZQoKVGhlIHVzZXIgY2hvc2VuIHNldHRpbmcgZm9yIE1TUl9U
-U1hfQ1RSTCBuZWVkcyByZXN0b3JpbmcgYWZ0ZXIgUzMuCgpBbGwgQVBzIGdl
-dCB0aGUgY29ycmVjdCBzZXR0aW5nIHZpYSBzdGFydF9zZWNvbmRhcnkoKSwg
-YnV0IHRoZSBCU1Agd2FzIG1pc3NlZApvdXQuCgpUaGlzIGlzIFhTQS0zNzcg
-LyBDVkUtMjAyMS0yODY5MC4KCkZpeGVzOiA4YzQzMzA4MThmNiAoIng4Ni9z
-cGVjLWN0cmw6IE1pdGlnYXRlIHRoZSBUU1ggQXN5bmNocm9ub3VzIEFib3J0
-IHNpZGVjaGFubmVsIikKU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3BlciA8
-YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBC
-ZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KCmRpZmYgLS1naXQgYS94ZW4v
-YXJjaC94ODYvYWNwaS9wb3dlci5jIGIveGVuL2FyY2gveDg2L2FjcGkvcG93
-ZXIuYwppbmRleCAzMGUxYmQ1Y2QzLi40NTFjYmE2MjJjIDEwMDY0NAotLS0g
-YS94ZW4vYXJjaC94ODYvYWNwaS9wb3dlci5jCisrKyBiL3hlbi9hcmNoL3g4
-Ni9hY3BpL3Bvd2VyLmMKQEAgLTI1OSw2ICsyNTksOCBAQCBzdGF0aWMgaW50
-IGVudGVyX3N0YXRlKHUzMiBzdGF0ZSkKIAogICAgIG1pY3JvY29kZV9yZXN1
-bWVfY3B1KDApOwogCisgICAgdHN4X2luaXQoKTsgLyogTmVlZHMgbWljcm9j
-b2RlLiAgTWF5IGNoYW5nZSBITEUvUlRNIGZlYXR1cmUgYml0cy4gKi8KKwog
-ICAgIGlmICggIXJlY2hlY2tfY3B1X2ZlYXR1cmVzKDApICkKICAgICAgICAg
-cGFuaWMoIk1pc3NpbmcgcHJldmlvdXNseSBhdmFpbGFibGUgZmVhdHVyZShz
-KS4iKTsKIAo=
+## Security announcements
 
---=separator
-Content-Type: application/octet-stream; name="xsa377-4.12.patch"
-Content-Disposition: attachment; filename="xsa377-4.12.patch"
-Content-Transfer-Encoding: base64
+There is a Security [category](https://grafana.com/tags/security/) on the
+Grafana blog where we will post a summary, remediation, and mitigation
+details for any patch containing security fixes and you can subscribe to
+updates from our [Security Announcements RSS feed](
+https://grafana.com/tags/security/index.xml).
 
-RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
-bT4KU3ViamVjdDogeDg2L3NwZWMtY3RybDogTWl0aWdhdGUgVEFBIGFmdGVy
-IFMzIHJlc3VtZQoKVGhlIHVzZXIgY2hvc2VuIHNldHRpbmcgZm9yIE1TUl9U
-U1hfQ1RSTCBuZWVkcyByZXN0b3JpbmcgYWZ0ZXIgUzMuCgpBbGwgQVBzIGdl
-dCB0aGUgY29ycmVjdCBzZXR0aW5nIHZpYSBzdGFydF9zZWNvbmRhcnkoKSwg
-YnV0IHRoZSBCU1Agd2FzIG1pc3NlZApvdXQuCgpUaGlzIGlzIFhTQS0zNzcg
-LyBDVkUtMjAyMS0yODY5MC4KCkZpeGVzOiA4YzQzMzA4MThmNiAoIng4Ni9z
-cGVjLWN0cmw6IE1pdGlnYXRlIHRoZSBUU1ggQXN5bmNocm9ub3VzIEFib3J0
-IHNpZGVjaGFubmVsIikKU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3BlciA8
-YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBC
-ZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KCmRpZmYgLS1naXQgYS94ZW4v
-YXJjaC94ODYvYWNwaS9wb3dlci5jIGIveGVuL2FyY2gveDg2L2FjcGkvcG93
-ZXIuYwppbmRleCBhMDdhYTNiOWVkLi42NjAzNjNhM2RmIDEwMDY0NAotLS0g
-YS94ZW4vYXJjaC94ODYvYWNwaS9wb3dlci5jCisrKyBiL3hlbi9hcmNoL3g4
-Ni9hY3BpL3Bvd2VyLmMKQEAgLTI1OSw2ICsyNTksOCBAQCBzdGF0aWMgaW50
-IGVudGVyX3N0YXRlKHUzMiBzdGF0ZSkKIAogICAgIG1pY3JvY29kZV9yZXN1
-bWVfY3B1KDApOwogCisgICAgdHN4X2luaXQoKTsgLyogTmVlZHMgbWljcm9j
-b2RlLiAgTWF5IGNoYW5nZSBITEUvUlRNIGZlYXR1cmUgYml0cy4gKi8KKwog
-ICAgIGlmICggIXJlY2hlY2tfY3B1X2ZlYXR1cmVzKDApICkKICAgICAgICAg
-cGFuaWMoIk1pc3NpbmcgcHJldmlvdXNseSBhdmFpbGFibGUgZmVhdHVyZShz
-KVxuIik7CiAK
+Regards,
+Daniel Lee, Grafana Labs
 
---=separator--
+--00000000000031b95205cfe32dae--
