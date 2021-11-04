@@ -1,26 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/07/2
-Message-Id: <20F4F8CE-A291-4DE5-97B1-FFA7AB76C638@beckweb.net>
-Date: Wed, 7 Apr 2021 15:16:47 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/04/3
+Message-Id: <3E15589B-2D44-4A55-B15F-FC686E0E8F59@beckweb.net>
+Date: Thu, 4 Nov 2021 15:20:37 +0100
 From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
 Subject: Multiple vulnerabilities in Jenkins and Jenkins plugins
 Content-Type: text/plain; charset=utf-8
+
+Subject: Multiple vulnerabilities in Jenkins and Jenkins plugins
+
 
 Jenkins is an open source automation server which enables developers around
 the world to reliably build, test, and deploy their software.
 
 The following releases contain fixes for security vulnerabilities:
 
-* Jenkins 2.287
-* Jenkins LTS 2.277.2
-* Micro Focus Application Automation Tools Plugin 6.8
-* promoted builds Plugin 3.9.1
+* Jenkins 2.319
+* Jenkins LTS 2.303.3
+* Subversion Plugin 2.15.1
 
 
 Summaries of the vulnerabilities are below. More details, severity, and
 attribution can be found here:
-https://www.jenkins.io/security/advisory/2021-04-07/
+https://www.jenkins.io/security/advisory/2021-11-04/
 
 We provide advance notification for security updates on this mailing list:
 https://groups.google.com/d/forum/jenkinsci-advisories
@@ -31,52 +33,41 @@ https://www.jenkins.io/security/#reporting-vulnerabilities
 
 ---
 
-SECURITY-1721 / CVE-2021-21639
-Jenkins 2.286 and earlier, LTS 2.277.1 and earlier does not validate the
-type of object created after loading the data submitted to the `config.xml`
-REST API endpoint of a node.
+SECURITY-2455 / CVE-2021-21685 through CVE-2021-21695
+The agent-to-controller security subsystem limits which files on the
+Jenkins controller can be accessed by agent processes.
 
-This allows attackers with Computer/Configure permission to replace a node
-with one of a different type.
-
-
-SECURITY-1871 / CVE-2021-21640
-Jenkins 2.286 and earlier, LTS 2.277.1 and earlier does not properly check
-that a newly created view has an allowed name. When a form to create a view
-is submitted, the name is included twice in the submission. One instance is
-validated, but the other instance is used to create the value.
-
-This allows attackers with View/Create permission to create views with
-invalid or already-used names.
+Multiple vulnerabilities in the file path filtering implementation of
+Jenkins 2.318 and earlier, LTS 2.303.2 and earlier allow agent processes to
+read and write arbitrary files on the Jenkins controller file system, and
+obtain some information about Jenkins controller file systems.
 
 
-SECURITY-2293 / CVE-2021-21641
-promoted builds Plugin 3.9 and earlier does not require POST requests for
-HTTP endpoints implementing promotion (regular, forced, and re-execute),
-resulting in cross-site request forgery (CSRF) vulnerabilities.
+SECURITY-2423 / CVE-2021-21696
+Jenkins 2.318 and earlier, LTS 2.303.2 and earlier does not limit agent
+read/write access to the `libs/` directory inside build directories when
+using the `FilePath` APIs. This directory is used by the Pipeline: Shared
+Groovy Libraries Plugin to store copies of shared libraries.
 
-These vulnerabilities allow attackers to promote builds.
-
-
-SECURITY-2132 / CVE-2021-22512 (CSRF) & CVE-2021-22513 (permission check)
-Micro Focus Application Automation Tools Plugin 6.7 and earlier does not
-perform permission checks in methods implementing form validation.
-
-This allows attackers with Overall/Read permission to connect to
-attacker-specified URLs using attacker-specified username and password.
-
-Additionally, these form validation methods do not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
+This allows attackers in control of agent processes to replace the code of
+a trusted library with a modified variant, resulting in unsandboxed code
+execution in the Jenkins controller process.
 
 
-SECURITY-2175 / CVE-2021-22510
-Micro Focus Application Automation Tools Plugin 6.7 and earlier does not
-escape user input in a form validation response.
+SECURITY-2428 / CVE-2021-21697
+Agents are allowed some limited access to files on the Jenkins controller
+file system. The directories agents are allowed to access in Jenkins 2.318
+and earlier, LTS 2.303.2 and earlier include the directories storing
+build-related information, intended to allow agents to store build-related
+metadata during build execution. As a consequence, this allows any agent to
+read and write the contents of any build directory stored in Jenkins with
+very few restrictions (`build.xml` and some Pipeline-related metadata).
 
-This results in a reflected cross-site scripting (XSS) vulnerability.
 
+SECURITY-2506 / CVE-2021-21698
+Subversion Plugin 2.15.0 and earlier does not restrict the name of a file
+when looking up a subversion key file on the controller from an agent.
 
-SECURITY-2176 / CVE-2021-22511
-Micro Focus Application Automation Tools Plugin 6.7 and earlier
-unconditionally disables SSL/TLS certificate validation for connections to
-Service Virtualization servers.
+This allows attackers able to control agent processes to read arbitrary
+files on the Jenkins controller file system.
+
