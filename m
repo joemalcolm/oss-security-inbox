@@ -1,30 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/23/3
-Message-ID: <CAMufup5fSgM0DomnAeiQJYx9rO5yyGRJDiHKvs2cqs0VztZLZQ@mail.gmail.com>
-Date: Tue, 23 Nov 2021 12:27:24 +0100
-From: Juan Pablo Santos Rodríguez <juanpablo.santos@...il.com>
-To: announce@...che.org, dev@...wiki.apache.org, user@...wiki.apache.org,  Apache Security Team <security@...che.org>, bo yu <forhaby0@...il.com>,  oss-security@...ts.openwall.com
-Subject: [CVE-2021-44140] Apache JSPWiki Arbitrary file deletion on logout
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/05/1
+Message-ID: <CAFcO6XPZGdhZ6p=iy2=HS2LcwRw30B2=dgevmrnU1hQM14qwXg@mail.gmail.com>
+Date: Fri, 5 Nov 2021 23:11:42 +0800
+From: butt3rflyh4ck <butterflyhuangxx@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel: isdn: cpai: array-index-out-of-bounds in detach_capi_ctr in drivers/isdn/capi/kcapi.c
 Content-Type: text/plain; charset=utf-8
 
-Severity
-Critical
+Hi, the Mitre has assigned CVE-2021-43389 to this issue.
 
-Vendor
-The Apache Software Foundation
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-43389
 
-Versions Affected
-Apache JSPWiki up to 2.11.0.M8
+Regards,
+  butt3rflyh4ck.
 
-Description
-Remote attackers may delete arbitrary files in a system hosting a
-JSPWiki instance by using a carefuly crafted http request on logout,
-given that those files are reachable to the user running the JSPWiki
-instance.
 
-Mitigation
-Apache JSPWiki users should upgrade to 2.11.0 or later.
+On Tue, Oct 19, 2021 at 11:21 PM butt3rflyh4ck
+<butterflyhuangxx@...il.com> wrote:
+>
+> Hi, there is an array-index-out-bounds bug in detach_capi_ctr in
+> drivers/isdn/capi/kcapi.c and I reproduce it on 5.15.0-rc2+.
+>
+> #Root Cause
+> we can call CMTPCONNADD ioctl and it would invoke
+> do_cmtp_sock_ioctl(), it would call cmtp_add_connection().
+> The chain of call is as follows.
+> ioctl(CMTPCONNADD)
+>    ->cmtp_sock_ioctl()
+>          -->do_cmtp_sock_ioctl()
+>             --->cmtp_add_connection()
+>                 ---->kthread_run()
+>                 ---->cmtp_attach_device()
+> the function would add a cmtp session to a controller.
+>
+> The cmtp_add_connection() would add a cmtp session to a controller
+> and run a kernel thread to process cmtp.
+>
+>         __module_get(THIS_MODULE);
+>         session->task = kthread_run(cmtp_session, session, "kcmtpd_ctr_%d",
+>                                                                 session->num);
+>
+> During this process, the kernel thread would call detach_capi_ctr()
+> to detach a register controller. if the controller
+> was not attached yet, detach_capi_ctr() would
+> trigger an array-index-out-bounds bug.
+>
+>
+> #analyze
+> https://lore.kernel.org/netdev/CAFcO6XOvGQrRTaTkaJ0p3zR7y7nrAWD79r48=L_BbOyrK9X-vA@mail.gmail.com/
+>
+> #patch
+> The patch is available upstream now.
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=1f3e2e97c003f80c4b087092b225c8787ff91e4d
+>
+> #Timeline
+> *2021/9/24 - Vulnerability reported to netdev@...r.kernel.org.
+> *2021/9/24 - Vulnerability confirmed.
+> *2021/10/8 - Vulnerability patched.
+> *2021/10/9 - Vulnerability reported to secalert@...hat.com and confirmed
+> *2021/10/19 - Opened on oss-security@...ts.openwall.com.
+>
+> #Credit
+> Active Defense Lab of Venustech.
+>
+>
+> Regards,
+>  butt3rflyh4ck.
+>
+> --
+> Active Defense Lab of Venustech
 
-Credit
-This issue was discovered by haby0 (forhaby0@...il.com) from Duxiaoman
-Financial Security Team, who also proposed the fix for this issue.
+
+
+--
+Active Defense Lab of Venustech
