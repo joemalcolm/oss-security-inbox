@@ -1,124 +1,137 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/23/6
-Message-Id: <E1mpUe8-0004X3-Q0@xenbits.xenproject.org>
-Date: Tue, 23 Nov 2021 12:11:36 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 387 v2 (CVE-2021-28703) - grant table v2 status pages may remain accessible after de-allocation (take two)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/09/1
+Message-ID: <6fd35694-5ddd-7e1c-b140-835834aa70bf@sit.fraunhofer.de>
+Date: Tue, 9 Nov 2021 11:22:58 +0100
+From: "Philipp Jeitner (SIT)" <philipp.jeitner@....fraunhofer.de>
+To: <oss-security@...ts.openwall.com>
+Subject: [CVE-2021-43523] Incorrect handling of special characters in domain names in uclibc and uclibc-ng
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Security Issue: Incorrect handling of special characters in domain names 
+in uclibc and uclibc-ng
 
-            Xen Security Advisory CVE-2021-28703 / XSA-387
-                               version 2
+#### Description of the vulnerability
 
- grant table v2 status pages may remain accessible after de-allocation (take two)
+Incorrect handling of special characters in domain names returned by 
+Domain Name Servers in uclibc and uclibc-ng below 1.0.39 via the 
+gethostbyname(), getaddrinfo(), gethostbyaddr() and getnameinfo() calls 
+can lead to output of wrong hostnames (leading to Domain Hijacking) and 
+injection vulnerabilities in applications using the library (leading to 
+Remote Code Execution, XSS, Applications crashes, etc.).
 
-UPDATES IN VERSION 2
-====================
+Examples of incorrect behavior:
 
-Public release.
+     example.com\000.attacker.com is returned as example.com
+     www\.example.com is returned as www.example.com
+     <script>alert('xss')</script>.attacker.com is not filtered even 
+though this is not a valid hostname.
 
-ISSUE DESCRIPTION
-=================
+#### CVE ID
 
-Guest get permitted access to certain Xen-owned pages of memory.  The
-majority of such pages remain allocated / associated with a guest for
-its entire lifetime.  Grant table v2 status pages, however, get
-de-allocated when a guest switched (back) from v2 to v1.  The freeing
-of such pages requires that the hypervisor know where in the guest
-these pages were mapped.  The hypervisor tracks only one use within
-guest space, but racing requests from the guest to insert mappings of
-these pages may result in any of them to become mapped in multiple
-locations.  Upon switching back from v2 to v1, the guest would then
-retain access to a page that was freed and perhaps re-used for other
-purposes.
+This vulnerability has been assigned CVE-2021-43523.
 
-This bug was fortuitously fixed by code cleanup in Xen 4.14, and
-backported to security-supported Xen branches as a prerequisite of the
-fix for XSA-378.
+#### Patch
 
-IMPACT
-======
+This vulnerability was patched with uclibc-ng version 1.0.39:
 
-A malicious guest may be able to elevate its privileges to that of the
-host, cause host or guest Denial of Service (DoS), or cause information
-leaks.
+https://github.com/wbx-github/uclibc-ng/commit/0f822af0445e5348ce7b7bd8ce1204244f31d174
 
-VULNERABLE SYSTEMS
-==================
+#### Attack vector(s):
 
-All Xen branches up to and including 4.13 are vulnerable,
-but only if the patches for XSA-378 have not been applied.
+Lookup of attacker controlled domain name or other cases where an 
+attacker can control the DNS response returned by used DNS servers.
 
-Xen versions 4.13.4, 4.14.x and 4.15.x are not affected.
+#### Attack type
 
-Only x86 HMV and PVH guests permitted to use grant table version 2
-interfaces can leverage this vulnerability.  x86 PV guests cannot
-leverage this vulnerability.  On Arm, grant table v2 use is explicitly
-unsupported.
+Context-dependent
 
-MITIGATION
-==========
+#### Impact
 
-Running only PV guests will avoid this vulnerability.
+Impact depends on the application using the libc stub resolver. In case 
+a cache is implemented, misinterpretation of \000 or \. can lead to 
+cache poisoning. In case unfiltered input is processed, this can lead to 
+XSS, SQL-injection, etc. We are aware of applications which are 
+vulnerable due to such stub-resolver behavior, such as CVE-2021-33425.
 
-Suppressing use of grant table v2 interfaces for HVM or PVH guests will
-also avoid this vulnerability.
+#### Affected Components:
 
-CREDITS
-=======
+DNS resolver library functions `gethostbyname()`, `getaddrinfo()`, 
+`gethostbyaddr()` and `getnameinfo()`.
 
-This issue was discovered by Patryk Balicki and Julien Grall of Amazon.
+#### Discoverer(s)/Credits
 
-RESOLUTION
-==========
+Philipp Jeitner and Haya Shulman, Fraunhofer SIT
 
-Applying the following patch resolves the issue:
-  x86/p2m: don't assert that the passed in MFN matches for a remove
+philipp.jeitner@....fraunhofer.de
+haya.shulman@....fraunhofer.de
 
-This patch was supplied with XSA-378, as one of 378's prerequisites.
-The fix has already been applied to Xen stable branches as follows:
+#### Reference(s)
 
-c65ea16dbcafbe4fe21693b18f8c2a3c5d14600e   in Xen 4.14.x, 4.15.x
-f50fbddbae81fcccae56d27317bd71cc0e678ba2   in Xen 4.13.4
-d44643199c96ac22491ae002d3bcd1c989b95ea4   in xen.git#stable-4.12
-66f400c71d12fe8adfb895984b14f2941e8cb6ce   in xen.git#stable-4.11
+  - https://www.uclibc.org/
+  - https://uclibc-ng.org/
+  - https://xdi-attack.net/
+  - Injection Attacks Reloaded: Tunnelling Malicious Payloads over DNS
+    https://www.usenix.org/conference/usenixsecurity21/presentation/jeitner
 
-DEPLOYMENT DURING EMBARGO
-=========================
+#### Additional information
 
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
+The POSIX Standard for Information Technology [1] defines interfaces for 
+DNS lookups in systems standard C libraries. This Standard includes 
+functions for forward lookups (gethostbyname, getaddrinfo) as well as 
+backward-lookups (gethostbyaddr, getnameinfo). These functions cannot 
+only return IP addresses but can also contain hostnames of aliases 
+(CNAME) of the requested host name in case of forward-lookups, or the 
+primary host name of that ip address in the case of backward-lookups 
+(PTR). The POSIX Standard defines the data format of these host names as 
+a null-terminated C-String containing a "hostname" or "nodename", which 
+are typically expected by developers and defined by RFC952 [2] and 
+RFC1123 [3] to only contain alphanumeric characters (a-z,A-Z,0-9), 
+hyphens ("-") and periods (".") to split labels. This creates a mismatch 
+of allowed characters between "hostnames" and "domain names" as defined 
+by the DNS standard [4] which defines "domain names" as a series of 
+"text labels" which are textually represented by concatenating all "text 
+labels" and joining them together with period signs. However, "text 
+labels" can contain any octet value, even zero-bytes ("\x00") and period 
+signs (".") and recursive DNS resolvers are required by the DNS standard 
+to support any of these characters in DNS records, thus not implementing 
+any sanitiy checks on domain names.
 
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
+When DNS responses are parsed by the stub DNS resolver implemented by 
+stub resolver library as part of the `gethostbyname()`, `getaddrinfo()`, 
+`gethostbyaddr()` and `getnameinfo()` functions, these functions must 
+therefore ensure that the returned, null-terminated C-Strings must be 
+valid domain names as defined by the POSIX standard, else applications 
+which use these values might include that information in contexts where 
+malicious data can included inside the domain name and used for command 
+injection attacks like Cross-Site-Scripting, SQL-injections, etc. 
+Furthermore, if domain names contain text labels with periods (`"\."`) 
+or zero-bytes (`"\000"`) and the stub resolver library does naively 
+decode these domain names into strings, attackers can create malicious 
+domain names which are misinterpreted by the naive decoding logic to 
+look like different domain names than they actually are. When these 
+misinterpreted domain names are than cached by applications using the 
+stub resolver, this allows for domain hijacking by poisoning of the 
+applications DNS cache which uses the vulnerable stub resolver library.
 
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+For an example on how stub resolvers should sanitize domain names 
+returned by those functions, we refer to the `ns_name_ntop` [5] and 
+`res_hnok` [6] functions in glibc.
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
+[1]: Standard for Information Technology - Portable Operating System 
+Interface (POSIX(R)) Base Specifications, Issue 7 - 
+https://ieeexplore.ieee.org/document/7582338
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
+[2]: RFC952 - DOD INTERNET HOST TABLE SPECIFICATION - 
+https://tools.ietf.org/html/rfc952
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmGc2jgMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZlWUIAJ4bU9n2q9A4sqhiW0xJOCI4MIdwV2ym6xziP9iN
-e5sg0u3gdp94M1vLf//8h7julxLXgdJd10HWWpJkfRQcsfz3E1ul1O+mAsoHxJwI
-/qGl1Xis7AkDFjrPXthJUKh/DNgi8F1Rok7XDbfFznk34v4g6anh4JDfqJIUwIFQ
-l2s6qIOc2PjvmrJMXEboT1wEUADZNtChIqOL7Ibre9Zz6/mdr0FjPfPvLAqfvf9m
-aLaMElJMRx5iTEUG7qCYXUn8oKLbWNTv88yceudE7QZl3/zv/UnEL8nvBZWs/Gkx
-UbrC6wkNFUSpF/ngexvzsSE/SrfMYYaUPfIciyuxvuosGJY=
-=DmKh
------END PGP SIGNATURE-----
+[3]: RFC1123 - Requirements for Internet Hosts -- Application and 
+Support - https://tools.ietf.org/html/rfc1123
 
+[4]: RFC6895 - Domain Name System (DNS) IANA Considerations - 
+https://tools.ietf.org/html/rfc6895
+
+[5]: Github: 
+https://github.com/bminor/glibc/blob/be9b0b9a012780a403a266c90878efffb9a5f3ca/resolv/ns_name.c#L58
+
+[6]: Github: 
+https://github.com/bminor/glibc/blob/21c3f4b5368686ade28d90d8c7d79c4c95c72c1b/resolv/res_comp.c#L198
