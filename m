@@ -1,4 +1,9 @@
-Received: (qmail 3173 invoked by uid 550); 4 Sep 2024 10:00:00 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4473" "Wednesday" "10" "November" "2021" "14:32:02" "+0100" "Solar Designer" "solar@openwall.com" nil "138" "[oss-security] Fwd: Samba 4.15.2, 4.14.10, 4.13.14 Security Releases are available for Download" nil nil nil "11" nil nil (number mark "U       solar@openwa Nov 10  138/4473  " thread-indent "\"[oss-security] Fwd: Samba 4.15.2, 4.14.10, 4.13.14 Security Releases are available for Download\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Fwd: Samba 4.15.2, 4.14.10, 4.13.14 Security Releases are available for Download" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 19747 invoked by uid 550); 10 Nov 2021 13:33:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,72 +12,152 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7223 invoked from network); 4 Sep 2024 06:46:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725432371; x=1726037171; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=jHbbmaszpMm7N5YV2GtMCNJJ1bzxQWCCNUGEcmzeMKo=;
-        b=dfWaGlT41UJGI6e1lqZr6yRGZrYvDpT25i5oKn1SnC8Zuby6qyjdHUZasCpjwcIgkV
-         g1ly8bBxJU7clD9LjWW6FIcY+zGnUt0Ymc1YuwESlEQ3ekloX7iBoyVO0X7teoSPWt9e
-         9PI4owA+2fQcbambpP5or8b91ZQ4Mg+kLDDIqm0wtdln3tHMTLI5X0M8fQwWry5OhaTq
-         EB/TCJJ7QXoGvJa7O4Z0nHDg5wkNtSkuCp0GrIuKOKfwJhw2p1774aemiTlisheZmVjq
-         zJPW9jmR6WK8WqLydkLP3+pc3LxcD4lfzHpXzikTRrnobf9/SMqNk0Ip/rbsNHauAyNF
-         +n+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725432371; x=1726037171;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jHbbmaszpMm7N5YV2GtMCNJJ1bzxQWCCNUGEcmzeMKo=;
-        b=RLU3xz7t9T/yeFLwOcn2VoWeM36ifHlRJLSxWSBypbs5z/yap8sztkMRIpmewP4o5+
-         LrsWKauYgQduyZEzjX9FbM1eMV6+kc4sRVyJxtyQmm+VdPFmyD76R+8xmz+3oCSbHjH6
-         sIUGNWfov1SMkWYFF4Ksf4w6wiE2jsyPf1lHoEE76fZtA0Nq7vjnNSKYO7q+atLGsVU4
-         zp4SuhprwHuz6lLNV/WK0s337Tv/V2Mcv60MpgFaRbstVRdoZR6/hEukj8VxTGOdhpvg
-         /zTabINvbJffIrMJf9RNcrxfFJP3PwAw8CGsVcuDwCv9NxLpiJk7DeqhyaEv+hP0dsp7
-         jLEw==
-X-Gm-Message-State: AOJu0YwRs8fwe+i5jAh5ow1SWcf24ll3GG422g1GPgmgtc5v13yvu8Sr
-	bCvpP9KaHEk1yT9ehwv9357i4RerAE6EyhRxQIm1InY8nPwct4K0cfX/WMJhB6mh5/DZhD5OQrn
-	tQc+BgkNOM7SmqtwP8/Jg3sOD/XjOM8v/G2uIZA==
-X-Google-Smtp-Source: AGHT+IGi1hGNfG/Y2iX1Gh2+rM+mbeQRP2LK0bau5u7FUo5qDdVUK2ZfcAsh9p6rKp6x7bG6X2a2wQy3kHuyGblfClc=
-X-Received: by 2002:a05:6512:3089:b0:533:324a:9df6 with SMTP id
- 2adb3069b0e04-53546b5043cmr15688231e87.29.1725432370905; Tue, 03 Sep 2024
- 23:46:10 -0700 (PDT)
-MIME-Version: 1.0
-From: Sergei G <serg.gordey@gmail.com>
-Date: Wed, 4 Sep 2024 09:45:59 +0300
-Message-ID: <CAKtDSqCsXGO8UWZxo8fdQi2DS8=wuLTEtsomx64+7WxM4ciC8A@mail.gmail.com>
+Received: (qmail 19585 invoked from network); 10 Nov 2021 13:32:18 -0000
+Date: Wed, 10 Nov 2021 14:32:02 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000008d4c8f0621458701"
-Subject: [oss-security] Webmin UDP/10000 discovery service Loop DoS (COK-2024-05-05)
+Message-ID: <20211110133202.GA4302@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] Fwd: Samba 4.15.2, 4.14.10, 4.13.14 Security Releases are available for Download
 
---0000000000008d4c8f0621458701
-Content-Type: text/plain; charset="UTF-8"
+----- Forwarded message from Stefan Metzmacher <metze@samba.org> -----
 
-Webmin is a web-based system administration tool for Unix-like servers, and
-services with about 1,000,000 yearly installations worldwide.
+Date: Tue, 9 Nov 2021 19:26:03 +0100
+From: Stefan Metzmacher <metze@samba.org>
+To: samba-announce@lists.samba.org, samba@lists.samba.org,
+	samba-technical@lists.samba.org
+Subject: [Announce] Samba 4.15.2, 4.14.10, 4.13.14 Security Releases are
+ available for Download
 
-Webmin/Virtualmin use a UDP service discovery, usually running on port
-UDP/10000. This service responds to any UDP request with the IP address and
-port on which the control panel is available.
+Release Announcements
+---------------------
 
-This behavior can be used to implement a Loop DoS attack (CVE-2024-2169
-etc) by sending udp packets with spoofed source ip:port using other Webmin
-instance IP-andreess that can lead to endless traffic exchange between
-hosts, Denial of Service (DOS) and/or abuse of resources.
+These are security releases in order to address the following defects:
 
-Fix:
-Users are recommended to upgrade to version Webmin 2.202, Virtualmin 7.20.2
-which fixes the issue.
+o CVE-2016-2124:  SMB1 client connections can be downgraded to plaintext
+                  authentication.
+                  https://www.samba.org/samba/security/CVE-2016-2124.html
 
-Workaround:
-Block UDP/10000 the service for access from the Internet.
+o CVE-2020-25717: A user on the domain can become root on domain members.
+                  https://www.samba.org/samba/security/CVE-2020-25717.html
+                  (PLEASE READ! There are important behaviour changes described)
 
-References:
-https://webmin.com/
-https://cispa.de/en/loop-dos
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-2169
+o CVE-2020-25718: Samba AD DC did not correctly sandbox Kerberos tickets issued
+                  by an RODC.
+                  https://www.samba.org/samba/security/CVE-2020-25718.html
 
-Credits:
-Alexander Chernenkov, Sergey Gordeychik, CyberOK
+o CVE-2020-25719: Samba AD DC did not always rely on the SID and PAC in Kerberos
+                  tickets.
+                  https://www.samba.org/samba/security/CVE-2020-25719.html
 
---0000000000008d4c8f0621458701--
+o CVE-2020-25721: Kerberos acceptors need easy access to stable AD identifiers
+                  (eg objectSid).
+                  https://www.samba.org/samba/security/CVE-2020-25721.html
+
+o CVE-2020-25722: Samba AD DC did not do suffienct access and conformance
+                  checking of data stored.
+                  https://www.samba.org/samba/security/CVE-2020-25722.html
+
+o CVE-2021-3738:  Use after free in Samba AD DC RPC server.
+                  https://www.samba.org/samba/security/CVE-2021-3738.html
+
+o CVE-2021-23192: Subsequent DCE/RPC fragment injection vulnerability.
+                  https://www.samba.org/samba/security/CVE-2021-23192.html
+
+There's sadly a regression that "allow trusted domains = no" prevents winbindd
+from starting, we'll try to provide a follow up fix as soon as possible.
+
+Changes:
+--------------------
+
+o  Douglas Bagnall <douglas.bagnall@catalyst.net.nz>
+   * CVE-2020-25722
+
+o  Andrew Bartlett <abartlet@samba.org>
+   * CVE-2020-25718
+   * CVE-2020-25719
+   * CVE-2020-25721
+   * CVE-2020-25722
+
+o  Ralph Boehme <slow@samba.org>
+   * CVE-2020-25717
+
+o  Alexander Bokovoy <ab@samba.org>
+   * CVE-2020-25717
+
+o  Samuel Cabrero <scabrero@samba.org>
+   * CVE-2020-25717
+
+o  Nadezhda Ivanova <nivanova@symas.com>
+   * CVE-2020-25722
+
+o  Stefan Metzmacher <metze@samba.org>
+   * CVE-2016-2124
+   * CVE-2020-25717
+   * CVE-2020-25719
+   * CVE-2020-25722
+   * CVE-2021-23192
+   * CVE-2021-3738
+   * ldb release 2.3.2 (for Samba 4.14.10)
+   * ldb release 2.2.3 (for Samba 4.13.14)
+
+o  Andreas Schneider <asn@samba.org>
+   * CVE-2020-25719
+
+o  Joseph Sutton <josephsutton@catalyst.net.nz>
+   * CVE-2020-17049
+   * CVE-2020-25718
+   * CVE-2020-25719
+   * CVE-2020-25721
+   * CVE-2020-25722
+   * MS CVE-2020-17049
+
+
+#######################################
+Reporting bugs & Development Discussion
+#######################################
+
+Please discuss this release on the samba-technical mailing list or by
+joining the #samba-technical IRC channel on irc.libera.chat or the
+#samba-technical:matrix.org matrix channel.
+
+If you do report problems then please try to send high quality
+feedback. If you don't provide vital information to help us track down
+the problem then you will probably be ignored.  All bug reports should
+be filed under the Samba 4.1 and newer product in the project's Bugzilla
+database (https://bugzilla.samba.org/).
+
+
+======================================================================
+== Our Code, Our Bugs, Our Responsibility.
+== The Samba Team
+======================================================================
+
+
+
+================
+Download Details
+================
+
+The uncompressed tarballs and patch files have been signed
+using GnuPG (ID AA99442FB680B620).  The source code can be downloaded
+from:
+
+        https://download.samba.org/pub/samba/stable/
+
+The release notes are available online at:
+
+        https://www.samba.org/samba/history/samba-4.15.2.html
+        https://www.samba.org/samba/history/samba-4.14.10.html
+        https://www.samba.org/samba/history/samba-4.13.14.html
+
+Our Code, Our Bugs, Our Responsibility.
+(https://bugzilla.samba.org/)
+
+                        --Enjoy
+                        The Samba Team
+
+----- End forwarded message -----
