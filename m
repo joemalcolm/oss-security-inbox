@@ -1,55 +1,147 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/10/4
-Message-ID: <87cztznkrf.fsf@canonical.com>
-Date: Mon, 10 May 2021 16:22:20 +0930
-From: Alex Murray <alex.murray@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/10/3
+Message-ID: <20211110133202.GA4302@openwall.com>
+Date: Wed, 10 Nov 2021 14:32:02 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Nadav Markus <nmarkus@...oaltonetworks.com>, Or Cohen <orcohen@...oaltonetworks.com>, Salvatore Bonaccorso <carnil@...ian.org>
-Subject: Re: CVE-2021-23133: Linux kernel: race condition in sctp sockets
+Subject: Fwd: Samba 4.15.2, 4.14.10, 4.13.14 Security Releases are available for Download
 Content-Type: text/plain; charset=utf-8
 
+----- Forwarded message from Stefan Metzmacher <metze@...ba.org> -----
 
-On Mon, 2021-05-10 at 15:40:53 +0930, Salvatore Bonaccorso wrote:
+Date: Tue, 9 Nov 2021 19:26:03 +0100
+From: Stefan Metzmacher <metze@...ba.org>
+To: samba-announce@...ts.samba.org, samba@...ts.samba.org,
+	samba-technical@...ts.samba.org
+Subject: [Announce] Samba 4.15.2, 4.14.10, 4.13.14 Security Releases are
+ available for Download
 
-> Hi Alex,
->
-> On Mon, May 10, 2021 at 03:28:02PM +0930, Alex Murray wrote:
->> 
->> On Mon, 2021-05-10 at 13:54:43 +0930, Salvatore Bonaccorso wrote:
->> 
->> > Hi,
->> > 
->> > On Sun, Apr 18, 2021 at 11:41:06AM +0300, Or Cohen wrote:
->> > > Hello,
->> > > 
->> > > This is an announcement about CVE-2021-23133 which is a 
->> > > race-condition
->> > > I found in Linux kernel sctp sockets (net/sctp/socket.c). It can
->> > > lead to kernel
->> > > privilege escalation from the context of a network service or from
->> > > an unprivileged process if certain conditions are met.
->> > > 
->> > > The bug was fixed on April 13, 2021:
->> > > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b166a20b07382b8bc1dcee2a448715c9c2c81b5b
->> > 
->> > It looks that additionally
->> > https://git.kernel.org/linus/34e5b01186858b36c4d7c87e1a025071e8e2401f
->> > refer to CVE-2021-23133.
->> 
->> It seems b166a20b07382b8bc1dcee2a448715c9c2c81b5b got reverted in the
->> follow-up commit
->> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/net/sctp/socket.c?id=01bfe5e8e428b475982a98a46cca5755726f3f7f
->> and so 34e5b01186858b36c4d7c87e1a025071e8e2401f would appear to be the
->> most correct fix from what I can tell.
->
-> Ah right, I missed the revert of the original commit.
->
-> Thanks for pointing that to me.
+Release Announcements
+---------------------
 
-No worries - thanks for pointing out the new commit otherwise I wouldn't
-have gone investigating to find the revert ;)
+These are security releases in order to address the following defects:
 
->
-> Regards,
-> Salvatore
+o CVE-2016-2124:  SMB1 client connections can be downgraded to plaintext
+                  authentication.
+                  https://www.samba.org/samba/security/CVE-2016-2124.html
 
+o CVE-2020-25717: A user on the domain can become root on domain members.
+                  https://www.samba.org/samba/security/CVE-2020-25717.html
+                  (PLEASE READ! There are important behaviour changes described)
+
+o CVE-2020-25718: Samba AD DC did not correctly sandbox Kerberos tickets issued
+                  by an RODC.
+                  https://www.samba.org/samba/security/CVE-2020-25718.html
+
+o CVE-2020-25719: Samba AD DC did not always rely on the SID and PAC in Kerberos
+                  tickets.
+                  https://www.samba.org/samba/security/CVE-2020-25719.html
+
+o CVE-2020-25721: Kerberos acceptors need easy access to stable AD identifiers
+                  (eg objectSid).
+                  https://www.samba.org/samba/security/CVE-2020-25721.html
+
+o CVE-2020-25722: Samba AD DC did not do suffienct access and conformance
+                  checking of data stored.
+                  https://www.samba.org/samba/security/CVE-2020-25722.html
+
+o CVE-2021-3738:  Use after free in Samba AD DC RPC server.
+                  https://www.samba.org/samba/security/CVE-2021-3738.html
+
+o CVE-2021-23192: Subsequent DCE/RPC fragment injection vulnerability.
+                  https://www.samba.org/samba/security/CVE-2021-23192.html
+
+There's sadly a regression that "allow trusted domains = no" prevents winbindd
+from starting, we'll try to provide a follow up fix as soon as possible.
+
+Changes:
+--------------------
+
+o  Douglas Bagnall <douglas.bagnall@...alyst.net.nz>
+   * CVE-2020-25722
+
+o  Andrew Bartlett <abartlet@...ba.org>
+   * CVE-2020-25718
+   * CVE-2020-25719
+   * CVE-2020-25721
+   * CVE-2020-25722
+
+o  Ralph Boehme <slow@...ba.org>
+   * CVE-2020-25717
+
+o  Alexander Bokovoy <ab@...ba.org>
+   * CVE-2020-25717
+
+o  Samuel Cabrero <scabrero@...ba.org>
+   * CVE-2020-25717
+
+o  Nadezhda Ivanova <nivanova@...as.com>
+   * CVE-2020-25722
+
+o  Stefan Metzmacher <metze@...ba.org>
+   * CVE-2016-2124
+   * CVE-2020-25717
+   * CVE-2020-25719
+   * CVE-2020-25722
+   * CVE-2021-23192
+   * CVE-2021-3738
+   * ldb release 2.3.2 (for Samba 4.14.10)
+   * ldb release 2.2.3 (for Samba 4.13.14)
+
+o  Andreas Schneider <asn@...ba.org>
+   * CVE-2020-25719
+
+o  Joseph Sutton <josephsutton@...alyst.net.nz>
+   * CVE-2020-17049
+   * CVE-2020-25718
+   * CVE-2020-25719
+   * CVE-2020-25721
+   * CVE-2020-25722
+   * MS CVE-2020-17049
+
+
+#######################################
+Reporting bugs & Development Discussion
+#######################################
+
+Please discuss this release on the samba-technical mailing list or by
+joining the #samba-technical IRC channel on irc.libera.chat or the
+#samba-technical:matrix.org matrix channel.
+
+If you do report problems then please try to send high quality
+feedback. If you don't provide vital information to help us track down
+the problem then you will probably be ignored.  All bug reports should
+be filed under the Samba 4.1 and newer product in the project's Bugzilla
+database (https://bugzilla.samba.org/).
+
+
+======================================================================
+== Our Code, Our Bugs, Our Responsibility.
+== The Samba Team
+======================================================================
+
+
+
+================
+Download Details
+================
+
+The uncompressed tarballs and patch files have been signed
+using GnuPG (ID AA99442FB680B620).  The source code can be downloaded
+from:
+
+        https://download.samba.org/pub/samba/stable/
+
+The release notes are available online at:
+
+        https://www.samba.org/samba/history/samba-4.15.2.html
+        https://www.samba.org/samba/history/samba-4.14.10.html
+        https://www.samba.org/samba/history/samba-4.13.14.html
+
+Our Code, Our Bugs, Our Responsibility.
+(https://bugzilla.samba.org/)
+
+                        --Enjoy
+                        The Samba Team
+
+----- End forwarded message -----
