@@ -1,19 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/19/9
-Message-ID: <080e4f99-db4b-fe12-937f-a908f01f14dc@apache.org>
-Date: Fri, 19 Mar 2021 16:30:27 +0100
-From: Andreas Lehmkuehler <lehmi@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/11/1
+Message-ID: <72d28796-d98d-7476-0df3-2bcb59fd79c9@apache.org>
+Date: Thu, 11 Nov 2021 03:08:08 +0000
+From: Juan Pan <panjuan@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-27807: Apache PDFBox: A carefully crafted PDF file can trigger an infinite loop while loading the file
+Subject: CVE-2021-26558: Apache ShardingSphere-UI: Deserialization of Untrusted Data 
 Content-Type: text/plain; charset=utf-8
+
+Severity: low
 
 Description:
 
-A carefully crafted PDF file can trigger an infinite loop while loading the 
-file. This issue affects Apache PDFBox Apache PDFBox version 2.0.22 and prior 
-2.0.x versions.
+Deserialization of Untrusted Data vulnerability of Apache ShardingSphere-UI allows an attacker to inject outer link resources.  This issue affects Apache ShardingSphere-UI Apache ShardingSphere-UI version 4.1.1 and later versions; Apache ShardingSphere-UI versions prior to 5.0.0.
 
-Credit:
+Mitigation:
 
-Apache PDFBox would like to thank Fabian Meumertzheim for reporting this issue
+This issue is related to ShardingSphere-UI project. If you do not deploy UI project, it is not required to upgrade. Otherwise, the vulnerability issue of servers deployed UI project or version upgrade is supposed to consider.
 
