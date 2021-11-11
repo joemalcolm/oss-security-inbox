@@ -1,24 +1,13 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/01/2
-Message-ID: <1d9e46e1-2201-5fb9-b5dc-791ce8f7e461@apache.org>
-Date: Mon, 1 Mar 2021 11:15:46 +0000
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/11/4
+Message-ID: <CAKOHTSaJ5pR9vy6rHZ5BXFupHGqTBTByOao9pqKuWq2VEtKe_A@mail.gmail.com>
+Date: Thu, 11 Nov 2021 14:26:59 -0700
+From: Zach Hoffman <zrhoffman@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-25329: Apache Tomcat Incomplete fix for CVE-2020-9484
+Subject: Re: CVE-2021-43350: Apache Traffic Control: LDAP filter injection vulnerability in Traffic Ops
 Content-Type: text/plain; charset=utf-8
 
-The fix for CVE-2020-9484 was incomplete. When using Apache Tomcat 
-10.0.0-M1 to 10.0.0, 9.0.0.M1 to 9.0.41, 8.5.0 to 8.5.61 or 7.0.0. to 
-7.0.107 with a configuration edge case that was highly unlikely to be 
-used, the Tomcat instance was still vulnerable to CVE-2020-9494. Note 
-that both the previously published prerequisites for CVE-2020-9484 and 
-the previously published mitigations for CVE-2020-9484 also apply to 
-this issue.
+Mitigation:
 
-Credit:
-
-This issue was identified by Trung Pham of Viettel Cyber Security.
-
-References:
-
-https://lists.apache.org/thread.html/rfe62fbf9d4c314f166fe8c668e50e5d9dd882a99447f26f0367474bf%40%3Cannounce.tomcat.apache.org%3E
+6.0.x users should upgrade to 6.0.1.
+5.1.x users should upgrade to 5.1.4.
