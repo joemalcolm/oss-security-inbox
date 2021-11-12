@@ -1,32 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/12/3
-Message-ID: <20210512234414.GB1175@localhost.localdomain>
-Date: Wed, 12 May 2021 23:46:13 +0000
-From: Qualys Security Advisory <qsa@...lys.com>
-To: harris.johnson.x <harris.johnson.x@...tonmail.com>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: [CVE-2020-28018] Use-After-Free on Exim Question
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/12/1
+Message-Id: <8C08F56A-5199-491A-B7FB-1E0B9ACEB4FD@beckweb.net>
+Date: Fri, 12 Nov 2021 11:19:00 +0100
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-On Wed, May 12, 2021 at 02:46:31PM +0000, harris.johnson.x wrote:
-> R u guys using any specific technique to groom the heap / get the
-> chunk returned by store_get() on that struct?
+The following releases contain fixes for security vulnerabilities:
 
-We first send a large EHLO command to make sure that the next allocation
-will overwrite the freed struct gstring, and then we send the MAIL FROM
-command (with an AUTH parameter) to actually overwrite the freed struct
-gstring (with arbitrary characters).
+* Active Choices Plugin 2.5.7
+* Scriptler Plugin 3.4
 
-Hopefully this helps! With best regards,
+Additionally, we announce unresolved security issues in the following
+plugins:
 
---
-the Qualys Security Advisory team
+* OWASP Dependency-Check Plugin
+* Performance Plugin
+* pom2config Plugin
+* Squash TM Publisher (Squash4Jenkins) Plugin
+
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2021-11-12/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-2219 / CVE-2021-21699
+Active Choices Plugin 2.5.6 and earlier does not escape the parameter name
+of reactive parameters and dynamic reference parameters.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Job/Configure permission.
 
 
-[https://d1dejaj6dcqv24.cloudfront.net/asset/image/email-banner-384-2x.png]<https://www.qualys.com/email-banner>
+SECURITY-2406 / CVE-2021-21700
+Scriptler Plugin 3.3 and earlier does not escape the name of scripts on the
+UI when asking to confirm their deletion.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to create Scriptler scripts.
 
 
+SECURITY-2394 / CVE-2021-21701
+Performance Plugin 3.20 and earlier does not configure its XML parser to
+prevent XML external entity (XXE) attacks.
 
-This message may contain confidential and privileged information. If it has been sent to you in error, please reply to advise the sender of the error and then immediately delete it. If you are not the intended recipient, do not read, copy, disclose or otherwise use this message. The sender disclaims any liability for such unauthorized use. NOTE that all incoming emails sent to Qualys email accounts will be archived and may be scanned by us and/or by external service providers to detect and prevent threats to our systems, investigate illegal or inappropriate behavior, and/or eliminate unsolicited promotional emails (“spam”). If you have any concerns about this process, please contact us.
+This allows attackers able to control workspace contents to have Jenkins
+parse a crafted XML report file that uses external entities for extraction
+of secrets from the Jenkins controller or server-side request forgery.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2415 / CVE-2021-43576
+pom2config Plugin 1.2 and earlier does not configure its XML parser to
+prevent XML external entity (XXE) attacks.
+
+This allows attackers with Overall/Read and Item/Read permissions to have
+Jenkins parse a crafted XML file that uses external entities for extraction
+of secrets from the Jenkins controller or server-side request forgery.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2488 / CVE-2021-43577
+OWASP Dependency-Check Plugin 5.1.1 and earlier does not configure its XML
+parser to prevent XML external entity (XXE) attacks.
+
+This allows attackers able to control workspace contents to have Jenkins
+parse a crafted XML file that uses external entities for extraction of
+secrets from the Jenkins controller or server-side request forgery.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2525 / CVE-2021-43578
+Squash TM Publisher (Squash4Jenkins) Plugin 1.0.0 and earlier implements an
+agent-to-controller message that does not implement any validation of its
+input.
+
+This allows attackers able to control agent processes to replace arbitrary
+files on the Jenkins controller file system with an attacker-controlled
+JSON string.
+
+As of publication of this advisory, there is no fix.
+
