@@ -1,57 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/09/7
-Message-ID: <rvuj8p$n59$1@ciao.gmane.io>
-Date: Tue, 9 Feb 2021 18:11:37 -0000 (UTC)
-From: Tavis Ormandy <taviso@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/15/1
+Message-ID: <CAHvrgmzXNe+pEZAEW6FDwFuM1oGrnu5Y1iOABUQPEXNrmxy35A@mail.gmail.com>
+Date: Mon, 15 Nov 2021 18:01:27 +0100
+From: Vardan Torosyan <vardan.torosyan@...fana.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: screen crash processing combining characters
+Subject: Grafana 8.2.4 released with security fixes
 Content-Type: text/plain; charset=utf-8
 
-On 2021-02-09, Harry Sintonen wrote:
-> On Tue, 9 Feb 2021, Tavis Ormandy wrote:
->
->> Hello, I noticed someone posted this to the screen-devel list. I can
->> reproduce it here, just catting the testcase does crash my screen
->> session.
->>
->> https://lists.gnu.org/archive/html/screen-devel/2021-02/msg00000.html
->
-> I managed to reproduce this against screen + irssi. It was a bit tricky to 
-> get it triggered but eventually screen did die.
->
+Dear all,
 
-welp, I minimized it a bit and it crashed xterm too.
+We have released Grafana 8.2.4 with security fixes This patch release
+includes security fixes that affect Grafana versions 8.0.0 through 8.2.3.
 
-I minimized it to 772 characters:
+The vulnerability only affects Grafana instances where fine-grained access
+control beta is enabled, and there is more than one organization in the
+Grafana instance. Grafana Cloud instances have not been affected by the
+vulnerability.
 
-$ wc -m input.txt
-772 input.txt
+*Incorrect Access Control (CVE-2021-41244)*
 
-Here is the minimized version (gzipped and base64 encoded to avoid
-crashing anything anybody's mail client).
+On Nov. 2, during an internal security audit, we discovered that when the
+fine-grained access control beta feature is enabled and there is more than
+one organization in the Grafana instance, Grafana 8.0 introduced a
+mechanism which allowed users with the Organization Admin role to list,
+add, remove, and update users’ roles in other organizations in which they
+are not an admin.
 
-$ gzip -9c < input.txt | base64
-H4sIAD7OImACA02W61IiQQyFX10WpkdZF5QFF4TVWbkoKpcZVuQyMM/iD99DTPM1p4qiTp1O0klO
-OvDp3Mf3p/gsio+4ZqB9+D4ybm+gJ8y7gesTEyffwG2EiQ3ci9fGwOLERAsDffGaGYiFiQx0JE6O
-TZk4SwOZePmjW/F6MZAK4yO/ideVAani2JZ/wpwZOBMvqyIuhHkyUDkyriRHXUDJjoLXOyASY+v8
-3gnTImf0igriwBzb8io5Nw2MyWcoR3PA1EBZ1EkN5GJsKhdbYTpoGm7/YeBScm7S1T1MRg8HeFWs
-UumhuwDcAcJkmtyuivEf8fLzox0b0I2EozLqbC3OCuMZ/dnB1CVyDHglsu/Pi9wVUu1RYELkcORn
-Yy2Rn+3S/8JcERB1Ij/zN3LXFr3GMI8GErE5N9CE2RD5r9j4V6m3twBv2Pj3VZPZ2DO0QfcbA12J
-7BW8E8bvjQl9Hsilv7CZACygzacxD4CUQRqJe8MAUrowCQdQZyA98yz5FGySDu5N5jDU1ebtRHhV
-AHVsJlyxgumicninGVO3wX3MZI643XdM1oVL2S1hP484eiB53425ePWR2yHTBCY8qyXTkhI5533l
-yH3BFvXlhL0RhOtjc9iQJfLJ2VGMsTfe70SdMOENbPz0NkQd/4iepC5qjzsw57Qu6JWRD5XGbZIP
-PRwaCAukTM6J5LxArwSmxLYJHXN0w/GIlhj/BqzYkFu8PDOVugYoWGPBZjTzDuAv/SlvOeLSUPsQ
-Y0bUrQ084tU7lRORz3GBzFlxGe4t8WInxGu8qsw8izGuMhJlNm1KOSHDW+6ih+7SwFK6ERK7ZoEs
-sLE4Lvw92InXPerk5DNlfixDJz8K0ZxGxSg484P6Be3RyjwMCQAA
+Affected versions with high severity
 
-To reproduce in XTerm, decode the file then try to select the line.
+Grafana 8.0 to 8.2.3
 
-I'll send a report to Thomas Dickey.
 
-Tavis.
+*Solutions and mitigations*
+All installations between v8.0 and v8.2.3 that have fine-grained access
+control beta enabled and more than one organization should be upgraded as
+soon as possible. If you cannot upgrade, you should turn off the
+fine-grained access control using a feature flag.
 
--- 
- _o)            $ lynx lock.cmpxchg8b.com
- /\\  _o)  _o)  $ finger taviso@....org
-_\_V _( ) _( )  @taviso
+
+*Patched versions*
+Release v8.2.4, only containing a security fix:
+
+* Download Grafana 8.2.4 - https://grafana.com/grafana/download/8.2.4
+* Release notes -
+https://grafana.com/docs/grafana/latest/release-notes/release-notes-8-2-4/
+
+Further information can be found at
+https://grafana.com/blog/2021/11/15/grafana-8.2.4-released-with-security-fixes/
+
+Best Regards,
+Vardan Torosyan
 
