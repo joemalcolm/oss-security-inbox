@@ -1,45 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/17/4
-Message-ID: <20210517183627.GA31237@huumeet.info>
-Date: Mon, 17 May 2021 21:36:27 +0300
-From: def <def@...meet.info>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/16/1
+Message-ID: <f9c3cbc8-1da9-3903-2e59-bb0e88f2ded5@apache.org>
+Date: Tue, 16 Nov 2021 05:14:11 +0000
+From: Liang Liu <midnight2104@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: rxvt terminal (+bash) remoteish code execution 0day
+Subject: CVE-2021-37580: Apache ShenYu Admin bypass JWT authentication 
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 17, 2021 at 05:30:48PM +0000, Priedhorsky, Reid wrote:
-> Hello,
-> 
-> Thanks for the bug report. However —
-> 
-> > On May 17, 2021, at 7:49 AM, def <def@...meet.info> wrote:
-> > 
-> > # However, rxvt responds to the query with a newline-terminated message, which
-> > # is retarded and exposes goatse-wide gaping security holes in many popular CLI
-> 
-> Can we please report bugs in a professional manner, including without
-> insults of any kind, let alone insults containing slurs and sexual
-> metaphors.
-> 
-> IMO such reporting standards should be added to the list content guidelines.
-> 
-> Thanks,
-> Reid
+Description:
 
-I'd have preferred to shitpost @ full-disclosure but their moderation
-process is too slow nowadays (last update May 13). Hopefully it improves
-in the future.
+A flaw was found in Apache ShenYu Admin. The incorrect use of JWT in ShenyuAdminBootstrap allows an attacker to bypass authentication.  This issue affected Apache ShenYu 2.3.0 and 2.4.0
 
-> Can we please report bugs in a professional manner
+Credit:
 
-    Because if you want me to "act professional", I can tell you that I'm
-    not interested. I'm sitting in my home office wearing a bathrobe. The
-    same way I'm not going to start wearing ties, I'm *also* not going to
-    buy into the fake politeness, the lying, the office politics and
-    backstabbing, the passive aggressiveness, and the buzzwords. Because
-    THAT is what "acting professionally" results in: people resort to all
-    kinds of really nasty things because they are forced to act out their
-    normal urges in unnatural ways.        - Torvalds, Linus (2013-07-15)
+This issue was reported by 伍 雄
 
-Professionally,
-- def
