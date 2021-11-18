@@ -1,53 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/16/2
-Message-ID: <YFAXlFS+y63uKlto@fullerene.field.pennock-tech.net>
-Date: Mon, 15 Mar 2021 22:27:32 -0400
-From: Phil Pennock <oss-security-phil@...dhuis.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/19/7
+Message-ID: <6b49338a-7118-f9d8-58a0-99ab5fdcdefa@apache.org>
+Date: Thu, 18 Nov 2021 23:07:24 +0000
+From: Siddharth Wagle <swagle@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: Phil Pennock <pdp@...adia.com>
-Subject: [CVE-2020-28466][CVE-2021-3127] NATS.io vulnerabilities
+Subject: CVE-2021-39236: Apache Ozone: Owners of the S3 tokens are not validated 
 Content-Type: text/plain; charset=utf-8
 
-[moderators: my apologies for the initial unsigned message, please
- discard that one and permit this one]
+Description:
 
-Folks,
+Authenticated users with valid Ozone S3 credentials can create specific OM requests, impersonating any other user. 
 
-Two new CVEs for the NATS project for issues fixed with the
-2.2.0 release.  The full text of the advisories should be attached.
-These, and other advisories, can be found at
-<https://advisories.nats.io/>.
+This issue is being tracked as HDDS-4763
 
- * CVE-2020-28466
-   + import loops between accounts, expressed in the account JWT, could
-     DoS the server
-   + this was fixed in public git some time ago without initially
-     thinking of the security impact, this was the first
-     release since then
-   + realistically, the current situation is that if you have untrusted
-     third parties with control over their account JWTs, then while
-     we'll hurry security releases for severe flaws (compromise,
-     disclosure), for DoS protection folks need to follow closer to git
-     mainline
+Mitigation:
 
- * CVE-2021-3127
-   + this one is far more serious: information disclosure between
-     accounts
-   + something which should have been an error was a disregarded
-     warning, letting people reuse binding tokens to bypass access
-     controls on data exports from an account because the binding was
-     not enforced
-   + the bug is in the JWT library, the current NATS server has the fix
-     in as as a dependency; the advisory includes a Python script which
-     can be pointed at your account server's account pack URL, or a pack
-     on local disk, to audit all the accounts to find instances of
-     someone exploiting this
+Upgrade to Apache Ozone release version 1.2.0
 
-Regards,
--Phil Pennock
+Credit:
 
-View attachment "CVE-2020-28466.txt" of type "text/plain" (1969 bytes)
+Apache Ozone would like to thank Marton Elek for reporting this issue.
 
-View attachment "CVE-2021-3127.txt" of type "text/plain" (7627 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
