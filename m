@@ -1,15 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/09/29/1
-Message-ID: <e52e8004-ef2f-bd45-a994-81f076002ae7@apache.org>
-Date: Wed, 29 Sep 2021 14:53:20 +0000
-From: Bryan Pendleton <bpendleton@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/19/1
+Message-ID: <77cee0ac-a53d-6de5-23fe-f6a928e4efc7@apache.org>
+Date: Thu, 18 Nov 2021 23:03:45 +0000
+From: Siddharth Wagle <swagle@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-41616: Apache ddlutils 1.0 readobject vulnerability 
+Subject: CVE-2021-36372: Apache Ozone: Original block tokens are persisted and can be retrieved 
 Content-Type: text/plain; charset=utf-8
 
 Description:
 
-Apache DB DdlUtils 1.0 included a BinaryObjectsHelper that was intended for use when migrating database data with a SQL data type of BINARY, VARBINARY, LONGVARBINARY, or BLOB between databases using the ddlutils features. The BinaryObjectsHelper  class was insecure and used ObjectInputStream.readObject without validating that the input data was safe to deserialize.
+Initially generated block tokens are persisted to the metadata database and can be retrieved with authenticated users with permission to the key. Authenticated users may use them even after access is revoked. 
 
-Please note that DdlUtils is no longer being actively developed. To address the insecurity of the BinaryObjectHelper class, the following changes to DdlUtils have been made: (1) BinaryObjectsHelper.java has been deleted from the DdlUtils source repository and the DdlUtils feature of propagating data of SQL binary types is therefore no longer present in DdlUtils; (2) The ddlutils-1.0 release has been removed from the Apache Release Distribution Infrastructure; (3) The DdlUtils web site has been updated to indicate that DdlUtils is now available only as source code, not as a packaged release.
+This issue is being tracked as HDDS-5315
+
+Mitigation:
+
+Upgrade to Apache Ozone release version 1.2.0
+
+Credit:
+
+Apache Ozone would like to thank Marton Elek for reporting this issue.
 
