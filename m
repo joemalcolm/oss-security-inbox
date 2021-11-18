@@ -1,27 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/17/3
-Message-ID: <E4A97F5B-5187-411A-9122-B9C3EE047171@lanl.gov>
-Date: Mon, 17 May 2021 17:30:48 +0000
-From: "Priedhorsky, Reid" <reidpr@...l.gov>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: rxvt terminal (+bash) remoteish code execution 0day
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/19/4
+Message-ID: <c75fc85e-1072-99b1-83ad-20da58aebf23@apache.org>
+Date: Thu, 18 Nov 2021 23:06:09 +0000
+From: Siddharth Wagle <swagle@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-39233: Apache Ozone: Container-related datanode operations can be called without authorization 
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Description:
 
-Thanks for the bug report. However —
+Container related Datanode requests of Ozone Datanode were not properly authorized and can be called by any client. 
 
-> On May 17, 2021, at 7:49 AM, def <def@...meet.info> wrote:
-> 
-> # However, rxvt responds to the query with a newline-terminated message, which
-> # is retarded and exposes goatse-wide gaping security holes in many popular CLI
+This issue is being tracked as HDDS-4729,HDDS-5236
 
-Can we please report bugs in a professional manner, including without insults of any kind, let alone insults containing slurs and sexual metaphors.
+Mitigation:
 
-IMO such reporting standards should be added to the list content guidelines.
+Upgrade to Apache Ozone release version 1.2.0
 
-Thanks,
-Reid
+Credit:
 
-—
-he/his
+Apache Ozone would like to thank Marton Elek for reporting this issue.
+
