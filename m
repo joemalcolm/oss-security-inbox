@@ -1,40 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/07/10
-Message-ID: <Pine.BSM.4.64L.2108071847450.4154@herc.mirbsd.org>
-Date: Sat, 7 Aug 2021 18:49:57 +0000 (UTC)
-From: Thorsten Glaser <tg@...bsd.de>
-To: Ariadne Conill <ariadne@...eferenced.org>
-cc: oss-security@...ts.openwall.com, Axel Beckert <abe@...ian.org>, lynx-dev@...gnu.org, security@...ian.org, 991971@...s.debian.org
-Subject: Re: [Lynx-dev] Re: bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/19/5
+Message-ID: <6114c6b2-91b8-3040-e765-c56edcb2be02@apache.org>
+Date: Thu, 18 Nov 2021 23:06:29 +0000
+From: Siddharth Wagle <swagle@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-39234: Apache Ozone: Raw block data can be read bypassing ACL/authorization 
 Content-Type: text/plain; charset=utf-8
 
-Ariadne Conill dixit:
+Description:
 
-> It turns out SNI is only marginally related to this issue.  The issue
-> itself is far more severe: HTParse() does not understand the authn
-> part of the URI at all.
+Authenticated users knowing the ID of an existing block can craft specific request allowing access those blocks, bypassing other security checks like ACL. 
 
-Yes, of course. But without SNI, nothing would have been sent *in
-plaintext* at all. The certificate validation fails¹, the connection
-stops and the user is asked whether to continue.
+This issue is being tracked as HDDS-5061
 
-① Tested on an OS without SNI in its libssl.
+Mitigation:
 
-> As a workaround, I taught HTParse() how to parse the authn part of URIs, but
-> Lynx itself needs to actually properly support the authn part really.
->
-> I have attached the patch Alpine is using to work around this infoleak.
+Upgrade to Apache Ozone release version 1.2.0
 
-Thanks!
+Credit:
 
-I recall having to work manually to strip the port from the hostname
-for SSL certificate validation, ages ago, but I had not tested with
-HTTP Auth sites back then.
+Apache Ozone would like to thank Marton Elek for reporting this issue.
 
-bye,
-//mirabilos
--- 
-Gestern Nacht ist mein IRC-Netzwerk explodiert. Ich hatte nicht damit
-gerechnet, darum bin ich blutverschmiert… wer konnte ahnen, daß SIE so
-reagier’n… gestern Nacht ist mein IRC-Netzwerk explodiert~~~
-	(as of 2021-06-15 The MirOS Project temporarily reconvenes on OFTC)
