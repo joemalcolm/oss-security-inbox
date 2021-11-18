@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1614" "Saturday" "5" "September" "2015" "12:11:54" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150905161154.82E526C009F@smtpvmsrv1.mitre.org>" "42" "[oss-security] Re: CVE Request Qemu: net: e1000 infinite loop issue" nil nil nil "9" "2015090516:11:54" "[oss-security] Re: CVE Request Qemu: net: e1000 infinite loop issue" (number mark "        cve-assign@m Sep  5   42/1614  " thread-indent "\"[oss-security] Re: CVE Request Qemu: net: e1000 infinite loop issue\"\n") "<alpine.LFD.2.20.1509050128380.647@wniryva>" ("<alpine.LFD.2.20.1509050128380.647@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["370" "Thursday" "18" "November" "2021" "23:07:46" "+0000" "Siddharth Wagle" "swagle@apache.org" nil "17" "[oss-security] CVE-2021-41532: Apache Ozone: Unauthenticated access to Ozone Recon HTTP endpoints " nil nil nil "11" nil nil (number mark "U       swagle@apach Nov 18   17/370   " thread-indent "\"[oss-security] CVE-2021-41532: Apache Ozone: Unauthenticated access to Ozone Recon HTTP endpoints \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-41532: Apache Ozone: Unauthenticated access to Ozone Recon HTTP endpoints " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13950 invoked by uid 550); 5 Sep 2015 16:12:07 -0000
+Received: (qmail 29754 invoked by uid 550); 19 Nov 2021 10:57:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,55 +11,32 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13929 invoked from network); 5 Sep 2015 16:12:06 -0000
-In-Reply-To: <alpine.LFD.2.20.1509050128380.647@wniryva>
-Message-Id: <20150905161154.82E526C009F@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, luodalongde@gmail.com
-Date: Sat,  5 Sep 2015 12:11:54 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request Qemu: net: e1000 infinite loop issue
-To: ppandit@redhat.com
+Received: (qmail 11667 invoked from network); 18 Nov 2021 23:07:59 -0000
+Content-Type: text/plain; charset=utf-8
+From: Siddharth Wagle <swagle@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <970d2d31-fd5a-b089-03b9-d6685722ab14@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 18 Nov 2021 23:07:46 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2021-41532: Apache Ozone: Unauthenticated access to Ozone
+ Recon HTTP endpoints 
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: moderate
 
-> Qemu emulator built with the e1000 NIC emulation support is vulnerable to an
-> infinite loop issue. It could occur while processing transmit descriptor data
-> when sending a network packet.
-> 
-> A privileged user inside guest could use this flaw to crash the Qemu instance
-> resulting in DoS.
+Description:
 
-> https://lists.gnu.org/archive/html/qemu-devel/2015-09/msg01199.html
-> 
-> [The guest can force 'bytes' to 0 by setting the hdr_len and mss
-> descriptor fields to 0.
+Recon HTTP endpoints provide access to OM, SCM and Datanode metadata. Due t=
+o a bug, any unauthenticated user can access the data from these endpoints.
 
-Use CVE-2015-6815.
+This issue is being tracked as HDDS-5691
 
-(not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/net/e1000.c)
+Mitigation:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Upgrade to Apache Ozone release version 1.2.0
 
-iQIcBAEBCAAGBQJV6xP0AAoJEL54rhJi8gl5ZzIP/1DtazmDcZVyDAR0BysUdj4E
-/9Jp/RYt5iKmJ7AkYNQQDZs2C6HZ4uOQ7rVcU9zVk+9Z5WmECZ8lwrD/d1FSN6kI
-ZhpbyfkKxlFmMldKMRdYi+I/WUXYfLGiE99KiB0OaSMlH8DzWJmNDlnEAc250enO
-AQkMs7S5qLlZ0nGn0wFNIsw0mgLMNu+L62zvZ37FhISJrMdjgToNFkKMs6AjVgvB
-AsgoCsjO3V9Pxtu8RQ61iX4C33FbQv5DbYv6M+0IBffkpEb8j8nzeYwGBUFIdAfM
-+TEGMUqY5rMLRArvf+Dern5M9RuK/NUl/xtpyy1HpQJl00JAmo8xRd2H7tjQlV9y
-tWB1zhSKU6Ilr0YRPv6ZQ0I7nBoB0BiaslpObVSyKckmxOGPb6FB0UXgF/fuUBKQ
-AIOsKLdxmqqpNIwlL9jwNOURMNVlEelJqkwfoXJRk2ri8AXuJsoDQgodhTv59lBK
-HDWw2+jP12PwDDpvxHbPR1HmyeRVJBuXty73AXHki1gCtjdBYLyX6zoEMiFo56Gp
-mwmTK9IyavHxeLpkCop8XRVsKiI2JvLucXW2Epjw2DbkoaKVDyJUP7IGJAgHQdD6
-nQcT4rm37YvPG1Zgbo5Hvvtr1qe7WlLqujTFduSVqC5LCo/3JzoqKFakjII0zhzz
-Za83YKAaEH3eFasIiUrO
-=8f0T
------END PGP SIGNATURE-----
+Credit:
+
+Apache Ozone would like to thank Ethan Rose for reporting this issue.
+
