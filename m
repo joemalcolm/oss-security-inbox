@@ -1,95 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/06/1
-Message-ID: <30ef71a2-8d53-f39d-1ba0-3faa6939d136@gmail.com>
-Date: Thu, 6 May 2021 09:50:26 +0200
-From: Mariusz Felisiak <felisiak.mariusz@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/19/6
+Message-ID: <726aa037-5b9d-2dfa-4256-79f53c659b5f@apache.org>
+Date: Thu, 18 Nov 2021 23:07:01 +0000
+From: Siddharth Wagle <swagle@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Django: CVE-2021-32052: Header injection possibility since URLValidator accepted newlines in input on Python 3.9.5+
+Subject: CVE-2021-39235: Apache Ozone: Access mode of block tokens are not enforced 
 Content-Type: text/plain; charset=utf-8
 
-https://www.djangoproject.com/weblog/2021/may/06/security-releases/
+Description:
 
-In accordance with `our security release policy
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
-Django team
-is issuing
-`Django 3.2.2 <https://docs.djangoproject.com/en/dev/releases/3.2.2/>`_,
-`Django 3.1.10 
-<https://docs.djangoproject.com/en/dev/releases/3.1.10/>`_, and
-`Django 2.2.22 <https://docs.djangoproject.com/en/dev/releases/2.2.22/>`_.
-These releases address the security issue with severity "moderate" 
-detailed below. We encourage all users of Django to upgrade as soon as 
-possible.
+Ozone Datanode doesn't check the access mode parameter of the block token. Authenticated users with valid READ block token can do any write operation on the same block. 
 
-CVE-2021-32052: Header injection possibility since ``URLValidator`` 
-accepted newlines in input on Python 3.9.5+
-===============================================================================================================
+This issue is being tracked as HDDS-4558,HDDS-4644
 
-On Python 3.9.5+, ``URLValidator`` didn't prohibit
-newlines and tabs. If you used values with newlines in HTTP response, 
-you could
-suffer from header injection attacks. Django itself wasn't vulnerable 
-because
-``HttpResponse`` prohibits newlines in HTTP headers.
+Mitigation:
 
-Moreover, the ``URLField`` form field which uses ``URLValidator`` silently
-removes newlines and tabs on Python 3.9.5+, so the possibility of newlines
-entering your data only existed if you are using this validator outside 
-of the
-form fields.
+Upgrade to Apache Ozone release version 1.2.0
 
-This issue was introduced by the `bpo-43882 
-<https://bugs.python.org/issue43882>`_ fix.
+Credit:
 
-Affected supported versions
-===========================
-
-* Django main branch
-* Django 3.2
-* Django 3.1
-* Django 2.2
-
-Resolution
-==========
-
-Patches to resolve the issue have been applied to Django's main branch 
-and to
-the 3.2, 3.1, and 2.2 release branches. The patches may be obtained from the
-following changesets:
-
-* On the `main branch 
-<https://github.com/django/django/commit/e1e81aa1c4427411e3c68facdd761229ffea6f6f>`__
-* On the `3.2 release branch 
-<https://github.com/django/django/commit/2d2c1d0c97832860fbd6597977e2aae17dd7e5b2>`__
-* On the `3.1 release branch 
-<https://github.com/django/django/commit/afb23f5929944a407e4990edef1c7806a94c9879>`__
-* On the `2.2 release branch 
-<https://github.com/django/django/commit/d9594c4ea57b6309d93879805302cec9ae9f23ff>`__
-
-The following releases have been issued:
-
-* Django 3.2.2 (`download Django 3.2.2 
-<https://www.djangoproject.com/m/releases/3.2/Django-3.2.2.tar.gz>`_ | 
-`3.2.2 checksums 
-<https://www.djangoproject.com/m/pgp/Django-3.2.2.checksum.txt>`_)
-* Django 3.1.10 (`download Django 3.1.10 
-<https://www.djangoproject.com/m/releases/3.1/Django-3.1.10.tar.gz>`_ | 
-`3.1.10 checksums 
-<https://www.djangoproject.com/m/pgp/Django-3.1.10.checksum.txt>`_)
-* Django 2.2.22 (`download Django 2.2.22 
-<https://www.djangoproject.com/m/releases/2.2/Django-2.2.22.tar.gz>`_ | 
-`2.2.22 checksums 
-<https://www.djangoproject.com/m/pgp/Django-2.2.22.checksum.txt>`_)
-
-The PGP key ID used for this release is Mariusz Felisiak: 
-`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
-
-General notes regarding security reporting
-==========================================
-
-As always, we ask that potential security issues be reported via
-private email to ``security@...ngoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
+Apache Ozone would like to thank Marton Elek for reporting this issue.
 
