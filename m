@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2849" "Monday" "29" "June" "2015" "11:33:44" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150629153344.89A5A72E070@smtpvbsrv1.mitre.org>" "70" "[oss-security] Re: Courier mail server: Write heap overflow in mailbot tool and out of bounds heap read in imap folder parser" nil nil nil "6" "2015062915:33:44" "[oss-security] Re: Courier mail server: Write heap overflow in mailbot tool and out of bounds heap read in imap folder parser" (number mark "        cve-assign@m Jun 29   70/2849  " thread-indent "\"[oss-security] Re: Courier mail server: Write heap overflow in mailbot tool and out of bounds heap read in imap folder parser\"\n") "<20150629112404.5a51f079@pc1>" ("<20150629112404.5a51f079@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["312" "Thursday" "18" "November" "2021" "23:04:45" "+0000" "Siddharth Wagle" "swagle@apache.org" nil "16" "[oss-security] CVE-2021-39232: Apache Ozone: Missing admin check for SCM related admin commands " nil nil nil "11" nil nil (number mark "U       swagle@apach Nov 18   16/312   " thread-indent "\"[oss-security] CVE-2021-39232: Apache Ozone: Missing admin check for SCM related admin commands \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-39232: Apache Ozone: Missing admin check for SCM related admin commands " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32683 invoked by uid 550); 29 Jun 2015 15:34:03 -0000
+Received: (qmail 26342 invoked by uid 550); 19 Nov 2021 10:56:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,83 +11,31 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32620 invoked from network); 29 Jun 2015 15:33:57 -0000
-In-Reply-To: <20150629112404.5a51f079@pc1>
-Message-Id: <20150629153344.89A5A72E070@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Mon, 29 Jun 2015 11:33:44 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Courier mail server: Write heap overflow in mailbot tool and out of bounds heap read in imap folder parser
-To: hanno@hboeck.de
+Received: (qmail 10170 invoked from network); 18 Nov 2021 23:04:59 -0000
+Content-Type: text/plain; charset=utf-8
+From: Siddharth Wagle <swagle@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <f8bd21d5-0fd8-d02d-f4c9-b54deff5a097@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 18 Nov 2021 23:04:45 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2021-39232: Apache Ozone: Missing admin check for SCM related
+ admin commands 
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Description:
 
-> The allocation only reserves one byte
-> for the zero termination, however it must be the size of the pointer (8
-> bytes on 64 bit systems). Therefore it causes a write heap overflow of
-> seven zero bytes.
+Certain admin related SCM commands can be executed by any authenticated use=
+rs, not just by admins.=20
 
-Is this relevant:
+This issue is being tracked as HDDS-4530
 
-  http://googleprojectzero.blogspot.com/2014/08/the-poisoned-nul-byte-2014-edition.html
-  "An odd malloc() size will always result in an off-by-one off the
-  end being harmless, due to malloc() minimum alignment being
-  sizeof(void*)."
+Mitigation:
 
-?
+Upgrade to Apache Ozone release version 1.2.0
 
-If there's a malloc implementation that relies on the values of these
-seven bytes, then the issue can have a CVE ID.
+Credit:
 
-Also, here's a general (but, in this case, probably unimportant)
-comment about whether command-line arguments (for a non-setuid
-program) are relevant to CVE inclusion:
+    Apache Ozone would like to thank Wei-Chiu Chuang for reporting this iss=
+ue.
 
-> The code parses command line data, therefore it is
-> unlikely that any attacker controlled input is affected.
-
-maildrop/testsuite.in gives this example:
-
-  LANG=en_US.utf-8 ./mailbot -T feedback -R abuse -n -N -m testmailbot.msg \
-      --feedback-source-ip 127.0.0.1 \
-      --feedback-incidents 2 \
-
-However, this type of command line isn't necessarily under the control
-of a local user. The purpose of mailbot is to send automatic responses
-to e-mail. It seems plausible that the command line would be
-dynamically constructed based on information available from an MTA,
-e.g., maybe mailbot is called from a .qmail file with something like:
-
-  mailbot -T feedback -R abuse -n -N -m testmailbot.msg \
-      --feedback-original-mail-from $QUOTEDSENDER
-
-where $QUOTEDSENDER is derived from the SENDER environment variable
-supplied by qmail-local, and the value of SENDER can be set
-arbitrarily by a remote SMTP client.
-
-In the current case, it appears that this would not be especially
-helpful to exploitation. It looks like the replyfeedback function
-would copy the string "original-mail-from" to the heap but would not
-copy the sender e-mail address to the heap. However, part of the SMTP
-DATA is copied to the heap. Thus, an attacker interested in
-controlling heap-memory contents would probably rely on DATA, not an
-envelope address that could possibly affect a command line.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVkWSDAAoJEKllVAevmvmsAWUH/11sOu9V+jwp0nNZnaJysMHy
-xKgBEvQCCUEaIGSIaSH+XNCEzg9R/liwBSwAM8cq+cjto0VmeLjK247AWIau96GK
-CxRoA+ukbgTrkGZKYjnPpbAXoQfDTRnK6xMfZUK8f/N8ekDY3a0vcT5vgvX3Da3a
-gA3JgUZR86S66LKFt+wzWYoGSoMlAVxmqB8+XlBwjXa6Kk+k0gQK7FfuRtSs+D2o
-sqR5LKgG2ZspaZJP5g/t5M56z1guBrhALdzm8PouObUEOTsyeELVIRBTO5a/is5l
-/Gydj2BPkFf6XPa7Vl9NEo0+3xpUFI2qgf63JBT6VOpymS2fVNCvQ259/DSFngw=
-=AJxg
------END PGP SIGNATURE-----
