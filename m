@@ -1,76 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/15/2
-Message-ID: <YCpgGeIbiOk30GBf@f195.suse.de>
-Date: Mon, 15 Feb 2021 12:50:49 +0100
-From: Matthias Gerstner <mgerstner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-26720: avahi-daemon: 'avahi' to 'root' user privilege escalation through Debian specific if-up script avahi-daemon-check-dns.sh
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/19/9
+Message-Id: <E1mo4bO-0006a8-Pf@xenbits.xenproject.org>
+Date: Fri, 19 Nov 2021 14:10:54 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 390 v1 (CVE-2021-28710) - certain VT-d IOMMUs may not work in shared page table mode
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-the avahi-daemon package [1] in Debian Linux contains a Debian specific
-script installed in
+            Xen Security Advisory CVE-2021-28710 / XSA-390
 
-    /usr/lib/avahi/avahi-daemon-check-dns.sh
+      certain VT-d IOMMUs may not work in shared page table mode
 
-This script is run as 'root' via the if-up.d script in
+ISSUE DESCRIPTION
+=================
 
-    /etc/network/if-up.d/avahi-daemon
+For efficiency reasons, address translation control structures (page
+tables) may (and, on suitable hardware, by default will) be shared
+between CPUs, for second-level translation (EPT), and IOMMUs.  These
+page tables are presently set up to always be 4 levels deep.  However,
+an IOMMU may require the use of just 3 page table levels.  In such a
+configuration the lop level table needs to be stripped before
+inserting the root table's address into the hardware pagetable base
+register.  When sharing page tables, Xen erroneously skipped this
+stripping.  Consequently, the guest is able to write to leaf page
+table entries.
 
-There are security issues in the code of the main shell script in this
-context. The $RUNDIR "/run/avahi-daemon" is owned by the unprivileged
-avahi:avahi user/group. This fact is also enforced in the script via its
-`ensure_rundir()` function.
+IMPACT
+======
 
-In line 136
+A malicious guest may be able to escalate its privileges to that of
+the host.
 
-    `touch ${DISABLE_TAG}`
+VULNERABLE SYSTEMS
+==================
 
-symlinks are followed in "/run/avahi-daemon/disabled-for-unicast-local".
-Thus the unprivileged 'avahi' user can trigger an arbitrary file to be
-created or an arbitrary file's timestamp updated when this script runs.
+Xen version 4.15 is vulnerable.  Xen versions 4.14 and earlier are not
+vulnerable.
 
-Similarly in line 94
+Only x86 Intel systems with IOMMU(s) in use are affected.  Arm
+systems, non-Intel x86 systems, and x86 systems without IOMMU are not
+affected.
 
-    `cat /etc/resolv.conf | grep "nameserver" | sort > ${TMP_CACHE} || return 0`
+Only HVM guests with passed-through PCI devices and configured to share
+IOMMU and EPT page tables are able to leverage the vulnerability on
+affected hardware.  Note that page table sharing is the default
+configuration on capable hardware.
 
-symlinks are followed in "/run/avahi-daemon/checked_nameservers.<PID>",
-which is a predictable path. Content from /etc/resolv.conf will be
-written to this location. This would allow for denial of service by
-overwriting arbitrary existing files.
+Systems are only affected if the IOMMU used for a passed through
+device requires the use of page tables less than 4 levels deep.  We
+are informed that this is the case for some at least Ivybridge and
+earlier "client" chips; additionally it might be possible for such a
+situation to arise when Xen is running nested under another
+hypervisor, if an (emulated) Intel IOMMU is made available to Xen.
 
-SUSE Linux distributions ship an outdated copy of this script in the avahi
-package [2] that is also affected by these issues.
+MITIGATION
+==========
 
-To fix these issues I consider it best to run the script as the avahi
-user and group by dropping privileges in
-"/etc/network/if-up.d/avahi-daemon" via tools like `setpriv` or `su`.
+Suppressing the use of shared page tables avoids the vulnerability.
+This can be achieved globally by passing "iommu=no-sharept" on the
+hypervisor command line.  This can also be achieved on a per-guest basis
+via the "passthrough=sync_pt" xl guest configuration file option.
 
-I privately reported this issue to the Debian security team on 2021-01-29. If
-I understood correctly then Debian Linux will not ship this script in future
-releases any more. A bugfix for Debian Buster will be included in the next
-point release [3]. Affected packages in maintained SUSE Linux distributions
-will also receive bugfixes [4].
+RESOLUTION
+==========
 
-[1]: https://packages.debian.org/buster/avahi-daemon
-[2]: https://build.opensuse.org/package/show/openSUSE:Factory/avahi
-[3]: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=982796
-[4]: https://bugzilla.suse.com/show_bug.cgi?id=1180827
+Applying the attached patch resolves this issue.
 
-Cheers
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
 
-Matthiag
+xsa390.patch           xen-unstable - Xen 4.15.x
 
--- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
- 
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG Nürnberg
-Geschäftsführer: Felix Imendörffer
+$ sha256sum xsa390*
+34d3b59a52c79bd7f9d963ca44ee5cfee08274d49961726e81c34eeff6e6cd37  xsa390.patch
+$
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This fix for issue was submitted in public before realizing the security
+aspect.
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmGXsGUMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZiMkH/2t+q/yAO7srnKdt1yLhOcG/tok0pdSLe5b3ayES
+ZktW69wnSlQ/TeH96A64pZKxXbQpRh3cDbjn2xedCDGIOyaKuObgPY7aYfuvtOxN
+/6a3P3qUf2oxm5/nS0KG6kHX69gptXupvgCPwl2i1KWARi4uMEm76N7lCe3o8fFd
+s8HNfLvJ0tX6pXtOQjeQEt73fDWQ/hwKGGJctFI1hrvy01erqHDdZrYiJAO6vp8z
+c9LU1o8dIQSUg2dm5GSX5DCX6xEzOh6sT53CDQ7W5gTn+SnCGr7FT1iTeXYeTFSN
+EaYZVynkaxQeCXsoJO0K2o7lwwKvUrQ6GNhqdd4iOR/annY=
+=P/qb
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa390.patch" of type "application/octet-stream" (1482 bytes)
