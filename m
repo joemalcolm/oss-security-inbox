@@ -1,26 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/17/2
-Message-ID: <20210417144115.GA3514@thinkstation>
-Date: Sat, 17 Apr 2021 07:41:15 -0700
-From: Tavis Ormandy <taviso@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: security@...ian.org
-Subject: Re: xscreensaver package caps gets raw socket
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/22/2
+Message-ID: <CAC8fJNZ9WakxS9tLqYtxkj3zQBU+==ZHvNM_-DA=-FiWzvTySw@mail.gmail.com>
+Date: Mon, 22 Nov 2021 07:57:25 +0100
+From: Marcin Niemiec <niemiec.marcin@...il.com>
+To: Zexuan Luo <spacewander@...che.org>
+Cc: announce@...che.org, dev@...six.apache.org,  Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
+Subject: Re: CVE-2021-43557: Apache APISIX: Path traversal in request_uri variable
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Apr 17, 2021 at 07:31:05AM -0700, Tavis Ormandy wrote:
-> - The code could use ping sockets instead, but they're still rarely
->   enabled by default, and users have to set the ping_group_range sysctl.
->   I personally think it's time to enable them by default, but that's a
->   different discussion :-)
-> 
+Hi,
 
-Oh, I also pitched using popen("/bin/ping" ..), but I think nobody is
-really convinced that will work, but I kinda like it :)
+Looks good to me.
 
-Tavis.
+It's really awesome that you verified this issue and provided fix so
+quickly!
 
--- 
- _o)            $ lynx lock.cmpxchg8b.com
- /\\  _o)  _o)  $ finger taviso@....org
-_\_V _( ) _( )  @taviso
+Best,
+Marcin
+
+pon., 22 lis 2021 o 07:30 Zexuan Luo <spacewander@...che.org> napisał(a):
+
+> Severity: moderate
+>
+> Description:
+>
+> The uri-block plugin in APISIX uses $request_uri without verification.
+> The $request_uri is the full original request URI without
+> normalization.
+> This makes it possible to construct a URI to bypass the block list on
+> some occasions. For instance, when the block list contains
+> "^/internal/", a URI like `//internal/` can be used to bypass it.
+>
+> Some other plugins also have the same issue. And it may affect the
+> developer's custom plugin.
+>
+> This issue is fixed in APISIX 2.10.2.
+> Thanks to Marcin Niemiec for reporting the vulnerability.
+>
+> Mitigation:
+>
+> 1. Upgrade to APISIX 2.10.2
+> 2. Carefully review custom code, find & fix the usage of $request_uri
+> without verification.
+>
+
