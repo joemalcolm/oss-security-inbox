@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["530" "Monday" "31" "July" "2017" "16:03:57" "+0100" "John Haxby" "john.haxby@oracle.com" "<5ba8733a-44fc-fe49-1f17-3dde40ad0e60@oracle.com>" "12" "Re: [oss-security] Linux kernel: net/irda/af_irda.c: irda_getsockopt() stack infoleak" "^Date:" nil nil "7" "2017073115:03:57" "[oss-security] Linux kernel: net/irda/af_irda.c: irda_getsockopt() stack infoleak" (number mark "        john.haxby@o Jul 31   12/530   " thread-indent "\"Re: [oss-security] Linux kernel: net/irda/af_irda.c: irda_getsockopt() stack infoleak\"\n") "<49eaccd9.1127.15d91d229be.Coremail.sohu0106@126.com>" ("<49eaccd9.1127.15d91d229be.Coremail.sohu0106@126.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1090" "Monday" "22" "November" "2021" "07:57:25" "+0100" "Marcin Niemiec" "niemiec.marcin@gmail.com" nil "42" "[oss-security] Re: CVE-2021-43557: Apache APISIX: Path traversal in request_uri variable" nil nil nil "11" nil nil (number mark "U       niemiec.marc Nov 22   42/1090  " thread-indent "\"[oss-security] Re: CVE-2021-43557: Apache APISIX: Path traversal in request_uri variable\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: CVE-2021-43557: Apache APISIX: Path traversal in request_uri variable" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7910 invoked by uid 550); 31 Jul 2017 15:04:16 -0000
+Received: (qmail 28254 invoked by uid 550); 22 Nov 2021 08:46:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,33 +11,86 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7816 invoked from network); 31 Jul 2017 15:04:13 -0000
-References: <49eaccd9.1127.15d91d229be.Coremail.sohu0106@126.com>
-Message-ID: <5ba8733a-44fc-fe49-1f17-3dde40ad0e60@oracle.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
-MIME-Version: 1.0
-In-Reply-To: <49eaccd9.1127.15d91d229be.Coremail.sohu0106@126.com>
-Content-Type: text/plain; charset=gbk
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-Source-IP: aserv0022.oracle.com [141.146.126.234]
-Date: Mon, 31 Jul 2017 16:03:57 +0100
-From: John Haxby <john.haxby@oracle.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux kernel: net/irda/af_irda.c:
- irda_getsockopt() stack infoleak
-To: oss-security@lists.openwall.com
+Received: (qmail 18074 invoked from network); 22 Nov 2021 06:57:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=l0c/Cyl81DLbvHhgQ4w4UbCqd3eIA64kH0Qsy4gYnAM=;
+        b=HLc6F6wnKahMS+FK4cv2urzp6yN9Vc9RxunHV/984k+ASlNg+Hg7wsEzmq47yr0GiZ
+         D1g1cR+W8DqKNacBXVjbSBPwcLdzc5cJnnpI4vCQsDSOQMpszLFNur7mdbWsDAFXq6wT
+         M6sT7Hp00rSFqypjmFk+S/5Qj3hIJp9Y6THwU4//AIjJyjTqsUUi/BeBU6xzkePCXsn5
+         XgpbFCETEmUQogWsT7jvbRTaoziRVc4nRZ76tXWhb9njM6QdmdwsfMzCx3ppit7xOPPD
+         V9orwr71eroFrGILJGLCX+MX9ph1ARXQTiau7prv4cUhxSo8nEkZ++Ux3UECqY4NeU+2
+         e26Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=l0c/Cyl81DLbvHhgQ4w4UbCqd3eIA64kH0Qsy4gYnAM=;
+        b=BMdV33/kUgPG4OCTpCdh6JP4j6wQqHqVrSqmzyO/7TsTwYLutUbPoDdKsrFt0qIo6B
+         2ROZSUnWwvWvJHkx64qmT4czHV3xT2zCskHByiyX2ZWI3JlqX7PmScMVogb7qbpZW7+F
+         iiY+0byXciu1AnFQ+7QRIx+g9QinCwsGWDtLDeKyR/Dam2ET4SVuGXyDbwVhitfexr2u
+         QVO/aXgOs3z6esO2YNhjWp/eJe3gQ3v092weCcZRrDp8/f1McZ75jmiheD04HN01I/aE
+         QqmnNhXhcDk/ireev6P89D45b8VRophUhw+Q5tZTrYYTAeiPPFxTqyVtp9KN8wgXvy05
+         pIQA==
+X-Gm-Message-State: AOAM532VIbWnvkeJs45UJlGzlhBi+Z75AdyFkHGsNSNSqLXhVWwT1ger
+	bbdP1sM0CGfaLF24Y/mB9Sx2y1C5CNSC4G5iyPg=
+X-Google-Smtp-Source: ABdhPJzKLsF8whEfdqrQWL//E2ifzJted4scPlyihg+zaFo9zDqIK6t+UHaLyuqFlgQCYfA083XAfm1Seq41gJxQiVs=
+X-Received: by 2002:a2e:7319:: with SMTP id o25mr50110643ljc.320.1637564254537;
+ Sun, 21 Nov 2021 22:57:34 -0800 (PST)
+MIME-Version: 1.0
+References: <CAADJU10-Sv+qtmNd8PWgx_jSfgOQ4qW7gNARSNmHP8xQEs5y_Q@mail.gmail.com>
+In-Reply-To: <CAADJU10-Sv+qtmNd8PWgx_jSfgOQ4qW7gNARSNmHP8xQEs5y_Q@mail.gmail.com>
+From: Marcin Niemiec <niemiec.marcin@gmail.com>
+Date: Mon, 22 Nov 2021 07:57:25 +0100
+Message-ID: <CAC8fJNZ9WakxS9tLqYtxkj3zQBU+==ZHvNM_-DA=-FiWzvTySw@mail.gmail.com>
+To: Zexuan Luo <spacewander@apache.org>
+Cc: announce@apache.org, dev@apisix.apache.org, 
+	Apache Security Team <security@apache.org>, oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000b04b2505d15b23a9"
+Subject: [oss-security] Re: CVE-2021-43557: Apache APISIX: Path traversal in request_uri variable
 
-On 30/07/17 05:47, sohu0106 wrote:
-> net/irda/af_irda.c
-> 
-> Sometimes irda_getsockopt() doesn't initialize all members of list field of irda_device_list struct.  This structure is then copied to
-> userland.  It leads to leaking of contents of kernel stack memory.  We have to initialize them to zero , or it will allows local users to obtain potentially sensitive information from kernel stack memory by reading a copy of this structure
-> 
-> https://github.com/torvalds/linux/pull/440
-> 
+--000000000000b04b2505d15b23a9
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Have you requested a CVE for this?
+Hi,
 
-jch
+Looks good to me.
+
+It's really awesome that you verified this issue and provided fix so
+quickly!
+
+Best,
+Marcin
+
+pon., 22 lis 2021 o 07:30 Zexuan Luo <spacewander@apache.org> napisa=C5=82(=
+a):
+
+> Severity: moderate
+>
+> Description:
+>
+> The uri-block plugin in APISIX uses $request_uri without verification.
+> The $request_uri is the full original request URI without
+> normalization.
+> This makes it possible to construct a URI to bypass the block list on
+> some occasions. For instance, when the block list contains
+> "^/internal/", a URI like `//internal/` can be used to bypass it.
+>
+> Some other plugins also have the same issue. And it may affect the
+> developer's custom plugin.
+>
+> This issue is fixed in APISIX 2.10.2.
+> Thanks to Marcin Niemiec for reporting the vulnerability.
+>
+> Mitigation:
+>
+> 1. Upgrade to APISIX 2.10.2
+> 2. Carefully review custom code, find & fix the usage of $request_uri
+> without verification.
+>
+
+--000000000000b04b2505d15b23a9--
