@@ -1,47 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/17/14
-Message-ID: <ab4fb69d-bbc1-0ee7-d3b9-58871ea096d8@virtuozzo.com>
-Date: Wed, 17 Mar 2021 18:36:29 +0300
-From: Evgenii Shatokhin <eshatokhin@...tuozzo.com>
-To: Greg KH <greg@...ah.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/23/1
+Message-ID: <CAC_jp4h3O6FSCLb=JV2HoUA1wZUin2yW2=MqtwW7N=8Bq0F9sg@mail.gmail.com>
+Date: Tue, 23 Nov 2021 11:29:57 +0800
+From: Zhiyuan Ju <juzhiyuan@...che.org>
+To: dev@...six.apache.org
+Cc: announce@...che.org, Apache Security Team <security@...che.org>,  oss-security@...ts.openwall.com, Marcin Niemiec <niemiec.marcin@...il.com>
+Subject: Re: CVE-2021-43557: Apache APISIX: Path traversal in request_uri variable
 Content-Type: text/plain; charset=utf-8
 
-On 17.03.2021 18:17, Greg KH wrote:
-> On Wed, Mar 17, 2021 at 07:45:59PM +0530, Rohit Keshri wrote:
->> Hello Team,
->>
->> A denial of service vulnerability was found in n_tty_receive_char_special
->> in drivers/tty/n_tty.c of the Linux kernel.  In this flaw a local attacker
->> with a normal user privilege could delay the loop (due to a changing
->> ldata->read_head, and a missing sanity check) and cause a threat to the
->> system availability.
->>
->> 'CVE-2021-20219' was assigned by Red Hat.
->>
->> Acknowledgements: Evgenii Shatokhin (Virtuozzo Research LLC)
-> 
-> Really?  Not the tools or people that reported this issue and fixed it
-> in the community back in 2018?
+Hi,
 
-The description is misleading, unfortunately.
+Thanks to Marcin, and Apache APISIX's Website just published his blog about
+this CVE[1].
 
-RedHat backported that original fix (commit 3d63b7e4ae0d "n_tty: Fix 
-stall at n_tty_receive_char_special().") long ago.
+ Welcome to read this post :)
 
-I just found that their backport was incomplete: one hunk of the patch 
-was lost. This lead to the problem I reported: the reproducer program 
-caused n_tty_receive_char() to loop forever. As a result, other 
-processes could hang too.
+[1] https://apisix.apache.org/blog/2021/11/23/cve-2021-43557-research-report
 
-Regards,
-Evgenii
+Best Regards!
+@ Zhiyuan Ju <https://github.com/juzhiyuan>
 
-> 
-> {sigh}
-> 
-> greg k-h
-> .
-> 
+
+Zexuan Luo <spacewander@...che.org> 于2021年11月22日周一 下午2:30写道：
+
+> Severity: moderate
+>
+> Description:
+>
+> The uri-block plugin in APISIX uses $request_uri without verification.
+> The $request_uri is the full original request URI without
+> normalization.
+> This makes it possible to construct a URI to bypass the block list on
+> some occasions. For instance, when the block list contains
+> "^/internal/", a URI like `//internal/` can be used to bypass it.
+>
+> Some other plugins also have the same issue. And it may affect the
+> developer's custom plugin.
+>
+> This issue is fixed in APISIX 2.10.2.
+> Thanks to Marcin Niemiec for reporting the vulnerability.
+>
+> Mitigation:
+>
+> 1. Upgrade to APISIX 2.10.2
+> 2. Carefully review custom code, find & fix the usage of $request_uri
+> without verification.
+>
 
