@@ -1,4 +1,9 @@
-Received: (qmail 28577 invoked by uid 550); 2 Sep 2024 13:34:56 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4182" "Tuesday" "23" "November" "2021" "12:11:36" "+0000" "Xen.org security team" "security@xen.org" nil "120" "[oss-security] Xen Security Advisory 387 v2 (CVE-2021-28703) - grant table v2 status pages may remain accessible after de-allocation (take two)" nil nil nil "11" nil nil (number mark "U       security@xen Nov 23  120/4182  " thread-indent "\"[oss-security] Xen Security Advisory 387 v2 (CVE-2021-28703) - grant table v2 status pages may remain accessible after de-allocation (take two)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 387 v2 (CVE-2021-28703) - grant table v2 status pages may remain accessible after de-allocation (take two)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 21981 invoked by uid 550); 23 Nov 2021 12:12:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,97 +12,143 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27918 invoked from network); 2 Sep 2024 13:34:47 -0000
-Date: Mon, 2 Sep 2024 15:34:35 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Cc: 2639161967 <2639161967@qq.com>,
-	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>
-Message-ID: <20240902133435.GA29502@openwall.com>
-References: <tencent_BB0764F9635412BA90A36B3B19EDEEF09905@qq.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Received: (qmail 21897 invoked from network); 23 Nov 2021 12:12:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
+	Content-Transfer-Encoding:Content-Type;
+	bh=q2HCCmRA4eyGBtlwL+LNVG30xiN/OakaIW2lLeVdN2E=; b=JTuizbbtWZk8XJEe1kYE1c8utZ
+	fJ4p3XTcPB1Do3cF5H0FHnjqMwN5GlIu9Ld/CseW4EZh5XaNpAYVQD89tGRgCWTdTENS41PskXuco
+	zazicsphTovKT/1CxD3niTkJhPjVoJ/gRebdKdEZiOPBMT8Nxf0gJgtKLxq0XVONuPFI=;
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
+MIME-Version: 1.0
+X-Mailer: MIME-tools 5.509 (Entity 5.509)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1mpUe8-0004X3-Q0@xenbits.xenproject.org>
+Date: Tue, 23 Nov 2021 12:11:36 +0000
+Subject: [oss-security] Xen Security Advisory 387 v2 (CVE-2021-28703) - grant table v2
+ status pages may remain accessible after de-allocation (take two)
+
+--=separator
+Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
-In-Reply-To: <tencent_BB0764F9635412BA90A36B3B19EDEEF09905@qq.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Linux kernel: memory leak in arch/powerpc/platforms/powernv/opal-irqchip.c: opal_event_init()
+Content-Transfer-Encoding: 7bit
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-This bug report is misaddressed.  Per upstream's preference and common
-sense (given how many issue reports there are against the Linux kernel),
-most Linux kernel (maybe-)issues should first be reported to Linux
-kernel maintainers/lists or (if you're reasonably sure of significant
-security relevance) to the Linux kernel security team, and only then (if
-relevant) maybe also to general security lists.  Occasional exceptions
-exist, such as for publicly exploited issues, but if you're new to this
-chances are that you should play by the rules, not claim an exception.
+            Xen Security Advisory CVE-2021-28703 / XSA-387
+                               version 2
 
-The original Subject line on this message was just "memory leak".  That
-was also inappropriate since it should contain at least the affected
-project's name (when applicable).  I've edited the Subject line prior to
-approving this message (as a moderator).
+ grant table v2 status pages may remain accessible after de-allocation (take two)
 
-2639161967 also sent this message to linux-distros.  That was also
-inappropriate for the reasons stated above (where it's not just
-upstream's preference, but also part of the current instructions for
-issue reporters), and additionally because linux-distros is only for
-non-public issues, so it makes no sense to send anything to the public
-oss-security and the private linux-distros at the same time.
+UPDATES IN VERSION 2
+====================
 
-On Mon, Sep 02, 2024 at 09:54:52AM +0800, 2639161967 wrote:
-> in the newest linux release version, in&nbsp;/arch/powerpc/platforms/powernv/opal-irqchip.c&nbsp;file , the&nbsp;
-> opal_event_init function, the variable "name"defined in line 270, and is alloced memory in line 274 or 276, but not free, cause many times memory leak, and most old release versions have the problem.
+Public release.
 
-The code in question is:
+ISSUE DESCRIPTION
+=================
 
-int __init opal_event_init(void)
-{
-[...]
-	/* Install interrupt handlers */
-	for (i = 0; i < opal_irq_count; i++) {
-		struct resource *r = &opal_irqs[i];
-		const char *name;
+Guest get permitted access to certain Xen-owned pages of memory.  The
+majority of such pages remain allocated / associated with a guest for
+its entire lifetime.  Grant table v2 status pages, however, get
+de-allocated when a guest switched (back) from v2 to v1.  The freeing
+of such pages requires that the hypervisor know where in the guest
+these pages were mapped.  The hypervisor tracks only one use within
+guest space, but racing requests from the guest to insert mappings of
+these pages may result in any of them to become mapped in multiple
+locations.  Upon switching back from v2 to v1, the guest would then
+retain access to a page that was freed and perhaps re-used for other
+purposes.
 
-		/* Prefix name */
-		if (r->name && strlen(r->name))
-			name = kasprintf(GFP_KERNEL, "opal-%s", r->name);
-		else
-			name = kasprintf(GFP_KERNEL, "opal");
+This bug was fortuitously fixed by code cleanup in Xen 4.14, and
+backported to security-supported Xen branches as a prerequisite of the
+fix for XSA-378.
 
-		if (!name)
-			continue;
-		/* Install interrupt handler */
-		rc = request_irq(r->start, opal_interrupt, r->flags & IRQD_TRIGGER_MASK,
-				 name, NULL);
-		if (rc) {
-			pr_warn("Error %d requesting OPAL irq %d\n", rc, (int)r->start);
-			continue;
-		}
-	}
+IMPACT
+======
 
-As I understand, the "memory leak" is actually a non-issue, because
-opal_event_init() is only called on initialization and request_irq()
-retains a pointer to name.  So this is part of building data structures
-that will normally remain around during the system's uptime.  Even if
-this were an unintentional memory leak, it's pretty clearly not a
-security issue because the leak would not be attacker-triggerable.
+A malicious guest may be able to elevate its privileges to that of the
+host, cause host or guest Denial of Service (DoS), or cause information
+leaks.
 
-Perhaps name could reasonably be freed when request_irq() fails, so
-inside the "if (rc) {" block.  Perhaps with some effort, these could
-also be freed in opal_event_shutdown(), but it's safer not to bother.
-Perhaps a source code comment may reasonably be added.
+VULNERABLE SYSTEMS
+==================
 
-This "problem" report could be slightly less useless if you included the
-methodology you used to find this, so that others could adjust it to
-find and report real issues, even if usually non-security ones (so not
-report them to here, but to appropriate Linux kernel maintainers and
-lists, as per the MAINTAINERS file).
+All Xen branches up to and including 4.13 are vulnerable,
+but only if the patches for XSA-378 have not been applied.
 
-I'm CC'ing this to some maintainers in case they want to add to the "if
-(rc) {" block, if only to silence static analysis tools, but other than
-that I see nothing to do on this report.
+Xen versions 4.13.4, 4.14.x and 4.15.x are not affected.
 
-Alexander
+Only x86 HMV and PVH guests permitted to use grant table version 2
+interfaces can leverage this vulnerability.  x86 PV guests cannot
+leverage this vulnerability.  On Arm, grant table v2 use is explicitly
+unsupported.
+
+MITIGATION
+==========
+
+Running only PV guests will avoid this vulnerability.
+
+Suppressing use of grant table v2 interfaces for HVM or PVH guests will
+also avoid this vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Patryk Balicki and Julien Grall of Amazon.
+
+RESOLUTION
+==========
+
+Applying the following patch resolves the issue:
+  x86/p2m: don't assert that the passed in MFN matches for a remove
+
+This patch was supplied with XSA-378, as one of 378's prerequisites.
+The fix has already been applied to Xen stable branches as follows:
+
+c65ea16dbcafbe4fe21693b18f8c2a3c5d14600e   in Xen 4.14.x, 4.15.x
+f50fbddbae81fcccae56d27317bd71cc0e678ba2   in Xen 4.13.4
+d44643199c96ac22491ae002d3bcd1c989b95ea4   in xen.git#stable-4.12
+66f400c71d12fe8adfb895984b14f2941e8cb6ce   in xen.git#stable-4.11
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmGc2jgMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZlWUIAJ4bU9n2q9A4sqhiW0xJOCI4MIdwV2ym6xziP9iN
+e5sg0u3gdp94M1vLf//8h7julxLXgdJd10HWWpJkfRQcsfz3E1ul1O+mAsoHxJwI
+/qGl1Xis7AkDFjrPXthJUKh/DNgi8F1Rok7XDbfFznk34v4g6anh4JDfqJIUwIFQ
+l2s6qIOc2PjvmrJMXEboT1wEUADZNtChIqOL7Ibre9Zz6/mdr0FjPfPvLAqfvf9m
+aLaMElJMRx5iTEUG7qCYXUn8oKLbWNTv88yceudE7QZl3/zv/UnEL8nvBZWs/Gkx
+UbrC6wkNFUSpF/ngexvzsSE/SrfMYYaUPfIciyuxvuosGJY=
+=DmKh
+-----END PGP SIGNATURE-----
+
+--=separator--
