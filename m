@@ -1,110 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/19/3
-Message-Id: <E1l1txP-0002qH-QD@xenbits.xenproject.org>
-Date: Tue, 19 Jan 2021 16:34:15 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 331 v3 (CVE-2020-27675) - Race condition in Linux event handler may crash dom0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/25/1
+Message-ID: <EF0C4A70-7268-4894-A006-1540CD68CB45@vmware.com>
+Date: Thu, 25 Nov 2021 19:15:19 +0000
+From: Nadav Amit <namit@...are.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: Mike Kravetz <mike.kravetz@...cle.com>, Greg Kroah-Hartman <gregkh@...uxfoundation.org>, Security Officers <security@...nel.org>, Andrew Morton <akpm@...ux-foundation.org>
+Subject: CVE-2021-4002: Linux kernel: Missing TLB flush on hugetlbfs
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Linux kernel 3.6 and later it is possible for an attacker to leak or change
+data that resides on hugetlbfs. Such data can reside on hugetlbfs, for
+instance, if the victim runs mmap() using the MAP_HUGETLB or shmget() with
+SHM_HUGETLB. If a victim maps executable code onto hugetlbfs, the executable
+can be modified as well.
 
-            Xen Security Advisory CVE-2020-27675 / XSA-331
-                              version 3
+The bug is caused due to a missing TLB flush when unmapping of a page of PMDs
+is performed by clearing a PUD. While the comment in the code claims that it
+is safe, it is not, since no flush would take place under these circumstances
+(unless, of course, it was needed for some other reason).
 
-         Race condition in Linux event handler may crash dom0
-
-UPDATES IN VERSION 3
-====================
-
-CVE assigned.
-
-ISSUE DESCRIPTION
-=================
-
-The Linux kernel event channel handling code doesn't defend the
-handling of an event against the same event channel being removed in
-parallel.
-
-This can result in accesses to already freed memory areas or NULL
-pointer dereferences in the event handling code, leading to
-misbehaviour of the system or even crashes.
-
-IMPACT
-======
-
-A misbehaving guest can trigger a dom0 crash by sending events for a
-paravirtualized device while simultaneously reconfiguring it.
-
-VULNERABLE SYSTEMS
-==================
-
-All systems with a Linux dom0 are vulnerable.
-
-All Linux kernel versions are vulnerable.
-
-MITIGATION
-==========
-
-There is no known mitigation.
-
-CREDITS
-=======
-
-This issue was discovered by Jinoh Kang of Theori.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa331-linux.patch     Linux
-
-$ sha256sum xsa331*
-8583392c0c573f7baa85e41c9afbdf74dcb04aea1be992d78991f0787230a193  xsa331-linux.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+Apparently the bug existed since commit 24669e58477e ("hugetlb: use mmu_gather
+instead of a temporary linked list for accumulating pages)” which means that
+it existed since kernel 3.6. There might be some mitigating factors in
+certain older kernels on certain architectures. For instance, x86 performed
+TLB flushes on huge-pages more eagerly in the past.
 
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
+Fix:
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
+The fix is upstreamed as commit a4a118f2eead ("hugetlbfs: flush TLBs correctly
+after huge_pmd_unshare”). Backporting of the fix to older kernels is in
+progress.
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmAHB6QMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZDpEH/1DgvbcVJRbGyzc8TA80oAT+zeVQpTaZkgGthQV/
-PvJQH/sMi5mrgQ7pkTVu08wY4/BWTzz+0bceD/+PqMoXBYn+56y3oavVUdAsrK6P
-Bjucd+TI0kOrRx/82FlVtjir8xPZuiBi1xHxb4mQRc70BqJfI9GETOnFsGYhFpcX
-woDuHAfum3+6fUFyRPhyu7MoWChfyOQxu6IxU22rpelT1wAOPsIi15fX0Xbz3nJi
-7bIbc3Hv9EAv114RsDZbNhz8ymzj5BL/gXWQO13187NGVhDlKdi91zdDQqbKTKTW
-4Hvl/6zARGLEPxh6oQbQhxhnMHD5+BVPvacarjNjtHdkJTk=
-=pzTm
------END PGP SIGNATURE-----
+To fix the bug a call to tlb_flush_pmd_range() is needed from
+__unmap_hugepage_range() when huge_pmd_unshare() succeeds, and forcing a flush
+before returning from __unmap_hugepage_range().
 
-Download attachment "xsa331-linux.patch" of type "application/octet-stream" (4730 bytes)
+
+Details:
+
+An attacker can using shmget() 512 pages of 2MB map twice which are aligned to
+PUD alignment and fault in some of the pages. As the pages are properly
+aligned, the kernel would share a PUD between the mappings. Later the
+attacker would remove the mappings and the shared memory segments. 
+
+The first mapping that is removed does not trigger a TLB flush due to a bug
+in __unmap_hugepage_range(). Later, if the kernel reallocates the huge-pages
+to another process shortly after, an attacker would be able to read and write
+these huge-pages for some time (until TLB flush happens for some other reason
+later on).
+
+A proof of concept is attached. The PoC creates a child process that allocates
+a huge-page and this data is leaked back to the parent. There is no need for
+the attacker to be the parent of the child and this is only implemented in
+such manner for simplicity. The PoC fails on the first iteration on my system
+repeatedly (although it is written to make multiple attack attempts).
+
+To make it work the PoC work, configure the number of pages to 512
+("echo 512 > /proc/sys/vm/nr_hugepages"), so huge-pages will be available for
+the PoC and will be reused by the victim.
+
+
+Download attachment "poc.c" of type "application/octet-stream" (3271 bytes)
