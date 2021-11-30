@@ -1,71 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/26/2
-Message-ID: <YIbC/ejOYMYVFOPM@f195.suse.de>
-Date: Mon, 26 Apr 2021 15:41:17 +0200
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/30/1
+Message-ID: <87wnkp8kmj.fsf@oldenburg.str.redhat.com>
+Date: Tue, 30 Nov 2021 21:16:20 +0100
+From: Florian Weimer <fweimer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: virtualbox: CVE-2021-25319: missing sticky bit in openSUSE packaging for /etc/box allows local root exploit for members of vboxusers group
+Subject: IMA gadgets
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+There's an idea floating around that you can take an established Linux
+distribution, create IMA signatures for all installed files in its
+packages, and use those signatures to lock out bad content at run time
+using IMA verification in the kernel.
 
-somewhat related to CVE-2021-2264 I noticed an openSUSE specific
-security issue in the openSUSE packaging for virtualbox [1]. To enable
-the autostart feature in virtualbox as outlined in the upstream manual
-[2] our packagers introduced a group 'vboxusers' that is granted write
-access to the directory /etc/vbox as the "autostart DB". Contrary to
-what the manual says the directory was not packaged with the sticky bit
-set, however.
+I do not think this works in the sense that it can detect serve for more
+than just detecting file corruption (as an unsigned hash would).  First
+of all, there is the issue that IMA signatures (at least as they exist
+in RPM today) are content-only and do not cover file permissions or file
+capabilities.  This means an attacker can turn any binary into a SUID
+binary.  The signatures do not cover these file attributes, so they will
+still verify.
 
-The file /etc/vbox/vbox.cfg is a configuration file for virtualbox. This
-file is sourced by other virtualbox bash scripts running as root like
-'vboxautostart.sh', 'vboxdrv.sh' and 'vboxweb-service.sh'. Due to the
-missing sticky bit any member of the vboxusers group can replace the
-/etc/vbox/vbox.cfg file by a manipulated one, allowing for full code
-execution in the context of the root user once e.g. the vboxautostart
-systemd service runs.
+The signatures do not cover the file names, either.  Therefore, an
+attacker can take a file and put it into a difference place in a file
+system.  For example, there's a debug-shell.service file that, when
+dropped into the right directory, will open a root shell on /dev/tty9.
+This may seem a bit silly, but I think the intent behind the IMA
+signatures is to combine them with remote attestation, and make
+(remote) interaction with devices in places without physical security
+trustworthy.
 
-Reproducer:
+Another example is /usr/share/perl5/vendor_perl/App/cpanminus.pod from a
+typical distribution of the App::cpanminus package.  If this is dropped
+into /etc/sysconfig/run-parts, after a while, the system will download
+untrusted code over the network and execute it, as far as I can see.
+(CPAN does not seem to be authenticated.)  The file does nothing when
+parsed by perl on the command line, but bash will try to run it and
+invoke a cpan shell command that triggers the download and code
+execution.  I don't think this kind of file type confusion is addressed
+by the proposed trusted_for system call, either.
 
-    root# su -g vboxusers nobody
-    nobody$ cd /etc/vbox
-    nobody$ cp vbox.cfg vbox.cfg.new
-    nobody$ rm -f vbox.cfg
-    nobody$ mv vbox.cfg.new vbox.cfg
-    nobody$ echo "touch /root/evil" >>vbox.cfg
-    
-    nobody$ exit
-    root# systemctl start vboxautostart.service
-    root# ls -lh /root/evil
-    -rw-r--r-- 1 root root 0  2. Mär 12:14 /root/evil
+I'm sure there are many gadgets like this.  These two are just the first
+examples I found.
 
-I have been looking into other distributions like Arch Linux, Fedora and
-also some of the RPMs distributed on www.virtualbox.org. They all
-package /etc/vbox as root:root mode 755 and are therefore not affected.
+So in short, I don't really see how IMA signatures shipped as part of
+all distribution packages, on all files, can provide value beyond that
+of the hash that the already contain.
 
-Updates for the openSUSE virtualbox packages are underway [3] that will
-fix the packaging error and also move the "autostart DB" directory from
-/etc/vbox to /etc/vbox/autostart.d to avoid mixing the autostart related
-files with the virtualbox system configuration file in the same
-directory.
+Thanks,
+Florian
 
-Cheers
-
-Matthias
-
-[1]: https://build.opensuse.org/package/show/Virtualization/virtualbox
-[2]: https://www.virtualbox.org/manual/ch09.html#autostart-linux
-[3]: https://bugzilla.suse.com/show_bug.cgi?id=1182918
-
--- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
- 
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG Nürnberg
-Geschäftsführer: Felix Imendörffer
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
