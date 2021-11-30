@@ -1,103 +1,123 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/18/9
-Message-ID: <20210318192136.GA6178@openwall.com>
-Date: Thu, 18 Mar 2021 20:21:36 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/01/1
+Message-ID: <d2b2c4b7-cba4-349e-1856-23f84fc6a198@spamtrap.tnetconsulting.net>
+Date: Tue, 30 Nov 2021 14:27:31 -0700
+From: Grant Taylor <gtaylor@...tconsulting.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS
+Subject: Re: IMA gadgets
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Pre-script:  I'm new to Linux's Integrity Measurement Architecture so my 
+comments below may be completely off base.  Please gently correct me if 
+that's the case.
 
-FWIW, I agree with what Kurt H Maier wrote.  While I wish Red Hat's
-messages like these were more informative right away, Greg's messages
-are unfortunately beyond being purely constructive and are in part
-discouraging.  We're lucky that so far his requests for more information
-actually resulted in just that, and didn't result in Red Hat stopping to
-post - that is, that others replying had the strength to interpret them
-constructively despite of their tone suggesting otherwise.  OTOH, we
-have no way to know whether someone was actually discouraged enough not
-to post on some occasion.
+On 11/30/21 1:16 PM, Florian Weimer wrote:
+> I do not think this works in the sense that it can detect serve for 
+> more than just detecting file corruption (as an unsigned hash would).
 
-Greg, I'd appreciate you not repeating the same things over and over -
-such as (roughly) "who is this for" and "why did you assign this CVE
-_now_".  Questioning CVE assignment is reasonable and desirable, but
-only when that is specific (e.g., point out specific reasons why you
-think an issue might not be CVE worthy) and not generic (questioning
-every CVE without giving reasons, or asking why bother with CVE for an
-old issue).  As a moderator, I tell you that the kind of messages Red
-Hat is posting _are_ desirable in here.  They could be more detailed,
-and it's OK to ask for more detail, but it's not OK to discourage their
-posting.  Thank you.
+My understanding is that the signature which uses public & private keys 
+would be more resilient than just a hash in that the signature created 
+with the private key (which need not be on system) can be verified with 
+the public key on system.  A simple hash doesn't provide that same level 
+of integrity.
 
-On Thu, Mar 18, 2021 at 02:33:21PM -0400, Sasha Levin wrote:
-> On Thu, Mar 18, 2021 at 10:19:31AM -0700, Kurt H Maier wrote:
-> >On Thu, Mar 18, 2021 at 01:08:21PM +0100, Greg KH wrote:
-> >>
-> >>But none of that takes into account for the backporting of commits into
-> >>the stable tree, you need a different tool for that, which many of us
-> >>have our own.  If you use that you will see that the above commit really
-> >>is in lots of fixed kernel trees:
-> >>
-> >>$ id_found_in 3d63b7e4ae0dc5e02d28ddd2fa1f945defc68d81
-> >>3.16.61 3.18.115 4.4.140 4.9.112 4.14.54 4.17.5 4.18
-> >
-> >It's not really Red Hat's fault that there are six hundred "stable"
-> >kernel versions, which each change approximately weekly.  It's generally
-> >not worth tracking, and it would not be sane to expect Red Hat to seek
-> >or announce CVEs for git branches they don't maintain.
-> 
-> I think that this is an excellent point: RedHat shouldn't be reporting
-> issues for "Linux Kernel" then. Look at the subject of this mail:
-> 
-> 	CVE-2021-20219 Linux kernel: improper synchronization in 
-> 	flush_to_ldisc() can lead to DoS
-> 
-> It doesn't say "Red Hat Linux kernel", it just says "Linux kernel",
-> right?
-> 
-> Red Hat runs on a forked version of the kernel that has it's own set of
-> backports, features, and bugs. As you pointed out I think it would make
-> a lot of sense if they would instead start assigning CVEs for "Red Hat
-> Linux Kernel".
+> First of all, there is the issue that IMA signatures (at least as they 
+> exist in RPM today) are content-only ...
 
-Oh, no.  Just no.  Red Hat (nor others) shouldn't start to
-indiscriminately label their CVE assignments for Linux kernel issues
-(nor for issues in other software they modify and package) like that.
+My initial skim of the Integrity Measurement Architecture page on 
+Gentoo's Wiki indicates that the pathname is included in the template has.
 
-I think what we really want is encourage Red Hat (and other distros) to
-put more effort into figuring out and documenting whether each issue is
-specific to them or (was) also present in mainline (any version or git
-commit, but not requiring a review of any branches other than what they
-possibly took code from).  I think they usually already have that
-information internally.  It's just that it didn't propagate into this
-thread's original message now.  It should.
+The columns (from left to right) are:
 
-Then, for issues that (ever) exist(ed) in upstream kernels, or in any
-upstream Open Source software for that matter, they should be brought to
-oss-security.  It's very kind of a distro to help us all with that.  We
-should encourage that.
+    *PCR* (Platform Configuration Register) in which the values are 
+registered. This only makes sense if a TPM chip is in use.
+    *Template hash* of the entry, which is a hash that combines the 
+length and values of the file content hash /and/ /the/ /pathname/
+    *Template* that registered the integrity value (ima-ng the case)
+    *File content* hash which is the hash of the file itself
 
-For issues that are distro-specific, it's a grey area.  First, like you
-correctly say, they should be labeled accordingly.  Then the question of
-their relevance to oss-security comes up.  Among the published content
-guidelines for oss-security we actually have one asking not to post in
-here distro-specific advisories aimed at end-users.  As I recall, when
-at some point years ago FreeBSD started sending their advisories in
-here, I asked them not to.  Indeed, we're also not seeing e.g. Red Hat's
-advisories in here, although they do produce those and send them to
-proper channels.  However, what about distro-specific vulnerability
-notifications not meant for end-users, but for downstream distros?
-Using my two examples, both FreeBSD and RHEL do have some downstream or
-otherwise related distros, who might need to know to merge the fixes.
+Link - Integrity Measurement Architecture - Gentoo Wiki
+  - https://wiki.gentoo.org/wiki/Integrity_Measurement_Architecture
 
-In fact, we have a reverse example of that in this same thread -
-Virtuozzo had reported the issue to Red Hat presumably due to their
-reuse of code from RHEL.  It can happen both ways, and would also be
-relevant to third-parties if there are more than two distros reusing
-distro-specific code like that.  It is quite possible that this thread
-was also noticed and will be acted upon by some other RHEL kernel forks,
-although chances are those monitor other Red Hat resources and would
-have learned from there as well.
+So ... I may be mistaken, but I believe more than just the content is 
+covered by IMA signatures.
 
-Alexander
+> ... and do not cover file permissions or file capabilities.
+
+I see nothing to refute that portion of your statement.
+
+> This means an attacker can turn any binary into a SUID binary. 
+> The signatures do not cover these file attributes, so they will 
+> still verify.
+
+It may be possible to add SUID and / or capabilities to a signed file. 
+But I have to question how such a questionable non-SUID binary would be 
+given a signature in the first place?  Or asked another why, why would a 
+questionable file be given a IMA signature in the first place?
+
+> The signatures do not cover the file names, either.  Therefore, 
+> an attacker can take a file and put it into a difference place in a 
+> file system.
+
+I question the veracity of that statement.  It seems to disagree with 
+the template hash containing the path.  Maybe it's a case of the file 
+hash being the same, but no longer matching with a template hash.
+
+> For example, there's a debug-shell.service file that, when dropped into 
+> the right directory, will open a root shell on /dev/tty9.  This may 
+> seem a bit silly, but I think the intent behind the IMA signatures is 
+> to combine them with remote attestation, and make (remote) interaction 
+> with devices in places without physical security trustworthy.
+
+Maybe I'm wrong, but I view IMA signatures as something akin to a real 
+time Tripwire as in has this file been modified since it was blessed ~> 
+approved to run?
+
+> Another example is /usr/share/perl5/vendor_perl/App/cpanminus.pod 
+> from a typical distribution of the App::cpanminus package.  If this is 
+> dropped into /etc/sysconfig/run-parts, after a while, the system will 
+> download untrusted code over the network and execute it, as far as I 
+> can see.  (CPAN does not seem to be authenticated.)  The file does 
+> nothing when parsed by perl on the command line, but bash will try 
+> to run it and invoke a cpan shell command that triggers the download 
+> and code execution.  I don't think this kind of file type confusion 
+> is addressed by the proposed trusted_for system call, either.
+
+I'm not current on cpanminus so there could be plenty that I'm 
+overlooking.  I would expect that download code to the site's Perl 
+installation.  But I would expect that said code would not get executed. 
+  Perhaps there is some form of chained process that I'm not cognizant of.
+
+I still think that moving / copying / linking cpanminus.pod from it's 
+original location to the new location would run afoul of the template hash.
+
+> I'm sure there are many gadgets like this.  These two are just the 
+> first examples I found.
+
+I think that it's worth looking at any and all gadgets to understand how 
+they would interact with IMA signatures.  At best it is an academic 
+exercise of how IMA signatures would help.  At worst it identifies a 
+vulnerability that needs to be remediated.
+
+> So in short, I don't really see how IMA signatures shipped as part 
+> of all distribution packages, on all files, can provide value beyond 
+> that of the hash that the already contain.
+
+I think the PKI signature would help more than /just/ a /simple/ hash.
+
+Maybe the crux of the difference between my understanding of what you're 
+concern is and my understanding from skimming the linked page is that 
+you seem to be talking as if there is only a hash of the file contents 
+verses that has plush another hash that covers more system installation 
+specific data.
+
+Post-Script:  Please correct me if I'm wrong in any of my understanding.
+
+
+
+-- 
+Grant. . . .
+unix || die
+
+
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (4017 bytes)
