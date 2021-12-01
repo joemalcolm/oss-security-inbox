@@ -1,29 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/12/10
-Message-ID: <20210112174919.GA2815@openwall.com>
-Date: Tue, 12 Jan 2021 18:49:20 +0100
-From: Solar Designer <solar@...nwall.com>
-To: Thomas Deutschmann <whissi@...too.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Gentoo's "contributing back" linux-distros tasks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/01/2
+Message-ID: <20211201080633.GF4037@suse.com>
+Date: Wed, 1 Dec 2021 09:06:33 +0100
+From: Johannes Segitz <jsegitz@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: IMA gadgets
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jan 11, 2021 at 10:09:18PM +0100, Thomas Deutschmann wrote:
-> On 2021-01-10 19:44, Solar Designer wrote:
-> >Gentoo, please let us all know whether you'd like to stay primary for
-> >these tasks, be moved to backup, or something else?
-> 
-> I think we will be able to act as backup.
+On Tue, Nov 30, 2021 at 09:16:20PM +0100, Florian Weimer wrote:
+> So in short, I don't really see how IMA signatures shipped as part of
+> all distribution packages, on all files, can provide value beyond that
+> of the hash that the already contain.
 
-If possible, please stay or become primary for at least one task.  We've
-been asking the same from newly joining distros lately.
+It provides "the customer is happy" value. From a security POV it doesn't
+help much (on a normal Linux system, can be different if you really strip
+it down). But AMSI also doesn't help and people are still keen on enabling
+it, despite bypasses being available all the time. Same will happen for
+IMA.
 
-> We will need to figure out a workflow to ensure we notice when we are on 
-> call but I am sure we will find a way. I'll contact Anthony directly for 
-> the details.
+Johannes
+-- 
+GPG Key                EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
+Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
+SUSE Software Solutions Germany GmbH, Maxfeldstr. 5, 90409 Nuernberg
+Geschäftsführer: Ivo Totev (HRB 36809, AG Nürnberg)
 
-Great to know you're coordinating with Anthony (Amazon), but a meaning
-of backup is that you'd also need to take over when the primary fails to
-handle a task without notifying you first.
-
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
