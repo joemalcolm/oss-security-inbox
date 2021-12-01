@@ -1,39 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/03/2
-Message-ID: <YBpObXzJVfFDoJbc@kroah.com>
-Date: Wed, 3 Feb 2021 08:19:09 +0100
-From: Greg KH <gregkh@...uxfoundation.org>
-To: ???? <zhaowenjia@....xjtu.edu.cn>
-Cc: security@...nel.org, oss-security@...ts.openwall.com, jirislaby@...nel.org, nico@...xnic.net
-Subject: Re: KASAN: use-after-free in con_scroll​
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/01/6
+Message-ID: <b3684dd2-0215-a119-2301-8c2ad2ef957e@kuix.de>
+Date: Wed, 1 Dec 2021 18:37:27 +0100
+From: Kai Engert <kaie@...x.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2021-43527: Heap overflow in NSS when verifying DSA/RSA-PSS DER-encoded signatures
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Feb 03, 2021 at 03:04:55PM +0800, ???? wrote:
-> Dear Linux kernel developers,
-> 
-> I found a crash "KASAN: use-after-free in con_scroll+0x45c/0x620 drivers/tty/vt/vt.c:641"  when running the syzkaller,  
-> 
-> It is can be reproduced. I did not find a report about this problem. Hope it is useful.
-> 
-> 
-> 
-> 
-> Linux version: Linux v5.9-rc8 (549738f15)
-> 
-> 
-> The following is the crash report.
-> 
-> ==================================================================
-> 
-> BUG: KASAN: use-after-free in scr_memmovew include/linux/vt_buffer.h:68 [inline]
-> BUG: KASAN: use-after-free in con_scroll+0x45c/0x620 drivers/tty/vt/vt.c:641
-> Read of size 693770 at addr ffff8880000b894c by task syz-executor.2/7755
-> 
-> CPU: 0 PID: 7755 Comm: syz-executor.2 Not tainted 5.1.0 #4
+>> https://bugs.chromium.org/p/project-zero/issues/detail?id=2237 states that
+>> "It's been 30 days since the initial thunderbird patches have been released".
+>>
+>> Is there a corresponding Thunderbird patch/advisory/release distros should be
+>> shipping as well?
 
-5.1.0 is _VERY_ old, please try reproducing this on a more modern kernel
-(i.e. 5.10 or newer).
+Thunderbird 91.3.0 had shipped a workaround, that should protect against 
+the most risky attack vector (executing the vulnerable code path when 
+importing certificates contained in a received S/MIME message).
 
-thanks,
+The workaround commits are here:
+https://hg.mozilla.org/releases/comm-esr91/rev/54507526da82
+https://hg.mozilla.org/releases/comm-esr91/rev/bea1eb4e98a3
 
-greg k-h
+We intend to add a separate CVE to the corresponding tracking bug
+https://bugzilla.mozilla.org/show_bug.cgi?id=1738501
+and also amend the release notes of the 91.3.0 release.
+
+In addition, to ensure that potential secondary attack vectors will be 
+protected as well, it is recommended that Thunderbird uses NSS binaries 
+that contain the NSS level patch. The Thunderbird team will ship NSS 
+3.68.1 in the upcoming 91.4.0 release.
+
+Kai
