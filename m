@@ -1,34 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/28/2
-Message-ID: <921291111.13398.1624863599048@appsuite-dev-gw2.open-xchange.com>
-Date: Mon, 28 Jun 2021 09:59:59 +0300 (EEST)
-From: Aki Tuomi <aki.tuomi@...n-xchange.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2021-33515: Dovecot SMTP Submission service STARTTLS injection.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/01/5
+Message-ID: <e5468d60-4732-2678-94b4-ff10939263c0@oracle.com>
+Date: Wed, 1 Dec 2021 09:11:15 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com, Dennis Jackson <djackson@...illa.com>
+Cc: Benjamin Beurdouche <beurdouche@...illa.com>, Daniel Veditz <dveditz@...illa.com>
+Subject: Re: CVE-2021-43527: Heap overflow in NSS when verifying DSA/RSA-PSS DER-encoded signatures
 Content-Type: text/plain; charset=utf-8
 
-Open-Xchange Security Advisory 2021-06-28
+On 12/1/21 8:43 AM, Dennis Jackson wrote:
+> Remediation:
+> 
+> NSS 3.73 [1] and NSS ESR 3.68.1 [2] have been released and contain the
+> fix. A patch suitable for backporting is also attached (patch.diff).
+> 
+> Acknowledgements:
+> 
+> This vulnerability was reported to the NSS team by Tavis Ormandy of
+> Project Zero.
 
-Affected product: Dovecot IMAP Server
-Vendor: OX Software GmbH
+https://bugs.chromium.org/p/project-zero/issues/detail?id=2237 states that
+"It's been 30 days since the initial thunderbird patches have been released".
 
-Internal reference: DOP-2421
-Vulnerability type: Cryptographic Issues (CWE-310)
-Vulnerable version: 2.3
-Vulnerable component: submission
-Report confidence: Confirmed
-Solution status: Fixed in 2.3.x
-Researcher credits: Fabian Ising and Damian Poddebniak of Münster University of Applied Sciences.
-Vendor notification: 2021-05-21
-CVE reference: CVE-2021-33515
-CVSS: 4.2 (CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:L/A:N)
+Is there a corresponding Thunderbird patch/advisory/release distros should be
+shipping as well?
 
-Vulnerability Details:
-Dovecot's lib-smtp is vulnerable to STARTTLS command injection. If more commands are pipelined as plaintext after STARTTLS, those commands are run inside the TLS session.
 
-Risk:
-A MiTM attacker can inject preamble commands to be executed prior to user's commands, these can be used to redirect the actual mail and other user commands to attacker controlled address.
-Proof of concept script exists.
-
-Solution:
-Upgrade to fixed version, or disable STARTTLS support.
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
