@@ -1,4 +1,9 @@
-Received: (qmail 24334 invoked by uid 550); 5 Oct 2023 08:17:54 -0000
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1955" "Wednesday" "1" "December" "2021" "09:06:33" "+0100" "Johannes Segitz" "jsegitz@suse.de" "<20211201080633.GF4037@suse.com>" "45" "Re: [oss-security] IMA gadgets" "^Date:" nil nil "12" "2021120108:06:33" "[oss-security] IMA gadgets" (number mark "        jsegitz@suse Dec  1   45/1955  " thread-indent "\"Re: [oss-security] IMA gadgets\"\n") "<87wnkp8kmj.fsf@oldenburg.str.redhat.com>" ("<87wnkp8kmj.fsf@oldenburg.str.redhat.com>") nil nil nil nil nil nil nil "Re: [oss-security] IMA gadgets" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0001
+X-Mozilla-Status2: 00000000
+Received: (qmail 25903 invoked by uid 550); 1 Dec 2021 11:23:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -6,97 +11,79 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24313 invoked from network); 5 Oct 2023 08:17:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=nodmarc.schlittermann.de; s=2020-06-19; h=In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:To:From:Date:Cc:
-	Content-Description:Content-ID:Content-Transfer-Encoding:Resent-Cc:Resent-To;
-	bh=4I5fpC5joVkWCJRMBt28Ub57/gWo5hpx+7a4NrH/6uY=; b=LwzHlIkHkJwcG7XxY241bCL1fv
-	tAfJJG0SQuEO5AU9Ns9rrKqUdyjTnd2NBL67TL6QgFQBT2sIkKKEU6v5vijOy0E7V0nOkMhVJAJRr
-	AXDWDcOK+/RJNogBhzSLtoqbR00M8VkF6Pn+k2pPrviWiqs9BzjLVNtJTH9suBgNIRsBHtl+1EP5f
-	bgoiXiYYMytxYYSdTo3El1puZ8XGqJwG50spADon2BWrVc6KbqkQG7IcAGw0QJM7wC+0jWW1mQrXV
-	2Xp+JDVL3XPdzqC7a7TupnVEp8hrU+r9mlO1qgPDw8X8VId5yt9W1cPddQLvmPutaGyNvCVdekW4b
-	mJ2u8aag==;
-Date: Thu, 5 Oct 2023 10:17:41 +0200
-From: Heiko Schlittermann <hs@nodmarc.schlittermann.de>
-To: oss-security@lists.openwall.com
-Message-ID: <ZR5xJZc32fhGOE+/@jumper.schlittermann.de>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <7b2e3fb3afc05aa39864e62b0c87a631b746f5c7.camel@runout.at>
- <ZRb180+B34Wmg1IM@jumper.schlittermann.de>
- <20230929165914.GA31245@openwall.com>
- <SJ0PR01MB7413CB07EDE457153C8C5C3CD1C0A@SJ0PR01MB7413.prod.exchangelabs.com>
- <ZR27jCirFcyI7smg@eldamar.lan>
- <SJ0PR01MB74130DAEAADAB8F76876E418D1CBA@SJ0PR01MB7413.prod.exchangelabs.com>
+Received: (qmail 1892 invoked from network); 1 Dec 2021 08:06:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1638345994; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=55F+Ypl+qwWyiQzZtyvxK0THqhmu3a9cUS/PkdgwAEg=;
+	b=AmMt7nOQbJ9wXiEgWRU4IGUogr63pEKTEU/LIvTcvrrS89PFxKGJpGo1Xk1Wx1lGOTBqww
+	VLSY0aKyfswmn8DRSPV4ghBw3fXgMBiTVWRGvYR4DqS6shdbYscTTFUuU/S4U3FR70B/Ow
+	iDae+d8UXfqj2e0V2fcnC05m7ZdwkLM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1638345994;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=55F+Ypl+qwWyiQzZtyvxK0THqhmu3a9cUS/PkdgwAEg=;
+	b=EpsNQQ7/uOgYRPLyCiC0a6Mm5s9IDCxmpEqvWlvNDLkFncpv9tQv42gB30rHVLIuxbngm7
+	nzu/S1D6tjNUJ2BA==
+Message-ID: <20211201080633.GF4037@suse.com>
+References: <87wnkp8kmj.fsf@oldenburg.str.redhat.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Fg3v0fsm7ThrgSUp"
+	protocol="application/pgp-signature"; boundary="kqOsKy60S4p104jH"
 Content-Disposition: inline
-In-Reply-To: <SJ0PR01MB74130DAEAADAB8F76876E418D1CBA@SJ0PR01MB7413.prod.exchangelabs.com>
-Organization: schlittermann -- internet & unix support
-X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
- QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
- y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
- X?H&`
-X-Telegram: @HeikoSchlittermann
-X-Threema: T5RPWMSS
-X-Signal: +49.172.7909055
-X-Phone: +49.172.7909055
-X-SMS: +49.172.7909055
-X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
-X-GPG-Key-ID: F69376CE
-Subject: Re: [oss-security] Exim4 MTA CVEs assigned from ZDI
+In-Reply-To: <87wnkp8kmj.fsf@oldenburg.str.redhat.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Date: Wed, 1 Dec 2021 09:06:33 +0100
+From: Johannes Segitz <jsegitz@suse.de>
+Reply-To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] IMA gadgets
+To: oss-security@lists.openwall.com
 
---Fg3v0fsm7ThrgSUp
-Content-Type: text/plain; charset=utf-8
+--kqOsKy60S4p104jH
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi ZDI,
+On Tue, Nov 30, 2021 at 09:16:20PM +0100, Florian Weimer wrote:
+> So in short, I don't really see how IMA signatures shipped as part of
+> all distribution packages, on all files, can provide value beyond that
+> of the hash that the already contain.
 
-zdi@trendmicro.com <zdi@trendmicro.com> (Mi 04 Okt 2023 23:01:37 CEST):
-> We have received a notification from the developers that these issues hav=
-e been patched. We will be happy to update our advisories once they do so.
+It provides "the customer is happy" value. From a security POV it doesn't
+help much (on a normal Linux system, can be different if you really strip
+it down). But AMSI also doesn't help and people are still keen on enabling
+it, despite bypasses being available all the time. Same will happen for
+IMA.
 
-https://exim.org/static/doc/security/CVE-2023-zdi.txt
+Johannes
+--=20
+GPG Key                EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
+Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
+SUSE Software Solutions Germany GmbH, Maxfeldstr. 5, 90409 Nuernberg
+Gesch=E4ftsf=FChrer: Ivo Totev (HRB 36809, AG N=FCrnberg)
 
-As publicly advertised, we patched only *a subset* of the issues.  And
-those patches are available to the public.  Unfortunately there is no
-confirmation from your side, whether those fixes really fix the issues.
-
-One of the open issues is related to libspf2, which is Exim a user of,
-but not responsible for.
-
- ZDI-23-1472 | ZDI-CAN-17578 | CVE-2023-42118 | Exim Bug 3032
-
-And about exactly *this libspf2* issue Salvatore asked you for information.
-
-(As I did on Oct 1st already, along with the request for additional informa=
-tion on one of
-the other unfixed issues (DNSDB)). I didn't receive any response yet.
-
-    Best regards from Dresden/Germany
-    Viele Gr=C3=BC=C3=9Fe aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
-
---Fg3v0fsm7ThrgSUp
+--kqOsKy60S4p104jH
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAmUecSUACgkQr0zGdqa2
-wUKVcggA2HlStICK/4BG5u2EPdwRy+7uZecohpZ6Tiw5yFn8lwFZN5/8On04rsmO
-PhDApwEs4+tl10pflp3BYTWvMUj7s4hhuuctoVZ6nujym1CUulG8Eup00JVQrpvF
-xMIsDwPW1BjcOkXWZgELKMlAJUMVJH7a30YWI4GzmHTbQB7DbXXepVb2Pst/JAGg
-7vt73JbkO/MCuAyccdIGFao0N37WVw7aOoWG4a6yeoBYERCmVbpDtk8T+eOW4AvU
-mVbfHiwr7cSUFR6DYbYiXF35Ty2+TeYTBpc3jjokJSoxvWNPMaWN5mSmoxKdVnxj
-Pm/SDoyWzGlwJ5dsFewxylWN7aimZA==
-=IVKa
+iQIzBAEBCgAdFiEEJQ9D9ffObx6cWU+VvCfdnSzE/WYFAmGnLQgACgkQvCfdnSzE
+/Wbmzw/+Om67mQ0dWxjHpROdXlzOGcEo3irMG5gYZ3hZSykizrrcqP6fyAwTs/lk
+X2sY1NUQaDAWQB5t339rFkylbxC1H63DvDBTzmbKhCLxs4o8ssq3Avl/zpmPO7z2
+6eyLCBHsKj3Mqnn01qKlXOxhifPD+UF3Rb2lgI2wlWu9nWsxt/AyglvSkwPioR/h
+wm/rdz5F12Ja5gSWqFDbeKQLb0OHDhLbU5MxjOnFrh+G/8Y4JQhgsIrBrANA4r5O
+Ff7eSPIMv+/TjdOwUy/0CuKWPYfaambFr38MCi5t8oB2Vaz1uNSirV9T7TRcIzIA
+vT/R9fJl1/MqywIYF6QHx5M8p0IeTuRk13/HaCIxKiJx+Snnvt2r4BDtqrCZfuAq
+QWJcXrcpGGJYrKR25W5BTXI0Q7fn7lm68Ic4DN57XfPMkug9DuZBfOnDnIRWyrr0
+ObNDp3+DZ3kEZ//KbcKCb2r1RMsehAYN6I9d5bxa8wYprnTeGrwftgGa74OWgHgn
+C5tGoRQR3om23+GUdIt7Z4uG+kvIi0thQ5Ol/eDEyVSpDsGExIvDN5GZ1fZsw7XV
+QBHrpSgVA8buK6LcGNBTzMGxzi+HoqbbMzsEEL1owoWf94j2UdXsSNMFamlPAZMR
++2iJ2hSZbBX0z2zlEaQw7Eb8lOkE0TCxF9edhmxtNT+vueuCvXg=
+=tc0v
 -----END PGP SIGNATURE-----
 
---Fg3v0fsm7ThrgSUp--
+--kqOsKy60S4p104jH--
