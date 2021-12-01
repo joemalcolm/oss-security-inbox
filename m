@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["643" "Wednesday" "14" "June" "2017" "09:24:26" "+1200" "Murray McAllister" "murray.mcallister@insomniasec.com" "<e84de9d7-409e-1346-87a6-0950030449fe@insomniasec.com>" "20" "[oss-security] Re: Linux kernel: drm/vmwgfx: 4 byte read of uninitialised kernel memory in vmw_gb_surface_define_ioctl()" "^Date:" nil nil "6" "2017061321:24:26" "[oss-security] Re: Linux kernel: drm/vmwgfx: 4 byte read of uninitialised kernel memory in vmw_gb_surface_define_ioctl()" (number mark "U       murray.mcall Jun 14   20/643   " thread-indent "\"[oss-security] Re: Linux kernel: drm/vmwgfx: 4 byte read of uninitialised kernel memory in vmw_gb_surface_define_ioctl()\"\n") "<58b3f24c-90fe-a92e-1ae8-dc8ad702401f@insomniasec.com>" ("<58b3f24c-90fe-a92e-1ae8-dc8ad702401f@insomniasec.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["963" "Wednesday" "1" "December" "2021" "12:52:18" "+0100" "Jens Timmerman" "jens@caret.be" "<73c78b13-5086-02eb-a496-4367a5712949@caret.be>" "25" "Re: [oss-security] IMA gadgets" "^Date:" nil nil "12" "2021120111:52:18" "[oss-security] IMA gadgets" (number mark "        jens@caret.b Dec  1   25/963   " thread-indent "\"Re: [oss-security] IMA gadgets\"\n") "<d2b2c4b7-cba4-349e-1856-23f84fc6a198@spamtrap.tnetconsulting.net>" ("<87wnkp8kmj.fsf@oldenburg.str.redhat.com>" "<d2b2c4b7-cba4-349e-1856-23f84fc6a198@spamtrap.tnetconsulting.net>") nil nil nil nil nil nil nil "Re: [oss-security] IMA gadgets" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0000
+X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 30269 invoked by uid 550); 13 Jun 2017 21:27:32 -0000
+Received: (qmail 5189 invoked by uid 550); 1 Dec 2021 11:58:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,40 +11,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28162 invoked from network); 13 Jun 2017 21:24:41 -0000
-References: <58b3f24c-90fe-a92e-1ae8-dc8ad702401f@insomniasec.com>
-Message-ID: <e84de9d7-409e-1346-87a6-0950030449fe@insomniasec.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.1
+Received: (qmail 1276 invoked from network); 1 Dec 2021 11:52:32 -0000
+X-ASG-Debug-ID: 1638359540-15c4336c7c21550001-Ebmqpw
+X-Barracuda-Envelope-From: jens@caret.be
+X-Barracuda-Effective-Source-IP: 94.105.126.128.dyn.edpnet.net[94.105.126.128]
+X-Barracuda-Apparent-Source-IP: 94.105.126.128
+Content-Type: multipart/alternative;
+ boundary="------------0LelCG82kr30OG9xxLIozYHM"
+Message-ID: <73c78b13-5086-02eb-a496-4367a5712949@caret.be>
 MIME-Version: 1.0
-In-Reply-To: <58b3f24c-90fe-a92e-1ae8-dc8ad702401f@insomniasec.com>
-Content-Type: text/plain; charset=utf-8
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.0
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-Date: Wed, 14 Jun 2017 09:24:26 +1200
-From: Murray McAllister <murray.mcallister@insomniasec.com>
+X-ASG-Orig-Subj: Re: [oss-security] IMA gadgets
+References: <87wnkp8kmj.fsf@oldenburg.str.redhat.com>
+ <d2b2c4b7-cba4-349e-1856-23f84fc6a198@spamtrap.tnetconsulting.net>
+In-Reply-To: <d2b2c4b7-cba4-349e-1856-23f84fc6a198@spamtrap.tnetconsulting.net>
+X-Barracuda-Connect: 94.105.126.128.dyn.edpnet.net[94.105.126.128]
+X-Barracuda-Start-Time: 1638359540
+X-Barracuda-URL: https://212.71.1.222:443/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at edpnet.be
+X-Barracuda-Scan-Msg-Size: 2179
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Spam-Score: 0.00
+X-Barracuda-Spam-Status: No, SCORE=0.00 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=7.0 tests=HTML_MESSAGE
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.94327
+	Rule breakdown below
+	 pts rule name              description
+	---- ---------------------- --------------------------------------------------
+	0.00 HTML_MESSAGE           BODY: HTML included in message
+Date: Wed, 1 Dec 2021 12:52:18 +0100
+From: Jens Timmerman <jens@caret.be>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Linux kernel: drm/vmwgfx: 4 byte read of uninitialised kernel
- memory in vmw_gb_surface_define_ioctl()
+Subject: Re: [oss-security] IMA gadgets
 To: oss-security@lists.openwall.com
 
-On 13/06/17 15:39, Murray McAllister wrote:
-> The vmw_gb_surface_define_ioctl() function (accessible via
-> DRM_IOCTL_VMW_GB_SURFACE_CREATE) defines a backup_handle variable but
-> does not give it an initial value. If you attempt to create a GB
-> surface, and provide a previously-allocated DMA buffer to be used as a
-> backup buffer, the backup_handle variable does not get written to and is
-> then later returned to user-space.
-> 
-> Upstream commit:
-> 
-> https://github.com/torvalds/linux/commit/07678eca2cf9c9a18584e546c2b2a0d0c9a3150c
-> 
-> CVE:
-> 
-> I'll request one now and reply once I have one.
-> 
+--------------0LelCG82kr30OG9xxLIozYHM
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-MITRE assigned CVE-2017-9605.
 
-Thanks
+On 11/30/21 22:27, Grant Taylor wrote:
+>
+>> This means an attacker can turn any binary into a SUID binary. The 
+>> signatures do not cover these file attributes, so they will still 
+>> verify.
+>
+> It may be possible to add SUID and / or capabilities to a signed file. 
+> But I have to question how such a questionable non-SUID binary would 
+> be given a signature in the first place?  Or asked another why, why 
+> would a questionable file be given a IMA signature in the first place? 
+
+
+An attacker doesn't need to SUID a questionable binary, just any binary 
+that would then allow to execute commands. e.g. /usr/bin/bash  or less 
+obvious but still obvious perl, python, vim, sudoedit,  and 100's of 
+other default tools that could be used to an attackers advantage once 
+they are SUID.
+
+--------------0LelCG82kr30OG9xxLIozYHM--
+
