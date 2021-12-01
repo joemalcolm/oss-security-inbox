@@ -1,53 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/10/1
-Message-ID: <20210110180842.GA2432@openwall.com>
-Date: Sun, 10 Jan 2021 19:08:42 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: distros list archive
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/01/7
+Message-ID: <21B1982A-2C53-4E5B-BB7E-178EAAADB089@juniper.net>
+Date: Wed, 1 Dec 2021 18:40:59 +0000
+From: Travis Finkenauer <tmfink@...iper.net>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: IMA gadgets
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-I've just updated the headers-only archives of (linux-)distros mentioned
-in the message below to include headers of everything posted until
-December 31, 2020.  There was relatively little need for this for a
-while due to the statistics kindly maintained by Gentoo, but now those
-are lagging behind (last updated until September 2019 inclusive).  They
-will need to also be updated, and I felt updating these archives might
-help with hopefully making that upcoming update and with its review.
+> On Dec 1, 2021, at 12:06 AM, Johannes Segitz <jsegitz@...e.de> wrote:
+> 
+> From a security POV it doesn't
+> help much (on a normal Linux system, can be different if you really strip
+> it down).
 
-Alexander
+I agree. It's difficult to add an IMA-like security policy that is both effective and general-purpose. But, if you don't care about your system being general-purpose, IMA can be useful on "locked-down vendor systems".
 
-On Mon, Nov 20, 2017 at 11:42:05PM +0100, Solar Designer wrote:
-> On Sat, Jun 24, 2017 at 06:39:50PM +0200, Solar Designer wrote:
-> > I've just set up these archives of the private lists up until June 19:
-> > 
-> > http://www.openwall.com/lists/linux-distros/
-> > http://www.openwall.com/lists/distros/
-> > 
-> > I did not decrypt the actual messages, but the statistics and the
-> > message headers should provide some visibility into how much and roughly
-> > what was discussed and when.
-> 
-> I've just updated these with message headers until November 19 (although
-> there was nothing posted after November 9, until further still-embargoed
-> messages appeared today).
-> 
-> > The messages appearing on distros should be strictly a subset of those
-> > appearing on linux-distros, as per the description of the lists here:
-> > 
-> > http://oss-security.openwall.org/wiki/mailing-lists/distros
-> > 
-> > As you may notice, the Subject lines sometimes contain [vs] and other
-> > times [vs-plain].  This reflects whether the messages traveled to the
-> > list exploder in encrypted or plaintext form, respectively.  They
-> > traveled to the list members in re-encrypted form either way.  The
-> > [vs-plain] case commonly occurs on messages CC'ed to other parties, for
-> > which the sender might not have had the keys.  MUAs generally don't
-> > allow a message to be encrypted to a subset of the addressees and sent
-> > in plaintext to others.
-> > 
-> > Enjoy.
-> 
-> Alexander
+If you can use IMA to enforce a "write XOR execute" policy on a filesystem, then you could have separate filesystems for executable code and writeable config. For example, you could:
+
+1) Have your executable code in a read-only squashfs filesystem. Use IMA to enforce only signed binaries will run.
+2) Put writeable data in a "noexec" filesystem.
+3) Lock-down (or remove) interpreters (python, perl, bash, etc.) that could "execute" data whose provenance does not come from a signed, read-only filesystem.
+
+Such a locked-down setup provides some security by trying to ensure only vendor-provided code is executed.
+But, this setup is probably not suitable for a general-purpose end-user system.
+
+-Travis
