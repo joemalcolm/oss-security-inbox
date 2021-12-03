@@ -1,4 +1,9 @@
-Received: (qmail 31989 invoked by uid 550); 16 May 2026 18:17:37 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3463" "Friday" "3" "December" "2021" "12:31:14" "+0100" "Oswald Buddenhagen" "oswald.buddenhagen@gmx.de" nil "98" "[oss-security] CVE-2021-44143: heap overflow in isync/mbsync" nil nil nil "12" nil nil (number mark "U       oswald.budde Dec  3   98/3463  " thread-indent "\"[oss-security] CVE-2021-44143: heap overflow in isync/mbsync\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-44143: heap overflow in isync/mbsync" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 32161 invoked by uid 550); 3 Dec 2021 11:34:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,73 +12,114 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 30536 invoked from network); 16 May 2026 15:09:18 -0000
-Date: Sat, 16 May 2026 17:09:08 +0200
-From: "Bernhard R. Link" <brl+oss@mail.brlink.eu>
-To: oss-security@lists.openwall.com
-Message-ID: <agiIlGxE-XCWbpVp@client.brlink.eu>
-References: <20260516150545.7570323b@hboeck.de>
+Received: (qmail 29813 invoked from network); 3 Dec 2021 11:31:27 -0000
+Date: Fri, 3 Dec 2021 12:31:14 +0100
+From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+To: isync-devel@lists.sourceforge.net
+Cc: oss-security@lists.openwall.com
+Message-ID: <YaoAAoib+m56pU/g@ugly>
+Mail-Followup-To: isync-devel@lists.sourceforge.net,
+	oss-security@lists.openwall.com
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: multipart/mixed; boundary="EBJnpFGq/t+SdAbh"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260516150545.7570323b@hboeck.de>
-Subject: Re: [oss-security] Recent Kernel exploits, attack surface reduction,
- example IPSEC
+Subject: [oss-security] CVE-2021-44143: heap overflow in isync/mbsync
 
-* Hanno Böck <hanno@hboeck.de> [260516 15:07]:
-> However, there's a broader point here: I think it's common these
-> days that Linux distributions install most or all kernel modules by
-> default, and loading them happens automatically. Which, in many cases,
-> means people are potentially affected by security flaws in features
-> they never use.
-> "Attack surface reduction" is widely considered to be a good security
-> principle, and I wonder if we can do better here.
->
-> To pick the example of IPSEC, i wonder if it wouldn't be better to
-> have, e.g., a separate "linux-modules-ipsec" package that isn't
-> installed by default. People who use and need IPSEC will likely know
-> that they need it, and can install it separately.
->
-> I'm aware this doesn't come for free, and will add increased
-> complexity to kernel packaging. [...]
+--EBJnpFGq/t+SdAbh
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
 
-The packaging complexity would likely not be that much of a problem,
-the overhead in packaging metadata would add some more cost (also
-consider that deciding which packages to install easily gets into
-the 2^package number complexity). But the biggest disadvantage would
-be the missing granularity (you don't wont to make a package for
-every single module) and the hassle is something is missing
-(installing a missing module to have network again without network...).
+description:
 
-To decrease the attack vector, restricting the second part would be
-much easier: restricting what can be auto-loaded. A module that you
-need root permissions to load is harmless for priviledge escalation,
-whether installed or not.
+A flaw was found in mbsync versions 1.4.0 through 1.4.3. Due to an
+unchecked condition, a malicious or compromised IMAP server could use
+a crafted mail message that lacks headers (i.e., one that
+starts with an empty line) to provoke a heap overflow, which could
+conceivably be exploited for remote code execution.
 
-Security wise, supporting allow-lists instead of only deny-lists
-would make it easier for systems where you know beforehand what you
-want (I guess many server systems might end up in there). Of course
-you can just load everything and disable module loading, but then
-you'll need a restart whenever what you load needs to be changed.
+mitigation:
 
-But that would only work for tighly managed systems, nothing easily
-applicable to general systems. There you always have to find a
-balance between ease of use and security. Security is worthless if
-users cannot use it. (After all, the most secure system is switched
-off, filles with epoxy, encased in cement and resting on the ground
-of the sea).
-
-Where the perfect balance is depends a lot on the individual though.
-One easy way to do that is for example security levels to define
-different sets of defaults. Distributions could for example
-categorize kernel modules about how likely an average user of them
-would need each one and then allow to configure a module security
-level that limits how uncommon a module gets autoloaded without
-an admin allowlisting it.
-
-That would likely need a lot of tooling, though...
+upgrade to the freshly released v1.4.4 available from 
+https://sourceforge.net/projects/isync/files/isync/ , or apply the 
+attached patch.
 
 
-	Bernhard R. Link
+--EBJnpFGq/t+SdAbh
+Content-Type: text/x-diff; charset=us-ascii
+Content-Disposition: attachment;
+	filename="CVE-2021-44143-buffer-overflow-on-invalid-1.4.patch"
+
+>From 87065c12b477ee7239dd907f352dda5289c0c919 Mon Sep 17 00:00:00 2001
+From: Oswald Buddenhagen <ossi@users.sf.net>
+Date: Mon, 22 Nov 2021 20:57:24 +0100
+Subject: [PATCH 1/1] CVE-2021-44143: don't overflow heap on messages without
+ headers
+
+when a broken/compromised/malicious server gives us a message that
+starts with an empty line, we'd enter the path for inserting a pristine
+placeholder subject, for which we unfortunately didn't actually allocate
+space (unless MaxSize is in use and the message exceeds it).
+
+note that this cannot be triggered by merely receiving a crafted mail
+with no headers (yes, it's actually possible to send such a thing), as
+the delivery of mails adds plenty of headers.
+
+amends 70bad661.
+---
+ src/sync.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/src/sync.c b/src/sync.c
+index 9804b7e..79dc223 100644
+--- a/src/sync.c
++++ b/src/sync.c
+@@ -410,7 +410,7 @@ copy_msg_convert( int in_cr, int out_cr, copy_vars_t *vars )
+ {
+ 	char *in_buf = vars->data.data;
+ 	uint in_len = vars->data.len;
+-	uint idx = 0, sbreak = 0, ebreak = 0, break2 = 0;
++	uint idx = 0, sbreak = 0, ebreak = 0, break2 = UINT_MAX;
+ 	uint lines = 0, hdr_crs = 0, bdy_crs = 0, app_cr = 0, extra = 0;
+ 	uint add_subj = 0;
+ 
+@@ -428,7 +428,7 @@ copy_msg_convert( int in_cr, int out_cr, copy_vars_t *vars )
+ 					if (!vars->minimal)
+ 						goto oke;
+ 				} else {
+-					if (!break2 && vars->minimal && !strncasecmp( in_buf + start, "Subject:", 8 )) {
++					if (break2 == UINT_MAX && vars->minimal && !strncasecmp( in_buf + start, "Subject:", 8 )) {
+ 						break2 = start + 8;
+ 						if (in_buf[break2] == ' ')
+ 							break2++;
+@@ -441,7 +441,7 @@ copy_msg_convert( int in_cr, int out_cr, copy_vars_t *vars )
+ 						sbreak = ebreak = start;
+ 					if (vars->minimal) {
+ 						in_len = idx;
+-						if (!break2) {
++						if (break2 == UINT_MAX) {
+ 							break2 = start;
+ 							add_subj = 1;
+ 						}
+@@ -496,7 +496,7 @@ copy_msg_convert( int in_cr, int out_cr, copy_vars_t *vars )
+ 	char *out_buf = vars->data.data = nfmalloc( vars->data.len );
+ 	idx = 0;
+ 	if (vars->srec) {
+-		if (break2 && break2 < sbreak) {
++		if (break2 < sbreak) {
+ 			copy_msg_bytes( &out_buf, in_buf, &idx, break2, in_cr, out_cr );
+ 			memcpy( out_buf, dummy_pfx, strlen(dummy_pfx) );
+ 			out_buf += strlen(dummy_pfx);
+@@ -512,7 +512,7 @@ copy_msg_convert( int in_cr, int out_cr, copy_vars_t *vars )
+ 		*out_buf++ = '\n';
+ 		idx = ebreak;
+ 
+-		if (break2 >= sbreak) {
++		if (break2 != UINT_MAX && break2 >= sbreak) {
+ 			copy_msg_bytes( &out_buf, in_buf, &idx, break2, in_cr, out_cr );
+ 			if (!add_subj) {
+ 				memcpy( out_buf, dummy_pfx, strlen(dummy_pfx) );
+-- 
+2.33.1.11.g2e4d00c830
+
+
+--EBJnpFGq/t+SdAbh--
