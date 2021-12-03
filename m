@@ -1,110 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/20/6
-Message-ID: <8d5b2baa-d0b5-a0fb-1d93-eeca4b439efa@igalia.com>
-Date: Mon, 20 Dec 2021 14:16:15 +0000
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2021-0007
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/03/1
+Message-ID: <Yan+cPE6n/neDPhS@ugly>
+Date: Fri, 3 Dec 2021 12:24:32 +0100
+From: Oswald Buddenhagen <oswald.buddenhagen@....de>
+To: isync-devel@...ts.sourceforge.net
+Cc: oss-security@...ts.openwall.com
+Subject: CVE-2021-3657: multiple buffer overflows in isync/mbsync
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2021-0007
-------------------------------------------------------------------------
+description:
 
-Date reported           : December 20, 2021
-Advisory ID             : WSA-2021-0007
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2021-0007.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2021-0007.html
-CVE identifiers         : CVE-2021-30809, CVE-2021-30818,
-                          CVE-2021-30823, CVE-2021-30836,
-                          CVE-2021-30884, CVE-2021-30887,
-                          CVE-2021-30888, CVE-2021-30889,
-                          CVE-2021-30890, CVE-2021-30897.
+A flaw was found in mbsync versions prior to 1.4.4. Due to inadequate
+handling of extremely large (>=2GiB) IMAP literals, malicious or
+compromised IMAP servers, and hypothetically even external email
+senders, could cause several different buffer overflows, which could
+conceivably be exploited for remote code execution.
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+mitigation:
 
-CVE-2021-30809
-    Versions affected: WebKitGTK and WPE WebKit before 2.32.4.
-    Credit to an anonymous researcher.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A use after free issue was
-    addressed with improved memory management.
+upgrade to the freshly released v1.4.4 available from 
+https://sourceforge.net/projects/isync/files/isync/ , or apply the 
+matching attached patch. note that while a patch for v1.3.x is provided, 
+no upstream release will be made any more.
 
-CVE-2021-30818
-    Versions affected: WebKitGTK and WPE WebKit before 2.34.0.
-    Credit to Amar Menezes (@amarekano) of Zon8Research.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A type confusion issue was
-    addressed with improved state handling.
+details:
 
-CVE-2021-30823
-    Versions affected: WebKitGTK and WPE WebKit before 2.34.0.
-    Credit to David Gullasch of Recurity Labs.
-    Impact: An attacker in a privileged network position may be able to
-    bypass HSTS. Description: A logic issue was addressed with improved
-    restrictions.
+i'm not sure it's actually possible to pull off RCE with these. a
+non-server attacker would be additionally impaired by message size
+limitations and being unable to predict the exact size of the headers
+stored in the box, so they would likely need an account on the same
+liberally configured system, apart from knowing to target mbsync.
 
-CVE-2021-30836
-    Versions affected: WebKitGTK and WPE WebKit before 2.32.4.
-    Credit to Peter Nguyen Vu Hoang of STAR Labs.
-    Impact: Processing a maliciously crafted audio file may disclose
-    restricted memory. Description: An out-of-bounds read was addressed
-    with improved input validation.
+View attachment "CVE-2021-3657-buffer-overflows-on-big-1.4.patch" of type "text/x-diff" (7190 bytes)
 
-CVE-2021-30884
-    Versions affected: WebKitGTK and WPE WebKit before 2.34.0.
-    Credit to an anonymous researcher.
-    Impact: Visiting a maliciously crafted website may reveal a user's
-    browsing history. Description: The issue was resolved with
-    additional restrictions on CSS compositing.
-
-CVE-2021-30887
-    Versions affected: WebKitGTK and WPE WebKit before 2.34.3.
-    Credit to Narendra Bhati (@imnarendrabhati) of Suma Soft Pvt. Ltd.
-    Impact: Processing maliciously crafted web content may lead to
-    unexpectedly unenforced Content Security Policy. Description: A
-    logic issue was addressed with improved restrictions.
-
-CVE-2021-30888
-    Versions affected: WebKitGTK and WPE WebKit before 2.34.0.
-    Credit to Prakash (@1lastBr3ath).
-    Impact: A malicious website using Content Security Policy reports
-    may be able to leak information via redirect behavior. Description:
-    An information leakage issue was addressed.
-
-CVE-2021-30889
-    Versions affected: WebKitGTK and WPE WebKit before 2.34.0.
-    Credit to Chijin Zhou of ShuiMuYuLin Ltd and Tsinghua wingtecher
-    lab.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution, Description: A buffer overflow issue was
-    addressed with improved memory handling.
-
-CVE-2021-30890
-    Versions affected: WebKitGTK and WPE WebKit before 2.34.3.
-    Credit to an anonymous researcher.
-    Impact: Processing maliciously crafted web content may lead to
-    universal cross site scripting. Description: A logic issue was
-    addressed with improved state management.
-
-CVE-2021-30897
-    Versions affected: WebKitGTK and WPE WebKit before 2.34.0.
-    Credit to an anonymous researcher.
-    Impact: A malicious website may exfiltrate data cross-origin.
-    Description: An issue existed in the specification for the resource
-    timing API. The specification was updated and the updated
-    specification was implemented.
-
-
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
-
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
-
-The WebKitGTK and WPE WebKit team,
-December 20, 2021
+View attachment "CVE-2021-3657-buffer-overflows-on-big-1.3.patch" of type "text/x-diff" (5489 bytes)
