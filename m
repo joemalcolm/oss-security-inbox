@@ -1,44 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/04/3
-Message-ID: <20210804164951.GG5486@sequoia>
-Date: Wed, 4 Aug 2021 11:49:51 -0500
-From: Tyler Hicks <code@...icks.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Pop!_OS Membership to linux-distros list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/03/2
+Message-ID: <YaoAAoib+m56pU/g@ugly>
+Date: Fri, 3 Dec 2021 12:31:14 +0100
+From: Oswald Buddenhagen <oswald.buddenhagen@....de>
+To: isync-devel@...ts.sourceforge.net
+Cc: oss-security@...ts.openwall.com
+Subject: CVE-2021-44143: heap overflow in isync/mbsync
 Content-Type: text/plain; charset=utf-8
 
-On 2021-08-04 09:59:02, Jeremy Soller wrote:
-> On Tue, Jul 27, 2021, at 11:59 AM, Solar Designer wrote:
-> > > 9. Have someone already on the private list, or at least someone else who has
-> > > been active on oss-security for years but is not affiliated with your distro
-> > > nor your organization, vouch for at least one of the people requesting
-> > > membership on behalf of your distro (then that one vouched-for person will be
-> > > able to vouch for others on your team, in case you'd like multiple people
-> > > subscribed)
-> > > 
-> > > I do not know if I have contacts that are already on the linux-distros list.
-> > 
-> > It can also be "someone else who has been active on oss-security for
-> > years but is not affiliated".  Anyone?
-> 
-> I believe Tyler Hicks is willing to do this.
+description:
 
-With the caveats that I mentioned in my earlier reply to the thread as
-I'm not clear on what "vouch" means here.
+A flaw was found in mbsync versions 1.4.0 through 1.4.3. Due to an
+unchecked condition, a malicious or compromised IMAP server could use
+a crafted mail message that lacks headers (i.e., one that
+starts with an empty line) to provoke a heap overflow, which could
+conceivably be exploited for remote code execution.
 
-In the past, I've vouched for people that I personally know and have
-worked closely with.
+mitigation:
 
-I need to make it clear that this "vouch" for Jeremy doesn't meet that
-bar. I've digitally crossed paths with Jeremy a few times and, based on
-those interactions, can believe that he'd be doing security response
-work for Pop!_OS. That's all I can say. I'd be a lot more comfortable if
-someone could provide a stronger vouch.
+upgrade to the freshly released v1.4.4 available from 
+https://sourceforge.net/projects/isync/files/isync/ , or apply the 
+attached patch.
 
-Tyler
 
-> 
-> > Thanks,
-> > 
-> > Alexander
-> > 
+View attachment "CVE-2021-44143-buffer-overflow-on-invalid-1.4.patch" of type "text/x-diff" (2692 bytes)
