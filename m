@@ -1,4 +1,9 @@
-Received: (qmail 30164 invoked by uid 550); 16 May 2023 15:24:46 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4129" "Monday" "6" "December" "2021" "15:58:14" "+1100" "Aleksa Sarai" "cyphar@cyphar.com" nil "99" "[oss-security] CVE-2021-43784: integer overflow in runc's netlink bytemsg allows malicious configuration to discreetly modify container configuration" nil nil nil "12" nil nil (number mark "U       cyphar@cypha Dec  6   99/4129  " thread-indent "\"[oss-security] CVE-2021-43784: integer overflow in runc's netlink bytemsg allows malicious configuration to discreetly modify container configuration\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-43784: integer overflow in runc's netlink bytemsg allows malicious configuration to discreetly modify container configuration" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 20242 invoked by uid 550); 6 Dec 2021 04:58:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,190 +12,115 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25646 invoked from network); 16 May 2023 15:15:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
-	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
-	Content-Transfer-Encoding:Content-Type;
-	bh=FSgKutlkty7XrjsLRVvpNZO6nUhKYovxPjAqthRaHbQ=; b=ovfB4G/yeLEMgz9vOE3aL5+5wx
-	h7gfJpfRfc1U/gf3oQC+VFUEQlfUIXXYlJJfrcv4BfCfOpIoAEnVs3HAgIWWIV+/n5sgvXmQBZ8tG
-	D7IklvZiR1JeDJzTmHTfQJgsCVwS0Xa4csgHisszbvBer3dO/95cJNb+4c6Teo+R20X4=;
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 20221 invoked from network); 6 Dec 2021 04:58:37 -0000
+X-Virus-Scanned: amavisd-new at heinlein-support.de
+Date: Mon, 6 Dec 2021 15:58:14 +1100
+From: Aleksa Sarai <cyphar@cyphar.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20211206045814.q3o5m32osc37ra4o@senku>
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.509 (Entity 5.509)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1pywNt-00034k-MT@xenbits.xenproject.org>
-Date: Tue, 16 May 2023 15:14:41 +0000
-Subject: [oss-security] Xen Security Advisory 431 v1 (CVE-2022-42336) - Mishandling of
- guest SSBD selection on AMD hardware
-
---=separator
-Content-Type: text/plain; charset="utf-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="gykhjkorupfmixo3"
 Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2021-43784: integer overflow in runc's netlink bytemsg allows
+ malicious configuration to discreetly modify container configuration
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--gykhjkorupfmixo3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-            Xen Security Advisory CVE-2022-42336 / XSA-431
+GitHub Advisory:
+  <https://github.com/opencontainers/runc/security/advisories/GHSA-v95c-p5h=
+m-xq8f>
 
-          Mishandling of guest SSBD selection on AMD hardware
+This vulnerability was originally thought to be exploitable in released
+versions of runc and thus a CVE was assigned (though it was thought to
+be more difficult than with the yet-unreleased runc tree), but
+subsequent analysis found that it appears to never have been exploitable
+outside of the yet-unreleased runc tree.
 
-ISSUE DESCRIPTION
-=================
+However, out of an abundance of caution we still followed through with
+an emergency release of runc 1.0.3[2] which resolves this issue.
 
-The current logic to set SSBD on AMD Family 17h and Hygon Family 18h
-processors requires that the setting of SSBD is coordinated at a core
-level, as the setting is shared between threads.  Logic was introduced
-to keep track of how many threads require SSBD active in order to
-coordinate it, such logic relies on using a per-core counter of threads
-that have SSBD active.
+[ Impact ]
 
-When running on the mentioned hardware, it's possible for a guest to
-under or overflow the thread counter, because each write to
-VIRT_SPEC_CTRL.SSBD by the guest gets propagated to the helper that does
-the per-core active accounting.  Underflowing the counter causes the
-value to get saturated, and thus attempts for guests running on the same
-core to set SSBD won't have effect because the hypervisor assumes it's
-already active.
+In runc, netlink is used internally as a serialization system for
+specifying the relevant container configuration to the C portion of our
+code (responsible for the based namespace setup of containers). In all
+versions of runc prior to 1.0.3, the encoder did not handle the
+possibility of an integer overflow in the 16-bit length field for the
+byte array attribute type, meaning that a large enough malicious byte
+array attribute could result in the length overflowing and the attribute
+contents being parsed as netlink messages for container configuration.
 
-IMPACT
-======
+This vulnerability requires the attacker to have some control over the
+configuration of the container and would allow the attacker to bypass
+the namespace restrictions of the container by simply adding their own
+netlink payload which disables all namespaces.
 
-An attacker with control over a guest can mislead other guests into
-observing SSBD active when it is not.
+Prior to 9c44407, in practice it was fairly difficult to specify an
+arbitrary-length netlink message with most container runtimes. The only
+user-controlled byte array was the namespace paths attributes which can
+be specified in runc's config.json, but as far as we can tell no
+container runtime gives raw access to that configuration setting -- and
+having raw access to that setting would allow the attacker to disable
+namespace protections entirely anyway (setting them to /proc/1/ns/...
+for instance). In addition, each namespace path is limited to 4096 bytes
+(with only 7 namespaces supported by runc at the moment) meaning that
+even with custom namespace paths it appears an attacker still cannot
+shove enough bytes into the netlink bytemsg in order to overflow the
+uint16 counter.
 
-VULNERABLE SYSTEMS
-==================
+However, out of an abundance of caution (given how old this bug is) we
+decided to treat it as a potentially exploitable vulnerability with a
+low severity. After 9c44407 (which was not present in any release of
+runc prior to the discovery of this bug), all mount paths are included
+as a giant netlink message which means that this bug becomes
+significantly more exploitable in more reasonable threat scenarios.
 
-Only Xen version 4.17 is vulnerable.
+The main users impacted are those who allow untrusted images with
+untrusted configurations to run on their machines (such as with shared
+cloud infrastructure), though as mentioned above it appears this bug was
+not practically exploitable on any released version of runc to date.
 
-Only x86 AMD systems are vulnerable.  The vulnerability can be leveraged
-by and affects only HVM guests.
+[ Patches ]
 
-MITIGATION
-==========
+The patch for this is commit d72d057[1] and runc 1.0.3[2] was released with
+this bug fixed.
 
-Running PV guests only will prevent the vulnerability.
+[ Workarounds ]
 
-Setting `spec-ctrl=ssbd` on the hypervisor command line will force SSBD
-to be unconditionally active.
+To the extent this is exploitable, disallowing untrusted namespace paths
+in container configuration should eliminate all practical ways of
+exploiting this bug. It should be noted that untrusted namespace paths
+would allow the attacker to disable namespace protections entirely even
+in the absence of this bug.
 
-NOTE REGARDING LACK OF EMBARGO
-==============================
+[ Credits ]
 
-This issue was discussed in public already.
+Thanks for Felix Wilhelm from Google Project Zero for discovering this
+vulnerability.
 
-RESOLUTION
-==========
+[1]: https://github.com/opencontainers/runc/commit/d72d057ba794164c3cce9451=
+a00b72a78b25e1ae
+[2]: https://github.com/opencontainers/runc/releases/tag/v1.0.3
 
-Applying the attached patch resolves this issue.
+--=20
+Aleksa Sarai
+Senior Software Engineer (Containers)
+SUSE Linux GmbH
+<https://www.cyphar.com/>
 
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
+--gykhjkorupfmixo3
+Content-Type: application/pgp-signature; name="signature.asc"
 
-xsa431.patch           xen-unstable - Xen 4.17.x
-
-$ sha256sum xsa431*
-e71a8b7e251adf4832a4de9e452c2fd895a56314729c54698d10e344f1996a99  xsa431.patch
-$
 -----BEGIN PGP SIGNATURE-----
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmRjkhsMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZDb8H/0vKLOgBhwKCVc8VYm59FIALd69k4qCLcwwfDuro
-jFum5ATC3Cbx+iEXD2URFY6O+eE71mMBqw3/GT/BiKvsBHQhX5lsJUpxZFscqW9J
-diM69a9BYuNNy+qW3TsslRsW9WGHH5bZoAhxpNKgciE17svJ76IRUsgNf806VRX+
-VBI61wK2s9oqzfTazhQVR9zxFLANTyw7M4EtUXs0y49IUFjnSeVpW7/PdoloPC1C
-m0SG6HSIJ4bH+yAWMqY5GYYVgJOkaStxEM6YLGjT/V078xcDyW2cie3BOtQ8/BI0
-FJ7iwEh932k7VLtd+htBF3vo7CD+teGneeaktqKK2h55ps0=
-=dmhW
+iHUEABYKAB0WIQSxZm6dtfE8gxLLfYqdlLljIbnQEgUCYa2YYwAKCRCdlLljIbnQ
+EoSzAP91hJAuXiWjxo8opHA60zmVWVFQyHEb0qlvX0pLwZCf3QD/QvKWrA8w/i3W
+FnuVZwHNt5sQBBOq+lxc2n6uW8OcsAA=
+=A0U4
 -----END PGP SIGNATURE-----
 
---=separator
-Content-Type: application/octet-stream; name="xsa431.patch"
-Content-Disposition: attachment; filename="xsa431.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSA5YzAzMzgwZmM5ZTMyOGYwY2NiYTg2MGNiZTA5ZWY1OGVhMzY2Zjcx
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBSb2dlciBQYXUgTW9u
-bmUgPHJvZ2VyLnBhdUBjaXRyaXguY29tPgpEYXRlOiBXZWQsIDIyIE1hciAy
-MDIzIDExOjUyOjA3ICswMTAwClN1YmplY3Q6IFtQQVRDSF0geDg2L2FtZDog
-Zml4IGxlZ2FjeSBzZXR0aW5nIG9mIFNTQkQgb24gQU1EIEZhbWlseSAxN2gK
-TUlNRS1WZXJzaW9uOiAxLjAKQ29udGVudC1UeXBlOiB0ZXh0L3BsYWluOyBj
-aGFyc2V0PVVURi04CkNvbnRlbnQtVHJhbnNmZXItRW5jb2Rpbmc6IDhiaXQK
-ClRoZSBjdXJyZW50IGxvZ2ljIHRvIHNldCBTU0JEIG9uIEFNRCBGYW1pbHkg
-MTdoIGFuZCBIeWdvbiBGYW1pbHkgMThoCnByb2Nlc3NvcnMgcmVxdWlyZXMg
-dGhhdCB0aGUgc2V0dGluZyBvZiBTU0JEIGlzIGNvb3JkaW5hdGVkIGF0IGEg
-Y29yZQpsZXZlbCwgYXMgdGhlIHNldHRpbmcgaXMgc2hhcmVkIGJldHdlZW4g
-dGhyZWFkcy4gIExvZ2ljIHdhcyBpbnRyb2R1Y2VkCnRvIGtlZXAgdHJhY2sg
-b2YgaG93IG1hbnkgdGhyZWFkcyByZXF1aXJlIFNTQkQgYWN0aXZlIGluIG9y
-ZGVyIHRvCmNvb3JkaW5hdGUgaXQsIHN1Y2ggbG9naWMgcmVsaWVzIG9uIHVz
-aW5nIGEgcGVyLWNvcmUgY291bnRlciBvZgp0aHJlYWRzIHRoYXQgaGF2ZSBT
-U0JEIGFjdGl2ZS4KCkdpdmVuIHRoZSBjdXJyZW50IGxvZ2ljLCBpdCdzIHBv
-c3NpYmxlIGZvciBhIGd1ZXN0IHRvIHVuZGVyIG9yCm92ZXJmbG93IHRoZSB0
-aHJlYWQgY291bnRlciwgYmVjYXVzZSBlYWNoIHdyaXRlIHRvIFZJUlRfU1BF
-Q19DVFJMLlNTQkQKYnkgdGhlIGd1ZXN0IGdldHMgcHJvcGFnYXRlZCB0byB0
-aGUgaGVscGVyIHRoYXQgZG9lcyB0aGUgcGVyLWNvcmUKYWN0aXZlIGFjY291
-bnRpbmcuICBPdmVyZmxvd2luZyB0aGUgY291bnRlciBpcyBub3Qgc28gbXVj
-aCBvZiBhbgppc3N1ZSwgYXMgdGhpcyB3b3VsZCBqdXN0IG1ha2UgU1NCRCBz
-dGlja3kuCgpVbmRlcmZsb3dpbmcgaG93ZXZlciBpcyBtb3JlIHByb2JsZW1h
-dGljOiBvbiBub24tZGVidWcgWGVuIGJ1aWxkcyBhCmd1ZXN0IGNhbiBwZXJm
-b3JtIGVtcHR5IHdyaXRlcyB0byBWSVJUX1NQRUNfQ1RSTCB0aGF0IHdvdWxk
-IGNhdXNlIHRoZQpjb3VudGVyIHRvIHVuZGVyZmxvdyBhbmQgdGh1cyB0aGUg
-dmFsdWUgZ2V0cyBzYXR1cmF0ZWQgdG8gdGhlIG1heAp2YWx1ZSBvZiB1bnNp
-Z25lZCBpbnQuICBBdCB3aGljaCBwb2ludHMgYXR0ZW1wdHMgZnJvbSBhbnkg
-dGhyZWFkIHRvCnNldCBWSVJUX1NQRUNfQ1RSTC5TU0JEIHdvbid0IGdldCBw
-cm9wYWdhdGVkIHRvIHRoZSBoYXJkd2FyZSBhbnltb3JlLApiZWNhdXNlIHRo
-ZSBsb2dpYyB3aWxsIHNlZSB0aGF0IHRoZSBjb3VudGVyIGlzIGdyZWF0ZXIg
-dGhhbiAxIGFuZAphc3N1bWUgdGhhdCBTU0JEIGlzIGFscmVhZHkgYWN0aXZl
-LCBlZmZlY3RpdmVseSBsb29zaW5nIHRoZSBzZXR0aW5nCm9mIFNTQkQgYW5k
-IHRoZSBwcm90ZWN0aW9uIGl0IHByb3ZpZGVzLgoKRml4IHRoaXMgYnkgaW50
-cm9kdWNpbmcgYSBwZXItQ1BVIHZhcmlhYmxlIHRoYXQga2VlcHMgdHJhY2sg
-b2Ygd2hldGhlcgp0aGUgY3VycmVudCB0aHJlYWQgaGFzIGxlZ2FjeSBTU0JE
-IGFjdGl2ZSBvciBub3QsIGFuZCB0aHVzIG9ubHkKYXR0ZW1wdCB0byBwcm9w
-YWdhdGUgdGhlIHZhbHVlIHRvIHRoZSBoYXJkd2FyZSBvbmNlIHRoZSB0aHJl
-YWQKc2VsZWN0ZWQgdmFsdWUgY2hhbmdlcy4KClRoaXMgaXMgWFNBLTQzMSAv
-IENWRS0yMDIyLTQyMzM2CgpGaXhlczogYjIwMzBlNjczMGEyICgnYW1kL3Zp
-cnRfc3NiZDogc2V0IFNTQkQgYXQgdkNQVSBjb250ZXh0IHN3aXRjaCcpClJl
-cG9ydGVkLWJ5OiBBbmRyZXcgQ29vcGVyIDxhbmRyZXcuY29vcGVyM0BjaXRy
-aXguY29tPgpTaWduZWQtb2ZmLWJ5OiBSb2dlciBQYXUgTW9ubsOpIDxyb2dl
-ci5wYXVAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVsaWNoIDxq
-YmV1bGljaEBzdXNlLmNvbT4KLS0tCiB4ZW4vYXJjaC94ODYvY3B1L2FtZC5j
-IHwgMTYgKysrKysrKysrKysrKysrKwogMSBmaWxlIGNoYW5nZWQsIDE2IGlu
-c2VydGlvbnMoKykKCmRpZmYgLS1naXQgYS94ZW4vYXJjaC94ODYvY3B1L2Ft
-ZC5jIGIveGVuL2FyY2gveDg2L2NwdS9hbWQuYwppbmRleCBjYWFmZTQ0NzQw
-MjEuLjlhMWEzODU4ZWRkNCAxMDA2NDQKLS0tIGEveGVuL2FyY2gveDg2L2Nw
-dS9hbWQuYworKysgYi94ZW4vYXJjaC94ODYvY3B1L2FtZC5jCkBAIC03ODMs
-MTIgKzc4MywyMyBAQCBib29sIF9faW5pdCBhbWRfc2V0dXBfbGVnYWN5X3Nz
-YmQodm9pZCkKIAlyZXR1cm4gdHJ1ZTsKIH0KIAorLyoKKyAqIGxlZ2FjeV9z
-c2JkIGlzIGFsd2F5cyBpbml0aWFsaXplZCB0byBmYWxzZSBiZWNhdXNlIHdo
-ZW4gU1NCRCBpcyBzZXQKKyAqIGZyb20gdGhlIGNvbW1hbmQgbGluZSBndWVz
-dCBhdHRlbXB0cyB0byBjaGFuZ2UgaXQgYXJlIGEgbm8tb3AgKHNlZQorICog
-YW1kX3NldF9sZWdhY3lfc3NiZCgpKSwgd2hlcmVhcyB3aGVuIFNTQkQgaXMg
-aW5hY3RpdmUgaGFyZHdhcmUgd2lsbAorICogYmUgZm9yY2VkIGludG8gdGhh
-dCBtb2RlIChzZWUgYW1kX2luaXRfc3NiZCgpKS4KKyAqLworc3RhdGljIERF
-RklORV9QRVJfQ1BVKGJvb2wsIGxlZ2FjeV9zc2JkKTsKKworLyogTXVzdCBi
-ZSBjYWxsZWQgb25seSB3aGVuIHRoZSBTU0JEIHNldHRpbmcgbmVlZHMgdG9n
-Z2xpbmcuICovCiBzdGF0aWMgdm9pZCBjb3JlX3NldF9sZWdhY3lfc3NiZChi
-b29sIGVuYWJsZSkKIHsKIAljb25zdCBzdHJ1Y3QgY3B1aW5mb194ODYgKmMg
-PSAmY3VycmVudF9jcHVfZGF0YTsKIAlzdHJ1Y3Qgc3NiZF9sc19jZmcgKnN0
-YXR1czsKIAl1bnNpZ25lZCBsb25nIGZsYWdzOwogCisJQlVHX09OKHRoaXNf
-Y3B1KGxlZ2FjeV9zc2JkKSA9PSBlbmFibGUpOworCiAJaWYgKChjLT54ODYg
-IT0gMHgxNyAmJiBjLT54ODYgIT0gMHgxOCkgfHwgYy0+eDg2X251bV9zaWJs
-aW5ncyA8PSAxKSB7CiAJCUJVR19PTighc2V0X2xlZ2FjeV9zc2JkKGMsIGVu
-YWJsZSkpOwogCQlyZXR1cm47CkBAIC04MTYsMTIgKzgyNywxNyBAQCB2b2lk
-IGFtZF9zZXRfbGVnYWN5X3NzYmQoYm9vbCBlbmFibGUpCiAJCSAqLwogCQly
-ZXR1cm47CiAKKwlpZiAodGhpc19jcHUobGVnYWN5X3NzYmQpID09IGVuYWJs
-ZSkKKwkJcmV0dXJuOworCiAJaWYgKGNwdV9oYXNfdmlydF9zc2JkKQogCQl3
-cm1zcihNU1JfVklSVF9TUEVDX0NUUkwsIGVuYWJsZSA/IFNQRUNfQ1RSTF9T
-U0JEIDogMCwgMCk7CiAJZWxzZSBpZiAoYW1kX2xlZ2FjeV9zc2JkKQogCQlj
-b3JlX3NldF9sZWdhY3lfc3NiZChlbmFibGUpOwogCWVsc2UKIAkJQVNTRVJU
-X1VOUkVBQ0hBQkxFKCk7CisKKwl0aGlzX2NwdShsZWdhY3lfc3NiZCkgPSBl
-bmFibGU7CiB9CiAKIC8qCi0tIAoyLjQwLjAKCg==
-
---=separator--
+--gykhjkorupfmixo3--
