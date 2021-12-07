@@ -1,28 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/17/10
-Message-ID: <CAKx+4-qgvO4_R8fTqwxKLqwud42wUkG3V2POGeXE6C6Bv+zrxg@mail.gmail.com>
-Date: Wed, 17 Mar 2021 19:45:59 +0530
-From: Rohit Keshri <rkeshri@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/07/1
+Message-ID: <0867be10-5fe2-8040-471b-b2219c29f9e4@gmail.com>
+Date: Tue, 7 Dec 2021 08:44:56 +0100
+From: Mariusz Felisiak <felisiak.mariusz@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS
+Subject: Django: CVE-2021-44420: Potential bypass of an upstream access control based on URL paths
 Content-Type: text/plain; charset=utf-8
 
-Hello Team,
+https://www.djangoproject.com/weblog/2021/dec/07/security-releases/
 
-A denial of service vulnerability was found in n_tty_receive_char_special
-in drivers/tty/n_tty.c of the Linux kernel.  In this flaw a local attacker
-with a normal user privilege could delay the loop (due to a changing
-ldata->read_head, and a missing sanity check) and cause a threat to the
-system availability.
+In accordance with `our security release policy
+<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
+Django team
+is issuing
+`Django 3.2.10 <https://docs.djangoproject.com/en/dev/releases/3.2.10/>`_,
+`Django 3.1.14 
+<https://docs.djangoproject.com/en/dev/releases/3.1.14/>`_, and
+`Django 2.2.25 <https://docs.djangoproject.com/en/dev/releases/2.2.25/>`_.
+These release addresses the security issue detailed below. We encourage all
+users of Django to upgrade as soon as possible.
 
-'CVE-2021-20219' was assigned by Red Hat.
+CVE-2021-44420: Potential bypass of an upstream access control based on 
+URL paths
+=================================================================================
 
-Acknowledgements: Evgenii Shatokhin (Virtuozzo Research LLC)
+HTTP requests for URLs with trailing newlines could bypass an upstream 
+access
+control based on URL paths.
 
-Regards,
-..
-Rohit Keshri / Red Hat Product Security Team
-PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
+This issue has low severity, according to the Django security policy.
 
-secalert@...hat.com for urgent response
+Thanks to Sjoerd Job Postmus and TengMA(@te3t123) for the report.
+
+Affected supported versions
+===========================
+
+* Django main branch
+* Django 4.0 (which will be released in a separate blog post later today)
+* Django 3.2
+* Django 3.1
+* Django 2.2
+
+Resolution
+==========
+
+Patches to resolve the issue have been applied to Django's main branch and
+the 4.0, 3.2, 3.1, and 2.2 release branches. The patches may be obtained 
+from the following changesets:
+
+
+* On the `main branch 
+<https://github.com/django/django/commit/d4dcd5b9dd9e462fec8220e33e3e6c822b7e88a6>`__
+* On the `4.0 release branch 
+<https://github.com/django/django/commit/20b9ad36ff0558b819659a10a9734262367750be>`__
+* On the `3.2 release branch 
+<https://github.com/django/django/commit/333c65603032c377e682cdbd7388657a5463a05a>`__
+* On the `3.1 release branch 
+<https://github.com/django/django/commit/22bd17488159601bf0741b70ae7932bffea8eced>`__
+* On the `2.2 release branch 
+<https://github.com/django/django/commit/7cf7d74e8a754446eeb85cacf2fef1247e0cb6d7>`__
+
+The following releases have been issued:
+
+* Django 3.2.10 (`download Django 3.2.10 
+<https://www.djangoproject.com/m/releases/3.2/Django-3.2.10.tar.gz>`_ | 
+`3.2.10 checksums 
+<https://www.djangoproject.com/m/pgp/Django-3.2.10.checksum.txt>`_)
+* Django 3.1.14 (`download Django 3.1.14 
+<https://www.djangoproject.com/m/releases/3.1/Django-3.1.14.tar.gz>`_ | 
+`3.1.14 checksums 
+<https://www.djangoproject.com/m/pgp/Django-3.1.14.checksum.txt>`_)
+* Django 2.2.25 (`download Django 2.2.25 
+<https://www.djangoproject.com/m/releases/2.2/Django-2.2.25.tar.gz>`_ | 
+`2.2.25 checksums 
+<https://www.djangoproject.com/m/pgp/Django-2.2.25.checksum.txt>`_)
+
+The PGP key ID used for this release is Mariusz Felisiak: 
+`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
+
+General notes regarding security reporting
+==========================================
+
+As always, we ask that potential security issues be reported via
+private email to ``security@...ngoproject.com``, and not via Django's
+Trac instance or the django-developers list. Please see `our security
+policies <https://www.djangoproject.com/security/>`_ for further
+information.
 
