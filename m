@@ -1,99 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/10/1
-Message-ID: <nycvar.QRO.7.76.2108100817550.28722@fvyyl>
-Date: Tue, 10 Aug 2021 08:19:32 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: c-ares development <c-ares@...l.haxx.se>, oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] c-ares: Missing input validation on hostnames returned by DNS servers
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/09/1
+Message-ID: <20211209130218.6d96ea6c@fabiankeil.de>
+Date: Thu, 9 Dec 2021 13:02:18 +0100
+From: Fabian Keil <freebsd-listen@...iankeil.de>
+To: oss-security@...ts.openwall.com
+Subject: Multiple issues fixed in Privoxy 3.0.33 stable
 Content-Type: text/plain; charset=utf-8
 
-Missing input validation on hostnames returned by DNS servers
-=============================================================
+               Announcing Privoxy 3.0.33 stable
+--------------------------------------------------------------------
 
-Project c-ares Security Advisory, August 10, 2021 -
-[Permalink](https://c-ares.haxx.se/adv_20210810.html)
+Privoxy 3.0.33 fixes an XSS issue, multiple DoS issues and a
+couple of other bugs. The issues also affect earlier Privoxy releases.
+Privoxy 3.0.33 also comes with a couple of general improvements and
+new features.
 
-VULNERABILITY
--------------
+--------------------------------------------------------------------
+ChangeLog for Privoxy 3.0.33
+--------------------------------------------------------------------
+- Security/Reliability:
+  - cgi_error_no_template(): Encode the template name to prevent
+    XSS (cross-site scripting) when Privoxy is configured to servce
+    the user-manual itself.
+    Commit 0e668e9409c. OVE-20211102-0001. CVE-2021-44543.
+    Reported by: Artem Ivanov
+  - get_url_spec_param(): Free memory of compiled pattern spec
+    before bailing.
+    Reported by Joshua Rogers (Opera) who also provided the fix.
+    Commit 652b4b7cb0. OVE-20211201-0003. CVE-2021-44540.
+  - process_encrypted_request_headers(): Free header memory when
+    failing to get the request destination.
+    Reported by Joshua Rogers (Opera) who also provided the fix.
+    Commit 0509c58045. OVE-20211201-0002. CVE-2021-44541.
+  - send_http_request(): Prevent memory leaks when handling errors
+    Reported by Joshua Rogers (Opera) who also provided the fix.
+    Commit c48d1d6d08. OVE-20211201-0001. CVE-2021-44542.
 
-Missing input validation of host names returned by Domain Name Servers in
-the c-ares library can lead to output of wrong hostnames (leading to Domain
-Hijacking).
+[...]
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2021-3672 to this issue.
+-----------------------------------------------------------------
+About Privoxy:
+-----------------------------------------------------------------
 
+Privoxy is a non-caching web proxy with advanced filtering capabilities for
+enhancing privacy, modifying web page data and HTTP headers, controlling
+access, and removing ads and other obnoxious Internet junk. Privoxy has a
+flexible configuration and can be customized to suit individual needs and
+tastes. It has application for both stand-alone systems and multi-user
+networks.
 
-STEPS TO REPRODUCE
-------------------
+Privoxy is Free Software and licensed under the GNU GPLv2.
 
-An example domain which has a cname including a zero byte:
+[...]
 
-```
-$ adig cnamezero.test2.xdi-attack.net
+Home Page: 
+   https://www.privoxy.org/
 
-Answers:
-      cnamezero.test2.xdi-attack.net. 0 CNAME 
-victim.test2.xdi-attack.net\000.test2.xdi-attack.net.
-      victim.test2.xdi-attack.net\000.test2.xdi-attack.net. 0 A 141.12.174.88
-```
+Complete announcement:
+   https://lists.privoxy.org/pipermail/privoxy-announce/2021-December/000009.html
 
-When resolved via a vulnerable implementation, the CNAME alias and name of the
-A record will seem to be `victim.test2.xdi-attack.net` instead of
-`victim.test2.xdi-attack.net\000.test2.xdi-attack.net`, a totally different
-domain.
-
-This is a clear error in zero-byte handling and can potentially lead to
-DNS-cache injections in case an application implements a cache based on the
-library.
-
-
-AFFECTED VERSIONS
------------------
-
-This flaw exists in the following c-ares versions.
-
-- Affected versions: c-ares 1.0.0 to and including 1.17.1
-- Not affected versions: c-ares >= 1.17.2
-
-
-THE SOLUTION
-------------
-
-In version 1.17.2, the function has been corrected and a test case have been
-added to verify.
-
-A [patch for
-CVE-2021-3672](https://github.com/c-ares/c-ares/compare/809d5e8..44c009b.patch)
-is available.
-
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-   A - Upgrade c-ares to version 1.17.2
-
-   B - Apply the patch to your version and rebuild
-
-
-TIME LINE
----------
-
-It was reported to the c-ares project on June 11, 2021 by Philipp Jeitner and
-Haya Shulman, Fraunhofer SIT.
-
-c-ares 1.17.2 was released on August 10 2021, coordinated with the publication
-of this advisory.
-
-
-CREDITS
--------
-
-Thanks to Philipp Jeitner and Haya Shulman, Fraunhofer SIT for the report.
-
--- 
-
-  / daniel.haxx.se
+Content of type "application/pgp-signature" skipped
