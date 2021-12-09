@@ -1,62 +1,226 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/19/1
-Message-ID: <trinity-2ae31df0-82cc-4381-9124-4b24e0bdeb45-1624113653558@3c-app-gmx-bs01>
-Date: Sat, 19 Jun 2021 16:40:53 +0200
-From: Norbert Slusarek <nslusarek@....net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/09/2
+Message-ID: <CAD7TOkxcZ9v4jO_g8nUnBbcomxePoGhxLcRyDxP=Quo2hH4gFQ@mail.gmail.com>
+Date: Thu, 9 Dec 2021 17:07:13 +0100
+From: Daniel Lee <daniel@...fana.com>
 To: oss-security@...ts.openwall.com
-Cc: Oliver Hartkopp <socketcan@...tkopp.net>, Marc Kleine-Budde <mkl@...gutronix.de>, Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
-Subject: CVE-2021-3609: Race condition in net/can/bcm.c leads to local privilege escalation
+Subject: CVE-2021-43798 Grafana directory traversal
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+We released Grafana 8.3.1, 8.2.7, 8.1.8, 8.0.7 on December 7th. This patch
+release includes a high severity security fix that affects Grafana versions
+from v8.0.0-beta1 through v8.3.0.
 
-this is an announcement for the recently reported bug (CVE-2021-3609)
-in the CAN BCM networking protocol in the Linux kernel ranging from
-version 2.6.25 to mainline 5.13-rc6.
-The vulnerability is a race condition in net/can/bcm.c allowing for local
-privilege escalation to root. The issue was initially reported by syzbot and
-proven to be exploitable by Norbert Slusarek.
+Release v8.3.1, only containing a security fix:
 
-The CAN BCM networking protocol allows to register a CAN message receiver for a
-specified socket. The function bcm_rx_handler() is run for incoming CAN messages.
-Simultaneously to running this function, the socket can be closed and
-bcm_release() will be called. Inside bcm_release(), struct bcm_op and
-struct bcm_sock are freed while bcm_rx_handler() is still running,
-finally leading to multiple use-after-free's.
+- [Download Grafana 8.3.1](https://grafana.com/grafana/download/8.3.1)
 
-Reproduction
-------------
+- [Release notes](
+https://grafana.com/docs/grafana/latest/release-notes/release-notes-8-3-1/)
 
-- setup unprivileged user namespace
-- setup vcan network interface
-- open two CAN BCM sockets and connect each to the interface
-- call sendmsg() on socket 1 with RX_SETUP to setup CAN receiver
-- call sendmsg() on socket 2 to send message to socket 1
+Release v8.2.7, only containing a security fix:
 
-Here comes the race condition:
+- [Download Grafana 8.2.7](https://grafana.com/grafana/download/8.2.7)
 
-- bcm_rx_handler() is run automatically for socket 1 to receive the message
-- call close() -> bcm_release() on socket 1 to free struct bcm_op and struct bcm_sock
+- [Release notes](
+https://grafana.com/docs/grafana/latest/release-notes/release-notes-8-2-7/)
 
-=> bcm_rx_handler() is still running and will access struct bcm_op and struct
-   bcm_sock which were previously freed
+Release v8.1.8, only containing a security fix:
 
-Exploitation
-------------
+- [Download Grafana 8.1.8](https://grafana.com/grafana/download/8.1.8)
 
-My exploitation attempt concentrates on kernels with version >= 5.4-rc1
-since commit bf74aa86e111 ("can: bcm: switch timer to HRTIMER_MODE_SOFT and
-remove hrtimer_tasklet"). I didn't investigate into exploiting kernels older
-than 5.4-rc1 which used tasklets, nevertheless exploitation on older kernels
-looks feasible as well. My specific exploitation approach was adjusted to work
-with Ubuntu 20.04.02 LTS but other known distributions could also be targeted.
+- [Release notes](
+https://grafana.com/docs/grafana/latest/release-notes/release-notes-8-1-8/)
 
-More exploitation details can be found at
+Release v8.0.7, only containing a security fix:
 
-https://github.com/nrb547/kernel-exploitation/blob/main/cve-2021-3609/cve-2021-3609.md
+- [Download Grafana 8.0.7](https://grafana.com/grafana/download/8.0.7)
 
-or in the attachments (plain text and attached image).
+- [Release notes](
+https://grafana.com/docs/grafana/latest/release-notes/release-notes-8-0-7/)
+
+
+## Path Traversal ([CVE-2021-43798](
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-43798))
+
+### Summary
+
+On 2021-12-03, we received a report that Grafana is vulnerable to directory
+traversal, allowing access to local files. We have confirmed this for
+versions 8.0.0-beta1 to 8.3.0. Thanks to our defense-in-depth approach, at
+no time has [Grafana Cloud](https://grafana.com/cloud) been vulnerable.
+
+The vulnerable URL path is: <grafana_host_url>/public/plugins/<plugin-id>/,
+where <plugin-id> is the plugin ID for any installed plugin.
+
+Every Grafana instance comes with pre-installed plugins like the Prometheus
+plugin or MySQL plugin so the following URLs are vulnerable for every
+instance:
+
+* <grafana_host_url>/public/plugins/alertlist/
+
+* <grafana_host_url>/public/plugins/annolist/
+
+* <grafana_host_url>/public/plugins/barchart/
+
+* <grafana_host_url>/public/plugins/bargauge/
+
+* <grafana_host_url>/public/plugins/candlestick/
+
+* <grafana_host_url>/public/plugins/cloudwatch/
+
+* <grafana_host_url>/public/plugins/dashlist/
+
+* <grafana_host_url>/public/plugins/elasticsearch/
+
+* <grafana_host_url>/public/plugins/gauge/
+
+* <grafana_host_url>/public/plugins/geomap/
+
+* <grafana_host_url>/public/plugins/gettingstarted/
+
+* <grafana_host_url>/public/plugins/grafana-azure-monitor-datasource/
+
+* <grafana_host_url>/public/plugins/graph/
+
+* <grafana_host_url>/public/plugins/heatmap/
+
+* <grafana_host_url>/public/plugins/histogram/
+
+* <grafana_host_url>/public/plugins/influxdb/
+
+* <grafana_host_url>/public/plugins/jaeger/
+
+* <grafana_host_url>/public/plugins/logs/
+
+* <grafana_host_url>/public/plugins/loki/
+
+* <grafana_host_url>/public/plugins/mssql/
+
+* <grafana_host_url>/public/plugins/mysql/
+
+* <grafana_host_url>/public/plugins/news/
+
+* <grafana_host_url>/public/plugins/nodeGraph/
+
+* <grafana_host_url>/public/plugins/opentsdb
+
+* <grafana_host_url>/public/plugins/piechart/
+
+* <grafana_host_url>/public/plugins/pluginlist/
+
+* <grafana_host_url>/public/plugins/postgres/
+
+* <grafana_host_url>/public/plugins/prometheus/
+
+* <grafana_host_url>/public/plugins/stackdriver/
+
+* <grafana_host_url>/public/plugins/stat/
+
+* <grafana_host_url>/public/plugins/state-timeline/
+
+* <grafana_host_url>/public/plugins/status-history/
+
+* <grafana_host_url>/public/plugins/table/
+
+* <grafana_host_url>/public/plugins/table-old/
+
+* <grafana_host_url>/public/plugins/tempo/
+
+* <grafana_host_url>/public/plugins/testdata/
+
+* <grafana_host_url>/public/plugins/text/
+
+* <grafana_host_url>/public/plugins/timeseries/
+
+* <grafana_host_url>/public/plugins/welcome/
+
+* <grafana_host_url>/public/plugins/zipkin/
+
+We have received CVE-2021-43798 for this issue. The CVSS score for this
+vulnerability is 7.5 High (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N)
+for Grafana versions 8.0.0-beta1 to 8.3.0
+
+### Affected versions with high severity
+
+Grafana 8.0.0-beta1 to 8.3.0
+
+### Solutions and mitigations
+
+All installations between v8.0.0-beta1 and v8.3.0 should be upgraded as
+soon as possible.
+
+If you can not upgrade, running a reverse proxy in front of Grafana that
+normalizes the PATH of the request will mitigate the vulnerability. For
+example the normalize_path
+<https://www.envoyproxy.io/docs/envoy/latest/api-v3/extensions/filters/network/http_connection_manager/v3/http_connection_manager.proto#envoy-v3-api-field-extensions-filters-network-http-connection-manager-v3-httpconnectionmanager-normalize-path>
+setting in envoy.
+
+Thanks to our defense-in-depth approach, [Grafana Cloud](
+https://grafana.com/cloud) instances have not been affected by the
+vulnerability.
+
+As always, we closely coordinated with all cloud providers licensed to
+offer Grafana Pro. They have received early notification under embargo and
+confirmed that their offerings are secure at the time of this announcement.
+In alphabetical order, this is applicable to Amazon Managed Grafana, and
+Azure Managed Grafana.
+
+### Timeline and postmortem
+
+Here is a detailed timeline starting from when we originally learned of the
+issue. All times in UTC.
+
+* 2021-12-03: Security researcher sends the initial report
+
+* 2021-12-03: Confirmed for 8.0.0-beta1 through 8.3.0
+
+* 2021-12-03: Confirmed that Grafana Cloud is not vulnerable
+
+* 2021-12-03: Security fix determined and committed to Git
+
+* 2021-12-03: Release timeline determined: 2021-12-07 for private customer
+release, 2021-12-14 for public release
+
+* 2021-12-06: Second report about the vulnerability received
+
+* 2021-12-07: We received information that the vulnerability has been
+leaked to the public, turning it into a 0day
+
+* 2021-12-07: Decision made to release as quickly as feasible
+
+* 2021-12-07: Private release with two hour grace period
+
+* 2021-12-07: Public release
+
+## Reporting security Issues
+
+If you think you have found a security vulnerability, please send a report
+to [security@...fana.com](mailto:security@...fana.com). This address can be
+used for all of
+
+Grafana Labs' open source and commercial products (including but not
+limited to Grafana, Grafana Cloud, Grafana Enterprise, and grafana.com). We
+can accept only vulnerability reports at this address. We would prefer that
+you encrypt your message to us by using our PGP key. The key fingerprint is
+
+F988 7BEA 027A 049F AE8E  5CAA D125 8932 BE24 C5CA
+
+The key is available from [keyserver.ubuntu.com](
+https://keyserver.ubuntu.com/pks/lookup?search=0xF9887BEA027A049FAE8E5CAAD1258932BE24C5CA&fingerprint=on&op=index
+).
+
+## Security announcements
+
+We maintain a [security category on our blog}(
+https://grafana.com/tags/security/),
+
+where we will always post a summary, remediation, and mitigation details
+for any patch containing security fixes.
+
+You can also subscribe to our [RSS feed](
+https://grafana.com/tags/security/index.xml).
 
 Regards,
-Norbert Slusarek
-Download attachment "cve-2021-3609-exploitation" of type "application/octet-stream" (13509 bytes)
+Daniel Lee, Grafana Labs
+
