@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2270" "Monday" "6" "April" "2015" "12:29:05" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150406162905.A1E646C0077@smtpvmsrv1.mitre.org>" "56" "[oss-security] Re: Request CVE for LinuxNode - DoS vulnerability" nil nil nil "4" "2015040616:29:05" "[oss-security] Re: Request CVE for LinuxNode - DoS vulnerability" (number mark "        cve-assign@m Apr  6   56/2270  " thread-indent "\"[oss-security] Re: Request CVE for LinuxNode - DoS vulnerability\"\n") "<20150404202314.1CED63AE023@smtpvbsrv1.mitre.org>" ("<20150404202314.1CED63AE023@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2622" "Thursday" "9" "December" "2021" "13:02:18" "+0100" "Fabian Keil" "freebsd-listen@fabiankeil.de" nil "69" "[oss-security] Multiple issues fixed in Privoxy 3.0.33 stable" nil nil nil "12" nil nil (number mark "U       freebsd-list Dec  9   69/2622  " thread-indent "\"[oss-security] Multiple issues fixed in Privoxy 3.0.33 stable\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple issues fixed in Privoxy 3.0.33 stable" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7421 invoked by uid 550); 6 Apr 2015 16:29:22 -0000
+Received: (qmail 28668 invoked by uid 550); 9 Dec 2021 12:03:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,69 +11,84 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7382 invoked from network); 6 Apr 2015 16:29:17 -0000
-In-Reply-To: <20150404202314.1CED63AE023@smtpvbsrv1.mitre.org>
-Message-Id: <20150406162905.A1E646C0077@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Mon,  6 Apr 2015 12:29:05 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Request CVE for LinuxNode - DoS vulnerability
-To: irl@fsfe.org
+Received: (qmail 28631 invoked from network); 9 Dec 2021 12:03:37 -0000
+Date: Thu, 9 Dec 2021 13:02:18 +0100
+From: Fabian Keil <freebsd-listen@fabiankeil.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20211209130218.6d96ea6c@fabiankeil.de>
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="Sig_/84.+wZJy3Sba.UV8OBpOCPc";
+ protocol="application/pgp-signature"; micalg=pgp-sha1
+X-Df-Sender: Nzc1MDY3
+Subject: [oss-security] Multiple issues fixed in Privoxy 3.0.33 stable
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--Sig_/84.+wZJy3Sba.UV8OBpOCPc
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-> So, the questions are:
-> 
-> 1. Is the above reasonable, i.e., there was (at one time) ...
+               Announcing Privoxy 3.0.33 stable
+--------------------------------------------------------------------
 
-irl@fsfe.org sent us a confirmation without a Cc to oss-security.
+Privoxy 3.0.33 fixes an XSS issue, multiple DoS issues and a
+couple of other bugs. The issues also affect earlier Privoxy releases.
+Privoxy 3.0.33 also comes with a couple of general improvements and
+new features.
 
-The CVE mapping is:
+--------------------------------------------------------------------
+ChangeLog for Privoxy 3.0.33
+--------------------------------------------------------------------
+- Security/Reliability:
+  - cgi_error_no_template(): Encode the template name to prevent
+    XSS (cross-site scripting) when Privoxy is configured to servce
+    the user-manual itself.
+    Commit 0e668e9409c. OVE-20211102-0001. CVE-2021-44543.
+    Reported by: Artem Ivanov
+  - get_url_spec_param(): Free memory of compiled pattern spec
+    before bailing.
+    Reported by Joshua Rogers (Opera) who also provided the fix.
+    Commit 652b4b7cb0. OVE-20211201-0003. CVE-2021-44540.
+  - process_encrypted_request_headers(): Free header memory when
+    failing to get the request destination.
+    Reported by Joshua Rogers (Opera) who also provided the fix.
+    Commit 0509c58045. OVE-20211201-0002. CVE-2021-44541.
+  - send_http_request(): Prevent memory leaks when handling errors
+    Reported by Joshua Rogers (Opera) who also provided the fix.
+    Commit c48d1d6d08. OVE-20211201-0001. CVE-2021-44542.
 
-> a single
-> vulnerability affecting both node and URONode in which a client could
-> use "quit" within telnet, and thereby cause the server to waste
-> network bandwidth on a radio path
+[...]
 
-Use CVE-2015-2927. The known affected version of node (aka LinuxNode)
-is 0.3.2 (for Debian, the "ax25-node" package name is associated with
-the "node" source-package name). Within the URONode changelog, the
-relevant entry is apparently "21/05/08 v1.0.5r3 ... I added a
-quit_handler routine in the main loop which now will execute a
-node_logout(), flush out the IPCs, log the event to syslog, and close
-out the application properly."
+-----------------------------------------------------------------
+About Privoxy:
+-----------------------------------------------------------------
 
+Privoxy is a non-caching web proxy with advanced filtering capabilities for
+enhancing privacy, modifying web page data and HTTP headers, controlling
+access, and removing ads and other obnoxious Internet junk. Privoxy has a
+flexible configuration and can be customized to suit individual needs and
+tastes. It has application for both stand-alone systems and multi-user
+networks.
 
-> app fails to close and more can be spawned by a crafty malicious
-> user thus bringing the system to a point of no memory available.
+Privoxy is Free Software and licensed under the GNU GPLv2.
 
-This does not have a CVE ID. The node software was not attempting to
-defend against a scenario in which a single client user causes
-arbitrarily many node processes to run on the server simultaneously.
-The node software runs as a service under inetd (or a similar
-program), and any related restrictions would ordinarily be part of the
-inetd configuration. Lack of restrictions is a site-specific problem.
+[...]
 
-("crafty malicious user" means, for example: if a client were allowed
-to have 100 simultaneous node processes, the malicious user could
-choose a request timing that ensured that 100 processes were always
-running.)
+Home Page:=20
+   https://www.privoxy.org/
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Complete announcement:
+   https://lists.privoxy.org/pipermail/privoxy-announce/2021-December/00000=
+9.html
+
+--Sig_/84.+wZJy3Sba.UV8OBpOCPc
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJVIrO0AAoJEKllVAevmvmsbXgIAJQdYhkCyxks3Js0ZhDkYkoJ
-3ITLnWgGp92m/hcL92K/oRL3ZvZj2Ik7kwf/7YsllhQBgVjVwoPjr/c7MA40nbgo
-1n/NFeFzrS3PM3ZivBk2wt9Gnc7mLG59P3Z9cR9oAGqhXqKOEodlRSaE1q8fHMFG
-qm5Sj9AgHqhc4MDCIo+y/R/pSL0Ayiqzr3J8U9B+R+ls6JsY0co45r9OTtCShl+i
-jazf4xFwNpkYo7VEx4zIIVd2DBUQm3XSqZT5kVdRp3pSf8MkM34E92POlptwKjNJ
-PiXKMazkLspMwLs9j1WywFuub+XdrFWCWxXl9b83LqoTWcMGU7k3OcUZUqRNrFc=
-=Jv34
+iFwEARECAB0WIQTKUNd6H/m3+ByGULIFiohV/3dUnQUCYbHwSgAKCRAFiohV/3dU
+nTT6AJdL2/8nm7A1Orgi48Cbo+BPZaErAJ94xr5Xpprq9S6FQSjbFYLLqiZz0g==
+=BobL
 -----END PGP SIGNATURE-----
+
+--Sig_/84.+wZJy3Sba.UV8OBpOCPc--
