@@ -1,73 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/04/3
-Message-Id: <3E15589B-2D44-4A55-B15F-FC686E0E8F59@beckweb.net>
-Date: Thu, 4 Nov 2021 15:20:37 +0100
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/10/1
+Message-ID: <10f758e4-7ee5-b4a4-c4c4-54d2bd253ce8@apache.org>
+Date: Fri, 10 Dec 2021 09:23:45 +0000
+From: Ralph Goers <rgoers@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins and Jenkins plugins
+Subject: CVE-2021-44228: Apache Log4j2 JNDI features do not protect against attacker controlled LDAP and other JNDI related endpoints 
 Content-Type: text/plain; charset=utf-8
 
-Subject: Multiple vulnerabilities in Jenkins and Jenkins plugins
+Severity: critical
 
+Description:
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+Apache Log4j2 <=2.14.1 JNDI features used in configuration, log messages, and parameters do not protect against attacker controlled LDAP and other JNDI related endpoints. An attacker who can control log messages or log message parameters can execute arbitrary code loaded from LDAP servers when message lookup substitution is enabled. From log4j 2.15.0, this behavior has been disabled by default. 
 
-The following releases contain fixes for security vulnerabilities:
+In previous releases (>2.10) this behavior can be mitigated by setting system property "log4j2.formatMsgNoLookups" to “true” or by removing the JndiLookup class from the classpath (example: zip -q -d log4j-core-*.jar org/apache/logging/log4j/core/lookup/JndiLookup.class). Java 8u121 (see https://www.oracle.com/java/technologies/javase/8u121-relnotes.html) protects against remote code execution by defaulting "com.sun.jndi.rmi.object.trustURLCodebase" and "com.sun.jndi.cosnaming.object.trustURLCodebase" to "false".
 
-* Jenkins 2.319
-* Jenkins LTS 2.303.3
-* Subversion Plugin 2.15.1
+Credit:
 
+This issue was discovered by Chen Zhaojun of Alibaba Cloud Security Team.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2021-11-04/
+References:
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-2455 / CVE-2021-21685 through CVE-2021-21695
-The agent-to-controller security subsystem limits which files on the
-Jenkins controller can be accessed by agent processes.
-
-Multiple vulnerabilities in the file path filtering implementation of
-Jenkins 2.318 and earlier, LTS 2.303.2 and earlier allow agent processes to
-read and write arbitrary files on the Jenkins controller file system, and
-obtain some information about Jenkins controller file systems.
-
-
-SECURITY-2423 / CVE-2021-21696
-Jenkins 2.318 and earlier, LTS 2.303.2 and earlier does not limit agent
-read/write access to the `libs/` directory inside build directories when
-using the `FilePath` APIs. This directory is used by the Pipeline: Shared
-Groovy Libraries Plugin to store copies of shared libraries.
-
-This allows attackers in control of agent processes to replace the code of
-a trusted library with a modified variant, resulting in unsandboxed code
-execution in the Jenkins controller process.
-
-
-SECURITY-2428 / CVE-2021-21697
-Agents are allowed some limited access to files on the Jenkins controller
-file system. The directories agents are allowed to access in Jenkins 2.318
-and earlier, LTS 2.303.2 and earlier include the directories storing
-build-related information, intended to allow agents to store build-related
-metadata during build execution. As a consequence, this allows any agent to
-read and write the contents of any build directory stored in Jenkins with
-very few restrictions (`build.xml` and some Pipeline-related metadata).
-
-
-SECURITY-2506 / CVE-2021-21698
-Subversion Plugin 2.15.0 and earlier does not restrict the name of a file
-when looking up a subversion key file on the controller from an agent.
-
-This allows attackers able to control agent processes to read arbitrary
-files on the Jenkins controller file system.
+https://logging.apache.org/log4j/2.x/security.html
 
