@@ -1,30 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/02/7
-Message-Id: <02CDFB7D-3E27-4C74-A7FA-11FE08043AC2@dwheeler.com>
-Date: Tue, 2 Nov 2021 10:05:52 -0700
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Trojan Source Attacks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/10/2
+Message-ID: <c24bb38a-bd87-3bcb-7831-811e8d8d5405@eenterphace.org>
+Date: Fri, 10 Dec 2021 11:29:48 +0100
+From: Moritz Bechler <mbechler@...terphace.org>
+To: oss-security@...ts.openwall.com, rgoers@...che.org
+Subject: Re: CVE-2021-44228: Apache Log4j2 JNDI features do not protect against attacker controlled LDAP and other JNDI related endpoints
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
 
-> On Nov 2, 2021, at 9:23 AM, Josh Bressers <josh@...ss.net> wrote:
-> You could argue the obfuscated C contest is related, that goes back to 1984.
-> https://www.ioccc.org/years.html#1984
+> In previous releases (>2.10) this behavior can be mitigated by setting system property "log4j2.formatMsgNoLookups" to “true” or by removing the JndiLookup class from the classpath (example: zip -q -d log4j-core-*.jar org/apache/logging/log4j/core/lookup/JndiLookup.class). Java 8u121 (see https://www.oracle.com/java/technologies/javase/8u121-relnotes.html) protects against remote code execution by defaulting "com.sun.jndi.rmi.object.trustURLCodebase" and "com.sun.jndi.cosnaming.object.trustURLCodebase" to "false".
 
-You could certainly make that argument :-). At the least,
-I think the obfuscated V contest was heavily inspired by the obfuscated C contest.
-After all, just look at the similarities of the name! 
 
-I didn’t make that argument.  The obfuscated C contest doesn’t bill itself
-as trying to fool anything as thinking some code did something *different*.
-Most entries are so bizarre that you have to deeply analyze it to figure out what it does at all.
-It’s usually painfully obvious that obfuscated C entries are hard to read.
+Please note, that Java 8u121+ does not necessarily protect against 
+remote code execution. There are known exploitation vectors using local 
+naming factories, e.g. a XBean BeanFactory (bundled with Tomcat). Also, 
+both RMI and LDAP lookups can be made to perform Java deserialization on 
+remote input and therefore there is a good chance for secondary RCE 
+exploits.
 
-Underhanded code is, I think, significantly different. Instead of being clearly hard to understand,
-It’s designed to be (1) easy to understand WRONGLY, (2) look innocent, and
-(3) do something malevolent.
 
---- David A. Wheeler
-
+Moritz
