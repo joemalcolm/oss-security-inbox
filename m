@@ -1,32 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/05/1
-Message-ID: <9rr66n72-o743-5psr-7797-or63q8758n42@redhat.com>
-Date: Fri, 5 Feb 2021 12:41:59 +0530 (IST)
-From: P J P <ppandit@...hat.com>
-To: oss security list <oss-security@...ts.openwall.com>
-Subject: CVE-2021-20221 QEMU: aarch64: GIC: out-of-bound heap buffer access via an interrupt ID field
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/10/3
+Message-ID: <9aa6ae9f-fa20-0804-1511-cb81d1491cc8@eenterphace.org>
+Date: Fri, 10 Dec 2021 19:55:34 +0100
+From: Moritz Bechler <mbechler@...terphace.org>
+To: oss-security@...ts.openwall.com, rgoers@...che.org
+Subject: Re: CVE-2021-44228: Apache Log4j2 JNDI features do not protect against attacker controlled LDAP and other JNDI related endpoints
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Hi,
 
-An out-of-bounds heap buffer access issue was found in the ARM Generic 
-Interrupt Controller emulator of QEMU on aarch64 platform. The issue occurs 
-because while writing an interrupt ID to the controller memory area, it is not 
-masked to be 4 bits wide. It may lead to the said issue while updating 
-controller state fields and their subsequent processing. A privileged guest 
-user may use this flaw to crash the QEMU process on the host resulting in DoS 
-scenario.
 
-It requires unusual kernel start-up with 'kernel-irqchip=off'.
+> Java 8u121 (see https://www.oracle.com/java/technologies/javase/8u121-relnotes.html) protects against remote code execution by defaulting "com.sun.jndi.rmi.object.trustURLCodebase" and "com.sun.jndi.cosnaming.object.trustURLCodebase" to "false".
+> 
 
-It does not affect default configuration ie. kernel-irqchip=on.
+I also believe this should be Java 8u191, as only then remote 
+classloading for LDAP was disabled by default. Only since then the 
+direct remote classloading attack vector through JNDI injection is 
+mitigated.
 
-Upstream patch:
----------------
-   -> https://gitlab.com/qemu-project/qemu/-/commit/edfe2eb4360cde4ed5d95bda7777edcb3510f76a
+I put together a little post on the different JNDI attack vectors and 
+how which Java versions are affected:
+<https://mbechler.github.io/2021/12/10/PSA_Log4Shell_JNDI_Injection/>
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-8685 545E B54C 486B C6EB 271E E285 8B5A F050 DE8D
+TLDR:
+- Direct remote classloading through RMI up to 8u121 (and corresponding 
+patch versions)
+- Direct remote classloading through LDAP up to 8u191 (and corresponding 
+patch versions)
+- Runtime environment may provide exploitable local JNDI factory classes 
+(Tomcat, WebSphere known)
+- Deserialization attacks are possible (if no global filter is applied), 
+independent of runtime version
 
+=> Do not rely on newer Java versions for mitigation, do patch 
+immediately (or remove/disable the functionality)
+
+
+
+Moritz
