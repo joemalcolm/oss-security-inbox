@@ -1,181 +1,165 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/10/1
-Message-Id: <E1lrGnq-0003by-9y@xenbits.xenproject.org>
-Date: Thu, 10 Jun 2021 09:16:42 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 375 v4 (CVE-2021-0089,CVE-2021-26313) - Speculative Code Store Bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/10/4
+Message-ID: <CAK6y_OOtwB2Z7Y2aTKh2phmCxVuVffP=5z_LeYvcSCrTiEx4sA@mail.gmail.com>
+Date: Fri, 10 Dec 2021 21:52:26 +0100
+From: Timur Olzhabayev <timur.olzhabayev@...fana.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-43813 and CVE-2021-43815 - Grafana directory traversal for some .md and .csv files
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+We released Grafana 8.3.2 and 7.5.12 on December 10th. This patch release
+includes a moderate severity security fix for directory traversal for:
 
-      Xen Security Advisory CVE-2021-0089,CVE-2021-26313 / XSA-375
-                                version 4
+   - arbitrary .md files: CVE-2021-43813, Grafana 5.0.0 to 8.3.1, and
+   - arbitrary .csv files: CVE-2021-43815, Grafana 8.0.0-beta3 to 8.3.1.
 
-                    Speculative Code Store Bypass
+The vulnerabilities are limited in scope, and only allow access to files
+with the extension .md or .csv to authenticated users. The .csv vulnerability
+requires a developer testing tool called TestData DB
+<https://grafana.com/docs/grafana/latest/datasources/testdata/> data source
+to be enabled and configured, and this feature is not enabled per default.
 
-UPDATES IN VERSION 4
-====================
+Thanks to our defense-in-depth approach, at no time has Grafana Cloud
+<https://grafana.com/cloud> been vulnerable.
 
-Correct the link to the AMD bulletin.
+This is a follow-up patch to our recent CVE-2021-43798
+<https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-43798> release. If
+you haven’t read about that high severity security fix, we recommend you
+review the initial blog post
+<https://grafana.com/blog/2021/12/07/grafana-8.3.1-8.2.7-8.1.8-and-8.0.7-released-with-high-severity-security-fix/>
+along
+with our update on the 0day
+<https://grafana.com/blog/2021/12/08/an-update-on-0day-cve-2021-43798-grafana-directory-traversal/>
+.
 
-ISSUE DESCRIPTION
-=================
+Given the attention CVE-2021-43798 has brought, there’s a risk that
+additional researchers will find CVE-2021-43813. Out of an abundance of
+caution and given that both CVE-2021-43813 and CVE-2021-43815 are only CVSS
+Score 4.3 Moderate CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N through
+their limited scope, we are immediately releasing to the public and on a
+Friday.
 
-Modern superscalar processors may employ sophisticated decoding and
-caching of the instruction stream to improve performance.  However, a
-consequence is that self-modifying code updates may not take effect
-instantly.
+We identified several vulnerability issues in the last few weeks and at a
+higher rate than in the years before. The infosec industry usually comes
+together after a few CVEs, and we benefit from that extra scrutiny.
+Although it can be difficult, ultimately it’s for the overall benefit of
+Grafana and the community. Please know that this is a top priority for us.
+We are spending significant resources on this in the remainder of 2021
+already, including full outside assessment. We will continue and increase
+this investment in 2022 and beyond.
 
-Whatever the architectural guarantees, some CPUs have microarchitectural
-behaviour whereby the stale instruction stream may be speculatively
-decoded and executed.
+Release 8.3.2, only containing a security fix:
+<https://grafana.com/grafana/download/8.3.2>
 
-Speculation of this form can suffer from type confusion in registers,
-and potentially leak data.
+   <https://grafana.com/grafana/download/8.3.2>
+   - <https://grafana.com/grafana/download/8.3.2>Download Grafana 8.3.2
+   <https://grafana.com/grafana/download/8.3.2>
+   - Release notes
+   <https://grafana.com/docs/grafana/next/release-notes/release-notes-8-3-2/>
 
-For more details, see:
-  https://www.vusec.net/projects/fpvi-scsb
-  https://www.amd.com/en/corporate/product-security/bulletin/amd-sb-1003
-  https://software.intel.com/content/www/us/en/develop/articles/software-security-guidance/advisory-guidance/speculative-code-store-bypass.html
-  https://software.intel.com/content/www/us/en/develop/articles/software-security-guidance/advisory-guidance/floating-point-value-injection.html
-  https://developer.arm.com/support/arm-security-updates/speculative-processor-vulnerability/frequently-asked-questions#scsb
-  https://developer.arm.com/support/arm-security-updates/speculative-processor-vulnerability/frequently-asked-questions#fvpi
+Release 7.5.12, only containing a security fix:
 
-IMPACT
-======
+   - Download Grafana 7.5.12 <https://grafana.com/grafana/download/7.5.12>
+   - Release notes
+   <https://grafana.com/docs/grafana/next/release-notes/release-notes-7-5-12/>
 
-In attacker might be able to infer the contents of arbitrary host
-memory, including memory assigned to other guests.
+Directory Traversal (CVE-2021-43813
+<https://github.com/grafana/grafana/security/advisories/GHSA-c3q8-26ph-9g2q>
+)Summary
 
-VULNERABLE SYSTEMS
-==================
+CVSS Score: 4.3 Moderate CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N,
+Grafana versions 5.0.0 to 8.3.1
 
-Systems running all versions of Xen are affected.
+On 2021-12-09, GitHub Security Labs notified us of a vulnerability through
+which authenticated users could read out fully lowercase or fully uppercase
+.md files through directory traversal. Doing our own follow-up
+investigation we found a related vulnerability through which authenticated
+users could read out arbitrary .csv files through directory traversal.
+Thanks to our defense-in-depth approach, at no time has Grafana Cloud
+<https://grafana.com/cloud/?pg=blog> been vulnerable.
 
-Whether a CPU is potentially vulnerable depends on its
-microarchitecture.  Consult your hardware vendor.
+The vulnerable URL path is: /api/plugins/.*/markdown/.* for .md files
+Affected versions with moderate severity
 
-Xen running on ARM does not have runtime self-modying code, so is
-believed to be not vulnerable, irrespective of any hardware
-susceptibility.
+CVE-2021-43813: Grafana 5.0.0 to 8.3.1
+CVE-2021-43815: Grafana 8.0.0-beta3 to 8.3.1
+Solutions and mitigations
 
-Xen running on x86 does have runtime self-modying code as part of
-emulation, and is believed to be potentially vulnerable.
+All installations between 5.0.0 and 8.3.1 should be upgraded as soon as
+possible.
 
-Xen is not vulnerable if retpoline or lfence mitigations for Spectre v2
-protection are active.  Protections depend on compiler support (as
-indicated by INDIRECT_THUNK), and a runtime setting (BTI-Thunk):
+If you cannot upgrade, running a reverse proxy in front of Grafana that
+normalizes the PATH of the request will mitigate the vulnerability. The
+proxy will have to also be able to handle url encoded paths. Alternatively,
+for fully lowercase or fully uppercase .md files, you can block
+/api/plugins/.*/markdown/.* without losing any functionality beyond inlined
+plugin help text.
 
-  # xl dmesg | grep -e INDIRECT_THUNK -e BTI-Thunk
-  (XEN)   Compiled-in support: INDIRECT_THUNK SHADOW_PAGING
-  (XEN)   Xen settings: BTI-Thunk RETPOLINE, SPEC_CTRL: IBRS+ SSBD-, Other: SRB_LOCK+ IBPB L1D_FLUSH VERW BRANCH_HARDEN
+To mitigate the csv path traversal vulnerability all configured TestData DB
+<https://grafana.com/docs/grafana/latest/datasources/testdata/> data
+sources (a UI testing data source that is disabled by default) should be
+deleted.
+Detecting exploits
 
-BTI-Thunk as either RETPOLINE or LFENCE prevents the vulnerability.
+Search your request logs for requests matching ..%2f.
+Timeline and postmortem
 
-MITIGATION
-==========
+Here is a detailed timeline starting from when we originally learned of the
+issue. All times in UTC.
 
-If Spectre v2 support is compiled in, but JMP is used by default,
-RETPOLINE or LFENCE can be selected with `spec-ctrl=bti-thunk=retpoline`
-or `spec-ctrl=bti-thunk=lfence`.
+   - 2021-12-09 14:32 - Github Security Labs notify us about the .md
+    vulnerability
+   - 2021-12-09 15:02 - Incident channel is open and announced
+   - 2021-12-09 15:11 - CVE is requested / GitHub Advisory is created
+   - 2021-12-09 15:20 - Investigation into potentially related issues
+   started
+   - 2021-12-09 15:22 - Issue reproduced and confirmed that it is limited
+   to *.md files
+   - 2021-12-09 15:27 - Confirmed that Hosted Grafana is protected by the
+   reverse proxy, similar to previous CVE
+   - 2021-12-09 16:07 - Possibly /api/ds/query is affected and might be
+   leveraged to read .csv files via path traversal
+   - 2021-12-09 16:10 - PR with a possible fix the markdown path traversal
+   is raised in private mirror repo
+   - 2021-12-09 16:42 - We have confirmed that .csv files are also affected
+   in some cases
+   - 2021-12-09 19:05 - Fix confirmed
+   - 2021-12-09 23:00: Decision release to direct to public on 2021-12-10
+   14:30 UTC
+   - 2021-12-09 23:36: Announcement email sent to customers
+   - 2021-12-10 10:11: Decision to split out .csv vulnerability into its
+   own CVE
+   - 2021-12-10: Public release
 
-CREDITS
-=======
+Acknowledgement
 
-This issue was discovered by Enrico Barberis, Hany Ragab, Herbert Bos,
-and Cristiano Giuffrida from the VUSec group at VU Amsterdam.
+We would like to thank the GitHub Security Lab team
+<https://securitylab.github.com/> for responsibly disclosing the initial
+issue to us.
+Reporting security Issues
 
-RESOLUTION
-==========
+If you think you have found a security vulnerability, please send a report
+to security@...fana.com. This address can be used for all of Grafana Labs'
+open source and commercial products (including but not limited to Grafana,
+Grafana Cloud, Grafana Enterprise, and grafana.com). We can accept only
+vulnerability reports at this address. We would prefer that you encrypt
+your message to us by using our PGP key. The key fingerprint is
 
-Applying the appropriate attached patch resolves this issue.  Note that
-in 4.13 and newer the patch will only take effect when the
-SPECULATIVE_HARDEN_BRANCH hypervisor config option is enabled.  4.12 and
-older do not have such an option, and the change will take effect
-unconditionally.
+F988 7BEA 027A 049F AE8E 5CAA D125 8932 BE24 C5CA
 
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
+The key is available from keyserver.ubuntu.com
+<https://keyserver.ubuntu.com/pks/lookup?search=0xF9887BEA027A049FAE8E5CAAD1258932BE24C5CA&fingerprint=on&op=index>
+.
+Security announcements
 
-xsa375.patch           xen-unstable - 4.14.x
-xsa375-4.13.patch      Xen 4.13.x
-xsa375-4.12.patch      Xen 4.12.x - 4.11.x
+We maintain a security category on our blog
+<https://grafana.com/tags/security/>, where we will always post a summary,
+remediation, and mitigation details for any patch containing security fixes.
 
-$ sha256sum xsa375*
-367d5bb97c942b9f744a57645df87148772c0879de6f351f36f88147f3958e83  xsa375.meta
-301ef80da837bc2af36a0958f35f42f4d267b20ec6e91ae5faf2616167ef49f8  xsa375.patch
-dc024daf17242b6477a16a349754a94b2b25cbbfd8c14475741b778710a44c93  xsa375-4.12.patch
-f70511d843c6617b932da11ffe857e2e3aa3834ccff07d4d0beba90d63a3dae2  xsa375-4.13.patch
-$
+You can also subscribe to our RSS feed
+<https://grafana.com/tags/security/index.xml>.
+-- 
+Best,
+Timur
+Grafana Labs
 
-NOTE CONCERNING CVE-2021-0086 / CVE-2021-26314
-==============================================
-
-Floating Point Value Injection (FPVI) was discovered and disclosed in
-the same research as SCSB.  Xen on x86 does in some cases emulate
-floating point operations with guest provided inputs, but does not have
-subsequent control flow dependent on results, transient or otherwise, of
-the operation.
-
-Therefore, we believe Xen is not vulnerable to FPVI, irrespective of any
-hardware susceptibility.
-
-NOTE CONCERNING MULTIPLE CVES
-=============================
-
-Intel and AMD allocated different CVEs for SCSB and FPVI.  We have
-included both on this advisory.  The allocations are as follows:
-
-  Issue | Intel         | AMD
-  ------+---------------+---------------
-  SCSB  | CVE-2021-0089 | CVE-2021-26313
-  FPVI  | CVE-2021-0086 | CVE-2021-26314
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmDB2EQMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZtgkIAMJ6zrjSMK/mrnJ8+vRwfaG7hYIOwIa8k18CnIin
-DH4LZ1PIyWRqOjgRo+oqgZEIOXFAlEx/ZXHJscf+SaleemA9klsBWpoiyURONchC
-4Sz/qUcJnTHXjakw21seaxtYA4FzBtGQ6V/Ccm/3vDxVhDewtbNSJLflq2kZDLv0
-nRMJkSajeCml/YPcSQ2y32KE49kQK726H9hzHIMuRA6fDAKCT51bWiyelH405vnR
-vanJetUHys1Uye0arqfi7Z9tv0KMKAspgR/ccOGh5g0EvDOTyOo6ZLAOm69wqdfr
-AC0IShNIPyk85k1VJBkU8VSsWvasPmbcT9NYWK6HeP6ZdRg=
-=T+nf
------END PGP SIGNATURE-----
-
-Download attachment "xsa375.meta" of type "application/octet-stream" (1821 bytes)
-
-Download attachment "xsa375.patch" of type "application/octet-stream" (2467 bytes)
-
-Download attachment "xsa375-4.12.patch" of type "application/octet-stream" (2492 bytes)
-
-Download attachment "xsa375-4.13.patch" of type "application/octet-stream" (2473 bytes)
