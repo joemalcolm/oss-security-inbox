@@ -1,24 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/10/28/2
-Message-ID: <YXol+JUnMvgDcDJ+@eldamar.lan>
-Date: Thu, 28 Oct 2021 06:24:24 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: Samuel Groß <saelo@...gle.com>
-Cc: Francis Perron <francis.perron@...pify.com>, oss-security@...ts.openwall.com, Carlos Alberto Lopez Perez <clopez@...lia.com>, security@...kit.org, Alberto Garcia <berto@...lia.com>
-Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2021-0006
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/13/1
+Message-ID: <cd490e11-90d5-946a-eeaf-d17e4391f788@apache.org>
+Date: Mon, 13 Dec 2021 16:10:57 +0000
+From: Ralph Goers <rgoers@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-4104: Deserialization of untrusted data in JMSAppender in Apache Log4j 1.2 
 Content-Type: text/plain; charset=utf-8
 
-Hi Samuel,
+Description:
 
-On Wed, Oct 27, 2021 at 04:40:55PM +0200, Samuel Groß wrote:
-> Hi!
-> 
-> I don't know what happened to CVE-2021-30851 as these CVEs are allocated by
-> Apple usually. I think the CVE would correspond to this issue though:
-> https://bugs.webkit.org/show_bug.cgi?id=227988
+JMSAppender in Log4j 1.2 is vulnerable to deserialization of untrusted data when the attacker has write access to the Log4j configuration. The attacker can provide TopicBindingName and TopicConnectionFactoryBindingName configurations causing JMSAppender to perform JNDI requests that result in remote code execution in a similar fashion to CVE-2021-44228.  
 
-I pinged now product-security@...le.com as well on this (as Apple Inc
-is the responsible CNA for the CVE).
+Note this issue only affects Log4j 1.2 when specifically configured to use JMSAppender, which is not the default.
 
-Regards,
-Salvatore
+Apache Log4j 1.2 reached end of life in August 2015. Users should upgrade to Log4j 2 as it addresses numerous other issues from the previous versions.
+
+References:
+
+https://www.cve.org/CVERecord?id=CVE-2021-44228
+https://github.com/apache/logging-log4j2/pull/608#issuecomment-990494126
+https://access.redhat.com/security/cve/CVE-2021-4104
+
