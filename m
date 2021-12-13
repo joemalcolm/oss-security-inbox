@@ -1,43 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/28/3
-Message-ID: <1174037964.13457.1624863727539@appsuite-dev-gw2.open-xchange.com>
-Date: Mon, 28 Jun 2021 10:02:07 +0300 (EEST)
-From: Aki Tuomi <aki.tuomi@...n-xchange.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2020-28200: Dovecot Pigeonhole Sieve excessive resource usage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/13/2
+Message-ID: <9fb9155e-c91e-7414-6343-523864d69536@eenterphace.org>
+Date: Mon, 13 Dec 2021 20:22:29 +0100
+From: Moritz Bechler <mbechler@...terphace.org>
+To: oss-security@...ts.openwall.com, Ralph Goers <rgoers@...che.org>
+Subject: Re: CVE-2021-4104: Deserialization of untrusted data in JMSAppender in Apache Log4j 1.2
 Content-Type: text/plain; charset=utf-8
 
-Open-Xchange Security Advisory 2021-06-28
+Hello,
 
-Affected product: Dovecot IMAP Server
-Vendor: OX Software GmbH
+> 
+> JMSAppender in Log4j 1.2 is vulnerable to deserialization of untrusted data when the attacker has write access to the Log4j configuration. The attacker can provide TopicBindingName and TopicConnectionFactoryBindingName configurations causing JMSAppender to perform JNDI requests that result in remote code execution in a similar fashion to CVE-2021-44228.
+> 
+> Note this issue only affects Log4j 1.2 when specifically configured to use JMSAppender, which is not the default.
 
-Internal reference: DOV-4159 
-Vulnerability type: Uncontrolled Resource Consumption (CWE-400)
-Vulnerable version: ancient
-Vulnerable component: sieve
-Report confidence: Confirmed
-Solution status: Fix available
-Researcher credits: Innokentii Sennovskii from BI.ZONE (rumata)
-Vendor notification: 2020-09-23
-CVE reference: CVE-2020-28200
-CVSS: 4.3 (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L)
+Pretty sure someone was pushing for this, sorry to be nagging again, but 
+I don't think adding that to the overall panic and confusion is really 
+helping.
 
-Vulnerability Details:
-Sieve interpreter is not protected against abusive scripts that claim excessive resource usage.
-Fixed by limiting both the CPU system+user time per single script execution and cumulatively over
-several script runs within a configurable timeout period. Sufficiently large CPU time usage is
-summed in the Sieve script binary and execution is blocked when the sum exceeds the limit within that time.
-The block is lifted when the script is updated after the resource usage times out.
+To emphasize again: this needs write access to the Log4j configuration.
 
-Risk:
-Attacker can cause uncontrolled CPU resource consumption to cause partial or complete denial of service.
+This is in no way even coming close to CVE-2021-44228 - log4j 1.2 is 
+absolutely unaffected by that bug.
 
-Steps to reproduce:
-Use sufficiently CPU intensive regular expression.
+Only for people allowing untrusted parties to modify logger 
+configuration this could be considered to cross a trust boundary. 
+Allowing that, in my opinion, already would require very careful 
+consideration on the caller/user side and cannot be assumed to be safe.
 
-Solution:
-Install patched version of Dovecot
+If one can modify the logger configuration, one might as well 
+(re)configure a FileAppender and write to files with the process 
+privileges - most likely also resulting in code execution.
 
-Workaround:
-Disable sieve "regex" extension.
+Everybody else should probably forget about this - expect for the fact 
+that they still might be using software that has been unsupported for 
+many years.
+
+Configuring e.g. DataSources via JNDI name lookups is not that uncommon 
+in Java applications and application servers, these all suffer from the 
+same "vulnerability". JNDI is a overly complex mess of bad surprises 
+(and in my opinion absolutely should go away), but that is really not 
+log4j's fault.
+
+
+
+Moritz
