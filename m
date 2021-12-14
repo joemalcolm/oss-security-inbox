@@ -1,54 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/30/2
-Message-ID: <CAFcO6XP+LtLLCzLakN9QFKNOcDHQhdgxyLz59OCr+5ebXxAkRg@mail.gmail.com>
-Date: Sat, 30 Jan 2021 16:46:30 +0800
-From: butt3rflyh4ck <butterflyhuangxx@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: linux-block: nbd: use-after-free Read in nbd_queue_rq
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/14/5
+Message-ID: <CALBaBG_3ddr3XE9JQsi60L3xXwMvnPiBjyA1S8NRUWyKsCn2Eg@mail.gmail.com>
+Date: Tue, 14 Dec 2021 12:29:20 -0800
+From: Aaron Patterson <aaron.patterson@...il.com>
+To: oss-security@...ts.openwall.com, rubyonrails-security@...glegroups.com,  ruby-security-ann@...glegroups.com
+Subject: [CVE-2021-44528] Possible Open Redirect in Host Authorization Middleware
 Content-Type: text/plain; charset=utf-8
 
-the patch for this issue in upstream:
+There is a possible open redirect vulnerability in the Host Authorization
+middleware in Action Pack. This vulnerability has been assigned the CVE
+identifier CVE-2021-44528.
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b98e762e3d71e893b221f871825dc64694cfb258
+Versions Affected:  >= 6.0.0.
+Not affected:       < 6.0.0
+Fixed Versions:     6.1.4.2, 6.0.4.2, 7.0.0.rc2
 
-Regards,
- butt3rflyh4ck.
+Impact
+------
+Specially crafted "X-Forwarded-Host" headers in combination with certain
+"allowed host" formats can cause the Host Authorization middleware in Action
+Pack to redirect users to a malicious website.
+
+Impacted applications will have allowed hosts with a leading dot. For
+example,
+configuration files that look like this:
+
+```
+config.hosts <<  '.EXAMPLE.com'
+```
+
+When an allowed host contains a leading dot, a specially crafted Host header
+can be used to redirect to a malicious website.
+
+This vulnerability is similar to CVE-2021-22881 and CVE-2021-22942.
+
+Releases
+--------
+The fixed releases are available at the normal locations.
+
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided
+patches for
+the two supported release series. They are in git-am format and consist of a
+single changeset.
+
+* 6-0-host-authorzation-open-redirect.patch - Patch for 6.0 series
+* 6-1-host-authorzation-open-redirect.patch - Patch for 6.1 series
+* 7-0-host-authorzation-open-redirect.patch - Patch for 7.0 series
+
+Please note that only the 6.1.Z, 6.0.Z, and 5.2.Z series are supported at
+present. Users of earlier unsupported releases are advised to upgrade as
+soon
+as possible as we cannot guarantee the continued availability of security
+fixes for unsupported releases.
+
+Credits
+-------
+Thanks to [@krynos](https://hackerone.com/krynos?type=user) for originally
+reporting this!
+
+Huge thanks to
+[@stefschenkelaars](https://hackerone.com/stefschenkelaars?type=user) for
+writing a patch along with tests to fix this issue!
 
 
-On Fri, Jan 29, 2021 at 2:10 AM butt3rflyh4ck <butterflyhuangxx@...il.com>
-wrote:
+-- 
+Aaron Patterson
+http://tenderlovemaking.com/
 
-> Hi, I reported a use-after-free Read bug in ndb_queue_rq() in
-> drivers/block/nbd.c and reproduced in linux-5.11.0-rc4+ too.
->
-> Root Cause:
->
-> There is a race condition in nbd ioctl.
-> NBD_SET_SIZE_BLOCKS ioctl will call nbd_size_set(), it will change the
-> block size.
-> NBD_SET_SOCK ioctl will call nbd_add_socket() and it will invoke
-> krealloc() to update a block, free and realloc a new one.
-> But nbd_queue_rq() is in runtime. and calls nbd_handle_cmd(), there
-> will use config->sock. there accesses to config->socks without any locking.
->
-> Patch for this issue:
->
-> https://lore.kernel.org/linux-block/24dff677353e2e30a71d8b66c4dffdbdf77c4dbd.1611595239.git.josef@toxicpanda.com/
->
-> CVE assigned:
-> not assigned.
->
-> Timeline:
-> *2021/1/25  - Vulnerability reported to security@...nel.org.
-> *2020/1/26  - Vulnerability confirmed and patched.
-> *2020/1/28 - Vulnerability reported to linux-distros@...openwall.org.
-> *2021/1/29 - Opened on oss-security@...ts.openwall.com.
->
-> Credit:
-> This issue was discovered by the ADLab of venustech.
->
->
-> Regards,
->  butt3rflyh4ck.
->
+Content of type "text/html" skipped
 
+Download attachment "6-0-host-authorzation-open-redirect.patch" of type "application/octet-stream" (6033 bytes)
+
+Download attachment "6-1-host-authorzation-open-redirect.patch" of type "application/octet-stream" (6123 bytes)
+
+Download attachment "7-0-host-authorzation-open-redirect.patch" of type "application/octet-stream" (6123 bytes)
