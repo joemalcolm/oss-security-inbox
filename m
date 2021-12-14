@@ -1,61 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/10/16
-Message-ID: <8feb8989-3b53-a97a-4421-ef8e47cce53d@wanadoo.fr>
-Date: Thu, 10 Jun 2021 19:18:55 +0200
-From: Christophe JAILLET <christophe.jaillet@...adoo.fr>
-To: oss-security@...ts.openwall.com, John Helmert III <jchelmert3@...teo.net>
-Subject: Re: CVE-2021-31618: Apache httpd: NULL pointer dereference on specially crafted HTTP/2 request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/14/1
+Message-ID: <06bd0517-a955-881f-553b-c49b7a7a4ed2@radix.lt>
+Date: Tue, 14 Dec 2021 15:14:06 +0200
+From: Povilas Kanapickas <povilas@...ix.lt>
+To: oss-security@...ts.openwall.com
+Subject: Fwd: X.Org Security Advisory: December 14, 2021
 Content-Type: text/plain; charset=utf-8
 
 
-Le 10/06/2021 à 16:38, John Helmert III a écrit :
-> On Wed, Jun 09, 2021 at 11:11:00PM +0200, Christophe JAILLET wrote:
->> CVE-2021-31618: NULL pointer dereference on specially crafted HTTP/2 request
->>
->> Severity: important
->>
->> Vendor: The Apache Software Foundation
->>
->> Versions Affected:
->> 2.4.47
->> httpd
->> Description:
->> Apache HTTP Server 2.4.47
->> Apache HTTP Server protocol handler for the HTTP/2 protocol checks received request headers against the size limitations as configured for the server and used for the HTTP/1 protocol as well. On violation of these restrictions and HTTP response is sent to the client with a status code indicating why the request was rejected.
->>
->> This rejection response was not fully initialised in the HTTP/2 protocol handler if the offending header was the very first one received or appeared in a a footer. This led to a NULL pointer dereference on initialised memory, crashing reliably the child process. Since such a triggering HTTP/2 request is easy to craft and submit, this can be exploited to DoS the server.
->>
->> This affected versions prior to 2.4.47
-> The announcement on the website indicates the affected versions for
-> CVE-2021-31618 are <2.4.48 and in the below table it indicates <=2.4.48
-> are affected. Both of these are different from the mail advisory, can
-> you clarify the affected versions, please?
+-------- Forwarded Message --------
+Subject: X.Org Security Advisory: December 14, 2021
+Date: Tue, 14 Dec 2021 15:11:35 +0200
+From: Povilas Kanapickas <povilas@...ix.lt>
+To: xorg-announce@...ts.x.org
+CC: xorg-devel@...ts.x.org <xorg-devel@...ts.x.org>, xorg@...ts.x.org
 
-Hi,
+X.Org Security Advisory: December 14, 2021
 
-in fact it was fixed in 2.4.47, BUT this version was never announced and 
-has never been visible from the httpd.apache.org website.
+Multiple input validation failures in X server extensions
+=========================================================
 
-So from an end-user point of view if was really fixed in 2.4.48 (and 
-2.4.47 does not exist).
+All of the following issues can lead to local privileges elevation on
+systems where the X server is running privileged and remote code
+execution for ssh X forwarding sessions.
 
-We'll clarify internally how we should proceed in such cases to avoid 
-such questions.
-The information should be consistent wherever you look for it.
+* CVE-2021-4008/ZDI-CAN-14192 SProcRenderCompositeGlyphs out-of-bounds
+access
 
-Hope this clarify the situation.
+The handler for the CompositeGlyphs request of the Render extension does
+not properly validate the request length leading to out of bounds memory
+write.
 
-Best regards,
+* CVE-2021-4009/ZDI-CAN 14950 SProcXFixesCreatePointerBarrier
+out-of-bounds access
 
-CJ
+The handler for the CreatePointerBarrier request of the XFixes extension
+does not properly validate the request length leading to out of bounds
+memory write.
 
+* CVE-2021-4010/ZDI-CAN-14951 SProcScreenSaverSuspend out-of-bounds access
 
->> Mitigation:
->> none
->>
->> Credit:
->> Apache HTTP server would like to thank  LI ZHI XIN from NSFocus for reporting this.
->>
->> References:
->> https://httpd.apache.org/security/vulnerabilities_24.html
->>
+The handler for the Suspend request of the Screen Saver extension does
+not properly validate the request length leading to out of bounds memory
+write.
+
+* CVE-2021-4011/ZDI-CAN-14952 SwapCreateRegister out-of-bounds access
+
+The handlers for the RecordCreateContext and RecordRegisterClients
+requests of the Record extension do not properly validate the request
+length leading to out of bounds memory write.
+
+Patches
+-------
+
+Patches for this issues have been commited to the xorg server git
+repository (https://gitlab.freedesktop.org/xorg/xserver). xorg-server
+21.1.2 will be released shortly and will include these patches.
+
+commit ebce7e2d80e7c80e1dda60f2f0bc886f1106ba60
+
+    render: Fix out of bounds access in SProcRenderCompositeGlyphs()
+
+    ZDI-CAN-14192, CVE-2021-4008
+
+    This vulnerability was discovered and the fix was suggested by:
+    Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
+
+commit b5196750099ae6ae582e1f46bd0a6dad29550e02
+
+    xfixes: Fix out of bounds access in *ProcXFixesCreatePointerBarrier()
+
+    ZDI-CAN-14950, CVE-2021-4009
+
+    This vulnerability was discovered and the fix was suggested by:
+    Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
+
+commit 6c4c53010772e3cb4cb8acd54950c8eec9c00d21
+
+    Xext: Fix out of bounds access in SProcScreenSaverSuspend()
+
+    ZDI-CAN-14951, CVE-2021-4010
+
+    This vulnerability was discovered and the fix was suggested by:
+    Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
+
+commit e56f61c79fc3cee26d83cda0f84ae56d5979f768
+
+    record: Fix out of bounds access in SwapCreateRegister()
+
+    ZDI-CAN-14952, CVE-2021-4011
+
+    This vulnerability was discovered and the fix was suggested by:
+    Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
+
+Thanks
+======
+
+This vulnerability was discovered by Jan-Niklas Sohn working with
+Trend Micro Zero Day Initiative.
+
+--
+Povilas Kanapickas
