@@ -1,84 +1,112 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/04/1
-Message-Id: <E1lHlOS-0000Se-RY@xenbits.xenproject.org>
-Date: Thu, 04 Mar 2021 10:39:44 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 367 v1 - Linux: netback fails to honor grant mapping errors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/14/3
+Message-ID: <d7da9abe-5635-5062-bc9d-ef9038f2d678@oracle.com>
+Date: Tue, 14 Dec 2021 08:37:18 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com, Povilas Kanapickas <povilas@...ix.lt>
+Cc: "X.Org Security Team" <xorg-security@...ts.x.org>
+Subject: Re: Fwd: X.Org Security Advisory: December 14, 2021
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+The fixes are also provided for XWayland users in the XWayland 21.1.4 release:
+https://lists.x.org/archives/xorg-announce/2021-December/003123.html
 
-                    Xen Security Advisory XSA-367
+	-Alan Coopersmith-              alan.coopersmith@...cle.com
+	  X.Org Security Response Team - xorg-security@...ts.x.org
 
-          Linux: netback fails to honor grant mapping errors
-
-ISSUE DESCRIPTION
-=================
-
-XSA-362 tried to address issues here, but in the case of the netback
-driver the changes were insufficient: It left the relevant function
-invocation with, effectively, no error handling at all.  As a result,
-memory allocation failures there could still lead to frontend-induced
-crashes of the backend.
-
-IMPACT
-======
-
-A malicious or buggy networking frontend driver may be able to crash
-the corresponding backend driver, potentially affecting the entire
-domain running the backend driver.  In a typical (non-disaggregated)
-system that is a host-wide denial of service (DoS).
-
-VULNERABLE SYSTEMS
-==================
-
-Linux versions from at least 2.6.39 onwards are vulnerable, when run in
-PV mode.  Earlier versions differ significantly in behavior and may
-therefore instead surface other issues under the same conditions.  Linux
-run in HVM / PVH modes is not vulnerable.
-
-MITIGATION
-==========
-
-For Linux, running the backends in HVM or PVH domains will avoid the
-vulnerability.  For example, by running the dom0 in PVH mode.
-
-In all other cases there is no known mitigation.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa367-linux.patch           Linux 5.12-rc
-
-$ sha256sum xsa367*
-b0244bfddee91cd7986172893e70664b74e698c5d44f25865870f179f80f9a92  xsa367-linux.patch
-$
-
-CREDITS
-=======
-
-This issue was reported by Intel's kernel test robot and recognized as a
-security issue by Jan Beulich of SUSE.
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-This issue was reported publicly, before the XSA could be issued.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmBAuOYMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZUCAH/1zw5d2l1R3k+nvJ659plwOYDe8Cmh4GeJ02PoUv
-fC/5efe7l/tXEmfg4rg5WiY8JZqQGeGmhwiOs8bI/8c5IXucaPOM1wDUaHUMkWTA
-tl/P/tbDamzd1/dSK4DdILTApibU+M/nmUn0sBBYpu53VUbeyXq2EAtjmliKgCG9
-Oo4PW4ys5ro+hwrPtYdLD1ktIN64+C+TqkKUdJset7po5sWX4nV1Cwp/4oKaNyeF
-Alh495TUCnhgc8gnXUgXhmxWKp3Iag/tHjmtu34mT5HHZdBrNBShFKhHSP5bJHE2
-CxYD1b/KbkRiLPOgZXNec+ikDQT4bTCeVLpnWvOXQ1FTXR4=
-=hY2s
------END PGP SIGNATURE-----
-
-Download attachment "xsa367-linux.patch" of type "application/octet-stream" (3974 bytes)
+On 12/14/21 5:14 AM, Povilas Kanapickas wrote:
+> 
+> -------- Forwarded Message --------
+> Subject: X.Org Security Advisory: December 14, 2021
+> Date: Tue, 14 Dec 2021 15:11:35 +0200
+> From: Povilas Kanapickas <povilas@...ix.lt>
+> To: xorg-announce@...ts.x.org
+> CC: xorg-devel@...ts.x.org <xorg-devel@...ts.x.org>, xorg@...ts.x.org
+> 
+> X.Org Security Advisory: December 14, 2021
+> 
+> Multiple input validation failures in X server extensions
+> =========================================================
+> 
+> All of the following issues can lead to local privileges elevation on
+> systems where the X server is running privileged and remote code
+> execution for ssh X forwarding sessions.
+> 
+> * CVE-2021-4008/ZDI-CAN-14192 SProcRenderCompositeGlyphs out-of-bounds
+> access
+> 
+> The handler for the CompositeGlyphs request of the Render extension does
+> not properly validate the request length leading to out of bounds memory
+> write.
+> 
+> * CVE-2021-4009/ZDI-CAN 14950 SProcXFixesCreatePointerBarrier
+> out-of-bounds access
+> 
+> The handler for the CreatePointerBarrier request of the XFixes extension
+> does not properly validate the request length leading to out of bounds
+> memory write.
+> 
+> * CVE-2021-4010/ZDI-CAN-14951 SProcScreenSaverSuspend out-of-bounds access
+> 
+> The handler for the Suspend request of the Screen Saver extension does
+> not properly validate the request length leading to out of bounds memory
+> write.
+> 
+> * CVE-2021-4011/ZDI-CAN-14952 SwapCreateRegister out-of-bounds access
+> 
+> The handlers for the RecordCreateContext and RecordRegisterClients
+> requests of the Record extension do not properly validate the request
+> length leading to out of bounds memory write.
+> 
+> Patches
+> -------
+> 
+> Patches for this issues have been commited to the xorg server git
+> repository (https://gitlab.freedesktop.org/xorg/xserver). xorg-server
+> 21.1.2 will be released shortly and will include these patches.
+> 
+> commit ebce7e2d80e7c80e1dda60f2f0bc886f1106ba60
+> 
+>      render: Fix out of bounds access in SProcRenderCompositeGlyphs()
+> 
+>      ZDI-CAN-14192, CVE-2021-4008
+> 
+>      This vulnerability was discovered and the fix was suggested by:
+>      Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
+> 
+> commit b5196750099ae6ae582e1f46bd0a6dad29550e02
+> 
+>      xfixes: Fix out of bounds access in *ProcXFixesCreatePointerBarrier()
+> 
+>      ZDI-CAN-14950, CVE-2021-4009
+> 
+>      This vulnerability was discovered and the fix was suggested by:
+>      Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
+> 
+> commit 6c4c53010772e3cb4cb8acd54950c8eec9c00d21
+> 
+>      Xext: Fix out of bounds access in SProcScreenSaverSuspend()
+> 
+>      ZDI-CAN-14951, CVE-2021-4010
+> 
+>      This vulnerability was discovered and the fix was suggested by:
+>      Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
+> 
+> commit e56f61c79fc3cee26d83cda0f84ae56d5979f768
+> 
+>      record: Fix out of bounds access in SwapCreateRegister()
+> 
+>      ZDI-CAN-14952, CVE-2021-4011
+> 
+>      This vulnerability was discovered and the fix was suggested by:
+>      Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
+> 
+> Thanks
+> ======
+> 
+> This vulnerability was discovered by Jan-Niklas Sohn working with
+> Trend Micro Zero Day Initiative.
+> 
+> --
+> Povilas Kanapickas
+> 
