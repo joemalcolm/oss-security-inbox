@@ -1,33 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/07/1
-Message-ID: <YL4HIzhrA7I83MF0@ugly>
-Date: Mon, 7 Jun 2021 13:46:43 +0200
-From: Oswald Buddenhagen <oswald.buddenhagen@....de>
-To: isync-devel@...ts.sourceforge.net
-Cc: oss-security@...ts.openwall.com
-Subject: CVE-2021-3578: possible remote code execution in isync/mbsync
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/14/2
+Message-ID: <CAFcO6XOttbdqHNGP=J0oN5+AKuUHysJM3FwVYc8qNr3wYyRTXQ@mail.gmail.com>
+Date: Tue, 14 Dec 2021 23:26:10 +0800
+From: butt3rflyh4ck <butterflyhuangxx@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-4095: kernel: KVM: NULL pointer dereference in kvm_dirty_ring_get() in virt/kvm/dirty_ring.c
 Content-Type: text/plain; charset=utf-8
 
-description:
+Hi, there was a null-ptr-deref bug in kvm_dirty_ring_get in
+virt/kvm/dirty_ring.c and I reproduced it on 5.15.0-rc5+.
 
-A flaw was found in mbsync before v1.3.6 and v1.4.2, where an unchecked
-pointer cast allows a malicious or compromised server to write an
-arbitrary integer value past the end of a heap-allocated structure by
-issuing an unexpected APPENDUID response. This could be plausibly
-exploited for remote code execution on the client.
+#Root Cause
+When dirty ring logging is enabled, any dirty logging without an active
+vCPU context will cause a kernel oops via a KVM KVM_XEN_HVM_SET_ATTR ioctl.
 
-mitigation:
+we can call KVM_XEN_HVM_SET_ATTR ioctl and it would invoke
+kvm_xen_hvm_set_attr(), it would call mark_page_dirty_in_slot().
+Call chains is like this:
+KVM_XEN_HVM_SET_ATTR ioctl
+  --->kvm_xen_hvm_set_attr
+      --->kvm_write_wall_clock
+         --->kvm_write_guest
+            -->__kvm_write_guest_page
+               --->mark_page_dirty_in_slot
+mark_page_dirty_in_slot().
+if kvm->dirty_ring_size is sat.
+```
+void mark_page_dirty_in_slot(struct kvm *kvm,
+     struct kvm_memory_slot *memslot,
+     gfn_t gfn)
+{
+if (memslot && kvm_slot_dirty_track_enabled(memslot)) {
+unsigned long rel_gfn = gfn - memslot->base_gfn;
+u32 slot = (memslot->as_id << 16) | memslot->id;
 
-upgrade to the freshly released v1.3.6 or v1.4.2 available from 
-https://sourceforge.net/projects/isync/files/isync/ , or apply the 
-matching attached patch.
+if (kvm->dirty_ring_size)
+kvm_dirty_ring_push(kvm_dirty_ring_get(kvm),
+    slot, rel_gfn);
+else
+set_bit_le(rel_gfn, memslot->dirty_bitmap);
+}
+}
+```
+mark_page_dirty_in_slot() would call kvm_dirty_ring_push() to push a
+dirty-page to dirty ring
+then kvm_dirty_ring_get() would get vcpu->dirty_ring.
 
-credit:
+kvm_dirty_ring_get()
+```
+struct kvm_dirty_ring *kvm_dirty_ring_get(struct kvm *kvm)
+{
+struct kvm_vcpu *vcpu = kvm_get_running_vcpu();  //-------> invoke
+kvm_get_running_vcpu() to get a vcpu.
 
-This problem was found by Lukas Braun <koomi@...hbit.net> using a
-fuzzer.
+WARN_ON_ONCE(vcpu->kvm != kvm); [1]
+
+return &vcpu->dirty_ring;
+}
+```
+If vCPU stat did not work, kvm_get_running_vcpu() would get a NULL
+vcpu pointer .
+
+#Details
+Analyze and some discussion on this issue.
+https://lore.kernel.org/kvm/CAFcO6XOmoS7EacN_n6v4Txk7xL7iqRa2gABg3F7E3Naf5uG94g@mail.gmail.com/
+
+#Fix
+The patch for this issue, not available upstream now.
+https://patchwork.kernel.org/project/kvm/patch/20211121125451.9489-12-dwmw2@infradead.org/
+
+#CVE
+Red Hat has assigned CVE-2021-4095 to this issue.
+https://access.redhat.com/security/cve/CVE-2021-4095
+https://bugzilla.redhat.com/show_bug.cgi?id=2031194
+
+#Cedit
+Active Defense Lab of Venustech.
 
 
-View attachment "fix-handling-of-unexpected-APPENDUID-response-code--1.3.patch" of type "text/x-diff" (3187 bytes)
-
-View attachment "fix-handling-of-unexpected-APPENDUID-response-code--1.4.patch" of type "text/x-diff" (3167 bytes)
+Regards,
+ butt3rflyh4ck.
+--
+Active Defense Lab of Venustech
