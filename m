@@ -1,101 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/18/2
-Message-Id: <E1lChm8-0008V9-8E@xenbits.xenproject.org>
-Date: Thu, 18 Feb 2021 11:47:16 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 366 v1 - missed flush in XSA-321 backport
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/14/4
+Message-ID: <b1b3fb6f-a394-ede3-0c3c-ea2c11018062@apache.org>
+Date: Tue, 14 Dec 2021 16:52:05 +0000
+From: Ron Grabowski <rgrabowski@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-45046: Apache Log4j2 Thread Context Message Pattern and Context Lookup Pattern vulnerable to a denial of service attack 
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: moderate (CVSS: 3.7 AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L)
 
-                    Xen Security Advisory XSA-366
+Description:
 
-                   missed flush in XSA-321 backport
+It was found that the fix to address CVE-2021-44228 in Apache Log4j 2.15.0 was incomplete in certain non-default configurations. This could allows attackers with control over Thread Context Map (MDC) input data when the logging configuration uses a non-default Pattern Layout with either a Context Lookup (for example, $${ctx:loginId}) or a Thread Context Map pattern (%X, %mdc, or %MDC) to craft malicious input data using a JNDI Lookup pattern resulting in a denial of service (DOS) attack. Log4j 2.15.0 restricts JNDI LDAP lookups to localhost by default. Note that previous mitigations involving configuration such as to set the system property `log4j2.noFormatMsgLookup` to `true` do NOT mitigate this specific vulnerability.
 
-ISSUE DESCRIPTION
-=================
+Log4j 2.16.0 fixes this issue by removing support for message lookup patterns and disabling JNDI functionality by default.  
 
-An oversight was made when backporting XSA-320, leading entries in the
-IOMMU not being properly updated under certain circumstances.
+This issue can be mitigated in prior releases (<2.16.0) by removing the JndiLookup class from the classpath (example: zip -q -d log4j-core-*.jar org/apache/logging/log4j/core/lookup/JndiLookup.class).
 
-IMPACT
-======
+References:
 
-A malicious guest may be able to retain read/write DMA access to
-frames returned to Xen's free pool, and later reused for another
-purpose.  Host crashes (leading to a Denial of Service) and privilege
-escalation cannot be ruled out.
+https://logging.apache.org/log4j/2.x/security.html
+https://www.cve.org/CVERecord?id=CVE-2021-44228
 
-VULNERABLE SYSTEMS
-==================
-
-Xen versions up to 4.11, from at least 3.2 onwards, are affected.  Xen
-versions 4.12 and newer are not affected.
-
-Only x86 Intel systems are affected.  x86 AMD as well as Arm systems are
-not affected.
-
-Only x86 HVM guests using hardware assisted paging (HAP), having a
-passed through PCI device assigned, and having page table sharing
-enabled can leverage the vulnerability.  Note that page table
-sharing will be enabled (by default) only if Xen considers IOMMU and
-CPU large page size support compatible.
-
-MITIGATION
-==========
-
-Suppressing the use of page table sharing will avoid the vulnerability
-(command line option "iommu=no-sharept").
-
-Suppressing the use of large HAP pages will avoid the vulnerability
-(command line options "hap_2mb=no hap_1gb=no").
-
-Not passing through PCI devices to HVM guests will avoid the
-vulnerability.
-
-CREDITS
-=======
-
-This issue was reported as a bug by M. Vefa Bicakci, and recognized as
-a security issue by Roger Pau Monne of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa366-4.11.patch      Xen 4.11.x
-
-$ sha256sum xsa366*
-3131c9487b9446655e2e21df4ccf1e003bec471881396d7b2b1a0939f5cbae96  xsa366.meta
-8c8c18ca8425e6167535c3cf774ffeb9dcb4572e81c8d2ff4a73fefede2d4d94  xsa366-4.11.patch
-$
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-This was reported and debugged publicly, before the security
-implications were apparent.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmAuU5EMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZMCkIAKq1dU6xOMN3lFqY6LeIV+Pn+JQDvJKhDT+lJT9b
-KAP+a44ks5bHHSD6CPyiq5boU5APE7yqiyJnXBycXVDLH6GGjh7uBvc6A00YkeHU
-y08l8jxa6/FAyrvCj5P0pYItALwH0NZDtfUE57ueloYUu3KJnyBRtl9icvx/sCa9
-CUkpKDpS0te+Rk+G57UPDjGvSPwpIh01vphJ5tyf+2Lrk8rsHTJYWQ7eD8A09jCr
-DtSD6FylzEuGGY30vPGLUzXgOm8Nji/WgnXnmmbILCEo8PQs3CcoxN53/F8cYvr6
-NRERHKZFhHoLmUUCImoFcApxzzdt11USDnCdEXiAkrEOYsk=
-=w9OA
------END PGP SIGNATURE-----
-
-Download attachment "xsa366.meta" of type "application/octet-stream" (338 bytes)
-
-Download attachment "xsa366-4.11.patch" of type "application/octet-stream" (1512 bytes)
