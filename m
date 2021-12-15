@@ -1,54 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/21/1
-Message-ID: <CAHMfzJkhZ01FG62sfMdXayK_NwD3g=5NcpGmg+-PVZLBpjJ9Fw@mail.gmail.com>
-Date: Mon, 21 Jun 2021 17:47:27 +0300
-From: Adam Morrison <mad@...tau.ac.il>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/15/1
+Message-ID: <CAH8yC8=R7+DwZ19C0c3D_r=BL2Bde7rVQd11RcLKGSkdn0EVqw@mail.gmail.com>
+Date: Wed, 15 Dec 2021 06:39:13 -0500
+From: Jeffrey Walton <noloader@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2021-33624] Linux kernel BPF protection against speculative execution attacks can be bypassed to read arbitrary kernel memory
+Subject: Re: CVE-2021-45046: Apache Log4j2 Thread Context Message Pattern and Context Lookup Pattern vulnerable to a denial of service attack
 Content-Type: text/plain; charset=utf-8
 
-The Linux kernel BPF subsystem's protection against speculative
-execution attacks (Spectre mitigation) can be bypassed.
+Hi Ron,
 
-On affected systems, an unprivileged BPF program can exploit this
-vulnerability to leak the contents of arbitrary kernel memory (and
-therefore, of all physical memory) via a side-channel.
+> It was found that the fix to address CVE-2021-44228 in
+> Apache Log4j 2.15.0 was incomplete in certain non-default
+> configurations. This could allows [DoS]...
 
-The issue is that when the kernel's BPF verifier enumerates the
-possible execution paths of a BPF program, it skips any branch
-outcomes that are impossible according to the ISA semantics.
-However, when the BPF program executes, such branch outcomes may be
-mispredicted and so a path could speculatively execute that was
-missed by the verifier.
+Is there any information on the non-default configuration that triggers the DoS?
 
-For example, when analyzing a memory load instruction, the paths
-inspected by the verifier could use an address register that is always
-in-bounds, and so the instruction is deemed safe. Whereas a path
-missed by the verifier could put an arbitrary attacker-controlled
-scalar into the address register before a branch that mispredicts
-to the load instruction. This can be abused to read and leak the
-contents of any kernel address via a side-channel.
+What I am trying to understand is, if we clear the first CVE through,
+say, envar LOG4J_FORMAT_MSG_NO_LOOKUPS=true or
+-Dlog4j2.formatMsgNoLookups=true, then where does the vulnerability
+lie for the second CVE? What configuration change needs to be done to
+reduce risk on the second CVE after the first CVE has been mitigated?
 
-Several PoCs of this vulnerability have been shared privately with
-<security@...nel.org> and the BPF maintainers to assist developing
-the fix.
+The reason I ask is, we don't have the option of updating to v2.16 (or
+v2.15) on some machines and programs, so we are trying to reduce and
+manage the risk.
 
-The following patch series (available from the mainline git
-repository) fixes the vulnerability (the 3rd one is the main patch):
+Jeff
 
-* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/?id=d203b0fd863a2261e5d00b97f3d060c4c2a6db71
-* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/?id=fe9a5ca7e370e613a9a75a13008a3845ea759d6e
-* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/?id=9183671af6dbf60a1219371d4ed73e23f43b49db
-* https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/patch/?id=973377ffe8148180b2651825b92ae91988141b05
-
-Thanks to Piotr Krysiuk for collaborating on this advisory.
-
-# Discoverers
-
-Ofek Kirzner <ofekkir@...il.com> and Adam Morrison <mad@...tau.ac.il>
-Benedict Schlueter <benedict.schlueter@....de> (independent report)
-Piotr Krysiuk <piotras@...il.com> (independent report)
-
-# References
-
-CVE-2021-33624 (reserved via https://cveform.mitre.org/)
+On Tue, Dec 14, 2021 at 12:10 PM Ron Grabowski <rgrabowski@...che.org> wrote:
+>
+> Severity: moderate (CVSS: 3.7 AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L)
+>
+> Description:
+>
+> It was found that the fix to address CVE-2021-44228 in Apache Log4j 2.15.0 was incomplete in certain non-default configurations. This could allows attackers with control over Thread Context Map (MDC) input data when the logging configuration uses a non-default Pattern Layout with either a Context Lookup (for example, $${ctx:loginId}) or a Thread Context Map pattern (%X, %mdc, or %MDC) to craft malicious input data using a JNDI Lookup pattern resulting in a denial of service (DOS) attack. Log4j 2.15.0 restricts JNDI LDAP lookups to localhost by default. Note that previous mitigations involving configuration such as to set the system property `log4j2.noFormatMsgLookup` to `true` do NOT mitigate this specific vulnerability.
+>
+> Log4j 2.16.0 fixes this issue by removing support for message lookup patterns and disabling JNDI functionality by default.
+>
+> This issue can be mitigated in prior releases (<2.16.0) by removing the JndiLookup class from the classpath (example: zip -q -d log4j-core-*.jar org/apache/logging/log4j/core/lookup/JndiLookup.class).
+>
+> References:
+>
+> https://logging.apache.org/log4j/2.x/security.html
+> https://www.cve.org/CVERecord?id=CVE-2021-44228
