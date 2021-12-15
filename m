@@ -1,89 +1,214 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/07/1
-Message-ID: <0867be10-5fe2-8040-471b-b2219c29f9e4@gmail.com>
-Date: Tue, 7 Dec 2021 08:44:56 +0100
-From: Mariusz Felisiak <felisiak.mariusz@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/15/4
+Message-ID: <942e362d-2a16-883f-5ff9-a466ee6202f8@gmail.com>
+Date: Wed, 15 Dec 2021 22:22:33 +0100
+From: Szymon Heidrich <szymon.heidrich@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Django: CVE-2021-44420: Potential bypass of an upstream access control based on URL paths
+Cc: Greg KH <greg@...ah.com>
+Subject: CVE-2021-39685 : Linux Kernel USB Gadget buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-https://www.djangoproject.com/weblog/2021/dec/07/security-releases/
+Hello,
 
-In accordance with `our security release policy
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
-Django team
-is issuing
-`Django 3.2.10 <https://docs.djangoproject.com/en/dev/releases/3.2.10/>`_,
-`Django 3.1.14 
-<https://docs.djangoproject.com/en/dev/releases/3.1.14/>`_, and
-`Django 2.2.25 <https://docs.djangoproject.com/en/dev/releases/2.2.25/>`_.
-These release addresses the security issue detailed below. We encourage all
-users of Django to upgrade as soon as possible.
+As some of you might have already observed a buffer overflow vulnerability
+was recently patched in the Linux USB Gadget subsystem.
 
-CVE-2021-44420: Potential bypass of an upstream access control based on 
-URL paths
-=================================================================================
+TLTR; The issue reported to the Linux security team allowed one to read 
+and/or write up to 65kB of kernel memory past buffer boundaries by exploiting
+lack of limiting of the usb control transfer request wLength in certain
+gadget functions.
 
-HTTP requests for URLs with trailing newlines could bypass an upstream 
-access
-control based on URL paths.
+You can find more details below. I also attached a sample exploit script
+based on pyusb to this message. You can also find a up to date version
+on my github under https://github.com/szymonh/inspector-gadget.
 
-This issue has low severity, according to the Django security policy.
+Best regards,
+Szymon
 
-Thanks to Sjoerd Job Postmus and TengMA(@te3t123) for the report.
+---
 
-Affected supported versions
-===========================
+Summary
 
-* Django main branch
-* Django 4.0 (which will be released in a separate blog post later today)
-* Django 3.2
-* Django 3.1
-* Django 2.2
+An attacker can access kernel memory bypassing valid buffer boundaries by exploiting implementation of control request handlers in the following usb gadgets - rndis, hid, uac1, uac1_legacy and uac2. Processing of malicious control transfer requests with unexpectedly large wLength lacks assurance that this value does not exceed the buffer size. Due to this fact one is capable of reading and/or writing (depending on particular case) up to 65k of kernel memory.
 
-Resolution
-==========
+Description
 
-Patches to resolve the issue have been applied to Django's main branch and
-the 4.0, 3.2, 3.1, and 2.2 release branches. The patches may be obtained 
-from the following changesets:
+Some execution paths of usb control transfer handlers of gadgets such as rndis, hid, uac1, uac1_legacy and uac2 do not include proper handling of request length (wLength). This value should be limited to buffer size to prevent buffer overflow vulnerabilities in the data transfer phase. 
+
+The buffer used by endpoint 0 is allocated in composite.c with size of USB_COMP_EP0_BUFSIZ (4096) bytes so
+setting wLength to a value greater than USB_COMP_EP0_BUFSIZ will result in a buffer overflow.
+
+For example in the case of f_uac1.c, execution of the f_audio_setup function allows one to perform both reads and writes past buffer boundaries. Neither f_audio_setup nor none of the called functions - audio_set_endpoint_req, audio_get_endpoint_req, out_rq_cur, ac_rq_in limit the return value to be smaller than the buffer size. Consequently the data transfer phase uses req->length = value = ctrl->wLength which is controlled by the attacker. This allows one to either read or write up to 65k bytes of kernel memory depending on the control transfer direction.
+
+    static int
+    f_audio_setup(struct usb_function *f, const struct usb_ctrlrequest *ctrl)
+    {
+            struct usb_composite_dev *cdev = f->config->cdev;
+            struct usb_request      *req = cdev->req;
+            int                     value = -EOPNOTSUPP;
+            u16                     w_index = le16_to_cpu(ctrl->wIndex);
+            u16                     w_value = le16_to_cpu(ctrl->wValue);
+            u16                     w_length = le16_to_cpu(ctrl->wLength);
+
+            /* composite driver infrastructure handles everything; interface
+             * activation uses set_alt().
+             */
+            switch (ctrl->bRequestType) {
+            case USB_DIR_OUT | USB_TYPE_CLASS | USB_RECIP_ENDPOINT:
+                    value = audio_set_endpoint_req(f, ctrl);
+                    break;
+
+            case USB_DIR_IN | USB_TYPE_CLASS | USB_RECIP_ENDPOINT:
+                    value = audio_get_endpoint_req(f, ctrl);
+                    break;
+            case USB_DIR_OUT | USB_TYPE_CLASS | USB_RECIP_INTERFACE:
+                    if (ctrl->bRequest == UAC_SET_CUR)
+                            value = out_rq_cur(f, ctrl);
+                    break;
+            case USB_DIR_IN | USB_TYPE_CLASS | USB_RECIP_INTERFACE:
+                    value = ac_rq_in(f, ctrl);
+                    break;
+            default:
+                    ERROR(cdev, "invalid control req%02x.%02x v%04x i%04x l%d\n",
+                            ctrl->bRequestType, ctrl->bRequest,
+                            w_value, w_index, w_length);
+            }
+
+            /* respond with data transfer or status phase? */
+            if (value >= 0) {
+                    DBG(cdev, "audio req%02x.%02x v%04x i%04x l%d\n",
+                            ctrl->bRequestType, ctrl->bRequest,
+                            w_value, w_index, w_length);
+                    req->zero = 0;
+                    req->length = value;
+                    value = usb_ep_queue(cdev->gadget->ep0, req, GFP_ATOMIC);
+
+                    if (value < 0)
+                            ERROR(cdev, "audio response on err %d\n", value);
+            }
+
+            /* device either stalls (value < 0) or reports success */
+            return value;
+    } 
+
+ 
+Execution of the sample readout exploit allows dumping of up to 65k of memory.
+
+    $ ./gadget.py -v 0x1b67 -p 0x400c -f uac1 | wc -c
+    65535
+
+     
+
+    $ ./gadget.py -v 0x1b67 -p 0x400c -f uac1 | strings
+
+    nsole=tty1 root=PARTUUID=e02024cb-02 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait modules-load=dwc2
+    tem.slice/system-getty.slice/getty@...GS0.service
+    !rE*
+    ?& .4!
+    0usb_composite_setup_continue
+    composite_setup
+    usb_gadget_get_string
+    usb_otg_descriptor_init
+    usb_otg_descriptor_alloc
+    usb_free_all_descriptors
+    usb_assign_descriptors
+    usb_copy_descriptors
+
+    usb_gadget_config_buf 
 
 
-* On the `main branch 
-<https://github.com/django/django/commit/d4dcd5b9dd9e462fec8220e33e3e6c822b7e88a6>`__
-* On the `4.0 release branch 
-<https://github.com/django/django/commit/20b9ad36ff0558b819659a10a9734262367750be>`__
-* On the `3.2 release branch 
-<https://github.com/django/django/commit/333c65603032c377e682cdbd7388657a5463a05a>`__
-* On the `3.1 release branch 
-<https://github.com/django/django/commit/22bd17488159601bf0741b70ae7932bffea8eced>`__
-* On the `2.2 release branch 
-<https://github.com/django/django/commit/7cf7d74e8a754446eeb85cacf2fef1247e0cb6d7>`__
+On the other hand, execution of the overwrite exploit allows one to write arbitrary data past expected buffer boundaries.
 
-The following releases have been issued:
+    $ ./gadget.py -v 0x1b67 -p 0x400c -f uac1 -d write
 
-* Django 3.2.10 (`download Django 3.2.10 
-<https://www.djangoproject.com/m/releases/3.2/Django-3.2.10.tar.gz>`_ | 
-`3.2.10 checksums 
-<https://www.djangoproject.com/m/pgp/Django-3.2.10.checksum.txt>`_)
-* Django 3.1.14 (`download Django 3.1.14 
-<https://www.djangoproject.com/m/releases/3.1/Django-3.1.14.tar.gz>`_ | 
-`3.1.14 checksums 
-<https://www.djangoproject.com/m/pgp/Django-3.1.14.checksum.txt>`_)
-* Django 2.2.25 (`download Django 2.2.25 
-<https://www.djangoproject.com/m/releases/2.2/Django-2.2.25.tar.gz>`_ | 
-`2.2.25 checksums 
-<https://www.djangoproject.com/m/pgp/Django-2.2.25.checksum.txt>`_)
 
-The PGP key ID used for this release is Mariusz Felisiak: 
-`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
+    Message from syslogd@...o at Dec  6 19:56:01 ...
+     kernel:[  103.850206] Internal error: Oops: 5 [#1] ARM
 
-General notes regarding security reporting
-==========================================
 
-As always, we ask that potential security issues be reported via
-private email to ``security@...ngoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
+Similarly in case of the rndis gadget the rndis_setup function can be exploited to write past buffer boundaries using control transfer request with direction out, type class, recipient interface and bRequest set to USB_CDC_SEND_ENCAPSULATED_COMMAND. 
 
+    static int
+    rndis_setup(struct usb_function *f, const struct usb_ctrlrequest *ctrl)
+    {
+            struct f_rndis          *rndis = func_to_rndis(f);
+            struct usb_composite_dev *cdev = f->config->cdev;
+            struct usb_request      *req = cdev->req;
+            int                     value = -EOPNOTSUPP;
+            u16                     w_index = le16_to_cpu(ctrl->wIndex);
+            u16                     w_value = le16_to_cpu(ctrl->wValue);
+            u16                     w_length = le16_to_cpu(ctrl->wLength);
+            /* composite driver infrastructure handles everything except
+             * CDC class messages; interface activation uses set_alt().
+             */
+            switch ((ctrl->bRequestType << 8) | ctrl->bRequest) {
+            /* RNDIS uses the CDC command encapsulation mechanism to implement
+             * an RPC scheme, with much getting/setting of attributes by OID.
+             */
+            case ((USB_DIR_OUT | USB_TYPE_CLASS | USB_RECIP_INTERFACE) << 8)
+                            | USB_CDC_SEND_ENCAPSULATED_COMMAND:
+                    if (w_value || w_index != rndis->ctrl_id)
+                            goto invalid;
+                    /* read the request; process it later */
+                    value = w_length;
+                    req->complete = rndis_command_complete;
+                    req->context = rndis;
+                    /* later, rndis_response_available() sends a notification */
+                    break;
+
+     ... 
+
+     ...
+
+            /* respond with data transfer or status phase? */
+            if (value >= 0) {
+                    DBG(cdev, "rndis req%02x.%02x v%04x i%04x l%d\n",
+                            ctrl->bRequestType, ctrl->bRequest,
+                            w_value, w_index, w_length);
+                    req->zero = (value < w_length);
+                    req->length = value;
+                    value = usb_ep_queue(cdev->gadget->ep0, req, GFP_ATOMIC);
+                    if (value < 0)
+                            ERROR(cdev, "rndis response on err %d\n", value);
+            }
+            /* device either stalls (value < 0) or reports success */
+            return value;
+
+    } 
+
+
+Vulnerable execution paths:
+- f_rndis.c
+    - rndis_setup
+- f_uac1.c
+    - out_rq_cur
+    - ac_rq_in
+    - audio_set_endpoint_req
+    - audio_get_endpoint_req
+- f_uac1_legacy.c
+    - audio_set_intf_req
+    - audio_set_endpoint_req
+    - audio_get_endpoint_req
+- f_uac2.c
+    - out_rq_cur
+- f_hid.c
+    - hid_gsetup for HID_REQ_SET_REPORT case
+
+Impact
+
+Devices implementing affected usb device gadget classes (rndis, hid, uac1, uac1_legacy, uac2) may be affected by buffer overflow vulnerabilities resulting in information disclosure, denial of service or execution of arbitrary code in kernel context.
+
+Expected resolution
+
+Limit the transfer phase size to min(len, buffer_size) in affected control request handlers to assure that a buffer overflow will not occur.
+
+Key dates
+
+- 07.12.2021 - reported the issue to Kernel security team
+- 09.12.2021 - draft patch provided by Kernel security team
+- 12.12.2021 - fix merged to main Linux kernel tree (public)
+
+
+I attached sample exploits based on pyusb. For optimal results libusb on the malicious host should be compiled with support for large request transfer messages (MAX_CTRL_BUFFER_LENGTH). 
+
+View attachment "gadget.py" of type "text/x-python-script" (6081 bytes)
