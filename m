@@ -1,34 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/17/2
-Message-ID: <20210517143348.GB24667@huumeet.info>
-Date: Mon, 17 May 2021 17:33:48 +0300
-From: def <def@...meet.info>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/18/2
+Message-ID: <1a42c865-2a9b-a8c1-a422-140d180d76f7@apache.org>
+Date: Sat, 18 Dec 2021 16:03:14 +0000
+From: Jan Høydahl <janhoy@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: rxvt terminal (+bash) remoteish code execution 0day
+Subject: CVE-2021-44548: Apache Solr information disclosure vulnerability through DataImportHandler 
 Content-Type: text/plain; charset=utf-8
 
-Some minor clarifications.
+Severity: moderate
 
-The bug is not technically a 0day for rxvt-unicode and has been known at
-least since 2017-05-01 when it was discussed publicly in oss-security:
+Description:
 
-    https://www.openwall.com/lists/oss-security/2017/05/01/20
+An Improper Input Validation vulnerability in DataImportHandler of Apache Solr allows an attacker to provide a Windows UNC path resulting in an SMB network call being made from the Solr host to another host on the network. If the attacker has wider access to the network, this may lead to SMB attacks, which may result in:
 
-The issue was quietly fixed in rxvt-unicode upstream in 2017. Most Linux
-distributions ship unpatched rxvt-unicode 9.22 (2016-01-23) because the
-first official fixed release version is rxvt-unicode 9.25 (2021-05-14).
-Yes, version numbers 9.23 & 9.24 were skipped in upstream. In any case,
-the vulnerability still counts as 0day against non-unicode rxvt 2.7.10,
-and forks such as mrxvt 0.5.4 and Enlightenment's eterm 0.9.7 terminal.
+* The exfiltration of sensitive data such as OS user hashes (NTLM/LM hashes),
+* In case of misconfigured systems, SMB Relay Attacks which can lead to user impersonation on SMB Shares or, in a worse-case scenario, Remote Code Execution
 
-Finally, the vulnerability can be exploited in any context in which the
-attacker can plant payload scripts in a subdirectory of CWD and trigger
-code execution by writing (unescaped) ANSI escape sequences to stdout or
-stderr. Suitable target programs besides `scp` include popular CLI tools
-such as `unrar` and `busybox tar` as demonstrated in the PoCs here:
+This issue affects all Apache Solr versions prior to 8.11.1. This issue only affects Windows.
 
-    https://huumeet.info/~def/rxvt0day/
+This issue is being tracked as SOLR-15826
 
-Note that GNU tar is not exploitable due to properly escaped filenames.
+Mitigation:
 
-- def
+Upgrade to Solr 8.11.1, and/or ensure only trusted clients can make requests to Solr's DataImport handler.
+
+Credit:
+
+Apache Solr would like to thank LaiHan of Nsfocus security team for reporting the issue
+
+References:
+
+https://solr.apache.org/security.html#cve-2021-44548-apache-solr-information-disclosure-vulnerability-through-dataimporthandler
+
