@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1985" "Wednesday" "29" "June" "2016" "06:56:57" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160629105657.7DD6F33201E@smtpvbsrv1.mitre.org>" "49" "[oss-security] Re: CVE Request - PECL-HTTP 3.0.0 Buffer overflow" nil nil nil "6" "2016062910:56:57" "[oss-security] Re: CVE Request - PECL-HTTP 3.0.0 Buffer overflow" (number mark "U       cve-assign@m Jun 29   49/1985  " thread-indent "\"[oss-security] Re: CVE Request - PECL-HTTP 3.0.0 Buffer overflow\"\n") "<d45df96858a4de9a1d544b795d2be58c@blinkenshell.org>" ("<d45df96858a4de9a1d544b795d2be58c@blinkenshell.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["734" "Saturday" "18" "December" "2021" "11:30:16" "+0100" "Moritz Bechler" "mbechler@eenterphace.org" nil "28" "Re: [oss-security] CVE-2021-45046: Apache Log4j2 Thread Context Message Pattern and Context Lookup Pattern vulnerable to a denial of service attack" nil nil nil "12" nil nil (number mark "U       mbechler@een Dec 18   28/734   " thread-indent "\"Re: [oss-security] CVE-2021-45046: Apache Log4j2 Thread Context Message Pattern and Context Lookup Pattern vulnerable to a denial of service attack\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-45046: Apache Log4j2 Thread Context Message Pattern and Context Lookup Pattern vulnerable to a denial of service attack" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5660 invoked by uid 550); 29 Jun 2016 10:57:10 -0000
+Received: (qmail 32166 invoked by uid 550); 18 Dec 2021 13:23:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,61 +12,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5642 invoked from network); 29 Jun 2016 10:57:09 -0000
-From: cve-assign@mitre.org
-To: hlt99@blinkenshell.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <d45df96858a4de9a1d544b795d2be58c@blinkenshell.org>
-Message-Id: <20160629105657.7DD6F33201E@smtpvbsrv1.mitre.org>
-Date: Wed, 29 Jun 2016 06:56:57 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request - PECL-HTTP 3.0.0 Buffer overflow
+Received: (qmail 3673 invoked from network); 18 Dec 2021 10:30:29 -0000
+Message-ID: <11aa374e-5dcf-71a3-9a56-aa1ea764cb12@eenterphace.org>
+Date: Sat, 18 Dec 2021 11:30:16 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.3.2
+Content-Language: en-US
+To: oss-security@lists.openwall.com
+References: <b1b3fb6f-a394-ede3-0c3c-ea2c11018062@apache.org>
+ <CAH8yC8=R7+DwZ19C0c3D_r=BL2Bde7rVQd11RcLKGSkdn0EVqw@mail.gmail.com>
+ <fc29939d-fac1-737a-a583-ea14a6a0baa9@eenterphace.org>
+From: Moritz Bechler <mbechler@eenterphace.org>
+In-Reply-To: <fc29939d-fac1-737a-a583-ea14a6a0baa9@eenterphace.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] CVE-2021-45046: Apache Log4j2 Thread Context
+ Message Pattern and Context Lookup Pattern vulnerable to a denial of service
+ attack
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> a buffer overflow was discovered in url parsing
-> functions of the PECL HTTP extension.
-> The bug allowed a partial overwrite of a callback function pointer
-> possibly leading to execution of arbitrary code.
-> 
-> For the original bug report to the PHP bug tracker, please see:
-> 
->   https://bugs.php.net/bug.php?id=71719
-> 
-> included in PECL-HTTP 3.0.1 that was released the same day:
-> 
->   https://pecl.php.net/package/pecl_http/3.0.1
->   Release notes Version 3.0.1
->   * Fix php-bug #71719: Buffer overflow in HTTP url parsing functions (Mike, rc0r)
-> 
-> This flaw was fixed in commit [3724cd7]
-> 
-> https://github.com/m6w6/ext-http/commit/3724cd76a28be1d6049b5537232e97ac567ae1f5
 
-Use CVE-2016-5873 for the entire issue described in this commit, i.e.,
-"The parser's offset was not reset when we softfail in scheme parsing
-and continue to parse a path" and the accompanying change to maxlen in
-the php_http_url_parse function.
+> For =2.15 this is mostly mitigated by the fact protocol and target host 
+> to which lookups are possible are also restricted to localhost by 
+> default. There still seems to be a way to hang/crash the process, thou.
+> 
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Updating that for completeness: a bypass of that hostname restriction 
+was found by Alvaro Munoz, exploiting different URI interpretations by 
+the standard Uri class and JNDI.
+Therefore 2.15 can be vulnerable again for RCE, if a layout
+with attacker-controlled input outside the message is used or the 
+expression lookup has been re-enabled.
 
-iQIcBAEBCAAGBQJXc6jUAAoJEHb/MwWLVhi2MLwQAK1r9jq7D6vcm23wuNd7yhwz
-y7VH1oflcJokHblJKyF+pNjZQ9tjGpsAnWqm2GHBEgH4yE297gVYg/WmhNauZZpE
-RUyCk6OCKXLBBNyFvP9YfJG7KJFp1OejEvmYFv/SD5pUquwv+hAWHwOoZucaESRH
-ivscwV1ILF4v+n61CPfMHtkmBk8XXggTnvHFGjTkQhekt2makC0pENId9SF4lzh1
-xkN9FzHJSviNkymSwX+CSvdUVjxa2UPenwAIjULw6dPZXSKgUWfCEXXFDiYI6Krt
-jeqxFMiAuKRfeCFnS3pr3wpFs2n7j7dBLL6+nH35Ex58lEaresdDRpRs5F/TIqU1
-B6xY30m0JeNaq5a6M7YEA1fWpAsLU6DuaDKkUt7uTSv525TULzmEBXhWh/ZZQbpw
-rMf+TyA+0cpgcmkTJx0ngmKpnlRuf/gCHf0/2no2N7t0dDqJR/KCEZd8NQSSbqOv
-GUNi2QYeII0b7ZibmB13W3paqqo2XzvEFeqqKCUoIrYiSEBLLKtu5nbrA9JzJd3E
-WR8RgGFpKfbntvzqXdmVyqohjh11GGY0qy9/IrSk9AYQHjGO/5/ZZXUpd50h9v7F
-pgr1tLArI/sNgnuugpyMcJX/bgvbpIPAJdg7hQGldgdoYnBCY/n4F7tZzalOzu6T
-nCkssdBqv91hfjwnGGd2
-=im8F
------END PGP SIGNATURE-----
+This also requires resolving a DNS name like 127.0.0.1#x.y.z or 
+localhost#x.y.z, which some resolvers and likely recursors will directly 
+reject.
+
+
+
+
+Moritz
+
+
+
+
+
