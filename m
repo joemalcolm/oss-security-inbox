@@ -1,188 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/04/20/1
-Message-ID: <000001d73588$9b95a920$d2c0fb60$@nsfocus.com>
-Date: Tue, 20 Apr 2021 09:58:05 +0800
-From: "Luo Likang" <luolikang@...ocus.com>
-To: <oss-security@...ts.openwall.com>
-Subject: Linux kernel:  a heap buffer overflow in firedtv driver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/19/1
+Message-ID: <CACmp6kqFOo0+SsDk-xEuBTvwz6zDRSEpsKobu=dcjVza=TN1pA@mail.gmail.com>
+Date: Sat, 18 Dec 2021 18:02:02 -0600
+From: Matt Sicker <mattsicker@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-45105: Apache Log4j2 does not always protect from infinite recursion in lookup evaluation
 Content-Type: text/plain; charset=utf-8
 
-I found a buffer overflow vulnerability in function
-avc_ca_pmt(drivers/media/fireware/firedtv-avc.c). 
+Severity: high
 
-The bounds checking in avc_ca_pmt() is not strict enough.  It should be
-checking "read_pos + 4" because it's reading 5 bytes. If the
-"es_info_length" is non-zero then it reads a 6th byte so there needs to be
-an additional check for that.
+Description:
 
- 
+Apache Log4j2 versions 2.0-alpha1 through 2.16.0 (excluding 2.12.3)
+did not protect from uncontrolled recursion from self-referential
+lookups. This allows an attacker with control over Thread Context Map
+data to cause a denial of service when a crafted string is
+interpreted. This issue was fixed in Log4j 2.17.0 and 2.12.3.
 
-a)      static int fdtv_ca_pmt(struct firedtv *fdtv, void *arg)
+This issue is being tracked as LOG4J2-3230
 
-{
+Mitigation:
 
-       struct ca_msg *msg = arg;
+Implement one of the following mitigation techniques:
 
-       int data_pos;
+* Java 8 (or later) users should upgrade to release 2.17.0.
 
-       int data_length;
+Alternatively, this can be mitigated in configuration:
 
-       int i;
+* In PatternLayout in the logging configuration, replace Context
+Lookups like `${ctx:loginId}` or `$${ctx:loginId}` with Thread Context
+Map patterns (%X, %mdc, or %MDC).
+* Otherwise, in the configuration, remove references to Context
+Lookups like `${ctx:loginId}` or `$${ctx:loginId}` where they
+originate
+from sources external to the application such as HTTP headers or user input.
 
- 
+Credit:
 
-       data_pos = 4;
+Independently discovered by Hideki Okamoto of Akamai Technologies, Guy
+Lederfein of Trend Micro Research working with Trend Micro’s Zero Day
+Initiative, and another anonymous vulnerability researcher
 
-       if (msg->msg[3] & 0x80) { 
+References:
 
-              data_length = 0;
+https://logging.apache.org/log4j/2.x/security.html
 
-              for (i = 0; i < (msg->msg[3] & 0x7f); i++)
 
-                     data_length = (data_length << 8) +
-msg->msg[data_pos++];
-
-       } else {
-
-              data_length = msg->msg[3];
-
-       }
-
- 
-
-       return avc_ca_pmt(fdtv, &msg->msg[data_pos], data_length); <== setp
-in
-
-}
-
-In this function, the content of `arg` is still the original data passed in
-by the user. If msg->msg[3] = 0x84, msg->[4] = 0xff, msg->msg[5]=0xff,
-msg->msg[6]=0xff, msg->msg[7]=0xff , will enter the for loop four times, and
-data_length will be equal to 0xffffffff, and then call avc_ca_pmt(fdtv,
-&msg->msg[8], 0xffffffff)
-
- 
-
-b)      int avc_ca_pmt(struct firedtv *fdtv, char *msg, int length)
-
-{
-
-       ..
-
-       int program_info_length;
-
-       int pmt_cmd_id;
-
-       int read_pos;
-
-       int write_pos;
-
-       int es_info_length;
-
-       int crc32_csum;
-
-       int ret;
-
- 
-
-       ..
-
-       program_info_length = ((msg[4] & 0x0f) << 8) + msg[5]; /////////////
-[0]
-
-       if (program_info_length > 0)
-
-              program_info_length--; /* Remove pmt_cmd_id */
-
-       pmt_cmd_id = msg[6];                             //////////////[1]
-
- 
-
-       c->operand[0] = SFE_VENDOR_DE_COMPANYID_0;
-
-       ..
-
-       c->operand[23] = (program_info_length & 0xff);
-
- 
-
-       /* CA descriptors at programme level */
-
-       read_pos = 6;
-
-       write_pos = 24;
-
-       if (program_info_length > 0) {
-
-              pmt_cmd_id = msg[read_pos++];
-
-              if (pmt_cmd_id != 1 && pmt_cmd_id != 4)
-////////////[2]
-
-                     dev_err(fdtv->device,
-
-                            "invalid pmt_cmd_id %d\n", pmt_cmd_id);
-
-              if (program_info_length > sizeof(c->operand) - 4 - write_pos)
-{  ///[3]
-
-                     ret = -EINVAL;
-
-                     goto out;
-
-              }
-
- 
-
-              memcpy(&c->operand[write_pos], &msg[read_pos], 
-
-                     program_info_length);
-
-              read_pos += program_info_length;
-
-              write_pos += program_info_length;             //////[4]
-
-       }
-
-       while (read_pos < length) {                      ////////[5]
-
-              c->operand[write_pos++] = msg[read_pos++]; ///[6]
-
-              c->operand[write_pos++] = msg[read_pos++];
-
-              c->operand[write_pos++] = msg[read_pos++];
-
-..
-
-              }
-
-       }
-
-In [0] and [1] : We can full control the program_info_length and pmt_cmd_id
-;
-
-In [2] : for bypass it, pmt_cmd_id must be 1 or 4 ;
-
-In [3] : program_info_length > sizeof(c->operand) - 4 - write_pos)
-
-==> program_info_length <= 509 - 4 - 24 = 0x1e1, so you can control its
-value to be 0x1e1 .
-
-           In [4] : write_pos will be updated to 24+0x1e1 = 505
-
-           In [5]: at this time, length=0xffffffff, read_pos is much smaller
-than it, so in[6] will overwrite the c->oprand many bytes.
-
- 
-
-Patch : https://lore.kernel.org/linux-media/YHaulytonFcW+lyZ@mwanda/
-
- 
-
-Credit :
-
-LuoLikang @ NSFOCUS SECURITY TEAM
-
- 
-
-
+-- 
+Matt Sicker
+PMC Member, Logging Services, Apache Software Foundation
