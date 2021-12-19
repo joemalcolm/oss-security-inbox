@@ -1,4 +1,9 @@
-Received: (qmail 28084 invoked by uid 550); 11 Apr 2024 13:44:06 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1330" "Saturday" "18" "December" "2021" "18:02:02" "-0600" "Matt Sicker" "mattsicker@apache.org" nil "43" "[oss-security] CVE-2021-45105: Apache Log4j2 does not always protect from infinite recursion in lookup evaluation" nil nil nil "12" nil nil (number mark "U       mattsicker@a Dec 18   43/1330  " thread-indent "\"[oss-security] CVE-2021-45105: Apache Log4j2 does not always protect from infinite recursion in lookup evaluation\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-45105: Apache Log4j2 does not always protect from infinite recursion in lookup evaluation" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9946 invoked by uid 550); 19 Dec 2021 00:34:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,91 +12,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29706 invoked from network); 11 Apr 2024 10:39:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712831931; x=1713436731; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=Spwb+Xa80oMp2lygGVi7vbURVNTX8+CsbJkj71AywgQ=;
-        b=NRWs4XnxSBlk4g/I8hKKBwRSJdDTDezn9/Lh7Pn6fMyVwYdi/mkHCbpzuopXi6T3MG
-         fuI1dXbtSAoE401vsvhTZZRpP9/9Dac39ZAIUZlo8+a03WQd5idgwRbMgTj/vWEi3R3J
-         b9faHgKe1Sj/4oxurOWRDSSDGVkgLfld8rwYH1R6+3+ZGVQzTDMY8THCfzFx03tgIKDN
-         kcN6yCGKdGIruTRT73w4D6QBzbpY77NlGmyCrfeMWVtGEbGI/MwEi+41pNRYO9oLJ1WT
-         y5YX3BqXWYl//5LNGSolGvzKMmQDtUllgWHg5jCbOoQ/FPsKiEeNkL4TuWUGoC5bHy0d
-         ZNsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712831931; x=1713436731;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Spwb+Xa80oMp2lygGVi7vbURVNTX8+CsbJkj71AywgQ=;
-        b=tb4M+nQFGUktxbtZYJfcf1EBiBuZrAB8Z3MjYTXd6GBCDY5C354AYLDoHdnR2yhfL2
-         EtOSO8znx2HkNwR+3wECftq+7S5p4gO3U83jljHN5eA0cytiOF1SYIPOQCZT+cK4OIrU
-         wv9i8BIlptkUrYVMx/kXfuR/padLOk8aDaDp4ZFpQe6DJH+WzytA5eXgrC5KqhH8F1qO
-         doYaLZCv/gZAu02voCTu3MfJc5KnWzd3RSUh1B9NSkZuckG5z7FIujsYwHwD4vXpI0f2
-         rd+4Fl76vkSOBcRHZRx1WL/U+S5WdT+UW9R6El00v/+Wq+3AY5T+6iqnMNBbxeGIhzIM
-         tSPw==
-X-Gm-Message-State: AOJu0Yw3V0sECpc4raJ/LvjcM+6I99X0IPqRduimhYTI/i3rxBXK1+X7
-	RVycZROmvDWlEd6Qk+bMV70uxBW1GzV7PWrnXHn1fN+PwovFduUaIaOK0t7v
-X-Google-Smtp-Source: AGHT+IF4dPbmdc67/ejK/aBxgiNFWzQCuRId5sihYqhAbFMCVS9dzT9+kd8rm2JpNK3tYUH5nIMj/A==
-X-Received: by 2002:ac2:42ca:0:b0:516:cd76:ee11 with SMTP id n10-20020ac242ca000000b00516cd76ee11mr3255617lfl.17.1712831930417;
-        Thu, 11 Apr 2024 03:38:50 -0700 (PDT)
-Sender: Maxim Nikulin <m.a.nikulin@gmail.com>
-Message-ID: <29c2fa7d-febb-4496-bac7-a963998d7bcb@gmail.com>
-Date: Thu, 11 Apr 2024 17:38:48 +0700
+Received: (qmail 26603 invoked from network); 19 Dec 2021 00:02:26 -0000
+X-Gm-Message-State: AOAM533dxzQ69QFFuaI+sGGF+k2uyAOrKqa2UYYKzwB17fpkCN39yvLP
+	8QNNUCLA4f03EZ5CbqBaTZsfaDHSoGOU88WfxOw=
+X-Google-Smtp-Source: ABdhPJz5/OsY+dwHM6hihxNYW5S0LQws1mShDb48Jm2m18e9clNr7QkQESdX5XPK9y3m7clLy6XmZxcNt/WCw4Yg9f8=
+X-Received: by 2002:a5d:590e:: with SMTP id v14mr1070584wrd.208.1639872133165;
+ Sat, 18 Dec 2021 16:02:13 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Sean Whitton <spwhitton@spwhitton.name>,
- Salvatore Bonaccorso <carnil@debian.org>
-Cc: oss-security@lists.openwall.com, emacs@packages.debian.org,
- emacs-devel@gnu.org, Ihor Radchenko <yantar92@posteo.net>
-References: <874jccjpvy.fsf@melete.silentflame.com> <87y19nu22i.fsf@localhost>
- <87bk6he8h4.fsf_-_@melete.silentflame.com> <87o7ahe85l.fsf@localhost>
- <Zhafa3wcZONJX-_k@eldamar.lan> <87y19kcle1.fsf@melete.silentflame.com>
-Content-Language: en-US, ru-RU
-From: Max Nikulin <manikulin@gmail.com>
-In-Reply-To: <87y19kcle1.fsf@melete.silentflame.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] Re: Is CVE-2024-30203 bogus? (Emacs)
+From: Matt Sicker <mattsicker@apache.org>
+Date: Sat, 18 Dec 2021 18:02:02 -0600
+X-Gmail-Original-Message-ID: <CACmp6kqFOo0+SsDk-xEuBTvwz6zDRSEpsKobu=dcjVza=TN1pA@mail.gmail.com>
+Message-ID: <CACmp6kqFOo0+SsDk-xEuBTvwz6zDRSEpsKobu=dcjVza=TN1pA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] CVE-2021-45105: Apache Log4j2 does not always protect from infinite
+ recursion in lookup evaluation
 
-On 11/04/2024 16:13, Sean Whitton wrote:
-> On Wed 10 Apr 2024 at 04:17pm +02, Salvatore Bonaccorso wrote:
-> 
->> Note that the CVE assignment (by MITRE as assigning CNA) for
->> CVE-2024-30203 is explicitly as follows:
->>
->>> In Emacs before 29.3, Gnus treats inline MIME contents as trusted.
->>
->> https://git.savannah.gnu.org/cgit/emacs.git/commit/?h=emacs-29&id=937b9042ad7426acdcca33e3d931d8f495bdd804
-> 
-> This commit doesn't fix anything at all, just fyi.
+Severity: high
 
-This Emacs commit
+Description:
 
-     2024-02-20 12:44:30 +0300 Ihor Radchenko:
-     * lisp/gnus/mm-view.el (mm-display-inline-fontify): Mark contents 
-untrusted.)
+Apache Log4j2 versions 2.0-alpha1 through 2.16.0 (excluding 2.12.3)
+did not protect from uncontrolled recursion from self-referential
+lookups. This allows an attacker with control over Thread Context Map
+data to cause a denial of service when a crafted string is
+interpreted. This issue was fixed in Log4j 2.17.0 and 2.12.3.
 
-is not enough to fix the issue. More changes are required to make the
-fix effective, namely
+This issue is being tracked as LOG4J2-3230
 
-ccc188fcf98 2024-02-20 12:43:51 +0300 Ihor Radchenko: * lisp/files.el 
-(untrusted-content): New variable.
-6f9ea396f49 2024-02-20 12:47:24 +0300 Ihor Radchenko: org-latex-preview: 
-Add protection when `untrusted-content' is non-nil
+Mitigation:
+
+Implement one of the following mitigation techniques:
+
+* Java 8 (or later) users should upgrade to release 2.17.0.
+
+Alternatively, this can be mitigated in configuration:
+
+* In PatternLayout in the logging configuration, replace Context
+Lookups like `${ctx:loginId}` or `$${ctx:loginId}` with Thread Context
+Map patterns (%X, %mdc, or %MDC).
+* Otherwise, in the configuration, remove references to Context
+Lookups like `${ctx:loginId}` or `$${ctx:loginId}` where they
+originate
+from sources external to the application such as HTTP headers or user input.
+
+Credit:
+
+Independently discovered by Hideki Okamoto of Akamai Technologies, Guy
+Lederfein of Trend Micro Research working with Trend Micro=E2=80=99s Zero D=
+ay
+Initiative, and another anonymous vulnerability researcher
+
+References:
+
+https://logging.apache.org/log4j/2.x/security.html
 
 
-When external Org mode is loaded, that version should contain
-
-https://git.savannah.gnu.org/cgit/emacs/org-mode.git/commit/?id=03635a335
-2024-02-20 12:47:24 +0300 Ihor Radchenko: org-latex-preview: Add 
-protection when `untrusted-content' is non-nil
-
-besides Emacs commits ccc188fcf98 and 937b9042ad7
-
-Emacs commit 6f9ea396f49 (fix of built-in Org mode) is currently
-associated with CVE-2024-30203, however Org mode commit 03635a335
-is not.
+--=20
+Matt Sicker
+PMC Member, Logging Services, Apache Software Foundation
