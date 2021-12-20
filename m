@@ -1,24 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/02/09/6
-Message-ID: <alpine.DEB.2.21.2102091921540.21881@o7.fi>
-Date: Tue, 9 Feb 2021 19:24:26 +0200 (EET)
-From: Harry Sintonen <sintonen@....fi>
-To: oss-security@...ts.openwall.com
-Subject: Re: screen crash processing combining characters
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/20/5
+Message-Id: <E1mzHOv-0005Fc-RG@xenbits.xenproject.org>
+Date: Mon, 20 Dec 2021 12:04:21 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 376 v1 - frontends vulnerable to backends
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 9 Feb 2021, Tavis Ormandy wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> Hello, I noticed someone posted this to the screen-devel list. I can
-> reproduce it here, just catting the testcase does crash my screen
-> session.
->
-> https://lists.gnu.org/archive/html/screen-devel/2021-02/msg00000.html
+                    Xen Security Advisory XSA-376
 
-I managed to reproduce this against screen + irssi. It was a bit tricky to 
-get it triggered but eventually screen did die.
+                   frontends vulnerable to backends
 
--- 
-l=2001;main(i){float o,O,_,I,D;for(;O=I=l/571.-1.75,l;)for(putchar(--l%80?
-i:10),o=D=l%80*.05-2,i=31;_=O*O,O=2*o*O+I,o=o*o-_+D,o+_+_<4+D&i++<87;);puts
-("  Harry 'Piru' Sintonen <sintonen@....fi> https://www.iki.fi/sintonen");}
+ISSUE DESCRIPTION
+=================
+
+Xen offers the ability to run PV backends in regular unprivileged
+guests, typically referred to as "driver domains". Running PV backends
+in driver domains has one primary security advantage: if a driver domain
+gets compromised, it doesn't have the privileges to take over the
+system.
+
+However, a malicious driver domain could try to attack other guests via
+the PV protocol. Many PV frontends are hardened against misbehaving PV
+backends, but a few of them are not and might be susceptible to Denial
+of Service attacks and metadata manipulation triggered by malicious PV
+backends.
+
+IMPACT
+======
+
+Potentially malicious PV backends can cause guest DoS due to unhardened
+frontends in the guests, even though this ought to have been prevented by
+containing them within a driver domain.
+
+VULNERABLE SYSTEMS
+==================
+
+All guests with non-hardened frontends being serviced by potentially
+malicious backends are vulnerable, even if those backends are running in a
+less privileged environment. The vulnerability is not affecting the host,
+but the guests using non-hardened frontends.
+
+The console, block and net frontends have been hardened in the Linux kernel
+5.16, so guests running Linux with kernel 5.16 or newer are not currently
+known to be vulnerable to potentially malicious console, block or net
+backends.
+
+MITIGATION
+==========
+
+In case of running potentially malicious backends, using only hardened
+frontend counterparts in guests will mitigate the problem.
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This issue was discussed in public already.
+
+RESOLUTION
+==========
+
+The related patch is just a clarification of the security statement,
+so it will NOT mitigate anything.
+
+As there is no urgent need for this patch to go into the Xen tree it
+will be posted on the xen-devel mailing list after disclosure of this
+advisory.
+
+xsa376.patch           xen-unstable
+
+$ sha256sum xsa376*
+b18551f7800d5a232bbe6953b1222ecb2c5a2058285c6fbc8d64f9b7dea2415f  xsa376.patch
+$
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmG8rFMMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZSP4H/RcD4WLHi3TuSeNspsv/+dNb906LIueHFn/3U5Pg
+5Jv8EHjv16apUhzgwTfTtx0pcCCDY2aEq0rdCziGpnTKiYzEarhTuVvc5igy9U0p
+jqazRTyUkU1pV6HwFIGi/kHXTUpO60amWgKoFzyM9ZMl6WKDejb2rTu6TJC5FyiE
+cxpe79GC98ECw8d131EfQgRx2/TIZuVQmKZlx3vVNG1lBlMZpFX2iioR7ajCQmdu
+XWt14kDYdLvmZ1UzlrOH9+jhMRIyFZ1jBZXtXEUN0zSC+aTje6nPO3WSf/gXbmNF
+COUrd7JPIMEO8PvnjzM3l1PS3XltIf2wTaVr5LjmkyBoMyM=
+=J4gx
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa376.patch" of type "application/octet-stream" (5207 bytes)
