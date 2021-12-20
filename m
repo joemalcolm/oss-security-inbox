@@ -1,40 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/06/18/1
-Message-Id: <42A78409-118C-4CF3-B50F-3AB2FC614CCB@beckweb.net>
-Date: Fri, 18 Jun 2021 11:16:07 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/20/4
+Message-ID: <30b33714-e372-c864-5111-94b8bf062b80@apache.org>
+Date: Mon, 20 Dec 2021 10:36:28 +0000
+From: Stefan Eissing <icing@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Vulnerability in Jenkins Generic Webhook Trigger Plugin
+Subject: CVE-2021-44790: Apache HTTP Server: Possible buffer overflow when parsing multipart content in mod_lua of Apache HTTP Server 2.4.51 and earlier 
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+Severity: high
 
-The following releases contain fixes for security vulnerabilities:
+Description:
 
-* Generic Webhook Trigger Plugin 1.74
+A carefully crafted request body can cause a buffer overflow in the mod_lua multipart parser (r:parsebody() called from Lua scripts).
+The Apache httpd team is not aware of an exploit for the vulnerabilty though it might be possible to craft one.
 
+This issue affects Apache HTTP Server 2.4.51 and earlier.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2021-06-18/
+Credit:
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-2330 / CVE-2021-21669
-Generic Webhook Trigger Plugin 1.72 and earlier does not configure its XML
-parser to prevent XML external entity (XXE) attacks.
-
-This allows attackers with the ability to call webhooks configured to
-extract parameters using XPath to have Jenkins parse a crafted XML request
-body that uses external entities for extraction of secrets from the Jenkins
-controller or server-side request forgery.
-
+Chamal
+Anonymous working with Trend Micro Zero Day Initiative
 
