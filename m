@@ -1,25 +1,132 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/02/1
-Message-ID: <ca3815f4-4b9a-83ac-1f79-72a24a8d3f6c@apache.org>
-Date: Fri, 02 Jul 2021 03:22:35 +0000
-From: Jihoon Son <jihoonson@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-26920: Apache Druid: The HTTP inputSource allows authenticated users to read data from other sources than intended 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/20/8
+Message-Id: <E1mzHNl-0002XV-04@xenbits.xenproject.org>
+Date: Mon, 20 Dec 2021 12:03:09 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 392 v4 (CVE-2021-28714,CVE-2021-28715) - Guest can force Linux netback driver to hog large amounts of kernel memory
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Description:
+     Xen Security Advisory CVE-2021-28714,CVE-2021-28715 / XSA-392
+                               version 4
 
-In the Druid ingestion system, the InputSource is used for reading data from a certain data source. However, the HTTP InputSource allows authenticated users to read data from other sources than intended, such as the local file system, with the privileges of the Druid server process. This is not an elevation of privilege when users access Druid directly, since Druid also provides the Local InputSource, which allows the same level of access. But it is problematic when users interact with Druid indirectly through an application that allows users to specify the HTTP InputSource, but not the Local InputSource. In this case, users could bypass the application-level restriction by passing a file URL to the HTTP InputSource.
+ Guest can force Linux netback driver to hog large amounts of kernel memory
 
-Mitigation:
+UPDATES IN VERSION 4
+====================
 
-Users can avoid the issue by upgrading to 0.21.0 or a higher version.
+Public release
 
-In an earlier version than 0.21.0, when the user application wants to restrict the access to the local file system, it should disallow all InputSources that can read local files, that is the Local, HTTP, and HDFS InputSources.
+ISSUE DESCRIPTION
+=================
 
-Credit:
+Incoming data packets for a guest in the Linux kernel's netback driver
+are buffered until the guest is ready to process them. There are some
+measures taken for avoiding to pile up too much data, but those can
+be bypassed by the guest:
 
-This issue was discovered by chybeta from the Security Team of Alibaba Cloud.
+There is a timeout how long the client side of an interface can stop
+consuming new packets before it is assumed to have stalled, but this
+timeout is rather long (60 seconds by default). Using a UDP connection
+on a fast interface can easily accumulate gigabytes of data in that
+time.  (CVE-2021-28715)
 
+The timeout could even never trigger if the guest manages to have only
+one free slot in its RX queue ring page and the next package would
+require more than one free slot, which may be the case when using GSO,
+XDP, or software hashing.  (CVE-2021-28714)
+
+IMPACT
+======
+
+The Linux kernel's xen-netback backend driver can be forced by guests
+to queue arbitrary amounts of network data, finally causing an out of
+memory situation in the domain the backend is running in (usually dom0).
+
+VULNERABLE SYSTEMS
+==================
+
+All systems using the Linux kernel based network backend xen-netback
+are vulnerable.
+
+MITIGATION
+==========
+
+Using another PV network backend (e.g. the qemu based "qnic" backend)
+will mitigate the problem.
+
+Using a dedicated network driver domain per guest will mitigate the
+problem.
+
+RESOLUTION
+==========
+
+Applying the attached patches resolves this issue.
+
+xsa392-linux-1.patch   Linux 5.15
+xsa392-linux-2.patch   Linux 5.15
+
+$ sha256sum xsa392*
+9cf75e9919415267266a7f69ca0f3dbbafc1c55d4243cff1cb26072e28bb6e26  xsa392-linux-1.patch
+f390da9723ed03948855bfc3b112fc11bcc794fc59502d4fc5e8e358321e8684  xsa392-linux-2.patch
+$
+
+CREDITS
+=======
+
+This issue was discovered by  Jürgen Groß of SUSE.
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the *patches* is permitted during the embargo, even on
+public-facing systems with untrusted guest users and administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+
+Deployment of the *mitigations* (switching to driver domains or using
+a qemu based backend) is NOT permitted (except where all the affected
+systems and VMs are administered and used only by organisations which
+are members of the Xen Project Security Issues Predisclosure List).
+Specifically, deployment of the mitigations on public cloud systems is
+NOT permitted.
+
+This is because the mitigations will result in discoverable changes of
+Xenstore entries for the guest.
+
+Deployment of the mitigations is permitted only AFTER the embargo ends.
+
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmG8sr8MHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZQGsH/igyavZ/s8jbiANP/jVW9/4wegsqqaeaQBEyhP0o
+P2wEwX30taFmT+kC/7Rf+62O2vdOJKow4C+JouCKcigDH2+nvkki/gd65cpKLkk4
+BKBuSnkTkagdokTPqpQ57zKTe9R5OP4Iw8B01YCI0k08aKE782xbxLr+pac3dw2C
+3tB24fdFibrzlXeMbYXM2Aw8aeSWkVjJ40XrW+Xo6k8GdgTZY9SDgTqGAv71g+bJ
+liCQheGkQIQPDjFUf6S/ykRCwaQVtnHqThASPoWOwzYto3uvjyMJm74Rr9n6TLzz
+WvJLQPDgObyU9RUlUXU3fgCaYgvh2ufuNreQt1d1NY01s04=
+=54ve
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa392-linux-1.patch" of type "application/octet-stream" (5369 bytes)
+
+Download attachment "xsa392-linux-2.patch" of type "application/octet-stream" (2626 bytes)
