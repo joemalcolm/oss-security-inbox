@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1332" "Monday" "25" "October" "2021" "22:18:54" "+1100" "Michael Ellerman" "mpe@ellerman.id.au" nil "40" "[oss-security] Linux kernel: powerpc: KVM guest can trigger host crash on Power8 " nil nil nil "10" nil nil (number mark "U       mpe@ellerman Oct 25   40/1332  " thread-indent "\"[oss-security] Linux kernel: powerpc: KVM guest can trigger host crash on Power8 \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux kernel: powerpc: KVM guest can trigger host crash on Power8 " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["748" "Monday" "20" "December" "2021" "10:00:38" "+0000" "Christofer Dutz" "cdutz@apache.org" nil "20" "[oss-security] CVE-2021-43083: Apache PLC4X 0.9.0 Buffer overflow in PLC4C via crafted server response " nil nil nil "12" nil nil (number mark "U       cdutz@apache Dec 20   20/748   " thread-indent "\"[oss-security] CVE-2021-43083: Apache PLC4X 0.9.0 Buffer overflow in PLC4C via crafted server response \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-43083: Apache PLC4X 0.9.0 Buffer overflow in PLC4C via crafted server response " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5691 invoked by uid 550); 25 Oct 2021 11:24:35 -0000
+Received: (qmail 27744 invoked by uid 550); 20 Dec 2021 14:13:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,63 +12,34 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3208 invoked from network); 25 Oct 2021 11:19:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ellerman.id.au;
-	s=201909; t=1635160739;
-	bh=q2w+1Ixl2mryFLxgvQRnX8bXQAX4fFunUvPWxhDUOcQ=;
-	h=From:To:Cc:Subject:Date:From;
-	b=X9OuwhtqadHhk7tjAZIg6c6ioV4Xduz445XgQXBPGVu9ijCScrlkNdlND6fYEHv9F
-	 K1YPjkiba1QM3n7v+xDUxaNp4orCLXweMmMoGDtjrrV0VwevbEe/4z/gVIxivINVi1
-	 JDIyNbOEWf52IWim9R3zSY2OPJWlHy7pnWRdYVAciz+N50g7puFU+zOzjj1WN69U+I
-	 0deHyhlgfz0v8TwGC0fNxGYoA38x3tojyhCHZcb2xkOBWrS7ItS/y0IEeg9uwtaS66
-	 Eh3KNmSYIFYjnWAh2hfwh14tyfjIdrEu9vIv5auqqM0byqn/mPBvvtSJftuAsZo0rh
-	 8lm1AZVwpJmVw==
-From: Michael Ellerman <mpe@ellerman.id.au>
+Received: (qmail 32190 invoked from network); 20 Dec 2021 10:00:51 -0000
+Content-Type: text/plain; charset=utf-8
+From: Christofer Dutz <cdutz@apache.org>
 To: oss-security@lists.openwall.com
-Cc: linuxppc-dev@lists.ozlabs.org
-Date: Mon, 25 Oct 2021 22:18:54 +1100
-Message-ID: <87pmrtbbdt.fsf@mpe.ellerman.id.au>
+Message-ID: <5c63230e-b733-4b15-1f5a-e885929bf474@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 20 Dec 2021 10:00:38 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Linux kernel: powerpc: KVM guest can trigger host crash on Power8 
+Subject: [oss-security] CVE-2021-43083: Apache PLC4X 0.9.0 Buffer overflow in PLC4C via
+ crafted server response 
 
-The Linux kernel for powerpc since v5.2 has a bug which allows a
-malicious KVM guest to crash the host, when the host is running on
-Power8.
+Description:
 
-Only machines using Linux as the hypervisor, aka. KVM, powernv or bare
-metal, are affected by the bug. Machines running PowerVM are not
-affected.
+Apache PLC4X - PLC4C (Only the C language implementation was effected) was =
+vulnerable to an unsigned integer underflow flaw inside the tcp transport. =
+Users should update to 0.9.1, which addresses this issue.
 
-The bug was introduced in:
+However, in order to exploit this vulnerability, a user would have to activ=
+ely connect to a mallicious device which could send a response with invalid=
+ content. Currently we consider the probability of this being exploited as =
+quite minimal, however this could change in the future, especially with the=
+ industrial networks growing more and more together.
 
-    10d91611f426 ("powerpc/64s: Reimplement book3s idle code in C")
+Credit:
 
-Which was first released in v5.2.
+Apache PLC4X would like to thank Eugene Lim for reporting this issue.
 
-The upstream fix is:
+References:
 
-  cdeb5d7d890e ("KVM: PPC: Book3S HV: Make idle_kvm_start_guest() return 0 if it went to guest")
-  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=cdeb5d7d890e14f3b70e8087e745c4a6a7d9f337
+https://lists.apache.org/thread/jxx6qc84z60xbbhn6vp2s5qf09psrtc7
 
-Which will be included in the v5.16 release.
-
-Note to backporters, the following commits are required:
-
-  73287caa9210ded6066833195f4335f7f688a46b
-  ("powerpc64/idle: Fix SP offsets when saving GPRs")
-
-  9b4416c5095c20e110c82ae602c254099b83b72f
-  ("KVM: PPC: Book3S HV: Fix stack handling in idle_kvm_start_guest()")
-
-  cdeb5d7d890e14f3b70e8087e745c4a6a7d9f337
-  ("KVM: PPC: Book3S HV: Make idle_kvm_start_guest() return 0 if it went to guest")
-
-  496c5fe25c377ddb7815c4ce8ecfb676f051e9b6
-  ("powerpc/idle: Don't corrupt back chain when going idle")
-
-
-I have a test case to trigger the bug, which I can share privately with
-anyone who would like to test the fix.
-
-cheers
