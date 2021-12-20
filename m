@@ -1,92 +1,119 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/01/10/3
-Message-ID: <20210110184458.GA2808@openwall.com>
-Date: Sun, 10 Jan 2021 19:44:58 +0100
-From: Solar Designer <solar@...nwall.com>
-To: Anthony Liguori <aliguori@...n.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Gentoo's "contributing back" linux-distros tasks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/20/7
+Message-Id: <E1mzHNS-0001sS-ET@xenbits.xenproject.org>
+Date: Mon, 20 Dec 2021 12:02:50 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 391 v3 (CVE-2021-28711,CVE-2021-28712,CVE-2021-28713) - Rogue backends can cause DoS of guests via high frequency events
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Oct 12, 2020 at 08:29:13AM -0700, Anthony Liguori wrote:
-> Solar Designer <solar@...nwall.com> writes:
-> 
-> > Gentoo signed up for these "contributing back" tasks for linux-distros:
-> >
-> > https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
-> >
-> > 9. Stay on top of issues to ensure progress is being made, remind others
-> > when there's no apparent progress, as well as when the public disclosure
-> > date for an issue is approaching and when it's finally reached (unless
-> > the reporter beats you to it by making their mandatory posting to
-> > oss-security first) - primary: Gentoo, backup: Amazon
-> >
-> > 11. Make sure the mandatory oss-security posting is made promptly and is
-> > sufficiently detailed, and remind the reporter if not - primary: Gentoo,
-> > backup: Amazon
-> >
-> > 12. If exploit(s) were shared on the list, make sure that either they're
-> > included in the oss-security posting along with the issue detail or the
-> > posting includes an announcement of planned later posting of the
-> > exploits (with the delay being within list policy), and in the latter
-> > case also make sure that the later posting is in fact made as planned,
-> > and remind the reporter if not - primary: Gentoo, backup: Amazon
-> 
-> I'm happy to take primary on any of the above.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Thank you, Anthony!
+ Xen Security Advisory CVE-2021-28711,CVE-2021-28712,CVE-2021-28713 / XSA-391
+                                   version 3
 
-Gentoo, please let us all know whether you'd like to stay primary for
-these tasks, be moved to backup, or something else?
+   Rogue backends can cause DoS of guests via high frequency events
 
-> > 13. Keep track of per-report and per-issue handling and disclosure
-> > timelines (at least times of notification of the private list and of
-> > actual public disclosure), at regular intervals produce and share
-> > statistics (most notably, the average embargo duration) as well as the
-> > raw data (except on issues that are still under embargo) by posting to
-> > oss-security - primary: Gentoo, backup: Amazon
-> >
-> > and we saw some contributions from Gentoo on these, most notable being
-> > their work on the statistics (task 13 above):
-> >
-> > https://oss-security.openwall.org/wiki/mailing-lists/distros/stats
-> >
-> > Unfortunately, the last update of these statistics ("Last modified:
-> > 2019/10/15 01:52 by kristianf") is also when the contributions ceased.
-> >
-> > Some others have been taking care of tasks 9, 11, 12 (in particular,
-> > Anthony Liguori of Amazon has been helping, but on various occasions
-> > also many others from other distros), but not yet of task 13.
-> >
-> > I understand that Gentoo is a community project run by volunteers, and I
-> > am not complaining.  Rather, I think we need to discuss with Gentoo in
-> > here and reassign to other distros whatever responsibilities Gentoo no
-> > longer has resources for.  We should ideally keep at least one task
-> > Gentoo's responsibility (and Gentoo should have specific people assigned
-> > to that task), at least to be consistent with our current requirements
-> > for new distros joining (linux-)distros.
-> >
-> > To Gentoo: which of these tasks, or other "contributing back" tasks, are
-> > you (still) willing to handle, and who on your team would handle them?
-> >
-> > To others on linux-distros: which of the above tasks do you volunteer to
-> > become primary for?
-> >
-> > To Amazon: do you want to remain backup for task 13, or do you not have
-> > the resources to handle it?
-> 
-> It's hard to be backup for this one as it is quite a lot of work
-> compared to most other tasks.  I'd prefer someone else to pick it up if
-> possible.  While I don't have the cycles to pick up 13, if you're
-> willing to consider adding another person from Amazon, I think we could
-> take primary on this one though.
+UPDATES IN VERSION 3
+====================
 
-No problem adding another person from Amazon, as long as that addition
-wouldn't be solely for the statistics task, but would also benefit the
-users of Amazon Linux.
+Public release
 
-Let's figure out if we should do that (and if it's still an option from
-Amazon's side), or if another distro maybe offers to be primary for the
-statistics task?
+ISSUE DESCRIPTION
+=================
 
-Alexander
+Xen offers the ability to run PV backends in regular unprivileged
+guests, typically referred to as "driver domains". Running PV backends
+in driver domains has one primary security advantage: if a driver domain
+gets compromised, it doesn't have the privileges to take over the
+system.
+
+However, a malicious driver domain could try to attack other guests via
+sending events at a high frequency leading to a Denial of Service in the
+guest due to trying to service interrupts for elongated amounts of time.
+
+There are three affected backends:
+ * blkfront          patch 1, CVE-2021-28711
+ * netfront          patch 2, CVE-2021-28712
+ * hvc_xen (console) patch 3, CVE-2021-28713
+
+IMPACT
+======
+
+Potentially malicious PV backends can cause guest DoS due to unhardened
+frontends in the guests, even though this ought to have been prevented by
+containing them within a driver domain.
+
+VULNERABLE SYSTEMS
+==================
+
+All guests being serviced by potentially malicious backends are vulnerable,
+even if those backends are running in a less privileged environment. The
+vulnerability is not affecting the host, but the guests.
+
+MITIGATION
+==========
+
+There is no known mitigation available.
+
+RESOLUTION
+==========
+
+Applying the attached patches resolves this issue.
+
+xsa391-linux-1.patch   Linux 5.15
+xsa391-linux-2.patch   Linux 5.15
+xsa391-linux-3.patch   Linux 5.15
+
+$ sha256sum xsa391*
+e55d3f15a85ff31e62a291981de89f7b0c08da807db9b2a6a2b9cbb2e29847cd  xsa391-linux-1.patch
+163fc4b9966768eb74e3bc1858a0b0254eff771898bd5f4d71806beeae0ffd2a  xsa391-linux-2.patch
+de888abe8d11d3204b4033b304cf3d66104a65956089e23f1736db682d3cedc4  xsa391-linux-3.patch
+$
+
+CREDITS
+=======
+
+This issue was discovered by Jürgen Groß of SUSE.
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of patches or mitigations is NOT permitted (except where
+all the affected systems and VMs are administered and used only by
+organisations which are members of the Xen Project Security Issues
+Predisclosure List).  Specifically, deployment on public cloud systems
+is NOT permitted.
+
+This is because the patches need to be applied to the guests, which will
+be visible by the guest administrators.
+
+Deployment is permitted only AFTER the embargo ends.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmG8srwMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZz/kH/RFI60D9qJnbNmDMgtbvihwn+jeHI0ejS7en8Ojf
+CL9QftZ2+YdyxjMISOHCCaWgUKQQyF/n9chF5sMMOkWRfUPL2TDPPKTmEnC9XMOq
+MYIftwT0OoMAVVhrRU3FZUZtpvTeQstofOYhBGhElmeEibYU+DbjKiv4agTEE3+8
+9M3cxDk3Zw9cO1/6tU3kYtPkbxVP3r6kZQSHnpRnKLbABXWJB3Y02cX09tU//mV7
+2REisCWKViLcKoupYTUOQHPWOD+VFE48mwKB4D9H9t9aTyn5PVjH/jVhiGrqbbic
+ia8a0AKi5F9l8xIKha81+TGIbjCY+HCuLbaShRDnaU9/2Qc=
+=wKo2
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa391-linux-1.patch" of type "application/octet-stream" (2418 bytes)
+
+Download attachment "xsa391-linux-2.patch" of type "application/octet-stream" (8674 bytes)
+
+Download attachment "xsa391-linux-3.patch" of type "application/octet-stream" (4416 bytes)
