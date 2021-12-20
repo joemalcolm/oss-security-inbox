@@ -1,30 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/17/2
-Message-ID: <YRurAomxEDQrxY+i@eldamar.lan>
-Date: Tue, 17 Aug 2021 14:26:42 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/20/1
+Message-ID: <568519e9-1bcc-671d-5868-d96b3fa6f908@apache.org>
+Date: Mon, 20 Dec 2021 10:03:37 +0000
+From: Gábor Szádovszky <gabor@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: Wade Mealing <wmealing@...hat.com>
-Subject: Re: Linux kernel: nfc: null ptr dereference in llcp_sock_getname
+Subject: CVE-2021-41561: Apache Parquet-MR potential DoS in case of malicious Parquet file 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Description:
 
-On Tue, Aug 17, 2021 at 04:17:38PM +0800, butt3rflyh4ck wrote:
-> Hi, MITRE has assigned CVE-2021-38208 to this issue,
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-38208
-> 
-> The CVE-2021-3587 assigned by Redhat was 'RESERVED' now.
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-3587
-> 
-> There was some confusion here, Maybe CVE-2021-3587 should be 'REJECT'.
+Improper Input Validation vulnerability in Parquet-MR of Apache Parquet allows an attacker to DoS by malicious Parquet files. This issue affects Apache Parquet-MR version 1.9.0 and later versions.
 
-I wonder if it would actually be better the other way around, but
-leaving the decision to MITRE CNA and Red Hat: Several downstream
-Linux distrubutions seem to have already used CVE-2021-3587 in their
-advisories, so rejecting CVE-2021-38208 would seem to cause less
-turnarounds). But I have a biased view here, at least Debian, Ubuntu,
-Slackware, Fedora and Mageia used already accordingly CVE-2021-3587.
+This issue is being tracked as PARQUET-2094
 
-Regards,
-Salvatore
+Mitigation:
+
+1.12.x users should upgrade to 1.12.2
+1.11.x users should upgrade to 1.11.2
+Users of older release lines (<= 1.10.x) should upgrade to 1.12.2 or 1.11.2
+
+Credit:
+
+This issue was discovered by Sergey Temnikov of the Amazon S3 team.
+
