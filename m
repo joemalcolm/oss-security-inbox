@@ -1,17 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/11/16/1
-Message-ID: <f9c3cbc8-1da9-3903-2e59-bb0e88f2ded5@apache.org>
-Date: Tue, 16 Nov 2021 05:14:11 +0000
-From: Liang Liu <midnight2104@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/20/2
+Message-ID: <5c63230e-b733-4b15-1f5a-e885929bf474@apache.org>
+Date: Mon, 20 Dec 2021 10:00:38 +0000
+From: Christofer Dutz <cdutz@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-37580: Apache ShenYu Admin bypass JWT authentication 
+Subject: CVE-2021-43083: Apache PLC4X 0.9.0 Buffer overflow in PLC4C via crafted server response 
 Content-Type: text/plain; charset=utf-8
 
 Description:
 
-A flaw was found in Apache ShenYu Admin. The incorrect use of JWT in ShenyuAdminBootstrap allows an attacker to bypass authentication.  This issue affected Apache ShenYu 2.3.0 and 2.4.0
+Apache PLC4X - PLC4C (Only the C language implementation was effected) was vulnerable to an unsigned integer underflow flaw inside the tcp transport. Users should update to 0.9.1, which addresses this issue.
+
+However, in order to exploit this vulnerability, a user would have to actively connect to a mallicious device which could send a response with invalid content. Currently we consider the probability of this being exploited as quite minimal, however this could change in the future, especially with the industrial networks growing more and more together.
 
 Credit:
 
-This issue was reported by 伍 雄
+Apache PLC4X would like to thank Eugene Lim for reporting this issue.
+
+References:
+
+https://lists.apache.org/thread/jxx6qc84z60xbbhn6vp2s5qf09psrtc7
 
