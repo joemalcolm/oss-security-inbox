@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1624" "Friday" "12" "July" "2019" "14:40:19" "+0000" "Jordan Glover" "Golden_Miller83@protonmail.ch" "<eLEcaAZ84viV-VsSdpXT33_w8eR6Sg6SPnu8naoZWbu5LE7Dm9Tn6HawkbPVhQXfCToNDJBsX7JZ_fZHsDj4xSp9UCrgBltJaT65sR3NUu4=@protonmail.ch>" "38" "Re: [oss-security] Privileged File Access from Desktop Applications" "^Cc:" nil nil "7" "2019071214:40:19" "[oss-security] Privileged File Access from Desktop Applications" (number mark "        Golden_Mille Jul 12   38/1624  " thread-indent "\"Re: [oss-security] Privileged File Access from Desktop Applications\"\n") "<20190711203714.7f3019ad@jabberwock.cb.piermont.com>" ("<200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>" "<20190709113036.0f12d057@jabberwock.cb.piermont.com>" "<9148ee55db2cabb111f790513413823996d04cb6.camel@suse.com>" "<20190711093326.328948dc@jabberwock.cb.piermont.com>" "<de14296ba908c162036a15b1aeda95586ff8ba14.camel@suse.com>" "<20190711114710.09ab5ad9@jabberwock.cb.piermont.com>" "<20190711202015.GA24270@espresso.pseudorandom.co.uk>" "<20190711203714.7f3019ad@jabberwock.cb.piermont.com>") nil nil nil nil nil nil nil "Re: [oss-security] Privileged File Access from Desktop Applications" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4419" "Monday" "20" "December" "2021" "14:16:15" "+0000" "Carlos Alberto Lopez Perez" "clopez@igalia.com" nil "100" "[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2021-0007" nil nil nil "12" nil nil (number mark "U       clopez@igali Dec 20  100/4419  " thread-indent "\"[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2021-0007\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2021-0007" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 30327 invoked by uid 550); 12 Jul 2019 14:42:14 -0000
+Received: (qmail 13455 invoked by uid 550); 20 Dec 2021 14:16:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,71 +11,135 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28411 invoked from network); 12 Jul 2019 14:40:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.ch;
-	s=default; t=1562942425;
-	bh=kzPHpyNfRAtOm3d+0dabh1SE6zHIixpWUtBmo50i+Kg=;
-	h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:
-	 Feedback-ID:From;
-	b=THmyrKNQcO8xujY7myiBjzWLqG+0GLO3UCfTOVEa224M6T5Q0jwWTOvpyNusHCXvC
-	 3SqVQMCaCrT/OGjKEAeDWauMKu0VgNeelQB3wMMrSnXZLf+9c1n6WzzohM95yfM0cV
-	 zaa1HI0an+y6WXObyPmUdS+z+f01OEHsVsvlzmdk=
-Message-ID: <eLEcaAZ84viV-VsSdpXT33_w8eR6Sg6SPnu8naoZWbu5LE7Dm9Tn6HawkbPVhQXfCToNDJBsX7JZ_fZHsDj4xSp9UCrgBltJaT65sR3NUu4=@protonmail.ch>
-In-Reply-To: <20190711203714.7f3019ad@jabberwock.cb.piermont.com>
-References: <200975c0f23706ce513744052225ea7dc9842206.camel@suse.com>
- <20190709113036.0f12d057@jabberwock.cb.piermont.com>
- <9148ee55db2cabb111f790513413823996d04cb6.camel@suse.com>
- <20190711093326.328948dc@jabberwock.cb.piermont.com>
- <de14296ba908c162036a15b1aeda95586ff8ba14.camel@suse.com>
- <20190711114710.09ab5ad9@jabberwock.cb.piermont.com>
- <20190711202015.GA24270@espresso.pseudorandom.co.uk>
- <20190711203714.7f3019ad@jabberwock.cb.piermont.com>
-Feedback-ID: QEdvdaLhFJaqnofhWA-dldGwsuoeDdDw7vz0UPs8r8sanA3bIt8zJdf4aDqYKSy4gJuZ0WvFYJtvq21y6ge_uQ==:Ext:ProtonMail
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Cc: Simon McVittie <smcv@debian.org>
-Date: Fri, 12 Jul 2019 14:40:19 +0000
-From: Jordan Glover <Golden_Miller83@protonmail.ch>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Privileged File Access from Desktop Applications
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 13385 invoked from network); 20 Dec 2021 14:16:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:Subject:From:Cc:To:Sender:Reply-To:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=V/mowgYT0Vs+jDxQTKQ4qNaUhNGg3xKsbecTqMEmLRY=; b=ZzcJJUHZQDeZfOB0Z//nW+O9tg
+	lgRjavj36q0iEj+/+87n9C9jLVNjFD0JCFypwilFUoK5wYOXttzNOH35IWGY5uvBdipUL5uys9RuP
+	EIeTjbG/jqVajy1dOe8WslgY9WN6mQqC5TssKjmEzSI9+c9tGXwY1EXO6fLBwwLe39IMdWGXjEFnT
+	50xivcWWtVpsN7y2qc9H+k7NCK6/lKVQAcuv2vKNrAJ/AK4B+Dm3pNVbtoVK1/gDtrAui0jBf6g2f
+	pwA9RZ9Iz9Xy4BGBWIgM4PwOpU10FMN8f+Ds9wGaKwK61djNMPRZM/Qewo1PtKQ8d391JgDiklyux
+	QrAesSLg==;
+To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Cc: security@webkit.org, distributor-list@gnome.org,
+ oss-security@lists.openwall.com, bugtraq@securityfocus.com
+From: Carlos Alberto Lopez Perez <clopez@igalia.com>
+Organization: Igalia S.L.
+Mail-Followup-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org,
+ security@webkit.org, distributor-list@gnome.org,
+ oss-security@lists.openwall.com, bugtraq@securityfocus.com
+Message-ID: <8d5b2baa-d0b5-a0fb-1d93-eeca4b439efa@igalia.com>
+Date: Mon, 20 Dec 2021 14:16:15 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Language: es
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2021-0007
 
-On Friday, July 12, 2019 12:37 AM, Perry E. Metzger <perry@piermont.com> wr=
-ote:
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2021-0007
+------------------------------------------------------------------------
 
-> On Thu, 11 Jul 2019 21:20:15 +0100 Simon McVittie smcv@debian.org
-> wrote:
->
-> > On Thu, 11 Jul 2019 at 11:47:10 -0400, Perry E. Metzger wrote:
-> >
-> > > having to add file i/o subsystems inside of dbus(!) probably does
-> > > add lots of threats
-> >
-> > I think you might be misunderstanding the scope of D-Bus.
->
-> Not really. The whole point is that instead of having the operating
-> system alone as part of your file security implementation you now
-> have a brand new service, an IPC mechanism, and loads of other stuff,
-> instead of having your app just do open(2) and write(2) etc.
+Date reported           : December 20, 2021
+Advisory ID             : WSA-2021-0007
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2021-0007.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2021-0007.html
+CVE identifiers         : CVE-2021-30809, CVE-2021-30818,
+                          CVE-2021-30823, CVE-2021-30836,
+                          CVE-2021-30884, CVE-2021-30887,
+                          CVE-2021-30888, CVE-2021-30889,
+                          CVE-2021-30890, CVE-2021-30897.
 
-Do you mean that IPC and D-bus aren't part of the OS? Then what is?
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-> It seems architecturally bad from a security perspective. The number
-> the number of trusted entities, the number of moving parts, the number
-> of mechanisms, and thus the number of ways things can go wrong keeps
-> going up. This is a mistake. And btw, this is a major piece of
-> mechanism being added just to handle the problem of someone wanting to
-> pop open an editor inside a GUI to edit a system config file, which is
-> not a major attack vector. But, now I have to worry about this new
-> file access service providing an attack surface that didn't exist
-> before.
->
-> What's the right way to handle this stuff? Capabilities,
-> probably. It's what they're designed for.
+CVE-2021-30809
+    Versions affected: WebKitGTK and WPE WebKit before 2.32.4.
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A use after free issue was
+    addressed with improved memory management.
 
-They're completely not designed for this case. Setting CAP_DAC_OVERRIDE
-or CAP_SYS_ADMIN is very close to SUID root. See:
-https://grsecurity.net/false_boundaries_and_arbitrary_code_execution.php
+CVE-2021-30818
+    Versions affected: WebKitGTK and WPE WebKit before 2.34.0.
+    Credit to Amar Menezes (@amarekano) of Zon8Research.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A type confusion issue was
+    addressed with improved state handling.
 
-Jordan
+CVE-2021-30823
+    Versions affected: WebKitGTK and WPE WebKit before 2.34.0.
+    Credit to David Gullasch of Recurity Labs.
+    Impact: An attacker in a privileged network position may be able to
+    bypass HSTS. Description: A logic issue was addressed with improved
+    restrictions.
+
+CVE-2021-30836
+    Versions affected: WebKitGTK and WPE WebKit before 2.32.4.
+    Credit to Peter Nguyen Vu Hoang of STAR Labs.
+    Impact: Processing a maliciously crafted audio file may disclose
+    restricted memory. Description: An out-of-bounds read was addressed
+    with improved input validation.
+
+CVE-2021-30884
+    Versions affected: WebKitGTK and WPE WebKit before 2.34.0.
+    Credit to an anonymous researcher.
+    Impact: Visiting a maliciously crafted website may reveal a user's
+    browsing history. Description: The issue was resolved with
+    additional restrictions on CSS compositing.
+
+CVE-2021-30887
+    Versions affected: WebKitGTK and WPE WebKit before 2.34.3.
+    Credit to Narendra Bhati (@imnarendrabhati) of Suma Soft Pvt. Ltd.
+    Impact: Processing maliciously crafted web content may lead to
+    unexpectedly unenforced Content Security Policy. Description: A
+    logic issue was addressed with improved restrictions.
+
+CVE-2021-30888
+    Versions affected: WebKitGTK and WPE WebKit before 2.34.0.
+    Credit to Prakash (@1lastBr3ath).
+    Impact: A malicious website using Content Security Policy reports
+    may be able to leak information via redirect behavior. Description:
+    An information leakage issue was addressed.
+
+CVE-2021-30889
+    Versions affected: WebKitGTK and WPE WebKit before 2.34.0.
+    Credit to Chijin Zhou of ShuiMuYuLin Ltd and Tsinghua wingtecher
+    lab.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution, Description: A buffer overflow issue was
+    addressed with improved memory handling.
+
+CVE-2021-30890
+    Versions affected: WebKitGTK and WPE WebKit before 2.34.3.
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may lead to
+    universal cross site scripting. Description: A logic issue was
+    addressed with improved state management.
+
+CVE-2021-30897
+    Versions affected: WebKitGTK and WPE WebKit before 2.34.0.
+    Credit to an anonymous researcher.
+    Impact: A malicious website may exfiltrate data cross-origin.
+    Description: An issue existed in the specification for the resource
+    timing API. The specification was updated and the updated
+    specification was implemented.
+
+
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
+
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+December 20, 2021
