@@ -1,36 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/07/22/4
-Message-ID: <20210722113545.hewzinrjmy7jon6c@jwilk.net>
-Date: Thu, 22 Jul 2021 13:35:45 +0200
-From: Jakub Wilk <jwilk@...lk.net>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: ipython3 may execute code from the current working directory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/23/1
+Message-ID: <CAPycaENa4y8oq9OFvgHNf+Y6ehO1zhJPE4ZTpTbr4jRzDqp+-Q@mail.gmail.com>
+Date: Thu, 23 Dec 2021 15:33:30 +0300
+From: Pavel Mayorov <pmayorov@...udlinux.com>
+To: oss-security@...ts.openwall.com
+Subject: binutils: Stack-overflow in debug_write_type in debug.c
 Content-Type: text/plain; charset=utf-8
 
-* Georgi Guninski <gguninski@...il.com>, 2021-07-22, 11:52:
->Summary: under certain circumstances, ipython3 may execute code from 
->the current working directory.
+Hello!
 
-Looks like this might be intentional? Or at least there's an option to 
-turn off this behavior:
+It was observed that CVE-2018-12700 in binutils package wasn't completely fixed.
+I was able to reproduce that issue by following instructions I had
+described in https://sourceware.org/bugzilla/show_bug.cgi?id=28718
+I assessed that this issue is only locally exploitable. Its impact is
+to resource availability and
+observable effects of objdump which I've tested range from fatal
+signal reception to livelock (due to optimization of recursions).
+The exact effect depends on compiler version and operating system.
 
-https://github.com/ipython/ipython/blob/7.25.0/IPython/core/shellapp.py#L219
-https://ipython.readthedocs.io/en/stable/config/options/kernel.html#configtrait-InteractiveShellApp.ignore_cwd
-
-However, in some Debian packages (at least 5.8.0-1 from Debian buster), 
-even --ignore-cwd doesn't help, because /usr/bin/python3 looks like 
-this:
-
-   VERSION="3"
-   if [ ! -f /usr/bin/python$VERSION ]
-   then
-           echo "Please install the python$VERSION package." >&2
-           exit 1
-   else
-           exec python$VERSION -c "import sys; sys.argv[0] = '/usr/bin/ipython$VERSION'; from IPython.terminal.ipapp import launch_new_instance; launch_new_instance()" "$@"
-   fi
-
-But "python3 -c" adds cwd to sys.path.
+Due to the nature of binutils which are normally used by developers
+only and don't affect production environments, I've decided to
+publicly report that issue.
 
 -- 
-Jakub Wilk
+Best regards,
+
+Pavel Mayorov
+Senior C Developer
+
+
+CloudLinux.com  |  KernelCare.com  |  Imunify360  | AlmaLinux
+
+helpdesk.cloudlinux.com: 24/7 Free, exceptionally good support
+Follow twitter.com/CloudLinuxOS for technical updates
