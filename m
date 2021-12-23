@@ -1,49 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/03/19/4
-Message-ID: <YFRTGpfRTmm566ZQ@kroah.com>
-Date: Fri, 19 Mar 2021 08:30:34 +0100
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/23/2
+Message-ID: <CAN_LGv3XWN9ptJL-FpHpzYdO8CatqW0ZJ7xo=yQt+d-07cAcbQ@mail.gmail.com>
+Date: Thu, 23 Dec 2021 23:06:59 +0500
+From: "Alexander E. Patrakov" <patrakov@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: CVE-2021-20219 Linux kernel: improper synchronization in flush_to_ldisc() can lead to DoS
+Subject: CVE-2021-44273: e2guardian did not validate TLS hostnames
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Mar 18, 2021 at 08:21:36PM +0100, Solar Designer wrote:
-> Greg, I'd appreciate you not repeating the same things over and over -
-> such as (roughly) "who is this for" and "why did you assign this CVE
-> _now_".  Questioning CVE assignment is reasonable and desirable, but
-> only when that is specific (e.g., point out specific reasons why you
-> think an issue might not be CVE worthy) and not generic (questioning
-> every CVE without giving reasons, or asking why bother with CVE for an
-> old issue).  As a moderator, I tell you that the kind of messages Red
-> Hat is posting _are_ desirable in here.  They could be more detailed,
-> and it's OK to ask for more detail, but it's not OK to discourage their
-> posting.  Thank you.
+Hello!
 
-If you look at the 3 RH emails this week for issues, they all contained
-misinformation and confused people.  I did not do my usual "why are you
-asking for a CVE for an old issue" questions, I asked in one for more
-information about the issue involved, and for the other, proper
-acknowledgment for the people that reported and fixed the issue as what
-was written was entirely incorrect and ignored them.
+Some time ago I was trying to make a certain Arch Linux system compliant
+with CyberEssentials security requirements from the UK [1], and this
+includes the requirement for anti-virus scanning of all web browser
+traffic. I interpreted this literally: break TLS using MITM on the
+(transparent) proxy, scan everything with ClamAV. Note: I may be
+mis-interpreting and over-complying, there is an unverified opinion that
+anti-malware browser extensions are enough and that it is not needed to
+break TLS. I don't know.
 
-I asked for that _because_ once these types of "announcements" go out to
-the world, my inbox instantly starts filling up with "why isn't this
-fixed in a stable kernel." "please tell me what commit fixes this
-issue." and the like from users of Linux.  Because the CVE notices are
-all still marked "private", doing misleading announcements like this
-cause a mini DoS on a number of kernel community members each time.
+Anyway, I have decided to try e2guardian 5.4.3r and later a 5.5 git
+snapshot, in the standalone mode (where it functions as a transparent
+proxy, as opposed to an ICAP server), because of the apparent simplicity of
+its setup. While testing it, I found that it significantly lowered the
+security of the system it purported to protect: I was able to access,
+through this transparent proxy, a significant amount of badssl.com
+subdomains that should not be accessible.
 
-So until Red Hat starts sending out announcements that are actually
-correct and are helpful to the community, I will keep complaining,
-because they directly affect me and others that work upstream on the
-stable kernel releases.
+In particular, I was able to access wrong.host.badssl.com, which meant that
+SSL certificate hostname validation was not working, and an attacker could
+trivially MITM the connection from the origin server to e2guardian. I have
+reported this [2], and it is now fixed in the v5.4 branch [3]. There is
+still no formal release with the fix.
 
-For an example of how to do a "good" CVE notice, I will point out
-Piotr's excellent emails today for CVE-2020-27171 and CVE-2020-27170.
-Red Hat could use those as a template of how to write their
-announcements in a way that would be useful for us all, and would _not_
-cause the upstream kernel developers additional work.
+I do not see anything relevant on the v5.5dev branch, though, and I have
+not tested any other branches. The issue exists only if e2guardian is
+compiled against OpenSSL 1.1.x, and is operating in the standalone mode.
+Builds using OpenSSL 1.0.2 or operating as ICAP servers (as opposed to
+standalone transparent proxies) are not affected.
 
-thanks,
+This issue with missing TLS hostname validation is now known as
+CVE-2021-44273. Distribution package maintainers, please see if your
+e2guardian package is vulnerable.
 
-greg k-h
+I have also reported [4] another issue, that certain badssl.com subdomains
+that implement bad crypto (dh2048, dh-small-subgroup, dh-composite,
+tls-v1-0, tls-v1-1), normally rejected by browsers, are still accessible
+through the e2guardian transparent proxy. However, we have agreed that it
+is not a bug in e2guardian, but just insecure OpenSSL defaults (and no
+user-oriented documentation how to change them via openssl.cnf), because
+the same subdomains can be accessed via curl. Interestingly, Squid (with
+ssl-bump enabled) does disallow such bad crypto.
+
+In my personal opinion (which may be different from the official opinion of
+any company that I work or worked for), the incident described above, plus
+a similar recent incident with Squid (CVE-2021-41611), should be treated as
+an evidence that such "please MITM all SSL traffic" requirements actually
+lower the security and should be abandoned, merely because browsers
+de-facto have the best available quality of TLS implementations.
+
+[1]
+https://www.ncsc.gov.uk/files/Cyber-Essentials-Requirements-for-IT-infrastructure-2-2.pdf
+[2] https://github.com/e2guardian/e2guardian/issues/707
+[3]
+https://github.com/e2guardian/e2guardian/commit/eae46a7e2a57103aadca903c4a24cca94dc502a2
+[4] https://github.com/e2guardian/e2guardian/issues/708
+
+-- 
+Alexander E. Patrakov
+
