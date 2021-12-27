@@ -1,4 +1,9 @@
-Received: (qmail 3205 invoked by uid 550); 4 Feb 2023 12:27:29 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["747" "Monday" "27" "December" "2021" "22:25:04" "+0800" "JunXu Chen" "chenjunxu@apache.org" nil "27" "[oss-security] CVE-2021-45232: Apache APISIX Dashboard: security vulnerability on unauthorized access" nil nil nil "12" nil nil (number mark "U       chenjunxu@ap Dec 27   27/747   " thread-indent "\"[oss-security] CVE-2021-45232: Apache APISIX Dashboard: security vulnerability on unauthorized access\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-45232: Apache APISIX Dashboard: security vulnerability on unauthorized access" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 18101 invoked by uid 550); 27 Dec 2021 15:06:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,75 +12,47 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12086 invoked from network); 3 Feb 2023 23:28:31 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: John Gemignani <jgemignani@apache.org>
-To: announce@apache.org, users@age.apache.org, dev@age.apache.org,
- security@apache.org, oss-security@lists.openwall.com
-Message-ID: <2741ecb8-c5f1-54c3-3b70-1bca3f5db7d1@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 03 Feb 2023 23:28:16 +0000
+Received: (qmail 3098 invoked from network); 27 Dec 2021 14:25:29 -0000
+X-Gm-Message-State: AOAM531EHW5fRVjDesAjVICu28PaptNsKmm7aGo/ERXH/NBs9fGHMGcL
+	PKXH1NaoZDCXshVBeDOLvxjymAbZgVnDSzjfBUA=
+X-Google-Smtp-Source: ABdhPJzXS2f4F0hYS5qRezidNfBCUBcU5ZJrcXkb9Xc/yqIBrpawnBLWTk2y57y+WBdhkjUJAFJRcpmD8wZGL1Bz7rA=
+X-Received: by 2002:aa7:c641:: with SMTP id z1mr16739077edr.84.1640615115046;
+ Mon, 27 Dec 2021 06:25:15 -0800 (PST)
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2022-45786: Apache AGE: Python and Golang drivers allow data
- manipulation and exposure due to SQL injection 
+From: JunXu Chen <chenjunxu@apache.org>
+Date: Mon, 27 Dec 2021 22:25:04 +0800
+X-Gmail-Original-Message-ID: <CAMikTu7OC1+SN_nOMEcSdFoE7EVmVKYt56WctqQe+nDYqMkAVA@mail.gmail.com>
+Message-ID: <CAMikTu7OC1+SN_nOMEcSdFoE7EVmVKYt56WctqQe+nDYqMkAVA@mail.gmail.com>
+To: announce@apache.org, dev@apisix.apache.org, 
+	oss-security@lists.openwall.com, =?UTF-8?B?5pyx56a55oiQ?= <zhuyucheng@yuanbaotech.cn>
+Content-Type: multipart/alternative; boundary="0000000000002545ac05d421797a"
+Subject: [oss-security] CVE-2021-45232: Apache APISIX Dashboard: security vulnerability on
+ unauthorized access
 
-Severity: important
+--0000000000002545ac05d421797a
+Content-Type: text/plain; charset="UTF-8"
+
+Severity: high
 
 Description:
 
-There are issues with the AGE drivers for Golang and Python that enable SQL=
- injections to occur. This impacts AGE for PostgreSQL 11 & AGE for PostgreS=
-QL 12, all versions up-to-and-including 1.1.0, when using those drivers.
+In Apache APISIX Dashboard before 2.10.1, the Manager API uses two
+frameworks and introduces framework `droplet` on the basis of
+framework `gin`, all APIs and authentication middleware are developed
+based on framework `droplet`, but some API directly use the interface
+of framework `gin` thus bypassing the authentication.
 
-The fix is to update to the latest Golang and Python drivers in addition to=
- the latest version of AGE that is used for PostgreSQL 11 or=C2=A0 PostgreS=
-QL 12.
+Mitigation:
 
-The update of AGE will add a new function to enable parameterization of the=
- cypher() function, which, in conjunction with the driver updates, will res=
-olve this issue.
+Implement one of the following mitigation techniques:
 
-Background (for those who want more information):
+1. Upgrade to release 2.10.1
 
-After thoroughly researching this issue, we found that due to the nature of=
- the cypher() function, it was not easy to parameterize the values passed i=
-nto it. This enabled SQL injections, if the developer of the driver wasn't =
-careful. The developer of the Golang and Pyton drivers didn't fully utilize=
- parameterization, likely because of this, thus enabling SQL injections.
+2. Change the default username and password, restrict the source IP to
+access the Apache APISIX Dashboard
 
-The obvious fix to this issue is to use parameterization in the drivers for=
- all PG SQL queries. However, parameterizing all PG queries is complicated =
-by the fact that the cypher() function call itself cannot be parameterized =
-directly, as it isn't a real function. At least, not the parameters that wo=
-uld take the graph name and cypher query.
+Credit:
 
-The reason the cypher() function cannot have those values parameterized is =
-because the function is a placeholder and never actually runs. The cypher()=
- function node, created by PG in the query tree, is transformed and replace=
-d with a query tree for the actual cypher query during the analyze phase. T=
-he problem is that parameters - that would be passed in and that the cypher=
-() function transform needs to be resolved - are only resolved in the execu=
-tion phase, which is much later. Since the transform of the cypher() functi=
-on needs to know the graph name and cypher query prior to execution, they c=
-an't be passed as parameters.
+Independently discovered by ZHU Yucheng of YuanbaoTeach Security Team.
 
-The fix that we are testing right now, and are proposing to use, is to crea=
-te a function that will be called prior to the execution of the cypher() fu=
-nction transform. This new function will allow values to be passed as param=
-eters for the graph name and cypher query. As this command will be executed=
- prior to the cypher() function transform, its values will be resolved. The=
-se values can then be cached for the immediately following cypher() functio=
-n transform to use. As added features, the cached values will store the cal=
-ling session's pid, for validation. And, the cypher() function transform wi=
-ll clear this cached information after function invocation, regardless of w=
-hether it was used.
-
-This method will allow the parameterizing of the cypher() function indirect=
-ly and provide a way to lock out SQL injection attacks.
-
-References:
-
-https://age.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2022-45786
-
+--0000000000002545ac05d421797a--
