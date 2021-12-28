@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["881" "Tuesday" "2" "November" "2021" "16:43:48" "-0400" "Stuart D Gathman" "stuart@gathman.org" nil "17" "Re: [oss-security] Trojan Source Attacks" nil nil nil "11" nil nil (number mark "U       stuart@gathm Nov  2   17/881   " thread-indent "\"Re: [oss-security] Trojan Source Attacks\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Trojan Source Attacks" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["707" "Tuesday" "28" "December" "2021" "19:26:40" "+0000" "Matt Sicker" "mattsicker@apache.org" nil "19" "[oss-security] CVE-2021-44832: Apache Log4j2 vulnerable to RCE via JDBC Appender when attacker controls configuration " nil nil nil "12" nil nil (number mark "U       mattsicker@a Dec 28   19/707   " thread-indent "\"[oss-security] CVE-2021-44832: Apache Log4j2 vulnerable to RCE via JDBC Appender when attacker controls configuration \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-44832: Apache Log4j2 vulnerable to RCE via JDBC Appender when attacker controls configuration " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23906 invoked by uid 550); 2 Nov 2021 20:59:23 -0000
+Received: (qmail 24457 invoked by uid 550); 28 Dec 2021 19:33:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,42 +12,33 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16108 invoked from network); 2 Nov 2021 20:48:51 -0000
-Authentication-Results: mail.gathman.org; iprev=pass policy.iprev="2001:470:8:809::1010" (mail.gathman.org); auth=pass (CRAM-MD5 sslbits=256) smtp.auth=stuart
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gathman.org; 
- i=@gathman.org; q=dns/txt; s=default; t=1635885834; 
- h=date : from : to : cc : subject : in-reply-to : 
- message-id : references : mime-version : content-type : 
- date : from : subject; 
- bh=IaMi9gZG/KQtficI/4qd+EZ87RZ6pTxXLDPKqbA1NYE=; 
- b=BcohvEAhwflyjduxZxexSBDzsy5opCQf2K1z04RAqUvFszGMiBW23dVW
- rBBKTb5ZclG6/sNfb8N+676ApMsLJtBDr+t2tZNLACGOXwvcu+THVmye/4
- N8YGlNZsyFl3tx1PBdlOgizcPSpsPN2VsNwC8ZvwCKUIW5QozyZK8oJAY=
-Date: Tue, 2 Nov 2021 16:43:48 -0400 (EDT)
-From: Stuart D Gathman <stuart@gathman.org>
+Received: (qmail 22449 invoked from network); 28 Dec 2021 19:26:53 -0000
+Content-Type: text/plain; charset=utf-8
+From: Matt Sicker <mattsicker@apache.org>
 To: oss-security@lists.openwall.com
-cc: Jan Engelhardt <jengelh@inai.de>
-In-Reply-To: <CAAHN_R1S7Jf96Y1raEuBrJ5VmTNUJJL8bp2Qbhh_Y-42FWfp2w@mail.gmail.com>
-Message-ID: <2dddaf8c-9220-f776-b0b4-13ad94d17e15@gathman.org>
-References: <c2d12374-0ed6-d6d4-60ea-799934b6f173@cl.cam.ac.uk> <3n67pqq3-9ro6-p138-npo0-n4314s77638n@vanv.qr> <58836a21-c9df-41cc-d6ea-edd7b01f2105@piermont.com> <CAAHN_R1S7Jf96Y1raEuBrJ5VmTNUJJL8bp2Qbhh_Y-42FWfp2w@mail.gmail.com>
+Message-ID: <5814f3ea-59ae-7533-1ea5-6e7203561a5e@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 28 Dec 2021 19:26:40 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Subject: Re: [oss-security] Trojan Source Attacks
+Subject: [oss-security] CVE-2021-44832: Apache Log4j2 vulnerable to RCE via JDBC Appender
+ when attacker controls configuration 
 
-> That's because unicode rendering is a UI element and calling compilers
-> "impacted" is misunderstanding the issue.  There's scope for adding
-> new diagnostics to square with UI representation of unicode, but
-> that's at best an optional warning and it may not even be feasible in
-> all cases.  A comprehensive language aware CI lint check is perhaps
-> more suitable but if such a check devolves into "7-bit ascii only
-> allowed" for all cases then we've regressed.
+Severity: moderate
 
-Bingo.  For many current languages, unicode is supported in string
-constants and comments only - so syntax coloring should highlight 
-anything beyond 7 or 8-bit outside of those elements.
+Description:
 
-Some support unicode variable/function names, and again syntax coloring
-should be able to highlight sequences that cross word boundaries.
+Apache Log4j2 versions 2.0-beta7 through 2.17.0 (excluding security fix rel=
+eases 2.3.2 and 2.12.4) are vulnerable to a remote code execution (RCE) att=
+ack where an attacker with permission to modify the logging configuration f=
+ile can construct a malicious configuration using a JDBC Appender with a da=
+ta source referencing a JNDI URI which can execute remote code. This issue =
+is fixed by limiting JNDI data source names to the java protocol in Log4j2 =
+versions 2.17.1, 2.12.4, and 2.3.2.
 
-Having some sample source files to test your code editor/viewer on would be
-helpful.
+This issue is being tracked as LOG4J2-3293,
+
+References:
+
+https://lists.apache.org/thread/s1o5vlo78ypqxnzn6p8zf6t9shtq5143
+https://issues.apache.org/jira/browse/LOG4J2-3293
+
