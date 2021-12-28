@@ -1,39 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/08/11/2
-Message-ID: <CAJt9-x5xY3ikisc=RZ1=tqNO+8Tm8YLfjVw=3=UQ2_nAP_7Oiw@mail.gmail.com>
-Date: Wed, 11 Aug 2021 08:09:57 +0100
-From: Matthew Wild <mwild1@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2021/12/28/1
+Message-ID: <5814f3ea-59ae-7533-1ea5-6e7203561a5e@apache.org>
+Date: Tue, 28 Dec 2021 19:26:40 +0000
+From: Matt Sicker <mattsicker@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: STARTTLS vulnerabilities
+Subject: CVE-2021-44832: Apache Log4j2 vulnerable to RCE via JDBC Appender when attacker controls configuration 
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 10 Aug 2021 at 14:52, Guido Berhoerster <
-guido+openwall.com@...hoerster.name> wrote:
+Severity: moderate
 
-> Hi,
->
-> have you or are you planning to look into XMPP client/server
-> implementations as well?  The use of STARTTLS for both c2s and s2s
-> connections is still prevalent both in terms of implementation
-> support and actual practice and could potentially suffer form the
-> same issues (command injection or downgrade attacks).
+Description:
 
+Apache Log4j2 versions 2.0-beta7 through 2.17.0 (excluding security fix releases 2.3.2 and 2.12.4) are vulnerable to a remote code execution (RCE) attack where an attacker with permission to modify the logging configuration file can construct a malicious configuration using a JDBC Appender with a data source referencing a JNDI URI which can execute remote code. This issue is fixed by limiting JNDI data source names to the java protocol in Log4j2 versions 2.17.1, 2.12.4, and 2.3.2.
 
-XMPP has some additional protections against this in its design. It is
-required, after TLS negotiation, for both parties to discard the pre-TLS
-XML stream and negotiate a new one after TLS has been established[1].
-Combined with TLS being considered mandatory by practically all modern
-implementations and deployments[2], I'd hope that the attacks described
-here do not translate well to the XMPP ecosystem.
+This issue is being tracked as LOG4J2-3293,
 
-However we all know standards are not always reflective of the real world.
-We (the XMPP Standards Foundation and community) are always open to
-researchers interested in this kind of thing, and have collaborated in the
-past for coordinating disclosure of cross-implementation vulnerabilities.
+References:
 
-Regards,
-Matthew
-
-[1]: https://xmpp.org/rfcs/rfc6120.html#tls-process-neg-success
-[2]: https://xmpp.org/2013/11/xmpp-ubiquitous-encryption-a-manifesto/
+https://lists.apache.org/thread/s1o5vlo78ypqxnzn6p8zf6t9shtq5143
+https://issues.apache.org/jira/browse/LOG4J2-3293
 
