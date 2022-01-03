@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["147" "Thursday" "9" "March" "2017" "15:25:00" "+1000" "Wade Mealing" "wmealing@redhat.com" "<CALJHwhQ3biJq_PjSZr6vPCStww78ptMRjzNzj_-BVkX9=UVARQ@mail.gmail.com>" "5" "[oss-security] Re: Concerns about CVE-2017-5972" nil nil nil "3" "2017030905:25:00" "[oss-security] Re: Concerns about CVE-2017-5972" (number mark "U       wmealing@red Mar  9    5/147   " thread-indent "\"[oss-security] Re: Concerns about CVE-2017-5972\"\n") "<CALJHwhQUW4-9YRvpEr0ygDSoskx9vCFjowAwEPK8hKB7_bYu2w@mail.gmail.com>" ("<CALJHwhQUW4-9YRvpEr0ygDSoskx9vCFjowAwEPK8hKB7_bYu2w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["436" "Monday" "3" "January" "2022" "21:32:36" "+0000" "Kirk Lund" "klund@apache.org" nil "13" "[oss-security] CVE-2021-34797: Apache Geode project log file redaction of sensitive information vulnerability " nil nil nil "1" nil nil (number mark "U       klund@apache Jan  3   13/436   " thread-indent "\"[oss-security] CVE-2021-34797: Apache Geode project log file redaction of sensitive information vulnerability \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-34797: Apache Geode project log file redaction of sensitive information vulnerability " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21704 invoked by uid 550); 9 Mar 2017 05:25:13 -0000
+Received: (qmail 31832 invoked by uid 550); 3 Jan 2022 21:38:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,33 +12,27 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21680 invoked from network); 9 Mar 2017 05:25:12 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=k5LdXFYclfSrsIJqlQubUz8A+AdZojz/RehrusjXJWs=;
-        b=Q5qPJ8EKSUitnQ62F39Oa6nMusLFmdK8TqJYR+UfLC3gEKTEiwoJsvKYTRp0uHzpL6
-         WgXlliquXQvhN4u4RI0NBJn3xJ8pmjqy88CjHriwuOiyNNta3mILLVo/O5W05is/n92m
-         47OiYallFB570aeh/x8BiWStY2scHVGnoqVLoPFM7IXTUkXTFYRnUHXPc0XnhJBvvEC+
-         xlZwyHZ+dxnVe1EwR25w5sPrkkspRABG5qzbbNIHec/qzYBPvJA7NMgRnaVyYyxK4gYn
-         1QohmaAnMAI9llsVeTAo879mc/jMGXk7W7ASQuYvTatLwl7oWvadlsQUfS2tYd2gueC+
-         2QHw==
-X-Gm-Message-State: AMke39mIU9HtN7WzyzWg6hWpY2ad+sbFwTUyIfCRW72af7jY/NKRfLW7Cb53ZDK8t9uWiODW7XfuXfXlGAnuSJKW
-X-Received: by 10.107.174.220 with SMTP id n89mr10660377ioo.166.1489037100774;
- Wed, 08 Mar 2017 21:25:00 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <CALJHwhQUW4-9YRvpEr0ygDSoskx9vCFjowAwEPK8hKB7_bYu2w@mail.gmail.com>
-References: <CALJHwhQUW4-9YRvpEr0ygDSoskx9vCFjowAwEPK8hKB7_bYu2w@mail.gmail.com>
-From: Wade Mealing <wmealing@redhat.com>
-Date: Thu, 9 Mar 2017 15:25:00 +1000
-Message-ID: <CALJHwhQ3biJq_PjSZr6vPCStww78ptMRjzNzj_-BVkX9=UVARQ@mail.gmail.com>
+Received: (qmail 28281 invoked from network); 3 Jan 2022 21:32:50 -0000
+Content-Type: text/plain; charset=utf-8
+From: Kirk Lund <klund@apache.org>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] Re: Concerns about CVE-2017-5972
+Message-ID: <7014bc33-70a1-6411-c65d-ed87f7f454e4@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 03 Jan 2022 21:32:36 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2021-34797: Apache Geode project log file redaction of
+ sensitive information vulnerability 
 
-A reference which i omitted:
+Description:
 
-https://cxsecurity.com/issue/WLB-2017020112
+Apache Geode versions up to 1.12.4 and 1.13.4 are vulnerable to a log file =
+redaction of sensitive information flaw when using values that begin with c=
+haracters other than letters or numbers for passwords and security properti=
+es with the prefix "sysprop-", "javax.net.ssl", or "security-".
 
-This contains the necessary information to show the result of the flaw.
+This issue is being tracked as GEODE-9354
+
+Credit:
+
+Apache Geode would like to thank Aaron Lindsey for reporting this issue.
+
