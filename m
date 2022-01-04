@@ -1,39 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/09/1
-Message-ID: <62df0f69-5768-80ea-9dbf-f3e1c6f1e69c@activis.me>
-Date: Mon, 9 May 2022 12:54:56 +0400
-From: Archange <archange@...ivis.me>
-To: oss-security@...ts.openwall.com, Jan Lehnardt <jan@...che.org>
-Subject: Re: CVE-2022-24706: Apache CouchDB: Remote Code Execution Vulnerability in Packaging
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/04/3
+Message-ID: <f4521c81-26b9-35d0-a5b4-f25b1a766d73@apache.org>
+Date: Tue, 04 Jan 2022 05:55:31 +0000
+From: Benoit Tellier <btellier@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-40111: Apache James IMAP parsing Denial Of Service 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: moderate
 
-Le 26/04/2022 à 12:44, Jan Lehnardt a écrit :
-> […]
->
-> In addition, all binary packages have been updated to bind `epmd` as
-> well as the CouchDB distribution port to `127.0.0.1` and/or `::1`
-> respectively.
->
-> Credit:
->
-> The Apache CouchDB Team would like to thank Alex Vandiver <alexmv@...ip.com> for the report of this issue.
->
-> References:
->
-> https://lists.apache.org/thread/w24wo0h8nlctfps65txvk0oc5hdcnv00
+Description:
 
-Regarding epmd, how is this achieved in the binary packages? Because on 
-Arch at least, setting `ERL_EPMD_ADDRESS=127.0.0.1` as stated in 
-https://github.com/apache/couchdb/issues/999#issuecomment-345068280 is 
-still required. Should Arch make that a default in the systemd service 
-file? For now this has just been a recommandation for single node 
-security since 2017 
-(https://wiki.archlinux.org/title/CouchDB#Single_node_setup_&_Security), 
-but I can make it the default (the second part of the wiki advice being 
-now an upstream default, I think it would make some sense).
+While fuzzing with Jazzer the IMAP parsing stack we discover that crafted APPEND and STATUS IMAP command could be used to trigger infinite loops resulting in expensive CPU computations and OutOfMemory exceptions.
+This can be used for a Denial Of Service attack. The IMAP user needs to be authenticated to exploit this vulnerability.  This affected Apache James prior to version 3.6.1.
 
-Regards,
-Bruno/Archange (Arch maintainer for CouchDB)
+This issue is being tracked as JAMES-3634
+
+Mitigation:
+
+This vulnerability had been patched in Apache James 3.6.1 and higher. We recommend the upgrade.
+
+Credit:
+
+The Apache James PMC would like to thanks Benoit TELLIER for the report.
 
