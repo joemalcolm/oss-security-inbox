@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3221" "Friday" "29" "April" "2016" "12:13:08" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160429161308.1775333600A@smtpvbsrv1.mitre.org>" "72" "[oss-security] Re: CVE request: three issues in libksba" nil nil nil "4" "2016042916:13:08" "[oss-security] Re: CVE request: three issues in libksba" (number mark "U       cve-assign@m Apr 29   72/3221  " thread-indent "\"[oss-security] Re: CVE request: three issues in libksba\"\n") "<87mvocv6ff.fsf@redhat.com>" ("<87mvocv6ff.fsf@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5286" "Tuesday" "4" "January" "2022" "11:06:35" "+0100" "Carlton Gibson" "carlton.gibson@gmail.com" nil "149" "[oss-security] Django security releases issued: 4.0.1, 3.2.11, and 2.2.26 (Multiple CVEs)" nil nil nil "1" nil nil (number mark "U       carlton.gibs Jan  4  149/5286  " thread-indent "\"[oss-security] Django security releases issued: 4.0.1, 3.2.11, and 2.2.26 (Multiple CVEs)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Django security releases issued: 4.0.1, 3.2.11, and 2.2.26 (Multiple CVEs)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32489 invoked by uid 550); 29 Apr 2016 16:13:20 -0000
+Received: (qmail 9609 invoked by uid 550); 4 Jan 2022 12:53:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,84 +12,186 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32471 invoked from network); 29 Apr 2016 16:13:20 -0000
-From: cve-assign@mitre.org
-To: mprpic@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <87mvocv6ff.fsf@redhat.com>
-Message-Id: <20160429161308.1775333600A@smtpvbsrv1.mitre.org>
-Date: Fri, 29 Apr 2016 12:13:08 -0400 (EDT)
-Subject: [oss-security] Re: CVE request: three issues in libksba
+Received: (qmail 3963 invoked from network); 4 Jan 2022 10:06:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=a1U9oBxzHOW3gz12xyT2XAG7WXFvqxeHgTXNt+63WiI=;
+        b=S2L/HPDLBrP32hmO/UDi2sTlD4bjdlXiQ7ahhS2KeNHZziDzGSZuYnDwEJ/pBYVs+b
+         ZUmxlnOtv7p3AUsWDDvWOdExWEkAVfDLETi230IDLu3PNeNgqZPkxxJuVti2SRrKqsUy
+         fZ5Hq0qoYRTUALQ6/3y2MOf/FWAH8xGhSgzcrQtV29a3tS1Gsk7+rAbRZ9ItPqYG2Xvr
+         fFXmH1sONUMX3fRoEf4guw6F9HZK41Z2LwXdibKjgLsCoUhSJbBsk48SCIvrkGUk9VLR
+         IEPiVpOX380KPeAv+uuDl18RHT0uxTbKd734gKotmhwp16GSP8x77duUlH+4Ybd7FxyL
+         IJQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=a1U9oBxzHOW3gz12xyT2XAG7WXFvqxeHgTXNt+63WiI=;
+        b=a+fPz25jFN5QBa+D6TVBH1beOHB2KXSwOvhi4mowGT0zb7uvZrAX/MSaG1ZGtoz+Bf
+         lNPgPc5j+HHgvC5mN5YjH6k7WC73/p8FqgUMJkhTOlA5ZRK41cNt+3JcYXKaDc1vcirL
+         FB4PYDlXTDxGOCzYgwz7zrkqNxKJKIXElZDZtE+YL8jJDn8HkPKPpljwycISh35IHvOz
+         gPGo/QsA/AIRRDWuvphu17mAPWseRKL2vkJttwKCCNdy1KRgDhhR4Yb9Hnus60U4+FIv
+         g0eIZzmbbmhOEEhcUX37Q49QpTYwfHlxWetr+BCSTHmI27g6RG36wv4RQ0DG6JfFl6CP
+         2F5A==
+X-Gm-Message-State: AOAM530AVjV6l+0DHx5MKJpM2eMZe4Rx+ePwAhca1kFOTKyUlz7PsYnN
+	i7UwVHhMz+mWYGT4l/Z+SLf87V/kEf6Hkb60DGGfpua0JO4=
+X-Google-Smtp-Source: ABdhPJyz+xEeUZ467+IOBCsDBWQ7Eu9yDd079RV3APYeNM7Wn0+JNMZMsi52/OXTXtQHt+AMv/F3HGbqvDvhj1O/MtA=
+X-Received: by 2002:a05:620a:22ed:: with SMTP id p13mr33128353qki.768.1641290805651;
+ Tue, 04 Jan 2022 02:06:45 -0800 (PST)
+MIME-Version: 1.0
+From: Carlton Gibson <carlton.gibson@gmail.com>
+Date: Tue, 4 Jan 2022 11:06:35 +0100
+Message-ID: <CAJwKpyQc7O94vcA7LTa6x3i-q08txoeFHzvMQDTOn0Zxwgak5g@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="00000000000071adb705d4becb39"
+Subject: [oss-security] Django security releases issued: 4.0.1, 3.2.11, and 2.2.26 (Multiple CVEs)
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--00000000000071adb705d4becb39
+Content-Type: text/plain; charset="UTF-8"
 
-> Denial of Service due to stack overflow in src/ber-decoder.c
-> http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=07116a314f4dcd4d96990bbd74db95a03a9f650a
+Blog post:
+https://www.djangoproject.com/weblog/2022/jan/04/security-releases/
 
-Use CVE-2016-4353. (This CVE is about changing the type of error
-handling after a decoder stack overflow. It is not about changing the
-decoder so that a decoder stack overflow occurs in fewer cases.)
+Django 4.0.1, 3.2.11, and 2.2.26 fix three security issues.
 
+In accordance with `our security release policy
+<https://docs.djangoproject.com/en/dev/internals/security/>`_, the Django
+team
+is issuing
+`Django 4.0.1 <https://docs.djangoproject.com/en/dev/releases/4.0.1/>`_,
+`Django 3.2.11 <https://docs.djangoproject.com/en/dev/releases/3.2.11/>`_,
+and
+`Django 2.2.26 <https://docs.djangoproject.com/en/dev/releases/2.2.26/>`_.
+These release addresses the security issues detailed below. We encourage all
+users of Django to upgrade as soon as possible.
 
-> Integer overflow in the BER decoder src/ber-decoder.c
-> http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=aea7b6032865740478ca4b706850a5217f1c3887
+CVE-2021-45115: Denial-of-service possibility in
+``UserAttributeSimilarityValidator``
+=====================================================================================
 
->> The actual bug described below is due to assigning an int
->> (val.length) to a size_t (ti.length). The int was too large and thus
->> negative so that the condition to check for too large objects didn't
->> worked. Changing the type would have been enough but other conditions
->> are possible. Thus the introduction of sum_a1_a2_ge_b for overflow
->> checking and checks when adding 100 extra bytes to malloc calls are
->> added.
+``UserAttributeSimilarityValidator`` incurred significant overhead
+evaluating submitted password that were artificially large in relative to
+the
+comparison values. On the assumption that access to user registration was
+unrestricted this provided a potential vector for a denial-of-service
+attack.
 
-We consider this two separate issues.
+In order to mitigate this issue, relatively long values are now ignored by
+``UserAttributeSimilarityValidator``.
 
-Use CVE-2016-4354 for the use of an incorrect integer data type.
+This issue has severity "medium" according to the Django security policy.
 
-Use CVE-2016-4355 for the cases in which the code was simply making no
-attempt to check for an integer overflow (the "+ 100" cases and the
-"+= d->val.length" case).
+CVE-2021-45116: Potential information disclosure in ``dictsort`` template
+filter
+================================================================================
 
+Due to leveraging the Django Template Language's variable resolution logic,
+the
+``dictsort`` template filter was potentially vulnerable to information
+disclosure or unintended method calls, if passed a suitably crafted key.
 
-> Integer overflow in the DN decoder src/dn.c
-> http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=commit;h=243d12fdec66a4360fbb3e307a046b39b5b4ffc3
+In order to avoid this possibility, ``dictsort`` now works with a restricted
+resolution logic, that will not call methods, nor allow indexing on
+dictionaries.
 
-This might be an error in the original
-https://security.gentoo.org/glsa/201604-04 advisory. We did not notice
-any obvious relationship between
-243d12fdec66a4360fbb3e307a046b39b5b4ffc3 and an integer overflow fix.
-The 243d12fdec66a4360fbb3e307a046b39b5b4ffc3 commit message seems to
-focus on "read access out of bounds." Also, there is no other recent
-commit at
-http://git.gnupg.org/cgi-bin/gitweb.cgi?p=libksba.git;a=history;f=src/dn.c
-that refers to an integer overflow. Possibly there was an inapplicable
-copy-and-paste of "Integer overflow in the" from the previous report
-about the BER decoder.
+As a reminder, all untrusted user input should be validated before use.
 
-Use CVE-2016-4356 for the 243d12fdec66a4360fbb3e307a046b39b5b4ffc3
-issue that is described as "Fix encoding of invalid utf-8 strings in
-dn.c" and "read access out of bounds."
+This issue has severity "low" according to the Django security policy.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+CVE-2021-45452: Potential directory-traversal via ``Storage.save()``
+====================================================================
 
-iQIcBAEBCAAGBQJXI4eHAAoJEHb/MwWLVhi2ZvoP/0tfBkT4Iqjsya7V3BthT3ne
-p9wDYxI8Tre5Qza/lteablh3FicO4I8e4EFjghxYEd51lbVXerJBJNqo3vcZsDzD
-2lozbI0YooCsiE9Z2kESUFpT4agPg2yLamjFqmw4kxK71RTq+FDke5GTmbAK05WR
-ir4VoTsK1qPUB6mcq2qqylXjs/ulGL/pkd6SuJJAVp9YEExh2kgiey+1KtIDGeij
-4NnzJ5a7syT6VxyX/JfwNaLuNlfv6vddqJyp7NWAa/0B3y7n+6gjyVjyAuwZYsiN
-wbVJOw9p6TSVPp1VX7GOoxj/bWn9fiOfMzCsun0Oajq4Te9aXrCZODy9aWivaRlH
-2XMFUEHfELQV8UzvwJb1hA1PISzvzYheWxSNyncxiojKvJbKmi8UvrkVWYUXaGKl
-OFO6DcsoCnVpYwMAelN5Ir1hgsJ6dr73ssxuVFgO9jwAteDoqikE8HFVm5cJTELP
-q6Q9QecnHAA7aJ32PqcGd2sd10+majAejMZV5MZpoLTWUkH/1+olFGR1njpvegyK
-tepkG9onPWFXQ2iUbTpUxQzmgYYNrwdtmU+0TgFKXOcfLV8W88w7v22sfdhLUgj0
-sm4ckXuxB0fO+6TyVo/ZRVibm7UPjacrubB8f65lUTUldbx+3Wtwgl3+MWAKbpT4
-TBr+InX8c9ul3DacR4iv
-=u1+d
------END PGP SIGNATURE-----
+``Storage.save()`` allowed directory-traversal if directly passed suitably
+crafted file names.
+
+This issue has severity "low" according to the Django security policy.
+
+Affected supported versions
+===========================
+
+* Django main branch
+* Django 4.0
+* Django 3.2
+* Django 2.2
+
+Resolution
+==========
+
+Patches to resolve the issue have been applied to Django's main branch and
+to
+the 4.0, 3.2, and 2.2 release branches. The patches may be obtained from the
+following changesets.
+
+CVE-2021-45115:
+
+* On the `main branch <
+https://github.com/django/django/commit/968a3d01fa79f055f93a1c3ed1535ecbcbdbb842
+>`__
+* On the `4.0 release branch <
+https://github.com/django/django/commit/df79ef03ac867c93caaa6be56bc69e66abfeef8f
+>`__
+* On the `3.2 release branch <
+https://github.com/django/django/commit/a8b32fe13bcaed1c0b772fdc53de84abc224fb20
+>`__
+* On the `2.2 release branch <
+https://github.com/django/django/commit/2135637fdd5ce994de110affef9e67dffdf77277
+>`__
+
+CVE-2021-45116:
+
+* On the `main branch <
+https://github.com/django/django/commit/761f449e0daf3de06b0132bd4d6dfcdeef578e26
+>`__
+* On the `4.0 release branch <
+https://github.com/django/django/commit/2a8ec7f546d6d5806e221ec948c5146b55bd7489
+>`__
+* On the `3.2 release branch <
+https://github.com/django/django/commit/c7fe895bca06daf12cc1670b56eaf72a1ef27a16
+>`__
+* On the `2.2 release branch <
+https://github.com/django/django/commit/c9f648ccfac5ab90fb2829a66da4f77e68c7f93a
+>`__
+
+CVE-2021-45452:
+
+* On the `main branch <
+https://github.com/django/django/commit/6d343d01c57eb03ca1c6826318b652709e58a76e
+>`__
+* On the `4.0 release branch <
+https://github.com/django/django/commit/e1592e0f26302e79856cc7f2218ae848ae19b0f6
+>`__
+* On the `3.2 release branch <
+https://github.com/django/django/commit/8d2f7cff76200cbd2337b2cf1707e383eb1fb54b
+>`__
+* On the `2.2 release branch <
+https://github.com/django/django/commit/4cb35b384ceef52123fc66411a73c36a706825e1
+>`__
+
+The following releases have been issued:
+
+* Django 4.0.1 (`download Django 4.0.1 <
+https://www.djangoproject.com/m/releases/4.0/Django-4.0.1.tar.gz>`_ |
+`4.0.1 checksums <
+https://www.djangoproject.com/m/pgp/Django-4.0.1.checksum.txt>`_)
+* Django 3.2.11 (`download Django 3.2.11 <
+https://www.djangoproject.com/m/releases/3.2/Django-3.2.11.tar.gz>`_ |
+`3.2.11 checksums <
+https://www.djangoproject.com/m/pgp/Django-3.2.11.checksum.txt>`_)
+* Django 2.2.26 (`download Django 2.2.26 <
+https://www.djangoproject.com/m/releases/2.2/Django-2.2.26.tar.gz>`_ |
+`2.2.26 checksums <
+https://www.djangoproject.com/m/pgp/Django-2.2.26.checksum.txt>`_)
+
+The PGP key ID used for these releases is Carlton Gibson: `E17DF5C82B4F9D00
+<https://github.com/carltongibson.gpg>`_.
+
+General notes regarding security reporting
+==========================================
+
+As always, we ask that potential security issues be reported via
+private email to ``security@djangoproject.com``, and not via Django's
+Trac instance or the django-developers list. Please see `our security
+policies <https://www.djangoproject.com/security/>`_ for further
+information.
+
+--00000000000071adb705d4becb39--
