@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2651" "Thursday" "12" "May" "2016" "21:16:00" "+0300" "Solar Designer" "solar@openwall.com" "<20160512181600.GA6622@openwall.com>" "53" "Re: [oss-security] broken RSA keys" "^Date:" nil nil "5" "2016051218:16:00" "[oss-security] broken RSA keys" (number mark "        solar@openwa May 12   53/2651  " thread-indent "\"Re: [oss-security] broken RSA keys\"\n") "<CAP9m6YcPrs7yaOHAHeN9cr_EhOJKHu2tptVwTm=ngTZrN7VZfQ@mail.gmail.com>" ("<20160504124248.GA15148@openwall.com>" "<20160504172803.GA19393@openwall.com>" "<CAP9m6YeT=Vo1WQ4Jqn1QV-Cp6mBQ3EwWQ5p_=Rm4P3Na3aGcGw@mail.gmail.com>" "<20160505081757.GA23172@openwall.com>" "<CAP9m6YcPrs7yaOHAHeN9cr_EhOJKHu2tptVwTm=ngTZrN7VZfQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1079" "Tuesday" "4" "January" "2022" "18:46:24" "-0500" "Bryan English" "bryan@bryanenglish.com" nil "26" "[oss-security] Fwd: Node.js security updates for all active release lines, January 2022" nil nil nil "1" nil nil (number mark "U       bryan@bryane Jan  4   26/1079  " thread-indent "\"[oss-security] Fwd: Node.js security updates for all active release lines, January 2022\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Fwd: Node.js security updates for all active release lines, January 2022" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22432 invoked by uid 550); 12 May 2016 18:16:06 -0000
+Received: (qmail 19545 invoked by uid 550); 5 Jan 2022 01:42:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,70 +11,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22414 invoked from network); 12 May 2016 18:16:06 -0000
-Message-ID: <20160512181600.GA6622@openwall.com>
-References: <20160504124248.GA15148@openwall.com> <20160504172803.GA19393@openwall.com> <CAP9m6YeT=Vo1WQ4Jqn1QV-Cp6mBQ3EwWQ5p_=Rm4P3Na3aGcGw@mail.gmail.com> <20160505081757.GA23172@openwall.com> <CAP9m6YcPrs7yaOHAHeN9cr_EhOJKHu2tptVwTm=ngTZrN7VZfQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAP9m6YcPrs7yaOHAHeN9cr_EhOJKHu2tptVwTm=ngTZrN7VZfQ@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Thu, 12 May 2016 21:16:00 +0300
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] broken RSA keys
-To: oss-security@lists.openwall.com
+Received: (qmail 21700 invoked from network); 4 Jan 2022 23:46:47 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bryanenglish-com.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:cc;
+        bh=X9TGWTddL8jvwYHLgUuDvm4QV+mQZqKOiO0q/4UzL/8=;
+        b=ypnvQr/2Dox+y5lUSnZ65rI0AzUzT/EyHWjDk/g5sQdPyUd7JDso5zsWN/7Mt9nRd8
+         ij0ZIlBIrceVA7ycOO5vH85lVBQgB6xdijAGEvWLvVEhRKkeVtV+sYdUk6/cOAFhND9i
+         gTRQQthqE4sKB3GMvOPDFHk+nVXQXuu5/N5jtQnDvYS2ka7Z8LqlyIGYpSiqWZvZfaBZ
+         9b54I1ORFN7WtuJBZHAejWE1i4Rvge+7oAwdrLX3fNzuME9LgUg/X0JN4yefFOOKGu9Z
+         0M8X5GjWykTOcyJOMCkEgFzHOfzADSRJuO+YZ2AIVIqpsl0sPTnSgXPd1//35cg7lPAQ
+         jYhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:cc;
+        bh=X9TGWTddL8jvwYHLgUuDvm4QV+mQZqKOiO0q/4UzL/8=;
+        b=uRBUTghuhc8H49Frm5anxc/ezFF7n/OUr7seHHzjz0orJwr/+gwy3jLJzNUn/wg4DS
+         R0m9zRByIExVrOQ4vCgsSGiSQ1iVhJvX6ggY+u3YgMfIKthSUFjBJt7c9mvZ2k/hqmfi
+         yApD0vbRoGx/ige2eTYZCes5lGvzZVO62IaqKsqMJjcYLzJfCUlpcjMk8hRUMHSuIuQk
+         WY1dYEPp3W+wEtYdboNiuwLaVJDSruvlvzQ1QSijOQvru8iIluQAtpojNzI2oZyPxHJY
+         mBWB+2NNU5/9zzzt1OT3+SDdJ+tM1BoBcFBil7TxSltxLuMgQbWGuduslqU68rqHQ7RF
+         N6Pg==
+X-Gm-Message-State: AOAM533ma0GuRqjyH4oj0XLqvtbL1bJnI4HmTr3v0Fg2GZWto/0gb4Us
+	Pgj4FVE+pHVgigasF//k8F6aULxbGWaYf6tLmLM2hHIGVf8=
+X-Google-Smtp-Source: ABdhPJwl3Vo/Vs5Z34flN6CYgE/lFM4ETjIdDqzp2/abAoy5oCSLPtnRP0QCamWWkZ3YcEU7qKEYYUYE2dhJQ4CKoic=
+X-Received: by 2002:a67:fb81:: with SMTP id n1mr15732398vsr.65.1641339995567;
+ Tue, 04 Jan 2022 15:46:35 -0800 (PST)
+MIME-Version: 1.0
+References: <436a4bef-7d60-49a4-97af-02b90b4fbd49n@googlegroups.com>
+In-Reply-To: <436a4bef-7d60-49a4-97af-02b90b4fbd49n@googlegroups.com>
+From: Bryan English <bryan@bryanenglish.com>
+Date: Tue, 4 Jan 2022 18:46:24 -0500
+Message-ID: <CA+35996-YwwZzKuLhnXxBT55GSzQV5fLjZT3YC7Mn8=gnMxULQ@mail.gmail.com>
+Cc: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000644e3d05d4ca3f13"
+Subject: [oss-security] Fwd: Node.js security updates for all active release lines, January 2022
 
-On Thu, May 05, 2016 at 08:36:29AM -0400, Stanislav Datskovskiy wrote:
-> On Thu, May 5, 2016 at 4:17 AM, Solar Designer <solar@openwall.com> wrote:
-> > When a modulus is (mangled?) such that each of its 64-bit limbs consists
-> > of two matching 32-bit limbs, it is necessarily a multiple of 2^32+1.
-> > That's because it can be represented as:
-> >
-> > N = {an an ... a1 a1 a0 a0} = (2^32+1) * {0 an ... 0 a1 0 a0}
-> >
-> > where the {...} notation means concatenated 32-bit limbs (or base 2^32
-> > digits, if you will).  From this, it follows that pairwise GCDs of such
-> > moduli will also have 2^32+1 as a factor, and this is what ultimately
-> > causes the 32-bit limb patterns in the GCDs.  As Alexander Cherepanov
-> > correctly pointed out, even the seemingly slightly more complex 32-bit
-> > limb patterns in the GCDs are merely indication of them being multiples
-> > of 2^32+1.  There's probably nothing else to see here.
-> 
-> Mircea Popescu (trilema.com) and I figured this out last May.
-> But the conclusion 'nothing to see here, move along' does not follow.
+--000000000000644e3d05d4ca3f13
+Content-Type: text/plain; charset="UTF-8"
 
-By "nothing else to see here" I was referring only to the patterns seen
-in GCDs, which are merely a consequence of the pattern seen in moduli.
+---------- Forwarded message ---------
+From: Bryan English <bryan@bryanenglish.com>
+Date: Tue, Jan 4, 2022 at 6:40 PM
+Subject: Node.js security updates for all active release lines, January 2022
+To: nodejs-sec <nodejs-sec@googlegroups.com>
 
-> > As Alexander Cherepanov wrote, if I understand him correctly, there's
-> > 100% overlap between keys with such moduli and with such exponents.
-> 
-> Presently I do not know why the perpetrator found it necessary to mangle
-> the exponent.
 
-To me, this speaks in favor of the software bug/miscompile theory,
-rather than an attack.  I took a look at:
+The Node.js project will release new versions of all supported release
+lines on or shortly after Monday, 10th of January, 2022 For more
+information see:
+https://nodejs.org/en/blog/vulnerability/jan-2022-security-releases/
 
-$ sha256sum *gz
-bced395621ddd1c8fd5a87279dface260fb47351a89427e1db7a785fd9f7595c  pks-0.9.4.tar.gz
-419fff7df644ac11d92ca5b7981e0a6f1e10f74605eb1602f7b39e272d8b079c  pks-0.9.6.tar.gz
-0b3b706df7bf2a4deb7b2e779402f1f8fcbe42b12d32a97692f37d97c5dba264  sks-1.0.5.tgz
-92a7f113f0ba7a28d51d7ced60a984d042d8524c651dc3fcafe9d11cc32981a0  sks-1.1.5.tgz
+-- 
+You received this message because you are subscribed to the Google Groups
+"nodejs-sec" group.
+To unsubscribe from this group and stop receiving emails from it, send an
+email to nodejs-sec+unsubscribe@googlegroups.com.
+To view this discussion on the web visit
+https://groups.google.com/d/msgid/nodejs-sec/436a4bef-7d60-49a4-97af-02b90b4fbd49n%40googlegroups.com
+<https://groups.google.com/d/msgid/nodejs-sec/436a4bef-7d60-49a4-97af-02b90b4fbd49n%40googlegroups.com?utm_medium=email&utm_source=footer>
+.
 
-but none of them look like they'd be likely to contain or expose a
-library bug like this: they don't appear to re-encode the bignums.
-
-> I haven't any notion of why this particular mutilation was chosen.
-> But the particular list of victims is sufficient to rule out 'software bug'
-> in my mind as an intellectually-honest explanation.
-
-This could be so, or there could be something else in common about them,
-such as preference to use some otherwise not so common piece of software.
-
-Anyway, I think we can in fact end this discussion for now - not because
-"nothing to see here, move along", but because we've already considered
-the available clues (thank you all for helping get us on the same page!)
-and there are no new clues yet.
-
-Alexander
+--000000000000644e3d05d4ca3f13--
