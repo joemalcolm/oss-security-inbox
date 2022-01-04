@@ -1,44 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/02/6
-Message-Id: <CO1HVUSF8YCE.38QUAT9ASBE5V@sumire>
-Date: Wed, 02 Nov 2022 04:37:43 +0100
-From: "alice" <alice@...ya.dev>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/04/4
+Message-ID: <aaa200fd-48d0-c922-fb68-06e5d17aa9e0@apache.org>
+Date: Tue, 04 Jan 2022 05:55:35 +0000
+From: Benoit Tellier <btellier@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-40525: Apache James: Sieve file storage vulnerable to path traversal attacks 
 Content-Type: text/plain; charset=utf-8
 
-On Wed Nov 2, 2022 at 3:56 AM CET, Demi Marie Obenour wrote:
-> On Tue, Nov 01, 2022 at 04:57:25PM -0400, Jeffrey Walton wrote:
-> > On Tue, Nov 1, 2022 at 3:55 PM Pavan Maddamsetti
-> > <pavan.maddamsetti@...il.com> wrote:
-> > >
-> > > https://github.com/RustCrypto
-> > 
-> > I hope this does not start a war.. The problem with Rust is, it's only
-> > guaranteed to work on i686 and x86_64.
-> > 
-> > Trying to compile Rust programs on armel, armhf, aarch64 and PowerPC
-> > has been excruciatingly painful. The tool cannot compile its own
-> > cargo's on those platforms. I gave up trying to use Rust on anything
-> > but x86_64.
->
-> Rust should certainly be able to compile its own Cargo, so this is an
-> outright bug.  Please report it.  If the instructions are confusing
-> enough that it is easy to make a mistake, that’s a bug in the
-> documentation.
-alpine linux successfully manages to build rust with itself for x86_64,
-i586 (currently, might be pentium4 x86 in the future), armhf (v6+hf),
-armv7, aarch64, ppc64le, s390x, and riscv64. s390x/riscv64 were the
-hardest to get to work here, and the ecosystem has a few issues on those
-architectures (old libc/nix crate versions, rustls crate not having asm
-for s390x/riscv64 (+ ppc64le), to name two), but the same really goes
-for a lot of software even in c/++ in general on those architectures
-lacking support.
+Description:
 
-so yes, this seems like a bug that should be reported.
+Apache James ManagedSieve implementation alongside with the file storage for sieve scripts is vulnerable to path traversal, allowing reading and writing any file. This vulnerability had been patched in Apache James 3.6.1 and higher. We recommend the upgrade.
 
-> -- 
-> Sincerely,
-> Demi Marie Obenour (she/her/hers)
-> Invisible Things Lab
+
+This issue is being tracked as JAMES-3646
+
+Mitigation:
+
+This could also be mitigated by ensuring manageSieve is disabled, which is the case by default.
+
+Distributed and Cassandra based products are also not impacted.
+
+Credit:
+
+The Apache James PMC would like to thanks Benoit TELLIER for the report.
 
