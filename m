@@ -1,17 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/03/3
-Message-ID: <804b39e8-5b2c-9642-d80d-bd48d5104768@apache.org>
-Date: Thu, 03 Feb 2022 18:21:00 +0000
-From: Abhishek Tiwari <abti@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-36151: Apache Gobblin: Local Credentials Disclosure Vulnerability 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/05/1
+Message-ID: <CA+35996-YwwZzKuLhnXxBT55GSzQV5fLjZT3YC7Mn8=gnMxULQ@mail.gmail.com>
+Date: Tue, 4 Jan 2022 18:46:24 -0500
+From: Bryan English <bryan@...anenglish.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Fwd: Node.js security updates for all active release lines, January 2022
 Content-Type: text/plain; charset=utf-8
 
-Description:
+---------- Forwarded message ---------
+From: Bryan English <bryan@...anenglish.com>
+Date: Tue, Jan 4, 2022 at 6:40 PM
+Subject: Node.js security updates for all active release lines, January 2022
+To: nodejs-sec <nodejs-sec@...glegroups.com>
 
-In Apache Gobblin, the Hadoop token is written to a temp file that is visible to all local users on Unix-like systems. This affects versions <= 0.15.0. Users should update to version 0.16.0 which addresses this issue. 
 
-Credit:
+The Node.js project will release new versions of all supported release
+lines on or shortly after Monday, 10th of January, 2022 For more
+information see:
+https://nodejs.org/en/blog/vulnerability/jan-2022-security-releases/
 
-Apache Gobblin would like to thank Jonathan Leitschuh for reporting this issue. 
+-- 
+You received this message because you are subscribed to the Google Groups
+"nodejs-sec" group.
+To unsubscribe from this group and stop receiving emails from it, send an
+email to nodejs-sec+unsubscribe@...glegroups.com.
+To view this discussion on the web visit
+https://groups.google.com/d/msgid/nodejs-sec/436a4bef-7d60-49a4-97af-02b90b4fbd49n%40googlegroups.com
+<https://groups.google.com/d/msgid/nodejs-sec/436a4bef-7d60-49a4-97af-02b90b4fbd49n%40googlegroups.com?utm_medium=email&utm_source=footer>
+.
 
