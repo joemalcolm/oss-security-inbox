@@ -1,58 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/09/1
-Message-ID: <CALV6CNPFCj_qyutH_ETc8=+ayLEEqbd9+_GA+VJMJOeuOS-_qg@mail.gmail.com>
-Date: Fri, 9 Sep 2022 12:52:44 +0800
-From: Xingyuan Mo <hdthky0@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Linux kernel: information disclosure in stex_queuecommand_lck
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/05/2
+Message-ID: <CAAqbB_dr90dmdxrVpG-cznaPrtPEQwtViaYgB2EA43efhRgRiA@mail.gmail.com>
+Date: Wed, 5 Jan 2022 18:30:38 -0500
+From: Neil Griffin <asfgriff@...che.org>
+To: general@...tals.apache.org, pluto-user@...tals.apache.org,  announce@...che.org, jetspeed-user@...tals.apache.org, security@...che.org,  oss-security@...ts.openwall.com
+Subject: CVE-2021-36737: Apache Portals: XSS in V3 Demo Portlet
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Severity: low
 
-We found an information disclosure vulnerability in stex_queuecommand_lck() in
-drivers/scsi/stex.c through linux v6.0-rc4 which allows an attacker to disclose
-sensitive information such as kernel space address.
+Description:
 
-This issue can be fixed with the following patch:
-https://lore.kernel.org/all/20220908145154.2284098-1-gregkh@linuxfoundation.org/
+The input fields of the Apache Pluto UrlTestPortlet are vulnerable to
+Cross-Site Scripting (XSS) attacks.  Users should migrate to version 3.1.1
+of the v3-demo-portlet.war artifact
 
-=*=*=*=*=*=*=*=*=  Bug Details  =*=*=*=*=*=*=*=*=
+Mitigation:
 
-In drivers/scsi/stex.c:
- 666:  case PASSTHRU_CMD:
- 667:    if (cmd->cmnd[1] == PASSTHRU_GET_DRVVER) {
- 668:      struct st_drvver ver;
- 669:      size_t cp_len = sizeof(ver);
- 670:
- 671:      ver.major = ST_VER_MAJOR;
- 672:      ver.minor = ST_VER_MINOR;
- 673:      ver.oem = ST_OEM;
- 674:      ver.build = ST_BUILD_VER;
- 675:      ver.signature[0] = PASSTHRU_SIGNATURE;
- 676:      ver.console_id = host->max_id - 1;
- 677:      ver.host_no = hba->host->host_no;
- 678:      cp_len = scsi_sg_copy_from_buffer(cmd, &ver, cp_len);
- 679:      if (sizeof(ver) == cp_len)
- 680:        cmd->result = DID_OK << 16;
- 681:      else
- 682:        cmd->result = DID_ERROR << 16;
- 683:      done(cmd);
- 684:      return 0;
- 685:    }
- 686:    break;
+* Uninstall the v3-demo-portlet.war artifact
+   -or-
+* Migrate to version 3.1.1 of the v3-demo-portlet.war artifact
 
-The variable ver is declared off of the stack, but not zeroed out before copied
-back to user space, resulting in sensitive information disclosure.
+Credit:
 
-=*=*=*=*=*=*=*=*=  Timeline  =*=*=*=*=*=*=*=*=
+Thanks to Dhiraj Mishra for reporting.
 
-2022-09-08: bug reported
-2022-09-08: patch released
-
-=*=*=*=*=*=*=*=*=  Credit  =*=*=*=*=*=*=*=*=
-
-Xingyuan Mo (@hdthky) and Gengjia Chen (@chengjia4574) of IceSword Lab, 360
-
-
-Best Regards,
-Xingyuan Mo
