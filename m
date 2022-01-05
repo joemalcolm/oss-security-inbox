@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1826" "Friday" "20" "March" "2015" "19:25:12" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150320232512.B11316DC005@smtpvmsrv1.mitre.org>" "45" "[oss-security] Re: CVE Request: Linux kernel unprivileged denial-of-service due to mis-protected xsave/xrstor instructions." nil nil nil "3" "2015032023:25:12" "[oss-security] Re: CVE Request: Linux kernel unprivileged denial-of-service due to mis-protected xsave/xrstor instructions." (number mark "        cve-assign@m Mar 20   45/1826  " thread-indent "\"[oss-security] Re: CVE Request: Linux kernel unprivileged denial-of-service due to mis-protected xsave/xrstor instructions.\"\n") "<20150318101405.GA19065@chrystal.uk.oracle.com>" ("<20150318101405.GA19065@chrystal.uk.oracle.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["497" "Wednesday" "5" "January" "2022" "18:30:38" "-0500" "Neil Griffin" "asfgriff@apache.org" nil "22" "[oss-security] CVE-2021-36737: Apache Portals: XSS in V3 Demo Portlet" nil nil nil "1" nil nil (number mark "U       asfgriff@apa Jan  5   22/497   " thread-indent "\"[oss-security] CVE-2021-36737: Apache Portals: XSS in V3 Demo Portlet\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-36737: Apache Portals: XSS in V3 Demo Portlet" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5513 invoked by uid 550); 20 Mar 2015 23:25:25 -0000
+Received: (qmail 7387 invoked by uid 550); 5 Jan 2022 23:41:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,58 +11,43 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5486 invoked from network); 20 Mar 2015 23:25:25 -0000
-In-Reply-To: <20150318101405.GA19065@chrystal.uk.oracle.com>
-Message-Id: <20150320232512.B11316DC005@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, jamie.iles@oracle.com, mr.a.xavier@gmail.com
-Date: Fri, 20 Mar 2015 19:25:12 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: Linux kernel unprivileged denial-of-service due to mis-protected xsave/xrstor instructions.
-To: quentin.casasnovas@oracle.com
+Received: (qmail 3492 invoked from network); 5 Jan 2022 23:31:42 -0000
+X-Gm-Message-State: AOAM532sILT0LMXXWM2DExaiWO047+7wuRo4UZCD1QdGdpwV1wB7LjkV
+	17W9722AnBny/PEbvyH1HCmZDWnrXOC0j/hfSPo=
+X-Google-Smtp-Source: ABdhPJy88RhYrDrQmdEA14lPSdW8AeDdTc7hmwFEO4f2dZ0sGd6eSUzeV+QXZl8f2ITfX79mN0ZTnmk7ed0+1bHRPMc=
+X-Received: by 2002:a05:6808:30a0:: with SMTP id bl32mr4292580oib.77.1641425449537;
+ Wed, 05 Jan 2022 15:30:49 -0800 (PST)
+MIME-Version: 1.0
+From: Neil Griffin <asfgriff@apache.org>
+Date: Wed, 5 Jan 2022 18:30:38 -0500
+X-Gmail-Original-Message-ID: <CAAqbB_dr90dmdxrVpG-cznaPrtPEQwtViaYgB2EA43efhRgRiA@mail.gmail.com>
+Message-ID: <CAAqbB_dr90dmdxrVpG-cznaPrtPEQwtViaYgB2EA43efhRgRiA@mail.gmail.com>
+To: general@portals.apache.org, pluto-user@portals.apache.org, 
+	announce@apache.org, jetspeed-user@portals.apache.org, security@apache.org, 
+	oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000d8550205d4de24fa"
+Subject: [oss-security] CVE-2021-36737: Apache Portals: XSS in V3 Demo Portlet
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--000000000000d8550205d4de24fa
+Content-Type: text/plain; charset="UTF-8"
 
-> a flaw in the way the xsave/xrstor (and their alternative
-> instructions) were being protected against a fault in kernel space
+Severity: low
 
-We believe that this report can have at least one CVE ID for a fixed
-issue.
+Description:
 
-Does anyone have a preference for two CVE IDs divided in this way:
+The input fields of the Apache Pluto UrlTestPortlet are vulnerable to
+Cross-Site Scripting (XSS) attacks.  Users should migrate to version 3.1.1
+of the v3-demo-portlet.war artifact
 
-  - one CVE ID for the
-    https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit?id=f31a9f7c71691569359fa7fb8b0acaa44bce0324
-    change that was introduced in 3.17. Our incomplete understanding
-    from http://openwall.com/lists/oss-security/2015/03/18/6 is that
-    this change had security-relevant value even though it was later
-    determined to be mis-protecting.
+Mitigation:
 
-  - a second CVE id for the
-    https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit?id=06c8173eb92bbfc03a0fe8bb64315857d0badd06
-    change
+* Uninstall the v3-demo-portlet.war artifact
+   -or-
+* Migrate to version 3.1.1 of the v3-demo-portlet.war artifact
 
-? Otherwise, we will assign only the latter.
+Credit:
 
-https://lkml.org/lkml/2015/3/17/462 is about "This is to prevent
-future misuses of the __ex_table entry like there was for
-xsaves/xrstors." Typically, code improvements for "prevent future
-misuses" purposes would not lead to additional CVE IDs.
+Thanks to Dhiraj Mishra for reporting.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVDKtrAAoJEKllVAevmvmspVsH/0nSGMudMjV5OyQSm8Ascnk1
-CxANkao5I6XjH2CKu1tyZHLHnlEnZ3nwIQf94znq77BOrqTs4kv4MRLfgsz01vWI
-nl6ZnoxFM5gV4bgvhLHJWuv5x9wsZbEl0jpPRg9NflUa4EDqyEDUZbjZZf+Rw1bc
-R54CyBbfGXf7tbkPX3jcM6dGqXnaCfDyPnJiElDIUpHtBEZnm8fwdvhYHOBqWROn
-tMeLnORGQIiPM7GxnsMCTL5a4nsRtbXeLSmIDVlU7wEB60oxB/ZCpzg9CSHPBYEk
-szx2EjCRklpMHbFLEvWO3ozI47aiy5iXkUUFSOSmJR4mVvOg+bJdUpt0dr15GL8=
-=/+Zb
------END PGP SIGNATURE-----
+--000000000000d8550205d4de24fa--
