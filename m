@@ -1,43 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/01/19
-Message-ID: <Y2F6C/dZo5njPUfd@itl-email>
-Date: Tue, 1 Nov 2022 15:56:57 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/05/4
+Message-ID: <CAAqbB_fND52UH8km8mqoWhWbb9pAgDkt3XrBPw1iAcJ2Woax4g@mail.gmail.com>
+Date: Wed, 5 Jan 2022 18:35:17 -0500
+From: Neil Griffin <asfgriff@...che.org>
+To: general@...tals.apache.org, pluto-user@...tals.apache.org,  announce@...che.org, jetspeed-user@...tals.apache.org, security@...che.org,  oss-security@...ts.openwall.com
+Subject: CVE-2021-36739: Apache Portals: XSS vulnerability in the MVCBean JSP portlet maven archetype
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 02, 2022 at 06:35:42AM +1100, Dave Horsfall wrote:
-> On Tue, 1 Nov 2022, Demi Marie Obenour wrote:
-> 
-> [ Massive trim ]
-> 
-> > 3. When will OpenSSL be replaced by something written in a safe
-> >    language, or at least with a better-maintained fork?  I know that
-> >    distributions often cannot use LibreSSL (because FIPS, ugh) or
-> >    BoringSSL (because of no stable API or ABI), but I wonder if e.g.
-> >    libcurl should be linked to BoringSSL instead.
-> 
-> We see this over at https://boringssl.googlesource.com/boringssl/ :
-> 
->   ``Although BoringSSL is an open source project, it is not intended
->     for general use, as OpenSSL is. We don't recommend that third parties
->     depend upon it. Doing so is likely to be frustrating because there
->     are no guarantees of API or ABI stability.''
-> 
-> If even the manufacturer says that you shouldn't use it...
+Severity: moderate
 
-My understanding was that libcurl gets updated whenever BoringSSL needs
-a change, and that libcurl’s API does not depend on what TLS backend it
-uses.  Applications would not be impacted, since they would only use the
-libcurl API and ABI.
+Description:
 
-That said, this would require constantly updating to new versions of
-libcurl + BoringSSL, so it might not make sense in general.  LibreSSL or
-rustls could well be a better choice.
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+The "first name" and "last name" fields of the Apache Pluto 3.1.0 MVCBean
+JSP portlet maven archetype are vulnerable to Cross-Site Scripting (XSS)
+attacks.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Mitigation:
+
+If a project was generated from the affected maven archetype using a
+command like the following:
+
+mvn archetype:generate \
+     -DarchetypeGroupId=org.apache.portals.pluto.archetype \
+     -DarchetypeArtifactId=mvcbean-jsp-portlet-archetype \
+     -DarchetypeVersion=3.1.0 \
+     -DgroupId=com.mycompany \
+     -DartifactId=com.mycompany.my.mvcbean.jsp.portlet
+
+Then developers must fix the generated greeting.jspx file by escaping the
+rendered values submitted to the "First Name" and "Last Name" fields.
+
+For example, change:
+
+     ${user.firstName} ${user.lastName}!
+
+To:
+
+     ${mvc.encoders.html(user.firstName)}
+${mvc.encoders.html(user.lastName)}!
+
+Moving forward, all such projects should be generated from version 3.1.1 of
+the Maven archetype.
+
