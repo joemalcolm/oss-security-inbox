@@ -1,94 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/25/1
-Message-ID: <CABEVAa1OxWqS9UAMZCLH7-9oLgHurv+bfRG1gsvYikuZv6CAXQ@mail.gmail.com>
-Date: Sun, 25 Dec 2022 17:44:50 +0100
-From: Dominik Czarnota <dominik.b.czarnota@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: [Linux] /proc/pid/stat parsing bugs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/05/3
+Message-ID: <CAAqbB_eXdFUkYbaAXQ8jxi5n+mEkbOY7Qnv4xWtWtZg6VS_+Pg@mail.gmail.com>
+Date: Wed, 5 Jan 2022 18:32:51 -0500
+From: Neil Griffin <asfgriff@...che.org>
+To: general@...tals.apache.org, pluto-user@...tals.apache.org,  announce@...che.org, jetspeed-user@...tals.apache.org, security@...che.org,  oss-security@...ts.openwall.com
+Subject: CVE-2021-36738: XSS vulnerability in the JSP version of the Apache Pluto Applicant MVCBean CDI portlet
 Content-Type: text/plain; charset=utf-8
 
-> To me this seems like a parsing problem, not a VFS problem. (...)
+Severity: moderate
 
-Indeed, it is a parsing problem, but if you have to split by ')'
-or/and read data from the end of file in order to parse it properly,
-that's not the best design.
+Description:
 
-It is probably the lack of proper documentation and examples that
-causes devs to make those mistakes since it is hard to think or account
-for all edge cases. Escaping the rendered output or using a standard
-format like json/xml would probably cause less mistakes like this.
+The input fields in the JSP version of the Apache Pluto Applicant MVCBean
+CDI portlet are vulnerable to Cross-Site Scripting (XSS) attacks. Users
+should migrate to version 3.1.1 of the
+applicant-mvcbean-cdi-jsp-portlet.war artifact
 
-> Others have a simple and well-defined format
-> (like /proc/self/environ and /proc/self/cmdline, which are sequences of
-> \0-terminated bytestrings), and those also seem fine.
+Mitigation:
 
-The format may seem to be well-defined, but it isn't. Nothing stops a
-process from changing what is rendered in their /proc/$pid/cmdline and
-/proc/$pid/environ files.
-The data in those files is rendered from mm->arg_start and
-mm->env_start user-space pointers respectively [0][1] and it can be
-changed either by:
-1) modifying the underlying data, e.g. overwriting the memory under
-argv[n] envp[n] in main
-2) changing those pointers with the prctl syscall with
-PR_SET_MM_ARG_{START,END} and PR_SET_MM_ENV_{START,END} flags [2]
-3) or by the setproctitle (3bsd) function [3]
+* Uninstall the applicant-mvcbean-cdi-jsp-portlet.war artifact
+-or-
+* Migrate to version 3.1.1 of the applicant-mvcbean-cdi-jsp-portlet.war
+artifact
 
-The `man procfs` page mentions that the `environ` file content may
-change, but it doesn't do so for the `cmdline` file:
-
-```
-   /proc/[pid]/cmdline
-      This read-only file holds the complete command line for the
-process, unless the process is a zom‐
-      bie.  In the latter case, there is nothing in this file: that
-is, a read on this file will return
-      0  characters.   The  command-line arguments appear in this file
-as a set of strings separated by
-      null bytes ('\0'), with a further null byte after the last string.
-```
-
-I understand we may not want to change what is already there to not
-break existing applications. But adding new files with well-defined
-formats and extending existing man pages sounds like a reasonable
-solution.
-
-[0] get_mm_cmdline -
-https://elixir.bootlin.com/linux/v6.1.1/source/fs/proc/base.c#L255
-[1] environ_read -
-https://elixir.bootlin.com/linux/v6.1.1/source/fs/proc/base.c#L941
-[2] https://man7.org/linux/man-pages/man2/prctl.2.html#:~:text=since%20Linux%203.5.-,PR_SET_MM_ARG_START,-Set%20the%20address
-[3] https://www.freebsd.org/cgi/man.cgi?query=setproctitle&sektion=3
-
-Best regards,
-Dominik 'Disconnect3d' Czarnota
-
-
-
-On Fri, 23 Dec 2022 at 17:50, Simon McVittie <smcv@...ian.org> wrote:
->
-> On Thu, 22 Dec 2022 at 10:04:48 -0500, Shawn Webb wrote:
-> > We knew way back then the dangers of VFS-based wizardry. Did we lose
-> > that knowledge somehow?
->
-> To me this seems like a parsing problem, not a VFS problem. Some
-> pseudo-files in Linux /proc are one file per item (/proc/self/oom_adj,
-> /proc/self/sessionid, most of /proc/sys) and those are fine[1]: the
-> structure is implicit in the filesystem layout, and the file contents
-> are trivial to "parse". Others have a simple and well-defined format
-> (like /proc/self/environ and /proc/self/cmdline, which are sequences of
-> \0-terminated bytestrings), and those also seem fine.
->
-> It's the pseudo-files that contain more than one item, particularly
-> those with a semi-consistent format that aims for human-readability, that
-> can easily get into escaping and parsing issues. If those pseudo-files
-> made *more* use of the VFS (one new file in /proc/self for each field
-> in the current /proc/self/stat?) then they would suffer from different
-> issues instead, like inability to read all fields atomically and maybe
-> performance issues for heavy users, but parsing would become a non-issue.
->
->     smcv
->
-> [1] or when they're not fine, the issues are around things like how to
->     separate an AppArmor enforcement mode from the label, which again is
->     a matter of parsing a human-readable format with structure
