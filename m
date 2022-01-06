@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["995" "Saturday" "8" "July" "2017" "14:40:16" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20170708124016.ypmkkzwrl3lxiwot@eldamar.local>" "25" "Re: [oss-security] CVE for the TSIG issue in knot?" "^Cc:" nil nil "7" "2017070812:40:16" "[oss-security] CVE for the TSIG issue in knot?" (number mark "        carnil@debia Jul  8   25/995   " thread-indent "\"Re: [oss-security] CVE for the TSIG issue in knot?\"\n") "<20170624122820.GB29096@openwall.com>" ("<1498305503.26646.5.camel@debian.org>" "<20170624122820.GB29096@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1237" "Thursday" "6" "January" "2022" "19:58:53" "+0800" "Xiaoxiang Yu" "xxyu@apache.org" nil "25" "[oss-security] CVE-2021-27738: Apache Kylin: Improper Access Control to Streaming Coordinator & SSRF" nil nil nil "1" nil nil (number mark "U       xxyu@apache. Jan  6   25/1237  " thread-indent "\"[oss-security] CVE-2021-27738: Apache Kylin: Improper Access Control to Streaming Coordinator & SSRF\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-27738: Apache Kylin: Improper Access Control to Streaming Coordinator & SSRF" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17727 invoked by uid 550); 8 Jul 2017 12:40:30 -0000
+Received: (qmail 29748 invoked by uid 550); 6 Jan 2022 13:55:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,71 +11,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17703 invoked from network); 8 Jul 2017 12:40:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=stQFkFf34XdMnOr5jIJ4z0OMW5ea1nv9vIXmpOL0xAc=;
-        b=Q5OHkW0daGWrbafyESEWFgtWI8bag35mfurinS3d/+gDjyE/ll3vnI5CwFv6tyRP/E
-         1/uJYHRN9mNyY8UTsTZIxVqQENzepM313ENsjPu+JCnehlbMDOtWzs/aiTMQXKcF7DwW
-         Nfe0HuFInEJEkjY32LZjrthJKBEHR6jfu3P5LanLSoqmNixpoK4+X//10OcP1Sr2h5Et
-         P2Q1ZJ3Hmqz1pLtdApX9nSfRTpGgNFta+EqbmubvDG02yMfB/a25URkVjHDN+mW3TWXJ
-         yYfLDH2LZQRGU5iYmeyeTn22ySVvLpBfVT63/sw/J0oqDVWH5sdFKaLMuwYNSeJStJIc
-         nXVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=stQFkFf34XdMnOr5jIJ4z0OMW5ea1nv9vIXmpOL0xAc=;
-        b=sEFi/3t7LQOPfkRq+4BnK9yK57jbX5AEGxLJ2XTfxIey9YL/zCHvCN3Wi+Q2Kd3DD1
-         1r6zBiRzdYSnBCcMs/QVh7rmLp8aKgrXxAk0VZ3Un4UlFcm0wIRbhh4MDdeVgyyEFzpU
-         iSVm1BdwsmcxPN2TuCuEOJV7aMi2PortgHPaKXul9Eoo4hkmA5iWuqS137FGfpgXcWPf
-         p1fdEgiPVUwxTPvNFw5y+fjKeSywia7MueyaFj7KYyGDGhG2E4Epe3cZ7pXPUpF7S4Fh
-         rBDYqEV6wIXYFL+BEvYk4fn2h2KJPQL75Q67gWY8x9qi8d6f8hUJSdAn+gYnTEKPtDoI
-         gieA==
-X-Gm-Message-State: AIVw112oD45E6UooqaEJHIB95gmBFHbKpw65X38jcvz08IiuVsDko7oR
-	K88SOaI2alyfEA==
-X-Received: by 10.223.128.42 with SMTP id 39mr3318510wrk.175.1499517618454;
-        Sat, 08 Jul 2017 05:40:18 -0700 (PDT)
-Message-ID: <20170708124016.ypmkkzwrl3lxiwot@eldamar.local>
-References: <1498305503.26646.5.camel@debian.org>
- <20170624122820.GB29096@openwall.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170624122820.GB29096@openwall.com>
-User-Agent: NeoMutt/20170609 (1.8.3)
-Cc: daniel.salzman@nic.cz, ondrej@debian.org
-Date: Sat, 8 Jul 2017 14:40:16 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: Re: [oss-security] CVE for the TSIG issue in knot?
+Received: (qmail 1953 invoked from network); 6 Jan 2022 12:00:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
+	s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=VY3a+
+	OfLO2GEjY3rKy658VHYBqzQYJDOl9GRIQp6D/w=; b=kX6YFer6GlvVZD1yE3PWa
+	1K0csrQaBevfgoX04xlafnxFuOEpiMFmFY0Q/RkGDCY5/KiwlU4hLFia2RZh5yYu
+	TdXp9owrUowro1NUf8J3FGYRvrNviZAt+EGwKe2iCdeoyjFPgH0MCVTRI1tESH7n
+	8ReP9gqDsrNQkPWvoGZBHk=
+X-Originating-IP: [116.228.210.42]
+Date: Thu, 6 Jan 2022 19:58:53 +0800 (CST)
+From: "Xiaoxiang Yu" <xxyu@apache.org>
 To: oss-security@lists.openwall.com
+Cc: ngo.weilin@starlabs.sg
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20210622(1d4788a8)
+ Copyright (c) 2002-2022 www.mailtech.cn 126com
+Sender: hit_lacus@126.com
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_67525_778403002.1641470333753"
+MIME-Version: 1.0
+Message-ID: <5ca291c.47d5.17e2f419339.Coremail.xxyu@apache.org>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: NMqowAAnqPF92dZhqaQNAA--.61565W
+X-CM-SenderInfo: pklwszpdfx2qqrswhudrp/1tbikwiA4lpEDKjX0AAGsC
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Subject: [oss-security] CVE-2021-27738: Apache Kylin: Improper Access Control to Streaming
+ Coordinator & SSRF
 
-Hi
+------=_Part_67525_778403002.1641470333753
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
 
-On Sat, Jun 24, 2017 at 02:28:20PM +0200, Solar Designer wrote:
-> On Sat, Jun 24, 2017 at 01:58:23PM +0200, Yves-Alexis Perez wrote:
-> > I noticed the recent issue in knot with TSIG bypass
-> > (https://lists.nic.cz/pipermail/knot-dns-users/2017-June/001144.html)
-> 
-> Is is inappropriate to post only a link in here.  In cases like this,
-> please also quote at least the most essential portion of the content
-> you're referring to, which is:
-> 
-> "CZ.NIC has released Knot DNS 2.5.2 and Knot DNS 2.4.5. Beside
-> several fixes and improvements, these versions fix a flaw within the
-> TSIG protocol implementation that would allow an attacker with a
-> valid key name and algorithm to bypass the TSIG authentication if no
-> additional ACL restrictions is set. This vulnerability was
-> discovered by security experts from Synacktiv.  Special thanks to
-> them!"
+U2V2ZXJpdHk6IG1vZGVyYXRlCgpEZXNjcmlwdGlvbjoKCkFsbCByZXF1ZXN0
+IG1hcHBpbmdzIGluIGBTdHJlYW1pbmdDb29yZGluYXRvckNvbnRyb2xsZXIu
+amF2YWAgaGFuZGxpbmcgYC9reWxpbi9hcGkvc3RyZWFtaW5nX2Nvb3JkaW5h
+dG9yLypgIFJFU1QgQVBJIGVuZHBvaW50cyBkaWQgbm90IGluY2x1ZGUgYW55
+IHNlY3VyaXR5IGNoZWNrcywgd2hpY2ggYWxsb3dlZCBhbiB1bmF1dGhlbnRp
+Y2F0ZWQgdXNlciB0byBpc3N1ZSBhcmJpdHJhcnkgcmVxdWVzdHMsIHN1Y2gg
+YXMgYXNzaWduaW5nL3VuYXNzaWduaW5nIG9mIHN0cmVhbWluZyBjdWJlcywg
+Y3JlYXRpb24vbW9kaWZpY2F0aW9uIGFuZCBkZWxldGlvbiBvZiByZXBsaWNh
+IHNldHMsIHRvIHRoZSBLeWxpbiBDb29yZGluYXRvci4KCkZvciBlbmRwb2lu
+dHMgYWNjZXB0aW5nIG5vZGUgZGV0YWlscyBpbiBIVFRQIG1lc3NhZ2UgYm9k
+eSwgdW5hdXRoZW50aWNhdGVkIChidXQgbGltaXRlZCkgc2VydmVyLXNpZGUg
+cmVxdWVzdCBmb3JnZXJ5IChTU1JGKSBjYW4gYmUgYWNoaWV2ZWQuCgpUaGlz
+IGlzc3VlIGFmZmVjdHMgQXBhY2hlIEt5bGluIEFwYWNoZSBLeWxpbiAzIHZl
+cnNpb25zIHByaW9yIHRvIDMuMS4yLgoKTWl0aWdhdGlvbjoKClVzZXJzIG9m
+IEt5bGluIDMueCBzaG91bGQgdXBncmFkZSB0byAzLjEuMyBvciBhcHBseSBw
+YXRjaCBodHRwczovL2dpdGh1Yi5jb20vYXBhY2hlL2t5bGluL3B1bGwvMTY0
+Ni4KCkNyZWRpdDoKCldlaSBMaW4gTmdvIC0tCgpCZXN0IHdpc2hlcyB0byB5
+b3UgISAKRnJvbSCjulhpYW94aWFuZyBZdQ==
 
-FTR, this issue has been assigned CVE-2017-11104.
+------=_Part_67525_778403002.1641470333753--
 
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-11104
-
-Regards,
-Salvatore
