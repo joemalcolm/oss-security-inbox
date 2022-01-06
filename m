@@ -1,18 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/12/1
-Message-ID: <CAH9eYVo6DNN9awE8txmY_U2aYposhy7pon689n0L6h5yROpqPg@mail.gmail.com>
-Date: Tue, 11 Oct 2022 22:52:33 -0400
-From: Brian Demers <bdemers@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/06/6
+Message-ID: <5ca291c.47d5.17e2f419339.Coremail.xxyu@apache.org>
+Date: Thu, 6 Jan 2022 19:58:53 +0800 (CST)
+From: "Xiaoxiang Yu" <xxyu@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-40664: Apache Shiro: Authentication Bypass Vulnerability in Shiro when forwarding or including via RequestDispatcher
+Cc: ngo.weilin@...rlabs.sg
+Subject: CVE-2021-27738: Apache Kylin: Improper Access Control to Streaming Coordinator & SSRF
 Content-Type: text/plain; charset=utf-8
+
+Severity: moderate
 
 Description:
 
-Apache Shiro before 1.10.0, Authentication Bypass Vulnerability in
-Shiro when forwarding or including via RequestDispatcher.
+All request mappings in `StreamingCoordinatorController.java` handling `/kylin/api/streaming_coordinator/*` REST API endpoints did not include any security checks, which allowed an unauthenticated user to issue arbitrary requests, such as assigning/unassigning of streaming cubes, creation/modification and deletion of replica sets, to the Kylin Coordinator.
+
+For endpoints accepting node details in HTTP message body, unauthenticated (but limited) server-side request forgery (SSRF) can be achieved.
+
+This issue affects Apache Kylin Apache Kylin 3 versions prior to 3.1.2.
+
+Mitigation:
+
+Users of Kylin 3.x should upgrade to 3.1.3 or apply patch https://github.com/apache/kylin/pull/1646.
 
 Credit:
 
-Apache Shiro would like to thank Y4tacker for reporting this issue
+Wei Lin Ngo --
 
+Best wishes to you ! 
+From ：Xiaoxiang Yu
