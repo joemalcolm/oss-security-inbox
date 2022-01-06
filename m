@@ -1,38 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/25/4
-Message-ID: <24add3d4-c09d-76d7-0dee-6e0c089ff0e6@canonical.com>
-Date: Wed, 25 May 2022 10:07:34 -0400
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: oss-security@...ts.openwall.com, Kamil Dudka <kdudka@...hat.com>
-Cc: Guilherme de Almeida Suckevicz <gsuckevi@...hat.com>
-Subject: Re: Re: CVE-2022-1348 logrotate: potential DoS from unprivileged users via the state file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/06/1
+Message-ID: <1eb37be5.47c4.17e2f3ee7d4.Coremail.xxyu@apache.org>
+Date: Thu, 6 Jan 2022 19:55:58 +0800 (CST)
+From: "Xiaoxiang Yu" <xxyu@...che.org>
+To: oss-security@...ts.openwall.com
+Cc: pwntester@...hub.com
+Subject: CVE-2021-45456: Apache Kylin: Command injection
 Content-Type: text/plain; charset=utf-8
 
-On 2022-05-25 09:37, Kamil Dudka wrote:
-> On Wednesday, May 25, 2022 3:19:31 PM CEST Marc Deslauriers wrote:
->> On 2022-05-18 09:54, Kamil Dudka wrote:
->>> The current version of the patch to fix CVE-2022-1348 in logrotate is
->>> attached.  We are going to apply the patch upstream on May 25th, when
->>> the embargo is lifted.
->>
->> FWIW, I don't think the patch actually works when logrotate is built with
->> ACL support...
->>
->> Marc.
-> 
-> You are right.  Although the patch mitigates the security issue, it is not 
-> perfect.  I had already opened an upstream pull request to improve it:
-> 
->     https://github.com/logrotate/logrotate/pull/446
-> 
-> I might create a bug fix release soon with the patch included.
-> 
-> Sorry for the troubles!
-> 
-> Kamil
-> 
-> 
+Severity: moderate
 
-Oh! I had not seen that pull request. Thanks, that should solve the issue!
+Description:
 
-Marc.
+Apache kylin checks the legitimacy of the project before executing some commands with the project name passed in by the user. There is a mismatch between what is being checked and what is being used as the shell command argument in DiagnosisService. This may cause an illegal project name to pass the check and perform the following steps, resulting in a command injection vulnerability.
+This issue affects Apache Kylin 4.0.0.
+
+Mitigation:
+
+Users of Kylin 4.0.0 should upgrade to 4.0.1 or apply patch https://github.com/apache/kylin/pull/1781.
+
+Credit:
+
+Alvaro Munoz --
+
+Best wishes to you ! 
+From ：Xiaoxiang Yu
