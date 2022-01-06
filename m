@@ -1,74 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/08/3
-Message-ID: <20220808110713.GA18509@openwall.com>
-Date: Mon, 8 Aug 2022 13:07:13 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/06/3
+Message-ID: <39ef6d48.47ba.17e2f3dce2f.Coremail.xxyu@apache.org>
+Date: Thu, 6 Jan 2022 19:54:46 +0800 (CST)
+From: "Xiaoxiang Yu" <xxyu@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: David Bouman <dbouman03@...il.com>
-Subject: Re: Linux: UaF due to concurrency issue in io_uring timeouts
+Cc: pwntester@...hub.com
+Subject: CVE-2021-45458: Apache Kylin: Hardcoded credentials
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: moderate
 
-Jayden and David have recently published a lengthy write-up on this
-vulnerability, here:
+Description:
 
-https://ruia-ruia.github.io/2022/08/05/CVE-2022-29582-io-uring/
+Apache Kylin provides encryption classes PasswordPlaceholderConfigurer to help users encrypt their passwords. In the encryption algorithm used by this encryption class, the cipher is initialized with a hardcoded key and IV.  If users use class PasswordPlaceholderConfigurer to encrypt their password and configure it into kylin's configuration file, there is a risk that the password may be decrypted.
+This issue affects Apache Kylin Apache Kylin 2 version 2.6.6 and prior versions; Apache Kylin 3 version 3.1.2 and prior versions; Apache Kylin 4 version 4.0.0 and prior versions.
 
-and exploit here:
+Mitigation:
 
-https://github.com/Ruia-ruia/CVE-2022-29582-Exploit
+Users of Kylin 2.x & Kylin 3.x should upgrade to 3.1.3 or apply patch https://github.com/apache/kylin/pull/1782.
+Users of Kylin 4.x should upgrade to 4.0.1 or apply patch https://github.com/apache/kylin/pull/1781.
 
-Alexander
+After upgrading, users can configure the value of `kylin.security.encrypt.cipher.ivSpec` in kylin.properties for encryption algorithm, and then re-encrypt the password they need to encrypt.
 
-On Fri, Apr 22, 2022 at 06:02:58PM +0200, Salvatore Bonaccorso wrote:
-> Hi David,
-> 
-> On Fri, Apr 22, 2022 at 02:43:27AM +0200, David Bouman wrote:
-> > Hello list,
-> > 
-> > We (Jayden Rivers and David Bouman) are disclosing a bug we found in the
-> > Linux kernel's io_uring subsystem. We have written a local privilege
-> > escalation PoC that can successfully elevate to system root from an
-> > unprivileged process (in a container). We will be releasing a blog post
-> > (including exploit code) in a week or two. It should be noted that unlike
-> > many Linux vulnerabilities that have surfaced recently, triggering this one
-> > does not require an attacker to have any kind of privileges (e.g. in a user
-> > namespace). This leaves many systems vulnerable.
-> > 
-> > We are still looking for a CNA representative that can assign a CVE number
-> > for this vulnerability; please contact us!
-> > 
-> > Kernel versions 5.10+ are affected, and linux-stable patches are already
-> > pushed. The upstream patch commit is
-> > e677edbcabee849bfdd43f1602bccbecf736a646 ("io_uring: fix race between
-> > timeout flush and removal").
-> > 
-> > When the IORING_OP_TIMEOUT (T) and IORING_OP_LINK_TIMEOUT (LT) opcodes are
-> > combined in a linked submission queue entry, and another request (B)
-> > finishes, a race might occur: namely, when due to the completion of B, T is
-> > cancelled (through the completion event count), and LT is canceled by its
-> > hrtimer at the same time. Whilst T is still being cleaned up, LT is already
-> > freed by a different execution context, and since they are linked, the
-> > cleanup of T retains a dangling reference to the now-freed LT. Hence,
-> > there's a use-after-free.
-> > 
-> > Exploitation-wise, the attacker can reallocate LT to another `struct
-> > io_kiocb` and defer the UaF to e.g. a `struct file` (this is the technique
-> > we will describe in aforementioned blog post).
-> > 
-> > The race window is quite tight and the scenario is complicated, so the race
-> > can only be won very infrequently in our experience.
-> > 
-> > It is advised to upgrade your kernel to latest ASAP.
-> > 
-> > Greetings,
-> > 
-> > Jayden Rivers & David Bouman
-> 
-> This has CVE-2022-29582 assigned.
-> 
-> https://www.cve.org/CVERecord?id=CVE-2022-29582
-> 
-> Regards,
-> Salvatore
+Credit:
+
+Alvaro Munoz 
+
+--
+
+Best wishes to you ! 
+From ：Xiaoxiang Yu
