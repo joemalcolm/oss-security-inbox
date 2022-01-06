@@ -1,37 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/18/6
-Message-ID: <Yv33fx1J/hQXTtSk@kroah.com>
-Date: Thu, 18 Aug 2022 10:25:35 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/06/8
+Message-ID: <04d5ac43-d559-563f-9f39-e7455cbfbaeb@apache.org>
+Date: Thu, 06 Jan 2022 17:48:38 +0000
+From: Ryan Skraba <rskraba@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: stack-out-of-bounds in profile_pc
+Subject: CVE-2021-43045: Apache Avro: Possible DOS vulnerabilities in C# Avro SDK 
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 18, 2022 at 05:41:30AM +0000, 黄 晓 wrote:
-> Hello:
->       
->       I found a bug through the syzkaller fuzz tool, you need to set CONFIG_KASAN=y, the crash information is displayed as out-of-bounds reading, I am weak and unable to analyze the harm of this bug.
-> The bug program cannot be reproduced stably and needs to be run multiple times.
+Description:
 
-It would have been helpful to notify the developers and maintainers of
-this code that there is an issue.  They will not see a random email on
-the oss-security mailing list as they are not subscribed here.
+A vulnerability in the .NET SDK of Apache Avro allows an attacker to allocate excessive resources, potentially causing a denial-of-service attack.  This issue affects .NET applications using Apache Avro version 1.10.2 and prior versions.  Users should update to version 1.11.0 which addresses this issue.
 
-To find who is responsible for this code, use the get_maintainers.pl
-script in the kernel tree.  The output for it for this problem is:
+This issue is being tracked as AVRO-3225,AVRO-3226
 
-$ ./scripts/get_maintainer.pl arch/x86/kernel/time.c
-Thomas Gleixner <tglx@...utronix.de> (maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT))
-Ingo Molnar <mingo@...hat.com> (maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT))
-Borislav Petkov <bp@...en8.de> (maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT))
-Dave Hansen <dave.hansen@...ux.intel.com> (maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT))
-x86@...nel.org (maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT))
-"H. Peter Anvin" <hpa@...or.com> (reviewer:X86 ARCHITECTURE (32-BIT AND 64-BIT))
-linux-kernel@...r.kernel.org (open list:X86 ARCHITECTURE (32-BIT AND 64-BIT))
+Credit:
 
-Also, this issue seems to require root permissions (i.e. write
-permissions on the kernel profiler) in order to be triggered.
+Apache Avro would like to thank Philip Sanetra for reporting this issue.
 
-Hope this helps,
-
-greg k-h
