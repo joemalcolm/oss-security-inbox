@@ -1,42 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/17/1
-Message-ID: <1de1c123-434e-569b-234e-e86d5da97d77@igalia.com>
-Date: Thu, 17 Feb 2022 18:50:04 +0000
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0003
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/06/2
+Message-ID: <da234c3.47c2.17e2f3e7d2c.Coremail.xxyu@apache.org>
+Date: Thu, 6 Jan 2022 19:55:31 +0800 (CST)
+From: "Xiaoxiang Yu" <xxyu@...che.org>
+To: oss-security@...ts.openwall.com
+Cc: pwntester@...hub.com
+Subject: CVE-2021-45457: Apache Kylin: Overly broad CORS configuration
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2022-0003
-------------------------------------------------------------------------
+Severity: moderate
 
-Date reported           : February 17, 2022
-Advisory ID             : WSA-2022-0003
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2022-0003.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2022-0003.html
-CVE identifiers         : CVE-2022-22620.
+Description:
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+Cross-origin requests with credentials are allowed to be sent from any origin.
 
-CVE-2022-22620
-    Versions affected: WebKitGTK and WPE WebKit before 2.34.6.
-    Credit to an anonymous researcher.
-    Impact: processing maliciously crafted web content may lead to
-    arbitrary code execution. Apple is aware of a report that this issue
-    may have been actively exploited. Description: A use after free
-    issue was addressed with improved memory management.
+Kylin reflects the `Origin` header and allow credentials to be sent cross-origin in the default configuration. The preflight OPTIONS request:
+```
+OPTIONS /kylin/api/projects HTTP/1.1
+Host: localhost:7070
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:94.0) Gecko/20100101 Firefox/94.0
+Accept: */*
+Accept-Language: en-US
+Accept-Encoding: gzip, deflate
+Access-Control-Request-Method: POST
+Access-Control-Request-Headers: content-type
+Referer: http://b49b-95-62-58-48.ngrok.io/
+Origin: http://b49b-95-62-58-48.ngrok.io
+Connection: keep-alive
+Cache-Control: max-age=0
+```
+
+Will be replied with:
+
+```
+HTTP/1.1 200 OK
+Server: Apache-Coyote/1.1
+Access-Control-Allow-Origin: http://b49b-95-62-58-48.ngrok.io
+Access-Control-Allow-Credentials: true
+Vary: Origin
+Access-Control-Allow-Methods: DELETE, POST, GET, OPTIONS, PUT
+Access-Control-Allow-Headers: Authorization, Origin, No-Cache, X-Requested-With, Cache-Control, Accept, X-E4m-With, If-Modified-Since, Pragma, Last-Modified, Expires, Content-Type
+Content-Length: 0
+```
+This issue affects Apache Kylin Apache Kylin 2 version 2.6.6 and prior versions; Apache Kylin 3 version 3.1.2 and prior versions; Apache Kylin 4 version 4.0.0 and prior versions.
+
+Mitigation:
+
+Users of Kylin 2.x & Kylin 3.x should upgrade to 3.1.3 or apply patch https://github.com/apache/kylin/pull/1782.
+Users of Kylin 4.x should upgrade to 4.0.1 or apply patch https://github.com/apache/kylin/pull/1781.
+
+Credit:
+
+Alvaro Munoz 
 
 
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
 
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
 
-The WebKitGTK and WPE WebKit team,
-February 17, 2022
+
+--
+
+Best wishes to you ! 
+From ：Xiaoxiang Yu
