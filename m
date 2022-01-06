@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["647" "Wednesday" "21" "December" "2016" "12:59:52" "-0800" "Kurt H Maier" "khm@sciops.net" "<20161221205952.GA81339@wopr>" "17" "Re: [oss-security] CVE-2016-9963 Exim private information leak" nil nil nil "12" "2016122120:59:52" "[oss-security] CVE-2016-9963 Exim private information leak" (number mark "U       khm@sciops.n Dec 21   17/647   " thread-indent "\"Re: [oss-security] CVE-2016-9963 Exim private information leak\"\n") "<20161220225935.GH19629@jumper.schlittermann.de>" ("<20161215233645.GJ29010@jumper.schlittermann.de>" "<8c7f77c36aa246b9ad31e46f6e733414@imshyb02.MITRE.ORG>" "<20161218175925.GE31981@jumper.schlittermann.de>" "<20161220225935.GH19629@jumper.schlittermann.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1042" "Thursday" "6" "January" "2022" "19:55:58" "+0800" "Xiaoxiang Yu" "xxyu@apache.org" nil "22" "[oss-security] CVE-2021-45456: Apache Kylin: Command injection" nil nil nil "1" nil nil (number mark "U       xxyu@apache. Jan  6   22/1042  " thread-indent "\"[oss-security] CVE-2021-45456: Apache Kylin: Command injection\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-45456: Apache Kylin: Command injection" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7621 invoked by uid 550); 21 Dec 2016 22:58:56 -0000
+Received: (qmail 22090 invoked by uid 550); 6 Jan 2022 13:54:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,36 +12,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23737 invoked from network); 21 Dec 2016 21:00:06 -0000
-Date: Wed, 21 Dec 2016 12:59:52 -0800
-From: Kurt H Maier <khm@sciops.net>
+Received: (qmail 1205 invoked from network); 6 Jan 2022 11:57:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
+	s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=TMYkJ
+	ZmFlYjKTpjp3pAm37qFkqUCChl739SjzN9xdyk=; b=jEkrf7Y8w/EHbTBAo80nw
+	LxEh0qiUBLUYE+K+2QF78NSakK0L3y21fwdOFqUp9/q51hAot5DffBr7TRo0hdYS
+	E/F0PQXXORORBaSNkRFawV8S/1pvK9Hs6Txr4+cJHvBFqUT2HbhhqTOqGcSKlIYU
+	XCQbgkphjFr4vTjVLxtQtw=
+X-Originating-IP: [116.228.210.42]
+Date: Thu, 6 Jan 2022 19:55:58 +0800 (CST)
+From: "Xiaoxiang Yu" <xxyu@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20161221205952.GA81339@wopr>
-References: <20161215233645.GJ29010@jumper.schlittermann.de>
- <8c7f77c36aa246b9ad31e46f6e733414@imshyb02.MITRE.ORG>
- <20161218175925.GE31981@jumper.schlittermann.de>
- <20161220225935.GH19629@jumper.schlittermann.de>
+Cc: pwntester@github.com
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20210622(1d4788a8)
+ Copyright (c) 2002-2022 www.mailtech.cn 126com
+Sender: hit_lacus@126.com
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_67460_307295099.1641470158804"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20161220225935.GH19629@jumper.schlittermann.de>
-Subject: Re: [oss-security] CVE-2016-9963 Exim private information leak
+Message-ID: <1eb37be5.47c4.17e2f3ee7d4.Coremail.xxyu@apache.org>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: NMqowAAXmPHP2NZhjaQNAA--.61078W
+X-CM-SenderInfo: pklwszpdfx2qqrswhudrp/1tbikwiA4lpEDKjX0AADsH
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Subject: [oss-security] CVE-2021-45456: Apache Kylin: Command injection
 
-On Tue, Dec 20, 2016 at 11:59:35PM +0100, Heiko Schlittermann wrote:
-> Heiko Schlittermann <hs@schlittermann.de> (So 18 Dez 2016 18:59:25 CET):
-> …
-> > On Dec, 25th we will make the details and the above mentioned releases
-> > available to the public.
-> 
-> To be more precise: On Dec, 25th, at 10.00 UTC we'll push the changes to the public
-> Git repository git://git.exim.org/exim.git and upload the tar balls into the 
-> FTP area ftp://ftp.exim.org/pub/exim/exim4
+------=_Part_67460_307295099.1641470158804
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
 
-Just so we're absolutely clear:
+U2V2ZXJpdHk6IG1vZGVyYXRlCgpEZXNjcmlwdGlvbjoKCkFwYWNoZSBreWxp
+biBjaGVja3MgdGhlIGxlZ2l0aW1hY3kgb2YgdGhlIHByb2plY3QgYmVmb3Jl
+IGV4ZWN1dGluZyBzb21lIGNvbW1hbmRzIHdpdGggdGhlIHByb2plY3QgbmFt
+ZSBwYXNzZWQgaW4gYnkgdGhlIHVzZXIuIFRoZXJlIGlzIGEgbWlzbWF0Y2gg
+YmV0d2VlbiB3aGF0IGlzIGJlaW5nIGNoZWNrZWQgYW5kIHdoYXQgaXMgYmVp
+bmcgdXNlZCBhcyB0aGUgc2hlbGwgY29tbWFuZCBhcmd1bWVudCBpbiBEaWFn
+bm9zaXNTZXJ2aWNlLiBUaGlzIG1heSBjYXVzZSBhbiBpbGxlZ2FsIHByb2pl
+Y3QgbmFtZSB0byBwYXNzIHRoZSBjaGVjayBhbmQgcGVyZm9ybSB0aGUgZm9s
+bG93aW5nIHN0ZXBzLCByZXN1bHRpbmcgaW4gYSBjb21tYW5kIGluamVjdGlv
+biB2dWxuZXJhYmlsaXR5LgpUaGlzIGlzc3VlIGFmZmVjdHMgQXBhY2hlIEt5
+bGluIDQuMC4wLgoKTWl0aWdhdGlvbjoKClVzZXJzIG9mIEt5bGluIDQuMC4w
+IHNob3VsZCB1cGdyYWRlIHRvIDQuMC4xIG9yIGFwcGx5IHBhdGNoIGh0dHBz
+Oi8vZ2l0aHViLmNvbS9hcGFjaGUva3lsaW4vcHVsbC8xNzgxLgoKQ3JlZGl0
+OgoKQWx2YXJvIE11bm96IC0tCgpCZXN0IHdpc2hlcyB0byB5b3UgISAKRnJv
+bSCjulhpYW94aWFuZyBZdQ==
 
-You are releasing the fix for a currently-undisclosed security
-vulnerability on the day most of the Western world's IT staff is on
-holiday?
+------=_Part_67460_307295099.1641470158804--
 
-khm
