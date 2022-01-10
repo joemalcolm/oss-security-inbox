@@ -1,37 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/29/3
-Message-ID: <16136472.hlxOUv9cDv@thomas>
-Date: Mon, 29 Aug 2022 19:55:17 +0200
-From: Thomas Monjalon <thomas@...jalon.net>
-To: announce@...k.org
-Cc: oss-security@...ts.openwall.com
-Subject: CVE-2022-28199: DPDK mlx5 driver error recovery handling vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/10/2
+Message-ID: <20220110180746.GA3527@localhost.localdomain>
+Date: Mon, 10 Jan 2022 18:08:29 +0000
+From: Qualys Security Advisory <qsa@...lys.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2021-3997: Uncontrolled recursion in systemd's systemd-tmpfiles
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was fixed in DPDK.
-Some downstream stakeholders were warned in advance
-in order to coordinate the release of fixes
-and reduce the vulnerability window.
+Hi all,
 
-When having a failure with the mlx5 driver,
-the error recovery was not handled properly,
-which can allow a remote attacker to cause denial of service
-and some impact to data integrity and confidentiality.
+We discovered a minor denial of service (an uncontrolled recursion) in
+systemd-tmpfiles, CVE-2021-3997; the Coordinated Release Date is today
+(January 10, 2022), and a patch is now available at (many thanks to
+Zbigniew Jedrzejewski-Szmek for working on this):
 
-CVE: CVE-2022-28199
-Severity: 6.5
-CVSS scores: AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H
+https://github.com/systemd/systemd/commit/55a89ea1b4088a6d84ba0bd3cd8e648bd51f1ebf
 
-Commits per branch:
-	main  - https://git.dpdk.org/dpdk/commit/?id=60b254e392
-	21.11 - https://git.dpdk.org/dpdk-stable/commit/?id=25c01bd323
-	20.11 - https://git.dpdk.org/dpdk-stable/commit/?id=ef311075d2
-	19.11 - https://git.dpdk.org/dpdk-stable/commit/?id=8b090f2664
+Below is a short write-up (which is part of a longer advisory that is
+mostly unrelated to systemd and that we will publish at a later date):
 
-LTS Releases:
-	21.11 - http://fast.dpdk.org/rel/dpdk-21.11.2.tar.xz
-	20.11 - http://fast.dpdk.org/rel/dpdk-20.11.6.tar.xz
-	19.11 - http://fast.dpdk.org/rel/dpdk-19.11.13.tar.xz
+========================================================================
+CVE-2021-3997: Uncontrolled recursion in systemd's systemd-tmpfiles
+========================================================================
 
+[...]
 
+We therefore looked into systemd-tmpfiles (which "creates, deletes, and
+cleans up volatile and temporary files and directories") and discovered
+a denial of service (an uncontrolled recursion): if we create thousands
+of nested directories in /tmp, then "systemd-tmpfiles --remove" (when
+executed as root at boot time) will call its rm_rf_children() function
+recursively (on each nested directory) and will exhaust its stack and
+crash. For example, on Ubuntu 21.04:
 
+------------------------------------------------------------------------
+$ cd /tmp
+$ perl -e 'use strict;
+for (my $i = 0; $i < (1<<15); $i++) {
+mkdir "A", 0700 or die;
+chdir "A" or die; }'
+------------------------------------------------------------------------
+
+Then, as root (warning: this command may delete important files and
+directories in /tmp; it is normally executed at boot time only):
+
+------------------------------------------------------------------------
+# systemd-tmpfiles --remove
+Segmentation fault (core dumped)
+------------------------------------------------------------------------
+
+We have not fully explored the implications of this vulnerability;
+however, we noticed that:
+
+- at boot time, systemd executes "systemd-tmpfiles --create --remove
+  --boot --exclude-prefix=/dev";
+
+- systemd-tmpfiles first enters the "remove" phase, and subsequently
+  enters the "create" phase;
+
+- but if systemd-tmpfiles crashes during the "remove" phase, then it
+  never enters the "create" phase;
+
+- and it fails to create the files and directories (specified in
+  /usr/lib/tmpfiles.d/*.conf) that it should create at boot time;
+
+- for example, on Ubuntu 21.04, systemd-tmpfiles fails to create the
+  directory /run/lock/subsys; but because /run/lock is world-writable,
+  attackers can create their own /run/lock/subsys; and because various
+  legacy packages and daemons write into /run/lock/subsys as root, the
+  attackers may create arbitrary files via symlinks in /run/lock/subsys.
+
+Last-minute note: it seems impossible to trigger this vulnerability in
+systemd-tmpfiles versions before commit e535840 ("tmpfiles: let's bump
+RLIMIT_NOFILE for tmpfiles") from February 2019.
+
+========================================================================
+
+Thank you very much! We are at your disposal for questions, comments,
+and further discussions.
+
+With best regards,
+
+-- 
+the Qualys Security Advisory team
