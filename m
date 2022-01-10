@@ -1,94 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/21/4
-Message-ID: <78c56608-8d3d-c770-3797-e1fd4fd37c43@ovn.org>
-Date: Wed, 21 Dec 2022 12:10:03 +0100
-From: Ilya Maximets <i.maximets@....org>
-To: oss-security@...ts.openwall.com, ovs-announce@...nvswitch.org, ovs-discuss <ovs-discuss@...nvswitch.org>
-Cc: i.maximets@....org, Aaron Conole <aconole@...hat.com>, Qian Chen <cq674350529@...il.com>, John Helmert III <ajak@...too.org>
-Subject: Re: [ADVISORY] LLDP underflow while parsing malformed Auto Attach TLV (Open vSwitch)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/10/1
+Message-ID: <CAKx+4-rd1JnV+C-0kxq4NWn1N-BPOxZpE29iYsXk8Y6MqbVkAw@mail.gmail.com>
+Date: Mon, 10 Jan 2022 17:49:47 +0530
+From: Rohit Keshri <rkeshri@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-4155 kernel: xfs: raw block device data leak in ioctl(XFS_IOC_ALLOCSP)
 Content-Type: text/plain; charset=utf-8
 
-On 12/20/22 22:39, Ilya Maximets wrote:
-> Description
-> ===========
-> 
-> Multiple versions of Open vSwitch are vulnerable to crafted LLDP
-> packets causing denial of service, and data underflow attacks.
-> Triggering the vulnerabilities requires LLDP processing to be enabled
-> for a specific port.  Open vSwitch versions prior to 2.4.0 are not
-> vulnerable.
-> 
-> The Common Vulnerabilities and Exposures project (cve.mitre.org)
-> did not assign the identifier to this issue yet.  The identifier will
-> be communicated separately.
+Hello,
 
-Following CVE identifiers have been allocated for the issue (one per
-TLV type since they can have a slightly different effect):
+A data leak flaw was found in the way XFS_IOC_ALLOCSP IOCTL in the XFS
+filesystem allowed for a size increase of files with unaligned size. A
+local attacker could use this flaw to leak data on the XFS filesystem
+otherwise not accessible to them.
 
- - CVE-2022-4337 for Out-of-Bounds Read in Organization Specific TLV
- - CVE-2022-4338 for Integer Underflow in Organization Specific TLV
+#Description
 
-The fix referenced in this advisory covers both issues.
+(Kirill reported)
+"the scenario is:
 
-> This issue does not affect the `lldpd'
-> project, although they share a code base.  The issue is related to
-> parsing the Auto Attach TLVs, which is specific to the Open vSwitch
-> implementation.
-> 
-> 
-> Mitigation
-> ==========
-> 
-> For any version of Open vSwitch, preventing LLDP packets from reaching
-> Open vSwitch mitigates the vulnerability.  We do not recommend
-> attempting to mitigate the vulnerability this way because of the
-> following difficulties:
-> 
->     - Open vSwitch obtains packets before the iptables host firewall,
->       so ebtables on the Open vSwitch host cannot ordinarily block the
->       vulnerability.
-> 
->     - If Open vSwitch is configured to receive and transmit LLDP
->       messages, the required functionality will need to be disabled
->       potentially disrupting the network.
-> 
-> We have found that Open vSwitch is subject to a denial of service, and
-> possibly a remote code execution exploit when LLDP processing is enabled
-> on an interface.  By default, interfaces are not configured to process
-> LLDP messages.
-> 
-> 
-> Fix
-> ===
-> 
-> Patches to fix these vulnerabilities in Open vSwitch 2.13.x and newer are
-> applied to the appropriate branches, and the original patch is located
-> at:
-> 
->    https://mail.openvswitch.org/pipermail/ovs-dev/2022-December/400596.html
-> 
-> Recommendation
-> ==============
-> 
-> We recommend that users of Open vSwitch apply the respective patch, or
-> upgrade to a known patched version of Open vSwitch.  These include:
-> 
-> * 3.0.3
-> * 2.17.5
-> * 2.16.6
-> * 2.15.7
-> * 2.14.8
-> * 2.13.10
-> 
-> 
-> Acknowledgments
-> ===============
-> 
-> The Open vSwitch team wishes to thank the reporter:
-> 
->   Qian Chen <cq674350529@...il.com>
-> 
+1)truncate() file by unaligned @size;
+2)ioctl(XFS_IOC_ALLOCSP) to increase the file size up to 4096.
 
-Download attachment "OpenPGP_0xB9F7EC77C829BF96.asc" of type "application/pgp-keys" (4740 bytes)
+then xfs_ioc_space()->xfs_vn_setattr_size() never zeros [round_down(@size,
+4096), @size]
+and this raw block device data leaks away to user."
 
-Download attachment "OpenPGP_signature" of type "application/pgp-signature" (841 bytes)
+#Fix
+The patch for this issue:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=983d8e60f50806f90534cc5373d0ce867e5aaf79
+
+#CVE
+Red Hat has assigned CVE-2021-4155 to this issue.
+https://access.redhat.com/security/cve/CVE-2021-4155
+https://bugzilla.redhat.com/show_bug.cgi?id=2034813
+
+#Credit
+Kirill Tkhai (Virtuozzo Kernel team)
+
+Thanks,
+..
+Rohit Keshri / Red Hat Product Security Team
+PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
+
+secalert@...hat.com for urgent response
+
