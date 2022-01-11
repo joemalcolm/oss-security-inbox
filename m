@@ -1,4 +1,9 @@
-Received: (qmail 25728 invoked by uid 550); 24 Sep 2025 02:23:26 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2113" "Tuesday" "11" "January" "2022" "16:10:06" "-0500" "Ana McTaggart" "amctagga@redhat.com" nil "70" "[oss-security] CVE-2021-3979 ceph: Ceph volume does not honour osd_dmcrypt_key_size" nil nil nil "1" nil nil (number mark "U       amctagga@red Jan 11   70/2113  " thread-indent "\"[oss-security] CVE-2021-3979 ceph: Ceph volume does not honour osd_dmcrypt_key_size\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-3979 ceph: Ceph volume does not honour osd_dmcrypt_key_size" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9506 invoked by uid 550); 11 Jan 2022 21:16:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,331 +12,114 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 24382 invoked from network); 24 Sep 2025 02:23:20 -0000
-Date: Wed, 24 Sep 2025 04:22:56 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 5681 invoked from network); 11 Jan 2022 21:10:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1641935419;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=AedalZeUv8hNovKbgdzpk8AD5CuJk2mNbzMKfgkI/hA=;
+	b=i4ZWHx0ygRzneJtxo2aS31iaetDKDBifFjVCO1Fmi0SRiu7+MhsuIgOtwB/t6UuxbCx12v
+	h2XT2YzRlvVJRVttP9dSOcuEjEQoKzDlmBxVIJeBk2Fk4b4NAY6Gtl6RcRl4HcOFqWyIlI
+	IiPxuh4ZHZhVMKHBatnFxkxjTLxxCCQ=
+X-MC-Unique: -286V7faOTGVCNGRCiMVFg-1
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=AedalZeUv8hNovKbgdzpk8AD5CuJk2mNbzMKfgkI/hA=;
+        b=gfrMCkM1ZESndVnFgrQt9kY6j+6t7G5L+ZCxqLMiZqk/arF2j0wpADjGUwu2wn/vSP
+         uj0oPrV0Dz/D9whKFy/iBaB40UrBLqPWQxelniliXP/eXELylYgLL1omD6L7+8MtCONj
+         NBRiijHeKzBwjAfIzCcODKmlvAPeEwo+ZA+qvyf/utQ17nnznuiyfYbiAsRPAsgUmOg2
+         /lHRcfVlVkyFZH5AT/6QUMoImDn25d9zLFaZ+gB8lQx19h5BDustYPV+jCVD2fdNVzwj
+         bgo55rlzCmnxrDSbz7dPozS2UATKFoqpQn6Tsc2uRogXCneG5oxjBAe38cyRwIl/GQd9
+         4qnA==
+X-Gm-Message-State: AOAM5326dufsyEwXOzpPXgf6M8o4euh5kZW6eyCd+CXSP8wGyKipboGn
+	WJu1kAReEPPKSwAncLx740XG4h3kcfvJE0tCSrdiz3eqclHrV1DIdU36hgVviqkR9gla6WwPh6M
+	/3cg4Pte35ng8h+e0S4vEsbOr/QPrF3o4xyU9XBBA4yKk
+X-Received: by 2002:a05:622a:1309:: with SMTP id v9mr622307qtk.141.1641935417078;
+        Tue, 11 Jan 2022 13:10:17 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJx9XeRJWIObbj6HbJfOJR6Jt0VI0ClgcBIfCC/ZlVCwYbYjPsA45/4Fbd1u8XftJfcWo3/bmxaXz6Vic1QDols=
+X-Received: by 2002:a05:622a:1309:: with SMTP id v9mr622271qtk.141.1641935416669;
+ Tue, 11 Jan 2022 13:10:16 -0800 (PST)
+MIME-Version: 1.0
+From: Ana McTaggart <amctagga@redhat.com>
+Date: Tue, 11 Jan 2022 16:10:06 -0500
+Message-ID: <CABBoSthWNAv07LcprhNazDEs_TEcqhzb94aFB7GvwU9HHm8ROw@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Cc: Van1sh <van1sh@pm.me>, Willy Tarreau <w@1wt.eu>
-Message-ID: <20250924022256.GA20793@openwall.com>
-References: <20250803015543.GA4607@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250803015543.GA4607@openwall.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Linux kernel: eBPF vulnerabilities
+Cc: Mark Kirkwood <markkirkwood@catalystcloud.nz>
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=amctagga@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: multipart/alternative; boundary="00000000000041552905d554e1be"
+Subject: [oss-security] CVE-2021-3979 ceph: Ceph volume does not honour osd_dmcrypt_key_size
 
-Hi Van1sh,
+--00000000000041552905d554e1be
+Content-Type: text/plain; charset="UTF-8"
 
-Do you have any update on these issues?  Are you aware of any fixes?
+Hi all,
+The key length for encrypted devices created using ceph-volume is
+incorrect. This is due to a bug in ceph_volume/util/encryption.py, where
+upon writing a key using osd_dmcrypt_key_size it does not pass the key size
+to the format and open operations following. The default key is then
+applied in cryptsetup. All versions since Luminous are assumed affected. At
+Red Hat. we have assigned it  CVE-2021-3979 and proposed a CVSS score of
+6.5/CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N
 
-Also, do you have an answer to Demi Marie Obenour's question:
+See below for the report, credit of Mark Kirkwood.
 
-On Sun, Aug 03, 2025 at 12:06:27AM -0400, Demi Marie Obenour wrote:
-> Are these exploitable via *classic* BPF?  The reason I ask is that this
-> is nearly always available to unprivileged users in the form of seccomp,
-> and no hardening guide will recommend disabling seccomp-BPF as that is
-> one of the best tools userspace has to sandbox itself!
+We happened to run 'cryptsetup luksDump' on some of our encrypted
+devices that were created using ceph-volume and noticed the key length
+was wrong:
 
-Of course, if anyone else reading this is aware, please also reply.  I am
-addressing the message to Van1sh to be specific, as a request to everyone
-may as well be to no one.
+e.g:
 
-Thanks,
+markir@ceph3:~$ cat /etc/ceph/ceph.conf
+...
+[osd]
+osd_dmcrypt_type = luks
+osd_cryptsetup_parameters = --cipher aes-xts-plain64
+osd_dmcrypt_key_size = 512
 
-Alexander
+markir@ceph3:~$ sudo cryptsetup luksDump
+/dev/mapper/ceph--9e3502c0--a991--44cc--a2a1--0e8e8fb45189-osd--block--aaab9851--5951--429d--8e9d--dbc22ea4c1a1
 
-"Over-quoting" the original for context since it's been a while:
 
-On Sun, Aug 03, 2025 at 03:55:43AM +0200, Solar Designer wrote:
-> Hi,
-> 
-> Van1sh, CC'ed here, brought a set of 11 Linux kernel eBPF subsystem
-> vulnerabilities to the kernel security team and linux-distros at once on
-> July 19.  Such early notification to linux-distros of issues not yet
-> handled by the kernel security team is currently (and has been for a
-> while) against guidelines from both the kernel and linux-distros:
-> 
-> https://docs.kernel.org/process/security-bugs.html
-> 
-> > the kernel security team strongly recommends that as a reporter
-> > of a potential security issue you DO NOT contact the "linux-distros"
-> > mailing list UNTIL a fix is accepted by the affected code's maintainers
-> > and you have read the distros wiki page above and you fully understand
-> > the requirements that contacting "linux-distros" will impose on you and
-> > the kernel community.  This also means that in general it doesn't make
-> > sense to Cc: both lists at once, except maybe for coordination if and
-> > while an accepted fix has not yet been merged.  In other words, until a
-> > fix is accepted do not Cc: "linux-distros", and after it's merged do not
-> > Cc: the kernel security team.
-> 
-> https://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-instructions-for-reporters
-> 
-> > For Linux kernel issues, you must notify the kernel security team
-> > first, wait for the fix, and only then notify linux-distros or
-> > oss-security (depending on whether the information is still private or
-> > already public, as well as on issue severity).
-> > 
-> > The maximum acceptable embargo period for issues disclosed to these
-> > lists is 14 days.
-> 
-> Van1sh also seemed to suggest a 28-day embargo period.
-> 
-> So we immediately had a problem with the process.  Luckily, Van1sh's
-> message that reached linux-distros didn't actually contain what it calls
-> "Disclosure Package".  So only high-level summaries were included, not
-> vulnerability detail.  This is also what I am disclosing publicly here
-> on oss-security today, as we're just past the 14 days maximum now.
-> 
-> There was a little bit of discussion on linux-distros, and the most
-> important aspect is that distros and systems should make sure they set
-> (or keep the default of) kernel.unprivileged_bpf_disabled at 1 or 2,
-> which per the discussion fully removes the exposure of these issues.
-> 
-> Van1sh also recommends restricting access to kernel pointers and
-> symbols (which I assume the currently developed eBPF exploits use), and
-> monitoring such access, but as I understand this is a general best
-> practice and defense-in-depth (on top of not exposing access to eBPF in
-> the first place).
-> 
-> Documentation/admin-guide/sysctl/kernel.rst:
-> 
-> > unprivileged_bpf_disabled
-> > =========================
-> > 
-> > Writing 1 to this entry will disable unprivileged calls to ``bpf()``;
-> > once disabled, calling ``bpf()`` without ``CAP_SYS_ADMIN`` or ``CAP_BPF``
-> > will return ``-EPERM``. Once set to 1, this can't be cleared from the
-> > running kernel anymore.
-> > 
-> > Writing 2 to this entry will also disable unprivileged calls to ``bpf()``,
-> > however, an admin can still change this setting later on, if needed, by
-> > writing 0 or 1 to this entry.
-> > 
-> > If ``BPF_UNPRIV_DEFAULT_OFF`` is enabled in the kernel config, then this
-> > entry will default to 2 instead of 0.
-> > 
-> > = =============================================================
-> > 0 Unprivileged calls to ``bpf()`` are enabled
-> > 1 Unprivileged calls to ``bpf()`` are disabled without recovery
-> > 2 Unprivileged calls to ``bpf()`` are disabled
-> > = =============================================================
-> 
-> kernel/bpf/Kconfig:
-> 
-> > config BPF_UNPRIV_DEFAULT_OFF
-> >         bool "Disable unprivileged BPF by default"
-> >         default y
-> >         depends on BPF_SYSCALL
-> >         help
-> >           Disables unprivileged BPF by default by setting the corresponding
-> >           /proc/sys/kernel/unprivileged_bpf_disabled knob to 2. An admin can
-> >           still reenable it by setting it to 0 later on, or permanently
-> >           disable it by setting it to 1 (from which no other transition to
-> >           0 is possible anymore).
-> > 
-> >           Unprivileged BPF could be used to exploit certain potential
-> >           speculative execution side-channel vulnerabilities on unmitigated
-> >           affected hardware.
-> > 
-> >           If you are unsure how to answer this question, answer Y.
-> 
-> So these issues shouldn't currently be exposed by default.  I tried
-> asking if any distros present on the linux-distros list still have
-> unprivileged eBPF exposed by default, and no one spoke up.
-> 
-> As to getting the issues fixed, the only information communicated to
-> linux-distros was from Willy Tarreau that he transferred Van1sh's
-> message to the eBPF maintainers - which is appreciated!  It is not
-> surprising that such a wide variety of issues not exposed by default
-> will take quite a while to process during the summer vacations season.
-> Luckily, they're also not that important to review and fix individually.
-> 
-> Given all of this, I reluctantly decided not to make an exception here
-> (skipping today's disclosure or limiting it to even less info than was
-> on linux-distros), as doing so didn't seem to serve a useful purpose yet
-> it would keep further handling by linux-distros in limbo.  Now we're
-> done handling this on linux-distros, and any further developments should
-> be added to this oss-security thread instead.
-> 
-> Alexander
-> 
-> On Mon, Jul 28, 2025 at 05:29:15AM +0000, Van1sh wrote:
-> > based on the evaluation, this is an initial remediation guideline, that can significantly mitigate the risks.
-> > 
-> > ### 1. Complete BPF Lockdown (Recommended)
-> > ```bash
-> > # Block unprivileged BPF
-> > echo 1 > /proc/sys/kernel/unprivileged_bpf_disabled
-> > 
-> > # Restrict kernel symbol exposure
-> > echo 2 > /proc/sys/kernel/kptr_restrict
-> > 
-> > # Limit configuration disclosure
-> > chmod 600 /proc/sys/net/core/bpf_*
-> > chmod 600 /proc/sys/kernel/unprivileged_bpf_disabled
-> > ```
-> > 
-> > ### 2. Information Disclosure Controls
-> > ```bash
-> > # Restrict kallsyms access
-> > echo 1 > /proc/sys/kernel/kptr_restrict  # Hide symbol addresses
-> > echo 2 > /proc/sys/kernel/kptr_restrict  # Hide symbols completely
-> > 
-> > # Limit dmesg access
-> > echo 1 > /proc/sys/kernel/dmesg_restrict
-> > 
-> > # Secure BPF filesystem
-> > chmod 700 /sys/fs/bpf
-> > ```
-> > 
-> > ### 3. Monitoring and Detection
-> > ```bash
-> > # Monitor information access
-> > auditctl -w /proc/kallsyms -p r -k symbol_access
-> > auditctl -w /proc/sys/kernel/ -p r -k sysctl_access
-> > auditctl -w /sys/fs/bpf/ -p rwa -k bpf_filesystem
-> > ```
-> 
-> > the command are just example to make the point across.
-> 
-> On Sat, Jul 19, 2025 at 03:30:03AM +0000, Van1sh wrote:
-> > Morning Guys,
-> > FYI as previous email was not delivered??
-> 
-> > > Data: Il sabato 19 luglio 2025 05:17
-> > > Oggetto: eBPF Vulnerabilities - Responsible Disclosure
-> 
-> > > > Dear Linux Kernel Security Team,
-> > > > I am writing to report the discovery of two critical zero-day vulnerabilities in the Linux kernel eBPF subsystem. As Security Researcher and maintainer of the Leviathan project, I am committed to responsible disclosure and collaboration with the kernel community to address these serious security issues.
-> > > > 
-> > 
-> > > > ## Executive Summary
-> > > > 
-> > 
-> > > > I discovered eleven critical vulnerabilities in the eBPF subsystem that pose significant risks to system security:
-> > > > 
-> > 
-> > > > **Critical Priority (CVSS 8.5+):**
-> > > > 1. **ZD_005**: eBPF Verifier State Pruning Bypass (CVSS 8.8) - Enables complete privilege escalation from unprivileged user to root
-> > > > 2. **ZD_003**: eBPF Helper Function Validation Bypass (CVSS 7.5) - Allows arbitrary kernel memory disclosure
-> > > > 3. **ZD_010**: Speculative Execution Side-Channels (CVSS 8.2) - Kernel memory disclosure via timing attacks
-> > > > 4. **ZD_011**: Container Escape via Namespace Bypass (CVSS 8.6) - Complete container isolation bypass
-> > > > 
-> > 
-> > > > **High Priority (CVSS 7.0-8.4):**
-> > > > 5. **ZD_002**: JIT Code Generation Vulnerability (CVSS 7.8) - Memory corruption and code execution
-> > > > 6. **ZD_007**: Atomic Operations Memory Ordering (CVSS 7.4) - Race conditions and memory corruption
-> > > > 7. **ZD_001**: Verifier Bounds Check Bypass (CVSS 7.2) - Memory corruption through bounds bypass
-> > > > 8. **ZD_004**: Map Lifecycle Race Conditions (CVSS 7.6) - Use-after-free vulnerabilities
-> > > > 9. **ZD_012**: Trampoline Memory Corruption (CVSS 7.3) - Function pointer corruption
-> > > > 10. **ZD_013**: cgroup Security Bypass (CVSS 7.1) - Resource limit and security policy bypass
-> > > > 11. **ZD_009**: BTF Type Information Corruption (CVSS 6.8) - Type confusion and information disclosure
-> > > > 
-> > 
-> > > > These vulnerabilities have been thoroughly validated with proof-of-concept exploits achieving success rates ranging from 52% to 95% across kernel versions 5.4.x through 6.6.x. The vulnerabilities affect x86_64, ARM64, RISC-V, and PowerPC architectures and can be exploited by local users, with some requiring no special privileges.
-> > > > 
-> > 
-> > > > ## Vulnerability Impact
-> > > > 
-> > 
-> > > > ### Critical Vulnerabilities
-> > > > - **ZD_005 - Privilege Escalation**: Complete system compromise (root access) from unprivileged user
-> > > > - **ZD_003 - Information Disclosure**: Arbitrary kernel memory read, ASLR bypass, credential disclosure ??
-> > > > - **ZD_010 - Side-Channel Attacks**: Speculative execution exploitation for kernel memory disclosure
-> > > > - **ZD_011 - Container Escape**: Complete bypass of container isolation and namespace security
-> > > > 
-> > 
-> > > > ### High-Impact Vulnerabilities
-> > > > - **ZD_002 - JIT Compilation**: Memory corruption and code execution through compiler bugs
-> > > > - **ZD_007 - Atomic Operations**: Race conditions and memory corruption on multi-core systems
-> > > > - **ZD_001 - Bounds Check Bypass**: Memory corruption through verifier logic flaws
-> > > > - **ZD_004 - Map Race Conditions**: Use-after-free vulnerabilities in concurrent operations
-> > > > - **ZD_012 - Trampoline Corruption**: Function pointer corruption in eBPF trampolines
-> > > > - **ZD_013 - cgroup Bypass**: Resource limits and security policy circumvention
-> > > > - **ZD_009 - BTF Corruption**: Type confusion and metadata manipulation
-> > > > 
-> > 
-> > > > ### Affected Components
-> > > > - **Primary**: `kernel/bpf/verifier.c`, `kernel/bpf/helpers.c`, `kernel/bpf/core.c`, JIT compilers
-> > > > - **Secondary**: Container runtimes, cgroup subsystem, namespace isolation, speculative execution
-> > > > - **Attack Vectors**: Local unprivileged users, malicious containers, side-channel attacks
-> > > > 
-> > 
-> > > > ## Disclosure Package Contents
-> > > > 
-> > 
-> > > > This submission includes:
-> > > > 
-> > 
-> > > > - **Comprehensive Technical Reports**: Detailed analysis of all 11 vulnerabilities with root cause analysis and exploitation details
-> > > > - **Complete Proof-of-Concept Suite**: Functional exploit code demonstrating all vulnerabilities
-> > > > - **Automated Exploitation Framework**: Tools for variant generation and testing automation
-> > > > - **Suggested Mitigations**: Specific code patches and recommendations for all vulnerabilities
-> > > > - **Validation Documentation**: Success rate analysis and testing across multiple architectures
-> > > > 
-> > 
-> > > > ## Proposed Timeline
-> > > > 
-> > 
-> > > > We propose the following coordinated disclosure timeline:
-> > > > 
-> > 
-> > > > - **Day 0** (Today): Initial disclosure to security@kernel.org
-> > > > - **Day 7**: Acknowledgment and initial assessment from kernel team
-> > > > - **Day 7**: Technical collaboration on patch development
-> > > > - **Day 7**: Testing and validation of proposed fixes
-> > > > - **Day 7**: Public disclosure (adjustable based on fix readiness)
-> > > > 
-> > 
-> > > > We are committed to working closely with the kernel security team throughout this process and can adjust the timeline as needed to ensure proper remediation.
-> > > > 
-> > 
-> > > > ## Contact Information
-> > > > 
-> > 
-> > > > **Researcher**: van1sh
-> > > > **Email**:van1sh@pm.me
-> > > > **Secure Communication**: Available upon request ??
-> > > > **Project**: Leviathan Framework - eBPF Security Research
-> > > > 
-> > 
-> > > > ## Research Context
-> > > > 
-> > 
-> > > > These vulnerabilities were discovered as part of our comprehensive security analysis of the eBPF subsystem. The Leviathan Framework represents a systematic approach to identifying security issues in eBPF through automated testing, semantic analysis, and variant discovery techniques.
-> > > > 
-> > 
-> > > > Our research methodology combines:
-> > > > - Static analysis of eBPF verifier logic
-> > > > - Dynamic testing with sophisticated fuzzing techniques ??
-> > > > - Manual security review of critical code paths
-> > > > - Automated variant discovery for related vulnerabilities
-> > > > 
-> > 
-> > > > ## Immediate Actions Requested
-> > > > 
-> > 
-> > > > 1. **Acknowledgment** of this disclosure within 7 days
-> > > > 2. **Technical point of contact** assignment for collaboration
-> > > > 3. **Initial assessment** of the reported vulnerabilities
-> > > > 4. **Discussion of disclosure timeline** adjustments if needed
-> > > > 
-> > 
-> > > > ## Additional Information
-> > > > 
-> > 
-> > > > We have additional research findings and automated tools that may be valuable for improving eBPF security long-term. We are happy to share these resources and collaborate on broader security improvements beyond addressing these specific vulnerabilities.
-> > > > 
-> > 
-> > > > The attached technical reports contain detailed information needed for understanding and reproducing these issues. We have validated our findings across multiple kernel versions and architectures to ensure the reports are accurate and actionable.
-> > > > 
-> > 
-> > > > Thank you for your dedication to kernel security. We look forward to working with you to address these critical issues and improve the overall security of the eBPF subsystem.
-> > > > ??I also ask for the assigned CVE Numbers
-> > > > Best regards,
-> > > > 
-> > 
-> > > > van1sh
-> > > > July 19, 2025
+Version:           1
+Cipher name:       aes
+Cipher mode:       xts-plain64
+Hash spec:         sha256
+Payload offset:    4096
+MK bits:           256 <=========== should be 512
+
+
+This appears to be due to a bug in ceph_volume/util/encryption.py. While
+it writes a key using osd_dmcrypt_key_size it does not pass the key size
+to the following format and open operations. It looks like that ecause
+the key is being passed to cryptsetup on stdin that the length is not
+being deduced, and so the default key size is being applied.
+
+It is fairly simple to patch (see attached - luks operation only, prob
+needs plain code path altered similarly).
+
+In terms of which versions are impacted, we are running Luminous, but
+the patch I have attached is against current master, so suspect all
+versions since Luminous are in the crosshairs.
+
+Ana McTaggart
+
+Red Hat Product Security
+
+Red Hat Remote <https://www.redhat.com>
+
+
+secalert@redhat.com for urgent response
+
+
+amct@redhat.com
+
+
+
+Pronouns:They/Them/Theirs
+
+--00000000000041552905d554e1be--
+
