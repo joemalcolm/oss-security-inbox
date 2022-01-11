@@ -1,23 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/16/3
-Message-ID: <072956cd-6dcf-5053-b666-e1254a85a20d@apache.org>
-Date: Mon, 16 May 2022 16:45:13 +0000
-From: Tim Allison <tallison@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/11/1
+Message-Id: <F97E792C-1249-4C6C-A1B2-23A2A835A941@gentoo.org>
+Date: Tue, 11 Jan 2022 00:01:34 +0000
+From: Sam James <sam@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-30126: Apache Tika Regular Expression Denial of Service in Standards Extractor 
+Subject: Re: CVE-2021-3997: Uncontrolled recursion in systemd's systemd-tmpfiles
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
 
-Description:
 
-A regular expression in our StandardsText class, used by the StandardsExtractingContentHandler could lead to a denial of service caused by backtracking on a specially crafted file. This only affects users who are running the StandardsExtractingContentHandler, which is a non-standard handler.  This is fixed in 1.28.2 and 2.4.0
+> On 10 Jan 2022, at 18:08, Qualys Security Advisory <qsa@...lys.com> wrote:
+> 
+> Hi all,
+> 
+> We discovered a minor denial of service (an uncontrolled recursion) in
+> systemd-tmpfiles, CVE-2021-3997; the Coordinated Release Date is today
+> (January 10, 2022), and a patch is now available at (many thanks to
+> Zbigniew Jedrzejewski-Szmek for working on this):
+> 
+> https://github.com/systemd/systemd/commit/55a89ea1b4088a6d84ba0bd3cd8e648bd51f1ebf
+> [...]
 
-Mitigation:
+Thanks.
 
-Upgrade to 1.28.2 or 2.4.0
+Fix commit (as you linked): https://github.com/systemd/systemd/commit/55a89ea1b4088a6d84ba0bd3cd8e648bd51f1ebf
+Backport release for 250.x: 250.2 (see https://github.com/systemd/systemd-stable/compare/v250.1...v250.2)
+Backport release for 249.x: pending
 
-Credit:
+Best,
+sam
 
-This issue was discovered and reported by the CodeQL team members [@atorralba (Tony Torralba)](https://github.com/atorralba) and [@joefarebrother (Joseph Farebrother)](https://github.com/joefarebrother).
-
+Download attachment "signature.asc" of type "application/pgp-signature" (619 bytes)
