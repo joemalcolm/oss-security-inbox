@@ -1,23 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/19/1
-Message-ID: <9c291caf-92b6-6293-193e-93ddc7fde95e@apache.org>
-Date: Wed, 19 Jan 2022 14:08:03 +0000
-From: Kaxil Naik <kaxilnaik@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/11/3
+Message-ID: <CA+35997895mNiHQ+3ZDY6wbbztq=qZDafJHWiH8_VkwFehn1pQ@mail.gmail.com>
+Date: Mon, 10 Jan 2022 20:27:17 -0500
+From: Bryan English <bryan@...anenglish.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-45230: Apache Airflow: Creating DagRuns didn't respect Dag-level permissions in the Webserver 
+Subject: Fwd: Node.js security updates for all active release lines, January 2022
 Content-Type: text/plain; charset=utf-8
 
-Description:
+---------- Forwarded message ---------
+From: Bryan English <bryan@...anenglish.com>
+Date: Mon, Jan 10, 2022 at 8:26 PM
+Subject: Re: Node.js security updates for all active release lines, January
+2022
+To: nodejs-sec <nodejs-sec@...glegroups.com>
 
-This CVE applies to a specific case where a User who has "can_create" permissions on DAG Runs can create Dag Runs for dags that they don't have "edit" permissions for. 
 
-This is a very low severity CVE and admins can mitigate this issue by removing the global "can_create" permissions on DagRun for Airflow versions >=2.0.0,<2.2.0 and 1.10.x versions that have set `rbac=True` in config.
+The Node.js project has now released new versions of all supported release
+lines. For more information see:
+https://nodejs.org/en/blog/vulnerability/jan-2022-security-releases/
 
-Credit:
+On Tuesday, January 4, 2022 at 6:40:55 PM UTC-5 Bryan English wrote:
 
-Apache Airflow PMC would like to thank Franco Cano Erazo for reporting this issue.
-
-References:
-
-https://lists.apache.org/thread/m778ojn0k595rwco4ht9wjql89mjoxnl
+> The Node.js project will release new versions of all supported release
+> lines on or shortly after Monday, 10th of January, 2022 For more
+> information see:
+> https://nodejs.org/en/blog/vulnerability/jan-2022-security-releases/
+>
+-- 
+You received this message because you are subscribed to the Google Groups
+"nodejs-sec" group.
+To unsubscribe from this group and stop receiving emails from it, send an
+email to nodejs-sec+unsubscribe@...glegroups.com.
+To view this discussion on the web visit
+https://groups.google.com/d/msgid/nodejs-sec/45a29063-bf7e-4639-84f2-17d23c3d84adn%40googlegroups.com
+<https://groups.google.com/d/msgid/nodejs-sec/45a29063-bf7e-4639-84f2-17d23c3d84adn%40googlegroups.com?utm_medium=email&utm_source=footer>
+.
 
