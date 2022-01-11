@@ -1,23 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/24/3
-Message-ID: <e22399f1-15c2-da7b-5786-1368aaf87a4d@apache.org>
-Date: Thu, 24 Feb 2022 18:01:16 +0000
-From: Jedidiah Cunningham <jedcunningham@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/11/4
+Message-ID: <CA+eGCHb3=V20Fh-dda20O6xtfBszuKmHnqSupsmrz_1Xuj3N4Q@mail.gmail.com>
+Date: Tue, 11 Jan 2022 20:00:08 +0800
+From: tr3e wang <tr3e.wang@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-24288: Apache Airflow: RCE in example DAGs 
+Cc: Daniel Borkmann <daniel@...earbox.net>
+Subject: CVE-2021-4204: Linux Kernel eBPF Improper Input Validation Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Severity: high
+Hi all,
 
-Description:
+This vulnerability allows local attackers to escalate privileges on
+affected installations of Linux Kernel. An attacker must first obtain the
+ability to execute low-privileged code on the target system in order to
+exploit this vulnerability.
 
-In Apache Airflow, prior to version 2.2.4, some example DAGs did not properly sanitize user-provided params, making them susceptible to OS Command Injection from the web UI.
+The specific flaw exists within the handling of eBPF programs. The issue
+results from the lack of proper validation of user-supplied eBPF programs
+prior to executing them. An attacker can leverage this vulnerability to
+escalate privileges and execute code in the context of the kernel.
+BE AWARE, unprivileged bpf is disabled by default in most distros.
 
-Mitigation:
+*Affected Version*
 
-This can be mitigated by ensuring `[core] load_examples` is set to `False`.
+    Linux kernel 5.8 or later (For now, 5.8 - 5.16)
 
-Credit:
+*Root Cause Analysis*
 
-The Apache Airflow PMC would like to thank Kai Zhao of the TToU Security Team for reporting this issue.
+eBPF provides some helper functions, and the verifier checks whether it is
+used properly according to bpf_func_proto.
+
+For some helper functions require a PTR_TO_MEM as an argument, the verifier
+MUST know the memory size through the next argument to prevent OOB.
+(see
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/kernel/bpf/verifier.c?h=v5.10.83#n4579
+)
+
+However, bpf_ringbuf_submit and bpf_ringbuf_discard do not follow the
+aboving rule. the verifier never know the size of memory passing into these
+two helper functions, resulting in OOB.
+(see
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/kernel/bpf/ringbuf.c?h=v5.10.83#n423
+)
+
+*Exploit Code*
+
+Exploit code will be delayed for 7 days and will be posted at 12:00 UTC,
+Jan 18, 2022
+
+*Mitigations*
+
+set kernel.unprivileged_bpf_disabled to 1
+
+BE AWARE AGAIN, unprivileged bpf is disabled by default in most distros.
+
+*Credits*
+
+tr3e of SecCoder Security Lab
+
+
+Best Regards,
+tr3e
 
