@@ -1,13 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/28/2
-Message-ID: <9be6df2b-5b8d-af10-94f9-ba98885f66e3@apache.org>
-Date: Fri, 28 Oct 2022 01:39:06 +0000
-From: ShunFeng Cai <caishunfeng@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/11/5
+Message-ID: <CABBoSthWNAv07LcprhNazDEs_TEcqhzb94aFB7GvwU9HHm8ROw@mail.gmail.com>
+Date: Tue, 11 Jan 2022 16:10:06 -0500
+From: Ana McTaggart <amctagga@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-26884: Apache DolphinScheduler exposes files without authentication 
+Cc: Mark Kirkwood <markkirkwood@...alystcloud.nz>
+Subject: CVE-2021-3979 ceph: Ceph volume does not honour osd_dmcrypt_key_size
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Hi all,
+The key length for encrypted devices created using ceph-volume is
+incorrect. This is due to a bug in ceph_volume/util/encryption.py, where
+upon writing a key using osd_dmcrypt_key_size it does not pass the key size
+to the format and open operations following. The default key is then
+applied in cryptsetup. All versions since Luminous are assumed affected. At
+Red Hat. we have assigned it  CVE-2021-3979 and proposed a CVSS score of
+6.5/CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N
 
-Users can read any files by log server, Apache DolphinScheduler users should upgrade to version 2.0.6 or higher.
+See below for the report, credit of Mark Kirkwood.
+
+We happened to run 'cryptsetup luksDump' on some of our encrypted
+devices that were created using ceph-volume and noticed the key length
+was wrong:
+
+e.g:
+
+markir@...h3:~$ cat /etc/ceph/ceph.conf
+...
+[osd]
+osd_dmcrypt_type = luks
+osd_cryptsetup_parameters = --cipher aes-xts-plain64
+osd_dmcrypt_key_size = 512
+
+markir@...h3:~$ sudo cryptsetup luksDump
+/dev/mapper/ceph--9e3502c0--a991--44cc--a2a1--0e8e8fb45189-osd--block--aaab9851--5951--429d--8e9d--dbc22ea4c1a1
+
+
+Version:           1
+Cipher name:       aes
+Cipher mode:       xts-plain64
+Hash spec:         sha256
+Payload offset:    4096
+MK bits:           256 <=========== should be 512
+
+
+This appears to be due to a bug in ceph_volume/util/encryption.py. While
+it writes a key using osd_dmcrypt_key_size it does not pass the key size
+to the following format and open operations. It looks like that ecause
+the key is being passed to cryptsetup on stdin that the length is not
+being deduced, and so the default key size is being applied.
+
+It is fairly simple to patch (see attached - luks operation only, prob
+needs plain code path altered similarly).
+
+In terms of which versions are impacted, we are running Luminous, but
+the patch I have attached is against current master, so suspect all
+versions since Luminous are in the crosshairs.
+
+Ana McTaggart
+
+Red Hat Product Security
+
+Red Hat Remote <https://www.redhat.com>
+
+
+secalert@...hat.com for urgent response
+
+
+amct@...hat.com
+
+
+
+Pronouns:They/Them/Theirs
 
