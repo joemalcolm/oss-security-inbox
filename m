@@ -1,41 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/09/1
-Message-Id: <591FA22B-3560-4892-8476-5105C89A122D@beckweb.net>
-Date: Wed, 9 Feb 2022 14:12:46 +0100
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Vulnerability in Jenkins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/11/6
+Message-ID: <CALKeL-MkfdjgQXwtCBerW_rU=Z4irnMez9nXTEDJA8O8tm2yng@mail.gmail.com>
+Date: Tue, 11 Jan 2022 13:21:26 -0800
+From: Mike Jumper <mjumper@...che.org>
+To: announce@...che.org, announce@...camole.apache.org,  dev@...camole.apache.org, user@...camole.apache.org
+Cc: security@...camole.apache.org, oss-security@...ts.openwall.com
+Subject: [SECURITY] CVE-2021-41767: Apache Guacamole: Private tunnel identifier may be included in the non-private details of active connections
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+Severity: moderate
 
-The following releases contain fixes for security vulnerabilities:
+Description:
 
-* Jenkins 2.334
-* Jenkins LTS 2.319.3
+Apache Guacamole 1.3.0 and older may incorrectly include a private
+tunnel identifier in the non-private details of some REST responses.
+This may allow an authenticated user who already has permission to
+access a particular connection to read from or interact with another
+user's active use of that same connection.
 
+Credit:
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2022-02-09/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-2602 / CVE-2021-43859 (upstream) & CVE-2022-0538 (Jenkins)
-Jenkins 2.333 and earlier, LTS 2.319.2 and earlier is affected by the
-XStream library's vulnerability CVE-2021-43859. This library is used by
-Jenkins to serialize and deserialize various XML files, like global and job
-`config.xml`, `build.xml`, and numerous others.
-
-This allows attackers able to submit crafted XML files to Jenkins to be
-parsed as configuration, e.g. through the `POST config.xml` API, to cause a
-denial of service (DoS).
-
+We would like to thank Damian Velardo (Australia and New Zealand
+Banking Group) for reporting this issue.
