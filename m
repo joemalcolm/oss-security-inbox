@@ -1,33 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/03/2
-Message-ID: <Y2MAGbrZO7r23Wtp@gentoo.org>
-Date: Wed, 2 Nov 2022 18:41:13 -0500
-From: John Helmert III <ajak@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/12/4
+Message-ID: <CABbtqzEDcwmS3=iu-cFjTOuxBa-50kNxQVRvoTwq3M73Ohf1yQ@mail.gmail.com>
+Date: Wed, 12 Jan 2022 13:32:51 +0100
+From: Ana Oprea <anaoprea@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
+Subject: CVE-2021-22569: Protobuf Java, Kotlin, JRuby DoS
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 02, 2022 at 11:24:08AM -0700, Kurt H Maier wrote:
-> On Wed, Nov 02, 2022 at 03:09:21PM +0100, Hanno Böck wrote:
-> > FWIW it only takes a basically trivial fuzz target on the affected
-> > function to find this bug with libfuzzer.
-> 
-> I'm not sure what the value is of all this Monday-morning
-> quarterbacking, from 'basically trivial' fuzzing to code-quality
-> comparisons of hypothetical Rust ports.  OpenSSL's development process
-> has a bad rap, and there are definitely some easy wins to be had.
-> Posting "if they'd only adopted my pet practice" to oss-sec isn't fixing
-> anything in the OpenSSL project.  Please consider directing fuzzing
-> advice and PL theory directly to the project?  I agree there would be
-> benefit to this stuff, but dunking on them on unrelated lists isn't
-> getting the medicine to the patient.
+Summary
+A potential Denial of Service issue in protobuf-java was discovered in the
+parsing procedure for binary data.
+- Reporter: OSS-Fuzz [1]
+- Affected versions: All versions of Java Protobufs (including Kotlin and
+JRuby) prior to the versions listed below. Protobuf "javalite" users
+(typically Android) are not affected.
 
-I don't read it (Hanno's point) as a 'dunk', some information on how
-this kind of thing might be prevented in the future certainly has
-value here.
+Severity
+CVE-2021-22569 High - CVSS Score: 7.5 [2]
+An implementation weakness in how unknown fields are parsed in Java. A
+small (~800 KB) malicious payload can occupy the parser for several minutes
+by creating large numbers of short-lived objects that cause frequent,
+repeated GC pauses.
 
-> 
-> Respectfully,
-> khm
+Proof of Concept
+For reproduction details, please refer to the oss-fuzz issue [3] that
+identifies the specific inputs that exercise this parsing weakness.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
+Remediation and Mitigation
+Please update to the latest available versions of the following packages:
+- protobuf-java (3.16.1, 3.18.2, 3.19.2)
+- protobuf-kotlin (3.18.2, 3.19.2)
+- google-protobuf [JRuby gem] (3.19.2)
+
+[1] https://github.com/google/oss-fuzz
+[2] https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-22569
+[3] https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=39330
+
+Kind regards,
+Ana
+
