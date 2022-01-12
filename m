@@ -1,60 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/27/1
-Message-ID: <bb863600-2e0d-a977-ad49-875093bd2ad0@bootc.boo.tc>
-Date: Thu, 27 Jan 2022 12:16:28 +0000
-From: Chris Boot <lists@...tc.boo.tc>
-To: oss-security@...ts.openwall.com, Erik Auerswald <auerswal@...x-ag.uni-kl.de>
-Cc: Roman Medina-Heigl Hernandez <roman@...labs.com>
-Subject: Re: pwnkit: Local Privilege Escalation in polkit's pkexec (CVE-2021-4034)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/12/7
+Message-ID: <Yd878FDAjBVbNKso@sol.nexus.lan>
+Date: Wed, 12 Jan 2022 14:37:04 -0600
+From: John Helmert III <ajak@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2021-22569: Protobuf Java, Kotlin, JRuby DoS
 Content-Type: text/plain; charset=utf-8
 
-On 26/01/2022 14:11, Erik Auerswald wrote:
-> Hi,
+On Wed, Jan 12, 2022 at 01:32:51PM +0100, Ana Oprea wrote:
+> Summary
+> A potential Denial of Service issue in protobuf-java was discovered in the
+> parsing procedure for binary data.
+> - Reporter: OSS-Fuzz [1]
+> - Affected versions: All versions of Java Protobufs (including Kotlin and
+> JRuby) prior to the versions listed below. Protobuf "javalite" users
+> (typically Android) are not affected.
 > 
-> On Wed, Jan 26, 2022 at 02:34:26PM +0200, Henri Salo wrote:
->> On Wed, Jan 26, 2022 at 12:18:07PM +0100, Roman Medina-Heigl Hernandez wrote:
->>> PS: Untested because my Debian machine doesn't contain pkexec,
->>> even though Qualy's advisory says it is by default on Debian.
->>
->> We had discussion off-list with Roman and this is the case only when
->> Debian is updated from previous release to bullseye. In clean installs
->> pkexec is installed.
+> Severity
+> CVE-2021-22569 High - CVSS Score: 7.5 [2]
+> An implementation weakness in how unknown fields are parsed in Java. A
+> small (~800 KB) malicious payload can occupy the parser for several minutes
+> by creating large numbers of short-lived objects that cause frequent,
+> repeated GC pauses.
 > 
-> I think this depends on how Debian is installed (e.g., keeping installer
-> defaults for a desktop system, or using a custom package selection).
+> Proof of Concept
+> For reproduction details, please refer to the oss-fuzz issue [3] that
+> identifies the specific inputs that exercise this parsing weakness.
+
+The oss-fuzz issue says the issue is unreproducible and was
+WontFix'd. Is that accurate, given this has gotten a CVE and a fixed
+version exists?
+
+> Remediation and Mitigation
+> Please update to the latest available versions of the following packages:
+> - protobuf-java (3.16.1, 3.18.2, 3.19.2)
+> - protobuf-kotlin (3.18.2, 3.19.2)
+> - google-protobuf [JRuby gem] (3.19.2)
 > 
-> The "policykit-1" containing pkexec is "optional" and thus not present
-> in all Debian installations:
+> [1] https://github.com/google/oss-fuzz
+> [2] https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-22569
+> [3] https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=39330
 > 
->      $ lsb_release -d ; apt-cache show policykit-1 | grep Priority
->      Description:    Debian GNU/Linux 10 (buster)
->      Priority: optional
->      Priority: optional
-> 
->      $ lsb_release -d ; apt-cache show policykit-1 | grep Priority
->      Description:	Debian GNU/Linux 11 (bullseye)
->      Priority: optional
->      Priority: optional
+> Kind regards,
+> Ana
 
-It's not as simple as this, and also depends on a lot of factors.
-
-If you have a graphical desktop environment installed, or a wifi card, 
-you will almost certainly have policykit-1 and pkexec. If you have a 
-GUI-less system it's less likely that you'll have it.
-
-With that said, lots of different packages Recommend or Depend on 
-policykit-1, including: firewalld, libvirt, NetworkManager, tuned, and 
-realmd. It's also "suggested" by systemd and isc-dhcp-server, so there 
-are reasons to have it even if you have nothing otherwise graphical 
-installed.
-
-It's effectively an alternative to sudo. If you have it installed and 
-you try to e.g. 'systemctl restart $unit' without sudo / having a root 
-shell, systemd will use polkit to try to elevate and let you do it.
-
-Cheers,
-Chris
-
--- 
-Chris Boot
-bootc@....tc
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
