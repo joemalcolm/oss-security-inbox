@@ -1,73 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/19/4
-Message-ID: <84A9FE84-665A-4750-9C36-07FBD9222C9F@oracle.com>
-Date: Tue, 19 Jul 2022 17:02:12 +0000
-From: John Haxby <john.haxby@...cle.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2022-21505: Kernel lockdown bypass bug
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/12/1
+Message-ID: <CAH8yC8k==vRTEL+WuJg4goUzTSx3kanEaLfzCjV_qnfQYKooAQ@mail.gmail.com>
+Date: Tue, 11 Jan 2022 22:01:10 -0500
+From: Jeffrey Walton <noloader@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: Mark Kirkwood <markkirkwood@...alystcloud.nz>
+Subject: Re: CVE-2021-3979 ceph: Ceph volume does not honour osd_dmcrypt_key_size
 Content-Type: text/plain; charset=utf-8
 
-Hello All,
+On Tue, Jan 11, 2022 at 4:18 PM Ana McTaggart <amctagga@...hat.com> wrote:
+>
+> The key length for encrypted devices created using ceph-volume is
+> incorrect. This is due to a bug in ceph_volume/util/encryption.py, where
+> upon writing a key using osd_dmcrypt_key_size it does not pass the key size
+> to the format and open operations following. The default key is then
+> applied in cryptsetup. All versions since Luminous are assumed affected. At
+> Red Hat. we have assigned it  CVE-2021-3979 and proposed a CVSS score of
+> 6.5/CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N
 
-We recently discovered a bug that allows linux kernel lockdown to be
-trivially bypassed using IMA. See the patch, below, for more details.
+The score does not make a lot of sense (to me). It seems too high. A
+256-bit XTS key means 128-bits are used for AES block cipher, and
+128-bits are used for the AES-based tweak. I don't think many people
+will feel AES-128 is a problem. If AES-128 is a problem nowadays, then
+there's a boat load of software that's going to be hit with CVEs.
 
-This has been assigned CVE-2022-21505.
+In practice the biggest problem will be ensuring data is not lost once
+the bug is fixed.
 
-I've included the patch, below, but it has been sent upstream and you'll
-probably want to pull it from the repos on kernel.org.
+I hope I'm not missing something obvious.
 
-jch
-
-
-~~~
-The lockdown LSM is primarily used in conjunction with UEFI Secure Boot.
-This LSM may also be used on machines without UEFI. It can also be enabled
-when UEFI Secure Boot is disabled. One of lockdown's features is to prevent
-kexec from loading untrusted kernels. Lockdown can be enabled through a
-bootparam or after the kernel has booted through securityfs.
-
-If IMA appraisal is used with the "ima_appraise=log" boot param,
-lockdown can be defeated with kexec on any machine when Secure Boot is
-disabled or unavailable. IMA prevents setting "ima_appraise=log"
-from the boot param when Secure Boot is enabled, but this does not cover
-cases where lockdown is used without Secure Boot.
-
-To defeat lockdown, boot without Secure Boot and add ima_appraise=log
-to the kernel command line; then:
-
-$ echo "integrity" > /sys/kernel/security/lockdown
-$ echo "appraise func=KEXEC_KERNEL_CHECK appraise_type=imasig" > \
-/sys/kernel/security/ima/policy
-$ kexec -ls unsigned-kernel
-
-Add a call to verify ima appraisal is set to "enforce" whenever lockdown
-is enabled.
-
-Fixes: 29d3c1c8dfe7 ("kexec: Allow kexec_file() with appropriate IMA policy when locked down")
-Signed-off-by: Eric Snowberg <eric.snowberg@...cle.com>
-Acked-by: Mimi Zohar <zohar@...ux.ibm.com>
-Reviewed-by: John Haxby <john.haxby@...cle.com>
----
-security/integrity/ima/ima_policy.c | 4 ++++
-1 file changed, 4 insertions(+)
-
-diff --git a/security/integrity/ima/ima_policy.c b/security/integrity/ima/ima_policy.c
-index fa5a93dbe5d26..748b97a2582a4 100644
---- a/security/integrity/ima/ima_policy.c
-+++ b/security/integrity/ima/ima_policy.c
-@@ -2034,6 +2034,10 @@ bool ima_appraise_signature(enum kernel_read_file_id id)
-	if (id >= READING_MAX_ID)
-		return false;
-
-+	if (id == READING_KEXEC_IMAGE && !(ima_appraise & IMA_APPRAISE_ENFORCE)
-+	 && security_locked_down(LOCKDOWN_KEXEC))
-+		return false;
-+
-	func = read_idmap[id] ?: FILE_CHECK;
-
-	rcu_read_lock();
---
-2.27.0
-
-Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
+Jeff
