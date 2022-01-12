@@ -1,78 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/03/10
-Message-Id: <FFA5687C-C618-4896-A2C0-5CE992FEF632@gentoo.org>
-Date: Thu, 3 Nov 2022 20:23:32 +0000
-From: Sam James <sam@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/12/5
+Message-ID: <CABBoSthAQU5yHPjTFWDWWpb4ENexWrQqWW07K-udfYCsQ-VDtQ@mail.gmail.com>
+Date: Wed, 12 Jan 2022 10:54:42 -0500
+From: Ana McTaggart <amctagga@...hat.com>
 To: oss-security@...ts.openwall.com
-Cc: nic.tuv@...il.com, Hanno Böck <hanno@...too.org>
-Subject: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
+Subject: Re: CVE-2021-3979 ceph: Ceph volume does not honour osd_dmcrypt_key_size
 Content-Type: text/plain; charset=utf-8
 
+Here is our patch :)
+
+Ana McTaggart
+
+Red Hat Product Security
+
+Red Hat Remote <https://www.redhat.com>
 
 
-> On 3 Nov 2022, at 16:32, Nicola Tuveri <nic.tuv@...il.com> wrote:
-> 
-> I can also add that at least this member of the OpenSSL Technical
-> Committee is following the discussion, and I believe I am not the only
-> one.
-> 
-> The feedback shared here on oss-security is read and carefully
-> considered, and I know it will be discussed within OTC to continue the
-> ongoing process of improving the OpenSSL project and its procedures.
+secalert@...hat.com for urgent response
 
-I'd like to thank the OpenSSL developers for being open to the
-CI improvements I've been making lately.
 
-> 
-> I totally concur with Tavis Ormandy:
->> this is active prolific opensource security researchers discussing their opensource security work on the opensource security mailing list :)
-> 
-> Personally, I'd like to thank you all for the feedback so far, as it
-> is in itself a contribution to the project, even when it is harsh and
-> reminds us of our mistakes.
-> As long as it is kept polite and constructive, as it has been so far
-> here, all feedback is very welcome and valuable.
+amct@...hat.com
 
-Something I think that should be revisited is the priority
-of undefined behaviour in the codebase.
 
-Undefined behaviour can - and has [0][1] - led to misbehaviour
-at runtime.
+M: +1 (774)279-0791 <7742790791>     IM: amctagga
 
-Part of living with "Modern C" is embracing the
-techniques we have available to enhance compiler diagnostics
-and detect problems. That includes LTO, as well, which
-generally leads to _far_ better compiler warnings.
 
-The OpenSSL codebase isn't strict aliasing clean, and in
-Gentoo, we've built with -fno-strict-aliasing since ~2005
-(note that -fstrict-aliasing is enabled by default with -O2
-in GCC since at least 10 years ago).
+Pronouns:They/Them/Theirs
 
-If at all possible, I'd ask that the OpenSSL team revisit
-its assessment of the severity of strict aliasing bugs
-as well as the value of LTO in enhancing diagnostics
-and finding bugs.
 
-And if it's deemed to not be a priority at this time,
-the build should enforce disabling them both.
 
-Again, this isn't about performance - it's about:
-1. Distributions inadvertently enabling something
-which is unsafe/insufficiently tested (LTO), or
-2. Not realising an option enabled by default
-in standard configurations can lead to miscompiled
-OpenSSL.
+On Wed, Jan 12, 2022 at 7:54 AM Sven Kieske <S.Kieske@...twald.de> wrote:
 
-(For my part, I've been trying to improve CI but I've
-also got some patches for aliasing bits which I'm
-playing with.)
+> On Di, 2022-01-11 at 22:52 -0600, John Helmert III wrote:
+> > Was a patch meant to be attached? Is there any report or PR upstream?
+>
+> There is at least no new commit in
+> https://github.com/ceph/ceph/blob/master/src/ceph-volume/ceph_volume/util/encryption.py
+>
+> from a cursory glance at the open PRs I also don't see anything related,
+> but I just might have missed it.
+>
+> There is also no tracking bug at https://tracker.ceph.com when searching
+> for this CVE number.
+>
+> --
+> Mit freundlichen Grüßen / Regards
+>
+> Sven Kieske
+> Systementwickler / systems engineer
+>
+>
+> Mittwald CM Service GmbH & Co. KG
+> Königsberger Straße 4-6
+> 32339 Espelkamp
+>
+> Tel.: 05772 / 293-900
+> Fax: 05772 / 293-333
+>
+> https://www.mittwald.de
+>
+> Geschäftsführer: Robert Meyer, Florian Jürgens
+>
+> St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
+> Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
+>
+> Informationen zur Datenverarbeitung im Rahmen unserer Geschäftstätigkeit
+> gemäß Art. 13-14 DSGVO sind unter www.mittwald.de/ds abrufbar.
+>
+>
 
-[0] https://github.com/llvm/llvm-project/issues/55255
-[1] https://github.com/openssl/openssl/issues/18225
-[2] https://github.com/openssl/openssl/issues/18663#issuecomment-1181478057
+Content of type "text/html" skipped
 
-Best,
-sam
-
-Download attachment "signature.asc" of type "application/pgp-signature" (359 bytes)
+View attachment "encryption.py.patch" of type "text/x-patch" (1970 bytes)
