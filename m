@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3132" "Tuesday" "3" "November" "2015" "16:00:46" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151103210046.BE34B72E027@smtpvbsrv1.mitre.org>" "69" "[oss-security] Re: Pointer misuse unziping files with busybox" nil nil nil "11" "2015110321:00:46" "[oss-security] Re: Pointer misuse unziping files with busybox" (number mark "        cve-assign@m Nov  3   69/3132  " thread-indent "\"[oss-security] Re: Pointer misuse unziping files with busybox\"\n") "<20151030193422.GH8645@brightrain.aerifal.cx>" ("<20151030193422.GH8645@brightrain.aerifal.cx>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2527" "Wednesday" "12" "January" "2022" "14:37:04" "-0600" "John Helmert III" "ajak@gentoo.org" nil "64" "Re: [oss-security] CVE-2021-22569: Protobuf Java, Kotlin, JRuby DoS" nil nil nil "1" nil nil (number mark "U       ajak@gentoo. Jan 12   64/2527  " thread-indent "\"Re: [oss-security] CVE-2021-22569: Protobuf Java, Kotlin, JRuby DoS\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-22569: Protobuf Java, Kotlin, JRuby DoS" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3633 invoked by uid 550); 3 Nov 2015 21:01:03 -0000
+Received: (qmail 21807 invoked by uid 550); 12 Jan 2022 20:38:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,82 +11,81 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3564 invoked from network); 3 Nov 2015 21:00:58 -0000
-In-Reply-To: <20151030193422.GH8645@brightrain.aerifal.cx>
-Message-Id: <20151103210046.BE34B72E027@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, gustavo.grieco@gmail.com
-Date: Tue,  3 Nov 2015 16:00:46 -0500 (EST)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Pointer misuse unziping files with busybox
-To: dalias@libc.org
+Received: (qmail 21520 invoked from network); 12 Jan 2022 20:37:19 -0000
+Date: Wed, 12 Jan 2022 14:37:04 -0600
+From: John Helmert III <ajak@gentoo.org>
+To: oss-security@lists.openwall.com
+Message-ID: <Yd878FDAjBVbNKso@sol.nexus.lan>
+References: <CABbtqzEDcwmS3=iu-cFjTOuxBa-50kNxQVRvoTwq3M73Ohf1yQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="dPaf38A8zNb8nuIB"
+Content-Disposition: inline
+In-Reply-To: <CABbtqzEDcwmS3=iu-cFjTOuxBa-50kNxQVRvoTwq3M73Ohf1yQ@mail.gmail.com>
+Subject: Re: [oss-security] CVE-2021-22569: Protobuf Java, Kotlin, JRuby DoS
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--dPaf38A8zNb8nuIB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->> > http://git.busybox.net/busybox/commit/?id=1de25a6e87e0e627aa34298105a3d17c60a1f44e
->>
->> > Unziping a specially crafted zip file results in a computation of an invalid
->> > pointer and a crash reading an invalid address.
+On Wed, Jan 12, 2022 at 01:32:51PM +0100, Ana Oprea wrote:
+> Summary
+> A potential Denial of Service issue in protobuf-java was discovered in the
+> parsing procedure for binary data.
+> - Reporter: OSS-Fuzz [1]
+> - Affected versions: All versions of Java Protobufs (including Kotlin and
+> JRuby) prior to the versions listed below. Protobuf "javalite" users
+> (typically Android) are not affected.
+>=20
+> Severity
+> CVE-2021-22569 High - CVSS Score: 7.5 [2]
+> An implementation weakness in how unknown fields are parsed in Java. A
+> small (~800 KB) malicious payload can occupy the parser for several minut=
+es
+> by creating large numbers of short-lived objects that cause frequent,
+> repeated GC pauses.
+>=20
+> Proof of Concept
+> For reproduction details, please refer to the oss-fuzz issue [3] that
+> identifies the specific inputs that exercise this parsing weakness.
 
->> BusyBox wouldn't realistically be
->> used for deployment of a program that remains running to offer an
->> unzipping service to multiple clients.
+The oss-fuzz issue says the issue is unreproducible and was
+WontFix'd. Is that accurate, given this has gotten a CVE and a fixed
+version exists?
 
-> There are several distributions including Alpine Linux, widely used in
-> container environments, which by default use busybox to provide the
-> unzip utility. Unzipping of any files downloaded by the user, possibly
-> from untrusted sources, may be affected. I believe CVE is appropriate
-> for user-facing programs commonly used to open untrusted files even
-> without an automated process accepting and processing
-> potentially-malicious files from a client.
+> Remediation and Mitigation
+> Please update to the latest available versions of the following packages:
+> - protobuf-java (3.16.1, 3.18.2, 3.19.2)
+> - protobuf-kotlin (3.18.2, 3.19.2)
+> - google-protobuf [JRuby gem] (3.19.2)
+>=20
+> [1] https://github.com/google/oss-fuzz
+> [2] https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2021-22569
+> [3] https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=3D39330
+>=20
+> Kind regards,
+> Ana
 
-We'll try to add some information about what we're looking for.
+--dPaf38A8zNb8nuIB
+Content-Type: application/pgp-signature; name="signature.asc"
 
-1. If the product were a library that decompresses untrusted files,
-then the existence of a crash would be enough to assign a CVE ID. The
-rationale is that a library might have been used to develop a program
-that needs to remain running even after one bad file is encountered.
-
-2. Many products that aren't libraries have no need to remain running
-after a bad file is encountered. If the only possible problem is "a
-crash reading an invalid address" and there is no way to write to an
-invalid address or change the flow of control, then there typically
-can't be a CVE ID. Typically, a simple and complete workaround for the
-crash problem is to not try to unzip the bad file again.
-
-> From: Gustavo Grieco <gustavo.grieco@gmail.com>
-> Date: Fri, 30 Oct 2015 09:38:47 -0300
-
->> Could you please comment directly about the likelihood of
->> exploitability for code execution?
-
-> To be honest, i don't know. The patched code looks quite complex and i
-> cannot discard any potential arbitrary write there.
-
-We currently prefer not to assign CVE IDs when the available
-information is "a crash reading an invalid address" in combination
-with "cannot discard any potential arbitrary write."
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWOR/wAAoJEL54rhJi8gl5Y/MQAMu/aVQBoFhPCvqyvrG0ABiz
-K6kfDNA+d9mus1GqKju007FM7l3YEjvVfBTP/yQy1xfwBlWtgJHPK4Xc5/VDNo2z
-lqop/O85DB+dV2sswcR8C7lqplLwCS5RocT5nyi8wF2YadAFgWk/WZVX9dgpWQF7
-wODx8HBTH2aLVOoNTGNZY4srRFACMFi6jycvrBZkbDfOvxeYU6sKZDU+ZxA8zU8X
-ULsDr6xqS+XRQBu2JExX6WyTQHRcS90Errti5k0GhghbPrcTB2eXGpDOFQ+AScAi
-KSbx7zV9ngBHNXPNuXoQ1WAeUUD5L1P69zMfy8asxBdLOQWTK0PrZNMKPxwbOD9R
-UqzbeztiBJ9uS6fnKGWeTyLH3+5vtvBSB+UA3NSaIayAN2GXJfGaKHLYeEDovAUr
-kuaN8gvya/y5cce0NtvUcz/Z5BiJEfE2CEaY24f/FJ8ZqXKEjEO0sIG6nNMUH8Zy
-8d3HSsigsLesGpLdUFpD4kLxUjyMYkUew0CXVZ6STHX1wpcRUUksot9KocHybFXw
-KKoPSbMi27C2tgYIrFdJn4wHIU4hJFgqDQh1QjVRcq1H+6aNcdwxbLb+WQBSA0ze
-bzXG0r5Q0NW4AqFW/jaU29ACcylqnVsPilbbQ6hG/n5l4+gkAT0su7x75k+NPaI0
-ezjjs0eDQnlnp00K7930
-=xHYl
+iQIzBAABCAAdFiEElFuPenBj6NvNLoABXP0dAeB+IzgFAmHfO+oACgkQXP0dAeB+
+IzheVxAAhA2Z2gFuuc8iYF1tRUYwmnAfDpnDfFmpcoTdyVBkeC+5LGvKrvexZuwB
+bE5W67LSiB1NqVx/xUbLDovv81L+Gbdl7ufs9Aa7s3p1lREY3J+77Ro7WsG9eMic
+Kc2Z064oIzzESRFOAZeQNi7sx10rmNOK2uvhqt1idfosr038qXKwcXta6UK5ALfx
+79yrLDdETZqclBj93wn2H9cox86PCmyWAmAAOVhXmLOSJCOuThLTN3g9/cNiPsqj
+Bbne57YWE/eiNOf+fmO4W9y7EDiaQyZmiapsd62IB28gNsPsfypWv+rOGqPW7X7u
+p8Hi+YN74nDjimDjbB3dYVmo9hT4Kaf6ol5+NHjIaSwEB55hOMg/sDig+nQ1whmD
+hKYMJCx79WdoUS0Jq6t5vjEhUSQ2QJIVjz1x9i6SvB59V2JkjolU01jsd4KC/8rQ
+TaJkHJxHFemSrWxrGpJSp70++S28kXOWlqk4jK06QVkjFq8GZyEYScDCX4cqgxv9
+bXlOd9P40v/VMwsEKwBWumBwW9jOUKane3oFQQ8e2XGabs5Pr7XTQKC/dunl/lqC
+COO5obFKtBrz8YTcBpWhqGvQ3N3Sat0i9UC43xVa+fA++9DxJFwjm+tlmHyEOzhQ
+sttMmfXkhJti094wMVUBy3pByKyP4+tD//fttrbXWAbQWCFr7xc=
+=I1D3
 -----END PGP SIGNATURE-----
+
+--dPaf38A8zNb8nuIB--
