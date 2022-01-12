@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1848" "Friday" "9" "September" "2016" "10:41:17" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160909144117.133EB332057@smtpvbsrv1.mitre.org>" "45" "[oss-security] Re: CVE Request Qemu: vmware_vga: OOB stack memory access when processing svga command" nil nil nil "9" "2016090914:41:17" "[oss-security] Re: CVE Request Qemu: vmware_vga: OOB stack memory access when processing svga command" (number mark "U       cve-assign@m Sep  9   45/1848  " thread-indent "\"[oss-security] Re: CVE Request Qemu: vmware_vga: OOB stack memory access when processing svga command\"\n") "<alpine.LFD.2.20.1609091835510.24544@wniryva>" ("<alpine.LFD.2.20.1609091835510.24544@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["10054" "Wednesday" "12" "January" "2022" "19:10:44" "+0100" "Wadeck Follonier" "wfollonier@cloudbees.com" nil "279" "[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins" nil nil nil "1" nil nil (number mark "U       wfollonier@c Jan 12  279/10054 " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15466 invoked by uid 550); 9 Sep 2016 14:41:29 -0000
+Received: (qmail 9668 invoked by uid 550); 12 Jan 2022 18:32:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,57 +12,313 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15445 invoked from network); 9 Sep 2016 14:41:29 -0000
-From: cve-assign@mitre.org
-To: ppandit@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, luodalongde@gmail.com, liqiang6-s@360.cn
-In-Reply-To: <alpine.LFD.2.20.1609091835510.24544@wniryva>
-Message-Id: <20160909144117.133EB332057@smtpvbsrv1.mitre.org>
-Date: Fri,  9 Sep 2016 10:41:17 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request Qemu: vmware_vga: OOB stack memory access when processing svga command
+Received: (qmail 32233 invoked from network); 12 Jan 2022 18:11:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=cloudbees.com; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=4vcbcBZcrbp20l/yXszf5cexcjKsjdPRJEFOc23N3J8=;
+        b=ewrm6KWNPv+o1dOHEonOxPCVW+Z04um0CGj7wh209aUvzGWKpaP7wdAGzbx5Oi3Kmm
+         I1bpR8+WKnce+XVUQDzOCAEQv/svgM4UhXMgR6eYtPvNuCBq2lfpaqVR+OQqfd76hHG7
+         C8/017Eu+ZhxG5WuJGagKiUZy9O8W5MGZvpj8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=4vcbcBZcrbp20l/yXszf5cexcjKsjdPRJEFOc23N3J8=;
+        b=RbxptYn4Gn2HTLQQGROEOkpErQpUWEAJJItL4tqsVx7z7hE3/q+PnLl5S1IxkNR95v
+         v1LkJfoh4vJ5sev5miDPRsUcGibUmp8E9kGVpyL1r0HFevVt4DBsvXmYMrvlmtRHyu5W
+         BTYvG0qwbT7Mm6VsENNva0qocS9BnKbtNRdL3A74mJOAs0w01Hll82LpXz334gnwYRcJ
+         uFCNkO8f3TZsXDWyha9qpeFToP3q5/nfEZpJFfPCry/fbtF6Cj2A+JFALJuaZDsImJ76
+         wqvT6pyU0I3a/rcvnRbfoZlR4t9Ai5O29Vuf8k2O6UWV9PoC036AdqeR2wYhcpmOAa+p
+         kgSQ==
+X-Gm-Message-State: AOAM530C9vack06uWfDzcUtQkQUm+jJs67qEL5b27GoQ3UClxO/x392K
+	UdrkngBFjia9FL4PB42gUbrANNw3BHOpHaMAcGuRdjYqg8d+QA==
+X-Google-Smtp-Source: ABdhPJxC+/V7MoT3/MFYVBiVeLQoYe5isZspPq/eAGDgXWOXmX5jUv74soxVbr5KEGz0VkaHFWXI0505zkJ+YpTU4yE=
+X-Received: by 2002:a05:651c:b22:: with SMTP id b34mr468021ljr.495.1642011082085;
+ Wed, 12 Jan 2022 10:11:22 -0800 (PST)
+MIME-Version: 1.0
+From: Wadeck Follonier <wfollonier@cloudbees.com>
+Date: Wed, 12 Jan 2022 19:10:44 +0100
+Message-ID: <CAAWM14c8TbhXWZvNSv-g1KwNxKoF2YZTv6t-UQ-AYHRAVkX3Zw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="00000000000043f04205d5667f49"
+Subject: [oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--00000000000043f04205d5667f49
+Content-Type: text/plain; charset="UTF-8"
 
-> Quick Emulator(Qemu) built with the VMware-SVGA "chipset" emulation support is
-> vulnerable to an OOB stack memory write issue. It could occur while processing
-> VGA commands in 'vmsvga_fifo_run' routine.
-> 
-> A privileged user inside guest could use this flaw to crash the Qemu process
-> resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-09/msg01764.html
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
->> When processing svga command DEFINE_CURSOR in vmsvga_fifo_run,
->> the computed BITMAP and PIXMAP size are checked against the
->> 'cursor.mask[]' and 'cursor.image[]' array sizes in bytes.
->> Correct these checks to avoid OOB memory access.
+The following releases contain fixes for security vulnerabilities:
 
-Use CVE-2016-7170.
+* Jenkins 2.330
+* Jenkins LTS 2.319.2
+* Active Directory Plugin 2.25.1
+* Badge Plugin 1.9.1
+* Bitbucket Branch Source Plugin 746.v350d2781c184
+* Configuration as Code Plugin 1.55.1
+* Credentials Binding Plugin 1.27.1
+* Docker Commons Plugin 1.18
+* HashiCorp Vault Plugin 3.8.0
+* Mailer Plugin 408.vd726a_1130320
+* Matrix Project Plugin 1.20
+* Metrics Plugin 4.0.2.8.1
+* SSH Agent Plugin 1.23.2
+* Warnings Next Generation Plugin 9.10.3
 
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/display/vmware_vga.c but
-that may be an expected place for a later update.
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+* batch task Plugin
+* Conjur Secrets Plugin
+* Debian Package Builder Plugin
+* Publish Over SSH Plugin
 
-iQIcBAEBCAAGBQJX0sm4AAoJEHb/MwWLVhi2QsIP/1hKnB1uJWV/u/21SPfEbDSs
-LcjSDPxTljCGmH2AY3csiyhStvZNwQqkCiIr11ZC9Vq9EH/0dWvdO6MfN+Bcx6NT
-EczC6JpUbxGDlRPXx/+9A68KCXFNFBZG2qhntm0EXpn0r8LNE/6l/7EFuidd7daZ
-T8+zH1tn0PvRXT3k7tbKflxeTu/VppdJk9JHCgeTFkB6ENUdBSM/+me/ttFH4TcC
-BCVYzZ8leENIMZSSbnYEX/gvLLDDKIU0+1VvJzoqRDT/djG7grMrNMrEUBq0OaYl
-Hw1ME4zbh54xuMPLKriMLPtux5rc3zQzYtXqdIpR5u68GJrTp7OIyUPhhKEUEx3v
-xN0nAJnV67gBgUQliwyiZ/P3Mt6VCHzHdmytl2Te/DwoRgS1m04OjhLuJUFj9YXY
-0s3RoWa+U8hFvnS77H43pbMyIUnggf/ZXfy/bcjd43Hcevkoe9PJqbCifxVwTaG6
-8+lRoPB7552alZKBrpQt/nOnLdvsFN9FZt3B9yqNGTAvgYTNBIsIZ7MlHuAR0CME
-n34G5MbDBY9yb2USkW1jCstoqjwpwmA0+wV8pE8kVE8cg0ZXs9oCh1TGovqIF3c4
-zZMgpXHqCy7jdbzmsDu7vLVcGpnG2twNS4vHQTJCDCl5lECYJw52VENjUiolNNQ8
-zHBSkSZBXvMZRaT+5aIR
-=i+cy
------END PGP SIGNATURE-----
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2022-01-12/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-2558 / CVE-2022-20612
+Jenkins 2.329 and earlier, LTS 2.319.1 and earlier does not require POST
+requests for the HTTP endpoint handling manual build requests when no
+security realm is set, resulting in a cross-site request forgery (CSRF)
+vulnerability.
+
+This vulnerability allows attackers to trigger build of job without
+parameters.
+
+
+SECURITY-2163 / CVE-2022-20613 (CSRF) & CVE-2022-20614 (missing permission
+check)
+Mailer Plugin 391.ve4a_38c1b_cf4b_ and earlier does not perform a
+permission check in a method implementing form validation.
+
+This allows attackers with Overall/Read access to use the DNS used by the
+Jenkins instance to resolve an attacker-specified hostname.
+
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+
+SECURITY-2017 / CVE-2022-20615
+Matrix Project Plugin 1.19 and earlier does not escape HTML metacharacters
+in node and label names, and label descriptions.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Agent/Configure permission.
+
+
+SECURITY-2342 / CVE-2022-20616
+Credentials Binding Plugin 1.27 and earlier does not perform a permission
+check in a method implementing form validation.
+
+This allows attackers with Overall/Read access to validate if a credential
+ID refers to a secret file credential and whether it's a zip file.
+
+
+SECURITY-1878 / CVE-2022-20617
+Docker Commons Plugin 1.17 and earlier does not sanitize the name of an
+image or a tag.
+
+This results in an OS command execution vulnerability exploitable by
+attackers with Item/Configure permission or able to control the contents of
+a previously configured job's SCM repository.
+
+
+SECURITY-2033 / CVE-2022-20618
+Bitbucket Branch Source Plugin 737.vdf9dc06105be and earlier does not
+perform permission checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read access to enumerate credentials IDs
+of credentials stored in Jenkins. Those can be used as part of an attack to
+capture the credentials using another vulnerability.
+
+
+SECURITY-2467 / CVE-2022-20619
+Bitbucket Branch Source Plugin 737.vdf9dc06105be and earlier does not
+require POST requests for an HTTP endpoint, resulting in a cross-site
+request forgery (CSRF) vulnerability.
+
+This allows attackers with Overall/Read access to connect to an
+attacker-specified URL using attacker-specified credentials IDs obtained
+through another method, capturing credentials stored in Jenkins.
+
+
+SECURITY-2189 / CVE-2022-20620
+SSH Agent Plugin 1.23 and earlier does not perform permission checks in
+several HTTP endpoints.
+
+This allows attackers with Overall/Read access to enumerate credentials IDs
+of credentials stored in Jenkins. Those can be used as part of an attack to
+capture the credentials using another vulnerability.
+
+
+SECURITY-1624 / CVE-2022-20621
+Metrics Plugin 4.0.2.8 and earlier stores access keys unencrypted in its
+global configuration file `jenkins.metrics.api.MetricsAccessKey.xml` on the
+Jenkins controller as part of its configuration.
+
+This access key can be viewed by users with access to the Jenkins
+controller file system.
+
+
+SECURITY-1389 / CVE-2022-23105
+Active Directory Plugin implements two separate modes: integration with
+ADSI on Windows, and an OS agnostic LDAP-based mode.
+
+Active Directory Plugin 2.25 and earlier does not encrypt the transmission
+of data between the Jenkins controller and Active Directory servers unless
+it is configured to use the OS agnostic LDAP mode and the system property
+`hudson.plugins.active_directory.ActiveDirectorySecurityRealm.forceLdaps`
+is set to `true`.
+
+This allows attackers able to capture network traffic between the Jenkins
+controller and Active Directory servers to obtain credentials of users
+logging into Jenkins, as well as credentials of the manager DN (LDAP mode)
+or the Windows/Active Directory user Jenkins is running as (ADSI mode).
+
+
+SECURITY-2141 / CVE-2022-23106
+Configuration as Code Plugin 1.55 and earlier does not use a constant-time
+comparison when checking whether two authentication tokens are equal.
+
+This could potentially allow attackers to use statistical methods to obtain
+a valid authentication token.
+
+
+SECURITY-2090 / CVE-2022-23107
+Warnings Next Generation Plugin 9.10.2 and earlier does not restrict the
+name of a file when configuring a custom ID.
+
+This allows attackers with Item/Configure permission to write and read
+specific files with a hard-coded suffix on the Jenkins controller file
+system.
+
+
+SECURITY-2547 / CVE-2022-23108
+Badge Plugin allows adding custom build badges with a custom description
+and optionally a link to a URL.
+
+Badge Plugin 1.9 and earlier does not escape the description and does not
+check for allowed protocols when creating a badge.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Item/Configure permission.
+
+
+SECURITY-2213 / CVE-2022-23109
+Pipelines display commands executed in their Pipeline step descriptions and
+their output in build logs. To mask sensitive output,
+Pipeline: Groovy Plugin 2.84 and earlier specified an
+allowlist of known non-sensitive variables and masked everything else. This
+caused problems, so Pipeline: Groovy Plugin 2.85 and newer expects pipeline
+steps to explicitly specify that variables are to be treated as sensitive
+and should be removed from output.
+
+HashiCorp Vault Plugin 3.7.0 and earlier relied on the previous behavior
+and did not explicitly declare variables as sensitive or redacted them.
+
+This can result in exposure of Vault credentials in Pipeline build logs and
+Pipeline step descriptions.
+
+
+SECURITY-2287 / CVE-2022-23110
+Publish Over SSH Plugin 1.22 and earlier does not escape the SSH server
+name.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Overall/Administer permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2290 / CVE-2022-23111 (CSRF) & CVE-2022-23112 (missing permission
+check)
+Publish Over SSH Plugin 1.22 and earlier does not perform permission checks
+in methods implementing connection tests.
+
+This allows attackers with Overall/Read access to connect to an
+attacker-specified SSH server using attacker-specified credentials.
+
+Additionally, these connection tests methods do not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2307 / CVE-2022-23113
+Publish Over SSH Plugin 1.22 and earlier performs a validation of the file
+name specifying whether it is present or not.
+
+This results in a path traversal vulnerability allowing attackers with
+Item/Configure permission to discover the name of the Jenkins controller
+files.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2291 / CVE-2022-23114
+Publish Over SSH Plugin 1.22 and earlier stores password unencrypted in its
+global configuration file
+`jenkins.plugins.publish_over_ssh.BapSshPublisherPlugin.xml` on the Jenkins
+controller as part of its configuration.
+
+This password can be viewed by users with access to the Jenkins controller
+file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1025 / CVE-2022-23115
+batch task Plugin 1.19 and earlier does not require POST requests for
+several HTTP endpoints, resulting in cross-site request forgery (CSRF)
+vulnerabilities.
+
+These vulnerabilities allow attackers with Overall/Read access to retrieve
+logs, build or delete a batch task.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2522 (1) / CVE-2022-23116
+Conjur Secrets Plugin 1.0.9 and earlier implements functionality that
+allows agent processes to obtain the plain text of any attacker-provided
+encrypted secret.
+
+This allows attackers able to control agent processes to decrypt secrets
+stored in Jenkins obtained through another method.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2522 (2) / CVE-2022-23117
+Conjur Secrets Plugin 1.0.9 and earlier implements functionality that
+allows agent processes to obtain all username/password credentials
+(Credentials Plugin) stored on the Jenkins controller.
+
+This allows attackers able to control agent processes to retrieve those
+credentials.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2546 / CVE-2022-23118
+Debian Package Builder Plugin 1.6.11 and earlier implements functionality
+that allows agent processes to invoke command-line `git` at an
+attacker-specified path on the controller.
+
+This allows attackers able to control agent processes to invoke arbitrary
+OS commands on the controller.
+
+As of publication of this advisory, there is no fix.
+
+--00000000000043f04205d5667f49--
