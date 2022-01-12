@@ -1,50 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/28/6
-Message-ID: <20221228172517.l7h3m7wjfpxr3dzw@mutt-hbsd>
-Date: Wed, 28 Dec 2022 12:25:17 -0500
-From: Shawn Webb <shawn.webb@...denedbsd.org>
-To: oss-security@...ts.openwall.com
-Cc: Alejandro Colomar <alx.manpages@...il.com>, Michael Kerrisk <mtk.manpages@...il.com>, linux-kernel@...r.kernel.org, linux-man@...r.kernel.org
-Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/12/3
+Message-ID: <a9f45c1da8506e5c8e1ee89ffd6edc27e065e721.camel@mittwald.de>
+Date: Wed, 12 Jan 2022 10:48:33 +0000
+From: Sven Kieske <S.Kieske@...twald.de>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2021-3979 ceph: Ceph volume does not honour osd_dmcrypt_key_size
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 28, 2022 at 11:47:25AM -0500, Demi Marie Obenour wrote:
-> On Wed, Dec 28, 2022 at 10:24:58AM -0500, Shawn Webb wrote:
-> > On Tue, Dec 27, 2022 at 04:44:49PM -0800, Lyndon Nerenberg (VE7TFX/VE6BBM) wrote:
-> > > Dominique Martinet writes:
-> > > 
-> > > > But, really, I just don't see how this can practically be said to be parsable...
-> > > 
-> > > In its current form it never will be.  The solution is to place
-> > > this variable-length field last.  Then you can "cut -d ' ' -f 51-"
-> > > to get the command+args part (assuming I counted all those fields
-> > > correctly ...)
-> > > 
-> > > Of course, this breaks backwards compatability.
-> > 
-> > It would also break forwards compatibility in the case new fields
-> > needed to be added.
-> > 
-> > The only solution would be a libxo-style feature wherein a
-> > machine-parseable format is exposed by virtue of a file extension.
-> > 
-> > Examples:
-> > 
-> > 1. /proc/pid/stats.json
-> > 2. /proc/pid/stats.xml
-> > 3. /proc/pid/stats.yaml_shouldnt_be_a_thing
-> 
-> A binary format would be even better.  No risk of ambiguity.
+On Di, 2022-01-11 at 22:52 -0600, John Helmert III wrote:
+> Was a patch meant to be attached? Is there any report or PR upstream?
 
-I think the argument I'm trying to make is to be flexible in
-implementation, allowing for future needs and wants--that is "future
-proofing".
+There is at least no new commit in https://github.com/ceph/ceph/blob/master/src/ceph-volume/ceph_volume/util/encryption.py
+
+from a cursory glance at the open PRs I also don't see anything related, but I just might have missed it.
+
+There is also no tracking bug at https://tracker.ceph.com when searching for this CVE number.
 
 -- 
-Shawn Webb
-Cofounder / Security Engineer
-HardenedBSD
+Mit freundlichen Grüßen / Regards
 
-https://git.hardenedbsd.org/hardenedbsd/pubkeys/-/raw/master/Shawn_Webb/03A4CBEBB82EA5A67D9F3853FF2E67A277F8E1FA.pub.asc
+Sven Kieske
+Systementwickler / systems engineer
+ 
+ 
+Mittwald CM Service GmbH & Co. KG
+Königsberger Straße 4-6
+32339 Espelkamp
+ 
+Tel.: 05772 / 293-900
+Fax: 05772 / 293-333
+ 
+https://www.mittwald.de
+ 
+Geschäftsführer: Robert Meyer, Florian Jürgens
+ 
+St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
+Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
+
+Informationen zur Datenverarbeitung im Rahmen unserer Geschäftstätigkeit 
+gemäß Art. 13-14 DSGVO sind unter www.mittwald.de/ds abrufbar.
+
 
 Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
