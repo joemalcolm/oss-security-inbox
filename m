@@ -1,42 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/31/4
-Message-ID: <CACcefgf1xWf2ysgXopjfaAEmmbhAPgfNS2jzpDVccOjrk8Tf1w@mail.gmail.com>
-Date: Mon, 31 Jan 2022 13:45:23 +0100
-From: Enrico Olivelli <eolivelli@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/13/4
+Message-ID: <5103793.L7788WgU49@sinistra>
+Date: Thu, 13 Jan 2022 15:23:11 +0100
+From: Jonas Schäfer <jonas@...licki.name>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-41571: Apache Pulsar: Pulsar Admin API allows access to data from other tenants using getMessageById API
+Subject: Re: Prosody XMPP server advisory 2022-01-13 (Remote Unauthenticated Denial of Service) (CVE request)
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Hi, quick update:
 
-Description:
+On Donnerstag, 13. Januar 2022 15:01:11 CET Jonas Schäfer wrote:
+> If neither patching nor upgrading is an option, it is possible to unload
+> the websocket module using:
+> 
+> ```
+> prosodyctl shell module unload websocket
+> ```
 
-In Apache Pulsar it is possible to access data from BookKeeper that
-does not belong to the topics accessible by the authenticated user.
+This only works on recent Prosody trunk. On 0.11.x and earlier, you need to 
 
-The Admin API get-message-by-id requires the user to input a topic and
-a ledger id. The ledger id is a pointer to the data, and it is
-supposed to be a valid id for the topic.
-Authorisation controls are performed against the topic name and there
-is not proper validation that the ledger id is valid in the context of
-such ledger.
-So it may happen that the user is able to read from a ledger that
-contains data owned by another tenant.
+- use module:unload("websocket") from the telnet console, OR
+- unload the module via an XMPP Ad-Hoc command OR
+- if neither of these online ways are available, remove the module from the 
+configuration and restart prosody.
 
-This issue affects Apache Pulsar Apache Pulsar version 2.8.0 and prior
-versions; Apache Pulsar version 2.7.3 and prior versions; Apache
-Pulsar version 2.6.4 and prior versions.
+kind regards,
+Jonas
 
-This issue is being tracked as https://github.com/apache/pulsar/issues/11814
+> 
+> However, note well that third-party modules may also use the vulnerable
+> internal APIs to parse XML. Unloading websocket does not protect those
+> other modules; only the patch or the upgrade can do that.
+> 
+> **Fix**
+> 
+> This issue is fixed in Prosody 0.11.12 by restricting the available XML
+> features in the internal XML API.
+> 
+> **Attribution**
+> 
+> The issue was discovered during internal code review by Matthew Wild
+> during the development of another feature. The patch was developed by
+> Jonas Schäfer. A proof-of-concept exploit was developed by Jonas Schäfer
+> and Kim Alvefur and will be published soon to allow administrators to
+> check their instances.
+> 
+> **Timeline**
+> 
+> 2022-01-10: Discovery of the issue, development of an exploit as well as
+> an initial patch. Sharing of this information with Jitsi and Snikket
+> developers. Heads-up sent to the Snikket group chat.
+> 
+> 2022-01-11: Refinement of the patch, release preparation. Heads-up sent
+> to the Prosody group chat. Patch shared confidentially with Jitsi.
+> 
+> 2022-01-12: Continued release preparation, notification of distros@.
+> 
+> 2022-01-13: Coordinated Snikket and Prosody release with a
+> fix, publication of the advisory.
 
-Mitigation:
 
-If you are running Pulsar behind a proxy you can disable access to the
-REST API for the flawed API
-
-/admin/v2/non-persistent/{tenant}/{namespace}/{topic}/ledger/{ledgerId}/entry/{entryId}
-
-References:
-
-https://pulsar.apache.org/admin-rest-api/#operation/getLastMessageId
-https://github.com/apache/pulsar/issues/11814
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
