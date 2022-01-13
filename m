@@ -1,25 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/04/2
-Message-ID: <7d7a8e28-8cb4-4938-f7c9-9bfd2d3f0fec@apache.org>
-Date: Tue, 04 Jan 2022 05:55:27 +0000
-From: Benoit Tellier <btellier@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/13/1
+Message-ID: <CA+eGCHaJ8Vcgm=+KqmFwmLd8BP+Vn8aos6RZzvbzHd544SdQZg@mail.gmail.com>
+Date: Thu, 13 Jan 2022 16:21:09 +0800
+From: tr3e wang <tr3e.wang@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-40110: Apache James IMAP vulnerable to a ReDoS 
+Cc: Daniel Borkmann <daniel@...earbox.net>
+Subject: Linux Kernel eBPF Improper Input Validation Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Hi all,
 
-Description:
+This vulnerability allows local attackers to escalate privileges on
+affected installations of Linux Kernel. An attacker must first obtain the
+ability to execute low-privileged code on the target system in order to
+exploit this vulnerability.
 
-Using Jazzer fuzzer, we identified that an IMAP user can craft IMAP LIST commands to orchestrate a Denial Of Service using a vulnerable Regular expression.  This affected Apache James prior to 3.6.1
+The specific flaw exists within the handling of eBPF programs. The issue
+results from the lack of proper validation of user-supplied eBPF programs
+prior to executing them. An attacker can leverage this vulnerability to
+escalate privileges and execute code in the context of the kernel.
+BE AWARE, unprivileged bpf is disabled by default in most distros.
 
-This issue is being tracked as JAMES-3635
+*Affected Version*
 
-Mitigation:
+    Linux Kernel 5.8 or later
 
-We recommend upgrading to Apache James 3.6.1 or higher , which enforce the use of RE2J regular expression engine to execute regex in linear time without back-tracking.
+*Root Cause Analysis*
 
-Credit:
+The bpf verifier(kernel/bpf/verifier.c) did not properly restrict several
+*_OR_NULL pointer types which allows these types to do pointer arithmetic.
+This can be leveraged to bypass the verifier check and escalate privilege.
+(see
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/kernel/bpf/verifier.c?h=v5.10.83#n6022
+)
 
-Apache James PMC would like to thanks Benoit TELLIER for this report.
+*Exploit Code*
+
+Exploit code will be delayed for 5 days and will be posted at 12:00 UTC,
+Jan 18, 2022
+
+*Mitigations*
+
+set kernel.unprivileged_bpf_disabled to 1
+
+BE AWARE AGAIN, unprivileged bpf is disabled by default in most distros.
+
+*Credits*
+
+tr3e of SecCoder Security Lab
+Best,
+tr3e
 
