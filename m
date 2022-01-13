@@ -1,21 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/04/1
-Message-ID: <916e8648-6c5b-ae73-8a09-549c6c10bbf7@apache.org>
-Date: Fri, 04 Mar 2022 11:04:02 +0000
-From: PJ Fanning <fanningpj@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/13/5
+Message-ID: <5010537.PsH9TYb4DV@sinistra>
+Date: Thu, 13 Jan 2022 18:07:44 +0100
+From: Jonas Schäfer <jonas@...licki.name>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-26336: poi-scratchpad: A carefully crafted TNEF file can cause an out of memory exception 
+Subject: Re: Prosody XMPP server advisory 2022-01-13 (Remote Unauthenticated Denial of Service) (CVE-2022-0217)
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Hi again,
 
-Description:
+CVE-2022-0217 has been assigned.
 
-A shortcoming in the HMEF package of poi-scratchpad (Apache POI) allows an attacker to cause an Out of Memory exception. This package is used to read TNEF files (Microsoft Outlook and Microsoft Exchange Server). If an application uses poi-scratchpad to parse TNEF files and the application allows untrusted users to supply them, then a carefully crafted file can cause an Out of Memory exception. This issue affects poi-scratchpad version 5.2.0 and prior versions. Users are recommended to upgrade to poi-scratchpad 5.2.1.
-
-This issue is being tracked as https://bz.apache.org/bugzilla/show_bug.cgi?id=65899
-
-Credit:
-
-Apache POI would like to thank Craig Haft of Yahoo Inc. for reporting and providing a patch for this issue.
-
+kind regards,
+Jonas
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
