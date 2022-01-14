@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1889" "Tuesday" "18" "September" "2018" "15:12:47" "+0200" "=?UTF-8?B?SmVhbi1CYXB0aXN0ZSBPbm9mcsOp?=" "jb@nanthrax.net" "<26337f62-619b-debf-3972-ed3c7082092e@nanthrax.net>" "47" "[oss-security] [SECURITY] New security advisory for CVE-2018-11787 released for Apache Karaf" nil nil nil "9" "2018091813:12:47" "[oss-security] [SECURITY] New security advisory for CVE-2018-11787 released for Apache Karaf" (number mark "U       jb@nanthrax. Sep 18   47/1889  " thread-indent "\"[oss-security] [SECURITY] New security advisory for CVE-2018-11787 released for Apache Karaf\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1739" "Friday" "14" "January" "2022" "16:57:53" "+0800" "tr3e wang" "tr3e.wang@gmail.com" nil "60" "[oss-security] Re: Linux Kernel eBPF Improper Input Validation Vulnerability" nil nil nil "1" nil nil (number mark "U       tr3e.wang@gm Jan 14   60/1739  " thread-indent "\"[oss-security] Re: Linux Kernel eBPF Improper Input Validation Vulnerability\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: Linux Kernel eBPF Improper Input Validation Vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 16134 invoked by uid 550); 18 Sep 2018 13:31:21 -0000
+Received: (qmail 5303 invoked by uid 550); 14 Jan 2022 09:04:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,67 +12,100 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23903 invoked from network); 18 Sep 2018 13:13:00 -0000
-X-Originating-IP: 82.238.224.4
-To: user@karaf.apache.org, Karaf Dev <dev@karaf.apache.org>,
- Apache Security Team <security@apache.org>, oss-security@lists.openwall.com,
- ktschmidt@gmail.com
-From: =?UTF-8?Q?Jean-Baptiste_Onofr=c3=a9?= <jb@nanthrax.net>
-Message-ID: <26337f62-619b-debf-3972-ed3c7082092e@nanthrax.net>
-Date: Tue, 18 Sep 2018 15:12:47 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+Received: (qmail 30230 invoked from network); 14 Jan 2022 08:58:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=Y2K/VDMbimc1kz+K4WtPglSzpqVrCbaruHauy7fJgDU=;
+        b=XHQ2ZA6UomH2mbviBYGuFBBB8xlKoGK/N0sqoon3wG0qOdyGTWxWDpK9AmqB+3gW5j
+         kGWdHfCfPTYK/HzTkHBf1rieNYsfe2OmZP71k7L+UlW0UrisyXcHZDEs6w5WJGSh/Wtr
+         nZcgLWJuHXAciXJi5QuzvuCb+0KtL5IXWzOIG03LlVP3ySapAMyOiUvee2uoZpTEhEYg
+         kcrJssWT+sztAEXWWf1PzFB6xaioJzr1uukHvSiI0DqgmiBuzayhCuEbzglogjeQEt4u
+         AK10b0ufhHGzZP7hN49TudRsnaOWxZ1PjRxMQLu4qtTQG8kyTA3o+swrg4qC+8T1HjAq
+         5DTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=Y2K/VDMbimc1kz+K4WtPglSzpqVrCbaruHauy7fJgDU=;
+        b=vRo+m3/+hTQfLEXb5thRLLfMrhw4gMX54qG7STzE34TxiFuZ3c2pFiiGeIdGNcpgYU
+         M3+6x65cS2NG9IIJqvLiZXEa8cyXNeZ+vKQKOtsoMbdXNgBL2f3FzUxPqwYndHwsz9Fo
+         Wb0l0X/bYwflpfx3VAJo6hTiS1IFm07GrayxgxYZlnRaBkn27dw8TSlY+1Z08sAsSO2j
+         3L5Y72O3nmEZH08F47BZ4l6lBc/kNAEPMUoCP6okxzFRJ5gR7B1pnp9l6iBQdUbh17z+
+         1kKmwErBkqV2GMXb6gEhH1J69ecu71nI7VNzqDEtXfkuv66c1rfuYwnNHKh1b07oAeew
+         S5ng==
+X-Gm-Message-State: AOAM530EVd4ZFyIMCAdBKhydTbgT3OHXc4VegtyeNjxO9UmTdzwG43nR
+	XGoe/5BTqrXzp6plhsmPvONuylzNoiSRswWCdj/NbhVBPnFzp/0CPHw=
+X-Google-Smtp-Source: ABdhPJx0e7dffdc9PjM0PIotKS3JzGBDPpAX+KChw3dannUuTRTc2hewV9sQLARQnfV3MDMq7DUOt76p1VhCyRmOMXk=
+X-Received: by 2002:a05:6808:e90:: with SMTP id k16mr6586962oil.3.1642150684242;
+ Fri, 14 Jan 2022 00:58:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] [SECURITY] New security advisory for CVE-2018-11787 released for
- Apache Karaf
+References: <CA+eGCHaJ8Vcgm=+KqmFwmLd8BP+Vn8aos6RZzvbzHd544SdQZg@mail.gmail.com>
+In-Reply-To: <CA+eGCHaJ8Vcgm=+KqmFwmLd8BP+Vn8aos6RZzvbzHd544SdQZg@mail.gmail.com>
+From: tr3e wang <tr3e.wang@gmail.com>
+Date: Fri, 14 Jan 2022 16:57:53 +0800
+Message-ID: <CA+eGCHa7dOhjZQwdA+ONaWQ-JFvn0iK_W0xmgCHgNDvFzROF+Q@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="00000000000033b73c05d587002c"
+Subject: [oss-security] Re: Linux Kernel eBPF Improper Input Validation Vulnerability
 
-A new security advisory has been released for Apache Karaf, that is
-fixed in recent 3.0.9, 4.0.9 and 4.1.1 releases.
+--00000000000033b73c05d587002c
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-CVS-2018-11787: Apache Karaf unsecure access to Gogo shell in the webconsole
+Hi all,
 
-Severity: Moderate
+CVE-2022-23222 has been assigned to this issue.
 
-Vendor: The Apache Software Foundation
+Thanks,
+tr3e
 
-Versions Affected: all versions of Apache Karaf prior to 3.0.9, 4.0.9,
-4.1.1.
+tr3e wang <tr3e.wang@gmail.com> =E4=BA=8E2022=E5=B9=B41=E6=9C=8813=E6=97=A5=
+=E5=91=A8=E5=9B=9B 16:21=E5=86=99=E9=81=93=EF=BC=9A
 
-Description:
+> Hi all,
+>
+> This vulnerability allows local attackers to escalate privileges on
+> affected installations of Linux Kernel. An attacker must first obtain the
+> ability to execute low-privileged code on the target system in order to
+> exploit this vulnerability.
+>
+> The specific flaw exists within the handling of eBPF programs. The issue
+> results from the lack of proper validation of user-supplied eBPF programs
+> prior to executing them. An attacker can leverage this vulnerability to
+> escalate privileges and execute code in the context of the kernel.
+> BE AWARE, unprivileged bpf is disabled by default in most distros.
+>
+> *Affected Version*
+>
+>     Linux Kernel 5.8 or later
+>
+> *Root Cause Analysis*
+>
+> The bpf verifier(kernel/bpf/verifier.c) did not properly restrict several
+> *_OR_NULL pointer types which allows these types to do pointer arithmetic.
+> This can be leveraged to bypass the verifier check and escalate privilege.
+> (see
+> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/ker=
+nel/bpf/verifier.c?h=3Dv5.10.83#n6022
+> )
+>
+> *Exploit Code*
+>
+> Exploit code will be delayed for 5 days and will be posted at 12:00 UTC,
+> Jan 18, 2022
+>
+> *Mitigations*
+>
+> set kernel.unprivileged_bpf_disabled to 1
+>
+> BE AWARE AGAIN, unprivileged bpf is disabled by default in most distros.
+>
+> *Credits*
+>
+> tr3e of SecCoder Security Lab
+> Best,
+> tr3e
+>
 
-When the webconsole feature is installed in Karaf, it is available at
-.../system/console and requires authentication to access it.  One part
-of the console is a Gogo shell/console that gives access to the
-command line console of Karaf via a Web browser, and when navigated to
-it is available at .../system/console/gogo.  Trying to go directly to
-that URL does require authentication.
-
-And optional bundle that some applications use is the Pax Web Extender
-Whiteboard, it is part of the pax-war feature and perhaps others.
-When it is installed, the Gogo console becomes available at another
-URL .../gogo/, and that URL is not secured giving access to the Karaf
-console to unauthenticated users.
-
-A mitigation for the issue is to manually stop/uninstall Gogo plugin
-bundle that is installed with the webconsole feature, although of
-course this removes the console from the .../system/console
-application, not only from the unauthenticated endpoint.  One could
-also stop/uninstall the Pax Web Extender Whiteboard, but other
-components/applications may require it and so their functionality
-would be reduced/compromised.
-
-This has been fixed in revision:
-
-https://gitbox.apache.org/repos/asf?p=karaf.git;h=cfa213a
-https://gitbox.apache.org/repos/asf?p=karaf.git;h=434e525
-https://gitbox.apache.org/repos/asf?p=karaf.git;h=1fc60d7
-
-Mitigation: Apache Karaf users should upgrade to 3.0.9, 4.0.9, 4.1.1
-or later as soon as possible.
-
-JIRA Tickets: https://issues.apache.org/jira/browse/KARAF-4993
-
-Credit: This issue was reported by Kevin Schmidt
+--00000000000033b73c05d587002c--
