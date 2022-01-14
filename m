@@ -1,78 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/16/2
-Message-ID: <YoJVBebSkRsaOv3b@quatroqueijos>
-Date: Mon, 16 May 2022 10:43:33 -0300
-From: Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/14/2
+Message-ID: <775f3f6a-cb7e-60d5-b8ea-8e6cdaf762fb@t-online.de>
+Date: Fri, 14 Jan 2022 12:09:00 +0100
+From: Nils Bars <nils_bars@...nline.de>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>
-Subject: Re: linux-distros list policy and Linux kernel
+Subject: Null pointer deref in unzip 6.0
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 16, 2022 at 03:12:20PM +0200, Jason A. Donenfeld wrote:
-> Hi Alexander,
-> 
-> I think a lot of this depends on what you feel the primary value in
-> distros@ is.
->
-> I always thought its primary purpose was to centralize embargoed
-> vulnerability reports, using its presence as *the* de facto forum for
-> that, in order to receive nearly all embargoed bugs. Then, those bugs
-> become subject to the distros@ 14-day disclosure policies. Seen this
-> way, distros@ is a mechanism for ensuring that bugs eventually *do*
-> become disclosed, rather than languishing in embarrassed vendor
-> purgatory forever.
->
-> Maybe I'm far off, though, so it'd be interesting to learn if you have a
-> different idea of its value.
->
+Hello,
 
-[...]
+I discovered a null pointer dereference in unzip 6.0. All details, 
+including the input required for reproduction can be found here: 
+https://bugs.launchpad.net/ubuntu/+source/unzip/+bug/1957077. If you 
+need further details, please do not hesitate to ask.
 
-> And anyway, practically speaking, security@...nel.org's disclosure
-> deadline is usually something like 7 days, which is pretty short, so for
-> people who misread the documentation, at most they'll only be miffed
-> about a few days, rather than a few months.
-> 
+Regards,
+Nils
 
-Though I want to add a little more to this discussion, I think this needs
-clarification and is really one of the main pain points here, in my opinion.
-
-"Although our preference is to release fixes for publicly undisclosed bugs
-as soon as they become available, this may be postponed at the request of
-the reporter or an affected party for up to 7 calendar days from the start
-of the release process"
-
-This is about the fixes, not the security report. As I read it, once a fix is
-developed/reviewed/accepted, kernel maintainers/developers may hold the *fix*
-release up to 7 days.
-
-Right in the next paragraph, though:
-
-"While embargoed information may be shared with trusted individuals in
-order to develop a fix, such information will not be published alongside
-the fix or on any other disclosure channel without the permission of the
-reporter.  This includes but is not limited to the original bug report
-and followup discussions (if any), exploits, CVE information or the
-identity of the reporter."
-
-This means that it's now up to the reporter to disclose any information if they
-want to. They may never disclose it. They may wait for someone else to disclose
-it. Or decide to disclose it immediately.
-
-Now, as you said earlier in your message (which is why I kept that excerpt),
-linux-distros ends up having such a role where reports sent to it should be
-made public in no more than 14 days. But there is no such mechanism on
-security@...nel.org rules as documented at
-Documentation/admin-guide/security-bugs.rst, as I understand it.
-
-Cascardo.
-
-
-> So I think maybe your option (0) makes sense? Enforce the policy, which
-> has worked well enough for a long while now.
-> 
-> Jason
-> 
-> [1] https://git.kernel.org/torvalds/c/d114b9fe78c8d
-> [2] https://lists.immunityinc.com/pipermail/dailydave/2015-August/000976.html
-> [3] https://git.kernel.org/torvalds/c/e3c1c4fd9e6d1
