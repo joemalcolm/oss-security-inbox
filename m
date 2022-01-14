@@ -1,27 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/12/6
-Message-ID: <ab7e33c7-9941-fe45-90dd-3217e0f82ed0@apache.org>
-Date: Tue, 12 Apr 2022 15:15:06 +0000
-From: Yasser Zamani <yasserzamani@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/14/1
+Message-ID: <CA+eGCHa7dOhjZQwdA+ONaWQ-JFvn0iK_W0xmgCHgNDvFzROF+Q@mail.gmail.com>
+Date: Fri, 14 Jan 2022 16:57:53 +0800
+From: tr3e wang <tr3e.wang@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-31805: Apache Struts: Forced OGNL evaluation, when evaluated on raw not validated user input in tag attributes, may lead to RCE. 
+Subject: Re: Linux Kernel eBPF Improper Input Validation Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Hi all,
 
-The fix issued for CVE-2020-17530 was incomplete. So from Apache Struts 2.0.0 to 2.5.29, still some of the tag’s attributes could perform a double evaluation if a developer applied forced OGNL evaluation by using the %{...} syntax. Using forced OGNL evaluation on untrusted user input can lead to a Remote Code Execution and security degradation.
+CVE-2022-23222 has been assigned to this issue.
 
-Mitigation:
+Thanks,
+tr3e
 
-Avoid using forced OGNL evaluation on untrusted user input, and/or upgrade to Struts 2.5.30 which checks if expression evaluation won’t lead to the double evaluation.
+tr3e wang <tr3e.wang@...il.com> 于2022年1月13日周四 16:21写道：
 
-Please read our Security Bulletin S2-062 for more details.
-
-Credit:
-
-Apache Struts would like to thank Chris McCown for reporting this issue!
-
-References:
-
-https://cwiki.apache.org/confluence/display/WW/S2-062
+> Hi all,
+>
+> This vulnerability allows local attackers to escalate privileges on
+> affected installations of Linux Kernel. An attacker must first obtain the
+> ability to execute low-privileged code on the target system in order to
+> exploit this vulnerability.
+>
+> The specific flaw exists within the handling of eBPF programs. The issue
+> results from the lack of proper validation of user-supplied eBPF programs
+> prior to executing them. An attacker can leverage this vulnerability to
+> escalate privileges and execute code in the context of the kernel.
+> BE AWARE, unprivileged bpf is disabled by default in most distros.
+>
+> *Affected Version*
+>
+>     Linux Kernel 5.8 or later
+>
+> *Root Cause Analysis*
+>
+> The bpf verifier(kernel/bpf/verifier.c) did not properly restrict several
+> *_OR_NULL pointer types which allows these types to do pointer arithmetic.
+> This can be leveraged to bypass the verifier check and escalate privilege.
+> (see
+> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/kernel/bpf/verifier.c?h=v5.10.83#n6022
+> )
+>
+> *Exploit Code*
+>
+> Exploit code will be delayed for 5 days and will be posted at 12:00 UTC,
+> Jan 18, 2022
+>
+> *Mitigations*
+>
+> set kernel.unprivileged_bpf_disabled to 1
+>
+> BE AWARE AGAIN, unprivileged bpf is disabled by default in most distros.
+>
+> *Credits*
+>
+> tr3e of SecCoder Security Lab
+> Best,
+> tr3e
+>
 
