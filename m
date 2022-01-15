@@ -1,43 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/08/2
-Message-ID: <20220408082329.o5ce7giuals7rd7h@jwilk.net>
-Date: Fri, 8 Apr 2022 10:23:29 +0200
-From: Jakub Wilk <jwilk@...lk.net>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: zgrep, xzgrep: arbitrary-file-write vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/15/2
+Message-ID: <0cb43119-de19-4f4b-99a8-b7949227a26c@oracle.com>
+Date: Fri, 14 Jan 2022 18:56:13 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Fuzzy CVE's in GNU inetutils
 Content-Type: text/plain; charset=utf-8
 
-* Jim Meyering <jim@...ering.net>, 2022-04-07, 11:44:
->All previous versions of gzip and xzutils are affected.
->
->xzutils released this patch today:
->
->  https://tukaani.org/xz/xzgrep-ZDI-CAN-16587.patch
->  https://tukaani.org/xz/xzgrep-ZDI-CAN-16587.patch.sig
->
->gzip-1.12 was released today, with the fix:
->
->  https://lists.gnu.org/r/bug-gzip/2022-04/msg00011.html
->  https://ftp.gnu.org/gnu/gzip/gzip-1.12.tar.xz
->  https://ftp.gnu.org/gnu/gzip/gzip-1.12.tar.xz.sig
+I noticed a number of new CVE's recently published against GNU inetutils,
+which seem to correspond to the results of fuzz testing that were mailed
+out in December, as seen on
+https://lists.gnu.org/archive/html/bug-inetutils/2021-12/threads.html
 
-As mentioned in the xz patch, if you have GNU sed, you get not just file 
-write, but direct code execution.
+Trying out the provided POC inputs with other ftp, telnet, and tftp
+commands derived from the same original BSD sources showed some seem
+to originate in the common roots and may affect other implementations
+as well.
 
-PoC:
+But they all also seem to only be of the case "user can crash local
+client" - I don't see any security boundaries crossed or security
+assurances broken here, just bugs in local command input parsers,
+so I don't see why they have CVE ids in general.
 
-    $ touch foo.gz
-    $ echo foo | gzip > "$(printf '|\n;e cowsay pwned\n#.gz')"
-    $ zgrep foo *.gz
-     _______
-    < pwned >
-     -------
-            \   ^__^
-             \  (oo)\_______
-                (__)\       )\/\
-                    ||----w |
-                    ||     ||
-    foo
+They are:
+
+CVE-2021-46060 	A NULL Pointer Dereference vulnerability exists in GNU inetutils 2.2 via the setcmd function at commands.c, which causes a denial of service.
+
+CVE-2021-46058 	A heap-based Buffer Overflow vulnerability exists in GNU inetutils 2.2 in cmds.c, which caused a denial of service.
+
+CVE-2021-45782 	An untrusted pointer dereference in getcmd() at inetutils/src/tftp.c of GNU Inetutils v2.2.16-cf091 can lead to a segmentation fault or application crash.
+
+CVE-2021-45781 	GNU Inetutils 2.2.16-cf091 was discovered to contain a heap-based buffer overflow via the component logger at inetutils/src/logger.c.
+
+CVE-2021-45780 	GNU Inetutils commit cf091 was discovered to contain a memory leak via the ifconfig function.
+
+CVE-2021-45779 	A NULL pointer dereference in unsetcmd() at inetutils/telnet/commands.c of GNU Inetutils v2.2.16-cf091 can lead to a segmentation fault or application crash.
+
+CVE-2021-45778 	A NULL pointer dereference in setnmap() at cmds.c of GNU Inetutils v2.2.16-cf091 can lead to a segmentation fault or application crash.
+
+CVE-2021-45775 	GNU Inetutils 2.2.16-cf091 was discovered to contain an infinite loop in domacro at domacro.c.
+
+CVE-2021-45774 	A NULL pointer dereference in help() at inetutils/telnet/commands.c of GNU Inetutils v2.2.16-cf091 can lead to a segmentation fault or application crash.
 
 -- 
-Jakub Wilk
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
