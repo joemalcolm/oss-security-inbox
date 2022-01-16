@@ -1,29 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/31/1
-Message-Id: <5379a9a1-f13a-4d98-97b1-37c11dfe9d0a@www.fastmail.com>
-Date: Thu, 31 Mar 2022 15:33:18 +0200
-From: "Kevin Decherf" <kevin@...cherf.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/16/1
+Message-ID: <YePdKmWRZCS9HDqD@eldamar.lan>
+Date: Sun, 16 Jan 2022 09:54:02 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: SpringShell and recent OpenJDK updates
+Subject: Re: Fuzzy CVE's in GNU inetutils
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 30, 2022, at 22:15, Alan Coopersmith wrote:
-> On 3/30/22 11:31, Jeffrey Walton wrote:
->> Hi Everyone,
->> 
->> I saw Ubuntu patched OpenJDK 11 recently. [1] Was that due to SpringShell? [2]
->
-> The Spring Framework is separate from OpenJDK.  (Perhaps you were thinking of
-> the Swing framework, which is part of OpenJDK?)
->
-> The latest I've seen on SpringShell suggests it was dropped without warning
-> as a zero-day: https://bugalert.org/content/notices/2022-03-30-spring.html
+Hi,
 
-Here are official announcements regarding the Spring Framework RCE:
-- https://spring.io/blog/2022/03/31/spring-framework-rce-early-announcement
-- https://tanzu.vmware.com/security/cve-2022-22965
+On Fri, Jan 14, 2022 at 06:56:13PM -0800, Alan Coopersmith wrote:
+> I noticed a number of new CVE's recently published against GNU inetutils,
+> which seem to correspond to the results of fuzz testing that were mailed
+> out in December, as seen on
+> https://lists.gnu.org/archive/html/bug-inetutils/2021-12/threads.html
+> 
+> Trying out the provided POC inputs with other ftp, telnet, and tftp
+> commands derived from the same original BSD sources showed some seem
+> to originate in the common roots and may affect other implementations
+> as well.
+> 
+> But they all also seem to only be of the case "user can crash local
+> client" - I don't see any security boundaries crossed or security
+> assurances broken here, just bugs in local command input parsers,
+> so I don't see why they have CVE ids in general.
+> 
+> They are:
+> 
+> CVE-2021-46060 	A NULL Pointer Dereference vulnerability exists in GNU inetutils 2.2 via the setcmd function at commands.c, which causes a denial of service.
+> 
+> CVE-2021-46058 	A heap-based Buffer Overflow vulnerability exists in GNU inetutils 2.2 in cmds.c, which caused a denial of service.
+> 
+> CVE-2021-45782 	An untrusted pointer dereference in getcmd() at inetutils/src/tftp.c of GNU Inetutils v2.2.16-cf091 can lead to a segmentation fault or application crash.
+> 
+> CVE-2021-45781 	GNU Inetutils 2.2.16-cf091 was discovered to contain a heap-based buffer overflow via the component logger at inetutils/src/logger.c.
+> 
+> CVE-2021-45780 	GNU Inetutils commit cf091 was discovered to contain a memory leak via the ifconfig function.
+> 
+> CVE-2021-45779 	A NULL pointer dereference in unsetcmd() at inetutils/telnet/commands.c of GNU Inetutils v2.2.16-cf091 can lead to a segmentation fault or application crash.
+> 
+> CVE-2021-45778 	A NULL pointer dereference in setnmap() at cmds.c of GNU Inetutils v2.2.16-cf091 can lead to a segmentation fault or application crash.
+> 
+> CVE-2021-45775 	GNU Inetutils 2.2.16-cf091 was discovered to contain an infinite loop in domacro at domacro.c.
+> 
+> CVE-2021-45774 	A NULL pointer dereference in help() at inetutils/telnet/commands.c of GNU Inetutils v2.2.16-cf091 can lead to a segmentation fault or application crash.
 
--- 
-Kevin Decherf - @Kdecherf
-GPG 0x108ABD75A81E6E2F
-https://kdecherf.com
+In fact all of those were REJECTED again (with a "Further
+investigation showed that it was not a security issue" reason).
+
+Regards,
+Salvatore
