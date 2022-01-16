@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1923" "Wednesday" "17" "March" "2021" "12:40:41" "+0000" "John Haxby" "john.haxby@oracle.com" nil "46" "Re: [oss-security] Use After Free and Double Free bugs in Linux Kernel mainline" nil nil nil "3" nil nil (number mark "U       john.haxby@o Mar 17   46/1923  " thread-indent "\"Re: [oss-security] Use After Free and Double Free bugs in Linux Kernel mainline\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Use After Free and Double Free bugs in Linux Kernel mainline" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["725" "Sunday" "16" "January" "2022" "15:49:29" "-0800" "Alan Coopersmith" "alan.coopersmith@oracle.com" nil "17" "Re: [oss-security] Fuzzy CVE's in GNU inetutils" nil nil nil "1" nil nil (number mark "U       alan.coopers Jan 16   17/725   " thread-indent "\"Re: [oss-security] Fuzzy CVE's in GNU inetutils\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Fuzzy CVE's in GNU inetutils" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 25718 invoked by uid 550); 17 Mar 2021 12:40:58 -0000
+Received: (qmail 11705 invoked by uid 550); 16 Jan 2022 23:49:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,158 +12,134 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25695 invoked from network); 17 Mar 2021 12:40:57 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : subject :
- date : message-id : references : in-reply-to : content-type : content-id :
- content-transfer-encoding : mime-version; s=corp-2020-01-29;
- bh=/YR1+vXKQGH+lmOZtRugJOaHwQzXOvnPttNQmBdZIC4=;
- b=JPzhTnUqtwng3lUQm9iLAwF6KlvqGiz6IOc1/pg9sGXcxI2w9JXeSfrhsrrwLRTyR1ff
- hf0EvNNnXepbXN6DXk6k3zUFZrtPlEYlu7aoBxu5cH3UMemy2Byr0UEF37d4q9QyQJkf
- ZodQj7cbTkfhemAk7GuTJFnOT6WSZwK5PYsgY4rveQXIQY1ZJxLbEV8qe6szoxGkbBmU
- VQ1HAfTxlPLH+r+4UH2SzgitRBI0rkYtV8SCZOH02lcyoaJxUHa1M7vMOf8q1+ubqDYO
- 3oJ3bqlLp+ntdna1ptgfJKz12IFYKCU731KNWjtbGAeltMMRUHBDKMpmRRbNpr/2uJqI Qg== 
+Received: (qmail 11681 invoked from network); 16 Jan 2022 23:49:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=message-id : date :
+ subject : to : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=corp-2021-07-09;
+ bh=W826LQh4xU8xqeXt9tDCcDjM35fjCfl3r5W9j+5Fzx0=;
+ b=Rg8bMhSjaLSQTSvfXJ1etOySRnfrKNmfvo+fTGXYkwQtYEiQMEu23bZxgRlKwGEXcI5k
+ BSW0A2XmQoREIB1/yp/7IUC3/3che1eJHOXLU7CEbWs+jn08pyhvZWo1zOPFI0EZKw4c
+ U0W+bS4/EwDPKjYE33XoyGCG9IwtNAo3rXHLaBdN/VMulgslAtKjJsW2hCJwbkCbKD6C
+ sbCHVchrEi0GiJL7OyytM4HT6Jokk7e6RPL2PDgp+++TeQ+uNZGuuD0jcVAJ/q9BhHKT
+ GZH4T8TTe5Ww35x/EWwPSx9uN3X/mE/DIlV1NUtbX+0UT2n50C6vT7crctGQvT0x3Xzp wA== 
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=lsphzUIBR1cjRe4zebiQQQh3b5H6CYbBkRo3+shyf96Gj7cIVmKArLq01l6hbQ2uG7oko6n7Z+8+xDk3eVh7e/vWqAtef9k8GvpOHr+yI27cthZ6ahJ5KraJym+DNFlsIK3EK0nONAavI6XcCQM1/Rws+AAkw81K8IGfYODxNZ18zJAMRY/kKFnSnFaIHaUiETP5jQGCmfV3OM8gHbsMCJFjAQIS5Fs3GprnZaInOSU4kzJIUOT/X1NZ3Q4BEtf/Ln4omlwGjBxiQrBJ8Nm3tgr842ClE08CLvME6M1gGXEQbymS1e07H8x62feQpE795EHGkxdPzLrjYQqMgPrKSA==
+ b=kpVPSS3HW7PSTOBhNwOUnwrgVWQn4IddBz16t35GAwFNb+RGR1ZnJ/trZEQs5+rvr9R43I6xfB36pFUjz4do818BxKmfY2IlW+G8wVjX81PyWTbPChNdJKhxzjCxv0ZLmEj/gU7dW2RUXRseUgKRPFA8pWfajZpHpkF//RrV+QMN4PRdWvVs8di2gCB1bGZQNOq3j4skr/tyRGzou0mm6EQTJ3OSjls4dOAqnk0kcPauiMUa1OKasVu2RRw0UVSkkLGTuAaWJE8ErgR8tzFLRMRNLb78vBRx+uRxgKWb49dPKdOFq8SpO8GYsTSP3Mv+TC3NeWr5KbFenPDpaa5dIg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/YR1+vXKQGH+lmOZtRugJOaHwQzXOvnPttNQmBdZIC4=;
- b=cVKo7iCn1ujZzX8XTd6S6E1cUlgo0IHVC1V/XlznxJcNd36oZFHlPWtAPoRyHEZYUfU7x6X39oVFRs3NvYaetq6SuOxzmsxrDnWkCBCqxnNeT6BnRd8YRj/SrCBMxNshUIlMdfeGrMhUPWa1uc0rrkK20U63MR4LD8vady0hdGIoub44EpUwy1b6d5DlKKzYqQYsRs2JDigo2D1A7Sj2gP9uqv0CfYvmn8jbJJqKzmsd/ZTd+Fr8d+Mh80nMmuls/UEKbUEwVekGB4nqfpn5td8gOVOv6NCzKa7wxNDc1Kzm4c6HwVQDPvlrfAPwlFm4dnYqINyEn7HfdRKikCLVWg==
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=W826LQh4xU8xqeXt9tDCcDjM35fjCfl3r5W9j+5Fzx0=;
+ b=hrAfIRCeZ/j553LmZfwEnzSXGB4zzodVIQWTVdJTLdI6G2xdqePS9MuJvLclBOHnxCP+JkGxzXoJxXz/ldMljjUPAQb1cz74UDZ7uekYR10TtBOyTisbDvnKzQe8JlIrh3nUUjuMkp/KvYDZPeAU7hojb9Xne09d6U2TYixBvIF1m6JPuBTfDJxv+afaqJO7mWC3LfMEymT+Bz8evLMm9BFx1UXOSSJgvqrhSCv9R0Id0GfcMNLBR6oMjvg+qJd8Aexdi298OsyaQkkNBGAr5NzolqcrrYa7sfSM0GTG/uu9YcFSr9QM8/6LOicavoeACv4U+5Qqau4n+hPAyLk2hA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
  dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/YR1+vXKQGH+lmOZtRugJOaHwQzXOvnPttNQmBdZIC4=;
- b=Yc4UZH4OnQEpvTyA1pQHFeAfEmTshBWH8c/smbSipk7T+1yxDlFgNEvzC/DRcpDlzGsYVEt8Dls54WMiZPwuuQrG7cNzIw31E90VHemv6JmPjioKLPBaRct7DnLWhffTdJUWKCRcOYJYbDqgLzxqKB0MI3RKKuQDENY5PQMYlxI=
-From: John Haxby <john.haxby@oracle.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: [oss-security] Use After Free and Double Free bugs in Linux
- Kernel mainline
-Thread-Index: AQHXGySKnI413nMmVkahpFs6U86bS6qIHzAA
-Date: Wed, 17 Mar 2021 12:40:41 +0000
-Message-ID: <28BC3D20-FB43-4E52-9D84-5589FC4366FC@oracle.com>
-References: <150fb1c3.1c2a0.17840082a2e.Coremail.lyl2019@mail.ustc.edu.cn>
-In-Reply-To: <150fb1c3.1c2a0.17840082a2e.Coremail.lyl2019@mail.ustc.edu.cn>
-Accept-Language: en-GB, en-US
+ bh=W826LQh4xU8xqeXt9tDCcDjM35fjCfl3r5W9j+5Fzx0=;
+ b=wMzM6wT36nMNvxeLFEF2vJImVIoRd+5xIGCVgf2zlzsRexOI7uBo8CHZ41ex/icu5MkvKJgsjEJCk6x2pOQVbLPM+ETh43W1CoTtjdFYCMCzXEoJFWGFsxpFp1gwxiuu1R2u9PsmkKDDOe+5lKgZwjyd2HIT68fDtSzyg4A20Pg=
+Message-ID: <ee8c74c0-04df-d4d4-2551-33cd2a105fbe@oracle.com>
+Date: Sun, 16 Jan 2022 15:49:29 -0800
+User-Agent: Mozilla/5.0 (X11; SunOS i86pc; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.0
 Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: lists.openwall.com; dkim=none (message not signed)
- header.d=none;lists.openwall.com; dmarc=none action=none
- header.from=oracle.com;
-x-originating-ip: [2001:470:1f09:58d:4dd5:f023:94d5:25b3]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: ff43fb4b-6db5-4815-4cca-08d8e941e067
-x-ms-traffictypediagnostic: BYAPR10MB2565:
-x-microsoft-antispam-prvs: 
- <BYAPR10MB2565AF27D85F2F5076AE98B9E46A9@BYAPR10MB2565.namprd10.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:321;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 
- pxoilOvarJTmytm3GrJxH7FSEx1Ex6WPOv+Qke1mR73vFcYmrXYjbbEgF53M4V7nDsYhsDsN6w6XUBORTgPieCXWvZQcWvwhMflA7+d6ZJtw9psfl8MXAFFCbclCKcbKAcnor3ziF5dbuy/H4QHX4HcnzufRZCdsX5i8lOo31+X5udaalfYhsJedBABjXZY/N7XnN5w+GkvA/9ZFXxNLt0iQQ7jPTlCkp8X3JQwEt9Gw4+fLO/mYZKY/5hD8OOC2+VXi6cZiVE+CO3af4BUlHKvqd/dO0kBR07l51w+1D6ao2qEDUxmTV2VrXDJ2isvXaSy+blG+AsflN+g+GLBLCzwZOJEuXk7ysnfdtQgIrfv+L16aXIjMHm7L7o33omJc9dlA7zl2GcNDemzAel4i1bn9B/B4ITKce+DavMazvpBWOLF1yK+pfXjrkf+MVVEvfjfBjUZVRaL6+fS6gMzYSa1/x48Q2y6Y7Se/kXRuNMp6Dxbb6YMbFx8FCLe+b0f4zFlAe70e2KSP52DcdHHQk6J5ITIbxBe35I/jGwqVxoK3fESvK/I+ooodcF1WsfDJUAcsfy1n/LMMX8JYGTguvUvW1f9wqifzLw5fKc46tTKQREz5fGZIsxld1/BuN5mQ55f54r8H2wHWPbFz0ivyHdGUE6tZuxp9GkPvVMaTtccKbH/MPfDz+uUZMa13ZDT46u+XeIdt2GcfE0qT3WAngA==
-x-forefront-antispam-report: 
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR10MB4429.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(366004)(346002)(396003)(376002)(136003)(39860400002)(91956017)(6916009)(86362001)(2906002)(44832011)(64756008)(186003)(76116006)(6506007)(966005)(8676002)(66446008)(6486002)(66946007)(2616005)(8936002)(478600001)(66556008)(15650500001)(66476007)(6512007)(33656002)(71200400001)(83380400001)(316002)(36756003)(53546011)(5660300002)(45980500001);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata: 
- =?us-ascii?Q?lX069J6QfibO5zW7jD82VIcHdnAKu65R2H0I+raUI8agAAGoURQdd5rklFuD?=
- =?us-ascii?Q?TzHbWaABeMnkfL8PRnRT/A0Vav8Fd1hjZFxSGdWlrKIFEIbMBUneRWJ070fQ?=
- =?us-ascii?Q?+R7s51DddiJdL6rrM7Di5OFvSfW40zWP7f/DVnxDpAKMUzB9npAPbBd+WXai?=
- =?us-ascii?Q?B01TzWe8ARzp1dMyL9+7mCEHrZaUUavaFrJiYaMf1+c7wf/s/ED9241NNLRC?=
- =?us-ascii?Q?eaMepRo729dq5Hhe/gAGgcCw5KetlmjafgzXrS3K5eEPYKCbaHZ/F27y0YIO?=
- =?us-ascii?Q?64zEyFnjnhOQCr90zT8e3UPmYM20o4MKSWh3xYWuRSlyx9WYi28SJKNGOml1?=
- =?us-ascii?Q?Zwlk/EuT0cz46WS6gXXoIFl8Qw4FGRidgliTZJqGtNSxx2S9y6jEZSwLV2nr?=
- =?us-ascii?Q?kZUQYrkwoAVrSd1cFvAAxBorXyzNijDrfy99/DoVRAJFrmvSwzmPSB6Ge/Qm?=
- =?us-ascii?Q?kObEdvteLMA1V6M5NslvPcgnOu2fBj6DqZI/eq9M3BwJOlC9Sd40TqwNTL3x?=
- =?us-ascii?Q?Kp28c0t1O1iAm6OG5w6i9f5aWFW6uAB28eYZFYXrEU6/OVp2tb374vV57YVs?=
- =?us-ascii?Q?4W4SyMk7653vy9q2AGmf6li9lRXRUvJ0uARhytVJE54Pp1Rl/XYmHHKrHO9T?=
- =?us-ascii?Q?Z/SXBYvWuYgSz4+U9VGB0mofhzoQb+5+EWj7Dr+cTN0kbZUHzouvboVIVDuW?=
- =?us-ascii?Q?KJapnjhRCA7hf0exU8ZQKmPz6WLT4W0DrJ3ffoVMkJ0kJB4pIztYT6u/zYRj?=
- =?us-ascii?Q?8XYunGN3orHuo2av5Q3cL7MqtUR9noaoqgTeOV/ctShkp7MfOUsq0I8669CQ?=
- =?us-ascii?Q?DcvM1I9Vd52vq5iETscuUznyEjMF8I9ThrWoKF64NNViBtlYdsj3ru7if9Rg?=
- =?us-ascii?Q?250mmYU80ySFK9FLPH6wBkGwLKqIyBb+4AXCOf+YfAwpaf1YUELlO6f1gRcr?=
- =?us-ascii?Q?d5SRzoHgl/0Zew6ftiDxG5GtSfgRyBur3a8trMxkf3kAciFXix1j+c0Wvnqf?=
- =?us-ascii?Q?x+vabmNpS8oDKZYoMhNtz56ZfChcnCkWpZFoXj4HVleTm0wE7znA3X9KZ72m?=
- =?us-ascii?Q?9t5zDiaqPuqcSh0m5IqZtc+YGZ0yQ0VpWsKQ9hlCtowAPuak67z9nwAw4bnU?=
- =?us-ascii?Q?C2rvgn5ElguzjSTwkIH30bS+bQkwy2TN2nkRbDFdilxkuGqWYPpouWyNTD1N?=
- =?us-ascii?Q?xt5p+dHnem1C6Mdz7G6zdVsKIADlnQ8tXoMpSjN8YvNhjhTNPt9xoOLIjcfW?=
- =?us-ascii?Q?P60M8EK6bqLD6dBmJWUjrSYrvutOi/uRNHecOmNraCKb8dUuum0vQSuXU7da?=
- =?us-ascii?Q?FXbWW9owIgRhA2HFPvf13PHhEhyZcrn1tesHW19+016l7ZYKmZ3WKX9aG4W/?=
- =?us-ascii?Q?lOql4hlqJfB4FQgH3D5KIs1EvfA6?=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <AE72B5967235974193B62DB586534F09@namprd10.prod.outlook.com>
-Content-Transfer-Encoding: quoted-printable
+To: oss-security@lists.openwall.com
+References: <0cb43119-de19-4f4b-99a8-b7949227a26c@oracle.com>
+ <YePdKmWRZCS9HDqD@eldamar.lan>
+From: Alan Coopersmith <alan.coopersmith@oracle.com>
+In-Reply-To: <YePdKmWRZCS9HDqD@eldamar.lan>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: BY5PR03CA0005.namprd03.prod.outlook.com
+ (2603:10b6:a03:1e0::15) To CO1PR10MB4451.namprd10.prod.outlook.com
+ (2603:10b6:303:96::9)
 MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 2ba99ec7-6e34-45c3-03a7-08d9d94ad7d8
+X-MS-TrafficTypeDiagnostic: MWHPR10MB1807:EE_
+X-Microsoft-Antispam-PRVS: 
+	<MWHPR10MB1807AD2FFB7949229CD477F5E0569@MWHPR10MB1807.namprd10.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:8882;
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 
+	B/2KDUNs1xsPpbqhCcJXgp5o6kzWd1kTctmdIHZvzfSRewtaOYUgBwKJ/Xm9W7B6COiJnADPQo/pBFOF0N9esjtpFenx3pNlQMAgg3dLw4QwUldaBhd9LXza5/GNrYtYnBVmL6YneV84PW4JXm3YVpDs6E7iDA3R33vhVUoCPfvE12XBQgJ8XJMaEFXIdHCbAK5qH3cwy8xB+YJxW/8k9ovv2lqvHMzeaDKJ8QXLV6vuQYybCOaG0aGspfAJjMrDI+OEZAkiCqxNiQVCFN23I7dHNBiZ9O6GCwGddw2HJuVOUHUnJT+yZgxqRNfelP2m/CWwaP+IaMzmC1eylNnrSD0MB5pFfJgFMBrrOJMGMqyrzd/HSp8Alp3U5+2Ykiu+GxphK0u8sBXoUf58FToiSlIa8BjTWX8dfLRnys/0pBz1nH0/hIkNe8XObLzz0ygRnpixxC8KZQr8vVSUNQXyGd4eENO5JIJDQqfn8AoFDSCU/1yylxAdMknmS3TiqbIa6l9bbparF0+owHWjAScfnNb6LN2lYDOUDMYC2zJDWXhaOxtYePKHxD8aaYnFHzffuZsmJHybEX8wrQAM2A//7Q2Z+8thrsPdQTZ85mGsj1nCUHNkHZXImjfgDXjmdRRwGISZS93ZSq70875fp75pviwo7UNrBXLc+xVeTTg0q4x8/b4ykhKAA/Na3sNSJuVG19BhlUK8iKPIXuvIg+0A/3lmV+9qtM3qBTfgHIgHnhk+eZiWE9NMLeYjJXd5zt8HYk1zE7yocilJoihNC32fn9DiHdKdJ1oaLnLofuP6hPcJ2s+mDAa7TOnvIhMgOzeQsSEl97rlWvtzyTC80IlbK4fby4lym7k/5lh9miQdHWg=
+X-Forefront-Antispam-Report: 
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO1PR10MB4451.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(366004)(6512007)(44832011)(6506007)(53546011)(66556008)(83380400001)(31696002)(8676002)(86362001)(15650500001)(38100700002)(31686004)(6486002)(8936002)(66476007)(6916009)(6666004)(66946007)(186003)(4744005)(966005)(316002)(2906002)(508600001)(5660300002)(2616005)(36756003)(26005)(43740500002)(45980500001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 
+	=?utf-8?B?UDk1a1JxT00wZU8vYTVtTDRlL01ITmQ2ejRiYjduRHB1VUhKUHFMZWUrK0U1?=
+ =?utf-8?B?SEpiRXFjYVNOSDM5aGR0ZWwyVmVHMlh1bERPTWhjdCtkU1FDcGNQSnZTN1Vw?=
+ =?utf-8?B?R3NWSFNzQ3dHZkFsZXVVbXkwSkxZZlpXV2o0dkE2S0ZOUHduWDhKSVpCbDlG?=
+ =?utf-8?B?aVZsNDhNUndTREtXOEJ0WjhqNGhmRnRkUDNOR3RNQUlEWnVrYzdUZnh1a2py?=
+ =?utf-8?B?N0JpclcxMDBVYUNlczZiS1ZSd0ZaNlMzRExMYXo2bzF2VVhHQ1ljeS9VQ0JV?=
+ =?utf-8?B?Q1RzQ1lYTzdwbkdkcmdUUDZVRjJRWW9KUmhtTFlCUVJ3bnBTMTJDclZaOWds?=
+ =?utf-8?B?dU9pdTZrdWRmWWRld1NXd3NiQitqOFBwTlpGOXJqQ0RIWEhvRFNHVzNuUUFR?=
+ =?utf-8?B?RWZuZUtvaUlnVUxjZmVTVXk4Wi9jUVVBcmxqRiswelFZdU8rWkd5STNBMFBF?=
+ =?utf-8?B?ZHh4Nnhwc3Z5cDJoZVZhSTNQTkY3VSswWXVYYXVaYTFQMnZQZlkwZVRFV1FP?=
+ =?utf-8?B?YTdPZG55blJrWjV4bjVqcDNCYkU0WVNUMEZkVkdoNVhrdElEY3Y4SGRDMjBi?=
+ =?utf-8?B?MTl3NjRQRnBpRVVRaFB0TTNJQXFyRkxxdUR0amNDaDN2VjZralJoVjNWQjdO?=
+ =?utf-8?B?R0U5RGxNbUMzTlN1a1YrNlRUN3ZQSVFlYTA5NXRKQTdsZmsrWWhTcGRmWnZJ?=
+ =?utf-8?B?TEx4UDk3ZUFWVjBuSGxtajVFanM0MlhnVWpoNFU1bDRNUlhNREZNNUxkblVW?=
+ =?utf-8?B?b3JzQjFMRTJ6L1lPVmlHL3loOU1WbEZRQm9BNWhqSXpPd2dNMXpnbmYxRloz?=
+ =?utf-8?B?eXM4eGhocFNIL1pTT0dsd2dVOVhBZDNPL0ROcnpLbjVhQTF5cE5FbVZ0Rysz?=
+ =?utf-8?B?NmVxRmtTMTh2akNVQjZjYzNpb2JkSHZ3TE9Dam1KTGhLc3NJWXdZVGNibkFY?=
+ =?utf-8?B?UEREbWdnby9mZzhoK28yQlErNXJGUFhwMGdWYzl3Zm92dDgzTmlFVXVOZGFw?=
+ =?utf-8?B?TkhNQ2hqUXl4Nys0Uk9xVEJFa243M0dkdUtZUjRoaUdkMmYxdHoxa2xTRXlP?=
+ =?utf-8?B?RDZjSnhlSTN1cWVGNFB4bEFnRUl2cjBwT2dITGQ0amh1TnVCc1JGb3d0WEdt?=
+ =?utf-8?B?OHFXemhaNkhPMURjZVYxNm9wbHoraTI4VFNGN3VBd2tzZUZGaVE0SFRnRFFq?=
+ =?utf-8?B?WU5nMndIeUFLWDVuN0JiNExEQUhjM3ZNdWpxR0VRbU52RDZhWElOVGMvZzBW?=
+ =?utf-8?B?bXBIMElvZ0Y0eG1Ha2UrWEZsbXRpaGljLzZneXFBb3NLbzFlWG4yWCtrQ0Rj?=
+ =?utf-8?B?Z1hjNFcxVk5OWm9iY2hmUDZjZlQ0WDdzVnNZRG9IbXFoOFF5TmJFdUFKWlZS?=
+ =?utf-8?B?cDVZMWR2L084Wjc5TWQ4WnhyQURxUDZqMXVBV2V2dVBqZys4a2FvWjEzbVRz?=
+ =?utf-8?B?ZXJZcUYwOXdxOXNIdmVOVjVudEh4TUE0TW8wTEdhMUxSS3luNnpaQlJySEt3?=
+ =?utf-8?B?clp3ZVJTMk00TEV3akM3Rklsa1VDcmhYN0lpbUFyQ2JVYjhhZnZ6R3BrbFU2?=
+ =?utf-8?B?Smg4WHNId3lRWGZhN3dqd1V3SjNRQSs1aC94dWhkaWNEQjBuZDR1cGZIRmlp?=
+ =?utf-8?B?N0REV1YzUFNlcU04dUJ2KzVYdDliY3lWclljaVFmZjhGQjhCMmVvRDZYWjV1?=
+ =?utf-8?B?b1hwSkxOc2VoMFFTSVNKZzUzSVhkVGVoTmdwbVhtK2Z0ZEJlcTV5SjBQUTls?=
+ =?utf-8?B?TDFxdkNTeWM4RWpQS24yTHloUmNtZ2ZISGVCL1lmclNQWU40d1NmK0dGS3J3?=
+ =?utf-8?B?RHFCNGUwYTlCS1FlcUdZcERER0FYeVFidzRtaUl0M3pJSm9lZ0tXQzVEckUv?=
+ =?utf-8?B?ak5mMkdZcTA1UWQ5YkhyRWZUZnQ0dUdnei9YcnpwOEpSRk1OdEd4UTh1ZzR3?=
+ =?utf-8?B?YlYvbGZpWXdTNmd4UWxXUWRrMGYxUTR0S21adHlzWTk4bEI0ZTdycDBiajh0?=
+ =?utf-8?B?bnZRUXo3YzZYYllBYjBDV3ViaGw1TDFCQXptMjk0MktTdEVEQTFlSCtDQXNy?=
+ =?utf-8?B?ekhtT1JCQTFzZG1ZMmswSS9ucWd3L0ZmY05rUkxaNnVwSWNhaWF1MGNUeVRS?=
+ =?utf-8?B?SW5OdVpNQm9PUWlLZWt0SkhuWGVGNThQOXBBVnE2Z2NjTkZGWFg4ZjUzZVB6?=
+ =?utf-8?B?VUtadFN1ZzZmeFJNaS90dmFpMmJ4NENFa3luRXlPRFV6cUtnUkh4dnd3SUor?=
+ =?utf-8?B?bE5TRXpXanpUSmMrdjVHVGFZdzN3PT0=?=
 X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2ba99ec7-6e34-45c3-03a7-08d9d94ad7d8
+X-MS-Exchange-CrossTenant-AuthSource: CO1PR10MB4451.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR10MB4429.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ff43fb4b-6db5-4815-4cca-08d8e941e067
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Mar 2021 12:40:41.8653
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jan 2022 23:49:32.4044
  (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: AgC/gNI/mZ5T6gtzY0Vn3vkydyAe9HsvQUfQzGm63MY/lbtXpxdk4CQtbhbckjVHbkvQ5PJIWH64KnVp1cggzg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR10MB2565
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=9925 signatures=668683
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 suspectscore=0
- malwarescore=0 phishscore=0 bulkscore=0 mlxscore=0 mlxlogscore=999
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2009150000 definitions=main-2103170094
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=9925 signatures=668683
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 malwarescore=0 bulkscore=0
- impostorscore=0 lowpriorityscore=0 mlxlogscore=999 spamscore=0
- priorityscore=1501 adultscore=0 phishscore=0 suspectscore=0 clxscore=1034
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
- definitions=main-2103170094
-Subject: Re: [oss-security] Use After Free and Double Free bugs in Linux
- Kernel mainline
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Jvhkd7MFcvfNjct5nIivM1h97VHhsOhPedQQEoobqlTBVnf/qP0PfATZbmMgHvBiD1sT2eKxBmcsxiPERuWwOO8qGFTj78Fpc+avxmriZ5c=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR10MB1807
+X-Proofpoint-Virus-Version: vendor=nai engine=6300 definitions=10229 signatures=668683
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 bulkscore=0
+ mlxlogscore=999 adultscore=0 suspectscore=0 malwarescore=0 mlxscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2110150000 definitions=main-2201160156
+X-Proofpoint-GUID: RQpuVdZ8AI6GnrJIKsBmTEOI-KfUIU3x
+X-Proofpoint-ORIG-GUID: RQpuVdZ8AI6GnrJIKsBmTEOI-KfUIU3x
+Subject: Re: [oss-security] Fuzzy CVE's in GNU inetutils
 
-This one isn't a security bug:
+On 1/16/22 00:54, Salvatore Bonaccorso wrote:
+> Hi,
+> 
+> On Fri, Jan 14, 2022 at 06:56:13PM -0800, Alan Coopersmith wrote:
+>> I noticed a number of new CVE's recently published against GNU inetutils,
+>> which seem to correspond to the results of fuzz testing that were mailed
+>> out in December, as seen on
+>> https://lists.gnu.org/archive/html/bug-inetutils/2021-12/threads.html
+> 
+> In fact all of those were REJECTED again (with a "Further
+> investigation showed that it was not a security issue" reason).
 
-> On 17 Mar 2021, at 11:53, lyl2019@mail.ustc.edu.cn wrote:
->=20
-> Bug2: nvme/rdma: Fix a use after free in nvmet_rdma_write_data_done
-> Commit Url: https://github.com/torvalds/linux/commit/abec6561fc4e0fbb1959=
-1a0b35676d8c783b5493
->=20
-> In nvmet_rdma_write_data_done, rsp is recoverd by wc->wr_cqe
-> and freed by nvmet_rdma_release_rsp(). But after that, pr_info()
-> used the freed chunk's member object and could leak the freed
-> chunk address with wc->wr_cqe by computing the offset.
->=20
-> drivers/nvme/target/rdma.c | 5 ++---
-> 1 file changed, 2 insertions(+), 3 deletions(-)
->=20
-> diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
-> index 06b6b742bb21..6c1f3ab7649c 100644
-> --- a/drivers/nvme/target/rdma.c
-> +++ b/drivers/nvme/target/rdma.c
-> @@ -802,9 +802,8 @@ static void nvmet_rdma_write_data_done(struct ib_cq *=
-cq, struct ib_wc *wc)
-> 		nvmet_req_uninit(&rsp->req);
-> 		nvmet_rdma_release_rsp(rsp);
-> 		if (wc->status !=3D IB_WC_WR_FLUSH_ERR) {
-> -			pr_info("RDMA WRITE for CQE 0x%p failed with status %s (%d).\n",
-> -				wc->wr_cqe, ib_wc_status_msg(wc->status),
-> -				wc->status);
-> +			pr_info("RDMA WRITE for CQE failed with status %s (%d).\n",
-> +				ib_wc_status_msg(wc->status), wc->status);
-> 			nvmet_rdma_error_comp(queue);
-> 		}
-> 		return;
+Thanks, I see they've all been updated since I checked on Friday.
 
-Commit ad67b74d2469 ("printk: hash addresses printed with %p") back in 2017=
- made '%p' a non-security issue. That commit noted that there were approxim=
-ately 14,000 places in the kernel where there was an address printed with %=
-p.  Rather than 14,000 CVEs :) this was fixed once and once only by that co=
-mmit.
-
-That's not to say that this "0x%p" doesn't have a problem: for a start you =
-don't need the "0x" because %p prints one anyway. That point is moot, thoug=
-h, because no one objected to just removing the pointer.  The commit messag=
-e is wrong though: it doesn't leak an address.
-
-jch=
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@oracle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
