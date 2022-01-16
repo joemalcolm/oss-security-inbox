@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2392" "Monday" "18" "May" "2015" "10:13:34" "+1200" "Emmanuel Law" "emmanuel.law@gmail.com" "<CA+KTh2x_FjdUwfKJo9c7QakRLa5tmZmeR189UUuxZV0BZ3FRwg@mail.gmail.com>" "55" "[oss-security] [CVE Request/Advisory] Multiple vulnerabilities in PHP's handling of Phar files" nil nil nil "5" "2015051722:13:34" "[oss-security] [CVE Request/Advisory] Multiple vulnerabilities in PHP's handling of Phar files" (number mark "        emmanuel.law May 18   55/2392  " thread-indent "\"[oss-security] [CVE Request/Advisory] Multiple vulnerabilities in PHP's handling of Phar files\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2226" "Sunday" "16" "January" "2022" "23:22:57" "+0200" "Jouni Malinen" "j@w1.fi" nil "58" "[oss-security] wpa_supplicant/hostapd: SAE/EAP-pwd side-channel attack update 2" nil nil nil "1" nil nil (number mark "U       j@w1.fi      Jan 16   58/2226  " thread-indent "\"[oss-security] wpa_supplicant/hostapd: SAE/EAP-pwd side-channel attack update 2\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] wpa_supplicant/hostapd: SAE/EAP-pwd side-channel attack update 2" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 17923 invoked by uid 550); 17 May 2015 22:13:47 -0000
+Received: (qmail 26257 invoked by uid 550); 16 Jan 2022 21:23:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,82 +11,73 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17896 invoked from network); 17 May 2015 22:13:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=TgJ4JQY7mxywvA3GsxVyRHfWT0WkDrdfeSEn5XzjgfU=;
-        b=XNubBJCDcn1NavFf37BslfWAbXJ4a0uucsN/1dyiuxWdGXL+xhVom1X0cH+nmA5zj+
-         vfRdxDWU+FRuU92N/7YO436hRHwvkrnjMbKVKyZVHxskx33yQTS+k/G7OUQekPeaxvAS
-         isyJIQqr+GqkQfZewDjKto8ztB53wJg7ZlPdutY0VWFYy67SbuIGAyafVwQvCblz3x2M
-         5de3Q6qoeMMumqL7LWkYLgICCfiuqLZrrlL5UanAVndbuX3ISCK8ISpauMOJ7ij8FpBa
-         EesQzMQNlNhUgUtHfce77LcUF1lmivs/3UOF0NZE2HFK926C51QJ+VK4uo72vNkEkGKs
-         s+fA==
-MIME-Version: 1.0
-X-Received: by 10.107.132.223 with SMTP id o92mr25910802ioi.49.1431900814279;
- Sun, 17 May 2015 15:13:34 -0700 (PDT)
-Message-ID: <CA+KTh2x_FjdUwfKJo9c7QakRLa5tmZmeR189UUuxZV0BZ3FRwg@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a113ebc086389a605164e63d5
-Cc: security@php.net
-Date: Mon, 18 May 2015 10:13:34 +1200
-From: Emmanuel Law <emmanuel.law@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [CVE Request/Advisory] Multiple vulnerabilities in PHP's handling of
- Phar files
-To: oss-security@lists.openwall.com, cve-assign@mitre.org
+Received: (qmail 26226 invoked from network); 16 Jan 2022 21:23:12 -0000
+X-Virus-Scanned: Debian amavisd-new at w1.fi
+Date: Sun, 16 Jan 2022 23:22:57 +0200
+From: Jouni Malinen <j@w1.fi>
+To: oss-security@lists.openwall.com
+Message-ID: <20220116212257.GC445289@w1.fi>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Subject: [oss-security] wpa_supplicant/hostapd: SAE/EAP-pwd side-channel attack update 2
 
---001a113ebc086389a605164e63d5
-Content-Type: text/plain; charset=UTF-8
+Published: January 16, 2022
+Latest version available from: https://w1.fi/security/2022-1/
 
-Hi
+This is an update on earlier security advisories 2019-1 and
+2019-2. Please see those advisories for more details in the issues.
+https://w1.fi/security/2019-1/
+https://w1.fi/security/2019-2/
 
---------Background---------
-PHP has the built-in Phar & PharData functionality since 5.3.0. It allows
-developers to use them to manipulate the following archive types: tar, zip,
-phar. Serveral vulnerabilities were found in the Phar extenion.
+Vulnerability
 
+hostapd and wpa_supplicant security advisories 2019-1 and 2019-2
+addressed side-channel attacks related to SAE and EAP-pwd. The
+improvements identified in those advisories made it more difficult to
+observe external differences in timing or memory access to mitigate
+against this type of attacks. However, the identified changes did not
+remove all differences. The external crypto library functions used to
+implement crypto_ec_point_solve_y_coord() might not use a constant time
+design and as such, might enable some side-channel channel attacks.
 
-
-[1: CVE Request - Memory Corruption in phar_parse_tarfile when entry
-filename starts with null ]
- Description: ------------ This is a single byte memory corruption
-vulnerability. It is triggered when a tar entry->filename starts with a
-null byte. On a x86 machine, it has the potential to corrupt the heap chunk
-metadata.On x64 machine, it has the potential to corrupt 1 byte at the
-offset entry.filename+0xFFFFFFFF Affected versions: PHP <= 5.6.8 Bug
-Report: https://bugs.php.net/bug.php?id=69453 Patch:
-http://git.php.net/?p=php-src.git;a=commit;h=c27f012b7a447e59d4a704688971cbfa7dddaa74
-
-Can a CVE be assign for this please?
-
-
-[2: CVE-2015-3307 - Heap metadata corruption when parsing tar file in
-phar_tar_process_metadata()] Description: ------------ This is a
-vulnerability whereby the Heap header gets misaligned resulting in the
-corruption of the heap chunk's metadata. A heap chunk is allocated in
-ext/phar/tar.c:167 metadata = (char *) safe_emalloc(1,
-entry->uncompressed_filesize, 1); A reference to this heap chunk is passed
-into phar_parse_metadata() at ext/phar/tar.c:176 if
-(phar_parse_metadata(&metadata, &entry->metadata,
-entry->uncompressed_filesize TSRMLS_CC) == FAILURE) { The following gets
-called within phar_parse_metadata:611 when zip_metadata_len==0
-PHAR_GET_32(*buffer, buf_len); This moves the pointer referencing the heap
-chunk by 4bytes. When the heap chunk gets freeed at at tar.c:177:
-efree(metadata); The heap chunk is now misaligned by 4 bytes. In
-otherwords: ZEND_MM_HEADER_OF(metadata).info._size is now
-ZEND_MM_HEADER_OF(metadata).info._prev and
-ZEND_MM_HEADER_OF(metadata).info._prev is tained with the body's data.
-Affected versions: PHP <= 5.6.8RC1 Bug Report:
-https://bugs.php.net/bug.php?id=69443&edit=2 Patch:
-http://git.php.net/?p=php-src.git;a=commit;h=17cbd0b5b78a7500f185b3781a2149881bfff8ae
-This patch was for CVE-2015-2783, but it inadvertently resolved this
-vulnerability as well. The vulnerable line that was removed was on
-ext/phar/phar.c:611
-
-PHAR_GET_32(*buffer, buf_len);
+In particular, a potential new cache-based attack has been described
+that could allow an attacker that is able to run unprivileged code on
+the same processor might be able to gain enough information from the
+SAE/EAP-pwd operations to be able to perform an offline dictionary attack
+that could work against sufficiently weak passwords.
 
 
+Vulnerable versions/configurations
 
-Thanks.
+All wpa_supplicant and hostapd versions with SAE support (CONFIG_SAE=y
+in the build configuration and in the runtime configuration).
 
---001a113ebc086389a605164e63d5--
+All wpa_supplicant and hostapd versions with EAP-pwd support
+(CONFIG_EAP_PWD=y in the build configuration and EAP-pwd being enabled
+in the runtime configuration).
+
+
+Acknowledgments
+
+Thanks to Daniel De Almeida Braga, Mohamed Sabt, and Pierre-Alain Fouque
+(all affiliated to the University of Rennes 1, IRISA, France) for
+discovering and reporting the issue.
+
+
+Possible mitigation steps
+
+- Update to wpa_supplicant/hostapd v2.10 or newer
+
+- Merge the following commits to wpa_supplicant/hostapd v2.9 and
+  rebuild:
+  crypto: Add more bignum/EC helper functions
+  dragonfly: Add sqrt() helper function
+  SAE: Derive the y coordinate for PWE with own implementation
+  EAP-pwd: Derive the y coordinate for PWE with own implementation
+
+  These patches are available from https://w1.fi/security/2022-1/
+
+-- 
+Jouni Malinen                                            PGP id EFC895FA
