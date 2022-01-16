@@ -1,25 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/16/1
-Message-ID: <9de91c88-8c85-77d2-8846-07244ed4630e@apache.org>
-Date: Tue, 15 Nov 2022 23:08:17 +0000
-From: Thomas Wolf <twolf@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/16/3
+Message-ID: <ee8c74c0-04df-d4d4-2551-33cd2a105fbe@oracle.com>
+Date: Sun, 16 Jan 2022 15:49:29 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-45047: Apache MINA SSHD: Java unsafe deserialization vulnerability 
+Subject: Re: Fuzzy CVE's in GNU inetutils
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+On 1/16/22 00:54, Salvatore Bonaccorso wrote:
+> Hi,
+> 
+> On Fri, Jan 14, 2022 at 06:56:13PM -0800, Alan Coopersmith wrote:
+>> I noticed a number of new CVE's recently published against GNU inetutils,
+>> which seem to correspond to the results of fuzz testing that were mailed
+>> out in December, as seen on
+>> https://lists.gnu.org/archive/html/bug-inetutils/2021-12/threads.html
+> 
+> In fact all of those were REJECTED again (with a "Further
+> investigation showed that it was not a security issue" reason).
 
-Description:
+Thanks, I see they've all been updated since I checked on Friday.
 
-Class org.apache.sshd.server.keyprovider.SimpleGeneratorHostKeyProvider in Apache MINA SSHD <= 2.9.1 uses Java deserialization to load a serialized java.security.PrivateKey. The class is one of several implementations that an implementor using Apache MINA SSHD can choose for loading the host keys of an SSH server.
-
-Mitigation:
-
-For Apache MINA SSHD <= 2.9.1, do not use org.apache.sshd.server.keyprovider.SimpleGeneratorHostKeyProvider to generate and later load your server's host key. Use separately generated host key files, for instance in OpenSSH format, and load them via a org.apache.sshd.common.keyprovider.FileKeyPairProvider instead. Or use a custom implementation instead of SimpleGeneratorHostKeyProvider that uses the OpenSSH format for storing and loading the host key (via classes OpenSSHKeyPairResourceWriter and OpenSSHKeyPairResourceParser).
-
-The issue was fixed in Apache MINA SSHD 2.9.2. 
-
-Credit:
-
-The Apache MINA SSHD team would like to thank Zhang Zewei, NOFOCUS, for reporting this issue.
-
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
