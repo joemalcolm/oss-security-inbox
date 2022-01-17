@@ -1,61 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/28/2
-Message-ID: <cf40e28c-5cbb-bc9d-e460-42c503cef524@igalia.com>
-Date: Thu, 28 Jul 2022 22:32:00 +0200
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0007
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/17/2
+Message-ID: <ebb955eb-5f5c-473a-35a4-1ff66d6b97d0@apache.org>
+Date: Mon, 17 Jan 2022 17:48:28 +0000
+From: Larry McCay <lmccay@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-42357: DOM based XSS Vulnerability in Apache Knox 
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2022-0007
-------------------------------------------------------------------------
+Severity: moderate
 
-Date reported           : July 28, 2022
-Advisory ID             : WSA-2022-0007
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2022-0007.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2022-0007.html
-CVE identifiers         : CVE-2022-32792, CVE-2022-32816, CVE-2022-2294.
+Description:
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+When using Knox SSO in affected releases, a request could be crafted to
+redirect a user to a malicious page due to improper URL parsing.
+A request that included a specially crafted
+request parameter could be used to redirect the user to a page controlled
+by an attacker. This URL would need to be presented to the user outside
+the normal request flow through a XSS or phishing campaign.
 
-CVE-2022-32792
-    Versions affected: WebKitGTK and WPE WebKit before 2.36.5.
-    Credit to Manfred Paul (@_manfp) working with Trend Micro Zero Day
-    Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: An out-of-bounds write issue
-    was addressed with improved input validation.
+Mitigation:
 
-CVE-2022-32816
-    Versions affected: WebKitGTK and WPE WebKit before 2.36.5.
-    Credit to Dohyun Lee (@l33d0hyun) of SSD Secure Disclosure Labs &
-    DNSLab, Korea Univ.
-    Impact: Visiting a website that frames malicious content may lead to
-    UI spoofing. Description: The issue was addressed with improved UI
-    handling.
-
-CVE-2022-2294
-    Versions affected: WebKitGTK and WPE WebKit before 2.36.5 if
-    USE_LIBWEBRTC is enabled.
-    Credit to Jan Vojtesek of Avast Threat Intelligence team.
-    Heap buffer overflow in LibWebRTC allowed a remote attacker to
-    potentially exploit heap corruption via a crafted HTML page. NOTE:
-    The tarballs of WebKitGTK or WPE WebKit don't ship LibWebRTC. Also
-    the LibWebRTC support is disabled by default. You only are affected
-    by this vulnerability if your build enabled the USE_LIBWEBRTC CMake
-    option and used the repository as source instead of the tarballs.
+1.x users should upgrade to 1.6.1.
+Unsupported versions of the 0.x line that include this issue are: 0.13.0, 0.14.0.
+and these should upgrade to 1.6.1 as well.
+1.0.0 and 1.1.0 are also Unsupported but affected and should upgrade to 1.6.1.
 
 
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
+Credit:
 
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
+Apache Knox would like to thank Kajetan Rostojek for this report
 
-The WebKitGTK and WPE WebKit team,
-July 28, 2022
