@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5612" "Monday" "3" "July" "2017" "08:31:05" "+0200" "Mark Hatle" "mark.hatle@windriver.com" "<1d5bcc90-3248-b7bf-6d3e-64fdc6c9a4bc@windriver.com>" "111" "Re: [oss-security] accepting new members to (linux-)distros lists" "^Date:" nil nil "7" "2017070306:31:05" "[oss-security] accepting new members to (linux-)distros lists" (number mark "        mark.hatle@w Jul  3  111/5612  " thread-indent "\"Re: [oss-security] accepting new members to (linux-)distros lists\"\n") "<20170701140735.GA10593@openwall.com>" ("<20170628200239.GA25525@openwall.com>" "<20170630132209.GA4625@openwall.com>" "<20170630195516.GB1011@hunt>" "<20170630201642.GA9159@openwall.com>" "<e6ea9fe9-1b52-11c3-fcce-bc13d3b7fd6a@windriver.com>" "<20170701140735.GA10593@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["755" "Monday" "17" "January" "2022" "17:48:28" "+0000" "Larry McCay" "lmccay@apache.org" nil "25" "[oss-security] CVE-2021-42357: DOM based XSS Vulnerability in Apache Knox " nil nil nil "1" nil nil (number mark "U       lmccay@apach Jan 17   25/755   " thread-indent "\"[oss-security] CVE-2021-42357: DOM based XSS Vulnerability in Apache Knox \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-42357: DOM based XSS Vulnerability in Apache Knox " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 5731 invoked by uid 550); 3 Jul 2017 11:26:54 -0000
+Received: (qmail 27677 invoked by uid 550); 17 Jan 2022 18:42:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,136 +11,39 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 12227 invoked from network); 3 Jul 2017 06:31:20 -0000
-References: <20170628200239.GA25525@openwall.com>
- <20170630132209.GA4625@openwall.com> <20170630195516.GB1011@hunt>
- <20170630201642.GA9159@openwall.com>
- <e6ea9fe9-1b52-11c3-fcce-bc13d3b7fd6a@windriver.com>
- <20170701140735.GA10593@openwall.com>
-Organization: Wind River Systems
-Message-ID: <1d5bcc90-3248-b7bf-6d3e-64fdc6c9a4bc@windriver.com>
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0)
- Gecko/20100101 Thunderbird/52.2.1
-MIME-Version: 1.0
-In-Reply-To: <20170701140735.GA10593@openwall.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-Date: Mon, 3 Jul 2017 08:31:05 +0200
-From: Mark Hatle <mark.hatle@windriver.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] accepting new members to
- (linux-)distros lists
-To: <oss-security@lists.openwall.com>
+Received: (qmail 1306 invoked from network); 17 Jan 2022 17:48:43 -0000
+Content-Type: text/plain; charset=utf-8
+From: Larry McCay <lmccay@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <ebb955eb-5f5c-473a-35a4-1ff66d6b97d0@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 17 Jan 2022 17:48:28 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2021-42357: DOM based XSS Vulnerability in Apache Knox 
 
-On 7/1/17 4:07 PM, Solar Designer wrote:
-> On Sat, Jul 01, 2017 at 01:57:55PM +0200, Mark Hatle wrote:
->> We (Wind River) can take a more active role in at least some of the
->> administrative tasks..
-> 
-> Thank you!
-> 
->> However, I can assure you we don't have the time or
->> ability to do it ourselves.
-> 
+Severity: moderate
 
-Sorry I wasn't clear.  "time or ability to do it all ourselves" is what I meant
-to write.
+Description:
 
-Between timezones, vacation schedules, etc.  I can't promise immediate responses
-or even a specific response time to the list.
+When using Knox SSO in affected releases, a request could be crafted to
+redirect a user to a malicious page due to improper URL parsing.
+A request that included a specially crafted
+request parameter could be used to redirect the user to a page controlled
+by an attacker. This URL would need to be presented to the user outside
+the normal request flow through a XSS or phishing campaign.
 
-> No "time or ability" to take care of any one (or preferably more) of the
-> administrative micro-roles I listed?  This makes no sense to me.  All of
-> the administrative tasks combined are far less than one full-time job.
-> With good discipline and focus, they can probably be taken care of with
-> 1 hour of effort per day on average (of course, there will be occasional
-> busy days, but also many days with no work of this type).  All of them
-> at once.  I think I know this because of me being the fallback person
-> for this type of work so far.  OTOH, I do recognize that I listed a few
-> additional tasks now - such as producing statistics - and the extent of
-> work on tasks involving monitoring external resources can vary greatly.
-> So maybe it's more than 1 hour/day on average with those extra tasks and
-> desired greater extent now.  But not much more.
+Mitigation:
 
-So really what I'm saying is even for something trivial, there will be times
-where I can not promise immediate response.
+1.x users should upgrade to 1.6.1.
+Unsupported versions of the 0.x line that include this issue are: 0.13.0, 0=
+.14.0.
+and these should upgrade to 1.6.1 as well.
+1.0.0 and 1.1.0 are also Unsupported but affected and should upgrade to 1.6=
+.1.
 
-> What I do understand is needing to temporarily transfer responsibility
-> to another distro if your own team subscribed to the list is small and
-> many of these people may simultaneously go on vacation.
 
-We effectively have one person monitoring the list, with two backup in case of
-vacations.  Occasionally all people are out at the same time (usually national
-holidays.)  I'm happy to offer our help, but as long as my limitations are
-understood then I think this will be beneficial.  (I doubt we are unique in
-this.  If we could subscribe all of our developers then the limitations go away
--- but that would be a terrible idea for informational security.)  :)
+Credit:
 
-> A reason why I listed so many administrative micro-tasks/roles is that
-> I'd like to allow for an even (or close to it) distribution of the
-> effort across the distros, where every one of them bears a tiny portion
-> of this small total effort of running the list.  This would also serve
-> to ensure and demonstrate to the rest of us that every distro is still
-> an active member, without us needing responsiveness tests.
-> 
-> The technical expertise tasks could be worked on to varying extent,
-> including becoming a full-time job for someone or even for several
-> people.  There's no decision on the exact extent yet, but it should be
-> sufficient to almost always avoid things like the recent incomplete fix
-> in Sudo.
-> 
->> So the more then one 'actor' on an action would definitely be what I suggest.
-> 
-> That's within consideration, but we got to start by listing at least one
-> distro per task.  When we eventually have more than one listed for some
-> task, we or they will need to coordinate their activities, and that
-> could create extra work.  Perhaps a "primary and backup" arrangement for
-> two distros sharing a task will work best: will not result in "no one's
-> responsibility" and will have low coordination overhead.
-> 
-> The first administrative task of getting back to message senders is so
-> trivial that I think it'd make sense to keep it reserved to the distro
-> who was last to join, perhaps switching responsibility to them from the
-> previous distro once the new member has confirmed they're successfully
-> receiving messages through the list.  The new distro will be "primary"
-> and the previous will be "backup" for that role.  Always that way,
-> unless the newly joining distro opts for something less trivial right
-> away.  (I know some people would be offended by being asked to
-> participate in this trivial activity.  I think they'd be wrong, but we
-> can accommodate their egos, no problem.)  This will quickly test each
-> new distro's responsiveness and get them involved, and hopefully
-> encourage them to pick up several of the less trivial tasks as well
-> (they will need to, or otherwise they'd be left without a task once
-> another distro joins, which would be inappropriate).
-
-Reply that a report made it to the list would certainly be an easy original
-task.  I've not done it so far, only because others usually beat me to it.
-
->> Unfortunately I really don't have a good sense (based on the link to the tasks)
->> as to what would be appropriate to volunteer for.  I'm open to suggestions.
-> 
-> It's really anything you feel like doing.  Perhaps see in which areas
-> you have been helping already, and suggest that you focus on those.
-
-Unfortunately I'm on vacation through the end of this week (as are many of us
-that are located in North America.)  So I can get back with what we can help
-with next week.  (If tasks are gone, that is fine.)
-
-Thank you for organizing this.  I do think it is important.
-
---Mark
-
-> If you really want me to narrow down the list for you, let me know.
-> 
-> This may also start happening on its own, due to other distros picking
-> up tasks.  Once a task is taken by one or two distros, I will want
-> further distros to volunteer for other tasks.  So if you want to have
-> more freedom of choice, hurry up.
-> 
-> OTOH, with distros not volunteering for specific tasks (like we've seen
-> so far), I might just assign tasks to distros myself.
-> 
-> Alexander
-> 
+Apache Knox would like to thank Kajetan Rostojek for this report
 
