@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7869" "Friday" "25" "October" "2019" "11:10:46" "+0000" "Xen.org security team" "security@xen.org" "<E1iNxUU-0002vA-BF@xenbits.xenproject.org>" "190" "[oss-security] Xen Security Advisory 300 v3 (CVE-2019-17351) - Linux: No grant table and foreign mapping limits" "^CC:" nil nil "10" "2019102511:10:46" "[oss-security] Xen Security Advisory 300 v3 (CVE-2019-17351) - Linux: No grant table and foreign mapping limits" (number mark "U       security@xen Oct 25  190/7869  " thread-indent "\"[oss-security] Xen Security Advisory 300 v3 (CVE-2019-17351) - Linux: No grant table and foreign mapping limits\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 300 v3 (CVE-2019-17351) - Linux: No grant table and foreign mapping limits" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2611" "Monday" "17" "January" "2022" "12:33:54" "+0800" "butt3rflyh4ck" "butterflyhuangxx@gmail.com" nil "91" "Re: [oss-security] CVE-2021-4095: kernel: KVM: NULL pointer dereference in kvm_dirty_ring_get() in virt/kvm/dirty_ring.c" nil nil nil "1" nil nil (number mark "U       butterflyhua Jan 17   91/2611  " thread-indent "\"Re: [oss-security] CVE-2021-4095: kernel: KVM: NULL pointer dereference in kvm_dirty_ring_get() in virt/kvm/dirty_ring.c\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-4095: kernel: KVM: NULL pointer dereference in kvm_dirty_ring_get() in virt/kvm/dirty_ring.c" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1712 invoked by uid 550); 25 Oct 2019 11:11:04 -0000
+Received: (qmail 4069 invoked by uid 550); 17 Jan 2022 04:34:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,208 +11,133 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1664 invoked from network); 25 Oct 2019 11:11:04 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
-MIME-Version: 1.0
-X-Mailer: MIME-tools 5.508 (Entity 5.508)
-Message-Id: <E1iNxUU-0002vA-BF@xenbits.xenproject.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Date: Fri, 25 Oct 2019 11:10:46 +0000
-From: Xen.org security team <security@xen.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Xen Security Advisory 300 v3 (CVE-2019-17351) - Linux: No grant
- table and foreign mapping limits
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
+Received: (qmail 4048 invoked from network); 17 Jan 2022 04:34:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=81aBSTH/GthciOxgEe9pegfqqhICY5minnvUAeAZJ+U=;
+        b=qHfYxJju6/+mnus6on1WY+yhiqwjdfao7YKT0VvvgHJ5J+SvRYsnH1Zm2UiDcF5lCq
+         XSDIOwy1vcaVPwkp7I1byXBe1iS2Q8lu9W8WrsyQJHAPQj8c1K0XJN/UuLQ0Vf7BE9Q5
+         fS7k8hRVV+jvNjJPHYiIvFyEeYlmah0ER84WmzhFRq42jw7K/UcGZY7QA+TYtUxwI42X
+         tPOJulx9JFzN/p04tX9+6Kon0ZDGgNnqVPLLrH7ELasxlbTXBFpuk13vXzew5faleGTQ
+         KlKTH213ecG2/B/rB6Nftwsr1llrTAe7b2VvxLBuMLm7ithAwjfJ+2aTWLueCsGuVkqj
+         JZvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=81aBSTH/GthciOxgEe9pegfqqhICY5minnvUAeAZJ+U=;
+        b=VHvzuBUppAI3dmjfNq889ClaiWCS8wna3xjBfLPKcsJRikXazSv7SaLQ/deX28kZVV
+         4jw2kBJGBjWdpE4iu2a61bAaYtn+u0HC4YC4hi6VchB/G9CC1Q0II/HQTZrvetZ65Te8
+         dVyXCcdj6J2L+U9bhAIjM/+GdegXePpoeMjCmHtYlnPCakdfb2DwgAZY6X8mw4RFX5a4
+         PCyj3Dlj0HrAYylSJX8XUa/JoxNRNdL2pl52eBknh7Mvd5Ia+oRmGbtEmcz4cQJaKhhF
+         WMbK4J+bdJgrhE/ZQkGz51u9Vt2x3KS5MMXFqPVRnB6VBZ6eL3XS2p8G1kiCtH7ChNgf
+         Hpog==
+X-Gm-Message-State: AOAM531B2/FkJwbcHN1JbuWcqSZz7jK6l14dUYnrolXNFOJfDDxE32ao
+	RG9YlrG4i6ZHQNVIajx1/zRdtGbilBsvmjVGeNhOn2DuEj8=
+X-Google-Smtp-Source: ABdhPJz4nScXNM58H9e6jmkyNfn9YoacN9/TqqEqIk/I+7rSXDT04Wh36ICPAj7rkKk2i7YCI4KSIiZbvYRpw4SzUHA=
+X-Received: by 2002:a25:7c87:: with SMTP id x129mr17658012ybc.300.1642394045323;
+ Sun, 16 Jan 2022 20:34:05 -0800 (PST)
+MIME-Version: 1.0
+References: <CAFcO6XOttbdqHNGP=J0oN5+AKuUHysJM3FwVYc8qNr3wYyRTXQ@mail.gmail.com>
+In-Reply-To: <CAFcO6XOttbdqHNGP=J0oN5+AKuUHysJM3FwVYc8qNr3wYyRTXQ@mail.gmail.com>
+From: butt3rflyh4ck <butterflyhuangxx@gmail.com>
+Date: Mon, 17 Jan 2022 12:33:54 +0800
+Message-ID: <CAFcO6XMeXqzHL3JDV2mrBv8KXd2=QyMFSzK4-rUfrA1u2TueKw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [oss-security] CVE-2021-4095: kernel: KVM: NULL pointer
+ dereference in kvm_dirty_ring_get() in virt/kvm/dirty_ring.c
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+The patch for this issue is available upstream now.
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=55749769fe608fa3f4a075e42e89d237c8e37637
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
 
-            Xen Security Advisory CVE-2019-17351 / XSA-300
-                              version 3
 
-             Linux: No grant table and foreign mapping limits
+Regards,
+ butt3rflyh4ck.
 
-UPDATES IN VERSION 3
-====================
+On Tue, Dec 14, 2021 at 11:26 PM butt3rflyh4ck
+<butterflyhuangxx@gmail.com> wrote:
+>
+> Hi, there was a null-ptr-deref bug in kvm_dirty_ring_get in
+> virt/kvm/dirty_ring.c and I reproduced it on 5.15.0-rc5+.
+>
+> #Root Cause
+> When dirty ring logging is enabled, any dirty logging without an active
+> vCPU context will cause a kernel oops via a KVM KVM_XEN_HVM_SET_ATTR ioctl.
+>
+> we can call KVM_XEN_HVM_SET_ATTR ioctl and it would invoke
+> kvm_xen_hvm_set_attr(), it would call mark_page_dirty_in_slot().
+> Call chains is like this:
+> KVM_XEN_HVM_SET_ATTR ioctl
+>   --->kvm_xen_hvm_set_attr
+>       --->kvm_write_wall_clock
+>          --->kvm_write_guest
+>             -->__kvm_write_guest_page
+>                --->mark_page_dirty_in_slot
+> mark_page_dirty_in_slot().
+> if kvm->dirty_ring_size is sat.
+> ```
+> void mark_page_dirty_in_slot(struct kvm *kvm,
+>      struct kvm_memory_slot *memslot,
+>      gfn_t gfn)
+> {
+> if (memslot && kvm_slot_dirty_track_enabled(memslot)) {
+> unsigned long rel_gfn = gfn - memslot->base_gfn;
+> u32 slot = (memslot->as_id << 16) | memslot->id;
+>
+> if (kvm->dirty_ring_size)
+> kvm_dirty_ring_push(kvm_dirty_ring_get(kvm),
+>     slot, rel_gfn);
+> else
+> set_bit_le(rel_gfn, memslot->dirty_bitmap);
+> }
+> }
+> ```
+> mark_page_dirty_in_slot() would call kvm_dirty_ring_push() to push a
+> dirty-page to dirty ring
+> then kvm_dirty_ring_get() would get vcpu->dirty_ring.
+>
+> kvm_dirty_ring_get()
+> ```
+> struct kvm_dirty_ring *kvm_dirty_ring_get(struct kvm *kvm)
+> {
+> struct kvm_vcpu *vcpu = kvm_get_running_vcpu();  //-------> invoke
+> kvm_get_running_vcpu() to get a vcpu.
+>
+> WARN_ON_ONCE(vcpu->kvm != kvm); [1]
+>
+> return &vcpu->dirty_ring;
+> }
+> ```
+> If vCPU stat did not work, kvm_get_running_vcpu() would get a NULL
+> vcpu pointer .
+>
+> #Details
+> Analyze and some discussion on this issue.
+> https://lore.kernel.org/kvm/CAFcO6XOmoS7EacN_n6v4Txk7xL7iqRa2gABg3F7E3Naf5uG94g@mail.gmail.com/
+>
+> #Fix
+> The patch for this issue, not available upstream now.
+> https://patchwork.kernel.org/project/kvm/patch/20211121125451.9489-12-dwmw2@infradead.org/
+>
+> #CVE
+> Red Hat has assigned CVE-2021-4095 to this issue.
+> https://access.redhat.com/security/cve/CVE-2021-4095
+> https://bugzilla.redhat.com/show_bug.cgi?id=2031194
+>
+> #Cedit
+> Active Defense Lab of Venustech.
+>
+>
+> Regards,
+>  butt3rflyh4ck.
+> --
+> Active Defense Lab of Venustech
 
-CVE assigned.
 
-ISSUE DESCRIPTION
-=================
 
-Virtual device backends and device models running in domain 0, or
-other backend driver domains, need to be able to map guest memory
-(either via grant mappings, or via the foreign mapping interface).
-
-Inside Xen, mapped grants are tracked by the maptrack structure.  The
-size of this structure is chosen during domain creation, and has a
-fixed upper bound for the lifetime of the domain.
-
-For Linux to keep track of these mappings, it needs to have a page
-structure for each one.  In practice the number of page structures is
-usually limited.  In PV guests, a range of pfns are typically set
-aside at boot ("pre-ballooned") for this purpose.  For HVM/PVH and Arm
-guests, no memory is set aside to begin with.  In either case, when
-more of this "foreign / grant map pfn space" is needed, Linux will
-balloon out extra pages to use for this purpose.
-
-Unfortunately, in Linux, there are no limits, either on the total
-amount of memory which the domain will attempt to balloon out, nor on
-the amount of "foreign / grant map" memory which any individual guest
-can consume.
-
-For Linux userspace backends (e.g. QEMU) which use /dev/xen/gnttab or
-/proc/xen/gnttab, there is an arbitrary mapping limit which, if hit,
-will prevent further mappings from being established.
-
-As a result, a malicious guest may be able to, with crafted requests,
-cause a backend Linux domain to either:
-
- 1) Fill the maptrack table in Xen and/or hit the userspace limit.
-    This will starve I/O from other guests served by the same backend.
-
- 2) Balloon out sufficient RAM to cause it to swap excessively, or run
-    completely out of memory.  This may starve all operations from the
-    domain, including I/O from other guests, or may cause a crash of
-    the domain.
-
-IMPACT
-======
-
-Guest may be able to crash backend Linux domains, or starve operations
-inside the domain, including the processing of guest I/O requests
-(Guest Denial-of-Service).
-
-If the backend is domain 0, which is the most common configuration,
-then host-wide operations may be starved, or the host may crash (Host
-Denial-of-Service).
-
-VULNERABLE SYSTEMS
-==================
-
-All versions of Linux are vulnerable.  Only Linux guests acting as
-backend domains for other guests may be exploited.
-
-All Arm domains are vulnerable, as are x86 PVH/HVM guests.  The
-vulnerability of x86 PV guests depends on how they were configured at
-boot.
-
-MITIGATION
-==========
-
-PV guests can be constructed with "pre-ballooned" memory, by building
-it with maxmem > memory.  See `man 5 xl.cfg` for full details of these
-two parameters.
-
-For PV dom0, these are controlled by Xen's "dom0_mem=$X,max:$Y"
-command line parameter.
-
-The larger the difference between memory and maxmem, the more space
-Linux has to fill with grant/foreign mappings before it will start
-ballooning out real memory to satisfy further mapping requests.  This
-makes the attack more difficult to accomplish.
-
-CREDITS
-=======
-
-This issue was discovered by Julien Grall of ARM.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves the backend memory
-exhaustion issue.
-
-NOTE: This does NOT fix the guest starvation issue.  Fixing fixing
-this issue is more complex, and it was determined that it was better
-to work on a robust fix for the issue in public.  This advisory will
-be updated when fixes are available.
-
-xsa300-linux-5.2.patch     Linux 4.4 ... 5.2
-
-$ sha256sum xsa300*
-9c8a9aec52b147f8e8ef41444e1dd11803bacf3bd4d0f6efa863b16f7a9621ac  xsa300-linux-5.2.patch
-$
-
-NOTE ON LACK OF EMBARGO
-=======================
-
-The lack of predisclosure is due to a short schedule set by the
-discoverer, and efforts to resolve the advisory wording.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl2y2AYMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ1zEH/0EshvAErWXqQzUnuqxyCeCOPnVtTbnGRDBR4B62
-znE6Kbu449nh7qnkqyRGQxwGgdKnsFPDbXuQJb1hyjSl1Ph+u5KbA3aDcIxNy4d0
-y0gumH8tcW+ag1P9Z9geACrRT+1dJ7RiMfi+IaBA7nD3raYUtHLdGrAHGTxX1B3u
-k3kXjP5pyXl96u9zCAd4lOe6hLnQr3gaPrBdDDkF+ArY8WO8+XaTqKPH0YsdrHxA
-kexqH3Ts9sBO+YC7LZdF9Q54K91xOfzwmmmZUTL99pJhzAAl4fwh/ZZj/rRZhC58
-FnRy0lL7D2lFyhzlPIrXk+sjuu4tS/ZslQKk14Q7etcXGFQ=
-=rVDQ
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa300-linux-5.2.patch"
-Content-Disposition: attachment; filename="xsa300-linux-5.2.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSBlYTQ5NDUwZGVkNTc1ZmFjYzBlNjRlMGQ2YWRjYjFjYThhYWFkMGJh
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKdWVyZ2VuIEdyb3Nz
-IDxqZ3Jvc3NAc3VzZS5jb20+CkRhdGU6IFdlZCwgMTkgSnVuIDIwMTkgMTE6
-MDA6NTYgKzAyMDAKU3ViamVjdDogW1BBVENIXSB4ZW46IGxldCBhbGxvY194
-ZW5iYWxsb29uZWRfcGFnZXMoKSBmYWlsIGlmIG5vdCBlbm91Z2ggbWVtb3J5
-CiBmcmVlCgpJbnN0ZWFkIG9mIHRyeWluZyB0byBhbGxvY2F0ZSBwYWdlcyB3
-aXRoIEdGUF9VU0VSIGluCmFkZF9iYWxsb29uZWRfcGFnZXMoKSBjaGVjayB0
-aGUgYXZhaWxhYmxlIGZyZWUgbWVtb3J5IHZpYQpzaV9tZW1fYXZhaWxhYmxl
-KCkuIEdGUF9VU0VSIGlzIGZhciBsZXNzIGxpbWl0aW5nIG1lbW9yeSBleGhh
-dXN0aW9uCnRoYW4gdGhlIHRlc3QgdmlhIHNpX21lbV9hdmFpbGFibGUoKS4K
-ClRoaXMgd2lsbCBhdm9pZCBkb20wIHJ1bm5pbmcgb3V0IG9mIG1lbW9yeSBk
-dWUgdG8gZXhjZXNzaXZlIGZvcmVpZ24KcGFnZSBtYXBwaW5ncyBlc3BlY2lh
-bGx5IG9uIEFSTSBhbmQgb24geDg2IGluIFBWSCBtb2RlLCBhcyB0aG9zZSBk
-b24ndApoYXZlIGEgcHJlLWJhbGxvb25lZCBhcmVhIHdoaWNoIGNhbiBiZSB1
-c2VkIGZvciBmb3JlaWduIG1hcHBpbmdzLgoKQXMgdGhlIG5vcm1hbCBiYWxs
-b29uaW5nIHN1ZmZlcnMgZnJvbSB0aGUgc2FtZSBwcm9ibGVtIGRvbid0IGJh
-bGxvb24KZG93biBtb3JlIHRoYW4gc2lfbWVtX2F2YWlsYWJsZSgpIHBhZ2Vz
-IGluIG9uZSBpdGVyYXRpb24uIEF0IHRoZSBzYW1lCnRpbWUgbGltaXQgdGhl
-IGRlZmF1bHQgbWF4aW11bSBudW1iZXIgb2YgcmV0cmllcy4KClJlcG9ydGVk
-LWJ5OiBKdWxpZW4gR3JhbGwgPGp1bGllbi5ncmFsbEBhcm0uY29tPgpTaWdu
-ZWQtb2ZmLWJ5OiBKdWVyZ2VuIEdyb3NzIDxqZ3Jvc3NAc3VzZS5jb20+Ci0t
-LQogZHJpdmVycy94ZW4vYmFsbG9vbi5jIHwgMTYgKysrKysrKysrKysrKy0t
-LQogMSBmaWxlIGNoYW5nZWQsIDEzIGluc2VydGlvbnMoKyksIDMgZGVsZXRp
-b25zKC0pCgpkaWZmIC0tZ2l0IGEvZHJpdmVycy94ZW4vYmFsbG9vbi5jIGIv
-ZHJpdmVycy94ZW4vYmFsbG9vbi5jCmluZGV4IGQzN2RkNWJiN2E4Zi4uNTU5
-NzY4ZGMyNTY3IDEwMDY0NAotLS0gYS9kcml2ZXJzL3hlbi9iYWxsb29uLmMK
-KysrIGIvZHJpdmVycy94ZW4vYmFsbG9vbi5jCkBAIC01MzgsOCArNTM4LDE1
-IEBAIHN0YXRpYyB2b2lkIGJhbGxvb25fcHJvY2VzcyhzdHJ1Y3Qgd29ya19z
-dHJ1Y3QgKndvcmspCiAJCQkJc3RhdGUgPSByZXNlcnZlX2FkZGl0aW9uYWxf
-bWVtb3J5KCk7CiAJCX0KIAotCQlpZiAoY3JlZGl0IDwgMCkKLQkJCXN0YXRl
-ID0gZGVjcmVhc2VfcmVzZXJ2YXRpb24oLWNyZWRpdCwgR0ZQX0JBTExPT04p
-OworCQlpZiAoY3JlZGl0IDwgMCkgeworCQkJbG9uZyBuX3BhZ2VzOworCisJ
-CQluX3BhZ2VzID0gbWluKC1jcmVkaXQsIHNpX21lbV9hdmFpbGFibGUoKSk7
-CisJCQlzdGF0ZSA9IGRlY3JlYXNlX3Jlc2VydmF0aW9uKG5fcGFnZXMsIEdG
-UF9CQUxMT09OKTsKKwkJCWlmIChzdGF0ZSA9PSBCUF9ET05FICYmIG5fcGFn
-ZXMgIT0gLWNyZWRpdCAmJgorCQkJICAgIG5fcGFnZXMgPCB0b3RhbHJlc2Vy
-dmVfcGFnZXMpCisJCQkJc3RhdGUgPSBCUF9FQUdBSU47CisJCX0KIAogCQlz
-dGF0ZSA9IHVwZGF0ZV9zY2hlZHVsZShzdGF0ZSk7CiAKQEAgLTU3OCw2ICs1
-ODUsOSBAQCBzdGF0aWMgaW50IGFkZF9iYWxsb29uZWRfcGFnZXMoaW50IG5y
-X3BhZ2VzKQogCQl9CiAJfQogCisJaWYgKHNpX21lbV9hdmFpbGFibGUoKSA8
-IG5yX3BhZ2VzKQorCQlyZXR1cm4gLUVOT01FTTsKKwogCXN0ID0gZGVjcmVh
-c2VfcmVzZXJ2YXRpb24obnJfcGFnZXMsIEdGUF9VU0VSKTsKIAlpZiAoc3Qg
-IT0gQlBfRE9ORSkKIAkJcmV0dXJuIC1FTk9NRU07CkBAIC03MTAsNyArNzIw
-LDcgQEAgc3RhdGljIGludCBfX2luaXQgYmFsbG9vbl9pbml0KHZvaWQpCiAJ
-YmFsbG9vbl9zdGF0cy5zY2hlZHVsZV9kZWxheSA9IDE7CiAJYmFsbG9vbl9z
-dGF0cy5tYXhfc2NoZWR1bGVfZGVsYXkgPSAzMjsKIAliYWxsb29uX3N0YXRz
-LnJldHJ5X2NvdW50ID0gMTsKLQliYWxsb29uX3N0YXRzLm1heF9yZXRyeV9j
-b3VudCA9IFJFVFJZX1VOTElNSVRFRDsKKwliYWxsb29uX3N0YXRzLm1heF9y
-ZXRyeV9jb3VudCA9IDQ7CiAKICNpZmRlZiBDT05GSUdfWEVOX0JBTExPT05f
-TUVNT1JZX0hPVFBMVUcKIAlzZXRfb25saW5lX3BhZ2VfY2FsbGJhY2soJnhl
-bl9vbmxpbmVfcGFnZSk7Ci0tIAoyLjE2LjQKCg==
-
---=separator--
+-- 
+Active Defense Lab of Venustech
