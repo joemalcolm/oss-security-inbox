@@ -1,39 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/07/5
-Message-ID: <4fd4c465-35a5-4ca5-f549-6392ecb10330@sysec.org>
-Date: Thu, 7 Apr 2022 17:16:26 +0800
-From: Qiuhao Li <qiuhao@...ec.org>
-To: Solar Designer <solar@...nwall.com>, kangel <kangel@....edu.cn>
-Cc: oss-security@...ts.openwall.com, pgn@....edu.cn, Pedro Sampaio <psampaio@...hat.com>, pbonzini@...hat.com
-Subject: Re: Linux kernel: x86/kvm: null-ptr-deref in kvm_dirty_ring_push
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/17/3
+Message-ID: <921da528-8b36-8cb4-84c0-5fb105357f85@oracle.com>
+Date: Mon, 17 Jan 2022 11:54:56 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Expat 2.4.3 released, includes 8 security fixes
 Content-Type: text/plain; charset=utf-8
 
-On 4/7/22 16:35, Solar Designer wrote:
-> Further in the linux-distros thread, this got assigned CVE-2022-1263,
-> however is this really a security issue - in other words, is a security
-> boundary crossed in triggering the bug?  I think it is not, and if so
-> the CVE ID should probably be rejected.  From the PoC:
+ From https://blog.hartwork.org/posts/expat-2-4-3-released/ :
+
+>  2022-01-15 15:58
 > 
->> 		res = syscall(__NR_openat, 0xffffffffffffff9cul, "/dev/kvm", 0ul, 0ul);
-
-We sent the report to oss-security as instructed by linux-distro.
-
-As Paolo said, /dev/kvm can be accessed by an unprivileged local user. 
-So it's a Dos. It also seems like there is a kernel NPD issue on oss 
-before: https://www.openwall.com/lists/oss-security/2022/04/02/5
-
+> libexpat is a fast streaming XML parser. Alongside libxml2, Expat is one of the most widely used software libre XML parsers written in C, precisely C99. It is cross-platform and licensed under the MIT license.
 > 
-> In fact, also in the linux-distros thread it was promptly agreed that
-> this doesn't need an embargo - perhaps precisely because of no security
-> relevance?  If so, that should have been said explicitly, so a CVE ID
-> wouldn't be assigned (it was by another person).
+> Expat 2.4.3 has been released earlier today. Besides two minor fixes to the build system, this release is about security fixes. There is a total of 8 CVEs fixed, all related to fixed-size integer math (integer overflow and invalid shifts) near memory allocation. Impact is denial of service, or more.
+> 
+>     CVE-2021-45960
+>     CVE-2021-46143
+>     CVE-2022-22822
+>     CVE-2022-22823
+>     CVE-2022-22824
+>     CVE-2022-22825
+>     CVE-2022-22826
+>     CVE-2022-22827
+> 
+> For more details, please check out the change log <https://github.com/libexpat/libexpat/blob/R_2_4_3/expat/Changes>.
+> 
+> If you maintain Expat packaging or a bundled copy of Expat or a pinned version of Expat somewhere, please update to 2.4.3. Thank you!
+> 
+> Sebastian Pipping
 
-We are willing to cooperate with the final decision of the CVE issuer 
-and oss-security.
+ From https://github.com/libexpat/libexpat/blob/R_2_4_3/expat/Changes :
 
-Personally, I agree with Paolo this is not a scary bug. No embargo makes 
-it be fixed quickly.
+> Release 2.4.3 Sun January 16 2022
+>         Security fixes:
+>        #531 #534  CVE-2021-45960 -- Fix issues with left shifts by >=29 places
+>                     resulting in
+>                       a) realloc acting as free
+>                       b) realloc allocating too few bytes
+>                       c) undefined behavior
+>                     depending on architecture and precise value
+>                     for XML documents with >=2^27+1 prefixed attributes
+>                     on a single XML tag a la
+>                     "<r xmlns:a='[..]' a:a123='[..]' [..] />"
+>                     where XML_ParserCreateNS is used to create the parser
+>                     (which needs argument "-n" when running xmlwf).
+>                     Impact is denial of service, or more.
+>        #532 #538  CVE-2021-46143 (ZDI-CAN-16157) -- Fix integer overflow
+>                     on variable m_groupSize in function doProlog leading
+>                     to realloc acting as free.
+>                     Impact is denial of service or more.
+>             #539  CVE-2022-22822 to CVE-2022-22827 -- Prevent integer overflows
+>                     near memory allocation at multiple places.  Mitre assigned
+>                     a dedicated CVE for each involved internal C function:
+>                     - CVE-2022-22822 for function addBinding
+>                     - CVE-2022-22823 for function build_model
+>                     - CVE-2022-22824 for function defineAttribute
+>                     - CVE-2022-22825 for function lookup
+>                     - CVE-2022-22826 for function nextScaffoldPart
+>                     - CVE-2022-22827 for function storeAtts
+>                     Impact is denial of service or more.
+> 
+>         Other changes:
+>             #535  CMake: Make call to file(GENERATE [..]) work for CMake <3.19
+>             #541  Autotools|CMake: MinGW: Make run.sh(.in) work for Cygwin
+>                     and MSYS2 by not going through Wine on these platforms
+>        #527 #528  Address compiler warnings
+>        #533 #543  Version info bumped from 9:2:8 to 9:3:8;
+>                     see https://verbump.de/ for what these numbers do
+> 
+>         Infrastructure:
+>             #536  CI: Check for realistic minimum CMake version
+>        #529 #539  CI: Cover compilation with -m32
+>             #529  CI: Store coverage reports as artifacts for download
+>             #528  CI: Upgrade Clang from 11 to 13
+> 
+>         Special thanks to:
+>             An anonymous whitehat
+>             Christopher Degawa
+>             J. Peter Mugaas
+>             Tyson Smith
+>                  and
+>             GCC Farm Project
+>             Trend Micro Zero Day Initiative
 
-Regards,
-   Qiuhao Li
-
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
