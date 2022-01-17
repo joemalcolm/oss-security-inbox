@@ -1,83 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/20/2
-Message-ID: <0894155b-6a17-c117-d826-04e4a6b8ecfa@ovn.org>
-Date: Tue, 20 Dec 2022 22:39:23 +0100
-From: Ilya Maximets <i.maximets@....org>
-To: oss-security@...ts.openwall.com, ovs-announce@...nvswitch.org, ovs-discuss <ovs-discuss@...nvswitch.org>
-Cc: i.maximets@....org, Aaron Conole <aconole@...hat.com>, Qian Chen <cq674350529@...il.com>
-Subject: [ADVISORY] LLDP underflow while parsing malformed Auto Attach TLV (Open vSwitch)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/17/1
+Message-ID: <CAFcO6XMeXqzHL3JDV2mrBv8KXd2=QyMFSzK4-rUfrA1u2TueKw@mail.gmail.com>
+Date: Mon, 17 Jan 2022 12:33:54 +0800
+From: butt3rflyh4ck <butterflyhuangxx@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2021-4095: kernel: KVM: NULL pointer dereference in kvm_dirty_ring_get() in virt/kvm/dirty_ring.c
 Content-Type: text/plain; charset=utf-8
 
-Description
-===========
-
-Multiple versions of Open vSwitch are vulnerable to crafted LLDP
-packets causing denial of service, and data underflow attacks.
-Triggering the vulnerabilities requires LLDP processing to be enabled
-for a specific port.  Open vSwitch versions prior to 2.4.0 are not
-vulnerable.
-
-The Common Vulnerabilities and Exposures project (cve.mitre.org)
-did not assign the identifier to this issue yet.  The identifier will
-be communicated separately.  This issue does not affect the `lldpd'
-project, although they share a code base.  The issue is related to
-parsing the Auto Attach TLVs, which is specific to the Open vSwitch
-implementation.
+The patch for this issue is available upstream now.
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=55749769fe608fa3f4a075e42e89d237c8e37637
 
 
-Mitigation
-==========
 
-For any version of Open vSwitch, preventing LLDP packets from reaching
-Open vSwitch mitigates the vulnerability.  We do not recommend
-attempting to mitigate the vulnerability this way because of the
-following difficulties:
+Regards,
+ butt3rflyh4ck.
 
-    - Open vSwitch obtains packets before the iptables host firewall,
-      so ebtables on the Open vSwitch host cannot ordinarily block the
-      vulnerability.
+On Tue, Dec 14, 2021 at 11:26 PM butt3rflyh4ck
+<butterflyhuangxx@...il.com> wrote:
+>
+> Hi, there was a null-ptr-deref bug in kvm_dirty_ring_get in
+> virt/kvm/dirty_ring.c and I reproduced it on 5.15.0-rc5+.
+>
+> #Root Cause
+> When dirty ring logging is enabled, any dirty logging without an active
+> vCPU context will cause a kernel oops via a KVM KVM_XEN_HVM_SET_ATTR ioctl.
+>
+> we can call KVM_XEN_HVM_SET_ATTR ioctl and it would invoke
+> kvm_xen_hvm_set_attr(), it would call mark_page_dirty_in_slot().
+> Call chains is like this:
+> KVM_XEN_HVM_SET_ATTR ioctl
+>   --->kvm_xen_hvm_set_attr
+>       --->kvm_write_wall_clock
+>          --->kvm_write_guest
+>             -->__kvm_write_guest_page
+>                --->mark_page_dirty_in_slot
+> mark_page_dirty_in_slot().
+> if kvm->dirty_ring_size is sat.
+> ```
+> void mark_page_dirty_in_slot(struct kvm *kvm,
+>      struct kvm_memory_slot *memslot,
+>      gfn_t gfn)
+> {
+> if (memslot && kvm_slot_dirty_track_enabled(memslot)) {
+> unsigned long rel_gfn = gfn - memslot->base_gfn;
+> u32 slot = (memslot->as_id << 16) | memslot->id;
+>
+> if (kvm->dirty_ring_size)
+> kvm_dirty_ring_push(kvm_dirty_ring_get(kvm),
+>     slot, rel_gfn);
+> else
+> set_bit_le(rel_gfn, memslot->dirty_bitmap);
+> }
+> }
+> ```
+> mark_page_dirty_in_slot() would call kvm_dirty_ring_push() to push a
+> dirty-page to dirty ring
+> then kvm_dirty_ring_get() would get vcpu->dirty_ring.
+>
+> kvm_dirty_ring_get()
+> ```
+> struct kvm_dirty_ring *kvm_dirty_ring_get(struct kvm *kvm)
+> {
+> struct kvm_vcpu *vcpu = kvm_get_running_vcpu();  //-------> invoke
+> kvm_get_running_vcpu() to get a vcpu.
+>
+> WARN_ON_ONCE(vcpu->kvm != kvm); [1]
+>
+> return &vcpu->dirty_ring;
+> }
+> ```
+> If vCPU stat did not work, kvm_get_running_vcpu() would get a NULL
+> vcpu pointer .
+>
+> #Details
+> Analyze and some discussion on this issue.
+> https://lore.kernel.org/kvm/CAFcO6XOmoS7EacN_n6v4Txk7xL7iqRa2gABg3F7E3Naf5uG94g@mail.gmail.com/
+>
+> #Fix
+> The patch for this issue, not available upstream now.
+> https://patchwork.kernel.org/project/kvm/patch/20211121125451.9489-12-dwmw2@infradead.org/
+>
+> #CVE
+> Red Hat has assigned CVE-2021-4095 to this issue.
+> https://access.redhat.com/security/cve/CVE-2021-4095
+> https://bugzilla.redhat.com/show_bug.cgi?id=2031194
+>
+> #Cedit
+> Active Defense Lab of Venustech.
+>
+>
+> Regards,
+>  butt3rflyh4ck.
+> --
+> Active Defense Lab of Venustech
 
-    - If Open vSwitch is configured to receive and transmit LLDP
-      messages, the required functionality will need to be disabled
-      potentially disrupting the network.
-
-We have found that Open vSwitch is subject to a denial of service, and
-possibly a remote code execution exploit when LLDP processing is enabled
-on an interface.  By default, interfaces are not configured to process
-LLDP messages.
 
 
-Fix
-===
-
-Patches to fix these vulnerabilities in Open vSwitch 2.13.x and newer are
-applied to the appropriate branches, and the original patch is located
-at:
-
-   https://mail.openvswitch.org/pipermail/ovs-dev/2022-December/400596.html
-
-Recommendation
-==============
-
-We recommend that users of Open vSwitch apply the respective patch, or
-upgrade to a known patched version of Open vSwitch.  These include:
-
-* 3.0.3
-* 2.17.5
-* 2.16.6
-* 2.15.7
-* 2.14.8
-* 2.13.10
-
-
-Acknowledgments
-===============
-
-The Open vSwitch team wishes to thank the reporter:
-
-  Qian Chen <cq674350529@...il.com>
-
-
-Download attachment "OpenPGP_0xB9F7EC77C829BF96.asc" of type "application/pgp-keys" (4740 bytes)
-
-Download attachment "OpenPGP_signature" of type "application/pgp-signature" (841 bytes)
+-- 
+Active Defense Lab of Venustech
