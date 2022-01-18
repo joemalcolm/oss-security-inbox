@@ -1,51 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/21/9
-Message-ID: <20221221194203.40e37b41@computer>
-Date: Wed, 21 Dec 2022 19:42:03 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Directory traversal in sharutils/uudecode and python uu module
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/18/8
+Message-ID: <215FEA11-77C7-42C1-97AB-8B3F637F9C61@oracle.com>
+Date: Tue, 18 Jan 2022 18:57:57 +0000
+From: John Haxby <john.haxby@...cle.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "jamie@...l-daniel.co.uk" <jamie@...l-daniel.co.uk>, "g@....io" <g@....io>, "misetichrvoje@...il.com" <misetichrvoje@...il.com>, "alecthechop@...il.com" <alecthechop@...il.com>, "isaac.badipe@...il.com" <isaac.badipe@...il.com>
+Subject: Re: Linux kernel: Heap buffer overflow in fs_context.c since version 5.1
 Content-Type: text/plain; charset=utf-8
 
-Hi
 
-uuencode is an old method to encode binary data in ascii.
 
-uuencoded files start with a line of this type:
-begin 644 [filename]
+> On 18 Jan 2022, at 18:21, Will <willsroot@...tonmail.com> wrote:
+> 
+> There is a heap overflow bug in legacy_parse_param in which the length of data copied can be incremented beyond the width of the 1-page slab allocated for it. We currently have created functional LPE exploits against Ubuntu 20.04 and container escape exploits against Google's hardened COS. The bug was introduced in 5.1-rc1 (https://github.com/torvalds/linux/commit/3e1aeb00e6d132efc151dacc062b38269bc9eccc#diff-c4a9ea83de4a42a0d1bcbaf1f03ce35188f38da4987e0e7a52aae7f04de14a05) and is present in all Linux releases since. As of January 18th, this patch (https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=722d94847de29310e8aa03fcbdb41fc92c521756) fixes this issue.
+> 
+> The bug is caused by an integer underflow present in fs/fs_context.c:legacy_parse_param, which results in miscalculation of a valid max length. A bounds check is present at fs_context.c:551, returning an error if (len > PAGE_SIZE - 2 - size); however, if the value of size is greater than or equal to 4095, the unsigned subtraction will underflow to a massive value greater than len, so the check will not trigger. After this, the attacker may freely write data out-of-bounds. Changing the check to size + len + 2 > PAGE_SIZE (which the patch did) would fix this.
+> 
+> Exploitation relies on the CAP_SYS_ADMIN capability; however, the permission only needs to be granted in the current namespace. An unprivileged user can use unshare(CLONE_NEWNS|CLONE_NEWUSER) to enter a namespace with the CAP_SYS_ADMIN permission, and then proceed with exploitation to root the system.
 
-If the implementation does not check for it this allows a directory
-traversal attack, e.g. like this:
-begin 644 /etc/shadow
+This is CVE-2022-0185
 
-Or
-begin 644 ../../../../../etc/shadow
+jch
 
-If one can convince someone with root privileges to decode such a file
-this may thus compromise a system.
-
-I discovered two implementations vulnerable to this: The uudecode tool
-shipped with GNU sharutils and the uu module in python (only if no
-explicit filename is given). Both are vulnerable to both variations.
-
-I reported both on November 27th. The python security team asked me to
-report it to their public bug tracker, as they don't consider it a high
-risk issue:
-https://github.com/python/cpython/issues/99889
-
-The python uu module is deprecated and will be removed in python 3.13.
-The python developers pointed out that it is rarely used, and it is not
-vulnerable if an output file name is given.
-The python binascii module contains an uu decoder that is unaffected
-(as it does not directly write a file, it decodes to a variable) and no
-deprecation or removal is planned. I guess this means if you're using
-the python uu module you should probably switch to binascii.
-
-I got a reply confirming the report from the sharutils developers,
-pointing out that this can be interpreted as expected behavior
-according to the posix standard. I don't expect a fix any time soon,
-their latest release is from 2015.
-
--- 
-Hanno Böck
-https://hboeck.de/
+Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
