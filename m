@@ -1,25 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/21/2
-Message-ID: <YmGV8gVeaVN9IMve@kroah.com>
-Date: Thu, 21 Apr 2022 19:35:46 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/18/6
+Message-ID: <11490321.fexurL4tql@sinistra>
+Date: Tue, 18 Jan 2022 17:05:50 +0100
+From: Jonas Schäfer <jonas@...licki.name>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-1419: Linux kernel: A concurrency use-after-free in vgem_gem_dumb_create
+Subject: Re: Prosody XMPP server advisory 2022-01-13 (Remote Unauthenticated Denial of Service) (CVE request)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 21, 2022 at 11:44:54PM +0800, Minh Yuan wrote:
-> Timeline:
-> * 21.04.22 - Vulnerability reported to security@...nel.org and
-> linux-distros@...openwall.org
-> * 21.04.22 - CVE-2022-1419 assigned.
+On Donnerstag, 13. Januar 2022 15:01:11 CET Jonas Schäfer wrote:
+> A remote unauthenticated denial of service / resource exhaustion attack was
+> discovered in all Prosody servers with WebSockets enabled and publicly
+> accessible.
+> 
+> Upstream builds have been started and should be available shortly. The
+> closely related Snikket project will publish new images shortly, too. Jitsi
+> Meet have been informed ahead of time.
+> 
+> Please see the below advisory for full information.
 
-Why are people assigning CVEs to things that require root permissions?
-Or are there distros running on kernels older than 5.4 that allow
-untrusted users access to the drm ioctls directly?
+As promised, attached you'll find instructions for probing for the 
+vulnerability.
 
-I'm curious as it would affect the backporting of the needed fixes here
-(or not.)
+kind regards,
+Jonas
+View attachment "instructions.md" of type "text/markdown" (1695 bytes)
 
-thanks,
-
-greg k-h
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
