@@ -1,35 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/23/1
-Message-ID: <6ae481de-39c2-c4a9-5274-59c2bcdb2dd6@gmail.com>
-Date: Sat, 23 Jul 2022 19:35:42 +0700
-From: Pedro Ribeiro <pedrib@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/18/2
+Message-ID: <CA+eGCHacHMaHndb9vAAU+Ju3KsZmu6zJfJoLT+id=_FjAhp59A@mail.gmail.com>
+Date: Tue, 18 Jan 2022 21:29:18 +0800
+From: tr3e wang <tr3e.wang@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE Request: heap buffer overflow in gdk-pixbuf
+Subject: Re: Linux Kernel eBPF Improper Input Validation Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi all,
 
-A year ago I found and submitted a vulnerability to the gdk-pixbuf tracker:
-https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/issues/190
+This post is the exploit overview of CVE-2022-23222.
 
-It's a heap buffer overflow using a crafted GIF, which is likely 
-exploitable in 32 bit systems. Full details are in the link above in the 
-bug tracker.
+We successfully exploited this vulnerability to obtain full root
+privileges on default installations of Ubuntu 20.04.
 
-This was patched and the fix was merged 8 months ago as seen here:
-https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/merge_requests/121
+*Exploit overview*
 
-The issue is now public, but since no CVE was attributed, it probably is 
-not being considered as a problem for downstream users of the package.
+1. Among all these *_OR_NULL types, we choose PTR_TO_MEM_OR_NULL
+   which can be created by BPF_FUNC_ringbuf_reserve. First, we
+   pass 0xffff........ffff to BPF_FUNC_ringbuf_reserve to get a
+   NULL pointer r0, and copy r0 to r1. Then add r1 by 1, and do
+   NULL check on r0. At this point, the verifier will believe that
+   both r0 and r1 are zero.
 
-As of today, the latest Debian stable package is affected by this 
-vulnerability. Using a GNOME file system browser and browsing to that 
-folder will cause a crash, as will opening it up in a GNOME image viewer 
-and even attempting to load it in Chromium (should have submitted to 
-them for a bounty :D).
+2. ALU sanitation is hardened after commit
+   "bpf: Fix leakage of uninitialized bpf stack under speculation".
+   To bypass alu sanitation, we use helper func bpf_skb_load_bytes_*
+   to get partial/full overwrite the pointer on stack to obtain
+   pointer address leakage and arbitrary address read/write.
 
-Hence I'd like to get a CVE to raise awareness for this issue, so that 
-downstream users of the package can get patched.
+3. We spawn many child processes, and use arbitrary address read to
+   find the address of task_struct and cred around the the address of
+   the array map we created. After zeroing out the uid/gid/... ,
+   full root privileges obtained.
 
-Thanks and regards,
-Pedro Ribeiro
+Full exploit code will be published on github in the near future.
+
+Regards,
+tr3e
+
+tr3e wang <tr3e.wang@...il.com> 于2022年1月13日周四 16:21写道：
+
+> Hi all,
+>
+> This vulnerability allows local attackers to escalate privileges on
+> affected installations of Linux Kernel. An attacker must first obtain the
+> ability to execute low-privileged code on the target system in order to
+> exploit this vulnerability.
+>
+> The specific flaw exists within the handling of eBPF programs. The issue
+> results from the lack of proper validation of user-supplied eBPF programs
+> prior to executing them. An attacker can leverage this vulnerability to
+> escalate privileges and execute code in the context of the kernel.
+> BE AWARE, unprivileged bpf is disabled by default in most distros.
+>
+> *Affected Version*
+>
+>     Linux Kernel 5.8 or later
+>
+> *Root Cause Analysis*
+>
+> The bpf verifier(kernel/bpf/verifier.c) did not properly restrict several
+> *_OR_NULL pointer types which allows these types to do pointer arithmetic.
+> This can be leveraged to bypass the verifier check and escalate privilege.
+> (see
+> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/kernel/bpf/verifier.c?h=v5.10.83#n6022
+> )
+>
+> *Exploit Code*
+>
+> Exploit code will be delayed for 5 days and will be posted at 12:00 UTC,
+> Jan 18, 2022
+>
+> *Mitigations*
+>
+> set kernel.unprivileged_bpf_disabled to 1
+>
+> BE AWARE AGAIN, unprivileged bpf is disabled by default in most distros.
+>
+> *Credits*
+>
+> tr3e of SecCoder Security Lab
+> Best,
+> tr3e
+>
+
