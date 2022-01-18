@@ -1,21 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/31/2
-Message-ID: <ef0d3598-74a5-7981-af98-c05407457f68@apache.org>
-Date: Tue, 31 May 2022 13:04:24 +0000
-From: Tim Allison <tallison@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/18/4
+Message-ID: <943ce266-8f32-d763-2980-41c3126222d3@apache.org>
+Date: Tue, 18 Jan 2022 14:42:35 +0000
+From: Ralph Goers <rgoers@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-30973: Apache Tika: Missing fix for CVE-2022-30126 in 1.28.2 
+Subject: CVE-2022-23305: SQL injection in JDBC Appender in Apache Log4j V1 
 Content-Type: text/plain; charset=utf-8
+
+Severity: high
 
 Description:
 
-We failed to apply the fix for CVE-2022-30126 to the 1.x branch in the 1.28.2 release.  In Apache Tika, a regular expression in the StandardsText class, used by the StandardsExtractingContentHandler could lead to a denial of service caused by backtracking on a specially crafted file. This only affects users who are running the StandardsExtractingContentHandler, which is a non-standard handler.  This is fixed in 1.28.3.
+By design, the JDBCAppender in Log4j 1.2.x accepts an SQL statement as a configuration parameter where the values to be inserted are converters from PatternLayout. The message converter, %m, is likely to always be included. This allows attackers to manipulate the SQL by entering crafted strings into input fields or headers of an application that are logged allowing unintended SQL queries to be executed.
+
+Note this issue only affects Log4j 1.x when specifically configured to use the JDBCAppender, which is not the default. Beginning in version 2.0-beta8, the JDBCAppender was re-introduced with proper support for parameterized SQL queries and further customization over the columns written to in logs.
+
+Apache Log4j 1.2 reached end of life in August 2015. Users should upgrade to Log4j 2 as it addresses numerous other issues from the previous versions.
 
 Mitigation:
 
-Avoid using the StandardsExtractingContentHandler or upgrade to Tika 1.28.3 or 2.4.0
+Users should upgrade to Log4j 2 or remove usage of the JDBCAppender from their configurations.
 
 Credit:
 
-This issue was reported by Cathy Hu, SUSE Software Solutions Germany GmbH.
+Daniel Martin of NCC Group
+
+References:
+
+https://logging.apache.org/log4j/2.x/security.html
+https://issues.apache.org/jira/browse/LOG4J2-229
 
