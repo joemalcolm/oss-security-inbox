@@ -1,51 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/28/7
-Message-ID: <Y6yEv+6iYQQNaqi9@itl-email>
-Date: Wed, 28 Dec 2022 13:02:35 -0500
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/18/1
+Message-ID: <CA+eGCHa47pnvi376PCQJE-zMaVR_y6WLTK4CyE-yKT87jDZKuA@mail.gmail.com>
+Date: Tue, 18 Jan 2022 21:26:43 +0800
+From: tr3e wang <tr3e.wang@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Alejandro Colomar <alx.manpages@...il.com>, Michael Kerrisk <mtk.manpages@...il.com>, linux-kernel@...r.kernel.org, linux-man@...r.kernel.org
-Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
+Subject: Re: CVE-2021-4204: Linux Kernel eBPF Improper Input Validation Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 28, 2022 at 12:25:17PM -0500, Shawn Webb wrote:
-> On Wed, Dec 28, 2022 at 11:47:25AM -0500, Demi Marie Obenour wrote:
-> > On Wed, Dec 28, 2022 at 10:24:58AM -0500, Shawn Webb wrote:
-> > > On Tue, Dec 27, 2022 at 04:44:49PM -0800, Lyndon Nerenberg (VE7TFX/VE6BBM) wrote:
-> > > > Dominique Martinet writes:
-> > > > 
-> > > > > But, really, I just don't see how this can practically be said to be parsable...
-> > > > 
-> > > > In its current form it never will be.  The solution is to place
-> > > > this variable-length field last.  Then you can "cut -d ' ' -f 51-"
-> > > > to get the command+args part (assuming I counted all those fields
-> > > > correctly ...)
-> > > > 
-> > > > Of course, this breaks backwards compatability.
-> > > 
-> > > It would also break forwards compatibility in the case new fields
-> > > needed to be added.
-> > > 
-> > > The only solution would be a libxo-style feature wherein a
-> > > machine-parseable format is exposed by virtue of a file extension.
-> > > 
-> > > Examples:
-> > > 
-> > > 1. /proc/pid/stats.json
-> > > 2. /proc/pid/stats.xml
-> > > 3. /proc/pid/stats.yaml_shouldnt_be_a_thing
-> > 
-> > A binary format would be even better.  No risk of ambiguity.
-> 
-> I think the argument I'm trying to make is to be flexible in
-> implementation, allowing for future needs and wants--that is "future
-> proofing".
+Hi all,
 
-Linux should not have an XML, JSON, or YAML serializer.  Linux already
-does way too much; let’s not add one more thing to the list.
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+This post is the exploit overview of CVE-2021-4202.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+We successfully exploited this vulnerability to obtain full root
+privileges on default installations of Ubuntu 20.04.
+
+*Exploit overview*
+
+1. We create a lot of BPF ringbufs, and choose one of them as victim.
+   The BPF_FUNC_ringbuf_reserve allow us to have a pointer A to the
+   beginning of the victim ringbuf's data field.
+
+2. We do a pointer subtraction to point back to the victim ringbuf's
+   mask field and overwrite it to 0x80000fff through
+BPF_FUNC_ringbuf_submit.
+   This allows us to do a limited out-of-bounds read/write. If lucky,
+   we can read/write all the fields of the ringbuf behind the victim.
+
+3. With the full control over all fields of the ringbuf behind the
+   victim, we can manipulate the ringbuf to achieve a restricted
+   address read/write with side effects in the vmalloc space.
+
+4. We spawn many child processes, and use restricted address read to
+   find the address of task_struct and cred in the vmalloc space.
+   After zeroing out the uid/gid/... , full root privileges obtained.
+
+Full exploit code will be published on github in the near future.
+
+Regards,
+tr3e
+
