@@ -1,4 +1,9 @@
-Received: (qmail 28359 invoked by uid 550); 9 Apr 2026 21:16:35 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["309" "Tuesday" "18" "January" "2022" "14:42:56" "+0000" "Ralph Goers" "rgoers@apache.org" nil "16" "[oss-security] CVE-2022-23307: Apache Log4j 1.x:  A deserialization flaw in the Chainsaw component of Log4j 1 can lead to malicious code execution. " nil nil nil "1" nil nil (number mark "U       rgoers@apach Jan 18   16/309   " thread-indent "\"[oss-security] CVE-2022-23307: Apache Log4j 1.x: A deserialization flaw in the Chainsaw component of Log4j 1 can lead to malicious code execution. \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2022-23307: Apache Log4j 1.x: A deserialization flaw in the Chainsaw component of Log4j 1 can lead to malicious code execution. " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 17931 invoked by uid 550); 18 Jan 2022 14:47:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,54 +12,30 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 30094 invoked from network); 9 Apr 2026 19:52:27 -0000
-Authentication-Results: apache.org; auth=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
-	t=1775764244; bh=ZL/yhlp1/VcUt8+rOVw2INNxQlEbWf/VRpUNGGyZJHc=;
-	h=Date:To:From:Subject:From;
-	b=lMRRgC/IBSlPD68tw2EXxy6gAUPmjklwLNQG7q8TBAnDOeIei/0LX7BaIrVnB+40L
-	 bQ+POCzHsVll1qnqAni8FVgaDLBetisFir5llQHR43oY0uKqOOYL/6tvK23CRAkJGH
-	 KWSB5hPClj3dIRH2RPBLYgxr+/9v5yLwNIq/KVgrYzGxO+cU1z4aDVBH8sZwHPlO5F
-	 hrz3fLBpSeZcKMMqKWQ01WTPZfkcm84vWhgLI8fW0P2VR50o7F2NEUnwuwEvdeiFto
-	 NXr90MgtGqQXHnk9BzJQM7ZGuXAX6SGr8Cutx55nJHfUuIpBVyMUOhuQA0eol/3bch
-	 HWUx4fcrz1ZeA==
-Message-ID: <3b643c68-e595-4101-8b80-a5598cb793ca@apache.org>
-Date: Thu, 9 Apr 2026 20:50:44 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
+Received: (qmail 13757 invoked from network); 18 Jan 2022 14:43:08 -0000
+Content-Type: text/plain; charset=utf-8
+From: Ralph Goers <rgoers@apache.org>
 To: oss-security@lists.openwall.com
-From: Mark Thomas <markt@apache.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2026-34486: Apache Tomcat: Fix for CVE-2026-29146 allowed bypass
- of EncryptInterceptor
+Message-ID: <f9eae471-1b6b-c840-0039-74cf3674db57@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 18 Jan 2022 14:42:56 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2022-23307: Apache Log4j 1.x:  A deserialization flaw in the
+ Chainsaw component of Log4j 1 can lead to malicious code execution. 
 
-Severity: important
-
-Affected versions:
-
-- Apache Tomcat 11.0.20
-- Apache Tomcat 10.1.53
-- Apache Tomcat 9.0.116
+Severity: Critical
 
 Description:
 
-Missing Encryption of Sensitive Data vulnerability in Apache Tomcat due 
-to the fix for CVE-2026-29146 allowing the bypass of the EncryptInterceptor.
+CVE-2020-9493 identified a deserialization issue that was present in Apache=
+ Chainsaw. Prior to Chainsaw V2.0 Chainsaw was a component of Apache Log4j =
+1.2.x where the same issue exists.
 
-This issue affects Apache Tomcat: 11.0.20, 10.1.53, 9.0.116.
+Mitigation:
 
-Users are recommended to upgrade to version 11.0.21, 10.1.54 or 9.0.117, 
-which fix the issue.
+Upgrade to Apache Log4j 2 and Apache Chainsaw 2.1.0.
 
 Credit:
 
-Bartlomiej Dmitruk at striga.ai (finder)
+@kingkk
 
-References:
-
-https://lists.apache.org/thread/9510k5p5zdvt9pkkgtyp85mvwxo2qrly
-https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-34486
