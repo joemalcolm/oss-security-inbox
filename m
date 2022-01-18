@@ -1,25 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/22/10
-Message-Id: <71bd506a-bbfc-44fc-962d-f034683d2f98n@googlegroups.com>
-Date: Thu, 22 Sep 2022 13:18:56 -0700 (PDT)
-From: Vladimir de Turckheim <vdeturckheim@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Fwd: [Postponed] Node.js security updates for all active release lines, September 2022
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/18/3
+Message-ID: <5f9df975-a7a3-a9c8-28b1-4331ab9b66c6@apache.org>
+Date: Tue, 18 Jan 2022 14:42:17 +0000
+From: Ralph Goers <rgoers@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2022-23302: Deserialization of untrusted data in JMSSink in Apache Log4j 1.x 
 Content-Type: text/plain; charset=utf-8
 
+Severity: high
 
+Description:
 
----------- Forwarded message ---------
-From: Vladimir de Turckheim <vdeturckheim@...il.com>
-Date: Thursday, September 22, 2022 at 10:18:40 PM UTC+2
-Subject: [Postponed] Node.js security updates for all active release lines, 
-September 2022
-To: nodejs-sec <nodejs-sec@...glegroups.com>
+JMSSink in all versions of Log4j 1.x is vulnerable to deserialization of untrusted data when the attacker has write access to the Log4j configuration or if the configuration references an LDAP service the attacker has access to. The attacker can provide a TopicConnectionFactoryBindingName configuration causing JMSSink to perform JNDI requests that result in remote code execution in a similar fashion to CVE-2021-4104.  
 
+Note this issue only affects Log4j 1.x when specifically configured to use JMSSink, which is not the default.
 
-Some fixes of the security releases have been recently updated and the 
-Node.js security team still needs an extra day of work to ensure the 
-binaries are ready to release. We would like to thank you for your patience 
-and understanding. The releases are now planned for September 23rd 2022.
+Apache Log4j 1.2 reached end of life in August 2015. Users should upgrade to Log4j 2 as it addresses numerous other issues from the previous versions.
 
-Content of type "text/html" skipped
+Mitigation:
+
+Users should upgrade to Log4j 2 or remove usage of the JMSSink from their configurations.
+
+Credit:
+
+Eduardo' Vela, Maksim Shudrak and Jacob Butler from Google.
+
