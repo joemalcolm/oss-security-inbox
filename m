@@ -1,83 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/08/8
-Message-ID: <YlCB9+pPmFeG27t9@gentoo.org>
-Date: Fri, 8 Apr 2022 13:41:59 -0500
-From: John Helmert III <ajak@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/19/1
+Message-ID: <9c291caf-92b6-6293-193e-93ddc7fde95e@apache.org>
+Date: Wed, 19 Jan 2022 14:08:03 +0000
+From: Kaxil Naik <kaxilnaik@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0004
+Subject: CVE-2021-45230: Apache Airflow: Creating DagRuns didn't respect Dag-level permissions in the Webserver 
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 08, 2022 at 12:31:18PM -0500, John Helmert III wrote:
-> The issue I described last time has come up again here [1]. 2.36.0 was
-> released on March 21, almost three weeks ago now, and its WSA was
-> released today. Why the long wait?
-> 
-> Three of these issues are fixed in 2.36.0 and 2.34.7, but I can't find
-> a release for 2.34.7 [2][3]. Is it released yet?
+Description:
 
-I'm sorry, I misread the descriptions. That version refers to WPE
-WebKit rather than WebKitGTK.
+This CVE applies to a specific case where a User who has "can_create" permissions on DAG Runs can create Dag Runs for dags that they don't have "edit" permissions for. 
 
-> [1] https://www.openwall.com/lists/oss-security/2022/01/23/1
-> [2] https://webkitgtk.org/news.html
-> [3] https://webkitgtk.org/releases/
-> 
-> On Fri, Apr 08, 2022 at 02:31:29PM +0100, Carlos Alberto Lopez Perez wrote:
-> > ------------------------------------------------------------------------
-> > WebKitGTK and WPE WebKit Security Advisory                 WSA-2022-0004
-> > ------------------------------------------------------------------------
-> > 
-> > Date reported           : April 08, 2022
-> > Advisory ID             : WSA-2022-0004
-> > WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2022-0004.html
-> > WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2022-0004.html
-> > CVE identifiers         : CVE-2022-22624, CVE-2022-22628,
-> >                           CVE-2022-22629, CVE-2022-22637.
-> > 
-> > Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
-> > 
-> > CVE-2022-22624
-> >     Versions affected: WebKitGTK before 2.36.0 and WPE WebKit before 2.34.7
-> >     Credit to Kirin (@Pwnrin) of Tencent Security Xuanwu Lab.
-> >     Impact: Processing maliciously crafted web content may lead to
-> >     arbitrary code execution. Description: A use after free issue was
-> >     addressed with improved memory management.
-> > 
-> > CVE-2022-22628
-> >     Versions affected: WebKitGTK before 2.36.0 and WPE WebKit before 2.34.7
-> >     Credit to Kirin (@Pwnrin) of Tencent Security Xuanwu Lab.
-> >     Impact: Processing maliciously crafted web content may lead to
-> >     arbitrary code execution. Description: A use after free issue was
-> >     addressed with improved memory management.
-> > 
-> > CVE-2022-22629
-> >     Versions affected: WebKitGTK before 2.36.0 and WPE WebKit before 2.34.7
-> >     Credit to Jeonghoon Shin at Theori working with Trend Micro Zero Day
-> >     Initiative.
-> >     Impact: Processing maliciously crafted web content may lead to
-> >     arbitrary code execution. Description: A buffer overflow issue was
-> >     addressed with improved memory handling.
-> > 
-> > CVE-2022-22637
-> >     Versions affected: WebKitGTK before 2.34.4 and WPE WebKit before 2.34.4
-> >     Credit to Tom McKee of Google.
-> >     Impact: A malicious website may cause unexpected cross-origin
-> >     behavior. Description: A logic issue was addressed with improved
-> >     state management.
-> > 
-> > 
-> > We recommend updating to the latest stable versions of WebKitGTK and WPE
-> > WebKit. It is the best way to ensure that you are running safe versions
-> > of WebKit. Please check our websites for information about the latest
-> > stable releases.
-> > 
-> > Further information about WebKitGTK and WPE WebKit security advisories
-> > can be found at: https://webkitgtk.org/security.html or
-> > https://wpewebkit.org/security/.
-> > 
-> > The WebKitGTK and WPE WebKit team,
-> > April 08, 2022
+This is a very low severity CVE and admins can mitigate this issue by removing the global "can_create" permissions on DagRun for Airflow versions >=2.0.0,<2.2.0 and 1.10.x versions that have set `rbac=True` in config.
 
+Credit:
 
+Apache Airflow PMC would like to thank Franco Cano Erazo for reporting this issue.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+References:
+
+https://lists.apache.org/thread/m778ojn0k595rwco4ht9wjql89mjoxnl
+
