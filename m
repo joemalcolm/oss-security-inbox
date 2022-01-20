@@ -1,23 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/08/3
-Message-ID: <5ee00238-2486-0a35-a227-265eaa6f7f47@apache.org>
-Date: Wed, 08 Jun 2022 09:43:16 +0000
-From: Stefan Eissing <icing@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/20/1
+Message-ID: <7a65d359-c698-a308-e6e8-3c0c44cff037@pietroalbini.org>
+Date: Thu, 20 Jan 2022 12:02:55 +0100
+From: Pietro Albini <pietro@...troalbini.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-28330: Apache HTTP Server: read beyond bounds in mod_isapi 
+Subject: Race condition in the Rust standard library (CVE-2022-21658)
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-Description:
+The Rust Security Response WG was notified that the `std::fs::remove_dir_all`
+standard library function is vulneable a race condition enabling symlink
+following (CWE-363). An attacker could use this security issue to trick a
+privileged program into deleting files and directories the attacker couldn't
+otherwise access or delete.
 
-Apache HTTP Server 2.4.53 and earlier on Windows may read beyond bounds when configured to process requests with the mod_isapi module. 
+This issue has been assigned [CVE-2022-21658][1].
 
-Credit:
+## Overview
 
-The Apache HTTP Server project would like to thank Ronald Crane (Zippenhop LLC) for reporting this issue
+Let's suppose an attacker obtained unprivileged access to a system and needed
+to delete a system directory called `sensitive/`, but they didn't have the
+permissions to do so. If `std::fs::remove_dir_all` followed symbolic links,
+they could find a privileged program that removes a directory they have access
+to (called `temp/`), create a symlink from `temp/foo` to `sensitive/`, and wait
+for the privileged program to delete `foo/`. The privileged program would
+follow the symlink from `temp/foo` to `sensitive/` while recursively deleting,
+resulting in `sensitive/` being deleted.
 
-References:
+To prevent such attacks, `std::fs::remove_dir_all` already includes protection
+to avoid recursively deleting symlinks, as described in its documentation:
 
-https://httpd.apache.org/security/vulnerabilities_24.html
+ > This function does **not** follow symbolic links and it will simply remove
+ > the symbolic link itself.
 
+Unfortunately that check was implemented incorrectly in the standard library,
+resulting in a TOCTOU (Time-of-check Time-of-use) race condition. Instead of
+telling the system not to follow symlinks, the standard library first checked
+whether the thing it was about to delete was a symlink, and otherwise it would
+proceed to recursively delete the directory.
+
+This exposed a race condition: an attacker could create a directory and replace
+it with a symlink between the check and the actual deletion. While this attack
+likely won't work the first time it's attempted, in our experimentation we were
+able to reliably perform it within a couple of seconds.
+
+## Affected Versions
+
+Rust 1.0.0 through Rust 1.58.0 is affected by this vulnerability. We're going
+to release Rust 1.58.1 later today, which will include mitigations for this
+vulnerability. Patches to the Rust standard library are also available for
+custom-built Rust toolchains [2].
+
+Note that the following targets don't have usable APIs to properly mitigate the
+attack, and are thus still vulnerable even with a patched toolchain:
+
+* macOS before version 10.10 (Yosemite)
+* REDOX
+
+## Mitigations
+
+We recommend everyone to update to Rust 1.58.1 as soon as possible, especially
+people developing programs expected to run in privileged contexts (including
+system daemons and setuid binaries), as those have the highest risk of being
+affected by this.
+
+Note that adding checks in your codebase before calling `remove_dir_all` will
+**not** mitigate the vulnerability, as they would also be vulnerable to race
+conditions like `remove_dir_all` itself. The existing mitigation is working as
+intended outside of race conditions.
+
+## Acknowledgments
+
+We want to thank Hans Kratz for independently discovering and disclosing this
+issue to us according to the [Rust security policy][3], for developing the fix
+for UNIX-like targets and for reviewing fixes for other platforms.
+
+We also want to thank Florian Weimer for reviewing the UNIX-like fix and for
+reporting the same issue back in 2018, even though the Security Response WG
+didn't realize the severity of the issue at the time.
+
+Finally we want to thank Pietro Albini for coordinating the security response
+and writing this advisory, Chris Denton for writing the Windows fix, Alex
+Crichton for writing the WASI fix, and Mara Bos for reviewing the patches.
+
+[1]: https://www.cve.org/CVERecord?id=CVE-2022-21658
+[2]: https://github.com/rust-lang/wg-security-response/tree/master/patches/CVE-2022-21658
+[3]: https://www.rust-lang.org/policies/security
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEV2nIi/XdPRSiNKes77mGCudSDawFAmHoNDkACgkQ77mGCudS
+DaxINQ/+L0+QEyc3V49iKitCOI7zqBe3obi90AjVBgiWzmVChw5iWr4vGqQmfgOC
+EdjCViQlRt2AssrDkzA5iZDKNApkkwWSwR/Y4kgOy25RJ5Ip357YKTwSa1aeO6zF
+XmfxMTWTmkz6Awy5EqGvg23+tU/aGkTGC7bVCCWewa0JbMsP7CsE2oRy71uGum9h
+RZn6K3P8IO6DA2C4GGgdJ8cd+o8GXbKLw1rdqyNInhLLpbPRl6yOXI//08dDXPdD
+BvfMVBv8kLWLVHUZvEQMoyRVUXnAlgzBCQHg7fribNUXp4rjAuWBipR/NQkIR+r4
+Uf2DE80DX+aWn1JyjOxxJZhxl9PAN2RjSn/k7/2SS2MpvQndnlC8e2xs4VA3p7pA
+Fqu3ZOvdQZ752El063UdfLAi19N3XobKYp3814zEtcHoMSOeGYRmp5NeP16WYACC
+f+O4SZhyM0306RNtGsmph7y9ZwUPNpsDLK8ELYhB08/U9zMS4DMaFxELLfCbi8Gq
++tFOiEcJwuzVNUKyn6yHD7HTJpGFuZdG9zhXMMGm8I4WhUnEa8xzjTcyTm64y0B+
+ye1vjCI9wTr+IsVN1buAxRcQyC9NQjPclOpkHZTXPp5f9P6ef3VNsF++pPekTneg
+2G6hlr9MDlorCVsvkTIpFSxjvqevN/A9Y/Va7/WoJu0lgGmQPRo=
+=3pzg
+-----END PGP SIGNATURE-----
