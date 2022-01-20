@@ -1,27 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/18/3
-Message-ID: <5f9df975-a7a3-a9c8-28b1-4331ab9b66c6@apache.org>
-Date: Tue, 18 Jan 2022 14:42:17 +0000
-From: Ralph Goers <rgoers@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-23302: Deserialization of untrusted data in JMSSink in Apache Log4j 1.x 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/20/2
+Message-ID: <CAKa5A-sEAqP-9YUT+cuT05H7i8fMG_g7upNRwi+3xOvt8PVuwA@mail.gmail.com>
+Date: Thu, 20 Jan 2022 13:54:46 +0800
+From: Haoran Meng <menghaoran@...che.org>
+To: oss-security@...ts.openwall.com, dev@...rdingsphere.apache.org
+Subject: CVE-2022-22733: Apache ShardingSphere ElasticJob-UI: Access-Token in ElasticJob UI causes password disclosure
 Content-Type: text/plain; charset=utf-8
 
-Severity: high
+Severity: moderate
 
 Description:
 
-JMSSink in all versions of Log4j 1.x is vulnerable to deserialization of untrusted data when the attacker has write access to the Log4j configuration or if the configuration references an LDAP service the attacker has access to. The attacker can provide a TopicConnectionFactoryBindingName configuration causing JMSSink to perform JNDI requests that result in remote code execution in a similar fashion to CVE-2021-4104.  
+Exposure of Sensitive Information to an Unauthorized Actor
+vulnerability in Apache ShardingSphere ElasticJob-UI allows an
+attacker who has guest account to do privilege escalation. This issue
+affects Apache ShardingSphere ElasticJob-UI Apache ShardingSphere
+ElasticJob-UI 3.x version 3.0.0 and prior versions.
 
-Note this issue only affects Log4j 1.x when specifically configured to use JMSSink, which is not the default.
 
-Apache Log4j 1.2 reached end of life in August 2015. Users should upgrade to Log4j 2 as it addresses numerous other issues from the previous versions.
 
-Mitigation:
 
-Users should upgrade to Log4j 2 or remove usage of the JMSSink from their configurations.
 
-Credit:
-
-Eduardo' Vela, Maksim Shudrak and Jacob Butler from Google.
+-- 
+Best,
+Haoran Meng
+Apache ShardingSphere
 
