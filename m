@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1377" "Saturday" "4" "June" "2016" "17:24:40" "+0200" "Sebastian Pipping" "sebastian@pipping.org" "<5752F2B8.5000009@pipping.org>" "35" "[oss-security] Re: expat hash collision fix too predictable?" "^Cc:" nil nil "6" "2016060415:24:40" "[oss-security] Re: expat hash collision fix too predictable?" (number mark "        sebastian@pi Jun  4   35/1377  " thread-indent "\"[oss-security] Re: expat hash collision fix too predictable?\"\n") "<20160604145419.70E2B6C037C@smtpvmsrv1.mitre.org>" ("<20160604145419.70E2B6C037C@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4853" "Friday" "21" "January" "2022" "16:53:45" "+0000" "Carlos Alberto Lopez Perez" "clopez@igalia.com" nil "109" "[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2022-0001" nil nil nil "1" nil nil (number mark "U       clopez@igali Jan 21  109/4853  " thread-indent "\"[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2022-0001\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2022-0001" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23753 invoked by uid 550); 4 Jun 2016 15:24:56 -0000
+Received: (qmail 7724 invoked by uid 550); 21 Jan 2022 16:54:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,55 +11,144 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23720 invoked from network); 4 Jun 2016 15:24:52 -0000
-References: <20160604145419.70E2B6C037C@smtpvmsrv1.mitre.org>
-Message-ID: <5752F2B8.5000009@pipping.org>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.1
-MIME-Version: 1.0
-In-Reply-To: <20160604145419.70E2B6C037C@smtpvmsrv1.mitre.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Df-Sender: aGFydHdvcmtAYmluZXJhLmRl
-Cc: oss-security@lists.openwall.com
-Date: Sat, 4 Jun 2016 17:24:40 +0200
-From: Sebastian Pipping <sebastian@pipping.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: expat hash collision fix too predictable?
-To: cve-assign@mitre.org
+Received: (qmail 7688 invoked from network); 21 Jan 2022 16:54:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:Subject:From:Cc:To:Sender:Reply-To:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=s+HqYncE/ro6X5dkjPRv/+97JtZeg8AjtLIHvz7xhHc=; b=LSJFqyZp3oFgZu978hS6IsIMPH
+	TnQqG7uwbnQSOT7FBSMwdRa/gpTYMqkkH4pC1wGE97j1EOCwK2ormrrayDNLUIrNRpGX9XqW668m0
+	qdtAvnDlGMEBljmx5/VJBHRNd5r2ba5F0of8Gs4WRn5ffkUUtHx9LUZmT6S33tmNAcxbKQhTFAi2f
+	LPgu9YG0jmr2ND1OYWa2dbDpKbzi695c7lW+ME7MolSluVvikWUJDWE8WzvKmZPwo8/y2qUnS8TNG
+	waiKVn106obR/kOiHZ75kV/ve6tnu09oo59cTmXvkDewFaDSz3tzEvv1IcCbLR2Mk+sUQYalfaBWH
+	3bDnM2Vg==;
+To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Cc: security@webkit.org, distributor-list@gnome.org,
+ oss-security@lists.openwall.com, bugtraq@securityfocus.com
+From: Carlos Alberto Lopez Perez <clopez@igalia.com>
+Organization: Igalia S.L.
+Mail-Followup-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org,
+ security@webkit.org, distributor-list@gnome.org,
+ oss-security@lists.openwall.com, bugtraq@securityfocus.com
+Message-ID: <cb8ce1dd-6dee-b6f9-4081-f662887ce835@igalia.com>
+Date: Fri, 21 Jan 2022 16:53:45 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2022-0001
 
-On 04.06.2016 16:54, cve-assign@mitre.org wrote:
->> Please confirm that using CVE-2012-6702 for consequences of
->> "unanticipated internal calls to srand" is what you intended.
-> 
-> Yes, we confirm that. (They are unanticipated both because of
-> thread-safety concerns, and because it's possible for an application
-> to have an important dependency on srand being called exactly once.)
-> 
-> 
->> The hash DoS vulnerability CVE-2012-0876 was fixed to some extend in
->> Expat 2.1.0, commit e3e81a6d
->> ...
->> The next release of Expat will not do internal calls to srand (or rand)
->> any more but extract and use entropy from other sources.
->> ...
->> I suppose hash initialization with (too little /) second-based
->> entropy still is part of the original CVE-2012-0876 (or the same again).
-> 
-> Use CVE-2016-5300 for the separate issue in which the original choices
-> of entropy source and RNG did not properly address the possibility of
-> a successful hash DoS attack. In other words, the code changes (in the
-> next release) to fix CVE-2016-5300 are needed because the original fix
-> for CVE-2012-0876 was insufficient. (We use separate CVE IDs when
-> follow-on work is needed to complete the solution to the same original
-> vulnerability finding.)
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2022-0001
+------------------------------------------------------------------------
 
-Excellent, thank you!
+Date reported           : January 21, 2022
+Advisory ID             : WSA-2022-0001
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2022-0001.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2022-0001.html
+CVE identifiers         : CVE-2021-30934, CVE-2021-30936,
+                          CVE-2021-30951, CVE-2021-30952,
+                          CVE-2021-30953, CVE-2021-30954,
+                          CVE-2021-30984, CVE-2022-XXXXX,
+                          CVE-2021-45481, CVE-2021-45482,
+                          CVE-2021-45483.
 
-https://sourceforge.net/p/expat/code_git/ci/07cc2fcacf81b32b2e06aa918df51756525240c0/
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-Best
+CVE-2021-30934
+    Versions affected: WebKitGTK and WPE WebKit before 2.34.4.
+    Credit to Dani Biro.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A buffer overflow issue was
+    addressed with improved memory handling.
+
+CVE-2021-30936
+    Versions affected: WebKitGTK and WPE WebKit before 2.34.4.
+    Credit to Chijin Zhou of ShuiMuYuLin Ltd and Tsinghua wingtecher
+    lab.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A use after free issue was
+    addressed with improved memory management.
+
+CVE-2021-30951
+    Versions affected: WebKitGTK and WPE WebKit before 2.34.4.
+    Credit to Pangu.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A use after free issue was
+    addressed with improved memory management.
+
+CVE-2021-30952
+    Versions affected: WebKitGTK and WPE WebKit before 2.34.4.
+    Credit to WeBin.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: An integer overflow was
+    addressed with improved input validation.
+
+CVE-2021-30953
+    Versions affected: WebKitGTK and WPE WebKit before 2.34.4.
+    Credit to VRIJ.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: An out-of-bounds read was
+    addressed with improved bounds checking.
+
+CVE-2021-30954
+    Versions affected: WebKitGTK and WPE WebKit before 2.34.4.
+    Credit to Kunlun Lab.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A type confusion issue was
+    addressed with improved memory handling.
+
+CVE-2021-30984
+    Versions affected: WebKitGTK and WPE WebKit before 2.34.4.
+    Credit to Kunlun Lab.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A race condition was
+    addressed with improved state handling.
+
+CVE-2022-XXXXX
+    Versions affected: WebKitGTK and WPE WebKit before 2.34.4.
+    Credit to Martin Bajanik from fingerprintjs.com.
+    Impact: A malicious website may exfiltrate data cross-origin.
+    Description: A cross-origin issue existed with the IndexedDB. This
+    was addressed with improved checking of security origins. 
+    Notes: There is a public PoC demonstrating this issue at
+    https://safarileaks.com so this issue may have been actively
+    exploited. We still don't know the CVE number that will be assigned
+    to this issue. We will update this advisory once we know it.
+
+CVE-2021-45481
+    Versions affected: WebKitGTK and WPE WebKit before 2.34.0.
+    Credit to Chijin Zhou of ShuiMuYuLin Ltd and Tsinghua wingtecher lab.
+    Processing maliciously crafted web content may cause an application
+    crash due to an incorrect memory allocation in
+    WebCore::ImageBufferCairoImageSurfaceBackend::create
+
+CVE-2021-45482
+    Versions affected: WebKitGTK and WPE WebKit before 2.32.4.
+    Credit to Chijin Zhou of ShuiMuYuLin Ltd and Tsinghua wingtecher lab.
+    Processing maliciously crafted web content may cause a memory
+    corruption issue (use-after-free) in WebCore::ContainerNode::firstChild
+
+CVE-2021-45483
+    Versions affected: WebKitGTK and WPE WebKit before 2.34.0.
+    Credit to Chijin Zhou of ShuiMuYuLin Ltd and Tsinghua wingtecher lab.
+    Processing maliciously crafted web content may cause a memory
+    corruption issue (heap-use-after-free) in WebCore::Frame::page
 
 
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
 
-Sebastian
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+January 21, 2022
