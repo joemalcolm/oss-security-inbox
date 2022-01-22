@@ -1,29 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/23/8
-Message-ID: <CAH8yC8nSE6BOU_JBTiYWWKXx2LeYUazTDN1tzzvcE5mg6WJf6Q@mail.gmail.com>
-Date: Fri, 23 Dec 2022 10:19:00 -0500
-From: Jeffrey Walton <noloader@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/22/1
+Message-ID: <Yev0nNQ9yB/ucgQU@kroah.com>
+Date: Sat, 22 Jan 2022 13:12:12 +0100
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Details on this supposed Linux Kernel ksmbd RCE
+Subject: Re: usbview polkit policy local root exploit (CVE-2022-23220)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Dec 23, 2022 at 8:22 AM Eric Biggers <ebiggers@...nel.org> wrote:
->
-> On Fri, Dec 23, 2022 at 09:17:28AM +0100, Marcus Meissner wrote:
-> >
-> > tldr: I requested 5 CVEs for the new ZDI issues Josh and Jan referenced.
-> >
-> > long form:
-> >
-> > Nice surprise 1 day before Christmas.
->
-> Note that these bugs were already fixed in upstream and all affected Long Term
-> Support (LTS) kernels months ago.  So this is really only a "surprise" for
-> people who choose to use known buggy and insecure kernels that don't follow LTS.
+On Fri, Jan 21, 2022 at 03:33:50PM +0100, Matthias Gerstner wrote:
+> Hello list,
+> 
+> this is to inform you about a local root exploit I found in usbview [1]
+> release 2.1. This finding was embargoed for 7 days on the linux-distros
+> mailing list and the fix has been published today.
+> 
+> The upstream author Greg KH is currently working on an improved version
+> of usbview that will no longer require root privileges to run.
 
-Comes to mind: https://thenewstack.io/design-system-can-update-greg-kroah-hartman-linux-security/
+That new version is now released as 3.0, which should prevent the need
+for any of this mess in the future as no root permissions are needed at
+all.
 
-> Anyway, these sorts of bugs are totally predictable in a complex, new network
-> filesystem server (ksmbd).  Personally I recommend not using ksmbd.
+thanks,
 
-Jeff
+gre gk-h
