@@ -1,28 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/02/8
-Message-ID: <CAHbpyFagAeVLCJW+E8RdgY3jb74fBwPiD7mC3oMrNFKz7A5uNg@mail.gmail.com>
-Date: Wed, 2 Nov 2022 07:50:26 -0400
-From: Daniel Klco <dklco@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-43670: Apache Sling App CMS: XSS in Sling CMS Reference App Taxonomy Path
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/24/1
+Message-ID: <Ye2pUrZ81PjFsary@jasmine.lan>
+Date: Sun, 23 Jan 2022 14:15:30 -0500
+From: Leo Famulari <leo@...ulari.name>
+To: John Helmert III <ajak@...too.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0001
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+On Sat, Jan 22, 2022 at 10:02:46PM -0600, John Helmert III wrote:
+> With this big of a gap between releases and security advisories, it
+> seems that users and distributors will be unaware of the necessity of
+> updating due to security fixes, sometimes for weeks after the
+> release. Why not always publish advisories close to new releases?
 
-Description:
+Since (almost?) every WebKitGTK update includes fixes for bugs that
+allow remote execution of arbitrary code, I'd expect that distributors
+are well aware that every update is critical.
 
-An improper neutralization of input during web page generation
-('Cross-site Scripting') [CWE-79] vulnerability in Sling App CMS
-version 1.1.0 and prior may allow an authenticated remote attacker to
-perform a reflected cross site scripting (XSS) attack in the taxonomy
-management feature.
-
-This issue is being tracked as SLING-11622
-
-Mitigation:
-
-Upgrade to Apache Sling App CMS >= 1.1.2
-
-Credit:
-
-Apache Sling would like to thank QSec-Team for reporting this issue
+And given the complexity of a fully-featured browser engine, it probably
+cannot be any other way: it's the same story for Firefox and Chrome.
