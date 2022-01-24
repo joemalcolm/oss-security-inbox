@@ -1,27 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/18/2
-Message-ID: <ff5b6e5e9d40b5cdb6034c7f4ba2e5551d7389e6.camel@debian.org>
-Date: Mon, 17 Oct 2022 23:57:45 +0200
-From: Markus Koschany <apo@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/24/5
+Message-ID: <Ye6z5G/Dq89PQ9jz@sol.nexus.lan>
+Date: Mon, 24 Jan 2022 08:13:15 -0600
+From: John Helmert III <ajak@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-34169: Apache Xalan Java XSLT library is vulnerable to an integer truncation issue when processing malicious XSLT stylesheets
+Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0001
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Sun, Jan 23, 2022 at 02:15:30PM -0500, Leo Famulari wrote:
+> On Sat, Jan 22, 2022 at 10:02:46PM -0600, John Helmert III wrote:
+> > With this big of a gap between releases and security advisories, it
+> > seems that users and distributors will be unaware of the necessity of
+> > updating due to security fixes, sometimes for weeks after the
+> > release. Why not always publish advisories close to new releases?
+> 
+> Since (almost?) every WebKitGTK update includes fixes for bugs that
+> allow remote execution of arbitrary code, I'd expect that distributors
+> are well aware that every update is critical.
+> 
+> And given the complexity of a fully-featured browser engine, it probably
+> cannot be any other way: it's the same story for Firefox and Chrome.
 
-it appears the underlying bug is in Apache Commons bcel and not in Apache Xalan
-itself. See
+I don't think it makes much sense for every downstream to make these
+kinds of assumptions. Besides, this doesn't seem to be what's
+happening in practice. For example, WSA-2021-0006 was released on
+October 26, 2021 with vulnerabilities addressed in 2.34.0, released on
+September 22, but RedHat's bugs for it were only opened in the days
+after the *security advisory's* release, not the software release. It
+doesn't help that most most distribution security tooling seems to be
+oriented around CVEs, which aren't released for WebKit until after the
+associated advisory.
 
-https://bugs.debian.org/1015860
-
-and
-
-https://github.com/apache/commons-bcel/pull/147
-
-https://github.com/apache/commons-bcel/commit/f3267cbcc900f80851d561bdd16b239d936947f5
-
-
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
+It probably also doesn't help that a lot of WebKit vulnerabilities
+also affect Apple products, given many times WebKit advisories are
+delayed until after the associated CVEs are made public by Apple
+security advisories.
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
