@@ -1,25 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/22/1
-Message-ID: <b6dccca1-9e43-d746-f832-6767ab0d3d03@apache.org>
-Date: Thu, 22 Sep 2022 08:07:35 +0000
-From: Arnout Engelen <engelen@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/24/3
+Message-ID: <CABuuzNOonKYSY0afJ0BZyt8+fqY6LUKv8eU6F+t0BJJPTsvymw@mail.gmail.com>
+Date: Mon, 24 Jan 2022 18:42:01 +0530
+From: Mukul Gandhi <mukulg@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-40705: Apache SOAP: XML External Entity Injection (XXE) allows unauthenticated users to read arbitrary files via HTTP 
+Subject: CVE-2022-23437: Infinite loop within Apache XercesJ xml parser
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+To: oss-security@...ts.openwall.com
+Reply-To: j-dev@...ces.apache.org
+Subject: CVE-2022-23437: Infinite loop within Apache XercesJ xml parser
+
+Severity: high
 
 Description:
 
-** UNSUPPORTED WHEN ASSIGNED ** An Improper Restriction of XML External Entity Reference vulnerability in RPCRouterServlet of Apache SOAP allows an attacker to read arbitrary files over HTTP. This issue affects Apache SOAP version 2.2 and later versions. It is unknown whether previous versions are also affected.  NOTE: This vulnerability only affects products that are no longer supported by the maintainer.
+There's a vulnerability within the Apache Xerces Java (XercesJ) XML
+parser when handling specially crafted XML document payloads. This
+causes, the XercesJ XML parser to wait in an infinite loop, which may
+sometimes consume system resources for prolonged duration. This
+vulnerability is present within XercesJ version 2.12.1 and the
+previous versions.
 
 Mitigation:
 
-We do not expect to release a version that fixes this problem. Instead, we recommend users to migrate to one of the other actively maintained web service stacks such as Apache CXF (https://cxf.apache.org) or Apache Axis (https://axis.apache.org).
-
-Apache SOAP is an archived project, with the last release published in 2003. This means it is no longer maintained, does not receive updates, and we do not commit to publishing CVE's for security problems in this project. This advisory is published purely as a courtesy.
+Apache XercesJ users, should migrate to version 2.12.2
 
 Credit:
 
-Apache would like to thank TsungShu Chiu (CHT Security) for reporting this issue
+This issue was discovered by Sergey Temnikov and Ziyi Luo, from Amazon
+Corretto/JDK Team
+
+References:
+https://markmail.org/message/vcmhwbuorfgcdr6l
+
+
+-- 
+Regards,
+Mukul Gandhi
 
