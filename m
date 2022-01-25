@@ -1,47 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/15/2
-Message-ID: <0cb43119-de19-4f4b-99a8-b7949227a26c@oracle.com>
-Date: Fri, 14 Jan 2022 18:56:13 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Fuzzy CVE's in GNU inetutils
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/25/9
+Message-ID: <CAB8EV3RcuY4hecdkbt55n6QUmDdLe7gJwZRZkJYG5XYbLzSkzQ@mail.gmail.com>
+Date: Tue, 25 Jan 2022 15:47:17 +0100
+From: Jean-Baptiste Onofré <jbonofre@...che.org>
+To: announce@...che.org, user@...af.apache.org, dev@...af.apache.org,  security@...che.org, oss-security@...ts.openwall.com, Daniel.Heyne@....de
+Subject: [SECURITY] New security advisory for CVE-2021-41766 released for Apache Karaf
 Content-Type: text/plain; charset=utf-8
 
-I noticed a number of new CVE's recently published against GNU inetutils,
-which seem to correspond to the results of fuzz testing that were mailed
-out in December, as seen on
-https://lists.gnu.org/archive/html/bug-inetutils/2021-12/threads.html
+A new security advisory has been released for Apache Karaf, which was
+fixed in the recent 4.3.6 runtime release.
 
-Trying out the provided POC inputs with other ftp, telnet, and tftp
-commands derived from the same original BSD sources showed some seem
-to originate in the common roots and may affect other implementations
-as well.
+CVE-2021-41766: Insecure Java Deserialization in Apache Karaf
 
-But they all also seem to only be of the case "user can crash local
-client" - I don't see any security boundaries crossed or security
-assurances broken here, just bugs in local command input parsers,
-so I don't see why they have CVE ids in general.
+Severity: Low
 
-They are:
+Vendor: The Apache Software Foundation
 
-CVE-2021-46060 	A NULL Pointer Dereference vulnerability exists in GNU inetutils 2.2 via the setcmd function at commands.c, which causes a denial of service.
+Versions Affected: all versions of Apache Karaf prior to 4.3.6
 
-CVE-2021-46058 	A heap-based Buffer Overflow vulnerability exists in GNU inetutils 2.2 in cmds.c, which caused a denial of service.
+Description:
 
-CVE-2021-45782 	An untrusted pointer dereference in getcmd() at inetutils/src/tftp.c of GNU Inetutils v2.2.16-cf091 can lead to a segmentation fault or application crash.
+Apache Karaf allows monitoring of applications and the Java runtime by
+using the Java Management Extensions (JMX).
+JMX is a Java RMI based technology that relies on Java serialized
+objects for client server communication.
+Whereas the default JMX implementation is hardened against
+unauthenticated deserialization attacks, the implementation
+used by Apache Karaf is not protected against this kind of attack.
 
-CVE-2021-45781 	GNU Inetutils 2.2.16-cf091 was discovered to contain a heap-based buffer overflow via the component logger at inetutils/src/logger.c.
+The impact of Java deserialization vulnerabilities strongly depends
+on the classes that are available within the targets
+class path.
+Generally speaking, deserialization of untrusted data does always
+represent a high security risk and should be prevented.
 
-CVE-2021-45780 	GNU Inetutils commit cf091 was discovered to contain a memory leak via the ifconfig function.
+The risk is low as, by default, Karaf uses a limited set of classes in
+the JMX server class path.
+It depends of system scoped classes (e.g. jar in the lib folder).
 
-CVE-2021-45779 	A NULL pointer dereference in unsetcmd() at inetutils/telnet/commands.c of GNU Inetutils v2.2.16-cf091 can lead to a segmentation fault or application crash.
+This has been fixed in revision:
 
-CVE-2021-45778 	A NULL pointer dereference in setnmap() at cmds.c of GNU Inetutils v2.2.16-cf091 can lead to a segmentation fault or application crash.
+https://gitbox.apache.org/repos/asf?p=karaf.git;h=b42c82c
+https://gitbox.apache.org/repos/asf?p=karaf.git;h=93a019c
 
-CVE-2021-45775 	GNU Inetutils 2.2.16-cf091 was discovered to contain an infinite loop in domacro at domacro.c.
+Mitigation: Apache Karaf users should upgrade to 4.3.6
+or later as soon as possible, or disable remote access to JMX server.
 
-CVE-2021-45774 	A NULL pointer dereference in help() at inetutils/telnet/commands.c of GNU Inetutils v2.2.16-cf091 can lead to a segmentation fault or application crash.
+JIRA Tickets: https://issues.apache.org/jira/browse/KARAF-7312
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+Credit: This issue was reported by Daniel Heyne, Konstantin Samuel and Tobias
+Neitzel
