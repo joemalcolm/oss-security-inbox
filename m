@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2080" "Thursday" "23" "June" "2016" "14:55:12" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160623185512.F3E8552E016@smtpvbsrv1.mitre.org>" "71" "[oss-security] Re: CVE Requests: WordPress: 4.5.3 maintenance and security release: several issues" nil nil nil "6" "2016062318:55:12" "[oss-security] Re: CVE Requests: WordPress: 4.5.3 maintenance and security release: several issues" (number mark "U       cve-assign@m Jun 23   71/2080  " thread-indent "\"[oss-security] Re: CVE Requests: WordPress: 4.5.3 maintenance and security release: several issues\"\n") "<20160623171218.GA8259@eldamar.local>" ("<20160623171218.GA8259@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1567" "Tuesday" "25" "January" "2022" "15:47:17" "+0100" "=?UTF-8?B?SmVhbi1CYXB0aXN0ZSBPbm9mcsOp?=" "jbonofre@apache.org" nil "43" "[oss-security] [SECURITY] New security advisory for CVE-2021-41766 released for Apache Karaf" nil nil nil "1" nil nil (number mark "U       jbonofre@apa Jan 25   43/1567  " thread-indent "\"[oss-security] [SECURITY] New security advisory for CVE-2021-41766 released for Apache Karaf\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY] New security advisory for CVE-2021-41766 released for Apache Karaf" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32017 invoked by uid 550); 23 Jun 2016 18:55:25 -0000
+Received: (qmail 11417 invoked by uid 550); 25 Jan 2022 14:56:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,83 +12,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31996 invoked from network); 23 Jun 2016 18:55:25 -0000
-From: cve-assign@mitre.org
-To: carnil@debian.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20160623171218.GA8259@eldamar.local>
-Message-Id: <20160623185512.F3E8552E016@smtpvbsrv1.mitre.org>
-Date: Thu, 23 Jun 2016 14:55:12 -0400 (EDT)
-Subject: [oss-security] Re: CVE Requests: WordPress: 4.5.3 maintenance and security release: several issues
+Received: (qmail 27826 invoked from network); 25 Jan 2022 14:47:41 -0000
+X-Gm-Message-State: AOAM5327qa0gUu0VefoECEnNyrI3FRZz8og7L4B5L1FXYjz0SloA6Fw6
+	aye7kYZEp9OtzqhsIHKbgQinK3PC9n7lln2xbOE=
+X-Google-Smtp-Source: ABdhPJxvNzXn61ok/qO7GWRFQW5b4qjMZTFebYfbzoCTz3tO+FVnrMxWlxpQoev9yJxefyO1QF6gd7e4EjjfawgvdjM=
+X-Received: by 2002:a2e:b892:: with SMTP id r18mr14316114ljp.50.1643122048044;
+ Tue, 25 Jan 2022 06:47:28 -0800 (PST)
+MIME-Version: 1.0
+From: =?UTF-8?Q?Jean=2DBaptiste_Onofr=C3=A9?= <jbonofre@apache.org>
+Date: Tue, 25 Jan 2022 15:47:17 +0100
+X-Gmail-Original-Message-ID: <CAB8EV3RcuY4hecdkbt55n6QUmDdLe7gJwZRZkJYG5XYbLzSkzQ@mail.gmail.com>
+Message-ID: <CAB8EV3RcuY4hecdkbt55n6QUmDdLe7gJwZRZkJYG5XYbLzSkzQ@mail.gmail.com>
+To: announce@apache.org, user@karaf.apache.org, dev@karaf.apache.org, 
+	security@apache.org, oss-security@lists.openwall.com, Daniel.Heyne@usd.de
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] [SECURITY] New security advisory for CVE-2021-41766 released for
+ Apache Karaf
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+A new security advisory has been released for Apache Karaf, which was
+fixed in the recent 4.3.6 runtime release.
 
-> https://wordpress.org/news/2016/06/wordpress-4-5-3/
+CVE-2021-41766: Insecure Java Deserialization in Apache Karaf
 
->  - redirect bypass in the customizer, reported by Yassine Aboukir;
+Severity: Low
 
-Use CVE-2016-5832.
+Vendor: The Apache Software Foundation
 
+Versions Affected: all versions of Apache Karaf prior to 4.3.6
 
->  - XSS problem via attachment name reported by Jouko Pynnonen
+Description:
 
-Use CVE-2016-5833.
+Apache Karaf allows monitoring of applications and the Java runtime by
+using the Java Management Extensions (JMX).
+JMX is a Java RMI based technology that relies on Java serialized
+objects for client server communication.
+Whereas the default JMX implementation is hardened against
+unauthenticated deserialization attacks, the implementation
+used by Apache Karaf is not protected against this kind of attack.
 
+The impact of Java deserialization vulnerabilities strongly depends
+on the classes that are available within the targets
+class path.
+Generally speaking, deserialization of untrusted data does always
+represent a high security risk and should be prevented.
 
->  - XSS problem via attachment name reported by Divyesh Prajapati
+The risk is low as, by default, Karaf uses a limited set of classes in
+the JMX server class path.
+It depends of system scoped classes (e.g. jar in the lib folder).
 
-Use CVE-2016-5834.
+This has been fixed in revision:
 
+https://gitbox.apache.org/repos/asf?p=karaf.git;h=b42c82c
+https://gitbox.apache.org/repos/asf?p=karaf.git;h=93a019c
 
->  - revision history information disclosure, reported independently by
->    John Blackbourn from the WordPress security team and by Dan Moen from
->    the Wordfence Research Team;
+Mitigation: Apache Karaf users should upgrade to 4.3.6
+or later as soon as possible, or disable remote access to JMX server.
 
-Use CVE-2016-5835 (for both reports).
+JIRA Tickets: https://issues.apache.org/jira/browse/KARAF-7312
 
-
->  - oEmbed denial of service reported by Jennifer Dodd from Automattic;
-
-Use CVE-2016-5836.
-
-
->  - unauthorized category removal from a post, reported by David Herrera
->    from Alley Interactive;
-
-Use CVE-2016-5837.
-
-
->  - password change via stolen cookie, reported by Michael Adams from the
->    WordPress security team;
-
-Use CVE-2016-5838.
-
-
->  - and some less secure sanitize_file_name edge cases reported by Peter
->    Westwood of the WordPress security team.
-
-Use CVE-2016-5839.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXbDAaAAoJEHb/MwWLVhi2vRsP/1cTw1/gyBFvOVlNRD4gUscp
-sVM6giF0Zex+dI8/mbpN+MVKaRVQyboyYkmIjsrpm8CkUZP+u04cxcoqcaoUOuSX
-IFr2IciixkO5oEJo8sBQdWYrkqUkUdUDqpbaVhjWF3R1/TtkPZSuFuSxcDZjSp6k
-OlRdC9kg325QJ7P6apqatAS2mnOM5N46SciRPZzuXZWBAtFlDYlBUAFmSjZri7cn
-+Wv5XgLa7Tr4sgDm7SYm4J7Uq5zxm/+iFyVCbIGoTsc9/J1ueSjuqQUNxfTa9exq
-d69CzHODuv97Uh1RkeaD0vWNRujH0IfiRTi4boC/6t5QyhVUwuIUcFnWt3JMEVL5
-Zy72e9BrVCEnEOjmRNVHLtH1g5IE88qZmDMLlmDTS8B+9sR2YzqY4pxVvRSIWiLD
-GKR7UI0FOQw7L2tMcuVdTUmjDj3szeSVdrbBNqltwFGIWOVoM4YQgMbvMOLmTPUg
-1Z1WcHLBbIkUTBExOgreTynbw6qNj07Ke58FJ48HOJokDNZu1OTYS/9DipIJfeuZ
-Iz6Agxrwe/56RY4Hw0v+t73QDw5NWymRcjUIH5CRXlWaF90lte1+WD+26tqdrOce
-bUTZCtSVC4p4EaJMVBlTAhHakt/jLNlSGo+E/X1+dyBZIN2gJBM6WgM0SevoFzNq
-wejdTa3fpDC0Nxv+829x
-=QXFm
------END PGP SIGNATURE-----
+Credit: This issue was reported by Daniel Heyne, Konstantin Samuel and Tobias
+Neitzel
