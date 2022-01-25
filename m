@@ -1,11 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/19/2
-Message-ID: <420cd38c550a46e6abea9bcab3c09eb7@huawei.com>
-Date: Tue, 19 Jul 2022 02:10:42 +0000
-From: "Weigang (Jimmy)" <weigang12@...wei.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "openeuler-security@...neuler.org" <openeuler-security@...neuler.org>
-Subject: CVE-2021-33655: Linux kernel: When sending malicous data to kernel by ioctl cmd FBIOPUT_VSCREENINFO,kernel will write memory out of bounds.(5.18 5.19.0-rc1)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/25/12
+Message-ID: <7460e2a7-4323-3914-bcd6-1d07c859abe5@linux.intel.com>
+Date: Tue, 25 Jan 2022 17:55:25 +0000
+From: Tvrtko Ursulin <tvrtko.ursulin@...ux.intel.com>
+To: oss-security@...ts.openwall.com
+Cc: Linus Torvalds <torvalds@...ux-foundation.org>, Dave Airlie <airlied@...il.com>, Daniel Vetter <daniel@...ll.ch>, Joonas Lahtinen <joonas.lahtinen@...ux.intel.com>, Greg Kroah-Hartman <gregkh@...uxfoundation.org>, Marian Rehak <mrehak@...hat.com>
+Subject: Linux kernel: Security sensitive bug in the i915 kernel driver​ (CVE-2022-0330)
 Content-Type: text/plain; charset=utf-8
 
-Fix has been released by Linux kernel upstream in 5.19-rc7: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=086ff84617185393a0bbf25830c4f36412a7d3f4.
+
+[This is a public disclosure of an issue reported 7 days ago to 
+linux-distros at openwall. CVE-2022-0330 has been assigned to the 
+issue since.]
+
+Hi all,
+
+A missing GPU TLB flush has been discovered in the i915 kernel driver 
+which could be exploited by malicious userspace and can manifest in two 
+flavours, depending on whether the GPU is running behind an active IOMMU 
+(address translation) or not:
+
+1. IOMMU with address translation - malicious userspace can trigger DMAR 
+read/write faults getting logged to the kernel log.
+
+2. Without an active IOMMU malicious userspace can gain access (from the 
+code executing on the GPU) to random memory pages.
+
+Second case is therefore the serious one.
+
+It is currently not known whether specific memory could be targeted, but 
+random memory corruption or data leaks are a known possibility.
+
+Underlying reason for the access to memory not owned is a missing TLB 
+flush upon releasing memory which used to back a GPU buffer object back 
+to the system.
+
+Flawed assumption was that flushing the TLB at the start of every 
+userspace GPU execution is sufficient, given the programming model where 
+userspace is expected to declare which graphics virtual memory address 
+ranges it will be accessing at the start of every execution. However 
+what was not considered is that userspace can legitimately (it is 
+allowed in uapi) _not_ declare those accesses.
+
+This allows userspace to continue GPU access to memory, while the kernel 
+driver (i915) is unaware of it being in use, and therefore is allowed to 
+release the backing store back to the system. Should the system then 
+give out those pages back for a different use, the exploit situation can 
+arise.
+
+Return of the pages back to the system can either be specifically 
+engineered by the malicious software, or can happen innocently via 
+system memory pressure.
+
+All Intel integrated and discrete GPUs starting from Gen8 (Broadwell) 
+are affected.
+
+Fix has already been developed and consists of explicitly flushing the 
+TLBs before releasing memory back to the system for any GPU buffer 
+objects which were in use from the GPU.
+
+Note that this will have a varying performance impact depending on the 
+specific GPU, GPU workload and overall system workload.
+
+Fix for the issue has been provided to the Linus distributions and Linux 
+kernel maintainers and is expected to be merged to top of the tree and 
+stable and LTS releases shortly. Fix carries the title of "drm/i915: 
+Flush TLBs before releasing backing store".
+
+Kind regards,
+
+Tvrtko
