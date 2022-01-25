@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["930" "Friday" "5" "February" "2016" "15:32:29" "-0500" "anarcat" "anarcat@orangeseeds.org" "<87io22kiea.fsf@angela.anarcat.ath.cx>" "27" "[oss-security] Re: CVE Request: tiff: Out-of-bounds write for invalid images using LogL compression" "^Date:" nil nil "2" "2016020520:32:29" "[oss-security] Re: CVE Request: tiff: Out-of-bounds write for invalid images using LogL compression" (number mark "U       anarcat@oran Feb  5   27/930   " thread-indent "\"[oss-security] Re: CVE Request: tiff: Out-of-bounds write for invalid images using LogL compression\"\n") "<20160124153737.GA18993@eldamar.local>" ("<20160124153737.GA18993@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["317" "Tuesday" "25" "January" "2022" "19:53:03" "+0800" "Zhang Yonglun" "zhangyonglun@apache.org" nil "15" "[oss-security] CVE-2021-45029: Groovy Code Injection & SpEL Injection in Apache ShenYu 2.4.1" nil nil nil "1" nil nil (number mark "U       zhangyonglun Jan 25   15/317   " thread-indent "\"[oss-security] CVE-2021-45029: Groovy Code Injection & SpEL Injection in Apache ShenYu 2.4.1\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-45029: Groovy Code Injection & SpEL Injection in Apache ShenYu 2.4.1" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 18012 invoked by uid 550); 5 Feb 2016 20:33:22 -0000
+Received: (qmail 5451 invoked by uid 550); 25 Jan 2022 14:56:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,46 +11,35 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17985 invoked from network); 5 Feb 2016 20:33:21 -0000
-X-Injected-Via-Gmane: http://gmane.org/
-Message-ID: <87io22kiea.fsf@angela.anarcat.ath.cx>
-References: <20160124153737.GA18993@eldamar.local>
-Mime-Version: 1.0
-Content-Type: text/plain
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: marcos.anarc.at
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
-Cancel-Lock: sha1:7/JfOViawCALPPr68V/M79dpono=
-Date: Fri, 05 Feb 2016 15:32:29 -0500
-From: anarcat <anarcat@orangeseeds.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: tiff: Out-of-bounds write for invalid images using LogL compression
-To: oss-security@lists.openwall.com
+Received: (qmail 5493 invoked from network); 25 Jan 2022 11:53:27 -0000
+X-Gm-Message-State: AOAM5326M7Rk7aEwoYnfHhmcoOYeywxuJIJ0iF/dsh1lV9TKsZuxL1fs
+	G9DRvhyF9Xvzsz7QJAfknZmMrZ+zRERAHndxmf8=
+X-Google-Smtp-Source: ABdhPJwdbeiLsoJcE4fUmHXRvRYij0x5LRIt5KFUBfJlnYyMXivXEXCU7gY/3Wp2Zt9+nkIBKqC9ZLg4MB6fONo3KTE=
+X-Received: by 2002:a05:6512:3a85:: with SMTP id q5mr15593930lfu.555.1643111594751;
+ Tue, 25 Jan 2022 03:53:14 -0800 (PST)
+MIME-Version: 1.0
+From: Zhang Yonglun <zhangyonglun@apache.org>
+Date: Tue, 25 Jan 2022 19:53:03 +0800
+X-Gmail-Original-Message-ID: <CA+ZBtZ5dRpp15h_OExLFuaPR=dEBeB-VYRCjA+omzNq23p=9cQ@mail.gmail.com>
+Message-ID: <CA+ZBtZ5dRpp15h_OExLFuaPR=dEBeB-VYRCjA+omzNq23p=9cQ@mail.gmail.com>
+To: oss-security@lists.openwall.com, dev@shenyu.apache.org
+Content-Type: multipart/alternative; boundary="000000000000ee7bbc05d666ba32"
+Subject: [oss-security] CVE-2021-45029: Groovy Code Injection & SpEL Injection in Apache
+ ShenYu 2.4.1
 
-So from what I understand, this issue is only related to the *sample*
-code in php-openid, correct?
+--000000000000ee7bbc05d666ba32
+Content-Type: text/plain; charset="UTF-8"
 
-You also report that this code is in "use verbatim" in "the vast
-majority of sites", yet looking at the Debian code base, the only
-samples of that code I could find are in php-openid itself and the SAML
-library:
+Description:
 
-https://codesearch.debian.net/search?perpkg=1&q=getTrustRoot
+Groovy Code Injection & SpEL Injection which lead to Remote Code
+Execution. This issue affected Apache ShenYu 2.4.0 and 2.4.1.
 
-(jglobus seems to be a false positive there)
+--
 
-I have reviewed the usage of the openid.realm field in the Debian source
-code and, in general, it doesn't seem to use the `Host:` header:
+Zhang Yonglun
+Apache ShenYu (Incubating)
+Apache ShardingSphere
 
-https://codesearch.debian.net/search?perpkg=1&q=openid.realm
-
-Furthermore, I am not sure the attack works even on the theoritical
-level: how would the user reach the proper website if the Host header is
-changed?
-
-A.
--- 
-Never attribute to malice that which can be adequately explained by
-stupidity, but don't rule out malice.
-                         - Albert Einstein
-
+--000000000000ee7bbc05d666ba32--
