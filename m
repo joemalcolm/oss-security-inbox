@@ -1,30 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/26/4
-Message-ID: <CA+ZBtZ6ENBd4PkJsuQdqG+67Z5c4Vtpp9P2HJxB03UbY3HYTaA@mail.gmail.com>
-Date: Wed, 26 Jan 2022 14:46:17 +0800
-From: Zhang Yonglun <zhangyonglun@...che.org>
-To: oss-security@...ts.openwall.com, dev@...nyu.apache.org
-Subject: CVE-2022-23223: Apache ShenYu (incubating) Password leakage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/25/16
+Message-ID: <20220125223307.aygg63t6evzp2t3g@jwilk.net>
+Date: Tue, 25 Jan 2022 23:33:07 +0100
+From: Jakub Wilk <jwilk@...lk.net>
+To: <oss-security@...ts.openwall.com>
+Subject: Bad signal handling in shell scripts leading to insecure use of /tmp
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+I've run into quite a few shell scripts that do something like this:
 
-Description:
+   tmpfile=$(mktemp)
+   trap 'rm "$tmpfile"' EXIT INT QUIT TERM
+   do_stuff_with "$tmpfile"
 
-The HTTP response will disclose the user password.
-When users send the request like the following URL
-"dashboardUser?currentPage=1&pageSize=12", the response will disclose
-all the passwords of the users.
-This issue affects Apache ShenYu (incubating) 2.4.0 and 2.4.1.
+Note that the signal handler doesn't terminate the program. So when the 
+signal arrives, the program continues whatever it was doing, while the 
+name of the temporary file is available to other local users. (For the
+avoidance of doubt: the attacker can't send the signal themself; they 
+have to wait for the victim to press ^C or so.)
 
-Mitigation:
+I've reported these bugs so far:
 
-Upgrade to Apache ShenYu (incubating) 2.4.2 or apply patch
-https://github.com/apache/incubator-shenyu/pull/2357.
+* Debian devscripts:
+   https://bugs.debian.org/911720
+   https://bugs.debian.org/911969
+* debian-goodies:
+   https://bugs.debian.org/999899
 
+But a quick grep for "trap" in my /usr/bin/ shows that there's a lot 
+more code with such buggy signal handlers.
 
---
+So how to fix these bugs?
 
-Zhang Yonglun
-Apache ShenYu (Incubating)
-Apache ShardingSphere
+1) The most lazy way is to install trap only for EXIT:
+
+   trap 'rm "$tmpfile"' EXIT
+
+In bash this seems to do the right thing. In the other shells I tried, 
+the cleanup code won't be executed when the program is terminated by a 
+signal, but that's probably not a big deal in most cases.
+
+2) Another possibility to explicitly exit in the signal handler:
+
+   trap 'rm "$tmpfile"' EXIT
+   trap 'exit 1' INT QUIT
+
+But with this approach, the terminating signal will not be reported to 
+the parent program, and some shells (such as bash) needs this 
+information to handle ^C and ^\ correctly. See 
+https://www.cons.org/cracauer/sigint.html for details.
+
+3) Finally, if you're not disheartened with the amount and ugliness of 
+the required code, you can re-raise the signal from the signal handler:
+
+   trap 'rm "$tmpfile"' EXIT
+   for sig in INT QUIT TERM
+   do
+       trap 'rm "$tmpfile" && trap - '$sig' EXIT && kill -s '$sig' $$' $sig
+   done
+
+-- 
+Jakub Wilk
