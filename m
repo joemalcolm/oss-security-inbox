@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2253" "Wednesday" "24" "February" "2016" "05:43:04" "+0000" "halfdog" "me@halfdog.net" "<42e97a56-3538-0864-ee40-2494df567745@halfdog.net>" "60" "Re: [oss-security] Access to /dev/pts devices via pt_chown and user namespaces" nil nil nil "2" "2016022405:43:04" "[oss-security] Access to /dev/pts devices via pt_chown and user namespaces" (number mark "U       me@halfdog.n Feb 24   60/2253  " thread-indent "\"Re: [oss-security] Access to /dev/pts devices via pt_chown and user namespaces\"\n") "<20160223164136.GA24225@altlinux.org>" ("<8fc639ad-daef-1a6f-facf-140eb61aeee5@halfdog.net>" "<20160223161754.GA23263@openwall.com>" "<20160223164136.GA24225@altlinux.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["11232" "Tuesday" "25" "January" "2022" "12:05:07" "+0000" "Xen.org security team" "security@xen.org" nil "246" "[oss-security] Xen Security Advisory 395 v2 (CVE-2022-23035) - Insufficient cleanup of passed-through device IRQs" nil nil nil "1" nil nil (number mark "U       security@xen Jan 25  246/11232 " thread-indent "\"[oss-security] Xen Security Advisory 395 v2 (CVE-2022-23035) - Insufficient cleanup of passed-through device IRQs\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 395 v2 (CVE-2022-23035) - Insufficient cleanup of passed-through device IRQs" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32134 invoked by uid 550); 24 Feb 2016 05:51:34 -0000
+Received: (qmail 25603 invoked by uid 550); 25 Jan 2022 12:05:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,78 +12,269 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32055 invoked from network); 24 Feb 2016 05:51:33 -0000
-To: oss-security@lists.openwall.com
-References: <8fc639ad-daef-1a6f-facf-140eb61aeee5@halfdog.net>
- <20160223161754.GA23263@openwall.com> <20160223164136.GA24225@altlinux.org>
-From: halfdog <me@halfdog.net>
-Message-ID: <42e97a56-3538-0864-ee40-2494df567745@halfdog.net>
-Date: Wed, 24 Feb 2016 05:43:04 +0000
-User-Agent: Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0
+Received: (qmail 24478 invoked from network); 25 Jan 2022 12:05:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
+	Content-Transfer-Encoding:Content-Type;
+	bh=XjImBY627dzjE6CAOBihcwCbC0zmFDELfKNBy+FyDb4=; b=INuodAE6zxiLlqwttASajLYK9T
+	qBZwj+RmvDQIE/tzkDOJEKvi1R/iFoIcXUWmIN4bi35HLHu7BlUWjbdjTaapoi+Opmuymv+UxTEc9
+	IXQu5ZinWM4Y7JHzkreaT9HKzrwwQ7atGF7Qc319S3zri6tTG8WafDvr9Xti29KiikaU=;
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-In-Reply-To: <20160223164136.GA24225@altlinux.org>
-Content-Type: text/plain; charset=ISO-8859-1
+X-Mailer: MIME-tools 5.509 (Entity 5.509)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1nCKZP-0003vf-6C@xenbits.xenproject.org>
+Date: Tue, 25 Jan 2022 12:05:07 +0000
+Subject: [oss-security] Xen Security Advisory 395 v2 (CVE-2022-23035) - Insufficient
+ cleanup of passed-through device IRQs
+
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
 Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] Access to /dev/pts devices via pt_chown and user
- namespaces
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hash: SHA256
 
-Dmitry V. Levin wrote:
-> On Tue, Feb 23, 2016 at 07:17:54PM +0300, Solar Designer wrote:
->> On Tue, Feb 23, 2016 at 12:03:54PM +0000, halfdog wrote:
->>> Sending content from [0] also to oss-security as requested last
->>> time:
->> 
->> Thank you.  This public disclosure is very late, though.  I
->> didn't realize you were still holding some of your findings on
->> this.
->> 
->>> With Ubuntu Wily and earlier, /usr/lib/pt_chown was used to
->>> change ownership of slave pts devices in /dev/pts to the same
->>> uid holding the master file descriptor for the slave.
->> 
->> I think pt_chown is only needed for legacy BSD pty's, and no
->> longer needed for Unix 98 pty's that Linux systems use these
->> days.  Perhaps it should be dropped from upstream glibc by now.
-> 
-> Just for the record, pt_chown is not enabled by default in upstream
-> glibc starting with glibc-2.18, one has to specify
-> --enable-pt_chown configure option explicitly to build pt_chown.
+            Xen Security Advisory CVE-2022-23035 / XSA-395
+                               version 2
 
-Thanks for that information. So for pt_chown, this could hopefully be
-just an Ubuntu issue. Should we assign an CVE for that?
+          Insufficient cleanup of passed-through device IRQs
 
-On the other hand, the TIOCGPTN ioctl still is problematic with
-USERNS, also for other tools. I just started with pt_chown for
-demonstration because it is SUID, perhaps there are other programs
-using this ioctl.
+UPDATES IN VERSION 2
+====================
 
-Should information about this risk/attack method just be added to the
-kernel docs/man-page of TIOCGPTN or is it a separate vulnerability
-with need for addressing (another CVE?).
+Adjust patch subject.
 
-> glibc documentation clearly states that "the use of pt_chown
-> introduces additional security risks to the system and you should
-> enable it only if you understand and accept those risks": 
-> https://www.gnu.org/software/libc/manual/html_node/Configuring-and-compiling.html#index-grantpt-1
+Public release.
 
-Another
-> 
-argument for having some community check tool + procedure
-(sketched in mail before) to make mistakes only once (when not
-everyone is reading all the docs).
+ISSUE DESCRIPTION
+=================
 
-hd
+The management of IRQs associated with physical devices exposed to x86
+HVM guests involves an iterative operation in particular when cleaning
+up after the guest's use of the device.  In the case where an interrupt
+is not quiescent yet at the time this cleanup gets invoked, the cleanup
+attempt may be scheduled to be retried.  When multiple interrupts are
+involved, this scheduling of a retry may get erroneously skipped.  At
+the same time pointers may get cleared (resulting in a de-reference of
+NULL) and freed (resulting in a use-after-free), while other code would
+continue to assume them to be valid.
 
-- -- 
-http://www.halfdog.net/
-PGP: 156A AE98 B91F 0114 FE88  2BD8 C459 9386 feed a bee
+IMPACT
+======
+
+The precise impact is system specific, but would typically be a Denial
+of Service (DoS) affecting the entire host.  Privilege escalation and
+information leaks cannot be ruled out.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions 4.6 and later are vulnerable.  Xen versions 4.5 and earlier
+are not vulnerable.
+
+Only x86 HVM guests with one or more passed-through physical devices
+using (together) multiple physical interupts can leverage the
+vulnerability.  x86 PV guests cannot leverage the vulnerability.  x86
+HVM guests without passed-through devices or with a passed-through
+device using just a single physical interrupt also cannot leverage the
+vulnerability.  Device pass-through is unsupported for x86 PVH guests
+and all Arm guests.
+
+MITIGATION
+==========
+
+There is no mitigation (other than not passing through to x86 HVM guests
+PCI devices with, overall, more than a single physical interrupt).
+
+CREDITS
+=======
+
+This issue was discovered by Julien Grall of Amazon.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa395.patch           xen-unstable - Xen 4.15.x
+xsa395-4.14.patch      Xen 4.14.x - Xen 4.12.x
+
+$ sha256sum xsa395*
+f460be598b936bb5cfb9276787f2f21d90b029d1fe10dabd572ae50f84a1124d  xsa395.meta
+295b876c52cf5efe19150757275da3d154beb72ac2d7be267e16c9262e410de3  xsa395.patch
+5697f3137e0a202744f31b1c6cbcfa459d8fa9b4b68be59561b78c40fe1233c5  xsa395-4.14.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iEYEARECAAYFAlbNQt0ACgkQxFmThv7tq+7cYwCeIz3bGFV7lJwTS6naQrzLfAoc
-h7EAnioQTLYVtsNJ5jX0+hiW9QekLUVg
-=B5H+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmHv39QMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZhowIAIZYZq4efyEAP5rB3zX4yRel2GNz+2Dpjok4PExB
+uSOrPaH5dDILhNdVJNG48MckDe0dMDsn3OGr1I6lbxcV1TWR1JFrBQoxeUnwdiEf
+GjeTni0hhefan3IEEd5HUDInQgf9oI7fUcgEdVAoIV87BQdlK0ofjJ3TggSrr8jl
+pL5dmIh4OICD6YttR11Of1vhPY2WhZQb2xgSxzEQbDeY8k3JaRWy8mYwwxPD0HXn
++hmLK59ZhkJd5Sk8AxttRUTEsl6nKESrUz3vv/vFInV5Go+35AElL//gQNgOOTAS
+nljLLtJdfHSuRy459Sw/lm4mwQ9zkfOFH6B+M6efSkHMyoE=
+=Iv+w
 -----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa395.meta"
+Content-Disposition: attachment; filename="xsa395.meta"
+Content-Transfer-Encoding: base64
+
+ewogICJYU0EiOiAzOTUsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
+Im1hc3RlciIsCiAgICAiNC4xNiIsCiAgICAiNC4xNSIsCiAgICAiNC4xNCIs
+CiAgICAiNC4xMyIsCiAgICAiNC4xMiIKICBdLAogICJUcmVlcyI6IFsKICAg
+ICJ4ZW4iCiAgXSwKICAiUmVjaXBlcyI6IHsKICAgICI0LjEyIjogewogICAg
+ICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0
+YWJsZVJlZiI6ICJiOWFhMTYzNWIzOGE3YmMwOTJkNjAxMjNiODdjNTQ1ZjI1
+ZGIzMWU0IiwKICAgICAgICAgICJQcmVyZXFzIjogWwogICAgICAgICAgICAz
+OTMsCiAgICAgICAgICAgIDM5NAogICAgICAgICAgXSwKICAgICAgICAgICJQ
+YXRjaGVzIjogWwogICAgICAgICAgICAieHNhMzk1LTQuMTQucGF0Y2giCiAg
+ICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQuMTMi
+OiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAg
+ICAgICAiU3RhYmxlUmVmIjogImQwZTJjMjc2MmI5ODFhYmQ5ODRhZjY2YTg0
+NGFjMTJkOGJmOGY4MTMiLAogICAgICAgICAgIlByZXJlcXMiOiBbCiAgICAg
+ICAgICAgIDM5MywKICAgICAgICAgICAgMzk0CiAgICAgICAgICBdLAogICAg
+ICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2EzOTUtNC4xNC5w
+YXRjaCIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAg
+ICAiNC4xNCI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6
+IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiY2JhZGY2N2JjYWI0ZTI5Yzg4
+MzQxMGRiMzkzZjRmNWVmMzRkZjA0YSIsCiAgICAgICAgICAiUHJlcmVxcyI6
+IFsKICAgICAgICAgICAgMzkzLAogICAgICAgICAgICAzOTQKICAgICAgICAg
+IF0sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTM5
+NS00LjE0LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQog
+ICAgfSwKICAgICI0LjE1IjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAg
+ICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICJhYmEyMmM2N2Vm
+ZTQ0MDRhMmE4NGUzNzhiZmQ5OGRlZjVlYzhlNjQ3IiwKICAgICAgICAgICJQ
+cmVyZXFzIjogWwogICAgICAgICAgICAzOTMsCiAgICAgICAgICAgIDM5NAog
+ICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAg
+ICAieHNhMzk1LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAg
+fQogICAgfSwKICAgICI0LjE2IjogewogICAgICAiUmVjaXBlcyI6IHsKICAg
+ICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICJkMGQwYWY2
+N2VlZGU1NjBmYWFiNThmMTYxZDk2MDhhNjljNzc5ZDQxIiwKICAgICAgICAg
+ICJQcmVyZXFzIjogWwogICAgICAgICAgICAzOTMsCiAgICAgICAgICAgIDM5
+NAogICAgICAgICAgXSwKICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAg
+ICAgICAieHNhMzk1LnBhdGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAg
+ICAgfQogICAgfSwKICAgICJtYXN0ZXIiOiB7CiAgICAgICJSZWNpcGVzIjog
+ewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjogIjMx
+ZjNiYzk3ZjQ1MDg2ODcyMTVlNDU5YTVlMzU2NzZlZWNmMTc3MmIiLAogICAg
+ICAgICAgIlByZXJlcXMiOiBbCiAgICAgICAgICAgIDM5MywKICAgICAgICAg
+ICAgMzk0CiAgICAgICAgICBdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAg
+ICAgICAgICAgICJ4c2EzOTUucGF0Y2giCiAgICAgICAgICBdCiAgICAgICAg
+fQogICAgICB9CiAgICB9CiAgfQp9
+
+--=separator
+Content-Type: application/octet-stream; name="xsa395.patch"
+Content-Disposition: attachment; filename="xsa395.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbSA0Y2M5MjRjM2UzYTBkNTMzMDZkMDhiMDQ3MjBjNDI3ZDFjMjk4YmE4
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKdWxpZW4gR3JhbGwg
+PGpncmFsbEBhbWF6b24uY29tPgpEYXRlOiBXZWQsIDUgSmFuIDIwMjIgMTg6
+MDk6MjAgKzAwMDAKU3ViamVjdDogW1BBVENIXSBwYXNzdGhyb3VnaC94ODY6
+IHN0b3AgcGlycSBpdGVyYXRpb24gaW1tZWRpYXRlbHkgaW4gY2FzZSBvZgog
+ZXJyb3IKCnB0X3BpcnFfaXRlcmF0ZSgpIHdpbGwgaXRlcmF0ZSBpbiBiYXRj
+aCBvdmVyIGFsbCB0aGUgUElSUXMuIFRoZSBvdXRlcgpsb29wIHdpbGwgYmFp
+bCBvdXQgaWYgJ3JjJyBpcyBub24temVybyBidXQgdGhlIGlubmVyIGxvb3Ag
+d2lsbCBjb250aW51ZS4KClRoaXMgbWVhbnMgJ3JjJyB3aWxsIGdldCBjbG9i
+YmVyZWQgYW5kIHdlIG1heSBtaXNzIGFueSBlcnJvcnMgKHN1Y2ggYXMKLUVS
+RVNUQVJUIGluIHRoZSBjYXNlIG9mIHRoZSBjYWxsYmFjayBwY2lfY2xlYW5f
+ZHBjaV9pcnEoKSkuCgpUaGlzIGlzIENWRS0yMDIyLTIzMDM1IC8gWFNBLTM5
+NS4KCkZpeGVzOiBjMjQ1MzZiNjM2ZjIgKCJyZXBsYWNlIGQtPm5yX3BpcnFz
+IHNpemVkIGFycmF5cyB3aXRoIHJhZGl4IHRyZWUiKQpGaXhlczogZjZkZDI5
+NTM4MWY0ICgiZHBjaTogcmVwbGFjZSB0YXNrbGV0IHdpdGggc29mdGlycSIp
+ClNpZ25lZC1vZmYtYnk6IEp1bGllbiBHcmFsbCA8amdyYWxsQGFtYXpvbi5j
+b20+ClNpZ25lZC1vZmYtYnk6IEphbiBCZXVsaWNoIDxqYmV1bGljaEBzdXNl
+LmNvbT4KUmV2aWV3ZWQtYnk6IFJvZ2VyIFBhdSBNb25uw6kgPHJvZ2VyLnBh
+dUBjaXRyaXguY29tPgotLS0KIHhlbi9kcml2ZXJzL3Bhc3N0aHJvdWdoL3g4
+Ni9odm0uYyB8IDQgKysrKwogMSBmaWxlIGNoYW5nZWQsIDQgaW5zZXJ0aW9u
+cygrKQoKZGlmZiAtLWdpdCBhL3hlbi9kcml2ZXJzL3Bhc3N0aHJvdWdoL3g4
+Ni9odm0uYyBiL3hlbi9kcml2ZXJzL3Bhc3N0aHJvdWdoL3g4Ni9odm0uYwpp
+bmRleCAzNTFkYWFmZGM5YmYuLjBiMzdjZDE0NWI2MCAxMDA2NDQKLS0tIGEv
+eGVuL2RyaXZlcnMvcGFzc3Rocm91Z2gveDg2L2h2bS5jCisrKyBiL3hlbi9k
+cml2ZXJzL3Bhc3N0aHJvdWdoL3g4Ni9odm0uYwpAQCAtNzMyLDcgKzczMiwx
+MSBAQCBpbnQgcHRfcGlycV9pdGVyYXRlKHN0cnVjdCBkb21haW4gKmQsCiAK
+ICAgICAgICAgICAgIHBpcnEgPSBwaXJxc1tpXS0+cGlycTsKICAgICAgICAg
+ICAgIGlmICggKHBpcnFfZHBjaS0+ZmxhZ3MgJiBIVk1fSVJRX0RQQ0lfTUFQ
+UEVEKSApCisgICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAgcmMgPSBj
+YihkLCBwaXJxX2RwY2ksIGFyZyk7CisgICAgICAgICAgICAgICAgaWYgKCBy
+YyApCisgICAgICAgICAgICAgICAgICAgIGJyZWFrOworICAgICAgICAgICAg
+fQogICAgICAgICB9CiAgICAgfSB3aGlsZSAoICFyYyAmJiArK3BpcnEgPCBk
+LT5ucl9waXJxcyAmJiBuID09IEFSUkFZX1NJWkUocGlycXMpICk7CiAKLS0g
+CjIuMzIuMAoK
+
+--=separator
+Content-Type: application/octet-stream; name="xsa395-4.14.patch"
+Content-Disposition: attachment; filename="xsa395-4.14.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbSA3NDMzNDhmNWQ1NDVjN2ZmZjljZGVhNzQ2ODQwYjc5NWY1YzI2ZDQz
+IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKdWxpZW4gR3JhbGwg
+PGpncmFsbEBhbWF6b24uY29tPgpEYXRlOiBXZWQsIDUgSmFuIDIwMjIgMTg6
+MDk6MzkgKzAwMDAKU3ViamVjdDogW1BBVENIXSBwYXNzdGhyb3VnaC94ODY6
+IHN0b3AgcGlycSBpdGVyYXRpb24gaW1tZWRpYXRlbHkgaW4gY2FzZSBvZgog
+ZXJyb3IKCnB0X3BpcnFfaXRlcmF0ZSgpIHdpbGwgaXRlcmF0ZSBpbiBiYXRj
+aCBvdmVyIGFsbCB0aGUgUElSUXMuIFRoZSBvdXRlcgpsb29wIHdpbGwgYmFp
+bCBvdXQgaWYgJ3JjJyBpcyBub24temVybyBidXQgdGhlIGlubmVyIGxvb3Ag
+d2lsbCBjb250aW51ZS4KClRoaXMgbWVhbnMgJ3JjJyB3aWxsIGdldCBjbG9i
+YmVyZWQgYW5kIHdlIG1heSBtaXNzIGFueSBlcnJvcnMgKHN1Y2ggYXMKLUVS
+RVNUQVJUIGluIHRoZSBjYXNlIG9mIHRoZSBjYWxsYmFjayBwY2lfY2xlYW5f
+ZHBjaV9pcnEoKSkuCgpUaGlzIGlzIENWRS0yMDIyLTIzMDM1IC8gWFNBLTM5
+NS4KCkZpeGVzOiBjMjQ1MzZiNjM2ZjIgKCJyZXBsYWNlIGQtPm5yX3BpcnFz
+IHNpemVkIGFycmF5cyB3aXRoIHJhZGl4IHRyZWUiKQpGaXhlczogZjZkZDI5
+NTM4MWY0ICgiZHBjaTogcmVwbGFjZSB0YXNrbGV0IHdpdGggc29mdGlycSIp
+ClNpZ25lZC1vZmYtYnk6IEp1bGllbiBHcmFsbCA8amdyYWxsQGFtYXpvbi5j
+b20+ClNpZ25lZC1vZmYtYnk6IEphbiBCZXVsaWNoIDxqYmV1bGljaEBzdXNl
+LmNvbT4KUmV2aWV3ZWQtYnk6IFJvZ2VyIFBhdSBNb25uw6kgPHJvZ2VyLnBh
+dUBjaXRyaXguY29tPgotLS0KIHhlbi9kcml2ZXJzL3Bhc3N0aHJvdWdoL2lv
+LmMgfCA0ICsrKysKIDEgZmlsZSBjaGFuZ2VkLCA0IGluc2VydGlvbnMoKykK
+CmRpZmYgLS1naXQgYS94ZW4vZHJpdmVycy9wYXNzdGhyb3VnaC9pby5jIGIv
+eGVuL2RyaXZlcnMvcGFzc3Rocm91Z2gvaW8uYwppbmRleCA3MWVhZjJjMTdl
+MjcuLmI2ZTg4ZWJjODY0NiAxMDA2NDQKLS0tIGEveGVuL2RyaXZlcnMvcGFz
+c3Rocm91Z2gvaW8uYworKysgYi94ZW4vZHJpdmVycy9wYXNzdGhyb3VnaC9p
+by5jCkBAIC04MTAsNyArODEwLDExIEBAIGludCBwdF9waXJxX2l0ZXJhdGUo
+c3RydWN0IGRvbWFpbiAqZCwKIAogICAgICAgICAgICAgcGlycSA9IHBpcnFz
+W2ldLT5waXJxOwogICAgICAgICAgICAgaWYgKCAocGlycV9kcGNpLT5mbGFn
+cyAmIEhWTV9JUlFfRFBDSV9NQVBQRUQpICkKKyAgICAgICAgICAgIHsKICAg
+ICAgICAgICAgICAgICByYyA9IGNiKGQsIHBpcnFfZHBjaSwgYXJnKTsKKyAg
+ICAgICAgICAgICAgICBpZiAoIHJjICkKKyAgICAgICAgICAgICAgICAgICAg
+YnJlYWs7CisgICAgICAgICAgICB9CiAgICAgICAgIH0KICAgICB9IHdoaWxl
+ICggIXJjICYmICsrcGlycSA8IGQtPm5yX3BpcnFzICYmIG4gPT0gQVJSQVlf
+U0laRShwaXJxcykgKTsKIAotLSAKMi4zMi4wCgo=
+
+--=separator--
