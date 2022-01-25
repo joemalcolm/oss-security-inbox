@@ -1,70 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/01/4
-Message-ID: <CAFqpC6zUc9DYKnBv3OBAsjOE9bgfGVqvoCW3B3f=CY43WfDVQA@mail.gmail.com>
-Date: Thu, 1 Sep 2022 19:30:58 +0530
-From: Tej Rathi <trathi@...hat.com>
-To: oss-security@...ts.openwall.com
-Cc: Ondrej Mular <omular@...hat.com>
-Subject: ClusterLabs/PCS: [CVE-2022-2735] Obtaining an authentication token for hacluster user leads to privilege escalation.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/25/15
+Message-ID: <3fc65cdf-8155-cff7-015c-e4aa1ba37346@oracle.com>
+Date: Tue, 25 Jan 2022 14:27:02 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com, Zhang Yonglun <zhangyonglun@...che.org>, dev@...nyu.apache.org
+Subject: Re: CVE-2022-23944: Apache ShenYu 2.4.1 Improper access control
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On 1/25/22 03:39, Zhang Yonglun wrote:
+> Description:
+> 
+> User can access /plugin api without authentication. This issue
+> affected Apache ShenYu 2.4.0 and 2.4.1.
 
-A security issue was discovered in the ClusterLabs/PCS project. This is
-CVE-2022-2735, assigned by Red Hat.
-(https://github.com/ClusterLabs/pcs)
+Thanks for informing oss-security of these issues, but good security
+announcements have a little more detail, like what actions users or
+distributors need to take (upgrade to a new version?  what version?)
+and information on where to find more details, like a bug id in your
+bug tracker.  If you look at the announcements from other Apache
+projects, you'll see they often include those.
 
+Some good examples:
+https://www.openwall.com/lists/oss-security/2021/12/18/2
+https://www.openwall.com/lists/oss-security/2022/01/05/4
+https://www.openwall.com/lists/oss-security/2022/01/06/2
 
-*ROOT CAUSE & IMPACT:*
-*------------------------------------*
-
-It is caused by incorrect permissions on a unix socket used for internal
-communication between pcs daemons. Reproducer below demonstrates a
-privilege escalation by obtaining authentication token for hacluster
-user. With the hacluster token, an attacker has complete control over
-the cluster managed by pcs.
-
-CVSS Base Score [HIGH]: 8.4/CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
-
-
-*AFFECTED VERSIONS:*
-
-*---------------------------------*
-
-pcs upstream is affected since version 0.10.5 [1][2]. This means that all
-0.10.x versions starting from 0.10.5 including the latest 0.10 branch
-release 0.10.14 are affected. And all 0.11.x versions are affected as well.
-
-POC and PATCH are in the attachment.
-
-
-*CREDITS:*
-
-*--------------*
-
-The issue was discovered by Ondrej Mular (Senior Software Engineer, Red Hat)
-
-
-*REFERENCES:*
-*---------------------*
-
-[1]: https://github.com/ClusterLabs/pcs/releases/tag/0.10.5
-[2]:
-https://github.com/ClusterLabs/pcs/blob/main/CHANGELOG.md#0105---2020-03-18
-
-
-- - - - - - - - - - - - - - - -
-
-Thanks & Regards,
-
-TEJ RATHI
-
-Associate Product Security Engineer | PSIRT
-
-Product Security Engineering, Red Hat.
-
-Content of type "text/html" skipped
-
-Download attachment "patch" of type "application/octet-stream" (1186 bytes)
-
-Download attachment "poc" of type "application/octet-stream" (2187 bytes)
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
