@@ -1,88 +1,142 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/21/2
-Message-ID: <q5686882-nr28-8426-s5r2-7pn92po2439o@unkk.fr>
-Date: Wed, 21 Dec 2022 08:24:27 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: curl: CVE-2022-43552: HTTP Proxy deny use-after-free
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/25/3
+Message-Id: <E1nCKZL-0003VD-3e@xenbits.xenproject.org>
+Date: Tue, 25 Jan 2022 12:05:03 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 394 v3 (CVE-2022-23034) - A PV guest could DoS Xen while unmapping a grant
 Content-Type: text/plain; charset=utf-8
 
-CVE-2022-43552: HTTP Proxy deny use-after-free
-==============================================
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Project curl Security Advisory, December 21 2022 -
-[Permalink](https://curl.se/docs/CVE-2022-43552.html)
+            Xen Security Advisory CVE-2022-23034 / XSA-394
+                               version 3
 
-VULNERABILITY
--------------
+           A PV guest could DoS Xen while unmapping a grant
 
-curl can be asked to *tunnel* virtually all protocols it supports through an
-HTTP proxy. HTTP proxies can (and often do) deny such tunnel operations using
-an appropriate HTTP error response code.
+UPDATES IN VERSION 3
+====================
 
-When getting denied to tunnel the specific protocols SMB or TELNET, curl would
-use a heap-allocated struct after it had been freed, in its transfer shutdown
-code path.
+Public release.
 
-We are not aware of any exploit of this flaw.
+ISSUE DESCRIPTION
+=================
 
-INFO
-----
+To address XSA-380, reference counting was introduced for grant
+mappings for the case where a PV guest would have the IOMMU enabled. PV
+guests can request two forms of mappings.  When both are in use for any
+individual mapping, unmapping of such a mapping can be requested in two
+steps.  The reference count for such a mapping would then mistakenly be
+decremented twice.  Underflow of the counters gets detected, resulting
+in the triggering of a hypervisor bug check.
 
-This flaw was introduced for TELNET in [commit
-b7eeb6e67fca68](https://github.com/curl/curl/commit/b7eeb6e67fca68) in
-September 7, 2006. The SMB part was introduced in 2014 with [commit
-aec2e865f06669](https://github.com/curl/curl/commit/aec2e865f06669).
+IMPACT
+======
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2022-43552 to this issue.
+Malicious guest kernels may be able to mount a Denial of Service (DoS)
+attack affecting the entire system.
 
-CWE-416: Use After Free
+VULNERABLE SYSTEMS
+==================
 
-Severity: Low
+All Xen versions from at least 3.2 onwards are vulnerable in principle,
+if they have the XSA-380 fixes applied.
 
-AFFECTED VERSIONS
------------------
+Only x86 systems are vulnerable.  Arm systems are not vulnerable.
 
-- Affected versions: curl 7.16.0 to and including 7.86.0
-- Not affected versions: curl < 7.16.0 and curl >= 7.86.0
+Only x86 PV guests with access to PCI devices can leverage the
+vulnerability.  x86 HVM and PVH guests, as well as PV guests without
+access to PCI devices, cannot leverage the vulnerability.
 
-libcurl is used by many applications, but not always advertised as such!
+Additionally from Xen 4.13 onwards x86 PV guests can leverage this
+vulnerability only when being granted access to pages owned by another
+domain.
 
-THE SOLUTION
-------------
+MITIGATION
+==========
 
-A [fix for CVE-2022-43552](https://github.com/curl/curl/commit/4f20188ac644afe17)
+Not running PV guests will avoid the vulnerability.
 
-RECOMMENDATIONS
---------------
+For Xen 4.12 and older not passing through PCI devices to PV guests will
+avoid the vulnerability.
 
-  A - Upgrade curl to version 7.87.0
+For Xen 4.13 and newer not enabling PCI device pass-through for PV
+guests will avoid the vulnerability.  This can be achieved via omitting
+any "passthrough=..." and "pci=..." settings from xl guest configuration
+files, or by setting "passthrough=disabled" there.
 
-  B - Apply the patch to your local version
-
-  C - Avoid using SMB and TELNET or disable HTTP proxy use
-
-TIMELINE
---------
-
-This issue was reported to the curl project on November 7, 2022. We contacted
-distros@...nwall on December 12, 2022.
-
-curl 7.87.0 was released on December 21 2022, coordinated with the publication
-of this advisory.
+- From Xen 4.13 onwards, XSM SILO can be available as a security policy
+designed to permit guests to only be able to communicate with Dom0.
+Dom0 does not normally offer its pages for guests to map, which means
+the use of SILO mode normally mitigates the vulnerability.
 
 CREDITS
--------
+=======
 
-- Reported-by: Trail of Bits
-- Patched-by: Daniel Stenberg
+This issue was discovered by Julien Grall of Amazon.
 
-Thanks a lot!
+RESOLUTION
+==========
 
--- 
+Applying the appropriate attached patch resolves this issue.
 
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa394.patch           xen-unstable - Xen 4.13.x
+xsa394-4.12.patch      Xen 4.12.x
+
+$ sha256sum xsa394*
+93f4d3b58d49ba239115753c9905b7c3720b438c48ef8fb701f15081aa317159  xsa394.meta
+f2a3420e8d3eb1cf728f90d3c352ace0d3c67f7933201ce9b784d63afaeaa179  xsa394.patch
+ee93797546ac9e82f98211366f9acc733332b0d5ab7ef73840c2acd2bb1439ca  xsa394-4.12.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches described above (or others which are
+substantially similar) is permitted during the embargo, even on public-
+facing systems with untrusted guest users and administrators.
+
+HOWEVER, deployment of the mitigations described above is NOT permitted
+during the embargo on public-facing systems with untrusted guest users
+and administrators.  This is because such a configuration change is
+recognizable by the affected guests.
+
+AND: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmHv39IMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZfCYH/iZn73/JRTKI7B+9v2fW6v/k1IcVhpu+N4+TuRhh
+Al5igmiTJLU3LcHM/H2KScgtnSwEKfCyddY1Gt3MZ+5lBDwR8elRkPdqn+P7xfol
+4D5NgnEJDAYUWwJZOFn0qWfqNDnDkAvuKpm1zmv8RE0Xmw6a74Fvbfvi8PCuN9CO
+zdippi5r5FlzFU7Q5MoWmOhmvVe3Fg7tGs4GXIyVUYkpDYyBGEWBo6rcoQ5aDvir
+g8T0P1Y8XKCVvYM9SOdKWENppam0uIh00Mm+QDjQNaXD4I3DCDXLXkT7OGImZglr
+MW8z5iNFjd0iXxFqTVBe1omxUhLC1xcB1fNySjd3zpt3RfA=
+=mIA+
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa394.meta" of type "application/octet-stream" (1709 bytes)
+
+Download attachment "xsa394.patch" of type "application/octet-stream" (2304 bytes)
+
+Download attachment "xsa394-4.12.patch" of type "application/octet-stream" (2112 bytes)
