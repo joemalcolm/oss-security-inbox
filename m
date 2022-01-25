@@ -1,24 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/16/1
-Message-ID: <caedcf4c-58a4-345d-41a1-a4e23be32780@apache.org>
-Date: Fri, 16 Dec 2022 12:48:32 +0000
-From: Arnout Engelen <engelen@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/25/13
+Message-Id: <F9283FD4-A0FC-4944-8659-530684BB33F8@gentoo.org>
+Date: Tue, 25 Jan 2022 18:04:49 +0000
+From: Sam James <sam@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-28655: Apache Zeppelin: Arbitrary file deletion vulnerability 
+Subject: Re: pwnkit: Local Privilege Escalation in polkit's pkexec (CVE-2021-4034)
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
 
-Description:
 
-The improper Input Validation vulnerability in "”Move folder to Trash” feature of Apache Zeppelin allows an attacker to delete the arbitrary files.  This issue affects Apache Zeppelin Apache Zeppelin version 0.9.0 and prior versions.
+> On 25 Jan 2022, at 17:57, Qualys Security Advisory <qsa@...lys.com> wrote:
+> 
+> 
+> Qualys Security Advisory
+> pwnkit: Local Privilege Escalation in polkit's pkexec (CVE-2021-4034)
+> [snip]
 
-Credit:
+Hi,
 
-Kai Zhao (finder)
+For the benefit of downstreams: patch is available in gitlab [0]
+but no release yet.
 
-References:
+[0] https://gitlab.freedesktop.org/polkit/polkit/-/commit/a2bf5c9c83b6ae46cbd5c779d3055bff81ded683
 
-https://zeppelin.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2021-28655
+Best,
+sam
 
+Download attachment "signature.asc" of type "application/pgp-signature" (619 bytes)
