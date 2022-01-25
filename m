@@ -1,41 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/04/7
-Message-ID: <Y2VfFUipF21W5dBh@itl-email>
-Date: Fri, 4 Nov 2022 14:51:00 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-37865: Apache Ivy allow create/overwrite any file on the system
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/25/7
+Message-ID: <CA+ZBtZ50nKwuZooqV_sj2KgBbZdNhakNqA1dyWR2VCkm6WL3gA@mail.gmail.com>
+Date: Tue, 25 Jan 2022 19:42:04 +0800
+From: Zhang Yonglun <zhangyonglun@...che.org>
+To: oss-security@...ts.openwall.com, dev@...nyu.apache.org
+Subject: CVE-2022-23223: Password leakage in Apache ShenYu
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Nov 04, 2022 at 12:06:48PM +0100, Stefan Bodewig wrote:
-> Severity: medium
-> 
-> Description:
-> 
-> With Apache Ivy 2.4.0 an optional packaging attribute has been
-> introduced that allows artifacts to be unpacked on the fly if they used
-> pack200 or zip packaging.
-> 
-> For artifacts using the "zip", "jar" or "war" packaging Ivy prior to
-> 2.5.1 doesn't verify the target path when extracting the archive. An
-> archive containing absolute paths or paths that try to traverse
-> "upwards" using ".." sequences can then write files to any location on
-> the local fie system that the user executing Ivy has write access to.
-> 
-> Mitigation:
-> 
-> Ivy users of version 2.4.0 to 2.5.0 should upgrade to Ivy 2.5.1.
-> 
-> Credit:
-> 
-> This issue was discovered by Kostya Kortchinsky of the Databricks Security Team.
+Description:
 
-FYI, you might want to rotate your OpenPGP key, or at least use a newer
-hash algorithm.  The signature I got uses SHA-1 which is no longer
-considered secure.
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+The HTTP response will disclose the user password. This issue affected
+Apache ShenYu 2.4.0 and 2.4.1.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+
+--
+
+Zhang Yonglun
+Apache ShenYu (Incubating)
+Apache ShardingSphere
+
