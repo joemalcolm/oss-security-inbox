@@ -1,47 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/27/2
-Message-ID: <A120BF13-DE6E-4F00-91AD-49F4AB663C8E@alumni.caltech.edu>
-Date: Sun, 27 Mar 2022 02:29:27 +0000
-From: "Adler, Mark" <madler@...mni.caltech.edu>
-To: Petr Štetiar <ynezz@...e.cz>
-CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: zlib memory corruption on deflate (i.e. compress)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/25/6
+Message-ID: <CA+ZBtZ5CrKObuaQGjg9T8x9zTVVhonYPOFCGuxWgcxhnqKdebw@mail.gmail.com>
+Date: Tue, 25 Jan 2022 19:39:34 +0800
+From: Zhang Yonglun <zhangyonglun@...che.org>
+To: oss-security@...ts.openwall.com, dev@...nyu.apache.org
+Subject: CVE-2022-23945: Apache ShenYu missing authentication allows gateway registration
 Content-Type: text/plain; charset=utf-8
 
-Petr,
+Description:
 
-Yes, I will release develop to master. I need to do some portability testing first.
+Missing  authentication on ShenYu Admin when register by HTTP. This
+issue affected Apache ShenYu 2.4.0 and 2.4.1.
 
-Mark
 
+--
 
-> On Mar 23, 2022, at 10:43 PM, Petr Štetiar <ynezz@...e.cz> wrote:
-> 
-> Tavis Ormandy <taviso@...il.com> [2022-03-23 20:49:49]:
-> 
-> [ adding Mark to the Cc: loop ]
-> 
-> Hi,
-> 
->> Greetings list, I was recently trying to track down a reproducible crash
->> in a compressor. Believe it or not, it really was a bug in
->> zlib-1.2.11 when compressing (not decompressing!) certain inputs.
-> 
-> thank you for letting us know!
-> 
->> I reported it upstream, but it turns out the issue has been public since
->> 2018, but the patch never made it into a release. As far as I know,
->> nobody ever assigned it a CVE.
->> 
->> https://github.com/madler/zlib/commit/5c44459c3b28a9bd3283aaceab7c615f8020c531
->> 
->> As far as I can tell, no distros have picked this up.
-> 
-> It's mostly due to the fact, that AFAIK it has never hit the release. Mark,
-> would it be please possible to do another point release with that security
-> fix included? Thanks!
-> 
-> Cheers,
-> 
-> Petr
+Zhang Yonglun
+Apache ShenYu (Incubating)
+Apache ShardingSphere
 
