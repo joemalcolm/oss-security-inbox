@@ -1,35 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/31/3
-Message-ID: <20220131104815.qc2gwh7jrf7zjl4f@jwilk.net>
-Date: Mon, 31 Jan 2022 11:48:15 +0100
-From: Jakub Wilk <jwilk@...lk.net>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: Re: xterm buffer overflow via crafted sixel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/26/8
+Message-ID: <CABEVAa2T604XknM=iC01OVRciWVCiTKJxuNS=RRtWhGpUWmwnw@mail.gmail.com>
+Date: Wed, 26 Jan 2022 13:54:45 +0100
+From: Dominik Czarnota <dominik.b.czarnota@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: pwnkit: Local Privilege Escalation in polkit's pkexec (CVE-2021-4034)
 Content-Type: text/plain; charset=utf-8
 
-* Tavis Ormandy <taviso@...il.com>, 2022-01-30, 18:39:
->I can repro here, here is a testcase:
->
->#!/bin/bash
->printf "\ePq"
->printf "#%hhu;2;%hhu;%hhu;%hhu" 0x41 100 100 100
->printf "#%hhu!%u@" 0x41 0x7fffffff
->printf "#%hhu!%u@" 0x41 0x7fffffff
->printf "\e\\"
->
->That should wrap context->col, and write a 'A' to graphic->pixels oob in
->set_sixel.
->
->I use `XTerm*decTerminalID: vt382` in .Xresources, not sure if that matters.
+Hi,
 
-I think it does. 
-https://invisible-island.net/xterm/ctlseqs/ctlseqs.html#h3-Sixel-Graphics 
-says "xterm [needs to be] configured as VT240, VT241, VT330, VT340 or 
-VT382" for Sixels to be supported. And indeed, I can't reproduce the bug 
-with the default emulation level (VT420).
+And many other binaries also do things incorrectly:
+- https://grep.app/search?q=%3D%201%3B%20n%20%3C%20argc
+- https://grep.app/search?q=%3D%201%3B%20.%20%3C%20argc&regexp=true
 
-If you don't want to tinker with your .Xresources for testing, you can 
-use the -ti option instead.
+But most of them are not suid binaries and also do not perform a write into
+argv[].
 
--- 
-Jakub Wilk
+Cheers,
+Disconnect3d
+
+On Wed, 26 Jan 2022 at 13:52, Matthias Schmidt <oss-sec@...c.org> wrote:
+
+> Hi,
+>
+> * Qualys Security Advisory wrote:
+> >
+> > Qualys Security Advisory
+> >
+> > pwnkit: Local Privilege Escalation in polkit's pkexec (CVE-2021-4034)
+>
+> This was already mentioned in 2013 in a blog post, however, it seems the
+> author didn't realize the consequences of their finding:
+>
+> https://ryiron.wordpress.com/2013/12/16/argv-silliness/
+>
+> Cheers
+>
+>         Matthias
+>
+
