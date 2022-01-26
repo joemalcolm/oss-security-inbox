@@ -1,32 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/25/1
-Message-ID: <060f9c47-1f5d-d2f2-1bb6-6cc8ec0afc6a@census-labs.com>
-Date: Wed, 25 May 2022 13:46:21 +0300
-From: Dimitrios Glynos <dimitris@...sus-labs.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/26/9
+Message-ID: <20220126141121.GA4424@unix-ag.uni-kl.de>
+Date: Wed, 26 Jan 2022 15:11:21 +0100
+From: Erik Auerswald <auerswal@...x-ag.uni-kl.de>
 To: oss-security@...ts.openwall.com
-Subject: multiple vulnerabilities in radare2
+Cc: Roman Medina-Heigl Hernandez <roman@...labs.com>
+Subject: Re: pwnkit: Local Privilege Escalation in polkit's pkexec (CVE-2021-4034)
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+Hi,
 
-Angelos T. Kalaitzidis of CENSUS had identified three vulnerabilities in radare2:
-- A null pointer dereference bug (CVE-2022-0419, fixed in version 5.6.0)
-- A heap buffer overflow bug (CVE-2021-44975, fixed in version 5.6.0)
-- A null pointer dereference bug (CVE-2021-44974, fixed in version 5.5.4)
+On Wed, Jan 26, 2022 at 02:34:26PM +0200, Henri Salo wrote:
+> On Wed, Jan 26, 2022 at 12:18:07PM +0100, Roman Medina-Heigl Hernandez wrote:
+> > PS: Untested because my Debian machine doesn't contain pkexec,
+> > even though Qualy's advisory says it is by default on Debian.
+> 
+> We had discussion off-list with Roman and this is the case only when
+> Debian is updated from previous release to bullseye. In clean installs
+> pkexec is installed.
 
-They're all triggerable by having radare2 process a crafted binary.
+I think this depends on how Debian is installed (e.g., keeping installer
+defaults for a desktop system, or using a custom package selection).
 
-There's more information about these issues here:
-https://census-labs.com/news/2022/05/24/multiple-vulnerabilities-in-radare2/
+The "policykit-1" containing pkexec is "optional" and thus not present
+in all Debian installations:
 
-We're mostly sending this for CVE-to-patch coordination purposes for distros, 
-as the issues have been addressed some time ago (back in February)
-by the upstream project.
+    $ lsb_release -d ; apt-cache show policykit-1 | grep Priority
+    Description:    Debian GNU/Linux 10 (buster)
+    Priority: optional
+    Priority: optional
 
-Kind regards,
+    $ lsb_release -d ; apt-cache show policykit-1 | grep Priority
+    Description:	Debian GNU/Linux 11 (bullseye)
+    Priority: optional
+    Priority: optional
 
-Dimitris
-
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Best regards,
+Erik
