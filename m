@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3639" "Monday" "7" "September" "2015" "11:44:01" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150907154401.164E26C000F@smtpvmsrv1.mitre.org>" "88" "[oss-security] Re: nss: SSL_ImplementedCiphers ABI incompatibility may lead to incorrect cipher suites" nil nil nil "9" "2015090715:44:01" "[oss-security] Re: nss: SSL_ImplementedCiphers ABI incompatibility may lead to incorrect cipher suites" (number mark "        cve-assign@m Sep  7   88/3639  " thread-indent "\"[oss-security] Re: nss: SSL_ImplementedCiphers ABI incompatibility may lead to incorrect cipher suites\"\n") "<55ED8FE6.9030805@redhat.com>" ("<55ED8FE6.9030805@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["667" "Wednesday" "26" "January" "2022" "14:29:17" "+0800" "Zhang Yonglun" "zhangyonglun@apache.org" nil "23" "[oss-security] CVE-2022-23944: Apache ShenYu (incubating) Improper access control" nil nil nil "1" nil nil (number mark "U       zhangyonglun Jan 26   23/667   " thread-indent "\"[oss-security] CVE-2022-23944: Apache ShenYu (incubating) Improper access control\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2022-23944: Apache ShenYu (incubating) Improper access control" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3713 invoked by uid 550); 7 Sep 2015 15:44:13 -0000
+Received: (qmail 28227 invoked by uid 550); 26 Jan 2022 11:14:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,101 +11,42 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3686 invoked from network); 7 Sep 2015 15:44:13 -0000
-In-Reply-To: <55ED8FE6.9030805@redhat.com>
-Message-Id: <20150907154401.164E26C000F@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Mon,  7 Sep 2015 11:44:01 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: nss: SSL_ImplementedCiphers ABI incompatibility may lead to incorrect cipher suites
-To: fweimer@redhat.com
+Received: (qmail 13556 invoked from network); 26 Jan 2022 06:29:43 -0000
+X-Gm-Message-State: AOAM532ylOxlSZz0bvzXztrsR7zikqJwwxkGhHrMEdfYfvad1MmzKtcL
+	tZdOfHxul0kwwpS7odObwNNyeVBXhl/5PBOQFfs=
+X-Google-Smtp-Source: ABdhPJy8rKEUfhCPeGzBojVmnAo3xILq+qDj7FY9XNrFD01CFtdF3rKokFiLhKLjjhuDreJ0+e8Tx6NTdqZ4yJMkckU=
+X-Received: by 2002:ac5:c890:: with SMTP id n16mr1948563vkl.26.1643178567875;
+ Tue, 25 Jan 2022 22:29:27 -0800 (PST)
+MIME-Version: 1.0
+From: Zhang Yonglun <zhangyonglun@apache.org>
+Date: Wed, 26 Jan 2022 14:29:17 +0800
+X-Gmail-Original-Message-ID: <CA+ZBtZ66qeLCWBy0DBUoRngMfP+dWdW6aRrGE6AO9nD51=opZg@mail.gmail.com>
+Message-ID: <CA+ZBtZ66qeLCWBy0DBUoRngMfP+dWdW6aRrGE6AO9nD51=opZg@mail.gmail.com>
+To: oss-security@lists.openwall.com, dev@shenyu.apache.org
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2022-23944: Apache ShenYu (incubating) Improper access control
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: moderate
 
-Yes, in general, a Linux distributor can be assigned a CVE ID if there
-is an unsatisfied ABI guarantee that results in weaker-than-intended
-security in a supported use case. We think you mean something like:
+Description:
 
-  Because of the ABI guarantee, a customer who has an NSS-based
-  application can upgrade from RHEL 7.0 to fully patched 7.1, and feel
-  confident that the security level provided by NSS will reflect the
-  current security level offered by the 7.1 NSS packages. The
-  customer does not need to touch their application in any way to
-  make this happen.
+Any user can access /plugin API without authentication. The project
+use Shiro to authenticate, but the default WhiteLists are defineded in
+application include /plugin path.
+So everybody can access /plugin API which will list the details of all
+ plugins include id, name, config (may include password). We can also
+add a new plugin with  POST method while using /plugin API.
+This issue affects Apache ShenYu (incubating) 2.4.0 and 2.4.1.
 
-We didn't research what specific NSS upstream code is used in 7.0
-versus 7.1, but as an example it looks like NSS 3.20 has 70 cipher
-suites whereas NSS 3.13 has 56 cipher suites. A direct truncation
-would apparently cut off at TLS_RSA_EXPORT_WITH_RC4_40_MD5 and not
-enable the next one (TLS_RSA_EXPORT_WITH_RC2_CBC_40_MD5) or any of the
-later ones.
+Mitigation:
 
-Is this an example of the security impact:
-
-  The customer's application is a client that communicates with a server
-  that only supports TLS_RSA_EXPORT_WITH_RC2_CBC_40_MD5, and no other
-  cipher suite. The application is designed to fall back to no TLS if
-  there is no mutually agreeable cipher suite. Under RHEL 7.0, the
-  customer was happy: the security level was exactly the maximum
-  security level available for that server. When the customer upgraded,
-  they became sad because TLS was no longer used at all.
-
-? (This type of example, if valid, is enough to assign a CVE ID.)
-
-(We realize that this isn't a great example. A better example would
-have forced the unavailability of an arguably "safe" cipher suite that
-had previously been used. Or, possibly, a better example would have
-caused the customer's application to fail to pick up a new and highly
-recommended cipher suite that exists only in newer NSS upstream code.)
-
-Is this also a security impact:
-
-  The applicable NSS code begins with
-
-       const PRUint16 SSL_ImplementedCiphers[] = {
-
-  and ends with
-
-         SSL_EN_RC2_128_CBC_EXPORT40_WITH_MD5,
-
-         0
-
-    };
+Upgrade to Apache ShenYu (incubating) 2.4.2 or apply patch
+https://github.com/apache/incubator-shenyu/pull/2462.
 
 
-  in both cases. If SSL_ImplementedCiphers is truncated, then the "0"
-  at the end is lost. In some or all cases, possibly depending on the
-  machine architecture or compiler, this can result in a different
-  type of unwanted behavior for an NSS-based application, such as an
-  out-of-bounds read and application crash caused by a malicious TLS
-  endpoint that intentionally has no mutually agreeable cipher suites.
+--
 
-?
-
-Or, is there simply no supported way in which any NSS-based
-application could have relied on the "0" at the end?
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJV7a/PAAoJEL54rhJi8gl5+PkP/3yOcsgTLlwNNdEiZt+/HJ6B
-IorQawTQqXyb22OJ/PhIrEZXOsW5ChphFcQ+deFLTNRAPliiUZonvt9/ArLE/Cis
-4YHETcEVanYpNU+707I8hQjrGGkrO0hvQf9B0zB/8tEPO9i0pLDwugaUNOboPm7p
-8MT8aD1KV4mgbGYDeJBt4ce76smhsWLdGwA02lUk6VzvxSkn8wRShLEFXi/5SXPb
-AscLzWXH5pYBkOUXV0tJTeZS96e1Bs2YkmvXhoR8hbgfPjtuwdM2l8Dp43HJtBu/
-Eha1EsRS6eVE+HKMF4QnJ5d1M3KbUNG7Urhk/ugHGCq9bFhRh+jm7TVTza2TJ3UR
-kGHe33CGB33ORAf7HAqg/z13P2flY0QzQ+js/IVq5PNmmtOBK68Os4t4NzE9ehb5
-m5S/tBjLxmwHbnpn7/NK29DIXw/B4SM+cIOy2pL9RZM2kWNzFQYA3Jqb/HgmRrRk
-101WbW11w3Jtf5ZpK09FSx4QQVIel6pP1p1NpJ629s5SKPhT8sPDeSi84meqQAb/
-HXZF8jCH1pp/QIzIO+ZRo0ZxccayPnMjc5MA5LfXOczjqH5xSinkA+8c/28cgkJE
-ajc5cvy1vhKlU7vF79TMuDrOclSr9NNuaSROaykkhRV6MmsZP8leD3mKqCC998bo
-LsYiXHMirywXKNwA+DCY
-=rEv/
------END PGP SIGNATURE-----
+Zhang Yonglun
+Apache ShenYu (Incubating)
+Apache ShardingSphere
