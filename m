@@ -1,135 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/07/3
-Message-ID: <CA+eGCHZE22tT-7PNKUssevOcHPm+nk6fz2e=sGOUc1j8U-Xffg@mail.gmail.com>
-Date: Tue, 7 Jun 2022 18:15:09 +0800
-From: tr3e wang <tr3e.wang@...il.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Linux Kernel eBPF Improper Input Validation Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/26/4
+Message-ID: <CA+ZBtZ6ENBd4PkJsuQdqG+67Z5c4Vtpp9P2HJxB03UbY3HYTaA@mail.gmail.com>
+Date: Wed, 26 Jan 2022 14:46:17 +0800
+From: Zhang Yonglun <zhangyonglun@...che.org>
+To: oss-security@...ts.openwall.com, dev@...nyu.apache.org
+Subject: CVE-2022-23223: Apache ShenYu (incubating) Password leakage
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: moderate
 
-The exploit code can be found at https://github.com/tr3ee/CVE-2022-23222
+Description:
 
-Alexander, thanks for the update and for helping me post the exploit
-code, I suffered from network outage last week.
+The HTTP response will disclose the user password.
+When users send the request like the following URL
+"dashboardUser?currentPage=1&pageSize=12", the response will disclose
+all the passwords of the users.
+This issue affects Apache ShenYu (incubating) 2.4.0 and 2.4.1.
 
-tr3e
+Mitigation:
 
-On Sun, Jun 5, 2022 at 4:24 AM Solar Designer <solar@...nwall.com> wrote:
->
-> Hi,
->
-> I've attached the exploit from the linux-distros thread - hopefully, the
-> right one.  (I really shouldn't be the one doing it.  The exploit author
-> is most qualified to do it, as required by linux-distros list policy.)
->
-> Alexander
->
-> On Wed, Jun 01, 2022 at 02:51:57PM +0200, Solar Designer wrote:
-> > Hi,
-> >
-> > In context of the recent discussions of linux-distros list policies and
-> > their enforcement, I looked at some of the previously handled issues,
-> > and identified that the below wasn't properly handled/enforced.
-> >
-> > tr3e, since you had shared actual exploit code with linux-distros, you
-> > were supposed to post the _code_ to oss-security within 7 days after
-> > your initial public disclosure of the vulnerability.  However, you only
-> > posted "the exploit overview" and promised that "Full exploit code will
-> > be published on github in the near future."  Apparently, the latter
-> > never happened, and it wouldn't have satisfied the requirement anyway.
-> >
-> > Please post the same exploit code you had shared with linux-distros to
-> > this thread on oss-security ASAP.  Thank you!
-> >
-> > Alexander
-> >
-> > On Tue, Jan 18, 2022 at 09:29:18PM +0800, tr3e wang wrote:
-> > > Hi all,
-> > >
-> > >
-> > > This post is the exploit overview of CVE-2022-23222.
-> > >
-> > >
-> > > We successfully exploited this vulnerability to obtain full root
-> > > privileges on default installations of Ubuntu 20.04.
-> > >
-> > >
-> > > *Exploit overview*
-> > >
-> > >
-> > > 1. Among all these *_OR_NULL types, we choose PTR_TO_MEM_OR_NULL
-> > >    which can be created by BPF_FUNC_ringbuf_reserve. First, we
-> > >    pass 0xffff........ffff to BPF_FUNC_ringbuf_reserve to get a
-> > >    NULL pointer r0, and copy r0 to r1. Then add r1 by 1, and do
-> > >    NULL check on r0. At this point, the verifier will believe that
-> > >    both r0 and r1 are zero.
-> > >
-> > >
-> > > 2. ALU sanitation is hardened after commit
-> > >    "bpf: Fix leakage of uninitialized bpf stack under speculation".
-> > >    To bypass alu sanitation, we use helper func bpf_skb_load_bytes_*
-> > >    to get partial/full overwrite the pointer on stack to obtain
-> > >    pointer address leakage and arbitrary address read/write.
-> > >
-> > >
-> > > 3. We spawn many child processes, and use arbitrary address read to
-> > >    find the address of task_struct and cred around the the address of
-> > >    the array map we created. After zeroing out the uid/gid/... ,
-> > >    full root privileges obtained.
-> > >
-> > >
-> > > Full exploit code will be published on github in the near future.
-> > >
-> > >
-> > > Regards,
-> > > tr3e
-> > >
-> > >
-> > > tr3e wang <tr3e.wang@...il.com> ???2022???1???13????????? 16:21?????????
-> > >
-> > >
-> > > > Hi all,
-> > > >
-> > > > This vulnerability allows local attackers to escalate privileges on
-> > > > affected installations of Linux Kernel. An attacker must first obtain the
-> > > > ability to execute low-privileged code on the target system in order to
-> > > > exploit this vulnerability.
-> > > >
-> > > > The specific flaw exists within the handling of eBPF programs. The issue
-> > > > results from the lack of proper validation of user-supplied eBPF programs
-> > > > prior to executing them. An attacker can leverage this vulnerability to
-> > > > escalate privileges and execute code in the context of the kernel.
-> > > > BE AWARE, unprivileged bpf is disabled by default in most distros.
-> > > >
-> > > > *Affected Version*
-> > > >
-> > > >     Linux Kernel 5.8 or later
-> > > >
-> > > > *Root Cause Analysis*
-> > > >
-> > > > The bpf verifier(kernel/bpf/verifier.c) did not properly restrict several
-> > > > *_OR_NULL pointer types which allows these types to do pointer arithmetic.
-> > > > This can be leveraged to bypass the verifier check and escalate privilege.
-> > > > (see
-> > > > https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/kernel/bpf/verifier.c?h=v5.10.83#n6022
-> > > > )
-> > > >
-> > > > *Exploit Code*
-> > > >
-> > > > Exploit code will be delayed for 5 days and will be posted at 12:00 UTC,
-> > > > Jan 18, 2022
-> > > >
-> > > > *Mitigations*
-> > > >
-> > > > set kernel.unprivileged_bpf_disabled to 1
-> > > >
-> > > > BE AWARE AGAIN, unprivileged bpf is disabled by default in most distros.
-> > > >
-> > > > *Credits*
-> > > >
-> > > > tr3e of SecCoder Security Lab
-> > > > Best,
-> > > > tr3e
+Upgrade to Apache ShenYu (incubating) 2.4.2 or apply patch
+https://github.com/apache/incubator-shenyu/pull/2357.
+
+
+--
+
+Zhang Yonglun
+Apache ShenYu (Incubating)
+Apache ShardingSphere
