@@ -1,33 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/30/1
-Message-ID: <CAP9KPhDskZ1W_wnJ_Z8sNY9nqwLGyL0k3pjYwrhJ_TQnXcC-HA@mail.gmail.com>
-Date: Tue, 30 Aug 2022 12:27:44 +1000
-From: David Leadbeater <dgl@....cx>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/26/6
+Message-ID: <YfE/0ldFPlLtuka9@ryzen.bugs.fi>
+Date: Wed, 26 Jan 2022 14:34:26 +0200
+From: Henri Salo <henri@...v.fi>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-2663: Linux netfilter: nf_conntrack_irc message handling
+Cc: Roman Medina-Heigl Hernandez <roman@...labs.com>
+Subject: Re: pwnkit: Local Privilege Escalation in polkit's pkexec (CVE-2021-4034)
 Content-Type: text/plain; charset=utf-8
 
-Description:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-I've found an issue in nf_conntrack_irc where the message handling can
-be confused and it incorrectly matches on the message.
+On Wed, Jan 26, 2022 at 12:18:07PM +0100, Roman Medina-Heigl Hernandez wrote:
+> PS: Untested because my Debian machine doesn't contain pkexec, even though
+> Qualy's advisory says it is by default on Debian.
 
-Impact:
+We had discussion off-list with Roman and this is the case only when Debian is
+updated from previous release to bullseye. In clean installs pkexec is
+installed.
 
-A firewall may be able to be bypassed when users are using unencrypted
-IRC with nf_conntrack_irc configured.
+- -- 
+Henri Salo
+-----BEGIN PGP SIGNATURE-----
 
-Mitigations:
-
-Linux: Disable nf_conntrack_irc (remove any --helper irc rules, and/or
-unload the kernel module)
-MikroTik: Remove IRC from the service ports list (/ip
-firewall/service-port/disable irc)
-
-Fix is posted here:
-https://lore.kernel.org/netfilter-devel/20220826045658.100360-1-dgl@dgl.cx/T/
-It will be making its way into upstream Linux soon.
-
-I'll update in a couple of days with complete details.
-
-David
+iQIzBAEBCgAdFiEE/aVSDznAZReWTkxKJ633pE6qdXQFAmHxP9EACgkQJ633pE6q
+dXS1NhAAtX9YcEAsZoHZ2yMohlofBqiRTvAwE2dk4jbhu8/4Kvkz1IP6sVBi6J4S
+MKF2zSvUW8ydq/MAl2K8viB+O2VcbN0ZZIzYSNN4a1Rjz2AyWUl5fhdqHRQrUqMn
+O9/FfsgtGmOVBECc4HNwlje9jDP0bZKkqbU9AULsxJrG1QwYGYCV28Ietb4ccJYD
+d9VqgdYr4W4qqcsycn4Z7wkq7iFS+VkLCX77KVMxr+WuldRFK2FCPa9rHopps+6i
+4yKLLYJxF9Z6y8t4d/ZSSckT4GN7fDw3L7WP8HYlJTY16gkOi+MDIlfvTPnLkAH0
+YIDvZcDpFMZGWluw2eO8wdkITZAk7LDCLo484iRAb0Ufji9n775R2mS7UjLKwJ++
+dg2TcqN7BNICTRRpnCXvqyWFMUTiI19I45v/T68ymgVF8YwGEAcnA3FyH8tCbz+Y
+79dKz764sMSKJubeRfL1EFdBm7a8ugi4v9c+jEUgqGvc4ERBB6hVuUWDsRpyNgEK
+/j/HdA4BOlp95GxjfYnckZKYvcqg0+A7XBsQsAVu0cH10sHsIRAwjwMCkk5uM2G6
+i4ciEDTV1svMpO0JsY7FS4HRvheEqg/Ws3c2Gd7ssvMuAwqS0p0K9qn9E6Bcj0xP
+KrwSF4tsqY1dQPS1h5GCTT4H8+M76DTBHVfwhy2L2yWdScn1I3s=
+=S0ir
+-----END PGP SIGNATURE-----
