@@ -1,21 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/23/1
-Message-ID: <3caaf2cd-e927-0f5b-8783-4e8f875af95f@enst-bretagne.fr>
-Date: Wed, 23 Mar 2022 22:02:15 +0100
-From: Gabriel Corona <gabriel.corona@...t-bretagne.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/26/7
+Message-ID: <YfFBAVnpRJemuCed@xosc.org>
+Date: Wed, 26 Jan 2022 13:39:29 +0100
+From: Matthias Schmidt <oss-sec@...c.org>
 To: oss-security@...ts.openwall.com
-Subject: Lack of TLS certification chain validation in ZAP Proxy
+Subject: Re: pwnkit: Local Privilege Escalation in polkit's pkexec (CVE-2021-4034)
 Content-Type: text/plain; charset=utf-8
 
-ZAP proxy does not verify the certificate chain of the HTTPS servers it 
-connects to. For example, it connects without warning to servers 
-presenting a self-signed certificate, an expired certificate, etc.
+Hi,
 
-This opens up a browser configured to use ZAP as an intercepting proxy to:
+* Qualys Security Advisory wrote:
+> 
+> Qualys Security Advisory
+> 
+> pwnkit: Local Privilege Escalation in polkit's pkexec (CVE-2021-4034)
 
-1. man-in-the-middle (MITM) attacks;
-2. DNS rebinding attacks (to HTTPS servers configured as default virtual 
-server).
+This was already mentioned in 2013 in a blog post, however, it seems the
+author didn't realize the consequences of their finding:
 
--- 
-Gabriel
+https://ryiron.wordpress.com/2013/12/16/argv-silliness/
+
+Cheers
+
+	Matthias
