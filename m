@@ -1,19 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/13/8
-Message-ID: <Y0iO/0BAoxZmttt3@chrisdown.name>
-Date: Thu, 13 Oct 2022 23:19:43 +0100
-From: Chris Down <chris@...isdown.name>
-To: oss-security@...ts.openwall.com
-Cc: shuster@...moo.tu-darmstadt.de, Greg Kroah-Hartman <gregkh@...uxfoundation.org>
-Subject: Re: Various Linux Kernel WLAN security issues (RCE/DOS) found
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/26/2
+Message-ID: <CA+ZBtZ66qeLCWBy0DBUoRngMfP+dWdW6aRrGE6AO9nD51=opZg@mail.gmail.com>
+Date: Wed, 26 Jan 2022 14:29:17 +0800
+From: Zhang Yonglun <zhangyonglun@...che.org>
+To: oss-security@...ts.openwall.com, dev@...nyu.apache.org
+Subject: CVE-2022-23944: Apache ShenYu (incubating) Improper access control
 Content-Type: text/plain; charset=utf-8
 
-Demi Marie Obenour writes:
->Are these fixes going to be backported to stable?  I did not see
->CC: stable@...r.kernel.org in any of the commit messages.
+Severity: moderate
 
-Greg pushed out stable rcs with them a few hours ago[0].
+Description:
 
-0: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/refs/
+Any user can access /plugin API without authentication. The project
+use Shiro to authenticate, but the default WhiteLists are defineded in
+application include /plugin path.
+So everybody can access /plugin API which will list the details of all
+ plugins include id, name, config (may include password). We can also
+add a new plugin with  POST method while using /plugin API.
+This issue affects Apache ShenYu (incubating) 2.4.0 and 2.4.1.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
+Mitigation:
+
+Upgrade to Apache ShenYu (incubating) 2.4.2 or apply patch
+https://github.com/apache/incubator-shenyu/pull/2462.
+
+
+--
+
+Zhang Yonglun
+Apache ShenYu (Incubating)
+Apache ShardingSphere
