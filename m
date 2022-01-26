@@ -1,55 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/07/1
-Message-ID: <87o7y18qeh.fsf@oldenburg.str.redhat.com>
-Date: Thu, 07 Jul 2022 07:04:22 +0200
-From: Florian Weimer <fweimer@...hat.com>
-To: Demi Marie Obenour <demi@...isiblethingslab.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Re: DO NOT OPEN PREVIOUS MAIL Re:  Denial of service in  GnuPG
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/26/5
+Message-ID: <56d94fb3-cb73-c541-b62b-4239a28afea1@rs-labs.com>
+Date: Wed, 26 Jan 2022 12:18:07 +0100
+From: Roman Medina-Heigl Hernandez <roman@...labs.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: pwnkit: Local Privilege Escalation in polkit's pkexec (CVE-2021-4034)
 Content-Type: text/plain; charset=utf-8
 
-* Demi Marie Obenour:
+Exploit by blasty attached (also at: 
+https://haxx.in/files/blasty-vs-pkexec.c).
 
-> Was adding compression to PGP even a good idea in the first place?
+PS: Untested because my Debian machine doesn't contain pkexec, even 
+though Qualy's advisory says it is by default on Debian.
 
-In the mid-90s, it was widely believed that compression was required as
-part of a good implementation because it was assumed that it made
-cryptanlysis more difficult.  Applied Cryptography recommended it:
+PS2: Since vuln is trivially exploitable other exploits will arise for 
+sure. Well, indeed there are already other exploits. (eg: 
+https://github.com/berdav/CVE-2021-4034).
 
-| 10.6 Compression, Enciding, And Encryption
+Cheers,
 
-| Using a data compression algorithm together with an encryption
-| algorithm makes sense for two reasons:
-|
-|   Cryptanalysis relies on exploiting redundancies in the plaintext;
-|   compressing a file before encryption reduces these redundancies.
-|
-|   Encryption is time-consuming; compression a file before encryption
-|   speeds up the entire process.
-|
-| The important thing to remeber si to compress before encryption.  If
-| the encryption algorithm is any good, the ciphertext will not be
-| compressible; it will look like random data.  (This makes a reasonable
-| test of an encryption algorithm; if the ciphertext can be compressed,
-| then the algorithm probably isn't very good.)
-|
-| If you are going to add any type of transmission encoding or error
-| detection and recovery, remember to add that after encryption.  If
-| there is noise in the communications path, decryption's
-| error-extension properties will only make that noise worse. […]
+-r
 
-The performance advice was likely based on the relative performance of a
-3DES implementation in software and a some simple LZW77 compressor.
-Even at the time, it probably wasn't true for IDEA algorithm on most
-CPUs, and the situation only got better for encryption after that.
+El 25/01/2022 a las 19:04, Sam James escribió:
+>
+>> On 25 Jan 2022, at 17:57, Qualys Security Advisory <qsa@...lys.com> wrote:
+>>
+>>
+>> Qualys Security Advisory
+>> pwnkit: Local Privilege Escalation in polkit's pkexec (CVE-2021-4034)
+>> [snip]
+> Hi,
+>
+> For the benefit of downstreams: patch is available in gitlab [0]
+> but no release yet.
+>
+> [0] https://gitlab.freedesktop.org/polkit/polkit/-/commit/a2bf5c9c83b6ae46cbd5c779d3055bff81ded683
+>
+> Best,
+> sam
 
-The first rationale, regarding cryptanalysis, has always been total
-bunk: effective compression introduces a weakness into any encryption
-scheme.  You are pretty much guaranteed to end up with viable adaptive
-choosen plaintext attacks if data is combined from multiple sources.
-For variable-bit-rate voice compression, it's possible to infer some
-information on phonemes in the cleartext just based on the bit rate.
+-- 
+Saludos,
+-Román
 
-Thanks,
-Florian
-
+View attachment "blasty-vs-pkexec.c" of type "text/plain" (2159 bytes)
