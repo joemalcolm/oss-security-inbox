@@ -1,124 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/09/3
-Message-ID: <7108492d-0757-96f5-f31d-a1300ec2a314@vulndisco.cc>
-Date: Tue, 9 Aug 2022 15:03:34 +0300
-From: Evgeny Legerov <admin@...ndisco.cc>
-To: oss-security@...ts.openwall.com
-Subject: Exim 4.96 overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/27/1
+Message-ID: <bb863600-2e0d-a977-ad49-875093bd2ad0@bootc.boo.tc>
+Date: Thu, 27 Jan 2022 12:16:28 +0000
+From: Chris Boot <lists@...tc.boo.tc>
+To: oss-security@...ts.openwall.com, Erik Auerswald <auerswal@...x-ag.uni-kl.de>
+Cc: Roman Medina-Heigl Hernandez <roman@...labs.com>
+Subject: Re: pwnkit: Local Privilege Escalation in polkit's pkexec (CVE-2021-4034)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 26/01/2022 14:11, Erik Auerswald wrote:
+> Hi,
+> 
+> On Wed, Jan 26, 2022 at 02:34:26PM +0200, Henri Salo wrote:
+>> On Wed, Jan 26, 2022 at 12:18:07PM +0100, Roman Medina-Heigl Hernandez wrote:
+>>> PS: Untested because my Debian machine doesn't contain pkexec,
+>>> even though Qualy's advisory says it is by default on Debian.
+>>
+>> We had discussion off-list with Roman and this is the case only when
+>> Debian is updated from previous release to bullseye. In clean installs
+>> pkexec is installed.
+> 
+> I think this depends on how Debian is installed (e.g., keeping installer
+> defaults for a desktop system, or using a custom package selection).
+> 
+> The "policykit-1" containing pkexec is "optional" and thus not present
+> in all Debian installations:
+> 
+>      $ lsb_release -d ; apt-cache show policykit-1 | grep Priority
+>      Description:    Debian GNU/Linux 10 (buster)
+>      Priority: optional
+>      Priority: optional
+> 
+>      $ lsb_release -d ; apt-cache show policykit-1 | grep Priority
+>      Description:	Debian GNU/Linux 11 (bullseye)
+>      Priority: optional
+>      Priority: optional
 
+It's not as simple as this, and also depends on a lot of factors.
 
-Yet another interesting issue in Exim 4.96, it is OpenBSD specific.
+If you have a graphical desktop environment installed, or a wifi card, 
+you will almost certainly have policykit-1 and pkexec. If you have a 
+GUI-less system it's less likely that you'll have it.
 
-Combination OpenBSD + Exim is very rare, so it probably affects only two 
-boxes in the world,one of them is my vm.
+With that said, lots of different packages Recommend or Depend on 
+policykit-1, including: firewalld, libvirt, NetworkManager, tuned, and 
+realmd. It's also "suggested" by systemd and isc-dhcp-server, so there 
+are reasons to have it even if you have nothing otherwise graphical 
+installed.
 
+It's effectively an alternative to sudo. If you have it installed and 
+you try to e.g. 'systemctl restart $unit' without sudo / having a root 
+shell, systemd will use polkit to try to elevate and let you do it.
 
-OpenBSD dn_expand() source:
-int
-dn_expand(const u_char *msg, const u_char *eomorig, const u_char *comp_dn,
-     char *exp_dn, int length)
-{
-const u_char *cp;
-         char *dn;
-         int n, c;
-         char *eom;
-         int len = -1, checked = 0;
+Cheers,
+Chris
 
-         dn = exp_dn;
-         cp = comp_dn;
-         if (length > HOST_NAME_MAX)
-                 length = HOST_NAME_MAX;
-         eom = exp_dn + length;
-         while ((n = *cp++)) {
-                 switch (n & INDIR_MASK) {
-                 case 0:
-                         if (dn != exp_dn) {
-                                 if (dn >= eom)
-                                         return (-1);
-                                 *dn++ = '.';
-                         }
-                         if (dn+n >= eom)
-                                 return (-1);
-                         checked += n + 1;
-                         while (--n >= 0) {
-                                 if (((c = *cp++) == '.') || (c == '\\')) {
-                                         if (dn + n + 2 >= eom)
-                                                 return (-1);
-                                         *dn++ = '\\';
-                                 }
-                                 *dn++ = c;
-                                 if (cp >= eomorig)      /* out of range */
-                                         return (-1);
-                         }
-                         break;
-
-                 case INDIR_MASK:
-                         if (len < 0)
-                                 len = cp - comp_dn + 1;
-                         cp = msg + (((n & 0x3f) << 8) | (*cp & 0xff));
-                         if (cp < msg || cp >= eomorig)  /* out of range */
-                                 return (-1);
-                         checked += 2;
-                         /*
-                          * Check for loops in the compressed name;
-                          * if we've looked at the whole message,
-                          * there must be a loop.
-                          */
-                         if (checked >= eomorig - msg)
-                                 return (-1);
-                         break;
-
-                 default:
-                         return (-1);                    /* flag error */
-                 }
-         }
-         *dn = '\0';
-         if (len < 0)
-                 len = cp - comp_dn;
-         return (len);
-}
-
-As we can see, dn_expand() does not escape special characters, in 
-particular it ignores '\n'.
-In case of Exim, after it does a reverse dns lookup, the answer is 
-parsed using dn_expand() and
-
-it is stored in 'sender_host_name' global variable.
-This variable is written into spool header file.
-
-
-Many interesting things can happen when we control the contents of spool 
-file:
-
-  if (flags & 0x01)      /* one_time data exists */
-       {
-       int len;
-       while (isdigit(*(--p)) || *p == ',' || *p == '-');
-       (void)sscanf(CS p+1, "%d,%d", &len, &pno);
-       *p = 0;
-       if (len > 0)
-         {
-         p -= len;
-[1]        errors_to = string_copy_taint(p, GET_TAINTED);
-         }
-       }
-
-[2]    *--p = 0;   /* Terminate address */
-
-As long as we control 'len' variable, we have out of bounds read on line 
-#1, and out of bounds write on line #2.
-
-It may not be very practical attack,as someone says you need arp 
-spoofing for this attack to work.
-
-Your opinions would be very interesting.
-
-
-regards,
-
--e
-
-
+-- 
+Chris Boot
+bootc@....tc
