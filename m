@@ -1,48 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/09/8
-Message-ID: <715df931-c8b6-4eab-5f98-c9558d63151b@oracle.com>
-Date: Tue, 9 Aug 2022 23:22:32 +0200
-From: Vegard Nossum <vegard.nossum@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/27/3
+Message-ID: <YfKeIoWB2J1zwJhq@shell.thinkmo.de>
+Date: Thu, 27 Jan 2022 14:29:06 +0100
+From: Bastian Blank <bblank@...nkmo.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-2588 - Linux kernel cls_route UAF
+Subject: Re: pwnkit: Local Privilege Escalation in polkit's pkexec (CVE-2021-4034)
 Content-Type: text/plain; charset=utf-8
 
-On 8/9/22 19:11, Thadeu Lima de Souza Cascardo wrote:
-> CVE-2022-2588 - Linux kernel cls_route UAF
-> 
-> It was discovered that the cls_route filter implementation in the Linux kernel
-> would not remove an old filter from the hashtable before freeing it if its
-> handle had the value 0.
-> 
-> Zhenpeng Lin working with Trend Micro's Zero Day Initiative discovered that
-> this vulnerability could be exploited for Local Privilege Escalation. This has
-> been reported as ZDI-CAN-17440, and assigned CVE-2022-2588.
-> 
-> This bug has been present since the first Linux commit git, v2.6.12-rc2.
-> 
-> Exploiting it requires CAP_NET_ADMIN in any user or network namespace.
-> 
-> It can be mitigated by those users who do not rely on cls_route, by adding
-> 'install cls_route /bin/true' to their modprobe.conf or modprobe.d configs,
-> in case it's built as a module.
-> 
-> A PoC that will trigger a WARNING is going to be posted in a week.
-> 
-> Fixes have been sent to netdev@...r.kernel.org and are at
-> https://lore.kernel.org/netdev/20220809170518.164662-1-cascardo@canonical.com/T/#u.
+On Thu, Jan 27, 2022 at 01:45:33PM +0100, Kai Lüke wrote:
+> An alternative to pkexec that is not setuid but also uses polkit auth
+> is systemd-run (here is an attempt at mimicking the sudo UX:
+> https://gist.github.com/pothos/73dd4f7694acc3b6bbed614438f6e2b1).
 
-This isn't the first bug where users can use namespaces to load kernel
-modules they wouldn't otherwise be able to load, thus increasing attack
-surface. I've posted a patch that attempts to mitigate this somewhat
-here (it would have prevented the above bug from being exploited for
-what is most likely a majority of users):
+Or just "machinectl login .host".
 
-https://lore.kernel.org/all/20220809185229.28417-1-vegard.nossum@oracle.com/
+Bastian
 
-There is apparently also a parallel discussion about user namespaces and
-LSM hooks here that seems relevant:
-
-https://lwn.net/Articles/903580/
-
-
-Vegard
+-- 
+You!  What PLANET is this!
+		-- McCoy, "The City on the Edge of Forever", stardate 3134.0
