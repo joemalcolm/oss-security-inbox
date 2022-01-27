@@ -1,23 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/04/1
-Message-ID: <6fb88b6d-9aa2-cf2c-5b4e-4168425ba462@apache.org>
-Date: Wed, 04 May 2022 21:26:45 +0000
-From: Andy Seaborne <andy@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-28890: Apache Jena: Processing external DTDs 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/27/4
+Message-ID: <0f115734-5e21-8fa9-7e96-f8636788a0bc@grsecurity.net>
+Date: Thu, 27 Jan 2022 21:00:19 +0100
+From: Mathias Krause <minipli@...ecurity.net>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Cc: Zack Rusin <zackr@...are.com>
+Subject: CVE-2022-22942: Linux kernel: wrong file descriptor handling in the vmwgfx driver
 Content-Type: text/plain; charset=utf-8
 
-Severity: medium
+Hi!
 
-Description:
+A vulnerability was found in the vmwgfx driver that allows unprivileged
+users to gain access to files opened by other processes on the system
+through a dangling 'file' pointer.
 
-A vulnerability in the RDF/XML parser of Apache Jena allows an attacker to cause an external DTD to be retrieved.  This issue affects Apache Jena version 4.4.0 and prior versions.  Apache Jena 4.2.x and 4.3.x do not allow external entities.
+Exploiting this vulnerability requires an attacker to have access to
+either /dev/dri/card0 or /dev/dri/rendererD128 and be able to issue an
+ioctl() on the resulting file descriptor.
 
-Mitigation:
+Linux kernels making use of the vmwgfx driver and containing commit
+c906965dee22 ("drm/vmwgfx: Add export fence to file descriptor support")
+are affected, which is v4.14+.
 
-Users are advised to upgrade to Apache Jena 4.5.0 or later.
+If the vmwgfx driver isn't loaded, your system isn't affected.
 
-Credit:
+Systems using the VMWare graphics card emulated by QEMU (-vga vmware)
+aren't affected either, as these lack a required feature that makes the
+driver fail to load.
 
-Apache Jena would like to thank Feras Daragma, Avishag Shapira & Amit Laish (GE Digital, Cyber Security Lab) for their report.
+Attached are patches as have been sent to linux-distros on Jan. 21st.
+They're against mainline Linux (0001-*.patch) or backports for all
+affected kernels (backport-*.patch) respectively. They should soon be
+merged into the corresponding Linux kernel trees.
 
+CVE-2022-22942 was allocated for this issue.
+
+Thanks,
+Mathias
+View attachment "backport-5.16-drm-vmwgfx-Fix-stale-file-descriptors-on-failed-user.patch" of type "text/x-patch" (5567 bytes)
+
+View attachment "backport-4.19-drm-vmwgfx-Fix-stale-file-descriptors-on-failed-user.patch" of type "text/x-patch" (5616 bytes)
+
+View attachment "0001-drm-vmwgfx-Fix-stale-file-descriptors-on-failed-user.patch" of type "text/x-patch" (5509 bytes)
+
+Download attachment "OpenPGP_signature" of type "application/pgp-signature" (666 bytes)
