@@ -1,35 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/22/9
-Message-ID: <182c53cf-4478-dd22-915b-b54f8c8f21b0@apache.org>
-Date: Thu, 22 Sep 2022 17:45:36 +0000
-From: Michael Marshall <mmarshall@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-33683: Apache Pulsar: Disabled Certificate Validation makes Broker, Proxy Admin Clients vulnerable to MITM attack  
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/27/5
+Message-ID: <e42a27f3-a888-dbbe-8833-9d8cf5c43038@grsecurity.net>
+Date: Thu, 27 Jan 2022 21:05:31 +0100
+From: Mathias Krause <minipli@...ecurity.net>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Linux kernel: erroneous error handling after fd_install()
 Content-Type: text/plain; charset=utf-8
 
-Severity: high
+Hi again!
 
-Description:
+As requested by Alexander, here's the disclosure of two more issues and
+a description of the general bug pattern behind all of them.
 
-Apache Pulsar Brokers and Proxies create an internal Pulsar Admin Client that does not verify peer TLS certificates, even when tlsAllowInsecureConnection is disabled via configuration. The Pulsar Admin Client's intra-cluster and geo-replication HTTPS connections are vulnerable to man in the middle attacks, which could leak authentication data, configuration data, and any other data sent by these clients.
+# The Bug Pattern
 
-An attacker can only take advantage of this vulnerability by taking control of a machine 'between' the client and the server. The attacker must then actively manipulate traffic to perform the attack.
+During the work on the vmwgfx issue[1], it was noticed, that there are
+more code constructs in the kernel falling prone to the error pattern of
+calling fd_install(fd, file) and trying to make sense of either 'fd' or
+'file' afterwards. This is generally not safe, as the fd_install(...)
+call will make them reachable by userland.
 
-This issue affects Apache Pulsar Broker and Proxy versions 2.7.0 to 2.7.4; 2.8.0 to 2.8.3; 2.9.0 to 2.9.2; 2.10.0; 2.6.4 and earlier.
+For example, a concurrent thread calling close(fd) in a tight loop
+(remember that file descriptors are allocated in a predictable manner,
+so the value of fd is known in advance) will release the associated
+'file', likely leading to use-after-free bugs in kernel code, still
+making use of it.
 
-Mitigation:
+That should make it clear, that it's generally unsafe to reason about
+'fd' or 'file' after a call to fd_install(). Now, in the vmwgfx case the
+code tried to clean up by itself, by closing the (assumed unused) fd and
+releasing the file using put_unused_fd(fd) and fput(file) respectively,
+basically like this:
 
-Any users running affected versions of the Pulsar Broker or Pulsar Proxy should rotate static authentication data vulnerable to man in the middle attacks used by these applications, including tokens and passwords.
+    fd_install(fd, file);
+    ...
+    if (copy_to_user(...)) {
+        put_unused_fd(fd);
+        fput(file);
+        return -EFAULT;
+    }
 
-2.7 users should upgrade Pulsar Brokers and Proxies to 2.7.5, and rotate vulnerable authentication data, including tokens and passwords.
-2.8 users should upgrade Pulsar Brokers and Proxies to 2.8.4, and rotate vulnerable authentication data, including tokens and passwords.
-2.9 users should upgrade Pulsar Brokers and Proxies to 2.9.3, and rotate vulnerable authentication data, including tokens and passwords.
-2.10 users should upgrade Pulsar Brokers and Proxies to 2.10.1, and rotate vulnerable authentication data, including tokens and passwords.
-Any users running Pulsar Brokers and Proxies for 2.6 and earlier should upgrade to one of the above patched versions, and rotate vulnerable authentication data, including tokens and passwords.
+If copy_to_user() fails (returns a non-zero value), the code tries to
+recover by releasing the allocated resources.
 
-In addition to upgrading, it is also necessary to enable hostname verification to prevent man in the middle attacks. Please see CVE-2022-33682 for more information.
+Now, this is an even worse bug, as 'fd' isn't "unused". It was populated
+by fd_install(). What the error handling code instead allows is having a
+valid file descriptor 'fd' for an already released 'file'. A typical
+use-after-free scenario. It's just that an attacker doesn't have to look
+for an KASLR leak, SMEP / SMAP bypass or other memory corruption aiding
+bugs. One just has to sit and wait and look every now and then at the
+file descriptor to see what actual file is currently attached to that
+memory. That's because such an exploit doesn't try to introduce some
+type confusion bug. It simply wants (and relies on) the memory to get
+reallocated for a new 'file' object to gain access to other newly opened
+files in the system, e.g. /etc/shadow. And that's very likely, as 'file'
+objects use a dedicated slab cache.
 
-Credit:
+# Additional Bugs
 
-This issue was discovered by Michael Marshall of DataStax.
+The following additional two code paths failing prone to the above bug
+pattern have been identified in the Linux kernel:
 
+1/ fanotify
+
+If the copy_info_records_to_user() call in copy_event_to_user() fails,
+it'll erroneously call put_unused_fd(fd) + fput(f) on a file that was
+already populated by fd_install(). The erroneous code path, however, is
+only reachable by privileged users, as one needs to pass the
+"!FAN_GROUP_FLAG(group, FANOTIFY_UNPRIV)" test which won't if one isn't
+already capable(CAP_SYS_ADMIN), i.e. has the CAP_SYS_ADMIN capability in
+the _init_ user namespace, which basically means root.
+
+The bug was introduced by commit f644bc449b37 ("fanotify: fix
+copy_event_to_user() fid error clean up"), which is Linux v5.13.
+
+A patch for the issue is pending and to be submitted by Dan Carpenter
+anytime soon.
+
+2/ fastrpc
+
+The fastrpc driver is prone to an additional fput() after having called
+fd_install() if the copy_to_user() fails in the fastrpc_dmabuf_alloc()
+function. This is similar to the above described bug pattern. It's just
+missing the put_unused_fd() which isn't needed to exploit the bug. In
+fact, the lack of calling put_unused_fd() even avoids a warning in
+alloc_fd() in case new file descriptors get allocated in the exploiting
+process.
+
+This bug was introduced by commit 6cffd79504ce ("misc: fastrpc: Add
+support for dmabuf exporter"), which is Linux v5.1.
+
+A patch for this issue can be found here:
+https://patchwork.kernel.org/project/linux-arm-msm/patch/20220127130218.809261-1-minipli@grsecurity.net/
+
+Thanks,
+Mathias
+
+[1] https://www.openwall.com/lists/oss-security/2022/01/27/4
+
+
+Download attachment "OpenPGP_signature" of type "application/pgp-signature" (666 bytes)
