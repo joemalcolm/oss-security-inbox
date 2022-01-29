@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2575" "Tuesday" "12" "January" "2021" "08:40:41" "-0800" "Philip Pettersson" "philip.pettersson@gmail.com" "<CAHQ_-nSbZpFA7rqYD3OfqROuzXd_J2UXmYiGkpBFgESCxxMrxQ@mail.gmail.com>" "50" "Re: [oss-security] CVE-2021-20177 kernel: iptables string match rule could result in kernel panic" nil nil nil "1" "2021011216:40:41" "[oss-security] CVE-2021-20177 kernel: iptables string match rule could result in kernel panic" (number mark "U       philip.pette Jan 12   50/2575  " thread-indent "\"Re: [oss-security] CVE-2021-20177 kernel: iptables string match rule could result in kernel panic\"\n") "<20210112160429.GM4035784@sasha-vm>" ("<CALJHwhR0d-q7dPhC1wXWm63WA9cLh9cQX_GYRJO7Mw0O8kDL4w@mail.gmail.com>" "<X/1YIT59FZ7clijT@kroah.com>" "<93325B6B-DDAD-492B-9954-9CE8A372E086@oracle.com>" "<20210112160429.GM4035784@sasha-vm>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-20177 kernel: iptables string match rule could result in kernel panic" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2321" "Saturday" "29" "January" "2022" "15:16:59" "-0500" "Leo Famulari" "leo@famulari.name" nil "52" "Re: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2022-0001" nil nil nil "1" nil nil (number mark "U       leo@famulari Jan 29   52/2321  " thread-indent "\"Re: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2022-0001\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2022-0001" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1432 invoked by uid 550); 12 Jan 2021 16:43:37 -0000
+Received: (qmail 3949 invoked by uid 550); 29 Jan 2022 21:02:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,95 +12,107 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30252 invoked from network); 12 Jan 2021 16:41:03 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=R4soQjLS/vaqVuispZBfnhX01cgn2oZVdiZcNwy9iPM=;
-        b=GTTL+N+wV5rGk0x/mpATOl0RvaF3sGRnzp9CsFo+LF2paTDqRDq/BLkARmUnt6L3Iq
-         D6+GxeU4qhxHNcxGwLONPgIc4Vb24r0B5cFAIec7O8CSocPnTrOGgA8N2HjOgJR0eijE
-         uYfqS/cmxT3bu4HMMuYHWDYDgK+YS6+WKvSJtxWhiPiw2hyNqO1F3oYGeyEAdxQgCVcf
-         UAXRqT12NyZbQyfJ9iQnN/KQXegROPAmgH12exkLyoPHN8l5DW1Mz3gw/KU1vVSdsPxf
-         BvGUtpGtHs0LYaoQzrIIIJGXg2PLKRiMaITU7NP9VowkuI0Xe5zQDmpaIHw+Q1qqyZIk
-         JyAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=R4soQjLS/vaqVuispZBfnhX01cgn2oZVdiZcNwy9iPM=;
-        b=ke0udenAyYieYTVJ/Hl3U9fbw/S/wSU+PtCPpHFWvhQiRMbbXkZO7m5pVhnplRhbvY
-         wmF92qZ8Lq+O27TsUDmjQ6RIKv3ecCjLcXWFVV5RDOBY6numeiN4N8VzuRY84YWKoZJ4
-         /ae1hkuRx/MU4j7E6TIf/QzL+rwMvK4Pow8OFPq8PBFXQeL2yGw7GQLVnE2TOY8iphay
-         zvzC60gn4Zn+Ug4I5BvGTabL+huy1pbUOdw7jDNhSU8hZpJVdGWUKg/WsMUjTiddhBSw
-         UrSaT352PdnexzNNdlSx9xO4Yi//BrK0oxqbwFb6IU2DmuZTflGFYHe5HNuSPa/BfR3m
-         UsFg==
-X-Gm-Message-State: AOAM533jTiXTEuaCB8UeYqt4uADF+rSmlRUPUfyJt9vSYI8yhbstpmdF
-	xUsrSoQQDSEgwjCOetKq1KUjY90jmElT0WWfQVWmqYbUF6k9jw==
-X-Google-Smtp-Source: ABdhPJyYwaPHKIozHg1VH/AD5wFZGoOi6vZBwyHxOWecHWCZ8OYyLGSNTLttFCXEeN7r3HPp88I3utMo6lq5ZIonDkE=
-X-Received: by 2002:aa7:db01:: with SMTP id t1mr2181eds.185.1610469652382;
- Tue, 12 Jan 2021 08:40:52 -0800 (PST)
+Received: (qmail 12243 invoked from network); 29 Jan 2022 20:17:14 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=famulari.name;
+	 h=cc:cc:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=mesmtp; bh=zNU2Y0V+/DrI5pqt/tkvnz+KCUt
+	oobO/yhkgPw6lpq0=; b=xaKnOfDlMUjjz+JiH8aWU+h42lWjao9rlaJ+NMdEU4r
+	LmmQmC7Xnhw8gkAJ29kxn8XKqojUR3kEsfVdkpSqrzajr5ws/9Ghh7QPrC9tuO1u
+	aBcO5hbJ5ydQRRMm6wQymsafvkJ4Fo7MAUoP3xZ7xziVteN+oBSb+9auw6UlhodU
+	=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=zNU2Y0V+/DrI5pqt/
+	tkvnz+KCUtoobO/yhkgPw6lpq0=; b=QIgTkmS8KtwdIhoUMjOhdc3SRZzXy5yad
+	EMlrChBcm/aRk1HXG6hv08lb6+XKVjBGwh+xULWr37wWytWHadPufc5ZX3pQOkkL
+	vVCutKblUrURm6BAkcNbETyT9lJjwge0JJJ+pmP+65x75Ir1MmMgKeIZsofHWNw5
+	ew6pKSaahJwbNUbuPh6tIb1akk/6ukNPjlbK0R7y/Z1s74Q53EdL/3hJQbawXuNn
+	EF5S59r3m5LRhM4c36Sj7zBSm3tYJ7d2W0mnVe0Sv5ub4Q9BLSK75Dxh0uK71y13
+	vcGG20ksKza+6gQrKQEOQqBz1qgy2AjNml/w10ABa1waTfrWaqN5w==
+X-ME-Sender: <xms:vaD1YTGsRUfdq-N_0Y6r6YiM0rbkHmHra_N8NUQfXNu10zSyvyxQfQ>
+    <xme:vaD1YQVzgHRlLXBsvEMHI6z67gtIWph7BI5n-VyDoZ4D6i0ukq1iVYoyb9-undRqF
+    bDfKre-rM89RTjDGg>
+X-ME-Received: <xmr:vaD1YVLPA1h_B5GAMhEM3g2feDTSShnqJ2IYxeMQ5X5kN5X0dZCAn1DAnGTVaJqp1_aZg75rd4pbpi7jtR-YtYZ46Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrfeejgddufeejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
+    ertddtvdenucfhrhhomhepnfgvohcuhfgrmhhulhgrrhhiuceolhgvohesfhgrmhhulhgr
+    rhhirdhnrghmvgeqnecuggftrfgrthhtvghrnhepudekveegteekleetgfeitdejgfejke
+    ffudethedvhfeukeduleeikeejfeehffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomheplhgvohesfhgrmhhulhgrrhhirdhnrghmvg
+X-ME-Proxy: <xmx:vaD1YRFeXmYAPdV7N95nfRDHnmdG6WnENKipmbPDkHX5C3DIiWwnFw>
+    <xmx:vaD1YZUXoRAne-TPx5Yehke0LuVOwLBNsAjib0yfHY4KXttsk6kB_w>
+    <xmx:vaD1YcOECUS4G_xfmBcTlIN0e-4us__Ice7b5zQie3YSA7m-RU6naA>
+    <xmx:vqD1YafEaMN73O6_WoVEDc1X5YBRcaa6OBp5wuK51j_hIAn6ZOzeGw>
+Date: Sat, 29 Jan 2022 15:16:59 -0500
+From: Leo Famulari <leo@famulari.name>
+To: John Helmert III <ajak@gentoo.org>
+Cc: oss-security@lists.openwall.com
+Message-ID: <YfWgu/Uv+2r3TpdL@jasmine.lan>
+References: <cb8ce1dd-6dee-b6f9-4081-f662887ce835@igalia.com>
+ <YezR31IUUe48w7KH@sol.nexus.lan>
+ <Ye2pUrZ81PjFsary@jasmine.lan>
+ <Ye6z5G/Dq89PQ9jz@sol.nexus.lan>
 MIME-Version: 1.0
-References: <CALJHwhR0d-q7dPhC1wXWm63WA9cLh9cQX_GYRJO7Mw0O8kDL4w@mail.gmail.com>
- <X/1YIT59FZ7clijT@kroah.com> <93325B6B-DDAD-492B-9954-9CE8A372E086@oracle.com>
- <20210112160429.GM4035784@sasha-vm>
-In-Reply-To: <20210112160429.GM4035784@sasha-vm>
-From: Philip Pettersson <philip.pettersson@gmail.com>
-Date: Tue, 12 Jan 2021 08:40:41 -0800
-Message-ID: <CAHQ_-nSbZpFA7rqYD3OfqROuzXd_J2UXmYiGkpBFgESCxxMrxQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] CVE-2021-20177 kernel: iptables string match rule
- could result in kernel panic
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="S9tauYTBsTTPUyvz"
+Content-Disposition: inline
+In-Reply-To: <Ye6z5G/Dq89PQ9jz@sol.nexus.lan>
+Subject: Re: [oss-security] WebKitGTK and WPE WebKit Security Advisory
+ WSA-2022-0001
 
-On Tue, Jan 12, 2021 at 8:06 AM Sasha Levin <sashal@kernel.org> wrote:
->
-> On Tue, Jan 12, 2021 at 03:23:16PM +0000, John Haxby wrote:
-> >> On 12 Jan 2021, at 08:04, Greg KH <greg@kroah.com> wrote:
-> >>
-> >> I still do not understand why you report issues that are fixed over a
-> >> year ago (October 2019) and assign them a CVE like this.  Who does this
-> >> help out?  And what about the thousands of other issues that are fixed
-> >> in the kernel and not assigned a CVE like this, are they somehow not as
-> >> important to your group?
-> >>
-> >> What determines what you want to give a CVE to and what you do not?
-> >
-> >
-> >I think I can answer that.   There's nothing technical going on here, it=
-'s down to the behaviour of the end users of enterprise systems.
-> >
-> >A lot of those people have a hard time understanding that they do actual=
-ly want bug fixes and an even harder time understanding that they need to a=
-ctually do something to install those fixes.   (I was once asked if I could=
- fix a problem without changing anything, anything at all when the fix was =
-a one-off chmod.)   A CVE number gets attention: think of it as getting hol=
-d of the customer by the lapels and going nose-to-nose to explain in words =
-of one syllable they if they don't update their systems that they will cras=
-h and they will get hacked.
-> >
-> >Ooh, no, they say, we can't possibly take the risk of updating our syste=
-ms.  Suppose something goes wrong?   Sheesh.   Suppose, instead, someone co=
-mes along and sees a known, fixed bug is unfixed and uses that to trash you=
-r systems.    Or that you've got a bug that crashes the machine once a week=
- for which there's a fix.   But, no, apparently the mythical risk of a test=
-ed update vs the actual quantifiable risk of leaving the bug unfixed is so =
-great that they'd rather take the real, quantifiable risk.   I suppose that=
-'s understandable, after a fashion, even though actual regressions are quit=
-e rare.
-> >
-> >If you present a customer with a CVE number (with or without a score) th=
-en they have SLAs which will ensure that that fix gets applied.
->
-> The subject of this thread is a "vulnerability" that requires root to
-> exploit and was fixed ages ago.
+--S9tauYTBsTTPUyvz
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-I didn't take a look at this specific bug very closely, but on certain
-distributions (Ubuntu etc) it has been possible to get CAP_NET_ADMIN
-in your own network namespace for years. An unprivileged user can
-become root with all capabilities in their own user/network namespace
-and modify local iptables rules. On Redhat systems you still need
-root.
+On Mon, Jan 24, 2022 at 08:13:15AM -0600, John Helmert III wrote:
+> I don't think it makes much sense for every downstream to make these
+> kinds of assumptions.
 
-Philip
+Why not? History shows that this assumption will almost always be
+correct for WebKit.
+
+> Besides, this doesn't seem to be what's
+> happening in practice. For example, WSA-2021-0006 was released on
+> October 26, 2021 with vulnerabilities addressed in 2.34.0, released on
+> September 22, but RedHat's bugs for it were only opened in the days
+> after the *security advisory's* release, not the software release. It
+> doesn't help that most most distribution security tooling seems to be
+> oriented around CVEs, which aren't released for WebKit until after the
+> associated advisory.
+
+I'm sure that Red Hat's package maintainers know what a WebKit update
+means. Presumably they are busy and their KPIs prioritize fixing CVEs,
+so they don't act as proactively as one might prefer.
+
+In general, it seems that WebKit is handling these issues like Linux.
+Observers know that important bugs are fixed constantly in software of
+this size and complexity. Relying only on CVEs is too reactive and
+limited in scope to provide a meaningful security stance, increasingly
+so since the CVE assignment system stopped working in the last few
+years.
+
+--S9tauYTBsTTPUyvz
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEsFFZSPHn08G5gDigJkb6MLrKfwgFAmH1oLsACgkQJkb6MLrK
+fwhkXw/+IcTFTctQAG/t6xY1sdwcRB6tpy3phQkZ9cUFTr7IBIFVOExa3xcxdH+Q
+HJUl6rBuREZYlob1U3Io4gN3+ml1dPYyv5JUmvmoWyHXl0m7sZgJN7ewFevbB8oc
+jpDS+evGSP/cGMyQmra7Lfm9PYm2u8sOs55RcxmG14vAkhDTTp+C/klMK4pkEoyF
+9SoUeNAv4tkBwDo3ZZOO3fNWmCmUBpjk08WEiJCUwn8altoJ6SqxSyLF/LWOJf8w
+6ZRMevM+XJlw4awICLPnIfrz2gyjG9BrJp4v9oBuhEYITm/42aIBGdhLqz/3va4T
+186/IaR5fNprS7U1JLaF7tHJQcA0piPHdivpEh7TiaxBkVXucgIj/tjtoWMEJlVF
+Qr8gSFWYzo8NXPS4fzvIJ4kgfqoR7U6eKoDYYBZ/MreDcxtG3gAtoZgRJri9eCO1
+YcaWZBlMAfYoZEFPtY6D8xIPVedHt6MUzkIQxNO15xPqlHY3DO9qjEOTbbqOur5i
+KI4NLmZfcqHfRPuI2kwfSc4ykaX3QV1GN4/fwLF5QmfTUt3dTxrdRfBQNU+whhTX
+ZcJtgxi089rlDYrXlW0ng+Q/m7GvOE71u6LUJsIojwJnjecs4Ox0zsBkqguTBRxz
+pWoYf4lMDFzBJutAYjX9Ys6zRRvB5bt3wbTtgwge6aXj7r9oZ68=
+=5Q9J
+-----END PGP SIGNATURE-----
+
+--S9tauYTBsTTPUyvz--
