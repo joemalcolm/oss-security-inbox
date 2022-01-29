@@ -1,41 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/07/3
-Message-ID: <6e8a1fe2-b07f-b5b7-0bac-495f70c88e12@redhat.com>
-Date: Thu, 7 Apr 2022 10:53:17 +0200
-From: Paolo Bonzini <pbonzini@...hat.com>
-To: Solar Designer <solar@...nwall.com>, kangel <kangel@....edu.cn>
-Cc: oss-security@...ts.openwall.com, pgn@....edu.cn, qiuhao@...ec.org, Pedro Sampaio <psampaio@...hat.com>
-Subject: Re: Linux kernel: x86/kvm: null-ptr-deref in kvm_dirty_ring_push
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/29/2
+Message-ID: <YfWgu/Uv+2r3TpdL@jasmine.lan>
+Date: Sat, 29 Jan 2022 15:16:59 -0500
+From: Leo Famulari <leo@...ulari.name>
+To: John Helmert III <ajak@...too.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0001
 Content-Type: text/plain; charset=utf-8
 
-On 4/7/22 10:35, Solar Designer wrote:
-> On Thu, Apr 07, 2022 at 10:15:42AM +0800, kangel wrote:
->>      We found a null-ptr-deref in the kvm module which can lead to DoS. This flaw is in kvm_dirty_ring_push in virt/kvm/dirty_ring.c. The linux kernel version is 5.17.0-rc8. We would appreciate a CVE ID if this is a security issue.
-> 
-> Further in the linux-distros thread, this got assigned CVE-2022-1263,
-> however is this really a security issue - in other words, is a security
-> boundary crossed in triggering the bug?  I think it is not, and if so
-> the CVE ID should probably be rejected.  From the PoC:
+On Mon, Jan 24, 2022 at 08:13:15AM -0600, John Helmert III wrote:
+> I don't think it makes much sense for every downstream to make these
+> kinds of assumptions.
 
-Alexander,
+Why not? History shows that this assumption will almost always be
+correct for WebKit.
 
-indeed it doesn't cross guest-host boundaries.  However, /dev/kvm is 
-accessible by unprivileged users, so it should be treated like any other 
-unprivileged NULL pointer dereference in Linux.  I do not apply an 
-embargo for those bugs, but whether to assign a CVE is not my choice.
+> Besides, this doesn't seem to be what's
+> happening in practice. For example, WSA-2021-0006 was released on
+> October 26, 2021 with vulnerabilities addressed in 2.34.0, released on
+> September 22, but RedHat's bugs for it were only opened in the days
+> after the *security advisory's* release, not the software release. It
+> doesn't help that most most distribution security tooling seems to be
+> oriented around CVEs, which aren't released for WebKit until after the
+> associated advisory.
 
-(As an aside, this is the third fuzzing bug reported for KVM on 
-security@...nel.org and linux-distros, but I think only one of them was 
-really security sensitive).
+I'm sure that Red Hat's package maintainers know what a WebKit update
+means. Presumably they are busy and their KPIs prioritize fixing CVEs,
+so they don't act as proactively as one might prefer.
 
-Thanks,
+In general, it seems that WebKit is handling these issues like Linux.
+Observers know that important bugs are fixed constantly in software of
+this size and complexity. Relying only on CVEs is too reactive and
+limited in scope to provide a meaningful security stance, increasingly
+so since the CVE assignment system stopped working in the last few
+years.
 
-Paolo
-
->> 		res = syscall(__NR_openat, 0xffffffffffffff9cul, "/dev/kvm", 0ul, 0ul);
-> 
-> In fact, also in the linux-distros thread it was promptly agreed that
-> this doesn't need an embargo - perhaps precisely because of no security
-> relevance?  If so, that should have been said explicitly, so a CVE ID
-> wouldn't be assigned (it was by another person).
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
