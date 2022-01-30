@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3711" "Thursday" "23" "April" "2020" "15:10:55" "+0300" "PromiseLabs Pentest Research" "pentest@promiselabs.net" "<ef4d2b65970d80e81fc0294aca5a6a30@promiselabs.net>" "117" "[oss-security] spoofing of local email sender via a homoglyph attack" "^Date:" nil nil "4" "2020042312:10:55" "[oss-security] spoofing of local email sender via a homoglyph attack" (number mark "        pentest@prom Apr 23  117/3711  " thread-indent "\"[oss-security] spoofing of local email sender via a homoglyph attack\"\n") "<2843537f5deb3a7987c8485bcc56a260@promiselabs.net>" ("<20200422152047.3196780D981@smtprhmv1.mitre.org>" "<2843537f5deb3a7987c8485bcc56a260@promiselabs.net>") nil nil nil nil nil nil nil "[oss-security] spoofing of local email sender via a homoglyph attack" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5159" "Sunday" "30" "January" "2022" "08:45:41" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" nil "113" "Re: [oss-security] Linux kernel: use-after-free of user namespace on shm and mqueue destruction" nil nil nil "1" nil nil (number mark "U       carnil@debia Jan 30  113/5159  " thread-indent "\"Re: [oss-security] Linux kernel: use-after-free of user namespace on shm and mqueue destruction\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: use-after-free of user namespace on shm and mqueue destruction" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 14087 invoked by uid 550); 23 Apr 2020 12:22:12 -0000
+Received: (qmail 7954 invoked by uid 550); 30 Jan 2022 07:45:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,160 +11,158 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1727 invoked from network); 23 Apr 2020 12:11:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=promisedev.com; s=default; h=Message-ID:References:In-Reply-To:Subject:To:
-	From:Date:Content-Type:MIME-Version:Sender:Reply-To:Cc:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	 bh=f10nbHtSMMw4UTvfQMJEbIWxAjVSDR5lPIonU2PfmQw=; b=iq7aJt7SAzCzOFXl0gphYMtnh
-	44+zhR6YsQr6pFrkRqbpSRdLw2BWP6wu/h8UQYbQioZLkXWZ/vwl/g68oWk8z6NGRjEOxHs0628gy
-	lmngWezx+xlDVSz+ZKW4TgLgVrNrtAGTOQjhiAj+YQgqX8+gMLbCj9bGScdFqIGlSX2+SRtNFEI9y
-	GfbbapZNN0XLjp4U3ekFRlVNou9HRIK85/MrRMjeINGICq6EEuy1sxVuFbl89U/gCD74WDiJ4euZY
-	sKloUECMw5v+hW1i6A1PYBTg7cXmJAD0A5CtLzMyov6xeXD5YdFrvdcg8WxWMJ5RRcANaJOLKeYaV
-	3nwsyQMmg==;
-MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="=_33c6d797d63a03fd3cf576564cc49594"
-Organization: PromiseLabs
-In-Reply-To: <2843537f5deb3a7987c8485bcc56a260@promiselabs.net>
-References: <20200422152047.3196780D981@smtprhmv1.mitre.org>
- <2843537f5deb3a7987c8485bcc56a260@promiselabs.net>
-Message-ID: <ef4d2b65970d80e81fc0294aca5a6a30@promiselabs.net>
-X-Sender: pentest@promiselabs.net
-User-Agent: Roundcube Webmail/1.3.8
-X-OutGoing-Spam-Status: No, score=-1.0
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - lego.superhosting.bg
-X-AntiAbuse: Original Domain - lists.openwall.com
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - promiselabs.net
-X-Get-Message-Sender-Via: lego.superhosting.bg: authenticated_id: pentest@promisedev.com
-X-Authenticated-Sender: lego.superhosting.bg: pentest@promisedev.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-Date: Thu, 23 Apr 2020 15:10:55 +0300
-From: PromiseLabs Pentest Research <pentest@promiselabs.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] spoofing of local email sender via a homoglyph attack
+Received: (qmail 7936 invoked from network); 30 Jan 2022 07:45:55 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=sender:date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=OQ8zZ8RYKmcN4qP8HEJJ4WVmgcLVloO6L8MOF5hplpU=;
+        b=l1/XiS/5Pg+lwZ2TOm7cu+nW6OoVoN6BtDNEKWcFz8oVlT4BhEumHTtlefExLkMyGx
+         JWZ9F6cb3oNAMk0OdrejbuBTDyNbnALExAXMRnRlFpiI6+3bhgmDTfaFQ73y01kaWfaK
+         2uBGtH5+2nku0h/Xz23nTZxmjSyT9D0JlwIrS1P4g1Yb/W7n6yPcjlw/U19kpTiAeaf0
+         dJ+4iiWNpOfjkAUorrXylognHMGyU6MeeneFIoFIcr3kCqzHv3/NRLoXYy49uxqIOSOx
+         Tr1SfJuTAepTK4ow+SNmwm7LyEJ8yCMIFGV2aq96RSEI2K8Qra36qwopbwNObP2YG7ou
+         jidw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to;
+        bh=OQ8zZ8RYKmcN4qP8HEJJ4WVmgcLVloO6L8MOF5hplpU=;
+        b=JmG/vN62qgxrCzbQQkz+cY3MMJmSl61rwK1l8EfMm7wbxZid++NQk2mgAbLUzZjDlU
+         Nt8oB+8nZ7R93jagkQHg9dhQfn9K/ESfpwoV/kQ9b7UGxTCyMzMqporHNhMP9fKUpfWI
+         lvJXUZU0u0mOkcBBhEypEh58NqKj5pD+Sa6qCVHE59YDmU6z0qpOQ/4wTtmg49hlg6eu
+         iJlIZwhgNZZOxXu+Qv6OzujwgjqpoWQnMEkPUf/KNtZ8MRria8RZuvPVXUFlNTQYGcw2
+         bG3HZrLv61MB2jjv/HnPdDIiXuwuGIKyutSzMcqb3edam/WvXlkSr1b8fjlaYVDt7kN8
+         28TQ==
+X-Gm-Message-State: AOAM533V7JBmdFI4PxDJsbRbBQUdzSGglMq1Ds3VhuAgjWV/ewmC1k1O
+	YmEggDkWGzYvf8FAgwa5AudLvtDQQE4U+A==
+X-Google-Smtp-Source: ABdhPJzQOkqEIAQyNyFVdCJ3jcXIoDUTNcnZFNOeMX3Pz6/TZ2jcmeUfsdVZkuohqGe9Dl16Dqu0rA==
+X-Received: by 2002:adf:f54d:: with SMTP id j13mr12531618wrp.596.1643528743448;
+        Sat, 29 Jan 2022 23:45:43 -0800 (PST)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Sun, 30 Jan 2022 08:45:41 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
 To: oss-security@lists.openwall.com
-
---=_33c6d797d63a03fd3cf576564cc49594
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset=US-ASCII
+Message-ID: <YfZCJfYIUicYi+ba@eldamar.lan>
+References: <69014e75-e96d-6200-a9d3-13248d35d864@grsecurity.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <69014e75-e96d-6200-a9d3-13248d35d864@grsecurity.net>
+Subject: Re: [oss-security] Linux kernel: use-after-free of user namespace on
+ shm and mqueue destruction
 
 Hi,
 
-The provided versions seem to be wrong on this request, sorry for this.
-
-The exact version is from the postfix-2.10.1-7.el7.x86_64 package, thus
-the version stated in the CVE should be 2.10.1.
-
----
-PLPR:
-Plamen Dimitrov
-Penetration Tester, CEH & OSCP certified
-
-Promise Solutions LTD
-Penetration Testing and Managed Security services
-
-https://www.promisedev.com
-https://www.promiselabs.net
-+359 883 22 05 12
-
-On 2020-04-22 18:20, cve-request@mitre.org wrote: 
-
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
+On Sat, Jan 29, 2022 at 08:07:27PM +0100, Mathias Krause wrote:
+> Hi!
 > 
-> The CVE ID is below. As far as we know, 3.3.0-1 is not a commonly
-> used version. Please see the "[Reference]" section below.
+> A use-after-free vulnerability was found in the way certain rlimit
+> conversions to 'ucounts' were done, affecting kernels containing merge
+> commit c54b245d0118 ("Merge branch 'for-linus' of
+> git://git.kernel.org/pub/scm/linux/kernel/git/ebiederm/user-namespace")
+> which is Linux v5.14 and newer.
 > 
->> [Suggested description]
->> A certain Postfix 3.3.0-1 package could allow an attacker to send
->> an email from an arbitrary-looking sender via a homoglyph attack,
->> as demonstrated by the similarity of \xce\xbf to the 'o' character.
->> 
->> ------------------------------------------
->> 
->> [Additional Information]
->> Postfix allows an email from unsanitized input, pretending to be from
->> an existing user on the mail system, which may look exactly the same.
->> For example, it is possible sending an email using the hex character
->> \xce\ xbf, which looks exactly like the letter 'o'. In case the user
->> john.doe exists on the mail server, postfix would not allow to send an
->> email from this email account unless an unauthorized attempt is made.
->> However, in case we substitute the letter 'o' with the hex character
->> \xce\xbf, it will look exactly like it's being sent from john.doe,
->> although john.doe (j<\xce\xbf)hn.doe) is actually different from
->> the other.
->> 
->> ------------------------------------------
->> 
->> [Vulnerability Type]
->> Incorrect Access Control
->> 
->> ------------------------------------------
->> 
->> [Vendor of Product]
->> postfix
->> 
->> ------------------------------------------
->> 
->> [Affected Product Code Base]
->> postfix 3.3.0-1 - 3.3.0-1
->> 
->> ------------------------------------------
->> 
->> [Affected Component]
->> postfix mail server
->> 
->> ------------------------------------------
->> 
->> [Attack Type]
->> Remote
->> 
->> ------------------------------------------
->> 
->> [Discoverer]
->> d7x, Promise Solutions LTD / www.promiselabs.net [1]
->> 
->> ------------------------------------------
->> 
->> [Reference]
->> https://www.promiselabs.net
->> https://repology.org/project/postfix/versions
->> http://www.postfix.org/announcements.html
+> The underlying issue was already noticed last year in a KASAN report[1]
+> in the mqueue code but could only be recently root-caused with the help
+> of our report and reproducer.
 > 
-> Use CVE-2020-12063.
+> The fix was merged yesterday into Linux mainline:
+> https://git.kernel.org/linus/f9d87929d451d3e649699d0f1d74f71f77ad38f5
 > 
-> - --
-> CVE Assignment Team
-> M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-> [ A PGP key is available for encrypted communications at
-> http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
+> However, in our opinion neither the commit itself nor its merge commit
+> (https://git.kernel.org/linus/76fcbc9c7c57a5d4) clearly expresses the
+> impact of the vulnerability.
 > 
-> iQIcBAEBCAAGBQJeoGCRAAoJEPNX0OmQPkAIyDAQAI56GXHXS1AJQVx2nBBJosam
-> 6d/mtkM+LozhzpBVydzed58z8P/Q/qGWXzdT0mmIvq+X2WQp7pvCrUH7l9wkniH+
-> 0FD0c+LO2T/oU7a6sqZ7EHC0V3GPKu/F1W+reNB9V0v8LyAfHLE50AdvHZZjGIHc
-> lUvw/hqt+7NqpR2HFyjyA3sb1K8ZiqBcmxwV9ecECUx/smXFpjtdV9hTz7A9mgj8
-> ggkSjrkMQBsYqiU2OvPEfn4aKskavqTYLqVMxztieICoDPvNAGj+lnZIz4o6WIig
-> d2lqtZ+/8fPVUaYGCikacMNAE4BGs61BQT7tuYdbMt8+wWnB+IU84hBC7Lb7OE8L
-> 7O59MmmIF/C/jaaSmwy+FlSk+ZE95Q+SV7CHoYMLeongByo5drvqVuK79t5KVGDO
-> L6m85ta3Jh/zzQ6srg6REgPuM1Q2cFwu7FmWg4vAEamCwHnjv6D6xRBRO4lBm9V1
-> Upek80hF+BI/JwvKlpng1pzKrClqvzGdeZA4kw5MLoiEN19cf2W85nO0L+cpoLbQ
-> ixz/TarYDG9QQ89U3aJcrLDMH6hGsPKmTvD8dy5sVh+J3qK/zvj/eR98xy5jbKAn
-> pt57X5qFkfu+Sf9yrC3RFBiNTJ/UB4vb0/25g8M4e+vUMb/kkNxbVVNoAg56Wl1M
-> NLgC/CCd32QpiUFehvF2
-> =T4/w
-> -----END PGP SIGNATURE-----
- 
+> See below for some background information about 'ucounts' and our
+> analysis of the issue that we previously shared in a similar form with
+> security@kernel.org on January 21st:
+> 
+> The 'ucounts' scheme "bubbles up" limit changes to the uppermost user
+> namespace by attaching and traversing a user namespace to the 'ucounts'
+> object. However, that user namespace pointer isn't reference-counted. As
+> the lifetime of a 'ucounts' object isn't strictly tied to that of the
+> user namespace it was created for, it can outlive the latter, making its
+> 'ns' member pointing to free'd memory. Such usages may happen in the shm
+> and mqueue code by making use of current_ucounts() and getting a
+> reference to it via get_ucounts().
+> 
+> We noticed the issue during testing and root-caused it to a
+> use-after-free of a user namespace object on shm destruction as follows:
+> 
+> 1/ A process creates a new shm segment.
+> 
+> 2/ It then forks a child that enters a new user namespace, so it gets
+>    its own 'ucounts' (alloc_ucounts() will create a new one via
+>    inc_user_namespaces(), as the namespaces differ) that gets attached
+>    to the new user namespace.
+> 
+> 3/ The child process attaches its 'ucounts' to the shm object by a call
+>    to semctl(SHM_LOCK), see ipc/shm.c:shmctl_do_lock(), lines 1198 and
+>    1203 in particular:
+> 
+>    1197     if (cmd == SHM_LOCK) {
+>    1198         struct ucounts *ucounts = current_ucounts();
+>    1199
+>    1200         err = shmem_lock(shm_file, 1, ucounts);
+>    1201         if (!err && !(shp->shm_perm.mode & SHM_LOCKED)) {
+>    1202             shp->shm_perm.mode |= SHM_LOCKED;
+>    1203             shp->mlock_ucounts = ucounts;
+>    1204         }
+>    1205         goto out_unlock0;
+>    1206     }
+> 
+>    shmem_lock() in line 1200 calls user_shm_unlock() which calls
+>    get_ucounts() to get a reference to the 'ucounts' object, which
+>    allows the ucounts object to outlive its user namespace.
+> 
+> 4/ The child process terminates, which leads to the destruction of its
+>    task_struct, the various cred objects and, in turn, the user
+>    namespace, as there's no reference (but pointers!) to it any more.
+>    The 'ucounts' object, however, survives, as it still has a live
+>    reference from the shmem_lock() done before. But it now has a
+>    dangling 'ns' pointer, as the user namespace was destroyed already.
+> 
+> 5/ The parent process now destroys the shm segment which leads to
+>    shm_destroy() calling shmem_lock() with the (still valid) 'ucounts'
+>    of the already dead child, leading to ... -> user_shm_unlock() ->
+>    dec_rlimit_ucounts() dereferencing a dangling 'ns' pointer when
+>    trying to advance 'iter' in line 285:
+> 
+>    285   for (iter = ucounts; iter; iter = iter->ns->ucounts) {
+>    286       long dec = atomic_long_sub_return(v, &iter->ucount[type]);
+>    287       WARN_ON_ONCE(dec < 0);
+>    288       if (iter == ucounts)
+>    289           new = dec;
+>    290   }
+> 
+> We shared a reproducer for the bug including exploitation notes with the
+> report to security@kernel.org, but we don't intend to share it any
+> further, as the above bug description should allow easy recreation
+> thereof anyway.
+> 
+> Exploiting this issue for privilege escalation requires the availability
+> of unprivileged user namespaces. With that granted, a possible way of
+> exploitation is by reallocating the memory of the released user
+> namespace object of step 4 and by introducing a type confusion bug
+> (ensure the user namespace release in step 4 empties the complete slab
+> page, get it reallocated, e.g. by some kmalloc slab cache and introduce
+> a fake 'user_namespace' object, e.g. via 'msg_msg' object spraying)
+> which will allow a decrement operation at an attacker controlled kernel
+> address (the '->ucounts' pointer of the crafted 'user_namespace'
+> object). The decrement value is under attacker control as well (the size
+> of the shm segment, up to RLIMIT_MEMLOCK).
+> 
+> Beside from patching, a possible mitigation is to disable unprivileged
+> user namespaces:
+> 
+> # sysctl -w kernel.unprivileged_userns_clone=0
+> 
+> To our knowledge, no CVE has been assigned to this issue so far.
 
-Links:
-------
-[1] http://www.promiselabs.net
---=_33c6d797d63a03fd3cf576564cc49594--
+This issue has been assigned CVE-2022-24122 by MITRE via
+https://cveform.mitre.org/ .
+
+Regards,
+Salvatore
