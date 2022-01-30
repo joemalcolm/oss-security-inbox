@@ -1,51 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/07/3
-Message-ID: <9e4aa379-70ce-3bf9-1480-c36a1b9fa4e0@enst-bretagne.fr>
-Date: Mon, 7 Feb 2022 22:04:17 +0100
-From: Gabriel Corona <gabriel.corona@...t-bretagne.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/30/5
+Message-Id: <388160F1-1B99-47C8-A904-3C204DA7D3DF@gentoo.org>
+Date: Sun, 30 Jan 2022 21:36:15 +0000
+From: Sam James <sam@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Browser-mediated attacks on WebDriver servers
+Cc: John Helmert III <ajak@...too.org>
+Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0001
 Content-Type: text/plain; charset=utf-8
 
-Several browser-mediated attacks on WebDriver servers:
 
-* GeckoDriver CSRF vulnerability (CVE-2020-15660);
-* GeckoDriver DNS-rebinding vulnerability (CVE-2021-4138);
-* Chromedriver localhost-bound same-site/cross-origin request forgery 
-vulnerability;
-* Selenium server/Grid CSRF vulnerability;
-* Selenium server/Grid DNS-rebinding vulnerability.
 
-In all cases this could be used to trigger arbitrary code execution.
+> On 29 Jan 2022, at 20:16, Leo Famulari <leo@...ulari.name> wrote:
+> 
+> On Mon, Jan 24, 2022 at 08:13:15AM -0600, John Helmert III wrote:
+>> I don't think it makes much sense for every downstream to make these
+>> kinds of assumptions.
+> 
+> Why not? History shows that this assumption will almost always be
+> correct for WebKit.
+> 
+>> Besides, this doesn't seem to be what's
+>> happening in practice. For example, WSA-2021-0006 was released on
+>> October 26, 2021 with vulnerabilities addressed in 2.34.0, released on
+>> September 22, but RedHat's bugs for it were only opened in the days
+>> after the *security advisory's* release, not the software release. It
+>> doesn't help that most most distribution security tooling seems to be
+>> oriented around CVEs, which aren't released for WebKit until after the
+>> associated advisory.
+> 
+> I'm sure that Red Hat's package maintainers know what a WebKit update
+> means. Presumably they are busy and their KPIs prioritize fixing CVEs,
+> so they don't act as proactively as one might prefer.
+> 
+> In general, it seems that WebKit is handling these issues like Linux.
+> Observers know that important bugs are fixed constantly in software of
+> this size and complexity. Relying only on CVEs is too reactive and
+> limited in scope to provide a meaningful security stance, increasingly
+> so since the CVE assignment system stopped working in the last few
+> years.
 
-GeckoDriver CSRF vulnerability
-==============================
+This isn't an argument against WebKit Doing The Right Thing (TM).
 
-This is CVE-2020-15660. Fixed in GeckoDriver v0.27.0.
+There's no need for us to rehash the standard arguments for/against
+bothering with CVEs at all.
 
-GeckoDriver DNS-rebinding vulnerability
-=======================================
+The point is that CVE notifications are useful for some of us and
+it _seems_ (obviously I can't know) that they're intentionally not
+published at the same time as release notes, often a week or more later.
 
-This is CVE-2021-4138. Fixed in GeckoDriver v0.30.0.
+I, and John, are just saying that if possible, it'd be a big help for
+them to do so.
 
-Chromedriver localhost-bound same-site/cross-origin request forgery
-===================================================================
+Best,
+sam
 
-A XSS on another localhost-bound service could be exploited to trigger
-arbitrary code execution.
-
-Reference: https://bugs.chromium.org/p/chromium/issues/detail?id=1100097
-
-Selenium server/Grid CSRF vulnerability
-=======================================
-
-A CVE-ID has been requested from MITRE.
-
-This is fixed in SeleniumServer 4.
-
-Selenium server/Grid DNS-rebinding vulnerability
-====================================
-
-A CVE-ID has been requested from MITRE.
-
-This is fixed in SeleniumServer 4.
+Download attachment "signature.asc" of type "application/pgp-signature" (619 bytes)
