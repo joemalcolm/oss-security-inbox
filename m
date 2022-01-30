@@ -1,30 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/11/2
-Message-Id: <C899DB14-0747-4285-B1CC-113489A2796D@gentoo.org>
-Date: Tue, 11 Jan 2022 02:55:57 +0000
-From: Sam James <sam@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/30/2
+Message-ID: <YfbKimj0O33X9f7v@schwarzgerat.orthanc>
+Date: Sun, 30 Jan 2022 12:27:38 -0500
+From: nick black <dankamongmen@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-3997: Uncontrolled recursion in systemd's systemd-tmpfiles
+Subject: xterm buffer overflow via crafted sixel
 Content-Type: text/plain; charset=utf-8
 
+howdy! in the hopes of further distributing my computing into
+your terminal emulators, i this morning learned that i can
+control writes to memory from XTerm's context via the method of
+crafted sixel. en garde, i'll let you try my wu-tang style.
 
+this was discovered while working on Notcurses bug #2573:
 
-> On 10 Jan 2022, at 18:08, Qualys Security Advisory <qsa@...lys.com> wrote:
-> 
-> Hi all,
-> 
-> We discovered a minor denial of service (an uncontrolled recursion) in
-> systemd-tmpfiles, CVE-2021-3997; the Coordinated Release Date is today
-> (January 10, 2022), and a patch is now available at (many thanks to
-> Zbigniew Jedrzejewski-Szmek for working on this):
-> [snip]
+ https://github.com/dankamongmen/notcurses/issues/2573
 
-For the benefit of distros:
+an error of mine own led to emission of a corrupted sixel [0], and
+spectacular gyrations from XTerm:
 
-Note that it's been backported in 250.x as 250.2 but there isn't
-a stable/backport release for 249.x yet.
+==1426124== Invalid write of size 2
+==1426124==    at 0x193FF1: set_sixel (graphics_sixel.c:181)
+==1426124==    by 0x1949E1: parse_sixel (graphics_sixel.c:534)
+==1426124==    by 0x17203D: do_dcs (misc.c:4973)
+==1426124==    by 0x149E03: doparsing.constprop.0 (charproc.c:4224)
+==1426124==    by 0x14B383: VTparse (charproc.c:5183)
+==1426124==    by 0x14B670: VTRun (charproc.c:8163)
+==1426124==    by 0x12DC49: main (main.c:2911)
+==1426124==  Address 0xffffffff0941efb8 is not stack'd, malloc'd or (recently) free'd
+==1426124==
+==1426124==
+==1426124== Process terminating with default action of signal 11 (SIGSEGV): dumping core
+==1426124==  Access not within mapped region at address 0xFFFFFFFF0941EFB8
+==1426124==    at 0x193FF1: set_sixel (graphics_sixel.c:181)
+==1426124==    by 0x1949E1: parse_sixel (graphics_sixel.c:534)
+==1426124==    by 0x17203D: do_dcs (misc.c:4973)
+==1426124==    by 0x149E03: doparsing.constprop.0 (charproc.c:4224)
+==1426124==    by 0x14B383: VTparse (charproc.c:5183)
+==1426124==    by 0x14B670: VTRun (charproc.c:8163)
+==1426124==    by 0x12DC49: main (main.c:2911)
 
-Best,
-sam
+I reported this to Mr. Thomas Dickey, the Archfather, and
+offered to put a patch together this evening. I also told him I
+probably wouldn't bother with a CVE, regarding which I clearly
+changed my mind pretty much immediately. Sorry, my good man =\.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (619 bytes)
+This requires that XTerm was built with Sixel support, and that
+the XTerm configuration interprets Sixels.
+ 
+--nick
+
+[0] "a man of genius makes no mistakes -- his errors are
+  volitional, and the portals to discovery." (james joyce).
+  nah, just kidding, i totally screwed it up.
+
+-- 
+nick black -=- https://www.nick-black.com
+to make an apple pie from scratch,
+you need first invent a universe.
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
