@@ -1,33 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/02/5
-Message-ID: <6971d523-a4b3-26d9-096e-a7e8a2c5b92a@apache.org>
-Date: Fri, 2 Sep 2022 08:20:03 +0200
-From: Jacques Le Roux <jleroux@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/31/4
+Message-ID: <CACcefgf1xWf2ysgXopjfaAEmmbhAPgfNS2jzpDVccOjrk8Tf1w@mail.gmail.com>
+Date: Mon, 31 Jan 2022 13:45:23 +0100
+From: Enrico Olivelli <eolivelli@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Apache OFBiz - Regular Expression Denial of Service (ReDoS) (CVE-2022-29158)
+Subject: CVE-2021-41571: Apache Pulsar: Pulsar Admin API allows access to data from other tenants using getMessageById API
 Content-Type: text/plain; charset=utf-8
 
-Severity:
-High
-
-Vendor:
-The Apache Software Foundation
-
-Versions Affected:
-OFBiz versions prior to 18.12.06
+Severity: moderate
 
 Description:
-Apache OFBiz up to version 18.12.05 is vulnerable to Regular
-Expression Denial of Service (ReDoS) in the way it handles URLs
-provided by external, unauthenticated users.
+
+In Apache Pulsar it is possible to access data from BookKeeper that
+does not belong to the topics accessible by the authenticated user.
+
+The Admin API get-message-by-id requires the user to input a topic and
+a ledger id. The ledger id is a pointer to the data, and it is
+supposed to be a valid id for the topic.
+Authorisation controls are performed against the topic name and there
+is not proper validation that the ledger id is valid in the context of
+such ledger.
+So it may happen that the user is able to read from a ledger that
+contains data owned by another tenant.
+
+This issue affects Apache Pulsar Apache Pulsar version 2.8.0 and prior
+versions; Apache Pulsar version 2.7.3 and prior versions; Apache
+Pulsar version 2.6.4 and prior versions.
+
+This issue is being tracked as https://github.com/apache/pulsar/issues/11814
 
 Mitigation:
-Upgrade to at least 18.12.06
-or apply patches at https://issues.apache.org/jira/browse/OFBIZ-12599
 
-Credit:
-Tony Torralba and Joseph Farebrother from the GitHub CodeQL team
+If you are running Pulsar behind a proxy you can disable access to the
+REST API for the flawed API
+
+/admin/v2/non-persistent/{tenant}/{namespace}/{topic}/ledger/{ledgerId}/entry/{entryId}
 
 References:
-http://ofbiz.apache.org/download.html#vulnerabilities
 
+https://pulsar.apache.org/admin-rest-api/#operation/getLastMessageId
+https://github.com/apache/pulsar/issues/11814
