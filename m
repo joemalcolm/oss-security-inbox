@@ -1,23 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/03/1
-Message-ID: <323ccb5e-ee71-ee85-6c6a-c9d5a5171411@apache.org>
-Date: Sat, 03 Dec 2022 14:39:09 +0000
-From: "Gary D. Gregory" <ggregory@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-37533: Apache Commons Net's FTP client trusts the host from PASV response by default 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/31/6
+Message-ID: <c20a5ac6-ec02-88ea-f6d4-713c93373904@igalia.com>
+Date: Mon, 31 Jan 2022 18:49:31 +0000
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0001
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+On 21/01/2022 16:53, Carlos Alberto Lopez Perez wrote:
+> CVE-2022-XXXXX
+>     Versions affected: WebKitGTK and WPE WebKit before 2.34.4.
+>     Credit to Martin Bajanik from fingerprintjs.com.
+>     Impact: A malicious website may exfiltrate data cross-origin.
+>     Description: A cross-origin issue existed with the IndexedDB. This
+>     was addressed with improved checking of security origins. 
+>     Notes: There is a public PoC demonstrating this issue at
+>     https://safarileaks.com so this issue may have been actively
+>     exploited. We still don't know the CVE number that will be assigned
+>     to this issue. We will update this advisory once we know it.
 
-Description:
+The data for the above unknown CVE number is now updated with the info below:
 
-Prior to Apache Commons Net 3.9.0, Net's FTP client trusts the host from PASV response by default. A malicious server can redirect the Commons Net code to use a different host, but the user has to connect to the malicious server in the first place. This may lead to leakage of information about services running on the private network of the client.
-The default in version 3.9.0 is now false to ignore such hosts, as cURL does. See https://issues.apache.org/jira/browse/NET-711.
-
-
-This issue is being tracked as NET-711
-
-Credit:
-
-Apache Commons would like to thank ZeddYu Lu for reporting this issue.
+CVE-2022-22594
+    Versions affected: WebKitGTK and WPE WebKit before 2.34.4.
+    Credit to Martin Bajanik of fingerprintjs.com.
+    Impact: A website may be able to track sensitive user information.
+    Description: A cross-origin issue in the IndexDB API was addressed
+    with improved input validation. Notes: There is a public PoC
+    demonstrating this issue at safarileaks.com so it may have been
+    actively exploited.
 
