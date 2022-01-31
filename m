@@ -1,28 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/09/5
-Message-ID: <YvKVC/O+tGfNNm35@quatroqueijos>
-Date: Tue, 9 Aug 2022 14:10:35 -0300
-From: Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/31/1
+Message-ID: <Yfd+5JHnPnIZTbPP@eldamar.lan>
+Date: Mon, 31 Jan 2022 07:17:08 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-2586 - Linux kernel nf_tables cross-table reference UAF
+Subject: Re: xterm buffer overflow via crafted sixel
 Content-Type: text/plain; charset=utf-8
 
-CVE-2022-2586 - Linux kernel nf_tables cross-table reference UAF
+Hi,
 
-It was discovered that a nft object or expression could reference a nft set on
-a different nft table, leading to a use-after-free once that table was deleted.
+On Sun, Jan 30, 2022 at 12:27:38PM -0500, nick black wrote:
+> howdy! in the hopes of further distributing my computing into
+> your terminal emulators, i this morning learned that i can
+> control writes to memory from XTerm's context via the method of
+> crafted sixel. en garde, i'll let you try my wu-tang style.
+> 
+> this was discovered while working on Notcurses bug #2573:
+> 
+>  https://github.com/dankamongmen/notcurses/issues/2573
+> 
+> an error of mine own led to emission of a corrupted sixel [0], and
+> spectacular gyrations from XTerm:
+> 
+> ==1426124== Invalid write of size 2
+> ==1426124==    at 0x193FF1: set_sixel (graphics_sixel.c:181)
+> ==1426124==    by 0x1949E1: parse_sixel (graphics_sixel.c:534)
+> ==1426124==    by 0x17203D: do_dcs (misc.c:4973)
+> ==1426124==    by 0x149E03: doparsing.constprop.0 (charproc.c:4224)
+> ==1426124==    by 0x14B383: VTparse (charproc.c:5183)
+> ==1426124==    by 0x14B670: VTRun (charproc.c:8163)
+> ==1426124==    by 0x12DC49: main (main.c:2911)
+> ==1426124==  Address 0xffffffff0941efb8 is not stack'd, malloc'd or (recently) free'd
+> ==1426124==
+> ==1426124==
+> ==1426124== Process terminating with default action of signal 11 (SIGSEGV): dumping core
+> ==1426124==  Access not within mapped region at address 0xFFFFFFFF0941EFB8
+> ==1426124==    at 0x193FF1: set_sixel (graphics_sixel.c:181)
+> ==1426124==    by 0x1949E1: parse_sixel (graphics_sixel.c:534)
+> ==1426124==    by 0x17203D: do_dcs (misc.c:4973)
+> ==1426124==    by 0x149E03: doparsing.constprop.0 (charproc.c:4224)
+> ==1426124==    by 0x14B383: VTparse (charproc.c:5183)
+> ==1426124==    by 0x14B670: VTRun (charproc.c:8163)
+> ==1426124==    by 0x12DC49: main (main.c:2911)
+> 
+> I reported this to Mr. Thomas Dickey, the Archfather, and
+> offered to put a patch together this evening. I also told him I
+> probably wouldn't bother with a CVE, regarding which I clearly
+> changed my mind pretty much immediately. Sorry, my good man =\.
+> 
+> This requires that XTerm was built with Sixel support, and that
+> the XTerm configuration interprets Sixels.
+>  
+> --nick
+> 
+> [0] "a man of genius makes no mistakes -- his errors are
+>   volitional, and the portals to discovery." (james joyce).
+>   nah, just kidding, i totally screwed it up.
 
-Team Orca of Sea Security (@seasecresponse) working with Trend Micro's Zero Day
-Initiative discovered that this vulnerability could be exploited for Local
-Privilege Escalation. This has been reported as ZDI-CAN-17470, and assigned
-CVE-2022-2586.
+This issue has CVE-2022-24130 assigned.
 
-This bug was introduced by commit 958bee14d071 ("netfilter: nf_tables: use new
-transaction infrastructure to handle sets"), which is present since v3.16-rc1.
-
-Exploiting it requires CAP_NET_ADMIN in any user or network namespace.
-
-A PoC that will trigger KASAN is going to be posted in a week.
-
-Fixes have been sent to netfilter-devel@...r.kernel.org and are at
-https://lore.kernel.org/netfilter-devel/20220809170148.164591-1-cascardo@canonical.com/T/#t.
+Regards,
+Salvatore
