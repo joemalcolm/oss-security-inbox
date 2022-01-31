@@ -1,31 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/03/1
-Message-ID: <YsDMw8o0g0IjrwzK@itl-email>
-Date: Sat, 2 Jul 2022 18:54:57 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/31/2
+Message-ID: <74cef8b2-e764-5644-0062-5cdad687bd6b@vanrees.org>
+Date: Mon, 31 Jan 2022 09:34:53 +0100
+From: Maurits van Rees <maurits@...rees.org>
 To: oss-security@...ts.openwall.com
-Cc: Hugues ANGUELKOV <hanguelkov@...dorisec.fr>
-Subject: Re: Linux kernel: Netfilter heap buffer overflow in nft_set_elem_init
+Subject: Plone: cache poisoning in image_view_fullscreen
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jul 02, 2022 at 11:55:40PM +0200, Solar Designer wrote:
-> On Sat, Jul 02, 2022 at 09:37:46PM +0200, Solar Designer wrote:
-> > The message below was meant to start an embargo for the issue, but it
-> > was CC'ed to netfilter-devel, which is a public mailing list, so it also
-> > appears here:
-> > 
-> > https://lore.kernel.org/netfilter-devel/cd9428b6-7ffb-dd22-d949-d86f4869f452@randorisec.fr/T/#u
-> 
-> I'm sorry I got the encoding wrong, breaking the non-breaking spaces.
-> Let me try again, below.  (Not trying to fix the line wrapping, which
-> would be too invasive an edit to make to someone else's message.)
+Plone is vulnerable to reflected cross site scripting and open redirect 
+when an attacker can get a compromised version of the 
+image_view_fullscreen page in a cache, for example in Varnish.
+The technique is known as cache poisoning.
+Any later visitor can get redirected when clicking on a link on this page.
+Usually only anonymous users are affected, but this depends on your 
+cache settings.
 
-At least my MUA (Mutt) displays escape sequences instead of the
-non-breaking spaces, presumably because the non-breaking spaces were not
-UTF-8 encoded.
+Versions Affected: All supported Plone versions (4.3.20 and any earlier 
+4.3.x version, 5.2.6 and any earlier 5.x version, 6.0.0a2 and any 
+earlier 6.0.0 version).
+
+There are updated packages for Plone 5.2:
+
+plone.app.contenttypes 2.2.3
+Products.ATContentTypes 3.0.6
+
+And updated packages for 6.0 (which is in alpha):
+
+plone.app.contenttypes 3.0.0a9
+
+With the default version pins, new Plone 5.2.7 and 6.0.0a3 are not 
+affected. Earlier versions are.
+
+CVE number: CVE-2022-23599.
+
+More information:
+
+- GitHub: 
+https://github.com/plone/Products.CMFPlone/security/advisories/GHSA-8w54-22w9-3g8f
+- community.plone.org: 
+https://community.plone.org/t/security-fix-for-image-view-fullscreen-cache-poisoning/14757?u=mauritsvanrees
+- plone.org: https://plone.org/security/hotfix/20220128
+
 -- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+Maurits van Rees https://maurits.vanrees.org/
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
