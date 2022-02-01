@@ -1,131 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/21/1
-Message-ID: <b97faf58-26d9-61ef-2a27-0d54a15d2e64@suse.com>
-Date: Tue, 21 Jun 2022 11:47:29 +0200
-From: Paolo Perego <paolo.perego@...e.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/01/2
+Message-ID: <74dc4a2c-8165-6ec6-5498-c41841a74bd6@gmail.com>
+Date: Tue, 1 Feb 2022 09:05:38 +0100
+From: Mariusz Felisiak <felisiak.mariusz@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities affecting Uyuni / SUSE Manager
+Subject: Django: CVE-2022-22818: Possible XSS via {% debug %} template tag
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
-     last May during a scheduled audit for the Uyuni project, two 
-security issues were found and tracked with a CVE identifier.
+https://www.djangoproject.com/weblog/2022/feb/01/security-releases/
 
-1. Issues
-1.1) CVE-2022-21952: unauthenticated remote DoS via resource exhaustion
+In accordance with `our security release policy
+<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
+Django team
+is issuing
+`Django 4.0.2 <https://docs.djangoproject.com/en/dev/releases/4.0.2/>`_,
+`Django 3.2.12 
+<https://docs.djangoproject.com/en/dev/releases/3.2.12/>`_, and
+`Django 2.2.27 <https://docs.djangoproject.com/en/dev/releases/2.2.27/>`_.
+These release addresses the security issues detailed below. We encourage all
+users of Django to upgrade as soon as possible.
 
-The endpoint /rhn/manager/frontend-log (implemented in [4]) takes an 
-arbitrary string of text as a POST parameter and then it writes on
-/var/log/rhn/rhn_web_frontend.log file.
+CVE-2022-22818: Possible XSS via ``{% debug %}`` template tag
+=============================================================
 
-The input is in the form of {'level':'error', 'message':'Message'}. An 
-attacker can control both the severity level of the log message and the 
-text.
+The ``{% debug %}`` template tag didn't properly encode the current context,
+posing an XSS attack vector.
 
-Since this endpoint is not restricted to authenticated users, there is 
-no throttling mechanism and it doesn't sanitize incoming input so it is 
-possible for an unauthenticated user to write arbitrary contents in the 
-log file.
+In order to avoid this vulnerability, ``{% debug %}`` no longer outputs an
+information when the ``DEBUG`` setting is ``False``, and it ensures all 
+context
+variables are correctly escaped when the ``DEBUG`` setting is ``True``.
 
-e.g:
-2022-05-13 10:24:04,855 [ajp-nio-0:0:0:0:0:0:0:1-8009-exec-8] ERROR
-     com.suse.manager.webui.controllers.FrontendLogController - 
-[no-logged-user -
-     python-requests/2.27.1] - <?php phpinfo(); ?>
-2022-05-13 10:24:43,911 [ajp-nio-0:0:0:0:0:0:0:1-8009-exec-4] ERROR
-     com.suse.manager.webui.controllers.FrontendLogController - 
-[no-logged-user -
-     python-requests/2.27.1] - <script>alert();</script>
-2022-05-13 10:24:51,944 [ajp-nio-0:0:0:0:0:0:0:1-8009-exec-9] ERROR
-     com.suse.manager.webui.controllers.FrontendLogController - 
-[no-logged-user -
-     python-requests/2.27.1] - <script>alert(document.cookies);</script>
-2022-05-13 10:25:03,741 [ajp-nio-0:0:0:0:0:0:0:1-8009-exec-2] ERROR
-     com.suse.manager.webui.controllers.FrontendLogController - 
-[no-logged-user -
-     python-requests/2.27.1] - <script>alert('d');</script>
+Thanks Keryn Knight for the report.
 
-Since there is no direct utilization of that file content in the web UI, 
-a log poisoning attack is not possible. However, since there is no 
-logrotate policy for that file, is it possible to exhaust available disk 
-space by injecting big portions of text.
+This issue has severity "medium" according to the Django security policy.
 
-The log file is consumed in this file [5] where a copy operation is 
-performed.
+Affected supported versions
+===========================
 
-```  cp -fapd  /var/log/rhn/*.log* $DIR/rhn-logs/rhn ```
+* Django main branch
+* Django 4.0
+* Django 3.2
+* Django 2.2
 
-Assigned CVSS score: 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
+Resolution
+==========
 
-1.2) CVE-2022-31248: SUMA user enumeration via weak error message
+Patches to resolve the issue have been applied to Django's main branch 
+and to
+the 4.0, 3.2, and 2.2 release branches. The patches may be obtained from the
+following changesets.
 
-The /rhn/help/ForgotCredentials.do offer two different ways to retrieve
-login information in case a user forgot his/her password.
+* On the `main branch 
+<https://github.com/django/django/commit/394517f07886495efcf79f95c7ee402a9437bd68>`__
+* On the `4.0 release branch 
+<https://github.com/django/django/commit/01422046065d2b51f8f613409cad2c81b39487e5>`__
+* On the `3.2 release branch 
+<https://github.com/django/django/commit/1a1e8278c46418bde24c86a65443b0674bae65e2>`__
+* On the `2.2 release branch 
+<https://github.com/django/django/commit/c27a7eb9f40b64990398978152e62b6ff839c2e6>`__
 
-The first way is asking for a password reset with your login handle and 
-the email address.
+The following releases have been issued:
 
-The second way it can be used when the user can't remember the login 
-handle, so he submits the email address and then the password recovery 
-workflow starts.
+* Django 4.0.2 (`download Django 4.0.2 
+<https://www.djangoproject.com/m/releases/4.0/Django-4.0.2.tar.gz>`_ | 
+`4.0.2 checksums 
+<https://www.djangoproject.com/m/pgp/Django-4.0.2.checksum.txt>`_)
+* Django 3.2.12 (`download Django 3.2.12 
+<https://www.djangoproject.com/m/releases/3.2/Django-3.2.12.tar.gz>`_ | 
+`3.2.12 checksums 
+<https://www.djangoproject.com/m/pgp/Django-3.2.12.checksum.txt>`_)
+* Django 2.2.27 (`download Django 2.2.27 
+<https://www.djangoproject.com/m/releases/2.2/Django-2.2.27.tar.gz>`_ | 
+`2.2.27 checksums 
+<https://www.djangoproject.com/m/pgp/Django-2.2.27.checksum.txt>`_)
 
-Unfortunately, the web application uses a too detailed error message. It 
-is possible to enumerate registered emails simply by submitting to the 
-page and
-looking at the response status code.
+The PGP key ID used for this release is Mariusz Felisiak: 
+`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
 
-It has been found that this service is available also using a plain GET 
-HTTP request and that it answers 302, redirecting to the homepage in 
-case of a valid email address and it returns 200, with an error message 
-in case of a not present email address.
+General notes regarding security reporting
+==========================================
 
-This makes the exploit code much easier to write.
+As always, we ask that potential security issues be reported via
+private email to ``security@...ngoproject.com``, and not via Django's
+Trac instance or the django-developers list. Please see `our security
+policies <https://www.djangoproject.com/security/>`_ for further
+information.
 
-Assigned CVSS score: 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N)
-
-2. Affected releases
-
-The two issues affect:
-     + Uyuni < 2022.06
-     + SUSE Manager 4.1 < 4.1.15
-     + SUSE Manager 4.2 < 4.2.7
-
-SUSE Manager 4.1.15, 4.2.7 and 4.3.0 are not affected and also Uyuni 
-2022.06.
-Uyuni was fixed by the commit [3].
-
-3. Timeline
-
-3.1) CVE-2022-21952
-2022-05-13: vulnerability was reported to upstream authors [1]
-2022-05-13: upstream authors acknowledge it
-2022-05-16: assigned a CVE and offered an embargo until 2022-06-20
-2022-06-20: fixes were released and embargo was lifted
-
-3.2) CVE-2022-31248
-2022-05-17: vulnerability was reported to upstream authors [2]
-2022-05-17: upstream authors acknowledge it
-2022-05-27: assigned a CVE and offered an embargo until 2022-06-20
-2022-06-20: fixes were released and embargo was lifted
-
-For both 2022-06-21 disclosed to the world
-
-4. Links:
-
-[1] https://bugzilla.suse.com/show_bug.cgi?id=1199512
-[2] https://bugzilla.suse.com/show_bug.cgi?id=1199629
-[3] 
-https://github.com/uyuni-project/uyuni/commit/18ba68a0f3de2c6ab77c7b9dc46f45615aacf9e1
-[4] 
-https://github.com/uyuni-project/uyuni/blob/master/java/code/src/com/suse/manager/webui/controllers/FrontendLogController.java
-[5] 
-https://github.com/uyuni-project/uyuni/blob/master/python/spacewalk/satellite_tools/spacewalk-debug#L198
-
--- 
-(*_  Paolo Perego                           @thesp0nge
-//\  Software security engineer               suse.com
-V_/_ 0A1A 2003 9AE0 B09C 51A4 7ACD FC0D CEA6 0806 294B
-
-Download attachment "OpenPGP_0xFC0DCEA60806294B.asc" of type "application/pgp-keys" (5642 bytes)
-
-Download attachment "OpenPGP_signature" of type "application/pgp-signature" (841 bytes)
