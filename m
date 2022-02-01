@@ -1,75 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/02/1
-Message-ID: <20220402035749.GA31424@kili>
-Date: Sat, 2 Apr 2022 06:57:49 +0300
-From: Dan Carpenter <dan.carpenter@...cle.com>
-To: Sasha Levin <sashal@...nel.org>
-Cc: linux-kernel@...r.kernel.org, stable@...r.kernel.org, Laura Abbott <labbott@...nel.org>, Luo Likang <luolikang@...ocus.com>, "Michael S . Tsirkin" <mst@...hat.com>, jasowang@...hat.com, kvm@...r.kernel.org, virtualization@...ts.linux-foundation.org, netdev@...r.kernel.org, oss-security@...ts.openwall.com
-Subject: Re: [PATCH AUTOSEL 5.15 13/16] vdpa: clean up get_config_size ret value handling
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/01/3
+Message-ID: <d825b5d0-6e85-110a-338f-c1063647d557@gmail.com>
+Date: Tue, 1 Feb 2022 09:05:56 +0100
+From: Mariusz Felisiak <felisiak.mariusz@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Django: CVE-2022-23833: Denial-of-service possibility in file uploads
 Content-Type: text/plain; charset=utf-8
 
-The mitre.org page
+https://www.djangoproject.com/weblog/2022/feb/01/security-releases/
 
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=2022-0998
+In accordance with `our security release policy
+<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
+Django team
+is issuing
+`Django 4.0.2 <https://docs.djangoproject.com/en/dev/releases/4.0.2/>`_,
+`Django 3.2.12 
+<https://docs.djangoproject.com/en/dev/releases/3.2.12/>`_, and
+`Django 2.2.27 <https://docs.djangoproject.com/en/dev/releases/2.2.27/>`_.
+These release addresses the security issues detailed below. We encourage all
+users of Django to upgrade as soon as possible.
 
-says this is a fix for CVE-2022-0998 but if you apply it by itself it
-creates a serious security problem.  Originally this bug only affected
-32 bit systems but this patch will change it to affect everyone.
+CVE-2022-23833: Denial-of-service possibility in file uploads
+=============================================================
 
-You need to apply commit 3ed21c1451a1 ("vdpa: check that offsets are
-within bounds").
+Passing certain inputs to multipart forms could result in an infinite 
+loop when
+parsing files.
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3ed21c1451a14d139e1ceb18f2fa70865ce3195a
+Thanks Alan Ryan for the report.
 
-I don't know if this affects anyone, but it seemed worth mentioning.
+This issue has severity "medium" according to the Django security policy.
 
-regards,
-dan carpenter
+Affected supported versions
+===========================
 
-On Sat, Jan 22, 2022 at 07:12:12PM -0500, Sasha Levin wrote:
-> From: Laura Abbott <labbott@...nel.org>
-> 
-> [ Upstream commit 870aaff92e959e29d40f9cfdb5ed06ba2fc2dae0 ]
-> 
-> The return type of get_config_size is size_t so it makes
-> sense to change the type of the variable holding its result.
-> 
-> That said, this already got taken care of (differently, and arguably
-> not as well) by commit 3ed21c1451a1 ("vdpa: check that offsets are
-> within bounds").
-> 
-> The added 'c->off > size' test in that commit will be done as an
-> unsigned comparison on 32-bit (safe due to not being signed).
-> 
-> On a 64-bit platform, it will be done as a signed comparison, but in
-> that case the comparison will be done in 64-bit, and 'c->off' being an
-> u32 it will be valid thanks to the extended range (ie both values will
-> be positive in 64 bits).
-> 
-> So this was a real bug, but it was already addressed and marked for stable.
-> 
-> Signed-off-by: Laura Abbott <labbott@...nel.org>
-> Reported-by: Luo Likang <luolikang@...ocus.com>
-> Signed-off-by: Michael S. Tsirkin <mst@...hat.com>
-> Signed-off-by: Sasha Levin <sashal@...nel.org>
-> ---
->  drivers/vhost/vdpa.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
-> index d62f05d056b7b..913cd465f9f1e 100644
-> --- a/drivers/vhost/vdpa.c
-> +++ b/drivers/vhost/vdpa.c
-> @@ -195,7 +195,7 @@ static int vhost_vdpa_config_validate(struct vhost_vdpa *v,
->  				      struct vhost_vdpa_config *c)
->  {
->  	struct vdpa_device *vdpa = v->vdpa;
-> -	long size = vdpa->config->get_config_size(vdpa);
-> +	size_t size = vdpa->config->get_config_size(vdpa);
->  
->  	if (c->len == 0 || c->off > size)
->  		return -EINVAL;
-> -- 
-> 2.34.1
-> 
-> 
+* Django main branch
+* Django 4.0
+* Django 3.2
+* Django 2.2
+
+Resolution
+==========
+
+Patches to resolve the issue have been applied to Django's main branch 
+and to
+the 4.0, 3.2, and 2.2 release branches. The patches may be obtained from the
+following changesets.
+
+* On the `main branch 
+<https://github.com/django/django/commit/fc18f36c4ab94399366ca2f2007b3692559a6f23>`__
+* On the `4.0 release branch 
+<https://github.com/django/django/commit/f9c7d48fdd6f198a6494a9202f90242f176e4fc9>`__
+* On the `3.2 release branch 
+<https://github.com/django/django/commit/d16133568ef9c9b42cb7a08bdf9ff3feec2e5468>`__
+* On the `2.2 release branch 
+<https://github.com/django/django/commit/c477b761804984c932704554ad35f78a2e230c6a>`__
+
+The following releases have been issued:
+
+* Django 4.0.2 (`download Django 4.0.2 
+<https://www.djangoproject.com/m/releases/4.0/Django-4.0.2.tar.gz>`_ | 
+`4.0.2 checksums 
+<https://www.djangoproject.com/m/pgp/Django-4.0.2.checksum.txt>`_)
+* Django 3.2.12 (`download Django 3.2.12 
+<https://www.djangoproject.com/m/releases/3.2/Django-3.2.12.tar.gz>`_ | 
+`3.2.12 checksums 
+<https://www.djangoproject.com/m/pgp/Django-3.2.12.checksum.txt>`_)
+* Django 2.2.27 (`download Django 2.2.27 
+<https://www.djangoproject.com/m/releases/2.2/Django-2.2.27.tar.gz>`_ | 
+`2.2.27 checksums 
+<https://www.djangoproject.com/m/pgp/Django-2.2.27.checksum.txt>`_)
+
+The PGP key ID used for this release is Mariusz Felisiak: 
+`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
+
+General notes regarding security reporting
+==========================================
+
+As always, we ask that potential security issues be reported via
+private email to ``security@...ngoproject.com``, and not via Django's
+Trac instance or the django-developers list. Please see `our security
+policies <https://www.djangoproject.com/security/>`_ for further
+information.
+
