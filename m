@@ -1,130 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/23/1
-Message-ID: <c5c0fa6c-f24e-b23f-01c2-5efd648d4f02@treenet.co.nz>
-Date: Fri, 23 Sep 2022 17:00:16 +1200
-From: Amos Jeffries <squid3@...enet.co.nz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/03/2
+Message-ID: <CAD+38UDCM==oLPK0E6pjt18GPkoyYMN9U+_hZ=1DTyQvN0JQ1g@mail.gmail.com>
+Date: Thu, 3 Feb 2022 10:07:26 -0800
+From: Abhishek Tiwari <abti@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: [ADVISORY] SQUID-2022:1 Exposure of Sensitive Information in Cache Manager
+Cc: user@...blin.apache.org
+Subject: CVE-2021-36152: Apache Gobblin: Insecure TrustManager used in LDAP connections
 Content-Type: text/plain; charset=utf-8
 
-_________________________________________________________________
+Severity: low
 
-     Squid Proxy Cache Security Update Advisory SQUID-2022:1
-__________________________________________________________________
+Description:
 
-Advisory ID:       | SQUID-2022:1
-Date:              | September 23, 2022
-Summary:           | Exposure of Sensitive Information
-                    | in Cache Manager
-Affected versions: | Squid 4.15 -> 4.17
-                    | Squid 5.0.6 -> 5.6
-Fixed in version:  | Squid 5.7
-__________________________________________________________________
+Apache Gobblin trusts all certificates used for LDAP connections in
+Gobblin-as-a-Service. This affects versions <= 0.15.0. Users should
+update to version 0.16.0 which addresses this issue.
 
-<http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-41317>
-__________________________________________________________________
+Credit:
 
-Problem Description:
+Apache Gobblin would like to thank Simon Gerst for reporting this issue.
 
-  Due to inconsistent handling of internal URIs Squid is
-  vulnerable to Exposure of Sensitive Information about clients
-  using the proxy.
-
-__________________________________________________________________
-
-Severity:
-
-  This problem allows a trusted client to directly access cache
-  manager information bypassing the manager ACL protection.
-
-  The available cache manager information contains records of
-  internal network structure, client credentials, client identity
-  and client traffic behaviour.
-
-CVSS Score of 6.4
-<https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?vector=AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N/E:F/RL:X/RC:C/CR:M/IR:X/AR:X/MAV:X/MAC:L/MPR:L/MUI:X/MS:X/MC:H/MI:X/MA:X&version=3.1>
-
-__________________________________________________________________
-
-Updated Packages:
-
-This bug is fixed by Squid version 5.7.
-
-  In addition, patches addressing this problem for the stable
-  releases can be found in our patch archives:
-
-Squid 4:
-  <http://www.squid-cache.org/Versions/v4/changesets/SQUID-2022_1.patch>
-
-Squid 5:
-  <http://www.squid-cache.org/Versions/v5/changesets/SQUID-2022_1.patch>
-
-  If you are using a prepackaged version of Squid then please refer
-  to the package vendor for availability information on updated
-  packages.
-
-__________________________________________________________________
-
-Determining if your version is vulnerable:
-
-  Squid older than 4.9 are not vulnerable.
-
-  All Squid-4.9 up to and including 4.14 have not been tested, but
-  should be assumed to be vulnerable.
-
-  All Squid-4.15 up to and including 4.17 are vulnerable.
-
-  All Squid-5.0.6 up to and including 5.6 are vulnerable.
-
-__________________________________________________________________
-
-Workaround:
-
-   Add the following to squid.conf:
-
-     acl manager url_regex +i ^[^:]+://[^/]+/squid-internal-mgr/
-
-__________________________________________________________________
-
-Contact details for the Squid project:
-
-  For installation / upgrade support on binary packaged versions
-  of Squid: Your first point of contact should be your binary
-  package vendor.
-
-  If you install and build Squid from the original Squid sources
-  then the <squid-users@...ts.squid-cache.org> mailing list is your
-  primary support point. For subscription details see
-  <http://www.squid-cache.org/Support/mailing-lists.html>.
-
-  For reporting of non-security bugs in the latest STABLE release
-  the squid bugzilla database should be used
-  <http://bugs.squid-cache.org/>.
-
-  For reporting of security sensitive bugs send an email to the
-  <squid-bugs@...ts.squid-cache.org> mailing list. It's a closed
-  list (though anyone can post) and security related bug reports
-  are treated in confidence until the impact has been established.
-
-__________________________________________________________________
-
-Credits:
-
-  This vulnerability was discovered by Mikhail Evdokimov
-  (aka konata).
-
-  Initial fix by Amos Jeffries of Treehouse Networks Ltd.
-
-__________________________________________________________________
-
-Revision history:
-
-  2022-04-17 18:30:52 UTC Initial Report
-  2022-08-08 11:01:47 UTC Initial Fix released
-  2022-09-23 05:00:00 UTC Advisory Released
-__________________________________________________________________
-END
-
-Download attachment "OpenPGP_0x00D863679420BDD3.asc" of type "application/pgp-keys" (3135 bytes)
-
-Download attachment "OpenPGP_signature" of type "application/pgp-signature" (841 bytes)
