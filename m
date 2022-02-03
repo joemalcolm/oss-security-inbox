@@ -1,32 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/09/4
-Message-Id: <347664F1-79BA-433D-BF04-1D015A074C84@apache.org>
-Date: Mon, 9 May 2022 12:36:58 +0200
-From: Jan Lehnardt <jan@...che.org>
-To: Archange <archange@...ivis.me>
-Cc: oss-security@...ts.openwall.com, Security CouchDB <security@...chdb.apache.org>
-Subject: Re: CVE-2022-24706: Apache CouchDB: Remote Code Execution Vulnerability in Packaging
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/03/1
+Message-ID: <69b19982-5ed2-77be-40c7-8a236d1ac4bf@grsecurity.net>
+Date: Thu, 3 Feb 2022 11:18:11 +0100
+From: Mathias Krause <minipli@...ecurity.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2022-22942: Linux kernel: wrong file descriptor handling in the vmwgfx driver
 Content-Type: text/plain; charset=utf-8
 
+Good Morning!
 
-> On 9. May 2022, at 11:46, Archange <archange@...ivis.me> wrote:
+Am 27.01.22 um 23:20 schrieb Mathias Krause:
+> Am 27.01.22 um 21:00 schrieb Mathias Krause:
+>> Exploiting this vulnerability requires an attacker to have access to
+>> either /dev/dri/card0 or /dev/dri/rendererD128 and be able to issue an
+>> ioctl() on the resulting file descriptor.
 > 
-> Le 09/05/2022 à 13:41, Jan Lehnardt a écrit :
->> Hi Bruno,
->> 
->> first of all, thanks for maintaining CouchDB for Arch. Secondly, for any security related questions, please do not hesitate to contact security@...chdb.apache.org instead of any one of the team individually, as we can’t know if any of is available at all times (vacations and whatnot :)
+> Forgot to mention, as per linux-distros' list policy, an exploit for the
+> vulnerability will be provided in 7 days, as one has been shared with
+> the linux-distros before.
 > 
-> Sure, you should put this address in copy when posting to oss-security then, so you would be sure people reply to that one too. ;)
+> Meanwhile the patch was merged into Linux mainline:
+> https://git.kernel.org/linus/a0f90c881570
 
-This is automated by ASF infrastructure, I sadly have no say over this. But maybe we can a footer with the address next time :)
+It's now also part of the following kernels:
+v4.14.264: commit e8d092a62449
+v4.19.227: commit 0008a0c78fc3
+v5.4.175: commit 84b1259fe36a
+v5.10.95: commit 77656fde3c01
+v5.15.18: commit 6066977961fc
+v5.16.4: commit 1d833b27fb70
 
-> 
->> As for your questions, see this PR to our packaging infrastructure for how we handle this on Debian and Centos/Rocky: https://github.com/apache/couchdb-pkg/pull/92/files
-> 
-> Thanks, so you use a default env file to set the variable and allow people to easily change it in the case of a clustered setup. Will do so as well then!
-> 
+Attached is the exploit, as demanded by the linux-distros mailing list
+policy.
 
-Perfect, thanks!
-Jan
-—
+We did not intend to be providing this exploit, especially not within 7
+days of disclosure, however when reporting this issue privately to
+linux-distros and asked to provide the exploit I developed, I did not
+realize that the mailing list rules
+(https://oss-security.openwall.org/wiki/mailing-lists/distros) require
+the public posting of the exploit no later than I am providing it now.
+While the requirement does serve the useful purpose of ensuring the
+private list doesn't become a stockpile of private exploits, we
+encourage others to please read the rules of the list fully before
+submitting and consider sharing exploits with individual members rather
+than to the list as a whole so as to avoid being forced to publish an
+exploit that in some instances may do more harm than good.
 
+Thanks,
+Mathias
+View attachment "vmwgfx.c" of type "text/x-csrc" (6706 bytes)
+
+Download attachment "OpenPGP_signature" of type "application/pgp-signature" (666 bytes)
