@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["472" "Thursday" "31" "January" "2019" "10:39:43" "+0200" "Henri Salo" "henri@nerv.fi" "<20190131083943.lnx3lwhhu3h5suxh@tunkki.bugs.fi>" "17" "Re: [oss-security] [CVE-2018-20242] Apache JSPWiki Cross-site scripting vulnerability on Apache JSPWiki" nil nil nil "1" "2019013108:39:43" "[oss-security] [CVE-2018-20242] Apache JSPWiki Cross-site scripting vulnerability on Apache JSPWiki" (number mark "U       henri@nerv.f Jan 31   17/472   " thread-indent "\"Re: [oss-security] [CVE-2018-20242] Apache JSPWiki Cross-site scripting vulnerability on Apache JSPWiki\"\n") "<CAMufup6pAEfJQv4MvELhYmcLigG-hKKoVO=At+Udh3ao4ZZkAg@mail.gmail.com>" ("<CAMufup6pAEfJQv4MvELhYmcLigG-hKKoVO=At+Udh3ao4ZZkAg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["461" "Thursday" "3" "February" "2022" "14:01:23" "-0600" "Justin Bertram" "jbertram@apache.org" nil "19" "[oss-security] ARTEMIS-3593: CVE-2022-23913: Apache ActiveMQ Artemis DoS" nil nil nil "2" nil nil (number mark "U       jbertram@apa Feb  3   19/461   " thread-indent "\"[oss-security] ARTEMIS-3593: CVE-2022-23913: Apache ActiveMQ Artemis DoS\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] ARTEMIS-3593: CVE-2022-23913: Apache ActiveMQ Artemis DoS" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1081 invoked by uid 550); 31 Jan 2019 08:39:58 -0000
+Received: (qmail 26569 invoked by uid 550); 3 Feb 2022 20:26:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,37 +12,37 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1037 invoked from network); 31 Jan 2019 08:39:58 -0000
-X-Virus-Scanned: Debian amavisd-new at coconut.nerv.fi
-Date: Thu, 31 Jan 2019 10:39:43 +0200
-From: Henri Salo <henri@nerv.fi>
-To: Juan Pablo Santos =?iso-8859-1?Q?Rodr=EDguez?= <juanpablo@apache.org>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20190131083943.lnx3lwhhu3h5suxh@tunkki.bugs.fi>
-References: <CAMufup6pAEfJQv4MvELhYmcLigG-hKKoVO=At+Udh3ao4ZZkAg@mail.gmail.com>
+Received: (qmail 15775 invoked from network); 3 Feb 2022 20:02:02 -0000
+X-Gm-Message-State: AOAM5337dtZh3XMNDsaoHmgeTBc2bxatRXTLgR+yGgTsUYUoBQoeaEK0
+	DdK2U1dbk9C4JXu0t/AG4+lu69ThLGx/AIf0Depijg==
+X-Google-Smtp-Source: ABdhPJxqjbVF3zEJq4gN+XDCyxoB/9hkgohSS/mcXrJOWucWxuViah29yB31/9SR+ZVvJjJqpVTbfRuKC/5Qx29skvk=
+X-Received: by 2002:a05:6402:190f:: with SMTP id e15mr36801413edz.195.1643918509228;
+ Thu, 03 Feb 2022 12:01:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMufup6pAEfJQv4MvELhYmcLigG-hKKoVO=At+Udh3ao4ZZkAg@mail.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-Subject: Re: [oss-security] [CVE-2018-20242] Apache JSPWiki Cross-site
- scripting vulnerability on Apache JSPWiki
+From: Justin Bertram <jbertram@apache.org>
+Date: Thu, 3 Feb 2022 14:01:23 -0600
+X-Gmail-Original-Message-ID: <CAF+kE=T04dwUSyQ5BMw2tC6-Z_R=uUUT=Bu3dKSNnwCkLbq7Hg@mail.gmail.com>
+Message-ID: <CAF+kE=T04dwUSyQ5BMw2tC6-Z_R=uUUT=Bu3dKSNnwCkLbq7Hg@mail.gmail.com>
+To: oss-security@lists.openwall.com, announce@apache.org
+Content-Type: multipart/alternative; boundary="000000000000c8580e05d7229a8a"
+Subject: [oss-security] ARTEMIS-3593: CVE-2022-23913: Apache ActiveMQ Artemis DoS
 
-On Wed, Jan 30, 2019 at 09:01:43PM +0100, Juan Pablo Santos Rodríguez wrote:
-> Versions Affected: Apache JSPWiki up to 2.10.5
-> 
-> Description:
-> A carefully crafted URL could trigger an XSS vulnerability on Apache
-> JSPWiki, which could lead to session hijacking.
-> 
-> Mitigation:
-> Apache JSPWiki users should upgrade to 2.11.0.M1 or later.
-> 
-> Credit:
-> This issue was discovered by Jamie Parfet.
+--000000000000c8580e05d7229a8a
+Content-Type: text/plain; charset="UTF-8"
 
-Do you have any Apache reference URLs for this issue?
+Description:
 
--- 
-Henri Salo
+In Apache ActiveMQ Artemis prior to 2.20.0 or 2.19.1, an attacker could
+partially disrupt availability (DoS) through uncontrolled resource
+consumption of memory.
+
+Mitigation:
+
+Upgrade to Apache ActiveMQ Artemis 2.20.0 or 2.19.1 (if you're still using
+Java 8).
+
+References:
+
+https://lists.apache.org/thread/fjynj57rd99s814rdn5hzvmx8lz403q2
+
+--000000000000c8580e05d7229a8a--
