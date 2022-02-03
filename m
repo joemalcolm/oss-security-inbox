@@ -1,20 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/26/4
-Message-ID: <YwjuUy0a6FFdHPVB@gentoo.org>
-Date: Fri, 26 Aug 2022 11:01:23 -0500
-From: John Helmert III <ajak@...too.org>
-To: jorton@...che.org
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-22728: libapreq2: libapreq2 multipart form parse memory corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/03/3
+Message-ID: <804b39e8-5b2c-9642-d80d-bd48d5104768@apache.org>
+Date: Thu, 03 Feb 2022 18:21:00 +0000
+From: Abhishek Tiwari <abti@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-36151: Apache Gobblin: Local Credentials Disclosure Vulnerability 
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 25, 2022 at 02:09:16PM +0000, Joe Orton wrote:
-> Severity: important
-> 
-> Description:
-> 
-> A flaw in libapreq2 versions 2.16 and earlier could cause a buffer overflow while processing multipart form uploads.  A remote attacker could send a request causing a process crash which could lead to a denial of service attack.
-> 
+Description:
 
-Is there a fixed version or patch or upstream issue?
-Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
+In Apache Gobblin, the Hadoop token is written to a temp file that is visible to all local users on Unix-like systems. This affects versions <= 0.15.0. Users should update to version 0.16.0 which addresses this issue. 
+
+Credit:
+
+Apache Gobblin would like to thank Jonathan Leitschuh for reporting this issue. 
+
