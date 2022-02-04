@@ -1,17 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/02/1
-Message-ID: <573c0741-ba91-b802-06db-6b0704e0f687@apache.org>
-Date: Fri, 02 Sep 2022 03:53:55 +0000
-From: Jedidiah Cunningham <jedcunningham@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/04/1
+Message-ID: <CAM62SmJTkayhy-+dbne1veD+zH5Nyc3ZhMqk60YQQwBC1-MW7A@mail.gmail.com>
+Date: Fri, 4 Feb 2022 10:56:19 -0600
+From: Tabitha Sable <tabitha.c.sable@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-38054: Apache Airflow: Session Fixation 
+Subject: CVE-2022-0492: Linux kernel cgroups v1 missing capabilities check when setting release_agent
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Hello all,
 
-In Apache Airflow versions 2.2.4 through 2.3.3, the `database` webserver session backend was susceptible to session fixation.
+It has been discovered that under certain circumstances, the Linux kernel’s
+cgroups v1 release_agent feature can be used to escalate privilege and
+bypass namespace isolation unexpectedly.
 
-Credit:
+CVE-2022-0492 has been assigned to this issue, which is corrected by
+requiring CAP_SYS_ADMIN in the initial user namespace when setting
+release_agent. This has been included upstream in commit
+24f6008564183aa120d07c03d9289519c2fe02af. (
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=24f6008564183aa120d07c03d9289519c2fe02af
+)
 
-The Apache Airflow PMC would like to thank Kai Zhao for reporting this issue.
+Thank you to Yiqi Sun and Kevin Wang of Huawei Security Team for disclosing
+their work that led to this fix.
+
+Cheers,
+
+Tabitha Sable
 
