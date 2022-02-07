@@ -1,26 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/06/5
-Message-ID: <9d586031-2bef-83a8-e50c-04eec1ea4755@apache.org>
-Date: Wed, 06 Jul 2022 12:51:49 +0000
-From: Matt Juntunen <mattjuntunen@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/07/2
+Message-ID: <YgF4EUUAWvh0f9Yh@fullerene.field.pennock-tech.net>
+Date: Mon, 7 Feb 2022 14:50:41 -0500
+From: Phil Pennock <oss-security-phil@...dhuis.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-33980: Apache Commons Configuration insecure interpolation defaults 
+Cc: pdp@...s.io
+Subject: [CVE-2022-24450] nats-server unconstrained account assumption by authenticated clients
 Content-Type: text/plain; charset=utf-8
 
-Severity: Moderate
+CVE: CVE-2022-24450
+Date: 2022-02-07
 
-Description:
+Background:
 
-Apache Commons Configuration performs variable interpolation, allowing properties to be dynamically evaluated and expanded. The standard format for interpolation is "${prefix:name}", where "prefix" is used to locate an instance of org.apache.commons.configuration2.interpol.Lookup that performs the interpolation. Starting with version 2.4 and continuing through 2.7, the set of default Lookup instances included interpolators that could result in arbitrary code execution or contact with remote servers. These lookups are:
-- "script" - execute expressions using the JVM script execution engine (javax.script)
-- "dns" - resolve dns records
-- "url" - load values from urls, including from remote servers
+NATS.io is a high performance open source pub-sub distributed communication
+technology, built for the cloud, on-premise, IoT, and edge computing.
 
-Applications using the interpolation defaults in the affected versions may be vulnerable to remote code execution or unintentional contact with remote servers if untrusted configuration values are used.
+The NATS server provides an optional account system for multi-tenancy,
+such that Users live inside Accounts.  Users exist only at authentication
+time; thereafter actions are all scoped to their account.  If Accounts
+are not in use then normally all users are in the Global account, but
+there is a System account most users should not have access to.
 
-Users are recommended to upgrade to Apache Commons Configuration 2.8.0, which disables the problematic interpolators by default.
+The NATS server can be embedded inside other software; any such software which
+uses authentication managed by the nats-server is affected.
 
-Mitigation:
 
-Upgrade to version Apache Commons Configuration 2.8.0
+Problem Description:
 
+NATS nats-server through 2022-02-04 has Incorrect Access Control, with
+unchecked ability for clients to authorize into any account, because of a
+coding error in a long-extant experimental feature.
+
+A client crafting the initial protocol-level handshake could, with valid
+credentials for any account, specify a target account and switch into it
+immediately.  This includes any other tenant, and includes the System account
+which controls nats-server core operations.
+
+For deployments not using multi-tenancy through NATS Accounts, there is
+still a vulnerability: normal users are able to choose to be in the System
+account.
+
+An experimental feature to provide dynamically provisioned sandbox accounts was
+designed to allow a server administrator to turn on an option to allow clients
+to dynamically request a brand new account inline at connection time.  This
+feature went nowhere, but lived on in the code and was used by a number of
+tests; support was never added to any client libraries or to the documentation.
+
+A bug in handling the feature meant that if someone did in fact have valid
+account credentials, then they could specify any other existing account and
+they would be assigned into that account.
+
+Release 2.7.2 of nats-server removes the feature.
+Because of the lack of client support and absence from protocol documentation,
+we feel this is safe operationally as well as the safest fix for the code.
+
+
+Affected versions:
+
+NATS Server:
+ * All 2.x versions up to and including 2.7.1.
+ * Fixed with nats-io/nats-server: 2.7.2
+ * NATS Server 1.x did not have accounts.
+ * Docker image:  nats <https://hub.docker.com/_/nats>
+
+NATS Streaming Server:
+ * All versions embedding affected NATS Server:
+   + Affected: v0.15.0 up to and including v0.24.0
+   + Fixed with nats-io/nats-streaming-server: 0.24.1
+ * Docker image:  nats-streaming <https://hub.docker.com/_/nats-streaming>
+
+
+Impact:
+
+Existing users could act in any account, including the System account.
+
+
+Workaround:
+
+None.
+
+
+Solution:
+
+Upgrade the NATS server.
+
+
+References:
+
+ * <https://advisories.nats.io/CVE/CVE-2022-24450.txt>
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
