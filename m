@@ -1,4 +1,9 @@
-Received: (qmail 17906 invoked by uid 550); 24 May 2022 13:30:31 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["497" "Monday" "7" "February" "2022" "04:39:16" "+0000" "Benoit Tellier" "btellier@apache.org" nil "23" "[oss-security] CVE-2022-22931: Path traversal in Apache James " nil nil nil "2" nil nil (number mark "U       btellier@apa Feb  7   23/497   " thread-indent "\"[oss-security] CVE-2022-22931: Path traversal in Apache James \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2022-22931: Path traversal in Apache James " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 30384 invoked by uid 550); 7 Feb 2022 08:36:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,62 +12,36 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17434 invoked from network); 24 May 2022 13:29:41 -0000
-Date: Tue, 24 May 2022 15:29:29 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 14147 invoked from network); 7 Feb 2022 04:39:29 -0000
+Content-Type: text/plain; charset=utf-8
+From: Benoit Tellier <btellier@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20220524132929.GA29337@openwall.com>
-References: <20220515162740.GA20526@openwall.com> <YoKiGWAX4E/mbGWB@kroah.com> <1be21670-921c-9f0a-d99c-a9f6fd02b9b2@oracle.com> <20220522191951.GA21330@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220522191951.GA21330@openwall.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] linux-distros list policy and Linux kernel
+Message-ID: <f037cdaa-2cef-1c10-849d-52f526ff5af8@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 07 Feb 2022 04:39:16 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2022-22931: Path traversal in Apache James 
 
-On Sun, May 22, 2022 at 09:19:51PM +0200, Solar Designer wrote:
-> it looks like Vegard
-> Nossum and maybe Thadeu Lima de Souza Cascardo intend to propose changes
-> to the kernel's Documentation/admin-guide/security-bugs.rst:
-> 
-> On Fri, May 20, 2022 at 10:14:07AM +0200, Vegard Nossum wrote:
-> > I'll respond a bit later with a slightly more detailed option that also
-> > includes potential modifications to the in-kernel documentation as
-> > displayed on kernel.org.
+Severity: moderate
 
-Reports of Linux kernel issues sent to linux-distros tend to ignore our
-policies - not only in terms of the aspect that started this thread, but
-also in that the reporter doesn't propose a specific date/time for
-making the issue (fully) public (maybe doesn't intend to do so
-themselves at all) and doesn't know/care/want to make a possible PoC
-public (if they shared that with linux-distros).
+Description:
 
-Overall, it looks like they're not reading our policy at all until we
-ask them to.
+Fix of CVE-2021-40525 do not prepend delimiters upon valid directory valida=
+tions.
 
-Documentation/admin-guide/security-bugs.rst gives the list posting
-address and mentions the [vs] prefix.  It also does link to the wiki,
-but that makes actually visiting the wiki and reading the policy
-technically optional.  Maybe only the wiki link should be kept, and the
-posting address removed.  Alternatively, if a dependency on the wiki is
-undesirable, maybe the Linux kernel documentation should include a copy
-of linux-distros instructions for reporters (copied from the wiki,
-including the posting address) in a nearby text file (and add to it the
-wiki link for a possibly more current revision), and refer to that.
+Affected implementations include:
+ - maildir mailbox store
+ - Sieve file repository
 
-There's also this:
+This enables a user to access other users data stores (limited to user name=
+s being prefixed by the value of the username being used).
 
-"Distros will need some time to test the proposed patch and will
-generally request at least a few days of embargo"
+Mitigation:
 
-which kind of goes against our request that the reporter be the first to
-propose a tentative public disclosure date/time.  So I suggest the above
-phrase be dropped.
+This had been fixed in Apache James 3.6.2.
 
-If there are no objections, Vegard can you please suggest specific edits
-accordingly, and if there are no objections to those either, then submit
-them as a patch?
+Credit:
 
-Thanks,
+These issues were discovered and reported by GHSL team member Jaroslav Loba=
+=C4=8Devski
 
-Alexander
