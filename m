@@ -1,45 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/08/1
-Message-ID: <857511092.5199.1657264857437@appsuite-dev.open-xchange.com>
-Date: Fri, 8 Jul 2022 10:20:57 +0300 (EEST)
-From: Aki Tuomi <aki.tuomi@...ecot.fi>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE-2022-30550: Privilege escalation possible in dovecot when similar master and non-master passdbs are used
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/07/1
+Message-ID: <f037cdaa-2cef-1c10-849d-52f526ff5af8@apache.org>
+Date: Mon, 07 Feb 2022 04:39:16 +0000
+From: Benoit Tellier <btellier@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2022-22931: Path traversal in Apache James 
 Content-Type: text/plain; charset=utf-8
 
+Severity: moderate
 
-> On 06/07/2022 16:54 EEST Aki Tuomi <aki.tuomi@...ecot.fi> wrote:
-> 
->  
-> Affected product: Dovecot IMAP Server 
-> Internal reference: DOV-5320
-> Vulnerability type: Improper Access Control (CWE-284) 
-> Vulnerable version: 2.2
-> Vulnerable component: submission 
-> Report confidence: Confirmed 
-> Solution status: Fixed in main
-> Researcher credits: Julian Brook (julezman)
-> Vendor notification: 2022-05-06 
-> CVE reference: CVE-2022-30550
-> CVSS: 6.8 (CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:N) 
-> 
-> Vulnerability Details: 
-> When two passdb configuration entries exist in Dovecot configuration, which have the same driver and args settings, the incorrect username_filter and mechanism settings can be applied to passdb definitions. These incorrectly applied settings can lead to an unintended security configuration and can permit privilege escalation with certain configurations involving master user authentication.
-> 
-> Dovecot documentation does not advise against the use of passdb definitions which have the same driver and args settings. One such configuration would be where an administrator wishes to use the same pam configuration or passwd file for both normal and master users but use the username_filter setting to restrict which of the users is able to be a master user.
-> 
-> Risk: 
-> If same passwd file or PAM is used for both normal and master users, it is possible for attacker to become master user.
-> 
-> Workaround:
-> Always authenticate master users from different source than regular users, e.g. using a separate passwd file. Alternatively, you can use global ACLs to ensure that only legimate master users have priviledged access.
-> 
-> Fix:
-> This has been fixed in main branch. See https://github.com/dovecot/core/compare/7bad6a24%5E..a1022072.patch
+Description:
 
-Hi all, unfortunately two mistakes crept into this notification. Apologies for that.
+Fix of CVE-2021-40525 do not prepend delimiters upon valid directory validations.
 
-The correct component for this is "auth", and the affected version should have been "2.2 and newer".
+Affected implementations include:
+ - maildir mailbox store
+ - Sieve file repository
 
-Regards,
-Aki Tuomi
+This enables a user to access other users data stores (limited to user names being prefixed by the value of the username being used).
+
+Mitigation:
+
+This had been fixed in Apache James 3.6.2.
+
+Credit:
+
+These issues were discovered and reported by GHSL team member Jaroslav Lobačevski
+
