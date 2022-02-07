@@ -1,33 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/20/1
-Message-ID: <a1429adf-2639-f01f-1978-ca7d0f733df7@apache.org>
-Date: Mon, 19 Sep 2022 23:13:25 +0000
-From: Benoit Tellier <btellier@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/07/3
+Message-ID: <9e4aa379-70ce-3bf9-1480-c36a1b9fa4e0@enst-bretagne.fr>
+Date: Mon, 7 Feb 2022 22:04:17 +0100
+From: Gabriel Corona <gabriel.corona@...t-bretagne.fr>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-28220: STARTTLS command injection in Apache JAMES 
+Subject: Browser-mediated attacks on WebDriver servers
 Content-Type: text/plain; charset=utf-8
 
-Severity: This can result in Man-in -the-middle command injection attacks, leading potentially to leakage of sensible information like user credentials. Exploit in IMAP requires a local account but SMTP exploit does not. Data integrity could be compromised in POP3.
+Several browser-mediated attacks on WebDriver servers:
 
-Description:
+* GeckoDriver CSRF vulnerability (CVE-2020-15660);
+* GeckoDriver DNS-rebinding vulnerability (CVE-2021-4138);
+* Chromedriver localhost-bound same-site/cross-origin request forgery 
+vulnerability;
+* Selenium server/Grid CSRF vulnerability;
+* Selenium server/Grid DNS-rebinding vulnerability.
 
-Apache James prior to release 3.6.3 and 3.7.1 is vulnerable to a buffering attack relying on the use of the STARTTLS command. 
+In all cases this could be used to trigger arbitrary code execution.
 
-Fix of CVE-2021-38542, which solved similar problem fron Apache James 3.6.1, is subject to a parser differential and do not take into account concurrent requests.
+GeckoDriver CSRF vulnerability
+==============================
 
+This is CVE-2020-15660. Fixed in GeckoDriver v0.27.0.
 
+GeckoDriver DNS-rebinding vulnerability
+=======================================
 
-This issue is being tracked as JAMES-1862
+This is CVE-2021-4138. Fixed in GeckoDriver v0.30.0.
 
-Mitigation:
+Chromedriver localhost-bound same-site/cross-origin request forgery
+===================================================================
 
-Upgrade to Apache James 3.7.1 or Apache James 3.6.3.
+A XSS on another localhost-bound service could be exploited to trigger
+arbitrary code execution.
 
-Credit:
+Reference: https://bugs.chromium.org/p/chromium/issues/detail?id=1100097
 
-Apache James PMC would like to thanks Benoit TELLIER for this report, and Fabian Ising for his support.
+Selenium server/Grid CSRF vulnerability
+=======================================
 
-References:
+A CVE-ID has been requested from MITRE.
 
-https://james.apache.org/james/update/2022/08/26/james-3.7.1.html
+This is fixed in SeleniumServer 4.
 
+Selenium server/Grid DNS-rebinding vulnerability
+====================================
+
+A CVE-ID has been requested from MITRE.
+
+This is fixed in SeleniumServer 4.
