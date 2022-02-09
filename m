@@ -1,57 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/23/4
-Message-ID: <20221223081727.GB2404@suse.de>
-Date: Fri, 23 Dec 2022 09:17:28 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/09/1
+Message-Id: <591FA22B-3560-4892-8476-5105C89A122D@beckweb.net>
+Date: Wed, 9 Feb 2022 14:12:46 +0100
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Details on this supposed Linux Kernel ksmbd RCE
+Subject: Vulnerability in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-Hi folks,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-tldr: I requested 5 CVEs for the new ZDI issues Josh and Jan referenced.
+The following releases contain fixes for security vulnerabilities:
 
-long form:
-
-Nice surprise 1 day before Christmas.
-
-On Fri, Dec 23, 2022 at 08:06:28AM +0100, Greg KH wrote:
-> On Thu, Dec 22, 2022 at 04:49:04PM -0500, Jan Schaumann wrote:
-> > Lastly, given that this is a coordinated disclosure,
-> > I don't know why there are no CVE IDs reserved for
-> > these.
-> 
-> The kernel developers do not work with CVEs at all as they are not all
-> that relevant for the most part for kernel issues.
-
-We know.
-
-> MITRE agrees with us
-> will not even give them to us if we ask for them :)
-
-Not sure why they do not like you, but to be very clear anyone else can
-requests CVEs for the kernel, (except the blacklisted drivers/staging/ area).
-
-> Some Linux companies still insist on assigning CVEs, but that's
-> primarily to help enable their internal engineering processes more than
-> anything else.
-
-The whole software industry operates with CVEs as primary identifiers at
-this time, so it is not just some "internal engineering processes".
-
-> As an alternative, please look at the GSD (Global Security Database,
-> https://globalsecuritydatabase.org/) for which the kernel does get ids
-> assigned for issues like this, and many many others.
-
-Perhaps this or any of the other ID spaces / databases will be taking
-off in the near future, but the main industry index is CVEs at this time.
+* Jenkins 2.334
+* Jenkins LTS 2.319.3
 
 
-That said, I have just filed 5 CVE requests for the 5 ZDI issues cross-
-referencing the Linux kernel mainline commits.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2022-02-09/
 
-FWIW, they were fixed in mainline in July and no one had spotted them,
-which of course underlines Gregs point and that there are not enough
-watchers.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-Ciao, Marcus
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-2602 / CVE-2021-43859 (upstream) & CVE-2022-0538 (Jenkins)
+Jenkins 2.333 and earlier, LTS 2.319.2 and earlier is affected by the
+XStream library's vulnerability CVE-2021-43859. This library is used by
+Jenkins to serialize and deserialize various XML files, like global and job
+`config.xml`, `build.xml`, and numerous others.
+
+This allows attackers able to submit crafted XML files to Jenkins to be
+parsed as configuration, e.g. through the `POST config.xml` API, to cause a
+denial of service (DoS).
+
