@@ -1,90 +1,286 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/04/2
-Message-ID: <CAJwKpyQDJVgvZGUXWVpx5dUCoajAyx8R-8qZEQ7CWMgXi+gv5g@mail.gmail.com>
-Date: Tue, 4 Oct 2022 10:03:56 +0200
-From: Carlton Gibson <carlton.gibson@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Django CVE-2022-41323: Potential denial-of-service vulnerability in internationalized URLs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/10/1
+Message-ID: <c83faa6a-847b-6ce4-fe10-c79c834ae28b@appgate.com>
+Date: Thu, 10 Feb 2022 14:16:41 +0000
+From: Samuel Page <samuel.page@...gate.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2022-0435: Remote Stack Overflow in Linux Kernel TIPC Module since 4.8 (net/tipc)
 Content-Type: text/plain; charset=utf-8
 
-Django security releases issued: 4.1.2, 4.0.8, and 3.2.16
-https://www.djangoproject.com/weblog/2022/oct/04/security-releases/
 
-In accordance with `our security release policy
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the Django
-team
-is issuing
-`Django 4.1.2 <https://docs.djangoproject.com/en/dev/releases/4.1.2/>`_,
-`Django 4.0.8 <https://docs.djangoproject.com/en/dev/releases/4.0.8/>`_, and
-`Django 3.2.16 <https://docs.djangoproject.com/en/dev/releases/3.2.16/>`_.
-These releases addresses the security issue detailed below. We encourage all
-users of Django to upgrade as soon as possible.
+Immunity Security Advisory
 
-CVE-2022-41323: Potential denial-of-service vulnerability in
-internationalized URLs
-===================================================================================
+CVE-2022-0435: A Remote Stack Overflow in The Linux Kernel
 
-Internationalized URLs were subject to potential denial of service attack
-via
-the locale parameter. This is now escaped to avoid this possibility.
 
-This issue has medium severity, according to the Django security policy.
+========================================================================
+Contents
+========================================================================
 
-Thanks to Benjamin Balder Bach for the report.
+Summary
+Analysis
+Further Information
+Remediation
+Acknowledgements
+Disclosure Timeline
 
-Affected supported versions
-===========================
 
-* Django main branch
-* Django 4.1
-* Django 4.0
-* Django 3.2
+========================================================================
+Summary
+========================================================================
 
-Resolution
-==========
+We discovered a remotely & locally reachable stack overflow in the Linux
+kernel networking module for the Transparent Inter-Process
+Communication (TIPC) protocol.
 
-Patches to resolve the issue have been applied to Django's main branch and
-the
-4.1, 4.0, and 3.2 release branches. The patches may be obtained from the
-following changesets:
+While the module can be found in most major distributions, it must be
+loaded in order to be exploited. Furthermore, for remote exploitation
+the target would need to have a TIPC bearer set up already i.e.
+vulnerability extends to systems using TIPC.
 
-* On the `main branch <
-https://github.com/django/django/commit/e5ea2842941967f06cefa10865f303b39c95279f
->`__
-* On the `4.1 release branch <
-https://github.com/django/django/commit/9d656ea51d9ea7105c0c0785783ac29d426a7d25
->`__
-* On the `4.0 release branch <
-https://github.com/django/django/commit/23f0093125ac2e553da6c1b2f9988eb6a3dd2ea1
->`__
-* On the `3.2 release branch <
-https://github.com/django/django/commit/5b6b257fa7ec37ff27965358800c67e2dd11c924
->`__
+Exploitation is trivial and can lead to denial of service via kernel
+panic. In the absence, or bypass, of stack canaries/KASLR the
+vulnerability can lead to control flow hijacking with an arbitrary
+payload.
 
-The following releases have been issued:
+The vulnerability has been present since the introduction of the TIPC
+monitoring framework in kernel version 4.8.
 
-* Django 4.1.2 (`download Django 4.1.2 <
-https://www.djangoproject.com/m/releases/4.1/Django-4.1.2.tar.gz>`_ |
-`4.1.2 checksums <
-https://www.djangoproject.com/m/pgp/Django-4.1.2.checksum.txt>`_)
-* Django 4.0.8 (`download Django 4.0.8 <
-https://www.djangoproject.com/m/releases/4.0/Django-4.0.8.tar.gz>`_ |
-`4.0.8 checksums <
-https://www.djangoproject.com/m/pgp/Django-4.0.8.checksum.txt>`_)
-* Django 3.2.16 (`download Django 3.2.16 <
-https://www.djangoproject.com/m/releases/3.2/Django-3.2.16.tar.gz>`_ |
-`3.2.16 checksums <
-https://www.djangoproject.com/m/pgp/Django-3.2.16.checksum.txt>`_)
+- Introduced: commit 35c55c9877f8 ("tipc: add neighbor monitoring framework")
+- Fixed: https://github.com/torvalds/linux/commit/9aa422ad326634b76309e8ff342c246800621216
 
-The PGP key ID used for this release is Carlton Gibson: `E17DF5C82B4F9D00 <
-https://github.com/carltongibson.gpg>`_.
 
-General notes regarding security reporting
-==========================================
+========================================================================
+Analysis
+========================================================================
 
-As always, we ask that potential security issues be reported via
-private email to ``security@...ngoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
+Transparent Inter Process Communication (TIPC) is an IPC mechanism
+designed for intra-cluster communication. Cluster topology is managed
+around the concept of nodes and the links between these nodes.
 
+One of the many features of the TIPC module is its monitoring framework.
+Introduced into the kernel in June 2016 (commit 35c55c9), the framework
+allows nodes to monitor network topology and share their view with other
+nodes in the same domain.
+
+Peer state is tracked via `struct tipc_peer`:
+
+...
+    /* struct tipc_peer: state of a peer node and its domain
+     * @addr: tipc node identity of peer
+     * @head_map: shows which other nodes currently consider peer 'up'
+     * @domain: most recent domain record from peer
+     * @hash: position in hashed lookup list
+     * @list: position in linked list, in circular ascending order by 'addr'
+     * @applied: number of reported domain members applied on this monitor list
+     * @is_up: peer is up as seen from this node
+     * @is_head: peer is assigned domain head as seen from this node
+     * @is_local: peer is in local domain and should be continuously monitored
+     * @down_cnt: - numbers of other peers which have reported this on lost
+     */
+    struct tipc_peer {
+        u32 addr;
+        struct tipc_mon_domain *domain;
+        struct hlist_node hash;
+        struct list_head list;
+        u8 applied;
+        u8 down_cnt;
+        bool is_up;
+        bool is_head;
+        bool is_local;
+    };
+...
+
+`struct tipc_mon_domain` referends a domain record, used to define that
+peers view of the TIPC topology:
+
+...
+    #define MAX_MON_DOMAIN       64
+    ...
+
+    /* struct tipc_mon_domain: domain record to be transferred between peers
+     * @len: actual size of domain record
+     * @gen: current generation of sender's domain
+     * @ack_gen: most recent generation of self's domain acked by peer
+     * @member_cnt: number of domain member nodes described in this record
+     * @up_map: bit map indicating which of the members the sender considers up
+     * @members: identity of the domain members
+     */
+    struct tipc_mon_domain {
+        u16 len;
+        u16 gen;
+        u16 ack_gen;
+        u16 member_cnt;
+        u64 up_map;
+        u32 members[MAX_MON_DOMAIN];
+    };
+...
+
+These records are transferred between peers, with each node keeping a
+copy of the most up-to-date domain record received from each of its
+peers in the `tipc_peer->domain` field.
+
+Records are processed by the function `tipc_mon_rcv`, which check
+`STATE_MSG` received from peers, to see if the message body contains a
+valid `struct tipc_mon_domain`:
+
+...
+    /* tipc_mon_rcv - process monitor domain event message
+     *
+     * @data: STATE_MSG body
+     * @dlen: STATE_MSG body size (taken from TIPC header)
+     */
+    void tipc_mon_rcv(struct net *net, void *data, u16 dlen, u32 addr,
+        struct tipc_mon_state *state, int bearer_id)
+    {
+        ...
+        struct tipc_mon_domain *arrv_dom = data;
+        struct tipc_mon_domain dom_bef;
+        ...
+
+        /* Sanity check received domain record */                        [0]
+        if (dlen < dom_rec_len(arrv_dom, 0))                             [1]
+            return;
+        if (dlen != dom_rec_len(arrv_dom, new_member_cnt))               [2]
+            return;
+        if (dlen < new_dlen || arrv_dlen != new_dlen)                    [3]
+            return;
+        ...
+
+        /* Drop duplicate unless we are waiting for a probe response */
+        if (!more(new_gen, state->peer_gen) && !probing)                 [4]
+            return;
+        ...
+
+        /* Cache current domain record for later use */
+        dom_bef.member_cnt = 0;
+        dom = peer->domain;
+        if (dom)                                                         [5]
+            memcpy(&dom_bef, dom, dom->len);                             [6]
+
+        /* Transform and store received domain record */
+        if (!dom || (dom->len < new_dlen)) {
+            kfree(dom);
+            dom = kmalloc(new_dlen, GFP_ATOMIC);                         [7]
+            peer->domain = dom;
+            if (!dom)
+                goto exit;
+        }
+...
+
+The function does some basic sanity checks [0] to make sure that a) the
+message body actually contains a domain record and b) does it contain a
+valid `struct tipc_mon_domain`.
+
+Where `data` is the message body and `dlen` is the length of the `data`
+taken from the message header, the function checks:
+
+- the length of `data` is enough to at least hold an empty record [1]
+- the length of `data` matches the expected size of a domain record
+  given the provided `member_cnt` field [2]
+- the length of `data` matches the provided `len` field [3]
+
+Later we fetch the sending peers `struct peer` to see if we've already
+received a domain record from them [5]. If we have, we want to
+temporarily cache a copy of the old record to do a comparison later [6].
+
+Then, satisfied it's a new and valid record, we'll update the
+`struct peer->domain` field with the new info. If it's the first domain
+record, we'll make a new `kmalloc`ation for this [7], or if it's larger
+than the last one we'll reallocate it.
+
+-----------------
+The Vulnerability
+-----------------
+
+The vulnerability lies in the fact that during the initial sanity
+checks, the function doesn't check that `member_cnt` is below
+MAX_MON_DOMAIN which defines the maximum size of the `members` array.
+
+By pretending to be a peer node and establishing a link with the target,
+locally or remotely, we're able to first submit a malicious domain
+record containing an arbitrary payload; so long as the len/member_cnt
+fields match up for the sanity checks, this will be kmallocated fine.
+
+Next, we can send a newer domain record which will cause the previous
+malicious record to be memcpy'd into a 272 bytes local
+`struct tipc_mon_domain` &dom_bef [6] triggering a stack overflow.
+
+This allows us to overwrite the contents of the stack following
+&dom_bef with our arbitrary members buffer from the malicious domain
+record submitted first; the size of which is constrained by the media
+MTU (Ethernet, UDP, Inifiband)
+
+
+========================================================================
+Further Information
+========================================================================
+
+For a more in-depth analysis, including additional TIPC background, we
+will be posting up a follow-up blog to compliment this advisory.
+
+Regarding exploitation, after time has been given for patching and
+remediation we will also release a further post discussing exploitation.
+
+Further information will be posted over at https://twitter.com/immunityinc/
+
+
+========================================================================
+Remediation
+========================================================================
+
+This vulnerability has been present since the monitoring framework was
+first introduced in June 2016, impacting versions 4.8 forward.
+
+The patch below was introduced in commit 9aa422ad3266, so updating your
+system to include this patch is the best way to mitigate CVE-2022-0435,
+including an additional u16 overflow spotted by Eric Dumazet.
+
+The TIPC module must be loaded for the system to be vulnerable,
+furthermore to be targeted remotely the system needs to have a TIPC
+bearer enabled. If you don't need to use TIPC or are unsure if you are,
+you can take the following steps:
+
+- `$ lsmod | grep tipc` will let you know if the module is currently
+  loaded,
+- `modprobe -r tipc` may allow you unload the module if loaded,
+  however you may need to reboot your system
+- `$ echo "install tipc /bin/true" >> /etc/modprobe.d/disable-tipc.conf`
+  will prevent the module from being loaded, which is a good idea if you
+  have no reason to use it
+
+If you need to use TIPC and can't immediately patch your system, look to
+enforce any configurtions that prevent or limit the ability for
+attackers to imitate nodes in your cluster. Options include TIPC
+protocol level encryption, IPSec/MACSec, network seperation etc.
+
+It's also worth noting that the current `CONFIG_FORTIFY_SRC=y` is a hard
+mitigation to leveraging CVE-2022-0435 for control-flow hijacking, as it
+does a bounds check on the size of the offending memcpy and causes a
+kernel panic.
+
+
+========================================================================
+Acknowledgements
+========================================================================
+
+I'd like to thank the maintainers of the TIPC module, as well as members
+of the security@...nel.org and linux-distros@...openwall.org for their
+help and work throughout the disclosure process.
+
+I would also like to mention the vulnerability research done on TIPC
+previously by SentinelLabs with their work on CVE-2021-43267 and other
+security researchers for publishing their findings on TIPC exploitation.
+
+- https://www.sentinelone.com/labs/tipc-remote-linux-kernel-heap-overflow-allows-arbitrary-code-execution/
+- https://haxx.in/posts/pwning-tipc/
+
+========================================================================
+Disclosure Timeline
+========================================================================
+
+- 27/01/2022: Vulnerability & fix suggestion reported
+- 05/02/2022: The patch is finalised
+- 10/02/2022: Coordinated release date (14:00 GMT)
+
+The information contained in this electronic mail is confidential information intended only for the use of the individual(s) or entity(s) named. If the reader of the message is not the addressee (or authorized to receive for the addressee), you are hereby notified that any dissemination, distribution or copying of this communication is strictly prohibited. If you have received this communication in error, please immediately notify the sender by reply e-mail and/or by telephone and destroy the original message.
