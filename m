@@ -1,70 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/02/1
-Message-ID: <adf7f4c9-f388-a882-562a-f2b424f16a09@prodaft.com>
-Date: Tue, 2 Aug 2022 11:53:25 +0300
-From: EGE BALCI <ege@...daft.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/11/1
+Message-ID: <59c2f992-ea03-6654-51da-b485f5a16d9b@apache.org>
+Date: Fri, 11 Feb 2022 02:08:41 +0000
+From: Aristedes Maniatis <amaniatis@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-29154: Rsync client-side arbitrary file write vulnerability.
+Subject: CVE-2022-24289: Apache Cayenne: Deserialization of untrusted data in the Hessian Component of Apache Cayenne 4.1 with older Java versions 
 Content-Type: text/plain; charset=utf-8
 
-Date reported           : July 25, 2022
-CVE identifiers         : CVE-2022-29154.
-------------------------------------------------------------------------
-Rsync client-side arbitrary file write vulnerability. (CVE-2022-29154)
-------------------------------------------------------------------------
+Severity: moderate
 
- >>>> We have discovered a critical arbitrary file write vulnerability 
-in the
- >>>> rsync utility that allows malicious remote servers to write arbitrary
- >>>> files inside the directories of connecting peers. The server chooses
- >>>> which files/directories are sent to the client. Due to the 
-insufficient
- >>>> controls inside the
- >>>> [do_server_recv](
- >>> 
-https://github.com/WayneD/rsync/blob/85c56b2603d97c225889175797ffff6745a4d305/main.c#L1118
- >>> )
- >>>> function, a malicious rysnc server (or Man-in-The-Middle attacker) can
- >>>> overwrite arbitrary files in the rsync client target directory and
- >>>> subdirectories. An attacker abusing this vulnerability can overwrite
- >>>> critical files under the target rsync directory and subdirectories 
-(for
- >>>> example, to overwrite the .ssh/authorized_keys file). This issue 
-is very
- >>>> similar with the
- >>>> [CVE-2019-6111](https://www.youtube.com/watch?v=fcesKgfSPq4).
- >>>>
- >>>> Best regards, Ege BALCI, Taha HAMAD.
+Description:
 
-The vulnerability was addressed with the developer of the rsync project 
-and necessary patches are made. Related commit and details can be found 
-in the following links,
-- https://download.samba.org/pub/rsync/NEWS
-- https://download.samba.org/pub/rsync/rsync.1#MULTI-HOST_SECURITY
-- 
-https://github.com/WayneD/rsync/commit/b7231c7d02cfb65d291af74ff66e7d8c507ee871
+Hessian serialization is a network protocol that supports object-based transmission.
+Apache Cayenne's optional Remote Object Persistence (ROP) feature is a web services-based technology that provides object persistence and query functionality to 'remote' applications.
 
-We recommend updating to the latest stable versions of rsync.
+In Apache Cayenne 4.1 and earlier, running on non-current patch versions of Java, an attacker with client access to Cayenne ROP can transmit a malicious payload to any vulnerable third-party dependency on the server.  This can result in arbitrary code execution.
 
--- 
-*Ege BALCI*
-Threat Intelligence Team Lead
 
-*PRODAFT Cyber Security Technologies INC.*
-*CH:* Y-Parc, rue Galilée 7, 1400 Yverdon-les-Bains, Switzerland
-*NL:* Wilhelmina van Pruisenweg 104, 2595 AN Den Haag, Netherlands
-*E.:*ege[at]prodaft.com
-*IN:*/egebalci
+Mitigation:
 
-In case you think you’re not the designated recipient of the e-mail 
-hereby; please delete it accordingly. *This e-mail may have been sent 
-from a mobile device. Please contact me from my mobile, in case you 
-notice an error in the content. PS. Feel free to contact me via Signal, 
-Threema or Telegram; or ask for my public PGP key for high-profile cases 
-that may require higher confidentiality.
+Either upgrade to Apache Cayenne 4.2 or a patched version of Java (after 6u211, 7u201, 8u191, and 11.0.1)
 
-Content of type "text/html" skipped
+All versions of Apache Cayenne 4.2 have whitelisting enabled by default for the Hessian deserialization.  Later versions of Java also have LDAP mitigation in place. Users can either upgrade Java or Apache Cayenne to avoid the issue.
 
-Download attachment "OpenPGP_0xCDCA0F4B4445AA39.asc" of type "application/pgp-keys" (649 bytes)
+LDAP mitigation is present starting in JDK 6u211, 7u201, 8u191, and 11.0.1 where com.sun.jndi.ldap.object.trustURLCodebase system property is set to false by default to prevent JNDI from loading remote code through LDAP.
 
-Download attachment "OpenPGP_signature" of type "application/pgp-signature" (237 bytes)
+Credit:
+
+Panda
+
