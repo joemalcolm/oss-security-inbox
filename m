@@ -1,29 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/04/4
-Message-ID: <YsLj+ux2Pgkir5F8@adhil>
-Date: Mon, 4 Jul 2022 14:58:34 +0200
-From: Jens-Wolfhard Schicke-Uffmann <j.schicke@...xlogic.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/11/4
+Message-ID: <6ce2cc1a-3308-19a3-91d5-b5457ed6f2f5@apache.org>
+Date: Fri, 11 Feb 2022 10:01:38 +0000
+From: Marcus Eriksson <marcuse@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: DO NOT OPEN PREVIOUS MAIL Re:  Denial of service in  GnuPG
+Subject: CVE-2021-44521: Apache Cassandra: Remote code execution for scripted UDFs 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: high
 
-On Mon, Jul 04, 2022 at 02:15:45PM +0200, Peter van Dijk wrote:
-> > On 04/07/2022 07:31 Demi Marie Obenour <demi@...isiblethingslab.com> wrote:
-> > Signature (of /dev/null) that triggers this bug is attached, along with
-> > the corresponding public key.
-> This is insane. You can't send weaponised exploits that crash email
-> clients to public mailing lists. Please do not do this again.
-What email client would that be specifically? Because at least on
-my end, nothing nefarious happened. GPG was called on the outermost
-layer of signature and verified the email in entirety (and did so
-quickly).
+Description:
 
-Do we have another bug lurking somewhere?
+When running Apache Cassandra with the following configuration:
 
+enable_user_defined_functions: true
+enable_scripted_user_defined_functions: true
+enable_user_defined_functions_threads: false 
 
-Regards,
-  Jens
+it is possible for an attacker to execute arbitrary code on the host. The attacker would need to have enough permissions to create user defined functions in the cluster to be able to exploit this. Note that this configuration is documented as unsafe, and will continue to be considered unsafe after this CVE.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+This issue is being tracked as CASSANDRA-17352
+
+Mitigation:
+
+Set `enable_user_defined_functions_threads: true` (this is default)
+or
+3.0 users should upgrade to 3.0.26
+3.11 users should upgrade to 3.11.12
+4.0 users should upgrade to 4.0.2
+
+Credit:
+
+This issue was discovered by Omer Kaspi of the JFrog Security vulnerability research team.
+
