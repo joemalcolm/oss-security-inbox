@@ -1,57 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/28/9
-Message-ID: <Y6yMqNRxwVuFnWJZ@gentoo.org>
-Date: Wed, 28 Dec 2022 12:36:24 -0600
-From: John Helmert III <ajak@...too.org>
-To: oss-security@...ts.openwall.com
-Cc: Alejandro Colomar <alx.manpages@...il.com>, Michael Kerrisk <mtk.manpages@...il.com>, linux-kernel@...r.kernel.org, linux-man@...r.kernel.org
-Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/11/5
+Message-ID: <CALBaBG95cw-_ZPCi+pppp_uhvX1ydSf=FP+sxfG-j4GDvieBFQ@mail.gmail.com>
+Date: Fri, 11 Feb 2022 12:39:10 -0800
+From: Aaron Patterson <aaron.patterson@...il.com>
+To: oss-security@...ts.openwall.com, ruby-security-ann@...glegroups.com,  rubyonrails-security@...glegroups.com
+Subject: [CVE-2022-23633] Possible exposure of information vulnerability in Action Pack
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 28, 2022 at 01:02:35PM -0500, Demi Marie Obenour wrote:
-> On Wed, Dec 28, 2022 at 12:25:17PM -0500, Shawn Webb wrote:
-> > On Wed, Dec 28, 2022 at 11:47:25AM -0500, Demi Marie Obenour wrote:
-> > > On Wed, Dec 28, 2022 at 10:24:58AM -0500, Shawn Webb wrote:
-> > > > On Tue, Dec 27, 2022 at 04:44:49PM -0800, Lyndon Nerenberg (VE7TFX/VE6BBM) wrote:
-> > > > > Dominique Martinet writes:
-> > > > > 
-> > > > > > But, really, I just don't see how this can practically be said to be parsable...
-> > > > > 
-> > > > > In its current form it never will be.  The solution is to place
-> > > > > this variable-length field last.  Then you can "cut -d ' ' -f 51-"
-> > > > > to get the command+args part (assuming I counted all those fields
-> > > > > correctly ...)
-> > > > > 
-> > > > > Of course, this breaks backwards compatability.
-> > > > 
-> > > > It would also break forwards compatibility in the case new fields
-> > > > needed to be added.
-> > > > 
-> > > > The only solution would be a libxo-style feature wherein a
-> > > > machine-parseable format is exposed by virtue of a file extension.
-> > > > 
-> > > > Examples:
-> > > > 
-> > > > 1. /proc/pid/stats.json
-> > > > 2. /proc/pid/stats.xml
-> > > > 3. /proc/pid/stats.yaml_shouldnt_be_a_thing
-> > > 
-> > > A binary format would be even better.  No risk of ambiguity.
-> > 
-> > I think the argument I'm trying to make is to be flexible in
-> > implementation, allowing for future needs and wants--that is "future
-> > proofing".
-> 
-> Linux should not have an XML, JSON, or YAML serializer.  Linux already
-> does way too much; let’s not add one more thing to the list.
+## Impact
 
-Handling a new binary format is not 'one more thing' added?
+Under certain circumstances response bodies will not be closed, for example
+a bug in a webserver[1] or a bug in a Rack middleware. In the event a
+response is not notified of a close, ActionDispatch::Executor will not know
+to reset thread local state for the next request. This can lead to data
+being leaked to subsequent requests, especially when interacting with
+ActiveSupport::CurrentAttributes.
 
-> -- 
-> Sincerely,
-> Demi Marie Obenour (she/her/hers)
-> Invisible Things Lab
+Upgrading to the FIXED versions of Rails will ensure mitigation if this
+issue even in the context of a buggy webserver or middleware implementation.
 
+## Patches
 
+To aid users who aren't able to upgrade immediately we have provided
+patches for
+the two supported release series. They are in git-am format and consist of a
+single changeset.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
+* 5.2-information-leak.patch
+* 6.0-information-leak.patch
+* 6.1-information-leak.patch
+* 7.0-information-leak.patch
+
+## Workarounds
+
+Upgrading is highly recommended, but to work around this problem the
+following middleware can be used:
+
+```
+class GuardedExecutor < ActionDispatch::Executor
+  def call(env)
+    ensure_completed!
+    super
+  end
+
+  private
+
+    def ensure_completed!
+      @executor.new.complete! if @executor.active?
+    end
+end
+
+# Ensure the guard is inserted before ActionDispatch::Executor
+Rails.application.configure do
+  config.middleware.swap ActionDispatch::Executor, GuardedExecutor, executor
+end
+```
+
+## Credits
+
+Thanks to Jean Boussier for fixing this!
+
+1. https://github.com/puma/puma/pull/2812
+
+Content of type "text/html" skipped
+
+Download attachment "6.1-information-leak.patch" of type "application/octet-stream" (4161 bytes)
+
+Download attachment "6.0-information-leak.patch" of type "application/octet-stream" (4161 bytes)
+
+Download attachment "7.0-information-leak.patch" of type "application/octet-stream" (5474 bytes)
+
+Download attachment "5.2-information-leak.patch" of type "application/octet-stream" (4158 bytes)
