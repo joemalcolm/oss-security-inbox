@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6724" "Monday" "5" "August" "2019" "15:51:59" "+0200" "Matthias Gerstner" "mgerstner@suse.de" "<20190805135159.GD9991@f195.suse.de>" "167" "[oss-security] Security issues in various deepin D-Bus services and tools" nil nil nil "8" "2019080513:51:59" "[oss-security] Security issues in various deepin D-Bus services and tools" (number mark "U       mgerstner@su Aug  5  167/6724  " thread-indent "\"[oss-security] Security issues in various deepin D-Bus services and tools\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Security issues in various deepin D-Bus services and tools" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["928" "Friday" "11" "February" "2022" "16:51:21" "+0800" "Zexuan Luo" "spacewander@apache.org" nil "28" "[oss-security] CVE-2022-24112: Apache APISIX: apisix/batch-requests plugin allows overwriting the X-REAL-IP header" nil nil nil "2" nil nil (number mark "U       spacewander@ Feb 11   28/928   " thread-indent "\"[oss-security] CVE-2022-24112: Apache APISIX: apisix/batch-requests plugin allows overwriting the X-REAL-IP header\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2022-24112: Apache APISIX: apisix/batch-requests plugin allows overwriting the X-REAL-IP header" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 1436 invoked by uid 550); 5 Aug 2019 13:52:11 -0000
+Received: (qmail 13675 invoked by uid 550); 11 Feb 2022 12:43:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,183 +12,49 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1401 invoked from network); 5 Aug 2019 13:52:11 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Mon, 5 Aug 2019 15:51:59 +0200
-From: Matthias Gerstner <mgerstner@suse.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20190805135159.GD9991@f195.suse.de>
+Received: (qmail 26073 invoked from network); 11 Feb 2022 08:51:45 -0000
+X-Gm-Message-State: AOAM532evtu+EHPURJxLwFMWAka6Bs8//06NLL1R2HhDJxeCR8c3HGUv
+	5zqC4pxKiwRYj8qQT2FuMY8gS31ubT7lpHyl7Uo=
+X-Google-Smtp-Source: ABdhPJwsGxOnwAgsvWvH4pAztAtiwDOI5jErBLYSOBt9AX4GinPywqQZeuvD93B7DJxYdID5ErE/CRWCVNPLi0o+epc=
+X-Received: by 2002:a05:6402:22eb:: with SMTP id dn11mr746580edb.331.1644569491994;
+ Fri, 11 Feb 2022 00:51:31 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="LTeJQqWS0MN7I/qa"
-Content-Disposition: inline
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Subject: [oss-security] Security issues in various deepin D-Bus services and tools
+From: Zexuan Luo <spacewander@apache.org>
+Date: Fri, 11 Feb 2022 16:51:21 +0800
+X-Gmail-Original-Message-ID: <CAADJU122drfk2TE_bLJ=HoWJG_T6Rxnq0ngX+GQqOGXFmEoKNA@mail.gmail.com>
+Message-ID: <CAADJU122drfk2TE_bLJ=HoWJG_T6Rxnq0ngX+GQqOGXFmEoKNA@mail.gmail.com>
+To: announce@apache.org, dev@apisix.apache.org, 
+	Apache Security Team <security@apache.org>, oss-security@lists.openwall.com, 
+	Live Overflow <liveoverflow@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2022-24112: Apache APISIX: apisix/batch-requests plugin allows
+ overwriting the X-REAL-IP header
 
---LTeJQqWS0MN7I/qa
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Severity: high
 
-We've been reviewing a number of D-Bus services and applications that
-are part of the deepin desktop environment (a desktop environment
-focused on Chinese users). There are a larger number of security related
-findings in these components. Since there has been little progress in
-the communication with upstream to fully fix these issues for some time
-I'm hereby making them available more publicly. It seems to us that
-upstream is lacking a designated security contact and a security policy.
+Description:
 
-deepin-api
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+An attacker can abuse the batch-requests plugin to send requests to
+bypass the IP restriction of Admin API.
+A default configuration of Apache APISIX (with default API key) is
+vulnerable to remote code execution.
+When the admin key was changed or the port of Admin API was changed to
+a port different from the data panel, the impact is lower. But there
+is still a risk to bypass the IP restriction of Apache APISIX's data
+panel.
 
-This package provides some common system services for the deepin desktop
-environment. It employs polkit for permissions management. Full details
-can be found in [1]. The following issues have been found:
+There is a check in the batch-requests plugin which overrides the
+client IP with its real remote IP. But due to a bug in the code, this
+check can be bypassed.
 
-1) com.deepin.api.Device.conf: The service allows anybody to run
-  /usr/sbin/rfkill with arbitrary arguments. Polkit protection is not
-  implemented, only a TODO in the source code hints at it.
+Mitigation:
 
-2) com.deepin.api.SoundThemePlayer.conf: The service allows any user to
-  pass arbitrary files to it and it will try to read it in as an audio
-  file and play it as `root`.
-  While the service supposedly only looks into a couple of system
-  directories for the files like in /usr/share/sounds/..., it can be
-  tricked by passing relative path components like so:
+1. explicitly configure the enabled plugins in `conf/config.yaml`,
+ensure `batch-requests` is disabled. (Or just comment out
+`batch-requests` in `conf/config-default.yaml`)
+Or
+1. upgrade to 2.10.4 or 2.12.1.
 
-  ```
-  dbus-send --system --print-reply --dest=3Dcom.deepin.api.SoundThemePlayer=
- \
-     /com/deepin/api/SoundThemePlayer com.deepin.api.SoundThemePlayer.Play \
-     string:goodtheme string:../../../../../home/mgerstner/test string:alsa
-  ```
+Credit:
 
-  This allows to specify files within user control like e.g. a very big
-  file, a specially constructed file that triggers a buffer overflow or
-  even a special device file like a FIFO which will DoS the system
-  service.
-
-3) com.deepin.api.LocaleHelper: This service employs polkit
-  authentication but is using the deprecated unix process subject to do
-  so.
-
-  Furthermore in locale-helper/main.go: in doGenLocaleWithParam() it
-  calls ("/bin/sh", "-c", cmd) where `cmd` is a user supplied parameter.
-  This allows injection of special shell characters that can lead to
-  code execution or other unexpected results.
-
-Most of these issues have by now been adressed by upstream in some way.
-
-[1]: https://bugzilla.suse.com/show_bug.cgi?id=3D1070943
-
-deepin-file-manager
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-This package provides a file manager for the deepin desktop environment.
-Full details about the findings can be found in [2].
-
-com.deepin.pkexec.usb-device-formatter.policy: This allows any locally
-logged in regular user to run /usr/bin/usb-device-formatter without any
-authentication.
-
-The usb-device-formatter has the following issues:
-
-- it crashes when called without parameters
-- It can be used to determine the existence of arbitrary files, since
-  all paths can be passed and the error message differentiates between
-  not existing and not a block device.
-- When operating on a symlinked block device the application allows to
-  unmount arbitrary block devices as far as they're not busy.
-- The same symlink attack can be used to format arbitrary file systems
-  as long as they're not busy.
-- it reads from users `~/.pam_environment` w/o any protection. It looks
-  like other PAM applications do that as well. Linking /dev/zero there
-  causes fun things. This should only be done after dropping privilege
-  to the calling user and by not following symlinks.
-
-So this program is certainly not fit to be run without root
-authentication.
-
-A couple of the issues have in some way been adressed by upstream, but
-some are still incomplete.
-
-The com.deepin.filemanager.daemon.conf D-Bus configuration allows any
-user to own the D-Bus service on the system bus, thereby any user can
-spoof clients of this service.
-
-None of the exported D-Bus functions is protected by polkit which would
-be necessary, as is shown by the following findings:
-
-Findings in the UserShareManager interface:
-
-- setUserSharePassword: allows to set arbitrary users' smb password.
-  Changes the database in /var/lib/samba/private. If at all then this
-  must only be allowed for the caller's username.
-- addGroup: calls `groupadd` so regular users can create arbitrary
-  groups.
-- addUserToGroup: allows arbitrary users to add arbitrary other users to
-  arbitrary other groups. Luckily doesn't work on SUSE, because
-  `/usr/sbin/adduser` is called but we have `useradd`.
-- restartSambaService calls `smbd restart`
-
-Findings in UsbFormatter:
-
-- mkfs: create jfs, ext2/3/4, btrfs, swap, hfs, dosfs, xfs, reiserfs on
-  arbitrary paths. This can overwrite arbitrary regular files, too, if
-  they are large enough.
-
-Findings in DeviceInfoManager:
-
-- The methods in this interface are somehwat okay but they still allow
-  to call lsblk and various low level file system information tools on
-  arbitrary block devices or other paths.
-
-[2]: https://bugzilla.suse.com/show_bug.cgi?id=3D1134131
-
-deepin-anything
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-This is a file search tool. Full details about the findings can be found
-in [3]. The D-Bus configuration com.deepin.anything.conf allows anybody
-to own the service com.deepin.anything on the system bus, thereby any
-user can spoof clients of this service. We did not look further into its
-code base.
-
-[3]: https://bugzilla.suse.com/show_bug.cgi?id=3D1136026
-
-Regards
-
-Matthias
-
---=20
-Matthias Gerstner <matthias.gerstner@suse.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
-
-SUSE Linux GmbH
-GF: Felix Imend=F6rffer, Mary Higgins, Sri Rasiah
-HRB 21284 (AG Nuernberg)
-
---LTeJQqWS0MN7I/qa
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAl1INH4ACgkQFMQFyXGS
-NVNdExAAjxc3ewrdRJW2vS0Eyb4pvvy0zS96AfTlw+TV6bmPUHLuKEzBgnNS2pn1
-wl+rwtpelUJEEnC8PdmFmcKXmtc8qbnXtpUjNQsh09WNBOB0o0Du8fRphZVQJORB
-NkTcrwIRNnlPJKoJccWlU3tQ91t8SqnIdVJ+9GkrXQdE7vAwifuququL5Wnb/cbR
-nh8ZWA4B30LHdHNTlGYUM2hwivxU69wXr0a/X8Og0ldiXZi9VRNRzzkv73V8687U
-VCrYZepwytyUj4ceBK55XssQmZEk/lcUPJnO8rf3mR4LP0UB8PoErxb8UntQzexC
-2CVdgtNE0Ee5+tPEG85sk+GddplrvntEdhkAW3yDc3WMVwyroA2Y75umsixTlqy3
-YhoZm0uQEBJZ8Tk3CiL1C0CCD6TEtTWUwiekgm+rbwSQuiSHjvs9HPElWg4gZqIN
-IMeq4oYrOWgS2o+xxOJjOLYQnOrFDgSprW92sggEVfOKDEuqXIAzlkThB/191C5O
-lksUXYyITmkBJhZ9oHlwKFHzyxZPcJxan8n916+NeFXqqZpV2MYWI9t7xtzqLhB8
-cvb9jQ+Oq0ur+gCmN2sX2ZHO8u/eUUtxH0wCHyJmrw9/ZmMJnBg2vQbeSMVwHd7u
-t0Cb/cTCjC+iSIbS6IrZC44U5TkGTR9E8SsPQZWqppGJmHwfcNY=
-=6/E3
------END PGP SIGNATURE-----
-
---LTeJQqWS0MN7I/qa--
+Original discovery by Real World CTF at Chaitin Tech. Reported by Sauercloud.
