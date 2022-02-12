@@ -1,21 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/21/6
-Message-ID: <f62db289-55b5-0163-ab99-783c23f2185b@apache.org>
-Date: Mon, 21 Nov 2022 20:41:11 +0000
-From: Jarek Potiuk <potiuk@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/12/1
+Message-ID: <fe41809854d203124f41164b8374456a@cs.fsu.edu>
+Date: Sat, 12 Feb 2022 02:04:11 -0500
+From: Wenqing Liu <liu@...fsu.edu>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-40954: Apache Airflow Spark Provider, Apache Airflow: Airflow 2.3.4 spark provider RCE that bypass restrictions to read arbitrary files 
+Subject: CVE-2021-44879: kernel:NULL pointer dereference in fs/f2fs/gc.c:move_data_page
 Content-Type: text/plain; charset=utf-8
 
 Description:
-
-Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') vulnerability in Apache Airflow Spark Provider, Apache Airflow allows an attacker to read arbtrary files in the task execution context, without write access to DAG files. This issue affects Spark Provider versions prior to 4.0.0. It also impacts any Apache Airflow versions prior to 2.3.0 in case Spark Provider is installed (Spark Provider 4.0.0 can only be installed for Airflow 2.3.0+). Note that you need to manually install the Spark Provider version 4.0.0 in order to get rid of the vulnerability on top of Airflow 2.3.0+ version that has lower version of the Spark Provider installed).
-
-Credit:
-
-Apache Airflow PMC wants to thank id_No2015429 of 3H Security Team for reporting the issue.
+In move_data_page in fs/f2fs/gc.c in the Linux kernel 5.15.1-5.15.16, 
+there is an NULL pointer dereference when f2fs tries to migrate a block 
+that belong to special file, and the file doesn't have assigned address 
+space operations pointer array for mapping->a_ops field but called 
+a_ops->set_dirty_page(). Could cause denial of service when mounting and 
+operate on the crafted image.
 
 References:
-
-https://github.com/apache/airflow/pull/27646
-
+https://bugzilla.kernel.org/show_bug.cgi?id=215231
+https://lore.kernel.org/linux-f2fs-devel/20211206144421.3735-3-chao@kernel.org/T/
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=9056d6489f5a41cfbb67f719d2c0ce61ead72d9f
