@@ -1,72 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/22/5
-Message-ID: <CABdrxGC5N9J4TqhzAOVpKuFkYijWREVtj5ToB5aD+GQx-YDsJA@mail.gmail.com>
-Date: Fri, 22 Apr 2022 09:37:40 -0700
-From: CJ Cullen <cjcullen@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: [kubernetes] CVE-2021-25745: Ingress-nginx `path` can be pointed to service account token file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/14/1
+Message-ID: <CA+FuTSeY-GNfBCppjRwhWrOnUg9JDOaesjby2+QbuvPOO5g-=Q@mail.gmail.com>
+Date: Sun, 13 Feb 2022 11:10:58 -0500
+From: Willem de Bruijn <willemdebruijn.kernel@...il.com>
+To: "Liu, Congyu" <liu3101@...due.edu>
+Cc: "security@...nel.org" <security@...nel.org>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "netdev@...r.kernel.org" <netdev@...r.kernel.org>
+Subject: Re: Linux kernel: potential net namespace bug in IPv6 flow label management
 Content-Type: text/plain; charset=utf-8
 
-Issue Details
+On Sun, Feb 13, 2022 at 5:31 AM Liu, Congyu <liu3101@...due.edu> wrote:
+>
+>
+> Hi,
+>
+> In the test conducted on namespace, I found that one unsuccessful IPv6 flow label
+> management from one net ns could stop other net ns's data transmission that requests
+> flow label for a short time. Specifically, in our test case, one unsuccessful
+> `setsockopt` to get flow label will affect other net ns's `sendmsg` with flow label
+> set in cmsg. Simple PoC is included for verification. The behavior descirbed above
+> can be reproduced in latest kernel.
+>
+> I managed to figure out the data flow behind this: when asking to get a flow label,
+> some `setsockopt` parameters can trigger function `ipv6_flowlabel_get` to call `fl_create`
+> to allocate an exclusive flow label, then call `fl_release` to release it before returning
+> -ENOENT. Global variable `ipv6_flowlabel_exclusive`, a rate limit jump label that keeps
+> track of number of alive exclusive flow labels, will get increased instantly after calling
+> `fl_create`. Due to its rate limit design, `ipv6_flowlabel_exclusive` can only decrease
+> sometime later after calling `fl_decrease`. During this period, if data transmission function
+> in other net ns (e.g. `udpv6_sendmsg`) calls `fl_lookup`, the false `ipv6_flowlabel_exclusive`
+> will invoke the `__fl_lookup`. In the test case observed, this function returns error and
+> eventually stops the data transmission.
+>
+> I further noticed that this bug could somehow be vulnerable: if `setsockopt` is called
+> continuously, then `sendmmsg` call from other net ns will be blocked forever. Using the PoC
+> provided, if attack and victim programs are running simutaneously, victim program cannot transmit
+> data; when running without attack program, the victim program can transmit data normally.
 
-A security issue was discovered in ingress-nginx
-<https://github.com/kubernetes/ingress-nginx> where a user that can create
-or update ingress objects can use the `spec.rules[].http.paths[].path`
-field of an Ingress object (in the `networking.k8s.io` or `extensions` API
-group) to obtain the credentials of the ingress-nginx controller. In the
-default configuration, that credential has access to all secrets in the
-cluster.
+Thanks for the clear explanation.
 
-This issue has been rated High (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L
-<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L>),
-and assigned CVE-2021-25745.
-Affected Components and Configurations
+Being able to use flowlabels without explicitly registering them
+through a setsockopt is a fast path optimization introduced in commit
+59c820b2317f ("ipv6: elide flowlabel check if no exclusive leases
+exist").
 
-This bug affects ingress-nginx. If you do not have ingress-nginx installed
-on your cluster, you are not affected. You can check this by running
-`kubectl get po -n ingress-nginx`.
+Before this, any use of flowlabels required registering them, whether
+the use was exclusive or not. As autoflowlabels already skipped this
+stateful action, the commit extended this fast path to all non-exclusive
+use. But if any exclusive flowlabel is active, to protect it, all
+other flowlabel use has to be registered too.
 
-Multitenant environments where non-admin users have permissions to create
-Ingress objects are most affected by this issue.
-Affected Versions
+The commit message does state
 
-   -
+    This is an optimization. Robust applications still have to revert to
+    requesting leases if the fast path fails due to an exclusive lease.
 
-   <v1.2.0
+Though I can see how the changed behavior has changed the perception of the API.
 
-Fixed Versions
+That this extends up to a second after release of the last exclusive
+flowlabel due to deferred release is only tangential to the issue?
 
-   -
-
-   v1.2.0-beta.0
-   -
-
-   v1.2.0
-
-Mitigation
-
-If you are unable to roll out the fix, this vulnerability can be mitigated
-by implementing an admission policy that restricts the
-`spec.rules[].http.paths[].path` field on the networking.k8s.io/Ingress
-resource to known safe characters (see the newly added rules
-<https://github.com/kubernetes/ingress-nginx/blame/main/internal/ingress/inspector/rules.go>,
-or the suggested value for annotation-value-word-blocklist
-<https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#annotation-value-word-blocklist>
-).
-
-Detection
-
-If you find evidence that this vulnerability has been exploited, please
-contact security@...ernetes.io
-Additional Details
-
-See ingress-nginx Issue #8502
-<https://github.com/kubernetes/ingress-nginx/issues/8502>for more details.
-Acknowledgements
-
-This vulnerability was reported by Gafnit Amiga.
-
-Thank You,
-
-CJ Cullen on behalf of the Kubernetes Security Response Committee
-
+Flowlabels are stored globally, but associated with a netns
+(fl->fl_net). Perhaps we can add a per-netns check to the
+static_branch and maintain stateless behavior in other netns, even if
+some netns maintain exclusive leases.
