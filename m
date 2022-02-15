@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["767" "Monday" "18" "December" "2017" "12:35:21" "+0200" "Arina Ielchiieva" "arina@apache.org" "<CAC1ju523-hOdd3tO1xkqZyxyvPVwM+CFETec2c14wrVa6K6hVg@mail.gmail.com>" "33" "[oss-security] [SECURITY] CVE-2017-12630 Apache Drill XSS vulnerability" nil nil nil "12" "2017121810:35:21" "[oss-security] [SECURITY] CVE-2017-12630 Apache Drill XSS vulnerability" (number mark "U       arina@apache Dec 18   33/767   " thread-indent "\"[oss-security] [SECURITY] CVE-2017-12630 Apache Drill XSS vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["14394" "Tuesday" "15" "February" "2022" "15:33:38" "+0100" "Wadeck Follonier" "wfollonier@cloudbees.com" nil "382" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "2" nil nil (number mark "U       wfollonier@c Feb 15  382/14394 " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 32511 invoked by uid 550); 18 Dec 2017 11:52:19 -0000
+Received: (qmail 15683 invoked by uid 550); 15 Feb 2022 14:50:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,53 +12,416 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1619 invoked from network); 18 Dec 2017 10:35:40 -0000
-X-Gm-Message-State: AKGB3mKlGbYn14cfKHPNx7pVgp+Bm5sTmzr5ZM09uN2wuk9Jrhyrq82x
-	E5uhZ4wunGWy9bx8HwCO0UkVBiO5tjwiW8LB+jA=
-X-Google-Smtp-Source: ACJfBotxJZNA5BQZYQubaqxTSlUCwkLd6ELTjZR54ZWcHRJ3UScZyXRsIMVJ8smcOYuX3z8lNGNh976r468bcK5nzsY=
-X-Received: by 10.36.131.203 with SMTP id d194mr18079298ite.44.1513593321565;
- Mon, 18 Dec 2017 02:35:21 -0800 (PST)
+Received: (qmail 3703 invoked from network); 15 Feb 2022 14:34:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=cloudbees.com; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=XJMsgk7EubrcWtA4ho9xQgDepIPQshy8EBtNbA57TIM=;
+        b=BEPMg9df0cca2iA1igtaT8kGoNeCzRj59QwVSoXg72Vuue3mJpa87VZ1Hc93e3f9+f
+         0Dp1tLv7RwST6dkOu90h5rfVZIF4Gvwy5/KpnxH6d7XFN512QxnOOiihu24onaD6pzPg
+         oGa24QYjFW5pmZVDy/ELYtYEgvx6T55J3V6qQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=XJMsgk7EubrcWtA4ho9xQgDepIPQshy8EBtNbA57TIM=;
+        b=hLrBOJOmHukiXTr2YS+lF1yioCheDqG5Sq9cR988ZZox2CcUT87X7+SMBIFmkPDwvv
+         qx7jX8GPKaNJ3ccysIgD8aFTlkzxHgu4aDFWpUIGodme4cmFr19TPhxSKQEmWqyRmbh4
+         7qKs/M9/PrYlaiyffbJShalMqAc3AjaY1Xa75EqsJcsGhW/BqmYGDn9bH+0NGtjJ7fLL
+         rjGM66rTcX4n+XSu9bdm9ylaX47a6BbdfyvyyZnFIreQ8pe3obinuTAxsiAaFsLz2jCP
+         thRR7gJDe9dUz8tbCaU6Wmg2bZ0eL+dKLbUgrwA06prMBjmlfl7OM7z8bSN+Cei34aKd
+         U1Zg==
+X-Gm-Message-State: AOAM533EUk2NvN2m8/sNylYpoOv4qy10MltFAiZ+ZV1tSRCBbbq08FZ2
+	lGLPAankCNxyj8kaQsvZiMqHbbc2pANFmuAjJKnnVFlsHe59Sw==
+X-Google-Smtp-Source: ABdhPJyIaN6Wt/Qo+L1fFX3GjXtVWEW3OD07zphq8NSX18W1FNTAjwxkdCJNG2QOGKTYZica0JecdbK0zsXU2Rm5Ilg=
+X-Received: by 2002:a05:6512:1394:: with SMTP id p20mr3130143lfa.395.1644935654583;
+ Tue, 15 Feb 2022 06:34:14 -0800 (PST)
 MIME-Version: 1.0
-From: Arina Ielchiieva <arina@apache.org>
-Date: Mon, 18 Dec 2017 12:35:21 +0200
-X-Gmail-Original-Message-ID: <CAC1ju523-hOdd3tO1xkqZyxyvPVwM+CFETec2c14wrVa6K6hVg@mail.gmail.com>
-Message-ID: <CAC1ju523-hOdd3tO1xkqZyxyvPVwM+CFETec2c14wrVa6K6hVg@mail.gmail.com>
-To: user <user@drill.apache.org>, dev@drill.apache.org, 
-	Sanjog <sanjogpandasp@gmail.com>, security <security@apache.org>, 
-	oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="94eb2c11898a44336305609ae8f6"
-Subject: [oss-security] [SECURITY] CVE-2017-12630 Apache Drill XSS vulnerability
+From: Wadeck Follonier <wfollonier@cloudbees.com>
+Date: Tue, 15 Feb 2022 15:33:38 +0100
+Message-ID: <CAAWM14fV-DKaW6fmakLRY_VDY2wssJB9yfwjUPHC9eV8SHM1XA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="0000000000005ec9b605d80f6d94"
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
---94eb2c11898a44336305609ae8f6
+--0000000000005ec9b605d80f6d94
 Content-Type: text/plain; charset="UTF-8"
 
-*CVE-2017-12630 Apache Drill XSS vulnerability*
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-*Severity*: Important
+The following releases contain fixes for security vulnerabilities:
 
-*Vendor:* The Apache Software Foundation
+* Agent Server Parameter Plugin 1.1
+* autonomiq Plugin 1.16
+* Conjur Secrets Plugin 1.0.12
+* Custom Checkbox Parameter Plugin 1.2
+* Fortify Plugin 20.2.35
+* Generic Webhook Trigger Plugin 1.82
+* HashiCorp Vault Plugin 336.v182c0fbaaeb7
+* Pipeline: Build Step Plugin 2.15.1
+* Pipeline: Groovy Plugin 2656.vf7a_e7b_75a_457
+* Pipeline: Multibranch Plugin 707.v71c3f0a_6ccdb_
+* Pipeline: Shared Groovy Libraries Plugin 561.va_ce0de3c2d69
+* Snow Commander Plugin 2.0
+* Support Core Plugin 2.79.1
 
-*Versions Affected:*
-Apache Drill 1.11.0 and earlier
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-*Description*
-In Apache Drill 1.11.0 and earlier when submitting form from Query page
-users are able to pass arbitrary script or HTML which will take effect on
-Profile page afterwards.
+* Checkmarx Plugin
+* Chef Sinatra Plugin
+* Convertigo Mobile Platform Plugin
+* dbCharts Plugin
+* Doktor Plugin
+* GitLab Authentication Plugin
+* HashiCorp Vault Plugin
+* Promoted Builds (Simple) Plugin
+* SCP publisher Plugin
+* SWAMP Plugin
+* Team Views Plugin
 
-Example:
-After submitting special script that returns cookie information from Query
-page, malicious user may obtain this information from Profile page
-afterwards.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2022-02-15/
 
-*Mitigation:*
-Users of the affected versions should upgrade to Apache Drill to 1.12.0 and
-later.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-*Credit:*
-Sanjog Panda
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-Kind regards
-Arina
+---
 
---94eb2c11898a44336305609ae8f6--
+SECURITY-2463 / CVE-2022-25173 (Pipeline: Groovy Plugin) & CVE-2022-25174
+(Pipeline: Shared Groovy Libraries) & CVE-2022-25175 (Pipeline: Multibranch)
+Multiple Pipeline-related plugins that perform on-controller SCM checkouts
+reuse the same workspace directory for checkouts of distinct SCMs in some
+contexts.
+
+- Pipeline: Groovy Plugin 2648.va9433432b33c and
+earlier uses the same checkout directories for distinct SCMs when reading
+the script file (typically `Jenkinsfile`) for Pipelines.
+- Pipeline: Shared Groovy Libraries
+552.vd9cc05b8a2e1 and earlier uses the same checkout directories for
+distinct SCMs for Pipeline libraries.
+- Pipeline: Multibranch 706.vd43c65dec013 and
+earlier uses the same checkout directories for distinct SCMs for the
+`readTrusted` step.
+
+This allows attackers with Item/Configure permission to invoke arbitrary OS
+commands on the controller through crafted SCM contents.
+
+
+SECURITY-2613 / CVE-2022-25176 (Pipeline: Groovy Plugin) & CVE-2022-25177
+(Pipeline: Shared Groovy Libraries) & CVE-2022-25178 (Pipeline: Shared
+Groovy Libraries) & CVE-2022-25179 (Pipeline: Multibranch)
+Multiple Pipeline-related plugins follow symbolic links or do not limit
+path names, resulting in arbitrary file read vulnerabilities:
+
+- Pipeline: Groovy Plugin 2648.va9433432b33c and
+earlier follows symbolic links to locations outside of the checkout
+directory for the configured SCM when reading the script file (typically
+`Jenkinsfile`) for Pipelines (originally reported as SECURITY-2595).
+- Pipeline: Shared Groovy Libraries
+552.vd9cc05b8a2e1 and earlier follows symbolic links to locations outside
+of the expected Pipeline library when reading files using the
+`libraryResource` step (originally reported as SECURITY-2479).
+- Pipeline: Shared Groovy Libraries
+552.vd9cc05b8a2e1 and earlier does not restrict the names of resources
+passed to the `libraryResource` step (originally reported as
+SECURITY-2476).
+- Pipeline: Multibranch 706.vd43c65dec013 and earlier follows symbolic
+links to locations outside
+of the checkout directory for the configured SCM when reading files using
+the `readTrusted` step (originally reported as SECURITY-2491).
+
+This allows attackers able to configure Pipelines to read arbitrary files
+on the Jenkins controller file system.
+
+
+SECURITY-2443 / CVE-2022-25180
+Pipeline: Groovy Plugin 2648.va9433432b33c and earlier includes password
+parameters from the original build in replayed builds.
+
+This allows attackers with Run/Replay permission to obtain the values of
+password parameters passed to previous builds of a Pipeline.
+
+
+SECURITY-2441 / CVE-2022-25181
+Pipeline: Shared Groovy Libraries Plugin 552.vd9cc05b8a2e1 and earlier uses
+the same workspace directory for all checkouts of Pipeline libraries with
+the same name regardless of the SCM being used and the source of the
+library configuration.
+
+This allows attackers with Item/Configure permission to execute arbitrary
+code in the context of the Jenkins controller JVM through crafted SCM
+contents, if a global Pipeline library already exists.
+
+
+SECURITY-2422 / CVE-2022-25182
+Pipeline: Shared Groovy Libraries Plugin 552.vd9cc05b8a2e1 and earlier uses
+the names of Pipeline libraries to create directories without
+canonicalization or sanitization.
+
+This allows attackers with Item/Configure permission to execute arbitrary
+code in the context of the Jenkins controller JVM using specially crafted
+library names if a global Pipeline library is already configured.
+
+
+SECURITY-2586 / CVE-2022-25183
+Pipeline: Shared Groovy Libraries Plugin 552.vd9cc05b8a2e1 and earlier uses
+the names of Pipeline libraries to create cache directories without any
+sanitization.
+
+This allows attackers with Item/Configure permission to execute arbitrary
+code in the context of the Jenkins controller JVM using specially crafted
+library names if a global Pipeline library configured to use caching
+already exists.
+
+
+SECURITY-2519 / CVE-2022-25184
+Pipeline: Build Step Plugin 2.15 and earlier reveals password parameter
+default values when generating a pipeline script using the Pipeline Snippet
+Generator.
+
+This allows attackers with Item/Read permission to retrieve the default
+password parameter value from jobs.
+
+
+SECURITY-2592 / CVE-2022-25185
+Generic Webhook Trigger Plugin 1.81 and earlier does not escape the build
+cause for the webhook.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to trigger builds using the webhook.
+
+
+SECURITY-2429 / CVE-2022-25186
+HashiCorp Vault Plugin 3.8.0 and earlier implements functionality that
+allows agent processes to retrieve any Vault secrets for use on the agent.
+
+This allows attackers able to control agent processes to obtain Vault
+secrets for an attacker-specified path and key.
+
+
+SECURITY-2186 / CVE-2022-25187
+Support Core Plugin has a feature to redact potentially sensitive
+information in the support bundle.
+
+Support Core Plugin 2.79 and earlier does not redact some sensitive
+information in the support bundle.
+
+This sensitive information can be viewed by anyone with access to the
+bundle.
+
+
+SECURITY-2214 / CVE-2022-25188
+Fortify Plugin 20.2.34 and earlier does not sanitize the `appName` and
+`appVersion` parameters of its Pipeline steps, which are used to write to
+files inside build directories.
+
+This allows attackers with Item/Configure permission to write or overwrite
+`.xml` files on the Jenkins controller file system with content not
+controllable by the attacker.
+
+
+SECURITY-2266 / CVE-2022-25189
+Custom Checkbox Parameter Plugin 1.1 and earlier does not escape parameter
+names of custom checkbox parameters.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Item/Configure permission.
+
+
+SECURITY-2350 / CVE-2022-25190
+Conjur Secrets Plugin 1.0.11 and earlier does not perform a permission
+check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+
+SECURITY-2268 / CVE-2022-25191
+Agent Server Parameter Plugin 1.0 and earlier does not escape parameter
+names of agent server parameters.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Item/Configure permission.
+
+
+SECURITY-2536 / CVE-2022-25192 (CSRF) & CVE-2022-25193 (missing permission
+check)
+Snow Commander Plugin 2.0 and earlier does not perform permission checks in
+methods implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified webserver using attacker-specified credentials IDs
+obtained through another method, capturing credentials stored in Jenkins.
+
+Additionally, these form validation methods do not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+
+SECURITY-2545 / CVE-2022-25194 (CSRF) & CVE-2022-25195 (missing permission
+check)
+autonomiq Plugin 1.15 and earlier does not perform a permission check in an
+HTTP endpoint.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified username and password.
+
+Additionally, this HTTP endpoint does not require POST requests, resulting
+in a cross-site request forgery (CSRF) vulnerability.
+
+
+SECURITY-1833 / CVE-2022-25196
+GitLab Authentication Plugin 1.13 and earlier records the HTTP `Referer`
+header as part of the URL query parameters when the authentication process
+starts and redirects users to that URL when the user has finished logging
+in.
+
+This allows attackers with access to Jenkins to craft a URL that will
+redirect users to an attacker-specified URL after logging in.
+
+NOTE: This issue is caused by an incomplete fix of SECURITY-796.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2521 / CVE-2022-25197
+HashiCorp Vault Plugin 336.v182c0fbaaeb7 and earlier implements
+functionality that allows agent processes to read arbitrary files on the
+Jenkins controller file system.
+
+This allows attackers able to control agent processes to read arbitrary
+files on the Jenkins controller file system.
+
+NOTE: This vulnerability is only exploitable in Jenkins 2.318 and earlier,
+LTS 2.303.2 and earlier.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2323 / CVE-2022-25198 (CSRF) & CVE-2022-25199 (missing permission
+check)
+SCP publisher Plugin 1.8 and earlier does not perform a permission check in
+a method implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified SSH server using attacker-specified username and
+password.
+
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1017 / CVE-2022-25200 (CSRF) & CVE-2022-25201 (missing permission
+check)
+Checkmarx Plugin 2022.1.2 and earlier does not perform permission checks in
+several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified webserver using attacker-specified credentials IDs
+obtained through another method, capturing credentials stored in Jenkins.
+
+Additionally, these HTTP endpoints do not require POST requests, resulting
+in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2334 / CVE-2022-25202
+Promoted Builds (Simple) Plugin 1.9 and earlier does not escape the name of
+custom promotion levels.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Overall/Administer permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2324 / CVE-2022-25203
+Team Views Plugin 0.9.0 and earlier does not escape team names.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Overall/Read permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2548 / CVE-2022-25204
+Doktor Plugin 0.4.1 and earlier implements functionality that allows agent
+processes to render files on the controller as Markdown or Asciidoc.
+
+Additionally, error messages allow attackers able to control agent
+processes to determine whether a file with a given name exists.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2177 / CVE-2022-25205 (CSRF) & CVE-2022-25206 (missing permission
+check)
+dbCharts Plugin 0.5.2 and earlier does not perform a permission check in a
+method implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified database via JDBC using attacker-specified credentials.
+
+Additionally, this method allows attackers to determine whether a class is
+available on the Jenkins controller's class path through error messages.
+
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1377 / CVE-2022-25207 (CSRF) & CVE-2022-25208 (missing permission
+check) & CVE-2022-25209 (XXE)
+Chef Sinatra Plugin 1.20 and earlier does not perform a permission check in
+a method implementing form validation.
+
+This allows attackers with Overall/Read permission to have Jenkins send an
+HTTP request to an attacker-controlled URL and have it parse the response
+as XML.
+
+As the plugin does not configure its XML parser to prevent XML external
+entity (XXE) attacks, attackers can have Jenkins parse a crafted XML
+response that uses external entities for extraction of secrets from the
+Jenkins controller or server-side request forgery.
+
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2280 / CVE-2022-25210
+Convertigo Mobile Platform Plugin 1.1 and earlier uses static fields to
+store job configuration information.
+
+This allows attackers with Item/Configure permission to capture passwords
+of the jobs that will be configured.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1988 / CVE-2022-25211 (missing permission check) & CVE-2022-25212
+(CSRF)
+SWAMP Plugin 1.2.6 and earlier does not perform a permission check in a
+method implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified credentials IDs obtained
+through another method, capturing credentials stored in Jenkins.
+
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+--0000000000005ec9b605d80f6d94--
