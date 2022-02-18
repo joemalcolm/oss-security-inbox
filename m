@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4664" "Thursday" "21" "July" "2016" "21:42:44" "+0800" "Marco Grassi" "marco.gra@gmail.com" "<CAFkTriJ_Gdghr4XZY3VbdtsmWN46ZMmPo9TX9c-CPebpwVhz2A@mail.gmail.com>" "120" "[oss-security] mupdf library use after free" nil nil nil "7" "2016072113:42:44" "[oss-security] mupdf library use after free" (number mark "U       marco.gra@gm Jul 21  120/4664  " thread-indent "\"[oss-security] mupdf library use after free\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["5307" "Friday" "18" "February" "2022" "12:22:57" "+1030" "Alex Murray" "alex.murray@canonical.com" nil "116" "[oss-security] CVE-2021-4120: Insufficient validation of snap content interface and layout paths" nil nil nil "2" nil nil (number mark "U       alex.murray@ Feb 18  116/5307  " thread-indent "\"[oss-security] CVE-2021-4120: Insufficient validation of snap content interface and layout paths\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-4120: Insufficient validation of snap content interface and layout paths" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 3376 invoked by uid 550); 21 Jul 2016 13:43:03 -0000
+Received: (qmail 32646 invoked by uid 550); 18 Feb 2022 08:02:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,156 +12,139 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3312 invoked from network); 21 Jul 2016 13:42:56 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=YusNh5pAmLjb5xDff5fjpIj7FTBRE1aL0qU2Sxmp1Ks=;
-        b=NX7TUacMmCRZ6Y/1GKHWClExv1f7leF7X/4B5rp7dIt28+Ry9t9p152dXtOyppaWHl
-         35STUnVLJZPnhWOs3VTRiS1vL0eXi2iz90FXgJSSXXxSZn0frF+X6YpTRaZulW8X1pNV
-         SzsoumrKHapJeKpXD3Ry3P8GMjb9Dof4jb79rG+2jaEus1fCkqMSn6zeLPrO5gwAWNjk
-         01IXo7i9rQWZdbuBrjtrVVvNnvYp/6EtQNQtA7R5f18bvFq/4DVgYAwK43nTmYvUXUbb
-         hYM4JRv60CyVpcbx3xuHKJTgI9W8ma4GpWpiiLbGskSPH2IcHvD/Gkp2xyXyim5fYPX4
-         wIeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=YusNh5pAmLjb5xDff5fjpIj7FTBRE1aL0qU2Sxmp1Ks=;
-        b=WmKvXwHG+RlSByFcXwpQHAOWhJuS89qYSpRH3gOTBI8PEyBoAGNX8N/GV//UuafSRm
-         J1qUuLK1gaksN30wpIFPwLhGdQA5Zz5Qb2EheLvgua0Xq4mkZ/0U2Q8qbQNdFrMMEIiZ
-         xK6iCVXR8HtrAhhbz/s5q/7+NeKPkqcHYahb1TSnO6NWj6tmUpUA8U3YTiYbouZtwyGk
-         lGvnaeMCxEXcmFu0HLhvSMwbacpfhw7Ek+cNEURgudVo6AlUD9I4WRaZB7pZrQ9vWQ0r
-         naMLI7leGks1FyRXh/HC7bn5DeCTjpvbUzGQd8W0JbyQiC34cIr4OhL91MyhuDdoc+lv
-         zopA==
-X-Gm-Message-State: ALyK8tJgqgKbNIL+sKftMe2IguOlH7Tx+3pzUHYV8mNdsFUodq/dvi0QOTTvvi2OVYnRu8QbC1rIFDjA9EcLPA==
-X-Received: by 10.28.134.14 with SMTP id i14mr17011340wmd.59.1469108564927;
- Thu, 21 Jul 2016 06:42:44 -0700 (PDT)
-MIME-Version: 1.0
-From: Marco Grassi <marco.gra@gmail.com>
-Date: Thu, 21 Jul 2016 21:42:44 +0800
-Message-ID: <CAFkTriJ_Gdghr4XZY3VbdtsmWN46ZMmPo9TX9c-CPebpwVhz2A@mail.gmail.com>
+Received: (qmail 11981 invoked from network); 18 Feb 2022 01:53:15 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1645149182;
+	bh=AEceV+S4bhhTPtogKn0JrSOx+Vf/YbiUEhQbGyw5QXE=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type;
+	b=Hbkdg+Qn6BH+OyZOfq9TpWSHo+B+WCi8OInuoUQLS30MVe5D+FeaKu3nUClFFbMrQ
+	 dhK9Utir6Qk5G6f0yk1ySS5ACxknh7WW0N6PAY0nMUcoP3VBBEjUuati7kAL4H/nch
+	 wvWhbD6wdwUaIuieUDTWZR3fpXgKZPJXLeHH1C7AbEQLOUzKoB5I1v8w4084LOWagc
+	 9y3MYIZ9Onhm1T+C+GMqQgwURshENZ4QPRvjUfcU/cJQDy+bW8Zx0/CApnuVwtII5U
+	 806mMCpNwGQpLY8e25Q8ZWbAEmCDg6RDbVqnJrachglnaA8rQ8ypOrHEMPWTCHdE6y
+	 jXcwVVvUHqDKg==
+From: Alex Murray <alex.murray@canonical.com>
 To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Content-Type: multipart/alternative; boundary=001a114416b82665790538257e3d
-Subject: [oss-security] mupdf library use after free
-
---001a114416b82665790538257e3d
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Date: Fri, 18 Feb 2022 12:22:57 +1030
+Message-ID: <87fsohueiu.fsf@graphene.mail-host-address-is-not-set>
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] CVE-2021-4120: Insufficient validation of snap content interface
+ and layout paths
 
 Hi,
 
-I disclosed a UAF in MuPDF, you can find the reproducer and report here:
+Earlier today, two security vulnerabilities (CVE-2021-44730,
+CVE-2021-44731) in the snap-confine component of snapd were disclosed by
+Qualys. These have been fixed in the snapd project by the 2.54.3 release
+earlier today.
 
-http://bugs.ghostscript.com/show_bug.cgi?id=3D696941
+In addition to these two vulnerabilities in snap-confine, a third
+vulnerability in snapd was independently discovered by Ian Johnson from
+the snapd team, which was also resolved in the 2.54.3 release.
 
-I put a partially symbolicated ASAN report here for reference
 
-Marco
+CVE-2021-4120
+-------------------------------------------------------------------
 
------
+snapd fails to perform sufficient validation of snap content interface and
+layout paths, resulting in the ability for snaps to inject arbitrary
+AppArmor policy rules via malformed content interface and layout
+declarations and hence escape strict snap confinement.
 
-=E2=9E=9C  mupdf ./mupdf_debug/build/debug/mupdf-x11 mucrash1.pdf 2>&1 |
-asan_symbolize-3.8
-warning: broken xref section, proceeding anyway.
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-=3D=3D24575=3D=3DERROR: AddressSanitizer: heap-use-after-free on address
-0x61700000fda8 at pc 0x0000006b0a54 bp 0x7ffcb040dbb0 sp 0x7ffcb040dba8
-READ of size 4 at 0x61700000fda8 thread T0
-    #0 0x6b0a53 in pdf_load_xref
-/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/sour=
-ce/pdf/pdf-xref.c:1188
-    #1 0x6b0a53 in ?? ??:0
-    #2 0x6aac73 in pdf_init_document
-/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/sour=
-ce/pdf/pdf-xref.c:1440
-    #3 0x6aac73 in ?? ??:0
-    #4 0x6ad4ae in pdf_open_document
-/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/sour=
-ce/pdf/pdf-xref.c:2347
-    #5 0x6ad4ae in ?? ??:0
-    #6 0x5183d2 in fz_open_document
-/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/sour=
-ce/fitz/document.c:129
-    #7 0x5183d2 in ?? ??:0
-    #8 0x4fbb2b in pdfapp_open_progressive
-/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/plat=
-form/x11/pdfapp.c:317
-    #9 0x4fbb2b in ?? ??:0
-    #10 0x4fb708 in pdfapp_open
-/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/plat=
-form/x11/pdfapp.c:213
-    #11 0x4fb708 in ?? ??:0
-    #12 0x4f01df in main
-/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/plat=
-form/x11/x11_main.c:888
-    #13 0x4f01df in ?? ??:0
-    #14 0x7f6b723ef82f in __libc_start_main
-/build/glibc-GKVZIf/glibc-2.23/csu/../csu/libc-start.c:291
-    #15 0x7f6b723ef82f in ?? ??:0
-    #16 0x41ad98 in _start ??:?
-    #17 0x41ad98 in ?? ??:0
+CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:H (8.2)
 
-0x61700000fda8 is located 296 bytes inside of 768-byte region
-[0x61700000fc80,0x61700000ff80)
-freed by thread T0 here:
-    #0 0x4bad40 in __interceptor_cfree.localalias.0 asan_malloc_linux.cc.o:?
-    #1 0x4bad40 in ?? ??:0
-    #2 0x516018 in fz_free_default
-/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/sour=
-ce/fitz/memory.c:225
-    #3 0x516018 in ?? ??:0
+This vulnerability was reported via Launchpad against the snapd project
+(https://bugs.launchpad.net/snapd/+bug/1949368) - quoting from this:
 
-previously allocated by thread T0 here:
-    #0 0x4baec8 in malloc ??:?
-    #1 0x4baec8 in ?? ??:0
-    #2 0x515f68 in fz_malloc_default
-/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/sour=
-ce/fitz/memory.c:213
-    #3 0x515f68 in ?? ??:0
-    #4 0x6b9aae in pdf_xref_find_subsection
-/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/sour=
-ce/pdf/pdf-xref.c:740
-    #5 0x6b9aae in ?? ??:0
+ Snapd does not properly or sufficiently validate the input strings used in
+ content interface plugs/slots, meaning that snaps can be installed with
+ strict confinement with malformed content interface slots which
+ effectively grant any AppArmor rule to the plug side.
 
-SUMMARY: AddressSanitizer: heap-use-after-free
-(/media/bob/e4109b52-3574-43a8-b95d-33b3494128de/misc/mupdf/mupdf_debug/bui=
-ld/debug/mupdf-x11+0x6b0a53)
-Shadow bytes around the buggy address:
-  0x0c2e7fff9f60: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2e7fff9f70: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2e7fff9f80: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2e7fff9f90: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c2e7fff9fa0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-=3D>0x0c2e7fff9fb0: fd fd fd fd fd[fd]fd fd fd fd fd fd fd fd fd fd
-  0x0c2e7fff9fc0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c2e7fff9fd0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c2e7fff9fe0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c2e7fff9ff0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c2e7fffa000: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-=3D=3D24575=3D=3DABORTING
+ To exploit this, create two snaps, one which provides the slot and one
+ which has a plug connected to the slot. For the purposes of the exploit,
+ these can just be local snaps, but note that a snap publisher could upload
+ both of these snaps to the store and the two snaps will have their
+ plug/slot auto-connected due to rules about auto-connection of matching
+ content interface plugs/slots for snaps of the same publisher.
 
---001a114416b82665790538257e3d--
+ The first snap has a content slot definition like this:
+
+ slots:
+   content-plug:
+     interface: content
+     content: mycont
+     read:
+       - "$SNAP/ rw, /** rw, } profile foobar (attach_disconnected) { /foo"
+
+ The embedded profile name does not really matter, but what is important is
+ that this rule has arbitrary apparmor rules embedded inside it, abusing
+ the "," character. For the plug side use a definition like this:
+
+ plugs:
+  content-plug:
+   interface: content
+   content: mycont
+   target: $SNAP_DATA/mycont
+
+ The plug side target does not matter at all, but the `content` attribute
+ must match the slot definition in order for the plug and slot to be
+ auto-connected.
+
+ What we are effectively doing is taking advantage of the fact that snapd
+ just validates that the read setting is a "clean" filepath, and does no
+ further validation and effectively ends up just copy-pasting the string
+ into various places inside an AppArmor profile without any quoting or
+ further validation.
+
+ There are really two profiles which get generated with this malicious
+ string without validation, the one for snap-update-ns of the plugging snap
+ in question, and the one for the snap itself. This actually presented
+ something of a problem, as for snap-update-ns, the string appears as part
+ of a mount rule source, which means that including other stuff here like
+ we do makes apparmor_parser fail to compile the file for snap-update-ns,
+ as it does not expect a mount rule to be formed like this. I still suspect
+ it is possible to craft a string such that it somehow is valid both as a
+ file source in a mount rule and as a file rule itself, but it turned out
+ that actually it doesn't need to be a valid rule for both profiles in
+ order to be exploited. This is because snapd just loads the profiles and
+ if they fail to be loaded, snapd does nothing about it. This means we can
+ craft a rule which is valid for just the profile for the app itself, (but
+ not for the profile of snap-update-ns), and still be able to use our
+ crafted rule. The one hiccup to this is that the mount namespace must
+ already exist, so that snap run does not need to invoke snap-update-ns,
+ otherwise presumably the exploit will not be exploitable since the app
+ cannot be run. It might be possible to also avoid this by using a daemon
+ and something like refresh-mode: endure, but I didn't take the time to
+ figure out all those details.
+
+ To be clear, with the above plug, for the plugging app snap we get this as
+ the tail end of the apparmor profile:
+
+ ```
+ # In addition to the bind mount, add any AppArmor rules so that
+ # snaps may directly access the slot implementation's files
+ # read-only.
+ /snap/test-content-interface-escape-slot/x15/ rw, /** rw, } profile
+snap-update-ns.test-content-interface-escape-plug2 (attach_disconnected) { /foo/** mrkix,
+
+ }
+ ```
+
+ Which for the purposes of this bug just demonstrates that we can inject
+ arbitrary apparmor rules into the profile through the snap.yaml plug/slot
+ definition.
+
+As stated above, to remediate this and the two vulnerabilities reported
+by Qualys, the snapd team released snapd 2.54.3
+(https://github.com/snapcore/snapd/releases/tag/2.54.3) earlier
+today. In addition, Ubuntu published updates for snapd as detailed in
+USN-5292-1 (https://ubuntu.com/security/notices/USN-5292-1).
+
+The details of the fixes can be found in the following merge commit
+https://github.com/snapcore/snapd/commit/f3f669d720ed8b0bcb73da7789843bf43b5c16cf
+in the snapd project.
+
+The Ubuntu Security team would like to thank Qualys for their help in
+the disclosure and coordination of the snap-confine issues.
