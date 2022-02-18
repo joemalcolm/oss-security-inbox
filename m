@@ -1,37 +1,16 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/23/9
-Message-ID: <20221223161906.GC4524@suse.de>
-Date: Fri, 23 Dec 2022 17:19:06 +0100
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: Details on this supposed Linux Kernel ksmbd RCE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/18/6
+Message-ID: <c0913700-a0e4-6323-2131-8a7ca3beab7c@oracle.com>
+Date: Fri, 18 Feb 2022 15:19:30 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com, Devon Thompson <devthomp@...hat.com>
+Cc: jrybar@...hat.com, gsuckevi@...hat.com
+Subject: Re: CVE-2021-4115: polkit: file descriptor leak allows an unprivileged user to cause a crash.
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Dec 23, 2022 at 03:20:17PM +0100, Greg KH wrote:
-> On Fri, Dec 23, 2022 at 09:04:25AM -0500, Sasha Levin wrote:
-> > On Fri, Dec 23, 2022 at 09:17:28AM +0100, Marcus Meissner wrote:
-> > > Not sure why they do not like you, but to be very clear anyone else can
-> > > requests CVEs for the kernel, (except the blacklisted drivers/staging/ area).
-> > 
-> > For CVEs assigned (earlier this month) to issues in drivers/staging,
-> > what would be the process to remove the assignment or mark them as
-> > invalid?
-> 
-> And who is doing this "blacklisting" of staging drivers from CVEs?  Why
-> are they special when many distros do enable and rely on them?
+The bug filed by the Github Security Lab was made public today:
+https://gitlab.freedesktop.org/polkit/polkit/-/issues/141
 
-This is just information I received when I tried to allocate a CVE for a
-staging driver.
-
-It has been over a year ago, so perhaps the this changed meanwhile again.
- 
-> In my talks with MITRE, they have said they don't want to make public
-> statments about the CVE issues and Linux, which is sad, but they never
-> mentioned anything about "we will ignore this portion of the kernel
-> source tree".  Is that in a public statement anywhere that I can point
-> to when people ask the kernel security team for CVEs?
-
-No, it was in a private email, I will search for it, but I cannot
-promise I will find it again.
-
-Ciao, Marcus
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
