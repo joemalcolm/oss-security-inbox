@@ -1,60 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/22/11
-Message-ID: <20221222210351.oQ5Sn%steffen@sdaoden.eu>
-Date: Thu, 22 Dec 2022 22:03:51 +0100
-From: Steffen Nurpmeso <steffen@...oden.eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/18/4
+Message-ID: <20220218163304.GA18539@openwall.com>
+Date: Fri, 18 Feb 2022 17:33:04 +0100
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
+Subject: Re: CVE-2021-3997: Uncontrolled recursion in systemd's systemd-tmpfiles
 Content-Type: text/plain; charset=utf-8
 
-..now sending this..
+Hi,
 
-Shawn Webb wrote in
- <20221222150448.5wyrhot7ikhp75j7@...t-hbsd>:
- |On Thu, Dec 22, 2022 at 03:44:45PM +0100, Jakub Wilk wrote:
- ...
- |We knew way back then the dangers of VFS-based wizardry. Did we lose
- |that knowledge somehow?
+Sorry for commenting so late, but:
 
-I think often problems materialize due to insufficient knowledge
-of special cases and/or the complete picture.  And you need to dig
-around in kernel sources to find answers, and for Linux in
-particular "one thing (sysfs/procfs entry) has that name and uses
-these values ranges here, and those over there".  (From my
-superficial view doing backlight / volume / fan control.)
-Names are also not self-describing, and then i very much like
-FreeBSD's sysctl(8) -d flag, as every sysctl has a documentation
-string entry; one can even do "sysctl -a -d".  For example
+On Mon, Jan 10, 2022 at 06:08:29PM +0000, Qualys Security Advisory wrote:
+> - but if systemd-tmpfiles crashes during the "remove" phase, then it
+>   never enters the "create" phase;
+> 
+> - and it fails to create the files and directories (specified in
+>   /usr/lib/tmpfiles.d/*.conf) that it should create at boot time;
+> 
+> - for example, on Ubuntu 21.04, systemd-tmpfiles fails to create the
+>   directory /run/lock/subsys; but because /run/lock is world-writable,
+>   attackers can create their own /run/lock/subsys; and because various
+>   legacy packages and daemons write into /run/lock/subsys as root, the
+>   attackers may create arbitrary files via symlinks in /run/lock/subsys.
 
-  kern.evdev.rcpt_mask: Who is receiving events: bit0 - sysmouse, bit1 - kbdmux, bit2 - mouse hardware, bit3 - keyboard hardware
+I think the combination of world-writable /run/lock and writes into
+/run/lock/subsys as root is a vulnerability on its own, independent of
+any systemd issues.  This is a matter of failure modes: it's fail-open,
+but should be fail-secure.
 
-Even manual references (punctuation issue)
+Further, even without writes into /run/lock/subsys, keeping /run/lock
+world-writable unnecessarily allows for DoS attacks against other not
+yet started services that would use it.
 
-  vm.overcommit: Configure virtual memory overcommit behavior. See tuning(7) for details.
+On the Red Hat'ish systems I've just checked /run/lock is mode 755, on
+Debian and Ubuntu it's mode 1777.  The only non-root-owned entry under
+/run/lock on an Ubuntu system is /run/lock/whoopsie, but that alone does
+not tell us whether it was possibly created as root (and then chown'ed).
+Either way, keeping /run/lock as world-writable should be avoided, even
+if by also changing something in another package.
 
-But of course for one BSD is a more holistic approach, and then
-this does not prevent errors from happening.  But -- how often
-have i wished i would get just a little information at a glance!
+systemd's tmpfiles.d/legacy.conf.in lists /run/lock as mode 755, and
+/run/lock/subsys as mode 755 too.  (Incidentally, on Owl we had
+/var/lock as mode 755, but /var/lock/subsys as mode 700 with no issues.)
 
-Some interfaces are very old, established and more or less stable,
-and origin in a time where many problems where not yet
-"completely" intellectually penetrated.  You need to move the
-entire infrastructure to make this better.  .. Appears strange in
-a so rapidly moving environment like Linux kernel, with >50 MB
-merges for a minor revision..  All those young dudes which eagerly
-carry the news to see their footsteps disappearing in the sand,
-heh!!  And then lots of software is done as a hobby, famous xkcd
-"dependency" thing[1].
+So the Debian and Ubuntu /run/lock mode 1777 looks like those distros'
+shortcoming that they should fix.
 
-  [1] https://xkcd.com/2347/
-
-P.S.: shawn.webb@ possibly means introducing something like libXO
-for (some / all?) procfs entries?  (And _i_ long dream of
-a FILE.txt with the equivalent to sysctl(8)'s -d.)
-
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+Alexander
