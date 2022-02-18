@@ -1,57 +1,158 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/19/2
-Message-ID: <59540946-5cbe-d264-4edc-2a2874ed222c@igalia.com>
-Date: Mon, 19 Sep 2022 14:44:45 +0200
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0009
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/18/3
+Message-ID: <fc7948ee-fe90-e69c-4f18-78e5b02c9682@suse.de>
+Date: Fri, 18 Feb 2022 13:26:29 +0100
+From: Paolo Perego <pperego@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities affecting cobbler
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2022-0009
-------------------------------------------------------------------------
+Hello list,
 
-Date reported           : September 19, 2022
-Advisory ID             : WSA-2022-0009
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2022-0009.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2022-0009.html
-CVE identifiers         : CVE-2022-32886, CVE-2022-32891,
-                          CVE-2022-32912.
+Last October 2021, I started a review on a subset of the Cobbler
+ecosystem  ([1], [2] and [3]) using the master branch at the time the
+request was made [4].
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+During the audit several issues were found and three of them, have been
+assigned with a CVE identifier.
 
-CVE-2022-32886
-    Versions affected: WebKitGTK and WPE WebKit before 2.36.8.
-    Credit to P1umer, afang5472, xmzyshypnc.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A buffer overflow issue was
-    addressed with improved memory handling.
+1) CVE-2021-45083 - unsafe permissions on sensitive files in /etc/cobbler
 
-CVE-2022-32891
-    Versions affected: WebKitGTK and WPE WebKit before 2.36.5.
-    Credit to @real_as3617, an anonymous researcher.
-    Impact: Visiting a website that frames malicious content may lead to
-    UI spoofing. Description: The issue was addressed with improved UI
-    handling.
+It has been found that files in /etc/cobbler are world readable and two
+of those files contain sensitive information that can be used by an
+attacker to open an authenticated session with cobbler daemon:
 
-CVE-2022-32912
-    Versions affected: WebKitGTK and WPE WebKit before 2.36.8.
-    Credit to Jeonghoon Shin (@singi21a) at Theori working with Trend
-    Micro Zero Day Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: An out-of-bounds read was
-    addressed with improved bounds checking.
+     * users.digest file contains sha2-512 digests of users in cobbler
+	local installation. In the case of an easy-to-guess password,
+	it's trivial to obtain the plaintext string.
+     -rw-r--r-- 1 root root 145 Oct 11 09:15 users.digest
 
+     * settings.yaml file contains secrets like hashed default password
+	and more.
+     -rw-r--r-- 1 root root 5051 Dec 13 12:42 /etc/cobbler/settings.yaml
 
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
+Assigned CVSS 8.4 (CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N)
 
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
+This vulnerability affects also koan [5] and products built using
+cobbler like SUSE Manager 4.1 and 4.2.
+SUSE Manager 4.3 is not affected by this issue.
 
-The WebKitGTK and WPE WebKit team,
-September 19, 2022
+The issue affects cobbler version 3.3.1 and previous. Version 3.X.X is safe.
+
+Upstream was fixed by this commit:
+https://github.com/cobbler/cobbler/commit/34e3417bcbb72d28c3c1c3332af85793ba077f75
+
+Please note that a possible workaround is trivial. As root you have to
+setup the configuration files, to make them readable only by root.
+
+---%<---%<---%<---%<---%<---%<---%<---%<---%<
+# chmod go-r /etc/cobbler/users.digest
+# chmod go-r /etc/cobbler/settings.yaml
+---%<---%<---%<---%<---%<---%<---%<---%<---%<
+
+2) CVE-2021-45082 - incomplete template sanitization
+
+In templar.py file, function check_for_invalid_imports, ensures that
+Cheetah code is not importing Python modules. However, the control is
+very basic and it fires up when line begins with #import:
+
+     lines = data.split("\n")
+     for line in lines:
+         if line.find("#import") != -1:
+             rest = line.replace("#import", "").replace(" ", "").strip()
+             if self.settings and rest not in
+			self.settings.cheetah_import_whitelist:
+                 raise CX("potentially insecure import in template: %s" %
+			rest)
+
+However, according to Cheetah documentation [6], it is possible to 
+include python code using this syntax:
+
+#from MODULE import MODULE_OR_OBJECT [as NAME] [, ...]
+
+Having a rogue module using #from can bypass import sanitization
+declared so far.
+
+Assigned CVSS 7.0 (CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H)
+
+This vulnerability affects also products built using cobbler like SUSE
+Manager 4.1, 4.2 and 4.3. Koan is not affected by this issue.
+
+Upstream was fixed by this commit:
+https://github.com/cobbler/cobbler/commit/c9a094541d81ce6d753f03888d763ff28b9ada72
+
+3) CVE-2021-45081: unsafe protocol usage
+
+A lot of cobbler server entry-points are served on HTTP rather then HTTPS.
+
+Assigned CVSS 6.8 (CVSS:3.1/AV:A/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N)
+
+This vulnerability affects also products built using cobbler like koan
+and SUSE Manager 4.1, 4.2 and 4.3.
+
+At the time of disclosing this, there is no a fix available. Using HTTPS
+everywhere requires a deep knowledge of how customers implements cobbler 
+in their network and how do they manage certificates.
+
+Accordingly with the maintainer we will keep attention on this in order 
+to create a certificate enrolling and trusting layer in the python code 
+for the future.
+
+CVSS 6.8 (CVSS:3.1/AV:A/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N)
+
+With the author, we agreed that fixing this will take longer, since it
+involves
+several architectural decision on certifciate enrollment and trust.
+
+4) Hardcoded password for testing
+
+When in /etc/cobbler/modules.conf, in the [authentication] part the
+module is “testing”, the credential “testing:testing” is used to 
+authenticate users.
+
+This is a known and well documented issues.
+However the upstream maintainer agreed, that this functionality is no
+longer needed and it can safely removed.
+
+5) Log file pollution
+
+In modules/installation/pre_log.py and modules/installation/post_log.py, 
+some user controlled input strings are appended in 
+/var/log/cobbler/install.log log file without sanitization.
+
+This can lead to a log pollution attack, where users inject rogue log
+statements making hard troubleshooting by sysadmins.
+
+6) Timeline
+
+2021-12-10: vulnerabilities were reported to upstream author
+2021-12-16: upstream author acknowledge them and start working on fixes
+2021-12-16: received CVEs from Mitre. Offered author an embargo until
+             2022-02-16
+2022-02-16: we agreed with the author two more embargo day to prepare
+	    all fixed packages
+2022-02-18: fixes reached upstream repository and findings were public
+
+7) Links
+
+[1] https://github.com/cobbler/cobblerclient
+[2] https://github.com/cobbler/cli
+[3] https://github.com/cobbler/cobbler
+[4] https://bugzilla.suse.com/show_bug.cgi?id=1191952
+[5] https://github.com/cobbler/koan
+[6] https://cheetahtemplate.org/users_guide/inheritanceEtc.html
+[7] https://bugzilla.suse.com/show_bug.cgi?id=1193671
+[8] https://bugzilla.suse.com/show_bug.cgi?id=1193678
+[9] https://bugzilla.suse.com/show_bug.cgi?id=1193683
+
+Cheers
+Paolo
+-- 
+(*_	Paolo Perego				@thesp0nge
+//\	Software security engineer		suse.com
+V_/_	0A1A 2003 9AE0 B09C 51A4 7ACD FC0D CEA6 0806 294B
+
+-- 
+(*_  Paolo Perego                           @thesp0nge
+//\  Software security engineer               suse.com
+V_/_ 0A1A 2003 9AE0 B09C 51A4 7ACD FC0D CEA6 0806 294B
