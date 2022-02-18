@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["454" "Monday" "11" "October" "2021" "03:05:49" "+0000" "Dave Fisher" "wave@apache.org" nil "18" "[oss-security] CVE-2021-41832: Apache OpenOffice: Content Manipulation with Certificate Validation Attack " nil nil nil "10" nil nil (number mark "U       wave@apache. Oct 11   18/454   " thread-indent "\"[oss-security] CVE-2021-41832: Apache OpenOffice: Content Manipulation with Certificate Validation Attack \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-41832: Apache OpenOffice: Content Manipulation with Certificate Validation Attack " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1884" "Friday" "18" "February" "2022" "17:33:04" "+0100" "Solar Designer" "solar@openwall.com" nil "41" "Re: [oss-security] CVE-2021-3997: Uncontrolled recursion in systemd's systemd-tmpfiles" nil nil nil "2" nil nil (number mark "U       solar@openwa Feb 18   41/1884  " thread-indent "\"Re: [oss-security] CVE-2021-3997: Uncontrolled recursion in systemd's systemd-tmpfiles\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-3997: Uncontrolled recursion in systemd's systemd-tmpfiles" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 13887 invoked by uid 550); 11 Oct 2021 07:08:20 -0000
+Received: (qmail 30063 invoked by uid 550); 18 Feb 2022 16:33:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,32 +12,57 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5405 invoked from network); 11 Oct 2021 03:06:24 -0000
-Content-Type: text/plain; charset=utf-8
-From: Dave Fisher <wave@apache.org>
+Received: (qmail 29809 invoked from network); 18 Feb 2022 16:33:13 -0000
+Date: Fri, 18 Feb 2022 17:33:04 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Message-ID: <41cad9cb-8df5-29b8-c4bd-95cc51a9e1d7@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 11 Oct 2021 03:05:49 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2021-41832: Apache OpenOffice: Content Manipulation with
- Certificate Validation Attack 
+Message-ID: <20220218163304.GA18539@openwall.com>
+References: <20220110180746.GA3527@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220110180746.GA3527@localhost.localdomain>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2021-3997: Uncontrolled recursion in systemd's systemd-tmpfiles
 
-Severity: moderate
+Hi,
 
-Description:
+Sorry for commenting so late, but:
 
-It is possible for an attacker to manipulate documents to appear to be sign=
-ed by a trusted source.
+On Mon, Jan 10, 2022 at 06:08:29PM +0000, Qualys Security Advisory wrote:
+> - but if systemd-tmpfiles crashes during the "remove" phase, then it
+>   never enters the "create" phase;
+> 
+> - and it fails to create the files and directories (specified in
+>   /usr/lib/tmpfiles.d/*.conf) that it should create at boot time;
+> 
+> - for example, on Ubuntu 21.04, systemd-tmpfiles fails to create the
+>   directory /run/lock/subsys; but because /run/lock is world-writable,
+>   attackers can create their own /run/lock/subsys; and because various
+>   legacy packages and daemons write into /run/lock/subsys as root, the
+>   attackers may create arbitrary files via symlinks in /run/lock/subsys.
 
-All versions of Apache OpenOffice up to 4.1.10 are affected. Users are advi=
-sed to update to version 4.1.11.
+I think the combination of world-writable /run/lock and writes into
+/run/lock/subsys as root is a vulnerability on its own, independent of
+any systemd issues.  This is a matter of failure modes: it's fail-open,
+but should be fail-secure.
 
-See CVE-2021-25635 for the LibreOffice advisory.
+Further, even without writes into /run/lock/subsys, keeping /run/lock
+world-writable unnecessarily allows for DoS attacks against other not
+yet started services that would use it.
 
+On the Red Hat'ish systems I've just checked /run/lock is mode 755, on
+Debian and Ubuntu it's mode 1777.  The only non-root-owned entry under
+/run/lock on an Ubuntu system is /run/lock/whoopsie, but that alone does
+not tell us whether it was possibly created as root (and then chown'ed).
+Either way, keeping /run/lock as world-writable should be avoided, even
+if by also changing something in another package.
 
-Credit:
+systemd's tmpfiles.d/legacy.conf.in lists /run/lock as mode 755, and
+/run/lock/subsys as mode 755 too.  (Incidentally, on Owl we had
+/var/lock as mode 755, but /var/lock/subsys as mode 700 with no issues.)
 
-Apache OpenOffice would like to thank Simon Rohlmann, Vladislav Mladenov, C=
-hristian Mainka, and Jorg Schwenk of Ruhr University Bochum, Germany
+So the Debian and Ubuntu /run/lock mode 1777 looks like those distros'
+shortcoming that they should fix.
 
+Alexander
