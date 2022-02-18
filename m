@@ -1,17 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/07/3
-Message-ID: <95de08a1-56d1-3c44-509a-759d20823a41@apache.org>
-Date: Thu, 07 Jul 2022 16:15:17 +0000
-From: Abhishek Agarwal <abhishek@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-28889: Apache Druid: Clickjacking in the web console 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/18/5
+Message-ID: <aaadb779-50ab-2204-7927-bb8f93fd6b46@oracle.com>
+Date: Fri, 18 Feb 2022 11:19:27 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com, Devon Thompson <devthomp@...hat.com>
+Cc: jrybar@...hat.com, gsuckevi@...hat.com
+Subject: Re: CVE-2021-4115: polkit: file descriptor leak allows an unprivileged user to cause a crash.
 Content-Type: text/plain; charset=utf-8
 
-Description:
+On 2/17/22 13:35, Devon Thompson wrote:
+> Description:
+> There is an error handing flaw in polkit which can allow an unprivileged user to 
+> cause polkit to crash.
+> The crash happens due to process file descriptor exhaustion.
+> NOTE: Polkit process outage duration is tied to the failing process being reaped 
+> and a new one being spawned.
 
-In Apache Druid 0.22.1 and earlier, the server did not set appropriate headers to prevent clickjacking. Druid 0.23.0 and later prevent clickjacking using the Content-Security-Policy header.
+A more detailed description has been posted at
+https://securitylab.github.com/advisories/GHSL-2021-077-polkit/
 
-Mitigation:
+> References:
+> https://access.redhat.com/security/cve/cve-2021-4115
+> https://bugzilla.redhat.com/show_bug.cgi?id=2054127
+> https://pkgs.devel.redhat.com/cgit/rpms/polkit/commit/?h=rhel-8.6.0&id=a71b0b5bb6624858a16bfbc1e721757b243709c6 
 
-Upgrade to Druid 0.23.0 or later.
+That last hostname does not resolve (perhaps it's internal to Red Hat?).
 
+I'm surprised these are all Red Hat URL's - was this not reported & fixed
+upstream?  I see a query asking about that at
+https://gitlab.freedesktop.org/polkit/polkit/-/issues/170 but no response,
+and no commit or merge request yet there.
+
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
