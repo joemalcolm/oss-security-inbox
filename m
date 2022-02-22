@@ -1,60 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/15/1
-Message-ID: <f893a62f-75b3-3a50-62ef-af1f0302e137@oracle.com>
-Date: Fri, 14 Jan 2022 19:22:11 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/22/1
+Message-ID: <YhSEHmSudhT0ig/f@eldamar.lan>
+Date: Tue, 22 Feb 2022 07:35:10 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: 3 new CVE's in vim
+Subject: Re: Linux kernel: heap out of bounds write in nf_dup_netdev.c since 5.4
 Content-Type: text/plain; charset=utf-8
 
-On 10/4/21 08:48, Alan Coopersmith wrote:
-> On 9/30/2021 7:39 PM, Alan Coopersmith wrote:
->> I haven't seen these make it to the list yet, but three CVE's were
->> recently assigned for bugs in vim.  [I personally don't see how
->> there's a security boundary crossed in normal vim usage here, but
->> could see issues if someone had configured vim to run with raised
->> privileges for editing system/application configuration files or
->> similar.]
+Hi,
+
+On Mon, Feb 21, 2022 at 08:38:23PM +0000, Nick Gregory wrote:
+> There is a heap out of bounds write in the function nft_fwd_dup_netdev_offload (nf_dup_netdev.c). This was introduced in 5.4-rc1 by https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=be2861dc36d77ff3778979b9c3c79ada4affa131, and is fixed by https://git.kernel.org/pub/scm/linux/kernel/git/netfilter/nf.git/commit/?id=b1a5983f56e371046dcf164f90bfaf704d2b89f6. I have created a sample LPE targeting Ubuntu 21.10 with KASLR disabled.
 > 
-> I do note all three of these were submitted via huntr.dev, which offers
-> bounties for both reporting & fixing security bugs.  As a maintainer of
-> an upstream open source project which is struggling with finding people
-> to fix reported security bugs [1], I do appreciate the additional
-> incentive to provide fixes here.  But as a maintainer of a distro, I see
-> a mismatch with the incentives here, as you get bounties for accepting
-> everything as a security bug and not pushing back, and flooding the
-> distros with CVE's - even if your distro policy isn't to handle every
-> CVE that applies, security auditors will often make your users query
-> about every CVE that they think applies, costing your time to respond.
+> In nft_fwd_dup_netdev_offload, ctx->num_actions++ is used to offset into the flow->rule->action.entries array (nf_dup_netdev.c:67) when setting up dup or fwd flow rules on a chain with hardware offload enabled. However there is a mismatch between the number of times the increment is called vs. the number of allocated entries. The allocated array size is based on the number of nftables expressions that have expr.offload_flags&NFT_OFFLOAD_F_ACTION (nf_tables_offload.c:97), but only the immediate expression type has this (not dup or fwd). It's possible to manually create a rule with dup/fwd expressions that don't have a corresponding/preceding immediate, leading to an undersized entries array, and an arbitrary number of out of bounds array writes. Despite being in code dealing with hardware offload, this is reachable when targeting network devices that don't have offload functionality (e.g. lo) as the bug is triggered before the rule creation fails. Additionally, while nftables requires CAP_NET_ADMIN, we can unshare into a new network namespace to get this as a (normally) unprivileged user. The reproducer code below demonstrates all of this, and will likely immediately panic the system.
 > 
-> [1] https://indico.freedesktop.org/event/1/contributions/28/
-> https://www.youtube.com/watch?v=IU3NeVvDSp0
+> This can be turned into kernel ROP/local privilege escalation without too much difficulty, as one of the values that is written out of bounds is conveniently a pointer to a net_device structure. There are many opportunities for one of the OOB writes to land in another heap allocated structure which then misuses it (type confusion, freeing it, etc.). Additionally, an OOB write could be landed in a buffer returned to userland, leaking the address of the net_device allocation out.
 
-This has continued with many more CVE's issued for vim:
+This isse seems to have CVE-2022-25636 assigned.
 
-CVE-2022-0213 	vim is vulnerable to Heap-based Buffer Overflow
-CVE-2022-0158 	vim is vulnerable to Heap-based Buffer Overflow
-CVE-2022-0156 	vim is vulnerable to Use After Free
-CVE-2022-0128 	vim is vulnerable to Out-of-bounds Read
-CVE-2021-46059 	A Pointer Dereference vulnerability exists in Vim 8.2.3883 via 
-the vim_regexec_multi function at regexp.c, which causes a denial of service.
-CVE-2021-4193 	vim is vulnerable to Out-of-bounds Read
-CVE-2021-4192 	vim is vulnerable to Use After Free
-CVE-2021-4187 	vim is vulnerable to Use After Free
-CVE-2021-4173 	vim is vulnerable to Use After Free
-CVE-2021-4166 	vim is vulnerable to Out-of-bounds Read
-CVE-2021-4136 	vim is vulnerable to Heap-based Buffer Overflow
-CVE-2021-4069 	vim is vulnerable to Use After Free
-CVE-2021-4019 	vim is vulnerable to Heap-based Buffer Overflow
-CVE-2021-3984 	vim is vulnerable to Heap-based Buffer Overflow
-CVE-2021-3974 	vim is vulnerable to Use After Free
-CVE-2021-3973 	vim is vulnerable to Heap-based Buffer Overflow
-CVE-2021-3968 	vim is vulnerable to Heap-based Buffer Overflow
-CVE-2021-3928 	vim is vulnerable to Use of Uninitialized Variable
-CVE-2021-3927 	vim is vulnerable to Heap-based Buffer Overflow
-CVE-2021-3903 	vim is vulnerable to Heap-based Buffer Overflow
-CVE-2021-3875 	vim is vulnerable to Heap-based Buffer Overflow
-
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+Regards,
+Salvatore
