@@ -1,4 +1,9 @@
-Received: (qmail 16059 invoked by uid 550); 12 May 2026 13:19:50 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2357" "Tuesday" "22" "February" "2022" "07:35:10" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" nil "41" "Re: [oss-security] Linux kernel: heap out of bounds write in nf_dup_netdev.c since 5.4" nil nil nil "2" nil nil (number mark "U       carnil@debia Feb 22   41/2357  " thread-indent "\"Re: [oss-security] Linux kernel: heap out of bounds write in nf_dup_netdev.c since 5.4\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: heap out of bounds write in nf_dup_netdev.c since 5.4" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 30665 invoked by uid 550); 22 Feb 2022 06:35:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,106 +12,87 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 16022 invoked from network); 12 May 2026 13:19:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pipping.org;
-	s=manitu-webhosting; t=1778591982;
-	bh=vON5YNsTRtFwNC0bzpJGWRU18tCOISOAg0LFBneY9Ps=;
-	h=Date:Subject:To:References:Cc:From:In-Reply-To;
-	b=eYWjhG0EqV+aY2b19rHc6ZfOx2PjbWDyAdkA2cfj8gy/2+RJeHwCdXX8hN7N9oFg9
-	 s0fuX465e/FqLrpatr+t4aFBHuryGGfY7IWgkpBVUpEd20vworOSyVIVLHbe6uIdG+
-	 HiQ09ujgMYTRykxWV0KsUhksAFKxA+asAqQUfmKmzvmvS/QytKP7Nidl15SJXhFnQh
-	 UnYxMyegIJvVN56t07TSp0TCaYOHgJ60MiYZMPy9W+r6MP5zWH/3gUppYXdaI+l0CA
-	 T4AsYP/htB073Mp5EzYnnUL4J8xmoZbVqMKT0//xImK0kXl1Fls6iI3QaU0rLzihQL
-	 u03cS7a1vBH6A==
-Message-ID: <c67530db-c586-4921-bc3f-67a12e389eb1@pipping.org>
-Date: Tue, 12 May 2026 15:19:39 +0200
-MIME-Version: 1.0
+Received: (qmail 30642 invoked from network); 22 Feb 2022 06:35:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=sender:date:from:to:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=zdmPPS7z5G7xME8QdVSe1LCf1w/MxLCoe1p96lRPJk4=;
+        b=JxVqhfD+Lvbq6756+414b0Xxw8rF//lNtLFelZkpYf48FJZM5FCT/92TcLwQuyt+RE
+         BI2aweKashYrG5W7kHThkt3p873HGMp2ulYpHjEM6mPVlVJt0CGH05nxVQpbk52SiiwL
+         I6fTP+RoLq+w07zqUqSchEITDMHc6JP6rU0Hs4G69UUZ3hysVXSYuZO95m5WevixsHtR
+         S3j/8+ptIDnQQSGndhc7LWug3F6CIGcxhgXQIkU7GaLVBYCMBBrnZJaZyjKJ3zNkuFtz
+         US/AONMcqm0ps1Fj90grANdPcHwV2RYZt8Hjaq75VdgmwCN39z0mIbRR9zOJexej/SW4
+         73VA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to;
+        bh=zdmPPS7z5G7xME8QdVSe1LCf1w/MxLCoe1p96lRPJk4=;
+        b=mmzBnCsdxnBmd/UHEGnsiLGcIf1k2/1yXrBSxfuAyQ09GjtbwpMp7G2ndCnWRe5KsB
+         Pb3ZKy0XB7B/b4RbOfzo5NsYCMQIDQUIRc51pFnMVlvGOGRG4/HGy9mm4FPVFmr3SgBn
+         expVtuUPswA4mj1ysyoFtwQTnmfY5TwuBSsaeOJ7Vr1paU6MmtgS+lJKlFYVFsUaON+W
+         V2eBMpUH8ti4ACFfk/oR6ESKUzYT4EMdhlAC7pN7R0g0lenlbBo4VoBQ8PYH7ZFAfyXv
+         kTVjjmW2PhDwWXd7SIlc/Vqlo2IITqrxEVvd/FI4slQ8dWAXoGeMEfiHiB2zdBMbQ+ag
+         X3FA==
+X-Gm-Message-State: AOAM530GqpqhmI3g6HMPYrWtAJKunqIJdSnMUYt6d4hHs55d9sXsRQ4J
+	v/EnGWa+2FcNiwK0H3UwG5u1VXeOCXS8jw==
+X-Google-Smtp-Source: ABdhPJzWwQh4ysRVqubcPSth4Yjr/afZMMQnuJI+OrTfRC2H3IvRw5xzw7EJ90Y8OFD10E7zLyaWjg==
+X-Received: by 2002:a05:600c:12d2:b0:380:8041:cf0f with SMTP id v18-20020a05600c12d200b003808041cf0fmr1947878wmd.91.1645511713232;
+        Mon, 21 Feb 2022 22:35:13 -0800 (PST)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Tue, 22 Feb 2022 07:35:10 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
 To: oss-security@lists.openwall.com
-References: <958c7edc-400f-44e9-aac4-78161e999db4@pipping.org>
- <20260510074756.GA17210@openwall.com>
-Content-Language: en-US
-Cc: solar@openwall.com
-From: Sebastian Pipping <sebastian@pipping.org>
-In-Reply-To: <20260510074756.GA17210@openwall.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] uriparser 1.0.2 fixes CVE-2026-44927 and
- CVE-2026-44928
+Message-ID: <YhSEHmSudhT0ig/f@eldamar.lan>
+References: <07A9630F-EFEE-4232-BD58-523C27D0D535@sophos.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <07A9630F-EFEE-4232-BD58-523C27D0D535@sophos.com>
+Subject: Re: [oss-security] Linux kernel: heap out of bounds write in
+ nf_dup_netdev.c since 5.4
 
-Hi Alexander,
+Hi,
 
+On Mon, Feb 21, 2022 at 08:38:23PM +0000, Nick Gregory wrote:
+> There is a heap out of bounds write in the function nft_fwd_dup_netdev_of=
+fload (nf_dup_netdev.c). This was introduced in 5.4-rc1 by https://git.kern=
+el.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3Dbe2861dc36d=
+77ff3778979b9c3c79ada4affa131, and is fixed by https://git.kernel.org/pub/s=
+cm/linux/kernel/git/netfilter/nf.git/commit/?id=3Db1a5983f56e371046dcf164f9=
+0bfaf704d2b89f6. I have created a sample LPE targeting Ubuntu 21.10 with KA=
+SLR disabled.
+>=20
+> In nft_fwd_dup_netdev_offload, ctx->num_actions++ is used to offset into =
+the flow->rule->action.entries array (nf_dup_netdev.c:67) when setting up d=
+up or fwd flow rules on a chain with hardware offload enabled. However ther=
+e is a mismatch between the number of times the increment is called vs. the=
+ number of allocated entries. The allocated array size is based on the numb=
+er of nftables expressions that have expr.offload_flags&NFT_OFFLOAD_F_ACTIO=
+N (nf_tables_offload.c:97), but only the immediate expression type has this=
+ (not dup or fwd). It's possible to manually create a rule with dup/fwd exp=
+ressions that don't have a corresponding/preceding immediate, leading to an=
+ undersized entries array, and an arbitrary number of out of bounds array w=
+rites. Despite being in code dealing with hardware offload, this is reachab=
+le when targeting network devices that don't have offload functionality (e.=
+g. lo) as the bug is triggered before the rule creation fails. Additionally=
+, while nftables requires CAP_NET_ADMIN, we can unshare into a new network =
+namespace to get this as a (normally) unprivileged user. The reproducer cod=
+e below demonstrates all of this, and will likely immediately panic the sys=
+tem.
+>=20
+> This can be turned into kernel ROP/local privilege escalation without too=
+ much difficulty, as one of the values that is written out of bounds is con=
+veniently a pointer to a net_device structure. There are many opportunities=
+ for one of the OOB writes to land in another heap allocated structure whic=
+h then misuses it (type confusion, freeing it, etc.). Additionally, an OOB =
+write could be landed in a buffer returned to userland, leaking the address=
+ of the net_device allocation out.
 
-On 5/10/26 09:47, Solar Designer wrote:
-> On Sat, May 09, 2026 at 08:18:49PM +0200, Sebastian Pipping wrote:
->> just a quick note that uriparser 1.0.2 released today is fixing
->> vulnerabilities CVE-2026-44927 and CVE-2026-44928.
-> 
-> Thanks, but let's please be including vulnerability descriptions right
-> in the postings.  Also, when it's one vulnerability, its title should be
-> in the Subject line.  When it's more than one, then if there's a way to
-> group them e.g. by category or severity, that could go into the Subject.
-> 
->> Some key links are:
->>
->> - The change log of release 1.0.2
->>    https://github.com/uriparser/uriparser/blob/uriparser-1.0.2/ChangeLog
-> 
-> This says:
-> 
->>>>>>>>>>>>>> SECURITY >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
->    * Fixed: [CVE-2026-44927]
->        Stop truncating `ptrdiff_t` to `int`
->        Thanks for the report to Ilia Alshanetsky and Joshua W. Windle!
->        (GitHub #304)
->    * Fixed: [CVE-2026-44928]
->        Fix `EqualsUri` with regard to `.absolutePath`
->        Thanks for the report to Ilia Alshanetsky! (GitHub #305)
->>>>>>>>>>>>>> SECURITY >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
->    * Fixed: Fix OOM related memory leak in `CopyUriMm`
->        Thanks for the report to Ilia Alshanetsky! (GitHub #306)
-> 
->> - The fixing pull requests
->>    - https://github.com/uriparser/uriparser/pull/304
->>    - https://github.com/uriparser/uriparser/pull/305
->>
->> - The official CVE metadata
->>    - https://nvd.nist.gov/vuln/detail/CVE-2026-44927
->>    - https://nvd.nist.gov/vuln/detail/CVE-2026-44928
-> 
-> These only say a little:
-> 
-> CVE-2026-44927: In uriparser before 1.0.2, there is pointer difference
-> truncation to int in various places.
-> 
-> CVE-2026-44928: In uriparser before 1.0.2, the function family EqualsUri
-> can misclassify two unequal URIs as equal.
-> 
-> For CVE-2026-44927, it could help to clarify actual security exposure
-> and impact.
+This isse seems to have CVE-2022-25636 assigned.
 
-I understand.
-
-My understanding of the impact of the ptrdiff_t truncation
-(CVE-2026-44927) was "DoS or more", and I focussed on fixing this in the
-about 15 places rather than analyzing the impact in more detail.
-
-Ilia and Joshua considered impact more than me, and I'm BCC'ing them
-so they can reply to this mail directly if they like, please do not feel
-pushed.
-
-Let me add that the public CVSS score input for CVE-2026-44927 is 
-(again) mistaken; none of these are correct:
-
-- Attack vector: Local
-- Attack complexity: High
-- Availability: None
-
-(Seen at https://github.com/advisories/ghsa-gmxg-5w57-j63q just now.)
-
-Best
-
-
-
-Sebastian
-
+Regards,
+Salvatore
