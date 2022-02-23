@@ -1,4 +1,9 @@
-Received: (qmail 7234 invoked by uid 550); 8 Feb 2024 20:13:41 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["11543" "Wednesday" "23" "February" "2022" "05:08:33" "-0700" "Damien Miller" "djm@cvs.openbsd.org" nil "277" "[oss-security] Announce: OpenSSH 8.9 released" nil nil nil "2" nil nil (number mark "U       djm@cvs.open Feb 23  277/11543 " thread-indent "\"[oss-security] Announce: OpenSSH 8.9 released\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Announce: OpenSSH 8.9 released" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 28264 invoked by uid 550); 23 Feb 2022 12:08:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,287 +12,287 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30034 invoked from network); 8 Feb 2024 20:11:02 -0000
-Message-ID: <7f0dd23b-5273-42c4-8543-6f7b93364017@ovn.org>
-Date: Thu, 8 Feb 2024 21:14:18 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-Cc: i.maximets@ovn.org, Aaron Conole <aconole@redhat.com>,
- Flavio Leitner <fbl@redhat.com>
-From: Ilya Maximets <i.maximets@ovn.org>
-Autocrypt: addr=i.maximets@ovn.org; keydata=
- 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
-To: oss-security@lists.openwall.com, ovs-announce@openvswitch.org,
- ovs-discuss <ovs-discuss@openvswitch.org>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------ybb6LydSFVugxNDSc6m3t9Rm"
-X-GND-Sasl: i.maximets@ovn.org
-Subject: [oss-security] [ADVISORY] CVE-2023-3966: Open vSwitch: Invalid memory access in
- Geneve with HW offload.
+Received: (qmail 28232 invoked from network); 23 Feb 2022 12:08:46 -0000
+From: Damien Miller <djm@cvs.openbsd.org>
+Date: Wed, 23 Feb 2022 05:08:33 -0700 (MST)
+To: oss-security@lists.openwall.com
+Message-ID: <ff5f98b0194639d6@cvs.openbsd.org>
+Subject: [oss-security] Announce: OpenSSH 8.9 released
 
---------------ybb6LydSFVugxNDSc6m3t9Rm
-Content-Type: multipart/mixed; boundary="------------WOd7DSitsV4qYcXcgkg3RxEa";
- protected-headers="v1"
-From: Ilya Maximets <i.maximets@ovn.org>
-To: oss-security@lists.openwall.com, ovs-announce@openvswitch.org,
- ovs-discuss <ovs-discuss@openvswitch.org>
-Cc: i.maximets@ovn.org, Aaron Conole <aconole@redhat.com>,
- Flavio Leitner <fbl@redhat.com>
-Message-ID: <7f0dd23b-5273-42c4-8543-6f7b93364017@ovn.org>
-Subject: [ADVISORY] CVE-2023-3966: Open vSwitch: Invalid memory access in
- Geneve with HW offload.
+OpenSSH 8.9 has just been released. It will be available from the
+mirrors listed at https://www.openssh.com/ shortly.
 
---------------WOd7DSitsV4qYcXcgkg3RxEa
-Content-Type: multipart/mixed; boundary="------------inkJOkI3r9zybneO9oOH6BzB"
+OpenSSH is a 100% complete SSH protocol 2.0 implementation and
+includes sftp client and server support.
 
---------------inkJOkI3r9zybneO9oOH6BzB
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Once again, we would like to thank the OpenSSH community for their
+continued support of the project, especially those who contributed
+code or patches, reported bugs, tested snapshots or donated to the
+project. More information on donations may be found at:
+https://www.openssh.com/donations.html
 
-Description
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Future deprecation notice
+=========================
 
-Multiple versions of Open vSwitch are vulnerable to crafted Geneve
-packets causing invalid memory accesses and potential denial of service.
-Triggering the vulnerability requires that Open vSwitch has flow hardware
-offload with Linux TC flower enabled (other_config:hw-offload=3Dtrue).
-It is not enabled by default.
+A near-future release of OpenSSH will switch scp(1) from using the
+legacy scp/rcp protocol to using SFTP by default.
 
-The issue is caused by insufficient validation of Geneve metadata
-fields in the offload path.  Open vSwitch versions 2.12 and newer are
-affected.
+Legacy scp/rcp performs wildcard expansion of remote filenames (e.g.
+"scp host:* .") through the remote shell. This has the side effect of
+requiring double quoting of shell meta-characters in file names
+included on scp(1) command-lines, otherwise they could be interpreted
+as shell commands on the remote side.
 
-The Common Vulnerabilities and Exposures project (cve.mitre.org) has
-assigned CVE-2023-3966 identifier to this issue.
+This creates one area of potential incompatibility: scp(1) when using
+the SFTP protocol no longer requires this finicky and brittle quoting,
+and attempts to use it may cause transfers to fail. We consider the
+removal of the need for double-quoting shell characters in file names
+to be a benefit and do not intend to introduce bug-compatibility for
+legacy scp/rcp in scp(1) when using the SFTP protocol.
 
+Another area of potential incompatibility relates to the use of remote
+paths relative to other user's home directories, for example -
+"scp host:~user/file /tmp". The SFTP protocol has no native way to
+expand a ~user path. However, sftp-server(8) in OpenSSH 8.7 and later
+support a protocol extension "expand-path@openssh.com" to support
+this.
 
-Mitigation
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Security Near Miss
+==================
 
-For any version of Open vSwitch, disabling flow hardware offload will
-prevent the issue (setting other_config:hw-offload=3Dfalse and reboot
-the system).  We do not recommend attempting to mitigate the vulnerability
-this way because it may impact the overall system throughput.
+ * sshd(8): fix an integer overflow in the user authentication path
+   that, in conjunction with other logic errors, could have yielded
+   unauthenticated access under difficult to exploit conditions.
 
-By default, flow hardware offload support is not enabled.
+   This situation is not exploitable because of independent checks in
+   the privilege separation monitor. Privilege separation has been
+   enabled by default in since openssh-3.2.2 (released in 2002) and
+   has been mandatory since openssh-7.5 (released in 2017). Moreover,
+   portable OpenSSH has used toolchain features available in most
+   modern compilers to abort on signed integer overflow since
+   openssh-6.5 (released in 2014).
 
+   Thanks to Malcolm Stagg for finding and reporting this bug.
 
-Fix
-=3D=3D=3D
+Potentially-incompatible changes
+================================
 
-Patches to fix this vulnerability in Open vSwitch 2.17 and newer:
+ * sshd(8), portable OpenSSH only: this release removes in-built
+   support for MD5-hashed passwords. If you require these on your
+   system then we recommend linking against libxcrypt or similar.
 
- * 3.2.x:
-   https://github.com/openvswitch/ovs/commit/2cfbcd5247ed0fd941c1ebb9f4adb9=
-52b67fe13a
- * 3.1.x:
-   https://github.com/openvswitch/ovs/commit/91e621bd5abab19954bec09c7d27c5=
-9acdf607b1
- * 3.0.x:
-   https://github.com/openvswitch/ovs/commit/935cd1d574c6f432a451df8941374f=
-fb36d767d9
- * 2.17.x:
-   https://github.com/openvswitch/ovs/commit/b8657dada9641fbd2bd3a3f882e086=
-2448d60910
+ * This release modifies the FIDO security key middleware interface
+   and increments SSH_SK_VERSION_MAJOR.
 
-Original patch is located at:
-  https://mail.openvswitch.org/pipermail/ovs-dev/2024-February/411702.html
+Changes since OpenSSH 8.8
+=========================
 
+This release includes a number of new features.
 
-Recommendation
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+New features
+------------
 
-We recommend that users of Open vSwitch apply the linked patches, or
-upgrade to a known patched version of Open vSwitch.  These include:
+ * ssh(1), sshd(8), ssh-add(1), ssh-agent(1): add a system for
+   restricting forwarding and use of keys added to ssh-agent(1)
+   A detailed description of the feature is available at
+   https://www.openssh.com/agent-restrict.html and the protocol
+   extensions are documented in the PROTOCOL and PROTOCOL.agent
+   files in the source release.
 
- * v3.2.2
- * v3.1.4
- * v3.0.6
- * v2.17.9
+ * ssh(1), sshd(8): add the sntrup761x25519-sha512@openssh.com hybrid
+   ECDH/x25519 + Streamlined NTRU Prime post-quantum KEX to the
+   default KEXAlgorithms list (after the ECDH methods but before the
+   prime-group DH ones). The next release of OpenSSH is likely to
+   make this key exchange the default method.
+    
+ * ssh-keygen(1): when downloading resident keys from a FIDO token,
+   pass back the user ID that was used when the key was created and
+   append it to the filename the key is written to (if it is not the
+   default). Avoids keys being clobbered if the user created multiple
+   resident keys with the same application string but different user
+   IDs.
 
+ * ssh-keygen(1), ssh(1), ssh-agent(1): better handling for FIDO keys
+   on tokens that provide user verification (UV) on the device itself,
+   including biometric keys, avoiding unnecessary PIN prompts.
 
-Acknowledgments
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+ * ssh-keygen(1): add "ssh-keygen -Y match-principals" operation to
+   perform matching of principals names against an allowed signers
+   file. To be used towards a TOFU model for SSH signatures in git.
 
-The Open vSwitch team wishes to thank the reporters:
+ * ssh-add(1), ssh-agent(1): allow pin-required FIDO keys to be added
+   to ssh-agent(1). $SSH_ASKPASS will be used to request the PIN at
+   authentication time.
+    
+ * ssh-keygen(1): allow selection of hash at sshsig signing time
+   (either sha512 (default) or sha256).
 
-  Timothy Redaelli <tredaelli@redhat.com>
-  Haresh Khandelwal <hakhande@redhat.com>=
+ * ssh(1), sshd(8): read network data directly to the packet input
+   buffer instead indirectly via a small stack buffer. Provides a
+   modest performance improvement.
 
---------------inkJOkI3r9zybneO9oOH6BzB
-Content-Type: application/pgp-keys; name="OpenPGP_0xB9F7EC77C829BF96.asc"
-Content-Disposition: attachment; filename="OpenPGP_0xB9F7EC77C829BF96.asc"
-Content-Description: OpenPGP public key
-Content-Transfer-Encoding: quoted-printable
+ * ssh(1), sshd(8): read data directly to the channel input buffer,
+   providing a similar modest performance improvement.
 
------BEGIN PGP PUBLIC KEY BLOCK-----=0A=
-=0A=
-xsFNBF77bOMBEADVZQ4iajIECGfH3hpQMQjhIQlyKX4hIB3OccKl5XvB/JqVPJWu=0A=
-ZQRuqNQG/B70MP6km95KnWLZ4H1/5YOJK2l7VN7nO+tyF+I+srcKq8Ai6S3vyiP9=0A=
-zPCrZkYvhqChNOCFpNqdWBEmTvLZeVPmfdrjmzCLXVLi5De9HpIZQFg/Ztgj1AZE=0A=
-NNQjYjtDdObMHuJQNJ6ubPIWcvOOn4WBr8NsP4a2OuHSTdVyAJwcDhu+WrS/Bj3K=0A=
-lQXIdPv3Zm5x9u/56NmCn1tSkLrEgi0i/nJNeH5QhPdYGtNzPixKgPmCKz54/LDx=0A=
-U61AmBvyRve+U80ukS+5vWk8zvnCGvL0ms7kx5sAtETpbKEV3d7CB3sQEym8B8gl=0A=
-0Ux9KzGp5lbhxxO995KWzZWWokVUcevGBKsAx4a/C0wTVOpPFbQsq6xEpTKBZwlC=0A=
-pxyJi3/PbZQJ95T8Uw6tlJkPmNx8CasiqNy2872gD1nN/WOP8m+cIQNuo6NOiz6V=0A=
-zNcowhEihE8Nkw9V+zfCxC8SzSBuYCiVX6FpgKzY/Tx+v2uO4f/8FoZj2trzXdLk=0A=
-BaIiyqnE0mtmTQE8jRa29qdh+s5DNArYAchJdeKuLQYnxy+9U1SMMzJoNUX5uRy6=0A=
-/3KrMoC/7zhn44x77gSoe7XVM6mr/mK+ViVB7v9JfqlZuiHDkJnS3yxKPwARAQAB=0A=
-zSJJbHlhIE1heGltZXRzIDxpLm1heGltZXRzQG92bi5vcmc+wsGUBBMBCAA+FiEE=0A=
-h+ma1RKWrHCY821auffsd8gpv5YFAl77bOMCGwMFCQHhM4AFCwkIBwIGFQoJCAsC=0A=
-BBYCAwECHgECF4AACgkQuffsd8gpv5Z4YQ//VcvzG2KP86MLV4uIoTHunpNH1+x7=0A=
-46NqDFZPPCVBRxnVhtgoetWYYoGYS2N6J8PnTjbiPxpTGlBFDrJPg7pHHOw3E8zI=0A=
-cKkcVT9EzdgcT7P7g9QHLfCgk9i42Cb/sV88VQV045NuWd/sHM6lY4ZMzDxvZMq9=0A=
-17qRppOeKUIFiD40neKCOOaHwpPIQBJ1QMBk2uF6sG7w8hlMFwwOYWEM47H17cw3=0A=
-kKZXTmJ7BKPTYAk+8a6d9uehQkDGEyXeqeVUIGQUhWPMSic/4dySW7hmYvjZmg3e=0A=
-LeXRTwXm8QFoz/DdTpQ9cGNP7lviRVgIMoNW7/jeMDiuD+oukzS0vbtB2y5cQd4b=0A=
-BdXxv/fY39uihbHFIRYMshUFHSa/LMXNysL7Io5HHh+k1dyJEnwZXEYExlv4BdOq=0A=
-H3T0gE53Ophr2OIS8U8y1tnH1Tej2vklDyVXNCWq4bO04QlY0cPAi1JnZhrM4eh9=0A=
-kie3O83LAWRZPY9XAiHK86dQHhZtuFka3Bp78bcyLG7C+XTohzcHi7rue1dOvRSK=0A=
-VZQp/L1MmTDiPM61ZmZN8aZRd2TbesdnZPi6m5UxnaAGFwDGWdxKqcyeNTF/seRQ=0A=
-6KtxJPsLmTnF3S9jLqXBE+NYFIsrXZ/yojuF72pmJufc1icE83CrR9R/TCrzWypO=0A=
-t0FPshLiVr8kmlDCwZQEEwEIAD4CGwMFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AW=0A=
-IQSH6ZrVEpascJjzbVq59+x3yCm/lgUCYNOg5QUJBZqbAgAKCRC59+x3yCm/lu3y=0A=
-D/9g1g9a21daBUwH7ls9MR1sZAaX+JGdpM25ib1DKNEPFPvTLBe27gPBzmAhuwHn=0A=
-y7wEhG2tgrPN8V8YO9iM3kwi4gX74NTmGM+mluCZgo6f+w10NdZnLzfBytdUKehN=0A=
-/c/hVyj2qwDIkJXsfOyi9NLTfzWwV8/U066Ua4D+6AVxBvxA+y1ZBf0XBsZ9eeLO=0A=
-ySCLeYfhfp6lRctpi0t5T2ZL1kgzg3L21C//rcZ35rqTyR40OhGVOXcYrALA2iEE=0A=
-HgciFPRe6otnPGbgxkyjC9vOBNDvdDN9RUip1KMVYY+t2DoDsQnzp7/t5ZHdP2ZA=0A=
-S6cMEAeMLCUinT4FIt+wfSFpa3fxvVBe2qpm0LbIhD0VarFgn0TStmw05eDLn4tM=0A=
-2AxE2rVAAZ+yw7D75L7zQDq+Q89VXhjBXYSYi3wWeORrvfAOsS90xwdw78DUAZp7=0A=
-7PVyy5xD9AfUkXRUiBYgQDOS/9y9eKe733qomaF2Pw9uZAcc/DBB2SaSCRICBpM0=0A=
-9FTJU1wmpAnoH8ErkSpZSK0pKRHepdMAynOLxUUa6bTeR5BF2DV5E7kUq9LHVBA7=0A=
-shnZTcl8drB+kJCGDUMsLbFwKuz3BrvsOJ8qjTeykWAr9UJCkDVoJAKkneYp9xUH=0A=
-EplcA3dOcLVE7txjhZjfZ7ESZeuCkwtRyqPeSbeKxOteu8LBlAQTAQgAPgIbAwUL=0A=
-CQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBIfpmtUSlqxwmPNtWrn37HfIKb+WBQJj=0A=
-/mPzBQkIxV4QAAoJELn37HfIKb+WIDgP/3hGpLxO8UxzSDHS1ua9151khGOOHRQx=0A=
-Fky50uxW2Syx8TzRVzdBkgAPGbCd3xNujuT8XhBBU3+0f1uoR3ElzSuHOkvMEeAp=0A=
-EyQt1zhSXIVwnYEnO8UtONHy2cBgbjueVk9mYUL2Y9T80/BXKPECr1F69O7Gh1Gm=0A=
-JNi79pkYRDz/c7Msuwtk/c1MxtOGt0hnT+ebQeQHYtK/xGvulSaCyHLTfDmhegcF=0A=
-6WoPLO+lgMg8fLggjQRd3JzZEKwrHyq0hNo676yQZr5Ud/5SdDmL+m2835Cr6NFt=0A=
-/NxHcXr8wDujgWiNsPsMQSvdkjCkAd0dGSPP4KgqJKwBSiO4LZ8jxhCs+o7by4Et=0A=
-z3jrX+Q+z08/u+hf1+qyRkzsUd27qfsNWz/0zxxD2trO0ciSEgtO1w3tuJ/WVJaR=0A=
-uYo0b342wgh2+qThIoyI9nr3CLJ4kyhEdqS/p5GLcdG6e3WRCtba23H4Jc7Xt9WU=0A=
-jrH5nu+LuRw8avP61B09NedZP771AGdSjnZD61RJeegGFBLBS5cBdf4/ZpHe61Mm=0A=
-N2VeqMqsVdTSkMOKpzvN14molY0LrCvel+RGvl6DRI1eEXcU8Tl3Q3F6l7QyQQun=0A=
-5jT84+EHMccs8UFFRyb+u5CTpBeBPrSc2vnTbPEhdCx5z3x2kjwRa3O8kCPb6ZNV=0A=
-wcUFocOqCYMtzsFNBF77bOMBEADQl8gzonNI9kCnso/4Gjg9aCpeOCUHzoHMi1Q2=0A=
-RmMhJ8pem/7VdZjW+e8v2EGK9938DEtYTI/XqmOrZTEzc/nIhmWVlWJDzRwPmhbj=0A=
-08wi62qS4s/NvTOS3LQduOPG7IMRatEz66+SmMegJLlszlav1+cGBDOnY21i3FVo=0A=
-Cd6NEATiOP7gfPcU3+5oHCHG8BH+sm//OgrPo2h3FLSXC7Fbs1uUVTFX/Rfkn/2/=0A=
-fC8669v5iAe3JTl2SUoLVe/QJccpuB9HBGWm8Il54oI47C7KeKI4RoGpIAsH7S5I=0A=
-QJ0E96ASx/+osfO2oWsBt6pciAfGWSh7L08W1rXunOsROXZpiyAzeOEmowHZo7dY=0A=
-u0mwMBSBY7hSRqbJ33UL9ToiFcyeOJHUSRvJEFjz7mv5PgLcCbf4Iwsb+afLClV0=0A=
-zbSD/7HdxDLNscGxfDHHmyxPSQg0NUV1R3HgJj1lQqt1qxbl/XUpYH90Vk6jYlmQ=0A=
-tGvB5+nzQ6duk8y23aPZp8W1OCP9wW3ACWSPafRC2hPa8Ny1PHrCqkSH2maj7a3Z=0A=
-tQvnuYGWtoJJhMxvlhLEtDCrScjhZ7oJRpdWQcUdbhb21FV4XsAjaL4l8ZJD5Pw2=0A=
-pyIGAdZ1LZDwvgR5CSWAsn/Sn5d97P22ot+GmsZBl6qSr/giJwEYN3wopHB82GFi=0A=
-ml0uhwARAQABwsF8BBgBCAAmFiEEh+ma1RKWrHCY821auffsd8gpv5YFAl77bOMC=0A=
-GwwFCQHhM4AACgkQuffsd8gpv5Zs3BAAtNjTKLicG+zs38XYvMZNpSR1mE9KA3o4=0A=
-NuUOyHDyMGEckYuM4gl+Vljv0zMRzMkHOsNehg8dbbmftnaIqW89D6cWmKENusjW=0A=
-r9IcP6IAcyvijcSg48IXNXZt0Ew58UnPjoCR7bsIC1sbcgpGGORIWe09PbKnApPk=0A=
-lO6K2ux0NrKv5eduOCsWOjtbkleiIvAFF21i6V653g0KU+D2YFTT0Vk0dNLab2ec=0A=
-UvMbGxqYsQtC0ecv4QmcXht5zuVfK7vdb9B0HOEXV61In0kn6sGaGDtjnz8NTPA6=0A=
-+BmbBgunlCzkksIkdkL0FAHgRd9v4WojjrY24zU2lbd+5vZ3Mplt7thhoEC0in3M=0A=
-QtQI9Z5ozQ7daP3UpvyadhxPYQIn6FYLt68+AeTUjqe+AV0isGESTEBqFzwZtR5g=0A=
-6f7SWQl6tTRygKxI3KOmK7up4I/Uc45bqWOMGy3RLtmNOBp/yJNO5z0eoGAUzpJn=0A=
-NVMEfu3K0Js+Km04ReDpdjyRk8EuUfnGwVQN/h8X+iP9GmQ2kXeJG4/Y4gkla8Xz=0A=
-rjzpvb1WAPSAGsBbej25svXL0f0UWuY0iyQQ4K9bCQzCRXmr7hYNGicgVhs4nOIv=0A=
-M5xI+o38I7F/YEH1FGpjQzFPWmt424UPPKKqkJWnPLSqHBVD+GydqfZY8RocwkEF=0A=
-W6JBL++3bXvCwXwEGAEIACYCGwwWIQSH6ZrVEpascJjzbVq59+x3yCm/lgUCYNOh=0A=
-QwUJBZqbYAAKCRC59+x3yCm/lvErEACqxz9P0E5/Ho0tJ61+p/LLjI9LyzCVVXmK=0A=
-oFMlQSsr1zxMTgR4ubKqcuX0yeDh9Bl0mbH7Fu9+92qnOJseCbec1Zyyt/4OfT9J=0A=
-6samW+6VIEVogVGhsB5QZTJCuVfeBX5iwx0ZoJMbW4xrbteke6WCpglzzSL0M0ms=0A=
-cqUK9l1asHhuaffcLtcGzMpXvqc9HjbDar7FTnnWpOK92DvBST+XVldSMPhg4/6D=0A=
-keojHHTPCxD3IrcogMfDM1X/eY/5ZmkTWnCT4MiQshlI4C/pzhJQQRRGOoitl/iS=0A=
-xPEIn9XLJoYhzV9GHr0T2W+PzMT+03b2xVWAGL5djZpYHo2X9VfPIvqT30Qt7Q/Q=0A=
-XlaziZx1ZPDz9MXtVS7YPmsxe7/TmW+9S8H3R+ZXJbYijUGg7H8F6Bs8PLP9P9gl=0A=
-1wkF4uZ9jYJcVykU1uZrjoK0BdEW5a863GZVFBAIHUEERT/YXtsfcnN4ppQYFLiX=0A=
-29xQy3FlRHKhRBBaSliSM9IUMwjJNO4HqTONIZai4hB73wYYJrfkm3Gd7bUZw5RD=0A=
-YFfUdt/zYoi/gg2UghBPS+exJdO0Q9sBhY2BLJ6sr0yNrMQjIoAYnn+XsxgMZR2t=0A=
-k79YOO/JksO83Klqn8+8M3C73+Yj+KUBBZlkEsaVfubeto48cdsnaHlZsak1C/iX=0A=
-QDbrUVQ6z8LBfAQYAQgAJgIbDBYhBIfpmtUSlqxwmPNtWrn37HfIKb+WBQJj/mQk=0A=
-BQkIxV5BAAoJELn37HfIKb+WkXsP/0uiXHTS7GpfPa+3+71+W9C8uw5Zr5QGZY8Z=0A=
-f26haFDboaO1tW8h/pIQJyc1aW7/L4weGZiTP6HZUuFZhUYnSrTdeSS0UI3BS8en=0A=
-dtNcbchw8gJ4MlRUwwgdcWntNy5EmGsaqeXOoq96uVjr7YKq0KkYwSY9VqEwMa6f=0A=
-CoV8brlC5tnJIIdVi9dP1I2BrQDL8vvX55XBy4YKEbLERaFWSkxUrlxJZXNl7sL6=0A=
-Bvo3VpM2uG7Z2GmBzB7VeyDh1i91jNM27X0VGl9z6dVF1Wc62jzCifVIcaBhJUkD=0A=
-5A+/XHyUxiooRI4cAUT8MkkpTwxGQJ5J+qyLMVWpPFOTdVc4IxRHi3Zxtn0TtBv9=0A=
-lmKCaZKCKVKs4+AM7lO1PzXVLOF4A3Q++BP4vUazO1xDcG9+h8W/c4sXvvwnJV+l=0A=
-dEeyf2sWrEb9BhYyolaL6908nlGEOXVBQQXIfuiT9ljrT/zkVbej05DCgx/b6ko0=0A=
-bcn4Qy5TiDhkcbPEjSKzLDDs+kQfHqzEUS8yGw6nuqeM+xBRycYgiKoqVOMfuLzr=0A=
-nzRWd2wqtEr33Mmubiz1OD/s4U/VKlW829IzhNFdLNUXblZV8uB6Wg3XIcLlayqT=0A=
-fddc202i+oDRMsWOF/LJ60Gwg6CkZqSAE2J4L0adju0LcAb4GobmOdW4apJM76Iz=0A=
-936Wyhr7=0A=
-=3DWtts=0A=
------END PGP PUBLIC KEY BLOCK-----=0A=
+ * ssh(1): extend the PubkeyAuthentication configuration directive to
+   accept yes|no|unbound|host-bound to allow control over one of the
+   protocol extensions used to implement agent-restricted keys.
 
---------------inkJOkI3r9zybneO9oOH6BzB--
+Bugfixes
+--------
 
---------------WOd7DSitsV4qYcXcgkg3RxEa--
+ * sshd(8): document that CASignatureAlgorithms, ExposeAuthInfo and
+   PubkeyAuthOptions can be used in a Match block. PR#277.
 
---------------ybb6LydSFVugxNDSc6m3t9Rm
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+ * sshd(8): fix possible string truncation when constructing paths to
+   .rhosts/.shosts files with very long user home directory names.
 
------BEGIN PGP SIGNATURE-----
+ * ssh-keysign(1): unbreak for KEX algorithms that use SHA384/512
+   exchange hashes
+    
+ * ssh(1): don't put the TTY into raw mode when SessionType=none,
+   avoids ^C being unable to kill such a session. bz3360
 
-wsF5BAABCAAjFiEEh+ma1RKWrHCY821auffsd8gpv5YFAmXFNhoFAwAAAAAACgkQuffsd8gpv5Z/
-AhAAwG0eKrx5TMDmzNeXEo1mC1N8kYKHBNRPWSk3tjZmHJ0FblG9s4j26TgwVaEuJkf60QWCshyC
-jqj4xelboO1RkHom47ogIclVxDxV6I5vL/P/pTKPwh66JdCURqAlAaQilsA940kI2mqfTZ2jXq7X
-QZr3/agCgr88NPZRLoyFgLAYu51vEacUvz1GoZryDSKiTkJ+KXwuYN+IR+52yELAkc6dWvBjzUUE
-0U227f25Q5QKy2UmuzMTh0io8aFhnAPhGJr/JbSxVoVrdGfyxwfGPNh2ScRLExPKQ+gxx4Fmci1V
-cxtat8PjK0c5bb/I5YYIyoPsP0nV+SV8anEgqnISmWxkUrSK4veF2iA3wl5myZeV+J8k56iiesqk
-J19YcmNsgW5BeUNru9zD8mc4+5CV0jCKYJkV8XBBEF6eOJrOEpnCcqtSRxMBPUcnkukW4loCy0gH
-KdYNNBxaWiWNd8I3MPQhMEU1NXbvPP17KoPBdoGZQntc5Y07idDweOOP8N54WGUTVkMZQCqlXVDy
-fHe+0uvxMLh0LEqGHpTEOTe2+Ur8wgSsrtNFIHRI30RSwJjb9+ee5UWKwxtT+su1XZWd1S4wY6l+
-pNBXHlK4/B53DuMJWATr2kiEBsPGIqFExxWwCGRryFPSaqJjn0mHoR8YAsolpHi2yDtbemQvDOzt
-9fs=
-=irp2
------END PGP SIGNATURE-----
+ * scp(1): fix some corner-case bugs in SFTP-mode handling of
+   ~-prefixed paths.
 
---------------ybb6LydSFVugxNDSc6m3t9Rm--
+ * ssh(1): unbreak hostbased auth using RSA keys. Allow ssh(1) to
+   select RSA keys when only RSA/SHA2 signature algorithms are
+   configured (this is the default case). Previously RSA keys were
+   not being considered in the default case.
+
+ * ssh-keysign(1): make ssh-keysign use the requested signature
+   algorithm and not the default for the key type. Part of unbreaking
+   hostbased auth for RSA/SHA2 keys.
+
+ * ssh(1): stricter UpdateHostkey signature verification logic on
+   the client- side. Require RSA/SHA2 signatures for RSA hostkeys
+   except when RSA/SHA1 was explicitly negotiated during initial
+   KEX; bz3375
+
+ * ssh(1), sshd(8): fix signature algorithm selection logic for
+   UpdateHostkeys on the server side. The previous code tried to
+   prefer RSA/SHA2 for hostkey proofs of RSA keys, but missed some
+   cases. This will use RSA/SHA2 signatures for RSA keys if the
+   client proposed these algorithms in initial KEX. bz3375
+
+ * All: convert all uses of select(2)/pselect(2) to poll(2)/ppoll(2).
+   This includes the mainloops in ssh(1), ssh-agent(1), ssh-agent(1)
+   and sftp-server(8), as well as the sshd(8) listen loop and all
+   other FD read/writability checks. On platforms with missing or
+   broken poll(2)/ppoll(2) syscalls a select(2)-based compat shim is
+   available.
+    
+ * ssh-keygen(1): the "-Y find-principals" command was verifying key
+   validity when using ca certs but not with simple key lifetimes
+   within the allowed signers file.
+    
+ * ssh-keygen(1): make sshsig verify-time argument parsing optional
+
+ * sshd(8): fix truncation in rhosts/shosts path construction.
+
+ * ssh(1), ssh-agent(1): avoid xmalloc(0) for PKCS#11 keyid for ECDSA
+   keys (we already did this for RSA keys). Avoids fatal errors for
+   PKCS#11 libraries that return empty keyid, e.g. Microchip ATECC608B
+   "cryptoauthlib"; bz#3364
+
+ * ssh(1), ssh-agent(1): improve the testing of credentials against
+   inserted FIDO: ask the token whether a particular key belongs to
+   it in cases where the token supports on-token user-verification
+   (e.g. biometrics) rather than just assuming that it will accept it.
+
+   Will reduce spurious "Confirm user presence" notifications for key
+   handles that relate to FIDO keys that are not currently inserted in at
+   least some cases. bz3366
+    
+ * ssh(1), sshd(8): correct value for IPTOS_DSCP_LE. It needs to
+   allow for the preceding two ECN bits. bz#3373
+
+ * ssh-keygen(1): add missing -O option to usage() for the "-Y sign"
+   option.
+
+ * ssh-keygen(1): fix a NULL deref when using the find-principals
+   function, when matching an allowed_signers line that contains a
+   namespace restriction, but no restriction specified on the
+   command-line
+
+ * ssh-agent(1): fix memleak in process_extension(); oss-fuzz
+   issue #42719
+
+ * ssh(1): suppress "Connection to xxx closed" messages when LogLevel
+   is set to "error" or above. bz3378
+
+ * ssh(1), sshd(8): use correct zlib flags when inflate(3)-ing
+   compressed packet data. bz3372
+ 
+ * scp(1): when recursively transferring files in SFTP mode, create the
+   destination directory if it doesn't already exist to match scp(1) in
+   legacy RCP mode behaviour.
+    
+ * scp(1): many improvements in error message consistency between scp(1)
+   in SFTP mode vs legacy RCP mode.
+
+ * sshd(8): fix potential race in SIGTERM handling PR#289
+
+ * ssh(1), ssh(8): since DSA keys are deprecated, move them to the
+   end of the default list of public keys so that they will be tried
+   last. PR#295
+
+ * ssh-keygen(1): allow 'ssh-keygen -Y find-principals' to match
+   wildcard principals in allowed_signers files
+    
+Portability
+-----------
+
+ * ssh(1), sshd(8): don't trust closefrom(2) on Linux. glibc's
+   implementation does not work in a chroot when the kernel does not
+   have close_range(2). It tries to read from /proc/self/fd and when
+   that fails dies with an assertion of sorts. Instead, call
+   close_range(2) directly from our compat code and fall back if
+   that fails.  bz#3349,
+
+ * OS X poll(2) is broken; use compat replacement. For character-
+   special devices like /dev/null, Darwin's poll(2) returns POLLNVAL
+   when polled with POLLIN. Apparently this is Apple bug 3710161 -
+   not public but a websearch will find other OSS projects
+   rediscovering it periodically since it was first identified in
+   2005.
+
+ * Correct handling of exceptfds/POLLPRI in our select(2)-based
+   poll(2)/ppoll(2) compat implementation.
+
+ * Cygwin: correct checking of mbstowcs() return value.
+
+ * Add a basic SECURITY.md that refers people to the openssh.com
+   website.
+
+ * Enable additional compiler warnings and toolchain hardening flags,
+   including -Wbitwise-instead-of-logical, -Wmisleading-indentation,
+   -fzero-call-used-regs and -ftrivial-auto-var-init.
+
+ * HP/UX. Use compat getline(3) on HP-UX 10.x, where the libc version
+   is not reliable.
+
+Checksums:
+==========
+
+ - SHA1 (openssh-8.9.tar.gz) = 653310ba1a63959fe2df503fe7ad556445180127
+ - SHA256 (openssh-8.9.tar.gz) = mJigktP+Bk0sB7uRPuWgjcCOYZ+mIMdvRlZe66irtQA=
+
+ - SHA1 (openssh-8.9p1.tar.gz) = 205cdf0040a238047e2c49f43460e03d76e5d650
+ - SHA256 (openssh-8.9p1.tar.gz) = /Ul2VLerFobaxnL7g9+0ukCW6LX/zazNJiOArli+xec=
+
+Please note that the SHA256 signatures are base64 encoded and not
+hexadecimal (which is the default for most checksum tools). The PGP
+key used to sign the releases is available from the mirror sites:
+https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
+
+Please note that the OpenPGP key used to sign releases has been
+rotated for this release. The new key has been signed by the previous
+key to provide continuity.
+
+Reporting Bugs:
+===============
+
+- Please read https://www.openssh.com/report.html
+  Security bugs should be reported directly to openssh@openssh.com
