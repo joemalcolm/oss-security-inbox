@@ -1,65 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/24/1
-Message-ID: <20220524125804.GA29146@openwall.com>
-Date: Tue, 24 May 2022 14:58:04 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/23/4
+Message-ID: <5b01b17d-0c06-2bbb-0a05-59eacab2b905@oracle.com>
+Date: Wed, 23 Feb 2022 11:52:13 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros list policy and Linux kernel
+Subject: Fwd: Cyrus-SASL 2.1.28 released [fixes CVE-2022-24407 & CVE-2019-19906]
 Content-Type: text/plain; charset=utf-8
 
-On Sun, May 22, 2022 at 09:19:51PM +0200, Solar Designer wrote:
-> I think now we need to come up with a specific edit to the policy, and I
-> think the exception should ideally be limited to Linux kernel issues
-> currently/recently handled with the kernel's security team involved.
-> Ideally, we'd also manage to simplify rather than further complicate the
-> policy - a goal inconsistent with granting only a limited exception?
 
-I've just added the exception to:
 
-https://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-instructions-for-reporters
 
-The paragraph now reads:
+-------- Forwarded Message --------
+Subject: Cyrus-SASL 2.1.28 released
+Date: Tue, 22 Feb 2022 10:11:53 -0800
+From: Quanah Gibson-Mount <quanah@...t-mail.org>
+To: announce@...us.topicbox.com
 
-"Please note that in case a fix for an issue is already in a publicly
-accessible source code repository, we generally consider the issue
-public (and thus you should post to oss-security right away, not report
-the issue to (linux-)distros as we'd merely redirect you to oss-security
-anyway and insist that you make the required posting ASAP).  There can
-be occasional exceptions to this, such as if the publicly accessible fix
-doesn't look like it's for a security issue and not revealing this
-publicly right away is somehow deemed desirable.  In particular, we
-grant such exceptions to Linux kernel issues concurrently or very
-recently handled by the Linux kernel security team.  In all other cases,
-you'd have to have very sound reasoning to claim an exception like this
-and be prepared to lose your argument and if so to post to oss-security
-ASAP anyway."
+The Cyrus team is proud to announce the immediate availability of the new version of Cyrus-SASL: 2.1.28
 
-It was:
+Among other things, this release fixes two CVEs:
 
-"Please note that in case a fix for an issue is already in a publicly
-accessible source code repository, we generally consider the issue
-public (and thus you should post to oss-security right away, not report
-the issue to (linux-)distros as we'd merely redirect you to oss-security
-anyway and insist that you make the required posting ASAP).  There can
-be occasional (rare) exceptions to this, such as if the publicly
-accessible fix doesn't look like it's for a security issue (e.g., if the
-corresponding changes were initially made for unrelated reasons and were
-only later realized to have fixed a non-public security issue) and not
-revealing this publicly right away is somehow desirable.  You'd have to
-have very sound reasoning to claim an exception like this and be
-prepared to lose your argument and if so to post to oss-security ASAP
-anyway."
+lib/common.c:
+CVE-2019-19906 Fix off by one error (Issue#587)
 
-The policy above doesn't explicitly say that equivalent terms apply when
-determining whether an embargo has ended (if before a pre-agreed date).
-However, we do have a paragraph that start with:
+plugins/sql.c:
+CVE-2022-24407 Escape password for SQL insert/update commands.
 
-"When the security issue is finally (to be made) public, "
+Of course, please check the release notes for the full list of changes.
 
-Previously, there were no braces around "to be made" - I've just added
-those.  Hopefully, it is obvious enough that if we accepted an issue as
-non-public under the new exception, then it is considered public when
-the new exception would have no longer applied.  We can, however, add
-explicit wording if that becomes necessary.
+Release notes:
 
-Alexander
+<https://www.cyrusimap.org/sasl/sasl/release-notes/2.1/index.html#new-in-2-1-28>
+
+Download URLs:
+
+<https://github.com/cyrusimap/cyrus-sasl/releases/download/cyrus-sasl-2.1.28/cyrus-sasl-2.1.28.tar.gz>
+<https://github.com/cyrusimap/cyrus-sasl/releases/download/cyrus-sasl-2.1.28/cyrus-sasl-2.1.28.tar.gz.sig>
+
+On behalf of the Cyrus team,
+
+Kind regards,
+
+Quanah Gibson-Mount
