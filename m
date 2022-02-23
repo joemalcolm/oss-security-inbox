@@ -1,210 +1,286 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/05/1
-Message-ID: <4a7ab989.4d12a.181317318f6.Coremail.duoming@zju.edu.cn>
-Date: Sun, 5 Jun 2022 09:20:35 +0800 (GMT+08:00)
-From: duoming@....edu.cn
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/23/3
+Message-ID: <ff5f98b0194639d6@cvs.openbsd.org>
+Date: Wed, 23 Feb 2022 05:08:33 -0700 (MST)
+From: Damien Miller <djm@....openbsd.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-1974: Linux kernel: use-after-free caused by improper check device_is_registered() in nfc netlink related functions
+Subject: Announce: OpenSSH 8.9 released
 Content-Type: text/plain; charset=utf-8
 
-Hello there,
+OpenSSH 8.9 has just been released. It will be available from the
+mirrors listed at https://www.openssh.com/ shortly.
 
-There are use-after-free vulnerabilities in /net/nfc/core.c of linux that allow 
-attacker to crash linux kernel by simulating nfc device from user-space.
+OpenSSH is a 100% complete SSH protocol 2.0 implementation and
+includes sftp client and server support.
 
-=*=*=*=*=*=*=*=*=  Bug Details  =*=*=*=*=*=*=*=*=
+Once again, we would like to thank the OpenSSH community for their
+continued support of the project, especially those who contributed
+code or patches, reported bugs, tested snapshots or donated to the
+project. More information on donations may be found at:
+https://www.openssh.com/donations.html
 
-The device_is_registered() in nfc core is used to check whether
-nfc device is registered in netlink related functions such as
-nfc_fw_download(), nfc_dev_up() and so on. Although device_is_registered()
-is protected by device_lock, there is still a race condition between
-device_del() and device_is_registered(). The root cause is that
-kobject_del() in device_del() is not protected by device_lock.
+Future deprecation notice
+=========================
 
-   (cleanup task)         |     (netlink task)
-                          |
-nfc_unregister_device     | nfc_fw_download
- device_del               |  device_lock
-  ...                     |   if (!device_is_registered)//(1)
-  kobject_del//(2)        |   ...
- ...                      |  device_unlock
+A near-future release of OpenSSH will switch scp(1) from using the
+legacy scp/rcp protocol to using SFTP by default.
 
-The device_is_registered() returns the value of state_in_sysfs and
-the state_in_sysfs is set to zero in kobject_del(). If we pass check in
-position (1), then set zero in position (2). As a result, the check
-in position (1) is useless.
+Legacy scp/rcp performs wildcard expansion of remote filenames (e.g.
+"scp host:* .") through the remote shell. This has the side effect of
+requiring double quoting of shell meta-characters in file names
+included on scp(1) command-lines, otherwise they could be interpreted
+as shell commands on the remote side.
 
-One of the use-after-free vulnerabilities caused by this problem is shown below:
+This creates one area of potential incompatibility: scp(1) when using
+the SFTP protocol no longer requires this finicky and brittle quoting,
+and attempts to use it may cause transfers to fail. We consider the
+removal of the need for double-quoting shell characters in file names
+to be a benefit and do not intend to introduce bug-compatibility for
+legacy scp/rcp in scp(1) when using the SFTP protocol.
 
-   (Free)                 |     (Use)                      
-nfc_unregister_device     | nfc_dev_up
- rfkill_destroy //(1)     |  ...
- ...                      |  
- device_del               |  device_lock
-  ...                     |   if (!device_is_registered)
-  kobject_del             |   ...
-                          |   rfkill_blocked
-                          |    spin_lock_irqsave(&rfkill->lock,..);//(2)
- ...                      |  device_unlock
+Another area of potential incompatibility relates to the use of remote
+paths relative to other user's home directories, for example -
+"scp host:~user/file /tmp". The SFTP protocol has no native way to
+expand a ~user path. However, sftp-server(8) in OpenSSH 8.7 and later
+support a protocol extension "expand-path@...nssh.com" to support
+this.
 
-The rfkill is deallocated is position(1) and use in position(2), which leads to 
-use-after-free bug.
+Security Near Miss
+==================
 
-=*=*=*=*=*=*=*=*=  Bug Effects  =*=*=*=*=*=*=*=*=
+ * sshd(8): fix an integer overflow in the user authentication path
+   that, in conjunction with other logic errors, could have yielded
+   unauthenticated access under difficult to exploit conditions.
 
-We can successfully trigger the vulnerabilities to crash the linux kernel.
+   This situation is not exploitable because of independent checks in
+   the privilege separation monitor. Privilege separation has been
+   enabled by default in since openssh-3.2.2 (released in 2002) and
+   has been mandatory since openssh-7.5 (released in 2017). Moreover,
+   portable OpenSSH has used toolchain features available in most
+   modern compilers to abort on signed integer overflow since
+   openssh-6.5 (released in 2014).
 
-The backtrace caused by use-after-free bug is shown below.
+   Thanks to Malcolm Stagg for finding and reporting this bug.
 
-[   97.540761] ==================================================================
-[   97.541238] BUG: KASAN: use-after-free in do_raw_spin_lock+0x66/0x1a0
-[   97.541525] Read of size 4 at addr ffff888006e68004 by task example/635
-[   97.541525] CPU: 0 PID: 635 Comm: example Not tainted 5.18.0-rc3-00849-gfc06b2867f4c-dirty #167
-[   97.541525] Call Trace:
-[   97.541525]  <TASK>
-[   97.541525]  dump_stack_lvl+0x57/0x7d
-[   97.541525]  print_report.cold+0x5e/0x5db
-[   97.541525]  ? do_raw_spin_lock+0x66/0x1a0
-[   97.541525]  kasan_report+0xbe/0x1c0
-[   97.541525]  ? do_raw_spin_lock+0x66/0x1a0
-[   97.541525]  do_raw_spin_lock+0x66/0x1a0
-[   97.541525]  ? rwlock_bug.part.0+0x50/0x50
-[   97.541525]  ? lock_release+0x450/0x450
-[   97.541525]  _raw_spin_lock_irqsave+0x41/0x50
-[   97.541525]  ? rfkill_blocked+0xc/0x40
-[   97.541525]  rfkill_blocked+0xc/0x40
-[   97.541525]  nfc_dev_up+0x4c/0x140
-[   97.541525]  nfc_genl_dev_up+0x46/0x70
-[   97.541525]  genl_family_rcv_msg_doit+0x17a/0x200
-[   97.541525]  ? genl_family_rcv_msg_attrs_parse.constprop.0+0x130/0x130
-[   97.541525]  ? mutex_lock_io_nested+0xb63/0xbd0
-[   97.541525]  ? security_capable+0x48/0x60
-[   97.541525]  genl_rcv_msg+0x18d/0x2c0
-[   97.541525]  ? genl_get_cmd+0x1b0/0x1b0
-[   97.541525]  ? rcu_read_lock_sched_held+0xd/0x70
-[   97.541525]  ? nfc_genl_dev_down+0x70/0x70
-[   97.541525]  ? rcu_read_lock_sched_held+0xd/0x70
-[   97.541525]  ? lock_acquire+0xce/0x410
-[   97.541525]  netlink_rcv_skb+0xc4/0x1f0
-[   97.541525]  ? genl_get_cmd+0x1b0/0x1b0
-[   97.541525]  ? netlink_ack+0x4d0/0x4d0
-[   97.541525]  ? netlink_deliver_tap+0xf7/0x5a0
-[   97.541525]  genl_rcv+0x1f/0x30
-[   97.541525]  netlink_unicast+0x2d8/0x420
-[   97.541525]  ? netlink_attachskb+0x430/0x430
-[   97.541525]  netlink_sendmsg+0x3a9/0x6e0
-[   97.541525]  ? netlink_unicast+0x420/0x420
-[   97.541525]  ? netlink_unicast+0x420/0x420
-[   97.541525]  sock_sendmsg+0x91/0xa0
-[   97.541525]  __sys_sendto+0x168/0x200
-[   97.541525]  ? __ia32_sys_getpeername+0x40/0x40
-[   97.541525]  ? preempt_count_sub+0xf/0xb0
-[   97.541525]  ? fd_install+0xfb/0x340
-[   97.541525]  ? __sys_socket+0xf0/0x160
-[   97.541525]  ? kernel_fpu_begin_mask+0x160/0x160
-[   97.541525]  ? compat_sock_ioctl+0x410/0x410
-[   97.541525]  ? rwlock_bug.part.0+0x50/0x50
-[   97.541525]  __x64_sys_sendto+0x6f/0x80
-[   97.541525]  do_syscall_64+0x3b/0x90
-[   97.541525]  entry_SYSCALL_64_after_hwframe+0x44/0xae
-[   97.541525] RIP: 0033:0x7f4d46a9102c
-[   97.541525] Code: 0a f8 ff ff 44 8b 4c 24 2c 4c 8b 44 24 20 89 c5 44 8b 54 24 28 48 8b 54 24 18 b8 2c 00 00 00 48 8b 74 24 10 8b 7c 24 08 0f 05 <48> 3b
-[   97.541525] RSP: 002b:00007f4d460a8e10 EFLAGS: 00000293 ORIG_RAX: 000000000000002c
-[   97.541525] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f4d46a9102c
-[   97.541525] RDX: 000000000000001c RSI: 0000558ad8003090 RDI: 000000000000009d
-[   97.541525] RBP: 0000000000000000 R08: 00007f4d460a8e8c R09: 000000000000000c
-[   97.541525] R10: 0000000000000000 R11: 0000000000000293 R12: 00007ffded880efe
-[   97.541525] R13: 00007ffded880eff R14: 00007f4d460a8fc0 R15: 00007f4d460a9700
-[   97.541525]  </TASK>
-[   97.541525] 
-[   97.541525] Allocated by task 159:
-[   97.541525]  kasan_save_stack+0x1e/0x40
-[   97.541525]  __kasan_kmalloc+0x81/0xa0
-[   97.541525]  rfkill_alloc+0x6a/0x170
-[   97.541525]  nfc_register_device+0x8d/0x110
-[   97.541525]  nci_register_device+0x515/0x5e0
-[   97.541525]  nfcmrvl_nci_register_dev+0x143/0x170
-[   97.541525]  nfcmrvl_nci_uart_open+0x147/0x240
-[   97.541525]  nci_uart_tty_ioctl+0x1c3/0x270
-[   97.541525]  tty_ioctl+0x5f0/0xc70
-[   97.541525]  __x64_sys_ioctl+0xb4/0xf0
-[   97.541525]  do_syscall_64+0x3b/0x90
-[   97.541525]  entry_SYSCALL_64_after_hwframe+0x44/0xae
-[   97.541525] 
-[   97.541525] Freed by task 636:
-[   97.541525]  kasan_save_stack+0x1e/0x40
-[   97.541525]  kasan_set_track+0x21/0x30
-[   97.541525]  kasan_set_free_info+0x20/0x30
-[   97.541525]  __kasan_slab_free+0x108/0x170
-[   97.541525]  kfree+0xb0/0x330
-[   97.541525]  device_release+0x54/0xe0
-[   97.541525]  kobject_put+0xa5/0x120
-[   97.541525]  nfc_unregister_device+0x51/0x100
-[   97.541525]  nfcmrvl_nci_unregister_dev+0x45/0x70
-[   97.541525]  nci_uart_tty_close+0x87/0xd0
-[   97.541525]  tty_ldisc_kill+0x3e/0x80
-[   97.541525]  tty_ldisc_hangup+0x1b2/0x2c0
-[   97.541525]  __tty_hangup.part.0+0x316/0x520
-[   97.541525]  tty_release+0x200/0x670
-[   97.541525]  __fput+0x110/0x410
-[   97.541525]  task_work_run+0x86/0xd0
-[   97.541525]  exit_to_user_mode_prepare+0x1aa/0x1b0
-[   97.541525]  syscall_exit_to_user_mode+0x19/0x50
-[   97.541525]  do_syscall_64+0x48/0x90
-[   97.541525]  entry_SYSCALL_64_after_hwframe+0x44/0xae
-[   97.541525] 
-[   97.541525] Last potentially related work creation:
-[   97.541525]  kasan_save_stack+0x1e/0x40
-[   97.541525]  __kasan_record_aux_stack+0x97/0xa0
-[   97.541525]  insert_work+0x28/0x110
-[   97.541525]  __queue_work+0x357/0x830
-[   97.541525]  queue_work_on+0x76/0x80
-[   97.541525]  rfkill_register+0x37a/0x4a0
-[   97.541525]  nfc_register_device+0xb3/0x110
-[   97.541525]  nci_register_device+0x515/0x5e0
-[   97.541525]  nfcmrvl_nci_register_dev+0x143/0x170
-[   97.541525]  nfcmrvl_nci_uart_open+0x147/0x240
-[   97.541525]  nci_uart_tty_ioctl+0x1c3/0x270
-[   97.541525]  tty_ioctl+0x5f0/0xc70
-[   97.541525]  __x64_sys_ioctl+0xb4/0xf0
-[   97.541525]  do_syscall_64+0x3b/0x90
-[   97.541525]  entry_SYSCALL_64_after_hwframe+0x44/0xae
-[   97.541525] 
-[   97.541525] The buggy address belongs to the object at ffff888006e68000
-[   97.541525]  which belongs to the cache kmalloc-2k of size 2048
-[   97.541525] The buggy address is located 4 bytes inside of
-[   97.541525]  2048-byte region [ffff888006e68000, ffff888006e68800)
-[   97.541525] 
-[   97.541525] The buggy address belongs to the physical page:
-[   97.541525] page:00000000949930bb refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x6e68
-[   97.541525] head:00000000949930bb order:3 compound_mapcount:0 compound_pincount:0
-[   97.541525] flags: 0x100000000010200(slab|head|node=0|zone=1)
-[   97.541525] raw: 0100000000010200 0000000000000000 dead000000000122 ffff888006042f00
-[   97.541525] raw: 0000000000000000 0000000080080008 00000001ffffffff 0000000000000000
-[   97.541525] page dumped because: kasan: bad access detected
-[   97.541525] 
-[   97.541525] Memory state around the buggy address:
-[   97.541525]  ffff888006e67f00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[   97.541525]  ffff888006e67f80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[   97.541525] >ffff888006e68000: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-[   97.541525]                    ^
-[   97.541525]  ffff888006e68080: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-[   97.541525]  ffff888006e68100: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-[   97.541525] ==================================================================
+Potentially-incompatible changes
+================================
 
-=*=*=*=*=*=*=*=*=  Bug Fix  =*=*=*=*=*=*=*=*=
+ * sshd(8), portable OpenSSH only: this release removes in-built
+   support for MD5-hashed passwords. If you require these on your
+   system then we recommend linking against libxcrypt or similar.
 
-The patch that have been applied to mainline Linux kernel is shown below.
-https://github.com/torvalds/linux/commit/da5c0f119203ad9728920456a0f52a6d850c01cd
+ * This release modifies the FIDO security key middleware interface
+   and increments SSH_SK_VERSION_MAJOR.
 
-=*=*=*=*=*=*=*=*=  Timeline  =*=*=*=*=*=*=*=*=
+Changes since OpenSSH 8.8
+=========================
 
-2022-05-01: commit da5c0f119203 accepted to mainline kernel
-2022-06-03: CVE-2022-1974 is assigned
+This release includes a number of new features.
 
-=*=*=*=*=*=*=*=*=  Credit  =*=*=*=*=*=*=*=*=
+New features
+------------
 
-Duoming Zhou <duoming@....edu.cn>
+ * ssh(1), sshd(8), ssh-add(1), ssh-agent(1): add a system for
+   restricting forwarding and use of keys added to ssh-agent(1)
+   A detailed description of the feature is available at
+   https://www.openssh.com/agent-restrict.html and the protocol
+   extensions are documented in the PROTOCOL and PROTOCOL.agent
+   files in the source release.
 
-Best Regards,
-Duoming Zhou
+ * ssh(1), sshd(8): add the sntrup761x25519-sha512@...nssh.com hybrid
+   ECDH/x25519 + Streamlined NTRU Prime post-quantum KEX to the
+   default KEXAlgorithms list (after the ECDH methods but before the
+   prime-group DH ones). The next release of OpenSSH is likely to
+   make this key exchange the default method.
+    
+ * ssh-keygen(1): when downloading resident keys from a FIDO token,
+   pass back the user ID that was used when the key was created and
+   append it to the filename the key is written to (if it is not the
+   default). Avoids keys being clobbered if the user created multiple
+   resident keys with the same application string but different user
+   IDs.
+
+ * ssh-keygen(1), ssh(1), ssh-agent(1): better handling for FIDO keys
+   on tokens that provide user verification (UV) on the device itself,
+   including biometric keys, avoiding unnecessary PIN prompts.
+
+ * ssh-keygen(1): add "ssh-keygen -Y match-principals" operation to
+   perform matching of principals names against an allowed signers
+   file. To be used towards a TOFU model for SSH signatures in git.
+
+ * ssh-add(1), ssh-agent(1): allow pin-required FIDO keys to be added
+   to ssh-agent(1). $SSH_ASKPASS will be used to request the PIN at
+   authentication time.
+    
+ * ssh-keygen(1): allow selection of hash at sshsig signing time
+   (either sha512 (default) or sha256).
+
+ * ssh(1), sshd(8): read network data directly to the packet input
+   buffer instead indirectly via a small stack buffer. Provides a
+   modest performance improvement.
+
+ * ssh(1), sshd(8): read data directly to the channel input buffer,
+   providing a similar modest performance improvement.
+
+ * ssh(1): extend the PubkeyAuthentication configuration directive to
+   accept yes|no|unbound|host-bound to allow control over one of the
+   protocol extensions used to implement agent-restricted keys.
+
+Bugfixes
+--------
+
+ * sshd(8): document that CASignatureAlgorithms, ExposeAuthInfo and
+   PubkeyAuthOptions can be used in a Match block. PR#277.
+
+ * sshd(8): fix possible string truncation when constructing paths to
+   .rhosts/.shosts files with very long user home directory names.
+
+ * ssh-keysign(1): unbreak for KEX algorithms that use SHA384/512
+   exchange hashes
+    
+ * ssh(1): don't put the TTY into raw mode when SessionType=none,
+   avoids ^C being unable to kill such a session. bz3360
+
+ * scp(1): fix some corner-case bugs in SFTP-mode handling of
+   ~-prefixed paths.
+
+ * ssh(1): unbreak hostbased auth using RSA keys. Allow ssh(1) to
+   select RSA keys when only RSA/SHA2 signature algorithms are
+   configured (this is the default case). Previously RSA keys were
+   not being considered in the default case.
+
+ * ssh-keysign(1): make ssh-keysign use the requested signature
+   algorithm and not the default for the key type. Part of unbreaking
+   hostbased auth for RSA/SHA2 keys.
+
+ * ssh(1): stricter UpdateHostkey signature verification logic on
+   the client- side. Require RSA/SHA2 signatures for RSA hostkeys
+   except when RSA/SHA1 was explicitly negotiated during initial
+   KEX; bz3375
+
+ * ssh(1), sshd(8): fix signature algorithm selection logic for
+   UpdateHostkeys on the server side. The previous code tried to
+   prefer RSA/SHA2 for hostkey proofs of RSA keys, but missed some
+   cases. This will use RSA/SHA2 signatures for RSA keys if the
+   client proposed these algorithms in initial KEX. bz3375
+
+ * All: convert all uses of select(2)/pselect(2) to poll(2)/ppoll(2).
+   This includes the mainloops in ssh(1), ssh-agent(1), ssh-agent(1)
+   and sftp-server(8), as well as the sshd(8) listen loop and all
+   other FD read/writability checks. On platforms with missing or
+   broken poll(2)/ppoll(2) syscalls a select(2)-based compat shim is
+   available.
+    
+ * ssh-keygen(1): the "-Y find-principals" command was verifying key
+   validity when using ca certs but not with simple key lifetimes
+   within the allowed signers file.
+    
+ * ssh-keygen(1): make sshsig verify-time argument parsing optional
+
+ * sshd(8): fix truncation in rhosts/shosts path construction.
+
+ * ssh(1), ssh-agent(1): avoid xmalloc(0) for PKCS#11 keyid for ECDSA
+   keys (we already did this for RSA keys). Avoids fatal errors for
+   PKCS#11 libraries that return empty keyid, e.g. Microchip ATECC608B
+   "cryptoauthlib"; bz#3364
+
+ * ssh(1), ssh-agent(1): improve the testing of credentials against
+   inserted FIDO: ask the token whether a particular key belongs to
+   it in cases where the token supports on-token user-verification
+   (e.g. biometrics) rather than just assuming that it will accept it.
+
+   Will reduce spurious "Confirm user presence" notifications for key
+   handles that relate to FIDO keys that are not currently inserted in at
+   least some cases. bz3366
+    
+ * ssh(1), sshd(8): correct value for IPTOS_DSCP_LE. It needs to
+   allow for the preceding two ECN bits. bz#3373
+
+ * ssh-keygen(1): add missing -O option to usage() for the "-Y sign"
+   option.
+
+ * ssh-keygen(1): fix a NULL deref when using the find-principals
+   function, when matching an allowed_signers line that contains a
+   namespace restriction, but no restriction specified on the
+   command-line
+
+ * ssh-agent(1): fix memleak in process_extension(); oss-fuzz
+   issue #42719
+
+ * ssh(1): suppress "Connection to xxx closed" messages when LogLevel
+   is set to "error" or above. bz3378
+
+ * ssh(1), sshd(8): use correct zlib flags when inflate(3)-ing
+   compressed packet data. bz3372
+ 
+ * scp(1): when recursively transferring files in SFTP mode, create the
+   destination directory if it doesn't already exist to match scp(1) in
+   legacy RCP mode behaviour.
+    
+ * scp(1): many improvements in error message consistency between scp(1)
+   in SFTP mode vs legacy RCP mode.
+
+ * sshd(8): fix potential race in SIGTERM handling PR#289
+
+ * ssh(1), ssh(8): since DSA keys are deprecated, move them to the
+   end of the default list of public keys so that they will be tried
+   last. PR#295
+
+ * ssh-keygen(1): allow 'ssh-keygen -Y find-principals' to match
+   wildcard principals in allowed_signers files
+    
+Portability
+-----------
+
+ * ssh(1), sshd(8): don't trust closefrom(2) on Linux. glibc's
+   implementation does not work in a chroot when the kernel does not
+   have close_range(2). It tries to read from /proc/self/fd and when
+   that fails dies with an assertion of sorts. Instead, call
+   close_range(2) directly from our compat code and fall back if
+   that fails.  bz#3349,
+
+ * OS X poll(2) is broken; use compat replacement. For character-
+   special devices like /dev/null, Darwin's poll(2) returns POLLNVAL
+   when polled with POLLIN. Apparently this is Apple bug 3710161 -
+   not public but a websearch will find other OSS projects
+   rediscovering it periodically since it was first identified in
+   2005.
+
+ * Correct handling of exceptfds/POLLPRI in our select(2)-based
+   poll(2)/ppoll(2) compat implementation.
+
+ * Cygwin: correct checking of mbstowcs() return value.
+
+ * Add a basic SECURITY.md that refers people to the openssh.com
+   website.
+
+ * Enable additional compiler warnings and toolchain hardening flags,
+   including -Wbitwise-instead-of-logical, -Wmisleading-indentation,
+   -fzero-call-used-regs and -ftrivial-auto-var-init.
+
+ * HP/UX. Use compat getline(3) on HP-UX 10.x, where the libc version
+   is not reliable.
+
+Checksums:
+==========
+
+ - SHA1 (openssh-8.9.tar.gz) = 653310ba1a63959fe2df503fe7ad556445180127
+ - SHA256 (openssh-8.9.tar.gz) = mJigktP+Bk0sB7uRPuWgjcCOYZ+mIMdvRlZe66irtQA=
+
+ - SHA1 (openssh-8.9p1.tar.gz) = 205cdf0040a238047e2c49f43460e03d76e5d650
+ - SHA256 (openssh-8.9p1.tar.gz) = /Ul2VLerFobaxnL7g9+0ukCW6LX/zazNJiOArli+xec=
+
+Please note that the SHA256 signatures are base64 encoded and not
+hexadecimal (which is the default for most checksum tools). The PGP
+key used to sign the releases is available from the mirror sites:
+https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
+
+Please note that the OpenPGP key used to sign releases has been
+rotated for this release. The new key has been signed by the previous
+key to provide continuity.
+
+Reporting Bugs:
+===============
+
+- Please read https://www.openssh.com/report.html
+  Security bugs should be reported directly to openssh@...nssh.com
