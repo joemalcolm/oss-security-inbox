@@ -1,35 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/30/4
-Message-ID: <Y69d7JASugX99avX@gentoo.org>
-Date: Fri, 30 Dec 2022 15:53:48 -0600
-From: John Helmert III <ajak@...too.org>
-To: security@...che.org
-Cc: jorton@...che.org, carnil@...ian.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-22728: libapreq2: libapreq2 multipart form parse memory corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/24/2
+Message-ID: <7ed76c19-838b-fe97-af15-623df2ce7a35@apache.org>
+Date: Thu, 24 Feb 2022 18:00:13 +0000
+From: Jedidiah Cunningham <jedcunningham@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-45229: Apache Airflow: Reflected XSS via Origin Query Argument in URL 
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Dec 29, 2022 at 10:50:26AM +0100, Salvatore Bonaccorso wrote:
-> Hi,
-> 
-> On Fri, Aug 26, 2022 at 11:01:23AM -0500, John Helmert III wrote:
-> > On Thu, Aug 25, 2022 at 02:09:16PM +0000, Joe Orton wrote:
-> > > Severity: important
-> > > 
-> > > Description:
-> > > 
-> > > A flaw in libapreq2 versions 2.16 and earlier could cause a buffer
-> > > overflow while processing multipart form uploads.  A remote
-> > > attacker could send a request causing a process crash which could
-> > > lead to a denial of service attack.
-> > > 
-> > 
-> > Is there a fixed version or patch or upstream issue?
-> 
-> Any pointers or information to this?
-> 
-> Regards,
-> Salvatore
+Severity: high
 
-Maybe it will help to loop in Apache's CNA contact address?
+Description:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
+It was discovered that the "Trigger DAG with config" screen was susceptible to XSS attacks via the `origin` query argument.
+
+This issue affects Apache Airflow versions 2.2.3 and below. 
+
+Credit:
+
+The Apache Airflow PMC would like to thank both Bogdan Kurinnoy of the Samsung R&D Institute Ukraine (SRK) and Ali Al-Habsi of Accellion for independently discovering and reporting this issue.
+
