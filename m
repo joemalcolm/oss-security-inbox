@@ -1,4 +1,9 @@
-Received: (qmail 11647 invoked by uid 550); 14 Feb 2025 14:42:58 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["3246" "Thursday" "24" "February" "2022" "12:52:00" "-0800" "Eric Biggers" "ebiggers@kernel.org" nil "66" "Re: [oss-security] fscrypt: Multiple File System Related Security Issues (CVE-2022-25326, CVE-2022-25327, CVE-2022-25328)" nil nil nil "2" nil nil (number mark "U       ebiggers@ker Feb 24   66/3246  " thread-indent "\"Re: [oss-security] fscrypt: Multiple File System Related Security Issues (CVE-2022-25326, CVE-2022-25327, CVE-2022-25328)\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] fscrypt: Multiple File System Related Security Issues (CVE-2022-25326, CVE-2022-25327, CVE-2022-25328)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 1295 invoked by uid 550); 24 Feb 2022 20:54:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,85 +12,92 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 1994 invoked from network); 14 Feb 2025 10:58:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739530695; x=1740135495; darn=lists.openwall.com;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=gEJ71bcWsqnwr8i7CO8QYmIHNBNwGhG/IcDADFPu1fw=;
-        b=S1uaMy5UNoHoGU+ERaUhVHd8Dv/RPzZE6KdvocqaRrzMWVmoHou/IjeHRQnW1KfEk+
-         2UhrGfr06C2SCGEYxX0nCH9DDuW6xha1nlNS3Yt1rq9O9KZr/SUrvi7xz7T1BHs1NOTd
-         netMJW53paUrK/3mY/lfhzyag+waLPRY5cXy4q1PwogRi5e97WWk7W3V0Db+T1ulXe5F
-         1fLwIfZNIhzYOlTba6fZ9XV3PmRDObYespX5jSYHtc8V43/FPVXHHg0a6PrYMGnokGp6
-         6OwR+FYVZVpjd/Of34ioCLnH+d5HfYy4n8olUmlPnFFKQe8j81AhsLiMSa/mp8s/9J2d
-         Qqig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739530695; x=1740135495;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gEJ71bcWsqnwr8i7CO8QYmIHNBNwGhG/IcDADFPu1fw=;
-        b=HIGmS61h6xNtrpbkRDQbR1fGAodNA2qF0tki5zMbpBqm3EDPTbvElTVDNrenf5HKzm
-         en1kaIfumSKeZnZy52bgzBw6r+XB2XAFVA4QfWyjt7REpL/aYUKSVvnj+ki2EhKDxNsG
-         IQr8YkiJvdiaMiUUZUKZE9HXt5A3l3WaLVoXOypW/FgAqt2Ppbp7f3O+11lh6utW9X5D
-         +s7grpBYJ0kjdBLtryU0DtJp222nybROcBZIynn3aWSQ5k0cxwbroMiW+OlN8qFv1VUb
-         BsEPWSa8KH+f2vxGScZbk6okW3znQW/12Mu0aULf+Oj6IVpbuCQJOU6WSKmuDKQiqOrk
-         dovw==
-X-Forwarded-Encrypted: i=1; AJvYcCWWqJ/XmBDhqEdZIjjtE2yUmzxF546aCMfArlKuplrukWK37fWQGIkZAkraSKMo/cSKyeU9TkxT281qFLM=@lists.openwall.com
-X-Gm-Message-State: AOJu0YzTDGV3DgReg9e5x8IetuRYUHKrzJMnF+EOjjhcMh2o10aOf2Ui
-	I+3JhmJL9ACHFsQLM2ngelaZqyAfB6NjRYn2Q+p/QaPz1j6kWBqOoN1p5vXO839h+La+ruCiTc8
-	wOKgAs++p494ASFHrux04z0Cn39D1kp/3
-X-Gm-Gg: ASbGncvCgkKf/tPNLv/xKv/DhXlGitiqpVygnttfsOsEOzbC55sS5bXINXEzYc2+hdF
-	ZdSc+lmcMlHeP9d2kRyTP7Tn9B4f74Fb8NyJSrTymci1JwyyswoHolEVPsGiAc7uYURzWNEg/+g
-	==
-X-Google-Smtp-Source: AGHT+IHZ4gnv89bJuOKLUUbhBj+x1gR9z2Wi9dl7xPr67XzEybrq4pR6uzcNbpuAnbmXAgOnjRx2k4sJ+IMf00bVSFU=
-X-Received: by 2002:ac2:51c9:0:b0:545:550:83e6 with SMTP id
- 2adb3069b0e04-5451e2f7bebmr2138499e87.5.1739530694768; Fri, 14 Feb 2025
- 02:58:14 -0800 (PST)
+Received: (qmail 29772 invoked from network); 24 Feb 2022 20:52:15 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1645735922;
+	bh=eNe2Uytz1MH/yeG8QLDN1rNyVFxrLOOoDyIVT76lGOw=;
+	h=Date:From:To:Subject:References:In-Reply-To:From;
+	b=ErJzNT+x7FgS2yt1VmoeTUszrX/wP8Ir1GCsgMtWOpqJfc7gtuREH8muHtdumrWtI
+	 IsizNt+PAHv8uSVoVOirzWk+gtEfv3ybStsdrllRyH+U3giGVTxPgxNvI6QCJGij7r
+	 iuUggKI+FqSAfhgwlqRN3w+iKQgsRc+fSLspMgmEewrCp62eW6W2rfokDDbRIn/dZ2
+	 7datNJ6IxGkwl8ytwSqWpx8fG+q6RjJUDp3blVnJm1tLhFOXb80wTKssRJmzTkqnWY
+	 u6bMuxGt75I52lbh7xUmszyzXg3nTX0rg5cQPxu2pi1aHGFB37+shZyK58kXRr6apg
+	 cF5Exci6sHYlg==
+Date: Thu, 24 Feb 2022 12:52:00 -0800
+From: Eric Biggers <ebiggers@kernel.org>
+To: oss-security@lists.openwall.com
+Message-ID: <Yhfv8GPdgFbbiGXk@sol.localdomain>
+References: <Yhds/v3yH6YV/gKQ@f195.suse.de>
 MIME-Version: 1.0
-References: <20250213171546.GA3976@brightrain.aerifal.cx> <CAFdMc-1uX4X1HNrR-hj0iGASCfRL6PfVdNsynOs4BdoS+QrGSw@mail.gmail.com>
- <E3B21524-35E5-470E-811A-E1083454B56E@aevum.de>
-In-Reply-To: <E3B21524-35E5-470E-811A-E1083454B56E@aevum.de>
-From: Daniel Gutson <danielgutson@gmail.com>
-Date: Fri, 14 Feb 2025 07:58:01 -0300
-X-Gm-Features: AWEUYZlStUj4_cBFHlNreK_ZzBXZNxx1wv8YHx0_54ySbOQXtjIAwn9qNygUmaM
-Message-ID: <CAFdMc-1FwzW+qar=rkCctgo-jdv4StD3izqBFWt8-CJFDxG1Yg@mail.gmail.com>
-To: Nick Wellnhofer <wellnhofer@aevum.de>
-Cc: musl@lists.openwall.com, oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="00000000000023410d062e180dd5"
-Subject: [oss-security] Re: [musl] CVE-2025-26519: musl libc: input-controlled out-of-bounds
- write primitive in iconv()
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Yhds/v3yH6YV/gKQ@f195.suse.de>
+Subject: Re: [oss-security] fscrypt: Multiple File System Related Security
+ Issues (CVE-2022-25326, CVE-2022-25327, CVE-2022-25328)
 
---00000000000023410d062e180dd5
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Thu, Feb 24, 2022 at 12:33:18PM +0100, Matthias Gerstner wrote:
+> Hello list,
+> 
+> in the context of a request to include Fscrypt [1] into openSUSE Tumbleweed
+> a routine review of the package was required, as it contains a PAM module.
+> In the course of the review I discovered a number of file system management
+> related security issues.
+> 
+> I have been reviewing Fscrypt version 0.3.1. Shortly later 0.3.2 got
+> released, with minor changes in the PAM module but some more changes in
+> other areas. All issues and source code locations mentioned in this report
+> relate to the upstream version tag v0.3.1. Most of the findings are also
+> valid for 0.3.2, however.
+> 
+> All acknowledged issues mentioned in this report have been addressed in the
+> new Fscrypt upstream release version v0.3.3.
 
-El vie, 14 feb 2025, 07:14, Nick Wellnhofer <wellnhofer@aevum.de> escribi=
-=C3=B3:
+Thanks for doing a security review and reporting all of these!
 
-> On Feb 13, 2025, at 23:28, Daniel Gutson <danielgutson@gmail.com> wrote:
-> >
-> > Curious: is there any info about how this was discovered?
->
-> The bug was discovered with basic fuzz testing. As libxml2 maintainer, I
-> found more and more issues in various iconv implementations by accident
-> which is a strong indicator that all this code isn't tested enough. The
-> iconv API is also trivial to fuzz, so it seemed like a nice weekend proje=
-ct.
->
+To provide some extra context for readers: "fscrypt" here refers to the
+userspace tool https://github.com/google/fscrypt, not to the kernel side of
+Linux native filesystem encryption which is also sometimes called fscrypt
+(https://www.kernel.org/doc/html/latest/filesystems/fscrypt.html).  These
+vulnerabilities only affected the userspace tool.  Also, these are not
+cryptographic vulnerabilities.
 
-Thanks, AFL?
+One correction below:
 
-My work is related to static checkers and linters (we will contribute an
-important patch to weggli soon), so I was wondering if you used something
-that used symbolic execution.
+> 5.i) Another User can Cause a Foreign Key to be Applied to its own File System
+> ------------------------------------------------------------------------------
+> 
+> Let's consider a malicious local user that has control over the root directory
+> of some mounted file system e.g. let's consider its own home directory is a
+> separate mount. Then this malicious user can do this:
+> 
+>     $ ln -s /.fscrypt /home/$USER/.fscrypt
+> 
+> Actually a copy of all the files should also suffice. That Fscrypt is
+> following symlinks is an extra degree of freedom that is exploited here. The
+> `filesystem/CheckSetup()` function does only check the mode bits of the
+> involved directories, but not the actual *owners*, therefore a plain copy of
+> the directories and files would also be working.
+> 
+> Now when another user unlocks its Protector via the PAM module, the module
+> will also look into other file systems and since a matching policy will be
+> found for /home/$USER, the following (strace) happens (with $USER = attacker):
+> 
+>     openat(AT_FDCWD, "/home/attacker", O_RDONLY|O_CLOEXEC) = 4
+>     ioctl(4, FS_IOC_ADD_ENCRYPTION_KEY, 0x7f2738d29000) = 0
+> 
+> So the encryption key is added to a completely unrelated file system. The
+> attacking user does not seem to have the ability to take advantage of this,
+> because the key cannot be retrieved back and the ciphertext of the
+> originally encrypted data can also not easily be duplicated on the other file
+> system to have the kernel decrypt it.
+> 
+> Upstream acknowledges this issue but doesn't see an attack vector in it,
+> because the attacker cannot take any advantage of it.
 
-Nice job!
+I believe this one did get addressed by
+https://github.com/google/fscrypt/commit/85a747493ff368a72f511619ecd391016ecb933c
+("Extend ownership validation to entire directory structure").  With that, by
+default pam_fscrypt will only consider filesystems whose root directory is owned
+by root or by the user logging in.
 
-
-> Nick
->
->
-
---00000000000023410d062e180dd5--
+- Eric
