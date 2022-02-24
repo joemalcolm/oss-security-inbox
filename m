@@ -1,34 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/18/1
-Message-Id: <e9bb0040-ecc0-4213-924b-e87aff0afb67n@googlegroups.com>
-Date: Thu, 17 Mar 2022 19:03:11 -0700 (PDT)
-From: Joe Sepi <joesepi@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Fwd: Node.js security updates for all active release lines, March 2022
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/25/1
+Message-ID: <CAMufup4RPMw8n=oq0apLMBStng9gEm+3yVs6P15-fA394WM3tQ@mail.gmail.com>
+Date: Fri, 25 Feb 2022 00:18:19 +0100
+From: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
+To: announce@...che.org, user@...wiki.apache.org, dev@...wiki.apache.org,  Paulos Yibelo <habte.yibelo@...il.com>, Apache Security Team <security@...che.org>,  oss-security@...ts.openwall.com
+Subject: [CVE-2022-24947] Apache JSPWiki CSRF Account Takeover
 Content-Type: text/plain; charset=utf-8
 
+Severity
+Critical
 
+Vendor
+The Apache Software Foundation
 
----------- Forwarded message ---------
-From: Joe Sepi <joesepi@...il.com>
-Date: Thursday, March 17, 2022 at 10:02:36 PM UTC-4
-Subject: Re: Node.js security updates for all active release lines, March 
-2022
-To: nodejs-sec <nodejs-sec@...glegroups.com>
+Versions Affected
+Apache JSPWiki up to 2.11.1
 
+Description
+Apache JSPWiki user preferences form is vulnerable to CSRF attacks,
+which can lead to account takeover.
 
-The Node.js project has now released new versions of all supported release 
-lines.
+Mitigation
+Apache JSPWiki users should upgrade to 2.11.2 or later. Installations
+>= 2.7.0 can also enable user management workflows' manual approval to
+mitigate the issue.
 
-For more information see: 
-https://nodejs.org/en/blog/vulnerability/mar-2022-security-releases/
-
-On Wednesday, March 16, 2022 at 10:57:17 AM UTC-4 Joe Sepi wrote:
-
-> The Node.js project will release new versions of all supported release 
-> lines on or shortly after Thursday, 17th of March, 2022 For more 
-> information see:
-> https://nodejs.org/en/blog/vulnerability/mar-2022-security-releases/
->
->
-Content of type "text/html" skipped
+Credit
+This issue was discovered initially by Cristian Borlovan from Ounce
+Labs Security (ref. JSPWIKI-79), and later on and independently from
+this by Paulos Yibelo, from Octagon Networks.
