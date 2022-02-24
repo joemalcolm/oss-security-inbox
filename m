@@ -1,115 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/01/1
-Message-ID: <20220601125157.GA8467@openwall.com>
-Date: Wed, 1 Jun 2022 14:51:57 +0200
-From: Solar Designer <solar@...nwall.com>
-To: tr3e wang <tr3e.wang@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Linux Kernel eBPF Improper Input Validation Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/24/4
+Message-ID: <Yhfv8GPdgFbbiGXk@sol.localdomain>
+Date: Thu, 24 Feb 2022 12:52:00 -0800
+From: Eric Biggers <ebiggers@...nel.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: fscrypt: Multiple File System Related Security Issues (CVE-2022-25326, CVE-2022-25327, CVE-2022-25328)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, Feb 24, 2022 at 12:33:18PM +0100, Matthias Gerstner wrote:
+> Hello list,
+> 
+> in the context of a request to include Fscrypt [1] into openSUSE Tumbleweed
+> a routine review of the package was required, as it contains a PAM module.
+> In the course of the review I discovered a number of file system management
+> related security issues.
+> 
+> I have been reviewing Fscrypt version 0.3.1. Shortly later 0.3.2 got
+> released, with minor changes in the PAM module but some more changes in
+> other areas. All issues and source code locations mentioned in this report
+> relate to the upstream version tag v0.3.1. Most of the findings are also
+> valid for 0.3.2, however.
+> 
+> All acknowledged issues mentioned in this report have been addressed in the
+> new Fscrypt upstream release version v0.3.3.
 
-In context of the recent discussions of linux-distros list policies and
-their enforcement, I looked at some of the previously handled issues,
-and identified that the below wasn't properly handled/enforced.
+Thanks for doing a security review and reporting all of these!
 
-tr3e, since you had shared actual exploit code with linux-distros, you
-were supposed to post the _code_ to oss-security within 7 days after
-your initial public disclosure of the vulnerability.  However, you only
-posted "the exploit overview" and promised that "Full exploit code will
-be published on github in the near future."  Apparently, the latter
-never happened, and it wouldn't have satisfied the requirement anyway.
+To provide some extra context for readers: "fscrypt" here refers to the
+userspace tool https://github.com/google/fscrypt, not to the kernel side of
+Linux native filesystem encryption which is also sometimes called fscrypt
+(https://www.kernel.org/doc/html/latest/filesystems/fscrypt.html).  These
+vulnerabilities only affected the userspace tool.  Also, these are not
+cryptographic vulnerabilities.
 
-Please post the same exploit code you had shared with linux-distros to
-this thread on oss-security ASAP.  Thank you!
+One correction below:
 
-Alexander
+> 5.i) Another User can Cause a Foreign Key to be Applied to its own File System
+> ------------------------------------------------------------------------------
+> 
+> Let's consider a malicious local user that has control over the root directory
+> of some mounted file system e.g. let's consider its own home directory is a
+> separate mount. Then this malicious user can do this:
+> 
+>     $ ln -s /.fscrypt /home/$USER/.fscrypt
+> 
+> Actually a copy of all the files should also suffice. That Fscrypt is
+> following symlinks is an extra degree of freedom that is exploited here. The
+> `filesystem/CheckSetup()` function does only check the mode bits of the
+> involved directories, but not the actual *owners*, therefore a plain copy of
+> the directories and files would also be working.
+> 
+> Now when another user unlocks its Protector via the PAM module, the module
+> will also look into other file systems and since a matching policy will be
+> found for /home/$USER, the following (strace) happens (with $USER = attacker):
+> 
+>     openat(AT_FDCWD, "/home/attacker", O_RDONLY|O_CLOEXEC) = 4
+>     ioctl(4, FS_IOC_ADD_ENCRYPTION_KEY, 0x7f2738d29000) = 0
+> 
+> So the encryption key is added to a completely unrelated file system. The
+> attacking user does not seem to have the ability to take advantage of this,
+> because the key cannot be retrieved back and the ciphertext of the
+> originally encrypted data can also not easily be duplicated on the other file
+> system to have the kernel decrypt it.
+> 
+> Upstream acknowledges this issue but doesn't see an attack vector in it,
+> because the attacker cannot take any advantage of it.
 
-On Tue, Jan 18, 2022 at 09:29:18PM +0800, tr3e wang wrote:
-> Hi all,
-> 
-> 
-> This post is the exploit overview of CVE-2022-23222.
-> 
-> 
-> We successfully exploited this vulnerability to obtain full root
-> privileges on default installations of Ubuntu 20.04.
-> 
-> 
-> *Exploit overview*
-> 
-> 
-> 1. Among all these *_OR_NULL types, we choose PTR_TO_MEM_OR_NULL
->    which can be created by BPF_FUNC_ringbuf_reserve. First, we
->    pass 0xffff........ffff to BPF_FUNC_ringbuf_reserve to get a
->    NULL pointer r0, and copy r0 to r1. Then add r1 by 1, and do
->    NULL check on r0. At this point, the verifier will believe that
->    both r0 and r1 are zero.
-> 
-> 
-> 2. ALU sanitation is hardened after commit
->    "bpf: Fix leakage of uninitialized bpf stack under speculation".
->    To bypass alu sanitation, we use helper func bpf_skb_load_bytes_*
->    to get partial/full overwrite the pointer on stack to obtain
->    pointer address leakage and arbitrary address read/write.
-> 
-> 
-> 3. We spawn many child processes, and use arbitrary address read to
->    find the address of task_struct and cred around the the address of
->    the array map we created. After zeroing out the uid/gid/... ,
->    full root privileges obtained.
-> 
-> 
-> Full exploit code will be published on github in the near future.
-> 
-> 
-> Regards,
-> tr3e
-> 
-> 
-> tr3e wang <tr3e.wang@...il.com> ???2022???1???13????????? 16:21?????????
-> 
-> 
-> > Hi all,
-> >
-> > This vulnerability allows local attackers to escalate privileges on
-> > affected installations of Linux Kernel. An attacker must first obtain the
-> > ability to execute low-privileged code on the target system in order to
-> > exploit this vulnerability.
-> >
-> > The specific flaw exists within the handling of eBPF programs. The issue
-> > results from the lack of proper validation of user-supplied eBPF programs
-> > prior to executing them. An attacker can leverage this vulnerability to
-> > escalate privileges and execute code in the context of the kernel.
-> > BE AWARE, unprivileged bpf is disabled by default in most distros.
-> >
-> > *Affected Version*
-> >
-> >     Linux Kernel 5.8 or later
-> >
-> > *Root Cause Analysis*
-> >
-> > The bpf verifier(kernel/bpf/verifier.c) did not properly restrict several
-> > *_OR_NULL pointer types which allows these types to do pointer arithmetic.
-> > This can be leveraged to bypass the verifier check and escalate privilege.
-> > (see
-> > https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/kernel/bpf/verifier.c?h=v5.10.83#n6022
-> > )
-> >
-> > *Exploit Code*
-> >
-> > Exploit code will be delayed for 5 days and will be posted at 12:00 UTC,
-> > Jan 18, 2022
-> >
-> > *Mitigations*
-> >
-> > set kernel.unprivileged_bpf_disabled to 1
-> >
-> > BE AWARE AGAIN, unprivileged bpf is disabled by default in most distros.
-> >
-> > *Credits*
-> >
-> > tr3e of SecCoder Security Lab
-> > Best,
-> > tr3e
+I believe this one did get addressed by
+https://github.com/google/fscrypt/commit/85a747493ff368a72f511619ecd391016ecb933c
+("Extend ownership validation to entire directory structure").  With that, by
+default pam_fscrypt will only consider filesystems whose root directory is owned
+by root or by the user logging in.
+
+- Eric
