@@ -1,36 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/26/2
-Message-ID: <3f9af332.69b6.180664aec3f.Coremail.morningman@163.com>
-Date: Tue, 26 Apr 2022 22:33:47 +0800 (CST)
-From: 陈明雨 <morningman@....com>
-To: general <general@...ubator.apache.org>, me@....io, security@...che.org,  oss-security@...ts.openwall.com
-Subject: CVE-2022-23942: Apache Doris(incubating) hardcoded cryptography initialization
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/25/2
+Message-ID: <CAMufup7EzAAJ6QMk7C7mPutijDzFN5sG9xu1B4d2TSWF1h0eyQ@mail.gmail.com>
+Date: Fri, 25 Feb 2022 00:20:02 +0100
+From: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
+To: announce@...che.org, dev@...wiki.apache.org, user@...wiki.apache.org,  Apache Security Team <security@...che.org>, Paulos Yibelo <habte.yibelo@...il.com>,  oss-security@...ts.openwall.com
+Subject: [CVE-2022-24948] Apache JSPWiki Cross-site scripting vulnerability on User Preferences screen
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Severity
+Medium
 
-Description:
-=============
-Doris use hardcoded key and IV to initialize the cipher used for ldap password, which may lead to information disclosure.
+Vendor
+The Apache Software Foundation
 
-Mitigation:
-=============
-Upgrade to 1.0.0[1] or higher will resolve this problem.
+Versions Affected
+Apache JSPWiki up to 2.11.1
 
-Credit:
-=============
-We would like to thanks to Dwi Siswanto for the report of this issue
+Description
+A carefully crafted user preferences for submission could trigger an
+XSS vulnerability on Apache JSPWiki, related to the user preferences
+screen, which could allow the attacker to execute javascript in the
+victim's browser and get some sensitive information about the victim.
 
-References:
-=============
-https://lists.apache.org/thread/com2dyzp3bn2rdrotry90q2zzord4tvt[1] http://doris.incubator.apache.org/downloads/downloads.html
+Mitigation
+Apache JSPWiki users should upgrade to 2.11.2 or later.
 
-
-
---
-
-此致！Best Regards
-陈明雨 Mingyu Chen
-
-Email:
-chenmingyu@...che.org
+Credit
+This issue was discovered by Paulos Yibelo, from Octagon Networks.
