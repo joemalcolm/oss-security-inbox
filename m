@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1033" "Wednesday" "11" "August" "2021" "08:16:34" "+0200" "Hanno =?iso-8859-1?Q?B=F6ck?=" "hanno@hboeck.de" nil "40" "Re: [oss-security] STARTTLS vulnerabilities" "^Date:" nil nil "8" nil nil (number mark "        hanno@hboeck Aug 11   40/1033  " thread-indent "\"Re: [oss-security] STARTTLS vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] STARTTLS vulnerabilities" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["428" "Thursday" "24" "February" "2022" "18:00:13" "+0000" "Jedidiah Cunningham" "jedcunningham@apache.org" nil "15" "[oss-security] CVE-2021-45229: Apache Airflow: Reflected XSS via Origin Query Argument in URL " nil nil nil "2" nil nil (number mark "U       jedcunningha Feb 24   15/428   " thread-indent "\"[oss-security] CVE-2021-45229: Apache Airflow: Reflected XSS via Origin Query Argument in URL \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-45229: Apache Airflow: Reflected XSS via Origin Query Argument in URL " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11315 invoked by uid 550); 11 Aug 2021 06:16:47 -0000
+Received: (qmail 3917 invoked by uid 550); 24 Feb 2022 18:15:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,58 +11,30 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11297 invoked from network); 11 Aug 2021 06:16:47 -0000
-Message-ID: <20210811081634.15143171@computer>
-In-Reply-To: <20210810134156.GF1599104@hal>
-References: <20210810122113.3fe65cc9@computer>
-	<20210810134156.GF1599104@hal>
-X-Mailer: Claws Mail 3.18.0 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 11 Aug 2021 08:16:34 +0200
-From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] STARTTLS vulnerabilities
+Received: (qmail 32105 invoked from network); 24 Feb 2022 18:00:33 -0000
+Content-Type: text/plain; charset=utf-8
+From: Jedidiah Cunningham <jedcunningham@apache.org>
 To: oss-security@lists.openwall.com
+Message-ID: <7ed76c19-838b-fe97-af15-623df2ce7a35@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 24 Feb 2022 18:00:13 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2021-45229: Apache Airflow: Reflected XSS via Origin Query
+ Argument in URL 
 
-Hi,
+Severity: high
 
-On Tue, 10 Aug 2021 15:41:56 +0200
-Guido Berhoerster <guido+openwall.com@berhoerster.name> wrote:
+Description:
 
-> have you or are you planning to look into XMPP client/server
-> implementations as well?  The use of STARTTLS for both c2s and s2s
-> connections is still prevalent both in terms of implementation
-> support and actual practice and could potentially suffer form the
-> same issues (command injection or downgrade attacks).
+It was discovered that the "Trigger DAG with config" screen was susceptible=
+ to XSS attacks via the `origin` query argument.
 
-We have not looked much into other protocols, and given how much time
-we've already spent on the topic I think it is unlikely that we will do
-this.
+This issue affects Apache Airflow versions 2.2.3 and below.=20
 
-Of course it's a very obvious idea for further research to look if one
-finds similar vulnerabilities to the ones we found in other protocols.
-So I'd really like to encourage other people to look for this.
+Credit:
 
-FWIW there are a lot of protocols with a STARTTLS mechanism, here's the
-list of supported protocols by OpenSSL:
-	smtp
-	pop3
-	imap
-	ftp
-	xmpp
-	xmpp-server
-	telnet
-	irc
-	mysql
-	postgres
-	lmtp
-	nntp
-	sieve
-	ldap
+The Apache Airflow PMC would like to thank both Bogdan Kurinnoy of the Sams=
+ung R&D Institute Ukraine (SRK) and Ali Al-Habsi of Accellion for independe=
+ntly discovering and reporting this issue.
 
-
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
