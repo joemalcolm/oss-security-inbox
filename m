@@ -1,4 +1,9 @@
-Received: (qmail 3798 invoked by uid 550); 19 Mar 2025 17:07:58 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["24874" "Thursday" "24" "February" "2022" "12:33:18" "+0100" "Matthias Gerstner" "mgerstner@suse.de" nil "594" "[oss-security] fscrypt: Multiple File System Related Security Issues (CVE-2022-25326, CVE-2022-25327, CVE-2022-25328)" nil nil nil "2" nil nil (number mark "U       mgerstner@su Feb 24  594/24874 " thread-indent "\"[oss-security] fscrypt: Multiple File System Related Security Issues (CVE-2022-25326, CVE-2022-25327, CVE-2022-25328)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] fscrypt: Multiple File System Related Security Issues (CVE-2022-25326, CVE-2022-25327, CVE-2022-25328)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 12269 invoked by uid 550); 24 Feb 2022 11:33:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,49 +12,623 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 28063 invoked from network); 19 Mar 2025 16:23:44 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Adarsh Sanjeev <adarshsanjeev@apache.org>
+Received: (qmail 12170 invoked from network); 24 Feb 2022 11:33:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1645702399; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=lxQ7gNfCTgOIX+8ljQyQdKSA3YgxzEpWkTCMHjnrPKc=;
+	b=mj9pgMhWw6iclg9b9Kiiqrv+5tnr/g9lBsghbPvzfsyXYBiV/uiFaWQgGsz5RV68apr3jJ
+	KkPatGzbQ+6xb+ZnkcODRlHTgcdqirre+KarnYf83kLpSVDXxJaR6cOCHzpxLXZ34fD7qy
+	RRdRkWqsxbHXVo8itEQyxsPyQvewt68=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1645702399;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=lxQ7gNfCTgOIX+8ljQyQdKSA3YgxzEpWkTCMHjnrPKc=;
+	b=HgmqoBcYv3P7H5/ycfRum20ui4i0fzYd69lSojNDwNFZltHreJUVIda5BgciMVkcQJan9y
+	2j/BxtXsSAouF4BQ==
+Date: Thu, 24 Feb 2022 12:33:18 +0100
+From: Matthias Gerstner <mgerstner@suse.de>
 To: oss-security@lists.openwall.com
-Message-ID: <03056158-f8ea-2a79-0184-4948a57adbde@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 19 Mar 2025 16:23:09 +0000
+Message-ID: <Yhds/v3yH6YV/gKQ@f195.suse.de>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2025-27888: Apache Druid: Server-Side Request Forgery and
- Cross-Site Scripting 
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="OLciPFw08PGqcvd/"
+Content-Disposition: inline
+Subject: [oss-security] fscrypt: Multiple File System Related Security Issues
+ (CVE-2022-25326, CVE-2022-25327, CVE-2022-25328)
 
-Affected versions:
+--OLciPFw08PGqcvd/
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-- Apache Druid before 31.0.2
-- Apache Druid before 32.0.1
+Hello list,
 
-Description:
+in the context of a request to include Fscrypt [1] into openSUSE Tumbleweed
+a routine review of the package was required, as it contains a PAM module.
+In the course of the review I discovered a number of file system management
+related security issues.
 
-Severity: medium (5.8) / important
+I have been reviewing Fscrypt version 0.3.1. Shortly later 0.3.2 got
+released, with minor changes in the PAM module but some more changes in
+other areas. All issues and source code locations mentioned in this report
+relate to the upstream version tag v0.3.1. Most of the findings are also
+valid for 0.3.2, however.
 
-Server-Side Request Forgery (SSRF), Improper Neutralization of Input During=
- Web Page Generation ('Cross-site Scripting'),=C2=A0URL Redirection to Untr=
-usted Site ('Open Redirect') vulnerability in Apache Druid.
+All acknowledged issues mentioned in this report have been addressed in the
+new Fscrypt upstream release version v0.3.3.
 
-This issue affects all previous Druid versions.
+1) About Fscrypt
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
+Fscrypt allows to setup transparent file encryption of specific directories
+*embedded* within a file system i.e. it is not block device encryption but
+needs the support of the underlying file system to do its thing. The Linux
+kernel keyrings and some special `ioctl()` calls are used to set this up.
+Fscrypt is mostly written in Golang with some bits of C code for the PAM
+module integration.
 
-When using the Druid management proxy, a request that has a specially craft=
-ed URL could be used to redirect the request to an arbitrary server instead=
-. This has the potential for XSS or XSRF. The user is required to be authen=
-ticated for this exploit. The management proxy is enabled in Druid's out-of=
--box configuration. It may be disabled to mitigate this vulnerability. If t=
-he management proxy is disabled, some web console features will not work pr=
-operly, but core functionality is unaffected.
+The configuration is rather simple. Global settings are stored in
+/etc/fscrypt.conf. An initial `fscrypt setup` as root performs global
+configuration steps. `fscrypt encrypt` creates an encrypted directory on a
+suitable file system. File systems need to be mounted or tuned specially to
+support this type of encryption, for example for EXT4:
 
+    tune2fs -Oencrypt /dev/my_block_device
 
-Users are recommended to upgrade to Druid 31.0.2 or Druid 32.0.1, which fix=
-es the issue.
+Data structures called Protectors and Policies are stored on the target file
+system's root directory in the hidden location ".fscrypt". The directories
+".fscrypt/policies" and ".fscrypt/protectors" are public sticky bit
+directories using mode 1777. The Protectors and Policies for the target file
+system for all users are stored there.
 
-References:
+2) About the PAM module
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-https://druid.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2025-27888
+The `pam_fscrypt.so` module has the task of automatically unlocking encrypt=
+ed
+directories during login. This works only when the passphrase for the user
+account and the passphrase for the Fscrypt encryption key match. A state of
+the art digest calculation approach with multiple rounds is used to calcula=
+te
+a hash from the passphrase for this purpose. There are also recommendations=
+ in
+the project's documentation on how to improve the security of the user
+password digest stored in /etc/shadow to better match Fscrypt's digest
+security.
 
+The PAM module implements the "auth", "passwd" and "session" hooks:
+
+- in the "auth" context the module checks whether there are any Protectors
+  present for the user about to login. Only if this is the case will the
+  cleartext passphrase be carried over into the other PAM contexts for being
+  able to unlock directories or change the passphrase during later phases.
+- in the "passwd" context the existing Protector will be re-wrapped using t=
+he
+  old and new passphrases provided.
+- in the "session" context any configured keys will be unwrapped using the
+  cached cleartext passphrase. The actual keys will be assigned to the targ=
+et
+  file systems using `ioctl()` calls. A session counter is maintained in
+  "/run/fscrypt" to allow locking of encrypted directories again when all
+  sessions for a user have been closed.
+
+3) Positive Implementation Aspects
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+- The module drops privileges to the about-to-login user most of the time,
+  which is good. It is sometimes a bit hard to follow, because privileges
+  are switched back and forth multiple times for elevated operations. The
+  Golang `defer` feature makes this pretty robust though.
+- For a couple of file system objects sanity checks on their modes are
+  performed e.g. for "/run/fscrypt" and the metadata in ".fscrypt" in
+  each file system mount.
+- No files are created during PAM module operation so there should be no
+  problems in this area like writing to user controlled paths.
+- When the PAM module is invoked on behalf of the root user logging in
+  then the code still runs completely with root privileges for
+  everything, so basically all code needs still to be treated similarly
+  as if it would be running as root. What will not happen most of the
+  time is that the module runs as root on behalf of a different user.
+- Parsing of "/proc/self/mountinfo" is implemented prudently and correctly =
+as
+  far as I can see. Tricking it with e.g. `fusermount` is not possible, the
+  source file system field is not even used anywhere in the program.
+- The PAM module takes extra care to wipe cleartext passphrases from memory
+  again when they are no longer required.
+
+4) Fscrypt Metadata Directory Structure
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+A problematic aspect of Fscrypt are the world-writable metadata directories
+like in "/.fscrypt". The directory hierarchy looks like this for each file
+system that is setup for Fscrypt:
+
+    /.fscrypt/           root:root drwxr-xr-x
+    /.fscrypt/policies   root:root drwxrwxrwt
+    /.fscrypt/protectors root:root drwxrwxrwt
+
+Inside 'policies' and 'protectors' files owned by different users that use
+Fscrypt on the target file system are to be found. For example in protector=
+s:
+
+    1db71a9f6fa85de6 attacker:attacker -rw-r--r--
+    82a7a2ba412af544 root:root         -rw-r--r--
+    d78ce93f73fb3def mgerstner:users   -rw-r--r--
+
+These files contain binary protobuf [2] data. For reference there are two
+deserialized examples of the involved data structures in sections 4.a) and
+4.b).
+
+The problems with this setup are that for most situations any user in the
+system can write to these public sticky bit directories. The Fscrypt logic
+does not differentiate between different ownership of files found there i.e.
+all files will be parsed and as all files are world-readable this means all
+data found in there will be considered for processing. Fscrypt does not avo=
+id
+following symlinks at any stage i.e. all parts of the directory structure
+could be symlinks to other file system locations. Also the ownership of the
+directories is never checked, only the permission bits. This leads to a num=
+ber
+of security concerns that are outlined in section 5).
+
+4.a) Protector Data Structure
+-----------------------------
+
+This is a typical example of a deserialized Protector metadata structure:
+
+    protector_descriptor: "0996c7bcdbde966f"
+    source: pam_passphrase
+    costs {
+      time: 19
+      memory: 131072
+      parallelism: 3
+    }
+    salt: "\344j\220\002\230\256\205\240\273\264\301\207T\3626I"
+    uid: 1001
+    wrapped_key {
+      IV: "=3D\356\324\240\343\001\265\004\205Cv\272\222$A3"
+      encrypted_key: "\354\260\021N\330\233\322\260\307\242\303R\210\321ir\=
+r\275\372\336\360\031\344\365\311~\362m\370\315=3D\371"
+      hmac: "\207u\356=3D\357n\3626:Ee_\303\000\233\"\344V\247LR\275\364\31=
+1\276\252|\026v\272\305\363"
+    }
+
+4.b) Policy Data Structure
+--------------------------
+
+This is a typical example of a deserialized Policy metadata structure:
+
+    key_descriptor: "00837eb05ba8443633528756aa28f288"
+    options {
+      padding: 32
+      contents: AES_256_XTS
+      filenames: AES_256_CTS
+      policy_version: 2
+    }
+    wrapped_policy_keys {
+      protector_descriptor: "d78ce93f73fb3def"
+      wrapped_key {
+        IV: "\007\031\377\034HW\204\254\276\373\217\323\271,2^"
+        encrypted_key: "\216a\3061\374\0058\333\2663sZ\206\016\017\330-\312=
+\030\202u\026D\213\027\340\231\036\317\314\'Y\317\276\222\350\r\266\376\234=
+\313Jq\240\343\275\377\n\357|\324^\360\245\226\300\267\000\000\2125S\341\00=
+1"
+        hmac: "=3D\217\025_\200\031\001:$\3736\275\307(\257\021\356\021\371=
+M\324$d\315\210]_\340H^O\235"
+      }
+    }
+
+5) Security Issues
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+5.a) Possible File System Space Exhaustion by Local Users (CVE-2022-25326)
+--------------------------------------------------------------------------
+
+The world-writable directories below "/.fscrypt" allow to exhaust most of t=
+he
+space on these file systems, notably also on the root file system. Since th=
+ese
+directories are technically the same as "/tmp", the same problems as in "/t=
+mp"
+apply. If "/tmp" is a separate file system or even a memory based tmpfs then
+the "/.fscrypt" directories reintroduce the problem again, that any user can
+exhaust space on the root or other file systems.
+
+Since "/tmp" is a well known place for world writable access there is a lot=
+ of
+management around that like deletion of old files or deletion on boot. This=
+ is
+not the case for the per file system "/.fscrypt" directories. Files there w=
+ill
+survive a reboot and will never be automatically cleaned up, if not configu=
+red
+explicitly by a system administrator.
+
+Upstream acknowledges this but considers it mostly the job of the system
+administrator to establish e.g. file system quotas to prevent issues.
+Nevertheless upstream changed the Fscrypt setup workflow [3] to explicitly =
+let
+users choose between two different modes for the ".fscrypt" directory tree:=
+ a
+root-only mode in which the directories are no longer world-writable, which
+means that only the root user can setup new encryptions, or the shared mode
+that comes with the described space exhaustion attack surface.
+
+5.b) Large Files in .fscrypt Can Prevent Future Logins
+------------------------------------------------------
+
+The situation outlined in 5.a) allows any local user with sufficient file
+system access to place very large files in these directories. This will not
+only waste file system space but `pam_fscrypt` will also attempt to read in
+these files. This can quickly lead to an out of memory situation during log=
+in,
+here the backtrace of an attempt at this:
+
+    runtime/panic.go:1198 +0x71
+    runtime.sysMap(0xc000400000, 0x7f7d0427e180, 0x7ffce0db8aa8)
+            runtime/mem_linux.go:169 +0x96
+    runtime.(*mheap).grow(0x7f7d045ddcc0, 0xad328)
+            runtime/mheap.go:1393 +0x225
+    runtime.(*mheap).allocSpan(0x7f7d045ddcc0, 0xad328, 0x0, 0x1)
+            runtime/mheap.go:1179 +0x165
+    runtime.(*mheap).alloc.func1()
+            runtime/mheap.go:913 +0x69
+    [...]
+    main.pam_sm_authenticate(...)
+            github.com/google/fscrypt/pam_fscrypt/pam_fscrypt.go:349
+    _cgoexp_84e5425fcaf2_pam_sm_authenticate(0x7ffce0db8c50)
+            _cgo_gotypes.go:66 +0x2f fp=3D0xc0001cfe30 sp=3D0xc0001cfe00
+    pc=3D0x7f7d043f838f
+    [...]
+
+This means that the login process dies, login becomes impossible and potent=
+ial
+cleanup logic that would be run by Fscrypt code will not be run.
+
+On openSUSE Tumbleweed when the PAM module is added to the "common-auth",
+"common-passwd", and "common-session" PAM files this even leads to a
+completely broken system upon reboot, because systemd cannot start up
+certain components any more, seeing error messages like:
+
+    failed to start UserManager for UID ...
+
+I have been able to observe similar effects on a current Arch Linux
+installation.
+
+Upstream acknowledges this issue and implemented a maximum file size
+restriction when reading in files from the public sticky bit directories to
+prevent this [4].
+
+5.c) Fscrypt Follows Symlinks or Special Files allowing Further DoS Vectors
+---------------------------------------------------------------------------
+
+Without the kernel's symlink protection the PAM module follows symlinks and
+thus also e.g. a link to /dev/zero, causing an infinite loop and memory
+exhaustion or blocking the login.
+
+Placing a FIFO special file in one of the sticky bit directories is a simple
+way to let the login process block forever or to feed a lot of data into the
+login process without having to place symlinks into the directory.
+
+Upstream acknowledges this issue and implemented more careful logic when
+opening files to check the file type and ownership of files before processi=
+ng
+them further [4], [5].=20
+
+5.d) Fscrypt Looks for ".fscrypt" on every Available File System Mount
+----------------------------------------------------------------------
+
+The Fscrypt logic attempts to access an ".fscrypt" directory on every
+available mount in the system including things like /proc/, /sys/, /tmp/, e=
+tc.
+For one thing this seems unclean and inefficient, because many of these file
+systems are not even suitable for Fscrypt encryption.
+Furthermore this means that any local user that has write permissions for t=
+he
+root of a mount point can add additional directories that will be processed=
+ by
+Fscrypt. For non-final path components even with kernel symlink protection
+symlinks would also be followed. This means the `protectors` and `policies`
+directories or the `.fscrypt` directory itself could be symlinks to arbitra=
+ry
+file system locations and Fscrypt would follow them.
+
+The impact is not that severe at first sight, because the original director=
+ies
+are world-writable anyway. Still it offers a worrying degree of freedom to
+make Fscrypt operate in arbitrary file system locations.
+
+Upstream acknowledges this issue but requires following symlinks for certain
+features to function. Avoiding processing pseudo file systems like /proc is
+already implement in Fscrypt version 0.3.2.
+
+Further improvements have been implemented by upstream in response to this
+like sanity checking the basic file system structure of `.fscrypt` and its
+sub-directories [6]. Also in the context of the PAM module only files owned=
+ by
+the currently logging-in user are processed [5].
+
+5.e) `pam_fscrypt` is Executed also for System Accounts
+-------------------------------------------------------
+
+`pam_fscrypt` is executed for all kinds of accounts, including the `gdm`
+system user, for example, creating a session count for it in "/run/fscrypt".
+
+I would prefer system accounts being excluded, since this unnecessarily
+increases the possible attack surface and also wastes resources.
+
+While this is not a concrete security issue upstream agreed to filter out
+system accounts smaller than user id 1000 by default now [7].
+
+5.f) The Session Count Logic is not Working Properly
+----------------------------------------------------
+
+On my OpenSUSE Tumbleweed setup the session counting is not working as
+expected. Directly after system boot the root user already has a session co=
+unt
+of "1", although it never logged in yet. This means that if later on a
+directory is unlocked by root logging in interactively, it will never be lo=
+cked
+again.
+
+It probably mostly affects the root user account, similarly other system
+accounts as pointed out in 5.e), but system accounts are typically not used
+interactively, so the problem won't show up.
+
+Upstream informed me that this is likely an issue in systemd [8]. Furthermo=
+re
+even if encrypted directories are locked again there is no total security
+against local attackers, because file system caches and other memory regions
+can still contain cleartext data of the once unlocked directory.
+
+5.g) The Outcome and Success of `pam_fscrypt` can be Influenced by Other Us=
+ers
+---------------------------------------------------------------------------=
+---
+
+Another user can create an arbitrary Protector file in the Fscrypt metadata,
+writing another user's UID into it. By doing so the behaviour of
+`pam_fscrypt` can be changed:
+
+- normally, if a user doesn't have any protectors present, then the clearte=
+xt
+  password ("AUTHTOK") will not be stored in the PAM handle for later use (=
+see
+  `pam_fscrypt.go:80`). If another user places a fake Protector into
+  "/.fscrypt/protectors" then it *will* be stored. This has no direct impac=
+t but
+  it changes a security property of the workflow of the PAM module.
+- a malicious user can prevent unlocking to happen for another user that ha=
+s a
+  valid Protector/Policy setup, because the logic in `loginProtector()` in
+  `run_fscrypt.go:148` will use the first protector encountered that has
+  source "PAM passphrase" and is tied to the respective user's UID. Other
+  users can create such a protector though (one that won't work for unlocki=
+ng)
+  and the `openSession()` function won't look for further protectors for un=
+locking.
+
+The success of this attack depends upon the internal ordering of directory
+entries in ".fscrypt/protectors" (as seen by `ls -U`). By creating a lot of
+new files and trial and error (on an Ext4 file system at least) it can be
+achieved that an attacker's entry will be processed first.
+
+This has been addressed by upstream in that the PAM module only processes
+files owned by the about to be logged in user any more [5]. Spoofed UIDs are
+explicitly addressed, too [9].
+
+5.h) OOM Situation during Login by Providing Malicious HashingCosts Paramet=
+ers
+---------------------------------------------------------------------------=
+---
+
+Similarly to 5.g) a malicious local user can "inject" both a fake Protector
+and fake Policy that `pam_fscrypt` will attempt to use for a victim user
+logging in. By providing a crafted "HashingCosts" (see 4.a))configuration w=
+ith
+excess values in the Protector metadata the login process will enter an OOM
+situation like reproduced here:
+
+    fatal error: runtime: out of memory
+=20=20=20=20
+    runtime stack:
+    runtime.throw({0x7fb0092689f8, 0x320000000})
+            runtime/panic.go:1198 +0x71
+    runtime.sysMap(0xc000400000, 0x7fb0090e8180, 0x7ffc321a3f78)
+            runtime/mem_linux.go:169 +0x96
+    [...]
+=20=20=20=20
+    goroutine 17 [running, locked to thread]:
+    runtime.systemstack_switch()
+            runtime/asm_amd64.s:350 fp=3D0xc000187680 sp=3D0xc000187678 pc=
+=3D0x7fb00911f140
+    runtime.(*mheap).alloc(0x0, 0x0, 0x0, 0x0)
+            runtime/mheap.go:907 +0x73 fp=3D0xc0001876d0 sp=3D0xc000187680 =
+pc=3D0x7fb0090e44b3
+
+It is a DoS attack vector similar to the one discussed in 5.b). This is fix=
+ed
+the same way as item 5.g)
+
+5.i) Another User can Cause a Foreign Key to be Applied to its own File Sys=
+tem
+---------------------------------------------------------------------------=
+---
+
+Let's consider a malicious local user that has control over the root direct=
+ory
+of some mounted file system e.g. let's consider its own home directory is a
+separate mount. Then this malicious user can do this:
+
+    $ ln -s /.fscrypt /home/$USER/.fscrypt
+
+Actually a copy of all the files should also suffice. That Fscrypt is
+following symlinks is an extra degree of freedom that is exploited here. The
+`filesystem/CheckSetup()` function does only check the mode bits of the
+involved directories, but not the actual *owners*, therefore a plain copy of
+the directories and files would also be working.
+
+Now when another user unlocks its Protector via the PAM module, the module
+will also look into other file systems and since a matching policy will be
+found for /home/$USER, the following (strace) happens (with $USER =3D attac=
+ker):
+
+    openat(AT_FDCWD, "/home/attacker", O_RDONLY|O_CLOEXEC) =3D 4
+    ioctl(4, FS_IOC_ADD_ENCRYPTION_KEY, 0x7f2738d29000) =3D 0
+
+So the encryption key is added to a completely unrelated file system. The
+attacking user does not seem to have the ability to take advantage of this,
+because the key cannot be retrieved back and the ciphertext of the
+originally encrypted data can also not easily be duplicated on the other fi=
+le
+system to have the kernel decrypt it.
+
+Upstream acknowledges this issue but doesn't see an attack vector in it,
+because the attacker cannot take any advantage of it.
+
+5.j) Bash Completion Potentially Allows Restricted Code Execution (CVE-2022=
+-25328)
+---------------------------------------------------------------------------=
+-------
+
+Part of the Fscrypt package is also a bash completion helper installed e.g.=
+ in
+
+    /usr/share/bash-completion/completions/fscrypt
+
+This bash completion logic context sensitively expands protector names and
+mountpoints that are using fscrypt (i.e. ones that have an ".fscrypt"
+structure in its root).
+
+Let's consider a local user that has the ability to mount a writable file
+system onto a directory name under its control. This could be the case by
+way of special `sudo` rules or removable media mount helpers, for example. =
+For
+simplicity in this example it is done as the root user:
+
+    mkdir '$(reboot)'
+    mount -t tmpfs none '$(reboot)'
+    cd '$(reboot)'
+    # simply link in the rootfs's metadata
+    ln -s /.fscrypt
+
+Now `fscrypt` should list this mount point:
+
+    fscrypt status | grep reboot
+    /root/$(reboot)             tmpfs       not supported  Yes
+
+Now let's consider the root user is attempting to complete a mountpoint like
+this:
+
+    root# fscrypt purge /<tab>
+    (<reboot happens>)
+
+This works only for single commands without space separated parameters,
+because the bash completion is operating on space separated fields in the
+output of `fscrypt status`. So it is not easy to get to a full local root
+exploit out of this.
+
+Using crafted protector names seems not to have an effect on the bash
+completion, because it only extracts sequences of 16-digit hex IDs.
+
+Upstream acknowledges this issue but only sees it as a limited local root
+code execution. The bash completion file has been fixed and hardened to avo=
+id
+this [10]. Upstream stated that writing safe bash completion files generally
+seems to be a difficult matter as it involves some obscure bash syntax (loo=
+king
+at the file I tend to agree).
+
+# 6) CVE Assignments
+
+Upstream assigned the following three CVEs:
+
+- CVE-2022-25328: Correctly handle malicious mountpoint paths in the fscrypt
+  bash completion script. This addresses issue 5.j).
+- CVE-2022-25327: Validate the size, type, and owner (for login protectors)=
+ of
+  policy and protector files (denial of service). This addresses issues 5.b=
+),
+  5.c), 5.g) and 5.h).
+- CVE-2022-25326: Make the fscrypt metadata directories non-world-writable =
+by
+  default (denial of service). This addresses issue 5.a).
+
+# 7) Timeline and Upstream Communication
+
+On 2022-02-11 I reported the issues privately to the security contacts of t=
+he
+Fscrypt project. Upstream quickly confirmed most of my findings but declined
+establishing a formal embargo for fixing them, because they didn't consider
+the severity of the issues high enough for that.
+
+Therefore a public GitHub pull request [11] was used for discussing a numbe=
+r of
+bugfixes and design changes to address the findings in this report. This got
+merged on 2022-02-23 and went into release v0.3.3. Although upstream has be=
+en
+a bit sceptical at first about some of my hardening suggestions they have n=
+ow
+applied most of what I had in mind for improving the overall security of the
+".fscrypt" metadata directories.
+
+# 7) References
+
+[1]: https://github.com/google/fscrypt
+[2]: https://developers.google.com/protocol-buffers
+[3]: https://github.com/google/fscrypt/commit/6e355131670ad014e45f879475ddf=
+800f0080d41
+[4]: https://github.com/google/fscrypt/commit/1a47718420317f893831b0223153d=
+56005d5b02b
+[5]: https://github.com/google/fscrypt/commit/74e870b7bd1585b4b509da47e0e75=
+db66336e576
+[6]: https://github.com/google/fscrypt/commit/85a747493ff368a72f511619ecd39=
+1016ecb933c
+[7]: https://github.com/google/fscrypt/commit/97700817e737eabf45033cdb4a42f=
+a5c6e74f877
+[8]: https://github.com/systemd/systemd/issues/8598
+[9]: https://github.com/google/fscrypt/commit/b44fbe71e1e93c47050322af51725=
+bac997641e0
+[10]: https://github.com/google/fscrypt/commit/fa1a1fdbdea65829ce24a6b6f86c=
+e2961e465b02
+[11]: https://github.com/google/fscrypt/pull/346
+
+Best Regards
+
+Matthias
+
+--=20
+Matthias Gerstner <matthias.gerstner@suse.de>
+Security Engineer
+https://www.suse.com/security
+GPG Key ID: 0x14C405C971923553
+=20
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG N=FCrnberg
+Gesch=E4ftsf=FChrer: Ivo Totev
+
+--OLciPFw08PGqcvd/
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmIXbP4ACgkQFMQFyXGS
+NVPT2Q/+MTAOIvX6ESDbwAM3hQTzJHoxm40wGHCuCeLi2ehLR6+XX1G3aS1MET0k
+p78qXBHIEGM8uLjF1C4+DDhsviQwAazfB/3czAqtI1YrVbm1iA0GBTfC7HnDbNJQ
+jALIrGOZHd+yficO4HFycM+UjAOOVp4R8gYTpb7Xj/Bf9bNBFgrBNxwcRgEk7aUV
+K945PWcYQAJgplYDhe2SFwyf1msAQOCAKRPFdfSAqfuFUxkcNfvXj9tb19kIFtLd
+pD707d0S/ybfgj9L3whjFjDQGmXpMEBkifd6E0VaKeTKiW5EufEEW0FxGmKsWZ4J
+Mbxgxc50l/Bjt+6kgHhiqXtQ9ikAySW8BQp3ylZbOIylaKaVDqXUTFKMoLbEj7EU
+Q0PJZIyiSaoRd8fwya4NKyN+Pr4Gjaqb15xYUiQpHjCKTSc2utHYlWcNmkZOojKX
+dE0ncyQpBt4KVBMz7vO0GsRBHvwvz0txDNVQYny9pgj62s//l2ufQSOP6ojjBffa
+iNeAMZ7oDqyMWc9vzX3D+IjOGdkMs5HJlzXPAbEo78Y0ogd/hfVPzQ0blUeyhzbH
+miEfdnGGTcTZvirgkk9CNBc81D8a3oNKGPthjMhzFkzxJKomH5IlCB/nT8ErPkXP
+3lWcvoK4cRhIjfU3ZQpgeha3RJ51+j+110BahkKKZAtK6uUhbog=
+=9tbD
+-----END PGP SIGNATURE-----
+
+--OLciPFw08PGqcvd/--
