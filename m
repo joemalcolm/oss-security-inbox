@@ -1,135 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/05/2
-Message-Id: <E1nbhrJ-0003ND-7u@xenbits.xenproject.org>
-Date: Tue, 05 Apr 2022 12:00:29 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 399 v2 (CVE-2022-26357) - race in VT-d domain ID cleanup
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/02/1
+Message-ID: <1337086b8006fc71c151904764857e3ed29d3a3a.camel@amazon.com>
+Date: Wed, 2 Mar 2022 19:17:44 +0000
+From: "Karp, Samuel" <skarp@...zon.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2022-23648: containerd CRI plugin: Insecure handling of image volumes
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+A bug was found in containerd where containers launched through
+containerd's CRI implementation with a specially-crafted image
+configuration could gain access to read-only copies of arbitrary files
+and directories on the host. This may bypass any policy-based
+enforcement on container setup (including a Kubernetes Pod Security
+Policy) and expose potentially sensitive information. Kubernetes and
+crictl can both be configured to use containerd's CRI implementation.
 
-            Xen Security Advisory CVE-2022-26357 / XSA-399
-                               version 2
+Patches
+This bug has been fixed in containerd 1.6.1, 1.5.10 and 1.4.13. Users
+should update to these versions to resolve the issue.
 
-                    race in VT-d domain ID cleanup
+Workarounds
+Ensure that only trusted images are used.
 
-UPDATES IN VERSION 2
-====================
+If you have any questions or comments about this advisory:
+* Open an issue [1]
+* Email us at security@...tainerd.io if you think you've found a
+security bug.
 
-Public release.
+View this advisory on the web: 
+https://github.com/containerd/containerd/security/advisories/GHSA-crp2-qrr5-8pq7
 
-ISSUE DESCRIPTION
-=================
+On behalf of the containerd project,
+Samuel Karp
 
-Xen domain IDs are up to 15 bits wide.  VT-d hardware may allow for only
-less than 15 bits to hold a domain ID associating a physical device with
-a particular domain.  Therefore internally Xen domain IDs are mapped to
-the smaller value range.  The cleaning up of the housekeeping structures
-has a race, allowing for VT-d domain IDs to be leaked and flushes to be
-bypassed.
-
-IMPACT
-======
-
-The precise impact is system specific, but would typically be a Denial
-of Service (DoS) affecting the entire host.  Privilege escalation and
-information leaks cannot be ruled out.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen versions 4.11 through 4.16 are vulnerable.  Xen versions 4.10 and
-earlier are not vulnerable.
-
-Only x86 systems with VT-d IOMMU hardware are vulnerable.  Arm systems
-as well as x86 systems without VT-d hardware or without any IOMMUs in
-use are not vulnerable.
-
-Only x86 guests which have physical devices passed through to them can
-leverage the vulnerability.
-
-MITIGATION
-==========
-
-Not passing through physical devices to untrusted guests will avoid
-the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa399.patch           xen-unstable
-xsa399-4.16.patch      Xen 4.16.x - Xen 4.13.x
-xsa399-4.12.patch      Xen 4.12.x
-
-$ sha256sum xsa399*
-53b9745564eb21f70dbb7bd7194ff3518f29cd9715c68e9dd7eff25812968019  xsa399.patch
-16c3327a60d8ab6c3524f10f57d63efaf2e3e54b807bc285a749cd1a94392a30  xsa399-4.12.patch
-79d0f5a0442dec0a806d77a722a1d2c04793572fe0b564bf86dcd1c6d992a679  xsa399-4.16.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches described above (or others which are
-substantially similar) is permitted during the embargo, even on
-public-facing systems with untrusted guest users and administrators.
-
-HOWEVER, deployment of the mitigation is NOT permitted (except where
-all the affected systems and VMs are administered and used only by
-organisations which are members of the Xen Project Security Issues
-Predisclosure List).  Specifically, deployment on public cloud systems
-is NOT permitted.
-
-This is because removal of pass-through devices or their replacement by
-emulated devices is a guest visible configuration change, which may lead
-to re-discovery of the issue.
-
-Deployment of this mitigation is permitted only AFTER the embargo ends.
-
-AND: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmJMJDcMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZpo8H/AqiAS0l5WJWl00bTQ4Q69REzd83m9Y3+UnUqRaf
-JUFWo4R1m4V2zJlq0E3TR/2ZS1RkXFJxlmXQyzueFmDEvMV2oKB0ids5ta1oUO2E
-eiQxdSFbTLrLnhI+4IxbTHHy+ovSHT/SKPeo1Zd1tXHfZ35g1OgGTYHHqj7RKJHp
-SyZT4iuAKjIr61M4NBKJcycpfRidlXEDvAotDX3jBQ06t3vgs/12nwe5LzzeV2V4
-sIDjpeDGNKzgT2NgLP2b+XMEUg1259iWb19tS3PPNJaLKSvQqTBOFjK+sqh7ACXV
-v6ph2Yy0Q/ZP+N9DvCeBCPEU9A9RhmPYzobU+Lc/T85SrQ4=
-=sp/Q
------END PGP SIGNATURE-----
-
-Download attachment "xsa399.patch" of type "application/octet-stream" (1759 bytes)
-
-Download attachment "xsa399-4.12.patch" of type "application/octet-stream" (1765 bytes)
-
-Download attachment "xsa399-4.16.patch" of type "application/octet-stream" (1762 bytes)
+[1] https://github.com/containerd/containerd/issues/new/choose
