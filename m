@@ -1,96 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/12/1
-Message-ID: <c8c9ce86-d45d-51e5-cf4a-b33ad24c88f2@radix.lt>
-Date: Tue, 12 Jul 2022 15:58:15 +0300
-From: Povilas Kanapickas <povilas@...ix.lt>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/04/2
+Message-ID: <CAGaRif0TSpR9GYCMd3O5aFhA=N=qatnpeeq+0xL2jNOKp_0+KA@mail.gmail.com>
+Date: Fri, 4 Mar 2022 14:20:36 -0800
+From: lewis john mcgibbney <lewismc@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: X.Org Security Advisory: July 12, 2022
+Subject: CVE-2022-25312: An XML external entity (XXE) injection vulnerability exists in the Apache Any23 RDFa XSLTStylesheet extractor
 Content-Type: text/plain; charset=utf-8
 
--------- Forwarded Message --------
-Subject: X.Org Security Advisory: July 12, 2022
-Date: Tue, 12 Jul 2022 15:55:05 +0300
-From: Povilas Kanapickas <povilas@...ix.lt>
-To: xorg-announce@...ts.x.org
-CC: xorg-devel@...ts.x.org <xorg-devel@...ts.x.org>, xorg@...ts.x.org
+Description:
 
-X.Org Security Advisory: July 12, 2022
+An XML external entity (XXE) injection vulnerability was discovered in
+the Any23 RDFa XSLTStylesheet extractor and is known to affect Any23
+versions < 2.7. XML external entity injection (also known as XXE) is a
+web security vulnerability that allows an attacker to interfere with
+an application's processing of XML data. It often allows an attacker
+to view files on the application server filesystem, and to interact
+with any back-end or external systems that the application itself can
+access.
 
-Multiple input validation failures in X server extensions
-=========================================================
+Resolution:
 
-All theses issues can lead to local privileges elevation on systems
-where the X server is running privileged and remote code execution for
-ssh X forwarding sessions.
+This issue is fixed in Apache Any23 2.7 which can be downloaded from
+https://any23.apache.org/download.html. We strongly encourage all
+Any23 users to upgrade to Apache Any23 2.7.
 
-* CVE-2022-2319/ZDI-CAN-16062: X.Org Server ProcXkbSetGeometry Out-Of-Bounds
-Access
+Credit:
 
-The handler for the ProcXkbSetGeometry request of the Xkb extension does
-not properly validate the request length leading to out of bounds memory
-write.
-
-* CVE-2022-2320/ZDI-CAN-16070: X.Org Server ProcXkbSetDeviceInfo 
-Out-Of-Bounds
-Access
-
-The handler for the ProcXkbSetDeviceInfo request of the Xkb extension
-does not properly validate the request length leading to out of bounds
-memory write.
-
-Patches
--------
-
-Patches for this issues have been committed to the xorg server git
-repository. xorg-server 21.1.4 will be released shortly and will
-include these patches.
-
-commit 6907b6ea2b4ce949cb07271f5b678d5966d9df42
-
-     xkb: add request length validation for XkbSetGeometry
-         No validation of the various fields on that report were done, so a
-     malicious client could send a short request that claims it had N
-     sections, or rows, or keys, and the server would process the request
-     for N sections, running out of bounds of the actual request data.
-         Fix this by adding size checks to ensure our data is valid.
-         Fixes ZDI-CAN 16062, CVE-2022-2319.
-         This vulnerability was discovered by:
-     Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
+The Apache Any23 Project Management Committee would like to thank Lion
+Tree a.k.a liontree0110 for reporting this issue.
 
 
-commit dd8caf39e9e15d8f302e54045dd08d8ebf1025dc
-
-     xkb: swap XkbSetDeviceInfo and XkbSetDeviceInfoCheck
-         XKB often uses a FooCheck and Foo function pair, the former is
-     supposed to check all values in the request and error out on
-     BadLength, BadValue, etc. The latter is then called once we're
-     confident the values are good (they may still fail on an individual
-     device, but that's a different topic).
-         In the case of XkbSetDeviceInfo, those functions were incorrectly
-     named, with XkbSetDeviceInfo ending up as the checker function and
-     XkbSetDeviceInfoCheck as the setter function. As a result, the setter
-     function was called before the checker function, accessing request
-     data and modifying device state before we ensured that the data is
-     valid.
-         In particular, the setter function relied on values being already
-     byte-swapped. This in turn could lead to potential OOB memory access.
-         Fix this by correctly naming the functions and moving the 
-length checks
-     over to the checker function. These were added in 87c64fc5b0 to the
-     wrong function, probably due to the incorrect naming.
-         Fixes ZDI-CAN 16070, CVE-2022-2320.
-         This vulnerability was discovered by:
-     Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
-         Introduced in c06e27b2f6fd9f7b9f827623a48876a225264132
-
-Backporting of the security fixes also needs this commit:
-f1070c01d616c5f21f939d5ebc533738779451ac.
-
-Thanks
-======
-
-The vulnerabilities have been discovered by Jan-Niklas Sohn working with
-Trend Micro Zero Day Initiative and fixed by Peter Hutterer.
-
---
-Povilas Kanapickas
+-- 
+http://home.apache.org/~lewismc/
+http://people.apache.org/keys/committer/lewismc
