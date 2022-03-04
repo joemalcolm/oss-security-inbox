@@ -1,29 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/04/1
-Message-ID: <CAM62SmJTkayhy-+dbne1veD+zH5Nyc3ZhMqk60YQQwBC1-MW7A@mail.gmail.com>
-Date: Fri, 4 Feb 2022 10:56:19 -0600
-From: Tabitha Sable <tabitha.c.sable@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/04/1
+Message-ID: <916e8648-6c5b-ae73-8a09-549c6c10bbf7@apache.org>
+Date: Fri, 04 Mar 2022 11:04:02 +0000
+From: PJ Fanning <fanningpj@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-0492: Linux kernel cgroups v1 missing capabilities check when setting release_agent
+Subject: CVE-2022-26336: poi-scratchpad: A carefully crafted TNEF file can cause an out of memory exception 
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+Severity: moderate
 
-It has been discovered that under certain circumstances, the Linux kernel’s
-cgroups v1 release_agent feature can be used to escalate privilege and
-bypass namespace isolation unexpectedly.
+Description:
 
-CVE-2022-0492 has been assigned to this issue, which is corrected by
-requiring CAP_SYS_ADMIN in the initial user namespace when setting
-release_agent. This has been included upstream in commit
-24f6008564183aa120d07c03d9289519c2fe02af. (
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=24f6008564183aa120d07c03d9289519c2fe02af
-)
+A shortcoming in the HMEF package of poi-scratchpad (Apache POI) allows an attacker to cause an Out of Memory exception. This package is used to read TNEF files (Microsoft Outlook and Microsoft Exchange Server). If an application uses poi-scratchpad to parse TNEF files and the application allows untrusted users to supply them, then a carefully crafted file can cause an Out of Memory exception. This issue affects poi-scratchpad version 5.2.0 and prior versions. Users are recommended to upgrade to poi-scratchpad 5.2.1.
 
-Thank you to Yiqi Sun and Kevin Wang of Huawei Security Team for disclosing
-their work that led to this fix.
+This issue is being tracked as https://bz.apache.org/bugzilla/show_bug.cgi?id=65899
 
-Cheers,
+Credit:
 
-Tabitha Sable
+Apache POI would like to thank Craig Haft of Yahoo Inc. for reporting and providing a patch for this issue.
 
