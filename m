@@ -1,83 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/19/1
-Message-ID: <48dab10c-9a77-cf3c-981d-c72b9345f7c5@oracle.com>
-Date: Sat, 19 Feb 2022 09:47:28 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/07/1
+Message-ID: <CAKPOu+8WtknWoUeY-CTK5ejo0hOQDsPOsbO12pFK6ifJwmVo4Q@mail.gmail.com>
+Date: Mon, 7 Mar 2022 13:01:19 +0100
+From: Max Kellermann <max.kellermann@...os.com>
 To: oss-security@...ts.openwall.com
-Subject: Expat 2.4.5 released, includes 5 security fixes
+Subject: CVE-2022-0847: Linux kernel: overwriting read-only files
 Content-Type: text/plain; charset=utf-8
 
- From https://blog.hartwork.org/posts/expat-2-4-5-released/ :
+Hi oss-security,
 
-> Expat 2.4.5 released, includes security fixes
-> 2022-02-19 01:23
-> 
-> libexpat is a fast streaming XML parser. Alongside libxml2, Expat is one of the most widely used software libre XML parsers written in C, precisely C99. It is cross-platform and licensed under the MIT license.
-> 
-> Expat 2.4.5 has been released a few hours ago. This release is about security fixes. There are 5 CVEs involved:
-> 
->     CVE-2022-25235
->     CVE-2022-25236
->     CVE-2022-25313
->     CVE-2022-25314
->     CVE-2022-25315
-> 
-> Regarding impact of vulnerabilities, please note that looking at a vulnerability in isolation may miss part of the picture; e.g. if Expat passes malformed data to the application using Expat and that application isn't prepared for Expat violating their agreed API contract, you may end up with code execution from something that looked close to harmless, in isolation.
-> 
-> For more details, please check out the change log.
-> 
-> If you maintain Expat packaging or a bundled copy of Expat or a pinned version of Expat somewhere, please update to 2.4.5. Thank you!
-> 
-> Sebastian Pipping
+two weeks ago, I found a vulnerability in the Linux kernel since
+version 5.8 commit f6dd975583bd ("pipe: merge anon_pipe_buf*_ops") due
+to uninitialized variables.  It enables anybody to write arbitrary
+data to arbitrary files, even if the file is O_RDONLY, immutable or on
+a MS_RDONLY filesystem.  It can be used to inject code into arbitrary
+processes.
 
+It is similar to CVE-2016-5195 "Dirty Cow", but is easier to exploit.
 
- From https://github.com/libexpat/libexpat/blob/R_2_4_5/expat/Changes :
+The vulnerability was fixed in Linux 5.16.11, 5.15.25 and 5.10.102.
 
-> Release 2.4.5 Fri February 18 2022
->         Security fixes:
->             #562  CVE-2022-25235 -- Passing malformed 2- and 3-byte UTF-8
->                     sequences (e.g. from start tag names) to the XML
->                     processing application on top of Expat can cause
->                     arbitrary damage (e.g. code execution) depending
->                     on how invalid UTF-8 is handled inside the XML
->                     processor; validation was not their job but Expat's.
->                     Exploits with code execution are known to exist.
->             #561  CVE-2022-25236 -- Passing (one or more) namespace separator
->                     characters in "xmlns[:prefix]" attribute values
->                     made Expat send malformed tag names to the XML
->                     processor on top of Expat which can cause
->                     arbitrary damage (e.g. code execution) depending
->                     on such unexpectable cases are handled inside the XML
->                     processor; validation was not their job but Expat's.
->                     Exploits with code execution are known to exist.
->             #558  CVE-2022-25313 -- Fix stack exhaustion in doctype parsing
->                     that could be triggered by e.g. a 2 megabytes
->                     file with a large number of opening braces.
->                     Expected impact is denial of service or potentially
->                     arbitrary code execution.
->             #560  CVE-2022-25314 -- Fix integer overflow in function copyString;
->                     only affects the encoding name parameter at parser creation
->                     time which is often hardcoded (rather than user input),
->                     takes a value in the gigabytes to trigger, and a 64-bit
->                     machine.  Expected impact is denial of service.
->             #559  CVE-2022-25315 -- Fix integer overflow in function storeRawNames;
->                     needs input in the gigabytes and a 64-bit machine.
->                     Expected impact is denial of service or potentially
->                     arbitrary code execution.
-> 
->         Other changes:
->        #557 #564  Version info bumped from 9:4:8 to 9:5:8;
->                     see https://verbump.de/ for what these numbers do
-> 
->         Special thanks to:
->             Ivan Fratric
->             Samanta Navarro
->                  and
->             Google Project Zero
->             JetBrains
+A proof-of-concept exploit is attached.
 
-[Versions 2.4.3 & 2.4.4 fixed a number of CVE's as well if people missed those.]
+For anybody curious, here's an article about how I discovered this:
+ https://dirtypipe.cm4all.com/
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+Max
+
+View attachment "write_anything.c" of type "text/x-csrc" (4371 bytes)
