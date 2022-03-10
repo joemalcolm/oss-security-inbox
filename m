@@ -1,25 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/14/2
-Message-ID: <CAGUWgD-oYbazh5f+EDj0AmzxmKBY9MK7fwZVkeeFsCETHF4T-g@mail.gmail.com>
-Date: Wed, 14 Sep 2022 10:52:46 +0300
-From: Georgi Guninski <gguninski@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/10/3
+Message-ID: <CAFVZhAmuMxk0KyKYz=hU+rX-Qn0+i8dr68_1Vg7YAYE=keNcVw@mail.gmail.com>
+Date: Thu, 10 Mar 2022 13:44:46 -0500
+From: Deepesh Chaudhari <deepesh@...intextgroup.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: sagemath denial of service with abort() in gmp: overflow in mpz type
+Subject: Grant Opportunities to Protect Open Source
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 7, 2022 at 8:36 AM Georgi Guninski <gguninski@...il.com> wrote:
->
+Hello All,
 
-> $ apt-cache rdepends libgmp10 | grep -i crypt | wc -l
-> 28
->
-> some examples:
->   gawk
+I'm a fellow at Plaintextgroup.com by Schmidt Futures, we've launched an
+RFP to fund new ideas and experiments to improve OSS sustainability -- see
+https://github.com/PlaintextGroup/oss-virtual-incubator and our WSJ piece
+https://wsj-articles-legacy.sc.onservo.com/articles/protect-open-source-software-prevention-oss-public-use-cybersecurity-innovation-cyberattack-apache-log4j-11643316125.
+If you know people who might be a good fit, or if any projects you're
+working on might intersect with this, do let me know!
 
-Hopefully last post in this thread:
+Best,
 
-guest3@...ntu20:~/prim$ gawk --bignum 'BEGIN { a = 2 ^ 2 ^41; print "a =", a }'
-gmp: overflow in mpz type
-Aborted (core dumped)
-guest3@...ntu20:~/prim$ gawk 'BEGIN { a = 2 ^ 2 ^41; print "a =", a }'
-a = +inf
+*Deepesh Chaudhari*
+
+(M) 650.505.6602 || deepesh@...intextgroup.com
+
+plaintextgroup.com
+
+Set up some time to meet <https://meetings.hubspot.com/deepesh6>.
+
+
+<https://t.sidekickopen04.com/s3t/c/5/f18dQhb0S7kF8cpgZlVCFWYp59hl3kW7_k2841CX6NGW35QNv-56l1rzW58Ht2k4CcPMFf197v5Y04?te=W3R5hFj4cm2zwW45Rjby41YylsW4fHrkS4hKD754mLXp1&si=8000000016831453&pi=a2663ed8-2b9f-48c3-cbd8-8d6a65cede1b>
+
