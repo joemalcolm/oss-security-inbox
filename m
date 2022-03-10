@@ -1,22 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/01/23
-Message-ID: <6a2839aa-8d22-ae93-a8d7-6676717cee07@apache.org>
-Date: Tue, 01 Nov 2022 20:59:26 +0000
-From: Jedidiah Cunningham <jedcunningham@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/10/1
+Message-ID: <YilG2vRKT/xi9+wo@fullerene.field.pennock-tech.net>
+Date: Wed, 9 Mar 2022 19:31:22 -0500
+From: Phil Pennock <oss-security-phil@...dhuis.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-43985: Apache Airflow: Open Redirect 
+Cc: pdp@...s.io
+Subject: CVE-2022-26652: nats-server arbitrary file write
 Content-Type: text/plain; charset=utf-8
 
-Description:
+CVE: CVE-2022-26652
+Date: 2022-03-09
 
-In Apache Airflow versions prior to 2.4.2, there was an open redirect in the webserver's `/confirm` endpoint.
+Background:
 
-Credit:
+NATS.io is a high performance open source pub-sub distributed communication
+technology, built for the cloud, on-premise, IoT, and edge computing.
 
-The Apache Airflow PMC would like to thank Axel Chong (@Haxatron) [https://hackerone.com/haxatron1] for reporting this issue.
+JetStream is the optional RAFT-based resilient persistent feature of NATS.
+
+
+Problem Description:
+
+The JetStream streams can be backed up and restored via NATS.
+The backup format is a tar archive file.
+Inadequate checks on the filenames within the archive file permit a
+so-called "Zip Slip" attack in the stream restore.
+
+NATS nats-server through 2022-03-09 (fixed in release 2.7.4) did not
+correctly sanitize elements of the archive file, thus a user of NATS
+could cause the NATS server to write arbitrary content to an
+attacker-controlled filename.
+
+
+Affected versions:
+
+NATS Server:
+ * 2.2.0 up to and including 2.7.3.
+   + Introduced with JetStream Restore functionality
+ * Fixed with nats-io/nats-server: 2.7.4
+ * Docker image:  nats <https://hub.docker.com/_/nats>
+ * NB users of OS package files from our releases: a change in
+   goreleaser defaults, discovered late in the release process, moved
+   the install directory from /usr/local/bin to /usr/bin; we are
+   evaluating the correct solution for subsequent releases, but not
+   recutting this release.
+
+NATS Streaming Server
+ * 0.15.0 up to and including 0.24.2
+ * Fixed with nats-io/nats-streaming-server: 0.24.3
+ * Embeds a nats-server, but this server is the old approach which
+   JetStream replaces, so unlikely (but not impossible) to be
+   configured with JS support
+
+
+Workarounds:
+
+ * Disable JetStream for untrusted users.
+ * If only one NATS account uses JetStream, such that cross-user attacks
+   are not an issue, and any user in that account with access to the
+   JetStream API is fully trusted anyway, then appropriate sandboxing
+   techniques will prevent exploit.
+   + Eg, with systemd, the supplied util/nats-server-hardened.service
+     example configuration demonstrates that NATS runs fine as an
+     unprivileged user under ProtectSystem=strict and PrivateTmp=true
+     restrictions; by only opening a ReadWritePaths hole for the
+     JetStream storage area, the impact of this vulnerability is limited.
+
+
+Solution:
+
+Upgrade the NATS server to at least 2.7.4.
+
+We fully support the util/nats-server-hardened.service configuration
+for running a NATS server and encourage this approach.
+
+
+Credits:
+
+This issue was reported (on 2022-03-07) to the NATS Maintainers by
+Yiming Xiang, TIANJI LAB of NSFOCUS.
+Thank you / 谢谢你！
+
 
 References:
 
-https://github.com/apache/airflow/pull/27143
+ * This document is canonically:
+   <https://advisories.nats.io/CVE/CVE-2022-26652.txt>
 
 
+Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
