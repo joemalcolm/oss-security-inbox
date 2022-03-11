@@ -1,34 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/02/7
-Message-ID: <tjtkiu$jeu$1@ciao.gmane.io>
-Date: Wed, 2 Nov 2022 11:33:50 -0000 (UTC)
-From: Tavis Ormandy <taviso@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/11/1
+Message-ID: <de937be5-35ed-af7b-b20a-a1150c700fa1@eknoes.de>
+Date: Fri, 11 Mar 2022 12:16:35 +0100
+From: Sönke Huster <soenke.huster@...oes.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
+Subject: CVE-2022-26878: Memory leak in Linux VirtIO Bluetooth driver
 Content-Type: text/plain; charset=utf-8
 
-On 2022-11-01, Jeffrey Walton wrote:
-> On Tue, Nov 1, 2022 at 3:55 PM Pavan Maddamsetti
-><pavan.maddamsetti@...il.com> wrote:
->>
->> https://github.com/RustCrypto
->
+Hi oss-security,
 
-I don't know rust, so serious question - if this same buggy punycode
-routine had been written in rust, what would have happened?
+A memory leak in the VirtIO Bluetooth driver for Linux, which is included since v5.13,
+allows an attacker with access to the VirtIO counterpart of the driver
+to create a DoS by sending invalid frames to the drivers interface.
+Therefore, the driver must be in use.
 
-- I assume you *could* write similar logic, but perhaps the argument is
-  that idiomatic rust discourages it?
-- Would rustc have been able to reason about the code well enough at
-  compile time to error out?
-- Just detect it at runtime and abort()?
+This is fixed in 1d0688421449 [1], which was backported and thus
+fixed in v5.16.3 [2] and v5.15.17 [3].
 
-If the answer is "error out", then I think that's a pretty convincing win.
+CVE-2022-26878 was assigned by MITRE.
 
-Tavis.
+Best,
+Sönke
 
--- 
- _o)            $ lynx lock.cmpxchg8b.com
- /\\  _o)  _o)  $ finger taviso@....org
-_\_V _( ) _( )  @taviso
-
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=1d0688421449718c6c5f46e458a378c9b530ba18
+[2] https://cdn.kernel.org/pub/linux/kernel/v5.x/ChangeLog-5.16.3
+[3] https://cdn.kernel.org/pub/linux/kernel/v5.x/ChangeLog-5.15.17
