@@ -1,55 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/19/4
-Message-ID: <CA+rf83oV8rxuEmDKmFjsR7Nst7HEu+0_j-hOm=ygQgjpcAUE8Q@mail.gmail.com>
-Date: Wed, 19 Oct 2022 20:10:13 +0200
-From: David Bouman <dbouman03@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/13/1
+Message-ID: <CAD-N9QVuufAueZc5jeC0agddo3gE05YLjLOT4-q0n2wGJtMf=w@mail.gmail.com>
+Date: Sun, 13 Mar 2022 20:59:49 +0800
+From: Dongliang Mu <mudongliangabcd@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-2602 - Linux kernel io_uring UAF
+Subject: Memory leak in Linux HID-elo driver
 Content-Type: text/plain; charset=utf-8
 
-Hey,
+Hi oss-security,
 
-I found this vulnerability independently of ZDI, and reported it to the
-maintainers (this email address is stated in the patch).
+There is one memory leak in Linux HID driver, introduced in v5.13.0.
+When hid_parse in elo_probe fails, it forgets to call usb_put_dev to
+decrease the refcount, leading to memory leak in the Linux kernel.
 
-I can verify that this issue is exploitable on 5.10 as well, the stated
-patch does not prevent the issue.
+This is fixed by 817b8b9c5396 [1] and already backported to Linux
+stable 5.15 and 5.16.
 
-Regards,
+I am not sure how to request one CVE on the CVE request webpage. Any
+help would be appreciated.
 
-David
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=817b8b9c5396d2b2d92311b46719aad5d3339dbe
+[2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=fbf42729d0e91332e8ce75a1ecce08b8a2dab9c1
 
+--
+My best regards to you.
 
-On Tue, 18 Oct 2022, 19:28 Thadeu Lima de Souza Cascardo <
-cascardo@...onical.com> wrote:
-
-> A local privilege escalation vulnerabilty involving Unix socket Garbage
-> Collection and io_uring was reported and fixed as:
->
-> 0091bfc81741b8d3aeb3b7ab8636f911b2de6e80 ("io_uring/af_unix: defer
-> registered files gc to io_uring release")
->
-> The vulnerability is a use-after-free that happens when an io_uring request
-> is being processed on a registered file and the Unix GC runs and frees the
-> io_uring fd and all the registered fds. The order at which the Unix GC
-> processes the inflight fds may lead to registered fds be freed before the
-> io_uring is released and has the chance to unregister and wait for such
-> requests to finish.
->
-> One way to trigger this race condition is to use userfaultfd and other
-> similar strategies that cause the request to be held waiting for the
-> attacker to trigger the free.
->
-> This issue was reported as ZDI-CAN-17428 and has been assigned
-> CVE-2022-2602.
->
-> It affects upstream stable 5.4.y, 5.15.y and later versions. 5.10.y may be
-> mitigated by the fact that commit 0f2122045b946241a9e549c2a76cea54fa58a7ff
-> ("io_uring: don't rely on weak ->files references") is present, but it is
-> safer to apply the fixes.
->
-> A PoC will be posted in 7 days, on October 25th.
->
-> Cascardo.
->
-
+     No System Is Safe!
+     Dongliang Mu
