@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2108" "Monday" "21" "December" "2015" "20:16:51" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151222011651.ABC96B2E0C5@smtpvbsrv1.mitre.org>" "50" "[oss-security] Re: CVE request: Qemu: scsi: stack based buffer overflow in megasas_ctrl_get_info" "^Cc:" nil nil "12" "2015122201:16:51" "[oss-security] Re: CVE request: Qemu: scsi: stack based buffer overflow in megasas_ctrl_get_info" (number mark "        cve-assign@m Dec 21   50/2108  " thread-indent "\"[oss-security] Re: CVE request: Qemu: scsi: stack based buffer overflow in megasas_ctrl_get_info\"\n") "<alpine.LFD.2.20.1512212349450.26574@wniryva>" ("<alpine.LFD.2.20.1512212349450.26574@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["727" "Sunday" "13" "March" "2022" "20:59:49" "+0800" "Dongliang Mu" "mudongliangabcd@gmail.com" nil "20" "[oss-security] Memory leak in Linux HID-elo driver" nil nil nil "3" nil nil (number mark "U       mudonglianga Mar 13   20/727   " thread-indent "\"[oss-security] Memory leak in Linux HID-elo driver\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Memory leak in Linux HID-elo driver" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 11423 invoked by uid 550); 22 Dec 2015 01:17:06 -0000
+Received: (qmail 7462 invoked by uid 550); 13 Mar 2022 13:26:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +11,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11402 invoked from network); 22 Dec 2015 01:17:05 -0000
-In-Reply-To: <alpine.LFD.2.20.1512212349450.26574@wniryva>
-Message-Id: <20151222011651.ABC96B2E0C5@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, luodalongde@gmail.com
-Date: Mon, 21 Dec 2015 20:16:51 -0500 (EST)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: Qemu: scsi: stack based buffer overflow in megasas_ctrl_get_info
-To: ppandit@redhat.com
+Received: (qmail 31822 invoked from network); 13 Mar 2022 13:00:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=iAS+O7qMxPdiSyyXPqK4ue3gwemrkUlgvYks8LDK5xs=;
+        b=lbcIQ9PTh2bR5z43wrUxSLH6NjXMVYeJRzmqhmxVG4kGB6Ks/v0jiwBzQ6fZQdum36
+         IV3rT2BAhL0iyvV5Ynl3sQpOU5PJutCJ1yLAUXgs6CVFdfx6eda3KsL5hyb1i8sFO1uD
+         EZojYO277Uk4Rpk1wxKX45KXOKu3QN4cBHg2j2p5Kju9vg6kaHZOJSP0PHh3Z3G4iivP
+         XC8+J5FTFdqBHfhNgAdSvB0ANa3BpKbnhJ5Q9c8nGv/XAbRtXsvw9fSOsknFCgtwUJax
+         cS/oCsmbl88WUVhWBwEfi6NdmCHD4VLr63fjcFfQuocrG5XjTMjTJ9e9YCpW8dfjByVb
+         8iHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=iAS+O7qMxPdiSyyXPqK4ue3gwemrkUlgvYks8LDK5xs=;
+        b=P/swE0uGsSY2D86cee7ZVzvr6A6GLk4jH58OhKZdoG7T5d+zAqxcotUEczUt8sxIyu
+         kgj3UKl6EyYkQFxUEf5YWFxRWbnn6ygB+z32gJ1hhpnYNvKf61Q2WRt9wkEPFNLq60J0
+         fdl53yu43jyPqb4sW1NZBa0PcVClJIXmJC29Tu56muTtbb0amroFKGg+QcZ+SvxIdLtM
+         fWy4Pd8ENEogzeDV/AonsAe9/bzFZEH7VeSHpoH/OIsHYJm1YHvQ/dMIaVCc2mtDovaK
+         TaVGPhFOjJWoeGD6AwrDx2bavsPrJcyKAi0u38/eYedqD45T80rU5Qdha6td1gi3iUga
+         l7dg==
+X-Gm-Message-State: AOAM533vTqd1NsnuAMmDZFTM9dqDT25BmIl35pW4KuoqwzF+AGrqDEM8
+	7nZus+uYIccsDCWJiqUnsUF/W16AfeED/LkzKT3v2+0qdwo=
+X-Google-Smtp-Source: ABdhPJwnYQtbbnZcpDwNdnrC5FkS8hNqGPRc3c/R30R9zZFDRTeANONBtjlWP7Lo04GqfZefe/pu5a9Lei7F/p1oo7o=
+X-Received: by 2002:a17:907:9482:b0:6da:a24e:e767 with SMTP id
+ dm2-20020a170907948200b006daa24ee767mr14963171ejc.479.1647176415677; Sun, 13
+ Mar 2022 06:00:15 -0700 (PDT)
+MIME-Version: 1.0
+From: Dongliang Mu <mudongliangabcd@gmail.com>
+Date: Sun, 13 Mar 2022 20:59:49 +0800
+Message-ID: <CAD-N9QVuufAueZc5jeC0agddo3gE05YLjLOT4-q0n2wGJtMf=w@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Memory leak in Linux HID-elo driver
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi oss-security,
 
-> Qemu emulator built with the SCSI MegaRAID SAS HBA emulation support is
-> vulnerable to a stack buffer overflow issue. It occurs while processing the
-> SCSI controller's CTRL_GET_INFO command. A privileged guest user could use
-> this flaw to crash the Qemu process instance resulting in DoS.
+There is one memory leak in Linux HID driver, introduced in v5.13.0.
+When hid_parse in elo_probe fails, it forgets to call usb_put_dev to
+decrease the refcount, leading to memory leak in the Linux kernel.
 
->> A stack overflow issue was reported by Mr Qinghao Tang ... It
->> occurs while processing the SCSI controller's CTRL_GET_INFO command,
->> as the memset(2) call uses driver supplied 'cmd->iov_size' to
->> initialise the '&info' object.
+This is fixed by 817b8b9c5396 [1] and already backported to Linux
+stable 5.15 and 5.16.
 
->> scsi: initialise info object with appropriate size
+I am not sure how to request one CVE on the CVE request webpage. Any
+help would be appreciated.
 
->> While processing controller 'CTRL_GET_INFO' command, the routine
->> 'megasas_ctrl_get_info' overflows the '&info' object size. Use its
->> appropriate size to null initialise it.
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=817b8b9c5396d2b2d92311b46719aad5d3339dbe
+[2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=fbf42729d0e91332e8ce75a1ecce08b8a2dab9c1
 
-> https://lists.gnu.org/archive/html/qemu-devel/2015-12/msg03737.html
-> https://bugzilla.redhat.com/show_bug.cgi?id=1284008
+--
+My best regards to you.
 
-Use CVE-2015-8613.
-
-This is not yet available at
-http://git.qemu.org/?p=qemu.git;a=history;f=hw/scsi/megasas.c but that
-may be an expected place for a later update.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWeKKaAAoJEL54rhJi8gl5eNgQAL4kqeQPi3YvHQXPrrqYuvBQ
-tik3Vi/USlhDPHncbIsjTLAcXepf/q5mCAuCJZaoAhzoaPNxkPVHz3idGb4wbYd5
-LacANo4hAAxoxdNn0KXZmWtkDz+8Zbf0VnawY2xGMoPDk+KvczPxboE6vupyth00
-7+JxihRYVEzY2JPZVOF5YYPa/hdytkQvw0iAOAZsgBsXlCMcJIBZcwgwbem8ibrR
-+UBtQ++/bL6UOX3bmADxsmDQr6IHO4yGaS5zGSYYb6fUROKDeG1Q1y5AT+F1t2tC
-O8YC+TFyadtFFWU5Ps7yW8hJ9+ACe5IygFSiHfoSCSSFz1wtZwHdNmQBb6Gfojy1
-HGnMiC8d5/LnO+Mrg70/9sKzZbAbH0EH6ceVtAbrLTap6f09Cw6pJiZw1kZmleQU
-Nrs+TioE44GKFFhL1putIDB1pcZL3ENDuQE6nWy9pOwfhbNIceo3yr7F1dLfIw3l
-NUFgi1UcGMqeSQFbXtrGMZWNGzhPXeZyz2S/P+6Tai9esJ1dgXY862YMIG3W/JMQ
-bezvCXhTKa6OIF843krLGZRsSGVIaN53DqsQI86tGtOhUGE5Rzm3Rdj9cw5frBB9
-VWYDmYr957CZjdTFVwCbnTW39JKPkcY2UoHff63nNY4Uy7Q5V+hLkrS09SOk2UxU
-x8p9clIO2w3lRNAaTEkh
-=kvtP
------END PGP SIGNATURE-----
+     No System Is Safe!
+     Dongliang Mu
