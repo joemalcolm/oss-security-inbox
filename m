@@ -1,62 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/26/2
-Message-ID: <YwhTtN8duEhxo1hY@gentoo.org>
-Date: Fri, 26 Aug 2022 00:01:40 -0500
-From: John Helmert III <ajak@...too.org>
-To: clopez@...lia.com, oss-security@...ts.openwall.com
-Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0008
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/14/1
+Message-ID: <13a710ca-0f67-4c77-dc3a-61091d14a77f@apache.org>
+Date: Mon, 14 Mar 2022 10:06:24 +0000
+From: Stefan Eissing <icing@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2022-23943: Apache HTTP Server: mod_sed: Read/write beyond bounds 
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 25, 2022 at 11:34:04PM +0200, Carlos Alberto Lopez Perez wrote:
-> ------------------------------------------------------------------------
-> WebKitGTK and WPE WebKit Security Advisory                 WSA-2022-0008
-> ------------------------------------------------------------------------
-> 
-> Date reported           : August 25, 2022
-> Advisory ID             : WSA-2022-0008
-> WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2022-0008.html
-> WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2022-0008.html
-> CVE identifiers         : CVE-2022-32893.
-> 
-> Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
-> 
-> CVE-2022-32893
->     Versions affected: WebKitGTK and WPE WebKit before 2.36.7.
->     Credit to an anonymous researcher.
->     Impact: Processing maliciously crafted web content may lead to
->     arbitrary code execution. Apple is aware of a report that this issue
->     may have been actively exploited.
+Severity: important
 
-According to Apple's security advisories for this (e.g. [1]), this
-issue is tracked on the Webkit Bugzilla as 243557 [2] which was opened
-on 2022-08-04. A few minutes after that bug was opened, a pull request
-on GitHub was linked [3] with a patch which also seems to add unit
-tests. So, it appears to me that this issue was public since at least
-August 4th, and even more widely publicized with Apple's security
-advisories on August 17.
+Description:
 
-WebKit-2.36.6 was released shortly after the first bug report, on
-2022-08-07, and WebKit-2.36.7 was released yesterday, on 2022-08-25.
+Out-of-bounds Write vulnerability in mod_sed of Apache HTTP Server allows an attacker to overwrite heap memory with possibly attacker provided data.
 
-With this bug seemingly being publicly known to be an actively
-exploited code execution issue, why did it take several weeks and 2
-WebKit releases to get this issue fixed and a WSA released?
+This issue affects Apache HTTP Server 2.4 version 2.4.52 and prior versions.
 
-[1] https://support.apple.com/en-us/HT213412
-[2] https://bugs.webkit.org/show_bug.cgi?id=243557
-[3] https://github.com/WebKit/WebKit/pull/3023
+Credit:
 
-> 
-> We recommend updating to the latest stable versions of WebKitGTK and WPE
-> WebKit. It is the best way to ensure that you are running safe versions
-> of WebKit. Please check our websites for information about the latest
-> stable releases.
-> 
-> Further information about WebKitGTK and WPE WebKit security advisories
-> can be found at: https://webkitgtk.org/security.html or
-> https://wpewebkit.org/security/.
-> 
-> The WebKitGTK and WPE WebKit team,
-> August 25, 2022
+Ronald Crane (Zippenhop LLC)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
