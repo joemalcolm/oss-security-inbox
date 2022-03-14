@@ -1,23 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/15/1
-Message-ID: <472d9cd6-7a65-5871-043c-930b966c49cc@apache.org>
-Date: Tue, 15 Mar 2022 15:17:33 +0000
-From: Daan <dahn@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/14/3
+Message-ID: <bd4ba7ac-0817-f378-08bb-11b8b7632496@apache.org>
+Date: Mon, 14 Mar 2022 10:08:35 +0000
+From: Stefan Eissing <icing@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-26779: Apache Cloudstack insecure random number generation affects project email invitation 
+Subject: CVE-2022-22720: HTTP request smuggling vulnerability in Apache HTTP Server 2.4.52 and earlier 
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+Severity: important
 
 Description:
 
-Apache CloudStack prior to 4.16.1.0 used insecure random number generation for project invitation tokens. If a project invite is created based only on an email address, a random token is generated. An attacker with knowledge of the project ID and the fact that the invite is sent, could generate time deterministic tokens and brute force attempt to use them prior to the legitimate receiver accepting the invite. This feature is not enabled by default, the attacker is required to know or guess the project ID for the invite in addition to the invitation token, and the attacker would need to be an existing authorized user of CloudStack.
+Apache HTTP Server 2.4.52 and earlier fails to close inbound connection when errors are encountered discarding the request body, exposing the server to HTTP Request Smuggling
 
 Credit:
 
-This issue was reported by Jonathan Leitschuh
-
-References:
-
-https://github.com/JLLeitschuh/security-research/security/advisories/GHSA-vpcc-9rh2-8jfp
+James Kettle <james.kettle portswigger.net>
 
