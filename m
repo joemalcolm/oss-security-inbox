@@ -1,19 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/23/1
-Message-ID: <69039489-c2ed-3a61-4691-adff38199082@apache.org>
-Date: Wed, 23 Nov 2022 02:19:51 +0000
-From: Jiajie Zhong <zhongjiajie@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/14/2
+Message-ID: <28650426-1002-ea94-54a5-71841b755b52@apache.org>
+Date: Mon, 14 Mar 2022 10:07:40 +0000
+From: Stefan Eissing <icing@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-45462: Apache DolphinScheduler prior to 2.0.5 have command execution vulnerability 
+Subject: CVE-2022-22721: Apache HTTP Server: core: Possible buffer overflow with very large or unlimited LimitXMLRequestBody 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Severity: low
 
 Description:
 
-Alarm instance management has command injection when there is a specific command configured. It is only for logged-in users. We recommend you upgrade to version 2.0.6 or higher
+If LimitXMLRequestBody is set to allow request bodies larger than 350MB (defaults to 1M) on 32 bit systems an integer overflow happens which later causes out of bounds writes.
+
+This issue affects Apache HTTP Server 2.4.52 and earlier.
 
 Credit:
 
-This issue was discovered by Jigang Dong of M1QLin Security Team
+Anonymous working with Trend Micro Zero Day Initiative
 
