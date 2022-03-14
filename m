@@ -1,4 +1,9 @@
-Received: (qmail 5448 invoked by uid 550); 13 Dec 2023 21:28:48 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["334" "Monday" "14" "March" "2022" "10:07:40" "+0000" "Stefan Eissing" "icing@apache.org" nil "14" "[oss-security] CVE-2022-22721: Apache HTTP Server: core: Possible buffer overflow with very large or unlimited LimitXMLRequestBody " nil nil nil "3" nil nil (number mark "U       icing@apache Mar 14   14/334   " thread-indent "\"[oss-security] CVE-2022-22721: Apache HTTP Server: core: Possible buffer overflow with very large or unlimited LimitXMLRequestBody \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2022-22721: Apache HTTP Server: core: Possible buffer overflow with very large or unlimited LimitXMLRequestBody " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 4014 invoked by uid 550); 14 Mar 2022 10:46:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,38 +12,28 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29782 invoked from network); 13 Dec 2023 21:24:12 -0000
-Authentication-Results: apache.org; auth=none
+Received: (qmail 1369 invoked from network); 14 Mar 2022 10:07:53 -0000
 Content-Type: text/plain; charset=utf-8
-From: Brian Demers <bdemers@apache.org>
+From: Stefan Eissing <icing@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <03657eca-b6ef-5e25-15f9-832df4274f3d@apache.org>
+Message-ID: <28650426-1002-ea94-54a5-71841b755b52@apache.org>
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 13 Dec 2023 21:24:22 +0000
+Date: Mon, 14 Mar 2022 10:07:40 +0000
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-46750: Apache Shiro: URL Redirection to Untrusted Site
- ('Open Redirect') vulnerability in FORM authentication feature Apache
- Shiro. 
+Subject: [oss-security] CVE-2022-22721: Apache HTTP Server: core: Possible buffer overflow
+ with very large or unlimited LimitXMLRequestBody 
 
-Severity: moderate
-
-Affected versions:
-
-- Apache Shiro before 1.13.0
-- Apache Shiro 2.0.0-alpha-1 before 2.0.0-alpha-4
+Severity: low
 
 Description:
 
-URL Redirection to Untrusted Site ('Open Redirect') vulnerability when "for=
-m" authentication is used in Apache Shiro.
-Mitigation: Update to Apache Shiro 1.13.0+ or 2.0.0-alpha-4+.
+If LimitXMLRequestBody is set to allow request bodies larger than 350MB (de=
+faults to 1M) on 32 bit systems an integer overflow happens which later cau=
+ses out of bounds writes.
+
+This issue affects Apache HTTP Server 2.4.52 and earlier.
 
 Credit:
 
-Claudio Villella (finder)
-
-References:
-
-https://shiro.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2023-46750
+Anonymous working with Trend Micro Zero Day Initiative
 
