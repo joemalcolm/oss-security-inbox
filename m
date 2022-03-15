@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3311" "Thursday" "31" "March" "2016" "19:00:16" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160331230016.AB0636FC041@smtpvmsrv1.mitre.org>" "66" "[oss-security] Re: CVE Clarification: Mysqlnd / CVE-2015-3152" nil nil nil "3" "2016033123:00:16" "[oss-security] Re: CVE Clarification: Mysqlnd / CVE-2015-3152" (number mark "U       cve-assign@m Mar 31   66/3311  " thread-indent "\"[oss-security] Re: CVE Clarification: Mysqlnd / CVE-2015-3152\"\n") "<20160331201936.GA25397@hunt>" ("<20160331201936.GA25397@hunt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["9539" "Tuesday" "15" "March" "2022" "17:29:37" "+0100" "Daniel Beck" "ml@beckweb.net" nil "256" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "3" nil nil (number mark "U       ml@beckweb.n Mar 15  256/9539  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 15919 invoked by uid 550); 31 Mar 2016 23:00:29 -0000
+Received: (qmail 21660 invoked by uid 550); 15 Mar 2022 16:29:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,78 +12,273 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15896 invoked from network); 31 Mar 2016 23:00:28 -0000
-From: cve-assign@mitre.org
-To: seth.arnold@canonical.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20160331201936.GA25397@hunt>
-Message-Id: <20160331230016.AB0636FC041@smtpvmsrv1.mitre.org>
-Date: Thu, 31 Mar 2016 19:00:16 -0400 (EDT)
-Subject: [oss-security] Re: CVE Clarification: Mysqlnd / CVE-2015-3152
+Received: (qmail 21625 invoked from network); 15 Mar 2022 16:29:49 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
+Message-Id: <8A60B212-2A7B-4675-932B-A6DC04A93164@beckweb.net>
+Date: Tue, 15 Mar 2022 17:29:37 +0100
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3654.120.0.1.13)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1647361789;b434daa6;
+X-HE-SMSGID: 1nUA3G-0004fx-2w
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-> Tomas Hoger asked if CVE-2015-3152 is appropriate for re-use with the php
-> mysqlnd interface:
+The following releases contain fixes for security vulnerabilities:
 
-No, the PHP ext/mysqlnd/mysqlnd.c code seems to be completely
-unrelated to the code shown in the
-https://github.com/mysql/mysql-server/commit/3bd5589e1a5a93f9c224badf983cd65c45215390
-commit (and the code available from the
-http://downloads.mysql.com/archives/c-c/?version=6.1.2&os=src web
-page), and thus the CVE ID should be different. Use CVE-2015-8838 for
-this https://bugs.php.net/bug.php?id=69669 issue.
+* CloudBees AWS Credentials Plugin 191.vcb_f183ce58b_9
+* Dashboard View Plugin 2.18.1
+* Favorite Plugin 2.4.1
+* Folder-based Authorization Strategy Plugin 1.4
+* Parameterized Trigger Plugin 2.43.1
+* Semantic Versioning Plugin 1.14
 
-Incidentally, there typically aren't CVE IDs for reports such as
-"MySQL clients have long had a --ssl option. Casual users may think
-specifying this option will cause clients to secure connections using
-SSL. That is not the case ... This behavior is clearly explained in
-the manual ... this option is not sufficient in itself to cause an SSL
-connection to be used" in the
-http://mysqlblog.fivefarmers.com/2014/04/02/redefining-ssl-option/
-post. In other words, if the only problem were that the product
-documented behavior that hardly anyone wants, and omitted behavior
-that would be much more useful, then a CVE ID generally shouldn't
-exist. This case was different because, as mentioned in the
-https://duo.com/blog/backronym-mysql-vulnerability post, other
-documentation stated "MYSQL_OPT_SSL_VERIFY_SERVER_CERT ... This
-feature can be used to prevent man-in-the-middle attacks." This was
-misleading because enabling the certificate-verification code didn't
-prevent the man-in-the-middle attacker from using a
-cleartext-downgrade attack. Also,
-http://mysqlblog.fivefarmers.com/2015/04/29/ssltls-in-5-6-and-5-5-ocert-advisory/
-is arguably a vendor confirmation that the behavior was a MySQL
-vulnerability, even though it was not on an official vendor web site.
-https://access.redhat.com/security/cve/cve-2015-3152 was posted by
-the CNA for this CVE.
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-http://php.net/ChangeLog-5.php has the three vendor confirmations of
-CVE-2015-8838 (the entries that mention bug #69669). We don't know
-whether the unpatched mysqlnd.c code ever included misleading
-documentation about the relationship between certificate verification
-and man-in-the-middle protection, but that's not needed for a CVE
-because of the obvious confirmation on the vendor's official site.
+* dbCharts Plugin
+* Environment Dashboard Plugin
+* Extended Choice Parameter Plugin
+* GitLab Authentication Plugin
+* global-build-stats Plugin
+* incapptic connect uploader Plugin
+* Kubernetes Continuous Deploy Plugin
+* List Git Branches Parameter Plugin
+* Release Helper Plugin
+* Vmware vRealize CodeStream Plugin
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2022-03-15/
 
-iQIcBAEBCAAGBQJW/atfAAoJEL54rhJi8gl5ByUQAM/xz719Q1AkdIdd/XOn4AVL
-E3iePMjQLfVVU2HHZBBWAb5EWM7vxS52f4K7FOFmbfZ9+813qLh7S8dRpM61eqZZ
-S9qXHmeUZazoWtN8D4j9nhGqKRHAc9k9Cl1g4+d1urV6aVtdSG+R4NsrEFGTKomu
-Qoq2akYMFqBGVlb1kyPVYZS0Yy/WMntYTmQ0MXJQxwzFfXNtDCDMn8swOg5CkKzP
-p/lj3f1EkUtJjdSytZhyCnzs9B5awCx3JkH/yBSdqo2ApfCaranjsia965pSv2Yd
-xKyIwr3jeO3BfatV1cGgaHHrrSobMNVJ5os4TPw4ziif6UBx+36HsaHEgKLP++sW
-Jx9j/565GbF1WH4iy0IV20qgPrSIGRx9h6AgmAWirw6iRrT9JM+5KEvFSDetNk/5
-ctCSeWVLb9gT4ASW6EOGEzCLU2Zy3AXZWHhPcOqNmq+iKcEWoUOowIAL8XtHyMlZ
-r6WwM+7Q5qsjP2hI+lI10qmCUPBw4KVsXurvKCasWC+BRSS8bkjJh2nnRfkELJwj
-lN5bTnQ0gdmr7nxr2IcQfB2F4nXfBa2kW0mSXSCT26wVSlt/ycTd8M64p0WLeIpE
-6xhpVxV7N9Pn6rhCqKjnqWGKWrOYPuD949DNqY6kQv6gd6eFWrHcikaKGtBfOjhY
-wb6fxrb9zEfAcWpd+07+
-=xHPT
------END PGP SIGNATURE-----
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-2185 / CVE-2022-27195
+Parameterized Trigger Plugin 2.43 and earlier captures environment
+variables passed to builds triggered using Parameterized Trigger Plugin,
+including password parameter values, in their `build.xml` files. These
+values are stored unencrypted and can be viewed by users with access to the
+Jenkins controller file system.
+
+
+SECURITY-2557 / CVE-2022-27196
+Favorite Plugin 2.4.0 and earlier does not escape the names of jobs in the
+favorite column.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Item/Configure or Item/Create permissions.
+
+
+SECURITY-2559 / CVE-2022-27197
+Dashboard View Plugin 2.18 and earlier does not perform URL validation for
+the Iframe Portlet's Iframe source URL.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to configure views.
+
+
+SECURITY-2351 / CVE-2022-27198 (CSRF) & CVE-2022-27199 (permission check)
+CloudBees AWS Credentials Plugin 189.v3551d5642995 and earlier does not
+perform a permission check in a method implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an AWS
+service using an attacker-specified token.
+
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+
+SECURITY-2646 / CVE-2022-27200
+Folder-based Authorization Strategy Plugin 1.3 and earlier does not escape
+the names of roles shown on the configuration form.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Overall/Administer permission.
+
+
+SECURITY-2124 / CVE-2022-27201
+Semantic Versioning Plugin defines a controller/agent message that
+processes a given file as XML and returns version information. The XML
+parser is not configured to prevent XML external entity (XXE) attacks,
+which is only a problem if XML documents are parsed on the Jenkins
+controller.
+
+Semantic Versioning Plugin 1.13 and earlier does not restrict execution of
+the controller/agent message to agents, and implements no limitations about
+the file path that can be parsed. This allows attackers able to control
+agent processes to have Jenkins parse a crafted file that uses external
+entities for extraction of secrets from the Jenkins controller or
+server-side request forgery.
+
+
+SECURITY-2232 / CVE-2022-27202
+Extended Choice Parameter Plugin 346.vd87693c5a_86c and earlier does not
+escape the value and description of Extended Choice Parameters with
+parameter type 'Radio Buttons' or 'Check Boxes'.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Item/Configure permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1351 / CVE-2022-27203
+Extended Choice Parameter Plugin 346.vd87693c5a_86c and earlier allows
+attackers with Item/Configure permission to read values from arbitrary JSON
+and Java properties files on the Jenkins controller.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1350 / CVE-2022-27204 (CSRF) & CVE-2022-27205 (permission check)
+Extended Choice Parameter Plugin 346.vd87693c5a_86c and earlier does not
+perform a permission check on form validation methods. This allows
+attackers with Overall/Read permission to connect to an attacker-specified
+URL.
+
+Additionally, these form validation methods do not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1891 / CVE-2022-27206
+GitLab Authentication Plugin 1.13 and earlier stores the GitLab client
+secret unencrypted in the global `config.xml` file on the Jenkins
+controller as part of its configuration.
+
+This client secret can be viewed by users with access to the Jenkins
+controller file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1886 / CVE-2022-27207
+global-build-stats Plugin 1.5 and earlier does not escape multiple fields
+in the chart configuration on the 'Global Build Stats' page.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Overall/Administer permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2096 / CVE-2022-27208
+Kubernetes Continuous Deploy Plugin contributes the 'Kubernetes
+configuration (kubeconfig)' credential type.
+
+Kubernetes Continuous Deploy Plugin 2.3.1 and earlier allows users with
+Credentials/Create or Credentials/Update permission to read arbitrary files
+on the Jenkins controller by defining a 'From a file on the Jenkins master'
+Kubeconfig source for such a credential.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2636 / CVE-2022-27209
+Kubernetes Continuous Deploy Plugin 2.3.1 and earlier does not perform
+permission checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2681 / CVE-2022-27210 (CSRF) & CVE-2022-27211 (permission check)
+Kubernetes Continuous Deploy Plugin 2.3.1 and earlier does not perform a
+permission check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified SSH server using attacker-specified credentials IDs
+obtained through another method, capturing credentials stored in Jenkins.
+
+Additionally, this endpoint does not require POST requests, resulting in a
+cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2167 / CVE-2022-27212
+List Git Branches Parameter Plugin 0.0.9 and earlier does not escape the
+name or default value of the 'List Git branches (and more)' parameter.
+Additionally, List Git Branches Parameter Plugin explicitly disables a
+protection mechanism introduced in Jenkins 2.44 and LTS 2.32.2 to prevent
+exploitation of unescaped parameter names.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Item/Configure permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2252 / CVE-2022-27213
+Environment Dashboard Plugin 1.1.10 and earlier does not escape the
+Environment order and the Component order configuration values in its
+views.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with View/Configure permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2274 / CVE-2022-27214 (CSRF) & CVE-2022-27215 (permission check)
+Release Helper Plugin 1.3.3 and earlier does not perform a permission check
+in a method implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified username and password.
+
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2159 / CVE-2022-27216
+dbCharts Plugin 0.5.2 and earlier stores JDBC connection passwords
+unencrypted in its global configuration file
+`hudson.plugins.dbcharts.DbChartPublisher.xml` on the Jenkins controller as
+part of its configuration.
+
+These passwords can be viewed by users with access to the Jenkins
+controller file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2238 / CVE-2022-27217
+Vmware vRealize CodeStream Plugin 1.2 and earlier stores passwords
+unencrypted in job `config.xml` files on the Jenkins controller as part of
+its configuration.
+
+These passwords can be viewed by users with Item/Extended Read permission
+or access to the Jenkins controller file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2273 / CVE-2022-27218
+incapptic connect uploader Plugin 1.15 and earlier stores personal tokens
+unencrypted in job `config.xml` files on the Jenkins controller as part of
+its configuration.
+
+These tokens can be viewed by users with Item/Extended Read permission or
+access to the Jenkins controller file system.
+
+As of publication of this advisory, there is no fix.
+
