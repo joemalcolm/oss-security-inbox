@@ -1,63 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/13/4
-Message-ID: <5103793.L7788WgU49@sinistra>
-Date: Thu, 13 Jan 2022 15:23:11 +0100
-From: Jonas Schäfer <jonas@...licki.name>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/15/1
+Message-ID: <472d9cd6-7a65-5871-043c-930b966c49cc@apache.org>
+Date: Tue, 15 Mar 2022 15:17:33 +0000
+From: Daan <dahn@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Prosody XMPP server advisory 2022-01-13 (Remote Unauthenticated Denial of Service) (CVE request)
+Subject: CVE-2022-26779: Apache Cloudstack insecure random number generation affects project email invitation 
 Content-Type: text/plain; charset=utf-8
 
-Hi, quick update:
+Severity: low
 
-On Donnerstag, 13. Januar 2022 15:01:11 CET Jonas Schäfer wrote:
-> If neither patching nor upgrading is an option, it is possible to unload
-> the websocket module using:
-> 
-> ```
-> prosodyctl shell module unload websocket
-> ```
+Description:
 
-This only works on recent Prosody trunk. On 0.11.x and earlier, you need to 
+Apache CloudStack prior to 4.16.1.0 used insecure random number generation for project invitation tokens. If a project invite is created based only on an email address, a random token is generated. An attacker with knowledge of the project ID and the fact that the invite is sent, could generate time deterministic tokens and brute force attempt to use them prior to the legitimate receiver accepting the invite. This feature is not enabled by default, the attacker is required to know or guess the project ID for the invite in addition to the invitation token, and the attacker would need to be an existing authorized user of CloudStack.
 
-- use module:unload("websocket") from the telnet console, OR
-- unload the module via an XMPP Ad-Hoc command OR
-- if neither of these online ways are available, remove the module from the 
-configuration and restart prosody.
+Credit:
 
-kind regards,
-Jonas
+This issue was reported by Jonathan Leitschuh
 
-> 
-> However, note well that third-party modules may also use the vulnerable
-> internal APIs to parse XML. Unloading websocket does not protect those
-> other modules; only the patch or the upgrade can do that.
-> 
-> **Fix**
-> 
-> This issue is fixed in Prosody 0.11.12 by restricting the available XML
-> features in the internal XML API.
-> 
-> **Attribution**
-> 
-> The issue was discovered during internal code review by Matthew Wild
-> during the development of another feature. The patch was developed by
-> Jonas Schäfer. A proof-of-concept exploit was developed by Jonas Schäfer
-> and Kim Alvefur and will be published soon to allow administrators to
-> check their instances.
-> 
-> **Timeline**
-> 
-> 2022-01-10: Discovery of the issue, development of an exploit as well as
-> an initial patch. Sharing of this information with Jitsi and Snikket
-> developers. Heads-up sent to the Snikket group chat.
-> 
-> 2022-01-11: Refinement of the patch, release preparation. Heads-up sent
-> to the Prosody group chat. Patch shared confidentially with Jitsi.
-> 
-> 2022-01-12: Continued release preparation, notification of distros@.
-> 
-> 2022-01-13: Coordinated Snikket and Prosody release with a
-> fix, publication of the advisory.
+References:
 
+https://github.com/JLLeitschuh/security-research/security/advisories/GHSA-vpcc-9rh2-8jfp
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
