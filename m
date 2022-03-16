@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1761" "Tuesday" "10" "November" "2020" "15:36:50" "-0800" "Dave Fisher" "wave@apache.org" "<A3E2C6BA-99BC-4A5F-B341-D5DB69CF04BF@apache.org>" "62" "[oss-security] [CVE-2020-13958] Apache OpenOffice - Unrestricted actions leads to arbitrary code execution in crafted documents" nil nil nil "11" "2020111023:36:50" "[oss-security] [CVE-2020-13958] Apache OpenOffice - Unrestricted actions leads to arbitrary code execution in crafted documents" (number mark "U       wave@apache. Nov 10   62/1761  " thread-indent "\"[oss-security] [CVE-2020-13958] Apache OpenOffice - Unrestricted actions leads to arbitrary code execution in crafted documents\"\n") "<A59B8270-B4D2-4ADC-B721-51B5E4741487@apache.org>" ("<A59B8270-B4D2-4ADC-B721-51B5E4741487@apache.org>") nil nil nil nil nil nil nil "[oss-security] [CVE-2020-13958] Apache OpenOffice - Unrestricted actions leads to arbitrary code execution in crafted documents" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["2080" "Wednesday" "16" "March" "2022" "08:00:33" "-0700" "Joe Sepi" "joesepi@gmail.com" nil "32" "[oss-security] Fwd: Node.js security updates for all active release lines, March 2022" nil nil nil "3" nil nil (number mark "U       joesepi@gmai Mar 16   32/2080  " thread-indent "\"[oss-security] Fwd: Node.js security updates for all active release lines, March 2022\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Fwd: Node.js security updates for all active release lines, March 2022" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 22412 invoked by uid 550); 11 Nov 2020 06:38:20 -0000
+Received: (qmail 11474 invoked by uid 550); 16 Mar 2022 15:04:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,79 +12,74 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5562 invoked from network); 10 Nov 2020 23:37:04 -0000
-From: Dave Fisher <wave@apache.org>
-Content-Type: multipart/alternative;
-	boundary="Apple-Mail=_50EFB2F7-503D-4E36-861D-348EA4F3EC32"
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
-Date: Tue, 10 Nov 2020 15:36:50 -0800
-References: <A59B8270-B4D2-4ADC-B721-51B5E4741487@apache.org>
-To: oss-security@lists.openwall.com
-In-Reply-To: <A59B8270-B4D2-4ADC-B721-51B5E4741487@apache.org>
-Message-Id: <A3E2C6BA-99BC-4A5F-B341-D5DB69CF04BF@apache.org>
-X-Mailer: Apple Mail (2.3608.120.23.2.4)
-Subject: [oss-security] [CVE-2020-13958] Apache OpenOffice - Unrestricted actions leads to
- arbitrary code execution in crafted documents
+Received: (qmail 9474 invoked from network); 16 Mar 2022 15:00:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:message-id:in-reply-to:references:subject:mime-version;
+        bh=hgVwbQQvk3jjlrYmhAKv908oKRqiSEanl9Pn3Fvxkjo=;
+        b=Px763JjkAcMwJ6WVo6iXNLsoiBVIE78VuwyOA7uLnQTGLijjpUjKsDYrDlGWoweJT0
+         +cG+Rqg0WiwUZBh1lMA3dZFp+esivhQO4uj2pqmcFpV0647ZvNAx+U/B6PLCf3nJAnwG
+         hxJp24R0p0WRW+FgfCEzNvkGCo/dSV4cCUjz7yAQ8qbet+053pgz/5Vuss7NjSmTPo2n
+         Cmp6hswtPtCxrAuf2Ip06nXaPj4aHTQrVvkL1w8w1WLyKKJPC1d47XT7G9tDzVeEH4hS
+         aqtag74+VvsD0oz7S3wFbVtgIt7Dz4ysZ4TG4ViiFMgGy5vyH+PC5xlzcnK2AB3W3hn+
+         o6kQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:message-id:in-reply-to:references
+         :subject:mime-version;
+        bh=hgVwbQQvk3jjlrYmhAKv908oKRqiSEanl9Pn3Fvxkjo=;
+        b=gR40/Syr4tWrk4zgKhIlvSI4o1NumBH9fstHtItAqaWD/Bg7tOYLgnjyUdfMTLCHwv
+         Z9s5HloMh0kMIar9UTJBjcVeoz56JH5CunxWucENNrEMHHq5wr5m7mMAWLTNuLdSlx+H
+         XCJQ4mjD/NSZZYeBhxpm4cT+rwakizfsWD+yMUG1ztyAgMHqgLe1NgDaIRsGe/vjjuWZ
+         3RuyshuCpa6ai0NpMkQFvuc75xcOOi6tTnnSzv5FvTA76x98A4YG4XaYBxJtF4N1sba+
+         fNpyPDHaXZoJtmk+UJHGnMZUNSE5Dj8acXzHIKjHLSMgFy6qgU2HTBRxu8OCm4ulcv0D
+         5B+A==
+X-Gm-Message-State: AOAM533MEyhPJIUW1RQl/oP+UOTfR1eQp0p0zvFsCE8pOSuH2t1pJIES
+	pGj5LHQUmOn2PS7v+J/Uyo7/pevqpg==
+X-Google-Smtp-Source: ABdhPJwVFMxNaafHMdfmOxhKjjLAe46jcVsqP6TPVP3ZoM3MpNE6xcUq5wnE/wKY0TXu/HHDGdeHl8nzlw==
+X-Received: by 2002:a05:6214:1c88:b0:42c:459a:53b2 with SMTP id ib8-20020a0562141c8800b0042c459a53b2mr169435qvb.57.1647442833697;
+        Wed, 16 Mar 2022 08:00:33 -0700 (PDT)
+Date: Wed, 16 Mar 2022 08:00:33 -0700 (PDT)
+From: Joe Sepi <joesepi@gmail.com>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Message-Id: <d4bbb5e7-53f5-438f-b57f-134b63f26c1en@googlegroups.com>
+In-Reply-To: <b2cd4323-2a7e-4e02-ab48-25c6f220b55dn@googlegroups.com>
+References: <b2cd4323-2a7e-4e02-ab48-25c6f220b55dn@googlegroups.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_5144_2049774474.1647442833551"
+Subject: [oss-security] Fwd: Node.js security updates for all active release lines, March
+ 2022
 
---Apple-Mail=_50EFB2F7-503D-4E36-861D-348EA4F3EC32
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+------=_Part_5144_2049774474.1647442833551
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_5145_606425617.1647442833551"
 
-CVE-2020-13958 Unrestricted actions leads to arbitrary code execution in cr=
-afted documents
-
-Fixed in Apache OpenOffice 4.1.8
-
-Description
-
-A vulnerability in Apache OpenOffice scripting events allows an attacker to=
- construct=20
-documents containing hyperlinks pointing to an executable on the target use=
-rs file system.
-These hyperlinks can be triggered unconditionally. In fixed versions no int=
-ernal protocol=20
-may be called from the document event handler and other hyperlinks require =
-a control-click.
-
-Severity: Low
-
-There are no known exploits of this vulnerability.
-A proof-of-concept demonstration exists.
-
-Vendor: The Apache Software Foundation
-
-Versions Affected
-
-Apache OpenOffice 4.0.0, 4.0.1, 4.1.0, 4.1.1, 4.1.2, 4.1.3, 4.1.4, 4.1.5, 4=
-.1.6, and 4.1.7
-OpenOffice.org versions may also be affected.
-
-Mitigation
-
-Install Apache OpenOffice 4.1.8 for the latest maintenance and cumulative s=
-ecurity fixes.
-Use the Apache OpenOffice download page (https://www.openoffice.org/downloa=
-d/).
-
-Acknowledgments
-
-The Apache OpenOffice Security Team would like to thank Imre Rad for discov=
-ering and
-reporting this attack vector.
-
-Further Information
-
-For additional information and assistance, consult the Apache OpenOffice Co=
-mmunity Forums
-(https://forum.openoffice.org) or make requests to the users@openoffice.apa=
-che.org
-(mailto:users@openoffice.apache.org) public mailing list.
-
-The latest information on Apache OpenOffice security bulletins can be found=
- at the
-Bulletin Archive page (https://www.openoffice.org/security/bulletin.html).
->=20
+------=_Part_5145_606425617.1647442833551
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
 
---Apple-Mail=_50EFB2F7-503D-4E36-861D-348EA4F3EC32--
+
+---------- Forwarded message ---------
+From: Joe Sepi <joesepi@gmail.com>
+Date: Wednesday, March 16, 2022 at 10:57:17 AM UTC-4
+Subject: Node.js security updates for all active release lines, March 2022
+To: nodejs-sec <nodejs-sec@googlegroups.com>
+
+
+The Node.js project will release new versions of all supported release 
+lines on or shortly after Thursday, 17th of March, 2022 For more 
+information see:
+https://nodejs.org/en/blog/vulnerability/mar-2022-security-releases/
+
+
+------=_Part_5145_606425617.1647442833551
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+<br><br><div class="gmail_quote"><div dir="auto" class="gmail_attr">---------- Forwarded message ---------<br>From: <span dir="auto">Joe Sepi &lt;joesepi@gmail.com&gt;</span><br>Date: Wednesday, March 16, 2022 at 10:57:17 AM UTC-4<br>Subject: Node.js security updates for all active release lines, March 2022<br>To: <span dir="auto">nodejs-sec &lt;nodejs-sec@googlegroups.com&gt;</span><br></div><br><br><html-blob><div><div><div><div><span style="white-space:pre">The Node.js project will release new versions of all supported release lines on or shortly after Thursday, 17th of March, 2022
+For more information see:</span></div><div><a href="https://nodejs.org/en/blog/vulnerability/mar-2022-security-releases/" target="_blank" rel="nofollow" data-saferedirecturl="https://www.google.com/url?hl=en&amp;q=https://nodejs.org/en/blog/vulnerability/mar-2022-security-releases/&amp;source=gmail&amp;ust=1647529208143000&amp;usg=AFQjCNFbFu6TXKYjXUcAKWH7DQR2CJFr2w">https://nodejs.org/en/blog/vulnerability/mar-2022-security-releases/</a><br></div></div></div><div><div></div></div></div><div><div><div><div><br></div></div></div></div></html-blob></div>
+------=_Part_5145_606425617.1647442833551--
+
+------=_Part_5144_2049774474.1647442833551--
