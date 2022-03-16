@@ -1,28 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/30/2
-Message-ID: <20b7e5b0-8c9d-fdf0-8346-6ccd5b721b29@apache.org>
-Date: Fri, 30 Dec 2022 07:15:23 +0000
-From: Xiaoxiang Yu <xxyu@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/16/2
+Message-ID: <c4f4fbb4-04fb-a4e5-0aba-d18533ddaaa9@isc.org>
+Date: Wed, 16 Mar 2022 14:51:01 -0500
+From: "Everett B. Fulton" <ebf@....org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-44621: Apache Kylin: Command injection by Diagnosis Controller 
+Subject: Four vulnerabilities disclosed in BIND (CVE-2021-25220, CVE-2022-0396, CVE-2022-0635 and CVE-2022-0667)
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+On March 16 2022, we (Internet Systems Consortium) disclosed four
+vulnerabilities affecting our BIND 9 software:
 
-Description:
+   CVE-2021-25220: DNS forwarders - cache poisoning vulnerability
+   https://kb.isc.org/docs/CVE-2021-25220
 
-Diagnosis Controller miss parameter validation, so user may attacked by command injection via HTTP Request.
+   CVE-2022-0396: DoS from specifically crafted TCP packets
+   https://kb.isc.org/docs/cve-2022-0396
 
-Work Arounds:
+   CVE-2022-0635: DNAME insist with synth-from-dnssec enabled
+   https://kb.isc.org/docs/cve-2022-0635
 
-Users of Kylin 2.x & Kylin 3.x & 4.x should upgrade to 4.0.3 or apply patch  https://github.com/apache/kylin/pull/2011 https://github.com/apache/kylin/pull/2011
+   CVE-2022-0667: Assertion failure on delayed DS lookup
+   https://kb.isc.org/docs/cve-2022-0667
 
-Credit:
+New versions of BIND are available from https://www.isc.org/downloads
 
-Messy God <godimessy@...il.com> (finder)
+Operators and package maintainers who prefer to apply patches
+selectively can find individual vulnerability-specific patches in the
+"patches" subdirectory of the release directories for our three stable
+release branches (9.11. 9.16 and 9.18)
 
-References:
+   https://downloads.isc.org/isc/bind9/9.11.37/patches/
+   https://downloads.isc.org/isc/bind9/9.16.27/patches/
+   https://downloads.isc.org/isc/bind9/9.18.1/patches/
 
-https://kylin.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2022-44621
-
+With the public announcement of these vulnerabilities, the embargo
+period is ended and any updated software packages that have been
+prepared may be released.
+-- 
+Everett B. Fulton
+ISC Support
