@@ -1,39 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/28/2
-Message-ID: <CAADJU110xZQCFK9xOC+s1OmAYo=a36uJa0+Mb6=h5cQO08yTzw@mail.gmail.com>
-Date: Mon, 28 Mar 2022 11:16:43 +0800
-From: Zexuan Luo <spacewander@...che.org>
-To: 人间的四月天 <1157599735@...com>,  announce@...che.org, dev@...six.apache.org,  Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
-Subject: CVE-2022-25757: Apache APISIX: the body_schema check in request-validation plugin can be bypassed
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/16/1
+Message-Id: <d4bbb5e7-53f5-438f-b57f-134b63f26c1en@googlegroups.com>
+Date: Wed, 16 Mar 2022 08:00:33 -0700 (PDT)
+From: Joe Sepi <joesepi@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Fwd: Node.js security updates for all active release lines, March 2022
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
 
-Description:
 
-When decoding JSON with duplicate keys, lua-cjson will choose the last
-occurred value as the result. By passing a JSON with a duplicate key,
-the attacker can bypass the body_schema validation in the
-request-validation plugin. For example,
-`{"string_payload":"bad","string_payload":"good"}` can be used to hide
-the "bad" input.
+---------- Forwarded message ---------
+From: Joe Sepi <joesepi@...il.com>
+Date: Wednesday, March 16, 2022 at 10:57:17 AM UTC-4
+Subject: Node.js security updates for all active release lines, March 2022
+To: nodejs-sec <nodejs-sec@...glegroups.com>
 
-Systems satisfy three conditions below are affected by this attack:
-1. use body_schema validation in the request-validation plugin
-2. upstream application uses a special JSON library that chooses the
-first occurred value, like jsoniter or gojay
-3. upstream application does not validate the input anymore.
 
-The fix in APISIX is to re-encode the validated JSON input back into
-the request body at the side of APISIX.
+The Node.js project will release new versions of all supported release 
+lines on or shortly after Thursday, 17th of March, 2022 For more 
+information see:
+https://nodejs.org/en/blog/vulnerability/mar-2022-security-releases/
 
-Mitigation:
 
-1. upgrade APISIX to 2.13.0 if you need to use the body_schema
-validation in the request-validation plugin
-2. add additional validation in the application code, embrace
-defensive programming
-
-Credit:
-
-Thanks for Guangli Dong from https://www.huoxian.cn/
+Content of type "text/html" skipped
