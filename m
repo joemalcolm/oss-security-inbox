@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1600" "Thursday" "8" "February" "2018" "18:02:22" "+0100" "Heiko Schlittermann" "hs@schlittermann.de" "<20180208170222.bq63nttdhpj72zxi@jumper.schlittermann.de>" "44" "[oss-security] Re: CVE-2018-6789 Exim 4.90 and earlier: buffer overflow" "^Date:" nil nil "2" "2018020817:02:22" "[oss-security] Re: CVE-2018-6789 Exim 4.90 and earlier: buffer overflow" (number mark "        hs@schlitter Feb  8   44/1600  " thread-indent "\"[oss-security] Re: CVE-2018-6789 Exim 4.90 and earlier: buffer overflow\"\n") "<20180208165700.i7j2n7avv6bebqo2@jumper.schlittermann.de>" ("<20180207103943.wwijjdmnlzpp46lm@jumper.schlittermann.de>" "<20180208165700.i7j2n7avv6bebqo2@jumper.schlittermann.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["1123" "Thursday" "17" "March" "2022" "23:03:45" "+1100" "Filip Palian" "s3810@pjwstk.edu.pl" nil "30" "Re: [oss-security] Linux Kernel 5.15-rc-ksmbd-part2 is affected by: Buffer Overflow. The impact is: use-after-free (local)." nil nil nil "3" nil nil (number mark "U       s3810@pjwstk Mar 17   30/1123  " thread-indent "\"Re: [oss-security] Linux Kernel 5.15-rc-ksmbd-part2 is affected by: Buffer Overflow. The impact is: use-after-free (local).\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Linux Kernel 5.15-rc-ksmbd-part2 is affected by: Buffer Overflow. The impact is: use-after-free (local)." nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 21948 invoked by uid 550); 8 Feb 2018 17:03:48 -0000
+Received: (qmail 1530 invoked by uid 550); 17 Mar 2022 12:12:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,79 +11,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20275 invoked from network); 8 Feb 2018 17:02:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=schlittermann.de; s=dd201504; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:To:From:Date:Cc:Content-Description:Content-ID:
-	Content-Transfer-Encoding:Resent-Cc:Resent-To;
-	bh=Jttay8bG+XlJbB9ABOIhXH/EZSvJ6NsACRdQ6r0Al9k=; b=AqJpYYcvUOZAOxORASGHkaVJSV
-	CYiOTIWZZpb3OUKE8GpPQ/r9y0VTxc8S69cZtDNd6U91qYYc+0IijXluB5NxC1e3v1rJv18EE57pL
-	4oMJbJzD3W+XSSzQUAvaaX/6hap6zIuqcUg1oVwwMJeCHHWdnFzHRUJJElpgR8MM452k=;
-Message-ID: <20180208170222.bq63nttdhpj72zxi@jumper.schlittermann.de>
-References: <20180207103943.wwijjdmnlzpp46lm@jumper.schlittermann.de>
- <20180208165700.i7j2n7avv6bebqo2@jumper.schlittermann.de>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="xdglfohrdxo3bzjf"
-Content-Disposition: inline
-In-Reply-To: <20180208165700.i7j2n7avv6bebqo2@jumper.schlittermann.de>
-Organization: schlittermann -- internet & unix support
-X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
- QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
- y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
- X?H&`
-X-Telegram: @HeikoSchlittermann
-X-Phone: +49.172.7909055
-X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
-X-GPG-Key-ID: F69376CE
-User-Agent: NeoMutt/20170113 (1.7.2)
-Date: Thu, 8 Feb 2018 18:02:22 +0100
-From: Heiko Schlittermann <hs@schlittermann.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE-2018-6789 Exim 4.90 and earlier: buffer overflow
+Received: (qmail 30417 invoked from network); 17 Mar 2022 12:04:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=pjwstk.edu.pl; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=ASZSYWwTpdw2xOGrMZbKK8yLOu/ZTE8OjKLymPeQ7dg=;
+        b=lKJiFMI4x/0fIstL4evmAlWiSXrKxEBcunLD8qciR6iDrdk5Fi071vBXdLG89aOOZC
+         dAJssWbvmDMXmXdfcAhacPbHJ9lIwi3/cUqYbuCjPEeogtirG+JzOw2kYYO1GbLExyw4
+         x0h2ajuDfUk5SAql1/NkH/jEpeYqaZNsCWTN0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=ASZSYWwTpdw2xOGrMZbKK8yLOu/ZTE8OjKLymPeQ7dg=;
+        b=Jbc/uwLJnXewBjmAkdvE4xaET7oBhfG9B2x1cfpGnu9SDS/xQBrhLea4bl21iY7ICT
+         eOtphFaALvg85g6TB9rTC/WyuTBH/i/euwYWiqHRT200qK1gnDFMOUzxobPJugykP+H3
+         AYyRNSHCuev7X5ecSl/FVS6gvomM3Rsf/mkeN+dDrVg55zL6PnW9qkfZfCb1pMaB2mjG
+         ersKTfxJXNtpKQJZCaSUqV4KdcImFTw5wBSipHjFs7cgrXeJQ11WW4Ep1mluoJXTXC14
+         my4Og5Z6O0yj5ugmOibfswebpERC9l5jNb2LsnaUgSULBj5++FV9cWJCGQVslxcbUfhU
+         pzzg==
+X-Gm-Message-State: AOAM531yClPgqJVu2xA2Xvd2KgIqm70cRFOT9p+BMVjnEQc/3DJzp7C+
+	dSBJYHL8Sju8K4YKtkxkrfMcxGdyJ26IFLmlkt8NBeSpplGL8g==
+X-Google-Smtp-Source: ABdhPJzavKyyb7vePJO248tPDdFhpc/Nu+QLAJjFZ8qsnMCY1pwJV4/KvQo9LvnIGbNnquiG65Tt59g66OoeffilkCQ=
+X-Received: by 2002:a81:1251:0:b0:2dd:290b:d4c1 with SMTP id
+ 78-20020a811251000000b002dd290bd4c1mr5179151yws.345.1647518636401; Thu, 17
+ Mar 2022 05:03:56 -0700 (PDT)
+MIME-Version: 1.0
+References: <tencent_51295AD6751A466E1F4D819D@qq.com>
+In-Reply-To: <tencent_51295AD6751A466E1F4D819D@qq.com>
+From: Filip Palian <s3810@pjwstk.edu.pl>
+Date: Thu, 17 Mar 2022 23:03:45 +1100
+Message-ID: <CAN10O-ajJuTXLKWWxtg02Nf5yVZ5jLs7B6PY+2F6Hk3PLsCNOg@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="0000000000001579a505da68d3c1"
+Subject: Re: [oss-security] Linux Kernel 5.15-rc-ksmbd-part2 is affected by:
+ Buffer Overflow. The impact is: use-after-free (local).
 
---xdglfohrdxo3bzjf
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+--0000000000001579a505da68d3c1
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Heiko Schlittermann <hs@schlittermann.de> (Do 08 Feb 2018 17:57:00 CET):
-=E2=80=A6
-> > * t0:     Distros will get access to our "security" non-public git repo
-> >           (based on the SSH keys known to us)
-> > * t0 +7d: Patch will be published on the official public git repo
-> >=20
-> > t0 will be around 2018-02-08.
->=20
-> t0 is now. Distro maintainers please use the following repo URLs:
+https://oss-security.openwall.org/wiki/mailing-lists/oss-security
+https://oss-security.openwall.org/wiki/
 
-We'll push the patch to our public Git repo on
+Thanks for sharing. Wish you happy day as well :]
 
-    Thu 15. Feb 16:59:37 UTC 2018
 
-    Best regards from Dresden/Germany
-    Viele Gr=C3=BC=C3=9Fe aus Dresden
-    Heiko Schlittermann
---=20
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+czw., 17 mar 2022 o 22:45 =E7=8E=8B=E6=98=8E=E4=B9=89 <6201613047@stu.jiang=
+nan.edu.cn> napisa=C5=82(a):
 
---xdglfohrdxo3bzjf
-Content-Type: application/pgp-signature; name="signature.asc"
+> ** RESERVED ** Linux Kernel 5.15-rc-ksmbd-part2 is affected by: Buffer
+> Overflow. The impact is: use-after-free (local). The component is:
+> kernel/locking/rwsem.c. The attack vector is: Run OS with Linux Kernel
+> 5.15-rc-ksmbd-part2. Then execute the POC file.&nbsp; A vulnerability was
+> found in Linux Kernel 5.15-rc-ksmbd-part2 kernel/locking/rwsem.c causing
+> use-after-free.
+>
+>
+> It is fixed by&nbsp;
+> https://git.kernel.org/pub/scm/linux/kernel/git/netfilter/nf.git/commit/?=
+id=3D9bf3d2033129
+> Please check the following website for details&nbsp;
+> https://bugzilla.kernel.org/show_bug.cgi?id=3D214655
+> And I want to request a CVE ID. Looking forward to your reply. Wish you a
+> happy day.
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAlp8gp0ACgkQr0zGdqa2
-wUKk+ggAmMCD7Qth2bo/Bx64IIwK/CY/tZma1Sd7SNSo6K+RhJPswEkNI67pqNL3
-RUttXrPtnLzLBdtZ0R+1QMI5vWvICDr+pIW/TlNz0jDBakwlZuiqh9/dJ+/2QQfl
-ZOJSqKSEI7ezCU8B+TNw089cqgJGIbmpm0jPPlr31WcOla/m/mC+OXvUk8+nJMWL
-Ibg2FBk/1TI5Nmj2/OyPOReyOQ3HvANLVbi67AhQRNF53SawWX1dQ9neLkIQGL2U
-94cCLTKXSr4/1zwnRAIFxjpxDey2n03PBsH7Qs7J6/iuEmLkKCrh4o4MPrS3xtHx
-qCPcnHhjGShbqU1ZZIfYMKPSTx4NzQ==
-=iruJ
------END PGP SIGNATURE-----
-
---xdglfohrdxo3bzjf--
+--0000000000001579a505da68d3c1--
