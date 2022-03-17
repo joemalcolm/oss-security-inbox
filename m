@@ -1,73 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/04/4
-Message-ID: <1dc711a9-42e7-91c6-e015-ec75cddac21f@igalia.com>
-Date: Fri, 4 Nov 2022 14:58:14 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0010
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/17/2
+Message-ID: <CAN10O-ajJuTXLKWWxtg02Nf5yVZ5jLs7B6PY+2F6Hk3PLsCNOg@mail.gmail.com>
+Date: Thu, 17 Mar 2022 23:03:45 +1100
+From: Filip Palian <s3810@...stk.edu.pl>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux Kernel 5.15-rc-ksmbd-part2 is affected by: Buffer Overflow. The impact is: use-after-free (local).
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2022-0010
-------------------------------------------------------------------------
+https://oss-security.openwall.org/wiki/mailing-lists/oss-security
+https://oss-security.openwall.org/wiki/
 
-Date reported           : November 04, 2022
-Advisory ID             : WSA-2022-0010
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2022-0010.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2022-0010.html
-CVE identifiers         : CVE-2022-32888, CVE-2022-32923,
-                          CVE-2022-42799, CVE-2022-42823,
-                          CVE-2022-42824.
-
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
-
-CVE-2022-32888
-    Versions affected: WebKitGTK and WPE WebKit before 2.38.0.
-    Credit to P1umer (@p1umer).
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: An out-of-bounds write issue
-    was addressed with improved bounds checking.
-
-CVE-2022-32923
-    Versions affected: WebKitGTK and WPE WebKit before 2.38.0.
-    Credit to Wonyoung Jung (@nonetype_pwn) of KAIST Hacking Lab.
-    Impact: Processing maliciously crafted web content may disclose
-    internal states of the app. Description: A correctness issue in the
-    JIT was addressed with improved checks.
-
-CVE-2022-42799
-    Versions affected: WebKitGTK and WPE WebKit before 2.38.2.
-    Credit to Jihwan Kim (@gPayl0ad), Dohyun Lee. (@l33d0hyun).
-    Impact: Visiting a malicious website may lead to user interface
-    spoofing. Description: The issue was addressed with improved UI
-    handling.
-
-CVE-2022-42823
-    Versions affected: WebKitGTK and WPE WebKit before 2.38.2.
-    Credit to Dohyun Lee (@l33d0hyun) of SSD Labs.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A type confusion issue was
-    addressed with improved memory handling.
-
-CVE-2022-42824
-    Versions affected: WebKitGTK before 2.38.2.
-    Credit to Abdulrahman Alqabandi of Microsoft Browser Vulnerability
-    Research, Ryan Shin of IAAI SecLab at Korea University, Dohyun Lee
-    (@l33d0hyun) of DNSLab at Korea University.
-    Impact: Processing maliciously crafted web content may disclose
-    sensitive user information. Description: A logic issue was addressed
-    with improved state management.
+Thanks for sharing. Wish you happy day as well :]
 
 
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
+czw., 17 mar 2022 o 22:45 王明义 <6201613047@....jiangnan.edu.cn> napisał(a):
 
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
+> ** RESERVED ** Linux Kernel 5.15-rc-ksmbd-part2 is affected by: Buffer
+> Overflow. The impact is: use-after-free (local). The component is:
+> kernel/locking/rwsem.c. The attack vector is: Run OS with Linux Kernel
+> 5.15-rc-ksmbd-part2. Then execute the POC file.&nbsp; A vulnerability was
+> found in Linux Kernel 5.15-rc-ksmbd-part2 kernel/locking/rwsem.c causing
+> use-after-free.
+>
+>
+> It is fixed by&nbsp;
+> https://git.kernel.org/pub/scm/linux/kernel/git/netfilter/nf.git/commit/?id=9bf3d2033129
+> Please check the following website for details&nbsp;
+> https://bugzilla.kernel.org/show_bug.cgi?id=214655
+> And I want to request a CVE ID. Looking forward to your reply. Wish you a
+> happy day.
 
-The WebKitGTK and WPE WebKit team,
-November 04, 2022
