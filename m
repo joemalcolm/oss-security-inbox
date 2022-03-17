@@ -1,60 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/30/1
-Message-ID: <ffd2934f-4e65-88ca-e3db-5204c2eb1127@greenbone.net>
-Date: Sat, 30 Apr 2022 13:24:36 +0200
-From: Christian Fischer <christian.fischer@...enbone.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-21449 and version reporting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/17/1
+Message-ID: <tencent_51295AD6751A466E1F4D819D@qq.com>
+Date: Thu, 17 Mar 2022 10:59:37 +0800
+From: "王明义" <6201613047@....jiangnan.edu.cn>
+To: "oss-security" <oss-security@...ts.openwall.com>
+Subject: Linux Kernel 5.15-rc-ksmbd-part2 is affected by: Buffer Overflow. The impact is: use-after-free (local). 
 Content-Type: text/plain; charset=utf-8
 
- > It’s not that they didn’t/can’t verify, it’s already verified, 
-they’re claiming those versions no longer being officially supported 
-means they can seemingly omit them from CVE reporting.
- >
- > Which is dangerous, misleading, and nonsensical.
+** RESERVED ** Linux Kernel 5.15-rc-ksmbd-part2 is affected by: Buffer Overflow. The impact is: use-after-free (local). The component is: kernel/locking/rwsem.c. The attack vector is: Run OS with Linux Kernel 5.15-rc-ksmbd-part2. Then execute the POC file.&nbsp; A vulnerability was found in Linux Kernel 5.15-rc-ksmbd-part2 kernel/locking/rwsem.c causing use-after-free.
 
-While i fully agree with this be aware that CVE entries could generally 
-contain incomplete information:
 
-After requesting an update of a CVE entry via the MITRE CVE forum in the 
-past to add additional affected products for a different vendor (which 
-wasn't even the assigning CNA like it is the case for Oracle here) my 
-request was rejected by MITRE with the following rationale given:
-
- > A CVE description does not necessarily contain all the affected 
-products or versions and is not part of CVE ID requirements. The 
-products are documented in the CVE references.
-
-This is also matching my experiences with various other products / 
-vendors and related CVE entries for these.
-
-On 29.04.22 01:34, Seaman, Chad wrote:
-> Exactly this.
-> 
-> It’s not that they didn’t/can’t verify, it’s already verified, they’re claiming those versions no longer being officially supported means they can seemingly omit them from CVE reporting.
-> 
-> Which is dangerous, misleading, and nonsensical.
-> 
-> Regards,
-> Chad
-> 
-> On Apr 28, 2022, at 5:36 PM, Sven Schwedas <sven.schwedas@....at> wrote:
-> 
-> ﻿
-> On 28.04.22 22:10, Seth Arnold wrote:
-> On Thu, Apr 28, 2022 at 02:12:04PM +0000, Seaman, Chad wrote:
-> In what universe exactly are versions omitted from vulnerability
-> reporting because a vendor “no longer supports that version”… this
-> non-supported version is still vulnerable?
-> A large part of software maintenance is managing technical debt --
-> and being able to walk away from no-longer-supported products is an
-> important part of that.
-> Would you expect Microsoft to evaluate Windows 3.11, Windows 95,
-> Windows 98, Windows ME, Windows NT 3.51, Windows NT 4.0. Windows XP,
-> etc for every single vulnerability discovered in newest products?
-> 
-> You and Jeremy arguing in bad faith here, OP didn't ask about anything like that.
-> 
-> The problem at hand is, someone *already did all that work*, and Oracle is *actively intervening* to have it dropped from CVE reports.
-> 
-> So the question is: Why is vulnerability information that already exists being censored?
+It is fixed by&nbsp;https://git.kernel.org/pub/scm/linux/kernel/git/netfilter/nf.git/commit/?id=9bf3d2033129
+Please check the following website for details&nbsp;https://bugzilla.kernel.org/show_bug.cgi?id=214655
+And I want to request a CVE ID. Looking forward to your reply. Wish you a happy day.
