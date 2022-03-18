@@ -1,23 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/19/2
-Message-ID: <CALJOYLFzKmL_qChvRV8iAcQBVuixtXr-_=50mPJynpUE5qSsHA@mail.gmail.com>
-Date: Wed, 19 Oct 2022 07:02:33 +0100
-From: Dan Haywood <danhaywood@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-42466: Apache Isis: XSS vulnerability, eg for String properties.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/18/1
+Message-Id: <e9bb0040-ecc0-4213-924b-e87aff0afb67n@googlegroups.com>
+Date: Thu, 17 Mar 2022 19:03:11 -0700 (PDT)
+From: Joe Sepi <joesepi@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Fwd: Node.js security updates for all active release lines, March 2022
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
 
-Description:
 
-Prior to 2.0.0-M9, it was possible for an end-user to set the value of
-an editable string property of a domain object to a value that would
-be rendered unchanged when the value was saved.  In particular, the
-end-user could enter javascript or similar and this would be executed.
+---------- Forwarded message ---------
+From: Joe Sepi <joesepi@...il.com>
+Date: Thursday, March 17, 2022 at 10:02:36 PM UTC-4
+Subject: Re: Node.js security updates for all active release lines, March 
+2022
+To: nodejs-sec <nodejs-sec@...glegroups.com>
 
-As of this release, the inputted strings are properly escaped when rendered.
 
-Credit:
+The Node.js project has now released new versions of all supported release 
+lines.
 
-Apache Isis would like to thank Qing Xu for reporting this issue
+For more information see: 
+https://nodejs.org/en/blog/vulnerability/mar-2022-security-releases/
+
+On Wednesday, March 16, 2022 at 10:57:17 AM UTC-4 Joe Sepi wrote:
+
+> The Node.js project will release new versions of all supported release 
+> lines on or shortly after Thursday, 17th of March, 2022 For more 
+> information see:
+> https://nodejs.org/en/blog/vulnerability/mar-2022-security-releases/
+>
+>
+Content of type "text/html" skipped
