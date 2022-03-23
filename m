@@ -1,4 +1,9 @@
-Received: (qmail 12046 invoked by uid 550); 25 May 2022 13:52:19 -0000
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["416" "Wednesday" "23" "March" "2022" "22:02:15" "+0100" "Gabriel Corona" "gabriel.corona@enst-bretagne.fr" nil "12" "[oss-security] Lack of TLS certification chain validation in ZAP Proxy" nil nil nil "3" nil nil (number mark "U       gabriel.coro Mar 23   12/416   " thread-indent "\"[oss-security] Lack of TLS certification chain validation in ZAP Proxy\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Lack of TLS certification chain validation in ZAP Proxy" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	nil)
+X-Mozilla-Status: 0000
+X-Mozilla-Status2: 00000000
+Received: (qmail 24321 invoked by uid 550); 23 Mar 2022 21:46:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,55 +12,28 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5687 invoked from network); 25 May 2022 13:37:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1653485847;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=islws4Wn4/uG+8fGP6AwxvOTC9pTCd5poUX8hQVDtZA=;
-	b=Sl1WxL4NJsyKqO8xgoy00iOw+0L0+YftF3Ie5xqnhNTRjUpjnwB8yxTkuQ133/30KYireH
-	qXINMgZ4wydi3rWWIA53XlFbr0RCDfwd6NihOjw15IUrh7YvnM8ApylCKbXvcv57P8011s
-	ZRIqzowOx9tjw+JAxQWw8Ihd2lK3T38=
-X-MC-Unique: k4Dfvu5WMOigP3yObqM0jA-1
-From: Kamil Dudka <kdudka@redhat.com>
-To: Marc Deslauriers <marc.deslauriers@canonical.com>
-Cc: oss-security@lists.openwall.com, Guilherme de Almeida Suckevicz <gsuckevi@redhat.com>
-Date: Wed, 25 May 2022 15:37:24 +0200
-Message-ID: <5618910.DvuYhMxLoT@nbkamil>
-In-Reply-To: <c41c3628-6132-9893-55ce-d86ff251e4fd@canonical.com>
-References: <e410d6e9-53cb-e83e-0dbc-412467ba21db@redhat.com> <2183384.iZASKD2KPV@nbkamil> <c41c3628-6132-9893-55ce-d86ff251e4fd@canonical.com>
+Received: (qmail 28418 invoked from network); 23 Mar 2022 21:02:27 -0000
+Message-ID: <3caaf2cd-e927-0f5b-8783-4e8f875af95f@enst-bretagne.fr>
+Date: Wed, 23 Mar 2022 22:02:15 +0100
 MIME-Version: 1.0
-X-Scanned-By: MIMEDefang 2.84 on 10.11.54.2
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=kdudka@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-Subject: [oss-security] Re: CVE-2022-1348 logrotate: potential DoS from unprivileged users via the state file
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Content-Language: en-US
+To: oss-security@lists.openwall.com
+From: Gabriel Corona <gabriel.corona@enst-bretagne.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] Lack of TLS certification chain validation in ZAP Proxy
 
-On Wednesday, May 25, 2022 3:19:31 PM CEST Marc Deslauriers wrote:
-> On 2022-05-18 09:54, Kamil Dudka wrote:
-> > The current version of the patch to fix CVE-2022-1348 in logrotate is
-> > attached.  We are going to apply the patch upstream on May 25th, when
-> > the embargo is lifted.
-> 
-> FWIW, I don't think the patch actually works when logrotate is built with
-> ACL support...
-> 
-> Marc.
+ZAP proxy does not verify the certificate chain of the HTTPS servers it 
+connects to. For example, it connects without warning to servers 
+presenting a self-signed certificate, an expired certificate, etc.
 
-You are right.  Although the patch mitigates the security issue, it is not 
-perfect.  I had already opened an upstream pull request to improve it:
+This opens up a browser configured to use ZAP as an intercepting proxy to:
 
-    https://github.com/logrotate/logrotate/pull/446
+1. man-in-the-middle (MITM) attacks;
+2. DNS rebinding attacks (to HTTPS servers configured as default virtual 
+server).
 
-I might create a bug fix release soon with the patch included.
-
-Sorry for the troubles!
-
-Kamil
-
-
+-- 
+Gabriel
