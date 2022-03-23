@@ -1,69 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/25/1
-Message-ID: <174ef5a4-523e-ab75-5f4a-d1ef38e2410c@gmail.com>
-Date: Mon, 25 Jul 2022 12:15:40 +0700
-From: Pedro Ribeiro <pedrib@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/23/1
+Message-ID: <3caaf2cd-e927-0f5b-8783-4e8f875af95f@enst-bretagne.fr>
+Date: Wed, 23 Mar 2022 22:02:15 +0100
+From: Gabriel Corona <gabriel.corona@...t-bretagne.fr>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: heap buffer overflow in gdk-pixbuf
+Subject: Lack of TLS certification chain validation in ZAP Proxy
 Content-Type: text/plain; charset=utf-8
 
+ZAP proxy does not verify the certificate chain of the HTTPS servers it 
+connects to. For example, it connects without warning to servers 
+presenting a self-signed certificate, an expired certificate, etc.
 
+This opens up a browser configured to use ZAP as an intercepting proxy to:
 
-On 24/07/2022 10:35, Pedro Ribeiro wrote:
-> 
->> On 24 Jul 2022, at 01:08, John Helmert III <ajak@...too.org> wrote:
->>
->> ﻿On Sat, Jul 23, 2022 at 07:35:42PM +0700, Pedro Ribeiro wrote:
->>> Hi,
->>>
->>> A year ago I found and submitted a vulnerability to the gdk-pixbuf tracker:
->>> https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/issues/190
->>>
->>> It's a heap buffer overflow using a crafted GIF, which is likely
->>> exploitable in 32 bit systems. Full details are in the link above in the
->>> bug tracker.
->>>
->>> This was patched and the fix was merged 8 months ago as seen here:
->>> https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/merge_requests/121
->>>
->>> The issue is now public, but since no CVE was attributed, it probably is
->>> not being considered as a problem for downstream users of the package.
->>>
->>> As of today, the latest Debian stable package is affected by this
->>> vulnerability. Using a GNOME file system browser and browsing to that
->>> folder will cause a crash, as will opening it up in a GNOME image viewer
->>> and even attempting to load it in Chromium (should have submitted to
->>> them for a bounty :D).
->>>
->>> Hence I'd like to get a CVE to raise awareness for this issue, so that
->>> downstream users of the package can get patched.
->>>
->>> Thanks and regards,
->>> Pedro Ribeiro
->>
->> Hi, according to the oss-security Openwall wiki page [1], CVEs need to
->> be requested via MITRE's web form [2].
->>
->> [1] https://oss-security.openwall.org/wiki/mailing-lists/oss-security
->> [2] https://cveform.mitre.org/
-> 
-> Hi John,
-> 
-> Thanks for the info, will request via the form and post here again once I have a CVE number. In any case I hope this post is useful to raise awareness of the issue to distro maintainers.
-> 
-> Regards
-> Pedro
-> 
-> 
+1. man-in-the-middle (MITM) attacks;
+2. DNS rebinding attacks (to HTTPS servers configured as default virtual 
+server).
 
-Actually I was wrong, this doesn't crash Chromium! But it still crashes 
-with a heap buffer overflow in GNOME file explorer and GNOME image 
-viewers (anything using gdk-pixbuf really) as said in the previous email 
-though.
-
-Here's the CVE number that was attributed by MITRE: CVE-2021-46829.
-I've put a copy of the PoC and bug report at 
-https://github.com/pedrib/PoC/blob/master/fuzzing/CVE-2021-46829/CVE-2021-46829.md
-
-Regards,
-Pedro
+-- 
+Gabriel
