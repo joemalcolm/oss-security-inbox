@@ -1,38 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/02/5
-Message-Id: <CO1HSHA08E4Q.HY2J0SF11I0@sumire>
-Date: Wed, 02 Nov 2022 04:33:19 +0100
-From: "alice" <alice@...ya.dev>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/24/1
+Message-ID: <20220324034949.GA25415@thinkstation.cmpxchg8b.net>
+Date: Wed, 23 Mar 2022 20:49:49 -0700
+From: Tavis Ormandy <taviso@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: zlib memory corruption on deflate (i.e. compress)
 Content-Type: text/plain; charset=utf-8
 
-On Wed Nov 2, 2022 at 3:53 AM CET, Alex Gaynor wrote:
-> Alpine Linux switched to LibreSSL for a while, but then switched back
-> to OpenSSL. (LibreSSL is still packaged separately)
-(and nothing is meant to use libressl- things wanting the libtls
-interface from libressl link to libretls[0] instead, in general. (just
-for context, in alpine))
+Greetings list, I was recently trying to track down a reproducible crash
+in a compressor. Believe it or not, it really was a bug in
+zlib-1.2.11 when compressing (not decompressing!) certain inputs.
 
-[0]: https://git.causal.agency/libretls/about/
+I reported it upstream, but it turns out the issue has been public since
+2018, but the patch never made it into a release. As far as I know,
+nobody ever assigned it a CVE.
 
->
-> Alex
->
-> On Tue, Nov 1, 2022 at 10:53 PM Demi Marie Obenour
-> <demi@...isiblethingslab.com> wrote:
-> >
-> > On Tue, Nov 01, 2022 at 09:52:59PM +0100, Erin Shepherd wrote:
-> > > LibreTLS does not track the OpenSSL API, so increasingly software does not build with it (it's not possible to support both LibreSSL and a supported version of OpenSSL without #ifdef hell)
-> >
-> > Has software not from OpenBSD considered switching to LibreSSL outright?
-> > --
-> > Sincerely,
-> > Demi Marie Obenour (she/her/hers)
-> > Invisible Things Lab
->
->
->
-> -- 
-> All that is necessary for evil to succeed is for good people to do nothing.
+https://github.com/madler/zlib/commit/5c44459c3b28a9bd3283aaceab7c615f8020c531
 
+As far as I can tell, no distros have picked this up.
+
+Tavis.
+
+
+-- 
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@....org
+_\_V _( ) _( )  @taviso
