@@ -1,45 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/07/1
-Message-ID: <CAHxebFYNPzz1q2GzCdCm=x9LytoqaoMkFhVNbDCRv7eZOj3LKQ@mail.gmail.com>
-Date: Mon, 6 Jun 2022 12:45:34 -0700
-From: Samuel Karp <sam@...uelkarp.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/24/2
+Message-ID: <20220324054307.GA74811@meh.true.cz>
+Date: Thu, 24 Mar 2022 06:43:07 +0100
+From: Petr Štetiar <ynezz@...e.cz>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-31030: containerd CRI plugin: Host memory exhaustion through ExecSync
+Cc: madler@...mni.caltech.edu
+Subject: Re: zlib memory corruption on deflate (i.e. compress)
 Content-Type: text/plain; charset=utf-8
 
-A bug was found in containerd's CRI implementation where programs
-inside a container can cause the containerd daemon to consume memory
-without bound during invocation of the ExecSync API. This can cause
-containerd to consume all available memory on the computer, denying
-service to other legitimate workloads. Kubernetes and crictl can both
-be configured to use containerd's CRI implementation; ExecSync may be
-used when running probes or when executing processes via an "exec"
-facility.
+Tavis Ormandy <taviso@...il.com> [2022-03-23 20:49:49]:
 
-Patches
-This bug has been fixed in containerd 1.6.6 and 1.5.13. Users should
-update to these versions to resolve the issue.
+[ adding Mark to the Cc: loop ]
 
-Workarounds
-Ensure that only trusted images and commands are used.
+Hi,
 
-References
-Similar fix in cri-o's CRI implementation GHSA-fcm2-6c3h-pg6j [1]
+> Greetings list, I was recently trying to track down a reproducible crash
+> in a compressor. Believe it or not, it really was a bug in
+> zlib-1.2.11 when compressing (not decompressing!) certain inputs.
 
-Credits
-The containerd project would like to thank David Korczynski and Adam
-Korczynski of ADA Logics for responsibly disclosing this issue in
-accordance with the containerd security policy [2] during a security
-audit sponsored by CNCF and facilitated by OSTIF.
+thank you for letting us know!
 
-For more information
-If you have any questions or comments about this advisory:
-* Open an issue in our GitHub repository [3]
-* Email us at security@...tainerd.io
+> I reported it upstream, but it turns out the issue has been public since
+> 2018, but the patch never made it into a release. As far as I know,
+> nobody ever assigned it a CVE.
+> 
+> https://github.com/madler/zlib/commit/5c44459c3b28a9bd3283aaceab7c615f8020c531
+> 
+> As far as I can tell, no distros have picked this up.
 
-On behalf of the containerd project,
-Samuel Karp
+It's mostly due to the fact, that AFAIK it has never hit the release. Mark,
+would it be please possible to do another point release with that security
+fix included? Thanks!
 
-[1] https://github.com/cri-o/cri-o/security/advisories/GHSA-fcm2-6c3h-pg6j
-[2] https://github.com/containerd/project/blob/main/SECURITY.md
-[3] https://github.com/containerd/containerd/issues/new/choose
+Cheers,
+
+Petr
