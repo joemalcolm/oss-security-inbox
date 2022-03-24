@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3356" "Sunday" "26" "August" "2018" "14:54:06" "+0000" "Jeremy Stanley" "fungi@yuggoth.org" "<20180826145405.3ynuaq5efx4zq33p@yuggoth.org>" "70" "Re: [oss-security] Travis CI MITM RCE" "^Date:" nil nil "8" "2018082614:54:06" "[oss-security] Travis CI MITM RCE" (number mark "        fungi@yuggot Aug 26   70/3356  " thread-indent "\"Re: [oss-security] Travis CI MITM RCE\"\n") "<20180826005658.GA5795@osmium.pennocktech.home.arpa>" ("<20180825214923.ppes3ivrw73mbmrm@jwilk.net>" "<20180826005658.GA5795@osmium.pennocktech.home.arpa>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["626" "Wednesday" "23" "March" "2022" "20:49:49" "-0700" "Tavis Ormandy" "taviso@gmail.com" nil "19" "[oss-security] zlib memory corruption on deflate (i.e. compress)" "^Date:" nil nil "3" nil nil (number mark "        taviso@gmail Mar 23   19/626   " thread-indent "\"[oss-security] zlib memory corruption on deflate (i.e. compress)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] zlib memory corruption on deflate (i.e. compress)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 32185 invoked by uid 550); 26 Aug 2018 14:54:21 -0000
+Received: (qmail 2032 invoked by uid 550); 24 Mar 2022 03:50:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,93 +11,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32167 invoked from network); 26 Aug 2018 14:54:20 -0000
-Message-ID: <20180826145405.3ynuaq5efx4zq33p@yuggoth.org>
-References: <20180825214923.ppes3ivrw73mbmrm@jwilk.net>
- <20180826005658.GA5795@osmium.pennocktech.home.arpa>
+Received: (qmail 1999 invoked from network); 24 Mar 2022 03:50:04 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=/qsXuD5Ecie2pGzxOpXvO1UVI6h5p6TAiGrcU4xJIMA=;
+        b=bLbV9MjHkFL/ECETPEJ1DzCHMmXt2IJMcJQ+eLDw9TSqwla0CJv5ymtJEOV2YHeGQx
+         i9dDdBs0KuYKQ7LLuYWMStz8q5Qf1Zfxr1lFP/VoR9opVkv29OYmhFFwuI97oOi1TCGF
+         kHOt5goYA8L/+v/Bz5cEk9/BrfdTKJZmto5auGciq3bhPC5WNxiok1ViVrW6Re6V5ix4
+         wJSvnaZxjujbqvVeQBZ10wEmUbhoOpRpqM2vhpuzaVur18UcLb6kc4RFUxncIDRNcRWr
+         JiZ80vpag7C5yPjEVhzGVb3vimWqsDci4uxKQzhLi1cFopC4BqJH6Ul3iSZuebmPPcxZ
+         NcgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=/qsXuD5Ecie2pGzxOpXvO1UVI6h5p6TAiGrcU4xJIMA=;
+        b=aifNbrI/8Em2S4jwScPD1hOY2vNa/irQ/MT4q1o/tpivODkPreH/TXSo7eTKtKD31i
+         BqM5WhN8ivW17RiU04hRF97KCkQMVyE9CvthzgRsmteEmCB/VN0O3O58FH+Lxou6P6VT
+         HhffAkK3rY8UgKu+THasdLWsLKLVDvqv4xCpjPnelUqr4v5r/HjukNhpsXKvYZpejbtF
+         SqBhkvq5UdfKkJ6k5gpJEPEO5b2QVwCtqMYA2Hd3d77ZZhjIjNV7w6Hpw77Ui2rjbIVE
+         HSWpiDObVlQwVcGFyX2nm1APetVJdy0jX/vNbCLSkfWl9Tm8tmI08pCxBvEnNALbxlcp
+         sS7g==
+X-Gm-Message-State: AOAM530CjhPlRqtm6XyhDOLqm9E9eLkFIfnRmhBkFg9qVlPR+yYrSWw5
+	p8nl/mTIFUpiXO/onHlG4nTF5Nxnq+0=
+X-Google-Smtp-Source: ABdhPJxbOwsseRiwCyBD/d52ptFKociA6pJhsHY6Bbv/vEDfpriWLLLQVpbK3UijST4xANo+Gdyo9w==
+X-Received: by 2002:a63:cf52:0:b0:36c:8e67:45c9 with SMTP id b18-20020a63cf52000000b0036c8e6745c9mr2510724pgj.542.1648093791697;
+        Wed, 23 Mar 2022 20:49:51 -0700 (PDT)
+Message-ID: <20220324034949.GA25415@thinkstation.cmpxchg8b.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ci62rwlk5xljqrlr"
-Content-Disposition: inline
-In-Reply-To: <20180826005658.GA5795@osmium.pennocktech.home.arpa>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
-X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
-X-SA-Exim-Mail-From: fungi@yuggoth.org
-X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
-Date: Sun, 26 Aug 2018 14:54:06 +0000
-From: Jeremy Stanley <fungi@yuggoth.org>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Travis CI MITM RCE
-To: oss-security@lists.openwall.com
-
---ci62rwlk5xljqrlr
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mutt/1.13.2 (2019-12-18)
+Date: Wed, 23 Mar 2022 20:49:49 -0700
+From: Tavis Ormandy <taviso@gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Subject: [oss-security] zlib memory corruption on deflate (i.e. compress)
+To: oss-security@lists.openwall.com
 
-On 2018-08-25 20:56:59 -0400 (-0400), Phil Pennock wrote:
-> On 2018-08-25 at 23:49 +0200, Jakub Wilk wrote:
-> > The new code looks like this:
-> >=20
-> >    apt-key list | awk -F'[ /]+' '/expired:/{printf "apt-key adv --recv-=
-keys --keyserver keys.gnupg.net %s\\n", $3}' | sudo sh
-> ...
-> >   $ apt-key list | grep -A1 -w A15703C6
-> >   pub   4096R/A15703C6 2016-01-11 [expires: 2020-01-05]
-> >   uid                  MongoDB 3.4 Release Signing Key <packaging@mongo=
-db.com>
-[...]
-> If you're building infrastructure which needs to get data from off-site,
-> then consider whether or not you can provide template directives which
-> people can include in their command lists, and you then populate the
-> template with the correct current commands for that directive.  Eg, if
-> I'm talking to Docker inside Circle CI, I don't set a bunch of variables
-> myself, I just say `setup_remote_docker` and let Circle CI figure out
-> which commands should be run.  For "everything is a shell command"
-> setup, then perhaps `$CICMD_APT_KEYS_UPDATE` could be made available.
-> Or `"${CICMD_APT_KEYS_UPDATE[@]}"` if even more constrained.
+Greetings list, I was recently trying to track down a reproducible crash
+in a compressor. Believe it or not, it really was a bug in
+zlib-1.2.11 when compressing (not decompressing!) certain inputs.
 
-Indeed, as someone who helps design and run very large CI systems, I
-can say with certainty that every extra request you make in your
-jobs to retrieve something over a network connection is one more
-false negative failure waiting to happen. The Internet is _not_
-reliable, and it becomes obvious when you start looking at
-connection failures and random API errors at scale from lots of
-different places on the planet. If there's basically static data
-that your job needs (especially public keys/certs) just bake it
-directly into the job itself, and for things that change more often
-than that cache as much of it as you can local to (or even directly
-on the filesystems of) the systems which run those jobs.
+I reported it upstream, but it turns out the issue has been public since
+2018, but the patch never made it into a release. As far as I know,
+nobody ever assigned it a CVE.
 
-Unfortunately a lot of this sort of silliness comes about because
-people write CI jobs by translating their own developer environment
-configuration documentation or user guides into scripts and don't
-think about (or perhaps don't even understand in many cases) how
-technologies like OpenPGP work.
---=20
-Jeremy Stanley
+https://github.com/madler/zlib/commit/5c44459c3b28a9bd3283aaceab7c615f8020c531
 
---ci62rwlk5xljqrlr
-Content-Type: application/pgp-signature; name="signature.asc"
+As far as I can tell, no distros have picked this up.
 
------BEGIN PGP SIGNATURE-----
+Tavis.
 
-iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAluCvwZfFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
-QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
-WCnhthAApF+6xxsKZVbOr7vefT903O4PDsxmSSY0A+kFam2XjXwfA8s/qVstqsjd
-3Vp4y4ysLxX+8PzggZIMzWGVURwH/2KXUb4nO/X6dzrAHNb4UCfDID0LlM83D2ta
-n5wZvM4nSEH21wi5nFcpdPY3yCD0WEQ0sSXtQkA5WrdLWV0mJpjY8Y/Y6csNiqtw
-7wCmBD4IOob+7gtINA51SqX4Zzt+Az+rwIvLG6XFkArungvOXMl0pc6ukU/uHbnZ
-Z6g38HtAWd1todvNiEGeSetx9IKec3Q0efTzysEV7srGp4IDolDGIKuHRmndHjSF
-PpGlVMnA7pt+vQGNFhcD1Ju/+rdXwvXeboL3P9tLHuXBUo+BV8v8VXxAK5/gAfiQ
-AfM9Ob8IWQUU4cTTblTXKIWofFT0dWPcDgzJEn60KvyzkGoaeDUC1o/hQu1gG4Jc
-hjLuijiSgkIgqx0NXfE8M/0Bqr+uWxIXoLRszJYSn4Cpb28haoq0/hyHzWx5gJM6
-tDzgVG4Dp4ChIWPCPF/AcMBSyZj4SvGaPegCfHhsmxbQ+UH+jftQ1pb/p6oNFr+Q
-atQf5YaSDOtVxO3TS2OANtD+U1SVqIkZ6678FxPpRGEjL0J6OcF1FD+1XnMWdBx5
-sHZBdX2dB75ln7o2YfCkPkSyuq+jiW7Ky6puosSSiEpLInaQlcQ=
-=UmUS
------END PGP SIGNATURE-----
 
---ci62rwlk5xljqrlr--
+-- 
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@sdf.org
+_\_V _( ) _( )  @taviso
