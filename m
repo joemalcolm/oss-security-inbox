@@ -1,89 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/01/2
-Message-ID: <74dc4a2c-8165-6ec6-5498-c41841a74bd6@gmail.com>
-Date: Tue, 1 Feb 2022 09:05:38 +0100
-From: Mariusz Felisiak <felisiak.mariusz@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/25/2
+Message-ID: <Yj3KxwDw01GIKHwD@gentoo.org>
+Date: Fri, 25 Mar 2022 08:59:35 -0500
+From: John Helmert III <ajak@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Django: CVE-2022-22818: Possible XSS via {% debug %} template tag
+Subject: Re: zlib memory corruption on deflate (i.e. compress)
 Content-Type: text/plain; charset=utf-8
 
-https://www.djangoproject.com/weblog/2022/feb/01/security-releases/
+On Wed, Mar 23, 2022 at 08:49:49PM -0700, Tavis Ormandy wrote:
+> Greetings list, I was recently trying to track down a reproducible crash
+> in a compressor. Believe it or not, it really was a bug in
+> zlib-1.2.11 when compressing (not decompressing!) certain inputs.
+> 
+> I reported it upstream, but it turns out the issue has been public since
+> 2018, but the patch never made it into a release. As far as I know,
+> nobody ever assigned it a CVE.
 
-In accordance with `our security release policy
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
-Django team
-is issuing
-`Django 4.0.2 <https://docs.djangoproject.com/en/dev/releases/4.0.2/>`_,
-`Django 3.2.12 
-<https://docs.djangoproject.com/en/dev/releases/3.2.12/>`_, and
-`Django 2.2.27 <https://docs.djangoproject.com/en/dev/releases/2.2.27/>`_.
-These release addresses the security issues detailed below. We encourage all
-users of Django to upgrade as soon as possible.
+CVE-2018-25032 appears to have been assigned for it now.
 
-CVE-2022-22818: Possible XSS via ``{% debug %}`` template tag
-=============================================================
+> https://github.com/madler/zlib/commit/5c44459c3b28a9bd3283aaceab7c615f8020c531
+> 
+> As far as I can tell, no distros have picked this up.
+> 
+> Tavis.
+> 
+> 
+> -- 
+>  _o)            $ lynx lock.cmpxchg8b.com
+>  /\\  _o)  _o)  $ finger taviso@....org
+> _\_V _( ) _( )  @taviso
 
-The ``{% debug %}`` template tag didn't properly encode the current context,
-posing an XSS attack vector.
-
-In order to avoid this vulnerability, ``{% debug %}`` no longer outputs an
-information when the ``DEBUG`` setting is ``False``, and it ensures all 
-context
-variables are correctly escaped when the ``DEBUG`` setting is ``True``.
-
-Thanks Keryn Knight for the report.
-
-This issue has severity "medium" according to the Django security policy.
-
-Affected supported versions
-===========================
-
-* Django main branch
-* Django 4.0
-* Django 3.2
-* Django 2.2
-
-Resolution
-==========
-
-Patches to resolve the issue have been applied to Django's main branch 
-and to
-the 4.0, 3.2, and 2.2 release branches. The patches may be obtained from the
-following changesets.
-
-* On the `main branch 
-<https://github.com/django/django/commit/394517f07886495efcf79f95c7ee402a9437bd68>`__
-* On the `4.0 release branch 
-<https://github.com/django/django/commit/01422046065d2b51f8f613409cad2c81b39487e5>`__
-* On the `3.2 release branch 
-<https://github.com/django/django/commit/1a1e8278c46418bde24c86a65443b0674bae65e2>`__
-* On the `2.2 release branch 
-<https://github.com/django/django/commit/c27a7eb9f40b64990398978152e62b6ff839c2e6>`__
-
-The following releases have been issued:
-
-* Django 4.0.2 (`download Django 4.0.2 
-<https://www.djangoproject.com/m/releases/4.0/Django-4.0.2.tar.gz>`_ | 
-`4.0.2 checksums 
-<https://www.djangoproject.com/m/pgp/Django-4.0.2.checksum.txt>`_)
-* Django 3.2.12 (`download Django 3.2.12 
-<https://www.djangoproject.com/m/releases/3.2/Django-3.2.12.tar.gz>`_ | 
-`3.2.12 checksums 
-<https://www.djangoproject.com/m/pgp/Django-3.2.12.checksum.txt>`_)
-* Django 2.2.27 (`download Django 2.2.27 
-<https://www.djangoproject.com/m/releases/2.2/Django-2.2.27.tar.gz>`_ | 
-`2.2.27 checksums 
-<https://www.djangoproject.com/m/pgp/Django-2.2.27.checksum.txt>`_)
-
-The PGP key ID used for this release is Mariusz Felisiak: 
-`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
-
-General notes regarding security reporting
-==========================================
-
-As always, we ask that potential security issues be reported via
-private email to ``security@...ngoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
