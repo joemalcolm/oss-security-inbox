@@ -1,93 +1,137 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/04/2
-Message-ID: <e6d51d15-43ea-9b1a-c9a7-8b6a2589c851@gmail.com>
-Date: Mon, 4 Jul 2022 10:13:32 +0200
-From: Mariusz Felisiak <felisiak.mariusz@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/27/4
+Message-ID: <YkC+PSwvLcRzOvgR@sol.localdomain>
+Date: Sun, 27 Mar 2022 12:42:53 -0700
+From: Eric Biggers <ebiggers@...nel.org>
 To: oss-security@...ts.openwall.com
-Subject: Django: CVE-2022-34265: Potential SQL injection via Trunc(kind) and Extract(lookup_name) arguments.
+Subject: Re: zlib memory corruption on deflate (i.e. compress)
 Content-Type: text/plain; charset=utf-8
 
-https://www.djangoproject.com/weblog/2022/jul/04/security-releases/
+On Sun, Mar 27, 2022 at 03:10:41PM +0300, ariel.byd@...il.com wrote:
+> If the match lengths are uniformly distributed between 3 and 258, you’ll get
+> exactly 8 bits per length - not less due to entropy considerations, not more
+> since N-3 is a valid Huffman encoding with 8 bits per character.
+> 
+> Actually, maybe not. I think 258 can be encoded as either “284 31” or “285”,
+> and if the encoder always chooses the “285” encoding (leaving “284 31”
+> useless) you might have 257 characters, you might need some 9-bit characters.
+> I think it’s possible to bound that by 1/64 bit per character but I have not
+> proven it.
+> 
+> Similarly for distances uniformly distributed between 1 and 32768.
+> 
+> That’s a total of 23 bits per code.
+> 
 
-In accordance with `our security release policy
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
-Django team
-is issuing
-`Django 4.0.6 <https://docs.djangoproject.com/en/dev/releases/4.0.6/>`_ and
-`Django 3.2.14 <https://docs.djangoproject.com/en/dev/releases/3.2.14/>`_.
-These release addresses the security issue detailed below. We encourage all
-users of Django to upgrade as soon as possible.
+Right, that's a better way to think about it.  I was basically thinking about
+making the Huffman symbols equally likely, but it's "better" to just make the
+match lengths and distances equally likely.
 
-CVE-2022-34265: Potential SQL injection via ``Trunc(kind)`` and 
-``Extract(lookup_name)`` arguments
-==================================================================================================
+Length 258 can indeed be encoded two ways; however, zlib always uses one way.
 
-``Trunc()`` and ``Extract()`` database functions were
-subject to SQL injection if untrusted data was used as a
-``kind``/``lookup_name`` value.
+I wrote a patch (given below) to inject sequences of matches with random lengths
+and distances.  These are the "best" results I got with the various memLevels:
 
-Applications that constrain the lookup name and kind choice to a known safe
-list are unaffected.
+	memLevel=9: 23.0188 bits/item
+	memLevel=8: 23.0268 bits/item
+	memLevel=7: 23.0399 bits/item
+	memLevel=6: 23.0720 bits/item
+	memLevel=5: 23.1285 bits/item
+	memLevel=4: 23.2414 bits/item
+	memLevel=3: 23.4521 bits/item
+	memLevel=2: 23.8431 bits/item
+	memLevel=1: OVERFLOW
 
-This security release mitigates the issue, but we have identified 
-improvements
-to the Database API methods related to date extract and truncate that 
-would be
-beneficial to add to Django 4.1 before it's final release. This will 
-impact 3rd
-party database backends using Django 4.1 release candidate 1 or newer, 
-until they
-are able to update to the API changes. We apologize for the inconvenience.
+As expected, the block header becomes more significant with the lower memLevels.
+Interestingly, with memLevel=1, the bug is reproduced.
 
-Thanks Takuto Yoshikai (Aeye Security Lab) for the report.
+Caveat: these are all assuming the default (and maximum) windowBits of 15, in
+order to maximize the cost of distances.  That would basically correspond to
+'deflateInit2(&z, <any>, Z_DEFLATED, 15, memLevel, Z_DEFAULT_STRATEGY)'.  It may
+be common for people who decrease the default memLevel of 8 to also decrease the
+default windowBits of 15, as these sort of have similar effects.  I.e.,
+memLevel=1 and windowBits=15 is probably not too common.
 
-This issue has severity "high" according to the Django security policy.
+Also, this isn't an actual reproducer; you would still need to craft an input
+that made zlib generate one of these sequences of matches whose lengths and
+distances are distributed uniformly at random.  I expect that this would be
+harder with memLevel=1 than memLevel=8, but it might be possible.
 
-Affected supported versions
-===========================
+Open question: can we do significantly better than uniformly random match
+lengths and distances, perhaps by abusing the non-optimality of Huffman codes?
 
-* Django main branch
-* Django 4.1 (currently at beta status)
-* Django 4.0
-* Django 3.2
+Here's the patch I used for zlib v1.2.11.  If anyone wants to play around with
+it, inject_item_list() can be changed to inject other match/literal sequences.
+For this code to be executed you just need to try to deflate() something.
 
-Resolution
-==========
-
-Patches to resolve the issue have been applied to Django's main branch 
-and to
-the 4.1, 4.0, and 3.2 release branches. The patches may be obtained from the
-following changesets:
-
-* On the `main branch 
-<https://github.com/django/django/commit/54eb8a374d5d98594b264e8ec22337819b37443c>`__
-* On the `4.1 release branch 
-<https://github.com/django/django/commit/284b188a4194e8fa5d72a73b09a869d7dd9f0dc5>`__
-* On the `4.0 release branch 
-<https://github.com/django/django/commit/0dc9c016fadb71a067e5a42be30164e3f96c0492>`__
-* On the `3.2 release branch 
-<https://github.com/django/django/commit/a9010fe5555e6086a9d9ae50069579400ef0685e>`__
-
-The following releases have been issued:
-
-* Django 4.0.6 (`download Django 4.0.6 
-<https://www.djangoproject.com/m/releases/4.0/Django-4.0.6.tar.gz>`_ | 
-`4.0.6 checksums 
-<https://www.djangoproject.com/m/pgp/Django-4.0.6.checksum.txt>`_)
-* Django 3.2.14 (`download Django 3.2.14 
-<https://www.djangoproject.com/m/releases/3.2/Django-3.2.14.tar.gz>`_ | 
-`3.2.14 checksums 
-<https://www.djangoproject.com/m/pgp/Django-3.2.14.checksum.txt>`_)
-
-The PGP key ID used for this release is Mariusz Felisiak: 
-`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
-
-General notes regarding security reporting
-==========================================
-
-As always, we ask that potential security issues be reported via
-private email to ``security@...ngoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
-
+diff --git a/trees.c b/trees.c
+index 50cf4b4..37e748f 100644
+--- a/trees.c
++++ b/trees.c
+@@ -39,6 +39,7 @@
+ #ifdef ZLIB_DEBUG
+ #  include <ctype.h>
+ #endif
++#include <stdio.h>
+ 
+ /* ===========================================================================
+  * Constants
+@@ -904,6 +905,19 @@ void ZLIB_INTERNAL _tr_align(s)
+     bi_flush(s);
+ }
+ 
++static void inject_item_list(deflate_state *s)
++{
++    init_block(s);
++
++    for (int i = 0; i < s->lit_bufsize-1; i++) {
++        int distance = 1 + (rand() % MAX_DIST(s));
++        int length = MIN_MATCH + (rand() % (MAX_MATCH - MIN_MATCH + 1));
++        int flush;
++
++        _tr_tally_dist(s, distance, length - MIN_MATCH, flush);
++    }
++}
++
+ /* ===========================================================================
+  * Determine the best encoding for the current block: dynamic trees, static
+  * trees or store, and write out the encoded block.
+@@ -917,6 +931,8 @@ void ZLIB_INTERNAL _tr_flush_block(s, buf, stored_len, last)
+     ulg opt_lenb, static_lenb; /* opt_len and static_len in bytes */
+     int max_blindex = 0;  /* index of last bit length code of non zero freq */
+ 
++    inject_item_list(s);
++
+     /* Build the Huffman trees unless a stored block is forced */
+     if (s->level > 0) {
+ 
+@@ -959,7 +975,7 @@ void ZLIB_INTERNAL _tr_flush_block(s, buf, stored_len, last)
+ #ifdef FORCE_STORED
+     if (buf != (char*)0) { /* force stored block */
+ #else
+-    if (stored_len+4 <= opt_lenb && buf != (char*)0) {
++    if (0 && stored_len+4 <= opt_lenb && buf != (char*)0) {
+                        /* 4: two words for the lengths */
+ #endif
+         /* The test buf != NULL is only necessary if LIT_BUFSIZE > WSIZE.
+@@ -1073,6 +1089,10 @@ local void compress_block(s, ltree, dtree)
+     int extra;          /* number of extra bits to send */
+ 
+     if (s->last_lit != 0) do {
++        if (&s->pending_buf[s->pending] > (Bytef *)&s->d_buf[lx]) {
++            fprintf(stderr, "@@@@@ PENDING DATA OVERLAPPED DISTANCES!!! @@@\n");
++            abort();
++        }
+         dist = s->d_buf[lx];
+         lc = s->l_buf[lx++];
+         if (dist == 0) {
+@@ -1105,6 +1125,9 @@ local void compress_block(s, ltree, dtree)
+ 
+     } while (lx < s->last_lit);
+ 
++    printf("block encoded to %lu bytes (%g bits/item)\n",
++           s->pending, (double)s->pending*8 / s->last_lit);
++
+     send_code(s, END_BLOCK, ltree);
+ }
+ 
