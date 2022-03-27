@@ -1,19 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/01/13
-Message-ID: <44167bf7-80e2-9442-625c-c153636e3ed3@apache.org>
-Date: Tue, 01 Nov 2022 14:32:09 +0000
-From: Jiajie Zhong <zhongjiajie@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-34662: Apache DolphinScheduler prior to 3.0.0 allows path traversal 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/27/2
+Message-ID: <A120BF13-DE6E-4F00-91AD-49F4AB663C8E@alumni.caltech.edu>
+Date: Sun, 27 Mar 2022 02:29:27 +0000
+From: "Adler, Mark" <madler@...mni.caltech.edu>
+To: Petr Štetiar <ynezz@...e.cz>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: zlib memory corruption on deflate (i.e. compress)
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Petr,
 
-Description:
+Yes, I will release develop to master. I need to do some portability testing first.
 
-When users add resources to the resource center with a relation path will cause path traversal issues and only for logged-in users. You could upgrade to version 3.0.0 or higher
+Mark
 
-Credit:
 
-This issue was discovered by Jigang Dong of M1QLin Security Team
+> On Mar 23, 2022, at 10:43 PM, Petr Štetiar <ynezz@...e.cz> wrote:
+> 
+> Tavis Ormandy <taviso@...il.com> [2022-03-23 20:49:49]:
+> 
+> [ adding Mark to the Cc: loop ]
+> 
+> Hi,
+> 
+>> Greetings list, I was recently trying to track down a reproducible crash
+>> in a compressor. Believe it or not, it really was a bug in
+>> zlib-1.2.11 when compressing (not decompressing!) certain inputs.
+> 
+> thank you for letting us know!
+> 
+>> I reported it upstream, but it turns out the issue has been public since
+>> 2018, but the patch never made it into a release. As far as I know,
+>> nobody ever assigned it a CVE.
+>> 
+>> https://github.com/madler/zlib/commit/5c44459c3b28a9bd3283aaceab7c615f8020c531
+>> 
+>> As far as I can tell, no distros have picked this up.
+> 
+> It's mostly due to the fact, that AFAIK it has never hit the release. Mark,
+> would it be please possible to do another point release with that security
+> fix included? Thanks!
+> 
+> Cheers,
+> 
+> Petr
 
