@@ -1,37 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/24/2
-Message-ID: <20220324054307.GA74811@meh.true.cz>
-Date: Thu, 24 Mar 2022 06:43:07 +0100
-From: Petr Štetiar <ynezz@...e.cz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/28/1
+Message-ID: <YkED39EzRCU99yOO@sol.localdomain>
+Date: Sun, 27 Mar 2022 17:39:59 -0700
+From: Eric Biggers <ebiggers@...nel.org>
 To: oss-security@...ts.openwall.com
-Cc: madler@...mni.caltech.edu
 Subject: Re: zlib memory corruption on deflate (i.e. compress)
 Content-Type: text/plain; charset=utf-8
 
-Tavis Ormandy <taviso@...il.com> [2022-03-23 20:49:49]:
-
-[ adding Mark to the Cc: loop ]
-
-Hi,
-
-> Greetings list, I was recently trying to track down a reproducible crash
-> in a compressor. Believe it or not, it really was a bug in
-> zlib-1.2.11 when compressing (not decompressing!) certain inputs.
-
-thank you for letting us know!
-
-> I reported it upstream, but it turns out the issue has been public since
-> 2018, but the patch never made it into a release. As far as I know,
-> nobody ever assigned it a CVE.
+On Sun, Mar 27, 2022 at 12:42:55PM -0700, Eric Biggers wrote:
+> On Sun, Mar 27, 2022 at 03:10:41PM +0300, ariel.byd@...il.com wrote:
+> > If the match lengths are uniformly distributed between 3 and 258, you’ll get
+> > exactly 8 bits per length - not less due to entropy considerations, not more
+> > since N-3 is a valid Huffman encoding with 8 bits per character.
+> > 
+> > Actually, maybe not. I think 258 can be encoded as either “284 31” or “285”,
+> > and if the encoder always chooses the “285” encoding (leaving “284 31”
+> > useless) you might have 257 characters, you might need some 9-bit characters.
+> > I think it’s possible to bound that by 1/64 bit per character but I have not
+> > proven it.
+> > 
+> > Similarly for distances uniformly distributed between 1 and 32768.
+> > 
+> > That’s a total of 23 bits per code.
+> > 
 > 
-> https://github.com/madler/zlib/commit/5c44459c3b28a9bd3283aaceab7c615f8020c531
+> Right, that's a better way to think about it.  I was basically thinking about
+> making the Huffman symbols equally likely, but it's "better" to just make the
+> match lengths and distances equally likely.
 > 
-> As far as I can tell, no distros have picked this up.
+> Length 258 can indeed be encoded two ways; however, zlib always uses one way.
+> 
+> I wrote a patch (given below) to inject sequences of matches with random lengths
+> and distances.  These are the "best" results I got with the various memLevels:
+> 
+> 	memLevel=9: 23.0188 bits/item
+> 	memLevel=8: 23.0268 bits/item
+> 	memLevel=7: 23.0399 bits/item
+> 	memLevel=6: 23.0720 bits/item
+> 	memLevel=5: 23.1285 bits/item
+> 	memLevel=4: 23.2414 bits/item
+> 	memLevel=3: 23.4521 bits/item
+> 	memLevel=2: 23.8431 bits/item
+> 	memLevel=1: OVERFLOW
+> 
+> As expected, the block header becomes more significant with the lower memLevels.
+> Interestingly, with memLevel=1, the bug is reproduced.
+> 
+> Caveat: these are all assuming the default (and maximum) windowBits of 15, in
+> order to maximize the cost of distances.  That would basically correspond to
+> 'deflateInit2(&z, <any>, Z_DEFLATED, 15, memLevel, Z_DEFAULT_STRATEGY)'.  It may
+> be common for people who decrease the default memLevel of 8 to also decrease the
+> default windowBits of 15, as these sort of have similar effects.  I.e.,
+> memLevel=1 and windowBits=15 is probably not too common.
+> 
+> Also, this isn't an actual reproducer; you would still need to craft an input
+> that made zlib generate one of these sequences of matches whose lengths and
+> distances are distributed uniformly at random.  I expect that this would be
+> harder with memLevel=1 than memLevel=8, but it might be possible.
 
-It's mostly due to the fact, that AFAIK it has never hit the release. Mark,
-would it be please possible to do another point release with that security
-fix included? Thanks!
+I've attached a full reproducer that works with the following parameters:
 
-Cheers,
+	level=7 (also 8 and 9)
+	windowBits=15
+	memLevel=1
+	strategy=Z_DEFAULT_STRATEGY
 
-Petr
+i.e.,
+
+    deflateInit2(&strm, 7, Z_DEFLATED, 15, 1, Z_DEFAULT_STRATEGY);
+
+With ASAN, it generates a warning like Tavis's reproducer with Z_FIXED did.
+
+Note, this is very sensitive to the specific parameters chosen, especially the
+memLevel of 1 which I expect is not very commonly used.  With memLevel=1, zlib
+only uses very short blocks, so it's possible for the block header to bring the
+average match cost above the 24 bits needed to hit the bug.  I'm not seeing a
+way for the bug to be reachable with much higher memLevels, notably the default
+memLevel of 8; as far as I can tell, the average match cost can't be much over
+23 bits in that case.
+
+- Eric
+
+View attachment "deflate.c" of type "text/plain" (818 bytes)
+
+View attachment "repro_7_15_1_DEFAULTSTRATEGY.txt" of type "text/plain" (48192 bytes)
