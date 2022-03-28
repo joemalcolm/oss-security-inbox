@@ -1,87 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/31/2
-Message-ID: <8r186sn8-2orp-3n38-nno4-9o8n23n6s069@unkk.fr>
-Date: Wed, 31 Aug 2022 08:31:44 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] CVE-2022-35252: control code in cookie denial of service (curl)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/28/2
+Message-ID: <CAADJU110xZQCFK9xOC+s1OmAYo=a36uJa0+Mb6=h5cQO08yTzw@mail.gmail.com>
+Date: Mon, 28 Mar 2022 11:16:43 +0800
+From: Zexuan Luo <spacewander@...che.org>
+To: 人间的四月天 <1157599735@...com>,  announce@...che.org, dev@...six.apache.org,  Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
+Subject: CVE-2022-25757: Apache APISIX: the body_schema check in request-validation plugin can be bypassed
 Content-Type: text/plain; charset=utf-8
 
-CVE-2022-35252: control code in cookie denial of service
-========================================================
+Severity: low
 
-Project curl Security Advisory, August 31 2022 -
-[Permalink](https://curl.se/docs/CVE-2022-35252.html)
+Description:
 
-VULNERABILITY
--------------
+When decoding JSON with duplicate keys, lua-cjson will choose the last
+occurred value as the result. By passing a JSON with a duplicate key,
+the attacker can bypass the body_schema validation in the
+request-validation plugin. For example,
+`{"string_payload":"bad","string_payload":"good"}` can be used to hide
+the "bad" input.
 
-When curl retrieves and parses cookies from an HTTP(S) server, it accepts
-cookies using control codes (byte values below 32). When cookies that contain
-such control codes are later sent back to an HTTP(S) server, it might make the
-server return a 400 response. Effectively allowing a "sister site" to deny
-service to siblings.
+Systems satisfy three conditions below are affected by this attack:
+1. use body_schema validation in the request-validation plugin
+2. upstream application uses a special JSON library that chooses the
+first occurred value, like jsoniter or gojay
+3. upstream application does not validate the input anymore.
 
-We are not aware of any exploit of this flaw.
+The fix in APISIX is to re-encode the validated JSON input back into
+the request body at the side of APISIX.
 
-INFO
-----
+Mitigation:
 
-This flaw in the code was initially introduced in curl 4.9 but HTTP(S) servers
-back then did not generally reject requests using control codes so this
-mistake did not actually cause problems until HTTP(S) servers started doing
-this much later. Different server implementations of course doing it at
-different times (with some also still accepting them just fine).
+1. upgrade APISIX to 2.13.0 if you need to use the body_schema
+validation in the request-validation plugin
+2. add additional validation in the application code, embrace
+defensive programming
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2022-35252 to this issue.
+Credit:
 
-CWE-1286: Improper Validation of Syntactic Correctness of Input
-
-Severity: Low
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 4.9 to and including 7.84.0
-- Not affected versions: curl < 4.9 and curl >= 7.85.0
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-[fix for CVE-2022-35252](https://github.com/curl/curl/commit/8dfc93e573ca740544a2d79ebb)
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 7.85.0
-
-  B - Apply the patch to your local version
-
-  C - Do not enable the cookie engine
-
-TIMELINE
---------
-
-This issue was reported to the curl project on June 26, 2022. We contacted
-distros@...nwall on August 22.
-
-libcurl 7.85.0 was released on August 31 2022, coordinated with the
-publication of this advisory.
-
-CREDITS
--------
-
-- Reported-by: Axel Chong
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
+Thanks for Guangli Dong from https://www.huoxian.cn/
