@@ -1,9 +1,9 @@
 X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4318" "Tuesday" "24" "March" "2015" "20:58:57" "+1100" "Garth Mollett" "gmollett@redhat.com" "<55113561.3060305@redhat.com>" "104" "[oss-security] Re: CVE request for OpenStack Compute (nova)" nil nil nil "3" "2015032409:58:57" "[oss-security] Re: CVE request for OpenStack Compute (nova)" (number mark "        gmollett@red Mar 24  104/4318  " thread-indent "\"[oss-security] Re: CVE request for OpenStack Compute (nova)\"\n") "<20150324073610.79BAF1BE1C3@smtpvbsrv1.mitre.org>" ("<20150324073610.79BAF1BE1C3@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["968" "Monday" "28" "March" "2022" "06:29:46" "-0700" "Tavis Ormandy" "taviso@gmail.com" nil "36" "Re: [oss-security] Re: zlib memory corruption on deflate (i.e. compress)" "^Date:" nil nil "3" nil nil (number mark "        taviso@gmail Mar 28   36/968   " thread-indent "\"Re: [oss-security] Re: zlib memory corruption on deflate (i.e. compress)\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Re: zlib memory corruption on deflate (i.e. compress)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
 X-Mozilla-Status: 0001
 X-Mozilla-Status2: 00000000
-Received: (qmail 17519 invoked by uid 550); 24 Mar 2015 09:59:17 -0000
+Received: (qmail 3198 invoked by uid 550); 28 Mar 2022 13:30:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,124 +11,84 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17498 invoked from network); 24 Mar 2015 09:59:16 -0000
-Message-ID: <55113561.3060305@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
+Received: (qmail 3160 invoked from network); 28 Mar 2022 13:30:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=K7d03ffeOC2h0oFoqGaP7FSi1eyo0TTi6f7FqKUnohw=;
+        b=PJfzfnPEuZ8x8A7nEZS7amdY2oc2+F5BCX1qXjEh06uND6ofDhrDMsaLHrVlmAstQl
+         0pTypvaZcecEjHlsdU2opbDH3W3pA7zP2cVwQgmpF07N7yIiFhYdpUVdYPduPiE3P+aQ
+         VIE2mL3ZqUV2oZf4NJTIQ1VV2f/6s1j3Gd18LhBkz3f982oHlPxYXIOVNsvJMaATwk5F
+         vPnTPPK/Cw7+8cR/5BSTXJ3wjhxXT/Q2uNlSb9rt71OtjD9VzgNW+fHeV2Ccc3t/ls1V
+         6A2SLOWEg/3QycLqAxWjpr2F31U8cUvkq0znS0kkhGcOtHd0HrYJNujpW0CAmIvV1dSk
+         qRFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=K7d03ffeOC2h0oFoqGaP7FSi1eyo0TTi6f7FqKUnohw=;
+        b=x1r6BewqgcnBM5RqALhjB1SQ93EConY9vtNc+IHAHBQLcCPLGJZt9e7toYgpV5hgAP
+         F8SpoFg64xhTcwpg1Yoh2IWNU+l7+oF69LZltJ9A3UulNbegquhO3vAu51CGhLsaq0h7
+         1HEtPskgtWQhl473izhvIHhhjOLM4lVTIjX7SvZ1IdRCzK/XwFHgJuJ9JYgO/7VPGbEo
+         8kYHYHK05Ocw8sA/9+Yz8X1UuAPIrIYUtqXjdey6l6D2llT3+hN9k05AfNNrNAfYKHlc
+         fmzAe8w5DteS8rph+OBAx2d525hP1qmlUxTCkuLvbBQ26Z6fI0NfRXCtA6AG5PyTvlul
+         jycw==
+X-Gm-Message-State: AOAM532xxgV4xlbMjvJj5suqJ8qwPjzABLw2nkOeMMkcJHDewiPfbwoP
+	P/9LkveUkRIovf1LQeuHtjcw832/Aik=
+X-Google-Smtp-Source: ABdhPJwd2PHdEOtY6/XwrEUeFBvVvpoAmiQR7ICWMCV22sQyOpptjJoU2TtGg+UymgvYaWBaAsjBSA==
+X-Received: by 2002:a17:902:f54f:b0:154:5686:7616 with SMTP id h15-20020a170902f54f00b0015456867616mr25457584plf.125.1648474187997;
+        Mon, 28 Mar 2022 06:29:47 -0700 (PDT)
+Message-ID: <20220328132946.GA23286@thinkstation.cmpxchg8b.net>
+References: <Yj/HK64AGxncpsFp@sol.localdomain>
+ <FC8967CA-B0AE-4315-92C8-16CB941FDF1B@gmail.com>
+ <YkC+PSwvLcRzOvgR@sol.localdomain>
+ <YkED39EzRCU99yOO@sol.localdomain>
 MIME-Version: 1.0
-References: <20150324073610.79BAF1BE1C3@smtpvbsrv1.mitre.org>
-In-Reply-To: <20150324073610.79BAF1BE1C3@smtpvbsrv1.mitre.org>
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="tXu8uLI2Vc94ojBu1cfbbhJnbcNhS4qSD"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
-CC: oss-security@lists.openwall.com
-Date: Tue, 24 Mar 2015 20:58:57 +1100
-From: Garth Mollett <gmollett@redhat.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YkED39EzRCU99yOO@sol.localdomain>
+User-Agent: Mutt/1.13.2 (2019-12-18)
+Date: Mon, 28 Mar 2022 06:29:46 -0700
+From: Tavis Ormandy <taviso@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request for OpenStack Compute (nova)
-To: cve-assign@mitre.org
+Subject: Re: [oss-security] Re: zlib memory corruption on deflate (i.e.
+ compress)
+To: oss-security@lists.openwall.com
 
---tXu8uLI2Vc94ojBu1cfbbhJnbcNhS4qSD
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: quoted-printable
+On Sun, Mar 27, 2022 at 05:39:59PM -0700, Eric Biggers wrote:
+> 
+> I've attached a full reproducer that works with the following parameters:
+> 
+> 	level=7 (also 8 and 9)
+> 	windowBits=15
+> 	memLevel=1
+> 	strategy=Z_DEFAULT_STRATEGY
+> 
+> i.e.,
+> 
+>     deflateInit2(&strm, 7, Z_DEFLATED, 15, 1, Z_DEFAULT_STRATEGY);
+> 
+> With ASAN, it generates a warning like Tavis's reproducer with Z_FIXED did.
+> 
 
-I am not a member of OpenStack VMT, so this is just my opinion, but I
-think the CVE should probably apply to all versions.
+Wow, thanks for your analysis Eric.
 
-It's worth noting that the C1 rating mentioned in the launchpad bug is
-referring to this:
-https://wiki.openstack.org/wiki/Vulnerability_Management#Incident_report_ta=
-xonomy
+Confirmed here, and the output deflated stream is also garbage... ouch,
+this is really not good...
 
-Which is "Not considered a practical vulnerability (but some people
-might assign a CVE for it)".
+It seems likely that an attacker can force this state, even if they
+don't control the prefix (e.g. a logfile), or perhaps (theoretically)
+force a deflated HTTP response to contain output that wasn't sent, etc,
+etc.
 
-So it's not necessarily saying there is no vulnerability/CVE needed for
-other versions. Just that it's not considered serious enough for an
-OSSA, by my reading.
+Let's hope cleaning up old static copies of zlib isn't going to be a
+mess for years to come :(
 
-
-
-On 03/24/2015 06:36 PM, cve-assign@mitre.org wrote:
->> https://bugs.launchpad.net/nova/+bug/1419577
->=20
-> Use CVE-2015-2687 for this issue with an unintended loss of access
-> control after a failed live migration.
->=20
-> For purposes of CVE, we typically don't think of vulnerabilities in
-> the way expressed in
-> https://bugs.launchpad.net/nova/+bug/1419577/comments/4 "without a way
-> to make the migration process fail, this is a bug with security
-> consequence, but not a vulnerability." In other words, for a CVE, the
-> attacker can be a person who wishes to have an unauthorized volume
-> attachment after the bug is triggered. The attacker does not need to
-> be a person who has determined a reproducible way to trigger the bug.
->=20
->> if live-migration is executed while process keep using big size of
->> memory by benchmark tool or something like that in VM instance and
->> then the waiting status of live-migration could be persisted,
->> eventually live-migration will be failed.
->=20
-> We think that nobody commented on whether this is a feasible way to
-> actively trigger the bug.
->=20
->> you're suggesting potential exploits involving
->=20
->> 1. disconnecting physical network interfaces
->=20
-> We think the intended security property of this OpenStack product is:
-> "if network connectivity is disrupted by anyone (authorized or not)
-> during a live migration, then access control for volumes still must
-> match users' expectations afterward."
->=20
-> It is conceivable that the intended security property of this
-> OpenStack product is instead "if network connectivity is disrupted
-> during a live migration, then access control for volumes afterward is
-> undefined." In this case, maybe you mean that the CVE should apply
-> only to Havana, because the only relevant root cause is a Havana bug.
-> The reasoning in that scenario would be:
->=20
->    1 - a Havana bug (e.g., 1362916 or possibly the combination of
->        1362916 and a second bug) makes it possible to force a failure
->        of a live migration
->=20
->    2 - this was not previously considered a vulnerability
->=20
->    3 - however, the relevant OpenStack product has a required security
->        property of "There must not be any software bugs that allow
->        live-migration failure attacks, because these attacks are
->        equivalent to attacks against volume access control."
->=20
->    4 - therefore, the bug in item 1 is promoted to a vulnerability,
->        and is the bug directly associated with CVE-2015-2687
->=20
->    5 - consequently, CVE-2015-2687 would not be used in an advisory
->        because Havana is unsupported by the OpenStack VMT
->=20
-> So, does the OpenStack VMT have a position on whether to choose this
-> latter scenario? In other words, if live migration fails because of a
-> disconnected physical network interface, is access control for volumes
-> intentionally undefined afterward?
->=20
->=20
+Tavis.
 
 
-
---tXu8uLI2Vc94ojBu1cfbbhJnbcNhS4qSD
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBAgAGBQJVETVhAAoJEPjpLwZKQ8GpbYoIAMgH8iT66yj7SVkSdAFyhPhw
-P0iYm2biNtKPpOnYOWFlcY+l8bLT32GQyR69SRBIyF1yJqrWnpRf1rqbeZNcJhEy
-lWgb6Rdm8jxMh5LivfoOSsBTX2oR38pNRkmiOPrMTTPq83hz+eiEt8095siAOLbL
-fQAPC5HoKFrMF7/OE/U5VN40oRKRWE1WW4Ax82vqjYYSjygYrfJ+kOe2QgAccIF+
-tc+gPQ2w2HK0PyrR0CwkzO12PpQzQLhawDQwc5trJVXhYWbjYp+mphvYnrup2Fxv
-XdrS4xF4Des0kF2+/hUVSHdb3TeAnDkcb44tBsyOf5PUbM1EZmEM7lf1LV++0+A=
-=wCFP
------END PGP SIGNATURE-----
-
---tXu8uLI2Vc94ojBu1cfbbhJnbcNhS4qSD--
+-- 
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@sdf.org
+_\_V _( ) _( )  @taviso
