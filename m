@@ -1,9 +1,9 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["968" "Monday" "11" "May" "2015" "07:13:20" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20150511051320.GA14900@lorien.valinor.li>" "30" "Re: [oss-security] CVE Request: zeromq downgrade attack" nil nil nil "5" "2015051105:13:20" "[oss-security] CVE Request: zeromq downgrade attack" (number mark "        carnil@debia May 11   30/968   " thread-indent "\"Re: [oss-security] CVE Request: zeromq downgrade attack\"\n") "<20150507144908.GA1677@kronk.local>" ("<20150507144908.GA1677@kronk.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
+	["10745" "Tuesday" "29" "March" "2022" "14:18:34" "+0200" "Daniel Beck" "ml@beckweb.net" nil "298" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "3" nil nil (number mark "U       ml@beckweb.n Mar 29  298/10745 " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
 	nil)
-X-Mozilla-Status: 0001
+X-Mozilla-Status: 0000
 X-Mozilla-Status2: 00000000
-Received: (qmail 23928 invoked by uid 550); 11 May 2015 05:13:34 -0000
+Received: (qmail 3479 invoked by uid 550); 29 Mar 2022 12:18:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +11,316 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23907 invoked from network); 11 May 2015 05:13:33 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=ECrUC4WuZw5m+Vs7SQsl/WjX/h+flzsfTQFOxPCm9eE=;
-        b=VD4wW7isH7C7tqxqi+lbjnnJFGCVXgt16SIacvMiRgixYlvffOWVftuKwKc/yqnQaq
-         dbyOqWN5BVpB5KMb7XqYdGh3FjOerNqc6jZCKblXDuVo2pNZNeJee+Bc0LeDSw250CgV
-         Zxw7jsoUS/cVQbA9TzHW1L45bojvLItAKpHoeizSQpQkdUtXOJJH28OZ9FDC+jSzfvIt
-         OB+N8xqLSpkrO6OPV28ssYSTWDvG/f3sPs/UzfbBZd/qSpq37Qp8N+f3+2HW07nli0o2
-         SlL+3KMOV4OHPyi7m5Zb8nElzS9zDR+HS0TFp/ZCul2w34qZv/GHJhMCg461s+40tE2G
-         tkkw==
-X-Received: by 10.194.205.37 with SMTP id ld5mr17217071wjc.14.1431321202252;
-        Sun, 10 May 2015 22:13:22 -0700 (PDT)
-Message-ID: <20150511051320.GA14900@lorien.valinor.li>
-References: <20150507144908.GA1677@kronk.local>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20150507144908.GA1677@kronk.local>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Cc: zeromq-dev@lists.zeromq.org,
-	CVE Assignments MITRE <cve-assign@mitre.org>
-Date: Mon, 11 May 2015 07:13:20 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: Re: [oss-security] CVE Request: zeromq downgrade attack
+Received: (qmail 3449 invoked from network); 29 Mar 2022 12:18:46 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.80.82.1.1\))
+Message-Id: <8E0CD9A4-3FAD-4F7E-AE43-E44BF27F8E14@beckweb.net>
+Date: Tue, 29 Mar 2022 14:18:34 +0200
 To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3696.80.82.1.1)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1648556326;3bf4d451;
+X-HE-SMSGID: 1nZAnz-00065R-5i
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
-Hi,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-On Thu, May 07, 2015 at 04:49:08PM +0200, Alessandro Ghedini wrote:
-> [ CCing upstream mailing list ]
-> 
-> Hello,
-> 
-> From https://github.com/zeromq/libzmq/issues/1273 :
-> 
-> > It is easy to bypass the security mechanism in 4.1.0 and 4.0.5 by sending a
-> > ZMTP v2 or earlier header. The library accepts such connections without
-> > applying its security mechanism.
-> > 
-> > Solution: if security is defined on a socket, reject all V2 and earlier
-> > connections, unconditionally.
-> 
-> A patch for the zeromq 4.0.x stable series is available at
-> https://github.com/zeromq/zeromq4-x/commit/b6e3e0f601e2c1ec1f3aac880ed6a3fe63043e51
-> 
-> AFAICT no CVE has been assigned (or requested) for this, and the issue has
-> been public since December of last year.
-> 
-> Could a CVE be assigned please?
+The following releases contain fixes for security vulnerabilities:
 
-For reference, an update for this issue has been released yesterday in
-Debian as
-https://lists.debian.org/debian-security-announce/2015/msg00144.html
+* Bitbucket Server Integration Plugin 3.2.0
+* Continuous Integration with Toad Edge Plugin 2.4
+* Flaky Test Handler Plugin 1.2.2
+* instant-messaging Plugin 1.42
+* JiraTestResultReporter Plugin 166.v0cc6208295b5
+* Proxmox Plugin 0.6.0, 0.7.0, and 0.7.1
+* RocketChat Notifier Plugin 1.5.0
 
-Regards,
-Salvatore
+Additionally, we announce unresolved security issues in the following
+plugins:
+
+* Coverage/Complexity Scatter Plot Plugin
+* Job and Node ownership Plugin
+* Pipeline: Phoenix AutoTest Plugin
+* SiteMonitor Plugin
+* Tests Selector Plugin
+
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2022-03-29/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-2639 / CVE-2022-28133
+Bitbucket Server Integration Plugin 2.0.0 through 3.1.0 (inclusive) does
+not limit URL schemes for callback URLs on OAuth consumers.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to create BitBucket Server consumers.
+
+
+SECURITY-2640 / CVE-2022-28134
+Bitbucket Server Integration Plugin 3.1.0 and earlier does not perform
+permission checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to create, view, and
+delete BitBucket Server consumers.
+
+
+SECURITY-2161 / CVE-2022-28135
+instant-messaging Plugin provides a framework for plugins integrating
+Jenkins with instant messaging services.
+
+instant-messaging Plugin 1.41 and earlier stores passwords for group chats
+unencrypted in the global configuration file of plugins based on
+instant-messaging Plugin on the Jenkins controller.
+
+These passwords can be viewed by users with access to the Jenkins
+controller file system.
+
+
+SECURITY-2236 / CVE-2022-28136 (CSRF) & CVE-2022-28137 (missing permission =
+check)
+JiraTestResultReporter Plugin 165.v817928553942 and earlier does not
+perform a permission check in a method implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified credentials.
+
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+
+SECURITY-2241 / CVE-2022-28138 (CSRF) & CVE-2022-28139 (missing permission =
+check)
+RocketChat Notifier Plugin 1.4.10 and earlier does not perform a permission
+check in a method implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified username and password.
+
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+
+SECURITY-1896 / CVE-2022-28140
+Flaky Test Handler Plugin 1.2.1 and earlier does not configure its XML
+parser to prevent XML external entity (XXE) attacks.
+
+This allows attackers with Item/Configure permission to have Jenkins parse
+a crafted file that uses external entities for extraction of secrets from
+the Jenkins controller or server-side request forgery.
+
+
+SECURITY-2079 / CVE-2022-28141
+Proxmox Plugin 0.5.0 and earlier stores the Proxmox Datacenter password
+unencrypted in the global `config.xml` file on the Jenkins controller as
+part of its configuration.
+
+This password can be viewed by users with access to the Jenkins controller
+file system.
+
+
+SECURITY-2081 / CVE-2022-28142
+Proxmox Plugin 0.6.0 and earlier disables SSL/TLS certificate validation
+for the entire Jenkins controller JVM when configured to ignore SSL/TLS
+issues.
+
+
+SECURITY-2082 / CVE-2022-28143 (CSRF) & CVE-2022-28144 (missing permission =
+check)
+Proxmox Plugin 0.7.0 and earlier does not perform permission checks in
+several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to:
+
+* connect to an attacker-specified host using attacker-specified username
+and password, performing a connection test,
+* disable SSL/TLS validation for the entire Jenkins controller JVM as part
+of the connection test (see SECURITY-2081 / CVE-2022-28142),
+* and test a rollback with attacker-specified parameters.
+
+Additionally, these endpoints do not require POST requests, resulting in a
+cross-site request forgery (CSRF) vulnerability.
+
+
+SECURITY-1892 / CVE-2022-28145
+Continuous Integration with Toad Edge Plugin 2.3 and earlier uses a patched
+fork of an old version of the file browser for workspaces, archived
+artifacts, and `userContent/` from Jenkins core (`DirectoryBrowserSupport`)
+to serve reports.
+
+This fork removes the `Content-Security-Policy` header functionality
+introduced for SECURITY-95.
+
+This results in a stored cross-site scripting (XSS) exploitable by attackers
+with Item/Configure permission or otherwise able to control report contents.
+
+
+SECURITY-2633 / CVE-2022-28146
+Continuous Integration with Toad Edge Plugin 2.3 and earlier allows
+attackers with Item/Configure permission to read arbitrary files on the
+Jenkins controller by specifying an input folder on the Jenkins controller
+as a parameter to its build steps.
+
+
+SECURITY-2635 / CVE-2022-28147
+Continuous Integration with Toad Edge Plugin 2.3 and earlier does not
+perform a permission check in a method implementing form validation.
+
+This allows attackers with Overall/Read permission to check for the
+existence of an attacker-specified file path on the Jenkins controller file
+system.
+
+
+SECURITY-2654 / CVE-2022-28148
+Continuous Integration with Toad Edge Plugin 2.3 and earlier uses a patched
+fork of an old version of the file browser for workspaces, archived
+artifacts, and `userContent/` from Jenkins core (`DirectoryBrowserSupport`)
+to serve reports.
+
+The fork did not receive the fix for SECURITY-2481 in Jenkins 2.315 and LTS
+2.303.2.
+
+This results in a path traversal vulnerability allowing attackers with
+Item/Read permission to obtain the contents of arbitrary files on Windows
+controllers.
+
+
+SECURITY-2285 / CVE-2022-28149
+Job and Node ownership Plugin 0.13.0 and earlier does not escape the names
+of secondary owners.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Item/Configure permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2062 (1) / CVE-2022-28150 (CSRF) & CVE-2022-28151 (missing permiss=
+ion check)
+Job and Node ownership Plugin 0.13.0 and earlier does not perform a
+permission check in several HTTP endpoints.
+
+This allows attackers with Item/Read permission to change the owners and
+item-specific permissions of a job.
+
+Additionally, this endpoint does not require POST requests, resulting in a
+cross-site request forgery (CSRF) vulnerability.
+
+NOTE: This CSRF vulnerability is only exploitable in Jenkins 2.286 and
+earlier, LTS 2.277.1 and earlier. See the
+link:/doc/upgrade-guide/2.277/#upgrading-to-jenkins-lts-2-277-2[LTS upgrade
+guide].
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2062 (2) / CVE-2022-28152
+Job and Node ownership Plugin 0.13.0 and earlier does not require POST
+requests for an HTTP endpoint, resulting in a cross-site request forgery
+(CSRF) vulnerability.
+
+This vulnerability allows attackers to restore the default ownership of a
+job.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1932 / CVE-2022-28153
+SiteMonitor Plugin 0.6 and earlier does not escape URLs of sites to monitor
+in tooltips.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Item/Configure permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1899 / CVE-2022-28154
+Coverage/Complexity Scatter Plot Plugin 1.1.1 and earlier does not
+configure its XML parser to prevent XML external entity (XXE) attacks.
+
+This allows attackers able to control the input files for the 'Public
+Coverage / Complexity Scatter Plot' post-build step to have Jenkins parse a
+crafted file that uses external entities for extraction of secrets from the
+Jenkins controller or server-side request forgery.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1897 / CVE-2022-28155
+Pipeline: Phoenix AutoTest Plugin 1.3 and earlier does not configure its
+XML parser to prevent XML external entity (XXE) attacks.
+
+This allows attackers able to control the input files for the `readXml` or
+`writeXml` build step to have Jenkins parse a crafted file that uses
+external entities for extraction of secrets from the Jenkins controller or
+server-side request forgery.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2683 / CVE-2022-28156
+Pipeline: Phoenix AutoTest Plugin 1.3 and earlier implements a Pipeline
+step (`copy`) to copy files from the running build's directory on the
+Jenkins controller to an agent without sanitizing the path specified.
+
+This allows attackers with Item/Configure permission to copy arbitrary
+files and directories from the Jenkins controller to the agent workspace.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2684 / CVE-2022-28157
+Pipeline: Phoenix AutoTest Plugin 1.3 and earlier implements a Pipeline
+step (`ftp`) to upload files to an FTP server without limiting the source
+directory.
+
+This allows attackers with Item/Configure permission to upload arbitrary
+files from the Jenkins controller via FTP to an attacker-specified FTP
+server.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2685 / CVE-2022-28158
+Pipeline: Phoenix AutoTest Plugin 1.3 and earlier does not perform
+permission checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2262 / CVE-2022-28159
+Tests Selector Plugin 1.3.3 and earlier does not escape the Properties File
+Path option for Choosing Tests parameters.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Item/Configure permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2338 / CVE-2022-28160
+Tests Selector Plugin 1.3.3 and earlier allows users with Item/Configure
+permission to read arbitrary files on the Jenkins controller using the
+Choosing Tests parameter.
+
+As of publication of this advisory, there is no fix.
+
+
+
