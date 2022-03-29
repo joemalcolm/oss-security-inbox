@@ -1,33 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/18/1
-Message-ID: <7d04fb57-182e-a779-dce2-1d1e42d24751@isc.org>
-Date: Wed, 18 May 2022 15:38:36 +0100
-From: ISC Security Officer <security-officer@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/29/2
+Message-ID: <8c6a6c4a-a643-6838-2aad-8911693da9cf@oracle.com>
+Date: Tue, 29 Mar 2022 14:27:12 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: ISC has disclosed a vulnerability in BIND (CVE-2022-1183)
+Subject: Re: zlib memory corruption on deflate (i.e. compress)
 Content-Type: text/plain; charset=utf-8
 
-On May 18 2022, we (Internet Systems Consortium) have disclosed a 
-vulnerability affecting our BIND software:
+For those who don't monitor the https://www.zlib.net/ home page, version 1.2.12 
+was released on Sunday.
 
-CVE-2022-1183: Destroying a TLS session early triggers assertion failure
+	-alan-
 
-https://kb.isc.org/v1/docs/cve-2022-1183
+On 3/26/22 19:29, Adler, Mark wrote:
+> Petr,
+> 
+> Yes, I will release develop to master. I need to do some portability testing first.
+> 
+> Mark
+> 
+> 
+>> On Mar 23, 2022, at 10:43 PM, Petr Štetiar <ynezz@...e.cz> wrote:
+>>
+>> Tavis Ormandy <taviso@...il.com> [2022-03-23 20:49:49]:
+>>
+>> [ adding Mark to the Cc: loop ]
+>>
+>> Hi,
+>>
+>>> Greetings list, I was recently trying to track down a reproducible crash
+>>> in a compressor. Believe it or not, it really was a bug in
+>>> zlib-1.2.11 when compressing (not decompressing!) certain inputs.
+>>
+>> thank you for letting us know!
+>>
+>>> I reported it upstream, but it turns out the issue has been public since
+>>> 2018, but the patch never made it into a release. As far as I know,
+>>> nobody ever assigned it a CVE.
+>>>
+>>> https://github.com/madler/zlib/commit/5c44459c3b28a9bd3283aaceab7c615f8020c531
+>>>
+>>> As far as I can tell, no distros have picked this up.
+>>
+>> It's mostly due to the fact, that AFAIK it has never hit the release. Mark,
+>> would it be please possible to do another point release with that security
+>> fix included? Thanks!
+>>
+>> Cheers,
+>>
+>> Petr
+> 
 
-New versions of BIND are available from https://www.isc.org/downloads
 
-Operators and package maintainers who prefer to apply patches 
-selectively can find individual vulnerability-specific patches in the 
-"patches" subdirectory of the release directories for our affected 
-stable release branch (9.18):
-
-9.18: https://downloads.isc.org/isc/bind9/9.18.3/patches/
-
-With the public announcement of this vulnerability, the embargo period 
-is ended and any updated software packages that have been prepared may 
-be released.
-
-Cathy Almond
-ISC Support
-
-Download attachment "OpenPGP_signature" of type "application/pgp-signature" (496 bytes)
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
