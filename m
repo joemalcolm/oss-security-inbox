@@ -1,31 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/09/6
-Message-ID: <YvKVWuPyQ/YXBT+o@quatroqueijos>
-Date: Tue, 9 Aug 2022 14:11:54 -0300
-From: Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-2588 - Linux kernel cls_route UAF
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/30/3
+Message-ID: <c06880b3-9447-3e3c-2c63-fd2efcfc5e4e@oracle.com>
+Date: Wed, 30 Mar 2022 13:15:15 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com, Jeffrey Walton <noloader@...il.com>
+Subject: Re: SpringShell and recent OpenJDK updates
 Content-Type: text/plain; charset=utf-8
 
-CVE-2022-2588 - Linux kernel cls_route UAF
+On 3/30/22 11:31, Jeffrey Walton wrote:
+> Hi Everyone,
+> 
+> I saw Ubuntu patched OpenJDK 11 recently. [1] Was that due to SpringShell? [2]
 
-It was discovered that the cls_route filter implementation in the Linux kernel
-would not remove an old filter from the hashtable before freeing it if its
-handle had the value 0.
+The Spring Framework is separate from OpenJDK.  (Perhaps you were thinking of
+the Swing framework, which is part of OpenJDK?)
 
-Zhenpeng Lin working with Trend Micro's Zero Day Initiative discovered that
-this vulnerability could be exploited for Local Privilege Escalation. This has
-been reported as ZDI-CAN-17440, and assigned CVE-2022-2588.
+The latest I've seen on SpringShell suggests it was dropped without warning
+as a zero-day: https://bugalert.org/content/notices/2022-03-30-spring.html
 
-This bug has been present since the first Linux commit git, v2.6.12-rc2.
-
-Exploiting it requires CAP_NET_ADMIN in any user or network namespace.
-
-It can be mitigated by those users who do not rely on cls_route, by adding
-'install cls_route /bin/true' to their modprobe.conf or modprobe.d configs,
-in case it's built as a module.
-
-A PoC that will trigger a WARNING is going to be posted in a week.
-
-Fixes have been sent to netdev@...r.kernel.org and are at
-https://lore.kernel.org/netdev/20220809170518.164662-1-cascardo@canonical.com/T/#u.
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
