@@ -1,98 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/27/1
-Message-ID: <nno31819-r6r5-o5q5-53q1-285qn67925p@unkk.fr>
-Date: Wed, 27 Apr 2022 08:40:18 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl OAUTH2 bearer bypass in connection re-use
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/30/1
+Message-ID: <CAH8yC8ngu__9q3C-pDGEAOnM=ZvuXt0m2V=BmJHH_bVa4CE1eQ@mail.gmail.com>
+Date: Wed, 30 Mar 2022 14:31:41 -0400
+From: Jeffrey Walton <noloader@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: SpringShell and recent OpenJDK updates
 Content-Type: text/plain; charset=utf-8
 
-OAUTH2 bearer bypass in connection re-use
-=========================================
+Hi Everyone,
 
-Project curl Security Advisory, April 27th 2022 -
-[Permalink](https://curl.se/docs/CVE-2022-22576.html)
+I saw Ubuntu patched OpenJDK 11 recently. [1] Was that due to SpringShell? [2]
 
-VULNERABILITY
--------------
+Or stepping back a bit, did the SpringShell folks work with distros?
+Or did they really drop a 0-day?
 
-libcurl might reuse OAUTH2-authenticated connections without properly making
-sure that the connection was authenticated with the same credentials as set
-for this transfer. This affects SASL-enabled protocols: SMPTP(S), IMAP(S),
-POP3(S) and LDAP(S) (openldap only).
+[1] https://ubuntu.com/security/notices/USN-5313-2
+[2] https://www.cyberkendra.com/2022/03/springshell-rce-0-day-vulnerability.html
 
-libcurl maintains a pool of live connections after a transfer has completed
-(sometimes called the connection cache). This pool of connections is then gone
-through when a new transfer is requested and if there is a live connection
-available that can be reused, it is preferred instead of creating a new one.
-
-Due to this security vulnerability, a connection that is successfully created
-and authenticated with a user name + OAUTH2 bearer could subsequently be
-erroneously reused even for user + [other OAUTH2 bearer], even though that
-might not even be a valid bearer. This could lead to an authentication bypass,
-either by mistake or by a malicious actor.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-This flaw was introduced in curl in 2013 with the commit series that started
-with [19a05c908f7d8b](https://github.com/curl/curl/commit/19a05c908f7d8b).
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2022-22576 to this issue.
-
-CWE-305: Authentication Bypass by Primary Weakness
-
-Severity: Medium
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.33.0 to and including 7.82.0
-- Not affected versions: curl < 7.33.0 and curl >= 7.83.0
-
-Note that libcurl is used by many applications, but not always advertised as
-such.
-
-THE SOLUTION
-------------
-
-A [fix for CVE-2022-22576](https://github.com/curl/curl/commit/852aa5ad351ea53e5f)
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.83.0
-
-  B - Apply the patch to your version and rebuild
-
-  C - Set the bearer string as password *as well* when using OAUTH2 bearer
-      authentication with these protocols.
-
-TIME LINE
----------
-
-It was first reported to the curl project on March 18 2022. We contacted
-distros@...nwall on April 18.
-
-libcurl 7.83.0 was released on April 27 2022, coordinated with the
-publication of this advisory.
-
-CREDITS
--------
-
-Reported and patched by Patrick Monnerat.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
+Jeff
