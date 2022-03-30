@@ -1,96 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/10/3
-Message-ID: <CALXpagykvZnnXHHPk6DP6O_qX5O=TBQK6_j-vO5ZFot5HY1NsQ@mail.gmail.com>
-Date: Thu, 10 Nov 2022 09:25:36 -0800
-From: Tim Allclair <timallclair@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: [kubernetes] CVE-2022-3162: Unauthorized read of Custom Resources
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/30/2
+Message-ID: <20220330201136.GA3061879@millbarge>
+Date: Wed, 30 Mar 2022 20:11:36 +0000
+From: Seth Arnold <seth.arnold@...onical.com>
+To: Jeffrey Walton <noloader@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: SpringShell and recent OpenJDK updates
 Content-Type: text/plain; charset=utf-8
 
-Hello Kubernetes Community,
+On Wed, Mar 30, 2022 at 02:31:41PM -0400, Jeffrey Walton wrote:
+> I saw Ubuntu patched OpenJDK 11 recently. [1] Was that due to SpringShell? [2]
+> 
+> Or stepping back a bit, did the SpringShell folks work with distros?
+> Or did they really drop a 0-day?
+> 
+> [1] https://ubuntu.com/security/notices/USN-5313-2
+> [2] https://www.cyberkendra.com/2022/03/springshell-rce-0-day-vulnerability.html
 
-A security issue was discovered in Kubernetes where users authorized to
-list or watch one type of namespaced custom resource cluster-wide can read
-custom resources of a different type in the same API group without
-authorization.
+Hello Jeff, as far as I know, Ubuntu received no communication from
+anyone about SpringShell. These are just bugfixes.
 
-This issue has been rated Medium (
-CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N
-<https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N>),
-and assigned CVE-2022-3162
-Am I vulnerable?
+Thanks
 
-Clusters are impacted by this vulnerability if all of the following are
-true:
-
-   1.
-
-   There are 2+ CustomResourceDefinitions sharing the same API group
-   2.
-
-   Users have cluster-wide list or watch authorization on one of those
-   custom resources.
-   3.
-
-   The same users are not authorized to read another custom resource in the
-   same API group.
-
-Affected Versions
-
-   -
-
-   Kubernetes kube-apiserver <= v1.25.3
-   -
-
-   Kubernetes kube-apiserver <= v1.24.7
-   -
-
-   Kubernetes kube-apiserver <= v1.23.13
-   -
-
-   Kubernetes kube-apiserver <= v1.22.15
-
-How do I mitigate this vulnerability?
-
-Upgrading the kube-apiserver to a fixed version mitigates this
-vulnerability.
-
-Prior to upgrading, this vulnerability can be mitigated by avoiding
-granting cluster-wide list and watch permissions.
-Fixed Versions
-
-   -
-
-   Kubernetes kube-apiserver v1.25.4
-   -
-
-   Kubernetes kube-apiserver v1.24.8
-   -
-
-   Kubernetes kube-apiserver v1.23.14
-   -
-
-   Kubernetes kube-apiserver v1.22.16
-
-These releases will be published over the course of today, November 10th.
-Detection
-
-Requests containing `..` in the request path are a likely indicator of
-exploitation. Request paths may be captured in API audit logs, or in
-kube-apiserver HTTP logs.
-
-If you find evidence that this vulnerability has been exploited, please
-contact security@...ernetes.io
-Additional Details
-
-See the GitHub issue for more details:
-https://github.com/kubernetes/kubernetes/issues/113756
-Acknowledgements
-
-This vulnerability was reported by Richard Turnbull of NCC Group as part of
-the Kubernetes Audit.
-
-Thank You,
-
-Tim Allclair on behalf of the Kubernetes Security Response Committee
-
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
