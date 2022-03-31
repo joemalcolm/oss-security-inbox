@@ -1,29 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/29/8
-Message-ID: <20221229204300.ehvPd%steffen@sdaoden.eu>
-Date: Thu, 29 Dec 2022 21:43:00 +0100
-From: Steffen Nurpmeso <steffen@...oden.eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/31/1
+Message-Id: <5379a9a1-f13a-4d98-97b1-37c11dfe9d0a@www.fastmail.com>
+Date: Thu, 31 Mar 2022 15:33:18 +0200
+From: "Kevin Decherf" <kevin@...cherf.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
+Subject: Re: SpringShell and recent OpenJDK updates
 Content-Type: text/plain; charset=utf-8
 
-Jeffrey Walton wrote in
- <CAH8yC8=p9a71AohbLtKGzb8d8yzBYyCADUJ1xthddQsyFbdSRA@...l.gmail.com>:
- ...
- |Using \0 as the delimiter would still require encoding of \0 when it
- |is present in the data.
+On Wed, Mar 30, 2022, at 22:15, Alan Coopersmith wrote:
+> On 3/30/22 11:31, Jeffrey Walton wrote:
+>> Hi Everyone,
+>> 
+>> I saw Ubuntu patched OpenJDK 11 recently. [1] Was that due to SpringShell? [2]
+>
+> The Spring Framework is separate from OpenJDK.  (Perhaps you were thinking of
+> the Swing framework, which is part of OpenJDK?)
+>
+> The latest I've seen on SpringShell suggests it was dropped without warning
+> as a zero-day: https://bugalert.org/content/notices/2022-03-30-spring.html
 
-But it is already used in some files like /proc/self/environ. 
-'Just thinking, it would be the (here optional) .nul suffix that
-is new.  (It of course cannot happen in the C-style strings of
-which all this is about.  For serialization of true non-humanized
-binary data "as-is", yes.  I surely would go CBOR then.  Though
-the libcbor that i track is a huge beast, it surely can be much
-smaller than that.)
+Here are official announcements regarding the Spring Framework RCE:
+- https://spring.io/blog/2022/03/31/spring-framework-rce-early-announcement
+- https://tanzu.vmware.com/security/cve-2022-22965
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+-- 
+Kevin Decherf - @Kdecherf
+GPG 0x108ABD75A81E6E2F
+https://kdecherf.com
