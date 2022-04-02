@@ -1,26 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/14/1
-Message-Id: <EC5BDCA4-8FF7-41E0-9177-5F4DD8A96841@apache.org>
-Date: Tue, 14 Jun 2022 00:22:00 -0700
-From: Ralph Goers <rgoers@...che.org>
-To: announce@...che.org
-Cc: oss-security@...ts.openwall.com
-Subject: CVE-2022-25167 - Apache Flume JMSSource does not protect from malicious JNDI urls
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/02/1
+Message-ID: <20220402035749.GA31424@kili>
+Date: Sat, 2 Apr 2022 06:57:49 +0300
+From: Dan Carpenter <dan.carpenter@...cle.com>
+To: Sasha Levin <sashal@...nel.org>
+Cc: linux-kernel@...r.kernel.org, stable@...r.kernel.org, Laura Abbott <labbott@...nel.org>, Luo Likang <luolikang@...ocus.com>, "Michael S . Tsirkin" <mst@...hat.com>, jasowang@...hat.com, kvm@...r.kernel.org, virtualization@...ts.linux-foundation.org, netdev@...r.kernel.org, oss-security@...ts.openwall.com
+Subject: Re: [PATCH AUTOSEL 5.15 13/16] vdpa: clean up get_config_size ret value handling
 Content-Type: text/plain; charset=utf-8
 
-Severity, medium
+The mitre.org page
 
-Description:
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=2022-0998
 
-Flume’s JMSSource class can be configured with a connection factory name. A JNDI lookup is performed on this name without performing an validation. This could result in untrusted data being deserialized.
+says this is a fix for CVE-2022-0998 but if you apply it by itself it
+creates a serious security problem.  Originally this bug only affected
+32 bit systems but this patch will change it to affect everyone.
 
-Mitigation
-Upgrade to Flume 1.10.0.
+You need to apply commit 3ed21c1451a1 ("vdpa: check that offsets are
+within bounds").
 
-In releases 1.4.0 through 1.9.0 the JMSSource should not be used.
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3ed21c1451a14d139e1ceb18f2fa70865ce3195a
 
-Release Details
-In release 1.10.0, if a protocol is specified in the connection factory parameter only the java protocol will be allowed. If no protocol is specified it will also be allowed.
+I don't know if this affects anyone, but it seemed worth mentioning.
 
-Credit
-This issue was found by the Flume development team.
+regards,
+dan carpenter
+
+On Sat, Jan 22, 2022 at 07:12:12PM -0500, Sasha Levin wrote:
+> From: Laura Abbott <labbott@...nel.org>
+> 
+> [ Upstream commit 870aaff92e959e29d40f9cfdb5ed06ba2fc2dae0 ]
+> 
+> The return type of get_config_size is size_t so it makes
+> sense to change the type of the variable holding its result.
+> 
+> That said, this already got taken care of (differently, and arguably
+> not as well) by commit 3ed21c1451a1 ("vdpa: check that offsets are
+> within bounds").
+> 
+> The added 'c->off > size' test in that commit will be done as an
+> unsigned comparison on 32-bit (safe due to not being signed).
+> 
+> On a 64-bit platform, it will be done as a signed comparison, but in
+> that case the comparison will be done in 64-bit, and 'c->off' being an
+> u32 it will be valid thanks to the extended range (ie both values will
+> be positive in 64 bits).
+> 
+> So this was a real bug, but it was already addressed and marked for stable.
+> 
+> Signed-off-by: Laura Abbott <labbott@...nel.org>
+> Reported-by: Luo Likang <luolikang@...ocus.com>
+> Signed-off-by: Michael S. Tsirkin <mst@...hat.com>
+> Signed-off-by: Sasha Levin <sashal@...nel.org>
+> ---
+>  drivers/vhost/vdpa.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
+> index d62f05d056b7b..913cd465f9f1e 100644
+> --- a/drivers/vhost/vdpa.c
+> +++ b/drivers/vhost/vdpa.c
+> @@ -195,7 +195,7 @@ static int vhost_vdpa_config_validate(struct vhost_vdpa *v,
+>  				      struct vhost_vdpa_config *c)
+>  {
+>  	struct vdpa_device *vdpa = v->vdpa;
+> -	long size = vdpa->config->get_config_size(vdpa);
+> +	size_t size = vdpa->config->get_config_size(vdpa);
+>  
+>  	if (c->len == 0 || c->off > size)
+>  		return -EINVAL;
+> -- 
+> 2.34.1
+> 
+> 
