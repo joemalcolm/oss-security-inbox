@@ -1,4 +1,4 @@
-Received: (qmail 24050 invoked by uid 550); 21 Dec 2024 00:58:16 -0000
+Received: (qmail 7705 invoked by uid 550); 5 Apr 2022 16:15:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,133 +7,29 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 23777 invoked from network); 21 Dec 2024 00:58:09 -0000
-Date: Sat, 21 Dec 2024 01:58:05 +0100
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 32001 invoked from network); 5 Apr 2022 15:55:01 -0000
+Content-Type: text/plain; charset=utf-8
+From: Subbu Subramaniam <mcvsubbu@apache.org>
 To: oss-security@lists.openwall.com
-Cc: Victoria Risk <vicky@isc.org>, security-officer@isc.org
-Message-ID: <20241221005805.GA27101@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] Fwd: Operational Notification: BIND 9.20 defect in QPzone implementation
+Message-ID: <c4acef90-342d-4a39-069a-ecc1a8dd7f9a@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 05 Apr 2022 15:54:48 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2022-23974: Apache Pinot: Pinot segment push endpoint has a
+ vulnerability in unprotected environments 
 
-Hi,
-
-I am forwarding in here ISC's Operational Notification for a
-non-security issue in BIND 9.  I do so because this was sent to the
-distros list and we have a rule that anything passing through distros
-must be posted to oss-security when embargo ends.  When there's no
-embargo, it means right now.  While normally a non-security issue would
-be off-topic for oss-security (except e.g. when the issue is with a
-security fix), we must post it this time since it was on distros and we
-don't want to make/explain exceptions.
-
-This is not intended use for the distros list, which is for embargoed
-information only.  Unfortunately, it is tricky to notify distros of
-non-security issues, so I kind of understand why the ISC sent this to
-the distros list.
-
-Somehow all mailing lists set up for this purpose (and more) end up low
-traffic and with few participants and eventually die off.  The latest is:
-
-https://lore.kernel.org/distributions/
-
-the previous was:
-
-https://lists.freedesktop.org/mailman/listinfo/distributions
-
-and before it there was:
-
-https://www.openwall.com/lists/xvendor/
-
-I think all 3 of these are technically still operational.
-
-Alexander
-
------ Forwarded message from Victoria Risk <vicky@isc.org> -----
-
-From: Victoria Risk <vicky@isc.org>
-To: distros
-Subject: Operational Notification: BIND 9.20 defect in QPzone implementation
-Date: Thu, 19 Dec 2024 11:22:30 -0500
-
-To the packagers and redistributors of BIND 9,
-
-Recent versions of BIND have a serious defect that can be remediated by rebuilding packages for BIND9, with a different compile-time flag setting.  This is not a CVE: ISC has issued a public Operational Notice, (https://kb.isc.org/docs/operational-notification-bind-920-defect-in-qpzone-implementation) there is no embargo on this information.
-If you have questions, please ask them by sending email to bind-security at isc.org <https://lists.isc.org/mailman/listinfo/isc-os-security> or opening a confidential GitLab issue at https://gitlab.isc.org/isc-projects/bind9/-/issues/new?issue[confidential]=true
-
-Thank you, and sorry about the timing of this!
-
-Vicky Risk
-
------------
-
-Posting date: 19 December 2024
-
-Program impacted: BIND
-
-Versions affected:
-
-BIND
-
-9.20.0 -> 9.20.4
 Description:
 
-ISC received several reports concerning an assertion failure involving DNSSEC-signed zones using NSEC3. Upon investigation, ISC engineers found a serious bug in the QPzone implementation which had been introduced in BIND 9.20.
+In 0.9.3 or older versions of Apache Pinot segment upload path allowed segm=
+ent directories to be imported into pinot tables. In pinot installations th=
+at allow open access to the controller a specially crafted request can pote=
+ntially be exploited to cause disruption in pinot service.
 
-QPzone uses the QPDB in-memory database for holding and serving authoritative zone content.
+Pinot release 0.10.0 fixes this. See https://docs.pinot.apache.org/basics/r=
+eleases/0.10.0
 
-Although this specific assertion only occurs in 9.20.4, the underlying defect has been present in QPzone since 9.20.0 and could potentially lead to other unexpected interactions and outcomes.
+Credit:
 
-This defect affects authoritative zones that have been signed using NSEC3 and all servers that are either primary or secondary for these zones. (Zones whose DNSSEC-management involves an independent DNSSEC-signer would therefore also be affected.)
+Apache Pinot would like to thank bubblegumkk@qq.com, Kuiplatain@knownsec an=
+d FA1C0N@RPO_OFFICIAL for reporting the issue
 
-Servers hosting only authoritative zones that are unsigned or that are DNSSEC-signed with NSEC are unaffected.
-
-BIND 9.20 resolvers are unaffected.
-
-Impact:
-
-Authoritative servers hosting zones that have been DNSSEC-signed using NSEC3 may experience assertion failures or other unexpected events or outcomes when those zones are queried.
-
-Solution:
-
-ISC is not updating or withdrawing the BIND 9.20 source code distributions, but has instead updated all 9.20.4 packaged distributions to use the older RBTDB database implementation instead of the new QPDB for authoritative zones.
-
-If you are running a BIND 9.20 server that hosts authoritative zones that are DNSSEC-signed with NSEC3, we recommend:
-
-Recompiling BIND 9.20 with --with-zonedb=RBTDB
-
-or
-
-Installing the latest BIND 9.20.4 packages provided by ISC
-
-Note for users of ISC BIND 9.20 packages
-All ISC previously-released BIND 9.20 packages (9.20.0 - 9.20.4) were built using the affected code. If you are affected by this bug, you will need to upgrade to the latest ISC 9.20.4 package (released on 19 December 2024).
-
-If using BIND 9.20 packages provided by your OS vendor, please refer to them for advice on upgrading.
-
-Acknowledgements:
-ISC would like to thank all of the users of BIND who very promptly brought this problem to our attention and provided additional information to assist with troubleshooting.
-
-Do you still have questions?
-Questions regarding this notification should be mailed to bind-security@isc.org <mailto:bind-security@isc.org> or posted as confidential GitLab issues at https://gitlab.isc.org/isc-projects/bind9/-/issues/new?issue[confidential]=true.
-
-Note:
-ISC patches only currently supported versions. When possible we indicate EOL versions affected. For current information on which versions are actively supported, please see https://www.isc.org/download/.
-
-ISC Security Vulnerability Disclosure Policy:
-Details of our current security advisory policy and practice can be found in the ISC Software Defect and Security Vulnerability Disclosure Policy at https://kb.isc.org/docs/aa-00861.
-
-The Knowledgebase article https://kb.isc.org/docs/operational-notification-bind-920-defect-in-qpzone-implementation is the complete and official operational notification document.
-
-How to Submit a Bug Report to ISC:
-If you have encountered a problem with BIND (or with any other ISC software), details on how to submit a report can be found at https://www.isc.org/reportbug/.
-
-Legal Disclaimer:
-Internet Systems Consortium (ISC) is providing this notice on an "AS IS" basis. No warranty or guarantee of any kind is expressed in this notice and none should be implied. ISC expressly excludes and disclaims any warranties regarding this notice or materials referred to in this notice, including, without limitation, any implied warranty of merchantability, fitness for a particular purpose, absence of hidden defects, or of non-infringement. Your use or reliance on this notice or materials referred to in this notice is at your own risk. ISC may change this notice at any time. A stand-alone copy or paraphrase of the text of this document that omits the document URL is an uncontrolled copy. Uncontrolled copies may lack important information, be out of date, or contain factual errors.
--- 
-
------ End forwarded message -----
