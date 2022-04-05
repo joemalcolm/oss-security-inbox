@@ -1,221 +1,346 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/24/3
-Message-ID: <f5299cec-6ec4-d69a-188c-36b88618947b@oracle.com>
-Date: Tue, 24 May 2022 15:56:46 +0200
-From: Vegard Nossum <vegard.nossum@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros list policy and Linux kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/05/3
+Message-Id: <E1nbhu2-0005jJ-9A@xenbits.xenproject.org>
+Date: Tue, 05 Apr 2022 12:03:18 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 400 v2 (CVE-2022-26358,CVE-2022-26359,CVE-2022-26360,CVE-2022-26361) - IOMMU: RMRR (VT-d) and unity map (AMD-Vi) handling issues
 Content-Type: text/plain; charset=utf-8
 
-On 5/24/22 15:29, Solar Designer wrote:
-> On Sun, May 22, 2022 at 09:19:51PM +0200, Solar Designer wrote:
->> it looks like Vegard Nossum and maybe Thadeu Lima de Souza Cascardo
->> intend to propose changes to the kernel's
->> Documentation/admin-guide/security-bugs.rst:
->> 
->> On Fri, May 20, 2022 at 10:14:07AM +0200, Vegard Nossum wrote:
->>> I'll respond a bit later with a slightly more detailed option
->>> that also includes potential modifications to the in-kernel
->>> documentation as displayed on kernel.org.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-[...]
+ Xen Security Advisory CVE-2022-26358,CVE-2022-26359,CVE-2022-26360,CVE-2022-26361 / XSA-400
+                                          version 2
 
-> If there are no objections, Vegard can you please suggest specific
-> edits accordingly, and if there are no objections to those either,
-> then submit them as a patch?
+       IOMMU: RMRR (VT-d) and unity map (AMD-Vi) handling issues
 
-I was going to propose completely rewriting the document to be clearer
-for reporters and to be more in line with both s@k.o and linux-distros
-policies. I'll include the full rewritten document here so you can reply
-to specific bits of it and I'll also give people a chance to comment on
-it here before attempting to submit it upstream (if somebody wants a Cc
-on that submission let me know).
+UPDATES IN VERSION 2
+====================
 
-Rendered HTML:
-https://vegard.github.io/security/Documentation/output/admin-guide/security-bugs.html
+Public release.
 
-And just for comparison, this is the current upstream version:
-https://www.kernel.org/doc/html/latest/admin-guide/security-bugs.html
+ISSUE DESCRIPTION
+=================
 
+Certain PCI devices in a system might be assigned Reserved Memory
+Regions (specified via Reserved Memory Region Reporting, "RMRR") for
+Intel VT-d or Unity Mapping ranges for AMD-Vi.  These are typically used
+for platform tasks such as legacy USB emulation.
 
-Vegard
+Since the precise purpose of these regions is unknown, once a device
+associated with such a region is active, the mappings of these regions
+need to remain continuouly accessible by the device.  This requirement
+has been violated.
 
-8<--------------------------------------
+Subsequent DMA or interrupts from the device may have unpredictable
+behaviour, ranging from IOMMU faults to memory corruption.
 
-..
-    If you modify this document, please consider the following:
+IMPACT
+======
 
-    1) The most important information should be at the top (preferably in
-    the opening paragraph). This means contacting <security@...nel.org>;
-    if somebody doesn't read any further than that, at least the security
-    team will have the report.
+The precise impact is system specific, but would likely be a Denial of
+Service (DoS) affecting the entire host.  Privilege escalation and
+information leaks cannot be ruled out.
 
-    2) Make the differences between the lists extremely clear. The old
-    version did make an attempt at this, but the lines were not drawn
-    clearly enough.
+VULNERABLE SYSTEMS
+==================
 
-    3) Emphasize some of the posting rules which can be confusing to new
-    people (e.g. the fact that posting to linux-distros means you must
-    propose an embargo date and that this cannot under any circumstances
-    be more than 14 days).
+All Xen versions supporting PCI passthrough are affected.
 
-    4) The document should be a "step-by-step process" as much as possible,
-    so that you can use it as a guide while reporting an issue instead of
-    having to search back and forth for the thing you're looking for.
+Only x86 systems with IOMMU hardware are vulnerable.  Arm systems
+as well as x86 systems without IOMMU hardware or without any IOMMUs in
+use are not vulnerable.
 
-.. _securitybugs:
+Only x86 guests which have physical devices passed through to them,
+and only when any such device has an associated RMRR or unity map, can
+leverage the vulnerability. (Whether a device is associated with an RMRR
+or unity map is not easy to discern.)
 
-Reporting security bugs
-=======================
+MITIGATION
+==========
 
-Linux kernel developers take security very seriously.  As such, we'd
-like to know when a security bug is found so that it can be fixed and
-disclosed as quickly as possible.  Please report security bugs to the
-Linux kernel security team at security@...nel.org, henceforth "the
-security list". This is a closed list of trusted developers who will
-help verify the bug report and develop a patch.
+Not passing through physical devices to untrusted guests when the
+devices have assoicated RMRRs / unity maps will avoid the vulnerability.
 
-While the security list is closed, the security team may bring in
-extra help from the relevant maintainers to understand and fix the
-security vulnerability.
+CREDITS
+=======
 
-Note that the main interest of the kernel security list is in getting
-bugs fixed; CVE assignment, disclosure to distributions, and public
-disclosure happens on different lists with different people.
+Aspects of this issue were discovered by Jan Beulich of SUSE and
+Roger Pau Monné of Citrix.
 
-Here is a quick overview of the various lists:
+RESOLUTION
+==========
 
-.. list-table::
-   :widths: 35 10 20 35
-   :header-rows: 1
+Applying the appropriate set of attached patches resolves this issue.
 
-   * - List address
-     - Open?
-     - Purpose
-     - Members
-   * - security@...nel.org
-     - Closed
-     - Reporting; patch development
-     - Trusted kernel developers
-   * - linux-distros@...openwall.org
-     - Closed
-     - Coordination; CVE assignment; patch development, testing, and
-backporting
-     - Linux distribution representatives
-   * - oss-security@...ts.openwall.com
-     - Public
-     - Disclosure
-     - General public
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
 
-The following sections give a step-by-step guide to reporting and
-disclosure.
+xsa400/xsa400-??.patch          xen-unstable
+xsa400/xsa400-4.16-*.patch      Xen 4.16.x
+xsa400/xsa400-4.15-*.patch      Xen 4.15.x
+xsa400/xsa400-4.14-*.patch      Xen 4.14.x
+xsa400/xsa400-4.13-*.patch      Xen 4.13.x
+xsa400/xsa400-4.12-*.patch      Xen 4.12.x
 
-Contacting the security list
-----------------------------
+$ sha256sum xsa400*/*
+108544235a011e96e8717e9e744190fd8128e99cca8141f682667bd7b8533f45  xsa400/xsa400-01.patch
+1648ef0213dd6beeaa782a18926416a00aa51ad89136aa1565debd5312bf58aa  xsa400/xsa400-02.patch
+39e02738ce3d3a65c02355dd45cb844ecca8be9715b7887dedcdaada02c4bda1  xsa400/xsa400-03.patch
+2d5e7f4090418d817df002b7cd7a9a40246ff9900faf53fc2b2f685ac77b2a0e  xsa400/xsa400-4.12-00.patch
+a4291033d1960f8095a11e765072f60cf9e5be07d4cd0cbfed1896f9c66a4576  xsa400/xsa400-4.12-01.patch
+2f5b2ce22ae6cba8a5380ccf63ae2dcf6e7ce8f29a33c87c0630abc6c1d24793  xsa400/xsa400-4.12-02.patch
+86ee30d46957f63e4516ea47f14470579d0906fd536b39e31645e2cd471c1b49  xsa400/xsa400-4.12-03.patch
+546430f61df3eb92a55e32047cce8557d85a8e860f67d558c35fea44e7c56b18  xsa400/xsa400-4.12-04.patch
+178463bf81b138668c2f036b11a0b9406a6f5bb98c0643741787ccdf276495d9  xsa400/xsa400-4.12-05.patch
+b19c599eb5eb17f8e0e17879174a4235fdc3f2172bc77bffdee60074ef2d7c90  xsa400/xsa400-4.12-06.patch
+02eae481f2b06763dd913b46a65837791147b7916bbd0ed50e5d972784b310aa  xsa400/xsa400-4.12-07.patch
+298339cc343d9803158abd0c36030f36e7dc8360ccfed320f34ff01813c47434  xsa400/xsa400-4.12-08.patch
+9253d7120db39a1e3c14fc6b8735577f3d215837996eed057511146c0ba199d6  xsa400/xsa400-4.12-09.patch
+762bbe418c028449812b4441c4e369230477eeea4d863c05a2efd9c7e5e19bc3  xsa400/xsa400-4.12-10.patch
+7172957a27cdf02327c28b5cfedf35b12e76cb17237cbb9c318442961f503fe6  xsa400/xsa400-4.12-11.patch
+c685d9ee2453728f509a78506930f756118ff443fbe6d5307873e90455b5e131  xsa400/xsa400-4.13-00.patch
+0b0a80a249c9c58726f913df24163976cfaadabc685d3d274dd7b972fe4cbffc  xsa400/xsa400-4.13-01.patch
+eabee7d9cabe00748e78fda0363818ca6085ac395804658a11f94394236d2734  xsa400/xsa400-4.13-02.patch
+66cd2a0ee8a002668e04e2bb7192ac2f774012434765988bdea0a7e79621f58c  xsa400/xsa400-4.13-03.patch
+4457c142c1fdc67e0dc77a57bc57159ee63dc1946e432ae1225937c7ed3a3e82  xsa400/xsa400-4.13-04.patch
+2feabcbcf160d8c1130b2c86efd98dd9fee0332489520f3a10aa8bb37d6a5a20  xsa400/xsa400-4.13-05.patch
+903099123d37806b7fe684d75ab0fb6a28b4609d7370cce65a9ba5ab4db43ddd  xsa400/xsa400-4.13-06.patch
+e8a39d36f629b7f79634d09d22ace97f1c23ee10ee9fef6afd68ec2204c55d81  xsa400/xsa400-4.13-07.patch
+d85c63917542d2d2b47dd6322b4c32364719be4707acf616290aacd536c57805  xsa400/xsa400-4.13-08.patch
+5496ca04a2789603069ca8e8d3bf6d301c19c799ccff813bf17865b46f687757  xsa400/xsa400-4.13-09.patch
+8b343f3616c0283caac334b4f0cc42b1523f2dc9de3463f2edadbf1a11c17a22  xsa400/xsa400-4.13-10.patch
+577d20d2ed5da8a89f32eae717a140f9ec3900e31fc9e10ee23e37ae5dc19d4a  xsa400/xsa400-4.13-11.patch
+bfa82c6beae9ec8ab88e042296442eed3ca162b42124c982785c7c0d95440480  xsa400/xsa400-4.14-01.patch
+f8f7da8d0cc3d149874956e9aefe666a2e33275dba66ed0d55f0b559d078f01f  xsa400/xsa400-4.14-02.patch
+49acd3d795aa091f8fa1c72b5064b5a71966e77c9785f5d0f8226d99daba3ead  xsa400/xsa400-4.14-03.patch
+0ce4435a8c7fd6f4186ea31d29932094b1a902d9d0c5dafa3fcb1c15c5eca88c  xsa400/xsa400-4.14-04.patch
+aeae4cef4bf31ecd854ad820239fe793f36ed81c0ad28ce3935ab3f83c3ee58c  xsa400/xsa400-4.14-05.patch
+f8d93e2ab3f891f70abd17ddba9aae8237605f1f680754ff9df646e5ddb9d419  xsa400/xsa400-4.14-06.patch
+afb9f731ba7a53930626e322ebb39db19f817b5c60710fc934c395fcdea4c7f4  xsa400/xsa400-4.14-07.patch
+c236bb7b5c692cf30e7b84e6668f87b248bcf80c6df1dd74c655b91b955eb271  xsa400/xsa400-4.14-08.patch
+6c4d44983eae92212be6bda7663198260bdeb0506c5b622c38ddbcedf9360d69  xsa400/xsa400-4.14-09.patch
+5393c6681c675c666396f6725c2ac2e48293465e97bc228dcfc410ee84d8ba7c  xsa400/xsa400-4.14-10.patch
+8d1dcdeb4d9420840a6753bb56f35bf199af63a6c477f2352e47222df5337c1a  xsa400/xsa400-4.14-11.patch
+f52a70fd92c4819658630c9d478ae03a9801352b024240059877d0ee2002e31e  xsa400/xsa400-4.15-01.patch
+243a0b20b20c78b41f833004c82ce26b1249285671f150bdfe4a2314860df316  xsa400/xsa400-4.15-02.patch
+175f2472f80dacffcee578543f4fc4521f5533de46199ce86b072bfd0ede9ae3  xsa400/xsa400-4.15-03.patch
+dee6fbe9e3c03d695bae1f81cebca80ca54ecf02a51db64ae5f3d313837eed8c  xsa400/xsa400-4.15-04.patch
+55a35033b8ba45b1c9c556e0c2866733e518137299f2f3f4d41046766898aeb5  xsa400/xsa400-4.15-05.patch
+94ec5289a3a632fed8d220478847ef3b780d7db345f30ee9d6b186905de61048  xsa400/xsa400-4.15-06.patch
+50cbb08b931cd1cc8ec3e2aa17b537db80dcd03a6de0994331fc3818f53cbfe4  xsa400/xsa400-4.15-07.patch
+e4c77fac42b8b0b50cdc9de30f406176c44de75d647e36b4bbd6360dd70c8aa6  xsa400/xsa400-4.15-08.patch
+652cd8700b830b3520db325cfd90eab6c08bd423debb21c05caa7edfef9ee671  xsa400/xsa400-4.15-09.patch
+50e58d663690475ce35a0a65eda88a2c2da319ddc02eb15b5a7d568a8f0a0366  xsa400/xsa400-4.15-10.patch
+37a18da6ad1f529bfdc4156225f18c17c10a45302b7d6045ee38c934656589da  xsa400/xsa400-4.15-11.patch
+ff069d123df2aba7a4f3185f21f7ca36b34fc026dcdd279224c86698f84c0975  xsa400/xsa400-4.15-12.patch
+76497919563cdf2804f5071325c032acd04cf8df75c0dcb4b207a93b9ae80927  xsa400/xsa400-4.16-01.patch
+150f2a7621ec17d6369a6ebbc2c08c502f3524acb89855a86a25d7b4fa3e3270  xsa400/xsa400-4.16-02.patch
+cd59bca0fcab4bda1d0ea839501543a59b53aef61e96a0d949675bc5550a6fcb  xsa400/xsa400-4.16-03.patch
+098edab3ed8915a3598badaa1d452f7c8ab2d8e72879dd9bf941b2093e6df9d1  xsa400/xsa400-4.16-04.patch
+a85640291e1bc1cdb757172eb6d2036834ad2eb7b84252cc64d29db3feeff331  xsa400/xsa400-4.16-05.patch
+99d43caf1ce60f421d940c2774e2a59d65d1f0dcccd941f13066117a19222b22  xsa400/xsa400-4.16-06.patch
+fbe5ec58da594dffd3e63c18406280f27d976609350d7c7083acbf2f2e6538cd  xsa400/xsa400-4.16-07.patch
+e6b0d400beda8ff0e9bdbfd033bc23935069b41dbd5dddf863dbd70de44d908f  xsa400/xsa400-4.16-08.patch
+965f96bdb33a872942de42597c7cc32012020f37b25a84015ecc55387d6b07dd  xsa400/xsa400-4.16-09.patch
+7996b1462374168ddc9cbc01c990d5cb40140d7a100096f284f6b74fb4ad7ec4  xsa400/xsa400-4.16-10.patch
+23e325be799b299e9621e76eeff646b81518a4124474fb766d3bf6f0cc925083  xsa400/xsa400-4.16-11.patch
+6fa43e1a8f53184724cd4a7b5c13f0fd699c998af968bafaefda570432b5a7d8  xsa400/xsa400-4.16-12.patch
+82306d680ef445bee04969028184f65b5e106c89c308fbb876b858f77fea9506  xsa400/xsa400-04.patch
+ccf3ff62b427d3d2ea46d4da96beeef2cb64674bc0d247352233c4b84a21f205  xsa400/xsa400-05.patch
+8b3f767ca659e8bbf4983927999bdb92d9fa42e3a88973e22facda0e23f29a84  xsa400/xsa400-06.patch
+bb570b89a2d4b535831d9211bf08cc0c62c060dc7808911afd8186082b884cf8  xsa400/xsa400-07.patch
+8382fd5336b5b4b3388dee099da00b1e728dea77d96825c6088991d7e50f333b  xsa400/xsa400-08.patch
+6909363863932ca77c9b7384516965bc1697fab9b4814294a1675fb6ce8e166e  xsa400/xsa400-09.patch
+c37fee4dd9ab2bf64ebb8b9c553f793bfcef9a7cf1972b0000fe6ce28b9e8e60  xsa400/xsa400-10.patch
+70f11f64457c9703f09c3121d08d5ff4676af20bd42eb1262c433a5e0f79ea41  xsa400/xsa400-11.patch
+724e34d262939162ecab713c070cc07b8f7baeca50ee8b62bb59460ec4f7fbdb  xsa400/xsa400-12.patch
+$
 
-As it is with any bug, the more information provided the easier it will
-be to diagnose and fix; please review the procedure outlined in
-Documentation/admin-guide/reporting-issues.rst if you are unclear about
-what information is helpful. Any exploit code is very helpful and will
-not be released without consent from the reporter unless it has already
-been made public.
+DEPLOYMENT DURING EMBARGO
+=========================
 
-The security team does not assign CVEs, nor does it require them
-for reports or fixes. CVEs may be requested when the issue is reported to
-the distros list.
+Deployment of the patches described above (or others which are
+substantially similar) is permitted during the embargo, even on
+public-facing systems with untrusted guest users and administrators.
 
-**Disclosure.** The security list prefers to merge fixes into the
-appropriate public git repository as soon as they become available.
-However, you or an affected party may request that the patch be
-withheld for up to 7 calendar days from the availability of the patch,
-with an exceptional extension to 14 calendar days if it is agreed that
-the bug is critical enough to warrant more time. The only valid reason
-for deferring the publication of a fix is to accommodate the logistics
-of QA and large scale rollouts which require release coordination.
+HOWEVER, deployment of the mitigation is NOT permitted (except where
+all the affected systems and VMs are administered and used only by
+organisations which are members of the Xen Project Security Issues
+Predisclosure List).  Specifically, deployment on public cloud systems
+is NOT permitted.
 
-**List rules.** Please send plain text emails without attachments where
-possible. It is much harder to have a context-quoted discussion about a
-complex issue if all the details are hidden away in attachments. Think of
-it like regular patch submission (see
-Documentation/process/submitting-patches.rst)
-even if you don't have a patch yet; describe the problem and impact, list
-reproduction steps, and follow it with a proposed fix, all in plain text.
+This is because removal of pass-through devices or their replacement by
+emulated devices is a guest visible configuration change, which may lead
+to re-discovery of the issue.
 
-**Confidentiality.** While embargoed information may be shared with trusted
-individuals in order to develop a fix, such information will not be
-published alongside the fix or on any other disclosure channel without the
-permission of the reporter. This includes but is not limited to the
-original bug report and followup discussions (if any), exploits, CVE
-information or the identity of the reporter. All such other information
-submitted to the security list and any follow-up discussions of the report
-are treated confidentially even after the embargo has been lifted, in
-perpetuity.
+Deployment of this mitigation is permitted only AFTER the embargo ends.
 
-The Linux kernel security team is not a formal body and therefore unable
-to enter any non-disclosure agreements.
+AND: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
 
-Once a patch has been developed, you are encouraged to contact the
-linux-distros list; see below.
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
-Contacting the linux-distros list
----------------------------------
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
 
-Fixes for particularly sensitive bugs (such as those that might lead to
-privilege escalations) may need to be coordinated with the private
-linux-distros mailing list (linux-distros@...openwall.org) so that
-distribution vendors are well prepared to release a fixed kernel as soon
-as possible after the public disclosure of the upstream fix. This
-includes verifying the reported issue, testing proposed fixes,
-developing a fix (if none is known yet), and backporting to older kernels
-and other versions.
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmJML+0MHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZQl8IALuh2RTTSiQBYeybKZPr3QEOfy+L3VFzNbRZeGBc
+jpN12lXjzkFvVuTXDu6Cgw1g6yhRrcRnhGWhx3T8RpGeYhHq1GeKSw7+c4NTsiDL
+21P9F3mEban6tOUa82V2PTkYfAMMpbn5apOcsMvdlPoEgXdgLPh5HoVIvXQQO6Ni
+3MkCN7foV3M07jAiB4ehqrsPLhzGSCCRJfiD9PA1/RnnzCBrspyyWepF7mwzh2cx
+1kENmG8mSwA3Eg0fNUMDBi6W+drNmIx4gooYo3LBnCyMgzUrv7+bzkvjpcU8+dAq
+H5i2Morbx4j0F/TcQ8+23KjzNvJHbiqKVrIFCoa1z54dGC8=
+=tz+l
+-----END PGP SIGNATURE-----
 
-The linux-distros list can also help with assigning a CVE for your issue.
+Download attachment "xsa400/xsa400-01.patch" of type "application/octet-stream" (3738 bytes)
 
-**Disclosure.** The linux-distros list has a strict policy of requiring
-reporters to post about the security issue on oss-security within 14 days
-of the list being contacted regardless of whether a patch is available or
-not. It is therefore preferable that you don't send your initial bug
-report to the linux-distros list unless you already have a patch for the
-issue.
+Download attachment "xsa400/xsa400-02.patch" of type "application/octet-stream" (2661 bytes)
 
-**List rules.** The main rules to be aware of when contacting the
-linux-distros list are:
+Download attachment "xsa400/xsa400-03.patch" of type "application/octet-stream" (4516 bytes)
 
-* Don't post about issues that are already public. If your issue has a
-  public patch, but the security impact is not generally known, then you
-  may still post about it.
+Download attachment "xsa400/xsa400-4.12-00.patch" of type "application/octet-stream" (4103 bytes)
 
-* The submitter can suggest an embargo end-date, but as a rule, embargoes
-  should not be longer than 7 days, or at most 14 days in exceptional
-  cases. Keep in mind that vendors may prefer to release new kernel
-  packages and/or updates Tuesday through Thursday.
+Download attachment "xsa400/xsa400-4.12-01.patch" of type "application/octet-stream" (3727 bytes)
 
-* When the embargo ends, the issue must be disclosed immediately on
-  the oss-security list (see below).
+Download attachment "xsa400/xsa400-4.12-02.patch" of type "application/octet-stream" (2646 bytes)
 
-* Prefix your subject with the string "[vs]" to avoid getting rejected
-  by the spam filter.
+Download attachment "xsa400/xsa400-4.12-03.patch" of type "application/octet-stream" (3336 bytes)
 
-For the full list of rules, see:
-https://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-instructions-for-reporters
+Download attachment "xsa400/xsa400-4.12-04.patch" of type "application/octet-stream" (20284 bytes)
 
-**Confidentiality.** Please note that, as opposed to the security list, any
-and all material submitted to the list must be made public once the
-security issue is publicly disclosed, so please do not post information
-to the linux-distros list that cannot be made public.
+Download attachment "xsa400/xsa400-4.12-05.patch" of type "application/octet-stream" (16955 bytes)
 
-Contacting the oss-security list
---------------------------------
+Download attachment "xsa400/xsa400-4.12-06.patch" of type "application/octet-stream" (11922 bytes)
 
-When your security issue is public, or you wish to make your issue public,
-you can write to the oss-security list (oss-security@...ts.openwall.com).
-This is a public list (anybody can subscribe and view the list archives)
-and it is not restricted to Linux kernel issues.
+Download attachment "xsa400/xsa400-4.12-07.patch" of type "application/octet-stream" (4273 bytes)
 
-The oss-security list typically does not assign CVEs or accept requests for
-CVE assignments.
+Download attachment "xsa400/xsa400-4.12-08.patch" of type "application/octet-stream" (13773 bytes)
 
-**List rules.** Please do not cross-post to other lists when writing to
-this list. Make sure to read the other list rules before posting:
-https://oss-security.openwall.org/wiki/mailing-lists/oss-security
-.
+Download attachment "xsa400/xsa400-4.12-09.patch" of type "application/octet-stream" (1637 bytes)
+
+Download attachment "xsa400/xsa400-4.12-10.patch" of type "application/octet-stream" (1509 bytes)
+
+Download attachment "xsa400/xsa400-4.12-11.patch" of type "application/octet-stream" (32013 bytes)
+
+Download attachment "xsa400/xsa400-4.13-00.patch" of type "application/octet-stream" (3000 bytes)
+
+Download attachment "xsa400/xsa400-4.13-01.patch" of type "application/octet-stream" (3722 bytes)
+
+Download attachment "xsa400/xsa400-4.13-02.patch" of type "application/octet-stream" (2646 bytes)
+
+Download attachment "xsa400/xsa400-4.13-03.patch" of type "application/octet-stream" (3386 bytes)
+
+Download attachment "xsa400/xsa400-4.13-04.patch" of type "application/octet-stream" (20267 bytes)
+
+Download attachment "xsa400/xsa400-4.13-05.patch" of type "application/octet-stream" (14333 bytes)
+
+Download attachment "xsa400/xsa400-4.13-06.patch" of type "application/octet-stream" (11974 bytes)
+
+Download attachment "xsa400/xsa400-4.13-07.patch" of type "application/octet-stream" (4637 bytes)
+
+Download attachment "xsa400/xsa400-4.13-08.patch" of type "application/octet-stream" (13063 bytes)
+
+Download attachment "xsa400/xsa400-4.13-09.patch" of type "application/octet-stream" (1637 bytes)
+
+Download attachment "xsa400/xsa400-4.13-10.patch" of type "application/octet-stream" (1403 bytes)
+
+Download attachment "xsa400/xsa400-4.13-11.patch" of type "application/octet-stream" (30989 bytes)
+
+Download attachment "xsa400/xsa400-4.14-01.patch" of type "application/octet-stream" (3722 bytes)
+
+Download attachment "xsa400/xsa400-4.14-02.patch" of type "application/octet-stream" (2646 bytes)
+
+Download attachment "xsa400/xsa400-4.14-03.patch" of type "application/octet-stream" (3275 bytes)
+
+Download attachment "xsa400/xsa400-4.14-04.patch" of type "application/octet-stream" (20408 bytes)
+
+Download attachment "xsa400/xsa400-4.14-05.patch" of type "application/octet-stream" (14313 bytes)
+
+Download attachment "xsa400/xsa400-4.14-06.patch" of type "application/octet-stream" (12028 bytes)
+
+Download attachment "xsa400/xsa400-4.14-07.patch" of type "application/octet-stream" (4637 bytes)
+
+Download attachment "xsa400/xsa400-4.14-08.patch" of type "application/octet-stream" (12737 bytes)
+
+Download attachment "xsa400/xsa400-4.14-09.patch" of type "application/octet-stream" (1637 bytes)
+
+Download attachment "xsa400/xsa400-4.14-10.patch" of type "application/octet-stream" (1375 bytes)
+
+Download attachment "xsa400/xsa400-4.14-11.patch" of type "application/octet-stream" (31037 bytes)
+
+Download attachment "xsa400/xsa400-4.15-01.patch" of type "application/octet-stream" (3693 bytes)
+
+Download attachment "xsa400/xsa400-4.15-02.patch" of type "application/octet-stream" (2646 bytes)
+
+Download attachment "xsa400/xsa400-4.15-03.patch" of type "application/octet-stream" (4480 bytes)
+
+Download attachment "xsa400/xsa400-4.15-04.patch" of type "application/octet-stream" (3112 bytes)
+
+Download attachment "xsa400/xsa400-4.15-05.patch" of type "application/octet-stream" (20240 bytes)
+
+Download attachment "xsa400/xsa400-4.15-06.patch" of type "application/octet-stream" (13930 bytes)
+
+Download attachment "xsa400/xsa400-4.15-07.patch" of type "application/octet-stream" (11951 bytes)
+
+Download attachment "xsa400/xsa400-4.15-08.patch" of type "application/octet-stream" (4660 bytes)
+
+Download attachment "xsa400/xsa400-4.15-09.patch" of type "application/octet-stream" (12791 bytes)
+
+Download attachment "xsa400/xsa400-4.15-10.patch" of type "application/octet-stream" (1289 bytes)
+
+Download attachment "xsa400/xsa400-4.15-11.patch" of type "application/octet-stream" (1383 bytes)
+
+Download attachment "xsa400/xsa400-4.15-12.patch" of type "application/octet-stream" (30949 bytes)
+
+Download attachment "xsa400/xsa400-4.16-01.patch" of type "application/octet-stream" (3693 bytes)
+
+Download attachment "xsa400/xsa400-4.16-02.patch" of type "application/octet-stream" (2646 bytes)
+
+Download attachment "xsa400/xsa400-4.16-03.patch" of type "application/octet-stream" (4480 bytes)
+
+Download attachment "xsa400/xsa400-4.16-04.patch" of type "application/octet-stream" (3112 bytes)
+
+Download attachment "xsa400/xsa400-4.16-05.patch" of type "application/octet-stream" (20778 bytes)
+
+Download attachment "xsa400/xsa400-4.16-06.patch" of type "application/octet-stream" (12358 bytes)
+
+Download attachment "xsa400/xsa400-4.16-07.patch" of type "application/octet-stream" (13805 bytes)
+
+Download attachment "xsa400/xsa400-4.16-08.patch" of type "application/octet-stream" (5074 bytes)
+
+Download attachment "xsa400/xsa400-4.16-09.patch" of type "application/octet-stream" (14127 bytes)
+
+Download attachment "xsa400/xsa400-4.16-10.patch" of type "application/octet-stream" (1289 bytes)
+
+Download attachment "xsa400/xsa400-4.16-11.patch" of type "application/octet-stream" (966 bytes)
+
+Download attachment "xsa400/xsa400-4.16-12.patch" of type "application/octet-stream" (33704 bytes)
+
+Download attachment "xsa400/xsa400-04.patch" of type "application/octet-stream" (3045 bytes)
+
+Download attachment "xsa400/xsa400-05.patch" of type "application/octet-stream" (21655 bytes)
+
+Download attachment "xsa400/xsa400-06.patch" of type "application/octet-stream" (12927 bytes)
+
+Download attachment "xsa400/xsa400-07.patch" of type "application/octet-stream" (14006 bytes)
+
+Download attachment "xsa400/xsa400-08.patch" of type "application/octet-stream" (5594 bytes)
+
+Download attachment "xsa400/xsa400-09.patch" of type "application/octet-stream" (15165 bytes)
+
+Download attachment "xsa400/xsa400-10.patch" of type "application/octet-stream" (1359 bytes)
+
+Download attachment "xsa400/xsa400-11.patch" of type "application/octet-stream" (988 bytes)
+
+Download attachment "xsa400/xsa400-12.patch" of type "application/octet-stream" (34687 bytes)
