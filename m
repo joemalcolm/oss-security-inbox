@@ -1,44 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/25/2
-Message-ID: <20220825132856.GA29197@openwall.com>
-Date: Thu, 25 Aug 2022 15:28:56 +0200
-From: Solar Designer <solar@...nwall.com>
-To: David Bouman <davidbouman35@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: CVE-2022-1015,CVE-2022-1016 in nf_tables cause privilege escalation, information leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/05/4
+Message-ID: <c4acef90-342d-4a39-069a-ecc1a8dd7f9a@apache.org>
+Date: Tue, 05 Apr 2022 15:54:48 +0000
+From: Subbu Subramaniam <mcvsubbu@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2022-23974: Apache Pinot: Pinot segment push endpoint has a vulnerability in unprotected environments 
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Mar 28, 2022 at 08:28:21PM +0200, David Bouman wrote:
-> I'm reporting two linux kernel vulnerabilities in the nf_tables 
-> component of the netfilter subsystem that I found.
-> 
-> CVE-2022-1015 pertains to an out of bounds access in nf_tables 
-> expression evaluation due to validation of user register indices. It 
-> leads to local privilege escalation, for example by overwriting a stack 
-> return address OOB with a crafted nft_expr_payload.
-> 
-> CVE-2022-1015 is exploitable starting from commit 345023b0db3 
-> ("netfilter: nftables: add nft_parse_register_store() and use it"), 
-> v5.12 and has been fixed in commit 6e1acfa387b9 ("netfilter: nf_tables: 
-> validate registers coming from userspace.").
-> 
-> The bug has been present since commit 49499c3e6e18 ("netfilter: 
-> nf_tables: switch registers to 32 bit addressing"), but to my knowledge 
-> has not been exploitable until v5.12.
-> 
-> CVE-2022-1016 pertains to uninitialized stack data in the nft_do_chain 
-> routine. CVE-2022-1016 is exploitable starting from commit 96518518cc41 
-> (original merge of nf_tables), v3.13-rc1, and has been fixed in commit 
-> 4c905f6740a3 ("netfilter: nf_tables: initialize registers in 
-> nft_do_chain()").
-> 
-> I will be releasing a detailed blog post and exploit code for both 
-> vulnerabilities in a few days.
+Description:
 
-Apparently, these were published on April 2, but not yet mentioned on
-oss-security?
+In 0.9.3 or older versions of Apache Pinot segment upload path allowed segment directories to be imported into pinot tables. In pinot installations that allow open access to the controller a specially crafted request can potentially be exploited to cause disruption in pinot service.
 
-https://blog.dbouman.nl/2022/04/02/How-The-Tables-Have-Turned-CVE-2022-1015-1016/
-https://github.com/pqlx/CVE-2022-1015
+Pinot release 0.10.0 fixes this. See https://docs.pinot.apache.org/basics/releases/0.10.0
 
-Alexander
+Credit:
+
+Apache Pinot would like to thank bubblegumkk@...com, Kuiplatain@...wnsec and FA1C0N@..._OFFICIAL for reporting the issue
+
