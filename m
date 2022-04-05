@@ -1,25 +1,127 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/18/8
-Message-ID: <215FEA11-77C7-42C1-97AB-8B3F637F9C61@oracle.com>
-Date: Tue, 18 Jan 2022 18:57:57 +0000
-From: John Haxby <john.haxby@...cle.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "jamie@...l-daniel.co.uk" <jamie@...l-daniel.co.uk>, "g@....io" <g@....io>, "misetichrvoje@...il.com" <misetichrvoje@...il.com>, "alecthechop@...il.com" <alecthechop@...il.com>, "isaac.badipe@...il.com" <isaac.badipe@...il.com>
-Subject: Re: Linux kernel: Heap buffer overflow in fs_context.c since version 5.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/05/1
+Message-Id: <E1nbhrE-0003M1-JC@xenbits.xenproject.org>
+Date: Tue, 05 Apr 2022 12:00:24 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 397 v2 (CVE-2022-26356) - Racy interactions between dirty vram tracking and paging log dirty hypercalls
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+            Xen Security Advisory CVE-2022-26356 / XSA-397
+                               version 2
+
+ Racy interactions between dirty vram tracking and paging log dirty hypercalls
+
+UPDATES IN VERSION 2
+====================
+
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+Activation of log dirty mode done by XEN_DMOP_track_dirty_vram (was named
+HVMOP_track_dirty_vram before Xen 4.9) is racy with ongoing log dirty
+hypercalls.  A suitably timed call to XEN_DMOP_track_dirty_vram can enable
+log dirty while another CPU is still in the process of tearing down the
+structures related to a previously enabled log dirty mode
+(XEN_DOMCTL_SHADOW_OP_OFF).  This is due to lack of mutually exclusive locking
+between both operations and can lead to entries being added in already freed
+slots, resulting in a memory leak.
+
+IMPACT
+======
+
+An attacker can cause Xen to leak memory, eventually leading to a Denial of
+Service (DoS) affecting the entire host.
+
+VULNERABLE SYSTEMS
+==================
+
+All Xen versions from at least 4.0 onwards are vulnerable.
+
+Only x86 systems are vulnerable.  Arm systems are not vulnerable.
+
+Only domains controlling an x86 HVM guest using Hardware Assisted Paging (HAP)
+can leverage the vulnerability.  On common deployments this is limited to
+domains that run device models on behalf of guests.
+
+MITIGATION
+==========
+
+Using only PV or PVH guests and/or running HVM guests in shadow mode will avoid
+the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Roger Pau Monné of Citrix.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa397.patch           xen-unstable
+xsa397-4.16.patch      Xen 4.16.x - Xen 4.15.x
+xsa397-4.14.patch      Xen 4.14.x - Xen 4.13.x
+xsa397-4.12.patch      Xen 4.12.x
+
+$ sha256sum xsa397*
+49c663e2bb9131dbc2488e12487f79bdf0dafd51a32413cbf3964e39d8779cae  xsa397.patch
+24f95f47b79739c9cb5b9110137c802989356c82d0aa27963b5ac7e33f667285  xsa397-4.12.patch
+9af14f90ba10d074425eb6072a6c648082c92c1cf8b6f881f57ed2fc13d6e49d  xsa397-4.14.patch
+ff5dd3b7a8dbf349c3b832b7916322c0296fa59c7f9cd2ba30858989add5f65c  xsa397-4.16.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches described above (or others which are substantially
+similar) is permitted during the embargo, even on public-facing systems with
+untrusted guest users and administrators.
+
+But: Distribution of updated software (except to other members of the
+predisclosure list) or deployment of mitigations is prohibited.
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
-> On 18 Jan 2022, at 18:21, Will <willsroot@...tonmail.com> wrote:
-> 
-> There is a heap overflow bug in legacy_parse_param in which the length of data copied can be incremented beyond the width of the 1-page slab allocated for it. We currently have created functional LPE exploits against Ubuntu 20.04 and container escape exploits against Google's hardened COS. The bug was introduced in 5.1-rc1 (https://github.com/torvalds/linux/commit/3e1aeb00e6d132efc151dacc062b38269bc9eccc#diff-c4a9ea83de4a42a0d1bcbaf1f03ce35188f38da4987e0e7a52aae7f04de14a05) and is present in all Linux releases since. As of January 18th, this patch (https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=722d94847de29310e8aa03fcbdb41fc92c521756) fixes this issue.
-> 
-> The bug is caused by an integer underflow present in fs/fs_context.c:legacy_parse_param, which results in miscalculation of a valid max length. A bounds check is present at fs_context.c:551, returning an error if (len > PAGE_SIZE - 2 - size); however, if the value of size is greater than or equal to 4095, the unsigned subtraction will underflow to a massive value greater than len, so the check will not trigger. After this, the attacker may freely write data out-of-bounds. Changing the check to size + len + 2 > PAGE_SIZE (which the patch did) would fix this.
-> 
-> Exploitation relies on the CAP_SYS_ADMIN capability; however, the permission only needs to be granted in the current namespace. An unprivileged user can use unshare(CLONE_NEWNS|CLONE_NEWUSER) to enter a namespace with the CAP_SYS_ADMIN permission, and then proceed with exploitation to root the system.
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
-This is CVE-2022-0185
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
 
-jch
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmJMJDEMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZOUMH/RRZ8aMaoywqTV38SeTFne2tFT5jnWPPXR1ZGCvh
+825hmSqzcYUaILbWFruUfT2PdpGoU9Eprz3xWXBDwgsUEGvKt7ZhGoWvxzXASlDh
+cPRh/XwQVEEYsB1cRSk/GoLxLCQEV8oGNpmAcjEM4K1dG0VbVaRD0W2thNCmyPcv
+d7aTkAdD2IE8NU4hX8YGN6v+UCkjrgzL0AF/hff9CMj7Sn/wBRrdStLT0LDZU20c
+G/5+9nsOAVM7EwrzImI5Lx9KELyHwl37XUPffbftyTLUofdHJ5PK40J1tNIRS/RW
+YYvs2alF7ng7LlwB/Go8gtn4XRx6xZidceYrUk22oB4JBqo=
+=Fje3
+-----END PGP SIGNATURE-----
 
-Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
+Download attachment "xsa397.patch" of type "application/octet-stream" (4463 bytes)
+
+Download attachment "xsa397-4.12.patch" of type "application/octet-stream" (3768 bytes)
+
+Download attachment "xsa397-4.14.patch" of type "application/octet-stream" (3766 bytes)
+
+Download attachment "xsa397-4.16.patch" of type "application/octet-stream" (3773 bytes)
