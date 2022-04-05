@@ -1,61 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/26/3
-Message-Id: <E1oGQAC-0002wB-Fy@xenbits.xenproject.org>
-Date: Tue, 26 Jul 2022 19:24:16 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/05/2
+Message-Id: <E1nbhrJ-0003ND-7u@xenbits.xenproject.org>
+Date: Tue, 05 Apr 2022 12:00:29 +0000
 From: Xen.org security team <security@....org>
 To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
 CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 408 v3 (CVE-2022-33745) - insufficient TLB flush for x86 PV guests in shadow mode
+Subject: Xen Security Advisory 399 v2 (CVE-2022-26357) - race in VT-d domain ID cleanup
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-            Xen Security Advisory CVE-2022-33745 / XSA-408
-                               version 3
+            Xen Security Advisory CVE-2022-26357 / XSA-399
+                               version 2
 
-        insufficient TLB flush for x86 PV guests in shadow mode
+                    race in VT-d domain ID cleanup
 
-UPDATES IN VERSION 3
+UPDATES IN VERSION 2
 ====================
 
-Update hash for metadata file.
+Public release.
 
 ISSUE DESCRIPTION
 =================
 
-For migration as well as to work around kernels unaware of L1TF (see
-XSA-273), PV guests may be run in shadow paging mode.  To address
-XSA-401, code was moved inside a function in Xen.  This code movement
-missed a variable changing meaning / value between old and new code
-positions.  The now wrong use of the variable did lead to a wrong TLB
-flush condition, omitting flushes where such are necessary.
+Xen domain IDs are up to 15 bits wide.  VT-d hardware may allow for only
+less than 15 bits to hold a domain ID associating a physical device with
+a particular domain.  Therefore internally Xen domain IDs are mapped to
+the smaller value range.  The cleaning up of the housekeeping structures
+has a race, allowing for VT-d domain IDs to be leaked and flushes to be
+bypassed.
 
 IMPACT
 ======
 
-The known (observed) impact would be a Denial of Service (DoS) affecting
-the entire host, due to running out of memory.  Privilege escalation and
+The precise impact is system specific, but would typically be a Denial
+of Service (DoS) affecting the entire host.  Privilege escalation and
 information leaks cannot be ruled out.
 
 VULNERABLE SYSTEMS
 ==================
 
-All versions of Xen with the XSA-401 fixes applied are vulnerable.
+Xen versions 4.11 through 4.16 are vulnerable.  Xen versions 4.10 and
+earlier are not vulnerable.
 
-Only x86 PV guests can trigger this vulnerability, and only when running
-in shadow mode.  Shadow mode would be in use when migrating guests or as
-a workaround for XSA-273 (L1TF).
+Only x86 systems with VT-d IOMMU hardware are vulnerable.  Arm systems
+as well as x86 systems without VT-d hardware or without any IOMMUs in
+use are not vulnerable.
+
+Only x86 guests which have physical devices passed through to them can
+leverage the vulnerability.
 
 MITIGATION
 ==========
 
-Not running x86 PV guests will avoid the vulnerability.
+Not passing through physical devices to untrusted guests will avoid
+the vulnerability.
 
 CREDITS
 =======
 
-This issue was discovered by Charles Arnold of SUSE.
+This issue was discovered by Jan Beulich of SUSE.
 
 RESOLUTION
 ==========
@@ -67,24 +72,36 @@ apply to the stable branches, and may not apply cleanly to the most
 recent release tarball.  Downstreams are encouraged to update to the
 tip of the stable branch before applying these patches.
 
-xsa408.patch           xen-unstable - Xen 4.14.x
-xsa408-4.13.patch      Xen 4.13.x
+xsa399.patch           xen-unstable
+xsa399-4.16.patch      Xen 4.16.x - Xen 4.13.x
+xsa399-4.12.patch      Xen 4.12.x
 
-$ sha256sum xsa408*
-9411b563c71445d2c95e36aba9d71fa3b9341f0230e4b3e2549a63292df11669  xsa408.meta
-f49cb67842c7576f1d59b965331956a9fa1f529a8e2da3531d7ebc4eb3f079b3  xsa408.patch
-26871efbd3f834dd4af4fbab6f2cb09a83c509e49894f025ee656071419ed995  xsa408-4.13.patch
+$ sha256sum xsa399*
+53b9745564eb21f70dbb7bd7194ff3518f29cd9715c68e9dd7eff25812968019  xsa399.patch
+16c3327a60d8ab6c3524f10f57d63efaf2e3e54b807bc285a749cd1a94392a30  xsa399-4.12.patch
+79d0f5a0442dec0a806d77a722a1d2c04793572fe0b564bf86dcd1c6d992a679  xsa399-4.16.patch
 $
 
 DEPLOYMENT DURING EMBARGO
 =========================
 
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
+Deployment of the patches described above (or others which are
+substantially similar) is permitted during the embargo, even on
+public-facing systems with untrusted guest users and administrators.
 
-But: Distribution of updated software is prohibited (except to other
+HOWEVER, deployment of the mitigation is NOT permitted (except where
+all the affected systems and VMs are administered and used only by
+organisations which are members of the Xen Project Security Issues
+Predisclosure List).  Specifically, deployment on public cloud systems
+is NOT permitted.
+
+This is because removal of pass-through devices or their replacement by
+emulated devices is a guest visible configuration change, which may lead
+to re-discovery of the issue.
+
+Deployment of this mitigation is permitted only AFTER the embargo ends.
+
+AND: Distribution of updated software is prohibited (except to other
 members of the predisclosure list).
 
 Predisclosure list members who wish to deploy significantly different
@@ -101,18 +118,18 @@ consult the Xen Project community's agreed Security Policy:
   http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmLgPzsMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZT5cIAKtisZZvdcSolZ+RHFzAdVEP2lbEW2TyoG6oy0st
-kMsV/ZSabthow9PiUp48DoZOXSIh/7hn2qyXqx5X0VYjiWOISVRCldm5g4p0+tA/
-GN6FztbRR1GargLkvtuWj38K9E7HIqfBRFLbtJD6X97NFSAPeNNZg8nqQPqwkhK+
-yeGBjPPO5pTjNwsRt91A1qEttTPjbBpipEcit/qjqqCBxX6NT/pYSE5Ltn2OHm38
-eYM25X901rJl0rPsyOeUN312FAL0bEunKVKJbiNcHVBZoR37YoJ5HE5trDxoxPrz
-XYJdR7gzcB028lbGU4jt9FVHdYCh0htWpdpdWci4A3DCH7U=
-=C02g
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmJMJDcMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZpo8H/AqiAS0l5WJWl00bTQ4Q69REzd83m9Y3+UnUqRaf
+JUFWo4R1m4V2zJlq0E3TR/2ZS1RkXFJxlmXQyzueFmDEvMV2oKB0ids5ta1oUO2E
+eiQxdSFbTLrLnhI+4IxbTHHy+ovSHT/SKPeo1Zd1tXHfZ35g1OgGTYHHqj7RKJHp
+SyZT4iuAKjIr61M4NBKJcycpfRidlXEDvAotDX3jBQ06t3vgs/12nwe5LzzeV2V4
+sIDjpeDGNKzgT2NgLP2b+XMEUg1259iWb19tS3PPNJaLKSvQqTBOFjK+sqh7ACXV
+v6ph2Yy0Q/ZP+N9DvCeBCPEU9A9RhmPYzobU+Lc/T85SrQ4=
+=sp/Q
 -----END PGP SIGNATURE-----
 
-Download attachment "xsa408.meta" of type "application/octet-stream" (1306 bytes)
+Download attachment "xsa399.patch" of type "application/octet-stream" (1759 bytes)
 
-Download attachment "xsa408.patch" of type "application/octet-stream" (1633 bytes)
+Download attachment "xsa399-4.12.patch" of type "application/octet-stream" (1765 bytes)
 
-Download attachment "xsa408-4.13.patch" of type "application/octet-stream" (1525 bytes)
+Download attachment "xsa399-4.16.patch" of type "application/octet-stream" (1762 bytes)
