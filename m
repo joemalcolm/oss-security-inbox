@@ -1,33 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/08/2
-Message-ID: <3ac8b7e2-e0a4-dde8-0893-797b1cce87b9@apache.org>
-Date: Thu, 8 Sep 2022 15:53:26 +0200
-From: Jacques Le Roux <jleroux@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/06/2
+Message-ID: <CAEhjM2Bg-NDaUP6-LUM_+a7Q-3MzuZgni0HC4k3eA0oYU-8q4g@mail.gmail.com>
+Date: Wed, 6 Apr 2022 12:58:18 -0400
+From: Nathan Gough <thenatog@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Apache OFBiz - Unauth Path Traversal with file corruption (CVE-2022-25371)
+Subject: CVE-2022-26850: Apache NiFi: Insufficiently protected credentials
 Content-Type: text/plain; charset=utf-8
 
-Severity:
-High
-
-Vendor:
-The Apache Software Foundation
-
-Versions Affected:
-OFBiz versions prior to 18.12.06
+Severity: moderate
 
 Description:
-The Birt viewer version 4.5.0 has a security issue that allows this exploit.
-We waited long for https://github.com/eclipse/birt/issues/625
-to resolve but eventually decided to release OFBiz 18.12.06 without
-the Birt component
+
+When creating or updating credentials for single-user access, NiFi
+wrote a copy of the Login Identity Providers configuration to the
+operating system temporary directory. On most platforms, the operating
+system temporary directory has global read permissions. NiFi
+immediately moved the temporary file to the final configuration
+directory, which significantly limited the window of opportunity for
+access.
+
+This issue is being tracked as NIFI-9785
 
 Mitigation:
-Upgrade to at least 18.12.06
+
+NiFi 1.16.0 includes updates to replace the Login Identity Providers
+configuration without writing a file to the operating system temporary
+directory.
 
 Credit:
-Positive Technologies
+
+This issue was discovered by Jonathan Leitschuh
+(https://twitter.com/jlleitschuh)
 
 References:
-http://ofbiz.apache.org/download.html#vulnerabilities
+https://nifi.apache.org/security.html#CVE-2022-26850
 
