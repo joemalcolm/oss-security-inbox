@@ -1,53 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/09/1
-Message-ID: <8b6d2928-c1f8-76f9-6ddd-24a8d6605069@oracle.com>
-Date: Mon, 8 Aug 2022 18:31:59 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/07/8
+Message-ID: <m2o81c3f8r.fsf@meyering.net>
+Date: Thu, 07 Apr 2022 11:44:36 -0700
+From: Jim Meyering <jim@...ering.net>
 To: oss-security@...ts.openwall.com
-Cc: Evgeny Legerov <admin@...ndisco.cc>
-Subject: Re: zlib buffer overflow
+Subject: zgrep, xzgrep: arbitrary-file-write vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 8/5/22 13:53, Evgeny Legerov wrote:
-> Heap overflow has been fixed in zlib - 
-> https://www.cve.org/CVERecord?id=CVE-2022-37434
+All previous versions of gzip and xzutils are affected.
 
-Expanding this for the benefit of list members and the archives:
+xzutils released this patch today:
 
-The CVE description is:
+  https://tukaani.org/xz/xzgrep-ZDI-CAN-16587.patch
+  https://tukaani.org/xz/xzgrep-ZDI-CAN-16587.patch.sig
 
-    zlib through 1.2.12 has a heap-based buffer over-read or buffer overflow
-    in inflate in inflate.c via a large gzip header extra field.
+gzip-1.12 was released today, with the fix:
 
-    NOTE: only applications that call inflateGetHeader are affected. Some
-    common applications bundle the affected zlib source code but may be unable
-    to call inflateGetHeader (e.g., see the nodejs/node reference).
+  https://lists.gnu.org/r/bug-gzip/2022-04/msg00011.html
+  https://ftp.gnu.org/gnu/gzip/gzip-1.12.tar.xz
+  https://ftp.gnu.org/gnu/gzip/gzip-1.12.tar.xz.sig
 
-where the nodejs reference is to:
-
-https://github.com/nodejs/node/blob/75b68c6e4db515f76df73af476eccf382bbcb00a/deps/zlib/inflate.c#L762-L764
-
-The reproducer is posted at https://github.com/ivd38/zlib_overflow and
-notes the issue was found by Evgeny Legerov of @intevydis - who is
-presumably our original poster here.
-
-The initial fix upstream was:
-
-     If the extra field was larger than the space the user provided with
-     inflateGetHeader(), and if multiple calls of inflate() delivered
-     the extra header data, then there could be a buffer overflow of the
-     provided space. This commit assures that provided space is not
-     exceeded.
-
-from https://github.com/madler/zlib/commit/eff308af425b67093bab25f80f1ae950166bece1
-
-*but* the curl developers found that crashed in their testing, as reported
-in comments on the above commit and https://github.com/curl/curl/issues/9271
-so a followup fix upstream today made sure not to dereference state->head
-until *after* the check for it not being NULL:
-
-https://github.com/madler/zlib/commit/1eb7682f845ac9e9bf9ae35bbfb3bad5dacbd91d
-
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+Download attachment "signature.asc" of type "application/pgp-signature" (858 bytes)
