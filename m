@@ -1,43 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/30/4
-Message-ID: <trinity-899166b1-0752-4850-abb1-9b7f19201378-1656619966440@3c-app-gmx-bs04>
-Date: Thu, 30 Jun 2022 22:12:46 +0200
-From: Norbert Slusarek <nslusarek@....net>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com, peterz@...radead.org, vegard.nossum@...cle.com
-Subject: Re: CVE-2022-1729: race condition in Linux perf subsystem leads to local privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/07/3
+Message-ID: <6e8a1fe2-b07f-b5b7-0bac-495f70c88e12@redhat.com>
+Date: Thu, 7 Apr 2022 10:53:17 +0200
+From: Paolo Bonzini <pbonzini@...hat.com>
+To: Solar Designer <solar@...nwall.com>, kangel <kangel@....edu.cn>
+Cc: oss-security@...ts.openwall.com, pgn@....edu.cn, qiuhao@...ec.org, Pedro Sampaio <psampaio@...hat.com>
+Subject: Re: Linux kernel: x86/kvm: null-ptr-deref in kvm_dirty_ring_push
 Content-Type: text/plain; charset=utf-8
 
->I'm attaching Norbert's exploit (lpe.c) that was attached to his May 12
->notification to linux-distros. We're now one month past the due date
->for Norbert's expected posting of this (should have been May 27, which
->is 7 days after public disclosure of the vulnerability on oss-security).
->
->Norbert, I would still appreciate a reply to the message below. I'm
->quoting it in full for context since it's been a month.
->
->Thanks,
->
->Alexander
->
->"If you shared exploit(s) that are not an essential part of the issue
->description, then at your option you may slightly delay posting them to
->oss-security but you must post the exploits to oss-security within at
->most 7 days of making the mandatory posting above. If you exercise this
->option, you have two mandatory postings to make: first with a
->sufficiently detailed issue description (as requested above) and with an
->announcement of your intent to post the exploits separately (please
->mention exactly when), and second with the exploits - or indeed you
->could have included the exploits right away, in your first and only
->mandatory posting."
->
->Did you read this before posting? If not, anything we should have done
->to ensure you'd have read it?
+On 4/7/22 10:35, Solar Designer wrote:
+> On Thu, Apr 07, 2022 at 10:15:42AM +0800, kangel wrote:
+>>      We found a null-ptr-deref in the kvm module which can lead to DoS. This flaw is in kvm_dirty_ring_push in virt/kvm/dirty_ring.c. The linux kernel version is 5.17.0-rc8. We would appreciate a CVE ID if this is a security issue.
+> 
+> Further in the linux-distros thread, this got assigned CVE-2022-1263,
+> however is this really a security issue - in other words, is a security
+> boundary crossed in triggering the bug?  I think it is not, and if so
+> the CVE ID should probably be rejected.  From the PoC:
 
-I missed it when I read the policy.
-I think having all of the requirements structured in one place is a good
-idea. Vegard's new page regarding reporting bugs in the Linux kernel
-makes it clear which essential rules to follow for the Linux security
-list as well as linux-distros and oss-security.
+Alexander,
 
-Norbert
+indeed it doesn't cross guest-host boundaries.  However, /dev/kvm is 
+accessible by unprivileged users, so it should be treated like any other 
+unprivileged NULL pointer dereference in Linux.  I do not apply an 
+embargo for those bugs, but whether to assign a CVE is not my choice.
+
+(As an aside, this is the third fuzzing bug reported for KVM on 
+security@...nel.org and linux-distros, but I think only one of them was 
+really security sensitive).
+
+Thanks,
+
+Paolo
+
+>> 		res = syscall(__NR_openat, 0xffffffffffffff9cul, "/dev/kvm", 0ul, 0ul);
+> 
+> In fact, also in the linux-distros thread it was promptly agreed that
+> this doesn't need an embargo - perhaps precisely because of no security
+> relevance?  If so, that should have been said explicitly, so a CVE ID
+> wouldn't be assigned (it was by another person).
+
