@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4406" "Wednesday" "9" "November" "2016" "15:42:22" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<2803183.JXljhHXDl4@blackgate>" "112" "[oss-security] libdwarf: heap-based buffer overflow in _dwarf_skim_forms (dwarf_macro5.c)" nil nil nil "11" "2016110914:42:22" "[oss-security] libdwarf: heap-based buffer overflow in _dwarf_skim_forms (dwarf_macro5.c)" (number mark "U       ago@gentoo.o Nov  9  112/4406  " thread-indent "\"[oss-security] libdwarf: heap-based buffer overflow in _dwarf_skim_forms (dwarf_macro5.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 30067 invoked by uid 550); 9 Nov 2016 14:42:39 -0000
+Received: (qmail 3462 invoked by uid 550); 7 Apr 2022 09:41:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,127 +7,39 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29984 invoked from network); 9 Nov 2016 14:42:38 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Date: Wed, 09 Nov 2016 15:42:22 +0100
-Message-ID: <2803183.JXljhHXDl4@blackgate>
-User-Agent: KMail/4.14.10 (Linux/4.4.26-gentoo; KDE/4.14.24; x86_64; ; )
+Received: (qmail 13848 invoked from network); 7 Apr 2022 09:17:56 -0000
+X-F-Verdict: SPFVALID
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tsmtp0001.email;
+	s=titan1; t=1649323064;
+	bh=4e7JksPWQD9cdhRlKqfQX3CESoRr6Fp1Ute8AZdVfF8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:From:To:Cc:Subject:Message-ID;
+	b=JvOMzx/vxaujjNEbEKP+kWcp5DlrEevXYIGIRPbY5iItLIWJKnGG2oV5wnG0AEIZy
+	 2jDWGhnqdkoj7qogA2wc5+2eGnHtWU23AgnkWhWOM+p2RBpExqrPPR5+13o9HrSEga
+	 54emLTiB6N6bNjKI+qL5duW3W6JPfXbX69wQufY4=
+Message-ID: <36860add-5d62-289f-6255-02b304b1c12f@sysec.org>
+Date: Thu, 7 Apr 2022 17:17:17 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] libdwarf: heap-based buffer overflow in _dwarf_skim_forms (dwarf_macro5.c)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Content-Language: en-US
+To: kangel <kangel@zju.edu.cn>, oss-security@lists.openwall.com
+Cc: pgn@zju.edu.cn
+References: <657e93b4.3cced.18001ce5999.Coremail.kangel@zju.edu.cn>
+Feedback-ID: :qiuhao@sysec.org:sysec.org:flockmailId
+From: Qiuhao Li <qiuhao@sysec.org>
+In-Reply-To: <657e93b4.3cced.18001ce5999.Coremail.kangel@zju.edu.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.4 cv=cO3zD3SN c=1 sm=1 tr=0 ts=624eac38
+	a=9zuiwUaE+4GOE7xYIc90Uw==:117 a=9zuiwUaE+4GOE7xYIc90Uw==:17
+	a=IkcTkHD0fZMA:10 a=CEWIc4RMnpUA:10 a=OLL_FvSJAAAA:8
+	a=wQzgBE0fSh213J1lR94A:9 a=D8H4bWiJGtFWUoFAfKj/bpVjoms=:19
+	a=QEXdDO2ut3YA:10 a=_3pv9xVZcpcA:10 a=NRVb-hUXiywA:10 a=wbbTpC8Z_7cA:10
+	a=oIrB72frpwYPwTMnlWqB:22
+X-Virus-Scanned: ClamAV using ClamSMTP
+Subject: Re: [oss-security] Linux kernel: x86/kvm: null-ptr-deref in kvm_dirty_ring_push
 
-If it is suitable for a CVE please assign one. Thanks.
-
-Description:
-libdwarf is a library to consume and produce DWARF debug information.
-
-A fuzz on an updated version revealed a buffer overflow.
-
-The complete ASan output:
-
-# dwarfdump $FILE
-==2437==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x62000000fe5b at pc 0x000000462c7c bp 0x7ffea0d4b690 sp 0x7ffea0d4ae40
-READ of size 29 at 0x62000000fe5b thread T0
-    #0 0x462c7b in __interceptor_strlen /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:581
-    #1 0x5edea2 in _dwarf_skim_forms 
-/tmp/dwarf-20161021/libdwarf/dwarf_macro5.c:185:17
-    #2 0x5edea2 in _dwarf_get_macro_ops_count_internal 
-/tmp/dwarf-20161021/libdwarf/dwarf_macro5.c:346
-    #3 0x5eb886 in _dwarf_internal_macro_context_by_offset 
-/tmp/dwarf-20161021/libdwarf/dwarf_macro5.c:1338:11
-    #4 0x5eb886 in _dwarf_internal_macro_context 
-/tmp/dwarf-20161021/libdwarf/dwarf_macro5.c:1201
-    #5 0x5ed10e in dwarf_get_macro_context_by_offset 
-/tmp/dwarf-20161021/libdwarf/dwarf_macro5.c:1467:11
-    #6 0x54f7be in print_macros_5style_this_cu 
-/tmp/dwarf-20161021/dwarfdump/print_macro.c:288:16
-    #7 0x514d0f in print_one_die_section 
-/tmp/dwarf-20161021/dwarfdump/print_die.c:869:21
-    #8 0x512262 in print_infos 
-/tmp/dwarf-20161021/dwarfdump/print_die.c:371:16
-    #9 0x4faafa in process_one_file 
-/tmp/dwarf-20161021/dwarfdump/dwarfdump.c:1371:9
-    #10 0x4faafa in main /tmp/dwarf-20161021/dwarfdump/dwarfdump.c:654
-    #11 0x7f74b22e761f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #12 0x419588 in _start (/usr/bin/dwarfdump-asan+0x419588)
-
-0x62000000fe5b is located 0 bytes to the right of 3547-byte region 
-[0x62000000f080,0x62000000fe5b)
-allocated by thread T0 here:
-    #0 0x4c0ad8 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:52
-    #1 0x7f74b33c1206 in __libelf_set_rawdata_wrlock /tmp/portage/dev-
-libs/elfutils-0.166/work/elfutils-0.166/libelf/elf_getdata.c:318
-
-SUMMARY: AddressSanitizer: heap-buffer-overflow /var/tmp/portage/sys-
-devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
-rt/lib/asan/asan_interceptors.cc:581 in __interceptor_strlen
-Shadow bytes around the buggy address:
-  0x0c407fff9f70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c407fff9f80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c407fff9f90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c407fff9fa0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c407fff9fb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c407fff9fc0: 00 00 00 00 00 00 00 00 00 00 00[03]fa fa fa fa
-  0x0c407fff9fd0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c407fff9fe0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c407fff9ff0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c407fffa000: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c407fffa010: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==2437==ABORTING
-
-Affected version:
-20161021
-
-Fixed version:
-N/A
-
-Commit fix:
-https://sourceforge.net/p/libdwarf/code/ci/583f8834083b5ef834c497f5b47797e16101a9a6/
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00027-libdwarf-heapoverflow-_dwarf_skim_forms
-
-Timeline:
-2016-11-02: bug discovered and reported to upstream
-2016-11-05: upstream released a patch
-2016-11-07: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/11/07/libdwarf-heap-based-buffer-overflow-in-_dwarf_skim_forms-dwarf_macro5-c
+Paolo's patch:
+https://www.spinics.net/lists/kvm/msg273052.html
