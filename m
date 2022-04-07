@@ -1,24 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/20/1
-Message-ID: <7d1f3488-dc28-e05a-1eb7-3a1a7efc9901@apache.org>
-Date: Sat, 20 Aug 2022 22:55:58 +0000
-From: Ralph Goers <rgoers@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/07/4
+Message-ID: <20220407090624.GA17007@openwall.com>
+Date: Thu, 7 Apr 2022 11:06:24 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-34916: Apache Flume: Improper Input Validation (JNDI Injection) in JMSMessageConsumer 
+Cc: kangel <kangel@....edu.cn>, pgn@....edu.cn, qiuhao@...ec.org, Pedro Sampaio <psampaio@...hat.com>, Paolo Bonzini <pbonzini@...hat.com>
+Subject: Re: Linux kernel: x86/kvm: null-ptr-deref in kvm_dirty_ring_push
 Content-Type: text/plain; charset=utf-8
 
-Description:
+On Thu, Apr 07, 2022 at 10:53:17AM +0200, Paolo Bonzini wrote:
+> indeed it doesn't cross guest-host boundaries.  However, /dev/kvm is 
+> accessible by unprivileged users, so it should be treated like any other 
+> unprivileged NULL pointer dereference in Linux.  I do not apply an 
+> embargo for those bugs, but whether to assign a CVE is not my choice.
 
-Apache Flume versions 1.4.0 through 1.10.0 are vulnerable to a remote code execution (RCE) attack when a configuration uses a JMS Source with a JNDI LDAP data source URI when an attacker has control of the target LDAP server. This issue is fixed by limiting JNDI to allow only the use of the java protocol or no protocol. 
+Oh, indeed.  So it's a local DoS for systems with user-accessible
+/dev/kvm and panic_on_oops=1, like RHEL and its rebuilds.  Makes sense
+to have a CVE ID, then.  (I assume that mmap_min_addr works.)
 
-This issue is being tracked as FLUME-3428
-
-Credit:
-
-Apache Flume would like to thank Frentzen Amaral for reporting this issue.
-
-References:
-
-https://issues.apache.org/jira/browse/FLUME-3428
-https://lists.apache.org/thread/qkmt4r2t9tbrxrdbjg1m2oczbvczd9zn
-
+Alexander
