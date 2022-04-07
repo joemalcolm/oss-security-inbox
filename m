@@ -1,4 +1,4 @@
-Received: (qmail 9380 invoked by uid 550); 29 Mar 2024 21:05:31 -0000
+Received: (qmail 1088 invoked by uid 550); 8 Apr 2022 09:06:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,93 +7,73 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31826 invoked from network); 29 Mar 2024 20:46:28 -0000
-DKIM-Signature: a=rsa-sha256; b=Eh2fZSYQPHMmRpzG3hBCwTv8un1zwDxDRzXFGgfvNPsU2NmiC7HS9XWIn28e7nTA2GbOZl1UInBkuNShsQ5PGoc5Kjz4GT4r2iNA5Bx/P1tBRjCYbPM2OT3mbfPDRAal+oHOYr7mbMW9Gr1gdOfqrULpzbqgdXmB6vFrtvMl8awG0H+YIMWKAgoprG8woC7HN1f1aJUWaW9S3UJQ+lil5rJB3sx2jy8RdEIscNhGYNslGp37WNz8hGPXjq4l2QKXLjgnUdYNT4FfggQ44eZC+zuakb+vtvTEQPCL3qtGfJgEgKhuKkkIhfUN2iq9GSZGNZek3yzxWPS6Ifd4BHJLBw==; s=purelymail2; d=levitati.ng; v=1; bh=Jerk5x/Ep5wd1n+q9nZjoP7xWisioy5oetPN0lnvOns=; h=Received:From:To:Subject;
-DKIM-Signature: a=rsa-sha256; b=GTWRab1v4ygbEyUKyOEO9ONPjVrU4jQ94KqyYqBSADNK3kereikMmgenxd7jGEoRSFIwtuzk/2htLWGCrJsxbhn5W48XqI0xIbVN2fH+0jAJQkXyC/HbsX/okiDj2j6O97AVdXvtx4t6eYRuPG1L6sIeXCUTwkt3Q7riHj5C8VSpoISXvDwpATcf5HcHdCdZ0jauGBg8iG16iFFkwSyL72oekOPimxGAhcoCEOgzJyax/cKfdyhPk+/EgNOnMKoQBRLorjvn/R842iXdsaN5yzJaordxAm1kys/9dr/h25SyjLzHsS26E+oI0RT21bSwJur93VK0oXT3rFTNtNq/8g==; s=purelymail2; d=purelymail.com; v=1; bh=Jerk5x/Ep5wd1n+q9nZjoP7xWisioy5oetPN0lnvOns=; h=Feedback-ID:Received:From:To:Subject;
-Feedback-ID: 25799:4744:null:purelymail
-X-Pm-Original-To: oss-security@lists.openwall.com
+Received: (qmail 30661 invoked from network); 7 Apr 2022 21:29:37 -0000
+Message-ID: <61e1bac6-7b68-127d-0616-5f6c903f0e47@leventepolyak.net>
+Date: Thu, 7 Apr 2022 23:29:03 +0200
 MIME-Version: 1.0
-Date: Fri, 29 Mar 2024 21:46:05 +0100
-From: "Rein Fernhout (Levitating)" <me@levitati.ng>
+User-Agent: Mutt/2.1.42 (2034-12-24)
+Content-Language: en-US
 To: oss-security@lists.openwall.com
-Cc: "Alexander E. Patrakov" <patrakov@gmail.com>
-In-Reply-To: <CAN_LGv3B4_K16osLRiinny7SbOsxvvtJHbU3Fgbu4ytnEPgoww@mail.gmail.com>
-References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
- <CAN_LGv0CU6J+5d6RX=mDrMvAg4kf3EGi+56x+J4iW0NCFRee1g@mail.gmail.com>
- <CAN_LGv3B4_K16osLRiinny7SbOsxvvtJHbU3Fgbu4ytnEPgoww@mail.gmail.com>
-User-Agent: Purely Mail via Roundcube/1.6.5
-Message-ID: <e134c4ab081dce2bba40540075585837@purelymail.com>
-X-Sender: me@levitati.ng
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-MIME-Autoconverted: from 8bit to quoted-printable by Purelymail
-Subject: Re: [oss-security] backdoor in upstream xz/liblzma leading to ssh
- server compromise
+References: <m2o81c3f8r.fsf@meyering.net>
+From: Levente Polyak <levente@leventepolyak.net>
+In-Reply-To: <m2o81c3f8r.fsf@meyering.net>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------wMafPuCsRA5QFpNHmCh3rqHn"
+X-bounce-key: webpack.hosteurope.de;levente@leventepolyak.net;1649366978;5b5f4e16;
+X-HE-SMSGID: 1ncZh0-0007mZ-RP
+Subject: Re: [oss-security] zgrep, xzgrep: arbitrary-file-write vulnerability
 
-> so I would appreciate it if somebody else confirms my conclusion.
+--------------wMafPuCsRA5QFpNHmCh3rqHn
+Content-Type: multipart/mixed; boundary="------------RR0eVz7JWab7G34pV187HTyO";
+ protected-headers="v1"
+From: Levente Polyak <levente@leventepolyak.net>
+To: oss-security@lists.openwall.com
+Message-ID: <61e1bac6-7b68-127d-0616-5f6c903f0e47@leventepolyak.net>
+Subject: Re: [oss-security] zgrep, xzgrep: arbitrary-file-write vulnerability
+References: <m2o81c3f8r.fsf@meyering.net>
+In-Reply-To: <m2o81c3f8r.fsf@meyering.net>
 
-I can confirm there is no difference in the disassembly of libzlma in=20
-Archlinux packages 5.6.1-1 and 5.6.1-2.
+--------------RR0eVz7JWab7G34pV187HTyO
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-This is the difference of the hexdumps as created by xxd:
+T24gNC83LzIyIDIwOjQ0LCBKaW0gTWV5ZXJpbmcgd3JvdGU6DQo+IEFsbCBw
+cmV2aW91cyB2ZXJzaW9ucyBvZiBnemlwIGFuZCB4enV0aWxzIGFyZSBhZmZl
+Y3RlZC4NCj4gDQo+IHh6dXRpbHMgcmVsZWFzZWQgdGhpcyBwYXRjaCB0b2Rh
+eToNCj4gDQo+ICAgIGh0dHBzOi8vdHVrYWFuaS5vcmcveHoveHpncmVwLVpE
+SS1DQU4tMTY1ODcucGF0Y2gNCj4gICAgaHR0cHM6Ly90dWthYW5pLm9yZy94
+ei94emdyZXAtWkRJLUNBTi0xNjU4Ny5wYXRjaC5zaWcNCj4gDQo+IGd6aXAt
+MS4xMiB3YXMgcmVsZWFzZWQgdG9kYXksIHdpdGggdGhlIGZpeDoNCj4gDQo+
+ICAgIGh0dHBzOi8vbGlzdHMuZ251Lm9yZy9yL2J1Zy1nemlwLzIwMjItMDQv
+bXNnMDAwMTEuaHRtbA0KPiAgICBodHRwczovL2Z0cC5nbnUub3JnL2dudS9n
+emlwL2d6aXAtMS4xMi50YXIueHoNCj4gICAgaHR0cHM6Ly9mdHAuZ251Lm9y
+Zy9nbnUvZ3ppcC9nemlwLTEuMTIudGFyLnh6LnNpZw0KDQoNCkNWRS0yMDIy
+LTEyNzEgaGFzIGJlZW4gYXNzaWduZWQgdG8gdGhpcyBpc3N1ZS4NCg0KQ2hl
+ZXJzLA0KTGV2ZW50ZQ0K
 
-48,49c48,49
-< 000002f0: 0300 0000 474e 5500 71f9 a255 f686 4e44  ....GNU.q..U..ND
-< 00000300: c325 3a10 dc37 9c25 c8bf b302 0000 0000  .%:..7.%........
----
-> 000002f0: 0300 0000 474e 5500 69df 3c77 1c62 8668  ....GNU.i.<w.b.h
-> 00000300: 86ef f245 d5b1 5834 540d f808 0000 0000  ...E..X4T.......
-12804c12804
-< 00032030: 2e36 2e31 2e64 6562 7567 0000 82fd 6f66  .6.1.debug....of
----
-> 00032030: 2e36 2e31 2e64 6562 7567 0000 4ad1 cc28  .6.1.debug..J..(
+--------------RR0eVz7JWab7G34pV187HTyO--
 
-The commit that updated the pkgrel can be seen here:
+--------------wMafPuCsRA5QFpNHmCh3rqHn
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
 
-https://gitlab.archlinux.org/archlinux/packaging/packages/xz/-/commit/88138=
-5757abdc39d3cfea1c3e34ec09f637424ad
+-----BEGIN PGP SIGNATURE-----
 
-5.6.1-1 was build from the tarball found in releases but 5.6.1-2 is not.
+iQIzBAEBCgAdFiEE4kC1fixGMLp2ji8m/BtUfI2BcsgFAmJPV58ACgkQ/BtUfI2B
+csghkhAAymaZNhsjFQpE0ywOy5+sQBx+35/Rl2sPxoWepIGMcc7WVGz6MZPSzfV+
+ReXMurLe3ACQDaYq9uqVecu7dXTMhVTn2nr3d/hZcbZPXgQRrpZGOWk9fRvtIcVb
+R08iDvbAfRjP7eqsDLuA9E7NBHaE90RMKncHTW0Y/+qbM/OI7guZ6FM2j3XnaHR7
+4VA9h/AhdMWBIkJXvItBduv5TVTNi/kew9ln2SjYMRNrl1Okqxx9oJezbkgNK3Aj
+2zsDZ08aFwja3u3NuVF9JhYjmGowDUdl9eBiWdTWjKTt3j3GWp7ECqBXOZqmCUgd
+Pf3GnMPXvqg9RJZ1siWWOQlgExEn5boV54AjSuYdn6TKUq9RTtv1rZTj/AqsCHCJ
+hrCWZzhDbncVtW/TDva6PFIU6p2URjPHkd2PPRWLRXsU7GOg0QaRbTUjhcgeig+e
+kGsG0g6OWXg3J3AmK+S3s165FApnSYO8IhepuzRRrogOZzzGcjw5kzpT0Y0zrOmf
+U9sAiPd+gIIj6tdXGd21beIuXWp9C1pmq+7xGGM2kZnJAJgOV5hdtOP0xm0vFSrT
+Sn+RONaq/iyOMmk2sYGk0HzGQhRWuow7kZwFWTjPJ3TzYaHXrZfdPA9Y+NcTKBp8
+RLKKIfTGPPpfJhdMkpEM0PWNjOQbL9RcAZXM3fnk3BPeQ3JYGVA=
+=ZdCd
+-----END PGP SIGNATURE-----
 
-On 2024-03-29 21:18, Alexander E. Patrakov wrote:
-> On Sat, Mar 30, 2024 at 2:59=E2=80=AFAM Alexander E. Patrakov
-> <patrakov@gmail.com> wrote:
->>=20
->> On Sat, Mar 30, 2024 at 12:09=E2=80=AFAM Andres Freund <andres@anarazel.=
-de>=20
->> wrote:
->> > =3D=3D Affected Systems =3D=3D
->> >
->> > The attached de-obfuscated script is invoked first after configure, wh=
-ere it
->> > decides whether to modify the build process to inject the code.
->> >
->> > These conditions include...
->> <snip>
->> > Running as part of a debian or RPM package build:
->> >     if test -f "$srcdir/debian/rules" || test "x$RPM_ARCH" =3D "xx86_6=
-4";then
->>=20
->> Could you please confirm that the Arch Linux binary package was never
->> actually compromised?
->=20
-> Answering my own question. Supposedly (as "confirmed" by
-> https://lists.archlinux.org/archives/list/arch-security@lists.archlinux.o=
-rg/thread/R3HBBSVYIRTXB4O64N2WZX55BF6IIPST/),
-> "package xz before version 5.6.1-2 is vulnerable". So, I downloaded
-> versions 5.6.1-1 (supposedly vulnerable) and 5.6.1-2 (supposedly
-> fixed) from Arch Linux Archive:
-> https://archive.archlinux.org/packages/x/xz/
->=20
-> I extracted both binary packages and disassembled the liblzma.so.5.6.1
-> library contained therein using "objdump -d". The files are not
-> identical, however, their disassembly is. Therefore, either both are
-> trojaned, or none. Based on the "if test -f "$srcdir/debian/rules" ||
-> test "x$RPM_ARCH" =3D "xx86_64";then" line, I think that the correct
-> answer is "none", and therefore no advisory should have been created.
-> But it's 4:18am here, not the best time to think, so I would
-> appreciate it if somebody else confirms my conclusion.
->=20
-> P.S. Kudos to the reproducible-builds project for making the analysis=20
-> that easy.
+--------------wMafPuCsRA5QFpNHmCh3rqHn--
