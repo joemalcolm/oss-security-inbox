@@ -1,21 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/28/5
-Message-ID: <99n882p8-41oq-9763-314-24r434o4549o@inai.de>
-Date: Wed, 28 Dec 2022 18:09:21 +0100 (CET)
-From: Jan Engelhardt <jengelh@...i.de>
-To: oss-security@...ts.openwall.com
-cc: Alejandro Colomar <alx.manpages@...il.com>,  Michael Kerrisk <mtk.manpages@...il.com>, linux-kernel@...r.kernel.org,  linux-man@...r.kernel.org
-Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/07/5
+Message-ID: <4fd4c465-35a5-4ca5-f549-6392ecb10330@sysec.org>
+Date: Thu, 7 Apr 2022 17:16:26 +0800
+From: Qiuhao Li <qiuhao@...ec.org>
+To: Solar Designer <solar@...nwall.com>, kangel <kangel@....edu.cn>
+Cc: oss-security@...ts.openwall.com, pgn@....edu.cn, Pedro Sampaio <psampaio@...hat.com>, pbonzini@...hat.com
+Subject: Re: Linux kernel: x86/kvm: null-ptr-deref in kvm_dirty_ring_push
 Content-Type: text/plain; charset=utf-8
 
+On 4/7/22 16:35, Solar Designer wrote:
+> Further in the linux-distros thread, this got assigned CVE-2022-1263,
+> however is this really a security issue - in other words, is a security
+> boundary crossed in triggering the bug?  I think it is not, and if so
+> the CVE ID should probably be rejected.  From the PoC:
+> 
+>> 		res = syscall(__NR_openat, 0xffffffffffffff9cul, "/dev/kvm", 0ul, 0ul);
 
-On Wednesday 2022-12-28 17:47, Demi Marie Obenour wrote:
->> Examples:
->> 
->> 1. /proc/pid/stats.json
->> 2. /proc/pid/stats.xml
->> 3. /proc/pid/stats.yaml_shouldnt_be_a_thing
->
->A binary format would be even better.  No risk of ambiguity.
+We sent the report to oss-security as instructed by linux-distro.
 
-So like EBML?
+As Paolo said, /dev/kvm can be accessed by an unprivileged local user. 
+So it's a Dos. It also seems like there is a kernel NPD issue on oss 
+before: https://www.openwall.com/lists/oss-security/2022/04/02/5
+
+> 
+> In fact, also in the linux-distros thread it was promptly agreed that
+> this doesn't need an embargo - perhaps precisely because of no security
+> relevance?  If so, that should have been said explicitly, so a CVE ID
+> wouldn't be assigned (it was by another person).
+
+We are willing to cooperate with the final decision of the CVE issuer 
+and oss-security.
+
+Personally, I agree with Paolo this is not a scary bug. No embargo makes 
+it be fixed quickly.
+
+Regards,
+   Qiuhao Li
+
