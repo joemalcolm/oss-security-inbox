@@ -1,44 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/12/3
-Message-ID: <a9f45c1da8506e5c8e1ee89ffd6edc27e065e721.camel@mittwald.de>
-Date: Wed, 12 Jan 2022 10:48:33 +0000
-From: Sven Kieske <S.Kieske@...twald.de>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE-2021-3979 ceph: Ceph volume does not honour osd_dmcrypt_key_size
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/07/2
+Message-ID: <20220407083543.GA16833@openwall.com>
+Date: Thu, 7 Apr 2022 10:35:43 +0200
+From: Solar Designer <solar@...nwall.com>
+To: kangel <kangel@....edu.cn>
+Cc: oss-security@...ts.openwall.com, pgn@....edu.cn, qiuhao@...ec.org, Pedro Sampaio <psampaio@...hat.com>, pbonzini@...hat.com
+Subject: Re: Linux kernel: x86/kvm: null-ptr-deref in kvm_dirty_ring_push
 Content-Type: text/plain; charset=utf-8
 
-On Di, 2022-01-11 at 22:52 -0600, John Helmert III wrote:
-> Was a patch meant to be attached? Is there any report or PR upstream?
+On Thu, Apr 07, 2022 at 10:15:42AM +0800, kangel wrote:
+>     We found a null-ptr-deref in the kvm module which can lead to DoS. This flaw is in kvm_dirty_ring_push in virt/kvm/dirty_ring.c. The linux kernel version is 5.17.0-rc8. We would appreciate a CVE ID if this is a security issue.
 
-There is at least no new commit in https://github.com/ceph/ceph/blob/master/src/ceph-volume/ceph_volume/util/encryption.py
+Further in the linux-distros thread, this got assigned CVE-2022-1263,
+however is this really a security issue - in other words, is a security
+boundary crossed in triggering the bug?  I think it is not, and if so
+the CVE ID should probably be rejected.  From the PoC:
 
-from a cursory glance at the open PRs I also don't see anything related, but I just might have missed it.
+> 		res = syscall(__NR_openat, 0xffffffffffffff9cul, "/dev/kvm", 0ul, 0ul);
 
-There is also no tracking bug at https://tracker.ceph.com when searching for this CVE number.
+In fact, also in the linux-distros thread it was promptly agreed that
+this doesn't need an embargo - perhaps precisely because of no security
+relevance?  If so, that should have been said explicitly, so a CVE ID
+wouldn't be assigned (it was by another person).
 
--- 
-Mit freundlichen Grüßen / Regards
-
-Sven Kieske
-Systementwickler / systems engineer
- 
- 
-Mittwald CM Service GmbH & Co. KG
-Königsberger Straße 4-6
-32339 Espelkamp
- 
-Tel.: 05772 / 293-900
-Fax: 05772 / 293-333
- 
-https://www.mittwald.de
- 
-Geschäftsführer: Robert Meyer, Florian Jürgens
- 
-St.Nr.: 331/5721/1033, USt-IdNr.: DE814773217, HRA 6640, AG Bad Oeynhausen
-Komplementärin: Robert Meyer Verwaltungs GmbH, HRB 13260, AG Bad Oeynhausen
-
-Informationen zur Datenverarbeitung im Rahmen unserer Geschäftstätigkeit 
-gemäß Art. 13-14 DSGVO sind unter www.mittwald.de/ds abrufbar.
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Alexander
