@@ -1,45 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/09/2
-Message-Id: <063FB760-CBFF-4669-9BDD-49B9D1CD56DD@apache.org>
-Date: Mon, 9 May 2022 11:41:13 +0200
-From: Jan Lehnardt <jan@...che.org>
-To: Archange <archange@...ivis.me>
-Cc: oss-security@...ts.openwall.com, Security CouchDB <security@...chdb.apache.org>
-Subject: Re: CVE-2022-24706: Apache CouchDB: Remote Code Execution Vulnerability in Packaging
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/08/8
+Message-ID: <YlCB9+pPmFeG27t9@gentoo.org>
+Date: Fri, 8 Apr 2022 13:41:59 -0500
+From: John Helmert III <ajak@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0004
 Content-Type: text/plain; charset=utf-8
 
-Hi Bruno,
-
-first of all, thanks for maintaining CouchDB for Arch. Secondly, for any security related questions, please do not hesitate to contact security@...chdb.apache.org instead of any one of the team individually, as we can’t know if any of is available at all times (vacations and whatnot :)
-
-As for your questions, see this PR to our packaging infrastructure for how we handle this on Debian and Centos/Rocky: https://github.com/apache/couchdb-pkg/pull/92/files
-
-Best
-Jan
-—
-
-> On 9. May 2022, at 10:54, Archange <archange@...ivis.me> wrote:
+On Fri, Apr 08, 2022 at 12:31:18PM -0500, John Helmert III wrote:
+> The issue I described last time has come up again here [1]. 2.36.0 was
+> released on March 21, almost three weeks ago now, and its WSA was
+> released today. Why the long wait?
 > 
-> Hi,
-> 
-> Le 26/04/2022 à 12:44, Jan Lehnardt a écrit :
->> […]
->> 
->> In addition, all binary packages have been updated to bind `epmd` as
->> well as the CouchDB distribution port to `127.0.0.1` and/or `::1`
->> respectively.
->> 
->> Credit:
->> 
->> The Apache CouchDB Team would like to thank Alex Vandiver <alexmv@...ip.com> for the report of this issue.
->> 
->> References:
->> 
->> https://lists.apache.org/thread/w24wo0h8nlctfps65txvk0oc5hdcnv00
-> 
-> Regarding epmd, how is this achieved in the binary packages? Because on Arch at least, setting `ERL_EPMD_ADDRESS=127.0.0.1` as stated in https://github.com/apache/couchdb/issues/999#issuecomment-345068280 is still required. Should Arch make that a default in the systemd service file? For now this has just been a recommandation for single node security since 2017 (https://wiki.archlinux.org/title/CouchDB#Single_node_setup_&_Security), but I can make it the default (the second part of the wiki advice being now an upstream default, I think it would make some sense).
-> 
-> Regards,
-> Bruno/Archange (Arch maintainer for CouchDB)
-> 
+> Three of these issues are fixed in 2.36.0 and 2.34.7, but I can't find
+> a release for 2.34.7 [2][3]. Is it released yet?
 
+I'm sorry, I misread the descriptions. That version refers to WPE
+WebKit rather than WebKitGTK.
+
+> [1] https://www.openwall.com/lists/oss-security/2022/01/23/1
+> [2] https://webkitgtk.org/news.html
+> [3] https://webkitgtk.org/releases/
+> 
+> On Fri, Apr 08, 2022 at 02:31:29PM +0100, Carlos Alberto Lopez Perez wrote:
+> > ------------------------------------------------------------------------
+> > WebKitGTK and WPE WebKit Security Advisory                 WSA-2022-0004
+> > ------------------------------------------------------------------------
+> > 
+> > Date reported           : April 08, 2022
+> > Advisory ID             : WSA-2022-0004
+> > WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2022-0004.html
+> > WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2022-0004.html
+> > CVE identifiers         : CVE-2022-22624, CVE-2022-22628,
+> >                           CVE-2022-22629, CVE-2022-22637.
+> > 
+> > Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+> > 
+> > CVE-2022-22624
+> >     Versions affected: WebKitGTK before 2.36.0 and WPE WebKit before 2.34.7
+> >     Credit to Kirin (@Pwnrin) of Tencent Security Xuanwu Lab.
+> >     Impact: Processing maliciously crafted web content may lead to
+> >     arbitrary code execution. Description: A use after free issue was
+> >     addressed with improved memory management.
+> > 
+> > CVE-2022-22628
+> >     Versions affected: WebKitGTK before 2.36.0 and WPE WebKit before 2.34.7
+> >     Credit to Kirin (@Pwnrin) of Tencent Security Xuanwu Lab.
+> >     Impact: Processing maliciously crafted web content may lead to
+> >     arbitrary code execution. Description: A use after free issue was
+> >     addressed with improved memory management.
+> > 
+> > CVE-2022-22629
+> >     Versions affected: WebKitGTK before 2.36.0 and WPE WebKit before 2.34.7
+> >     Credit to Jeonghoon Shin at Theori working with Trend Micro Zero Day
+> >     Initiative.
+> >     Impact: Processing maliciously crafted web content may lead to
+> >     arbitrary code execution. Description: A buffer overflow issue was
+> >     addressed with improved memory handling.
+> > 
+> > CVE-2022-22637
+> >     Versions affected: WebKitGTK before 2.34.4 and WPE WebKit before 2.34.4
+> >     Credit to Tom McKee of Google.
+> >     Impact: A malicious website may cause unexpected cross-origin
+> >     behavior. Description: A logic issue was addressed with improved
+> >     state management.
+> > 
+> > 
+> > We recommend updating to the latest stable versions of WebKitGTK and WPE
+> > WebKit. It is the best way to ensure that you are running safe versions
+> > of WebKit. Please check our websites for information about the latest
+> > stable releases.
+> > 
+> > Further information about WebKitGTK and WPE WebKit security advisories
+> > can be found at: https://webkitgtk.org/security.html or
+> > https://wpewebkit.org/security/.
+> > 
+> > The WebKitGTK and WPE WebKit team,
+> > April 08, 2022
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
