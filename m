@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2854" "Wednesday" "15" "June" "2016" "02:37:11" "+0000" "=?utf-8?B?5byg5byA57+U?=" "zhangkaixiang@360.cn" "<5EDB84F4B23F5B4DB6500A89258280E0BB62C2@EX02.corp.qihoo.net>" "50" "[oss-security] CVE-2016-5323: libtiff 4.0.6 tiffcrop _TIFFFax3fillruns(): divide by zero" nil nil nil "6" "2016061502:37:11" "[oss-security] CVE-2016-5323: libtiff 4.0.6 tiffcrop _TIFFFax3fillruns(): divide by zero" (number mark "U       zhangkaixian Jun 15   50/2854  " thread-indent "\"[oss-security] CVE-2016-5323: libtiff 4.0.6 tiffcrop _TIFFFax3fillruns(): divide by zero\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 20456 invoked by uid 550); 15 Jun 2016 02:44:19 -0000
+Received: (qmail 17870 invoked by uid 550); 8 Apr 2022 02:12:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,72 +7,158 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5200 invoked from network); 15 Jun 2016 02:37:24 -0000
-From: =?utf-8?B?5byg5byA57+U?= <zhangkaixiang@360.cn>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: CVE-2016-5323: libtiff 4.0.6 tiffcrop _TIFFFax3fillruns():
- divide by zero
-Thread-Index: AdHGrqWMAggsHKNVTFWKyyj4kAXA9A==
-Date: Wed, 15 Jun 2016 02:37:11 +0000
-Message-ID: <5EDB84F4B23F5B4DB6500A89258280E0BB62C2@EX02.corp.qihoo.net>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.18.25.62]
-Content-Type: multipart/alternative;
-	boundary="_000_5EDB84F4B23F5B4DB6500A89258280E0BB62C2EX02corpqihoonet_"
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2016-5323: libtiff 4.0.6 tiffcrop _TIFFFax3fillruns(): divide
- by zero
+Received: (qmail 17831 invoked from network); 8 Apr 2022 02:12:17 -0000
+From: Damien Miller <djm@cvs.openbsd.org>
+Date: Thu, 7 Apr 2022 20:12:04 -0600 (MDT)
+To: oss-security@lists.openwall.com
+Message-ID: <ff602d26454d3886@cvs.openbsd.org>
+Subject: [oss-security] Announce: OpenSSH 9.0 released
 
---_000_5EDB84F4B23F5B4DB6500A89258280E0BB62C2EX02corpqihoonet_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+OpenSSH 9.0 has just been released. It will be available from the
+mirrors listed at https://www.openssh.com/ shortly.
 
-RGV0YWlscw0KPT09PT09PQ0KDQpQcm9kdWN0OiBsaWJ0aWZmDQpBZmZlY3Rl
-ZCBWZXJzaW9uczogPD0gNC4wLjYNClZ1bG5lcmFiaWxpdHkgVHlwZTogZGl2
-aWRlIGJ5IHplcm8NClZlbmRvciBVUkw6IGh0dHA6Ly93d3cucmVtb3Rlc2Vu
-c2luZy5vcmcvbGlidGlmZi8NCkNyZWRpdDogS2FpeGlhbmcgWmhhbmcgb2Yg
-dGhlIENsb3VkIFNlY3VyaXR5IFRlYW0sIFFpaG9vIDM2MA0KQ1ZFIElEOiBD
-VkUtMjAxNi01MzIzDQpUZXN0ZWQgc3lzdGVtIHZlcnNpb246DQogICAgICAg
-ZmVkb3JhMjMgMzJiaXQNCiAgICAgICBmZWRvcmEyMyA2NGJpdA0KICAgICAg
-IENlbnRPUyBMaW51eCByZWxlYXNlIDcuMS4xNTAzIDY0Yml0DQoNCkludHJv
-ZHVjdGlvbg0KPT09PT09PQ0KDQp0IHdhcyBhbHdheXMgY29ycnVwdGVkIHdo
-ZW4gSSB1c2UgdGlmZmNyb3AgY29tbWFuZCBmb2xsb3dlZCBieSBhIGNyYWZ0
-ZWQgVElGRiBpbWFnZSBpbiBmdW5jdGlvbiBfVElGRkZheDNmaWxscnVucyAo
-KSB3aXRob3V0IGNoZWNraW5nIHRoZSB2YWx1ZSBvZiBkaXZpc29yLCBpdCBj
-YXVzZXMgYSBkaXZpZGUgYnkgemVybyBmbGF3LiBBdHRhY2tlcnMgY291bmQg
-ZXhwbG9pdCB0aGlzIGlzc3VlIHRvIGNhdXNlIGRlbmlhbC1vZi1zZXJ2aWNl
-Lg0KDQpIZXJlIGlzIHRoZSBzdGFjayBpbmZvOg0KZ2RiIOKAk2FyZ3MgLi90
-aWZmY3JvcCBfVElGRkZheDNmaWxscnVucy50aWYgdG1wb3V0LnRpZg0KLS0t
-IC0tLQ0KUHJvZ3JhbSByZWNlaXZlZCBzaWduYWwgU0lHU0VHViwgU2VnbWVu
-dGF0aW9uIGZhdWx0Lg0KMHgwMDAwN2ZmZmY3YWQ5N2YwIGluIF9USUZGRmF4
-M2ZpbGxydW5zIChidWY9MHgwLCBydW5zPTB4NjczNTAwLCBlcnVuPTxvcHRp
-bWl6ZWQgb3V0PiwgbGFzdHg9NjQpIGF0IHRpZl9mYXgzLmM6NDA3DQo0MDcg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICBaRVJPKG4sIGNwKTsNCihn
-ZGIpIGJ0DQojMCAgMHgwMDAwN2ZmZmY3YWQ5N2YwIGluIF9USUZGRmF4M2Zp
-bGxydW5zIChidWY9MHgwLCBydW5zPTB4NjczNTAwLCBlcnVuPTxvcHRpbWl6
-ZWQgb3V0PiwgbGFzdHg9NjQpIGF0IHRpZl9mYXgzLmM6NDA3DQojMSAgMHgw
-MDAwN2ZmZmY3YWUwODdjIGluIEZheDNEZWNvZGVSTEUgKHRpZj0weDY2MjAx
-MCwgYnVmPTB4MCwgb2NjPTgxOTIsIHM9PG9wdGltaXplZCBvdXQ+KSBhdCB0
-aWZfZmF4My5jOjE1MjcNCiMyICAweDAwMDA3ZmZmZjdiYTM3MzkgaW4gVElG
-RlJlYWRFbmNvZGVkVGlsZSAodGlmPXRpZkBlbnRyeT0weDY2MjAxMCwgdGls
-ZT04LCBidWY9MHgwLCBzaXplPTgxOTIsIHNpemVAZW50cnk9LTEpIGF0IHRp
-Zl9yZWFkLmM6NjY4DQojMyAgMHgwMDAwN2ZmZmY3YmEzYTAxIGluIFRJRkZS
-ZWFkVGlsZSAodGlmPXRpZkBlbnRyeT0weDY2MjAxMCwgYnVmPTxvcHRpbWl6
-ZWQgb3V0PiwgeD14QGVudHJ5PTAsIHk9eUBlbnRyeT0wLCB6PXpAZW50cnk9
-MCwgcz1zQGVudHJ5PTgpIGF0IHRpZl9yZWFkLmM6NjQxDQojNCAgMHgwMDAw
-MDAwMDAwNDQzZTQxIGluIHJlYWRTZXBhcmF0ZVRpbGVzSW50b0J1ZmZlciAo
-YnBzPTEsIHNwcD0xMjksIHRsPTEwMjQsIHR3PTY0LCBpbWFnZXdpZHRoPTMy
-LCBpbWFnZWxlbmd0aD0zMiwgb2J1Zj0weDdmZmZmN2VlNTAxMCAiIiwgaW49
-MHg2NjIwMTApIGF0IHRpZmZjcm9wLmM6OTk0DQojNSAgbG9hZEltYWdlIChp
-bj1pbkBlbnRyeT0weDY2MjAxMCwgaW1hZ2U9aW1hZ2VAZW50cnk9MHg3ZmZm
-ZmZmZjc5NjAsIGR1bXA9ZHVtcEBlbnRyeT0weDdmZmZmZmZmYzI3MCwgcmVh
-ZF9wdHI9cmVhZF9wdHJAZW50cnk9MHg3ZmZmZmZmZjc5MjApIGF0IHRpZmZj
-cm9wLmM6NjA3OQ0KIzYgIDB4MDAwMDAwMDAwMDQwMzIwOSBpbiBtYWluIChh
-cmdjPTxvcHRpbWl6ZWQgb3V0PiwgYXJndj08b3B0aW1pemVkIG91dD4pIGF0
-IHRpZmZjcm9wLmM6MjI3OA0KKGdkYikgcCBjcA0KJDIgPSAodW5zaWduZWQg
-Y2hhciAqKSAweDANCg0KDQo=
+OpenSSH is a 100% complete SSH protocol 2.0 implementation and
+includes sftp client and server support.
 
---_000_5EDB84F4B23F5B4DB6500A89258280E0BB62C2EX02corpqihoonet_--
+Once again, we would like to thank the OpenSSH community for their
+continued support of the project, especially those who contributed
+code or patches, reported bugs, tested snapshots or donated to the
+project. More information on donations may be found at:
+https://www.openssh.com/donations.html
+
+Changes since OpenSSH 8.9
+=========================
+
+This release is focused on bug fixing.
+
+Potentially-incompatible changes
+--------------------------------
+
+This release switches scp(1) from using the legacy scp/rcp protocol
+to using the SFTP protocol by default.
+
+Legacy scp/rcp performs wildcard expansion of remote filenames (e.g.
+"scp host:* .") through the remote shell. This has the side effect of
+requiring double quoting of shell meta-characters in file names
+included on scp(1) command-lines, otherwise they could be interpreted
+as shell commands on the remote side.
+
+This creates one area of potential incompatibility: scp(1) when using
+the SFTP protocol no longer requires this finicky and brittle quoting,
+and attempts to use it may cause transfers to fail. We consider the
+removal of the need for double-quoting shell characters in file names
+to be a benefit and do not intend to introduce bug-compatibility for
+legacy scp/rcp in scp(1) when using the SFTP protocol.
+
+Another area of potential incompatibility relates to the use of remote
+paths relative to other user's home directories, for example -
+"scp host:~user/file /tmp". The SFTP protocol has no native way to
+expand a ~user path. However, sftp-server(8) in OpenSSH 8.7 and later
+support a protocol extension "expand-path@openssh.com" to support
+this.
+
+In case of incompatibility, the scp(1) client may be instructed to use
+the legacy scp/rcp using the -O flag.
+
+New features
+------------
+
+ * ssh(1), sshd(8): use the hybrid Streamlined NTRU Prime + x25519 key
+   exchange method by default ("sntrup761x25519-sha512@openssh.com").
+   The NTRU algorithm is believed to resist attacks enabled by future
+   quantum computers and is paired with the X25519 ECDH key exchange
+   (the previous default) as a backstop against any weaknesses in
+   NTRU Prime that may be discovered in the future. The combination
+   ensures that the hybrid exchange offers at least as good security
+   as the status quo.
+
+   We are making this change now (i.e. ahead of cryptographically-
+   relevant quantum computers) to prevent "capture now, decrypt
+   later" attacks where an adversary who can record and store SSH
+   session ciphertext would be able to decrypt it once a sufficiently
+   advanced quantum computer is available.
+
+ * sftp-server(8): support the "copy-data" extension to allow server-
+   side copying of files/data, following the design in
+   draft-ietf-secsh-filexfer-extensions-00. bz2948
+
+ * sftp(1): add a "cp" command to allow the sftp client to perform
+   server-side file copies.
+
+Bugfixes
+--------
+
+ * ssh(1), sshd(8): upstream: fix poll(2) spin when a channel's output
+   fd closes without data in the channel buffer. bz3405 and bz3411
+
+ * sshd(8): pack pollfd array in server listen/accept loop. Could
+   cause the server to hang/spin when MaxStartups > RLIMIT_NOFILE
+
+ * ssh-keygen(1): avoid NULL deref via the find-principals and
+   check-novalidate operations. bz3409 and GHPR#307 respectively.
+
+ * scp(1): fix a memory leak in argument processing. bz3404
+
+ * sshd(8): don't try to resolve ListenAddress directives in the sshd
+   re-exec path. They are unused after re-exec and parsing errors
+   (possible for example if the host's network configuration changed)
+   could prevent connections from being accepted.
+    
+ * sshd(8): when refusing a public key authentication request from a
+   client for using an unapproved or unsupported signature algorithm
+   include the algorithm name in the log message to make debugging
+   easier.
+    
+Portability
+-----------
+
+ * sshd(8): refactor platform-specific locked account check, fixing
+   an incorrect free() on platforms with both libiaf and shadow
+   passwords (probably only Unixware) GHPR#284,
+
+ * ssh(1), sshd(8): Fix possible integer underflow in scan_scaled(3)
+   parsing of K/M/G/etc quantities. bz#3401.
+
+ * sshd(8): provide killpg implementation (mostly for Tandem NonStop)
+   GHPR#301.
+
+ * Check for missing ftruncate prototype. GHPR#301
+
+ * sshd(8): default to not using sandbox when cross compiling. On most
+   systems poll(2) does not work when the number of FDs is reduced
+   with setrlimit, so assume it doesn't when cross compiling and we
+   can't run the test.  bz#3398.
+
+ * sshd(8): allow ppoll_time64 in seccomp sandbox. Should fix sandbox
+   violations on some (at least i386 and armhf) 32bit Linux platforms.
+   bz#3396.
+
+ * Improve detection of -fzero-call-used-regs=all support in
+   configure script.
+
+
+Checksums:
+==========
+
+
+ - SHA1 (openssh-9.0.tar.gz) = 05302aa4781e1a69db4261474ed940bd685afc24
+ - SHA256 (openssh-9.0.tar.gz) = 9I/FrLf5Gij/4NIPts9A8yWVi0ienyyMqjqn8s0hyLk=
+
+ - SHA1 (openssh-9.0p1.tar.gz) = 06dd658874dcd22d66311cf5999bd56c614de509
+ - SHA256 (openssh-9.0p1.tar.gz) = A5dDAhYenszjIVPPoQAS8eZcjzdQ9XOnOrG+/Vlyooo=
+
+Please note that the SHA256 signatures are base64 encoded and not
+hexadecimal (which is the default for most checksum tools). The PGP
+key used to sign the releases is available from the mirror sites:
+https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
+
+Please note that the OpenPGP key used to sign releases has been
+rotated for this release. The new key has been signed by the previous
+key to provide continuity.
+
+Reporting Bugs:
+===============
+
+- Please read https://www.openssh.com/report.html
+  Security bugs should be reported directly to openssh@openssh.com
+
