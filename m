@@ -1,28 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/06/4
-Message-ID: <c6a45ff60ee7199e8fc18871764a6e598b83d76c.camel@orlitzky.com>
-Date: Tue, 06 Sep 2022 08:31:12 -0400
-From: Michael Orlitzky <michael@...itzky.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: sagemath denial of service with abort() in gmp: overflow in mpz type
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/08/6
+Message-ID: <7ab10c96-aabc-5868-6ed9-2c3ec1e7c8ff@igalia.com>
+Date: Fri, 8 Apr 2022 14:31:29 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0004
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 2022-09-06 at 11:50 +0000, Jeremy Stanley wrote:
-> On 2022-09-06 08:47:58 +0300 (+0300), Georgi Guninski wrote:
-> [...]
-> > sagemath gives access to the python interpreter, so code execution
-> > is trivial.
-> [...]
-> 
-> I'm not familiar with sagemath, but is it intended to protect
-> against such cases? Note that even if all it does is pass
-> expressions into CPython's eval(), it's pretty much impossible to
-> guard against misuse without completely sandboxing the underlying
-> processes. Denial of service scenarios are really the least of
-> worries in that case.
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2022-0004
+------------------------------------------------------------------------
 
-That's about right. Sage does provide a web-based notebook interface,
-but the bottom line is that crashing is one of the nicer things you can
-ask it to do if it will execute your commands.
+Date reported           : April 08, 2022
+Advisory ID             : WSA-2022-0004
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2022-0004.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2022-0004.html
+CVE identifiers         : CVE-2022-22624, CVE-2022-22628,
+                          CVE-2022-22629, CVE-2022-22637.
+
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+
+CVE-2022-22624
+    Versions affected: WebKitGTK before 2.36.0 and WPE WebKit before 2.34.7
+    Credit to Kirin (@Pwnrin) of Tencent Security Xuanwu Lab.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A use after free issue was
+    addressed with improved memory management.
+
+CVE-2022-22628
+    Versions affected: WebKitGTK before 2.36.0 and WPE WebKit before 2.34.7
+    Credit to Kirin (@Pwnrin) of Tencent Security Xuanwu Lab.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A use after free issue was
+    addressed with improved memory management.
+
+CVE-2022-22629
+    Versions affected: WebKitGTK before 2.36.0 and WPE WebKit before 2.34.7
+    Credit to Jeonghoon Shin at Theori working with Trend Micro Zero Day
+    Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A buffer overflow issue was
+    addressed with improved memory handling.
+
+CVE-2022-22637
+    Versions affected: WebKitGTK before 2.34.4 and WPE WebKit before 2.34.4
+    Credit to Tom McKee of Google.
+    Impact: A malicious website may cause unexpected cross-origin
+    behavior. Description: A logic issue was addressed with improved
+    state management.
 
 
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
+
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+April 08, 2022
