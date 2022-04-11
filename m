@@ -1,74 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/29/1
-Message-ID: <8812a292-ecd6-5172-a746-4ca192552882@igalia.com>
-Date: Mon, 29 Aug 2022 13:26:49 +0200
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: oss-security@...ts.openwall.com, John Helmert III <ajak@...too.org>
-Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0008
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/11/3
+Message-ID: <CAAr7cF2zor2=J0D=NxFqS0TecrZTv2X8d_W53=vp_KWNJ-rxsg@mail.gmail.com>
+Date: Mon, 11 Apr 2022 16:20:56 +0800
+From: Felix Fu <foyjog@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2022-28893: Linux kernel: Use after free in SUNRPC subsystem
 Content-Type: text/plain; charset=utf-8
 
+Hello, I Request a CVE from MITRE.
 
-On 26/08/2022 07:01, John Helmert III wrote:
-> On Thu, Aug 25, 2022 at 11:34:04PM +0200, Carlos Alberto Lopez Perez wrote:
->> ------------------------------------------------------------------------
->> WebKitGTK and WPE WebKit Security Advisory                 WSA-2022-0008
->> ------------------------------------------------------------------------
->>
->> Date reported           : August 25, 2022
->> Advisory ID             : WSA-2022-0008
->> WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2022-0008.html
->> WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2022-0008.html
->> CVE identifiers         : CVE-2022-32893.
->>
->> Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
->>
->> CVE-2022-32893
->>     Versions affected: WebKitGTK and WPE WebKit before 2.36.7.
->>     Credit to an anonymous researcher.
->>     Impact: Processing maliciously crafted web content may lead to
->>     arbitrary code execution. Apple is aware of a report that this issue
->>     may have been actively exploited.
-> 
-> According to Apple's security advisories for this (e.g. [1]), this
-> issue is tracked on the Webkit Bugzilla as 243557 [2] which was opened
-> on 2022-08-04. A few minutes after that bug was opened, a pull request
-> on GitHub was linked [3] with a patch which also seems to add unit
-> tests. So, it appears to me that this issue was public since at least
-> August 4th, and even more widely publicized with Apple's security
-> advisories on August 17.
-> 
-> WebKit-2.36.6 was released shortly after the first bug report, on
-> 2022-08-07, and WebKit-2.36.7 was released yesterday, on 2022-08-25.
-> 
-> With this bug seemingly being publicly known to be an actively
-> exploited code execution issue, why did it take several weeks and 2
-> WebKit releases to get this issue fixed and a WSA released?
-> 
-> [1] https://support.apple.com/en-us/HT213412
-> [2] https://bugs.webkit.org/show_bug.cgi?id=243557
-> [3] https://github.com/WebKit/WebKit/pull/3023
-> 
+Description: The SUNRPC subsystem in the Linux kernel through 5.17.2 can
+call xs_xprt_free before ensuring that sockets are in the intended state.
+Details: Use after free happens in inet_put_port because some sockets are
+not close before xs_xprt_free().
+CVE-ID: CVE-2022-28893  (
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-28893)
+Fix:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=1a3b1bba7c7a5eb8a11513cf88427cb9d77bc60a
 
+------------------------------------------------------------
+I followed the steps as below :
 
-We (maintainers of Linux WebKit ports) don't have access to the security
-issues affecting Apple products until those issues are made public by them.
+To report minor security bugs (such as local DOS or local info leak):
 
-So, we didn't knew until August 17th of this issue. Also you can see
-that the bug report itself or the patch doesn't has any indication that
-it fixes a security-related problem.
+1、Report the bug publicly to kernel developers as described above and wait
+until a fix is committed. Alternatively, you can develop and send a fix
+yourself.
 
-Therefore, the time it took us to notice the issue, backport the fix and
-do a new release was just 7-8 days (from 17th to 24-25th of August).
-Which, honestely, it is quite good taking into account that: 1)
-back-porting the fix was not straightforward since it required
-back-porting also a few previous patches in order to be able to merge it
-properly and that 2) we are in August and people is usually on holidays.
+2、Request a CVE from MITRE through the web form. Describe the bug details
+and add a link to the fix (from patchwork.kernel.org, git.kernel.org or
+github.com) in the request.
 
-On the other hand, I don't know if this issue was or is exploited on
-Linux WebKit users. All I known is that Apple said they are aware of a
-report that this issue was actively exploited (on Apple/WebKit users).
-So I assume this can also affect Linux WebKit users. But I don't have a
-confirmation that this is actually the case, neither I'm aware of any
-PoC demonstrating the issue.
+3、Once a CVE is assigned, send the bug details, the CVE number and a link
+to the fix to oss-security@...ts.openwall.com
 
-Regards.
+(
+https://github.com/google/syzkaller/blob/master/docs/linux/reporting_kernel_bugs.md
+)
+
