@@ -1,28 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/14/5
-Message-ID: <f504671e-250d-f954-4f7b-39439e2cd429@apache.org>
-Date: Mon, 14 Nov 2022 15:26:45 +0000
-From: Rob Vesse <rvesse@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/11/1
+Message-ID: <5b1f908c-3940-bdf3-9511-e6f843b1f068@gmail.com>
+Date: Mon, 11 Apr 2022 10:02:56 +0200
+From: Mariusz Felisiak <felisiak.mariusz@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-45136: JDBC Deserialisation in Apache Jena SDB 
+Subject: Django: CVE-2022-28346: Potential SQL injection in ``QuerySet.annotate()``, ``aggregate()``, and ``extra()``
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+https://www.djangoproject.com/weblog/2022/apr/11/security-releases/
 
-Description:
+In accordance with `our security release policy
+<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
+Django team
+is issuing
+`Django 4.0.4 <https://docs.djangoproject.com/en/dev/releases/4.0.4/>`_,
+`Django 3.2.13 
+<https://docs.djangoproject.com/en/dev/releases/3.2.13/>`_, and
+`Django 2.2.28 <https://docs.djangoproject.com/en/dev/releases/2.2.28/>`_.
+These release addresses the security issues detailed below. We encourage all
+users of Django to upgrade as soon as possible.
 
-** UNSUPPORTED WHEN ASSIGNED ** Apache Jena SDB 3.17.0 and earlier is vulnerable to a JDBC Deserialisation attack if the attacker is able to control the JDBC URL used or cause the underlying database server to return malicious data.  The mySQL JDBC driver in particular is known to be vulnerable to this class of attack.  As a result an application using Apache Jena SDB can be subject to RCE when connected to a malicious database server.
+CVE-2022-28346: Potential SQL injection in ``QuerySet.annotate()``, 
+``aggregate()``, and ``extra()``
+====================================================================================================
 
-Apache Jena SDB has been EOL since December 2020 and users should migrate to alternative options e.g. Apache Jena TDB 2.
+``QuerySet.annotate()``, ``aggregate()``, and ``extra()`` methods were 
+subject to SQL injection in column aliases, using a suitably crafted 
+dictionary, with dictionary expansion, as the
+``**kwargs`` passed to these methods.
 
-Mitigation:
+Thanks Splunk team: Preston Elder, Jacob Davis, Jacob Moore, Matt 
+Hanson, David Briggs, and a security researcher: Danylo Dmytriiev 
+(DDV_UA) for the report.
 
-Apache Jena SDB has been EOL since December 2020, users should migrate to alternative options from the Apache Jena project e.g. Apache Jena TDB 2 or from 3rd party vendors.
+This issue has severity "high" according to the Django security policy.
 
+Affected supported versions
+===========================
 
-Users utilising Apache Jena SDB with mySQL should ensure they explicitly set autoDeserialize=false on their JDBC connection strings.  It is also recommended that users ensure that any ability to set the JDBC connection string is limited to appropriate users.
+* Django main branch
+* Django 4.0
+* Django 3.2
+* Django 2.2
 
-Credit:
+Resolution
+==========
 
-Apache Jena would like to thank Crilwa & LaNyer640 for reporting this issue
+Patches to resolve the issue have been applied to Django's main branch 
+and to
+the 4.0, 3.2, and 2.2 release branches. The patches may be obtained from the
+following changesets.
+
+* On the `main branch 
+<https://github.com/django/django/commit/93cae5cb2f9a4ef1514cf1a41f714fef08005200>`__
+* On the `4.0 release branch 
+<https://github.com/django/django/commit/800828887a0509ad1162d6d407e94d8de7eafc60>`__
+* On the `3.2 release branch 
+<https://github.com/django/django/commit/2044dac5c6968441be6f534c4139bcf48c5c7e48>`__
+* On the `2.2 release branch 
+<https://github.com/django/django/commit/2c09e68ec911919360d5f8502cefc312f9e03c5d>`__
+
+The following releases have been issued:
+
+* Django 4.0.4 (`download Django 4.0.4 
+<https://www.djangoproject.com/m/releases/4.0/Django-4.0.4.tar.gz>`_ | 
+`4.0.4 checksums 
+<https://www.djangoproject.com/m/pgp/Django-4.0.4.checksum.txt>`_)
+* Django 3.2.13 (`download Django 3.2.13 
+<https://www.djangoproject.com/m/releases/3.2/Django-3.2.13.tar.gz>`_ | 
+`3.2.13 checksums 
+<https://www.djangoproject.com/m/pgp/Django-3.2.13.checksum.txt>`_)
+* Django 2.2.28 (`download Django 2.2.28 
+<https://www.djangoproject.com/m/releases/2.2/Django-2.2.28.tar.gz>`_ | 
+`2.2.28 checksums 
+<https://www.djangoproject.com/m/pgp/Django-2.2.28.checksum.txt>`_)
+
+The PGP key ID used for this release is Mariusz Felisiak: 
+`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
+
+General notes regarding security reporting
+==========================================
+
+As always, we ask that potential security issues be reported via
+private email to ``security@...ngoproject.com``, and not via Django's
+Trac instance or the django-developers list. Please see `our security
+policies <https://www.djangoproject.com/security/>`_ for further
+information.
 
