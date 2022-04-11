@@ -1,33 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/02/8
-Message-ID: <e817b33e-48c3-bb1c-900c-65afc4e157df@apache.org>
-Date: Fri, 2 Sep 2022 08:28:34 +0200
-From: Jacques Le Roux <jleroux@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/11/2
+Message-ID: <011d90a3-078b-ca82-0eee-d7ae3f5b8e13@gmail.com>
+Date: Mon, 11 Apr 2022 10:04:24 +0200
+From: Mariusz Felisiak <felisiak.mariusz@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Apache OFBiz - Unauth Stored XSS (CVE-2022-25370)
+Subject: Django: CVE-2022-28347: Potential SQL injection via QuerySet.explain(**options) on PostgreSQL
 Content-Type: text/plain; charset=utf-8
 
-Severity:
-High
+https://www.djangoproject.com/weblog/2022/apr/11/security-releases/
 
-Vendor:
-The Apache Software Foundation
+In accordance with `our security release policy
+<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
+Django team
+is issuing
+`Django 4.0.4 <https://docs.djangoproject.com/en/dev/releases/4.0.4/>`_,
+`Django 3.2.13 
+<https://docs.djangoproject.com/en/dev/releases/3.2.13/>`_, and
+`Django 2.2.28 <https://docs.djangoproject.com/en/dev/releases/2.2.28/>`_.
+These release addresses the security issues detailed below. We encourage all
+users of Django to upgrade as soon as possible.
 
-Versions Affected:
-OFBiz versions prior to 18.12.06
+CVE-2022-28347: Potential SQL injection via 
+``QuerySet.explain(**options)`` on PostgreSQL
+=========================================================================================
 
-Description:
-The Birt viewer version 4.5.0 has a security issue that allows this exploit.
-We waited long for https://github.com/eclipse/birt/issues/625
-to resolve but eventually decided to release OFBiz 18.12.06 without
-the Birt component
+``QuerySet.explain()`` method was subject to SQL injection in option 
+names, using a suitably crafted dictionary, with dictionary expansion, 
+as the ``**options`` argument.
 
-Mitigation:
-Upgrade to at least 18.12.06
+This issue has severity "high" according to the Django security policy.
 
-Credit:
-npodotykin@...ecurity.com
+Affected supported versions
+===========================
 
-References:
-http://ofbiz.apache.org/download.html#vulnerabilities
+* Django main branch
+* Django 4.0
+* Django 3.2
+* Django 2.2
+
+Resolution
+==========
+
+Patches to resolve the issue have been applied to Django's main branch 
+and to
+the 4.0, 3.2, and 2.2 release branches. The patches may be obtained from the
+following changesets.
+
+* On the `main branch 
+<https://github.com/django/django/commit/6723a26e59b0b5429a0c5873941e01a2e1bdbb81>`__
+* On the `4.0 release branch 
+<https://github.com/django/django/commit/00b0fc50e1738c7174c495464a5ef069408a4402>`__
+* On the `3.2 release branch 
+<https://github.com/django/django/commit/9e19accb6e0a00ba77d5a95a91675bf18877c72d>`__
+* On the `2.2 release branch 
+<https://github.com/django/django/commit/29a6c98b4c13af82064f993f0acc6e8fafa4d3f5>`__
+
+The following releases have been issued:
+
+* Django 4.0.4 (`download Django 4.0.4 
+<https://www.djangoproject.com/m/releases/4.0/Django-4.0.4.tar.gz>`_ | 
+`4.0.4 checksums 
+<https://www.djangoproject.com/m/pgp/Django-4.0.4.checksum.txt>`_)
+* Django 3.2.13 (`download Django 3.2.13 
+<https://www.djangoproject.com/m/releases/3.2/Django-3.2.13.tar.gz>`_ | 
+`3.2.13 checksums 
+<https://www.djangoproject.com/m/pgp/Django-3.2.13.checksum.txt>`_)
+* Django 2.2.28 (`download Django 2.2.28 
+<https://www.djangoproject.com/m/releases/2.2/Django-2.2.28.tar.gz>`_ | 
+`2.2.28 checksums 
+<https://www.djangoproject.com/m/pgp/Django-2.2.28.checksum.txt>`_)
+
+The PGP key ID used for this release is Mariusz Felisiak: 
+`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
+
+General notes regarding security reporting
+==========================================
+
+As always, we ask that potential security issues be reported via
+private email to ``security@...ngoproject.com``, and not via Django's
+Trac instance or the django-developers list. Please see `our security
+policies <https://www.djangoproject.com/security/>`_ for further
+information.
 
