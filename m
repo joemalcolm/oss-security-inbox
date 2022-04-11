@@ -1,110 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/10/4
-Message-ID: <CALXpagy9180LrnQ_1Ekgek+xj6+iaYRghU+CjRdnWGDcKXxUkQ@mail.gmail.com>
-Date: Thu, 10 Nov 2022 09:26:15 -0800
-From: Tim Allclair <timallclair@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/11/4
+Message-ID: <YlQSAy7P8xHKaWpT@kroah.com>
+Date: Mon, 11 Apr 2022 13:33:23 +0200
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: [kubernetes] CVE-2022-3294: Node address isn't always verified when proxying
+Subject: Re: CVE-2022-28893: Linux kernel: Use after free in SUNRPC subsystem
 Content-Type: text/plain; charset=utf-8
 
-Hello Kubernetes Community,
+On Mon, Apr 11, 2022 at 04:20:56PM +0800, Felix Fu wrote:
+> Hello, I Request a CVE from MITRE.
+> 
+> Description: The SUNRPC subsystem in the Linux kernel through 5.17.2 can
+> call xs_xprt_free before ensuring that sockets are in the intended state.
+> Details: Use after free happens in inet_put_port because some sockets are
+> not close before xs_xprt_free().
+> CVE-ID: CVE-2022-28893  (
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-28893)
+> Fix:
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=1a3b1bba7c7a5eb8a11513cf88427cb9d77bc60a
 
-A security issue was discovered in Kubernetes where users may have access
-to secure endpoints in the control plane network. Kubernetes clusters are
-only affected if an untrusted user can modify Node objects and send proxy
-requests to them.
+This is a merge commit, not the actual commit that fixed the issue :(
 
-Kubernetes supports node proxying, which allows clients of kube-apiserver
-to access endpoints of a Kubelet to establish connections to Pods, retrieve
-container logs, and more. While Kubernetes already validates the proxying
-address for Nodes, a bug in kube-apiserver made it possible to bypass this
-validation. Bypassing this validation could allow authenticated requests
-destined for Nodes to to the API server's private network.
+thanks,
 
-This issue has been rated Medium (
-CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:H/I:H/A:H
-<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:H/I:H/A:H>),
-and assigned CVE-2022-3294
-Am I vulnerable?
-
-Clusters are affected by this vulnerability if there are endpoints that the
-kube-apiserver has connectivity to that users should not be able to access.
-This includes:
-
-   -
-
-   kube-apiserver is in a separate network from worker nodes
-   -
-
-   localhost services
-
-mTLS services that accept the same client certificate as nodes may be
-affected. The severity of this issue depends on the privileges &
-sensitivity of the exploitable endpoints.
-
-Clusters that configure the egress selector to use a proxy for cluster
-traffic may not be affected.
-Affected Versions
-
-   -
-
-   Kubernetes kube-apiserver <= v1.25.3
-   -
-
-   Kubernetes kube-apiserver <= v1.24.7
-   -
-
-   Kubernetes kube-apiserver <= v1.23.13
-   -
-
-   Kubernetes kube-apiserver <= v1.22.15
-
-How do I mitigate this vulnerability?
-
-Upgrading the kube-apiserver to a fixed version mitigates this
-vulnerability.
-
-Aside from upgrading, configuring an egress proxy for egress to the cluster
-network
-<https://kubernetes.io/docs/tasks/extend-kubernetes/setup-konnectivity/>
-can mitigate this vulnerability.
-Fixed Versions
-
-   -
-
-   Kubernetes kube-apiserver v1.25.4
-   -
-
-   Kubernetes kube-apiserver v1.24.8
-   -
-
-   Kubernetes kube-apiserver v1.23.14
-   -
-
-   Kubernetes kube-apiserver v1.22.16
-
-These releases will be published over the course of today, November 10th.
-
-Fix impact: In some cases, the fix can break clients that depend on the
-nodes/proxy subresource, specifically if a kubelet advertises a localhost
-or link-local address to the Kubernetes control plane.
-Detection
-
-Node create & update requests may be included in the Kubernetes audit log,
-and can be used to identify requests for IP addresses that should not be
-permitted. Node proxy requests may also be included in audit logs.
-
-If you find evidence that this vulnerability has been exploited, please
-contact security@...ernetes.io
-Additional Details
-
-See the GitHub issue for more details:
-https://github.com/kubernetes/kubernetes/issues/113757
-Acknowledgements
-
-This vulnerability was reported by Yuval Avrahami of Palo Alto Networks.
-
-Thank You,
-
-Tim Allclair on behalf of the Kubernetes Security Response Committee
-
+greg k-h
