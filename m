@@ -1,55 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/07/4
-Message-ID: <CAB=ivF95gmkRr74nu5+_XmNkQKdGd==4hB+9N8EmaELQz+vHxQ@mail.gmail.com>
-Date: Sun, 7 Aug 2022 08:39:59 -0700
-From: Roxana Bradescu <roxabee@...omium.org>
-To: oss-security@...ts.openwall.com, security@...m.org
-Subject: Re: Exim < 4.95 heap overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/11/5
+Message-ID: <YlRZ0MNxf3lyr/nE@dojo.mi.org>
+Date: Mon, 11 Apr 2022 12:39:44 -0400
+From: "Mike O'Connor" <mjo@...o.mi.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2022-28893: Linux kernel: Use after free in SUNRPC subsystem
 Content-Type: text/plain; charset=utf-8
 
-Adding the Exim security folks to this thread to shed some light on the
-original report and CVE discussion.
+:On Mon, Apr 11, 2022 at 04:20:56PM +0800, Felix Fu wrote:
+:> Hello, I Request a CVE from MITRE.
+:> 
+:> Description: The SUNRPC subsystem in the Linux kernel through 5.17.2 can
+:> call xs_xprt_free before ensuring that sockets are in the intended state.
+:> Details: Use after free happens in inet_put_port because some sockets are
+:> not close before xs_xprt_free().
+:> CVE-ID: CVE-2022-28893  (
+:> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-28893)
+:> Fix:
+:> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=1a3b1bba7c7a5eb8a11513cf88427cb9d77bc60a
+:
+:This is a merge commit, not the actual commit that fixed the issue :(
 
-Per their
-https://github.com/Exim/exim/wiki/SecurityReleaseProcess they email this
-group and distros to notify of security issues. They will also issue CVEs.
-However I don’t actually see any CVE issued since 2019
-https://github.com/Exim/exim/wiki/EximSecurity
+https://github.com/torvalds/linux/commit/f00432063db1a0db484e85193eccc6845435b80e
 
-—-
-Regards, Roxana
+appears to be the actual commit that fixed the issue.
 
-On Sun, Aug 7, 2022 at 6:49 AM John Helmert III <ajak@...too.org> wrote:
+-Mike
 
-> On Sat, Aug 06, 2022 at 10:46:42PM +0300, Evgeny Legerov wrote:
-> > Hi,
-> >
-> >
-> > Here is another bug which has been silently fixed in Exim.
-> >
-> > It has not been recognized as a security issue, many distros still don't
-> > have this patch.
->
-> Why do you say it hasn't been recognized as a security issue? Distros
-> don't usually have a way of knowing about a vulnerability that needs
-> patching without a CVE. Have you requested a CVE?
->
-> > Original report + patch  is here -
-> >
-> https://github.com/Exim/exim/commit/d4bc023436e4cce7c23c5f8bb5199e178b4cc743
->
-> That commit does not seem like an original report.
->
-> > Analysis of the bug  - https://github.com/ivd38/exim_overflow
-> >
-> > I don't post here because it is huge snippet of code.
-> >
-> >
-> > regards,
-> >
-> > -e
-> >
-> >
-> >
->
-
+-- 
+ Michael J. O'Connor                                          mjo@...o.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"Holy one-track Batcomputer mind!!!"                   -Robin, the Boy Wonder
