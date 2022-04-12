@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["729" "Thursday" "16" "January" "2020" "23:21:52" "-0500" "Jeffrey Walton" "noloader@gmail.com" "<CAH8yC8n6X75L0dC_50wjc+Cq-Cubj568g=NXon19s_-Kxgz+2w@mail.gmail.com>" "26" "[oss-security] Some AMD cpus with RDRAND fail to produce random numbers after suspend/resume" "^Date:" nil nil "1" "2020011704:21:52" "[oss-security] Some AMD cpus with RDRAND fail to produce random numbers after suspend/resume" (number mark "        noloader@gma Jan 16   26/729   " thread-indent "\"[oss-security] Some AMD cpus with RDRAND fail to produce random numbers after suspend/resume\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Some AMD cpus with RDRAND fail to produce random numbers after suspend/resume" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 26438 invoked by uid 550); 17 Jan 2020 04:22:16 -0000
+Received: (qmail 1755 invoked by uid 550); 12 Apr 2022 11:22:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,65 +6,119 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26394 invoked from network); 17 Jan 2020 04:22:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=i28eBhmqwnBHnIhJJJSmUVh8NySdpswLxMsdxjRflPM=;
-        b=UENRHMn++HJDnuo9qnjfgh6Mt3Qh0pSli+eWcnsTy9SsC7769YoaG45oJXP9SGOQdG
-         nsbet7/dfbS1hb/glE+QbyOv+tA7MC2iUVJuq2bT+ivaSo44S5OOfVDZ55EZCXoAEEfh
-         AF8+hD4z4qtkDdJlXUEq6yKPfAcNMEdx3/PGsvl+rWI4XctTjvlClHqB5mC4dSmVK3S8
-         Tqv8H4UbQ9/fGBwynDZxCH6XUkqvrDoQDPhu40oge2oUcu01kl0Ce4cnpQIt4Wri4VWa
-         M3kLVV7gu/ky1TA0ohhyw4VMbz1R6N5DhPLcaFTlP6ooCt9/NW4bvmQkG/kITEDbDvU+
-         Hlug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=i28eBhmqwnBHnIhJJJSmUVh8NySdpswLxMsdxjRflPM=;
-        b=EDBCL+quBenDuTx4vikva40fpsO9hRrr9eILWFineN52OhXkB6/iP0jU+oal8oWAn5
-         aVBBOSzF5zdfZVbTu+8o4pliUOVSIEyGDtjklc33cwylyLvIpZ/DnvhhRzkxlvvZ+7p8
-         sl8u6gOgGkWW4X0XcH0HDpIdvaxneC4VXzJYrQVwg0zTkmjIjWMRGn3qH8TVY7kaZyMT
-         9FKRp/6g82lj3RVsk7vCTNdZ6ZO5PRIWZ6SyWvadlYi09dGh2jL8csyYjEPmq4WwPSrC
-         W3fVmjBkLHpk4vrcMIvAU1AW2dhnms7GQWRvUn8OjHd6HSUz5yFHomlnrvWR8yazt57U
-         JUng==
-X-Gm-Message-State: APjAAAUaNP5bIbIfYUea3Ulj6LrBjFOYXQteQPk3QWINd/0zoJltyfOF
-	ArpJ2W4qx1XjkFimnwj0CqSjjmH6BMTZjBBvNy9uNoJBbR0=
-X-Google-Smtp-Source: APXvYqzBu1qZpnT1OlITSBEPjdb4khtagp8BsPpWJc0f71QsF1bu28HCFDRQUU9kedRnt6I8Bex/g9kGrC09CdiRa3A=
-X-Received: by 2002:a02:c951:: with SMTP id u17mr32848530jao.27.1579234923098;
- Thu, 16 Jan 2020 20:22:03 -0800 (PST)
-MIME-Version: 1.0
-Message-ID: <CAH8yC8n6X75L0dC_50wjc+Cq-Cubj568g=NXon19s_-Kxgz+2w@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Thu, 16 Jan 2020 23:21:52 -0500
-From: Jeffrey Walton <noloader@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Some AMD cpus with RDRAND fail to produce random numbers after suspend/resume
-To: oss-security@lists.openwall.com
+Received: (qmail 1649 invoked from network); 12 Apr 2022 10:55:25 -0000
+X-Gm-Message-State: AOAM532BbeJQgy8gsLjAAJAVhe1roPiaqT6ogNMDJYqYmcuDbilEAhMD
+	Y0y/j/iu+xtB3fSbU3CIPyCOJXELYb2YDtKkkqQ=
+X-Google-Smtp-Source: ABdhPJzCyFc68NInaYa46g/J2+cQ6U4euUy77P+X3ERK0f9F/XdJHg9LNdOeoBbMbSgUEhbw0QlXHlzOMPMc1gkt5Yk=
+X-Received: by 2002:aca:c182:0:b0:2ef:8fd4:7523 with SMTP id
+ r124-20020acac182000000b002ef8fd47523mr1473788oif.148.1649760898387; Tue, 12
+ Apr 2022 03:54:58 -0700 (PDT)
+MIME-Version: 1.0
+From: "markphip@gmail.com" <markphip@apache.org>
+Date: Tue, 12 Apr 2022 06:54:47 -0400
+X-Gmail-Original-Message-ID: <CAHFaGCrjuBDKrgjQV0ZKw3TH6RbCn-AE3fr8Smg69v4Ust-xog@mail.gmail.com>
+Message-ID: <CAHFaGCrjuBDKrgjQV0ZKw3TH6RbCn-AE3fr8Smg69v4Ust-xog@mail.gmail.com>
+To: announce@subversion.apache.org, Subversion <users@subversion.apache.org>, 
+	Subversion Development <dev@subversion.apache.org>
+Cc: security@apache.org, oss-security@lists.openwall.com, 
+	bugtraq@securityfocus.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] [SECURITY][ANNOUNCE] Apache Subversion 1.14.2 released
 
-This just made my radar. It appears some AMD cpus with RDRAND fail to
-produce random numbers after a suspend/resume. It looks like it was
-first reported in 2014 or so.
+I'm happy to announce the release of Apache Subversion 1.14.2.
+Please choose the mirror closest to you by visiting:
 
-Kernel bug:
+    https://subversion.apache.org/download.cgi#supported-releases
 
-    * https://bugzilla.kernel.org/show_bug.cgi?id=85911
+This is a stable bugfix and security release of the Apache Subversion
+open source version control system.
 
-Systemd bug:
+THIS RELEASE CONTAINS TWO IMPORTANT SECURITY FIXES:
 
-    * https://github.com/systemd/systemd/issues/11810
+CVE-2021-28544
+"SVN authz protected copyfrom paths regression"
 
-Fedora bug:
+The full security advisory for CVE-2021-28544 is available at:
+    https://subversion.apache.org/security/CVE-2021-28544-advisory.txt
+    https://subversion.apache.org/security/CVE-2021-28544-advisory.txt.asc
 
-    * https://bugzilla.redhat.com/show_bug.cgi?id=1150286
+A brief summary of this advisory follows:
 
-AMD patch:
+   Subversion servers reveal 'copyfrom' paths that should be hidden accordi=
+ng to
+   configured path-based authorization (authz) rules.  When a node has been
+   copied from a protected location, users with access to the copy can see =
+the
+   `copyfrom' path of the original.  This also reveals the fact that
+the node was copied.
+   Only the 'copyfrom' path is revealed; not its contents. Both httpd
+and svnserve
+   servers are vulnerable.
 
-    * https://lore.kernel.org/patchwork/patch/1115413/
+   We recommend all users to upgrade to a known fixed release of the
+Subversion server.
 
-I agree with Lennart Poettering. This seems CVE worthy given RDRAND is
-often used to get the kernel generator (and other userland generators)
-in good working order.
+   This issue was reported by Evgeny Kotkov
 
-(Thanks to https://www.phoronix.com/scan.php?page=news_item&px=AMD-CPUs-RdRand-Suspend
-for the article and links).
+CVE-2022-24070
+"Subversion's mod_dav_svn is vulnerable to memory corruption"
+
+The full security advisory for CVE-2022-24070 is available at:
+    https://subversion.apache.org/security/CVE-2022-24070-advisory.txt
+    https://subversion.apache.org/security/CVE-2022-24070-advisory.txt.asc
+
+A brief summary of this advisory follows:
+
+   While looking up path-based authorization rules, mod_dav_svn servers
+   may attempt to use memory which has already been freed.
+
+   We recommend all users to upgrade to a known fixed release of the
+Subversion server.
+
+   This issue was reported by Thomas Wei=C3=9Fschuh
+
+SHA-512 checksums are available at:
+
+    https://www.apache.org/dist/subversion/subversion-1.14.2.tar.bz2.sha512
+    https://www.apache.org/dist/subversion/subversion-1.14.2.tar.gz.sha512
+    https://www.apache.org/dist/subversion/subversion-1.14.2.zip.sha512
+
+PGP Signatures are available at:
+
+    https://www.apache.org/dist/subversion/subversion-1.14.2.tar.bz2.asc
+    https://www.apache.org/dist/subversion/subversion-1.14.2.tar.gz.asc
+    https://www.apache.org/dist/subversion/subversion-1.14.2.zip.asc
+
+For this release, the following people have provided PGP signatures:
+
+   Julian Foad [rsa4096/1FB064B84EECC493] with fingerprint:
+    6011 63CF 9D49 9FD7 18CF  582D 1FB0 64B8 4EEC C493
+   Nathan Hartman [rsa4096/583F00ADF981C39F] with fingerprint:
+    3F8E 467C B336 6E30 13E1  120D 583F 00AD F981 C39F
+   Stefan Sperling [rsa2048/4F7DBAA99A59B973] with fingerprint:
+    8BC4 DAE0 C5A4 D65F 4044  0107 4F7D BAA9 9A59 B973
+   Branko =C4=8Cibej [rsa4096/1BCA6586A347943F] with fingerprint:
+    BA3C 15B1 337C F0FB 222B  D41A 1BCA 6586 A347 943F
+   Mark Phippard [ed25519/C4416167349A3BCB] with fingerprint:
+    EC25 FCC1 0561 8D04 ADB4  3429 C441 6167 349A 3BCB
+   Johan Corveleyn [rsa4096/B59CE6D6010C8AAD] with fingerprint:
+    8AA2 C10E EAAD 44F9 6972  7AEA B59C E6D6 010C 8AAD
+
+These public keys are available at:
+
+    https://www.apache.org/dist/subversion/subversion-1.14.2.KEYS
+
+Release notes for the 1.14.x release series may be found at:
+
+    https://subversion.apache.org/docs/release-notes/1.14.html
+
+You can find the list of changes between 1.14.2 and earlier versions at:
+
+    https://svn.apache.org/repos/asf/subversion/tags/1.14.2/CHANGES
+
+Questions, comments, and bug reports to users@subversion.apache.org.
+
+Thanks,
+- The Subversion Team
