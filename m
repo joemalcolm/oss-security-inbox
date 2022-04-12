@@ -1,45 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/28/3
-Message-ID: <20220328132946.GA23286@thinkstation.cmpxchg8b.net>
-Date: Mon, 28 Mar 2022 06:29:46 -0700
-From: Tavis Ormandy <taviso@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/12/4
+Message-ID: <YlVskpTa7twfTtwK@kroah.com>
+Date: Tue, 12 Apr 2022 14:12:02 +0200
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: zlib memory corruption on deflate (i.e. compress)
+Subject: Re: Linux kernel: A concurrency use-after-free between drm_setmaster_ioctl and drm_mode_getresources
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Mar 27, 2022 at 05:39:59PM -0700, Eric Biggers wrote:
+On Tue, Apr 12, 2022 at 07:42:04PM +0800, Minh Yuan wrote:
+> Hi guys,
 > 
-> I've attached a full reproducer that works with the following parameters:
-> 
-> 	level=7 (also 8 and 9)
-> 	windowBits=15
-> 	memLevel=1
-> 	strategy=Z_DEFAULT_STRATEGY
-> 
-> i.e.,
-> 
->     deflateInit2(&strm, 7, Z_DEFLATED, 15, 1, Z_DEFAULT_STRATEGY);
-> 
-> With ASAN, it generates a warning like Tavis's reproducer with Z_FIXED did.
-> 
+> We recently discovered a concurrency uaf in drm of the latest kernel
+> version (Linux 4.19.237).
 
-Wow, thanks for your analysis Eric.
+Note, this issue is not a problem for kernel versions 5.15 and newer,
+the relevant commits have not yet been backported to older stable kernel
+trees.  I have a list (as does the author of this report) of the needed
+commits if anyone wishes to help in backporting (and testing.)
 
-Confirmed here, and the output deflated stream is also garbage... ouch,
-this is really not good...
+5.10.y and 5.4.y have some of the needed changes (as does 4.19.y), but
+not all of them, so I do not know if the reproducer works on those trees
+at this point in time.
 
-It seems likely that an attacker can force this state, even if they
-don't control the prefix (e.g. a logfile), or perhaps (theoretically)
-force a deflated HTTP response to contain output that wasn't sent, etc,
-etc.
+> int fd1 = open("/dev/dri/card0",0);
+> fd = open("/dev/dri/card0",0);
 
-Let's hope cleaning up old static copies of zlib isn't going to be a
-mess for years to come :(
+Also note that this issue requires access to these device nodes.
 
-Tavis.
+thanks,
 
-
--- 
- _o)            $ lynx lock.cmpxchg8b.com
- /\\  _o)  _o)  $ finger taviso@....org
-_\_V _( ) _( )  @taviso
+greg k-h
