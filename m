@@ -1,43 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/23/2
-Message-ID: <YtwnKUHaS9nL/F/F@gentoo.org>
-Date: Sat, 23 Jul 2022 11:51:53 -0500
-From: John Helmert III <ajak@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/12/6
+Message-ID: <ab7e33c7-9941-fe45-90dd-3217e0f82ed0@apache.org>
+Date: Tue, 12 Apr 2022 15:15:06 +0000
+From: Yasser Zamani <yasserzamani@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: heap buffer overflow in gdk-pixbuf
+Subject: CVE-2021-31805: Apache Struts: Forced OGNL evaluation, when evaluated on raw not validated user input in tag attributes, may lead to RCE. 
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jul 23, 2022 at 07:35:42PM +0700, Pedro Ribeiro wrote:
-> Hi,
-> 
-> A year ago I found and submitted a vulnerability to the gdk-pixbuf tracker:
-> https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/issues/190
-> 
-> It's a heap buffer overflow using a crafted GIF, which is likely 
-> exploitable in 32 bit systems. Full details are in the link above in the 
-> bug tracker.
-> 
-> This was patched and the fix was merged 8 months ago as seen here:
-> https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/merge_requests/121
-> 
-> The issue is now public, but since no CVE was attributed, it probably is 
-> not being considered as a problem for downstream users of the package.
-> 
-> As of today, the latest Debian stable package is affected by this 
-> vulnerability. Using a GNOME file system browser and browsing to that 
-> folder will cause a crash, as will opening it up in a GNOME image viewer 
-> and even attempting to load it in Chromium (should have submitted to 
-> them for a bounty :D).
-> 
-> Hence I'd like to get a CVE to raise awareness for this issue, so that 
-> downstream users of the package can get patched.
-> 
-> Thanks and regards,
-> Pedro Ribeiro
+Description:
 
-Hi, according to the oss-security Openwall wiki page [1], CVEs need to
-be requested via MITRE's web form [2].
+The fix issued for CVE-2020-17530 was incomplete. So from Apache Struts 2.0.0 to 2.5.29, still some of the tag’s attributes could perform a double evaluation if a developer applied forced OGNL evaluation by using the %{...} syntax. Using forced OGNL evaluation on untrusted user input can lead to a Remote Code Execution and security degradation.
 
-[1] https://oss-security.openwall.org/wiki/mailing-lists/oss-security
-[2] https://cveform.mitre.org/
-Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
+Mitigation:
+
+Avoid using forced OGNL evaluation on untrusted user input, and/or upgrade to Struts 2.5.30 which checks if expression evaluation won’t lead to the double evaluation.
+
+Please read our Security Bulletin S2-062 for more details.
+
+Credit:
+
+Apache Struts would like to thank Chris McCown for reporting this issue!
+
+References:
+
+https://cwiki.apache.org/confluence/display/WW/S2-062
+
