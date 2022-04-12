@@ -1,122 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/30/1
-Message-ID: <YfZCJfYIUicYi+ba@eldamar.lan>
-Date: Sun, 30 Jan 2022 08:45:41 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/12/7
+Message-ID: <xmqqo816b5fr.fsf@gitster.g>
+Date: Tue, 12 Apr 2022 10:02:48 -0700
+From: Junio C Hamano <gitster@...ox.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: use-after-free of user namespace on shm and mqueue destruction
+Cc: git-security@...glegroups.com, 俞晨东 <ycdxsb@...il.com>, prplr@...hub.com,  vdye@...hub.com
+Subject: git v2.35.2 and friends for CVE-2022-24765
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+The Git project released versions v2.30.3, v2.31.2, v2.32.1,
+v2.33.2, v2.34.2, and v2.35.2 today.  They are to address
+CVE-2022-24765.  All supported platforms with multiple users are
+affected in one way or another.
 
-On Sat, Jan 29, 2022 at 08:07:27PM +0100, Mathias Krause wrote:
-> Hi!
-> 
-> A use-after-free vulnerability was found in the way certain rlimit
-> conversions to 'ucounts' were done, affecting kernels containing merge
-> commit c54b245d0118 ("Merge branch 'for-linus' of
-> git://git.kernel.org/pub/scm/linux/kernel/git/ebiederm/user-namespace")
-> which is Linux v5.14 and newer.
-> 
-> The underlying issue was already noticed last year in a KASAN report[1]
-> in the mqueue code but could only be recently root-caused with the help
-> of our report and reproducer.
-> 
-> The fix was merged yesterday into Linux mainline:
-> https://git.kernel.org/linus/f9d87929d451d3e649699d0f1d74f71f77ad38f5
-> 
-> However, in our opinion neither the commit itself nor its merge commit
-> (https://git.kernel.org/linus/76fcbc9c7c57a5d4) clearly expresses the
-> impact of the vulnerability.
-> 
-> See below for some background information about 'ucounts' and our
-> analysis of the issue that we previously shared in a similar form with
-> security@...nel.org on January 21st:
-> 
-> The 'ucounts' scheme "bubbles up" limit changes to the uppermost user
-> namespace by attaching and traversing a user namespace to the 'ucounts'
-> object. However, that user namespace pointer isn't reference-counted. As
-> the lifetime of a 'ucounts' object isn't strictly tied to that of the
-> user namespace it was created for, it can outlive the latter, making its
-> 'ns' member pointing to free'd memory. Such usages may happen in the shm
-> and mqueue code by making use of current_ucounts() and getting a
-> reference to it via get_ucounts().
-> 
-> We noticed the issue during testing and root-caused it to a
-> use-after-free of a user namespace object on shm destruction as follows:
-> 
-> 1/ A process creates a new shm segment.
-> 
-> 2/ It then forks a child that enters a new user namespace, so it gets
->    its own 'ucounts' (alloc_ucounts() will create a new one via
->    inc_user_namespaces(), as the namespaces differ) that gets attached
->    to the new user namespace.
-> 
-> 3/ The child process attaches its 'ucounts' to the shm object by a call
->    to semctl(SHM_LOCK), see ipc/shm.c:shmctl_do_lock(), lines 1198 and
->    1203 in particular:
-> 
->    1197     if (cmd == SHM_LOCK) {
->    1198         struct ucounts *ucounts = current_ucounts();
->    1199
->    1200         err = shmem_lock(shm_file, 1, ucounts);
->    1201         if (!err && !(shp->shm_perm.mode & SHM_LOCKED)) {
->    1202             shp->shm_perm.mode |= SHM_LOCKED;
->    1203             shp->mlock_ucounts = ucounts;
->    1204         }
->    1205         goto out_unlock0;
->    1206     }
-> 
->    shmem_lock() in line 1200 calls user_shm_unlock() which calls
->    get_ucounts() to get a reference to the 'ucounts' object, which
->    allows the ucounts object to outlive its user namespace.
-> 
-> 4/ The child process terminates, which leads to the destruction of its
->    task_struct, the various cred objects and, in turn, the user
->    namespace, as there's no reference (but pointers!) to it any more.
->    The 'ucounts' object, however, survives, as it still has a live
->    reference from the shmem_lock() done before. But it now has a
->    dangling 'ns' pointer, as the user namespace was destroyed already.
-> 
-> 5/ The parent process now destroys the shm segment which leads to
->    shm_destroy() calling shmem_lock() with the (still valid) 'ucounts'
->    of the already dead child, leading to ... -> user_shm_unlock() ->
->    dec_rlimit_ucounts() dereferencing a dangling 'ns' pointer when
->    trying to advance 'iter' in line 285:
-> 
->    285   for (iter = ucounts; iter; iter = iter->ns->ucounts) {
->    286       long dec = atomic_long_sub_return(v, &iter->ucount[type]);
->    287       WARN_ON_ONCE(dec < 0);
->    288       if (iter == ucounts)
->    289           new = dec;
->    290   }
-> 
-> We shared a reproducer for the bug including exploitation notes with the
-> report to security@...nel.org, but we don't intend to share it any
-> further, as the above bug description should allow easy recreation
-> thereof anyway.
-> 
-> Exploiting this issue for privilege escalation requires the availability
-> of unprivileged user namespaces. With that granted, a possible way of
-> exploitation is by reallocating the memory of the released user
-> namespace object of step 4 and by introducing a type confusion bug
-> (ensure the user namespace release in step 4 empties the complete slab
-> page, get it reallocated, e.g. by some kmalloc slab cache and introduce
-> a fake 'user_namespace' object, e.g. via 'msg_msg' object spraying)
-> which will allow a decrement operation at an attacker controlled kernel
-> address (the '->ucounts' pointer of the crafted 'user_namespace'
-> object). The decrement value is under attacker control as well (the size
-> of the shm segment, up to RLIMIT_MEMLOCK).
-> 
-> Beside from patching, a possible mitigation is to disable unprivileged
-> user namespaces:
-> 
-> # sysctl -w kernel.unprivileged_userns_clone=0
-> 
-> To our knowledge, no CVE has been assigned to this issue so far.
+    https://lore.kernel.org/git/xmqqv8veb5i6.fsf@gitster.g/
 
-This issue has been assigned CVE-2022-24122 by MITRE via
-https://cveform.mitre.org/ .
+We highly recommend to upgrade.
 
-Regards,
-Salvatore
+The addressed issue is:
+
+* CVE-2022-24765:
+  On multi-user machines, Git users might find themselves unexpectedly in
+  a Git worktree, e.g. when there is a scratch space (`/scratch/`) intended
+  for all users and another user created a repository in `/scratch/.git`.
+  Merely having a Git-aware prompt that runs `git status` (or `git diff`)
+  and navigating to a directory which is supposedly not a Git worktree, or
+  opening such a directory in an editor or IDE such as VS Code or Atom, will
+  potentially run commands defined by that other user via
+  `/scratch/.git/config`.
+
+Credit for finding the vulnerability goes to 俞晨东; credit for fixing
+it goes to Johannes Schindelin.
