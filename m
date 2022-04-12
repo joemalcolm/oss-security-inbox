@@ -1,110 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/16/6
-Message-ID: <YoKiGWAX4E/mbGWB@kroah.com>
-Date: Mon, 16 May 2022 21:12:25 +0200
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros list policy and Linux kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/12/1
+Message-ID: <CAHFaGCpaF=-bkXcsZ8TBqAqb+mCjyE3P-L+9xBtCG39Vv4G-1w@mail.gmail.com>
+Date: Tue, 12 Apr 2022 06:54:32 -0400
+From: "markphip@...il.com" <markphip@...che.org>
+To: announce@...version.apache.org, Subversion <users@...version.apache.org>,  Subversion Development <dev@...version.apache.org>
+Cc: security@...che.org, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
+Subject: [SECURITY][ANNOUNCE] Apache Subversion 1.10.8 released
 Content-Type: text/plain; charset=utf-8
 
-On Sun, May 15, 2022 at 06:27:40PM +0200, Solar Designer wrote:
-> Hi,
-> 
-> This is a lengthy and belated message, yet I think is something we need
-> to discuss in here.
+I'm happy to announce the release of Apache Subversion 1.10.8.
+Please choose the mirror closest to you by visiting:
 
-Thank you for bringing it up, I appreciate it as the issues involved
-here have provided a lot of friction lately between the kernel security
-team and the linux-distros list.
+    https://subversion.apache.org/download.cgi#supported-releases
 
-As I'm not a member of linux-distros, I can't dictate their requirements
-and rules, but I can state what I would like to see change based on my
-work on the kernel team.
+This is a stable bugfix and security release of the Apache Subversion
+open source version control system.
 
-Some comments:
+THIS RELEASE CONTAINS TWO IMPORTANT SECURITY FIXES:
 
-> Options:
-> 
-> Off the top of my head, we can do one of:
-> 
-> 0. Do nothing specific - let things work or fail on their own.
+CVE-2021-28544
+"SVN authz protected copyfrom paths regression"
 
-While Jason votes for this one, I really don't like this as I feel there
-are problems today that I get stuck in the middle of many times (as
-someone who helps shepard a number of kernel security issues.)  It
-would be great if linux-distros could change their rules a bit to help
-make projects like the kernel, and others, work together easier.
+The full security advisory for CVE-2021-28544 is available at:
+    https://subversion.apache.org/security/CVE-2021-28544-advisory.txt
+    https://subversion.apache.org/security/CVE-2021-28544-advisory.txt.asc
 
-But if no changes happen, I can still live with it, we have worse groups
-we deal with more often :)
+A brief summary of this advisory follows:
 
-> 1. Adjust linux-distros policy to allow "embargoes" on publicly fixed
-> Linux kernel issues.  (Only for Linux kernel, not for other projects.)
+   Subversion servers reveal 'copyfrom' paths that should be hidden according to
+   configured path-based authorization (authz) rules.  When a node has been
+   copied from a protected location, users with access to the copy can see the
+   `copyfrom' path of the original.  This also reveals the fact that
+the node was copied.
+   Only the 'copyfrom' path is revealed; not its contents. Both httpd
+and svnserve
+   servers are vulnerable.
 
-Note, the issue isn't always "fixed" issues, the issue is "we want to
-post a patch in public to get people to review it and to introduce it to
-the much wider range of CI testing systems out there.  Right now if a
-patch is sent to the public, linux-distros treats this like an "embargo
-break" and will instantly post about it to oss-security, which helps no
-one.
+   We recommend all users to upgrade to a known fixed release of the
+Subversion server.
 
-So if you all could just modify the rules to be something like,
-"embargos are not broken when changes are posted in public, or accepted
-into public trees, unless the changes or discussions around them turn
-out to disclose the security related issue."
+   This issue was reported by Evgeny Kotkov
 
-That would allow us to still get changes merged into Linus's tree, and
-the stable trees, and the distro trees before the oss-security
-announcement goes out to the world.
+CVE-2022-24070
+"Subversion's mod_dav_svn is vulnerable to memory corruption"
 
-If this happens, I will be much happier as I think it would remove all
-of the current friction we have today.
+The full security advisory for CVE-2022-24070 is available at:
+    https://subversion.apache.org/security/CVE-2022-24070-advisory.txt
+    https://subversion.apache.org/security/CVE-2022-24070-advisory.txt.asc
 
-Taking this a bit further, why is the kernel "special" for something
-like this?  Why wouldn't this also apply to any other project with a
-reasonable number of developers where you want additional review and
-acceptance of changes before the world is notified that an issue was
-fixed?  That allows issues to be fixed, and to be in place on users
-systems before the issue is made public.
+A brief summary of this advisory follows:
 
-I would imagine that projects like Kubernetes, or Jenkins, or Docker or
-Mozilla or Chrome or other large systems would also fall into this
-category.  Heck, smaller projects too, the size shouldn't matter, what
-matters is that users have the ability to upgrade before security issues
-are told to the world, ensuring that user's systems are safe.
+   While looking up path-based authorization rules, mod_dav_svn servers
+   may attempt to use memory which has already been freed.
 
-I think we can all agree that this is our overall goal anyway, to make
-software more secure and keep user's systems safe.  Disclosing problems
-before the fixes even have the ability to make it to a user's systems
-goes directly against that goal.
+   We recommend all users to upgrade to a known fixed release of the
+Subversion server.
 
-> 2. Strictly enforce the policy as it is - and be in conflict with Linux
-> kernel security team, and handle fewer issues via linux-distros.
+   This issue was reported by Thomas Weißschuh
 
-That's the same as 0 today, right?  Or do you mean "enforce it more
-strictly than we have so far today"?
+SHA-512 checksums are available at:
 
-> 3. Ask that Linux kernel issues not be reported to linux-distros at all.
-> This is unnecessarily limiting compared to option 2 above, but maybe not
-> so conflicting (just not using this specific medium for communication).
-> However, I think it won't work consistently - it would be too
-> unexpected by many (indeed, out of context it sounds plain ridiculous),
-> and linux-distros is referenced in older Linux kernel release trees.
-> More importantly, both teams actually want to communicate on issues
-> somewhere, and there isn't a good alternative currently.
+    https://www.apache.org/dist/subversion/subversion-1.10.8.tar.bz2.sha512
+    https://www.apache.org/dist/subversion/subversion-1.10.8.tar.gz.sha512
+    https://www.apache.org/dist/subversion/subversion-1.10.8.zip.sha512
 
-This one would not go very well as we don't control where reporters send
-their information.
+PGP Signatures are available at:
 
-> 4. Shut down the list.  (What about the non-Linux distros list, then?)
-> I need to migrate the setup soon and ideally also update it later, so
-> shutting it down is as simple as not putting more effort into it.  It's
-> been around for 11 years.
+    https://www.apache.org/dist/subversion/subversion-1.10.8.tar.bz2.asc
+    https://www.apache.org/dist/subversion/subversion-1.10.8.tar.gz.asc
+    https://www.apache.org/dist/subversion/subversion-1.10.8.zip.asc
 
-I wouldn't like to see this happen as I think the distros get a lot of
-value out of the current situation.  But it's your list, not mine, if
-you are tired of running it, I totally understand.
+For this release, the following people have provided PGP signatures:
 
-thanks again for being willing to discuss this,
+   Julian Foad [rsa4096/1FB064B84EECC493] with fingerprint:
+    6011 63CF 9D49 9FD7 18CF  582D 1FB0 64B8 4EEC C493
+   Stefan Sperling [rsa2048/4F7DBAA99A59B973] with fingerprint:
+    8BC4 DAE0 C5A4 D65F 4044  0107 4F7D BAA9 9A59 B973
+   Branko Čibej [rsa4096/1BCA6586A347943F] with fingerprint:
+    BA3C 15B1 337C F0FB 222B  D41A 1BCA 6586 A347 943F
+   Mark Phippard [ed25519/C4416167349A3BCB] with fingerprint:
+    EC25 FCC1 0561 8D04 ADB4  3429 C441 6167 349A 3BCB
+   Johan Corveleyn [rsa4096/B59CE6D6010C8AAD] with fingerprint:
+    8AA2 C10E EAAD 44F9 6972  7AEA B59C E6D6 010C 8AAD
 
-greg k-h
+These public keys are available at:
+
+    https://www.apache.org/dist/subversion/subversion-1.10.8.KEYS
+
+Release notes for the 1.10.x release series may be found at:
+
+    https://subversion.apache.org/docs/release-notes/1.10.html
+
+You can find the list of changes between 1.10.8 and earlier versions at:
+
+    https://svn.apache.org/repos/asf/subversion/tags/1.10.8/CHANGES
+
+Questions, comments, and bug reports to users@...version.apache.org.
+
+Thanks,
+- The Subversion Team
