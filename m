@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2309" "Sunday" "22" "March" "2015" "19:35:21" "+0000" "Jeremy Stanley" "fungi@yuggoth.org" "<20150322193521.GA2456@yuggoth.org>" "53" "Re: [oss-security] CVE for Kali Linux" nil nil nil "3" "2015032219:35:21" "[oss-security] CVE for Kali Linux" (number mark "        fungi@yuggot Mar 22   53/2309  " thread-indent "\"Re: [oss-security] CVE for Kali Linux\"\n") "<550F15A4.8020904@sumptuouscapital.com>" ("<550EE478.70005@redhat.com>" "<E1YZj9N-0003Th-Gn@rmm6prod02.runbox.com>" "<20150322172300.GA21110@openwall.com>" "<550F01FF.1010208@redhat.com>" "<550F15A4.8020904@sumptuouscapital.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 5870 invoked by uid 550); 22 Mar 2015 19:35:35 -0000
+Received: (qmail 1451 invoked by uid 550); 12 Apr 2022 11:22:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,79 +6,117 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5852 invoked from network); 22 Mar 2015 19:35:34 -0000
-Message-ID: <20150322193521.GA2456@yuggoth.org>
-References: <550EE478.70005@redhat.com>
- <E1YZj9N-0003Th-Gn@rmm6prod02.runbox.com>
- <20150322172300.GA21110@openwall.com>
- <550F01FF.1010208@redhat.com>
- <550F15A4.8020904@sumptuouscapital.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="88pBQ1/6ie/nQzMF"
-Content-Disposition: inline
-In-Reply-To: <550F15A4.8020904@sumptuouscapital.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
-X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
-X-SA-Exim-Mail-From: fungi@yuggoth.org
-X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
-Date: Sun, 22 Mar 2015 19:35:21 +0000
-From: Jeremy Stanley <fungi@yuggoth.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE for Kali Linux
-To: oss-security@lists.openwall.com
-
---88pBQ1/6ie/nQzMF
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Received: (qmail 1498 invoked from network); 12 Apr 2022 10:55:15 -0000
+X-Gm-Message-State: AOAM532ZTahcYIDCg4UGnyFsTlM5rFvE4/8zRJZ15gexB3JFxJ6vhD7t
+	aJmQPiGL4grN+Mf7wvac4aQKkJwXjTqRzs+aRrE=
+X-Google-Smtp-Source: ABdhPJx79uO6W08+ExORjcscEGtUfAY+1t2+K+Nqb7BTRTS8Mc5ZuZPM8djSYRnmqOU8q1SyyTTdOMclD/w2Qc9QSrc=
+X-Received: by 2002:aca:c182:0:b0:2ef:8fd4:7523 with SMTP id
+ r124-20020acac182000000b002ef8fd47523mr1473345oif.148.1649760882923; Tue, 12
+ Apr 2022 03:54:42 -0700 (PDT)
+MIME-Version: 1.0
+From: "markphip@gmail.com" <markphip@apache.org>
+Date: Tue, 12 Apr 2022 06:54:32 -0400
+X-Gmail-Original-Message-ID: <CAHFaGCpaF=-bkXcsZ8TBqAqb+mCjyE3P-L+9xBtCG39Vv4G-1w@mail.gmail.com>
+Message-ID: <CAHFaGCpaF=-bkXcsZ8TBqAqb+mCjyE3P-L+9xBtCG39Vv4G-1w@mail.gmail.com>
+To: announce@subversion.apache.org, Subversion <users@subversion.apache.org>, 
+	Subversion Development <dev@subversion.apache.org>
+Cc: security@apache.org, oss-security@lists.openwall.com, 
+	bugtraq@securityfocus.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] [SECURITY][ANNOUNCE] Apache Subversion 1.10.8 released
 
-On 2015-03-22 20:19:00 +0100 (+0100), Kristian Fiskerstrand wrote:
-[...]
-> The package being signing using the same key over
-> time signifies that it is coming from authoritative source (unless
-> you've been MITMed a long time), the fingerprint of the OpenPGP key
-> should be included in email announcements and other documents that are
-> being mirrored by multiple sources, reducing the likelihood of a MITM
-> if corresponding information is the same in multiple archives over a
-> long time.
-[...]
+I'm happy to announce the release of Apache Subversion 1.10.8.
+Please choose the mirror closest to you by visiting:
 
-And the repository signing key is hopefully also published to a
-well-known keyserver network along with signatures from maintainers
-of the primary distribution repository, some of whom may be known
-(either directly or transitively via other key signatures) to the
-end user. And repository signing keys can be gradually replaced by
-generating new keys well in advance and signing them with the old
-keys as a transition, then adding them to the trust keyring long
-enough before the current key is retired that clients already have
-it once it starts to get used.
---=20
-Jeremy Stanley
+    https://subversion.apache.org/download.cgi#supported-releases
 
---88pBQ1/6ie/nQzMF
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+This is a stable bugfix and security release of the Apache Subversion
+open source version control system.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+THIS RELEASE CONTAINS TWO IMPORTANT SECURITY FIXES:
 
-iQJ8BAEBCgBmBQJVDxl5XxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
-ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQ5N0FFNDk2RkMwMkRFQzlGQzM1M0IyRTc0
-OEY5OTYxMTQzNDk1ODI5AAoJEEj5lhFDSVgpUyQQANRz+rqL3Q67KhWDD8GnGj8v
-iKy2jnpStrJLkCtGLogr9f0lhI53vwPL6Ab1OVzXA3XHb+92fhhJSp6+4gmtSIYz
-LT7zkvfs2qa6RnrsoYVtX3an8JO4ND7VHZ+BZN/6d/En37vq1TygsPT9OwftUj8j
-e9zFF2btss6+/Bhm9SjawqGGvQ9Npi4WkHx4+DhhrVXoCYnY7t2voXGrHSAE8609
-zvVyW+WQynMoufSzQRP5qryT47UGxqGleCvL9o28aOpzJOe9j2RARdciMZvit5Yu
-qpP2+3JzfLzyUcdOS+mUBuJxPzWzML4pIYTDs8D3TfcA1hTQ/Zgb6z0dBEe0Jddh
-WVENK+W2F5znWajAJiyU9wEfrP7QW6Ttm34jP3TdFx69R6SqEHauUV5fhGBjuxyf
-tiUXSCFW4U6Q9lFc26NXXvenuFfml653dUCb4UfsT0whT/Dygfi1X6UM5jliKrmZ
-db6syh4xABAdGnu/deRnvBPLqkQo8IJQVxh35LKz09PVvT6dl0xwQB4G8QR1UBJE
-APQ1fSA6cMRTBsxoB3+5Mdxq5+c593G0B/f5tvQ+rwPBztUxcieObn59FmeRS3o3
-o6d+ljbrqqzGhUJT1DE7nFUVkxT0PQtLCbTEJuq7yKCo66FyZr2b/VV1XQftp7qg
-HRdlZiydjQsanDbaEsgH
-=1XLC
------END PGP SIGNATURE-----
+CVE-2021-28544
+"SVN authz protected copyfrom paths regression"
 
---88pBQ1/6ie/nQzMF--
+The full security advisory for CVE-2021-28544 is available at:
+    https://subversion.apache.org/security/CVE-2021-28544-advisory.txt
+    https://subversion.apache.org/security/CVE-2021-28544-advisory.txt.asc
+
+A brief summary of this advisory follows:
+
+   Subversion servers reveal 'copyfrom' paths that should be hidden accordi=
+ng to
+   configured path-based authorization (authz) rules.  When a node has been
+   copied from a protected location, users with access to the copy can see =
+the
+   `copyfrom' path of the original.  This also reveals the fact that
+the node was copied.
+   Only the 'copyfrom' path is revealed; not its contents. Both httpd
+and svnserve
+   servers are vulnerable.
+
+   We recommend all users to upgrade to a known fixed release of the
+Subversion server.
+
+   This issue was reported by Evgeny Kotkov
+
+CVE-2022-24070
+"Subversion's mod_dav_svn is vulnerable to memory corruption"
+
+The full security advisory for CVE-2022-24070 is available at:
+    https://subversion.apache.org/security/CVE-2022-24070-advisory.txt
+    https://subversion.apache.org/security/CVE-2022-24070-advisory.txt.asc
+
+A brief summary of this advisory follows:
+
+   While looking up path-based authorization rules, mod_dav_svn servers
+   may attempt to use memory which has already been freed.
+
+   We recommend all users to upgrade to a known fixed release of the
+Subversion server.
+
+   This issue was reported by Thomas Wei=C3=9Fschuh
+
+SHA-512 checksums are available at:
+
+    https://www.apache.org/dist/subversion/subversion-1.10.8.tar.bz2.sha512
+    https://www.apache.org/dist/subversion/subversion-1.10.8.tar.gz.sha512
+    https://www.apache.org/dist/subversion/subversion-1.10.8.zip.sha512
+
+PGP Signatures are available at:
+
+    https://www.apache.org/dist/subversion/subversion-1.10.8.tar.bz2.asc
+    https://www.apache.org/dist/subversion/subversion-1.10.8.tar.gz.asc
+    https://www.apache.org/dist/subversion/subversion-1.10.8.zip.asc
+
+For this release, the following people have provided PGP signatures:
+
+   Julian Foad [rsa4096/1FB064B84EECC493] with fingerprint:
+    6011 63CF 9D49 9FD7 18CF  582D 1FB0 64B8 4EEC C493
+   Stefan Sperling [rsa2048/4F7DBAA99A59B973] with fingerprint:
+    8BC4 DAE0 C5A4 D65F 4044  0107 4F7D BAA9 9A59 B973
+   Branko =C4=8Cibej [rsa4096/1BCA6586A347943F] with fingerprint:
+    BA3C 15B1 337C F0FB 222B  D41A 1BCA 6586 A347 943F
+   Mark Phippard [ed25519/C4416167349A3BCB] with fingerprint:
+    EC25 FCC1 0561 8D04 ADB4  3429 C441 6167 349A 3BCB
+   Johan Corveleyn [rsa4096/B59CE6D6010C8AAD] with fingerprint:
+    8AA2 C10E EAAD 44F9 6972  7AEA B59C E6D6 010C 8AAD
+
+These public keys are available at:
+
+    https://www.apache.org/dist/subversion/subversion-1.10.8.KEYS
+
+Release notes for the 1.10.x release series may be found at:
+
+    https://subversion.apache.org/docs/release-notes/1.10.html
+
+You can find the list of changes between 1.10.8 and earlier versions at:
+
+    https://svn.apache.org/repos/asf/subversion/tags/1.10.8/CHANGES
+
+Questions, comments, and bug reports to users@subversion.apache.org.
+
+Thanks,
+- The Subversion Team
