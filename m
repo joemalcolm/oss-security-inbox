@@ -1,44 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/05/4
-Message-ID: <CAAqbB_fND52UH8km8mqoWhWbb9pAgDkt3XrBPw1iAcJ2Woax4g@mail.gmail.com>
-Date: Wed, 5 Jan 2022 18:35:17 -0500
-From: Neil Griffin <asfgriff@...che.org>
-To: general@...tals.apache.org, pluto-user@...tals.apache.org,  announce@...che.org, jetspeed-user@...tals.apache.org, security@...che.org,  oss-security@...ts.openwall.com
-Subject: CVE-2021-36739: Apache Portals: XSS vulnerability in the MVCBean JSP portlet maven archetype
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/13/3
+Message-ID: <c2d11523-cf18-652b-a817-de0dccd15910@apache.org>
+Date: Wed, 13 Apr 2022 16:31:29 +0000
+From: Ville Brofeldt <villebro@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2022-27479: Apache Superset: SQL injection vulnerability in chart data API 
 Content-Type: text/plain; charset=utf-8
-
-Severity: moderate
 
 Description:
 
-The "first name" and "last name" fields of the Apache Pluto 3.1.0 MVCBean
-JSP portlet maven archetype are vulnerable to Cross-Site Scripting (XSS)
-attacks.
+Apache Superset before 1.4.2 is vulnerable to SQL injection in chart data requests. Users should update to 1.4.2 or higher which addresses this issue.
 
-Mitigation:
+This issue is being tracked as SUPERSET-20
 
-If a project was generated from the affected maven archetype using a
-command like the following:
+References:
 
-mvn archetype:generate \
-     -DarchetypeGroupId=org.apache.portals.pluto.archetype \
-     -DarchetypeArtifactId=mvcbean-jsp-portlet-archetype \
-     -DarchetypeVersion=3.1.0 \
-     -DgroupId=com.mycompany \
-     -DartifactId=com.mycompany.my.mvcbean.jsp.portlet
-
-Then developers must fix the generated greeting.jspx file by escaping the
-rendered values submitted to the "First Name" and "Last Name" fields.
-
-For example, change:
-
-     ${user.firstName} ${user.lastName}!
-
-To:
-
-     ${mvc.encoders.html(user.firstName)}
-${mvc.encoders.html(user.lastName)}!
-
-Moving forward, all such projects should be generated from version 3.1.1 of
-the Maven archetype.
+https://lists.apache.org/thread/94th50j5d0y2fw7ysx0g7w3t6jk3z7q6
+https://lists.apache.org/thread/ztb9b6jd9rngoxwvq8r4fhpp401o613y
 
