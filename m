@@ -1,23 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/08/6
-Message-ID: <6dd88d7b-4d7d-d1f0-238a-53556932ff4d@apache.org>
-Date: Wed, 08 Jun 2022 09:43:44 +0000
-From: Stefan Eissing <icing@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/14/2
+Message-ID: <4027574e-ba23-10c4-0f2a-364f05d38cb8@enst-bretagne.fr>
+Date: Thu, 14 Apr 2022 21:20:08 +0200
+From: Gabriel Corona <gabriel.corona@...t-bretagne.fr>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-30522: Apache HTTP Server: mod_sed denial of service 
+Subject: Re: Browser-mediated attacks on WebDriver servers
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+Hi,
 
-Description:
+ > * Selenium server/Grid CSRF vulnerability;
+ > * Selenium server/Grid DNS-rebinding vulnerability.
 
-If Apache HTTP Server 2.4.53 is configured to do transformations with mod_sed in contexts where the input to mod_sed may be very large, mod_sed may make excessively large memory allocations and trigger an abort.
+I have tried requesting CVE IDs for those three times (first request was 
+done in 2021-06-12) and failed so far.
 
-Credit:
+All three attempts were rejected for the following reasons:
 
-This issue was found by Brian Moussalli from the JFrog Security Research team
+ > The Jenkins CNA is responsible for assigning CVE IDs to
+ > vulnerabilities in this product. Please contact the Jenkins CNA
+ > to get a CVE ID assigned to this issue.
 
-References:
+However, as a far as I understand this not the case. Here is the scope 
+of the Jenkins CNA [1]:
 
-https://httpd.apache.org/security/vulnerabilities_24.html
+ > The Jenkins project is a CVE Numbers Authority (CNA) for Jenkins
+ > and Jenkins plugins published by the Jenkins project (listed
+ > on plugins.jenkins.io and/or hosted in the jenkinsci
+ > GitHub organization). This means that the Jenkins project assigns
+ > CVE IDs for vulnerabilities in these components.
 
+A Selenium plugin [2,3] in indeed included in the list of Jenkins
+plugins. This plugin includes [4] selenium-standalone-server but is
+different from selenium-standalone-server [5] itself.
+
+I asked the Jenkins CNA:
+
+ > I have been redirected to you by MITRE concerning the allocation of
+ > CVE IDs for several vulnerabilities in Selenium standalone server /
+ > Selenium Grid [...]
+ >
+ > I believe this is a mistake as I do not see any clue indicating
+ > that Jenkins CNA might be responsible for assigning CVE IDs
+ > to vulnerabilities in this product. Could you confirm me that this
+ > is an error by MITRE ?
+
+Here is the answer from the Jenkins CNA:
+
+ > You are correct: Selenium is not in the scope of the Jenkins CNA.
+ > That said, we assigned CVE IDs in the past for Jenkins plugins
+ > integrating Jenkins and Selenium in some way (CVE-2021-21672,
+ > CVE-2020-2196). Those are in our scope. Perhaps this is the source
+ > of the confusion?
+
+In my third CVE request attempt, I explicitly stated:
+
+ > [Additional Information]
+ > This was previously reported and denied with the following reason:
+ >
+ > > The Jenkins CNA is responsible for assigning CVE IDs to
+ > > vulnerabilities in this product. Please contact the Jenkins CNA to
+ > > get a CVE ID assigned to this issue.
+ >
+ > I asked Jenkins CNA about this and they denied being responsible
+ > for Selenium itself :
+ >
+ > > You are correct: Selenium is not in the scope of the Jenkins CNA.
+ > > That said, we assigned CVE IDs in the past for Jenkins plugins
+ > > integrating Jenkins and Selenium in some way (CVE-2021-21672,
+ > > CVE-2020-2196). Those are in our scope. Perhaps this is the
+ > > source of the confusion?
+
+However, the request is still rejected for the same reason.
+
+Any idea how to proceed from there?
+
+[1] https://www.jenkins.io/security/cna/
+[2] https://plugins.jenkins.io/selenium/
+[3] https://github.com/jenkinsci/selenium-plugin
+[4] https://github.com/jenkinsci/selenium-plugin/blob/master/pom.xml
+[5] 
+https://github.com/SeleniumHQ/selenium/tree/trunk/java/src/org/openqa/selenium/grid
+
+Gabriel
