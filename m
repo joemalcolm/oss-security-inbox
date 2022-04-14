@@ -1,85 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/01/3
-Message-ID: <d825b5d0-6e85-110a-338f-c1063647d557@gmail.com>
-Date: Tue, 1 Feb 2022 09:05:56 +0100
-From: Mariusz Felisiak <felisiak.mariusz@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/14/3
+Message-ID: <3b4692b8-1f75-259a-0608-8511e076a461@oracle.com>
+Date: Thu, 14 Apr 2022 16:21:52 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Django: CVE-2022-23833: Denial-of-service possibility in file uploads
+Subject: mutt 2.2.3 released - fixes CVE-2022-1328
 Content-Type: text/plain; charset=utf-8
 
-https://www.djangoproject.com/weblog/2022/feb/01/security-releases/
+https://marc.info/?l=mutt-users&m=164979464612885&w=2 says:
 
-In accordance with `our security release policy
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
-Django team
-is issuing
-`Django 4.0.2 <https://docs.djangoproject.com/en/dev/releases/4.0.2/>`_,
-`Django 3.2.12 
-<https://docs.djangoproject.com/en/dev/releases/3.2.12/>`_, and
-`Django 2.2.27 <https://docs.djangoproject.com/en/dev/releases/2.2.27/>`_.
-These release addresses the security issues detailed below. We encourage all
-users of Django to upgrade as soon as possible.
+> From: "Kevin J. McCarthy" <kevin () 8t8 ! us>
+> Date: Tue, 12 Apr 2022 20:16:44 +0000
+> To: mutt-users
+> Subject: mutt 2.2.3 released
+> 
+> Hello Mutt Users,
+> 
+> I've just released version 2.2.3.  Instructions for downloading are 
+> available at <http://www.mutt.org/download.html>, or the tarball can be 
+> directly downloaded from <http://ftp.mutt.org/pub/mutt/>.  Please take 
+> the time to verify the signature file against my public key[1].
+> 
+> This is a bug-fix release, addressing CVE-2022-1328: a buffer overread 
+> in the uuencoded decoder routine.  For more details please see GitLab 
+> ticket 404: <https://gitlab.com/muttmua/mutt/-/issues/404>.  The commit 
+> fixing this issue is at 
+> <https://gitlab.com/muttmua/mutt/-/commit/e5ed080c00e59701ca62ef9b2a6d2612ebf765a5>
+> 
+> Also fixed were a possible integer overflow issue in the general iconv 
+> and rfc2047-conversion iconv functions.  These are not believed to be 
+> exploitable.
+> 
+> A huge thank you to Tavis Ormandy for reporting these issues, suggesting 
+> a patch for the iconv issue, helping test, and providing constructive 
+> feedback.  Hurray for the white-hats!
+> 
+> -Kevin
+> 
+> [1]
+> My public key is available at:
+>    - my personal website: https://www.8t8.us/configs/80316BDA.asc.pubkey
+>    - the mutt website: http://www.mutt.org/keys/kevin.key
+>    - The keys.openpgp.org network
+>      https://keys.openpgp.org/vks/v1/by-fingerprint/8975A9B33AA37910385C5308ADEF768480316BDA
 
-CVE-2022-23833: Denial-of-service possibility in file uploads
-=============================================================
-
-Passing certain inputs to multipart forms could result in an infinite 
-loop when
-parsing files.
-
-Thanks Alan Ryan for the report.
-
-This issue has severity "medium" according to the Django security policy.
-
-Affected supported versions
-===========================
-
-* Django main branch
-* Django 4.0
-* Django 3.2
-* Django 2.2
-
-Resolution
-==========
-
-Patches to resolve the issue have been applied to Django's main branch 
-and to
-the 4.0, 3.2, and 2.2 release branches. The patches may be obtained from the
-following changesets.
-
-* On the `main branch 
-<https://github.com/django/django/commit/fc18f36c4ab94399366ca2f2007b3692559a6f23>`__
-* On the `4.0 release branch 
-<https://github.com/django/django/commit/f9c7d48fdd6f198a6494a9202f90242f176e4fc9>`__
-* On the `3.2 release branch 
-<https://github.com/django/django/commit/d16133568ef9c9b42cb7a08bdf9ff3feec2e5468>`__
-* On the `2.2 release branch 
-<https://github.com/django/django/commit/c477b761804984c932704554ad35f78a2e230c6a>`__
-
-The following releases have been issued:
-
-* Django 4.0.2 (`download Django 4.0.2 
-<https://www.djangoproject.com/m/releases/4.0/Django-4.0.2.tar.gz>`_ | 
-`4.0.2 checksums 
-<https://www.djangoproject.com/m/pgp/Django-4.0.2.checksum.txt>`_)
-* Django 3.2.12 (`download Django 3.2.12 
-<https://www.djangoproject.com/m/releases/3.2/Django-3.2.12.tar.gz>`_ | 
-`3.2.12 checksums 
-<https://www.djangoproject.com/m/pgp/Django-3.2.12.checksum.txt>`_)
-* Django 2.2.27 (`download Django 2.2.27 
-<https://www.djangoproject.com/m/releases/2.2/Django-2.2.27.tar.gz>`_ | 
-`2.2.27 checksums 
-<https://www.djangoproject.com/m/pgp/Django-2.2.27.checksum.txt>`_)
-
-The PGP key ID used for this release is Mariusz Felisiak: 
-`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
-
-General notes regarding security reporting
-==========================================
-
-As always, we ask that potential security issues be reported via
-private email to ``security@...ngoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
-
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
