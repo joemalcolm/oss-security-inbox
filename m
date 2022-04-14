@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3892" "Friday" "3" "June" "2016" "22:56:47" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160604025647.D1D406C00F8@smtpvmsrv1.mitre.org>" "86" "[oss-security] Re: expat hash collision fix too predictable?" "^Cc:" nil nil "6" "2016060402:56:47" "[oss-security] Re: expat hash collision fix too predictable?" (number mark "        cve-assign@m Jun  3   86/3892  " thread-indent "\"[oss-security] Re: expat hash collision fix too predictable?\"\n") "<5751DAF8.6060901@pipping.org>" ("<5751DAF8.6060901@pipping.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 32719 invoked by uid 550); 4 Jun 2016 02:57:07 -0000
+Received: (qmail 29938 invoked by uid 550); 14 Apr 2022 10:29:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,99 +6,358 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32646 invoked from network); 4 Jun 2016 02:56:59 -0000
-In-Reply-To: <5751DAF8.6060901@pipping.org>
-Message-Id: <20160604025647.D1D406C00F8@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri,  3 Jun 2016 22:56:47 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: expat hash collision fix too predictable?
-To: sebastian@pipping.org
+Received: (qmail 29905 invoked from network); 14 Apr 2022 10:29:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1649932176; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=EMLk3NVn5uiXM4pak7VUl9s+tSyqfuYsBqlulqdLR84=;
+	b=tazg+a7a9oN1ypWs5hdtqKzOmAvVZjwasUwJRlaQaygARg2rnqVGZs6U06c4V/6kA+/i66
+	a2Bj3X3agkG033MnOyQjf23YGSUL52XASmrOa/y96s3tEtN6Hb3xdDbdNCtZNkDTNWwAzh
+	OJw1kK999dTXCZmU3fdicXep3Mcw/B4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1649932176;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=EMLk3NVn5uiXM4pak7VUl9s+tSyqfuYsBqlulqdLR84=;
+	b=HWszdKVX/jNQ66iRH678cedbxg2yi5vbWty96tFVA/gCKOk/r6bZsYloXI26o4uuffeHUN
+	wJv7rF0sg6Tz5TDQ==
+Date: Thu, 14 Apr 2022 12:29:36 +0200
+From: Matthias Gerstner <mgerstner@suse.de>
+To: oss-security@lists.openwall.com
+Message-ID: <Ylf3kJDnYlodMRNW@f195.suse.de>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="l88QxEWmXm1BKl8M"
+Content-Disposition: inline
+Subject: [oss-security] Multiple vulnerabilities in swhkd hotkey helper for Wayland
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--l88QxEWmXm1BKl8M
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> The call to srand(3) can reduce the security of the calling application,
-> depending on what it is doing with srand(3)/random(3). This behavior is
-> recognized as a bug by Fedora, too
-> (https://bugzilla.redhat.com/show_bug.cgi?id=1197087).
+Hello list,
 
-The text below assigns one CVE ID to this expat vulnerability.
+swhkd [1] is a pair of programs that allow to configure arbitrary
+keyboard hotkey definitions for the Wayland graphics system, written in
+the Rust programming language. The RPM package integration
+submitted for openSUSE Tumbleweed contained an unusual Polkit rules
+definition file that required a review by the SUSE security team [2].
+
+As a result of the review multiple security issues have been identified.
+The individual issues are described in the following detailed report.
+
+1) Introduction
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+1.a) swhkd Design and Operation
+-------------------------------
+
+swhkd consists of two components: `swhks` ("server") which runs in the
+context of the unprivileged user to execute hotkey actions and `swhkd`
+("daemon") which runs with root privileges to interact with keyboard
+devices on uinput API level. The two components communicate with each
+other via a UNIX domain socket.
+
+It is a bit unclear if `swhkd` allows other modes of operation. The
+function `permission_check()` is somewhat confusing in this regard. In
+the end the only way to get it running is doing it as root, and the
+README also points to `pkexec` for running it. So this is the only setup
+that I analyzed for this report.
+
+1.b) Scope of Review
+--------------------
+
+The target of this review was version 1.1.5 of swhkd.
+
+1.c) Polkit pkexec Usage
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+In version 1.1.5 of swhkd a Polkit rules file
+"/usr/share/polkit-1/rules.d/swhkd.rules" is used containing the
+following rule snippet:
+
+```
+polkit.addRule(function(action, subject) {
+      if (action.lookup("program") =3D=3D "/usr/bin/swhkd") {
+                return polkit.Result.YES;
+      }
+})
+```
+
+This means that any user in the system independently of a session
+context is able to execute /usr/bin/swhkd as root via pkexec passing
+arbitrary parameters e.g. also a compromised 'nobody' user account could
+do it.
+
+According to my recommendation upstream switched to using a Polkit
+policy file instead that only allows local users in an active session to
+run swhkd as root.
+
+2) Security Issues
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+2.a) Use of Fixed Temporary File in /tmp/swhkd.pid (CVE-2022-27815)
+-------------------------------------------------------------------
+
+The daemon running as root uses this path to record its own PID for
+instance monitoring. This fixed path has the following issues:
+
+- local application DoS: if an attacker places the PID of an existing
+  process there (e.g. PID 1), other users cannot start the daemon any
+  more.
+
+- local information leak if the kernel's symlink protection is turned
+  off. The daemon logs the *full* content of the PID file to stdout.
+  Example output of a run with a symlink pointing to a private root
+  owned file containing the string "secret":
+
+      [2022-03-21T15:44:28Z DEBUG swhkd] Previous PID: secret
+
+- local system DoS if kernel symlink protection is off. The daemon will
+  overwrite the target file with its own PID. This could also create a
+  world-readable file in interesting locations that allow for further
+  attack vectors in other programs.
+
+- functional issue: such a setup is not suitable for multiple users
+  using the software in parallel.
+
+### Bugfix
+
+The issue has been fixed upstream via the following commit:
+
+https://github.com/waycrate/swhkd/pull/93/commits/ee3534b401cba71fddf378f7e=
+1cb18ada0e6fa75
+
+The PID file is now placed into /etc, which fixes the issue, albeit is
+an incorrect location. I suggested upstream to place this file in /run
+instead.
+
+2.b) The `-c` Daemon Command Line Parameter Allows for Arbitrary File Exist=
+ence Tests (CVE-2022-27814)
+---------------------------------------------------------------------------=
+---------------------------
+
+Example exploitation:
+
+    $ pkexec /usr/bin/swhkd -d -c /root/.somefile
+    [2022-03-22T12:32:25Z ERROR swhkd] "/root/.somefile" doesn't exist
+=20=20=20=20
+    $ pkexec /usr/bin/swhkd -d -c /root/.bash_history
+    [...] (daemon starts "normal" operation)
+
+### Bugfix
+
+Upstream tries to fix this via the following commit:
+
+https://github.com/waycrate/swhkd/pull/105/commits/3c111663f2dcf8f28214ff19=
+07169aa669fcf791
+
+This commit now uses the external `cat` program to read in the
+configuration file. Actually this is just a workaround, because the fix
+for issue 2.c) is incomplete (only the root UID is dropped, not the root
+GID, see [3]).
+
+2.c) The `-c` Daemon Command Line Parameter Allows to Parse Arbitrary Files=
+ (CVE-2022-27819)
+---------------------------------------------------------------------------=
+-----------------
+
+The file passed to `swhkd` via `-c` will be completely read in by
+`swhkd`. Any privileged file can thus also be processed. The daemon only
+outputs the contents if something that looks like a hotkey definition is
+found in the file, however. Since this syntax is pretty complex the
+involved information leak is rather hard to exploit. Something like
+
+    $ pkexec /usr/bin/swhkd -d -c /dev/sda
+
+causes the daemon to "parse" the complete block device, exhausting
+memory and causing high I/O load.
+
+### Bugfix
+
+Upstream addressed this by dropping privileges to the invoking user via
+the following commit:
+
+https://github.com/waycrate/swhkd/commit/8ddd40fdc0f1a356816671d6a91f067c11=
+2e4724
+
+The privilege drop is still incomplete, because the root group ID
+privilege is not dropped.
+
+The security stance of swhkd can still be improved by dropping
+privileges to the invoking user by default and only raising them for
+privileged operations. I recommended this to upstream for follow up
+changes of the codebase.
+
+2.d) The Daemon Connects to a Fixed UNIX Domain Socket in /tmp/swhkd.sock (=
+CVE-2022-27818)
+---------------------------------------------------------------------------=
+---------------
+
+For connecting to the unprivileged swhks sibbling process the swhkd
+daemon connects to the fixed domain socket path /tmp/swhkd.sock. This
+causes the following issues:
+
+- local DoS: If an attacker pre-creates this pathname then the daemon
+  cannot send out hotkey events and the unprivileged server component
+  cannot start up successfully.
+- local information leak: If an attacker places its *own* UNIX domain
+  socket there, then the attacker will receive hotkey events instead of
+  the legitimate user. The information contains the commands to be
+  executed which is depending on the actual hotkey setup. In some cases
+  this might even contain sensitive data.
+
+### Bugfix
+
+Upstream addressed this by placing the socket into the unprivileged
+user's private /run/user/$UID directory. This is done via the following
+commit:
+
+https://github.com/waycrate/swhkd/commit/3187d7fc75fe5833f903b342941eebc1a5=
+6e5979
+
+2.e) Input Events are Consumed For all Keyboard Input Devices in all Sessio=
+ns (CVE-2022-27817)
+---------------------------------------------------------------------------=
+-------------------
+
+The daemon listens for input events on uinput device level. This means
+even other users in other Wayland sessions or on the text mode consoles
+will be affected by this. In theory this fact could be used to log
+passwords and other sensitive information from other users. However,
+recognized hotkey events will be discarded by the daemon i.e. if regular
+key presses are configured as hotkeys then the keys seem to work no
+longer. Therefore it is more like a local DoS for other users.
+
+### Bugfix
+
+This issue has not been addressed by upstream yet. My suggested fix is
+as follows:
+
+Establish a systemd Session Context: I think it is possible to determine
+the current session the unprivileged user is in via systemd. Then the
+daemon should pause its operation as soon as the active session is
+changed to another one, and reactivate operation once the original user
+session becomes active again.
+
+2.f) The Unprivileged Server Process Uses a Fixed Temporary File in /tmp/sw=
+hks.pid (CVE-2022-27816)
+---------------------------------------------------------------------------=
+------------------------
+
+This issue is similar to 2.a). The consequences are:
+
+- local application DoS: if an attacker places the PID of an existing
+  process there (e.g. PID 1), other users cannot start the server any
+  more.
+- local user file corruption: if kernel symlink protection is off, then
+  the PID file can be a symlink to a private file in the user's home
+  directory which will then be overwritten with the PID information.
+
+### Bugfix
+
+Upstream addressed this issue by placing the PID file in the respective
+user's private /run/user/$UID directory. This is done in the following
+commit:
+
+https://github.com/waycrate/swhkd/commit/4b8442fef512441c9155186956c767a120=
+c12974
+
+2.g) The Unprivileged Server Process Receives Commands via /tmp/swhkd.sock
+--------------------------------------------------------------------------
+
+The socket used by the daemon (see 2.d) is created by the unprivileged
+server. The daemon sends commands to be executed to this socket and the
+server will execute them.
+
+The UNIX socket `bind()` call only succeeds if the target file does not
+exist yet and it also doesn't follow symlinks. Therefore an attacker
+cannot pre-create this socket, without the server process failing to
+`bind()`. For `connect()`ing to the socket the caller needs to have
+write permissions on the socket. Therefore arbitrary other users cannot
+send commands to the server process if a _sane_ umask is configured.
+
+Should the user starting the server process *not* have a sane umask,
+however, then the socket could become writable for other users and
+therefore other users could execute arbitrary code in the context of the
+unprivileged user:
+
+    $ umask 0
+    $ swhks &
+    $ ls -lh /tmp/swhkd.sock
+    srwxrwxrwx 1 mgerstner users 0 M=E4r 22 13:46 /tmp/swhkd.sock
+
+Since an overly open umask is an issue in itself I did not request a CVE
+for this issue.
+
+### Bugfix
+
+To protect against this scenario the socket file is now placed in the
+respective user's private /run/user/$UID directory. Furthermore for
+hardening purposes a sane umask is applied. The following upstream
+commit contains this change:
+
+https://github.com/waycrate/swhkd/commit/707ea9915c9cf3d68b4a6729ac212a46a4=
+86e3fd
+
+3) Timeline
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+- 2022-03-22: I reported these findings to upstream privately. I offered
+  formal coordinated disclosure, no defined embargo and publication date
+  have been established though.
+- 2022-03-23: Upstream started quickly to work on bugfixes which have
+  been published on GitHub right away. Therefore increasing parts of the
+  information has become public over time.
+- 2022-03-24: I received CVEs for the issues from Mitre and communicated
+  them to upstream.
+- 2022-04-13: I asked upstream for permission to publish the full
+  report, since most CVEs have already public fixes, some of them still
+  incomplete though.
+
+References
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+[1]: https://github.com/waycrate/swhkd
+[2]: https://bugzilla.suse.com/show_bug.cgi?id=3D1196890
+[3]: https://github.com/waycrate/swhkd/pull/102#issuecomment-1088417911
 
 
->> https://bugzilla.redhat.com/show_bug.cgi?id=1197087#c6
->> 
->> Expat is calling srand ... [if] the code using Expat ... never called
->> XML_SetHashSalt on that parser ... the arrival of XML_SetHashSalt
->> bypassed the Expat user's radar
+Best Regards
 
->>> https://sourceforge.net/p/expat/bugs/499/
->>> 2012-04-05
->>> In any case, you can supply your own hash salt - after creating the
->>> parser, but before parsing is started. See the new API function XML_SetHashSalt.
+Matthias
 
-The higher-level issue, from our perspective, is that a library
-(intended for use in arbitrary applications) should not have
-potentially unavoidable calls to the srand function unless this is
-documented. The library might be used by an application in which srand
-was already called exactly once, and srand/rand happens to be the
-right choice for that application because of a minimal need for
-randomness, and this minimal need for randomness is no longer
-satisfied if there are unexpected extra calls to srand.
+--=20
+Matthias Gerstner <matthias.gerstner@suse.de>
+Security Engineer
+https://www.suse.com/security
+Phone: +49 911 740 53 290
+GPG Key ID: 0x14C405C971923553
+=20
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG N=FCrnberg
+Gesch=E4ftsf=FChrer: Ivo Totev
 
-In other words, good options for a library include:
+--l88QxEWmXm1BKl8M
+Content-Type: application/pgp-signature; name="signature.asc"
 
-  - never call srand under any circumstances
-
-  - call srand only if the application calls a library function that
-    is documented as triggering an srand call
-
-  - call srand whenever it wants, as long as the documentation warns
-    application authors about potential incompatibility with any use
-    of srand within an application
-
-We really don't know whether the above is a generally accepted
-principle for all libraries. However, it appears that the expat vendor
-is recognizing the old behavior (i.e., the behavior before
-XML_SetHashSalt was available and documented) as a security-relevant
-implementation error. Use CVE-2012-6702.
-
-An entirely separate question is whether generate_hash_secret_salt
-should ultimately be using the rand function to attempt to provide a
-random number, or whether it should provide a better quality random
-number. There is no CVE ID for this yet. If the expat upstream
-maintainer is announcing a new expat release, specifically stating
-that discontinuing use of the rand function represents a vulnerability
-fix, then a CVE ID can be assigned.
-
-One might make a design assertion that every portable library and
-application, if it potentially has a need for good random numbers, is
-supposed to have its own code that is able to call each of getrandom,
-CryptGenRandom, and arc4random_buf on the applicable OS (as suggested
-in https://bugzilla.redhat.com/show_bug.cgi?id=1197087#c28). We don't
-feel that CVE is the right way to track that assertion's viability or
-adherence.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXUkL1AAoJEHb/MwWLVhi29JcP/1O68QOg+teOsPnIAXqBFnf+
-8zty+w4jemQtwcSeSEsFKm7U9r3ACC/EtGi8sdjws5kqFY7Qad2+XyJS4mTQLozZ
-aK2MjByk3ITmEtPkLiIwBbYro1DpixvdOnkCVGUKe3NwuZ42/FOnXNobPprSEBPW
-5ibjiqcu1HKAfH7A2e9EuGs63Skdh40NhEBwSbbvhiHLq1FMQuETEGmkno7yIC+u
-zijg1uz+K//YkJrADyzvAzwcfer4WUqe9Ney+jgrTyp5sIqVuStro08WVH7HQRTZ
-pKJ4ZbvNrn0HrchA5nd+xcsn7B29NjKMVuUCvczpP4xZKvASyey95+t9FfrkwZ6O
-A04BdefJMddedSwd7odzVq0QdqUinkWMLlPuMv4UdZRwjF/MsdBqDZVPDouNSPxT
-vL6KOwhGJ12qazXYhjIDxkqztj6ou9udcUyUsLK0EehlnHeE2/ZnfnEAR34i53uG
-wFmPXual8A5imxVtY3uruVl91Y2UAbspTIujSBZcZwBGnIGdXmTBHdybKI4/4dfh
-5nsAc6EgVak1hWR/JxzNnvwowySXECLV9XHlaMdzO/g6kMF3HKCGZYhdjgrhIE8b
-GkN6uKv3JVZmFmuaOvqzPRpkrCS4Y36K9KV+T9u1qGKsmEzUt23vAEU7yr4crlDz
-cX0LtknjCbvm/N/Hv1eJ
-=5Ppg
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmJX95AACgkQFMQFyXGS
+NVPjJxAAr8ZQw9pjywe9G7+Tc5CF9jvANkuTkp9ZTVv7Nhx9dl21aPz1FXh1jgZR
+xyBGc+EtY8ImwBPi0iHucjqgbz4cCyO9fIAsN3hANC42riVLLBqF2lFSvpNUuIZm
+pu2PB6WVdYGLP2F4XoY/lS/21vbuAex6035IsNu7hm9MzIt5QAhBfOpi4m3hhUHT
+HYKKLPj1Ab5NBebeddyVMpYpZ2sqW01gY777teRx5gm6T/t7QFlyb5P3ZMId83ED
+gPacBo0aWAZfetmWLcKG+YaMtKypPfkiqAg9lsH2je57P5KEaYk6Yyrc7xTgNpsk
+gZP22RiDu57mIpTLisdnRsfQYposy5m+fBXK6/EReZCKKAoAGnyf+9XHoJkpSogS
+AjXGAopObLnm3nqPZ0isbkU9XHOp2+6NOQQRjxNvsqVDf+fvjz2Nm00B1ds5YAIH
+QluUzVgKjcxRaUhlE3NRhh12bJh9/urI5wxGEt/AaRXit4OXyWHQ0WTEbKMOaBq2
+tk1qT02hotDDagjgkslooNPrRashsEHcrN64u0wZqKM/ig/5ikJtXUxubobUNx4v
+LdQPHaiTNzn03HWwlSPfQe/OzO6Cy2HMs8k0V8AbVeKCIkA/K/IGrTW+u22CvMjv
+rulFOW7hlutWuXmnMBUFDEJ9iU0XZ+PxZ4CXMZ9glxEAeItioho=
+=iqbD
 -----END PGP SIGNATURE-----
+
+--l88QxEWmXm1BKl8M--
