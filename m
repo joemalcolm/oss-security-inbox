@@ -1,4 +1,4 @@
-Received: (qmail 24083 invoked by uid 550); 22 Mar 2024 19:12:42 -0000
+Received: (qmail 17991 invoked by uid 550); 14 Apr 2022 19:40:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,119 +7,94 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24065 invoked from network); 22 Mar 2024 19:12:42 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711135028; x=1711739828; darn=lists.openwall.com;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mvUL3W2zJTRaGz0/7GB1VGv32BPLzKb0uNLajUS/G4I=;
-        b=JRIUADx5+aEB492Asx365B6SrEpjOMQY9Nm4fN/L/+JcQ1yLGpEuXp4517V3ZF8E7Y
-         XugTcyrUG+470YdXS2Jv+DFE7h6QSG4bCuU5S7C6KUnyU/rBi8iXcBBqz9qVorem+6EH
-         y2aoj5eVV1yRuzJ6iNM121M3Gktd6feUj6fPwmC95yPazz1OjwdCRI9/0XpdgjogddbJ
-         q/hmt0F3VPTWmng56vMzconauk0mP+3tzh1s4NJmnIxBnxJD0HHOifPgv0u9voAa6gm3
-         27IIIxTUq+CIvMC6mz8zIGrAt3CH0NPkY2PTcbP1BqUchuf+TfMSeV1ffxEd5h6h+JXG
-         bWGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711135028; x=1711739828;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mvUL3W2zJTRaGz0/7GB1VGv32BPLzKb0uNLajUS/G4I=;
-        b=CW3V7q3RDd6Y1qv5ZTc0HZGMup+Tn4vQXkv2MvvffBuYdlESsEeJhc24YKJLDVjLpm
-         /AelVS5xDg8/124KzXTnOHKcyng8eIjDghoizsm4DUTGM/8Cf50NH2JR+KNZskgeZF45
-         8W3MRry4PAlgRAFYoCiOkCxIIxz78To0eiMdXmAcYtVGvWmx0Z7LgfDlAEL6xsHtXdbR
-         KDKKId+IgY0yN9RNAL5EDB7GG/EJx2Au9CDXVQ9tLfa/LPZfRYeQ9wsaMhJocodsgqlH
-         Hb2FfMxeglJBTkkY74oHAKXvp5YeuHGFuzyS2siGvAheL6LSStQsWytHcnGhQr0+geYR
-         JZ4g==
-X-Gm-Message-State: AOJu0YxKNw9KjIOeomTnRxnpRrDrWL57VkRT7G48spVXNT8rEfDBqGA/
-	K507a0YSjtD9GNFbieZ/VDgVIadWCDZqyDwss2G/nh6mJ64HSPg/5fjDfxfS2POvPRyQiEZA+sQ
-	GUjoOF0n4sAcdU7LZYo4zYnf3vJSlwHM4BG0=
-X-Google-Smtp-Source: AGHT+IFhNZ+oLOsonbd6uItLjf0rggBJWgnhkqa1dASrcP6reXYp3bdcsr1kQNKrHaQa/vm9zUv7kfiqV/fqJECDke8=
-X-Received: by 2002:a25:b004:0:b0:dcc:d5aa:af36 with SMTP id
- q4-20020a25b004000000b00dccd5aaaf36mr315746ybf.44.1711135027665; Fri, 22 Mar
- 2024 12:17:07 -0700 (PDT)
+Received: (qmail 5927 invoked from network); 14 Apr 2022 19:20:20 -0000
+Message-ID: <4027574e-ba23-10c4-0f2a-364f05d38cb8@enst-bretagne.fr>
+Date: Thu, 14 Apr 2022 21:20:08 +0200
 MIME-Version: 1.0
-References: <2c65862c-886c-435c-ac5c-0ad954a2b7cb@oracle.com>
-In-Reply-To: <2c65862c-886c-435c-ac5c-0ad954a2b7cb@oracle.com>
-From: Alex Gaynor <alex.gaynor@gmail.com>
-Date: Fri, 22 Mar 2024 15:16:56 -0400
-Message-ID: <CAFRnB2W+-G1XkSUk4NfmxPWcbgLgJ7-ASR-JDW1m67MvwDHmUA@mail.gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Content-Language: en-US
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] GnuTLS 3.8.4 released, fixes CVE-2024-28834 & CVE-2024-28835
+References: <9e4aa379-70ce-3bf9-1480-c36a1b9fa4e0@enst-bretagne.fr>
+From: Gabriel Corona <gabriel.corona@enst-bretagne.fr>
+In-Reply-To: <9e4aa379-70ce-3bf9-1480-c36a1b9fa4e0@enst-bretagne.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] Browser-mediated attacks on WebDriver servers
 
-One thing that may be of interest to this group: Will found
-CVE-2024-28835 by running the x509-limbo test suite against gnutls.
-x509-limbo is a set of test cases that can be used to test x.509 path
-building implementations against a variety of edge cases (inspired by
-wycheproof). The tests are at https://github.com/C2SP/x509-limbo
+Hi,
 
-Cheers,
-Alex
+ > * Selenium server/Grid CSRF vulnerability;
+ > * Selenium server/Grid DNS-rebinding vulnerability.
 
-On Fri, Mar 22, 2024 at 3:12=E2=80=AFPM Alan Coopersmith
-<alan.coopersmith@oracle.com> wrote:
->
-> https://lists.gnupg.org/pipermail/gnutls-help/2024-March/004845.html
-> announced the release of GnuTLS 3.8.4, including these fixes:
->
-> > ** libgnutls: Fix side-channel in the deterministic ECDSA. Reported by
-> > George Pantelakis (#1516). [GNUTLS-SA-2023-12-04, CVSS: medium]
-> > [CVE-2024-28834]
-> >
-> > ** libgnutls: Fixed a bug where certtool crashed when verifying a
-> > certificate chain with more than 16 certificates. Reported by William
-> > Woodruff (#1525) and yixiangzhike (#1527). [GNUTLS-SA-2024-01-23, CVSS:
-> > medium] [CVE-2024-28835]
->
-> https://gnutls.org/security-new.html#GNUTLS-SA-2023-12-04 says:
->
-> > CVE-2024-28834  Severity Medium; timing sidechannel in deterministic EC=
-DSA
-> >
-> > A vulnerability was found that the deterministic ECDSA code leaks bit-l=
-ength
-> > of random nonce which allows for full recovery of the private key used =
-after
-> > observing a few hundreds to a few thousands of signatures on known mess=
-ages,
-> > due to the application of lattice techniques. The issue was reported in=
- the
-> > issue tracker as #1516.
-> >
-> > https://gitlab.com/gnutls/gnutls/-/issues/1516
-> >
-> > Recommendation: To address the issue found upgrade to GnuTLS 3.8.4 or l=
-ater
-> > versions.
->
->
-> https://gnutls.org/security-new.html#GNUTLS-SA-2024-01-23 says:
->
-> > CVE-2024-28835  Severity Medium; Denial of service
-> >
-> > When validating a certificate chain with more then 16 certificates GnuT=
-LS
-> > applications crash with an assertion failure. The issue was reported in=
- the
-> > issue tracker as #1527 and #1525.
-> >
-> > https://gitlab.com/gnutls/gnutls/-/issues/1527
-> > https://gitlab.com/gnutls/gnutls/-/issues/1525
-> >
-> > Recommendation: To address the issue found upgrade to GnuTLS 3.8.4 or l=
-ater
-> > versions.
->
->
->
-> --
->          -Alan Coopersmith-                 alan.coopersmith@oracle.com
->           Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+I have tried requesting CVE IDs for those three times (first request was 
+done in 2021-06-12) and failed so far.
 
+All three attempts were rejected for the following reasons:
 
+ > The Jenkins CNA is responsible for assigning CVE IDs to
+ > vulnerabilities in this product. Please contact the Jenkins CNA
+ > to get a CVE ID assigned to this issue.
 
---=20
-All that is necessary for evil to succeed is for good people to do nothing.
+However, as a far as I understand this not the case. Here is the scope 
+of the Jenkins CNA [1]:
+
+ > The Jenkins project is a CVE Numbers Authority (CNA) for Jenkins
+ > and Jenkins plugins published by the Jenkins project (listed
+ > on plugins.jenkins.io and/or hosted in the jenkinsci
+ > GitHub organization). This means that the Jenkins project assigns
+ > CVE IDs for vulnerabilities in these components.
+
+A Selenium plugin [2,3] in indeed included in the list of Jenkins
+plugins. This plugin includes [4] selenium-standalone-server but is
+different from selenium-standalone-server [5] itself.
+
+I asked the Jenkins CNA:
+
+ > I have been redirected to you by MITRE concerning the allocation of
+ > CVE IDs for several vulnerabilities in Selenium standalone server /
+ > Selenium Grid [...]
+ >
+ > I believe this is a mistake as I do not see any clue indicating
+ > that Jenkins CNA might be responsible for assigning CVE IDs
+ > to vulnerabilities in this product. Could you confirm me that this
+ > is an error by MITRE ?
+
+Here is the answer from the Jenkins CNA:
+
+ > You are correct: Selenium is not in the scope of the Jenkins CNA.
+ > That said, we assigned CVE IDs in the past for Jenkins plugins
+ > integrating Jenkins and Selenium in some way (CVE-2021-21672,
+ > CVE-2020-2196). Those are in our scope. Perhaps this is the source
+ > of the confusion?
+
+In my third CVE request attempt, I explicitly stated:
+
+ > [Additional Information]
+ > This was previously reported and denied with the following reason:
+ >
+ > > The Jenkins CNA is responsible for assigning CVE IDs to
+ > > vulnerabilities in this product. Please contact the Jenkins CNA to
+ > > get a CVE ID assigned to this issue.
+ >
+ > I asked Jenkins CNA about this and they denied being responsible
+ > for Selenium itself :
+ >
+ > > You are correct: Selenium is not in the scope of the Jenkins CNA.
+ > > That said, we assigned CVE IDs in the past for Jenkins plugins
+ > > integrating Jenkins and Selenium in some way (CVE-2021-21672,
+ > > CVE-2020-2196). Those are in our scope. Perhaps this is the
+ > > source of the confusion?
+
+However, the request is still rejected for the same reason.
+
+Any idea how to proceed from there?
+
+[1] https://www.jenkins.io/security/cna/
+[2] https://plugins.jenkins.io/selenium/
+[3] https://github.com/jenkinsci/selenium-plugin
+[4] https://github.com/jenkinsci/selenium-plugin/blob/master/pom.xml
+[5] 
+https://github.com/SeleniumHQ/selenium/tree/trunk/java/src/org/openqa/selenium/grid
+
+Gabriel
