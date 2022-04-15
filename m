@@ -1,46 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/26/5
-Message-ID: <56d94fb3-cb73-c541-b62b-4239a28afea1@rs-labs.com>
-Date: Wed, 26 Jan 2022 12:18:07 +0100
-From: Roman Medina-Heigl Hernandez <roman@...labs.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/16/1
+Message-ID: <d2ec8110-b27d-3605-27c9-bf5a9056d9a8@enst-bretagne.fr>
+Date: Sat, 16 Apr 2022 00:12:30 +0200
+From: Gabriel Corona <gabriel.corona@...t-bretagne.fr>
 To: oss-security@...ts.openwall.com
-Subject: Re: pwnkit: Local Privilege Escalation in polkit's pkexec (CVE-2021-4034)
+Subject: Re: Browser-mediated attacks on WebDriver servers
 Content-Type: text/plain; charset=utf-8
 
-Exploit by blasty attached (also at: 
-https://haxx.in/files/blasty-vs-pkexec.c).
+> Selenium server/Grid CSRF vulnerability;
 
-PS: Untested because my Debian machine doesn't contain pkexec, even 
-though Qualy's advisory says it is by default on Debian.
+This is CVE-2022-28108.
 
-PS2: Since vuln is trivially exploitable other exploits will arise for 
-sure. Well, indeed there are already other exploits. (eg: 
-https://github.com/berdav/CVE-2021-4034).
+> Selenium server/Grid DNS-rebinding vulnerability.
 
-Cheers,
+This is CVE-2022-28109.
 
--r
-
-El 25/01/2022 a las 19:04, Sam James escribió:
->
->> On 25 Jan 2022, at 17:57, Qualys Security Advisory <qsa@...lys.com> wrote:
->>
->>
->> Qualys Security Advisory
->> pwnkit: Local Privilege Escalation in polkit's pkexec (CVE-2021-4034)
->> [snip]
-> Hi,
->
-> For the benefit of downstreams: patch is available in gitlab [0]
-> but no release yet.
->
-> [0] https://gitlab.freedesktop.org/polkit/polkit/-/commit/a2bf5c9c83b6ae46cbd5c779d3055bff81ded683
->
-> Best,
-> sam
-
--- 
-Saludos,
--Román
-
-View attachment "blasty-vs-pkexec.c" of type "text/plain" (2159 bytes)
+Gabriel
