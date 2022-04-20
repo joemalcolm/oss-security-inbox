@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1715" "Wednesday" "15" "April" "2015" "20:05:30" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFk+-9p4GH3-Z4qcyrURbMA9oMphOXZOE43PXVMLOCdpW1w@mail.gmail.com>" "48" "Re: [oss-security] Re: Problems in automatic crash analysis frameworks" nil nil nil "4" "2015041603:05:30" "[oss-security] Re: Problems in automatic crash analysis frameworks" (number mark "        taviso@googl Apr 15   48/1715  " thread-indent "\"Re: [oss-security] Re: Problems in automatic crash analysis frameworks\"\n") "<CAJ_zFkLAM+5DpyS4L6aqiyKT4AZY7fbW+5M7+=rBYNcE-Cr6aw@mail.gmail.com>" ("<20150414155515.BFCAD6C0075@smtpvmsrv1.mitre.org>" "<552D3A20.8040909@canonical.com>" "<CAJ_zFkLtZteX-ge_=9jE8KHxDmKZ=7cwWUmwkHwGHbnCpiQWZA@mail.gmail.com>" "<CAJ_zFk+7eV52Ui1+aV+BKhc68zKi3pmPsgPmFoOsw8Qg6dHPAQ@mail.gmail.com>" "<CAJ_zFkLA=Qn_exvDW8Rym1jx_jS0vo=vuTJ7ON71qk8BSB=1dw@mail.gmail.com>" "<20150414221607.GA5795@boyd>" "<CAJ_zFkLHirkfhNbHGne8V_n2RJ_kS_LL7MLA8_Sw3Tp-Q85T8Q@mail.gmail.com>" "<CAJ_zFkLAM+5DpyS4L6aqiyKT4AZY7fbW+5M7+=rBYNcE-Cr6aw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 11872 invoked by uid 550); 16 Apr 2015 03:06:03 -0000
+Received: (qmail 25830 invoked by uid 550); 20 Apr 2022 09:07:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,96 +6,146 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11849 invoked from network); 16 Apr 2015 03:06:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=wd8D5LZrLFEGGamL48PABQl2oGxJjhUS/f0OfyW9bxY=;
-        b=LUYx3OV3MQ0oA2t1TEo4FPnMuICEWobZWBehYkE4D/zo2CaVL7DOEyTX1nJKeh+HSh
-         ig3gWGnkwnWKi0aABUJMSrFTevTh+XYC3MocS/eNRc02gMIKiCCGPSWkwyU5SYy/ggOK
-         KhhWYgvCHGCW/moKulD14kTxc/JtleylS9p9gTOAVBhE+kkUb8Mqx9/zWSuRRCHLgiXi
-         f3svM8ff5hobtMm8BAD6lv0PklBV0l//0vYJ51IB0P3C3diF76pEW8uh9XhOqwJBSPuy
-         H00Av66QljNeffYDKD7MFuIbx3/Ustl2XzbzMLscmAKApkY5Jyo/8Up59Ty1FFU1K9W0
-         2n9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=wd8D5LZrLFEGGamL48PABQl2oGxJjhUS/f0OfyW9bxY=;
-        b=Zm06uJ2DBSOa/yX0NyXjQJ0vIgtaSyvgzGVAV7bV7qf+E+Y7aI0mmTrWhgDFGYnlyL
-         RDFif1ASqZ2I/12TKUladl6rqpu+kBoMo0yWc7wF7bZqMq6fRK6AoHtYgyrumdwFgLs6
-         oh5/fLPDbgMOtMaMlUOkExu+CS+vjT7g4RKxQfQq8/5w15IF66uzCk0WqqZWEJ1huQTa
-         HiTku2IbxrRTm4TKNnoA3l3OLAChfVfKwr0zozlEJ3YKuDqsLMW/m+d0FB1EqSpyJHbC
-         Ed3A4LiDXbF4u8SKze7tY4FTyZTVReL/sBqhPWF7BJQhRKtv6Ze4/Ufp07QEviLgpQzX
-         sSVA==
-X-Gm-Message-State: ALoCoQmtfxo5FSB0sacQex3EhkB+0+Sfp271gkiAGs5owqowM77UWNAbbzuU52GCh9m66VPfsbFc
-X-Received: by 10.55.33.94 with SMTP id h91mr58552670qkh.69.1429153550965;
- Wed, 15 Apr 2015 20:05:50 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CAJ_zFkLAM+5DpyS4L6aqiyKT4AZY7fbW+5M7+=rBYNcE-Cr6aw@mail.gmail.com>
-References: <20150414155515.BFCAD6C0075@smtpvmsrv1.mitre.org>
- <552D3A20.8040909@canonical.com> <CAJ_zFkLtZteX-ge_=9jE8KHxDmKZ=7cwWUmwkHwGHbnCpiQWZA@mail.gmail.com>
- <CAJ_zFk+7eV52Ui1+aV+BKhc68zKi3pmPsgPmFoOsw8Qg6dHPAQ@mail.gmail.com>
- <CAJ_zFkLA=Qn_exvDW8Rym1jx_jS0vo=vuTJ7ON71qk8BSB=1dw@mail.gmail.com>
- <20150414221607.GA5795@boyd> <CAJ_zFkLHirkfhNbHGne8V_n2RJ_kS_LL7MLA8_Sw3Tp-Q85T8Q@mail.gmail.com>
- <CAJ_zFkLAM+5DpyS4L6aqiyKT4AZY7fbW+5M7+=rBYNcE-Cr6aw@mail.gmail.com>
-Message-ID: <CAJ_zFk+-9p4GH3-Z4qcyrURbMA9oMphOXZOE43PXVMLOCdpW1w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Cc: oss-security@lists.openwall.com, 
-	Assign a CVE Identifier <cve-assign@mitre.org>, security <security@ubuntu.com>, 
-	=?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@ubuntu.com>
-Date: Wed, 15 Apr 2015 20:05:30 -0700
-From: Tavis Ormandy <taviso@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Problems in automatic crash analysis frameworks
-To: Tyler Hicks <tyhicks@canonical.com>
+Received: (qmail 25800 invoked from network); 20 Apr 2022 09:07:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1650445620; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=cdMtn18g4n7vTM42w9lhWe+QPts1t/0o2+UrMK4HxDk=;
+	b=F5Spzq0aN2RtuXAJu2HceRSRnYpOba7wDh9JAi0J9Drcidd16ODvlvioNqtvKb+K5aDjOR
+	Q2lAFL8YyVUeukaumtmRaQ5yFmiYbnEGBNhRp9rnoWKPqHj/fhT8PIsioVjQJPmWKmYm+G
+	Gs2TFD+W7c3X4f7/ijM4LGkhO5+EFuU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1650445620;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=cdMtn18g4n7vTM42w9lhWe+QPts1t/0o2+UrMK4HxDk=;
+	b=0BJxXImZuCtnGd0QlPNxTQZ7aXe9MdDu3S2APOWFGr4Cj/9eKL+2nsZ3x279bldRxyP1wK
+	A3IDVnrqGQkPztAg==
+Date: Wed, 20 Apr 2022 11:07:00 +0200
+From: Matthias Gerstner <mgerstner@suse.de>
+To: oss-security@lists.openwall.com
+Message-ID: <Yl/NNAMZpGvD1c09@f195.suse.de>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="lVIgUkz1BMfIw6ux"
+Content-Disposition: inline
+Subject: [oss-security] tpm2-abrmd: possibly surprising security model for local users could
+ result in a local DoS against TPM configuration and data
 
-On Wed, Apr 15, 2015 at 12:55 PM, Tavis Ormandy <taviso@google.com> wrote:
-> On Wed, Apr 15, 2015 at 11:48 AM, Tavis Ormandy <taviso@google.com> wrote:
->> FWIW, I verified this is exploitable.
->>
->
-> Here's the script I used to verify, it should create the file
-> /etc/rootfiletest. By using the partial trick or creating parse
-> errors, this is easy to turn into a root shell.
+--lVIgUkz1BMfIw6ux
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-It looks like there's a new patch here:
-https://launchpadlibrarian.net/203416094/apport.diff
+Hello list,
 
-In get_parentns_pid code, it looks like it has the same problem as
-before in that there's no guarantee ppid isn't recycled (possibly by
-root). Also, you can easily get an untrusted process reparented to
-init. If you're not convinced of this, try this:
+this is both a heads up and an invitation for discussion of a situation
+that some end users and TPM integrators might find surprising.
 
-$ bash -c 'sleep 600 & echo $!; disown -ah'
-28396
-$ egrep '(PPid|Name):' /proc/28396/status
-Name: sleep
-PPid: 1
+The Intel TPM 2.0 software stack offers software components for
+accessing TPM 2.0 hardware features. The stack's main components are the
+core libraries tpm2-tss [1], a set of command line tools tpm2-tools [2]
+and the userspace resource manager and access broker tpm2-abrmd [3] used
+for multiplexing parallel access to a TPM device.
 
-I'm almost certain it's not possible for the core_patten handler to
-perform any meaningful analysis on the parent process.
+I was made aware that, after installing all three of the mentioned
+tpm2 packages on openSUSE, arbitrary local users may issue arbitrary
+commands to the TPM chip [4], including a `tpm2_clear` operation. The
+reporter of this was afraid that this could be used as a local
+denial-of-service vector especially in the light of recent feature
+developments like TPM assisted unattended unlocking of encrypted file
+systems during boot.
 
-This code is definitely not sufficient:
+The Intel TPM 2.0 software stack supports different communication
+backends (TCTIs, TPM Command Transmission Interfaces) for accessing a
+TPM device. For example the tcti-device backend accesses the /dev/tpm0
+character device directly while tcti-tabrmd attempts to invoke the D-Bus
+interface of the tpm2-abrmd daemon. The packaging of tpm2-abrmd in
+openSUSE uses configuration files to allow transparent autostart of the
+daemon via D-Bus [5] and to allow everybody to invoke the service's
+D-Bus methods via the D-Bus service configuration [6].
 
-        os.chdir("/proc/%s/" % ppid)
-        ...
-        with open("status", "r") as fd:
-        ....
-                            if line.startswith("Uid:"):
+What happens is that upon invocation of a tpm2-tools command, even by a
+regular system user (even a user like 'nobody'), different TCTI
+backends will be probed by the tool. The probing of the tcti-tabrmd will
+cause the tpm2-abrmd service to be started, even if not enabled on
+systemd level. Since there are no restrictions on D-Bus level and no
+further authentication layers exist on top of it, the operation will
+succeed.
 
+The /dev/tpm0 character device is typically owned by root:root (mode
+0700) or root:tss (mode 0770) and does not allow world access. Thus
+without tpm2-abrmd installed, arbitrary local users are *not* able to
+issue TPM commands. I contacted upstream about their security model in
+this regard and the statement is that they purely rely on the
+cryptographic security provided by the TPM itself. This means to avoid
+arbitrary local users being able to e.g. reset TPM state, the respective
+TPM properties would need to be protected by TPM level authorization.
+The /dev/tpm0 device should still not be world accessible, because
+otherwise the TPM device itself could suffer from a local DoS. The
+tpm2-abrmd implements measures against the latter.
 
-Because you can just wait for ppid to be recycled before the chdir().
-The UDS inode validation is a neat idea, but I don't think it works -
-the obvious case is reparenting to init and then using one of the
-inode numbers init uses, but even if you special-case init, pid
-recycling is possible.
+Upstream told me that they considered to implement e.g. polkit
+authorization for individual actions in tpm2-abrmd but in the end
+decided against it as they did not see a clear benefit for integrators.
 
-I saw the duplicate inode checks, but that doesn't work....it's racy,
-and you can just use a netlink socket or similar.
+I generally agree with upstream in that properly setup TPM level
+authorization will prevent any local DoS issues. On the other hand I
+found that many people seem to find this situation surprising. Tests
+on other Linux distributions like Debian or Fedora show that they
+exhibit the same behaviour when all three mentioned tpm2 packages are
+installed. Thus integrators might want to reduce the level of surprise
+for some of their users. This can be done relatively simple by
+restricting the D-Bus level access to members of a separate group, for
+example. Upstream recommends *not* to use the same 'tss' group for this
+as is used for group ownership of /dev/tpm0, because this would
+introduce DoS issues against the kernel level device again.
 
-Once you've passed this check, it's a controlled lxc.Container() and
-you can use my previous PoC to verify that is exploitable.
+Upstream stresses the point that this is not a known vulnerability. I
+still would be interested to hear further opinions on this.
 
-Tavis.
+Best Regards
+
+Matthias
+
+[1]: https://github.com/tpm2-software/tpm2-tss
+[2]: https://github.com/tpm2-software/tpm2-tools
+[3]: https://github.com/tpm2-software/tpm2-abrmd
+[4]: https://bugzilla.suse.com/show_bug.cgi?id=3D1197532
+[5]: https://github.com/tpm2-software/tpm2-abrmd/blob/master/dist/com.intel=
+.tss2.Tabrmd.service
+[6]: https://github.com/tpm2-software/tpm2-abrmd/blob/master/dist/tpm2-abrm=
+d.conf
+
+--=20
+Matthias Gerstner <matthias.gerstner@suse.de>
+Security Engineer
+https://www.suse.com/security
+GPG Key ID: 0x14C405C971923553
+=20
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG N=FCrnberg
+Gesch=E4ftsf=FChrer: Ivo Totev
+
+--lVIgUkz1BMfIw6ux
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmJfzTQACgkQFMQFyXGS
+NVOyQg/8D2vPW2H8gbqeVoH81j5PHyFJrEvXBykYiDkYhc18gTTlCjibDtY6/ydU
+Uvlk18nhqibliVsnJT/tJ3SztsYvTRiGrgd+azi034blqczs22VvPkSfcfz0boTy
+CtJatK2Jd24h8Vb3zazeI6vY0sYeNiwGzkxYzgsVVg4AGPXS9Io9mUEHuylGBdMQ
+snXM/S+4l79pG938KRLJFYq2Y6bv65lCmdX/74g0RyMuoE2MsgK+D5zwnmT2nTA/
+RWu94DbUil2n0gcscAY7nlNpj98iqqrL/ihmsuHhTxDuQ2Ks+SsnBjVKEVnITO7m
+6JjL7kplNiaoP+bmcmGgmW7IKHbO5FKkd24qz8QNiCpUCKiX4T5C2+1vqRA202Ss
+D3ISaKSGMi8ZeJPGK5MyBiCuujBQC8WA5td+8o3352P/uxRqvKHKm3OcaVpJRGdF
+ChkqiOZbwf9pUxw9JxZRlSJZTqcc5Nk16XXhHHjVv/d7NIQz+1wEZA0btMrsrPdq
+1xyTMmw4Q85h5cgyOysca5YVE9ho9LeDUlp1ednRp+HgEqwzS1d2URJAjPvewyZf
+p1UJauUx76IqitJKMkXEM73gb3+cz4Ghi16px7eS/u5eR5UIjHs0Epg6Y6NYJluy
+7pE+CC1hsocUQCplzROqoYj7ly3Cw8tB9Qcwo4RIKNLqrWxA4kc=
+=ZNhu
+-----END PGP SIGNATURE-----
+
+--lVIgUkz1BMfIw6ux--
