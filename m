@@ -1,38 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/25/2
-Message-ID: <007201d8e85c$6da62570$48f27050$@gmail.com>
-Date: Tue, 25 Oct 2022 11:27:47 +0100
-From: "Simon Steiner" <simonsteiner1984@...il.com>
-To: <general@...graphics.apache.org>, <batik-dev@...graphics.apache.org>, <batik-users@...graphics.apache.org>, "'Apache Security Team'" <security@...che.org>, <oss-security@...ts.openwall.com>
-Subject: [CVE-2022-41704] Apache Batik information disclosure vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/20/2
+Message-ID: <86c70de9-3adb-a18c-23aa-0110d83dbdc2@redhat.com>
+Date: Wed, 20 Apr 2022 15:58:20 +1000
+From: Peter Hutterer <peter.hutterer@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2022-1215 libinput format string vulnerability
 Content-Type: text/plain; charset=utf-8
 
-CVE-2022-41704:
-        Apache Batik information disclosure vulnerability
+Title: Format string vulnerability in libinput
+Component: libinput, affecting all Wayland compositors and X.Org when 
+using xf86-input-libinput
+Report URL: https://gitlab.freedesktop.org/libinput/libinput/-/issues/752
+Reporter: Albin Eldstål-Ahrens and Lukas Lamster
+CVSS: 7.1 AV:L/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H/E:U/RL:O/RC:C
+Disclosure date: Embargo cancelled due to an independent public bug filed
 
-Severity:
-        Medium
+When a device is detected by libinput, libinput logs several messages 
+through log handlers set up by the callers. These log handlers usually 
+eventually result in a printf call. Logging happens with the privileges 
+of the caller, in the case of Xorg this may be root.
 
-Vendor:
-        The Apache Software Foundation
+The device name ends up as part of the format string and a kernel device 
+with printf-style format string placeholders in the device name can 
+enable an attacker to run malicious code. An exploit is possible through 
+any device where the attacker controls the device name, e.g. /dev/uinput 
+or Bluetooth devices.
 
-Versions Affected:
-        Batik 1.0 - 1.15
+All versions of libinput since 1.10 (released Feb 2018) are affected.
 
-Description:
-        Block loading jars by default to avoid running untrusted code
+The upstream patch is available as commit
+   2a8b8fde90d63d48ce09ddae44142674bbca1c28
 
-Mitigation:
-        Users should upgrade to Batik 1.16+
+libinput releases that include these patches are:
+- 1.20.1
+- 1.19.4
+- 1.18.2
+Releases of versions 1.17.x and earlier are not planned at this stage.
 
-Credit:
-        This issue was independently reported by Y4tacker and 4ra1n of
-Chaitin Tech and pwnull
+Many thanks to Albin Eldstål-Ahrens and Benjamin Svensson from Assured 
+AB for their discovery and responsible reporting of this issue.
 
-References:
-        http://xmlgraphics.apache.org/security.html
-        https://issues.apache.org/jira/browse/BATIK-1338
-
-The Apache XML Graphics team.
-
+This issue was independently discovered by Lukas Lamster. Many thanks 
+for their discovery and responsible reporting.
 
