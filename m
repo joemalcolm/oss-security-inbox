@@ -1,40 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/11/3
-Message-ID: <CAAr7cF2zor2=J0D=NxFqS0TecrZTv2X8d_W53=vp_KWNJ-rxsg@mail.gmail.com>
-Date: Mon, 11 Apr 2022 16:20:56 +0800
-From: Felix Fu <foyjog@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/21/2
+Message-ID: <YmGV8gVeaVN9IMve@kroah.com>
+Date: Thu, 21 Apr 2022 19:35:46 +0200
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-28893: Linux kernel: Use after free in SUNRPC subsystem
+Subject: Re: CVE-2022-1419: Linux kernel: A concurrency use-after-free in vgem_gem_dumb_create
 Content-Type: text/plain; charset=utf-8
 
-Hello, I Request a CVE from MITRE.
+On Thu, Apr 21, 2022 at 11:44:54PM +0800, Minh Yuan wrote:
+> Timeline:
+> * 21.04.22 - Vulnerability reported to security@...nel.org and
+> linux-distros@...openwall.org
+> * 21.04.22 - CVE-2022-1419 assigned.
 
-Description: The SUNRPC subsystem in the Linux kernel through 5.17.2 can
-call xs_xprt_free before ensuring that sockets are in the intended state.
-Details: Use after free happens in inet_put_port because some sockets are
-not close before xs_xprt_free().
-CVE-ID: CVE-2022-28893  (
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-28893)
-Fix:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=1a3b1bba7c7a5eb8a11513cf88427cb9d77bc60a
+Why are people assigning CVEs to things that require root permissions?
+Or are there distros running on kernels older than 5.4 that allow
+untrusted users access to the drm ioctls directly?
 
-------------------------------------------------------------
-I followed the steps as below :
+I'm curious as it would affect the backporting of the needed fixes here
+(or not.)
 
-To report minor security bugs (such as local DOS or local info leak):
+thanks,
 
-1、Report the bug publicly to kernel developers as described above and wait
-until a fix is committed. Alternatively, you can develop and send a fix
-yourself.
-
-2、Request a CVE from MITRE through the web form. Describe the bug details
-and add a link to the fix (from patchwork.kernel.org, git.kernel.org or
-github.com) in the request.
-
-3、Once a CVE is assigned, send the bug details, the CVE number and a link
-to the fix to oss-security@...ts.openwall.com
-
-(
-https://github.com/google/syzkaller/blob/master/docs/linux/reporting_kernel_bugs.md
-)
-
+greg k-h
