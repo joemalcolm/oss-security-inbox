@@ -1,39 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/26/6
-Message-ID: <YfE/0ldFPlLtuka9@ryzen.bugs.fi>
-Date: Wed, 26 Jan 2022 14:34:26 +0200
-From: Henri Salo <henri@...v.fi>
-To: oss-security@...ts.openwall.com
-Cc: Roman Medina-Heigl Hernandez <roman@...labs.com>
-Subject: Re: pwnkit: Local Privilege Escalation in polkit's pkexec (CVE-2021-4034)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/22/7
+Message-ID:  <DM5PR14MB146504CDA1924C1B6B2479AEE1F79@DM5PR14MB1465.namprd14.prod.outlook.com>
+Date: Fri, 22 Apr 2022 17:49:37 +0000
+From: "Myers, Christopher" <Christopher.Myers@...or.edu>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2022-29464 :: WSO2 Unrestricted arbitrary file upload, and remote code to execution vulnerability.
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+I have not seen this come across the oss-sec/CISA/DHS emails at this point, but anyone using WSO2 or a derivative needs to check this out right away.
 
-On Wed, Jan 26, 2022 at 12:18:07PM +0100, Roman Medina-Heigl Hernandez wrote:
-> PS: Untested because my Debian machine doesn't contain pkexec, even though
-> Qualy's advisory says it is by default on Debian.
+https://docs.wso2.com/display/Security/Security+Advisory+WSO2-2021-1738
 
-We had discussion off-list with Roman and this is the case only when Debian is
-updated from previous release to bullseye. In clean installs pkexec is
-installed.
+https://nvd.nist.gov/vuln/detail/CVE-2022-29464
 
-- -- 
-Henri Salo
------BEGIN PGP SIGNATURE-----
+Good writeup and PoC code here: https://github.com/hakivvi/CVE-2022-29464
 
-iQIzBAEBCgAdFiEE/aVSDznAZReWTkxKJ633pE6qdXQFAmHxP9EACgkQJ633pE6q
-dXS1NhAAtX9YcEAsZoHZ2yMohlofBqiRTvAwE2dk4jbhu8/4Kvkz1IP6sVBi6J4S
-MKF2zSvUW8ydq/MAl2K8viB+O2VcbN0ZZIzYSNN4a1Rjz2AyWUl5fhdqHRQrUqMn
-O9/FfsgtGmOVBECc4HNwlje9jDP0bZKkqbU9AULsxJrG1QwYGYCV28Ietb4ccJYD
-d9VqgdYr4W4qqcsycn4Z7wkq7iFS+VkLCX77KVMxr+WuldRFK2FCPa9rHopps+6i
-4yKLLYJxF9Z6y8t4d/ZSSckT4GN7fDw3L7WP8HYlJTY16gkOi+MDIlfvTPnLkAH0
-YIDvZcDpFMZGWluw2eO8wdkITZAk7LDCLo484iRAb0Ufji9n775R2mS7UjLKwJ++
-dg2TcqN7BNICTRRpnCXvqyWFMUTiI19I45v/T68ymgVF8YwGEAcnA3FyH8tCbz+Y
-79dKz764sMSKJubeRfL1EFdBm7a8ugi4v9c+jEUgqGvc4ERBB6hVuUWDsRpyNgEK
-/j/HdA4BOlp95GxjfYnckZKYvcqg0+A7XBsQsAVu0cH10sHsIRAwjwMCkk5uM2G6
-i4ciEDTV1svMpO0JsY7FS4HRvheEqg/Ws3c2Gd7ssvMuAwqS0p0K9qn9E6Bcj0xP
-KrwSF4tsqY1dQPS1h5GCTT4H8+M76DTBHVfwhy2L2yWdScn1I3s=
-=S0ir
------END PGP SIGNATURE-----
