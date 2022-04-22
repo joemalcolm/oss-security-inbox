@@ -1,25 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/06/7
-Message-ID: <20220906145100.kmnuhcj4slmbrokz@yuggoth.org>
-Date: Tue, 6 Sep 2022 14:51:01 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/22/6
+Message-ID: <CABdrxGCAksdYgwgf4H1-7V6W9yBM=J=_YLoHDCikD5NT-D1OiA@mail.gmail.com>
+Date: Fri, 22 Apr 2022 09:37:42 -0700
+From: CJ Cullen <cjcullen@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: sagemath denial of service with abort() in gmp: overflow in mpz type
+Subject: [kubernetes] CVE-2021-25746: Ingress-nginx directive injection via annotations
 Content-Type: text/plain; charset=utf-8
 
-On 2022-09-06 16:26:58 +0300 (+0300), Georgi Guninski wrote:
-> If you can crash the python interpreter without syscalls and
-> without the kernel killing it for OOM, would you call this DoS?
+Issue Details
 
-I didn't say it wasn't a denial of service, but you can trivially
-create all manner of "denials of service" (and far, far worse things
-too) of the CPython interpreter and anything running in it by asking
-it to execute arbitrary Python code. It's more a question of whether
-that's something that can or even should be "fixed." If a program's
-author chooses to intentionally pass user-supplied code to CPython,
-hopefully they do so knowing all the risks and informing their users
-of the same.
--- 
-Jeremy Stanley
+A security issue was discovered in ingress-nginx
+<https://github.com/kubernetes/ingress-nginx> where a user that can create
+or update ingress objects can use `.metadata.annotations` in an Ingress
+object (in the `networking.k8s.io` or `extensions` API group) to obtain the
+credentials of the ingress-nginx controller. In the default configuration,
+that credential has access to all secrets in the cluster.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
+This issue has been rated High (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L>),
+and assigned CVE-2021-25746.
+Affected Components and Configurations
+
+This bug affects ingress-nginx. If you do not have ingress-nginx installed
+on your cluster, you are not affected. You can check this by running
+`kubectl get po -n ingress-nginx`.
+
+Multitenant environments where non-admin users have permissions to create
+Ingress objects are most affected by this issue.
+Affected Versions
+
+   -
+
+   <v1.2.0
+
+Fixed Versions
+
+   -
+
+   v1.2.0-beta.0
+   -
+
+   v1.2.0
+
+Mitigation
+
+If you are unable to roll out the fix, this vulnerability can be mitigated
+by implementing an admission policy that restricts the
+`metadata.annotations` values to known safe (see the newly added rules
+<https://github.com/kubernetes/ingress-nginx/blame/main/internal/ingress/inspector/rules.go>,
+or the suggested value for annotation-value-word-blocklist
+<https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#annotation-value-word-blocklist>
+).
+Detection
+
+If you find evidence that this vulnerability has been exploited, please
+contact security@...ernetes.io
+Additional Details
+
+See ingress-nginx Issue #8503
+<https://github.com/kubernetes/ingress-nginx/issues/8503> for more details.
+Acknowledgements
+
+This vulnerability was reported by Anthony Weems, and separately by
+jeffrey&oliver.
+
+Thank You,
+
+CJ Cullen on behalf of the Kubernetes Security Response Committee
+
