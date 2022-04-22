@@ -1,21 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/25/6
-Message-ID: <CA+ZBtZ5CrKObuaQGjg9T8x9zTVVhonYPOFCGuxWgcxhnqKdebw@mail.gmail.com>
-Date: Tue, 25 Jan 2022 19:39:34 +0800
-From: Zhang Yonglun <zhangyonglun@...che.org>
-To: oss-security@...ts.openwall.com, dev@...nyu.apache.org
-Subject: CVE-2022-23945: Apache ShenYu missing authentication allows gateway registration
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/22/3
+Message-ID: <d5567e4b-884c-9449-1cfc-0c21b6a4a752@gmail.com>
+Date: Fri, 22 Apr 2022 02:43:27 +0200
+From: David Bouman <dbouman03@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Linux: UaF due to concurrency issue in io_uring timeouts
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Hello list,
 
-Missing  authentication on ShenYu Admin when register by HTTP. This
-issue affected Apache ShenYu 2.4.0 and 2.4.1.
+We (Jayden Rivers and David Bouman) are disclosing a bug we found in the 
+Linux kernel's io_uring subsystem. We have written a local privilege 
+escalation PoC that can successfully elevate to system root from an 
+unprivileged process (in a container). We will be releasing a blog post 
+(including exploit code) in a week or two. It should be noted that 
+unlike many Linux vulnerabilities that have surfaced recently, 
+triggering this one does not require an attacker to have any kind of 
+privileges (e.g. in a user namespace). This leaves many systems vulnerable.
 
+We are still looking for a CNA representative that can assign a CVE 
+number for this vulnerability; please contact us!
 
---
+Kernel versions 5.10+ are affected, and linux-stable patches are already 
+pushed. The upstream patch commit is 
+e677edbcabee849bfdd43f1602bccbecf736a646 ("io_uring: fix race between 
+timeout flush and removal").
 
-Zhang Yonglun
-Apache ShenYu (Incubating)
-Apache ShardingSphere
+When the IORING_OP_TIMEOUT (T) and IORING_OP_LINK_TIMEOUT (LT) opcodes 
+are combined in a linked submission queue entry, and another request (B) 
+finishes, a race might occur: namely, when due to the completion of B, T 
+is cancelled (through the completion event count), and LT is canceled by 
+its hrtimer at the same time. Whilst T is still being cleaned up, LT is 
+already freed by a different execution context, and since they are 
+linked, the cleanup of T retains a dangling reference to the now-freed 
+LT. Hence, there's a use-after-free.
 
+Exploitation-wise, the attacker can reallocate LT to another `struct 
+io_kiocb` and defer the UaF to e.g. a `struct file` (this is the 
+technique we will describe in aforementioned blog post).
+
+The race window is quite tight and the scenario is complicated, so the 
+race can only be won very infrequently in our experience.
+
+It is advised to upgrade your kernel to latest ASAP.
+
+Greetings,
+
+Jayden Rivers & David Bouman
