@@ -1,46 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/04/1
-Message-ID: <20220604200332.GA25072@openwall.com>
-Date: Sat, 4 Jun 2022 22:03:32 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/26/1
+Message-ID: <a388a13c-2f49-a36d-668a-633583013717@apache.org>
+Date: Tue, 26 Apr 2022 08:44:41 +0000
+From: Jan Lehnardt <jan@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: Marian Rehak <mrehak@...hat.com>, EDG EDG <edg.bugs@...il.com>
-Subject: Re: Linux Kernel use-after-free write in netfilter
+Subject: CVE-2022-24706: Apache CouchDB: Remote Code Execution Vulnerability in Packaging 
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 03, 2022 at 08:31:41AM +0200, Salvatore Bonaccorso wrote:
-> On Tue, May 31, 2022 at 10:00:32AM +0100, EDG EDG wrote:
-> > A use-after-free write vulnerability was identified within the
-> > netfilter subsystem
-> > which can be exploited to achieve privilege escalation to root.
-> > 
-> > In order to trigger the issue it requires the ability to create user/net
-> > namespaces.
-> > 
-> > This issue has been fixed within the following commit:
-> > 
-> > https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/net/netfilter?id=520778042ccca019f3ffa136dd0ca565c486cedd
-> > 
-> > The issue was previously confirmed on the latest linux master (commit
-> > 143a6252e1b8ab424b4b293512a97cca7295c182) and we have confirmed it can be
-> > exploited for privilege escalation on Ubuntu 22.04 (Linux kernel
-> > 5.15.0-27-generic).
+Severity: critical
 
-> FTR, this was assigned CVE-2022-1966 by Red Hat:
-> https://bugzilla.redhat.com/show_bug.cgi?id=2092427 .
-> 
-> There is though as well now
-> https://www.cve.org/CVERecord?id=CVE-2022-32250 . I have asked MITRE
-> to possibly reject the later one.
+Description:
 
-Also, as Linus added to the private thread, the fix commit is now in:
+An attacker can access an improperly secured default installation without
+authenticating and gain admin privileges.
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=520778042ccc
+1. CouchDB opens a random network port, bound to all available interfaces
+   in anticipation of clustered operation and/or runtime introspection. A
+   utility process called `epmd` advertises that random port to the network.
+   `epmd` itself listens on a fixed port.
+2. CouchDB packaging previously chose a default `cookie` value for single-node
+   as well as clustered installations. That cookie authenticates any
+   communication between Erlang nodes.
 
-> Just a note to say for anybody tracking the progress of this that the
-> fix is in my tree now as commit 520778042ccc ("netfilter: nf_tables:
-> disallow non-stateful expression in sets earlier")
->  
->                  Linus
+The CouchDB documentation[1] has always made recommendations for properly
+securing an installation, but not all users follow the advice.
 
-Alexander
+We recommend a firewall in front of all CouchDB installations. The full
+CouchDB api is available on registered port `5984` and this is the only
+port that needs to be exposed for a single-node install. Installations
+that do not expose the separate distribution port to external access are
+not vulnerable.
+
+[1]: https://docs.couchdb.org/en/stable/setup/cluster.html
+
+
+
+Mitigation:
+
+CouchDB 3.2.2 and onwards will refuse to start with the former default
+Erlang cookie value of `monster`. Installations that upgrade to this
+versions are forced to choose a different value.
+
+In addition, all binary packages have been updated to bind `epmd` as
+well as the CouchDB distribution port to `127.0.0.1` and/or `::1`
+respectively.
+
+Credit:
+
+The Apache CouchDB Team would like to thank Alex Vandiver <alexmv@...ip.com> for the report of this issue.
+
+References:
+
+https://lists.apache.org/thread/w24wo0h8nlctfps65txvk0oc5hdcnv00
+
