@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2638" "Tuesday" "17" "March" "2015" "00:50:59" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150317045059.C7BA842E06C@smtpvbsrv1.mitre.org>" "79" "[oss-security] Re: CVE Request: Cap'n Proto: Several issues" nil nil nil "3" "2015031704:50:59" "[oss-security] Re: CVE Request: Cap'n Proto: Several issues" (number mark "        cve-assign@m Mar 17   79/2638  " thread-indent "\"[oss-security] Re: CVE Request: Cap'n Proto: Several issues\"\n") "<20150316062556.GA7658@eldamar.local>" ("<20150316062556.GA7658@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 9882 invoked by uid 550); 17 Mar 2015 04:51:12 -0000
+Received: (qmail 13846 invoked by uid 550); 26 Apr 2022 23:18:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,92 +6,128 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9862 invoked from network); 17 Mar 2015 04:51:11 -0000
-In-Reply-To: <20150316062556.GA7658@eldamar.local>
-Message-Id: <20150317045059.C7BA842E06C@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, debian@tomlee.co, bernat@debian.org
-Date: Tue, 17 Mar 2015 00:50:59 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: Cap'n Proto: Several issues
-To: carnil@debian.org
+Received: (qmail 13828 invoked from network); 26 Apr 2022 23:18:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1651015107;
+	bh=2UT6ebEPpq1YUdf7Of2Abft9kB7BxT0s7OxeQqMjWOI=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type;
+	b=uq9qJ2ntfw8dsjLiHw7i2XNl13F1MTvOlYtWkYE5R2PvD+RWb8dDybucQtFgI1Ndz
+	 A8cmWswAN5CPCsC4VvvxdeGbhneEbvsnRYC+BWU7JHoOsGveKVlVDodOS7jsKQo2NF
+	 7YoRPc9QFWMjD6G1TQw813BpMIqyFOSxGodZNiDfnXmY41GPXrRE/vu6RPAdfVgWwU
+	 OCmhRVX1rt6rwmQOe+n2r8vN0t94jiliFSypSLkkngsxiCA43XcAtZKOoCU5W3Vu2q
+	 YTqtbYKo7Uz/ZidkjWldb5KVFP8973RmJmN66N+d9NHKbLZ/kZU+fwSaGjJuvLDyYD
+	 4tM/+ZfQAxHhw==
+Date: Tue, 26 Apr 2022 23:18:25 +0000
+From: Seth Arnold <seth.arnold@canonical.com>
+To: dev@kylin.apache.org
+Cc: oss-security@lists.openwall.com
+Message-ID: <20220426231825.GA484258@millbarge>
+Mail-Followup-To: dev@kylin.apache.org, oss-security@lists.openwall.com
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="yrj/dFKFPuw6o+aM"
+Content-Disposition: inline
+Subject: [oss-security] [morningman@163.com: [oss-security] CVE-2022-23942: Apache
+ Doris(incubating) hardcoded cryptography initialization]
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--yrj/dFKFPuw6o+aM
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Can you assign CVEs for the following issues in Cap'n Proto? Details
-> and fixing commits are referenced in upstream problem descriptions:
+Hello, the Apache Doris project recently switched away from using
+hard-coded credentials; they apaprently copy-and-pasted code from the
+Kylin project:
 
-> 1/ Integer overflow in pointer validation
->   - https://github.com/sandstorm-io/capnproto/blob/master/security-advisories/2015-03-02-0-c%2B%2B-integer-overflow.md
->   - https://bugs.debian.org/780565
+https://www.openwall.com/lists/oss-security/2022/04/26/2
+https://github.com/apache/incubator-doris/pull/7862/files
 
-> Discovered by Ben Laurie
+https://github.com/apache/kylin/blob/0fa41762ec0fc69c0b8029fc8a81b273388bbf=
+1d/core-common/src/main/java/org/apache/kylin/common/util/EncryptUtil.java#=
+L39
 
-> KJ_REQUIRE(elementTag->structRef.wordSize() / ELEMENTS * ElementCount64(count) <= wordCount,
+public class EncryptUtil {
+    /**
+     * thisIsAsecretKey
+     */
+    private static byte[] key =3D { 0x74, 0x68, 0x69, 0x73, 0x49, 0x73, 0x4=
+1, 0x53, 0x65, 0x63, 0x72, 0x65, 0x74, 0x4b,
+            0x65, 0x79 };
 
-> KJ_REQUIRE(wordsPerElement * ElementCount64(elementCount) <= wordCount,
-
-> KJ_REQUIRE(ElementCount64(size) * wordsPerElement <= wordCount,
-
-Use CVE-2015-2310.
-
-
-> 2/ Integer underflow in pointer validation
->   - https://github.com/sandstorm-io/capnproto/blob/master/security-advisories/2015-03-02-1-c%2B%2B-integer-underflow.md
->   - https://bugs.debian.org/780566
-
-> Discovered by Kenton Varda
-
-> KJ_REQUIRE(size > 0
-
-Use CVE-2015-2311.
-
-
-> 3/ CPU usage amplification attack
->   - https://github.com/sandstorm-io/capnproto/blob/master/security-advisories/2015-03-02-2-all-cpu-amplification.md
->   - https://bugs.debian.org/780567
-
-> Discovered by Ben Laurie
-
-> Cap'n Proto takes the philosophy that any security mistake that is
-> likely to be common in naively-written application code is in fact a
-> bug in Cap'n Proto
-
-> list could claim to have up to 2^29-1 elements while only taking 8 or
-> 16 bytes on the wire
-
-> application may notice nothing wrong and proceed to iterate through
-> and handle each element in the list, potentially taking a lot of time
-> and resources
-
-Use CVE-2015-2312.
+    private static final Cipher getCipher(int cipherMode) throws InvalidAlg=
+orithmParameterException,
+            InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmExc=
+eption, UnsupportedEncodingException {
+        Cipher cipher =3D Cipher.getInstance("AES/CFB/PKCS5Padding");
+        final SecretKeySpec secretKey =3D new SecretKeySpec(key, "AES");
+        IvParameterSpec ivSpec =3D new IvParameterSpec(KylinConfig.getInsta=
+nceFromEnv().getEncryptCipherIvSpec().getBytes("UTF-8"));
+        cipher.init(cipherMode, secretKey, ivSpec);
+        return cipher;
+    }
 
 
-> 4/ CPU usage amplification attack #2
->   - https://github.com/sandstorm-io/capnproto/blob/master/security-advisories/2015-03-05-0-c%2B%2B-addl-cpu-amplification.md
->   - https://bugs.debian.org/780568
+Kylin may need a similar fix.
 
-> Discovered by David Renshaw
+Thanks
 
-> The new case occurs only if the application invokes the totalSize()
-> method on an object reader.
+----- Forwarded message from =E9=99=88=E6=98=8E=E9=9B=A8 <morningman@163.co=
+m> -----
 
-Use CVE-2015-2313.
+Date: Tue, 26 Apr 2022 22:33:47 +0800 (CST)
+From: =E9=99=88=E6=98=8E=E9=9B=A8 <morningman@163.com>
+To: general <general@incubator.apache.org>, me@dw1.io, security@apache.org,=
+ oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2022-23942: Apache Doris(incubating) hardcoded =
+cryptography initialization
+Message-ID: <3f9af332.69b6.180664aec3f.Coremail.morningman@163.com>
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Severity: moderate
+
+Description:
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Doris use hardcoded key and IV to initialize the cipher used for ldap passw=
+ord, which may lead to information disclosure.
+
+Mitigation:
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Upgrade to 1.0.0[1] or higher will resolve this problem.
+
+Credit:
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+We would like to thanks to Dwi Siswanto for the report of this issue
+
+References:
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+https://lists.apache.org/thread/com2dyzp3bn2rdrotry90q2zzord4tvt[1] http://=
+doris.incubator.apache.org/downloads/downloads.html
+
+
+
+--
+
+=E6=AD=A4=E8=87=B4=EF=BC=81Best Regards
+=E9=99=88=E6=98=8E=E9=9B=A8 Mingyu Chen
+
+Email:
+chenmingyu@apache.org
+
+----- End forwarded message -----
+
+--yrj/dFKFPuw6o+aM
+Content-Type: application/pgp-signature; name="signature.asc"
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJVB7HrAAoJEKllVAevmvms508IAKyyZQLBjgtp7bTd7lpZ5bKQ
-tkHPwBKJLt5AyjkgFN+J1lF0ijW1sInbuzs/n35R/yDk7y1LByOqSUqacPiQma2T
-XU+yaK13+7H4Cn3w3t9Vukix6CdhvRTlTKpK5ijF9o3PK+oWgFhcvwSiNvQ7H5nW
-V3L7cxYOjUlJabqvWI60rHW1mrVSLc5GMOSFrH7Aau39KbDJAa8EkfkRITYz2Ip2
-XZWvqobldBY9wgRvDGdDgpgFGvZM5nMv7irNtSnU3va8eEWXTmh5Mzu1IaKwIuZZ
-LH5uX91LbcCeRSRgxfHSIn9xuyMhoQrE+GvfXVzzO54U8r6WgitKD3OguALaXU8=
-=9zKY
+iQEzBAABCgAdFiEEQVAQ8bojyMcg37H18yFyWZ2NLpcFAmJofbkACgkQ8yFyWZ2N
+Lpes1AgAnpgDN8Un14ehJPfoNXJSt+16NgjmJ/8Yy7+/iFENPfjLt2qy/uwvzliA
+QIkimJY7wrOVBA2bb2J+njoYZCYuROrrk2Nr/cCGGF8YQ75Gu/LALQ0Io/HwjShA
+lbBFMXCg+8JAkTEVwOIZaGpa7HHE6p8aIIp8Qn7kTKt0YD5qlihG1eCDo+w1wX7L
+y1JCs1sYXnr2+lfLnMUZ29S7Qj/LUZgQpOtBvzNnzkLmZCxq76XslD6AiQctjWPd
+4jHIF4965YdaNxTMbz5asFxiXpEGyW9acWg4qK9ijY3FUyIHo+PYn7GdMYDe4oH/
+e1LZ5zvTVxfQCicBLB21R7pyM4H7yg==
+=r3/s
 -----END PGP SIGNATURE-----
+
+--yrj/dFKFPuw6o+aM--
