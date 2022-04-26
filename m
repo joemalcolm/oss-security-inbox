@@ -1,38 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/22/2
-Message-ID: <001301d8ce81$fa4e05f0$eeea11d0$@gmail.com>
-Date: Thu, 22 Sep 2022 13:51:04 +0100
-From: "Simon Steiner" <simonsteiner1984@...il.com>
-To: <general@...graphics.apache.org>, <batik-dev@...graphics.apache.org>, <batik-users@...graphics.apache.org>, "'Apache Security Team'" <security@...che.org>, <oss-security@...ts.openwall.com>
-Subject: [CVE-2022-38398] Apache Batik information disclosure vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/26/3
+Message-ID: <20220426231825.GA484258@millbarge>
+Date: Tue, 26 Apr 2022 23:18:25 +0000
+From: Seth Arnold <seth.arnold@...onical.com>
+To: dev@...in.apache.org
+Cc: oss-security@...ts.openwall.com
+Subject: [morningman@....com: CVE-2022-23942: Apache Doris(incubating) hardcoded cryptography initialization]
 Content-Type: text/plain; charset=utf-8
 
-CVE-2022-38398:
-        Apache Batik information disclosure vulnerability
+Hello, the Apache Doris project recently switched away from using
+hard-coded credentials; they apaprently copy-and-pasted code from the
+Kylin project:
 
-Severity:
-        Medium
+https://www.openwall.com/lists/oss-security/2022/04/26/2
+https://github.com/apache/incubator-doris/pull/7862/files
 
-Vendor:
-        The Apache Software Foundation
+https://github.com/apache/kylin/blob/0fa41762ec0fc69c0b8029fc8a81b273388bbf1d/core-common/src/main/java/org/apache/kylin/common/util/EncryptUtil.java#L39
 
-Versions Affected:
-        Batik 1.0 - 1.14
+public class EncryptUtil {
+    /**
+     * thisIsAsecretKey
+     */
+    private static byte[] key = { 0x74, 0x68, 0x69, 0x73, 0x49, 0x73, 0x41, 0x53, 0x65, 0x63, 0x72, 0x65, 0x74, 0x4b,
+            0x65, 0x79 };
+
+    private static final Cipher getCipher(int cipherMode) throws InvalidAlgorithmParameterException,
+            InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException, UnsupportedEncodingException {
+        Cipher cipher = Cipher.getInstance("AES/CFB/PKCS5Padding");
+        final SecretKeySpec secretKey = new SecretKeySpec(key, "AES");
+        IvParameterSpec ivSpec = new IvParameterSpec(KylinConfig.getInstanceFromEnv().getEncryptCipherIvSpec().getBytes("UTF-8"));
+        cipher.init(cipherMode, secretKey, ivSpec);
+        return cipher;
+    }
+
+
+Kylin may need a similar fix.
+
+Thanks
+
+----- Forwarded message from 陈明雨 <morningman@....com> -----
+
+Date: Tue, 26 Apr 2022 22:33:47 +0800 (CST)
+From: 陈明雨 <morningman@....com>
+To: general <general@...ubator.apache.org>, me@....io, security@...che.org, oss-security@...ts.openwall.com
+Subject: [oss-security] CVE-2022-23942: Apache Doris(incubating) hardcoded cryptography initialization
+Message-ID: <3f9af332.69b6.180664aec3f.Coremail.morningman@....com>
+
+Severity: moderate
 
 Description:
-        DefaultExternalResourceSecurity should block urls loaded thru the
-jar protocol
+=============
+Doris use hardcoded key and IV to initialize the cipher used for ldap password, which may lead to information disclosure.
 
 Mitigation:
-        Users should upgrade to Batik 1.15+
+=============
+Upgrade to 1.0.0[1] or higher will resolve this problem.
 
 Credit:
-        This issue was independently reported by Piotr Bazydlo (@chudypb) of
-Trend Micro Zero Day Initiative
+=============
+We would like to thanks to Dwi Siswanto for the report of this issue
 
 References:
-        http://xmlgraphics.apache.org/security.html
-        https://issues.apache.org/jira/browse/BATIK-1331
+=============
+https://lists.apache.org/thread/com2dyzp3bn2rdrotry90q2zzord4tvt[1] http://doris.incubator.apache.org/downloads/downloads.html
 
-The Apache XML Graphics team.
 
+
+--
+
+此致！Best Regards
+陈明雨 Mingyu Chen
+
+Email:
+chenmingyu@...che.org
+
+----- End forwarded message -----
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
