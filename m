@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1896" "Thursday" "20" "October" "2016" "12:27:15" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161020162715.3B981B2E004@smtpvbsrv1.mitre.org>" "45" "[oss-security] Re: CVE Request - Portable UPnP SDK 1.6.19 through 1.8.x" nil nil nil "10" "2016102016:27:15" "[oss-security] Re: CVE Request - Portable UPnP SDK 1.6.19 through 1.8.x" (number mark "U       cve-assign@m Oct 20   45/1896  " thread-indent "\"[oss-security] Re: CVE Request - Portable UPnP SDK 1.6.19 through 1.8.x\"\n") "<CAJ+owFsAGn7MJt+DWtLSwMkUrEqGWj0X2To+De3UaU6DjYqQ-w@mail.gmail.com>" ("<CAJ+owFsAGn7MJt+DWtLSwMkUrEqGWj0X2To+De3UaU6DjYqQ-w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 12022 invoked by uid 550); 20 Oct 2016 16:27:28 -0000
+Received: (qmail 12061 invoked by uid 550); 26 Apr 2022 12:35:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,57 +7,62 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11998 invoked from network); 20 Oct 2016 16:27:27 -0000
-From: cve-assign@mitre.org
-To: scott.tenaglia@invincea.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CAJ+owFsAGn7MJt+DWtLSwMkUrEqGWj0X2To+De3UaU6DjYqQ-w@mail.gmail.com>
-Message-Id: <20161020162715.3B981B2E004@smtpvbsrv1.mitre.org>
-Date: Thu, 20 Oct 2016 12:27:15 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request - Portable UPnP SDK 1.6.19 through 1.8.x
+Received: (qmail 18061 invoked from network); 26 Apr 2022 08:44:54 -0000
+Content-Type: text/plain; charset=utf-8
+From: Jan Lehnardt <jan@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <a388a13c-2f49-a36d-668a-633583013717@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 26 Apr 2022 08:44:41 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2022-24706: Apache CouchDB: Remote Code Execution
+ Vulnerability in Packaging 
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: critical
 
-> https://sourceforge.net/p/pupnp/bugs/133/
+Description:
 
->   parse_uri( &out->URLs[i + 1], URLS->size - i + 1,
->              &out->parsedURLs[URLcount] )
+An attacker can access an improperly secured default installation without
+authenticating and gain admin privileges.
 
-This seems to be a CWE-372 ("Incomplete Internal State Distinction")
-issue in which the code expected to be in a state where it was
-operating on a set of validated URIs from a CALLBACK header, but
-actually was in a state where it was operating on a set of all URIs
-from a CALLBACK header. A validation step occurs for every URI, and
-the amount of memory allocated is correct for the set of validated
-URIs, but there is simply no data model for the set of validated URIs.
-(Conceivably, the set of validated URIs could be in its own array, or
-each URI in the original array could have a flag indicating whether it
-was valid.)
+1. CouchDB opens a random network port, bound to all available interfaces
+   in anticipation of clustered operation and/or runtime introspection. A
+   utility process called `epmd` advertises that random port to the network.
+   `epmd` itself listens on a fixed port.
+2. CouchDB packaging previously chose a default `cookie` value for single-n=
+ode
+   as well as clustered installations. That cookie authenticates any
+   communication between Erlang nodes.
 
-Use CVE-2016-8863.
+The CouchDB documentation[1] has always made recommendations for properly
+securing an installation, but not all users follow the advice.
 
-As mentioned, this has a resultant heap buffer overflow.
+We recommend a firewall in front of all CouchDB installations. The full
+CouchDB api is available on registered port `5984` and this is the only
+port that needs to be exposed for a single-node install. Installations
+that do not expose the separate distribution port to external access are
+not vulnerable.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+[1]: https://docs.couchdb.org/en/stable/setup/cluster.html
 
-iQIcBAEBCAAGBQJYCO/sAAoJEHb/MwWLVhi2WxMP/iE4erxSoRjKIE42RHEoeGq2
-UDy+y+B9Sf/xK0zWtZGB06Mmkli+v7SLKOkWK7oWHJ4tQa4NXCvKbzwfLbyX3jDZ
-Ul7IE42LFCti/bJqb1qQwqjM/LzMtOSloofBI5pMocYkBKnjaLq1PwRGDTKzyVEN
-7Hs8LhzkUsqDdr4z5bk1NhDNhBHDg+4pIJ91rFrqkL06bWIsUAnfUJmWE7wWGWGp
-XePAkR+yOkvOpsgdWPFmaUNU3t7iPkRhw/P24O8QG+So39z5DVts4IHYoOQHmIa5
-OtNKauWUxLMIOkUneZbWEazLrrglKGoG0VJzqXpNDAXciRPd6DNQ3GueJjthBkoG
-LrfsoTdUrpGA+q33DipHxg2Aj+OaN/LUQ1n+mYE09k3Iy+4OHN7xZ9VWUWirYkDL
-/JODFta8VX3BsMGFjUwNsICaxJm/kARxY72A7mKvJsEZ6Jow4seIIgzmFiBPqzPC
-ErcnxLIvbJOiy9jw0hP3qGH5I/5N1h+7ViUqS97mOy4MySgVs1kKtU+ZVpL4h1PK
-7smULHLCAKKLqpJS8smcd08ZmetYtB4s3ccPM0Yn7vQKRI92mCRgTpJh5IhqSmiZ
-IoesKUf10Ml+xx/DR5WEEZ4ACHn+Q7nUzMhobzHWQbG0NdXzUWXdWZQdkmS2NBfH
-1shVmylDTkJ5tLBQwHmM
-=WKq1
------END PGP SIGNATURE-----
+
+
+Mitigation:
+
+CouchDB 3.2.2 and onwards will refuse to start with the former default
+Erlang cookie value of `monster`. Installations that upgrade to this
+versions are forced to choose a different value.
+
+In addition, all binary packages have been updated to bind `epmd` as
+well as the CouchDB distribution port to `127.0.0.1` and/or `::1`
+respectively.
+
+Credit:
+
+The Apache CouchDB Team would like to thank Alex Vandiver <alexmv@zulip.com=
+> for the report of this issue.
+
+References:
+
+https://lists.apache.org/thread/w24wo0h8nlctfps65txvk0oc5hdcnv00
+
