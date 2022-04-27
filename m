@@ -1,35 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/18/2
-Message-ID: <CANLSSBXJFGQN2ajDTWy5PEJPszrCrG2_F0d76tW9zw8f3XPbFA@mail.gmail.com>
-Date: Mon, 18 Jul 2022 19:20:07 +0530
-From: Rohit Yadav <rohit@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: [ADVISORY] Apache CloudStack SAML Single Sign-On XXE (CVE-2022-35741)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/27/4
+Message-ID: <68r3784-1553-onn-n398-884o5s84n031@unkk.fr>
+Date: Wed, 27 Apr 2022 08:43:42 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl auth/cookie leak on redirect
 Content-Type: text/plain; charset=utf-8
 
-Apache CloudStack version 4.5.0 and later has a SAML 2.0
-authentication Service Provider plugin which is found to be vulnerable
-to XML external entity (XXE) injection. This plugin is not enabled by
-default and the attacker would require that this plugin be enabled to
-exploit the vulnerability. When the SAML 2.0 plugin is enabled in
-affected versions of Apache CloudStack could potentially allow the
-exploitation of XXE vulnerabilities.
+Auth/cookie leak on redirect
+============================
 
-The SAML 2.0 messages constructed during the authentication flow in
-Apache CloudStack are XML-based and the XML data is parsed by various
-standard libraries that are now understood to be vulnerable to XXE
-injection attacks such as arbitrary file reading, possible denial of
-service, server-side request forgery (SSRF) on the CloudStack
-management server.
+Project curl Security Advisory, April 27 2022 -
+[Permalink](https://curl.se/docs/CVE-2022-27776.html)
 
-As of 18th July 2022, this is now tracked under CVE-2022-35741:
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-35741
+VULNERABILITY
+-------------
 
-To mitigate the risk, a CloudStack admin can do any of the following:
+curl might leak authentication or cookie header data on HTTP redirects to the
+same host but another port number.
 
-1. Disable the SAML 2.0 plugin by setting `saml2.enabled` to false and
-restart the management servers.
+When asked to send custom headers or cookies in its HTTP requests, curl sends
+that set of headers only to the host which name is used in the initial URL, so
+that redirects to other hosts will make curl send the data to those. However,
+due to a flawed check, curl wrongly also sends that same set of headers to the
+hosts that are identical to the first one but use a different port number or
+URL scheme. Contrary to expectation and intention.
 
-2. Upgrade to Apache CloudStack 4.16.1.1 or 4.17.0.1 or higher.
+Sending the same set of headers to a server on a different port number is a
+problem for applications that pass on custom `Authorization:` or `Cookie:`
+headers, as those headers often contain privacy sensitive information or data.
 
---
+curl and libcurl have options that allow users to opt out from this check, but
+that is not set by default.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+This flaw was added in curl 4.9 with the introduction of `--location` and has
+been present in all libcurl versions ever released. In July 2000 in the curl
+7.1.1 release, [this commit](https://github.com/curl/curl/commit/29eda80f9669f) was the first
+version that attempted to avoid this, but the check has been bad since then.
+
+In 2018, [CVE-2018-1000007](https://curl.se/docs/CVE-2018-1000007.html) was
+reported that partly addressed this area - but in an incomplete way.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2022-27776 to this issue.
+
+CWE-522: Insufficiently Protected Credentials
+
+Severity: Low
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 4.9 to and including 7.82.0
+- Not affected versions: curl < 4.9 and curl >= 7.83.0
+
+Also note that libcurl is used by many applications, and not always advertised
+as such.
+
+THE SOLUTION
+------------
+
+In curl version 7.83.0, the same-host check is extended to check the port
+number and protocol as well.
+
+A [fix for CVE-2022-27776](https://github.com/curl/curl/commit/6e659993952aa5f90f488)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 7.83.0
+
+  B - Apply the patch to your local version
+
+  C - Do not enable `CURLOPT_FOLLOWLOCATION` if you pass on custom
+      `Authorization:` headers or cookies.
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on April 21, 2022. We contacted
+distros@...nwall on April 22.
+
+libcurl 7.83.0 was released on April 27 2022, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+This issue was reported by Harry Sintonen. Patched by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
