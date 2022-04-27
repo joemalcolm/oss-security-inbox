@@ -1,53 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/13/1
-Message-ID: <CA+eGCHaJ8Vcgm=+KqmFwmLd8BP+Vn8aos6RZzvbzHd544SdQZg@mail.gmail.com>
-Date: Thu, 13 Jan 2022 16:21:09 +0800
-From: tr3e wang <tr3e.wang@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Daniel Borkmann <daniel@...earbox.net>
-Subject: Linux Kernel eBPF Improper Input Validation Vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/27/5
+Message-ID: <20220427074550.GL28706@suse.de>
+Date: Wed, 27 Apr 2022 09:45:54 +0200
+From: Marcus Meissner <meissner@...e.de>
+To: OSS Security List <oss-security@...ts.openwall.com>
+Subject: CVE-2022-27239: cifs-utils mount.cifs buffer overflow in ip parameter
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Hi,
 
-This vulnerability allows local attackers to escalate privileges on
-affected installations of Linux Kernel. An attacker must first obtain the
-ability to execute low-privileged code on the target system in order to
-exploit this vulnerability.
+A buffer overflow in mounts.cifs commandline parameter ip= handling
+was just fixed/published.
 
-The specific flaw exists within the handling of eBPF programs. The issue
-results from the lack of proper validation of user-supplied eBPF programs
-prior to executing them. An attacker can leverage this vulnerability to
-escalate privileges and execute code in the context of the kernel.
-BE AWARE, unprivileged bpf is disabled by default in most distros.
+CVE-2022-27239
 
-*Affected Version*
+https://bugzilla.suse.com/show_bug.cgi?id=1197216
+https://github.com/piastry/cifs-utils/pull/7
+https://github.com/piastry/cifs-utils/pull/7/commits/955fb147e97a6a74e1aaa65766de91e2c1479765
 
-    Linux Kernel 5.8 or later
+(mounts.cifs is usually setuid-root)
 
-*Root Cause Analysis*
+This was reported by Jeffrey Bencteux <jbe@...rosec.com> to samba security.
 
-The bpf verifier(kernel/bpf/verifier.c) did not properly restrict several
-*_OR_NULL pointer types which allows these types to do pointer arithmetic.
-This can be leveraged to bypass the verifier check and escalate privilege.
-(see
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/kernel/bpf/verifier.c?h=v5.10.83#n6022
-)
+Both -fstack-protector and -D_FORTIFY_SOURCE=2 overflow protections are catching it.
 
-*Exploit Code*
-
-Exploit code will be delayed for 5 days and will be posted at 12:00 UTC,
-Jan 18, 2022
-
-*Mitigations*
-
-set kernel.unprivileged_bpf_disabled to 1
-
-BE AWARE AGAIN, unprivileged bpf is disabled by default in most distros.
-
-*Credits*
-
-tr3e of SecCoder Security Lab
-Best,
-tr3e
-
+Ciao, Marcus
