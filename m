@@ -1,76 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/15/3
-Message-ID: <CAO06FutBccV46=p1+dGgpP1_UdyXYLYTjiMfKBVq2JoVKd4Yrw@mail.gmail.com>
-Date: Tue, 15 Mar 2022 18:56:32 +0100
-From: "sirdarckcat ." <sirdarckcat@...omium.org>
-To: 3pvd@...gle.com, Eric Dumazet <edumazet@...gle.com>, oss-security@...ts.openwall.com
-Subject: CVE-2022-0742: Remote Denial of Service on Linux Kernel >=5.13 icmp6
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/27/3
+Message-ID: <827s9p32-qo7-954s-8pqr-n8p7sp55q242@unkk.fr>
+Date: Wed, 27 Apr 2022 08:42:57 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl bad local IPv6 connection reuse
 Content-Type: text/plain; charset=utf-8
 
-Flooding icmp6 messages of type 130 or 131 is enough to exploit a
-memory leak in the kernel and cause the host to go out-of-memory. The
-volume of traffic doesn't need to be particularly high. Note that
-since the vulnerability was introduced recently (5.13) only 5.15's
-stable was affected.
+Bad local IPv6 connection reuse
+===============================
 
-This vulnerability was found/fixed by Eric Dumazet.
+Project curl Security Advisory, April 27 2022 -
+[Permalink](https://curl.se/docs/CVE-2022-27775.html)
 
-CVE will land on MITRE's website sometime this week.
+VULNERABILITY
+-------------
 
-This was fixed on https://kernel.dance/2d3916f3189172d5c69d33065c3c21119fe539fc
- "the commit landed on upstream on": [
-  {
-   "tags": "tags/v5.17-rc7~18^2"
-  }
- ],
- "the commit was backported to": [
-  {
-   "tags": "tags/v5.16.13~140",
-   "commit": "5ed9983ce67341b405cf6fda826e29aed26a7371"
-  },
-  {
-   "tags": "tags/v5.15.27~216",
-   "commit": "771aca9bc70709771f66c3e7c00ce87339aa1790"
-  }
- ],
- "the commit fixes a bug introduced by": [
-  {
-   "fixes": "f185de28d9ae (\"mld: add new workqueues for process mld events\")"
-  }
- ],
- "the buggy commit landed on upstream on": [
-  {
-   "tags": "tags/v5.13-rc1~94^2~371^2~1",
-   "commit": "f185de28d9ae6c978135993769352e523ee8df06"
-  }
- ],
+libcurl keeps previously used connections in a connection pool for subsequent
+transfers to reuse, if one of them matches the setup.
 
-Patch: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=2d3916f3189172d5c69d33065c3c21119fe539fc
+Due to errors in the logic, the config matching function did not take the IPv6
+address zone id into account which could lead to libcurl reusing the wrong
+connection when one transfer uses a zone id and a subsequent transfer uses
+another (or no) zone id.
 
-ipv6: fix skb drops in igmp6_event_query() and igmp6_event_report()
-While investigating on why a synchronize_net() has been added recently
-in ipv6_mc_down(), I found that igmp6_event_query() and igmp6_event_report()
-might drop skbs in some cases.
+We are not aware of any exploit of this flaw.
 
-Discussion about removing synchronize_net() from ipv6_mc_down()
-will happen in a different thread.
+INFO
+----
 
-Fixes: f185de28d9ae ("mld: add new workqueues for process mld events")
-Signed-off-by: Eric Dumazet <edumazet@...gle.com>
-Cc: Taehee Yoo <ap420073@...il.com>
-Cc: Cong Wang <xiyou.wangcong@...il.com>
-Cc: David Ahern <dsahern@...nel.org>
-Link: https://lore.kernel.org/r/20220303173728.937869-1-eric.dumazet@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@...nel.org>
+Zone ids are only used for non-global scoped IPv6 addresses and they are only
+used when specifying the address numerically.
 
-Timeline:
+This flaw has existed in curl since commit [2d0e9b40d3237b1](https://github.com/curl/curl/commit/2d0e9b40d3237b1), shipped in libcurl 7.65.0, released on May 22 2019. Previous versions will
+instead not accept URLs with zone ids.
 
-Following https://about.google/appsecurity/ policy:
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2022-27775 to this issue.
 
-Feb 23, 2022  - Discovery / Shared with network upstream maintainers,
-reproduced, patch confirmed to work, CVE reserved
-Feb 25, 2022 - security@...nel.org decides fix/disclosure timeline
-Mar 3, 2022 - Patch lands on mainline (Linus tree)
-2d3916f3189172d5c69d33065c3c21119fe539fc
-Mar 8, 2022 - Patch lands on stable (5.15/5.16)
-Mar 15, 2022 - This email is sent (public disclosure of vuln details)
+CWE-200: Exposure of Sensitive Information to an Unauthorized Actor
+
+Severity: Low
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.65.0 to and including 7.82.0
+- Not affected versions: curl < 7.65.0 and curl >= 7.83.0
+
+Also note that libcurl is used by many applications, and not always advertised
+as such.
+
+THE SOLUTION
+------------
+
+A [fix for CVE-2022-27775](https://github.com/curl/curl/commit/058f98dc3fe595f21dc26)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 7.83.0
+
+  B - Apply the patch to your local version
+
+  C - Do not use non-global numerical IPv6 addresses in URLs to curl
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on April 21, 2022. We contacted
+distros@...nwall on April 21.
+
+libcurl 7.83.0 was released on April 27 2022, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+This issue was reported by Harry Sintonen. Patched by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
