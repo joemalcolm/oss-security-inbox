@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1436" "Saturday" "23" "April" "2016" "23:58:18" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160424035818.A9F8672E09B@smtpvbsrv1.mitre.org>" "38" "[oss-security] Re: CVE request: Poppler < 0.40.0" nil nil nil "4" "2016042403:58:18" "[oss-security] Re: CVE request: Poppler < 0.40.0" (number mark "U       cve-assign@m Apr 23   38/1436  " thread-indent "\"[oss-security] Re: CVE request: Poppler < 0.40.0\"\n") "<CAEDLTO9PTJy54Wqbb3c63phUbv5xCKJHkueNfFKtb0hy6VxpVQ@mail.gmail.com>" ("<CAEDLTO9PTJy54Wqbb3c63phUbv5xCKJHkueNfFKtb0hy6VxpVQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 30699 invoked by uid 550); 24 Apr 2016 03:58:32 -0000
+Received: (qmail 20352 invoked by uid 550); 27 Apr 2022 06:40:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,50 +7,104 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30677 invoked from network); 24 Apr 2016 03:58:30 -0000
-From: cve-assign@mitre.org
-To: felipe.andres.manzano@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CAEDLTO9PTJy54Wqbb3c63phUbv5xCKJHkueNfFKtb0hy6VxpVQ@mail.gmail.com>
-Message-Id: <20160424035818.A9F8672E09B@smtpvbsrv1.mitre.org>
-Date: Sat, 23 Apr 2016 23:58:18 -0400 (EDT)
-Subject: [oss-security] Re: CVE request: Poppler < 0.40.0
+Received: (qmail 20311 invoked from network); 27 Apr 2022 06:40:30 -0000
+Date: Wed, 27 Apr 2022 08:40:18 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <nno31819-r6r5-o5q5-53q1-285qn67925p@unkk.fr>
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl OAUTH2 bearer bypass in connection re-use
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+OAUTH2 bearer bypass in connection re-use
+=========================================
 
-> This is a clean heap overflow.
-> 
-> https://cgit.freedesktop.org/poppler/poppler/commit/?id=b3425dd3261679958cd56c0f71995c15d2124433
+Project curl Security Advisory, April 27th 2022 -
+[Permalink](https://curl.se/docs/CVE-2022-22576.html)
 
->> ExponentialFunction::ExponentialFunction(Object *funcObj, Dict *dict) {
->> ...
->> +  if (unlikely(n > funcMaxOutputs)) {
->> +  error(errSyntaxError, -1, "Function's C0 array is wrong length");
->> +  n = funcMaxOutputs;
->> +  }
+VULNERABILITY
+-------------
 
-Use CVE-2015-8868.
+libcurl might reuse OAUTH2-authenticated connections without properly making
+sure that the connection was authenticated with the same credentials as set
+for this transfer. This affects SASL-enabled protocols: SMPTP(S), IMAP(S),
+POP3(S) and LDAP(S) (openldap only).
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+libcurl maintains a pool of live connections after a transfer has completed
+(sometimes called the connection cache). This pool of connections is then gone
+through when a new transfer is requested and if there is a live connection
+available that can be reused, it is preferred instead of creating a new one.
 
-iQIcBAEBCAAGBQJXHEP+AAoJEHb/MwWLVhi2yCQP/jdyOQR6mHI2snwddK0mkFjC
-DOUAa2SMTDyVvoOmRcBUWspMtqgfBUlyzGQvBSSf7wKq5QyyDGVzc0q392Ik+j8A
-4NrFumG2uhUZGmt7ILzVAVRgOSVkNVVK3Ar8Ef/gX/MV+/ZQT/+YQFYlsauU28eE
-VF1gKrPNLoczFnPbmjzZbf6RnqIaAnvce1IIF6UZblEhudAUvjG0X4QNvyxJBqWb
-i0KOViYPc+VLqkYcNzGy3PFoDlUhU96xiSVpNPC7yoYFfrWrO4qLbO6V58tMALoz
-vcKPRdonELjcedxO1mpZAXkVXXkBrgWP/m/K3HsI7XM/qLaRYcjvtOZFBe+SNQrF
-HhVzGUBO8eB/1irkZTvqs3Qywbr4RZ9AC9+85Bl6lY4Tf58YmudMomn+IsPWAJ/o
-N0IBTnCH1xaTGStK4XFwgO6+wPoIh2x0gkpeOLgXA3ebpPcLN0x84Anbu0MRUpHN
-n6Ql07YXAtwmNpUrnQORklKqGSSo0k2GaANJKcxszHgF3fHCifQpbx2u6C0CON6f
-cVpYvbIRc+YhhlCgqt/I4BAE0QTw82zMht0rfx3+55l0Hx+eecqxnO+bNWBDZp0J
-xx1xQ/RF+KTs+OrozZk87w+M0La9Kn5VWQUEhwiXGOwom7edzJriJ9hteV7XSUT+
-nEohPLvL3NfXqCsYei4f
-=M8Dv
------END PGP SIGNATURE-----
+Due to this security vulnerability, a connection that is successfully created
+and authenticated with a user name + OAUTH2 bearer could subsequently be
+erroneously reused even for user + [other OAUTH2 bearer], even though that
+might not even be a valid bearer. This could lead to an authentication bypass,
+either by mistake or by a malicious actor.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+This flaw was introduced in curl in 2013 with the commit series that started
+with [19a05c908f7d8b](https://github.com/curl/curl/commit/19a05c908f7d8b).
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2022-22576 to this issue.
+
+CWE-305: Authentication Bypass by Primary Weakness
+
+Severity: Medium
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.33.0 to and including 7.82.0
+- Not affected versions: curl < 7.33.0 and curl >= 7.83.0
+
+Note that libcurl is used by many applications, but not always advertised as
+such.
+
+THE SOLUTION
+------------
+
+A [fix for CVE-2022-22576](https://github.com/curl/curl/commit/852aa5ad351ea53e5f)
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.83.0
+
+  B - Apply the patch to your version and rebuild
+
+  C - Set the bearer string as password *as well* when using OAUTH2 bearer
+      authentication with these protocols.
+
+TIME LINE
+---------
+
+It was first reported to the curl project on March 18 2022. We contacted
+distros@openwall on April 18.
+
+libcurl 7.83.0 was released on April 27 2022, coordinated with the
+publication of this advisory.
+
+CREDITS
+-------
+
+Reported and patched by Patrick Monnerat.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
