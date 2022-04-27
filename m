@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1697" "Wednesday" "8" "February" "2017" "10:27:46" "+1030" "Doran Moppert" "dmoppert@redhat.com" "<20170207235746.GA13577@sin.redhat.com>" "44" "Re: [oss-security] CVE request: XXE in Openpyxl" nil nil nil "2" "2017020723:57:46" "[oss-security] CVE request: XXE in Openpyxl" (number mark "U       dmoppert@red Feb  8   44/1697  " thread-indent "\"Re: [oss-security] CVE request: XXE in Openpyxl\"\n") "<20170207104854.331@usenet.piggo.com>" ("<20170207104854.331@usenet.piggo.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9492 invoked by uid 550); 7 Feb 2017 23:58:03 -0000
+Received: (qmail 29812 invoked by uid 550); 27 Apr 2022 06:41:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,62 +7,106 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9463 invoked from network); 7 Feb 2017 23:58:02 -0000
-Date: Wed, 8 Feb 2017 10:27:46 +1030
-From: Doran Moppert <dmoppert@redhat.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20170207235746.GA13577@sin.redhat.com>
-References: <20170207104854.331@usenet.piggo.com>
+Received: (qmail 29748 invoked from network); 27 Apr 2022 06:41:22 -0000
+Date: Wed, 27 Apr 2022 08:41:11 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <976r6q0-o5sr-p1o0-5p6o-63748549593n@unkk.fr>
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="a8Wt8u1KmwUX3Y2C"
-Content-Disposition: inline
-In-Reply-To: <20170207104854.331@usenet.piggo.com>
-X-Scanned-By: MIMEDefang 2.74 on 10.5.11.28
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Tue, 07 Feb 2017 23:57:52 +0000 (UTC)
-Subject: Re: [oss-security] CVE request: XXE in Openpyxl
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl credential leak on redirect
 
---a8Wt8u1KmwUX3Y2C
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Credential leak on redirect
+===========================
 
-On Feb 07 2017, S=C3=A9bastien Delafond wrote:
-> the Debian Security Team would like to request a CVE for an XML XEE
-> discovered in Openpyxl by Marcin Ulikowski from F-Secure; Openpyxl
-> resolves external entities by default:
->=20
->   https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D854442
->   https://bitbucket.org/openpyxl/openpyxl/commits/3b4905f428e1
+Project curl Security Advisory, April 27th 2022 -
+[Permalink](https://curl.se/docs/CVE-2022-27774.html)
 
-This is yet another instance of CVE-2016-9318.  As already observed on
-the Debian tracker, disabling entity resolution altogether is probably
-going to make openpyxl fail on well-formed Excel documents using
-standard entities such as &lt;.
+VULNERABILITY
+-------------
 
---=20
-Doran Moppert
-Red Hat Product Security
+curl follows HTTP(S) redirects when asked to. curl also supports
+authentication. When a user and password are provided for a URL with a given
+hostname, curl makes an effort to not pass on those credentials to other hosts
+in redirects unless given permission with a special option.
 
---a8Wt8u1KmwUX3Y2C
-Content-Type: application/pgp-signature
+This "same host check" has been flawed all since it was introduced. It does
+not work on cross protocol redirects and it does not consider different port
+numbers to be separate hosts. This leads to curl leaking credentials to other
+servers when it follows redirects from auth protected HTTP(S) URLs to other
+protocols and port numbers. It could also leak the TLS SRP credentials this
+way.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+By default, curl only allows redirects to HTTP(S) and FTP(S), but can be asked
+to allow redirects to all protocols curl supports.
 
-iQIcBAEBCgAGBQJYml75AAoJEGohqWcZR7qpVoYQAKtwkUBiwN5mGMJ/qCr8Banb
-5+hhcD3UtKISJ2wz+hB0pQmcMRr1OYhnKMhSN2rA1oqQZWyeI8en8vnOJjrU+VsU
-AXP+05vDpDqtAq0qMEVQwRsbL2a+TIm8yFqvCu2I7+uHqz873L5QaootNtf6Ngn+
-UhW7RgU5XD4U1OZuToDM0HpRznd6vMsonWNSe7e+59spcPUd11ycMVeNWOcOMxwu
-V7QCw2kchhR1ffrX026yKw1jgMPjJxMQc0qvzCdEA+Aaast3TX+NpI1m6JJ7f52Z
-kW+ybTHbzRDkdSsQx9RqmSvvJyWBGFTcKo+KjcmQVm60LRLUoYXIv6Yc366nHUav
-WRoj/gZKI3S5J6Ski2dXVhgsByBcw1cDXdQHCRHCtnkwlRyAGr3+4SUUSPZ2yIc4
-+OuPgDecm2fSg0RoC1efKOtFmj2uJpztezyk/+UyIPpk00+MMlJCBJw4PM/ipXbg
-vT2yK0jNjAE0a/R6X9kUTCuCcKozXwDxRYDAjVb8dhiHSkbxWXj12iGiW6VCWi0G
-95lrpgWT2zJti8aUzU7/zgzgSIEBJFBKoEGvkmWtlmwEcoCdEdB1fpZ8APTYVfdg
-Flzjt9FhH9JWXpzqnSPwUijhrSUIbyihh8ktQqIb84U8bsGSYljnHT+VA4qDNbjV
-cyOaGi3hfQOXnCOHMwEI
-=hWIM
------END PGP SIGNATURE-----
+We are not aware of any exploit of this flaw.
 
---a8Wt8u1KmwUX3Y2C--
+INFO
+----
+
+This flaw was added in curl 4.9 with the introduction of `--location` and has
+been present in all libcurl versions ever released. In July 2000 in the curl
+7.1.1 release, [this commit](https://github.com/curl/curl/commit/29eda80f9669f) was the first
+version that attempted to avoid this, but the check has been bad since then.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2022-27774 to this issue.
+
+CWE-522: Insufficiently Protected Credentials
+
+Severity: Medium
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 4.9 to and including 7.82.0
+- Not affected versions: curl < 4.9 and curl >= 7.83.0
+
+Note that libcurl is used by many applications, but not always advertised as
+such.
+
+THE SOLUTION
+------------
+
+There are two separate patches to apply for CVE-2022-27774: [the main
+one](https://github.com/curl/curl/commit/620ea21410030a997) and [the SRP
+follow-up](https://github.com/curl/curl/commit/139a54ed0a172ada).
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade curl and libcurl to version 7.83.0
+
+  B - Apply the patches to your version and rebuild
+
+  C - Switch off curl's automatic redirect following
+
+TIME LINE
+---------
+
+It was first reported to the curl project on April 18 2022. We contacted
+distros@openwall on April 19.
+
+libcurl 7.83.0 was released on April 27 2022, coordinated with the
+publication of this advisory.
+
+CREDITS
+-------
+
+Reported by Harry Sintonen.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
