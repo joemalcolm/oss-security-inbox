@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1430" "Friday" "10" "April" "2015" "17:20:02" "+0200" "Pierre Schweitzer" "pierre@reactos.org" "<5527EA22.2000702@reactos.org>" "40" "[oss-security] Kernel oops on 32 bits arch" nil nil nil "4" "2015041015:20:02" "[oss-security] Kernel oops on 32 bits arch" (number mark "        pierre@react Apr 10   40/1430  " thread-indent "\"[oss-security] Kernel oops on 32 bits arch\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 1979 invoked by uid 550); 10 Apr 2015 15:20:20 -0000
+Received: (qmail 14021 invoked by uid 550); 27 Apr 2022 06:43:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,55 +6,111 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1884 invoked from network); 10 Apr 2015 15:20:14 -0000
-Message-ID: <5527EA22.2000702@reactos.org>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Icedove/31.6.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Date: Fri, 10 Apr 2015 17:20:02 +0200
-From: Pierre Schweitzer <pierre@reactos.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Kernel oops on 32 bits arch
-To: OSS Security List <oss-security@lists.openwall.com>
+Received: (qmail 13936 invoked from network); 27 Apr 2022 06:43:53 -0000
+Date: Wed, 27 Apr 2022 08:43:42 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <68r3784-1553-onn-n398-884o5s84n031@unkk.fr>
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl auth/cookie leak on redirect
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Auth/cookie leak on redirect
+============================
 
-Dear all,
+Project curl Security Advisory, April 27 2022 -
+[Permalink](https://curl.se/docs/CVE-2022-27776.html)
 
-This bug report has been brought to my attention [1] where under high
-load a server can be oopsed, be it grsec or vanilla kernel.
+VULNERABILITY
+-------------
 
-Apparently, it's due to a partial fix that would have only be deployed
-to 64 bits Linux [2].
+curl might leak authentication or cookie header data on HTTP redirects to the
+same host but another port number.
 
-Has anyone more info on this? Like why there was only a 64 bits fix?
-Was a CVE assigned for this?
+When asked to send custom headers or cookies in its HTTP requests, curl sends
+that set of headers only to the host which name is used in the initial URL, so
+that redirects to other hosts will make curl send the data to those. However,
+due to a flawed check, curl wrongly also sends that same set of headers to the
+hosts that are identical to the first one but use a different port number or
+URL scheme. Contrary to expectation and intention.
 
-Cheers,
+Sending the same set of headers to a server on a different port number is a
+problem for applications that pass on custom `Authorization:` or `Cookie:`
+headers, as those headers often contain privacy sensitive information or data.
 
-[1]: https://bugs.gentoo.org/show_bug.cgi?id=536040
-[2]: https://lkml.org/lkml/2014/4/29/497
-- -- 
-Pierre Schweitzer <pierre@reactos.org>
-System & Network Administrator
-Senior Kernel Developer
-ReactOS Deutschland e.V.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+curl and libcurl have options that allow users to opt out from this check, but
+that is not set by default.
 
-iQIcBAEBCAAGBQJVJ+ohAAoJEHVFVWw9WFsLHKEP/jj9wEyuRJB0eqbkoJOZXmdI
-F1N0T+Yhg4oRPt6O+w7Ari+f2+uTVtvaLnikWqWjGyrRhWRwETTjg/hSZjS0OcFA
-4CKomPpka/iP1IASzjVO6L4eGJ22qNoEiq8XjrN30iHJD3c5nAC+DB2y7qwn+rPY
-SFJbdOjv5SxVmUjBWZrr8IQ9FOtwKUGcbPY1kqlnMnL7rArERc7UA5u7WLzBhUNm
-Uaoutr66sCjGO/py+GPDd1HQsvr1Grpx9qYMAOgz3hlHCuZJ86A5Z9auvyWwuRTB
-ixajID2lFMHtJhDHCfVIqRv4fnUA7rLzEhtfbRLPXfmcYSdS8i+t9I5kre6Fy2in
-c4s4QtVcdQJnh1vVgAk3rrPUf51TNBoRt5Fk+4RqLglDELworuHoXwC4GV6c6vZZ
-RJ8vnhCO1ThY8HDKW/wH7fZ8fgbKBuXzvrfbCnAVuvkuYYU/EiTSULMcX6d7hq9D
-MBKFakMr+xWIXlKmv6Y31g2OK2kOpw9Wu0f/lDHgkCw4rKuZuIBG12yYe+m0Xn/a
-dMVl1jau3Crs8KbeXCnDtuXnO3GPJ6+cxcuvUcuxJUHaSbKd00OOHO9KToCz4ZDL
-Sy2E6KtgKOtqAwHkkDwT0i1FwVDbK3kKw0xMwiVwsMPdf+lyqe20s0fixZgF2eeS
-xyX5ok91ot1BVIGXwkeY
-=o4UY
------END PGP SIGNATURE-----
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+This flaw was added in curl 4.9 with the introduction of `--location` and has
+been present in all libcurl versions ever released. In July 2000 in the curl
+7.1.1 release, [this commit](https://github.com/curl/curl/commit/29eda80f9669f) was the first
+version that attempted to avoid this, but the check has been bad since then.
+
+In 2018, [CVE-2018-1000007](https://curl.se/docs/CVE-2018-1000007.html) was
+reported that partly addressed this area - but in an incomplete way.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2022-27776 to this issue.
+
+CWE-522: Insufficiently Protected Credentials
+
+Severity: Low
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 4.9 to and including 7.82.0
+- Not affected versions: curl < 4.9 and curl >= 7.83.0
+
+Also note that libcurl is used by many applications, and not always advertised
+as such.
+
+THE SOLUTION
+------------
+
+In curl version 7.83.0, the same-host check is extended to check the port
+number and protocol as well.
+
+A [fix for CVE-2022-27776](https://github.com/curl/curl/commit/6e659993952aa5f90f488)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 7.83.0
+
+  B - Apply the patch to your local version
+
+  C - Do not enable `CURLOPT_FOLLOWLOCATION` if you pass on custom
+      `Authorization:` headers or cookies.
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on April 21, 2022. We contacted
+distros@openwall on April 22.
+
+libcurl 7.83.0 was released on April 27 2022, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+This issue was reported by Harry Sintonen. Patched by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
