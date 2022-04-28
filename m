@@ -1,4 +1,4 @@
-Received: (qmail 27826 invoked by uid 550); 5 Nov 2025 14:56:33 -0000
+Received: (qmail 19777 invoked by uid 550); 28 Apr 2022 20:10:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,126 +7,81 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 1457 invoked from network); 5 Nov 2025 02:38:02 -0000
-Message-ID: <9423be70-1e56-4e04-9710-c41bce99b419@treenet.co.nz>
-Date: Wed, 5 Nov 2025 15:37:51 +1300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
+Received: (qmail 19758 invoked from network); 28 Apr 2022 20:10:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1651176605;
+	bh=cIcMWQQitXwxE6K9d9ih+fOrXYuRR8gC1B+asSWEIpE=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:In-Reply-To;
+	b=HmZ8JHAejzt9rmfHS8By8yNjRCdDYJkIVAJ6fgm/E+gB3bKvPYHmnnj03yLoRVlxu
+	 7/StfGbqk7YyJttxLghNsZtzf2Tl/4q+tY+YdxpV2XB0J1kTO1DKSQUh8ccvyewZyB
+	 xGFdc3+DsqsrNH6BFoM/jTP1PPazvoSr85DEDRa/V3PltX+IJPDkn3Xh3r90admrI+
+	 Bizwp0lskhk3tPW/kYHfc1JHBJZTZs9eVMiw2seBd1X4bruqrnJo98QbcEVCSy46tY
+	 hTTONsfI7U5k06agf40BetHm8AvQfxGFXZzyJSJ9Ta2xt3TMG1voo/uWRyAYmqjrGi
+	 bcXzqFHWDv3Ig==
+Date: Thu, 28 Apr 2022 20:10:03 +0000
+From: Seth Arnold <seth.arnold@canonical.com>
 To: oss-security@lists.openwall.com
-From: Amos Jeffries <squid3@treenet.co.nz>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] [CVE-2025-54574] SQUID-2025:1 Buffer Overflow in URN Handling
+Message-ID: <20220428201003.GA1260523@millbarge>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <484488E0-D662-4F58-80DB-499DE532FA3B@akamai.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="liOOAslEiF7prFVr"
+Content-Disposition: inline
+In-Reply-To: <484488E0-D662-4F58-80DB-499DE532FA3B@akamai.com>
+Subject: Re: [oss-security] CVE-2022-21449 and version reporting
 
-__________________________________________________________________
+--liOOAslEiF7prFVr
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-      Squid Proxy Cache Security Update Advisory SQUID-2025:1
-__________________________________________________________________
+On Thu, Apr 28, 2022 at 02:12:04PM +0000, Seaman, Chad wrote:
+> In what universe exactly are versions omitted from vulnerability
+> reporting because a vendor =E2=80=9Cno longer supports that version=E2=80=
+=9D=E2=80=A6 this
+> non-supported version is still vulnerable?
 
-Advisory ID:       | SQUID-2025:1, CVE-2025-54574
-Date:              | August 1, 2025
-Summary:           | Buffer Overflow in URN Handling
-Affected versions: | Squid 2.x -> 2.7.STABLE9
-                    | Squid 3.x -> 3.5.28
-                    | Squid 4.x -> 4.17
-                    | Squid 5.x -> 5.9
-                    | Squid 6.x -> 6.3
-Fixed in version:  | Squid 6.4
-__________________________________________________________________
+A large part of software maintenance is managing technical debt --
+and being able to walk away from no-longer-supported products is an
+important part of that.
 
-Problem Description:
+Would you expect Microsoft to evaluate Windows 3.11, Windows 95,
+Windows 98, Windows ME, Windows NT 3.51, Windows NT 4.0. Windows XP,
+etc for every single vulnerability discovered in newest products?
 
-   Due to incorrect buffer management Squid is vulnerable to a
-   heap buffer overflow and possible remote code execution attack
-   when processing URN.
+Products that have reached end of life are clearly communicated as no
+longer supported; see, eg:
 
-__________________________________________________________________
+https://endoflife.date/java
 
-Severity:
+There has been discussion about releasing "end of life" CVEs that indicate
+when a product goes out of support, so tooling built to compare lists of
+CVEs against software that's installed and in use at a site can report on
+it, but unless this is consistently applied across the entire ecosystem it
+is probably not useful enough for anyone to issue them.
 
-   This problem allows a remote server to perform a Buffer Overflow
-   attack when delivering URN Trivial-HTTP responses. Potentially
-   allowing delivery of up to 4KB of Squid allocated heap memory
-   to the client.
+Of course, anyone asking for vulnerability information for EOL software
+can have a conversation with the sales team from their vendors. Probably
+every company has a price where they'd be happy to provide this
+information to you.
 
-   Revealed memory may include security credentials or other
-   confidential data.
+Thanks
 
-__________________________________________________________________
+--liOOAslEiF7prFVr
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Updated Packages:
+-----BEGIN PGP SIGNATURE-----
 
-   This bug is fixed by Squid version 6.4.
+iQEzBAABCgAdFiEEQVAQ8bojyMcg37H18yFyWZ2NLpcFAmJq9JcACgkQ8yFyWZ2N
+Lpe7/QgAn2DHEwRNxFQ6yE0zqC7pX6v5XCtRe9TSB/FgwA5AA8MTnoW0bqganCXJ
+b92nM1psWfDdKFt+uqV1Ayj9/PBeXos59J2jDPNrK5v+6fuvhJ2Eu03w62QlaXWZ
+UvN83nM7o4C0rZt8dtrVASU6mcClyfkuy++m+5mOg4eQ0FiFRPvyh3E84Z+fa9Rf
+Rcap/GB/MXr83EmoolPnZANXoRrBveRMX115IfiJT/cuY0oGV7OTxHDEgEyKSJ6A
+EhPx6Oi4zlZl5/nJtEmT1xK9UnwgViqmNTyWmc+wH6JHmMx7y5Khno5FsRGzAV3c
+e9ljlm2o20vynZujwMLj4Fw+O2PSyQ==
+=rpUc
+-----END PGP SIGNATURE-----
 
-   In addition, patches addressing this problem for the stable
-   releases can be found in our patch archives:
-
-   Squid 6:
-  
-<https://github.com/squid-cache/squid/commit/a27bf4b84da23594150c7a86a23435df0b35b988>
-
-   If you are using a prepackaged version of Squid then please refer
-   to the package vendor for availability information on updated
-   packages.
-
-__________________________________________________________________
-
-Determining if your version is vulnerable:
-
-   Squid older than 4.14 have not been tested and should be assumed
-   to be vulnerable.
-
-   All Squid-4.x up to and including 4.17 are vulnerable.
-
-   All Squid-5.x up to and including 5.9 are vulnerable.
-
-   All Squid-6.x up to and including 6.3 are vulnerable.
-
-__________________________________________________________________
-
-Workaround:
-
-   Disable URN access permissions.
-
-    acl URN proto URN
-    http_access deny URN
-
-__________________________________________________________________
-
-Contact details for the Squid project:
-
-   For installation / upgrade support on binary packaged versions
-   of Squid: Your first point of contact should be your binary
-   package vendor.
-
-   If you install and build Squid from the original Squid sources
-   then the <squid-users at lists.squid-cache.org> mailing list is your
-   primary support point. For subscription details see
-   <http://www.squid-cache.org/Support/mailing-lists.html>.
-
-   For reporting of non-security bugs in the latest STABLE release
-   the squid bugzilla database should be used
-   <https://bugs.squid-cache.org/>.
-
-   For reporting of security sensitive bugs send an email to the
-   <squid-bugs at lists.squid-cache.org> mailing list. It's a closed
-   list (though anyone can post) and security related bug reports
-   are treated in confidence until the impact has been established.
-
-__________________________________________________________________
-
-Credits:
-
-   This vulnerability was discovered by StarryNight.
-
-   Fixed by The Measurement Factory.
-
-__________________________________________________________________
-
-Revision history:
-   2023-06-24 08:18:55 UTC Fix published
-   2025-07-01 18:40:24 UTC Initial Report
-__________________________________________________________________
-END
+--liOOAslEiF7prFVr--
