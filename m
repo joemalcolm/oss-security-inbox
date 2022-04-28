@@ -1,102 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/05/2
-Message-ID: <62cf5ab.4d34d.18131c6b47b.Coremail.duoming@zju.edu.cn>
-Date: Sun, 5 Jun 2022 10:51:54 +0800 (GMT+08:00)
-From: duoming@....edu.cn
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-1975: Linux kernel: sleep in atomic context bug when nfc firmware download timeout
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/28/2
+Message-ID: <484488E0-D662-4F58-80DB-499DE532FA3B@akamai.com>
+Date: Thu, 28 Apr 2022 14:12:04 +0000
+From: "Seaman, Chad" <cseaman@...mai.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2022-21449 and version reporting
 Content-Type: text/plain; charset=utf-8
 
-Hello there,
+Hi All,
 
-There are sleep in atomic context bugs that could cause kernel panic during
-nfc firmware download process.
+Have a question for MITRE, Oracle, and folks here…
 
-=*=*=*=*=*=*=*=*=  Bug Details  =*=*=*=*=*=*=*=*=
+https://neilmadden.blog/2022/04/19/psychic-signatures-in-java/
 
-The root cause of this bug is that nlmsg_new with GFP_KERNEL parameter is called
-in fw_dnld_timeout which is a timer handler. 
+“Update 2: Oracle have informed me they are in the process of correcting the advisory to state that only versions 15-18 are impacted. The CVE has already been updated.<https://nvd.nist.gov/vuln/detail/CVE-2022-21449> Note that 15 and 16 are no longer supported, so it will only list 17 and 18 as impacted.”
 
-The nlmsg_new with GFP_KERNEL parameter may sleep during memory allocation process,
-and the timer handler is run as the result of a "software interrupt" that should not
-call any other functions that could sleep.
+Checking the official CVE listing…
 
-=*=*=*=*=*=*=*=*=  Bug Effects  =*=*=*=*=*=*=*=*=
+https://nvd.nist.gov/vuln/detail/CVE-2022-21449
 
-We can successfully trigger the vulnerabilities to crash the linux kernel.
+It appears this is true, the reported versions in the official CVE listing, only show 17 and 18, where 15 is also impacted.
 
-[   41.852019] general protection fault, probably for non-canonical address 0xdead00000000012a: 0000 [#1] PREEMPT SMP NOPTI
-[   41.871262] (NULL device *): NFC: FW loading timeout
-[   41.852019] RIP: 0010:__run_timers.part.0+0x391/0x500
-[   41.852019] Code: 00 48 8b 45 08 48 89 c7 48 89 04 24 e8 f8 54 0e 00 48 8b 04 24 4c 89 30 4d 85 f6 74 11 49 8d 7e 08 e8 9
-[   41.852019] RSP: 0018:ffffc900000c8ec0 EFLAGS: 00000046
-[   41.852019] RAX: ffffc900000c8ef0 RBX: ffffc900000c8ef0 RCX: ffffffff8116927d
-[   41.852019] RDX: 000000000000038b RSI: 0001ffffffffffff RDI: dead00000000012a
-[   41.852019] RBP: ffff8880046cbd20 R08: ffffffff8417ab78 R09: 0000000000000000
-[   41.852019] R10: 0000000000000001 R11: 0000000000000002 R12: ffff88807dc9bf00
-[   41.852019] R13: ffff88807dc9bf40 R14: dead000000000122 R15: ffff8880046cbd28
-[   41.852019] FS:  0000000000000000(0000) GS:ffff88807dc80000(0000) knlGS:0000000000000000
-[   41.852019] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   41.852019] CR2: 00007fa7f0229180 CR3: 0000000003222000 CR4: 00000000000006e0
-[   41.852019] Call Trace:
-[   41.852019]  <IRQ>
-[   41.852019]  ? clockevents_program_event+0xd9/0x150
-[   41.852019]  ? tick_program_event+0x50/0x90
-[   41.852019]  run_timer_softirq+0x4f/0xa0
-[   41.852019]  __do_softirq+0x11d/0x363
-[   41.852019]  irq_exit_rcu+0xb0/0x100
-[   41.852019]  sysvec_apic_timer_interrupt+0x8f/0xc0
-[   41.852019]  </IRQ>
-[   41.852019]  <TASK>
-[   41.852019]  asm_sysvec_apic_timer_interrupt+0x12/0x20
-[   41.852019] RIP: 0010:rescuer_thread+0x5a5/0x6d0
-[   41.852019] Code: 00 48 8b 03 48 39 c3 0f 84 cf 00 00 00 48 c7 c7 60 d3 26 83 e8 7c 61 58 01 e9 cd fe ff ff 48 c7 c7 60 7
-[   41.852019] RSP: 0018:ffffc90000e03e70 EFLAGS: 00000286
-[   41.852019] RAX: 0000000080000000 RBX: ffff88800729c0e8 RCX: 0000000000000000
-[   41.852019] RDX: 0000000000000001 RSI: 0001ffff8326d360 RDI: 00000000ffffffff
-[   41.852019] RBP: ffff8880073e802c R08: ffffffff8417ace0 R09: 0000000000000000
-[   41.852019] R10: 0001ffffffffffff R11: ffffffff811125a7 R12: ffff8880073af700
-[   41.852019] R13: ffffc9000027fb68 R14: ffff88800729c000 R15: ffff8880073e8000
-[   41.852019]  ? do_raw_spin_unlock+0x97/0xf0
-[   41.852019]  ? __this_cpu_preempt_check+0xf/0x10
-[   41.852019]  ? lock_release+0x13c/0x2c0
-[   41.852019]  ? do_raw_spin_unlock+0x97/0xf0
-[   41.852019]  ? process_one_work+0xa80/0xa80
-[   41.852019]  kthread+0x17e/0x1b0
-[   41.852019]  ? kthread_complete_and_exit+0x20/0x20
-[   41.852019]  ret_from_fork+0x22/0x30
-[   41.852019]  </TASK>
-[   41.852019] Modules linked in:
-[   41.852019] ---[ end trace 0000000000000000 ]---
-[   41.852019] RIP: 0010:__run_timers.part.0+0x391/0x500
-[   41.852019] Code: 00 48 8b 45 08 48 89 c7 48 89 04 24 e8 f8 54 0e 00 48 8b 04 24 4c 89 30 4d 85 f6 74 11 49 8d 7e 08 e8 9
-[   41.852019] RSP: 0018:ffffc900000c8ec0 EFLAGS: 00000046
-[   41.852019] RAX: ffffc900000c8ef0 RBX: ffffc900000c8ef0 RCX: ffffffff8116927d
-[   41.852019] RDX: 000000000000038b RSI: 0001ffffffffffff RDI: dead00000000012a
-[   41.852019] RBP: ffff8880046cbd20 R08: ffffffff8417ab78 R09: 0000000000000000
-[   41.852019] R10: 0000000000000001 R11: 0000000000000002 R12: ffff88807dc9bf00
-[   41.852019] R13: ffff88807dc9bf40 R14: dead000000000122 R15: ffff8880046cbd28
-[   41.852019] FS:  0000000000000000(0000) GS:ffff88807dc80000(0000) knlGS:0000000000000000
-[   41.852019] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   41.852019] CR2: 00007fa7f0229180 CR3: 0000000003222000 CR4: 00000000000006e0
-[   41.852019] Kernel panic - not syncing: Fatal exception in interrupt
-[   41.852019] Shutting down cpus with NMI
-[   41.852019] Kernel Offset: disabled
-[   41.852019] ---[ end Kernel panic - not syncing: Fatal exception in interrupt ]---
+In what universe exactly are versions omitted from vulnerability reporting because a vendor “no longer supports that version”… this non-supported version is still vulnerable?
 
-=*=*=*=*=*=*=*=*=  Bug Fix  =*=*=*=*=*=*=*=*=
+Are exploit developers expected to check against the version of the vulnerable application during their exploit detonation to ensure they’re “only infecting supported versions?”.
 
-The patch that have been applied to mainline Linux kernel is shown below.
-https://github.com/torvalds/linux/commit/4071bf121d59944d5cd2238de0642f3d7995a997
+Why is this being allowed… this is dangerous for everyone involved save for Oracle’s own ego or public image?
 
-=*=*=*=*=*=*=*=*=  Timeline  =*=*=*=*=*=*=*=*=
-
-2022-05-05: commit 4071bf121d59 accepted to mainline kernel
-2022-06-03: CVE-2022-1975 is assigned
-
-=*=*=*=*=*=*=*=*=  Credit  =*=*=*=*=*=*=*=*=
-
-Duoming Zhou <duoming@....edu.cn>
-
-Best Regards,
-Duoming Zhou
+Scratching my head,
+Chad
