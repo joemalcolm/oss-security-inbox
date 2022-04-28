@@ -1,57 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/29/4
-Message-ID: <1705193.jNaZZp9DzI@thomas>
-Date: Mon, 29 Aug 2022 20:12:18 +0200
-From: Thomas Monjalon <thomas@...jalon.net>
-To: announce@...k.org
-Cc: security@...k.org, oss-security@...ts.openwall.com
-Subject: CVE-2022-2132: DPDK copy_desc_to_mbuf() Vhost header vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/28/3
+Message-ID: <465685a3-b074-a283-d632-e1a69b23ae7f@behlendorf.com>
+Date: Thu, 28 Apr 2022 07:40:45 -0700 (PDT)
+From: Brian Behlendorf <brian@...lendorf.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2022-21449 and version reporting
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was fixed in DPDK.
-Some downstream stakeholders were warned in advance
-in order to coordinate the release of fixes
-and reduce the vulnerability window.
+On Thu, 28 Apr 2022, Seaman, Chad wrote:
+> In what universe exactly are versions omitted from vulnerability 
+> reporting because a vendor “no longer supports that version”… this 
+> non-supported version is still vulnerable?
 
-In copy_desc_to_mbuf() function,
-the Vhost header was assumed not across more than two descriptors.
+If that universe were consistent, it'd be one where vendors and open 
+source projects issued pre-emptive CVEs when release branches are no 
+longer provided with security fixes.
 
-If a malicious guest send a packet
-with the Vhost header crossing more than two descriptors,
-the buf_avail will be a very large number near 4G.
-
-All the mbufs will be allocated,
-therefore other guests traffic will be blocked.
-A malicious guest can cause denial of service
-for the other guest running on the hypervisor.
-
-CVE: CVE-2022-2132
-Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=1031
-Severity: 8.6 (High)
-CVSS scores: CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H
-
-Commits per branch:
-	main
-	        https://git.dpdk.org/dpdk/commit/?id=71bd0cc536
-	        https://git.dpdk.org/dpdk/commit/?id=dc1516e260
-	21.11
-	        https://git.dpdk.org/dpdk-stable/commit/?id=f167022606
-	        https://git.dpdk.org/dpdk-stable/commit/?id=e12d415556
-	20.11
-	        https://git.dpdk.org/dpdk-stable/commit/?id=8fff8520f3
-	        https://git.dpdk.org/dpdk-stable/commit/?id=089e01b375
-	19.11
-	        https://git.dpdk.org/dpdk-stable/commit/?id=5b3c25e6ee
-	        https://git.dpdk.org/dpdk-stable/commit/?id=e73049ea26
-
-LTS Releases:
-	21.11 - http://fast.dpdk.org/rel/dpdk-21.11.2.tar.xz
-	20.11 - http://fast.dpdk.org/rel/dpdk-20.11.6.tar.xz
-	19.11 - http://fast.dpdk.org/rel/dpdk-19.11.13.tar.xz
-
-CVE: CVE-2022-2132
-Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=1031
-Severity: 8.6 (High)
-CVSS scores: CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H
-
-
+Brian
