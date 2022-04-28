@@ -1,28 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/26/3
-Message-ID: <trinity-3f5f7066-5ba5-45cb-b229-a2207e9fe209-1653583477988@3c-app-gmx-bap49>
-Date: Thu, 26 May 2022 18:44:38 +0200
-From: Norbert Slusarek <nslusarek@....net>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com, peterz@...radead.org
-Subject: Re: CVE-2022-1729: race condition in Linux perf subsystem leads to local privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/28/4
+Message-ID: <20220428154502.j4hzupl7hsipgtfk@yuggoth.org>
+Date: Thu, 28 Apr 2022 15:45:02 +0000
+From: Jeremy Stanley <fungi@...goth.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2022-21449 and version reporting
 Content-Type: text/plain; charset=utf-8
 
->What do you suggest we do regarding the LPE exploit you sent to
->linux-distros?
+On 2022-04-28 14:12:04 +0000 (+0000), Seaman, Chad wrote:
+[...]
+> In what universe exactly are versions omitted from vulnerability
+> reporting because a vendor “no longer supports that version”… this
+> non-supported version is still vulnerable?
 
-I saw your reveal of linux-distros from 2020 and the exchange
-didn't include any text nor attachments. In that case, the
-exploit should remain private to linux-distros accordingly.
+The alternative is what projects I work on do: If the oldest
+supported version is vulnerable, then assume all unsupported
+versions are also vulnerable unless someone is able to find evidence
+to the contrary (we basically just always list <= the oldest fixed
+version as vulnerable).
 
->What do you suggest we do with this policy aspect going forward, so that
->people do not get into a situation where they're required to do
->something they didn't want to subscribe to?
+> Are exploit developers expected to check against the version of
+> the vulnerable application during their exploit detonation to
+> ensure they’re “only infecting supported versions?”.
 
-How is this policy aspect enforced in the first place?
-If it's not, I suggest you remove it entirely as there is no reason
-to have policies which cannot (and shouldn't) be enforced.
-Overall, as a researcher I would prefer having a way just to inform
-distros of a bug, *without* being subject to these requirements.
+Vulnerability managers' jobs aren't to make things easier for
+exploit developers, quite the opposite in fact. My goal is to make
+sure users know when they may be running vulnerable software and
+disseminate fixes for all supported releases, where possible.
 
-Norbert
+> Why is this being allowed… this is dangerous for everyone involved
+> save for Oracle’s own ego or public image?
+
+Speaking from the perspective of volunteer-run open source projects
+like the ones I work on, there are only so many hours in the day so
+we have to limit what versions of software we can effectively test
+and fix. In our case, as I said, we just assume all older versions
+that that are also vulnerable unless we happen to find information
+to the contrary, but I can certainly understand if others have a
+policy to only bother providing information about versions they
+support (and flat out tell users to upgrade to a supported version).
+-- 
+Jeremy Stanley
+
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
