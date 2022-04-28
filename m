@@ -1,17 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/02/1
-Message-ID: <22ffd609-2702-cce6-cdc1-7207442a360d@apache.org>
-Date: Fri, 02 Dec 2022 13:36:02 +0000
-From: Arnout Engelen <engelen@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/28/6
+Message-ID: <142a2b8b-f5f5-526e-741f-35337a5a81f2@tao.at>
+Date: Thu, 28 Apr 2022 22:40:23 +0200
+From: Sven Schwedas <sven.schwedas@....at>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-46366: Apache Tapestry prior to version 4 (EOL) allows RCE though deserialization of untrusted input 
+Subject: Re: CVE-2022-21449 and version reporting
 Content-Type: text/plain; charset=utf-8
 
-Description:
 
-** UNSUPPORTED WHEN ASSIGNED ** Apache Tapestry 3.x allows deserialization of untrusted data, leading to remote code execution. This issue is similar to but distinct from CVE-2020-17531, which applies the the (also unsupported) 4.x version line. NOTE: This vulnerability only affects Apache Tapestry version line 3.x, which is no longer supported by the maintainer. Users are recommended to upgrade to a supported version line of Apache Tapestry.
+On 28.04.22 22:10, Seth Arnold wrote:
+> On Thu, Apr 28, 2022 at 02:12:04PM +0000, Seaman, Chad wrote:
+>> In what universe exactly are versions omitted from vulnerability
+>> reporting because a vendor “no longer supports that version”… this
+>> non-supported version is still vulnerable?
+> 
+> A large part of software maintenance is managing technical debt --
+> and being able to walk away from no-longer-supported products is an
+> important part of that.
+> 
+> Would you expect Microsoft to evaluate Windows 3.11, Windows 95,
+> Windows 98, Windows ME, Windows NT 3.51, Windows NT 4.0. Windows XP,
+> etc for every single vulnerability discovered in newest products?
 
-Credit:
+You and Jeremy arguing in bad faith here, OP didn't ask about anything 
+like that.
 
-Apache would like to thank Ilyass El Hadi from Mandiant for reporting this issue
+The problem at hand is, someone *already did all that work*, and Oracle 
+is *actively intervening* to have it dropped from CVE reports.
 
+So the question is: Why is vulnerability information that already exists 
+being censored?
+
+Download attachment "OpenPGP_signature" of type "application/pgp-signature" (666 bytes)
