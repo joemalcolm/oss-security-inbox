@@ -1,23 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/23/2
-Message-ID: <YhYbcF7Iy9rwr3V5@momentum.pseudorandom.co.uk>
-Date: Wed, 23 Feb 2022 11:33:04 +0000
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-44731: Race condition in snap-confine's setup_private_mount()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/28/7
+Message-ID: <2D37FD38-B910-4D66-A5B3-0E58DA3B87C1@akamai.com>
+Date: Thu, 28 Apr 2022 23:34:46 +0000
+From: "Seaman, Chad" <cseaman@...mai.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2022-21449 and version reporting
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 23 Feb 2022 at 08:54:49 +0100, Wire Snark wrote:
-> Why it isn't possible to copy the snap-confine binary into a directory
-> for the same effect -- instead of hardlinking it?
+Exactly this.
 
-If you copy a file you don't own, then the copy is owned by you, and has
-permissions controlled by you: in particular, if you're not root, then the
-copy can't be setuid root.
+It’s not that they didn’t/can’t verify, it’s already verified, they’re claiming those versions no longer being officially supported means they can seemingly omit them from CVE reporting.
 
-If you hard-link a file you don't own (which some kernel configurations
-don't allow), then that filename points to the same inode as the original
-filename, so it has the same ownership and permissions as the original file
-(and in particular it's still setuid root).
+Which is dangerous, misleading, and nonsensical.
 
-    smcv
+Regards,
+Chad
+
+On Apr 28, 2022, at 5:36 PM, Sven Schwedas <sven.schwedas@....at> wrote:
+
+﻿
+On 28.04.22 22:10, Seth Arnold wrote:
+On Thu, Apr 28, 2022 at 02:12:04PM +0000, Seaman, Chad wrote:
+In what universe exactly are versions omitted from vulnerability
+reporting because a vendor “no longer supports that version”… this
+non-supported version is still vulnerable?
+A large part of software maintenance is managing technical debt --
+and being able to walk away from no-longer-supported products is an
+important part of that.
+Would you expect Microsoft to evaluate Windows 3.11, Windows 95,
+Windows 98, Windows ME, Windows NT 3.51, Windows NT 4.0. Windows XP,
+etc for every single vulnerability discovered in newest products?
+
+You and Jeremy arguing in bad faith here, OP didn't ask about anything like that.
+
+The problem at hand is, someone *already did all that work*, and Oracle is *actively intervening* to have it dropped from CVE reports.
+
+So the question is: Why is vulnerability information that already exists being censored?
+
+Content of type "text/html" skipped
+
+Download attachment "OpenPGP_signature" of type "application/octet-stream" (677 bytes)
