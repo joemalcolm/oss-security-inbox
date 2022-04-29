@@ -1,25 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/26/7
-Message-ID: <YfFBAVnpRJemuCed@xosc.org>
-Date: Wed, 26 Jan 2022 13:39:29 +0100
-From: Matthias Schmidt <oss-sec@...c.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/29/2
+Message-ID: <9032b118-519c-49f6-8782-eb97d02a9ca2@apache.org>
+Date: Fri, 29 Apr 2022 20:28:54 +0000
+From: David Handermann <exceptionfactory@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: pwnkit: Local Privilege Escalation in polkit's pkexec (CVE-2021-4034)
+Subject: CVE-2022-29265: Apache NiFi: Improper Restriction of XML External Entity References in Multiple Components 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: moderate
 
-* Qualys Security Advisory wrote:
-> 
-> Qualys Security Advisory
-> 
-> pwnkit: Local Privilege Escalation in polkit's pkexec (CVE-2021-4034)
+Description:
 
-This was already mentioned in 2013 in a blog post, however, it seems the
-author didn't realize the consequences of their finding:
+Multiple components in Apache NiFi 0.0.1 to 1.16.0 do not restrict XML External Entity references in the default configuration.
 
-https://ryiron.wordpress.com/2013/12/16/argv-silliness/
+The Standard Content Viewer service attempts to resolve XML External Entity references when viewing formatted XML files.
 
-Cheers
+The following Processors attempt to resolve XML External Entity references when configured with default property values:
 
-	Matthias
+- EvaluateXPath
+- EvaluateXQuery
+- ValidateXml
+
+Apache NiFi flow configurations that include these Processors are vulnerable to malicious XML documents that contain Document Type Declarations with XML External Entity references.
+
+The resolution disables Document Type Declarations in the default configuration for these Processors, and disallows XML External Entity resolution in standard services.
+
+This issue is being tracked as NIFI-9901
+
+Mitigation:
+
+Disabling the Validate DTD Processor Property in EvaluateXPath and EvaluateXQuery mitigates the vulnerability for those Processors. No mitigation is available for the ValidateXml Processor or the Standard Content Viewer.
+
+Credit:
+
+David Handermann at exceptionfactory.com reported this issue.
+
+References:
+
+https://nifi.apache.org/security.html#CVE-2022-29265
+
+
