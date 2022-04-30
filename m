@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1207" "Saturday" "19" "November" "2016" "17:18:26" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<1975740.FIEDfIgEBD@arcadia>" "49" "[oss-security] imagemagick: null pointer must never be null (tiff.c)" nil nil nil "11" "2016111916:18:26" "[oss-security] imagemagick: null pointer must never be null (tiff.c)" (number mark "U       ago@gentoo.o Nov 19   49/1207  " thread-indent "\"[oss-security] imagemagick: null pointer must never be null (tiff.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 14275 invoked by uid 550); 19 Nov 2016 16:17:28 -0000
+Received: (qmail 24173 invoked by uid 550); 30 Apr 2022 15:56:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,64 +7,85 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14249 invoked from network); 19 Nov 2016 16:17:26 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
+Received: (qmail 16218 invoked from network); 30 Apr 2022 15:38:42 -0000
+Date: Sat, 30 Apr 2022 10:38:27 -0500
+From: John Helmert III <ajak@gentoo.org>
 To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Date: Sat, 19 Nov 2016 17:18:26 +0100
-Message-ID: <1975740.FIEDfIgEBD@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.24; x86_64; ; )
+Message-ID: <Ym1X82gykRQqVzd7@gentoo.org>
+References: <484488E0-D662-4F58-80DB-499DE532FA3B@akamai.com>
+ <20220428201003.GA1260523@millbarge>
+ <142a2b8b-f5f5-526e-741f-35337a5a81f2@tao.at>
+ <2D37FD38-B910-4D66-A5B3-0E58DA3B87C1@akamai.com>
+ <ffd2934f-4e65-88ca-e3db-5204c2eb1127@greenbone.net>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] imagemagick: null pointer must never be null (tiff.c)
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="d3K5Efw3UoSrPMu3"
+Content-Disposition: inline
+In-Reply-To: <ffd2934f-4e65-88ca-e3db-5204c2eb1127@greenbone.net>
+Subject: Re: [oss-security] CVE-2022-21449 and version reporting
 
-If suitable for a CVE please assign one. Thanks.
+--d3K5Efw3UoSrPMu3
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Description:
-imagemagick is a software suite to create, edit, compose, or convert bitmap 
-images.
+On Sat, Apr 30, 2022 at 01:24:36PM +0200, Christian Fischer wrote:
+>  > It=E2=80=99s not that they didn=E2=80=99t/can=E2=80=99t verify, it=E2=
+=80=99s already verified,=20
+> they=E2=80=99re claiming those versions no longer being officially suppor=
+ted=20
+> means they can seemingly omit them from CVE reporting.
+>  >
+>  > Which is dangerous, misleading, and nonsensical.
+>=20
+> While i fully agree with this be aware that CVE entries could generally=20
+> contain incomplete information:
+>=20
+> After requesting an update of a CVE entry via the MITRE CVE forum in the=
+=20
+> past to add additional affected products for a different vendor (which=20
+> wasn't even the assigning CNA like it is the case for Oracle here) my=20
+> request was rejected by MITRE with the following rationale given:
 
-A fuzz on an updated version with the undefined behavior sanitizer enabled, 
-revealed a null pointer which is declared to never be null.
+The CNA that assigned that CVE is Oracle, so Oracle is the CNA to talk
+to to make changes to it. MITRE won't make changes to it as they're
+not the CNA behind that CVE.
 
-The complete UBSan output:
+>  > A CVE description does not necessarily contain all the affected=20
+> products or versions and is not part of CVE ID requirements. The=20
+> products are documented in the CVE references.
+> This is also matching my experiences with various other products /=20
+> vendors and related CVE entries for these.
 
-# identify $FILE
-coders/tiff.c:655:39: runtime error: null pointer passed as argument 2, which 
-is declared to never be null
-MagickCore/string_.h:76:23: note: nonnull attribute specified here
+Right, this is documented in the CNA rules [1]:
 
-Affected version:
-7.0.3.6
+"8.2.1 MUST provide enough information for a reader to have a
+reasonable understanding of what products are affected. If the
+affected products are not explicitly listed in the description, then
+the CNA MUST provide a reference that points to the known affected
+products."
 
-Fixed version:
-7.0.3.7
+[1] https://www.cve.org/ResourcesSupport/AllResources/CNARules#section_8-2_=
+cve_record_prose_description_requirements
 
-Commit fix:
-https://github.com/ImageMagick/ImageMagick/commit/b61d35eaccc0a7ddeff8a1c3abfcd0a43ccf210b
+--d3K5Efw3UoSrPMu3
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+-----BEGIN PGP SIGNATURE-----
 
-CVE:
-N/A
+iQIzBAABCAAdFiEElFuPenBj6NvNLoABXP0dAeB+IzgFAmJtV/AACgkQXP0dAeB+
+IzjNkg/9GmgY5GoJM1VGhr7QeN39KIiCyFntmd6VlZcQKKvAj8/sz+uwqFgJhFGD
+bLNmdJR/qHQ6SBJTw4QMe2V7uexV4yOBqKk/rnqY0s67ahakffC7e9twqqWvr5ll
+VIAriUtlwW1JcFyuwihk94IRprDva4Ucgc70LvKdMBIRVaSa7171NPqMHlZD65ad
+n12elPZg4gX8M495dUe3KTH4mtUMfv5r9002M3XrEkdF7D6EJUeHcAsXrLi63KV5
+lkZlSVB5d41wyUf8ixZvcOKodWmtq2zNy3UAz+Qt+S6PUEUchOyPxWKCTIFzXdyq
+iVBO39/MyQAdbcMvSWUstymrvIttFZyzDQzKD0BKm/iCE4UaQPXKvq80gq00lUy0
+gZHRG4PhF2oOWb8fgYFqXNv+Ok0M+eYJBW87TLdTTY9oOvxDNZumUk/6zF3U9Jot
+j30L3g4/qVTpv1Q0tkiPxNyKjZD4fmnTB0+/uBcxoF4WYGC9WbpbScoyF+cqyMSs
+mi+ognPIGK54X3QZC+P44mbZtau80rRX4810OYIKFv8OdSvf0O8DaDa0hm+th5bu
+29lWSa/PquYBHh1BsKC87cmBEnPVflAJLUGqht74NZmYl4iZGRyoXRhXBrOVc5Yc
+OWELkVcrtRM/dR6dcbR3Jk6geOkCRflMQMX3bSue7g9Jf8yuEg0=
+=cVF1
+-----END PGP SIGNATURE-----
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00049-imagemagick-pointernerverbenull
-
-Timeline:
-2016-11-09: bug discovered and reported to upstream
-2016-11-09: upstream released a patch
-2016-11-15: upstream released 7.0.3.7
-2016-11-19: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/11/19/imagemagick-null-pointer-must-never-be-null-tiff-c
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+--d3K5Efw3UoSrPMu3--
