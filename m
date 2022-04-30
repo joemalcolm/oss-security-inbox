@@ -1,64 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/08/6
-Message-ID: <7ab10c96-aabc-5868-6ed9-2c3ec1e7c8ff@igalia.com>
-Date: Fri, 8 Apr 2022 14:31:29 +0100
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0004
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/30/3
+Message-ID: <20220430194331.k6wx35pjrvoi4qqd@yuggoth.org>
+Date: Sat, 30 Apr 2022 19:43:32 +0000
+From: Jeremy Stanley <fungi@...goth.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2022-21449 and version reporting
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2022-0004
-------------------------------------------------------------------------
+On 2022-04-28 22:40:23 +0200 (+0200), Sven Schwedas wrote:
+[...]
+> You and Jeremy arguing in bad faith here, OP didn't ask about
+> anything like that.
+[...]
 
-Date reported           : April 08, 2022
-Advisory ID             : WSA-2022-0004
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2022-0004.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2022-0004.html
-CVE identifiers         : CVE-2022-22624, CVE-2022-22628,
-                          CVE-2022-22629, CVE-2022-22637.
+"Bad faith" doesn't mean what you seem to think it means, unless you
+really believe I'm shilling for Oracle in order to mislead or
+defraud you in some way. I'll tell you straight up, though, I
+personally have no connection to Oracle nor have they ever funded my
+work in any way.
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+If you've got concerns with how Oracle handles their vulnerability
+reporting, I would take that as an indication to stop using their
+software. That's what I do when I don't trust someone. Expecting
+MITRE to set some requirements for how everyone is allowed to report
+vulnerabilities for unsupported versions of software is not
+something I can get behind, though.
+-- 
+Jeremy Stanley
 
-CVE-2022-22624
-    Versions affected: WebKitGTK before 2.36.0 and WPE WebKit before 2.34.7
-    Credit to Kirin (@Pwnrin) of Tencent Security Xuanwu Lab.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A use after free issue was
-    addressed with improved memory management.
-
-CVE-2022-22628
-    Versions affected: WebKitGTK before 2.36.0 and WPE WebKit before 2.34.7
-    Credit to Kirin (@Pwnrin) of Tencent Security Xuanwu Lab.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A use after free issue was
-    addressed with improved memory management.
-
-CVE-2022-22629
-    Versions affected: WebKitGTK before 2.36.0 and WPE WebKit before 2.34.7
-    Credit to Jeonghoon Shin at Theori working with Trend Micro Zero Day
-    Initiative.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A buffer overflow issue was
-    addressed with improved memory handling.
-
-CVE-2022-22637
-    Versions affected: WebKitGTK before 2.34.4 and WPE WebKit before 2.34.4
-    Credit to Tom McKee of Google.
-    Impact: A malicious website may cause unexpected cross-origin
-    behavior. Description: A logic issue was addressed with improved
-    state management.
-
-
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
-
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
-
-The WebKitGTK and WPE WebKit team,
-April 08, 2022
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
