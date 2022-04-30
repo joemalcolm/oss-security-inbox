@@ -1,63 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/06/2
-Message-ID: <da234c3.47c2.17e2f3e7d2c.Coremail.xxyu@apache.org>
-Date: Thu, 6 Jan 2022 19:55:31 +0800 (CST)
-From: "Xiaoxiang Yu" <xxyu@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/30/2
+Message-ID: <Ym1X82gykRQqVzd7@gentoo.org>
+Date: Sat, 30 Apr 2022 10:38:27 -0500
+From: John Helmert III <ajak@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: pwntester@...hub.com
-Subject: CVE-2021-45457: Apache Kylin: Overly broad CORS configuration
+Subject: Re: CVE-2022-21449 and version reporting
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+On Sat, Apr 30, 2022 at 01:24:36PM +0200, Christian Fischer wrote:
+>  > It’s not that they didn’t/can’t verify, it’s already verified, 
+> they’re claiming those versions no longer being officially supported 
+> means they can seemingly omit them from CVE reporting.
+>  >
+>  > Which is dangerous, misleading, and nonsensical.
+> 
+> While i fully agree with this be aware that CVE entries could generally 
+> contain incomplete information:
+> 
+> After requesting an update of a CVE entry via the MITRE CVE forum in the 
+> past to add additional affected products for a different vendor (which 
+> wasn't even the assigning CNA like it is the case for Oracle here) my 
+> request was rejected by MITRE with the following rationale given:
 
-Description:
+The CNA that assigned that CVE is Oracle, so Oracle is the CNA to talk
+to to make changes to it. MITRE won't make changes to it as they're
+not the CNA behind that CVE.
 
-Cross-origin requests with credentials are allowed to be sent from any origin.
+>  > A CVE description does not necessarily contain all the affected 
+> products or versions and is not part of CVE ID requirements. The 
+> products are documented in the CVE references.
+> This is also matching my experiences with various other products / 
+> vendors and related CVE entries for these.
 
-Kylin reflects the `Origin` header and allow credentials to be sent cross-origin in the default configuration. The preflight OPTIONS request:
-```
-OPTIONS /kylin/api/projects HTTP/1.1
-Host: localhost:7070
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:94.0) Gecko/20100101 Firefox/94.0
-Accept: */*
-Accept-Language: en-US
-Accept-Encoding: gzip, deflate
-Access-Control-Request-Method: POST
-Access-Control-Request-Headers: content-type
-Referer: http://b49b-95-62-58-48.ngrok.io/
-Origin: http://b49b-95-62-58-48.ngrok.io
-Connection: keep-alive
-Cache-Control: max-age=0
-```
+Right, this is documented in the CNA rules [1]:
 
-Will be replied with:
+"8.2.1 MUST provide enough information for a reader to have a
+reasonable understanding of what products are affected. If the
+affected products are not explicitly listed in the description, then
+the CNA MUST provide a reference that points to the known affected
+products."
 
-```
-HTTP/1.1 200 OK
-Server: Apache-Coyote/1.1
-Access-Control-Allow-Origin: http://b49b-95-62-58-48.ngrok.io
-Access-Control-Allow-Credentials: true
-Vary: Origin
-Access-Control-Allow-Methods: DELETE, POST, GET, OPTIONS, PUT
-Access-Control-Allow-Headers: Authorization, Origin, No-Cache, X-Requested-With, Cache-Control, Accept, X-E4m-With, If-Modified-Since, Pragma, Last-Modified, Expires, Content-Type
-Content-Length: 0
-```
-This issue affects Apache Kylin Apache Kylin 2 version 2.6.6 and prior versions; Apache Kylin 3 version 3.1.2 and prior versions; Apache Kylin 4 version 4.0.0 and prior versions.
+[1] https://www.cve.org/ResourcesSupport/AllResources/CNARules#section_8-2_cve_record_prose_description_requirements
 
-Mitigation:
-
-Users of Kylin 2.x & Kylin 3.x should upgrade to 3.1.3 or apply patch https://github.com/apache/kylin/pull/1782.
-Users of Kylin 4.x should upgrade to 4.0.1 or apply patch https://github.com/apache/kylin/pull/1781.
-
-Credit:
-
-Alvaro Munoz 
-
-
-
-
-
---
-
-Best wishes to you ! 
-From ：Xiaoxiang Yu
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
