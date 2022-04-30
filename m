@@ -1,35 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/11/4
-Message-ID: <6ce2cc1a-3308-19a3-91d5-b5457ed6f2f5@apache.org>
-Date: Fri, 11 Feb 2022 10:01:38 +0000
-From: Marcus Eriksson <marcuse@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/01/1
+Message-ID: <24e8-626d8980-3-6d44cb00@230483808>
+Date: Sat, 30 Apr 2022 21:09:16 +0200
+From: "Christian Fischer" <christian.fischer@...enbone.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-44521: Apache Cassandra: Remote code execution for scripted UDFs 
+Subject: Re: CVE-2022-21449 and version  reporting
 Content-Type: text/plain; charset=utf-8
 
-Severity: high
+On Saturday, April 30, 2022 17:38 CEST, John Helmert III <ajak@...too.org> wrote: 
+ 
+> On Sat, Apr 30, 2022 at 01:24:36PM +0200, Christian Fischer wrote:
+> >  > It’s not that they didn’t/can’t verify, it’s already verified, 
+> > they’re claiming those versions no longer being officially supported 
+> > means they can seemingly omit them from CVE reporting.
+> >  >
+> >  > Which is dangerous, misleading, and nonsensical.
+> > 
+> > While i fully agree with this be aware that CVE entries could generally 
+> > contain incomplete information:
+> > 
+> > After requesting an update of a CVE entry via the MITRE CVE forum in the 
+> > past to add additional affected products for a different vendor (which 
+> > wasn't even the assigning CNA like it is the case for Oracle here) my 
+> > request was rejected by MITRE with the following rationale given:
+> 
+> The CNA that assigned that CVE is Oracle, so Oracle is the CNA to talk
+> to to make changes to it. MITRE won't make changes to it as they're
+> not the CNA behind that CVE.
+> 
+> >  > A CVE description does not necessarily contain all the affected 
+> > products or versions and is not part of CVE ID requirements. The 
+> > products are documented in the CVE references.
+> > This is also matching my experiences with various other products / 
+> > vendors and related CVE entries for these.
+> 
+> Right, this is documented in the CNA rules [1]:
+> 
+> "8.2.1 MUST provide enough information for a reader to have a
+> reasonable understanding of what products are affected. If the
+> affected products are not explicitly listed in the description, then
+> the CNA MUST provide a reference that points to the known affected
+> products."
+> 
+> [1] https://www.cve.org/ResourcesSupport/AllResources/CNARules#section_8-2_cve_record_prose_description_requirements
 
-Description:
+Yes, indeed / in know (since then) but it wasn't clear if all participants in this thread are aware of this fact.
 
-When running Apache Cassandra with the following configuration:
-
-enable_user_defined_functions: true
-enable_scripted_user_defined_functions: true
-enable_user_defined_functions_threads: false 
-
-it is possible for an attacker to execute arbitrary code on the host. The attacker would need to have enough permissions to create user defined functions in the cluster to be able to exploit this. Note that this configuration is documented as unsafe, and will continue to be considered unsafe after this CVE.
-
-This issue is being tracked as CASSANDRA-17352
-
-Mitigation:
-
-Set `enable_user_defined_functions_threads: true` (this is default)
-or
-3.0 users should upgrade to 3.0.26
-3.11 users should upgrade to 3.11.12
-4.0 users should upgrade to 4.0.2
-
-Credit:
-
-This issue was discovered by Omer Kaspi of the JFrog Security vulnerability research team.
+But i just have noticed that my posting was only partly relevant for the quoted message and the question of the OP "Why is this being allowed…" because i have missed that Oracle (if they as the assigning CNA are aware that Java 15 and 16 are affected) AFAICT indeed haven't provided any reference so far about all known affected versions / products.
 
