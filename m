@@ -1,28 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/18/6
-Message-ID: <11490321.fexurL4tql@sinistra>
-Date: Tue, 18 Jan 2022 17:05:50 +0100
-From: Jonas Schäfer <jonas@...licki.name>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/30/1
+Message-ID: <ffd2934f-4e65-88ca-e3db-5204c2eb1127@greenbone.net>
+Date: Sat, 30 Apr 2022 13:24:36 +0200
+From: Christian Fischer <christian.fischer@...enbone.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Prosody XMPP server advisory 2022-01-13 (Remote Unauthenticated Denial of Service) (CVE request)
+Subject: Re: CVE-2022-21449 and version reporting
 Content-Type: text/plain; charset=utf-8
 
-On Donnerstag, 13. Januar 2022 15:01:11 CET Jonas Schäfer wrote:
-> A remote unauthenticated denial of service / resource exhaustion attack was
-> discovered in all Prosody servers with WebSockets enabled and publicly
-> accessible.
+ > It’s not that they didn’t/can’t verify, it’s already verified, 
+they’re claiming those versions no longer being officially supported 
+means they can seemingly omit them from CVE reporting.
+ >
+ > Which is dangerous, misleading, and nonsensical.
+
+While i fully agree with this be aware that CVE entries could generally 
+contain incomplete information:
+
+After requesting an update of a CVE entry via the MITRE CVE forum in the 
+past to add additional affected products for a different vendor (which 
+wasn't even the assigning CNA like it is the case for Oracle here) my 
+request was rejected by MITRE with the following rationale given:
+
+ > A CVE description does not necessarily contain all the affected 
+products or versions and is not part of CVE ID requirements. The 
+products are documented in the CVE references.
+
+This is also matching my experiences with various other products / 
+vendors and related CVE entries for these.
+
+On 29.04.22 01:34, Seaman, Chad wrote:
+> Exactly this.
 > 
-> Upstream builds have been started and should be available shortly. The
-> closely related Snikket project will publish new images shortly, too. Jitsi
-> Meet have been informed ahead of time.
+> It’s not that they didn’t/can’t verify, it’s already verified, they’re claiming those versions no longer being officially supported means they can seemingly omit them from CVE reporting.
 > 
-> Please see the below advisory for full information.
-
-As promised, attached you'll find instructions for probing for the 
-vulnerability.
-
-kind regards,
-Jonas
-View attachment "instructions.md" of type "text/markdown" (1695 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+> Which is dangerous, misleading, and nonsensical.
+> 
+> Regards,
+> Chad
+> 
+> On Apr 28, 2022, at 5:36 PM, Sven Schwedas <sven.schwedas@....at> wrote:
+> 
+> ﻿
+> On 28.04.22 22:10, Seth Arnold wrote:
+> On Thu, Apr 28, 2022 at 02:12:04PM +0000, Seaman, Chad wrote:
+> In what universe exactly are versions omitted from vulnerability
+> reporting because a vendor “no longer supports that version”… this
+> non-supported version is still vulnerable?
+> A large part of software maintenance is managing technical debt --
+> and being able to walk away from no-longer-supported products is an
+> important part of that.
+> Would you expect Microsoft to evaluate Windows 3.11, Windows 95,
+> Windows 98, Windows ME, Windows NT 3.51, Windows NT 4.0. Windows XP,
+> etc for every single vulnerability discovered in newest products?
+> 
+> You and Jeremy arguing in bad faith here, OP didn't ask about anything like that.
+> 
+> The problem at hand is, someone *already did all that work*, and Oracle is *actively intervening* to have it dropped from CVE reports.
+> 
+> So the question is: Why is vulnerability information that already exists being censored?
