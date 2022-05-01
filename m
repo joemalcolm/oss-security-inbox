@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3514" "Sunday" "1" "March" "2020" "07:47:15" "+0500" "Alexander E. Patrakov" "patrakov@gmail.com" "<CAN_LGv2vhWw6hPL+71GHbRMF8HC8K+0yMjocjXu46pET8zYzNg@mail.gmail.com>" "78" "Re: [oss-security] LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)" "^Date:" nil nil "3" "2020030102:47:15" "[oss-security] LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)" (number mark "        patrakov@gma Mar  1   78/3514  " thread-indent "\"Re: [oss-security] LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)\"\n") "<20200226202819.GA1051@localhost.localdomain>" ("<20200224184538.GF17396@localhost.localdomain>" "<20200226202819.GA1051@localhost.localdomain>") nil nil nil nil nil nil nil "Re: [oss-security] LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 23974 invoked by uid 550); 1 Mar 2020 02:47:39 -0000
+Received: (qmail 31828 invoked by uid 550); 1 May 2022 18:52:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,119 +6,106 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23956 invoked from network); 1 Mar 2020 02:47:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=64BKELz3UUSEHZPgHT983crs8E4uXWtkQ8oPaWRBsq0=;
-        b=pb+OefCIiGSJw38P1jGhIQkk+Xf2iKLIYPwjIN8Kwek1Hy+4+1stuNP1mwlGr1gVju
-         fxjn4zhX2TBxYV7qzGPCJXqfjRAlt9h+QrTVakjCYoFckA0ThgpGxpey2Z0VEiUTjjm3
-         QSKc4DL+ofVuynyyElXm6NOmUCV6fAJdwkm54akQ6Le0TuttpTsJatMb1H+LpRcQdrBf
-         N4MViRpAlQw04DfYARQMCrKRGE9VoYcjvGFZ8p9kZyW1K7hXULZEQToe+OgKE9ywrPa0
-         Ph9t/MV/eI8oo4lCu9fY+veAr6rlB5/Eq/1BYat2hKkWBlHMCOTnRyAXofearBuHavHt
-         L7Ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=64BKELz3UUSEHZPgHT983crs8E4uXWtkQ8oPaWRBsq0=;
-        b=AU0hebAW6VTOs5MQsJfKnzz6yMEFGJpLKxs9pin3e5kBx4zbcaFS2JgQuhcCtyYLi3
-         mjCKcRY8gRRgmoywP4lEFRGwPlxw0lVi4MVvQYcGIgRF1ed5/XAIFkwQ/oOsIOWSy36B
-         G+piA6lcKpOrh2F1DSMW0asYXc54xq1ZaeJPytGZWVIgFND5IIdkGNmOZXHYGmJS9XE1
-         9kZG2iawhCG5kUn+XV20hzKpIWSsJ4kKnp7JwxxZYHfVZNLxNliN5xVhroIjI2y1/Ul/
-         jmheCI4mCgoXlELIMk84A9RqmoAJW8aDrcJY1LW8+LV3+qOuc8lBYZ4BdE84CjbKipj8
-         NuLw==
-X-Gm-Message-State: APjAAAX0aGdadRYGxI6Hzc12Dap/GgFHK4pesIfbzBK0LLmiP9yUhHR1
-	p/AS7SS8y+/JrmaeJO51aWgEooesa4z7wep8jVXML3am3w4=
-X-Google-Smtp-Source: APXvYqygbgSZbv9nV1ohwqL3Jvw1nWfc47+kj4XyxYqspCp2lBqP+2WYFt0jFKw4L5ckDxJwpir0y8Lcsp5dUIEWGRg=
-X-Received: by 2002:a05:620a:15f4:: with SMTP id p20mr10530380qkm.272.1583030846643;
- Sat, 29 Feb 2020 18:47:26 -0800 (PST)
-MIME-Version: 1.0
-References: <20200224184538.GF17396@localhost.localdomain> <20200226202819.GA1051@localhost.localdomain>
-In-Reply-To: <20200226202819.GA1051@localhost.localdomain>
-Message-ID: <CAN_LGv2vhWw6hPL+71GHbRMF8HC8K+0yMjocjXu46pET8zYzNg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Sun, 1 Mar 2020 07:47:15 +0500
-From: "Alexander E. Patrakov" <patrakov@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)
+Received: (qmail 27965 invoked from network); 1 May 2022 14:38:16 -0000
+Date: Sun, 1 May 2022 09:38:01 -0500
+From: John Helmert III <ajak@gentoo.org>
 To: oss-security@lists.openwall.com
+Message-ID: <Ym6bSZb8S/5OVcuV@gentoo.org>
+References: <Ym1X82gykRQqVzd7@gentoo.org>
+ <24e8-626d8980-3-6d44cb00@230483808>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="wRCRRTZSrrP5ki3i"
+Content-Disposition: inline
+In-Reply-To: <24e8-626d8980-3-6d44cb00@230483808>
+Subject: Re: [oss-security] CVE-2022-21449 and version reporting
 
-On Thu, Feb 27, 2020 at 12:38 AM Qualys Security Advisory
-<qsa@qualys.com> wrote:
->
->
-> Qualys Security Advisory
->
-> LPE and RCE in OpenSMTPD's default install (CVE-2020-8794)
->
->
-> ==============================================================================
-> Contents
-> ==============================================================================
->
-> Summary
-> Analysis
-> Client-side exploitation (new grammar)
-> Server-side exploitation (new grammar)
-> Old-grammar exploitation
-> Acknowledgments
->
->
-> ==============================================================================
-> Summary
-> ==============================================================================
->
-> We discovered a vulnerability in OpenSMTPD, OpenBSD's mail server. This
-> vulnerability, an out-of-bounds read introduced in December 2015 (commit
-> 80c6a60c, "when peer outputs a multi-line response ..."), is exploitable
-> remotely and leads to the execution of arbitrary shell commands: either
-> as root, after May 2018 (commit a8e22235, "switch smtpd to new
-> grammar"); or as any non-root user, before May 2018.
->
-> Because this vulnerability resides in OpenSMTPD's client-side code
-> (which delivers mail to remote SMTP servers), we must consider two
-> different scenarios:
->
-> - Client-side exploitation: This vulnerability is remotely exploitable
->   in OpenSMTPD's (and hence OpenBSD's) default configuration. Although
->   OpenSMTPD listens on localhost only, by default, it does accept mail
->   from local users and delivers it to remote servers. If such a remote
->   server is controlled by an attacker (either because it is malicious or
->   compromised, or because of a man-in-the-middle, DNS, or BGP attack --
->   SMTP is not TLS-encrypted by default), then the attacker can execute
->   arbitrary shell commands on the vulnerable OpenSMTPD installation.
->
-> - Server-side exploitation: First, the attacker must connect to the
->   OpenSMTPD server (which accepts external mail) and send a mail that
->   creates a bounce. Next, when OpenSMTPD connects back to their mail
->   server to deliver this bounce, the attacker can exploit OpenSMTPD's
->   client-side vulnerability. Last, for their shell commands to be
->   executed, the attacker must (to the best of our knowledge) crash
->   OpenSMTPD and wait until it is restarted (either manually by an
->   administrator, or automatically by a system update or reboot).
->
-> We developed a simple exploit for this vulnerability and successfully
-> tested it against OpenBSD 6.6 (the current release), OpenBSD 5.9 (the
-> first vulnerable release), Debian 10 (stable), Debian 11 (testing), and
-> Fedora 31. At OpenBSD's request, and to give OpenSMTPD's users a chance
-> to patch their systems, we are withholding the exploitation details and
-> code until Wednesday, February 26, 2020.
->
-> Last-minute note: we tested our exploit against the recent changes in
-> OpenSMTPD 6.6.3p1, and our results are: if the "mbox" method is used for
-> local delivery (the default in OpenBSD -current), then arbitrary command
-> execution as root is still possible; otherwise (if the "maildir" method
-> is used, for example), arbitrary command execution as any non-root user
-> is possible.
+--wRCRRTZSrrP5ki3i
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Just in case, I would like to complain here that my Fedora 31 systems
-have not received an update.
+On Sat, Apr 30, 2022 at 09:09:16PM +0200, Christian Fischer wrote:
+> On Saturday, April 30, 2022 17:38 CEST, John Helmert III <ajak@gentoo.org=
+> wrote:
+>=20
+> > On Sat, Apr 30, 2022 at 01:24:36PM +0200, Christian Fischer wrote:
+> > >  > It=E2=80=99s not that they didn=E2=80=99t/can=E2=80=99t verify, it=
+=E2=80=99s already verified,
+> > > they=E2=80=99re claiming those versions no longer being officially su=
+pported
+> > > means they can seemingly omit them from CVE reporting.
+> > >  >
+> > >  > Which is dangerous, misleading, and nonsensical.
+> > >
+> > > While i fully agree with this be aware that CVE entries could general=
+ly
+> > > contain incomplete information:
+> > >
+> > > After requesting an update of a CVE entry via the MITRE CVE forum in =
+the
+> > > past to add additional affected products for a different vendor (which
+> > > wasn't even the assigning CNA like it is the case for Oracle here) my
+> > > request was rejected by MITRE with the following rationale given:
+> >
+> > The CNA that assigned that CVE is Oracle, so Oracle is the CNA to talk
+> > to to make changes to it. MITRE won't make changes to it as they're
+> > not the CNA behind that CVE.
+> >
+> > >  > A CVE description does not necessarily contain all the affected=20
+> > > products or versions and is not part of CVE ID requirements. The
+> > > products are documented in the CVE references.
+> > > This is also matching my experiences with various other products /=20
+> > > vendors and related CVE entries for these.
+> >
+> > Right, this is documented in the CNA rules [1]:
+> >
+> > "8.2.1 MUST provide enough information for a reader to have a
+> > reasonable understanding of what products are affected. If the
+> > affected products are not explicitly listed in the description, then
+> > the CNA MUST provide a reference that points to the known affected
+> > products."
+> >
+> > [1] https://www.cve.org/ResourcesSupport/AllResources/CNARules#section_=
+8-2_cve_record_prose_description_requirements
+>=20
+> Yes, indeed / in know (since then) but it wasn't clear if all participant=
+s in this thread are aware of this fact.
+>=20
+> But i just have noticed that my posting was only partly relevant for the =
+quoted message and the question of the OP "Why is this being allowed=E2=80=
+=A6" because i have missed that Oracle (if they as the assigning CNA are aw=
+are that Java 15 and 16 are affected) AFAICT indeed haven't provided any re=
+ference so far about all known affected versions / products.
+>=20
 
-There is indeed something in testing, but it is (mistakenly?) marked
-as a bugfix release and not as a security update:
+Their April 2022 CPU (Critical Patch Update) Advisory, which is a
+reference of CVE-2022-21449, is pretty comprehensive:
 
-https://bodhi.fedoraproject.org/updates/?packages=opensmtpd
+https://www.oracle.com/security-alerts/cpuapr2022.html#AppendixJAVA
 
--- 
-Alexander E. Patrakov
+Supported versions affected: "Oracle Java SE: 17.0.2, 18; Oracle
+GraalVM Enterprise Edition: 21.3.1, 22.0.0.2"=
+
+--wRCRRTZSrrP5ki3i
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEElFuPenBj6NvNLoABXP0dAeB+IzgFAmJum0MACgkQXP0dAeB+
+IzjWQA/6A9IbNTRFgPCefkrpohzNsFpGMYpVOUxU+dQwS4VhKzdSS+kPIvpdBgMc
+TaRz9sSvwhkj4WgLJUDV3iuukYXO/oJlskDcWlgHHr3KygmiBRpE9UHZuhliSD42
+xNfRBC8POEkKTk1du4fFT0ErNxP/S1QOjdDogIHtYbJFb5lBDqSXRk63qzyLDqXz
+9CNmQzLfJ4p6PZepn2SJPNrQ6YE3TewbkJQeQAMq6Fk4tUueRYBWr2rLOxL8BdRL
+d9J4wtYgQ/NvJnnPFUEgEGjn4WSUhtqqKbdeyJLkZyGm1ksvCqPqrc6SmldiwXwC
+ci/2f2iGFIBtlITQSwFoRtE+5/GKqp+A9WssDRRGIY9WXiT7++1kYawDTSqVCnle
+HPiPblsvOwSZV2OXdeWPaXgB6GPiTgcMzZ/a+59759EvSq3hA5Z72oMO+cAGTZ4D
+gHuTwBfb3Ruzqp4CSZl4awIxKGchf/MxmhSXWvQymlRmmZx0RNL6/qefoo84u2aU
+yToJY4iUGXyM3PGO3dYcE5C5qcuwXKcynIdADuq+3uRdaR1IdVb2QV7lPrryedzH
+HNWpfftR3KKuIthGXp1xWj64Tmh63fLSzTbpalDdUglxRzuK4nPQqejuqgup4YCE
+39OKRcmuMApAmDHedCPKTEy6/wdVMrLbLDXH8ur1uOzmPbWiSzQ=
+=vUpC
+-----END PGP SIGNATURE-----
+
+--wRCRRTZSrrP5ki3i--
