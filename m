@@ -1,52 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/17/1
-Message-ID: <20220517033033.GA3403712@millbarge>
-Date: Tue, 17 May 2022 03:30:33 +0000
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/01/2
+Message-ID: <Ym6bSZb8S/5OVcuV@gentoo.org>
+Date: Sun, 1 May 2022 09:38:01 -0500
+From: John Helmert III <ajak@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros list policy and Linux kernel
+Subject: Re: CVE-2022-21449 and version reporting
 Content-Type: text/plain; charset=utf-8
 
-On Mon, May 16, 2022 at 03:12:20PM +0200, Jason A. Donenfeld wrote:
-> So I think a lot of the kernel's commit message obfuscation and unusual
-> disclosure ideas stem from a sort of collective sigh and desire not to
-> join the circus of security performers. They'll commit the fix, because
+On Sat, Apr 30, 2022 at 09:09:16PM +0200, Christian Fischer wrote:
+> On Saturday, April 30, 2022 17:38 CEST, John Helmert III <ajak@...too.org> wrote:
+> 
+> > On Sat, Apr 30, 2022 at 01:24:36PM +0200, Christian Fischer wrote:
+> > >  > It’s not that they didn’t/can’t verify, it’s already verified,
+> > > they’re claiming those versions no longer being officially supported
+> > > means they can seemingly omit them from CVE reporting.
+> > >  >
+> > >  > Which is dangerous, misleading, and nonsensical.
+> > >
+> > > While i fully agree with this be aware that CVE entries could generally
+> > > contain incomplete information:
+> > >
+> > > After requesting an update of a CVE entry via the MITRE CVE forum in the
+> > > past to add additional affected products for a different vendor (which
+> > > wasn't even the assigning CNA like it is the case for Oracle here) my
+> > > request was rejected by MITRE with the following rationale given:
+> >
+> > The CNA that assigned that CVE is Oracle, so Oracle is the CNA to talk
+> > to to make changes to it. MITRE won't make changes to it as they're
+> > not the CNA behind that CVE.
+> >
+> > >  > A CVE description does not necessarily contain all the affected 
+> > > products or versions and is not part of CVE ID requirements. The
+> > > products are documented in the CVE references.
+> > > This is also matching my experiences with various other products / 
+> > > vendors and related CVE entries for these.
+> >
+> > Right, this is documented in the CNA rules [1]:
+> >
+> > "8.2.1 MUST provide enough information for a reader to have a
+> > reasonable understanding of what products are affected. If the
+> > affected products are not explicitly listed in the description, then
+> > the CNA MUST provide a reference that points to the known affected
+> > products."
+> >
+> > [1] https://www.cve.org/ResourcesSupport/AllResources/CNARules#section_8-2_cve_record_prose_description_requirements
+> 
+> Yes, indeed / in know (since then) but it wasn't clear if all participants in this thread are aware of this fact.
+> 
+> But i just have noticed that my posting was only partly relevant for the quoted message and the question of the OP "Why is this being allowed…" because i have missed that Oracle (if they as the assigning CNA are aware that Java 15 and 16 are affected) AFAICT indeed haven't provided any reference so far about all known affected versions / products.
+> 
 
-I have seen some kernel developers say that the "security bugs" that
-get attention are no different from dozens of other bugfixes that are
-committed to the kernel every cycle.
+Their April 2022 CPU (Critical Patch Update) Advisory, which is a
+reference of CVE-2022-21449, is pretty comprehensive:
 
-If I've understood the complaint correctly they feel like we, the security
-community, are engaging in a dog-and-pony show around ten percent of the
-actual problems in the kernel. The other ninety percent get obfuscated
-commit messages and no one makes a fuss, because it's just way easier
-that way.
+https://www.oracle.com/security-alerts/cpuapr2022.html#AppendixJAVA
 
-I suspect there's some truth to it.
-
-(We get hyperbolic reports from security researchers with proof-of-concept
-exploits that are basically syzkaller reproducers and while they look
-like they're real issues, it's hard to get excited when it's just .1%
-of syzkaller's findings.)
-
-Is this how the wider kernel community sees the various downstream
-security efforts?
-
-If this accurately describes feelings held by Linux developers, perhaps we
-need larger changes. Ubuntu has (far too many) kernel trees and the only
-way we can keep track of the CVEs is via our break-fix lines that show
-when issues were introduced and when they were fixed. The Fixes: lines in
-commit messages are wonderful assistances here.
-
-Given how much effort it takes me to assign CVEs for kernel issues, I've
-wondered before if we (me, us, the community as a whole, etc) ought to
-have a very standard and lightweight way to publish kernel CVEs, something
-that's not much more than the Fixes: lines already in the commits.
-
-I know this discussion didn't start around assigning CVEs to kernel
-issues, but if we're missing more than we're handling, perhaps it ought to
-be part of the discussion.
-
-Thanks
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Supported versions affected: "Oracle Java SE: 17.0.2, 18; Oracle
+GraalVM Enterprise Edition: 21.3.1, 22.0.0.2"
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
