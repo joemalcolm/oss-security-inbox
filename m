@@ -1,29 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/04/8
-Message-ID: <Y2V8FtuEeMuBjf1u@gentoo.org>
-Date: Fri, 4 Nov 2022 15:54:46 -0500
-From: John Helmert III <ajak@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/02/1
+Message-ID: <667aaf4d-c78e-c139-2ec9-cbfd8d858bcc@greenbone.net>
+Date: Mon, 2 May 2022 14:53:07 +0200
+From: Christian Fischer <christian.fischer@...enbone.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-42920: Apache Commons BCEL prior to 6.6.0 allows producing arbitrary bytecode via out-of-bounds writing
+Subject: Re: CVE-2022-21449 and version reporting
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Nov 04, 2022 at 05:35:34PM +0000, Gary D. Gregory wrote:
-> Description:
+On 01.05.22 16:38, John Helmert III wrote:
+> On Sat, Apr 30, 2022 at 09:09:16PM +0200, Christian Fischer wrote:
+>> On Saturday, April 30, 2022 17:38 CEST, John Helmert III <ajak@...too.org> wrote:
+>>
+>>> On Sat, Apr 30, 2022 at 01:24:36PM +0200, Christian Fischer wrote:
+>>>>   > It’s not that they didn’t/can’t verify, it’s already verified,
+>>>> they’re claiming those versions no longer being officially supported
+>>>> means they can seemingly omit them from CVE reporting.
+>>>>   >
+>>>>   > Which is dangerous, misleading, and nonsensical.
+>>>>
+>>>> While i fully agree with this be aware that CVE entries could generally
+>>>> contain incomplete information:
+>>>>
+>>>> After requesting an update of a CVE entry via the MITRE CVE forum in the
+>>>> past to add additional affected products for a different vendor (which
+>>>> wasn't even the assigning CNA like it is the case for Oracle here) my
+>>>> request was rejected by MITRE with the following rationale given:
+>>>
+>>> The CNA that assigned that CVE is Oracle, so Oracle is the CNA to talk
+>>> to to make changes to it. MITRE won't make changes to it as they're
+>>> not the CNA behind that CVE.
+>>>
+>>>>   > A CVE description does not necessarily contain all the affected
+>>>> products or versions and is not part of CVE ID requirements. The
+>>>> products are documented in the CVE references.
+>>>> This is also matching my experiences with various other products /
+>>>> vendors and related CVE entries for these.
+>>>
+>>> Right, this is documented in the CNA rules [1]:
+>>>
+>>> "8.2.1 MUST provide enough information for a reader to have a
+>>> reasonable understanding of what products are affected. If the
+>>> affected products are not explicitly listed in the description, then
+>>> the CNA MUST provide a reference that points to the known affected
+>>> products."
+>>>
+>>> [1] https://www.cve.org/ResourcesSupport/AllResources/CNARules#section_8-2_cve_record_prose_description_requirements
+>>
+>> Yes, indeed / in know (since then) but it wasn't clear if all participants in this thread are aware of this fact.
+>>
+>> But i just have noticed that my posting was only partly relevant for the quoted message and the question of the OP "Why is this being allowed…" because i have missed that Oracle (if they as the assigning CNA are aware that Java 15 and 16 are affected) AFAICT indeed haven't provided any reference so far about all known affected versions / products.
+>>
 > 
-> Apache Commons BCEL has a number of APIs that would normally only allow changing specific class characteristics. However, due to an out-of-bounds writing issue, these APIs can be used to produce arbitrary bytecode. This could be abused in applications that pass attacker-controllable data to those APIs, giving the attacker more control over the resulting bytecode than otherwise expected. Update to Apache Commons BCEL 6.6.0.
+> Their April 2022 CPU (Critical Patch Update) Advisory, which is a
+> reference of CVE-2022-21449, is pretty comprehensive:
 > 
-> This issue is being tracked as BCEL-363
+> https://www.oracle.com/security-alerts/cpuapr2022.html#AppendixJAVA
 > 
-> Credit:
-> 
-> Reported by Felix Wilhelm (Google); GitHub pull request to Apache Commons BCEL #147 by Richard Atkins (https://github.com/rjatkins); PR derived from OpenJDK (https://github.com/openjdk/jdk11u/) commit 13bf52c8d876528a43be7cb77a1f452d29a21492 by Aleksei Voitylov and RealCLanger (Christoph Langer https://github.com/RealCLanger)
-> 
+> Supported versions affected: "Oracle Java SE: 17.0.2, 18; Oracle
+> GraalVM Enterprise Edition: 21.3.1, 22.0.0.2"
 
-This appears to be a duplicate of CVE-2022-34169 (also issued by the
-Apache CNA), and previously discussed on this list at [1]. It was
-eventually reported to the list that the vulnerability was actually in
-bcel [2].
+Maybe there is a misunderstanding, just to clarify:
 
-[1] https://www.openwall.com/lists/oss-security/2022/07/19/5
-[2] https://www.openwall.com/lists/oss-security/2022/10/18/2
-Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
+1. Oracle Java 15, 16, 17 and 18 are known to be affected
+2. Oracle seems to be aware of this (see the various previous comments / 
+the blog post linked by the OP)
+3. The CVE description doesn't reflect that Java 15 and 16 is affected 
+(only Java 17 and 18 is listed there as vulnerable)
+4. The related entry for CVE-2022-21449 on the April 2022 CPU is also 
+not reflecting this (only Java 17 and 18 is listed there as vulnerable)
+
+and that's what is currently discussed in this thread.
