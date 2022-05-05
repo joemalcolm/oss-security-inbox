@@ -1,25 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/30/2
-Message-ID: <20220330201136.GA3061879@millbarge>
-Date: Wed, 30 Mar 2022 20:11:36 +0000
-From: Seth Arnold <seth.arnold@...onical.com>
-To: Jeffrey Walton <noloader@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: SpringShell and recent OpenJDK updates
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/05/3
+Message-ID: <CADk+mPB6u97n6EsXZtmUXKn1kXaH7xtSUz3vo3Q4FoOv-RF9UQ@mail.gmail.com>
+Date: Thu, 5 May 2022 14:10:43 +0200
+From: Rainer Gerhards <rgerhards@...adiscon.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2022-24903: rsyslog < 8.2204.1 heap buffer overrun
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 30, 2022 at 02:31:41PM -0400, Jeffrey Walton wrote:
-> I saw Ubuntu patched OpenJDK 11 recently. [1] Was that due to SpringShell? [2]
-> 
-> Or stepping back a bit, did the SpringShell folks work with distros?
-> Or did they really drop a 0-day?
-> 
-> [1] https://ubuntu.com/security/notices/USN-5313-2
-> [2] https://www.cyberkendra.com/2022/03/springshell-rce-0-day-vulnerability.html
+Severity: High | CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H
 
-Hello Jeff, as far as I know, Ubuntu received no communication from
-anyone about SpringShell. These are just bugfixes.
+This is a worst case rating. When syslog best practices are applied
+(no Internet access to rsyslog receivers) the severity is lower.
+Details below.
 
-Thanks
+Advisory: https://github.com/rsyslog/rsyslog/security/advisories/GHSA-ggw7-xr6h-mmr8#advisory-comment-72243
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Advisory content:
+
+### Impact
+Modules for TCP syslog reception have a heap buffer overflow when
+octet-counted framing is used. The attacker can corrupt heap values,
+leading to data integrity issues and availability impact. Remote code
+execution is unlikely to happen but not impossible.
+
+### Affected modules
+* `imtcp`
+* `imptcp`
+* `imhttp` (contributed module)
+* `imgssapi` (long-term semi-contributed module)
+* `imdiag`
+
+### Details
+The bug occurs when the octet count is read. While there is a check
+for the maximum number of octets, digits are written to a heap buffer
+even when the octet count is over the maximum, This can be used to
+overrun the memory buffer. This can also be used to corrupt other heap
+buffers. Once the sequence of digits stop, no additional characters
+can be added to the buffer. In our opinion, this makes remote exploits
+impossible or at least highly complex.
+
+Octet-counted framing is one of two potential framing modes. It is
+relatively uncommon, but enabled by default on receivers.
+
+Modules `imtcp`, `imptcp`, `imgssapi`, and `imhttp` are used for
+regular syslog message reception. It is best practice not to directly
+expose them to the public. When this practice is followed, the risk is
+considerably lower.
+
+Module `imdiag` is a diagnostics module primarily intended for
+testbench runs. We do not expect it to be present on any production
+installation.
+
+### Patches
+The patch is available via commit ID [PUT HERE].
+
+### Workarounds
+Octet-counted framing is not very common. Usually, it needs to be
+specifically enabled at senders. If users do not need it, they can
+turn it off for the most important modules. This will mitigate the
+vulnerability. How to do this depends on the module:
+
+* For `imtcp`. `imptcp`, add `SupportOctetCountedFraming="off"` to the
+`input()` definition.
+  Docs: https://www.rsyslog.com/doc/v8-stable/configuration/modules/imtcp.html,
+https://www.rsyslog.com/doc/v8-stable/configuration/modules/imptcp.html,
+https://www.rsyslog.com/doc/v8-stable/configuration/modules/imhttp.html
+* For `imgssapi`octet.-counted framing cannot be turned off.
+* For `imdiag` octect-counted framing cannot be turned off. However,
+`imdiag` should never be present on production systems.
+
+Note that while octet-counted framing can be disabled sending systems
+have to explicitly enable it, but by default receiving systems
+autodetect if it's in use. The 'normal' reason to enable it is if you
+are sending logs with embedded newlines.
+
+### For more information
+
+If you have any questions or comments about this advisory:
+* Open an issue in [rsyslog repo](http://github.com/rsyslog)
+* Post to the [rsyslog mailing
+list](https://lists.adiscon.net/mailman/listinfo/rsyslog)
+
+Credits to Peter Agten for initially reporting the issue and working
+with us on the resolution.
+
+Rainer Gerhards
