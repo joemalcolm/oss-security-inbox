@@ -1,21 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/30/5
-Message-ID: <ce81839a-b84e-5741-af68-f06383d66022@apache.org>
-Date: Tue, 30 Aug 2022 17:09:20 +0000
-From: Kirk Lund <klund@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-37023: Apache Geode deserialization of untrusted data flaw when using REST API on Java 8 or Java 11 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/09/1
+Message-ID: <62df0f69-5768-80ea-9dbf-f3e1c6f1e69c@activis.me>
+Date: Mon, 9 May 2022 12:54:56 +0400
+From: Archange <archange@...ivis.me>
+To: oss-security@...ts.openwall.com, Jan Lehnardt <jan@...che.org>
+Subject: Re: CVE-2022-24706: Apache CouchDB: Remote Code Execution Vulnerability in Packaging
 Content-Type: text/plain; charset=utf-8
 
-Severity: high - possible RCE
+Hi,
 
-Description:
+Le 26/04/2022 à 12:44, Jan Lehnardt a écrit :
+> […]
+>
+> In addition, all binary packages have been updated to bind `epmd` as
+> well as the CouchDB distribution port to `127.0.0.1` and/or `::1`
+> respectively.
+>
+> Credit:
+>
+> The Apache CouchDB Team would like to thank Alex Vandiver <alexmv@...ip.com> for the report of this issue.
+>
+> References:
+>
+> https://lists.apache.org/thread/w24wo0h8nlctfps65txvk0oc5hdcnv00
 
-Apache Geode versions prior to 1.15.0 are vulnerable to a deserialization of untrusted data flaw when using REST API on Java 8 or Java 11.
+Regarding epmd, how is this achieved in the binary packages? Because on 
+Arch at least, setting `ERL_EPMD_ADDRESS=127.0.0.1` as stated in 
+https://github.com/apache/couchdb/issues/999#issuecomment-345068280 is 
+still required. Should Arch make that a default in the systemd service 
+file? For now this has just been a recommandation for single node 
+security since 2017 
+(https://wiki.archlinux.org/title/CouchDB#Single_node_setup_&_Security), 
+but I can make it the default (the second part of the wiki advice being 
+now an upstream default, I think it would make some sense).
 
-Any user wishing to protect against deserialization attacks involving REST APIs should upgrade to Apache Geode 1.15 and follow the documentation for details on enabling "validate-serializable-objects=true" and specifying any user classes that may be serialized/deserialized with "serializable-object-filter". Enabling "validate-serializable-objects" may impact performance.
-
-Mitigation:
-
-Disable affected services such as JMX over RMI or REST APIs unless they are required. REST APIs can be disabled by setting `http-service-port` to zero.
+Regards,
+Bruno/Archange (Arch maintainer for CouchDB)
 
