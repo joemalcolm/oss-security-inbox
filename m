@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6468" "Thursday" "27" "August" "2015" "15:33:51" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150827193351.35E1E52E5B7@smtpvbsrv1.mitre.org>" "146" "[oss-security] Re: CVE Request: MediaWiki 1.25.2, 1.24.3, 1.23.10" nil nil nil "8" "2015082719:33:51" "[oss-security] Re: CVE Request: MediaWiki 1.25.2, 1.24.3, 1.23.10" (number mark "U       cve-assign@m Aug 27  146/6468  " thread-indent "\"[oss-security] Re: CVE Request: MediaWiki 1.25.2, 1.24.3, 1.23.10\"\n") "<CAKcmtDz8vumgDXa8Y=bZiEEKyMLET5VDPNSgLk+mo0JsaqY5xg@mail.gmail.com>" ("<CAKcmtDz8vumgDXa8Y=bZiEEKyMLET5VDPNSgLk+mo0JsaqY5xg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9991 invoked by uid 550); 27 Aug 2015 19:34:03 -0000
+Received: (qmail 7408 invoked by uid 550); 9 May 2022 11:51:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,158 +7,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9964 invoked from network); 27 Aug 2015 19:34:03 -0000
-From: cve-assign@mitre.org
-To: csteipp@wikimedia.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CAKcmtDz8vumgDXa8Y=bZiEEKyMLET5VDPNSgLk+mo0JsaqY5xg@mail.gmail.com>
-Message-Id: <20150827193351.35E1E52E5B7@smtpvbsrv1.mitre.org>
-Date: Thu, 27 Aug 2015 15:33:51 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: MediaWiki 1.25.2, 1.24.3, 1.23.10
+Received: (qmail 5887 invoked from network); 9 May 2022 08:55:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=activis.me; s=dkim;
+	t=1652086501;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=KzYflW3/vJdulXnRWa4iENaBYDDflgHf1vRo8+90B2Q=;
+	b=Nq8cohMgiy7Es/dCvYnvHLNiSolxom6ugYvdkS8H8CkyZR0MJyV7JUoKOw0+jPII/CHh6W
+	xWCAC5iYPr7BtC7Kjh7CKz38zdPrm/bRRgQ9L9CPnKtGiuuOTTAVlvx8wt1yEuPbrGazzO
+	+MZwIovLJ5o1Bu4o6lnY63czV5NbHlfpTokyL2LPS5sMnvK29HUr4DGZ21tEFyRMt8fL8w
+	OuZV+bo25AS1PZehAx0uAEYadV1gcciiCxaQag+vs8EmGbbc8f2RMG7hMWfAgSFykpLKt+
+	UiV60Sn2+CQemrEC963DzPGnxXetTIilP4xDl9K0bb1CA/E/9KQINhJge9Sthw==
+Message-ID: <62df0f69-5768-80ea-9dbf-f3e1c6f1e69c@activis.me>
+Date: Mon, 9 May 2022 12:54:56 +0400
+MIME-Version: 1.0
+Content-Language: fr-FR
+To: oss-security@lists.openwall.com, Jan Lehnardt <jan@apache.org>
+References: <a388a13c-2f49-a36d-668a-633583013717@apache.org>
+From: Archange <archange@activis.me>
+In-Reply-To: <a388a13c-2f49-a36d-668a-633583013717@apache.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] CVE-2022-24706: Apache CouchDB: Remote Code
+ Execution Vulnerability in Packaging
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> * Internal review discovered that Special:DeletedContributions did not
-> properly protect the IP of autoblocked users. This fix makes the
-> functionality of Special:DeletedContributions consistent with
-> Special:Contributions and Special:BlockList.
-> <https://phabricator.wikimedia.org/T106893>
+Le 26/04/2022 à 12:44, Jan Lehnardt a écrit :
+> […]
+>
+> In addition, all binary packages have been updated to bind `epmd` as
+> well as the CouchDB distribution port to `127.0.0.1` and/or `::1`
+> respectively.
+>
+> Credit:
+>
+> The Apache CouchDB Team would like to thank Alex Vandiver <alexmv@zulip.com> for the report of this issue.
+>
+> References:
+>
+> https://lists.apache.org/thread/w24wo0h8nlctfps65txvk0oc5hdcnv00
 
-The DESCRIPTION section of T106893 refers to a similar issue that
-existed in other code until 2013. As far as we can tell, both issues
-have security relevance for the same reason (although the first issue
-was debated at the time). So, we think it will be best to use
-CVE-2015-6727 for the issue fixed in the
-https://github.com/wikimedia/mediawiki/commit/5faabfa1bbf65536ea36108887040198afcb3c82
-commit, and CVE-2013-7444 for the issue fixed in the
-https://github.com/wikimedia/mediawiki/commit/dc2966bd05b69321300c63fd0bd78e7c78ecea6e
-commit.
+Regarding epmd, how is this achieved in the binary packages? Because on 
+Arch at least, setting `ERL_EPMD_ADDRESS=127.0.0.1` as stated in 
+https://github.com/apache/couchdb/issues/999#issuecomment-345068280 is 
+still required. Should Arch make that a default in the systemd service 
+file? For now this has just been a recommandation for single node 
+security since 2017 
+(https://wiki.archlinux.org/title/CouchDB#Single_node_setup_&_Security), 
+but I can make it the default (the second part of the wiki advice being 
+now an upstream default, I think it would make some sense).
 
+Regards,
+Bruno/Archange (Arch maintainer for CouchDB)
 
-> * Internal review discovered that watchlist anti-csrf tokens were not being
-> compared in constant time, which could allow various timing attacks. This
-> could allow an attacker to modify a user's watchlist via csrf.
-> <https://phabricator.wikimedia.org/T94116>
-
-Use CVE-2015-6728.
-
-
-> * John Menerick reported that MediaWiki's thumb.php failed to sanitize
-> various error messages, resulting in xss.
-> <https://phabricator.wikimedia.org/T97391>
-
-Based on the T97391 "Apr 28 2015, 5:58 PM" comment describing both
-"Confirmed the rel404 issue" and "ForeignAPI images also have an xss"
-vectors, it appears that the original John Menerick report was about
-"unvalidated or sanitized parameters are pulled from the client's
-request" and that the f parameter wasn't necessarily known to be
-exploitable when that report was written. (Maybe this isn't accurate
-because the "attached image" in the original report is apparently
-unavailable.) In any case, use CVE-2015-6729 for the John Menerick XSS
-report, and use CVE-2015-6730 for the internal XSS discoveries.
-
-
-> * Extension:SemanticForms - MediaWiki user Grunny discovered multiple
-> reflected xss vectors in SemanticForms. Further internal review discovered
-> and fixed other reflected and stored xss vectors.
-> <https://phabricator.wikimedia.org/T103391>
-> <https://phabricator.wikimedia.org/T103765>
-> <https://phabricator.wikimedia.org/T103761>
-
-Use CVE-2015-6731 for the Grunny XSS report, and use CVE-2015-6732 for
-the internal XSS discoveries.
-
-There is currently no CVE ID for the "The Special:CreateForm post to
-add the template doesn't check the csrf token, so it can be submitted
-for a user via csrf" statement in the T103761 DESCRIPTION section. We
-aren't sure about this, but we think that a CSRF token check there is
-not thought to be required. If a CSRF token check there is thought to
-be required, then another CVE ID can be assigned.
-
-
-> * Extension:SyntaxHighlight_GeSHi - xss and potential DoS vectors. Internal
-> review discovered that the contib directory for GeSHi was re-included in
-> MediaWiki 1.25. Some scripts could be potentially be used for DoS, and DAU
-> Huy Ngoc discovered an xss vector. All contrib scripts have been removed.
-> <https://phabricator.wikimedia.org/T108198>
-
-There are multiple options with which this topic could be covered in
-CVE, e.g.,
-
-  1. It is a single integration-policy error. In other words, the
-     policy is that Extension:SyntaxHighlight_GeSHi may have an update
-     at any time from the upstream GeSHi source code, but the contrib
-     directory must be excluded. A person who did an update did not
-     follow that policy.
-
-  2. The problems with using the upstream contrib directory within
-     MediaWiki need to be considered individually.
-
-We're using option 2.
-
-"Some scripts could be potentially be used for DoS" is not really
-enough information, because distinct types of DoS can't always be
-combined into one CVE ID. We think the only known DoS problem is
-resource consumption from otherwise correct algorithms, as mentioned
-at http://qbnz.com/highlighter/ with "GeSHi aims to do this all as
-quickly as possible. Many customisable features of GeSHi facilitate
-speed increases, and you can easily find a balance between the amount
-of highlighting done and the speed in which it is done." Use
-CVE-2015-6733 for this type of resource-consumption DoS, which has
-security relevance within the MediaWiki product.
-
-Use CVE-2015-6734 for the cssgen.php keywords-1 XSS. (Although not
-directly related to CVE assignment, it's possible that that XSS hasn't
-been reported upstream because it's not listed on the
-https://github.com/GeSHi/geshi-1.0/commits/master/src/contrib/cssgen.php
-page.)
-
-
-> * Extension:TimedMediaHandler - User:McZusatz reported that resetting
-> transcodes deleted the transcode without creating a new one, which could be
-> used for vandalism or potentially DoS.
-> <https://phabricator.wikimedia.org/T100211>
-
-Use CVE-2015-6735.
-
-
-> * Extension:Quiz - Internal review discovered that Quiz did not properly
-> escape regex metacharacters in a user controlled regular expression,
-> enabling a DoS vector.
-> <https://phabricator.wikimedia.org/T97083>
-
-Use CVE-2015-6736.
-
-
-> * Extension:Widgets - MediaWiki developer Majr reported a potential HTML
-> injection (xss) vector.
-> <https://phabricator.wikimedia.org/T88964>
-
-Use CVE-2015-6737. We think that the primary vulnerability is that the
-approach to integrity protection is wrong, and that the HTML injection
-is resultant from this. In any case, we think that only one CVE ID is
-needed for T88964.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJV32WdAAoJEL54rhJi8gl5KxcQAKlVrS3ikXXKM8qxnNFpEJUC
-hP39Qbz6FY6mvPlXw199gZsgoIGMBfjmg4+NFwH3W+gksbpieUWcd71Mc5mGb0dY
-to1w7kFiDsgroearzKWQq96N+qBoF+erQtYFIfEXhJGi4DTOyTuXor0W4YfcFfPT
-+VTp3RiyB4l6njQ7oxEBF0fvmNRdJX5fqvUU/VxEjhWLqjvWZmcC+lNRIXaat4sA
-XqDa6ktW/rCdYDMZLsnMibqx8R6Z8nI7PFAJoijFFwfzREMAnkEoPDzttM4Q2g0q
-IpEqbhrxJUFXllIUOcfmAz3f4zVvaMCJpJeU2e36zwQ5tpOEern2/TJM0OkNHJrL
-nwaatdyYXJd8oFrId0lUlSa66BXqmakOu09qUrF06p1CtLPQd4YSufdMNbY0g6aL
-28rP/Y/pd0KV770MLux/FfeDdNkkbYCSX+kWq0xJHepOTaqrpd9t8nlFzK9SB3D9
-bylKhU0JSG3H5Z4vTMIVbJU2tI6aPJ0tIfYJ46UChzbhyDlHUrqkUiCUP76gGGR/
-Iu2xAfXOOtaLXJpTWKElX+NZyYfzoULxklTImdF0FpS8sqlX2LpA/YuMWgcwcD1z
-a4os1wcHJhPgbG6vBHp7uYoav0e1iW7nTbjCTpZi/sGYp7KQpHsgYsNhNPyydiSz
-Z9r2ydLeSD5uag51jEtH
-=vozk
------END PGP SIGNATURE-----
