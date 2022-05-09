@@ -1,4 +1,4 @@
-Received: (qmail 3524 invoked by uid 550); 2 Nov 2022 14:09:35 -0000
+Received: (qmail 11349 invoked by uid 550); 9 May 2022 11:51:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,72 +7,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3503 invoked from network); 2 Nov 2022 14:09:35 -0000
-Date: Wed, 2 Nov 2022 15:09:21 +0100
-From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20221102150921.3ab3f2d0@computer>
-In-Reply-To: <20221101170833.GA10470@openwall.com>
-References: <20221101170833.GA10470@openwall.com>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.34; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature";
- micalg=pgp-sha256; boundary="=_zucker.schokokeks.org-8868-1667398163-0001-2"
-Subject: Re: [oss-security] OpenSSL X.509 Email Address 4-byte Buffer
- Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer
- Overflow (CVE-2022-3786)
+Received: (qmail 30277 invoked from network); 9 May 2022 09:46:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=activis.me; s=dkim;
+	t=1652089565;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=yWM8BYnrB8cJZr/ON+4KaGdGFlzJVux9c/cAguvZMNk=;
+	b=LoeyIeQMSK7NeHm3vwfHlSC4JN3i2y3tW/Y5+fA8dAwAPzMW3CeA6eTfmNZHkIuNBo6dWh
+	1RyzOnGmBTIJkwmlfp57S78svcRB4HM53Lcqea9sGV79WOvkguqrjE5pD/STQ/g42BfHyY
+	2HQf9rfdhwQ3Bk3kMD/jlRwjZYKOCl4EZftAbryvXemdiArsiHxfhHJVhBuHJ9o2BbfyvS
+	NVXWNZ5Ywg2hBJWtzzfK1jwsfKLrHYqyxwpIsGtEnAAzCSQ3tvMXIt2q0evFF7EwMlkJVc
+	7lwp4aKswG/1LVJEqSaM8znaNi/i8OccgC1FGQBLPne4jQHM6SoP/ksqT3qgcw==
+Message-ID: <76ef068a-c6d3-109d-6e70-84007151f487@activis.me>
+Date: Mon, 9 May 2022 13:46:00 +0400
+MIME-Version: 1.0
+Content-Language: fr-FR
+To: Jan Lehnardt <jan@apache.org>
+Cc: oss-security@lists.openwall.com,
+ Security CouchDB <security@couchdb.apache.org>
+References: <a388a13c-2f49-a36d-668a-633583013717@apache.org>
+ <62df0f69-5768-80ea-9dbf-f3e1c6f1e69c@activis.me>
+ <063FB760-CBFF-4669-9BDD-49B9D1CD56DD@apache.org>
+From: Archange <archange@activis.me>
+In-Reply-To: <063FB760-CBFF-4669-9BDD-49B9D1CD56DD@apache.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] CVE-2022-24706: Apache CouchDB: Remote Code
+ Execution Vulnerability in Packaging
 
---=_zucker.schokokeks.org-8868-1667398163-0001-2
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Le 09/05/2022 à 13:41, Jan Lehnardt a écrit :
+> Hi Bruno,
+>
+> first of all, thanks for maintaining CouchDB for Arch. Secondly, for any security related questions, please do not hesitate to contact security@couchdb.apache.org instead of any one of the team individually, as we can’t know if any of is available at all times (vacations and whatnot :)
 
-FWIW it only takes a basically trivial fuzz target on the affected
-function to find this bug with libfuzzer.
+Sure, you should put this address in copy when posting to oss-security 
+then, so you would be sure people reply to that one too. ;)
 
-In OpenSSL 3.0.5 code do:
+> As for your questions, see this PR to our packaging infrastructure for how we handle this on Debian and Centos/Rocky: https://github.com/apache/couchdb-pkg/pull/92/files
 
-./config no-shared CC=3Dclang CFLAGS=3D"-fsanitize=3Dfuzzer-no-link,address"
-clang -fsanitize=3Dfuzzer,address -I$(pwd)/include punyfuzz.c libcrypto.a
+Thanks, so you use a default env file to set the variable and allow 
+people to easily change it in the case of a clustered setup. Will do so 
+as well then!
 
-with this in punyfuzz.c:
+Regards,
+Bruno
 
-#include <stddef.h>
-#include <stdint.h>
-#include "crypto/punycode.h"
-
-int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
-  unsigned int bar[32];
-  unsigned int x =3D 32;
-  ossl_punycode_decode((const char *)data, size, bar, &x);
-  return 0;
-}
-
-Run ./a.out and it'll crash with an ASAN error almost instantly.
-
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
-
---=_zucker.schokokeks.org-8868-1667398163-0001-2
-Content-Type: application/pgp-signature
-Content-Transfer-Encoding: 7bit
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEn3wfQCCb9MicJwD8dkhfABMwL8oFAmNiehEACgkQdkhfABMw
-L8qp2xAAiuDFK3Gc8Qq13swaLmh0tuRz0/EWnnbadivxtY7bJ2nUZjDjQXTlr8Cd
-VgKiy9H6TDOw5B1aR1q+EiQs4VIIZPMA8FnftyRgA/GuckaTs7YYGpai3LNxOtZE
-h/ZwpjrKzZ5sHEYev029eY+NFFNfzTKhc+GU7UgFTD1bZTlFABcN71LIZYdQ5BR3
-YXjlVR8RYAwurXcAwp+wTmYQnWrGttYMNKQIv78gEKxcDpIIUmPPcAo93piKAc98
-y/LrSLcG5t2ZfRh8qyPLR0Tvu3xpWentWYus/6JV7dvoL2vESc/926f5pZkVhgQC
-/1ATeF6o9m9oSEjeZFxPf6LW7ez6lKpCGXurTCGgZmCKPZ5jtxNpevZGPOfFqUYp
-zNlllkXy8H6s9lLt+p/TbYPBJ5waznMWoSwWMS7FTo4HxkW4hJAZVy1F7N1Kb2jP
-b9+NOZQNJnZOgkCs1U/5NCxLTz+kSem1kl1AZxVrl7XDqdcwPU1CEUTLR8X2eQ5b
-4TL4mHKh/hEIM+ZZNv+0k9bu+PdLSvnxb527fnaXXjECQTENffEa5La0o3xpAvdk
-PMX9WjvOjeyAQH9+4ksCDRLzI0DjGDT03oPkusLRYUKpxut/befFjNbOJG5KZseM
-Yhs6L/zt8ywWkIhQz6JqPT9TPag0BDmkv6a3PuIsQRym/7DQyCY=
-=T3J/
------END PGP SIGNATURE-----
-
---=_zucker.schokokeks.org-8868-1667398163-0001-2--
