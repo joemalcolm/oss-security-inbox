@@ -1,33 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/04/9
-Message-Id: <292ca9a8-6552-460a-a780-c358fd842a89n@googlegroups.com>
-Date: Fri, 4 Nov 2022 14:04:07 -0700 (PDT)
-From: "soyjuanarbol@...il.com" <soyjuanarbol@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Fwd: Node.js security updates for all active release lines, November 2022
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/09/4
+Message-Id: <347664F1-79BA-433D-BF04-1D015A074C84@apache.org>
+Date: Mon, 9 May 2022 12:36:58 +0200
+From: Jan Lehnardt <jan@...che.org>
+To: Archange <archange@...ivis.me>
+Cc: oss-security@...ts.openwall.com, Security CouchDB <security@...chdb.apache.org>
+Subject: Re: CVE-2022-24706: Apache CouchDB: Remote Code Execution Vulnerability in Packaging
 Content-Type: text/plain; charset=utf-8
 
 
+> On 9. May 2022, at 11:46, Archange <archange@...ivis.me> wrote:
+> 
+> Le 09/05/2022 à 13:41, Jan Lehnardt a écrit :
+>> Hi Bruno,
+>> 
+>> first of all, thanks for maintaining CouchDB for Arch. Secondly, for any security related questions, please do not hesitate to contact security@...chdb.apache.org instead of any one of the team individually, as we can’t know if any of is available at all times (vacations and whatnot :)
+> 
+> Sure, you should put this address in copy when posting to oss-security then, so you would be sure people reply to that one too. ;)
 
----------- Forwarded message ---------
-From: soyjuanarbol@...il.com <soyjuanarbol@...il.com>
-Date: Friday, November 4, 2022 at 4:03:42 PM UTC-5
-Subject: Node.js security updates for all active release lines, November 
-2022
-To: nodejs-sec <nodejs-sec@...glegroups.com>
+This is automated by ASF infrastructure, I sadly have no say over this. But maybe we can a footer with the address next time :)
 
+> 
+>> As for your questions, see this PR to our packaging infrastructure for how we handle this on Debian and Centos/Rocky: https://github.com/apache/couchdb-pkg/pull/92/files
+> 
+> Thanks, so you use a default env file to set the variable and allow people to easily change it in the case of a clustered setup. Will do so as well then!
+> 
 
-The Node.js project has now released new versions of all supported release 
-lines.
-For more information see: 
-https://nodejs.org/en/blog/vulnerability/november-2022-security-releases/
+Perfect, thanks!
+Jan
+—
 
-On Tuesday, November 1, 2022 at 5:37:56 PM UTC-5 soyjua...@...il.com wrote:
-
-> The Node.js project will release new versions of all supported release 
-> lines on or shortly after Thursday, 3rd of November, 2022
-> For more information see: 
-> https://nodejs.org/en/blog/vulnerability/november-2022-security-releases/
->
-
-Content of type "text/html" skipped
