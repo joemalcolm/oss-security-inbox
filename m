@@ -1,19 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/29/3
-Message-ID: <e3f656ef-0bb1-edf0-57f8-d62352a6675a@apache.org>
-Date: Tue, 29 Nov 2022 14:21:52 +0000
-From: Arnout Engelen <engelen@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-44635: Apache Fineract allowed an authenticated user to perform remote code execution due to path traversal 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/09/3
+Message-ID: <76ef068a-c6d3-109d-6e70-84007151f487@activis.me>
+Date: Mon, 9 May 2022 13:46:00 +0400
+From: Archange <archange@...ivis.me>
+To: Jan Lehnardt <jan@...che.org>
+Cc: oss-security@...ts.openwall.com, Security CouchDB <security@...chdb.apache.org>
+Subject: Re: CVE-2022-24706: Apache CouchDB: Remote Code Execution Vulnerability in Packaging
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+Le 09/05/2022 à 13:41, Jan Lehnardt a écrit :
+> Hi Bruno,
+>
+> first of all, thanks for maintaining CouchDB for Arch. Secondly, for any security related questions, please do not hesitate to contact security@...chdb.apache.org instead of any one of the team individually, as we can’t know if any of is available at all times (vacations and whatnot :)
 
-Description:
+Sure, you should put this address in copy when posting to oss-security 
+then, so you would be sure people reply to that one too. ;)
 
-Apache Fineract allowed an authenticated user to perform remote code execution due to a path traversal vulnerability in a file upload component of Apache Fineract, allowing an attacker to run remote code.  This issue affects Apache Fineract version 1.8.0 and prior versions. We recommend users to upgrade to 1.8.1.
+> As for your questions, see this PR to our packaging infrastructure for how we handle this on Debian and Centos/Rocky: https://github.com/apache/couchdb-pkg/pull/92/files
 
-Credit:
+Thanks, so you use a default env file to set the variable and allow 
+people to easily change it in the case of a clustered setup. Will do so 
+as well then!
 
-We would like to thank  Aman Sapra, co-captain of the Super Guesser CTF team & Security researcher at CRED, for reporting this issue, and the Apache Security team for their assistance.  We give kudos and karma to @Aleksandar Vidakovic for resolving this CVE. 
+Regards,
+Bruno
 
