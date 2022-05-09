@@ -1,54 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/21/6
-Message-ID: <CACT4Y+aqb9V=WO0gsN1DgqimrjHiY3x+KvKGiz7b95jh9gubhw@mail.gmail.com>
-Date: Wed, 21 Dec 2022 18:13:17 +0100
-From: Dmitry Vyukov <dvyukov@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: [Linux] /proc/pid/stat parsing bugs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/09/2
+Message-Id: <063FB760-CBFF-4669-9BDD-49B9D1CD56DD@apache.org>
+Date: Mon, 9 May 2022 11:41:13 +0200
+From: Jan Lehnardt <jan@...che.org>
+To: Archange <archange@...ivis.me>
+Cc: oss-security@...ts.openwall.com, Security CouchDB <security@...chdb.apache.org>
+Subject: Re: CVE-2022-24706: Apache CouchDB: Remote Code Execution Vulnerability in Packaging
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi Bruno,
 
-This is not a single vulnerability, the list of affected software is
-large, but it's not a security issue for all of it.
+first of all, thanks for maintaining CouchDB for Arch. Secondly, for any security related questions, please do not hesitate to contact security@...chdb.apache.org instead of any one of the team individually, as we can’t know if any of is available at all times (vacations and whatnot :)
 
-It occurred to me that most of the Linux procfs /proc/pid/stat and
-/proc/pid/task/tid/stat parsing code out there is buggy. The fine
-contains a set of numbers about the task:
-https://man7.org/linux/man-pages/man5/proc.5.html
+As for your questions, see this PR to our packaging infrastructure for how we handle this on Debian and Centos/Rocky: https://github.com/apache/couchdb-pkg/pull/92/files
 
-e.g. $ cat /proc/self/stat
-1715376 (cat) R 1544883 1715376 1544883 34819 1715376 4194304 106 0 0
-0 0 0 0 0 20 0 1 0 42505561 9207808 237 18446744073709551615
-93955355631616 93955355651497 140737444557056 0 0 0 0 0 0 0 0 0 17 36
-0 0 0 0 0 93955355667504 93955355669120 93955385581568 140737444559745
-140737444559765 140737444559765 140737444564971 0
+Best
+Jan
+—
 
-Most of the code splits it by space and takes an N-th field.
-The problem is that the process name "(cat)" can contain spaces (and
-brackets). Potentially some important software (containers/sandboxes)
-can be tricked into getting wrong data, and I've seen cases close to
-stack overflows (buffer for a fixed number of fields is allocated on
-stack).
+> On 9. May 2022, at 10:54, Archange <archange@...ivis.me> wrote:
+> 
+> Hi,
+> 
+> Le 26/04/2022 à 12:44, Jan Lehnardt a écrit :
+>> […]
+>> 
+>> In addition, all binary packages have been updated to bind `epmd` as
+>> well as the CouchDB distribution port to `127.0.0.1` and/or `::1`
+>> respectively.
+>> 
+>> Credit:
+>> 
+>> The Apache CouchDB Team would like to thank Alex Vandiver <alexmv@...ip.com> for the report of this issue.
+>> 
+>> References:
+>> 
+>> https://lists.apache.org/thread/w24wo0h8nlctfps65txvk0oc5hdcnv00
+> 
+> Regarding epmd, how is this achieved in the binary packages? Because on Arch at least, setting `ERL_EPMD_ADDRESS=127.0.0.1` as stated in https://github.com/apache/couchdb/issues/999#issuecomment-345068280 is still required. Should Arch make that a default in the systemd service file? For now this has just been a recommandation for single node security since 2017 (https://wiki.archlinux.org/title/CouchDB#Single_node_setup_&_Security), but I can make it the default (the second part of the wiki advice being now an upstream default, I think it would make some sense).
+> 
+> Regards,
+> Bruno/Archange (Arch maintainer for CouchDB)
+> 
 
-Some examples:
-OpenJDK:
-https://sourcegraph.com/github.com/openjdk/jdk/-/blob/src/jdk.management/unix/native/libmanagement_ext/OperatingSystemImpl.c?L133-139
-https://sourcegraph.com/github.com/openjdk/jdk8u/-/blob/jdk/src/solaris/native/sun/management/OperatingSystemImpl.c?L223-229
-
-Ansible:
-https://sourcegraph.com/github.com/ansible/ansible/-/blob/lib/ansible/modules/yum.py?L507-510
-
-Libuv:
-https://sourcegraph.com/github.com/libuv/libuv/-/blob/src/unix/linux.c?L674-701
-
-bdwgc:
-https://sourcegraph.com/github.com/mono/linux-packaging-mono/-/blob/external/bdwgc/os_dep.c?L1138-1155
-
-But really most of the code that does it:
-https://sourcegraph.com/search?q=context:global+/%5C%22%5C/proc%5C/.*%5C/stat%5C%22/
-
-The only way to parse it is to do strrchr(')') first (fortunately it
-contains just one unescaped string).
-
-Thanks
