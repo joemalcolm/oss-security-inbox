@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2396" "Saturday" "27" "June" "2015" "00:46:47" "+0530" "Anirudh Anand" "anirudhanand722@gmail.com" "<CAMntfF3xsdLJ9GHbJHDczaS_6jVDZLDM=yu0G-P4bPsgB3vU3g@mail.gmail.com>" "87" "[oss-security] Re: CVE Request: Anchor CMS - Multiple Stored and DOM Based XSS issues" nil nil nil "6" "2015062619:16:47" "[oss-security] Re: CVE Request: Anchor CMS - Multiple Stored and DOM Based XSS issues" (number mark "U       anirudhanand Jun 27   87/2396  " thread-indent "\"[oss-security] Re: CVE Request: Anchor CMS - Multiple Stored and DOM Based XSS issues\"\n") "<CAMntfF3YiZ3dDTTR0Szo4A0KF5z_a-yHjrMA1hA-VxRGiWKMRw@mail.gmail.com>" ("<CAMntfF3YiZ3dDTTR0Szo4A0KF5z_a-yHjrMA1hA-VxRGiWKMRw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 14265 invoked by uid 550); 26 Jun 2015 19:18:50 -0000
+Received: (qmail 6142 invoked by uid 550); 10 May 2022 09:30:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,115 +6,120 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13821 invoked from network); 26 Jun 2015 19:17:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=lhwf8Y6B7ri0seDNp7lE3/oo1wti9KtCV9OCy6KAZj8=;
-        b=PiTZxiw0/hHEgKbjRZuytf/A0OdZURDQULJCN1HBoxifw87k2tPmkK7yuvQfUU4BWp
-         4cI+f2FSzTiOQ3fkHveBpxffuaKZgQaGush6uBKZkSnrsI4jGMqxlYlyjPD+kZ0Z3M5Y
-         cRrxUrpSGPgsEwsLd0SCgaYlJ/YC+oCQO5I6ZuNVxNLcML8APYj2KYm42sd9LEK3wyD7
-         8lE2FYnI6Nt/KdqamOwiCPoNveI2ZqxtFUghof0H/W1T8ci1KSPW0VV73CLGG/wEmRlD
-         qFn4wsC8l0F7OKksWLOgjR0OWF5GzLsEtt+TJ/Xf08RUypAeQo1uEzRT9d05RlRhrUrA
-         04Ow==
-MIME-Version: 1.0
-X-Received: by 10.140.106.101 with SMTP id d92mr4466215qgf.70.1435346208037;
- Fri, 26 Jun 2015 12:16:48 -0700 (PDT)
-In-Reply-To: <CAMntfF3YiZ3dDTTR0Szo4A0KF5z_a-yHjrMA1hA-VxRGiWKMRw@mail.gmail.com>
-References: <CAMntfF3YiZ3dDTTR0Szo4A0KF5z_a-yHjrMA1hA-VxRGiWKMRw@mail.gmail.com>
-Message-ID: <CAMntfF3xsdLJ9GHbJHDczaS_6jVDZLDM=yu0G-P4bPsgB3vU3g@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a113b3744dc247e0519709452
-Date: Sat, 27 Jun 2015 00:46:47 +0530
-From: Anirudh Anand <anirudhanand722@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: Anchor CMS - Multiple Stored and DOM Based XSS issues
-To: oss-security@lists.openwall.com, cve-assign@mitre.org
+Received: (qmail 9867 invoked from network); 10 May 2022 07:00:03 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=f/iTEo48OohH9HRsScGVrPbkr3mS9KQjbP1H1ua64tc=;
+        b=LQQPA5VGZ+j1bXepzzMJaOPxoE4lSAGCIPKBvf1cLvtP6M6gj2nLURhaZbI3JHzz8R
+         IpvTEE03qrws2Trxd/iLhbZMwGyy7KZ3JClAu3HxRvp00fLptUMtpcTs90BYN111sAkd
+         TMt2mjIxQTod59F7BnT7JS3jVw92B1sVKsljb1BgMqxtyJo2ic1ZqOsfYAJ54FolhidJ
+         zapCkjBPAOOI2pE/V0zaROOCzC7E6MeqjV8nwcy31KKtK7E0WpfZ6sLb76UpazoTe98y
+         nbb8nyFA3khyAjHgCDAJiRhOmqPHs3RreKRxFjn1QDaUY6p8jAwuz1n8V7fN5xa8e3qy
+         JSwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=f/iTEo48OohH9HRsScGVrPbkr3mS9KQjbP1H1ua64tc=;
+        b=dz4qhv4pSi4Sgo1KUkwz6BLLEVUMn0huy8RsdqntnVjDx+ssI73/mriraWtFPhV3LA
+         aExqTERE1D0j/LP04fK22LfhK2vQ2bT6rn9awW5TWVuRVdEA0Wf6aMJkMnXE/Qa6IWJn
+         xaIgishmL4GVADmywYWYfgau8aheSrjCXY6KiXaZoLL8s+So0eB3lkJVqFC0Gj+YuQLe
+         U0kJV7ccXSWkSrOqwH8KSQgIMAB8XYSF9sQwEZULC4JOYjl8zd2pFNkgKEVh3d9H23It
+         gpalxOPp/hTXz1X42YZh+RKbYaAJ/Hqb8DW9T/iWZCxlPJ7rBZeoovgLnJWa2mJNb5nD
+         B+YQ==
+X-Gm-Message-State: AOAM531JGPnWBfSr4ffmTCj9eKKV9r9x90a36hemr2RhPUnJVJ1teoKc
+	blNkHpnzjS81OmJahUH0suzii7DMjsmQq0+HIrTwQqWn6gXauhzX
+X-Google-Smtp-Source: ABdhPJxQc/nHtGBNcZdeIkkbSkPiMs2M85tyqw5QX5r/vInBi19DJZp0/eyCghQatHdWnb9Pgc3pUyiuk83ClUGlreQ=
+X-Received: by 2002:a25:c54b:0:b0:649:dfa4:283c with SMTP id
+ v72-20020a25c54b000000b00649dfa4283cmr16133073ybe.434.1652165991431; Mon, 09
+ May 2022 23:59:51 -0700 (PDT)
+MIME-Version: 1.0
+From: Minh Yuan <yuanmingbuaa@gmail.com>
+Date: Tue, 10 May 2022 14:59:15 +0800
+Message-ID: <CAH5WSp5rKR6gaKDAG58nKAiOf4fkzTz-faSFCrX4mo7RNoigFQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="00000000000007860c05dea2df09"
+Subject: [oss-security] Linux kernel: A concurrency use-after-free in bad_flp_intr for latest kernel version
 
---001a113b3744dc247e0519709452
-Content-Type: text/plain; charset=UTF-8
+--00000000000007860c05dea2df09
+Content-Type: text/plain; charset="UTF-8"
 
-Adding Further details regarding the issue: (sorry for not including the
-details in the first mail).
+Hi everyone,
 
-1)
-*Stored/Persistent XSS: *
-While creating a new page (any authenticated user can create a new page),
-the page title is not properly sanitized before saving the input the
-database and hence users inject their own payloads. A sample POC can be
-trying to give the following payload while adding a new page:
+My fuzzer discovered another concurrency uaf between reset_interrupt and
+floppy_end_request in the latest kernel version (5.17.5 for now).
 
-Page title = *page"onmouseover="alert(1)";*
+The root cause is that after deallocating current_req in floppy_end_request,
+reset_interrupt still holds the freed current_req->error_count and accesses
+it concurrently.
 
-Same injection can be also done on username field while creating a new user
-or when editing an already existing user. So any user can purposefully add
-JavaScript along with his name. If the user profile page is visited by the
-admin or any other users, it will trigger the JavaScript.
+Here is the KASAN report:
 
-2) *DOM Based XSS:*
+BUG: KASAN: use-after-free in bad_flp_intr+0x332/0x460
 
-DOM Based XSS occurs under every single URL below* /admin/*. A sample POC
-can be:
+Call Trace:
+ __dump_stack
+ dump_stack+0x1e9/0x30e
+ print_address_description+0x6a/0x310
+ kasan_report_error
+ kasan_report+0x1bf/0x290
+ bad_flp_intr+0x332/0x460
+ reset_interrupt+0x16e/0x1b0
+ process_one_work+0xc61/0x1530
+ worker_thread+0xa7f/0x1440
+ kthread+0x346/0x370
+ ret_from_fork+0x24/0x30
 
-http://localhost/anchor-cms/admin/posts/%3Cscript%3Ealert%281%29%3C/script%3E
- <http://localhost/anchor-cms/admin/%3Cscript%3Ealert%281%29%3C/script%3E>
-ttp://localhost/anchor-cms/admin/%3Cscript%3Ealert%281%29%3C/script%3E
-<http://localhost/anchor-cms/admin/%3Cscript%3Ealert%281%29%3C/script%3E>
+Allocated by task 12590:
+ kmem_cache_alloc_node+0x200/0x390
+ alloc_request_simple+0x42/0x70
+ mempool_alloc+0x166/0x6b0
+ __get_request+0x92c/0x1c50
+ get_request+0x756/0x10e0
+ blk_queue_bio+0x523/0x12d0
+audit: type=1804 audit(1651287706.088:1517): pid=13750 uid=0 auid=0 ses=6
+subj==unconfined op=invalid_pcr cause=ToMToU comm="syz-executor.2"
+name=2F73797A6B616C6C65722D746573746469723539363038303737352F73797A6B616C6C65722E6C56656931332F313737362F48C7C060
+dev="sda" ino=136083 res=1
+ generic_make_request+0x561/0xe20
+ submit_bio+0x259/0x560
+audit: type=1800 audit(1651287706.088:1518): pid=13752 uid=0 auid=0 ses=6
+subj==unconfined op=collect_data cause=failed(directio)
+comm="syz-executor.2" name=48C7C060 dev="sda" ino=136083 res=0
+ __floppy_read_block_0
+ floppy_revalidate+0xa70/0xd90
+ check_disk_change+0x11e/0x1a0
+ floppy_open+0x54d/0x890
+ __blkdev_get+0x3ce/0x1ab0
+ blkdev_get+0x986/0xb20
+ do_dentry_open+0x91d/0x10a0
+ do_last
+ path_openat+0x298d/0x6de0
+ do_filp_open+0x24a/0x4c0
+ do_sys_open+0x361/0x5d0
+ do_syscall_64+0x111/0x710
+ entry_SYSCALL_64_after_hwframe+0x49/0xbe
 
-
-*Date of reporting:* 24th June, 2015
-
-*Exploit Author:* Anirudh Anand
-
-*Vendor Homepage*: https://anchorcms.com
-
-*Software Link:* http://anchorcms.com/download
-
-*Version: *< 0.9.2
-
-*Tested on:* Linux:- Ubuntu, Debian
-
-
-The issue has been reported to the vendor:
-https://github.com/anchorcms/anchor-cms/issues/876
-
-Is it possible to assign CVE identifiers for the same ?
-
-Thank you,
-
-On Thu, Jun 25, 2015 at 4:53 PM, Anirudh Anand <anirudhanand722@gmail.com>
-wrote:
-
-> Hello,
->
-> I would like to receive CVE identifier for the following Issues in the
-> latest version of Anchor CMS:
->
-> *Reference: *
-> https://github.com/anchorcms/anchor-cms/issues/876
->
-> Anchor CMS is a very popular content Management System. There are multiple
-> Stored and DOM based XSS issues in it as reported in the reference. These
-> issues persists in all the latest Anchor CMS releases.
-> --
->
-> Anirudh Anand
-> bi0s@AMRITA
-> www.securethelock.com
->
-> *"Those who Say it cannot be done, should not interrupt the people doing
-> it"*
->
+Freed by task 2856:
+ __cache_free
+ kmem_cache_free+0xc8/0x260
+ blk_free_request
+ __blk_put_request+0x4d8/0xcd0
+ __blk_end_bidi_request+0x1d4/0x260
+ floppy_end_request
+ request_done+0x701/0x950
+ floppy_shutdown+0x14a/0x2b0
+ process_one_work+0xc61/0x1530
+ worker_thread+0xa7f/0x1440
+ kthread+0x346/0x370
+ ret_from_fork+0x24/0x30
 
 
 
--- 
+Timeline:
+* 04.30.22 - Vulnerability reported to security@kernel.org.
+* 05.01.22 - Vulnerability reported to linux-distros@vs.openwall.org.
+* 05.10.22 - Vulnerability opened.
 
-Anirudh Anand
-bi0s@AMRITA
-www.securethelock.com
-
-*"Those who Say it cannot be done, should not interrupt the people doing
-it"*
-
---001a113b3744dc247e0519709452--
+--00000000000007860c05dea2df09--
