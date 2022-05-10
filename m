@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2250" "Sunday" "16" "May" "2021" "14:26:14" "-0500" "Brandon Perry" "bperry.volatile@gmail.com" nil "62" "Re: [oss-security] Open Source WAF testing tools" nil nil nil "5" nil nil (number mark "U       bperry.volat May 16   62/2250  " thread-indent "\"Re: [oss-security] Open Source WAF testing tools\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Open Source WAF testing tools" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3985 invoked by uid 550); 16 May 2021 19:26:29 -0000
+Received: (qmail 3598 invoked by uid 550); 10 May 2022 17:12:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,106 +7,133 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3967 invoked from network); 16 May 2021 19:26:28 -0000
+Received: (qmail 21990 invoked from network); 10 May 2022 16:39:38 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:mime-version:subject:date:references:to:in-reply-to:message-id;
-        bh=6JtH+zZdQQjc4xxvxorM7XDMd09JV6p6jZy8lpCnrME=;
-        b=AyWrBhByAA63vdy6gICMEOzv/ogUDUwYImm+IaIuu5y3dL3CelCvO6x4HNVYVxXfpE
-         eYzKZ4e5Ej+b3mHmNYvQmpL8iNCDdIloQ8zu7OJde2JfrKZ8buiAs2muXutpXIek+w8Y
-         dJPbUH+KCizz34Hp83/z+bFeIhkF9IvlE0/6fqgTnIKuh+Ly85PobfDoV1vcW3L0BVi8
-         47LE9ojEpncQeOwX9s1pFHfTCJudjpB7jyWQxxyAsAzUhw1jovUhEbhVGuwZKvHH48a+
-         xP14pfbwRTEhCeHVT1sJiesKKvYK3VBGE8APmWi+STlsZokfHETF9WhhXMHCOakYTwf9
-         YU0g==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=pM/TMcvQ8PIJCu9Uc2SKHnOMY48V9K8513IGvgeJb7A=;
+        b=XWwuECSv2/+akphsI7e2zBttYFSuX+2pdHSPnNQz8MxdlBNmIVJh43i3tYlAxrWAdn
+         Xfv4pzancCzT4jHZ46TNCioXia+yP18pxzBigDr8EiaEeLEfkdNZ/Xelxoza/4DKfskR
+         8aaD1ddYf6zN6ocA2dDe6BI+fxMGUeXuTwsi68QECvQxAtHf/PgSSTuMJXC86qoiJaKf
+         UacuuPP7bK9wXT1JvK9I/ika+NjnCVcQHFKd2j7oRD+soY1ROwV41paECxQY3vDEehq2
+         dcLxYXYyylXpWTs92E3KADQJndMCI66srJtjfj/8YWKo2VVyS6VKiLy6Ke1+fA+N1mNU
+         LhLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:mime-version:subject:date:references:to
-         :in-reply-to:message-id;
-        bh=6JtH+zZdQQjc4xxvxorM7XDMd09JV6p6jZy8lpCnrME=;
-        b=GPsAW2qHVAMpxu40QGOyspQVz4w4LG0y7lCYriJFchMaclnb3vmP6OWrut9dJ46LLY
-         +fW0uiijcqfXRtcQwy4JFExPud3fPWt3TUiZNYJKEECao+C8wqtBREMtFvoacROv94QM
-         qp+7HPpojkXqA4GoYYJE8DQgAdGppuIQSp4zRRXfqDd2IpblPTiLUus2bs9YgjJdup5l
-         OiJABqrXDokTKwHyYohOimjiDv6L875OHh7p9eoZhy2PdUsGZF48BhUlyFr8OG6dmdj0
-         AG5ymyCkDBKMc/TZdCliMmKGSjEDg27e4qq7q70VIF+1gMniwp6xgtQ4CDZlXfs48giL
-         XFcg==
-X-Gm-Message-State: AOAM533sPcBMioV77gDvmeNj+LvfS3LV4tNK63rJpIL+1Bu8zywdV842
-	gyb/XphbNAKayWch2zydxl4BzdxckYa+wg==
-X-Google-Smtp-Source: ABdhPJx/Bgtuvy5UZ30R2CueGuUjEjagCWaLguxQ00K1sPQ4Wn2F6MTeyme8HI4ivr99QL78hNIauQ==
-X-Received: by 2002:ad4:5613:: with SMTP id ca19mr16131313qvb.3.1621193176764;
-        Sun, 16 May 2021 12:26:16 -0700 (PDT)
-From: Brandon Perry <bperry.volatile@gmail.com>
-Content-Type: multipart/signed;
-	boundary="Apple-Mail=_4757F89C-30CF-43B2-8A26-8956BDDD5B49";
-	protocol="application/pgp-signature";
-	micalg=pgp-sha256
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.17\))
-Date: Sun, 16 May 2021 14:26:14 -0500
-References: <CANnFHybun4hjZqFqOsLOhdPfPX-Q3tGpxzyxjqbepZ+nK2VJQQ@mail.gmail.com>
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=pM/TMcvQ8PIJCu9Uc2SKHnOMY48V9K8513IGvgeJb7A=;
+        b=yMLS8FoCQ1SkoB0NQk+u/BSy58Df9qisCfbF9rmJpwBPHqUpiGuMSPdTFB9IeOZQ/O
+         4tWcgkG38jDngT4uOG8KEJD15o4VXRUoJ+G4uXNFuZHoEsGyvT0XYa8+LEQZpRhXlGu/
+         eXb3pmGVcMAe6VBJjE9cS2BbmNwbmHoPfeLLpbCvav/pUkMRlDZuGi8PblrBgMI9E9ls
+         4L2bWjvF5fU41awIPJsaSov9fYlIoz03ZqX3xxC/GXwn53smDB7I9t923rk1evQWbq25
+         1Kms4Da5WrNGYLllWN0g6kiL/JwAuYYr5ZSIRUToUUERCcrfDjun1uJozdsZ+ZucR11F
+         ztkw==
+X-Gm-Message-State: AOAM533OcmlnoYYKWTVFfgpeYS74k2Sl4oOp0311uSgMCBDJ7T1BSRAA
+	u/0X/uZKgTsI/0khYnpnqQEZqrcR4pheJz6Kybp4pzZmsVT6z/36
+X-Google-Smtp-Source: ABdhPJzYrZwzV3TuxvSaR5rN0sytJ7tTKZ1I+coMyu+sYs3qjDmCmynPRvznSJ+bzqMJuASFWZWvvDxMxHSETyp205s=
+X-Received: by 2002:a0d:ef84:0:b0:2f1:ac72:6e05 with SMTP id
+ y126-20020a0def84000000b002f1ac726e05mr20785929ywe.241.1652200766996; Tue, 10
+ May 2022 09:39:26 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAH5WSp5rKR6gaKDAG58nKAiOf4fkzTz-faSFCrX4mo7RNoigFQ@mail.gmail.com>
+In-Reply-To: <CAH5WSp5rKR6gaKDAG58nKAiOf4fkzTz-faSFCrX4mo7RNoigFQ@mail.gmail.com>
+From: Minh Yuan <yuanmingbuaa@gmail.com>
+Date: Wed, 11 May 2022 00:38:51 +0800
+Message-ID: <CAH5WSp4ZArJaWpdDQpX8vvvYmJTD1yiWpOVVY6R2ZKHgTPU8Ow@mail.gmail.com>
 To: oss-security@lists.openwall.com
-In-Reply-To: <CANnFHybun4hjZqFqOsLOhdPfPX-Q3tGpxzyxjqbepZ+nK2VJQQ@mail.gmail.com>
-Message-Id: <C713881E-C4D4-4CCA-B8F7-D315B0AD975F@gmail.com>
-X-Mailer: Apple Mail (2.3445.104.17)
-Subject: Re: [oss-security] Open Source WAF testing tools
+Content-Type: multipart/alternative; boundary="000000000000d0854305deaaf79b"
+Subject: Re: [oss-security] Linux kernel: A concurrency use-after-free in bad_flp_intr for latest kernel version
 
---Apple-Mail=_4757F89C-30CF-43B2-8A26-8956BDDD5B49
+--000000000000d0854305deaaf79b
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
 
-Use Burp and test by hand?
+By the way, this race issue has been assigned CVE-2022-1652 by Red Hat.
 
-> On May 16, 2021, at 2:01 PM, Martin O'Neil <martinoneil.cyber@gmail.com> =
-wrote:
->=20
-> Hi, list,
->=20
-> Does anybody know an open-source tool for testing Web Application Firewal=
-ls?
->=20
-> In an ideal case, with an out-of-the-box-ready CLI/UI, PDF reports, and a
-> configurable set of payloads to test. I need it to check if my WAF
-> deployment and rules work well.
->=20
-> I found at least 5 projects, all made by WAF vendors.
->=20
-> 1. https://github.com/wallarm/gotestwaf byWallarm
-> 2. https://github.com/signalsciences/waf-testing-framework by Signal
-> Sciences
-> 3. https://github.com/fastly/ftw by Fastly
-> 4. https://microsoft.github.io/WAFBench/ by Microsoft Azure WAF team
-> 5. https://github.com/f5devcentral/f5-waf-tester by F5
->=20
-> The GoTestWAF project looks more active and supported by the community.
-> Does anybody recommend some other GitHub repositories, preferably made by
-> 3rd party folks?
->=20
-> Thanks
-> Martin.
+Minh Yuan <yuanmingbuaa@gmail.com> =E4=BA=8E2022=E5=B9=B45=E6=9C=8810=E6=97=
+=A5=E5=91=A8=E4=BA=8C 14:59=E5=86=99=E9=81=93=EF=BC=9A
 
+> Hi everyone,
+>
+> My fuzzer discovered another concurrency uaf between reset_interrupt and
+> floppy_end_request in the latest kernel version (5.17.5 for now).
+>
+> The root cause is that after deallocating current_req in
+> floppy_end_request, reset_interrupt still holds the freed
+> current_req->error_count and accesses it concurrently.
+>
+> Here is the KASAN report:
+>
+> BUG: KASAN: use-after-free in bad_flp_intr+0x332/0x460
+>
+> Call Trace:
+>  __dump_stack
+>  dump_stack+0x1e9/0x30e
+>  print_address_description+0x6a/0x310
+>  kasan_report_error
+>  kasan_report+0x1bf/0x290
+>  bad_flp_intr+0x332/0x460
+>  reset_interrupt+0x16e/0x1b0
+>  process_one_work+0xc61/0x1530
+>  worker_thread+0xa7f/0x1440
+>  kthread+0x346/0x370
+>  ret_from_fork+0x24/0x30
+>
+> Allocated by task 12590:
+>  kmem_cache_alloc_node+0x200/0x390
+>  alloc_request_simple+0x42/0x70
+>  mempool_alloc+0x166/0x6b0
+>  __get_request+0x92c/0x1c50
+>  get_request+0x756/0x10e0
+>  blk_queue_bio+0x523/0x12d0
+> audit: type=3D1804 audit(1651287706.088:1517): pid=3D13750 uid=3D0 auid=
+=3D0 ses=3D6
+> subj=3D=3Dunconfined op=3Dinvalid_pcr cause=3DToMToU comm=3D"syz-executor=
+.2"
+> name=3D2F73797A6B616C6C65722D746573746469723539363038303737352F73797A6B61=
+6C6C65722E6C56656931332F313737362F48C7C060
+> dev=3D"sda" ino=3D136083 res=3D1
+>  generic_make_request+0x561/0xe20
+>  submit_bio+0x259/0x560
+> audit: type=3D1800 audit(1651287706.088:1518): pid=3D13752 uid=3D0 auid=
+=3D0 ses=3D6
+> subj=3D=3Dunconfined op=3Dcollect_data cause=3Dfailed(directio)
+> comm=3D"syz-executor.2" name=3D48C7C060 dev=3D"sda" ino=3D136083 res=3D0
+>  __floppy_read_block_0
+>  floppy_revalidate+0xa70/0xd90
+>  check_disk_change+0x11e/0x1a0
+>  floppy_open+0x54d/0x890
+>  __blkdev_get+0x3ce/0x1ab0
+>  blkdev_get+0x986/0xb20
+>  do_dentry_open+0x91d/0x10a0
+>  do_last
+>  path_openat+0x298d/0x6de0
+>  do_filp_open+0x24a/0x4c0
+>  do_sys_open+0x361/0x5d0
+>  do_syscall_64+0x111/0x710
+>  entry_SYSCALL_64_after_hwframe+0x49/0xbe
+>
+> Freed by task 2856:
+>  __cache_free
+>  kmem_cache_free+0xc8/0x260
+>  blk_free_request
+>  __blk_put_request+0x4d8/0xcd0
+>  __blk_end_bidi_request+0x1d4/0x260
+>  floppy_end_request
+>  request_done+0x701/0x950
+>  floppy_shutdown+0x14a/0x2b0
+>  process_one_work+0xc61/0x1530
+>  worker_thread+0xa7f/0x1440
+>  kthread+0x346/0x370
+>  ret_from_fork+0x24/0x30
+>
+>
+>
+> Timeline:
+> * 04.30.22 - Vulnerability reported to security@kernel.org.
+> * 05.01.22 - Vulnerability reported to linux-distros@vs.openwall.org.
+> * 05.10.22 - Vulnerability opened.
+>
 
---Apple-Mail=_4757F89C-30CF-43B2-8A26-8956BDDD5B49
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
-	filename=signature.asc
-Content-Type: application/pgp-signature;
-	name=signature.asc
-Content-Description: Message signed with OpenPGP
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEoMgt+2k+7USJTPNpDj2JIDyRmS0FAmChcdYACgkQDj2JIDyR
-mS153g//cgy7X7eXKbhlAzPLojG31nqPU25bC+pf5B7P8lsohyU1vLzqiD58LRGP
-kTFAHXj9Cz305h+xTqUHPH40mPGB6luF0hSrwRe7zx3kAxBDFFC0O15zLxX0pUzH
-aXKakAYs0DxdSbN6UuIrxPMdziotVlja/m6QODUb8ecpAPyO+HpxTdNysA7C5cOo
-mX/M2pazqJT6kQjhjV9M5q/wkU8IOlPOEyl4ZWXTsIVlulkgmLR1sB4tcv1w1t+V
-3JghVsryLvzvRTUzRFfGaNX0IhZjGJMtUu1nTyecolBbvJCcw91ZDApQBWhCO6A6
-l62O4+LYmLc+7lXJnuJWcsb7OF7Eoc28tzbJ4V3f7guPzA0mMxCgFtcYMV79fODH
-ensKJbHXLjnrNUfkNI1a1n4DxfZx8nWRw7mDWqKhldtJEFUEiQOnqYUZH4MD9s/2
-t3PW1GiupmMrOGtHl+I9tIra0iYAflkGaMF6icEfZZtUI23zrrYfuIyP+0PG+jjG
-Xfsp7QEt/ui5qx04bgx8xL6F+q+qH0HEzPWAFengObwMoJi08Q7C3KqOfKcR5XLy
-cfXTh0OcBpmeiLKZWxSbRq7ZWsnYck27CmIrmj81W8QNCWwthf1XyLtIz9EzlthX
-zXxZHHyIIEO63+jvYTAX9oitPyJ8xcLBugEy8HmGUw/y/0AX2oU=
-=UZsI
------END PGP SIGNATURE-----
-
---Apple-Mail=_4757F89C-30CF-43B2-8A26-8956BDDD5B49--
+--000000000000d0854305deaaf79b--
