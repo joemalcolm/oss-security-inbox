@@ -1,116 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/21/1
-Message-ID: <62718b59-2e47-09e9-12df-fced96903a13@gmail.com>
-Date: Mon, 21 Feb 2022 16:16:37 +0100
-From: Szymon Heidrich <szymon.heidrich@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/10/1
+Message-ID: <CAH5WSp5rKR6gaKDAG58nKAiOf4fkzTz-faSFCrX4mo7RNoigFQ@mail.gmail.com>
+Date: Tue, 10 May 2022 14:59:15 +0800
+From: Minh Yuan <yuanmingbuaa@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-25375 : Linux RNDIS USB Gadget memory extraction via packet filter
+Subject: Linux kernel: A concurrency use-after-free in bad_flp_intr for latest kernel version
 Content-Type: text/plain; charset=utf-8
 
-The RNDIS USB Gadget may be exploited to dump contents
-of kernel memory space via packet filter update mechanism.
+Hi everyone,
 
-The RNDIS_MSG_SET handler - rndis_set_response - calls gen_ndis_set_resp
-passing a buffer pointer offset by BufOffset + 8. The BufOffset variable
-is retrieved from the RNDIS message and not validated to respect buffer
-boundaries. Consequently by manipulating the four byte InformationBufferOffset
-member of rndis_set_msg_type an attacker may offset the actual buffer by up
-to 0xffffffff bytes.
+My fuzzer discovered another concurrency uaf between reset_interrupt and
+floppy_end_request in the latest kernel version (5.17.5 for now).
 
-rndis.c - rndis_msg_parser
->	case RNDIS_MSG_QUERY:
->		return rndis_query_response(params,
->					(rndis_query_msg_type *)buf);
->
->	case RNDIS_MSG_SET:
->		return rndis_set_response(params, (rndis_set_msg_type *)buf);
+The root cause is that after deallocating current_req in floppy_end_request,
+reset_interrupt still holds the freed current_req->error_count and accesses
+it concurrently.
 
-rndis.c - rndis_set_response
-> static int rndis_set_response(struct rndis_params *params,
->			      rndis_set_msg_type *buf)
->{
->	u32 BufLength, BufOffset;
->	rndis_set_cmplt_type *resp;
->	rndis_resp_t *r;
->
->	r = rndis_add_response(params, sizeof(rndis_set_cmplt_type));
->	if (!r)
->		return -ENOMEM;
->	resp = (rndis_set_cmplt_type *)r->buf;
->
->	BufLength = le32_to_cpu(buf->InformationBufferLength);
->	BufOffset = le32_to_cpu(buf->InformationBufferOffset);
->
->#ifdef	VERBOSE_DEBUG
->	pr_debug("%s: Length: %d\n", __func__, BufLength);
->	pr_debug("%s: Offset: %d\n", __func__, BufOffset);
->	pr_debug("%s: InfoBuffer: ", __func__);
->
->	for (i = 0; i < BufLength; i++) {
->		pr_debug("%02x ", *(((u8 *) buf) + i + 8 + BufOffset));
->	}
->
->	pr_debug("\n");
->#endif
->
->	resp->MessageType = cpu_to_le32(RNDIS_MSG_SET_C);
->	resp->MessageLength = cpu_to_le32(16);
->	resp->RequestID = buf->RequestID; /* Still LE in msg buffer */
->	if (gen_ndis_set_resp(params, le32_to_cpu(buf->OID),
->			((u8 *)buf) + 8 + BufOffset, BufLength, r))
->		resp->Status = cpu_to_le32(RNDIS_STATUS_NOT_SUPPORTED);
->	else
->		resp->Status = cpu_to_le32(RNDIS_STATUS_SUCCESS);
->
->	params->resp_avail(params->v);
->	return 0;
->}
+Here is the KASAN report:
 
-Next the code responsible for handling RNDIS_OID_GEN_CURRENT_PACKET_FILTER
-OID sets the current packet filter to the value pointed by the buf pointer.
-With the offset applied this allows one to retrieve two bytes at a specified
-address and store the value in the packet filter.
+BUG: KASAN: use-after-free in bad_flp_intr+0x332/0x460
 
-rndis.c - gen_ndis_set_resp
->	switch (OID) {
->	case RNDIS_OID_GEN_CURRENT_PACKET_FILTER:
->
->		/* these NDIS_PACKET_TYPE_* bitflags are shared with
->		 * cdc_filter; it's not RNDIS-specific
->		 * NDIS_PACKET_TYPE_x == USB_CDC_PACKET_TYPE_x for x in:
->		 *	PROMISCUOUS, DIRECTED,
->		 *	MULTICAST, ALL_MULTICAST, BROADCAST
->		 */
->		*params->filter = (u16)get_unaligned_le32(buf);
->		pr_debug("%s: RNDIS_OID_GEN_CURRENT_PACKET_FILTER %08x\n",
->			__func__, *params->filter);
->
+Call Trace:
+ __dump_stack
+ dump_stack+0x1e9/0x30e
+ print_address_description+0x6a/0x310
+ kasan_report_error
+ kasan_report+0x1bf/0x290
+ bad_flp_intr+0x332/0x460
+ reset_interrupt+0x16e/0x1b0
+ process_one_work+0xc61/0x1530
+ worker_thread+0xa7f/0x1440
+ kthread+0x346/0x370
+ ret_from_fork+0x24/0x30
 
-Further step is to retrieve the packet filter value by utilizing a combination
-of USB_CDC_SEND_ENCAPSULATED_COMMAND with RNDIS_MSG_QUERY for the
-RNDIS_OID_GEN_CURRENT_PACKET_FILTER OID and USB_CDC_GET_ENCAPSULATED_RESPONSE
-control transfer requests.
+Allocated by task 12590:
+ kmem_cache_alloc_node+0x200/0x390
+ alloc_request_simple+0x42/0x70
+ mempool_alloc+0x166/0x6b0
+ __get_request+0x92c/0x1c50
+ get_request+0x756/0x10e0
+ blk_queue_bio+0x523/0x12d0
+audit: type=1804 audit(1651287706.088:1517): pid=13750 uid=0 auid=0 ses=6
+subj==unconfined op=invalid_pcr cause=ToMToU comm="syz-executor.2"
+name=2F73797A6B616C6C65722D746573746469723539363038303737352F73797A6B616C6C65722E6C56656931332F313737362F48C7C060
+dev="sda" ino=136083 res=1
+ generic_make_request+0x561/0xe20
+ submit_bio+0x259/0x560
+audit: type=1800 audit(1651287706.088:1518): pid=13752 uid=0 auid=0 ses=6
+subj==unconfined op=collect_data cause=failed(directio)
+comm="syz-executor.2" name=48C7C060 dev="sda" ino=136083 res=0
+ __floppy_read_block_0
+ floppy_revalidate+0xa70/0xd90
+ check_disk_change+0x11e/0x1a0
+ floppy_open+0x54d/0x890
+ __blkdev_get+0x3ce/0x1ab0
+ blkdev_get+0x986/0xb20
+ do_dentry_open+0x91d/0x10a0
+ do_last
+ path_openat+0x298d/0x6de0
+ do_filp_open+0x24a/0x4c0
+ do_sys_open+0x361/0x5d0
+ do_syscall_64+0x111/0x710
+ entry_SYSCALL_64_after_hwframe+0x49/0xbe
 
-Repeating the set/get packet filter with incremented InformationBufferOffset
-in the RNDIS request allows extraction of up to 0xffffffff bytes of kernel
-space memory by two bytes at a time. For large amounts of data the process is
-rather slow but still effective.
-
-> $ sudo python3 rndisco.py -v 0x1b67 -p 0x400c -l 0x3fffc > /tmp/rpi_rndis.dmp
-> strings /tmp/rpi_rndis.dmp -n8 | tail -n 6
-> stp_proto_unregister
-> <30>Jan 27 14:39:48 dhcpcd[486]: usb0: IAID be:53:70:24
-> <30>Jan 27 14:39:46 dhcpcd[486]: usb0: IAID be:53:70:24
-> <30>Jan 27 14:39:46 dhcpcd[486]: usb0: adding address fe80::6f70:c737:89e:697a
-> <30>Jan 27 14:39:40 dhcpcd[486]: usb0: carrier lost
-> <30>Jan 27 14:39:48 dhcpcd[486]: usb0: adding address fe80::6f70:c737:89e:697a
-
-References
-- https://github.com/torvalds/linux/commit/38ea1eac7d88072bbffb630e2b3db83ca649b826
-- https://cdn.kernel.org/pub/linux/kernel/v5.x/ChangeLog-5.16.10
-- https://github.com/szymonh/rndis-co
-- https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-25375
+Freed by task 2856:
+ __cache_free
+ kmem_cache_free+0xc8/0x260
+ blk_free_request
+ __blk_put_request+0x4d8/0xcd0
+ __blk_end_bidi_request+0x1d4/0x260
+ floppy_end_request
+ request_done+0x701/0x950
+ floppy_shutdown+0x14a/0x2b0
+ process_one_work+0xc61/0x1530
+ worker_thread+0xa7f/0x1440
+ kthread+0x346/0x370
+ ret_from_fork+0x24/0x30
 
 
-Best regards,
-Szymon
+
+Timeline:
+* 04.30.22 - Vulnerability reported to security@...nel.org.
+* 05.01.22 - Vulnerability reported to linux-distros@...openwall.org.
+* 05.10.22 - Vulnerability opened.
+
