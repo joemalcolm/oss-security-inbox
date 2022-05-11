@@ -1,32 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/26/2
-Message-ID: <CA+ZBtZ66qeLCWBy0DBUoRngMfP+dWdW6aRrGE6AO9nD51=opZg@mail.gmail.com>
-Date: Wed, 26 Jan 2022 14:29:17 +0800
-From: Zhang Yonglun <zhangyonglun@...che.org>
-To: oss-security@...ts.openwall.com, dev@...nyu.apache.org
-Subject: CVE-2022-23944: Apache ShenYu (incubating) Improper access control
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/11/4
+Message-ID: <o384s4p8-o2pp-6or4-7989-9n2ps04062so@unkk.fr>
+Date: Wed, 11 May 2022 08:40:29 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: CERTINFO never-ending busy-loop
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+CERTINFO never-ending busy-loop
+===============================
 
-Description:
+Project curl Security Advisory, May 11 2022 -
+[Permalink](https://curl.se/docs/CVE-2022-27781.html)
 
-Any user can access /plugin API without authentication. The project
-use Shiro to authenticate, but the default WhiteLists are defineded in
-application include /plugin path.
-So everybody can access /plugin API which will list the details of all
- plugins include id, name, config (may include password). We can also
-add a new plugin with  POST method while using /plugin API.
-This issue affects Apache ShenYu (incubating) 2.4.0 and 2.4.1.
+VULNERABILITY
+-------------
 
-Mitigation:
+libcurl provides the `CURLOPT_CERTINFO` option to allow applications to
+request details to be returned about a TLS server's certificate chain.
 
-Upgrade to Apache ShenYu (incubating) 2.4.2 or apply patch
-https://github.com/apache/incubator-shenyu/pull/2462.
+Due to an erroneous function, a malicious server could make libcurl built with
+NSS get stuck in a never-ending busy-loop when trying to retrieve that
+information.
 
+We are not aware of any exploit of this flaw.
 
---
+INFO
+----
 
-Zhang Yonglun
-Apache ShenYu (Incubating)
-Apache ShardingSphere
+This flaw was introduced in [commit
+f6c335d63f](https://github.com/curl/curl/commit/f6c335d63f), shipped in curl
+7.34.0 when libcurl added support for CERTINFO using NSS.
+
+This feature is not accessible from the command line tool.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2022-27781 to this issue.
+
+CWE-835: Loop with Unreachable Exit Condition ('Infinite Loop')
+
+Severity: Low
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.34.0 to and including 7.83.0
+- Not affected versions: curl < 7.34.0 and curl >= 7.83.1
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+A [fix for CVE-2022-27781](https://github.com/curl/curl/commit/5c7da89d404bf59)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 7.83.1
+
+  B - Apply the patch to your local version
+
+  C - Do not use the `CURLOPT_CERTINFO` option
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on April 30, 2022. We contacted
+distros@...nwall on May 5.
+
+libcurl 7.83.1 was released on May 11 2022, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+This issue was reported by Florian Kohnhäuser. Patched by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
