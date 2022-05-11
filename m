@@ -1,4 +1,4 @@
-Received: (qmail 22510 invoked by uid 550); 8 Aug 2022 09:46:51 -0000
+Received: (qmail 5258 invoked by uid 550); 11 May 2022 06:42:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,78 +7,100 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26601 invoked from network); 8 Aug 2022 07:18:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1659943112;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=Y/nrSvyiSoDDwsXI2lJHq4artnZp0kfUFCPQ+ibWpu8=;
-	b=ccVenVD4InUykc0/yI75k6AYTHYct9984LaKwj8/c/lLMg9Vmnsg/bar/lvnZrmT+SPlXx
-	hCAwLKMZ59kaRdjkEb78YipMpaRhv32xIbjGpwybpyuhiNFZ6fuYzS67tCZXV6tz5h4Xaf
-	Hkthtiv4IYJ+oGS+dtvv6ryuPQOvGU4=
-X-MC-Unique: JTENHw7PMRyiH1vH57GJ8A-1
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:subject:to:organization:from
-         :content-language:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc;
-        bh=Y/nrSvyiSoDDwsXI2lJHq4artnZp0kfUFCPQ+ibWpu8=;
-        b=y1jaaEGorlktPK0ManwpHtLIXNWgUi41OkxMfqGT9v24WC2Z1+uU23ftSsvf8/QLI3
-         hcixL9AY6iFv4cljW+Mt+g60ymCyt43ss2OMQFflTo4M+kFssh2oRKL4oyA8Pl4lj6/q
-         TOOKOxirKmn0Iw9JWSYyIQZuEdgpRnhXGEWfbanYlkPViDl0T5YiWxN8cKEd2Am9KpH9
-         ezJfalSqYPuUTkq5EFCzVnAwv8sVhL3KTzdutwQ008JGK7cEdBcsIgVEpNOpPSOa6PaZ
-         81x4D4mBJUbqciMKkjLhFhaOHMB4SYPBqyxqtWgAbOBAwBmR6qNzuGNPC2GINk++jd6o
-         Uu6Q==
-X-Gm-Message-State: ACgBeo0uOlCqu0m5amZWZd6NIXnCkl2pWnkJR8XS0uCUh8UVMzq7RQuk
-	dOTAACbooEFA6WbVam4HmtH8Im0wmE2zMIUXSWnzGPH4hkk/dxi7RToYTcQTxYnHUJkL23iw3X4
-	6VOmTeMJu09COrWq5rX8TCIP3nie2Fo7aspB3AVGlLmwJVGxgecJZkecYebbOjbjLEcJNdp1Arx
-	d5
-X-Received: by 2002:a1c:29c1:0:b0:3a3:79b0:1ced with SMTP id p184-20020a1c29c1000000b003a379b01cedmr11634889wmp.73.1659943109843;
-        Mon, 08 Aug 2022 00:18:29 -0700 (PDT)
-X-Google-Smtp-Source: AA6agR4QtsneACVNTQ2yiOpKK2o33XaTNkC5YFPzn53Oy4ObJ878aNKouAZD/MG8wbLKPivOHJ/Dcg==
-X-Received: by 2002:a1c:29c1:0:b0:3a3:79b0:1ced with SMTP id p184-20020a1c29c1000000b003a379b01cedmr11634862wmp.73.1659943109350;
-        Mon, 08 Aug 2022 00:18:29 -0700 (PDT)
-Message-ID: <1973d16e-bb3e-c5b2-74e0-cc2faf9db2bd@redhat.com>
-Date: Mon, 8 Aug 2022 09:18:27 +0200
+Received: (qmail 5204 invoked from network); 11 May 2022 06:42:22 -0000
+Date: Wed, 11 May 2022 08:42:11 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <q8n331np-1qo6-o367-n636-o5q33o0o29@unkk.fr>
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-From: David Hildenbrand <david@redhat.com>
-Organization: Red Hat
-To: oss-security@lists.openwall.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2022-2590: Linux kernel: Modifying shmem/tmpfs files without
- write permissions
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl: HSTS bypass via trailing dot
 
-Hi,
+HSTS bypass via trailing dot
+============================
 
-I found a security issue (CVE-2022-2590) in the Linux kernel similar to
-Dirty COW (CVE-2016-5195), however, restricted to shared memory (shmem /
-tmpfs). I notified distributions one week ago and the embargo ended today.
+Project curl Security Advisory, May 11 2022 -
+[Permalink](https://curl.se/docs/CVE-2022-30115.html)
 
-An unprivileged user can modify file content of a shmem (tmpfs) file,
-even if that user does not have write permissions to the file. The file
-could be an executable.
+VULNERABILITY
+-------------
 
-The introducing upstream commit ID is:
-  9ae0f87d009c ("mm/shmem: unconditionally set pte dirty in
-  mfill_atomic_install_pte")
+curl's HSTS check could be bypassed to trick it to keep using HTTP.
 
-Linux >= v5.16 is affected on x86-64 and aarch64 if the kernel is
-compiled with CONFIG_USERFAULTFD=y. For Linux < v5.19 it's sufficient to
-revert the problematic commit, which is possible with minor contextual
-conflicts. For Linux >= v5.19 I'll send a proposal fix today.
+Using its HSTS support, curl can be instructed to use HTTPS directly instead
+of using an insecure clear-text HTTP step even when HTTP is provided in the
+URL. This mechanism could be bypassed if the host name in the given URL used a
+trailing dot while not using one when it built the HSTS cache. Or the other
+way around - by having the trailing dot in the HSTS cache and *not* using the
+trailing dot in the URL.
 
-I have a working reproducer that I will post as reply to this mail in
-one week (August 15).
+Since trailing dots in host names are somewhat special, many sites work
+equally fine with or without a trailing dot present.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+This flaw was introduced in [commit
+b27ad8e1d3e68e](https://github.com/curl/curl/commit/b27ad8e1d3e68e), shipped
+in curl 7.82.0 when the treatment of trailing dot host names was changed.
+
+Similar issues have been raised in the past for
+[Firefox](https://www.mozilla.org/en-US/security/advisories/mfsa2015-13/) and
+for [Chrome](https://bugs.chromium.org/p/chromium/issues/detail?id=461481).
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2022-30115 to this issue.
+
+CWE-319: Cleartext Transmission of Sensitive Information
+
+Severity: Medium
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.82.0 to and including 7.83.0
+- Not affected versions: curl < 7.82.0 and curl >= 7.83.1
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+A [fix for CVE-2022-30115](https://github.com/curl/curl/commit/fae6fea209a2d4d)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 7.83.1
+
+  B - Apply the patch to your local version
+
+  C - Stick to always using `HTTPS://` in URLs
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on May 3, 2022. We contacted
+distros@openwall on May 5.
+
+libcurl 7.83.1 was released on May 11 2022, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+This issue was reported by Axel Chong. Patched by Daniel Stenberg.
+
+Thanks a lot!
 
 -- 
-Thanks,
 
-David / dhildenb
-
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
