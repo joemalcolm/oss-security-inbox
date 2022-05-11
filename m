@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2278" "Thursday" "30" "July" "2015" "05:37:22" "+0300" "Solar Designer" "solar@openwall.com" "<20150730023722.GA15205@openwall.com>" "58" "Re: [oss-security] Linux x86_64 NMI security issues" nil nil nil "7" "2015073002:37:22" "[oss-security] Linux x86_64 NMI security issues" (number mark "U       solar@openwa Jul 30   58/2278  " thread-indent "\"Re: [oss-security] Linux x86_64 NMI security issues\"\n") "<CALCETrXViSiMG79NtqN79NauDN9B2k9nOQN18496h9pJg+78+g@mail.gmail.com>" ("<CALCETrXViSiMG79NtqN79NauDN9B2k9nOQN18496h9pJg+78+g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 7267 invoked by uid 550); 30 Jul 2015 02:38:44 -0000
+Received: (qmail 5985 invoked by uid 550); 11 May 2022 06:37:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,74 +7,107 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7235 invoked from network); 30 Jul 2015 02:38:43 -0000
-Date: Thu, 30 Jul 2015 05:37:22 +0300
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20150730023722.GA15205@openwall.com>
-References: <CALCETrXViSiMG79NtqN79NauDN9B2k9nOQN18496h9pJg+78+g@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CALCETrXViSiMG79NtqN79NauDN9B2k9nOQN18496h9pJg+78+g@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Linux x86_64 NMI security issues
+Received: (qmail 5899 invoked from network); 11 May 2022 06:37:48 -0000
+Date: Wed, 11 May 2022 08:37:37 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <qq67po5s-55n3-25r-n716-p9696o74n88r@unkk.fr>
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl: cookie for trailing dot TLD
 
-On Wed, Jul 22, 2015 at 11:12:00AM -0700, Andy Lutomirski wrote:
-> +++++ CVE-2015-5157 +++++
-[...]
-> Mitigations: Use seccomp to disable perf_event_open or modify_ldt or
-> run with only a single CPU.  To my knowledge, this cannot be exploited
-> on single-processor systems or in single-threaded applications.
-[...]
-> +++++ CVE-2015-3290 +++++
-> 
-> High impact NMI bug on x86_64 systems 3.13 and newer, embargoed.  Also fixed by:
-> 
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=9b6e6a8334d56354853f9c255d1395c2ba570e0a
-> 
-> The other fix (synchronous modify_ldt) does *not* fix CVE-2015-3290.
-> 
-> You can mitigate CVE-2015-3290 by blocking modify_ldt or
-> perf_event_open using seccomp.  A fully-functional, portable, reliable
-> exploit is privately available and will be published in a week or two.
-> *Patch your systems*
+cookie for trailing dot TLD
+===========================
 
-I understand how seccomp is usable for sandboxing in a program, but how
-would a sysadmin block syscalls with it?
+Project curl Security Advisory, May 11 2022 -
+[Permalink](https://curl.se/docs/CVE-2022-27779.html)
 
-Perhaps we still need a new interface that would enable a sysadmin to
-easily block individual syscalls?  The idea of blocking modify_ldt for
-the entire system was brought up before:
+VULNERABILITY
+-------------
 
-http://www.openwall.com/lists/kernel-hardening/2011/06/19/2
-http://www.openwall.com/lists/owl-dev/2012/08/05/2
+libcurl wrongly allows HTTP cookies to be set for Top Level Domains (TLDs) if
+the host name is provided with a trailing dot.
 
-even though there are valid reasons for having it available to all, e.g.:
+curl can be told to receive and send cookies when communicating using
+HTTP(S). curl's "cookie engine" can be built with or without [Public Suffix
+List](https://publicsuffix.org/) awareness. If PSL support not provided, a
+more rudimentary check exists to at least prevent cookies from being set on
+TLDs. This check was broken if the host name in the URL uses a trailing dot.
 
-http://www.openwall.com/lists/musl/2014/06/10/1
+This can allow arbitrary sites to set cookies that then would get sent to a
+different and unrelated site or domain.
 
-Past issues with and thoughts on the ability for user processes to
-modify the LDT, dating back to 2001:
+We are not aware of any exploit of this flaw.
 
-http://marc.info/?l=linux-security-audit&m=98237041708897
+INFO
+----
 
-BTW, Red Hat now has a statement here:
+This vulnerability only exists when curl is built without
+[libpsl](https://rockdaboot.github.io/libpsl/). Without this PSL support
+built-in, curl is also destined to possibly leak cookies cross sites simply
+due to how public suffixes work.
 
-https://access.redhat.com/security/cve/CVE-2015-3290
+This flaw was introduced in [commit
+b27ad8e1d3e68e](https://github.com/curl/curl/commit/b27ad8e1d3e68e), shipped
+in curl 7.82.0 when the treatment of trailing dot host names was changed.
 
-"This issue does not affect the Linux kernel packages as shipped with
-Red Hat Enterprise Linux 5 and 6 since they did not backport the nested
-NMI handler and espfix64 functionalities.
+This flaw is similar to
+[CVE-2014-3620](https://curl.se/docs/CVE-2014-3620.html), although in 2014
+curl did not have PSL support.
 
-This issue does not affect the Linux kernel packages as shipped with Red
-Hat Enterprise Linux 7 and Red Hat Enterprise MRG 2 since they did not
-backport the espfix64 functionality and also did not backport upstream
-commit e00b12e64be9a3 that allowed an unprivileged local user to
-re-enable NMIs from the NMI handler."
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2022-27779 to this issue.
 
-The mentioned commit is:
+CWE-201: Information Exposure Through Sent Data
 
-https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=e00b12e64be9a3
+Severity: Medium
 
-Alexander
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.82.0 to and including curl 7.83.0
+- Not affected versions: curl < 7.82.0 and curl >= 7.83.1
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+A [fix for CVE-2022-27779](https://github.com/curl/curl/commit/7e92d12b4e6911f)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 7.83.1
+
+  B - Apply the patch to your local version
+
+  C - Build libcurl with libpsl support
+
+  D - Do not use cookies
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on April 28, 2022. We contacted
+distros@openwall on May 5.
+
+libcurl 7.83.1 was released on May 11 2022, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+This issue was reported by Axel Chong. Patched by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
