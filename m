@@ -1,22 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/08/1
-Message-ID: <CAGUWgD-UcCLieARno1B_Oei9dgnntoOod2bcncuc3vy6Yyu+eg@mail.gmail.com>
-Date: Thu, 8 Sep 2022 11:53:56 +0300
-From: Georgi Guninski <gguninski@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: sagemath denial of service with abort() in gmp: overflow in mpz type
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/11/5
+Message-ID: <nooqr7o5-86no-68n-9s31-oq6o9pn1r425@unkk.fr>
+Date: Wed, 11 May 2022 08:41:12 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: TLS and SSH connection too eager reuse
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Sep 7, 2022 at 8:31 PM Russ Allbery <eagle@...ie.org> wrote:
->
+TLS and SSH connection too eager reuse
+======================================
 
+Project curl Security Advisory, May 11 2022 -
+[Permalink](https://curl.se/docs/CVE-2022-27782.html)
 
->
-> The ability to make a program crash is not inherently a security bug.
+VULNERABILITY
+-------------
 
-1. This is nearly true story: On a mailing list someone posted crash
-when parsing the Subject header in one the most popular MUA.
-Whenever the user tried to open the folder, the MUA crashed,
-preventing reading the list.
-Users without technical skills needed technical help to delete the DoS mail.
-2. coredump takes space.
+libcurl would reuse a previously created connection even when a TLS or SSH
+related option had been changed that should have prohibited reuse.
+
+libcurl keeps previously used connections in a connection pool for subsequent
+transfers to reuse if one of them matches the setup. However, several TLS and
+SSH settings were left out from the configuration match checks, making them
+match too easily.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+Here are the list of options that were not considered in the check, so curl
+would reuse a connection even if the subsequent transfer would have changed
+one or more of these options.
+
+### TLS options
+
+- `CURLOPT_SSL_OPTIONS` (since 7.25.0)
+- `CURLOPT_CRLFILE` (since 7.19.0)
+- `CURLOPT_TLSAUTH_USERNAME` (since 7.21.4)
+- `CURLOPT_TLSAUTH_PASSWORD` (since 7.21.4)
+- `CURLOPT_PROXY_SSL_OPTIONS` (since 7.52.0)
+- `CURLOPT_PROXY_CRLFILE` (since 7.52.0)
+- `CURLOPT_PROXY_TLSAUTH_USERNAME` (since 7.52.0)
+- `CURLOPT_PROXY_TLSAUTH_PASSWORD` (since 7.52.0)
+
+### SSH options
+
+- `CURLOPT_SSH_PUBLIC_KEYFILE` (since 7.16.1)
+- `CURLOPT_SSH_PRIVATE_KEYFILE` (since 7.16.1)
+
+This flaw was initially introduced in curl 7.16.1 and has been widened several
+times since then. See table above for details
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2022-27782 to this issue.
+
+CWE-305: Authentication Bypass by Primary Weakness
+
+Severity: Medium
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.16.1 to and including 7.83.0
+- Not affected versions: curl < 7.16.1 and curl >= 7.83.1
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+The two patches for CVE-2022-27782: [TLS-fix](https://github.com/curl/curl/commit/f18af4f874) and [SSH-fix](https://github.com/curl/curl/commit/1645e9b44505abd5cbaf65da5282c3f33b5924a5)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 7.83.1
+
+  B - Apply the patch to your local version
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on May 1, 2022. We contacted
+distros@...nwall on May 5.
+
+libcurl 7.83.1 was released on May 11 2022, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+This issue was reported by Harry Sintonen. Patched by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
