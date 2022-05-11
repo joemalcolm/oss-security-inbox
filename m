@@ -1,41 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/25/10
-Message-ID: <CAB8EV3SjWzULpV46s_Yss1EA3-g5UpLCYNB0QzwK3OvSuo5Mug@mail.gmail.com>
-Date: Tue, 25 Jan 2022 15:56:37 +0100
-From: Jean-Baptiste Onofré <jbonofre@...che.org>
-To: announce@...che.org, user@...af.apache.org, dev@...af.apache.org,  security@...che.org, oss-security@...ts.openwall.com, securitylab@...hub.com
-Subject: [SECURITY] New security advisory for CVE-2022-22932
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/11/6
+Message-ID: <q8n331np-1qo6-o367-n636-o5q33o0o29@unkk.fr>
+Date: Wed, 11 May 2022 08:42:11 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: HSTS bypass via trailing dot
 Content-Type: text/plain; charset=utf-8
 
-A new security advisory has been released for Apache Karaf, which was
-fixed in the 4.2.15 and 4.3.6 runtime releases
+HSTS bypass via trailing dot
+============================
 
-CVE-2022-22932: Path traversal flaws
+Project curl Security Advisory, May 11 2022 -
+[Permalink](https://curl.se/docs/CVE-2022-30115.html)
 
-Severity: Low
+VULNERABILITY
+-------------
 
-Vendor: The Apache Software Foundation
+curl's HSTS check could be bypassed to trick it to keep using HTTP.
 
-Versions Affected: all versions of Apache Karaf prior to 4.2.15 or 4.3.6
+Using its HSTS support, curl can be instructed to use HTTPS directly instead
+of using an insecure clear-text HTTP step even when HTTP is provided in the
+URL. This mechanism could be bypassed if the host name in the given URL used a
+trailing dot while not using one when it built the HSTS cache. Or the other
+way around - by having the trailing dot in the HSTS cache and *not* using the
+trailing dot in the URL.
 
-Description:
+Since trailing dots in host names are somewhat special, many sites work
+equally fine with or without a trailing dot present.
 
-Apache Karaf obr:* commands and run goal on the karaf-maven-plugin have partial
-path traversal which allows to break out of expected folder.
+We are not aware of any exploit of this flaw.
 
-The risk is low as obr:* commands are not very used and the entry is
-set by user.
+INFO
+----
 
-This has been fixed in revision:
+This flaw was introduced in [commit
+b27ad8e1d3e68e](https://github.com/curl/curl/commit/b27ad8e1d3e68e), shipped
+in curl 7.82.0 when the treatment of trailing dot host names was changed.
 
-https://gitbox.apache.org/repos/asf?p=karaf.git;h=36a2bc4
-https://gitbox.apache.org/repos/asf?p=karaf.git;h=52b70cf
+Similar issues have been raised in the past for
+[Firefox](https://www.mozilla.org/en-US/security/advisories/mfsa2015-13/) and
+for [Chrome](https://bugs.chromium.org/p/chromium/issues/detail?id=461481).
 
-Mitigation: Apache Karaf users should upgrade to 4.2.15 or 4.3.6
-or later as soon as possible, or use correct path.
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2022-30115 to this issue.
 
-JIRA Tickets: https://issues.apache.org/jira/browse/KARAF-7326
+CWE-319: Cleartext Transmission of Sensitive Information
 
+Severity: Medium
 
-Credit: This issue was discovered and reported by GHSL team member
-Jaroslav Lobacevski..
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.82.0 to and including 7.83.0
+- Not affected versions: curl < 7.82.0 and curl >= 7.83.1
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+A [fix for CVE-2022-30115](https://github.com/curl/curl/commit/fae6fea209a2d4d)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 7.83.1
+
+  B - Apply the patch to your local version
+
+  C - Stick to always using `HTTPS://` in URLs
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on May 3, 2022. We contacted
+distros@...nwall on May 5.
+
+libcurl 7.83.1 was released on May 11 2022, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+This issue was reported by Axel Chong. Patched by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
