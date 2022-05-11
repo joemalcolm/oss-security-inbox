@@ -1,68 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/21/10
-Message-ID: <20221221191510.3rqbrzu7oiyidlbt@mutt-hbsd>
-Date: Wed, 21 Dec 2022 14:15:10 -0500
-From: Shawn Webb <shawn.webb@...denedbsd.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: [Linux] /proc/pid/stat parsing bugs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/11/3
+Message-ID: <82n3o7sq-n555-q6o1-323q-7p91921s93s1@unkk.fr>
+Date: Wed, 11 May 2022 08:38:18 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: percent-encoded path separator in URL host
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 21, 2022 at 06:13:17PM +0100, Dmitry Vyukov wrote:
-> Hello,
-> 
-> This is not a single vulnerability, the list of affected software is
-> large, but it's not a security issue for all of it.
-> 
-> It occurred to me that most of the Linux procfs /proc/pid/stat and
-> /proc/pid/task/tid/stat parsing code out there is buggy. The fine
-> contains a set of numbers about the task:
-> https://man7.org/linux/man-pages/man5/proc.5.html
-> 
-> e.g. $ cat /proc/self/stat
-> 1715376 (cat) R 1544883 1715376 1544883 34819 1715376 4194304 106 0 0
-> 0 0 0 0 0 20 0 1 0 42505561 9207808 237 18446744073709551615
-> 93955355631616 93955355651497 140737444557056 0 0 0 0 0 0 0 0 0 17 36
-> 0 0 0 0 0 93955355667504 93955355669120 93955385581568 140737444559745
-> 140737444559765 140737444559765 140737444564971 0
-> 
-> Most of the code splits it by space and takes an N-th field.
-> The problem is that the process name "(cat)" can contain spaces (and
-> brackets). Potentially some important software (containers/sandboxes)
-> can be tricked into getting wrong data, and I've seen cases close to
-> stack overflows (buffer for a fixed number of fields is allocated on
-> stack).
-> 
-> Some examples:
-> OpenJDK:
-> https://sourcegraph.com/github.com/openjdk/jdk/-/blob/src/jdk.management/unix/native/libmanagement_ext/OperatingSystemImpl.c?L133-139
-> https://sourcegraph.com/github.com/openjdk/jdk8u/-/blob/jdk/src/solaris/native/sun/management/OperatingSystemImpl.c?L223-229
-> 
-> Ansible:
-> https://sourcegraph.com/github.com/ansible/ansible/-/blob/lib/ansible/modules/yum.py?L507-510
-> 
-> Libuv:
-> https://sourcegraph.com/github.com/libuv/libuv/-/blob/src/unix/linux.c?L674-701
-> 
-> bdwgc:
-> https://sourcegraph.com/github.com/mono/linux-packaging-mono/-/blob/external/bdwgc/os_dep.c?L1138-1155
-> 
-> But really most of the code that does it:
-> https://sourcegraph.com/search?q=context:global+/%5C%22%5C/proc%5C/.*%5C/stat%5C%22/
-> 
-> The only way to parse it is to do strrchr(')') first (fortunately it
-> contains just one unescaped string).
+percent-encoded path separator in URL host
+==========================================
 
-What is old is new again. Perhaps it's a good time to reflect on the
-security of relying on VFS-based gadgets for process and system
-instrumentation.
+Project curl Security Advisory, May 11 2022 -
+[Permalink](https://curl.se/docs/CVE-2022-27780.html)
 
-Long live sysctl.
+VULNERABILITY
+-------------
+
+The curl URL parser wrongly accepts percent-encoded URL separators like '/'
+when decoding the host name part of a URL, making it a *different* URL using
+the wrong host name when it is later retrieved.
+
+For example, a URL like `http://example.com%2F10.0.0.1/`, would be allowed by
+the parser and get transposed into `http://example.com/10.0.0.1/`. This flaw
+can be used to circumvent filters, checks and more.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+This flaw was introduced in [commit
+9a8564a920188e](https://github.com/curl/curl/commit/9a8564a920188e), shipped
+in curl 7.80.0 when curl added support for percent-encoded host names in URLs.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2022-27780 to this issue.
+
+CWE-177: Improper Handling of URL Encoding
+
+Severity: Medium
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.80.0 to and including 7.83.0
+- Not affected versions: curl < 7.83.0 and curl >= 7.83.1
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+The URL parser now rejects host names that percent-decode into URL separator
+characters.
+
+A [fix for CVE-2022-27780](https://github.com/curl/curl/commit/914aaab9153764e)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 7.83.1
+
+  B - Apply the patch to your local version
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on April 28, 2022. We contacted
+distros@...nwall on May 5.
+
+libcurl 7.83.1 was released on May 11 2022, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+This issue was reported by Axel Chong. Patched by Daniel Stenberg.
+
+Thanks a lot!
 
 -- 
-Shawn Webb
-Cofounder / Security Engineer
-HardenedBSD
 
-https://git.hardenedbsd.org/hardenedbsd/pubkeys/-/raw/master/Shawn_Webb/03A4CBEBB82EA5A67D9F3853FF2E67A277F8E1FA.pub.asc
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
