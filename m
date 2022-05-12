@@ -1,55 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/23/2
-Message-ID: <CAFswPa-o3rbTauLiQfQtLLP-Cm2BFbKFCEffdbA3iHDLHcUwDg@mail.gmail.com>
-Date: Mon, 23 May 2022 08:48:27 +0200
-From: eduardo vela <evn@...glers.com>
-To: oss-security@...ts.openwall.com
-Cc: Sam James <sam@...too.org>, Seth Arnold <seth.arnold@...onical.com>
-Subject: Re: linux-distros list policy and Linux kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/12/1
+Message-ID: <20220512052823.advhiwrcdc6rokme@senku>
+Date: Thu, 12 May 2022 15:28:23 +1000
+From: Aleksa Sarai <asarai@...e.de>
+To: security-announce@...ncontainers.org, oss-security@...ts.openwall.com
+Subject: CVE-2022-29162: runc < 1.1.2 incorrect handling of inheritable capabilities in default configuration
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 23 May 2022, 08:35 Greg KH, <greg@...ah.com> wrote:
+A security update for runc (v1.1.2) was released to mitigate
+CVE-2022-29162, which is a low severity vulnerability related to
+mishandling of inheritable capabilities which resulted in an atypical
+Linux environment inside containers.
 
-> On Sun, May 22, 2022 at 08:55:50PM +0100, Sam James wrote:
-> > I'd also like to ask that the final commit messages please reference any
-> > relevant CVEs or at least the security impact. There've been a fair
-> number
-> > of incidents where such information is stripped and it makes tracking
-> > issues *really* hard.
->
-> That is pretty much impossible and goes against the whole goal of "get
-> this fixed and in a public tree and only tell the world that it was an
-> issue after-the-fact" way that the kernel team works.  If we put all of
-> that in the commit to start with, the whole world knows this info.  We
-> can't go back in time and change git commits for obvious reasons.
->
+As the inheritable set was a subset of the permitted capabilities (which
+are limited) this bug does not affect the container security boundary,
+it simply ensures that programs running inside the container do not
+inherit capabilities they do not need accidentally. This issue is
+similar to CVE-2022-24769 which was found in Docker and containerd.
 
-Hi all
+As this issue was deemed not exploitable, there is no embargo for this
+patch and release. Please update as soon as practical.
 
-Regarding keeping the security relevance of the patch secret.
+You can find the new version of runc on our releases page[1] and the
+patch fixing the issue is [2].
 
-Something we are working on now (as the Google CNA) is to automatically
-generate CVEs for Syzkaller findings that meet some criteria (unique, with
-reproducer, and with some heuristics to determine the type of crash, eg
-KASAN+uaf). We would also monitor advisories from distros to catch
-duplicate CVEs and not issue them in those cases.
+[1]: https://github.com/opencontainers/runc/releases/tag/v1.1.2
+[2]: https://github.com/opencontainers/runc/commit/98fe566c527479195ce3c8167136d2a555fe6b65
 
-The reason I mention it in this list is because a CVE would be issued (and
-maybe communicated to oss-security@ to avoid duplicate CVEs), which might
-also automatically break embargos. That said, I hope that's OK, as
-Syzkaller is just a subset of security vulnerabilities being disclosed on
-the Kernel.
+-- 
+Aleksa Sarai
+Senior Software Engineer (Containers)
+SUSE Linux GmbH
+<https://www.cyphar.com/>
 
-If you have feedback about the overall concept, please send it off-list (or
-start a new thread) as to avoid derailing the topic, but I wanted to bring
-it up because it might appear as willing violations of Embargo on the new
-linux-distros@ process being proposed.
-
-Regards
-
-
-thanks,
->
-> gre gk-h
->
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
