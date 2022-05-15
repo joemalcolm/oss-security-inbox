@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2154" "Thursday" "16" "March" "2017" "10:31:17" "+0100" "Adam Maris" "amaris@redhat.com" "<1489656677.3059.3.camel@redhat.com>" "63" "Re: [oss-security] CVE request for unchecked size argument in malloc() in CHICKEN Scheme" nil nil nil "3" "2017031609:31:17" "[oss-security] CVE request for unchecked size argument in malloc() in CHICKEN Scheme" (number mark "U       amaris@redha Mar 16   63/2154  " thread-indent "\"Re: [oss-security] CVE request for unchecked size argument in malloc() in CHICKEN Scheme\"\n") "<20170315224749.GG759@scully.more-magic.net>" ("<20170315224749.GG759@scully.more-magic.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 7223 invoked by uid 550); 16 Mar 2017 09:31:36 -0000
+Received: (qmail 25604 invoked by uid 550); 15 May 2022 16:48:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,86 +7,221 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7202 invoked from network); 16 Mar 2017 09:31:36 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 50C0EC04B30E
-Authentication-Results: ext-mx07.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx07.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=amaris@redhat.com
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 50C0EC04B30E
-Message-ID: <1489656677.3059.3.camel@redhat.com>
-From: Adam Maris <amaris@redhat.com>
+Received: (qmail 21536 invoked from network); 15 May 2022 16:42:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=cloudlinux.com; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=1Ih9BzT2eu+ZAonQAujG6zPlBLM9nuJps/UpPLk7zrg=;
+        b=TGNDZtA7dUXQeCor2V6W6wZt6iYGaf37y7jHe0u6DTp7SgvoDp6kGqHMdshAHtMhZj
+         io/V6p7fW4+7Ty43N2M9jO3O+n84N8SbkAs8ycqlnNPZKn3Zij0zOeqy5wc414J0SiCf
+         FCL0Job1LmM+EPC54OAdQHGoLfZ/gnJVigVj993NT9Lo5/xzyvfQKmf3H737QZKDi5i1
+         ZUiAnudnOa1UsWGn/8dkvUuYzlaM/+QnPgsGjJNSuqhn5LCS/U3dIyamapTzjZNLt7lz
+         PEM212DhfKiNErMqp5faZKN/utr4SqwvvQginbq0XaN7IMSUd0ocN9OcmpXUmun+wVjA
+         cKkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=1Ih9BzT2eu+ZAonQAujG6zPlBLM9nuJps/UpPLk7zrg=;
+        b=27+dxUNAOZrkmk2fNT5DBr76Gbi2dRGBPtA/qsG2vk/vOdWpbTXRnq1YGExbn+jtBl
+         uiD7zkTFHxjo8iWddx4Tt+sEnRu6mB+uvyAkMDYywl8OkLFT6dSToSaPbI+sL23fS9NZ
+         XwDOVBbXhxy2epjQDdcCWAvuQfKMPS+bY+p89nBIybhNRau9HXRPLNowUjuIWL3nKUoS
+         6idluY0eEHTuWy63GhWo6lQrcNFMMWNzUPvrriTnDByw5XSGTX+/2XXaB2U3CxNV+ycx
+         E7nkVcqUa8WyjY0ZnwAW7caeouxCtq3QnkD11gKLg5J10DhjP5kn0j5Y45KQXshh1ifU
+         OIbg==
+X-Gm-Message-State: AOAM530Q8dfIG7GN8566naqEqk0FdxfLDFGdyL2VZ8VzML15b5j3AA+8
+	mPLshxkJQtLPafhQ0mJCjCLR6fN0vOIKUJKA64iyYJDFixk=
+X-Google-Smtp-Source: ABdhPJwe8DoImGrNzPBI67za5lDQrf7HZEyzND43SOP5Ig1Nr9J+5Ajx48UrZFOXCJwjjEysc3Q9eWWo2ovD+lxZ0k4=
+X-Received: by 2002:a05:690c:446:b0:2fe:f680:3462 with SMTP id
+ bj6-20020a05690c044600b002fef6803462mr1543947ywb.468.1652632932760; Sun, 15
+ May 2022 09:42:12 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220515162740.GA20526@openwall.com>
+In-Reply-To: <20220515162740.GA20526@openwall.com>
+From: Igor Seletskiy <i@cloudlinux.com>
+Date: Sun, 15 May 2022 09:41:37 -0700
+Message-ID: <CA+-XxSHpfXpN5drp__JtcyUuvzyatc8u8+FTsrX6uExRDOdDMg@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Cc: peter@more-magic.net
-Date: Thu, 16 Mar 2017 10:31:17 +0100
-In-Reply-To: <20170315224749.GG759@scully.more-magic.net>
-References: <20170315224749.GG759@scully.more-magic.net>
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-nYelhvTMIizKelTGmzxA"
-Mime-Version: 1.0
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Thu, 16 Mar 2017 09:31:25 +0000 (UTC)
-Subject: Re: [oss-security] CVE request for unchecked size argument in
- malloc() in CHICKEN Scheme
+Content-Type: multipart/alternative; boundary="000000000000e6db2405df0f969e"
+Subject: Re: [oss-security] linux-distros list policy and Linux kernel
 
---=-nYelhvTMIizKelTGmzxA
+--000000000000e6db2405df0f969e
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, 2017-03-15 at 23:47 +0100, Peter Bex wrote:
-> Hello all,
->=20
-> I'd like to request a CVE for an unchecked malloc() argument in
-> CHICKEN Scheme's SRFI-4 vector constructors, when allocating the
-> vector in unmanaged memory.=C2=A0=C2=A0Due to the missing range check, th=
-is
-> could result in negative or too small size allocations, which would
-> result in a crash or a buffer overrun, depending on the size.
->=20
-> This issue affects all current releases of CHICKEN Scheme, including
-> the latest release, 4.12.0.
->=20
-> The official announcement was made here:
-> http://lists.gnu.org/archive/html/chicken-announce/2017-03/msg00000.h
-> tml
->=20
->=C2=A0
+My vote would be for #1
+Linux kernel is a huge ecosystem in its own right with many vested
+players.  They arrived at their way of handling security issues, and
+overall doing a good job. It will be really hard to change that
+ecosystem from the outside. This would make #2 very similar to #3 in many
+cases.
 
-Hi Peter,
+On the other hand, the linux-distros mailing list is very valuable for the
+participating distros (at least it is very valuable for CloudLinux OS), and
+losing it as a resource would be dreadful for us. So would be losing only
+part of the information related to the Linux kernel. As such I don't like
+either #3 or #4.
 
-oss-security mailing is no longer a place for requesting CVEs. Please,
-request CVE from MITRE via=C2=A0https://cveform.mitre.org/=C2=A0or also pos=
-sibly
-from DWF project via=C2=A0http://iwantacve.org/
+I also don't like #0, as it seems we have a fairly concrete case to deal
+with, and it can be dealt with explicitly using #1.
 
-Thanks!
+Regards,
+Igor Seletskiy |  CEO
+CloudLinux OS <https://cloudlinux.com/cloudlinuxos>   |   KernelCare
+<https://kernelcare.com>   |   Imunify360 <http://imunify360.com/> |
+AlmaLinux <https://almalinux.org>
 
-Best Regards,
 
---=20
-Adam Mari=C5=A1, Red Hat Product Security
-1CCD 3446 0529 81E3 86AF =C2=A02D4C 4869 76E7 BEF0 6BC2=C2=A0=
 
---=-nYelhvTMIizKelTGmzxA
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
+On Sun, May 15, 2022 at 9:28 AM Solar Designer <solar@openwall.com> wrote:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+> Hi,
+>
+> This is a lengthy and belated message, yet I think is something we need
+> to discuss in here.
+>
+> Context:
+>
+> (linux-)distros list policy is generally to treat as public issues for
+> which a fix is public.  For issues that haven't yet been brought to
+> (linux-)distros, this means they shouldn't be - and instead should be
+> brought to oss-security right away.  For issues that have been on
+> (linux-)distros, this means an oss-security posting is to be made as
+> soon as a fix is made public.
+>
+> This works well for most distros (where releasing a package update
+> generally implies documenting the update's known security relevance at
+> the same time) and for (linux-)distros list interactions with most
+> projects, with the major exception being the Linux kernel.
+>
+> For Linux kernel maintainers, it is customary to post a fix technically
+> publicly but without indication of its security relevance, then work on
+> getting it merged into the various trees, and expect that its security
+> relevance wouldn't be clearly indicated publicly for a while.
+>
+> I didn't keep track of statistics, but my impression was that in the
+> last few years for issues handled with linux-distros involved, the
+> maintainers usually reluctantly accepted linux-distros' way of handling
+> them - didn't insist that the reporter would post e.g. to netdev before
+> a "final" patch is ready, agreed on and honored coordinated release
+> dates, and didn't object to linux-distros members asking the reporter to
+> post about the issue to oss-security on the same day that a posting to a
+> Linux kernel list is made.  I was grateful for that, especially knowing
+> that some of this is an inconvenience/overhead for the maintainers.
+>
+> The handling was still often problematic (somehow way worse than for
+> other projects, in my impression), but that appeared to be because
+> discoverers/reporters were not familiar with the procedure and with our
+> expectations, or/and because our policy and thus expectations were
+> counter-intuitive for them (I admit this could mean that we were wrong
+> in having such unexpected policy).  This also suggested that many didn't
+> fully read or didn't understand our published policy before posting to
+> linux-distros, which I tried to address by adding clarifications, some
+> emphasized in bold and eventually even in ALL CAPS (not as shouting, but
+> to make these parts less likely overlooked).
+>
+> Somehow it seems to have gotten worse this year.  In handling of an
+> issue in February, a reporter planned to ignore our policy after having
+> already shared an issue with linux-distros, and a list member from a
+> major distro tried to enforce the policy.  In discussion that followed,
+> a kernel maintainer (someone I have a lot of respect for, and who I
+> think is also on the kernel security team?) said he had directed the
+> reporter to share the issue with linux-distros despite of the reporter's
+> explicit concerns and non-acceptance of the policy, expecting that
+> linux-distros members would be "reasonable" and won't actually enforce
+> the "unreasonable" policy (I don't recall the exact wording used, but
+> that's the gist of it).  So it was not a case of something unexpected
+> being overlooked by someone new - it was a case of the policy being
+> deliberately violated by someone very experienced.  (Moreover, we also
+> got accused of shouting with the ALL CAPS.)
+>
+> linux-distros members and Linux kernel security team didn't arrive at an
+> agreement on how to handle further issues, planning to bring this up for
+> discussion on oss-security - which I am finally doing now.  Meanwhile,
+> the handling was hectic - indeed, people felt discouraged from enforcing
+> the policy.  Another kernel maintainer also mentioned he's no longer
+> directing people to linux-distros (which I find more reasonable than
+> coercing/expecting linux-distros not to enforce a published policy).
+>
+> Question:
+>
+> Should we address this incompatibility in desired handling of issues by
+> the distros vs. kernel teams, and how?
+>
+> Options:
+>
+> Off the top of my head, we can do one of:
+>
+> 0. Do nothing specific - let things work or fail on their own.
+>
+> 1. Adjust linux-distros policy to allow "embargoes" on publicly fixed
+> Linux kernel issues.  (Only for Linux kernel, not for other projects.)
+>
+> However, besides not posting to oss-security this probably means also
+> not releasing distro kernel updates until the "embargo" is over (when
+> the changes hit a stable tree maybe?), thus exposing most Linux users to
+> vulnerabilities that some attackers can infer from Linux kernel mailing
+> lists and git commits.
+>
+> The current policy:
+>
+>
+> https://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-instructions-for-reporters
+>
+> already includes an exception in:
+>
+> "Please note that in case a fix for an issue is already in a publicly
+> accessible source code repository, we generally consider the issue
+> public (and thus you should post to oss-security right away, not report
+> the issue to (linux-)distros as we'd merely redirect you to oss-security
+> anyway and insist that you make the required posting ASAP).  There can
+> be occasional (rare) exceptions to this, such as if the publicly
+> accessible fix doesn't look like it's for a security issue (e.g., if the
+> corresponding changes were initially made for unrelated reasons and were
+> only later realized to have fixed a non-public security issue) and not
+> revealing this publicly right away is somehow desirable.  You'd have to
+> have very sound reasoning to claim an exception like this and be
+> prepared to lose your argument and if so to post to oss-security ASAP
+> anyway."
+>
+> This currently talks about fixes that are already public at the time of
+> reporting to (linux-)distros, it requires "very sound reasoning", and it
+> allows (linux-)distros to insist that the issue be made public ASAP.
+>
+> In my understanding, the Linux kernel folks want an exception like this
+> also for publicly fixing issues already being handled with linux-distros
+> involved, and to have the exception granted unconditionally with no way
+> for linux-distros not to agree to it in a given case.  (Please correct
+> me if I misunderstand.)
+>
+> 2. Strictly enforce the policy as it is - and be in conflict with Linux
+> kernel security team, and handle fewer issues via linux-distros.
+>
+> As a sub-option, also suggest that if a reporter or/and upstream does
+> not accept the policy, they can nevertheless use the list to establish
+> direct communication with interested distros - post a vague message like
+> "I found a [type, impact] vulnerability in the Linux kernel [versions,
+> subsystem], but I don't accept the list policy - please contact me
+> directly if you'd like to receive the details on my terms anyway."
+> Maybe with or without the clarifications I put in square brackets there.
+>
+> 3. Ask that Linux kernel issues not be reported to linux-distros at all.
+> This is unnecessarily limiting compared to option 2 above, but maybe not
+> so conflicting (just not using this specific medium for communication).
+> However, I think it won't work consistently - it would be too
+> unexpected by many (indeed, out of context it sounds plain ridiculous),
+> and linux-distros is referenced in older Linux kernel release trees.
+> More importantly, both teams actually want to communicate on issues
+> somewhere, and there isn't a good alternative currently.
+>
+> 4. Shut down the list.  (What about the non-Linux distros list, then?)
+> I need to migrate the setup soon and ideally also update it later, so
+> shutting it down is as simple as not putting more effort into it.  It's
+> been around for 11 years.
+>
+> I don't like any of these options.  Any other ideas?  Any ways to make
+> option 1 more reasonable?
+>
+> Alexander
+>
 
-iQIcBAABCgAGBQJYyltmAAoJEEhpdue+8GvCBXUQAI/GL9wHkXUakfwPM7eLVDqO
-MtwAQrZFxXNJCVIbL9jezCrmkO39QBS2ctjSk3RAgXl0OcKkTOexqm7t5ucYYuY8
-wcK8kTmnCnqIEjIQO61cjlukiA9gNxXoxmSiZ2VBLxqNhWqIS9f2WzpgTJ81oW3q
-rK5ZKjeqsEB5FbPILloAyysBiNNkNoPNrVW5aJX2ktbgqHI06mzpLf7jHXTESR7Z
-QRHoeOV/pCP2nGackjfg6PGnFnz6wHm72FuB3mUjmltZ0/VOblq14qlHShyWhfOA
-kIksTvXtcUU9ZPcu/cJdEHWH224bnRIEe3eJCP4Fj/1JBdK2CO1iW7KwMv8X6MBT
-dKM4RMJByBaHf/7k7xvhgKJrOr60FTco4Jx59DmSkfT7KdrcqKDrJnecqdSZ/C6r
-kKul1WTpFdXAm0lLiXazvxaybWb/7+d1CjvtGJQ4WYdFzO0Eai0UEUrizdESe4t4
-e1PVx7V/Z+ENCV/mTeEy7GsBcKgRrMgM4AucS5GFyCuRJB4zjLH0tixQHjySpMdY
-IRMqh+zKlW7prhz7nphkCuL4ZaWmDDQmDnNc3ilBfYjK4IItqt+H+YuxFwD4Tn85
-dmeN47/VgevJ5vnv0eijKOu9waRGbgsqOd9ZnoJHOq7qPgGwZjVb6U/OwUqKRm6P
-40Z5Q3R4uiSW8n823ehA
-=JZ7H
------END PGP SIGNATURE-----
-
---=-nYelhvTMIizKelTGmzxA--
-
+--000000000000e6db2405df0f969e--
