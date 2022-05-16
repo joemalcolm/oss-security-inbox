@@ -1,41 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/28/5
-Message-ID: <20220428201003.GA1260523@millbarge>
-Date: Thu, 28 Apr 2022 20:10:03 +0000
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/16/3
+Message-ID: <072956cd-6dcf-5053-b666-e1254a85a20d@apache.org>
+Date: Mon, 16 May 2022 16:45:13 +0000
+From: Tim Allison <tallison@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-21449 and version reporting
+Subject: CVE-2022-30126: Apache Tika Regular Expression Denial of Service in Standards Extractor 
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 28, 2022 at 02:12:04PM +0000, Seaman, Chad wrote:
-> In what universe exactly are versions omitted from vulnerability
-> reporting because a vendor “no longer supports that version”… this
-> non-supported version is still vulnerable?
+Severity: low
 
-A large part of software maintenance is managing technical debt --
-and being able to walk away from no-longer-supported products is an
-important part of that.
+Description:
 
-Would you expect Microsoft to evaluate Windows 3.11, Windows 95,
-Windows 98, Windows ME, Windows NT 3.51, Windows NT 4.0. Windows XP,
-etc for every single vulnerability discovered in newest products?
+A regular expression in our StandardsText class, used by the StandardsExtractingContentHandler could lead to a denial of service caused by backtracking on a specially crafted file. This only affects users who are running the StandardsExtractingContentHandler, which is a non-standard handler.  This is fixed in 1.28.2 and 2.4.0
 
-Products that have reached end of life are clearly communicated as no
-longer supported; see, eg:
+Mitigation:
 
-https://endoflife.date/java
+Upgrade to 1.28.2 or 2.4.0
 
-There has been discussion about releasing "end of life" CVEs that indicate
-when a product goes out of support, so tooling built to compare lists of
-CVEs against software that's installed and in use at a site can report on
-it, but unless this is consistently applied across the entire ecosystem it
-is probably not useful enough for anyone to issue them.
+Credit:
 
-Of course, anyone asking for vulnerability information for EOL software
-can have a conversation with the sales team from their vendors. Probably
-every company has a price where they'd be happy to provide this
-information to you.
+This issue was discovered and reported by the CodeQL team members [@atorralba (Tony Torralba)](https://github.com/atorralba) and [@joefarebrother (Joseph Farebrother)](https://github.com/joefarebrother).
 
-Thanks
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
