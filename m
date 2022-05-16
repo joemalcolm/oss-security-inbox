@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["636" "Monday" "17" "August" "2015" "14:29:05" "+0200" "Dejan Bosanac" "dejan@nighttale.net" "<CAGeh-pEJEEEoQWNnsWhTAVQTw1J=VgeD_tab4DTT+RnaG5YDCw@mail.gmail.com>" "22" "[oss-security] [ANNOUNCE] CVE-2015-1830 - Path traversal leading to unauthenticated RCE in ActiveMQ" nil nil nil "8" "2015081712:29:05" "[oss-security] [ANNOUNCE] CVE-2015-1830 - Path traversal leading to unauthenticated RCE in ActiveMQ" (number mark "        dejan@nightt Aug 17   22/636   " thread-indent "\"[oss-security] [ANNOUNCE] CVE-2015-1830 - Path traversal leading to unauthenticated RCE in ActiveMQ\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 13868 invoked by uid 550); 17 Aug 2015 12:29:23 -0000
+Received: (qmail 22258 invoked by uid 550); 16 May 2022 14:30:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +6,97 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13814 invoked from network); 17 Aug 2015 12:29:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to:content-type;
-        bh=hm/4yLVyd0kWvZPu01nxfXIRijsVfpWHDj5dKU4vspo=;
-        b=e60SPtTxiKg9KivPo6g6TOmYDwb0lYybDJldO+FL2E33zQLEX1C17nYQCfdtxIG0N1
-         te/L1DCqjs7waQDNpiJavf3bcAATVWmWDhG3n5zzRc63o89r+uaNfbmKbMr/Lz/hM2i5
-         VI6SFO0jR4zCaSabRI/rdLXuqGRSjWOWRqQ/dgyl/vrQFjzoHMfJo9H8dcYDStzgnNHe
-         UMgzbIopWK0TIE7R7Jd8e5i5hzddq3IdNnY1UZKNTKM6zfknjHaL9h6Esk1ijIfRebnc
-         OC1LmcndETmPYsRWzz8STDTBF5wjVZM3YXZYYqzhx0lM8wmczrrjIGvrMxHXsQ1OxeKl
-         jRyg==
-MIME-Version: 1.0
-X-Received: by 10.170.127.86 with SMTP id t83mr1010107ykb.107.1439814545743;
- Mon, 17 Aug 2015 05:29:05 -0700 (PDT)
-X-Google-Sender-Auth: JO1EQK6MZ7WSUq2Wg9U-sCXkWEk
-Message-ID: <CAGeh-pEJEEEoQWNnsWhTAVQTw1J=VgeD_tab4DTT+RnaG5YDCw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a1139d1cc8aa649051d80f20c
-Date: Mon, 17 Aug 2015 14:29:05 +0200
-From: Dejan Bosanac <dejan@nighttale.net>
 Reply-To: oss-security@lists.openwall.com
-Sender: chubrilo@gmail.com
-Subject: [oss-security] [ANNOUNCE] CVE-2015-1830 - Path traversal leading to unauthenticated
- RCE in ActiveMQ
-To: "dev@activemq.apache.org" <dev@activemq.apache.org>, 
-	"users@activemq.apache.org" <users@activemq.apache.org>, 
-	Apache Security Response Team <security@apache.org>, oss-security@lists.openwall.com, 
-	bugtraq@securityfocus.com
+Received: (qmail 23910 invoked from network); 16 May 2022 13:43:53 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1652708620;
+	bh=pAxJx8SWMkrnAMtxw1t1SbrNQMw+PXb3viGMVuL0f+k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:In-Reply-To;
+	b=Khc5ri1Rmh9BfFB4hmOhum7MZwAfcXU5JEFcEdcnDlM8Et7PdtG/9GZQA8Wmq6a6z
+	 8FJg9SzdIkNuR0El+M37TO8xIR4FmYCkJUNzj+QCn2zBn4hOoYe4cc/svOzYwB6CtT
+	 sThtDSrVqAGX1izs0+qXgiuqSvFWWVKnU9mYu9H3uqQXMzRYG49iq7ZLs4/fevqDnU
+	 SvoYSF3PHInJ49iG6OLvFszxXKFk9FjcNKEP8wRSS3WZWGUJjFzx7HNASRnQfEUupV
+	 2FmOOXf3LEK/jDyHDF86o2UuKVUaKEVIASvRlA80z5ExJtm6/E1UgDr1P+hVoUSHVG
+	 urRoO3Y8TGm1Q==
+Date: Mon, 16 May 2022 10:43:33 -0300
+From: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
+To: oss-security@lists.openwall.com
+Cc: Solar Designer <solar@openwall.com>
+Message-ID: <YoJVBebSkRsaOv3b@quatroqueijos>
+References: <20220515162740.GA20526@openwall.com>
+ <YoJNtNJXUwLySmmO@zx2c4.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YoJNtNJXUwLySmmO@zx2c4.com>
+Subject: Re: [oss-security] linux-distros list policy and Linux kernel
 
---001a1139d1cc8aa649051d80f20c
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Mon, May 16, 2022 at 03:12:20PM +0200, Jason A. Donenfeld wrote:
+> Hi Alexander,
+> 
+> I think a lot of this depends on what you feel the primary value in
+> distros@ is.
+>
+> I always thought its primary purpose was to centralize embargoed
+> vulnerability reports, using its presence as *the* de facto forum for
+> that, in order to receive nearly all embargoed bugs. Then, those bugs
+> become subject to the distros@ 14-day disclosure policies. Seen this
+> way, distros@ is a mechanism for ensuring that bugs eventually *do*
+> become disclosed, rather than languishing in embarrassed vendor
+> purgatory forever.
+>
+> Maybe I'm far off, though, so it'd be interesting to learn if you have a
+> different idea of its value.
+>
 
-A security vulnerabilities is reported against Apache ActiveMQ 5.11.1 and
-older versions
+[...]
 
-Please check the following document and see if you=E2=80=99re affected
+> And anyway, practically speaking, security@kernel.org's disclosure
+> deadline is usually something like 7 days, which is pretty short, so for
+> people who misread the documentation, at most they'll only be miffed
+> about a few days, rather than a few months.
+> 
 
-http://activemq.apache.org/security-advisories.data/CVE-2015-1830-announcem=
-ent.txt
+Though I want to add a little more to this discussion, I think this needs
+clarification and is really one of the main pain points here, in my opinion.
 
-Apache ActiveMQ 5.12.0 and 5.11.2 with appropriate fixes are released and
-available for upgrade. There's also a configuration workaround that
-resolves the problem (described in the announcement).
+"Although our preference is to release fixes for publicly undisclosed bugs
+as soon as they become available, this may be postponed at the request of
+the reporter or an affected party for up to 7 calendar days from the start
+of the release process"
 
-Regards
---
-Dejan Bosanac
-about.me/dejanb
+This is about the fixes, not the security report. As I read it, once a fix is
+developed/reviewed/accepted, kernel maintainers/developers may hold the *fix*
+release up to 7 days.
 
---001a1139d1cc8aa649051d80f20c--
+Right in the next paragraph, though:
+
+"While embargoed information may be shared with trusted individuals in
+order to develop a fix, such information will not be published alongside
+the fix or on any other disclosure channel without the permission of the
+reporter.  This includes but is not limited to the original bug report
+and followup discussions (if any), exploits, CVE information or the
+identity of the reporter."
+
+This means that it's now up to the reporter to disclose any information if they
+want to. They may never disclose it. They may wait for someone else to disclose
+it. Or decide to disclose it immediately.
+
+Now, as you said earlier in your message (which is why I kept that excerpt),
+linux-distros ends up having such a role where reports sent to it should be
+made public in no more than 14 days. But there is no such mechanism on
+security@kernel.org rules as documented at
+Documentation/admin-guide/security-bugs.rst, as I understand it.
+
+Cascardo.
+
+
+> So I think maybe your option (0) makes sense? Enforce the policy, which
+> has worked well enough for a long while now.
+> 
+> Jason
+> 
+> [1] https://git.kernel.org/torvalds/c/d114b9fe78c8d
+> [2] https://lists.immunityinc.com/pipermail/dailydave/2015-August/000976.html
+> [3] https://git.kernel.org/torvalds/c/e3c1c4fd9e6d1
