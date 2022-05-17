@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4220" "Sunday" "18" "December" "2016" "03:30:26" "+1300" "Amos Jeffries" "squid3@treenet.co.nz" "<7cc09c7a-01f9-de00-5dfd-d022104c66ea@treenet.co.nz>" "115" "[oss-security] CVE Request - squid HTTP proxy multiple Information Disclosure issues" nil nil nil "12" "2016121714:30:26" "[oss-security] CVE Request - squid HTTP proxy multiple Information Disclosure issues" (number mark "U       squid3@treen Dec 18  115/4220  " thread-indent "\"[oss-security] CVE Request - squid HTTP proxy multiple Information Disclosure issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 16001 invoked by uid 550); 17 Dec 2016 14:49:17 -0000
+Received: (qmail 23613 invoked by uid 550); 17 May 2022 12:25:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,131 +7,115 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7444 invoked from network); 17 Dec 2016 14:30:58 -0000
-From: Amos Jeffries <squid3@treenet.co.nz>
+Received: (qmail 5199 invoked from network); 17 May 2022 12:13:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1652789592;
+	bh=kV1vqUzkLjdjiaLiFjmMwOID1msr7AjWL9zVaFEllYw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:In-Reply-To;
+	b=W+b1LrtAEQ/lKbKoQ+TmFYsB38/MH96uSBvOz69eFT12pVqRw9LqQOCxLpDVBQLeB
+	 e0TZfuWkYpfV8RAJFcDtb0xFr2fUKQ5r7ZgADKfKB+ZiIf9Xrj+b2kiIv1S+Xd8wXk
+	 E0QAh1uPqn4bI3LG4MAY1CpHNESpCTrIVmTX8cjPNH6E0ywJncf6vG4zBQ+a98V2BD
+	 ywzeAKSRFQv18BCR/QFLcO/2jkg6C3AGy0J62hFqqDWMIeYJpH32nmbjP4f3qtYcji
+	 5wbgAMIrriXlhCi22LLMocEXmj3vprhpkY4W4JXJaFc42gkOoR30Kt0W3MTKsMjtbJ
+	 F4uMVmfTZcvuQ==
+Date: Tue, 17 May 2022 09:13:08 -0300
+From: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
 To: oss-security@lists.openwall.com
-Message-ID: <7cc09c7a-01f9-de00-5dfd-d022104c66ea@treenet.co.nz>
-Date: Sun, 18 Dec 2016 03:30:26 +1300
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.5.1
+Cc: Seth Arnold <seth.arnold@canonical.com>
+Message-ID: <YoORVO2BbBDdjyd2@quatroqueijos>
+References: <20220517033033.GA3403712@millbarge>
+ <YoOCmBqfouvgbEX0@zx2c4.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="NLWq8G9sv1SeXFCHjdGKawa8vIItqLHQ5"
-Subject: [oss-security] CVE Request - squid HTTP proxy multiple Information Disclosure issues
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YoOCmBqfouvgbEX0@zx2c4.com>
+Subject: Re: [oss-security] linux-distros list policy and Linux kernel
 
---NLWq8G9sv1SeXFCHjdGKawa8vIItqLHQ5
-Content-Type: multipart/mixed; boundary="Enm3pTrbplNrpvNUS4XOxfIesefS7a2il";
- protected-headers="v1"
-From: Amos Jeffries <squid3@treenet.co.nz>
-To: oss-security@lists.openwall.com
-Message-ID: <7cc09c7a-01f9-de00-5dfd-d022104c66ea@treenet.co.nz>
-Subject: CVE Request - squid HTTP proxy multiple Information Disclosure issues
+On Tue, May 17, 2022 at 01:10:16PM +0200, Jason A. Donenfeld wrote:
+[...] 
+> This brings us back to the original topic of this (sub-)thread: do
+> public fixes make security vulnerabilities manifest to the public? I
+> guess it depends on who you consider to be the public. If you're
+> speaking from the perspective of placating customers and taking care of
+> some commercial bottom line, the answer is no. No public PR situation
+> coming your way, so no work to be done, vulnerability doesn't exist yet.
+> But if you're speaking from the perspective of whether attackers now are
+> aware of the bug and can write exploits for it -- that is, a real threat
+> model -- then the answer is obviously yes, if the fix is public, the bug
+> is public.
+> 
+> So when I read in this thread calls for extending embargoes until the
+> vulnerability is "disclosed" in some sort of announcement (that is, PR),
+> rather than just until the public git fix, it seems plain that the end
+> goal is a messaging or communication one, rather than a security one. On
+> the surface, delaying the release of a vulnerability until it's had time
+> to reach customer systems sounds like a good idea. But zoom in a little
+> bit and you quickly realize that the vulnerability has *already* been
+> released to attackers who read commit logs, and the thing we're talking
+> about delaying is an official announcement. It turns out, attackers
+> don't care about your official announcements; the marketing team does.
+> 
+> And as I understand it, the Openwall mailing lists have never been about
+> enabling companies to better control their messaging. They've been about
+> a deterministic embargo & disclosure process, to strike the right
+> balance of letting people coordinate privately when needed, and then
+> letting various parties make the best decisions they can once the cat is
+> out of the bag. Should the distros@ policy change to be more PR-friendly,
+> or should it stay true to its security policy ideals?
+> 
+> Jason
+> 
+> [1] https://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm.git/commit/?id=2505a981114dcb715f8977b8433f7540854851d8
 
---Enm3pTrbplNrpvNUS4XOxfIesefS7a2il
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Hey, Jason.
 
-Hi,
+Lots of good discussion points there, but let me focus on these last ones, as I
+think I am able to address them better than the others. Thanks.
 
-Two issues have been fixed in the latest Squid HTTP Proxy releases, both
-result in Cookie headers and other client-specific private information
-being delivered on cached responses to the wrong clients. Since Cookie
-often carries security credentials or session keys we consider these
-issues to have a high severity rating.
+Notice this is my personal opinion, having been a linux-distros member list for
+around a year or a bit less.
 
+I think you are taking this backwards. The linux-distros policy is not that the
+fix should be kept private until there is a security disclosure, but that the
+security implications (that were disclosed to linux-distros) be made public as
+soon as the fix is public.
 
-Issue #1:
+It is about communication, but not only communication. It is also about process
+and balancing stability and security.
 
- Incorrect processing of responses to If-None-Modified HTTP conditional
-requests leads to client-specific Cookie data being leaked to other
-clients. Attack requests can easily be crafted by a client to probe a
-cache for this information.
+If distros are supposed to include many different fixes in a very short time
+frame, just in order to hide the security implications of a fix, there are
+chances of other things breaking because: 1) there are many changes; 2) there
+was a short time to get them tested. Don't get this wrong. I also agree that a
+good strategy is to release as many fixes as are identified to go to stable@ as
+often as possible. But doing it weekly is not feasible for everyone out there.
 
-Vulnerable Squid Versions:
- 3.1.10 up to and including 3.1.23
- 3.2.0.3 up to and including 3.5.22
- 4.0.1 up to and including 4.0.16
+And if distros ship a new kernel release with a single fix without mentioning
+any security implications, honestly, we are already shouting out to attackers:
+"hey, we decided this was important enough to include this single fix, look at
+that!". And it looks like distros are breaking an embargo that was requested.
 
-Reference URLs will be:
- <http://www.squid-cache.org/Advisories/SQUID-2016_11.txt>
- <http://bugs.squid-cache.org/show_bug.cgi?id=3D4169>
- <http://www.squid-cache.org/Versions/v3/3.1/changesets/SQUID-2016_11.patch>
- <http://www.squid-cache.org/Versions/v3/3.2/changesets/SQUID-2016_11.patch>
- <http://www.squid-cache.org/Versions/v3/3.3/changesets/SQUID-2016_11.patch>
- <http://www.squid-cache.org/Versions/v3/3.4/changesets/SQUID-2016_11.patch>
- <http://www.squid-cache.org/Versions/v3/3.5/changesets/SQUID-2016_11.patch>
- <http://www.squid-cache.org/Versions/v4/changesets/SQUID-2016_11.patch>
+I may be wrong on this, but I have the impression that disclosures are on the
+hands of the researchers/reporters. They are doing the work you described,
+going through fixes, syzkaller and other bug reports, and evaluating their
+security implications. Then, they go to security@kernel.org and the policy, as
+we mentioned, is that the security implications are not disclosed unless the
+reporter does it. Then, linux-distros/distros has the policy that whatever is
+posted there must be disclosed to oss-sec after up to 14 days. But it is still
+the reporter that does it. I think it is important that we are aware of that in
+order to find out how we could get this better or discuss if we should do it at
+all.
 
+And the status quo today is this: the reporter is the one who does the
+disclosure, distros won't ship a single fix after they have been told about a
+security vulnerability (and asked to not communicate its security implications)
+without a Coordinated Release Date, and distros won't ship hundreds or
+thousands of fixes in a short time frame just in order to release a security
+fix and yet hide the security implications.
 
-For Mitre: the CVE critical leak was due to these lines in
-src/client_side_reply.cc:
+As I read your last question, and recall the initial message that started this
+discussion, I think people were being true to distros@ security policy ideals
+when it was asked that reports be made public as fixes were already public.
 
-     bool matchedIfNoneMatch =3D false;
-     if (r.header.has(HDR_IF_NONE_MATCH)) {
-        if (!e->hasIfNoneMatchEtag(r)) {
-...
--            http->logType =3D LOG_TCP_MISS;
--            sendMoreData(result);
-
-This last line should have called "  processMiss(result); ". The
-remainder of the patch changes are behaviour fixes to ensure other leaks
-can not occur in any related HTTP transaction cases.
-
-
-
-Issue #2:
-
- Incorrect HTTP Request header comparison results in Collapsed
-Forwarding feature mistakenly identifying some private responses as
-being suitable for delivery to multiple clients.
-
- The current fix is not quite complete. However we believe the remaining
-headers leaked are not a serious security issue.
-
-Vulnerable Squid Versions:
- 3.5.0.1 up to and including 3.5.22
- 4.0.1 up to and including 4.0.16
-
-Reference URLs:
- <http://www.squid-cache.org/Advisories/SQUID-2016_10.txt>
- <http://www.squid-cache.org/Versions/v4/changesets/squid-4-14956.patch>
- for squid-3.5 excluding 3.5.22:
-<http://www.squid-cache.org/Versions/v3/3.5/changesets/SQUID-2016_10_a.patc=
-h>
- for 3.5.22 only:
- <http://www.squid-cache.org/Versions/v3/3.5/changesets/squid-3.5-14127.pat=
-ch>
-
-
-
-Amos Jeffries
-The Squid Software Foundation
-
-
---Enm3pTrbplNrpvNUS4XOxfIesefS7a2il--
-
---NLWq8G9sv1SeXFCHjdGKawa8vIItqLHQ5
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (MingW32)
-
-iQIcBAEBAgAGBQJYVUwJAAoJEGvSOzfXE+nLfa4QAKm3N499iUvJlcpRIKFNDLsu
-0dBSEKMEk81otnP68Jcul4Iief9jJ//XVzfFnfej3Z9qh8Y8JGlRCmN8eKdZBWbO
-Z1DxgY/V/z9WzSkw0a8NNc6yNeQrDF0d7Yr2YkXl4OutSGE58faNBWK8P9BuJUaz
-TkAItzeUQPl7lqLR/tnMSwMnF7a3cA3qHWUjjoM8tM8llHQoZio89q4gZW3loFNI
-uNHr1/IvVZ/6bBQm7TnX4kXM/TMWs4U3hkuihKgXdx/4Nbb/JD1n3vqObM3Rf5FY
-fbuj2Ck8bZti1PpkHcHWIwVLdTRElKZhmyATG7sR4E+5z09HchqYCxjmDSAChSfY
-1XrmoB80IX0KtbhTVhJEwWb4Xcm48qLRLpXL4w7wHf0eGRiaWJ4PCnS3jo/Gj8HM
-BiyHGJtCAZyta0NpKx07I7BnigGasqOCgDQLu+Tw3s3x0fAlhHBSu6/Xyd5WE2HN
-kb+SMdA/RF1D/clbW+mfnyUQpFH7rTSlRBSe5zumr1QrTtT+qEOoxZufQ8+30tEZ
-rbF6xh8lNlfRTe8abJujMmiTI9v465RGKuUW9Kipl4eRMa+saF7WHOzQ8fA2DwnV
-OgR1MO6FK1BSeJKbBBrpYHEatFmSmHZm9CmNXlK6K2UnpjV9fxudUOKIhQ9nbT51
-i3DGD++rT6xC+pzx/g2r
-=ItZF
------END PGP SIGNATURE-----
-
---NLWq8G9sv1SeXFCHjdGKawa8vIItqLHQ5--
+Cascardo.
