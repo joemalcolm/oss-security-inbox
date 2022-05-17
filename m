@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3734" "Monday" "20" "April" "2015" "12:30:26" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150420163026.CEFA96C0043@smtpvmsrv1.mitre.org>" "96" "[oss-security] Re: CVE request Qemu: malicious PRDT flow from guest to host" nil nil nil "4" "2015042016:30:26" "[oss-security] Re: CVE request Qemu: malicious PRDT flow from guest to host" (number mark "        cve-assign@m Apr 20   96/3734  " thread-indent "\"[oss-security] Re: CVE request Qemu: malicious PRDT flow from guest to host\"\n") "<alpine.LFD.2.11.1503241045380.5202@wniryva>" ("<alpine.LFD.2.11.1503241045380.5202@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 12194 invoked by uid 550); 20 Apr 2015 16:30:39 -0000
+Received: (qmail 15532 invoked by uid 550); 17 May 2022 18:42:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,109 +6,126 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 12176 invoked from network); 20 Apr 2015 16:30:38 -0000
-In-Reply-To: <alpine.LFD.2.11.1503241045380.5202@wniryva>
-Message-Id: <20150420163026.CEFA96C0043@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Mon, 20 Apr 2015 12:30:26 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request Qemu: malicious PRDT flow from guest to host
-To: ppandit@redhat.com
+Received: (qmail 1949 invoked from network); 17 May 2022 18:35:58 -0000
+Message-ID: <e53ec98ef43fa137db9a626e5148ae1c00ea7c7e.camel@fiasko-nw.net>
+From: Thomas Liske <thomas@fiasko-nw.net>
+To: oss-security@lists.openwall.com
+Date: Tue, 17 May 2022 20:35:37 +0200
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-eocdpC2RCuN2crV9H5tQ"
+User-Agent: Evolution 3.38.3-1 
+MIME-Version: 1.0
+X-Spam_bar: -
+Subject: [oss-security] CVE-2022-30688: needrestart 0.8+ local privilege escalation
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--=-eocdpC2RCuN2crV9H5tQ
+Content-Type: multipart/mixed; boundary="=-zVn5lO1Ru0z0LkvUBCfQ"
 
-> Due to inconsistent error checking, Qemu emulator allows malicious PRDT data
-> to flow from a guest to the host's IDE or AHCI controllers. This could result
-> in infinite loop or memory leakage on the host leading to unbounded resource
-> consumption.
-> 
-> A privileged user inside guest could use this flaw to crash the system,
-> resulting in DoS.
-> 
-> Upstream fix:
-> -------------
->    -> http://git.qemu.org/?p=qemu.git;a=commitdiff;h=3251bdcf1c67427d964517053c3d185b46e618e8
 
-We've been unable to determine the scope of this CVE request and what
-the correct number of CVE IDs should be. The concept of "inconsistent
-error checking" is not one that always results in only one CVE ID.
+--=-zVn5lO1Ru0z0LkvUBCfQ
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-3251bdcf1c67427d964517053c3d185b46e618e8 appears to make at least two
-types of changes. The first type of change is described in the commit
-message as:
+# needrestart: local privilege escalation
 
-  we confuse the difference between a PRDT having
-  "0 bytes" and a PRDT having "0 complete sectors."
+https://github.com/liske/needrestart
 
-and this apparently corresponds to code changes that include use of
-"return s->io_buffer_size" where "return s->io_buffer_size != 0" had
-previously been used.
 
-Although BMDMA support was present in QEMU before AHCI support was
-present (suggesting possible different affected versions), the use of
-"return s->io_buffer_size != 0" existed for both BMDMA and AHCI in
-QEMU 1.0, and apparently for neither in 0.9.x. So, we don't think we
-should have two CVE IDs based on affected versions. Also, the commit
-message lists two different types of impacts:
+## Description
 
-  BMDMA: "leaked memory for short PRDTs"
-  AHCI: "infinite loops and resource usage"
+A local privilege escalation has been found in needrestart. CVE-2022-
+30688 has been assigned to this issue.
 
-but that isn't, by itself, sufficient to assign two CVE IDs.
+The interpreter heuristic contains unanchored regexs allowing local
+users to execute arbitrary code in the context of the user running
+needrestart. Needrestart might be run as root by package manager hooks
+on package installations or upgrades.
 
-The second type of change is the new size checks, i.e.,
 
-  BMDMA:
-  if (s->sg.size > INT32_MAX) {
-      error_report("IDE: sglist describes more than 2GiB.\n");
-  
-  AHCI:
-  if (sglist->size > INT32_MAX) {
-      error_report("AHCI Physical Region Descriptor Table describes "
-                   "more than 2 GiB.\n");
+## Affected
 
-Your message was about "could use this flaw to crash the system,"
-which isn't precisely the same as either impact stated in the commit
-message. If you can clarify what the vulnerability or vulnerabilities
-are, that would be helpful. First, we think you mean that there is a
-security impact (not necessarily the same security impact) in both the
-BMDMA case and the AHCI case: is that correct?
+Affected: needrestart >=3D 0.8
+Fixed in: needrestart >=3D 3.6
 
-Second, would either of these CVE mappings be useful:
 
-Possibility 1:
+## Mitigation
 
-  1A: one CVE ID for the use of "return s->io_buffer_size != 0" - this
-      made it impossible for other parts of the code to distinguish
-      between the "0 bytes" case and the "0 complete sectors" case,
-      and caused both impacts: "leaked memory for short PRDTs" and
-      "infinite loops and resource usage"
+Disabling the interpreter heuristic in neederstart's config prevents
+this attack:
 
-  1B: one CVE ID for lack of the 2 GiB limit checking
+=C2=A0# Disable interpreter scanners.
+=C2=A0$nrconf{interpscan} =3D 0;
 
-Possibility 2:
 
-  One CVE ID only for item 1A above. 1B has no security impact (e.g.,
-  because it only allows the guest to conduct a DoS attack against
-  itself with a large transfer attempt, or for some other reason)
+## Credit
 
-?
+Reported by Jakub Wilk.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+
+
+Regards,
+Thomas Liske
+
+
+--=-zVn5lO1Ru0z0LkvUBCfQ
+Content-Disposition: attachment; filename="anchor-interp-re.patch"
+Content-Type: text/x-patch; name="anchor-interp-re.patch"; charset="UTF-8"
+Content-Transfer-Encoding: base64
+
+ZGlmZiAtLWdpdCBhL3BlcmwvbGliL05lZWRSZXN0YXJ0L0ludGVycC9QZXJs
+LnBtIGIvcGVybC9saWIvTmVlZFJlc3RhcnQvSW50ZXJwL1BlcmwucG0KaW5k
+ZXggNDBhYWJiNC4uNTAzMTY3OSAxMDA2NDQKLS0tIGEvcGVybC9saWIvTmVl
+ZFJlc3RhcnQvSW50ZXJwL1BlcmwucG0KKysrIGIvcGVybC9saWIvTmVlZFJl
+c3RhcnQvSW50ZXJwL1BlcmwucG0KQEAgLTQzLDcgKzQzLDcgQEAgc3ViIGlz
+YSB7CiAgICAgbXkgJHBpZCA9IHNoaWZ0OwogICAgIG15ICRiaW4gPSBzaGlm
+dDsKIAotICAgIHJldHVybiAxIGlmKCRiaW4gPX4gbUAvdXNyLyhsb2NhbC8p
+P2Jpbi9wZXJsQCk7CisgICAgcmV0dXJuIDEgaWYoJGJpbiA9fiBtQF4vdXNy
+Lyhsb2NhbC8pP2Jpbi9wZXJsKDVbLlxkXSopPyRAKTsKIAogICAgIHJldHVy
+biAwOwogfQpkaWZmIC0tZ2l0IGEvcGVybC9saWIvTmVlZFJlc3RhcnQvSW50
+ZXJwL1B5dGhvbi5wbSBiL3BlcmwvbGliL05lZWRSZXN0YXJ0L0ludGVycC9Q
+eXRob24ucG0KaW5kZXggNTU5NjY2Yy4uYTMwMTIxZCAxMDA2NDQKLS0tIGEv
+cGVybC9saWIvTmVlZFJlc3RhcnQvSW50ZXJwL1B5dGhvbi5wbQorKysgYi9w
+ZXJsL2xpYi9OZWVkUmVzdGFydC9JbnRlcnAvUHl0aG9uLnBtCkBAIC00Miw3
+ICs0Miw3IEBAIHN1YiBpc2EgewogICAgIG15ICRwaWQgPSBzaGlmdDsKICAg
+ICBteSAkYmluID0gc2hpZnQ7CiAKLSAgICByZXR1cm4gMSBpZigkYmluID1+
+IG1AL3Vzci8obG9jYWwvKT9iaW4vcHl0aG9uQCk7CisgICAgcmV0dXJuIDEg
+aWYoJGJpbiA9fiBtQF4vdXNyLyhsb2NhbC8pP2Jpbi9weXRob24oWzIzXVsu
+XGRdKik/JEApOwogCiAgICAgcmV0dXJuIDA7CiB9CmRpZmYgLS1naXQgYS9w
+ZXJsL2xpYi9OZWVkUmVzdGFydC9JbnRlcnAvUnVieS5wbSBiL3BlcmwvbGli
+L05lZWRSZXN0YXJ0L0ludGVycC9SdWJ5LnBtCmluZGV4IGQwMjk3M2QuLjcy
+OTIwZjMgMTAwNjQ0Ci0tLSBhL3BlcmwvbGliL05lZWRSZXN0YXJ0L0ludGVy
+cC9SdWJ5LnBtCisrKyBiL3BlcmwvbGliL05lZWRSZXN0YXJ0L0ludGVycC9S
+dWJ5LnBtCkBAIC00Miw3ICs0Miw3IEBAIHN1YiBpc2EgewogICAgIG15ICRw
+aWQgPSBzaGlmdDsKICAgICBteSAkYmluID0gc2hpZnQ7CiAKLSAgICByZXR1
+cm4gMSBpZigkYmluID1+IG1AL3Vzci8obG9jYWwvKT9iaW4vcnVieUApOwor
+ICAgIHJldHVybiAxIGlmKCRiaW4gPX4gbUBeL3Vzci8obG9jYWwvKT9iaW4v
+cnVieSRAKTsKIAogICAgIHJldHVybiAwOwogfQo=
+
+--=-zVn5lO1Ru0z0LkvUBCfQ--
+
+--=-eocdpC2RCuN2crV9H5tQ
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJVNSlFAAoJEKllVAevmvmsiVAH/3yf08Dw033fypzAeSSu8FA/
-T37C1pNBJJXHccUq3Lf5R31lw6si3CKZCJBEwQzm3Ts3+h+i+nrIh9vO8nhMoBm9
-1t1fkc2YN8y+whOWhXz/K0a24nF4HQSfS9cCIImqGvLc7xDogjkedmph1mNN88z6
-Q8kK/03vhTj4D3Nm36GG5xAHiLi28Op+Jlge0ZzQnXEZ2CuIJOx1ORdkb69fctAX
-U1S38+I7PSw2+PBt6iO4wLaMCnFieEBD2C2x7pOCtwh53PjPmNmjgWF+VyXpUWpz
-EgK3WsVJwW6amoSnFGM+DVgRqTMbUaHZUUDAU+72DVBfclU5BVTH6hmHLaNw7NI=
-=2KOa
+iQJJBAABCgAzFiEEPWObHgtAaGFEniDEk7pbGfAdPjIFAmKD6vkVHHRob21hc0Bm
+aWFza28tbncubmV0AAoJEJO6WxnwHT4yZZsP/37+8CSXP8y1oo/Hx5Z+jRu/Jqpv
+5ixGQWTOI3Zwt04X97FKT3GaWczpgkMN7OKUAjO2qBooEaJ61pAw2K+n2VBRlQL2
+vBqVVOAzCBYhq2z+4BCetMCaiO+ceuXaMFI2/fZ5wV5Z6Fy/98lmVJx1qfeYbVkk
+fCstyKGEg2vzJ93uzTkuHwYQj69SMqobgMsDYKQEQ/+duB5FwY3YML29MVA24RE2
+POYeiWaFExg95XZt8Xr244TXNL7jLaT5N7Q9B54JI5JrW6EAD1ucP7myX5QapV2m
+vM4dHwYUXDqyRVYfWuyWvy4fKoewQisxDpNBkGzquFuym1dUaXmZyhJqbY/v9ADK
+04EaypN2F5uzoQ+aUK7VcCqhUa3PCRYrihzPMeQq9QrISohyfktlhIq4AKxiwVNb
+DnckE3IdTU7dawh6ij+aU80RxKkO7TT3v17cKncYXtmYB8DhJtMhRokBWdSBaEeW
+r6WyHCYC4jFBRPkb93f/WyJqHIKxEeRRkHFAcio+7uGPut8TbL+IQ2jE50kdt3C7
+m/NGPkMhrWgpHEU5aoExKVYB7ZoTaz7shYpFYnGznAC6zfdbI1zTEp08JzdmYIkb
+JUwKqj9P2skXTSW29aEfoXbDxrhaWYWuq6FOe2BjxGAN+oWW6d/ybEJdhQ8yK6yZ
+2I7IT2K7pS+6hyny
+=tEj0
 -----END PGP SIGNATURE-----
+
+--=-eocdpC2RCuN2crV9H5tQ--
+
