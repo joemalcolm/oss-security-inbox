@@ -1,101 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/12/1
-Message-ID: <CAHFaGCpaF=-bkXcsZ8TBqAqb+mCjyE3P-L+9xBtCG39Vv4G-1w@mail.gmail.com>
-Date: Tue, 12 Apr 2022 06:54:32 -0400
-From: "markphip@...il.com" <markphip@...che.org>
-To: announce@...version.apache.org, Subversion <users@...version.apache.org>,  Subversion Development <dev@...version.apache.org>
-Cc: security@...che.org, oss-security@...ts.openwall.com,  bugtraq@...urityfocus.com
-Subject: [SECURITY][ANNOUNCE] Apache Subversion 1.10.8 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/17/2
+Message-ID: <YoNGC3IYwXWE7CBX@kroah.com>
+Date: Tue, 17 May 2022 08:51:55 +0200
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: linux-distros list policy and Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-I'm happy to announce the release of Apache Subversion 1.10.8.
-Please choose the mirror closest to you by visiting:
+On Tue, May 17, 2022 at 03:30:33AM +0000, Seth Arnold wrote:
+> Given how much effort it takes me to assign CVEs for kernel issues, I've
+> wondered before if we (me, us, the community as a whole, etc) ought to
+> have a very standard and lightweight way to publish kernel CVEs, something
+> that's not much more than the Fixes: lines already in the commits.
 
-    https://subversion.apache.org/download.cgi#supported-releases
+Isn't this what the "GSD" process is supposed to accomplish:
+	https://globalsecuritydatabase.org/
 
-This is a stable bugfix and security release of the Apache Subversion
-open source version control system.
+The stable kernel team (i.e. Sasha) asks for identifiers for kernel
+issues all the time from this group now that MITRE refuses to assign
+CVEs for kernel fixes made in stable kernel releases.
 
-THIS RELEASE CONTAINS TWO IMPORTANT SECURITY FIXES:
+If you look in their database at github, there are lots of kernel
+commits being tracked there, is that sufficient for your needs?
 
-CVE-2021-28544
-"SVN authz protected copyfrom paths regression"
+> I know this discussion didn't start around assigning CVEs to kernel
+> issues, but if we're missing more than we're handling, perhaps it ought to
+> be part of the discussion.
 
-The full security advisory for CVE-2021-28544 is available at:
-    https://subversion.apache.org/security/CVE-2021-28544-advisory.txt
-    https://subversion.apache.org/security/CVE-2021-28544-advisory.txt.asc
+I think this an independent issue that doesn't have much to do with
+linux-distros other than currently linux-distros is one of the simplest
+ways that people can get CVEs for kernel issues at the moment.
 
-A brief summary of this advisory follows:
+thanks,
 
-   Subversion servers reveal 'copyfrom' paths that should be hidden according to
-   configured path-based authorization (authz) rules.  When a node has been
-   copied from a protected location, users with access to the copy can see the
-   `copyfrom' path of the original.  This also reveals the fact that
-the node was copied.
-   Only the 'copyfrom' path is revealed; not its contents. Both httpd
-and svnserve
-   servers are vulnerable.
-
-   We recommend all users to upgrade to a known fixed release of the
-Subversion server.
-
-   This issue was reported by Evgeny Kotkov
-
-CVE-2022-24070
-"Subversion's mod_dav_svn is vulnerable to memory corruption"
-
-The full security advisory for CVE-2022-24070 is available at:
-    https://subversion.apache.org/security/CVE-2022-24070-advisory.txt
-    https://subversion.apache.org/security/CVE-2022-24070-advisory.txt.asc
-
-A brief summary of this advisory follows:
-
-   While looking up path-based authorization rules, mod_dav_svn servers
-   may attempt to use memory which has already been freed.
-
-   We recommend all users to upgrade to a known fixed release of the
-Subversion server.
-
-   This issue was reported by Thomas Weißschuh
-
-SHA-512 checksums are available at:
-
-    https://www.apache.org/dist/subversion/subversion-1.10.8.tar.bz2.sha512
-    https://www.apache.org/dist/subversion/subversion-1.10.8.tar.gz.sha512
-    https://www.apache.org/dist/subversion/subversion-1.10.8.zip.sha512
-
-PGP Signatures are available at:
-
-    https://www.apache.org/dist/subversion/subversion-1.10.8.tar.bz2.asc
-    https://www.apache.org/dist/subversion/subversion-1.10.8.tar.gz.asc
-    https://www.apache.org/dist/subversion/subversion-1.10.8.zip.asc
-
-For this release, the following people have provided PGP signatures:
-
-   Julian Foad [rsa4096/1FB064B84EECC493] with fingerprint:
-    6011 63CF 9D49 9FD7 18CF  582D 1FB0 64B8 4EEC C493
-   Stefan Sperling [rsa2048/4F7DBAA99A59B973] with fingerprint:
-    8BC4 DAE0 C5A4 D65F 4044  0107 4F7D BAA9 9A59 B973
-   Branko Čibej [rsa4096/1BCA6586A347943F] with fingerprint:
-    BA3C 15B1 337C F0FB 222B  D41A 1BCA 6586 A347 943F
-   Mark Phippard [ed25519/C4416167349A3BCB] with fingerprint:
-    EC25 FCC1 0561 8D04 ADB4  3429 C441 6167 349A 3BCB
-   Johan Corveleyn [rsa4096/B59CE6D6010C8AAD] with fingerprint:
-    8AA2 C10E EAAD 44F9 6972  7AEA B59C E6D6 010C 8AAD
-
-These public keys are available at:
-
-    https://www.apache.org/dist/subversion/subversion-1.10.8.KEYS
-
-Release notes for the 1.10.x release series may be found at:
-
-    https://subversion.apache.org/docs/release-notes/1.10.html
-
-You can find the list of changes between 1.10.8 and earlier versions at:
-
-    https://svn.apache.org/repos/asf/subversion/tags/1.10.8/CHANGES
-
-Questions, comments, and bug reports to users@...version.apache.org.
-
-Thanks,
-- The Subversion Team
+greg k-h
