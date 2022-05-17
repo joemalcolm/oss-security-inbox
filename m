@@ -1,13 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/24/3
-Message-ID:  <MWHPR05MB32146A1E7E26CA44CD71DF95C12E9@MWHPR05MB3214.namprd05.prod.outlook.com>
-Date: Mon, 24 Oct 2022 17:11:25 +0000
-From: Dan Smith <dasmith@...are.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "dev@...de.apache.org" <dev@...de.apache.org>
-Subject: CVE-2022-34870: Apache Geode stored Cross-Site Scripting (XSS) via data injection vulnerability in Pulse web application 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/17/3
+Message-ID: <CA+ZBtZ7fwTPbbEcZbd0qPQHqB4xZDg1LRhk2hZSEUBx0Qj7waA@mail.gmail.com>
+Date: Tue, 17 May 2022 13:50:48 +0800
+From: Zhang Yonglun <zhangyonglun@...che.org>
+To: oss-security@...ts.openwall.com
+Cc: dev@...nyu.apache.org
+Subject: CVE-2022-26650: Apache ShenYu (incubating) Regular expression denial of service
 Content-Type: text/plain; charset=utf-8
 
-Apache Geode versions up to 1.15.0 are vulnerable to a Cross-Site Scripting (XSS) via data injection when using Pulse web application to view Region entries.
+Severity: moderate
 
-This issue is being tracked as GEODE-10411
+Description:
+
+In ShenYu-Bootstrap there's RegexPredicateJudge.java which uses
+Pattern.matches(conditionData.getParamValue(), realData) to make
+judgments, where both parameters are controllable by the user. This
+can cause an attacker pass in malicious regular expressions and
+characters causing a resource exhaustion.
+This issue affects Apache ShenYu (incubating) 2.4.0, 2.4.1 and 2.4.2.
+
+Mitigation:
+
+Upgrade to Apache ShenYu (incubating) 2.4.3 or apply patch
+https://github.com/apache/incubator-shenyu/pull/2975.
+
+--
+
+Zhang Yonglun
+Apache ShenYu (Incubating)
+Apache ShardingSphere
