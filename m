@@ -1,34 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/06/3
-Message-ID: <5f0712ff-44b4-cef2-1276-424c1cfa094e@vulndisco.cc>
-Date: Sat, 6 Aug 2022 19:40:49 +0300
-From: Evgeny Legerov <admin@...ndisco.cc>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/17/7
+Message-ID: <20220517125233.q2xhgdov2l7bpuvb@yuggoth.org>
+Date: Tue, 17 May 2022 12:52:34 +0000
+From: Jeremy Stanley <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Exim 4.95 invalid free
+Subject: Re: linux-distros list policy and Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-My bad.
+Another potential nail in the coffin for embargoed disclosure lists
+such as linux-distros and distros, as well as the idea of embargoed
+disclosure in general, is recent changes in export controls, most
+recently by the USA's Commerce Dept. While there seem to be
+exceptions called out for "cybersecurity response" and
+"vulnerability disclosure" in 86-FR-58205 (Information Security
+Controls: Cybersecurity Items), I've been in a number of semi-hushed
+conversations with vulnerability managers of other large free/libre
+open source projects over worries that the provisions for this are
+still too vague.
 
-Fix is here 
-https://github.com/Exim/exim/commit/51be321b27825c01829dffd90f11bfff256f7e42
+In particular, I've heard concerns raised by developers living in
+the USA that privately supplying vulnerability fix patches or
+information on exploiting privately identified vulnerabilities to
+individuals in "restricted" countries could be a contravention of
+federal export control policy, and that determining whether every
+individual in receipt of this information is not a resident of a
+"restricted" country is unfeasible enough to make a switch to
+full-disclosure models increasingly attractive for these projects.
 
-On 06.08.2022 17:47, John Helmert III wrote:
-> Hi, please keep in mind the list content guidelines:
->
-> "At least the most essential part of your message (e.g., vulnerability detail and/or exploit) should be directly included in the message itself (and in plain text), rather than only included by reference to an external resource. Posting links to relevant external resources as well is acceptable, but posting only links is not. Your message should remain valuable even with all of the external resources gone."
->
-> Do you have any upstream references or commits of the fix?
->
-> On Sat, Aug 06, 2022 at 12:06:36PM +0300, Evgeny Legerov wrote:
->> Hi,
->>
->>
->> The issue has been silently fixed in Exim 4.96 -
->> https://github.com/ivd38/exim_invalid_free
->>
->>
->>
->> regards,
->>
->> -e
->>
+Unfortunately, the regulations are also new enough that getting a
+clear risk assessment on these matters from legal counsel available
+to community-run projects and non-profit foundations is...
+challenging. Further, I've had some vulnerability manager colleagues
+instructed by their employers to cease participation in any embargo
+processes for related "corporate liability" reasons.
+-- 
+Jeremy Stanley
+
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
