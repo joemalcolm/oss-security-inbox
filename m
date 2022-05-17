@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3455" "Sunday" "30" "January" "2022" "12:27:38" "-0500" "nick black" "dankamongmen@gmail.com" nil "81" "[oss-security] xterm buffer overflow via crafted sixel" nil nil nil "1" nil nil (number mark "U       dankamongmen Jan 30   81/3455  " thread-indent "\"[oss-security] xterm buffer overflow via crafted sixel\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] xterm buffer overflow via crafted sixel" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 19853 invoked by uid 550); 30 Jan 2022 17:30:55 -0000
+Received: (qmail 1124 invoked by uid 550); 17 May 2022 11:18:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,121 +7,144 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18128 invoked from network); 30 Jan 2022 17:27:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:subject:message-id:mime-version:content-disposition;
-        bh=6Pbg6PHdVq1nQ42xtfQBZsU+AMnUS1vIb3616xEGOU8=;
-        b=ah1X1gp5XYBJKpImCdu9x+uObz2nA6dvRHyvXNZ+KabgyL3DLqZqXlnFFe+lRF6CX7
-         M76HCp8OcOGlDgSKuyhHyrKrreZjB2yniZkqiza6KNveqWX2OOaLQNMQ9G6/TdLx5CBW
-         HaerMjBUKlUnEqwOaIuxSfs3XafsKc9uxsPaSX08/MaH/9Am/OJttpF+m+JL2LF+ERVw
-         sQwUe+vDgekp8ZQ74ndy5MUtKonoN+XzzHbVl6hVTJo7qRmkJRdKjYofg3sqplWketsa
-         fc59o0Pn+8INh0LAxwGIpzIIkbynjnjvyYPPggOTN0MbxT4dO90ZRWi4hHHR+ptJXml4
-         VAoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition;
-        bh=6Pbg6PHdVq1nQ42xtfQBZsU+AMnUS1vIb3616xEGOU8=;
-        b=JJGf8blRktb7BWeWRdougyvOOWFTldq7JUVTzuEK5yrlaprEswjBT5Pn21ps+SbAgz
-         RPR2dSSFxzJw0/hRrMZluNmZx1Ud1b9c2ZYOy9CLxxAprRhUsnZGPOMJ7WVN0b4gY5V+
-         3EY2NilRgtxkxqtJXtXrul0IkPyti3oXd64dTZkDRRyP1uuDKPCIt3wvecpZRRUzON6Z
-         GLfULA+1tMltxaOwmt2/wriO6I66CjFAdDYeymlSpOa+lS7n1qGqzJ86LV9pBP6ivi1j
-         ktHHJdkSza0ldEfhwof3b41sT9mXcXGMLtzZppn4n0WK9foeQBIL6uBqVStaeJcIwv4m
-         OHTQ==
-X-Gm-Message-State: AOAM531wzTJv87+geJ6eM+RIywoDPhVExJnI5OQnZJBjsuiAglYpbzJK
-	LdK17T6mhtq/6oe38aPMo99zgP4XmW8=
-X-Google-Smtp-Source: ABdhPJxZe8S+5oJx5uuuMIO0e7izZqgTDvU5Pcog9Y+4xwmm891oLshj4I98s/0vdmP17x+NsASeXQ==
-X-Received: by 2002:a05:6214:2b0c:: with SMTP id jx12mr14832450qvb.17.1643563659917;
-        Sun, 30 Jan 2022 09:27:39 -0800 (PST)
-Date: Sun, 30 Jan 2022 12:27:38 -0500
-From: nick black <dankamongmen@gmail.com>
-To: oss-security@lists.openwall.com
-Message-ID: <YfbKimj0O33X9f7v@schwarzgerat.orthanc>
+Received: (qmail 27936 invoked from network); 17 May 2022 11:10:32 -0000
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="c/azlysw"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1652785818;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ngQdm8zkJLKYqw/oO7FzDs4Te8TM+7I0bD6/9BZ6OuQ=;
+	b=c/azlysw41PVFJ09E2cBzTWsYktvETWm8h8FeMUaAv+ucRgIQyDq3bh04/k8jiPPOUzT+q
+	6wp6qVzjV7QfMY3iAkOb1HIwL5p4vvOe5RQLj/vPfCrWdKtgRV4va86hLAvBRpGOSJiYbd
+	vPVKJfGiQw9eZ/Ar/+z3mdQDqS36Ids=
+Date: Tue, 17 May 2022 13:10:16 +0200
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Seth Arnold <seth.arnold@canonical.com>
+Cc: oss-security@lists.openwall.com
+Message-ID: <YoOCmBqfouvgbEX0@zx2c4.com>
+References: <20220517033033.GA3403712@millbarge>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ZZUSONMtXhcsR6Tw"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Subject: [oss-security] xterm buffer overflow via crafted sixel
+In-Reply-To: <20220517033033.GA3403712@millbarge>
+Subject: Re: [oss-security] linux-distros list policy and Linux kernel
 
---ZZUSONMtXhcsR6Tw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hi Seth,
 
-howdy! in the hopes of further distributing my computing into
-your terminal emulators, i this morning learned that i can
-control writes to memory from XTerm's context via the method of
-crafted sixel. en garde, i'll let you try my wu-tang style.
+On Tue, May 17, 2022 at 03:30:33AM +0000, Seth Arnold wrote:
+> If this accurately describes feelings held by Linux developers, perhaps we
+> need larger changes. Ubuntu has (far too many) kernel trees and the only
+> way we can keep track of the CVEs is via our break-fix lines that show
+> when issues were introduced and when they were fixed. The Fixes: lines in
+> commit messages are wonderful assistances here.
+> 
+> Given how much effort it takes me to assign CVEs for kernel issues, I've
+> wondered before if we (me, us, the community as a whole, etc) ought to
+> have a very standard and lightweight way to publish kernel CVEs, something
+> that's not much more than the Fixes: lines already in the commits.
+> 
+> I know this discussion didn't start around assigning CVEs to kernel
+> issues, but if we're missing more than we're handling, perhaps it ought to
+> be part of the discussion.
 
-this was discovered while working on Notcurses bug #2573:
+I think playing CVEs with the kernel (and possibly other humongous
+projects too) is in large part a fool's errand. Not all security bug
+fixes go through some explicit security track that would result in a CVE
+or other type of security identifier. And more importantly, it's often
+difficult to assess whether a particular patch has security implications
+or not.
 
- https://github.com/dankamongmen/notcurses/issues/2573
+To pick a random example, take a look at [1]. Does this fix a
+vulnerability? It definitely fixes a crashing phone. Could you exploit
+this to get execution somehow? Maybe those are obvious questions to some
+people, but it's not immediately obvious to me without really digging
+into it, and that's a lot of work.
 
-an error of mine own led to emission of a corrupted sixel [0], and
-spectacular gyrations from XTerm:
+But at the very least it fixes a bug (several, it appears). So it's
+marked as `Cc: stable@` and has a `Fixes: ...` tag too, which means
+eventually it'll wind up in one of Greg's trees and then maybe one of
+your trees. All the while, the patch itself is sitting in Andrew's (new)
+git repository. No secret embargo here.
 
-=3D=3D1426124=3D=3D Invalid write of size 2
-=3D=3D1426124=3D=3D    at 0x193FF1: set_sixel (graphics_sixel.c:181)
-=3D=3D1426124=3D=3D    by 0x1949E1: parse_sixel (graphics_sixel.c:534)
-=3D=3D1426124=3D=3D    by 0x17203D: do_dcs (misc.c:4973)
-=3D=3D1426124=3D=3D    by 0x149E03: doparsing.constprop.0 (charproc.c:4224)
-=3D=3D1426124=3D=3D    by 0x14B383: VTparse (charproc.c:5183)
-=3D=3D1426124=3D=3D    by 0x14B670: VTRun (charproc.c:8163)
-=3D=3D1426124=3D=3D    by 0x12DC49: main (main.c:2911)
-=3D=3D1426124=3D=3D  Address 0xffffffff0941efb8 is not stack'd, malloc'd or=
- (recently) free'd
-=3D=3D1426124=3D=3D
-=3D=3D1426124=3D=3D
-=3D=3D1426124=3D=3D Process terminating with default action of signal 11 (S=
-IGSEGV): dumping core
-=3D=3D1426124=3D=3D  Access not within mapped region at address 0xFFFFFFFF0=
-941EFB8
-=3D=3D1426124=3D=3D    at 0x193FF1: set_sixel (graphics_sixel.c:181)
-=3D=3D1426124=3D=3D    by 0x1949E1: parse_sixel (graphics_sixel.c:534)
-=3D=3D1426124=3D=3D    by 0x17203D: do_dcs (misc.c:4973)
-=3D=3D1426124=3D=3D    by 0x149E03: doparsing.constprop.0 (charproc.c:4224)
-=3D=3D1426124=3D=3D    by 0x14B383: VTparse (charproc.c:5183)
-=3D=3D1426124=3D=3D    by 0x14B670: VTRun (charproc.c:8163)
-=3D=3D1426124=3D=3D    by 0x12DC49: main (main.c:2911)
+In that sense, the stable@ tag will at least give you _something_, and
+certainly way more than whatever stray CVEs have been assigned. But
+stable@ is by no means perfect:
 
-I reported this to Mr. Thomas Dickey, the Archfather, and
-offered to put a patch together this evening. I also told him I
-probably wouldn't bother with a CVE, regarding which I clearly
-changed my mind pretty much immediately. Sorry, my good man =3D\.
+  - Many patches aren't marked as stable.
+  - If a stable@ patch doesn't apply to a tree, it's usually up to the
+    original patch author to backport it, and sometimes authors ignore
+    those emails.
+  - Sometimes stable@ patches bring in additional patches that weren't
+    meant to be backported.
+  - Sometimes a patch applies fine but is missing a prerequisite, which
+    wasn't marked as stable.
+  - And so on and so forth.
 
-This requires that XTerm was built with Sixel support, and that
-the XTerm configuration interprets Sixels.
-=20
---nick
+It's not like these problems happen all the time, and I suspect these
+are just inherent limitations in the stable process when operating at
+huge scale. Greg does a darn good job of this, especially when you
+consider the huge amount of patches; it's remarkable he makes it work as
+well as it does, considering the challenge. It'll just never be perfect.
+But I'm pretty sure it's better than focusing on CVEs, as you've
+suggested Canonical does.
 
-[0] "a man of genius makes no mistakes -- his errors are
-  volitional, and the portals to discovery." (james joyce).
-  nah, just kidding, i totally screwed it up.
+Probably the more serious way of handling that would be to hire a team
+of kernel security experts (read: not simply people who crank kernel
+build scripts) who trawl through commit logs all day and actively follow
+development in particular areas. And they'd be in charge of doing their
+own analysis and classification on various commits. Super worried about
+something falling through the cracks? Make two teams and have them
+duplicate each other's work. Or three. Or four. It's expensive,
+labor-intensive work. I'm not sure you're going to get that all for
+"free" by just leaning on the stable process or leaning on CVEs or
+whatever cheap "process shortcuts" appear to provide what you want
+without the investment.
 
---=20
-nick black -=3D- https://www.nick-black.com
-to make an apple pie from scratch,
-you need first invent a universe.
+However, I really doubt you'll do the expensive thing in the end, not
+just because what I suggested is impractical; actually, the grsec team
+perhaps shows it can be done. I doubt it'll happen in the end because
+it's not likely to support Canonical's commercial interests, which in
+terms of security relate to *customers* getting scared about CVEs,
+something that *customers* know about, so you have to address their
+concerns to sell products, and deal in a currency they know about. Very
+few customers know about or care about the implications of some obscure
+zram mm-tree bug. But most "security minded" customers will pay for
+something CVE-related instead. So I think playing the CVE game with
+kernel security is much more about customer perception than anything
+actually threat modeled.
 
---ZZUSONMtXhcsR6Tw
-Content-Type: application/pgp-signature; name="signature.asc"
+This brings us back to the original topic of this (sub-)thread: do
+public fixes make security vulnerabilities manifest to the public? I
+guess it depends on who you consider to be the public. If you're
+speaking from the perspective of placating customers and taking care of
+some commercial bottom line, the answer is no. No public PR situation
+coming your way, so no work to be done, vulnerability doesn't exist yet.
+But if you're speaking from the perspective of whether attackers now are
+aware of the bug and can write exploits for it -- that is, a real threat
+model -- then the answer is obviously yes, if the fix is public, the bug
+is public.
 
------BEGIN PGP SIGNATURE-----
+So when I read in this thread calls for extending embargoes until the
+vulnerability is "disclosed" in some sort of announcement (that is, PR),
+rather than just until the public git fix, it seems plain that the end
+goal is a messaging or communication one, rather than a security one. On
+the surface, delaying the release of a vulnerability until it's had time
+to reach customer systems sounds like a good idea. But zoom in a little
+bit and you quickly realize that the vulnerability has *already* been
+released to attackers who read commit logs, and the thing we're talking
+about delaying is an official announcement. It turns out, attackers
+don't care about your official announcements; the marketing team does.
 
-iQIzBAABCgAdFiEEmi//dHmU4oe+xCLxX0NADCHL+swFAmH2yooACgkQX0NADCHL
-+szmuQ//fF/p5dgWkg2q6cFBExPmuN+uxltjo3+SAqRJqI3uthUxmCjUtWX46prK
-H+OVVuRVhXAUSTDzhKfz152A2Z5oF17uDpdA3EoZB5Xmr1QnWF808o37UL2+wNHv
-KEjH/a5miusucFFJN//cwrdn+9WWsPZ4tsZ/quYhYjjaV+Oet2lYjU+2RXsOw5np
-aMcwq0yDEmHCgYHQr1KelbaoMyp6Fn0TNUkofIoykklY7Kvv0tFv+3nxQXEUYswu
-7e/4zuyJCKW5PQOlaIw/Pwz7UGoJuJWWF4TFwLu0lg7hQmhhHpCG68KY9VZZaX14
-Ic9rVRyJas1M/FhUb+UhkYRjERsbiy6YeUUhqKTQPj/QGDRSFUMHv2bJaSQSwf9v
-2xe2RbgDozxx8n3YPcFWEHCv6oSCl8aET5u5a1rlYzSruyqNM2xJ4YnCmzYDTzfy
-eLpkGkgILATpbfCq2JtCipJCeSXUJY9Yxc7uNPkAtvDZ3SFmzQx6aus5bVILj0PH
-8/inx60e8wceOyOLmd5UgqniCbw2AhGjdTAlxI+U5QW1bAxGHb2Rk9gwnxfAhwka
-Xlr8Pa2UfsWkfzaW9XIcp9D+Hx9SUM8qrXAOZF0eLll++MrUbEN2w2VaVPDBaTzy
-yCyTpngigl4SOOlaIXEQNlD9/32BnR28k0Lb8O6p1y/KT+dMa3c=
-=fTHV
------END PGP SIGNATURE-----
+And as I understand it, the Openwall mailing lists have never been about
+enabling companies to better control their messaging. They've been about
+a deterministic embargo & disclosure process, to strike the right
+balance of letting people coordinate privately when needed, and then
+letting various parties make the best decisions they can once the cat is
+out of the bag. Should the distros@ policy change to be more PR-friendly,
+or should it stay true to its security policy ideals?
 
---ZZUSONMtXhcsR6Tw--
+Jason
+
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm.git/commit/?id=2505a981114dcb715f8977b8433f7540854851d8
