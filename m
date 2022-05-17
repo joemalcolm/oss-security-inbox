@@ -1,94 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/06/1
-Message-Id: <E1p2ZhM-0005Wc-FV@xenbits.xenproject.org>
-Date: Tue, 06 Dec 2022 15:17:32 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 423 v1 (CVE-2022-3643) - Guests can trigger NIC interface reset/abort/crash via netback
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/17/5
+Message-ID: <YoOMdbwp3D8bynKy@kroah.com>
+Date: Tue, 17 May 2022 13:52:21 +0200
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Cc: Seth Arnold <seth.arnold@...onical.com>
+Subject: Re: linux-distros list policy and Linux kernel
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, May 17, 2022 at 01:10:16PM +0200, Jason A. Donenfeld wrote:
+> This brings us back to the original topic of this (sub-)thread: do
+> public fixes make security vulnerabilities manifest to the public? I
+> guess it depends on who you consider to be the public. If you're
+> speaking from the perspective of placating customers and taking care of
+> some commercial bottom line, the answer is no. No public PR situation
+> coming your way, so no work to be done, vulnerability doesn't exist yet.
+> But if you're speaking from the perspective of whether attackers now are
+> aware of the bug and can write exploits for it -- that is, a real threat
+> model -- then the answer is obviously yes, if the fix is public, the bug
+> is public.
+> 
+> So when I read in this thread calls for extending embargoes until the
+> vulnerability is "disclosed" in some sort of announcement (that is, PR),
+> rather than just until the public git fix, it seems plain that the end
+> goal is a messaging or communication one, rather than a security one. On
+> the surface, delaying the release of a vulnerability until it's had time
+> to reach customer systems sounds like a good idea. But zoom in a little
+> bit and you quickly realize that the vulnerability has *already* been
+> released to attackers who read commit logs, and the thing we're talking
+> about delaying is an official announcement. It turns out, attackers
+> don't care about your official announcements; the marketing team does.
 
-            Xen Security Advisory CVE-2022-3643 / XSA-423
+As you know, there are different "grades" of attackers.  There's a huge
+range from "run metasploit that I just downloaded" to "look at this
+kernel change and figure out how to abuse the system that does not have
+it".  By delaying a small bit of time from publically posting a patch to
+telling the world that "hey, that was a security fix over there" that
+allows the community that works in the public added time for review and
+testing as our testing infrastructure that is NOT public is quite
+limited and reviews are limited given the huge range of needed
+developers to do that review.
 
-    Guests can trigger NIC interface reset/abort/crash via netback
+That delay can allow users to have the fix on their system first before
+the "metasploit" package is updated to attack it, which reduces the
+amount of vulnerable systems out there.  Yes, it does not solve the
+"prevent readers of all commits" issue, but I don't know what we can
+really do about that except switch to a closed source development model,
+which isn't a good thing overall anyway.
 
-ISSUE DESCRIPTION
-=================
+So it's just a delay, not a "never disclose" issue here.  Is a delay
+good or not?  Personally I think it is, but as you say here, others
+might not think so.
 
-It is possible for a guest to trigger a NIC interface reset/abort/crash in
-a Linux based network backend by sending certain kinds of packets.
+> And as I understand it, the Openwall mailing lists have never been about
+> enabling companies to better control their messaging. They've been about
+> a deterministic embargo & disclosure process, to strike the right
+> balance of letting people coordinate privately when needed, and then
+> letting various parties make the best decisions they can once the cat is
+> out of the bag. Should the distros@ policy change to be more PR-friendly,
+> or should it stay true to its security policy ideals?
 
-It appears to be an (unwritten?) assumption in the rest of the Linux network
-stack that packet protocol headers are all contained within the linear
-section of the SKB and some NICs behave badly if this is not the case.
+I don't think it's a "PR-friendly" issue here, it's about how best to
+develop and ship secure systems as that's what the linux-distros members
+are responsible for.  The linux-distros group needs to talk about this
+and come up with what they are going to do for this issue as it is their
+members that has to define their ideals and how to follow them best.
 
-This has been reported to occur with Cisco (enic) and Broadcom NetXtrem II
-BCM5780 (bnx2x) though it may be an issue with other NICs/drivers as well.
+thanks,
 
-In case the frontend is sending requests with split headers, netback will
-forward those violating above mentioned assumption to the networking core,
-resulting in said misbehavior.
-
-IMPACT
-======
-
-An unprivileged guest can cause network Denial of Service (DoS) of the
-host by sending network packets to the backend causing the related
-physical NIC to reset, abort, or crash.
-
-Data corruption or privilege escalation seem unlikely but have not been
-ruled out.
-
-VULNERABLE SYSTEMS
-==================
-
-All systems using a Linux based network backend with kernel 3.19 and
-newer are vulnerable. Systems using other network backends are not
-known to be vulnerable.
-
-Systems using Cisco (enic driver) and Broadcom NetXtrem II BCM5780
-(bnx2x driver) NICs for guest network access are known to be vulnerable.
-Systems using other NICs for guest network access cannot be ruled out
-to be vulnerable.
-
-MITIGATION
-==========
-
-Using another PV network backend (e.g. the qemu based "qnic" backend)
-will mitigate the problem.
-
-Using a dedicated network driver domain per guest will mitigate the
-problem.
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-This issue was discussed in public already.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa423-linux.patch           Linux 4.14 - 6.1-rc
-
-$ sha256sum xsa423*
-6b11934a428ca990ee870b793c700064342b8d83bd6632a4c417de05d5c95dad  xsa423-linux.patch
-$
-
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmOPXKAMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZptEIAI2kIbKXbZNr3k0riwXxH2tV4i6Ja9ad7to7CrGN
-VSCOG8S5+wBhI92RnVjkifFyA4FGdHaob7AYw7X5R43rLsFKEzw06R4pP0elsGoz
-w/ieETiUrdwmzIA3wx0p14kLIZdT2MWPtjuczbBYTWXVN9LGvUkIkuXLwZLOK5O5
-HT2oAJhvgemcW8ThBBK0kI5Y1GxBlJ32hbQGBi6Wut6LUprZ+b3No3+/ylOfHRQG
-y0vgJ5TtjdIBcJ+xY97mgmMbIRW4lI54ju4G7D6QrGl3IAPD666y2u97QwefuK4V
-YigMIXIv2+PsCdo/6Vv/Fwt5g5C2PiFDr6Lx+pRNZcVIRl4=
-=pbpP
------END PGP SIGNATURE-----
-
-Download attachment "xsa423-linux.patch" of type "application/octet-stream" (12850 bytes)
+greg k-h
