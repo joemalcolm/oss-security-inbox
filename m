@@ -1,4 +1,4 @@
-Received: (qmail 11716 invoked by uid 550); 29 Apr 2026 00:15:11 -0000
+Received: (qmail 20040 invoked by uid 550); 17 May 2022 13:13:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,86 +7,280 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 31868 invoked from network); 28 Apr 2026 23:53:18 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1777420390;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=rO1UdDCufYG5318WzHoqz7ROA7mN+Xnswz9TnlKWJdM=;
-	b=Ji7EjgMIX72FmJ1937U2vhgxe+7PD6FcjOlLmQDMdPDOL/DtT/1WEJv8O3N73iJG6iXIas
-	hUwcXqO0/vdg7GOssnXxKFx2CfSyUuJFUl6ljxSn0um0NEg6Rml+Qmf1aLpiVpN4Y+DR2p
-	bdOGesf7qH0C2bZLnK/8YpMFdBF7JvzP8+LPRrO9zsinCVNFptZx93kWqck+DTlwZ6JgcC
-	5jlu6onXBheY7w5yOuJu7SrA7rW7/Prdo5VyjUPYeeEb04yigGzrx3TZWGlPWBeuKxfBti
-	/5wbQwslsbXlBzcENgpcXTPSG/ojRKaskQHVFwzSBbDfQUOZh2/5BVvE+V5aKw==
-MIME-Version: 1.0
-Date: Tue, 28 Apr 2026 20:53:09 -0300
-From: Timothy Legge <timlegge@cpansec.org>
-To: Cve Announce <cve-announce@security.metacpan.org>, Oss Security
- <oss-security@lists.openwall.com>
-Message-ID: <2aff9aefaaf12148bbfd43af480ab8f4@cpansec.org>
-X-Sender: timlegge@cpansec.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-GND-Sasl: timlegge@cpansec.org
-X-GND-Cause: dmFkZTGsQYGKqNl8N1ypTUtA2huk/H/OCurz1g4QD4jQ3Ad6dJTZ+FAwCty78Ua08WXUqjej+v9A0g0b17bmWtHNIqHDXTph00AObVZVvoRTDO68LPDp2k0AkBERYvMKnWlaiTIhbf7oiSvQEYdM7eTyXTz6B1yPhdefme/ykVT3OEGSSBxP8cUahRB99jYm9CHXNc3nBLTWE2iKo8H3t2jFg18pfTdDtdTZx3rjgkSoU38rP5XqdSCzDyk5Fpu7L/rzEoij3Oki7fOgBA+C7jzCNNmKD2QEKtaw4+Wn/6pY6tSLfm44omLHc41/HGN6wWoNJ17V9uZQMxQVSqZd3jGh3pwsUVEF5bxu+sGZ/S8P66FI6MTHwJr0RMy/b2Xa8FkQ3zy9Vh0ufjqIzc2r8khv33QdmhrtqOFddz0Z/HdmReJ+Rwt59abuz2r6NjsGBcvsBaI/hCtmT7zj2MFTMLbg0c2ubnoJHGlrWrMx/GoSWoaTfRpeJhk/txgTe4APNaWFJ+Y44CdC7b4dQrGqzAtjkMClDyNTy7dNxh9eU+Nj6+FZnCwYjU3jP/+Low05cFGint8jIZmksOWK5G3zj9CYcHQjbNoAyJxJNw1NVf7OT8PPreBD+sYHHN+3TqQ1yV9wd9fgKTDlmtmbgWvIPsIf3uJWBZa/qeWDxEPEgYpveOu3eg
-X-GND-State: clean
-X-GND-Score: -100
-Subject: [oss-security] CVE-2026-40560: Starman versions before 0.4018 for Perl allows HTTP
- Request Smuggling via Improper Header Precedence
-
-========================================================================
-CVE-2026-40560                                       CPAN Security Group
-========================================================================
-
-         CVE ID:  CVE-2026-40560
-   Distribution:  Starman
-       Versions:  before 0.4018
-
-       MetaCPAN:  https://metacpan.org/dist/Starman
-       VCS Repo:  https://github.com/miyagawa/Starman
+Received: (qmail 20010 invoked from network); 17 May 2022 13:13:56 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.80.82.1.1\))
+Message-Id: <34EFA4C8-0709-401C-B5AF-AF22234F0C22@beckweb.net>
+Date: Tue, 17 May 2022 15:13:45 +0200
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3696.80.82.1.1)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1652793236;f31d86bc;
+X-HE-SMSGID: 1nqx1F-0006S5-D1
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
 
-Starman versions before 0.4018 for Perl allows HTTP Request Smuggling
-via Improper Header Precedence
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-Description
------------
-Starman versions before 0.4018 for Perl allows HTTP Request Smuggling
-via Improper Header Precedence.
+The following releases contain fixes for security vulnerabilities:
 
-Starman incorrectly prioritizes "Content-Length" over
-"Transfer-Encoding: chunked" when both headers are present in an HTTP
-request. Per RFC 7230 3.3.3, Transfer-Encoding must take precedence.
+* Application Detector Plugin 1.0.9
+* Blue Ocean Plugin 1.25.4
+* Git Plugin 4.11.2
+* GitLab Plugin 1.5.32
+* Mercurial Plugin 2.16.1
+* Multiselect parameter Plugin 1.4
+* Pipeline SCM API for Blue Ocean Plugin 1.25.4
+* Pipeline: Groovy Plugin 2692.v76b_089ccd026
+* REPO Plugin 1.14.1
+* Rundeck Plugin 3.6.11
+* Script Security Plugin 1172.v35f6a_0b_8207e
+* WMI Windows Agents Plugin 1.8.1
 
-An attacker could exploit this to smuggle malicious HTTP requests via a
-front-end reverse proxy.
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-Problem types
--------------
-- CWE-444 Inconsistent Interpretation of HTTP Requests ('HTTP
-   Request/Response Smuggling')
+* Autocomplete Parameter Plugin
+* Global Variable String Parameter Plugin
+* JDK Parameter Plugin
+* Promoted Builds (Simple) Plugin
+* Random String Parameter Plugin
+* Selection tasks Plugin
+* SSH Plugin
+* Storable Configs Plugin
+* vboxwrapper Plugin
 
-Solutions
----------
-Upgrade to version 0.4018
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2022-05-17/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-359 / CVE-2022-30945
+Pipeline: Groovy Plugin allows pipelines to load Groovy source files. This
+is intended to be used to allow Global Shared Libraries to execute without
+sandbox protection.
+
+In Pipeline: Groovy Plugin 2689.v434009a_31b_f1 and earlier, any Groovy
+source files bundled with Jenkins core and plugins could be loaded this way
+and their methods executed. If a suitable Groovy source file is available
+on the classpath of Jenkins, sandbox protections can be bypassed.
+
+NOTE: The Jenkins security team has been unable to identify any Groovy
+source files in Jenkins core or plugins that would allow attackers to
+execute dangerous code. While the severity of this issue is declared as
+High due to the potential impact, successful exploitation is considered
+very unlikely.
 
 
-References
-----------
-https://github.com/miyagawa/Starman/commit/ced205f0805027e9d9c0731f8c40b104220604ed.patch
-https://metacpan.org/release/MIYAGAWA/Starman-0.4018/changes
-https://datatracker.ietf.org/doc/html/rfc7230#section-3.3.3
+SECURITY-2116 / CVE-2022-30946
+Script Security Plugin 1158.v7c1b_73a_69a_08 and earlier does not require
+POST requests for a form validation endpoint, resulting in a cross-site
+request forgery (CSRF) vulnerability.
 
-Timeline
---------
-- 2027-04-12: Issue identified by CPANSec
-- 2027-04-27: Issue reported to software maintainer
-- 2027-04-27: Fix committed to public Github repository
-- 2027-04-27: Updated version uploaded to CPAN
+This vulnerability allows attackers to have Jenkins send an HTTP request to
+an attacker-specific webserver.
 
-Credits
--------
-CPANSec, finder
+
+SECURITY-2478 / CVE-2022-30947 (Git) & CVE-2022-30948 (Mercurial) & CVE-202=
+2-30949 (REPO)
+SCMs support a number of different URL schemes, including local file system
+paths (e.g. using `file:` URLs).
+
+Historically in Jenkins, only agents checked out from SCM, and if multiple
+projects share the same agent, there is no expected isolation between
+builds besides using different workspaces unless overridden. Some
+Pipeline-related features check out SCMs from the Jenkins controller as
+well.
+
+This allows attackers able to configure pipelines to check out some SCM
+repositories stored on the Jenkins controller's file system using local
+paths as SCM URLs, obtaining limited information about other projects' SCM
+contents. The following Jenkins plugins are known to be affected:
+
+* Git 4.11.1 and earlier
+* Mercurial 2.16 and earlier
+* REPO 1.14.0 and earlier
+
+
+SECURITY-2604 / CVE-2022-30950 (buffer overflow) & CVE-2022-30951 (access c=
+ontrol)
+WMI Windows Agents Plugin 1.8 and earlier includes the Windows Remote
+Command library. It provides a general-purpose remote command execution
+capability that Jenkins uses to check if Java is available, and if not, to
+install it.
+
+This library has a buffer overflow vulnerability that may allow users able
+to connect to a named pipe to execute commands on the Windows agent
+machine.
+
+Additionally, while the processes are started as the user who connects to
+the named pipe, no access control takes place, potentially allowing users
+to start processes even if they're not allowed to log in.
+
+
+SECURITY-714 / CVE-2022-30952
+When pipelines are created using the pipeline creation wizard in Blue
+Ocean, the credentials used are stored in the per-user credentials store of
+the user creating the pipeline. To allow pipelines to use this credential
+to scan repositories and checkout from SCM, the Blue Ocean Credentials
+Provider allows pipelines to access a specific credential from the per-user
+credentials store in Pipeline SCM API for Blue Ocean Plugin 1.25.3 and
+earlier.
+
+As a result, attackers with Job/Configure permission can rewrite job
+configurations in a way that lets them access and capture any
+attacker-specified credential from any user's private credentials store.
+
+
+SECURITY-2502 / CVE-2022-30953 (CSRF) & CVE-2022-30954 (permission check)
+Blue Ocean Plugin 1.25.3 and earlier does not perform permission checks in
+several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to send requests to an
+attacker-specified URL.
+
+Additionally, these endpoints do not require POST requests, resulting in a
+cross-site request forgery (CSRF) vulnerability.
+
+
+SECURITY-2753 / CVE-2022-30955
+GitLab Plugin 1.5.31 and earlier does not perform a permission check in an
+HTTP endpoint.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+
+SECURITY-2600 / CVE-2022-30956
+Rundeck Plugin 3.6.10 and earlier does not restrict URL schemes in Rundeck
+webhook submissions.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to submit crafted Rundeck webhook payloads.
+
+
+SECURITY-2315 / CVE-2022-30957
+SSH Plugin 2.6.1 and earlier does not perform a permission check in an HTTP
+endpoint.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2093 / CVE-2022-30958 (CSRF) & CVE-2022-30959 (permission check)
+SSH Plugin 2.6.1 and earlier does not perform a permission check in an HTTP
+endpoint.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified SSH server using attacker-specified credentials IDs
+obtained through another method, capturing credentials stored in Jenkins.
+
+Additionally, this endpoint does not require POST requests, resulting in a
+cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2717 / CVE-2022-30960 through CVE-2022-30968
+Multiple plugins do not escape the name and description of the parameter
+types they provide:
+
+* Application Detector Plugin 1.0.8 and earlier (SECURITY-2732 /
+  CVE-2022-30960)
+* Autocomplete Parameter Plugin 1.1 and earlier (SECURITY-2729 /
+  CVE-2022-30961)
+* Global Variable String Parameter Plugin 1.2 and earlier (SECURITY-2715 /
+  CVE-2022-30962)
+* JDK Parameter Plugin 1.0 and earlier (SECURITY-2713 / CVE-2022-30963)
+* Multiselect parameter Plugin 1.3 and earlier (SECURITY-2726 /
+  CVE-2022-30964)
+* Promoted Builds (Simple) Plugin 1.9 and earlier (SECURITY-2720 /
+  CVE-2022-30965)
+* Random String Parameter Plugin 1.0 and earlier (SECURITY-2722 /
+  CVE-2022-30966)
+* Selection tasks Plugin 1.0 and earlier (SECURITY-2728 / CVE-2022-30967)
+* vboxwrapper Plugin 1.3 and earlier (SECURITY-2734 / CVE-2022-30968)
+
+This results in stored cross-site scripting (XSS) vulnerabilites
+exploitable by attackers with Item/Configure permission.
+
+Exploitation of these vulnerabilities requires that parameters are listed
+on another page, like the "Build With Parameters" and "Parameters" pages
+provided by Jenkins (core), and that those pages are not hardened to
+prevent exploitation. Jenkins (core) has prevented exploitation of
+vulnerabilities of this kind on the "Build With Parameters" and
+"Parameters" pages since 2.44 and LTS 2.32.2 as part of the SECURITY-353 /
+CVE-2017-2601 fix. Additionally, several plugins have previously been
+updated to list parameters in a way that prevents exploitation by default,
+see SECURITY-2617 in the 2022-04-12 security advisory for a list.
+
+As of publication of this advisory, there is no fix available for the
+following plugins:
+
+* Autocomplete Parameter Plugin 1.1 and earlier (SECURITY-2729 /
+  CVE-2022-30961)
+* Global Variable String Parameter Plugin 1.2 and earlier (SECURITY-2715 /
+  CVE-2022-30962)
+* JDK Parameter Plugin 1.0 and earlier (SECURITY-2713 / CVE-2022-30963)
+* Promoted Builds (Simple) Plugin 1.9 and earlier (SECURITY-2720 /
+  CVE-2022-30965)
+* Random String Parameter Plugin 1.0 and earlier (SECURITY-2722 /
+  CVE-2022-30966)
+* Selection tasks Plugin 1.0 and earlier (SECURITY-2728 / CVE-2022-30967)
+* vboxwrapper Plugin 1.3 and earlier (SECURITY-2734 / CVE-2022-30968)
+
+
+SECURITY-2322 / CVE-2022-30969
+Autocomplete Parameter Plugin 1.1 and earlier does not require POST
+requests for a form validation endpoint executing a provided Groovy script,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+This vulnerability allows attackers to execute arbitrary code without
+sandbox protection if the victim is an administrator.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2267 / CVE-2022-30970
+Autocomplete Parameter Plugin 1.1 and earlier references Dropdown
+Autocomplete parameter and Auto Complete String parameter names in an
+unsafe manner from Javascript embedded in view definitions.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Item/Configure permission.
+
+NOTE: While this looks similar to SECURITY-2729, this is an independent
+problem and exploitable even on views rendering parameters that otherwise
+attempt to prevent XSS vulnerabilities in parameter names.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1969 / CVE-2022-30971 (XXE) & CVE-2022-30972 (CSRF)
+Storable Configs Plugin 1.0 and earlier does not configure its XML parser
+to prevent XML external entity (XXE) attacks.
+
+This allows attackers with Item/Configure permission to have Jenkins parse
+a crafted file that uses external entities for extraction of secrets from
+the Jenkins controller or server-side request forgery.
+
+Additionally, the HTTP endpoint calling the XML parser does not require
+POST requests, resulting in a cross-site request forgery (CSRF)
+vulnerability.
+
+As of publication of this advisory, there is no fix.=
