@@ -1,43 +1,97 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/20/1
-Message-ID: <CANLSSBUW0342P0jVEUf-iZyqqiVRAhN2ET8a3-tnsZHT+f86fg@mail.gmail.com>
-Date: Wed, 20 Jul 2022 11:52:06 +0530
-From: Rohit Yadav <rohit@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/17/6
+Message-ID: <YoORVO2BbBDdjyd2@quatroqueijos>
+Date: Tue, 17 May 2022 09:13:08 -0300
+From: Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [ADVISORY] Apache CloudStack SAML Single Sign-On XXE (CVE-2022-35741)
+Cc: Seth Arnold <seth.arnold@...onical.com>
+Subject: Re: linux-distros list policy and Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-Credit: This issue was discovered and reported by "v3ged0ge".
+On Tue, May 17, 2022 at 01:10:16PM +0200, Jason A. Donenfeld wrote:
+[...] 
+> This brings us back to the original topic of this (sub-)thread: do
+> public fixes make security vulnerabilities manifest to the public? I
+> guess it depends on who you consider to be the public. If you're
+> speaking from the perspective of placating customers and taking care of
+> some commercial bottom line, the answer is no. No public PR situation
+> coming your way, so no work to be done, vulnerability doesn't exist yet.
+> But if you're speaking from the perspective of whether attackers now are
+> aware of the bug and can write exploits for it -- that is, a real threat
+> model -- then the answer is obviously yes, if the fix is public, the bug
+> is public.
+> 
+> So when I read in this thread calls for extending embargoes until the
+> vulnerability is "disclosed" in some sort of announcement (that is, PR),
+> rather than just until the public git fix, it seems plain that the end
+> goal is a messaging or communication one, rather than a security one. On
+> the surface, delaying the release of a vulnerability until it's had time
+> to reach customer systems sounds like a good idea. But zoom in a little
+> bit and you quickly realize that the vulnerability has *already* been
+> released to attackers who read commit logs, and the thing we're talking
+> about delaying is an official announcement. It turns out, attackers
+> don't care about your official announcements; the marketing team does.
+> 
+> And as I understand it, the Openwall mailing lists have never been about
+> enabling companies to better control their messaging. They've been about
+> a deterministic embargo & disclosure process, to strike the right
+> balance of letting people coordinate privately when needed, and then
+> letting various parties make the best decisions they can once the cat is
+> out of the bag. Should the distros@ policy change to be more PR-friendly,
+> or should it stay true to its security policy ideals?
+> 
+> Jason
+> 
+> [1] https://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm.git/commit/?id=2505a981114dcb715f8977b8433f7540854851d8
 
-Updated: https://blogs.apache.org/cloudstack/entry/cve-2022-35741
+Hey, Jason.
 
-Regards.
+Lots of good discussion points there, but let me focus on these last ones, as I
+think I am able to address them better than the others. Thanks.
 
-On Mon, Jul 18, 2022 at 7:20 PM Rohit Yadav <rohit@...che.org> wrote:
->
-> Apache CloudStack version 4.5.0 and later has a SAML 2.0
-> authentication Service Provider plugin which is found to be vulnerable
-> to XML external entity (XXE) injection. This plugin is not enabled by
-> default and the attacker would require that this plugin be enabled to
-> exploit the vulnerability. When the SAML 2.0 plugin is enabled in
-> affected versions of Apache CloudStack could potentially allow the
-> exploitation of XXE vulnerabilities.
->
-> The SAML 2.0 messages constructed during the authentication flow in
-> Apache CloudStack are XML-based and the XML data is parsed by various
-> standard libraries that are now understood to be vulnerable to XXE
-> injection attacks such as arbitrary file reading, possible denial of
-> service, server-side request forgery (SSRF) on the CloudStack
-> management server.
->
-> As of 18th July 2022, this is now tracked under CVE-2022-35741:
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-35741
->
-> To mitigate the risk, a CloudStack admin can do any of the following:
->
-> 1. Disable the SAML 2.0 plugin by setting `saml2.enabled` to false and
-> restart the management servers.
->
-> 2. Upgrade to Apache CloudStack 4.16.1.1 or 4.17.0.1 or higher.
->
-> --
+Notice this is my personal opinion, having been a linux-distros member list for
+around a year or a bit less.
+
+I think you are taking this backwards. The linux-distros policy is not that the
+fix should be kept private until there is a security disclosure, but that the
+security implications (that were disclosed to linux-distros) be made public as
+soon as the fix is public.
+
+It is about communication, but not only communication. It is also about process
+and balancing stability and security.
+
+If distros are supposed to include many different fixes in a very short time
+frame, just in order to hide the security implications of a fix, there are
+chances of other things breaking because: 1) there are many changes; 2) there
+was a short time to get them tested. Don't get this wrong. I also agree that a
+good strategy is to release as many fixes as are identified to go to stable@ as
+often as possible. But doing it weekly is not feasible for everyone out there.
+
+And if distros ship a new kernel release with a single fix without mentioning
+any security implications, honestly, we are already shouting out to attackers:
+"hey, we decided this was important enough to include this single fix, look at
+that!". And it looks like distros are breaking an embargo that was requested.
+
+I may be wrong on this, but I have the impression that disclosures are on the
+hands of the researchers/reporters. They are doing the work you described,
+going through fixes, syzkaller and other bug reports, and evaluating their
+security implications. Then, they go to security@...nel.org and the policy, as
+we mentioned, is that the security implications are not disclosed unless the
+reporter does it. Then, linux-distros/distros has the policy that whatever is
+posted there must be disclosed to oss-sec after up to 14 days. But it is still
+the reporter that does it. I think it is important that we are aware of that in
+order to find out how we could get this better or discuss if we should do it at
+all.
+
+And the status quo today is this: the reporter is the one who does the
+disclosure, distros won't ship a single fix after they have been told about a
+security vulnerability (and asked to not communicate its security implications)
+without a Coordinated Release Date, and distros won't ship hundreds or
+thousands of fixes in a short time frame just in order to release a security
+fix and yet hide the security implications.
+
+As I read your last question, and recall the initial message that started this
+discussion, I think people were being true to distros@ security policy ideals
+when it was asked that reports be made public as fixes were already public.
+
+Cascardo.
