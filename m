@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2460" "Saturday" "7" "October" "2017" "08:56:48" "+0200" "chbi@chbi.eu" "chbi@chbi.eu" "<4e04d782-268e-46bf-f74e-06696f5bdc7a@chbi.eu>" "77" "[oss-security] Stored XSS vulnerabilities in Flyspray" nil nil nil "10" "2017100706:56:48" "[oss-security] Stored XSS vulnerabilities in Flyspray" (number mark "U       chbi@chbi.eu Oct  7   77/2460  " thread-indent "\"[oss-security] Stored XSS vulnerabilities in Flyspray\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3378 invoked by uid 550); 7 Oct 2017 08:42:49 -0000
+Received: (qmail 9319 invoked by uid 550); 17 May 2022 09:07:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,93 +7,42 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24304 invoked from network); 7 Oct 2017 06:57:08 -0000
-To: oss-security@lists.openwall.com
-From: chbi@chbi.eu
-Message-ID: <4e04d782-268e-46bf-f74e-06696f5bdc7a@chbi.eu>
-Date: Sat, 7 Oct 2017 08:56:48 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
+Received: (qmail 1767 invoked from network); 17 May 2022 05:51:13 -0000
+X-Gm-Message-State: AOAM533FEsxsg6JANdZxInTFrYxYtMdPhIUEq94vdj2GkfLYoXtJsTWC
+	h/eyhrou3mxc3y4izRC1DP/ZPMBw2A9ZDKcHa4Y=
+X-Google-Smtp-Source: ABdhPJxdeedqMVXFPI2wmnEgAyD4+jPbodKwp8f+9/Bu6ubMoDRaR5yda/b/9xH0FX0FYy29nr9hMWVKJBgJjxSGMAI=
+X-Received: by 2002:a05:6512:41d:b0:474:2ac3:5a78 with SMTP id
+ u29-20020a056512041d00b004742ac35a78mr15154238lfk.109.1652766660397; Mon, 16
+ May 2022 22:51:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="L3PO4qOppxHD3jgckNkAg5HLfbgKtVkTv"
-Subject: [oss-security] Stored XSS vulnerabilities in Flyspray
-
---L3PO4qOppxHD3jgckNkAg5HLfbgKtVkTv
-Content-Type: multipart/mixed; boundary="5CllbLbSsu5MC6tgRcribNjpLCgc7KGBo";
- protected-headers="v1"
-From: chbi@chbi.eu
+From: Zhang Yonglun <zhangyonglun@apache.org>
+Date: Tue, 17 May 2022 13:50:48 +0800
+X-Gmail-Original-Message-ID: <CA+ZBtZ7fwTPbbEcZbd0qPQHqB4xZDg1LRhk2hZSEUBx0Qj7waA@mail.gmail.com>
+Message-ID: <CA+ZBtZ7fwTPbbEcZbd0qPQHqB4xZDg1LRhk2hZSEUBx0Qj7waA@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Message-ID: <4e04d782-268e-46bf-f74e-06696f5bdc7a@chbi.eu>
-Subject: Stored XSS vulnerabilities in Flyspray
+Cc: dev@shenyu.apache.org
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2022-26650: Apache ShenYu (incubating) Regular expression denial
+ of service
 
---5CllbLbSsu5MC6tgRcribNjpLCgc7KGBo
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+Severity: moderate
 
-Hi,
+Description:
 
-I've discovered two security issues in Flyspray (http://www.flyspray.org/)
+In ShenYu-Bootstrap there's RegexPredicateJudge.java which uses
+Pattern.matches(conditionData.getParamValue(), realData) to make
+judgments, where both parameters are controllable by the user. This
+can cause an attacker pass in malicious regular expressions and
+characters causing a resource exhaustion.
+This issue affects Apache ShenYu (incubating) 2.4.0, 2.4.1 and 2.4.2.
 
+Mitigation:
 
-A stored XSS vulnerability in Flyspray before 1.0-rc6 allows an
-authenticated user to inject JavaScript to gain administrator privileges.
+Upgrade to Apache ShenYu (incubating) 2.4.3 or apply patch
+https://github.com/apache/incubator-shenyu/pull/2975.
 
-Fix:
-https://github.com/Flyspray/flyspray/commit/754ec5d04348ef7ecb8cb02ade976dc=
-412b031f8
+--
 
-
-A stored XSS vulnerability in Flyspray between 1.0-rc4 and 1.0-rc6
-allows an authenticated user to inject JavaScript to gain administrator
-privileges and also to execute JavaScript against other users (including
-unauthenticated users).
-
-Fix
-https://github.com/Flyspray/flyspray/commit/00cfae5661124f9d67ac6733db61b2b=
-fee34dccc
-
-
-Both issues are fixed in Flyspray 1.0-rc6.
-
-https://github.com/Flyspray/flyspray/releases/tag/v1.0-rc6
-
-
-I've requested CVE IDs (MITRE).
-
-
---=20
-chbi
-https://chbi.eu
-
-GPG: 3DE9 9187 4BE9 EAE6 3CA8  DC20 BA7B 93F9 9037 AE7E
-     https://chbi.eu/chbi.asc
-
-
---5CllbLbSsu5MC6tgRcribNjpLCgc7KGBo--
-
---L3PO4qOppxHD3jgckNkAg5HLfbgKtVkTv
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEPemRh0vp6uY8qNwgunuT+ZA3rn4FAlnYerYACgkQunuT+ZA3
-rn7ZpA/+JJVMYAKSSd4XgSGAGMb/Ni04ur58lZFLMvZXMpONnsaje+CfPnhcu20c
-Kxm+sTPfwmPnpA1B5BV976IXNhAGIM5jVq2xkIYG+3RJw2TTXHsxvdVqN7QETqrg
-B58vdOpTgFc9GSZ9nC1VxYZUuciudrxevPSIW61qB+8x+FQB7wl9hwaVedzBjyns
-4oa5g3eF1G3Bwk/khSrGbRLivrmBdWle8c/ZqBdy/BnLvnyUgadIt9PjXrlPaRE+
-A1eepNJtwaPdE4AkiwhriIsqsSCTq2gVB36JWXt4GD9qWNq1ZYIeGS/MLQRC64tg
-AArupZAJ5wQBa492cxYpTRGB3ZodNAibhKcKrCJ3Clk+Yg8Oz7FxAHSHw7BtI5X8
-Cnv6p5xBHkZDC2oha/lalgoCxyVyG0zxmJ+BkTCjt5hb/VCVUn1GQfjRJJ+QJNcY
-iEjCBlt8xRM+NJyyXYtjthf5Jyy8K4Q7i1ACDgpUy52LHT5wVlpkI2QNCI1OZQQg
-cK0m0RBBO1sB7D4//QHo0hh+LJiGv4uwLLunQmR3IqKB4DlspV4Bx8yKzb9ZBR/u
-wK1BuqPyVx2fuM9lo/8TYccvjq3CBYJwYzHCSqx0/JOACB/aXbpjqJyvHI+LpXlX
-OSQK1xrrhztNPzT4PXdEAAL2aFLouQNJ1IYoXux7Alr/StTxxxo=
-=kczA
------END PGP SIGNATURE-----
-
---L3PO4qOppxHD3jgckNkAg5HLfbgKtVkTv--
+Zhang Yonglun
+Apache ShenYu (Incubating)
+Apache ShardingSphere
