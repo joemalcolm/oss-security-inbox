@@ -1,35 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/24/10
-Message-ID: <D57406DE-02FB-43BD-BE4D-27A8ECA2C517@oracle.com>
-Date: Tue, 24 May 2022 20:18:02 +0000
-From: John Haxby <john.haxby@...cle.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE-2022-21499: trivial lockdown break
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/17/1
+Message-ID: <20220517033033.GA3403712@millbarge>
+Date: Tue, 17 May 2022 03:30:33 +0000
+From: Seth Arnold <seth.arnold@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: linux-distros list policy and Linux kernel
 Content-Type: text/plain; charset=utf-8
 
+On Mon, May 16, 2022 at 03:12:20PM +0200, Jason A. Donenfeld wrote:
+> So I think a lot of the kernel's commit message obfuscation and unusual
+> disclosure ideas stem from a sort of collective sigh and desire not to
+> join the circus of security performers. They'll commit the fix, because
 
+I have seen some kernel developers say that the "security bugs" that
+get attention are no different from dozens of other bugfixes that are
+committed to the kernel every cycle.
 
-> On 24 May 2022, at 18:10, John Haxby <john.haxby@...cle.com> wrote:
-> 
-> Hello All,
-> 
-> CVE-2022-21499: trivial lockdown break
-> 
-> We recently discovered that it is trivial to break lockdown (and secureboot) using the kernel debugger: you can use the debugger to write zero into a location of your choice ...
-> 
-> I originally posted this with a preliminary patch on linux-distros.   Since then we have developed a better patch that takes into account the differences between integrity and confidentiality modes.
-> 
-> The updated patch will be available in the Linux mainline kernel at almost the same time as I'm sending this email.  I'll reply with the commit ID as soon as I have it.   If anyone wants the simpler patch that I posted to linux-bistros, please let me know, but I would encourage you to take the full patch.
-> 
-> jch
+If I've understood the complaint correctly they feel like we, the security
+community, are engaging in a dog-and-pony show around ten percent of the
+actual problems in the kernel. The other ninety percent get obfuscated
+commit messages and no one makes a fuss, because it's just way easier
+that way.
 
+I suspect there's some truth to it.
 
-The commit that fixes this is eadb2f47a3ce ("lockdown: also lock down previous kgdb use") [1]
+(We get hyperbolic reports from security researchers with proof-of-concept
+exploits that are basically syzkaller reproducers and while they look
+like they're real issues, it's hard to get excited when it's just .1%
+of syzkaller's findings.)
 
-jch
+Is this how the wider kernel community sees the various downstream
+security efforts?
 
+If this accurately describes feelings held by Linux developers, perhaps we
+need larger changes. Ubuntu has (far too many) kernel trees and the only
+way we can keep track of the CVEs is via our break-fix lines that show
+when issues were introduced and when they were fixed. The Fixes: lines in
+commit messages are wonderful assistances here.
 
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=eadb2f47a3ced5c64b23b90fd2a3463f63726066
+Given how much effort it takes me to assign CVEs for kernel issues, I've
+wondered before if we (me, us, the community as a whole, etc) ought to
+have a very standard and lightweight way to publish kernel CVEs, something
+that's not much more than the Fixes: lines already in the commits.
 
+I know this discussion didn't start around assigning CVEs to kernel
+issues, but if we're missing more than we're handling, perhaps it ought to
+be part of the discussion.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
