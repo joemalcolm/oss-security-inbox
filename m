@@ -1,118 +1,127 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/23/3
-Message-ID:  <BYAPR05MB63436604DE6E9F49EAAAD1B1B9709@BYAPR05MB6343.namprd05.prod.outlook.com>
-Date: Tue, 23 Aug 2022 20:10:48 +0000
-From: VMware Security Response Center <security@...are.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: [SECURITY ADVISORY] open-vm-tools: Local privilege escalation vulnerability (CVE-2022-31676)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/17/4
+Message-ID: <YoOCmBqfouvgbEX0@zx2c4.com>
+Date: Tue, 17 May 2022 13:10:16 +0200
+From: "Jason A. Donenfeld" <Jason@...c4.com>
+To: Seth Arnold <seth.arnold@...onical.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: linux-distros list policy and Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-Local privilege escalation vulnerability in open-vm-tools
-================================
+Hi Seth,
 
-VMware security advisory, August 23 2022 - https://www.vmware.com/security/advisories/VMSA-2022-0024.html
+On Tue, May 17, 2022 at 03:30:33AM +0000, Seth Arnold wrote:
+> If this accurately describes feelings held by Linux developers, perhaps we
+> need larger changes. Ubuntu has (far too many) kernel trees and the only
+> way we can keep track of the CVEs is via our break-fix lines that show
+> when issues were introduced and when they were fixed. The Fixes: lines in
+> commit messages are wonderful assistances here.
+> 
+> Given how much effort it takes me to assign CVEs for kernel issues, I've
+> wondered before if we (me, us, the community as a whole, etc) ought to
+> have a very standard and lightweight way to publish kernel CVEs, something
+> that's not much more than the Fixes: lines already in the commits.
+> 
+> I know this discussion didn't start around assigning CVEs to kernel
+> issues, but if we're missing more than we're handling, perhaps it ought to
+> be part of the discussion.
 
-1. Impacted Products
-VMware Tools (open-vm-tools)
+I think playing CVEs with the kernel (and possibly other humongous
+projects too) is in large part a fool's errand. Not all security bug
+fixes go through some explicit security track that would result in a CVE
+or other type of security identifier. And more importantly, it's often
+difficult to assess whether a particular patch has security implications
+or not.
 
-2. Introduction
-VMware Tools was impacted by a local privilege escalation vulnerability. Updates are available to remediate this vulnerability in affected VMware products.
+To pick a random example, take a look at [1]. Does this fix a
+vulnerability? It definitely fixes a crashing phone. Could you exploit
+this to get execution somehow? Maybe those are obvious questions to some
+people, but it's not immediately obvious to me without really digging
+into it, and that's a lot of work.
 
-3. Local privilege escalation vulnerability (CVE-2022-31676)
+But at the very least it fixes a bug (several, it appears). So it's
+marked as `Cc: stable@` and has a `Fixes: ...` tag too, which means
+eventually it'll wind up in one of Greg's trees and then maybe one of
+your trees. All the while, the patch itself is sitting in Andrew's (new)
+git repository. No secret embargo here.
 
-Description:
-VMware Tools contains a local privilege escalation vulnerability. VMware has evaluated the severity of this issue to be in the Important severity range<https://www.vmware.com/support/policies/security_response.html> with a maximum CVSSv3 base score of 7.0<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H>.
+In that sense, the stable@ tag will at least give you _something_, and
+certainly way more than whatever stray CVEs have been assigned. But
+stable@ is by no means perfect:
 
-Known Attack Vectors:
-A malicious actor with local non-administrative access to the Guest OS can escalate privileges as a root user in the virtual machine.
+  - Many patches aren't marked as stable.
+  - If a stable@ patch doesn't apply to a tree, it's usually up to the
+    original patch author to backport it, and sometimes authors ignore
+    those emails.
+  - Sometimes stable@ patches bring in additional patches that weren't
+    meant to be backported.
+  - Sometimes a patch applies fine but is missing a prerequisite, which
+    wasn't marked as stable.
+  - And so on and so forth.
 
-Resolution:
-To remediate CVE-2022-31676 apply the patches listed in the 'Fixed Version' column of the 'Response Matrix' found below.
+It's not like these problems happen all the time, and I suspect these
+are just inherent limitations in the stable process when operating at
+huge scale. Greg does a darn good job of this, especially when you
+consider the huge amount of patches; it's remarkable he makes it work as
+well as it does, considering the challenge. It'll just never be perfect.
+But I'm pretty sure it's better than focusing on CVEs, as you've
+suggested Canonical does.
 
-Workarounds:
-None
+Probably the more serious way of handling that would be to hire a team
+of kernel security experts (read: not simply people who crank kernel
+build scripts) who trawl through commit logs all day and actively follow
+development in particular areas. And they'd be in charge of doing their
+own analysis and classification on various commits. Super worried about
+something falling through the cracks? Make two teams and have them
+duplicate each other's work. Or three. Or four. It's expensive,
+labor-intensive work. I'm not sure you're going to get that all for
+"free" by just leaning on the stable process or leaning on CVEs or
+whatever cheap "process shortcuts" appear to provide what you want
+without the investment.
 
-Additional Documentation:
-None
+However, I really doubt you'll do the expensive thing in the end, not
+just because what I suggested is impractical; actually, the grsec team
+perhaps shows it can be done. I doubt it'll happen in the end because
+it's not likely to support Canonical's commercial interests, which in
+terms of security relate to *customers* getting scared about CVEs,
+something that *customers* know about, so you have to address their
+concerns to sell products, and deal in a currency they know about. Very
+few customers know about or care about the implications of some obscure
+zram mm-tree bug. But most "security minded" customers will pay for
+something CVE-related instead. So I think playing the CVE game with
+kernel security is much more about customer perception than anything
+actually threat modeled.
 
-Acknowledgements:
-None
+This brings us back to the original topic of this (sub-)thread: do
+public fixes make security vulnerabilities manifest to the public? I
+guess it depends on who you consider to be the public. If you're
+speaking from the perspective of placating customers and taking care of
+some commercial bottom line, the answer is no. No public PR situation
+coming your way, so no work to be done, vulnerability doesn't exist yet.
+But if you're speaking from the perspective of whether attackers now are
+aware of the bug and can write exploits for it -- that is, a real threat
+model -- then the answer is obviously yes, if the fix is public, the bug
+is public.
 
-Notes:
-VMware Tools 10.3.25 only applies to the older Linux releases.
+So when I read in this thread calls for extending embargoes until the
+vulnerability is "disclosed" in some sort of announcement (that is, PR),
+rather than just until the public git fix, it seems plain that the end
+goal is a messaging or communication one, rather than a security one. On
+the surface, delaying the release of a vulnerability until it's had time
+to reach customer systems sounds like a good idea. But zoom in a little
+bit and you quickly realize that the vulnerability has *already* been
+released to attackers who read commit logs, and the thing we're talking
+about delaying is an official announcement. It turns out, attackers
+don't care about your official announcements; the marketing team does.
 
-Response Matrix:
+And as I understand it, the Openwall mailing lists have never been about
+enabling companies to better control their messaging. They've been about
+a deterministic embargo & disclosure process, to strike the right
+balance of letting people coordinate privately when needed, and then
+letting various parties make the best decisions they can once the cat is
+out of the bag. Should the distros@ policy change to be more PR-friendly,
+or should it stay true to its security policy ideals?
 
+Jason
 
-VMware Product
-
-Version
-
-Running On
-
-CVE
-
-CVSSv3
-
-Severity
-
-Fixed Version
-
-Workarounds
-
-Additional Documentation
-VMware Tools
-12.x.y, 11.x.y
-Linux
-CVE-2022-31676
-7.0<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H>
-Important
-12.1.0<https://docs.vmware.com/en/VMware-Tools/12.1/rn/VMware-Tools-1210-Release-Notes.html>
-None
-None
-VMware Tools
-10.x.y
-Linux
-CVE-2022-31676
-7.0<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H>
-Important
-10.3.25<https://docs.vmware.com/en/VMware-Tools/10.3/rn/VMware-Tools-10325-Release-Notes.html>
-None
-None
-
-
-4. References:
-
-Fixed Version(s) and Release Notes:
-
-VMware Tools for Linux 12.1.0
-
-Downloads and Documentation:
-https://customerconnect.vmware.com/downloads/details?downloadGroup=VMTOOLS1210&productId=1259&rPId=92824
-
-https://docs.vmware.com/en/VMware-Tools/12.1/rn/VMware-Tools-1210-Release-Notes.html
-
-VMware Tools for Linux 10.3.25
-
-Downloads and Documentation:
-https://customerconnect.vmware.com/downloads/details?downloadGroup=VMTOOLS10325&productId=1072&rPId=92945
-
-https://docs.vmware.com/en/VMware-Tools/10.3/rn/VMware-Tools-10325-Release-Notes.html
-
-Mitre CVE Dictionary Links:
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-31676
-
-FIRST CVSSv3 Calculator:
-CVE-2022-31676: https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H
-
-
-Upstream fix for CVE-2022-31676: https://github.com/vmware/open-vm-tools/blob/CVE-2022-31676.patch/README.md
-
-
-
-Thanks,
-Sibi Aravind E
-VMware Security Response Center
-
-
-
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm.git/commit/?id=2505a981114dcb715f8977b8433f7540854851d8
