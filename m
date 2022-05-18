@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1101" "Friday" "22" "May" "2015" "22:28:19" "+0800" "Jing Wang" "justqdjing@gmail.com" "<CAFWG0-hVJ8kdfJdktA_ynrhcGmm74MaQhuSKm=wygt_+esLzvw@mail.gmail.com>" "57" "[oss-security] Feed2JS v1.7 XSS Web Security Vulnerabilities - CVE Request" nil nil nil "5" "2015052214:28:19" "[oss-security] Feed2JS v1.7 XSS Web Security Vulnerabilities - CVE Request" (number mark "        justqdjing@g May 22   57/1101  " thread-indent "\"[oss-security] Feed2JS v1.7 XSS Web Security Vulnerabilities - CVE Request\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 27874 invoked by uid 550); 22 May 2015 14:28:32 -0000
+Received: (qmail 13935 invoked by uid 550); 18 May 2022 20:00:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,82 +6,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 27851 invoked from network); 22 May 2015 14:28:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=fReC/2c8kzXxMMfawGJtRsDBuHk/u1OG4l+pIm6GHUc=;
-        b=0V7ZFljtJbFZucnJ+5Aw3+YN/N59swrrzEUsOl8qE5FIXZS17yIifQ9/8PVDanar/p
-         W+oziKrll1Ea8QbRHtquKu+CtMb4x+dQLcH5FEZnyElgHUbbVtxfhMu2MZmaLdpI1BgV
-         pUmiUn5b5bIE4wcibTAy8A1ELXjJ/ITD03avNvUxIhhuC+0/t/aXvYcWi9nTobGO6uWB
-         1VcpvjEPQC3Ooruvzz92kL4zwSiTmihGk9188MYz9papUVvtTMOocwLL1Olt9RMSKh31
-         3mUrGKj6SAHgDhdX76FhThPJCZKyJYkUeGv6/0RGz+WXcr1cpiyY3PfEHFhYnCsVOg2R
-         sXow==
-MIME-Version: 1.0
-X-Received: by 10.182.143.103 with SMTP id sd7mr6753982obb.1.1432304899262;
- Fri, 22 May 2015 07:28:19 -0700 (PDT)
-Message-ID: <CAFWG0-hVJ8kdfJdktA_ynrhcGmm74MaQhuSKm=wygt_+esLzvw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=e89a8ff1ce9ebb0de80516ac7823
-Date: Fri, 22 May 2015 22:28:19 +0800
-From: Jing Wang <justqdjing@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Feed2JS v1.7 XSS Web Security Vulnerabilities - CVE Request
+Received: (qmail 3675 invoked from network); 18 May 2022 19:40:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=A1QAPZ/0cqQZjL0+UPANusBIbYUNSQ+2WnDA81IvlRE=;
+        b=d3aqHGxQp96midfrI1To/R9xxFqrL5xs4hM6UKxeIxtI70cGYWEAweIkKhcJnohFap
+         mCbJw8e7jwGe0eWFLxg/zCsd9Z/0WeWQt8oDYc2V+pjBtcH1f2dPMC+qJCmGoNEVZJ2Y
+         YzSziZSG88+bxx/D4P9YfgAK2c7b0dR0QT/cTYvxOvNNV5nfxF0D+Fs8GxCPCjl7IFro
+         WYo8C8RD0hkob1Hu0IWeUbXQRmFGVtFW7JEgdLhJrqeF9oz7uTrwR/ArvCAGs68YbmLX
+         vGjkZOG/i2nUN2DXKQPu6NNy21bVTWndp+tddWBW6cw6wdJG5EATftChFehKBAF53Nix
+         gAew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=A1QAPZ/0cqQZjL0+UPANusBIbYUNSQ+2WnDA81IvlRE=;
+        b=rwSc2jkRTONkP0aLv0aD/deuYkfqTsuldv9937PYgLQH7pSOzW9IvRr/2B3QTchO2z
+         yE7X11YzG83ufhAQ502oRpLoRV7UjdR84z2B8m6AfWbPM1ZU59U+1EwB7DFrBW21HlDD
+         jkKcvCfK5A30fuJez4UXSUXkxuQFdLvxReM3BkbDqR1+OZ6jF8QaKM5f7rl705y7Aa9p
+         SoSFvKdjVYHM+2lVcYslIP87+rdsaoqmm05hR+45HtTTvZ9L5+oyPxAmZrEr7CRCjlJu
+         z1j3KGjATWHEqozzt3JOBc8seDx3Xyc4dMkm1Xy2S1XqTfzdhv6WCswfn+X2qLj8GFKi
+         lk6A==
+X-Gm-Message-State: AOAM533U2k0ZRrGHYtUNl0Ki6lHzLeYxG5rT2sHZAfUrlqpDNnugN84B
+	p/EHrmoIltNTdLG9+lAG9E0DlI/bRkMexV7Tk2cayzcNM+qweg==
+X-Google-Smtp-Source: ABdhPJxIXV2nNeFTZg2kMXgmR127NJyNCvpc6nPs8OTolcrGXB8Cma1Y58KPc2LqoC5URfpi5R6BsIRGc1zIJ3G5Dng=
+X-Received: by 2002:a17:902:c404:b0:15e:a090:dc8a with SMTP id
+ k4-20020a170902c40400b0015ea090dc8amr1108110plk.31.1652902829029; Wed, 18 May
+ 2022 12:40:29 -0700 (PDT)
+MIME-Version: 1.0
+From: Kyle Zeng <zengyhkyle@gmail.com>
+Date: Wed, 18 May 2022 12:39:52 -0700
+Message-ID: <CADW8OBvo2NjaNEGsFsaT3QX3UtqvuLJbL07Kgwc1+qrJ51LiQQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2022-29581: Linux kernel cls_u32 UAF
 
---e89a8ff1ce9ebb0de80516ac7823
-Content-Type: text/plain; charset=UTF-8
+Hi there,
 
-Hello,
+I recently discovered that a patch in Linux kernel upstream has
+security implications. And some vendor-maintained kernels were still
+affected when I checked on May 17th.
 
-Could you assign a CVE reference ID for the following vulnerability?
-Thank you very much.
+# Impact
+I wrote a proof-of-concept exploit and demonstrated that it can be
+used to achieve local privilege escalation.
 
+# Vulnerability
+The vulnerability lies in the u32 network traffic classifier and it is
+enabled in most vendors. When u32_change function is called and it
+enters an error path, it will mistakenly reduce the refcount of the
+current network namespace, which can lead to UAF of the "struct net"
+data structure that is associated with the current net namespace. This
+UAF can lead to local privilege escalation.
 
-http://seclists.org/fulldisclosure/2015/May/35
-http://www.osvdb.org/show/osvdb/121852
-http://packetstormsecurity.com/files/131840/Feed2JS-1.7-Cross-Site-Scripting.html
-http://tetraph.com/security/xss-vulnerability/feed2js-v1-7-xss/
-http://permalink.gmane.org/gmane.comp.security.fulldisclosure/1958
-http://cxsecurity.com/issue/WLB-2015050068
-http://www.intelligentexploit.com/view-details.html?id=21315
+# Patch
+The patch is merged into Linux kernel main tree already and can be
+found here: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3db09e762dc79584a69c10d74a6b98f89a9979f8.
 
+# Disclosure
+I reported it to Google on Apr 21st, a CVE was allocated on Apr 22nd,
+and the detail was made public on May 17th.
 
-
-
-========
-
-Exploit Title:
-Feed2JS v1.7 XSS (Cross-site Scripting) Web Security Vulnerabilities
-
-Product:
-Feed2JS
-
-Vendor:
-feed2js.org
-
-Vendor Link:
-https://feed2js.org/index.php?s=download
-
-Vulnerable Versions:
-v1.7
-
-Tested Versions:
-v1.7
-
-========
-
-
-
-
-Best Regards,
-Wang Jing,
-
-
-Division of Mathematical Sciences (MAS),
-School of Physical and Mathematical Sciences (SPMS),
-Nanyang Technological University (NTU),
-Singapore.
-http://www.tetraph.com/wangjing/
-https://twitter.com/justqdjing
-
---e89a8ff1ce9ebb0de80516ac7823--
+--
+Kyle Zeng
