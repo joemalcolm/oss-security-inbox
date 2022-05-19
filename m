@@ -1,44 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/22/9
-Message-ID: <Y6TQ0HyCJOMkKSDn@netmeister.org>
-Date: Thu, 22 Dec 2022 16:49:04 -0500
-From: Jan Schaumann <jschauma@...meister.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Details on this supposed Linux Kernel ksmbd RCE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/19/2
+Message-ID: <f350341e-31aa-895b-c092-f62fb18835c5@oracle.com>
+Date: Thu, 19 May 2022 12:52:38 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com, Dan Carpenter <dan.carpenter@...cle.com>
+Subject: Re: linux-distros list policy and Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-Josh Bressers <josh@...ss.net> wrote:
- 
-> I was wondering if anyone on the list has additional details about this ZDI
-> advisory
-> https://www.zerodayinitiative.com/advisories/ZDI-22-1690/
+On 5/19/22 05:41, Dan Carpenter wrote:
+> I don't know how to distributions do embargos and I don't want to be a
+> part of that discussion.  If I started disclosing bugs then I would be
+> a part of a discussion I'm trying to avoid.
 > 
-> There aren't many usable details at the moment
+> I'm pretty sure a lot of employers have policy about disclosing
+> vulnerabilities.  I've never disclosed a vulnerability so I don't know
+> Oracle's policy.  Possibly sending an email to oss-security could get
+> me fired???
 
-Agreed.
+If you wanted to be in that position, you could take steps to be able to
+do so without getting fired.  Oracle sanctions my participation in the
+X.Org Security Team, including my disclosure of security fixes in X.Org's
+open source projects to public forums including oss-security following X.Org's
+security disclosure process. But I've also got over a decade of experience as
+the Security Lead for Oracle Solaris and know exactly where the line is between
+what I should and should not say on such forums, and have worked closely with
+the Oracle people who decide what should be said on security disclosures.
+You can also see other Oracle folks here like John Haxby who know what they're
+doing here.
 
-The advisories link to a changelog in
-https://cdn.kernel.org/pub/linux/kernel/v5.x/ChangeLog-5.15.61
-but it's unclear (to me) whether that implies v6.x
-kernels are not affected?
+But if, as you say, you don't want to be involved in that and learn all the
+rules involved, that's not going to help you, and you should avoid disclosing
+vulnerabilities yourself.
 
-Note also that this disclosure is accompanied by a few
-others:
-
-Authenticated remote information disclosure:
-https://www.zerodayinitiative.com/advisories/ZDI-22-1691/
-
-Unauthenticated remote DoS:
-https://www.zerodayinitiative.com/advisories/ZDI-22-1687/
-
-Authenticated RCE:
-https://www.zerodayinitiative.com/advisories/ZDI-22-1688/
-
-Authenticated DoS:
-https://www.zerodayinitiative.com/advisories/ZDI-22-1689/
-
-Lastly, given that this is a coordinated disclosure,
-I don't know why there are no CVE IDs reserved for
-these.
-
--Jan
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
