@@ -1,51 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/13/1
-Message-ID: <CAH9eYVog2BcGtOVgLp3Spc5=NN3d4RQAe3yGEmkF1+9zhz3H5w@mail.gmail.com>
-Date: Wed, 12 Oct 2022 18:15:19 -0400
-From: Brian Demers <bdemers@...che.org>
-To: Alan Coopersmith <alan.coopersmith@...cle.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-40664: Apache Shiro: Authentication Bypass Vulnerability in Shiro when forwarding or including via RequestDispatcher
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/20/2
+Message-ID: <trinity-5f3c0fdf-d83f-422e-9a05-c4ead66e42e1-1653077676864@3c-app-gmx-bap52>
+Date: Fri, 20 May 2022 22:14:36 +0200
+From: Norbert Slusarek <nslusarek@....net>
+To: oss-security@...ts.openwall.com
+Cc: peterz@...radead.org
+Subject: CVE-2022-1729: race condition in Linux perf subsystem leads to local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Thanks for the feedback Alan, I'll make sure to include additional info in
-the future.
+Hello,
 
-For now:
+this is an announcement for a recently reported vulnerability (CVE-2022-1729) in the perf subsystem
+of the Linux kernel. The issue is a race condition which was proven to allow for a local privilege
+escalation to root on current kernel version >= 5.4.193, but the bug seems to exist since kernel
+version 4.0-rc1 (patch fixes the commit to this version).
+Fortunately, major Linux distributions often restrict the use of perf for unprivileged users by
+setting the sysctl variable kernel.perf_event_paranoid >= 3, effectively rendering the
+vulnerability harmless.
 
-Mitigation:
-  Update to Shiro 1.10.0
+The patch can be found at
+https://lkml.kernel.org/r/20220520183806.GV2578@worktop.programming.kicks-ass.net
 
-References:
-  https://lists.apache.org/thread/loc2ktxng32xpy7lfwxto13k4lvnhjwg
+Details
+-------
 
-On Wed, Oct 12, 2022 at 3:21 PM Alan Coopersmith <
-alan.coopersmith@...cle.com> wrote:
+The following syscall order triggers the bug:
 
-> On 10/11/22 19:52, Brian Demers wrote:
-> > Description:
-> >
-> > Apache Shiro before 1.10.0, Authentication Bypass Vulnerability in
-> > Shiro when forwarding or including via RequestDispatcher.
-> >
-> > Credit:
-> >
-> > Apache Shiro would like to thank Y4tacker for reporting this issue
->
-> Thanks for informing oss-security of these issues, but good security
-> announcements have a little more detail, like what actions users or
-> distributors need to take (upgrade to a new version?  what version?)
-> and information on where to find more details, like a bug id in your
-> bug tracker.  If you look at the announcements from other Apache
-> projects, you'll see they often include those.
->
-> Some good examples:
-> https://www.openwall.com/lists/oss-security/2021/12/18/2
-> https://www.openwall.com/lists/oss-security/2022/01/05/4
-> https://www.openwall.com/lists/oss-security/2022/01/06/2
->
-> --
->          -Alan Coopersmith-                 alan.coopersmith@...cle.com
->           Oracle Solaris Engineering - https://blogs.oracle.com/solaris
->
+1) fd0 = perf_event_open, type PERF_TYPE_TRACEPOINT is created.
 
+Called simultaneously:
+
+2) thread 1: fd1 = perf_event_open, type PERF_TYPE_HARDWARE, group leader fd0
+3) thread 2: fd2 = perf_event_open, type PERF_TYPE_SOFTWARE, group leader fd0
+
+4) thread 1: fd1 is of type PERF_TYPE_HARDWARE, and the group leader is of
+	type PERF_TYPE_TRACEPOINT. Because fd1 is a hardware event in a software event group,
+	the whole group is required to move to a hardware context, so move_group is set to 1.
+
+5) thread 1: fd1 takes the context lock.
+
+6) thread 2: fd2 is of type PERF_TYPE_SOFTWARE, so no group migration is needed and
+	move_group is set to 0. This thread *waits* at the lock while it's held by fd1.
+
+7) thread 1: all siblings of fd1 and the group leader fd0 are moved from
+	the current software context to a new hardware context.
+
+8) thread 1: creation of fd1 is finished and the lock released.
+
+9) thread 2: fd2 acquires the lock, and it is still attached to the old software context,
+	even though its group leader fd0 is attached to the new hardware context.
+
+The following sequence of event closes leaves a dangling pointer in the hardware context:
+
+1) close fd0
+2) close fd1
+	All of its siblings (fd2 in this case) are attached to a new context.
+	Now, fd2 is in two contexts at the same time.
+3) close fd2
+	The event is removed from its old software context and freed, but a dangling pointer still persists
+	in the newer context. For instance, merge_sched_in() can access this freed event when scheduling
+	in events for the hardware context, leading to a use-after-free.
+
+
+Regards,
+Norbert
