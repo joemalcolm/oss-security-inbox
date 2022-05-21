@@ -1,23 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/08/2
-Message-ID: <e9dfb469-1e96-4f36-bc87-990a8db23b0c@apache.org>
-Date: Wed, 08 Jun 2022 09:42:22 +0000
-From: Stefan Eissing <icing@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-26377: Apache HTTP Server: mod_proxy_ajp: Possible request smuggling 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/21/1
+Message-ID: <20220521154759.GA15268@openwall.com>
+Date: Sat, 21 May 2022 17:47:59 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Norbert Slusarek <nslusarek@....net>
+Cc: oss-security@...ts.openwall.com, peterz@...radead.org
+Subject: Re: CVE-2022-1729: race condition in Linux perf subsystem leads to local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Norbert,
 
-Description:
+On Fri, May 20, 2022 at 10:14:36PM +0200, Norbert Slusarek wrote:
+> this is an announcement for a recently reported vulnerability (CVE-2022-1729) in the perf subsystem
+> of the Linux kernel. The issue is a race condition which was proven to allow for a local privilege
+> escalation to root on current kernel version >= 5.4.193, but the bug seems to exist since kernel
+> version 4.0-rc1 (patch fixes the commit to this version).
+> Fortunately, major Linux distributions often restrict the use of perf for unprivileged users by
+> setting the sysctl variable kernel.perf_event_paranoid >= 3, effectively rendering the
+> vulnerability harmless.
+> 
+> The patch can be found at
+> https://lkml.kernel.org/r/20220520183806.GV2578@worktop.programming.kicks-ass.net
+> 
+> Details
+> -------
+> 
+> The following syscall order triggers the bug:
 
-Inconsistent Interpretation of HTTP Requests ('HTTP Request Smuggling') vulnerability in mod_proxy_ajp of Apache HTTP Server allows an attacker to smuggle requests to the AJP server it forwards requests to.  This issue affects Apache HTTP Server Apache HTTP Server 2.4 version 2.4.53 and prior versions.
+Thank you for bringing this to oss-security and for including the detail
+on triggering and exploiting the issue.
 
-Credit:
+Since you shared actual exploit code on linux-distros, you're supposed
+to also post that to oss-security within 7 days of your first posting
+above, so by or on May 27.  Do you intend to?
 
-Ricter Z @ 360 Noah Lab
+I realize this is one of the aspects that not everyone is happy about.
+It helps against linux-distros and its subscribers' mailboxes becoming
+stockpiles of unpublished exploits, and it lets those in the larger
+community also test their fixes, general mitigations, and/or detection
+tools in the same ways that linux-distros members could and without
+extra effort to recreate exploits.  However, it also makes it easier to
+exploit the vulnerabilities on unpatched systems in the wild, and it
+could go against wishes of specific exploit authors or policies of their
+employers.
 
-References:
-
-https://httpd.apache.org/security/vulnerabilities_24.html
-
+Alexander
