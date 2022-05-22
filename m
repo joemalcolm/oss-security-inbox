@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1556" "Wednesday" "25" "January" "2017" "03:46:44" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<ea48caae501a4f49b5c764f51989aecd@imshyb01.MITRE.ORG>" "40" "[oss-security] Re: [tigervnc-announce] TigerVNC 1.7.1" nil nil nil "1" "2017012508:46:44" "[oss-security] Re: [tigervnc-announce] TigerVNC 1.7.1" (number mark "U       cve-assign@m Jan 25   40/1556  " thread-indent "\"[oss-security] Re: [tigervnc-announce] TigerVNC 1.7.1\"\n") "<01becbfa-72eb-838e-4cfa-0891c392326f@oracle.com>" ("<01becbfa-72eb-838e-4cfa-0891c392326f@oracle.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3508 invoked by uid 550); 25 Jan 2017 08:46:58 -0000
+Received: (qmail 20458 invoked by uid 550); 22 May 2022 19:57:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,54 +7,116 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3476 invoked from network); 25 Jan 2017 08:46:56 -0000
-From: <cve-assign@mitre.org>
-To: <alan.coopersmith@oracle.com>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <01becbfa-72eb-838e-4cfa-0891c392326f@oracle.com>
-Message-ID: <ea48caae501a4f49b5c764f51989aecd@imshyb01.MITRE.ORG>
-Date: Wed, 25 Jan 2017 03:46:44 -0500
-MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: [tigervnc-announce] TigerVNC 1.7.1
+Received: (qmail 11776 invoked from network); 22 May 2022 19:56:06 -0000
+Content-Type: multipart/signed;
+	boundary="Apple-Mail=_30205634-A3DF-4C92-8994-10899C4B24EF";
+	protocol="application/pgp-signature";
+	micalg=pgp-sha512
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.100.31\))
+From: Sam James <sam@gentoo.org>
+In-Reply-To: <20220522191951.GA21330@openwall.com>
+Date: Sun, 22 May 2022 20:55:50 +0100
+Cc: seth.arnold@canonical.com,
+ greg@kroah.com
+Message-Id: <1667A786-CDE3-4DB2-B6E8-5EA6B39F1AA4@gentoo.org>
+References: <20220515162740.GA20526@openwall.com> <YoKiGWAX4E/mbGWB@kroah.com>
+ <1be21670-921c-9f0a-d99c-a9f6fd02b9b2@oracle.com>
+ <20220522191951.GA21330@openwall.com>
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3696.100.31)
+Subject: Re: [oss-security] linux-distros list policy and Linux kernel
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--Apple-Mail=_30205634-A3DF-4C92-8994-10899C4B24EF
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-> https://github.com/TigerVNC/tigervnc/commit/18c020124ff1b2441f714da2017f63dba50720ba
-> https://github.com/TigerVNC/tigervnc/pull/399
-> https://github.com/TigerVNC/tigervnc/releases/tag/v1.7.1
 
-> a memory overflow issue
-> via the RRE decoder. A malicious server could possibly use this issue to take
-> control of the TigerVNC viewer.
 
->> Fix buffer overflow in ModifiablePixelBuffer::fillRect.
+> On 22 May 2022, at 20:19, Solar Designer <solar@openwall.com> wrote:
+>=20
+> Hi,
+>=20
+> Thank you all for the helpful replies in this thread.  Here's my summary
+> of what was said so far:
+>=20
+> As seen from replies by Jason and Greg, I didn't make the distinction
+> between my suggested options 0 and 2 clear enough.  They were:
+>=20
+>> 0. Do nothing specific - let things work or fail on their own.
+>=20
+>> 2. Strictly enforce the policy as it is - and be in conflict with Linux
+>> kernel security team, and handle fewer issues via linux-distros.
+>=20
+> Let me clarify.  As I wrote, after the disagreement in February, "the
+> handling was hectic - indeed, people felt discouraged from enforcing the
+> policy."  So by option 0 I referred to the loose (non-)enforcement we've
+> had since February until now, and by option 2 to enforcement at least as
+> strict as we had before February.
+>=20
+> Although I wouldn't necessarily have the list's future decided by a
+> majority vote, I counted something like 4.5 votes for relaxing the list
+> policy to accommodate (at least) Linux kernel community's workflow:
 
->> It can be triggered by RRE message with subrectangle out of framebuffer
->> boundaries.
+I've been watching as I was hesitant to muddy the waters as we've
+had this discussion many times before and didn't want to be noisy, but
+my support is for Greg's suggestion.
 
-Use CVE-2017-5581.
+We're trying to get the best possible outcome within practical means
+and I think it'll serve that aim.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+>=20
+> Igor Seletskiy
+>> My vote would be for #1
+>=20
+> Anthony Liguori
+>> make this policy specific to changes under security@vger.kernel.org emba=
+rgo
+>=20
+> Greg KH
+>> So if you all could just modify the rules to be something like,
+>> "embargos are not broken when changes are posted in public, or accepted
+>> into public trees, unless the changes or discussions around them turn
+>> out to disclose the security related issue."
+
+What I ask is that the kernel folks are proactive in reaching out to us if =
+they
+think people start to suspect, too.
+
+I'd also like to ask that the final commit messages please reference any
+relevant CVEs or at least the security impact. There've been a fair number
+of incidents where such information is stripped and it makes tracking
+issues *really* hard.
+
+This would make a big difference to us in distributions. I hope this can
+be considered.
+
+> [snip]
+
+best,
+sam
+
+
+--Apple-Mail=_30205634-A3DF-4C92-8994-10899C4B24EF
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYiGPRAAoJEHb/MwWLVhi274EP/0qCORqMxPgDJAXIuqgpAj0L
-G6e5HtbqrxbWITMMCKtA4SVuoRO+vVBd4wLB9DvnTHIwkrXzZQVSWqiEfGpgEoIX
-m5Chyh+uBcrsmk5tRy9DCaKTJFHWev4NRQA115DfufdHNaHUAuaJbODQwf4LRv1C
-oNQWbzR/eyPix+lX9pRlu8uUmm7gZqPZJYxS7kCfmRk07N1LENDCOz5U+MexyY52
-BktCV0CZ4zquvzHJTDd13OH3mpPHOrdTeyS1g7OfVe+Plk0ot4UooRCpSgGK53Ur
-+/p3Ms0lSf8fGJ8efghjxEZchmRdP/6ao1v6TawKuYKRfYedxB6dnfQQfdy9XIfX
-t5enoEkl0+FHx7FjjQoJFKEq/mW7tkr/5Rl1vdcNpSch3GlwR68hCISrd5EEYFCH
-NC2q3ICrfeYDw9Hx1EEwioA99Rh3mVfa4E8p5r6evzhn3ZLQDg9fbRooX4p7GZEi
-uEMGRSciVcYwq6L2rnKVukC1JKTxT7ZnYRbYKqz4zwjOA46MKK7VYkoyLfZq6LWS
-8JxHyajn7J5nDSa/USAYLEtgK3Ijo42MYfpErogxmEcEZNWyNv4NIbzMRCn2gk7l
-y5EMlp/ITscPeoptLGzIXmtvGKFl/+VU1tpMzRnVofEkLU0Jf8Nw/gsjL5qz5Z/G
-469D7HNsmKu/RHofEa6p
-=7pz8
+iQGTBAEBCgB9FiEEYOpPv/uDUzOcqtTy9JIoEO6gSDsFAmKKlUZfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDYw
+RUE0RkJGRkI4MzUzMzM5Q0FBRDRGMkY0OTIyODEwRUVBMDQ4M0IACgkQ9JIoEO6g
+SDvTigf/e3qoT1LUazpNozXyktOmt0HG1Cig+O6zi24nTi6bxt15uHLQWGiXFJQ4
+wZL6sxOEw1326xmA/TZu6farWnw/xJ6o5al6fBxQaFTiE0JALSsKYxjVS+FcyYSF
+r0Ra+UAhRySoHGoCQXt4p03FnFYHUMouwXgFxeAvzpJAHZhedWvBH6l2tfYBgFFN
+/yF5Rvxt0+sTcAK4XELzzVBWgryKBn3ADJ5ZskURRhj+eSDGWrE3jzNOY4vyczm6
+aJ/63TFRDB3PJ4G0/v6jTg1JykahuOtcvdrLN3RJ2tFKZBPfFFmqVqAuAOfsqHQC
+DuE8dTneCJewaVInaG6J+e4OisYO+A==
+=jmNk
 -----END PGP SIGNATURE-----
+
+--Apple-Mail=_30205634-A3DF-4C92-8994-10899C4B24EF--
