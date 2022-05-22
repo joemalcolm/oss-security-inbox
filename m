@@ -1,41 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/27/1
-Message-ID: <YpC1emS62JHunSQm@dojo.mi.org>
-Date: Fri, 27 May 2022 07:26:50 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/22/1
+Message-ID: <20220522191951.GA21330@openwall.com>
+Date: Sun, 22 May 2022 21:19:52 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>, peterz@...radead.org, nslusarek@....net
-Subject: Re: CVE-2022-1729: race condition in Linux perf subsystem leads to local privilege escalation
+Subject: Re: linux-distros list policy and Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-:I think it's important to remember that closed mailing lists filled
-:with private/embargoed exploits become valuable targets. They have
-:been compromised ever since Zardoz in the 1980s, vendor-sec was
-:discontinued for the same reason. By keeping zerodays in linux-distros
-:you paint a target on every recipient of the list. You should assume
+Hi,
 
-Every recipient and their upstream providers.
+Thank you all for the helpful replies in this thread.  Here's my summary
+of what was said so far:
 
-:that any working exploit code you share to a mailing list will
-:eventually fall into the hands of bad actors. Therefore, I don't think
-:selective full-disclosure works.
+As seen from replies by Jason and Greg, I didn't make the distinction
+between my suggested options 0 and 2 clear enough.  They were:
 
-Long ago, I suggested that such mailing lists should PLAN to be public
-eventually, and disclose the info themselves before someone beats them
-to it.  For example, when June comes up, April linux-distros archives
-are made public, and that's advertised and known.  Given its two week
-max embargo period, this shouldn't pose an issue for anyone.  There is
-value in (eventually) seeing the sausage being made.  I know Solar has
-made old linux-distros mailing list metadata public, has advised folks
-that "any/all list postings may be made public once the corresponding
-security issue is publicly disclosed".  I suggest "may" become "will
-eventually".  
+> 0. Do nothing specific - let things work or fail on their own.
 
+> 2. Strictly enforce the policy as it is - and be in conflict with Linux
+> kernel security team, and handle fewer issues via linux-distros.
 
-Take FWIW...
--Mike
+Let me clarify.  As I wrote, after the disagreement in February, "the
+handling was hectic - indeed, people felt discouraged from enforcing the
+policy."  So by option 0 I referred to the loose (non-)enforcement we've
+had since February until now, and by option 2 to enforcement at least as
+strict as we had before February.
 
--- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"Passion is the enemy of precision."                              -Daryl Zero
+Although I wouldn't necessarily have the list's future decided by a
+majority vote, I counted something like 4.5 votes for relaxing the list
+policy to accommodate (at least) Linux kernel community's workflow:
+
+Igor Seletskiy
+> My vote would be for #1
+
+Anthony Liguori
+> make this policy specific to changes under security@...r.kernel.org embargo
+
+Greg KH
+> So if you all could just modify the rules to be something like,
+> "embargos are not broken when changes are posted in public, or accepted
+> into public trees, unless the changes or discussions around them turn
+> out to disclose the security related issue."
+
+Dan Carpenter
+> What I wish we had is a private way to tell maintainers "You may want to
+> pick up a patch."  It has to be private.
+
+Vegard Nossum
+> As a distribution, our preference is to see sources/patches and binaries
+> released simultaneously by both upstream and distributions. [...]
+> 
+> However, barring that option, our preference would be to adjust the
+> linux-distros list policy as proposed (option 1/Greg KH's proposal).
+
+and 1 vote for preserving the current policy:
+
+Jason A. Donenfeld
+> So I think maybe your option (0) makes sense? Enforce the policy, which
+> has worked well enough for a long while now.
+
+A few of you also said the linux-distros list is still valuable, and no
+one said otherwise.
+
+I think now we need to come up with a specific edit to the policy, and I
+think the exception should ideally be limited to Linux kernel issues
+currently/recently handled with the kernel's security team involved.
+Ideally, we'd also manage to simplify rather than further complicate the
+policy - a goal inconsistent with granting only a limited exception?
+
+A number of other related issues were brought up as well, including by
+Jason A. Donenfeld, Seth Arnold, Thadeu Lima de Souza Cascardo, and
+Vegard Nossum.  From a practical perspective, it looks like Vegard
+Nossum and maybe Thadeu Lima de Souza Cascardo intend to propose changes
+to the kernel's Documentation/admin-guide/security-bugs.rst:
+
+On Fri, May 20, 2022 at 10:14:07AM +0200, Vegard Nossum wrote:
+> I'll respond a bit later with a slightly more detailed option that also
+> includes potential modifications to the in-kernel documentation as
+> displayed on kernel.org.
+
+Alexander
