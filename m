@@ -1,104 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/07/1
-Message-Id: <B1DBF10E-2BE4-44BA-AD8C-431524FEA766@beckweb.net>
-Date: Wed, 7 Dec 2022 14:22:36 +0100
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/22/4
+Message-Id: <1667A786-CDE3-4DB2-B6E8-5EA6B39F1AA4@gentoo.org>
+Date: Sun, 22 May 2022 20:55:50 +0100
+From: Sam James <sam@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+Cc: seth.arnold@...onical.com, greg@...ah.com
+Subject: Re: linux-distros list policy and Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
-
-The following releases contain fixes for security vulnerabilities:
-
-* Checkmarx Plugin 2022.4.3
-* Custom Build Properties Plugin 2.82.v16d5b_d3590c7
-* Gitea Plugin 1.4.5
-* Google Login Plugin 1.7
-* Plot Plugin 2.1.12
-* Spring Config Plugin 2.0.1
-
-Additionally, we announce unresolved security issues in the following
-plugins:
-
-* Sonar Gerrit Plugin
-
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2022-12-07/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-2940 / CVE-2022-46682
-Plot Plugin 2.1.11 and earlier does not configure its XML parser to prevent
-XML external entity (XXE) attacks.
-
-This allows attackers able to control XML input files for the 'Plot build
-data' build step to have Jenkins parse a crafted file that uses external
-entities for extraction of secrets from the Jenkins controller or
-server-side request forgery.
 
 
-SECURITY-2967 / CVE-2022-46683
-Google Login Plugin 1.4 through 1.6 (both inclusive) improperly determines
-that a redirect URL after login is legitimately pointing to Jenkins.
+> On 22 May 2022, at 20:19, Solar Designer <solar@...nwall.com> wrote:
+> 
+> Hi,
+> 
+> Thank you all for the helpful replies in this thread.  Here's my summary
+> of what was said so far:
+> 
+> As seen from replies by Jason and Greg, I didn't make the distinction
+> between my suggested options 0 and 2 clear enough.  They were:
+> 
+>> 0. Do nothing specific - let things work or fail on their own.
+> 
+>> 2. Strictly enforce the policy as it is - and be in conflict with Linux
+>> kernel security team, and handle fewer issues via linux-distros.
+> 
+> Let me clarify.  As I wrote, after the disagreement in February, "the
+> handling was hectic - indeed, people felt discouraged from enforcing the
+> policy."  So by option 0 I referred to the loose (non-)enforcement we've
+> had since February until now, and by option 2 to enforcement at least as
+> strict as we had before February.
+> 
+> Although I wouldn't necessarily have the list's future decided by a
+> majority vote, I counted something like 4.5 votes for relaxing the list
+> policy to accommodate (at least) Linux kernel community's workflow:
 
-This allows attackers to perform phishing attacks by having users go to a
-Jenkins URL that will forward them to a different site after successful
-authentication.
+I've been watching as I was hesitant to muddy the waters as we've
+had this discussion many times before and didn't want to be noisy, but
+my support is for Greg's suggestion.
+
+We're trying to get the best possible outcome within practical means
+and I think it'll serve that aim.
+
+> 
+> Igor Seletskiy
+>> My vote would be for #1
+> 
+> Anthony Liguori
+>> make this policy specific to changes under security@...r.kernel.org embargo
+> 
+> Greg KH
+>> So if you all could just modify the rules to be something like,
+>> "embargos are not broken when changes are posted in public, or accepted
+>> into public trees, unless the changes or discussions around them turn
+>> out to disclose the security related issue."
+
+What I ask is that the kernel folks are proactive in reaching out to us if they
+think people start to suspect, too.
+
+I'd also like to ask that the final commit messages please reference any
+relevant CVEs or at least the security impact. There've been a fair number
+of incidents where such information is stripped and it makes tracking
+issues *really* hard.
+
+This would make a big difference to us in distributions. I hope this can
+be considered.
+
+> [snip]
+
+best,
+sam
 
 
-SECURITY-2869 / CVE-2022-46684
-Checkmarx Plugin processes Checkmarx service API responses and generates
-HTML reports from them for rendering on the Jenkins UI.
-
-Checkmarx Plugin 2022.3.3 and earlier does not escape values returned from
-the Checkmarx service API before inserting them into HTML reports. This
-results in a stored cross-site scripting (XSS) vulnerability.
-
-
-SECURITY-2661 / CVE-2022-46685
-Gitea Plugin support authentication with Gitea personal access tokens.
-
-In Gitea Plugin 1.4.4 and earlier, the implementation of these tokens did
-not support credentials masking. This can expose Gitea personal access
-tokens in the build log, e.g., when printed as part of repository URLs.
-
-
-SECURITY-2810 / CVE-2022-46686
-Custom Build Properties Plugin 2.79.vc095ccc85094 and earlier does not
-escape property values or build display names on the Custom Build
-Properties page.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to set or change these values.
-
-
-SECURITY-2814 / CVE-2022-46687
-Spring Config Plugin 2.0.0 and earlier does not escape build display names
-shown on the Spring Config view.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to change build display names.
-
-
-SECURITY-1002 / CVE-2022-46688
-Sonar Gerrit Plugin 377.v8f3808963dc5 and earlier does not require POST
-requests for an HTTP endpoint, resulting in a cross-site request forgery
-(CSRF) vulnerability.
-
-This allows attackers to have Jenkins connect to Gerrit servers (previously
-configured by Jenkins administrators) using attacker-specified credentials
-IDs obtained through another method, potentially capturing credentials
-stored in Jenkins.
-
-As of publication of this advisory, there is no fix.
-
+Download attachment "signature.asc" of type "application/pgp-signature" (619 bytes)
