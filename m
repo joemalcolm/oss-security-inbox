@@ -1,33 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/25/3
-Message-ID: <5618910.DvuYhMxLoT@nbkamil>
-Date: Wed, 25 May 2022 15:37:24 +0200
-From: Kamil Dudka <kdudka@...hat.com>
-To: Marc Deslauriers <marc.deslauriers@...onical.com>
-Cc: oss-security@...ts.openwall.com, Guilherme de Almeida Suckevicz <gsuckevi@...hat.com>
-Subject: Re: CVE-2022-1348 logrotate: potential DoS from unprivileged users via the state file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/22/2
+Message-ID: <20220522194644.GB21330@openwall.com>
+Date: Sun, 22 May 2022 21:46:45 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: linux-distros list policy and Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday, May 25, 2022 3:19:31 PM CEST Marc Deslauriers wrote:
-> On 2022-05-18 09:54, Kamil Dudka wrote:
-> > The current version of the patch to fix CVE-2022-1348 in logrotate is
-> > attached.  We are going to apply the patch upstream on May 25th, when
-> > the embargo is lifted.
+On Mon, May 16, 2022 at 09:12:25PM +0200, Greg KH wrote:
+> Taking this a bit further, why is the kernel "special" for something
+> like this?  Why wouldn't this also apply to any other project with a
+> reasonable number of developers where you want additional review and
+> acceptance of changes before the world is notified that an issue was
+> fixed?  That allows issues to be fixed, and to be in place on users
+> systems before the issue is made public.
 > 
-> FWIW, I don't think the patch actually works when logrotate is built with
-> ACL support...
-> 
-> Marc.
+> I would imagine that projects like Kubernetes, or Jenkins, or Docker or
+> Mozilla or Chrome or other large systems would also fall into this
+> category.  Heck, smaller projects too, the size shouldn't matter, what
+> matters is that users have the ability to upgrade before security issues
+> are told to the world, ensuring that user's systems are safe.
 
-You are right.  Although the patch mitigates the security issue, it is not 
-perfect.  I had already opened an upstream pull request to improve it:
+For issues commonly brought to (linux-)distros, we currently only
+encounter this sort of conflicting preferences with the Linux kernel
+community.  I guess some other projects also release silent fixes that
+are only later documented to have known security relevance.  Maybe our
+policy plays a role in non-reporting of such issues to distros, or maybe
+not.  For example, we generally do not receive reports of
+vulnerabilities in Firefox and Chrome/ium to the distros list, but I
+don't recall anyone ever expressing any unhappiness about that - neither
+those projects nor the distros.  So it's kind of fine?
 
-    https://github.com/logrotate/logrotate/pull/446
+> it's your list, not mine, if
+> you are tired of running it, I totally understand.
 
-I might create a bug fix release soon with the patch included.
+A bit tired, yes, but that's in part because of us fighting each other's
+windmills.
 
-Sorry for the troubles!
-
-Kamil
-
-
+Alexander
