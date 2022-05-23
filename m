@@ -1,44 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/08/8
-Message-ID: <YvFpTsZI8HRkMYYM@itl-email>
-Date: Mon, 8 Aug 2022 15:51:34 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/23/2
+Message-ID: <CAFswPa-o3rbTauLiQfQtLLP-Cm2BFbKFCEffdbA3iHDLHcUwDg@mail.gmail.com>
+Date: Mon, 23 May 2022 08:48:27 +0200
+From: eduardo vela <evn@...glers.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-2590: Linux kernel: Modifying shmem/tmpfs files without write permissions
+Cc: Sam James <sam@...too.org>, Seth Arnold <seth.arnold@...onical.com>
+Subject: Re: linux-distros list policy and Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 08, 2022 at 09:18:27AM +0200, David Hildenbrand wrote:
-> Hi,
-> 
-> I found a security issue (CVE-2022-2590) in the Linux kernel similar to
-> Dirty COW (CVE-2016-5195), however, restricted to shared memory (shmem /
-> tmpfs). I notified distributions one week ago and the embargo ended today.
-> 
-> An unprivileged user can modify file content of a shmem (tmpfs) file,
-> even if that user does not have write permissions to the file. The file
-> could be an executable.
+On Mon, 23 May 2022, 08:35 Greg KH, <greg@...ah.com> wrote:
 
-Is Android affected by this, or do other protections (such as SELinux)
-prevent an exploit from succeeding?  Also, is read access to the file
-necessary?  Are sealed memfds impacted?
+> On Sun, May 22, 2022 at 08:55:50PM +0100, Sam James wrote:
+> > I'd also like to ask that the final commit messages please reference any
+> > relevant CVEs or at least the security impact. There've been a fair
+> number
+> > of incidents where such information is stripped and it makes tracking
+> > issues *really* hard.
+>
+> That is pretty much impossible and goes against the whole goal of "get
+> this fixed and in a public tree and only tell the world that it was an
+> issue after-the-fact" way that the kernel team works.  If we put all of
+> that in the commit to start with, the whole world knows this info.  We
+> can't go back in time and change git commits for obvious reasons.
+>
 
-> The introducing upstream commit ID is:
->   9ae0f87d009c ("mm/shmem: unconditionally set pte dirty in
->   mfill_atomic_install_pte")
-> 
-> Linux >= v5.16 is affected on x86-64 and aarch64 if the kernel is
-> compiled with CONFIG_USERFAULTFD=y. For Linux < v5.19 it's sufficient to
-> revert the problematic commit, which is possible with minor contextual
-> conflicts. For Linux >= v5.19 I'll send a proposal fix today.
-> 
-> I have a working reproducer that I will post as reply to this mail in
-> one week (August 15).
+Hi all
 
-Can you try to make sure that a patch has made it into Greg’s stable
-trees by then?  Also, would it be possible to include a regression test?
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+Regarding keeping the security relevance of the patch secret.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Something we are working on now (as the Google CNA) is to automatically
+generate CVEs for Syzkaller findings that meet some criteria (unique, with
+reproducer, and with some heuristics to determine the type of crash, eg
+KASAN+uaf). We would also monitor advisories from distros to catch
+duplicate CVEs and not issue them in those cases.
+
+The reason I mention it in this list is because a CVE would be issued (and
+maybe communicated to oss-security@ to avoid duplicate CVEs), which might
+also automatically break embargos. That said, I hope that's OK, as
+Syzkaller is just a subset of security vulnerabilities being disclosed on
+the Kernel.
+
+If you have feedback about the overall concept, please send it off-list (or
+start a new thread) as to avoid derailing the topic, but I wanted to bring
+it up because it might appear as willing violations of Embargo on the new
+linux-distros@ process being proposed.
+
+Regards
+
+
+thanks,
+>
+> gre gk-h
+>
+
