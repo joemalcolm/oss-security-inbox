@@ -1,42 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/29/2
-Message-ID: <9032b118-519c-49f6-8782-eb97d02a9ca2@apache.org>
-Date: Fri, 29 Apr 2022 20:28:54 +0000
-From: David Handermann <exceptionfactory@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/24/2
+Message-ID: <20220524132929.GA29337@openwall.com>
+Date: Tue, 24 May 2022 15:29:29 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-29265: Apache NiFi: Improper Restriction of XML External Entity References in Multiple Components 
+Subject: Re: linux-distros list policy and Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+On Sun, May 22, 2022 at 09:19:51PM +0200, Solar Designer wrote:
+> it looks like Vegard
+> Nossum and maybe Thadeu Lima de Souza Cascardo intend to propose changes
+> to the kernel's Documentation/admin-guide/security-bugs.rst:
+> 
+> On Fri, May 20, 2022 at 10:14:07AM +0200, Vegard Nossum wrote:
+> > I'll respond a bit later with a slightly more detailed option that also
+> > includes potential modifications to the in-kernel documentation as
+> > displayed on kernel.org.
 
-Description:
+Reports of Linux kernel issues sent to linux-distros tend to ignore our
+policies - not only in terms of the aspect that started this thread, but
+also in that the reporter doesn't propose a specific date/time for
+making the issue (fully) public (maybe doesn't intend to do so
+themselves at all) and doesn't know/care/want to make a possible PoC
+public (if they shared that with linux-distros).
 
-Multiple components in Apache NiFi 0.0.1 to 1.16.0 do not restrict XML External Entity references in the default configuration.
+Overall, it looks like they're not reading our policy at all until we
+ask them to.
 
-The Standard Content Viewer service attempts to resolve XML External Entity references when viewing formatted XML files.
+Documentation/admin-guide/security-bugs.rst gives the list posting
+address and mentions the [vs] prefix.  It also does link to the wiki,
+but that makes actually visiting the wiki and reading the policy
+technically optional.  Maybe only the wiki link should be kept, and the
+posting address removed.  Alternatively, if a dependency on the wiki is
+undesirable, maybe the Linux kernel documentation should include a copy
+of linux-distros instructions for reporters (copied from the wiki,
+including the posting address) in a nearby text file (and add to it the
+wiki link for a possibly more current revision), and refer to that.
 
-The following Processors attempt to resolve XML External Entity references when configured with default property values:
+There's also this:
 
-- EvaluateXPath
-- EvaluateXQuery
-- ValidateXml
+"Distros will need some time to test the proposed patch and will
+generally request at least a few days of embargo"
 
-Apache NiFi flow configurations that include these Processors are vulnerable to malicious XML documents that contain Document Type Declarations with XML External Entity references.
+which kind of goes against our request that the reporter be the first to
+propose a tentative public disclosure date/time.  So I suggest the above
+phrase be dropped.
 
-The resolution disables Document Type Declarations in the default configuration for these Processors, and disallows XML External Entity resolution in standard services.
+If there are no objections, Vegard can you please suggest specific edits
+accordingly, and if there are no objections to those either, then submit
+them as a patch?
 
-This issue is being tracked as NIFI-9901
+Thanks,
 
-Mitigation:
-
-Disabling the Validate DTD Processor Property in EvaluateXPath and EvaluateXQuery mitigates the vulnerability for those Processors. No mitigation is available for the ValidateXml Processor or the Standard Content Viewer.
-
-Credit:
-
-David Handermann at exceptionfactory.com reported this issue.
-
-References:
-
-https://nifi.apache.org/security.html#CVE-2022-29265
-
-
+Alexander
