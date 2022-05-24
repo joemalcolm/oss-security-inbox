@@ -1,26 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/16/3
-Message-ID: <ee8c74c0-04df-d4d4-2551-33cd2a105fbe@oracle.com>
-Date: Sun, 16 Jan 2022 15:49:29 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Fuzzy CVE's in GNU inetutils
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/24/11
+Message-ID: <trinity-4c518dcc-751b-4893-82dc-b2f80734eb9d-1653430844824@3c-app-gmx-bap13>
+Date: Wed, 25 May 2022 00:20:44 +0200
+From: Norbert Slusarek <nslusarek@....net>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com, peterz@...radead.org
+Subject: Re: CVE-2022-1729: race condition in Linux perf subsystem leads to local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-On 1/16/22 00:54, Salvatore Bonaccorso wrote:
-> Hi,
-> 
-> On Fri, Jan 14, 2022 at 06:56:13PM -0800, Alan Coopersmith wrote:
->> I noticed a number of new CVE's recently published against GNU inetutils,
->> which seem to correspond to the results of fuzz testing that were mailed
->> out in December, as seen on
->> https://lists.gnu.org/archive/html/bug-inetutils/2021-12/threads.html
-> 
-> In fact all of those were REJECTED again (with a "Further
-> investigation showed that it was not a security issue" reason).
+Hello Alexander,
 
-Thanks, I see they've all been updated since I checked on Friday.
+>Since you shared actual exploit code on linux-distros, you're supposed
+>to also post that to oss-security within 7 days of your first posting
+>above, so by or on May 27. Do you intend to?
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+I don't intend to share the exploit to the public, mainly because
+the issue was fixed only few days ago. Instead, anyone wanting to check
+his own system for the bug should resort to the attached PoC repro.
+
+>I realize this is one of the aspects that not everyone is happy about.
+
+Yes, you got that right.
+
+
+Norbert
+View attachment "repro.c" of type "text/plain" (1613 bytes)
