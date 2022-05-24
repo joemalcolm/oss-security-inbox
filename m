@@ -1,24 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/13/1
-Message-ID: <962c0ceb-9aef-7a4b-aff4-ac84839c8f21@apache.org>
-Date: Fri, 12 Aug 2022 22:38:26 +0000
-From: "Carl B. Marcum" <cmarcum@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-37400: Apache OpenOffice Static Initialization Vector Allows to Recover Passwords for Web Connections Without Knowing the Master Password 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/24/5
+Message-ID: <20220524162210.GA31294@openwall.com>
+Date: Tue, 24 May 2022 18:22:10 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Kyle Zeng <zengyhkyle@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2022-1786: Linux Kernel invalid-free in io_uring
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+On Tue, May 24, 2022 at 09:10:37AM -0700, Kyle Zeng wrote:
+> # Impact
+> I wrote a proof-of-concept exploit and demonstrated that it can be
+> used to achieve local privilege escalation.
 
-Description:
+Since you shared the PoC exploit with linux-distros, you're supposed to
+also post that to oss-security within 7 days of your first posting
+above, so by or on May 31.  Do you intend to, and when exactly?
 
-Apache OpenOffice supports the storage of passwords for web connections in the user's configuration database. The stored passwords are encrypted with a single master key provided by the user. A flaw in OpenOffice existed where the required initialization vector for encryption was always the same which weakens the security of the encryption making them vulnerable if an attacker has access to the user's configuration data. This issue affects: Apache OpenOffice versions prior to 4.1.13.
-Reference: CVE-2022-26306 - LibreOffice
-
-Credit:
-
-OpenSource Security GmbH on behalf of the German Federal Office for Information Security
-
-References:
-
-https://www.openoffice.org/security/cves/CVE-2022-37400.html
-
+Alexander
