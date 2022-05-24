@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1159" "Thursday" "22" "April" "2021" "17:11:42" "+0200" "Marcus Meissner" "meissner@suse.de" nil "32" "Re: [oss-security] Malicious commits to Linux kernel as part of university study" nil nil nil "4" nil nil (number mark "U       meissner@sus Apr 22   32/1159  " thread-indent "\"Re: [oss-security] Malicious commits to Linux kernel as part of university study\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Malicious commits to Linux kernel as part of university study" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 10187 invoked by uid 550); 22 Apr 2021 15:11:55 -0000
+Received: (qmail 21726 invoked by uid 550); 24 May 2022 23:22:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,56 +7,42 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10169 invoked from network); 22 Apr 2021 15:11:55 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Thu, 22 Apr 2021 17:11:42 +0200
-From: Marcus Meissner <meissner@suse.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20210422151142.GB10297@suse.de>
-References: <20210422065959.GI13079@scully.more-magic.net>
- <BN7PR14MB243454DA1540F0722C1FA2DEFB469@BN7PR14MB2434.namprd14.prod.outlook.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Received: (qmail 21568 invoked from network); 24 May 2022 23:21:59 -0000
+Date: Wed, 25 May 2022 01:21:55 +0200
+From: Solar Designer <solar@openwall.com>
+To: Norbert Slusarek <nslusarek@gmx.net>
+Cc: oss-security@lists.openwall.com, peterz@infradead.org
+Message-ID: <20220524232155.GA2264@openwall.com>
+References: <trinity-5f3c0fdf-d83f-422e-9a05-c4ead66e42e1-1653077676864@3c-app-gmx-bap52> <20220521154759.GA15268@openwall.com> <trinity-4c518dcc-751b-4893-82dc-b2f80734eb9d-1653430844824@3c-app-gmx-bap13>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <BN7PR14MB243454DA1540F0722C1FA2DEFB469@BN7PR14MB2434.namprd14.prod.outlook.com>
-Organization: SUSE Software Solutions =?iso-8859-1?Q?Ger?=
- =?iso-8859-1?Q?many_GmbH=2C_Maxfeldstr=2E_5=2C_90409_Nuernberg=2C_Germany?=
- =?iso-8859-1?Q?=2C_GF=3A_Felix_Imend=F6rffer=2C_HRB_36809=2C_AG_N=FCrnber?=
- =?iso-8859-1?Q?g?=
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Subject: Re: [oss-security] Malicious commits to Linux kernel as part of
- university study
+In-Reply-To: <trinity-4c518dcc-751b-4893-82dc-b2f80734eb9d-1653430844824@3c-app-gmx-bap13>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2022-1729: race condition in Linux perf subsystem leads to local privilege escalation
 
-Hi,
+On Wed, May 25, 2022 at 12:20:44AM +0200, Norbert Slusarek wrote:
+> Hello Alexander,
+> 
+> >Since you shared actual exploit code on linux-distros, you're supposed
+> >to also post that to oss-security within 7 days of your first posting
+> >above, so by or on May 27. Do you intend to?
+> 
+> I don't intend to share the exploit to the public, mainly because
+> the issue was fixed only few days ago. Instead, anyone wanting to check
+> his own system for the bug should resort to the attached PoC repro.
+> 
+> >I realize this is one of the aspects that not everyone is happy about.
+> 
+> Yes, you got that right.
 
-https://twitter.com/UMNComputerSci/status/1384948683821694976
+Thank you for posting the repro.
 
-Ciao, Marcus
+What do you suggest we do regarding the LPE exploit you sent to
+linux-distros?
 
+What do you suggest we do with this policy aspect going forward, so that
+people do not get into a situation where they're required to do
+something they didn't want to subscribe to?
 
-On Thu, Apr 22, 2021 at 02:55:03PM +0000, David H wrote:
-> Has anyone reported this to https://research.umn.edu/ethics-compliance/reporting-research-misconduct ?
-> 
-> 
-> ﻿On 4/22/21, 3:00 AM, "Peter Bex" <peter@more-magic.net> wrote:
-> 
->     Hi all,
-> 
->     Probably a lot of you know this already but I consider it serious enough
->     to point out to the OSS security community at large.
-> 
->     The university of Minnesota has been banned from making any commits to
->     the Linux kernel after it was found out they'd been submitting bogus
->     patches to the LKML to knowingly introduce security issues:
->     https://lore.kernel.org/linux-nfs/YH%2FfM%2FTsbmcZzwnX@kroah.com/
-> 
->     They also published a paper:
->     https://raw.githubusercontent.com/QiushiWu/qiushiwu.github.io/main/papers/OpenSourceInsecurity.pdf
-> 
->     I don't know the scope of this research, but it could involve other OSS
->     projects, now or in the future, as well.  Hence this e-mail.  If you feel
->     it's spam or needless drama, feel free to ignore.
-> 
->     Cheers,
->     Peter
+Alexander
