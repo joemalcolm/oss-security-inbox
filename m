@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["524" "Thursday" "10" "March" "2016" "07:46:01" "-0500" "Christopher Shannon" "christopher.l.shannon@gmail.com" "<CACHnxzxreiNXbWu0P-sv0A=PTwAGss-cwqsYbd3hpw2LpRZv9Q@mail.gmail.com>" "17" "[oss-security] [ANNOUNCE] CVE-2016-0734: ActiveMQ Web Console - Clickjacking" nil nil nil "3" "2016031012:46:01" "[oss-security] [ANNOUNCE] CVE-2016-0734: ActiveMQ Web Console - Clickjacking" (number mark "U       christopher. Mar 10   17/524   " thread-indent "\"[oss-security] [ANNOUNCE] CVE-2016-0734: ActiveMQ Web Console - Clickjacking\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 17672 invoked by uid 550); 10 Mar 2016 12:52:59 -0000
+Received: (qmail 17906 invoked by uid 550); 24 May 2022 13:30:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,53 +7,62 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11850 invoked from network); 10 Mar 2016 12:46:42 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=L69Qn+jPUCiwMO/9Ef7EPe6WqvZ9oApzz3csyfl5eLc=;
-        b=jFwAXX9vWj39gCduc5S/JrFWGHSjM25gc4q86iGlNZ/jiQP3Vv1Kd90Xy6EPs88lx1
-         n4IhXNDXjnUnhthWCHSnzh7mMCPloxNWmq4NJIIuI7vDR9PZ8Zn9lPhCNEZ2Z85yX5BJ
-         8M5U0wvbnAlPv5rZwQlH8TlSfRDL9Mz0fxA/net82lTBk5ZfoyPVenPBsdkNqiQzpvPa
-         XgCW/2AOSGje1HdGT1U3bZyhdmc43XBTShY4yVk+8yuG+1CyUIzuw59sAUH1casRb0J0
-         I+e6T/qWmlpbl8Ufi02nZRQxjaFLEc+Rmbpgv5hM2kYdZ0qlN+UX7YYSNZMJH0MiLByL
-         wIfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=L69Qn+jPUCiwMO/9Ef7EPe6WqvZ9oApzz3csyfl5eLc=;
-        b=O5JHqDTJb6NVHd6kjVWRdwgMxWePIh6V5eeH/q73+enqs2JV8+2qJuwBbXYJtIJETa
-         NcDyAMsCcZ3QsA+u+ETV0d0wWmN25gHT/sKRX0vc0oaq2C5la/QiKG2COli0p1ohUOXy
-         ClF2HEzOzrDloj5Ux3dMxVfWHfWKlIhrIfjDaF20foTUp3cMlUdkoWFCFegh3piepkSD
-         pKeJx1pxt/TH5PMX9Z6TuhY8U4EgbqUsyUwZPgsJkPfSI33mEmnK8RX8LTYT/Ll3OLvB
-         TFdil8KKFVPn7nxDm8HEcdZxfVr6OJF598IfIOY+P9PHHYWwh3YHkCOUu48UB2Hl6XTd
-         GeXg==
-X-Gm-Message-State: AD7BkJKio2nsqn9vRSEmSTBrIy2LygxHD7xtpLMgf/cF8fR+IZ6CmgWcParbTCQFIUDMklPVM4g8usJ2DgVJVQ==
-X-Received: by 10.129.109.19 with SMTP id i19mr1633702ywc.50.1457613991142;
- Thu, 10 Mar 2016 04:46:31 -0800 (PST)
-MIME-Version: 1.0
-From: Christopher Shannon <christopher.l.shannon@gmail.com>
-Date: Thu, 10 Mar 2016 07:46:01 -0500
-Message-ID: <CACHnxzxreiNXbWu0P-sv0A=PTwAGss-cwqsYbd3hpw2LpRZv9Q@mail.gmail.com>
-To: dev@activemq.apache.org, users@activemq.apache.org, security@apache.org, 
-	oss-security@lists.openwall.com, bugtraq@securityfocus.com
-Content-Type: multipart/alternative; boundary=001a114db7182969f2052db134ef
-Subject: [oss-security] [ANNOUNCE] CVE-2016-0734: ActiveMQ Web Console - Clickjacking
+Received: (qmail 17434 invoked from network); 24 May 2022 13:29:41 -0000
+Date: Tue, 24 May 2022 15:29:29 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20220524132929.GA29337@openwall.com>
+References: <20220515162740.GA20526@openwall.com> <YoKiGWAX4E/mbGWB@kroah.com> <1be21670-921c-9f0a-d99c-a9f6fd02b9b2@oracle.com> <20220522191951.GA21330@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220522191951.GA21330@openwall.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] linux-distros list policy and Linux kernel
 
---001a114db7182969f2052db134ef
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Sun, May 22, 2022 at 09:19:51PM +0200, Solar Designer wrote:
+> it looks like Vegard
+> Nossum and maybe Thadeu Lima de Souza Cascardo intend to propose changes
+> to the kernel's Documentation/admin-guide/security-bugs.rst:
+> 
+> On Fri, May 20, 2022 at 10:14:07AM +0200, Vegard Nossum wrote:
+> > I'll respond a bit later with a slightly more detailed option that also
+> > includes potential modifications to the in-kernel documentation as
+> > displayed on kernel.org.
 
-There following security vulnerability was reported against Apache
-ActiveMQ 5.13.1 and older versions.
+Reports of Linux kernel issues sent to linux-distros tend to ignore our
+policies - not only in terms of the aspect that started this thread, but
+also in that the reporter doesn't propose a specific date/time for
+making the issue (fully) public (maybe doesn't intend to do so
+themselves at all) and doesn't know/care/want to make a possible PoC
+public (if they shared that with linux-distros).
 
-Please check the following document and see if you=E2=80=99re affected by t=
-he issue.
+Overall, it looks like they're not reading our policy at all until we
+ask them to.
 
-http://activemq.apache.org/security-advisories.data/CVE-2016-0734-announcem=
-ent.txt
+Documentation/admin-guide/security-bugs.rst gives the list posting
+address and mentions the [vs] prefix.  It also does link to the wiki,
+but that makes actually visiting the wiki and reading the policy
+technically optional.  Maybe only the wiki link should be kept, and the
+posting address removed.  Alternatively, if a dependency on the wiki is
+undesirable, maybe the Linux kernel documentation should include a copy
+of linux-distros instructions for reporters (copied from the wiki,
+including the posting address) in a nearby text file (and add to it the
+wiki link for a possibly more current revision), and refer to that.
 
-Apache ActiveMQ 5.13.2 and newer with appropriate fixes was released and
-available for upgrade.
+There's also this:
 
---001a114db7182969f2052db134ef--
+"Distros will need some time to test the proposed patch and will
+generally request at least a few days of embargo"
+
+which kind of goes against our request that the reporter be the first to
+propose a tentative public disclosure date/time.  So I suggest the above
+phrase be dropped.
+
+If there are no objections, Vegard can you please suggest specific edits
+accordingly, and if there are no objections to those either, then submit
+them as a patch?
+
+Thanks,
+
+Alexander
