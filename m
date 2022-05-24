@@ -1,26 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/29/6
-Message-Id: <90735C03-0C34-49ED-A79A-EC0165C274CC@dwheeler.com>
-Date: Thu, 29 Dec 2022 12:56:22 -0500
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: oss-security@...ts.openwall.com
-Cc: Demi Marie Obenour <demi@...isiblethingslab.com>, Alejandro Colomar <alx.manpages@...il.com>, Michael Kerrisk <mtk.manpages@...il.com>
-Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/24/10
+Message-ID: <D57406DE-02FB-43BD-BE4D-27A8ECA2C517@oracle.com>
+Date: Tue, 24 May 2022 20:18:02 +0000
+From: John Haxby <john.haxby@...cle.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2022-21499: trivial lockdown break
 Content-Type: text/plain; charset=utf-8
 
-> On Dec 29, 2022, at 11:43 AM, Alan Coopersmith <alan.coopersmith@...cle.com> wrote:
 
 
-Another solution is to escape bytes that might cause trouble in this field, e.g., using %xx hexadecimal.
-So space would be %20, ")" would be %41, control characters 1-31 would be %01 to %1f,
-and (of course) "%" would be encoded as %25.
-Basically, URL-encode / Percent-encode them. See: https://en.wikipedia.org/wiki/Percent-encoding
+> On 24 May 2022, at 18:10, John Haxby <john.haxby@...cle.com> wrote:
+> 
+> Hello All,
+> 
+> CVE-2022-21499: trivial lockdown break
+> 
+> We recently discovered that it is trivial to break lockdown (and secureboot) using the kernel debugger: you can use the debugger to write zero into a location of your choice ...
+> 
+> I originally posted this with a preliminary patch on linux-distros.   Since then we have developed a better patch that takes into account the differences between integrity and confidentiality modes.
+> 
+> The updated patch will be available in the Linux mainline kernel at almost the same time as I'm sending this email.  I'll reply with the commit ID as soon as I have it.   If anyone wants the simpler patch that I posted to linux-bistros, please let me know, but I would encourage you to take the full patch.
+> 
+> jch
 
-Technically this would be a userspace change, but only in cases where the system
-would probably have done the wrong thing previously. It's okay if we break *attacker* workflows
-as long as we don't break others'. An advantage of URL encoding is that,
-like JSON, it's a well-known format. I might do something different if this was a new system,
-but that seems like the least-impact approach while eliminating the problem.
 
---- David A .Wheeler
+The commit that fixes this is eadb2f47a3ce ("lockdown: also lock down previous kgdb use") [1]
 
+jch
+
+
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=eadb2f47a3ced5c64b23b90fd2a3463f63726066
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
