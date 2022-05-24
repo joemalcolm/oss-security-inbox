@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1677" "Wednesday" "17" "June" "2015" "06:43:00" "-0700" "Tristan Cacqueray" "tdecacqu@redhat.com" "<55817964.40700@redhat.com>" "49" "Re: [oss-security] [OSSA 2015-011] Cinder host file disclosure through qcow2 backing file (CVE-2015-1851)" nil nil nil "6" "2015061713:43:00" "[oss-security] [OSSA 2015-011] Cinder host file disclosure through qcow2 backing file (CVE-2015-1851)" (number mark "        tdecacqu@red Jun 17   49/1677  " thread-indent "\"Re: [oss-security] [OSSA 2015-011] Cinder host file disclosure through qcow2 backing file (CVE-2015-1851)\"\n") "<20150617043336.GA23069@lorien.valinor.li>" ("<55805FE7.5070007@redhat.com>" "<20150617043336.GA23069@lorien.valinor.li>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 13485 invoked by uid 550); 17 Jun 2015 13:42:59 -0000
+Received: (qmail 32473 invoked by uid 550); 24 May 2022 17:32:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,69 +6,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13459 invoked from network); 17 Jun 2015 13:42:58 -0000
-Message-ID: <55817964.40700@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-MIME-Version: 1.0
-References: <55805FE7.5070007@redhat.com> <20150617043336.GA23069@lorien.valinor.li>
-In-Reply-To: <20150617043336.GA23069@lorien.valinor.li>
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="qqqthkpi3RBHKSnJNkOhRbmRVeJQVE2H7"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-Date: Wed, 17 Jun 2015 06:43:00 -0700
-From: Tristan Cacqueray <tdecacqu@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] [OSSA 2015-011] Cinder host file disclosure through
- qcow2 backing file (CVE-2015-1851)
-To: Salvatore Bonaccorso <carnil@debian.org>, oss-security@lists.openwall.com
-
---qqqthkpi3RBHKSnJNkOhRbmRVeJQVE2H7
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: quoted-printable
-
-Hi Salvatore,
-
-On 06/16/2015 09:33 PM, Salvatore Bonaccorso wrote:
-> Could you clearify if this CVE assignment is correct?
-
-OSSA 2015-011 assigned the wrong CVE and it should have included
-CVE-2015-1851 instead. An ERRATA will be issued soon.
-
-> I noticed that Red Hat Bugzilla has
-> https://bugzilla.redhat.com/show_bug.cgi?id=3D1231816 (CVE-2015-1850)
-> for the nova issue and similarly
-> https://bugzilla.redhat.com/show_bug.cgi?id=3D1231817 (CVE-2015-1851)
-> for the cinder issue. Is this correct?
->=20
-This is correct. Note that while a CVE has been assigned for the Nova
-part, the bug has still not been reproduced there, and while there is no
-patch, Nova has been left out of this OSSA.
-
-> Regards and thanks in advance,
-> Salvatore
-
-Thanks for bringing that up!
---
-Tristan Cacqueray
-OpenStack Vulnerability Management Team
+Received: (qmail 9379 invoked from network); 24 May 2022 16:26:02 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=digikod.net;
+	s=20191114; t=1653409551;
+	bh=EqFv1BXSTQEMxfWBMSKf398lpBGaf9bYF+BmuTW2+rE=;
+	h=Date:To:Cc:References:From:Subject:In-Reply-To:From;
+	b=d+Sdn/ny/o5vaWpv8KSfyraAHn8mJetSxqU5CkUImLNsL8U9/Odm5t7o3AbV7tHE9
+	 Xp4/jdWmF1wH3dJWljOuzgnV3mOzXqqeQZ7Dc7IA4cr7Zw8Pj0wNBhIFm1c7G/29YP
+	 mLRu517d3kBGvgNmc7CthFNOsxiYmB2sgwHIu5gQ=
+Message-ID: <f9c51792-de81-54bc-38ce-4337e52869d5@digikod.net>
+Date: Tue, 24 May 2022 18:25:50 +0200
+MIME-Version: 1.0
+User-Agent: 
+Content-Language: en-US
+To: oss-security@lists.openwall.com, Greg KH <greg@kroah.com>,
+ Sam James <sam@gentoo.org>
+Cc: seth.arnold@canonical.com
+References: <20220515162740.GA20526@openwall.com> <YoKiGWAX4E/mbGWB@kroah.com>
+ <1be21670-921c-9f0a-d99c-a9f6fd02b9b2@oracle.com>
+ <20220522191951.GA21330@openwall.com>
+ <1667A786-CDE3-4DB2-B6E8-5EA6B39F1AA4@gentoo.org>
+ <Yosq94tksfo9y+xM@kroah.com>
+From: =?UTF-8?Q?Micka=c3=abl_Sala=c3=bcn?= <mic@digikod.net>
+In-Reply-To: <Yosq94tksfo9y+xM@kroah.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] linux-distros list policy and Linux kernel
 
 
---qqqthkpi3RBHKSnJNkOhRbmRVeJQVE2H7
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+On 23/05/2022 08:34, Greg KH wrote:
+> On Sun, May 22, 2022 at 08:55:50PM +0100, Sam James wrote:
+>> I'd also like to ask that the final commit messages please reference any
+>> relevant CVEs or at least the security impact. There've been a fair number
+>> of incidents where such information is stripped and it makes tracking
+>> issues *really* hard.
+> 
+> That is pretty much impossible and goes against the whole goal of "get
+> this fixed and in a public tree and only tell the world that it was an
+> issue after-the-fact" way that the kernel team works.  If we put all of
+> that in the commit to start with, the whole world knows this info.  We
+> can't go back in time and change git commits for obvious reasons.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+It would work well if (as asked Vegard) sources/patches and binaries 
+were released simultaneously by both upstream and distributions.
 
-iQEcBAEBAgAGBQJVgXlsAAoJECK5oFySXMXYlHcH/2AAH+k2hj732oaXItqzYGCw
-Ob0Ikmxv5I4Yq1G+8/p4e5E754QFyqrwwLxWR16XlrbQFWd0lhPn6PiJG9yPq9OD
-A6EW71Rr6nlJVg5nbjFeskIYg1ZMV4wFC4NO4j4d+2pwhVkwHd0TnRBMtSnl9JQ3
-bbnsaKiDA0ouFyCI8FEFEhC7zo919lQPOgvDFMDGcjdt7B+MLqvG0eipvioaOckq
-/qSqqrfJ+AUCnd2//h4eXPbS2gyyaNwRAupmUfMu8+0wQh2AydDj6JOrtXF0KqUi
-rFtNj4QJhO2HboeU5Zj1kGxmoR3Ez/q5qCI+orDG9/2P1l7FBwrkxqyH7j2sboI=
-=9SBq
------END PGP SIGNATURE-----
-
---qqqthkpi3RBHKSnJNkOhRbmRVeJQVE2H7--
+Regards,
+  Mickaël
