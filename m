@@ -1,36 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/02/1
-Message-ID: <1337086b8006fc71c151904764857e3ed29d3a3a.camel@amazon.com>
-Date: Wed, 2 Mar 2022 19:17:44 +0000
-From: "Karp, Samuel" <skarp@...zon.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/24/7
+Message-ID: <0A7B7D99-48F7-44B2-9E0A-C18C9EB9E2FA@oracle.com>
+Date: Tue, 24 May 2022 17:10:40 +0000
+From: John Haxby <john.haxby@...cle.com>
 To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2022-23648: containerd CRI plugin: Insecure handling of image volumes
+Subject: CVE-2022-21499: trivial lockdown break
 Content-Type: text/plain; charset=utf-8
 
-A bug was found in containerd where containers launched through
-containerd's CRI implementation with a specially-crafted image
-configuration could gain access to read-only copies of arbitrary files
-and directories on the host. This may bypass any policy-based
-enforcement on container setup (including a Kubernetes Pod Security
-Policy) and expose potentially sensitive information. Kubernetes and
-crictl can both be configured to use containerd's CRI implementation.
+Hello All,
 
-Patches
-This bug has been fixed in containerd 1.6.1, 1.5.10 and 1.4.13. Users
-should update to these versions to resolve the issue.
+CVE-2022-21499: trivial lockdown break
 
-Workarounds
-Ensure that only trusted images are used.
+We recently discovered that it is trivial to break lockdown (and secureboot) using the kernel debugger: you can use the debugger to write zero into a location of your choice ...
 
-If you have any questions or comments about this advisory:
-* Open an issue [1]
-* Email us at security@...tainerd.io if you think you've found a
-security bug.
+I originally posted this with a preliminary patch on linux-distros.   Since then we have developed a better patch that takes into account the differences between integrity and confidentiality modes.
 
-View this advisory on the web: 
-https://github.com/containerd/containerd/security/advisories/GHSA-crp2-qrr5-8pq7
+The updated patch will be available in the Linux mainline kernel at almost the same time as I'm sending this email.  I'll reply with the commit ID as soon as I have it.   If anyone wants the simpler patch that I posted to linux-bistros, please let me know, but I would encourage you to take the full patch.
 
-On behalf of the containerd project,
-Samuel Karp
+jch
 
-[1] https://github.com/containerd/containerd/issues/new/choose
+Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
