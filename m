@@ -1,22 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/20/4
-Message-ID: <Yem60C2ibSoIyAMt@carcharodon.zash.se>
-Date: Thu, 20 Jan 2022 20:41:24 +0100
-From: Kim Alvefur <zash@...h.se>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/24/1
+Message-ID: <20220524125804.GA29146@openwall.com>
+Date: Tue, 24 May 2022 14:58:04 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Prosody XMPP server advisory 2022-01-13 (Remote Unauthenticated Denial of Service) (CVE-2022-0217)
+Subject: Re: linux-distros list policy and Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Sun, May 22, 2022 at 09:19:51PM +0200, Solar Designer wrote:
+> I think now we need to come up with a specific edit to the policy, and I
+> think the exception should ideally be limited to Linux kernel issues
+> currently/recently handled with the kernel's security team involved.
+> Ideally, we'd also manage to simplify rather than further complicate the
+> policy - a goal inconsistent with granting only a limited exception?
 
-The fix for this issue introduced a regression in the from of a memory
-leak (of the unintentional reference variety, not a true leak).
+I've just added the exception to:
 
-A fix for can be found in this commit:
-https://hg.prosody.im/trunk/rev/e5e0ab93d7f4
+https://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-instructions-for-reporters
 
--- 
-Regards,
-Kim "Zash" Alvefur
+The paragraph now reads:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+"Please note that in case a fix for an issue is already in a publicly
+accessible source code repository, we generally consider the issue
+public (and thus you should post to oss-security right away, not report
+the issue to (linux-)distros as we'd merely redirect you to oss-security
+anyway and insist that you make the required posting ASAP).  There can
+be occasional exceptions to this, such as if the publicly accessible fix
+doesn't look like it's for a security issue and not revealing this
+publicly right away is somehow deemed desirable.  In particular, we
+grant such exceptions to Linux kernel issues concurrently or very
+recently handled by the Linux kernel security team.  In all other cases,
+you'd have to have very sound reasoning to claim an exception like this
+and be prepared to lose your argument and if so to post to oss-security
+ASAP anyway."
+
+It was:
+
+"Please note that in case a fix for an issue is already in a publicly
+accessible source code repository, we generally consider the issue
+public (and thus you should post to oss-security right away, not report
+the issue to (linux-)distros as we'd merely redirect you to oss-security
+anyway and insist that you make the required posting ASAP).  There can
+be occasional (rare) exceptions to this, such as if the publicly
+accessible fix doesn't look like it's for a security issue (e.g., if the
+corresponding changes were initially made for unrelated reasons and were
+only later realized to have fixed a non-public security issue) and not
+revealing this publicly right away is somehow desirable.  You'd have to
+have very sound reasoning to claim an exception like this and be
+prepared to lose your argument and if so to post to oss-security ASAP
+anyway."
+
+The policy above doesn't explicitly say that equivalent terms apply when
+determining whether an embargo has ended (if before a pre-agreed date).
+However, we do have a paragraph that start with:
+
+"When the security issue is finally (to be made) public, "
+
+Previously, there were no braces around "to be made" - I've just added
+those.  Hopefully, it is obvious enough that if we accepted an issue as
+non-public under the new exception, then it is considered public when
+the new exception would have no longer applied.  We can, however, add
+explicit wording if that becomes necessary.
+
+Alexander
