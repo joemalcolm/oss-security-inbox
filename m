@@ -1,19 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/14/2
-Message-ID: <775f3f6a-cb7e-60d5-b8ea-8e6cdaf762fb@t-online.de>
-Date: Fri, 14 Jan 2022 12:09:00 +0100
-From: Nils Bars <nils_bars@...nline.de>
-To: oss-security@...ts.openwall.com
-Subject: Null pointer deref in unzip 6.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/24/8
+Message-ID: <CADW8OBuPkS==FV+0zb9rObxoc+02GCBno+7SdDXpnYOvGLik0g@mail.gmail.com>
+Date: Tue, 24 May 2022 09:28:29 -0700
+From: Kyle Zeng <zengyhkyle@...il.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2022-1786: Linux Kernel invalid-free in io_uring
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+A small correction, I shared a minimal crashing PoC to linux-distros
+but not the LPE exploit.
+I do not plan to share the LPE exploit because of ethical issues.
 
-I discovered a null pointer dereference in unzip 6.0. All details, 
-including the input required for reproduction can be found here: 
-https://bugs.launchpad.net/ubuntu/+source/unzip/+bug/1957077. If you 
-need further details, please do not hesitate to ask.
+To answer your question: I intend to post the crashing PoC on May
+27th. Thanks for reminding me.
 
-Regards,
-Nils
+Kyle
 
+On Tue, May 24, 2022 at 9:22 AM Solar Designer <solar@...nwall.com> wrote:
+>
+> On Tue, May 24, 2022 at 09:10:37AM -0700, Kyle Zeng wrote:
+> > # Impact
+> > I wrote a proof-of-concept exploit and demonstrated that it can be
+> > used to achieve local privilege escalation.
+>
+> Since you shared the PoC exploit with linux-distros, you're supposed to
+> also post that to oss-security within 7 days of your first posting
+> above, so by or on May 31.  Do you intend to, and when exactly?
+>
+> Alexander
