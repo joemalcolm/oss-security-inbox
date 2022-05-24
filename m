@@ -1,40 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/04/2
-Message-ID: <87a657nflj.fsf@v45346.1blu.de>
-Date: Fri, 04 Nov 2022 12:06:48 +0100
-From: Stefan Bodewig <bodewig@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-37865: Apache Ivy allow create/overwrite any file on the system
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/24/6
+Message-ID: <Yo0KMcGzi3J/+0ky@kroah.com>
+Date: Tue, 24 May 2022 18:39:13 +0200
+From: Greg KH <greg@...ah.com>
+To: Mickaël Salaün <mic@...ikod.net>
+Cc: oss-security@...ts.openwall.com, Sam James <sam@...too.org>, seth.arnold@...onical.com
+Subject: Re: linux-distros list policy and Linux kernel
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tue, May 24, 2022 at 06:25:50PM +0200, Mickaël Salaün wrote:
+> 
+> On 23/05/2022 08:34, Greg KH wrote:
+> > On Sun, May 22, 2022 at 08:55:50PM +0100, Sam James wrote:
+> > > I'd also like to ask that the final commit messages please reference any
+> > > relevant CVEs or at least the security impact. There've been a fair number
+> > > of incidents where such information is stripped and it makes tracking
+> > > issues *really* hard.
+> > 
+> > That is pretty much impossible and goes against the whole goal of "get
+> > this fixed and in a public tree and only tell the world that it was an
+> > issue after-the-fact" way that the kernel team works.  If we put all of
+> > that in the commit to start with, the whole world knows this info.  We
+> > can't go back in time and change git commits for obvious reasons.
+> 
+> It would work well if (as asked Vegard) sources/patches and binaries were
+> released simultaneously by both upstream and distributions.
 
-Severity: medium
+As stated way back at the beginning of this thread, that's impossible to
+do, sorry.  And is not the issue here.
 
-Description:
-
-With Apache Ivy 2.4.0 an optional packaging attribute has been
-introduced that allows artifacts to be unpacked on the fly if they used
-pack200 or zip packaging.
-
-For artifacts using the "zip", "jar" or "war" packaging Ivy prior to
-2.5.1 doesn't verify the target path when extracting the archive. An
-archive containing absolute paths or paths that try to traverse
-"upwards" using ".." sequences can then write files to any location on
-the local fie system that the user executing Ivy has write access to.
-
-Mitigation:
-
-Ivy users of version 2.4.0 to 2.5.0 should upgrade to Ivy 2.5.1.
-
-Credit:
-
-This issue was discovered by Kostya Kortchinsky of the Databricks Security Team.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iEYEARECAAYFAmNk8kgACgkQohFa4V9ri3IqkQCfQujcSRYhjtUmvl7GuyYn46cc
-f9MAn2ZSD7dzeAn9kPK+QqYH6gbH4F0e
-=jVS7
------END PGP SIGNATURE-----
+greg k-h
