@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2019" "Friday" "6" "September" "2019" "08:00:28" "+0200" "Heiko Schlittermann" "hs@nodmarc.schlittermann.de" nil "54" nil "^Date:" nil nil "9" nil nil (number mark "        hs@nodmarc.s Sep  6   54/2019  " thread-indent "\"[oss-security] Re: CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges.\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: CVE-2019-15846: Exim - local or remote attacker can execute programs with root privileges." nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 19554 invoked by uid 550); 6 Sep 2019 06:00:41 -0000
+Received: (qmail 21777 invoked by uid 550); 24 May 2022 16:39:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,88 +6,87 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19528 invoked from network); 6 Sep 2019 06:00:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=schlittermann.de; s=dd201504; h=Content-Type:MIME-Version:Message-ID:
-	Subject:To:From:Date:Cc:Content-Description:Content-ID:
-	Content-Transfer-Encoding:In-Reply-To:References:Resent-Cc:Resent-To;
-	bh=JqHQln3mIaKAbBXgTOdqRwcjJ8xMtS7lctG7vQaSG1I=; b=ZlRPXFmPcTNqf7gpbHlbTX9S9v
-	HZvYfS6Vj3EEnj8gY0uNX0Kzahq2MjtJ6ApmSNvTYFS+s8YOk0ERWV1HoI+aScCLHzTQTMRVJCIY7
-	KA7f+wKXIb4A7de+GBpe0pqpZQZbdL/FYSnLWSoAn4blkVx1pSINSb1Puu2k06DtBQRc=;
-Message-ID: <20190906060028.GY3837@jumper.schlittermann.de>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="kZU6r8y0YpRwyDfh"
-Content-Disposition: inline
-Organization: schlittermann -- internet & unix support
-X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
- QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
- y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
- X?H&`
-X-Telegram: @HeikoSchlittermann
-X-Threema: T5RPWMSS
-X-Phone: +49.172.7909055
-X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
-X-GPG-Key-ID: F69376CE
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Date: Fri, 6 Sep 2019 08:00:28 +0200
-From: Heiko Schlittermann <hs@nodmarc.schlittermann.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE-2019-15846: Exim - local or remote attacker can execute
- programs with root privileges.
-To: oss-security <oss-security@lists.openwall.com>
-
---kZU6r8y0YpRwyDfh
-Content-Type: text/plain; charset=utf-8
+Received: (qmail 21753 invoked from network); 24 May 2022 16:39:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
+	:cc:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:sender:subject:subject:to:to; s=fm1; t=1653410356; x=
+	1653496756; bh=pUCwEHilOXykua/GzcWzBJbbnEgkguliVWIiBILooTY=; b=l
+	8ha74jmv2K7QVe1VO5roNAiwK3qvdcqcvfmF96vhbaUq1zvzGIq48Xm68i5pDIuH
+	2FOhrBA9n3fjGoLEKh9kvJvOLswLsgYCJsndwiRsA7V9N8M0Db56GOT4X1AsyuJw
+	bB02A1kfxj8Yo+Rp9FG2mv0T1bMg1b32oHeH3Xdhz//mQqvahDYG3Wq7hQzxYEhe
+	FRb0wpb1tbjueIwePpP6/WlKFfp45Io7KpRQR7qtJjobjHvFKK8WuHDJQVK5mgdL
+	SXepbndtJnu1DNzNjnrYx0tznSgYpUV8gDvs7n/GgGUDi5oMTu0gOchYGyuxYJsY
+	NTlZKy4KgkQCCqBfHQX8A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1653410356; x=
+	1653496756; bh=pUCwEHilOXykua/GzcWzBJbbnEgkguliVWIiBILooTY=; b=r
+	LXx9AY+bnR+478EjW9MoEnh+smXyRviFPyQ93GT3rCBurr5oZu9raw438N2uaKrl
+	+yiXlThHxSvpDYRYKl6K6IRoNU/DIN60s9ZYlQdAE+oWCs/TKG7ANUNVGLOF3TtX
+	rUkDmqmhvy3YQXvaf/O8wyJ6bVkdmH1wzavNniSOL929OCxZ1Qu7mdaq/FzF4hgb
+	uq5MNp53XTW+jxtUquLiWwZB814OXj/oAndZiseXJO/2mSGt0veJO0BX5Zz6p7vq
+	mtAaaMGPCzfpp76vIjBStaT+4sykWj00w43BDRuSgLpyeOx6ILFXGs/tw49Az3ms
+	ne3dI+01tDO0Oc17LrqBg==
+X-ME-Sender: <xms:NAqNYrwHYcQ-1ZsEIjb0ijqGvOHCuSm8EnqvjNU0gCymN_Rr8ukd6A>
+    <xme:NAqNYjRPiTsD5SGaFjw5Rg02mMTx_p1t-n7AtHLItIgrkCYZRpzz6hHS4S85ytLOl
+    67k9mdrlbXWxw>
+X-ME-Received: <xmr:NAqNYlXJ78lZJrkcz4vkrzETT4SlrHvxz2fQEOcPq5xOfQVKjiTiisQDWw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrjeefgddutdefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtugfgjgesth
+    ekredttddtudenucfhrhhomhepifhrvghgucfmjfcuoehgrhgvgheskhhrohgrhhdrtgho
+    mheqnecuggftrfgrthhtvghrnhepleehheduudeugeegjefgheeuudffheevueekgfekue
+    efledtjeetieeutdekkeelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehm
+    rghilhhfrhhomhepghhrvghgsehkrhhorghhrdgtohhm
+X-ME-Proxy: <xmx:NAqNYliDOv83y3GTu-5gJTWcpNABsQ99Nc4Yxc5ELNE6qMrlhDVg-w>
+    <xmx:NAqNYtDATt84ry48WBMKzdgaMRtuZrJEWh3Nv6oXElNepqWVxpkW7w>
+    <xmx:NAqNYuKUaXa7yltfBJeBEbjPRpx-fIIp5H0ze1L8Ll0-mviEDxk_uQ>
+    <xmx:NAqNYv3TT0vdxwRKwCvBkAJXV8Abt_71HXMgiFQT0dK7cCr5Lmimwg>
+Feedback-ID: i787e41f1:Fastmail
+Date: Tue, 24 May 2022 18:39:13 +0200
+From: Greg KH <greg@kroah.com>
+To: =?iso-8859-1?Q?Micka=EBl_Sala=FCn?= <mic@digikod.net>
+Cc: oss-security@lists.openwall.com, Sam James <sam@gentoo.org>,
+	seth.arnold@canonical.com
+Message-ID: <Yo0KMcGzi3J/+0ky@kroah.com>
+References: <20220515162740.GA20526@openwall.com>
+ <YoKiGWAX4E/mbGWB@kroah.com>
+ <1be21670-921c-9f0a-d99c-a9f6fd02b9b2@oracle.com>
+ <20220522191951.GA21330@openwall.com>
+ <1667A786-CDE3-4DB2-B6E8-5EA6B39F1AA4@gentoo.org>
+ <Yosq94tksfo9y+xM@kroah.com>
+ <f9c51792-de81-54bc-38ce-4337e52869d5@digikod.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <f9c51792-de81-54bc-38ce-4337e52869d5@digikod.net>
+Subject: Re: [oss-security] linux-distros list policy and Linux kernel
 
-[ This is a re-post w/o dmarc protection of the sender (me). ]
+On Tue, May 24, 2022 at 06:25:50PM +0200, Mickaël Salaün wrote:
+> 
+> On 23/05/2022 08:34, Greg KH wrote:
+> > On Sun, May 22, 2022 at 08:55:50PM +0100, Sam James wrote:
+> > > I'd also like to ask that the final commit messages please reference any
+> > > relevant CVEs or at least the security impact. There've been a fair number
+> > > of incidents where such information is stripped and it makes tracking
+> > > issues *really* hard.
+> > 
+> > That is pretty much impossible and goes against the whole goal of "get
+> > this fixed and in a public tree and only tell the world that it was an
+> > issue after-the-fact" way that the kernel team works.  If we put all of
+> > that in the commit to start with, the whole world knows this info.  We
+> > can't go back in time and change git commits for obvious reasons.
+> 
+> It would work well if (as asked Vegard) sources/patches and binaries were
+> released simultaneously by both upstream and distributions.
 
-*** Note: EMBARGO is still in effect!       ***
-*** Distros must not publish any detail yet ***
+As stated way back at the beginning of this thread, that's impossible to
+do, sorry.  And is not the issue here.
 
-In case you are entitled to access the security repo:
-*and* use the 4.92.2+fixes branch:
-
-The branch got two new commits, fixing a small tool. This tool is not
-designed to process untrusted data, so there is no security issue, but
-it was buggy. It is unlikely to be critical.
-
-You may consider including the fix in the packages to be
-released at CRD (today, 10.00 UTC) or schedule it for a later
-maintainance release of the Exim packages.
-
-commit cdc7f9a9667ecf31d803fc8d1a31b466284360bd
-Author: Heiko Schlittermann (HS12-RIPE) <hs@schlittermann.de>
-Date:   Fri Sep 6 06:57:11 2019 +0200
-
-commit 66935633816a88460f5222f40dc29d1a4e877978
-Author: Heiko Schlittermann (HS12-RIPE) <hs@schlittermann.de>
-Date:   Thu Sep 5 14:56:22 2019 +0200
-
-    Best regards from Dresden/Germany
-    Viele Gr=C3=BC=C3=9Fe aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
-
---kZU6r8y0YpRwyDfh
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAl1x9fsACgkQr0zGdqa2
-wULG7gf9HGOJdrpi6dMkDRqgJACxm7en/3Qbev7ZYhtSBl31NJye5S2hOldtcwgA
-RxE8zOsm1jiQCXnB2STvY/55yXis4Mv2e7Vj8/wiiwXz23sT+jXXVGmF98AkTpSr
-JvDWVCQnqJOSk5lvjnOpZhpBgpknnQ5sgitX8khrFyf6+UeVW0SCCI1hoNwhVcnj
-fq+JwSr5DL3XGGfQWLI3boAA+tGEceBmL6iJ5ZPi314l4IgfJP4CoP9+IacFmr26
-Nh6ozVaRUm29QD6xTaElMuhAXBEp7uRxywymfMyOQQpt3HxwWa/pBqaFYnLLbwmU
-Hv/P3hJypVspABsiqTV6E9ZYq5tK2Q==
-=he5h
------END PGP SIGNATURE-----
-
---kZU6r8y0YpRwyDfh--
+greg k-h
