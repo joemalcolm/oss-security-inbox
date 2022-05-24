@@ -1,54 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/24/1
-Message-Id: <08DDF362-C8B0-4D35-8A56-6E504F376019@gmail.com>
-Date: Sun, 24 Jul 2022 10:35:04 +0700
-From: Pedro Ribeiro <pedrib@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/24/4
+Message-ID: <CADW8OBs7P=YE_xfYCX3KuhaiVkwjSTMVUjLX93S_bn_XBd05EQ@mail.gmail.com>
+Date: Tue, 24 May 2022 09:10:37 -0700
+From: Kyle Zeng <zengyhkyle@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE Request: heap buffer overflow in gdk-pixbuf
+Subject: CVE-2022-1786: Linux Kernel invalid-free in io_uring
 Content-Type: text/plain; charset=utf-8
 
+Hi there,
 
-> On 24 Jul 2022, at 01:08, John Helmert III <ajak@...too.org> wrote:
-> 
-> ﻿On Sat, Jul 23, 2022 at 07:35:42PM +0700, Pedro Ribeiro wrote:
->> Hi,
->> 
->> A year ago I found and submitted a vulnerability to the gdk-pixbuf tracker:
->> https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/issues/190
->> 
->> It's a heap buffer overflow using a crafted GIF, which is likely 
->> exploitable in 32 bit systems. Full details are in the link above in the 
->> bug tracker.
->> 
->> This was patched and the fix was merged 8 months ago as seen here:
->> https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/merge_requests/121
->> 
->> The issue is now public, but since no CVE was attributed, it probably is 
->> not being considered as a problem for downstream users of the package.
->> 
->> As of today, the latest Debian stable package is affected by this 
->> vulnerability. Using a GNOME file system browser and browsing to that 
->> folder will cause a crash, as will opening it up in a GNOME image viewer 
->> and even attempting to load it in Chromium (should have submitted to 
->> them for a bounty :D).
->> 
->> Hence I'd like to get a CVE to raise awareness for this issue, so that 
->> downstream users of the package can get patched.
->> 
->> Thanks and regards,
->> Pedro Ribeiro
-> 
-> Hi, according to the oss-security Openwall wiki page [1], CVEs need to
-> be requested via MITRE's web form [2].
-> 
-> [1] https://oss-security.openwall.org/wiki/mailing-lists/oss-security
-> [2] https://cveform.mitre.org/
+I recently found a severe invalid-free bug in the io_uring subsystem
+which affects Linux kernel v5.10. It has been demonstrated that the
+vulnerability can be exploited to achieve local privilege escalation.
 
-Hi John,
+# Root Cause
+The root cause of the bug is a misuse of the identity model in
+io_uring. When preparing a request, the kernel uses the identity of
+the current task instead of that of the request task, which causes
+type confusion and invalid-free when the request needs to be
+destroyed.
 
-Thanks for the info, will request via the form and post here again once I have a CVE number. In any case I hope this post is useful to raise awareness of the issue to distro maintainers.
+# Impact
+I wrote a proof-of-concept exploit and demonstrated that it can be
+used to achieve local privilege escalation.
 
-Regards 
-Pedro 
+# Affected Versions
+To the best of my knowledge, this bug only affects Linux kernel v5.10
+and v5.11 because of their unique identity model in io_uring. But it
+still affects many users because of some widely used vendors (Android
+12, ChromeOS, etc).
 
+# Disclosure & Patch
+I already contacted the Linux security team and prepared a patch. The
+patch has been merged into the Linux kernel stable tree and it can be
+found here: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?h=linux-5.10.y&id=29f077d070519a88a793fbc70f1e6484dc6d9e35.
 
+I also informed the vendors and gave enough time for them to patch the
+bug before this public disclosure.
+
+--
+Kyle Zeng
