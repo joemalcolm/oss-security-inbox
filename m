@@ -1,4 +1,4 @@
-Received: (qmail 14004 invoked by uid 550); 1 Oct 2023 18:30:54 -0000
+Received: (qmail 1827 invoked by uid 550); 25 May 2022 14:07:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,60 +7,62 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1248 invoked from network); 1 Oct 2023 18:20:23 -0000
-X-SourceIP: 86.4.155.149
-X-Authenticated-Sender: zarniwhoop@ntlworld.com
-X-Spam: 0
-X-Authority: v=2.4 cv=MPKm2uVl c=1 sm=1 tr=0 ts=6519b85b cx=a_exe
- a=69rpv3kaMhdJyoIRs2s4pw==:117 a=69rpv3kaMhdJyoIRs2s4pw==:17
- a=IkcTkHD0fZMA:10 a=bhdUkHdE2iEA:10 a=8r2qhXULAAAA:8 a=RAskpV9TuDtEdLD39x0A:9
- a=QEXdDO2ut3YA:10 a=ZXulRonScM0A:10 a=8gvLZcY7Nlvl4CGD_6nf:22
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ntlworld.com;
-	s=meg.feb2017; t=1696184411;
-	bh=CSniU+Hxk4ODEUpm4Hn1SOiD+3PZxhagbzNVGm88mG0=;
-	h=Date:From:To:Subject:References:In-Reply-To;
-	b=OqYLsgDvPrcUAntNZyaK4No6SbYl7WAwPBYM5OmB6LaDEKvT+TjA1QESmJZQj6bQk
-	 RkZ9Iipocu2vJCMNjrmJn25NwEjsbb1ZRHykLna9Wk86CwQs36UFsPvisb8aCpz3pH
-	 etrJkI7O4oHbV2gJ04OwzzlrrvRoJFwwh1R9D4DlP04nNvflaYiGjjQf4+aRmUUtM6
-	 sV8zy86L9+RN/xqabIFF9iGe4sZ+7UOAH/0PSeiT8WknVNdvdeTccj1ywOUneyb4mz
-	 +8tvrqDMIvxwM06MQ0uXK6FkwaIjNag0+N99GfVRBeG3NdtbMJG0ZwntaNmVPMPTX1
-	 6HEOMwcd8rsWg==
-Date: Sun, 1 Oct 2023 19:20:11 +0100
-From: Ken Moffat <zarniwhoop@ntlworld.com>
-To: oss-security@lists.openwall.com
-Message-ID: <ZRm4W-K4CtjLxcAQ@llamedos.localdomain>
-References: <bd99e07a-8d8c-4652-9089-7c0fc2e86409@oracle.com>
+Received: (qmail 1809 invoked from network); 25 May 2022 14:07:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1653487655;
+	bh=zjxICfUlMgqXSgWWK6rTAOLFCvF/AUVJgquepzGNnO0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type;
+	b=TvvT3KJl252joj9vdcPNO3mdztBTP5WgDPvUq/u1zOEbyq9H9e8OIyyTfbzQdau73
+	 04ddxxJASkk6ar8gPC9djeJecabO4iKwnnsN4I552ytDz6EVL0KMaOK6K8Tt99c0YV
+	 d/ZtjZDTazfjLFcVTCh66s+I9eEZ+csHWQb16KhGWwXPvHrl1xJ8OCykRLt9po+X00
+	 OMPEV+SkQO1VSIVWG2LPJ+jiXzIHyQlwhAY+f23p/K+rvpdRPTBdfmeBxWdhWnNpEY
+	 Km0pE9d0AkePjdv9J1Wz90x+dzQPQm6JGrudeX727scrylLsjLXa0SLW2c3m9u77Bu
+	 3G5f4TQHyZTkg==
+Message-ID: <24add3d4-c09d-76d7-0dee-6e0c089ff0e6@canonical.com>
+Date: Wed, 25 May 2022 10:07:34 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-X-Clacks-Overhead: GNU Terry Pratchett
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <bd99e07a-8d8c-4652-9089-7c0fc2e86409@oracle.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-CMAE-Envelope: MS4xfM012iFZSd2LGvMqxKNMtacgztQaZjQqNf722E3ARtPKZ9UrtFbHZ6uPGZQHBjQsVHdIYFMEeI3fwjMiM/t4jdZwlcRkaeoOIzM5oqHdNrT1DbMpdKCN
- s6RIQjwXiEo8Wy+YjKdXmsTVEc72q+LXWjpwhmaQ8f8Pz/c80Ii5+Tuwzt/866ZSElScvike+Ff9QoesjLctW7SQZJoG7MVjB0Q=
-Subject: Re: [oss-security] CVE-2023-5217: Heap buffer overflow in vp8
- encoding in libvpx
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Content-Language: en-CA
+To: oss-security@lists.openwall.com, Kamil Dudka <kdudka@redhat.com>
+Cc: Guilherme de Almeida Suckevicz <gsuckevi@redhat.com>
+References: <e410d6e9-53cb-e83e-0dbc-412467ba21db@redhat.com>
+ <2183384.iZASKD2KPV@nbkamil>
+ <c41c3628-6132-9893-55ce-d86ff251e4fd@canonical.com>
+ <5618910.DvuYhMxLoT@nbkamil>
+From: Marc Deslauriers <marc.deslauriers@canonical.com>
+In-Reply-To: <5618910.DvuYhMxLoT@nbkamil>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] Re: CVE-2022-1348 logrotate: potential DoS from
+ unprivileged users via the state file
 
-On Thu, Sep 28, 2023 at 11:37:23AM -0700, Alan Coopersmith wrote:
-> Google has announced another media parsing bug, this time correctly documenting
-> both the base library and Chrome versions affected in the CVE.
+On 2022-05-25 09:37, Kamil Dudka wrote:
+> On Wednesday, May 25, 2022 3:19:31 PM CEST Marc Deslauriers wrote:
+>> On 2022-05-18 09:54, Kamil Dudka wrote:
+>>> The current version of the patch to fix CVE-2022-1348 in logrotate is
+>>> attached.  We are going to apply the patch upstream on May 25th, when
+>>> the embargo is lifted.
+>>
+>> FWIW, I don't think the patch actually works when logrotate is built with
+>> ACL support...
+>>
+>> Marc.
 > 
-> https://www.cve.org/CVERecord?id=CVE-2023-5217 states:
+> You are right.  Although the patch mitigates the security issue, it is not 
+> perfect.  I had already opened an upstream pull request to improve it:
 > 
->    Heap buffer overflow in vp8 encoding in libvpx in Google Chrome prior to
->    117.0.5938.132 and libvpx 1.13.1 allowed a remote attacker to potentially
->    exploit heap corruption via a crafted HTML page.
->    (Chromium security severity: High)
+>     https://github.com/logrotate/logrotate/pull/446
+> 
+> I might create a bug fix release soon with the patch included.
+> 
+> Sorry for the troubles!
+> 
+> Kamil
+> 
 > 
 
-Does anyone know how far back libvpx is affected ?  Asking because
-seamonkey-2.53.17.1 is apparently shipping a version of libvpx-1.7.0
-from 2020 and I'm told it no longer builds against system
-libvpx-1.13.1, although a recent version apparently built against
-libvpx-1.11.0.
+Oh! I had not seen that pull request. Thanks, that should solve the issue!
 
-ĸen
--- 
-  Men marched away, Vimes. And men marched back. How glorious the
-  battles would have been that they never had to fight! -- Jingo
+Marc.
