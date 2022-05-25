@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["598" "Friday" "23" "June" "2017" "07:37:54" "+0200" "Florian Weimer" "fweimer@redhat.com" "<af227933-a69f-6a1f-5ab1-00a1031e8819@redhat.com>" "19" "Re: [oss-security] CVE-2017-9780: Flatpak: privilege escalation via setuid/world-writable file permissions" nil nil nil "6" "2017062305:37:54" "[oss-security] CVE-2017-9780: Flatpak: privilege escalation via setuid/world-writable file permissions" (number mark "U       fweimer@redh Jun 23   19/598   " thread-indent "\"Re: [oss-security] CVE-2017-9780: Flatpak: privilege escalation via setuid/world-writable file permissions\"\n") "<20170622210110.zqlh2rn5cnzsre65@perpetual.pseudorandom.co.uk>" ("<20170622210110.zqlh2rn5cnzsre65@perpetual.pseudorandom.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 11515 invoked by uid 550); 23 Jun 2017 05:38:09 -0000
+Received: (qmail 12046 invoked by uid 550); 25 May 2022 13:52:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,44 +7,55 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11484 invoked from network); 23 Jun 2017 05:38:08 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com C9E247F6AE
-Authentication-Results: ext-mx01.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx01.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=fweimer@redhat.com
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com C9E247F6AE
-To: oss-security@lists.openwall.com, Simon McVittie <smcv@debian.org>
-References: <20170622210110.zqlh2rn5cnzsre65@perpetual.pseudorandom.co.uk>
-From: Florian Weimer <fweimer@redhat.com>
-Message-ID: <af227933-a69f-6a1f-5ab1-00a1031e8819@redhat.com>
-Date: Fri, 23 Jun 2017 07:37:54 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.1.0
+Received: (qmail 5687 invoked from network); 25 May 2022 13:37:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1653485847;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=islws4Wn4/uG+8fGP6AwxvOTC9pTCd5poUX8hQVDtZA=;
+	b=Sl1WxL4NJsyKqO8xgoy00iOw+0L0+YftF3Ie5xqnhNTRjUpjnwB8yxTkuQ133/30KYireH
+	qXINMgZ4wydi3rWWIA53XlFbr0RCDfwd6NihOjw15IUrh7YvnM8ApylCKbXvcv57P8011s
+	ZRIqzowOx9tjw+JAxQWw8Ihd2lK3T38=
+X-MC-Unique: k4Dfvu5WMOigP3yObqM0jA-1
+From: Kamil Dudka <kdudka@redhat.com>
+To: Marc Deslauriers <marc.deslauriers@canonical.com>
+Cc: oss-security@lists.openwall.com, Guilherme de Almeida Suckevicz <gsuckevi@redhat.com>
+Date: Wed, 25 May 2022 15:37:24 +0200
+Message-ID: <5618910.DvuYhMxLoT@nbkamil>
+In-Reply-To: <c41c3628-6132-9893-55ce-d86ff251e4fd@canonical.com>
+References: <e410d6e9-53cb-e83e-0dbc-412467ba21db@redhat.com> <2183384.iZASKD2KPV@nbkamil> <c41c3628-6132-9893-55ce-d86ff251e4fd@canonical.com>
 MIME-Version: 1.0
-In-Reply-To: <20170622210110.zqlh2rn5cnzsre65@perpetual.pseudorandom.co.uk>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.14
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.25]); Fri, 23 Jun 2017 05:37:57 +0000 (UTC)
-Subject: Re: [oss-security] CVE-2017-9780: Flatpak: privilege escalation via
- setuid/world-writable file permissions
+X-Scanned-By: MIMEDefang 2.84 on 10.11.54.2
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=kdudka@redhat.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+Subject: [oss-security] Re: CVE-2022-1348 logrotate: potential DoS from unprivileged users via the state file
 
-On 06/22/2017 11:01 PM, Simon McVittie wrote:
-> * If you are using Flatpak to install apps from a third-party vendor,
->   then there is already a trust relationship: the app is sandboxed, but
->   the third-party vendor chooses what parameters are used for the sandbox.
+On Wednesday, May 25, 2022 3:19:31 PM CEST Marc Deslauriers wrote:
+> On 2022-05-18 09:54, Kamil Dudka wrote:
+> > The current version of the patch to fix CVE-2022-1348 in logrotate is
+> > attached.  We are going to apply the patch upstream on May 25th, when
+> > the embargo is lifted.
+> 
+> FWIW, I don't think the patch actually works when logrotate is built with
+> ACL support...
+> 
+> Marc.
 
-Doesn't this qualify as a vulnerability in its own right?  Flatpak
-advertises countermeasures against malicious applications:
+You are right.  Although the patch mitigates the security issue, it is not 
+perfect.  I had already opened an upstream pull request to improve it:
 
-“
-Secure, sandboxed applications
+    https://github.com/logrotate/logrotate/pull/446
 
-Flatpak's sandboxing technology prevents exploits and hinders malicious
-applications.
-”
+I might create a bug fix release soon with the patch included.
 
-But maybe it's like selling a VPN which isn't encrypted.
+Sorry for the troubles!
 
-Thanks,
-Florian
+Kamil
+
+
