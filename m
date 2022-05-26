@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5869" "Tuesday" "1" "September" "2020" "15:40:11" "+0200" "Daniel Beck" "ml@beckweb.net" "<D3E42EB3-B891-4E7D-8F23-B5C551998DB4@beckweb.net>" "165" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "9" "2020090113:40:11" "[oss-security] Multiple vulnerabilities in Jenkins plugins" (number mark "U       ml@beckweb.n Sep  1  165/5869  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 11439 invoked by uid 550); 1 Sep 2020 13:40:24 -0000
+Received: (qmail 14315 invoked by uid 550); 26 May 2022 17:36:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,182 +7,93 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11421 invoked from network); 1 Sep 2020 13:40:23 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.15\))
-Message-Id: <D3E42EB3-B891-4E7D-8F23-B5C551998DB4@beckweb.net>
-Date: Tue, 1 Sep 2020 15:40:11 +0200
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3445.104.15)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1598967623;a3fdb804;
-X-HE-SMSGID: 1kD6WB-00016Z-TM
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
+Received: (qmail 14197 invoked from network); 26 May 2022 17:35:50 -0000
+Date: Thu, 26 May 2022 19:35:46 +0200
+From: Solar Designer <solar@openwall.com>
+To: Norbert Slusarek <nslusarek@gmx.net>
+Cc: oss-security@lists.openwall.com, peterz@infradead.org
+Message-ID: <20220526173546.GA8848@openwall.com>
+References: <trinity-5f3c0fdf-d83f-422e-9a05-c4ead66e42e1-1653077676864@3c-app-gmx-bap52> <20220521154759.GA15268@openwall.com> <trinity-4c518dcc-751b-4893-82dc-b2f80734eb9d-1653430844824@3c-app-gmx-bap13> <20220524232155.GA2264@openwall.com> <trinity-3f5f7066-5ba5-45cb-b229-a2207e9fe209-1653583477988@3c-app-gmx-bap49>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <trinity-3f5f7066-5ba5-45cb-b229-a2207e9fe209-1653583477988@3c-app-gmx-bap49>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2022-1729: race condition in Linux perf subsystem leads to local privilege escalation
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+Norbert,
 
-The following releases contain fixes for security vulnerabilities:
+Thank you for engaging in this discussion.  It helps.
 
-* Build Failure Analyzer Plugin 1.27.1
-* Cadence vManager Plugin 3.0.5
-* database Plugin 1.7
-* Git Parameter Plugin 0.9.13
-* Parameterized Remote Trigger Plugin 3.1.4
-* SoapUI Pro Functional Testing Plugin 1.4
+On Thu, May 26, 2022 at 06:44:38PM +0200, Norbert Slusarek wrote:
+> >What do you suggest we do regarding the LPE exploit you sent to
+> >linux-distros?
+> 
+> I saw your reveal of linux-distros from 2020 and the exchange
+> didn't include any text nor attachments. In that case, the
+> exploit should remain private to linux-distros accordingly.
 
-Additionally, we announce unresolved security issues in the following
-plugins:
+I don't know what "reveal of linux-distros from 2020" you refer to.  The
+policy aspect in question (see below) is in effect since 2017, and I
+don't recall us deviating from it.  Did we?
 
-* JSGames Plugin
-* Klocwork Analysis Plugin
-* SoapUI Pro Functional Testing Plugin
-* Team Foundation Server Plugin
-* Valgrind Plugin
+We have a published policy here:
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2020-09-01/
+https://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-instructions-for-reporters
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+which includes:
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+"If you shared exploit(s) that are not an essential part of the issue
+description, then at your option you may slightly delay posting them to
+oss-security but you must post the exploits to oss-security within at
+most 7 days of making the mandatory posting above.  If you exercise this
+option, you have two mandatory postings to make: first with a
+sufficiently detailed issue description (as requested above) and with an
+announcement of your intent to post the exploits separately (please
+mention exactly when), and second with the exploits - or indeed you
+could have included the exploits right away, in your first and only
+mandatory posting."
 
----
+Did you read this before posting?  If not, anything we should have done
+to ensure you'd have read it?
 
-SECURITY-1884 / CVE-2020-2238
-Git Parameter Plugin 0.9.12 and earlier does not escape the repository
-field on the 'Build with Parameters' page.
+> >What do you suggest we do with this policy aspect going forward, so that
+> >people do not get into a situation where they're required to do
+> >something they didn't want to subscribe to?
+> 
+> How is this policy aspect enforced in the first place?
+> If it's not, I suggest you remove it entirely as there is no reason
+> to have policies which cannot (and shouldn't) be enforced.
 
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Job/Configure permission.
+Reminders, like I am doing now (often in private, this time in public).
+Failing that, list members technically can post the exploits themselves.
+Finally, we can setup the list to automatically make all messages public
+with a delay.
 
+However, as you can see from another recent thread we're now in the
+process of reconsidering list policy aspects, so might end up e.g.
+extending the period from 7 to 30 days.  Would that work for you?
 
-SECURITY-1625 / CVE-2020-2239
-Parameterized Remote Trigger Plugin 3.1.3 and earlier stores a secret
-unencrypted in its global configuration file
-`org.jenkinsci.plugins.ParameterizedRemoteTrigger.RemoteBuildConfiguration.=
-xml`
-on the Jenkins controller as part of its configuration. This secret can be
-viewed by attackers with access to the Jenkins controller file system.
+If people insist on keeping exploits sent to (linux-)distros private
+forever, then I'll more likely either shut down the list instead or set
+it up to automatically make all messages public.  After all, if people
+send private messages to some list without reading its published policy
+first, they accept that anything can happen with those messages.  Right?
+Yet I've been reluctant to do that so far, as it's not ideal for social
+and technical reasons.
 
+> Overall, as a researcher I would prefer having a way just to inform
+> distros of a bug, *without* being subject to these requirements.
 
-SECURITY-1023 / CVE-2020-2240
-database Plugin 1.6 and earlier does not require POST requests for the
-database console, resulting in a cross-site request forgery (CSRF)
-vulnerability.
+I understand, yet I find that very problematic.
 
-This vulnerability allows attackers to execute arbitrary SQL scripts.
+Also, you don't need to post an exploit (especially more than a PoC) to
+the list "to inform distros of a bug".  You can literally just inform
+them, and (if you don't accept the policy on forced publication of what
+you share with the list) offer to privately share the exploit with
+interested distros.  Then the exploit itself wouldn't be subject to the
+forced publication.
 
+Thanks again,
 
-SECURITY-1024 / CVE-2020-2241 (CSRF) & CVE-2020-2242 (permission check)
-database Plugin 1.6 and earlier does not perform a permission check in a
-method implementing form validation.
-
-This allows attackers with Overall/Read access to Jenkins to connect to an
-attacker-specified database server using attacker-specified username and
-password.
-
-Additionally, this form validation method does not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-
-SECURITY-1936 / CVE-2020-2243
-Cadence vManager Plugin 3.0.4 and earlier does not escape build
-descriptions in tooltips.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Run/Update permission.
-
-
-SECURITY-1770 / CVE-2020-2244
-Build Failure Analyzer Plugin 1.27.0 and earlier does not escape matching
-text in a form validation response.
-
-This results in a cross-site scripting (XSS) vulnerability exploitable by
-attackers able to provide console output for builds used to test build log
-indications.
-
-
-SECURITY-1829 / CVE-2020-2245
-Valgrind Plugin 0.28 and earlier does not configure its XML parser to
-prevent XML external entity (XXE) attacks.
-
-This allows a user able to control the input files for the Valgrind plugin
-parser to have Jenkins parse a crafted file that uses external entities for
-extraction of secrets from the Jenkins controller or server-side request
-forgery.=20=20
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1830 / CVE-2020-2246
-Valgrind Plugin 0.28 and earlier does not escape content in Valgrind XML
-reports.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to control Valgrind XML report contents.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1831 / CVE-2020-2247
-Klocwork Analysis Plugin 2020.2.1 and earlier does not configure its XML
-parser to prevent XML external entity (XXE) attacks.
-
-This allows a user able to control the input files for the Klocwork plugin
-parser to have Jenkins parse a crafted file that uses external entities for
-extraction of secrets from the Jenkins controller or server-side request
-forgery.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1905 / CVE-2020-2248
-JSGames Plugin 0.2 and earlier evaluates part of a URL as code.
-
-This results in a reflected cross-site scripting (XSS) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1506 / CVE-2020-2249
-Team Foundation Server Plugin 5.157.1 and earlier stores a webhook secret
-unencrypted in its global configuration file
-`hudson.plugins.tfs.TeamPluginGlobalConfig.xml` on the Jenkins controller
-as part of its configuration. This secret can be viewed by attackers with
-access to the Jenkins controller file system.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1631 (1) / CVE-2020-2250
-SoapUI Pro Functional Testing Plugin 1.3 and earlier stores project
-passwords unencrypted in job `config.xml` files as part of its
-configuration. These project passwords can be viewed by attackers with
-Extended Read permission or access to the Jenkins controller file system.
-
-
-SECURITY-1631 (2) / CVE-2020-2251
-SoapUI Pro Functional Testing Plugin stores project passwords in job
-`config.xml` files on the Jenkins controller as part of its configuration.
-
-While these passwords are stored encrypted on disk since SoapUI Pro
-Functional Testing Plugin 1.4, they are transmitted in plain text as part
-of the global configuration form by SoapUI Pro Functional Testing Plugin
-1.5 and earlier. These passwords can be viewed by attackers with Extended
-Read permission.
-
-This only affects Jenkins before 2.236, including 2.235.x LTS, as Jenkins
-2.236 introduces a security hardening that transparently encrypts and
-decrypts data used for a Jenkins password form field.
-
-As of publication of this advisory, there is no fix.
-
-
-
+Alexander
