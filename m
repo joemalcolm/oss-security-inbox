@@ -1,19 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/14/3
-Message-ID: <bd4ba7ac-0817-f378-08bb-11b8b7632496@apache.org>
-Date: Mon, 14 Mar 2022 10:08:35 +0000
-From: Stefan Eissing <icing@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-22720: HTTP request smuggling vulnerability in Apache HTTP Server 2.4.52 and earlier 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/26/3
+Message-ID: <trinity-3f5f7066-5ba5-45cb-b229-a2207e9fe209-1653583477988@3c-app-gmx-bap49>
+Date: Thu, 26 May 2022 18:44:38 +0200
+From: Norbert Slusarek <nslusarek@....net>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com, peterz@...radead.org
+Subject: Re: CVE-2022-1729: race condition in Linux perf subsystem leads to local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+>What do you suggest we do regarding the LPE exploit you sent to
+>linux-distros?
 
-Description:
+I saw your reveal of linux-distros from 2020 and the exchange
+didn't include any text nor attachments. In that case, the
+exploit should remain private to linux-distros accordingly.
 
-Apache HTTP Server 2.4.52 and earlier fails to close inbound connection when errors are encountered discarding the request body, exposing the server to HTTP Request Smuggling
+>What do you suggest we do with this policy aspect going forward, so that
+>people do not get into a situation where they're required to do
+>something they didn't want to subscribe to?
 
-Credit:
+How is this policy aspect enforced in the first place?
+If it's not, I suggest you remove it entirely as there is no reason
+to have policies which cannot (and shouldn't) be enforced.
+Overall, as a researcher I would prefer having a way just to inform
+distros of a bug, *without* being subject to these requirements.
 
-James Kettle <james.kettle portswigger.net>
-
+Norbert
