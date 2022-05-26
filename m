@@ -1,14 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/01/2
-Message-ID: <f0c02aa7-7165-3828-903e-1385512e069c@apache.org>
-Date: Tue, 01 Nov 2022 02:20:21 +0000
-From: Weijie Wu <wuweijie@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/26/2
+Message-ID: <18eb75a2-51f3-6e22-af4d-6b85e02ed6b7@tuxera.com>
+Date: Thu, 26 May 2022 11:48:31 +0300
+From: Jussi Hietanen <jussi.hietanen@...era.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-31764: Apache ShardingSphere ElasticJob-UI allows RCE via event trace data source JDBC 
+Cc: Roman Fiedler <roman.fiedler.at@...il.com>, Jean-Pierre André <jean-pierre.andre@...adoo.fr>
+Subject: OPEN SOURCE NTFS-3G SECURITY ADVISORY NTFS3G-SA-2022-0002
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Security vulnerabilities were identified in the open source NTFS-3G 
+built with internal libfuse (known as libfuse-lite) or libfuse2. These 
+vulnerabilities were confirmed and resolved. A proof-of-concept exploit 
+against a specific NTFS-3G build exists.
 
-The Lite UI of Apache ShardingSphere ElasticJob-UI allows an attacker to perform RCE by constructing a special JDBC URL of H2 database. This issue affects Apache ShardingSphere ElasticJob-UI version 3.0.1 and prior versions. This vulnerability has been fixed in ElasticJob-UI 3.0.2.
-The premise of this attack is that the attacker has obtained the account and password. Otherwise, the attacker cannot perform this attack.
+These vulnerabilities allow an attacker to execute arbitrary privileged 
+code, if the attacker has local access and the ntfs-3g binary is setuid 
+root.
 
+We recommend installing and applying the update with the security fixes, 
+and advise to follow security guidance and frameworks such as NIST for 
+assessing and improving an organization’s abilities to prevent, detect, 
+and respond to security threats and cyber attacks.
+
+AFFECTED PRODUCTS: All previous versions of open source NTFS-3G compiled 
+with internal libfuse (known as libfuse-lite) or libfuse2.
+
+WORKAROUND: None
+
+SOLUTION: Upgrade to 2022.5.17
+
+PROJECT URL: https://github.com/tuxera/ntfs-3g
+
+ADVISORY ID: NTFS3G-SA-2022-0002
+
+ISSUE DATE: 2022-05-26
+
+SEVERITY: High
+
+CVEs: CVE-2022-30783, CVE-2022-30785, CVE-2022-30787
+
+CVSS SCORE: 7.5
+
+ACKNOWLEDGMENT: Thanks to Roman Fiedler for reporting the 
+vulnerabilities and supplying a PoC.
