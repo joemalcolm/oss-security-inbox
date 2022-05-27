@@ -1,4 +1,4 @@
-Received: (qmail 23826 invoked by uid 550); 17 Jan 2023 17:13:45 -0000
+Received: (qmail 27813 invoked by uid 550); 27 May 2022 11:30:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,93 +7,54 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15959 invoked from network); 17 Jan 2023 17:05:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diag.uniroma1.it; s=google;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ItAyMhneyYyBAdMm4vVyA+V9VYhqLWT1xURzpy2bAcQ=;
-        b=bcmPkPU+NbPBJc2V5qAO1oTdb4pz7d+wAElGcD/GAHizw6t4jH2tJMsNlZGftG/Ol+
-         akNfI0b+zQwIaYKU9+zFO5itXd5HfOYW+wAZsYRS1oq5SOyqYGqtiHQnktHPKr5WmDOv
-         2f0l+t/2vqjzegGIKIEqqCeQZA0wfyUpZW1HI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ItAyMhneyYyBAdMm4vVyA+V9VYhqLWT1xURzpy2bAcQ=;
-        b=iVOomitRzFCowFmX+VVJDdXLWdEi/wv+UjxUXViUnFiNeHQFVUn1X9vM6ar631Cn4U
-         ocHZaiYhhBGL5UWKkrnyhH1IYSNkIeBD9Y72a4CFF9LeBgzR/EA283bKBxIIPpRbPt9e
-         0e//yR1o3kyyODhjJpt4NdZGuyViwA8Yl7R6qXIwF65U3/ouUznSKJsdvCf6W8UZGXZR
-         0Snqx7QQn1PGMQZbkHIpPjIPnGgFHfAQ4/R7nQteRN3jiW4QrI14qF3x1zcVBhW4LCTw
-         w0VaWEYpgg69WNBlCVCb4k+kFN3zgKUErShxur0VPnYujwhkyi/oj1IbyuB0GKoGFtBG
-         ebNg==
-X-Gm-Message-State: AFqh2krhxzcSB8pBk1y0juOPTezI8xytiQPZysyOJx3eH0Vfx5smkiFk
-	ScIWCOJ4bSxO50T+6lnlliiStbvnjyn01PElnoomjy69BspA1re4
-X-Google-Smtp-Source: AMrXdXtYQmaFsjmprzTIrhchS7qp57/YumQXLuQlPGEg/A8T6sa6gFSHveQQ17M1it0F9tCNWbbdw9ruNArcAmwoyVo=
-X-Received: by 2002:a05:6402:1106:b0:46c:76da:b58b with SMTP id
- u6-20020a056402110600b0046c76dab58bmr354623edv.116.1673975141197; Tue, 17 Jan
- 2023 09:05:41 -0800 (PST)
-MIME-Version: 1.0
-From: Pietro Borrello <borrello@diag.uniroma1.it>
-Date: Tue, 17 Jan 2023 18:05:30 +0100
-Message-ID: <CAEih1qXOiRzcGgLeyFtQ5C04_gi5FSFHq6qJ37Tqtg=EUS8bAw@mail.gmail.com>
+Received: (qmail 25892 invoked from network); 27 May 2022 11:28:44 -0000
+Date: Fri, 27 May 2022 07:26:50 -0400
+From: "Mike O'Connor" <mjo@dojo.mi.org>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] Linux Kernel: hid: type confusions on hid report_list entry
+Cc: Solar Designer <solar@openwall.com>, peterz@infradead.org,
+        nslusarek@gmx.net
+Message-ID: <YpC1emS62JHunSQm@dojo.mi.org>
+References: <trinity-5f3c0fdf-d83f-422e-9a05-c4ead66e42e1-1653077676864@3c-app-gmx-bap52>
+ <20220521154759.GA15268@openwall.com>
+ <trinity-4c518dcc-751b-4893-82dc-b2f80734eb9d-1653430844824@3c-app-gmx-bap13>
+ <CAHQ_-nSt-YAyuSpjtFAe1Pvi9txYT7Z7kCT8j3nT4BjrqHOqCw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHQ_-nSt-YAyuSpjtFAe1Pvi9txYT7Z7kCT8j3nT4BjrqHOqCw@mail.gmail.com>
+X-Greylist: inspected by milter-greylist-4.5.11 (angus.mystery.com [127.0.0.1]); Fri, 27 May 2022 07:27:21 -0400 (EDT) for IP:'127.0.0.1' DOMAIN:'localhost' HELO:'angus.mystery.com' FROM:'mjo@dojo.mi.org' RCPT:''
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.11 (angus.mystery.com [127.0.0.1]); Fri, 27 May 2022 07:27:21 -0400 (EDT)
+Subject: Re: [oss-security] CVE-2022-1729: race condition in Linux perf
+ subsystem leads to local privilege escalation
 
-Hi all,
+:I think it's important to remember that closed mailing lists filled
+:with private/embargoed exploits become valuable targets. They have
+:been compromised ever since Zardoz in the 1980s, vendor-sec was
+:discontinued for the same reason. By keeping zerodays in linux-distros
+:you paint a target on every recipient of the list. You should assume
 
-We found potential misuses of list_entry() on lists in hid driver
-code that are not checked, specifically hid_validate_values() in
-drivers/hid/hid-core.c and bigben_probe() in drivers/hid/hid-bigbenff.c.
-Issuing a list_entry() on an empty list causes a type confusion making
-the list_entry point to the list_head itself.
-The most impactful seems the missing check for an empty list in
-hid_validate_values() which is supposed to check the validity of the
-reports themselves, potentially affecting all the drivers that rely on it.
+Every recipient and their upstream providers.
 
-The problem is caused by the driver's assumption that the device must
-have a valid report_list. While this will be true for all normal HID
-devices, a suitably malicious device can violate the assumption.
+:that any working exploit code you share to a mailing list will
+:eventually fall into the hands of bad actors. Therefore, I don't think
+:selective full-disclosure works.
 
-At a first glance, it may seem that the patches have security implications.
-However, when plugging a device which provides a descriptor with no output
-report, the type confusions will create a fake struct hid_report*
-which points to ((struct hid_device *)hid).report_enum[type].report_list.
-This, by chance, makes the type confused structure to span
-the `struct hid_report* report_id_hash[256]` array in the
-((struct hid_device *)hid).report_enum[type] field.
-
-Then, due to their semantics hid_validate_values() will check
-(report->maxfield > field_index) on the type-confused report,
-and the maxfield field happens to overlap on the
-report_id_hash[] array in the report_enum[type] field
-which are all NULL since we provided no reports.
-Similarly, for bigben_probe(), the confused report entry is
-used in the bigben_worker() function which checks
-(report->field[0] != NULL) that, again, overlaps with a NULL
-pointer.
-It seems there is a commit (918aa1ef104d: "HID: bigbenff: prevent
-null pointer dereference") which added the check for report_field
-being NULL to bigben_worker() to prevent crashing, but without
-checking the actual root cause.
-
-Thus, while being type confusions bugs, they are not exploitable.
-The list checks should be added also to prevent future exploitability
-if the shape of the structure changes (e.g., structure layout
-randomization), and they do not overlap anymore with NULL pointers.
-In this case, it is not exploitable just by the pure chance of struct
-member ordering.
-
-This post has been written in accordance with linux-distros rules to
-which we disclosed the initial findings of the potential vulnerabilities.
-as even if the bugs seem not exploitable, the wider community on
-oss-security might see how the issue does have security relevance.
-
-We submitted patches to fix the issue by checking that the lists
-are non-empty before allowing them to be used:
-https://lore.kernel.org/all/20230114-hid-fix-emmpty-report-list-v1-0-e4d02fad3ba5@diag.uniroma1.it/T/
+Long ago, I suggested that such mailing lists should PLAN to be public
+eventually, and disclose the info themselves before someone beats them
+to it.  For example, when June comes up, April linux-distros archives
+are made public, and that's advertised and known.  Given its two week
+max embargo period, this shouldn't pose an issue for anyone.  There is
+value in (eventually) seeing the sausage being made.  I know Solar has
+made old linux-distros mailing list metadata public, has advised folks
+that "any/all list postings may be made public once the corresponding
+security issue is publicly disclosed".  I suggest "may" become "will
+eventually".  
 
 
-Best regards,
-Pietro Borrello
+Take FWIW...
+-Mike
+
+-- 
+ Michael J. O'Connor                                          mjo@dojo.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"Passion is the enemy of precision."                              -Daryl Zero
