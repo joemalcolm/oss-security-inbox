@@ -1,24 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/13/6
-Message-ID: <e473c5b4-ec1e-4776-6fca-562bfb75f7d1@seemoo.tu-darmstadt.de>
-Date: Thu, 13 Oct 2022 22:15:50 +0200
-From: Sönke Huster <shuster@...moo.tu-darmstadt.de>
-To: Marcus Meissner <meissner@...e.de>, oss-security@...ts.openwall.com
-Subject: Re: Various Linux Kernel WLAN security issues (RCE/DOS) found
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/28/2
+Message-ID: <20220528200426.GB20541@openwall.com>
+Date: Sat, 28 May 2022 22:04:26 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Mike O'Connor <mjo@...o.mi.org>
+Cc: oss-security@...ts.openwall.com, peterz@...radead.org, nslusarek@....net
+Subject: Re: CVE-2022-1729: race condition in Linux perf subsystem leads to local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Hello again,
-
-On 13.10.22 19:13, Sönke Huster wrote:
-> Hi everyone,
+On Fri, May 27, 2022 at 07:26:50AM -0400, Mike O'Connor wrote:
+> :I think it's important to remember that closed mailing lists filled
+> :with private/embargoed exploits become valuable targets. They have
+> :been compromised ever since Zardoz in the 1980s, vendor-sec was
+> :discontinued for the same reason. By keeping zerodays in linux-distros
+> :you paint a target on every recipient of the list. You should assume
 > 
-> In the following, I quickly introduce the PoC and briefly describe each CVE.
-> 
-> Please see attached:
-> * The PCAP files containing the Wifi frames triggering the vulnerabilities and
-> * inject-pcap.c to inject the Wifi frames into the 802.11 stack
-I forgot to attach the inject-pcap.c file that sends the frames, sorry for that!
+> Every recipient
 
-Best
-Sönke
-View attachment "inject-pcap.c" of type "text/x-csrc" (2449 bytes)
+Right.
+
+> and their upstream providers.
+
+Luckily, this is mostly not the case with (linux-)distros since all
+messages relayed by the list are encrypted to their recipients' keys.
+
+I say "mostly" because of possible two-stage attacks - where someone got
+only temporary access to a subscriber's computer to compromise the
+private key, but then targets their provider(s) for continued access to
+encrypted messages.
+
+> :that any working exploit code you share to a mailing list will
+> :eventually fall into the hands of bad actors. Therefore, I don't think
+> :selective full-disclosure works.
+> 
+> Long ago, I suggested that such mailing lists should PLAN to be public
+> eventually, and disclose the info themselves before someone beats them
+> to it.  For example, when June comes up, April linux-distros archives
+> are made public, and that's advertised and known.  Given its two week
+> max embargo period, this shouldn't pose an issue for anyone.  There is
+> value in (eventually) seeing the sausage being made.  I know Solar has
+> made old linux-distros mailing list metadata public, has advised folks
+> that "any/all list postings may be made public once the corresponding
+> security issue is publicly disclosed".  I suggest "may" become "will
+> eventually".
+
+Yes, I recall you had suggested that, and it's within consideration.
+
+Alexander
