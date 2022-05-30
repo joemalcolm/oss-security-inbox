@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5326" "Monday" "10" "April" "2017" "07:25:59" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<374565.691777633-sendEmail@localhost>" "113" "[oss-security] elfutils: heap-based buffer overflow in handle_gnu_hash (readelf.c)" nil nil nil "4" "2017041007:25:59" "[oss-security] elfutils: heap-based buffer overflow in handle_gnu_hash (readelf.c)" (number mark "U       ago@gentoo.o Apr 10  113/5326  " thread-indent "\"[oss-security] elfutils: heap-based buffer overflow in handle_gnu_hash (readelf.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 25957 invoked by uid 550); 10 Apr 2017 07:26:16 -0000
+Received: (qmail 9720 invoked by uid 550); 30 May 2022 14:07:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,125 +7,120 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25936 invoked from network); 10 Apr 2017 07:26:16 -0000
-Message-ID: <374565.691777633-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Mon, 10 Apr 2017 07:25:59 +0000
+Received: (qmail 9680 invoked from network); 30 May 2022 14:07:04 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:Cc:To:Subject:From:
+	MIME-Version:Date:Message-ID:Sender:Reply-To:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=t/Pq7d9CPPA0Rxr7VKvxLRlUDYxqNThVWf7nxv3BK2A=; b=A8vJPjR0eBvl4r5PYHD25KI6UB
+	83caVbbNhubLR3wujbAfOtjm6r4+wtYpXd5p4amZqvvPv/cPv81QiUfef/TWJATRKG89SWRwOhb+7
+	mAD1MZ3D/UCJS5QVhgSeMZ9djNGs27uS8TP8s//BAJ3ObqXK+1dm/kj0T/ZgGiup01cmgaiHsW3Mn
+	L4qxuFdsvkNnkFQVIaGKb67u/Xarcd30h4g7YXGcN0UtL1fY+jJuP2M/EaVeQRIaTlZNLJWT7G1EA
+	QCg8gpL/vr5xLD8GFVddcWIQFjOToHiFpimX2veIesNSRR4+GtbKRBVSam9IS1uEv5dNFGYuuDieQ
+	EZKNnfUg==;
+Message-ID: <d2901153-d74f-d45b-23c8-eb5b1160dac3@igalia.com>
+Date: Mon, 30 May 2022 15:06:36 +0100
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-772165.956747816"
-Subject: [oss-security] elfutils: heap-based buffer overflow in handle_gnu_hash (readelf.c)
-
-------MIME delimiter for sendEmail-772165.956747816
-Content-Type: text/plain;
-        charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Content-Language: en-GB
+From: Carlos Alberto Lopez Perez <clopez@igalia.com>
+To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Cc: security@webkit.org, distributor-list@gnome.org,
+ oss-security@lists.openwall.com, bugtraq@securityfocus.com
+Organization: Igalia S.L.
+Mail-Followup-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org,
+ security@webkit.org, distributor-list@gnome.org,
+ oss-security@lists.openwall.com, bugtraq@securityfocus.com
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2022-0005
 
-Description:
-elfutils is a set of libraries/utilities to handle ELF objects (drop in replacement for libelf).
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2022-0005
+------------------------------------------------------------------------
 
-A fuzz on eu-readelf showed an heap overflow.
+Date reported           : May 30, 2022
+Advisory ID             : WSA-2022-0005
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2022-0005.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2022-0005.html
+CVE identifiers         : CVE-2022-26700, CVE-2022-26709,
+                          CVE-2022-26717, CVE-2022-26716,
+                          CVE-2022-26719, CVE-2022-30293,
+                          CVE-2022-30294.
 
-The complete ASan output:
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-# eu-readelf -a $FILE
-==1855==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x611000009ffc at pc 0x000000421a8c bp 0x7ffef67082e0 sp 0x7ffef67082d8
-READ of size 4 at 0x611000009ffc thread T0
-    #0 0x421a8b in handle_gnu_hash /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:3268
-    #1 0x421a8b in handle_hash /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:3346
-    #2 0x4680f7 in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:898
-    #3 0x47ae65 in process_dwflmod /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:690
-    #4 0x7f4bae746094 in dwfl_getmodules /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libdwfl/dwfl_getmodules.c:82
-    #5 0x4365f2 in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:789
-    #6 0x405e50 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:305
-    #7 0x7f4bacd6478f in __libc_start_main (/lib64/libc.so.6+0x2078f)
-    #8 0x406cd8 in _start (/usr/bin/eu-readelf+0x406cd8)
+CVE-2022-26700
+    Versions affected: WebKitGTK and WPE WebKit before 2.36.3.
+    Credit to ryuzaki.
+    Impact: Processing maliciously crafted web content may lead to code
+    execution. Description: A memory corruption issue was addressed with
+    improved state management.
 
-0x611000009ffc is located 0 bytes to the right of 252-byte region [0x611000009f00,0x611000009ffc)
-allocated by thread T0 here:
-    #0 0x7f4baecaa288 in malloc (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libasan.so.3+0xc2288)
-    #1 0x7f4bae120f48 in convert_data /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:166
-    #2 0x7f4bae120f48 in __libelf_set_data_list_rdlock /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:434
-    #3 0x7f4bae1229ba in __elf_getdata_rdlock /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:541
-    #4 0x7f4bae122cae in elf_getdata /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libelf/elf_getdata.c:559
-    #5 0x41f100 in handle_gnu_hash /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:3206
-    #6 0x41f100 in handle_hash /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:3346
-    #7 0x4680f7 in process_elf_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:898
-    #8 0x47ae65 in process_dwflmod /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:690
-    #9 0x7f4bae746094 in dwfl_getmodules /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/libdwfl/dwfl_getmodules.c:82
-    #10 0x4365f2 in process_file /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:789
-    #11 0x405e50 in main /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:305
-    #12 0x7f4bacd6478f in __libc_start_main (/lib64/libc.so.6+0x2078f)
+CVE-2022-26709
+    Versions affected: WebKitGTK and WPE WebKit before 2.36.3.
+    Credit to Chijin Zhou of ShuiMuYuLin Ltd and Tsinghua wingtecher
+    lab.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A use after free issue was
+    addressed with improved memory management.
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/dev-libs/elfutils-0.168/work/elfutils-0.168/src/readelf.c:3268 in handle_gnu_hash
-Shadow bytes around the buggy address:
-  0x0c227fff93a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff93b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff93c0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff93d0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff93e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c227fff93f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00[04]
-  0x0c227fff9400: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff9410: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff9420: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff9430: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff9440: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==1855==ABORTING
+CVE-2022-26717
+    Versions affected: WebKitGTK and WPE WebKit before 2.36.3.
+    Credit to Jeonghoon Shin of Theori.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A use after free issue was
+    addressed with improved memory management.
 
-Affected version:
-0.168
+CVE-2022-26716
+    Versions affected: WebKitGTK and WPE WebKit before 2.36.3.
+    Credit to SorryMybad (@S0rryMybad) of Kunlun Lab.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A memory corruption issue was
+    addressed with improved state management.
 
-Fixed version:
-0.169 (not released atm)
+CVE-2022-26719
+    Versions affected: WebKitGTK and WPE WebKit before 2.36.3.
+    Credit to Dongzhuo Zhao working with ADLab of Venustech.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A memory corruption issue was
+    addressed with improved state management.
 
-Commit fix:
-https://sourceware.org/ml/elfutils-devel/2017-q1/msg00109.html
+CVE-2022-30293
+    Versions affected: WebKitGTK and WPE WebKit before 2.36.1.
+    Credit to Chijin Zhou of ShuiMuYuLin Ltd and Tsinghua wingtecher
+    lab.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution or to a denial of service (application
+    crash). Description: A memory corruption issue that could cause a
+    heap use after free or a heap buffer overflow in
+    WebCore::TextureMapperLayer::setContentsLayer was addressed with
+    improved state management.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-7607
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00225-elfutils-heapoverflow-handle_gnu_hash
-
-Timeline:
-2017-03-24: bug discovered and reported to upstream
-2017-04-04: blog post about the issue
-2017-04-09: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/03/elfutils-heap-based-buffer-overflow-in-handle_gnu_hash-readelf-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+CVE-2022-30294
+    Versions affected: WebKitGTK and WPE WebKit before 2.36.1.
+    Credit to Chijin Zhou of ShuiMuYuLin Ltd and Tsinghua wingtecher
+    lab.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution or to a denial of service (application
+    crash). Description: A memory corruption issue that could cause a
+    heap use after free or a heap buffer overflow in
+    WebCore::TextureMapperLayer::setContentsLayer was addressed with
+    improved state management. This is the same issue than
+    CVE-2022-30293.
 
 
-------MIME delimiter for sendEmail-772165.956747816--
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
 
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+May 30, 2022
