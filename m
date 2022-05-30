@@ -1,26 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/07/2
-Message-ID: <20220407083543.GA16833@openwall.com>
-Date: Thu, 7 Apr 2022 10:35:43 +0200
-From: Solar Designer <solar@...nwall.com>
-To: kangel <kangel@....edu.cn>
-Cc: oss-security@...ts.openwall.com, pgn@....edu.cn, qiuhao@...ec.org, Pedro Sampaio <psampaio@...hat.com>, pbonzini@...hat.com
-Subject: Re: Linux kernel: x86/kvm: null-ptr-deref in kvm_dirty_ring_push
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/30/1
+Message-ID: <d2901153-d74f-d45b-23c8-eb5b1160dac3@igalia.com>
+Date: Mon, 30 May 2022 15:06:36 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0005
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 07, 2022 at 10:15:42AM +0800, kangel wrote:
->     We found a null-ptr-deref in the kvm module which can lead to DoS. This flaw is in kvm_dirty_ring_push in virt/kvm/dirty_ring.c. The linux kernel version is 5.17.0-rc8. We would appreciate a CVE ID if this is a security issue.
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2022-0005
+------------------------------------------------------------------------
 
-Further in the linux-distros thread, this got assigned CVE-2022-1263,
-however is this really a security issue - in other words, is a security
-boundary crossed in triggering the bug?  I think it is not, and if so
-the CVE ID should probably be rejected.  From the PoC:
+Date reported           : May 30, 2022
+Advisory ID             : WSA-2022-0005
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2022-0005.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2022-0005.html
+CVE identifiers         : CVE-2022-26700, CVE-2022-26709,
+                          CVE-2022-26717, CVE-2022-26716,
+                          CVE-2022-26719, CVE-2022-30293,
+                          CVE-2022-30294.
 
-> 		res = syscall(__NR_openat, 0xffffffffffffff9cul, "/dev/kvm", 0ul, 0ul);
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-In fact, also in the linux-distros thread it was promptly agreed that
-this doesn't need an embargo - perhaps precisely because of no security
-relevance?  If so, that should have been said explicitly, so a CVE ID
-wouldn't be assigned (it was by another person).
+CVE-2022-26700
+    Versions affected: WebKitGTK and WPE WebKit before 2.36.3.
+    Credit to ryuzaki.
+    Impact: Processing maliciously crafted web content may lead to code
+    execution. Description: A memory corruption issue was addressed with
+    improved state management.
 
-Alexander
+CVE-2022-26709
+    Versions affected: WebKitGTK and WPE WebKit before 2.36.3.
+    Credit to Chijin Zhou of ShuiMuYuLin Ltd and Tsinghua wingtecher
+    lab.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A use after free issue was
+    addressed with improved memory management.
+
+CVE-2022-26717
+    Versions affected: WebKitGTK and WPE WebKit before 2.36.3.
+    Credit to Jeonghoon Shin of Theori.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A use after free issue was
+    addressed with improved memory management.
+
+CVE-2022-26716
+    Versions affected: WebKitGTK and WPE WebKit before 2.36.3.
+    Credit to SorryMybad (@S0rryMybad) of Kunlun Lab.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A memory corruption issue was
+    addressed with improved state management.
+
+CVE-2022-26719
+    Versions affected: WebKitGTK and WPE WebKit before 2.36.3.
+    Credit to Dongzhuo Zhao working with ADLab of Venustech.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A memory corruption issue was
+    addressed with improved state management.
+
+CVE-2022-30293
+    Versions affected: WebKitGTK and WPE WebKit before 2.36.1.
+    Credit to Chijin Zhou of ShuiMuYuLin Ltd and Tsinghua wingtecher
+    lab.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution or to a denial of service (application
+    crash). Description: A memory corruption issue that could cause a
+    heap use after free or a heap buffer overflow in
+    WebCore::TextureMapperLayer::setContentsLayer was addressed with
+    improved state management.
+
+CVE-2022-30294
+    Versions affected: WebKitGTK and WPE WebKit before 2.36.1.
+    Credit to Chijin Zhou of ShuiMuYuLin Ltd and Tsinghua wingtecher
+    lab.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution or to a denial of service (application
+    crash). Description: A memory corruption issue that could cause a
+    heap use after free or a heap buffer overflow in
+    WebCore::TextureMapperLayer::setContentsLayer was addressed with
+    improved state management. This is the same issue than
+    CVE-2022-30293.
+
+
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
+
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+May 30, 2022
