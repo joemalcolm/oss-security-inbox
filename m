@@ -1,98 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/26/1
-Message-ID: <20220326165217.GA10836@thinkstation.cmpxchg8b.net>
-Date: Sat, 26 Mar 2022 09:52:17 -0700
-From: Tavis Ormandy <taviso@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: zlib memory corruption on deflate (i.e. compress)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/31/3
+Message-ID: <4bd95df2.42f12.1811adb8fd4.Coremail.kangel@zju.edu.cn>
+Date: Wed, 1 Jun 2022 00:03:25 +0800 (GMT+08:00)
+From: kangel <kangel@....edu.cn>
+To: oss-security@...ts.openwall.com, solar@...nwall.com,  john.haxby@...cle.com, carlos.lopez@...e.com
+Cc: secalert@...hat.com, pbonzini@...hat.com, seanjc@...gle.com,  vkuznets@...hat.com, wanpengli@...cent.com, jmattson@...gle.com,  joro@...tes.org, tglx@...utronix.de, mingo@...hat.com, bp@...en8.de,  dave.hansen@...ux.intel.com, x86@...nel.org, hpa@...or.com,  pgn@....edu.cn, qiuhao@...ec.org
+Subject: CVE-2022-1852: Linux Kernel: x86/kvm: NULL pointer dereference in x86_emulate_insn
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Mar 25, 2022 at 08:59:35AM -0500, John Helmert III wrote:
-> 
-> CVE-2018-25032 appears to have been assigned for it now.
-> 
+------------[ Description ]------------    Whenever x86_decode_emulated_instruction() detects a breakpoint, it
+returns the value that kvm_vcpu_check_breakpoint() writes into its
+pass-by-reference second argument.  Unfortunately this is completely
+bogus because the expected outcome of x86_decode_emulated_instruction
+is an EMULATION_* value.
+    Then, if kvm_vcpu_check_breakpoint() does "*r = 0" (corresponding to
+a KVM_EXIT_DEBUG userspace exit), it is misunderstood as EMULATION_OK
+and x86_emulate_instruction() is called without having decoded the
+instruction.  This causes various havoc from running with a stale
+emulation context.    This bug was disclosed on May 24 and assigned CVE-2022-1852. ------------[ Credits ]------------Yongkang Jia (Zhejiang University)Gaoning Pan (Zhejiang University)Qiuhao Li (Harbin Institute of Technology)------------[ Backtrace ]------------BUG: kernel NULL pointer dereference, address: 0000000000000000
+#PF: supervisor instruction fetch in kernel mode
+#PF: error_code(0x0010) - not-present page
+PGD 9112067 P4D 9112067 PUD 1f11067 PMD 0 
+Oops: 0010 [#1] PREEMPT SMP KASAN NOPTI
+CPU: 0 PID: 490 Comm: syz-executor159 Not tainted 5.17.0-rc8 #21
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014RIP: 0010:0x0
+Code: Unable to access opcode bytes at RIP 0xffffffffffffffd6.
+RSP: 0018:ffff88800a747810 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: 0003000008280000 RCX: ffffffff9032ac99
+RDX: 1ffff1100189400d RSI: 0000000000000000 RDI: ffff88800c4a0000
+RBP: ffff88800c4a0088 R08: 0000000000000000 R09: ffff88800a1c41a7
+R10: ffffed1001438834 R11: 0000000000000001 R12: ffff88800c4a0072
+R13: ffffffff932296a0 R14: ffff88800c4a0020 R15: ffff88800c4a0000
+FS:  00007f95fcd82700(0000) GS:ffff88806ce00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: ffffffffffffffd6 CR3: 0000000007c1a003 CR4: 0000000000772ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ x86_emulate_insn+0xe41/0x3480 arch/x86/kvm/emulate.c:5469
+ x86_emulate_instruction+0x972/0x1400 arch/x86/kvm/x86.c:8375
+ kvm_mmu_page_fault+0x48f/0x1b80 arch/x86/kvm/mmu/mmu.c:5359
+ handle_ept_violation+0x24e/0x660 arch/x86/kvm/vmx/vmx.c:5429
+ __vmx_handle_exit arch/x86/kvm/vmx/vmx.c:6171 [inline]
+ vmx_handle_exit+0x5e7/0x1ab0 arch/x86/kvm/vmx/vmx.c:6188
+ vcpu_enter_guest+0x1adb/0x3af0 arch/x86/kvm/x86.c:10178
+ vcpu_run arch/x86/kvm/x86.c:10261 [inline]
+ kvm_arch_vcpu_ioctl_run+0x41e/0x17c0 arch/x86/kvm/x86.c:10471
+ kvm_vcpu_ioctl+0x4d2/0xc60 arch/x86/kvm/../../../virt/kvm/kvm_main.c:3908
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:874 [inline]
+ __se_sys_ioctl fs/ioctl.c:860 [inline]
+ __x64_sys_ioctl+0x16d/0x1d0 fs/ioctl.c:860
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x38/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x44/0xae------------[Patch ]------------The patch is public and it can be found here:https://git.kernel.org/pub/scm/virt/kvm/kvm.git/commit/?h=queue&id=7c718221fb3f1b362ac87b04dc8e143ba8ed09c1C repro is attached.Best regards.    Yongkang Jia
 
-Thanks, I've made some progress working on the bug. I've got a nice
-clean repro for Z_FIXED strategy. To hit the bug, you need to force
-lots of worst-case (distance, length) pairs.
+Content of type "text/html" skipped
 
-Zlib keeps a rolling hash of every 3 bytes of input, then uses this to
-find previous matches and then see how long they are. Here is a good
-explainer:
-
-https://www.euccas.me/zlib/#zlib_hash_chain
-
-
-The longest possible back-reference is 31 bits, starting at
-(distance=16385, length=131).
-
-The trick I found to force those is to use a de Bruijn sequence with
-alphabet length cbrt(2^windowBits) and word length 3 (3 because that's
-MIN_MATCH in zlib). Now there is a match of arbitrary length at every
-single offset that can't be RLE'd away. So you generate one
-2^windowsBits block of this sequence, then repeat the same sequence but
-shuffle the subwords (lyndon words? I might be using the wrong
-terminology).
-
-I've attached a minimal C compressor, and an input that triggers the
-bug. It should trigger ASAN and (if it doesn't crash) produces garbage
-output that doesn't inflate into a matching input.
-
-(Let me know if you want my C code to generate the input)
-
-Repro:
-
-$ gcc deflate.c -o deflate libz.a
-$ deflate < CVE-2018-25032.txt
-trees.c:1091:20: runtime error: index 734 out of bounds for type 'uch [512]'
-trees.c:1091:20: runtime error: load of address 0x7f862280c27e with insufficient space for an object of type 'const uch'
-0x7f862280c27e: note: pointer points here
- 19 19 19 19 19 19  1a 1a 1a 1a 1a 1a 1a 1a  1a 1a 1a 1a 1a 1a 1a 1a  1a 1a 1a 1a 1a 1a 1a 1a  1a 1a
-             ^
-=================================================================
-==8534==ERROR: AddressSanitizer: global-buffer-overflow on address 0x7f862280c1ac at pc 0x7f86227f1b86 bp 0x7ffff6711bd0 sp 0x7ffff6711bc0
-READ of size 1 at 0x7f862280c1ac thread T0
-    #0 0x7f86227f1b85 in compress_block zlib/zlib-1.2.11-orig/trees.c:1091
-    #1 0x7f86227ecdb2 in _tr_flush_block zlib/zlib-1.2.11-orig/trees.c:979
-    #2 0x7f86227cf310 in deflate_slow zlib/zlib-1.2.11-orig/deflate.c:2011
-    #3 0x7f86227b9b90 in deflate zlib/zlib-1.2.11-orig/deflate.c:1003
-    #4 0x7f86227a8849 in main (/home/taviso/deflate+0x95849)
-    #5 0x7f86211540b2 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x240b2)
-    #6 0x7f86227a848d in _start (/home/taviso/deflate+0x9548d)
-
-0x7f862280c1ac is located 12 bytes to the right of global variable '_dist_code' defined in 'trees.h:73:25' (0x7f862280bfa0) of size 512
-0x7f862280c1ac is located 20 bytes to the left of global variable '_length_code' defined in 'trees.h:102:25' (0x7f862280c1c0) of size 256
-SUMMARY: AddressSanitizer: global-buffer-overflow trees.c:1091 in compress_block
-
-If it doesn't crash, You can use the zpipe utility to verify that the
-generated compressed data is garbage.
-
-One question remains - does this *only* affect Z_FIXED, or also
-Z_DEFAULT_STRATEGY? It seems plausible this also affects
-Z_DEFAULT_STRATEGY, because of this condition:
-
-https://github.com/madler/zlib/blob/master/trees.c#L976
-
-    } else if (s->strategy == Z_FIXED || static_lenb == opt_lenb) {
-
-That is, if the optimal and static trees are the same size, then zlib
-*chooses* the Z_FIXED strategy anyway. I don't know if this is
-practically possible yet, I'm investigating but if someone smarter than
-me already knows the answer please let me know!
-
-IMHO, this is a pretty bad bug - but if it is impossible to reach with
-Z_DEFAULT_STRATEGY, then at least there's no need to panic, as Z_FIXED
-is usually only used in special circumstances...
-
-If it possible, well... uh-oh.
-
-Tavis.
-
--- 
- _o)            $ lynx lock.cmpxchg8b.com
- /\\  _o)  _o)  $ finger taviso@....org
-_\_V _( ) _( )  @taviso
-
-View attachment "CVE-2018-25032.txt" of type "text/plain" (32768 bytes)
-
-View attachment "deflate.c" of type "text/x-csrc" (828 bytes)
+View attachment "poc.c" of type "text/plain" (35453 bytes)
