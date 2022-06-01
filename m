@@ -1,96 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/23/1
-Message-ID: <848110348.5557.1661251259917@appsuite-guard.open-xchange.com>
-Date: Tue, 23 Aug 2022 12:40:59 +0200 (CEST)
-From: Otto Moerbeek <otto.moerbeek@...n-xchange.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Security Advisory 2022-02 for PowerDNS Recursor up to and including 4.5.9, 4.6.2, 4.7.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/01/2
+Message-ID: <20220601125513.GA8558@openwall.com>
+Date: Wed, 1 Jun 2022 14:55:13 +0200
+From: Solar Designer <solar@...nwall.com>
+To: tr3e wang <tr3e.wang@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2021-4204: Linux Kernel eBPF Improper Input Validation Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
 
-   Today we have released PowerDNS Recursor 4.5.10, 4.6.3 and 4.7.2 due to
-   a medium severity issue found. The security advisory only applies to
-   Recursors running with protobuf logging enabled.
+In context of the recent discussions on linux-distros list policies and
+their enforcement, I looked at some of the previously handled issues,
+and identified that the below wasn't properly handled/enforced.
 
-   Please find the full text of the advisory below.
+tr3e, since you had shared actual exploit code with linux-distros, you
+were supposed to post the _code_ to oss-security within 7 days after
+your initial public disclosure of the vulnerability.  However, you only
+posted "the exploit overview" and promised that "Full exploit code will
+be published on github in the near future."  Apparently, the latter
+never happened, and it wouldn't have satisfied the requirement anyway.
 
-   The changelogs are available at [1]4.5.10, [2]4.6.3, [3]4.7.2.
+Please post the same exploit code you had shared with linux-distros to
+this thread on oss-security ASAP.  Thank you!
 
-   The source tarballs ([4]4.5.10, [5]4.6.3, [6]4.7.2) and signatures
-   ([7]4.5.10, [8]4.6.3, [9]4.7.2) are available from our download
-   [10]server. Patches are available at [11]patches. Packages for various
-   distributions are available from our [12]repository.
+Alexander
 
-   Note that PowerDNS Recursor 4.4.x and older releases are End of Life.
-   Consult the [13]EOL policy for more details.
-     __________________________________________________________________
-
-   PowerDNS Security Advisory 2022-02: incomplete exception handling
-   related to protobuf message generation
-
-   CVE: CVE-2022-37428
-   Date: 23th of August 2022.
-   Affects: PowerDNS Recursor up to and including 4.5.9, 4.6.2 and 4.7.1
-   Not affected: PowerDNS Recursor 4.5.10, 4.6.3 and 4.7.2
-   Severity: Medium
-   Impact: Denial of service
-   Exploit: This problem can be triggered by a remote attacker with
-   access to the recursor if protobuf logging is enabled
-   Risk of system compromise: None
-   Solution: Upgrade to patched version, disable protobuf logging of responses
-
-   This issue only affects recursors which have protobuf logging enabled
-   using the
-     * protobufServer function with logResponses=true or
-     * outgoingProtobufServer function with logResponses=true
-
-   If either of these functions is used without specifying logResponses,
-   its value is true.
-   An attacker needs to have access to the recursor, i.e. the remote IP
-   must be in the access control list.
-   If an attacker queries a name that leads to an answer with specific
-   properties, a protobuf message might be generated that causes an
-   exception. The code does not handle this exception correctly, causing a
-   denial of service.
-
-References
-
-   1. https://docs.powerdns.com/recursor/changelog/4.5.html#change-4.5.10
-   2. https://docs.powerdns.com/recursor/changelog/4.6.html#change-4.6.3
-   3. https://docs.powerdns.com/recursor/changelog/4.7.html#change-4.7.2
-   4. https://downloads.powerdns.com/releases/pdns-recursor-4.5.10.tar.bz2
-   5. https://downloads.powerdns.com/releases/pdns-recursor-4.6.3.tar.bz2
-   6. https://downloads.powerdns.com/releases/pdns-recursor-4.7.2.tar.bz2
-   7. https://downloads.powerdns.com/releases/pdns-recursor-4.5.10.tar.bz2.sig
-   8. https://downloads.powerdns.com/releases/pdns-recursor-4.6.3.tar.bz2.sig
-   9. https://downloads.powerdns.com/releases/pdns-recursor-4.7.2.tar.bz2.sig
-  10. https://downloads.powerdns.com/releases/
-  11. https://downloads.powerdns.com/patches/2022-02/
-  12. https://repo.powerdns.com/
-  13. https://docs.powerdns.com/recursor/appendices/EOL.html
-
-
-
-
---
-
-kind regards,
-Otto Moerbeek
-PowerDNS Developer
-
-
-
-Email: otto.moerbeek@...n-xchange.com
-
-
--------------------------------------------------------------------------------------
-Open-Xchange AG, Hohenzollernring 72, 50672 Cologne, District Court Cologne HRB 95366
-Managing Board: Andreas Gauger, Dirk Valbert, Frank Hoberg, Stephan Martin
-Chairman of the Board: Richard Seibt
-
-PowerDNS.COM BV, Koninginnegracht 14L, 2514 AA Den Haag, The Netherlands
-Managing Director: Robert Brandt, Maxim Letski
--------------------------------------------------------------------------------------
-
-Download attachment "signature.asc" of type "application/pgp-signature" (476 bytes)
+On Tue, Jan 18, 2022 at 09:26:43PM +0800, tr3e wang wrote:
+> Hi all,
+> 
+> This post is the exploit overview of CVE-2021-4202.
+> 
+> We successfully exploited this vulnerability to obtain full root
+> privileges on default installations of Ubuntu 20.04.
+> 
+> *Exploit overview*
+> 
+> 1. We create a lot of BPF ringbufs, and choose one of them as victim.
+>    The BPF_FUNC_ringbuf_reserve allow us to have a pointer A to the
+>    beginning of the victim ringbuf's data field.
+> 
+> 2. We do a pointer subtraction to point back to the victim ringbuf's
+>    mask field and overwrite it to 0x80000fff through
+> BPF_FUNC_ringbuf_submit.
+>    This allows us to do a limited out-of-bounds read/write. If lucky,
+>    we can read/write all the fields of the ringbuf behind the victim.
+> 
+> 3. With the full control over all fields of the ringbuf behind the
+>    victim, we can manipulate the ringbuf to achieve a restricted
+>    address read/write with side effects in the vmalloc space.
+> 
+> 4. We spawn many child processes, and use restricted address read to
+>    find the address of task_struct and cred in the vmalloc space.
+>    After zeroing out the uid/gid/... , full root privileges obtained.
+> 
+> Full exploit code will be published on github in the near future.
+> 
+> Regards,
+> tr3e
