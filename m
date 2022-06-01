@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1253" "Thursday" "27" "October" "2016" "13:30:50" "+0100" "Mark Thomas" "markt@apache.org" "<bbd5381b-ede3-6278-c442-820c74a0d259@apache.org>" "38" "[oss-security] [SECURITY] CVE-2016-5018 Apache Tomcat Security Manager Bypass" nil nil nil "10" "2016102712:30:50" "[oss-security] [SECURITY] CVE-2016-5018 Apache Tomcat Security Manager Bypass" (number mark "U       markt@apache Oct 27   38/1253  " thread-indent "\"[oss-security] [SECURITY] CVE-2016-5018 Apache Tomcat Security Manager Bypass\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 13680 invoked by uid 550); 27 Oct 2016 13:20:25 -0000
+Received: (qmail 28283 invoked by uid 550); 1 Jun 2022 12:55:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,53 +7,67 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5148 invoked from network); 27 Oct 2016 12:32:18 -0000
-From: Mark Thomas <markt@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <bbd5381b-ede3-6278-c442-820c74a0d259@apache.org>
-Date: Thu, 27 Oct 2016 13:30:50 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] [SECURITY] CVE-2016-5018 Apache Tomcat Security Manager Bypass
+Received: (qmail 27859 invoked from network); 1 Jun 2022 12:55:25 -0000
+Date: Wed, 1 Jun 2022 14:55:13 +0200
+From: Solar Designer <solar@openwall.com>
+To: tr3e wang <tr3e.wang@gmail.com>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20220601125513.GA8558@openwall.com>
+References: <CA+eGCHb3=V20Fh-dda20O6xtfBszuKmHnqSupsmrz_1Xuj3N4Q@mail.gmail.com> <CA+eGCHa47pnvi376PCQJE-zMaVR_y6WLTK4CyE-yKT87jDZKuA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CA+eGCHa47pnvi376PCQJE-zMaVR_y6WLTK4CyE-yKT87jDZKuA@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2021-4204: Linux Kernel eBPF Improper Input Validation Vulnerability
 
-CVE-2016-5018 Apache Tomcat Security Manager Bypass
+Hi,
 
-Severity: Low
+In context of the recent discussions on linux-distros list policies and
+their enforcement, I looked at some of the previously handled issues,
+and identified that the below wasn't properly handled/enforced.
 
-Vendor: The Apache Software Foundation
+tr3e, since you had shared actual exploit code with linux-distros, you
+were supposed to post the _code_ to oss-security within 7 days after
+your initial public disclosure of the vulnerability.  However, you only
+posted "the exploit overview" and promised that "Full exploit code will
+be published on github in the near future."  Apparently, the latter
+never happened, and it wouldn't have satisfied the requirement anyway.
 
-Versions Affected:
-Apache Tomcat 9.0.0.M1 to 9.0.0.M9
-Apache Tomcat 8.5.0 to 8.5.4
-Apache Tomcat 8.0.0.RC1 to 8.0.36
-Apache Tomcat 7.0.0 to 7.0.70
-Apache Tomcat 6.0.0 to 6.0.45
-Earlier, unsupported versions may also be affected.
+Please post the same exploit code you had shared with linux-distros to
+this thread on oss-security ASAP.  Thank you!
 
-Description
-A malicious web application was able to bypass a configured
-SecurityManager via a Tomcat utility method that was accessible to web
-applications.
+Alexander
 
-Mitigation
-Users of affected versions should apply one of the following mitigations
-- Upgrade to Apache Tomcat 9.0.0.M10 or later
-- Upgrade to Apache Tomcat 8.5.5 or later
-- Upgrade to Apache Tomcat 8.0.37 or later
-- Upgrade to Apache Tomcat 7.0.72 or later
-  (Apache Tomcat 7.0.71 has the fix but was not released)
-- Upgrade to Apache Tomcat 6.0.47 or later
-  (Apache Tomcat 6.0.46 has the fix but was not released)
-
-Credit:
-This issue was discovered by Alvaro Munoz of the HP Enterprise Security
-Team and reported responsibly to the Apache Tomcat Security Team.
-
-References:
-[1] http://tomcat.apache.org/security-9.html
-[2] http://tomcat.apache.org/security-8.html
-[3] http://tomcat.apache.org/security-7.html
-[4] http://tomcat.apache.org/security-6.html
+On Tue, Jan 18, 2022 at 09:26:43PM +0800, tr3e wang wrote:
+> Hi all,
+> 
+> This post is the exploit overview of CVE-2021-4202.
+> 
+> We successfully exploited this vulnerability to obtain full root
+> privileges on default installations of Ubuntu 20.04.
+> 
+> *Exploit overview*
+> 
+> 1. We create a lot of BPF ringbufs, and choose one of them as victim.
+>    The BPF_FUNC_ringbuf_reserve allow us to have a pointer A to the
+>    beginning of the victim ringbuf's data field.
+> 
+> 2. We do a pointer subtraction to point back to the victim ringbuf's
+>    mask field and overwrite it to 0x80000fff through
+> BPF_FUNC_ringbuf_submit.
+>    This allows us to do a limited out-of-bounds read/write. If lucky,
+>    we can read/write all the fields of the ringbuf behind the victim.
+> 
+> 3. With the full control over all fields of the ringbuf behind the
+>    victim, we can manipulate the ringbuf to achieve a restricted
+>    address read/write with side effects in the vmalloc space.
+> 
+> 4. We spawn many child processes, and use restricted address read to
+>    find the address of task_struct and cred in the vmalloc space.
+>    After zeroing out the uid/gid/... , full root privileges obtained.
+> 
+> Full exploit code will be published on github in the near future.
+> 
+> Regards,
+> tr3e
