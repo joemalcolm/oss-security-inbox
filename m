@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6369" "Tuesday" "25" "October" "2016" "11:41:14" "+0200" "Marcus Meissner" "meissner@suse.de" "<20161025094114.GE8134@suse.de>" "123" "Re: [oss-security] libwmf: memory allocation failure in wmf_malloc (api.c)" nil nil nil "10" "2016102509:41:14" "[oss-security] libwmf: memory allocation failure in wmf_malloc (api.c)" (number mark "U       meissner@sus Oct 25  123/6369  " thread-indent "\"Re: [oss-security] libwmf: memory allocation failure in wmf_malloc (api.c)\"\n") "<2620117.JbBQOqU5X0@blackgate>" ("<2620117.JbBQOqU5X0@blackgate>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 19673 invoked by uid 550); 25 Oct 2016 09:41:28 -0000
+Received: (qmail 20309 invoked by uid 550); 2 Jun 2022 10:34:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,146 +7,292 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19649 invoked from network); 25 Oct 2016 09:41:27 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Tue, 25 Oct 2016 11:41:14 +0200
-From: Marcus Meissner <meissner@suse.de>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Message-ID: <20161025094114.GE8134@suse.de>
-References: <2620117.JbBQOqU5X0@blackgate>
+Received: (qmail 21664 invoked from network); 2 Jun 2022 02:21:48 -0000
+X-Alimail-AntiSpam: AC=PASS;BC=-1|-1;BR=01201311R181e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=ay29a033018047212;MF=zhangziming.zzm@antgroup.com;NM=1;PH=DW;RN=1;SR=0;TI=W4_0.1.30_v5ForDingX_21254BF6_1654136323160_o7001c127l;
+Date: Thu, 02 Jun 2022 10:21:36 +0800
+From: "=?UTF-8?B?5byg5a2Q5piOKOaYjueoiyk=?=" <zhangziming.zzm@antgroup.com>
+To: "oss-security" <oss-security@lists.openwall.com>
+Message-ID: <adc61777-4814-4426-9d6d-2a2af6d09426.zhangziming.zzm@antgroup.com>
+X-Mailer: [Alimail-Mailagent][W4_0.1.30][v5ForDingX][Chrome]
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <2620117.JbBQOqU5X0@blackgate>
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: Re: [oss-security] libwmf: memory allocation failure in wmf_malloc
- (api.c)
+x-aliyun-mail-creator: W4_0.1.30_v5ForDingX_luZTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgMTAuMDsgV09XNjQpIEFwcGxlV2ViS2l0LzUzNy4zNiAoS0hUTUwsIGxpa2UgR2Vja28pIENocm9tZS85MS4wLjQ0NzIuMTY0IFNhZmFyaS81MzcuMzYgZGluZ3RhbGstd2luLzEuMC4wIG53KDAuMTQuNykgRGluZ1RhbGsoNi4zLjI1LVJlbGVhc2UuMjE2OTEwNikgTW9qby8xLjAuMCBOYXRpdmUgQXBwVHlwZShyZWxlYXNlKSBDaGFubmVsLzIwMTIwMA==gZ
+Content-Type: multipart/alternative;
+  boundary="----=ALIBOUNDARY_72653_7fd3c03e8700_62981eb0_16ecef9"
+Subject: [oss-security] =?UTF-8?B?Q1ZFLTIwMjItMTk3Mjogb3V0LW9mLWJvdW5kIHdyaXRlIGluIExpbnV4IG5ldGZpbHRlciBz?=
+  =?UTF-8?B?dWJzeXN0ZW0gbGVhZHMgdG8gbG9jYWwgcHJpdmlsZWdlIGVzY2FsYXRpb24=?=
 
-Hi,
+------=ALIBOUNDARY_72653_7fd3c03e8700_62981eb0_16ecef9
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
 
-can you send the reproducer too please.
+CkhlbGxvLAoKQW4gb3V0LW9mLWJvdW5kIHdyaXRlIHZ1bG5lcmFiaWxpdHkg
+d2FzIGlkZW50aWZpZWQgd2l0aGluIHRoZQpuZXRmaWx0ZXIgc3Vic3lzdGVt
+CndoaWNoIGNhbiBiZSBleHBsb2l0ZWQgdG8gYWNoaWV2ZSBwcml2aWxlZ2Ug
+ZXNjYWxhdGlvbiB0byByb290LgoKSW4gb3JkZXIgdG8gdHJpZ2dlciB0aGUg
+aXNzdWUgaXQgcmVxdWlyZXMgdGhlIGFiaWxpdHkgdG8gY3JlYXRlIHVzZXIv
+bmV0Cm5hbWVzcGFjZXMuCgp0aGlzIHZ1bG5lcmFiaWxpdHkgY29tZXMgZnJv
+bSBjb21taXQoCmh0dHBzOi8vZ2l0aHViLmNvbS90b3J2YWxkcy9saW51eC9j
+b21taXQvZjNhMjE4MWUxNmYxZGNiZjU0NDZlZDQzZjZiNWQ5ZjU2YzQ1OWY4
+NSkKClRoaXMgaXNzdWUgaGFzIGJlZW4gZml4ZWQgd2l0aGluIHRoZSBmb2xs
+b3dpbmcgY29tbWl0OgoKaHR0cHM6Ly9naXQua2VybmVsLm9yZy9wdWIvc2Nt
+L2xpbnV4L2tlcm5lbC9naXQvbmV0ZGV2L25ldC5naXQvY29tbWl0Lz9pZD1m
+ZWNmMzFlZTM5NWIwMjk1ZjJkNzI2MGFhMjk5NDZiNzYwNWY3Yzg1Cgp3ZSBo
+YXZlIGNvbmZpcm1lZCBpdCBjYW4gYmUKZXhwbG9pdGVkIGZvciBwcml2aWxl
+Z2UgZXNjYWxhdGlvbiBvbiBVYnVudHUgMjEuMTAgKExpbnV4IGtlcm5lbAo1
+LjEzLjAtMzktZ2VuZXJpYykuCgoKIyBWdWxuZXJhYmlsaXR5IERldGFpbHMK
+CuKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjWBgYGMKc3RhdGljIGludCBuZnRfc2V0X2Rlc2NfY29uY2F0X3Bh
+cnNlKGNvbnN0IHN0cnVjdCBubGF0dHIgKmF0dHIsCiAgICAgICAgIHN0cnVj
+dCBuZnRfc2V0X2Rlc2MgKmRlc2MpCnsKIHN0cnVjdCBubGF0dHIgKnRiW05G
+VEFfU0VUX0ZJRUxEX01BWCArIDFdOwogdTMyIGxlbjsKIGludCBlcnI7Cgog
+ZXJyID0gbmxhX3BhcnNlX25lc3RlZF9kZXByZWNhdGVkKHRiLCBORlRBX1NF
+VF9GSUVMRF9NQVgsIGF0dHIsCiAgICAgICBuZnRfY29uY2F0X3BvbGljeSwg
+TlVMTCk7Ci4uLi4KIGxlbiA9IG50b2hsKG5sYV9nZXRfYmUzMih0YltORlRB
+X1NFVF9GSUVMRF9MRU5dKSk7CgogaWYgKGxlbiAqIEJJVFNfUEVSX0JZVEUg
+LyAzMiA+IE5GVF9SRUczMl9DT1VOVCkgLy9jb250ZW50IDwgMHg0MAogIHJl
+dHVybiAtRTJCSUc7CgogZGVzYy0+ZmllbGRfbGVuW2Rlc2MtPmZpZWxkX2Nv
+dW50KytdID0gbGVuOyAvL29vYiB3cml0ZQogcmV0dXJuIDA7Cn0K4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+YGBgClRoaXMgd2lsbCBjYXVzZSBzdGFjayBvdmVyZmxvdywgYW5kIHRoZSBm
+aWVsZF9jb3VudCBmaWVsZCB3aWxsIGJlIG92ZXJ3cml0dGVuIGFmdGVyIHRo
+ZSBvdmVyZmxvdyBvY2N1cnMuIEl0IHdpbGwgY2F1c2Ugc3RhY2sgb3ZlcmZs
+b3cgd2l0aCBjb250cm9sbGFibGUgaW5kZXguCgpJbiB0aGUgbmZfdGFibGVz
+X25ld3NldCBmdW5jdGlvbgoK4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCN
+4oCN4oCN4oCN4oCN4oCN4oCN4oCN4oCNYGBgYwpzZXQtPmZpZWxkX2NvdW50
+ID0gZGVzYy5maWVsZF9jb3VudDsKZm9yIChpID0gMDsgaSA8IGRlc2MuZmll
+bGRfY291bnQ7IGkrKykKICAgIHNldC0+ZmllbGRfbGVuW2ldID0gZGVzYy5m
+aWVsZF9sZW5baV07IC8vQmVjYXVzZSBmaWVsZF9jb3VudCBpcyBjb250cm9s
+bGVkLCBpdCB3aWxsIGNhdXNlIGFub3RoZXIgb3V0LW9mLWJvdW5kcyB3cml0
+ZSBwcm9ibGVtCuKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKAjeKA
+jeKAjeKAjeKAjeKAjeKAjWBgYAoKIyBQT0MgQ29kZQpwb2MuYwpnY2MgcG9j
+LmMgYHBrZy1jb25maWcgLS1jZmxhZ3MgLS1saWJzIGxpYm5sLTMuMCBsaWJu
+bC1nZW5sLTMuMGAgLWxtbmwgLWxuZnRubCAtbWFzbT1pbnRlbCAtbm8tcGll
+IC1vIHBvYyAtLW5vLXdhcm5pbmdzCgojZGVmaW5lIF9HTlVfU09VUkNFCiNp
+bmNsdWRlIDxzeXMvdHlwZXMuaD4KI2luY2x1ZGUgPGFycGEvaW5ldC5oPgoj
+aW5jbHVkZSA8bGludXgvbmV0ZmlsdGVyLmg+CiNpbmNsdWRlIDxsaW51eC9u
+ZXRmaWx0ZXIvbmZuZXRsaW5rLmg+CiNpbmNsdWRlIDxsaW51eC9uZXRmaWx0
+ZXIvbmZfdGFibGVzLmg+CiNpbmNsdWRlIDxsaWJtbmwvbGlibW5sLmg+CiNp
+bmNsdWRlIDxsaWJuZnRubC90YWJsZS5oPgojaW5jbHVkZSA8bGlibmZ0bmwv
+Y2hhaW4uaD4KI2luY2x1ZGUgPGxpYm5mdG5sL3J1bGUuaD4KI2luY2x1ZGUg
+PGxpYm5mdG5sL2V4cHIuaD4KI2luY2x1ZGUgPGxpYm5mdG5sL3NldC5oPgoj
+aW5jbHVkZSA8ZXJyLmg+CiNpbmNsdWRlIDxzdGRpby5oPgojaW5jbHVkZSA8
+c3RkbGliLmg+CiNpbmNsdWRlIDx1bmlzdGQuaD4KI2luY2x1ZGUgPGZjbnRs
+Lmg+CiNpbmNsdWRlIDxzdGRpbnQuaD4KI2luY2x1ZGUgPHN0cmluZy5oPgoj
+aW5jbHVkZSA8c3lzL2lvY3RsLmg+CiNpbmNsdWRlIDxzeXMvc3lzY2FsbC5o
+PgojaW5jbHVkZSA8c3lzL3NvY2tldC5oPgojaW5jbHVkZSA8ZXJybm8uaD4K
+I2luY2x1ZGUgPHN0ZGlvLmg+CiNpbmNsdWRlIDx1bmlzdGQuaD4KI2luY2x1
+ZGUgPGFzc2VydC5oPgojaW5jbHVkZSA8ZXJyLmg+CiNpbmNsdWRlIDxlcnJu
+by5oPgojaW5jbHVkZSA8ZmNudGwuaD4KI2luY2x1ZGUgPGludHR5cGVzLmg+
+CiNpbmNsdWRlIDxzY2hlZC5oPgojaW5jbHVkZSA8c3RkaW8uaD4KI2luY2x1
+ZGUgPHN0ZGxpYi5oPgojaW5jbHVkZSA8c3RyaW5nLmg+CiNpbmNsdWRlIDx1
+bmlzdGQuaD4KI2luY2x1ZGUgPG5ldC9pZi5oPgojaW5jbHVkZSA8bmV0aW5l
+dC9pbi5oPgojaW5jbHVkZSA8c3lzL2lwYy5oPgojaW5jbHVkZSA8c3lzL21z
+Zy5oPgojaW5jbHVkZSA8c3lzL3NvY2tldC5oPgojaW5jbHVkZSA8c3lzL3N5
+c2NhbGwuaD4KI2luY2x1ZGUgPHN0cmluZy5oPgojaW5jbHVkZSA8c3RkbGli
+Lmg+CiNpbmNsdWRlIDxlcnJuby5oPgojaW5jbHVkZSA8c3lzL3NvY2tldC5o
+PgojaW5jbHVkZSA8YXJwYS9pbmV0Lmg+CiNpbmNsdWRlIDxzdGRkZWYuaD4K
+I2luY2x1ZGUgPHN0ZGxpYi5oPgp2b2lkIG1ha2VfcGF5bG9hZChjaGFyICpi
+dWYxKXsKICBpbnQgaW5kZXg9MDsKICBidWYxW2luZGV4XT04OwogIGluZGV4
+Kz0yOwogIGJ1ZjFbaW5kZXhdPTE7CiAgaW5kZXgrPTI7CiAgYnVmMVtpbmRl
+eF09MHgwMDsKICBidWYxW2luZGV4KzFdPTB4MDA7CiAgYnVmMVtpbmRleCsy
+XT0weDAwOwogIGJ1ZjFbaW5kZXgrM109MHgwMDsKICBpbmRleCs9NDsKICBi
+dWYxW2luZGV4XT0weGY4OwogIGJ1ZjFbaW5kZXgrMV09MHgzOwogIGluZGV4
+Kz0yOwogIGJ1ZjFbaW5kZXhdPTI7CiAgaW5kZXgrPTI7CiAgZm9yKGludCBp
+PTA7aTwweDIwO2krKyl7CiAgYnVmMVtpbmRleF09MHhjOyAvL2xlbgogIGlu
+ZGV4Kz0yOwogIGJ1ZjFbaW5kZXhdPTB4MTsvL3R5cGUKICBpbmRleCs9MjsK
+ICBidWYxW2luZGV4XT0weDg7CiAgaW5kZXgrPTI7CiAgYnVmMVtpbmRleF09
+MHgxOwogIGJ1ZjFbaW5kZXgrNV09MHgzMDsKICBpbmRleCs9NjsKfQp9Cmlu
+dCBzZXR1cF9zYW5kYm94KHZvaWQpIHsKCiAgaWYgKHVuc2hhcmUoQ0xPTkVf
+TkVXVVNFUikgPCAwKSB7CiAgICBwZXJyb3IoIlstXSB1bnNoYXJlKENMT05F
+X05FV1VTRVIpIik7CiAgICByZXR1cm4gLTE7CiAgfQoKICBpZiAodW5zaGFy
+ZShDTE9ORV9ORVdORVQpIDwgMCkgewogICAgcGVycm9yKCJbLV0gdW5zaGFy
+ZShDTE9ORV9ORVdORVQpIik7CiAgICByZXR1cm4gLTE7CiAgfQoKICBjcHVf
+c2V0X3Qgc2V0OwogIENQVV9aRVJPKCZzZXQpOwogIENQVV9TRVQoMSwgJnNl
+dCk7CiAgaWYgKHNjaGVkX3NldGFmZmluaXR5KGdldHBpZCgpLCBzaXplb2Yo
+c2V0KSwgJnNldCkgPCAwKSB7CiAgICBwZXJyb3IoIlstXSBzY2hlZF9zZXRh
+ZmZpbml0eSIpOwogICAgcmV0dXJuIC0xOwogIH0KCiAgcmV0dXJuIDA7Cn0K
+CgppbnQgbWFpbihpbnQgYXJnYywgY2hhciAqKmFyZ3YpIHsKc2V0dXBfc2Fu
+ZGJveCgpOy8vU2V0IHRoZSBuYW1lc3BhY2UKCiAgc3RydWN0IG5mdG5sX3Rh
+YmxlICp0YWJsZSA9IG5mdG5sX3RhYmxlX2FsbG9jKCk7CiAgbmZ0bmxfdGFi
+bGVfc2V0X3N0cih0YWJsZSwgTkZUTkxfVEFCTEVfTkFNRSwgIngiKTsKICBu
+ZnRubF90YWJsZV9zZXRfdTMyKHRhYmxlLCBORlROTF9UQUJMRV9GTEFHUywg
+MCk7CiAgY2hhciBidWZbTU5MX1NPQ0tFVF9CVUZGRVJfU0laRV07CiAgc3Ry
+dWN0IG1ubF9ubG1zZ19iYXRjaCAqYmF0Y2ggPSBtbmxfbmxtc2dfYmF0Y2hf
+c3RhcnQoYnVmLCBzaXplb2YoYnVmKSk7CiAgaW50IHNlcSA9IDA7CiAgbmZ0
+bmxfYmF0Y2hfYmVnaW4obW5sX25sbXNnX2JhdGNoX2N1cnJlbnQoYmF0Y2gp
+LCBzZXErKyk7CiAgbW5sX25sbXNnX2JhdGNoX25leHQoYmF0Y2gpOwogIHN0
+cnVjdCBubG1zZ2hkciAqbmxoOwogIG5saCA9IG5mdG5sX3RhYmxlX25sbXNn
+X2J1aWxkX2hkcihtbmxfbmxtc2dfYmF0Y2hfY3VycmVudChiYXRjaCksCiAg
+ICAgIE5GVF9NU0dfTkVXVEFCTEUsIE5GUFJPVE9fTkVUREVWLAogICAgICAw
+LCBzZXErKyk7CiAgbmZ0bmxfdGFibGVfbmxtc2dfYnVpbGRfcGF5bG9hZChu
+bGgsIHRhYmxlKTsKICBtbmxfbmxtc2dfYmF0Y2hfbmV4dChiYXRjaCk7CiAg
+Y2hhciBidWYxWzB4OTAwXTsKICBtZW1zZXQoYnVmMSwwLDB4ODAwKTsKICBt
+YWtlX3BheWxvYWQoYnVmMSk7Ly9Db25zdHJ1Y3Rpb24gZGF0YSB0cmlnZ2Vy
+IHZ1bG5lcmFiaWxpdHkKICBubGg9bmZ0bmxfc2V0X25sbXNnX2J1aWxkX2hk
+cihtbmxfbmxtc2dfYmF0Y2hfY3VycmVudChiYXRjaCksCiAgICAgIE5GVF9N
+U0dfTkVXU0VULCBORlBST1RPX05FVERFViwKICAgICAgTkxNX0ZfQ1JFQVRF
+LCBzZXErKyk7CiAgbW5sX2F0dHJfcHV0X3N0cnoobmxoLE5GVEFfU0VUX1RB
+QkxFLCJ4Iik7CiAgbW5sX2F0dHJfcHV0X3N0cnoobmxoLE5GVEFfU0VUX05B
+TUUsInkiKTsKICBtbmxfYXR0cl9wdXRfdTMyKG5saCxORlRBX1NFVF9LRVlf
+TEVOLDB4MDQwMDAwMDApOwogIG1ubF9hdHRyX3B1dF91MzIobmxoLE5GVEFf
+U0VUX0lELDEwKTsKICBtbmxfYXR0cl9wdXRfdTMyKG5saCxORlRBX1NFVF9G
+TEFHUyxodG9ubCgwKSk7CiAgaW50NjRfdCB1c2VyX2RhdGFbMHgxMDBdOwog
+IHVzZXJfZGF0YVswXT0weDEyMzQ1Njc4OwogIHVzZXJfZGF0YVsxXT0weDg3
+NjU0MzIxOwogIG1ubF9hdHRyX3B1dChubGgsTkZUQV9TRVRfVVNFUkRBVEEs
+MHg4LHVzZXJfZGF0YSk7CiAgbW5sX2F0dHJfcHV0KG5saCxORlRBX1NFVF9E
+RVNDLDB4NDAwLGJ1ZjEpOwogIG1ubF9ubG1zZ19iYXRjaF9uZXh0KGJhdGNo
+KTsKICBuZnRubF9iYXRjaF9lbmQobW5sX25sbXNnX2JhdGNoX2N1cnJlbnQo
+YmF0Y2gpLCBzZXErKyk7CiAgbW5sX25sbXNnX2JhdGNoX25leHQoYmF0Y2gp
+OwogIHN0cnVjdCBtbmxfc29ja2V0ICpubCA9IG1ubF9zb2NrZXRfb3BlbihO
+RVRMSU5LX05FVEZJTFRFUik7Ly9TZW5kCiAgaWYgKG5sID09IE5VTEwpIHsK
+ICAgICAgZXJyKDEsICJtbmxfc29ja2V0X29wZW4iKTsKICB9CiAgaWYgKG1u
+bF9zb2NrZXRfc2VuZHRvKG5sLCBtbmxfbmxtc2dfYmF0Y2hfaGVhZChiYXRj
+aCksCiAgICAgICAgICBtbmxfbmxtc2dfYmF0Y2hfc2l6ZShiYXRjaCkpIDwg
+MCkgewogICAgICBlcnIoMSwgIm1ubF9zb2NrZXRfc2VuZCIpOwogIH0KICBy
+ZXR1cm4gMDsKfQoKPSo9Kj0qPSo9Kj0qPSo9Kj0gIENyZWRpdCAgPSo9Kj0q
+PSo9Kj0qPSo9Kj0KemltaW5nIHpoYW5nKEBlenJhazFlKSBmcm9tIEFudCBH
+cm91cCBMaWdodC1ZZWFyIFNlY3VyaXR5IExhYgoKQmVzdCBSZWdhcmRzLAp6
+aW1pbmc=
 
-Ciao, Marcus
-On Tue, Oct 18, 2016 at 05:17:37PM +0200, Agostino Sarubbo wrote:
-> Description:
-> libwmf is a library for reading vector images in Microsøft’s native Windøws 
-> Metafile Format (WMF) and for either (a) displaying them in, e.g., an X 
-> window; or (b) converting them to more standard/open file formats such as, 
-> e.g., the W3C’s XML-based Scaleable Vector Graphic (SVG) format.
-> 
-> A fuzzing through imagemagick revealed a memory allocation failure. It was 
-> first reported to imagemagick developers(to double-check) which stated that 
-> the issue is in libwmf.
-> Since the libwmf project is dead the issue has not been reported elsewhere.
-> 
-> The complete ASan output:
-> 
-> # identify $FILE
-> ==25497==ERROR: AddressSanitizer failed to allocate 0xfe769000 (4269182976) 
-> bytes of LargeMmapAllocator (error code: 12)                                                                                                                                                       
-> ==25497==Process memory map follows:                                                                                                                                                                                                                                           
-> [..cut here..]
-> ==25497==End of process memory map.
-> ==25497==AddressSanitizer CHECK failed: /var/tmp/portage/sys-devel/llvm-3.8.1-
-> r2/work/llvm-3.8.1.src/projects/compiler-
-> rt/lib/sanitizer_common/sanitizer_common.cc:183 "((0 && "unable to mmap")) != 
-> (0)" (0x0, 0x0)
->     #0 0x4c9f9d in AsanCheckFailed /var/tmp/portage/sys-devel/llvm-3.8.1-
-> r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_rtl.cc:67
->     #1 0x4d0ad3 in __sanitizer::CheckFailed(char const*, int, char const*, 
-> unsigned long long, unsigned long long) /var/tmp/portage/sys-devel/llvm-3.8.1-
-> r2/work/llvm-3.8.1.src/projects/compiler-
-> rt/lib/sanitizer_common/sanitizer_common.cc:159
->     #2 0x4d0cc1 in __sanitizer::ReportMmapFailureAndDie(unsigned long, char 
-> const*, char const*, int, bool) /var/tmp/portage/sys-devel/llvm-3.8.1-
-> r2/work/llvm-3.8.1.src/projects/compiler-
-> rt/lib/sanitizer_common/sanitizer_common.cc:183
->     #3 0x4d9cfa in __sanitizer::MmapOrDie(unsigned long, char const*, bool) 
-> /var/tmp/portage/sys-devel/llvm-3.8.1-
-> r2/work/llvm-3.8.1.src/projects/compiler-
-> rt/lib/sanitizer_common/sanitizer_posix.cc:122
->     #4 0x42208f in 
-> __sanitizer::LargeMmapAllocator::Allocate(__sanitizer::AllocatorStats*, 
-> unsigned long, unsigned long) /var/tmp/portage/sys-devel/llvm-3.8.1-
-> r2/work/llvm-3.8.1.src/projects/compiler-
-> rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1033
->     #5 0x42208f in 
-> __sanitizer::CombinedAllocator<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-> 4398046511104ul, 0ul, __sanitizer::SizeClassMap, 
-> __asan::AsanMapUnmapCallback>, 
-> __sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-> 4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
-> >, __sanitizer::LargeMmapAllocator 
-> >::Allocate(__sanitizer::SizeClassAllocatorLocalCache<__sanitizer::SizeClassAllocator64<105553116266496ul, 
-> 4398046511104ul, 0ul, __sanitizer::SizeClassMap, __asan::AsanMapUnmapCallback> 
-> >*, unsigned long, unsigned long, bool, bool) /var/tmp/portage/sys-
-> devel/llvm-3.8.1-r2/work/llvm-3.8.1.src/projects/compiler-
-> rt/lib/asan/../sanitizer_common/sanitizer_allocator.h:1302
->     #6 0x42208f in __asan::Allocator::Allocate(unsigned long, unsigned long, 
-> __sanitizer::BufferedStackTrace*, __asan::AllocType, bool) 
-> /var/tmp/portage/sys-devel/llvm-3.8.1-
-> r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:368
->     #7 0x42208f in __asan::asan_malloc(unsigned long, 
-> __sanitizer::BufferedStackTrace*) /var/tmp/portage/sys-devel/llvm-3.8.1-
-> r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:718
->     #8 0x4c0661 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
-> r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:53
->     #9 0x7f7173b4d337 in wmf_malloc /tmp/portage/media-libs/libwmf-0.2.8.4-
-> r6/work/libwmf-0.2.8.4/src/api.c:482
->     #10 0x7f7173b5d2f8 in wmf_scan /tmp/portage/media-libs/libwmf-0.2.8.4-
-> r6/work/libwmf-0.2.8.4/src/player.c:143
->     #11 0x7f7173d6dcf7 in ReadWMFImage /tmp/portage/media-
-> gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/coders/wmf.c:2675:13
->     #12 0x7f717fde7b12 in ReadImage /tmp/portage/media-
-> gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:496:13
->     #13 0x7f718057f406 in ReadStream /tmp/portage/media-
-> gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/stream.c:1012:9
->     #14 0x7f717fde65ca in PingImage /tmp/portage/media-
-> gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:226:9
->     #15 0x7f717fde6e25 in PingImages /tmp/portage/media-
-> gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickCore/constitute.c:326:10
->     #16 0x7f717f66c4c3 in IdentifyImageCommand /tmp/portage/media-
-> gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/identify.c:319:18
->     #17 0x7f717f70226a in MagickCommandGenesis /tmp/portage/media-
-> gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/MagickWand/mogrify.c:183:14
->     #18 0x4f1fb5 in MagickMain /tmp/portage/media-
-> gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:145:10
->     #19 0x4f1fb5 in main /tmp/portage/media-
-> gfx/imagemagick-7.0.3.0/work/ImageMagick-7.0.3-0/utilities/magick.c:176
->     #20 0x7f717e5a661f in __libc_start_main /var/tmp/portage/sys-
-> libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
->     #21 0x419138 in _init (/usr/bin/magick+0x419138)
-> 
-> Affected version:
-> 0.2.8.4
-> 
-> Fixed version:
-> N/A
-> 
-> Commit fix:
-> N/A
-> 
-> Credit:
-> This bug was discovered by Agostino Sarubbo of Gentoo.
-> 
-> CVE:
-> N/A
-> 
-> Timeline:
-> 2016-09-14: bug discovered
-> 2016-10-18: blog post about the issue
-> 
-> Note:
-> This bug was found with American Fuzzy Lop.
-> 
-> Permalink:
-> https://blogs.gentoo.org/ago/2016/10/18/libwmf-memory-allocation-failure-in-wmf_malloc-api-c
-> 
+------=ALIBOUNDARY_72653_7fd3c03e8700_62981eb0_16ecef9--
 
--- 
-Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@suse.de>
