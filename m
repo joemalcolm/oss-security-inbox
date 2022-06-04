@@ -1,67 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/06/1
-Message-ID: <Yz6XZSTsVQm7VKia@momentum.pseudorandom.co.uk>
-Date: Thu, 6 Oct 2022 09:52:53 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: dbus-security@...ts.freedesktop.org
-Subject: dbus denial of service: CVE-2022-42010, -42011, -42012
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/04/4
+Message-ID: <20220604205119.GA25511@openwall.com>
+Date: Sat, 4 Jun 2022 22:51:19 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Valentina Palmiotti <chompie@...plsecurity.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Linux Kernel: Exploitable vulnerability in io_uring
 Content-Type: text/plain; charset=utf-8
 
-dbus is the reference implementation of D-Bus, a message bus for
-communication between applications and system services.
+Hi,
 
-Evgeny Vereshchagin discovered several ways in which an authenticated
-local attacker could cause a crash (denial of service) in
-dbus-daemon --system or a custom DBusServer. In uncommon configurations
-these could potentially be carried out by an authenticated remote attacker.
+On Sat, Sep 18, 2021 at 02:31:00PM -0500, Valentina Palmiotti wrote:
+> I'm writing to disclose a Linux Kernel vulnerability I found in the
+> io_uring subsystem.
+> 
+> The vulnerability is in fs/io_uring.c at loop_rw_iter. It is a controllable
+> kernel buffer free.
+> 
+> Most files implement the file op function read_iter. However, if they don't
+> (such as a procfs file like /proc/<pid>/maps), loop_rw_iter is called to
+> manually perform the iterative read/write of a file. The pointer
+> in req->rw.addr is incremented by the size of the read/write after each
+> segment. In normal cases, req->rw.addr contains a pointer to a userspace
+> buffer to read/write from. However, a user can use the
+> IORING_OP_PROVIDE_BUFFERS command to preselect buffers for I/O operations.
+> If this is the case, req->rw.addr contains a pointer to a kernel buffer
+> (io_buffer structure). This buffer is later freed in io_put_kbuf after the
+> read/write request completes.
+> 
+> This gives the ability to free adjacent buffers at a controllable offset.
+> It is accessible from unprivileged, and straight forward to exploit for
+> local privilege escalation. I plan to share the specifics for exploitation
+> in the future.
+> 
+> I disclosed the vulnerability to security () kernel org, and the patch has
+> been merged into the mainline kernel. It has also been backported into the
+> affected stable trees:
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=16c8d2df7ec0eed31b7d3b61cb13206a7fb930cc
+> 
+> CVE-2021-41073 has been reserved by MITRE for this vulnerability
 
-Fixed versions:
+Here's Valentina's writeup on the above (March 16, 2022) and exploit:
 
-* dbus 1.14.x >= 1.14.4 (stable branch)
-* dbus 1.12.x >= 1.12.24 (old stable branch)
-* dbus >= 1.15.2 (development branch)
+https://www.graplsecurity.com/post/iou-ring-exploiting-the-linux-kernel
+https://github.com/chompie1337/Linux_LPE_io_uring_CVE-2021-41073
 
-Older dbus branches such as 1.10.x are EOL and will not receive new
-upstream releases.
+Ideally, we'd also post (attach) the actual content (not only links) to
+the list for archival, but this is non-trivial.  Valentina, please feel
+free to do that in a reply if you like, or not if you don't.
 
-Vulnerable versions:
+As far as I can tell, this issue wasn't handled via linux-distros (so
+the exploit must not have been in there either, and is thus not subject
+to the mandatory oss-security posting policy), but I did not verify.
+The writeup above includes:
 
-* dbus 1.15.x before 1.15.2
-* dbus 1.14.x before 1.14.4
-* all versions before 1.12.24
+> 9/13/2021: Greg K-H responds to my initial report that states I want to
+> coordinate disclosure with the linux-distros mailing list so downstream
+> consumers can apply the patch. He says since most distros sync on stable
+> releases, it is not necessary to get the distro list involved. I don't
+> get the distro list involved.
 
-CVE-2022-42010 is believed to have been introduced during early dbus
-development (before 1.0) and the other two vulnerabilities mentioned
-here were regressions in 1.3.0.
-
-Vulnerability details:
-
-* An invalid array of fixed-length elements where the length of the array
-  is not a multiple of the length of the element would cause an assertion
-  failure in debug builds or an out-of-bounds read in production builds.
-  This was a regression in version 1.3.0.
-  (dbus#413, CVE-2022-42011, fixed by
-  https://gitlab.freedesktop.org/dbus/dbus/-/commit/079bbf16186e87fb0157adf8951f19864bc2ed69)
-
-* A syntactically invalid type signature with incorrectly nested parentheses
-  and curly brackets would cause an assertion failure in debug builds.
-  Similar messages could potentially result in a crash or incorrect message
-  processing in a production build, although we are not aware of a practical
-  example. (dbus#418, CVE-2022-42010, fixed by
-  https://gitlab.freedesktop.org/dbus/dbus/-/commit/9d07424e9011e3bbe535e83043d335f3093d2916)
-
-* A message in non-native endianness with out-of-band Unix file descriptors
-  would cause a use-after-free and possible memory corruption in production
-  builds, or an assertion failure in debug builds. This was a regression in
-  version 1.3.0. (dbus#417, CVE-2022-42012, fixed by
-  https://gitlab.freedesktop.org/dbus/dbus/-/commit/236f16e444e88a984cf12b09225e0f8efa6c5b44)
-
-Reimplementations of the D-Bus protocol such as systemd's sd-bus (used
-in dbus-broker and systemd) and GLib's GDBus (used in gvfs and ibus)
-do not share dbus' code for message parsing and validation, so they are
-probably unaffected by these issues.
-
--- 
-Simon McVittie, Collabora Ltd. / Debian
-on behalf of the dbus maintainers
+Alexander
