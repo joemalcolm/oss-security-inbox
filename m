@@ -1,33 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/11/1
-Message-Id: <F97E792C-1249-4C6C-A1B2-23A2A835A941@gentoo.org>
-Date: Tue, 11 Jan 2022 00:01:34 +0000
-From: Sam James <sam@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/04/1
+Message-ID: <20220604200332.GA25072@openwall.com>
+Date: Sat, 4 Jun 2022 22:03:32 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-3997: Uncontrolled recursion in systemd's systemd-tmpfiles
+Cc: Marian Rehak <mrehak@...hat.com>, EDG EDG <edg.bugs@...il.com>
+Subject: Re: Linux Kernel use-after-free write in netfilter
 Content-Type: text/plain; charset=utf-8
 
+On Fri, Jun 03, 2022 at 08:31:41AM +0200, Salvatore Bonaccorso wrote:
+> On Tue, May 31, 2022 at 10:00:32AM +0100, EDG EDG wrote:
+> > A use-after-free write vulnerability was identified within the
+> > netfilter subsystem
+> > which can be exploited to achieve privilege escalation to root.
+> > 
+> > In order to trigger the issue it requires the ability to create user/net
+> > namespaces.
+> > 
+> > This issue has been fixed within the following commit:
+> > 
+> > https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/net/netfilter?id=520778042ccca019f3ffa136dd0ca565c486cedd
+> > 
+> > The issue was previously confirmed on the latest linux master (commit
+> > 143a6252e1b8ab424b4b293512a97cca7295c182) and we have confirmed it can be
+> > exploited for privilege escalation on Ubuntu 22.04 (Linux kernel
+> > 5.15.0-27-generic).
 
-
-> On 10 Jan 2022, at 18:08, Qualys Security Advisory <qsa@...lys.com> wrote:
+> FTR, this was assigned CVE-2022-1966 by Red Hat:
+> https://bugzilla.redhat.com/show_bug.cgi?id=2092427 .
 > 
-> Hi all,
-> 
-> We discovered a minor denial of service (an uncontrolled recursion) in
-> systemd-tmpfiles, CVE-2021-3997; the Coordinated Release Date is today
-> (January 10, 2022), and a patch is now available at (many thanks to
-> Zbigniew Jedrzejewski-Szmek for working on this):
-> 
-> https://github.com/systemd/systemd/commit/55a89ea1b4088a6d84ba0bd3cd8e648bd51f1ebf
-> [...]
+> There is though as well now
+> https://www.cve.org/CVERecord?id=CVE-2022-32250 . I have asked MITRE
+> to possibly reject the later one.
 
-Thanks.
+Also, as Linus added to the private thread, the fix commit is now in:
 
-Fix commit (as you linked): https://github.com/systemd/systemd/commit/55a89ea1b4088a6d84ba0bd3cd8e648bd51f1ebf
-Backport release for 250.x: 250.2 (see https://github.com/systemd/systemd-stable/compare/v250.1...v250.2)
-Backport release for 249.x: pending
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=520778042ccc
 
-Best,
-sam
+> Just a note to say for anybody tracking the progress of this that the
+> fix is in my tree now as commit 520778042ccc ("netfilter: nf_tables:
+> disallow non-stateful expression in sets earlier")
+>  
+>                  Linus
 
-Download attachment "signature.asc" of type "application/pgp-signature" (619 bytes)
+Alexander
