@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2464" "Thursday" "21" "October" "2021" "09:26:08" "-0700" "CJ Cullen" "cjcullen@google.com" nil "105" "[oss-security] [kubernetes] CVE-2021-25742: Ingress-nginx custom snippets allows retrieval of ingress-nginx serviceaccount token and secrets across all namespaces" nil nil nil "10" nil nil (number mark "U       cjcullen@goo Oct 21  105/2464  " thread-indent "\"[oss-security] [kubernetes] CVE-2021-25742: Ingress-nginx custom snippets allows retrieval of ingress-nginx serviceaccount token and secrets across all namespaces\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [kubernetes] CVE-2021-25742: Ingress-nginx custom snippets allows retrieval of ingress-nginx serviceaccount token and secrets across all namespaces" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 17920 invoked by uid 550); 21 Oct 2021 17:09:29 -0000
+Received: (qmail 1890 invoked by uid 550); 4 Jun 2022 20:51:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,143 +7,70 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28356 invoked from network); 21 Oct 2021 16:26:33 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=gbqll318EuiUdqtggPAxwxaGFfNHT0MKSTMe8vx62qY=;
-        b=XVEisxN4V46StWKxZ3qXu7Z1uraPVoMZIpibr2LVeZiiIkJPDOMHGerNBUWOMc3bbf
-         s3xaw5xMTa322LF/W9hwHX5HGsBiIxD/0qjS+lcgdkQwyCuFlzVC8rryg/lwnlFij2e0
-         woK6dRfI21rdjHeMM7r6bBO866E9x7tRkaYi/gkzT3jU7dwAzTn/urhyAu5Jig0q9gRt
-         rA5g43iPg8EUp0rINcDvgpFfNT8d8855LldjJgHctnnni3nBhByQ8R93/WL3zV0Rnexo
-         SU+SseIVl9h38yi/b+4SeKn9FPBODNzOTnJRQqjKsEhNLKw/HN6g64JDBebBlo5jNfdP
-         i90A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=gbqll318EuiUdqtggPAxwxaGFfNHT0MKSTMe8vx62qY=;
-        b=1G8VUSv4wvRgokp52v2nxZkyx96/rW+fI2BXyHegi1CTx9oyV1nmvZldAF3R+yJzin
-         ATXpJ/POnODV08YprKhardBr4r+9MPfrgtax9kKd1Fdtx489ba9e0Cu+UJ/wy/ngW9VS
-         cNPSTA7Q0tlEZLAYF3EQyBnUb3iwWhhh9aWqte6BBgBK5mXFQojfBD3WKUgG/Uv4mms9
-         KjpVhfr1am0/b1UdJJ2mIvaAW20kOhcw6frtKQr0eT6eJeVoIAEs/iXJh69K4+ZMeyrU
-         Uk1Q8w9Kiu5EZcMh2/qT+kRlxnMCY6cfGcs3/ElXAZfs+5c/DEWQ+/03hM09IjTLHOsZ
-         uexQ==
-X-Gm-Message-State: AOAM530qvWjLAxyMd9S7UwdHMCOHf9wQ3czs4r2nUkDI4ibtCmnghWQH
-	JfTf02b4YLJEf3YVZKUVQoyfQ6JJtSz3mQBChYKJjV2VlvQsuw==
-X-Google-Smtp-Source: ABdhPJycizO5rNdeKqdDsCAevIRgw8GOVeroYGQRSEnynbDscPz7lXmNeS3OxOb2/oe7PFyyiLzEs0X+S5a0mzVe5OQ=
-X-Received: by 2002:a25:3a05:: with SMTP id h5mr7671761yba.306.1634833581483;
- Thu, 21 Oct 2021 09:26:21 -0700 (PDT)
-MIME-Version: 1.0
-From: CJ Cullen <cjcullen@google.com>
-Date: Thu, 21 Oct 2021 09:26:08 -0700
-Message-ID: <CABdrxGAGO99O4ZfiCMO2tqmjSZtDZE+q9vL3cUP0AkMGjFCPMg@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000e4a7f105cedf5a3f"
-Subject: [oss-security] [kubernetes] CVE-2021-25742: Ingress-nginx custom snippets allows
- retrieval of ingress-nginx serviceaccount token and secrets across all namespaces
+Received: (qmail 1505 invoked from network); 4 Jun 2022 20:51:24 -0000
+Date: Sat, 4 Jun 2022 22:51:19 +0200
+From: Solar Designer <solar@openwall.com>
+To: Valentina Palmiotti <chompie@graplsecurity.com>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20220604205119.GA25511@openwall.com>
+References: <CALoOwW45LdmFC6nmi8H71FVLmaWZh1xTSA74CAZTfN3r4cwZGQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CALoOwW45LdmFC6nmi8H71FVLmaWZh1xTSA74CAZTfN3r4cwZGQ@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Linux Kernel: Exploitable vulnerability in io_uring
 
---000000000000e4a7f105cedf5a3f
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-Hello Kubernetes Community,
+On Sat, Sep 18, 2021 at 02:31:00PM -0500, Valentina Palmiotti wrote:
+> I'm writing to disclose a Linux Kernel vulnerability I found in the
+> io_uring subsystem.
+> 
+> The vulnerability is in fs/io_uring.c at loop_rw_iter. It is a controllable
+> kernel buffer free.
+> 
+> Most files implement the file op function read_iter. However, if they don't
+> (such as a procfs file like /proc/<pid>/maps), loop_rw_iter is called to
+> manually perform the iterative read/write of a file. The pointer
+> in req->rw.addr is incremented by the size of the read/write after each
+> segment. In normal cases, req->rw.addr contains a pointer to a userspace
+> buffer to read/write from. However, a user can use the
+> IORING_OP_PROVIDE_BUFFERS command to preselect buffers for I/O operations.
+> If this is the case, req->rw.addr contains a pointer to a kernel buffer
+> (io_buffer structure). This buffer is later freed in io_put_kbuf after the
+> read/write request completes.
+> 
+> This gives the ability to free adjacent buffers at a controllable offset.
+> It is accessible from unprivileged, and straight forward to exploit for
+> local privilege escalation. I plan to share the specifics for exploitation
+> in the future.
+> 
+> I disclosed the vulnerability to security () kernel org, and the patch has
+> been merged into the mainline kernel. It has also been backported into the
+> affected stable trees:
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=16c8d2df7ec0eed31b7d3b61cb13206a7fb930cc
+> 
+> CVE-2021-41073 has been reserved by MITRE for this vulnerability
 
-A security issue was discovered in ingress-nginx where a user that can
-create or update ingress objects can use the custom snippets feature to
-obtain all secrets in the cluster.
+Here's Valentina's writeup on the above (March 16, 2022) and exploit:
 
-This issue has been rated High (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L
-<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U=
-/C:H/I:L/A:L>),
-and assigned CVE-2021-25742.
-Affected Components and Configurations
+https://www.graplsecurity.com/post/iou-ring-exploiting-the-linux-kernel
+https://github.com/chompie1337/Linux_LPE_io_uring_CVE-2021-41073
 
-This bug affects ingress-nginx.
+Ideally, we'd also post (attach) the actual content (not only links) to
+the list for archival, but this is non-trivial.  Valentina, please feel
+free to do that in a reply if you like, or not if you don't.
 
-Multitenant environments where non-admin users have permissions to create
-Ingress objects are most affected by this issue.
-Affected Versions with no mitigation
+As far as I can tell, this issue wasn't handled via linux-distros (so
+the exploit must not have been in there either, and is thus not subject
+to the mandatory oss-security posting policy), but I did not verify.
+The writeup above includes:
 
-   -
+> 9/13/2021: Greg K-H responds to my initial report that states I want to
+> coordinate disclosure with the linux-distros mailing list so downstream
+> consumers can apply the patch. He says since most distros sync on stable
+> releases, it is not necessary to get the distro list involved. I don't
+> get the distro list involved.
 
-   v1.0.0
-   -
-
-   <=3D v0.49.0
-
-Versions allowing mitigation
-
-This issue cannot be fixed solely by upgrading ingress-nginx. It can be
-mitigated in the following versions:
-
-   -
-
-   v1.0.1
-   -
-
-   v0.49.1
-
-Mitigation
-
-To mitigate this vulnerability:
-
-   1.
-
-   Upgrade to a version that allows mitigation, (>=3D v0.49.1 or >=3D v1.0.=
-1)
-   2.
-
-   Set allow-snippet-annotations
-   <https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configurati=
-on/configmap/#allow-snippet-annotations>
-   to false in your ingress-nginx ConfigMap based on how you deploy
-   ingress-nginx:
-
-
-Static Deploy Files
-
-Edit the ConfigMap for ingress-nginx after deployment
-
-kubectl edit configmap -n ingress-nginx ingress-nginx-controller
-
-Add directive:
-
-data:
-
-  allow-snippet-annotations: =E2=80=9Cfalse=E2=80=9D
-
-
-
-More information on the ConfigMap here
-<https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/=
-configmap/>
-
-
-Deploying Via Helm
-
-Set controller.allowSnippetAnnotations to false in the Values.yaml or add
-the directive to the helm deploy
-
-helm install [RELEASE_NAME] --set controller.allowSnippetAnnotations=3Dfalse
-ingress-nginx/ingress-nginx
-
-https://github.com/kubernetes/ingress-nginx/blob/controller-v1.0.1/charts/i=
-ngress-nginx/values.yaml#L76
-
-Detection
-
-If you find evidence that this vulnerability has been exploited, please
-contact security@kubernetes.io
-Additional Details
-
-See ingress-nginx Issue #7837
-<https://github.com/kubernetes/ingress-nginx/issues/7837> for more details.
-Acknowledgements
-
-This vulnerability was reported by Mitch Hulscher.
-
-Thank You,
-
-CJ Cullen on behalf of the Kubernetes Security Response Committee
-
---000000000000e4a7f105cedf5a3f--
+Alexander
