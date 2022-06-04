@@ -1,27 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/09/3
-Message-ID: <76ef068a-c6d3-109d-6e70-84007151f487@activis.me>
-Date: Mon, 9 May 2022 13:46:00 +0400
-From: Archange <archange@...ivis.me>
-To: Jan Lehnardt <jan@...che.org>
-Cc: oss-security@...ts.openwall.com, Security CouchDB <security@...chdb.apache.org>
-Subject: Re: CVE-2022-24706: Apache CouchDB: Remote Code Execution Vulnerability in Packaging
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/04/2
+Message-ID: <20220604202219.GA25285@openwall.com>
+Date: Sat, 4 Jun 2022 22:22:19 +0200
+From: Solar Designer <solar@...nwall.com>
+To: tr3e wang <tr3e.wang@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2021-4204: Linux Kernel eBPF Improper Input Validation Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Le 09/05/2022 à 13:41, Jan Lehnardt a écrit :
-> Hi Bruno,
->
-> first of all, thanks for maintaining CouchDB for Arch. Secondly, for any security related questions, please do not hesitate to contact security@...chdb.apache.org instead of any one of the team individually, as we can’t know if any of is available at all times (vacations and whatnot :)
+Hi,
 
-Sure, you should put this address in copy when posting to oss-security 
-then, so you would be sure people reply to that one too. ;)
+I've attached the exploit from the linux-distros thread - hopefully, the
+right one.  (I really shouldn't be the one doing it.  The exploit author
+is most qualified to do it, as required by linux-distros list policy.)
 
-> As for your questions, see this PR to our packaging infrastructure for how we handle this on Debian and Centos/Rocky: https://github.com/apache/couchdb-pkg/pull/92/files
+Alexander
 
-Thanks, so you use a default env file to set the variable and allow 
-people to easily change it in the case of a clustered setup. Will do so 
-as well then!
+On Wed, Jun 01, 2022 at 02:55:13PM +0200, Solar Designer wrote:
+> Hi,
+> 
+> In context of the recent discussions on linux-distros list policies and
+> their enforcement, I looked at some of the previously handled issues,
+> and identified that the below wasn't properly handled/enforced.
+> 
+> tr3e, since you had shared actual exploit code with linux-distros, you
+> were supposed to post the _code_ to oss-security within 7 days after
+> your initial public disclosure of the vulnerability.  However, you only
+> posted "the exploit overview" and promised that "Full exploit code will
+> be published on github in the near future."  Apparently, the latter
+> never happened, and it wouldn't have satisfied the requirement anyway.
+> 
+> Please post the same exploit code you had shared with linux-distros to
+> this thread on oss-security ASAP.  Thank you!
+> 
+> Alexander
+> 
+> On Tue, Jan 18, 2022 at 09:26:43PM +0800, tr3e wang wrote:
+> > Hi all,
+> > 
+> > This post is the exploit overview of CVE-2021-4202.
+> > 
+> > We successfully exploited this vulnerability to obtain full root
+> > privileges on default installations of Ubuntu 20.04.
+> > 
+> > *Exploit overview*
+> > 
+> > 1. We create a lot of BPF ringbufs, and choose one of them as victim.
+> >    The BPF_FUNC_ringbuf_reserve allow us to have a pointer A to the
+> >    beginning of the victim ringbuf's data field.
+> > 
+> > 2. We do a pointer subtraction to point back to the victim ringbuf's
+> >    mask field and overwrite it to 0x80000fff through
+> > BPF_FUNC_ringbuf_submit.
+> >    This allows us to do a limited out-of-bounds read/write. If lucky,
+> >    we can read/write all the fields of the ringbuf behind the victim.
+> > 
+> > 3. With the full control over all fields of the ringbuf behind the
+> >    victim, we can manipulate the ringbuf to achieve a restricted
+> >    address read/write with side effects in the vmalloc space.
+> > 
+> > 4. We spawn many child processes, and use restricted address read to
+> >    find the address of task_struct and cred in the vmalloc space.
+> >    After zeroing out the uid/gid/... , full root privileges obtained.
+> > 
+> > Full exploit code will be published on github in the near future.
+> > 
+> > Regards,
+> > tr3e
 
-Regards,
-Bruno
-
+Download attachment "full-exploit.tar.gz" of type "application/x-gzip" (14094 bytes)
