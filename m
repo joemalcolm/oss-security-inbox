@@ -1,201 +1,339 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/25/3
-Message-ID: <1c07e043-dbbb-65ac-6246-fd03e93894ef@suse.de>
-Date: Fri, 25 Feb 2022 12:32:37 +0100
-From: Carlos López <clopez@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/05/3
+Message-ID: <80b5bf9.4e3f7.18134003f02.Coremail.duoming@zju.edu.cn>
+Date: Sun, 5 Jun 2022 21:14:00 +0800 (GMT+08:00)
+From: duoming@....edu.cn
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-24986: KCron: Insecure temporary file handling
+Cc: solar@...nwall.com
+Subject: Linux kernel: UAF, null-ptr-deref and double-free vulnerabilities in nfcmrvl module
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
+Hello there,
 
-Find below our report for CVE-2022-24986: Insecure temporary file 
-handling in KDE KCron <= 21.12.2.
+There are double-free, use-after-free(write,read), null-ptr-deref vulnerabilities
+in drivers/nfc/nfcmrvl of linux that allow attacker to crash linux kernel by simulating
+nfc device from user-space.
 
-# 0. Overview
+=*=*=*=*=*=*=*=*=  Bug Details  =*=*=*=*=*=*=*=*=
 
-KCron [0] is a graphical frontend to the classical cron utility for the 
-KDE desktop environment. In order to perform elevated tasks, such as 
-modifying the system-wide crontab at `/etc/crontab`, a privileged helper 
-program is used. Communication (via dbus) and authorization against the 
-helper (via Polkit) is abstracted away with the KDE Kauth framework.
+There are destructive operations such as nfcmrvl_fw_dnld_abort and
+gpio_free in nfcmrvl_nci_unregister_dev. The resources such as firmware,
+gpio and so on could be destructed while the upper layer functions such as
+nfcmrvl_fw_dnld_start and nfcmrvl_nci_recv_frame is executing, which leads
+to double-free, use-after-free and null-ptr-deref bugs.
 
-# 1. Analysis
+There are three situations that could lead to double-free bugs.
 
-The client (unprivileged) code is mainly contained in 
-`src/crontablib/ctcron.cpp:CTCron::save()` and 
-`src/crontablib/ctSystemCron:CTSystemCron::CTSystemCron()`. The client 
-side has two different modes of operation:
+The first situation is shown below:
 
-- Saving content of the user-specific crontab. This is done via the 
-`/usr/bin/crontab` setuid-root binary.
-- Saving content of the system-wide crontab. This is done via invocation 
-of the privileged privileged helper program on D-Bus 
-(`src/helper/kcronhelper.cpp`).
+   (Thread 1)                 |      (Thread 2)
+nfcmrvl_fw_dnld_start         |
+ ...                          |  nfcmrvl_nci_unregister_dev
+ release_firmware()           |   nfcmrvl_fw_dnld_abort
+  kfree(fw) //(1)             |    fw_dnld_over
+                              |     release_firmware
+  ...                         |      kfree(fw) //(2)
+                              |     ...
 
-In both cases a temporary file is created with the new contents and it 
-is passed on to the respective mechanism. These temporary files are 
-created under /tmp using unpredictable file names of the format 
-`systemsettings.XXXXXX` with mode `0644`, and are thus world-readable
+The second situation is shown below:
 
-The first mode of operation is affected by an information leak, and the 
-second one by a potential privilege escalation.
+   (Thread 1)                 |      (Thread 2)
+nfcmrvl_fw_dnld_start         |
+ ...                          |
+ mod_timer                    |
+ (wait a time)                |
+ fw_dnld_timeout              |  nfcmrvl_nci_unregister_dev
+   fw_dnld_over               |   nfcmrvl_fw_dnld_abort
+    release_firmware          |    fw_dnld_over
+     kfree(fw) //(1)          |     release_firmware
+     ...                      |      kfree(fw) //(2)
 
-## 1.1. Information leak due to improper file permissions
+The third situation is shown below:
 
-When temporary files are created, the mode passed to the open call is 
-`0666`, which causes the file to be world-readable.
+       (Thread 1)               |       (Thread 2)
+nfcmrvl_nci_recv_frame          |
+ if(..->fw_download_in_progress)|
+  nfcmrvl_fw_dnld_recv_frame    |
+   queue_work                   |
+                                |
+fw_dnld_rx_work                 | nfcmrvl_nci_unregister_dev
+ fw_dnld_over                   |  nfcmrvl_fw_dnld_abort
+  release_firmware              |   fw_dnld_over
+   kfree(fw) //(1)              |    release_firmware
+                                |     kfree(fw) //(2)
 
-```
-openat(AT_FDCWD, "/tmp/systemsettings.jhcCtT", 
-O_WRONLY|O_CREAT|O_TRUNC|O_CLOEXEC, 0666) = 15
-```
+The firmware struct is deallocated in position (1) and deallocated
+in position (2) again.
 
-Since created temporary files are world-readable, other users in the 
-system might gain knowledge about other users' crontabs. The severity of 
-this leak depends on the actual contents of the user specific crontab. 
-The system wide crontab is usually installed as world-readable, so the 
-leak does not apply there by default (but could still be an issue if 
-`/etc/crontab` is hardened, and thus not meant to be read). Users could 
-place passwords in their crontabs via environment variables, or the 
-contents could be hints for further attack vectors.
+What's more, there are also use-after-free and null-ptr-deref bugs
+in nfcmrvl_fw_dnld_start. 
 
-## 1.2. Privilege escalation due to filename reuse
+One of the use-after-free bugs about firmware is shown below:
 
-The name for the temporary file holding user changes is obtained once 
-and reused each time the user saves crontab content. This means that, 
-after the first time the temporary file is written, other local users in 
-the system have knowledge of the used filename, and can stage attacks if 
-the user should reuse the same instance of the tool.
+   (Use Thread)               |      (Free Thread )
+nfcmrvl_fw_dnld_start         |
+                              |  nfcmrvl_nci_unregister_dev
+                              |   nfcmrvl_fw_dnld_abort
+  ...                         |    fw_dnld_over
+                              |     release_firmware
+                              |      kfree(fw) //(1)
+  priv->fw_dnld.fw->data;//(2)|     ...
 
-```
-CTCron::CTCron(...)
-{
-     ...
-     QTemporaryFile tmp;
-     tmp.open();
-     d->tmpFileName = tmp.fileName(); // [A]
-     ...
-}
+One of the use-after-free bugs about gpio is shown below:
 
-CTSaveStatus CTCron::save()
-{
-     bool saveStatus = saveToFile(d->tmpFileName); // [B]
-     ...
-     QFile::remove(d->tmpFileName); // [C]
-     ...
-}
+   (Use Thread)               |      (Free Thread )
+nfcmrvl_fw_dnld_start         |
+                              |  nfcmrvl_nci_unregister_dev
+  ...                         |   ...
+                              |   gpio_free //(1)   
+  nfcmrvl_chip_reset          |     ...
+   gpio_set_value //(2)       |
 
-bool CTCron::saveToFile(const QString &fileName)
-{
-     QFile file(fileName);
-     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-         ...
-     ...
-}
-```
+One of the null-ptr-deref bugs about firmware is shown below:
 
-The file name is obtained once in [A], when the CTCron object is 
-instantiated, and reused in [B] every time the user saves their changes. 
-The file is then removed explicitly in [C].
+   (Use Thread)               |      (Free Thread )
+nfcmrvl_fw_dnld_start         |
+                              |  nfcmrvl_nci_unregister_dev
+                              |   nfcmrvl_fw_dnld_abort
+  ...                         |    fw_dnld_over
+                              |     priv->fw_dnld.fw = NULL;//(1) 
+                              |     
+  priv->fw_dnld.fw->data;//(2)|     ...
 
-Temporary files are opened without passing the `O_EXCL` or `O_NOFOLLOW` 
-flags, which can be exploited in two ways.
+If we deallocate firmware struct, gpio or set null to the members of priv->fw_dnld
+in position(1), then, we dereference firmware, gpio or the members of priv->fw_dnld
+in position(2), the UAF or NPD bugs will happen.
 
-First, if `/proc/sys/fs/protected_symlinks` is disabled (see the manual 
-page for proc(5)), the absence of `O_NOFOLLOW` means that the 
-application will happily follow any symlink. Note that this protection 
-is disabled by default for the vanilla kernel, but it is enabled by most 
-distributions.
+=*=*=*=*=*=*=*=*=  Bug Effects  =*=*=*=*=*=*=*=*=
 
-This can be exploited as follows:
+We can successfully trigger the vulnerabilities to crash the linux kernel.
 
-- An attacker creates a world-writable directory under its own control 
-and prepares a symlink attack into this directory:
-   1. `mkdir -m 777 /tmp/evil-directory`
-   2. `ln -s /tmp/evil-directory/evil-file /tmp/systemsettings.abcdef`
-- When KCron re-creates the temporary file, the call will succeed, 
-because the target file does not yet exist.
-- After the file has been created in `/tmp/evil-directory`, the attacker 
-can remove the `/tmp/evil-directory/evil-file`, as they have write 
-permissions in the directory. After that, a new file under the 
-attacker's control is created in its stead that contains malicous data. 
-This is the race condition that needs to be won.
-- Once either the KAuth helper or the crontab binary is invoked, the 
-malicious data is placed as the new crontab content, allowing arbitrary 
-code execution as the victim user (or as an arbitrary user in the case 
-of the system crontab).
+(1) One of the backtraces caused by use-after-free(write) bug is shown below.
 
-Second, if `/proc/sys/fs/protected_regular` is disabled, the absence of 
-`O_EXCL` means that the call to `openat()` will not fail if the file 
-already exists and is owned by a different user. In this case, the 
-attacker does not even need to set up a symlink, as they can simply 
-create a file with the appropiate name and world-writeable permissions. 
-Once KCron is done writing to the temporary file, but before it is 
-copied to its destination, the attacker can modify its contents, as the 
-file is still under their control.
+[  138.280382] BUG: KASAN: use-after-free in _request_firmware+0x52/0x690
+[  138.280382] Write of size 8 at addr ffff88800c114850 by task download/11174
+[  138.280382] Call Trace:
+[  138.280382]  <TASK>
+[  138.280382]  dump_stack_lvl+0x57/0x7d
+[  138.280382]  print_report.cold+0x5e/0x5db
+[  138.280382]  ? _request_firmware+0x52/0x690
+[  138.280382]  kasan_report+0xbe/0x1c0
+[  138.280382]  ? _request_firmware+0x52/0x690
+[  138.280382]  _request_firmware+0x52/0x690
+[  138.280382]  request_firmware+0x2d/0x50
+[  138.280382]  nfcmrvl_fw_dnld_start+0x7a/0xb0
+[  138.280382]  nfc_fw_download+0x92/0xe0
+[  138.280382]  nfc_genl_fw_download+0x10b/0x170
+[  138.280382]  ? nfc_genl_enable_se+0xa0/0xa0
+[  138.280382]  ? __kasan_slab_alloc+0x2c/0x80
+[  138.280382]  ? __nla_parse+0x22/0x30
+[  138.280382]  ? genl_family_rcv_msg_attrs_parse.constprop.0+0xd3/0x130
+[  138.280382]  genl_family_rcv_msg_doit+0x17a/0x200
+[  138.280382]  ? genl_family_rcv_msg_attrs_parse.constprop.0+0x130/0x130
+[  138.280382]  ? mutex_lock_io_nested+0xb63/0xbd0
+[  138.280382]  ? security_capable+0x48/0x60
+[  138.280382]  genl_rcv_msg+0x18d/0x2c0
+[  138.280382]  ? genl_get_cmd+0x1b0/0x1b0
+[  138.280382]  ? rcu_read_lock_sched_held+0xd/0x70
+[  138.280382]  ? nfc_genl_enable_se+0xa0/0xa0
+[  138.280382]  ? rcu_read_lock_sched_held+0xd/0x70
+[  138.280382]  ? lock_acquire+0xce/0x410
+[  138.280382]  netlink_rcv_skb+0xc4/0x1f0
+[  138.280382]  ? genl_get_cmd+0x1b0/0x1b0
+[  138.280382]  ? netlink_ack+0x4d0/0x4d0
+[  138.280382]  ? netlink_deliver_tap+0xf7/0x5a0
+[  138.280382]  genl_rcv+0x1f/0x30
+[  138.280382]  netlink_unicast+0x2d8/0x420
+[  138.280382]  ? netlink_attachskb+0x430/0x430
+[  138.280382]  netlink_sendmsg+0x3a9/0x6e0
+[  138.280382]  ? netlink_unicast+0x420/0x420
+[  138.280382]  ? netlink_unicast+0x420/0x420
+[  138.280382]  sock_sendmsg+0x91/0xa0
+[  138.280382]  __sys_sendto+0x168/0x200
+[  138.280382]  ? __ia32_sys_getpeername+0x40/0x40
+[  138.280382]  ? preempt_count_sub+0xf/0xb0
+[  138.280382]  ? fd_install+0xfb/0x340
+[  138.280382]  ? __sys_socket+0xf0/0x160
+[  138.280382]  ? __x64_sys_clock_nanosleep+0x195/0x220
+[  138.280382]  ? compat_sock_ioctl+0x410/0x410
+[  138.280382]  __x64_sys_sendto+0x6f/0x80
+[  138.280382]  do_syscall_64+0x3b/0x90
+[  138.280382]  entry_SYSCALL_64_after_hwframe+0x44/0xae
+[  138.280382] RIP: 0033:0x7ff12ac0602c
+[  138.280382] Code: 0a f8 ff ff 44 8b 4c 24 2c 4c 8b 44 24 20 89 c5 44 8b 54 2b
+[  138.280382] RSP: 002b:00007ff12aa1ee00 EFLAGS: 00000293 ORIG_RAX: 0000000000c
+[  138.280382] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007ff12ac0602c
+[  138.280382] RDX: 000000000000002c RSI: 000055eab88030b0 RDI: 0000000000000000
+[  138.280382] RBP: 0000000000000000 R08: 00007ff12aa1ee7c R09: 000000000000000c
+[  138.280382] R10: 0000000000000000 R11: 0000000000000293 R12: 00007ffca74ba00e
+[  138.280382] R13: 00007ffca74ba00f R14: 00007ff12aa1efc0 R15: 00007ff12aa1f700
 
-This all stems from a misuse of the `QTemporaryFile` object of the Qt 
-framework. The abstractions this class provides make its use fairly 
-non-obvious, as we already noted in the past [1].
+(2) One of the backtraces caused by use-after-free(read) bug is shown below.
 
-# 2. Other minor issues
+[   65.835462] BUG: KASAN: use-after-free in nci_fw_download+0x26/0x60
+[   65.840236] Read of size 8 at addr ffff88800c2f5008 by task download/160
+[   65.845755] Call Trace:
+[   65.845755]  <TASK>
+[   65.845755]  dump_stack_lvl+0x57/0x7d
+[   65.845755]  print_report.cold+0x5e/0x5db
+[   65.845755]  ? nci_fw_download+0x26/0x60
+[   65.845755]  kasan_report+0xbe/0x1c0
+[   65.856061]  ? nfc_driver_failure+0x90/0xa0
+[   65.856235]  ? nci_fw_download+0x26/0x60
+[   65.856235]  nci_fw_download+0x26/0x60
+[   65.856235]  nfc_fw_download+0x99/0xe0
+[   65.856235]  nfc_genl_fw_download+0x10b/0x170
+[   65.861189]  ? nfc_genl_enable_se+0xa0/0xa0
+[   65.861189]  ? __kasan_slab_alloc+0x2c/0x80
+[   65.861189]  ? __nla_parse+0x22/0x30
+[   65.865988]  ? genl_family_rcv_msg_attrs_parse.constprop.0+0xd3/0x130
+[   65.865988]  genl_family_rcv_msg_doit+0x17a/0x200
+[   65.865988]  ? genl_family_rcv_msg_attrs_parse.constprop.0+0x130/0x130
+[   65.870892]  ? asm_spurious_interrupt+0x3/0x30
+[   65.870892]  ? security_capable+0x48/0x60
+[   65.870892]  genl_rcv_msg+0x18d/0x2c0
+[   65.870892]  ? genl_get_cmd+0x1b0/0x1b0
+[   65.870892]  ? rcu_read_lock_sched_held+0xd/0x70
+[   65.875946]  ? nfc_genl_enable_se+0xa0/0xa0
+[   65.875946]  ? rcu_read_lock_sched_held+0xd/0x70
+[   65.875946]  ? lock_acquire+0xce/0x410
+[   65.875946]  netlink_rcv_skb+0xc4/0x1f0
+[   65.880842]  ? genl_get_cmd+0x1b0/0x1b0
+[   65.881778]  ? netlink_ack+0x4d0/0x4d0
+[   65.881778]  ? netlink_deliver_tap+0xf7/0x5a0
+[   65.881778]  genl_rcv+0x1f/0x30
+[   65.881778]  netlink_unicast+0x2d8/0x420
+[   65.885734]  ? netlink_attachskb+0x430/0x430
+[   65.887472]  netlink_sendmsg+0x3a9/0x6e0
+[   65.887472]  ? netlink_unicast+0x420/0x420
+[   65.887472]  ? netlink_unicast+0x420/0x420
+[   65.887472]  sock_sendmsg+0x91/0xa0
+[   65.891949]  __sys_sendto+0x168/0x200
+[   65.893134]  ? __ia32_sys_getpeername+0x40/0x40
+[   65.893134]  ? lockdep_hardirqs_on_prepare+0xe/0x220
+[   65.893134]  ? __schedule+0x5c5/0x1180
+[   65.893134]  ? io_schedule_timeout+0xb0/0xb0
+[   65.897936]  ? clockevents_program_event+0xd3/0x130
+[   65.897936]  ? hrtimer_interrupt+0x332/0x350
+[   65.897936]  __x64_sys_sendto+0x6f/0x80
+[   65.897936]  do_syscall_64+0x3b/0x90
+[   65.897936]  entry_SYSCALL_64_after_hwframe+0x44/0xae
+[   65.902930] RIP: 0033:0x7f96173ec02c
+[   65.902930] Code: 0a f8 ff ff 44 8b 4c 24 2c 4c 8b 44 24 20 89 c5 44 8b 54 24 28 48 8b 54 24 18 b8 2c 00 00 00 48 8b 74 24 10 8b 7c 24 08 0f 05 <48> 3d 00 fb
+[   65.908959] RSP: 002b:00007f9617204df0 EFLAGS: 00000293 ORIG_RAX: 000000000000002c
+[   65.908959] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f96173ec02c
+[   65.908959] RDX: 0000000000000034 RSI: 0000556fa2a030b0 RDI: 0000000000000003
+[   65.908959] RBP: 0000000000000000 R08: 00007f9617204e6c R09: 000000000000000c
+[   65.915542] R10: 0000000000000000 R11: 0000000000000293 R12: 00007ffde78477ee
+[   65.916990] R13: 00007ffde78477ef R14: 00007f9617204fc0 R15: 00007f9617205700
 
-During our analysis we noticed other minor issues that do not pose an 
-immediate security threat, but that we communicated to the maintainer 
-nonetheless. These have since been addressed through upstream patches.
+(3) One of the backtraces caused by double-free bug is shown below.
 
-  - The helper's error handling is incomplete, only warnings will be 
-logged, but neither is the operation aborted on errors nor are errors 
-propagated back to the caller. No proper polkit authentication dialog 
-with the active source/target arguments is displayed.
-  - The helper's functionality is not limited to saving a crontab file, 
-as it accepts source and destination arguments (i.e. an arbitrary file 
-move scheme). If the helper were improperly parametrized, it could be 
-used for arbitrary local root exploits. In the past we already 
-identified issues with overly generic D-Bus file system APIs which can 
-lead to security bugs [2].
-  - There is an additional DoS vector due to file name reuse, as other 
-users might place files at the expected temporary locations. This breaks 
-the application, as it will not be able to create said temporary files. 
-Of course, this is not an issue for a privileged user, which can remove 
-the malicious files, and the option to update the crontab manually via 
-CLI is still available, but it would defeat the purpose of the GUI program.
+[  122.640457] BUG: KASAN: double-free or invalid-free in fw_dnld_over+0x28/0xf0
+[  122.640457] Call Trace:
+[  122.640457]  <TASK>
+[  122.640457]  dump_stack_lvl+0x57/0x7d
+[  122.640457]  print_report.cold+0x5e/0x5db
+[  122.640457]  ? fw_dnld_over+0x28/0xf0
+[  122.640457]  ? fw_dnld_over+0x28/0xf0
+[  1re22.640457]  kasan_report_invalid_free+0x90/0x180
+[  122.640457]  ? refcount_warn_saturate+0x40/0x110
+[  122.640457]  ? fw_dnld_over+0x28/0xf0
+[  122.640457]  __kasan_slab_free+0x152/0x170
+[  122.640457]  ? fw_dnld_over+0x28/0xf0
+[  122.640457]  kfree+0xb0/0x330
+[  122.640457]  fw_dnld_over+0x28/0xf0
+[  122.640457]  nfcmrvl_nci_unregister_dev+0x61/0x70
+[  122.640457]  nci_uart_tty_close+0x87/0xd0
+[  122.640457]  tty_ldisc_kill+0x3e/0x80
+[  122.640457]  tty_ldisc_hangup+0x1b2/0x2c0
+[  122.640457]  __tty_hangup.part.0+0x316/0x520
+[  122.640457]  tty_release+0x200/0x670
+[  122.640457]  __fput+0x110/0x410
+[  122.640457]  ? _raw_spin_unlock_irq+0x1f/0x40
+[  122.640457]  task_work_run+0x86/0xd0
+[  122.640457]  exit_to_user_mode_prepare+0x1aa/0x1b0
+[  122.640457]  syscall_exit_to_user_mode+0x19/0x50
+[  122.640457]  do_syscall_64+0x48/0x90
+[  122.640457]  entry_SYSCALL_64_after_hwframe+0x44/0xae
+[  122.640457] RIP: 0033:0x7f68433f6beb
+[  122.640457] Code: 0f 05 48 3d 00 f0 ff ff 77 45 c3 0f 1f 40 00 48 83 ec 18 84
+[  122.640457] RSP: 002b:00007f684320fee0 EFLAGS: 00000293 ORIG_RAX: 00000000003
+[  122.640457] RAX: 0000000000000000 RBX: 0000000000000000 RCX: 00007f68433f6beb
+[  122.640457] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000003
+[  122.640457] RBP: 00007f684320ff00 R08: 0000000000000000 R09: 00007f6843210700
+[  122.640457] R10: 0000000000000000 R11: 0000000000000293 R12: 00007ffd5d6f9fde
+[  122.640457] R13: 00007ffd5d6f9fdf R14: 00007f684320ffc0 R15: 00007f6843210700
 
-The referenced upstream patch to fix the issues [3] still contains a 
-problem. With the patch the source (temporary) file under user control 
-is `chmod()`ed by the helper program [4] to give it the right 
-permissions for moving it to `/etc/crontab`. Our suggestion is to to 
-overwrite the destination file instead. An upstream merge request is 
-currently in the works to address this [5].
+(4) One of the backtraces caused by null-ptr-deref bug is shown below.
 
-# 3. Timeline
+[   80.495478] BUG: KASAN: null-ptr-deref in nfcmrvl_fw_dnld_start.cold+0x19/0x276
+[   80.498745] Read of size 8 at addr 0000000000000008 by task download/161
+[   80.502308] Call Trace:
+[   80.502308]  <TASK>
+[   80.502308]  dump_stack_lvl+0x57/0x7d
+[   80.502308]  kasan_report+0xbe/0x1c0
+[   80.502308]  ? nfcmrvl_fw_dnld_start.cold+0x19/0x276
+[   80.502308]  nfcmrvl_fw_dnld_start.cold+0x19/0x276
+[   80.508210]  ? nfc_fw_download+0x79/0xe0
+[   80.508210]  nfc_fw_download+0x99/0xe0
+[   80.508210]  nfc_genl_fw_download+0x10b/0x170
+[   80.508210]  ? nfc_genl_enable_se+0xa0/0xa0
+[   80.508210]  ? __kasan_slab_alloc+0x2c/0x80
+[   80.508210]  ? __nla_parse+0x22/0x30
+[   80.508210]  ? genl_family_rcv_msg_attrs_parse.constprop.0+0xd3/0x130
+[   80.508210]  genl_family_rcv_msg_doit+0x17a/0x200
+[   80.508210]  ? genl_family_rcv_msg_attrs_parse.constprop.0+0x130/0x130
+[   80.513085]  ? mutex_lock_io_nested+0xb43/0xbd0
+[   80.513085]  ? security_capable+0x48/0x60
+[   80.513085]  genl_rcv_msg+0x18d/0x2c0
+[   80.513085]  ? genl_get_cmd+0x1b0/0x1b0
+[   80.513085]  ? rcu_read_lock_sched_held+0xd/0x70
+[   80.513085]  ? nfc_genl_enable_se+0xa0/0xa0
+[   80.513085]  ? rcu_read_lock_sched_held+0xd/0x70
+[   80.513085]  ? lock_acquire+0xce/0x410
+[   80.513085]  netlink_rcv_skb+0xc4/0x1f0
+[   80.513085]  ? genl_get_cmd+0x1b0/0x1b0
+[   80.518420]  ? netlink_ack+0x4d0/0x4d0
+[   80.518420]  ? netlink_deliver_tap+0xf7/0x5a0
+[   80.518420]  genl_rcv+0x1f/0x30
+[   80.518420]  netlink_unicast+0x2d8/0x420
+[   80.518420]  ? netlink_attachskb+0x430/0x430
+[   80.518420]  netlink_sendmsg+0x3a9/0x6e0
+[   80.518420]  ? netlink_unicast+0x420/0x420
+[   80.518420]  ? netlink_unicast+0x420/0x420
+[   80.518420]  sock_sendmsg+0x91/0xa0
+[   80.518420]  __sys_sendto+0x168/0x200
+[   80.523005]  ? __ia32_sys_getpeername+0x40/0x40
+[   80.523005]  ? preempt_count_sub+0xf/0xb0
+[   80.523005]  ? fd_install+0xfb/0x340
+[   80.523005]  ? __sys_socket+0xf0/0x160
+[   80.523005]  ? compat_sock_ioctl+0x410/0x410
+[   80.523005]  __x64_sys_sendto+0x6f/0x80
+[   80.523005]  do_syscall_64+0x3b/0x90
+[   80.523005]  entry_SYSCALL_64_after_hwframe+0x44/0xae
+[   80.523005] RIP: 0033:0x7f30f54f402c
+[   80.523005] Code: 0a f8 ff ff 44 8b 4c 24 2c 4c 8b 44 24 20 89 c5 44 8b 54 24 28 48 8b 54 24 18 b8 2b
+[   80.528021] RSP: 002b:00007f30f530cdf0 EFLAGS: 00000293 ORIG_RAX: 000000000000002c
+[   80.528021] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f30f54f402c
+[   80.528021] RDX: 0000000000000034 RSI: 00005571766030b0 RDI: 0000000000000005
+[   80.533650] RBP: 0000000000000000 R08: 00007f30f530ce6c R09: 000000000000000c
+[   80.533650] R10: 0000000000000000 R11: 0000000000000293 R12: 00007ffd9c6c6cee
+[   80.533650] R13: 00007ffd9c6c6cef R14: 00007f30f530cfc0 R15: 00007f30f530d700
 
-2022-01-26 - Issues reported to upstream
-2022-01-31 - Upstream starts working on fixes
-2022-02-02 - Embargo date set to 2022-02-16
-2022-02-04 - Patch proposal from maintainer
-2022-02-15 - Patch pushed to upstream repository
-2022-02-16 - KDE report goes public [6]
+=*=*=*=*=*=*=*=*=  Bug Fix  =*=*=*=*=*=*=*=*=
 
-# 4. References
+The patch that have been applied to mainline Linux kernel is shown below.
+https://github.com/torvalds/linux/commit/d270453a0d9ec10bb8a802a142fb1b3601a83098
 
-[0] https://invent.kde.org/system/kcron
-[1] https://www.openwall.com/lists/oss-security/2018/04/24/1
-[2] https://www.openwall.com/lists/oss-security/2019/07/09/3
-[3] 
-https://invent.kde.org/system/kcron/-/commit/ef4266e3d5ea741c4d4f442a2cb12a317d7502a1
-[4] 
-https://invent.kde.org/system/kcron/-/commit/ef4266e3d5ea741c4d4f442a2cb12a317d7502a1#87f74e7efe41bc6f7cbe1f834b88b2e31889c804_47_47
-[5] https://invent.kde.org/system/kcron/-/merge_requests/14
-[6] https://kde.org/info/security/advisory-20220216-1.txt
+=*=*=*=*=*=*=*=*=  Timeline  =*=*=*=*=*=*=*=*=
 
-Best regards,
+2022-05-01: commit d270453a0d9e accepted to mainline kernel
+2022-06-05: send an email to secalert@...hat.com in order to request CVE number
 
-Carlos
+=*=*=*=*=*=*=*=*=  Credit  =*=*=*=*=*=*=*=*=
 
--- 
-Carlos López
-Jr. Security Engineer
-SUSE Software Solutions
+Duoming Zhou <duoming@....edu.cn>
 
+Best Regards,
+Duoming Zhou
