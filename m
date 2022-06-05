@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3003" "Wednesday" "4" "July" "2018" "17:15:13" "-0400" "will martin" "wmartinusa@gmail.com" "<CAK3kuDWdbaN_SKessVpbpu2eE-8D3Q2GmEW2bAy4-Pfvs6j0og@mail.gmail.com>" "85" "[oss-security] Re: [SECURITY] CVE-2018-8026: XXE vulnerability due to Apache Solr configset upload (exchange rate provider config / enum field config / TIKA parsecontext)" nil nil nil "7" "2018070421:15:13" "[oss-security] Re: [SECURITY] CVE-2018-8026: XXE vulnerability due to Apache Solr configset upload (exchange rate provider config / enum field config / TIKA parsecontext)" (number mark "U       wmartinusa@g Jul  4   85/3003  " thread-indent "\"[oss-security] Re: [SECURITY] CVE-2018-8026: XXE vulnerability due to Apache Solr configset upload (exchange rate provider config / enum field config / TIKA parsecontext)\"\n") "<0cdc01d413b7$f97ba580$ec72f080$@apache.org>" ("<0cdc01d413b7$f97ba580$ec72f080$@apache.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 23683 invoked by uid 550); 4 Jul 2018 21:21:44 -0000
+Received: (qmail 20356 invoked by uid 550); 5 Jun 2022 11:45:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,129 +7,233 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13332 invoked from network); 4 Jul 2018 21:15:36 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=TuUJl1iwwrJd/AhERm8+oxDQGUUrsprYFQNeJkq1HK8=;
-        b=hxw2mwm4WOez/cj8Jzuopvls9TGkkq+31zServtq7OSbGRj4t53kP5HEt7OydF2lu7
-         jnJABPILJv4HuaZF3nqL6CYfFp4Fy56Je1B7vtJOdsBVe2q1T/FYXIGUperAJLv3ZNaO
-         9+ViNNGPu8ByXNsdc9hBphanugkCxNaRzwD4Wm2pg+6lvOVbn2CoHrJwcaK0/brm7eV0
-         s3dqeYVF67IlR4Zlm+PxGrm7gSQ+gYGn+Zt532LpVCch/demCVbZeavlHhgFB+AfFS71
-         wUiY21ZyRO0LnhiQtfAU2KVceLi0w6vQ2UePxkbl4eEf1TkMXaqGhCHeU6dcGPB5vdZF
-         4N5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=TuUJl1iwwrJd/AhERm8+oxDQGUUrsprYFQNeJkq1HK8=;
-        b=QaI+qJhnu5YZZ2vwFNWFgWnVV1qFCRmAMVQVb9pMrLrNMmcXgd9LZBurVKQwCTRMK5
-         A+XJBc/0KH+gYULctfNSxwUAiR7pklgPLUnxHt6lha8m0RW1bPT0cXnjZ7gtpj4F0ekX
-         o/6WxWXd/dFf6380pUfDnOpTR12ITD8pewJWMaFs//PogaqNk1j1wmbHnhO6o5JGKSmk
-         7qzYwRrunjx+SUqIwgLYW0NiIg2K5PDo64f9dLb1hWR3wY7fDwBynesTqQoHQt9DDuar
-         mt6/gCiz3VCN7cv5kRDBCCLrRvyA2N3CaIeCvoXPBuV7b2JKpchczEvehwP/PLtHaalv
-         J9jA==
-X-Gm-Message-State: APt69E3cPU7lSDWoFBcpADfTgAl+pQcJsacvE+psBvz3pBj3fGdmbddu
-	rjKcyv4V6BvbkYwl5+dYnnjKF44DoEWYbg1UZ4k=
-X-Google-Smtp-Source: AAOMgpeew3zuwJomO6a01oaYnhI3IABHJ6ouy63MsN1eUgdyVDFbSgq8eR9anQggl+kuMumIOSmFNL2OPVKaB9jPjF0=
-X-Received: by 2002:a19:7403:: with SMTP id v3-v6mr2400172lfe.97.1530738924678;
- Wed, 04 Jul 2018 14:15:24 -0700 (PDT)
+Received: (qmail 32428 invoked from network); 5 Jun 2022 01:20:50 -0000
+X-Originating-IP: [106.117.78.144]
+Date: Sun, 5 Jun 2022 09:20:35 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: duoming@zju.edu.cn
+To: oss-security@lists.openwall.com
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20210104(ab8c30b6)
+ Copyright (c) 2002-2022 www.mailtech.cn zju.edu.cn
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-References: <0cdc01d413b7$f97ba580$ec72f080$@apache.org>
-In-Reply-To: <0cdc01d413b7$f97ba580$ec72f080$@apache.org>
-From: will martin <wmartinusa@gmail.com>
-Date: Wed, 4 Jul 2018 17:15:13 -0400
-Message-ID: <CAK3kuDWdbaN_SKessVpbpu2eE-8D3Q2GmEW2bAy4-Pfvs6j0og@mail.gmail.com>
-To: general@lucene.apache.org
-Cc: announce@apache.org, dev@lucene.apache.org, solr-user@lucene.apache.org, 
-	security <security@apache.org>, oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000d97365057032ed1b"
-Subject: [oss-security] Re: [SECURITY] CVE-2018-8026: XXE vulnerability due to Apache Solr
- configset upload (exchange rate provider config / enum field config / TIKA parsecontext)
+Message-ID: <4a7ab989.4d12a.181317318f6.Coremail.duoming@zju.edu.cn>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: cC_KCgBnT7rjBJxiGgaDAQ--.36117W
+X-CM-SenderInfo: qssqjiasttq6lmxovvfxof0/1tbiAgYMAVZdtaCixQAAsw
+X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWDJw
+	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
+	daVFxhVjvjDU=
+Subject: [oss-security] CVE-2022-1974: Linux kernel: use-after-free caused by improper check
+ device_is_registered() in nfc netlink related functions
 
---000000000000d97365057032ed1b
-Content-Type: text/plain; charset="UTF-8"
-
-The cve id was reserved in April. The jira ticket 1 mo ago. Is this the
-first notice to this list?
-
-Thx
-
-On Wed, Jul 4, 2018, 12:56 PM Uwe Schindler <uschindler@apache.org> wrote:
-
-> CVE-2018-8026: XXE vulnerability due to Apache Solr configset upload
-> (exchange rate provider config / enum field config / TIKA parsecontext)
->
-> Severity: High
->
-> Vendor:
-> The Apache Software Foundation
->
-> Versions Affected:
-> Solr 6.0.0 to 6.6.4
-> Solr 7.0.0 to 7.3.1
->
-> Description:
-> The details of this vulnerability were reported by mail to the Apache
-> security mailing list.
-> This vulnerability relates to an XML external entity expansion (XXE) in
-> Solr
-> config files (currency.xml, enumsConfig.xml referred from schema.xml,
-> TIKA parsecontext config file). In addition, Xinclude functionality
-> provided
-> in these config files is also affected in a similar way. The vulnerability
-> can
-> be used as XXE using file/ftp/http protocols in order to read arbitrary
-> local files from the Solr server or the internal network. The manipulated
-> files can be uploaded as configsets using Solr's API, allowing to exploit
-> that vulnerability. See [1] for more details.
->
-> Mitigation:
-> Users are advised to upgrade to either Solr 6.6.5 or Solr 7.4.0 releases
-> both
-> of which address the vulnerability. Once upgrade is complete, no other
-> steps
-> are required. Those releases only allow external entities and Xincludes
-> that
-> refer to local files / zookeeper resources below the Solr instance
-> directory
-> (using Solr's ResourceLoader); usage of absolute URLs is denied. Keep in
-> mind, that external entities and XInclude are explicitly supported to
-> better
-> structure config files in large installations. Before Solr 6 this was no
-> problem, as config files were not accessible through the APIs.
->
-> If users are unable to upgrade to Solr 6.6.5 or Solr 7.4.0 then they are
-> advised to make sure that Solr instances are only used locally without
-> access
-> to public internet, so the vulnerability cannot be exploited. In addition,
-> reverse proxies should be guarded to not allow end users to reach the
-> configset APIs. Please refer to [2] on how to correctly secure Solr
-> servers.
->
-> Solr 5.x and earlier are not affected by this vulnerability; those versions
-> do not allow to upload configsets via the API. Nevertheless, users should
-> upgrade those versions as soon as possible, because there may be other ways
-> to inject config files through file upload functionality of the old web
-> interface. Those versions are no longer maintained, so no deep analysis was
-> done.
->
-> Credit:
-> Yuyang Xiao, Ishan Chattopadhyaya
->
-> References:
-> [1] https://issues.apache.org/jira/browse/SOLR-12450
-> [2] https://wiki.apache.org/solr/SolrSecurity
->
-> -----
-> Uwe Schindler
-> uschindler@apache.org
-> ASF Member, Apache Lucene PMC / Committer
-> Bremen, Germany
-> http://lucene.apache.org/
->
->
->
-
---000000000000d97365057032ed1b--
+SGVsbG8gdGhlcmUsCgpUaGVyZSBhcmUgdXNlLWFmdGVyLWZyZWUgdnVsbmVy
+YWJpbGl0aWVzIGluIC9uZXQvbmZjL2NvcmUuYyBvZiBsaW51eCB0aGF0IGFs
+bG93IAphdHRhY2tlciB0byBjcmFzaCBsaW51eCBrZXJuZWwgYnkgc2ltdWxh
+dGluZyBuZmMgZGV2aWNlIGZyb20gdXNlci1zcGFjZS4KCj0qPSo9Kj0qPSo9
+Kj0qPSo9ICBCdWcgRGV0YWlscyAgPSo9Kj0qPSo9Kj0qPSo9Kj0KClRoZSBk
+ZXZpY2VfaXNfcmVnaXN0ZXJlZCgpIGluIG5mYyBjb3JlIGlzIHVzZWQgdG8g
+Y2hlY2sgd2hldGhlcgpuZmMgZGV2aWNlIGlzIHJlZ2lzdGVyZWQgaW4gbmV0
+bGluayByZWxhdGVkIGZ1bmN0aW9ucyBzdWNoIGFzCm5mY19md19kb3dubG9h
+ZCgpLCBuZmNfZGV2X3VwKCkgYW5kIHNvIG9uLiBBbHRob3VnaCBkZXZpY2Vf
+aXNfcmVnaXN0ZXJlZCgpCmlzIHByb3RlY3RlZCBieSBkZXZpY2VfbG9jaywg
+dGhlcmUgaXMgc3RpbGwgYSByYWNlIGNvbmRpdGlvbiBiZXR3ZWVuCmRldmlj
+ZV9kZWwoKSBhbmQgZGV2aWNlX2lzX3JlZ2lzdGVyZWQoKS4gVGhlIHJvb3Qg
+Y2F1c2UgaXMgdGhhdAprb2JqZWN0X2RlbCgpIGluIGRldmljZV9kZWwoKSBp
+cyBub3QgcHJvdGVjdGVkIGJ5IGRldmljZV9sb2NrLgoKICAgKGNsZWFudXAg
+dGFzaykgICAgICAgICB8ICAgICAobmV0bGluayB0YXNrKQogICAgICAgICAg
+ICAgICAgICAgICAgICAgIHwKbmZjX3VucmVnaXN0ZXJfZGV2aWNlICAgICB8
+IG5mY19md19kb3dubG9hZAogZGV2aWNlX2RlbCAgICAgICAgICAgICAgIHwg
+IGRldmljZV9sb2NrCiAgLi4uICAgICAgICAgICAgICAgICAgICAgfCAgIGlm
+ICghZGV2aWNlX2lzX3JlZ2lzdGVyZWQpLy8oMSkKICBrb2JqZWN0X2RlbC8v
+KDIpICAgICAgICB8ICAgLi4uCiAuLi4gICAgICAgICAgICAgICAgICAgICAg
+fCAgZGV2aWNlX3VubG9jawoKVGhlIGRldmljZV9pc19yZWdpc3RlcmVkKCkg
+cmV0dXJucyB0aGUgdmFsdWUgb2Ygc3RhdGVfaW5fc3lzZnMgYW5kCnRoZSBz
+dGF0ZV9pbl9zeXNmcyBpcyBzZXQgdG8gemVybyBpbiBrb2JqZWN0X2RlbCgp
+LiBJZiB3ZSBwYXNzIGNoZWNrIGluCnBvc2l0aW9uICgxKSwgdGhlbiBzZXQg
+emVybyBpbiBwb3NpdGlvbiAoMikuIEFzIGEgcmVzdWx0LCB0aGUgY2hlY2sK
+aW4gcG9zaXRpb24gKDEpIGlzIHVzZWxlc3MuCgpPbmUgb2YgdGhlIHVzZS1h
+ZnRlci1mcmVlIHZ1bG5lcmFiaWxpdGllcyBjYXVzZWQgYnkgdGhpcyBwcm9i
+bGVtIGlzIHNob3duIGJlbG93OgoKICAgKEZyZWUpICAgICAgICAgICAgICAg
+ICB8ICAgICAoVXNlKSAgICAgICAgICAgICAgICAgICAgICAKbmZjX3VucmVn
+aXN0ZXJfZGV2aWNlICAgICB8IG5mY19kZXZfdXAKIHJma2lsbF9kZXN0cm95
+IC8vKDEpICAgICB8ICAuLi4KIC4uLiAgICAgICAgICAgICAgICAgICAgICB8
+ICAKIGRldmljZV9kZWwgICAgICAgICAgICAgICB8ICBkZXZpY2VfbG9jawog
+IC4uLiAgICAgICAgICAgICAgICAgICAgIHwgICBpZiAoIWRldmljZV9pc19y
+ZWdpc3RlcmVkKQogIGtvYmplY3RfZGVsICAgICAgICAgICAgIHwgICAuLi4K
+ICAgICAgICAgICAgICAgICAgICAgICAgICB8ICAgcmZraWxsX2Jsb2NrZWQK
+ICAgICAgICAgICAgICAgICAgICAgICAgICB8ICAgIHNwaW5fbG9ja19pcnFz
+YXZlKCZyZmtpbGwtPmxvY2ssLi4pOy8vKDIpCiAuLi4gICAgICAgICAgICAg
+ICAgICAgICAgfCAgZGV2aWNlX3VubG9jawoKVGhlIHJma2lsbCBpcyBkZWFs
+bG9jYXRlZCBpcyBwb3NpdGlvbigxKSBhbmQgdXNlIGluIHBvc2l0aW9uKDIp
+LCB3aGljaCBsZWFkcyB0byAKdXNlLWFmdGVyLWZyZWUgYnVnLgoKPSo9Kj0q
+PSo9Kj0qPSo9Kj0gIEJ1ZyBFZmZlY3RzICA9Kj0qPSo9Kj0qPSo9Kj0qPQoK
+V2UgY2FuIHN1Y2Nlc3NmdWxseSB0cmlnZ2VyIHRoZSB2dWxuZXJhYmlsaXRp
+ZXMgdG8gY3Jhc2ggdGhlIGxpbnV4IGtlcm5lbC4KClRoZSBiYWNrdHJhY2Ug
+Y2F1c2VkIGJ5IHVzZS1hZnRlci1mcmVlIGJ1ZyBpcyBzaG93biBiZWxvdy4K
+ClsgICA5Ny41NDA3NjFdID09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQpbICAgOTcu
+NTQxMjM4XSBCVUc6IEtBU0FOOiB1c2UtYWZ0ZXItZnJlZSBpbiBkb19yYXdf
+c3Bpbl9sb2NrKzB4NjYvMHgxYTAKWyAgIDk3LjU0MTUyNV0gUmVhZCBvZiBz
+aXplIDQgYXQgYWRkciBmZmZmODg4MDA2ZTY4MDA0IGJ5IHRhc2sgZXhhbXBs
+ZS82MzUKWyAgIDk3LjU0MTUyNV0gQ1BVOiAwIFBJRDogNjM1IENvbW06IGV4
+YW1wbGUgTm90IHRhaW50ZWQgNS4xOC4wLXJjMy0wMDg0OS1nZmMwNmIyODY3
+ZjRjLWRpcnR5ICMxNjcKWyAgIDk3LjU0MTUyNV0gQ2FsbCBUcmFjZToKWyAg
+IDk3LjU0MTUyNV0gIDxUQVNLPgpbICAgOTcuNTQxNTI1XSAgZHVtcF9zdGFj
+a19sdmwrMHg1Ny8weDdkClsgICA5Ny41NDE1MjVdICBwcmludF9yZXBvcnQu
+Y29sZCsweDVlLzB4NWRiClsgICA5Ny41NDE1MjVdICA/IGRvX3Jhd19zcGlu
+X2xvY2srMHg2Ni8weDFhMApbICAgOTcuNTQxNTI1XSAga2FzYW5fcmVwb3J0
+KzB4YmUvMHgxYzAKWyAgIDk3LjU0MTUyNV0gID8gZG9fcmF3X3NwaW5fbG9j
+aysweDY2LzB4MWEwClsgICA5Ny41NDE1MjVdICBkb19yYXdfc3Bpbl9sb2Nr
+KzB4NjYvMHgxYTAKWyAgIDk3LjU0MTUyNV0gID8gcndsb2NrX2J1Zy5wYXJ0
+LjArMHg1MC8weDUwClsgICA5Ny41NDE1MjVdICA/IGxvY2tfcmVsZWFzZSsw
+eDQ1MC8weDQ1MApbICAgOTcuNTQxNTI1XSAgX3Jhd19zcGluX2xvY2tfaXJx
+c2F2ZSsweDQxLzB4NTAKWyAgIDk3LjU0MTUyNV0gID8gcmZraWxsX2Jsb2Nr
+ZWQrMHhjLzB4NDAKWyAgIDk3LjU0MTUyNV0gIHJma2lsbF9ibG9ja2VkKzB4
+Yy8weDQwClsgICA5Ny41NDE1MjVdICBuZmNfZGV2X3VwKzB4NGMvMHgxNDAK
+WyAgIDk3LjU0MTUyNV0gIG5mY19nZW5sX2Rldl91cCsweDQ2LzB4NzAKWyAg
+IDk3LjU0MTUyNV0gIGdlbmxfZmFtaWx5X3Jjdl9tc2dfZG9pdCsweDE3YS8w
+eDIwMApbICAgOTcuNTQxNTI1XSAgPyBnZW5sX2ZhbWlseV9yY3ZfbXNnX2F0
+dHJzX3BhcnNlLmNvbnN0cHJvcC4wKzB4MTMwLzB4MTMwClsgICA5Ny41NDE1
+MjVdICA/IG11dGV4X2xvY2tfaW9fbmVzdGVkKzB4YjYzLzB4YmQwClsgICA5
+Ny41NDE1MjVdICA/IHNlY3VyaXR5X2NhcGFibGUrMHg0OC8weDYwClsgICA5
+Ny41NDE1MjVdICBnZW5sX3Jjdl9tc2crMHgxOGQvMHgyYzAKWyAgIDk3LjU0
+MTUyNV0gID8gZ2VubF9nZXRfY21kKzB4MWIwLzB4MWIwClsgICA5Ny41NDE1
+MjVdICA/IHJjdV9yZWFkX2xvY2tfc2NoZWRfaGVsZCsweGQvMHg3MApbICAg
+OTcuNTQxNTI1XSAgPyBuZmNfZ2VubF9kZXZfZG93bisweDcwLzB4NzAKWyAg
+IDk3LjU0MTUyNV0gID8gcmN1X3JlYWRfbG9ja19zY2hlZF9oZWxkKzB4ZC8w
+eDcwClsgICA5Ny41NDE1MjVdICA/IGxvY2tfYWNxdWlyZSsweGNlLzB4NDEw
+ClsgICA5Ny41NDE1MjVdICBuZXRsaW5rX3Jjdl9za2IrMHhjNC8weDFmMApb
+ICAgOTcuNTQxNTI1XSAgPyBnZW5sX2dldF9jbWQrMHgxYjAvMHgxYjAKWyAg
+IDk3LjU0MTUyNV0gID8gbmV0bGlua19hY2srMHg0ZDAvMHg0ZDAKWyAgIDk3
+LjU0MTUyNV0gID8gbmV0bGlua19kZWxpdmVyX3RhcCsweGY3LzB4NWEwClsg
+ICA5Ny41NDE1MjVdICBnZW5sX3JjdisweDFmLzB4MzAKWyAgIDk3LjU0MTUy
+NV0gIG5ldGxpbmtfdW5pY2FzdCsweDJkOC8weDQyMApbICAgOTcuNTQxNTI1
+XSAgPyBuZXRsaW5rX2F0dGFjaHNrYisweDQzMC8weDQzMApbICAgOTcuNTQx
+NTI1XSAgbmV0bGlua19zZW5kbXNnKzB4M2E5LzB4NmUwClsgICA5Ny41NDE1
+MjVdICA/IG5ldGxpbmtfdW5pY2FzdCsweDQyMC8weDQyMApbICAgOTcuNTQx
+NTI1XSAgPyBuZXRsaW5rX3VuaWNhc3QrMHg0MjAvMHg0MjAKWyAgIDk3LjU0
+MTUyNV0gIHNvY2tfc2VuZG1zZysweDkxLzB4YTAKWyAgIDk3LjU0MTUyNV0g
+IF9fc3lzX3NlbmR0bysweDE2OC8weDIwMApbICAgOTcuNTQxNTI1XSAgPyBf
+X2lhMzJfc3lzX2dldHBlZXJuYW1lKzB4NDAvMHg0MApbICAgOTcuNTQxNTI1
+XSAgPyBwcmVlbXB0X2NvdW50X3N1YisweGYvMHhiMApbICAgOTcuNTQxNTI1
+XSAgPyBmZF9pbnN0YWxsKzB4ZmIvMHgzNDAKWyAgIDk3LjU0MTUyNV0gID8g
+X19zeXNfc29ja2V0KzB4ZjAvMHgxNjAKWyAgIDk3LjU0MTUyNV0gID8ga2Vy
+bmVsX2ZwdV9iZWdpbl9tYXNrKzB4MTYwLzB4MTYwClsgICA5Ny41NDE1MjVd
+ICA/IGNvbXBhdF9zb2NrX2lvY3RsKzB4NDEwLzB4NDEwClsgICA5Ny41NDE1
+MjVdICA/IHJ3bG9ja19idWcucGFydC4wKzB4NTAvMHg1MApbICAgOTcuNTQx
+NTI1XSAgX194NjRfc3lzX3NlbmR0bysweDZmLzB4ODAKWyAgIDk3LjU0MTUy
+NV0gIGRvX3N5c2NhbGxfNjQrMHgzYi8weDkwClsgICA5Ny41NDE1MjVdICBl
+bnRyeV9TWVNDQUxMXzY0X2FmdGVyX2h3ZnJhbWUrMHg0NC8weGFlClsgICA5
+Ny41NDE1MjVdIFJJUDogMDAzMzoweDdmNGQ0NmE5MTAyYwpbICAgOTcuNTQx
+NTI1XSBDb2RlOiAwYSBmOCBmZiBmZiA0NCA4YiA0YyAyNCAyYyA0YyA4YiA0
+NCAyNCAyMCA4OSBjNSA0NCA4YiA1NCAyNCAyOCA0OCA4YiA1NCAyNCAxOCBi
+OCAyYyAwMCAwMCAwMCA0OCA4YiA3NCAyNCAxMCA4YiA3YyAyNCAwOCAwZiAw
+NSA8NDg+IDNiClsgICA5Ny41NDE1MjVdIFJTUDogMDAyYjowMDAwN2Y0ZDQ2
+MGE4ZTEwIEVGTEFHUzogMDAwMDAyOTMgT1JJR19SQVg6IDAwMDAwMDAwMDAw
+MDAwMmMKWyAgIDk3LjU0MTUyNV0gUkFYOiBmZmZmZmZmZmZmZmZmZmRhIFJC
+WDogMDAwMDAwMDAwMDAwMDAwMCBSQ1g6IDAwMDA3ZjRkNDZhOTEwMmMKWyAg
+IDk3LjU0MTUyNV0gUkRYOiAwMDAwMDAwMDAwMDAwMDFjIFJTSTogMDAwMDU1
+OGFkODAwMzA5MCBSREk6IDAwMDAwMDAwMDAwMDAwOWQKWyAgIDk3LjU0MTUy
+NV0gUkJQOiAwMDAwMDAwMDAwMDAwMDAwIFIwODogMDAwMDdmNGQ0NjBhOGU4
+YyBSMDk6IDAwMDAwMDAwMDAwMDAwMGMKWyAgIDk3LjU0MTUyNV0gUjEwOiAw
+MDAwMDAwMDAwMDAwMDAwIFIxMTogMDAwMDAwMDAwMDAwMDI5MyBSMTI6IDAw
+MDA3ZmZkZWQ4ODBlZmUKWyAgIDk3LjU0MTUyNV0gUjEzOiAwMDAwN2ZmZGVk
+ODgwZWZmIFIxNDogMDAwMDdmNGQ0NjBhOGZjMCBSMTU6IDAwMDA3ZjRkNDYw
+YTk3MDAKWyAgIDk3LjU0MTUyNV0gIDwvVEFTSz4KWyAgIDk3LjU0MTUyNV0g
+ClsgICA5Ny41NDE1MjVdIEFsbG9jYXRlZCBieSB0YXNrIDE1OToKWyAgIDk3
+LjU0MTUyNV0gIGthc2FuX3NhdmVfc3RhY2srMHgxZS8weDQwClsgICA5Ny41
+NDE1MjVdICBfX2thc2FuX2ttYWxsb2MrMHg4MS8weGEwClsgICA5Ny41NDE1
+MjVdICByZmtpbGxfYWxsb2MrMHg2YS8weDE3MApbICAgOTcuNTQxNTI1XSAg
+bmZjX3JlZ2lzdGVyX2RldmljZSsweDhkLzB4MTEwClsgICA5Ny41NDE1MjVd
+ICBuY2lfcmVnaXN0ZXJfZGV2aWNlKzB4NTE1LzB4NWUwClsgICA5Ny41NDE1
+MjVdICBuZmNtcnZsX25jaV9yZWdpc3Rlcl9kZXYrMHgxNDMvMHgxNzAKWyAg
+IDk3LjU0MTUyNV0gIG5mY21ydmxfbmNpX3VhcnRfb3BlbisweDE0Ny8weDI0
+MApbICAgOTcuNTQxNTI1XSAgbmNpX3VhcnRfdHR5X2lvY3RsKzB4MWMzLzB4
+MjcwClsgICA5Ny41NDE1MjVdICB0dHlfaW9jdGwrMHg1ZjAvMHhjNzAKWyAg
+IDk3LjU0MTUyNV0gIF9feDY0X3N5c19pb2N0bCsweGI0LzB4ZjAKWyAgIDk3
+LjU0MTUyNV0gIGRvX3N5c2NhbGxfNjQrMHgzYi8weDkwClsgICA5Ny41NDE1
+MjVdICBlbnRyeV9TWVNDQUxMXzY0X2FmdGVyX2h3ZnJhbWUrMHg0NC8weGFl
+ClsgICA5Ny41NDE1MjVdIApbICAgOTcuNTQxNTI1XSBGcmVlZCBieSB0YXNr
+IDYzNjoKWyAgIDk3LjU0MTUyNV0gIGthc2FuX3NhdmVfc3RhY2srMHgxZS8w
+eDQwClsgICA5Ny41NDE1MjVdICBrYXNhbl9zZXRfdHJhY2srMHgyMS8weDMw
+ClsgICA5Ny41NDE1MjVdICBrYXNhbl9zZXRfZnJlZV9pbmZvKzB4MjAvMHgz
+MApbICAgOTcuNTQxNTI1XSAgX19rYXNhbl9zbGFiX2ZyZWUrMHgxMDgvMHgx
+NzAKWyAgIDk3LjU0MTUyNV0gIGtmcmVlKzB4YjAvMHgzMzAKWyAgIDk3LjU0
+MTUyNV0gIGRldmljZV9yZWxlYXNlKzB4NTQvMHhlMApbICAgOTcuNTQxNTI1
+XSAga29iamVjdF9wdXQrMHhhNS8weDEyMApbICAgOTcuNTQxNTI1XSAgbmZj
+X3VucmVnaXN0ZXJfZGV2aWNlKzB4NTEvMHgxMDAKWyAgIDk3LjU0MTUyNV0g
+IG5mY21ydmxfbmNpX3VucmVnaXN0ZXJfZGV2KzB4NDUvMHg3MApbICAgOTcu
+NTQxNTI1XSAgbmNpX3VhcnRfdHR5X2Nsb3NlKzB4ODcvMHhkMApbICAgOTcu
+NTQxNTI1XSAgdHR5X2xkaXNjX2tpbGwrMHgzZS8weDgwClsgICA5Ny41NDE1
+MjVdICB0dHlfbGRpc2NfaGFuZ3VwKzB4MWIyLzB4MmMwClsgICA5Ny41NDE1
+MjVdICBfX3R0eV9oYW5ndXAucGFydC4wKzB4MzE2LzB4NTIwClsgICA5Ny41
+NDE1MjVdICB0dHlfcmVsZWFzZSsweDIwMC8weDY3MApbICAgOTcuNTQxNTI1
+XSAgX19mcHV0KzB4MTEwLzB4NDEwClsgICA5Ny41NDE1MjVdICB0YXNrX3dv
+cmtfcnVuKzB4ODYvMHhkMApbICAgOTcuNTQxNTI1XSAgZXhpdF90b191c2Vy
+X21vZGVfcHJlcGFyZSsweDFhYS8weDFiMApbICAgOTcuNTQxNTI1XSAgc3lz
+Y2FsbF9leGl0X3RvX3VzZXJfbW9kZSsweDE5LzB4NTAKWyAgIDk3LjU0MTUy
+NV0gIGRvX3N5c2NhbGxfNjQrMHg0OC8weDkwClsgICA5Ny41NDE1MjVdICBl
+bnRyeV9TWVNDQUxMXzY0X2FmdGVyX2h3ZnJhbWUrMHg0NC8weGFlClsgICA5
+Ny41NDE1MjVdIApbICAgOTcuNTQxNTI1XSBMYXN0IHBvdGVudGlhbGx5IHJl
+bGF0ZWQgd29yayBjcmVhdGlvbjoKWyAgIDk3LjU0MTUyNV0gIGthc2FuX3Nh
+dmVfc3RhY2srMHgxZS8weDQwClsgICA5Ny41NDE1MjVdICBfX2thc2FuX3Jl
+Y29yZF9hdXhfc3RhY2srMHg5Ny8weGEwClsgICA5Ny41NDE1MjVdICBpbnNl
+cnRfd29yaysweDI4LzB4MTEwClsgICA5Ny41NDE1MjVdICBfX3F1ZXVlX3dv
+cmsrMHgzNTcvMHg4MzAKWyAgIDk3LjU0MTUyNV0gIHF1ZXVlX3dvcmtfb24r
+MHg3Ni8weDgwClsgICA5Ny41NDE1MjVdICByZmtpbGxfcmVnaXN0ZXIrMHgz
+N2EvMHg0YTAKWyAgIDk3LjU0MTUyNV0gIG5mY19yZWdpc3Rlcl9kZXZpY2Ur
+MHhiMy8weDExMApbICAgOTcuNTQxNTI1XSAgbmNpX3JlZ2lzdGVyX2Rldmlj
+ZSsweDUxNS8weDVlMApbICAgOTcuNTQxNTI1XSAgbmZjbXJ2bF9uY2lfcmVn
+aXN0ZXJfZGV2KzB4MTQzLzB4MTcwClsgICA5Ny41NDE1MjVdICBuZmNtcnZs
+X25jaV91YXJ0X29wZW4rMHgxNDcvMHgyNDAKWyAgIDk3LjU0MTUyNV0gIG5j
+aV91YXJ0X3R0eV9pb2N0bCsweDFjMy8weDI3MApbICAgOTcuNTQxNTI1XSAg
+dHR5X2lvY3RsKzB4NWYwLzB4YzcwClsgICA5Ny41NDE1MjVdICBfX3g2NF9z
+eXNfaW9jdGwrMHhiNC8weGYwClsgICA5Ny41NDE1MjVdICBkb19zeXNjYWxs
+XzY0KzB4M2IvMHg5MApbICAgOTcuNTQxNTI1XSAgZW50cnlfU1lTQ0FMTF82
+NF9hZnRlcl9od2ZyYW1lKzB4NDQvMHhhZQpbICAgOTcuNTQxNTI1XSAKWyAg
+IDk3LjU0MTUyNV0gVGhlIGJ1Z2d5IGFkZHJlc3MgYmVsb25ncyB0byB0aGUg
+b2JqZWN0IGF0IGZmZmY4ODgwMDZlNjgwMDAKWyAgIDk3LjU0MTUyNV0gIHdo
+aWNoIGJlbG9uZ3MgdG8gdGhlIGNhY2hlIGttYWxsb2MtMmsgb2Ygc2l6ZSAy
+MDQ4ClsgICA5Ny41NDE1MjVdIFRoZSBidWdneSBhZGRyZXNzIGlzIGxvY2F0
+ZWQgNCBieXRlcyBpbnNpZGUgb2YKWyAgIDk3LjU0MTUyNV0gIDIwNDgtYnl0
+ZSByZWdpb24gW2ZmZmY4ODgwMDZlNjgwMDAsIGZmZmY4ODgwMDZlNjg4MDAp
+ClsgICA5Ny41NDE1MjVdIApbICAgOTcuNTQxNTI1XSBUaGUgYnVnZ3kgYWRk
+cmVzcyBiZWxvbmdzIHRvIHRoZSBwaHlzaWNhbCBwYWdlOgpbICAgOTcuNTQx
+NTI1XSBwYWdlOjAwMDAwMDAwOTQ5OTMwYmIgcmVmY291bnQ6MSBtYXBjb3Vu
+dDowIG1hcHBpbmc6MDAwMDAwMDAwMDAwMDAwMCBpbmRleDoweDAgcGZuOjB4
+NmU2OApbICAgOTcuNTQxNTI1XSBoZWFkOjAwMDAwMDAwOTQ5OTMwYmIgb3Jk
+ZXI6MyBjb21wb3VuZF9tYXBjb3VudDowIGNvbXBvdW5kX3BpbmNvdW50OjAK
+WyAgIDk3LjU0MTUyNV0gZmxhZ3M6IDB4MTAwMDAwMDAwMDEwMjAwKHNsYWJ8
+aGVhZHxub2RlPTB8em9uZT0xKQpbICAgOTcuNTQxNTI1XSByYXc6IDAxMDAw
+MDAwMDAwMTAyMDAgMDAwMDAwMDAwMDAwMDAwMCBkZWFkMDAwMDAwMDAwMTIy
+IGZmZmY4ODgwMDYwNDJmMDAKWyAgIDk3LjU0MTUyNV0gcmF3OiAwMDAwMDAw
+MDAwMDAwMDAwIDAwMDAwMDAwODAwODAwMDggMDAwMDAwMDFmZmZmZmZmZiAw
+MDAwMDAwMDAwMDAwMDAwClsgICA5Ny41NDE1MjVdIHBhZ2UgZHVtcGVkIGJl
+Y2F1c2U6IGthc2FuOiBiYWQgYWNjZXNzIGRldGVjdGVkClsgICA5Ny41NDE1
+MjVdIApbICAgOTcuNTQxNTI1XSBNZW1vcnkgc3RhdGUgYXJvdW5kIHRoZSBi
+dWdneSBhZGRyZXNzOgpbICAgOTcuNTQxNTI1XSAgZmZmZjg4ODAwNmU2N2Yw
+MDogMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAgMDAg
+MDAgMDAKWyAgIDk3LjU0MTUyNV0gIGZmZmY4ODgwMDZlNjdmODA6IDAwIDAw
+IDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwIDAwClsg
+ICA5Ny41NDE1MjVdID5mZmZmODg4MDA2ZTY4MDAwOiBmYSBmYiBmYiBmYiBm
+YiBmYiBmYiBmYiBmYiBmYiBmYiBmYiBmYiBmYiBmYiBmYgpbICAgOTcuNTQx
+NTI1XSAgICAgICAgICAgICAgICAgICAgXgpbICAgOTcuNTQxNTI1XSAgZmZm
+Zjg4ODAwNmU2ODA4MDogZmIgZmIgZmIgZmIgZmIgZmIgZmIgZmIgZmIgZmIg
+ZmIgZmIgZmIgZmIgZmIgZmIKWyAgIDk3LjU0MTUyNV0gIGZmZmY4ODgwMDZl
+NjgxMDA6IGZiIGZiIGZiIGZiIGZiIGZiIGZiIGZiIGZiIGZiIGZiIGZiIGZi
+IGZiIGZiIGZiClsgICA5Ny41NDE1MjVdID09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PQoKPSo9Kj0qPSo9Kj0qPSo9Kj0gIEJ1ZyBGaXggID0qPSo9Kj0qPSo9Kj0q
+PSo9CgpUaGUgcGF0Y2ggdGhhdCBoYXZlIGJlZW4gYXBwbGllZCB0byBtYWlu
+bGluZSBMaW51eCBrZXJuZWwgaXMgc2hvd24gYmVsb3cuCmh0dHBzOi8vZ2l0
+aHViLmNvbS90b3J2YWxkcy9saW51eC9jb21taXQvZGE1YzBmMTE5MjAzYWQ5
+NzI4OTIwNDU2YTBmNTJhNmQ4NTBjMDFjZAoKPSo9Kj0qPSo9Kj0qPSo9Kj0g
+IFRpbWVsaW5lICA9Kj0qPSo9Kj0qPSo9Kj0qPQoKMjAyMi0wNS0wMTogY29t
+bWl0IGRhNWMwZjExOTIwMyBhY2NlcHRlZCB0byBtYWlubGluZSBrZXJuZWwK
+MjAyMi0wNi0wMzogQ1ZFLTIwMjItMTk3NCBpcyBhc3NpZ25lZAoKPSo9Kj0q
+PSo9Kj0qPSo9Kj0gIENyZWRpdCAgPSo9Kj0qPSo9Kj0qPSo9Kj0KCkR1b21p
+bmcgWmhvdSA8ZHVvbWluZ0B6anUuZWR1LmNuPgoKQmVzdCBSZWdhcmRzLApE
+dW9taW5nIFpob3U=
