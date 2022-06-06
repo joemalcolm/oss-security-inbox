@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1049" "Friday" "10" "April" "2015" "11:26:53" "+0200" "Vitezslav Cizek" "civ@blema.cz" "<20150410092652.GA27909@blema.cz>" "28" "Re: [oss-security] Re: [CVE Requests] rsync and librsync collisions" nil nil nil "4" "2015041009:26:53" "[oss-security] Re: [CVE Requests] rsync and librsync collisions" (number mark "        civ@blema.cz Apr 10   28/1049  " thread-indent "\"Re: [oss-security] Re: [CVE Requests] rsync and librsync collisions\"\n") "<CACYkhxjxuCUj0b5VzicAzKgq42xFU2Rdk736yETPY1d11h5xcw@mail.gmail.com>" ("<540E7816.90001@redhat.com>" "<20140912183958.D1DA96C000A@smtpvmsrv1.mitre.org>" "<CACYkhxhmU74Xsi4H_tBYxY17Y0ovHDdrPfn1pLp1hW6OY6U8dw@mail.gmail.com>" "<CAOp4FwTAFW816AHSE8xZHvVXTYEtArDTNPzTiU+5sOYdEw4efA@mail.gmail.com>" "<CACYkhxjxuCUj0b5VzicAzKgq42xFU2Rdk736yETPY1d11h5xcw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 15684 invoked by uid 550); 10 Apr 2015 09:27:06 -0000
+Received: (qmail 24278 invoked by uid 550); 7 Jun 2022 09:58:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +6,65 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15659 invoked from network); 10 Apr 2015 09:27:05 -0000
-Message-ID: <20150410092652.GA27909@blema.cz>
-References: <540E7816.90001@redhat.com>
- <20140912183958.D1DA96C000A@smtpvmsrv1.mitre.org>
- <CACYkhxhmU74Xsi4H_tBYxY17Y0ovHDdrPfn1pLp1hW6OY6U8dw@mail.gmail.com>
- <CAOp4FwTAFW816AHSE8xZHvVXTYEtArDTNPzTiU+5sOYdEw4efA@mail.gmail.com>
- <CACYkhxjxuCUj0b5VzicAzKgq42xFU2Rdk736yETPY1d11h5xcw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACYkhxjxuCUj0b5VzicAzKgq42xFU2Rdk736yETPY1d11h5xcw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Cc: oss-security@lists.openwall.com
-Date: Fri, 10 Apr 2015 11:26:53 +0200
-From: Vitezslav Cizek <civ@blema.cz>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: [CVE Requests] rsync and librsync collisions
-To: Michael Samuel <mik@miknet.net>
+Received: (qmail 3620 invoked from network); 6 Jun 2022 19:45:58 -0000
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=zEuEk20wcDbr01vTtciuQkq74E8h+RutxRWD0PcaZPA=;
+        b=Hl7U6yXZ7qFUH324m1Zokb/0h4hbx2gADojJbdiHuqt1+ClOrkV5fD5kNyKR8eQWnF
+         3ht5jeMLaIsvxwwB5N+vJs+jgESsSvXH9Up1/VZ36FMLPlydieBN3dho8Fqb/QOk/VCC
+         NZfPO5QSWtYh7noCGB5fFTY/2tlwBykronhiv0v0ulNCAwBenY+cp+ZWYjXtMWTMXl/9
+         h7CjJEQJq8osgonZ7NzxK1W8a7b2/39ElYlRAY899uUOteko5SKIIm/M2oljsl26xJ/N
+         rk8DnlE4agnIel483OpQ/OPHWDSNfdMfgJF1ECrj0Q8AJ+E1nfZzPS/GtwyTA8aDOHmF
+         /2FQ==
+X-Gm-Message-State: AOAM532aUd7WVylzk5NjimAACAAVE/wScb3QpU/pdeoo1NF4vpxteKoW
+	4GaPChdBjqTXaAIZQSmLx2CERKtoT+Wbl1czpO1Z1cIjwknL
+X-Google-Smtp-Source: ABdhPJzymbES8HA2X2oXWQUFjRyBweqa8qB+/6UiJdXVJ5P9u1m8M2KqYs6L+3LmVnA7MlEHpmj8/uEdfELhJ6vjh2A=
+X-Received: by 2002:a17:902:ca0b:b0:167:4c4d:7320 with SMTP id
+ w11-20020a170902ca0b00b001674c4d7320mr18195595pld.113.1654544745543; Mon, 06
+ Jun 2022 12:45:45 -0700 (PDT)
+MIME-Version: 1.0
+From: Samuel Karp <sam@samuelkarp.com>
+Date: Mon, 6 Jun 2022 12:45:34 -0700
+Message-ID: <CAHxebFYNPzz1q2GzCdCm=x9LytoqaoMkFhVNbDCRv7eZOj3LKQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2022-31030: containerd CRI plugin: Host memory exhaustion through ExecSync
 
-Hi Michael,
+A bug was found in containerd's CRI implementation where programs
+inside a container can cause the containerd daemon to consume memory
+without bound during invocation of the ExecSync API. This can cause
+containerd to consume all available memory on the computer, denying
+service to other legitimate workloads. Kubernetes and crictl can both
+be configured to use containerd's CRI implementation; ExecSync may be
+used when running probes or when executing processes via an "exec"
+facility.
 
-* Dne Thursday 18. September 2014, 04:30:22 [CEST] Michael Samuel napsal:
-> Ok, for rsync you can download colliding blocks (and a brief description) here:
-> 
-> https://github.com/therealmik/rsync-collision
-> 
-> I don't get the feeling that this will be fixed upstream, but a simple
-> fix would be
-> to incorporate libdetectcoll from Marc Stevens into rsync, and when a collision
-> attempt is detected to simply send a data block.
-> 
-> A longer-term would be to just replace MD5 with a collision-resistant hash
-> function - blake2 is a good fit.  The 128-bit output is right on the
-> edge of being
-> strong enough.
-> 
-> I submitted a very rough patch which does both, but I haven't had the
-> time to clean
-> the rough edges - the libdetectcoll codebase needs a fair amount of cleaning
-> (printfs etc), and the rsync codebase needs a fair bit of refactor to
-> handle hash
-> output lengths > 16 bytes.
+Patches
+This bug has been fixed in containerd 1.6.6 and 1.5.13. Users should
+update to these versions to resolve the issue.
 
-Was there any further progress with the rsync upstream?
-Are they planning to address this issue or is there no interest?
+Workarounds
+Ensure that only trusted images and commands are used.
 
-  Vita Cizek
+References
+Similar fix in cri-o's CRI implementation GHSA-fcm2-6c3h-pg6j [1]
+
+Credits
+The containerd project would like to thank David Korczynski and Adam
+Korczynski of ADA Logics for responsibly disclosing this issue in
+accordance with the containerd security policy [2] during a security
+audit sponsored by CNCF and facilitated by OSTIF.
+
+For more information
+If you have any questions or comments about this advisory:
+* Open an issue in our GitHub repository [3]
+* Email us at security@containerd.io
+
+On behalf of the containerd project,
+Samuel Karp
+
+[1] https://github.com/cri-o/cri-o/security/advisories/GHSA-fcm2-6c3h-pg6j
+[2] https://github.com/containerd/project/blob/main/SECURITY.md
+[3] https://github.com/containerd/containerd/issues/new/choose
