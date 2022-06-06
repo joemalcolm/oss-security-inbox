@@ -1,55 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/26/1
-Message-ID: <a388a13c-2f49-a36d-668a-633583013717@apache.org>
-Date: Tue, 26 Apr 2022 08:44:41 +0000
-From: Jan Lehnardt <jan@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/07/1
+Message-ID: <CAHxebFYNPzz1q2GzCdCm=x9LytoqaoMkFhVNbDCRv7eZOj3LKQ@mail.gmail.com>
+Date: Mon, 6 Jun 2022 12:45:34 -0700
+From: Samuel Karp <sam@...uelkarp.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-24706: Apache CouchDB: Remote Code Execution Vulnerability in Packaging 
+Subject: CVE-2022-31030: containerd CRI plugin: Host memory exhaustion through ExecSync
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical
+A bug was found in containerd's CRI implementation where programs
+inside a container can cause the containerd daemon to consume memory
+without bound during invocation of the ExecSync API. This can cause
+containerd to consume all available memory on the computer, denying
+service to other legitimate workloads. Kubernetes and crictl can both
+be configured to use containerd's CRI implementation; ExecSync may be
+used when running probes or when executing processes via an "exec"
+facility.
 
-Description:
+Patches
+This bug has been fixed in containerd 1.6.6 and 1.5.13. Users should
+update to these versions to resolve the issue.
 
-An attacker can access an improperly secured default installation without
-authenticating and gain admin privileges.
+Workarounds
+Ensure that only trusted images and commands are used.
 
-1. CouchDB opens a random network port, bound to all available interfaces
-   in anticipation of clustered operation and/or runtime introspection. A
-   utility process called `epmd` advertises that random port to the network.
-   `epmd` itself listens on a fixed port.
-2. CouchDB packaging previously chose a default `cookie` value for single-node
-   as well as clustered installations. That cookie authenticates any
-   communication between Erlang nodes.
+References
+Similar fix in cri-o's CRI implementation GHSA-fcm2-6c3h-pg6j [1]
 
-The CouchDB documentation[1] has always made recommendations for properly
-securing an installation, but not all users follow the advice.
+Credits
+The containerd project would like to thank David Korczynski and Adam
+Korczynski of ADA Logics for responsibly disclosing this issue in
+accordance with the containerd security policy [2] during a security
+audit sponsored by CNCF and facilitated by OSTIF.
 
-We recommend a firewall in front of all CouchDB installations. The full
-CouchDB api is available on registered port `5984` and this is the only
-port that needs to be exposed for a single-node install. Installations
-that do not expose the separate distribution port to external access are
-not vulnerable.
+For more information
+If you have any questions or comments about this advisory:
+* Open an issue in our GitHub repository [3]
+* Email us at security@...tainerd.io
 
-[1]: https://docs.couchdb.org/en/stable/setup/cluster.html
+On behalf of the containerd project,
+Samuel Karp
 
-
-
-Mitigation:
-
-CouchDB 3.2.2 and onwards will refuse to start with the former default
-Erlang cookie value of `monster`. Installations that upgrade to this
-versions are forced to choose a different value.
-
-In addition, all binary packages have been updated to bind `epmd` as
-well as the CouchDB distribution port to `127.0.0.1` and/or `::1`
-respectively.
-
-Credit:
-
-The Apache CouchDB Team would like to thank Alex Vandiver <alexmv@...ip.com> for the report of this issue.
-
-References:
-
-https://lists.apache.org/thread/w24wo0h8nlctfps65txvk0oc5hdcnv00
-
+[1] https://github.com/cri-o/cri-o/security/advisories/GHSA-fcm2-6c3h-pg6j
+[2] https://github.com/containerd/project/blob/main/SECURITY.md
+[3] https://github.com/containerd/containerd/issues/new/choose
