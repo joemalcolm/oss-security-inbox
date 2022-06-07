@@ -1,51 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/30/1
-Message-ID: <c9089e54-bc0d-773c-233e-d63980ad49d4@intel.com>
-Date: Wed, 30 Nov 2022 11:22:16 +0100
-From: Andrzej Hajda <andrzej.hajda@...el.com>
-To: oss-security@...ts.openwall.com
-Cc: Daniel Vetter <daniel@...ll.ch>, Dave Airlie <airlied@...il.com>, Joonas Lahtinen <joonas.lahtinen@...ux.intel.com>, Jani Nikula <jani.nikula@...ux.intel.com>, Tvrtko Ursulin <tvrtko.ursulin@...ux.intel.com>, Linus Torvalds <torvalds@...ux-foundation.org>, Marian Rehak <mrehak@...hat.com>, Greg Kroah-Hartman <gregkh@...uxfoundation.org>, Vegard Nossum <vegard.nossum@...cle.com>
-Subject: Security sensitive bug in the i915 kernel driver (CVE-2022-4139)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/07/2
+Message-ID: <CA+eGCHZT2BdNnH1ZAb5u7j3=OoRbSBpXeOeZmgGj9r7J3Nj39g@mail.gmail.com>
+Date: Tue, 7 Jun 2022 18:14:32 +0800
+From: tr3e wang <tr3e.wang@...il.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2021-4204: Linux Kernel eBPF Improper Input Validation Vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Hi,
 
-[This is a public disclosure of an issue reported 7 days ago to 
-linux-distros@...openwall.org. CVE-2022-4139 has been assigned to the 
-issue since.]
+The exploit code can be found at https://github.com/tr3ee/CVE-2021-4204
 
-Incorrect GPU TLB flush code has been discovered in i915 kernel driver.
-In some cases (Gen12 hardware with specific types of engine) the 
-engine's TLB is not flushed at all.
-Depending on whether the GPU is running behind an active IOMMU there are 
-two possible scenarios which can happen, due to stale TLB mapping:
-1. Without IOMMU - GPU can still access physical memory which could be 
-already assigned by OS to different process.
-2. With IOMMU - GPU can access any memory, if the malicious process is 
-able to create/reuse necessary IOMMU mappings.
+Alexander, thanks for the update and for helping me post the exploit
+code, I suffered from network outage last week.
 
-It is currently not known if specific memory could be targeted, but 
-random memory corruption or data leaks are a known possibility.
+tr3e
 
-All Intel integrated and discrete GPUs Gen12 are affected, including 
-Tiger Lake, Rocket Lake, Alder Lake, DG1, Raptor Lake, DG2, Arctic 
-Sound, Meteor Lake.
-Fix has already been developed and consists of fixing the method of 
-writing to specific registers.
-I am attaching a set of back-ported patches which implement the fix for 
-all affected stable branches (all since 5.4).
-
-This vulnerability has similar impact as CVE-2022-0330[1].
-
-I will try to follow Linux Security Process[2]. So I hope to send the 
-fix for public mailing list after 7 days.
-
-[1]:https://nvd.nist.gov/vuln/detail/cve-2022-0330
-[2]:https://www.kernel.org/doc/html/latest/admin-guide/security-bugs.html
-
-Regards
-Andrzej
-
-
-
-Download attachment "media-tlb.tar" of type "application/x-tar" (20480 bytes)
+On Sun, Jun 5, 2022 at 4:22 AM Solar Designer <solar@...nwall.com> wrote:
+>
+> Hi,
+>
+> I've attached the exploit from the linux-distros thread - hopefully, the
+> right one.  (I really shouldn't be the one doing it.  The exploit author
+> is most qualified to do it, as required by linux-distros list policy.)
+>
+> Alexander
+>
+> On Wed, Jun 01, 2022 at 02:55:13PM +0200, Solar Designer wrote:
+> > Hi,
+> >
+> > In context of the recent discussions on linux-distros list policies and
+> > their enforcement, I looked at some of the previously handled issues,
+> > and identified that the below wasn't properly handled/enforced.
+> >
+> > tr3e, since you had shared actual exploit code with linux-distros, you
+> > were supposed to post the _code_ to oss-security within 7 days after
+> > your initial public disclosure of the vulnerability.  However, you only
+> > posted "the exploit overview" and promised that "Full exploit code will
+> > be published on github in the near future."  Apparently, the latter
+> > never happened, and it wouldn't have satisfied the requirement anyway.
+> >
+> > Please post the same exploit code you had shared with linux-distros to
+> > this thread on oss-security ASAP.  Thank you!
+> >
+> > Alexander
+> >
+> > On Tue, Jan 18, 2022 at 09:26:43PM +0800, tr3e wang wrote:
+> > > Hi all,
+> > >
+> > > This post is the exploit overview of CVE-2021-4202.
+> > >
+> > > We successfully exploited this vulnerability to obtain full root
+> > > privileges on default installations of Ubuntu 20.04.
+> > >
+> > > *Exploit overview*
+> > >
+> > > 1. We create a lot of BPF ringbufs, and choose one of them as victim.
+> > >    The BPF_FUNC_ringbuf_reserve allow us to have a pointer A to the
+> > >    beginning of the victim ringbuf's data field.
+> > >
+> > > 2. We do a pointer subtraction to point back to the victim ringbuf's
+> > >    mask field and overwrite it to 0x80000fff through
+> > > BPF_FUNC_ringbuf_submit.
+> > >    This allows us to do a limited out-of-bounds read/write. If lucky,
+> > >    we can read/write all the fields of the ringbuf behind the victim.
+> > >
+> > > 3. With the full control over all fields of the ringbuf behind the
+> > >    victim, we can manipulate the ringbuf to achieve a restricted
+> > >    address read/write with side effects in the vmalloc space.
+> > >
+> > > 4. We spawn many child processes, and use restricted address read to
+> > >    find the address of task_struct and cred in the vmalloc space.
+> > >    After zeroing out the uid/gid/... , full root privileges obtained.
+> > >
+> > > Full exploit code will be published on github in the near future.
+> > >
+> > > Regards,
+> > > tr3e
