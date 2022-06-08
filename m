@@ -1,21 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/08/5
-Message-ID: <180ab6ad-f7a6-4e9b-98fb-2868f60b9eaf@apache.org>
-Date: Wed, 08 Jun 2022 09:43:35 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/08/6
+Message-ID: <6dd88d7b-4d7d-d1f0-238a-53556932ff4d@apache.org>
+Date: Wed, 08 Jun 2022 09:43:44 +0000
 From: Stefan Eissing <icing@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-29404: Apache HTTP Server: Denial of service in mod_lua r:parsebody 
+Subject: CVE-2022-30522: Apache HTTP Server: mod_sed denial of service 
 Content-Type: text/plain; charset=utf-8
 
 Severity: low
 
 Description:
 
-In Apache HTTP Server 2.4.53 and earlier, a malicious request to a lua script that calls r:parsebody(0) may cause a denial of service due to no default limit on possible input size.
+If Apache HTTP Server 2.4.53 is configured to do transformations with mod_sed in contexts where the input to mod_sed may be very large, mod_sed may make excessively large memory allocations and trigger an abort.
 
 Credit:
 
-The Apache HTTP Server project would like to thank Ronald Crane (Zippenhop LLC) for reporting this issue
+This issue was found by Brian Moussalli from the JFrog Security Research team
 
 References:
 
