@@ -1,52 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/25/9
-Message-ID: <CAB8EV3RcuY4hecdkbt55n6QUmDdLe7gJwZRZkJYG5XYbLzSkzQ@mail.gmail.com>
-Date: Tue, 25 Jan 2022 15:47:17 +0100
-From: Jean-Baptiste Onofré <jbonofre@...che.org>
-To: announce@...che.org, user@...af.apache.org, dev@...af.apache.org,  security@...che.org, oss-security@...ts.openwall.com, Daniel.Heyne@....de
-Subject: [SECURITY] New security advisory for CVE-2021-41766 released for Apache Karaf
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/08/4
+Message-ID: <8827a2d7-3499-efe9-4346-cb507e5be974@apache.org>
+Date: Wed, 08 Jun 2022 09:43:25 +0000
+From: Stefan Eissing <icing@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2022-28614: Apache HTTP Server: read beyond bounds via ap_rwrite()  
 Content-Type: text/plain; charset=utf-8
 
-A new security advisory has been released for Apache Karaf, which was
-fixed in the recent 4.3.6 runtime release.
-
-CVE-2021-41766: Insecure Java Deserialization in Apache Karaf
-
-Severity: Low
-
-Vendor: The Apache Software Foundation
-
-Versions Affected: all versions of Apache Karaf prior to 4.3.6
+Severity: low
 
 Description:
 
-Apache Karaf allows monitoring of applications and the Java runtime by
-using the Java Management Extensions (JMX).
-JMX is a Java RMI based technology that relies on Java serialized
-objects for client server communication.
-Whereas the default JMX implementation is hardened against
-unauthenticated deserialization attacks, the implementation
-used by Apache Karaf is not protected against this kind of attack.
+The ap_rwrite() function in Apache HTTP Server 2.4.53 and earlier may read unintended memory if an attacker can cause the server to reflect very large input using ap_rwrite() or ap_rputs(), such as with mod_luas r:puts() function.
 
-The impact of Java deserialization vulnerabilities strongly depends
-on the classes that are available within the targets
-class path.
-Generally speaking, deserialization of untrusted data does always
-represent a high security risk and should be prevented.
+Credit:
 
-The risk is low as, by default, Karaf uses a limited set of classes in
-the JMX server class path.
-It depends of system scoped classes (e.g. jar in the lib folder).
+The Apache HTTP Server project would like to thank Ronald Crane (Zippenhop LLC) for reporting this issue
 
-This has been fixed in revision:
+References:
 
-https://gitbox.apache.org/repos/asf?p=karaf.git;h=b42c82c
-https://gitbox.apache.org/repos/asf?p=karaf.git;h=93a019c
+https://httpd.apache.org/security/vulnerabilities_24.html
 
-Mitigation: Apache Karaf users should upgrade to 4.3.6
-or later as soon as possible, or disable remote access to JMX server.
-
-JIRA Tickets: https://issues.apache.org/jira/browse/KARAF-7312
-
-Credit: This issue was reported by Daniel Heyne, Konstantin Samuel and Tobias
-Neitzel
