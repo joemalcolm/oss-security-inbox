@@ -1,4 +1,4 @@
-Received: (qmail 24567 invoked by uid 550); 14 May 2026 18:55:35 -0000
+Received: (qmail 29873 invoked by uid 550); 8 Jun 2022 09:49:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,44 +7,33 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 17614 invoked from network); 14 May 2026 11:01:23 -0000
-Authentication-Results: apache.org; auth=none
+Received: (qmail 5353 invoked from network); 8 Jun 2022 09:45:25 -0000
 Content-Type: text/plain; charset=utf-8
-From: "Gary D. Gregory" <ggregory@apache.org>
+From: Stefan Eissing <icing@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <1a0258a0-fd45-f0ce-3082-bb336058df53@apache.org>
+Message-ID: <81e6fbc2-681c-de5c-5f1e-8513fb2fac10@apache.org>
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 14 May 2026 11:01:03 +0000
+Date: Wed, 08 Jun 2022 09:45:13 +0000
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2026-45205: Apache Commons Configuration: StackOverflowError
- for YAML input with cycles 
+Subject: [oss-security] CVE-2022-28615: Apache HTTP Server: Read beyond bounds in
+ ap_strcmp_match() 
 
-Severity: low=20
-
-Affected versions:
-
-- Apache Commons Configuration (org.apache.commons:commons-configuration2) =
-2.2 before 2.15.0
+Severity: low
 
 Description:
 
-Uncontrolled Recursion vulnerability in Apache Commons.
-
-When processing an untrusted configuration file, Commons Configuration will=
- throw a StackOverflowError for YAML input with cycles.
-This issue affects Apache Commons: from 2.2 before 2.15.0.
-
-Users are recommended to upgrade to version 2.15.0, which fixes the issue.
+Apache HTTP Server 2.4.53 and earlier may crash or disclose information due=
+ to a read beyond bounds in ap_strcmp_match() when provided with an extreme=
+ly large input buffer.  While no code distributed with the server can be co=
+erced into such a call, third-party modules or lua scripts that use ap_strc=
+mp_match() may hypothetically be affected.
 
 Credit:
 
-Erichen, Institute of Computing Technology, Chinese Academy of Sciences (re=
-porter)
+The Apache HTTP Server project would like to thank Ronald Crane (Zippenhop =
+LLC) for reporting this issue
 
 References:
 
-https://github.com/apache/commons-configuration/pull/634
-https://commons.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2026-45205
+https://httpd.apache.org/security/vulnerabilities_24.html
 
