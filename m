@@ -1,19 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/11/1
-Message-ID: <4739a75c-ca38-1f2a-babc-ee4fc3b427e3@apache.org>
-Date: Sun, 11 Sep 2022 08:03:22 +0000
-From: Ruben Q L <rubenql@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/08/7
+Message-ID: <72cac31d-cd71-86d3-c567-a01d66d8e66d@apache.org>
+Date: Wed, 08 Jun 2022 09:43:54 +0000
+From: Stefan Eissing <icing@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-39135: Apache Calcite: potential XEE attacks 
+Subject: CVE-2022-30556: Apache HTTP Server: Information Disclosure in mod_lua with websockets 
 Content-Type: text/plain; charset=utf-8
+
+Severity: low
 
 Description:
 
-In Apache Calcite prior to version 1.32.0 the SQL operators EXISTS_NODE, EXTRACT_XML, XML_TRANSFORM and EXTRACT_VALUE do not restrict XML External Entity references in their configuration, which makes them vulnerable to a potential XML External Entity (XXE) attack. Therefore any client exposing these operators, typically by using Oracle dialect (the first three) or MySQL dialect (the last one), is affected by this vulnerability (the extent of it will depend on the user under which the application is running).
-
->From Apache Calcite 1.32.0 onwards, Document Type Declarations and XML External Entity resolution are disabled on the impacted operators.
+Apache HTTP Server 2.4.53 and earlier may return lengths to applications calling r:wsread() that point past the end of the storage allocated for the buffer.
 
 Credit:
 
-Apache Calcite would like to thank David Handermann for reporting this issue
+The Apache HTTP Server project would like to thank Ronald Crane (Zippenhop LLC) for reporting this issue
+
+References:
+
+https://httpd.apache.org/security/vulnerabilities_24.html
 
