@@ -1,64 +1,138 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/12/5
-Message-ID: <Ys3MxgqixXKIMg/T@eldamar.lan>
-Date: Tue, 12 Jul 2022 21:34:30 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, "Xen.org security team" <security-team-members@....org>
-Subject: Re: Xen Security Advisory 407 v1 (CVE-2022-23816,CVE-2022-23825,CVE-2022-29900) - Retbleed - arbitrary speculative code execution with return instructions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/09/3
+Message-Id: <E1nzGx8-0006Rg-9q@xenbits.xenproject.org>
+Date: Thu, 09 Jun 2022 12:07:54 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 401 v2 (CVE-2022-26362) - x86 pv: Race condition in typeref acquisition
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Tue, Jul 12, 2022 at 09:27:07PM +0200, Salvatore Bonaccorso wrote:
-> Hi,
-> 
-> On Tue, Jul 12, 2022 at 04:36:10PM +0000, Xen.org security team wrote:
-> > -----BEGIN PGP SIGNED MESSAGE-----
-> > Hash: SHA256
-> > 
-> >  Xen Security Advisory CVE-2022-23816,CVE-2022-23825,CVE-2022-29900 / XSA-407
-> > 
-> >    Retbleed - arbitrary speculative code execution with return instructions
-> > 
-> > ISSUE DESCRIPTION
-> > =================
-> > 
-> > Researchers at ETH Zurich have discovered Retbleed, allowing for
-> > arbitrary speculative execution in a victim context.
-> > 
-> > For more details, see:
-> >   https://comsec.ethz.ch/retbleed
-> > 
-> > ETH Zurich have allocated CVE-2022-29900 for AMD and CVE-2022-29901 for
-> > Intel.
-> > 
-> > Despite the similar preconditions, these are very different
-> > microarchitectural behaviours between vendors.
-> > 
-> > On AMD CPUs, Retbleed is one specific instance of a more general
-> > microarchitectural behaviour called Branch Type Confusion.  AMD have
-> > assigned CVE-2022-23816 (Retbleed) and CVE-2022-23825 (Branch Type
-> > Confusion).
-> > 
-> > For more details, see:
-> >   https://www.amd.com/en/corporate/product-security/bulletin/amd-sb-1037
-> 
-> Is it confirmed that AMD is not using CVE-2022-29900? The above
-> amd-sb-1037 references as well both CVE-2022-23825 (Branch Type
-> Confusion) and CVE-2022-29900 (RETbleed), so I assume they agreed to
-> use CVE-2022-29900 for retbleed?
-> 
-> So should the Xen advisory as well use CVE-2022-23825,CVE-2022-29900
-> and CVE-2022-29901?
+            Xen Security Advisory CVE-2022-26362 / XSA-401
+                               version 2
 
-Nevermind, I missunderstood the wording and the advisory just mentions
-all the related CVEs correctly and made a thinko. It might turn out
-that CVE-2022-23816 will not be used, but then the title would read
-only as 
+             x86 pv: Race condition in typeref acquisition
 
-Xen Security Advisory CVE-2022-23825,CVE-2022-29900 / XSA-407
+UPDATES IN VERSION 2
+====================
 
-So please disregard the question above.
+Update 4.16 and 4.15 baselines.
 
-Salvatore
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+Xen maintains a type reference count for pages, in addition to a regular
+reference count.  This scheme is used to maintain invariants required
+for Xen's safety, e.g. PV guests may not have direct writeable access to
+pagetables; updates need auditing by Xen.
+
+Unfortunately, the logic for acquiring a type reference has a race
+condition, whereby a safely TLB flush is issued too early and creates a
+window where the guest can re-establish the read/write mapping before
+writeability is prohibited.
+
+IMPACT
+======
+
+Malicious x86 PV guest administrators may be able to escalate privilege
+so as to control the whole system.
+
+VULNERABLE SYSTEMS
+==================
+
+All versions of Xen are vulnerable.
+
+Only x86 PV guests can trigger this vulnerability.
+
+To exploit the vulnerability, there needs to be an undue delay at just
+the wrong moment in _get_page_type().  The degree to which an x86 PV
+guest can practically control this race condition is unknown.
+
+MITIGATION
+==========
+
+Not running x86 PV guests will avoid the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Jann Horn of Google Project Zero.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patches resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa401/xsa401-?.patch           xen-unstable
+xsa401/xsa401-4.16-?.patch      Xen 4.16.x - Xen 4.14.x
+xsa401/xsa401-4.13-?.patch      Xen 4.13.x
+
+$ sha256sum xsa401* xsa401*/*
+d442bc0946eaa4c325226fd0805ab81eba6a68b68cffb9b03d9552edea86b118  xsa401.meta
+074b57204f828cbd004c2d024b02a41af5d5bf3547d407af27249dca95eca13a  xsa401/xsa401-1.patch
+a095b39b203d501f9c9d4974638cd4d5e2d7a18daee7a7a61e2010dea477e212  xsa401/xsa401-2.patch
+99af3efc91d2dbf4fd54cc9f454b87bd76edbc85abd1a20bdad0bd22acabf466  xsa401/xsa401-4.13-1.patch
+bb997094052edbbbdd0dc9f3a0454508eb737556e2449ec6a0bc649deb921e4f  xsa401/xsa401-4.13-2.patch
+d336b31cb91466942e4fb8b44783bb2f0be4995076e70e0e78cdf992147cf72a  xsa401/xsa401-4.16-1.patch
+b380a76d67957b602ff3c9a3faaa4d9b6666422834d6ee3ab72432a6d07ddbc6  xsa401/xsa401-4.16-2.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmKh4lsMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZcoAH/ijbKKkQet6frag9HVfDHZtcb6N7yIxMUioVOu9t
+tNhg4LdJJnnrCqXmJdXygZTYwIZufQGQOxMR3b66+6MJyz0JIL7XExqnLJs6mDsO
+GFcvsxoGLYSdsBTVtGQgLpEPxwgkblKUQuwokz3K3kdxcHJmJceZitvaDdrycw8M
+kRZ22qHUbFWTSOKZNe5t9t0x/4xwdyM4dYElAmuN4Ej1cQhhXG/Gbl+acZexS+cz
+TFEbIS5G/j6EgaCpBSP5XCoUn2LlyswRxBllGh0kpaLrJRH4CX3E/KHBSdPMkWoP
+3HyQF3o+WYvpWUGXVaAREaR+WxlsAwmQJUxpO64O4Y4IUEY=
+=UGgq
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa401.meta" of type "application/octet-stream" (1366 bytes)
+
+Download attachment "xsa401/xsa401-1.patch" of type "application/octet-stream" (7404 bytes)
+
+Download attachment "xsa401/xsa401-2.patch" of type "application/octet-stream" (7673 bytes)
+
+Download attachment "xsa401/xsa401-4.13-1.patch" of type "application/octet-stream" (7404 bytes)
+
+Download attachment "xsa401/xsa401-4.13-2.patch" of type "application/octet-stream" (6626 bytes)
+
+Download attachment "xsa401/xsa401-4.16-1.patch" of type "application/octet-stream" (7404 bytes)
+
+Download attachment "xsa401/xsa401-4.16-2.patch" of type "application/octet-stream" (7673 bytes)
