@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1256" "Friday" "19" "February" "2021" "15:59:09" "+0100" "Daniel Beck" "ml@beckweb.net" nil "33" "[oss-security] Vulnerability in Jenkins" nil nil nil "2" nil nil (number mark "U       ml@beckweb.n Feb 19   33/1256  " thread-indent "\"[oss-security] Vulnerability in Jenkins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Vulnerability in Jenkins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9527 invoked by uid 550); 19 Feb 2021 14:59:22 -0000
+Received: (qmail 27917 invoked by uid 550); 9 Jun 2022 11:54:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,50 +7,41 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9495 invoked from network); 19 Feb 2021 14:59:22 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.15\))
-Message-Id: <7E26B4AC-DFB1-4760-B719-E14133F103B5@beckweb.net>
-Date: Fri, 19 Feb 2021 15:59:09 +0100
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3445.104.15)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1613746762;2aa2b859;
-X-HE-SMSGID: 1lD7FO-0005z9-7j
-Subject: [oss-security] Vulnerability in Jenkins
+Received: (qmail 5701 invoked from network); 9 Jun 2022 03:19:07 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1654744734;
+	bh=TVb6bE4wa998Y5Wu6FJWKynU6Okduvr4j6hkN9F349o=;
+	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type;
+	b=ZFVWYGVkVD4hRvZhQ0x87aiEieR9jarieIvkYVXrIH9eI5OQyi5wjtlPN43t1CXkL
+	 riYUZnaafdZqV2dIarAY01+XdSNYLgBe+PFZdHMasa4tR7EmfAAt41If/QWh/kpmq/
+	 n1kfMWkDxDZ7eDhLO9adMPyig08rDkGBZfhPkpJ4XJb++pbQrSgXkjrMZFAINJoLV5
+	 o0q+QJxg7rv8YMLufX/Y6Q0Nv15nEZKS43Qf/yevm/bJ4BLKufgGZUszDcme57pX75
+	 7eUt8vWcUnrxyVAporVWhtP/b/rhbyNtWGDVEDTn0OucpF5rxThCJZFV5M8RxM3h4j
+	 EbV17Y8ncj5wA==
+From: Alex Murray <alex.murray@canonical.com>
+To: Matthias Gerstner <mgerstner@suse.de>, oss-security@lists.openwall.com
+In-Reply-To: <YqCar9IFTyPnq2o0@f195.suse.de>
+References: <YqCar9IFTyPnq2o0@f195.suse.de>
+Date: Thu, 09 Jun 2022 12:48:48 +0930
+Message-ID: <878rq634o7.fsf@graphene.mail-host-address-is-not-set>
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: Re: [oss-security] firejail: local root exploit reachable via
+ --join logic (CVE-2022-31214)
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+On Wed, 2022-06-08 at 14:48:47 +0200, Matthias Gerstner wrote:
 
-The following releases contain fixes for security vulnerabilities:
+>
+> Upstream Bugfix
+> ===============
+>
+> Upstream published a comprehensive bugfix for this issue just today [2].
+< ...
+> [2]: https://github.com/netblue30/firejail/commit/27cde3d7d1e4e16d4190932347c7151dc2a84c50
+>
 
-* Jenkins 2.280
+FYI it looks like upstream made two subsequent fixup commits as well:
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2021-02-19/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-2195 / CVE-2021-22112
-Spring Security 5.4.3 and earlier has a vulnerability that unintentionally
-persisted temporarily elevated privileges in some circumstances in a user's
-session. This issue, CVE-2021-22112, is resolved in Spring Security 5.4.4.
-
-Jenkins 2.266 through 2.279 (inclusive) include releases of Spring
-Security with this vulnerability.
-
-We are aware of a sequence of operations in Jenkins 2.275 through 2.278
-(inclusive) that allows attackers with Job/Workspace permission to exploit
-this to switch their identity to SYSTEM, an internal user with all
-permissions.
-
+https://github.com/netblue30/firejail/commit/dab835e7a0eb287822016f5ae4e87f46e1d363e7
+https://github.com/netblue30/firejail/commit/1884ea22a90d225950d81c804f1771b42ae55f54
