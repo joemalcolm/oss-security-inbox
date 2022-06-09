@@ -1,96 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/20/4
-Message-ID: <757dede0-dd98-104e-5fad-ac425a282382@ovn.org>
-Date: Tue, 20 Dec 2022 22:51:54 +0100
-From: Ilya Maximets <i.maximets@....org>
-To: John Helmert III <ajak@...too.org>, oss-security@...ts.openwall.com
-Cc: i.maximets@....org, ovs-discuss <ovs-discuss@...nvswitch.org>, Aaron Conole <aconole@...hat.com>, Qian Chen <cq674350529@...il.com>
-Subject: Re: [ADVISORY] LLDP underflow while parsing malformed Auto Attach TLV (Open vSwitch)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/09/2
+Message-ID: <878rq634o7.fsf@graphene.mail-host-address-is-not-set>
+Date: Thu, 09 Jun 2022 12:48:48 +0930
+From: Alex Murray <alex.murray@...onical.com>
+To: Matthias Gerstner <mgerstner@...e.de>, oss-security@...ts.openwall.com
+Subject: Re: firejail: local root exploit reachable via --join logic (CVE-2022-31214)
 Content-Type: text/plain; charset=utf-8
 
-On 12/20/22 22:46, John Helmert III wrote:
-> On Tue, Dec 20, 2022 at 10:39:23PM +0100, Ilya Maximets wrote:
->> Description
->> ===========
->>
->> Multiple versions of Open vSwitch are vulnerable to crafted LLDP
->> packets causing denial of service, and data underflow attacks.
->> Triggering the vulnerabilities requires LLDP processing to be enabled
->> for a specific port.  Open vSwitch versions prior to 2.4.0 are not
->> vulnerable.
->>
->> The Common Vulnerabilities and Exposures project (cve.mitre.org)
->> did not assign the identifier to this issue yet.  The identifier will
->> be communicated separately.
-> 
-> Has a CVE been requested?
+On Wed, 2022-06-08 at 14:48:47 +0200, Matthias Gerstner wrote:
 
-Yes, CVE was requested via Red Hat.   There was initial communication
-but they didn't provide us the identifier yet.
+>
+> Upstream Bugfix
+> ===============
+>
+> Upstream published a comprehensive bugfix for this issue just today [2].
+< ...
+> [2]: https://github.com/netblue30/firejail/commit/27cde3d7d1e4e16d4190932347c7151dc2a84c50
+>
 
-The issue was reported publicly, so we decided to release without waiting.
+FYI it looks like upstream made two subsequent fixup commits as well:
 
-> 
->> This issue does not affect the `lldpd' project, although they share
->> a code base.  The issue is related to parsing the Auto Attach TLVs,
->> which is specific to the Open vSwitch implementation.
->>
->>
->> Mitigation
->> ==========
->>
->> For any version of Open vSwitch, preventing LLDP packets from reaching
->> Open vSwitch mitigates the vulnerability.  We do not recommend
->> attempting to mitigate the vulnerability this way because of the
->> following difficulties:
->>
->>     - Open vSwitch obtains packets before the iptables host firewall,
->>       so ebtables on the Open vSwitch host cannot ordinarily block the
->>       vulnerability.
->>
->>     - If Open vSwitch is configured to receive and transmit LLDP
->>       messages, the required functionality will need to be disabled
->>       potentially disrupting the network.
->>
->> We have found that Open vSwitch is subject to a denial of service, and
->> possibly a remote code execution exploit when LLDP processing is enabled
->> on an interface.  By default, interfaces are not configured to process
->> LLDP messages.
->>
->>
->> Fix
->> ===
->>
->> Patches to fix these vulnerabilities in Open vSwitch 2.13.x and newer are
->> applied to the appropriate branches, and the original patch is located
->> at:
->>
->>    https://mail.openvswitch.org/pipermail/ovs-dev/2022-December/400596.html
->>
->> Recommendation
->> ==============
->>
->> We recommend that users of Open vSwitch apply the respective patch, or
->> upgrade to a known patched version of Open vSwitch.  These include:
->>
->> * 3.0.3
->> * 2.17.5
->> * 2.16.6
->> * 2.15.7
->> * 2.14.8
->> * 2.13.10
->>
->>
->> Acknowledgments
->> ===============
->>
->> The Open vSwitch team wishes to thank the reporter:
->>
->>   Qian Chen <cq674350529@...il.com>
->>
-> 
-> 
-> 
-> 
-> 
-
+https://github.com/netblue30/firejail/commit/dab835e7a0eb287822016f5ae4e87f46e1d363e7
+https://github.com/netblue30/firejail/commit/1884ea22a90d225950d81c804f1771b42ae55f54
