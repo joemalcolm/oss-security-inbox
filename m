@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9139" "Wednesday" "13" "July" "2016" "14:53:03" "-0300" "Franco Costantini" "franco.costantini.20@gmail.com" "<CAGkswnQeO6oXv+so+DRCMWHqpVKuKYjZ3dTo=gZo2GzycdArhw@mail.gmail.com>" "173" "[oss-security] CVE Request: Write out-of-bounds in gdk-pixbuf 2.30.7" nil nil nil "7" "2016071317:53:03" "[oss-security] CVE Request: Write out-of-bounds in gdk-pixbuf 2.30.7" (number mark "U       franco.costa Jul 13  173/9139  " thread-indent "\"[oss-security] CVE Request: Write out-of-bounds in gdk-pixbuf 2.30.7\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 16191 invoked by uid 550); 13 Jul 2016 18:02:27 -0000
+Received: (qmail 1410 invoked by uid 550); 10 Jun 2022 16:39:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,209 +7,111 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1709 invoked from network); 13 Jul 2016 17:53:15 -0000
+Received: (qmail 8180 invoked from network); 10 Jun 2022 16:12:11 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=19VEkatWXEpjjFJJkt5l/PLv61udrk4kX95J3b98pE0=;
-        b=j07ZolSxKcVgxsUPpiLLO/jHD543OyA7QqxGgt0xgn1iHGl0bHAnzxK6r3zfavf6oG
-         KLxpDywuUz9QaJZTzjmKhepA1zBh9cOFn/KigY0VjAGllcmWveaL7WGOJkpDsX2JHb5f
-         JAZsZCLAZPLDyCXLHsFke0WS9UCxStDdrK8zCsHVhXAwsbE8kVn05MYS3DIQ2iE7F5Uu
-         0u1yzX1MI5vHnA+S3vDphI4NZO3YLFWFXKExCYUFXw1W3V3Xj9kRP8hTMBkAEBBx3u2D
-         fUVoV+beuAbZ36IZXkvbUSsi8+hun9ALFt6hmgKpMwJjjfPjseO8YmAELQt+iBloCqZe
-         HbnQ==
+        d=google.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=02HOH/C/c7PEvZdwDhppDgb7z3yM3yTxeqnNjz6Vg6E=;
+        b=b6a1zmqcvprKwoImf/Wfee+hTdQUAIzOspsybJqy1s+tYWK7/ZpjJzgQIH10hs1AWE
+         Dl4qN8KxSS4GuMkugBluQpCjgiJsWz4vh/5uwX/Tv11J1qtQQR+m26+YjkA0FKvosMkp
+         orStUvQWOLipkbdg8xSD2iFkHsEmZ3KOfSCDiEY4VugkgYwkfMs3zwFHrwaltHte2V+R
+         oHbX3a+mgVMg3/8zOxEO/cLAPe23RjzogBLnB5aloqgBxQM0D9QE9IOzRd50zYgpEEgA
+         QL4N9ogOWUzf2d3hrQ/gS8sKpskxZE6RvY2V5de/6qmgSxAew+rCxQ3aGdU1/sGyvwuP
+         RqHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=19VEkatWXEpjjFJJkt5l/PLv61udrk4kX95J3b98pE0=;
-        b=DOFdgMDwIDTXv91/WfH5g0KIIpMAT5QuI9BAHDTtE/Z/4ck4ZLo1OJixRahNeFgd0R
-         E44m1itP2W0nRz+ewiNBtaoNJyG8Xg8ULfWb2nAHK+l07sqdmAfDCDYiMwNqvhSJN6GC
-         SxowhX5cBeD3ZoHAFz+KbbUU/JlpKkWsDyTO4l9oJAXcgHEcAf1oATqa8IUR92MiHGzV
-         8Y8g6ghI3eElT1yNS66OQj2jZSgMNAORgPC9iFAvkB3zh5FbS5aA+H4z5d7so56GoyWI
-         3wCHhIhThpNYSDu+y9K/rgjd0cC6uYylQbEeAk/3WFp8yYx1OMUpF85aLEja+ssecyeU
-         DbAw==
-X-Gm-Message-State: ALyK8tIatA9WbT+T8DJPFipCPRQa8p9c8g2/uNwHZqJX+A24j1HMFlozjPd1r/lAuyoBKS4SDF1E7+CBWZcexw==
-X-Received: by 10.55.178.195 with SMTP id b186mr11059379qkf.81.1468432383991;
- Wed, 13 Jul 2016 10:53:03 -0700 (PDT)
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=02HOH/C/c7PEvZdwDhppDgb7z3yM3yTxeqnNjz6Vg6E=;
+        b=n3ypGNffHUO6da6b26vs8A9WoYg4nxfNrqXjiv81Hb2xGgUfxQJfoA0QCRe3YHZc+T
+         Xerr97siPq3h+jDetNSItzCHVdsoL3vPUzVQnl7+ZSxfmF9XQC6x42Ch3NIcknuI4Yqb
+         Z/1ToCxf2KnyMEStT43D/Og9LzNiLAQgkrU18sNRebKUizhdaeTU24/yEsKpvJgogOwQ
+         2ZYOfZhByp+Oa+IXVuzAF05lucaB/uj+1hfHHElHTSZNMMx8MdcwnK7wHzPfBRcqq1FS
+         xNX9aXV+JTHad0sk9fKPhF1rWfJY3Q8AzcYYdhA3w/jU35osUKlwHUmvQfUYDxYIgzVD
+         bYwg==
+X-Gm-Message-State: AOAM531yZ1FjY0onjdErf+Ao2CKn5wgP+i37wHzXoG5blSD6Yd8/t2LN
+	TL9Zy6thRn1/zf3CJZnYSKdUzwEtHrkkr2u5d7UXqdCGR6FJQQ==
+X-Google-Smtp-Source: ABdhPJxmPsdNwLYcmFYAleKdHex36lwSNadiagl3a+8zlI+Sv3evHyxZUKEmDRkq8VYu08RBimw/ioZIqgvUCSkUkWs=
+X-Received: by 2002:a81:7607:0:b0:2fb:7bee:bf70 with SMTP id
+ r7-20020a817607000000b002fb7beebf70mr49777899ywc.279.1654877518648; Fri, 10
+ Jun 2022 09:11:58 -0700 (PDT)
 MIME-Version: 1.0
-From: Franco Costantini <franco.costantini.20@gmail.com>
-Date: Wed, 13 Jul 2016 14:53:03 -0300
-Message-ID: <CAGkswnQeO6oXv+so+DRCMWHqpVKuKYjZ3dTo=gZo2GzycdArhw@mail.gmail.com>
+From: CJ Cullen <cjcullen@google.com>
+Date: Fri, 10 Jun 2022 09:11:47 -0700
+Message-ID: <CABdrxGBr+uS70N8OhVvLZ=qW8EaGLJkA84Q0vAjQ3tpv6bdX0Q@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Cc: gustavo.grieco@imag.fr
-Content-Type: multipart/mixed; boundary=94eb2c06ee04a068f50537880ec2
-Subject: [oss-security] CVE Request: Write out-of-bounds in gdk-pixbuf 2.30.7
+Content-Type: multipart/alternative; boundary="000000000000a5cd9505e11a32a0"
+Subject: [oss-security] [kubernetes] CVE-2021-25748: Ingress-nginx `path` sanitization can be
+ bypassed with newline character
 
---94eb2c06ee04a068f50537880ec2
-Content-Type: multipart/alternative; boundary=94eb2c06ee04a068f20537880ec0
-
---94eb2c06ee04a068f20537880ec0
-Content-Type: text/plain; charset=UTF-8
-
-This issue was reported to Redhat secalert, they asked me to disclose it
-publicly.
-
-A write out-of-bounds parsing an ico file was found in gdk-pixbuf 2.30.7.
-It's tested in Ubuntu 14.04, other versions can be affected (in Debian 8,
-an assert inside gtk3 stops the execution before the crash). This issue can
-be reproduced using eog:
-
- (gdb) run crash.ico
- Starting program: /usr/bin/eog crash.ico
- [Thread debugging using libthread_db enabled]
- Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
- [New Thread 0x7fffec58e700 (LWP 3709)]
- [New Thread 0x7fffebd8d700 (LWP 3710)]
- [New Thread 0x7fffe9656700 (LWP 3711)]
- [New Thread 0x7fffe8e55700 (LWP 3712)]
-
- (eog:3705): EOG-WARNING **: Couldn't load icon: Icon 'image-loading' not
-present in theme
-
- Program received signal SIGSEGV, Segmentation fault.
- [Switching to Thread 0x7fffe9656700 (LWP 3711)]
- 0x00007fffd83b428c in OneLine32 (context=0x7fffe0029820) at io-ico.c:589
- (gdb) bt
- #0  0x00007fffd83b428c in OneLine32 (context=0x7fffe0029820) at
-io-ico.c:589
- #1  OneLine (context=0x7fffe0029820) at io-ico.c:800
- #2  gdk_pixbuf__ico_image_load_increment (data=0x7fffe0029820,
-     buf=0x7fffe001b852 "", size=0, error=0x7fffe9655b68) at io-ico.c:891
- #3  0x00007ffff53e2665 in gdk_pixbuf_loader_load_module (
-     loader=loader@entry=0x7df420, image_type=image_type@entry=0x0,
-     error=error@entry=0x7fffe9655b68) at gdk-pixbuf-loader.c:443
- #4  0x00007ffff53e2ee8 in gdk_pixbuf_loader_close (loader=0x7df420,
-     error=0xaa1aa0) at gdk-pixbuf-loader.c:808
- #5  0x00000000004236ab in eog_image_load ()
- #6  0x00000000004275d7 in ?? ()
- #7  0x0000000000425959 in ?? ()
- #8  0x00007ffff43eff05 in ?? () from /lib/x86_64-linux-gnu/libglib-2.0.so.0
- #9  0x00007ffff3f53184 in start_thread (arg=0x7fffe9656700)
-     at pthread_create.c:312
- #10 0x00007ffff3c8037d in clone ()
-     at ../sysdeps/unix/sysv/linux/x86_64/clone.S:111
-
-The affected function is here:
-
- static void OneLine32 (struct ico_progressive_state *context)
-{
-        gint X;
-        guchar *Pixels;
-
-        X = 0;
-        if (context->Header.Negative == 0)
-                Pixels = (context->pixbuf->pixels +
-                          context->pixbuf->rowstride *
-                          (context->Header.height - context->Lines - 1));
-        else
-                Pixels = (context->pixbuf->pixels +
-                          context->pixbuf->rowstride *
-                          context->Lines);
-        while (X < context->Header.width) {
-                Pixels[X * 4 + 0] = context->LineBuf[X * 4 + 2];
-                Pixels[X * 4 + 1] = context->LineBuf[X * 4 + 1];
-                Pixels[X * 4 + 2] = context->LineBuf[X * 4 + 0];
-                Pixels[X * 4 + 3] = context->LineBuf[X * 4 + 3];
-                X++;
-        }
-}
-
-The value of context->Header.height in OneLine32 is a very large number
-(probably it wasn't validated correctly). Such value is used to calculate
-where to write, resulting in an overflow where Pixels is written.
-
-This issue was found using QuickFuzz, the file to reproduce it is attached.
-Please assign a CVE if suitable.
-
-Regards, Franco
-
---94eb2c06ee04a068f20537880ec0
-Content-Type: text/html; charset=UTF-8
+--000000000000a5cd9505e11a32a0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">This issue was reported to Redhat secalert, they asked me =
-to disclose it publicly.<br><div><br>A write out-of-bounds parsing an ico f=
-ile was found in gdk-pixbuf=20
-2.30.7. It&#39;s tested in Ubuntu 14.04, other versions can be affected (in=
-=20
-Debian 8, an assert inside gtk3 stops the execution before the crash).=20
-This issue can be reproduced using eog:<br><br>=C2=A0(gdb) run crash.ico<br=
->=C2=A0Starting program: /usr/bin/eog crash.ico<br>=C2=A0[Thread debugging =
-using libthread_db enabled]<br>=C2=A0Using host libthread_db library &quot;=
-/lib/x86_64-linux-gnu/libthread_db.so.1&quot;.<br>=C2=A0[New Thread 0x7fffe=
-c58e700 (LWP 3709)]<br>=C2=A0[New Thread 0x7fffebd8d700 (LWP 3710)]<br>=C2=
-=A0[New Thread 0x7fffe9656700 (LWP 3711)]<br>=C2=A0[New Thread 0x7fffe8e557=
-00 (LWP 3712)]<br><br>=C2=A0(eog:3705): EOG-WARNING **: Couldn&#39;t load i=
-con: Icon &#39;image-loading&#39; not present in theme<br><br>=C2=A0Program=
- received signal SIGSEGV, Segmentation fault.<br>=C2=A0[Switching to Thread=
- 0x7fffe9656700 (LWP 3711)]<br>=C2=A00x00007fffd83b428c in OneLine32 (conte=
-xt=3D0x7fffe0029820) at io-ico.c:589<br>=C2=A0(gdb) bt<br>=C2=A0#0=C2=A0 0x=
-00007fffd83b428c in OneLine32 (context=3D0x7fffe0029820) at io-ico.c:589<br=
->=C2=A0#1=C2=A0 OneLine (context=3D0x7fffe0029820) at io-ico.c:800<br>=C2=
-=A0#2=C2=A0 gdk_pixbuf__ico_image_load_increment (data=3D0x7fffe0029820,<br=
->=C2=A0=C2=A0=C2=A0=C2=A0 buf=3D0x7fffe001b852 &quot;&quot;, size=3D0, erro=
-r=3D0x7fffe9655b68) at io-ico.c:891<br>=C2=A0#3=C2=A0 0x00007ffff53e2665 in=
- gdk_pixbuf_loader_load_module (<br>=C2=A0=C2=A0=C2=A0=C2=A0 loader=3Dloade=
-r@entry=3D0x7df420, image_type=3Dimage_type@entry=3D0x0,<br>=C2=A0=C2=A0=C2=
-=A0=C2=A0 error=3Derror@entry=3D0x7fffe9655b68) at gdk-pixbuf-loader.c:443<=
-br>=C2=A0#4=C2=A0 0x00007ffff53e2ee8 in gdk_pixbuf_loader_close (loader=3D0=
-x7df420,<br>=C2=A0=C2=A0=C2=A0=C2=A0 error=3D0xaa1aa0) at gdk-pixbuf-loader=
-.c:808<br>=C2=A0#5=C2=A0 0x00000000004236ab in eog_image_load ()<br>=C2=A0#=
-6=C2=A0 0x00000000004275d7 in ?? ()<br>=C2=A0#7=C2=A0 0x0000000000425959 in=
- ?? ()<br>=C2=A0#8=C2=A0 0x00007ffff43eff05 in ?? () from /lib/x86_64-linux=
--gnu/libglib-2.0.so.0<br>=C2=A0#9=C2=A0 0x00007ffff3f53184 in start_thread =
-(arg=3D0x7fffe9656700)<br>=C2=A0=C2=A0=C2=A0=C2=A0 at pthread_create.c:312<=
-br>=C2=A0#10 0x00007ffff3c8037d in clone ()<br>=C2=A0=C2=A0=C2=A0=C2=A0 at =
-../sysdeps/unix/sysv/linux/x86_64/clone.S:111<br><br>The affected function =
-is here:<br><br>=C2=A0static void OneLine32 (struct ico_progressive_state *=
-context)<br>{<br>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 gint X;<br>=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 guchar *Pixels;<br><br>=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 X =3D 0;<br>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 if (context-&gt;Header.Negative =3D=3D 0)<br>=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
- Pixels =3D (context-&gt;pixbuf-&gt;pixels +<br>=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 context-&gt;pixbuf-&gt;row=
-stride *<br>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 (context-&gt;Header.height - context-&gt;Lines - 1));<br>=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 else<br>=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Pixels =3D =
-(context-&gt;pixbuf-&gt;pixels +<br>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 context-&gt;pixbuf-&gt;rowstride *<br>=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
- context-&gt;Lines);<br>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 while (X=
- &lt; context-&gt;Header.width) {<br>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Pixels[X * 4 + 0] =
-=3D context-&gt;LineBuf[X * 4 + 2];<br>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Pixels[X * 4 + 1] =
-=3D context-&gt;LineBuf[X * 4 + 1];<br>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Pixels[X * 4 + 2] =
-=3D context-&gt;LineBuf[X * 4 + 0];<br>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Pixels[X * 4 + 3] =
-=3D context-&gt;LineBuf[X * 4 + 3];<br>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 X++;<br>=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }<br>}<br><br>The
- value of context-&gt;Header.height in OneLine32 is a very large number=20
-(probably it wasn&#39;t validated correctly). Such value is used to=20
-calculate where to write, resulting in an overflow where Pixels is=20
-written.<br><br>This issue was found using QuickFuzz, the file to reproduce=
- it is attached. Please assign a CVE if suitable.<br><br>Regards, Franco<br=
-></div></div>
+Issue Details
 
---94eb2c06ee04a068f20537880ec0--
+A security issue was discovered in ingress-nginx
+<https://github.com/kubernetes/ingress-nginx> where a user that can create
+or update ingress objects can use a newline character to bypass the
+sanitization of the `spec.rules[].http.paths[].path` field of an Ingress
+object (in the `networking.k8s.io` or `extensions` API group) to obtain the
+credentials of the ingress-nginx controller. In the default configuration,
+that credential has access to all secrets in the cluster.
 
---94eb2c06ee04a068f50537880ec2
-Content-Type: application/x-gzip; name="crash.ico.tar.gz"
-Content-Disposition: attachment; filename="crash.ico.tar.gz"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_iql6jcw10
+This issue has been rated High (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U=
+/C:H/I:L/A:L>),
+and assigned CVE-2021-25748.
+Affected Components and Configurations
 
-H4sIAAnMX1cAA+3QMQ4CIRCF4XG9gJU1pZUBRGi9CkGjW2lYvf8OFnZrx1b/
-RyaTeSRkQql5ehzH8pR+rIohaHc+Wt/mYFP85o2zUZxPPqUQ0llz5+IpibEd
-d/r5TO9cjZF7HW//fqHk62uNfVa30TMMrRu56LzXOmhpJFsR0/Jmt/TA4gUA
-AAAAAAAAAAAAAAAAoJ8ZdqN/TgAoAAA=
+This bug affects ingress-nginx. If you do not have ingress-nginx installed
+on your cluster, you are not affected. You can check this by running
+`kubectl get po -n ingress-nginx`.
 
---94eb2c06ee04a068f50537880ec2--
+If you are running the =E2=80=9Cchrooted=E2=80=9D ingress-nginx controller =
+introduced in
+v1.2.0 (gcr.io/k8s-staging-ingress-nginx/controller-chroot), you are not
+affected.
+
+Multitenant environments where non-admin users have permissions to create
+Ingress objects are most affected by this issue.
+Affected Versions
+
+   -
+
+   <v1.2.1
+
+Fixed Versions
+
+   -
+
+   v1.2.1
+
+Mitigation
+
+If you are unable to roll out the fix, this vulnerability can be mitigated
+by implementing an admission policy that restricts the
+`spec.rules[].http.paths[].path` field on the networking.k8s.io/Ingress
+resource to known safe characters (see the newly added rules
+<https://github.com/kubernetes/ingress-nginx/blame/main/internal/ingress/in=
+spector/rules.go>,
+or the suggested value for annotation-value-word-blocklist
+<https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/=
+configmap/#annotation-value-word-blocklist>
+).
+Detection
+
+If you find evidence that this vulnerability has been exploited, please
+contact security@kubernetes.io
+Additional Details
+
+See ingress-nginx Issue #8686
+<https://github.com/kubernetes/ingress-nginx/issues/8686> for more details.
+Acknowledgements
+
+This vulnerability was reported by Gafnit Amiga.
+
+Thank You,
+
+CJ Cullen on behalf of the Kubernetes Security Response Committee
+
+--000000000000a5cd9505e11a32a0--
