@@ -1,119 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/21/2
-Message-ID: <cb8ce1dd-6dee-b6f9-4081-f662887ce835@igalia.com>
-Date: Fri, 21 Jan 2022 16:53:45 +0000
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0001
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/10/1
+Message-ID: <CABdrxGBr+uS70N8OhVvLZ=qW8EaGLJkA84Q0vAjQ3tpv6bdX0Q@mail.gmail.com>
+Date: Fri, 10 Jun 2022 09:11:47 -0700
+From: CJ Cullen <cjcullen@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: [kubernetes] CVE-2021-25748: Ingress-nginx `path` sanitization can be bypassed with newline character
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2022-0001
-------------------------------------------------------------------------
+Issue Details
 
-Date reported           : January 21, 2022
-Advisory ID             : WSA-2022-0001
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2022-0001.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2022-0001.html
-CVE identifiers         : CVE-2021-30934, CVE-2021-30936,
-                          CVE-2021-30951, CVE-2021-30952,
-                          CVE-2021-30953, CVE-2021-30954,
-                          CVE-2021-30984, CVE-2022-XXXXX,
-                          CVE-2021-45481, CVE-2021-45482,
-                          CVE-2021-45483.
+A security issue was discovered in ingress-nginx
+<https://github.com/kubernetes/ingress-nginx> where a user that can create
+or update ingress objects can use a newline character to bypass the
+sanitization of the `spec.rules[].http.paths[].path` field of an Ingress
+object (in the `networking.k8s.io` or `extensions` API group) to obtain the
+credentials of the ingress-nginx controller. In the default configuration,
+that credential has access to all secrets in the cluster.
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+This issue has been rated High (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L>),
+and assigned CVE-2021-25748.
+Affected Components and Configurations
 
-CVE-2021-30934
-    Versions affected: WebKitGTK and WPE WebKit before 2.34.4.
-    Credit to Dani Biro.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A buffer overflow issue was
-    addressed with improved memory handling.
+This bug affects ingress-nginx. If you do not have ingress-nginx installed
+on your cluster, you are not affected. You can check this by running
+`kubectl get po -n ingress-nginx`.
 
-CVE-2021-30936
-    Versions affected: WebKitGTK and WPE WebKit before 2.34.4.
-    Credit to Chijin Zhou of ShuiMuYuLin Ltd and Tsinghua wingtecher
-    lab.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A use after free issue was
-    addressed with improved memory management.
+If you are running the “chrooted” ingress-nginx controller introduced in
+v1.2.0 (gcr.io/k8s-staging-ingress-nginx/controller-chroot), you are not
+affected.
 
-CVE-2021-30951
-    Versions affected: WebKitGTK and WPE WebKit before 2.34.4.
-    Credit to Pangu.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A use after free issue was
-    addressed with improved memory management.
+Multitenant environments where non-admin users have permissions to create
+Ingress objects are most affected by this issue.
+Affected Versions
 
-CVE-2021-30952
-    Versions affected: WebKitGTK and WPE WebKit before 2.34.4.
-    Credit to WeBin.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: An integer overflow was
-    addressed with improved input validation.
+   -
 
-CVE-2021-30953
-    Versions affected: WebKitGTK and WPE WebKit before 2.34.4.
-    Credit to VRIJ.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: An out-of-bounds read was
-    addressed with improved bounds checking.
+   <v1.2.1
 
-CVE-2021-30954
-    Versions affected: WebKitGTK and WPE WebKit before 2.34.4.
-    Credit to Kunlun Lab.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A type confusion issue was
-    addressed with improved memory handling.
+Fixed Versions
 
-CVE-2021-30984
-    Versions affected: WebKitGTK and WPE WebKit before 2.34.4.
-    Credit to Kunlun Lab.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A race condition was
-    addressed with improved state handling.
+   -
 
-CVE-2022-XXXXX
-    Versions affected: WebKitGTK and WPE WebKit before 2.34.4.
-    Credit to Martin Bajanik from fingerprintjs.com.
-    Impact: A malicious website may exfiltrate data cross-origin.
-    Description: A cross-origin issue existed with the IndexedDB. This
-    was addressed with improved checking of security origins. 
-    Notes: There is a public PoC demonstrating this issue at
-    https://safarileaks.com so this issue may have been actively
-    exploited. We still don't know the CVE number that will be assigned
-    to this issue. We will update this advisory once we know it.
+   v1.2.1
 
-CVE-2021-45481
-    Versions affected: WebKitGTK and WPE WebKit before 2.34.0.
-    Credit to Chijin Zhou of ShuiMuYuLin Ltd and Tsinghua wingtecher lab.
-    Processing maliciously crafted web content may cause an application
-    crash due to an incorrect memory allocation in
-    WebCore::ImageBufferCairoImageSurfaceBackend::create
+Mitigation
 
-CVE-2021-45482
-    Versions affected: WebKitGTK and WPE WebKit before 2.32.4.
-    Credit to Chijin Zhou of ShuiMuYuLin Ltd and Tsinghua wingtecher lab.
-    Processing maliciously crafted web content may cause a memory
-    corruption issue (use-after-free) in WebCore::ContainerNode::firstChild
+If you are unable to roll out the fix, this vulnerability can be mitigated
+by implementing an admission policy that restricts the
+`spec.rules[].http.paths[].path` field on the networking.k8s.io/Ingress
+resource to known safe characters (see the newly added rules
+<https://github.com/kubernetes/ingress-nginx/blame/main/internal/ingress/inspector/rules.go>,
+or the suggested value for annotation-value-word-blocklist
+<https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#annotation-value-word-blocklist>
+).
+Detection
 
-CVE-2021-45483
-    Versions affected: WebKitGTK and WPE WebKit before 2.34.0.
-    Credit to Chijin Zhou of ShuiMuYuLin Ltd and Tsinghua wingtecher lab.
-    Processing maliciously crafted web content may cause a memory
-    corruption issue (heap-use-after-free) in WebCore::Frame::page
+If you find evidence that this vulnerability has been exploited, please
+contact security@...ernetes.io
+Additional Details
 
+See ingress-nginx Issue #8686
+<https://github.com/kubernetes/ingress-nginx/issues/8686> for more details.
+Acknowledgements
 
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
+This vulnerability was reported by Gafnit Amiga.
 
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
+Thank You,
 
-The WebKitGTK and WPE WebKit team,
-January 21, 2022
+CJ Cullen on behalf of the Kubernetes Security Response Committee
+
