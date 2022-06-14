@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1399" "Sunday" "4" "February" "2018" "09:08:12" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20180204080812.GA12818@eldamar.local>" "35" "[oss-security] Anymail: CVE-2018-6596: timing attack on WEBHOOK_AUTHORIZATION secret" nil nil nil "2" "2018020408:08:12" "[oss-security] Anymail: CVE-2018-6596: timing attack on WEBHOOK_AUTHORIZATION secret" (number mark "U       carnil@debia Feb  4   35/1399  " thread-indent "\"[oss-security] Anymail: CVE-2018-6596: timing attack on WEBHOOK_AUTHORIZATION secret\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 7690 invoked by uid 550); 4 Feb 2018 08:08:27 -0000
+Received: (qmail 20112 invoked by uid 550); 14 Jun 2022 11:55:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,77 +7,198 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7666 invoked from network); 4 Feb 2018 08:08:26 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=Zt5YPZ6XHlSy8uE2+Sg5jSItlR0YPXt4ATBeZZsEYVY=;
-        b=lMLpsf7Krw+TI9xhfFq5CvBRTJLHc0akacUGUEhg6uiUkn+nPSgCYRfe5q5rcXgxu8
-         RxDaMlRI7jtDQyGA0GYPmtsBUsO8OLzFA10C3uhc/e7k6mRn0CtnrLZtYtczR2FIkbsY
-         el8N0TalmFFvUeZScGLRgHTPN70oahY4IIX40Hqx5Wrl1qinsPrWEDbCOorCz7t8Xtgc
-         A+Fq6EklKLsaucZ9bojjxD+2cugT5PK0oWSsZY4ok9n65m7o9+UWTM4MIsetNqffHLMi
-         ZBLuChgWcNIa00Tq4aleQQnEUrBVgmvFoaGCM+Yannxnm2Ixnt1AcUt+VvAOM3K7P0Vb
-         96wg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :mime-version:content-disposition:user-agent;
-        bh=Zt5YPZ6XHlSy8uE2+Sg5jSItlR0YPXt4ATBeZZsEYVY=;
-        b=Nxwex7yIWuhbB64GOT822itK2+8KPTKSI4Ps7R6S3lVD1hPvfXpxtf4t8MkDSvJVpT
-         9Zs17w1uSVhTXlYoaQbAvkmlCAduq5XHzojAq0o9nZkeg7WMWW4G+jrjSXpEeIfyvSGf
-         PdzFZ74fSiOfgE6aE/goUToJENYJ3mtMo8nMZr686soAvMqnZ7ybR2as4TZg5Vo7ea41
-         UrQo1AteQJIZ6jcWBk2Yj7O9+GBFenEh6NpukXKWKDWLs1WGeQJLQstbaO0eHBbIS+AC
-         smoVt0GS4JhTV1ac9eMm5qAminz4rDeWC1gGHLLn9nGI8ARvgy6fPxkIiMYABxI9S8xN
-         g+mw==
-X-Gm-Message-State: APf1xPC2s8fVt5sp1+zeehH31HgL1nAe0klMZ1j9xVBJzOhZ5SWF0Z+R
-	2NVs+aGoUfHCTIRInwMMxEEyYg==
-X-Google-Smtp-Source: AH8x224SnsBBQe22NVexfvYlY/CY3RCh0TtVD/BB8D1NoziLN2tcMr2zwSg5EKEJIJnWaH7lrHNk1Q==
-X-Received: by 10.28.180.4 with SMTP id d4mr5339354wmf.13.1517731694560;
-        Sun, 04 Feb 2018 00:08:14 -0800 (PST)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Sun, 4 Feb 2018 09:08:12 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
-Message-ID: <20180204080812.GA12818@eldamar.local>
+Received: (qmail 19637 invoked from network); 14 Jun 2022 03:05:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ellerman.id.au;
+	s=201909; t=1655175913;
+	bh=1xIJXejtN+mWKpRPi53pnNIm6/f79lWjm8a2q0EHRyc=;
+	h=From:To:Subject:Date:From;
+	b=Y9oImp+LbQNZ8OqV8tdTOQ059Oa03Zm0mNIESjnSZC5FUFeR2Y5hWc5WCRUk/mc3A
+	 pzOuTqelrMOyw/qdcqIIq8/H4eINU9Go/bJvviTxlYOuzLKTmFMqorEu4ERM4hFbON
+	 SaWC5azHyZXDnRigOVkArtGE6vHuYHG8vGdPGMr4cEoiZpRoqRlzn8ztedrI5VQLu+
+	 hUY/LtgKg4I77Bwivqgh0GQ7uWJUXfRgSfdC9G7YL+f7KZhiD8a02csuw8oCMu/ItR
+	 UlhFPu+9ygHK07ocHxT2zHud4xKZ7YJkqhgq9EelPEdV351FXChMdYlciEnjqdtGVo
+	 v7nzPZV5JwyYA==
+From: Michael Ellerman <mpe@ellerman.id.au>
+To: oss-security@lists.openwall.com
+Date: Tue, 14 Jun 2022 13:05:08 +1000
+Message-ID: <87bkuwc5cr.fsf@mpe.ellerman.id.au>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.9.3 (2018-01-21)
-Subject: [oss-security] Anymail: CVE-2018-6596: timing attack on WEBHOOK_AUTHORIZATION secret
+Content-Type: text/plain
+Subject: [oss-security] CVE-2022-32981: Linux kernel for powerpc 32-bit, buffer overflow in
+ ptrace PEEKUSER/POKEUSER
 
-Hi
+The Linux kernel for powerpc 32-bit has a buffer overflow in the handling of ptrace
+PEEKUSER/POKEUSER when accessing floating point registers.
 
-MITRE has assigned CVE-2018-6596 for the following issue in Anymail, a
-Django email backends for multiple ESPs:
+The fix for mainline is:
+  https://git.kernel.org/pub/scm/linux/kernel/git/powerpc/linux.git/commit/?id=8e1278444446fc97778a5e5c99bca1ce0bbc5ec9
 
-https://github.com/anymail/django-anymail/releases/tag/v1.2.1
-> Prevent timing attack on WEBHOOK_AUTHORIZATION secret
-> 
-> If you are using Anymail's tracking webhooks, you should upgrade to
-> this release, and you may want to rotate to a new
-> WEBHOOK_AUTHORIZATION shared secret (see docs). You should
-> definitely change your webhook auth if your logs indicate attempted
-> exploit.
-> 
-> More information
-> 
-> Anymail's webhook validation was vulnerable to a timing attack. An
-> attacker could have used this to obtain your WEBHOOK_AUTHORIZATION
-> shared secret, potentially allowing them to post fabricated or
-> malicious email tracking events to your app.
-> 
-> There have not been any reports of attempted exploit. (The
-> vulnerability was discovered through code review.) Attempts would be
-> visible in HTTP logs as a very large number of 400 responses on
-> Anymail's webhook urls (by default "/anymail/esp_name/tracking/"),
-> and in Python error monitoring as a very large number of
-> AnymailWebhookValidationFailure exceptions.
+Which is included in v5.19-rc2.
 
-There is the upstream fix for v1.3
-https://github.com/anymail/django-anymail/commit/db586ede1fbb41dce21310ea28ae15a1cf1286c5
-and v1.2.1
-https://github.com/anymail/django-anymail/commit/c07998304b4a31df4c61deddcb03d3607a04691b
+Stable backports have been posted.
 
-Regards,
-Salvatore
+A test case is included below, it will report if the system is correctly
+patched, it is safe to run on an unpatched system.
+
+cheers
+
+---
+#undef NDEBUG
+#include <assert.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/ptrace.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <sys/syscall.h>
+#include <unistd.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
+
+static double expected = 0.123456L;
+
+static int child(int shm_id)
+{
+	int *cptr = shmat(shm_id, NULL, 0);
+
+	asm volatile (
+		"lfd	 %%f0, 0(%0)	;"
+		"lfd	 %%f1, 0(%0)	;"
+		"li 	 %%r9, 1	;"
+		"stw	 %%r9, 0(%1)	;"
+		"1:"
+		"lwz	 %%r9, 0(%2)	;"
+		"cmpwi	 %%r9, 0	;"
+		"beq	   1b		;"
+		: // outputs
+		: // inputs
+		  "b" (&expected), "b" (&cptr[1]), "b" (&cptr[0])
+		: // clobbers
+		  "memory", "r9", "fr0", "fr1"
+	);
+
+	return 0;
+}
+
+int start_trace(pid_t child)
+{
+	int ret;
+
+	ret = ptrace(PTRACE_ATTACH, child, NULL, NULL);
+	if (ret) {
+		perror("ptrace(PTRACE_ATTACH) failed");
+		return -1;
+	}
+	ret = waitpid(child, NULL, 0);
+	if (ret != child) {
+		perror("waitpid() failed");
+		return -1;
+	}
+	return 0;
+}
+
+int stop_trace(pid_t child)
+{
+	int ret;
+
+	ret = ptrace(PTRACE_DETACH, child, NULL, NULL);
+	if (ret) {
+		perror("ptrace(PTRACE_DETACH) failed");
+		return -1;
+	}
+	return 0;
+}
+
+long raw_ptrace(enum __ptrace_request request, pid_t pid, unsigned long addr, void *data)
+{
+	return syscall(__NR_ptrace, request, pid, (void *)addr, data);
+}
+
+#define PEEKS_PER_FPR	(sizeof(__u64) / sizeof(unsigned long))
+
+int peek_fpr(pid_t child, int frnum, __u64 *fpr)
+{
+	unsigned long *p, addr;
+	int i, fpindex;
+	long ret;
+
+	fpindex = PEEKS_PER_FPR * frnum;
+
+	p = (unsigned long *)fpr;
+	for (i = 0; i < PEEKS_PER_FPR; i++, p++) {
+		addr = sizeof(unsigned long) * (PT_FPR0 + fpindex + i);
+		ret = raw_ptrace(PTRACE_PEEKUSER, child, addr, p);
+		if (ret) {
+			perror("ptrace(PTRACE_PEEKUSR) failed");
+			return -1;
+		}
+	}
+
+	return 0;
+}
+
+int parent(pid_t child)
+{
+	double f0, f1;
+
+	assert(start_trace(child) == 0);
+
+	assert(peek_fpr(child, 0, (__u64 *)&f0) == 0);
+	assert(peek_fpr(child, 1, (__u64 *)&f1) == 0);
+
+	assert(stop_trace(child) == 0);
+
+	printf("expected = %e\n", f0);
+	printf("f0       = %e\n", f0);
+	printf("f1       = %e\n", f1);
+
+	if (f0 != expected || f1 != expected) {
+		printf("FAIL - values don't match! Kernel is buggy.\n");
+		return -1;
+	}
+
+	printf("OK - values match\n");
+
+	return 0;
+}
+
+int main(void)
+{
+	int shm_id, ret, status, *pptr;
+	pid_t pid;
+
+	shm_id = shmget(IPC_PRIVATE, sizeof(int) * 2, 0777|IPC_CREAT);
+	assert(shm_id != -1);
+
+	pid = fork();
+	assert(pid >= 0);
+
+	if (pid == 0)
+		exit(child(shm_id));
+
+	pptr = shmat(shm_id, NULL, 0);
+
+	// Wait for child to signal us to continue
+	while (!pptr[1])
+		asm volatile("" : : : "memory");
+
+	ret = parent(pid);
+	if (ret) {
+		kill(pid, SIGTERM);
+		shmdt((void *)pptr);
+		shmctl(shm_id, IPC_RMID, NULL);
+		return -1;
+	}
+
+	// Signal child to exit
+	pptr[0] = 1;
+	shmdt((void *)pptr);
+
+	ret = wait(&status);
+	shmctl(shm_id, IPC_RMID, NULL);
+
+	assert(ret != -1 && WIFEXITED(status) && !WEXITSTATUS(status));
+
+	return 0;
+}
