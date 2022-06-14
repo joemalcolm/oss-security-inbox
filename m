@@ -1,68 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/04/1
-Message-ID: <Y2RcnxVZFaql5VNo@itl-email>
-Date: Thu, 3 Nov 2022 20:28:10 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
-To: oss-security@...ts.openwall.com
-Cc: nic.tuv@...il.com, Hanno Böck <hanno@...too.org>
-Subject: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/14/1
+Message-Id: <EC5BDCA4-8FF7-41E0-9177-5F4DD8A96841@apache.org>
+Date: Tue, 14 Jun 2022 00:22:00 -0700
+From: Ralph Goers <rgoers@...che.org>
+To: announce@...che.org
+Cc: oss-security@...ts.openwall.com
+Subject: CVE-2022-25167 - Apache Flume JMSSource does not protect from malicious JNDI urls
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 03, 2022 at 08:23:32PM +0000, Sam James wrote:
-> 
-> 
-> > On 3 Nov 2022, at 16:32, Nicola Tuveri <nic.tuv@...il.com> wrote:
-> > 
-> > I can also add that at least this member of the OpenSSL Technical
-> > Committee is following the discussion, and I believe I am not the only
-> > one.
-> > 
-> > The feedback shared here on oss-security is read and carefully
-> > considered, and I know it will be discussed within OTC to continue the
-> > ongoing process of improving the OpenSSL project and its procedures.
-> 
-> I'd like to thank the OpenSSL developers for being open to the
-> CI improvements I've been making lately.
-> 
-> > 
-> > I totally concur with Tavis Ormandy:
-> >> this is active prolific opensource security researchers discussing their opensource security work on the opensource security mailing list :)
-> > 
-> > Personally, I'd like to thank you all for the feedback so far, as it
-> > is in itself a contribution to the project, even when it is harsh and
-> > reminds us of our mistakes.
-> > As long as it is kept polite and constructive, as it has been so far
-> > here, all feedback is very welcome and valuable.
-> 
-> Something I think that should be revisited is the priority
-> of undefined behaviour in the codebase.
-> 
-> Undefined behaviour can - and has [0][1] - led to misbehaviour
-> at runtime.
-> 
-> Part of living with "Modern C" is embracing the
-> techniques we have available to enhance compiler diagnostics
-> and detect problems. That includes LTO, as well, which
-> generally leads to _far_ better compiler warnings.
-> 
-> The OpenSSL codebase isn't strict aliasing clean, and in
-> Gentoo, we've built with -fno-strict-aliasing since ~2005
-> (note that -fstrict-aliasing is enabled by default with -O2
-> in GCC since at least 10 years ago).
-> 
-> If at all possible, I'd ask that the OpenSSL team revisit
-> its assessment of the severity of strict aliasing bugs
-> as well as the value of LTO in enhancing diagnostics
-> and finding bugs.
+Severity, medium
 
--fno-strict-aliasing is definitely the right call.  I use it pretty much
-everywhere, as complying with the strict aliasing rules is often just
-not worth the effort.  I suspect that wl_container_of (used in every C
-program using libwayland) may violate strict aliasing, and I am nearly
-certain X11 clients do.
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+Description:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Flume’s JMSSource class can be configured with a connection factory name. A JNDI lookup is performed on this name without performing an validation. This could result in untrusted data being deserialized.
+
+Mitigation
+Upgrade to Flume 1.10.0.
+
+In releases 1.4.0 through 1.9.0 the JMSSource should not be used.
+
+Release Details
+In release 1.10.0, if a protocol is specified in the connection factory parameter only the java protocol will be allowed. If no protocol is specified it will also be allowed.
+
+Credit
+This issue was found by the Flume development team.
