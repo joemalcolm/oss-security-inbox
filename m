@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4571" "Wednesday" "4" "November" "2015" "11:06:56" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151104160656.26856332060@smtpvbsrv1.mitre.org>" "99" "[oss-security] Re: CVE request: urlfetch range handling flaw in Cyrus IMAP" nil nil nil "11" "2015110416:06:56" "[oss-security] Re: CVE request: urlfetch range handling flaw in Cyrus IMAP" (number mark "        cve-assign@m Nov  4   99/4571  " thread-indent "\"[oss-security] Re: CVE request: urlfetch range handling flaw in Cyrus IMAP\"\n") "<87mvw5mquv.fsf@redhat.com>" ("<87mvw5mquv.fsf@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 16157 invoked by uid 550); 4 Nov 2015 16:07:09 -0000
+Received: (qmail 14090 invoked by uid 550); 15 Jun 2022 14:29:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,112 +6,34 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16138 invoked from network); 4 Nov 2015 16:07:08 -0000
-In-Reply-To: <87mvw5mquv.fsf@redhat.com>
-Message-Id: <20151104160656.26856332060@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Wed,  4 Nov 2015 11:06:56 -0500 (EST)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: urlfetch range handling flaw in Cyrus IMAP
-To: mprpic@redhat.com
+Received: (qmail 5914 invoked from network); 15 Jun 2022 14:10:34 -0000
+Content-Type: text/plain; charset=utf-8
+From: Akira Ajisaka <aajisaka@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <632698ac-e78b-79ac-3a37-7a6a3acf782c@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 15 Jun 2022 14:10:21 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2021-33036: Apache Hadoop Privilege escalation vulnerability 
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: Critical
 
-> "Security fix: handle urlfetch range starting outside message range"
-> [https://docs.cyrus.foundation/imap/release-notes/2.4/x/2.4.18.html]
+Description:
 
-This was a somewhat complex situation for CVE assignment. The
-http://www.openwall.com/lists/oss-security/2015/09/30/3 post
-identified one commit associated with an upstream security-fix
-release, but it was later found that there were two similar commits
-associated with the same type of security fix in that release. The
-oss-security thread was extremely helpful in providing a specific URL
-for where upstream discussion was attempted, but the only upstream
-discussion occurred after the last oss-security message. Finally,
-there is the somewhat-common question of what to do if a Linux
-distributor interprets an oss-security message as an indication that a
-new distribution package can be safely produced by backporting one
-commit, rather than by packaging a new upstream version.
+In Apache Hadoop 2.2.0 to 2.10.1, 3.0.0-alpha1 to 3.1.4, 3.2.0 to 3.2.2, an=
+d 3.3.0 to 3.3.1, a user who can escalate to yarn user can possibly run arb=
+itrary commands as root user.  Users should upgrade to Apache Hadoop 2.10.2=
+, 3.2.3, 3.3.2 or higher.
 
-The scope of CVE-2015-8076 is both of the June 2015 commits by the
-cyrus-imapd developers for preventing read operations that go beyond
-the size of a message, i.e.,
+Mitigation:
 
-  https://cyrus.foundation/cyrus-imapd/commit/?id=07de4ff1bf2fa340b9d77b8e7de8d43d47a33921
+If you are using the affected version of Apache Hadoop and some users can e=
+scalate to yarn user and cannot escalate to root user, remove the permissio=
+n to escalate to yarn user from them.
 
-  and
+Credit:
 
-  https://cyrus.foundation/cyrus-imapd/commit/?id=c21e179c1f6b968fe69bebe079176714e511587b
+Apache Hadoop would like to thank Hideyuki Furue for reporting and fixing t=
+his issue.
 
-(We don't know of cases where a Linux distribution backported only
-07de4ff1bf2fa340b9d77b8e7de8d43d47a33921. For example, the September
-updates from openSUSE state that they packaged version 2.3.19. If any
-Linux distributions backported only
-07de4ff1bf2fa340b9d77b8e7de8d43d47a33921, each of those distributions
-should now have another unique CVE for an "incomplete fix for
-CVE-2015-8076" problem. If we already knew that that had occurred, we
-may have chosen separate CVEs for the upstream
-07de4ff1bf2fa340b9d77b8e7de8d43d47a33921 and
-c21e179c1f6b968fe69bebe079176714e511587b fixes, to simplify the
-overall CVE assignment work.)
-
-The original oss-security message suggested that the fixed version was
-2.4.18, but actually all of these changelogs seem applicable:
-
-  https://docs.cyrus.foundation/imap/release-notes/2.3/x/2.3.19.html
-  https://docs.cyrus.foundation/imap/release-notes/2.4/x/2.4.18.html
-  https://docs.cyrus.foundation/imap/release-notes/2.5/x/2.5.4.html
-
-The scope of CVE-2015-8077 is the discovery by Florian Weimer that
-there can be an integer overflow in the start_octet addition after the
-07de4ff1bf2fa340b9d77b8e7de8d43d47a33921 fix. This discovery
-corresponds to:
-
-  https://cyrus.foundation/cyrus-imapd/commit/?id=745e161c834f1eb6d62fc14477f51dae799e1e08
-
-The scope of CVE-2015-8078 is the discovery by a cyrus-imapd developer
-that there can be an integer overflow in the section_offset addition
-after the c21e179c1f6b968fe69bebe079176714e511587b fix. This discovery
-corresponds to:
-
-  https://cyrus.foundation/cyrus-imapd/commit/?id=6fb6a272171f49c79ba6ab7c6403eb25b39ec1b2
-
-CVE-2015-8077 and CVE-2015-8078 potentially affect all released
-versions (see the ftp://ftp.cyrusimap.org/cyrus-imapd/ listing.)
-
-There is no CVE for the
-https://cyrus.foundation/cyrus-imapd/commit/?id=d81a712401418cc0bd1daa49ded8e5bcc4b69f21
-buffer overflow because we don't know of a realistic case in which a
-privilege boundary can be crossed by an untrusted person who controls
-the imtest command line.
-
-There is no CVE for
-https://cyrus.foundation/cyrus-imapd/commit/?id=ff4e6c71d932b3e6bbfa67d76f095e27ff21bad0
-because of the upstream comments in the
-https://lists.andrew.cmu.edu/pipermail/cyrus-devel/2015-October/003550.html
-post.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWOiyZAAoJEL54rhJi8gl5d0kQAKXrBLVlHSAv5O2P39UEUFAQ
-Kug9b8p3ktVyPWMADkXVhkureQ9Sjdyjqtfb+NeyCSzm8AdiYjwYDpFnBqT8DCFj
-7z6Q88mAgSyI4hbKKnylAR+2pEagLct1MGZCm990VjtMkRKgUil2S013hRU0ol5D
-NfLaYsZuO12DhzyXYVbcz2Yu83AfdapiG4UfDedeMPCrX/WpDdDIpElMDv9zuBha
-I4sb4v/1TlI/MWLDIRv6VVguL5q8Qj7xnHTpIcaKUkjmJJBbMxn/8+4zOOxZqgnx
-Z+qOmz7h3nQ9nY7j+AgoD268a0UPACemG4Wc9enzD8toiXCQ1rU2eegdUSXNXL3k
-m+JbVn9aOQB0P6m2bthWzbtkcMBnGY/mqvqqf/w7W+0qKXzE4EFUtny8D6ApQCYJ
-hxdPDlt2iAHxrR5gZg3jH+UjZ4eE80ORN7+1ZUcW5h/FHWyUrFfVIeY2GkXpu1rc
-9+ciRPUOW6fI9oK5fiyCi3kGmfg4V3i2i+IpYkK7s+/gF3ehj5kmwxaFVCQX9Dib
-cj0kLJIG/yzBRN/DGaHdfKSsxp1P5e3JyojikdOKuXMfgxX3ZXFZA5O9TcvX9siV
-lGGB4wDjrSk+jyC+iAf6gO8pqCas8POkMgfu2ktnklXJQZUceSINmMPLlwbDA4Lx
-ZnWm8ntzkESdiXorQIE2
-=utTo
------END PGP SIGNATURE-----
