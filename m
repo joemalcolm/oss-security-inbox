@@ -1,116 +1,208 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/27/3
-Message-Id: <FC8967CA-B0AE-4315-92C8-16CB941FDF1B@gmail.com>
-Date: Sun, 27 Mar 2022 15:10:41 +0300
-From: ariel.byd@...il.com
-To: oss-security@...ts.openwall.com
-Subject: Re: zlib memory corruption on deflate (i.e. compress)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/16/1
+Message-Id: <E1o1s4I-00011l-V8@xenbits.xenproject.org>
+Date: Thu, 16 Jun 2022 16:10:02 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 404 v2 (CVE-2022-21123,CVE-2022-21125,CVE-2022-21166) - x86: MMIO Stale Data vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-If the match lengths are uniformly distributed between 3 and 258, you’ll get exactly 8 bits per length - not less due to entropy considerations, not more since N-3 is a valid Huffman encoding with 8 bits per character.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Actually, maybe not. I think 258 can be encoded as either “284 31” or “285”, and if the encoder always chooses the “285” encoding (leaving “284 31” useless) you might have 257 characters, you might need some 9-bit characters. I think it’s possible to bound that by 1/64 bit per character but I have not proven it.
+ Xen Security Advisory CVE-2022-21123,CVE-2022-21125,CVE-2022-21166 / XSA-404
+                                   version 2
 
-Similarly for distances uniformly distributed between 1 and 32768.
+                 x86: MMIO Stale Data vulnerabilities
 
-That’s a total of 23 bits per code.
+UPDATES IN VERSION 2
+====================
 
+Correct one CVE.  The title for version 1 gave CVE-2022-21124 which was
+incorrect and should have been CVE-2022-21125.
 
-> On 27 Mar 2022, at 12:31, Eric Biggers <ebiggers@...nel.org> wrote:
-> 
-> ﻿On Sat, Mar 26, 2022 at 09:52:17AM -0700, Tavis Ormandy wrote:
->> One question remains - does this *only* affect Z_FIXED, or also
->> Z_DEFAULT_STRATEGY? It seems plausible this also affects
->> Z_DEFAULT_STRATEGY, because of this condition:
->> 
->> https://github.com/madler/zlib/blob/master/trees.c#L976
->> 
->>    } else if (s->strategy == Z_FIXED || static_lenb == opt_lenb) {
->> 
->> That is, if the optimal and static trees are the same size, then zlib
->> *chooses* the Z_FIXED strategy anyway. I don't know if this is
->> practically possible yet, I'm investigating but if someone smarter than
->> me already knows the answer please let me know!
->> 
->> IMHO, this is a pretty bad bug - but if it is impossible to reach with
->> Z_DEFAULT_STRATEGY, then at least there's no need to panic, as Z_FIXED
->> is usually only used in special circumstances...
->> 
->> If it possible, well... uh-oh.
->> 
-> 
-> I think it's not possible, at least with the default memLevel (which is one of
-> the parameters to deflateInit2()), though it gets uncomfortably close.
-> 
-> Let's assume that given a sequence of "items" (matches and literals), it's
-> possible to craft an input that makes the compressor choose those items for one
-> of its blocks.  It may require getting creative with de Bruijn sequences, etc.,
-> like Tavis did in his reproducer, but generally speaking I'd consider it to be
-> possible.  Then, I'd phrase the question of reachability of this bug as:
-> 
-> "Does there exist a sequence of items with length at most 1<<(memLevel+6)
-> [i.e.  16384 by default] that, when encoded into a block, takes up more than
-> 3*(1<<(memLevel+6)) bytes [i.e. 49152 by default]?"
-> 
-> Using less than the maximum allowed number of items isn't going to help.  Also,
-> the block header won't take up significant space compared to 16384 items.  So
-> this is basically asking "do items ever cost more than 24 bits on average"?
-> 
-> This can "obviously" happen when the use of the static Huffman codes is forced
-> with Z_FIXED, as items can cost up to 31 bits with the static codes, and all
-> items can have this worst-case cost.  That's what Tavis's reproducer does.
-> 
-> But with Z_DEFAULT_STRATEGY, zlib uses the cheaper of the static and dynamic
-> codes.  For the bug to happen then, both the static and dynamic codes would have
-> to use more than 24 bits per item on average, for the same sequence of items.
-> 
-> So can the dynamic codes ever use more than 24 bits per item on average?
-> 
-> It gets pretty close, but I don't think it's possible.
-> 
-> The worst case must involve all matches and zero literals, unless every single
-> length symbol is used which seems unlikely to help (see later analysis).  And
-> all else being equal, the most costly matches will be the ones with the most
-> extra length and extra offset bits.
-> 
-> However, the more often a symbol is used, the shorter its Huffman codeword gets.
-> If we use only matches that have the most extra bits, we end up using the same
-> length and offset symbols a lot.  There are only 4 length symbols with the
-> maximum extra bits of 5, so if we use those evenly we get 2-bit length
-> codewords, for 7 bits per length.  Likewise, there are only 2 offset symbols
-> with the maximum extra bits of 13, so if we use those evenly we get 1-bit offset
-> codewords, for 14 bits per offset.  That's 7 + 14 = 21 bits per match.
-> 
-> Roughly speaking, to add 1 bit to a Huffman codeword length, we need to halve
-> the symbol's frequency.  So roughly speaking, to add one bit to the length
-> codewords we'd need to add 4, 8, 16, ..., length symbols, using each one roughly
-> equally often.  However, the number of extra bits decreases by 1 for each 4
-> length symbols.  Therefore we gain roughly 0.5 bits by adding the 4 length
-> symbols with 4 extra bits, resulting in 7.5 bits per length on average.  But if
-> we go further, the average cost per length starts getting cheaper.
-> 
-> Similarly, the number of extra bits decreases by 1 for each 2 offset symbols.
-> So offsets get about 0.5 bits more expensive if we also use the 2 offset symbols
-> with 12 extra bits, resulting in 14.5 bits per offset on average.  But anything
-> further decreases the cost.
-> 
-> That's 7.5+14.5 = 22.0 bits per match on average.
-> 
-> We can do a bit "better" by considering that Huffman codewords can only be a
-> whole number of bits.  E.g., if we're using four offset symbols, we can use the
-> ones with num_extra_bits=13 'n' times each and the ones with num_extra_bits=12
-> n/2+1 times each, and still get 2-bit codewords for all four symbols.  However,
-> it doesn't seem that we can gain more than 1 bit on average per match from this.
-> 
-> So it looks like the worst case is somewhere around 22.5 bits per item.  That's
-> less than the required 24.  It's definitely getting uncomfortably close though,
-> so this could use a more formal treatment.
-> 
-> Also, memLevel can be as low as 1; it's a parameter to deflateInit2().  With
-> memLevel=1, zlib will flush blocks after just 128 items.  The block header
-> containing the Huffman codeword lengths would be more significant in that case.
-> Though, the block header would still be pretty short, given that there wouldn't
-> be too many codewords in the codes, given the 128 item limit as well the
-> constraints of having to generate one of these worst-case sequences.
-> 
-> - Eric
+Patches are now reviewed.  Backports are available.
+
+ISSUE DESCRIPTION
+=================
+
+This issue is related to the SRBDS, TAA and MDS vulnerabilities.  Please
+see:
+
+  https://xenbits.xen.org/xsa/advisory-320.html (SRBDS)
+  https://xenbits.xen.org/xsa/advisory-305.html (TAA)
+  https://xenbits.xen.org/xsa/advisory-297.html (MDS)
+
+Please see Intel's whitepaper:
+
+  https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/technical-documentation/processor-mmio-stale-data-vulnerabilities.html
+
+IMPACT
+======
+
+An attacker might be able to directly read or infer data from other
+security contexts in the system.  This can include data belonging to
+other VMs, or to Xen itself.  The degree to which an attacker can obtain
+data depends on the CPU, and the system configuration.
+
+VULNERABLE SYSTEMS
+==================
+
+Systems running all versions of Xen are affected.
+
+Only x86 processors are vulnerable.  Processors from other manufacturers
+(e.g. ARM) are not believed to be vulnerable.
+
+Only Intel based processors are affected.  Processors from other x86
+manufacturers (e.g. AMD) are not believed to be vulnerable.
+
+Please consult the Intel Security Advisory for details on the affected
+processors and configurations.
+
+Per Xen's support statement, PCI passthrough should be to trusted
+domains because the overall system security depends on factors outside
+of Xen's control.
+
+As such, Xen, in a supported configuration, is not vulnerable to
+DRPW/SBDR.
+
+MITIGATION
+==========
+
+All mitigations depend on functionality added in the IPU 2022.1 (May
+2022) microcode release from Intel.  Consult your dom0 OS vendor.
+
+To the best of the security team's understanding, the summary is as
+follows:
+
+Server CPUs (Xeon EP/EX, Scalable, and some Atom servers), excluding
+Xeon E3 (which use the client CPU design), are potentially vulnerable to
+DRPW (CVE-2022-21166).
+
+Client CPUs (inc Xeon E3) are, furthermore, potentially vulnerable to
+SBDR (CVE-2022-21123) and SBDS (CVE-2022-21125).
+
+SBDS only affects CPUs vulnerable to MDS.  On these CPUs, there are
+previously undiscovered leakage channels.  There is no change to the
+existing MDS mitigations.
+
+DRPW and SBDR only affects configurations where less privileged domains
+have MMIO mappings of buggy endpoints.  Consult your hardware vendor.
+
+In configurations where less privileged domains have MMIO access to
+buggy endpoints, `spec-ctrl=unpriv-mmio` can be enabled which will cause
+Xen to mitigate cross-domain fill buffer leakage, and extend SRBDS
+protections to protect RNG data from leakage.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patches and enabling the newly
+introduced command line option, if appropriate, mitigates these issues.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa404/xsa404-?.patch           xen-unstable
+xsa404/xsa404-4.16-?.patch      Xen 4.16.x
+xsa404/xsa404-4.15-?.patch      Xen 4.15.x
+xsa404/xsa404-4.14-?.patch      Xen 4.14.x
+xsa404/xsa404-4.13-?.patch      Xen 4.13.x
+
+$ sha256sum xsa404*/*
+51a812b3e37fb5067aff94d7e587c3fed0de4fcc89e694c7b7dbf1ef2d7e2acc  xsa404/xsa404-1.patch
+99d9657cd811f5ed86949bd44777b6bfbb4356fea70795edaa9c7ede341603a0  xsa404/xsa404-2.patch
+7e61db8f1741a9e2e9e68e7221cc532f4d17c4d0b2e02ce9ba4468ce187b7b57  xsa404/xsa404-3.patch
+be78110d460db361be29f5e5f4b4608bbd25d2032c5f14eed05fd10e66e99e87  xsa404/xsa404-4.13-1.patch
+7734bc21a04eb0cea30564bd0855ecc969b7b427a250b5ea6efc6fab46483b70  xsa404/xsa404-4.13-2.patch
+6abbdcf5308c033ab7b59c6c75514e29aa14f06c61ef807e2d0c80695af1cace  xsa404/xsa404-4.13-3.patch
+ccff36c3615d0068ade29e1d25abd6112b9e90490a5b0ef3d189b27aa53976b2  xsa404/xsa404-4.14-1.patch
+ac446bed9d33d84e0b20e4898ce1424f3ed7ed4b05c3c559045a377a9a044b0c  xsa404/xsa404-4.14-2.patch
+0ca7801e0442dd304d62538a0861fe459b08dc367530d2142405d602930e1dab  xsa404/xsa404-4.14-3.patch
+a26036a136c10810de88960704e6922a40b483a49c8b1821a6e265cae968bfc2  xsa404/xsa404-4.15-1.patch
+25616a8665b96b965fbc0b799fb8cd17a360b4add71c6e6e504859cfd35f19ce  xsa404/xsa404-4.15-2.patch
+a4c3608210f62e453f9c983ebc1a3b0846ca3a52ba32ee13143561710b4c4118  xsa404/xsa404-4.15-3.patch
+a18c04cfdacf7dbb518216ac85047a5851c1f64c62d64e234f8ed19b6905ba60  xsa404/xsa404-4.16-1.patch
+d22af75e0bc42e249a37bd91165b426c7146f69dfd6c4de4a06d6ed0b3e5e713  xsa404/xsa404-4.16-2.patch
+b04603668f61fbd40e2effaaeb7b3d9c555a8d8a4667208ae0ae42baf323230a  xsa404/xsa404-4.16-3.patch
+$
+
+In addition, the backports have already been pushed to xen.git.  They are
+available in the following branches:
+
+staging      8c24b70fedcb52633b2370f834d8a2be3f7fa38e
+staging-4.16 2e82446cb252f6c8ac697e81f4155872c69afde4
+staging-4.15 a3faf632606e54437146dbcac2c9bbb89b9a4007
+staging-4.14 c5f774eaeeca195ef85b47713f0b21220c4b41e6
+staging-4.13 87ff11354f0dc0d6e77e1695e6c1e14aa1382cdc
+
+NOTE CONCERNING CVE-2022-21127 / Update to SRBDS
+================================================
+
+An issue was discovered with the SRBDS microcode mitigation.  A
+microcode update was released as part of Intel's IPU 2022.1 in May 2022.
+
+Updating microcode is sufficient to fix the issue, with no extra actions
+required on Xen's behalf.  Consult your dom0 OS vendor or OEM for
+updated microcode.
+
+NOTE CONCERNING CVE-2022-21180 / Undefined MMIO Hang
+====================================================
+
+A related issue was discovered.  See:
+
+  https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/advisory-guidance/undefined-mmio-hang.html
+
+Xen is not vulnerable to UMH in supported configurations.
+
+The only mitigation is to avoid passing impacted devices through to
+untrusted guests.
+
+NOTE CONCERNING LACK OF EMBARGO
+===============================
+
+The discoverer did not authorise us to predisclose.
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmKrVbAMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZ2AcH/jWGiu0jpWMkQw/3U4DUu2a77PcC9jLH8NONesB7
+SGfdhIMNqmStUI5VJf54ccDIrZSLQxvNVWWxXyQPhZXWhSPf5xE2uYK1qUL+Za8c
+kOIJr0Drzffr2Bmu3NnBCRdQDkmXl2GDgqig4YWK/+BOlOO+YxBGdyoE0mBOXMo4
++cQHHvYa16kZVuwxyS0mZxhKFo3JQZaKqh2DEzKZUWm3w8n3NKEYG8S00sttZfjs
+dS8rNXEu+yrmPjsJ+hFfJw8MfoETE6yGI47C89dFTN9Q0KedEYM28oD6ClMUC+ks
+kwnFAk561m4VUoTqkSv82PeJfS9Sp5D6yO4CDdC05Eyc9gA=
+=K9Tq
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa404/xsa404-1.patch" of type "application/octet-stream" (9555 bytes)
+
+Download attachment "xsa404/xsa404-2.patch" of type "application/octet-stream" (5026 bytes)
+
+Download attachment "xsa404/xsa404-3.patch" of type "application/octet-stream" (8418 bytes)
+
+Download attachment "xsa404/xsa404-4.13-1.patch" of type "application/octet-stream" (9583 bytes)
+
+Download attachment "xsa404/xsa404-4.13-2.patch" of type "application/octet-stream" (3196 bytes)
+
+Download attachment "xsa404/xsa404-4.13-3.patch" of type "application/octet-stream" (8405 bytes)
+
+Download attachment "xsa404/xsa404-4.14-1.patch" of type "application/octet-stream" (9432 bytes)
+
+Download attachment "xsa404/xsa404-4.14-2.patch" of type "application/octet-stream" (4997 bytes)
+
+Download attachment "xsa404/xsa404-4.14-3.patch" of type "application/octet-stream" (8398 bytes)
+
+Download attachment "xsa404/xsa404-4.15-1.patch" of type "application/octet-stream" (9471 bytes)
+
+Download attachment "xsa404/xsa404-4.15-2.patch" of type "application/octet-stream" (4997 bytes)
+
+Download attachment "xsa404/xsa404-4.15-3.patch" of type "application/octet-stream" (8398 bytes)
+
+Download attachment "xsa404/xsa404-4.16-1.patch" of type "application/octet-stream" (9471 bytes)
+
+Download attachment "xsa404/xsa404-4.16-2.patch" of type "application/octet-stream" (4997 bytes)
+
+Download attachment "xsa404/xsa404-4.16-3.patch" of type "application/octet-stream" (8398 bytes)
