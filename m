@@ -1,73 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/01/2
-Message-ID: <CAP9KPhDXj2vUKyZ0m7on+DSn-BUMYfyd-W0_DY2TVAKyeVg=FA@mail.gmail.com>
-Date: Thu, 1 Sep 2022 13:26:45 +1000
-From: David Leadbeater <dgl@....cx>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/19/1
+Message-ID: <5953bcb8.7a23f.1817c6f6683.Coremail.duoming@zju.edu.cn>
+Date: Sun, 19 Jun 2022 22:48:04 +0800 (GMT+08:00)
+From: duoming@....edu.cn
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-2663: Linux netfilter: nf_conntrack_irc message handling
+Subject: Linux kernel: CVE-2022-1516: NULL pointer dereference in Linux kernel`s X.25 network protocol
 Content-Type: text/plain; charset=utf-8
 
-The exploit is an IRC client can be tricked into replying to a CTCP
-PING message with a crafted payload. The raw IRC command to do this is
-(sent by the attacker):
+Hello there,
 
-PRIVMSG victim :^APING ^ADCC CHAT x [ip-as-numeric] [port]^A
-
-Which results in the victim's IRC client sending a PING response that
-is matched by nf_conntrack_irc as if the victim is establishing a DCC
+A NULL pointer dereference flaw was found in the Linux kernel’s X.25 set of
+standardized network protocols functionality in the way a user terminates 
+their session using a simulated Ethernet card and continued usage of this 
 connection.
 
-In addition to this, there were some bugs in the handling of the IP
-address and port, rather than the client's IP address the code was
-matching on the IRC server's address and if a port of 0 was sent it
-would result in future packets being dropped. This means a remote (on
-the same IRC network) attacker can force a victim to either: open a
-port on its host, reveal its (public) IP address or perform a DoS by
-disconnecting from IRC.
+=*=*=*=*=*=*=*=*=  Bug Details  =*=*=*=*=*=*=*=*=
 
-This code has been present in Linux since the addition of
-nf_conntrack_irc, around 16 years ago:
-https://github.com/torvalds/linux/commit/869f37d8 (this was very
-closely based on ip_conntrack_irc and from a quick look at the
-historical code that would have a similar issue).
+When the link layer is terminating, x25->neighbour will be set to NULL
+in x25_disconnect(). As a result, it could cause null-ptr-deref bugs in
+x25_sendmsg(),x25_recvmsg() and x25_connect(). One of the bugs is
+shown below.
 
-If IRC client authors are reading this, I've opened an issue for IRCv3
-to consider a spec for blocking control characters in CTCP PING
-requests, as a defence-in-depth measure against this and potentially
-future attacks:
-https://github.com/ircv3/ircv3-specifications/issues/504
+    (Thread 1)                 |  (Thread 2)
+x25_link_terminated()          | x25_recvmsg()
+ x25_kill_by_neigh()           |  ...
+  x25_disconnect()             |  lock_sock(sk)
+   ...                         |  ...
+   x25->neighbour = NULL //(1) |
+   ...                         |  x25->neighbour->extended //(2)
 
-Hopefully it goes without saying to this audience, but using TLS for
-IRC connections fixes this entirely.
+The code sets NULL to x25->neighbour in position (1) and dereferences
+x25->neighbour in position (2), which could cause null-ptr-deref bug.
 
-I've posted a writeup with more background details here (including a
-video): https://dgl.cx/2022/08/nat-again-irc-cve-2022-2663
+=*=*=*=*=*=*=*=*=  Bug Effects  =*=*=*=*=*=*=*=*=
 
-David
+This flaw allows a local user to crash the system.
 
-On Tue, 30 Aug 2022 at 12:27, David Leadbeater <dgl@....cx> wrote:
->
-> Description:
->
-> I've found an issue in nf_conntrack_irc where the message handling can
-> be confused and it incorrectly matches on the message.
->
-> Impact:
->
-> A firewall may be able to be bypassed when users are using unencrypted
-> IRC with nf_conntrack_irc configured.
->
-> Mitigations:
->
-> Linux: Disable nf_conntrack_irc (remove any --helper irc rules, and/or
-> unload the kernel module)
-> MikroTik: Remove IRC from the service ports list (/ip
-> firewall/service-port/disable irc)
->
-> Fix is posted here:
-> https://lore.kernel.org/netfilter-devel/20220826045658.100360-1-dgl@dgl.cx/T/
-> It will be making its way into upstream Linux soon.
->
-> I'll update in a couple of days with complete details.
->
-> David
+=*=*=*=*=*=*=*=*=  Bug Fix  =*=*=*=*=*=*=*=*=
+
+The patch that have been applied to mainline Linux kernel is shown below.
+https://github.com/torvalds/linux/commit/7781607938c8371d4c2b243527430241c62e39c2
+
+=*=*=*=*=*=*=*=*=  Timeline  =*=*=*=*=*=*=*=*=
+
+2022-03-26: commit 7781607938c8 accepted to mainline kernel
+2022-03-26: CVE-2022-1516 is assigned
+
+=*=*=*=*=*=*=*=*=  Credit  =*=*=*=*=*=*=*=*=
+
+Duoming Zhou <duoming@....edu.cn>
+
+Best Regards,
+Duoming Zhou
