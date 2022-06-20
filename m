@@ -1,42 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/25/1
-Message-ID: <20220825132021.GA27469@openwall.com>
-Date: Thu, 25 Aug 2022 15:20:21 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/20/1
+Message-ID: <YrCDWMM3+JvDcOVu@pisco.westfalen.local>
+Date: Mon, 20 Jun 2022 16:25:28 +0200
+From: Moritz Mühlenhoff <jmm@...til.org>
 To: oss-security@...ts.openwall.com
+Cc: Marian Rehak <mrehak@...hat.com>
 Subject: Re: Linux Kernel use-after-free write in netfilter
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 31, 2022 at 10:00:32AM +0100, EDG EDG wrote:
-> A use-after-free write vulnerability was identified within the
-> netfilter subsystem
-> which can be exploited to achieve privilege escalation to root.
+Salvatore Bonaccorso wrote:
+> FTR, this was assigned CVE-2022-1966 by Red Hat:
+> https://bugzilla.redhat.com/show_bug.cgi?id=2092427 .
 > 
-> In order to trigger the issue it requires the ability to create user/net
-> namespaces.
-> 
-> This issue has been fixed within the following commit:
-> 
-> https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/net/netfilter?id=520778042ccca019f3ffa136dd0ca565c486cedd
-> 
-> The issue was previously confirmed on the latest linux master (commit
-> 143a6252e1b8ab424b4b293512a97cca7295c182) and we have confirmed it can be
-> exploited for privilege escalation on Ubuntu 22.04 (Linux kernel
-> 5.15.0-27-generic).
-[...]
-> # POC Code
-[...]
->     printf("should have triggered KASAN\n");
+> There is though as well now
+> https://www.cve.org/CVERecord?id=CVE-2022-32250 . I have asked MITRE
+> to possibly reject the later one.
 
-While the message above included PoC code, there's now also a blog post
-and GitHub repo with a full exploit:
+MITRE rejected CVE-2022-1966 and CVE-2022-32250 is now the authoritative
+one: https://www.cve.org/CVERecord?id=CVE-2022-1966
 
-https://blog.theori.io/research/CVE-2022-32250-linux-kernel-lpe-2022/
-https://github.com/theori-io/CVE-2022-32250-exploit
-
-"In this post, we have shown the process of exploiting CVE-2022-32250.
-We were able to leak KASLR and overwrite modprobe_path by utilizing the
-mqueue functions, and as a result, we successfully gained root
-privileges in Ubuntu 22.04."
-
-Alexander
+Cheers,
+        Moritz
