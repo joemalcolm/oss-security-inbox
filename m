@@ -1,21 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/03/4
-Message-ID: <39087948-8913-135e-b69d-bf6d1632266b@apache.org>
-Date: Thu, 03 Nov 2022 11:12:27 +0000
-From: Richard Eckart de Castilho <rec@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/21/2
+Message-ID: <CA+-XxSF2JKURyb3o7Y4ZR1P20rEH7zOoeSzHfUJLj+m_G_3kcg@mail.gmail.com>
+Date: Tue, 21 Jun 2022 10:41:22 -0700
+From: Igor Seletskiy <i@...udlinux.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-32287: Apache UIMA prior to 3.3.1 has a path traversal vulnerability when extracting (PEAR) archives 
+Subject: Request for comment: kmod signing by AlmaLinux OS Foundation
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+Hello list, I have a security-related question for the Linux community at
+large.
 
-Description:
+AlmaLinux OS is a community rebuild of RHEL 8.x & RHEL 9.x done by the
+non-profit AlmaLinux OS Foundation. The foundation is community-driven and
+done for the benefit of the community. As part of its service, it has
+signed shim, kernel & signs kmods that come as part of RHEL to provide
+SecureBoot & ability to load kmods when secure boot is enabled. Note that
+our shim is already signed and works without OEM/customers adding any keys
+to the BIOS
 
-A relative path traversal vulnerability in a FileUtil class used by the PEAR management component of Apache UIMA allows an attacker to create files outside the designated target directory using carefully crafted ZIP entry names. This issue affects Apache UIMA Apache UIMA version 3.3.0 and prior versions. 
+Yet, the goal of the organization is to serve the community beyond where
+RHEL servers, which might include the need to ship additional kernels &
+kernel modules.
 
-Note that PEAR files should never be installed into an UIMA installation from untrusted sources because PEAR archives are executable plugins that will be able to perform any actions with the same privileges as the host Java Virtual Machine.
+AlmaLinux technical team is considering starting signing:
 
-Credit:
+1. Additional kernels (like kernel for RaspberryPi or the latest mainline
+kernel)
 
-Apache UIMA would like to thank Huangzhicong from CodeSafe Team of Legendsec at Qi'anxin Group
+2. Additional kernel modules from AlmaLinux OS Foundation sponsors.
+
+We believe that such an approach might benefit the community as a whole.
+Yet, we are mindful of security implications and want to ask for feedback
+from the AlmaLinux community, the broader Linux community, as well as from
+security experts.
+
+
+At this moment we want to focus on kmod signing. Here are some of the
+conditions that the AlmaLinux technical team considers to require
+
+*The conditions would be: *1. The module should be GPLv2, published to
+Github/available to all 2. AlmaLinux will publish the signed modules in its
+main repository, maintaining an additional repository for such module 3.
+The module can only come from sponsoring members 4. It has to be approved
+by the AlmaLinux tech committee 5. Additionally, it might require the
+approval of the board. 6. AlmaLinux OS would publish information for all
+such modules built. 7. Require 3rd audit from vetted security audit vendors
+(optional? how to deal with security issues/need for quick release
+turnaround for security-related vulnerabilities/changes?)
+
+We would appreciate feedback from the community.
+
+
+Regards,
+Igor Seletskiy @ AlmaLinux OS Foundation
 
