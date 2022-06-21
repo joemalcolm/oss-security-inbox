@@ -1,63 +1,131 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/04/4
-Message-ID: <20220604205119.GA25511@openwall.com>
-Date: Sat, 4 Jun 2022 22:51:19 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Valentina Palmiotti <chompie@...plsecurity.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Linux Kernel: Exploitable vulnerability in io_uring
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/21/1
+Message-ID: <b97faf58-26d9-61ef-2a27-0d54a15d2e64@suse.com>
+Date: Tue, 21 Jun 2022 11:47:29 +0200
+From: Paolo Perego <paolo.perego@...e.com>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities affecting Uyuni / SUSE Manager
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello list,
+     last May during a scheduled audit for the Uyuni project, two 
+security issues were found and tracked with a CVE identifier.
 
-On Sat, Sep 18, 2021 at 02:31:00PM -0500, Valentina Palmiotti wrote:
-> I'm writing to disclose a Linux Kernel vulnerability I found in the
-> io_uring subsystem.
-> 
-> The vulnerability is in fs/io_uring.c at loop_rw_iter. It is a controllable
-> kernel buffer free.
-> 
-> Most files implement the file op function read_iter. However, if they don't
-> (such as a procfs file like /proc/<pid>/maps), loop_rw_iter is called to
-> manually perform the iterative read/write of a file. The pointer
-> in req->rw.addr is incremented by the size of the read/write after each
-> segment. In normal cases, req->rw.addr contains a pointer to a userspace
-> buffer to read/write from. However, a user can use the
-> IORING_OP_PROVIDE_BUFFERS command to preselect buffers for I/O operations.
-> If this is the case, req->rw.addr contains a pointer to a kernel buffer
-> (io_buffer structure). This buffer is later freed in io_put_kbuf after the
-> read/write request completes.
-> 
-> This gives the ability to free adjacent buffers at a controllable offset.
-> It is accessible from unprivileged, and straight forward to exploit for
-> local privilege escalation. I plan to share the specifics for exploitation
-> in the future.
-> 
-> I disclosed the vulnerability to security () kernel org, and the patch has
-> been merged into the mainline kernel. It has also been backported into the
-> affected stable trees:
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=16c8d2df7ec0eed31b7d3b61cb13206a7fb930cc
-> 
-> CVE-2021-41073 has been reserved by MITRE for this vulnerability
+1. Issues
+1.1) CVE-2022-21952: unauthenticated remote DoS via resource exhaustion
 
-Here's Valentina's writeup on the above (March 16, 2022) and exploit:
+The endpoint /rhn/manager/frontend-log (implemented in [4]) takes an 
+arbitrary string of text as a POST parameter and then it writes on
+/var/log/rhn/rhn_web_frontend.log file.
 
-https://www.graplsecurity.com/post/iou-ring-exploiting-the-linux-kernel
-https://github.com/chompie1337/Linux_LPE_io_uring_CVE-2021-41073
+The input is in the form of {'level':'error', 'message':'Message'}. An 
+attacker can control both the severity level of the log message and the 
+text.
 
-Ideally, we'd also post (attach) the actual content (not only links) to
-the list for archival, but this is non-trivial.  Valentina, please feel
-free to do that in a reply if you like, or not if you don't.
+Since this endpoint is not restricted to authenticated users, there is 
+no throttling mechanism and it doesn't sanitize incoming input so it is 
+possible for an unauthenticated user to write arbitrary contents in the 
+log file.
 
-As far as I can tell, this issue wasn't handled via linux-distros (so
-the exploit must not have been in there either, and is thus not subject
-to the mandatory oss-security posting policy), but I did not verify.
-The writeup above includes:
+e.g:
+2022-05-13 10:24:04,855 [ajp-nio-0:0:0:0:0:0:0:1-8009-exec-8] ERROR
+     com.suse.manager.webui.controllers.FrontendLogController - 
+[no-logged-user -
+     python-requests/2.27.1] - <?php phpinfo(); ?>
+2022-05-13 10:24:43,911 [ajp-nio-0:0:0:0:0:0:0:1-8009-exec-4] ERROR
+     com.suse.manager.webui.controllers.FrontendLogController - 
+[no-logged-user -
+     python-requests/2.27.1] - <script>alert();</script>
+2022-05-13 10:24:51,944 [ajp-nio-0:0:0:0:0:0:0:1-8009-exec-9] ERROR
+     com.suse.manager.webui.controllers.FrontendLogController - 
+[no-logged-user -
+     python-requests/2.27.1] - <script>alert(document.cookies);</script>
+2022-05-13 10:25:03,741 [ajp-nio-0:0:0:0:0:0:0:1-8009-exec-2] ERROR
+     com.suse.manager.webui.controllers.FrontendLogController - 
+[no-logged-user -
+     python-requests/2.27.1] - <script>alert('d');</script>
 
-> 9/13/2021: Greg K-H responds to my initial report that states I want to
-> coordinate disclosure with the linux-distros mailing list so downstream
-> consumers can apply the patch. He says since most distros sync on stable
-> releases, it is not necessary to get the distro list involved. I don't
-> get the distro list involved.
+Since there is no direct utilization of that file content in the web UI, 
+a log poisoning attack is not possible. However, since there is no 
+logrotate policy for that file, is it possible to exhaust available disk 
+space by injecting big portions of text.
 
-Alexander
+The log file is consumed in this file [5] where a copy operation is 
+performed.
+
+```  cp -fapd  /var/log/rhn/*.log* $DIR/rhn-logs/rhn ```
+
+Assigned CVSS score: 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
+
+1.2) CVE-2022-31248: SUMA user enumeration via weak error message
+
+The /rhn/help/ForgotCredentials.do offer two different ways to retrieve
+login information in case a user forgot his/her password.
+
+The first way is asking for a password reset with your login handle and 
+the email address.
+
+The second way it can be used when the user can't remember the login 
+handle, so he submits the email address and then the password recovery 
+workflow starts.
+
+Unfortunately, the web application uses a too detailed error message. It 
+is possible to enumerate registered emails simply by submitting to the 
+page and
+looking at the response status code.
+
+It has been found that this service is available also using a plain GET 
+HTTP request and that it answers 302, redirecting to the homepage in 
+case of a valid email address and it returns 200, with an error message 
+in case of a not present email address.
+
+This makes the exploit code much easier to write.
+
+Assigned CVSS score: 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N)
+
+2. Affected releases
+
+The two issues affect:
+     + Uyuni < 2022.06
+     + SUSE Manager 4.1 < 4.1.15
+     + SUSE Manager 4.2 < 4.2.7
+
+SUSE Manager 4.1.15, 4.2.7 and 4.3.0 are not affected and also Uyuni 
+2022.06.
+Uyuni was fixed by the commit [3].
+
+3. Timeline
+
+3.1) CVE-2022-21952
+2022-05-13: vulnerability was reported to upstream authors [1]
+2022-05-13: upstream authors acknowledge it
+2022-05-16: assigned a CVE and offered an embargo until 2022-06-20
+2022-06-20: fixes were released and embargo was lifted
+
+3.2) CVE-2022-31248
+2022-05-17: vulnerability was reported to upstream authors [2]
+2022-05-17: upstream authors acknowledge it
+2022-05-27: assigned a CVE and offered an embargo until 2022-06-20
+2022-06-20: fixes were released and embargo was lifted
+
+For both 2022-06-21 disclosed to the world
+
+4. Links:
+
+[1] https://bugzilla.suse.com/show_bug.cgi?id=1199512
+[2] https://bugzilla.suse.com/show_bug.cgi?id=1199629
+[3] 
+https://github.com/uyuni-project/uyuni/commit/18ba68a0f3de2c6ab77c7b9dc46f45615aacf9e1
+[4] 
+https://github.com/uyuni-project/uyuni/blob/master/java/code/src/com/suse/manager/webui/controllers/FrontendLogController.java
+[5] 
+https://github.com/uyuni-project/uyuni/blob/master/python/spacewalk/satellite_tools/spacewalk-debug#L198
+
+-- 
+(*_  Paolo Perego                           @thesp0nge
+//\  Software security engineer               suse.com
+V_/_ 0A1A 2003 9AE0 B09C 51A4 7ACD FC0D CEA6 0806 294B
+
+Download attachment "OpenPGP_0xFC0DCEA60806294B.asc" of type "application/pgp-keys" (5642 bytes)
+
+Download attachment "OpenPGP_signature" of type "application/pgp-signature" (841 bytes)
