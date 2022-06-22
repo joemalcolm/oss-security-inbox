@@ -1,228 +1,330 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/08/2
-Message-ID: <CAFswPa_3=8cHOx6G8tOvs6Fz4KBJVmHrcHngbhXY+xniV=w=JA@mail.gmail.com>
-Date: Fri, 8 Jul 2022 10:11:58 +0200
-From: "Eduardo' Vela\" <Nava>" <evn@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/22/3
+Message-Id: <6D14D6C6-2FFB-49A2-BD66-C68DA4EF1ACC@beckweb.net>
+Date: Wed, 22 Jun 2022 16:11:23 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: CVE-2022-2347 - Unchecked Download Size and Direction in U-Boot USB DFU
+Subject: Multiple vulnerabilities in Jenkins and Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
----------- Forwarded message ---------
-From: Eduardo' Vela" <Nava> <evn@...gle.com>
-Date: Fri, 8 Jul 2022, 10:07
-Subject: CVE-2022-2347 - Unchecked Download Size and Direction in U-Boot
-USB DFU
-To: <sultan.qasimkhan@...group.com>, 3pvd <3pvd@...gle.com>, <
-u-boot@...ts.denx.de>
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
+
+The following releases contain fixes for security vulnerabilities:
+
+* Jenkins 2.356
+* Jenkins LTS 2.332.4 and 2.346.1
+* Embeddable Build Status Plugin 2.0.4
+* Hidden Parameter Plugin 0.0.5
+* JUnit Plugin 1119.1121.vc43d0fc45561
+* Nested View Plugin 1.26
+* Pipeline: Input Step Plugin 449.v77f0e8b_845c4
+* REST List Parameter Plugin 1.6.0
+* xUnit Plugin 3.1.0
+
+Additionally, we announce unresolved security issues in the following
+plugins:
+
+* Agent Server Parameter Plugin
+* Beaker builder Plugin
+* Convertigo Mobile Platform Plugin
+* CRX Content Package Deployer Plugin
+* Date Parameter Plugin
+* Dynamic Extended Choice Parameter Plugin
+* EasyQA Plugin
+* Filesystem List Parameter Plugin
+* Image Tag Parameter Plugin
+* Jianliao Notification Plugin
+* Maven Metadata Plugin for Jenkins CI server Plugin
+* NS-ND Integration Performance Publisher Plugin
+* ontrack Jenkins Plugin
+* Package Version Plugin
+* Readonly Parameter Plugin
+* Repository Connector Plugin
+* Sauce OnDemand Plugin
+* Squash TM Publisher (Squash4Jenkins) Plugin
+* Stash Branch Parameter Plugin
+* ThreadFix Plugin
+* vRealize Orchestrator Plugin
+
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2022-06-22/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-2781 / CVE-2022-34170 through CVE-2022-34173
+Multiple cross-site scripting (XSS) vulnerabilities in Jenkins 2.355 and
+earlier, LTS 2.332.3 and earlier allow attackers to inject HTML and
+JavaScript into the Jenkins UI:
+
+* SECURITY-2779 (CVE-2022-34170): Since Jenkins 2.320 and LTS 2.332.1, help
+  icon tooltips no longer escape the feature name, effectively undoing the
+  fix for SECURITY-1955.
+* SECURITY-2761 (CVE-2022-34171): Since Jenkins 2.321 and LTS 2.332.1, the
+  HTML output generated for new symbol-based SVG icons includes the `title`
+  attribute of `l:ionicon` until Jenkins 2.334 and `alt` attribute of
+  `l:icon` since Jenkins 2.335 without further escaping.
+* SECURITY-2776 (CVE-2022-34172): Since Jenkins 2.340, symbol-based icons
+  unescape previously escaped values of `tooltip` parameters.
+* SECURITY-2780 (CVE-2022-34173): Since Jenkins 2.340, the tooltip of the
+  build button in list views supports HTML without escaping the job display
+  name.
+
+These vulnerabilities are known to be exploitable by attackers with
+Job/Configure permission.
 
 
-```
-Vendor: DENX Software Engineering
-Vendor URL: https://www.denx.de/wiki/U-Boot
-Versions affected: v2012.10-rc1 to <version of fix>
-Systems Affected: All systems with CONFIG_DFU_OVER_USB or CONFIG_SPL_DFU
-enabled
-Author: <Sultan Qasim Khan> <sultan.qasimkhan@...group.com>
-Advisory URL / CVE Identifier: CVE-2022-2347
-Risk: 7.7 AV:P/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:N
-```
+SECURITY-2566 / CVE-2022-34174
+In Jenkins 2.355 and earlier, LTS 2.332.3 and earlier, an observable timing
+discrepancy on the login form allows distinguishing between login attempts
+with an invalid username, and login attempts with a valid username and
+wrong password, when using the Jenkins user database security realm. This
+allows attackers to determine the validity of attacker-specified usernames.
 
 
+SECURITY-2777 / CVE-2022-34175
+Jenkins uses the Stapler web framework to render its UI views. These views
+are frequently composed of several view fragments, enabling plugins to
+extend existing views with more content.
 
-    **Summary**
+Before SECURITY-534 was fixed in Jenkins 2.186 and LTS 2.176.2, attackers
+could in some cases directly access a view fragment containing sensitive
+information, bypassing any permission checks in the corresponding view.
 
+In Jenkins 2.335 through 2.355 (both inclusive), the protection added for
+SECURITY-534 is disabled for some views. As a result, attackers could in
+very limited cases directly access a view fragment containing sensitive
+information, bypassing any permission checks in the corresponding view.
 
-    U-Boot is a popular and feature-rich bootloader for embedded systems.
-It includes optional support for the USB Device Firmware Update (DFU)
-protocol, which can be used by devices to download new firmware, or upload
-their current firmware.
-
-
-    The U-Boot DFU implementation does not bound the length field in USB
-DFU download setup packets, and it does not verify that the transfer
-direction corresponds to the specified command. Consequently, if a physical
-attacker crafts a USB DFU download setup packet with a `wLength `greater
-than 4096 bytes, they can write beyond the heap-allocated request buffer.
-It is also possible to read its content (and beyond it) if the direction
-bit for the setup packet indicates a device to host direction.
-
-
-    **Location**
+NOTE: As of publication, the Jenkins security team is unaware of any
+vulnerable view fragment across the Jenkins plugin ecosystem.
 
 
-```
-    drivers/usb/gadget/f_dfu.c
-```
+SECURITY-2760 / CVE-2022-34176
+JUnit Plugin 1119.va_a_5e9068da_d7 and earlier does not escape descriptions
+of test results.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Run/Update permission.
 
 
+SECURITY-2705 / CVE-2022-34177
+Pipeline: Input Step Plugin 448.v37cea_9a_10a_70 and earlier allows
+Pipeline authors to specify `file` parameters for Pipeline `input` steps
+even though they are unsupported. Although the uploaded file is not copied
+to the workspace, Jenkins archives the file on the controller as part of
+build metadata using the parameter name without sanitization as a relative
+path inside a build-related directory.
 
-    Functions `dfu_handle, state_dfu_idle, state_dfu_dnload_idle,
-handle_dnload`
-
-
-    **Impact**
-
-
-    Data beyond the heap-allocated `req->buf `buffer may be corrupted or
-read by a connected USB host when a device running U-Boot is in DFU mode.
-This may enable a malicious host to gain code execution on the device
-running U-Boot, or read sensitive data from the device.
-
-
-    **Details**
+This allows attackers able to configure Pipelines to create or replace
+arbitrary files on the Jenkins controller file system with
+attacker-specified content.
 
 
-    USB DFU setup packets are handled by the `dfu_handle `function. The DFU
-command is specified  by the `ctrl->bRequest `field, and the transfer
-direction for the data phase is specified by the  direction bit
-`ctrl->bRequestType & USB_DIR_IN`. The `dfu_handle `function calls
-state-specific  handlers such as `state_dfu_idle `or
-`state_dfu_dnload_idle`, and uses the value returned by  the state handler
-as the length for the data phase of the transfer. The buffer that will be
-written to  or read from in the data phase of the transfer is `req->buf`,
-which is heap allocated as 4096 (`USB_BUFSIZ`) bytes in `composite_bind `of
-[drivers/usb/gadget/composite.c](
-https://source.denx.de/u-boot/u-boot/-/blob/4df50f89f5769732c6cce67f956371140680ff5d/drivers/usb/gadget/composite.c#L1396
-).
+SECURITY-2567 / CVE-2022-34178
+Embeddable Build Status Plugin 2.0.3 allows specifying a `link` query
+parameter that build status badges will link to, without restricting
+possible values.
+
+This results in a reflected cross-site scripting (XSS) vulnerability.
 
 
-    The request structure that is set up is then queued with the USB
-controller driver via a call to  `usb_ep_queue`. There are several USB
-controllers supported by U-Boot, such as the popular  Designware DWC2 whose
-support is implemented in <code>[drivers/usb/gadget/dwc2_udc_otg.c](
-https://source.denx.de/u-boot/u-boot/-/blob/master/drivers/usb/gadget/dwc2_udc_otg.c)
-</code>and <code>[drivers/usb/gadget/dwc2_udc_otg_xfer_dma.c](
-https://source.denx.de/u-boot/u-boot/-/blob/master/drivers/usb/gadget/dwc2_udc_otg_xfer_dma.c)</code>.
-These drivers are unaware of the  allocated size for the request buffer
-(<code>req->buf</code>), and assume the supplied length field (<code>req-
->length</code>) is safe for the allocated buffer.
+SECURITY-2792 / CVE-2022-34179
+Embeddable Build Status Plugin 2.0.3 and earlier allows specifying a
+`style` query parameter that is used to choose a different SVG image style
+without restricting possible values.
+
+This results in a relative path traversal vulnerability, allowing attackers
+without Overall/Read permission to specify paths to other SVG images on the
+Jenkins controller file system.
 
 
-```
-    static int
-    dfu_handle(struct usb_function *f, const struct usb_ctrlrequest *ctrl)
-    {
-    struct usb_gadget *gadget = f->config->cdev->gadget;
-    struct usb_request *req = f->config->cdev->req;
-    struct f_dfu *f_dfu = f->config->cdev->req->context;
-    …
+SECURITY-2794 / CVE-2022-34180
+Embeddable Build Status Plugin 2.0.3 and earlier does not correctly perform
+the ViewStatus permission check in the HTTP endpoint it provides for
+"unprotected" status badge access.
+
+This allows attackers without any permissions to obtain the build status
+badge icon for any attacker-specified job and/or build.
 
 
-    if (req_type == USB_TYPE_STANDARD) {
-        …
-    } else /* DFU specific request */
-        value = dfu_state[f_dfu->dfu_state] (f_dfu, ctrl, gadget, req);
+SECURITY-2549 / CVE-2022-34181
+xUnit Plugin 3.0.8 and earlier implements an agent-to-controller message
+that creates a user-specified directory if it doesn't exist, and parsing
+files inside it as test results.
 
-    if (value >= 0) {
-        req->length = value;
-        req->zero = value < len;
-    value = usb_ep_queue(gadget->ep0, req, 0);
-        if (value < 0) {
-            debug("ep_queue --> %d\n", value);
-            req->status = 0;
-        }
-    }
-
-    return value;
-    }
-```
+This allows attackers able to control agent processes to create an
+arbitrary directory on the Jenkins controller or to obtain test results
+from existing files in an attacker-specified directory.
 
 
+SECURITY-2768 / CVE-2022-34182
+Nested View Plugin 1.20 through 1.25 (both inclusive) does not escape
+search parameters.
 
-    The DFU state handlers which support the download command
-(`state_dfu_idle` and  `state_dfu_dnload_idle`) return the value returned
-by `handle_dnload` when `ctrl->bRequest `is  `USB_REQ_DFU_DNLOAD`. No
-checking of the transfer direction is performed; DFU download requests  are
-assumed to always be OUT transfers (host to device). However, a malicious
-or compromised  host could issue a download request setup packet with the
-`USB_DIR_IN `bit set (device to host). A  DFU download request with the
-`USB_DIR_IN `bit set would cause data in req->buf to be sent to the  host,
-rather than filling the buffer with data received from the host.
+This results in a reflected cross-site scripting (XSS) vulnerability.
 
 
-    The `handle_dnload `function simply returns the length argument passed
-to it without any bounds  checking. Both state handlers that call
-`handle_dnload `pass it the `wLength `field of the setup  packet without
-any bounds checks. Consequently, a malicious host that sends a DFU setup
-packet with a length longer than 4096 bytes would result in a read or write
-beyond `req->buf`. The  DFU functional descriptor does declare a maximum
-`wTransferSize `of `DFU_USB_BUFSIZ `(4096  bytes), and compliant hosts
-would abide by not sending setup packets specifying lengths longer  than
-this. However, a malicious or non-compliant host may send a DFU setup
-packet for a transfer  longer than this.
+SECURITY-2784 / CVE-2022-34183 through CVE-2022-34198
+Multiple plugins do not escape the name and description of the parameter
+types they provide:
+
+* Agent Server Parameter 1.1 and earlier (SECURITY-2731 / CVE-2022-34183)
+* CRX Content Package Deployer 1.9 and earlier (SECURITY-2727 /
+  CVE-2022-34184)
+* Date Parameter Plugin 0.0.4 and earlier (SECURITY-2711 / CVE-2022-34185)
+* Dynamic Extended Choice Parameter 1.0.1 and earlier (SECURITY-2712 /
+  CVE-2022-34186)
+* Filesystem List Parameter 0.0.7 and earlier (SECURITY-2716 /
+  CVE-2022-34187)
+* Hidden Parameter Plugin 0.0.4 and earlier (SECURITY-2755 /
+  CVE-2022-34188)
+* Image Tag Parameter 1.10 and earlier (SECURITY-2721 / CVE-2022-34189)
+* Maven Metadata for CI server 2.1 and earlier (SECURITY-2714 /
+  CVE-2022-34190)
+* NS-ND Integration Performance Publisher 4.8.0.77 and earlier
+  (SECURITY-2736 / CVE-2022-34191)
+* ontrack Jenkins 4.0.0 and earlier (SECURITY-2733 / CVE-2022-34192)
+* Package Version 1.0.1 and earlier (SECURITY-2735 / CVE-2022-34193)
+* Readonly Parameter 1.0.0 and earlier (SECURITY-2719 / CVE-2022-34194)
+* Repository Connector 2.2.0 and earlier (SECURITY-2666 / CVE-2022-34195)
+* REST List Parameter Plugin 1.5.2 and earlier (SECURITY-2730 /
+  CVE-2022-34196)
+* Sauce OnDemand 1.204 and earlier (SECURITY-2724 / CVE-2022-34197)
+* Stash Branch Parameter 0.3.0 and earlier (SECURITY-2725 / CVE-2022-34198)
+
+This results in stored cross-site scripting (XSS) vulnerabilites
+exploitable by attackers with Item/Configure permission.
+
+Exploitation of these vulnerabilities requires that parameters are listed
+on another page, like the "Build With Parameters" and "Parameters" pages
+provided by Jenkins (core), and that those pages are not hardened to
+prevent exploitation. Jenkins (core) has prevented exploitation of
+vulnerabilities of this kind on the "Build With Parameters" and
+"Parameters" pages since 2.44 and LTS 2.32.2 as part of the SECURITY-353 /
+CVE-2017-2601 fix. Additionally, several plugins have previously been
+updated to list parameters in a way that prevents exploitation by default,
+see SECURITY-2617 in the 2022-04-12 security advisory for a list.
 
 
-```
-    static int handle_dnload(struct usb_gadget *gadget, u16 len)
-    {
-    struct usb_composite_dev *cdev = get_gadget_data(gad get);
-    struct usb_request *req = cdev->req;
-    struct f_dfu *f_dfu = req->context;
+SECURITY-2064 / CVE-2022-34199
+Convertigo Mobile Platform Plugin 1.1 and earlier stores passwords
+unencrypted in job `config.xml` files on the Jenkins controller as part of
+its configuration.
 
-    if (len == 0)
-        f_dfu->dfu_state = DFU_STATE_dfuMANIFEST_SYNC;
+These passwords can be viewed by users with Item/Extended Read permission
+or access to the Jenkins controller file system.
 
-    req->complete = dnload_request_complete;
-    return len;
-    }
-```
+As of publication of this advisory, there is no fix.
 
 
+SECURITY-2276 / CVE-2022-34200 (CSRF) & CVE-2022-34201 (missing permission check)
+Convertigo Mobile Platform Plugin 1.1 and earlier does not perform a
+permission check in a method implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL.
+
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
 
 
+SECURITY-2066 / CVE-2022-34202
+EasyQA Plugin 1.0 and earlier stores user passwords unencrypted in its
+global configuration file `EasyQAPluginProperties.xml` on the Jenkins
+controller as part of its configuration.
+
+These passwords can be viewed by users with access to the Jenkins
+controller file system.
+
+As of publication of this advisory, there is no fix.
 
 
-```
-    static int state_dfu_idle(struct f_dfu *f_dfu,
-     const struct usb_ctrlrequest *ctrl,
-     struct usb_gadget *gadget,
-     struct usb_request *req)
-    {
-    u16 w_value = le16_to_cpu(ctrl->wValue);
-    u16 len = le16_to_cpu(ctrl->wLength);
-    int value = 0;
+SECURITY-2281 / CVE-2022-34203 (CSRF) & CVE-2022-34204 (missing permission check)
+EasyQA Plugin 1.0 and earlier does not perform a permission check in a
+method implementing form validation.
 
-    switch (ctrl->bRequest) {
-    case USB_REQ_DFU_DNLOAD:
-        if (len == 0) {
-            f_dfu->dfu_state = DFU_STATE_dfuERROR;
-            value = RET_STALL;
-            break;
-        }
-        f_dfu->dfu_state = DFU_STATE_dfuDNLOAD_SYNC;
-        f_dfu->blk_seq_num = w_value;
-        value = handle_dnload(gadget, len);
-        break;
-    …
-    }
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified HTTP server.
 
-    return value;
-    }
-```
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
 
 
-    **Recommendation **
+SECURITY-2240 / CVE-2022-34205 (CSRF) & CVE-2022-34206 (missing permission check)
+Jianliao Notification Plugin 1.1 and earlier does not perform a permission
+check in a method implementing form validation.
+
+This allows attackers with Overall/Read permission to send HTTP POST
+requests to an attacker-specified URL.
+
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
 
 
-    Limit USB transfer lengths to a maximum of `DFU_USB_BUFSIZ `before
-adding them to the endpoint  transfer queue in `dfu_handle`. In every DFU
-setup packet handler, also verify that the direction bit
-`ctrl->bRequestType & USB_DIR_IN `matches the request type (such as upload
-or download).
+SECURITY-2248 / CVE-2022-34207 (CSRF) & CVE-2022-34208 (missing permission check)
+Beaker builder Plugin 1.10 and earlier does not perform a permission check
+in a method implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL.
+
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
 
 
+SECURITY-2249 / CVE-2022-34209 (CSRF) & CVE-2022-34210 (missing permission check)
+ThreadFix Plugin 1.5.4 and earlier does not perform a permission check in a
+method implementing form validation.
 
-    **Vendor Communication **
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL.
 
-1. Feb 27 2022 - Initial email to security@...x.de (this was the wrong
-email)
-2. April 30 2022 - Follow up (60 days)
-3. June 3 2022 - Email to wd@...x.de (bounced but provided alternative
-contacts)
-4. June 7 2022 - Discussion to post to the public mailing list
-5. July 8 2022 - Public disclosure
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
 
 
-    **Written by: **Sultan Qasim Khan from NCC Group
-https://www.nccgroup.com/
+SECURITY-2279 / CVE-2022-34211 (CSRF) & CVE-2022-34212 (missing permission check)
+vRealize Orchestrator Plugin 3.0 and earlier does not perform a permission
+check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to send an HTTP POST
+request to an attacker-specified URL.
+
+Additionally, this HTTP endpoint does not require POST requests, resulting
+in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2089 / CVE-2022-34213
+Squash TM Publisher (Squash4Jenkins) Plugin 1.0.0 and earlier stores
+passwords unencrypted in its global configuration file
+`org.jenkinsci.squashtm.core.SquashTMPublisher.xml` on the Jenkins
+controller as part of its configuration.
+
+These passwords can be viewed by users with access to the Jenkins
+controller file system.
+
+As of publication of this advisory, there is no fix.
+
+
 
