@@ -1,30 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/25/15
-Message-ID: <3fc65cdf-8155-cff7-015c-e4aa1ba37346@oracle.com>
-Date: Tue, 25 Jan 2022 14:27:02 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com, Zhang Yonglun <zhangyonglun@...che.org>, dev@...nyu.apache.org
-Subject: Re: CVE-2022-23944: Apache ShenYu 2.4.1 Improper access control
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/23/1
+Message-ID: <15158782-a2b5-d6a4-2d27-7bb1774af5db@apache.org>
+Date: Thu, 23 Jun 2022 11:23:39 +0100
+From: Mark Thomas <markt@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2022-34305: Apache Tomcat: XSS in examples web application
 Content-Type: text/plain; charset=utf-8
 
-On 1/25/22 03:39, Zhang Yonglun wrote:
-> Description:
-> 
-> User can access /plugin api without authentication. This issue
-> affected Apache ShenYu 2.4.0 and 2.4.1.
+Severity: low
 
-Thanks for informing oss-security of these issues, but good security
-announcements have a little more detail, like what actions users or
-distributors need to take (upgrade to a new version?  what version?)
-and information on where to find more details, like a bug id in your
-bug tracker.  If you look at the announcements from other Apache
-projects, you'll see they often include those.
+Description:
 
-Some good examples:
-https://www.openwall.com/lists/oss-security/2021/12/18/2
-https://www.openwall.com/lists/oss-security/2022/01/05/4
-https://www.openwall.com/lists/oss-security/2022/01/06/2
+In Apache Tomcat 10.1.0-M1 to 10.1.0-M16, 10.0.0-M1 to 10.0.22, 9.0.30 
+to 9.0.64 and 8.5.50 to 8.5.81 the Form authentication example in the 
+examples web application displayed user provided data without filtering, 
+exposing a XSS vulnerability.
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+References:
+
+https://lists.apache.org/thread/k04zk0nq6w57m72w5gb0r6z9ryhmvr4k
