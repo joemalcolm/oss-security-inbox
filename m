@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["318" "Wednesday" "17" "November" "2021" "14:59:19" "+0000" "Daniel Gaspar" "dpgaspar@apache.org" nil "14" "[oss-security] CVE-2021-42250: Apache Superset: Possible log injection " nil nil nil "11" nil nil (number mark "U       dpgaspar@apa Nov 17   14/318   " thread-indent "\"[oss-security] CVE-2021-42250: Apache Superset: Possible log injection \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-42250: Apache Superset: Possible log injection " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3617 invoked by uid 550); 17 Nov 2021 15:01:47 -0000
+Received: (qmail 5494 invoked by uid 550); 27 Jun 2022 06:20:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,27 +7,105 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1820 invoked from network); 17 Nov 2021 14:59:33 -0000
-Content-Type: text/plain; charset=utf-8
-From: Daniel Gaspar <dpgaspar@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <6282612b-66b8-b813-22e3-d656807f4a44@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 17 Nov 2021 14:59:19 +0000
+Received: (qmail 5445 invoked from network); 27 Jun 2022 06:20:22 -0000
+Date: Mon, 27 Jun 2022 08:20:10 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <573s840-9q6o-7q70-5n1o-p0134rro2p88@unkk.fr>
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2021-42250: Apache Superset: Possible log injection 
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl: CVE-2022-32206: HTTP compression denial
+ of service
 
-Description:
+CVE-2022-32206: HTTP compression denial of service
+==================================================
 
-Improper output neutralization for Logs. A specific Apache Superset HTTP en=
-dpoint allowed for an authenticated user to forge log entries or inject mal=
-icious content into logs.
+Project curl Security Advisory, June 27th 2022 -
+[Permalink](https://curl.se/docs/CVE-2022-32206.html)
 
-Mitigation:
+VULNERABILITY
+-------------
 
-Upgrade to Apache Superset 1.3.2 or higher
+curl supports "chained" HTTP compression algorithms, meaning that a server
+response can be compressed multiple times and potentially with different
+algorithms. The number of acceptable "links" in this "decompression chain" was
+unbounded, allowing a malicious server to insert a virtually unlimited number
+of compression steps.
 
-Credit:
+The use of such a decompression chain could result in a "malloc bomb", making
+curl end up spending enormous amounts of allocated heap memory, or trying to
+and returning out of memory errors.
 
-Found and reported by Duxiaoman Financial Security Team
+We are not aware of any exploit of this flaw.
 
+INFO
+----
+
+CVE-2022-32206 was introduced in [commit
+dbcced8e32b50c06](https://github.com/curl/curl/commit/dbcced8e32b50c06),
+shipped in curl 7.57.0.
+
+Automatic decompression of content needs to be enabled per transfer. It is
+disabled by default and then nothing bad happens.
+
+This flaw exists with just one of the compression algorithms built-in (gzip,
+brotli or zstd), but the individual algorithms has different "exploding"
+powers.
+
+Both `Content-Encoding:` and `Transfer-Encoding:` are affected. The
+vulnerability is more emphasized over HTTP/1 than HTTP/2 due to different curl
+internal header limits.
+
+CWE-770: Allocation of Resources Without Limits or Throttling
+
+Severity: Medium
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.57.0 to and including 7.83.1
+- Not affected versions: curl < 7.57.0 and curl >= 7.84.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+The amount of accepted "chained" algorithms is now capped to 5.
+
+A [fix for CVE-2022-32206](https://github.com/curl/curl/commit/3a09fbb7f264c67c43)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 7.84.0
+
+  B - Apply the patch to your local version
+
+  C - Do not enable automatic decompression
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on May 15, 2022. We contacted
+distros@openwall on June 20.
+
+libcurl 7.84.0 was released on June 27 2022, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+This issue was reported by Harry Sintonen. Patched by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
