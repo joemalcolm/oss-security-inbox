@@ -1,4 +1,4 @@
-Received: (qmail 21709 invoked by uid 550); 7 Sep 2024 13:11:16 -0000
+Received: (qmail 7930 invoked by uid 550); 27 Jun 2022 06:20:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,175 +7,92 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18056 invoked from network); 7 Sep 2024 10:55:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sigma-star.at; s=google; t=1725706500; x=1726311300; darn=lists.openwall.com;
-        h=to:message-id:subject:date:mime-version:content-transfer-encoding
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=yWqZSYquikdRsQ+vwQaNVH/kNnSR5Gd2wMjOLoEe6MQ=;
-        b=ajOH0usGygE06cuHOP8pW9FT3cPPJlKOEtguJjBFP7fLsfKHFk/L76EjApycdpiaEH
-         xArDYdXiKYIhO7zC6LizM+ML+kIQSu8dDcCm8m4BdRc5KuoKc6IABKcYtbe07ZIdQ4Cn
-         YVCUEOYpDO2/kSbEPIYPwbhIbJz1SV4HEi9muZ9XFSSFp9WAZPXfdswa8S1aUG2uzd06
-         eEmvCri5VOnFPGsGH8YD92Mnh93qex8tOEf9Sm5h4ZY5XEdw76Ap+0rUiyfnaSI+giaH
-         lC/PreAeS+Kri9R97kB7Sjz0SUIF1JCTX0NrUU7J3sliijAjhQzDo5xJ27mh2QG27baf
-         Lfdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725706500; x=1726311300;
-        h=to:message-id:subject:date:mime-version:content-transfer-encoding
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yWqZSYquikdRsQ+vwQaNVH/kNnSR5Gd2wMjOLoEe6MQ=;
-        b=j2xnZX/iWvHVd9sDw2zaZBumTPEzup8S1o7qoMr4cbw63t2aKj2MAP38mJSm7uwN3k
-         QpACJgmP6EefApADEC3OqbdLGIpuDRPfCXStasYfmnHFx3sDXDibWiawE5eNgMyNm7fU
-         oxT9XRUwylCVahksmFJjy6MNiRvIHflg6rtVp9W4WstUcX/WuRQKhOr8sBLdG+f1EtYx
-         EJQpaF2+p0cqyP2E2AIXanSkBiJeApLQmU1/k8J66BEi5LxkutJfz67281Ca1pJaYHxh
-         0QRIWH/B6YE/YVAITZDNQJvMdUl77SUqtwkD6fMv7OCT10L0C5/1ukFMroJO7cd48eEd
-         NxtQ==
-X-Gm-Message-State: AOJu0YyexjGqOR20wBZlB0KV2xQcdy4IT1hYAjCjVs35CJSVRaeh/RYH
-	ZHgX7eB7M1tDUx6Fq1oVCy0zSUB8pn4k9O+zOqmfWKPZd8rh3xWxiko1blfi8RLJeDjXmT+keaX
-	j
-X-Google-Smtp-Source: AGHT+IGw+PLQ/JirWD9Ov1512VPLklmCFko1VZrr+AHYrTXTFKjX7X0kWRethJmdJe++9/ipk+BUQA==
-X-Received: by 2002:a17:906:f595:b0:a8d:1655:a42c with SMTP id a640c23a62f3a-a8d24512872mr109035366b.1.1725706498981;
-        Sat, 07 Sep 2024 03:54:58 -0700 (PDT)
-From: David Gstir <david@sigma-star.at>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51\))
-Date: Sat, 7 Sep 2024 12:54:44 +0200
-Message-Id: <18957144-3F90-4803-AA90-53D6900BDD80@sigma-star.at>
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3776.700.51)
-Subject: [oss-security] CVE-2024-45751: CHAP authentication bypass in user-space Linux target
- framework (tgt) up to v1.0.92
+Received: (qmail 7879 invoked from network); 27 Jun 2022 06:20:53 -0000
+Date: Mon, 27 Jun 2022 08:20:42 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <67qo8418-68q7-q8r1-732s-r46o6s81q7rp@unkk.fr>
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl: CVE-2022-32207: Unpreserved file
+ permissions
 
-## Summary
+CVE-2022-32207: Unpreserved file permissions
+============================================
 
-The user-space iSCSI target daemon of the Linux target framework (tgt)  use=
-s an insecure
-random number generator to generate CHAP authentication callenges. This res=
-ults in
-predictable challenges which an attacker capable of recording network traff=
-ic between
-iSCSI target and initiator can abuse to bypass CHAP authentication by repla=
-ying
-previous responses.
+Project curl Security Advisory, June 27th 2022 -
+[Permalink](https://curl.se/docs/CVE-2022-32207.html)
 
-- *Identifier:*                   sigma-star-sa-2024-001
-- *Type of vulnerability (CWE):*  Use of cryptographically weak pseud-random
-                                 number generator ([CWE-338](https://cwe.mi=
-tre.org/data/definitions/338.html))
-- *Vendor:*                       -
-- *Product/Software:*             [The Linux target framework (tgt)](https:=
-//github.com/fujita/tgt)
-- *Affected versions:*            <=3D 1.0.92
-- *Fixed versions:*               1.0.93
-- *CVE ID:*                       CVE-2024-45751
+VULNERABILITY
+-------------
 
-## Affected Product and Vendor
+When curl saves cookies, alt-svc and hsts data to local files, it makes the
+operation atomic by finalizing the operation with a rename from a temporary
+name to the final target file name.
 
-> The Linux target framework (tgt) is a user space SCSI target framework th=
-at
-> supports the iSCSI and iSER transport protocols and that supports multiple
-> methods for accessing block storage. Tgt consists of user-space daemon an=
-d tools.
+In that rename operation, it might accidentally *widen* the permissions for
+the target file, leaving the updated file accessible to more users than
+intended.
 
-Source: https://github.com/fujita/tgt/blob/e393a80b02b8cb90709c75f9bd91542e=
-a3a78d58/README.md
+We are not aware of any exploit of this flaw.
 
-## Description
+INFO
+----
 
-`tgt` supports CHAP for authenticating initiators. As defined in the [CHAP =
-specification](https://datatracker.ietf.org/doc/html/rfc1994#section-2)
-the target generates a random challenge and sends it to the initiator. `tgt=
-` fails
-to use a cryptographically secure random number generator for this. Instead=
- it
-simply uses the [`rand()`](https://man7.org/linux/man-pages/man3/srand.3.ht=
-ml) call without
-setting a seed using `srand()` first. Thus the default seed (equivalent to =
-`srand(1)`) will be used.
-This results in a predictable sequence of numbers being returned by subsequ=
-ent
-calls to `rand()`.
+CVE-2022-32207 was introduced in [commit
+b834890a3fa3f52](https://github.com/curl/curl/commit/b834890a3fa3f52), shipped
+in curl 7.69.0.
 
-Note that even though `tgt` generates a random length for each challenge,
-this does not affect the predictability of challenges as these lengths will
-also be generated using predictable output of `rand()`.
+This problem can be worked-around by using a strict umask.
 
-```c
-static int chap_initiator_auth_create_challenge(struct iscsi_connection *co=
-nn)
-{
-	char *value, *p;
-	char text[CHAP_CHALLENGE_MAX * 2 + 8];
-	static int chap_id;
-	int i;
+CWE-281: Improper Preservation of Permissions
 
-	[...]
+Severity: Medium
 
-	/*
-	 * FIXME: does a random challenge length provide any benefits security-
-	 * wise, or should we rather always use the max. allowed length of
-	 * 1024 for the (unencoded) challenge?
-	 */
-	conn->auth.chap.challenge_size =3D (rand() % (CHAP_CHALLENGE_MAX / 2)) + C=
-HAP_CHALLENGE_MAX / 2;
+AFFECTED VERSIONS
+-----------------
 
-	conn->auth.chap.challenge =3D malloc(conn->auth.chap.challenge_size);
-	if (!conn->auth.chap.challenge)
-		return CHAP_TARGET_ERROR;
+- Affected versions: curl 7.69.0 to and including 7.83.1
+- Not affected versions: curl < 7.69.0 and curl >= 7.84.0
 
-	p =3D text;
-	strcpy(p, "0x");
-	p +=3D 2;
-	for (i =3D 0; i < conn->auth.chap.challenge_size; i++) {
-		conn->auth.chap.challenge[i] =3D rand();
-		sprintf(p, "%.2hhx", conn->auth.chap.challenge[i]);
-		p +=3D 2;
-	}
-	text_key_add(conn, "CHAP_C",  text);
+libcurl is used by many applications, but not always advertised as such!
 
-	return 0;
-}
-```
+THE SOLUTION
+------------
 
-Source: https://github.com/fujita/tgt/blob/v1.0.92/usr/iscsi/chap.c#L333
+A [fix for CVE-2022-32207](https://github.com/curl/curl/commit/20f9dd6bae50b)
 
-## Impact
+RECOMMENDATIONS
+--------------
 
-An attacker who is able to recording network traffic between iSCSI target
-and initiator can apply a replay attack to bypass the CHAP authentication.
-All the attacker has to do is wait for the server or the service to restart
-and replay with a previously record CHAP session which fits into the sequen=
-ce.
+  A - Upgrade curl to version 7.84.0
 
-Having bypassed CHAP authentication, an attacker has full user privileges a=
-nd
-can modify the iSCSI target at will within that user privileges.
+  B - Apply the patch to your local version
 
-## Mitigation
+  C - Make extra precautions to protect saved files (ie strict umask)
 
-We recommend replacing the pseudo-random number generator (`rand()`)  with
-`getrandom()`as this will yield cryptographically secure pseudo-random numb=
-ers
-fitting for CHAP challenges.
+TIMELINE
+--------
 
-Version 1.0.93 contains this fix.
+This issue was reported to the curl project on May 17, 2022. We contacted
+distros@openwall on June 20.
 
-## Patches
+libcurl 7.84.0 was released on June 27 2022, coordinated with the publication
+of this advisory.
 
-- https://github.com/fujita/tgt/pull/67/commits/abd8e0d987ab56013d360077202=
-bf2aca20a42dd (chap: Use proper entropy source)
+CREDITS
+-------
 
-## Disclosure Timeline
+This issue was reported by Harry Sintonen. Patched by Daniel Stenberg.
 
-- 2024-09-03: Vulnerability disclosed to vendor
-- 2024-09-04: Patch submitted to vendor and version 1.0.93 released by vend=
-or
-- 2024-09-07: Advisory published
+Thanks a lot!
 
-## Credits
+-- 
 
-- Richard Weinberger ([sigma star gmbh](https://sigma-star.at)
-- David Gstir ([sigma star gmbh](https://sigma-star.at)
-
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
