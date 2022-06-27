@@ -1,30 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/06/1
-Message-ID: <b134b991-774d-5e38-f8ea-f81ffc02d8f4@enst-bretagne.fr>
-Date: Sun, 6 Mar 2022 10:08:21 +0100
-From: Gabriel Corona <gabriel.corona@...t-bretagne.fr>
-To: oss-security@...ts.openwall.com
-Subject: Re: DNS rebinding on ReadyMedia/minidlna v1.3.0 and below
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/27/4
+Message-ID: <76n529n8-qppo-10o7-4s28-1s26009n30@unkk.fr>
+Date: Mon, 27 Jun 2022 08:21:14 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: FTP-KRB bad message verification
 Content-Type: text/plain; charset=utf-8
 
-On 03/03/2022 21:56, Gabriel Corona wrote:
-> ReadyMedia [1] (formerly MiniDLNA) v1.3.0 and below is vulnerable to DNS 
-> rebinding attacks. A malicious remote web server may trick the user 
-> browser into triggering arbitrary UPnP requests on the local DLNA server 
-> and observe the result of these actions. Moreover, the shared files are 
-> accessible through DNS rebinding as well.
-> 
-> A remote malicious server could exploit the user browser in order to:
-> 
-> * list the available media files and exfiltrate this list;
-> * download the media files and exfiltrate them.
-> 
-> This has been fixed in ReadyMedia v1.3.1.
-> 
-> [1] https://sourceforge.net/projects/minidlna/
-> 
+CVE-2022-32208: FTP-KRB bad message verification
+================================================
 
-This is CVE-2022-26505.
+Project curl Security Advisory, June 27th 2022 -
+[Permalink](https://curl.se/docs/CVE-2022-32208.html)
 
---
-Gabriel
+VULNERABILITY
+-------------
+
+When curl does FTP transfers secured by krb5, it handles message verification
+failures wrongly. This flaw makes it possible for a Man-In-The-Middle attack
+to go unnoticed and even allows it to inject data to the client.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+CVE-2022-32208 was introduced in [commit
+54967d2a3a](https://github.com/curl/curl/commit/54967d2a3a), shipped
+in curl 7.16.4.
+
+This flaw typically makes curl insert `599 ` (+ terminating null) into the
+data where it detects the error, then the attackers data. It forces the
+attacker to be somewhat creative to handle this initial hard-coded 5 byte
+sequence of "junk".
+
+FTP-KRB is a rarely used feature.
+
+CWE-924: Improper Enforcement of Message Integrity During Transmission in a
+Communication Channel
+
+Severity: Low
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.16.4 to and including 7.83.1
+- Not affected versions: curl < 7.16.4 and curl >= 7.84.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+A [fix for CVE-2022-32208](https://github.com/curl/curl/commit/6ecdf5136b52af7)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 7.84.0
+
+  B - Apply the patch to your local version
+
+  C - Do not use KRB-FTP
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on June 2, 2022. We contacted
+distros@...nwall on June 20.
+
+libcurl 7.84.0 was released on June 27 2022, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+This issue was reported by Harry Sintonen. Patched by Daniel Stenberg.
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
