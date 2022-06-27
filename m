@@ -1,63 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/25/16
-Message-ID: <20220125223307.aygg63t6evzp2t3g@jwilk.net>
-Date: Tue, 25 Jan 2022 23:33:07 +0100
-From: Jakub Wilk <jwilk@...lk.net>
-To: <oss-security@...ts.openwall.com>
-Subject: Bad signal handling in shell scripts leading to insecure use of /tmp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/27/1
+Message-ID: <3qq3rs9r-4so8-332o-193n-rq8p259257@unkk.fr>
+Date: Mon, 27 Jun 2022 08:19:23 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: CVE-2022-32205: Set-Cookie denial of service
 Content-Type: text/plain; charset=utf-8
 
-I've run into quite a few shell scripts that do something like this:
+CVE-2022-32205: Set-Cookie denial of service
+============================================
 
-   tmpfile=$(mktemp)
-   trap 'rm "$tmpfile"' EXIT INT QUIT TERM
-   do_stuff_with "$tmpfile"
+´Project curl Security Advisory, June 27th 2022 -
+[Permalink](https://curl.se/docs/CVE-2022-32205.html)
 
-Note that the signal handler doesn't terminate the program. So when the 
-signal arrives, the program continues whatever it was doing, while the 
-name of the temporary file is available to other local users. (For the
-avoidance of doubt: the attacker can't send the signal themself; they 
-have to wait for the victim to press ^C or so.)
+VULNERABILITY
+-------------
 
-I've reported these bugs so far:
+A malicious server can serve excessive amounts of `Set-Cookie:` headers in a
+HTTP response to curl and curl stores all of them. A sufficiently large amount
+of (big) cookies make subsequent HTTP requests to this, or other servers to
+which the cookies match, create requests that become larger than the threshold
+that curl uses internally to avoid sending crazy large requests (1048576
+bytes) and instead returns an error.
 
-* Debian devscripts:
-   https://bugs.debian.org/911720
-   https://bugs.debian.org/911969
-* debian-goodies:
-   https://bugs.debian.org/999899
+This denial state might remain for as long as the same cookies are kept, match
+and haven't expired. Due to cookie matching rules, a server on
+`foo.example.com` can set cookies that also would match for `bar.example.com`,
+making it it possible for a "sister server" to effectively cause a denial of
+service for a sibling site on the same second level domain using this method.
 
-But a quick grep for "trap" in my /usr/bin/ shows that there's a lot 
-more code with such buggy signal handlers.
+We are not aware of any exploit of this flaw.
 
-So how to fix these bugs?
+INFO
+----
 
-1) The most lazy way is to install trap only for EXIT:
+CVE-2022-32205 was introduced in [commit
+ed35d6590e72c23c](https://github.com/curl/curl/commit/ed35d6590e72c23c),
+shipped in curl 7.71.0 with the introduction of the "dynbuf"
+internally. Before this change, curl had no limit in how large HTTP request it
+could generate.
 
-   trap 'rm "$tmpfile"' EXIT
+CWE-770: Allocation of Resources Without Limits or Throttling
 
-In bash this seems to do the right thing. In the other shells I tried, 
-the cleanup code won't be executed when the program is terminated by a 
-signal, but that's probably not a big deal in most cases.
+Severity: Low
 
-2) Another possibility to explicitly exit in the signal handler:
+AFFECTED VERSIONS
+-----------------
 
-   trap 'rm "$tmpfile"' EXIT
-   trap 'exit 1' INT QUIT
+- Affected versions: curl 7.71.0 to and including 7.83.1
+- Not affected versions: curl < 7.71.0 and curl >= 7.84.0
 
-But with this approach, the terminating signal will not be reported to 
-the parent program, and some shells (such as bash) needs this 
-information to handle ^C and ^\ correctly. See 
-https://www.cons.org/cracauer/sigint.html for details.
+libcurl is used by many applications, but not always advertised as such!
 
-3) Finally, if you're not disheartened with the amount and ugliness of 
-the required code, you can re-raise the signal from the signal handler:
+THE SOLUTION
+------------
 
-   trap 'rm "$tmpfile"' EXIT
-   for sig in INT QUIT TERM
-   do
-       trap 'rm "$tmpfile" && trap - '$sig' EXIT && kill -s '$sig' $$' $sig
-   done
+We introduce several new limits and thresholds for cookies:
+
+- Send no more than 150 cookies per request
+- Cap the max length used for an outgoing `Cookie:` header to 8K
+- Cap the max number of accepted `Set-Cookie:` header fields to 50
+
+A [fix for CVE-2022-32205](https://github.com/curl/curl/commit/48d7064a49148f0394)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 7.84.0
+
+  B - Apply the patch to your local version
+
+  C - Do not use cookies
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on May 13, 2022. We contacted
+distros@...nwall on June 20.
+
+libcurl 7.84.0 was released on June 27 2022, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+This issue was reported by Harry Sintonen. Patched by Daniel Stenberg.
+
+Thanks a lot!
 
 -- 
-Jakub Wilk
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
