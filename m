@@ -1,4 +1,4 @@
-Received: (qmail 21897 invoked by uid 550); 28 Jun 2022 19:42:51 -0000
+Received: (qmail 12100 invoked by uid 550); 28 Jun 2022 14:29:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,34 +7,60 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10001 invoked from network); 28 Jun 2022 19:32:25 -0000
-X-Gm-Message-State: AJIora9Nb2kNXMCehrhXAFpN2Z1wJm2phnauNh19FA10ZKYDpgS2puYk
-	H1W5MjHLQ3Wr1RSTe4IernA7TeuvGXhA3YYy+GM=
-X-Google-Smtp-Source: AGRyM1twzPyYB+gKLQihZKXS8J3wICPFYOHQBupcuCTORuiJw9LTGHev13ga+AzXpU6Nosrl30N294B51PwNUCht0/4=
-X-Received: by 2002:aa7:c38d:0:b0:435:9257:99a5 with SMTP id
- k13-20020aa7c38d000000b00435925799a5mr25259796edq.204.1656444732400; Tue, 28
- Jun 2022 12:32:12 -0700 (PDT)
+Received: (qmail 11490 invoked from network); 28 Jun 2022 14:27:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:mime-version:date:message-id:subject:to;
+        bh=46fbl6wpPYmiUm0RggnHX1eMh32ZLaXrpe54C+To0uM=;
+        b=ipRuSLo3HHIHTf9+6JLrpA/ZEpcd1QNxSSBkIuOTGmgbrjJazxuT9YyvG6J8MIKH6y
+         Q8v5mJTAI9RhgzmRpC/KlWjVIZ4t0bZsmRMZ8ZMrxOhbrKR4LB5MvimshS69+KNcTchB
+         x/ufiYm+ReTiPMeMs2U9dXp9HdpBReyRmWaDPkyWeq7AxqOAjuaK4m/eEFXuidEPbeVl
+         iLRbzAswqoiPyuj7Enl408OeluNsgHRz0xHfoIpxPQeRbaAlAVW6c94zseTGg4LEEEgs
+         5i5/1GIQXy+kit5NAlNGIKHUjGSMiuKWMarKobOQXcBkxwwM2sZPdv18M+NvtJVOb8SF
+         HnVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:mime-version:date:message-id:subject:to;
+        bh=46fbl6wpPYmiUm0RggnHX1eMh32ZLaXrpe54C+To0uM=;
+        b=ylZ0q6nGtSyVWQ4HINOResEw1r5lzIuHGyKm9rgfat6+LXMdE0/YCH/xYbMo/KELat
+         ay57lAG2wcbUUWA1KaoYxmiBBE2/vLAZS9IZEclvA35Kzo6ySyfiRSbK+x3MDl9TxuNg
+         Pbht1NyeK9uNZFUS+SIlq/J1SSHBR/Ore5pdTOo8unfIKq5OFQM9df+cTmzPedY2nfHy
+         nkC0CAy+LEzYYFGHaeFDgSsU8vOXu2Yes26ZNXUALYiHOcrgimQmKVOy1AhXMouGxs4S
+         nOWiry5e7vlmf80pOWw9wkZbGaQlq2yYiTmSck81wPUAPbK1x2YHGORoHRgzcVFNMtxq
+         /7lg==
+X-Gm-Message-State: AJIora+tW7wLWzmJJNGUJRKz5rNIqkns21tcKMttN0ZEmCZ1pGB2lXAo
+	gEGVwNIBCdSx84Bhmsh3b0FgtFiov127Lh4QfhCD67+OGwg=
+X-Google-Smtp-Source: AGRyM1ukjuKpGJIS/Z09eLkFKdzrumLCbnHWHfz0j56qFNeGbJhpuUFgYVWIwR3231UOkaGdro59EpefE/k+7yp2s4E=
+X-Received: by 2002:a17:90b:1e44:b0:1ec:cc44:be77 with SMTP id
+ pi4-20020a17090b1e4400b001eccc44be77mr28245682pjb.34.1656426441376; Tue, 28
+ Jun 2022 07:27:21 -0700 (PDT)
+From: Matteo Collina <matteo.collina@gmail.com>
 MIME-Version: 1.0
-From: Brian Demers <bdemers@apache.org>
-Date: Tue, 28 Jun 2022 15:32:01 -0400
-X-Gmail-Original-Message-ID: <CAH9eYVqfx9RvVpg34arMu4unNkmzwAbtL2umS+41atCZAVyctw@mail.gmail.com>
-Message-ID: <CAH9eYVqfx9RvVpg34arMu4unNkmzwAbtL2umS+41atCZAVyctw@mail.gmail.com>
+Date: Tue, 28 Jun 2022 07:27:20 -0700
+Message-ID: <CAANuz54JHumf1epcp_U1ieWwrvupv0rZkSk--d_hsnxrgmnV4w@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000dd6c8505e287173f"
-Subject: [oss-security] CVE-2022-32532: Apache Shiro: Authentication Bypass Vulnerability
+Content-Type: multipart/alternative; boundary="000000000000a289cd05e282d5c5"
+Subject: [oss-security] Fwd: Node.js security updates for all active release lines, July 2022
 
---000000000000dd6c8505e287173f
+--000000000000a289cd05e282d5c5
 Content-Type: text/plain; charset="UTF-8"
 
-Description:
+On 28 June 2022 at 16:26:43, Matteo Collina (matteo.collina@gmail.com)
+wrote:
 
-Apache Shiro before 1.9.1, A RegexRequestMatcher can be misconfigured
-to be bypassed on some servlet containers. Applications using
-RegExPatternMatcher with `.` in the regular expression are possibly
-vulnerable to an authorization bypass.
+The Node.js project will release new versions of all supported release
+lines on or shortly after Tuesday, 5th of July, 2022
+For more information see:
+https://nodejs.org/en/blog/vulnerability/july-2022-security-releases/
 
-Credit:
+-- 
+You received this message because you are subscribed to the Google Groups
+"nodejs-sec" group.
+To unsubscribe from this group and stop receiving emails from it, send an
+email to nodejs-sec+unsubscribe@googlegroups.com.
+To view this discussion on the web visit
+https://groups.google.com/d/msgid/nodejs-sec/d522e004-c08a-4add-8e28-db579c4f4a27n%40googlegroups.com
+<https://groups.google.com/d/msgid/nodejs-sec/d522e004-c08a-4add-8e28-db579c4f4a27n%40googlegroups.com?utm_medium=email&utm_source=footer>
+.
 
-Apache Shiro would like the thank 4ra1n for reporting this issue.
-
---000000000000dd6c8505e287173f--
+--000000000000a289cd05e282d5c5--
