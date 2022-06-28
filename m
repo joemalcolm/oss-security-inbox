@@ -1,36 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/21/2
-Message-ID: <CAJ7ievqw=vXF-NL31ni7tHb7LHuz7e3x5hGQ_4YF2=3ybgbByA@mail.gmail.com>
-Date: Tue, 20 Sep 2022 13:56:47 -0600
-From: Jed Cunningham <jedcunningham@...che.org>
-To: Jedidiah Cunningham <jedcunningham@...che.org>, oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-38170: Apache Airflow: Overly permissive umask for deamons
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/28/1
+Message-ID: <CAANuz54JHumf1epcp_U1ieWwrvupv0rZkSk--d_hsnxrgmnV4w@mail.gmail.com>
+Date: Tue, 28 Jun 2022 07:27:20 -0700
+From: Matteo Collina <matteo.collina@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Fwd: Node.js security updates for all active release lines, July 2022
 Content-Type: text/plain; charset=utf-8
 
-Hi Seth,
+On 28 June 2022 at 16:26:43, Matteo Collina (matteo.collina@...il.com)
+wrote:
 
-Thanks for the feedback, and I agree. We will start adding links to the PR
-fixing the issue going forward, starting with our announcements today.
+The Node.js project will release new versions of all supported release
+lines on or shortly after Tuesday, 5th of July, 2022
+For more information see:
+https://nodejs.org/en/blog/vulnerability/july-2022-security-releases/
 
-Thanks,
-Jed
-
-On Fri, Sep 2, 2022, 2:43 PM Seth Arnold <seth.arnold@...onical.com> wrote:
-
-> On Fri, Sep 02, 2022 at 03:55:07AM +0000, Jedidiah Cunningham wrote:
-> > In Apache Airflow prior to 2.3.4, an insecure umask was configured for
-> numerous Airflow components when running with the  `--deamon` flag which
-> could result in a race condition giving world-writable files in the Airflow
-> home directory and allowing local users to expose arbitrary file contents
-> via the webserver.
->
-> Hello Jedidiah,
->
-> Thanks for contributing to the oss-security list; I believe your
-> contributions would be far more valuable if they included some further
-> details -- providing links to issues and commits is common, but you could
-> also include the details in the email if that's easier for whatever reason.
->
-> Thanks
->
+-- 
+You received this message because you are subscribed to the Google Groups
+"nodejs-sec" group.
+To unsubscribe from this group and stop receiving emails from it, send an
+email to nodejs-sec+unsubscribe@...glegroups.com.
+To view this discussion on the web visit
+https://groups.google.com/d/msgid/nodejs-sec/d522e004-c08a-4add-8e28-db579c4f4a27n%40googlegroups.com
+<https://groups.google.com/d/msgid/nodejs-sec/d522e004-c08a-4add-8e28-db579c4f4a27n%40googlegroups.com?utm_medium=email&utm_source=footer>
+.
 
