@@ -1,28 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/06/4
-Message-ID: <47de7a15.47d0.17e2f40f9f3.Coremail.xxyu@apache.org>
-Date: Thu, 6 Jan 2022 19:58:14 +0800 (CST)
-From: "Xiaoxiang Yu" <xxyu@...che.org>
-To: oss-security@...ts.openwall.com
-Cc: forhaby0@...il.com
-Subject: CVE-2021-31522: Apache Kylin unsafe class loading
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/30/4
+Message-ID: <trinity-899166b1-0752-4850-abb1-9b7f19201378-1656619966440@3c-app-gmx-bs04>
+Date: Thu, 30 Jun 2022 22:12:46 +0200
+From: Norbert Slusarek <nslusarek@....net>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com, peterz@...radead.org, vegard.nossum@...cle.com
+Subject: Re: CVE-2022-1729: race condition in Linux perf subsystem leads to local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+>I'm attaching Norbert's exploit (lpe.c) that was attached to his May 12
+>notification to linux-distros. We're now one month past the due date
+>for Norbert's expected posting of this (should have been May 27, which
+>is 7 days after public disclosure of the vulnerability on oss-security).
+>
+>Norbert, I would still appreciate a reply to the message below. I'm
+>quoting it in full for context since it's been a month.
+>
+>Thanks,
+>
+>Alexander
+>
+>"If you shared exploit(s) that are not an essential part of the issue
+>description, then at your option you may slightly delay posting them to
+>oss-security but you must post the exploits to oss-security within at
+>most 7 days of making the mandatory posting above. If you exercise this
+>option, you have two mandatory postings to make: first with a
+>sufficiently detailed issue description (as requested above) and with an
+>announcement of your intent to post the exploits separately (please
+>mention exactly when), and second with the exploits - or indeed you
+>could have included the exploits right away, in your first and only
+>mandatory posting."
+>
+>Did you read this before posting? If not, anything we should have done
+>to ensure you'd have read it?
 
-Description:
+I missed it when I read the policy.
+I think having all of the requirements structured in one place is a good
+idea. Vegard's new page regarding reporting bugs in the Linux kernel
+makes it clear which essential rules to follow for the Linux security
+list as well as linux-distros and oss-security.
 
-Kylin can receive user input and load any class through Class.forName(...).
-This issue affects Apache Kylin Apache Kylin 2 version 2.6.6 and prior versions; Apache Kylin 3 version 3.1.2 and prior versions; Apache Kylin 4 version 4.0.0 and prior versions.
-
-Mitigation:
-
-Users of Kylin 2.x & Kylin 3.x should upgrade to 3.1.3 or apply patch https://github.com/apache/kylin/pull/1695.
-Users of Kylin 4.x should upgrade to 4.0.1 or apply patch https://github.com/apache/kylin/pull/1763.
-
-Credit:
-
-bo yu--
-
-Best wishes to you ! 
-From ：Xiaoxiang Yu
+Norbert
