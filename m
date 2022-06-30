@@ -1,65 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/03/1
-Message-ID: <bb4f8cbe-d7d8-ba66-101c-f754f2e3d9cb@vulndisco.cc>
-Date: Mon, 3 Oct 2022 19:06:16 +0300
-From: Evgeny Legerov <admin@...ndisco.cc>
-To: oss-security@...ts.openwall.com
-Subject: MySQL Cluster 8.0.30 overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/30/2
+Message-ID: <20220630091210.GA3060@openwall.com>
+Date: Thu, 30 Jun 2022 11:12:10 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Norbert Slusarek <nslusarek@....net>
+Cc: oss-security@...ts.openwall.com, peterz@...radead.org
+Subject: Re: CVE-2022-1729: race condition in Linux perf subsystem leads to local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi all,
 
-There is a heap overflow in ndbd.
+I'm attaching Norbert's exploit (lpe.c) that was attached to his May 12
+notification to linux-distros.  We're now one month past the due date
+for Norbert's expected posting of this (should have been May 27, which
+is 7 days after public disclosure of the vulnerability on oss-security).
 
-Bug details:
-void Dbdih::execSTART_MECONF(Signal* signal)
-{
-   jamEntry();
-   StartMeConf * const startMe = (StartMeConf *)&signal->theData[0];
-   Uint32 nodeId = startMe->startingNodeId;
-[1]  const Uint32 startWord = startMe->startWord;
+Norbert, I would still appreciate a reply to the message below.  I'm
+quoting it in full for context since it's been a month.
 
-   CRASH_INSERTION(7130);
-   ndbrequire(nodeId == cownNodeId);
-   bool v2_format = true;
-   Uint32 cdata_size_in_words;
-[2]  if 
-(ndbd_send_node_bitmask_in_section(getNodeInfo(cmasterNodeId).m_version))
-   {
-     jam();
-     ndbrequire(signal->getNoOfSections() == 1);
-     SegmentedSectionPtr ptr;
-     SectionHandle handle(this, signal);
-     ndbrequire(handle.getSection(ptr, 0));
-     ndbrequire(ptr.sz <= (sizeof(cdata)/4));
-     copy(cdata, ptr);
-     cdata_size_in_words = ptr.sz;
-     releaseSections(handle);
-   }
-   else
-   {
-     jam();
-     v2_format = false;
-[3]    arrGuard(startWord + StartMeConf::DATA_SIZE, sizeof(cdata)/4);
-     for(Uint32 i = 0; i < StartMeConf::DATA_SIZE; i++)
-     {
-[4]      cdata[startWord+i] = startMe->data[i];
-     }
+Thanks,
 
+Alexander
 
-}
+On Thu, May 26, 2022 at 07:35:46PM +0200, Solar Designer wrote:
+> 
+> Thank you for engaging in this discussion.  It helps.
+> 
+> On Thu, May 26, 2022 at 06:44:38PM +0200, Norbert Slusarek wrote:
+> > >What do you suggest we do regarding the LPE exploit you sent to
+> > >linux-distros?
+> > 
+> > I saw your reveal of linux-distros from 2020 and the exchange
+> > didn't include any text nor attachments. In that case, the
+> > exploit should remain private to linux-distros accordingly.
+> 
+> I don't know what "reveal of linux-distros from 2020" you refer to.  The
+> policy aspect in question (see below) is in effect since 2017, and I
+> don't recall us deviating from it.  Did we?
+> 
+> We have a published policy here:
+> 
+> https://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-instructions-for-reporters
+> 
+> which includes:
+> 
+> "If you shared exploit(s) that are not an essential part of the issue
+> description, then at your option you may slightly delay posting them to
+> oss-security but you must post the exploits to oss-security within at
+> most 7 days of making the mandatory posting above.  If you exercise this
+> option, you have two mandatory postings to make: first with a
+> sufficiently detailed issue description (as requested above) and with an
+> announcement of your intent to post the exploits separately (please
+> mention exactly when), and second with the exploits - or indeed you
+> could have included the exploits right away, in your first and only
+> mandatory posting."
+> 
+> Did you read this before posting?  If not, anything we should have done
+> to ensure you'd have read it?
+> 
+> > >What do you suggest we do with this policy aspect going forward, so that
+> > >people do not get into a situation where they're required to do
+> > >something they didn't want to subscribe to?
+> > 
+> > How is this policy aspect enforced in the first place?
+> > If it's not, I suggest you remove it entirely as there is no reason
+> > to have policies which cannot (and shouldn't) be enforced.
+> 
+> Reminders, like I am doing now (often in private, this time in public).
+> Failing that, list members technically can post the exploits themselves.
+> Finally, we can setup the list to automatically make all messages public
+> with a delay.
+> 
+> However, as you can see from another recent thread we're now in the
+> process of reconsidering list policy aspects, so might end up e.g.
+> extending the period from 7 to 30 days.  Would that work for you?
+> 
+> If people insist on keeping exploits sent to (linux-)distros private
+> forever, then I'll more likely either shut down the list instead or set
+> it up to automatically make all messages public.  After all, if people
+> send private messages to some list without reading its published policy
+> first, they accept that anything can happen with those messages.  Right?
+> Yet I've been reluctant to do that so far, as it's not ideal for social
+> and technical reasons.
+> 
+> > Overall, as a researcher I would prefer having a way just to inform
+> > distros of a bug, *without* being subject to these requirements.
+> 
+> I understand, yet I find that very problematic.
+> 
+> Also, you don't need to post an exploit (especially more than a PoC) to
+> the list "to inform distros of a bug".  You can literally just inform
+> them, and (if you don't accept the policy on forced publication of what
+> you share with the list) offer to privately share the exploit with
+> interested distros.  Then the exploit itself wouldn't be subject to the
+> forced publication.
+> 
+> Thanks again,
+> 
+> Alexander
 
-We control the contents of signal->theData buffer.
-If master node is an old 7.6 version, which is still supported, check on 
-line #2 fails and we go to line #3.
-This check can be easily bypassed if startWord is negative.
-On line #4 we have nice heap overflow.
-
-Instructions and code to reproduce - 
-https://github.com/ivd38/mysql_overflow1
-
-
-regards,
-
--e
-
+View attachment "lpe.c" of type "text/x-c" (18326 bytes)
