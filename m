@@ -1,339 +1,270 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/05/3
-Message-ID: <80b5bf9.4e3f7.18134003f02.Coremail.duoming@zju.edu.cn>
-Date: Sun, 5 Jun 2022 21:14:00 +0800 (GMT+08:00)
-From: duoming@....edu.cn
-To: oss-security@...ts.openwall.com
-Cc: solar@...nwall.com
-Subject: Linux kernel: UAF, null-ptr-deref and double-free vulnerabilities in nfcmrvl module
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/30/1
+Message-ID: <Yr1AOUYow00A799A@itl-email>
+Date: Thu, 30 Jun 2022 02:18:33 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
+To: Open Source Software Security <oss-security@...ts.openwall.com>
+Subject: GnuPG signature spoofing via status line injection
 Content-Type: text/plain; charset=utf-8
 
-Hello there,
+# Background
 
-There are double-free, use-after-free(write,read), null-ptr-deref vulnerabilities
-in drivers/nfc/nfcmrvl of linux that allow attacker to crash linux kernel by simulating
-nfc device from user-space.
+After discovering that gpgv does not support
+--exit-on-status-write-error, I decided to check if it handles write
+errors on the status file descriptor properly.  I ultimately found that
+while such errors are *not* handled properly, exploiting this flaw in
+practice would likely be very difficult and unreliable.  However, in the
+course of this research (and entirely accidentally), I found that if a
+signature has a notation with a value of 8192 spaces, gpg will crash
+while writing the notation’s value to the status FD.  This turned out to
+be a far more severe flaw, with consequences including the ability to
+make a signature that will appear to be ultimately valid and made by a
+key with any fingerprint one wishes.
 
-=*=*=*=*=*=*=*=*=  Bug Details  =*=*=*=*=*=*=*=*=
+# Prerequisites for exploitation
 
-There are destructive operations such as nfcmrvl_fw_dnld_abort and
-gpio_free in nfcmrvl_nci_unregister_dev. The resources such as firmware,
-gpio and so on could be destructed while the upper layer functions such as
-nfcmrvl_fw_dnld_start and nfcmrvl_nci_recv_frame is executing, which leads
-to double-free, use-after-free and null-ptr-deref bugs.
+For an attack to be possible, the attacker must control the secret part
+of at least one key in the victim's keyring.  The key does *not* need to
+be trusted, however.  Depending on the calling code, the attack may work
+even if the key is revoked or the signature is expired.  However, if the
+program requires that *all* signatures be valid (instead of merely *any*
+signature being valid), then a revoked or expired key cannot be used.
 
-There are three situations that could lead to double-free bugs.
+Additionally the code calling GnuPG must either not read status data
+until end of file, or satisfy both of the following:
 
-The first situation is shown below:
+- It uses a lax parser that is tolerant of invalid status lines.
+- It does not treat a non-zero exit code from GnuPG as an error.
 
-   (Thread 1)                 |      (Thread 2)
-nfcmrvl_fw_dnld_start         |
- ...                          |  nfcmrvl_nci_unregister_dev
- release_firmware()           |   nfcmrvl_fw_dnld_abort
-  kfree(fw) //(1)             |    fw_dnld_over
-                              |     release_firmware
-  ...                         |      kfree(fw) //(2)
-                              |     ...
+It turns out that gpgme satisfies both requirements, so programs using
+gpgme are vulnerable.  Since gpgme is the recommended way to use GnuPG
+from a program, I believe that the number of applications that are
+vulnerable is very large.
 
-The second situation is shown below:
+# Impact
 
-   (Thread 1)                 |      (Thread 2)
-nfcmrvl_fw_dnld_start         |
- ...                          |
- mod_timer                    |
- (wait a time)                |
- fw_dnld_timeout              |  nfcmrvl_nci_unregister_dev
-   fw_dnld_over               |   nfcmrvl_fw_dnld_abort
-    release_firmware          |    fw_dnld_over
-     kfree(fw) //(1)          |     release_firmware
-     ...                      |      kfree(fw) //(2)
+If the attacker controls the secret part of any signing-capable key or
+subkey in the victim's keyring, they can provide a correctly-formed
+signature that some software, including gpgme, will believe to have a
+validity and signer fingerprint of the attacker's choosing.  The
+consequences of this are highly application-dependent, but are likely to
+be serious.  In an email client, this could allow spoofing emails, while
+in a system using key fingerprints for access control, this could allow
+for an access control bypass.
 
-The third situation is shown below:
+# Solution
 
-       (Thread 1)               |       (Thread 2)
-nfcmrvl_nci_recv_frame          |
- if(..->fw_download_in_progress)|
-  nfcmrvl_fw_dnld_recv_frame    |
-   queue_work                   |
-                                |
-fw_dnld_rx_work                 | nfcmrvl_nci_unregister_dev
- fw_dnld_over                   |  nfcmrvl_fw_dnld_abort
-  release_firmware              |   fw_dnld_over
-   kfree(fw) //(1)              |    release_firmware
-                                |     kfree(fw) //(2)
+I recommend cherry-picking upstream commit
+34c649b3601383cd11dbc76221747ec16fd68e1b, which can be found at
+https://dev.gnupg.org/rG34c649b3601383cd11dbc76221747ec16fd68e1b.
+Afterwards, it will be necessary to rebuild and reinstall GnuPG.  No
+security advisory has been issued by upstream, no patch release is
+planned, and no CVE has (to my knowledge) been requested.  Distributions
+will need to carry this as an out-of-tree patch until the next upstream
+release is made.  For those using GnuPG on Windows, the only solution
+will be to build from source.
 
-The firmware struct is deallocated in position (1) and deallocated
-in position (2) again.
+This does not fix the handling of write errors on the status file
+descriptor.  However, I believe that exploiting the mishandling of such
+errors is not feasable in general.  On the other hand, the out of bounds
+read can be reliably exploited.
 
-What's more, there are also use-after-free and null-ptr-deref bugs
-in nfcmrvl_fw_dnld_start. 
+# Proof of concept
 
-One of the use-after-free bugs about firmware is shown below:
+I have attached a public key, a revoked version of that key, and two
+signatures made by the key.  Both signatures are of the empty string;
+you can pass /dev/null if the program takes a file instead.
+simple-exploit-sig.asc will not work if the key is revoked or expired,
+while revoked-exploit-sig.asc *may* work even if the key is revoked or
+expired.
 
-   (Use Thread)               |      (Free Thread )
-nfcmrvl_fw_dnld_start         |
-                              |  nfcmrvl_nci_unregister_dev
-                              |   nfcmrvl_fw_dnld_abort
-  ...                         |    fw_dnld_over
-                              |     release_firmware
-                              |      kfree(fw) //(1)
-  priv->fw_dnld.fw->data;//(2)|     ...
+# Details
 
-One of the use-after-free bugs about gpio is shown below:
+## The bug
 
-   (Use Thread)               |      (Free Thread )
-nfcmrvl_fw_dnld_start         |
-                              |  nfcmrvl_nci_unregister_dev
-  ...                         |   ...
-                              |   gpio_free //(1)   
-  nfcmrvl_chip_reset          |     ...
-   gpio_set_value //(2)       |
+GnuPG does not provide an OpenPGP or S/MIME library.  Instead, gpg,
+gpgv, and gpgsm all support writing machine-readable text to a
+user-provided file descriptor, which is set via the --status-fd
+command-line argument.  Other programs and libraries then parse this
+output to extract information about what GnuPG has done.
 
-One of the null-ptr-deref bugs about firmware is shown below:
+In the case of gpg and gpgv, all status output goes through one of the
+functions in g10/cpr.c.  The one of interest here is
+write_status_text_and_buffer(), of which the relevant part is reproduced
+below.
 
-   (Use Thread)               |      (Free Thread )
-nfcmrvl_fw_dnld_start         |
-                              |  nfcmrvl_nci_unregister_dev
-                              |   nfcmrvl_fw_dnld_abort
-  ...                         |    fw_dnld_over
-                              |     priv->fw_dnld.fw = NULL;//(1) 
-                              |     
-  priv->fw_dnld.fw->data;//(2)|     ...
+356  do
+357    {
+358      if (dowrap)
+359        {
+360          es_fprintf (statusfp, "[GNUPG:] %s ", text);
+361          count = dowrap = 0;
+362          if (first && string)
+363            {
+364              es_fputs (string, statusfp);
+365              count += strlen (string);
+366              /* Make sure that there is a space after the string.  */
+367              if (*string && string[strlen (string)-1] != ' ')
+368                {
+369                  es_putc (' ', statusfp);
+370                  count++;
+371                }
+372            }
+373          first = 0;
+374        }
+375      for (esc=0, s=buffer, n=len; n && !esc; s++, n--)
+376        {
+377          if (*s == '%' || *(const byte*)s <= lower_limit
+378              || *(const byte*)s == 127 )
+379            esc = 1;
+380          if (wrap && ++count > wrap)
+381            {
+382              dowrap=1;
+383              break;
+384            }
+385        }
+386      if (esc)
+387        {
+388          s--; n++;
+389        }
+390      if (s != buffer)
+391        es_fwrite (buffer, s-buffer, 1, statusfp);
+392      if ( esc )
+393        {
+394          es_fprintf (statusfp, "%%%02X", *(const byte*)s );
+395          s++; n--;
+396        }
+397      buffer = s;
+398      len = n;
+399      if (dowrap && len)
+400        es_putc ('\n', statusfp);
+401    }
+402  while (len);
 
-If we deallocate firmware struct, gpio or set null to the members of priv->fw_dnld
-in position(1), then, we dereference firmware, gpio or the members of priv->fw_dnld
-in position(2), the UAF or NPD bugs will happen.
+When writing the data of a notation subpacket, GnuPG requests that
+write_status_text_and_buffer() wrap the output at 50 bytes if the
+notation is marked as human-readable, or 250 bytes otherwise.  ‘buffer’
+points to the (unsanitized) notation data, and ‘length’ is the length of
+that data.  For the subsequent discussion, I will only consider
+human-readable notations.  Adapting the exploit to use binary notations
+is easy and is left as an exercise for the reader.
 
-=*=*=*=*=*=*=*=*=  Bug Effects  =*=*=*=*=*=*=*=*=
+If byte 50 needs escaping, esc will be set to 1 on line 379, causing the
+loop to exit.  Line 388 will undo the effect of the s++, n-- on line
+375, but this will in turn be undone by line 395.  Therefore, line 397
+will increase `buffer` by 50.
 
-We can successfully trigger the vulnerabilities to crash the linux kernel.
+Now suppose the next byte also needs escaping.  This time, line 380 will
+break out of the loop, so the s++, n-- on line 375 will be skipped.
+However, the s--; n++ on line 388 will still run, so s is now one *less*
+than buffer.  Subtracting them will thus return -1, which becomes
+SIZE_MAX when converted to size_t.  As a result, es_fwrite() will try to
+write the rest of the address space to the status stream, starting with
+byte 51 of the notation data.
 
-(1) One of the backtraces caused by use-after-free(write) bug is shown below.
+## Exploitation
 
-[  138.280382] BUG: KASAN: use-after-free in _request_firmware+0x52/0x690
-[  138.280382] Write of size 8 at addr ffff88800c114850 by task download/11174
-[  138.280382] Call Trace:
-[  138.280382]  <TASK>
-[  138.280382]  dump_stack_lvl+0x57/0x7d
-[  138.280382]  print_report.cold+0x5e/0x5db
-[  138.280382]  ? _request_firmware+0x52/0x690
-[  138.280382]  kasan_report+0xbe/0x1c0
-[  138.280382]  ? _request_firmware+0x52/0x690
-[  138.280382]  _request_firmware+0x52/0x690
-[  138.280382]  request_firmware+0x2d/0x50
-[  138.280382]  nfcmrvl_fw_dnld_start+0x7a/0xb0
-[  138.280382]  nfc_fw_download+0x92/0xe0
-[  138.280382]  nfc_genl_fw_download+0x10b/0x170
-[  138.280382]  ? nfc_genl_enable_se+0xa0/0xa0
-[  138.280382]  ? __kasan_slab_alloc+0x2c/0x80
-[  138.280382]  ? __nla_parse+0x22/0x30
-[  138.280382]  ? genl_family_rcv_msg_attrs_parse.constprop.0+0xd3/0x130
-[  138.280382]  genl_family_rcv_msg_doit+0x17a/0x200
-[  138.280382]  ? genl_family_rcv_msg_attrs_parse.constprop.0+0x130/0x130
-[  138.280382]  ? mutex_lock_io_nested+0xb63/0xbd0
-[  138.280382]  ? security_capable+0x48/0x60
-[  138.280382]  genl_rcv_msg+0x18d/0x2c0
-[  138.280382]  ? genl_get_cmd+0x1b0/0x1b0
-[  138.280382]  ? rcu_read_lock_sched_held+0xd/0x70
-[  138.280382]  ? nfc_genl_enable_se+0xa0/0xa0
-[  138.280382]  ? rcu_read_lock_sched_held+0xd/0x70
-[  138.280382]  ? lock_acquire+0xce/0x410
-[  138.280382]  netlink_rcv_skb+0xc4/0x1f0
-[  138.280382]  ? genl_get_cmd+0x1b0/0x1b0
-[  138.280382]  ? netlink_ack+0x4d0/0x4d0
-[  138.280382]  ? netlink_deliver_tap+0xf7/0x5a0
-[  138.280382]  genl_rcv+0x1f/0x30
-[  138.280382]  netlink_unicast+0x2d8/0x420
-[  138.280382]  ? netlink_attachskb+0x430/0x430
-[  138.280382]  netlink_sendmsg+0x3a9/0x6e0
-[  138.280382]  ? netlink_unicast+0x420/0x420
-[  138.280382]  ? netlink_unicast+0x420/0x420
-[  138.280382]  sock_sendmsg+0x91/0xa0
-[  138.280382]  __sys_sendto+0x168/0x200
-[  138.280382]  ? __ia32_sys_getpeername+0x40/0x40
-[  138.280382]  ? preempt_count_sub+0xf/0xb0
-[  138.280382]  ? fd_install+0xfb/0x340
-[  138.280382]  ? __sys_socket+0xf0/0x160
-[  138.280382]  ? __x64_sys_clock_nanosleep+0x195/0x220
-[  138.280382]  ? compat_sock_ioctl+0x410/0x410
-[  138.280382]  __x64_sys_sendto+0x6f/0x80
-[  138.280382]  do_syscall_64+0x3b/0x90
-[  138.280382]  entry_SYSCALL_64_after_hwframe+0x44/0xae
-[  138.280382] RIP: 0033:0x7ff12ac0602c
-[  138.280382] Code: 0a f8 ff ff 44 8b 4c 24 2c 4c 8b 44 24 20 89 c5 44 8b 54 2b
-[  138.280382] RSP: 002b:00007ff12aa1ee00 EFLAGS: 00000293 ORIG_RAX: 0000000000c
-[  138.280382] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007ff12ac0602c
-[  138.280382] RDX: 000000000000002c RSI: 000055eab88030b0 RDI: 0000000000000000
-[  138.280382] RBP: 0000000000000000 R08: 00007ff12aa1ee7c R09: 000000000000000c
-[  138.280382] R10: 0000000000000000 R11: 0000000000000293 R12: 00007ffca74ba00e
-[  138.280382] R13: 00007ffca74ba00f R14: 00007ff12aa1efc0 R15: 00007ff12aa1f700
+The result of the bug is that es_fwrite() will write bytes to the status
+stream (with no escaping) until it hits unmapped memory and segfaults.
+The first bytes written, in particular, come from the notation data
+itself.  Therefore, they are fully controlled by the attacker.  The only
+restriction is that the first byte must be one that needs to be escaped,
+but this turns out to be no restriction at all.
 
-(2) One of the backtraces caused by use-after-free(read) bug is shown below.
+Suppose that the the first byte injected is a newline.  At this point,
+the status stream is at the start of a line, and the attacker can append
+any bytes of their choice to it.  A good choice for the attacker would be:
 
-[   65.835462] BUG: KASAN: use-after-free in nci_fw_download+0x26/0x60
-[   65.840236] Read of size 8 at addr ffff88800c2f5008 by task download/160
-[   65.845755] Call Trace:
-[   65.845755]  <TASK>
-[   65.845755]  dump_stack_lvl+0x57/0x7d
-[   65.845755]  print_report.cold+0x5e/0x5db
-[   65.845755]  ? nci_fw_download+0x26/0x60
-[   65.845755]  kasan_report+0xbe/0x1c0
-[   65.856061]  ? nfc_driver_failure+0x90/0xa0
-[   65.856235]  ? nci_fw_download+0x26/0x60
-[   65.856235]  nci_fw_download+0x26/0x60
-[   65.856235]  nfc_fw_download+0x99/0xe0
-[   65.856235]  nfc_genl_fw_download+0x10b/0x170
-[   65.861189]  ? nfc_genl_enable_se+0xa0/0xa0
-[   65.861189]  ? __kasan_slab_alloc+0x2c/0x80
-[   65.861189]  ? __nla_parse+0x22/0x30
-[   65.865988]  ? genl_family_rcv_msg_attrs_parse.constprop.0+0xd3/0x130
-[   65.865988]  genl_family_rcv_msg_doit+0x17a/0x200
-[   65.865988]  ? genl_family_rcv_msg_attrs_parse.constprop.0+0x130/0x130
-[   65.870892]  ? asm_spurious_interrupt+0x3/0x30
-[   65.870892]  ? security_capable+0x48/0x60
-[   65.870892]  genl_rcv_msg+0x18d/0x2c0
-[   65.870892]  ? genl_get_cmd+0x1b0/0x1b0
-[   65.870892]  ? rcu_read_lock_sched_held+0xd/0x70
-[   65.875946]  ? nfc_genl_enable_se+0xa0/0xa0
-[   65.875946]  ? rcu_read_lock_sched_held+0xd/0x70
-[   65.875946]  ? lock_acquire+0xce/0x410
-[   65.875946]  netlink_rcv_skb+0xc4/0x1f0
-[   65.880842]  ? genl_get_cmd+0x1b0/0x1b0
-[   65.881778]  ? netlink_ack+0x4d0/0x4d0
-[   65.881778]  ? netlink_deliver_tap+0xf7/0x5a0
-[   65.881778]  genl_rcv+0x1f/0x30
-[   65.881778]  netlink_unicast+0x2d8/0x420
-[   65.885734]  ? netlink_attachskb+0x430/0x430
-[   65.887472]  netlink_sendmsg+0x3a9/0x6e0
-[   65.887472]  ? netlink_unicast+0x420/0x420
-[   65.887472]  ? netlink_unicast+0x420/0x420
-[   65.887472]  sock_sendmsg+0x91/0xa0
-[   65.891949]  __sys_sendto+0x168/0x200
-[   65.893134]  ? __ia32_sys_getpeername+0x40/0x40
-[   65.893134]  ? lockdep_hardirqs_on_prepare+0xe/0x220
-[   65.893134]  ? __schedule+0x5c5/0x1180
-[   65.893134]  ? io_schedule_timeout+0xb0/0xb0
-[   65.897936]  ? clockevents_program_event+0xd3/0x130
-[   65.897936]  ? hrtimer_interrupt+0x332/0x350
-[   65.897936]  __x64_sys_sendto+0x6f/0x80
-[   65.897936]  do_syscall_64+0x3b/0x90
-[   65.897936]  entry_SYSCALL_64_after_hwframe+0x44/0xae
-[   65.902930] RIP: 0033:0x7f96173ec02c
-[   65.902930] Code: 0a f8 ff ff 44 8b 4c 24 2c 4c 8b 44 24 20 89 c5 44 8b 54 24 28 48 8b 54 24 18 b8 2c 00 00 00 48 8b 74 24 10 8b 7c 24 08 0f 05 <48> 3d 00 fb
-[   65.908959] RSP: 002b:00007f9617204df0 EFLAGS: 00000293 ORIG_RAX: 000000000000002c
-[   65.908959] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f96173ec02c
-[   65.908959] RDX: 0000000000000034 RSI: 0000556fa2a030b0 RDI: 0000000000000003
-[   65.908959] RBP: 0000000000000000 R08: 00007f9617204e6c R09: 000000000000000c
-[   65.915542] R10: 0000000000000000 R11: 0000000000000293 R12: 00007ffde78477ee
-[   65.916990] R13: 00007ffde78477ef R14: 00007f9617204fc0 R15: 00007f9617205700
+[GNUPG:] VALIDSIG $subkey_fpr $date $timestamp 0 4 0 22 10 00 $primary_key_fpr
+[GNUPG:] TRUST_ULTIMATE 0 pgp
 
-(3) One of the backtraces caused by double-free bug is shown below.
+Here $subkey_fpr should be replaced with the desired subkey fingerprint,
+$date with the desired signing date, $timestamp with the desired
+timestamp, and $primary_key_fpr with the desired primary key
+fingerprint.  Obviously, the fingerprints can be those of *any* key, or
+even ones (such as 0000000000000000000000000000000000000000) that do not
+correspond to a real key.  TRUST_ULTIMATE tells the calling program that
+the key is ultimately valid.
 
-[  122.640457] BUG: KASAN: double-free or invalid-free in fw_dnld_over+0x28/0xf0
-[  122.640457] Call Trace:
-[  122.640457]  <TASK>
-[  122.640457]  dump_stack_lvl+0x57/0x7d
-[  122.640457]  print_report.cold+0x5e/0x5db
-[  122.640457]  ? fw_dnld_over+0x28/0xf0
-[  122.640457]  ? fw_dnld_over+0x28/0xf0
-[  1re22.640457]  kasan_report_invalid_free+0x90/0x180
-[  122.640457]  ? refcount_warn_saturate+0x40/0x110
-[  122.640457]  ? fw_dnld_over+0x28/0xf0
-[  122.640457]  __kasan_slab_free+0x152/0x170
-[  122.640457]  ? fw_dnld_over+0x28/0xf0
-[  122.640457]  kfree+0xb0/0x330
-[  122.640457]  fw_dnld_over+0x28/0xf0
-[  122.640457]  nfcmrvl_nci_unregister_dev+0x61/0x70
-[  122.640457]  nci_uart_tty_close+0x87/0xd0
-[  122.640457]  tty_ldisc_kill+0x3e/0x80
-[  122.640457]  tty_ldisc_hangup+0x1b2/0x2c0
-[  122.640457]  __tty_hangup.part.0+0x316/0x520
-[  122.640457]  tty_release+0x200/0x670
-[  122.640457]  __fput+0x110/0x410
-[  122.640457]  ? _raw_spin_unlock_irq+0x1f/0x40
-[  122.640457]  task_work_run+0x86/0xd0
-[  122.640457]  exit_to_user_mode_prepare+0x1aa/0x1b0
-[  122.640457]  syscall_exit_to_user_mode+0x19/0x50
-[  122.640457]  do_syscall_64+0x48/0x90
-[  122.640457]  entry_SYSCALL_64_after_hwframe+0x44/0xae
-[  122.640457] RIP: 0033:0x7f68433f6beb
-[  122.640457] Code: 0f 05 48 3d 00 f0 ff ff 77 45 c3 0f 1f 40 00 48 83 ec 18 84
-[  122.640457] RSP: 002b:00007f684320fee0 EFLAGS: 00000293 ORIG_RAX: 00000000003
-[  122.640457] RAX: 0000000000000000 RBX: 0000000000000000 RCX: 00007f68433f6beb
-[  122.640457] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000003
-[  122.640457] RBP: 00007f684320ff00 R08: 0000000000000000 R09: 00007f6843210700
-[  122.640457] R10: 0000000000000000 R11: 0000000000000293 R12: 00007ffd5d6f9fde
-[  122.640457] R13: 00007ffd5d6f9fdf R14: 00007f684320ffc0 R15: 00007f6843210700
+Following the notation data, gpg will write a bunch more garbage from
+its heap before it eventually segfaults.  This garbage is not valid
+status data, but it turns out that many programs do not care.  Git stops
+at the first NUL byte and gpgme ignores any line that does not start
+with "[GNUPG:] ".  Hence, this does not prevent exploitation.
 
-(4) One of the backtraces caused by null-ptr-deref bug is shown below.
+# Timeline
 
-[   80.495478] BUG: KASAN: null-ptr-deref in nfcmrvl_fw_dnld_start.cold+0x19/0x276
-[   80.498745] Read of size 8 at addr 0000000000000008 by task download/161
-[   80.502308] Call Trace:
-[   80.502308]  <TASK>
-[   80.502308]  dump_stack_lvl+0x57/0x7d
-[   80.502308]  kasan_report+0xbe/0x1c0
-[   80.502308]  ? nfcmrvl_fw_dnld_start.cold+0x19/0x276
-[   80.502308]  nfcmrvl_fw_dnld_start.cold+0x19/0x276
-[   80.508210]  ? nfc_fw_download+0x79/0xe0
-[   80.508210]  nfc_fw_download+0x99/0xe0
-[   80.508210]  nfc_genl_fw_download+0x10b/0x170
-[   80.508210]  ? nfc_genl_enable_se+0xa0/0xa0
-[   80.508210]  ? __kasan_slab_alloc+0x2c/0x80
-[   80.508210]  ? __nla_parse+0x22/0x30
-[   80.508210]  ? genl_family_rcv_msg_attrs_parse.constprop.0+0xd3/0x130
-[   80.508210]  genl_family_rcv_msg_doit+0x17a/0x200
-[   80.508210]  ? genl_family_rcv_msg_attrs_parse.constprop.0+0x130/0x130
-[   80.513085]  ? mutex_lock_io_nested+0xb43/0xbd0
-[   80.513085]  ? security_capable+0x48/0x60
-[   80.513085]  genl_rcv_msg+0x18d/0x2c0
-[   80.513085]  ? genl_get_cmd+0x1b0/0x1b0
-[   80.513085]  ? rcu_read_lock_sched_held+0xd/0x70
-[   80.513085]  ? nfc_genl_enable_se+0xa0/0xa0
-[   80.513085]  ? rcu_read_lock_sched_held+0xd/0x70
-[   80.513085]  ? lock_acquire+0xce/0x410
-[   80.513085]  netlink_rcv_skb+0xc4/0x1f0
-[   80.513085]  ? genl_get_cmd+0x1b0/0x1b0
-[   80.518420]  ? netlink_ack+0x4d0/0x4d0
-[   80.518420]  ? netlink_deliver_tap+0xf7/0x5a0
-[   80.518420]  genl_rcv+0x1f/0x30
-[   80.518420]  netlink_unicast+0x2d8/0x420
-[   80.518420]  ? netlink_attachskb+0x430/0x430
-[   80.518420]  netlink_sendmsg+0x3a9/0x6e0
-[   80.518420]  ? netlink_unicast+0x420/0x420
-[   80.518420]  ? netlink_unicast+0x420/0x420
-[   80.518420]  sock_sendmsg+0x91/0xa0
-[   80.518420]  __sys_sendto+0x168/0x200
-[   80.523005]  ? __ia32_sys_getpeername+0x40/0x40
-[   80.523005]  ? preempt_count_sub+0xf/0xb0
-[   80.523005]  ? fd_install+0xfb/0x340
-[   80.523005]  ? __sys_socket+0xf0/0x160
-[   80.523005]  ? compat_sock_ioctl+0x410/0x410
-[   80.523005]  __x64_sys_sendto+0x6f/0x80
-[   80.523005]  do_syscall_64+0x3b/0x90
-[   80.523005]  entry_SYSCALL_64_after_hwframe+0x44/0xae
-[   80.523005] RIP: 0033:0x7f30f54f402c
-[   80.523005] Code: 0a f8 ff ff 44 8b 4c 24 2c 4c 8b 44 24 20 89 c5 44 8b 54 24 28 48 8b 54 24 18 b8 2b
-[   80.528021] RSP: 002b:00007f30f530cdf0 EFLAGS: 00000293 ORIG_RAX: 000000000000002c
-[   80.528021] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f30f54f402c
-[   80.528021] RDX: 0000000000000034 RSI: 00005571766030b0 RDI: 0000000000000005
-[   80.533650] RBP: 0000000000000000 R08: 00007f30f530ce6c R09: 000000000000000c
-[   80.533650] R10: 0000000000000000 R11: 0000000000000293 R12: 00007ffd9c6c6cee
-[   80.533650] R13: 00007ffd9c6c6cef R14: 00007f30f530cfc0 R15: 00007f30f530d700
+- 2022-06-10: Message sent to security@...pg.org requesting encryption
+  keys for subsequent communication.
 
-=*=*=*=*=*=*=*=*=  Bug Fix  =*=*=*=*=*=*=*=*=
+- 2022-06-10 through 2022-06-11: Message with encrypted subjects sent to
+  GnuPG Security Team.  These messages are automatically discarded by
+  Werner Koch's email account.
 
-The patch that have been applied to mainline Linux kernel is shown below.
-https://github.com/torvalds/linux/commit/d270453a0d9ec10bb8a802a142fb1b3601a83098
+- 2022-06-12: Message with unencrypted subject sent and received.
 
-=*=*=*=*=*=*=*=*=  Timeline  =*=*=*=*=*=*=*=*=
+- 2022-06-13: Response asking for a specific case where a transient I/O
+  error can happen, and acknowledging that the out-of-bounds read is
+  real.  Bug is not considered critical and so no immediate security
+  release is planned.
 
-2022-05-01: commit d270453a0d9e accepted to mainline kernel
-2022-06-05: send an email to secalert@...hat.com in order to request CVE number
+- 2022-06-13: I respond mentioning ENOMEM and socket errors as potential
+  transient write errors.
 
-=*=*=*=*=*=*=*=*=  Credit  =*=*=*=*=*=*=*=*=
+- 2022-06-14: Werner Koch commits 34c649b3601383cd11dbc76221747ec16fd68e1b
+  to the GnuPG git repository.  From this commit, ticket T6027, and the
+  test signature attached to T6027, it is easy to reverse-engineer the
+  bug and create an exploit.  There is no public mention that this is a
+  security problem.
 
-Duoming Zhou <duoming@....edu.cn>
+- 2022-06-15: I followed up stating that it may be possible to control
+  the contents of the out-of-bounds memory and that this would make the
+  bug much more severe.
 
-Best Regards,
-Duoming Zhou
+- 2022-06-17: Werner responds stating that he has doubts as to whether
+  this can be done easily, and noting that GPGME still needs to accept
+  the injected data.
+
+- 2022-06-17: I state that I am able to inject arbitrary data into the
+  status output, and that the only reason Git is not vulnerable is
+  because GnuPG eventually segfaults.
+
+- 2022-06-18: I state that I can make GPGME mark a signature as “valid
+  green” (the highest trust level) with whatever fingerprint I wish.
+
+- 2022-06-19: Werner replies stating that he is not able to reproduce
+  the injection of arbitrary data into the status output, though he can
+  reproduce improper escaping.
+
+- 2022-06-19: I state that the flaw is indeed less severe in git master.
+
+- 2022-06-19: Via `git bisect`, I discover that
+  34c649b3601383cd11dbc76221747ec16fd68e1b is in fact the commit that
+  fixed the vulnerability, and that arbitrary injection into the status
+  line is possible on the immediately preceeding commit
+  4dbef2addca8c76fb4953fd507bd800d2a19d3ec.  I provide a reproducer.
+
+- 2022-06-22: I request that this be marked as a security vulnerability
+  and have a CVE assigned, and that an immediate security release be
+  made.  I note exactly what an attacker who exploits this vulnerability
+  can do to a program relying on gpgme.
+
+- 2022-06-29: As Werner Koch has stopped replyng to my emails, and since
+  there is still no public indication that GnuPG has a security
+  vulnerability (despite the patch already being public), I am publicly
+  disclosing the issue.
+
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
+
+Download attachment "key-without-revocation.asc" of type "application/octet-stream" (1209 bytes)
+
+View attachment "revocation-certificate.asc" of type "text/plain" (1936 bytes)
+
+View attachment "simple-exploit-sig.asc" of type "text/plain" (659 bytes)
+
+View attachment "revoked-exploit-sig.asc" of type "text/plain" (704 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
