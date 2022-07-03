@@ -1,4 +1,4 @@
-Received: (qmail 20133 invoked by uid 550); 8 May 2023 11:52:31 -0000
+Received: (qmail 32336 invoked by uid 550); 3 Jul 2022 11:27:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,36 +7,92 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19696 invoked from network); 8 May 2023 11:51:21 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Jarek Potiuk <potiuk@apache.org>
+Received: (qmail 23746 invoked from network); 3 Jul 2022 04:26:25 -0000
+X-Originating-IP: [106.117.99.4]
+Date: Sun, 3 Jul 2022 12:26:09 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: duoming@zju.edu.cn
 To: oss-security@lists.openwall.com
-Message-ID: <9512ef7c-a3c8-3b19-fcd6-6965a21c5e8b@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 08 May 2023 11:50:58 +0000
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20210104(ab8c30b6)
+ Copyright (c) 2002-2022 www.mailtech.cn zju.edu.cn
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-25754: Apache Airflow: Privilege escalation using airflow
- logs 
+Message-ID: <410aa0c9.2541c.181c24f0c89.Coremail.duoming@zju.edu.cn>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: by_KCgCHOAhhGsFiwHIQAw--.2336W
+X-CM-SenderInfo: qssqjiasttq6lmxovvfxof0/1tbiAgsAAVZdtagSGgABsX
+X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
+	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
+	daVFxhVjvjDU=
+Subject: [oss-security] Linux kernel: UAF vulnerabilities in rose protocol
 
-Severity: moderate
-
-Affected versions:
-
-- Apache Airflow before 2.6.0
-
-Description:
-
-Privilege Context Switching Error vulnerability in Apache Software Foundati=
-on Apache Airflow.This issue affects Apache Airflow: before 2.6.0.
-
-Credit:
-
-ksw9722@naver.com (finder)
-
-References:
-
-https://github.com/apache/airflow/pull/29506
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2023-25754
-
+SGVsbG8gdGhlcmUsCgpUaGVyZSBhcmUgdXNlLWFmdGVyLWZyZWUgdnVsbmVy
+YWJpbGl0aWVzIGNhdXNlZCBieSB0aW1lciBoYW5kbGVyIGluIG5ldC9yb3Nl
+L3Jvc2VfdGltZXIuYwpvZiBsaW51eCB0aGF0IGFsbG93IGF0dGFja2VycyB0
+byBjcmFzaCBsaW51eCBrZXJuZWwgd2l0aG91dCBhbnkgcHJpdmlsZWdlcy4K
+Cj0qPSo9Kj0qPSo9Kj0qPSo9ICBCdWcgRGV0YWlscyAgPSo9Kj0qPSo9Kj0q
+PSo9Kj0KClRoZSByb290IGNhdXNlIGlzIHRoYXQgZGVsX3RpbWVyKCkgY291
+bGQgbm90IHN0b3AgdGhlIHRpbWVyIGhhbmRsZXIgdGhhdCBpcyBydW5uaW5n
+CmFuZCB0aGUgcmVmY291bnQgb2Ygc29jayBpcyBub3QgbWFuYWdlZCBwcm9w
+ZXJseSBpbiByb3NlIHByb3RvY29sLgoKQXR0YWNrZXJzIGNhbiB1c2UgYW4g
+YWN0aXZlIHJvc2UgbmV0d29yayBpbnRlcmZhY2UsIHRoZW4sIGNhbGwgY2xv
+c2UoKSwgYmluZCgpCmFuZCBjb25uZWN0KCkgc3lzY2FsbCB0byBjcmFzaCBM
+aW51eCBrZXJuZWwgd2l0aG91dCBhbnkgcHJpdmlsZWdlcy4KCj0qPSo9Kj0q
+PSo9Kj0qPSo9ICBCdWcgRWZmZWN0cyAgPSo9Kj0qPSo9Kj0qPSo9Kj0KCldl
+IGNhbiBzdWNjZXNzZnVsbHkgdHJpZ2dlciB0aGUgdnVsbmVyYWJpbGl0aWVz
+IHRvIGNyYXNoIHRoZSBsaW51eCBrZXJuZWwuCgpCVUc6IEtBU0FOOiB1c2Ut
+YWZ0ZXItZnJlZSBpbiBfcmF3X3NwaW5fbG9jaysweDVhLzB4MTEwCldyaXRl
+IG9mIHNpemUgNCBhdCBhZGRyIGZmZmY4ODgwMGFlNTkwOTggYnkgdGFzayBz
+d2FwcGVyLzMvMAouLi4KQ2FsbCBUcmFjZToKIDxJUlE+CiBkdW1wX3N0YWNr
+X2x2bCsweGJmLzB4ZWUKIHByaW50X2FkZHJlc3NfZGVzY3JpcHRpb24rMHg3
+Yi8weDQ0MAogcHJpbnRfcmVwb3J0KzB4MTAxLzB4MjMwCiA/IGlycV93b3Jr
+X3NpbmdsZSsweGJiLzB4MTQwCiA/IF9yYXdfc3Bpbl9sb2NrKzB4NWEvMHgx
+MTAKIGthc2FuX3JlcG9ydCsweGVkLzB4MTIwCiA/IF9yYXdfc3Bpbl9sb2Nr
+KzB4NWEvMHgxMTAKIGthc2FuX2NoZWNrX3JhbmdlKzB4MmJkLzB4MmUwCiBf
+cmF3X3NwaW5fbG9jaysweDVhLzB4MTEwCiByb3NlX2hlYXJ0YmVhdF9leHBp
+cnkrMHgzOS8weDM3MAogPyByb3NlX3N0YXJ0X2hlYXJ0YmVhdCsweGIwLzB4
+YjAKIGNhbGxfdGltZXJfZm4rMHgyZC8weDFjMAogPyByb3NlX3N0YXJ0X2hl
+YXJ0YmVhdCsweGIwLzB4YjAKIGV4cGlyZV90aW1lcnMrMHgxZjMvMHgzMjAK
+IF9fcnVuX3RpbWVycysweDNmZi8weDRkMAogcnVuX3RpbWVyX3NvZnRpcnEr
+MHg0MS8weDgwCiBfX2RvX3NvZnRpcnErMHgyMzMvMHg1NDQKIGlycV9leGl0
+X3JjdSsweDQxLzB4YTAKIHN5c3ZlY19hcGljX3RpbWVyX2ludGVycnVwdCsw
+eDhjLzB4YjAKIDwvSVJRPgogPFRBU0s+CiBhc21fc3lzdmVjX2FwaWNfdGlt
+ZXJfaW50ZXJydXB0KzB4MWIvMHgyMApSSVA6IDAwMTA6ZGVmYXVsdF9pZGxl
+KzB4Yi8weDEwClJTUDogMDAxODpmZmZmYzkwMDAwMTJmZWEwIEVGTEFHUzog
+MDAwMDAyMDIKUkFYOiAwMDAwMDAwMDAwMDBiY2FlIFJCWDogZmZmZjg4ODAw
+NjY2MGYwMCBSQ1g6IDAwMDAwMDAwMDAwMGJjYWUKUkRYOiAwMDAwMDAwMDAw
+MDAwMDAxIFJTSTogZmZmZmZmZmY4NDNhMTFjMCBSREk6IGZmZmZmZmZmODQz
+YTExODAKUkJQOiBkZmZmZmMwMDAwMDAwMDAwIFIwODogZGZmZmZjMDAwMDAw
+MDAwMCBSMDk6IGZmZmZlZDEwMGRhMzZkNDYKUjEwOiBkZmZmZTkxMDBkYTM2
+ZDQ3IFIxMTogZmZmZmZmZmY4M2NmMDk1MCBSMTI6IDAwMDAwMDAwMDAwMDAw
+MDAKUjEzOiAxZmZmZjExMDAwY2NjMWUwIFIxNDogZmZmZmZmZmY4NTQyYWYy
+OCBSMTU6IGRmZmZmYzAwMDAwMDAwMDAKLi4uCkFsbG9jYXRlZCBieSB0YXNr
+IDE0NjoKIF9fa2FzYW5fa21hbGxvYysweGM0LzB4ZjAKIHNrX3Byb3RfYWxs
+b2MrMHhkZC8weDFhMAogc2tfYWxsb2MrMHgyZC8weDRlMAogcm9zZV9jcmVh
+dGUrMHg3Yi8weDMzMAogX19zb2NrX2NyZWF0ZSsweDJkZC8weDY0MAogX19z
+eXNfc29ja2V0KzB4YzcvMHgyNzAKIF9feDY0X3N5c19zb2NrZXQrMHg3MS8w
+eDgwCiBkb19zeXNjYWxsXzY0KzB4NDMvMHg5MAogZW50cnlfU1lTQ0FMTF82
+NF9hZnRlcl9od2ZyYW1lKzB4NDYvMHhiMAoKRnJlZWQgYnkgdGFzayAxNTI6
+CiBrYXNhbl9zZXRfdHJhY2srMHg0Yy8weDcwCiBrYXNhbl9zZXRfZnJlZV9p
+bmZvKzB4MWYvMHg0MAogX19fX2thc2FuX3NsYWJfZnJlZSsweDEyNC8weDE5
+MAoga2ZyZWUrMHhkMy8weDI3MAogX19za19kZXN0cnVjdCsweDMxNC8weDQ2
+MAogcm9zZV9yZWxlYXNlKzB4MmZhLzB4M2IwCiBzb2NrX2Nsb3NlKzB4Y2Iv
+MHgyMzAKIF9fZnB1dCsweDJkOS8weDY1MAogdGFza193b3JrX3J1bisweGQ2
+LzB4MTYwCiBleGl0X3RvX3VzZXJfbW9kZV9sb29wKzB4YzcvMHhkMAogZXhp
+dF90b191c2VyX21vZGVfcHJlcGFyZSsweDRlLzB4ODAKIHN5c2NhbGxfZXhp
+dF90b191c2VyX21vZGUrMHgyMC8weDQwCiBkb19zeXNjYWxsXzY0KzB4NGYv
+MHg5MAogZW50cnlfU1lTQ0FMTF82NF9hZnRlcl9od2ZyYW1lKzB4NDYvMHhi
+MAoKPSo9Kj0qPSo9Kj0qPSo9Kj0gIEJ1ZyBGaXggID0qPSo9Kj0qPSo9Kj0q
+PSo9CgpUaGUgcGF0Y2ggdGhhdCBoYXZlIGJlZW4gYXBwbGllZCB0byBtYWlu
+bGluZSBMaW51eCBrZXJuZWwgaXMgc2hvd24gYmVsb3cuCmh0dHBzOi8vZ2l0
+aHViLmNvbS90b3J2YWxkcy9saW51eC9jb21taXQvOWNjMDJlZGU2OTYyNzJj
+NTI3MWE0MDFlNGYyN2MyNjIzNTliYzJmNgoKPSo9Kj0qPSo9Kj0qPSo9Kj0g
+IFRpbWVsaW5lICA9Kj0qPSo9Kj0qPSo9Kj0qPQoKMjAyMi0wNi0zMDogY29t
+bWl0IDljYzAyZWRlNjk2MiBhY2NlcHRlZCB0byBtYWlubGluZSBrZXJuZWwK
+MjAyMi0wNy0wMzogc2VuZCBhbiBlbWFpbCB0byBzZWNhbGVydEByZWRoYXQu
+Y29tIGluIG9yZGVyIHRvIHJlcXVlc3QgQ1ZFIG51bWJlcgoKPSo9Kj0qPSo9
+Kj0qPSo9Kj0gIENyZWRpdCAgPSo9Kj0qPSo9Kj0qPSo9Kj0KCkR1b21pbmcg
+WmhvdSA8ZHVvbWluZ0B6anUuZWR1LmNuPgoKQmVzdCBSZWdhcmRzLApEdW9t
+aW5nIFpob3U=
