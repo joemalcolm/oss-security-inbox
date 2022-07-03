@@ -1,83 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/06/4
-Message-ID: <20220806184721.GA8594@openwall.com>
-Date: Sat, 6 Aug 2022 20:47:21 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Evgeny Legerov <admin@...ndisco.cc>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Exim 4.95 invalid free
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/03/2
+Message-ID: <410aa0c9.2541c.181c24f0c89.Coremail.duoming@zju.edu.cn>
+Date: Sun, 3 Jul 2022 12:26:09 +0800 (GMT+08:00)
+From: duoming@....edu.cn
+To: oss-security@...ts.openwall.com
+Subject: Linux kernel: UAF vulnerabilities in rose protocol
 Content-Type: text/plain; charset=utf-8
 
-Hi Evgeny,
+Hello there,
 
-Thank you for starting to bring relevant issues to oss-security!
+There are use-after-free vulnerabilities caused by timer handler in net/rose/rose_timer.c
+of linux that allow attackers to crash linux kernel without any privileges.
 
-In that guideline John quoted, we really do mean that each "message
-should remain valuable even with all of the external resources gone."
-Adding a second link helps, but not enough to satisfy this requirement.
+=*=*=*=*=*=*=*=*=  Bug Details  =*=*=*=*=*=*=*=*=
 
-Yet I understand we cannot really ask you for more, and a brief
-link-only heads-up is better than none.
+The root cause is that del_timer() could not stop the timer handler that is running
+and the refcount of sock is not managed properly in rose protocol.
 
-So maybe others in here can be filling in the gaps (in follow-up
-postings) in cases like this.  In fact, some had volunteered:
+Attackers can use an active rose network interface, then, call close(), bind()
+and connect() syscall to crash Linux kernel without any privileges.
 
-https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+=*=*=*=*=*=*=*=*=  Bug Effects  =*=*=*=*=*=*=*=*=
 
-"Help ensure that each message posted to oss-security contains the most
-essential information (e.g., vulnerability detail and/or exploit)
-directly in the message itself (and in plain text) rather than only by
-reference to an external resource, and add the missing information
-(e.g., in your own words, by quoting with proper attribution, and/or by
-creating and attaching a properly attributed text/plain export of a
-previously referenced web page) and remind the original sender of this
-requirement (for further occasions) in a "reply" posting when necessary
-- primary: Oracle Solaris, backup: Container-Optimized OS"
+We can successfully trigger the vulnerabilities to crash the linux kernel.
 
-So maybe the Oracle Solaris and/or the Container-Optimized OS folks can
-be the ones to extract the vulnerability description and PoC from
-https://github.com/ivd38/exim_invalid_free and the patch from
-https://github.com/Exim/exim/commit/51be321b27825c01829dffd90f11bfff256f7e42
-and attach them to a "reply" in this thread?  And similar for the "zlib
-buffer overflow" thread nearby.
+BUG: KASAN: use-after-free in _raw_spin_lock+0x5a/0x110
+Write of size 4 at addr ffff88800ae59098 by task swapper/3/0
+...
+Call Trace:
+ <IRQ>
+ dump_stack_lvl+0xbf/0xee
+ print_address_description+0x7b/0x440
+ print_report+0x101/0x230
+ ? irq_work_single+0xbb/0x140
+ ? _raw_spin_lock+0x5a/0x110
+ kasan_report+0xed/0x120
+ ? _raw_spin_lock+0x5a/0x110
+ kasan_check_range+0x2bd/0x2e0
+ _raw_spin_lock+0x5a/0x110
+ rose_heartbeat_expiry+0x39/0x370
+ ? rose_start_heartbeat+0xb0/0xb0
+ call_timer_fn+0x2d/0x1c0
+ ? rose_start_heartbeat+0xb0/0xb0
+ expire_timers+0x1f3/0x320
+ __run_timers+0x3ff/0x4d0
+ run_timer_softirq+0x41/0x80
+ __do_softirq+0x233/0x544
+ irq_exit_rcu+0x41/0xa0
+ sysvec_apic_timer_interrupt+0x8c/0xb0
+ </IRQ>
+ <TASK>
+ asm_sysvec_apic_timer_interrupt+0x1b/0x20
+RIP: 0010:default_idle+0xb/0x10
+RSP: 0018:ffffc9000012fea0 EFLAGS: 00000202
+RAX: 000000000000bcae RBX: ffff888006660f00 RCX: 000000000000bcae
+RDX: 0000000000000001 RSI: ffffffff843a11c0 RDI: ffffffff843a1180
+RBP: dffffc0000000000 R08: dffffc0000000000 R09: ffffed100da36d46
+R10: dfffe9100da36d47 R11: ffffffff83cf0950 R12: 0000000000000000
+R13: 1ffff11000ccc1e0 R14: ffffffff8542af28 R15: dffffc0000000000
+...
+Allocated by task 146:
+ __kasan_kmalloc+0xc4/0xf0
+ sk_prot_alloc+0xdd/0x1a0
+ sk_alloc+0x2d/0x4e0
+ rose_create+0x7b/0x330
+ __sock_create+0x2dd/0x640
+ __sys_socket+0xc7/0x270
+ __x64_sys_socket+0x71/0x80
+ do_syscall_64+0x43/0x90
+ entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-Speaking of the actual issue/fix, I wonder if it's considered acceptable
-in Exim to use unchecked strdup() in general or in this specific place,
-with the possibility of the PAM response pointer being NULL on an
-out-of-memory condition.  Perhaps an oversight, as I'd expect at least a
-comment on this otherwise.
+Freed by task 152:
+ kasan_set_track+0x4c/0x70
+ kasan_set_free_info+0x1f/0x40
+ ____kasan_slab_free+0x124/0x190
+ kfree+0xd3/0x270
+ __sk_destruct+0x314/0x460
+ rose_release+0x2fa/0x3b0
+ sock_close+0xcb/0x230
+ __fput+0x2d9/0x650
+ task_work_run+0xd6/0x160
+ exit_to_user_mode_loop+0xc7/0xd0
+ exit_to_user_mode_prepare+0x4e/0x80
+ syscall_exit_to_user_mode+0x20/0x40
+ do_syscall_64+0x4f/0x90
+ entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-Thanks,
+=*=*=*=*=*=*=*=*=  Bug Fix  =*=*=*=*=*=*=*=*=
 
-Alexander
+The patch that have been applied to mainline Linux kernel is shown below.
+https://github.com/torvalds/linux/commit/9cc02ede696272c5271a401e4f27c262359bc2f6
 
-On Sat, Aug 06, 2022 at 07:40:49PM +0300, Evgeny Legerov wrote:
-> My bad.
-> 
-> Fix is here 
-> https://github.com/Exim/exim/commit/51be321b27825c01829dffd90f11bfff256f7e42
-> 
-> On 06.08.2022 17:47, John Helmert III wrote:
-> >Hi, please keep in mind the list content guidelines:
-> >
-> >"At least the most essential part of your message (e.g., vulnerability 
-> >detail and/or exploit) should be directly included in the message itself 
-> >(and in plain text), rather than only included by reference to an external 
-> >resource. Posting links to relevant external resources as well is 
-> >acceptable, but posting only links is not. Your message should remain 
-> >valuable even with all of the external resources gone."
-> >
-> >Do you have any upstream references or commits of the fix?
-> >
-> >On Sat, Aug 06, 2022 at 12:06:36PM +0300, Evgeny Legerov wrote:
-> >>Hi,
-> >>
-> >>
-> >>The issue has been silently fixed in Exim 4.96 -
-> >>https://github.com/ivd38/exim_invalid_free
-> >>
-> >>
-> >>
-> >>regards,
-> >>
-> >>-e
+=*=*=*=*=*=*=*=*=  Timeline  =*=*=*=*=*=*=*=*=
+
+2022-06-30: commit 9cc02ede6962 accepted to mainline kernel
+2022-07-03: send an email to secalert@...hat.com in order to request CVE number
+
+=*=*=*=*=*=*=*=*=  Credit  =*=*=*=*=*=*=*=*=
+
+Duoming Zhou <duoming@....edu.cn>
+
+Best Regards,
+Duoming Zhou
