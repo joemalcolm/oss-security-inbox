@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2561" "Monday" "22" "May" "2017" "20:41:19" "+0200" "Thomas Deutschmann" "whissi@gentoo.org" "<bd1dd6da-8b2a-4776-ea92-cc5a4b369515@gentoo.org>" "70" "Re: [oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder" "^Date:" nil nil "5" "2017052218:41:19" "[oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder" (number mark "        whissi@gento May 22   70/2561  " thread-indent "\"Re: [oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder\"\n") "<alpine.GSO.2.20.1705201313250.6623@freddy.simplesystems.org>" ("<20170520072632.z5nbivrdwmqm3soe@eldamar.local>" "<20170520152406.2339.3B884775@matica.foolinux.mooo.com>" "<20170520175436.GA30962@jasmine>" "<alpine.GSO.2.20.1705201313250.6623@freddy.simplesystems.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 32682 invoked by uid 550); 22 May 2017 18:48:37 -0000
+Received: (qmail 24248 invoked by uid 550); 3 Jul 2022 16:05:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,93 +6,71 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26395 invoked from network); 22 May 2017 18:41:44 -0000
-References: <20170520072632.z5nbivrdwmqm3soe@eldamar.local>
- <20170520152406.2339.3B884775@matica.foolinux.mooo.com>
- <20170520175436.GA30962@jasmine>
- <alpine.GSO.2.20.1705201313250.6623@freddy.simplesystems.org>
-Message-ID: <bd1dd6da-8b2a-4776-ea92-cc5a4b369515@gentoo.org>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:21.0) Gecko/20100101
- Thunderbird/52.0.0
-MIME-Version: 1.0
-In-Reply-To: <alpine.GSO.2.20.1705201313250.6623@freddy.simplesystems.org>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="avX1uQFWQ86C3QdoM2kg6MJFtkHoPPBdW"
-Date: Mon, 22 May 2017 20:41:19 +0200
-From: Thomas Deutschmann <whissi@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: ImageMagick: CVE-2017-9098: use of
- uninitialized memory in RLE decoder
+Received: (qmail 24100 invoked from network); 3 Jul 2022 16:05:14 -0000
+Date: Sun, 3 Jul 2022 18:05:08 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Cc: Hugues ANGUELKOV <hanguelkov@randorisec.fr>
+Message-ID: <20220703160508.GA17310@openwall.com>
+References: <20220702193746.GA12948@openwall.com> <20220702215539.GA14413@openwall.com> <YsDMw8o0g0IjrwzK@itl-email> <20220703125516.GA15346@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220703125516.GA15346@openwall.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Linux kernel: Netfilter heap buffer overflow in nft_set_elem_init
 
---avX1uQFWQ86C3QdoM2kg6MJFtkHoPPBdW
-Content-Type: multipart/mixed; boundary="CRWnKVBSqc6gagvejiuAxKerPGBRpwsX4";
- protected-headers="v1"
-From: Thomas Deutschmann <whissi@gentoo.org>
-To: oss-security@lists.openwall.com
-Message-ID: <bd1dd6da-8b2a-4776-ea92-cc5a4b369515@gentoo.org>
-Subject: Re: [oss-security] Re: ImageMagick: CVE-2017-9098: use of
- uninitialized memory in RLE decoder
-References: <20170520072632.z5nbivrdwmqm3soe@eldamar.local>
- <20170520152406.2339.3B884775@matica.foolinux.mooo.com>
- <20170520175436.GA30962@jasmine>
- <alpine.GSO.2.20.1705201313250.6623@freddy.simplesystems.org>
-In-Reply-To: <alpine.GSO.2.20.1705201313250.6623@freddy.simplesystems.org>
+Proposed fix by the maintainer:
 
---CRWnKVBSqc6gagvejiuAxKerPGBRpwsX4
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=7e6bc1f6cabcd30aba0b11219d8e01b952eacbb6
 
-Hi,
+netdev thread leading to there starts here:
 
-let me take the opportunity to jump into this.
+https://lists.openwall.net/netdev/2022/07/02/86
 
-Bob, do you have any PoC you can share with ImageMagick project
-regarding CVE-2017-6335?
+> ----- Forwarded message from Hugues ANGUELKOV <hanguelkov@randorisec.fr> -----
 
-Your fix was
-https://sourceforge.net/p/graphicsmagick/code/ci/6156b4c2992d855ece6079653b=
-3b93c3229fc4b8/
+> One of our collaborators at RandoriSec, Arthur Mongodin found a 
+> vulnerability within the netfilter subsystem during his internship.
+> Successful exploitation of this bug leads to a Local Privilege 
+> Escalation (LPE) to the `root` user, as tested on Ubuntu server 22.04 
+> (Linux 5.15.0-39-generic).
+> This vulnerability is a heap buffer overflow due to a weak check and has 
+> been introduced within the commit 
+> [fdb9c405e35bdc6e305b9b4e20ebc141ed14fc81](https://github.com/torvalds/linux/commit/fdb9c405e35bdc6e305b9b4e20ebc141ed14fc81), 
+> it affects the Linux kernel since the version 5.8 and is still present 
+> today.
 
-I asked ImageMagick project about that issue but they don't know without
-a PoC, see https://github.com/ImageMagick/ImageMagick/issues/391
+The fix commit above says it Fixes an older commit from 2015
+(7d7402642eaf), but the bug was likely only exposed later, by the 2020
+commit referenced in RandoriSec's message above.  Quoting from:
 
-Thanks!
+https://patchwork.ozlabs.org/project/netfilter-devel/patch/20220702191029.238563-1-pablo@netfilter.org/
 
+   Insufficient validation of element datatype and length in
+   nft_setelem_parse_data(). At least commit 7d7402642eaf updates
+   maximum element data area up to 64 bytes when only 16 bytes
+   where supported at the time. Support for larger element size
+   came later in fdb9c405e35b though. Picking this older commit
+   as Fixes: tag to be safe than sorry.
 
---=20
-Regards,
-Thomas Deutschmann / Gentoo Security Team
-C4DD 695F A713 8F24 2AA1  5638 5849 7EE5 1D5D 74A5
+> The vulnerable code path can be reached if the kernel is built with the 
+> configuration `CONFIG_NETFILTER`, `CONFIG_NF_TABLES` enabled.
+> To exploit the vulnerability, an attacker may need to obtain an 
+> unprivileged user namespace to gain the capability `CAP_NET_ADMIN` 
+> (`CONFIG_USER_NS` and `CONFIG_NET_NS` enabled, and 
+> `kernel.unprivileged_userns_clone = 1`).
 
+Another scenario is the attacker having (or gaining by other means)
+"root" access inside a pre-existing container with CAP_NET_ADMIN.  This
+does not require unprivileged user namespaces as the container may have
+been started by host root.
 
---CRWnKVBSqc6gagvejiuAxKerPGBRpwsX4--
+> we can 
+> suggest the August, 15th 2022 as a potential date for public disclosure.
 
---avX1uQFWQ86C3QdoM2kg6MJFtkHoPPBdW
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+FWIW, an embargo this long wouldn't have been accepted by linux-distros.
+The latest this issue could be disclosed publicly is July 15th.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0
-
-iQJ8BAEBCgBmBQJZIzDVXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
-ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQzM0M1ODQ4MkM0MDIyOTJEMkUzQzVDMDY5
-NzA5RjkwQzNDOTZGRkM4AAoJEJcJ+Qw8lv/ImToP/00J4U34pcYuNXP/x73ZOdP8
-NkAE/i0FprSP0gz9inr7IeZnzlvgo7YQTNnlvKCQUog95Pg4UKxpXnImml33ps4j
-i58KMnzX/IDactPV+NexD7R8t24rxIuQ2zzfcO5kP3CYPSCDZhRLDj/z6aSs6dwQ
-PqqGXIK6p93H1QUX5J1Mgb+/I2oUMBTv5FxoxkvX2CNMp3iPCNThMuIl5oVRKBOM
-sgEmYJxHHgw7LMMEQ+BBPMITAWZ86ZGZkAAzSwe/4igSPW+6sflMnpCwMLwpIbkx
-mtPXO9S45wDcvOkyDNRjnaECPWpxSMoOmlA9hEDXWIC97taJhgTQuPyMQtW/p68r
-cD5nA+b4x3SDgofjaombHKOI10KyCSwiytyiLBDhlI6g5+N2m5+3nRIYHUH07PXq
-G0I/QxHJAdRlEhqpgY1Jamut+KJDCQi2hY1SHTSquZJckM+zaYGZlet9fucWPFBK
-7/hW0y6NEl1fRPntjoTuviWAIAkYVu1PKvdyftgCC+3JEMp8N0JlHOQcD670HeL1
-wLGFhM2OC3tNisZujtiBYP1xuEUkUL+DWW70/8UCdC9fl6hAIH03Vp9u7uLLE6YO
-wX2CpO8J9ToeLEp604wfLnsD+yVNXGkv7u1qaC+SRde0dpTYCBAzuXOeNRqGCJ8+
-BDdWogW+GGo9UQEIq7S/
-=48nF
------END PGP SIGNATURE-----
-
---avX1uQFWQ86C3QdoM2kg6MJFtkHoPPBdW--
+Alexander
