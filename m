@@ -1,23 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/08/4
-Message-ID: <8827a2d7-3499-efe9-4346-cb507e5be974@apache.org>
-Date: Wed, 08 Jun 2022 09:43:25 +0000
-From: Stefan Eissing <icing@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/03/6
+Message-ID: <20220703173431.GA18764@openwall.com>
+Date: Sun, 3 Jul 2022 19:34:31 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-28614: Apache HTTP Server: read beyond bounds via ap_rwrite()  
+Cc: Keine Eile <keine-eile@...ail.de>
+Subject: Re: Linux kernel: Netfilter heap buffer overflow: Is this CVE-2022-32250?
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+On Sun, Jul 03, 2022 at 06:09:07PM +0200, Keine Eile wrote:
+> Pardon my may be silly question.
 
-Description:
+No, the Netfilter bug disclosed this weekend is not CVE-2022-32250.
 
-The ap_rwrite() function in Apache HTTP Server 2.4.53 and earlier may read unintended memory if an attacker can cause the server to reflect very large input using ap_rwrite() or ap_rputs(), such as with mod_luas r:puts() function.
+CVE-2022-32250 refers to another Netfilter bug, disclosed a month ago:
 
-Credit:
+https://www.openwall.com/lists/oss-security/2022/05/31/1
 
-The Apache HTTP Server project would like to thank Ronald Crane (Zippenhop LLC) for reporting this issue
-
-References:
-
-https://httpd.apache.org/security/vulnerabilities_24.html
-
+Alexander
