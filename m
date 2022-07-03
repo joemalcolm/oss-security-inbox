@@ -1,62 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/14/1
-Message-ID: <CA+eGCHa7dOhjZQwdA+ONaWQ-JFvn0iK_W0xmgCHgNDvFzROF+Q@mail.gmail.com>
-Date: Fri, 14 Jan 2022 16:57:53 +0800
-From: tr3e wang <tr3e.wang@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/03/4
+Message-ID: <20220703160508.GA17310@openwall.com>
+Date: Sun, 3 Jul 2022 18:05:08 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux Kernel eBPF Improper Input Validation Vulnerability
+Cc: Hugues ANGUELKOV <hanguelkov@...dorisec.fr>
+Subject: Re: Linux kernel: Netfilter heap buffer overflow in nft_set_elem_init
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Proposed fix by the maintainer:
 
-CVE-2022-23222 has been assigned to this issue.
+https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=7e6bc1f6cabcd30aba0b11219d8e01b952eacbb6
 
-Thanks,
-tr3e
+netdev thread leading to there starts here:
 
-tr3e wang <tr3e.wang@...il.com> 于2022年1月13日周四 16:21写道：
+https://lists.openwall.net/netdev/2022/07/02/86
 
-> Hi all,
->
-> This vulnerability allows local attackers to escalate privileges on
-> affected installations of Linux Kernel. An attacker must first obtain the
-> ability to execute low-privileged code on the target system in order to
-> exploit this vulnerability.
->
-> The specific flaw exists within the handling of eBPF programs. The issue
-> results from the lack of proper validation of user-supplied eBPF programs
-> prior to executing them. An attacker can leverage this vulnerability to
-> escalate privileges and execute code in the context of the kernel.
-> BE AWARE, unprivileged bpf is disabled by default in most distros.
->
-> *Affected Version*
->
->     Linux Kernel 5.8 or later
->
-> *Root Cause Analysis*
->
-> The bpf verifier(kernel/bpf/verifier.c) did not properly restrict several
-> *_OR_NULL pointer types which allows these types to do pointer arithmetic.
-> This can be leveraged to bypass the verifier check and escalate privilege.
-> (see
-> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/kernel/bpf/verifier.c?h=v5.10.83#n6022
-> )
->
-> *Exploit Code*
->
-> Exploit code will be delayed for 5 days and will be posted at 12:00 UTC,
-> Jan 18, 2022
->
-> *Mitigations*
->
-> set kernel.unprivileged_bpf_disabled to 1
->
-> BE AWARE AGAIN, unprivileged bpf is disabled by default in most distros.
->
-> *Credits*
->
-> tr3e of SecCoder Security Lab
-> Best,
-> tr3e
->
+> ----- Forwarded message from Hugues ANGUELKOV <hanguelkov@...dorisec.fr> -----
 
+> One of our collaborators at RandoriSec, Arthur Mongodin found a 
+> vulnerability within the netfilter subsystem during his internship.
+> Successful exploitation of this bug leads to a Local Privilege 
+> Escalation (LPE) to the `root` user, as tested on Ubuntu server 22.04 
+> (Linux 5.15.0-39-generic).
+> This vulnerability is a heap buffer overflow due to a weak check and has 
+> been introduced within the commit 
+> [fdb9c405e35bdc6e305b9b4e20ebc141ed14fc81](https://github.com/torvalds/linux/commit/fdb9c405e35bdc6e305b9b4e20ebc141ed14fc81), 
+> it affects the Linux kernel since the version 5.8 and is still present 
+> today.
+
+The fix commit above says it Fixes an older commit from 2015
+(7d7402642eaf), but the bug was likely only exposed later, by the 2020
+commit referenced in RandoriSec's message above.  Quoting from:
+
+https://patchwork.ozlabs.org/project/netfilter-devel/patch/20220702191029.238563-1-pablo@netfilter.org/
+
+   Insufficient validation of element datatype and length in
+   nft_setelem_parse_data(). At least commit 7d7402642eaf updates
+   maximum element data area up to 64 bytes when only 16 bytes
+   where supported at the time. Support for larger element size
+   came later in fdb9c405e35b though. Picking this older commit
+   as Fixes: tag to be safe than sorry.
+
+> The vulnerable code path can be reached if the kernel is built with the 
+> configuration `CONFIG_NETFILTER`, `CONFIG_NF_TABLES` enabled.
+> To exploit the vulnerability, an attacker may need to obtain an 
+> unprivileged user namespace to gain the capability `CAP_NET_ADMIN` 
+> (`CONFIG_USER_NS` and `CONFIG_NET_NS` enabled, and 
+> `kernel.unprivileged_userns_clone = 1`).
+
+Another scenario is the attacker having (or gaining by other means)
+"root" access inside a pre-existing container with CAP_NET_ADMIN.  This
+does not require unprivileged user namespaces as the container may have
+been started by host root.
+
+> we can 
+> suggest the August, 15th 2022 as a potential date for public disclosure.
+
+FWIW, an embargo this long wouldn't have been accepted by linux-distros.
+The latest this issue could be disclosed publicly is July 15th.
+
+Alexander
