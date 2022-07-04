@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["173" "Tuesday" "28" "February" "2017" "19:44:38" "+0100" "Albert Astals Cid" "aacid@kde.org" "<1501907.mtIKE32cx4@xps>" "6" "[oss-security] kio vulnerability: need CVE" nil nil nil "2" "2017022818:44:38" "[oss-security] kio vulnerability: need CVE" (number mark "U       aacid@kde.or Feb 28    6/173   " thread-indent "\"[oss-security] kio vulnerability: need CVE\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 19979 invoked by uid 550); 28 Feb 2017 18:46:03 -0000
+Received: (qmail 24242 invoked by uid 550); 4 Jul 2022 13:06:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,46 +7,53 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19626 invoked from network); 28 Feb 2017 18:44:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:subject:date:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=cIeCDe1GzTIAprzl36eUnmLbx/wx0NVDDnyAs5KM/jA=;
-        b=kjWXvAkeohKziUneUQO1uG4fD6/PviA+JLXHpVr3SxbXVwYosBcG/ca67UfR36HO/p
-         FEPwtmCbzNZlmuWwEDOKULWzzYKTKjhA23MqxvVsO9Wb8vnQzK6YDtFiLRpuHJ+N5FT0
-         S1k/a/fz+TECFuCxJEhgIt/P0PAywGH3/6fL1BYaVHS1RzGsbBVOv+B7xOLrNGVqw5EO
-         JJCgx8APcn+vvkPKg7i64PvVoxsReOcZ4TuSVKGTeLT5pM2F2XEYDac/wI+IcnMMvE+9
-         v8UrIIcltFUY6J9v/l1LVzb1Eo3wf3Llbo2YESO3OKdNpnT3Nq3ezLLzdI/IiS5xmlqT
-         9zdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:subject:date:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=cIeCDe1GzTIAprzl36eUnmLbx/wx0NVDDnyAs5KM/jA=;
-        b=d/6A4y933DTQHjP0KyS2GNg0n8t6lBu8athndw1oMTQUlJyGt9SyNVfUC/TAbqSNEH
-         IeqYjwlg0bAYm4k/cmyZFs3VLvzAKbPGpqnyJfNK/tGN+pwcap+Qoqp7tYKAVaP0WG4p
-         ywGFbiujcmcBRCXYiucP8giGR8n9Q1iX7ouKuVuIWyzmafbC5SzT/3jCnHPm1aONMc76
-         Zc14nl8m79C+uaRNPYAhYA5vDda3eIDE4NalKYjltgjHHzTTgmnj6fhQaGQkHyZH2fum
-         j15HNWjEGVjyVNo+6Q5HiP76qaNNoTGHzvZT4Vg9FU69TE4R2JqqKdmwkA4G9gay155K
-         OHMQ==
-X-Gm-Message-State: AMke39n1c2m10hYq1nMxWBZI6vWqC5n1/lS+QFEzJzRORedhigq+FnVkSlJBNruM852qTg==
-X-Received: by 10.223.146.131 with SMTP id 3mr3887200wrn.198.1488307479821;
-        Tue, 28 Feb 2017 10:44:39 -0800 (PST)
-Sender: Albert Astals Cid <tsdgeos@gmail.com>
-From: Albert Astals Cid <aacid@kde.org>
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>, security@kde.org
-Date: Tue, 28 Feb 2017 19:44:38 +0100
-Message-ID: <1501907.mtIKE32cx4@xps>
-User-Agent: KMail/5.2.3 (Linux/4.8.0-39-generic; KDE/5.26.0; x86_64; ; )
+Received: (qmail 23863 invoked from network); 4 Jul 2022 13:05:23 -0000
+X-Virus-Scanned: amavisd-new at thermi.consulting
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=thermi.consulting;
+	s=201909; t=1656939910;
+	bh=lVWn1HtDvktLMrSlXewpKn7e4LOecFo/hfi9O5PIIAQ=;
+	h=Date:MIME-Version:Subject:To:From:Content-Type;
+	b=wHwb4IEDmx4n2rEun9rTVYwbZObHxsa+fPB99q6eRY4f/LddqQLBAJFhty7FXvX9k
+	 f9zWWDFNIiTqur4fmD5III9TbhgiHKpgGtWFC/Peas9uTSgN5SkeW6yG7vNizysFsh
+	 NJQABOAzYSXhqhMhq0wnLf3Slkhw34HhS0Jxh6jxgL0NL5M9Y6ZmCu97redoH6WO/o
+	 2cUi0bpBVBZFb3SJRWQQ0iDQsGUcvz5L8hqTE2PfBXwEpbxEnc+zbVzFGYqAnH0llr
+	 3ItC8eLqTJZrdz2hil2NQ71hd7yVZMU5A+E05cmSMHBKL/v0qutYmOXLnL//6nXTOA
+	 qhQTEWnyXeFyw==
+Message-ID: <3110cb65-cf6e-1742-0cdd-6792e47a6541@thermi.consulting>
+Date: Mon, 4 Jul 2022 15:05:10 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-Subject: [oss-security] kio vulnerability: need CVE
+Content-Language: de-DE
+To: oss-security@lists.openwall.com,
+ Peter van Dijk <peter.van.dijk@powerdns.com>
+References: <YsJ7JjZ/R/jqN+YX@itl-email>
+ <939888998.96730.1656936945905@appsuite.open-xchange.com>
+From: Noel Kuntze <noel.kuntze@thermi.consulting>
+Organization: Noel Kuntze IT- und Unternehmenssicherheit
+In-Reply-To: <939888998.96730.1656936945905@appsuite.open-xchange.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] DO NOT OPEN PREVIOUS MAIL Re: [oss-security]
+ Denial of service in GnuPG
 
-Hi, Albert from KDE, can we get a CVE assigned for kio (input/output library)?
+Hi Peter,
 
-advisory is here https://www.kde.org/info/security/advisory-20170228-1.txt
+It's really not that deep.
+The attachement is not named after the naming scheme expected of signatures of emails so clients won't try to process it in the context of opening or verifying an email.
+I had to call gpg locally on the attached fiels to reproduce the issue.
 
-Thanks,
-  Albert
+But I agree that attaching such files that could be read by clients directly is not a good move.
+
+Kind regards
+Noel
+
+Am 04.07.22 um 14:15 schrieb Peter van Dijk:
+> Hello,
+>
+>> On 04/07/2022 07:31 Demi Marie Obenour <demi@invisiblethingslab.com> wrote:
+>>
+>> Signature (of /dev/null) that triggers this bug is attached, along with
+>> the corresponding public key.
+> This is insane. You can't send weaponised exploits that crash email clients to public mailing lists. Please do not do this again.
+>
+> Peter
+
