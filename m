@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4544" "Monday" "12" "October" "2015" "14:50:56" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151012185056.0366DB2E069@smtpvbsrv1.mitre.org>" "97" "[oss-security] Re: CVE request: BD-J implementation in libbluray" nil nil nil "10" "2015101218:50:56" "[oss-security] Re: CVE request: BD-J implementation in libbluray" (number mark "U       cve-assign@m Oct 12   97/4544  " thread-indent "\"[oss-security] Re: CVE request: BD-J implementation in libbluray\"\n") "<54EAEB47.7070106@redhat.com>" ("<54EAEB47.7070106@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 22416 invoked by uid 550); 12 Oct 2015 18:51:10 -0000
+Received: (qmail 19662 invoked by uid 550); 4 Jul 2022 15:00:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,110 +6,41 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22389 invoked from network); 12 Oct 2015 18:51:09 -0000
-In-Reply-To: <54EAEB47.7070106@redhat.com>
-Message-Id: <20151012185056.0366DB2E069@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Mon, 12 Oct 2015 14:50:56 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: BD-J implementation in libbluray
-To: fweimer@redhat.com
+Received: (qmail 19644 invoked from network); 4 Jul 2022 15:00:42 -0000
+Authentication-Results: garm.ovh; auth=pass (GARM-102R004f6bec8ef-c155-4115-9407-cd9c28905c4d,
+                    71F9AC4D7AE0181B07F897B013AD32A2E64E1A30) smtp.auth=jwilk@jwilk.net
+X-OVh-ClientIp: 5.172.255.131
+Date: Mon, 4 Jul 2022 17:00:29 +0200
+From: Jakub Wilk <jwilk@jwilk.net>
+To: <oss-security@lists.openwall.com>
+Message-ID: <20220704150029.vcbamih6dlqdxqpl@jwilk.net>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <YsJ7JjZ/R/jqN+YX@itl-email>
+ <939888998.96730.1656936945905@appsuite.open-xchange.com>
+ <YsLj+ux2Pgkir5F8@adhil>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"; format=flowed
+Content-Disposition: inline
+In-Reply-To: <YsLj+ux2Pgkir5F8@adhil>
+X-Originating-IP: [37.59.142.102]
+X-ClientProxiedBy: DAG7EX2.mxp6.local (172.16.2.62) To DAG4EX2.mxp6.local
+ (172.16.2.32)
+X-Ovh-Tracer-GUID: 2818e6f0-5384-43f6-9b80-fa55868b5e92
+X-Ovh-Tracer-Id: 39969447777261335
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvfedrudehledgkeegucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpeffhffvuffkfhggtggujghisehttdertddttddvnecuhfhrohhmpeflrghkuhgsucghihhlkhcuoehjfihilhhksehjfihilhhkrdhnvghtqeenucggtffrrghtthgvrhhnpeelffduueelheevhfdvjeejfeduvdfhuedvjedttdehgedugfetgefgudfgjeffudenucfkpheptddrtddrtddrtddpfeejrdehledrudegvddruddtvdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhhouggvpehsmhhtphhouhhtpdhhvghlohepmhigphhlrghniedrmhgrihhlrdhovhhhrdhnvghtpdhinhgvtheptddrtddrtddrtddpmhgrihhlfhhrohhmpehjfihilhhksehjfihilhhkrdhnvghtpdhnsggprhgtphhtthhopedupdhrtghpthhtohepohhsshdqshgvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomhdpoffvtefjohhsthepmhhohedvle
+Subject: Re: [oss-security] DO NOT OPEN PREVIOUS MAIL Re: [oss-security]
+ Denial of service in  GnuPG
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+As a data point, if Mutt has pgp_auto_decode=yes ("automatically attempt 
+to decrypt traditional PGP messages") in the config, it will trigger the 
+DoS when you view the message.
 
-> It was found that org.videolan.BDJLoader class implementation of
-> libbluray, a library to access Blu-Ray disks for video playback, was
-> missing Java Security Manager sandboxing. A specially-crafted Java
-> application, utilizing the functionality of org.videolan.BDJLoader
-> class, could use this missing feature to perform actions as the user
-> running the Bluray player application.
-> 
-> Note: libbluray upstream disables BD-J support by default, but some
-> downstreams (like Fedora) pass --enable-bdjava at configure time,
-> enabling it for their distribution.
+(And it seems that if you lose patience waiting for the message to show 
+up and press ctrl+backslash in attempt to make it quit, it will actually 
+hang forever.)
 
-This is a situation in which there may be multiple valid perspectives.
-What we're going to do is assign a CVE ID to the Fedora package for
-the use of --enable-bdjava at a time when there had not been an
-upstream release with default support for BD-J. Use CVE-2015-7810.
-
-The upstream default was changed here:
-
-  http://git.videolan.org/?p=libbluray.git;a=commit;h=a83104c1c31301c4b2eb593b21e7b43f5480bd64
-
-on 2015-02-03. Default support for BD-J was present in 0.8.0 (released
-2015-04-29) but not in 0.7.0 (released 2015-01-27).
-https://download.videolan.org/pub/videolan/libbluray/ doesn't list any
-releases between these.
-
-In 0.7.0, the configure script has:
-
-  --enable-bdjava         enable BD-Java support (default is no)
-
-under "Optional Features" but we didn't find any documentation or
-comments suggesting that --enable-bdjava was recommended for general
-use cases at that time. Apparently, BDJSecurityManager development
-came after 0.7.0.
-
-In other words, our perspective is that the primary known mistake is
-that the Fedora packaging process chose a non-standard default
-behavior, and either didn't investigate or didn't document the risks.
-If anyone else independently chose --enable-bdjava for their package
-based on 0.7.0 or earlier, then they can have their own CVE ID.
-
-On the question of whether CVE IDs can be assigned for an upstream
-BDJSecurityManager error (or omission), we don't currently know.
-Certainly if the upstream documentation announced that the product was
-intended for arbitrary untrusted Blu-ray content, then any
-security-relevant behavior would be a vulnerability. Blu-ray content
-is designed to be (in some senses, but maybe not all arbitrary senses)
-executable content.
-http://www.openwall.com/lists/oss-security/2015/02/23/12 suggests an
-original upstream goal of handling trusted content in which the Java
-code is trusted Java code. Accordingly, it seems reasonable to
-interpret BDJSecurityManager as a work in progress. The existence of
-later releases doesn't mean they have announced that they are
-finished. For the general case of attacks that use media content, the
-CVE assignment process has an expectation that untrusted content may
-occur; however, any known upstream goal is always considered (also,
-the situation details are unusual here because the attack relies on
-Java, not memory safety in handling audio/video data).
-
-Similarly,
-https://www.nccgroup.trust/uk/about-us/newsroom-and-events/blogs/2015/february/abusing-blu-ray-players-pt.-1-sandbox-escapes/
-mentions (among its other findings) "Many physical players have
-settings to prevent discs from accessing the Internet for privacy
-reasons." If a device's documentation stated that the Internet would
-never be accessed, and the observed behavior were that the Internet is
-accessed, then there could be a CVE.
-
-Finally, we do realize that:
-
- http://www.openwall.com/lists/oss-security/2015/02/06/9
-
-has different reports.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWHAB/AAoJEL54rhJi8gl5OBwQAIDWf0XgzoEaP62hk3ACMnQ1
-d6kDh7QHkyCtqwcVAchfirOhGKaTX9mS0MOwxpIiCWAkc51RlK5TjfHk5YByNV9v
-TM3cyvfDMmVt0R9hUDZD3OUucJTya/WHWXoKczk/Wt0J7zkSuk8oQn95beLqVSAJ
-qs+jFOzBnLyrlx+nZFDxWV+TpelFrhYROdfRTHDQdi6VlcK6qbtOwNO+0AADlO4K
-zjbYvNc0PxzC5bO5h1L4rlLBAVVo03IB1lD8b4QfC8dEMgFklj7oN7lGaK+LDCpq
-m0eg5rAz3MGhuvTK43TIuRX/32poxbC+o6DX5Cye1mcQGmCFcIXtF11fZl4cdQsg
-m2QhrobnUZwDTMHuRTfLhuYKtja95f+/AnDFANBp38jaufGidP8a+OlR2IYcLVjr
-E7kI9eznmS5pKp2fCJIGkP4TE++vJoxoTa5PUnqFGJJgRHINTaUJ+qkhh/NjviEJ
-P8FxcoyHw06dNVg9HhK433mUtSH0VTMrxbgNA61Yvn6SyZEy76Fsa3Iozdszyl5n
-n8jB5/kQuolYKyx/Cwmw1XtWoOdzEU1ccglSwaRDcC30Wwpuca19lGhFjspYY347
-raexxjVy7NF++G631T6bY2loNaLIcAds7bmFPzo9KEG3WBPADrIG9VeMCFqSjBLr
-bsYTn+migyn5VAM7KUtt
-=HNXo
------END PGP SIGNATURE-----
+-- 
+Jakub Wilk
