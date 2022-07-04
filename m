@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1568" "Wednesday" "6" "May" "2020" "15:12:12" "+1000" "Wade Mealing" "wmealing@redhat.com" "<CALJHwhRpmRTpqWe74KBk1QBQ7b8tuHXuOJAu2UHtq6foYRj7Zg@mail.gmail.com>" "51" "[oss-security] CVE-2020-10732 kernel: uninitialized kernel data leak in userspace coredumps" nil nil nil "5" "2020050605:12:12" "[oss-security] CVE-2020-10732 kernel: uninitialized kernel data leak in userspace coredumps" (number mark "U       wmealing@red May  6   51/1568  " thread-indent "\"[oss-security] CVE-2020-10732 kernel: uninitialized kernel data leak in userspace coredumps\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-10732 kernel: uninitialized kernel data leak in userspace coredumps" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 26310 invoked by uid 550); 6 May 2020 05:12:41 -0000
+Received: (qmail 17907 invoked by uid 550); 4 Jul 2022 10:04:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,92 +7,128 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26287 invoked from network); 6 May 2020 05:12:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1588741949;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=e/3zAAhstKGnVSpjin4VpDgDn3QGOSkUuLpiEBsA5g4=;
-	b=gEk+/mOP9FHg1Fy9OiQLIY1Wr3qvcrnlUneix1myelsLOakFB6ZekTKGSKE8jO9pEMdEwJ
-	UD9KD9rHhdgIj173Zm9XxJ/QQfe1P+1nFcPRleEi6QYM8rRtIAoUR5zMBpEYfnRyoEcDn4
-	JKgkWbjzbFrUCqfxoBxjL1lAGEEfP1k=
-X-MC-Unique: BlLrW9z8Nr6xWdYIEBk_cQ-1
+Received: (qmail 30370 invoked from network); 4 Jul 2022 08:13:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:content-language:to:from
+         :subject:content-transfer-encoding;
+        bh=yblLWs5l8Ze1vVdhRTaqBhtV/KomDJ9B9J2cSDHqm3c=;
+        b=CMHyEdEx5Y6NJgzZLqRRqQTolFCHSzD0idStrctA0z+1FrEf7EyrKPhTSeCZcjwrnt
+         iaoQe/xhJLoPX03l0eVK6yifVAcvqJz3R9G5K31VPkxOx1daiBP5M4eKJFxCP110+/FT
+         kHIbTxTtFJ55/8pIKmmyYZaMbaTguH8e02NZzpkKGWLMnJNahubvpVHSHKhlLjupQOtM
+         GR4qF1P0BmS0LtAIHAyIfF6f4CToEIgrNx0V1z8WEZiXl/G3/JnGAwy3Qf7FynGWWD9q
+         fIEQzG1/9kgtXSpaeoAjCxVOjyeOjdY4rItAoqX7zsoPZMVBcFZBhqDMK0BjZSLXCFVF
+         MklA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=VNRVOQzQLCjqJMqGkhHJrRyCU/LtsZI1YJnVF+DtS/w=;
-        b=ndAi4c1v4o1Ype1jXSIrD+E3fGQaDtgCiWAZuHD+Ck0FuQL4zcp9PLR7LeRwMBwDsf
-         +0IgQNgvMeksnM62MO8jP3IueB2HXPfh4SCGsFC7I/8Ovcq0lY2HoSQUjm7g/pXRxohg
-         5nlk61IIxyjNr5kmZimcExRK1qmMN6FdFGsujE6IM0PtCnPvX48zJuN3pxWaf/QkFGdz
-         4iF2gDKry3K5yVXeKgKSlHL616v5ACx8gO8+ANQqURfAivev0T4cgTHs8DcafhCTBC53
-         wcrqPNUPh7CC8M+YiVZ1BohHCQ51fnPbpRY+P8uPEtRlqJH2V0i/qv8O6Dfdj0xsuL35
-         jo9Q==
-X-Gm-Message-State: AGi0PuYvZlEqwu5h67m5dBmIQHWSOCry+hNlxkxR1w+gnEaXWqof1ON2
-	6QfdqMKNzzvMk653J6xu6XzYF90THdez8CInlTNo/eqF/BerghntL/BtrHb6FWVp5UUMKBV3QmU
-	RehENC8n1h6oO3cEhdpisFQ3Mk80t4HsnSzA8U+F/A6uW
-X-Received: by 2002:a1c:6545:: with SMTP id z66mr2104802wmb.81.1588741944004;
-        Tue, 05 May 2020 22:12:24 -0700 (PDT)
-X-Google-Smtp-Source: APiQypJXeqNAH4wVfxGNDMU40/EZAB15N1MD2jtow8rk/UER7wmNlF0SmSfpNYqIcHTo7nJLFGKjqUw/7eBdQSZWiO8=
-X-Received: by 2002:a1c:6545:: with SMTP id z66mr2104789wmb.81.1588741943810;
- Tue, 05 May 2020 22:12:23 -0700 (PDT)
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent
+         :content-language:to:from:subject:content-transfer-encoding;
+        bh=yblLWs5l8Ze1vVdhRTaqBhtV/KomDJ9B9J2cSDHqm3c=;
+        b=5ctk+/Ds5wCZXdTiNEacUb1wz4BS9y1o1LMsTmxUWsGT3H4KeWRzkuG9xZsczfG6Ak
+         DoAiM5jSjQbbK0G+jKZ4WCQfZvm02kq+TNudN83k41SgiKRhUDrtbTHavUeli9Hyh2DK
+         9HQjXIjwbByhnWYmgcd6RapXf8yV2XASmZwI6V3aZBTYLfXP1nBd2ElBVAllm7Tyyl6r
+         2euA9M8ekueibpQJWml9z+StU9pByTKJbZtcr4BB4FC784xxEsbqON4h9XQyEqOwRVcm
+         H7+9f1CdT3dGpQpbvx5fJubK18FWjBXi0ZwmmIe17psS3n+hf10giF13IjJq/1/EYrhC
+         D02w==
+X-Gm-Message-State: AJIora/D+B8KWu1sgUDVS/srrZ977Iis2Yb/FPAuEd0E123NMNmMTPQz
+	zETSI7aHKkErGfgxSIRVZ9vUi/ySRjo=
+X-Google-Smtp-Source: AGRyM1ucptJ5nrTXkbevz7ybZ/tMeFtT2V5yYCIOphnFPXQcBm13rdgWWn5W+xvHp3VK/k/cbOkCIA==
+X-Received: by 2002:a2e:1453:0:b0:25a:725a:db92 with SMTP id 19-20020a2e1453000000b0025a725adb92mr16338235lju.483.1656922414471;
+        Mon, 04 Jul 2022 01:13:34 -0700 (PDT)
+Message-ID: <e6d51d15-43ea-9b1a-c9a7-8b6a2589c851@gmail.com>
+Date: Mon, 4 Jul 2022 10:13:32 +0200
 MIME-Version: 1.0
-From: Wade Mealing <wmealing@redhat.com>
-Date: Wed, 6 May 2020 15:12:12 +1000
-Message-ID: <CALJHwhRpmRTpqWe74KBk1QBQ7b8tuHXuOJAu2UHtq6foYRj7Zg@mail.gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Content-Language: en-US
 To: oss-security@lists.openwall.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: multipart/alternative; boundary="000000000000336e1d05a4f3cf19"
-Subject: [oss-security] CVE-2020-10732 kernel: uninitialized kernel data leak in userspace coredumps
+From: Mariusz Felisiak <felisiak.mariusz@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] Django: CVE-2022-34265: Potential SQL injection via Trunc(kind) and
+ Extract(lookup_name) arguments.
 
---000000000000336e1d05a4f3cf19
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+https://www.djangoproject.com/weblog/2022/jul/04/security-releases/
 
-Gday,
+In accordance with `our security release policy
+<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
+Django team
+is issuing
+`Django 4.0.6 <https://docs.djangoproject.com/en/dev/releases/4.0.6/>`_ and
+`Django 3.2.14 <https://docs.djangoproject.com/en/dev/releases/3.2.14/>`_.
+These release addresses the security issue detailed below. We encourage all
+users of Django to upgrade as soon as possible.
 
-A potential info leak of kernel private memory to userspace was found in
-the kernel's implementation of core dumping userspace processes.  An area
-of memory was allocated from free memory without being correctly
-initialized, this memory contents could contain kernel private information
-from previous executions and leak it to kernel space for any (probably
-local) user that is able to read the core dump.
+CVE-2022-34265: Potential SQL injection via ``Trunc(kind)`` and 
+``Extract(lookup_name)`` arguments
+==================================================================================================
 
-This seems like it would allow leaking of possible registers that are not
-stored/initialized in the core dump itself.  The amount leaked will depend
-on the register state at the time of the crash, it could also leak nothing.
+``Trunc()`` and ``Extract()`` database functions were
+subject to SQL injection if untrusted data was used as a
+``kind``/``lookup_name`` value.
 
-This was introduced in 4206d3aa1978e44f58bfa4e1c9d8d35cbf19c187
+Applications that constrain the lookup name and kind choice to a known safe
+list are unaffected.
 
-Possible mitigation would be to disable core dumps system-wide by setting:
+This security release mitigates the issue, but we have identified 
+improvements
+to the Database API methods related to date extract and truncate that 
+would be
+beneficial to add to Django 4.1 before it's final release. This will 
+impact 3rd
+party database backends using Django 4.1 release candidate 1 or newer, 
+until they
+are able to update to the API changes. We apologize for the inconvenience.
 
-* hard core 0
+Thanks Takuto Yoshikai (Aeye Security Lab) for the report.
 
-In the  /etc/security/limits.conf file and restarting
-applications/services/processes which users may have access to or simply
-reboot the system.  This disables core dumps which may not be a suitable
-workaround in your environment.
+This issue has severity "high" according to the Django security policy.
 
-Relevant links:
--------------------
+Affected supported versions
+===========================
 
-Not upstream but a patch:
-https://github.com/ruscur/linux/commit/a95cdec9fa0c08e6eeb410d461c03af8fd1f=
-ef0a
+* Django main branch
+* Django 4.1 (currently at beta status)
+* Django 4.0
+* Django 3.2
 
-Where I found out about it:
-https://twitter.com/grsecurity/status/1252558055629299712
+Resolution
+==========
 
-Red Hat Bugzilla:
-https://bugzilla.redhat.com/show_bug.cgi?id=3D1831399
+Patches to resolve the issue have been applied to Django's main branch 
+and to
+the 4.1, 4.0, and 3.2 release branches. The patches may be obtained from the
+following changesets:
 
-Thank you.
+* On the `main branch 
+<https://github.com/django/django/commit/54eb8a374d5d98594b264e8ec22337819b37443c>`__
+* On the `4.1 release branch 
+<https://github.com/django/django/commit/284b188a4194e8fa5d72a73b09a869d7dd9f0dc5>`__
+* On the `4.0 release branch 
+<https://github.com/django/django/commit/0dc9c016fadb71a067e5a42be30164e3f96c0492>`__
+* On the `3.2 release branch 
+<https://github.com/django/django/commit/a9010fe5555e6086a9d9ae50069579400ef0685e>`__
 
-Wade Mealing
+The following releases have been issued:
 
-Product Security - Kernel
-Red Hat
-wmealing@redhat.com
+* Django 4.0.6 (`download Django 4.0.6 
+<https://www.djangoproject.com/m/releases/4.0/Django-4.0.6.tar.gz>`_ | 
+`4.0.6 checksums 
+<https://www.djangoproject.com/m/pgp/Django-4.0.6.checksum.txt>`_)
+* Django 3.2.14 (`download Django 3.2.14 
+<https://www.djangoproject.com/m/releases/3.2/Django-3.2.14.tar.gz>`_ | 
+`3.2.14 checksums 
+<https://www.djangoproject.com/m/pgp/Django-3.2.14.checksum.txt>`_)
 
---000000000000336e1d05a4f3cf19--
+The PGP key ID used for this release is Mariusz Felisiak: 
+`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
+
+General notes regarding security reporting
+==========================================
+
+As always, we ask that potential security issues be reported via
+private email to ``security@djangoproject.com``, and not via Django's
+Trac instance or the django-developers list. Please see `our security
+policies <https://www.djangoproject.com/security/>`_ for further
+information.
 
