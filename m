@@ -1,25 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/06/8
-Message-ID: <YsWSda4ITnaf5bOY@itl-email>
-Date: Wed, 6 Jul 2022 09:47:28 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: DO NOT OPEN PREVIOUS MAIL Re:  Denial of service in  GnuPG
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/04/5
+Message-ID: <3110cb65-cf6e-1742-0cdd-6792e47a6541@thermi.consulting>
+Date: Mon, 4 Jul 2022 15:05:10 +0200
+From: Noel Kuntze <noel.kuntze@...rmi.consulting>
+To: oss-security@...ts.openwall.com, Peter van Dijk <peter.van.dijk@...erdns.com>
+Subject: Re: DO NOT OPEN PREVIOUS MAIL Re:  Denial of service in GnuPG
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 06, 2022 at 03:38:10PM +0200, Solar Designer wrote:
-> On Wed, Jul 06, 2022 at 07:02:59AM -0400, Demi Marie Obenour wrote:
-> > Was adding compression to PGP even a good idea in the first place?
-> 
-> I think actually yes, it was, especially back then.  It has probably
-> helped more than it hurt in PGP's lifetime so far.
-> 
-> Alexander
+Hi Peter,
 
-Interesting.  Why do you say that?
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+It's really not that deep.
+The attachement is not named after the naming scheme expected of signatures of emails so clients won't try to process it in the context of opening or verifying an email.
+I had to call gpg locally on the attached fiels to reproduce the issue.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+But I agree that attaching such files that could be read by clients directly is not a good move.
+
+Kind regards
+Noel
+
+Am 04.07.22 um 14:15 schrieb Peter van Dijk:
+> Hello,
+>
+>> On 04/07/2022 07:31 Demi Marie Obenour <demi@...isiblethingslab.com> wrote:
+>>
+>> Signature (of /dev/null) that triggers this bug is attached, along with
+>> the corresponding public key.
+> This is insane. You can't send weaponised exploits that crash email clients to public mailing lists. Please do not do this again.
+>
+> Peter
+
