@@ -1,29 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/23/3
-Message-ID: <Y6VTdO608VUE38Ke@kroah.com>
-Date: Fri, 23 Dec 2022 08:06:28 +0100
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/04/6
+Message-ID: <a165ce13d67c1d9dd29e4a4f0681ed5dbfd592aa.camel@powerdns.com>
+Date: Mon, 04 Jul 2022 15:15:40 +0200
+From: Peter van Dijk <peter.van.dijk@...erdns.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Details on this supposed Linux Kernel ksmbd RCE
+Subject: Re: DO NOT OPEN PREVIOUS MAIL Re:  Denial of service in  GnuPG
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Dec 22, 2022 at 04:49:04PM -0500, Jan Schaumann wrote:
-> Lastly, given that this is a coordinated disclosure,
-> I don't know why there are no CVE IDs reserved for
-> these.
+On Mon, 2022-07-04 at 14:58 +0200, Jens-Wolfhard Schicke-Uffmann wrote:
+> Hi,
+> 
+> On Mon, Jul 04, 2022 at 02:15:45PM +0200, Peter van Dijk wrote:
+> > > On 04/07/2022 07:31 Demi Marie Obenour <demi@...isiblethingslab.com> wrote:
+> > > Signature (of /dev/null) that triggers this bug is attached, along with
+> > > the corresponding public key.
+> > This is insane. You can't send weaponised exploits that crash email
+> > clients to public mailing lists. Please do not do this again.
+> What email client would that be specifically? Because at least on
+> my end, nothing nefarious happened. GPG was called on the outermost
+> layer of signature and verified the email in entirety (and did so
+> quickly).
 
-The kernel developers do not work with CVEs at all as they are not all
-that relevant for the most part for kernel issues.  MITRE agrees with us
-will not even give them to us if we ask for them :)
+GNOME Evolution (Debian's version 3.38.3-1) hangs (interruptibly, by
+navigating to another message) when trying to open the message. It
+hangs completely (eventually I used the Force Quit that GNOME offered
+me) when trying to reply to it.
 
-Some Linux companies still insist on assigning CVEs, but that's
-primarily to help enable their internal engineering processes more than
-anything else.
+Kind regards,
+-- 
+Peter van Dijk
+PowerDNS.COM BV - https://www.powerdns.com/
 
-As an alternative, please look at the GSD (Global Security Database,
-https://globalsecuritydatabase.org/) for which the kernel does get ids
-assigned for issues like this, and many many others.
-
-sorry,
-
-greg k-h
