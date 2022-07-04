@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["713" "Monday" "20" "February" "2017" "08:58:16" "-0800" "Timothy D. Morgan" "tim.advisories@blindspotsecurity.com" "<2cd2011c-c51b-66d9-2de9-b9bca8ce9c48@blindspotsecurity.com>" "15" "Re: [oss-security] Blindspot Advisory: Java/Python FTP Injections Allow for Firewall Bypass" nil nil nil "2" "2017022016:58:16" "[oss-security] Blindspot Advisory: Java/Python FTP Injections Allow for Firewall Bypass" (number mark "U       tim.advisori Feb 20   15/713   " thread-indent "\"Re: [oss-security] Blindspot Advisory: Java/Python FTP Injections Allow for Firewall Bypass\"\n") "<20170220165206.GA15039@openwall.com>" ("<a2152d8b-5716-db81-9668-c04e70cd744f@blindspotsecurity.com>" "<20170220165206.GA15039@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 17690 invoked by uid 550); 20 Feb 2017 17:00:16 -0000
+Received: (qmail 12092 invoked by uid 550); 4 Jul 2022 13:17:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,34 +7,43 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16159 invoked from network); 20 Feb 2017 16:58:35 -0000
+Received: (qmail 11665 invoked from network); 4 Jul 2022 13:15:52 -0000
+Message-ID: <a165ce13d67c1d9dd29e4a4f0681ed5dbfd592aa.camel@powerdns.com>
+From: Peter van Dijk <peter.van.dijk@powerdns.com>
 To: oss-security@lists.openwall.com
-References: <a2152d8b-5716-db81-9668-c04e70cd744f@blindspotsecurity.com>
- <20170220165206.GA15039@openwall.com>
-From: "Timothy D. Morgan" <tim.advisories@blindspotsecurity.com>
-Message-ID: <2cd2011c-c51b-66d9-2de9-b9bca8ce9c48@blindspotsecurity.com>
-Date: Mon, 20 Feb 2017 08:58:16 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.4.0
+Date: Mon, 04 Jul 2022 15:15:40 +0200
+In-Reply-To: <YsLj+ux2Pgkir5F8@adhil>
+References: <YsJ7JjZ/R/jqN+YX@itl-email>
+	 <939888998.96730.1656936945905@appsuite.open-xchange.com>
+	 <YsLj+ux2Pgkir5F8@adhil>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.38.3-1 
 MIME-Version: 1.0
-In-Reply-To: <20170220165206.GA15039@openwall.com>
-Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] Blindspot Advisory: Java/Python FTP Injections
- Allow for Firewall Bypass
+Subject: Re: [oss-security] DO NOT OPEN PREVIOUS MAIL Re: [oss-security]
+ Denial of service in  GnuPG
 
-
-> Thanks, Timothy.  For archival (since web pages tend to be gone after a
-> few years) and per oss-security list content guidelines, we'd like full
-> advisories to be posted right in here (including links as well is OK and
-> encouraged; including only links is not).
+On Mon, 2022-07-04 at 14:58 +0200, Jens-Wolfhard Schicke-Uffmann wrote:
+> Hi,
 > 
-> Attached is a mostly auto-converted text version of the above advisory.
-> (I only deleted the web page header/footer portions not specific to it.)
+> On Mon, Jul 04, 2022 at 02:15:45PM +0200, Peter van Dijk wrote:
+> > > On 04/07/2022 07:31 Demi Marie Obenour <demi@invisiblethingslab.com> wrote:
+> > > Signature (of /dev/null) that triggers this bug is attached, along with
+> > > the corresponding public key.
+> > This is insane. You can't send weaponised exploits that crash email
+> > clients to public mailing lists. Please do not do this again.
+> What email client would that be specifically? Because at least on
+> my end, nothing nefarious happened. GPG was called on the outermost
+> layer of signature and verified the email in entirety (and did so
+> quickly).
 
-Sorry Alexander.  I was sort of in a rush.  Thanks for converting it and posting it.
+GNOME Evolution (Debian's version 3.38.3-1) hangs (interruptibly, by
+navigating to another message) when trying to open the message. It
+hangs completely (eventually I used the Force Quit that GNOME offered
+me) when trying to reply to it.
 
-Though, truth be known... I am pretty good about keeping my advisory pages available at the same URLs.  The very first advisory I ever published is still at the same location after 15 years. ;-)
+Kind regards,
+-- 
+Peter van Dijk
+PowerDNS.COM BV - https://www.powerdns.com/
 
-Best,
-tim
