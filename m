@@ -1,42 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/28/7
-Message-ID: <2D37FD38-B910-4D66-A5B3-0E58DA3B87C1@akamai.com>
-Date: Thu, 28 Apr 2022 23:34:46 +0000
-From: "Seaman, Chad" <cseaman@...mai.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE-2022-21449 and version reporting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/04/2
+Message-ID: <e6d51d15-43ea-9b1a-c9a7-8b6a2589c851@gmail.com>
+Date: Mon, 4 Jul 2022 10:13:32 +0200
+From: Mariusz Felisiak <felisiak.mariusz@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Django: CVE-2022-34265: Potential SQL injection via Trunc(kind) and Extract(lookup_name) arguments.
 Content-Type: text/plain; charset=utf-8
 
-Exactly this.
+https://www.djangoproject.com/weblog/2022/jul/04/security-releases/
 
-It’s not that they didn’t/can’t verify, it’s already verified, they’re claiming those versions no longer being officially supported means they can seemingly omit them from CVE reporting.
+In accordance with `our security release policy
+<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
+Django team
+is issuing
+`Django 4.0.6 <https://docs.djangoproject.com/en/dev/releases/4.0.6/>`_ and
+`Django 3.2.14 <https://docs.djangoproject.com/en/dev/releases/3.2.14/>`_.
+These release addresses the security issue detailed below. We encourage all
+users of Django to upgrade as soon as possible.
 
-Which is dangerous, misleading, and nonsensical.
+CVE-2022-34265: Potential SQL injection via ``Trunc(kind)`` and 
+``Extract(lookup_name)`` arguments
+==================================================================================================
 
-Regards,
-Chad
+``Trunc()`` and ``Extract()`` database functions were
+subject to SQL injection if untrusted data was used as a
+``kind``/``lookup_name`` value.
 
-On Apr 28, 2022, at 5:36 PM, Sven Schwedas <sven.schwedas@....at> wrote:
+Applications that constrain the lookup name and kind choice to a known safe
+list are unaffected.
 
-﻿
-On 28.04.22 22:10, Seth Arnold wrote:
-On Thu, Apr 28, 2022 at 02:12:04PM +0000, Seaman, Chad wrote:
-In what universe exactly are versions omitted from vulnerability
-reporting because a vendor “no longer supports that version”… this
-non-supported version is still vulnerable?
-A large part of software maintenance is managing technical debt --
-and being able to walk away from no-longer-supported products is an
-important part of that.
-Would you expect Microsoft to evaluate Windows 3.11, Windows 95,
-Windows 98, Windows ME, Windows NT 3.51, Windows NT 4.0. Windows XP,
-etc for every single vulnerability discovered in newest products?
+This security release mitigates the issue, but we have identified 
+improvements
+to the Database API methods related to date extract and truncate that 
+would be
+beneficial to add to Django 4.1 before it's final release. This will 
+impact 3rd
+party database backends using Django 4.1 release candidate 1 or newer, 
+until they
+are able to update to the API changes. We apologize for the inconvenience.
 
-You and Jeremy arguing in bad faith here, OP didn't ask about anything like that.
+Thanks Takuto Yoshikai (Aeye Security Lab) for the report.
 
-The problem at hand is, someone *already did all that work*, and Oracle is *actively intervening* to have it dropped from CVE reports.
+This issue has severity "high" according to the Django security policy.
 
-So the question is: Why is vulnerability information that already exists being censored?
+Affected supported versions
+===========================
 
-Content of type "text/html" skipped
+* Django main branch
+* Django 4.1 (currently at beta status)
+* Django 4.0
+* Django 3.2
 
-Download attachment "OpenPGP_signature" of type "application/octet-stream" (677 bytes)
+Resolution
+==========
+
+Patches to resolve the issue have been applied to Django's main branch 
+and to
+the 4.1, 4.0, and 3.2 release branches. The patches may be obtained from the
+following changesets:
+
+* On the `main branch 
+<https://github.com/django/django/commit/54eb8a374d5d98594b264e8ec22337819b37443c>`__
+* On the `4.1 release branch 
+<https://github.com/django/django/commit/284b188a4194e8fa5d72a73b09a869d7dd9f0dc5>`__
+* On the `4.0 release branch 
+<https://github.com/django/django/commit/0dc9c016fadb71a067e5a42be30164e3f96c0492>`__
+* On the `3.2 release branch 
+<https://github.com/django/django/commit/a9010fe5555e6086a9d9ae50069579400ef0685e>`__
+
+The following releases have been issued:
+
+* Django 4.0.6 (`download Django 4.0.6 
+<https://www.djangoproject.com/m/releases/4.0/Django-4.0.6.tar.gz>`_ | 
+`4.0.6 checksums 
+<https://www.djangoproject.com/m/pgp/Django-4.0.6.checksum.txt>`_)
+* Django 3.2.14 (`download Django 3.2.14 
+<https://www.djangoproject.com/m/releases/3.2/Django-3.2.14.tar.gz>`_ | 
+`3.2.14 checksums 
+<https://www.djangoproject.com/m/pgp/Django-3.2.14.checksum.txt>`_)
+
+The PGP key ID used for this release is Mariusz Felisiak: 
+`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
+
+General notes regarding security reporting
+==========================================
+
+As always, we ask that potential security issues be reported via
+private email to ``security@...ngoproject.com``, and not via Django's
+Trac instance or the django-developers list. Please see `our security
+policies <https://www.djangoproject.com/security/>`_ for further
+information.
+
