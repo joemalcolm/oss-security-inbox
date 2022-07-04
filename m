@@ -1,91 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/26/3
-Message-ID: <n1srq084-n412-2732-q867-r4ns9q23r570@unkk.fr>
-Date: Wed, 26 Oct 2022 08:26:44 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] CVE-2022-42915: HTTP proxy double-free (curl)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/04/8
+Message-ID: <YsNKzWyfLpY3Bt6+@itl-email>
+Date: Mon, 4 Jul 2022 16:17:17 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
+To: Open Source Software Security <oss-security@...ts.openwall.com>
+Subject: Re: Denial of service in GnuPG
 Content-Type: text/plain; charset=utf-8
 
-CVE-2022-42915: HTTP proxy double-free
-======================================
+It has come to my attention that my original post caused at least two
+mail clients to hang.  Sorry about that; I did not expect any mail
+client to eagerly parse the attachments.  This version wraps the
+attachments in a password-protected zip file (password: MitB7vqh).  It
+also includes some additional information.
 
-Project curl Security Advisory, October 26 2022 -
-[Permalink](https://curl.se/docs/CVE-2022-42915.html)
+GnuPG is vulnerable to a denial of service attack when processing
+crafted detached signatures and/or certificates.  By concatenating the
+same signature to itself a very large number of times, and then wrapping
+them in a compressed packet, I am able to cause GnuPG to take over a
+minute to process an input that is less than 5KB armored.
 
-VULNERABILITY
--------------
+I have attached two files:
 
-If curl is told to use an HTTP proxy for a transfer with a non-HTTP(S) URL, it
-sets up the connection to the remote server by issuing a `CONNECT` request to
-the proxy, and then *tunnels* the rest of protocol through.
+- A patch (based on one submitted upstream) that fixes the bug for keys,
+  detached signatures, and cleartext signatures.  It does not fix the
+  bug for other types of OpenPGP data, as I am not sure if the obvious
+  fix (only allowing a single literal data packet in a compressed
+  packet) would render data already in the wild inaccessible.  The only
+  difference between this patch and the one sent upstream already is that
+  this one prevents attacks involving cleartext signatures.
 
-An HTTP proxy might refuse this request (HTTP proxies often only allow
-outgoing connections to specific port numbers, like 443 for HTTPS) and instead
-return a non-200 response code to the client.
-
-Due to flaws in the error/cleanup handling, this could trigger a double-free
-in curl if one of the following schemes were used in the URL for the transfer:
-`dict`, `gopher`, `gophers`, `ldap`, `ldaps`, `rtmp`, `rtmps`, `telnet`
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-The bug was introduced in [this commit](https://github.com/curl/curl/commit/51c0ebcff2140c3).
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2022-42915 to this issue.
-
-CWE-415: Double Free
-
-Severity: medium
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.77.0 to and including 7.85.0
-- Not affected versions: curl < 7.77.0 and >= 7.86.0
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-[The fix for CVE-2022-42915](https://github.com/curl/curl/commit/55e1875729f9d9fc7315ce)
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 7.86.0
-
-  B - Apply the patch to your local version
-
-  C - Do not do use HTTP proxy
-
-TIMELINE
---------
-
-This issue was reported to the curl project on October 4, 2022. We contacted
-distros@...nwall on October 18, 2022.
-
-libcurl 7.86.0 was released on October 26 2022, coordinated with the
-publication of this advisory.
-
-CREDITS
--------
-
-This report was part of the security audit performed by Trail of Bits.
-
-- Reported-by: Trail of Bits
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
-
+- An encrypted zip file (see above for password) that contains a proof
+  of concept exploit.  Both the public key and the detached signature
+  (of an empty file) are included.
 -- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
+View attachment "v3-0001-Disallow-compressed-signatures-and-certificates.patch" of type "text/plain" (8134 bytes)
+
+Download attachment "gnupg-dos.zip" of type "application/zip" (4070 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
