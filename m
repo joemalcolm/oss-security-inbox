@@ -1,4 +1,4 @@
-Received: (qmail 25750 invoked by uid 550); 23 Jan 2024 10:37:28 -0000
+Received: (qmail 24555 invoked by uid 550); 5 Jul 2022 12:04:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,200 +7,166 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25720 invoked from network); 23 Jan 2024 10:37:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1706006362; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=Owzq/8627SQE4DrAeleuIgZgMG2k3Qq9yHvWYweaEcI=;
-	b=LCWFTRi6+3d7DJyBGDLD5oBtUDilp/EFgbVobGHgpjHWRDxQvAw5koxX7tDYCen5/A+xLw
-	upPFqf/ujz+abU/R+6Yls9cZLxPL6XwrjVv/0bX/JuIjHVQ2K6oI6Z7sHIxV0DI0vrHowK
-	+EbXScrluQugSTCOvBV3lM3V4VgfsIw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1706006362;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=Owzq/8627SQE4DrAeleuIgZgMG2k3Qq9yHvWYweaEcI=;
-	b=mRjYE1pT1zuquwiLEsamqmK32GftT+zp2LgsX/xfl5bCF0oUXoveTrMke5JnK2gE2psU87
-	nViLBn4dfPiZ27DA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1706006362; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=Owzq/8627SQE4DrAeleuIgZgMG2k3Qq9yHvWYweaEcI=;
-	b=LCWFTRi6+3d7DJyBGDLD5oBtUDilp/EFgbVobGHgpjHWRDxQvAw5koxX7tDYCen5/A+xLw
-	upPFqf/ujz+abU/R+6Yls9cZLxPL6XwrjVv/0bX/JuIjHVQ2K6oI6Z7sHIxV0DI0vrHowK
-	+EbXScrluQugSTCOvBV3lM3V4VgfsIw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1706006362;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=Owzq/8627SQE4DrAeleuIgZgMG2k3Qq9yHvWYweaEcI=;
-	b=mRjYE1pT1zuquwiLEsamqmK32GftT+zp2LgsX/xfl5bCF0oUXoveTrMke5JnK2gE2psU87
-	nViLBn4dfPiZ27DA==
-Date: Tue, 23 Jan 2024 11:39:19 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
-To: oss-security@lists.openwall.com
-Message-ID: <Za-XWUEPml2pcATt@kasco.suse.de>
+Received: (qmail 24396 invoked from network); 5 Jul 2022 12:04:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
+	Content-Transfer-Encoding:Content-Type;
+	bh=QAl9nOVTcMC4khUODf/sp9Yo/Uls9NnRuFaD0BAPueY=; b=l6Mf2w3V7T4K7eM3Mo/eb7VX3F
+	xemvX6yj6UVHsLHOZT1kzGbGTkp9kZ+K1SKP3ai1rk+8jFWo4iv9Bq5eDYYTgEJps+wKn+YoxqOyB
+	3upUaM0vPzMA4/g1x2Y1tus1ZGTcLCTGxZkJObN/hFG6mxSklMZI7Ln9RBswKGV9vITw=;
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="q2f1jvgSasYACE+I"
+X-Mailer: MIME-tools 5.509 (Entity 5.509)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1o8hHu-0004G2-Eq@xenbits.xenproject.org>
+Date: Tue, 05 Jul 2022 12:04:18 +0000
+Subject: [oss-security] Xen Security Advisory 405 v3 (CVE-2022-33743) - network backend
+ may cause Linux netfront to use freed SKBs
+
+--=separator
+Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
-Authentication-Results: smtp-out1.suse.de;
-	none
-Subject: [oss-security] darkhttpd: timing attack and local leak of HTTP basic auth
- credentials
+Content-Transfer-Encoding: 7bit
 
---q2f1jvgSasYACE+I
-Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 23 Jan 2024 11:39:19 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
-To: oss-security@lists.openwall.com
-Subject: darkhttpd: timing attack and local leak of HTTP basic auth
- credentials
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hello list,
+            Xen Security Advisory CVE-2022-33743 / XSA-405
+                               version 3
 
-this report deals with HTTP basic auth issues in the darkhttpd project
-[1]. Darkhttpd is a minimal HTTP web server implemented in the C
-programming language, for serving static files. The version under review
-was 1.14 [2].
+       network backend may cause Linux netfront to use freed SKBs
 
-A version 1.15 bugfix release [3] containing a bugfix and an additional
-warning message is available. I requested CVEs from Mitre for the two
-issues found during this review. They have not been assigned yet,
-though. I will give an update once I know them.
+UPDATES IN VERSION 3
+====================
 
-We offer this report also as a rendered HTML version on our blog [4].
+Public release.
 
-Basic Auth Timing Attack
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+ISSUE DESCRIPTION
+=================
 
-The issue is found in darkhttpd.c line 2272 [5]. Here the HTTP basic
-authentication string supplied by a client is compared against the
-secret configured via the `--auth` command line parameter. For this
-comparison a regular `strcmp()` function call is used.
+While adding logic to support XDP (eXpress Data Path), a code label was
+moved in a way allowing for SKBs having references (pointers) retained
+for further processing to nevertheless be freed.
 
-Since `strcmp()` performs an efficient linear comparison, it will
-terminate earlier if the first bytes of the supplied authentication
-string don't match compared to if they do match. This difference in
-runtime can be used for timing attacks to try and find out the correct
-authentication credentials to access the web server.
+IMPACT
+======
 
-To fix this, a constant-time string comparison function needs to be used
-that always takes the same amount of computation time for the comparison
-independently of how many bytes of the provided data match the actual
-authentication secret. An example for such a function is the
-`CRYPTO_memcmp()` [6] function provided by the openSSL library.
+A misbehaving or malicious backend may cause a Denial of Service (DoS)
+in the guest.  Information leaks or privilege escalation cannot be
+ruled out.
 
-Darkhttp does not support SSL encrypted traffic by itself. When
-darkhttpd is used for unencrypted http:// over the Internet then it
-could be argued that the authentication data will be sent unencrypted
-over an untrusted channel anyway. If darkhttpd is used behind a reverse
-proxy that uses SSL and thus uses a secure channel, then a major
-security property will be violated by this issue though.
+VULNERABLE SYSTEMS
+==================
 
-Bugfix
-------
+Linux versions 5.9 - 5.18 are vulnerable.  Linux versions 5.8 and
+earlier are not vulnerable.
 
-After discussing the available options with him, the upstream author
-decided to implement a custom constant-time string comparison
-algorithm [7] to address the issue. This algorithm is a rather simple
-xor operation over the complete range of bytes.
+This vulnerability only increases the capability of an attacker in systems
+with less than fully privileged network backends (e.g. network driver
+domains).  For systems where netback runs in dom0 (the default
+configuration), this vulnerability does not increase the capabilities of
+an attacker.
 
-Local Leak of Authentication Parameter in Process List
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D
+MITIGATION
+==========
 
-The only way to configure the HTTP basic auth string in darkhttpd is to
-pass it via the `--auth` command line parameter. On Linux all local
-users can view the parameters of other programs running on the system.
-This means if there are other users or programs running in different
-security domains, then these can obtain the authentication credentials
-for the web server.
+There is no mitigation available other than not using PV devices in case
+a backend is suspected to be potentially malicious.
 
-To fix this an alternative mechanism needs to be provided to pass the
-authentication credentials in a safe way. Typically this can be solved
-by using an environment variable or a protected configuration file. If
-the existing `--auth` command line switch is kept around, then the fact
-that this leaks the authentication credentials on Linux systems should
-be documented.
+CREDITS
+=======
 
-Bugfix
-------
+This issue was discovered by Jan Beulich of SUSE.
 
-The upstream author decided to only document the security implications
-[8] by adding a warning to the command line usage output.
+RESOLUTION
+==========
 
-Review Summary
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Applying the appropriate attached patch resolves this issue.
 
-Apart from these HTTP basic authentication related issues, I have not
-found any problematic spots in the code base of darkhttpd. I focused on
-the potential for log file spoofing, escaping the web root via crafted
-URLs and memory corruption, e.g. through specifying bad byte ranges in
-HTTP headers.  The code is robust in these areas.
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
 
-Timeline
-=3D=3D=3D=3D=3D=3D=3D=3D
+xsa405-linux.patch     Linux 5.9 - 5.19-rc
 
-2024-01-12: I reported the findings to the upstream author
-            <emikulic@gmail.com>, offering coordinated disclosure.
-2024-01-13: The author confirmed the security issues but declined a
-            formal embargo period.
-2024-01-15: I requested two CVEs from Mitre to track the two findings
-            found during the review.
-2024-01-18: After some discussions about the bugfixes, the author
-            published the new version 1.15 containing the changes.
+$ sha256sum xsa405*
+69716b78fbd996bce0414079bbb5f002029c5a82924aaae0db78a13c4b385f0a  xsa405-linux.patch
+$
 
-References
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+DEPLOYMENT DURING EMBARGO
+=========================
 
-[1]: https://github.com/emikulic/darkhttpd
-[2]: https://github.com/emikulic/darkhttpd/releases/tag/v1.14
-[3]: https://github.com/emikulic/darkhttpd/releases/tag/v1.15
-[4]: https://security.opensuse.org/2024/01/22/darkhttpd-basic-auth-issues.h=
-tml
-[5]: https://github.com/emikulic/darkhttpd/blob/v1.14/darkhttpd.c#L2272
-[6]: https://www.openssl.org/docs/man1.1.1/man3/CRYPTO_memcmp.html
-[7]: https://github.com/emikulic/darkhttpd/commit/f477619d49f3c4de9ad59bd19=
-4265a48ddc03f04
-[8]: https://github.com/emikulic/darkhttpd/commit/2b339828b2a42a5fda105ea84=
-934957a7d23e35d
+Deployment of patches or mitigations is NOT permitted (except where
+all the affected systems and VMs are administered and used only by
+organisations which are members of the Xen Project Security Issues
+Predisclosure List).  Specifically, deployment on public cloud systems
+is NOT permitted.
 
-Best Regards
+This is because the patches need to be applied in the affected guests.
+Switching from PV to non-PV devices is observable by the guests and has
+usually a bad performance impact.
 
-Matthias
+Deployment is permitted only AFTER the embargo ends.
 
---=20
-Matthias Gerstner <matthias.gerstner@suse.de>
-Security Engineer
-https://www.suse.com/security
-GPG Key ID: 0x14C405C971923553
-=20
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG N=FCrnberg
-Gesch=E4ftsf=FChrer: Ivo Totev, Andrew McDonald, Werner Knoblich
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
---q2f1jvgSasYACE+I
-Content-Type: application/pgp-signature; name="signature.asc"
-
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmWvl1kACgkQFMQFyXGS
-NVO/8xAAhIyFMaa3DAkzzWTEmkwpgYXR3C/Xl+/2RplZYMta3TOjlcGpNjz8cujc
-SpR8D+UZJJHSNWBOwBvFBIKZ+lyrVOicB/7Rsy8wmj/EVHKjQJKEJAyudxG8Eg28
-NA5de+LPFfd1AGS/r1RW5NoB4FQWqfpyBF0zl8nW8KEbe8eAL80/bG2qoi44K8YQ
-uCHWvvSGoMITboilMK9jpWqGBvrBONSU8mJgnUaY0SESAEMo429v5t2SvEohqcpB
-NhHtMrL9iEzY+EJg9Z4aHxDWJcKAHEGOInIMO+G11GwPLaWYMdR7f3LssvRzjIl/
-TapXi62qIRbheaIyMFSVSKZAGwBuD40U0G1ETrIS2Kv9M2JdguWLMyzz9MirBQbH
-ZKHt03yalsTP6SJOd2Ylw7CMHm6lFApoOm7XybssAZYe3mmSrWP6kpLmPew+18B7
-tGHsKfUgGXIRI7wE7u4sPi8ctf+ny2SXkbOS5TZleEtxvrDkj07bCyzRN1jt89S+
-znM9m1jF3outJXK8arNOJ66876xXCGY3F5SL4oZCt+YRXdaEkKJBGwpiLEnobyId
-qQiX1DPTuN0uw1iDse5wOillbGkuIP1IIU0JsazsXs351JvmShZsQTstLYGNywOT
-+bGen2s0PwQHS2Puaf9C5O3OcNSGKhw7VJr4xqwfJzWUxM/VHyY=
-=3eF6
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmLEFgAMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZgG4H/3KYUQdJlSEq2AEmIZhh1HDdhj/9n9Wxm0eHEqEQ
+pXvflqbqb2glZpQyWcFPcY4oRRYvy58p9FIEi3PJD+52K/7h58XcTEZKDFP87z53
+iqATbN4s/wHQ45xWAuIEHsmfLRtj3gIr4qviux3dtygKMjo6cZDX7Ethv6j0xdgc
+lEUfvisH+3ZXG+JOQbZyxmi6g1SGDf1TJQczXR1rJjIp/npTupfFO+4r+vpiypbI
+6ytFrRwmqfzuO8Mz5Wqrda8Fkk3JYoYtJdBfd/hYNu5vBN0d4o82sbZpuzVgdRI4
+H+R90MB1XpZJ/mSYEDBbEctbmTFfJrRvr9yGjtCi8ivvQ5I=
+=fMa/
 -----END PGP SIGNATURE-----
 
---q2f1jvgSasYACE+I--
+--=separator
+Content-Type: application/octet-stream; name="xsa405-linux.patch"
+Content-Disposition: attachment; filename="xsa405-linux.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
+OiB4ZW4tbmV0ZnJvbnQ6IHJlc3RvcmUgX19za2JfcXVldWVfdGFpbCgpIHBv
+c2l0aW9uaW5nIGluIHhlbm5ldF9nZXRfcmVzcG9uc2VzKCkKClRoZSBjb21t
+aXQgcmVmZXJlbmNlZCBiZWxvdyBtb3ZlZCB0aGUgaW52b2NhdGlvbiBwYXN0
+IHRoZSAibmV4dCIgbGFiZWwsCndpdGhvdXQgYW55IGV4cGxhbmF0aW9uLiBJ
+biBmYWN0IHRoaXMgYWxsb3dzIG1pc2JlaGF2aW5nIGJhY2tlbmRzIHVuZHVl
+CmNvbnRyb2wgb3ZlciB0aGUgZG9tYWluIHRoZSBmcm9udGVuZCBydW5zIGlu
+LCBhcyBlYXJsaWVyIGRldGVjdGVkIGVycm9ycwpyZXF1aXJlIHRoZSBza2Ig
+dG8gbm90IGJlIGZyZWVkIChpdCBtYXkgYmUgcmV0YWluZWQgZm9yIGxhdGVy
+IHByb2Nlc3NpbmcKdmlhIHhlbm5ldF9tb3ZlX3J4X3Nsb3QoKSwgb3IgaXQg
+bWF5IHNpbXBseSBiZSB1bnNhZmUgdG8gaGF2ZSBpdCBmcmVlZCkuCgpUaGlz
+IGlzIENWRS0yMDIyLTMzNzQzIC8gWFNBLTQwNS4KCkZpeGVzOiA2YzVhYTZm
+YzRkZWYgKCJ4ZW4gbmV0d29ya2luZzogYWRkIGJhc2ljIFhEUCBzdXBwb3J0
+IGZvciB4ZW4tbmV0ZnJvbnQiKQpTaWduZWQtb2ZmLWJ5OiBKYW4gQmV1bGlj
+aCA8amJldWxpY2hAc3VzZS5jb20+ClJldmlld2VkLWJ5OiBKdWVyZ2VuIEdy
+b3NzIDxqZ3Jvc3NAc3VzZS5jb20+Ci0tLQpUaGUgY2hhbmdlIGluIHF1ZXN0
+aW9uIGFzIHdlbGwgYXMgdGhlIHJlc3BlY3RpdmUgbmV0aWYuaCBjaGFuZ2Ug
+d2VudAppbiB3aXRob3V0IGFueSBYZW4gcGVyc29uJ3MgYWNrIG9yIFItYjsg
+b25seSB0aGUgY29ycmVzcG9uZGluZyBiYWNrZW5kCmNoYW5nZSBoYXMgUGF1
+bCdzIFItYi4gVGhpcyBpbiBwYXJ0aWN1bGFyIG1lYW5zIHRoYXQgdGhlIGlu
+dGVyZmFjZQphZGRpdGlvbiBpcyBzdGlsbCB1bm9mZmljaWFsIChhbmQgYXQg
+cmlzayBvZiBjb2xsaWRpbmcgd2l0aCBzb21lb25lCmVsc2UncyksIGZvciBu
+b3QgaGF2aW5nIGJlZW4gY29tbWl0dGVkIHRvIHRoZSBjYW5vbmljYWwgY29w
+eSBvZiB0aGUKaGVhZGVyIGluIHhlbi5naXQuCgotLS0gYS9kcml2ZXJzL25l
+dC94ZW4tbmV0ZnJvbnQuYworKysgYi9kcml2ZXJzL25ldC94ZW4tbmV0ZnJv
+bnQuYwpAQCAtMTA1Myw4ICsxMDUzLDEwIEBAIHN0YXRpYyBpbnQgeGVubmV0
+X2dldF9yZXNwb25zZXMoc3RydWN0IG4KIAkJCX0KIAkJfQogCQlyY3VfcmVh
+ZF91bmxvY2soKTsKLW5leHQ6CisKIAkJX19za2JfcXVldWVfdGFpbChsaXN0
+LCBza2IpOworCituZXh0OgogCQlpZiAoIShyeC0+ZmxhZ3MgJiBYRU5fTkVU
+UlhGX21vcmVfZGF0YSkpCiAJCQlicmVhazsKIAo=
+
+--=separator--
