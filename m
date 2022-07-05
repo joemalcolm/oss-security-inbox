@@ -1,23 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/01/1
-Message-ID: <20221201000006.GA20004@localhost.localdomain>
-Date: Thu, 1 Dec 2022 00:01:18 +0000
-From: Qualys Security Advisory <qsa@...lys.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Race condition in snap-confine's must_mkdir_and_open_with_perms() (CVE-2022-3328)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/05/8
+Message-ID: <YsRpUY9bb3i5ejuU@wopr>
+Date: Tue, 5 Jul 2022 09:39:45 -0700
+From: Kurt H Maier <khm@...ops.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: DO NOT OPEN PREVIOUS MAIL Re:  Denial of service in  GnuPG
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On Mon, Jul 04, 2022 at 03:15:40PM +0200, Peter van Dijk wrote:
+> 
+> GNOME Evolution (Debian's version 3.38.3-1) hangs (interruptibly, by
+> navigating to another message) when trying to open the message. It
+> hangs completely (eventually I used the Force Quit that GNOME offered
+> me) when trying to reply to it.
 
-On Wed, Nov 30, 2022 at 11:28:27PM +0000, Qualys Security Advisory wrote:
-> We discovered a race condition (CVE-2022-3328) in snap-confine
+This bug report would be better sent to the GNOME developers.
 
-Patches are available at:
-
-https://github.com/snapcore/snapd/releases/tag/2.57.6
-https://github.com/snapcore/snapd/commits/release/2.57
-
-Thank you very much! With best regards,
-
--- 
-the Qualys Security Advisory team
+Good luck,
+khm
