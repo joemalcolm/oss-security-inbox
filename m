@@ -1,4 +1,4 @@
-Received: (qmail 16089 invoked by uid 550); 2 Apr 2024 12:46:50 -0000
+Received: (qmail 26088 invoked by uid 550); 5 Jul 2022 16:40:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,55 +7,40 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25832 invoked from network); 2 Apr 2024 07:31:18 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Lari Hotari <lhotari@apache.org>
+Received: (qmail 26070 invoked from network); 5 Jul 2022 16:40:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sciops.net; s=20210706;
+	t=1657039185;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=VJ4WkknCo9BJ6xQg14nrnJ+5/8qRoMq+nXtDawWa0MY=;
+	b=ADE0FHerDcrU1bpXr82hkh6R5UoS42rpQL2073aHuZ7OKsCmc1RFD1GQ2ZMFl2bwG4YjZM
+	UL2PwQ9tw+HsnVXAi8fEDU2xJowQBAjvKMUJZCvDZjaH4EEbvhXEktfBGE2Yy6ozOHzn+D
+	u4jqxwquz4yoUqqjv/QNv+vTW3FjNNo=
+Date: Tue, 5 Jul 2022 09:39:45 -0700
+From: Kurt H Maier <khm@sciops.net>
 To: oss-security@lists.openwall.com
-Message-ID: <2570fd6b-672f-4da1-3453-0e7b28e87bbe@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 02 Apr 2024 07:31:07 +0000
+Message-ID: <YsRpUY9bb3i5ejuU@wopr>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <YsJ7JjZ/R/jqN+YX@itl-email>
+ <939888998.96730.1656936945905@appsuite.open-xchange.com>
+ <YsLj+ux2Pgkir5F8@adhil>
+ <a165ce13d67c1d9dd29e4a4f0681ed5dbfd592aa.camel@powerdns.com>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2024-29834: Apache Pulsar: Improper Authorization For
- Namespace and Topic Management Endpoints 
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a165ce13d67c1d9dd29e4a4f0681ed5dbfd592aa.camel@powerdns.com>
+Subject: Re: [oss-security] DO NOT OPEN PREVIOUS MAIL Re: [oss-security]
+ Denial of service in  GnuPG
 
-Affected versions:
+On Mon, Jul 04, 2022 at 03:15:40PM +0200, Peter van Dijk wrote:
+> 
+> GNOME Evolution (Debian's version 3.38.3-1) hangs (interruptibly, by
+> navigating to another message) when trying to open the message. It
+> hangs completely (eventually I used the Force Quit that GNOME offered
+> me) when trying to reply to it.
 
-- Apache Pulsar 2.7.1 through 2.10.6
-- Apache Pulsar 2.11.0 through 2.11.4
-- Apache Pulsar 3.0.0 before 3.0.4
-- Apache Pulsar 3.1.0 through 3.1.3
-- Apache Pulsar 3.2.0 before 3.2.2
+This bug report would be better sent to the GNOME developers.
 
-Description:
-
-This vulnerability allows authenticated users with produce or consume permi=
-ssions to perform unauthorized operations on partitioned topics, such as un=
-loading topics and triggering compaction. These management operations shoul=
-d be restricted to users with the tenant admin role or superuser role. An a=
-uthenticated user with produce permission can create subscriptions and upda=
-te subscription properties on partitioned topics, even though this should b=
-e limited to users with consume permissions. This impact analysis assumes t=
-hat Pulsar has been configured with the default authorization provider. For=
- custom authorization providers, the impact could be slightly different. Ad=
-ditionally, the vulnerability allows an authenticated user to read, create,=
- modify, and delete namespace properties in any namespace in any tenant. In=
- Pulsar, namespace properties are reserved for user provided metadata about=
- the namespace.
-
-This issue affects Apache Pulsar versions from 2.7.1 to 2.10.6, from 2.11.0=
- to 2.11.4, from 3.0.0 to 3.0.3, from 3.1.0 to 3.1.3, and from 3.2.0 to 3.2=
-.1.=20
-
-3.0 Apache Pulsar users should upgrade to at least 3.0.4.
-3.1 and 3.2 Apache Pulsar users should upgrade to at least 3.2.2.
-
-Users operating versions prior to those listed above should upgrade to the =
-aforementioned patched versions or newer versions.
-
-References:
-
-https://pulsar.apache.org/security/CVE-2024-29834/
-https://pulsar.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2024-29834
-
+Good luck,
+khm
