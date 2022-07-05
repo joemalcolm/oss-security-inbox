@@ -1,49 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/02/9
-Message-ID: <20220902094946.GA28965@openwall.com>
-Date: Fri, 2 Sep 2022 11:49:46 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux Kernel use-after-free write in netfilter
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/05/4
+Message-Id: <E1o8hHz-0004HG-2A@xenbits.xenproject.org>
+Date: Tue, 05 Jul 2022 12:04:23 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 406 v3 (CVE-2022-33744) - Arm guests can cause Dom0 DoS via PV devices
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Aug 25, 2022 at 03:20:21PM +0200, Solar Designer wrote:
-> On Tue, May 31, 2022 at 10:00:32AM +0100, EDG EDG wrote:
-> > A use-after-free write vulnerability was identified within the
-> > netfilter subsystem
-> > which can be exploited to achieve privilege escalation to root.
-> > 
-> > In order to trigger the issue it requires the ability to create user/net
-> > namespaces.
-> > 
-> > This issue has been fixed within the following commit:
-> > 
-> > https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/net/netfilter?id=520778042ccca019f3ffa136dd0ca565c486cedd
-> > 
-> > The issue was previously confirmed on the latest linux master (commit
-> > 143a6252e1b8ab424b4b293512a97cca7295c182) and we have confirmed it can be
-> > exploited for privilege escalation on Ubuntu 22.04 (Linux kernel
-> > 5.15.0-27-generic).
-> [...]
-> > # POC Code
-> [...]
-> >     printf("should have triggered KASAN\n");
-> 
-> While the message above included PoC code, there's now also a blog post
-> and GitHub repo with a full exploit:
-> 
-> https://blog.theori.io/research/CVE-2022-32250-linux-kernel-lpe-2022/
-> https://github.com/theori-io/CVE-2022-32250-exploit
-> 
-> "In this post, we have shown the process of exploiting CVE-2022-32250.
-> We were able to leak KASLR and overwrite modprobe_path by utilizing the
-> mqueue functions, and as a result, we successfully gained root
-> privileges in Ubuntu 22.04."
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The Exploit Development Group (EDG) at NCC Group, who discovered this
-vulnerability and started this thread, have just published their own
-write-up about its exploitation:
+            Xen Security Advisory CVE-2022-33744 / XSA-406
+                               version 3
 
-https://research.nccgroup.com/2022/09/01/settlers-of-netlink-exploiting-a-limited-uaf-in-nf_tables-cve-2022-32250/
+             Arm guests can cause Dom0 DoS via PV devices
 
-Alexander
+UPDATES IN VERSION 3
+====================
+
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+When mapping pages of guests on Arm, dom0 is using an rbtree to keep
+track of the foreign mappings.
+
+Updating of that rbtree is not always done completely with the related
+lock held, resulting in a small race window, which can be used by
+unprivileged guests via PV devices to cause inconsistencies of the
+rbtree. These inconsistencies can lead to Denial of Service (DoS) of
+dom0, e.g. by causing crashes or the inability to perform further
+mappings of other guests' memory pages.
+
+IMPACT
+======
+
+A guest performing multiple I/Os of PV devices in parallel can cause
+DoS of dom0 and thus of the complete host.
+
+VULNERABLE SYSTEMS
+==================
+
+Only Arm systems (32-bit and 64-bit) are vulnerable. Dom0 Linux versions
+3.13 - 5.18 are vulnerable.
+
+X86 systems are not vulnerable.
+
+MITIGATION
+==========
+
+There is no mitigation available.
+
+CREDITS
+=======
+
+This issue was discovered by Oleksandr Tyshchenko of EPAM.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa406-linux.patch     Linux 3.13 - 5.19-rc
+
+$ sha256sum xsa406*
+7a789f564b3365cade6e95d549dbbd5a8b7b5e53d09bc5a463c77dfefd5a4182  xsa406-linux.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmLEFgEMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZwJUIAJSrSYNMQE4jo1sJFKjEJ3cHy6CymbJC94JSm2Tf
+HzeMlwd7NQF3Sc2HSWQoCSI+0TiRb6bJpfZASsbL/E3b6zcm3+VxwS7HVUtvHXhN
+HJYRUMN9vckUkGwWDYbgveI7uie9P7gpjwi5CEXxQf4NO9Oloyk2J5bijktzbBN2
+9FIZ7zFuiSRwGtr2WRaozCSzgg4EGiPRc5eMCFMP+K0P+oRvpkE52wWo/ZOPzW8T
+xocUIcvQK335ib04OCS3oqJZrRNwrvX6Vn+CifXac2WHR9tQ24VnTq1iYRrVD+5x
+kxpg4IuiNc2eD8lZCLnKEUDUj6LzWvgxKoxXgJFKXlESb0A=
+=57so
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa406-linux.patch" of type "application/octet-stream" (2561 bytes)
