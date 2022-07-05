@@ -1,34 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/02/4
-Message-ID: <6ab86c25-f72e-7f27-ac29-54ce9b9128f8@apache.org>
-Date: Fri, 2 Sep 2022 08:17:05 +0200
-From: Jacques Le Roux <jleroux@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: Apache OFBiz - Server-Side Template Injection (CVE-2022-25813)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/05/3
+Message-ID: <a793b97f-2bca-43c3-2555-012e80daeeb8@igalia.com>
+Date: Tue, 5 Jul 2022 13:16:55 +0200
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0006
 Content-Type: text/plain; charset=utf-8
 
-Severity:
-High (SSTI then possible RCE)
 
-Vendor:
-The Apache Software Foundation
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2022-0006
+------------------------------------------------------------------------
 
-Versions Affected:
-OFBiz versions prior to 18.12.06
+Date reported           : July 05, 2022
+Advisory ID             : WSA-2022-0006
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2022-0006.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2022-0006.html
+CVE identifiers         : CVE-2022-22662, CVE-2022-22677, CVE-2022-26710.
 
-Description:
-As an ecommerce anonymous client, an external attacker can insert a malicious
-content in a message “Subject” field from the "Contact us" page. Then a party
-manager needs to list the communications in the party component to activate
-the SSTI. A RCE is then possible.
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-Mitigation:
-Upgrade to at least 18.12.06
-or apply patches at https://issues.apache.org/jira/browse/OFBIZ-12594
+CVE-2022-22662
+    Versions affected: WebKitGTK and WPE WebKit before 2.36.0.
+    Credit to Prakash (@1lastBr3ath) of Threat Nix.
+    Impact: Processing maliciously crafted web content may disclose
+    sensitive user information. Description: A cookie management issue
+    was addressed with improved state management.
 
-Credit:
-Matei "Mal" Badanoiu
+CVE-2022-22677
+    Versions affected: WebKitGTK and WPE WebKit before 2.36.4.
+    Credit to an anonymous researcher.
+    Impact: The video in a webRTC call may be interrupted if the audio
+    capture gets interrupted. Description: A logic issue in the handling
+    of concurrent media was addressed with improved state handling.
 
-References:
-http://ofbiz.apache.org/download.html#vulnerabilities
+CVE-2022-26710
+    Versions affected: WebKitGTK and WPE WebKit before 2.36.4.
+    Credit to Chijin Zhou of ShuiMuYuLin Ltd and Tsinghua wingtecher lab.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A use after free issue was
+    addressed with improved memory management.
 
+
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
+
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+
+July 05, 2022
