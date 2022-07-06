@@ -1,112 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/05/5
-Message-Id: <E1o8hHu-0004G2-Eq@xenbits.xenproject.org>
-Date: Tue, 05 Jul 2022 12:04:18 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 405 v3 (CVE-2022-33743) - network backend may cause Linux netfront to use freed SKBs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/06/4
+Message-ID: <f99b360a-192e-5c4e-1832-ee26121ae0bf@apache.org>
+Date: Wed, 06 Jul 2022 12:13:10 +0000
+From: Daniel Gaspar <dpgaspar@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2021-37839: Apache Superset: Improper access to dataset metadata information  
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Description:
 
-            Xen Security Advisory CVE-2022-33743 / XSA-405
-                               version 3
+Apache Superset up to 1.5.1 allowed for authenticated users to access metadata information related to datasets they have no permission on. This metadata included the dataset name, columns and metrics.
 
-       network backend may cause Linux netfront to use freed SKBs
+Mitigation:
 
-UPDATES IN VERSION 3
-====================
+Upgrade to 1.5.1 or higher
 
-Public release.
+Credit:
 
-ISSUE DESCRIPTION
-=================
+Apache Superset would like to thank Dinesh for reporting this issue
 
-While adding logic to support XDP (eXpress Data Path), a code label was
-moved in a way allowing for SKBs having references (pointers) retained
-for further processing to nevertheless be freed.
-
-IMPACT
-======
-
-A misbehaving or malicious backend may cause a Denial of Service (DoS)
-in the guest.  Information leaks or privilege escalation cannot be
-ruled out.
-
-VULNERABLE SYSTEMS
-==================
-
-Linux versions 5.9 - 5.18 are vulnerable.  Linux versions 5.8 and
-earlier are not vulnerable.
-
-This vulnerability only increases the capability of an attacker in systems
-with less than fully privileged network backends (e.g. network driver
-domains).  For systems where netback runs in dom0 (the default
-configuration), this vulnerability does not increase the capabilities of
-an attacker.
-
-MITIGATION
-==========
-
-There is no mitigation available other than not using PV devices in case
-a backend is suspected to be potentially malicious.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa405-linux.patch     Linux 5.9 - 5.19-rc
-
-$ sha256sum xsa405*
-69716b78fbd996bce0414079bbb5f002029c5a82924aaae0db78a13c4b385f0a  xsa405-linux.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of patches or mitigations is NOT permitted (except where
-all the affected systems and VMs are administered and used only by
-organisations which are members of the Xen Project Security Issues
-Predisclosure List).  Specifically, deployment on public cloud systems
-is NOT permitted.
-
-This is because the patches need to be applied in the affected guests.
-Switching from PV to non-PV devices is observable by the guests and has
-usually a bad performance impact.
-
-Deployment is permitted only AFTER the embargo ends.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmLEFgAMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZgG4H/3KYUQdJlSEq2AEmIZhh1HDdhj/9n9Wxm0eHEqEQ
-pXvflqbqb2glZpQyWcFPcY4oRRYvy58p9FIEi3PJD+52K/7h58XcTEZKDFP87z53
-iqATbN4s/wHQ45xWAuIEHsmfLRtj3gIr4qviux3dtygKMjo6cZDX7Ethv6j0xdgc
-lEUfvisH+3ZXG+JOQbZyxmi6g1SGDf1TJQczXR1rJjIp/npTupfFO+4r+vpiypbI
-6ytFrRwmqfzuO8Mz5Wqrda8Fkk3JYoYtJdBfd/hYNu5vBN0d4o82sbZpuzVgdRI4
-H+R90MB1XpZJ/mSYEDBbEctbmTFfJrRvr9yGjtCi8ivvQ5I=
-=fMa/
------END PGP SIGNATURE-----
-
-Download attachment "xsa405-linux.patch" of type "application/octet-stream" (1334 bytes)
