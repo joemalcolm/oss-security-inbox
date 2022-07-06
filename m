@@ -1,158 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/18/3
-Message-ID: <fc7948ee-fe90-e69c-4f18-78e5b02c9682@suse.de>
-Date: Fri, 18 Feb 2022 13:26:29 +0100
-From: Paolo Perego <pperego@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities affecting cobbler
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/06/9
+Message-ID: <185548807.26514.1657115687920@appsuite-dev.open-xchange.com>
+Date: Wed, 6 Jul 2022 16:54:47 +0300 (EEST)
+From: Aki Tuomi <aki.tuomi@...ecot.fi>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2022-30550: Privilege escalation possible in dovecot when similar master and non-master passdbs are used
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
+Affected product: Dovecot IMAP Server 
+Internal reference: DOV-5320
+Vulnerability type: Improper Access Control (CWE-284) 
+Vulnerable version: 2.2
+Vulnerable component: submission 
+Report confidence: Confirmed 
+Solution status: Fixed in main
+Researcher credits: Julian Brook (julezman)
+Vendor notification: 2022-05-06 
+CVE reference: CVE-2022-30550
+CVSS: 6.8 (CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:N) 
 
-Last October 2021, I started a review on a subset of the Cobbler
-ecosystem  ([1], [2] and [3]) using the master branch at the time the
-request was made [4].
+Vulnerability Details: 
+When two passdb configuration entries exist in Dovecot configuration, which have the same driver and args settings, the incorrect username_filter and mechanism settings can be applied to passdb definitions. These incorrectly applied settings can lead to an unintended security configuration and can permit privilege escalation with certain configurations involving master user authentication.
 
-During the audit several issues were found and three of them, have been
-assigned with a CVE identifier.
+Dovecot documentation does not advise against the use of passdb definitions which have the same driver and args settings. One such configuration would be where an administrator wishes to use the same pam configuration or passwd file for both normal and master users but use the username_filter setting to restrict which of the users is able to be a master user.
 
-1) CVE-2021-45083 - unsafe permissions on sensitive files in /etc/cobbler
+Risk: 
+If same passwd file or PAM is used for both normal and master users, it is possible for attacker to become master user.
 
-It has been found that files in /etc/cobbler are world readable and two
-of those files contain sensitive information that can be used by an
-attacker to open an authenticated session with cobbler daemon:
+Workaround:
+Always authenticate master users from different source than regular users, e.g. using a separate passwd file. Alternatively, you can use global ACLs to ensure that only legimate master users have priviledged access.
 
-     * users.digest file contains sha2-512 digests of users in cobbler
-	local installation. In the case of an easy-to-guess password,
-	it's trivial to obtain the plaintext string.
-     -rw-r--r-- 1 root root 145 Oct 11 09:15 users.digest
-
-     * settings.yaml file contains secrets like hashed default password
-	and more.
-     -rw-r--r-- 1 root root 5051 Dec 13 12:42 /etc/cobbler/settings.yaml
-
-Assigned CVSS 8.4 (CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N)
-
-This vulnerability affects also koan [5] and products built using
-cobbler like SUSE Manager 4.1 and 4.2.
-SUSE Manager 4.3 is not affected by this issue.
-
-The issue affects cobbler version 3.3.1 and previous. Version 3.X.X is safe.
-
-Upstream was fixed by this commit:
-https://github.com/cobbler/cobbler/commit/34e3417bcbb72d28c3c1c3332af85793ba077f75
-
-Please note that a possible workaround is trivial. As root you have to
-setup the configuration files, to make them readable only by root.
-
----%<---%<---%<---%<---%<---%<---%<---%<---%<
-# chmod go-r /etc/cobbler/users.digest
-# chmod go-r /etc/cobbler/settings.yaml
----%<---%<---%<---%<---%<---%<---%<---%<---%<
-
-2) CVE-2021-45082 - incomplete template sanitization
-
-In templar.py file, function check_for_invalid_imports, ensures that
-Cheetah code is not importing Python modules. However, the control is
-very basic and it fires up when line begins with #import:
-
-     lines = data.split("\n")
-     for line in lines:
-         if line.find("#import") != -1:
-             rest = line.replace("#import", "").replace(" ", "").strip()
-             if self.settings and rest not in
-			self.settings.cheetah_import_whitelist:
-                 raise CX("potentially insecure import in template: %s" %
-			rest)
-
-However, according to Cheetah documentation [6], it is possible to 
-include python code using this syntax:
-
-#from MODULE import MODULE_OR_OBJECT [as NAME] [, ...]
-
-Having a rogue module using #from can bypass import sanitization
-declared so far.
-
-Assigned CVSS 7.0 (CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H)
-
-This vulnerability affects also products built using cobbler like SUSE
-Manager 4.1, 4.2 and 4.3. Koan is not affected by this issue.
-
-Upstream was fixed by this commit:
-https://github.com/cobbler/cobbler/commit/c9a094541d81ce6d753f03888d763ff28b9ada72
-
-3) CVE-2021-45081: unsafe protocol usage
-
-A lot of cobbler server entry-points are served on HTTP rather then HTTPS.
-
-Assigned CVSS 6.8 (CVSS:3.1/AV:A/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N)
-
-This vulnerability affects also products built using cobbler like koan
-and SUSE Manager 4.1, 4.2 and 4.3.
-
-At the time of disclosing this, there is no a fix available. Using HTTPS
-everywhere requires a deep knowledge of how customers implements cobbler 
-in their network and how do they manage certificates.
-
-Accordingly with the maintainer we will keep attention on this in order 
-to create a certificate enrolling and trusting layer in the python code 
-for the future.
-
-CVSS 6.8 (CVSS:3.1/AV:A/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N)
-
-With the author, we agreed that fixing this will take longer, since it
-involves
-several architectural decision on certifciate enrollment and trust.
-
-4) Hardcoded password for testing
-
-When in /etc/cobbler/modules.conf, in the [authentication] part the
-module is “testing”, the credential “testing:testing” is used to 
-authenticate users.
-
-This is a known and well documented issues.
-However the upstream maintainer agreed, that this functionality is no
-longer needed and it can safely removed.
-
-5) Log file pollution
-
-In modules/installation/pre_log.py and modules/installation/post_log.py, 
-some user controlled input strings are appended in 
-/var/log/cobbler/install.log log file without sanitization.
-
-This can lead to a log pollution attack, where users inject rogue log
-statements making hard troubleshooting by sysadmins.
-
-6) Timeline
-
-2021-12-10: vulnerabilities were reported to upstream author
-2021-12-16: upstream author acknowledge them and start working on fixes
-2021-12-16: received CVEs from Mitre. Offered author an embargo until
-             2022-02-16
-2022-02-16: we agreed with the author two more embargo day to prepare
-	    all fixed packages
-2022-02-18: fixes reached upstream repository and findings were public
-
-7) Links
-
-[1] https://github.com/cobbler/cobblerclient
-[2] https://github.com/cobbler/cli
-[3] https://github.com/cobbler/cobbler
-[4] https://bugzilla.suse.com/show_bug.cgi?id=1191952
-[5] https://github.com/cobbler/koan
-[6] https://cheetahtemplate.org/users_guide/inheritanceEtc.html
-[7] https://bugzilla.suse.com/show_bug.cgi?id=1193671
-[8] https://bugzilla.suse.com/show_bug.cgi?id=1193678
-[9] https://bugzilla.suse.com/show_bug.cgi?id=1193683
-
-Cheers
-Paolo
--- 
-(*_	Paolo Perego				@thesp0nge
-//\	Software security engineer		suse.com
-V_/_	0A1A 2003 9AE0 B09C 51A4 7ACD FC0D CEA6 0806 294B
-
--- 
-(*_  Paolo Perego                           @thesp0nge
-//\  Software security engineer               suse.com
-V_/_ 0A1A 2003 9AE0 B09C 51A4 7ACD FC0D CEA6 0806 294B
+Fix:
+This has been fixed in main branch. See https://github.com/dovecot/core/compare/7bad6a24%5E..a1022072.patch
