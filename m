@@ -1,32 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/12/4
-Message-ID: <YlVskpTa7twfTtwK@kroah.com>
-Date: Tue, 12 Apr 2022 14:12:02 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/06/8
+Message-ID: <YsWSda4ITnaf5bOY@itl-email>
+Date: Wed, 6 Jul 2022 09:47:28 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: A concurrency use-after-free between drm_setmaster_ioctl and drm_mode_getresources
+Subject: Re: Re: DO NOT OPEN PREVIOUS MAIL Re:  Denial of service in  GnuPG
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 12, 2022 at 07:42:04PM +0800, Minh Yuan wrote:
-> Hi guys,
+On Wed, Jul 06, 2022 at 03:38:10PM +0200, Solar Designer wrote:
+> On Wed, Jul 06, 2022 at 07:02:59AM -0400, Demi Marie Obenour wrote:
+> > Was adding compression to PGP even a good idea in the first place?
 > 
-> We recently discovered a concurrency uaf in drm of the latest kernel
-> version (Linux 4.19.237).
+> I think actually yes, it was, especially back then.  It has probably
+> helped more than it hurt in PGP's lifetime so far.
+> 
+> Alexander
 
-Note, this issue is not a problem for kernel versions 5.15 and newer,
-the relevant commits have not yet been backported to older stable kernel
-trees.  I have a list (as does the author of this report) of the needed
-commits if anyone wishes to help in backporting (and testing.)
+Interesting.  Why do you say that?
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-5.10.y and 5.4.y have some of the needed changes (as does 4.19.y), but
-not all of them, so I do not know if the reproducer works on those trees
-at this point in time.
-
-> int fd1 = open("/dev/dri/card0",0);
-> fd = open("/dev/dri/card0",0);
-
-Also note that this issue requires access to these device nodes.
-
-thanks,
-
-greg k-h
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
