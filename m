@@ -1,30 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/02/3
-Message-ID: <Y2HcWkqpp9KhX80r@itl-email>
-Date: Tue, 1 Nov 2022 22:56:23 -0400
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/06/3
+Message-ID: <YsVr51JzzpR0A0N9@itl-email>
+Date: Wed, 6 Jul 2022 07:02:59 -0400
 From: Demi Marie Obenour <demi@...isiblethingslab.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
+Subject: Re: Re: DO NOT OPEN PREVIOUS MAIL Re:  Denial of service in  GnuPG
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 01, 2022 at 04:57:25PM -0400, Jeffrey Walton wrote:
-> On Tue, Nov 1, 2022 at 3:55 PM Pavan Maddamsetti
-> <pavan.maddamsetti@...il.com> wrote:
+On Wed, Jul 06, 2022 at 06:10:32AM -0000, Tavis Ormandy wrote:
+> On 2022-07-04, Jakub Wilk wrote:
+> > As a data point, if Mutt has pgp_auto_decode=yes ("automatically attempt 
+> > to decrypt traditional PGP messages") in the config, it will trigger the 
+> > DoS when you view the message.
+> 
+> Hmm - I think you don't even need auto_decode, because x-action parameters
+> can trigger automatic decryption in mutt.
+> 
+> There's an example message here: https://gitlab.com/muttmua/mutt/-/issues/405
+> 
+> > (And it seems that if you lose patience waiting for the message to show 
+> > up and press ctrl+backslash in attempt to make it quit, it will actually 
+> > hang forever.)
 > >
-> > https://github.com/RustCrypto
 > 
-> I hope this does not start a war.. The problem with Rust is, it's only
-> guaranteed to work on i686 and x86_64.
+> I think you need at least something like max-output 104857600 in
+> gnupg.conf if you don't want trivial DoS pranks to be possible :)
 > 
-> Trying to compile Rust programs on armel, armhf, aarch64 and PowerPC
-> has been excruciatingly painful. The tool cannot compile its own
-> cargo's on those platforms. I gave up trying to use Rust on anything
-> but x86_64.
+> Tavis.
 
-Rust should certainly be able to compile its own Cargo, so this is an
-outright bug.  Please report it.  If the instructions are confusing
-enough that it is easy to make a mistake, that’s a bug in the
-documentation.
+I don't think this one is impacted by max-output.  Worse, I was told
+“Not a bug, sorry” by Werner.
+
+Was adding compression to PGP even a good idea in the first place?
+Becuase it seems to have some of the same problems that compression in
+TLS and SSH do, not to mention creating a trivial DoS.  If it were not
+for OpenPGP being an archival format I would suggest ditching it
+outright.
 -- 
 Sincerely,
 Demi Marie Obenour (she/her/hers)
