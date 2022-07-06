@@ -1,24 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/03/4
-Message-ID: <CAF+kE=T04dwUSyQ5BMw2tC6-Z_R=uUUT=Bu3dKSNnwCkLbq7Hg@mail.gmail.com>
-Date: Thu, 3 Feb 2022 14:01:23 -0600
-From: Justin Bertram <jbertram@...che.org>
-To: oss-security@...ts.openwall.com, announce@...che.org
-Subject: ARTEMIS-3593: CVE-2022-23913: Apache ActiveMQ Artemis DoS
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/06/12
+Message-ID: <YsXcAKWZYR90JMFf@itl-email>
+Date: Wed, 6 Jul 2022 15:01:19 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: DO NOT OPEN PREVIOUS MAIL Re:  Denial of service in  GnuPG
 Content-Type: text/plain; charset=utf-8
 
-Description:
+On Wed, Jul 06, 2022 at 04:50:11PM +0200, Solar Designer wrote:
+> On Wed, Jul 06, 2022 at 09:47:28AM -0400, Demi Marie Obenour wrote:
+> > On Wed, Jul 06, 2022 at 03:38:10PM +0200, Solar Designer wrote:
+> > > On Wed, Jul 06, 2022 at 07:02:59AM -0400, Demi Marie Obenour wrote:
+> > > > Was adding compression to PGP even a good idea in the first place?
+> > > 
+> > > I think actually yes, it was, especially back then.  It has probably
+> > > helped more than it hurt in PGP's lifetime so far.
+> > 
+> > Interesting.  Why do you say that?
+> 
+> Oh, I didn't feel this even needed explanation, and I feel silly writing
+> the below and don't really have time for it (lesson re-learned: should
+> have stayed silent), but well.
+> 
+> PGP is commonly used on compressible data (such as text), and PGP
+> messages are then transferred over a network and finally stay in
+> people's mailboxes or such.  Bandwidth was commonly low back then, and
+> storage much more limited than today's.
+> 
+> Some compression existed for unencrypted messages - some network links
+> somewhat compressed (e.g., V.42bis), some mail clients supported mailbox
+> compression, and of course a mailbox could also be compressed manually.
+> 
+> Obviously, already encrypted content is not compressible.
+> 
+> Without built-in compression in PGP, its messages would be slower to
+> transfer and larger to store.  Compression would need to be performed
+> before PGP, which would be an inconvenience and would lead to similar
+> risks, especially if automated, and would often not be done.  In PGP,
+> it's just one standard way to do it, not more than one.
+> 
+> So compression was of some benefit to a lot of people.  We could argue
+> that it's little benefit, but multiplied by the number of people it's
+> significant.  Was compression also a problem for a lot of people?
+> Theoretically, yes, but in practice those attacks were not common.
+> 
+> We could also argue that PGP never became popular, MUA integrations are
+> poor, etc., and as a consequence that its individual features were not
+> of a lot of benefit to computer users at large.  While true, that
+> argument also means the risks associated with those features did not
+> apply to most computer users.  So it's irrelevant.
+> 
+> What I say is that for the geeks using PGP, compression was overall of
+> more benefit than risk.
+> 
+> Oh, and I'm also grateful for compression in SSH, despite of my own
+> criticism of its effect on security.
+> 
+> Alexander
 
-In Apache ActiveMQ Artemis prior to 2.20.0 or 2.19.1, an attacker could
-partially disrupt availability (DoS) through uncontrolled resource
-consumption of memory.
+Thanks!  I had not considered this at all, and it makes a ton of sense.
+Being able to compress data prior to encryption is indeed necessary if
+one wants to avoid using more space than a message compressed using
+normal methods.
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-Mitigation:
-
-Upgrade to Apache ActiveMQ Artemis 2.20.0 or 2.19.1 (if you're still using
-Java 8).
-
-References:
-
-https://lists.apache.org/thread/fjynj57rd99s814rdn5hzvmx8lz403q2
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
