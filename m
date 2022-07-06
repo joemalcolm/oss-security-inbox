@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2672" "Monday" "6" "August" "2018" "12:27:03" "-0400" "=?iso-8859-1?Q?St=E9phan?==?iso-8859-1?Q?e?= Graber" "stgraber@ubuntu.com" "<20180806162703.GB6609@castiana>" "73" "[oss-security] CVE-2018-6556: lxc-user-nic allows for open() of arbitrary paths" nil nil nil "8" "2018080616:27:03" "[oss-security] CVE-2018-6556: lxc-user-nic allows for open() of arbitrary paths" (number mark "U       stgraber@ubu Aug  6   73/2672  " thread-indent "\"[oss-security] CVE-2018-6556: lxc-user-nic allows for open() of arbitrary paths\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 16129 invoked by uid 550); 6 Aug 2018 17:45:17 -0000
+Received: (qmail 9363 invoked by uid 550); 6 Jul 2022 14:50:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,106 +7,65 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10024 invoked from network); 6 Aug 2018 16:27:19 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=Dj+y4yvdpHfDU0ndnj+X+8d6lrPtUVt9+6X7GN/AH+g=;
-        b=K3J0g5X3jDPqb8PTXVNERDJdvz7qaMqE+1ae55uDovvMw6QuqM4gqB+5EKnZTjdvCX
-         /GcCLO9LN79vJHDrT363h3W9htidJim7eMkC0lhF5m2J2yggHaQAGjYzuE0q75q+qEjl
-         veR6GJmrx2mpNknduZ4TAjKB1a4xJhHJmoGt/UfjH13UGPRSF205p7dWRHCsbwI0L8au
-         L/D/WeE8l3iZciCUAtXYCREHBO/cYqOVV92ESvRyhK+ovgj1JEDC7RX0wBCl/IDoybPf
-         p1uJa3rNmwH5JgsGefc/srd8w8kp7WO7Tn+oCWfhvfeaJ/CRVk8XiM2e3FX+VCAL81YH
-         58Pw==
-X-Gm-Message-State: AOUpUlH8xmv9rs2A+bpyYWgvgzFU+jXJboM3mujza1MqekJwOQtit3ll
-	soGdGzrZwKyyQ6F8NY2IZHDd+ygO3fI=
-X-Google-Smtp-Source: AAOMgpdPO0G2PQyrGmW6UuWfsz7KHHMMHqpnbekfCh/7rk6viFyZ3Mxx9wGVs171+Og5WLkUtkvojA==
-X-Received: by 2002:aed:3bb7:: with SMTP id r52-v6mr14797020qte.77.1533572827326;
-        Mon, 06 Aug 2018 09:27:07 -0700 (PDT)
-Date: Mon, 6 Aug 2018 12:27:03 -0400
-From: =?iso-8859-1?Q?St=E9phane?= Graber <stgraber@ubuntu.com>
-To: lxc-devel@lists.linuxcontainers.org,
-	lxc-users@lists.linuxcontainers.org
-Cc: oss-security@lists.openwall.com, Matthias Gerstner <mgerstner@suse.de>
-Message-ID: <20180806162703.GB6609@castiana>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ftEhullJWpWg/VHq"
+Received: (qmail 8037 invoked from network); 6 Jul 2022 14:50:17 -0000
+Date: Wed, 6 Jul 2022 16:50:11 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20220706145011.GA2928@openwall.com>
+References: <YsJ7JjZ/R/jqN+YX@itl-email> <939888998.96730.1656936945905@appsuite.open-xchange.com> <YsLj+ux2Pgkir5F8@adhil> <20220704150029.vcbamih6dlqdxqpl@jwilk.net> <ta390o$qi2$1@ciao.gmane.io> <YsVr51JzzpR0A0N9@itl-email> <20220706133809.GA2593@openwall.com> <YsWSda4ITnaf5bOY@itl-email>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-User-Agent: Mutt/1.9.4 (2018-02-28)
-Subject: [oss-security] CVE-2018-6556: lxc-user-nic allows for open() of arbitrary paths
+In-Reply-To: <YsWSda4ITnaf5bOY@itl-email>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Re: DO NOT OPEN PREVIOUS MAIL Re: [oss-security] Denial of service in  GnuPG
 
---ftEhullJWpWg/VHq
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Wed, Jul 06, 2022 at 09:47:28AM -0400, Demi Marie Obenour wrote:
+> On Wed, Jul 06, 2022 at 03:38:10PM +0200, Solar Designer wrote:
+> > On Wed, Jul 06, 2022 at 07:02:59AM -0400, Demi Marie Obenour wrote:
+> > > Was adding compression to PGP even a good idea in the first place?
+> > 
+> > I think actually yes, it was, especially back then.  It has probably
+> > helped more than it hurt in PGP's lifetime so far.
+> 
+> Interesting.  Why do you say that?
 
-Hello,
+Oh, I didn't feel this even needed explanation, and I feel silly writing
+the below and don't really have time for it (lesson re-learned: should
+have stayed silent), but well.
 
-This is a notice for a security issue affecting the following LXC versions:
- - 2.0.9 and higher
- - 3.0.0 and higher
+PGP is commonly used on compressible data (such as text), and PGP
+messages are then transferred over a network and finally stay in
+people's mailboxes or such.  Bandwidth was commonly low back then, and
+storage much more limited than today's.
 
+Some compression existed for unencrypted messages - some network links
+somewhat compressed (e.g., V.42bis), some mail clients supported mailbox
+compression, and of course a mailbox could also be compressed manually.
 
-Description of the issue:
-  lxc-user-nic (setuid) when asked to delete a network interface will
-  unconditionally open a user provided path.
+Obviously, already encrypted content is not compressible.
 
-  This code path may be used by an unprivileged user to check for
-  the existence of a path which they wouldn't otherwise be able to reach.
+Without built-in compression in PGP, its messages would be slower to
+transfer and larger to store.  Compression would need to be performed
+before PGP, which would be an inconvenience and would lead to similar
+risks, especially if automated, and would often not be done.  In PGP,
+it's just one standard way to do it, not more than one.
 
-  It may also be used to trigger side effects by causing a (read-only) open
-  of special kernel files (ptmx, proc, sys).
+So compression was of some benefit to a lot of people.  We could argue
+that it's little benefit, but multiplied by the number of people it's
+significant.  Was compression also a problem for a lot of people?
+Theoretically, yes, but in practice those attacks were not common.
 
-This was reported to us by Matthias Gerstner from SUSE and Christian
-Brauner on the LXC team took care of finding a workable solution and
-preparing the needed updates.
+We could also argue that PGP never became popular, MUA integrations are
+poor, etc., and as a consequence that its individual features were not
+of a lot of benefit to computer users at large.  While true, that
+argument also means the risks associated with those features did not
+apply to most computer users.  So it's irrelevant.
 
+What I say is that for the geeks using PGP, compression was overall of
+more benefit than risk.
 
-Fixes:
- - stable-2.0: https://github.com/lxc/lxc/commit/5eb45428b312e978fb9e294dde=
-16efb14dd9fa4d
- - stable-3.0: https://github.com/lxc/lxc/commit/c1cf54ebf251fdbad1e9716796=
-14e81649f1c032
- - master: https://github.com/lxc/lxc/commit/f26dc127bf5d66e8c29f8584c64bd9=
-7c9bbbc574
+Oh, and I'm also grateful for compression in SSH, despite of my own
+criticism of its effect on security.
 
-Linux distributions were privately notified with about a week notice and
-so should have security updates ready for this already, or will shortly.
-
-We will not be issuing emergency release tarballs for this issue so if
-you're maintaining your own build, you should be cherry-picking one of
-the fixes above. We do however intend to release LXC 3.0.2 very shortly
-which will include this fix among other traditional bugfixes.
-
-References:
- - https://bugs.launchpad.net/ubuntu/+source/lxc/+bug/1783591
- - https://bugzilla.suse.com/show_bug.cgi?id=3D988348
-
---=20
-St=E9phane Graber
-Ubuntu developer
-http://www.ubuntu.com
-
---ftEhullJWpWg/VHq
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEYC9WdmPlk7y9FPM4xjiXTWR5LWcFAltodtQACgkQxjiXTWR5
-LWeyNw//T8CX6fUTrF4/hRDsc7OTeWn+2xU99EXZK+HvGx7+OyZFApoTR6Zk8oo0
-OmiEvUteE4T1U4eYyygPi1nAVbYdyJqWE0NajZYptPjZkeLZwCpKTySAnZwNjfyt
-4n2PDRpBIYz24VZQroFT5l0PkhoQK175Tgzu4KudyS9ZJzg+0RgUqYCWy9xIpZ63
-N21EvhjSZeLteAWOfWYjs1uKihioLdLBTvomA+QmrNQ5ICUTqKpLEcGQ5fpUmxMg
-fpGiAMVpNRvdb+gkpICjehRLzAoxJrCfFMAaEtEeb9w7zYcx8acx2V+Ww+MIZIXu
-eFY+9CnxPJgGJ6i3oZS45WjQKFaQ7ASRdwhtAl2NaDSTUj/o9FVFlIF+ujmnRsXd
-nvUvC3Smg+9+6pmTtisXoqH21s3ZdFKGyzFva5d5KLmZnBTc35FWKu0ruiGD5Sr0
-h/QfxW55wFOiH99yMkvWPGujvlWt/79Qc7+d+Gu7Rb2TzgOaKKc52wdNEYrg6I1e
-DX5SZWD8rv5zToNuheetKWRVbNWPqfWN0j1B1aVFSd26AFA2BvWC+9t25OI/d6QT
-eAVM/74zrUzVEtmo7S6/zhh4kQW6NoNQB/6WWQpeffBYhAxbgHy9BIX+GYPfuA/J
-lrFhgrTFfrzOxnTBqbYG1iblGYjchFQ7A+aIIluySxWZHYuALrA=
-=SdlZ
------END PGP SIGNATURE-----
-
---ftEhullJWpWg/VHq--
+Alexander
