@@ -1,72 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/21/3
-Message-ID: <CABEwPvGVFWS8gNrc4txih+axEh_zwds_aXYGn+PB8xkcABTWvA@mail.gmail.com>
-Date: Mon, 21 Nov 2022 13:12:19 -0500
-From: David Smiley <dsmiley@...che.org>
-To: security <security@...che.org>, oss-security@...ts.openwall.com,  Andreas Hubold <andreas.hubold@...emedia.com>, users@...r.apache.org, dev@...r.apache.org
-Subject: Apache Solr is vulnerable to CVE-2022-39135 via /sql handler
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/06/6
+Message-ID: <1b440233-e567-4b47-b1c8-ffc421f30cf9@alexburke.ca>
+Date: Wed, 6 Jul 2022 13:06:44 +0000 (UTC)
+From: Alexander Burke <alex@...xburke.ca>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: DO NOT OPEN PREVIOUS MAIL Re:  Denial of service in  GnuPG
 Content-Type: text/plain; charset=utf-8
 
-Vendor:
 
-  The Apache Software Foundation
+> I would suggest ditching it outright.
 
+Don't let your dreams be dreams!
 
-Versions Affected:
+----------------------------------------
 
-  Solr 6.5 to 8.11.2
+Jul 6, 2022 13:33:09 Demi Marie Obenour <demi@...isiblethingslab.com>:
 
-  Solr 9.0
-
-
-Description:
-
-  Apache Calcite has a vulnerability, CVE-2022-39135, that is exploitable
-in Apache Solr in SolrCloud mode.  If an untrusted user can supply SQL
-queries to Solr’s “/sql” handler (even indirectly via proxies / other
-apps), then the user could perform an XML External Entity (XXE) attack.  This
-might have been exposed by some deployers of Solr in order for internal
-analysts to use JDBC based tooling, but would have unlikely been granted to
-wider audiences.
-
-
-Impact:
-
-  An XXE attack may lead to the disclosure of confidential data, denial of
-service, server side request forgery (SSRF), port scanning from the Solr
-node, and other system impacts.
-
-
-Mitigation:
-
-  Most Solr installations don’t make use of the SQL functionality.  For
-such users, the standard Solr security advice of using a firewall should be
-adequate.  Nonetheless, the functionality can be disabled.  As of Solr 9,
-it has been modularized and thus became opt-in, so nothing is needed for
-Solr 9 users that don’t use it.  Users *not* using SolrCloud can’t use the
-functionality at all.  For other users that wish to disable it, you must
-register a request handler that masks the underlying functionality in
-solrconfig.xml like so:
-
-  <requestHandler name="/sql" class="solr.NotFoundRequestHandler"/>
-
-
-  Users needing this SQL functionality are forced to upgrade to Solr 9.1.
-If Solr 8.11.3 is released, then it will be an option as well.  Simply
-replacing Calcite and other JAR files may mostly work but could fail
-depending on the particulars of the query.  Users interested in this or in
-patching their own versions of Solr should examine SOLR-16421 for a source
-patch.
-
-
-Credit:
-
-  Andreas Hubold at CoreMedia GmbH
-
-
-References:
-
-https://nvd.nist.gov/vuln/detail/CVE-2022-39135
-
-https://issues.apache.org/jira/browse/SOLR-16421
-
+> On Wed, Jul 06, 2022 at 06:10:32AM -0000, Tavis Ormandy wrote:
+>> On 2022-07-04, Jakub Wilk wrote:
+>>> As a data point, if Mutt has pgp_auto_decode=yes ("automatically attempt
+>>> to decrypt traditional PGP messages") in the config, it will trigger the
+>>> DoS when you view the message.
+>> 
+>> Hmm - I think you don't even need auto_decode, because x-action parameters
+>> can trigger automatic decryption in mutt.
+>> 
+>> There's an example message here: https://gitlab.com/muttmua/mutt/-/issues/405
+>> 
+>>> (And it seems that if you lose patience waiting for the message to show
+>>> up and press ctrl+backslash in attempt to make it quit, it will actually
+>>> hang forever.)
+>>> 
+>> 
+>> I think you need at least something like max-output 104857600 in
+>> gnupg.conf if you don't want trivial DoS pranks to be possible :)
+>> 
+>> Tavis.
+> 
+> I don't think this one is impacted by max-output.  Worse, I was told
+> “Not a bug, sorry” by Werner.
+> 
+> Was adding compression to PGP even a good idea in the first place?
+> Becuase it seems to have some of the same problems that compression in
+> TLS and SSH do, not to mention creating a trivial DoS.  If it were not
+> for OpenPGP being an archival format I would suggest ditching it
+> outright.
+> -- 
+> Sincerely,
+> Demi Marie Obenour (she/her/hers)
+> Invisible Things Lab
