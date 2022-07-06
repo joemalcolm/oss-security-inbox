@@ -1,87 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/11/3
-Message-ID: <82n3o7sq-n555-q6o1-323q-7p91921s93s1@unkk.fr>
-Date: Wed, 11 May 2022 08:38:18 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: percent-encoded path separator in URL host
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/06/5
+Message-ID: <9d586031-2bef-83a8-e50c-04eec1ea4755@apache.org>
+Date: Wed, 06 Jul 2022 12:51:49 +0000
+From: Matt Juntunen <mattjuntunen@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2022-33980: Apache Commons Configuration insecure interpolation defaults 
 Content-Type: text/plain; charset=utf-8
 
-percent-encoded path separator in URL host
-==========================================
+Severity: Moderate
 
-Project curl Security Advisory, May 11 2022 -
-[Permalink](https://curl.se/docs/CVE-2022-27780.html)
+Description:
 
-VULNERABILITY
--------------
+Apache Commons Configuration performs variable interpolation, allowing properties to be dynamically evaluated and expanded. The standard format for interpolation is "${prefix:name}", where "prefix" is used to locate an instance of org.apache.commons.configuration2.interpol.Lookup that performs the interpolation. Starting with version 2.4 and continuing through 2.7, the set of default Lookup instances included interpolators that could result in arbitrary code execution or contact with remote servers. These lookups are:
+- "script" - execute expressions using the JVM script execution engine (javax.script)
+- "dns" - resolve dns records
+- "url" - load values from urls, including from remote servers
 
-The curl URL parser wrongly accepts percent-encoded URL separators like '/'
-when decoding the host name part of a URL, making it a *different* URL using
-the wrong host name when it is later retrieved.
+Applications using the interpolation defaults in the affected versions may be vulnerable to remote code execution or unintentional contact with remote servers if untrusted configuration values are used.
 
-For example, a URL like `http://example.com%2F10.0.0.1/`, would be allowed by
-the parser and get transposed into `http://example.com/10.0.0.1/`. This flaw
-can be used to circumvent filters, checks and more.
+Users are recommended to upgrade to Apache Commons Configuration 2.8.0, which disables the problematic interpolators by default.
 
-We are not aware of any exploit of this flaw.
+Mitigation:
 
-INFO
-----
+Upgrade to version Apache Commons Configuration 2.8.0
 
-This flaw was introduced in [commit
-9a8564a920188e](https://github.com/curl/curl/commit/9a8564a920188e), shipped
-in curl 7.80.0 when curl added support for percent-encoded host names in URLs.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2022-27780 to this issue.
-
-CWE-177: Improper Handling of URL Encoding
-
-Severity: Medium
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.80.0 to and including 7.83.0
-- Not affected versions: curl < 7.83.0 and curl >= 7.83.1
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-The URL parser now rejects host names that percent-decode into URL separator
-characters.
-
-A [fix for CVE-2022-27780](https://github.com/curl/curl/commit/914aaab9153764e)
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 7.83.1
-
-  B - Apply the patch to your local version
-
-TIMELINE
---------
-
-This issue was reported to the curl project on April 28, 2022. We contacted
-distros@...nwall on May 5.
-
-libcurl 7.83.1 was released on May 11 2022, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-This issue was reported by Axel Chong. Patched by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
