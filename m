@@ -1,51 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/25/5
-Message-ID: <4449206.LvFx2qVVIh@nbkamil>
-Date: Wed, 25 May 2022 17:41:03 +0200
-From: Kamil Dudka <kdudka@...hat.com>
-To: Marc Deslauriers <marc.deslauriers@...onical.com>
-Cc: oss-security@...ts.openwall.com, Guilherme de Almeida Suckevicz <gsuckevi@...hat.com>
-Subject: Re: Re: CVE-2022-1348 logrotate: potential DoS from unprivileged users via the state file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/07/3
+Message-ID: <95de08a1-56d1-3c44-509a-759d20823a41@apache.org>
+Date: Thu, 07 Jul 2022 16:15:17 +0000
+From: Abhishek Agarwal <abhishek@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2022-28889: Apache Druid: Clickjacking in the web console 
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday, May 25, 2022 4:07:34 PM CEST Marc Deslauriers wrote:
-> On 2022-05-25 09:37, Kamil Dudka wrote:
-> > On Wednesday, May 25, 2022 3:19:31 PM CEST Marc Deslauriers wrote:
-> >> On 2022-05-18 09:54, Kamil Dudka wrote:
-> >>> The current version of the patch to fix CVE-2022-1348 in logrotate is
-> >>> attached.  We are going to apply the patch upstream on May 25th, when
-> >>> the embargo is lifted.
-> >> 
-> >> FWIW, I don't think the patch actually works when logrotate is built with
-> >> ACL support...
-> >> 
-> >> Marc.
-> > 
-> > You are right.  Although the patch mitigates the security issue, it is not
-> > 
-> > perfect.  I had already opened an upstream pull request to improve it:
-> >     https://github.com/logrotate/logrotate/pull/446
-> > 
-> > I might create a bug fix release soon with the patch included.
-> > 
-> > Sorry for the troubles!
-> > 
-> > Kamil
-> 
-> Oh! I had not seen that pull request. Thanks, that should solve the issue!
-> 
-> Marc.
+Description:
 
-Thanks for confirmation!  I have merged the pull request and released 3.20.1:
+In Apache Druid 0.22.1 and earlier, the server did not set appropriate headers to prevent clickjacking. Druid 0.23.0 and later prevent clickjacking using the Content-Security-Policy header.
 
-    https://github.com/logrotate/logrotate/releases/tag/3.20.1
+Mitigation:
 
-The following two commits should be cherry-picked for older releases
-of logrotate (from 3.17.0 to 3.19.0):
-
-    https://github.com/logrotate/logrotate/commit/1f76a381e2caa0603ae3dbc51ed0f1aa0d6658b9
-    https://github.com/logrotate/logrotate/commit/addbd293242b0b78aa54f054e6c1d249451f137d
-
-Kamil
-
+Upgrade to Druid 0.23.0 or later.
 
