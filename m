@@ -1,4 +1,4 @@
-Received: (qmail 30707 invoked by uid 550); 28 Dec 2025 23:12:32 -0000
+Received: (qmail 1048 invoked by uid 550); 7 Jul 2022 13:41:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,30 +7,30 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 15892 invoked from network); 28 Dec 2025 10:15:50 -0000
-From: Sam James <sam@gentoo.org>
+Received: (qmail 32049 invoked from network); 7 Jul 2022 13:38:57 -0000
+Content-Type: text/plain; charset=utf-8
+From: Abhishek Agarwal <abhishek@apache.org>
 To: oss-security@lists.openwall.com
-In-Reply-To: <87pl7ykjqa.fsf@gentoo.org>
-Organization: Gentoo
-References: <CAM=PXV50+jaVYFueXFbZpioBX3PMrUG2Ey8WoQ5NT89J9gFwCA@mail.gmail.com>
-	<87pl7ykjqa.fsf@gentoo.org>
-User-Agent: mu4e 1.12.13; emacs 31.0.50
-Date: Sun, 28 Dec 2025 10:15:37 +0000
-Message-ID: <87h5takj3q.fsf@gentoo.org>
+Message-ID: <780f3eb8-92fe-12c3-9e4f-d385ff6dd10d@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 07 Jul 2022 13:38:43 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: Re: [oss-security] Systemd vsock sshd
+Subject: [oss-security] CVE-2021-44791: Apache Druid: Reflected XSS on certain HTTP
+ endpoints 
 
-Sam James <sam@gentoo.org> writes:
+Severity: low
 
-> Greg Dahlman <dahlman@gmail.com> writes:
->
->> This information is to be publicly released on January 6 per requirements of the distro list.
->
-> To be clear, are you aware that this list (oss-security) is a public
-> mailing list?
+Description:
 
-.. though I see you are indeed aware from other correspondence, sorry
-(victim of catching up on inbox in wrong order), but I expect someone
-else would've asked anyway.
+In Apache Druid 0.22.1 and earlier, certain specially-crafted links result =
+in unescaped URL parameters being sent back in HTML responses. This makes i=
+t possible to execute reflected XSS attacks.
+
+Mitigation:
+
+Upgrade to Druid 0.23.0 or later.
+
+Credit:
+
+This issue was discovered by DangKhai from Viettel Cyber Security
+
