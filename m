@@ -1,30 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/23/7
-Message-ID: <Y6W5IcAzIUb5rD1F@kroah.com>
-Date: Fri, 23 Dec 2022 15:20:17 +0100
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Details on this supposed Linux Kernel ksmbd RCE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/07/1
+Message-ID: <87o7y18qeh.fsf@oldenburg.str.redhat.com>
+Date: Thu, 07 Jul 2022 07:04:22 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: Demi Marie Obenour <demi@...isiblethingslab.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: DO NOT OPEN PREVIOUS MAIL Re:  Denial of service in  GnuPG
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Dec 23, 2022 at 09:04:25AM -0500, Sasha Levin wrote:
-> On Fri, Dec 23, 2022 at 09:17:28AM +0100, Marcus Meissner wrote:
-> > Not sure why they do not like you, but to be very clear anyone else can
-> > requests CVEs for the kernel, (except the blacklisted drivers/staging/ area).
-> 
-> For CVEs assigned (earlier this month) to issues in drivers/staging,
-> what would be the process to remove the assignment or mark them as
-> invalid?
+* Demi Marie Obenour:
 
-And who is doing this "blacklisting" of staging drivers from CVEs?  Why
-are they special when many distros do enable and rely on them?
+> Was adding compression to PGP even a good idea in the first place?
 
-In my talks with MITRE, they have said they don't want to make public
-statments about the CVE issues and Linux, which is sad, but they never
-mentioned anything about "we will ignore this portion of the kernel
-source tree".  Is that in a public statement anywhere that I can point
-to when people ask the kernel security team for CVEs?
+In the mid-90s, it was widely believed that compression was required as
+part of a good implementation because it was assumed that it made
+cryptanlysis more difficult.  Applied Cryptography recommended it:
 
-thanks,
+| 10.6 Compression, Enciding, And Encryption
 
-greg k-h
+| Using a data compression algorithm together with an encryption
+| algorithm makes sense for two reasons:
+|
+|   Cryptanalysis relies on exploiting redundancies in the plaintext;
+|   compressing a file before encryption reduces these redundancies.
+|
+|   Encryption is time-consuming; compression a file before encryption
+|   speeds up the entire process.
+|
+| The important thing to remeber si to compress before encryption.  If
+| the encryption algorithm is any good, the ciphertext will not be
+| compressible; it will look like random data.  (This makes a reasonable
+| test of an encryption algorithm; if the ciphertext can be compressed,
+| then the algorithm probably isn't very good.)
+|
+| If you are going to add any type of transmission encoding or error
+| detection and recovery, remember to add that after encryption.  If
+| there is noise in the communications path, decryption's
+| error-extension properties will only make that noise worse. […]
+
+The performance advice was likely based on the relative performance of a
+3DES implementation in software and a some simple LZW77 compressor.
+Even at the time, it probably wasn't true for IDEA algorithm on most
+CPUs, and the situation only got better for encryption after that.
+
+The first rationale, regarding cryptanalysis, has always been total
+bunk: effective compression introduces a weakness into any encryption
+scheme.  You are pretty much guaranteed to end up with viable adaptive
+choosen plaintext attacks if data is combined from multiple sources.
+For variable-bit-rate voice compression, it's possible to infer some
+information on phonemes in the cleartext just based on the bit rate.
+
+Thanks,
+Florian
+
