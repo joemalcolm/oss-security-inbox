@@ -1,80 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/28/11
-Message-ID: <551c6d28-2b4e-ce4e-7602-29afe014d725@gmail.com>
-Date: Wed, 28 Dec 2022 20:57:04 +0100
-From: Alejandro Colomar <alx.manpages@...il.com>
-To: Shawn Webb <shawn.webb@...denedbsd.org>, oss-security@...ts.openwall.com, John Helmert III <ajak@...too.org>, Demi Marie Obenour <demi@...isiblethingslab.com>, Jan Engelhardt <jengelh@...i.de>, "Lyndon Nerenberg (VE7TFX/VE6BBM)" <lyndon@...hanc.ca>
-Cc: Michael Kerrisk <mtk.manpages@...il.com>, linux-kernel@...r.kernel.org, linux-man@...r.kernel.org
-Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/11/1
+Message-ID: <C5315523-3149-4845-9560-36D35AD65D2B@amazon.com>
+Date: Mon, 11 Jul 2022 16:42:12 +0000
+From: "Hausler, Micah" <mhausler@...zon.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: [kubernetes] CVE-2022-2385: aws-iam-authenticator AccessKeyID validation bypass
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Hello Kubernetes Community,
 
-On 12/28/22 20:24, Shawn Webb wrote:
-> On Wed, Dec 28, 2022 at 01:02:35PM -0500, Demi Marie Obenour wrote:
->> On Wed, Dec 28, 2022 at 12:25:17PM -0500, Shawn Webb wrote:
->>> On Wed, Dec 28, 2022 at 11:47:25AM -0500, Demi Marie Obenour wrote:
->>>> On Wed, Dec 28, 2022 at 10:24:58AM -0500, Shawn Webb wrote:
->>>>> On Tue, Dec 27, 2022 at 04:44:49PM -0800, Lyndon Nerenberg (VE7TFX/VE6BBM) wrote:
->>>>>> Dominique Martinet writes:
->>>>>>
->>>>>>> But, really, I just don't see how this can practically be said to be parsable...
->>>>>>
->>>>>> In its current form it never will be.  The solution is to place
->>>>>> this variable-length field last.  Then you can "cut -d ' ' -f 51-"
->>>>>> to get the command+args part (assuming I counted all those fields
->>>>>> correctly ...)
->>>>>>
->>>>>> Of course, this breaks backwards compatability.
->>>>>
->>>>> It would also break forwards compatibility in the case new fields
->>>>> needed to be added.
->>>>>
->>>>> The only solution would be a libxo-style feature wherein a
->>>>> machine-parseable format is exposed by virtue of a file extension.
->>>>>
->>>>> Examples:
->>>>>
->>>>> 1. /proc/pid/stats.json
->>>>> 2. /proc/pid/stats.xml
->>>>> 3. /proc/pid/stats.yaml_shouldnt_be_a_thing
->>>>
->>>> A binary format would be even better.  No risk of ambiguity.
->>>
->>> I think the argument I'm trying to make is to be flexible in
->>> implementation, allowing for future needs and wants--that is "future
->>> proofing".
->>
->> Linux should not have an XML, JSON, or YAML serializer.  Linux already
->> does way too much; let’s not add one more thing to the list.
-> 
-> Somewhat agreed. I think formats like JSON provide a good balance
-> between machine parseable and human readable.
-> a
-> As I described earlier, though, when it comes to concepts like procfs
-> and sysfs, I have a bias towards abandoning them in favor of sysctl.
-> If sysctl nodes were to be used, no new serialization formats would
-> need to be implemented--and developers would also use a safter method
-> of system and process inspection and manipulation.
-> 
+ 
 
-Just a comment as someone who is reading without much understanding of the 
-contents of /prod/pid/stat:
+A security issue was discovered in aws-iam-authenticator where an allow-listed IAM identity may be able to modify their username and escalate privileges. 
 
-If organization of the data in the file is a problem, and the format starts to 
-matter, maybe it's a hint that there are too many different contents, and could 
-be split into different files, each one with its own formatting rules.  I'll 
-suggest that maybe a set of files, maybe contained in a common directory 
-stats.d, is what you're looking for?
+This issue has been rated high (https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N), and assigned CVE-2022-2385
+Am I vulnerable?
+Users are only affected if they use the AccessKeyID template parameter to construct a username and provide different levels of access based on the username.
+Affected Versions
+v0.5.2 - v0.5.8
+How do I mitigate this vulnerability?
+Upgrading to v0.5.9 mitigates this vulnerability.
 
-Binary format is not of my preference, since most user-space tools work with the 
-standard interface, that is, text.
+Prior to upgrading, this vulnerability can be mitigated by not using the {{AccessKeyID}} template value to construct usernames.
+Fixed Versions
+aws-iam-authenticator v0.5.9
+Detection
+This issue affected the logged identity, and is not discernible from valid requests.
+Additional Details
+See the GitHub issue for more details: https://github.com/kubernetes-sigs/aws-iam-authenticator/issues/472
+Acknowledgements
+This vulnerability was reported by Gafnit Amiga from Lightspin
 
-Cheers,
+ 
 
-Alex
+ 
 
--- 
-<http://www.alejandro-colomar.es/>
+Micah Hausler
 
-Download attachment "OpenPGP_signature" of type "application/pgp-signature" (834 bytes)
+Principal Engineer
+
+Amazon Web Services
+
+ 
+
+
+Content of type "text/html" skipped
+
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (4700 bytes)
