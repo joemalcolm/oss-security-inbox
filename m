@@ -1,53 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/02/2
-Message-ID: <YxEuR+oRpNUVhiOs@itl-email>
-Date: Thu, 1 Sep 2022 18:11:58 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
-To: oss-security@...ts.openwall.com, John Helmert III <ajak@...too.org>
-Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0008
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/12/1
+Message-ID: <c8c9ce86-d45d-51e5-cf4a-b33ad24c88f2@radix.lt>
+Date: Tue, 12 Jul 2022 15:58:15 +0300
+From: Povilas Kanapickas <povilas@...ix.lt>
+To: oss-security@...ts.openwall.com
+Subject: Fwd: X.Org Security Advisory: July 12, 2022
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 01, 2022 at 10:31:16PM +0200, Carlos Alberto Lopez Perez wrote:
-> On 29/08/2022 20:03, Demi Marie Obenour wrote:
-> >> We (maintainers of Linux WebKit ports) don't have access to the security
-> >> issues affecting Apple products until those issues are made public by them.
-> > That is unfortunate.  I thought you would have access to embargoed
-> > bugzilla tickets.
-> > 
-> 
-> We do have access to the tickets on WebKit bugzilla that are marked as
-> security-related and are hidden from other users by default.
+-------- Forwarded Message --------
+Subject: X.Org Security Advisory: July 12, 2022
+Date: Tue, 12 Jul 2022 15:55:05 +0300
+From: Povilas Kanapickas <povilas@...ix.lt>
+To: xorg-announce@...ts.x.org
+CC: xorg-devel@...ts.x.org <xorg-devel@...ts.x.org>, xorg@...ts.x.org
 
-Okay, that makes sense.  As an aside, why are these tickets kept hidden
-indefinitely even after patches have been available for a long time?
+X.Org Security Advisory: July 12, 2022
 
-> However, we don't receive the information about which WebKit fixes will
-> be included in any Apple security update until those advisories are public.
-> 
-> 
-> >> So, we didn't knew until August 17th of this issue. Also you can see
-> >> that the bug report itself or the patch doesn't has any indication that
-> >> it fixes a security-related problem.
-> >>
-> >> Therefore, the time it took us to notice the issue, backport the fix and
-> >> do a new release was just 7-8 days (from 17th to 24-25th of August).
-> >> Which, honestely, it is quite good taking into account that: 1)
-> >> back-porting the fix was not straightforward since it required
-> >> back-porting also a few previous patches in order to be able to merge it
-> >> properly and that 2) we are in August and people is usually on holidays.
-> > Was backporting needed, as opposed to shipping a new minor version?
-> > 
-> 
-> It was. Fixes land in the master (main) branch. Those fixes don't
-> necessarely apply or work on the branch of the last webkitgtk-stable branch.
+Multiple input validation failures in X server extensions
+=========================================================
 
-I see.  Have you considered using the same branch of WebKit that Apple
-does, or backporting security patches as soon as they land in main
-without waiting for an upstream release?  Presumably you know which
-commits are security fixes.
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+All theses issues can lead to local privileges elevation on systems
+where the X server is running privileged and remote code execution for
+ssh X forwarding sessions.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+* CVE-2022-2319/ZDI-CAN-16062: X.Org Server ProcXkbSetGeometry Out-Of-Bounds
+Access
+
+The handler for the ProcXkbSetGeometry request of the Xkb extension does
+not properly validate the request length leading to out of bounds memory
+write.
+
+* CVE-2022-2320/ZDI-CAN-16070: X.Org Server ProcXkbSetDeviceInfo 
+Out-Of-Bounds
+Access
+
+The handler for the ProcXkbSetDeviceInfo request of the Xkb extension
+does not properly validate the request length leading to out of bounds
+memory write.
+
+Patches
+-------
+
+Patches for this issues have been committed to the xorg server git
+repository. xorg-server 21.1.4 will be released shortly and will
+include these patches.
+
+commit 6907b6ea2b4ce949cb07271f5b678d5966d9df42
+
+     xkb: add request length validation for XkbSetGeometry
+         No validation of the various fields on that report were done, so a
+     malicious client could send a short request that claims it had N
+     sections, or rows, or keys, and the server would process the request
+     for N sections, running out of bounds of the actual request data.
+         Fix this by adding size checks to ensure our data is valid.
+         Fixes ZDI-CAN 16062, CVE-2022-2319.
+         This vulnerability was discovered by:
+     Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
+
+
+commit dd8caf39e9e15d8f302e54045dd08d8ebf1025dc
+
+     xkb: swap XkbSetDeviceInfo and XkbSetDeviceInfoCheck
+         XKB often uses a FooCheck and Foo function pair, the former is
+     supposed to check all values in the request and error out on
+     BadLength, BadValue, etc. The latter is then called once we're
+     confident the values are good (they may still fail on an individual
+     device, but that's a different topic).
+         In the case of XkbSetDeviceInfo, those functions were incorrectly
+     named, with XkbSetDeviceInfo ending up as the checker function and
+     XkbSetDeviceInfoCheck as the setter function. As a result, the setter
+     function was called before the checker function, accessing request
+     data and modifying device state before we ensured that the data is
+     valid.
+         In particular, the setter function relied on values being already
+     byte-swapped. This in turn could lead to potential OOB memory access.
+         Fix this by correctly naming the functions and moving the 
+length checks
+     over to the checker function. These were added in 87c64fc5b0 to the
+     wrong function, probably due to the incorrect naming.
+         Fixes ZDI-CAN 16070, CVE-2022-2320.
+         This vulnerability was discovered by:
+     Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
+         Introduced in c06e27b2f6fd9f7b9f827623a48876a225264132
+
+Backporting of the security fixes also needs this commit:
+f1070c01d616c5f21f939d5ebc533738779451ac.
+
+Thanks
+======
+
+The vulnerabilities have been discovered by Jan-Niklas Sohn working with
+Trend Micro Zero Day Initiative and fixed by Peter Hutterer.
+
+--
+Povilas Kanapickas
