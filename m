@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["868" "Thursday" "22" "October" "2015" "10:33:58" "+0530" "GAURAV GUPTA" "ya1gaurav@gmail.com" "<CAJUzAGZj=vbVsWJZptC7jEjpUN54qgSiCsL56vQOJ=EMq6574A@mail.gmail.com>" "32" "[oss-security]Crafted xml causes out of bound memory access - Libxml2" nil nil nil "10" "2015102205:03:58" "[oss-security]Crafted xml causes out of bound memory access - Libxml2" (number mark "U       ya1gaurav@gm Oct 22   32/868   " thread-indent "\"[oss-security]Crafted xml causes out of bound memory access - Libxml2\"\n") "<CAJUzAGa5GZiKcFd_YEUqs=k9jk1fgwkbZY6ESfxA6FneKiaAMg@mail.gmail.com>" ("<CAJUzAGa5GZiKcFd_YEUqs=k9jk1fgwkbZY6ESfxA6FneKiaAMg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 24546 invoked by uid 550); 22 Oct 2015 05:09:43 -0000
+Received: (qmail 17758 invoked by uid 550); 12 Jul 2022 19:27:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,60 +7,91 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19907 invoked from network); 22 Oct 2015 05:04:11 -0000
+Received: (qmail 17740 invoked from network); 12 Jul 2022 19:27:19 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=L9hGGOVaZ0Fjy9nN0pE5xK2PjocE53s1Nfe1K0U5aNI=;
-        b=cMnov6mMpHRNKJIq2wKAjAfe6GEltfJ8cnO6VUUZ6vrixLS8mFMPd9Wmid4T07VWgD
-         0useOOgVJELQZT4HvZ19m07H2TcxkqGKpLLVDDCUYMD6Ppabq0+MWAHPhnH3yWMLtmOP
-         xMXy6uuYXIAYykbYhmhK9ryRT5roa8G0aaA0ZMxnkw8qpsAFxMzLDorJ3SLlcz/gxHrK
-         zuDjzG94sVyRDK0UeP8uq0DbSGKJwAPjZJABp4r4Er3LMoE7F7xsSJPE2Pd9Ip4BYtK1
-         864rHZHGu2u8/65e2iWdujyQhqnrqFmIy3/s69tEygc2LOdVFcoqQjrl6yyjE2k4WtX9
-         qLUw==
+        d=gmail.com; s=20210112;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=z9G0wguDrAjcjW75nvr7+pGpjBAR/f3spr6nVa+W/E8=;
+        b=hdS47UsIc8Fwz4zPSqtXitJJWQN1LCuo4FKPRv16FEUdcOd+jNhAGXk6U/TMsne7CY
+         OWPbw7WcL1VYfnvV4p5u8jGRr1SAcNuC3JB/tUIXNd6rga6qu546Urpw38vlw6VCRppW
+         xE/eOuxFIUG8W8kJhuH7U2LAWumu7eXZgS2QXB7z15N22+sMxDnTcLWXqP4yW5a2bWWD
+         EeB5DzMFNIBX43mfFkybVmzucuCMjWFT2edBJfecKXTc1UQgfJ4ixOR2aMAUxt5Hdbpt
+         v+UpC9bB0E+zZ5sVw+pSYlrKo4lWRgG4KJJljjPsKwSAeRAlmX8GmNDoabxxTevf+1kw
+         C97w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to;
+        bh=z9G0wguDrAjcjW75nvr7+pGpjBAR/f3spr6nVa+W/E8=;
+        b=b/nFaox53NbQwDK4K/tgajgVOs0VMsg4Zzq8r0SKQzcfF/lGJeYbn7DIKPEGxnomZs
+         lfmZTT5dqodtFhzARFAT2lFaevkd7XYkJvbykIZVdFduGhuQqHZGHTgVtREPvLgz3+mu
+         /ST4SzqPDNkEWk0goBl5K8NnnQBvhoUq9TcjcQIqR67xkIbeIIIaVkUfFZVqviuAQ+GD
+         D9rmrlhUCKaGNvUeLKtdKlildq1/7SDbX8/2Wkaf5h2TrfltWIOkhbx/+nHByib14Gua
+         bxg0fEQ3aKK1CHugFIQ8sdDXP4POsJtLvQdDFhiDqabnn5NlMGBp21HnGONHH0/D67n2
+         pNLQ==
+X-Gm-Message-State: AJIora+2fEW3tW6Xab17ygn1GpbywbFhUO6UkGBr6I31RxbCuPpZFJxF
+	80xSOMcsqKX+KFUXtU4DZog=
+X-Google-Smtp-Source: AGRyM1v8019adYsp3ny2RyVvIYKz2DtuN+HXhP1DCr3GueiOWQEx9YpzP62n3PtvTXXlbH7Gs0vgYg==
+X-Received: by 2002:a05:6402:cba:b0:43a:6b17:f6b5 with SMTP id cn26-20020a0564020cba00b0043a6b17f6b5mr34455445edb.330.1657654028245;
+        Tue, 12 Jul 2022 12:27:08 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Tue, 12 Jul 2022 21:27:07 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: oss-security@lists.openwall.com
+Cc: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+	xen-users@lists.xen.org,
+	"Xen.org security team" <security-team-members@xen.org>
+Message-ID: <Ys3LCx6LmRFF547K@eldamar.lan>
+References: <E1oBIrq-0007mF-D5@xenbits.xenproject.org>
 MIME-Version: 1.0
-X-Received: by 10.112.155.232 with SMTP id vz8mr7453399lbb.20.1445490238509;
- Wed, 21 Oct 2015 22:03:58 -0700 (PDT)
-In-Reply-To: <CAJUzAGa5GZiKcFd_YEUqs=k9jk1fgwkbZY6ESfxA6FneKiaAMg@mail.gmail.com>
-References: <CAJUzAGa5GZiKcFd_YEUqs=k9jk1fgwkbZY6ESfxA6FneKiaAMg@mail.gmail.com>
-Date: Thu, 22 Oct 2015 10:33:58 +0530
-Message-ID: <CAJUzAGZj=vbVsWJZptC7jEjpUN54qgSiCsL56vQOJ=EMq6574A@mail.gmail.com>
-From: GAURAV GUPTA <ya1gaurav@gmail.com>
-To: oss-security@lists.openwall.com, cve-assign@mitre.org
-Cc: veillard@redhat.com
-Content-Type: multipart/alternative; boundary=089e0122938431584c0522aa6cf8
-Subject: [oss-security]Crafted xml causes out of bound memory access - Libxml2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <E1oBIrq-0007mF-D5@xenbits.xenproject.org>
+Subject: Re: [oss-security] Xen Security Advisory 407 v1
+ (CVE-2022-23816,CVE-2022-23825,CVE-2022-29900) - Retbleed - arbitrary
+ speculative code execution with return instructions
 
---089e0122938431584c0522aa6cf8
-Content-Type: text/plain; charset=UTF-8
+Hi,
 
-Please assign cve for below reported vulnerability.
----------- Forwarded message ----------
-From: "GAURAV GUPTA" <ya1gaurav@gmail.com>
-Date: Oct 22, 2015 10:12 AM
-Subject: Crafted xml causes out of bound memory access - Libxml2
-To: <cve-assign@mitre.org>
-Cc: <veillard@redhat.com>
+On Tue, Jul 12, 2022 at 04:36:10PM +0000, Xen.org security team wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA256
+> 
+>  Xen Security Advisory CVE-2022-23816,CVE-2022-23825,CVE-2022-29900 / XSA-407
+> 
+>    Retbleed - arbitrary speculative code execution with return instructions
+> 
+> ISSUE DESCRIPTION
+> =================
+> 
+> Researchers at ETH Zurich have discovered Retbleed, allowing for
+> arbitrary speculative execution in a victim context.
+> 
+> For more details, see:
+>   https://comsec.ethz.ch/retbleed
+> 
+> ETH Zurich have allocated CVE-2022-29900 for AMD and CVE-2022-29901 for
+> Intel.
+> 
+> Despite the similar preconditions, these are very different
+> microarchitectural behaviours between vendors.
+> 
+> On AMD CPUs, Retbleed is one specific instance of a more general
+> microarchitectural behaviour called Branch Type Confusion.  AMD have
+> assigned CVE-2022-23816 (Retbleed) and CVE-2022-23825 (Branch Type
+> Confusion).
+> 
+> For more details, see:
+>   https://www.amd.com/en/corporate/product-security/bulletin/amd-sb-1037
 
-Hello,
-Please assign CVE for below vulnerability:
+Is it confirmed that AMD is not using CVE-2022-29900? The above
+amd-sb-1037 references as well both CVE-2022-23825 (Branch Type
+Confusion) and CVE-2022-29900 (RETbleed), so I assume they agreed to
+use CVE-2022-29900 for retbleed?
 
-Description : Out of bound read in libxml2 with crafted xml input. It is
-detected using Fuzzer - American fuzzy loop.
+So should the Xen advisory as well use CVE-2022-23825,CVE-2022-29900
+and CVE-2022-29901?
 
-Reported discussion : https://bugzilla.gnome.org/show_bug.cgi?id=744980
-
-Upstream Fixes :
-1.
-https://git.gnome.org/browse/libxml2/commit/?id=a7dfab7411cbf545f359dd3157e5df1eb0e7ce31
-
-2.
-https://git.gnome.org/browse/libxml2/commit/?id=9b8512337d14c8ddf662fcb98b0135f225a1c489
-
-Thanks.
--- 
 Regards,
-Gaurav Gupta
-
---089e0122938431584c0522aa6cf8--
+Salvatore
