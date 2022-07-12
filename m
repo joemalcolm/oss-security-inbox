@@ -1,42 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/28/4
-Message-ID: <Y6xzIR9P+a6uaaEx@itl-email>
-Date: Wed, 28 Dec 2022 11:47:25 -0500
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
-To: oss-security@...ts.openwall.com
-Cc: Alejandro Colomar <alx.manpages@...il.com>, Michael Kerrisk <mtk.manpages@...il.com>, linux-kernel@...r.kernel.org, linux-man@...r.kernel.org
-Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/12/3
+Message-ID: <CAE_88GZRaZV=nRrOBD2_++u=LxUnX54RD8JY+ssRKWPhs8PW=g@mail.gmail.com>
+Date: Tue, 12 Jul 2022 14:58:47 -0300
+From: "Thiago H. de Paula Figueiredo" <thiagohp@...il.com>
+To: Tapestry users <users@...estry.apache.org>
+Cc: Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
+Subject: [CVE-2022-31781] Apache Tapestry denial of service vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 28, 2022 at 10:24:58AM -0500, Shawn Webb wrote:
-> On Tue, Dec 27, 2022 at 04:44:49PM -0800, Lyndon Nerenberg (VE7TFX/VE6BBM) wrote:
-> > Dominique Martinet writes:
-> > 
-> > > But, really, I just don't see how this can practically be said to be parsable...
-> > 
-> > In its current form it never will be.  The solution is to place
-> > this variable-length field last.  Then you can "cut -d ' ' -f 51-"
-> > to get the command+args part (assuming I counted all those fields
-> > correctly ...)
-> > 
-> > Of course, this breaks backwards compatability.
-> 
-> It would also break forwards compatibility in the case new fields
-> needed to be added.
-> 
-> The only solution would be a libxo-style feature wherein a
-> machine-parseable format is exposed by virtue of a file extension.
-> 
-> Examples:
-> 
-> 1. /proc/pid/stats.json
-> 2. /proc/pid/stats.xml
-> 3. /proc/pid/stats.yaml_shouldnt_be_a_thing
+Regular Expression Denial of Service (ReDoS) in ContentType.java.
+(GHSL-2022-022) (CVE-2022-31781)
 
-A binary format would be even better.  No risk of ambiguity.
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+PRODUCT AFFECTED:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+This issue affects Apache Tapestry 5.8.1.
+
+PROBLEM:
+
+Severity: low
+
+Apache Tapestry up to version 5.8.1 is vulnerable to Regular
+Expression Denial of Service (ReDoS) in the way it handles Content
+Types. Specially crafted Content Types may cause catastrophic
+backtracking, taking exponential time to complete.
+
+Specifically, this is about the regular expression used on the
+parameter of the org.apache.tapestry5.http.ContentType class.
+
+Apache Tapestry 5.8.2 has a fix for this vulnerability.
+
+Notice the vulnerability cannot be triggered by web requests in
+Tapestry code alone. It would only happen if there's some non-Tapestry
+codepath passing some outside input to the ContentType class
+constructor.
+
+This issue has been assigned CVE-2022-31781.
+
+MODIFICATION HISTORY:
+
+: Initial Publication.
+
+RELATED LINKS:
+
+CVE-2022-31781 at cve.mitre.org
+
+ACKNOWLEDGEMENTS:
+
+CodeQL team members [@atorralba (Tony
+Torralba)](https://github.com/atorralba) and [@joefarebrother (Joseph
+Farebrother)](https://github.com/joefarebrother).
