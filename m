@@ -1,94 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/26/4
-Message-ID: <1666n13n-4p11-777r-srq5-sp89r0q5s631@unkk.fr>
-Date: Wed, 26 Oct 2022 08:26:48 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] CVE-2022-42916: HSTS bypass via IDN (curl)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/14/1
+Message-ID: <xmqqh73k8sbl.fsf@gitster.g>
+Date: Wed, 13 Jul 2022 17:13:18 -0700
+From: Junio C Hamano <junio@...ox.com>
+To: oss-security@...ts.openwall.com
+cc: git-security@...glegroups.com, ycdxsb <ycdxsb@...il.com>, Carlo Marcelo Arenas Belón <carenas@...il.com>, Johannes Schindelin <johannes.schindelin@....de>
+Subject: Git v2.37.1 and friends for CVE-2022-29187
 Content-Type: text/plain; charset=utf-8
 
-CVE-2022-42916: HSTS bypass via IDN
-===================================
+The Git project released new versions on July 12th, 2022, addressing
+CVE-2022-29187.  We highly recommend to upgrade to one of these fixed
+versions:
 
-Project curl Security Advisory, October 26 2022 -
-[Permalink](https://curl.se/docs/CVE-2022-42916.html)
+  v2.30.5 v2.31.4 v2.32.3 v2.33.4 v2.34.4 v2.35.4 v2.36.2 v2.37.1
 
-VULNERABILITY
--------------
+If you are on the unreleased development track, the same fix is
+already included, so you do not have to do anything.
 
-curl's HSTS check could be bypassed to trick it to keep using HTTP.
+https://lore.kernel.org/git/xmqqv8s2fefi.fsf@gitster.g/
 
-Using its HSTS support, curl can be instructed to use HTTPS directly instead
-of using an insecure clear-text HTTP step even when HTTP is provided in the
-URL. This mechanism could be bypassed if the host name in the given URL uses
-IDN characters that get replaced to ASCII counterparts as part of the IDN
-conversion. Like using the character UTF-8 U+3002 (IDEOGRAPHIC FULL STOP)
-instead of the common ASCII full stop (U+002E) `.`.
 
-Like this: `http://curl。se。`
+This fix contained in these releases are minor updates for the
+changes that went into Git 2.30.3 and 2.30.4, addressing
+CVE-2022-29187.
 
-We are not aware of any exploit of this flaw.
+ * The safety check that verifies a safe ownership of the Git
+   worktree is now extended to also cover the ownership of the Git
+   directory (and the `.git` file, if there is any).
 
-INFO
-----
+Credit for finding and fixing the problem goes to Carlo Marcelo
+Arenas Belón and Johannes Schindelin.
 
-This flaw was introduced in [commit
-7385610d0c7](https://github.com/curl/curl/commit/7385610d0c7), which was
-shipped enabled by default from [commit
-d71ff2b9db566b3f](https://github.com/curl/curl/commit/d71ff2b9db566b3f) in
-curl 7.77.0.
+Thanks.
 
-This issue is similar to the previous [CVE-2022-30115](https://curl.se/docs/CVE-2022-30115.html).
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2022-42916 to this issue.
-
-CWE-319: Cleartext Transmission of Sensitive Information
-
-Severity: Medium
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.77.0 to and including 7.85.0
-- Not affected versions: curl < 7.77.0 and curl >= 7.86.0
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-A [fix for CVE-2022-42916](https://github.com/curl/curl/commit/53bcf55b4538067e6)
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 7.86.0
-
-  B - Apply the patch to your local version
-
-  C - Stick to always using `HTTPS://` in URLs
-
-TIMELINE
---------
-
-This issue was reported to the curl project on October 11, 2022. We contacted
-distros@...nwall on October 18, 2022.
-
-libcurl 7.86.0 was released on October 26 2022, coordinated with the
-publication of this advisory.
-
-CREDITS
--------
-
-- Reported-by: Hiroki Kurosawa
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
