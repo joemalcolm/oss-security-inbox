@@ -1,41 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/06/6
-Message-ID: <20220806191022.GA10830@openwall.com>
-Date: Sat, 6 Aug 2022 21:10:22 +0200
-From: Solar Designer <solar@...nwall.com>
-To: "?????????(??????)" <zhangziming.zzm@...group.com>
-Cc: oss-security <oss-security@...ts.openwall.com>
-Subject: Re: CVE-2022-1972: out-of-bound write in Linux netfilter subsystem leads to local privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/15/1
+Message-ID: <CADx9buP8OWYN2zjjhHmatNvsVPwpii6ic7Dw437BP7COe8NUKQ@mail.gmail.com>
+Date: Fri, 15 Jul 2022 17:40:36 -0400
+From: Naveen Gangam <ngangam@...udera.com>
+To: security <security@...e.apache.org>, dev@...e.apache.org, user@...e.apache.org,  oss-security@...ts.openwall.com
+Subject: [Security] CVE-2021-34538: Security vulnerability in Hive with UDFs
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 02, 2022 at 10:21:36AM +0800, ?????????(??????) wrote:
-> An out-of-bound write vulnerability was identified within the
-> netfilter subsystem
-> which can be exploited to achieve privilege escalation to root.
-> 
-> In order to trigger the issue it requires the ability to create user/net
-> namespaces.
-> 
-> this vulnerability comes from commit(
-> https://github.com/torvalds/linux/commit/f3a2181e16f1dcbf5446ed43f6b5d9f56c459f85)
-> 
-> This issue has been fixed within the following commit:
-> 
-> https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=fecf31ee395b0295f2d7260aa29946b7605f7c85
+*CVE-2021-34538*: Unauthorized access to Hive UDFs
 
-[...]
+*Severity*: Very Important
 
-> =*=*=*=*=*=*=*=*=  Credit  =*=*=*=*=*=*=*=*=
-> ziming zhang(@ezrak1e) from Ant Group Light-Year Security Lab
+*Vendor*: The Apache Software Foundation
 
-Apparently, this vulnerability was also independently discovered by
-Arthur Mongodin during an internship at Randorisec, who blogged about it
-on June 13 here:
+*Versions Affected*: This vulnerability affects all versions of Hive prior
+to Hive 3.1.3. (3.1.2 or earlier).
 
-https://randorisec.fr/yet-another-bug-netfilter/
+*Version Fixed:* Hive 3.1.3, Hive 4.0 (in Beta)
 
-and posted an infoleak PoC here:
+*Description*: Hive's "CREATE" and "DROP" function operations does not
+check for necessary authorization of involved entities in the query. It was
+found that an unauthorized user can manipulate an existing UDF without
+having the privileges to do so. This allowed unauthorized or
+underprivileged users to drop and recreate UDFs pointing them to new jars
+that could be potentially malicious.
 
-https://github.com/randorisec/CVE-2022-1972-infoleak-PoC
+Mitigation: This vulnerability has been addressed vio HIVE-25468 in Hive
+3.1.3 release and will be included in Hive 4.0GA (Already in the beta
+releases). Please upgrade to one of the releases containing the fix or
+apply this patch to an existing release.
 
-Alexander
+Credit: This vulnerability was discovered and reported by Hideyuki Furue.
+THANK YOU !!!
+
