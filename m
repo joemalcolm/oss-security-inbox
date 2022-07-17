@@ -1,59 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/31/2
-Message-ID:  <DBAPR06MB682490628A918F9C24295036BC379@DBAPR06MB6824.eurprd06.prod.outlook.com>
-Date: Mon, 31 Oct 2022 10:52:16 +0000
-From: Rakesh Pandit <rakesh@...era.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: Erik Larsson <erik@...era.com>, Jean-Pierre Andre <jean-pierre.andre@...adoo.fr>, Szabolcs Szakacsits <szaka@...era.com>
-Subject: OPEN SOURCE NTFS-3G SECURITY ADVISORY NTFS3G-SA-2022-0003
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/17/1
+Message-ID: <CAEccTyzievJ1i1uaGOz8NJ37=yCpr+iCAsCe_SJqoMKt3iJSnw@mail.gmail.com>
+Date: Sun, 17 Jul 2022 18:40:40 -0500
+From: Sean Owen <srowen@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2022-33891: Apache Spark shell command injection vulnerability via Spark UI
 Content-Type: text/plain; charset=utf-8
 
-A security vulnerability was identified in the open source NTFS-3G and
-NTFSPROGS software. The vulnerability was confirmed and resolved. To
-our knowledge, this vulnerability has not been exploited.
+Severity: important
 
-This vulnerability may allow an attacker using a maliciously crafted
-NTFS-formatted image file or external storage to potentially execute
-arbitrary privileged code, if the attacker has either local access and
-the ntfs-3g binary is setuid root, or if the attacker has physical
-access to an external port to a computer which is configured to run
-the ntfs-3g binary or one of the ntfsprogs tools when the external
-storage is plugged into the computer. This vulnerability results from
-incorrect validation of some of the NTFS metadata that could
-potentially cause buffer overflow, which could be exploited by an
-attacker. Common ways for attackers to gain physical access to a
-machine is through social engineering or an evil maid attack on an
-unattended computer.
+Description:
 
-We recommend installing and applying the update with the security
-fixes, and advise to follow security guidance and frameworks such as
-NIST for assessing and improving an organization’s abilities to
-prevent, detect, and respond to security threats and cyber attacks.
+The Apache Spark UI offers the possibility to enable ACLs via the
+configuration option spark.acls.enable. With an authentication filter, this
+checks whether a user has access permissions to view or modify the
+application. If ACLs are enabled, a code path in HttpSecurityFilter can
+allow someone to perform impersonation by providing an arbitrary user name.
+A malicious user might then be able to reach a permission check function
+that will ultimately build a Unix shell command based on their input, and
+execute it. This will result in arbitrary shell command execution as the
+user Spark is currently running as. This affects Apache Spark versions
+3.0.3 and earlier, versions 3.1.1 to 3.1.2, and versions 3.2.0 to 3.2.1.
 
-AFFECTED PRODUCTS: All previous versions of open source NTFS-3G
-and NTFSPROGS.
+This issue is being tracked as SPARK-38992
 
-This release code is available on :
-https://github.com/tuxera/ntfs-3g/releases/tag/2022.10.3
-and the new release tarball can be downloaded from :
-https://tuxera.com/opensource/ntfs-3g_ntfsprogs-2022.10.3.tgz
+Mitigation:
 
-We would like to thank Yuchen Zeng and Eduardo Vela for having
-reported on the flaw they discovered.
+Upgrade to supported Apache Spark maintenance release 3.1.3, 3.2.2, or
+3.3.0 or later
 
-WORKAROUND: None
+Credit:
 
-SOLUTION: 2022.10.3
-
-PROJECT URL: https://github.com/tuxera/ntfs-3g
-
-ADVISORY ID: NTFS3G-SA-2022-0003
-
-ISSUE DATE: 31.10.2022
-
-SEVERITY: Moderate
-
-CVEs: CVE-2022-40284
-
-CVSS SCORE: 5.0-6.7
+ Kostya Kortchinsky (Databricks)
 
