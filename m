@@ -1,21 +1,13 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/02/3
-Message-ID: <c44d5503-8393-4048-2b2b-5bc3ddac3a43@apache.org>
-Date: Fri, 02 Sep 2022 03:55:07 +0000
-From: Jedidiah Cunningham <jedcunningham@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/18/1
+Message-ID: <bc7463ea-bb83-722a-7bfe-9b8881f9ee19@apache.org>
+Date: Mon, 18 Jul 2022 11:22:23 +0000
+From: Zhenxu Ke <kezhenxu94@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-38170: Apache Airflow: Overly permissive umask for deamons 
+Subject: CVE-2022-36127: Apache SkyWalking NodeJS Agent: Service unavailability impact in NodeJS agent(version <= 0.5.0) 
 Content-Type: text/plain; charset=utf-8
 
 Description:
 
-In Apache Airflow prior to 2.3.4, an insecure umask was configured for numerous Airflow components when running with the  `--deamon` flag which could result in a race condition giving world-writable files in the Airflow home directory and allowing local users to expose arbitrary file contents via the webserver.
-
-Mitigation:
-
-Run without the `--deamon` flag via a process supervisor instead (systemd, runit, etc.).
-
-Credit:
-
-The Apache Airflow PMC would like to thank Harry Sintonen for reporting this issue.
+The vulnerability will cause NodeJS services that has this agent installed to be unavailable if the OAP is unhealthy and NodeJS agent can't establish the connection.
 
