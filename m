@@ -1,72 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/25/12
-Message-ID: <7460e2a7-4323-3914-bcd6-1d07c859abe5@linux.intel.com>
-Date: Tue, 25 Jan 2022 17:55:25 +0000
-From: Tvrtko Ursulin <tvrtko.ursulin@...ux.intel.com>
-To: oss-security@...ts.openwall.com
-Cc: Linus Torvalds <torvalds@...ux-foundation.org>, Dave Airlie <airlied@...il.com>, Daniel Vetter <daniel@...ll.ch>, Joonas Lahtinen <joonas.lahtinen@...ux.intel.com>, Greg Kroah-Hartman <gregkh@...uxfoundation.org>, Marian Rehak <mrehak@...hat.com>
-Subject: Linux kernel: Security sensitive bug in the i915 kernel driver​ (CVE-2022-0330)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/19/4
+Message-ID: <84A9FE84-665A-4750-9C36-07FBD9222C9F@oracle.com>
+Date: Tue, 19 Jul 2022 17:02:12 +0000
+From: John Haxby <john.haxby@...cle.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2022-21505: Kernel lockdown bypass bug
 Content-Type: text/plain; charset=utf-8
 
+Hello All,
 
-[This is a public disclosure of an issue reported 7 days ago to 
-linux-distros at openwall. CVE-2022-0330 has been assigned to the 
-issue since.]
+We recently discovered a bug that allows linux kernel lockdown to be
+trivially bypassed using IMA. See the patch, below, for more details.
 
-Hi all,
+This has been assigned CVE-2022-21505.
 
-A missing GPU TLB flush has been discovered in the i915 kernel driver 
-which could be exploited by malicious userspace and can manifest in two 
-flavours, depending on whether the GPU is running behind an active IOMMU 
-(address translation) or not:
+I've included the patch, below, but it has been sent upstream and you'll
+probably want to pull it from the repos on kernel.org.
 
-1. IOMMU with address translation - malicious userspace can trigger DMAR 
-read/write faults getting logged to the kernel log.
+jch
 
-2. Without an active IOMMU malicious userspace can gain access (from the 
-code executing on the GPU) to random memory pages.
 
-Second case is therefore the serious one.
+~~~
+The lockdown LSM is primarily used in conjunction with UEFI Secure Boot.
+This LSM may also be used on machines without UEFI. It can also be enabled
+when UEFI Secure Boot is disabled. One of lockdown's features is to prevent
+kexec from loading untrusted kernels. Lockdown can be enabled through a
+bootparam or after the kernel has booted through securityfs.
 
-It is currently not known whether specific memory could be targeted, but 
-random memory corruption or data leaks are a known possibility.
+If IMA appraisal is used with the "ima_appraise=log" boot param,
+lockdown can be defeated with kexec on any machine when Secure Boot is
+disabled or unavailable. IMA prevents setting "ima_appraise=log"
+from the boot param when Secure Boot is enabled, but this does not cover
+cases where lockdown is used without Secure Boot.
 
-Underlying reason for the access to memory not owned is a missing TLB 
-flush upon releasing memory which used to back a GPU buffer object back 
-to the system.
+To defeat lockdown, boot without Secure Boot and add ima_appraise=log
+to the kernel command line; then:
 
-Flawed assumption was that flushing the TLB at the start of every 
-userspace GPU execution is sufficient, given the programming model where 
-userspace is expected to declare which graphics virtual memory address 
-ranges it will be accessing at the start of every execution. However 
-what was not considered is that userspace can legitimately (it is 
-allowed in uapi) _not_ declare those accesses.
+$ echo "integrity" > /sys/kernel/security/lockdown
+$ echo "appraise func=KEXEC_KERNEL_CHECK appraise_type=imasig" > \
+/sys/kernel/security/ima/policy
+$ kexec -ls unsigned-kernel
 
-This allows userspace to continue GPU access to memory, while the kernel 
-driver (i915) is unaware of it being in use, and therefore is allowed to 
-release the backing store back to the system. Should the system then 
-give out those pages back for a different use, the exploit situation can 
-arise.
+Add a call to verify ima appraisal is set to "enforce" whenever lockdown
+is enabled.
 
-Return of the pages back to the system can either be specifically 
-engineered by the malicious software, or can happen innocently via 
-system memory pressure.
+Fixes: 29d3c1c8dfe7 ("kexec: Allow kexec_file() with appropriate IMA policy when locked down")
+Signed-off-by: Eric Snowberg <eric.snowberg@...cle.com>
+Acked-by: Mimi Zohar <zohar@...ux.ibm.com>
+Reviewed-by: John Haxby <john.haxby@...cle.com>
+---
+security/integrity/ima/ima_policy.c | 4 ++++
+1 file changed, 4 insertions(+)
 
-All Intel integrated and discrete GPUs starting from Gen8 (Broadwell) 
-are affected.
+diff --git a/security/integrity/ima/ima_policy.c b/security/integrity/ima/ima_policy.c
+index fa5a93dbe5d26..748b97a2582a4 100644
+--- a/security/integrity/ima/ima_policy.c
++++ b/security/integrity/ima/ima_policy.c
+@@ -2034,6 +2034,10 @@ bool ima_appraise_signature(enum kernel_read_file_id id)
+	if (id >= READING_MAX_ID)
+		return false;
 
-Fix has already been developed and consists of explicitly flushing the 
-TLBs before releasing memory back to the system for any GPU buffer 
-objects which were in use from the GPU.
++	if (id == READING_KEXEC_IMAGE && !(ima_appraise & IMA_APPRAISE_ENFORCE)
++	 && security_locked_down(LOCKDOWN_KEXEC))
++		return false;
++
+	func = read_idmap[id] ?: FILE_CHECK;
 
-Note that this will have a varying performance impact depending on the 
-specific GPU, GPU workload and overall system workload.
+	rcu_read_lock();
+--
+2.27.0
 
-Fix for the issue has been provided to the Linus distributions and Linux 
-kernel maintainers and is expected to be merged to top of the tree and 
-stable and LTS releases shortly. Fix carries the title of "drm/i915: 
-Flush TLBs before releasing backing store".
-
-Kind regards,
-
-Tvrtko
+Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
