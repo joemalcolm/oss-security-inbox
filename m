@@ -1,18 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/22/3
-Message-ID: <97dbcb8b-609e-07c5-6a78-76da8d4e91ff@apache.org>
-Date: Thu, 22 Dec 2022 09:35:08 +0000
-From: Weijie Wu <wuweijie@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/19/1
+Message-ID: <20220719001848.GA1516019@millbarge>
+Date: Tue, 19 Jul 2022 00:18:48 +0000
+From: Seth Arnold <seth.arnold@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-45347: Apache ShardingSphere-Proxy: ShardingSphere-Proxy MySQL authentication bypass 
+Subject: snowflakedb security contacts
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Hello, if anyone has friends or acquaintances at snowflakedb, please
+direct their attention to:
 
-ShardingSphere-Proxy with MySQL protocol didn't cleanup session completely after client authentication failed, which allows an attacker to execute normal commands by constructing a special MySQL client. This vulnerability has been fixed in ShardingSphere 5.3.0.
+https://github.com/snowflakedb/gosnowflake/issues/619
+"Please add a SECURITY.md file and security policy"
 
-References:
+I don't know if what I found is actually an issue but I'd like to give
+them a chance to see it privately before telling the whole world. I've
+not had much luck with the Usual Methods so far.
 
-https://shardingsphere.apache.org
-https://www.cve.org/CVERecord?id=CVE-2022-45347
+Everyone else: *please* take five minutes to write down how you'd like
+people to report security issues. Some people subscribe to the "security
+bugs are just bugs, report them like any other" philosophy. Some people
+want a chance to look at potential security issues privately, first.
 
+Whatever you'd like, please just write it down someplace obvious.
+
+Thanks
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
