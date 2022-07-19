@@ -1,30 +1,11 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/07/1
-Message-ID: <CAKPOu+8WtknWoUeY-CTK5ejo0hOQDsPOsbO12pFK6ifJwmVo4Q@mail.gmail.com>
-Date: Mon, 7 Mar 2022 13:01:19 +0100
-From: Max Kellermann <max.kellermann@...os.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-0847: Linux kernel: overwriting read-only files
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/19/2
+Message-ID: <420cd38c550a46e6abea9bcab3c09eb7@huawei.com>
+Date: Tue, 19 Jul 2022 02:10:42 +0000
+From: "Weigang (Jimmy)" <weigang12@...wei.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "openeuler-security@...neuler.org" <openeuler-security@...neuler.org>
+Subject: CVE-2021-33655: Linux kernel: When sending malicous data to kernel by ioctl cmd FBIOPUT_VSCREENINFO,kernel will write memory out of bounds.(5.18 5.19.0-rc1)
 Content-Type: text/plain; charset=utf-8
 
-Hi oss-security,
-
-two weeks ago, I found a vulnerability in the Linux kernel since
-version 5.8 commit f6dd975583bd ("pipe: merge anon_pipe_buf*_ops") due
-to uninitialized variables.  It enables anybody to write arbitrary
-data to arbitrary files, even if the file is O_RDONLY, immutable or on
-a MS_RDONLY filesystem.  It can be used to inject code into arbitrary
-processes.
-
-It is similar to CVE-2016-5195 "Dirty Cow", but is easier to exploit.
-
-The vulnerability was fixed in Linux 5.16.11, 5.15.25 and 5.10.102.
-
-A proof-of-concept exploit is attached.
-
-For anybody curious, here's an article about how I discovered this:
- https://dirtypipe.cm4all.com/
-
-Max
-
-View attachment "write_anything.c" of type "text/x-csrc" (4371 bytes)
+Fix has been released by Linux kernel upstream in 5.19-rc7: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=086ff84617185393a0bbf25830c4f36412a7d3f4.
