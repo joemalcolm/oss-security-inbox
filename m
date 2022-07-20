@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3054" "Monday" "1" "February" "2021" "10:44:09" "+0100" "Mariusz Felisiak" "felisiak.mariusz@gmail.com" "<27226ce7-d477-5cb5-fbf2-050d8096a151@gmail.com>" "77" "[oss-security] Django: CVE-2021-3281: Potential directory-traversal via archive.extract()" nil nil nil "2" "2021020109:44:09" "[oss-security] Django: CVE-2021-3281: Potential directory-traversal via archive.extract()" (number mark "U       felisiak.mar Feb  1   77/3054  " thread-indent "\"[oss-security] Django: CVE-2021-3281: Potential directory-traversal via archive.extract()\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Django: CVE-2021-3281: Potential directory-traversal via archive.extract()" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 19608 invoked by uid 550); 1 Feb 2021 11:20:49 -0000
+Received: (qmail 23948 invoked by uid 550); 20 Jul 2022 08:08:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,121 +7,185 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24512 invoked from network); 1 Feb 2021 09:44:22 -0000
+Received: (qmail 9356 invoked from network); 20 Jul 2022 02:53:25 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-transfer-encoding:content-language;
-        bh=ZtENExhqWD3r1/7csvzVDouY9TeBdc24oek60RQFlq0=;
-        b=Au2BreGyDPcoeZBj+V1RcnuopwvPRlf0BUMFzQkjiDM7ddCm9hPO6mS/FIE5jfMEvW
-         zRIum6StaliiUPrUnyhVYW0xAdm8lwa1Ve6SN0Ul4Q7bzhSYrzaz0R+QhvRbanQjFLdd
-         li5TncG3o2GOKXfeReAQe1g/U96OhwWz9e0MxZoKiWi0vk4kNZYPBOaOWYwTMNBWOYYo
-         BrpFfvsdrfpWPiOCAdcHSydzqn+ryhs0W/InUgvhWA0iT2+cBnA7UJCrwigIQfViQgsi
-         ti9D4ynIrNJS2+4bVpK/DQyXpD87zrF6Hyb5IJtVQ21ZQ3MO54BU2ruyhQBT57+EJjY8
-         XVAw==
+        d=gmail.com; s=20210112;
+        h=from:message-id:mime-version:subject:date:in-reply-to:cc:to
+         :references;
+        bh=E02NnayUCLgv+XNEvhCTMNa2wcshQSXurUvQpD/gQoY=;
+        b=Lf9anhI49rF1uQEmsV4xFQD38mkroGK8RQiGst13WQqSa71vhdXf6ySVZf6+qdnmP7
+         jwF5O8gDj56w5lhRnhu5iQ5U06oMGOxYRO7RsHBcoGwJdXUU68PIIWuBkXDN56PtuFho
+         2DnEyxizsehLbh92nLdFrotDekb6ZzuQ4GRbU0f4YREKgkxHkjUvoyAkfLK+tBDLfoD2
+         Drf7S93FsvsWILImZWPNaW4QRblrQw8QANGFq0togwlWjtMLG0A4Z4GjgWDGsrpak1f2
+         FdhL633oQjR0AEEGvx7TCaLQLIXZePMm2Q+bKkiXZ3WS6UGAWY2d4NwMO5IviTd/kQae
+         f4wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version:content-transfer-encoding:content-language;
-        bh=ZtENExhqWD3r1/7csvzVDouY9TeBdc24oek60RQFlq0=;
-        b=AhK4RwfsTXAb4pydA5R+M8aZ4nivj4BsTxKPkrlodepBvaCDUG5hkvx79O3oUnKrvc
-         arEknhxMqC5pAcyavFawU63ap4asOW9bwfCyw4mkjWnlkiDUkO30x5VR44epcB5unp8E
-         2Sq6VN9XdSG45L1c+a3FnAKZFnMiveNk1tqoS0/Uj1JX/8fxkb7E9Abeh0Vd1cXkeqTu
-         uakrNFdOiMddtfQn8MgVmW158/xbFCdEDSA5JJlT650PCAPsR6tNrDOuvQb0mmT8GzSO
-         G0+GOFOfllKa6tCYMVZjvJ1aHm2iKD2XHf+xwjP7F1TVUuJWJAhhkkHg3MAfaqPdMtAd
-         0EFg==
-X-Gm-Message-State: AOAM531CIyH8ZwQhCvTxClxwAR7Vhc/a1CWHyEv9uZEqurQws2bV4fS9
-	9MnVt753iGB52IxEBNTyi39UL5VcPBU=
-X-Google-Smtp-Source: ABdhPJzfqqPbfbf2FRcUNF2vwK/1mQe71mkAlhnR/obwomiGJ0MzvEp9m/Rjprlw2YTtlEHaBoPUhg==
-X-Received: by 2002:a05:6512:10c8:: with SMTP id k8mr8230790lfg.299.1612172650601;
-        Mon, 01 Feb 2021 01:44:10 -0800 (PST)
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:message-id:mime-version:subject:date
+         :in-reply-to:cc:to:references;
+        bh=E02NnayUCLgv+XNEvhCTMNa2wcshQSXurUvQpD/gQoY=;
+        b=cUHXnmq8158cdpctipRTEWgrP/4NSaGA2E4JmXLl5KDP0o8c5uU5FtCare9XAGN+q/
+         w6UVAx2qxw4/QJr1T2hjP5HZvsDH5mPUid+sKnoblHVx/LbH3TMa5CwHH07tcGO+tqsu
+         PVHM9CITs67zvo5qTzZi8kDILa85AT7lNPDHknlUzVv+QLfYkocFr94LZ8/afmTKrXXm
+         llCP2nlFEQfF/bQoewX1UZh7ghyKLxE77vpduu7oR7jkAcovwAr+nTVkn8H8FvsS6m83
+         u0wpIxbJ0NS+n3gBGBeU8bTvxw4XsXUAElHcTRGrW2r/oOvynW9SvWHgmaWYw2Meitp2
+         cJXQ==
+X-Gm-Message-State: AJIora/ryqoWfrtIDzH4B/LBey4gn4Sa/+96PDBA3SRi3EzPr6KajdRo
+	czX/c15rz5GdfWKASx/zq51OX79zJ18=
+X-Google-Smtp-Source: AGRyM1sRqljFUCYt4x+3p0CcQMzu+3uK9lOG/ScWplq+Gjv+Trv3o6tlsFEliNBeaYT79hdBiwGwLg==
+X-Received: by 2002:aa7:9eca:0:b0:52b:2bf4:fae9 with SMTP id r10-20020aa79eca000000b0052b2bf4fae9mr29283670pfq.13.1658285593303;
+        Tue, 19 Jul 2022 19:53:13 -0700 (PDT)
+From: Roxana Bradescu <roxxbee@gmail.com>
+X-Google-Original-From: Roxana Bradescu <roxabee@chromium.org>
+Message-Id: <3EEAA7BE-FB68-4167-9774-7F29533C5DE4@chromium.org>
+Content-Type: multipart/signed;
+	boundary="Apple-Mail=_6F933F0A-ACBF-42DE-B193-92775BD280E3";
+	protocol="application/pgp-signature";
+	micalg=pgp-sha256
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.100.31\))
+Date: Tue, 19 Jul 2022 19:53:10 -0700
+In-Reply-To: <YtcERPgb/nPGxvHA@gentoo.org>
+Cc: mjc@apache.org
 To: oss-security@lists.openwall.com
-From: Mariusz Felisiak <felisiak.mariusz@gmail.com>
-Message-ID: <27226ce7-d477-5cb5-fbf2-050d8096a151@gmail.com>
-Date: Mon, 1 Feb 2021 10:44:09 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
+References: <e975be34-c838-7d06-4e98-4171fd2a650b@apache.org>
+ <YtcERPgb/nPGxvHA@gentoo.org>
+X-Mailer: Apple Mail (2.3696.100.31)
+Subject: Re: [oss-security] CVE-2022-34169: Apache Xalan Java XSLT library is
+ vulnerable to an integer truncation issue when processing malicious XSLT
+ stylesheets
+
+--Apple-Mail=_6F933F0A-ACBF-42DE-B193-92775BD280E3
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_B269C718-5A72-4D59-AA03-5162FC24617E"
+
+
+--Apple-Mail=_B269C718-5A72-4D59-AA03-5162FC24617E
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
+
+
+> On Jul 19, 2022, at 12:21 PM, John Helmert III <ajak@gentoo.org> wrote:
+>=20
+> On Tue, Jul 19, 2022 at 05:37:46PM +0000, Mark J. Cox wrote:
+>> Description:
+>>=20
+>> The Apache Xalan Java XSLT library is vulnerable to an integer truncatio=
+n issue when processing malicious XSLT stylesheets. This can be used to cor=
+rupt Java class files generated by the internal XSLTC compiler and execute =
+arbitrary Java bytecode.
+>>=20
+>> The Apache Xalan Java project is dormant and in the process of being ret=
+ired. No future releases of Apache Xalan Java to address this issue are exp=
+ected.
+>>=20
+>> Note: Java runtimes (such as OpenJDK) include repackaged copies of Xalan.
+>>=20
+>> Credit:
+>>=20
+>> Reported by Felix Wilhelm, Google Project Zero
+>>=20
+>> References:
+>>=20
+>> https://lists.apache.org/thread/2qvl7r43wb4t8p9dd9om1bnkssk07sn8
+>>=20
+>=20
+> Hi, is there any available patch or bug report? The reference here
+> only seems to be a discussion of the retirement of xalan-j, rather
+> than the vulnerability.
+
+Project Zero won't share technical details of a vulnerability for 30 days i=
+f a vendor patches it before the 90-day or 7-day deadline. The 30-day perio=
+d is intended for user patch adoption.
+https://googleprojectzero.blogspot.com/2021/04/policy-and-disclosure-2021-e=
+dition.html <https://googleprojectzero.blogspot.com/2021/04/policy-and-disc=
+losure-2021-edition.html>
+
+Since OpenJDK released patches for this vulnerability today, PZ would publi=
+sh technical details in 30 days.
+https://openjdk.org/groups/vulnerability/advisories/2022-07-19 <https://ope=
+njdk.org/groups/vulnerability/advisories/2022-07-19>
+
+=E2=80=94
+Regards, Roxana
+
+
+
+--Apple-Mail=_B269C718-5A72-4D59-AA03-5162FC24617E
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; charset=
+=3Dutf-8"></head><body style=3D"word-wrap: break-word; -webkit-nbsp-mode: s=
+pace; line-break: after-white-space;" class=3D""><br class=3D""><div><block=
+quote type=3D"cite" class=3D""><div class=3D"">On Jul 19, 2022, at 12:21 PM=
+, John Helmert III &lt;<a href=3D"mailto:ajak@gentoo.org" class=3D"">ajak@g=
+entoo.org</a>&gt; wrote:</div><br class=3D"Apple-interchange-newline"><div =
+class=3D""><div class=3D""><div class=3D"content-isolator__container">On Tu=
+e, Jul 19, 2022 at 05:37:46PM +0000, Mark J. Cox wrote:<br class=3D""><bloc=
+kquote type=3D"cite" class=3D"">Description:<br class=3D""><br class=3D"">T=
+he Apache Xalan Java XSLT library is vulnerable to an integer truncation is=
+sue when processing malicious XSLT stylesheets. This can be used to corrupt=
+ Java class files generated by the internal XSLTC compiler and execute arbi=
+trary Java bytecode.<br class=3D""><br class=3D"">The Apache Xalan Java pro=
+ject is dormant and in the process of being retired. No future releases of =
+Apache Xalan Java to address this issue are expected.<br class=3D""><br cla=
+ss=3D"">Note: Java runtimes (such as OpenJDK) include repackaged copies of =
+Xalan.<br class=3D""><br class=3D"">Credit:<br class=3D""><br class=3D"">Re=
+ported by Felix Wilhelm, Google Project Zero<br class=3D""><br class=3D"">R=
+eferences:<br class=3D""><br class=3D""><a href=3D"https://lists.apache.org=
+/thread/2qvl7r43wb4t8p9dd9om1bnkssk07sn8" class=3D"">https://lists.apache.o=
+rg/thread/2qvl7r43wb4t8p9dd9om1bnkssk07sn8</a><br class=3D""><br class=3D""=
+></blockquote><br class=3D"">Hi, is there any available patch or bug report=
+? The reference here<br class=3D"">only seems to be a discussion of the ret=
+irement of xalan-j, rather<br class=3D"">than the vulnerability.</div></div=
+></div></blockquote><br class=3D""></div><div>Project Zero won't share tech=
+nical details of a vulnerability for 30 days if a vendor patches it before =
+the&nbsp;90-day&nbsp;or 7-day&nbsp;deadline. The 30-day period is intended =
+for user patch adoption.&nbsp;<br class=3D""><a href=3D"https://googleproje=
+ctzero.blogspot.com/2021/04/policy-and-disclosure-2021-edition.html" class=
+=3D"">https://googleprojectzero.blogspot.com/2021/04/policy-and-disclosure-=
+2021-edition.html</a></div><div><br class=3D""></div><div><span style=3D"ca=
+ret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D"">Since OpenJDK </s=
+pan><span style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=
+=3D"">released patches for this vulnerability today, PZ would publish techn=
+ical details in 30 days.</span></div><div><div style=3D"caret-color: rgb(0,=
+ 0, 0); color: rgb(0, 0, 0);" class=3D""><a href=3D"https://openjdk.org/gro=
+ups/vulnerability/advisories/2022-07-19" class=3D"">https://openjdk.org/gro=
+ups/vulnerability/advisories/2022-07-19</a></div><div style=3D"caret-color:=
+ rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D""><br class=3D""></div><div s=
+tyle=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" class=3D"">=E2=80=
+=94</div><div style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);" cla=
+ss=3D"">Regards, Roxana</div><div style=3D"caret-color: rgb(0, 0, 0); color=
+: rgb(0, 0, 0);" class=3D""><br class=3D""></div></div><br class=3D""></bod=
+y></html>=
+
+--Apple-Mail=_B269C718-5A72-4D59-AA03-5162FC24617E--
+
+--Apple-Mail=_6F933F0A-ACBF-42DE-B193-92775BD280E3
 Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-Subject: [oss-security] Django: CVE-2021-3281: Potential directory-traversal via
- archive.extract()
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP
 
-https://www.djangoproject.com/weblog/2021/feb/01/security-releases/
+-----BEGIN PGP SIGNATURE-----
 
-In accordance with `our security release policy 
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
-Django team is issuing
-`Django 3.1.6 <https://docs.djangoproject.com/en/dev/releases/3.1.6/>`_,
-`Django 3.0.12 
-<https://docs.djangoproject.com/en/dev/releases/3.0.12/>`_ and
-`Django 2.2.18 <https://docs.djangoproject.com/en/dev/releases/2.2.18/>`_.
-These releases address the security issue with severity "low" detailed 
-below. We encourage all users of Django to upgrade as soon as possible.
+iQIzBAEBCAAdFiEEgZzAKV63cJrecgABXEIiv89pXdUFAmLXbhYACgkQXEIiv89p
+XdXZMRAAmZtr6cuDq++mNQ/BE7LLL7HAuUnSQr+a+0f1H9lelCg4tv/jjW6RRbkb
+BlQUr1kXqCzYyiKX6pYDy04onfKafgSobsLUvZH01Lv/FbX2T6u9RJ07wvxPwqip
+N+EsJFMkU+itAv8ULZY5qee7+8itmV9+IjeaLDAqsRIF/Qbq9FXEDgSuNj09ubBj
+3Q47e3LI3O9v5WvqUtWDVO4dMG3CuTGYLLsSW01eG/+QXVrQHQtfJ1dRGM2mIDJo
+BLsD4wBPnGmzYXYEobDiXLDJMeEWUSD1dSPo2L+As6leH3E3Da4trUohQuE4cwOr
+NzOa8L29h2qIVy5n044v+Owt/gYHLx4Gn6Z65q7EeFIV6/9dsb95bUStaxffVbip
+HSJVCbJ8dN5GKAUGjaNGIEMaQ74LfTbTgQiXFx1EBma48GSMhbmoTZnY+Wg00ZIN
+Ee/scbJ5bfVP3GT9R/U/mSXjJyUrn5V0bWzL2aq5tAW19NNn2IV4m63M4P0klzgG
+5s4GOtsLuHPnSsI4AHZ4DvCHsqidDtGDdb3WlIi9QkMX/6eOeY/9PyMugOV42Ise
+1QrI9XGs5t2wbAINNSOJGt3SCh14kL3ZH34pfd1m++egQeBuvQhMtkJ4qT/4RZrG
+i/oiMWtrXWAhtel2Ue9G9jllVJEagGsWRIVwxcOiRbSbLFW3L3o=
+=Uxvi
+-----END PGP SIGNATURE-----
 
-CVE-2021-3281: Potential directory-traversal via ``archive.extract()``
-======================================================================
-
-The ``django.utils.archive.extract()`` function, used by
-``startapp --template`` and ``startproject --template``, allowed
-directory-traversal via an archive with absolute paths or relative paths 
-with
-dot segments.
-
-Thank you to Wang Baohua for the report.
-
-Affected supported versions
-===========================
-
-* Django master branch
-* Django 3.2 (currently at alpha status)
-* Django 3.1
-* Django 3.0
-* Django 2.2
-
-Resolution
-==========
-
-Patches to resolve the issue have been applied to Django's master branch and
-the 3.2, 3.1, 3.0, and 2.2 release branches. The patches may be obtained 
-from the following changesets:
-
-* On the `master branch 
-<https://github.com/django/django/commit/05413afa8c18cdb978fcdf470e09f7a12b234a23>`__
-* On the `3.2 release branch 
-<https://github.com/django/django/commit/f944f79e555c91571192022a6bb9ddf2178db7ed>`__
-* On the `3.1 release branch 
-<https://github.com/django/django/commit/02e6592835b4559909aa3aaaf67988fef435f624>`__
-* On the `3.0 release branch 
-<https://github.com/django/django/commit/52e409ed17287e9aabda847b6afe58be2fa9f86a>`__
-* On the `2.2 release branch 
-<https://github.com/django/django/commit/21e7622dec1f8612c85c2fc37fe8efbfd3311e37>`__
-
-The following releases have been issued:
-
-* Django 3.1.6 (`download Django 3.1.6 
-<https://www.djangoproject.com/m/releases/3.1/Django-3.1.6.tar.gz>`_ | 
-`3.1.6 checksums 
-<https://www.djangoproject.com/m/pgp/Django-3.1.6.checksum.txt>`_)
-* Django 3.0.12 (`download Django 3.0.12 
-<https://www.djangoproject.com/m/releases/3.0/Django-3.0.12.tar.gz>`_ | 
-`3.0.12 checksums 
-<https://www.djangoproject.com/m/pgp/Django-3.0.12.checksum.txt>`_)
-* Django 2.2.18 (`download Django 2.2.18 
-<https://www.djangoproject.com/m/releases/2.2/Django-2.2.18.tar.gz>`_ | 
-`2.2.18 checksums 
-<https://www.djangoproject.com/m/pgp/Django-2.2.18.checksum.txt>`_)
-
-The PGP key ID used for this release is Mariusz Felisiak: 
-`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
-
-General notes regarding security reporting
-==========================================
-
-As always, we ask that potential security issues be reported via
-private email to ``security@djangoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
-
+--Apple-Mail=_6F933F0A-ACBF-42DE-B193-92775BD280E3--
