@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["645" "Tuesday" "28" "November" "2017" "20:46:58" "-0800" "Ian Zimmerman" "itz@very.loosely.org" "<20171129044658.mkrtl3nhjuhxw6k7@matica.foolinux.mooo.com>" "15" "[oss-security] Re: Security risk of server side text editing ..." "^Date:" nil nil "11" "2017112904:46:58" "[oss-security] Re: Security risk of server side text editing ..." (number mark "        itz@very.loo Nov 28   15/645   " thread-indent "\"[oss-security] Re: Security risk of server side text editing ...\"\n") "<d84e199d-8f99-531f-74a3-5b5b29176c44@orlitzky.com>" ("<201711281319.vASDJxWP010037@masaka.moolenaar.net>" "<d84e199d-8f99-531f-74a3-5b5b29176c44@orlitzky.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 22281 invoked by uid 550); 29 Nov 2017 11:26:07 -0000
+Received: (qmail 5562 invoked by uid 550); 20 Jul 2022 06:48:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,35 +6,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21959 invoked from network); 29 Nov 2017 04:47:17 -0000
-Message-ID: <20171129044658.mkrtl3nhjuhxw6k7@matica.foolinux.mooo.com>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <201711281319.vASDJxWP010037@masaka.moolenaar.net>
- <d84e199d-8f99-531f-74a3-5b5b29176c44@orlitzky.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d84e199d-8f99-531f-74a3-5b5b29176c44@orlitzky.com>
-X-Loosely-Listed: yes
-User-Agent: NeoMutt/20170707-dirty (1.8.3)
-Date: Tue, 28 Nov 2017 20:46:58 -0800
-From: Ian Zimmerman <itz@very.loosely.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Security risk of server side text editing ...
+Received: (qmail 26100 invoked from network); 20 Jul 2022 06:22:32 -0000
+Authentication-Results: apache.org; auth=none
+X-Gm-Message-State: AJIora/FVo9u84kDMSx4g0tMR9RtrWKU+fzy06dEeKMI2gebTWs1nUZw
+	lOA7TzmRrvxJ5VqnGZDhoqBi/17VapLXOFIzSBQ=
+X-Google-Smtp-Source: AGRyM1u/HIFu1hZJ00OCXcwk58cvlCwjq2O6zp0/WTqokvXyzIGxIanugW9boeCO0NOQT1xLuazhVkbM+BF3uzIP23I=
+X-Received: by 2002:a05:6870:73cd:b0:10c:31f9:9f48 with SMTP id
+ a13-20020a05687073cd00b0010c31f99f48mr1654962oan.13.1658298137252; Tue, 19
+ Jul 2022 23:22:17 -0700 (PDT)
+MIME-Version: 1.0
+References: <CANLSSBXJFGQN2ajDTWy5PEJPszrCrG2_F0d76tW9zw8f3XPbFA@mail.gmail.com>
+In-Reply-To: <CANLSSBXJFGQN2ajDTWy5PEJPszrCrG2_F0d76tW9zw8f3XPbFA@mail.gmail.com>
+From: Rohit Yadav <rohit@apache.org>
+Date: Wed, 20 Jul 2022 11:52:06 +0530
+X-Gmail-Original-Message-ID: <CANLSSBUW0342P0jVEUf-iZyqqiVRAhN2ET8a3-tnsZHT+f86fg@mail.gmail.com>
+Message-ID: <CANLSSBUW0342P0jVEUf-iZyqqiVRAhN2ET8a3-tnsZHT+f86fg@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Re: [ADVISORY] Apache CloudStack SAML Single Sign-On XXE (CVE-2022-35741)
 
-On 2017-11-28 21:05, Michael Orlitzky wrote:
+Credit: This issue was discovered and reported by "v3ged0ge".
 
-> Editing a file in-place should not create *another* file in the
-> current directory with a different name/suffix. I realize that's
-> subjective, but a lot of (even long time) users will tell you that no
-> way in hell did they expect that to happen.
+Updated: https://blogs.apache.org/cloudstack/entry/cve-2022-35741
 
-Maybe, but I think editors have done this from time immemorial.  Compare
-for instance the comments on the limits of locking on p. 456 of Stevens
-& Rago.
+Regards.
 
--- 
-Please don't Cc: me privately on mailing lists and Usenet,
-if you also post the followup to the list or newsgroup.
-To reply privately _only_ on Usenet, fetch the TXT record for the domain.
+On Mon, Jul 18, 2022 at 7:20 PM Rohit Yadav <rohit@apache.org> wrote:
+>
+> Apache CloudStack version 4.5.0 and later has a SAML 2.0
+> authentication Service Provider plugin which is found to be vulnerable
+> to XML external entity (XXE) injection. This plugin is not enabled by
+> default and the attacker would require that this plugin be enabled to
+> exploit the vulnerability. When the SAML 2.0 plugin is enabled in
+> affected versions of Apache CloudStack could potentially allow the
+> exploitation of XXE vulnerabilities.
+>
+> The SAML 2.0 messages constructed during the authentication flow in
+> Apache CloudStack are XML-based and the XML data is parsed by various
+> standard libraries that are now understood to be vulnerable to XXE
+> injection attacks such as arbitrary file reading, possible denial of
+> service, server-side request forgery (SSRF) on the CloudStack
+> management server.
+>
+> As of 18th July 2022, this is now tracked under CVE-2022-35741:
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-35741
+>
+> To mitigate the risk, a CloudStack admin can do any of the following:
+>
+> 1. Disable the SAML 2.0 plugin by setting `saml2.enabled` to false and
+> restart the management servers.
+>
+> 2. Upgrade to Apache CloudStack 4.16.1.1 or 4.17.0.1 or higher.
+>
+> --
