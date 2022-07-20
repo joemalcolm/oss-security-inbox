@@ -1,102 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/01/1
-Message-ID: <YfiZNymtMafSB3eB@sol.nexus.lan>
-Date: Tue, 01 Feb 2022 02:23:33 +0000
-From: John Helmert III <jchelmert3@...teo.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/20/1
+Message-ID: <CANLSSBUW0342P0jVEUf-iZyqqiVRAhN2ET8a3-tnsZHT+f86fg@mail.gmail.com>
+Date: Wed, 20 Jul 2022 11:52:06 +0530
+From: Rohit Yadav <rohit@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Samba 4.15.5, 4.14.12, 4.13.17 Security Releases
+Subject: Re: [ADVISORY] Apache CloudStack SAML Single Sign-On XXE (CVE-2022-35741)
 Content-Type: text/plain; charset=utf-8
 
-CVE-2021-44142 is particularly nasty, "This vulnerability allows
-remote attackers to execute arbitrary code as root on affected Samba
-installations that use the VFS module vfs_fruit."
+Credit: This issue was discovered and reported by "v3ged0ge".
 
------ Forwarded message from Jule Anger via samba-announce <samba-announce@...ts.samba.org> -----
+Updated: https://blogs.apache.org/cloudstack/entry/cve-2022-35741
 
-Return-Path: <samba-announce-bounces@...ts.samba.org>
-Date: Mon, 31 Jan 2022 14:04:39 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101 Thunderbird/91.5.0
-Subject: [Announce] Samba 4.15.5, 4.14.12, 4.13.17 Security Releases are available for Download
-To: samba-announce@...ts.samba.org, samba@...ts.samba.org, samba-technical@...ts.samba.org
-List-Id: Low volume list for Samba announcements <samba-announce.lists.samba.org>
-From: Jule Anger via samba-announce <samba-announce@...ts.samba.org>
-Reply-To: Jule Anger <janger@...ba.org>
-Sender: samba-announce <samba-announce-bounces@...ts.samba.org>
+Regards.
 
-Release Announcements
----------------------
-
-These are security releases in order to address the following defects:
-
-o CVE-2021-44141: UNIX extensions in SMB1 disclose whether the outside target
-                  of a symlink exists.
-https://www.samba.org/samba/security/CVE-2021-44141.html
-
-o CVE-2021-44142: Out-of-Bound Read/Write on Samba vfs_fruit module.
-https://www.samba.org/samba/security/CVE-2021-44142.html
-
-o CVE-2022-0336:  Re-adding an SPN skips subsequent SPN conflict checks.
-https://www.samba.org/samba/security/CVE-2022-0336.html
-
-
-Changes
--------
-
-o  Jeremy Allison <jra@...ba.org>
-   * BUG 14911: CVE-2021-44141
-
-o  Ralph Boehme <slow@...ba.org>
-   * BUG 14914: CVE-2021-44142
-
-o  Joseph Sutton <josephsutton@...alyst.net.nz>
-   * BUG 14950: CVE-2022-0336
-
-
-#######################################
-Reporting bugs & Development Discussion
-#######################################
-
-Please discuss this release on the samba-technical mailing list or by
-joining the #samba-technical IRC channel on irc.libera.chat or the
-#samba-technical:matrix.org matrix channel.
-
-If you do report problems then please try to send high quality
-feedback. If you don't provide vital information to help us track down
-the problem then you will probably be ignored.  All bug reports should
-be filed under the Samba 4.1 and newer product in the project's Bugzilla
-database (https://bugzilla.samba.org/).
-
-
-======================================================================
-== Our Code, Our Bugs, Our Responsibility.
-== The Samba Team
-======================================================================
-
-
-
-================
-Download Details
-================
-
-The uncompressed tarballs and patch files have been signed
-using GnuPG (ID AA99442FB680B620).  The source code can be downloaded
-from:
-
-https://download.samba.org/pub/samba/stable/
-
-The release notes are available online at:
-
-        https://www.samba.org/samba/history/samba-4.15.5.html
-        https://www.samba.org/samba/history/samba-4.14.12.html
-https://www.samba.org/samba/history/samba-4.13.17.html
-
-Our Code, Our Bugs, Our Responsibility.
-(https://bugzilla.samba.org/)
-
-                        --Enjoy
-                        The Samba Team
-
-
------ End forwarded message -----
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+On Mon, Jul 18, 2022 at 7:20 PM Rohit Yadav <rohit@...che.org> wrote:
+>
+> Apache CloudStack version 4.5.0 and later has a SAML 2.0
+> authentication Service Provider plugin which is found to be vulnerable
+> to XML external entity (XXE) injection. This plugin is not enabled by
+> default and the attacker would require that this plugin be enabled to
+> exploit the vulnerability. When the SAML 2.0 plugin is enabled in
+> affected versions of Apache CloudStack could potentially allow the
+> exploitation of XXE vulnerabilities.
+>
+> The SAML 2.0 messages constructed during the authentication flow in
+> Apache CloudStack are XML-based and the XML data is parsed by various
+> standard libraries that are now understood to be vulnerable to XXE
+> injection attacks such as arbitrary file reading, possible denial of
+> service, server-side request forgery (SSRF) on the CloudStack
+> management server.
+>
+> As of 18th July 2022, this is now tracked under CVE-2022-35741:
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-35741
+>
+> To mitigate the risk, a CloudStack admin can do any of the following:
+>
+> 1. Disable the SAML 2.0 plugin by setting `saml2.enabled` to false and
+> restart the management servers.
+>
+> 2. Upgrade to Apache CloudStack 4.16.1.1 or 4.17.0.1 or higher.
+>
+> --
