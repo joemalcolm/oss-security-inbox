@@ -1,27 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/08/4
-Message-ID: <20220808112020.GA18620@openwall.com>
-Date: Mon, 8 Aug 2022 13:20:20 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Dipanjan Das <mail.dipanjan.das@...il.com>, Dylan Yudaken <dylany@...com>, Jens Axboe <axboe@...nel.dk>
-Subject: Linux kernel: io_uring: free of unallocated buffer list in io_register_pbuf_ring()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/20/4
+Message-ID:  <DM5PR14MB14659176D1373740E82972C2E18E9@DM5PR14MB1465.namprd14.prod.outlook.com>
+Date: Wed, 20 Jul 2022 19:58:07 +0000
+From: "Myers, Christopher" <Christopher.Myers@...or.edu>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Grails Framework Remote Code Execution Vulnerability, CVE-2022-35912
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+I haven't seen this posted yet, so I'm just passing along.
 
-I think this wasn't reported in here before, and has no CVE ID?
 
-Writeup in Chinese dated July 29:
 
-https://dawnslab.jd.com/linux-5.19-rc2_pbuf_ring_0day/
+The Grails team has confirmed a critical security vulnerability reported by meizjm3i and codeplutos of AntGroup FG Security Lab. This vulnerability has been assigned identifier CVE-2022-35912<https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-35912>.
 
-Fix dated July 21, per the writeup included in 5.19-rc8:
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ec8516f3b7c40ba7050e6b3a32467e9de451ecdf
+The vulnerability allows an attacker to remotely execute code within a Grails application runtime by issuing a specially crafted web request that grants the attacker access to the class loader. This attack exploits a section of the Grails data-binding logic. Grails data-binding is invoked in a number of ways including the creation of command objects, domain class construction, and manual data binding when using bindData. For a full description, please refer to the data-binding documentation<https://docs.grails.org/latest/guide/theWebLayer.html#dataBinding>.
 
-Per the Fixes tag, the bug was introduced in May, in:
+Blog post: https://grails.org/blog/2022-07-18-rce-vulnerability.html
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c7fb19428d67
+Github thread: https://github.com/grails/grails-core/issues/12626
 
-Alexander
