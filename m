@@ -1,19 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/08/11
-Message-ID: <886d9e95-0445-3d37-87ab-e73de79132dd@apache.org>
-Date: Mon, 08 Aug 2022 19:33:41 +0000
-From: Ryan Skraba <rskraba@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/23/2
+Message-ID: <YtwnKUHaS9nL/F/F@gentoo.org>
+Date: Sat, 23 Jul 2022 11:51:53 -0500
+From: John Helmert III <ajak@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-36125: Apache Avro: Integer overflow when reading corrupted .avro file in Avro Rust SDK 
+Subject: Re: CVE Request: heap buffer overflow in gdk-pixbuf
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+On Sat, Jul 23, 2022 at 07:35:42PM +0700, Pedro Ribeiro wrote:
+> Hi,
+> 
+> A year ago I found and submitted a vulnerability to the gdk-pixbuf tracker:
+> https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/issues/190
+> 
+> It's a heap buffer overflow using a crafted GIF, which is likely 
+> exploitable in 32 bit systems. Full details are in the link above in the 
+> bug tracker.
+> 
+> This was patched and the fix was merged 8 months ago as seen here:
+> https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/merge_requests/121
+> 
+> The issue is now public, but since no CVE was attributed, it probably is 
+> not being considered as a problem for downstream users of the package.
+> 
+> As of today, the latest Debian stable package is affected by this 
+> vulnerability. Using a GNOME file system browser and browsing to that 
+> folder will cause a crash, as will opening it up in a GNOME image viewer 
+> and even attempting to load it in Chromium (should have submitted to 
+> them for a bounty :D).
+> 
+> Hence I'd like to get a CVE to raise awareness for this issue, so that 
+> downstream users of the package can get patched.
+> 
+> Thanks and regards,
+> Pedro Ribeiro
 
-Description:
+Hi, according to the oss-security Openwall wiki page [1], CVEs need to
+be requested via MITRE's web form [2].
 
-It is possible to crash (panic) an application by providing a corrupted data to be read. This issue affects Rust applications using Apache Avro Rust SDK prior to 0.14.0 (previously known as avro-rs).  Users should update to apache-avro version 0.14.0 which addresses this issue.
-
-Credit:
-
-This issue was reported to the Apache Avro team by Evan Richter at ForAllSecure and found with Mayhem.
-
+[1] https://oss-security.openwall.org/wiki/mailing-lists/oss-security
+[2] https://cveform.mitre.org/
+Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
