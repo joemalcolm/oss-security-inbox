@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1565" "Tuesday" "21" "February" "2017" "15:42:35" "-0500" "Leo Famulari" "leo@famulari.name" "<20170221204235.GA26169@jasmine>" "44" "Re: [oss-security] CVE Request - Multiple vulnerabilities in gdk-pixbuf" nil nil nil "2" "2017022120:42:35" "[oss-security] CVE Request - Multiple vulnerabilities in gdk-pixbuf" (number mark "U       leo@famulari Feb 21   44/1565  " thread-indent "\"Re: [oss-security] CVE Request - Multiple vulnerabilities in gdk-pixbuf\"\n") "<CAE-_4r3PgqHs2kVHLTzynYhcffE_AWu1Y8QFM5LXeA8kvMnbrw@mail.gmail.com>" ("<CAE-_4r3PgqHs2kVHLTzynYhcffE_AWu1Y8QFM5LXeA8kvMnbrw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 19675 invoked by uid 550); 21 Feb 2017 20:47:41 -0000
+Received: (qmail 19824 invoked by uid 550); 23 Jul 2022 12:50:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,78 +7,69 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16310 invoked from network); 21 Feb 2017 20:42:50 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=famulari.name; h=
-	content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to:x-me-sender:x-me-sender:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=NtJ3KZVvNfzuWKY/IqLPmcZMoDY=; b=FFJHkg
-	oKRmax1dwFcc0fqg2LUoCM3B2IlQ9BA9m2j+zV1LOvmWTdPDiCC7cNFls3UGMTV8
-	4ItAgnx+SCpwggJ8m7PtvXtEiffbLBvZDlbHP+eTG4VE5L4qUsI1vR4dhOoLTXfF
-	P9F2j+04KJLyNSNzq7HeuxYNRlBmPHBz2IdUI=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-me-sender
-	:x-me-sender:x-sasl-enc:x-sasl-enc; s=smtpout; bh=NtJ3KZVvNfzuWK
-	Y/IqLPmcZMoDY=; b=OcYrlDxhI6E8VCDnpqnKM0FARinl1IjM04FTSxfHmVaFX4
-	E0FoWn3lnJMK8p/afc2E87SUniCQRVssnrKmOywKCm55F/+BH7oDkiS2Kk1cZ5g7
-	tJMXb3hR14o7ScjDC4vRLiWI4w2V3VpDC44PxW0TbpUEaQ/8c4eoccDhzBwAU=
-X-ME-Sender: <xms:PKasWLnjek_hCQJeozc16b_IahVn3nxCw6xB4C60OPgjUqkZ5kV2Gg>
-X-Sasl-enc: etGnAPloTsIxFKZJWpRYBPANTtv5KPe0pELuRIGKSxKl 1487709756
-Date: Tue, 21 Feb 2017 15:42:35 -0500
-From: Leo Famulari <leo@famulari.name>
-To: oss-security@lists.openwall.com
-Message-ID: <20170221204235.GA26169@jasmine>
-References: <CAE-_4r3PgqHs2kVHLTzynYhcffE_AWu1Y8QFM5LXeA8kvMnbrw@mail.gmail.com>
+Received: (qmail 13798 invoked from network); 23 Jul 2022 12:35:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:content-language:from:to
+         :subject:content-transfer-encoding;
+        bh=GZKHo+Q0OhDqcaVM4hKBfNpOaNkaAxca65VA0nQ9/ok=;
+        b=NBtOO6Oa1DJKIO2lYk6lBNLGLf3hu/8b3CC5IgkIIBo9Yk33F9R+XlFMK7yF80mSmg
+         z/M2aBbBPoFUEgFXcoFUI77bDLAxTUrcFy48TynljKMuxUGyEivZ9BBC9RTIH7M7jySj
+         jSpvvl8WwyL5nb0at9jSreZXQQgy1oWbQ/8rdJ1ZEnRGIeTB0LhQSL1dRqKule9i7r8X
+         II7DkapPVkMH+l2eXHoq6X3WRqoZxdv2I1ewZ7R//U4JLFpGdlbiwIRBievGkc9NZC+4
+         7JvL6aXchUUEv/xGpCP8P587QDSlu82ckZCFG/VY6gb1aWrhyzYMC5uSvuWtib+Y9Ogn
+         6zXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent
+         :content-language:from:to:subject:content-transfer-encoding;
+        bh=GZKHo+Q0OhDqcaVM4hKBfNpOaNkaAxca65VA0nQ9/ok=;
+        b=eIsQGcmBV+WnU3tGDjW4H5sFDVy5Az6If7KzmnHhIf6D0ZIAYKTRtyA9viw6mvuw3Q
+         EjQ9061lYs4WhZaMxwpu3tckg1WZwhRawFrZNVLjemE8X0cHjfJh+JgnXLc2f9wZOrdt
+         qzX6BiK78f8rinEe7RST0a9l2FuanaS2E1laAB9a2aBu8vlcZJN1KFGGQuKMwBdu+EUk
+         e5i8jP915z6SjuiuOrIIthlpEbWgQ9d5eqJBXl2s+gtOEaW47GSCzBk5rNMJYIHJOKpv
+         Z2pbSNTPhnmPVnltezVD4jzZN2XS0VoerZdx2yGbUiMMdlcNff05uqydGvO2jbIfySVY
+         md6g==
+X-Gm-Message-State: AJIora+hqP03ldRcBi8BPrUoe/yJMWz1ST8s3AC0iKxCsBoWWSg+pa1f
+	WNWbseGiNbrYRlW90cWWhHtfjSo9eDD8Xg==
+X-Google-Smtp-Source: AGRyM1tWqU2o5AZFYpl4gQgqtB5NjAHon0oddYCM0xEKQKqNSqLH16KSWMQIWmBlydjR7D2NIX6gww==
+X-Received: by 2002:a17:902:cf11:b0:16b:e1a5:aee with SMTP id i17-20020a170902cf1100b0016be1a50aeemr4374031plg.132.1658579745552;
+        Sat, 23 Jul 2022 05:35:45 -0700 (PDT)
+Message-ID: <6ae481de-39c2-c4a9-5274-59c2bcdb2dd6@gmail.com>
+Date: Sat, 23 Jul 2022 19:35:42 +0700
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="yrj/dFKFPuw6o+aM"
-Content-Disposition: inline
-In-Reply-To: <CAE-_4r3PgqHs2kVHLTzynYhcffE_AWu1Y8QFM5LXeA8kvMnbrw@mail.gmail.com>
-User-Agent: Mutt/1.7.2 (2016-11-26)
-Subject: Re: [oss-security] CVE Request - Multiple vulnerabilities in
- gdk-pixbuf
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Content-Language: en-GB
+From: Pedro Ribeiro <pedrib@gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE Request: heap buffer overflow in gdk-pixbuf
 
---yrj/dFKFPuw6o+aM
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-On Tue, Feb 21, 2017 at 05:20:11PM +0200, Ariel Zelivanski wrote:
-> Hello,
->=20
-> I just reported several vulnerabilities in gdk-pixbuf. I am adding the
-> relevant details but you can also refer to the bug reports in the links. =
-If
-> suitable please assign CVEs.
+A year ago I found and submitted a vulnerability to the gdk-pixbuf tracker:
+https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/issues/190
 
-As announced previously [0], MITRE is no longer assigning CVEs based on
-messages to this list. Will you request the CVE IDs via the new web
-form? [1]
+It's a heap buffer overflow using a crafted GIF, which is likely 
+exploitable in 32 bit systems. Full details are in the link above in the 
+bug tracker.
 
-[0]
-http://seclists.org/oss-sec/2017/q1/351
+This was patched and the fix was merged 8 months ago as seen here:
+https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/merge_requests/121
 
-[1]
-https://cveform.mitre.org/
+The issue is now public, but since no CVE was attributed, it probably is 
+not being considered as a problem for downstream users of the package.
 
---yrj/dFKFPuw6o+aM
-Content-Type: application/pgp-signature; name="signature.asc"
+As of today, the latest Debian stable package is affected by this 
+vulnerability. Using a GNOME file system browser and browsing to that 
+folder will cause a crash, as will opening it up in a GNOME image viewer 
+and even attempting to load it in Chromium (should have submitted to 
+them for a bounty :D).
 
------BEGIN PGP SIGNATURE-----
+Hence I'd like to get a CVE to raise awareness for this issue, so that 
+downstream users of the package can get patched.
 
-iQIzBAABCAAdFiEEsFFZSPHn08G5gDigJkb6MLrKfwgFAlispjcACgkQJkb6MLrK
-fwiEkA//RoghGrWq90CKZGMaH6MjVnSHjEWrQzTK0Fki9EgVT70NPkwyUrsJZHE/
-MwJ4cNtsxgpeEpgQevp2BB0yLoQ9aRKLmuAbuxyCPzdhOtwiFK/tuxLmjNj/IxZ9
-+z+/G9tBA4xpH35DVWM5ugYhGmK65YreVtWM1PJ82Jk0YuSt8uKjLEcNxwKsl4la
-PJ4ddx7y6Ps7KtPzHQRI7o2PTWD30KbG/mU8APBrZZqj3oZ6Az/D4ds6r7nW3XbJ
-dipxW80JuLw+6/YszZ8lqSIsQIAUWromJpYYoP5ztkBZ0N/oHguL1aGBAp2GXFrA
-Nw+26lf4tA6REhucMjXZvneKSs/PciSEnRrX5E876JjwMuVvWYyiFoFU723+CtyI
-OAR0LYySyoPgZq43Mb3RiXSHmuwSj91FgmRNDs2WBMVsr/EGqZHMjXaXomiQJDgp
-bhj3pF0v4R6qenPm71UtiipxPkQtqRnvEKoX1RdcsFhMLF1ZhpxFvCUHOciisZfM
-ltjKQXr91JFutK6e7UXkrKKBgvuhXwyM00XokGPisRd7/x4Ce7piGGDu0tTjOV2J
-QKGnfleuztqYKa6npNXekUBmcNVskLKsF84mCHqueCi/pJ7/iV6kztwA+zrrVETi
-JV2/IhFJ2ejG/kMFnPYfA9cQFTZHztiPUVFa1NWD5abjwbFfyhU=
-=FTxv
------END PGP SIGNATURE-----
-
---yrj/dFKFPuw6o+aM--
+Thanks and regards,
+Pedro Ribeiro
