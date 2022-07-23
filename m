@@ -1,135 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/01/6
-Message-Id: <E1oppwj-0005Rp-2T@xenbits.xenproject.org>
-Date: Tue, 01 Nov 2022 12:00:45 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 416 v2 (CVE-2022-42319) - Xenstore: Guests can cause Xenstore to not free temporary memory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/23/1
+Message-ID: <6ae481de-39c2-c4a9-5274-59c2bcdb2dd6@gmail.com>
+Date: Sat, 23 Jul 2022 19:35:42 +0700
+From: Pedro Ribeiro <pedrib@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE Request: heap buffer overflow in gdk-pixbuf
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-            Xen Security Advisory CVE-2022-42319 / XSA-416
-                               version 2
+A year ago I found and submitted a vulnerability to the gdk-pixbuf tracker:
+https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/issues/190
 
-   Xenstore: Guests can cause Xenstore to not free temporary memory
+It's a heap buffer overflow using a crafted GIF, which is likely 
+exploitable in 32 bit systems. Full details are in the link above in the 
+bug tracker.
 
-UPDATES IN VERSION 2
-====================
+This was patched and the fix was merged 8 months ago as seen here:
+https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/merge_requests/121
 
-Public release.
+The issue is now public, but since no CVE was attributed, it probably is 
+not being considered as a problem for downstream users of the package.
 
-ISSUE DESCRIPTION
-=================
+As of today, the latest Debian stable package is affected by this 
+vulnerability. Using a GNOME file system browser and browsing to that 
+folder will cause a crash, as will opening it up in a GNOME image viewer 
+and even attempting to load it in Chromium (should have submitted to 
+them for a bounty :D).
 
-When working on a request of a guest, xenstored might need to allocate
-quite large amounts of memory temporarily. This memory is freed only
-after the request has been finished completely.
+Hence I'd like to get a CVE to raise awareness for this issue, so that 
+downstream users of the package can get patched.
 
-A request is regarded to be finished only after the guest has read the
-response message of the request from the ring page. Thus a guest not
-reading the response can cause xenstored to not free the temporary
-memory.
-
-This can result in memory shortages causing Denial of Service (DoS) of
-xenstored.
-
-IMPACT
-======
-
-A malicious guest can cause DoS of xenstored, resulting in the inability
-to create new guests or to change the configuration of already running
-guests.
-
-VULNERABLE SYSTEMS
-==================
-
-Xen systems with version 4.9 and newer running the C variant of Xenstore
-(xenstored or xenstore-stubdom) are vulnerable.
-
-Systems using the Ocaml variant of Xenstore (oxenstored) are not vulnerable.
-
-MITIGATION
-==========
-
-Using oxenstored instead of xenstored will avoid the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Julien Grall of Amazon.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa416.patch           xen-unstable
-xsa416-4.16.patch      Xen 4.16.x
-xsa416-4.15.patch      Xen 4.15.x
-xsa416-4.14.patch      Xen 4.14.x
-xsa416-4.13.patch      Xen 4.13.x
-
-$ sha256sum xsa416*
-9f5f459b0c5b71ba25503d176c59732baf2ed174688b59e51010f22f8eecd218  xsa416.meta
-6a28884392997baaea046ac8f1df86ffaec64febdabf17a8753e451ef3cab0f7  xsa416.patch
-5838de576be5a71be46ab2e58287ea7d9c774f68f588c7d1f472a190b5923446  xsa416-4.13.patch
-cb06c57ff0158899e61b26901e06d931838f68958d610fbeff1c76edb9c8b4e1  xsa416-4.14.patch
-68b7128b0f1e1d6de345dbc47dfdd583beff840c96e625fcf6e6a82679ff3732  xsa416-4.15.patch
-c4bb88546b272925d85d75d62f552d91698a10faaac1a0ce6cac3c54eeeda6a2  xsa416-4.16.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmNg+6UMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZx0IH/0A0O9/AnlHpVEM8RUVrHqDLbVozGVbroH/OsA05
-Fgj5kCqgRQs03H2uMnIboDL9RbgnjqRkU1cVf0gG2MWRzvMofxjLykUN8fUxcax0
-6qCnAPF1m5kFA/LE6iyjWem6949n7B/LZb2NCJ9EFwb+W1/g6/skTj82ngvlSO+6
-svxuK+BnTUshcDI6b3MSos4CPVpF4VMYB8JogUo9XANUdu7mblV4jMPn/wt712MA
-tEOcxeIPvzkYpPTzV5bEQGKmRy4WpnpSKDPDL8+PVFMFdyMartx98RoZFnldTmlN
-fifLfsTq3h3NxTA7V0KUXdO5tb0ZPLQiN/8fn7AwO/2HtdY=
-=YXaE
------END PGP SIGNATURE-----
-
-Download attachment "xsa416.meta" of type "application/octet-stream" (1660 bytes)
-
-Download attachment "xsa416.patch" of type "application/octet-stream" (24242 bytes)
-
-Download attachment "xsa416-4.13.patch" of type "application/octet-stream" (23189 bytes)
-
-Download attachment "xsa416-4.14.patch" of type "application/octet-stream" (23487 bytes)
-
-Download attachment "xsa416-4.15.patch" of type "application/octet-stream" (24271 bytes)
-
-Download attachment "xsa416-4.16.patch" of type "application/octet-stream" (24251 bytes)
+Thanks and regards,
+Pedro Ribeiro
