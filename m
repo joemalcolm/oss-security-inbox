@@ -1,4 +1,4 @@
-Received: (qmail 22121 invoked by uid 550); 19 Apr 2024 17:25:14 -0000
+Received: (qmail 14056 invoked by uid 550); 23 Jul 2022 18:07:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,45 +7,71 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22093 invoked from network); 19 Apr 2024 17:25:13 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:To:From:Date:Reply-To:Cc:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=X8A1+QiPlMeYsXF+lHrzDbS6CrKl1IWb001k2b4fLak=; b=wJE4i+dQo0S5aE5U5Nxb1sfpcN
-	XtVED/ofFMVBXtmxCXXgDI74T5h/TFH6NaboCWDNDGQpmjiCETV0nEd7h+4xlx6Zsu21CYgAQGNk5
-	b+mxVLKRhnORr5fF+NygCIY/hFLD5ZE9nCrb/2pNjE4995Hb7oaMZw07uz3oz0CZHlcVZnQdkEK+a
-	R5ztS5K3i/2gkTbixRYO7VC18+Dy5P9TLDWYchsVMHOpye8Ux3l1mWI0hXHMhiPNkmInanzr3rb+x
-	VtVcE76VlAMJLn4TJ3KPZ02QtYO1DAHj0f93DBI1CD48y8nO7W3/pWWHGlZ6/TR7gN+QmrKsoWs2M
-	KhiSK/Wg==;
-Date: Fri, 19 Apr 2024 18:25:02 +0100
-From: Simon McVittie <smcv@debian.org>
+Received: (qmail 18363 invoked from network); 23 Jul 2022 16:52:08 -0000
+Date: Sat, 23 Jul 2022 11:51:53 -0500
+From: John Helmert III <ajak@gentoo.org>
 To: oss-security@lists.openwall.com
-Message-ID: <ZiKo7shztRpgvAIC@remnant.pseudorandom.co.uk>
-References: <20240414190855.GA12716@openwall.com>
- <354b913bc1c154c1e3a2fc34ed8ed6b0d4641f11.camel@canonical.com>
- <20240419154435.GA7046@openwall.com>
+Message-ID: <YtwnKUHaS9nL/F/F@gentoo.org>
+References: <6ae481de-39c2-c4a9-5274-59c2bcdb2dd6@gmail.com>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="dA1dbJzk1TKwtetN"
+Content-Disposition: inline
+In-Reply-To: <6ae481de-39c2-c4a9-5274-59c2bcdb2dd6@gmail.com>
+Subject: Re: [oss-security] CVE Request: heap buffer overflow in gdk-pixbuf
+
+--dA1dbJzk1TKwtetN
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240419154435.GA7046@openwall.com>
-X-Debian-User: smcv
-Subject: Re: [oss-security] Linux: Disabling network namespaces
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, 19 Apr 2024 at 17:44:35 +0200, Solar Designer wrote:
-> I guess
-> systemd's PrivateNetwork services generally don't configure networking
-> (they just give up network access), so would continue to work even with
-> capabilities disallowed?
+On Sat, Jul 23, 2022 at 07:35:42PM +0700, Pedro Ribeiro wrote:
+> Hi,
+>=20
+> A year ago I found and submitted a vulnerability to the gdk-pixbuf tracke=
+r:
+> https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/issues/190
+>=20
+> It's a heap buffer overflow using a crafted GIF, which is likely=20
+> exploitable in 32 bit systems. Full details are in the link above in the=
+=20
+> bug tracker.
+>=20
+> This was patched and the fix was merged 8 months ago as seen here:
+> https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/merge_requests/121
+>=20
+> The issue is now public, but since no CVE was attributed, it probably is=
+=20
+> not being considered as a problem for downstream users of the package.
+>=20
+> As of today, the latest Debian stable package is affected by this=20
+> vulnerability. Using a GNOME file system browser and browsing to that=20
+> folder will cause a crash, as will opening it up in a GNOME image viewer=
+=20
+> and even attempting to load it in Chromium (should have submitted to=20
+> them for a bounty :D).
+>=20
+> Hence I'd like to get a CVE to raise awareness for this issue, so that=20
+> downstream users of the package can get patched.
+>=20
+> Thanks and regards,
+> Pedro Ribeiro
 
-I can't speak for systemd's PrivateNetwork services, but for the
-bubblewrap use-cases that I described elsewhere in the thread (Flatpak,
-libgnome-desktop etc.), `bwrap --unshare-net` does bring up the "lo"
-interface with address 127.0.0.1 and a route to 127.0.0.0/8 before it
-relinquishes its capabilities and execs the sandboxed program.
+Hi, according to the oss-security Openwall wiki page [1], CVEs need to
+be requested via MITRE's web form [2].
 
-Presumably this is because it's common for ordinary user-space applications
-to assume that they can "talk to themselves" via loopback, even if there is
-no external connectivity.
+[1] https://oss-security.openwall.org/wiki/mailing-lists/oss-security
+[2] https://cveform.mitre.org/=
 
-    smcv
+--dA1dbJzk1TKwtetN
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQQyG9yfCrmO0LPSdG2gXq2+aa/JtQUCYtwnJwAKCRCgXq2+aa/J
+tW3fAQCQzkIe8opGcVBld8aPY5ALtRrJSUEothhnA8bfYgN3pAEA4n6m3jLECFdV
+Y9YdxUFhGzBMJ72JLBbzHSJf7YSDQAo=
+=q4ta
+-----END PGP SIGNATURE-----
+
+--dA1dbJzk1TKwtetN--
