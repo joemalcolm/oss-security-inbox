@@ -1,30 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/06/2
-Message-ID: <Yu5+6SlKH6n6afZv@gentoo.org>
-Date: Sat, 6 Aug 2022 09:47:05 -0500
-From: John Helmert III <ajak@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/24/3
+Message-Id: <EEF3C292-40F0-4EF5-A4D8-3731FA2FE428@chromium.org>
+Date: Sun, 24 Jul 2022 11:10:35 -0700
+From: Roxana Bradescu <roxxbee@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Exim 4.95 invalid free
+Subject: Re: snowflakedb security contacts
 Content-Type: text/plain; charset=utf-8
 
-Hi, please keep in mind the list content guidelines:
 
-"At least the most essential part of your message (e.g., vulnerability detail and/or exploit) should be directly included in the message itself (and in plain text), rather than only included by reference to an external resource. Posting links to relevant external resources as well is acceptable, but posting only links is not. Your message should remain valuable even with all of the external resources gone."
+> On Jul 18, 2022, at 5:18 PM, Seth Arnold <seth.arnold@...onical.com> wrote:
+> 
+> Hello, if anyone has friends or acquaintances at snowflakedb, please
+> direct their attention to:
+> 
+> https://github.com/snowflakedb/gosnowflake/issues/619
+> "Please add a SECURITY.md file and security policy"
+> 
+> I don't know if what I found is actually an issue but I'd like to give
+> them a chance to see it privately before telling the whole world. I've
+> not had much luck with the Usual Methods so far.
+> 
+> Everyone else: *please* take five minutes to write down how you'd like
+> people to report security issues. Some people subscribe to the "security
+> bugs are just bugs, report them like any other" philosophy. Some people
+> want a chance to look at potential security issues privately, first.
+> 
+> Whatever you'd like, please just write it down someplace obvious.
+> 
+> Thanks
 
-Do you have any upstream references or commits of the fix?
+Hi Seth, did you ever get a response from anyone at Snowflake?
 
-On Sat, Aug 06, 2022 at 12:06:36PM +0300, Evgeny Legerov wrote:
-> Hi,
-> 
-> 
-> The issue has been silently fixed in Exim 4.96 - 
-> https://github.com/ivd38/exim_invalid_free
-> 
-> 
-> 
-> regards,
-> 
-> -e
-> 
+Just in case you didn’t, Snowflake uses HackerOne for their vuln mgmt program so issues get reported to HackerOne directly (and this information belongs in a Security.md file)
+https://hackerone.com/139c0e4f-5b34-470a-b81e-aa8740c3e66e/embedded_submissions/new <https://hackerone.com/139c0e4f-5b34-470a-b81e-aa8740c3e66e/embedded_submissions/new>
 
-Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
+---
+Regards, Roxana
+
+
+
+Content of type "text/html" skipped
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
