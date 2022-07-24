@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1096" "Thursday" "3" "November" "2016" "17:58:14" "+0800" "redrain root" "rootredrain@gmail.com" "<CAPGxrc_N_=z12njMyN2WrSO74A9=ioEnppxs2YGExMn0qd6MJA@mail.gmail.com>" "45" "[oss-security] CVE request:Lynx invalid URL parsing with '?'" "^Cc:" nil nil "11" "2016110309:58:14" "[oss-security] CVE request:Lynx invalid URL parsing with '?'" (number mark "        rootredrain@ Nov  3   45/1096  " thread-indent "\"[oss-security] CVE request:Lynx invalid URL parsing with '?'\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 22010 invoked by uid 550); 3 Nov 2016 09:58:27 -0000
+Received: (qmail 19582 invoked by uid 550); 24 Jul 2022 10:13:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,83 +6,95 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21992 invoked from network); 3 Nov 2016 09:58:26 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=I/vMSH/MbaO4q1smOv5RGEzsFcSWiWBieArFTHBJ4AU=;
-        b=JYGvZnZIzTK64ME5ImQwXDGSMRjG2gKxi3mFZVQYqDevMxmbte2L5UWAONyDVSzGZB
-         Fkecgqai31dB3J2BOOLyB7sgBjSw0dWd+2yBoBtreN7qNWoi4ERVU7j0fnA+EcNGGwOF
-         DuRN70HrW6Z4rQjKjLvmduZJvj50vQul3SsrSxouuRmBU+twrTaIyqxRhv5wDfFQ3uPu
-         GQGVLaocw6gwgujhgHmC6bfg96RYoOOAuBIB/R2QN4mHg68KU8drkjSyOTmr0G/STvsa
-         Tybzlvtg1Bt4dXn3MTxQVbRoCzgKfh2RWjaJsesD3bl/NhaHHDSOooo9dD1wRzslZ2w1
-         s49Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=I/vMSH/MbaO4q1smOv5RGEzsFcSWiWBieArFTHBJ4AU=;
-        b=QoJIawwk/AMaAYzE0NuK4Gz1AzBQgwB2tWGUPj/SUgKF0tpPB9CmNxG+YlwGGWQioP
-         8BUpPYShJcRSwNn5X9GMIYWJAAf9huOzfIxYb6nkPZCb6/gHTaMAEnwiNy93reQevKqE
-         OIhNZbktm/KWcGOExpf2xb1CLZVARbdWEEGsan1Kq9jmY2w/mLtc8fvTZTJH8OgNocg2
-         tABDPoD2bRmT8A3Q/7ojIO7owtvPXj3dErywAGy1e8COWN2+3JyXPNJhUcj+vfGLwNfg
-         1TDDhSnzZfxaGRgnmwh5eytVxxNRnsgaId4kc0DjLi7gtceh9b15VJ1FxxOuYJzgRmci
-         VuyQ==
-X-Gm-Message-State: ABUngvflSvL+Q0IXeaTLizsXO3xzcFwXuKtFN1yrVMtFfzNyOn/YY26JIhKZ56tlqtQVDLIEUhyLRczVJ4Y7oQ==
-X-Received: by 10.129.36.4 with SMTP id k4mr7654697ywk.162.1478167094376; Thu,
- 03 Nov 2016 02:58:14 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CAPGxrc_N_=z12njMyN2WrSO74A9=ioEnppxs2YGExMn0qd6MJA@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a11427e24943fbe0540629842
-Cc: cve-assign@mitre.org
-Date: Thu, 3 Nov 2016 17:58:14 +0800
-From: redrain root <rootredrain@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request:Lynx invalid URL parsing with '?'
-To: dickey@invisible-island.net, oss-security@lists.openwall.com, 
-	fulldisclosure@seclists.org
-
---001a11427e24943fbe0540629842
-Content-Type: text/plain; charset=UTF-8
+Received: (qmail 21647 invoked from network); 24 Jul 2022 03:35:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:from:mime-version:subject:date:message-id
+         :references:in-reply-to:to;
+        bh=8Oid2+m7VSi6NVJbgoGzpAsqazRVemf11q+v7uYQl44=;
+        b=Hl5gCFsIbIFdjhGiYIwun6vn7WbM4ZxvZ7AsRaXlZCJsLclfmSzKvaLWsgxRcHJenn
+         8Vz9QlWTNs8PARHExPrOpv8eEbWwXPC4C4eutLhRIGM1mEI6aqm71BIhCfNowu3gj3nT
+         NIhcvb+l+ozXtK+aOramN3qEtOIDxNLTUzBwY4mc610CgQf9fUvAfurDStwgf/JMvrY4
+         CGTChzBPo8qS+zA1qnY9mIbsfMfVWoXv3/FfXhBbHsme4rWjZckdFiiI69R21uWyolAb
+         HRJm1egiYUQew7Z6VwSsENSK0+f/W2E/bVY5fUHpX04yX+9PWOWEu6dUPXEY+qmbBj2u
+         2EVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:content-transfer-encoding:from:mime-version
+         :subject:date:message-id:references:in-reply-to:to;
+        bh=8Oid2+m7VSi6NVJbgoGzpAsqazRVemf11q+v7uYQl44=;
+        b=7hjT5Cs932N6oX2Z0GUjM2lVtP+aKMUlIS7L5WDzZfi7zMOmj5CEqMEBXJ7/jqTp8E
+         7roCyXhEuhdVo32VW5cycEtwgrO2uRfyRvvZyar5B1vW8hw0WplXndzJyPCAqHJFcM/K
+         uPqw02bP92tjwhL2qeIQ/iiTkMh0vwkmSmUMnJC+ZzCk1z5oxXoyxGDyLJAVqB7W4lBJ
+         1vO7cqP+xlvPKqXxymOudK7tXw68FrGu/gl3m+uluwSexL8QFR95hItIMnXoWf4mUyhJ
+         9Qfc4ujMvwoOw3ntRR2TOprZvfzuaOBnbJAPvLdhyvZ+GjFSPJORZwFzNP2kfRaS7WnM
+         QhyQ==
+X-Gm-Message-State: AJIora80+Q1GzB0lfxFkcViO+jpJVHMAGw7W2qdlzVNfxUhbE4a3W74b
+	GwEGCV4aphSN5SxLnLVBUYDhLTXqO7D07w==
+X-Google-Smtp-Source: AGRyM1snlIdV138oVp0IJ/86j/cnBunjesyxgInRsAiIaTGDvHvBFzsh/fKoa2dHRhxyFUsyQfiVZA==
+X-Received: by 2002:a05:6a00:16ca:b0:52b:cc59:9488 with SMTP id l10-20020a056a0016ca00b0052bcc599488mr6872758pfc.0.1658633708554;
+        Sat, 23 Jul 2022 20:35:08 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-
-I can't find any bugtracker in lynx ,so i will disclose by this mail and
-sent to the author dickey@invisible-island.net.
-
-redrain (rootredrain@gmail.com)
-Date:2016-11-03
-Version: 2.8.8pre.4=E3=80=812.8.9dev.8 and earlier
-Platform: Linux and Windows
-Vendor: http://lynx.browser.org/
-Vendor Notified: 2016-11-03
-
-
-VULNERABILITY
--------------------------
-
-Lynx doesn't parse the authority component of the URL correctly when the
-host
-name part ends with '?', and could instead be tricked into
-connecting to a different host.
-
-Passing in `*http://google.com?@hackdog.me/
-<http://google.com?@hackdog.me/>*` <http://example.com/#@evil.com/x.txt> wo=
-uld
-wrongly make lynx send a
-request to hackdog.me while your browser would connect to google.com given
-the same URL.
-
-PoC
-------------------------
-lynx  "http://google.com?@hackdog.me/"
+From: Pedro Ribeiro <pedrib@gmail.com>
+Mime-Version: 1.0 (1.0)
+Date: Sun, 24 Jul 2022 10:35:04 +0700
+Message-Id: <08DDF362-C8B0-4D35-8A56-6E504F376019@gmail.com>
+References: <YtwnKUHaS9nL/F/F@gentoo.org>
+In-Reply-To: <YtwnKUHaS9nL/F/F@gentoo.org>
+To: oss-security@lists.openwall.com
+X-Mailer: iPhone Mail (19G71)
+Subject: Re: [oss-security] CVE Request: heap buffer overflow in gdk-pixbuf
 
 
-SOLUTION
--------------------------
-follow the RFC and check for domains before send request.
+> On 24 Jul 2022, at 01:08, John Helmert III <ajak@gentoo.org> wrote:
+>=20
+> =EF=BB=BFOn Sat, Jul 23, 2022 at 07:35:42PM +0700, Pedro Ribeiro wrote:
+>> Hi,
+>>=20
+>> A year ago I found and submitted a vulnerability to the gdk-pixbuf track=
+er:
+>> https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/issues/190
+>>=20
+>> It's a heap buffer overflow using a crafted GIF, which is likely=20
+>> exploitable in 32 bit systems. Full details are in the link above in the=
+=20
+>> bug tracker.
+>>=20
+>> This was patched and the fix was merged 8 months ago as seen here:
+>> https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/merge_requests/121
+>>=20
+>> The issue is now public, but since no CVE was attributed, it probably is=
+=20
+>> not being considered as a problem for downstream users of the package.
+>>=20
+>> As of today, the latest Debian stable package is affected by this=20
+>> vulnerability. Using a GNOME file system browser and browsing to that=20
+>> folder will cause a crash, as will opening it up in a GNOME image viewer=
+=20
+>> and even attempting to load it in Chromium (should have submitted to=20
+>> them for a bounty :D).
+>>=20
+>> Hence I'd like to get a CVE to raise awareness for this issue, so that=20
+>> downstream users of the package can get patched.
+>>=20
+>> Thanks and regards,
+>> Pedro Ribeiro
+>=20
+> Hi, according to the oss-security Openwall wiki page [1], CVEs need to
+> be requested via MITRE's web form [2].
+>=20
+> [1] https://oss-security.openwall.org/wiki/mailing-lists/oss-security
+> [2] https://cveform.mitre.org/
+
+Hi John,
+
+Thanks for the info, will request via the form and post here again once I h=
+ave a CVE number. In any case I hope this post is useful to raise awareness=
+ of the issue to distro maintainers.
+
+Regards=20
+Pedro=20
 
 
-
-Regards,
-redrain
-
---001a11427e24943fbe0540629842--
