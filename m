@@ -1,35 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/22/7
-Message-ID: <9e8dd09b-ec97-41bf-f741-16a35009e97c@apache.org>
-Date: Thu, 22 Sep 2022 17:34:52 +0000
-From: Michael Marshall <mmarshall@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/24/1
+Message-Id: <08DDF362-C8B0-4D35-8A56-6E504F376019@gmail.com>
+Date: Sun, 24 Jul 2022 10:35:04 +0700
+From: Pedro Ribeiro <pedrib@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-33681: Apache Pulsar: Improper Hostname Verification in Java Client and Proxy can expose authentication data via MITM 
+Subject: Re: CVE Request: heap buffer overflow in gdk-pixbuf
 Content-Type: text/plain; charset=utf-8
 
-Severity: high
 
-Description:
+> On 24 Jul 2022, at 01:08, John Helmert III <ajak@...too.org> wrote:
+> 
+> ﻿On Sat, Jul 23, 2022 at 07:35:42PM +0700, Pedro Ribeiro wrote:
+>> Hi,
+>> 
+>> A year ago I found and submitted a vulnerability to the gdk-pixbuf tracker:
+>> https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/issues/190
+>> 
+>> It's a heap buffer overflow using a crafted GIF, which is likely 
+>> exploitable in 32 bit systems. Full details are in the link above in the 
+>> bug tracker.
+>> 
+>> This was patched and the fix was merged 8 months ago as seen here:
+>> https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/merge_requests/121
+>> 
+>> The issue is now public, but since no CVE was attributed, it probably is 
+>> not being considered as a problem for downstream users of the package.
+>> 
+>> As of today, the latest Debian stable package is affected by this 
+>> vulnerability. Using a GNOME file system browser and browsing to that 
+>> folder will cause a crash, as will opening it up in a GNOME image viewer 
+>> and even attempting to load it in Chromium (should have submitted to 
+>> them for a bounty :D).
+>> 
+>> Hence I'd like to get a CVE to raise awareness for this issue, so that 
+>> downstream users of the package can get patched.
+>> 
+>> Thanks and regards,
+>> Pedro Ribeiro
+> 
+> Hi, according to the oss-security Openwall wiki page [1], CVEs need to
+> be requested via MITRE's web form [2].
+> 
+> [1] https://oss-security.openwall.org/wiki/mailing-lists/oss-security
+> [2] https://cveform.mitre.org/
 
-Delayed TLS hostname verification in the Pulsar Java Client and the Pulsar Proxy make each client vulnerable to a man in the middle attack. Connections from the Pulsar Java Client to the Pulsar Broker/Proxy and connections from the Pulsar Proxy to the Pulsar Broker are vulnerable. Authentication data is sent before verifying the server’s TLS certificate matches the hostname, which means authentication data could be exposed to an attacker.
+Hi John,
 
-An attacker can only take advantage of this vulnerability by taking control of a machine 'between' the client and the server. The attacker must then actively manipulate traffic to perform the attack by providing the client with a cryptographically valid certificate for an unrelated host. Because the client sends authentication data before performing hostname verification, an attacker could gain access to the client’s authentication data. The client eventually closes the connection when it verifies the hostname and identifies the targeted hostname does not match a hostname on the certificate.
+Thanks for the info, will request via the form and post here again once I have a CVE number. In any case I hope this post is useful to raise awareness of the issue to distro maintainers.
 
-Because the client eventually closes the connection, the value of the intercepted authentication data depends on the authentication method used by the client. Token based authentication and username/password authentication methods are vulnerable because the authentication data can be used to impersonate the client in a separate session.
+Regards 
+Pedro 
 
-This issue affects Apache Pulsar Java Client versions 2.7.0 to 2.7.4; 2.8.0 to 2.8.3; 2.9.0 to 2.9.2; 2.10.0; 2.6.4 and earlier.
-
-Mitigation:
-
-Any users running affected versions of the Java Client should rotate vulnerable authentication data, including tokens and passwords.
-
-2.7 Pulsar Java Client users should upgrade to 2.7.5, and rotate vulnerable authentication data, including tokens and passwords.
-2.8 Pulsar Java Client users should upgrade to 2.8.4, and rotate vulnerable authentication data, including tokens and passwords.
-2.9 Pulsar Java Client users should upgrade to 2.9.3, and rotate vulnerable authentication data, including tokens and passwords.
-2.10 Pulsar Java Client users should upgrade to 2.10.1, and rotate vulnerable authentication data, including tokens and passwords.
-Any users running the Pulsar Java Client for 2.6.4 and earlier should upgrade to one of the above patched versions, and rotate vulnerable authentication data, including tokens and passwords.
-
-Credit:
-
-This issue was discovered by Michael Marshall of DataStax.
 
