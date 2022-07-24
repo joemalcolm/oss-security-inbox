@@ -1,48 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/15/1
-Message-ID: <96f1c805-f41c-6341-5849-2e84b4587f1a@redhat.com>
-Date: Mon, 15 Aug 2022 08:59:02 +0200
-From: David Hildenbrand <david@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/24/2
+Message-ID: <CA+7MY97noRm+cNmUO+QPGRseAvb3vEpyMsG6mVrcVNCLC0yTzg@mail.gmail.com>
+Date: Sun, 24 Jul 2022 13:16:59 -0400
+From: Sheng Zha <zhasheng@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: "akpm@...ux-foundation.org" <akpm@...ux-foundation.org>, Greg KH <gregkh@...uxfoundation.org>, Nadav Amit <namit@...are.com>
-Subject: Re: CVE-2022-2590: Linux kernel: Modifying shmem/tmpfs files without write permissions
+Subject: CVE-2022-24294: ReDoS in Apache MXNet RTC Module
 Content-Type: text/plain; charset=utf-8
 
-On 08.08.22 09:18, David Hildenbrand wrote:
-> Hi,
-> 
-> I found a security issue (CVE-2022-2590) in the Linux kernel similar to
-> Dirty COW (CVE-2016-5195), however, restricted to shared memory (shmem /
-> tmpfs). I notified distributions one week ago and the embargo ended today.
-> 
-> An unprivileged user can modify file content of a shmem (tmpfs) file,
-> even if that user does not have write permissions to the file. The file
-> could be an executable.
-> 
-> The introducing upstream commit ID is:
->   9ae0f87d009c ("mm/shmem: unconditionally set pte dirty in
->   mfill_atomic_install_pte")
-> 
-> Linux >= v5.16 is affected on x86-64 and aarch64 if the kernel is
-> compiled with CONFIG_USERFAULTFD=y. For Linux < v5.19 it's sufficient to
-> revert the problematic commit, which is possible with minor contextual
-> conflicts. For Linux >= v5.19 I'll send a proposal fix today.
-> 
-> I have a working reproducer that I will post as reply to this mail in
-> one week (August 15).
-> 
+Severity: low
 
-Hi,
+Description:
 
-attached is the reproducer. When run without arguments, it will test
-with a memfd that is sealed for writes.
+A regular expression used in Apache MXNet (incubating) is vulnerable
+to a potential denial-of-service by excessive resource consumption.
+The bug could be exploited when loading a model in Apache MXNet that
+has a specially crafted operator name that would cause the regular
+expression evaluation to use excessive resources to attempt a match.
+This issue affects Apache MXNet versions prior to 1.9.1.
 
-upstream, 5.18-stable and 5.19-stable are still to be fixed. The fix is
-on its way upstream and us already in -next, so I suppose it should all
-be fixed fairly soonish.
+Mitigation:
 
--- 
-Thanks,
+Users that depend on MXNet 1.x are advised to upgrade to MXNet>=1.9.1,<2
 
-David / dhildenb
-View attachment "reproducer.c" of type "text/x-csrc" (7506 bytes)
+Credit:
+
+Apache MXNet would like to thank Dwi Siswanto for reporting this issue.
