@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1429" "Friday" "3" "April" "2015" "10:17:30" "+0200" "Jan Rusnacko" "jrusnack@redhat.com" "<551E4C9A.7000008@redhat.com>" "26" "Re: [oss-security] Re: libyaml / YAML-LibYAML DoS" nil nil nil "4" "2015040308:17:30" "[oss-security] Re: libyaml / YAML-LibYAML DoS" (number mark "        jrusnack@red Apr  3   26/1429  " thread-indent "\"Re: [oss-security] Re: libyaml / YAML-LibYAML DoS\"\n") "<20141128200411.70A406C0018@smtpvmsrv1.mitre.org>" ("<20141128200411.70A406C0018@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 12051 invoked by uid 550); 3 Apr 2015 08:17:48 -0000
+Received: (qmail 24469 invoked by uid 550); 25 Jul 2022 22:27:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,45 +6,71 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 12030 invoked from network); 3 Apr 2015 08:17:47 -0000
-Message-ID: <551E4C9A.7000008@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-MIME-Version: 1.0
-References: <20141128200411.70A406C0018@smtpvmsrv1.mitre.org>
-In-Reply-To: <20141128200411.70A406C0018@smtpvmsrv1.mitre.org>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-CC: oss-security@lists.openwall.com
-Date: Fri, 03 Apr 2015 10:17:30 +0200
-From: Jan Rusnacko <jrusnack@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: libyaml / YAML-LibYAML DoS
-To: cve-assign@mitre.org
+Received: (qmail 24437 invoked from network); 25 Jul 2022 22:27:45 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1658788053;
+	bh=TEP62eV8f5zvIPmACO27gCuujxjqxe8jVGXPowuPpOg=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:In-Reply-To;
+	b=Yo7Prw101xzRxjzqfReJCOq6aw8+HtVUUY6JsESDIosQ0b7AAEe+xBhrZCzoJByxW
+	 h+M9M7l8CPybrWVX/gO2wlS59YFLRoNNlU5h9GqLlIpg5m1/zRgAE+MQbjPdeslGfg
+	 H8/mgYVI5W0QOWgD0V6DAShDKFLUePuC6HcPW6rpziR1/yrB/KkYFD0XBkDDE8/Ctg
+	 RTlV7O4BU5lT368UVToTwAKpvF07VWWcS/Z4gnQdNJZDXc3jZOPMrlAgqysh83Ge2i
+	 EOuJJT7GTqn4AbIM8iQoc1f62ZMym8L7kOvYbJz7tlv0fV6XFTTY8rMlXGp7pok7tj
+	 cp0o4/SEXItjA==
+Date: Mon, 25 Jul 2022 22:27:31 +0000
+From: Seth Arnold <seth.arnold@canonical.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20220725222731.GB2583985@millbarge>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <20220719001848.GA1516019@millbarge>
+ <EEF3C292-40F0-4EF5-A4D8-3731FA2FE428@chromium.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="CblX+4bnyfN0pR09"
+Content-Disposition: inline
+In-Reply-To: <EEF3C292-40F0-4EF5-A4D8-3731FA2FE428@chromium.org>
+Subject: Re: [oss-security] snowflakedb security contacts
 
-On 11/28/2014 09:04 PM, cve-assign@mitre.org wrote:
-> This Python code is apparently intended to correspond directly to the
-> yaml_parser_save_simple_key C code. However, because it's in a
-> different programming language, we would typically consider it a
-> separate codebase, eligible for its own CVE IDs. Here, "assert
-> self.allow_simple_key or not required" is not within the scope of
-> CVE-2014-9130.
-> 
-> One question is whether identifying a security-relevant DoS caused by
-> an assert in C code means that there is also a security-relevant DoS
-> caused by an assert in corresponding Python code. In other words,
-> should the threat model be considered the same: the assert within
-> scanner.c might cause an outage of a C application that was intended
-> to remain available for processing YAML from other clients, and the
-> assert within scanner.py might cause an outage of a Python application
-> that was intended to remain available for processing YAML from other
-> clients? Or should the latter be considered much less plausible? If
-> the threat model is largely the same, we will assign a second CVE ID
-> for the scanner.py issue.
+--CblX+4bnyfN0pR09
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Belated ping on this one - since I don`t see a separate CVE assigned 
-for scanner.py, shall it be tracked under CVE-2014-9130, despite the
-above statement that it is not within it`s scope ? Statement on how to
-track this would be appreciated.
--- 
-Jan Rusnacko, Red Hat Product Security
+On Sun, Jul 24, 2022 at 11:10:35AM -0700, Roxana Bradescu wrote:
+> Just in case you didn=E2=80=99t, Snowflake uses HackerOne for their vuln =
+mgmt
+> program so issues get reported to HackerOne directly (and this
+> information belongs in a Security.md file)
+
+Hello Roxana, thank you, yes, I did hear from Snowflake, perhaps via the
+efforts of list readers who helped make connections.
+
+Snowflake has their HackerOne relationship published on:
+https://www.snowflake.com/product/security-and-trust-center/
+(which I swear I looked for, but was unable to find when looking for it
+myself).
+
+HackerOne feels a bit formal for me: not everyone reporting issues is out
+for bug bounties and so on -- but having seen more than my fair share of
+"all your source code is public" reports, I'm also sympathetic.
+
+Thanks
+
+--CblX+4bnyfN0pR09
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEQVAQ8bojyMcg37H18yFyWZ2NLpcFAmLfGM8ACgkQ8yFyWZ2N
+LpcYZAgAjV9F78BH6rOIUHteR+TKufsLIujQ55mWSTXjxfItsMzn9f21Hfd4mwiE
+jyLtvUJ0uvj4vyD74yIgQH5xL2gO9ZaWAQTVS0/2KLExWMi+ZyVEo4YLqczR7Jiv
+WdVmyA/Q1M+W5CKXkeMP9MiQzLaKFKlcrgqzUnlOz0LLQ7WikVnpbE+CR0gqAuUy
+Y9dZoqg3UtIS9cr6mbiyldnjp9ufLvIXWEUIzbSEAjdYNyyMB3LLdLZAznrUjOIG
+q+AR285XjELf8aoETRfZZTvF7CuV4Un7fuI790zBGHnxFSXmR/DMn6Rvfh5aq/uW
+epJLN39C5/s32vuGzWozvNAVRI5cgA==
+=sp8V
+-----END PGP SIGNATURE-----
+
+--CblX+4bnyfN0pR09--
