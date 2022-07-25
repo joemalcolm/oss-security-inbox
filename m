@@ -1,21 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/18/3
-Message-ID: <ce33d3c3-e71a-87f5-509f-799e83919acd@apache.org>
-Date: Tue, 18 Oct 2022 08:31:50 +0000
-From: Albumen Kevin <albumenj@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/26/1
+Message-ID: <CAGKxTUSFnV50gJvJsoWb2TJ6_44hXrt1F-iKGirS_SdBigGYFA@mail.gmail.com>
+Date: Tue, 26 Jul 2022 09:21:37 +0930
+From: Christian Heinrich <christian.heinrich@...h.id.au>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-39198: Apache Dubbo Hession Deserialization Vulnerability Gadgets Bypass 
+Subject: Re: snowflakedb security contacts
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Seth,
 
-Description:
+On Tue, 26 Jul 2022 at 08:00, Seth Arnold <seth.arnold@...onical.com> wrote:
+> HackerOne feels a bit formal for me: not everyone reporting issues is out
+> for bug bounties and so on -- but having seen more than my fair share of
+> "all your source code is public" reports, I'm also sympathetic.
 
-A deserialization vulnerability existed in dubbo hessian-lite 3.2.12 and its earlier versions, which could lead to malicious code execution. 
+Direct contact is usually banned by
+https://www.hackerone.com/policies/code-of-conduct
 
-This issue affects Apache Dubbo 2.7.x version 2.7.17 and prior versions; Apache Dubbo 3.0.x version 3.0.11 and prior versions; Apache Dubbo 3.1.x version 3.1.0 and prior versions. 
+"Only contact security teams through approved channels
 
-Credit:
+Only use approved communication channels. Unless the program has
+intentionally provided a contact method to the Finder, contacting
+security teams “out-of-band” is a violation of this CoC. Approved
+communication channels will be outlined within the program policy page
+or otherwise notified by the customer, should nothing be specifically
+mentioned, all Finders must assume that the HackerOne platform is the
+only approved channel."
 
-yemoli&cxc
 
+-- 
+Regards,
+Christian Heinrich
+
+http://cmlh.id.au/contact
