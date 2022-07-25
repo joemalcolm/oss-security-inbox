@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3657" "Friday" "26" "January" "2018" "10:23:49" "-0500" "Stiepan" "stie@itk.swiss" "<BSTa0xkd6PUstoK62HXIf9i3UbZq_tCsSclHxAN7KTx3C1KFs-sF5C7ob4tsKCoYkw9Tb-axNViD4GKkd-VvX8g163zTLOvsngO4-M3jlus=@itk.swiss>" "65" "Re: [oss-security] How to deal with reporters who don't want their bugs fixed?" "^Date:" nil nil "1" "2018012615:23:49" "[oss-security] How to deal with reporters who don't want their bugs fixed?" (number mark "        stie@itk.swi Jan 26   65/3657  " thread-indent "\"Re: [oss-security] How to deal with reporters who don't want their bugs fixed?\"\n") "<20180124030215.ugiofq23lmyurwsa@dojo.mi.org>" ("<07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>" "<20180124030215.ugiofq23lmyurwsa@dojo.mi.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 20173 invoked by uid 550); 26 Jan 2018 16:47:07 -0000
+Received: (qmail 22139 invoked by uid 550); 25 Jul 2022 06:53:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,84 +6,108 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11825 invoked from network); 26 Jan 2018 15:24:04 -0000
-Authentication-Results: mail1.protonmail.ch; dkim=none
-Message-ID: <BSTa0xkd6PUstoK62HXIf9i3UbZq_tCsSclHxAN7KTx3C1KFs-sF5C7ob4tsKCoYkw9Tb-axNViD4GKkd-VvX8g163zTLOvsngO4-M3jlus=@itk.swiss>
-In-Reply-To: <20180124030215.ugiofq23lmyurwsa@dojo.mi.org>
-References: <07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>
- <20180124030215.ugiofq23lmyurwsa@dojo.mi.org>
-Feedback-ID: wnsnnc8Us3MVqt1IALGduDJl-d16B_hEkg50pF7qo11mpeysEHmUOGy-yvw8MEApAPX3TXcPDHQwu7hti-kzSw==:Ext:ProtonMail
-MIME-Version: 1.0
-Content-Type: multipart/alternative;
-	boundary="b1_5c1426f22472dc0ec4fde4667e6c4da3"
-Date: Fri, 26 Jan 2018 10:23:49 -0500
-From: Stiepan <stie@itk.swiss>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] How to deal with reporters who don't want their bugs fixed?
-To: mjo@dojo.mi.org, oss-security@lists.openwall.com
+Received: (qmail 9958 invoked from network); 25 Jul 2022 05:15:56 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:content-language:from
+         :references:to:subject:in-reply-to:content-transfer-encoding;
+        bh=1yNg+4ATdW+J/EPcauc9ZaVGT+rwTHBqIlJw3SppxjE=;
+        b=gqeKiwCFd+mxj29hcI1+DfuAby6j3zz7+5Dk7XAm1af8OAGRD5xJCMbnfmLECxX7Ei
+         l8bqWSrjD02ehxihRAR2C1rNhx4hKsjKjEkHYAgHjzCmwAkCq4WXxGCYNZxBjyyNnjGI
+         f1yeJ776cCuoLtIL7VGhvY4EFiRpw+EaVj+rLXC3jSgrI32sFtD9cbATXbiY8WC6LTp/
+         gsek3toAJRlRmUGwIAcq4r7h8i3dnfJaUV6qZ2qC9cPi68uNffnIDREhCgO7qzZ66MMy
+         LsIJqPq3+xWNgOOrxPCxDBNV/TkP8HHJxwv87qO7Hb74JuolEARNu/ydIN/biYm8hION
+         Y6mA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent
+         :content-language:from:references:to:subject:in-reply-to
+         :content-transfer-encoding;
+        bh=1yNg+4ATdW+J/EPcauc9ZaVGT+rwTHBqIlJw3SppxjE=;
+        b=YAsfNbhZ2+Dp9n8kKV8RQ4WTklzwQ+fbpQpXzbnDd+ts6jLwA3OXyHB1G+CFsT6GWz
+         lgG6jTTATkd380olSmrC+KUA/bHdPBNuCvhINKKDj664oR1pqnPl7gaR78Ci5S/BHh+2
+         /4UYm36cbbv2lkE3ZNHJNNkkA4rX88BkjL0+Zb0vts49oA3DVRaryG75E+Tmd9qWrn0B
+         Yg5YiHY0iZE6gyfdtBHLptfrXOvVSGF9r5GeNi+hdEQGYT4FXfQTm7oAaVrBgxdN0wYa
+         xtT4vfA0qsemviAyzA4RMwDRpAVmgWG3TQJJ0yBonNQvwC6yK/I9X/GM0XF555o7Jykd
+         5KBA==
+X-Gm-Message-State: AJIora9pe6fRvAFsFVFnkrx3TUehJcCbq6SzSRmuMxU5feZydIF/fbOE
+	cZmRNFo3BD9rdREknqjkQDYJF9U0LHutKg==
+X-Google-Smtp-Source: AGRyM1t4BZP5xcKezQJs2iIDNcVza2UU4HmLQDcMkATFau4tJSP/1ZIJjP3/sdelFHUffEPjghO5sA==
+X-Received: by 2002:a17:90a:728f:b0:1f2:4a4c:6c39 with SMTP id e15-20020a17090a728f00b001f24a4c6c39mr16641117pjg.43.1658726144148;
+        Sun, 24 Jul 2022 22:15:44 -0700 (PDT)
+Message-ID: <174ef5a4-523e-ab75-5f4a-d1ef38e2410c@gmail.com>
+Date: Mon, 25 Jul 2022 12:15:40 +0700
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Content-Language: en-GB
+From: Pedro Ribeiro <pedrib@gmail.com>
+References: <YtwnKUHaS9nL/F/F@gentoo.org>
+ <08DDF362-C8B0-4D35-8A56-6E504F376019@gmail.com>
+To: oss-security@lists.openwall.com
+In-Reply-To: <08DDF362-C8B0-4D35-8A56-6E504F376019@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] CVE Request: heap buffer overflow in gdk-pixbuf
 
---b1_5c1426f22472dc0ec4fde4667e6c4da3
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
 
-V2l0aCB0aGUgcmlzayBvZiBkaXNwbGVhc2luZyB0aGUgc3VwcG9ydGVycyBv
-ZiBhICJjb21tb24gc2Vuc2UiIGFwcHJvYWNoIHRvIHRoaXMgdG9waWMsIEkg
-dGhpbmsgdGhhdCBjbGVhciBydWxlcyBtaWdodCBiZSB3ZWxjb21lOiBXZSBh
-cyBhIHByb2Zlc3Npb24gc2hvdWxkIGhhdmUgYSBjbGVhciBjb2RlIG9mIGV0
-aGljcyBqdXN0IGxpa2UgcGh5c2ljaWFucyBkbywgaW5zdGVhZCBvZiByZWx5
-aW5nIG9uIHRoZSBwYXJ0aWVzJyBzb2NpYWwgZW5naW5lZXJpbmcgc2tpbGxz
-IHRvIHNldCB0aGUgb3V0Y29tZSBvZiB0aGlzIGtpbmQgb2YgaXNzdWUuIEVu
-ZCB1c2VycyB3b3VsZCB0aGFuayB1cyBhbmQgdGhlIHByb2Zlc3Npb24ncyBp
-bWFnZSBjb3VsZCBldm9sdmUgZnJvbSBwaXJhdGUgaW4gYSBnYXJhZ2UgdG8g
-YSByZXNwZWN0YWJsZSBvbmUgKGJ5IHRoZSBtYWpvcml0eSkuIEp1c3QgbGlr
-ZSBiYXJiZXJzIGJlY2FtZSBzdXJnZW9ucyBhZnRlciBzb21lIHRpbWUsIHRv
-IGtlZXAgdGhlIG1lZGljYWwgYW5hbG9neS4gVGhlcmUgYXJlIG9mIGNvdXJz
-ZSBwcmVjZWRlbnRzLCBzdWNoIGFzIHRoZSBwcml2YWN5IHByb2Zlc3Npb25h
-bHMnIGNvZGUgb2YgY29uZHVjdCwgdG8gbmFtZSBvbmUgYXMgYW4gZXhhbXBs
-ZSAobGVhbmluZyB0b3dhcmRzIHNlY3JldCBrZWVwaW5nKSwgYnV0IHdlIGxh
-Y2sgYW4gdW5pdmVyc2FsIGV0aGljcycgY29kZSwgd2hpY2ggd291bGQgbm90
-IGJlIGJvdW5kIHRvIGEgcHJpdmF0ZSBjZXJ0aWZpY2F0aW9uIGJvZHkgYW5k
-IHdvdWxkIHB1dCB0aGUgZW5kIHVzZXIncyBpbnRlcmVzdHMgZmlyc3QuIEkg
-aGF2ZSB5ZXQgdG8gZmluZCBzb21ldGhpbmcgb2YgdGhlIGxpa2UsIHdpdGgg
-YnJvYWQgYXBwbGljYWJpbGl0eSB0byB0aGUgSUNUIFNlY3VyaXR5IHByb2Zl
-c3Npb24ocyksIGJ1dCBJIHdvdWxkIGxvdmUgdG8gYmUgY29ycmVjdGVkIQoK
-LS0tLS0tLS0gTWVuc2FqZSBvcmlnaW5hbCAtLS0tLS0tLQpPbiAyNCBlbmUu
-IDIwMTggNDowMiwgTWlrZSBPJ0Nvbm5vciBlc2NyaWJpw7M6Cgo+IDpTdWJq
-ZWN0IHNheXMgaXQgYWxsOiBXaGF0IGRvIHlvdSBkbyBpZiB5b3UgcmVjZWl2
-ZSBhIHZ1bG5lcmFiaWxpdHkgcmVwb3J0LCA6YW5kIHRoZSByZXBvcnRlciBy
-ZXF1ZXN0cyBhbiBlbWJhcmdvIGF0IHNvbWUgdGltZSBpbiB0aGUgZnV0dXJl
-IGJlY2F1c2UgOnRoYXQncyB3aGVuIHRoZWlyIHBhcGVyL2NvbmZlcmVuY2Ug
-cHJlc2VudGF0aW9uL3BhdGVudCBzdWJtaXNzaW9uIGlzIDpzY2hlZHVsZWQ/
-IDogOlRoZSBvYnZpb3VzIGFwcHJvYWNoIGlzIHRvIGZpbmQgYSBwcmlvciBw
-dWJsaWMgcmVwb3J0IG9mIGVzc2VudGlhbGx5IHRoZSBzYW1lIDpidWcgYW5k
-IGZpeCB0aGF0ICh3aGljaCB3aWxsIHdvcmsgc3VycHJpc2luZ2x5IG9mdGVu
-KSwgYnV0IGxldCdzIGFzc3VtZSB0aGF0IDp0aGlzIGlzbid0IHRoZSBjYXNl
-LiBXZWxsLCBkb2VzIHRoZSBlbWJhcmdvIGFkZCB2YWx1ZSBmb3IgdGhlIGNv
-bnN1bWVycyBvZiB0aGUgcHJvZHVjdD8gVGhhdCBoYWQgaGlzdG9yaWNhbGx5
-IGJlZW4gbXkgZ3VpZGVsaW5lLCB3aGVuIEkndmUgaGFkIHRvIG1ha2UgdGhh
-dCBjYWxsLiBXaWxsIGl0IGltcHJvdmUgdGhlIGZpeCwgZG9jdW1lbnRhdGlv
-biwgZGVsaXZlcnkgbWVjaGFuaXNtcywgZXRjLiBTb21ldGltZXMsIHRoZSBh
-bnN3ZXIgaXMgInllcyIuIE90aGVyIHRpbWVzLCBub3Qgc28gbXVjaCBvciBp
-dCdzIGZhaXJseSBpbmRldGVybWluYXRlLiBZb3UgZG9uJ3QgYWx3YXlzIGtu
-b3cgYWxsIHRoZSBmYWN0cywgb3IgYWxsIHRoZSBwbGF5ZXJzLCB5b3UncmUg
-bGVmdCB3aXRoIGVkdWNhdGVkIGd1ZXNzaW5nLiBTb21ldGltZXMsIHlvdSBj
-YW4gcGVyc3VhZGUgcmVzZWFyY2hlcnMgdG8gYSB2ZW5kb3ItZnJpZW5kbHkg
-cG9pbnQgb2YgdmlldyBvbiBkaXNjbG9zdXJlIGJ5IHNpbXBseSBhc2tpbmcg
-dGhlbSBpZiB0aGV5IHRoaW5rIHRoaXMgaXMgaW4gdGhlIGJlc3QgaW50ZXJl
-c3RzIG9mIHRoZSB1c2Vycy4gT3RoZXIgdGltZXMsIHlvdSB3b3JrIHdpdGgg
-c29tZW9uZSB3aG8gY2FyZXMgbW9yZSBhYm91dCBhZGRpbmcgYSBDVkUgYW5k
-fG9yIGJvdW50eSB0byB0aGVpciByZXN1bWUsIG9yIHRoZXkgYXJlIGRpc2lu
-Z2VudW91cyBvciBzaW1wbHkgaW5jYXBhYmxlIG9mIGtlZXBpbmcgc2VjcmV0
-cy4gSWYgdGhlcmUncyBldmlkZW5jZSBvZiBvcGVuIGV4cGxvaXRhdGlvbiwg
-YWxsIGJldHMgc2hvdWxkIGJlIG9mZiBhbmQgdGhhdCBzaG91bGQgYmUgc3Rh
-dGVkIHVwIGZyb250LiBBdCB0aGF0IHBvaW50LCBvZiBjb3Vyc2UsIGl0IGNl
-YXNlcyBhZGRpbmcgdmFsdWUuIEFuIGFncmVlZCBkaXNjbG9zdXJlIGRhdGUg
-ZG9lcyBub3QgZ2VuZXJhbGx5IGFtb3VudCB0byBhbiBOREEgb3IgdGhlIGxp
-a2UuIC1NaWtlIC0tIE1pY2hhZWwgSi4gTydDb25ub3IgbWpvQGRvam8ubWku
-b3JnID0tLT09LS09PS0tPT0tLT09LS09PS0tPT0tLT09LS09PS0tPT0tLT09
-LS09PS0tPT0tLT09LS09PS0tPT0tLT09LS09PS0tPT0tLT0gIlRoZSBkZWZl
-bmRhbnQgcGxlYWRlZCBleHRlcm1pbmF0aW5nIGNpcmN1bXN0YW5jZXMuIiAt
-QW5ndWlzaGVkIEVuZ2xpc2g=
 
---b1_5c1426f22472dc0ec4fde4667e6c4da3--
+On 24/07/2022 10:35, Pedro Ribeiro wrote:
+> 
+>> On 24 Jul 2022, at 01:08, John Helmert III <ajak@gentoo.org> wrote:
+>>
+>> ﻿On Sat, Jul 23, 2022 at 07:35:42PM +0700, Pedro Ribeiro wrote:
+>>> Hi,
+>>>
+>>> A year ago I found and submitted a vulnerability to the gdk-pixbuf tracker:
+>>> https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/issues/190
+>>>
+>>> It's a heap buffer overflow using a crafted GIF, which is likely
+>>> exploitable in 32 bit systems. Full details are in the link above in the
+>>> bug tracker.
+>>>
+>>> This was patched and the fix was merged 8 months ago as seen here:
+>>> https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/merge_requests/121
+>>>
+>>> The issue is now public, but since no CVE was attributed, it probably is
+>>> not being considered as a problem for downstream users of the package.
+>>>
+>>> As of today, the latest Debian stable package is affected by this
+>>> vulnerability. Using a GNOME file system browser and browsing to that
+>>> folder will cause a crash, as will opening it up in a GNOME image viewer
+>>> and even attempting to load it in Chromium (should have submitted to
+>>> them for a bounty :D).
+>>>
+>>> Hence I'd like to get a CVE to raise awareness for this issue, so that
+>>> downstream users of the package can get patched.
+>>>
+>>> Thanks and regards,
+>>> Pedro Ribeiro
+>>
+>> Hi, according to the oss-security Openwall wiki page [1], CVEs need to
+>> be requested via MITRE's web form [2].
+>>
+>> [1] https://oss-security.openwall.org/wiki/mailing-lists/oss-security
+>> [2] https://cveform.mitre.org/
+> 
+> Hi John,
+> 
+> Thanks for the info, will request via the form and post here again once I have a CVE number. In any case I hope this post is useful to raise awareness of the issue to distro maintainers.
+> 
+> Regards
+> Pedro
+> 
+> 
 
+Actually I was wrong, this doesn't crash Chromium! But it still crashes 
+with a heap buffer overflow in GNOME file explorer and GNOME image 
+viewers (anything using gdk-pixbuf really) as said in the previous email 
+though.
+
+Here's the CVE number that was attributed by MITRE: CVE-2021-46829.
+I've put a copy of the PoC and bug report at 
+https://github.com/pedrib/PoC/blob/master/fuzzing/CVE-2021-46829/CVE-2021-46829.md
+
+Regards,
+Pedro
