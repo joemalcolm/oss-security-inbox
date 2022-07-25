@@ -1,29 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/03/3
-Message-ID: <cb402038-6b4f-e640-467d-652b8ca7cc26@apache.org>
-Date: Wed, 03 Aug 2022 20:45:51 +0000
-From: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/25/1
+Message-ID: <174ef5a4-523e-ab75-5f4a-d1ef38e2410c@gmail.com>
+Date: Mon, 25 Jul 2022 12:15:40 +0700
+From: Pedro Ribeiro <pedrib@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-28730: Apache JSPWiki Cross-site scripting vulnerability on AJAXPreview.jsp 
+Subject: Re: CVE Request: heap buffer overflow in gdk-pixbuf
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
 
-Description:
 
-A carefully crafted request on AJAXPreview.jsp could trigger an XSS vulnerability on Apache JSPWiki, which could allow the attacker to execute javascript in the victim's browser and get some sensitive information about the victim.
+On 24/07/2022 10:35, Pedro Ribeiro wrote:
+> 
+>> On 24 Jul 2022, at 01:08, John Helmert III <ajak@...too.org> wrote:
+>>
+>> ﻿On Sat, Jul 23, 2022 at 07:35:42PM +0700, Pedro Ribeiro wrote:
+>>> Hi,
+>>>
+>>> A year ago I found and submitted a vulnerability to the gdk-pixbuf tracker:
+>>> https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/issues/190
+>>>
+>>> It's a heap buffer overflow using a crafted GIF, which is likely
+>>> exploitable in 32 bit systems. Full details are in the link above in the
+>>> bug tracker.
+>>>
+>>> This was patched and the fix was merged 8 months ago as seen here:
+>>> https://gitlab.gnome.org/GNOME/gdk-pixbuf/-/merge_requests/121
+>>>
+>>> The issue is now public, but since no CVE was attributed, it probably is
+>>> not being considered as a problem for downstream users of the package.
+>>>
+>>> As of today, the latest Debian stable package is affected by this
+>>> vulnerability. Using a GNOME file system browser and browsing to that
+>>> folder will cause a crash, as will opening it up in a GNOME image viewer
+>>> and even attempting to load it in Chromium (should have submitted to
+>>> them for a bounty :D).
+>>>
+>>> Hence I'd like to get a CVE to raise awareness for this issue, so that
+>>> downstream users of the package can get patched.
+>>>
+>>> Thanks and regards,
+>>> Pedro Ribeiro
+>>
+>> Hi, according to the oss-security Openwall wiki page [1], CVEs need to
+>> be requested via MITRE's web form [2].
+>>
+>> [1] https://oss-security.openwall.org/wiki/mailing-lists/oss-security
+>> [2] https://cveform.mitre.org/
+> 
+> Hi John,
+> 
+> Thanks for the info, will request via the form and post here again once I have a CVE number. In any case I hope this post is useful to raise awareness of the issue to distro maintainers.
+> 
+> Regards
+> Pedro
+> 
+> 
 
-This vulnerability leverages CVE-2021-40369, where the Denounce plugin dangerously renders user-supplied URLs. Upon re-testing CVE-2021-40369, it appears that the patch was incomplete as it was still possible to insert malicious input via the Denounce plugin. 
+Actually I was wrong, this doesn't crash Chromium! But it still crashes 
+with a heap buffer overflow in GNOME file explorer and GNOME image 
+viewers (anything using gdk-pixbuf really) as said in the previous email 
+though.
 
-Mitigation:
+Here's the CVE number that was attributed by MITRE: CVE-2021-46829.
+I've put a copy of the PoC and bug report at 
+https://github.com/pedrib/PoC/blob/master/fuzzing/CVE-2021-46829/CVE-2021-46829.md
 
-Apache JSPWiki users should upgrade to 2.11.3 or later. 
-
-Credit:
-
-This issue was discovered by Poh Jia Hao, from Star Labs <info AT starlabs DOT sg>
-
-References:
-
-https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2022-28732
-
+Regards,
+Pedro
