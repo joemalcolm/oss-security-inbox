@@ -1,22 +1,118 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/05/1
-Message-ID: <b4b5b976-5adf-a057-7658-24b875181eda@apache.org>
-Date: Sat, 05 Feb 2022 00:08:03 +0000
-From: Zach Hoffman <zrhoffman@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-23206: Apache Traffic Control: Server-Side Request Forgery in Traffic Ops endpoint POST /user/login/oauth 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/26/3
+Message-Id: <E1oGQAC-0002wB-Fy@xenbits.xenproject.org>
+Date: Tue, 26 Jul 2022 19:24:16 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 408 v3 (CVE-2022-33745) - insufficient TLB flush for x86 PV guests in shadow mode
 Content-Type: text/plain; charset=utf-8
 
-Description:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-In Apache Traffic Control Traffic Ops prior to 6.1.0 or 5.1.6, an unprivileged user who can reach Traffic Ops over HTTPS can send a specially-crafted POST request to /user/login/oauth to scan a port of a server that Traffic Ops can reach.
+            Xen Security Advisory CVE-2022-33745 / XSA-408
+                               version 3
 
-Mitigation:
+        insufficient TLB flush for x86 PV guests in shadow mode
 
-6.0.x user should upgrade to 6.1.0.
-5.1.x users should upgrade to 5.1.6 or 6.1.0.
+UPDATES IN VERSION 3
+====================
 
-Credit:
+Update hash for metadata file.
 
-Apache Traffic Control would like to thank walkerxiong of SecCoder Security Lab for reporting this issue.
+ISSUE DESCRIPTION
+=================
 
+For migration as well as to work around kernels unaware of L1TF (see
+XSA-273), PV guests may be run in shadow paging mode.  To address
+XSA-401, code was moved inside a function in Xen.  This code movement
+missed a variable changing meaning / value between old and new code
+positions.  The now wrong use of the variable did lead to a wrong TLB
+flush condition, omitting flushes where such are necessary.
+
+IMPACT
+======
+
+The known (observed) impact would be a Denial of Service (DoS) affecting
+the entire host, due to running out of memory.  Privilege escalation and
+information leaks cannot be ruled out.
+
+VULNERABLE SYSTEMS
+==================
+
+All versions of Xen with the XSA-401 fixes applied are vulnerable.
+
+Only x86 PV guests can trigger this vulnerability, and only when running
+in shadow mode.  Shadow mode would be in use when migrating guests or as
+a workaround for XSA-273 (L1TF).
+
+MITIGATION
+==========
+
+Not running x86 PV guests will avoid the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Charles Arnold of SUSE.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa408.patch           xen-unstable - Xen 4.14.x
+xsa408-4.13.patch      Xen 4.13.x
+
+$ sha256sum xsa408*
+9411b563c71445d2c95e36aba9d71fa3b9341f0230e4b3e2549a63292df11669  xsa408.meta
+f49cb67842c7576f1d59b965331956a9fa1f529a8e2da3531d7ebc4eb3f079b3  xsa408.patch
+26871efbd3f834dd4af4fbab6f2cb09a83c509e49894f025ee656071419ed995  xsa408-4.13.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmLgPzsMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZT5cIAKtisZZvdcSolZ+RHFzAdVEP2lbEW2TyoG6oy0st
+kMsV/ZSabthow9PiUp48DoZOXSIh/7hn2qyXqx5X0VYjiWOISVRCldm5g4p0+tA/
+GN6FztbRR1GargLkvtuWj38K9E7HIqfBRFLbtJD6X97NFSAPeNNZg8nqQPqwkhK+
+yeGBjPPO5pTjNwsRt91A1qEttTPjbBpipEcit/qjqqCBxX6NT/pYSE5Ltn2OHm38
+eYM25X901rJl0rPsyOeUN312FAL0bEunKVKJbiNcHVBZoR37YoJ5HE5trDxoxPrz
+XYJdR7gzcB028lbGU4jt9FVHdYCh0htWpdpdWci4A3DCH7U=
+=C02g
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa408.meta" of type "application/octet-stream" (1306 bytes)
+
+Download attachment "xsa408.patch" of type "application/octet-stream" (1633 bytes)
+
+Download attachment "xsa408-4.13.patch" of type "application/octet-stream" (1525 bytes)
