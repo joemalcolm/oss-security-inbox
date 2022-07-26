@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4238" "Wednesday" "5" "July" "2017" "13:28:43" "+0100" "Ben Tasker" "ben@bentasker.co.uk" "<CABMkiz7jqqJNjL==jrLXWPjJpDgx4r+_ZmnYFq5aJqBn9eAKCA@mail.gmail.com>" "114" "Re: [oss-security] systemd fails to parse user that should run service" "^Cc:" nil nil "7" "2017070512:28:43" "[oss-security] systemd fails to parse user that should run service" (number mark "        ben@bentaske Jul  5  114/4238  " thread-indent "\"Re: [oss-security] systemd fails to parse user that should run service\"\n") "<20170705085034.GA2638@pali>" ("<VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>" "<20170705085034.GA2638@pali>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 21699 invoked by uid 550); 5 Jul 2017 12:37:18 -0000
+Received: (qmail 1859 invoked by uid 550); 26 Jul 2022 13:02:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,155 +6,254 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3311 invoked from network); 5 Jul 2017 12:28:56 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bentasker.co.uk; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=rismOUSlcMfGHe2sprrxZ1pBITjFsDp28Qd3RwWZDsU=;
-        b=K/oJQBQVSpwV1b9nUNsJ8DuwTHVvpII6zwe9DUlFPpp/GQTgXw0T+US8Zu5lrxsf8q
-         qWJhdj/Fj0tuAAINsmwrDXaE6cNHJeIoRlzrHRpXFzDkB7OxryEDvN8Mbl778glOaks2
-         GO8eF5SfrBUZz6QHRMBypuMiEpe8NGvDh2whk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=rismOUSlcMfGHe2sprrxZ1pBITjFsDp28Qd3RwWZDsU=;
-        b=HeEXZn4LgSN+sxMezSWpdtB7NaVDopBEZklYKuosFWVF/ZlUz7Fd6nlLYkCSJICW5z
-         mXsgrOmoNlafA/PuiJkmaXGVsjuoo68ugIK2dXOB59EinLcIx3zHfaEEXdsrYjUlY1Od
-         9jCfB7PNieYHqFl6dzh9qZ1BDcEy9ijyhK7N0KOcw34HNp7C3w70E0VDpfZAirpLTpVZ
-         syeFzAuxAhbReLytW6heg0NzRybBdnq0QXAuYrBCfFUsDJSp526piHei3bc8nbmxGEw/
-         SyJEPsT619LDw01EXNvMbDVV9sKnACyOOqJDQfdKX5xBxRDZD8o/EuS1H8Cejz7zzVH0
-         Yabw==
-X-Gm-Message-State: AIVw111fU3eZ6hjiSvDcmuBfbCe9GA9eJw0c3KMgMUfj8785iF5UqDHl
-	db2ZW9omqeWORJQEu44QqwKkKSFg2IKX9nc=
-X-Received: by 10.202.230.212 with SMTP id d203mr5344828oih.143.1499257724373;
- Wed, 05 Jul 2017 05:28:44 -0700 (PDT)
-MIME-Version: 1.0
-X-Originating-IP: [178.62.118.116]
-In-Reply-To: <20170705085034.GA2638@pali>
-References: <VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>
- <20170705085034.GA2638@pali>
-Message-ID: <CABMkiz7jqqJNjL==jrLXWPjJpDgx4r+_ZmnYFq5aJqBn9eAKCA@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="001a1141aede16abbd0553912487"
-Cc: =?UTF-8?Q?Daniel_Skowro=C5=84ski?= <daniel@dsinf.net>
-Date: Wed, 5 Jul 2017 13:28:43 +0100
-From: Ben Tasker <ben@bentasker.co.uk>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] systemd fails to parse user that should run service
-To: oss-security@lists.openwall.com
+Received: (qmail 26228 invoked from network); 26 Jul 2022 12:44:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
+	Content-Transfer-Encoding:Content-Type;
+	bh=5zUc3GTVdkqv2U2hDzriHogHU6mxVsSzoLo34MiGpJ0=; b=AboCeRd2aTP+l7XRUXw8wY7tie
+	npjepsApr6CcupUUck+czhQUNCDU2QU/X75jtcernPtsUC1ZodK83bXyKfcXtkMNTTTkha+tWSVkz
+	RvYEv+DQ1Tk2LKqtQIux0F3rmr3BaVo64MXmgUdGeaW9+uscOJH2n50z653D9f6LfCA4=;
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
+MIME-Version: 1.0
+X-Mailer: MIME-tools 5.509 (Entity 5.509)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1oGJv9-0001Jn-PZ@xenbits.xenproject.org>
+Date: Tue, 26 Jul 2022 12:44:19 +0000
+Subject: [oss-security] Xen Security Advisory 408 v2 (CVE-2022-33745) - insufficient TLB
+ flush for x86 PV guests in shadow mode
 
---001a1141aede16abbd0553912487
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jul 5, 2017 at 9:50 AM, Pali Roh=C3=A1r <pali.rohar@gmail.com> wrot=
-e:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
->
-> Hi!
->
-> There are basically two problems:
->
-> 1) In more Linux distributions useradd tool allow to create a new user
-> which starts with digit. Also according to POSIX such user name is a
-> valid. This means that valid user name (for some Linux distributions)
-> from /etc/passwd specified in systemd unit file results running service
-> as root user.
->
-> 2) If user name specified in systemd unit file is syntactically correct
-> (according to systemd check) but user name does not exist then systemd
-> refuse to start that unit.
->
-> Which leads to problem that syntactically invalid user name (for
-> systemd) results in root user and syntactically valid non-existent user
-> name cause error.
+            Xen Security Advisory CVE-2022-33745 / XSA-408
+                               version 2
 
+        insufficient TLB flush for x86 PV guests in shadow mode
 
-> Because check if user name is valid is different in systemd as specified
-> in POSIX and also different as in useradd tool supplied by some Linux
-> distributions, I see this as a security problem when processing invalid
-> input from configuration unit file.
->
->
-You'd really hope it'd be consistent. If they want to enforce a policy that
-user names cannot start with a digit (which as Poettering notes, many
-distro's do) that's fine, but the resulting behaviour should be safe, well
-defined and expected. I wouldn't say running the service as root falls
-under that definition, personally.
+UPDATES IN VERSION 2
+====================
 
-I think it'd be possible to take a different view on it if the usecase of a
-non-existing user presented different behaviour. If it too fell back to
-root, that wouldn't be great, but would at least be consistent. Personally,
-I think the better behaviour would be to refuse to start the unit in either
-case.
+Added metadata
 
-As others have noted, this is something that could quite easily happen as
-the result of installing a package.
+Public release.
 
-It'd be all too easy for a reviewer to look at the unit file, note it runs
-as '0day', double check that the package creates a user called '0day' and
-be happy that it's going to work. Hopefully someone *would* notice but that
-might not happen until after a vulnerability in that particular package has
-been remotely exploited (giving root access, oh dear), which is a situation
-that's in no-one's interest.
+ISSUE DESCRIPTION
+=================
 
-I wouldn't expect to see it happen to a package in the main distro's
-repo's, but could quite easily see it happening via a PPA or through
-provision of rebuilt packages elsewhere.
+For migration as well as to work around kernels unaware of L1TF (see
+XSA-273), PV guests may be run in shadow paging mode.  To address
+XSA-401, code was moved inside a function in Xen.  This code movement
+missed a variable changing meaning / value between old and new code
+positions.  The now wrong use of the variable did lead to a wrong TLB
+flush condition, omitting flushes where such are necessary.
 
+IMPACT
+======
 
+The known (observed) impact would be a Denial of Service (DoS) affecting
+the entire host, due to running out of memory.  Privilege escalation and
+information leaks cannot be ruled out.
 
+VULNERABLE SYSTEMS
+==================
 
-> Correct behaviour should be to throw error also when garbage (invalid
-> user name), according to internal systemd check, was specified. And not
-> start service under root user with high privileges.
->
-> Because of this I would suggest to ask for CVE identifier, so Linux
-> distributions can mitigate or decide how to handle this problem.
->
-> Linux distributions which follow POSIX standard when creating new users
-> are affected by this.
->
-> Please note that above bug tracker on github is locked for future
-> discussion, which means it is not possible to ask for more details or
-> continue discussion in upstream.
->
-> Which is really *bad* for security related problems.
->
-> What do you think, how should be this problem handled?
->
->
-Honestly, I think upstream have done an *awful *job of handling it so far
-(and it's far from the only example of Poettering taking the not-a-bug
-approach questionably). Their issues do have a habit of attracting trolls,
-but I think sometimes their definition of troll expands to include anyone
-who doesn't agree with them.
+All versions of Xen with the XSA-401 fixes applied are vulnerable.
 
-FWIW, I'd be inclined to agree that it needs a CVE so that downstream
-distro's can at least refer to it, and decide how (and if) they want to
-address it. Even if they decide to stick with upstream's approach, having
-the CVE at least gives them something to make sure package reviewers refer
-to.
+Only x86 PV guests can trigger this vulnerability, and only when running
+in shadow mode.  Shadow mode would be in use when migrating guests or as
+a workaround for XSA-273 (L1TF).
 
-I think the approach SUSE has taken is pretty good, and it's basically the
-kind of fix I'd have liked to see upstream put in place (though in their
-case, the suggestion of a config var to define whether it's acceptable is
-also a very good suggestion).
+MITIGATION
+==========
 
+Not running x86 PV guests will avoid the vulnerability.
 
+CREDITS
+=======
 
+This issue was discovered by Charles Arnold of SUSE.
 
+RESOLUTION
+==========
 
-> --
-> Pali Roh=C3=A1r
-> pali.rohar@gmail.com
->
+Applying the appropriate attached patch resolves this issue.
 
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
 
+xsa408.patch           xen-unstable - Xen 4.14.x
+xsa408-4.13.patch      Xen 4.13.x
 
---=20
-Ben Tasker
-https://www.bentasker.co.uk
+$ sha256sum xsa408*
+7349445d53b68bc8e2be2aea9fa20409a9b87e0d6b78fc2515093a65668444a0  xsa408.meta
+f49cb67842c7576f1d59b965331956a9fa1f529a8e2da3531d7ebc4eb3f079b3  xsa408.patch
+26871efbd3f834dd4af4fbab6f2cb09a83c509e49894f025ee656071419ed995  xsa408-4.13.patch
+$
 
---001a1141aede16abbd0553912487--
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmLfyP4MHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZSkAIAM3XDzBdUXux7ONc9nztSMGPBdWosC5f0SycveSq
+adplJeShw50aFYLxpZzqfCBAX/Jh0ooF+7gHnjVMuKKkg8vu5SfBpSGRdmva6jpc
+qNXoNyIc21PdNH4PVCKDQnO8Dq8wPSCnPpMZbFwk2uz7QGN5BKU/GM6XQrmXA3wz
+3XYIcVVR377MdDuR8UQKyCSAG0JPr6SiozygRFHykGjg9NABWZwGyod64C9xBAyu
+K8CGTx12bAJEVcqJbGAVSEU6J5iKdWjSLHwy43ZOcAFvfiCAlolBOPlfjJTllYdQ
+Yhv0wQtOwsIDjQU6vbUtMsckuNEmfMPTEkRHPOpp46dPuVk=
+=33sr
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa408.meta"
+Content-Disposition: attachment; filename="xsa408.meta"
+Content-Transfer-Encoding: base64
+
+ewogICJYU0EiOiA0MDgsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
+Im1hc3RlciIsCiAgICAiNC4xNiIsCiAgICAiNC4xNSIsCiAgICAiNC4xNCIs
+CiAgICAiNC4xMyIKICBdLAogICJUcmVlcyI6IFsKICAgICJ4ZW4iCiAgXSwK
+ICAiUmVjaXBlcyI6IHsKICAgICI0LjEzIjogewogICAgICAiUmVjaXBlcyI6
+IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICJm
+ODYxNGM3MTUzZjk1ZGNkMWExMzIwMTU2Nzg3ZGJjNTMyNWZkOTQ2IiwKICAg
+ICAgICAgICJQcmVyZXFzIjogW10sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsK
+ICAgICAgICAgICAgInhzYTQwOC00LjEzLnBhdGNoIgogICAgICAgICAgXQog
+ICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICI0LjE0IjogewogICAgICAi
+UmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJs
+ZVJlZiI6ICI4N2Q5MGQ1MTFjODc0Nzc2MDljYzRiOGM4ODg2NmJmYmU5OTdk
+YTQ2IiwKICAgICAgICAgICJQcmVyZXFzIjogW10sCiAgICAgICAgICAiUGF0
+Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTQwOC5wYXRjaCIKICAgICAgICAg
+IF0KICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAgICAiNC4xNSI6IHsKICAg
+ICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAgICAgICJT
+dGFibGVSZWYiOiAiMzViZjkxZDMwZjFhNDgwZGNmNWJmZDk5Yjc5Mzg0YjJi
+MjgzZGE3ZiIsCiAgICAgICAgICAiUHJlcmVxcyI6IFtdLAogICAgICAgICAg
+IlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2E0MDgucGF0Y2giCiAgICAg
+ICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQuMTYiOiB7
+CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAg
+ICAiU3RhYmxlUmVmIjogIjBhNTM4N2EwMTE2NWI0NmM4Yzg1ZTdmN2UyZGRi
+ZTYwYTdmNWRiNDQiLAogICAgICAgICAgIlByZXJlcXMiOiBbXSwKICAgICAg
+ICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNhNDA4LnBhdGNoIgog
+ICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICJtYXN0
+ZXIiOiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAg
+ICAgICAgICAiU3RhYmxlUmVmIjogIjM1NWNhYTllZjI5ZmQ0YmNkZjQ4YmMy
+NjNlNmNhM2IyNDM5MjQ5MGIiLAogICAgICAgICAgIlByZXJlcXMiOiBbXSwK
+ICAgICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNhNDA4LnBh
+dGNoIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAgfQogIH0K
+fQ==
+
+--=separator
+Content-Type: application/octet-stream; name="xsa408.patch"
+Content-Disposition: attachment; filename="xsa408.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
+OiB4ODYvbW06IGNvcnJlY3QgVExCIGZsdXNoIGNvbmRpdGlvbiBpbiBfZ2V0
+X3BhZ2VfdHlwZSgpCgpXaGVuIHRoaXMgbG9naWMgd2FzIG1vdmVkLCBpdCB3
+YXMgbW92ZWQgYWNyb3NzIHRoZSBwb2ludCB3aGVyZSBueCBpcwp1cGRhdGVk
+IHRvIGhvbGQgdGhlIG5ldyB0eXBlIGZvciB0aGUgcGFnZS4gSU9XIG9yaWdp
+bmFsbHkgaXQgd2FzCmVxdWl2YWxlbnQgdG8gdXNpbmcgeCAoYW5kIHBlcmhh
+cHMgeCB3b3VsZCBiZXR0ZXIgaGF2ZSBiZWVuIHVzZWQpLCBidXQKbm93IGl0
+IGlzbid0IGFueW1vcmUuIFN3aXRjaCB0byB1c2luZyB4LCB3aGljaCB0aGVu
+IGJyaW5ncyB0aGluZ3MgaW4KbGluZSBhZ2FpbiB3aXRoIHRoZSBzbGlnaHRs
+eSBlYXJsaWVyIGNvbW1lbnQgdGhlcmUgKG5vdykgdGFsa2luZyBhYm91dAp0
+cmFuc2l0aW9ucyBfZnJvbV8gd3JpdGFibGUuCgpJIGhhdmUgdG8gY29uZmVz
+cyB0aG91Z2ggdGhhdCBJIGNhbm5vdCBtYWtlIGEgZGlyZWN0IGNvbm5lY3Rp
+b24gYmV0d2Vlbgp0aGUgcmVwb3J0ZWQgb2JzZXJ2ZWQgYmVoYXZpb3Igb2Yg
+Z3Vlc3RzIGxlYXZpbmcgc2V2ZXJhbCBwYWdlcyBhcm91bmQKd2l0aCBwZW5k
+aW5nIGdlbmVyYWwgcmVmZXJlbmNlcyBhbmQgdGhlIGNoYW5nZSBoZXJlLiBS
+ZXBlYXRlZCB0ZXN0aW5nLApuZXZlcnRoZWxlc3MsIGNvbmZpcm1zIHRoZSBy
+ZXBvcnRlZCBpc3N1ZSBpcyBubyBsb25nZXIgdGhlcmUuCgpUaGlzIGlzIENW
+RS0yMDIyLTMzNzQ1IC8gWFNBLTQwOC4KClJlcG9ydGVkLWJ5OiBDaGFybGVz
+IEFybm9sZCA8Y2Fybm9sZEBzdXNlLmNvbT4KRml4ZXM6IDhjYzUwMzZiYzM4
+NSAoIng4Ni9wdjogRml4IEFCQUMgY21weGNoZygpIHJhY2UgaW4gX2dldF9w
+YWdlX3R5cGUoKSIpClNpZ25lZC1vZmYtYnk6IEphbiBCZXVsaWNoIDxqYmV1
+bGljaEBzdXNlLmNvbT4KUmV2aWV3ZWQtYnk6IEFuZHJldyBDb29wZXIgPGFu
+ZHJldy5jb29wZXIzQGNpdHJpeC5jb20+Ci0tLQpJJ2QgYmUgaGFwcHkgdG8g
+dXBkYXRlIHRoZSBkZXNjcmlwdGlvbiB0byBhY3R1YWxseSBjb25uZWN0IHRo
+aW5ncywgYXMKbG9uZyBhcyBzb21lb25lIGNhbiBnaXZlIHNvbWUgcGxhdXNp
+YmxlIGV4cGxhbmF0aW9uLgoKLS0tIGEveGVuL2FyY2gveDg2L21tLmMKKysr
+IGIveGVuL2FyY2gveDg2L21tLmMKQEAgLTMwMzgsNyArMzAzOCw3IEBAIHN0
+YXRpYyBpbnQgX2dldF9wYWdlX3R5cGUoc3RydWN0IHBhZ2VfaW4KICAgICAg
+ICAgICAgIGlmICggdW5saWtlbHkoIWNwdW1hc2tfZW1wdHkobWFzaykpICYm
+CiAgICAgICAgICAgICAgICAgIC8qIFNoYWRvdyBtb2RlOiB0cmFjayBvbmx5
+IHdyaXRhYmxlIHBhZ2VzLiAqLwogICAgICAgICAgICAgICAgICAoIXNoYWRv
+d19tb2RlX2VuYWJsZWQoZCkgfHwKLSAgICAgICAgICAgICAgICAgICgobngg
+JiBQR1RfdHlwZV9tYXNrKSA9PSBQR1Rfd3JpdGFibGVfcGFnZSkpICkKKyAg
+ICAgICAgICAgICAgICAgICgoeCAmIFBHVF90eXBlX21hc2spID09IFBHVF93
+cml0YWJsZV9wYWdlKSkgKQogICAgICAgICAgICAgewogICAgICAgICAgICAg
+ICAgIHBlcmZjX2luY3IobmVlZF9mbHVzaF90bGJfZmx1c2gpOwogICAgICAg
+ICAgICAgICAgIC8qCg==
+
+--=separator
+Content-Type: application/octet-stream; name="xsa408-4.13.patch"
+Content-Disposition: attachment; filename="xsa408-4.13.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
+OiB4ODYvbW06IGNvcnJlY3QgVExCIGZsdXNoIGNvbmRpdGlvbiBpbiBfZ2V0
+X3BhZ2VfdHlwZSgpCgpXaGVuIHRoaXMgbG9naWMgd2FzIG1vdmVkLCBpdCB3
+YXMgbW92ZWQgYWNyb3NzIHRoZSBwb2ludCB3aGVyZSBueCBpcwp1cGRhdGVk
+IHRvIGhvbGQgdGhlIG5ldyB0eXBlIGZvciB0aGUgcGFnZS4gSU9XIG9yaWdp
+bmFsbHkgaXQgd2FzCmVxdWl2YWxlbnQgdG8gdXNpbmcgeCAoYW5kIHBlcmhh
+cHMgeCB3b3VsZCBiZXR0ZXIgaGF2ZSBiZWVuIHVzZWQpLCBidXQKbm93IGl0
+IGlzbid0IGFueW1vcmUuIFN3aXRjaCB0byB1c2luZyB4LCB3aGljaCB0aGVu
+IGJyaW5ncyB0aGluZ3MgaW4KbGluZSBhZ2FpbiB3aXRoIHRoZSBzbGlnaHRs
+eSBlYXJsaWVyIGNvbW1lbnQgdGhlcmUgKG5vdykgdGFsa2luZyBhYm91dAp0
+cmFuc2l0aW9ucyBfZnJvbV8gd3JpdGFibGUuCgpJIGhhdmUgdG8gY29uZmVz
+cyB0aG91Z2ggdGhhdCBJIGNhbm5vdCBtYWtlIGEgZGlyZWN0IGNvbm5lY3Rp
+b24gYmV0d2Vlbgp0aGUgcmVwb3J0ZWQgb2JzZXJ2ZWQgYmVoYXZpb3Igb2Yg
+Z3Vlc3RzIGxlYXZpbmcgc2V2ZXJhbCBwYWdlcyBhcm91bmQKd2l0aCBwZW5k
+aW5nIGdlbmVyYWwgcmVmZXJlbmNlcyBhbmQgdGhlIGNoYW5nZSBoZXJlLiBS
+ZXBlYXRlZCB0ZXN0aW5nLApuZXZlcnRoZWxlc3MsIGNvbmZpcm1zIHRoZSBy
+ZXBvcnRlZCBpc3N1ZSBpcyBubyBsb25nZXIgdGhlcmUuCgpUaGlzIGlzIENW
+RS0yMDIyLTMzNzQ1IC8gWFNBLTQwOC4KClJlcG9ydGVkLWJ5OiBDaGFybGVz
+IEFybm9sZCA8Y2Fybm9sZEBzdXNlLmNvbT4KRml4ZXM6IDhjYzUwMzZiYzM4
+NSAoIng4Ni9wdjogRml4IEFCQUMgY21weGNoZygpIHJhY2UgaW4gX2dldF9w
+YWdlX3R5cGUoKSIpClNpZ25lZC1vZmYtYnk6IEphbiBCZXVsaWNoIDxqYmV1
+bGljaEBzdXNlLmNvbT4KUmV2aWV3ZWQtYnk6IEFuZHJldyBDb29wZXIgPGFu
+ZHJldy5jb29wZXIzQGNpdHJpeC5jb20+CgotLS0gYS94ZW4vYXJjaC94ODYv
+bW0uYworKysgYi94ZW4vYXJjaC94ODYvbW0uYwpAQCAtMzA4MCw3ICszMDgw
+LDcgQEAgc3RhdGljIGludCBfZ2V0X3BhZ2VfdHlwZShzdHJ1Y3QgcGFnZV9p
+bgogICAgICAgICAgICAgaWYgKCB1bmxpa2VseSghY3B1bWFza19lbXB0eSht
+YXNrKSkgJiYKICAgICAgICAgICAgICAgICAgLyogU2hhZG93IG1vZGU6IHRy
+YWNrIG9ubHkgd3JpdGFibGUgcGFnZXMuICovCiAgICAgICAgICAgICAgICAg
+ICghc2hhZG93X21vZGVfZW5hYmxlZChkKSB8fAotICAgICAgICAgICAgICAg
+ICAgKChueCAmIFBHVF90eXBlX21hc2spID09IFBHVF93cml0YWJsZV9wYWdl
+KSkgKQorICAgICAgICAgICAgICAgICAgKCh4ICYgUEdUX3R5cGVfbWFzaykg
+PT0gUEdUX3dyaXRhYmxlX3BhZ2UpKSApCiAgICAgICAgICAgICB7CiAgICAg
+ICAgICAgICAgICAgcGVyZmNfaW5jcihuZWVkX2ZsdXNoX3RsYl9mbHVzaCk7
+CiAgICAgICAgICAgICAgICAgZmx1c2hfdGxiX21hc2sobWFzayk7Cg==
+
+--=separator--
