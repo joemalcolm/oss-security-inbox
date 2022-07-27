@@ -1,105 +1,451 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/07/1
-Message-ID: <657e93b4.3cced.18001ce5999.Coremail.kangel@zju.edu.cn>
-Date: Thu, 7 Apr 2022 10:15:42 +0800 (GMT+08:00)
-From: kangel <kangel@....edu.cn>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/27/1
+Message-Id: <9194FA9D-9A6C-4C5C-8E57-95B8909C328E@beckweb.net>
+Date: Wed, 27 Jul 2022 15:48:59 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Cc: pgn@....edu.cn, qiuhao@...ec.org
-Subject: Linux kernel: x86/kvm: null-ptr-deref in kvm_dirty_ring_push
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
+
+The following releases contain fixes for security vulnerabilities:
+
+* Compuware ISPW Operations Plugin 1.0.9
+* Compuware Source Code Download for Endevor, PDS, and ISPW Plugin 2.0.13
+* Compuware Topaz Utilities Plugin 1.0.9
+* Compuware Xpediter Code Coverage Plugin 1.0.8
+* Compuware zAdviser API Plugin 1.0.4
+* Deployer Framework Plugin 86.v7b_a_4a_55b_f3ec
+* External Monitor Job Type Plugin 192.ve979ca_8b_3ccd
+* Git client Plugin 3.11.1
+* Git Plugin 4.11.4
+* GitHub Plugin 1.34.5
+* HashiCorp Vault Plugin 355.v3b_38d767a_b_a_8
+* Job Configuration History Plugin 1156.v536a_97b_8d649
+* rhnpush-plugin Plugin 0.5.2
+* rpmsign-plugin Plugin 0.5.1
+
+Additionally, we announce unresolved security issues in the following
+plugins:
+
+* Android Signing Plugin
+* Buckminster Plugin
+* CLIF Performance Testing Plugin
+* Coverity Plugin
+* Dynamic Extended Choice Parameter Plugin
+* Files Found Trigger Plugin
+* Google Cloud Backup Plugin
+* HTTP Request Plugin
+* Lucene-Search Plugin
+* Maven Metadata Plugin for Jenkins CI server Plugin
+* OpenShift Deployer Plugin
+* Openstack Heat Plugin
+* Repository Connector Plugin
+
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2022-07-27/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-1468 / CVE-2022-36881
+Git client Plugin 3.11.0 and earlier does not perform SSH host key
+verification when connecting to Git repositories via SSH.
+
+This lack of verification could be abused using a man-in-the-middle attack
+to intercept these connections.
 
 
+SECURITY-284 / CVE-2022-36882 (CSRF) & CVE-2022-36883 (permission check) &
+CVE-2022-36884 (information disclosure)
+Git Plugin provides a webhook endpoint at `/git/notifyCommit` that can be
+used to notify Jenkins of changes to an SCM repository. For its most basic
+functionality, this endpoint receives a repository URL, and Jenkins will
+schedule polling for all jobs configured with the specified repository. In
+Git Plugin 4.11.3 and earlier, this endpoint can be accessed with GET
+requests and without authentication.
 
------原始邮件-----
-发件人:kangel <kangel@....edu.cn>
-发送时间:2022-04-06 21:11:39 (星期三)
-收件人: security@...nel.org, linux-distros@...openwall.org
-抄送: secalert@...hat.com, pbonzini@...hat.com, pgn@....edu.cn, qiuhao@...ec.org
-主题: [vs] x86/kvm: null-ptr-deref in kvm_dirty_ring_push
+In addition to this basic functionality, the endpoint also accept a `sha1`
+parameter specifying a commit ID. If this parameter is specified, jobs
+configured with the specified repo will be triggered immediately, and the
+build will check out the specified commit.
 
+Additionally, the output of the webhook endpoint will provide information
+about which jobs were triggered or scheduled for polling, including jobs
+the user has no permission to access.
 
-Hi developers,
-    We found a null-ptr-deref in the kvm module which can lead to DoS. This flaw is in kvm_dirty_ring_push in virt/kvm/dirty_ring.c. The linux kernel version is 5.17.0-rc8. We would appreciate a CVE ID if this is a security issue.
-------------[ Description ]------------
-    When we call kvm_vcpu_release(), it will call kvm_dirty_ring_free() which will free ring->dirty_gfns and set it to NULL. Then if we can set kvm->dirty_ring_size != NULL[1] and make vcpu->arch.st.preempt to NULL[2], it will call kvm_dirty_ring_push() and lead to null-ptr-deref in virt/kvm/dirty_ring.c:159.
-    The condition of [1] can be set by do ioctl$KVM_CAP_DIRTY_LOG_RING and the condition of [2] can be set by race of doing ioctf$KVM_RUN.
-------------[ Reproducer ]------------
-qemu run:
-qemu-system-x86_64 -m 512M -smp 2 -kernel /home/zju/linux-5.17-rc8/arch/x86/boot/bzImage -append "console=ttyS0 root=/dev/sda earlyprintk=serial net.ifnames=0 nokaslr" -drive file=/home/zju/script/stretch2.img,format=raw -net user,host=10.0.2.10,hostfwd=tcp:127.0.0.1:10021-:22 -net nic,model=e1000 -enable-kvm -nographic 
-poc.c is attached( run in qemu).
-gcc poc.c -static -o poc -lpthread
+This allows attackers with knowledge of Git repository URLs to trigger
+builds of jobs using a specified Git repository and to cause them to check
+out an attacker-specified commit, and to obtain information about the
+existence of jobs configured with this Git repository.
 
-------------[ Credits ]------------
-Yongkang Jia (Zhejiang University)
-Gaoning Pan (Zhejiang University)
-Qiuhao Li (Harbin Institute of Technology)
-------------[ Backtrace ]------------
-KASAN: null-ptr-deref in range [0x0000000000000030-0x0000000000000037]
-CPU: 0 PID: 453 Comm: syz-executor425 Not tainted 5.17.0 #3
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.10.2-1ubuntu1~cloud0 04/01/2014
-RIP: 0010:kvm_dirty_ring_push+0x10c/0x2e0 arch/x86/kvm/../../../virt/kvm/dirty_ring.c:159
-Code: 0f 8e 8e 01 00 00 48 b8 00 00 00 00 00 fc ff df 41 83 ec 01 44 23 65 00 49 c1 e4 04 4c 01 e3 48 8d 7b 04 48 89 fa 48 c1 ea 03 <0f> b6 14 02 48 89 f8 83 e0 07 83 c0 03 38 d0 7c 08 84 d2 0f 85 47
-RSP: 0018:ffff88800812fb88 EFLAGS: 00010207
-RAX: dffffc0000000000 RBX: 0000000000000030 RCX: ffffffffa5a929d4
-RDX: 0000000000000006 RSI: 0000000000000000 RDI: 0000000000000034
-RBP: ffff888004d12118 R08: 0000000000000001 R09: fffffbfff5104469
-R10: 0000000000000000 R11: fffffbfff5104468 R12: 0000000000000030
-R13: 0000000000000000 R14: 0000000000000000 R15: ffff888004d10dd0
-FS:  0000000000868880(0000) GS:ffff88806d200000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000020ffe010 CR3: 0000000005ba4002 CR4: 00000000003726f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- mark_page_dirty_in_slot+0x192/0x270 arch/x86/kvm/../../../virt/kvm/kvm_main.c:3171
- kvm_steal_time_set_preempted arch/x86/kvm/x86.c:4600 [inline]
- kvm_arch_vcpu_put+0x34e/0x5b0 arch/x86/kvm/x86.c:4618
- vcpu_put+0x1b/0x70 arch/x86/kvm/../../../virt/kvm/kvm_main.c:211
- vmx_free_vcpu+0xcb/0x130 arch/x86/kvm/vmx/vmx.c:6985
- kvm_arch_vcpu_destroy+0x76/0x290 arch/x86/kvm/x86.c:11219
- kvm_vcpu_destroy arch/x86/kvm/../../../virt/kvm/kvm_main.c:441 [inline]
- kvm_destroy_vcpus+0x119/0x280 arch/x86/kvm/../../../virt/kvm/kvm_main.c:460
- kvm_free_vcpus arch/x86/kvm/x86.c:11659 [inline]
- kvm_arch_destroy_vm+0x22a/0x380 arch/x86/kvm/x86.c:11769
- kvm_destroy_vm arch/x86/kvm/../../../virt/kvm/kvm_main.c:1217 [inline]
- kvm_put_kvm+0x3ff/0x900 arch/x86/kvm/../../../virt/kvm/kvm_main.c:1250
- kvm_vcpu_release+0x4d/0x70 arch/x86/kvm/../../../virt/kvm/kvm_main.c:3668
- __fput+0x21b/0x940 fs/file_table.c:317
- task_work_run+0xde/0x180 kernel/task_work.c:164
- tracehook_notify_resume include/linux/tracehook.h:188 [inline]
- exit_to_user_mode_loop kernel/entry/common.c:175 [inline]
- exit_to_user_mode_prepare+0x14d/0x150 kernel/entry/common.c:207
- __syscall_exit_to_user_mode_work kernel/entry/common.c:289 [inline]
- syscall_exit_to_user_mode+0x1d/0x40 kernel/entry/common.c:300
- do_syscall_64+0x48/0x90 arch/x86/entry/common.c:86
- entry_SYSCALL_64_after_hwframe+0x44/0xae
-------------[ Patch ]------------
-We try to do a patch, which can not make the poc trigger this flaw.
-diff --git a/virt/kvm/dirty_ring.c b/virt/kvm/dirty_ring.c.patch
-index 222ecc8..38f1b66 100644
---- a/virt/kvm/dirty_ring.c
-+++ b/virt/kvm/dirty_ring.c.patch
-@@ -154,6 +154,8 @@ void kvm_dirty_ring_push(struct kvm_dirty_ring *ring, u32 slot, u64 offset)
-        /* It should never get full */
-        WARN_ON_ONCE(kvm_dirty_ring_full(ring));
-
-+       if (!ring->dirty_gfns)
-+               return;
-        entry = &ring->dirty_gfns[ring->dirty_index & (ring->size - 1)];
-
-        entry->slot = slot;
+Additionally, this webhook endpoint does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
 
 
-------------[ Cut here ]------------
-C repro and kernel config are attached.
-Best regards.
-    Yongkang Jia of Zhejiang University
+SECURITY-1849 / CVE-2022-36885
+GitHub Plugin 1.34.4 and earlier does not use a constant-time comparison
+when checking whether the provided and computed webhook signatures are
+equal.
+
+This could potentially allow attackers to use statistical methods to obtain
+a valid webhook signature.
 
 
-Content of type "text/html" skipped
+SECURITY-2762 / CVE-2022-36886
+External Monitor Job Type Plugin 191.v363d0d1efdf8 and earlier does not
+require POST requests for an HTTP endpoint, resulting in a cross-site
+request forgery (CSRF) vulnerability.
 
-View attachment "poc.c" of type "text/plain" (6534 bytes)
+This vulnerability allows attackers to create runs of an external job.
 
-Download attachment "config" of type "application/octet-stream" (130642 bytes)
+
+SECURITY-2766 / CVE-2022-36887
+Job Configuration History Plugin 1155.v28a_46a_cc06a_5 and earlier does not
+require POST requests for several HTTP endpoints, resulting in cross-site
+request forgery (CSRF) vulnerabilities.
+
+These vulnerabilities allow attackers to delete entries from job, agent,
+and system configuration history, or restore older versions of job, agent,
+and system configurations.
+
+
+SECURITY-2593 / CVE-2022-36888
+HashiCorp Vault Plugin 354.vdb_858fd6b_f48 and earlier does not perform
+permission checks in several HTTP endpoints performing Vault connection
+tests.
+
+This allows attackers with Overall/Read permission to obtain credentials
+stored in Vault with attacker-specified path and keys.
+
+
+SECURITY-2764 / CVE-2022-36889
+Deployer Framework Plugin 85.v1d1888e8c021 and earlier does not restrict
+the application path of the applications when configuring a deployment.
+
+This allows attackers with Item/Configure permission to upload arbitrary
+files from the Jenkins controller file system to the selected service.
+
+
+SECURITY-2206 / CVE-2022-36890
+Deployer Framework Plugin 85.v1d1888e8c021 and earlier does not restrict
+the name of files in methods implementing form validation.
+
+This allows attackers with Item/Read permission to check for the existence
+of an attacker-specified file path on the Jenkins controller file system.
+
+
+SECURITY-2205 / CVE-2022-36891
+Deployer Framework Plugin 85.v1d1888e8c021 and earlier does not perform a
+permission check in an HTTP endpoint.
+
+This allows attackers with Item/Read permission to read deployment logs.
+
+
+SECURITY-2402 / CVE-2022-36892
+rhnpush-plugin Plugin 0.5.1 and earlier does not perform a permission check
+in a method implementing form validation.
+
+This allows attackers with Item/Read permission but without Item/Workspace
+or Item/Configure permission to check whether attacker-specified file
+patterns match workspace contents. A sequence of requests can be used to
+effectively list workspace contents.
+
+
+SECURITY-2403 / CVE-2022-36893
+rpmsign-plugin Plugin 0.5.0 and earlier does not perform a permission check
+in a method implementing form validation.
+
+This allows attackers with Item/Read permission but without Item/Workspace
+or Item/Configure permission to check whether attacker-specified file
+patterns match workspace contents. A sequence of requests can be used to
+effectively list workspace contents.
+
+
+SECURITY-2413 / CVE-2022-36894
+CLIF Performance Testing Plugin 64.vc0d66de1dfb_f and earlier allows users
+to extract files from an archive without validating file paths of files
+contained within the archive.
+
+This allows attackers with Overall/Read permission to create or replace
+arbitrary files on the Jenkins controller file system with
+attacker-specified content.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2619 / CVE-2022-36895
+Compuware Topaz Utilities Plugin 1.0.8 and earlier does not perform
+permission checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to enumerate hosts and
+ports of Compuware configurations and credentials IDs of credentials stored
+in Jenkins. Those credentials IDs can be used as part of an attack to
+capture the credentials using another vulnerability.
+
+
+SECURITY-2621 / CVE-2022-36896
+Compuware Source Code Download for Endevor, PDS, and ISPW Plugin 2.0.12 and
+earlier does not perform permission checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to enumerate hosts and
+ports of Compuware configurations and credentials IDs of credentials stored
+in Jenkins. Those credentials IDs can be used as part of an attack to
+capture the credentials using another vulnerability.
+
+
+SECURITY-2626 / CVE-2022-36897
+Compuware Xpediter Code Coverage Plugin 1.0.7 and earlier does not perform
+permission checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to enumerate hosts and
+ports of Compuware configurations and credentials IDs of credentials stored
+in Jenkins. Those credentials IDs can be used as part of an attack to
+capture the credentials using another vulnerability.
+
+
+SECURITY-2628 / CVE-2022-36898
+Compuware ISPW Operations Plugin 1.0.8 and earlier does not perform
+permission checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to enumerate hosts and
+ports of Compuware configurations and credentials IDs of credentials stored
+in Jenkins. Those credentials IDs can be used as part of an attack to
+capture the credentials using another vulnerability.
+
+
+SECURITY-2629 / CVE-2022-36899
+Compuware ISPW Operations Plugin defines a controller/agent message that
+retrieves Java system properties.
+
+Compuware ISPW Operations Plugin 1.0.8 and earlier does not restrict
+execution of the controller/agent message to agents. This allows attackers
+able to control agent processes to retrieve Java system properties.
+
+NOTE: This vulnerability is only exploitable in Jenkins 2.318 and earlier,
+LTS 2.303.2 and earlier.
+
+
+SECURITY-2630 / CVE-2022-36900
+Compuware zAdviser API Plugin defines a controller/agent message that
+retrieves Java system properties.
+
+Compuware zAdviser API Plugin 1.0.3 and earlier does not restrict execution
+of the controller/agent message to agents. This allows attackers able to
+control agent processes to retrieve Java system properties.
+
+NOTE: This vulnerability is only exploitable in Jenkins 2.318 and earlier,
+LTS 2.303.2 and earlier.
+
+
+SECURITY-2053 / CVE-2022-36901
+HTTP Request Plugin 1.15 and earlier stores HTTP Request passwords
+unencrypted in its global configuration file
+`jenkins.plugins.http_request.HttpRequest.xml` on the Jenkins controller as
+part of its configuration when using (deprecated) Basic/Digest
+Authentication.
+
+These passwords can be viewed by users with access to the Jenkins
+controller file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2682 / CVE-2022-36902
+Dynamic Extended Choice Parameter Plugin 1.0.1 and earlier does not escape
+several fields of Moded Extended Choice parameters.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Item/Configure permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2665 (1) / CVE-2022-36903
+Repository Connector Plugin 2.2.0 and earlier does not perform permission
+checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2665 (2) / CVE-2022-36904
+Repository Connector Plugin 2.2.0 and earlier does not perform a permission
+check in a method implementing form validation.
+
+This allows attackers with Overall/Read permission to check for the
+existence of an attacker-specified file path on the Jenkins controller file
+system. A sequence of requests can be used to effectively list the Jenkins
+controller file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2686 / CVE-2022-36905
+Maven Metadata Plugin for Jenkins CI server Plugin 2.2 and earlier does not
+perform URL validation for the Repository Base URL of List maven artifact
+versions parameters.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Item/Configure permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1375 (1) / CVE-2022-36906 (CSRF) & CVE-2022-36907 (missing permission check)
+OpenShift Deployer Plugin 1.2.0 and earlier does not perform a permission
+check in a method implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified username and password.
+
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1375 (2) / CVE-2022-36908 (CSRF) & CVE-2022-36909 (missing permission check)
+OpenShift Deployer Plugin 1.2.0 and earlier does not perform permission
+checks in methods implementing form validation.
+
+This allows attackers with Overall/Read permission to check for the
+existence of an attacker-specified file path on the Jenkins controller file
+system and to upload a SSH key file from the Jenkins controller file system
+to an attacker-specified URL.
+
+Additionally, these form validation methods do not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2048 / CVE-2022-36910
+Lucene-Search Plugin 370.v62a5f618cd3a and earlier does not perform
+permission checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to reindex the database
+and to obtain information about jobs otherwise inaccessible to them.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2105 (1) / CVE-2022-36911 (CSRF) & CVE-2022-36912 (missing permission check)
+Openstack Heat Plugin 1.5 and earlier does not perform permission checks in
+methods implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL.
+
+Additionally, these form validation methods do not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2105 (2) / CVE-2022-36913
+Openstack Heat Plugin 1.5 and earlier does not perform permission checks in
+methods implementing form validation.
+
+This allows attackers with Overall/Read permission to check for the
+existence of an attacker-specified file path on the Jenkins controller file
+system. A sequence of requests can be used to effectively list the Jenkins
+controller file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2210 / CVE-2022-36914
+Files Found Trigger Plugin 1.5 and earlier does not perform a permission
+check in a method implementing form validation.
+
+This allows attackers with Overall/Read permission to check for the
+existence of an attacker-specified file path on the Jenkins controller file
+system. A sequence of requests can be used to effectively list the Jenkins
+controller file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2404 / CVE-2022-36915
+Android Signing Plugin 2.2.5 and earlier does not perform a permission
+check in a method implementing form validation.
+
+This allows attackers with Item/Read permission but without Item/Workspace
+or Item/Configure permission to check whether attacker-specified file
+patterns match workspace contents. A sequence of requests can be used to
+effectively list workspace contents.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2656 / CVE-2022-36916 (CSRF) & CVE-2022-36917 (missing permission check)
+Google Cloud Backup Plugin 0.6 and earlier does not perform a permission
+check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to request a manual
+backup.
+
+Additionally, this HTTP endpoint does not require POST requests, resulting
+in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2747 / CVE-2022-36918
+Buckminster Plugin 1.1.1 and earlier does not perform a permission check in
+a method implementing form validation.
+
+This allows attackers with Overall/Read permission to check for the
+existence of an attacker-specified file path on the Jenkins controller file
+system. A sequence of requests can be used to effectively list the Jenkins
+controller file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2790 (1) / CVE-2022-36919
+Coverity Plugin 1.11.4 and earlier does not perform a permission check in
+an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2790 (2) / CVE-2022-36920 (CSRF) & CVE-2022-36921 (permission check)
+Coverity Plugin 1.11.4 and earlier does not perform a permission check in
+an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified credentials IDs obtained
+through another method, capturing credentials stored in Jenkins.
+
+Additionally, this HTTP endpoint does not require POST requests, resulting
+in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2812 / CVE-2022-36922
+Lucene-Search Plugin 370.v62a5f618cd3a and earlier does not escape the
+search `query` parameter displayed on the search result page.
+
+This results in a reflected cross-site scripting (XSS) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
