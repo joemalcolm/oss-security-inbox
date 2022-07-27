@@ -1,4 +1,4 @@
-Received: (qmail 1636 invoked by uid 550); 17 Aug 2022 17:06:10 -0000
+Received: (qmail 25655 invoked by uid 550); 27 Jul 2022 13:49:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,227 +7,464 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12083 invoked from network); 17 Aug 2022 16:50:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=digikod.net;
-	s=20191114; t=1660754989;
-	bh=nq1DdW2pNinPQGbPhawokMPbx8tQLJR7cigpQW/6b6o=;
-	h=Date:From:To:Cc:Subject:From;
-	b=TEmgI5+0rqKSnzHmE7BPW+0rAcWhBYoh27IoMb9ynzssj18Ug0HjD7db7SYSuPRg9
-	 wGSBfBQ6Lm5J/ETZXm6TnayCpmMyU+LmYk0np7c8SBUtSPcQnDT0efmIUqgkt6cOfM
-	 yP5iazGYIQf1WN0iZk9aUBXbmkzZnBvhQu3XsvA0=
-Message-ID: <441bd1cd-03fd-8e30-c370-3d0f0263d564@digikod.net>
-Date: Wed, 17 Aug 2022 18:49:48 +0200
-MIME-Version: 1.0
-User-Agent: 
-Content-Language: en-US
-From: =?UTF-8?Q?Micka=c3=abl_Sala=c3=bcn?= <mic@digikod.net>
-To: landlock@lists.linux.dev
-Cc: linux-security-module@vger.kernel.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] Landlock news #2
+Received: (qmail 25624 invoked from network); 27 Jul 2022 13:49:11 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.80.82.1.1\))
+Message-Id: <9194FA9D-9A6C-4C5C-8E57-95B8909C328E@beckweb.net>
+Date: Wed, 27 Jul 2022 15:48:59 +0200
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3696.80.82.1.1)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1658929751;d0368896;
+X-HE-SMSGID: 1oGhPH-0007r4-Ea
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
-Hi,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-Here is the second Landlock newsletter! It's been a while and there is
-some news to catch up.
+The following releases contain fixes for security vulnerabilities:
 
-Official website: https://landlock.io
-Previews newsletter:
-https://lore.kernel.org/landlock/2df4887a-1710-bba2-f49c-cd5b785bb565@digikod.net/
+* Compuware ISPW Operations Plugin 1.0.9
+* Compuware Source Code Download for Endevor, PDS, and ISPW Plugin 2.0.13
+* Compuware Topaz Utilities Plugin 1.0.9
+* Compuware Xpediter Code Coverage Plugin 1.0.8
+* Compuware zAdviser API Plugin 1.0.4
+* Deployer Framework Plugin 86.v7b_a_4a_55b_f3ec
+* External Monitor Job Type Plugin 192.ve979ca_8b_3ccd
+* Git client Plugin 3.11.1
+* Git Plugin 4.11.4
+* GitHub Plugin 1.34.5
+* HashiCorp Vault Plugin 355.v3b_38d767a_b_a_8
+* Job Configuration History Plugin 1156.v536a_97b_8d649
+* rhnpush-plugin Plugin 0.5.2
+* rpmsign-plugin Plugin 0.5.1
 
-Kernel
-------
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-### Linux distributions
+* Android Signing Plugin
+* Buckminster Plugin
+* CLIF Performance Testing Plugin
+* Coverity Plugin
+* Dynamic Extended Choice Parameter Plugin
+* Files Found Trigger Plugin
+* Google Cloud Backup Plugin
+* HTTP Request Plugin
+* Lucene-Search Plugin
+* Maven Metadata Plugin for Jenkins CI server Plugin
+* OpenShift Deployer Plugin
+* Openstack Heat Plugin
+* Repository Connector Plugin
 
-Landlock is now supported by default in major Linux distributions:
-* Alpine Linux
-* Arch Linux
-* chromeOS (including for Linux 5.10)
-* Debian Sid
-* Fedora 35
-* Ubuntu 20.04 LTS
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2022-07-27/
 
-### New features for Linux 5.19
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-Linux 5.19 is now released, and it includes some Landlock changes:
-https://git.kernel.org/torvalds/c/cb44e4f061e1
-The main one being full renaming and linking support thanks to the new
-LANDLOCK_ACCESS_FS_REFER access right. This lift one major limitation
-that was blocking for more generic sandboxing (e.g., container
-runtimes).
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-This comes with a second Landlock ABI version that should be checked to
-leverage Landlock in a best-effort way. See the updated documentation:
-https://docs.kernel.org/userspace-api/landlock.html
-If developers don't change their ruleset's handled access rights, a
-sandboxed application will not change. If they add the new
-LANDLOCK_ACCESS_FS_REFER right, then they should first check the ABI
-version to make sure it will work as expected:
+---
 
-int abi = landlock_create_ruleset(NULL, 0, LANDLOCK_CREATE_RULESET_VERSION);
-if (abi < 2) {
-     ruleset_attr.handled_access_fs &= ~LANDLOCK_ACCESS_FS_REFER;
-}
-path_beneath_attr.allowed_access &= ruleset_attr.handled_access_fs;
+SECURITY-1468 / CVE-2022-36881
+Git client Plugin 3.11.0 and earlier does not perform SSH host key
+verification when connecting to Git repositories via SSH.
 
-### Backports
+This lack of verification could be abused using a man-in-the-middle attack
+to intercept these connections.
 
-A too-restrictive filesystem control for a rare corner case was fixed
-and backported down to Linux 5.13:
-https://git.kernel.org/stable/c/8ba0005ff418
-The backports also include more tests to check ABI stability, and the
-maximum number of nested sandboxes is now down to 16:
-https://git.kernel.org/stable/c/75c542d6c6cc
 
-User space
-----------
+SECURITY-284 / CVE-2022-36882 (CSRF) & CVE-2022-36883 (permission check) &
+CVE-2022-36884 (information disclosure)
+Git Plugin provides a webhook endpoint at `/git/notifyCommit` that can be
+used to notify Jenkins of changes to an SCM repository. For its most basic
+functionality, this endpoint receives a repository URL, and Jenkins will
+schedule polling for all jobs configured with the specified repository. In
+Git Plugin 4.11.3 and earlier, this endpoint can be accessed with GET
+requests and without authentication.
 
-We are currently brainstorming about how to make libraries properly and
-easily handle compatibility for several kernel versions:
-https://lore.kernel.org/landlock/7290b021-c90f-76e9-7868-ed612595b411@digikod.net/
+In addition to this basic functionality, the endpoint also accept a `sha1`
+parameter specifying a commit ID. If this parameter is specified, jobs
+configured with the specified repo will be triggered immediately, and the
+build will check out the specified commit.
 
-### Go library
+Additionally, the output of the webhook endpoint will provide information
+about which jobs were triggered or scheduled for polling, including jobs
+the user has no permission to access.
 
-As described by Günther Noack, go-landlock added support for Landlock
-ABI v2 and the LANDLOCK_ACCESS_FS_REFER flag. Usage example:
+This allows attackers with knowledge of Git repository URLs to trigger
+builds of jobs using a specified Git repository and to cause them to check
+out an attacker-specified commit, and to obtain information about the
+existence of jobs configured with this Git repository.
 
-err := landlock.V2.RestrictPaths(
-     landlock.RWDirs("/src", "/dest").WithRefer(),
-)
+Additionally, this webhook endpoint does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
 
-See the documentation:
-https://pkg.go.dev/github.com/landlock-lsm/go-landlock/landlock
 
-### Rust library
+SECURITY-1849 / CVE-2022-36885
+GitHub Plugin 1.34.4 and earlier does not use a constant-time comparison
+when checking whether the provided and computed webhook signatures are
+equal.
 
-There is some work going on for the Rust library. There is new
-documentation, test coverage improvements, CI checks with different
-kernel versions, API improvements, and new helpers to make it easier for
-common use cases (while leveraging the strong type system). Usage
-example:
+This could potentially allow attackers to use statistical methods to obtain
+a valid webhook signature.
 
-let abi = ABI::V1;
-let status = Ruleset::new()
-     .handle_access(AccessFs::from_all(abi))?
-     .create()?
-     // Read-only access to /usr, /etc and /dev.
-     .add_rules(path_beneath_rules(&["/usr", "/etc", "/dev"], 
-AccessFs::from_read(abi)))?
-     // Read-write access to /home and /tmp.
-     .add_rules(path_beneath_rules(&["/home", "/tmp"], 
-AccessFs::from_all(abi)))?
-     .restrict_self()?;
 
-There is still some room for improvements with syntactic sugar, but the
-priority is to make the compatibility (with different kernel versions)
-flexible, easy to handle and future-proof:
-https://github.com/landlock-lsm/rust-landlock/pull/12
+SECURITY-2762 / CVE-2022-36886
+External Monitor Job Type Plugin 191.v363d0d1efdf8 and earlier does not
+require POST requests for an HTTP endpoint, resulting in a cross-site
+request forgery (CSRF) vulnerability.
 
-We plan to release a new version in the coming weeks, but in the
-meantime, you can try the development branch which is much easier to use
-than the currently released version:
-https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-dependencies-from-git-repositories
-See the new documentation: https://landlock.io/rust-landlock/landlock/
+This vulnerability allows attackers to create runs of an external job.
 
-### New Landlock users
 
-New sandbox manager and library support:
-* A Pledge and Unveil implementation for Linux (with the Cosmopolitan
-   libc): https://justine.lol/pledge/
-* Minijail:
- 
-https://source.chromium.org/chromiumos/chromiumos/codesearch/+/main:src/platform/minijail/landlock_util.h
-* exile.h (header-only sandboxing library):
-   https://github.com/quitesimpleorg/exile.h
+SECURITY-2766 / CVE-2022-36887
+Job Configuration History Plugin 1155.v28a_46a_cc06a_5 and earlier does not
+require POST requests for several HTTP endpoints, resulting in cross-site
+request forgery (CSRF) vulnerabilities.
 
-New open-source software using or working on supporting Landlock:
-* Game of Trees (version control system):
- 
-https://git.gameoftrees.org/gitweb/?p=got-portable.git;a=blob;f=compat/landlock.c
-* Suricata (network IDS): https://github.com/OISF/suricata/pull/7697
-* Landlock Make (zero-configuration sandboxing for hermetic builds):
-   https://justine.lol/make/
+These vulnerabilities allow attackers to delete entries from job, agent,
+and system configuration history, or restore older versions of job, agent,
+and system configurations.
 
-Please let me know if I missed other Landlock users.
 
-Conferences
------------
+SECURITY-2593 / CVE-2022-36888
+HashiCorp Vault Plugin 354.vdb_858fd6b_f48 and earlier does not perform
+permission checks in several HTTP endpoints performing Vault connection
+tests.
 
-I gave two talks about Landlock. One about the new Landlock features
-brought by Linux 5.19 and the other about practical example of how to
-sandbox an application.
+This allows attackers with Overall/Read permission to obtain credentials
+stored in Vault with attacker-specified path and keys.
 
-### Update on Landlock: Lifting the File Reparenting Limits and 
-Supporting Network Rules
 
-The Linux Security Summit North America talk is about the lifting of
-some Landlock limitations due to incremental development. One of the
-most annoying limitations, especially for generic containers, is the
-inability to change the parent directory of a file e.g., with rename(2)
-or link(2). In the first part, we explain what the related challenges
-were and how we can now use the new LANDLOCK_ACCESS_FS_REFER right to
-allow renaming and linking without risking bypassing the security
-policy. File system access control is required to protect data, but
-network access control is also very important. In the second part, we
-talk about the upcoming network access control support that will enable
-us to create simple app-centric or container firewalls.
-https://sched.co/11MXq
-https://youtu.be/MWjW-QwK_ZA
+SECURITY-2764 / CVE-2022-36889
+Deployer Framework Plugin 85.v1d1888e8c021 and earlier does not restrict
+the application path of the applications when configuring a deployment.
 
-### Sandboxing your application with Landlock, illustration with the 
-p7zip case
+This allows attackers with Item/Configure permission to upload arbitrary
+files from the Jenkins controller file system to the selected service.
 
-The Pass the Salt talk quickly introduces the main Landlock properties,
-and we then explain how to sandbox your own application. We use p7zip, a
-C++ archive manager, as a practical example.
-https://cfp.pass-the-salt.org/pts2022/talk/BGQGZC/
 
-Unconstrained access and ongoing development
---------------------------------------------
+SECURITY-2206 / CVE-2022-36890
+Deployer Framework Plugin 85.v1d1888e8c021 and earlier does not restrict
+the name of files in methods implementing form validation.
 
-One important thing to keep in mind about Landlock is that it is an
-incremental development, and it is not complete yet, but still useful
-(especially in combination with seccomp to deny some access types). See
-the Pledge implementation on Linux for such example. It should be noted
-that this also has limits: https://blog.gnoack.org/post/pledge-on-linux/
+This allows attackers with Item/Read permission to check for the existence
+of an attacker-specified file path on the Jenkins controller file system.
 
-One step in this journey is to control access to truncate operations.
-Günther Noack is implementing such a feature which should be merged
-soon:
-https://lore.kernel.org/all/20220814192603.7387-1-gnoack3000@gmail.com/
 
-Konstantin Meskhidze is working on the initial network implementation
-which will bring two new access rights (TCP_BIND and TCP_CONNECT):
-https://lore.kernel.org/all/20220621082313.3330667-1-konstantin.meskhidze@huawei.com/
+SECURITY-2205 / CVE-2022-36891
+Deployer Framework Plugin 85.v1d1888e8c021 and earlier does not perform a
+permission check in an HTTP endpoint.
 
-There are still some unanswered questions about the best approach to
-restrict UDP:
-https://lore.kernel.org/all/a5ef620d-0447-3d58-d9bd-1220b8411957@digikod.net/
-Feel free to reply to this thread.
+This allows attackers with Item/Read permission to read deployment logs.
 
-Roadmap
--------
 
-And finally, an update on the Landlock kernel roadmap.
+SECURITY-2402 / CVE-2022-36892
+rhnpush-plugin Plugin 0.5.1 and earlier does not perform a permission check
+in a method implementing form validation.
 
-Short term:
-* add audit features to ease debugging;
-* add minimal network access-control types;
-* add minimal process signaling access-control types;
-* improve kernel performance for the current features;
+This allows attackers with Item/Read permission but without Item/Workspace
+or Item/Configure permission to check whether attacker-specified file
+patterns match workspace contents. A sequence of requests can be used to
+effectively list workspace contents.
 
-Medium term:
-* extend filesystem access-control types to address the current
-   limitations;
-* add the ability to follow a deny listing approach, which is required
-   for some use cases.
-* extend network access-control types;
 
-Long term:
-* add the ability to create (file descriptor) capabilities compatible
-   with Capsicum.
+SECURITY-2403 / CVE-2022-36893
+rpmsign-plugin Plugin 0.5.0 and earlier does not perform a permission check
+in a method implementing form validation.
 
-Regards,
-  Mickaël
+This allows attackers with Item/Read permission but without Item/Workspace
+or Item/Configure permission to check whether attacker-specified file
+patterns match workspace contents. A sequence of requests can be used to
+effectively list workspace contents.
+
+
+SECURITY-2413 / CVE-2022-36894
+CLIF Performance Testing Plugin 64.vc0d66de1dfb_f and earlier allows users
+to extract files from an archive without validating file paths of files
+contained within the archive.
+
+This allows attackers with Overall/Read permission to create or replace
+arbitrary files on the Jenkins controller file system with
+attacker-specified content.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2619 / CVE-2022-36895
+Compuware Topaz Utilities Plugin 1.0.8 and earlier does not perform
+permission checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to enumerate hosts and
+ports of Compuware configurations and credentials IDs of credentials stored
+in Jenkins. Those credentials IDs can be used as part of an attack to
+capture the credentials using another vulnerability.
+
+
+SECURITY-2621 / CVE-2022-36896
+Compuware Source Code Download for Endevor, PDS, and ISPW Plugin 2.0.12 and
+earlier does not perform permission checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to enumerate hosts and
+ports of Compuware configurations and credentials IDs of credentials stored
+in Jenkins. Those credentials IDs can be used as part of an attack to
+capture the credentials using another vulnerability.
+
+
+SECURITY-2626 / CVE-2022-36897
+Compuware Xpediter Code Coverage Plugin 1.0.7 and earlier does not perform
+permission checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to enumerate hosts and
+ports of Compuware configurations and credentials IDs of credentials stored
+in Jenkins. Those credentials IDs can be used as part of an attack to
+capture the credentials using another vulnerability.
+
+
+SECURITY-2628 / CVE-2022-36898
+Compuware ISPW Operations Plugin 1.0.8 and earlier does not perform
+permission checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to enumerate hosts and
+ports of Compuware configurations and credentials IDs of credentials stored
+in Jenkins. Those credentials IDs can be used as part of an attack to
+capture the credentials using another vulnerability.
+
+
+SECURITY-2629 / CVE-2022-36899
+Compuware ISPW Operations Plugin defines a controller/agent message that
+retrieves Java system properties.
+
+Compuware ISPW Operations Plugin 1.0.8 and earlier does not restrict
+execution of the controller/agent message to agents. This allows attackers
+able to control agent processes to retrieve Java system properties.
+
+NOTE: This vulnerability is only exploitable in Jenkins 2.318 and earlier,
+LTS 2.303.2 and earlier.
+
+
+SECURITY-2630 / CVE-2022-36900
+Compuware zAdviser API Plugin defines a controller/agent message that
+retrieves Java system properties.
+
+Compuware zAdviser API Plugin 1.0.3 and earlier does not restrict execution
+of the controller/agent message to agents. This allows attackers able to
+control agent processes to retrieve Java system properties.
+
+NOTE: This vulnerability is only exploitable in Jenkins 2.318 and earlier,
+LTS 2.303.2 and earlier.
+
+
+SECURITY-2053 / CVE-2022-36901
+HTTP Request Plugin 1.15 and earlier stores HTTP Request passwords
+unencrypted in its global configuration file
+`jenkins.plugins.http_request.HttpRequest.xml` on the Jenkins controller as
+part of its configuration when using (deprecated) Basic/Digest
+Authentication.
+
+These passwords can be viewed by users with access to the Jenkins
+controller file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2682 / CVE-2022-36902
+Dynamic Extended Choice Parameter Plugin 1.0.1 and earlier does not escape
+several fields of Moded Extended Choice parameters.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Item/Configure permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2665 (1) / CVE-2022-36903
+Repository Connector Plugin 2.2.0 and earlier does not perform permission
+checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2665 (2) / CVE-2022-36904
+Repository Connector Plugin 2.2.0 and earlier does not perform a permission
+check in a method implementing form validation.
+
+This allows attackers with Overall/Read permission to check for the
+existence of an attacker-specified file path on the Jenkins controller file
+system. A sequence of requests can be used to effectively list the Jenkins
+controller file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2686 / CVE-2022-36905
+Maven Metadata Plugin for Jenkins CI server Plugin 2.2 and earlier does not
+perform URL validation for the Repository Base URL of List maven artifact
+versions parameters.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Item/Configure permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1375 (1) / CVE-2022-36906 (CSRF) & CVE-2022-36907 (missing permiss=
+ion check)
+OpenShift Deployer Plugin 1.2.0 and earlier does not perform a permission
+check in a method implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified username and password.
+
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1375 (2) / CVE-2022-36908 (CSRF) & CVE-2022-36909 (missing permiss=
+ion check)
+OpenShift Deployer Plugin 1.2.0 and earlier does not perform permission
+checks in methods implementing form validation.
+
+This allows attackers with Overall/Read permission to check for the
+existence of an attacker-specified file path on the Jenkins controller file
+system and to upload a SSH key file from the Jenkins controller file system
+to an attacker-specified URL.
+
+Additionally, these form validation methods do not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2048 / CVE-2022-36910
+Lucene-Search Plugin 370.v62a5f618cd3a and earlier does not perform
+permission checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to reindex the database
+and to obtain information about jobs otherwise inaccessible to them.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2105 (1) / CVE-2022-36911 (CSRF) & CVE-2022-36912 (missing permiss=
+ion check)
+Openstack Heat Plugin 1.5 and earlier does not perform permission checks in
+methods implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL.
+
+Additionally, these form validation methods do not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2105 (2) / CVE-2022-36913
+Openstack Heat Plugin 1.5 and earlier does not perform permission checks in
+methods implementing form validation.
+
+This allows attackers with Overall/Read permission to check for the
+existence of an attacker-specified file path on the Jenkins controller file
+system. A sequence of requests can be used to effectively list the Jenkins
+controller file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2210 / CVE-2022-36914
+Files Found Trigger Plugin 1.5 and earlier does not perform a permission
+check in a method implementing form validation.
+
+This allows attackers with Overall/Read permission to check for the
+existence of an attacker-specified file path on the Jenkins controller file
+system. A sequence of requests can be used to effectively list the Jenkins
+controller file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2404 / CVE-2022-36915
+Android Signing Plugin 2.2.5 and earlier does not perform a permission
+check in a method implementing form validation.
+
+This allows attackers with Item/Read permission but without Item/Workspace
+or Item/Configure permission to check whether attacker-specified file
+patterns match workspace contents. A sequence of requests can be used to
+effectively list workspace contents.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2656 / CVE-2022-36916 (CSRF) & CVE-2022-36917 (missing permission =
+check)
+Google Cloud Backup Plugin 0.6 and earlier does not perform a permission
+check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to request a manual
+backup.
+
+Additionally, this HTTP endpoint does not require POST requests, resulting
+in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2747 / CVE-2022-36918
+Buckminster Plugin 1.1.1 and earlier does not perform a permission check in
+a method implementing form validation.
+
+This allows attackers with Overall/Read permission to check for the
+existence of an attacker-specified file path on the Jenkins controller file
+system. A sequence of requests can be used to effectively list the Jenkins
+controller file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2790 (1) / CVE-2022-36919
+Coverity Plugin 1.11.4 and earlier does not perform a permission check in
+an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2790 (2) / CVE-2022-36920 (CSRF) & CVE-2022-36921 (permission chec=
+k)
+Coverity Plugin 1.11.4 and earlier does not perform a permission check in
+an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified credentials IDs obtained
+through another method, capturing credentials stored in Jenkins.
+
+Additionally, this HTTP endpoint does not require POST requests, resulting
+in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2812 / CVE-2022-36922
+Lucene-Search Plugin 370.v62a5f618cd3a and earlier does not escape the
+search `query` parameter displayed on the search result page.
+
+This results in a reflected cross-site scripting (XSS) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
