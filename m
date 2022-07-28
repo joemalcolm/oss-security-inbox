@@ -1,48 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/09/2
-Message-ID: <62b55912-4d43-0811-6431-0b36efdf8985@igalia.com>
-Date: Wed, 9 Feb 2022 13:23:18 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/28/2
+Message-ID: <cf40e28c-5cbb-bc9d-e460-42c503cef524@igalia.com>
+Date: Thu, 28 Jul 2022 22:32:00 +0200
 From: Carlos Alberto Lopez Perez <clopez@...lia.com>
 To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
 Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0002
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0007
 Content-Type: text/plain; charset=utf-8
 
 ------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2022-0002
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2022-0007
 ------------------------------------------------------------------------
 
-Date reported           : February 09, 2022
-Advisory ID             : WSA-2022-0002
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2022-0002.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2022-0002.html
-CVE identifiers         : CVE-2022-22589, CVE-2022-22590,
-                          CVE-2022-22592.
+Date reported           : July 28, 2022
+Advisory ID             : WSA-2022-0007
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2022-0007.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2022-0007.html
+CVE identifiers         : CVE-2022-32792, CVE-2022-32816, CVE-2022-2294.
 
 Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-CVE-2022-22589
-    Versions affected: WebKitGTK and WPE WebKit before 2.34.5.
-    Credit to Heige of KnownSec 404 Team (knownsec.com) and Bo Qu of
-    Palo Alto Networks (paloaltonetworks.com).
-    Impact: Processing a maliciously crafted mail message may lead to
-    running arbitrary javascript. Description: A validation issue was
-    addressed with improved input sanitization.
-
-CVE-2022-22590
-    Versions affected: WebKitGTK and WPE WebKit before 2.34.5.
-    Credit to Toan Pham from Team Orca of Sea Security
-    (security.sea.com).
+CVE-2022-32792
+    Versions affected: WebKitGTK and WPE WebKit before 2.36.5.
+    Credit to Manfred Paul (@_manfp) working with Trend Micro Zero Day
+    Initiative.
     Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A use after free issue was
-    addressed with improved memory management.
+    arbitrary code execution. Description: An out-of-bounds write issue
+    was addressed with improved input validation.
 
-CVE-2022-22592
-    Versions affected: WebKitGTK and WPE WebKit before 2.34.5.
-    Credit to Prakash (@1lastBr3ath).
-    Impact: Processing maliciously crafted web content may prevent
-    Content Security Policy from being enforced. Description: A logic
-    issue was addressed with improved state management.
+CVE-2022-32816
+    Versions affected: WebKitGTK and WPE WebKit before 2.36.5.
+    Credit to Dohyun Lee (@l33d0hyun) of SSD Secure Disclosure Labs &
+    DNSLab, Korea Univ.
+    Impact: Visiting a website that frames malicious content may lead to
+    UI spoofing. Description: The issue was addressed with improved UI
+    handling.
+
+CVE-2022-2294
+    Versions affected: WebKitGTK and WPE WebKit before 2.36.5 if
+    USE_LIBWEBRTC is enabled.
+    Credit to Jan Vojtesek of Avast Threat Intelligence team.
+    Heap buffer overflow in LibWebRTC allowed a remote attacker to
+    potentially exploit heap corruption via a crafted HTML page. NOTE:
+    The tarballs of WebKitGTK or WPE WebKit don't ship LibWebRTC. Also
+    the LibWebRTC support is disabled by default. You only are affected
+    by this vulnerability if your build enabled the USE_LIBWEBRTC CMake
+    option and used the repository as source instead of the tarballs.
 
 
 We recommend updating to the latest stable versions of WebKitGTK and WPE
@@ -55,4 +58,4 @@ can be found at: https://webkitgtk.org/security.html or
 https://wpewebkit.org/security/.
 
 The WebKitGTK and WPE WebKit team,
-February 09, 2022
+July 28, 2022
