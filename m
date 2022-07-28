@@ -1,21 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/12/1
-Message-ID: <fe41809854d203124f41164b8374456a@cs.fsu.edu>
-Date: Sat, 12 Feb 2022 02:04:11 -0500
-From: Wenqing Liu <liu@...fsu.edu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/28/1
+Message-ID: <9f4f4eb2-79d4-0351-0d36-05443710c549@apache.org>
+Date: Thu, 28 Jul 2022 07:38:24 +0000
+From: Ruben Q L <rubenql@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-44879: kernel:NULL pointer dereference in fs/f2fs/gc.c:move_data_page
+Subject: CVE-2022-36364: Apache Calcite Avatica JDBC driver `httpclient_impl` connection property can be used as an RCE vector 
 Content-Type: text/plain; charset=utf-8
 
-Description:
-In move_data_page in fs/f2fs/gc.c in the Linux kernel 5.15.1-5.15.16, 
-there is an NULL pointer dereference when f2fs tries to migrate a block 
-that belong to special file, and the file doesn't have assigned address 
-space operations pointer array for mapping->a_ops field but called 
-a_ops->set_dirty_page(). Could cause denial of service when mounting and 
-operate on the crafted image.
+Severity: moderate
 
-References:
-https://bugzilla.kernel.org/show_bug.cgi?id=215231
-https://lore.kernel.org/linux-f2fs-devel/20211206144421.3735-3-chao@kernel.org/T/
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=9056d6489f5a41cfbb67f719d2c0ce61ead72d9f
+Description:
+
+Apache Calcite Avatica JDBC driver creates HTTP client instances based on class names provided via `httpclient_impl` connection property; however, the driver does not verify if the class implements the expected interface before instantiating it, which can lead to code execution loaded via arbitrary classes and in rare cases remote code execution.
+
+To exploit the vulnerability:
+1) the attacker needs to have privileges to control JDBC connection parameters;
+2) and there should be a vulnerable class (constructor with URL parameter and ability to execute code) in the classpath.
+
+>From Apache Calcite Avatica 1.22.0 onwards, it will be verified that the class implements the expected interface before invoking its constructor.
+
+Credit:
+
+Apache Calcite Avatica would like to thank Peter M (https://twitter.com/h1pmnh) for reporting this issue
+
