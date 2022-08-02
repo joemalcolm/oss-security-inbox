@@ -1,100 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/25/1
-Message-ID: <389814453.6469.1648211788568@appsuite-guard.open-xchange.com>
-Date: Fri, 25 Mar 2022 13:36:28 +0100 (CET)
-From: Otto Moerbeek <otto.moerbeek@...n-xchange.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Security Advisory 2022-01 for PowerDNS Authoritative Server 4.4.2, 4.5.3, 4.6.0 and PowerDNS Recursor 4.4.7, 4.5.7, 4.6.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/02/1
+Message-ID: <adf7f4c9-f388-a882-562a-f2b424f16a09@prodaft.com>
+Date: Tue, 2 Aug 2022 11:53:25 +0300
+From: EGE BALCI <ege@...daft.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2022-29154: Rsync client-side arbitrary file write vulnerability.
 Content-Type: text/plain; charset=utf-8
 
-   Hello,
+Date reported           : July 25, 2022
+CVE identifiers         : CVE-2022-29154.
+------------------------------------------------------------------------
+Rsync client-side arbitrary file write vulnerability. (CVE-2022-29154)
+------------------------------------------------------------------------
 
-   Today we have released PowerDNS Authoritative Server 4.4.3, 4.5.4 and
-   4.6.1, and PowerDNS Recursor 4.4.8, 4.5.8 and 4.6.1 due to a low
-   severity issue found in both products.
-     * In the Authoritative server this issue only applies to secondary
-       zones for which IXFR transfers have been enabled and the network
-       path to the primary server is not trusted. Note that IXFR transfers
-       are not enabled by default.
-     * In the Recursor it applies to setups retrieving one or more RPZ
-       zones from a remote server if the network path to the server is not
-       trusted.
+ >>>> We have discovered a critical arbitrary file write vulnerability 
+in the
+ >>>> rsync utility that allows malicious remote servers to write arbitrary
+ >>>> files inside the directories of connecting peers. The server chooses
+ >>>> which files/directories are sent to the client. Due to the 
+insufficient
+ >>>> controls inside the
+ >>>> [do_server_recv](
+ >>> 
+https://github.com/WayneD/rsync/blob/85c56b2603d97c225889175797ffff6745a4d305/main.c#L1118
+ >>> )
+ >>>> function, a malicious rysnc server (or Man-in-The-Middle attacker) can
+ >>>> overwrite arbitrary files in the rsync client target directory and
+ >>>> subdirectories. An attacker abusing this vulnerability can overwrite
+ >>>> critical files under the target rsync directory and subdirectories 
+(for
+ >>>> example, to overwrite the .ssh/authorized_keys file). This issue 
+is very
+ >>>> similar with the
+ >>>> [CVE-2019-6111](https://www.youtube.com/watch?v=fcesKgfSPq4).
+ >>>>
+ >>>> Best regards, Ege BALCI, Taha HAMAD.
 
-   Tarballs and signatures are available at
-   https://downloads.powerdns.com/releases/[1], and patches are available
-   at https://downloads.powerdns.com/patches/2022-01/[2]. However, the
-   releases contain no other changes, with the exception of our EL8
-   builds, which were switched from CentOS 8 to Oracle Linux 8.
+The vulnerability was addressed with the developer of the rsync project 
+and necessary patches are made. Related commit and details can be found 
+in the following links,
+- https://download.samba.org/pub/rsync/NEWS
+- https://download.samba.org/pub/rsync/rsync.1#MULTI-HOST_SECURITY
+- 
+https://github.com/WayneD/rsync/commit/b7231c7d02cfb65d291af74ff66e7d8c507ee871
 
-   Please find the full text of the advisory below.
-     __________________________________________________________________
+We recommend updating to the latest stable versions of rsync.
 
-   PowerDNS Security Advisory 2022-01: incomplete validation of incoming
-   IXFR transfer in Authoritative Server and Recursor.
-     * CVE: CVE-2022-27227
-     * Date: 25th of March 2022.
-     * Affects: PowerDNS Authoritative version 4.4.2, 4.5.3, 4.6.0 and
-       PowerDNS Recursor 4.4.7, 4.5.7 and 4.6.0
-     * Not affected: PowerDNS Authoritative Server 4.4.3, 4.5.4, 4.6.1 and
-       PowerDNS Recursor 4.4.8, 4.5.8 and 4.6.1
-     * Severity: Low
-     * Impact: Denial of service
-     * Exploit: This problem can be triggered by an attacker controlling
-       the network path for IXFR transfers
-     * Risk of system compromise: None
-     * Solution: Upgrade to patched version, do not use IXFR in
-       Authoritative Server
+-- 
+*Ege BALCI*
+Threat Intelligence Team Lead
 
-   In the Authoritative server this issue only applies to secondary zones
-   for which IXFR transfers have been enabled and the network path to the
-   primary server is not trusted. Note that IXFR transfers are not enabled
-   by default.
+*PRODAFT Cyber Security Technologies INC.*
+*CH:* Y-Parc, rue Galilée 7, 1400 Yverdon-les-Bains, Switzerland
+*NL:* Wilhelmina van Pruisenweg 104, 2595 AN Den Haag, Netherlands
+*E.:*ege[at]prodaft.com
+*IN:*/egebalci
 
-   In the Recursor it applies to setups retrieving one or more RPZ zones
-   from a remote server if the network path to the server is not trusted.
+In case you think you’re not the designated recipient of the e-mail 
+hereby; please delete it accordingly. *This e-mail may have been sent 
+from a mobile device. Please contact me from my mobile, in case you 
+notice an error in the content. PS. Feel free to contact me via Signal, 
+Threema or Telegram; or ask for my public PGP key for high-profile cases 
+that may require higher confidentiality.
 
-   IXFR usually exchanges only the modifications between two versions of a
-   zone, but sometimes needs to fall back to a full transfer of the
-   current version.
+Content of type "text/html" skipped
 
-   When IXFR falls back to a full zone transfer, an attacker in position
-   of man-in-the-middle can cause the transfer to be prematurely
-   interrupted. This interrupted transfer is mistakenly interpreted as a
-   complete transfer, causing an incomplete zone to be processed.
+Download attachment "OpenPGP_0xCDCA0F4B4445AA39.asc" of type "application/pgp-keys" (649 bytes)
 
-   For the Authoritative Server, IXFR transfers are not enabled by
-   default.
-   The Recursor only uses IXFR for retrieving RPZ zones. An incomplete RPZ
-   transfer results in missing policy entries, potentially causing some
-   DNS names and IP addresses to not be properly intercepted.
-
-   We would like to thank Nicolas Dehaine and Dmitry Shabanov from
-   ThreatSTOP for reporting and initial analysis of this issue.
-
-References
-
-   1. https://downloads.powerdns.com/releases/
-   2. https://downloads.powerdns.com/patches/2021-01/
-
-
---
-
-kind regards,
-Otto Moerbeek
-PowerDNS Developer
-
-
-
-Email: otto.moerbeek@...n-xchange.com
-
-
--------------------------------------------------------------------------------------
-Open-Xchange AG, Hohenzollernring 72, 50672 Cologne, District Court Cologne HRB 95366
-Managing Board: Andreas Gauger, Dirk Valbert, Frank Hoberg, Stephan Martin
-Chairman of the Board: Richard Seibt
-
-PowerDNS.COM BV, Koninginnegracht 14L, 2514 AA Den Haag, The Netherlands
-Managing Director: Robert Brandt, Maxim Letski
--------------------------------------------------------------------------------------
-
-Download attachment "signature.asc" of type "application/pgp-signature" (476 bytes)
+Download attachment "OpenPGP_signature" of type "application/pgp-signature" (237 bytes)
