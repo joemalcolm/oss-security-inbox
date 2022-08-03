@@ -1,101 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/11/2
-Message-ID: <qq67po5s-55n3-25r-n716-p9696o74n88r@unkk.fr>
-Date: Wed, 11 May 2022 08:37:37 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: cookie for trailing dot TLD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/03/6
+Message-ID: <00fa1dc6-2c61-66b7-1611-8158642e233b@apache.org>
+Date: Wed, 03 Aug 2022 20:46:24 +0000
+From: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2022-34158: Apache JSPWiki: User Group Privilege Escalation 
 Content-Type: text/plain; charset=utf-8
 
-cookie for trailing dot TLD
-===========================
+Severity: critical
 
-Project curl Security Advisory, May 11 2022 -
-[Permalink](https://curl.se/docs/CVE-2022-27779.html)
+Description:
 
-VULNERABILITY
--------------
+A carefully crafted invocation on the Image plugin could trigger an CSRF vulnerability on Apache JSPWiki, which could allow a group privilege escalation of the attacker's account. Further examination of this issue established that it could also be used to modify the email associated with the attacked account, and then a reset password request from the login page. 
 
-libcurl wrongly allows HTTP cookies to be set for Top Level Domains (TLDs) if
-the host name is provided with a trailing dot.
+Mitigation:
 
-curl can be told to receive and send cookies when communicating using
-HTTP(S). curl's "cookie engine" can be built with or without [Public Suffix
-List](https://publicsuffix.org/) awareness. If PSL support not provided, a
-more rudimentary check exists to at least prevent cookies from being set on
-TLDs. This check was broken if the host name in the URL uses a trailing dot.
+Apache JSPWiki users should upgrade to 2.11.3 or later. 
 
-This can allow arbitrary sites to set cookies that then would get sent to a
-different and unrelated site or domain.
+Credit:
 
-We are not aware of any exploit of this flaw.
+This issue was discovered by Huiseong Seo (t0rchwo0d), <awdr1624AT gmail DOT com>
 
-INFO
-----
+References:
 
-This vulnerability only exists when curl is built without
-[libpsl](https://rockdaboot.github.io/libpsl/). Without this PSL support
-built-in, curl is also destined to possibly leak cookies cross sites simply
-due to how public suffixes work.
+https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2022-34158
 
-This flaw was introduced in [commit
-b27ad8e1d3e68e](https://github.com/curl/curl/commit/b27ad8e1d3e68e), shipped
-in curl 7.82.0 when the treatment of trailing dot host names was changed.
-
-This flaw is similar to
-[CVE-2014-3620](https://curl.se/docs/CVE-2014-3620.html), although in 2014
-curl did not have PSL support.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2022-27779 to this issue.
-
-CWE-201: Information Exposure Through Sent Data
-
-Severity: Medium
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.82.0 to and including curl 7.83.0
-- Not affected versions: curl < 7.82.0 and curl >= 7.83.1
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-A [fix for CVE-2022-27779](https://github.com/curl/curl/commit/7e92d12b4e6911f)
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 7.83.1
-
-  B - Apply the patch to your local version
-
-  C - Build libcurl with libpsl support
-
-  D - Do not use cookies
-
-TIMELINE
---------
-
-This issue was reported to the curl project on April 28, 2022. We contacted
-distros@...nwall on May 5.
-
-libcurl 7.83.1 was released on May 11 2022, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-This issue was reported by Axel Chong. Patched by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
