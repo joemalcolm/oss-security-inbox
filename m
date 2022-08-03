@@ -1,24 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/07/1
-Message-ID: <20220907013017.GA1357227@millbarge>
-Date: Wed, 7 Sep 2022 01:30:17 +0000
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/03/1
+Message-ID: <CAJwKpyQHAbv6FP-xYbixE2gtgyfHwfeLutYgrNBZY7=+rjktBA@mail.gmail.com>
+Date: Wed, 3 Aug 2022 09:54:16 +0200
+From: Carlton Gibson <carlton.gibson@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: sagemath denial of service with abort() in gmp: overflow in mpz type
+Subject: Django: CVE-2022-36359: Potential reflected file download vulnerability in FileResponse.
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 06, 2022 at 08:45:28AM -0400, Jeffrey Walton wrote:
-> One of the problems with GMP is, it will crash instead of returning
-> failure. The problem becomes more acute if the program using GMP is
-> handling sensitive information, like a private key or passphrase. The
-> sensitive material can be written to a dump file and can be sent to an
-> error reporting service.
+See: https://www.djangoproject.com/weblog/2022/aug/03/security-releases/
 
-Could an application that handles secrets and uses GMP use prctl(2)'s
-PR_SET_DUMPABLE command to prevent dumping the core file? It'd also
-prevent using ptrace-based debugging, so it's not without costs, but if
-it handles secrets, that's probably also a good idea.
+In accordance with `our security release policy
+<https://docs.djangoproject.com/en/dev/internals/security/>`_, the Django
+team
+is issuing
+`Django 4.0.7 <https://docs.djangoproject.com/en/dev/releases/4.0.7/>`_, and
+`Django 3.2.15 <https://docs.djangoproject.com/en/dev/releases/3.2.15/>`_.
+These releases addresses the security issue detailed below. We encourage all
+users of Django to upgrade as soon as possible.
 
-Thanks
+CVE-2022-36359: Potential reflected file download vulnerability in
+``FileResponse``
+===================================================================================
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+An application may have been vulnerable to a reflected file download (RFD)
+attack that sets the Content-Disposition header of a ``FileResponse``
+when the ``filename`` was derived from
+user-supplied input. The ``filename`` is now escaped to avoid this
+possibility.
+
+This issue has high severity, according to the Django security policy.
+
+Thanks to Motoyasu Saburi for the report.
+
+Affected supported versions
+===========================
+
+* Django main branch
+* Django 4.1 (which will be released in a separate blog post later today)
+* Django 4.0
+* Django 3.2
+
+Resolution
+==========
+
+Patches to resolve the issue have been applied to Django's main branch and
+the
+4.1, 4.0, and 3.2 release branches. The patches may be obtained from the
+following changesets:
+
+* On the `main branch <
+https://github.com/django/django/commit/bd062445cffd3f6cc6dcd20d13e2abed818fa173
+>`__
+* On the `4.1 release branch <
+https://github.com/django/django/commit/46916665f9aa729067ef894e994854ecf9223157
+>`__
+* On the `4.0 release branch <
+https://github.com/django/django/commit/b7d9529cbe0af4adabb6ea5d01ed8dcce3668fb3
+>`__
+* On the `3.2 release branch <
+https://github.com/django/django/commit/b3e4494d759202a3b6bf247fd34455bf13be5b80
+>`__
+
+The following releases have been issued:
+
+* Django 4.0.7 (`download Django 4.0.7 <
+https://www.djangoproject.com/m/releases/4.0/Django-4.0.7.tar.gz>`_ |
+`4.0.7 checksums <
+https://www.djangoproject.com/m/pgp/Django-4.0.7.checksum.txt>`_)
+* Django 3.2.15 (`download Django 3.2.15 <
+https://www.djangoproject.com/m/releases/3.2/Django-3.2.15.tar.gz>`_ |
+`3.2.15 checksums <
+https://www.djangoproject.com/m/pgp/Django-3.2.15.checksum.txt>`_)
+
+The PGP key ID used for this release is Carlton Gibson: `E17DF5C82B4F9D00 <
+https://github.com/carltongibson.gpg>`_.
+
+General notes regarding security reporting
+==========================================
+
+As always, we ask that potential security issues be reported via
+private email to ``security@...ngoproject.com``, and not via Django's
+Trac instance or the django-developers list. Please see `our security
+policies <https://www.djangoproject.com/security/>`_ for further
+information.
+
