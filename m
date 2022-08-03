@@ -1,4 +1,4 @@
-Received: (qmail 25984 invoked by uid 550); 5 Jan 2026 12:52:58 -0000
+Received: (qmail 3293 invoked by uid 550); 3 Aug 2022 21:07:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,107 +7,37 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 25945 invoked from network); 5 Jan 2026 12:52:57 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=notcom.org;
-	s=jk; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
-	References:Message-ID:Subject:To:From:Date:Reply-To:Cc:Content-ID:
-	Content-Description; bh=ArD1rJAZ+NhxoRABUclY2G4GHXMCScsht0DmBfwATKA=;
-	i=b49a205f73f09af5fde31f6781a721d6b26ace42@notcom.org; t=1767617579;
-	x=1768265579; b=DdARvv1yJlFHfYZE8W0fuJTH61Pvqasj1xyLw56+NZLTQ1DHm+UmT73dyoVKe
-	QhoS31wBOvfgIXRIJOTrHFwOZe3+5IOJKAMtC63E86bmyvI3h1LrZytgBrsL9o2tXXN3aH1gjoZRB
-	SGKENBXLfyq1y6N4HZfQMOx0tIwaU822mtqGQZ/Z9DFCktJzQzrb6GlZ1AsqHIqhZyDQePId5qwkx
-	X+41lGThEYyNNjMKnXf1097RsOZ++83ZxDpN0nz2NaKJiae1D4SL1zRgC1C3luX3QpyvLOIaUVwhq
-	hi8KasdB/hYv1K9nZzMTTSiwWA49a9N3eWy7KJoOJhm9pM0SPA==;
-Date: Mon, 5 Jan 2026 14:52:39 +0200
-From: Valtteri Vuorikoski <vuori@notcom.org>
-To: oss-security@lists.openwall.com
-Message-ID: <aVuxyNKwrPhbE0SH@donburi.himad.notcom.org>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <4bb0e4f7-a4f3-45cc-b519-2044b4b2871c@gmail.com>
- <928709EE-07AA-4995-B9D3-E83AC18353CC.1@smtp-inbound1.duck.com>
- <6F979157-91AD-4C55-8CCD-5CC5AA18BB50.1@smtp-inbound1.duck.com>
- <878qei6bq7.fsf@josefsson.org>
- <87ms2y1d2m.fsf@gmail.com>
- <87eco91kzi.fsf@josefsson.org>
- <SYCPR01MB3661379F4E31EE1A57A2F310EEBBA@SYCPR01MB3661.ausprd01.prod.outlook.com>
- <7002eb83-6227-4de9-aa3a-bfe5cad62320@gmail.com>
- <ME2PR01MB36500CA1987170A857BCF637EEB9A@ME2PR01MB3650.ausprd01.prod.outlook.com>
-MIME-Version: 1.0
+Received: (qmail 21988 invoked from network); 3 Aug 2022 20:46:19 -0000
+Authentication-Results: apache.org; auth=none
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ME2PR01MB36500CA1987170A857BCF637EEB9A@ME2PR01MB3650.ausprd01.prod.outlook.com>
-User-Agent: NeoMutt/20251211-3-1d6324
-Subject: Re: [oss-security] Re: Best practices for signature verifcation
+From: =?UTF-8?Q?Juan_Pablo_Santos_Rodr=C3=ADguez?= <juanpablo@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <7b1d53fa-a746-b369-211d-a8400fd0ea77@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 03 Aug 2022 20:46:05 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2022-28731: Apache JSPWiki CSRF in UserPreferences.jsp 
 
-On Sun, Jan 04, 2026 at 11:56:06AM +0000, Peter Gutmann wrote:
-> As an aside, is anyone aware of a single-source design document for what
-> Authenticode does?   There's a million web pages related to the business of
-> selling signing certs, and less than a million on using it, but I can't find a
-> single-source design doc, just lots of stuff in various places that I've
-> picked up over the years.  By "single-source doc" I mean something that
-> addresses all of the above issues and related ones in one place.
+Severity: critical
 
-Are you looking for something more detailed than the Microsoft document titled
-"Windows Authenticode Portable Executable Signature Format" from 2008?
+Description:
 
-Download from the horse's mouth:
-<https://download.microsoft.com/download/9/c/5/9c5b2167-8017-4bae-9fde-d599bac8184a/authenticode_pe.docx>)
+A carefully crafted request on UserPreferences.jsp could trigger an CSRF vu=
+lnerability on Apache JSPWiki, which could allow the attacker to modify the=
+ email associated with the attacked account, and then a reset password requ=
+est from the login page.=20
 
-Here is the overview section of that document (via pandoc -t rst):
+Mitigation:
 
-Overview
-========
+Apache JSPWiki users should upgrade to 2.11.3 or later. Installations >=3D =
+2.7.0 can also enable user management workflows' manual approval to mitigat=
+e the issue.=20
 
-The Authenticode signature in a PE file is in a PKCS #7 **SignedData**
-structure. The signature asserts that:
+Credit:
 
--  The file originates from a specific software publisher.
+This issue was discovered by Fabrice Perez, <fabioperez AT gmail DOT com>=20
 
--  The file has not been altered since it was signed.
+References:
 
-The signature itself does not convey any information about the intent or
-quality of the software. However, signatures that are associated with
-programs such as the Windows Logo Program—that sign software only if it
-passes certain tests—can convey quality information.
+https://jspwiki-wiki.apache.org/Wiki.jsp?page=3DCVE-2022-28732
 
-A PKCS #7 **SignedData** structure contains the PE file's hash value, a
-signature created by the software publisher’s private key, and the X.509
-v3 certificates that bind the software publisher’s signing key to a
-legal entity. A PKCS #7 **SignedData** structure can optionally contain:
-
--  A description of the software publisher.
-
--  The software publisher's URL.
-
--  An Authenticode timestamp.
-
-The timestamp is generated by a timestamping authority (TSA) and asserts
-that a publisher’s signature existed before the specified time. The
-timestamp extends the lifetime of the signature when a signing
-certificate expires or is later revoked.
-
-Authenticode signatures can be “embedded” in a Windows PE file, in a
-location specified by the **Certificate Table** entry in **Optional
-Header Data Directories**. When Authenticode is used to sign a Windows
-PE file, the algorithm that calculates the file's Authenticode hash
-value excludes certain PE fields. When embedding the signature in the
-file, the signing process can modify these fields without affecting the
-file's hash value.
-
-Figure 1 provides a simplified overview of how an Authenticode signature
-is included in a Windows PE file. It includes the location of the
-embedded Authenticode signature and specifies which PE fields are
-excluded when calculating the PE file's hash value.
-
-For details about the PE file structure, see ”Microsoft Portable
-Executable and Common Object File Format Specification” (PE/COFF
-specification).
-
-For details on the PKCS #7 portion of the Authenticode signature see the
-Abstract Syntax Notation version 1 (ASN.1) structure definitions later
-in this paper.
-
-For details on how the Authenticode PE hash value is calculated, see
-“Calculating the PE Image Hash” later in this paper.
