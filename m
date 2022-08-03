@@ -1,29 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/30/1
-Message-ID: <30c1915c-551e-732c-dcb8-7e838253e2b6@apache.org>
-Date: Fri, 30 Dec 2022 06:52:17 +0000
-From: Xiaoxiang Yu <xxyu@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/03/4
+Message-ID: <7b1d53fa-a746-b369-211d-a8400fd0ea77@apache.org>
+Date: Wed, 03 Aug 2022 20:46:05 +0000
+From: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-43396: Apache Kylin: Command injection by Useless configuration 
+Subject: CVE-2022-28731: Apache JSPWiki CSRF in UserPreferences.jsp 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+Severity: critical
 
 Description:
 
-In the fix for CVE-2022-24697, a blacklist is used to filter user input commands. But there is a risk of being bypassed. The user can control the command by controlling the kylin.engine.spark-cmd parameter of conf.
+A carefully crafted request on UserPreferences.jsp could trigger an CSRF vulnerability on Apache JSPWiki, which could allow the attacker to modify the email associated with the attacked account, and then a reset password request from the login page. 
 
-Work Arounds:
+Mitigation:
 
-Users of Kylin 2.x & Kylin 3.x & 4.x should upgrade to 4.0.3 or apply patch  https://github.com/apache/kylin/pull/2011 https://github.com/apache/kylin/pull/2011
+Apache JSPWiki users should upgrade to 2.11.3 or later. Installations >= 2.7.0 can also enable user management workflows' manual approval to mitigate the issue. 
 
 Credit:
 
-Yasax1 Li <pp1ove.lit@...il.com> (finder)
+This issue was discovered by Fabrice Perez, <fabioperez AT gmail DOT com> 
 
 References:
 
-https://lists.apache.org/thread/o53vqxjdd9q731bwqpgcqyzx9r716qwx
-https://kylin.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2022-43396
+https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2022-28732
 
