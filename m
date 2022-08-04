@@ -1,19 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/03/1
-Message-ID: <7014bc33-70a1-6411-c65d-ed87f7f454e4@apache.org>
-Date: Mon, 03 Jan 2022 21:32:36 +0000
-From: Kirk Lund <klund@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/04/1
+Message-ID: <20220804103817.osenwnxxnj3ufxd4@suse.com>
+Date: Thu, 4 Aug 2022 12:38:17 +0200
+From: Filippo Bonazzi <fbonazzi@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-34797: Apache Geode project log file redaction of sensitive information vulnerability 
+Subject: gromox: potential local privilege escalation (CVE-2022-37030)
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Hello list,
 
-Apache Geode versions up to 1.12.4 and 1.13.4 are vulnerable to a log file redaction of sensitive information flaw when using values that begin with characters other than letters or numbers for passwords and security properties with the prefix "sysprop-", "javax.net.ssl", or "security-".
+the following report describes a local privilege escalation vulnerability in
+Gromox[0] versions 0.5 to 1.27. Any code references in this report are based on
+version 1.27 in the upstream Git repository[1], and packaging references are
+based on the 1.27 RPM distributed by upstream[2].
 
-This issue is being tracked as GEODE-9354
+# Introduction
 
-Credit:
+Gromox is the central groupware server component of grommunio[3]. It is capable
+of serving as a replacement for Microsoft Exchange and compatibles.
 
-Apache Geode would like to thank Aaron Lindsey for reporting this issue.
+Among its many features, Gromox provides a PAM module to authenticate non-Gromox
+processes to an authentication backend such as MySQL or LDAP. The PAM module
+allows runtime loading of plugins, and its configuration lives in
+`/etc/gromox/pam` or `/etc/gromox`.
 
+The interaction between this PAM module, its runtime loading of plugins and
+their configuration causes the vulnerability described in this report.
+
+# The Vulnerability
+
+The RPM spec file packages the `/etc/gromox` directory with ownership
+`root:gromox` and mode 775, i.e. the directory is writeable by the unprivileged
+`gromox` group.
+
+The directory contains, among others, the configuration file for the PAM module.
+When the authentication hook of the PAM module is invoked, the module loads the
+`/etc/gromox/pam.cfg` configuration file, which can contain a path and a list of
+filenames to be used to load plugins. The plugins are regular .so shared objects,
+which are then executed by the PAM module.
+
+It is therefore possible for the `gromox` group to effectively have the PAM
+stack run arbitrary code upon execution of the `pam_gromox.so` module.
+
+Assuming that the PAM stack is run as root, as it is likely, this results in the
+unprivileged `gromox` group being able to execute arbitrary code as root.
+
+# Proof of Concept Exploit
+
+Attached is a proof of concept setup that has been tested on current openSUSE
+distributions.
+The only precondition for the exploit is that gromox is installed and a target
+user is in the `gromox` group.
+
+# Upstream Fix
+
+Upstream released version 1.28 of Gromox[4] which removes configuration
+directives for runtime loading of plugins. Plugins are now loaded from a fixed
+list, and from root-controlled paths only. This removes the possibility for an
+unprivileged user to control what will be executed by the Gromox PAM module.
+
+# Timeline
+
+2022-07-25: I contacted upstream with the vulnerability report and offered
+             coordinated disclosure.
+	    Upstream released version 1.28 on the same day, fixing the issue,
+	    and did not request any embargo.
+2022-07-26: I reviewed the new version and verified that the issue has been
+             fixed.
+2022-08-01: I obtained CVE-2022-37030 from Mitre to track this issue.
+
+# References
+
+[0] https://gromox.com/
+[1] https://github.com/grommunio/gromox
+[2] https://download.grommunio.com/community/openSUSE_Tumbleweed/
+[3] https://grommunio.com/
+[4] https://github.com/grommunio/gromox/releases/tag/gromox-1.28
+
+-- 
+Filippo Bonazzi
+Security Engineer                        suse.com
+8257 4398 947A 2DBE F21D 76E6 937A 63F0 5B36 46D9
+
+Download attachment "gromox-poc.zip" of type "application/zip" (2488 bytes)
+
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
