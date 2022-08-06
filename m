@@ -1,29 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/13/2
-Message-ID: <CAB8XdGDk7xbis9aOcDM3w+b6CepMBKNhWwweKH9ZW2a0TQXZ6Q@mail.gmail.com>
-Date: Tue, 13 Dec 2022 14:38:00 +0000
-From: Colm O hEigeartaigh <coheigea@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/06/2
+Message-ID: <Yu5+6SlKH6n6afZv@gentoo.org>
+Date: Sat, 6 Aug 2022 09:47:05 -0500
+From: John Helmert III <ajak@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-46363: Apache CXF directory listing / code exfiltration
+Subject: Re: Exim 4.95 invalid free
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Hi, please keep in mind the list content guidelines:
 
-Description:
+"At least the most essential part of your message (e.g., vulnerability detail and/or exploit) should be directly included in the message itself (and in plain text), rather than only included by reference to an external resource. Posting links to relevant external resources as well is acceptable, but posting only links is not. Your message should remain valuable even with all of the external resources gone."
 
-A vulnerability in Apache CXF before versions 3.5.5 and 3.4.10 allows
-an attacker to perform a remote directory listing or code
-exfiltration. The vulnerability only applies when the CXFServlet is
-configured with both the static-resources-list and
-redirect-query-check attributes. These attributes are not supposed to
-be used together, and so the vulnerability can only arise if the CXF
-service is misconfigured.
+Do you have any upstream references or commits of the fix?
 
-Credit:
+On Sat, Aug 06, 2022 at 12:06:36PM +0300, Evgeny Legerov wrote:
+> Hi,
+> 
+> 
+> The issue has been silently fixed in Exim 4.96 - 
+> https://github.com/ivd38/exim_invalid_free
+> 
+> 
+> 
+> regards,
+> 
+> -e
+> 
 
-thanat0s from Beijin Qihoo 360 adlab (finder)
-
-References:
-
-https://cxf.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2022-46363
+Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
