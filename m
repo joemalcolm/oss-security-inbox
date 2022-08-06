@@ -1,53 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/17/9
-Message-ID: <e53ec98ef43fa137db9a626e5148ae1c00ea7c7e.camel@fiasko-nw.net>
-Date: Tue, 17 May 2022 20:35:37 +0200
-From: Thomas Liske <thomas@...sko-nw.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/06/8
+Message-ID: <2dc37111-fd35-e10e-0162-1bdad2e80f5e@vulndisco.cc>
+Date: Sat, 6 Aug 2022 22:46:42 +0300
+From: Evgeny Legerov <admin@...ndisco.cc>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-30688: needrestart 0.8+ local privilege escalation
+Subject: Exim < 4.95 heap overflow
 Content-Type: text/plain; charset=utf-8
 
-# needrestart: local privilege escalation
-
-https://github.com/liske/needrestart
+Hi,
 
 
-## Description
+Here is another bug which has been silently fixed in Exim.
 
-A local privilege escalation has been found in needrestart. CVE-2022-
-30688 has been assigned to this issue.
+It has not been recognized as a security issue, many distros still don't 
+have this patch.
 
-The interpreter heuristic contains unanchored regexs allowing local
-users to execute arbitrary code in the context of the user running
-needrestart. Needrestart might be run as root by package manager hooks
-on package installations or upgrades.
+Original report + patch  is here - 
+https://github.com/Exim/exim/commit/d4bc023436e4cce7c23c5f8bb5199e178b4cc743
 
+Analysis of the bug  - https://github.com/ivd38/exim_overflow
 
-## Affected
-
-Affected: needrestart >= 0.8
-Fixed in: needrestart >= 3.6
+I don't post here because it is huge snippet of code.
 
 
-## Mitigation
+regards,
 
-Disabling the interpreter heuristic in neederstart's config prevents
-this attack:
-
- # Disable interpreter scanners.
- $nrconf{interpscan} = 0;
-
-
-## Credit
-
-Reported by Jakub Wilk.
+-e
 
 
 
-Regards,
-Thomas Liske
-
-
-View attachment "anchor-interp-re.patch" of type "text/x-patch" (1244 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (863 bytes)
