@@ -1,40 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/19/3
-Message-ID: <CAMVt_AwSgbSxwUZ4kjyM6j399HvRaQgjt-bPAruSu3cpQ1vm-w@mail.gmail.com>
-Date: Mon, 19 Sep 2022 21:23:30 +0530
-From: Manikumar <manikumar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/07/1
+Message-ID: <Yu7WIlgb9y4tGUDQ@gentoo.org>
+Date: Sat, 6 Aug 2022 15:59:14 -0500
+From: John Helmert III <ajak@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: dev <dev@...ka.apache.org>
-Subject: CVE-2022-34917: Unauthenticated clients may cause OutOfMemoryError on Apache Kafka Brokers
+Subject: Re: Exim < 4.95 heap overflow
 Content-Type: text/plain; charset=utf-8
 
-Severity: High
+On Sat, Aug 06, 2022 at 10:46:42PM +0300, Evgeny Legerov wrote:
+> Hi,
+> 
+> 
+> Here is another bug which has been silently fixed in Exim.
+> 
+> It has not been recognized as a security issue, many distros still don't 
+> have this patch.
 
-Description:
+Why do you say it hasn't been recognized as a security issue? Distros
+don't usually have a way of knowing about a vulnerability that needs
+patching without a CVE. Have you requested a CVE?
 
-A security vulnerability has been identified in Apache Kafka. It
-affects all releases since 2.8.0. The vulnerability allows malicious
-unauthenticated clients to allocate large amounts of memory on
-brokers. This can lead to brokers hitting OutOfMemoryException and
-causing denial of service.
+> Original report + patch  is here - 
+> https://github.com/Exim/exim/commit/d4bc023436e4cce7c23c5f8bb5199e178b4cc743
 
-Example scenarios:
-- Kafka cluster without authentication: Any clients able to establish
-a network connection to a broker can trigger the issue.
-- Kafka cluster with SASL authentication: Any clients able to
-establish a network connection to a broker, without the need for valid
-SASL credentials, can trigger the issue.
-- Kafka cluster with TLS authentication: Only clients able to
-successfully authenticate via TLS can trigger the issue.
+That commit does not seem like an original report.
 
-We advise the users to upgrade the Kafka installations to one of the
-3.2.3, 3.1.2, 3.0.2, 2.8.2 versions.
+> Analysis of the bug  - https://github.com/ivd38/exim_overflow
+> 
+> I don't post here because it is huge snippet of code.
+> 
+> 
+> regards,
+> 
+> -e
+> 
+> 
+> 
 
-Credit:
-
-Apache Kafka would like to thank Mickael Maison, Tom Bentley and
-Daniel Collins for reporting this issue.
-
-References:
-
-https://kafka.apache.org/cve-list
+Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
