@@ -1,40 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/07/1
-Message-ID: <Yu7WIlgb9y4tGUDQ@gentoo.org>
-Date: Sat, 6 Aug 2022 15:59:14 -0500
-From: John Helmert III <ajak@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Exim < 4.95 heap overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/06/7
+Message-ID: <20220806192502.GA10997@openwall.com>
+Date: Sat, 6 Aug 2022 21:25:02 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Evgeny Legerov <admin@...ndisco.cc>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Exim 4.95 invalid free
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Aug 06, 2022 at 10:46:42PM +0300, Evgeny Legerov wrote:
-> Hi,
-> 
-> 
-> Here is another bug which has been silently fixed in Exim.
-> 
-> It has not been recognized as a security issue, many distros still don't 
-> have this patch.
+On Sat, Aug 06, 2022 at 08:47:21PM +0200, Solar Designer wrote:
+> Yet I understand we cannot really ask you for more, and a brief
+> link-only heads-up is better than none.
 
-Why do you say it hasn't been recognized as a security issue? Distros
-don't usually have a way of knowing about a vulnerability that needs
-patching without a CVE. Have you requested a CVE?
+When I wrote the above, I didn't realize these two bugs (in zlib and
+Exim) were Evgeny's own findings.  Now that I do, I think it isn't
+unreasonable for us to ask Evgeny to include the full detail in such
+postings going forward.  We'd appreciate that, Evgeny!
 
-> Original report + patch  is here - 
-> https://github.com/Exim/exim/commit/d4bc023436e4cce7c23c5f8bb5199e178b4cc743
-
-That commit does not seem like an original report.
-
-> Analysis of the bug  - https://github.com/ivd38/exim_overflow
-> 
-> I don't post here because it is huge snippet of code.
-> 
-> 
-> regards,
-> 
-> -e
-> 
-> 
-> 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
+Alexander
