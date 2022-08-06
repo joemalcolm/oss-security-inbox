@@ -1,40 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/22/1
-Message-ID: <20220422070546.GD7624@suse.de>
-Date: Fri, 22 Apr 2022 09:05:50 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/06/3
+Message-ID: <5f0712ff-44b4-cef2-1276-424c1cfa094e@vulndisco.cc>
+Date: Sat, 6 Aug 2022 19:40:49 +0300
+From: Evgeny Legerov <admin@...ndisco.cc>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-1419: Linux kernel: A concurrency use-after-free in vgem_gem_dumb_create
+Subject: Re: Exim 4.95 invalid free
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 21, 2022 at 07:35:46PM +0200, Greg KH wrote:
-> On Thu, Apr 21, 2022 at 11:44:54PM +0800, Minh Yuan wrote:
-> > Timeline:
-> > * 21.04.22 - Vulnerability reported to security@...nel.org and
-> > linux-distros@...openwall.org
-> > * 21.04.22 - CVE-2022-1419 assigned.
-> 
-> Why are people assigning CVEs to things that require root permissions?
-> Or are there distros running on kernels older than 5.4 that allow
-> untrusted users access to the drm ioctls directly?
-> 
-> I'm curious as it would affect the backporting of the needed fixes here
-> (or not.)
+My bad.
 
-It does not, distros like SUSE give out ACLs or groups write perms to /dev/dri/card0
-to it via udev.
+Fix is here 
+https://github.com/Exim/exim/commit/51be321b27825c01829dffd90f11bfff256f7e42
 
-crw-rw----+ 1 root video 226, 0 Apr 22 08:47 /dev/dri/card0
-
-getfacl /dev/dri/card0
-
-# file: dev/dri/card0
-# owner: root
-# group: video
-user::rw-
-user:marcus:rw-
-group::rw-
-mask::rw-
-other::---
-
-Ciao, Marcus
+On 06.08.2022 17:47, John Helmert III wrote:
+> Hi, please keep in mind the list content guidelines:
+>
+> "At least the most essential part of your message (e.g., vulnerability detail and/or exploit) should be directly included in the message itself (and in plain text), rather than only included by reference to an external resource. Posting links to relevant external resources as well is acceptable, but posting only links is not. Your message should remain valuable even with all of the external resources gone."
+>
+> Do you have any upstream references or commits of the fix?
+>
+> On Sat, Aug 06, 2022 at 12:06:36PM +0300, Evgeny Legerov wrote:
+>> Hi,
+>>
+>>
+>> The issue has been silently fixed in Exim 4.96 -
+>> https://github.com/ivd38/exim_invalid_free
+>>
+>>
+>>
+>> regards,
+>>
+>> -e
+>>
