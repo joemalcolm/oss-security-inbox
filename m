@@ -1,4 +1,4 @@
-Received: (qmail 7262 invoked by uid 550); 8 Oct 2024 02:54:46 -0000
+Received: (qmail 10100 invoked by uid 550); 6 Aug 2022 18:47:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,115 +7,90 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 5417 invoked from network); 8 Oct 2024 02:54:03 -0000
-Date: Tue, 8 Oct 2024 04:54:02 +0200
+Received: (qmail 9913 invoked from network); 6 Aug 2022 18:47:25 -0000
+Date: Sat, 6 Aug 2022 20:47:21 +0200
 From: Solar Designer <solar@openwall.com>
-To: Simon Josefsson <simon@josefsson.org>
+To: Evgeny Legerov <admin@vulndisco.cc>
 Cc: oss-security@lists.openwall.com
-Message-ID: <20241008025402.GA2904@openwall.com>
-References: <Zv-9gAGM_X7QQShJ@suse.com> <878qv251x7.fsf@kaka.sjd.se>
+Message-ID: <20220806184721.GA8594@openwall.com>
+References: <2007d258-97ab-fb3c-bfa8-0544c63ec1b8@vulndisco.cc> <Yu5+6SlKH6n6afZv@gentoo.org> <5f0712ff-44b4-cef2-1276-424c1cfa094e@vulndisco.cc>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <878qv251x7.fsf@kaka.sjd.se>
+In-Reply-To: <5f0712ff-44b4-cef2-1276-424c1cfa094e@vulndisco.cc>
 User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CVE-2024-47191: Local root exploit in the PAM module pam_oath.so
+Subject: Re: [oss-security] Exim 4.95 invalid free
 
-Hi,
+Hi Evgeny,
 
-Great work by the SUSE Security Team and upstream!
+Thank you for starting to bring relevant issues to oss-security!
 
-On Sat, Oct 05, 2024 at 11:33:56AM +0200, Simon Josefsson wrote:
-> Solution
-> --------
-> 
-> Version 2.6.12 contains the following liboath patch to use `fopen(wx)`:
-> 
-> https://gitlab.com/oath-toolkit/oath-toolkit/-/commit/3235a52f6b87cd1c5da6508f421ac261f5e33a70
-> 
-> Some non-glibc and non-ISO C11 platforms needs the following patch to
-> enable gnulib's `fopen(wx)` workaround:
-> 
-> https://gitlab.com/oath-toolkit/oath-toolkit/-/commit/3271139989fde35ab0163b558fc29e80c3a280e5
-> 
-> Then `pam_oath.c` is modified to call seteuid()/setegid() as follows:
-> 
-> https://gitlab.com/jas/oath-toolkit/-/commit/95ef255e6a401949ce3f67609bf8aac2029db418
+In that guideline John quoted, we really do mean that each "message
+should remain valuable even with all of the external resources gone."
+Adding a second link helps, but not enough to satisfy this requirement.
 
-This link requires authentication.  I guess you meant to post:
+Yet I understand we cannot really ask you for more, and a brief
+link-only heads-up is better than none.
 
-https://gitlab.com/oath-toolkit/oath-toolkit/-/commit/95ef255e6a401949ce3f67609bf8aac2029db418
+So maybe others in here can be filling in the gaps (in follow-up
+postings) in cases like this.  In fact, some had volunteered:
 
-> A patch that applies cleanly to version 2.6.7 found in Debian 12.x
-> bookworm is available here:
-> 
-> https://salsa.debian.org/debian/oath-toolkit/-/blob/debian/bookworm-security/debian/patches/pam_oath-seteuid.patch
-> 
-> We recommend you to upgrade to version 2.6.12.
-> 
-> If that is unpractical we recommended you to apply the patches on top
-> of your earlier version.
+https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
 
-I note a few things:
+"Help ensure that each message posted to oss-security contains the most
+essential information (e.g., vulnerability detail and/or exploit)
+directly in the message itself (and in plain text) rather than only by
+reference to an external resource, and add the missing information
+(e.g., in your own words, by quoting with proper attribution, and/or by
+creating and attaching a properly attributed text/plain export of a
+previously referenced web page) and remind the original sender of this
+requirement (for further occasions) in a "reply" posting when necessary
+- primary: Oracle Solaris, backup: Container-Optimized OS"
 
-1. Neither the SUSE nor the upstream patches change the supplementary
-groups.  SUSE patches fork() and then in the child setgid() and
-setuid().  Upstream doesn't fork(), but switches with setegid() and
-seteuid(), and then back.  If the intent is solely to avoid the need for
-fchown(), then that's sufficient.  Hopefully, along with SUSE's openat()
-and flags magic or with upstream's fopen(, "x"), nothing more is needed.
-However, if the intent is to avoid even trying to access files in user's
-directory with potentially excessive privileges, then supplementary
-groups should also be switched or dropped.
+So maybe the Oracle Solaris and/or the Container-Optimized OS folks can
+be the ones to extract the vulnerability description and PoC from
+https://github.com/ivd38/exim_invalid_free and the patch from
+https://github.com/Exim/exim/commit/51be321b27825c01829dffd90f11bfff256f7e42
+and attach them to a "reply" in this thread?  And similar for the "zlib
+buffer overflow" thread nearby.
 
-I'm sorry I didn't get around to bringing this maybe-issue up in the
-pre-disclosure thread on the distros list (which Johannes Segitz from
-SUSE kindly started on September 27).  I feel it was not essential to
-discuss/address pre-disclosure, and is fine to discuss in public now.
+Speaking of the actual issue/fix, I wonder if it's considered acceptable
+in Exim to use unchecked strdup() in general or in this specific place,
+with the possibility of the PAM response pointer being NULL on an
+out-of-memory condition.  Perhaps an oversight, as I'd expect at least a
+comment on this otherwise.
 
-2. Switching task credentials from library code is tricky, given that
-the program could have threads that don't expect this.  set*id() and
-setgroups() libc calls would typically affect all threads.  On Linux,
-it's possible to affect the current thread only, which e.g. we do in
-tcb[1] by using setfs*id() and direct setgroups() syscall (the latter
-only in our recent git code at this time, previously we used the libc
-function).  I assume Simon is aware of the Linux specific way, but
-deliberately chose not to do this in upstream oath-toolkit for
-portability to non-Linux.
-
-[1] https://www.openwall.com/tcb/ and https://github.com/openwall/tcb
-
-3. There's similar concern about the program's signal handlers, which
-isn't addressed by switching credentials only of the current thread.
-Maybe such library code should be temporarily blocking signals?  This
-becomes tricky and dirty.  In tcb, we just accept this risk for now
-(that a signal handler may run with unexpectedly dropped privileges).
-
-4. As Simon also noted:
-
-> SUSE's alternative patch and advisory can be found via:
-> 
-> https://security.opensuse.org/2024/10/04/oath-toolkit-vulnerability.html
-> 
-> It rely on Linux kernel specific features and uses fork() which was
-> determined to be contrary to the liboath design, which aims to be
-> portable to macOS and *BSD and beyond.
-
-I agree fork() from library code is tricky, but not so much because of
-portability concerns.  Again, the program using the library may not
-expect it to ever have an extra child process.  Sure the library should
-use waitpid() on this specific process, yet the program could receive
-unexpected SIGCHLD.  The combination of the program's threads and our
-fork() could also have unexpected consequences.
-
-In tcb, we chose to make usage of fork() a PAM module option, so that by
-enabling it the distro or sysadmin acknowledges that it's acceptable in
-the specific PAM configuration.  Our usage of fork() is for a different
-reason, though: "Using this option one can be sure that after a call to
-pam_end(3) there is no sensitive data left in the process' address
-space."  I wonder if this property would also be relevant in
-oath-toolkit patches if more processing is moved to the child process,
-or if this would be excessive under the relevant threat models.
+Thanks,
 
 Alexander
+
+On Sat, Aug 06, 2022 at 07:40:49PM +0300, Evgeny Legerov wrote:
+> My bad.
+> 
+> Fix is here 
+> https://github.com/Exim/exim/commit/51be321b27825c01829dffd90f11bfff256f7e42
+> 
+> On 06.08.2022 17:47, John Helmert III wrote:
+> >Hi, please keep in mind the list content guidelines:
+> >
+> >"At least the most essential part of your message (e.g., vulnerability 
+> >detail and/or exploit) should be directly included in the message itself 
+> >(and in plain text), rather than only included by reference to an external 
+> >resource. Posting links to relevant external resources as well is 
+> >acceptable, but posting only links is not. Your message should remain 
+> >valuable even with all of the external resources gone."
+> >
+> >Do you have any upstream references or commits of the fix?
+> >
+> >On Sat, Aug 06, 2022 at 12:06:36PM +0300, Evgeny Legerov wrote:
+> >>Hi,
+> >>
+> >>
+> >>The issue has been silently fixed in Exim 4.96 -
+> >>https://github.com/ivd38/exim_invalid_free
+> >>
+> >>
+> >>
+> >>regards,
+> >>
+> >>-e
