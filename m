@@ -1,22 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/11/7
-Message-ID: <CALKeL-MztJwfgVgt=bugEoafDNmgDtZ8o=vmZ6mbjuJj9zW20g@mail.gmail.com>
-Date: Tue, 11 Jan 2022 13:21:35 -0800
-From: Mike Jumper <mjumper@...che.org>
-To: announce@...che.org, announce@...camole.apache.org,  dev@...camole.apache.org, user@...camole.apache.org
-Cc: security@...camole.apache.org, oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2021-43999: Apache Guacamole: Improper validation of SAML responses
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/06/4
+Message-ID: <20220806184721.GA8594@openwall.com>
+Date: Sat, 6 Aug 2022 20:47:21 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Evgeny Legerov <admin@...ndisco.cc>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Exim 4.95 invalid free
 Content-Type: text/plain; charset=utf-8
 
-Severity: high
+Hi Evgeny,
 
-Description:
+Thank you for starting to bring relevant issues to oss-security!
 
-Apache Guacamole 1.2.0 and 1.3.0 do not properly validate responses
-received from a SAML identity provider. If SAML support is enabled,
-this may allow a malicious user to assume the identity of another
-Guacamole user.
+In that guideline John quoted, we really do mean that each "message
+should remain valuable even with all of the external resources gone."
+Adding a second link helps, but not enough to satisfy this requirement.
 
-Credit:
+Yet I understand we cannot really ask you for more, and a brief
+link-only heads-up is better than none.
 
-We would like to thank Finn Steglich (ETAS) for reporting this issue.
+So maybe others in here can be filling in the gaps (in follow-up
+postings) in cases like this.  In fact, some had volunteered:
+
+https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+
+"Help ensure that each message posted to oss-security contains the most
+essential information (e.g., vulnerability detail and/or exploit)
+directly in the message itself (and in plain text) rather than only by
+reference to an external resource, and add the missing information
+(e.g., in your own words, by quoting with proper attribution, and/or by
+creating and attaching a properly attributed text/plain export of a
+previously referenced web page) and remind the original sender of this
+requirement (for further occasions) in a "reply" posting when necessary
+- primary: Oracle Solaris, backup: Container-Optimized OS"
+
+So maybe the Oracle Solaris and/or the Container-Optimized OS folks can
+be the ones to extract the vulnerability description and PoC from
+https://github.com/ivd38/exim_invalid_free and the patch from
+https://github.com/Exim/exim/commit/51be321b27825c01829dffd90f11bfff256f7e42
+and attach them to a "reply" in this thread?  And similar for the "zlib
+buffer overflow" thread nearby.
+
+Speaking of the actual issue/fix, I wonder if it's considered acceptable
+in Exim to use unchecked strdup() in general or in this specific place,
+with the possibility of the PAM response pointer being NULL on an
+out-of-memory condition.  Perhaps an oversight, as I'd expect at least a
+comment on this otherwise.
+
+Thanks,
+
+Alexander
+
+On Sat, Aug 06, 2022 at 07:40:49PM +0300, Evgeny Legerov wrote:
+> My bad.
+> 
+> Fix is here 
+> https://github.com/Exim/exim/commit/51be321b27825c01829dffd90f11bfff256f7e42
+> 
+> On 06.08.2022 17:47, John Helmert III wrote:
+> >Hi, please keep in mind the list content guidelines:
+> >
+> >"At least the most essential part of your message (e.g., vulnerability 
+> >detail and/or exploit) should be directly included in the message itself 
+> >(and in plain text), rather than only included by reference to an external 
+> >resource. Posting links to relevant external resources as well is 
+> >acceptable, but posting only links is not. Your message should remain 
+> >valuable even with all of the external resources gone."
+> >
+> >Do you have any upstream references or commits of the fix?
+> >
+> >On Sat, Aug 06, 2022 at 12:06:36PM +0300, Evgeny Legerov wrote:
+> >>Hi,
+> >>
+> >>
+> >>The issue has been silently fixed in Exim 4.96 -
+> >>https://github.com/ivd38/exim_invalid_free
+> >>
+> >>
+> >>
+> >>regards,
+> >>
+> >>-e
