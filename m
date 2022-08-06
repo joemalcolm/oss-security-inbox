@@ -1,108 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/21/1
-Message-ID: <5r56o44n-369n-6s66-rs5q-84os4n2p64os@unkk.fr>
-Date: Wed, 21 Dec 2022 08:23:58 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: curl: CVE-2022-43551: Another HSTS bypass via IDN
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/06/5
+Message-ID: <20220806185940.GA8784@openwall.com>
+Date: Sat, 6 Aug 2022 20:59:40 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Cc: Hugues ANGUELKOV <hanguelkov@...dorisec.fr>
+Subject: Re: Linux kernel: Netfilter heap buffer overflow in nft_set_elem_init
 Content-Type: text/plain; charset=utf-8
 
-CVE-2022-43551: Another HSTS bypass via IDN
-===========================================
+On Tue, Jul 05, 2022 at 08:56:28AM +0200, Marcus Meissner wrote:
+> Mitre has assigned CVE-2022-34918 to this issue.
 
-Project curl Security Advisory, December 21 2022 -
-[Permalink](https://curl.se/docs/CVE-2022-43551.html)
+> > ----- Forwarded message from Hugues ANGUELKOV <hanguelkov@...dorisec.fr> -----
 
-VULNERABILITY
--------------
+> > Also, we would like to release the LPE exploit targeting Ubuntu server 
+> > along with a more detailed blogpost.
 
-curl's HSTS check could be bypassed to trick it to keep using HTTP.
+Apparently, this is the blog post:
 
-Using its HSTS support, curl can be instructed to use HTTPS instead of using
-an insecure clear-text HTTP step even when HTTP is provided in the URL.
+https://www.randorisec.fr/crack-linux-firewall/
 
-The HSTS mechanism could be bypassed if the host name in the given URL first
-uses IDN characters that get replaced to ASCII counterparts as part of the IDN
-conversion. Like using the character UTF-8 U+3002 (IDEOGRAPHIC FULL STOP)
-instead of the common ASCII full stop (U+002E). Then in a subsequent request,
-it does not detect the HSTS state and makes a clear text transfer. Because it
-would store the info IDN encoded but look for it IDN decoded.
-
-Reproducible like this:
-
-     curl --hsts hsts.txt https://curl%E3%80%82se
-     curl --hsts hsts.txt http://curl%E3%80%82se
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-This flaw was introduced in [commit
-7385610d0c7](https://github.com/curl/curl/commit/7385610d0c7), which was
-shipped enabled by default from [commit
-d71ff2b9db566b3f](https://github.com/curl/curl/commit/d71ff2b9db566b3f) in
-curl 7.77.0.
-
-This issue is similar to both the previous issues
-[CVE-2022-42916](https://curl.se/docs/CVE-2022-42916.html) and
-[CVE-2022-30115](https://curl.se/docs/CVE-2022-30115.html).
-
-This became a new separate vulnerability simply because we did not properly
-test and research related side-issues while we worked on fixing the previous
-issues.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2022-43551 to this issue.
-
-CWE-319: Cleartext Transmission of Sensitive Information
-
-Severity: Medium
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.77.0 to and including 7.86.0
-- Not affected versions: curl < 7.77.0 and curl >= 7.86.0
-
-curl built without IDN support is not vulnerable.
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-A [fix for CVE-2022-43551](https://github.com/curl/curl/commit/9e71901634e276dd)
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 7.87.0
-
-  B - Apply the patch to your local version
-
-  C - Stick to always using `HTTPS://` in URLs
-
-TIMELINE
---------
-
-This issue was reported to the curl project on October 29, 2022. We contacted
-distros@...nwall on December 12, 2022.
-
-curl 7.87.0 was released on December 21 2022, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-- Reported-by: Hiroki Kurosawa
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
+Alexander
