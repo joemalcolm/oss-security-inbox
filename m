@@ -1,29 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/07/1
-Message-ID: <f037cdaa-2cef-1c10-849d-52f526ff5af8@apache.org>
-Date: Mon, 07 Feb 2022 04:39:16 +0000
-From: Benoit Tellier <btellier@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-22931: Path traversal in Apache James 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/06/6
+Message-ID: <20220806191022.GA10830@openwall.com>
+Date: Sat, 6 Aug 2022 21:10:22 +0200
+From: Solar Designer <solar@...nwall.com>
+To: "?????????(??????)" <zhangziming.zzm@...group.com>
+Cc: oss-security <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2022-1972: out-of-bound write in Linux netfilter subsystem leads to local privilege escalation
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+On Thu, Jun 02, 2022 at 10:21:36AM +0800, ?????????(??????) wrote:
+> An out-of-bound write vulnerability was identified within the
+> netfilter subsystem
+> which can be exploited to achieve privilege escalation to root.
+> 
+> In order to trigger the issue it requires the ability to create user/net
+> namespaces.
+> 
+> this vulnerability comes from commit(
+> https://github.com/torvalds/linux/commit/f3a2181e16f1dcbf5446ed43f6b5d9f56c459f85)
+> 
+> This issue has been fixed within the following commit:
+> 
+> https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=fecf31ee395b0295f2d7260aa29946b7605f7c85
 
-Description:
+[...]
 
-Fix of CVE-2021-40525 do not prepend delimiters upon valid directory validations.
+> =*=*=*=*=*=*=*=*=  Credit  =*=*=*=*=*=*=*=*=
+> ziming zhang(@ezrak1e) from Ant Group Light-Year Security Lab
 
-Affected implementations include:
- - maildir mailbox store
- - Sieve file repository
+Apparently, this vulnerability was also independently discovered by
+Arthur Mongodin during an internship at Randorisec, who blogged about it
+on June 13 here:
 
-This enables a user to access other users data stores (limited to user names being prefixed by the value of the username being used).
+https://randorisec.fr/yet-another-bug-netfilter/
 
-Mitigation:
+and posted an infoleak PoC here:
 
-This had been fixed in Apache James 3.6.2.
+https://github.com/randorisec/CVE-2022-1972-infoleak-PoC
 
-Credit:
-
-These issues were discovered and reported by GHSL team member Jaroslav Lobačevski
-
+Alexander
