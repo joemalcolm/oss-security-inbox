@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1341" "Friday" "10" "February" "2017" "16:00:00" "-0700" "Kurt Seifried" "kseifrie@redhat.com" "<41947024-52FA-47F4-BC55-B15F563B69E8@redhat.com>" "38" "Re: [oss-security] MITRE is adding data intake to its CVE ID process" "^Date:" nil nil "2" "2017021023:00:00" "[oss-security] MITRE is adding data intake to its CVE ID process" (number mark "        kseifrie@red Feb 10   38/1341  " thread-indent "\"Re: [oss-security] MITRE is adding data intake to its CVE ID process\"\n") "<20170210224910.neeqi3e5265dgnxh@sentinelchicken.org>" ("<e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>" "<616FD56C-60C1-48B6-983B-08FBD515343D@lanl.gov>" "<20170210205916.GB28439@hunt>" "<D999895D83BF47489B7647E60E228B4702FE7609@EX10MBOX05.pnnl.gov>" "<20170210224910.neeqi3e5265dgnxh@sentinelchicken.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 29707 invoked by uid 550); 10 Feb 2017 23:00:14 -0000
+Received: (qmail 32248 invoked by uid 550); 6 Aug 2022 19:00:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,70 +6,31 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28649 invoked from network); 10 Feb 2017 23:00:13 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:mime-version:date
-         :subject:message-id:references:in-reply-to:to;
-        bh=Wp1j/6cGBEd3c8VlbQYpOTJF4jdgBfYbJNyAJlA2S2E=;
-        b=C9vke9NMwN3aIA1Q/uqexaEAuNBfY5gK1reErF192DdfHB+5IbGjXD4OFa1n+D9uI8
-         aiQyKFTC1dJp/Z2JUH0FImBQfweCx+5UjwQ8PgsNuaKqjL9d7i0o+/Izpa5+5jcWfZzu
-         arv0n23Mxsh6jXSmcX7etlbnrrusJBC2lIokGZtUVGsSdKcL3xIuWp55vLKmp5LvSLDH
-         msQqv9W20ghoGikMfMzChDeRe+DTHJWRZ4EX7cglwyIaZ0REcLvl2a0Sl+w55d/3qyAZ
-         2zO6tuTBEOrR2KqqIVIFWlvmg8LjzHkbpsoJUgsOvpToHHp9mcdzjmvPt91U21zVp3lT
-         wr3g==
-X-Gm-Message-State: AIkVDXJZWYRUlNtXJ006mMSgK04/hAzsJW43xK2zmYjYxjbJajK5iBLLNUbG78ZRc2Kgf1f6
-X-Received: by 10.36.92.4 with SMTP id q4mr30673057itb.89.1486767601931;
-        Fri, 10 Feb 2017 15:00:01 -0800 (PST)
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (1.0)
-Message-Id: <41947024-52FA-47F4-BC55-B15F563B69E8@redhat.com>
-References: <e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG> <616FD56C-60C1-48B6-983B-08FBD515343D@lanl.gov> <20170210205916.GB28439@hunt> <D999895D83BF47489B7647E60E228B4702FE7609@EX10MBOX05.pnnl.gov> <20170210224910.neeqi3e5265dgnxh@sentinelchicken.org>
-In-Reply-To: <20170210224910.neeqi3e5265dgnxh@sentinelchicken.org>
-X-Mailer: iPhone Mail (14D27)
-Date: Fri, 10 Feb 2017 16:00:00 -0700
-From: Kurt Seifried <kseifrie@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] MITRE is adding data intake to its CVE ID process
+Received: (qmail 32096 invoked from network); 6 Aug 2022 18:59:44 -0000
+Date: Sat, 6 Aug 2022 20:59:40 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Cc: Hugues ANGUELKOV <hanguelkov@randorisec.fr>
+Message-ID: <20220806185940.GA8784@openwall.com>
+References: <20220702193746.GA12948@openwall.com> <20220705065628.GA23475@suse.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220705065628.GA23475@suse.de>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Linux kernel: Netfilter heap buffer overflow in nft_set_elem_init
 
-Oh Lordy. Really?
+On Tue, Jul 05, 2022 at 08:56:28AM +0200, Marcus Meissner wrote:
+> Mitre has assigned CVE-2022-34918 to this issue.
 
-my rsa 2017 talk is "saving cve with open source" and I'm copresenting  wit=
-h Kent Landfield from Intel.=20
+> > ----- Forwarded message from Hugues ANGUELKOV <hanguelkov@randorisec.fr> -----
 
-Second hint: the DWF has a block of a million CVE IDs and I intend to use t=
-hem =F0=9F=98=8E
+> > Also, we would like to release the LPE exploit targeting Ubuntu server 
+> > along with a more detailed blogpost.
 
+Apparently, this is the blog post:
 
--Kurt
+https://www.randorisec.fr/crack-linux-firewall/
 
-
-
-
-
-> On Feb 10, 2017, at 15:49, Tim <tim-security@sentinelchicken.org> wrote:
->=20
->=20
->> This is a fine supplement to the oss-security list, but it completely
->> removes the possibility of natural discussion of CVEs by members
->> of the list.  Valuable insights might never surface unless every list=20
->> member manually monitors the database and decides to send a=20
->> message regarding a given database entry.
->>=20
->> In short, it removes the best avenue toward the collaboration upon
->> which all OSS development is based in the first place.  I don't mind
->> if MITRE requires submitters to use their web stuff, but messages
->> generated by that tool should also appear on this list, or something
->> very valuable will be lost.
->=20
->=20
-> It's pretty clear that MITRE's interest is increasingly aligned with
-> commercial software vendors and not the open source community at
-> large.  I wouldn't hold your breath on improvements to how The MITRE
-> Corporation deals with our community.  If you want something better,
-> we'll have to build it ourselves.  Note that I'm just the messenger.
->=20
-> tim
+Alexander
