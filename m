@@ -1,24 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/06/3
-Message-ID: <dd0e94aa-e439-9d45-dd8e-233b87287e02@apache.org>
-Date: Tue, 06 Dec 2022 17:42:05 +0000
-From: Markus Schuch <schuch@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-45910: Apache ManifoldCF: LDAP Injection Vulnerability - ActiveDirectory Authorities 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/07/4
+Message-ID: <CAB=ivF95gmkRr74nu5+_XmNkQKdGd==4hB+9N8EmaELQz+vHxQ@mail.gmail.com>
+Date: Sun, 7 Aug 2022 08:39:59 -0700
+From: Roxana Bradescu <roxabee@...omium.org>
+To: oss-security@...ts.openwall.com, security@...m.org
+Subject: Re: Exim < 4.95 heap overflow
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Adding the Exim security folks to this thread to shed some light on the
+original report and CVE discussion.
 
-Improper neutralization of special elements used in an LDAP query ('LDAP Injection') vulnerability in ActiveDirectory and Sharepoint ActiveDirectory authority connectors of Apache ManifoldCF allows an attacker to manipulate the LDAP search queries (DoS, additional queries, filter manipulation) during user lookup, if the username or the domain string are passed to the UserACLs servlet without validation.
+Per their
+https://github.com/Exim/exim/wiki/SecurityReleaseProcess they email this
+group and distros to notify of security issues. They will also issue CVEs.
+However I don’t actually see any CVE issued since 2019
+https://github.com/Exim/exim/wiki/EximSecurity
 
-This issue affects Apache ManifoldCF version 2.23 and prior versions.
+—-
+Regards, Roxana
 
-Credit:
+On Sun, Aug 7, 2022 at 6:49 AM John Helmert III <ajak@...too.org> wrote:
 
-4ra1n of Chaitin Tech (finder)
-
-References:
-
-https://manifoldcf.apache.org/
-https://cve.org/CVERecord?id=CVE-2022-45910
+> On Sat, Aug 06, 2022 at 10:46:42PM +0300, Evgeny Legerov wrote:
+> > Hi,
+> >
+> >
+> > Here is another bug which has been silently fixed in Exim.
+> >
+> > It has not been recognized as a security issue, many distros still don't
+> > have this patch.
+>
+> Why do you say it hasn't been recognized as a security issue? Distros
+> don't usually have a way of knowing about a vulnerability that needs
+> patching without a CVE. Have you requested a CVE?
+>
+> > Original report + patch  is here -
+> >
+> https://github.com/Exim/exim/commit/d4bc023436e4cce7c23c5f8bb5199e178b4cc743
+>
+> That commit does not seem like an original report.
+>
+> > Analysis of the bug  - https://github.com/ivd38/exim_overflow
+> >
+> > I don't post here because it is huge snippet of code.
+> >
+> >
+> > regards,
+> >
+> > -e
+> >
+> >
+> >
+>
 
