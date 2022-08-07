@@ -1,51 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/12/3
-Message-ID: <CAE_88GZRaZV=nRrOBD2_++u=LxUnX54RD8JY+ssRKWPhs8PW=g@mail.gmail.com>
-Date: Tue, 12 Jul 2022 14:58:47 -0300
-From: "Thiago H. de Paula Figueiredo" <thiagohp@...il.com>
-To: Tapestry users <users@...estry.apache.org>
-Cc: Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
-Subject: [CVE-2022-31781] Apache Tapestry denial of service vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/07/2
+Message-ID: <Yu+WyB/EKZ9m2hO2@bamboo.spacehopper.org>
+Date: Sun, 7 Aug 2022 11:41:12 +0100
+From: Stuart Henderson <sthen@...nbsd.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Exim < 4.95 heap overflow
 Content-Type: text/plain; charset=utf-8
 
-Regular Expression Denial of Service (ReDoS) in ContentType.java.
-(GHSL-2022-022) (CVE-2022-31781)
+On 2022/08/06 22:46, Evgeny Legerov wrote:
+> Hi,
+> 
+> 
+> Here is another bug which has been silently fixed in Exim.
+> 
+> It has not been recognized as a security issue, many distros still don't
+> have this patch.
+> 
+> Original report + patch  is here -
+> https://github.com/Exim/exim/commit/d4bc023436e4cce7c23c5f8bb5199e178b4cc743
+> 
+> Analysis of the bug  - https://github.com/ivd38/exim_overflow
+> 
+> I don't post here because it is huge snippet of code.
 
-PRODUCT AFFECTED:
+As a reader, I would much rather have a self-contained list post with a huge
+snippet of code, than a link to an external source. But in this case it isn't
+huge at all; the entire contents of https://github.com/ivd38/exim_overflow
+(README.md, exim.conf, asan.log) are certainly short enough for a list post.
 
-This issue affects Apache Tapestry 5.8.1.
-
-PROBLEM:
-
-Severity: low
-
-Apache Tapestry up to version 5.8.1 is vulnerable to Regular
-Expression Denial of Service (ReDoS) in the way it handles Content
-Types. Specially crafted Content Types may cause catastrophic
-backtracking, taking exponential time to complete.
-
-Specifically, this is about the regular expression used on the
-parameter of the org.apache.tapestry5.http.ContentType class.
-
-Apache Tapestry 5.8.2 has a fix for this vulnerability.
-
-Notice the vulnerability cannot be triggered by web requests in
-Tapestry code alone. It would only happen if there's some non-Tapestry
-codepath passing some outside input to the ContentType class
-constructor.
-
-This issue has been assigned CVE-2022-31781.
-
-MODIFICATION HISTORY:
-
-: Initial Publication.
-
-RELATED LINKS:
-
-CVE-2022-31781 at cve.mitre.org
-
-ACKNOWLEDGEMENTS:
-
-CodeQL team members [@atorralba (Tony
-Torralba)](https://github.com/atorralba) and [@joefarebrother (Joseph
-Farebrother)](https://github.com/joefarebrother).
