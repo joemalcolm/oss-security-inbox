@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["491" "Monday" "26" "June" "2017" "08:43:55" "+0200" "Greg KH" "greg@kroah.com" "<20170626064355.GA14009@kroah.com>" "13" "Re: [oss-security] Can someone explain all the CONFIG_VMAP_STACK CVEs lately?" "^Date:" nil nil "6" "2017062606:43:55" "[oss-security] Can someone explain all the CONFIG_VMAP_STACK CVEs lately?" (number mark "        greg@kroah.c Jun 26   13/491   " thread-indent "\"Re: [oss-security] Can someone explain all the CONFIG_VMAP_STACK CVEs lately?\"\n") "<CALCETrWGp4wARvxNopt7ZFUfDMssAw9oS8fuwROv76EdQe_OQA@mail.gmail.com>" ("<CALCETrWGp4wARvxNopt7ZFUfDMssAw9oS8fuwROv76EdQe_OQA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 14105 invoked by uid 550); 26 Jun 2017 07:02:57 -0000
+Received: (qmail 20172 invoked by uid 550); 7 Aug 2022 15:58:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +6,92 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14084 invoked from network); 26 Jun 2017 07:02:56 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-me-sender
-	:x-me-sender:x-sasl-enc:x-sasl-enc; s=fm1; bh=v7SxkVIB4mu09FnPTn
-	pmWfEx5TZQW2xyRt4hNjfW1kY=; b=JcuVzSUZPPkyXjCfPvp1uahxuOCEM/UJKY
-	OtSLe5rPpEDsrYeKb7wvbTAV8IIeDZlzu8ZB3Jaffo5wx6MuxIfUtOMBi7D9KIBd
-	GNUPj1cChIKA5lPARxFFYt4zmk+DL07FH2lh3uhX3C3wyTYkZgLKpWOLoGoHXohM
-	VNZUS2IHI4wyNCMS1TRlYrLVtYCGyLU1XJ7VghkAACY8LDf1Eqn8YsWsCx0X7Vwx
-	Lcax9i9ob6c6LJ17/GXvzfMbX3BQ6Y+bbktyz/+Udxb/WbWtN7ovckYf1QYl0eMX
-	TkXNv6ivIKHUAqRqLcpvjtc8w3QRYAyvyv79jj1mQB9OZZhODPkg==
-X-ME-Sender: <xms:lbFQWTooA3XmluBZUbXuhFsaL4vKZ8iBslpbtd5qlKFKjBhQoh7MvQ>
-X-Sasl-enc: 6J+8msMKW9KNCLgnS10K6o0ajphEQdRzYcGzDyCJJegD 1498460564
-Message-ID: <20170626064355.GA14009@kroah.com>
-References: <CALCETrWGp4wARvxNopt7ZFUfDMssAw9oS8fuwROv76EdQe_OQA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CALCETrWGp4wARvxNopt7ZFUfDMssAw9oS8fuwROv76EdQe_OQA@mail.gmail.com>
-User-Agent: Mutt/1.8.3 (2017-05-23)
-Date: Mon, 26 Jun 2017 08:43:55 +0200
-From: Greg KH <greg@kroah.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Can someone explain all the CONFIG_VMAP_STACK
- CVEs lately?
-To: oss-security@lists.openwall.com
+Received: (qmail 5405 invoked from network); 7 Aug 2022 15:40:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc;
+        bh=+BTLhx0VnpjsdYKzRlHf03EOlWm4xI2b6lCios+sboc=;
+        b=nFwsRBy4KsR9v2Le/QavCp06oH2EmK/O1R3dcCCHhGzR8F5yrWxIuNvJ9DtbxnO2Dg
+         ymaWOp2WIj0Li3Ex8rLUuSkhWDh0G6MrtsZjxCrGVyXA4/7nnMfghTPOJB02qT3Dn2DC
+         PfKppbiFvW7goNTcw2ZHs7gH7TuircmyX280k=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc;
+        bh=+BTLhx0VnpjsdYKzRlHf03EOlWm4xI2b6lCios+sboc=;
+        b=HqFUwxZIuO1uMGV7u5NmwmmV+cInlxJ/Xxdk4mda9+7uFVzrP1Pc3ycXHd/wwzBKhJ
+         zFg5Qmr/VkuWI7TDwgctx3HS6lGCjTnwbrxOSca30E03O8OCbG4W6XRjtctCYxggeAwD
+         V3jcnngkD7M5ah47HtO0ir6ihQvGS/vo1mr3ibFpjggGV16+en3quzjFvhdhGclg7pwq
+         tb6kwf/Q3wXGl3MQh/jNGW3L6gRUd+S2AZfPGqNGHH46ixXv+ChvOsiIuNTQr4k1Wveh
+         SvfAB9rICkW5sUFmWEZxbGkHNh5SxB2TPuP5F8pUPBHmcfY8A/i5MjYwLsdp8UNqi6/K
+         I6OA==
+X-Gm-Message-State: ACgBeo2STLcI7rIMVTBr2zgxkI2V/WAW4QOiB/SfyIVVaJR5UjhLuFV1
+	kXQPbuP04E9bWpSNvM9B+M80GXFdPvwp4vWSiUnrfvWqYv3Pvw==
+X-Google-Smtp-Source: AA6agR50a0aFuiPn1L5NfFbBkbmdSfCfrUHt5+3h5MG1qGvvHnX4yZdzjQPFbAL/YKQLj8+MwOwEYWJF+366R0WwN5g=
+X-Received: by 2002:a25:a428:0:b0:671:ca87:710c with SMTP id
+ f37-20020a25a428000000b00671ca87710cmr12884872ybi.4.1659886810027; Sun, 07
+ Aug 2022 08:40:10 -0700 (PDT)
+MIME-Version: 1.0
+References: <2dc37111-fd35-e10e-0162-1bdad2e80f5e@vulndisco.cc> <Yu7WIlgb9y4tGUDQ@gentoo.org>
+In-Reply-To: <Yu7WIlgb9y4tGUDQ@gentoo.org>
+From: Roxana Bradescu <roxabee@chromium.org>
+Date: Sun, 7 Aug 2022 08:39:59 -0700
+Message-ID: <CAB=ivF95gmkRr74nu5+_XmNkQKdGd==4hB+9N8EmaELQz+vHxQ@mail.gmail.com>
+To: oss-security@lists.openwall.com, security@exim.org
+Content-Type: multipart/alternative; boundary="000000000000adef8205e5a8833c"
+Subject: Re: [oss-security] Exim < 4.95 heap overflow
 
-On Sun, Jun 25, 2017 at 08:49:43PM -0700, Andy Lutomirski wrote:
-> I haven't checked what USB does, but I suspect it's a wildly
-> out-of-bounds DMA transfer that's more likely to result in a
-> straight-up abort than easily exploitable corruption.
+--000000000000adef8205e5a8833c
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-For USB, yes, it's just a totally failed DMA transaction and the driver
-will not work at all.  It's been that way since the 2.2 kernel days,
-nothing new there, it's just that this can now happen on "common"
-architectures :)
+Adding the Exim security folks to this thread to shed some light on the
+original report and CVE discussion.
 
-thanks,
+Per their
+https://github.com/Exim/exim/wiki/SecurityReleaseProcess they email this
+group and distros to notify of security issues. They will also issue CVEs.
+However I don=E2=80=99t actually see any CVE issued since 2019
+https://github.com/Exim/exim/wiki/EximSecurity
 
-greg k-h
+=E2=80=94-
+Regards, Roxana
+
+On Sun, Aug 7, 2022 at 6:49 AM John Helmert III <ajak@gentoo.org> wrote:
+
+> On Sat, Aug 06, 2022 at 10:46:42PM +0300, Evgeny Legerov wrote:
+> > Hi,
+> >
+> >
+> > Here is another bug which has been silently fixed in Exim.
+> >
+> > It has not been recognized as a security issue, many distros still don't
+> > have this patch.
+>
+> Why do you say it hasn't been recognized as a security issue? Distros
+> don't usually have a way of knowing about a vulnerability that needs
+> patching without a CVE. Have you requested a CVE?
+>
+> > Original report + patch  is here -
+> >
+> https://github.com/Exim/exim/commit/d4bc023436e4cce7c23c5f8bb5199e178b4cc=
+743
+>
+> That commit does not seem like an original report.
+>
+> > Analysis of the bug  - https://github.com/ivd38/exim_overflow
+> >
+> > I don't post here because it is huge snippet of code.
+> >
+> >
+> > regards,
+> >
+> > -e
+> >
+> >
+> >
+>
+
+--000000000000adef8205e5a8833c--
