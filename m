@@ -1,52 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/03/3
-Message-ID: <877d0cl4md.wl-neal@walfield.org>
-Date: Thu, 03 Nov 2022 11:22:18 +0100
-From: "Neal H. Walfield" <neal@...field.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/08/4
+Message-ID: <20220808112020.GA18620@openwall.com>
+Date: Mon, 8 Aug 2022 13:20:20 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
+Cc: Dipanjan Das <mail.dipanjan.das@...il.com>, Dylan Yudaken <dylany@...com>, Jens Axboe <axboe@...nel.dk>
+Subject: Linux kernel: io_uring: free of unallocated buffer list in io_register_pbuf_ring()
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 02 Nov 2022 13:03:31 +0100,
-Alex Gaynor wrote:
-> In Rust, assuming you wrote normal safe Rust[0], and you had code that
-> overran a buffer on the stack, you'd get a panic() -- which is roughly
-> an abort (there's even a mode where it literally is an abort. By
-> default it unwinds and runs destructors and such). As a general rule,
-> bounds check issues aren't caught at compile time (in contrast with
-> temporal safety, which mostly is enforced at compile time.)
+Hi,
 
-If you are careless, then this can indeed result in a panic, but that
-is not inevitable.  Here's how I'd copy a buffer in Rust:
+I think this wasn't reported in here before, and has no CVE ID?
 
-  fn main() -> Result<(), anyhow::Error> {
-      let mut dest = vec![10; 0];
-      let source = vec![10; 1];
-      let dest_offset = 0;
-      let source_offset = 0;
-      let len = 11;
+Writeup in Chinese dated July 29:
 
-      dest.get_mut(source_offset..source_offset+len)
-          .ok_or(anyhow::anyhow!("Index out of bounds"))?
-          .copy_from_slice(
-              source.get(dest_offset..dest_offset+len)
-                  .ok_or(anyhow::anyhow!("Index out of bounds"))?
-              );
+https://dawnslab.jd.com/linux-5.19-rc2_pbuf_ring_0day/
 
-      Ok(())
-  }
+Fix dated July 21, per the writeup included in 5.19-rc8:
 
-  https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=b7981319d0629bfc83cc29f23d43a3be
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ec8516f3b7c40ba7050e6b3a32467e9de451ecdf
 
-This returns an error when you attempt to read past the end of the
-source buffer (the first `ok_or`) or write beyond the end of the
-destintation buffer (the second `ok_or`).  The caller can catch or
-propagate any error in the usual Rust way (e.g., by using the `?`
-operator to return the error to its caller).
+Per the Fixes tag, the bug was introduced in May, in:
 
-Unfortunately, `copy_from_slice` will still panic if the slices are
-not the same length.
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c7fb19428d67
 
-  https://doc.rust-lang.org/stable/std/primitive.slice.html#method.copy_from_slice
-
-:) Neal
+Alexander
