@@ -1,44 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/28/2
-Message-ID: <20221228152458.6xyksrxunukjrtzx@mutt-hbsd>
-Date: Wed, 28 Dec 2022 10:24:58 -0500
-From: Shawn Webb <shawn.webb@...denedbsd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/08/9
+Message-ID: <cf914925-7d43-837b-cc49-d587328f1866@apache.org>
+Date: Mon, 08 Aug 2022 19:33:29 +0000
+From: Ryan Skraba <rskraba@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: Alejandro Colomar <alx.manpages@...il.com>, Michael Kerrisk <mtk.manpages@...il.com>, linux-kernel@...r.kernel.org, linux-man@...r.kernel.org
-Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
+Subject: CVE-2022-35724: Apache Avro: Denial of service while reading data in Avro Rust SDK 
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Dec 27, 2022 at 04:44:49PM -0800, Lyndon Nerenberg (VE7TFX/VE6BBM) wrote:
-> Dominique Martinet writes:
-> 
-> > But, really, I just don't see how this can practically be said to be parsable...
-> 
-> In its current form it never will be.  The solution is to place
-> this variable-length field last.  Then you can "cut -d ' ' -f 51-"
-> to get the command+args part (assuming I counted all those fields
-> correctly ...)
-> 
-> Of course, this breaks backwards compatability.
+Severity: important
 
-It would also break forwards compatibility in the case new fields
-needed to be added.
+Description:
 
-The only solution would be a libxo-style feature wherein a
-machine-parseable format is exposed by virtue of a file extension.
+It is possible to provide data to be read that leads the reader to loop in cycles endlessly, consuming CPU.  This issue affects Rust applications using Apache Avro Rust SDK prior to 0.14.0 (previously known as avro-rs).  Users should update to apache-avro version 0.14.0 which addresses this issue.
 
-Examples:
+Credit:
 
-1. /proc/pid/stats.json
-2. /proc/pid/stats.xml
-3. /proc/pid/stats.yaml_shouldnt_be_a_thing
+This issue was reported to the Apache Avro team by Evan Richter at ForAllSecure and found with Mayhem.
 
-Thanks,
-
--- 
-Shawn Webb
-Cofounder / Security Engineer
-HardenedBSD
-
-https://git.hardenedbsd.org/hardenedbsd/pubkeys/-/raw/master/Shawn_Webb/03A4CBEBB82EA5A67D9F3853FF2E67A277F8E1FA.pub.asc
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
