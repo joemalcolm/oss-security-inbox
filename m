@@ -1,89 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/27/3
-Message-ID: <827s9p32-qo7-954s-8pqr-n8p7sp55q242@unkk.fr>
-Date: Wed, 27 Apr 2022 08:42:57 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl bad local IPv6 connection reuse
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/08/5
+Message-ID: <87a68fncyi.fsf@oldenburg.str.redhat.com>
+Date: Mon, 08 Aug 2022 14:20:53 +0200
+From: Florian Weimer <fweimer@...hat.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com,  Dipanjan Das <mail.dipanjan.das@...il.com>,  Dylan Yudaken <dylany@...com>,  Jens Axboe <axboe@...nel.dk>
+Subject: Re: Linux kernel: io_uring: free of unallocated buffer list in io_register_pbuf_ring()
 Content-Type: text/plain; charset=utf-8
 
-Bad local IPv6 connection reuse
-===============================
+* Solar Designer:
 
-Project curl Security Advisory, April 27 2022 -
-[Permalink](https://curl.se/docs/CVE-2022-27775.html)
+> I think this wasn't reported in here before, and has no CVE ID?
+>
+> Writeup in Chinese dated July 29:
+>
+> https://dawnslab.jd.com/linux-5.19-rc2_pbuf_ring_0day/
+>
+> Fix dated July 21, per the writeup included in 5.19-rc8:
+>
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ec8516f3b7c40ba7050e6b3a32467e9de451ecdf
+>
+> Per the Fixes tag, the bug was introduced in May, in:
+>
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c7fb19428d67
 
-VULNERABILITY
--------------
+Wasn't this introduced and fixed during 5.19 development?  In those
+cases, no CVE assignment is expected.
 
-libcurl keeps previously used connections in a connection pool for subsequent
-transfers to reuse, if one of them matches the setup.
+Thanks,
+Florian
 
-Due to errors in the logic, the config matching function did not take the IPv6
-address zone id into account which could lead to libcurl reusing the wrong
-connection when one transfer uses a zone id and a subsequent transfer uses
-another (or no) zone id.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-Zone ids are only used for non-global scoped IPv6 addresses and they are only
-used when specifying the address numerically.
-
-This flaw has existed in curl since commit [2d0e9b40d3237b1](https://github.com/curl/curl/commit/2d0e9b40d3237b1), shipped in libcurl 7.65.0, released on May 22 2019. Previous versions will
-instead not accept URLs with zone ids.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2022-27775 to this issue.
-
-CWE-200: Exposure of Sensitive Information to an Unauthorized Actor
-
-Severity: Low
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.65.0 to and including 7.82.0
-- Not affected versions: curl < 7.65.0 and curl >= 7.83.0
-
-Also note that libcurl is used by many applications, and not always advertised
-as such.
-
-THE SOLUTION
-------------
-
-A [fix for CVE-2022-27775](https://github.com/curl/curl/commit/058f98dc3fe595f21dc26)
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 7.83.0
-
-  B - Apply the patch to your local version
-
-  C - Do not use non-global numerical IPv6 addresses in URLs to curl
-
-TIMELINE
---------
-
-This issue was reported to the curl project on April 21, 2022. We contacted
-distros@...nwall on April 21.
-
-libcurl 7.83.0 was released on April 27 2022, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-This issue was reported by Harry Sintonen. Patched by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
