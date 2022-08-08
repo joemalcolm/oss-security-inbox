@@ -1,25 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/20/1
-Message-ID: <bab9580c-76bf-f921-4611-edf215db4a9d@apache.org>
-Date: Tue, 20 Dec 2022 10:08:46 +0000
-From: Jarek Potiuk <potiuk@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/08/8
+Message-ID: <YvFpTsZI8HRkMYYM@itl-email>
+Date: Mon, 8 Aug 2022 15:51:34 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-46421: Apache Airflow Hive Provider: Hive Provider RCE vulnerability with hive_cli_params 
+Subject: Re: CVE-2022-2590: Linux kernel: Modifying shmem/tmpfs files without write permissions
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+On Mon, Aug 08, 2022 at 09:18:27AM +0200, David Hildenbrand wrote:
+> Hi,
+> 
+> I found a security issue (CVE-2022-2590) in the Linux kernel similar to
+> Dirty COW (CVE-2016-5195), however, restricted to shared memory (shmem /
+> tmpfs). I notified distributions one week ago and the embargo ended today.
+> 
+> An unprivileged user can modify file content of a shmem (tmpfs) file,
+> even if that user does not have write permissions to the file. The file
+> could be an executable.
 
-Description:
+Is Android affected by this, or do other protections (such as SELinux)
+prevent an exploit from succeeding?  Also, is read access to the file
+necessary?  Are sealed memfds impacted?
 
-Improper Neutralization of Special Elements used in a Command ('Command Injection') vulnerability in Apache Software Foundation Apache Airflow Hive Provider.This issue affects Apache Airflow Hive Provider: before 5.0.0.
+> The introducing upstream commit ID is:
+>   9ae0f87d009c ("mm/shmem: unconditionally set pte dirty in
+>   mfill_atomic_install_pte")
+> 
+> Linux >= v5.16 is affected on x86-64 and aarch64 if the kernel is
+> compiled with CONFIG_USERFAULTFD=y. For Linux < v5.19 it's sufficient to
+> revert the problematic commit, which is possible with minor contextual
+> conflicts. For Linux >= v5.19 I'll send a proposal fix today.
+> 
+> I have a working reproducer that I will post as reply to this mail in
+> one week (August 15).
 
-Credit:
+Can you try to make sure that a patch has made it into Greg’s stable
+trees by then?  Also, would it be possible to include a regression test?
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-id_No2015429 of 3H Security Team (finder)
-
-References:
-
-https://github.com/apache/airflow/pull/28101
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2022-46421
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
