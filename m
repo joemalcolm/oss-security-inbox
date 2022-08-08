@@ -1,21 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/25/5
-Message-ID: <CA+ZBtZ4H7FSgb6_c8BXHUd=JesdUC914GvF0_2sUrHDsAdxVhg@mail.gmail.com>
-Date: Tue, 25 Jan 2022 19:39:06 +0800
-From: Zhang Yonglun <zhangyonglun@...che.org>
-To: oss-security@...ts.openwall.com, dev@...nyu.apache.org
-Subject: CVE-2022-23944: Apache ShenYu 2.4.1 Improper access control
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/08/1
+Message-ID: <1973d16e-bb3e-c5b2-74e0-cc2faf9db2bd@redhat.com>
+Date: Mon, 8 Aug 2022 09:18:27 +0200
+From: David Hildenbrand <david@...hat.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2022-2590: Linux kernel: Modifying shmem/tmpfs files without write permissions
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Hi,
 
-User can access /plugin api without authentication. This issue
-affected Apache ShenYu 2.4.0 and 2.4.1.
+I found a security issue (CVE-2022-2590) in the Linux kernel similar to
+Dirty COW (CVE-2016-5195), however, restricted to shared memory (shmem /
+tmpfs). I notified distributions one week ago and the embargo ended today.
 
+An unprivileged user can modify file content of a shmem (tmpfs) file,
+even if that user does not have write permissions to the file. The file
+could be an executable.
 
---
+The introducing upstream commit ID is:
+  9ae0f87d009c ("mm/shmem: unconditionally set pte dirty in
+  mfill_atomic_install_pte")
 
-Zhang Yonglun
-Apache ShenYu (Incubating)
-Apache ShardingSphere
+Linux >= v5.16 is affected on x86-64 and aarch64 if the kernel is
+compiled with CONFIG_USERFAULTFD=y. For Linux < v5.19 it's sufficient to
+revert the problematic commit, which is possible with minor contextual
+conflicts. For Linux >= v5.19 I'll send a proposal fix today.
+
+I have a working reproducer that I will post as reply to this mail in
+one week (August 15).
+
+-- 
+Thanks,
+
+David / dhildenb
 
