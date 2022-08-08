@@ -1,48 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/23/12
-Message-ID: <Y6XcWDBY2uBellV3@gentoo.org>
-Date: Fri, 23 Dec 2022 10:50:32 -0600
-From: John Helmert III <ajak@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/08/10
+Message-ID: <4c7df63d-59b6-d40a-6c22-6b42f5ce7279@apache.org>
+Date: Mon, 08 Aug 2022 19:33:37 +0000
+From: Ryan Skraba <rskraba@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Details on this supposed Linux Kernel ksmbd RCE
+Subject: CVE-2022-36124: Apache Avro: Memory overconsumption in Avro Rust SDK 
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Dec 23, 2022 at 05:19:06PM +0100, Marcus Meissner wrote:
-> On Fri, Dec 23, 2022 at 03:20:17PM +0100, Greg KH wrote:
-> > On Fri, Dec 23, 2022 at 09:04:25AM -0500, Sasha Levin wrote:
-> > > On Fri, Dec 23, 2022 at 09:17:28AM +0100, Marcus Meissner wrote:
-> > > > Not sure why they do not like you, but to be very clear anyone else can
-> > > > requests CVEs for the kernel, (except the blacklisted drivers/staging/ area).
-> > > 
-> > > For CVEs assigned (earlier this month) to issues in drivers/staging,
-> > > what would be the process to remove the assignment or mark them as
-> > > invalid?
-> > 
-> > And who is doing this "blacklisting" of staging drivers from CVEs?  Why
-> > are they special when many distros do enable and rely on them?
-> 
-> This is just information I received when I tried to allocate a CVE for a
-> staging driver.
-> 
-> It has been over a year ago, so perhaps the this changed meanwhile again.
+Severity: moderate
 
-SUSE is a CNA. Wouldn't you be able to oassign a CVE via the SUSE CNA
-without going through MITRE?
+Description:
 
-> > In my talks with MITRE, they have said they don't want to make public
-> > statments about the CVE issues and Linux, which is sad, but they never
-> > mentioned anything about "we will ignore this portion of the kernel
-> > source tree".  Is that in a public statement anywhere that I can point
-> > to when people ask the kernel security team for CVEs?
-> 
-> No, it was in a private email, I will search for it, but I cannot
-> promise I will find it again.
-> 
-> Ciao, Marcus
+It is possible for a Reader to consume memory beyond the allowed constraints and thus lead to out of memory on the system. This issue affects Rust applications using Apache Avro Rust SDK prior to 0.14.0 (previously known as avro-rs).  Users should update to apache-avro version 0.14.0 which addresses this issue.
 
-Relatedly, I find it very frustrating how little visibility there is
-into the world's interactions with cveform.mitre.org. Your form inputs
-aren't even sent back to you in the automated response, which makes it
-quite hard to keep track of the state of changes you've asked for.
+Credit:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
+This issue was reported to the Apache Avro team by Evan Richter at ForAllSecure and found with Mayhem.
+
