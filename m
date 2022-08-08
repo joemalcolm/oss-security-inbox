@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1819" "Monday" "10" "February" "2020" "13:49:30" "-0800" "Andy LoPresto" "alopresto@apache.org" nil "43" nil "^Date:" nil nil "2" nil nil (number mark "        alopresto@ap Feb 10   43/1819  " thread-indent "\"[oss-security] CVE-2020-1942: Apache NiFi 0.0.1 to 1.11.0 information disclosure in logs\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-1942: Apache NiFi 0.0.1 to 1.11.0 information disclosure in logs" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 13868 invoked by uid 550); 10 Feb 2020 22:15:37 -0000
+Received: (qmail 3310 invoked by uid 550); 8 Aug 2022 11:07:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,73 +6,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32412 invoked from network); 10 Feb 2020 21:49:44 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:mime-version:subject:message-id:date:to;
-        bh=4nXXwMCj1jhi/5+6AgDge5jPYM1NZQWyBB+sS+Trqso=;
-        b=DAgFKA88KdEdPEz9hkbO0+9SX6BNgG2Kb3Oaq6Om53naAzy1nsCrNfLFsuurCPfyWM
-         bVOOUYtbciEsOCFqiSSTUdU4zu5EaMZ6QvoyuSJifsjMB/fNIK18Wkms++tfE+F1jBha
-         8Z9r8goBvKbeEk0WvlUoZsI15hgcfY2q3AkGtsyje6D/N5q3RXwgfA56p+HQ3IGIe4TB
-         3nhX6G81Fgr1Us3rh3AXGcQyL6TxaDEcZCag3VB47pYxgtHXoFQVB5u+n3wz6S/c9qQ6
-         +u5u4WGGafjEIX1eGwWpDsd93OULq3WKjFfcdObLODp5KRaHxHsOpu8yqGCAmYDHE4ax
-         tVVA==
-X-Gm-Message-State: APjAAAWKPO8b1ibAoV8xD1RtdaZfuoWXZhzyRj4h+3bKG2aSi0VPy8vf
-	MHQSB1ElQy4jsKrT7CZHocdxs+ca
-X-Google-Smtp-Source: APXvYqykOdzko1WHGNJFu1/QhG54vCZQohaLM4UgfH4nZ0EfW1TuaeOjyHc5neuaTYjqmurhjeOhQA==
-X-Received: by 2002:a17:902:161:: with SMTP id 88mr2913565plb.129.1581371371744;
-        Mon, 10 Feb 2020 13:49:31 -0800 (PST)
-Content-Type: multipart/alternative;
-	boundary="Apple-Mail=_42DC1E86-174C-4CF1-97F4-99203FBCF0CC"
-Mime-Version: 1.0 (Mac OS X Mail 12.2 \(3445.102.3\))
-Message-Id: <CE6967F1-2CD4-4A6E-89CF-75B2FE817EAE@apache.org>
-X-Mailer: Apple Mail (2.3445.102.3)
-Date: Mon, 10 Feb 2020 13:49:30 -0800
-From: Andy LoPresto <alopresto@apache.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2020-1942: Apache NiFi 0.0.1 to 1.11.0 information disclosure in logs
+Received: (qmail 1763 invoked from network); 8 Aug 2022 11:07:22 -0000
+Date: Mon, 8 Aug 2022 13:07:13 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Cc: David Bouman <dbouman03@gmail.com>
+Message-ID: <20220808110713.GA18509@openwall.com>
+References: <d5567e4b-884c-9449-1cfc-0c21b6a4a752@gmail.com> <YmLRsltx7Y1s0vo2@eldamar.lan>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YmLRsltx7Y1s0vo2@eldamar.lan>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Linux: UaF due to concurrency issue in io_uring timeouts
 
---Apple-Mail=_42DC1E86-174C-4CF1-97F4-99203FBCF0CC
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+Hi,
 
-The https://nifi.apache.org/security.html <https://nifi.apache.org/security=
-.html> page has been updated with 1 vulnerability discovered in previous Ni=
-Fi versions which has been resolved in release 1.11.1. The severity of this=
- issue was determined to be =E2=80=98important'. Questions about this vulne=
-rability can be directed to security@nifi.apache.org <mailto:security@nifi.=
-apache.org>.
+Jayden and David have recently published a lengthy write-up on this
+vulnerability, here:
 
-CVE-2020-1942: Apache NiFi information disclosure in logs
+https://ruia-ruia.github.io/2022/08/05/CVE-2022-29582-io-uring/
 
-Severity: Important
+and exploit here:
 
-Versions Affected: Apache NiFi 0.0.1 - 1.11.0
+https://github.com/Ruia-ruia/CVE-2022-29582-Exploit
 
-Description: The flow fingerprint factory generated flow fingerprints which=
- included sensitive property descriptor values. In the event a node attempt=
-ed to join a cluster and the cluster flow was not inheritable, the flow fin=
-gerprint of both the cluster and local flow was printed, potentially contai=
-ning sensitive values in plaintext.
+Alexander
 
-Mitigation: Implemented Argon2 secure hashing to provide a deterministic lo=
-ggable value which does not reveal the sensitive value. Users running any p=
-revious NiFi release should upgrade to the latest release.
-
-Released: February 4, 2020
-
-If you identify new security issues within the NiFi 1.11.1 release, please =
-forward your report to security@nifi.apache.org <mailto:security@nifi.apach=
-e.org> and do not disclose the issue publicly. The security vulnerability r=
-eporting and disclosure process can be found here: https://www.apache.org/s=
-ecurity/committers.html <https://www.apache.org/security/committers.html>.
-
-Andy LoPresto
-alopresto@apache.org
-alopresto.apache@gmail.com
-PGP Fingerprint: 70EC B3E5 98A6 5A3F D3C4  BACE 3C6E F65B 2F7D EF69
-
-
---Apple-Mail=_42DC1E86-174C-4CF1-97F4-99203FBCF0CC--
+On Fri, Apr 22, 2022 at 06:02:58PM +0200, Salvatore Bonaccorso wrote:
+> Hi David,
+> 
+> On Fri, Apr 22, 2022 at 02:43:27AM +0200, David Bouman wrote:
+> > Hello list,
+> > 
+> > We (Jayden Rivers and David Bouman) are disclosing a bug we found in the
+> > Linux kernel's io_uring subsystem. We have written a local privilege
+> > escalation PoC that can successfully elevate to system root from an
+> > unprivileged process (in a container). We will be releasing a blog post
+> > (including exploit code) in a week or two. It should be noted that unlike
+> > many Linux vulnerabilities that have surfaced recently, triggering this one
+> > does not require an attacker to have any kind of privileges (e.g. in a user
+> > namespace). This leaves many systems vulnerable.
+> > 
+> > We are still looking for a CNA representative that can assign a CVE number
+> > for this vulnerability; please contact us!
+> > 
+> > Kernel versions 5.10+ are affected, and linux-stable patches are already
+> > pushed. The upstream patch commit is
+> > e677edbcabee849bfdd43f1602bccbecf736a646 ("io_uring: fix race between
+> > timeout flush and removal").
+> > 
+> > When the IORING_OP_TIMEOUT (T) and IORING_OP_LINK_TIMEOUT (LT) opcodes are
+> > combined in a linked submission queue entry, and another request (B)
+> > finishes, a race might occur: namely, when due to the completion of B, T is
+> > cancelled (through the completion event count), and LT is canceled by its
+> > hrtimer at the same time. Whilst T is still being cleaned up, LT is already
+> > freed by a different execution context, and since they are linked, the
+> > cleanup of T retains a dangling reference to the now-freed LT. Hence,
+> > there's a use-after-free.
+> > 
+> > Exploitation-wise, the attacker can reallocate LT to another `struct
+> > io_kiocb` and defer the UaF to e.g. a `struct file` (this is the technique
+> > we will describe in aforementioned blog post).
+> > 
+> > The race window is quite tight and the scenario is complicated, so the race
+> > can only be won very infrequently in our experience.
+> > 
+> > It is advised to upgrade your kernel to latest ASAP.
+> > 
+> > Greetings,
+> > 
+> > Jayden Rivers & David Bouman
+> 
+> This has CVE-2022-29582 assigned.
+> 
+> https://www.cve.org/CVERecord?id=CVE-2022-29582
+> 
+> Regards,
+> Salvatore
