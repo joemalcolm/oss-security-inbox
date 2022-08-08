@@ -1,22 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/22/1
-Message-ID: <YhSEHmSudhT0ig/f@eldamar.lan>
-Date: Tue, 22 Feb 2022 07:35:10 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/08/3
+Message-ID: <20220808110713.GA18509@openwall.com>
+Date: Mon, 8 Aug 2022 13:07:13 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: heap out of bounds write in nf_dup_netdev.c since 5.4
+Cc: David Bouman <dbouman03@...il.com>
+Subject: Re: Linux: UaF due to concurrency issue in io_uring timeouts
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-On Mon, Feb 21, 2022 at 08:38:23PM +0000, Nick Gregory wrote:
-> There is a heap out of bounds write in the function nft_fwd_dup_netdev_offload (nf_dup_netdev.c). This was introduced in 5.4-rc1 by https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=be2861dc36d77ff3778979b9c3c79ada4affa131, and is fixed by https://git.kernel.org/pub/scm/linux/kernel/git/netfilter/nf.git/commit/?id=b1a5983f56e371046dcf164f90bfaf704d2b89f6. I have created a sample LPE targeting Ubuntu 21.10 with KASLR disabled.
-> 
-> In nft_fwd_dup_netdev_offload, ctx->num_actions++ is used to offset into the flow->rule->action.entries array (nf_dup_netdev.c:67) when setting up dup or fwd flow rules on a chain with hardware offload enabled. However there is a mismatch between the number of times the increment is called vs. the number of allocated entries. The allocated array size is based on the number of nftables expressions that have expr.offload_flags&NFT_OFFLOAD_F_ACTION (nf_tables_offload.c:97), but only the immediate expression type has this (not dup or fwd). It's possible to manually create a rule with dup/fwd expressions that don't have a corresponding/preceding immediate, leading to an undersized entries array, and an arbitrary number of out of bounds array writes. Despite being in code dealing with hardware offload, this is reachable when targeting network devices that don't have offload functionality (e.g. lo) as the bug is triggered before the rule creation fails. Additionally, while nftables requires CAP_NET_ADMIN, we can unshare into a new network namespace to get this as a (normally) unprivileged user. The reproducer code below demonstrates all of this, and will likely immediately panic the system.
-> 
-> This can be turned into kernel ROP/local privilege escalation without too much difficulty, as one of the values that is written out of bounds is conveniently a pointer to a net_device structure. There are many opportunities for one of the OOB writes to land in another heap allocated structure which then misuses it (type confusion, freeing it, etc.). Additionally, an OOB write could be landed in a buffer returned to userland, leaking the address of the net_device allocation out.
+Jayden and David have recently published a lengthy write-up on this
+vulnerability, here:
 
-This isse seems to have CVE-2022-25636 assigned.
+https://ruia-ruia.github.io/2022/08/05/CVE-2022-29582-io-uring/
 
-Regards,
-Salvatore
+and exploit here:
+
+https://github.com/Ruia-ruia/CVE-2022-29582-Exploit
+
+Alexander
+
+On Fri, Apr 22, 2022 at 06:02:58PM +0200, Salvatore Bonaccorso wrote:
+> Hi David,
+> 
+> On Fri, Apr 22, 2022 at 02:43:27AM +0200, David Bouman wrote:
+> > Hello list,
+> > 
+> > We (Jayden Rivers and David Bouman) are disclosing a bug we found in the
+> > Linux kernel's io_uring subsystem. We have written a local privilege
+> > escalation PoC that can successfully elevate to system root from an
+> > unprivileged process (in a container). We will be releasing a blog post
+> > (including exploit code) in a week or two. It should be noted that unlike
+> > many Linux vulnerabilities that have surfaced recently, triggering this one
+> > does not require an attacker to have any kind of privileges (e.g. in a user
+> > namespace). This leaves many systems vulnerable.
+> > 
+> > We are still looking for a CNA representative that can assign a CVE number
+> > for this vulnerability; please contact us!
+> > 
+> > Kernel versions 5.10+ are affected, and linux-stable patches are already
+> > pushed. The upstream patch commit is
+> > e677edbcabee849bfdd43f1602bccbecf736a646 ("io_uring: fix race between
+> > timeout flush and removal").
+> > 
+> > When the IORING_OP_TIMEOUT (T) and IORING_OP_LINK_TIMEOUT (LT) opcodes are
+> > combined in a linked submission queue entry, and another request (B)
+> > finishes, a race might occur: namely, when due to the completion of B, T is
+> > cancelled (through the completion event count), and LT is canceled by its
+> > hrtimer at the same time. Whilst T is still being cleaned up, LT is already
+> > freed by a different execution context, and since they are linked, the
+> > cleanup of T retains a dangling reference to the now-freed LT. Hence,
+> > there's a use-after-free.
+> > 
+> > Exploitation-wise, the attacker can reallocate LT to another `struct
+> > io_kiocb` and defer the UaF to e.g. a `struct file` (this is the technique
+> > we will describe in aforementioned blog post).
+> > 
+> > The race window is quite tight and the scenario is complicated, so the race
+> > can only be won very infrequently in our experience.
+> > 
+> > It is advised to upgrade your kernel to latest ASAP.
+> > 
+> > Greetings,
+> > 
+> > Jayden Rivers & David Bouman
+> 
+> This has CVE-2022-29582 assigned.
+> 
+> https://www.cve.org/CVERecord?id=CVE-2022-29582
+> 
+> Regards,
+> Salvatore
