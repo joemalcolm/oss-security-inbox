@@ -1,4 +1,4 @@
-Received: (qmail 31965 invoked by uid 550); 5 Jul 2022 15:19:15 -0000
+Received: (qmail 25822 invoked by uid 550); 9 Aug 2022 12:04:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,100 +7,139 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30678 invoked from network); 5 Jul 2022 15:18:45 -0000
-X-Originating-IP: [10.190.65.210]
-Date: Tue, 5 Jul 2022 23:18:18 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: duoming@zju.edu.cn
-To: oss-security@lists.openwall.com
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20210104(ab8c30b6)
- Copyright (c) 2002-2022 www.mailtech.cn zju.edu.cn
-In-Reply-To: <410aa0c9.2541c.181c24f0c89.Coremail.duoming@zju.edu.cn>
-References: <410aa0c9.2541c.181c24f0c89.Coremail.duoming@zju.edu.cn>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+Received: (qmail 25723 invoked from network); 9 Aug 2022 12:03:48 -0000
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vulndisco.cc; s=mail; t=1660046616;
+	bh=DiEnPFHd7a72c/bFdEDD2NF5oRMNSIsmLxNOM2XgW4A=;
+	h=Subject:To:From:Date:Message-ID;
+	b=Y8GpBRd+Ld7AZ88n4KmkufEq/U3Ge2h4OmfXoZvMVyTtjuVTXTKjySgOAHMbv6uu8
+	 qouSCIcFsON8FWBIw4QGBLWCGYOF6Nv6wPvYiPkn5K/G0c71oTAgSw+Yo42HB1IQ9E
+	 fBGdHjx3VqXlRjbN60lWmNDreUPuoVrnr6M1H2rc=
+Authentication-Results: sas1-384d3eaa6677.qloud-c.yandex.net; dkim=pass header.i=@vulndisco.cc
+Message-ID: <7108492d-0757-96f5-f31d-a1300ec2a314@vulndisco.cc>
+Date: Tue, 9 Aug 2022 15:03:34 +0300
 MIME-Version: 1.0
-Message-ID: <3a78c5ea.2c9db.181cef0d3ac.Coremail.duoming@zju.edu.cn>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: cC_KCgD3x8g6VsRicoGdAQ--.29342W
-X-CM-SenderInfo: qssqjiasttq6lmxovvfxof0/1tbiAgECAVZdtaicNwAusT
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
-	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
-	daVFxhVjvjDU=
-Subject: [oss-security] Re: Linux kernel: UAF vulnerabilities in rose protocol
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Content-Language: en-US
+From: Evgeny Legerov <admin@vulndisco.cc>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] Exim 4.96 overflow
 
-SGVsbG8sCgpPbiBTdW4sIDMgSnVsIDIwMjIgMTI6MjY6MDkgKzA4MDAgRHVv
-bWluZyBaaG91IHdyb3RlOgoKPiBIZWxsbyB0aGVyZSwKPiAKPiBUaGVyZSBh
-cmUgdXNlLWFmdGVyLWZyZWUgdnVsbmVyYWJpbGl0aWVzIGNhdXNlZCBieSB0
-aW1lciBoYW5kbGVyIGluIG5ldC9yb3NlL3Jvc2VfdGltZXIuYwo+IG9mIGxp
-bnV4IHRoYXQgYWxsb3cgYXR0YWNrZXJzIHRvIGNyYXNoIGxpbnV4IGtlcm5l
-bCB3aXRob3V0IGFueSBwcml2aWxlZ2VzLgo+IAo+ID0qPSo9Kj0qPSo9Kj0q
-PSo9ICBCdWcgRGV0YWlscyAgPSo9Kj0qPSo9Kj0qPSo9Kj0KPiAKPiBUaGUg
-cm9vdCBjYXVzZSBpcyB0aGF0IGRlbF90aW1lcigpIGNvdWxkIG5vdCBzdG9w
-IHRoZSB0aW1lciBoYW5kbGVyIHRoYXQgaXMgcnVubmluZwo+IGFuZCB0aGUg
-cmVmY291bnQgb2Ygc29jayBpcyBub3QgbWFuYWdlZCBwcm9wZXJseSBpbiBy
-b3NlIHByb3RvY29sLgo+IAo+IEF0dGFja2VycyBjYW4gdXNlIGFuIGFjdGl2
-ZSByb3NlIG5ldHdvcmsgaW50ZXJmYWNlLCB0aGVuLCBjYWxsIGNsb3NlKCks
-IGJpbmQoKQo+IGFuZCBjb25uZWN0KCkgc3lzY2FsbCB0byBjcmFzaCBMaW51
-eCBrZXJuZWwgd2l0aG91dCBhbnkgcHJpdmlsZWdlcy4KPiAKPiA9Kj0qPSo9
-Kj0qPSo9Kj0qPSAgQnVnIEVmZmVjdHMgID0qPSo9Kj0qPSo9Kj0qPSo9Cj4g
-Cj4gV2UgY2FuIHN1Y2Nlc3NmdWxseSB0cmlnZ2VyIHRoZSB2dWxuZXJhYmls
-aXRpZXMgdG8gY3Jhc2ggdGhlIGxpbnV4IGtlcm5lbC4KPiAKPiBCVUc6IEtB
-U0FOOiB1c2UtYWZ0ZXItZnJlZSBpbiBfcmF3X3NwaW5fbG9jaysweDVhLzB4
-MTEwCj4gV3JpdGUgb2Ygc2l6ZSA0IGF0IGFkZHIgZmZmZjg4ODAwYWU1OTA5
-OCBieSB0YXNrIHN3YXBwZXIvMy8wCj4gLi4uCj4gQ2FsbCBUcmFjZToKPiAg
-PElSUT4KPiAgZHVtcF9zdGFja19sdmwrMHhiZi8weGVlCj4gIHByaW50X2Fk
-ZHJlc3NfZGVzY3JpcHRpb24rMHg3Yi8weDQ0MAo+ICBwcmludF9yZXBvcnQr
-MHgxMDEvMHgyMzAKPiAgPyBpcnFfd29ya19zaW5nbGUrMHhiYi8weDE0MAo+
-ICA/IF9yYXdfc3Bpbl9sb2NrKzB4NWEvMHgxMTAKPiAga2FzYW5fcmVwb3J0
-KzB4ZWQvMHgxMjAKPiAgPyBfcmF3X3NwaW5fbG9jaysweDVhLzB4MTEwCj4g
-IGthc2FuX2NoZWNrX3JhbmdlKzB4MmJkLzB4MmUwCj4gIF9yYXdfc3Bpbl9s
-b2NrKzB4NWEvMHgxMTAKPiAgcm9zZV9oZWFydGJlYXRfZXhwaXJ5KzB4Mzkv
-MHgzNzAKPiAgPyByb3NlX3N0YXJ0X2hlYXJ0YmVhdCsweGIwLzB4YjAKPiAg
-Y2FsbF90aW1lcl9mbisweDJkLzB4MWMwCj4gID8gcm9zZV9zdGFydF9oZWFy
-dGJlYXQrMHhiMC8weGIwCj4gIGV4cGlyZV90aW1lcnMrMHgxZjMvMHgzMjAK
-PiAgX19ydW5fdGltZXJzKzB4M2ZmLzB4NGQwCj4gIHJ1bl90aW1lcl9zb2Z0
-aXJxKzB4NDEvMHg4MAo+ICBfX2RvX3NvZnRpcnErMHgyMzMvMHg1NDQKPiAg
-aXJxX2V4aXRfcmN1KzB4NDEvMHhhMAo+ICBzeXN2ZWNfYXBpY190aW1lcl9p
-bnRlcnJ1cHQrMHg4Yy8weGIwCj4gIDwvSVJRPgo+ICA8VEFTSz4KPiAgYXNt
-X3N5c3ZlY19hcGljX3RpbWVyX2ludGVycnVwdCsweDFiLzB4MjAKPiBSSVA6
-IDAwMTA6ZGVmYXVsdF9pZGxlKzB4Yi8weDEwCj4gUlNQOiAwMDE4OmZmZmZj
-OTAwMDAxMmZlYTAgRUZMQUdTOiAwMDAwMDIwMgo+IFJBWDogMDAwMDAwMDAw
-MDAwYmNhZSBSQlg6IGZmZmY4ODgwMDY2NjBmMDAgUkNYOiAwMDAwMDAwMDAw
-MDBiY2FlCj4gUkRYOiAwMDAwMDAwMDAwMDAwMDAxIFJTSTogZmZmZmZmZmY4
-NDNhMTFjMCBSREk6IGZmZmZmZmZmODQzYTExODAKPiBSQlA6IGRmZmZmYzAw
-MDAwMDAwMDAgUjA4OiBkZmZmZmMwMDAwMDAwMDAwIFIwOTogZmZmZmVkMTAw
-ZGEzNmQ0Ngo+IFIxMDogZGZmZmU5MTAwZGEzNmQ0NyBSMTE6IGZmZmZmZmZm
-ODNjZjA5NTAgUjEyOiAwMDAwMDAwMDAwMDAwMDAwCj4gUjEzOiAxZmZmZjEx
-MDAwY2NjMWUwIFIxNDogZmZmZmZmZmY4NTQyYWYyOCBSMTU6IGRmZmZmYzAw
-MDAwMDAwMDAKPiAuLi4KPiBBbGxvY2F0ZWQgYnkgdGFzayAxNDY6Cj4gIF9f
-a2FzYW5fa21hbGxvYysweGM0LzB4ZjAKPiAgc2tfcHJvdF9hbGxvYysweGRk
-LzB4MWEwCj4gIHNrX2FsbG9jKzB4MmQvMHg0ZTAKPiAgcm9zZV9jcmVhdGUr
-MHg3Yi8weDMzMAo+ICBfX3NvY2tfY3JlYXRlKzB4MmRkLzB4NjQwCj4gIF9f
-c3lzX3NvY2tldCsweGM3LzB4MjcwCj4gIF9feDY0X3N5c19zb2NrZXQrMHg3
-MS8weDgwCj4gIGRvX3N5c2NhbGxfNjQrMHg0My8weDkwCj4gIGVudHJ5X1NZ
-U0NBTExfNjRfYWZ0ZXJfaHdmcmFtZSsweDQ2LzB4YjAKPiAKPiBGcmVlZCBi
-eSB0YXNrIDE1MjoKPiAga2FzYW5fc2V0X3RyYWNrKzB4NGMvMHg3MAo+ICBr
-YXNhbl9zZXRfZnJlZV9pbmZvKzB4MWYvMHg0MAo+ICBfX19fa2FzYW5fc2xh
-Yl9mcmVlKzB4MTI0LzB4MTkwCj4gIGtmcmVlKzB4ZDMvMHgyNzAKPiAgX19z
-a19kZXN0cnVjdCsweDMxNC8weDQ2MAo+ICByb3NlX3JlbGVhc2UrMHgyZmEv
-MHgzYjAKPiAgc29ja19jbG9zZSsweGNiLzB4MjMwCj4gIF9fZnB1dCsweDJk
-OS8weDY1MAo+ICB0YXNrX3dvcmtfcnVuKzB4ZDYvMHgxNjAKPiAgZXhpdF90
-b191c2VyX21vZGVfbG9vcCsweGM3LzB4ZDAKPiAgZXhpdF90b191c2VyX21v
-ZGVfcHJlcGFyZSsweDRlLzB4ODAKPiAgc3lzY2FsbF9leGl0X3RvX3VzZXJf
-bW9kZSsweDIwLzB4NDAKPiAgZG9fc3lzY2FsbF82NCsweDRmLzB4OTAKPiAg
-ZW50cnlfU1lTQ0FMTF82NF9hZnRlcl9od2ZyYW1lKzB4NDYvMHhiMAo+IAo+
-ID0qPSo9Kj0qPSo9Kj0qPSo9ICBCdWcgRml4ICA9Kj0qPSo9Kj0qPSo9Kj0q
-PQo+IAo+IFRoZSBwYXRjaCB0aGF0IGhhdmUgYmVlbiBhcHBsaWVkIHRvIG1h
-aW5saW5lIExpbnV4IGtlcm5lbCBpcyBzaG93biBiZWxvdy4KPiBodHRwczov
-L2dpdGh1Yi5jb20vdG9ydmFsZHMvbGludXgvY29tbWl0LzljYzAyZWRlNjk2
-MjcyYzUyNzFhNDAxZTRmMjdjMjYyMzU5YmMyZjYKPiAKPiA9Kj0qPSo9Kj0q
-PSo9Kj0qPSAgVGltZWxpbmUgID0qPSo9Kj0qPSo9Kj0qPSo9Cj4gCj4gMjAy
-Mi0wNi0zMDogY29tbWl0IDljYzAyZWRlNjk2MiBhY2NlcHRlZCB0byBtYWlu
-bGluZSBrZXJuZWwKPiAyMDIyLTA3LTAzOiBzZW5kIGFuIGVtYWlsIHRvIHNl
-Y2FsZXJ0QHJlZGhhdC5jb20gaW4gb3JkZXIgdG8gcmVxdWVzdCBDVkUgbnVt
-YmVyCj4gCj4gPSo9Kj0qPSo9Kj0qPSo9Kj0gIENyZWRpdCAgPSo9Kj0qPSo9
-Kj0qPSo9Kj0KPiAKPiBEdW9taW5nIFpob3UgPGR1b21pbmdAemp1LmVkdS5j
-bj4KCkNWRS0yMDIyLTIzMTggaGFzIGJlZW4gYXNzaWduZWQgdG8gdGhpcyBw
-cm9ibGVtLgoKQmVzdCBSZWdhcmRzLApEdW9taW5nIFpob3UK
+Hi,
+
+
+Yet another interesting issue in Exim 4.96, it is OpenBSD specific.
+
+Combination OpenBSD + Exim is very rare, so it probably affects only two 
+boxes in the world,one of them is my vm.
+
+
+OpenBSD dn_expand() source:
+int
+dn_expand(const u_char *msg, const u_char *eomorig, const u_char *comp_dn,
+     char *exp_dn, int length)
+{
+const u_char *cp;
+         char *dn;
+         int n, c;
+         char *eom;
+         int len = -1, checked = 0;
+
+         dn = exp_dn;
+         cp = comp_dn;
+         if (length > HOST_NAME_MAX)
+                 length = HOST_NAME_MAX;
+         eom = exp_dn + length;
+         while ((n = *cp++)) {
+                 switch (n & INDIR_MASK) {
+                 case 0:
+                         if (dn != exp_dn) {
+                                 if (dn >= eom)
+                                         return (-1);
+                                 *dn++ = '.';
+                         }
+                         if (dn+n >= eom)
+                                 return (-1);
+                         checked += n + 1;
+                         while (--n >= 0) {
+                                 if (((c = *cp++) == '.') || (c == '\\')) {
+                                         if (dn + n + 2 >= eom)
+                                                 return (-1);
+                                         *dn++ = '\\';
+                                 }
+                                 *dn++ = c;
+                                 if (cp >= eomorig)      /* out of range */
+                                         return (-1);
+                         }
+                         break;
+
+                 case INDIR_MASK:
+                         if (len < 0)
+                                 len = cp - comp_dn + 1;
+                         cp = msg + (((n & 0x3f) << 8) | (*cp & 0xff));
+                         if (cp < msg || cp >= eomorig)  /* out of range */
+                                 return (-1);
+                         checked += 2;
+                         /*
+                          * Check for loops in the compressed name;
+                          * if we've looked at the whole message,
+                          * there must be a loop.
+                          */
+                         if (checked >= eomorig - msg)
+                                 return (-1);
+                         break;
+
+                 default:
+                         return (-1);                    /* flag error */
+                 }
+         }
+         *dn = '\0';
+         if (len < 0)
+                 len = cp - comp_dn;
+         return (len);
+}
+
+As we can see, dn_expand() does not escape special characters, in 
+particular it ignores '\n'.
+In case of Exim, after it does a reverse dns lookup, the answer is 
+parsed using dn_expand() and
+
+it is stored in 'sender_host_name' global variable.
+This variable is written into spool header file.
+
+
+Many interesting things can happen when we control the contents of spool 
+file:
+
+  if (flags & 0x01)      /* one_time data exists */
+       {
+       int len;
+       while (isdigit(*(--p)) || *p == ',' || *p == '-');
+       (void)sscanf(CS p+1, "%d,%d", &len, &pno);
+       *p = 0;
+       if (len > 0)
+         {
+         p -= len;
+[1]        errors_to = string_copy_taint(p, GET_TAINTED);
+         }
+       }
+
+[2]    *--p = 0;   /* Terminate address */
+
+As long as we control 'len' variable, we have out of bounds read on line 
+#1, and out of bounds write on line #2.
+
+It may not be very practical attack,as someone says you need arp 
+spoofing for this attack to work.
+
+Your opinions would be very interesting.
+
+
+regards,
+
+-e
+
+
