@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8797" "Tuesday" "3" "October" "2017" "14:50:50" "-0600" "Damien Miller" "djm@openbsd.org" "<5eed2c6d12ec1d09@openbsd.org>" "230" "[oss-security] Announce: OpenSSH 7.6 released" "^Date:" nil nil "10" "2017100320:50:50" "[oss-security] Announce: OpenSSH 7.6 released" (number mark "        djm@openbsd. Oct  3  230/8797  " thread-indent "\"[oss-security] Announce: OpenSSH 7.6 released\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 17621 invoked by uid 550); 3 Oct 2017 20:51:04 -0000
+Received: (qmail 11617 invoked by uid 550); 9 Aug 2022 17:14:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,241 +6,43 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17581 invoked from network); 3 Oct 2017 20:51:03 -0000
-Message-Id: <5eed2c6d12ec1d09@openbsd.org>
-Date: Tue, 3 Oct 2017 14:50:50 -0600 (MDT)
-From: Damien Miller <djm@openbsd.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Announce: OpenSSH 7.6 released
+Received: (qmail 7850 invoked from network); 9 Aug 2022 17:10:51 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1660065039;
+	bh=lHcaz7UcD45ZCKQwSdvK3w7Z04z+2gLfnAKY3pfYPNI=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type;
+	b=SvZHdR/be+ziZseQgobTClhcBXa8Fq5APdvoKNMvthAXxIm1zeXSVHb7nIrujjB5X
+	 TPgltJlbnHu9JsK4bMrwwlLvglTU5UkZPVDJwjMptx70BAqlUTP1GhWICIAFVR6lXD
+	 G6T/roLcEcBAttfuUxcAdukcWafCGLMbNuxE5FD5bfBQp+eDNbnssBFnUiPb2UsoOd
+	 /kVMFTicvmHam28BP37U/OfPMfVaoMnR73dqOOPWXfe8YpYWRCg3rqEVFQyi415fw5
+	 vKTjqfb64GhPVm2LiW1fKknfCUhcu6fP8XeLeHd0mGPbPSmVdQ5jTvyoain3AxteBF
+	 3SExAIklTfdtw==
+Date: Tue, 9 Aug 2022 14:10:35 -0300
+From: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
 To: oss-security@lists.openwall.com
+Message-ID: <YvKVC/O+tGfNNm35@quatroqueijos>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Subject: [oss-security] CVE-2022-2586 - Linux kernel nf_tables cross-table reference UAF
 
-OpenSSH 7.6 has just been released. It will be available from the
-mirrors listed at http://www.openssh.com/ shortly.
+CVE-2022-2586 - Linux kernel nf_tables cross-table reference UAF
 
-OpenSSH is a 100% complete SSH protocol 2.0 implementation and
-includes sftp client and server support.
+It was discovered that a nft object or expression could reference a nft set on
+a different nft table, leading to a use-after-free once that table was deleted.
 
-Once again, we would like to thank the OpenSSH community for their
-continued support of the project, especially those who contributed
-code or patches, reported bugs, tested snapshots or donated to the
-project. More information on donations may be found at:
-http://www.openssh.com/donations.html
+Team Orca of Sea Security (@seasecresponse) working with Trend Micro's Zero Day
+Initiative discovered that this vulnerability could be exploited for Local
+Privilege Escalation. This has been reported as ZDI-CAN-17470, and assigned
+CVE-2022-2586.
 
-Potentially-incompatible changes
-================================
+This bug was introduced by commit 958bee14d071 ("netfilter: nf_tables: use new
+transaction infrastructure to handle sets"), which is present since v3.16-rc1.
 
-This release includes a number of changes that may affect existing
-configurations:
+Exploiting it requires CAP_NET_ADMIN in any user or network namespace.
 
- * ssh(1): delete SSH protocol version 1 support, associated
-   configuration options and documentation.
+A PoC that will trigger KASAN is going to be posted in a week.
 
- * ssh(1)/sshd(8): remove support for the hmac-ripemd160 MAC.
-
- * ssh(1)/sshd(8): remove support for the arcfour, blowfish and CAST
-   ciphers.
-
- * Refuse RSA keys <1024 bits in length and improve reporting for keys
-   that do not meet this requirement.
-
- * ssh(1): do not offer CBC ciphers by default.
-
-Changes since OpenSSH 7.5
-=========================
-
-This is primarily a bugfix release. It also contains substantial
-internal refactoring.
-
-Security
---------
-
- * sftp-server(8): in read-only mode, sftp-server was incorrectly
-   permitting creation of zero-length files. Reported by Michal
-   Zalewski.
-
-New Features
-------------
-
- * ssh(1): add RemoteCommand option to specify a command in the ssh
-   config file instead of giving it on the client's command line. This
-   allows the configuration file to specify the command that will be
-   executed on the remote host.
-
- * sshd(8): add ExposeAuthInfo option that enables writing details of
-   the authentication methods used (including public keys where
-   applicable) to a file that is exposed via a $SSH_USER_AUTH
-   environment variable in the subsequent session.
-
- * ssh(1): add support for reverse dynamic forwarding. In this mode,
-   ssh will act as a SOCKS4/5 proxy and forward connections
-   to destinations requested by the remote SOCKS client. This mode
-   is requested using extended syntax for the -R and RemoteForward
-   options and, because it is implemented solely at the client,
-   does not require the server be updated to be supported.
-
- * sshd(8): allow LogLevel directive in sshd_config Match blocks;
-   bz#2717
-
- * ssh-keygen(1): allow inclusion of arbitrary string or flag
-   certificate extensions and critical options.
-
- * ssh-keygen(1): allow ssh-keygen to use a key held in ssh-agent as
-   a CA when signing certificates. bz#2377
-
- * ssh(1)/sshd(8): allow IPQoS=none in ssh/sshd to not set an explicit
-   ToS/DSCP value and just use the operating system default.
-
- * ssh-add(1): added -q option to make ssh-add quiet on success.
-
- * ssh(1): expand the StrictHostKeyChecking option with two new
-   settings. The first "accept-new" will automatically accept
-   hitherto-unseen keys but will refuse connections for changed or
-   invalid hostkeys. This is a safer subset of the current behaviour
-   of StrictHostKeyChecking=no. The second setting "off", is a synonym
-   for the current behaviour of StrictHostKeyChecking=no: accept new
-   host keys, and continue connection for hosts with incorrect
-   hostkeys. A future release will change the meaning of
-   StrictHostKeyChecking=no to the behaviour of "accept-new". bz#2400
-
- * ssh(1): add SyslogFacility option to ssh(1) matching the equivalent
-   option in sshd(8). bz#2705
-
-Bugfixes
---------
-
- * ssh(1): use HostKeyAlias if specified instead of hostname for
-   matching host certificate principal names; bz#2728
-
- * sftp(1): implement sorting for globbed ls; bz#2649
-
- * ssh(1): add a user@host prefix to client's "Permission denied"
-   messages, useful in particular when using "stacked" connections
-   (e.g. ssh -J) where it's not clear which host is denying. bz#2720
-
- * ssh(1): accept unknown EXT_INFO extension values that contain \0
-   characters. These are legal, but would previously cause fatal
-   connection errors if received.
-
- * ssh(1)/sshd(8): repair compression statistics printed at
-   connection exit
-
- * sftp(1): print '?' instead of incorrect link count (that the
-   protocol doesn't provide) for remote listings. bz#2710
-
- * ssh(1): return failure rather than fatal() for more cases during
-   session multiplexing negotiations. Causes the session to fall back
-   to a non-mux connection if they occur. bz#2707
-
- * ssh(1): mention that the server may send debug messages to explain
-   public key authentication problems under some circumstances; bz#2709
-
- * Translate OpenSSL error codes to better report incorrect passphrase
-   errors when loading private keys; bz#2699
-
- * sshd(8): adjust compatibility patterns for WinSCP to correctly
-   identify versions that implement only the legacy DH group exchange
-   scheme. bz#2748
-
- * ssh(1): print the "Killed by signal 1" message only at LogLevel
-   verbose so that it is not shown at the default level; prevents it
-   from appearing during ssh -J and equivalent ProxyCommand configs.
-   bz#1906, bz#2744
-
- * ssh-keygen(1): when generating all hostkeys (ssh-keygen -A), clobber
-   existing keys if they exist but are zero length. zero-length keys
-   could previously be made if ssh-keygen failed or was interrupted part
-   way through generating them. bz#2561
-
- * ssh(1): fix pledge(2) violation in the escape sequence "~&" used to
-   place the current session in the background.
-
- * ssh-keyscan(1): avoid double-close() on file descriptors; bz#2734
-
- * sshd(8): avoid reliance on shared use of pointers shared between
-   monitor and child sshd processes. bz#2704
-
- * sshd_config(8): document available AuthenticationMethods; bz#2453
-
- * ssh(1): avoid truncation in some login prompts; bz#2768
-
- * sshd(8): Fix various compilations failures, inc bz#2767
-
- * ssh(1): make "--" before the hostname terminate argument processing
-   after the hostname too.
-
- * ssh-keygen(1): switch from aes256-cbc to aes256-ctr for encrypting
-   new-style private keys. Fixes problems related to private key
-   handling for no-OpenSSL builds. bz#2754
-
- * ssh(1): warn and do not attempt to use keys when the public and
-   private halves do not match. bz#2737
-
- * sftp(1): don't print verbose error message when ssh disconnects
-   from under sftp. bz#2750
-
- * sshd(8): fix keepalive scheduling problem: activity on a forwarded
-   port from preventing the keepalive from being sent; bz#2756
-
- * sshd(8): when started without root privileges, don't require the
-   privilege separation user or path to exist. Makes running the
-   regression tests easier without touching the filesystem.
-
- * Make integrity.sh regression tests more robust against timeouts.
-   bz#2658
-
- * ssh(1)/sshd(8): correctness fix for channels implementation: accept
-   channel IDs greater than 0x7FFFFFFF.
-
-Portability
------------
-
- * sshd(9): drop two more privileges in the Solaris sandbox:
-   PRIV_DAX_ACCESS and PRIV_SYS_IB_INFO; bz#2723
-
- * sshd(8): expose list of completed authentication methods to PAM
-   via the SSH_AUTH_INFO_0 PAM environment variable. bz#2408
-
- * ssh(1)/sshd(8): fix several problems in the tun/tap forwarding code,
-   mostly to do with host/network byte order confusion. bz#2735
-
- * Add --with-cflags-after and --with-ldflags-after configure flags to
-   allow setting CFLAGS/LDFLAGS after configure has completed. These
-   are useful for setting sanitiser/fuzzing options that may interfere
-   with configure's operation.
-
- * sshd(8): avoid Linux seccomp violations on ppc64le over the
-   socketcall syscall.
-
- * Fix use of ldns when using ldns-config; bz#2697
-
- * configure: set cache variables when cross-compiling. The cross-
-   compiling fallback message was saying it assumed the test passed,
-   but it wasn't actually set the cache variables and this would
-   cause later tests to fail.
-
- * Add clang libFuzzer harnesses for public key parsing and signature
-   verification.
-
-Checksums:
-==========
-
- - SHA1 (openssh-7.6.tar.gz) = 157fe3989a245c58fcdb34d9fe722a3c4e14c008
- - SHA1 (openssh-7.6p1.tar.gz) = a6984bc2c72192bed015c8b879b35dd9f5350b3b
-
- - SHA256 (openssh-7.6.tar.gz) = Xu3bdpCcu65vM2FnW7b6IKLgd4Kvf2P3WBTMw+I7Bao=
- - SHA256 (openssh-7.6p1.tar.gz) = oyPK7t3+FFuqoNsW6Y14Sx+8fdQ2pr8fR539XNHSFyM=
-
-Please note that the SHA256 signatures are base64 encoded and not
-hexadecimal (which is the default for most checksum tools). The PGP
-key used to sign the releases is available as RELEASE_KEY.asc from
-the mirror sites.
-
-Reporting Bugs:
-===============
-
-- Please read http://www.openssh.com/report.html
-  Security bugs should be reported directly to openssh@openssh.com
-
-OpenSSH is brought to you by Markus Friedl, Niels Provos, Theo de
-Raadt, Kevin Steves, Damien Miller, Darren Tucker, Jason McIntyre,
-Tim Rice and Ben Lindstrom.
+Fixes have been sent to netfilter-devel@vger.kernel.org and are at
+https://lore.kernel.org/netfilter-devel/20220809170148.164591-1-cascardo@canonical.com/T/#t.
