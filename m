@@ -1,44 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/24/3
-Message-Id: <EEF3C292-40F0-4EF5-A4D8-3731FA2FE428@chromium.org>
-Date: Sun, 24 Jul 2022 11:10:35 -0700
-From: Roxana Bradescu <roxxbee@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/09/8
+Message-ID: <715df931-c8b6-4eab-5f98-c9558d63151b@oracle.com>
+Date: Tue, 9 Aug 2022 23:22:32 +0200
+From: Vegard Nossum <vegard.nossum@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: snowflakedb security contacts
+Subject: Re: CVE-2022-2588 - Linux kernel cls_route UAF
 Content-Type: text/plain; charset=utf-8
 
-
-> On Jul 18, 2022, at 5:18 PM, Seth Arnold <seth.arnold@...onical.com> wrote:
+On 8/9/22 19:11, Thadeu Lima de Souza Cascardo wrote:
+> CVE-2022-2588 - Linux kernel cls_route UAF
 > 
-> Hello, if anyone has friends or acquaintances at snowflakedb, please
-> direct their attention to:
+> It was discovered that the cls_route filter implementation in the Linux kernel
+> would not remove an old filter from the hashtable before freeing it if its
+> handle had the value 0.
 > 
-> https://github.com/snowflakedb/gosnowflake/issues/619
-> "Please add a SECURITY.md file and security policy"
+> Zhenpeng Lin working with Trend Micro's Zero Day Initiative discovered that
+> this vulnerability could be exploited for Local Privilege Escalation. This has
+> been reported as ZDI-CAN-17440, and assigned CVE-2022-2588.
 > 
-> I don't know if what I found is actually an issue but I'd like to give
-> them a chance to see it privately before telling the whole world. I've
-> not had much luck with the Usual Methods so far.
+> This bug has been present since the first Linux commit git, v2.6.12-rc2.
 > 
-> Everyone else: *please* take five minutes to write down how you'd like
-> people to report security issues. Some people subscribe to the "security
-> bugs are just bugs, report them like any other" philosophy. Some people
-> want a chance to look at potential security issues privately, first.
+> Exploiting it requires CAP_NET_ADMIN in any user or network namespace.
 > 
-> Whatever you'd like, please just write it down someplace obvious.
+> It can be mitigated by those users who do not rely on cls_route, by adding
+> 'install cls_route /bin/true' to their modprobe.conf or modprobe.d configs,
+> in case it's built as a module.
 > 
-> Thanks
+> A PoC that will trigger a WARNING is going to be posted in a week.
+> 
+> Fixes have been sent to netdev@...r.kernel.org and are at
+> https://lore.kernel.org/netdev/20220809170518.164662-1-cascardo@canonical.com/T/#u.
 
-Hi Seth, did you ever get a response from anyone at Snowflake?
+This isn't the first bug where users can use namespaces to load kernel
+modules they wouldn't otherwise be able to load, thus increasing attack
+surface. I've posted a patch that attempts to mitigate this somewhat
+here (it would have prevented the above bug from being exploited for
+what is most likely a majority of users):
 
-Just in case you didn’t, Snowflake uses HackerOne for their vuln mgmt program so issues get reported to HackerOne directly (and this information belongs in a Security.md file)
-https://hackerone.com/139c0e4f-5b34-470a-b81e-aa8740c3e66e/embedded_submissions/new <https://hackerone.com/139c0e4f-5b34-470a-b81e-aa8740c3e66e/embedded_submissions/new>
+https://lore.kernel.org/all/20220809185229.28417-1-vegard.nossum@oracle.com/
 
----
-Regards, Roxana
+There is apparently also a parallel discussion about user namespaces and
+LSM hooks here that seems relevant:
+
+https://lwn.net/Articles/903580/
 
 
-
-Content of type "text/html" skipped
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Vegard
