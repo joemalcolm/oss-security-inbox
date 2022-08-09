@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1559" "Thursday" "12" "May" "2016" "11:27:49" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160512152749.88F6A6C0689@smtpvmsrv1.mitre.org>" "42" "[oss-security] Re: Linux Kernel bpf related UAF" nil nil nil "5" "2016051215:27:49" "[oss-security] Re: Linux Kernel bpf related UAF" (number mark "U       cve-assign@m May 12   42/1559  " thread-indent "\"[oss-security] Re: Linux Kernel bpf related UAF\"\n") "<CAFkTriLitb9v4MZn5b2HV9HGpu6VWHifgR3VZhDYoQwjGyaWBg@mail.gmail.com>" ("<CAFkTriLitb9v4MZn5b2HV9HGpu6VWHifgR3VZhDYoQwjGyaWBg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1975 invoked by uid 550); 12 May 2016 15:28:08 -0000
+Received: (qmail 15801 invoked by uid 550); 9 Aug 2022 17:15:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,54 +7,41 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1919 invoked from network); 12 May 2016 15:28:01 -0000
-From: cve-assign@mitre.org
-To: marco.gra@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CAFkTriLitb9v4MZn5b2HV9HGpu6VWHifgR3VZhDYoQwjGyaWBg@mail.gmail.com>
-Message-Id: <20160512152749.88F6A6C0689@smtpvmsrv1.mitre.org>
-Date: Thu, 12 May 2016 11:27:49 -0400 (EDT)
-Subject: [oss-security] Re: Linux Kernel bpf related UAF
+Received: (qmail 10215 invoked from network); 9 Aug 2022 17:13:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1660065225;
+	bh=N1l50JMsFZfCisDQLmJnevZIvCHnT9g5o1NByNMFoiU=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type;
+	b=n3d+ppqHjzgblB05kbL0QnCosh3sKs79tKMl0EfXEgBHVPHlBp3sb8WhJbQVSw+fD
+	 WosljVC6CjBO+gnShds04iz6pZkXWA+wqQ7mBYU8RqLhie6hR3gTbSw8mC2702yVCV
+	 lKH0XuFnwMmRs08nOUgbzWbe/EO22jS8q0MqA0CZV+V3byFBuYKsaJLFlvOQ83k507
+	 BClE1m9RUdq/bjC/gsczA2OyxR1B0pm1bw5ZkXcj1CO7k7oTYlUR1C2bknTYOkxBjr
+	 TW74RH6UdMKRWFI72zDlNsgFOgP0nWpqD1mHkbZ3ZQxukmRgJRvHx1H72agBgL2jRC
+	 x43EUB+u9rP2w==
+Date: Tue, 9 Aug 2022 14:13:40 -0300
+From: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
+To: oss-security@lists.openwall.com
+Message-ID: <YvKVxLtBs86r6Dmh@quatroqueijos>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Subject: [oss-security] CVE-2022-2585 - Linux kernel POSIX CPU timer UAF
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+CVE-2022-2585 - Linux kernel POSIX CPU timer UAF
 
-> the following reproducer will cause a UAF of a previously allocated memory
-> in bpf.
-> 
-> You can reproduce with linux kernel master, or 4.6-rc6 4.6-rc7 and maybe
-> other kernel versions.
+It was discovered that when exec'ing from a non-leader thread, armed POSIX
+CPU timers would be left on a list but freed, leading to a use-after-free.
 
-> int main(int argc, char **argv)
-> ...
-> r[0] = syscall(SYS_mmap, ...
-> ...
-> r[5] = syscall(SYS_bpf, ...
+An independent security researcher working with SSD Secure Disclosure
+discovered that this vulnerability could be exploited for Local Privilege
+Escalation.
 
-Use CVE-2016-4794. (We did not run any tests, or look for other
-information, to investigate whether the same reproducer or a similar
-reproducer affects any kernel version that's considered stable or
-longterm.)
+This bug was introduced by commit 55e8c8eb2c7b ("posix-cpu-timers: Store a
+reference to a pid not a task"), which is present since v5.7-rc1.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+This has been assigned CVE-2022-2585.
 
-iQIcBAEBCAAGBQJXNKCMAAoJEHb/MwWLVhi2g8QP/3vBTsa8xuk8NWYWsv3jwNGu
-Ugpl+hUdkQHW4aFzxx96nePBPZpfVeNCGRMdtlCcKVb9wFNUSbRwDPBHFXrfKz9R
-KVf9VHi4CMcBlvPS0MvGZg52SQPAAO7O7cCWpEAdhyxW2gPPxKYo98x4xNuNVlWx
-POD/dVK9ll261g6W+CUSYPtwJgIrPSddnnNCUvbB+XIvV87MGSLp+nE6h8I3L2Yp
-ZisKaT6z6aHqqC0bcySk6V04UlbkfL83eahAz5bWvZeywUEjYvN+kOUlgR8TOxLC
-8bIQ28Q043XM3VC853rhPQqe5enV6KDRrLgDu1paeFdKYcaHjGkHvkwjRfxjJZIC
-EsNdEl2vGjB1iGTUnFiUep9BteZBRrwfmaTE1yAseaUjEAx/3UK85PpTEqmNkON6
-1HCInP0LOeZMcggVzBKgRKCXKJZiInxEtSBXhxnPGgxagkOD7enw86gWflSqz3ca
-wdRm/oADgCrQk6CsSGgusCouSyndC/T6ZRCa2/7vCecm2BBi8gxRuT4TZem3A6Ij
-x+zfK7QaMDtELPGL+/rVOSgVCTaihz7oGeBKzqJeuyAv7zN0LxYoNlBsmsoBSTYJ
-Uftvf0T7JTR3AQd1+tB2kOnyGOW4jSCNu66xNifR29j1C7jvKB0+uh891s/3mkzo
-Wttcn/XLKpzXFWtN+mjb
-=DWFZ
------END PGP SIGNATURE-----
+A PoC that will trigger KASAN is going to be posted in a week.
+
+A fix has been sent to linux-kernel@vger.kernel.org and is at
+https://lore.kernel.org/lkml/20220809170751.164716-1-cascardo@canonical.com/T/#u.
