@@ -1,87 +1,124 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/05/3
-Message-ID: <CADk+mPB6u97n6EsXZtmUXKn1kXaH7xtSUz3vo3Q4FoOv-RF9UQ@mail.gmail.com>
-Date: Thu, 5 May 2022 14:10:43 +0200
-From: Rainer Gerhards <rgerhards@...adiscon.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/09/3
+Message-ID: <7108492d-0757-96f5-f31d-a1300ec2a314@vulndisco.cc>
+Date: Tue, 9 Aug 2022 15:03:34 +0300
+From: Evgeny Legerov <admin@...ndisco.cc>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-24903: rsyslog < 8.2204.1 heap buffer overrun
+Subject: Exim 4.96 overflow
 Content-Type: text/plain; charset=utf-8
 
-Severity: High | CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H
+Hi,
 
-This is a worst case rating. When syslog best practices are applied
-(no Internet access to rsyslog receivers) the severity is lower.
-Details below.
 
-Advisory: https://github.com/rsyslog/rsyslog/security/advisories/GHSA-ggw7-xr6h-mmr8#advisory-comment-72243
+Yet another interesting issue in Exim 4.96, it is OpenBSD specific.
 
-Advisory content:
+Combination OpenBSD + Exim is very rare, so it probably affects only two 
+boxes in the world,one of them is my vm.
 
-### Impact
-Modules for TCP syslog reception have a heap buffer overflow when
-octet-counted framing is used. The attacker can corrupt heap values,
-leading to data integrity issues and availability impact. Remote code
-execution is unlikely to happen but not impossible.
 
-### Affected modules
-* `imtcp`
-* `imptcp`
-* `imhttp` (contributed module)
-* `imgssapi` (long-term semi-contributed module)
-* `imdiag`
+OpenBSD dn_expand() source:
+int
+dn_expand(const u_char *msg, const u_char *eomorig, const u_char *comp_dn,
+     char *exp_dn, int length)
+{
+const u_char *cp;
+         char *dn;
+         int n, c;
+         char *eom;
+         int len = -1, checked = 0;
 
-### Details
-The bug occurs when the octet count is read. While there is a check
-for the maximum number of octets, digits are written to a heap buffer
-even when the octet count is over the maximum, This can be used to
-overrun the memory buffer. This can also be used to corrupt other heap
-buffers. Once the sequence of digits stop, no additional characters
-can be added to the buffer. In our opinion, this makes remote exploits
-impossible or at least highly complex.
+         dn = exp_dn;
+         cp = comp_dn;
+         if (length > HOST_NAME_MAX)
+                 length = HOST_NAME_MAX;
+         eom = exp_dn + length;
+         while ((n = *cp++)) {
+                 switch (n & INDIR_MASK) {
+                 case 0:
+                         if (dn != exp_dn) {
+                                 if (dn >= eom)
+                                         return (-1);
+                                 *dn++ = '.';
+                         }
+                         if (dn+n >= eom)
+                                 return (-1);
+                         checked += n + 1;
+                         while (--n >= 0) {
+                                 if (((c = *cp++) == '.') || (c == '\\')) {
+                                         if (dn + n + 2 >= eom)
+                                                 return (-1);
+                                         *dn++ = '\\';
+                                 }
+                                 *dn++ = c;
+                                 if (cp >= eomorig)      /* out of range */
+                                         return (-1);
+                         }
+                         break;
 
-Octet-counted framing is one of two potential framing modes. It is
-relatively uncommon, but enabled by default on receivers.
+                 case INDIR_MASK:
+                         if (len < 0)
+                                 len = cp - comp_dn + 1;
+                         cp = msg + (((n & 0x3f) << 8) | (*cp & 0xff));
+                         if (cp < msg || cp >= eomorig)  /* out of range */
+                                 return (-1);
+                         checked += 2;
+                         /*
+                          * Check for loops in the compressed name;
+                          * if we've looked at the whole message,
+                          * there must be a loop.
+                          */
+                         if (checked >= eomorig - msg)
+                                 return (-1);
+                         break;
 
-Modules `imtcp`, `imptcp`, `imgssapi`, and `imhttp` are used for
-regular syslog message reception. It is best practice not to directly
-expose them to the public. When this practice is followed, the risk is
-considerably lower.
+                 default:
+                         return (-1);                    /* flag error */
+                 }
+         }
+         *dn = '\0';
+         if (len < 0)
+                 len = cp - comp_dn;
+         return (len);
+}
 
-Module `imdiag` is a diagnostics module primarily intended for
-testbench runs. We do not expect it to be present on any production
-installation.
+As we can see, dn_expand() does not escape special characters, in 
+particular it ignores '\n'.
+In case of Exim, after it does a reverse dns lookup, the answer is 
+parsed using dn_expand() and
 
-### Patches
-The patch is available via commit ID [PUT HERE].
+it is stored in 'sender_host_name' global variable.
+This variable is written into spool header file.
 
-### Workarounds
-Octet-counted framing is not very common. Usually, it needs to be
-specifically enabled at senders. If users do not need it, they can
-turn it off for the most important modules. This will mitigate the
-vulnerability. How to do this depends on the module:
 
-* For `imtcp`. `imptcp`, add `SupportOctetCountedFraming="off"` to the
-`input()` definition.
-  Docs: https://www.rsyslog.com/doc/v8-stable/configuration/modules/imtcp.html,
-https://www.rsyslog.com/doc/v8-stable/configuration/modules/imptcp.html,
-https://www.rsyslog.com/doc/v8-stable/configuration/modules/imhttp.html
-* For `imgssapi`octet.-counted framing cannot be turned off.
-* For `imdiag` octect-counted framing cannot be turned off. However,
-`imdiag` should never be present on production systems.
+Many interesting things can happen when we control the contents of spool 
+file:
 
-Note that while octet-counted framing can be disabled sending systems
-have to explicitly enable it, but by default receiving systems
-autodetect if it's in use. The 'normal' reason to enable it is if you
-are sending logs with embedded newlines.
+  if (flags & 0x01)      /* one_time data exists */
+       {
+       int len;
+       while (isdigit(*(--p)) || *p == ',' || *p == '-');
+       (void)sscanf(CS p+1, "%d,%d", &len, &pno);
+       *p = 0;
+       if (len > 0)
+         {
+         p -= len;
+[1]        errors_to = string_copy_taint(p, GET_TAINTED);
+         }
+       }
 
-### For more information
+[2]    *--p = 0;   /* Terminate address */
 
-If you have any questions or comments about this advisory:
-* Open an issue in [rsyslog repo](http://github.com/rsyslog)
-* Post to the [rsyslog mailing
-list](https://lists.adiscon.net/mailman/listinfo/rsyslog)
+As long as we control 'len' variable, we have out of bounds read on line 
+#1, and out of bounds write on line #2.
 
-Credits to Peter Agten for initially reporting the issue and working
-with us on the resolution.
+It may not be very practical attack,as someone says you need arp 
+spoofing for this attack to work.
 
-Rainer Gerhards
+Your opinions would be very interesting.
+
+
+regards,
+
+-e
+
+
