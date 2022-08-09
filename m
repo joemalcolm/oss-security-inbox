@@ -1,25 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/18/4
-Message-ID: <CAF+kE=S3-PVFZA2zGQBBuFsAsosXwZ04ONy3g10-SJqGCZywEQ@mail.gmail.com>
-Date: Wed, 17 Aug 2022 15:42:09 -0500
-From: Justin Bertram <jbertram@...che.org>
-To: dev@...ivemq.apache.org, users@...ivemq.apache.org,  Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com
-Subject: CVE-2022-35278: Apache ActiveMQ Artemis: HTML Injection in ActiveMQ Artemis Web Console
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/09/2
+Message-ID: <6aa96d55-36b5-9053-913c-d37a25c8ca48@vulndisco.cc>
+Date: Tue, 9 Aug 2022 14:50:34 +0300
+From: Evgeny Legerov <admin@...ndisco.cc>
+To: oss-security@...ts.openwall.com
+Subject: Apache mod_dav off-by-one
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Hi,
 
-An attacker could show malicious content and/or redirect users to a
-malicious URL in the web console by using HTML in the name of an address or
-queue.
 
-Mitigation:
+How it happens that Apache process_if_header off-by-one, which has been 
+mentioned in
 
-Upgrade to Apache ActiveMQ Artemis 2.24.0.
+The Art of Software Security Assessment (page 420), still remains unpatched?
 
-Credit:
+What am I missing?
 
-Apache ActiveMQ would like to thank Yash Pandya (Digital14), Rajatkumar
-Karmarkar (Digital14), and Likhith Cheekatipalle (Digital14) for reporting
-this issue.
+
+The code from Apache 2.4.54:
+
+static dav_error * dav_process_if_header(request_rec *r, dav_if_header 
+**p_ih)
+{
+...
+
+      while (*list) {
+                 /* List is the entire production (in a uri scope) */
+
+                 switch (*list) {
+                 ...
+                 case 'N':
+                     if (list[1] == 'o' && list[2] == 't') {
+                         if (condition != DAV_IF_COND_NORMAL) {
+                             return dav_new_error(r->pool, HTTP_BAD_REQUEST,
+DAV_ERR_IF_MULTIPLE_NOT, 0,
+                                                  "Invalid \"If:\" header: "
+                                                  "Multiple \"not\" 
+entries "
+                                                  "for the same state.");
+                         }
+                         condition = DAV_IF_COND_NOT;
+                     }
+                     list += 2;
+                     break;
+
+It is not only out of bounds read, dav_fetch_next_token() will write 
+NULL byte on next iteration.
+
+
+regards,
+
+-e
 
