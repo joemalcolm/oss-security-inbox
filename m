@@ -1,24 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/11/6
-Message-ID: <CALKeL-MkfdjgQXwtCBerW_rU=Z4irnMez9nXTEDJA8O8tm2yng@mail.gmail.com>
-Date: Tue, 11 Jan 2022 13:21:26 -0800
-From: Mike Jumper <mjumper@...che.org>
-To: announce@...che.org, announce@...camole.apache.org,  dev@...camole.apache.org, user@...camole.apache.org
-Cc: security@...camole.apache.org, oss-security@...ts.openwall.com
-Subject: [SECURITY] CVE-2021-41767: Apache Guacamole: Private tunnel identifier may be included in the non-private details of active connections
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/09/4
+Message-ID: <85bceffa-b532-5cbc-d22d-485fd379a103@redhat.com>
+Date: Tue, 9 Aug 2022 10:44:28 +0200
+From: David Hildenbrand <david@...hat.com>
+To: oss-security@...ts.openwall.com, Demi Marie Obenour <demi@...isiblethingslab.com>
+Cc: Greg KH <gregkh@...uxfoundation.org>
+Subject: Re: CVE-2022-2590: Linux kernel: Modifying shmem/tmpfs files without write permissions
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+On 08.08.22 21:51, Demi Marie Obenour wrote:
+> On Mon, Aug 08, 2022 at 09:18:27AM +0200, David Hildenbrand wrote:
+>> Hi,
+>>
+>> I found a security issue (CVE-2022-2590) in the Linux kernel similar to
+>> Dirty COW (CVE-2016-5195), however, restricted to shared memory (shmem /
+>> tmpfs). I notified distributions one week ago and the embargo ended today.
+>>
+>> An unprivileged user can modify file content of a shmem (tmpfs) file,
+>> even if that user does not have write permissions to the file. The file
+>> could be an executable.
+> 
 
-Description:
+Hi,
 
-Apache Guacamole 1.3.0 and older may incorrectly include a private
-tunnel identifier in the non-private details of some REST responses.
-This may allow an authenticated user who already has permission to
-access a particular connection to read from or interact with another
-user's active use of that same connection.
+> Is Android affected by this, or do other protections (such as SELinux)
+> prevent an exploit from succeeding? 
 
-Credit:
+Android: short, don't know. They are affected if
+* they are based on >= v5.16 OR they backported the patch
+* and they have CONFIG_USERFAULTFD=y (I assume so)
 
-We would like to thank Damian Velardo (Australia and New Zealand
-Banking Group) for reporting this issue.
+My gut feeling is that we found this issue early enough before it got
+part of many distros, including Android.
+
+Regarding other protections: not aware of any.
+
+> Also, is read access to the file
+> necessary? 
+
+We have to be able to mmap the file. Just like for the original dirty
+COW (IIRC) we need read access.
+
+> Are sealed memfds impacted?
+
+Yes. I just extended my reproducer to modify content of a memfd that is
+sealed with F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_WRITE | F_SEAL_SEAL.
+
+> 
+>> The introducing upstream commit ID is:
+>>   9ae0f87d009c ("mm/shmem: unconditionally set pte dirty in
+>>   mfill_atomic_install_pte")
+>>
+>> Linux >= v5.16 is affected on x86-64 and aarch64 if the kernel is
+>> compiled with CONFIG_USERFAULTFD=y. For Linux < v5.19 it's sufficient to
+>> revert the problematic commit, which is possible with minor contextual
+>> conflicts. For Linux >= v5.19 I'll send a proposal fix today.
+>>
+>> I have a working reproducer that I will post as reply to this mail in
+>> one week (August 15).
+> 
+> Can you try to make sure that a patch has made it into Greg’s stable
+> trees by then?  Also, would it be possible to include a regression test?
+
+That's the plan, hopefully there is feedback on the upstream patch
+soonish, because backports usually rely on the fix being upstream. Greg
+(cc) is aware of the issue.
+
+Regarding regression test: I noticed that LTP has a Dirty COW regression
+test [1]. Most probably LTP is the right place for that.
+
+[1]
+https://github.com/linux-test-project/ltp/tree/master/testcases/kernel/security/dirtyc0w
+
+-- 
+Thanks,
+
+David / dhildenb
+
