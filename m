@@ -1,34 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/23/11
-Message-ID: <Y6XcJ+tcf1Cg1jkZ@momentum.pseudorandom.co.uk>
-Date: Fri, 23 Dec 2022 16:49:43 +0000
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/10/1
+Message-Id: <0D1F6213-D667-4E9C-B541-52E52429B756@graemef.net>
+Date: Wed, 10 Aug 2022 15:44:25 +0100
+From: Graeme Fowler <graeme+osssec@...emef.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: [Linux] /proc/pid/stat parsing bugs
+Subject: Re: [Exim-Security] Exim < 4.95 heap overflow
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 22 Dec 2022 at 10:04:48 -0500, Shawn Webb wrote:
-> We knew way back then the dangers of VFS-based wizardry. Did we lose
-> that knowledge somehow?
+On 7 Aug 2022, at 16:39, Roxana Bradescu via Security <security@...m.org> wrote:
+> Adding the Exim security folks to this thread to shed some light on the original report and CVE discussion. 
 
-To me this seems like a parsing problem, not a VFS problem. Some
-pseudo-files in Linux /proc are one file per item (/proc/self/oom_adj,
-/proc/self/sessionid, most of /proc/sys) and those are fine[1]: the
-structure is implicit in the filesystem layout, and the file contents
-are trivial to "parse". Others have a simple and well-defined format
-(like /proc/self/environ and /proc/self/cmdline, which are sequences of
-\0-terminated bytestrings), and those also seem fine.
+Responding separately to each list...
 
-It's the pseudo-files that contain more than one item, particularly
-those with a semi-consistent format that aims for human-readability, that
-can easily get into escaping and parsing issues. If those pseudo-files
-made *more* use of the VFS (one new file in /proc/self for each field
-in the current /proc/self/stat?) then they would suffer from different
-issues instead, like inability to read all fields atomically and maybe
-performance issues for heavy users, but parsing would become a non-issue.
+The Exim developers don't use github to track bugs, there is a bugzilla instance used for that which is detailed on the Github Readme.pod page.
 
-    smcv
+This issue (and others) weren't "silently fixed"; they were openly tracked in Bugzilla, and an example is here:
 
-[1] or when they're not fine, the issues are around things like how to
-    separate an AppArmor enforcement mode from the label, which again is
-    a matter of parsing a human-readable format with structure
+https://bugs.exim.org/show_bug.cgi?id=2747 (fixing the observed issue in this thread).
+
+The pages detailing CVEs were regularly updated by a developer who is no longer involved. These have not been updated since 2019 as you observe, yet there have been 23 CVEs addressed by the developers. These are fairly easy to find using your favourite CVE tracker.
+
+The development process - excepting times when a CVE has been allocated - is pretty open and easy to find, as all the commits are in the Git repo and bugzilla updates are mirrored into the exim-dev mailing list, often including the commit also.
+
+Regards
+
+Graeme
+(wearing my exim mailing list admin hat)
+
