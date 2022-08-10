@@ -1,87 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/18/2
-Message-ID: <CA+eGCHacHMaHndb9vAAU+Ju3KsZmu6zJfJoLT+id=_FjAhp59A@mail.gmail.com>
-Date: Tue, 18 Jan 2022 21:29:18 +0800
-From: tr3e wang <tr3e.wang@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/10/2
+Message-ID: <YvP6OlyJp+KPoFbr@gentoo.org>
+Date: Wed, 10 Aug 2022 13:34:34 -0500
+From: John Helmert III <ajak@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux Kernel eBPF Improper Input Validation Vulnerability
+Subject: Re: Apache mod_dav off-by-one
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On Tue, Aug 09, 2022 at 02:50:34PM +0300, Evgeny Legerov wrote:
+> Hi,
+> 
+> 
+> How it happens that Apache process_if_header off-by-one, which has been 
+> mentioned in
+> 
+> The Art of Software Security Assessment (page 420), still remains unpatched?
+> 
+> What am I missing?
 
-This post is the exploit overview of CVE-2022-23222.
+Has anyone reported it upstream? Has anyone requested a CVE (seems
+unlikely, given the last CVE for mod_dav is one from 2013)?
 
-We successfully exploited this vulnerability to obtain full root
-privileges on default installations of Ubuntu 20.04.
+Upstreams don't magically know about security issues, they need to be
+reported to the upstream one way or another.
 
-*Exploit overview*
+> 
+> The code from Apache 2.4.54:
+> 
+> static dav_error * dav_process_if_header(request_rec *r, dav_if_header 
+> **p_ih)
+> {
+> ...
+> 
+>       while (*list) {
+>                  /* List is the entire production (in a uri scope) */
+> 
+>                  switch (*list) {
+>                  ...
+>                  case 'N':
+>                      if (list[1] == 'o' && list[2] == 't') {
+>                          if (condition != DAV_IF_COND_NORMAL) {
+>                              return dav_new_error(r->pool, HTTP_BAD_REQUEST,
+> DAV_ERR_IF_MULTIPLE_NOT, 0,
+>                                                   "Invalid \"If:\" header: "
+>                                                   "Multiple \"not\" 
+> entries "
+>                                                   "for the same state.");
+>                          }
+>                          condition = DAV_IF_COND_NOT;
+>                      }
+>                      list += 2;
+>                      break;
+> 
+> It is not only out of bounds read, dav_fetch_next_token() will write 
+> NULL byte on next iteration.
 
-1. Among all these *_OR_NULL types, we choose PTR_TO_MEM_OR_NULL
-   which can be created by BPF_FUNC_ringbuf_reserve. First, we
-   pass 0xffff........ffff to BPF_FUNC_ringbuf_reserve to get a
-   NULL pointer r0, and copy r0 to r1. Then add r1 by 1, and do
-   NULL check on r0. At this point, the verifier will believe that
-   both r0 and r1 are zero.
+So we can be more descriptive than calling the vulnerability an
+"off-by-one". It's more of an OOB read/write. And if NULL is the only
+thing that can be written, it seems likely that the only impact is a
+DoS, if that.
 
-2. ALU sanitation is hardened after commit
-   "bpf: Fix leakage of uninitialized bpf stack under speculation".
-   To bypass alu sanitation, we use helper func bpf_skb_load_bytes_*
-   to get partial/full overwrite the pointer on stack to obtain
-   pointer address leakage and arbitrary address read/write.
+> 
+> regards,
+> 
+> -e
+> 
 
-3. We spawn many child processes, and use arbitrary address read to
-   find the address of task_struct and cred around the the address of
-   the array map we created. After zeroing out the uid/gid/... ,
-   full root privileges obtained.
-
-Full exploit code will be published on github in the near future.
-
-Regards,
-tr3e
-
-tr3e wang <tr3e.wang@...il.com> 于2022年1月13日周四 16:21写道：
-
-> Hi all,
->
-> This vulnerability allows local attackers to escalate privileges on
-> affected installations of Linux Kernel. An attacker must first obtain the
-> ability to execute low-privileged code on the target system in order to
-> exploit this vulnerability.
->
-> The specific flaw exists within the handling of eBPF programs. The issue
-> results from the lack of proper validation of user-supplied eBPF programs
-> prior to executing them. An attacker can leverage this vulnerability to
-> escalate privileges and execute code in the context of the kernel.
-> BE AWARE, unprivileged bpf is disabled by default in most distros.
->
-> *Affected Version*
->
->     Linux Kernel 5.8 or later
->
-> *Root Cause Analysis*
->
-> The bpf verifier(kernel/bpf/verifier.c) did not properly restrict several
-> *_OR_NULL pointer types which allows these types to do pointer arithmetic.
-> This can be leveraged to bypass the verifier check and escalate privilege.
-> (see
-> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/kernel/bpf/verifier.c?h=v5.10.83#n6022
-> )
->
-> *Exploit Code*
->
-> Exploit code will be delayed for 5 days and will be posted at 12:00 UTC,
-> Jan 18, 2022
->
-> *Mitigations*
->
-> set kernel.unprivileged_bpf_disabled to 1
->
-> BE AWARE AGAIN, unprivileged bpf is disabled by default in most distros.
->
-> *Credits*
->
-> tr3e of SecCoder Security Lab
-> Best,
-> tr3e
->
-
+Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
