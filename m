@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1459" "Saturday" "31" "December" "2016" "05:38:20" "-0200" "Pedro Santos" "pedrosans@gmail.com" "<CACvbKQavmHbrxTWnpGKF4XTsmifAa_4hwWavV427P8b4gDb+Sg@mail.gmail.com>" "40" "[oss-security] Fwd: [ANNOUNCE] CVE-2016-6793 Apache Wicket deserialization vulnerability" nil nil nil "12" "2016123107:38:20" "[oss-security] Fwd: [ANNOUNCE] CVE-2016-6793 Apache Wicket deserialization vulnerability" (number mark "U       pedrosans@gm Dec 31   40/1459  " thread-indent "\"[oss-security] Fwd: [ANNOUNCE] CVE-2016-6793 Apache Wicket deserialization vulnerability\"\n") "<CACvbKQa=-=qmeOW8-4iPvKC6Tmqf=XcEf6ETnDzgtvrqe467bA@mail.gmail.com>" ("<CACvbKQa=-=qmeOW8-4iPvKC6Tmqf=XcEf6ETnDzgtvrqe467bA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 17813 invoked by uid 550); 31 Dec 2016 12:54:43 -0000
+Received: (qmail 12164 invoked by uid 550); 10 Aug 2022 18:26:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,79 +7,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3389 invoked from network); 31 Dec 2016 07:38:33 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=7kRmV3B30Izvfj4GNsGFV0lTekS78rA0SkeAqxRYkw8=;
-        b=lRG9e+Yze1rRKls8qbDKVThwmwxYF2PF+zByhUx0mYm9H2CgZy3AUO0Xipxw61JErw
-         YNcNqMFIhjZcOKgjeX5cCsIyktc4RU5EGTjI7QWDwKm47LKU04l+lqj6+qxO3ObeWGe6
-         7pwSoMvWU+HgGO+lQCt8b8146dmPX+0kj0xs8b1DBmtgTQySpeHdUd1GX1u50tUItVSD
-         fhMzM3Q6Vd4uB6xTHB6OkbQGeaIe0oP2RH4OXyMoMq/s581tMY74CbbIxsebaGTcJQp1
-         pqHoCLFa9wYB6TMJuBnQz0V7uZMhmm9fCEHTm+oDY6nGGiw4+LD3rO5eiT17npfucjaX
-         RdgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=7kRmV3B30Izvfj4GNsGFV0lTekS78rA0SkeAqxRYkw8=;
-        b=mMHazQaELw53AuX+c8jWz6Am0EbUxbMkNE4a3+ZwH75zGuXb+MuoR84tKi7fXgY0+r
-         2XJ6UeAUUNSBjbDEGtBzgfaSk+MjpoRmnj+KDMrk7P/lcJ1K4ZQhyYSonC28GsnhgYqT
-         FWb6pqYUmop/UZN+aw0IRZd2yvWCEapqxLnolAXPMTw4Z8eRPfAXZksa7IrN4+14DoHA
-         JeIyVqsV7YDrrjUkaq3gUSVTAwAJP2vda2uiUDN3qkjm+771o8B7pEWEa7AppK9sG2i2
-         2XULiLYu7MliJ0OZ2EajZu0Q9QOgQr1PFeff0U8kZOVc+/NjTU8RBJlNC6HtcmhXhylO
-         8HwQ==
-X-Gm-Message-State: AIkVDXKqiKJoyv3hJsuM/jj5AI8QhGVCPELSCUdGR9DKRURNmOhtDz67GRHa2iqDzkEqsfcU1QpdzFatfu1k3w==
-X-Received: by 10.157.11.67 with SMTP id p3mr17853363otd.215.1483169901162;
- Fri, 30 Dec 2016 23:38:21 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <CACvbKQa=-=qmeOW8-4iPvKC6Tmqf=XcEf6ETnDzgtvrqe467bA@mail.gmail.com>
-References: <CACvbKQa=-=qmeOW8-4iPvKC6Tmqf=XcEf6ETnDzgtvrqe467bA@mail.gmail.com>
-From: Pedro Santos <pedrosans@gmail.com>
-Date: Sat, 31 Dec 2016 05:38:20 -0200
-Message-ID: <CACvbKQavmHbrxTWnpGKF4XTsmifAa_4hwWavV427P8b4gDb+Sg@mail.gmail.com>
-To: oss-security@lists.openwall.com, bugtraq@securityfocus.com, 
-	security <security@apache.org>
-Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] Fwd: [ANNOUNCE] CVE-2016-6793 Apache Wicket deserialization vulnerability
+Received: (qmail 24523 invoked from network); 10 Aug 2022 14:44:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=graemef.net
+	; s=20151104; h=Message-Id:In-Reply-To:To:References:Date:Subject:
+	Mime-Version:Content-Transfer-Encoding:Content-Type:From:Sender:Reply-To:Cc:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=LaTTATclIx+q5p3dNqJt6GiN3FnU7BH/lZeyJ/yMj/0=; b=D57fV8n0DDxupRGWJDpFZklzTg
+	/qQjDVzskr78b9mflBQfXrlgiD5pi3B2Go2zkk5pXQ/vvN5k0XC8Y6yvXQ8w3W2H4B+T3gLgLhjyY
+	ohxXTRVEeof/EWrv2g6AaDvAms8nl8OCMrNIIJpLB3MQO+q3MSjzrr6w0POAZUPrAe1Q=;
+From: Graeme Fowler <graeme+osssec@graemef.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.1\))
+Date: Wed, 10 Aug 2022 15:44:25 +0100
+References: <2dc37111-fd35-e10e-0162-1bdad2e80f5e@vulndisco.cc>
+ <Yu7WIlgb9y4tGUDQ@gentoo.org>
+ <CAB=ivF95gmkRr74nu5+_XmNkQKdGd==4hB+9N8EmaELQz+vHxQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+In-Reply-To: <CAB=ivF95gmkRr74nu5+_XmNkQKdGd==4hB+9N8EmaELQz+vHxQ@mail.gmail.com>
+Message-Id: <0D1F6213-D667-4E9C-B541-52E52429B756@graemef.net>
+X-Mailer: Apple Mail (2.3696.120.41.1.1)
+Subject: [oss-security] Re: [Exim-Security] [oss-security] Exim < 4.95 heap overflow
 
-Forwarding the message em plain text mode to:
+On 7 Aug 2022, at 16:39, Roxana Bradescu via Security <security@exim.org> w=
+rote:
+> Adding the Exim security folks to this thread to shed some light on the o=
+riginal report and CVE discussion.=20
 
-- be accepted by securityfocus's mail server ( didn't accepted MIME
-Content-Type 'multipart/alternative' )
-- add oss-security@lists.openwall.com at the open receiver ( openwall
-is not accepting emails if in BCC)
-- adding missing Apache's security team (my bad, missed in the original email)
+Responding separately to each list...
 
-Pedro Santos
+The Exim developers don't use github to track bugs, there is a bugzilla ins=
+tance used for that which is detailed on the Github Readme.pod page.
 
----------- Forwarded message ----------
-From: Pedro Santos <pedro@apache.org>
-Date: Sat, Dec 31, 2016 at 5:21 AM
-Subject: [ANNOUNCE] CVE-2016-6793 Apache Wicket deserialization vulnerability
-To: announce@wicket.apache.org, "users@wicket.apache.org"
-<users@wicket.apache.org>, dev@wicket.apache.org
+This issue (and others) weren't "silently fixed"; they were openly tracked =
+in Bugzilla, and an example is here:
 
+https://bugs.exim.org/show_bug.cgi?id=3D2747 (fixing the observed issue in =
+this thread).
 
-CVE-2016-6793: Apache Wicket deserialization vulnerability
+The pages detailing CVEs were regularly updated by a developer who is no lo=
+nger involved. These have not been updated since 2019 as you observe, yet t=
+here have been 23 CVEs addressed by the developers. These are fairly easy t=
+o find using your favourite CVE tracker.
 
-Severity: Low
+The development process - excepting times when a CVE has been allocated - i=
+s pretty open and easy to find, as all the commits are in the Git repo and =
+bugzilla updates are mirrored into the exim-dev mailing list, often includi=
+ng the commit also.
 
-Vendor: The Apache Software Foundation
+Regards
 
-Versions Affected: Apache Wicket 6.x and 1.5.x
+Graeme
+(wearing my exim mailing list admin hat)
 
-Description: Depending on the ISerializer set in the Wicket
-application, it's possible that a Wicket's object deserialized from an
-untrusted source and utilized by the application to causes the code to
-enter in an infinite loop. Specifically, Wicket's DiskFileItem class,
-serialized by Kryo, allows an attacker to hack its serialized form to
-put a client on an infinite loop if the client attempts to write on
-the DeferredFileOutputStream attribute.
-
-Mitigation: Upgrade to Apache Wicket 6.25.0 or 1.5.17
-
-Credit: This issue was discovered by Jacob Baines, Tenable Network
-Security and Pedro Santos
-
-References: https://wicket.apache.org/news
