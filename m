@@ -1,57 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/29/2
-Message-ID: <8c6a6c4a-a643-6838-2aad-8911693da9cf@oracle.com>
-Date: Tue, 29 Mar 2022 14:27:12 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: zlib memory corruption on deflate (i.e. compress)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/11/1
+Message-ID: <YvS/cMgjyTqrRbh8@eldamar.lan>
+Date: Thu, 11 Aug 2022 10:36:00 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: Neil Williams <codehelp@...ian.org>
+Cc: oss-security@...ts.openwall.com, team@...urity.debian.org
+Subject: Re: CVE-2022-20359 is not mentioned in linked bulletin
 Content-Type: text/plain; charset=utf-8
 
-For those who don't monitor the https://www.zlib.net/ home page, version 1.2.12 
-was released on Sunday.
+Hi Neil,
 
-	-alan-
+On Thu, Aug 11, 2022 at 09:01:32AM +0100, Neil Williams wrote:
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-20359
+> 
+> URL: https://source.android.com/security/bulletin/2022-08-01
+> 
+> CVE-2022-20359 is not mentioned in that particular bulletin. Lots of
+> others, either side, but not that one.
+> 
+> Does anyone know of the correct URL for more information?
 
-On 3/26/22 19:29, Adler, Mark wrote:
-> Petr,
-> 
-> Yes, I will release develop to master. I need to do some portability testing first.
-> 
-> Mark
-> 
-> 
->> On Mar 23, 2022, at 10:43 PM, Petr Štetiar <ynezz@...e.cz> wrote:
->>
->> Tavis Ormandy <taviso@...il.com> [2022-03-23 20:49:49]:
->>
->> [ adding Mark to the Cc: loop ]
->>
->> Hi,
->>
->>> Greetings list, I was recently trying to track down a reproducible crash
->>> in a compressor. Believe it or not, it really was a bug in
->>> zlib-1.2.11 when compressing (not decompressing!) certain inputs.
->>
->> thank you for letting us know!
->>
->>> I reported it upstream, but it turns out the issue has been public since
->>> 2018, but the patch never made it into a release. As far as I know,
->>> nobody ever assigned it a CVE.
->>>
->>> https://github.com/madler/zlib/commit/5c44459c3b28a9bd3283aaceab7c615f8020c531
->>>
->>> As far as I can tell, no distros have picked this up.
->>
->> It's mostly due to the fact, that AFAIK it has never hit the release. Mark,
->> would it be please possible to do another point release with that security
->> fix included? Thanks!
->>
->> Cheers,
->>
->> Petr
-> 
+As the CVE is assigned by Android, I would ask at
+https://www.cve.org/PartnerInformation/ListofPartners/partner/google_android
+.
 
-
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+Regards,
+Salvatore
