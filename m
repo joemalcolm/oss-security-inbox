@@ -1,26 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/27/6
-Message-ID: <77daef92-54bb-4c5c-cea2-c489e46d9027@grsecurity.net>
-Date: Thu, 27 Jan 2022 23:20:48 +0100
-From: Mathias Krause <minipli@...ecurity.net>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE-2022-22942: Linux kernel: wrong file descriptor handling in the vmwgfx driver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/11/2
+Message-ID: <20220811090132.66cb95e2@felix.codehelp>
+Date: Thu, 11 Aug 2022 09:01:32 +0100
+From: Neil Williams <codehelp@...ian.org>
+To: oss-security@...ts.openwall.com
+Cc: team@...urity.debian.org
+Subject: CVE-2022-20359 is not mentioned in linked bulletin
 Content-Type: text/plain; charset=utf-8
 
-Am 27.01.22 um 21:00 schrieb Mathias Krause:
-> Exploiting this vulnerability requires an attacker to have access to
-> either /dev/dri/card0 or /dev/dri/rendererD128 and be able to issue an
-> ioctl() on the resulting file descriptor.
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-20359
 
-Forgot to mention, as per linux-distros' list policy, an exploit for the
-vulnerability will be provided in 7 days, as one has been shared with
-the linux-distros before.
+URL: https://source.android.com/security/bulletin/2022-08-01
 
-Meanwhile the patch was merged into Linux mainline:
-https://git.kernel.org/linus/a0f90c881570
+CVE-2022-20359 is not mentioned in that particular bulletin. Lots of
+others, either side, but not that one.
 
-Thanks,
-Mathias
+Does anyone know of the correct URL for more information?
 
+-- 
+Neil Williams
+=============
+https://linux.codehelp.co.uk/
 
-Download attachment "OpenPGP_signature" of type "application/pgp-signature" (666 bytes)
+Content of type "application/pgp-signature" skipped
