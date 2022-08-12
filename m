@@ -1,33 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/25/2
-Message-ID: <Yj3KxwDw01GIKHwD@gentoo.org>
-Date: Fri, 25 Mar 2022 08:59:35 -0500
-From: John Helmert III <ajak@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/12/1
+Message-Id: <AF6E8613-D1CA-4072-B708-7C7702994D51@chromium.org>
+Date: Thu, 11 Aug 2022 20:28:02 -0700
+From: Roxana Bradescu <roxxbee@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: zlib memory corruption on deflate (i.e. compress)
+Subject: Re: [Exim-Security] Exim < 4.95 heap overflow
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Mar 23, 2022 at 08:49:49PM -0700, Tavis Ormandy wrote:
-> Greetings list, I was recently trying to track down a reproducible crash
-> in a compressor. Believe it or not, it really was a bug in
-> zlib-1.2.11 when compressing (not decompressing!) certain inputs.
-> 
-> I reported it upstream, but it turns out the issue has been public since
-> 2018, but the patch never made it into a release. As far as I know,
-> nobody ever assigned it a CVE.
+Thank you for the clarification and we sincerely appreciate all the efforts the Exim project team!
 
-CVE-2018-25032 appears to have been assigned for it now.
+—
+Regards, Roxana
 
-> https://github.com/madler/zlib/commit/5c44459c3b28a9bd3283aaceab7c615f8020c531
+
+> On Aug 10, 2022, at 7:44 AM, Graeme Fowler <graeme+osssec@...emef.net> wrote:
 > 
-> As far as I can tell, no distros have picked this up.
+> On 7 Aug 2022, at 16:39, Roxana Bradescu via Security <security@...m.org> wrote:
+>> Adding the Exim security folks to this thread to shed some light on the original report and CVE discussion.
 > 
-> Tavis.
+> Responding separately to each list...
 > 
+> The Exim developers don't use github to track bugs, there is a bugzilla instance used for that which is detailed on the Github Readme.pod page.
 > 
-> -- 
->  _o)            $ lynx lock.cmpxchg8b.com
->  /\\  _o)  _o)  $ finger taviso@....org
-> _\_V _( ) _( )  @taviso
+> This issue (and others) weren't "silently fixed"; they were openly tracked in Bugzilla, and an example is here:
+> 
+> https://bugs.exim.org/show_bug.cgi?id=2747 (fixing the observed issue in this thread).
+> 
+> The pages detailing CVEs were regularly updated by a developer who is no longer involved. These have not been updated since 2019 as you observe, yet there have been 23 CVEs addressed by the developers. These are fairly easy to find using your favourite CVE tracker.
+> 
+> The development process - excepting times when a CVE has been allocated - is pretty open and easy to find, as all the commits are in the Git repo and bugzilla updates are mirrored into the exim-dev mailing list, often including the commit also.
+> 
+> Regards
+> 
+> Graeme
+> (wearing my exim mailing list admin hat)
+> 
+
 
 Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
