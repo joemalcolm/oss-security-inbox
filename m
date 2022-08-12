@@ -1,4 +1,4 @@
-Received: (qmail 3156 invoked by uid 550); 10 Mar 2026 11:36:07 -0000
+Received: (qmail 9744 invoked by uid 550); 13 Aug 2022 06:35:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,54 +7,36 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 30497 invoked from network); 10 Mar 2026 09:22:39 -0000
+Received: (qmail 5559 invoked from network); 12 Aug 2022 22:41:07 -0000
 Authentication-Results: apache.org; auth=none
 Content-Type: text/plain; charset=utf-8
-From: Tilman Hausherr <tilman@apache.org>
+From: "Carl B. Marcum" <cmarcum@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <8642eca7-9ea4-e688-6a2f-afff338fcbfa@apache.org>
+Message-ID: <7644e755-cfdd-5fa1-6e85-ea43ef69802b@apache.org>
 Content-Transfer-Encoding: quoted-printable
-Date: Tue, 10 Mar 2026 09:20:37 +0000
+Date: Fri, 12 Aug 2022 22:38:45 +0000
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2026-23907: Apache PDFBox Examples: Path Traversal in PDFBox
- ExtractEmbeddedFiles Example Code 
+Subject: [oss-security] CVE-2022-37401: Apache OpenOffice Weak Master Keys 
 
-Severity: moderate=20
-
-Affected versions:
-
-- Apache PDFBox Examples (org.apache.pdfbox:pdfbox-examples) 2.0.24 through=
- 2.0.36
-- Apache PDFBox Examples (org.apache.pdfbox:pdfbox-examples) 3.0.0 through =
-3.0.7
+Severity: important
 
 Description:
 
-This issue affects the=20
-ExtractEmbeddedFiles example in=C2=A0Apache PDFBox: from 2.0.24 through 2.0=
-.36, from 3.0.0 through 3.0.7.
-
-
-The ExtractEmbeddedFiles example contains a path traversal vulnerability (C=
-WE-22) because=20
-the filename that is obtained from=20
-PDComplexFileSpecification.getFilename() is appended to the extraction path.
-
-Users who have copied this example into their production code should=20
-review it to ensure that the extraction path is acceptable. The example=20
-has been changed accordingly, now the initial path and the extraction=20
-paths are converted into canonical paths and it is verified that=20
-extraction path contains the initial path. The documentation has also=20
-been adjusted.
+Apache OpenOffice supports the storage of passwords for web connections in =
+the user's configuration database. The stored passwords are encrypted with =
+a single master key provided by the user. A flaw in OpenOffice existed wher=
+e master key was poorly encoded resulting in weakening its entropy from 128=
+ to 43 bits making the stored passwords vulnerable to a brute force attack =
+if an attacker has access to the users stored config. This issue affects: A=
+pache OpenOffice versions prior to 4.1.13.  Reference: CVE-2022-26307 - Lib=
+reOffice
 
 Credit:
 
-Joakim B=C3=BClow (Neo4j Security Team) (finder)
+ OpenSource Security GmbH on behalf of the German Federal Office for Inform=
+ation Security
 
 References:
 
-https://github.com/JoakimBulow/
-https://pdfbox.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2026-23907
+https://www.openoffice.org/security/cves/CVE-2022-37401.html
 
