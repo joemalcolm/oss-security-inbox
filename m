@@ -1,28 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/04/1
-Message-ID: <be74be76-1448-e1c7-2e72-4c5d7699df38@apache.org>
-Date: Tue, 04 Jan 2022 05:55:21 +0000
-From: Benoit Tellier <btellier@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-38542: Apache James vulnerable to STARTTLS command injection (IMAP and POP3) 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/14/2
+Message-ID: <ffb16e32-97e6-b4f1-51ff-b80710dfd584@sit.fraunhofer.de>
+Date: Sat, 13 Aug 2022 16:59:37 -0700
+From: "Philipp Jeitner (SIT)" <philipp.jeitner@....fraunhofer.de>
+To: <oss-security@...ts.openwall.com>
+Subject: Fixed DNS UDP port in totd DNS forwarder (CVE-2022-34294)
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+We hereby disclose the discovery of a DNS Cache poisoning vulnerability 
+in totd DNS forwarder. totd is a non-caching DNS forwarder/proxy which 
+has not been further developed for a long time, yet it is still used in 
+some residential router firmwares. Because the projects age, there are 
+no patches available for the described issues.
 
-Description:
+Our findings are published in our 2022 paper "XDRI Attacks - and - How 
+to Enhance Resilience of Residential Routers" in August 2022.
 
-Apache James prior to release 3.6.1 is vulnerable to a buffering attack relying on the use of the STARTTLS command. This can result in Man-in -the-middle command injection attacks, leading potentially to leakage of sensible information.
+Discovery/Credits
+-----------------
+
+Philipp Jeitner, Lucas Teichmann and Haya Shulman
+Fraunhofer SIT
+
+References
+----------
+
+     - totd: https://github.com/fwdillema/totd
+     - paper website: https://xdi-attack.net/
+     - paper presentation: 
+https://www.usenix.org/conference/usenixsecurity22/presentation/jeitner
 
 
-This issue is being tracked as JAMES-1862
 
-Mitigation:
+CVE-2022-34294: Fixed UDP port in DNS queries sent to upstream resolvers
+-------------------------------------------------------------------------
 
-We recommend to upgrade to Apache James 3.6.1, which fixes this vulnerability.
+totd uses a fixed UDP source port in upstream queries sent to DNS 
+resolvers which allows DNS cache poisoning as there is not enough 
+entropy to prevent traffic injection attacks.
 
-Furthermore, we recommend, if possible to dis-activate STARTTLS and rely solely on explicit TLS for mail protocols, including SMTP, IMAP and POP3.
+## Summary
 
-Credit:
+The router/forwarder uses a fixed UDP port for all queries sent to 
+upstream resolvers.
 
-We thanks Benoit Tellier, Raphael Ouazana for reporting this vulnerability as well as Damian Poddebniak, Fabian Ising, Hanno Böck, and Sebastian Schinzel Münster University of Applied Science for their research and tools regarding STARTTLS security.
+## Impact
+
+Attackers who control a script or web-site which is loaded on a client 
+of the vulnerable router/forwarder can exploit this to poison the DNS 
+cache by classic DNS poisoning attacks with spoofed IP address of the 
+upstream resolver.
+
+## Steps to reproduce
+
+Connect a computer to the vulnerable router/forwarder and trigger 
+multiple DNS queries. Observe the queries sent to upstream resolvers via 
+packet capture, either on the routers Internet-facing interface or the 
+upstream resolver's network interface. The queries captured on these 
+interfaces have the same UDP source port (port 1024 in our tests).
+
+## Detailed description and publication timeline
+
+This attack is known to be practical since the 2008 publication "Black 
+Ops 2008: It’s The End Of The Cache As We Know It" 
+(https://www.blackhat.com/presentations/bh-jp-08/bh-jp-08-Kaminsky/BlackHat-Japan-08-Kaminsky-DNS08-BlackOps.pdf). 
+During an evaluation of DNS vulnerabilities in routers, we found this 
+attack to be still applicable.
+
+
 
