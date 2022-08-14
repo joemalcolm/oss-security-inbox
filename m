@@ -1,96 +1,185 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/27/1
-Message-ID: <3qq3rs9r-4so8-332o-193n-rq8p259257@unkk.fr>
-Date: Mon, 27 Jun 2022 08:19:23 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: CVE-2022-32205: Set-Cookie denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/14/3
+Message-ID: <d07a552b-e107-a680-8220-eca36b07565d@sit.fraunhofer.de>
+Date: Sat, 13 Aug 2022 17:00:16 -0700
+From: "Philipp Jeitner (SIT)" <philipp.jeitner@....fraunhofer.de>
+To: <oss-security@...ts.openwall.com>
+Subject: Multiple DNS Cache poisoning vulnerabilities in dproxy and drpoxy-nexgen (CVE-2022-33988, CVE-2022-33989, CVE-2022-33990, CVE-2022-33991)
 Content-Type: text/plain; charset=utf-8
 
-CVE-2022-32205: Set-Cookie denial of service
-============================================
+We hereby disclose the discovery of multiple DNS Cache poisoning 
+vulnerabilities in the dproxy(-nexgen) DNS forwarder. dproxy is a 
+caching DNS forwarder/proxy which is unmaintained since about 2004, yet 
+it is still used in some residential router firmwares. Because the 
+project is unmaintained, there are no patches available for the 
+described issues.
 
-´Project curl Security Advisory, June 27th 2022 -
-[Permalink](https://curl.se/docs/CVE-2022-32205.html)
+Our findings are published in our 2022 paper "XDRI Attacks - and - How 
+to Enhance Resilience of Residential Routers" in August 2022.
 
-VULNERABILITY
--------------
-
-A malicious server can serve excessive amounts of `Set-Cookie:` headers in a
-HTTP response to curl and curl stores all of them. A sufficiently large amount
-of (big) cookies make subsequent HTTP requests to this, or other servers to
-which the cookies match, create requests that become larger than the threshold
-that curl uses internally to avoid sending crazy large requests (1048576
-bytes) and instead returns an error.
-
-This denial state might remain for as long as the same cookies are kept, match
-and haven't expired. Due to cookie matching rules, a server on
-`foo.example.com` can set cookies that also would match for `bar.example.com`,
-making it it possible for a "sister server" to effectively cause a denial of
-service for a sibling site on the same second level domain using this method.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-CVE-2022-32205 was introduced in [commit
-ed35d6590e72c23c](https://github.com/curl/curl/commit/ed35d6590e72c23c),
-shipped in curl 7.71.0 with the introduction of the "dynbuf"
-internally. Before this change, curl had no limit in how large HTTP request it
-could generate.
-
-CWE-770: Allocation of Resources Without Limits or Throttling
-
-Severity: Low
-
-AFFECTED VERSIONS
+Discovery/Credits
 -----------------
 
-- Affected versions: curl 7.71.0 to and including 7.83.1
-- Not affected versions: curl < 7.71.0 and curl >= 7.84.0
+Philipp Jeitner, Lucas Teichmann and Haya Shulman
+Fraunhofer SIT
 
-libcurl is used by many applications, but not always advertised as such!
+References
+----------
 
-THE SOLUTION
-------------
+   - dproxy: https://sourceforge.net/projects/dproxy/
+   - paper website: https://xdi-attack.net/
+   - paper presentation: 
+https://www.usenix.org/conference/usenixsecurity22/presentation/jeitner
 
-We introduce several new limits and thresholds for cookies:
 
-- Send no more than 150 cookies per request
-- Cap the max length used for an outgoing `Cookie:` header to 8K
-- Cap the max number of accepted `Set-Cookie:` header fields to 50
 
-A [fix for CVE-2022-32205](https://github.com/curl/curl/commit/48d7064a49148f0394)
+CVE-2022-33990: Misinterpretation of special characters in domain names 
+leading to cache-poisoning
+--------------------------------------------------------------------------------------------------
 
-RECOMMENDATIONS
---------------
+Misinterpretation of special domain name characters in dproxy-nexgen 
+leads to cache-poisoning as domain names and their associated IP 
+addresses are cached in their misinterpreted form.
 
-  A - Upgrade curl to version 7.84.0
+## Summary
 
-  B - Apply the patch to your local version
+Attacker can poison the DNS cache of the vulnerable router/forwarder by 
+triggering queries to attacker controlled domain names whose queries 
+and/or answers contain special characters (zero-byte or period sign). 
+These characters are misinterpreted by the vulnerable router/forwarder 
+so that the attacker can provide addresses for domain names he does not own.
 
-  C - Do not use cookies
+## Impact
 
-TIMELINE
---------
+Attackers who control a script or web-site which is loaded on a client 
+of the vulnerable router/forwarder can hijack connections by poisoning 
+the DNS cache.
 
-This issue was reported to the curl project on May 13, 2022. We contacted
-distros@...nwall on June 20.
+## Steps to reproduce
 
-libcurl 7.84.0 was released on June 27 2022, coordinated with the publication
-of this advisory.
+To reproduce, connect a computer to the router and follow the Steps at 
+https://xdi-attack.net/manual.html or use our downloadable test-tool at 
+https://xdi-attack.net/test.html (NOT the online test).
 
-CREDITS
--------
+## Detailed description and publication timeline
 
-This issue was reported by Harry Sintonen. Patched by Daniel Stenberg.
+A detailed description of this attack is included in our 2021 USENIX 
+security paper "Injection Attacks Reloaded: Tunnelling Malicious 
+Payloads over DNS", see Section 3.2. We conducted further research and 
+found that these attacks apply to various router models.
 
-Thanks a lot!
 
--- 
 
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
+CVE-2022-33989: Static UDP port in DNS queries sent to upstream resolvers
+-------------------------------------------------------------------------
+
+dproxy-nexgen uses a static UDP source port (selected randomly only at 
+boot-time) in upstream queries sent to DNS resolvers which allows DNS 
+cache poisoning as there is not enough entropy to prevent traffic 
+injection attacks.
+
+## Summary
+
+The router/forwarder uses a fixed UDP port for all queries sent to 
+upstream resolvers.
+
+## Impact
+
+Attackers who control a script or web-site which is loaded on a client 
+of the vulnerable router/forwarder can exploit this to poison the DNS 
+cache by classic DNS poisoning attacks with spoofed IP address of the 
+upstream resolver.
+
+## Steps to reproduce
+
+Connect a computer to the vulnerable router/forwarder and trigger 
+multiple DNS queries. Observe the queries sent to upstream resolvers via 
+packet capture, either on the routers Internet-facing interface or the 
+upstream resolver's network interface. The queries captured on these 
+interfaces have the same UDP source port.
+
+## Detailed description and publication timeline
+
+This attack is known to be practical since the 2008 publication "Black 
+Ops 2008: It’s The End Of The Cache As We Know It" 
+(https://www.blackhat.com/presentations/bh-jp-08/bh-jp-08-Kaminsky/BlackHat-Japan-08-Kaminsky-DNS08-BlackOps.pdf). 
+During an evaluation of DNS vulnerabilities in routers, we found this 
+attack to be still applicable.
+
+
+
+CVE-2022-33988: DNS TXID value is re-used from client queries
+-------------------------------------------------------------
+
+dproxy-nexgen re-uses the DNS transaction id (TXID) value from client 
+queries, which allows attackers able to sent queries to the resolver to 
+conduct DNS cache poisoning attacks as the TXID value is known to the 
+attacker.
+
+## Summary
+
+The router/forwarder re-uses the DNS TXID value from client queries when 
+forwarding the DNS query to upstream resolvers.
+
+## Impact
+
+Attackers which can send DNS queries directly to the vulnerable 
+router/forwarder can infer the TXID used for upstream queries as the 
+value is re-used from the query sent by the attacker. This allows the 
+attacker to inject malicious records into the router/forwarder's DNS 
+cache, as the remaining entropy in the DNS request (max 16-bit UDP 
+source port) is not enough to protect against spoofed DNS responses.
+
+## Steps to reproduce
+
+Connect a computer to the vulnerable router/forwarder and trigger some 
+DNS queries. Monitor the requests sent by the client device (e.g. via 
+wireshark) and compare the DNS TXID value with the value of the packets 
+forwarded to the upstream resolvers, e.g. by capturing traffic on the 
+routers Internet-facing interface or the upstream resolver's network 
+interface. The TXID values of these packets are the same.
+
+
+
+CVE-2022-33991: Disabling of DNSSEC protection provided by upstream 
+resolvers
+-----------------------------------------------------------------------------
+
+dproxy-nexgen forwards and caches DNS queries with checking disabled 
+(CD) bit set to 1 which leads to disabling of DNSSEC protection provided 
+by upstream resolvers.
+
+## Summary
+
+The router/forwarder forwards DNS queries with the checking disabled 
+(CD) bit set to 1 to upstream resolvers and caches the responses 
+provided by the upstream resolver. The cached answers are then sent to 
+other clients even when they do set the checking disabled (CD) bit to 0.
+
+## Impact
+
+Attackers which can send DNS queries directly to the vulnerable 
+router/forwarder can disable DNSSEC protection on the upstream resolver 
+by sending queries with the checking disabled (CD) bit set to 1. When 
+the attacker is able to inject DNS responses via another method (e.g. 
+MitM attacks, BGP hijacking), this allows attacker to hijack connections 
+from clients of the vulnerable router/forwarder, as DNSSEC protection is 
+not guaranteed anymore.
+
+## Steps to reproduce
+
+Connect a computer to the vulnerable router/forwarder and trigger the 
+following DNS queries via `dig`:
+
+      $ dig sigfail.verteiltesysteme.net +cdflag @router/forwarder-ip
+      (should always return 134.91.78.139)
+
+      $ dig sigfail.verteiltesysteme.net +short @router/forwarder-ip
+      (returns 134.91.78.139 if vulnerable, should return nothing)
+
+Note: you can replace `sigfail.verteiltesysteme.net` with any other 
+domain with broken DNSSEC, such as `www.dnssec-failed.org`, only the 
+addresses will be different.
+
+
+
