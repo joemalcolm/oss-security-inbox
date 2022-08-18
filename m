@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["643" "Wednesday" "12" "December" "2018" "17:36:40" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20181212163640.GA22617@eldamar.local>" "20" "[oss-security] Re: CVE Request: mini-httpd (<= v1.30) is affected by a response discrepancy information exposure (CWE-204)" "^Cc:" nil nil "12" "2018121216:36:40" "[oss-security] Re: CVE Request: mini-httpd (<= v1.30) is affected by a response discrepancy information exposure (CWE-204)" (number mark "        carnil@debia Dec 12   20/643   " thread-indent "\"[oss-security] Re: CVE Request: mini-httpd (<= v1.30) is affected by a response discrepancy information exposure (CWE-204)\"\n") "<CA+NXwpT9J40mJe_=h-R==qJBc=9PA+-80b8p4gdaJ=uy_JhMJg@mail.gmail.com>" ("<CA+NXwpT9J40mJe_=h-R==qJBc=9PA+-80b8p4gdaJ=uy_JhMJg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 18162 invoked by uid 550); 12 Dec 2018 16:36:56 -0000
+Received: (qmail 17968 invoked by uid 550); 18 Aug 2022 08:25:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,70 +6,85 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18144 invoked from network); 12 Dec 2018 16:36:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=VGKK887CKcpLkglL/2fV5hczyLUkFAzHgtCBtx3s+Lw=;
-        b=iGP5qbAUkOyytghBcJAb86lKE2xlyD/ip1Tg/tJNqt96vcrbPO47qe6X5E+NrPnKJy
-         86rkNN4ZRNwmFUT583cEXzHj5Hq+4EazFsVzeIqOYVXA0NhTvejUSM7o5peMr3TQ0dJn
-         5zVoMxDiIihOspfGBG0uUFNInTaSW5ng2Mr4tdIUadLtFlB45Vr7TgB10JhcRIKqDzNp
-         Mmx5vFksEbDIZ8nnknFLtfp2KdG2Wk6JGm5dc0/Mn1/kqrU0QZ+OnbfhGseD6jr77/G0
-         jN+R/ukfAQINSxkZmeGeHlEEfqJ4kfNrvW1SDE6TM6uxad1m2PDDgwjFSM5ajIvW1Rjz
-         YXuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=VGKK887CKcpLkglL/2fV5hczyLUkFAzHgtCBtx3s+Lw=;
-        b=V8tVbC5SwTMbT0su29zG1ycUxCeoH2d87NxK4CaodAxl6ZiTcdvZb24NbpzIKHfxZv
-         VI+/ccs9EqFexSUWMuvnqQgVTzpxHKwLuQ2+hjJLk2MkPhcxNJQ4gO5wJQJe9oYGCCzK
-         BG0+tnQVwJ+Wxm0gU3+AsOl9KSEp3mlXOPhAIlofQoWMVfclwyL0acPg+kveZuKd0/Kr
-         YRW8RDFpBtiEFBkkIWvhxzBts1JhEb8u4Hmcp/nVrlQZ16w8v87eAxBtfTOc0NM1OYbe
-         WCVHJz4dd3I/xIoQ4Zkv8BvBXqe4eYrntXHRk3FmTyfQzYK/W32D/iqwX+ZDTsH4BXIl
-         Nx6Q==
-X-Gm-Message-State: AA+aEWYnYlNdjJpiKNroccQ+vfDvMGoZ4zX3R7jEEv/4vcxIvTrkiDZQ
-	5PQJVyR1chc0rGKG1CL/TII=
-X-Google-Smtp-Source: AFSGD/Xqj5GQSnucTzD/FelgSqR90oreMSW/WnV7qbGEVbf+WaZ8bSIWelFPh1vrM6YsxpQ1F5rggQ==
-X-Received: by 2002:a50:ec19:: with SMTP id g25mr19184536edr.38.1544632604029;
-        Wed, 12 Dec 2018 08:36:44 -0800 (PST)
-Message-ID: <20181212163640.GA22617@eldamar.local>
-References: <CA+NXwpT9J40mJe_=h-R==qJBc=9PA+-80b8p4gdaJ=uy_JhMJg@mail.gmail.com>
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 17943 invoked from network); 18 Aug 2022 08:25:51 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
+	:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:sender:subject:subject:to:to; s=fm1; t=1660811138; x=
+	1660897538; bh=PMMHHU70no4wFAuT5ThXHRPOl2YI0TKp09BWWxNpQT4=; b=n
+	K7Iy/uxlbMyLqU0Coa4mcD/0uiC+SDWiR7stgHRQkCYpnvNSFWpWgmgO+QCt00mS
+	NEubm86cT18DY5Oo8njOpq/rQFh9tYlcFwnFRqREj1Ys8j9qXrhUUaWl4FKNvu3P
+	RUCv6gEx89Z+WTm7Ql7sNGpcNITw/SUt2bAyGGL2oC5UhmCk8S+xYW54GBAwGY7S
+	92QajD60754fIn61Spv0BrRQBSoZ3Mpfycm9oa2ZWpbHAgPF51mbLjeFllvziOk6
+	qV9OAiaecWdKIthsq7DQTIguzQKIdad3yQS3I6ZpffiQ6P8yBm5zEV9uP3NsGIy9
+	5Lz7imltZorrqlpRFbOPw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:date:feedback-id:feedback-id:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm1; t=1660811138; x=1660897538; bh=P
+	MMHHU70no4wFAuT5ThXHRPOl2YI0TKp09BWWxNpQT4=; b=Yt10U8ytf/YdtI24P
+	h7P6Nl74oxEhrg5PtC6otCdtv5ftY2iu0TwaOrKGUPu0OhO+iQ9lcI2SOGa+CFJp
+	YZimTHiz5I3SW/fJGrTZfhKBsg77EZhWGu5wf0mOGoZ6ecNZj/ll7AaaQykNOtxj
+	gSMZ72I3zGMjr3+22r60zz5tok5KG0gkTlXoCjciwealvqb76RPh7E6PkYDln4ui
+	G7DuC5pdCO+YmaRuKT6I1B9tg0F670qdhTzBpd1nqjyPCy/SW2RzwWgU1JlX/+pH
+	QsKsKmlsQ31XMx+JS+7EMpxNnQapIr+nidLWtLPD/n+ppDFdYrKtnCMKxyvvm1Lq
+	XP0eA==
+X-ME-Sender: <xms:gff9YrznOM_jYW37JN3KjdZPNBtv18F62wNZ3WaGjLXuYUpBqy6GYw>
+    <xme:gff9YjSvs0xlHV34kRorlmlAnqmvnVjCDli_VSfsJuedwicUxe3HiePSUUNvDm3lB
+    g07XT2JcRqTjg>
+X-ME-Received: <xmr:gff9YlWpOqss2UWqrx6ForAkgr0Vwgmk3pgfAjAKlF03zhmx5VaQUsdJlloB_oUIxWzbvSeJ6zT60Yc5iBNKfYO_K9ffMtKo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdehkedgtdehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggugfgjsehtke
+    ertddttdejnecuhfhrohhmpefirhgvghcumffjuceoghhrvghgsehkrhhorghhrdgtohhm
+    qeenucggtffrrghtthgvrhhnpeeuheekheelffefieduteefkeejffdvueehjeejffehle
+    dugfetkedvleekudduvdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
+    ihhlfhhrohhmpehgrhgvgheskhhrohgrhhdrtghomh
+X-ME-Proxy: <xmx:gvf9YljjW7EnvvfiLy2AkRO63oubNesj8BD6yTMLstCjdXX_NBQZaQ>
+    <xmx:gvf9YtCgxDPUAOgJ-_lEAF_CyU6LeeeoSS_YnOZc-pvZX4HJ0WfVAQ>
+    <xmx:gvf9YuL02dNbBLMblIGi35HSyGX42l6TD30J6mF1uYaFtTxPNAnNKg>
+    <xmx:gvf9Ygq8Ue4Qi-wzxeqa6vIb2fquM8QA9JszMyzGSNgwJVmhCsgttg>
+Feedback-ID: i787e41f1:Fastmail
+Date: Thu, 18 Aug 2022 10:25:35 +0200
+From: Greg KH <greg@kroah.com>
+To: oss-security@lists.openwall.com
+Message-ID: <Yv33fx1J/hQXTtSk@kroah.com>
+References: <OSZP286MB1910B2AA75597E9B1724117EAA6D9@OSZP286MB1910.JPNP286.PROD.OUTLOOK.COM>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CA+NXwpT9J40mJe_=h-R==qJBc=9PA+-80b8p4gdaJ=uy_JhMJg@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Cc: oss-security@lists.openwall.com, security@debian.org
-Date: Wed, 12 Dec 2018 17:36:40 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
-Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: [oss-security] Re: CVE Request: mini-httpd (<= v1.30) is affected by a response
- discrepancy information exposure (CWE-204)
-To: Salva =?iso-8859-1?Q?Peir=F3?= <speirofr@gmail.com>
+In-Reply-To: <OSZP286MB1910B2AA75597E9B1724117EAA6D9@OSZP286MB1910.JPNP286.PROD.OUTLOOK.COM>
+Subject: Re: [oss-security] Linux kernel: stack-out-of-bounds in profile_pc
 
-Hi,
+On Thu, Aug 18, 2022 at 05:41:30AM +0000, 黄 晓 wrote:
+> Hello:
+>       
+>       I found a bug through the syzkaller fuzz tool, you need to set CONFIG_KASAN=y, the crash information is displayed as out-of-bounds reading, I am weak and unable to analyze the harm of this bug.
+> The bug program cannot be reproduced stably and needs to be run multiple times.
 
-On Wed, Dec 12, 2018 at 04:27:02PM +0100, Salva Peir� wrote:
-> Hi everyone,
-> 
-> The mini-httpd daemon (version <= v1.30) shipped in Debian/Ubuntu from [1]
-> is affected by a response discrepancy information exposure (CWE-204) that
-> enables an attacker to remotely enumerate valid htpasswd usernames (RFC
-> 7617).
-> 
-> A more detailed advisory can be found at:
-> https://speirofr.appspot.com/files/advisory/SPADV-2018-01.md
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=916190
-> 
-> Is there a CVE for this? If not, could one be assigned, please?
+It would have been helpful to notify the developers and maintainers of
+this code that there is an issue.  They will not see a random email on
+the oss-security mailing list as they are not subscribed here.
 
-Can you request a CVE directly via https://cveform.mitre.org/ ?
+To find who is responsible for this code, use the get_maintainers.pl
+script in the kernel tree.  The output for it for this problem is:
 
-Regards,
-Salvatore
+$ ./scripts/get_maintainer.pl arch/x86/kernel/time.c
+Thomas Gleixner <tglx@linutronix.de> (maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT))
+Ingo Molnar <mingo@redhat.com> (maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT))
+Borislav Petkov <bp@alien8.de> (maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT))
+Dave Hansen <dave.hansen@linux.intel.com> (maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT))
+x86@kernel.org (maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT))
+"H. Peter Anvin" <hpa@zytor.com> (reviewer:X86 ARCHITECTURE (32-BIT AND 64-BIT))
+linux-kernel@vger.kernel.org (open list:X86 ARCHITECTURE (32-BIT AND 64-BIT))
+
+Also, this issue seems to require root permissions (i.e. write
+permissions on the kernel profiler) in order to be triggered.
+
+Hope this helps,
+
+greg k-h
