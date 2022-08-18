@@ -1,43 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/27/3
-Message-ID: <Y1q26N3sohrCvZA6@quatroqueijos.cascardo.eti.br>
-Date: Thu, 27 Oct 2022 13:50:48 -0300
-From: Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/18/6
+Message-ID: <Yv33fx1J/hQXTtSk@kroah.com>
+Date: Thu, 18 Aug 2022 10:25:35 +0200
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-2602 - Linux kernel io_uring UAF
+Subject: Re: Linux kernel: stack-out-of-bounds in profile_pc
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 18, 2022 at 01:59:51PM -0300, Thadeu Lima de Souza Cascardo wrote:
-> A local privilege escalation vulnerabilty involving Unix socket Garbage
-> Collection and io_uring was reported and fixed as:
-> 
-> 0091bfc81741b8d3aeb3b7ab8636f911b2de6e80 ("io_uring/af_unix: defer registered files gc to io_uring release")
-> 
-> The vulnerability is a use-after-free that happens when an io_uring request
-> is being processed on a registered file and the Unix GC runs and frees the
-> io_uring fd and all the registered fds. The order at which the Unix GC
-> processes the inflight fds may lead to registered fds be freed before the
-> io_uring is released and has the chance to unregister and wait for such
-> requests to finish.
-> 
-> One way to trigger this race condition is to use userfaultfd and other
-> similar strategies that cause the request to be held waiting for the
-> attacker to trigger the free.
-> 
-> This issue was reported as ZDI-CAN-17428 and has been assigned
-> CVE-2022-2602.
-> 
-> It affects upstream stable 5.4.y, 5.15.y and later versions. 5.10.y may be
-> mitigated by the fact that commit 0f2122045b946241a9e549c2a76cea54fa58a7ff
-> ("io_uring: don't rely on weak ->files references") is present, but it is
-> safer to apply the fixes.
-> 
-> A PoC will be posted in 7 days, on October 25th.
-> 
-> Cascardo.
+On Thu, Aug 18, 2022 at 05:41:30AM +0000, 黄 晓 wrote:
+> Hello:
+>       
+>       I found a bug through the syzkaller fuzz tool, you need to set CONFIG_KASAN=y, the crash information is displayed as out-of-bounds reading, I am weak and unable to analyze the harm of this bug.
+> The bug program cannot be reproduced stably and needs to be run multiple times.
 
-Sorry about posting this late, but here it is.
+It would have been helpful to notify the developers and maintainers of
+this code that there is an issue.  They will not see a random email on
+the oss-security mailing list as they are not subscribed here.
 
-Cascardo.
+To find who is responsible for this code, use the get_maintainers.pl
+script in the kernel tree.  The output for it for this problem is:
 
-View attachment "poc.c" of type "text/x-csrc" (3499 bytes)
+$ ./scripts/get_maintainer.pl arch/x86/kernel/time.c
+Thomas Gleixner <tglx@...utronix.de> (maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT))
+Ingo Molnar <mingo@...hat.com> (maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT))
+Borislav Petkov <bp@...en8.de> (maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT))
+Dave Hansen <dave.hansen@...ux.intel.com> (maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT))
+x86@...nel.org (maintainer:X86 ARCHITECTURE (32-BIT AND 64-BIT))
+"H. Peter Anvin" <hpa@...or.com> (reviewer:X86 ARCHITECTURE (32-BIT AND 64-BIT))
+linux-kernel@...r.kernel.org (open list:X86 ARCHITECTURE (32-BIT AND 64-BIT))
+
+Also, this issue seems to require root permissions (i.e. write
+permissions on the kernel profiler) in order to be triggered.
+
+Hope this helps,
+
+greg k-h
