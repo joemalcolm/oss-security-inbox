@@ -1,27 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/03/1
-Message-ID: <949efc4e-dc03-c261-2eda-f554eb3ed0fe@enst-bretagne.fr>
-Date: Thu, 3 Mar 2022 21:56:42 +0100
-From: Gabriel Corona <gabriel.corona@...t-bretagne.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/20/1
+Message-ID: <7d1f3488-dc28-e05a-1eb7-3a1a7efc9901@apache.org>
+Date: Sat, 20 Aug 2022 22:55:58 +0000
+From: Ralph Goers <rgoers@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: DNS rebinding on ReadyMedia/minidlna v1.3.0 and below
+Subject: CVE-2022-34916: Apache Flume: Improper Input Validation (JNDI Injection) in JMSMessageConsumer 
 Content-Type: text/plain; charset=utf-8
 
-ReadyMedia [1] (formerly MiniDLNA) v1.3.0 and below is vulnerable to DNS 
-rebinding attacks. A malicious remote web server may trick the user 
-browser into triggering arbitrary UPnP requests on the local DLNA server 
-and observe the result of these actions. Moreover, the shared files are 
-accessible through DNS rebinding as well.
+Description:
 
-A remote malicious server could exploit the user browser in order to:
+Apache Flume versions 1.4.0 through 1.10.0 are vulnerable to a remote code execution (RCE) attack when a configuration uses a JMS Source with a JNDI LDAP data source URI when an attacker has control of the target LDAP server. This issue is fixed by limiting JNDI to allow only the use of the java protocol or no protocol. 
 
-* list the available media files and exfiltrate this list;
-* download the media files and exfiltrate them.
+This issue is being tracked as FLUME-3428
 
-This has been fixed in ReadyMedia v1.3.1.
+Credit:
 
-[1] https://sourceforge.net/projects/minidlna/
+Apache Flume would like to thank Frentzen Amaral for reporting this issue.
 
--- 
-Gabriel
+References:
+
+https://issues.apache.org/jira/browse/FLUME-3428
+https://lists.apache.org/thread/qkmt4r2t9tbrxrdbjg1m2oczbvczd9zn
 
