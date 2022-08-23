@@ -1,87 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/22/2
-Message-ID: <Y6PQctuK5/GtDRa5@ip-172-31-85-199.ec2.internal>
-Date: Thu, 22 Dec 2022 11:35:14 +0800
-From: Xingyuan Mo <hdthky0@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/23/2
+Message-ID: <CAK_ifP47=74WfAVBGV+EnrtBZ92Zjsk8Zbib8AdVfQQNWj6YXw@mail.gmail.com>
+Date: Tue, 23 Aug 2022 17:29:03 +0200
+From: Wadeck Follonier <wadeck.follonier@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel: use-after-free in io_sqpoll_wait_sq
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-There is a use-after-free vulnerability in io_sqpoll_wait_sq() in fs/io_uring.c
-in linux-5.10.y through v5.10.154, which allows an attacker to crash the kernel,
-resulting in Denial of Service.
+The following releases contain fixes for security vulnerabilities:
 
-=*=*=*=*=*=*=*=*=  Bug Details  =*=*=*=*=*=*=*=*=
+* CollabNet Plugins Plugin 2.0.9
+* Git Plugin 4.11.5
+* Job Configuration History Plugin 1166.vc9f255f45b_8a
 
-9028:  static int io_sqpoll_wait_sq(struct io_ring_ctx *ctx)
-9029:  {
-9030:  	int ret = 0;
-9031:  	DEFINE_WAIT(wait);
-9032:
-9033:  	do {
-9034:  		if (!io_sqring_full(ctx))
-9035:  			break;
-9036:
-9037:  		prepare_to_wait(&ctx->sqo_sq_wait, &wait, TASK_INTERRUPTIBLE);
-9038:
-9039:  		if (unlikely(ctx->sqo_dead)) {
-9040:  			ret = -EOWNERDEAD;
-9041:  			goto out;
-9042:  		}
-9043:
-9044:  		if (!io_sqring_full(ctx))
-9045:  			break;
-9046:
-9047:  		schedule();
-9048:  	} while (!signal_pending(current));
-9049:
-9050:  	finish_wait(&ctx->sqo_sq_wait, &wait);
-9051:  out:
-9052:  	return ret;
-9053:  }
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-On line 9037 of fs/io_uring.c, a wait_queue_entry object on the stack named wait
-is added to wait queue ctx->sqo_sq_wait, which should be removed from
-ctx->sqo_sq_wait by calling finish_wait() once the current task does not need to
-wait for an available submission queue entry. Though, On line 9039, if
-ctx->sqo_dead is not 0, the control flow jumps to out, skipping the call to
-finish_wait() on line 9050. As a result, wait still exists in ctx->sqo_sq_wait
-even when the current task exits kernel mode or comes to an end, which means
-that the two entries before and after wait each contain a stale pointer to the
-expired kernel stack space. If one of the two entries is later unlinked from
-ctx->sqo_dead, the memory of the expired stack space pointed to by the stale
-pointer will be corrupted, resulting in use-after-free.
+* Kubernetes Continuous Deploy Plugin
 
-As mentioned earlier, the condition for triggering the vulnerability is that
-ctx->sqo_dead is not 0, which can be achieved by forking a new process and
-terminating it quickly. When the new process exits, the copied io_uring file
-descriptor will be closed, causing the following call chain to be triggered:
-io_uring_flush()->io_uring_cancel_task_requests()->io_disable_sqo_submit(). In
-io_disable_sqo_submit(), ctx->sqo_dead is assigned 1 on line 8732.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2022-08-23/
 
-8729:  static void io_disable_sqo_submit(struct io_ring_ctx *ctx)
-8730:  {
-8731:  	mutex_lock(&ctx->uring_lock);
-8732:  	ctx->sqo_dead = 1;
-8733:  	if (ctx->flags & IORING_SETUP_R_DISABLED)
-8734:  		io_sq_offload_start(ctx);
-8735:  	mutex_unlock(&ctx->uring_lock);
-8736:
-8737:  	/* make sure callers enter the ring to get error */
-8738:  	if (ctx->rings)
-8739:  		io_ring_set_wakeup_flag(ctx);
-8740:  }
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-=*=*=*=*=*=*=*=*=  Patch  =*=*=*=*=*=*=*=*=
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-The patch can be found here:
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?h=v5.10.161&id=0f544353fec8e717d37724d95b92538e1de79e86
+---
 
-=*=*=*=*=*=*=*=*=  Credit  =*=*=*=*=*=*=*=*=
+SECURITY-2796 / CVE-2022-38663
+Git Plugin 4.11.4 and earlier does not properly mask (i.e., replace with
+asterisks) credentials in the build log provided by the Git Username and
+Password (`gitUsernamePassword`) credentials binding. Usernames are masked
+instead of passwords in cases when usernames are not set to be treated as
+secret.
 
-Xingyuan Mo and Gengjia Chen of IceSword Lab, Qihoo 360 Technology Co. Ltd.
 
-Best Regards,
-Xingyuan Mo
+SECURITY-2765 / CVE-2022-38664
+Job Configuration History Plugin 1165.v8cc9fd1f4597 and earlier does not
+escape the job name on the System Configuration History page.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to configure job names.
+
+
+SECURITY-2157 / CVE-2022-38665
+CollabNet Plugins Plugin 2.0.8 and earlier stores a RabbitMQ password
+unencrypted in its global configuration file
+`hudson.plugins.collabnet.share.TeamForgeShare.xml` on the Jenkins
+controller as part of its configuration.
+
+This password can be viewed by users with access to the Jenkins controller
+file system.
+
+
+SECURITY-2448 / CVE-2021-25738
+Kubernetes Continuous Deploy Plugin 2.3.1 and earlier bundles a version of
+Kubernetes Java Client library with the vulnerability CVE-2021-25738 that
+does not configure its YAML parser to prevent the instantiation of
+arbitrary types.
+
+This results in a remote code execution (RCE) vulnerability exploitable by
+users able to provide YAML input files to Kubernetes Continuous Deploy
+Plugin's build step.
+
+As of publication of this advisory, there is no fix.
+
