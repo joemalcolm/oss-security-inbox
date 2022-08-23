@@ -1,19 +1,118 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/08/10
-Message-ID: <4c7df63d-59b6-d40a-6c22-6b42f5ce7279@apache.org>
-Date: Mon, 08 Aug 2022 19:33:37 +0000
-From: Ryan Skraba <rskraba@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-36124: Apache Avro: Memory overconsumption in Avro Rust SDK 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/23/3
+Message-ID:  <BYAPR05MB63436604DE6E9F49EAAAD1B1B9709@BYAPR05MB6343.namprd05.prod.outlook.com>
+Date: Tue, 23 Aug 2022 20:10:48 +0000
+From: VMware Security Response Center <security@...are.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: [SECURITY ADVISORY] open-vm-tools: Local privilege escalation vulnerability (CVE-2022-31676)
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Local privilege escalation vulnerability in open-vm-tools
+================================
+
+VMware security advisory, August 23 2022 - https://www.vmware.com/security/advisories/VMSA-2022-0024.html
+
+1. Impacted Products
+VMware Tools (open-vm-tools)
+
+2. Introduction
+VMware Tools was impacted by a local privilege escalation vulnerability. Updates are available to remediate this vulnerability in affected VMware products.
+
+3. Local privilege escalation vulnerability (CVE-2022-31676)
 
 Description:
+VMware Tools contains a local privilege escalation vulnerability. VMware has evaluated the severity of this issue to be in the Important severity range<https://www.vmware.com/support/policies/security_response.html> with a maximum CVSSv3 base score of 7.0<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H>.
 
-It is possible for a Reader to consume memory beyond the allowed constraints and thus lead to out of memory on the system. This issue affects Rust applications using Apache Avro Rust SDK prior to 0.14.0 (previously known as avro-rs).  Users should update to apache-avro version 0.14.0 which addresses this issue.
+Known Attack Vectors:
+A malicious actor with local non-administrative access to the Guest OS can escalate privileges as a root user in the virtual machine.
 
-Credit:
+Resolution:
+To remediate CVE-2022-31676 apply the patches listed in the 'Fixed Version' column of the 'Response Matrix' found below.
 
-This issue was reported to the Apache Avro team by Evan Richter at ForAllSecure and found with Mayhem.
+Workarounds:
+None
+
+Additional Documentation:
+None
+
+Acknowledgements:
+None
+
+Notes:
+VMware Tools 10.3.25 only applies to the older Linux releases.
+
+Response Matrix:
+
+
+VMware Product
+
+Version
+
+Running On
+
+CVE
+
+CVSSv3
+
+Severity
+
+Fixed Version
+
+Workarounds
+
+Additional Documentation
+VMware Tools
+12.x.y, 11.x.y
+Linux
+CVE-2022-31676
+7.0<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H>
+Important
+12.1.0<https://docs.vmware.com/en/VMware-Tools/12.1/rn/VMware-Tools-1210-Release-Notes.html>
+None
+None
+VMware Tools
+10.x.y
+Linux
+CVE-2022-31676
+7.0<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H>
+Important
+10.3.25<https://docs.vmware.com/en/VMware-Tools/10.3/rn/VMware-Tools-10325-Release-Notes.html>
+None
+None
+
+
+4. References:
+
+Fixed Version(s) and Release Notes:
+
+VMware Tools for Linux 12.1.0
+
+Downloads and Documentation:
+https://customerconnect.vmware.com/downloads/details?downloadGroup=VMTOOLS1210&productId=1259&rPId=92824
+
+https://docs.vmware.com/en/VMware-Tools/12.1/rn/VMware-Tools-1210-Release-Notes.html
+
+VMware Tools for Linux 10.3.25
+
+Downloads and Documentation:
+https://customerconnect.vmware.com/downloads/details?downloadGroup=VMTOOLS10325&productId=1072&rPId=92945
+
+https://docs.vmware.com/en/VMware-Tools/10.3/rn/VMware-Tools-10325-Release-Notes.html
+
+Mitre CVE Dictionary Links:
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-31676
+
+FIRST CVSSv3 Calculator:
+CVE-2022-31676: https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H
+
+
+Upstream fix for CVE-2022-31676: https://github.com/vmware/open-vm-tools/blob/CVE-2022-31676.patch/README.md
+
+
+
+Thanks,
+Sibi Aravind E
+VMware Security Response Center
+
+
 
