@@ -1,29 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/06/2
-Message-ID: <Yz722hsDFWr/hqGb@momentum.pseudorandom.co.uk>
-Date: Thu, 6 Oct 2022 16:40:10 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com, dbus-security@...ts.freedesktop.org
-Cc: Demi Marie Obenour <demi@...isiblethingslab.com>
-Subject: Re: dbus denial of service: CVE-2022-42010, -42011, -42012
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/25/1
+Message-ID: <20220825132021.GA27469@openwall.com>
+Date: Thu, 25 Aug 2022 15:20:21 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux Kernel use-after-free write in netfilter
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 06 Oct 2022 at 10:53:15 -0400, Demi Marie Obenour wrote:
-> Is the memory corruption potentially exploitable for local privilege
-> escalation?
+On Tue, May 31, 2022 at 10:00:32AM +0100, EDG EDG wrote:
+> A use-after-free write vulnerability was identified within the
+> netfilter subsystem
+> which can be exploited to achieve privilege escalation to root.
+> 
+> In order to trigger the issue it requires the ability to create user/net
+> namespaces.
+> 
+> This issue has been fixed within the following commit:
+> 
+> https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/net/netfilter?id=520778042ccca019f3ffa136dd0ca565c486cedd
+> 
+> The issue was previously confirmed on the latest linux master (commit
+> 143a6252e1b8ab424b4b293512a97cca7295c182) and we have confirmed it can be
+> exploited for privilege escalation on Ubuntu 22.04 (Linux kernel
+> 5.15.0-27-generic).
+[...]
+> # POC Code
+[...]
+>     printf("should have triggered KASAN\n");
 
-It is not known to be, but also not known not to be. I'm sure a
-sufficiently creative attacker can convert almost any memory corruption
-into arbitrary code execution, but exploit development is not my job
-(I'd rather fix the vulnerabilities!), so I have not attempted to
-weaponize this.
+While the message above included PoC code, there's now also a blog post
+and GitHub repo with a full exploit:
 
-> Are clients using libdbus vulnerable if they are behind dbus-broker?
+https://blog.theori.io/research/CVE-2022-32250-linux-kernel-lpe-2022/
+https://github.com/theori-io/CVE-2022-32250-exploit
 
-I don't maintain dbus-broker and have not tested or audited it, so
-I don't know how much validation it does. I would hope that it would
-detect and prevent CVE-2022-42011 and CVE-2022-42010 (which involve
-invalid messages), but probably not CVE-2022-42012 (which involves a
-message that is odd but technically valid).
+"In this post, we have shown the process of exploiting CVE-2022-32250.
+We were able to leak KASLR and overwrite modprobe_path by utilizing the
+mqueue functions, and as a result, we successfully gained root
+privileges in Ubuntu 22.04."
 
-    smcv
+Alexander
