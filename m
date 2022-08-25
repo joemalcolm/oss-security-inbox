@@ -1,32 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/04/1
-Message-ID: <YsJ7JjZ/R/jqN+YX@itl-email>
-Date: Mon, 4 Jul 2022 01:31:18 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
-To: Open Source Software Security <oss-security@...ts.openwall.com>
-Subject: Denial of service in GnuPG
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/25/2
+Message-ID: <20220825132856.GA29197@openwall.com>
+Date: Thu, 25 Aug 2022 15:28:56 +0200
+From: Solar Designer <solar@...nwall.com>
+To: David Bouman <davidbouman35@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel: CVE-2022-1015,CVE-2022-1016 in nf_tables cause privilege escalation, information leak
 Content-Type: text/plain; charset=utf-8
 
-GnuPG is vulnerable to a denial of service attack when processing
-crafted detached signatures and/or certificates.  By concatenating the
-same signature to itself a very large number of times, and then wrapping
-them in a compressed packet, I am able to cause GnuPG to take over a
-minute to process an input that is less than 5KB armored.
+On Mon, Mar 28, 2022 at 08:28:21PM +0200, David Bouman wrote:
+> I'm reporting two linux kernel vulnerabilities in the nf_tables 
+> component of the netfilter subsystem that I found.
+> 
+> CVE-2022-1015 pertains to an out of bounds access in nf_tables 
+> expression evaluation due to validation of user register indices. It 
+> leads to local privilege escalation, for example by overwriting a stack 
+> return address OOB with a crafted nft_expr_payload.
+> 
+> CVE-2022-1015 is exploitable starting from commit 345023b0db3 
+> ("netfilter: nftables: add nft_parse_register_store() and use it"), 
+> v5.12 and has been fixed in commit 6e1acfa387b9 ("netfilter: nf_tables: 
+> validate registers coming from userspace.").
+> 
+> The bug has been present since commit 49499c3e6e18 ("netfilter: 
+> nf_tables: switch registers to 32 bit addressing"), but to my knowledge 
+> has not been exploitable until v5.12.
+> 
+> CVE-2022-1016 pertains to uninitialized stack data in the nft_do_chain 
+> routine. CVE-2022-1016 is exploitable starting from commit 96518518cc41 
+> (original merge of nf_tables), v3.13-rc1, and has been fixed in commit 
+> 4c905f6740a3 ("netfilter: nf_tables: initialize registers in 
+> nft_do_chain()").
+> 
+> I will be releasing a detailed blog post and exploit code for both 
+> vulnerabilities in a few days.
 
-https://dev.gnupg.org/D556 should fix this particular bug by refusing to
-process compressed packets in detached signatures and/or certificates.
-There may be further problems with non-detached signatures that are not
-addressed by D556, but I recommend applying D556 first.
+Apparently, these were published on April 2, but not yet mentioned on
+oss-security?
 
-Signature (of /dev/null) that triggers this bug is attached, along with
-the corresponding public key.
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+https://blog.dbouman.nl/2022/04/02/How-The-Tables-Have-Turned-CVE-2022-1015-1016/
+https://github.com/pqlx/CVE-2022-1015
 
-Download attachment "test-key.cert" of type "application/octet-stream" (1209 bytes)
-
-View attachment "decomp-3" of type "text/plain" (4604 bytes)
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Alexander
