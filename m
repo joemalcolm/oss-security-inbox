@@ -1,29 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/26/3
-Message-ID: <CA+ZBtZ7__rBfj7EgGm9sibydEc-Xyep9ctp8z7BTMqhLf7enVQ@mail.gmail.com>
-Date: Wed, 26 Jan 2022 14:40:38 +0800
-From: Zhang Yonglun <zhangyonglun@...che.org>
-To: oss-security@...ts.openwall.com, dev@...nyu.apache.org
-Subject: CVE-2022-23945: Apache ShenYu (incubating) missing authentication allows gateway registration
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/25/5
+Message-ID: <b2f4c0a2-695c-7744-2397-269a1e588c31@igalia.com>
+Date: Thu, 25 Aug 2022 23:34:04 +0200
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0008
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2022-0008
+------------------------------------------------------------------------
 
-Description:
+Date reported           : August 25, 2022
+Advisory ID             : WSA-2022-0008
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2022-0008.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2022-0008.html
+CVE identifiers         : CVE-2022-32893.
 
-Missing  authentication on ShenYu Admin when a gateway registers. So,
-if ShenYu Admin is exposed to the internet, it will allow any user to
-register as the gateway.
-This issue affects Apache ShenYu (incubating) 2.4.0 and 2.4.1.
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-Mitigation:
+CVE-2022-32893
+    Versions affected: WebKitGTK and WPE WebKit before 2.36.7.
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Apple is aware of a report that this issue
+    may have been actively exploited.
 
-Upgrade to Apache ShenYu (incubating) 2.4.2 or apply patch
-https://github.com/apache/incubator-shenyu/pull/2723.
 
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
 
---
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
 
-Zhang Yonglun
-Apache ShenYu (Incubating)
-Apache ShardingSphere
+The WebKitGTK and WPE WebKit team,
+August 25, 2022
