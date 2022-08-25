@@ -1,35 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/01/18
-Message-ID: <CAPWQ=1TzQ_e2yHZMXx6Tm4UJG3owZypShvm+VDoxEMcDSDxX+A@mail.gmail.com>
-Date: Tue, 1 Nov 2022 15:49:27 -0400
-From: Pavan Maddamsetti <pavan.maddamsetti@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/25/3
+Message-ID: <d1b6acf9-0f59-1954-ccad-2243ca03d138@apache.org>
+Date: Thu, 25 Aug 2022 14:09:16 +0000
+From: Joe Orton <jorton@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
+Subject: CVE-2022-22728: libapreq2: libapreq2 multipart form parse memory corruption 
 Content-Type: text/plain; charset=utf-8
 
-https://github.com/RustCrypto
+Severity: important
 
-On Tue, Nov 1, 2022, 3:42 PM Dave Horsfall <dave@...sfall.org> wrote:
+Description:
 
-> On Tue, 1 Nov 2022, Demi Marie Obenour wrote:
->
-> [ Massive trim ]
->
-> > 3. When will OpenSSL be replaced by something written in a safe
-> >    language, or at least with a better-maintained fork?  I know that
-> >    distributions often cannot use LibreSSL (because FIPS, ugh) or
-> >    BoringSSL (because of no stable API or ABI), but I wonder if e.g.
-> >    libcurl should be linked to BoringSSL instead.
->
-> We see this over at https://boringssl.googlesource.com/boringssl/ :
->
->   ``Although BoringSSL is an open source project, it is not intended
->     for general use, as OpenSSL is. We don't recommend that third parties
->     depend upon it. Doing so is likely to be frustrating because there
->     are no guarantees of API or ABI stability.''
->
-> If even the manufacturer says that you shouldn't use it...
->
-> -- Dave
->
+A flaw in libapreq2 versions 2.16 and earlier could cause a buffer overflow while processing multipart form uploads.  A remote attacker could send a request causing a process crash which could lead to a denial of service attack.
 
