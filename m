@@ -1,4 +1,4 @@
-Received: (qmail 16149 invoked by uid 550); 9 Apr 2024 13:06:41 -0000
+Received: (qmail 5288 invoked by uid 550); 26 Aug 2022 06:57:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,40 +7,88 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29756 invoked from network); 9 Apr 2024 02:09:18 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Jongyoul Lee <jongyoul@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <9a68ff69-1112-b320-9104-71b4b239e04e@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 09 Apr 2024 02:09:08 +0000
+Received: (qmail 7434 invoked from network); 26 Aug 2022 05:01:55 -0000
+Date: Fri, 26 Aug 2022 00:01:40 -0500
+From: John Helmert III <ajak@gentoo.org>
+To: clopez@igalia.com, oss-security@lists.openwall.com
+Message-ID: <YwhTtN8duEhxo1hY@gentoo.org>
+References: <b2f4c0a2-695c-7744-2397-269a1e588c31@igalia.com>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2024-31860: Apache Zeppelin: Path traversal vulnerability 
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="JCcNjko20y6/wK1g"
+Content-Disposition: inline
+In-Reply-To: <b2f4c0a2-695c-7744-2397-269a1e588c31@igalia.com>
+Subject: Re: [oss-security] WebKitGTK and WPE WebKit Security Advisory
+ WSA-2022-0008
 
-Severity: low
+--JCcNjko20y6/wK1g
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Affected versions:
+On Thu, Aug 25, 2022 at 11:34:04PM +0200, Carlos Alberto Lopez Perez wrote:
+> ------------------------------------------------------------------------
+> WebKitGTK and WPE WebKit Security Advisory                 WSA-2022-0008
+> ------------------------------------------------------------------------
+>=20
+> Date reported           : August 25, 2022
+> Advisory ID             : WSA-2022-0008
+> WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2022-0008.ht=
+ml
+> WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2022-0008.ht=
+ml
+> CVE identifiers         : CVE-2022-32893.
+>=20
+> Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+>=20
+> CVE-2022-32893
+>     Versions affected: WebKitGTK and WPE WebKit before 2.36.7.
+>     Credit to an anonymous researcher.
+>     Impact: Processing maliciously crafted web content may lead to
+>     arbitrary code execution. Apple is aware of a report that this issue
+>     may have been actively exploited.
 
-- Apache Zeppelin 0.9.0 before 0.11.0
+According to Apple's security advisories for this (e.g. [1]), this
+issue is tracked on the Webkit Bugzilla as 243557 [2] which was opened
+on 2022-08-04. A few minutes after that bug was opened, a pull request
+on GitHub was linked [3] with a patch which also seems to add unit
+tests. So, it appears to me that this issue was public since at least
+August 4th, and even more widely publicized with Apple's security
+advisories on August 17.
 
-Description:
+WebKit-2.36.6 was released shortly after the first bug report, on
+2022-08-07, and WebKit-2.36.7 was released yesterday, on 2022-08-25.
 
-Improper Input Validation vulnerability in Apache Zeppelin.
+With this bug seemingly being publicly known to be an actively
+exploited code execution issue, why did it take several weeks and 2
+WebKit releases to get this issue fixed and a WSA released?
 
-By adding relative path indicators(E.g ..), attackers can see the contents =
-for any files in the filesystem that the server account can access.=C2=A0
-This issue affects Apache Zeppelin: from 0.9.0 before 0.11.0.
+[1] https://support.apple.com/en-us/HT213412
+[2] https://bugs.webkit.org/show_bug.cgi?id=3D243557
+[3] https://github.com/WebKit/WebKit/pull/3023
 
-Users are recommended to upgrade to version 0.11.0, which fixes the issue.
+>=20
+> We recommend updating to the latest stable versions of WebKitGTK and WPE
+> WebKit. It is the best way to ensure that you are running safe versions
+> of WebKit. Please check our websites for information about the latest
+> stable releases.
+>=20
+> Further information about WebKitGTK and WPE WebKit security advisories
+> can be found at: https://webkitgtk.org/security.html or
+> https://wpewebkit.org/security/.
+>=20
+> The WebKitGTK and WPE WebKit team,
+> August 25, 2022
 
-Credit:
+--JCcNjko20y6/wK1g
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Kai Zhao (finder)
+-----BEGIN PGP SIGNATURE-----
 
-References:
+iHUEABYKAB0WIQQyG9yfCrmO0LPSdG2gXq2+aa/JtQUCYwhTsgAKCRCgXq2+aa/J
+te9lAQChMtfUcIZ8w88f/aNfQNeD4nZ4TBRsI6+kYa7B3ZFkWAEAqUugJhMF2TzA
+dCSjFU5HeTN6Tl0No0HkApFXMrnkoAQ=
+=N5/c
+-----END PGP SIGNATURE-----
 
-https://github.com/apache/zeppelin/pull/4632
-https://zeppelin.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2024-31860
-
+--JCcNjko20y6/wK1g--
