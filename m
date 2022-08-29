@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["686" "Monday" "10" "August" "2020" "10:25:43" "+0200" "Mauro Matteo Cascella" "mcascell@redhat.com" "<CAA8xKjW4-RaRBBR6FC+CzNrAaafKMPGAC9Hkufg=6ODoAkCcCQ@mail.gmail.com>" "21" "[oss-security] CVE-2020-16092 QEMU: reachable assertion failure in net_tx_pkt_add_raw_fragment() in hw/net/net_tx_pkt.c" "^Cc:" nil nil "8" "2020081008:25:43" "[oss-security] CVE-2020-16092 QEMU: reachable assertion failure in net_tx_pkt_add_raw_fragment() in hw/net/net_tx_pkt.c" (number mark "U       mcascell@red Aug 10   21/686   " thread-indent "\"[oss-security] CVE-2020-16092 QEMU: reachable assertion failure in net_tx_pkt_add_raw_fragment() in hw/net/net_tx_pkt.c\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-16092 QEMU: reachable assertion failure in net_tx_pkt_add_raw_fragment() in hw/net/net_tx_pkt.c" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 4069 invoked by uid 550); 10 Aug 2020 09:08:17 -0000
+Received: (qmail 24508 invoked by uid 550); 29 Aug 2022 11:27:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +6,101 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14156 invoked from network); 10 Aug 2020 08:26:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1597047964;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
-	bh=UqnJ3u9NuXrs75TsHdVvta+o2ZYt/JAq+MIydGEhSu8=;
-	b=QaAs6wu6ngKw828ESgBvsGnzGtIjyxcVKfGOOHgeQ8wGjPRG+A1+bleE4V3gz1KuUkQ+pV
-	g34qewjeCEHqjlq78VC1h65H5gFH9DZWwvc7vil9fTaKC8SZZUSBPlSDRxPu2DhK7JBbi7
-	chHEo/wwS2SOifsgEBg1Nk4EMTGaoSY=
-X-MC-Unique: lzv9MxSHMkCcC5eI1xGAIg-1
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=UqnJ3u9NuXrs75TsHdVvta+o2ZYt/JAq+MIydGEhSu8=;
-        b=GAKLO+23i/9Gwn+G4i4UP0KYryEfDbHKrDmI4BDHh297O3cbksJdJkYbPZTBhqZI+g
-         nKk6Gi8siLvY3HdbknCH4Ue4TW08SLCzME5wQItVLqxHW5lQtG5iZJuYAitjPyG228d0
-         w4vsjcu4cfuB61NRHZljnfL2q+kqeawQwvWMumDO/Pu8PXdGX/S50BiVXq0dTBpSY+8u
-         e8RAHKYWiBu0fb8kuj1Vb5zc19FP026pcIm58yDgKVf4IXfQsWRg/nnOSCgDSl7+WPt5
-         vCSdaXSGB9XKU/3AgXVJkL5noj72fleQPPdx0cJtoy3eEVyW7ViaobpmDbkF70fS3pTs
-         CPlg==
-X-Gm-Message-State: AOAM531GyaGAoaDf3xAxjmM1iObHP2bPjuQnjV+h1WWVZJIjlMOg0zis
-	QF2uMILPjoO40+odtkKaeLjshQrWNU/yq8kGeP5jILYurNYg5l8YSnvfzz0JosawTJVuavlFzV+
-	iXCcF5Zizx+OxUnBfxo47kT+IRKSqmLGagw3/i1Fu1Db5
-X-Received: by 2002:a50:c449:: with SMTP id w9mr20689600edf.65.1597047954348;
-        Mon, 10 Aug 2020 01:25:54 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJxeG+1Lte5PV9cdBvSYpQgjHVV+55PfhXN7WuGZcc4/Crqz5DX1oouWO8H0kGU/nJxnL9cQ8Fdb2VdYgvn+v78=
-X-Received: by 2002:a50:c449:: with SMTP id w9mr20689591edf.65.1597047954103;
- Mon, 10 Aug 2020 01:25:54 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CAA8xKjW4-RaRBBR6FC+CzNrAaafKMPGAC9Hkufg=6ODoAkCcCQ@mail.gmail.com>
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=mcascell@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Cc: Alexander Bulekov <alxndr@bu.edu>, ziming zhang <ezrakiez@gmail.com>
-Date: Mon, 10 Aug 2020 10:25:43 +0200
-From: Mauro Matteo Cascella <mcascell@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2020-16092 QEMU: reachable assertion failure in
- net_tx_pkt_add_raw_fragment() in hw/net/net_tx_pkt.c
-To: oss-security@lists.openwall.com
+Received: (qmail 24484 invoked from network); 29 Aug 2022 11:27:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:Cc:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=z7Y7XJuGU/+6uiZLkpdjYcPV9ctWX7caGdSngkYm2cA=; b=aG9hcVNyVY8OIMCtER5cglBJ9y
+	adPbnUtgocCPXWmZThrcdulQdk2vegCFjhB+sJDDj9ybx1S16iB0Jlum7nRV3M9s6KsWq/IUXs4M1
+	JNvQR4N8cQXPlu5JAYYHVY+aYWw/tphkzXIUmH0a7B5oyRoFe7eJYogbqq8OuSB2LKXeUGiYqBZzx
+	CGJ9hxH/qEXzTvrCDB8YWKkHEXjPLARids+9kNwNeNHj6Gt3qxgeMHrGOhXrQZ5kGEwbxohxoOo5M
+	ArADi1/hiUgPhAK6ExQusidhtOXh27XEfZmPX4SE67r4KfI5IigppHlTMiiJJ4tabCHXLAXALIJDI
+	vwYagAKQ==;
+Message-ID: <8812a292-ecd6-5172-a746-4ca192552882@igalia.com>
+Date: Mon, 29 Aug 2022 13:26:49 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Content-Language: en-GB
+To: oss-security@lists.openwall.com, John Helmert III <ajak@gentoo.org>
+References: <b2f4c0a2-695c-7744-2397-269a1e588c31@igalia.com>
+ <YwhTtN8duEhxo1hY@gentoo.org>
+From: Carlos Alberto Lopez Perez <clopez@igalia.com>
+Organization: Igalia S.L.
+Mail-Followup-To: oss-security@lists.openwall.com,
+ John Helmert III <ajak@gentoo.org>
+In-Reply-To: <YwhTtN8duEhxo1hY@gentoo.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] WebKitGTK and WPE WebKit Security Advisory
+ WSA-2022-0008
 
-Hello,
 
-An assertion failure issue was found in QEMU in the network packet
-processing component. This issue affects the "e1000e" and "vmxnet3"
-network devices. This flaw allows a malicious guest user or process to
-abort the QEMU process on the host, resulting in a denial of service
-condition.
+On 26/08/2022 07:01, John Helmert III wrote:
+> On Thu, Aug 25, 2022 at 11:34:04PM +0200, Carlos Alberto Lopez Perez wrote:
+>> ------------------------------------------------------------------------
+>> WebKitGTK and WPE WebKit Security Advisory                 WSA-2022-0008
+>> ------------------------------------------------------------------------
+>>
+>> Date reported           : August 25, 2022
+>> Advisory ID             : WSA-2022-0008
+>> WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2022-0008.html
+>> WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2022-0008.html
+>> CVE identifiers         : CVE-2022-32893.
+>>
+>> Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+>>
+>> CVE-2022-32893
+>>     Versions affected: WebKitGTK and WPE WebKit before 2.36.7.
+>>     Credit to an anonymous researcher.
+>>     Impact: Processing maliciously crafted web content may lead to
+>>     arbitrary code execution. Apple is aware of a report that this issue
+>>     may have been actively exploited.
+> 
+> According to Apple's security advisories for this (e.g. [1]), this
+> issue is tracked on the Webkit Bugzilla as 243557 [2] which was opened
+> on 2022-08-04. A few minutes after that bug was opened, a pull request
+> on GitHub was linked [3] with a patch which also seems to add unit
+> tests. So, it appears to me that this issue was public since at least
+> August 4th, and even more widely publicized with Apple's security
+> advisories on August 17.
+> 
+> WebKit-2.36.6 was released shortly after the first bug report, on
+> 2022-08-07, and WebKit-2.36.7 was released yesterday, on 2022-08-25.
+> 
+> With this bug seemingly being publicly known to be an actively
+> exploited code execution issue, why did it take several weeks and 2
+> WebKit releases to get this issue fixed and a WSA released?
+> 
+> [1] https://support.apple.com/en-us/HT213412
+> [2] https://bugs.webkit.org/show_bug.cgi?id=243557
+> [3] https://github.com/WebKit/WebKit/pull/3023
+> 
 
-Upstream patch:
-  -> https://git.qemu.org/?p=qemu.git;a=commit;h=035e69b063835a5fd23cacabd63690a3d84532a8
 
-This flaw was independently reported by Alexander Bulekov and Ziming
-Zhang (both CC'd).
-CVE-2020-16092 requested and assigned via MITRE form: https://cveform.mitre.org/
+We (maintainers of Linux WebKit ports) don't have access to the security
+issues affecting Apple products until those issues are made public by them.
 
-Regards,
+So, we didn't knew until August 17th of this issue. Also you can see
+that the bug report itself or the patch doesn't has any indication that
+it fixes a security-related problem.
 
--- 
-Mauro Matteo Cascella, Red Hat Product Security
-6F78 E20B 5935 928C F0A8  1A9D 4E55 23B8 BB34 10B0
+Therefore, the time it took us to notice the issue, backport the fix and
+do a new release was just 7-8 days (from 17th to 24-25th of August).
+Which, honestely, it is quite good taking into account that: 1)
+back-porting the fix was not straightforward since it required
+back-porting also a few previous patches in order to be able to merge it
+properly and that 2) we are in August and people is usually on holidays.
 
+On the other hand, I don't know if this issue was or is exploited on
+Linux WebKit users. All I known is that Apple said they are aware of a
+report that this issue was actively exploited (on Apple/WebKit users).
+So I assume this can also affect Linux WebKit users. But I don't have a
+confirmation that this is actually the case, neither I'm aware of any
+PoC demonstrating the issue.
+
+Regards.
