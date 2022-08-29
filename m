@@ -1,30 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/28/1
-Message-ID: <53a25a93-e8ae-da21-8a5c-ed10fc2a1669@apache.org>
-Date: Wed, 28 Sep 2022 14:19:57 +0100
-From: Mark Thomas <markt@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-43980: Apache Tomcat: Information disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/29/3
+Message-ID: <16136472.hlxOUv9cDv@thomas>
+Date: Mon, 29 Aug 2022 19:55:17 +0200
+From: Thomas Monjalon <thomas@...jalon.net>
+To: announce@...k.org
+Cc: oss-security@...ts.openwall.com
+Subject: CVE-2022-28199: DPDK mlx5 driver error recovery handling vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+A vulnerability was fixed in DPDK.
+Some downstream stakeholders were warned in advance
+in order to coordinate the release of fixes
+and reduce the vulnerability window.
 
-Description:
+When having a failure with the mlx5 driver,
+the error recovery was not handled properly,
+which can allow a remote attacker to cause denial of service
+and some impact to data integrity and confidentiality.
 
-The simplified implementation of blocking reads and writes introduced in 
-Tomcat 10 and back-ported to Tomcat 9.0.47 onwards exposed a long 
-standing (but extremely hard to trigger) concurrency bug in Apache 
-Tomcat 10.1.0 to 10.1.0-M12, 10.0.0-M1 to 10.0.18, 9.0.0-M1 to 9.0.60 
-and 8.5.0 to 8.5.77 that could cause client connections to share an 
-Http11Processor instance resulting in responses, or part responses, to 
-be received by the wrong client.
+CVE: CVE-2022-28199
+Severity: 6.5
+CVSS scores: AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H
 
-Credit:
+Commits per branch:
+	main  - https://git.dpdk.org/dpdk/commit/?id=60b254e392
+	21.11 - https://git.dpdk.org/dpdk-stable/commit/?id=25c01bd323
+	20.11 - https://git.dpdk.org/dpdk-stable/commit/?id=ef311075d2
+	19.11 - https://git.dpdk.org/dpdk-stable/commit/?id=8b090f2664
 
-Thanks to Adam Thomas, Richard Hernandez and Ryan Schmitt for 
-discovering the issue and working with the Tomcat security team to 
-identify the root cause and appropriate fix.
+LTS Releases:
+	21.11 - http://fast.dpdk.org/rel/dpdk-21.11.2.tar.xz
+	20.11 - http://fast.dpdk.org/rel/dpdk-20.11.6.tar.xz
+	19.11 - http://fast.dpdk.org/rel/dpdk-19.11.13.tar.xz
 
-References:
 
-https://lists.apache.org/thread/3jjqbsp6j88b198x5rmg99b1qr8ht3g3
+
