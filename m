@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2671" "Monday" "20" "March" "2017" "10:26:26" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<762448.990109505-sendEmail@localhost>" "70" "[oss-security] libpcre: invalid memory read in match (pcre_exec.c)" nil nil nil "3" "2017032010:26:26" "[oss-security] libpcre: invalid memory read in match (pcre_exec.c)" (number mark "U       ago@gentoo.o Mar 20   70/2671  " thread-indent "\"[oss-security] libpcre: invalid memory read in match (pcre_exec.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5838 invoked by uid 550); 20 Mar 2017 10:26:46 -0000
+Received: (qmail 32651 invoked by uid 550); 29 Aug 2022 18:19:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,82 +7,100 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5661 invoked from network); 20 Mar 2017 10:26:43 -0000
-Message-ID: <762448.990109505-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Mon, 20 Mar 2017 10:26:26 +0000
+Received: (qmail 11514 invoked from network); 29 Aug 2022 18:12:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=monjalon.net; h=
+	cc:cc:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:message-id:mime-version:reply-to:sender:subject
+	:subject:to:to; s=fm1; t=1661796741; x=1661883141; bh=kF8K0X8x2/
+	OaHpASGVOnKLmguSc6Vd0qs1g5gDlzpbk=; b=OskCJYAsFOX0DOzD3mJuYIe44n
+	ysAS2ZCzXZH72vwUufojcCWi1s3+yPlJOqolHuGHxEBM0Fvwk187iYSb/U5tJEdr
+	DU22UXK4sVjpCqxzpf+rxPt2s2jVoNkf/i1Ub5WPhS/67JF62IxVWGYBA3udZOXz
+	1sQKJQwXPSlrm4w9B0Fs1r2hsvBL6Vvr5StpTxR5LBu/a1KyUjczedRyZk/cQHS4
+	v6joMILkg84KL/fHSKKGN/YWVavhPdGPzZeaJPAD0B+0QfP5wN6VAQPt6uJRMIdC
+	1bXI/WkI4yPX0eBauurMNl41HjQENkIiXrt17GCrlhr7qn7oksYDjTShOj3w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm1; t=1661796741; x=1661883141; bh=kF8K0X8x2/OaH
+	pASGVOnKLmguSc6Vd0qs1g5gDlzpbk=; b=2mCJ1zWU5ev8Gt5XBvIbEEQjZShI3
+	iNdtsxBz9cuaPDehmPrw7qj/s0tl+NM1zWQYLve6OuIcTV2mU3mWizJlz3uQm/5t
+	008nMyUOOpM4lnPctNcoivQVjtWMq0Bkxo+K/9eL7Txyht6YY50TzNdWE69Yei2m
+	jRLTkXlOzD5ES/thq0NVXw1MKfrWrSNG+319FlnvFZ4yRwuHQiAv6oIRkCFpvhbI
+	R7y0dCRXJajKfJTcU0KQCFCSX+b+MVQl+LukVCpb4m//ALVvohVX/vAeAxdBZh9E
+	tGPfDs6NhS2tUJMmzMpkRQ4l/sMry6ourwf7idKXCwumTuQ3u1sR6Qv0w==
+X-ME-Sender: <xms:hAENY-byvingvH7MWl5vfk_M96h60lf6K8vM1-J7jdKjLMN3QkpAXw>
+    <xme:hAENYxYshvzj-oXPL-Bpf0bqEcMMM7WrwqZgQ5-bV5Se5pMXMHjj_tmInfKgLAm0F
+    5Gd_WRPyMv0h2mxZg>
+X-ME-Received: <xmr:hAENY4_hZMDo9hZuAbgUH7WxtfrlSFG7xff1RxdEx7vfWLo2ES2WyAUPlLD4T5CWN9hO_sveoq02LD0GjweQ852O-w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdekuddguddvfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefufffkggfgtgesthfure
+    dttddtvdenucfhrhhomhepvfhhohhmrghsucfoohhnjhgrlhhonhcuoehthhhomhgrshes
+    mhhonhhjrghlohhnrdhnvghtqeenucggtffrrghtthgvrhhnpeeuhedtudelvdekffekud
+    duiefftdekhfelgffggeeifffhvdekvddvgffhteelffenucffohhmrghinhepughpughk
+    rdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
+    epthhhohhmrghssehmohhnjhgrlhhonhdrnhgvth
+X-ME-Proxy: <xmx:hQENYwrwUcSwMDvs-a2RiiUFrfwd4WH0PTE1Zu4wKZ66v-TeQYwuiQ>
+    <xmx:hQENY5r0B2aL5a7LlUKDjmPLjwxbl8BXsQyL1qCpNiEiaf5GrVfX9w>
+    <xmx:hQENY-QdBCLLKsjcl7BfUUZ2U_pkU71uiqPH_Tv5TNDia4Q6Hq2saw>
+    <xmx:hQENY6AybzWG0U4GSx2Z-KYVc-rSPWXwT5yxGpVaq__7pj28G-WMvw>
+Feedback-ID: i47234305:Fastmail
+From: Thomas Monjalon <thomas@monjalon.net>
+To: announce@dpdk.org
+Cc: security@dpdk.org, oss-security@lists.openwall.com
+Date: Mon, 29 Aug 2022 20:12:18 +0200
+Message-ID: <1705193.jNaZZp9DzI@thomas>
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-520624.864920141"
-Subject: [oss-security] libpcre: invalid memory read in match (pcre_exec.c)
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+Subject: [oss-security] CVE-2022-2132: DPDK copy_desc_to_mbuf() Vhost header vulnerability
 
-------MIME delimiter for sendEmail-520624.864920141
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+A vulnerability was fixed in DPDK.
+Some downstream stakeholders were warned in advance
+in order to coordinate the release of fixes
+and reduce the vulnerability window.
 
-Description:
-libpcre is a perl-compatible regular expression library.
+In copy_desc_to_mbuf() function,
+the Vhost header was assumed not across more than two descriptors.
 
-A fuzz on libpcre1 through the pcretest utility revealed an invalid read in the library. For who is interested in a detailed description of the bug, will follow a feedback from upstream:
+If a malicious guest send a packet
+with the Vhost header crossing more than two descriptors,
+the buf_avail will be a very large number near 4G.
 
-This was a genuine bug in the 32-bit library. Thanks for finding it. The crash was caused by trying to find a Unicode property for a code value greater than 0x10ffff, the Unicode maximum, when running 
-in non-UTF mode (where character values can be up to 0xffffffff). The bug was in both PCRE1 and PCRE2. I have fixed both of them.
+All the mbufs will be allocated,
+therefore other guests traffic will be blocked.
+A malicious guest can cause denial of service
+for the other guest running on the hypervisor.
 
-The complete ASan output:
+CVE: CVE-2022-2132
+Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=1031
+Severity: 8.6 (High)
+CVSS scores: CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H
 
-# pcretest -32 -d $FILE
-==14788==ERROR: AddressSanitizer: SEGV on unknown address 0x7f1bbffed4df (pc 0x7f1bbee3fe6b bp 0x7fff8b50d8c0 sp 0x7fff8b50d3a0 T0)
-==14788==The signal is caused by a READ memory access.
-    #0 0x7f1bbee3fe6a in match /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcre_exec.c:5473:18
-    #1 0x7f1bbee09226 in pcre32_exec /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcre_exec.c:6936:8
-    #2 0x527d6c in main /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcretest.c:5218:9
-    #3 0x7f1bbddd678f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #4 0x41b438 in _init (/usr/bin/pcretest+0x41b438)
+Commits per branch:
+	main
+	        https://git.dpdk.org/dpdk/commit/?id=71bd0cc536
+	        https://git.dpdk.org/dpdk/commit/?id=dc1516e260
+	21.11
+	        https://git.dpdk.org/dpdk-stable/commit/?id=f167022606
+	        https://git.dpdk.org/dpdk-stable/commit/?id=e12d415556
+	20.11
+	        https://git.dpdk.org/dpdk-stable/commit/?id=8fff8520f3
+	        https://git.dpdk.org/dpdk-stable/commit/?id=089e01b375
+	19.11
+	        https://git.dpdk.org/dpdk-stable/commit/?id=5b3c25e6ee
+	        https://git.dpdk.org/dpdk-stable/commit/?id=e73049ea26
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/dev-libs/libpcre-8.40/work/pcre-8.40/pcre_exec.c:5473:18 in match
-==14788==ABORTING
+LTS Releases:
+	21.11 - http://fast.dpdk.org/rel/dpdk-21.11.2.tar.xz
+	20.11 - http://fast.dpdk.org/rel/dpdk-20.11.6.tar.xz
+	19.11 - http://fast.dpdk.org/rel/dpdk-19.11.13.tar.xz
 
-Affected version:
-8.40 and 10.23
+CVE: CVE-2022-2132
+Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=1031
+Severity: 8.6 (High)
+CVSS scores: CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H
 
-Fixed version:
-8.41 and 10.24 (not released atm)
-
-Commit fix for libpcre1:
-https://vcs.pcre.org/pcre/code/trunk/pcre_internal.h?r1=1649&r2=1688&sortby=date
-https://vcs.pcre.org/pcre/code/trunk/pcre_ucd.c?r1=1490&r2=1688&sortby=date
-
-Commit fix for libpcre2:
-https://vcs.pcre.org/pcre2/code/trunk/src/pcre2_ucd.c?r1=316&r2=670&sortby=date
-https://vcs.pcre.org/pcre2/code/trunk/src/pcre2_internal.h?r1=600&r2=670&sortby=date
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-7186
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00204-pcre-invalidread1-pcre_exec
-
-Timeline:
-2017-02-23: bug discovered and reported to upstream
-2017-02-24: upstream released a patch
-2017-03-14: blog post about the issue
-2017-03-19: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/03/14/libpcre-invalid-memory-read-in-match-pcre_exec-c
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-520624.864920141--
 
