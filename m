@@ -1,4 +1,4 @@
-Received: (qmail 13405 invoked by uid 550); 31 Jul 2024 09:42:18 -0000
+Received: (qmail 32236 invoked by uid 550); 29 Aug 2022 18:19:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,48 +7,80 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13378 invoked from network); 31 Jul 2024 09:42:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=notcom.org;
-	s=jk; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:
-	To:From:Date:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
-	Content-Description; bh=PKQq/XRodWguSQaezFnpC4xQWPDNJWyoCgFKAqmopHQ=;
-	i=b49a205f73f09af5fde31f6781a721d6b26ace42@notcom.org; t=1722418940;
-	x=1723066940; b=AQ9s7/hIdNF4hLdhdjitF0GWRTrpoa3HFwmvHaPZ8tEmbW5GLNy/OI0VXY0d2
-	LDrw+SKGa889gkVHQqzkU73OPT22PgX22aXlxkLR/BZKj8ivIKzP7dksVuvUanLVR0L4UBtDqBH55
-	v2me7j0gaNeLKoxvFX++BNN4Vp7aX1LOzpbKUGFGHD/Mwc40NudpQXV18YOuJkIut1zbbcL1J6sLT
-	WbofvjeHvO1mKLAQzm0uh2mhudRwFOta70CotFIam3tJUMNXHUfZUZofV8c/EhVb9O3o/9ATYTRMM
-	PPVmBg0pxUni01iNnRexl2LJ6/98cdE/yZhorXONYagFD7NAOQ==;
-Date: Wed, 31 Jul 2024 12:41:59 +0300
-From: Valtteri Vuorikoski <vuori@notcom.org>
-To: oss-security@lists.openwall.com
-Message-ID: <hwkl4p4igeqk2j2du4handrhtdcm2loitv6xdeozz3w4c5t3ul@ksr2ahgumsxi>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <2129473434.508234.1721743147880.JavaMail.zimbra@isc.org>
+Received: (qmail 31812 invoked from network); 29 Aug 2022 17:55:33 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=monjalon.net; h=
+	cc:cc:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:message-id:mime-version:reply-to:sender:subject
+	:subject:to:to; s=fm1; t=1661795720; x=1661882120; bh=o0QQ+CYUkY
+	0JBM5LJleTev3PrUZieipjs772V66YA1U=; b=eSnXBGZNl9Nzsch9KNTFE3CiKf
+	/9iUpB4uWOuxa2/xSbP4cKC14DFMZgP+jo9Xr8meFAEmwjjfb+u4NtFo2MM68G+Z
+	/ebI0SOJP9KCiSbQPgYuSMrSoHtEvQCaNJiB1D+PoVBawzZyYTbd3W60pgehSe6r
+	+c95FMS20FDJCpOp6YwQz2KZ/JHLgbf+792hTi8uuiySjMcID3iJc0b90W1FgfU6
+	ToG3E70MYCG1Vua7vYR6d+WqEW8krfwke9C/elUeIGf+QkZwEhN8jncw1HJ2LOr/
+	5IX8Amq6eAb1FP5ZYzGT0CJJ6mOaF28e6t+Tn750Q2kyg0v0GL2gK2dI+AsA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm1; t=1661795720; x=1661882120; bh=o0QQ+CYUkY0JB
+	M5LJleTev3PrUZieipjs772V66YA1U=; b=k8KjYsu4ouGts7aIW/DDxAkoeKHm2
+	/Rl0MMxuXFyWMO+HmPqyAI3Bve5yqla4tJ0zyOPZrYNtd1W2nxb29gGE3IUr5bNn
+	ocFULGK4NRm8pAC2gknGQgR5iKxoiZjVedqhI/LPf6JWdQlXCJdKYeABl0MddHlY
+	7ru1C4EhZVgFw3vOsE+ewSZODW96jUEzByL0wmS0QzZMcwgVlKjGK1i8R9w3AzX+
+	rjj+abBYvICZNv7+xI/cYNlpznTK/14sCKm5bJAD81RpwkQ3Uj/VxhxTXHGDazmR
+	4NzNk0rwZYKR+TDOwo8mgNbd4n5hi3hXPEyyOIpcK2/MHWiHs7JPyZAZA==
+X-ME-Sender: <xms:iP0MY-pVxN4_dlSE7_i3OCgfJaYic-wtq6vZwiNQGPaYnfBKEf5BXQ>
+    <xme:iP0MY8rsdqbRN43xJTkMAbDFb7NNgabm0Cy5EpAunx1PkjULnekLzwVejvtNJ5eXO
+    gjcmgACrhtgyKF5BQ>
+X-ME-Received: <xmr:iP0MYzOm-CZE8ENZn_4w9X6X6OFKGL2dRS2A43-JCsU1stszSGiMfrt961ec-RoRNofoiTf5Ex3d2Cty9Lednrjxcg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdekuddguddvtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefufffkggfgtgesthfure
+    dttddtvdenucfhrhhomhepvfhhohhmrghsucfoohhnjhgrlhhonhcuoehthhhomhgrshes
+    mhhonhhjrghlohhnrdhnvghtqeenucggtffrrghtthgvrhhnpeeuhedtudelvdekffekud
+    duiefftdekhfelgffggeeifffhvdekvddvgffhteelffenucffohhmrghinhepughpughk
+    rdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
+    epthhhohhmrghssehmohhnjhgrlhhonhdrnhgvth
+X-ME-Proxy: <xmx:iP0MY94BGLOox8EwxZV1C9sLb3dJxYDPcHRO0PhXqCsKZCpYIhFMzQ>
+    <xmx:iP0MY94D0kuazz6RedmOK81MJ07KGcuQ2qoNN1OldCU-BwiwZjtYBA>
+    <xmx:iP0MY9i1c43Vk-T5J7fJ-7KSja63-7IAhq3V0ZPgGxv48J34fpBg3w>
+    <xmx:iP0MY6g280_Hms1yiA3PiYxsnseHfAarAoo_gcIc1U3Z93u9kSzhsQ>
+Feedback-ID: i47234305:Fastmail
+From: Thomas Monjalon <thomas@monjalon.net>
+To: announce@dpdk.org
+Cc: oss-security@lists.openwall.com
+Date: Mon, 29 Aug 2022 19:55:17 +0200
+Message-ID: <16136472.hlxOUv9cDv@thomas>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2129473434.508234.1721743147880.JavaMail.zimbra@isc.org>
-User-Agent: NeoMutt/20240323-4-c04f3b
-Subject: Re: [oss-security] ISC has disclosed four vulnerabilities in BIND 9
- (CVE-2024-0760, CVE-2024-1737, CVE-2024-1975, CVE-2024-4076)
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+Subject: [oss-security] CVE-2022-28199: DPDK mlx5 driver error recovery handling vulnerability
 
-On Tue, Jul 23, 2024 at 01:59:07PM +0000, Aram Sargsyan wrote:
-> On 23 July 2024 we (Internet Systems Consortium) disclosed four vulnerabilities affecting our BIND 9 software:
-> 
-> - CVE-2024-1975:        SIG(0) can be used to exhaust CPU resources https://kb.isc.org/docs/cve-2024-1975
+A vulnerability was fixed in DPDK.
+Some downstream stakeholders were warned in advance
+in order to coordinate the release of fixes
+and reduce the vulnerability window.
 
-Note to anyone running 9.18 series (which means at least all Debian 12
-installations) that the "fix" for this CVE in that branch is the complete
-removal of SIG(0) dynamic DNS update support. Not just a disabled-by-default
-config option, but the actual removal of the relevant code.
+When having a failure with the mlx5 driver,
+the error recovery was not handled properly,
+which can allow a remote attacker to cause denial of service
+and some impact to data integrity and confidentiality.
 
-The actual mitigation for the issue is only available in the 9.20 series.
+CVE: CVE-2022-28199
+Severity: 6.5
+CVSS scores: AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H
 
-IMO this seems like a rather drastic way of doing things for a 0.0.1 patch
-release to a purportedly stable branch. Anyway reverting
-https://github.com/isc-projects/bind9/commit/bef3d2cca3552100bbe44790c8c1a4f5bef06798
-restores SIG(0) support (along with the vulnerability) for those who prefer to
-live dangerously.
+Commits per branch:
+	main  - https://git.dpdk.org/dpdk/commit/?id=60b254e392
+	21.11 - https://git.dpdk.org/dpdk-stable/commit/?id=25c01bd323
+	20.11 - https://git.dpdk.org/dpdk-stable/commit/?id=ef311075d2
+	19.11 - https://git.dpdk.org/dpdk-stable/commit/?id=8b090f2664
 
- -Valtteri
- 
+LTS Releases:
+	21.11 - http://fast.dpdk.org/rel/dpdk-21.11.2.tar.xz
+	20.11 - http://fast.dpdk.org/rel/dpdk-20.11.6.tar.xz
+	19.11 - http://fast.dpdk.org/rel/dpdk-19.11.13.tar.xz
+
+
+
