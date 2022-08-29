@@ -1,74 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/13/1
-Message-ID: <57b84d81-b689-f05f-d4a8-9967078fdc04@citrix.com>
-Date: Wed, 13 Jul 2022 09:27:34 +0000
-From: Andrew Cooper <Andrew.Cooper3@...rix.com>
-To: Salvatore Bonaccorso <carnil@...ian.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "xen-announce@...ts.xen.org" <xen-announce@...ts.xen.org>, "xen-devel@...ts.xen.org" <xen-devel@...ts.xen.org>, "xen-users@...ts.xen.org" <xen-users@...ts.xen.org>, Xen.org security team <security-team-members@....org>
-Subject: Re: Xen Security Advisory 407 v1 (CVE-2022-23816,CVE-2022-23825,CVE-2022-29900) - Retbleed - arbitrary speculative code execution with return instructions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/29/4
+Message-ID: <1705193.jNaZZp9DzI@thomas>
+Date: Mon, 29 Aug 2022 20:12:18 +0200
+From: Thomas Monjalon <thomas@...jalon.net>
+To: announce@...k.org
+Cc: security@...k.org, oss-security@...ts.openwall.com
+Subject: CVE-2022-2132: DPDK copy_desc_to_mbuf() Vhost header vulnerability
 Content-Type: text/plain; charset=utf-8
 
-On 12/07/2022 20:34, Salvatore Bonaccorso wrote:
-> Hi,
->
-> On Tue, Jul 12, 2022 at 09:27:07PM +0200, Salvatore Bonaccorso wrote:
->> Hi,
->>
->> On Tue, Jul 12, 2022 at 04:36:10PM +0000, Xen.org security team wrote:
->>> -----BEGIN PGP SIGNED MESSAGE-----
->>> Hash: SHA256
->>>
->>>  Xen Security Advisory CVE-2022-23816,CVE-2022-23825,CVE-2022-29900 / XSA-407
->>>
->>>    Retbleed - arbitrary speculative code execution with return instructions
->>>
->>> ISSUE DESCRIPTION
->>> =================
->>>
->>> Researchers at ETH Zurich have discovered Retbleed, allowing for
->>> arbitrary speculative execution in a victim context.
->>>
->>> For more details, see:
->>>   https://comsec.ethz.ch/retbleed
->>>
->>> ETH Zurich have allocated CVE-2022-29900 for AMD and CVE-2022-29901 for
->>> Intel.
->>>
->>> Despite the similar preconditions, these are very different
->>> microarchitectural behaviours between vendors.
->>>
->>> On AMD CPUs, Retbleed is one specific instance of a more general
->>> microarchitectural behaviour called Branch Type Confusion.  AMD have
->>> assigned CVE-2022-23816 (Retbleed) and CVE-2022-23825 (Branch Type
->>> Confusion).
->>>
->>> For more details, see:
->>>   https://www.amd.com/en/corporate/product-security/bulletin/amd-sb-1037
->> Is it confirmed that AMD is not using CVE-2022-29900? The above
->> amd-sb-1037 references as well both CVE-2022-23825 (Branch Type
->> Confusion) and CVE-2022-29900 (RETbleed), so I assume they agreed to
->> use CVE-2022-29900 for retbleed?
->>
->> So should the Xen advisory as well use CVE-2022-23825,CVE-2022-29900
->> and CVE-2022-29901?
-> Nevermind, I missunderstood the wording and the advisory just mentions
-> all the related CVEs correctly and made a thinko. It might turn out
-> that CVE-2022-23816 will not be used, but then the title would read
-> only as 
->
-> Xen Security Advisory CVE-2022-23825,CVE-2022-29900 / XSA-407
->
-> So please disregard the question above.
+A vulnerability was fixed in DPDK.
+Some downstream stakeholders were warned in advance
+in order to coordinate the release of fixes
+and reduce the vulnerability window.
 
-/sigh
+In copy_desc_to_mbuf() function,
+the Vhost header was assumed not across more than two descriptors.
 
-AMD changed the CVE in the bulletin between the final draft, and what
-went public.
+If a malicious guest send a packet
+with the Vhost header crossing more than two descriptors,
+the buf_avail will be a very large number near 4G.
 
-CVE-2022-23816 has been referenced by multiple other vendors too, so is
-definitely out in the world.  Hopefully MITRE will close out one of
-CVE-2022-23816 and CVE-2022-29900 as a dup of the other.
+All the mbufs will be allocated,
+therefore other guests traffic will be blocked.
+A malicious guest can cause denial of service
+for the other guest running on the hypervisor.
 
-For now, I think the least confusing option is to keep both referenced.
+CVE: CVE-2022-2132
+Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=1031
+Severity: 8.6 (High)
+CVSS scores: CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H
 
-~Andrew
+Commits per branch:
+	main
+	        https://git.dpdk.org/dpdk/commit/?id=71bd0cc536
+	        https://git.dpdk.org/dpdk/commit/?id=dc1516e260
+	21.11
+	        https://git.dpdk.org/dpdk-stable/commit/?id=f167022606
+	        https://git.dpdk.org/dpdk-stable/commit/?id=e12d415556
+	20.11
+	        https://git.dpdk.org/dpdk-stable/commit/?id=8fff8520f3
+	        https://git.dpdk.org/dpdk-stable/commit/?id=089e01b375
+	19.11
+	        https://git.dpdk.org/dpdk-stable/commit/?id=5b3c25e6ee
+	        https://git.dpdk.org/dpdk-stable/commit/?id=e73049ea26
+
+LTS Releases:
+	21.11 - http://fast.dpdk.org/rel/dpdk-21.11.2.tar.xz
+	20.11 - http://fast.dpdk.org/rel/dpdk-20.11.6.tar.xz
+	19.11 - http://fast.dpdk.org/rel/dpdk-19.11.13.tar.xz
+
+CVE: CVE-2022-2132
+Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=1031
+Severity: 8.6 (High)
+CVSS scores: CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:H
+
+
