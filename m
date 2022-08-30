@@ -1,37 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/15/1
-Message-ID: <CALSHWeDjhVEkJ76sRzqX56ToyxpLF+BsYTHneQ7iQ8H=0exeoA@mail.gmail.com>
-Date: Tue, 15 Feb 2022 13:53:06 +0100
-From: Bartek Plotka <bartek@...metheus.io>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/30/3
+Message-ID: <fc373d19-9e46-80b5-fc19-c9aeed275c91@apache.org>
+Date: Tue, 30 Aug 2022 16:40:52 +0000
+From: Kirk Lund <klund@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-21698: HTTP method DOS; Prometheus client_golang <1.11.1 affected; Other web servers might be affected too
+Subject: CVE-2022-37021: Apache Geode deserialization of untrusted data flaw when using JMX over RMI on Java 8.  
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: high - possible RCE
 
-Prometheus Team just published CVE-2022-21698
-<https://github.com/prometheus/client_golang/security/advisories/GHSA-cg3q-j54f-5p7p>
-that
-relates to unbounded cardinality of HTTP method, which is not validated by
-some HTTP server implementations (including Golang one). See the GitHub
-security advisory
-<https://github.com/prometheus/client_golang/security/advisories/GHSA-cg3q-j54f-5p7p>
-for
-more details on potential attack vectors, characteristics and workarounds.
+Description:
 
-Prometheus client_golang before 1.11.1 was affected. Newer versions are
-patched. See the announcement.
-<https://groups.google.com/g/prometheus-announce/c/zlCm4A7FwZU>
+Apache Geode versions up to 1.12.5, 1.13.4 and 1.14.0 are vulnerable to a deserialization of untrusted data flaw when using JMX over RMI on Java 8. 
 
-Note however that many metric implementations that gather metrics about
-HTTP requests can be affected, even without using client_golang or using
-different programming languages (!). We notified some common open-source
-web-servers (including Kubernetes) projects and some of them were affected
-(without client_golang) and patched subsequently.
+Any user still on Java 8 who wishes to protect against deserialization attacks involving JMX or RMI should upgrade to Apache Geode 1.15 and Java 11. 
 
-We would like to thank Prometheus contributor David <https://github.com/dgl>,
-for reporting this.
+If upgrading to Java 11 is not possible, then upgrade to Apache Geode 1.15 and specify "--J=-Dgeode.enableGlobalSerialFilter=true" when starting any Locators or Servers. Follow the documentation for details on specifying any user classes that may be serialized/deserialized with the "serializable-object-filter" configuration option. Using a global serial filter will impact performance.
 
-Thanks,
-The Prometheus Team
+This issue is being tracked as GEODE-9758
+
+Mitigation:
+
+Disable affected services such as JMX over RMI unless they are required. JMX over RMI can be disabled by setting Geode property `jmx-manager` to false; this property defaults to false on Servers and true on Locators. 
 
