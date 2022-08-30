@@ -1,77 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/23/10
-Message-ID: <20221223162128.GD4524@suse.de>
-Date: Fri, 23 Dec 2022 17:21:29 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/30/4
+Message-ID: <e1baad62-b4a0-101a-c3bc-366d426e778c@apache.org>
+Date: Tue, 30 Aug 2022 17:06:53 +0000
+From: Kirk Lund <klund@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Details on this supposed Linux Kernel ksmbd RCE
+Subject: CVE-2022-37022: Apache Geode deserialization of untrusted data flaw when using JMX over RMI on Java 11 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: high - possible RCE
 
-Mitre has assigned following CVEs, also torvalds mainline commits:
+Description:
 
-ZDI-22-1687 - CVE-2022-47941
-	aa7253c2393f6dcd6a1468b0792f6da76edad917
-ZDI-22-1688 - CVE-2022-47942
-	8f0541186e9ad1b62accc9519cc2b7a7240272a7
-ZDI-22-1689 - CVE-2022-47938
-	824d4f64c20093275f72fc8101394d75ff6a249e
-ZDI-22-1690 - CVE-2022-47939
-	a54c509c32adba9d136f2b9d6a075e8cae1b6d27
-ZDI-22-1691 - CVE-2022-47940
-	158a66b245739e15858de42c0ba60fcf3de9b8e6
+Apache Geode versions up to 1.12.2 and 1.13.2 are vulnerable to a deserialization of untrusted data flaw when using JMX over RMI on Java 11.
 
-Mitre assigned also from the stable patch, but was not in ZDI set - CVE-2022-47943
-	ac60778b87e45576d7bfdbd6f53df902654e6f09
+Any user wishing to protect against deserialization attacks involving JMX or RMI should upgrade to Apache Geode 1.15. Use of 1.15 on Java 11 will automatically protect JMX over RMI against deserialization attacks. This should have no impact on performance since it only affects JMX/RMI which Gfsh uses to communicate with the JMX Manager which is hosted on a Locator.
 
-	(I did not request that in my batch, Mitre seemed to have
-	picked this from the stable patch.)
+This issue is being tracked as GEODE-9064
 
-I mistakenly declared 5.13-5.19 affectedness to Mitre in a hurry,
-but it is more 5.15 - 5.18.x / 5.19.x
+Mitigation:
 
-Ciao, Marcus
+Disable affected services such as JMX over RMI unless they are required. JMX over RMI can be disabled by setting Geode property `jmx-manager` to false; this property defaults to false on Servers and true on Locators. 
 
-
-On Thu, Dec 22, 2022 at 04:49:04PM -0500, Jan Schaumann wrote:
-> Josh Bressers <josh@...ss.net> wrote:
->  
-> > I was wondering if anyone on the list has additional details about this ZDI
-> > advisory
-> > https://www.zerodayinitiative.com/advisories/ZDI-22-1690/
-> > 
-> > There aren't many usable details at the moment
-> 
-> Agreed.
-> 
-> The advisories link to a changelog in
-> https://cdn.kernel.org/pub/linux/kernel/v5.x/ChangeLog-5.15.61
-> but it's unclear (to me) whether that implies v6.x
-> kernels are not affected?
-> 
-> Note also that this disclosure is accompanied by a few
-> others:
-> 
-> Authenticated remote information disclosure:
-> https://www.zerodayinitiative.com/advisories/ZDI-22-1691/
-> 
-> Unauthenticated remote DoS:
-> https://www.zerodayinitiative.com/advisories/ZDI-22-1687/
-> 
-> Authenticated RCE:
-> https://www.zerodayinitiative.com/advisories/ZDI-22-1688/
-> 
-> Authenticated DoS:
-> https://www.zerodayinitiative.com/advisories/ZDI-22-1689/
-> 
-> Lastly, given that this is a coordinated disclosure,
-> I don't know why there are no CVE IDs reserved for
-> these.
-> 
-> -Jan
-
--- 
-Marcus Meissner (he/him), Distinguished Engineer / Senior Project Manager Security
-SUSE Software Solutions Germany GmbH, Frankenstrasse 146, 90461 Nuernberg, Germany
-GF: Ivo Totev, Andrew Myers, Andrew McDonald, Martje Boudien Moerman, HRB 36809, AG Nuernberg
