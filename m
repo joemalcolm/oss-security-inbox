@@ -1,45 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/04/3
-Message-ID: <87wn8bm0vz.fsf@v45346.1blu.de>
-Date: Fri, 04 Nov 2022 12:09:52 +0100
-From: Stefan Bodewig <bodewig@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/30/6
+Message-ID: <Yw5cq12s590/JbIJ@pisco.westfalen.local>
+Date: Tue, 30 Aug 2022 20:53:31 +0200
+From: Moritz Mühlenhoff <jmm@...til.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-37866: Apache Ivy: Ivy Path traversal
+Subject: Re: CVE-2022-31790 CVE-2022-31789: Watchguard XTM/Firebox firewalls: Multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Charles Fol wrote:
+> Hello,
+> 
+> While performing a red-team assessment we discovered a few vulnerabilities
+> on Watchguard firewalls of the XTM/Firebox brand:
 
-Severity: medium
+Why was this posted to oss-sec? These are proprietary network
+devices AFAICT?
 
-Description:
-
-When Apache Ivy downloads artifacts from a repository it stores them in
-the local file system based on a user-supplied "pattern" that may
-include placeholders for artifacts coordinates like the organisation,
-module or version.
-
-If said coordinates contain "../" sequences - which are valid characters
-for Ivy coordinates in general - it is possible the artifacts are stored
-outside of Ivy's local cache or repository or can overwrite different
-artifacts inside of the local cache.
-
-In order to exploit this vulnerability an attacker needs collaboration
-by the remote repository as Ivy will issue http requests containing ".."
-sequences and a "normal" repository will not interpret them as part of
-the artifact coordinates.
-
-Mitigation:
-
-Users of Apache Ivy 2.0.0 to 2.5.1 should upgrade to Ivy 2.5.1.
-
-Credit:
-
-This issue was discovered by Kostya Kortchinsky of the Databricks Security Team.
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iEYEARECAAYFAmNk8wAACgkQohFa4V9ri3IUCgCeNrT2fqxtV4aAJf/RhpmQLeDK
-VkAAoLmKEXe0H6Oe6cgWiyxvOM7HpZYd
-=mSlx
------END PGP SIGNATURE-----
+Cheers,
+        Moritz
