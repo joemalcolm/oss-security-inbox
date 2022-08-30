@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1484" "Wednesday" "16" "January" "2019" "17:51:47" "+0100" "Daniel Beck" "ml@beckweb.net" "<7201AC57-5316-478F-A241-C43FCC25B0F2@beckweb.net>" "40" "[oss-security] Multiple vulnerabilities in Jenkins" nil nil nil "1" "2019011616:51:47" "[oss-security] Multiple vulnerabilities in Jenkins" (number mark "U       ml@beckweb.n Jan 16   40/1484  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 32574 invoked by uid 550); 16 Jan 2019 16:52:00 -0000
+Received: (qmail 9299 invoked by uid 550); 30 Aug 2022 17:28:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,57 +7,33 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32553 invoked from network); 16 Jan 2019 16:52:00 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
-Message-Id: <7201AC57-5316-478F-A241-C43FCC25B0F2@beckweb.net>
-Date: Wed, 16 Jan 2019 17:51:47 +0100
+Received: (qmail 29994 invoked from network); 30 Aug 2022 17:10:35 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Kirk Lund <klund@apache.org>
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3445.9.1)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1547657520;a00f5e4a;
-X-HE-SMSGID: 1gjoPs-0005rj-HU
-Subject: [oss-security] Multiple vulnerabilities in Jenkins
+Message-ID: <ce81839a-b84e-5741-af68-f06383d66022@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 30 Aug 2022 17:09:20 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2022-37023: Apache Geode deserialization of untrusted data
+ flaw when using REST API on Java 8 or Java 11 
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+Severity: high - possible RCE
 
-* Jenkins weekly 2.160
-* Jenkins LTS 2.150.2
+Description:
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2019-01-16/
+Apache Geode versions prior to 1.15.0 are vulnerable to a deserialization o=
+f untrusted data flaw when using REST API on Java 8 or Java 11.
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Any user wishing to protect against deserialization attacks involving REST =
+APIs should upgrade to Apache Geode 1.15 and follow the documentation for d=
+etails on enabling "validate-serializable-objects=3Dtrue" and specifying an=
+y user classes that may be serialized/deserialized with "serializable-objec=
+t-filter". Enabling "validate-serializable-objects" may impact performance.
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+Mitigation:
 
----
-
-SECURITY-868
-Users with the Overall/RunScripts permission (typically administrators) 
-were able to use the Jenkins script console to craft a 'Remember me' 
-cookie that would never expire.
-
-This allowed attackers access to a Jenkins instance while the 
-corresponding user in the configured security realm exists, for example to 
-persist access after another successful attack. 
-
-
-SECURITY-901
-When using an external security realm such as LDAP or Active Directory, 
-deleting a user from the security realm does not result in the user losing 
-access to Jenkins.
-
-While deleting the user record from Jenkins did invalidate the 'Remember 
-me' cookie, there was no way to invalidate active sessions besides 
-restarting Jenkins or terminating sessions through other means, such as 
-Monitoring Plugin.
+Disable affected services such as JMX over RMI or REST APIs unless they are=
+ required. REST APIs can be disabled by setting `http-service-port` to zero.
 
