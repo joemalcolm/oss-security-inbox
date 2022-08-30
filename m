@@ -1,90 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/26/2
-Message-ID: <p640o2q7-363s-36q2-1n4q-7q204o9qnp5n@unkk.fr>
-Date: Wed, 26 Oct 2022 08:26:39 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] CVE-2022-35260: .netrc parser out-of-bounds access (curl)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/30/2
+Message-ID: <7378c405-5150-ebea-b81d-74f32cff7516@lexfo.fr>
+Date: Tue, 30 Aug 2022 16:25:12 +0200
+From: Charles Fol <c.fol@...fo.fr>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2022-31790 CVE-2022-31789: Watchguard XTM/Firebox firewalls: Multiple vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-CVE-2022-35260: .netrc parser out-of-bounds access
-==================================================
+Hello,
 
-Project curl Security Advisory, October 26 2022 -
-[Permalink](https://curl.se/docs/CVE-2022-35260.html)
+While performing a red-team assessment we discovered a few 
+vulnerabilities on Watchguard firewalls of the XTM/Firebox brand:
 
-VULNERABILITY
--------------
+Here are the different CVEs and WSGA references for the bugs:
 
-curl can be told to parse a `.netrc` file for credentials. If that file ends
-in a line with consecutive non-white space letters and no newline, curl could
-read past the end of the stack-based buffer, and if the read works, write a
-zero byte possibly beyond its boundary.
+- Xpath time-based injection in wgcgi: CVE-2022-31790, WSGA-2022-00017
+- Integer overflow leading to UAF/overflow in wgagent: CVE-2022-31789, 
+WSGA-2022-00015
+- Local privilege escalation from nobody to root: WSGA-2022-00018
 
-This will in most cases cause a segfault or similar, but circumstances might
-also cause different outcomes.
+Combined, the two latter bugs lead to pre-authentication remote code 
+execution as root on XTM/Firebox devices.
+Although the second bug is present in both XTM and Firebox models, the 
+exploitation differs as the libc (ptmalloc) version is different, 
+(respectively 2.19 and 2.28).
 
-If a malicious user can provide a custom netrc file to an application or
-otherwise affect its contents, this flaw could be used as denial-of-service.
+A very in-depth blog-post is available here:
+https://www.ambionics.io/blog/hacking-watchguard-firewalls
 
-We are not aware of any exploit of this flaw.
+References:
 
-INFO
-----
+https://www.watchguard.com/wgrd-psirt/advisory/wgsa-2022-00015
+https://www.watchguard.com/wgrd-psirt/advisory/wgsa-2022-00017
+https://www.watchguard.com/wgrd-psirt/advisory/wgsa-2022-00018
 
-The flaw was introduced in curl with [this
-commit](https://github.com/curl/curl/commit/eeaae10c0fb27aa06), first shipped
-in curl 7.84.0.
+Regards,
+Charles
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2022-35260 to this issue.
-
-CWE-121: Stack-based Buffer Overflow
-
-Severity: low
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.84.0 to and including 7.85.0
-- Not affected versions: curl < 7.84.0 and >= 7.86.0
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-[The fix for CVE-2022-35260](https://github.com/curl/curl/commit/c97ec984fb2bc919a3aa86)
-
-RECOMMENDATIONS
----------------
-
-  A - Upgrade curl to version 7.86.0
-
-  B - Apply the patch to your local version
-
-  C - Do not use `.netrc` files
-
-TIMELINE
---------
-
-This issue was reported to the curl project on October 3, 2022. We contacted
-distros@...nwall on October 18, 2022.
-
-libcurl 7.86.0 was released on October 26 2022, coordinated with the
-publication of this advisory.
-
-CREDITS
--------
-
-- Reported-by: Hiroki Kurosawa
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
