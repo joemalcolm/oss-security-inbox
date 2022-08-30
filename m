@@ -1,35 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/24/12
-Message-ID: <20220524232155.GA2264@openwall.com>
-Date: Wed, 25 May 2022 01:21:55 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Norbert Slusarek <nslusarek@....net>
-Cc: oss-security@...ts.openwall.com, peterz@...radead.org
-Subject: Re: CVE-2022-1729: race condition in Linux perf subsystem leads to local privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/30/5
+Message-ID: <ce81839a-b84e-5741-af68-f06383d66022@apache.org>
+Date: Tue, 30 Aug 2022 17:09:20 +0000
+From: Kirk Lund <klund@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2022-37023: Apache Geode deserialization of untrusted data flaw when using REST API on Java 8 or Java 11 
 Content-Type: text/plain; charset=utf-8
 
-On Wed, May 25, 2022 at 12:20:44AM +0200, Norbert Slusarek wrote:
-> Hello Alexander,
-> 
-> >Since you shared actual exploit code on linux-distros, you're supposed
-> >to also post that to oss-security within 7 days of your first posting
-> >above, so by or on May 27. Do you intend to?
-> 
-> I don't intend to share the exploit to the public, mainly because
-> the issue was fixed only few days ago. Instead, anyone wanting to check
-> his own system for the bug should resort to the attached PoC repro.
-> 
-> >I realize this is one of the aspects that not everyone is happy about.
-> 
-> Yes, you got that right.
+Severity: high - possible RCE
 
-Thank you for posting the repro.
+Description:
 
-What do you suggest we do regarding the LPE exploit you sent to
-linux-distros?
+Apache Geode versions prior to 1.15.0 are vulnerable to a deserialization of untrusted data flaw when using REST API on Java 8 or Java 11.
 
-What do you suggest we do with this policy aspect going forward, so that
-people do not get into a situation where they're required to do
-something they didn't want to subscribe to?
+Any user wishing to protect against deserialization attacks involving REST APIs should upgrade to Apache Geode 1.15 and follow the documentation for details on enabling "validate-serializable-objects=true" and specifying any user classes that may be serialized/deserialized with "serializable-object-filter". Enabling "validate-serializable-objects" may impact performance.
 
-Alexander
+Mitigation:
+
+Disable affected services such as JMX over RMI or REST APIs unless they are required. REST APIs can be disabled by setting `http-service-port` to zero.
+
