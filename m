@@ -1,22 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/24/7
-Message-ID: <0A7B7D99-48F7-44B2-9E0A-C18C9EB9E2FA@oracle.com>
-Date: Tue, 24 May 2022 17:10:40 +0000
-From: John Haxby <john.haxby@...cle.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2022-21499: trivial lockdown break
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/31/1
+Message-ID: <Yw7+wJ9jUjJA9+Wy@lorien.valinor.li>
+Date: Wed, 31 Aug 2022 08:25:04 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Freeciv < 2.6.7, freeciv-3.0 < 3.0.3, Modpack Installer buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Hello All,
+Hi,
 
-CVE-2022-21499: trivial lockdown break
+On Fri, Aug 05, 2022 at 02:17:51AM +0300, Marko Lindqvist wrote:
+>  Just released freeciv-2.6.7 & freeciv-3.0.3 fix buffer overflow in
+> Modpack Installer utility's handling of the modpack URL. Specially
+> crafted URLs, without any '/' -characters would result in an
+> underflowing length (unsigned)(-1) string copy, i.e., all of the
+> NULL-terminated string given as "URL" would get written beyond the
+> buffer reserved for it.
+> 
+>  Freeciv source tarballs are available from
+> https://www.freeciv.org/download.html for current 3.0, and from
+> https://www.freeciv.org/wiki/Old_downloads for 2.6.
+> 
+>  In case you can't make full version update at the moment, bug tracker
+> ticket has also a patch for this single issue attached:
+> https://osdn.net/projects/freeciv/ticket/45299
 
-We recently discovered that it is trivial to break lockdown (and secureboot) using the kernel debugger: you can use the debugger to write zero into a location of your choice ...
+FTR, this has CVE-2022-39047 assigned:
 
-I originally posted this with a preliminary patch on linux-distros.   Since then we have developed a better patch that takes into account the differences between integrity and confidentiality modes.
+https://www.cve.org/CVERecord?id=CVE-2022-39047
 
-The updated patch will be available in the Linux mainline kernel at almost the same time as I'm sending this email.  I'll reply with the commit ID as soon as I have it.   If anyone wants the simpler patch that I posted to linux-bistros, please let me know, but I would encourage you to take the full patch.
-
-jch
-
-Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
+Regards,
+Salvatore
