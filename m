@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2581" "Thursday" "4" "June" "2015" "16:48:15" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150604204815.131408BC040@smtpvmsrv1.mitre.org>" "62" "[oss-security] Re: CVE requests / Advisory: phpMyBackupPro" nil nil nil "6" "2015060420:48:15" "[oss-security] Re: CVE requests / Advisory: phpMyBackupPro" (number mark "        cve-assign@m Jun  4   62/2581  " thread-indent "\"[oss-security] Re: CVE requests / Advisory: phpMyBackupPro\"\n") "<CAD3CanfvEFLMpKbLaqfAX7b-q76yS63c95t+=J5hcNFjNdwYcA@mail.gmail.com>" ("<CAD3CanfvEFLMpKbLaqfAX7b-q76yS63c95t+=J5hcNFjNdwYcA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 3995 invoked by uid 550); 4 Jun 2015 20:48:27 -0000
+Received: (qmail 16178 invoked by uid 550); 1 Sep 2022 20:31:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,75 +6,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3977 invoked from network); 4 Jun 2015 20:48:26 -0000
-In-Reply-To: <CAD3CanfvEFLMpKbLaqfAX7b-q76yS63c95t+=J5hcNFjNdwYcA@mail.gmail.com>
-Message-Id: <20150604204815.131408BC040@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu,  4 Jun 2015 16:48:15 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE requests / Advisory: phpMyBackupPro
-To: mattd@bugfuzz.com
+Received: (qmail 16160 invoked from network); 1 Sep 2022 20:31:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:Cc:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=Gz6WgEJgUlsENLnW2DxROPnpVCN0hRKmPwO3FbxVnNQ=; b=WZF5GQJbOvbe7iWYbcCm7Y7K8D
+	0e3ImL+aFLdRLr2zCM+bgGD2Eit0rxMKv7uy2vfTCvcBN4OA1mVhn2lV1nTXinINIGEfGkwdNgeUr
+	BUWK/T/pW/2uE+8U5WWj3dNdVwLlnm1sPxS2ipj847uw1KAuZc+xtjSDwHk3KrU2CN0M/gX+OGYS5
+	nSLMSb2wmvJBnMMeiu6ByvBUtgWY5FUx8o1Y2c7snIiVVYZeOSE/cCV277uEfh510gghYpOp7Rdis
+	+CVu1t1VylnsndkzJTCKFMYqvpDC0o6sVycZTigUv8o0eu///JQ4UuEveFpBha1A8f2Ge4SndNDmg
+	lTtyjrnw==;
+Message-ID: <e9e07db7-9456-4015-5241-8a7e6e80ab0a@igalia.com>
+Date: Thu, 1 Sep 2022 22:31:16 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Content-Language: en-US
+To: oss-security@lists.openwall.com,
+ Demi Marie Obenour <demi@invisiblethingslab.com>,
+ John Helmert III <ajak@gentoo.org>
+References: <b2f4c0a2-695c-7744-2397-269a1e588c31@igalia.com>
+ <YwhTtN8duEhxo1hY@gentoo.org>
+ <8812a292-ecd6-5172-a746-4ca192552882@igalia.com>
+ <Ywz/hDw3dwvhYlua@itl-email>
+From: Carlos Alberto Lopez Perez <clopez@igalia.com>
+Organization: Igalia S.L.
+Mail-Followup-To: oss-security@lists.openwall.com,
+ Demi Marie Obenour <demi@invisiblethingslab.com>,
+ John Helmert III <ajak@gentoo.org>
+In-Reply-To: <Ywz/hDw3dwvhYlua@itl-email>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] WebKitGTK and WPE WebKit Security Advisory
+ WSA-2022-0008
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On 29/08/2022 20:03, Demi Marie Obenour wrote:
+>> We (maintainers of Linux WebKit ports) don't have access to the security
+>> issues affecting Apple products until those issues are made public by them.
+> That is unfortunate.  I thought you would have access to embargoed
+> bugzilla tickets.
+> 
 
-> * CVE-2009-4050 = original fully-arbitrary file download
-> * New 2009 CVE = incomplete fix in 2.2(?) (adding a file extension whitelist)
-> * New 2015 CVE = incomplete fix in 2.5 (adding a filename suffix blacklist)
+We do have access to the tickets on WebKit bugzilla that are marked as
+security-related and are hidden from other users by default.
 
-We haven't been able to figure out why another CVE-2009- ID would be
-needed. The year portion of a CVE ID typically refers to when the
-vulnerability became publicly known, not (for example) when the
-vulnerability was introduced. Before this year, apparently nobody had
-disclosed that there was a vulnerability in version 2.2 or later in
-which a .php file, but not an arbitrary file, could be downloaded.
-Also, the phpMyBackupPro doc/HISTORY.txt doesn't have any entries that
-we would consider sufficiently close to a disclosure of that .php
-download vulnerability.
-
-So:
-
-  CVE-2009-4050 = original fully-arbitrary file download
-                  (the known affected version is 2.1)
+However, we don't receive the information about which WebKit fixes will
+be included in any Apple security update until those advisories are public.
 
 
-  CVE-2015-4180 = download of specific configuration files
-                  with a ../../files/filename.php request (the
-                  presumed affected versions are at least 2.1 through
-                  2.4)
+>> So, we didn't knew until August 17th of this issue. Also you can see
+>> that the bug report itself or the patch doesn't has any indication that
+>> it fixes a security-related problem.
+>>
+>> Therefore, the time it took us to notice the issue, backport the fix and
+>> do a new release was just 7-8 days (from 17th to 24-25th of August).
+>> Which, honestely, it is quite good taking into account that: 1)
+>> back-porting the fix was not straightforward since it required
+>> back-porting also a few previous patches in order to be able to merge it
+>> properly and that 2) we are in August and people is usually on holidays.
+> Was backporting needed, as opposed to shipping a new minor version?
+> 
 
-                  (other files with approved extensions can also be
-                  downloaded, but this is intentional behavior, not
-                  part of the vulnerability)
+It was. Fixes land in the master (main) branch. Those fixes don't
+necessarely apply or work on the branch of the last webkitgtk-stable branch.
 
+A new webkitgtk/stable branch is forked from master (main) each 6
+months, and once forked it receives cherry-picks from the main branch,
+but it is never rebased.
 
-  CVE-2015-4181 = download of specific configuration files
-                  with a ../../files/../files/filename.php request
-                  (the presumed affected version are at least 2.1
-                  through 2.5)
+We release a new major stable version each 6 months (2.XX), and then we
+backport fixes doing minor relases (2.XX.A) for 6 months until the next
+major relaseis out (2.XY).
 
-                  (again, other files with approved extensions can
-                  also be downloaded, but this is intentional
-                  behavior, not part of the vulnerability)
-              
+See:
+https://trac.webkit.org/wiki/WebKitGTK/StableRelease
+https://trac.webkit.org/wiki/WebKitGTK/2.36.x
 
-CVE-2015-4181 exists because of an incomplete fix for CVE-2015-4180.
-CVE-2015-4180 exists because of an incomplete fix for CVE-2009-4050.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVcLkNAAoJEKllVAevmvmsP1kH/3McXj3rkNn/KdgHBddNj5M9
-tnwhb1hDugmZ8H4EqfypexsxELCZ8Wc21OrqSQCdHpGumPZHWGfN5Sa49FlLcz2R
-ghJ5/O6pLhMYudPS9WByfQmTTSFMSygPCUKNxg5zawulMJTEu3oK+Ra47StOQn+q
-hEiI9/HqDoGIVr+4gUkyFFyCdFSsDq9hBJFsWWXAzsrIAKBclY+GYpmzxk3bY61Q
-jgmFMnZyfV9JFw1MPMPR/RZ5PGBjppo2EGO9EaWFg4uhowuNCEhv1CZQi4kTM9sZ
-36BLsVbZ78yI38TGyK10nZxfEhlBmMLmOM+/rpBGeWHRLNLK+o6TQJTqvuYdUjE=
-=PQsw
------END PGP SIGNATURE-----
