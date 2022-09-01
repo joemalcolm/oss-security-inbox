@@ -1,23 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/23/1
-Message-ID: <s5r028oo-n662-9qqq-9130-208poq85418p@inai.de>
-Date: Fri, 23 Dec 2022 01:21:42 +0100 (CET)
-From: Jan Engelhardt <jengelh@...i.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/01/4
+Message-ID: <CAFqpC6zUc9DYKnBv3OBAsjOE9bgfGVqvoCW3B3f=CY43WfDVQA@mail.gmail.com>
+Date: Thu, 1 Sep 2022 19:30:58 +0530
+From: Tej Rathi <trathi@...hat.com>
 To: oss-security@...ts.openwall.com
-cc: Alejandro Colomar <alx.manpages@...il.com>,  Michael Kerrisk <mtk.manpages@...il.com>, linux-kernel@...r.kernel.org,  linux-man@...r.kernel.org
-Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
+Cc: Ondrej Mular <omular@...hat.com>
+Subject: ClusterLabs/PCS: [CVE-2022-2735] Obtaining an authentication token for hacluster user leads to privilege escalation.
 Content-Type: text/plain; charset=utf-8
 
+Hello,
 
-On Thursday 2022-12-22 23:03, Dominique Martinet wrote:
->> +
->> +Note that \fIcomm\fP can contain space and closing parenthesis characters. 
->> +Parsing /proc/${pid}/stat with split() or equivalent, or scanf(3) isn't
->> +reliable. The correct way is to locate closing parenthesis with strrchr(')')
->> +from the end of the buffer and parse integers from there.
->
->That's still not enough unless new lines are escaped, which they aren't:
+A security issue was discovered in the ClusterLabs/PCS project. This is
+CVE-2022-2735, assigned by Red Hat.
+(https://github.com/ClusterLabs/pcs)
 
-strrchr does not concern itself with "lines".
-If your input buffer contains the complete content of /proc/X/stat (and not
-just a "line" thereof), the strrchr approach appears quite workable.
+
+*ROOT CAUSE & IMPACT:*
+*------------------------------------*
+
+It is caused by incorrect permissions on a unix socket used for internal
+communication between pcs daemons. Reproducer below demonstrates a
+privilege escalation by obtaining authentication token for hacluster
+user. With the hacluster token, an attacker has complete control over
+the cluster managed by pcs.
+
+CVSS Base Score [HIGH]: 8.4/CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
+
+
+*AFFECTED VERSIONS:*
+
+*---------------------------------*
+
+pcs upstream is affected since version 0.10.5 [1][2]. This means that all
+0.10.x versions starting from 0.10.5 including the latest 0.10 branch
+release 0.10.14 are affected. And all 0.11.x versions are affected as well.
+
+POC and PATCH are in the attachment.
+
+
+*CREDITS:*
+
+*--------------*
+
+The issue was discovered by Ondrej Mular (Senior Software Engineer, Red Hat)
+
+
+*REFERENCES:*
+*---------------------*
+
+[1]: https://github.com/ClusterLabs/pcs/releases/tag/0.10.5
+[2]:
+https://github.com/ClusterLabs/pcs/blob/main/CHANGELOG.md#0105---2020-03-18
+
+
+- - - - - - - - - - - - - - - -
+
+Thanks & Regards,
+
+TEJ RATHI
+
+Associate Product Security Engineer | PSIRT
+
+Product Security Engineering, Red Hat.
+
+Content of type "text/html" skipped
+
+Download attachment "patch" of type "application/octet-stream" (1186 bytes)
+
+Download attachment "poc" of type "application/octet-stream" (2187 bytes)
