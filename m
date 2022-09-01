@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8564" "Wednesday" "18" "November" "2015" "17:33:37" "+0100" "Fabio Pagani" "pagabuc@gmail.com" "<CAGfLVYzktacNa_ZyenDrybe-37A499rv4LEw6BSp9Jqcj5YaOA@mail.gmail.com>" "222" "Re: [oss-security] Re: Fwd: x86 ROP mitigation" nil nil nil "11" "2015111816:33:37" "[oss-security] Re: Fwd: x86 ROP mitigation" (number mark "U       pagabuc@gmai Nov 18  222/8564  " thread-indent "\"Re: [oss-security] Re: Fwd: x86 ROP mitigation\"\n") "<1673938.GaGbo5rB5J@x2>" ("<20151117153951.GA28672@openwall.com>" "<20151118021008.GB31188@openwall.com>" "<564C582B.6080803@redhat.com>" "<1673938.GaGbo5rB5J@x2>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 14300 invoked by uid 550); 18 Nov 2015 16:57:25 -0000
+Received: (qmail 1377 invoked by uid 550); 1 Sep 2022 10:36:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,253 +7,135 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3141 invoked from network); 18 Nov 2015 16:33:49 -0000
+Received: (qmail 18106 invoked from network); 1 Sep 2022 03:01:53 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=p9y/QrlaZcVjsUEInAR0Nt8mn5wcZ008L/dQwGSin3A=;
-        b=t70lwgLOMheMjLQqDgz5EiqL4Ar8+i1JrDAn/3jeFcmbTkpwA128vCur6hVhGdF3BA
-         zNWQrDg8L2HK6pCC+JsShbH2u3jCOa79zkzvsqF0cgTLWsMBSUXEqtV7rXTG3nxw5jaT
-         BiamrgnM+4hG6pWUiJG34o6wuI6oFJ1cuPcTwPAhfuLzQwq4Pgx0Ke3CwRSCzOGxQi8e
-         49NvfovgD36XA9MbLiK/Q8eKme4vKEkdxZzwFjlZ0jR6a7TRn2G5jXwEOT5bPGsq7gVa
-         GTk4VZlouSAxdoa2Kl03AaASDJSSXOefdI/5nMKGuO/HqYOXKOHAZRz+veuEvIK5wZXA
-         xoZw==
-MIME-Version: 1.0
-X-Received: by 10.107.151.144 with SMTP id z138mr3651785iod.89.1447864417194;
- Wed, 18 Nov 2015 08:33:37 -0800 (PST)
-In-Reply-To: <1673938.GaGbo5rB5J@x2>
-References: <20151117153951.GA28672@openwall.com>
-	<20151118021008.GB31188@openwall.com>
-	<564C582B.6080803@redhat.com>
-	<1673938.GaGbo5rB5J@x2>
-Date: Wed, 18 Nov 2015 17:33:37 +0100
-Message-ID: <CAGfLVYzktacNa_ZyenDrybe-37A499rv4LEw6BSp9Jqcj5YaOA@mail.gmail.com>
-From: Fabio Pagani <pagabuc@gmail.com>
+        d=gmail.com; s=20210112;
+        h=message-id:in-reply-to:to:references:date:subject:mime-version:from
+         :from:to:cc;
+        bh=qiLW2AnqSbBSZ3KqzsqLJ7AT3Bt3Fa3yIHDvr0wbG4M=;
+        b=Ph+cL7PqTVjKwuF5NblIogXZUxu7GW+P9f8/+xwzuKLreGnKW4fLIasb4/f3kqzoyi
+         4aybWCTWzPnP86u3Bt+djUVkxGP8PSrJMCpRKJkG1NYHH0bQ3I9V4k4bokWSu06sCxHY
+         ZahKexIy9E+PQrdv16FAuzWm1zAOqNORQHlAGiy6PyzD1/gWDvAz23TNq/swQ21fqViC
+         wBVoQBGhoCkGWfT6nQd8+NO+Mep08S1sK74crouPlv5asS23WNcLEo/NlWsX+cXdiXMq
+         86bkzHGsMMb7HEizmdqy4sY7VEIWQo4wS5i1ZLMexUzRcH9SioVFG4Pc+Ugv2AhmDWxX
+         Jy0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=message-id:in-reply-to:to:references:date:subject:mime-version:from
+         :x-gm-message-state:from:to:cc;
+        bh=qiLW2AnqSbBSZ3KqzsqLJ7AT3Bt3Fa3yIHDvr0wbG4M=;
+        b=4+wj1AjMtL66NxF6l/J/clzExgq9mdbTquPM/ntDS1yMs4qss95dEr/K9f5ct31cic
+         nuWHobVB10p3bBV4m1FTyrQx+WQhl46QuKRkey8zgzyffKXVXeo7hjpaISvK0TdhNBPH
+         rTBO8vYvMRvT9LhKShD+OZVh5HjTXJXIrbdct3oguErEibxFf4wEstUSIhS5PPL3AWYM
+         MhJChirMDaqC4Jso/+u2Ary4T8aQqdI5WBv08Xu6xF8kwmmDduYWXhqeCXE4HN8D3mzT
+         KDQHyHiIDQ2ebi2lZ9T+ewpJHieUG5JxH7QYFqeOceF+NTTtSER+OhTH27zbZIWaCJmt
+         2btg==
+X-Gm-Message-State: ACgBeo1h8rn+jMQkhjiyCmz3sq6Hi52187MVcsgaIekeDnVJsU7CWLBF
+	+k1xTnJE6CYSoyd12hMMpTFRIQgX2Gk=
+X-Google-Smtp-Source: AA6agR6rQorUoWSb5cFRcuxrAqMh7M6g0zQCpRgkAQ3t42Hke86U5HFs+wW3h+RLINW6oz28ev4PTA==
+X-Received: by 2002:a63:5c42:0:b0:42b:452f:8e66 with SMTP id n2-20020a635c42000000b0042b452f8e66mr24656885pgm.323.1662001300661;
+        Wed, 31 Aug 2022 20:01:40 -0700 (PDT)
+From: Roxana Bradescu <roxxbee@gmail.com>
+X-Google-Original-From: Roxana Bradescu <roxabee@chromium.org>
+Content-Type: multipart/signed;
+	boundary="Apple-Mail=_EA8F1001-C3E3-413F-9803-6BBE777BE362";
+	protocol="application/pgp-signature";
+	micalg=pgp-sha256
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.1\))
+Date: Wed, 31 Aug 2022 20:01:38 -0700
+References: <7378c405-5150-ebea-b81d-74f32cff7516@lexfo.fr>
+ <Yw5cq12s590/JbIJ@pisco.westfalen.local>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <Yw5cq12s590/JbIJ@pisco.westfalen.local>
+Message-Id: <269D4AA0-E239-4314-ABD4-0DDCF71CEE35@chromium.org>
+X-Mailer: Apple Mail (2.3696.120.41.1.1)
+Subject: Re: [oss-security] CVE-2022-31790 CVE-2022-31789: Watchguard
+ XTM/Firebox firewalls: Multiple vulnerabilities
+
+--Apple-Mail=_EA8F1001-C3E3-413F-9803-6BBE777BE362
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_82848D95-AF52-47B5-AC39-6E2FE9381723"
+
+
+--Apple-Mail=_82848D95-AF52-47B5-AC39-6E2FE9381723
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] Re: Fwd: x86 ROP mitigation
+Content-Type: text/plain;
+	charset=utf-8
 
-Hello everybody,
 
-I'm jumping into this discussion since I've worked the last couple of
-months on this topic.
 
-The plan outlined in the previous email seems reasonable but, for a
-more complete overview, you should definitely check G-Free:
-https://www.iseclab.org/papers/gfree.pdf
-
-> It seems to me that if the stack canary check happened directly before
-> the RET instruction, after restoring the registers, it would make it
-> more difficult to abuse the RET instruction.  With the code above, you
-> can just jump to the address 1c6e7 and have access to quite a few useful
-> POP instructions.
-
-You are right. Attackers will have access to POP instruction and
-potentially to any instruction found in an unaligned fashion.
-Shifting down the check will work but it's very dangerous, because you
-are accessing a part of the stack that was deallocated with the add.
-
-Actually I've implemented G-Free for X86-64 (except the "symbolic
-addresses" part) in the LLVM backend.
-The source will be released max in 2 weeks, but anyway i will be very
-happy to discuss and help for a GCC implementation.
-
-// Fab
-
-On Wed, Nov 18, 2015 at 4:49 PM, Steve Grubb <sgrubb@redhat.com> wrote:
-> On Wednesday, November 18, 2015 11:51:23 AM Florian Weimer wrote:
->> On 11/18/2015 03:10 AM, Solar Designer wrote:
->> > This approach makes sense to me, but I think we should have a better
->> > idea of whether and how "a point where ROP gadgets are reasonably hard
->> > to find & exploit" is potentially reachable.  If it is not even
->> > potentially reachable, then this undermines the effort, unfortunately.
->>
->> This came up in other discussions as well.  We even got to the point
->> where someone ran a ROP gadget finding tool on a core library, which did
->> not find any gadgets at all, and someone else found a useful one in a
->> few minutes with objdump and no other tool support (and this did not
->> even include jumping into the middle of instructions).
->
-> This was something that I was involved in. What I did was get the latest
-> source code of ROPgadget. [1]  I have no idea how good it is compared to =
-other
-> tools. But it does have a command line switch that builds a full ROP chai=
-n so
-> that you have a working exploit.
->
-> Next, I wrote a small script to iterate over the directories on my Fedora=
- 22
-> system that should hold programs or libraries the attacker might exploit =
-and
-> check each and every one of them using ROPgadget. I was curious what the =
-size
-> of the elephant is that we have.
->
-> What I found was that the list of libraries or programs that ROPgadget co=
-uld
-> build a chain for is fairly small. I thought about reasons why that might=
- be
-> the case and then considered that maybe if the gadgets from several libra=
-ries
-> were combined, maybe it would find more. But I think ASLR would make too =
-many
-> moving parts for that to be practical. If you use a whole library or
-> application, then everything moves together up or down as a unit to the n=
-ew
-> offset.
->
-> Another thought in explaining why the list was so small is that the quali=
-ty of
-> the chaining that ROPgadget has needs a lot of improvement. Could someone=
- more
-> clever piece together gadgets that make a chain that ROPgadget didn't see=
-? I
-> don't have the expertise to do this by hand. So, I'll do what others woul=
-d do
-> and look for another tool. There is only one other tools that I could fin=
-d,
-> ropper [2]. It dies due to a programming bug. So, I doubt its being used.
->
-> The following files are the ones that ROPgadget was able to build a chain=
- for:
->
-> /usr/lib64/ld-2.21.so
-> /usr/lib64/libasound.so.2.0.0
-> /usr/lib64/libavfilter.so.5.11.102
-> /usr/lib64/libc-2.21.so
-> /usr/lib64/libcln.so.6.0.4
-> /usr/lib64/libdb-5.3.so
-> /usr/lib64/libfreetype.so.6.11.4
-> /usr/lib64/libgs.so.9.16
-> /usr/lib64/libgtk-3.so.0.1600.7
-> /usr/lib64/libgtk-x11-2.0.so.0.2400.28
-> /usr/lib64/libliveMedia.so.36.0.6
-> /usr/lib64/libmozjs-17.0.so
-> /usr/lib64/libmozjs185.so.1.0.0
-> /usr/lib64/libmozjs-24.so
-> /usr/lib64/libpython3.4m.so.1.0
-> /usr/lib64/libQtWebKit.so.4.10.4
-> /usr/lib64/libruby.so.2.2.0
-> /usr/lib64/libsamba-util.so.0.0.1
-> /usr/lib64/libsmbconf.so.0
-> /usr/lib64/libsqlite3.so.0.8.6
-> /usr/lib64/libtcl8.6.so
-> /usr/lib64/libwebkit2gtk-4.0.so.37.6.8
-> /usr/lib64/libwebkitgtk-1.0.so.0.22.15
-> /usr/lib64/libwebkitgtk-3.0.so.0.22.15
-> /usr/lib64/libxml2.so.2.9.2
-> /usr/libexec/mysqld
-> /usr/sbin/ldconfig
-> /usr/sbin/sln
-> /usr/bin/clang
-> /usr/bin/clang-check
-> /usr/bin/dvipdfmx
-> /usr/bin/gimp-2.8
-> /usr/bin/inkscape
-> /usr/bin/js
-> /usr/bin/shotwell
-> /usr/bin/virtuoso-t
->
-> This is on a desktop with a lot of server and software development packag=
+> On Aug 30, 2022, at 11:53 AM, Moritz M=C3=BChlenhoff <jmm@inutil.org> wro=
+te:
+>=20
+> Charles Fol wrote:
+>> Hello,
+>>=20
+>> While performing a red-team assessment we discovered a few vulnerabiliti=
 es
-> that total up to approx 3800 rpms. If we are going to try to spoil ROP
-> gadgets, I would suggest that we as a community pick one tool and give it=
- some
-> love so that it finds all kinds of gadgets. This way we know how effectiv=
-e any
-> mitigations are.
->
-> During this study, Florian had suggested checking -fstack-protector-all. =
-This
-> defeated ROPgadget. It was not able to find any ROP gadgets in anything
-> compiled that way. If it were better at finding gadgets I would like to r=
-etry
-> the study to see if that still holds true.
->
->
->> In the end, this boils down to lack of concrete goals.  =E2=80=9CBlindin=
-g ROP
->> gadget finder X=E2=80=9C is easy (just change the ELF format in such a w=
-ay that
->> it's no longer recognized by the tool), but probably not very useful if
->> you want to improve security, for any useful definition of =E2=80=9Csecu=
-rity=E2=80=9D.
->>
->> We face the problem that I and my immediate colleagues (on the Red Hat
->> tools team) do not have access to information about successful
->> compromises, and what attackers actually do today, on GNU/Linux systems,
->> both to achieve initial access
->
-> There is information about this scattered around. It largely depends on w=
-hat
-> the role of the system is, what exploit is recently circulating, and exte=
-rnal
-> vs internal threat actors. Fishing around for the top uses of Linux serve=
-rs
-> [3] reveals probably what we all knew its used for: virtualization, datab=
-ase
-> servers, web servers, application servers, etc.
->
-> For web servers, there are studies [4] that show what people do. TL;DR: t=
-hey
-> find a hole in the web software to issue a wget command to pull down soft=
-ware,
-> this lands in /tmp, they then execute the software downloaded.
->
-> There's 3 different points where this could have been defeated. 1) mod_se=
-curity
-> probably would have blocked whatever weird URL or hole they found. 2) /tmp
-> should be mounted noexec. But noexec is easy to defeat by invoking the
-> interpreter or ld.so directly. 3) This is the hard one and yet so simple =
-to
-> fix....make all interpreters check the execute bit before executing. They=
- need
-> to be a policy enforcement point for the noexec mount option. Otherwise w=
-e may
-> as well ask the kernel guys to remove the noexec mount option because its
-> useless.
->
-> For other servers, its a similar pattern.
->
->> and to maintain a presence afterwards.
->
-> This is something I am also interested in. There are groups of people stu=
-dying
-> this. One such project is ATT&CK [5] run by MITRE. I have been collecting
-> information for Linux systems to add to their project. The idea of that
-> project is to enumerate the various ways that an attacker can perform act=
-ions
-> post exploit. With a catalogue, you can then go build tools that check the
-> hiding places. If they get a rootkit installed, you might not be able to
-> detect it on the host, but rather by its actions on the network.
->
-> From this catalogue, you can the create indicators of compromise to look =
-for.
-> Mandiant has one method [6], but I would rather see something based around
-> SCAP tooling so that its standardized.
->
->
->> Under these conditions, anything we implement is, to some degree,
->> arbitrary and a shot in the dark.  We can still use our best judgment to
->> set priorities, but we are very far from being guided by empirical evide=
-nce.
->
-> I hope I filled in some of the blanks. I am sure that others can point to=
- more
-> information to help fill in more gaps.
->
-> -Steve
->
->
-> 1 - http://shell-storm.org/project/ROPgadget/
-> 2 - https://github.com/sashs/Ropper
-> 3 - https://www.daniweb.com/hardware-and-software/linux-and-unix/news/258=
-647/10-ways-that-enterprises-use-linux
-> 4 - https://www.sans.org/reading-room/whitepapers/malicious/introduction-=
-linux-based-malware-36097
-> 5 - https://attack.mitre.org/wiki/Main_Page
-> 6 - http://www.openioc.org/
->
->
+>> on Watchguard firewalls of the XTM/Firebox brand:
+>=20
+> Why was this posted to oss-sec? These are proprietary network
+> devices AFAICT?
+>=20
+> Cheers,
+>        Moritz
+
+
+Might want to post this to fulldisclosure@seclists.org <mailto:fulldisclosu=
+re@seclists.org>
+
+=E2=80=94
+Regards, Roxana
+
+--Apple-Mail=_82848D95-AF52-47B5-AC39-6E2FE9381723
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; charset=
+=3Dutf-8"></head><body style=3D"word-wrap: break-word; -webkit-nbsp-mode: s=
+pace; line-break: after-white-space;" class=3D""><br class=3D""><div><br cl=
+ass=3D""><blockquote type=3D"cite" class=3D""><div class=3D"">On Aug 30, 20=
+22, at 11:53 AM, Moritz M=C3=BChlenhoff &lt;<a href=3D"mailto:jmm@inutil.or=
+g" class=3D"">jmm@inutil.org</a>&gt; wrote:</div><br class=3D"Apple-interch=
+ange-newline"><div class=3D""><div class=3D"">Charles Fol wrote:<br class=
+=3D""><blockquote type=3D"cite" class=3D"">Hello,<br class=3D""><br class=
+=3D"">While performing a red-team assessment we discovered a few vulnerabil=
+ities<br class=3D"">on Watchguard firewalls of the XTM/Firebox brand:<br cl=
+ass=3D""></blockquote><br class=3D"">Why was this posted to oss-sec? These =
+are proprietary network<br class=3D"">devices AFAICT?<br class=3D""><br cla=
+ss=3D"">Cheers,<br class=3D""> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mo=
+ritz<br class=3D""></div></div></blockquote></div><br class=3D""><div class=
+=3D""><br class=3D""></div><div class=3D"">Might want to post this to&nbsp;=
+<a href=3D"mailto:fulldisclosure@seclists.org" class=3D"">fulldisclosure@se=
+clists.org</a>&nbsp;</div><div class=3D""><br class=3D""></div><div class=
+=3D"">=E2=80=94</div><div class=3D"">Regards, Roxana</div></body></html>=
+
+--Apple-Mail=_82848D95-AF52-47B5-AC39-6E2FE9381723--
+
+--Apple-Mail=_EA8F1001-C3E3-413F-9803-6BBE777BE362
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename=signature.asc
+Content-Type: application/pgp-signature;
+	name=signature.asc
+Content-Description: Message signed with OpenPGP
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEgZzAKV63cJrecgABXEIiv89pXdUFAmMQIJIACgkQXEIiv89p
+XdWJ7w/8Diovq83J1p649IeYERo6Rq2PzTyUBhPN6UDXvHWVGRsvQ6F/s1VKpb3O
+BIoYpes3Z+pYIIctalWmFkzPlvh2wCxzXwvmmtTYkYXNsej0tSjdyQkrANua9MW3
+bm3EA2GC6nJTM7HXx3AlY+ay4f8aXpE67nGmQj34MxQIh8S+FG9p6Tp5Da26K5aR
+A55qKMB0+1XJ3Rr6uqh9eLHCpoK8EhX4IrYJEStNkMxrtNNxMLH4OCuzyvF0DQOS
+xJwv1I0j8X4L8yCSGKsEJLJsZKAA2Pp/1ShgjA5QXe13uN6E4Fu1ZEmnTEOKUIaE
+dQhT0c3EqaQSGLONScTBY+IOItvLuZ51+IHGZm4/BAx9SQSaP/vv+8vvpZcdr1ZG
+ud3mNF9TkGaJMmivoS6iR8A7u0ykKJk9QFmOmXEEnB6rbztt19GxdFK2AhwzQp9t
+vGx7geU9xNUtr0W5Zco/1wedVP37QHYoipzShyfwF37HfINpsII7vxvkmcUUar6m
+MgUBM/COFiDozINEL3cO/AEaGb4+w9E0BK1uHlk0/YedhcRrH4T5u6eCZABw5Bus
+oJGZWF1b9tiLjgAYO3B30G9bA6DZ1ZKAAVhV0ysuvGgenw3FzUuNYDTaguSi7aGp
+hlsOK1vPL0349H//79GnZkzadhoIwMM4sHpe9Bufxy3EBBGdSW0=
+=5afB
+-----END PGP SIGNATURE-----
+
+--Apple-Mail=_EA8F1001-C3E3-413F-9803-6BBE777BE362--
