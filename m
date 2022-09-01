@@ -1,23 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/15/2
-Message-ID: <632698ac-e78b-79ac-3a37-7a6a3acf782c@apache.org>
-Date: Wed, 15 Jun 2022 14:10:21 +0000
-From: Akira Ajisaka <aajisaka@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-33036: Apache Hadoop Privilege escalation vulnerability 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/02/2
+Message-ID: <YxEuR+oRpNUVhiOs@itl-email>
+Date: Thu, 1 Sep 2022 18:11:58 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
+To: oss-security@...ts.openwall.com, John Helmert III <ajak@...too.org>
+Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0008
 Content-Type: text/plain; charset=utf-8
 
-Severity: Critical
+On Thu, Sep 01, 2022 at 10:31:16PM +0200, Carlos Alberto Lopez Perez wrote:
+> On 29/08/2022 20:03, Demi Marie Obenour wrote:
+> >> We (maintainers of Linux WebKit ports) don't have access to the security
+> >> issues affecting Apple products until those issues are made public by them.
+> > That is unfortunate.  I thought you would have access to embargoed
+> > bugzilla tickets.
+> > 
+> 
+> We do have access to the tickets on WebKit bugzilla that are marked as
+> security-related and are hidden from other users by default.
 
-Description:
+Okay, that makes sense.  As an aside, why are these tickets kept hidden
+indefinitely even after patches have been available for a long time?
 
-In Apache Hadoop 2.2.0 to 2.10.1, 3.0.0-alpha1 to 3.1.4, 3.2.0 to 3.2.2, and 3.3.0 to 3.3.1, a user who can escalate to yarn user can possibly run arbitrary commands as root user.  Users should upgrade to Apache Hadoop 2.10.2, 3.2.3, 3.3.2 or higher.
+> However, we don't receive the information about which WebKit fixes will
+> be included in any Apple security update until those advisories are public.
+> 
+> 
+> >> So, we didn't knew until August 17th of this issue. Also you can see
+> >> that the bug report itself or the patch doesn't has any indication that
+> >> it fixes a security-related problem.
+> >>
+> >> Therefore, the time it took us to notice the issue, backport the fix and
+> >> do a new release was just 7-8 days (from 17th to 24-25th of August).
+> >> Which, honestely, it is quite good taking into account that: 1)
+> >> back-porting the fix was not straightforward since it required
+> >> back-porting also a few previous patches in order to be able to merge it
+> >> properly and that 2) we are in August and people is usually on holidays.
+> > Was backporting needed, as opposed to shipping a new minor version?
+> > 
+> 
+> It was. Fixes land in the master (main) branch. Those fixes don't
+> necessarely apply or work on the branch of the last webkitgtk-stable branch.
 
-Mitigation:
+I see.  Have you considered using the same branch of WebKit that Apple
+does, or backporting security patches as soon as they land in main
+without waiting for an upstream release?  Presumably you know which
+commits are security fixes.
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-If you are using the affected version of Apache Hadoop and some users can escalate to yarn user and cannot escalate to root user, remove the permission to escalate to yarn user from them.
-
-Credit:
-
-Apache Hadoop would like to thank Hideyuki Furue for reporting and fixing this issue.
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
