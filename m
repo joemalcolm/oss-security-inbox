@@ -1,21 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/06/4
-Message-ID: <f99b360a-192e-5c4e-1832-ee26121ae0bf@apache.org>
-Date: Wed, 06 Jul 2022 12:13:10 +0000
-From: Daniel Gaspar <dpgaspar@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2021-37839: Apache Superset: Improper access to dataset metadata information  
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/01/5
+Message-ID: <e9e07db7-9456-4015-5241-8a7e6e80ab0a@igalia.com>
+Date: Thu, 1 Sep 2022 22:31:16 +0200
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: oss-security@...ts.openwall.com, Demi Marie Obenour <demi@...isiblethingslab.com>, John Helmert III <ajak@...too.org>
+Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0008
 Content-Type: text/plain; charset=utf-8
 
-Description:
+On 29/08/2022 20:03, Demi Marie Obenour wrote:
+>> We (maintainers of Linux WebKit ports) don't have access to the security
+>> issues affecting Apple products until those issues are made public by them.
+> That is unfortunate.  I thought you would have access to embargoed
+> bugzilla tickets.
+> 
 
-Apache Superset up to 1.5.1 allowed for authenticated users to access metadata information related to datasets they have no permission on. This metadata included the dataset name, columns and metrics.
+We do have access to the tickets on WebKit bugzilla that are marked as
+security-related and are hidden from other users by default.
 
-Mitigation:
+However, we don't receive the information about which WebKit fixes will
+be included in any Apple security update until those advisories are public.
 
-Upgrade to 1.5.1 or higher
 
-Credit:
+>> So, we didn't knew until August 17th of this issue. Also you can see
+>> that the bug report itself or the patch doesn't has any indication that
+>> it fixes a security-related problem.
+>>
+>> Therefore, the time it took us to notice the issue, backport the fix and
+>> do a new release was just 7-8 days (from 17th to 24-25th of August).
+>> Which, honestely, it is quite good taking into account that: 1)
+>> back-porting the fix was not straightforward since it required
+>> back-porting also a few previous patches in order to be able to merge it
+>> properly and that 2) we are in August and people is usually on holidays.
+> Was backporting needed, as opposed to shipping a new minor version?
+> 
 
-Apache Superset would like to thank Dinesh for reporting this issue
+It was. Fixes land in the master (main) branch. Those fixes don't
+necessarely apply or work on the branch of the last webkitgtk-stable branch.
+
+A new webkitgtk/stable branch is forked from master (main) each 6
+months, and once forked it receives cherry-picks from the main branch,
+but it is never rebased.
+
+We release a new major stable version each 6 months (2.XX), and then we
+backport fixes doing minor relases (2.XX.A) for 6 months until the next
+major relaseis out (2.XY).
+
+See:
+https://trac.webkit.org/wiki/WebKitGTK/StableRelease
+https://trac.webkit.org/wiki/WebKitGTK/2.36.x
 
