@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1446" "Tuesday" "6" "October" "2020" "23:17:56" "+1100" "Michael Ellerman" "mpe@ellerman.id.au" "<87lfgj35vv.fsf@mpe.ellerman.id.au>" "57" "Re: [oss-security] CVE-2020-25641 kernel: soft lockup when submitting zero length bvecs." "^Date:" nil nil "10" "2020100612:17:56" "[oss-security] CVE-2020-25641 kernel: soft lockup when submitting zero length bvecs." (number mark "        mpe@ellerman Oct  6   57/1446  " thread-indent "\"Re: [oss-security] CVE-2020-25641 kernel: soft lockup when submitting zero length bvecs.\"\n") "<20200930063254.GB1474755@kroah.com>" ("<CALJHwhTWAWPjfWD1nLho+zxXneEt_CCbYFROJY=trcDvqsA7uw@mail.gmail.com>" "<20200930063254.GB1474755@kroah.com>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2020-25641 kernel: soft lockup when submitting zero length bvecs." nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 30227 invoked by uid 550); 6 Oct 2020 13:36:03 -0000
+Received: (qmail 5981 invoked by uid 550); 2 Sep 2022 17:40:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,82 +6,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1404 invoked from network); 6 Oct 2020 12:18:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ellerman.id.au;
-	s=201909; t=1601986682;
-	bh=EEffFzJJ2fn89RnvwmOnMH7fkFYVOXEOJh/+AWzCNnk=;
-	h=From:To:Subject:In-Reply-To:References:Date:From;
-	b=pb9h6eLEv70Pc3Q/oyFRF1loD1wm4YglnMsRDtXQTt7dtqd0QgChNEqsCvSqfbrIP
-	 r7AQA9Y3Z5ts1WRObnpA4V32fLfhLFRFId+mxN8fFCTS5Y9l99wU1zbagxLDQ2pa/v
-	 m4SpFcBJecJrULQwbJN9t+fDCtx070oMh1PRlKORmChL2tc3LpCRpTJuP7NfC81nK+
-	 vvBpCGyPEju5ON2BPK3S4c+P8rxV6z6w3p1w4o/kzAhgNDicras3VYYJjTXVjxLuzb
-	 yYNPBu1jr1keuqTdkXjDD8PdgWJ6ZmJQnv0mDdGiO7YzmhuZ7NI69Xc2kWX+tkJHE3
-	 C6futByesse6g==
-In-Reply-To: <20200930063254.GB1474755@kroah.com>
-References: <CALJHwhTWAWPjfWD1nLho+zxXneEt_CCbYFROJY=trcDvqsA7uw@mail.gmail.com> <20200930063254.GB1474755@kroah.com>
-Message-ID: <87lfgj35vv.fsf@mpe.ellerman.id.au>
-MIME-Version: 1.0
-Content-Type: text/plain
-Date: Tue, 06 Oct 2020 23:17:56 +1100
-From: Michael Ellerman <mpe@ellerman.id.au>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2020-25641 kernel: soft lockup when submitting zero length bvecs.
-To: Greg KH <greg@kroah.com>, oss-security@lists.openwall.com
+Received: (qmail 24519 invoked from network); 2 Sep 2022 16:13:53 -0000
+Date: Fri, 02 Sep 2022 16:13:36 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1662135222; x=1662394422;
+	bh=gNuFMjNIA/tGpcyweqZAcRdVH01tIGT9t4fCvgrpmkI=;
+	h=Date:To:From:Reply-To:Subject:Message-ID:Feedback-ID:From:To:Cc:
+	 Date:Subject:Reply-To:Feedback-ID:Message-ID;
+	b=BE+VYuLQbaCaFTkLkiPbXn/8buu6WQP/qsD1CdGljAvp/wZ1eq6yH/C4VunCTvkGq
+	 IF477bK+7DqRd76cKLMUTu1wQMJmDc1jM9dDtuhJRxG/PykGB2g+FRltJjMvD4KQK1
+	 nhaARvdlM21N6bMBc5cONGnflVYuT644Rhv5NJnKtadazHOsdiJpvOef44KSx9Whn8
+	 nXDfgBpATs5M1WmiSEaszjxMn1ohuDgMeIYBd/yb6F7vHnOYoKSJlMP+peals+Vv6X
+	 jLVhUIqKXc2ioj3jPn+nE57qgdLiW9R1dlUzaG5iKCOjNcOFwoZ0C9AaNZqOdKXGZR
+	 NIArmW66v6bvw==
+To: oss-security@lists.openwall.com
+From: Art Manion <zmanion@protonmail.com>
+Message-ID: <aca73c02-b870-1824-8cd2-515bbaaeebfc@protonmail.com>
+Feedback-ID: 39015149:user:proton
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] JBIG2 integer overflow fixed in Xpdf 4.04, Poppler 22.09.0
 
-Greg KH <greg@kroah.com> writes:
-> On Wed, Sep 30, 2020 at 10:35:56AM +1000, Wade Mealing wrote:
->> Gday,
->> 
->> A flaw was found in the Linux kernels implementation of biovec usage.  A
->> zero-length biovec request issued to the block subsystem could cause the
->> kernel to enter an infinite loop causing a denial of service. An attacker
->> with a local account can issue requests to a block device can cause a
->> denial of service.
->> 
->> This has been assigned CVE-2020-25641,
->> 
->> According to the fix commits "Introduced in":
->> # git tag --contains 1bdc76aea115 | head -n 1
->> v4.10
->
-> That's odd, and not the best way to do this, the commit really showed up
-> in 4.8-rc1:
-> 	$ git describe --contains 1bdc76aea115
-> 	v4.8-rc1~162^2~21
->
-> You forgot to sort by "version", which is what you need to do if you
-> want to try to look at tags, but then it's still a bit off:
-> 	$ git tag --contains 1bdc76aea115 | sort -V | head -n 10
-> 	v4.8
-> 	v4.8-rc1
-> 	v4.8-rc2
-> 	v4.8-rc3
-> 	v4.8-rc4
-> 	v4.8-rc5
-> 	v4.8-rc6
-> 	v4.8-rc7
-> 	v4.8-rc8
-> 	v4.9
+Xpdf 4.04 (released 2022-04-18, CVE-2022-38171):
 
-Git can do the sorting for you with --sort.
+   <https://www.cve.org/CVERecord?id=3DCVE-2022-38171>
 
-And if you have other tags in your repo that can confuse things, so
-specifying that you want "v*" tags avoids that.
+   <https://gist.github.com/zmanion/b2ed0d1a0cec163ecd07d5e3d9740dc6>
 
-eg:
 
-$ git tag -l "v*" --sort=v:refname --contains 1bdc76aea115 | head -n 10
-v4.8
-v4.8-rc1
-v4.8-rc2
-v4.8-rc3
-v4.8-rc4
-v4.8-rc5
-v4.8-rc6
-v4.8-rc7
-v4.8-rc8
-v4.9
+Poppler 22.09.0 (released 2022-09-01, CVE-2022-38784):
 
-Obviously for ease of use you want that in an alias or script.
+   <https://www.cve.org/CVERecord?id=3DCVE-2022-38784>
 
-cheers
+   <https://gitlab.freedesktop.org/poppler/poppler/-/blob/master/NEWS>
+
+   <https://gitlab.freedesktop.org/poppler/poppler/-/merge_requests/1261/di=
+ffs?commit_id=3D27354e9d9696ee2bc063910a6c9a6b27c5184a52>
+
+The lineage of this bug includes a variant used as part of the FORCEDENTRY =
+exploit chain (targeting Apple devices).  The bug readily crashes affected =
+software, code execution is not straightforward and would depend heavily on=
+ the context in which affected software is used.
+
+FORCEDENTRY was first discussed publicly in 2021, it took some time to trac=
+k down the affected OSS components.  Lots of packages are downstream of Xpd=
+f and Poppler.
+
+
+Crashing test case, use at your own risk:
+
+   <https://github.com/jeffssh/CVE-2021-30860>
+
+
+For background, Apple CoreGraphics fixes released in September 2021 (CVE-20=
+21-30860):
+
+   <https://www.cve.org/CVERecord?id=3DCVE-2021-30860>
+
+   <https://support.apple.com/en-ca/HT212807>
+
+   <https://googleprojectzero.blogspot.com/2021/12/a-deep-dive-into-nso-zer=
+o-click.html>
+
+
+Regards,
+
+  - Art
+
