@@ -1,37 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/02/11
-Message-ID: <20221102150921.3ab3f2d0@computer>
-Date: Wed, 2 Nov 2022 15:09:21 +0100
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/02/10
+Message-ID: <f1fef6f7-fadb-d9d4-e1cb-9fbcb9e1f881@igalia.com>
+Date: Fri, 2 Sep 2022 12:53:29 +0200
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: oss-security@...ts.openwall.com, Demi Marie Obenour <demi@...isiblethingslab.com>, John Helmert III <ajak@...too.org>
+Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0008
 Content-Type: text/plain; charset=utf-8
 
-FWIW it only takes a basically trivial fuzz target on the affected
-function to find this bug with libfuzzer.
+On 02/09/2022 00:11, Demi Marie Obenour wrote:
+> On Thu, Sep 01, 2022 at 10:31:16PM +0200, Carlos Alberto Lopez Perez wrote:
+>> On 29/08/2022 20:03, Demi Marie Obenour wrote:
+>>>> We (maintainers of Linux WebKit ports) don't have access to the security
+>>>> issues affecting Apple products until those issues are made public by them.
+>>> That is unfortunate.  I thought you would have access to embargoed
+>>> bugzilla tickets.
+>>>
+>>
+>> We do have access to the tickets on WebKit bugzilla that are marked as
+>> security-related and are hidden from other users by default.
+> 
+> Okay, that makes sense.  As an aside, why are these tickets kept hidden
+> indefinitely even after patches have been available for a long time?
+> 
 
-In OpenSSL 3.0.5 code do:
+I don't know the reason.
 
-./config no-shared CC=clang CFLAGS="-fsanitize=fuzzer-no-link,address"
-clang -fsanitize=fuzzer,address -I$(pwd)/include punyfuzz.c libcrypto.a
+But I suspect it maybe has something to do how bugzilla works, since the
+whole "Security" category on the WebKit bugzilla is private.
+And I'm unsure if Bugzilla allows access to a private issue based on the
+age and status (closed/open) of the issue.
 
-with this in punyfuzz.c:
+>> However, we don't receive the information about which WebKit fixes will
+>> be included in any Apple security update until those advisories are public.
+>>
+>>
+>>>> So, we didn't knew until August 17th of this issue. Also you can see
+>>>> that the bug report itself or the patch doesn't has any indication that
+>>>> it fixes a security-related problem.
+>>>>
+>>>> Therefore, the time it took us to notice the issue, backport the fix and
+>>>> do a new release was just 7-8 days (from 17th to 24-25th of August).
+>>>> Which, honestely, it is quite good taking into account that: 1)
+>>>> back-porting the fix was not straightforward since it required
+>>>> back-porting also a few previous patches in order to be able to merge it
+>>>> properly and that 2) we are in August and people is usually on holidays.
+>>> Was backporting needed, as opposed to shipping a new minor version?
+>>>
+>>
+>> It was. Fixes land in the master (main) branch. Those fixes don't
+>> necessarely apply or work on the branch of the last webkitgtk-stable branch.
+> 
+> I see.  Have you considered using the same branch of WebKit that Apple
+> does, or backporting security patches as soon as they land in main
+> without waiting for an upstream release?  Presumably you know which
+> commits are security fixes.
 
-#include <stddef.h>
-#include <stdint.h>
-#include "crypto/punycode.h"
+We have considered using the same stable branches that them, but in the
+end it didn't fit well our release process. We aim at a 6-month release
+cadence for major stable releases in order to align with the GNOME
+release process. And Apple has a differente release cadence than that.
 
-int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
-  unsigned int bar[32];
-  unsigned int x = 32;
-  ossl_punycode_decode((const char *)data, size, bar, &x);
-  return 0;
-}
+We also monitor patches landing on master (main) that are tagged as
+security releated and sometimes we backport them even when those don't
+have (still) assigned a CVE.
 
-Run ./a.out and it'll crash with an ASAN error almost instantly.
-
--- 
-Hanno Böck
-https://hboeck.de/
-
-Content of type "application/pgp-signature" skipped
+In the case of this CVE (CVE-2022-32893) the patch fixing it was not
+marked as security related.
