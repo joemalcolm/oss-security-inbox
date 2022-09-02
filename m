@@ -1,100 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/17/1
-Message-ID: <CAFcO6XMeXqzHL3JDV2mrBv8KXd2=QyMFSzK4-rUfrA1u2TueKw@mail.gmail.com>
-Date: Mon, 17 Jan 2022 12:33:54 +0800
-From: butt3rflyh4ck <butterflyhuangxx@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/02/7
+Message-ID: <0692e33f-4855-c688-6718-26b94610fdeb@apache.org>
+Date: Fri, 2 Sep 2022 08:26:10 +0200
+From: Jacques Le Roux <jleroux@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-4095: kernel: KVM: NULL pointer dereference in kvm_dirty_ring_get() in virt/kvm/dirty_ring.c
+Subject: Apache OFBiz - Unauth Path Traversal with file corruption (CVE-2022-25371)
 Content-Type: text/plain; charset=utf-8
 
-The patch for this issue is available upstream now.
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=55749769fe608fa3f4a075e42e89d237c8e37637
+Severity:
+High
 
+Vendor:
+The Apache Software Foundation
 
+Versions Affected:
+OFBiz versions prior to 18.12.06
 
-Regards,
- butt3rflyh4ck.
+Description:
+The Birt viewer version 4.5.0 has a security issue that allows this exploit.
+We waited long for https://github.com/eclipse/birt/issues/625
+to resolve but eventually decided to release OFBiz 18.12.06 without
+the Birt component
 
-On Tue, Dec 14, 2021 at 11:26 PM butt3rflyh4ck
-<butterflyhuangxx@...il.com> wrote:
->
-> Hi, there was a null-ptr-deref bug in kvm_dirty_ring_get in
-> virt/kvm/dirty_ring.c and I reproduced it on 5.15.0-rc5+.
->
-> #Root Cause
-> When dirty ring logging is enabled, any dirty logging without an active
-> vCPU context will cause a kernel oops via a KVM KVM_XEN_HVM_SET_ATTR ioctl.
->
-> we can call KVM_XEN_HVM_SET_ATTR ioctl and it would invoke
-> kvm_xen_hvm_set_attr(), it would call mark_page_dirty_in_slot().
-> Call chains is like this:
-> KVM_XEN_HVM_SET_ATTR ioctl
->   --->kvm_xen_hvm_set_attr
->       --->kvm_write_wall_clock
->          --->kvm_write_guest
->             -->__kvm_write_guest_page
->                --->mark_page_dirty_in_slot
-> mark_page_dirty_in_slot().
-> if kvm->dirty_ring_size is sat.
-> ```
-> void mark_page_dirty_in_slot(struct kvm *kvm,
->      struct kvm_memory_slot *memslot,
->      gfn_t gfn)
-> {
-> if (memslot && kvm_slot_dirty_track_enabled(memslot)) {
-> unsigned long rel_gfn = gfn - memslot->base_gfn;
-> u32 slot = (memslot->as_id << 16) | memslot->id;
->
-> if (kvm->dirty_ring_size)
-> kvm_dirty_ring_push(kvm_dirty_ring_get(kvm),
->     slot, rel_gfn);
-> else
-> set_bit_le(rel_gfn, memslot->dirty_bitmap);
-> }
-> }
-> ```
-> mark_page_dirty_in_slot() would call kvm_dirty_ring_push() to push a
-> dirty-page to dirty ring
-> then kvm_dirty_ring_get() would get vcpu->dirty_ring.
->
-> kvm_dirty_ring_get()
-> ```
-> struct kvm_dirty_ring *kvm_dirty_ring_get(struct kvm *kvm)
-> {
-> struct kvm_vcpu *vcpu = kvm_get_running_vcpu();  //-------> invoke
-> kvm_get_running_vcpu() to get a vcpu.
->
-> WARN_ON_ONCE(vcpu->kvm != kvm); [1]
->
-> return &vcpu->dirty_ring;
-> }
-> ```
-> If vCPU stat did not work, kvm_get_running_vcpu() would get a NULL
-> vcpu pointer .
->
-> #Details
-> Analyze and some discussion on this issue.
-> https://lore.kernel.org/kvm/CAFcO6XOmoS7EacN_n6v4Txk7xL7iqRa2gABg3F7E3Naf5uG94g@mail.gmail.com/
->
-> #Fix
-> The patch for this issue, not available upstream now.
-> https://patchwork.kernel.org/project/kvm/patch/20211121125451.9489-12-dwmw2@infradead.org/
->
-> #CVE
-> Red Hat has assigned CVE-2021-4095 to this issue.
-> https://access.redhat.com/security/cve/CVE-2021-4095
-> https://bugzilla.redhat.com/show_bug.cgi?id=2031194
->
-> #Cedit
-> Active Defense Lab of Venustech.
->
->
-> Regards,
->  butt3rflyh4ck.
-> --
-> Active Defense Lab of Venustech
+Mitigation:
+Upgrade to at least 18.12.06
+or apply patches at https://issues.apache.org/jira/browse/OFBIZ-...
 
+Credit:
+npodotykin@...ecurity.com
 
+References:
+http://ofbiz.apache.org/download.html#vulnerabilities
 
--- 
-Active Defense Lab of Venustech
