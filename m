@@ -1,94 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/11/6
-Message-ID: <q8n331np-1qo6-o367-n636-o5q33o0o29@unkk.fr>
-Date: Wed, 11 May 2022 08:42:11 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: HSTS bypass via trailing dot
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/02/8
+Message-ID: <e817b33e-48c3-bb1c-900c-65afc4e157df@apache.org>
+Date: Fri, 2 Sep 2022 08:28:34 +0200
+From: Jacques Le Roux <jleroux@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: Apache OFBiz - Unauth Stored XSS (CVE-2022-25370)
 Content-Type: text/plain; charset=utf-8
 
-HSTS bypass via trailing dot
-============================
+Severity:
+High
 
-Project curl Security Advisory, May 11 2022 -
-[Permalink](https://curl.se/docs/CVE-2022-30115.html)
+Vendor:
+The Apache Software Foundation
 
-VULNERABILITY
--------------
+Versions Affected:
+OFBiz versions prior to 18.12.06
 
-curl's HSTS check could be bypassed to trick it to keep using HTTP.
+Description:
+The Birt viewer version 4.5.0 has a security issue that allows this exploit.
+We waited long for https://github.com/eclipse/birt/issues/625
+to resolve but eventually decided to release OFBiz 18.12.06 without
+the Birt component
 
-Using its HSTS support, curl can be instructed to use HTTPS directly instead
-of using an insecure clear-text HTTP step even when HTTP is provided in the
-URL. This mechanism could be bypassed if the host name in the given URL used a
-trailing dot while not using one when it built the HSTS cache. Or the other
-way around - by having the trailing dot in the HSTS cache and *not* using the
-trailing dot in the URL.
+Mitigation:
+Upgrade to at least 18.12.06
 
-Since trailing dots in host names are somewhat special, many sites work
-equally fine with or without a trailing dot present.
+Credit:
+npodotykin@...ecurity.com
 
-We are not aware of any exploit of this flaw.
+References:
+http://ofbiz.apache.org/download.html#vulnerabilities
 
-INFO
-----
-
-This flaw was introduced in [commit
-b27ad8e1d3e68e](https://github.com/curl/curl/commit/b27ad8e1d3e68e), shipped
-in curl 7.82.0 when the treatment of trailing dot host names was changed.
-
-Similar issues have been raised in the past for
-[Firefox](https://www.mozilla.org/en-US/security/advisories/mfsa2015-13/) and
-for [Chrome](https://bugs.chromium.org/p/chromium/issues/detail?id=461481).
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2022-30115 to this issue.
-
-CWE-319: Cleartext Transmission of Sensitive Information
-
-Severity: Medium
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.82.0 to and including 7.83.0
-- Not affected versions: curl < 7.82.0 and curl >= 7.83.1
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-A [fix for CVE-2022-30115](https://github.com/curl/curl/commit/fae6fea209a2d4d)
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 7.83.1
-
-  B - Apply the patch to your local version
-
-  C - Stick to always using `HTTPS://` in URLs
-
-TIMELINE
---------
-
-This issue was reported to the curl project on May 3, 2022. We contacted
-distros@...nwall on May 5.
-
-libcurl 7.83.1 was released on May 11 2022, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-This issue was reported by Axel Chong. Patched by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
