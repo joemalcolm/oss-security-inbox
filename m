@@ -1,25 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/02/15
-Message-ID: <Y2K1yOB7748iGI2P@wopr>
-Date: Wed, 2 Nov 2022 11:24:08 -0700
-From: Kurt H Maier <khm@...ops.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/02/3
+Message-ID: <c44d5503-8393-4048-2b2b-5bc3ddac3a43@apache.org>
+Date: Fri, 02 Sep 2022 03:55:07 +0000
+From: Jedidiah Cunningham <jedcunningham@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
+Subject: CVE-2022-38170: Apache Airflow: Overly permissive umask for deamons 
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 02, 2022 at 03:09:21PM +0100, Hanno Böck wrote:
-> FWIW it only takes a basically trivial fuzz target on the affected
-> function to find this bug with libfuzzer.
+Description:
 
-I'm not sure what the value is of all this Monday-morning
-quarterbacking, from 'basically trivial' fuzzing to code-quality
-comparisons of hypothetical Rust ports.  OpenSSL's development process
-has a bad rap, and there are definitely some easy wins to be had.
-Posting "if they'd only adopted my pet practice" to oss-sec isn't fixing
-anything in the OpenSSL project.  Please consider directing fuzzing
-advice and PL theory directly to the project?  I agree there would be
-benefit to this stuff, but dunking on them on unrelated lists isn't
-getting the medicine to the patient.
+In Apache Airflow prior to 2.3.4, an insecure umask was configured for numerous Airflow components when running with the  `--deamon` flag which could result in a race condition giving world-writable files in the Airflow home directory and allowing local users to expose arbitrary file contents via the webserver.
 
-Respectfully,
-khm
+Mitigation:
+
+Run without the `--deamon` flag via a process supervisor instead (systemd, runit, etc.).
+
+Credit:
+
+The Apache Airflow PMC would like to thank Harry Sintonen for reporting this issue.
+
