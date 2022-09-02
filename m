@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1877" "Thursday" "13" "October" "2016" "03:03:08" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161013070308.6FFD713A870@smtpvmsrv1.mitre.org>" "47" "[oss-security] Re: CVE Request -- Broadcom Wifi Driver Brcmfmac brcmf_cfg80211_start_ap Buffer Overflow" nil nil nil "10" "2016101307:03:08" "[oss-security] Re: CVE Request -- Broadcom Wifi Driver Brcmfmac brcmf_cfg80211_start_ap Buffer Overflow" (number mark "U       cve-assign@m Oct 13   47/1877  " thread-indent "\"[oss-security] Re: CVE Request -- Broadcom Wifi Driver Brcmfmac brcmf_cfg80211_start_ap Buffer Overflow\"\n") "<CABNVnE1qt5aoJUOqb-d0vxs83Dfirn7CYxYQsS3TAxuTbX=LLQ@mail.gmail.com>" ("<CABNVnE1qt5aoJUOqb-d0vxs83Dfirn7CYxYQsS3TAxuTbX=LLQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 24177 invoked by uid 550); 13 Oct 2016 07:03:46 -0000
+Received: (qmail 27792 invoked by uid 550); 2 Sep 2022 10:53:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,59 +7,101 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24062 invoked from network); 13 Oct 2016 07:03:22 -0000
-From: cve-assign@mitre.org
-To: freener.gdx@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CABNVnE1qt5aoJUOqb-d0vxs83Dfirn7CYxYQsS3TAxuTbX=LLQ@mail.gmail.com>
-Message-Id: <20161013070308.6FFD713A870@smtpvmsrv1.mitre.org>
-Date: Thu, 13 Oct 2016 03:03:08 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request -- Broadcom Wifi Driver Brcmfmac brcmf_cfg80211_start_ap Buffer Overflow
+Received: (qmail 27774 invoked from network); 2 Sep 2022 10:53:51 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:Cc:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=x4GNHUwxrG2V3UmE/2+lCyhekPs9Tw0jHPRZy8Tr/K4=; b=nbf9xX9JLucOV0IpA82HgopzZo
+	42S3rXM3jIw0Kr79LgeKJzwZdNiFs6PXOufB71IrM/WkCWslmDXDHdt8q5EzWQ9B4KIN9NqsznVZ1
+	BD5Ao54+iJ0VaK/EbHyDzVoFBjEKslGh477/l4+mPIv/RvAgBEU8cCXfpMsPHJ9hlS3qrWEvpGtQ4
+	Ezqbxj+mPwD2qy7sccWNoxPU6bAJ1WU1pHPfAaER+pqrmAM5yB2gzA1v1UwP7N4Rj2bKxDnTCSAJ+
+	NjUN6iio+nurkpMYknCyQ8Shv08YEYo8YKC/qYWMhwykzsOWaurUY4sbIuizLyOg30DHzeyAvqM5v
+	Kr+nuLOw==;
+Message-ID: <f1fef6f7-fadb-d9d4-e1cb-9fbcb9e1f881@igalia.com>
+Date: Fri, 2 Sep 2022 12:53:29 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Content-Language: es
+To: oss-security@lists.openwall.com,
+ Demi Marie Obenour <demi@invisiblethingslab.com>,
+ John Helmert III <ajak@gentoo.org>
+References: <b2f4c0a2-695c-7744-2397-269a1e588c31@igalia.com>
+ <YwhTtN8duEhxo1hY@gentoo.org>
+ <8812a292-ecd6-5172-a746-4ca192552882@igalia.com>
+ <Ywz/hDw3dwvhYlua@itl-email>
+ <e9e07db7-9456-4015-5241-8a7e6e80ab0a@igalia.com>
+ <YxEuR+oRpNUVhiOs@itl-email>
+From: Carlos Alberto Lopez Perez <clopez@igalia.com>
+Organization: Igalia S.L.
+Mail-Followup-To: oss-security@lists.openwall.com,
+ Demi Marie Obenour <demi@invisiblethingslab.com>,
+ John Helmert III <ajak@gentoo.org>
+In-Reply-To: <YxEuR+oRpNUVhiOs@itl-email>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] WebKitGTK and WPE WebKit Security Advisory
+ WSA-2022-0008
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 02/09/2022 00:11, Demi Marie Obenour wrote:
+> On Thu, Sep 01, 2022 at 10:31:16PM +0200, Carlos Alberto Lopez Perez wrote:
+>> On 29/08/2022 20:03, Demi Marie Obenour wrote:
+>>>> We (maintainers of Linux WebKit ports) don't have access to the security
+>>>> issues affecting Apple products until those issues are made public by them.
+>>> That is unfortunate.  I thought you would have access to embargoed
+>>> bugzilla tickets.
+>>>
+>>
+>> We do have access to the tickets on WebKit bugzilla that are marked as
+>> security-related and are hidden from other users by default.
+> 
+> Okay, that makes sense.  As an aside, why are these tickets kept hidden
+> indefinitely even after patches have been available for a long time?
+> 
 
-> https://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=ded89912156b1a47d940a0c954c43afbabd0c42c
+I don't know the reason.
 
-> I found a stack buffer overflow vulnerability in Broadcom wifi driver
-> brcmfmac, this issue has been fixed,
+But I suspect it maybe has something to do how bugzilla works, since the
+whole "Security" category on the WebKit bugzilla is private.
+And I'm unsure if Bugzilla allows access to a private issue based on the
+age and status (closed/open) of the issue.
 
-> To trigger the bug the exploit should send a NL80211_CMD_START_AP or
-> NL80211_CMD_NEW_BEACON command to nl80211 socket in kernel.
+>> However, we don't receive the information about which WebKit fixes will
+>> be included in any Apple security update until those advisories are public.
+>>
+>>
+>>>> So, we didn't knew until August 17th of this issue. Also you can see
+>>>> that the bug report itself or the patch doesn't has any indication that
+>>>> it fixes a security-related problem.
+>>>>
+>>>> Therefore, the time it took us to notice the issue, backport the fix and
+>>>> do a new release was just 7-8 days (from 17th to 24-25th of August).
+>>>> Which, honestely, it is quite good taking into account that: 1)
+>>>> back-porting the fix was not straightforward since it required
+>>>> back-porting also a few previous patches in order to be able to merge it
+>>>> properly and that 2) we are in August and people is usually on holidays.
+>>> Was backporting needed, as opposed to shipping a new minor version?
+>>>
+>>
+>> It was. Fixes land in the master (main) branch. Those fixes don't
+>> necessarely apply or work on the branch of the last webkitgtk-stable branch.
+> 
+> I see.  Have you considered using the same branch of WebKit that Apple
+> does, or backporting security patches as soon as they land in main
+> without waiting for an upstream release?  Presumably you know which
+> commits are security fixes.
 
-> NL80211_ATTR_SSID is optional, user can send a netlink packet which
-> does not contain information about NL80211_ATTR_SSID, so params.ssid
-> and params.ssid_len will be 0. It's the key point in the exploit.
+We have considered using the same stable branches that them, but in the
+end it didn't fit well our release process. We aim at a 6-month release
+cadence for major stable releases in order to align with the GNOME
+release process. And Apple has a differente release cadence than that.
 
-> It does not
-> check the length of data before calling memcpy to copy the data to
-> stack buffer.
+We also monitor patches landing on master (main) that are tagged as
+security releated and sometimes we backport them even when those don't
+have (still) assigned a CVE.
 
->> brcmfmac: avoid potential stack overflow in brcmf_cfg80211_start_ap()
-
->> drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-
-Use CVE-2016-8658.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJX/zAMAAoJEHb/MwWLVhi25+oQAKs2qjaGbVngpPWsnbCsPONI
-6NjXoz9otsl0g1RrLuKHYB7S7fIY2D5JqKh+dNFuFwUkcTIo7nojVgcZSTp1FEnH
-V/LHG3uPo2rmul/65vo1a3H90C6ZSJlHsOE1DaUbLIDNUr6fReAWWinP2Mv7IPft
-2BSXXriH544MBkwL5GEMVtfKEcLvzWrOK/poxN1dFyCUGCtD7vNFs0CEhT/eqhZZ
-YZVcV1wvIHnbPbpBc0riuzZcej4ofcfcyIoLFqHWuV4R4VnPzXjWVB2Zm9O+DJkh
-y1/xHDGo4Yasfx3V3hX03ylHe4BrJaA6rz6ptBLuBQUU976r8Hu7UAZ1deR0beSe
-WkEbKaXPl/kIBpyjCM4XHhc4L6CXM9W6QUy03j1ueWIRj7C4ImNUIR6ti87uDVG1
-WqMcOtdsG0N7mXd7y2e4T2slW9BYa/+FdT/rcdVtSVPis7FWH+N3DiG76/0BTcCj
-iuUBZHF81CnrkJQZo/pLmAPy2GC7iaaqTT8J6P0f52+CnbFPHBPaYYOaAb3zy3Vk
-F7SJM1sbPEan2Wyb6CW0wJVDGKXjvFgNj4QYm0etoVMsQiz0puhBWC1GXVbzhsCS
-DxXRW58QtkN5ODLSXYGMO3H4kQwuUv6P0nKYrrpv7nCIkS4uXZWydpQcN3+zVvuP
-5l5c5X60MnOYzYVMOH4P
-=kCpv
------END PGP SIGNATURE-----
+In the case of this CVE (CVE-2022-32893) the patch fixing it was not
+marked as security related.
