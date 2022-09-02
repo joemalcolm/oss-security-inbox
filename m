@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["692" "Wednesday" "15" "June" "2016" "16:29:50" "+1000" "Wade Mealing" "wmealing@redhat.com" "<CALJHwhQrWQ-TZ2cO=L3v8AVt-OOXGRvdXgtMxABKz6XFnXg9Aw@mail.gmail.com>" "24" "[oss-security] CVE-2016-4470: Linux kernel Uninitialized variable in request_key handling user controlled kfree()." nil nil nil "6" "2016061506:29:50" "[oss-security] CVE-2016-4470: Linux kernel Uninitialized variable in request_key handling user controlled kfree()." (number mark "U       wmealing@red Jun 15   24/692   " thread-indent "\"[oss-security] CVE-2016-4470: Linux kernel Uninitialized variable in request_key handling user controlled kfree().\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 6061 invoked by uid 550); 15 Jun 2016 06:30:04 -0000
+Received: (qmail 13547 invoked by uid 550); 2 Sep 2022 20:43:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,50 +7,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 6005 invoked from network); 15 Jun 2016 06:30:03 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=O+O8O+g1i1xCOMKguCtA/MD/3dmnV39OQwbXolAEpxo=;
-        b=ZIUPoWBsKl8DqBc8CPtlZhBlFXHOb2xvf8OhUyiH9hUavsNGAQed7D34M2Yg3gBLN9
-         m2g+wS3ZCDHrXp8YNXRsmXHXUJB/ws5uBjeaw893hf/JOHM+KCWWw+XVhvH3mtldmx+1
-         wrC5bIpvf4Vz78bOYtEC/Mlm07Hkkw00sAWepmEbUZghqUrDYdejMQg/7zrbJivVzY+0
-         FYN29mkjw9RNWMS662Yhpg5idb9MFoyTRtULVVrDvnTp0dd7teo7bouPkwbfaNsZSDJd
-         EphW792mOqGXuoBFVoGXX7S9sWjZZEz45qyYFDyejnwuEC1UuFZiC4tkAymCVgE47MLB
-         xDgw==
-X-Gm-Message-State: ALyK8tJm7nr9ULHPBTT7+Y0PaJ9cvqNV96cqzGFqD93XR1vM7yZHtlRWLaddeJV+cqEMOLWx5DpSS3nDts8gjP2h
+Received: (qmail 13529 invoked from network); 2 Sep 2022 20:43:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1662151384;
+	bh=TQXOr8GCDMV9ZmrjpRqzyeTBLKe4HM+TJlbwpaO3fRs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:In-Reply-To;
+	b=rlvHM4HQ/0I/66jJZ82ivjeQv3tc7ZQ6K+dcLl2hkmIMzwTbH13dv1JrO55/1KI9+
+	 MN5FJ1y5z/1+AMflD9A3iOQuiB1xaeIHN26ANO7vE0Y+ovxzr2JxpF1+8yzH+vuRNT
+	 tY5KcGSgBihm/SWPXXXPBs7gm7Fxg3UijwQzFAZzftv9b9CkXXLyjA7cjhPV5ZalKH
+	 aAys8YZTtRGNP1a1jS/31AosYpaUCkPAhudRcCvYGxuPz+es3mhCiv3FFzrOMuzqGz
+	 xtutGD1fBm/lVPeNTDQfwFJXzKeMU3tdBpWsfPcw0O6GFEJfs+H5ziQ2Dh/mDPZPj4
+	 DqcNOsg5izDjA==
+Date: Fri, 2 Sep 2022 20:43:01 +0000
+From: Seth Arnold <seth.arnold@canonical.com>
+To: Jedidiah Cunningham <jedcunningham@apache.org>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20220902204301.GA3212087@millbarge>
+Mail-Followup-To: Jedidiah Cunningham <jedcunningham@apache.org>,
+	oss-security@lists.openwall.com
+References: <c44d5503-8393-4048-2b2b-5bc3ddac3a43@apache.org>
 MIME-Version: 1.0
-X-Received: by 10.36.64.8 with SMTP id n8mr31839156ita.21.1465972191013; Tue,
- 14 Jun 2016 23:29:51 -0700 (PDT)
-Date: Wed, 15 Jun 2016 16:29:50 +1000
-Message-ID: <CALJHwhQrWQ-TZ2cO=L3v8AVt-OOXGRvdXgtMxABKz6XFnXg9Aw@mail.gmail.com>
-From: Wade Mealing <wmealing@redhat.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] CVE-2016-4470: Linux kernel Uninitialized variable in request_key
- handling user controlled kfree().
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="TB36FDmn/VVEgNH/"
+Content-Disposition: inline
+In-Reply-To: <c44d5503-8393-4048-2b2b-5bc3ddac3a43@apache.org>
+Subject: Re: [oss-security] CVE-2022-38170: Apache Airflow: Overly permissive
+ umask for deamons
 
-Gday,
+--TB36FDmn/VVEgNH/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-A flaw was found in the Linux kernels keyring handling code, where in
-key_reject_and_link() there's an uninitialised variable that isn't set
-by __key_link_begin() on the destination keyring if that function
-fails.
+On Fri, Sep 02, 2022 at 03:55:07AM +0000, Jedidiah Cunningham wrote:
+> In Apache Airflow prior to 2.3.4, an insecure umask was configured for numerous Airflow components when running with the  `--deamon` flag which could result in a race condition giving world-writable files in the Airflow home directory and allowing local users to expose arbitrary file contents via the webserver.
 
-If a destination keyring was supplied, then __key_link_end() is called
-whether or not __key_link_begin() succeeded, with the result that the
-edit pointers contains members which end up being freed.   These are
-the user controlled addresses that can exist from previous memory
-contents.
+Hello Jedidiah,
 
-Thanks,
+Thanks for contributing to the oss-security list; I believe your
+contributions would be far more valuable if they included some further
+details -- providing links to issues and commits is common, but you could
+also include the details in the email if that's easier for whatever reason.
 
-Wade Mealing
-Product Security Team
+Thanks
 
-Resources:
+--TB36FDmn/VVEgNH/
+Content-Type: application/pgp-signature; name="signature.asc"
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1341716
+-----BEGIN PGP SIGNATURE-----
 
-Patch:
-https://www.spinics.net/lists/linux-kernel-janitors/msg26069.html
+iQEzBAABCgAdFiEEQVAQ8bojyMcg37H18yFyWZ2NLpcFAmMSaswACgkQ8yFyWZ2N
+LpfeFAgAqVrfZNCG3FOt4MNUadVa39OC2HQFtSACi+NpfJR0fGoPBjAb4MDZgvFo
+umGT4hTd8ljTSPZQR/0obwy7WBnvRAdAlyGZlL6dcogeKEgG2dZhILCoNCCUavFP
+0YZO4wzJD6exrc4FwPdkK1bWtYI6uixF0nRrz8B3hRhuOF2PSo8Tn/149X5ZZ/+o
+BC2sO4W8/uwjHs6tkwCxKJb1JdylG+I7Yj9sRonFI1D4LJlZOSn7JJu7wK0tevEx
+OLFGaROuF95is+J4ZjcPc6Hz2LIUqCzKqYAa8TcO9VoUoxyrRAraqBLu6Y0rHGTz
+j9tpgT6BYDDSYG4R9PdZB/UM9GevDA==
+=T5fR
+-----END PGP SIGNATURE-----
+
+--TB36FDmn/VVEgNH/--
