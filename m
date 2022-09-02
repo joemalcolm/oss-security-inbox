@@ -1,30 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/08/3
-Message-ID: <61e1bac6-7b68-127d-0616-5f6c903f0e47@leventepolyak.net>
-Date: Thu, 7 Apr 2022 23:29:03 +0200
-From: Levente Polyak <levente@...entepolyak.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/02/11
+Message-ID: <aca73c02-b870-1824-8cd2-515bbaaeebfc@protonmail.com>
+Date: Fri, 02 Sep 2022 16:13:36 +0000
+From: Art Manion <zmanion@...tonmail.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: zgrep, xzgrep: arbitrary-file-write vulnerability
+Subject: JBIG2 integer overflow fixed in Xpdf 4.04, Poppler 22.09.0
 Content-Type: text/plain; charset=utf-8
 
-On 4/7/22 20:44, Jim Meyering wrote:
-> All previous versions of gzip and xzutils are affected.
-> 
-> xzutils released this patch today:
-> 
->    https://tukaani.org/xz/xzgrep-ZDI-CAN-16587.patch
->    https://tukaani.org/xz/xzgrep-ZDI-CAN-16587.patch.sig
-> 
-> gzip-1.12 was released today, with the fix:
-> 
->    https://lists.gnu.org/r/bug-gzip/2022-04/msg00011.html
->    https://ftp.gnu.org/gnu/gzip/gzip-1.12.tar.xz
->    https://ftp.gnu.org/gnu/gzip/gzip-1.12.tar.xz.sig
+Xpdf 4.04 (released 2022-04-18, CVE-2022-38171):
+
+   <https://www.cve.org/CVERecord?id=CVE-2022-38171>
+
+   <https://gist.github.com/zmanion/b2ed0d1a0cec163ecd07d5e3d9740dc6>
 
 
-CVE-2022-1271 has been assigned to this issue.
+Poppler 22.09.0 (released 2022-09-01, CVE-2022-38784):
 
-Cheers,
-Levente
+   <https://www.cve.org/CVERecord?id=CVE-2022-38784>
 
-Download attachment "OpenPGP_signature" of type "application/pgp-signature" (834 bytes)
+   <https://gitlab.freedesktop.org/poppler/poppler/-/blob/master/NEWS>
+
+   <https://gitlab.freedesktop.org/poppler/poppler/-/merge_requests/1261/diffs?commit_id=27354e9d9696ee2bc063910a6c9a6b27c5184a52>
+
+The lineage of this bug includes a variant used as part of the FORCEDENTRY exploit chain (targeting Apple devices).  The bug readily crashes affected software, code execution is not straightforward and would depend heavily on the context in which affected software is used.
+
+FORCEDENTRY was first discussed publicly in 2021, it took some time to track down the affected OSS components.  Lots of packages are downstream of Xpdf and Poppler.
+
+
+Crashing test case, use at your own risk:
+
+   <https://github.com/jeffssh/CVE-2021-30860>
+
+
+For background, Apple CoreGraphics fixes released in September 2021 (CVE-2021-30860):
+
+   <https://www.cve.org/CVERecord?id=CVE-2021-30860>
+
+   <https://support.apple.com/en-ca/HT212807>
+
+   <https://googleprojectzero.blogspot.com/2021/12/a-deep-dive-into-nso-zero-click.html>
+
+
+Regards,
+
+  - Art
+
