@@ -1,31 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/17/3
-Message-ID: <CA+ZBtZ7fwTPbbEcZbd0qPQHqB4xZDg1LRhk2hZSEUBx0Qj7waA@mail.gmail.com>
-Date: Tue, 17 May 2022 13:50:48 +0800
-From: Zhang Yonglun <zhangyonglun@...che.org>
-To: oss-security@...ts.openwall.com
-Cc: dev@...nyu.apache.org
-Subject: CVE-2022-26650: Apache ShenYu (incubating) Regular expression denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/02/12
+Message-ID: <20220902204301.GA3212087@millbarge>
+Date: Fri, 2 Sep 2022 20:43:01 +0000
+From: Seth Arnold <seth.arnold@...onical.com>
+To: Jedidiah Cunningham <jedcunningham@...che.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2022-38170: Apache Airflow: Overly permissive umask for deamons
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+On Fri, Sep 02, 2022 at 03:55:07AM +0000, Jedidiah Cunningham wrote:
+> In Apache Airflow prior to 2.3.4, an insecure umask was configured for numerous Airflow components when running with the  `--deamon` flag which could result in a race condition giving world-writable files in the Airflow home directory and allowing local users to expose arbitrary file contents via the webserver.
 
-Description:
+Hello Jedidiah,
 
-In ShenYu-Bootstrap there's RegexPredicateJudge.java which uses
-Pattern.matches(conditionData.getParamValue(), realData) to make
-judgments, where both parameters are controllable by the user. This
-can cause an attacker pass in malicious regular expressions and
-characters causing a resource exhaustion.
-This issue affects Apache ShenYu (incubating) 2.4.0, 2.4.1 and 2.4.2.
+Thanks for contributing to the oss-security list; I believe your
+contributions would be far more valuable if they included some further
+details -- providing links to issues and commits is common, but you could
+also include the details in the email if that's easier for whatever reason.
 
-Mitigation:
+Thanks
 
-Upgrade to Apache ShenYu (incubating) 2.4.3 or apply patch
-https://github.com/apache/incubator-shenyu/pull/2975.
-
---
-
-Zhang Yonglun
-Apache ShenYu (Incubating)
-Apache ShardingSphere
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
