@@ -1,41 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/16/2
-Message-ID: <c4f4fbb4-04fb-a4e5-0aba-d18533ddaaa9@isc.org>
-Date: Wed, 16 Mar 2022 14:51:01 -0500
-From: "Everett B. Fulton" <ebf@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/02/5
+Message-ID: <6971d523-a4b3-26d9-096e-a7e8a2c5b92a@apache.org>
+Date: Fri, 2 Sep 2022 08:20:03 +0200
+From: Jacques Le Roux <jleroux@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Four vulnerabilities disclosed in BIND (CVE-2021-25220, CVE-2022-0396, CVE-2022-0635 and CVE-2022-0667)
+Subject: Apache OFBiz - Regular Expression Denial of Service (ReDoS) (CVE-2022-29158)
 Content-Type: text/plain; charset=utf-8
 
-On March 16 2022, we (Internet Systems Consortium) disclosed four
-vulnerabilities affecting our BIND 9 software:
+Severity:
+High
 
-   CVE-2021-25220: DNS forwarders - cache poisoning vulnerability
-   https://kb.isc.org/docs/CVE-2021-25220
+Vendor:
+The Apache Software Foundation
 
-   CVE-2022-0396: DoS from specifically crafted TCP packets
-   https://kb.isc.org/docs/cve-2022-0396
+Versions Affected:
+OFBiz versions prior to 18.12.06
 
-   CVE-2022-0635: DNAME insist with synth-from-dnssec enabled
-   https://kb.isc.org/docs/cve-2022-0635
+Description:
+Apache OFBiz up to version 18.12.05 is vulnerable to Regular
+Expression Denial of Service (ReDoS) in the way it handles URLs
+provided by external, unauthenticated users.
 
-   CVE-2022-0667: Assertion failure on delayed DS lookup
-   https://kb.isc.org/docs/cve-2022-0667
+Mitigation:
+Upgrade to at least 18.12.06
+or apply patches at https://issues.apache.org/jira/browse/OFBIZ-12599
 
-New versions of BIND are available from https://www.isc.org/downloads
+Credit:
+Tony Torralba and Joseph Farebrother from the GitHub CodeQL team
 
-Operators and package maintainers who prefer to apply patches
-selectively can find individual vulnerability-specific patches in the
-"patches" subdirectory of the release directories for our three stable
-release branches (9.11. 9.16 and 9.18)
+References:
+http://ofbiz.apache.org/download.html#vulnerabilities
 
-   https://downloads.isc.org/isc/bind9/9.11.37/patches/
-   https://downloads.isc.org/isc/bind9/9.16.27/patches/
-   https://downloads.isc.org/isc/bind9/9.18.1/patches/
-
-With the public announcement of these vulnerabilities, the embargo
-period is ended and any updated software packages that have been
-prepared may be released.
--- 
-Everett B. Fulton
-ISC Support
