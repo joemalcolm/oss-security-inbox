@@ -1,50 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/31/5
-Message-ID: <188aef5b-4005-b370-6237-63f7be533ae1@apache.org>
-Date: Mon, 31 Oct 2022 16:53:36 +0000
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/02/4
+Message-ID: <6ab86c25-f72e-7f27-ac29-54ce9b9128f8@apache.org>
+Date: Fri, 2 Sep 2022 08:17:05 +0200
+From: Jacques Le Roux <jleroux@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-42252: Apache Tomcat - Request Smuggling
+Subject: Apache OFBiz - Server-Side Template Injection (CVE-2022-25813)
 Content-Type: text/plain; charset=utf-8
 
-CVE-2022-42252 Apache Tomcat - Request Smuggling
+Severity:
+High (SSTI then possible RCE)
 
-Severity: Low
-
-Vendor: The Apache Software Foundation
+Vendor:
+The Apache Software Foundation
 
 Versions Affected:
-Apache Tomcat 10.1.0-M1 to 10.1.0
-Apache Tomcat 10.0.0-M1 to 10.0.26
-Apache Tomcat 9.0.0-M1 to 9.0.67
-Apache Tomcat 8.5.0 to 8.5.52
+OFBiz versions prior to 18.12.06
 
 Description:
-If Tomcat was configured to ignore invalid HTTP headers via setting
-rejectIllegalHeader to false (the default for 8.5.x only), Tomcat did 
-not reject a request containing an invalid Content-Length header making 
-a request smuggling attack  possible if Tomcat was located behind a 
-reverse proxy that also failed to reject the request with the invalid 
-header.
-
+As an ecommerce anonymous client, an external attacker can insert a malicious
+content in a message “Subject” field from the "Contact us" page. Then a party
+manager needs to list the communications in the party component to activate
+the SSTI. A RCE is then possible.
 
 Mitigation:
-Users of the affected versions should apply one of the following
-mitigations:
-- Ensure rejectIllegalHeader is set to true
-- Upgrade to Apache Tomcat 10.1.1 or later
-- Upgrade to Apache Tomcat 10.0.27 or later
-- Upgrade to Apache Tomcat 9.0.68 or later
-- Upgrade to Apache Tomcat 8.5.83 or later
+Upgrade to at least 18.12.06
+or apply patches at https://issues.apache.org/jira/browse/OFBIZ-12594
 
 Credit:
-Thanks to Sam Shahsavar who discovered this issue and reported it to the 
-Apache Tomcat security team.
-
-History:
-2022-10-31 Original advisory
+Matei "Mal" Badanoiu
 
 References:
-[1] https://tomcat.apache.org/security-10.html
-[2] https://tomcat.apache.org/security-9.html
-[3] https://tomcat.apache.org/security-8.html
+http://ofbiz.apache.org/download.html#vulnerabilities
+
