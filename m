@@ -1,33 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/11/5
-Message-ID: <YlRZ0MNxf3lyr/nE@dojo.mi.org>
-Date: Mon, 11 Apr 2022 12:39:44 -0400
-From: "Mike O'Connor" <mjo@...o.mi.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/03/1
+Message-ID: <48f1b895-e1f4-7994-19d6-60c7307c877a@apache.org>
+Date: Sat, 3 Sep 2022 15:28:10 +0200
+From: Jacques Le Roux <jleroux@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-28893: Linux kernel: Use after free in SUNRPC subsystem
+Subject: Re: Apache OFBiz - Unauth Path Traversal with file corruption (CVE-2022-25371)
 Content-Type: text/plain; charset=utf-8
 
-:On Mon, Apr 11, 2022 at 04:20:56PM +0800, Felix Fu wrote:
-:> Hello, I Request a CVE from MITRE.
-:> 
-:> Description: The SUNRPC subsystem in the Linux kernel through 5.17.2 can
-:> call xs_xprt_free before ensuring that sockets are in the intended state.
-:> Details: Use after free happens in inet_put_port because some sockets are
-:> not close before xs_xprt_free().
-:> CVE-ID: CVE-2022-28893  (
-:> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-28893)
-:> Fix:
-:> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=1a3b1bba7c7a5eb8a11513cf88427cb9d77bc60a
-:
-:This is a merge commit, not the actual commit that fixed the issue :(
+Hi I'm sorry, I forgot to mention here the same than for (CVE-2022-25370) mitigation.
 
-https://github.com/torvalds/linux/commit/f00432063db1a0db484e85193eccc6845435b80e
+Obviously there is no patch to apply since we waited [too] long for
+https://github.com/eclipse/birt/issues/625
+to resolve but eventually decided to release OFBiz 18.12.06 with
+the Birt component disabled.
 
-appears to be the actual commit that fixed the issue.
+My apologies
 
--Mike
+Jacques
 
--- 
- Michael J. O'Connor                                          mjo@...o.mi.org
- =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-"Holy one-track Batcomputer mind!!!"                   -Robin, the Boy Wonder
+
+Le 02/09/2022 à 08:26, Jacques Le Roux a écrit :
+> Severity:
+> High
+>
+> Vendor:
+> The Apache Software Foundation
+>
+> Versions Affected:
+> OFBiz versions prior to 18.12.06
+>
+> Description:
+> The Birt viewer version 4.5.0 has a security issue that allows this exploit.
+> We waited long for https://github.com/eclipse/birt/issues/625
+> to resolve but eventually decided to release OFBiz 18.12.06 without
+> the Birt component
+>
+> Mitigation:
+> Upgrade to at least 18.12.06
+> or apply patches at https://issues.apache.org/jira/browse/OFBIZ-...
+>
+> Credit:
+> npodotykin@...ecurity.com
+>
+> References:
+> http://ofbiz.apache.org/download.html#vulnerabilities
+>
