@@ -1,21 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/25/6
-Message-ID: <f6d07458-3515-4f79-c013-440d27278554@openssl.org>
-Date: Tue, 25 Oct 2022 20:36:25 +0200
-From: "Ing. Martin Koci, MBA" <mkoci@...nssl.org>
-To: openssl-announce@...nssl.org, openssl-users@...nssl.org, openssl-project@...nssl.org, oss-security@...ts.openwall.com
-Subject: Forthcoming OpenSSL Bug Fix Release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/06/2
+Message-ID: <CAGXZeP28q6nGrEQT5fUtEP0T1MX1Q+a6NrwD87Y8sB4qF=2r_Q@mail.gmail.com>
+Date: Tue, 6 Sep 2022 18:45:32 +0800
+From: Joey <joey@...e.io>
+To: thomas@...jalon.net
+Cc: announce@...k.org, oss-security@...ts.openwall.com
+Subject: Re: CVE-2022-28199: DPDK mlx5 driver error recovery handling vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi all,
 
-In addition to the already announced 3.0.7 release, the OpenSSL project 
-team would like to announce the forthcoming release of OpenSSL version 
-1.1.1s that is a bug fix release.
+I know 18.11.11 is EOL.
+But does anyone know if the vulnerability affects 18.11.11?
 
-This bug fix release will be made available on Tuesday 1st November 2022 
-between 1300-1700 UTC too.
+Thanks.
 
-Yours
-The OpenSSL Project Team
-
+Joey
