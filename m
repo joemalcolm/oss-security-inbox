@@ -1,85 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/27/3
-Message-ID: <67qo8418-68q7-q8r1-732s-r46o6s81q7rp@unkk.fr>
-Date: Mon, 27 Jun 2022 08:20:42 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: CVE-2022-32207: Unpreserved file permissions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/06/8
+Message-ID: <CAGUWgD8HasZRDG_BPCMTa2sZs1Kk4yFZd7R0oc=nfG2+JA3Sqw@mail.gmail.com>
+Date: Tue, 6 Sep 2022 18:14:38 +0300
+From: Georgi Guninski <gguninski@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: sagemath denial of service with abort() in gmp: overflow in mpz type
 Content-Type: text/plain; charset=utf-8
 
-CVE-2022-32207: Unpreserved file permissions
-============================================
-
-Project curl Security Advisory, June 27th 2022 -
-[Permalink](https://curl.se/docs/CVE-2022-32207.html)
-
-VULNERABILITY
--------------
-
-When curl saves cookies, alt-svc and hsts data to local files, it makes the
-operation atomic by finalizing the operation with a rename from a temporary
-name to the final target file name.
-
-In that rename operation, it might accidentally *widen* the permissions for
-the target file, leaving the updated file accessible to more users than
-intended.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-CVE-2022-32207 was introduced in [commit
-b834890a3fa3f52](https://github.com/curl/curl/commit/b834890a3fa3f52), shipped
-in curl 7.69.0.
-
-This problem can be worked-around by using a strict umask.
-
-CWE-281: Improper Preservation of Permissions
-
-Severity: Medium
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.69.0 to and including 7.83.1
-- Not affected versions: curl < 7.69.0 and curl >= 7.84.0
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-A [fix for CVE-2022-32207](https://github.com/curl/curl/commit/20f9dd6bae50b)
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 7.84.0
-
-  B - Apply the patch to your local version
-
-  C - Make extra precautions to protect saved files (ie strict umask)
-
-TIMELINE
---------
-
-This issue was reported to the curl project on May 17, 2022. We contacted
-distros@...nwall on June 20.
-
-libcurl 7.84.0 was released on June 27 2022, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-This issue was reported by Harry Sintonen. Patched by Daniel Stenberg.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
+The DoS can be a .cgi or in a web service, allowing only numerical and
+math functions input.
+As pointed by Jeffrey Walton, the problem is in libgmp, not in sage,
+and ubuntu asks for sending them crash info, including the coredump.
+To avoid the gmp crash in |2^2^64|, sage catches signals and ignores SIGABRT.
+The sage ``feature'' with more info is at:
+https://trac.sagemath.org/ticket/34492
+avoid crash and print better error message when gmp calls abort()
