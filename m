@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1284" "Tuesday" "18" "April" "2017" "09:11:16" "+0100" "Simon Steiner" "simonsteiner1984@gmail.com" "<016901d2b81b$5a69da00$0f3d8e00$@gmail.com>" "77" "[oss-security] [CVE-2017-5662] Apache Batik information disclosure vulnerability" "^Cc:" nil nil "4" "2017041808:11:16" "[oss-security] [CVE-2017-5662] Apache Batik information disclosure vulnerability" (number mark "U       simonsteiner Apr 18   77/1284  " thread-indent "\"[oss-security] [CVE-2017-5662] Apache Batik information disclosure vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 7946 invoked by uid 550); 18 Apr 2017 11:57:39 -0000
+Received: (qmail 15426 invoked by uid 550); 6 Sep 2022 10:54:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,125 +6,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 31928 invoked from network); 18 Apr 2017 08:11:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version:thread-index
-         :content-language;
-        bh=umVauFm0m5muLkmGJqIPZ5IyqIPPzvTAi17X0uJOct0=;
-        b=TcVpDKTYGrQBZ3O+GCb71vEwf/PQrMreEBSt09sC3u26sPQfygOfp8nZTNwlWQGgaF
-         YL2QR04iIpmnjVMM7C7IxiOXdrwpK6k/PSRskO4A3Wg22e8wXSns8gQNVxXNQ67WENoJ
-         0UMhSXnm+5n+3XfNXZVIHFQlSTU7/p5AIIg6Z3E51c4HZEYVGiCtYJ4nykaEDucvl3HO
-         RhtCsWHgX2fnRRBPuyP6FtsSWfmKNeSIDd7sAEkpUAfh1e2JwjYjfTySsbgZbmmpmitD
-         hr5iovfnAZp5hNvuB6zumk5HMOtTtc0sNCOIle4PuFYJn8+jRnTbIOX8aiAyT1D8pwHm
-         27bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :thread-index:content-language;
-        bh=umVauFm0m5muLkmGJqIPZ5IyqIPPzvTAi17X0uJOct0=;
-        b=bFaTScRamEBXQlq407CkRfJ9rKf505fQDqYOOhvYvtUGso4Q1rtZevPskinXhrOLqu
-         G6m1LeWf1130S5QRZvfaXRwj3i50sPKQFbO8XjycIClkRl1r2SuD/YMiaKM8X36jV36X
-         RcnFxwizSzr0sQYKcAUe0aEosb3qKT7UiHjgMczT+geJoIVY1f7rXaHVA4cfPzrKKpfu
-         QAw30ZQq67LVDUU4XH+v/DX7d8XK+ZxuwezU9HvA7c+Ci+bIsg6vHiNPp4IrjYQjewcr
-         SW+czp0m2jqXSJ/ja7SKTgGxhU6+ChSmRb/onLUH4Ht5dyY7wJFLSeeZI9j4XNyQ2mcd
-         omDg==
-X-Gm-Message-State: AN3rC/5tGNzCJmzEFlYD/zVKKBZLXyiVrskXF1+TR0POc8zMtLZHtsG6
-	Pq2xMbPg7JDEjQ==
-X-Received: by 10.223.157.37 with SMTP id k37mr22465069wre.156.1492503077123;
-        Tue, 18 Apr 2017 01:11:17 -0700 (PDT)
-Message-ID: <016901d2b81b$5a69da00$0f3d8e00$@gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/alternative;
-	boundary="----=_NextPart_000_016A_01D2B823.BC308BF0"
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AdK4Gw57N+QKqTWxTd6mClBP6wrOpg==
-Content-Language: en-gb
-Cc: "'Pierre Ernst'" <pernst@salesforce.com>
-Date: Tue, 18 Apr 2017 09:11:16 +0100
-From: "Simon Steiner" <simonsteiner1984@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [CVE-2017-5662] Apache Batik information disclosure vulnerability
-To: <general@xmlgraphics.apache.org>,
-	<batik-users@xmlgraphics.apache.org>,
-	<batik-dev@xmlgraphics.apache.org>,
-	<oss-security@lists.openwall.com>,
-	<bugtraq@securityfocus.com>
+Received: (qmail 11391 invoked from network); 6 Sep 2022 10:45:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=csie-io.20210112.gappssmtp.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date;
+        bh=Ec+cxXPQXOiYB4yrVMIHVk160r6pAbAaeHB2vNERAVs=;
+        b=aPGQKX5V7HRP9S58PdlppXprbDaKXfJaTKWypYlP/fiqO1szIwt7+N5dKyYN2Xp13t
+         oBNHm/3WPF9SPvOE/+/GLyPuTT9jCsUCS58tzcHr7CJkKSzr+9CCytrteOqEkvIOY7jc
+         ePvDhhR7c/vNQyBzqT13jb1iYsoqiWKoFXmydsxlFK4Wn9MLW9gjWikIqnzUx5gkEy1B
+         zXZRTYUERjKAkcthzEZpgJDSXsAyuIZLEbF98+7LOuIQhn/HbNGo504Eb7ngdK/fOYS1
+         SUZvMi8y2uXZbzexnFG0nR+TPKB4rRRoyzd8oDVyI5Me32I91X/BAs8C7e6NsNnE2vRi
+         aUvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date;
+        bh=Ec+cxXPQXOiYB4yrVMIHVk160r6pAbAaeHB2vNERAVs=;
+        b=lLIfdlF4jsyipR7aa9QWy1hCBfJ1jisCQnlW2gFX9Y7SakMoXHi4QOehMLR3zNlxtm
+         7zdozuyB4zAXgzoSALk8RH/W9pnP9Gzcr/fqWxblFLdsuwGPXvc9lo6RCi4MsztvVUYF
+         hBA3fUO7VcFqfkJJ83XJ5WVx39/YbJour9SOYpcu/f7GGeE6qiilKAwqfBgvKADUBQk7
+         FOsSC+eo6DeA+7wI4I7El8zWeNj3DZq54M2Fz69aohXnldn6k+v8KrOOB+tfg1I1Hyv8
+         VDAlDXae7xlPTWJpXvhJiabL/n0nF0dsyfZm34qZaCwTax6IMa41J3/ksp53S+hU8ih9
+         vjfQ==
+X-Gm-Message-State: ACgBeo26/Q587lyGcCklzenXOHQ3MADFRNk2rPkoOKlyda/OgKMU7utk
+	1JCWVx8QV5y5CxlWW2SYY5ss3qpuOvRxwp6tRSweeg==
+X-Google-Smtp-Source: AA6agR7c7Aeoz7KLo2f0D9hsJ9aYYoNTam2K3VAI0pJNl8/D9u4R7UqMhxd4IXChHYkb/c4/+07puzEhFX+sA80QuNs=
+X-Received: by 2002:a9d:362:0:b0:637:257e:3824 with SMTP id
+ 89-20020a9d0362000000b00637257e3824mr20381371otv.148.1662461142954; Tue, 06
+ Sep 2022 03:45:42 -0700 (PDT)
+MIME-Version: 1.0
+From: Joey <joey@csie.io>
+Date: Tue, 6 Sep 2022 18:45:32 +0800
+Message-ID: <CAGXZeP28q6nGrEQT5fUtEP0T1MX1Q+a6NrwD87Y8sB4qF=2r_Q@mail.gmail.com>
+To: thomas@monjalon.net
+Cc: announce@dpdk.org, oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [oss-security] CVE-2022-28199: DPDK mlx5 driver error recovery handling vulnerability
 
-------=_NextPart_000_016A_01D2B823.BC308BF0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Hi all,
 
-CVE-2017-5662:
+I know 18.11.11 is EOL.
+But does anyone know if the vulnerability affects 18.11.11?
 
-        Apache Batik information disclosure vulnerability
+Thanks.
 
- 
-
-Severity:
-
-        Medium
-
- 
-
-Vendor:
-
-        The Apache Software Foundation
-
- 
-
-Versions Affected:
-
-        Batik 1.0 - 1.8
-
- 
-
-Description:
-
-        Files lying on the filesystem of the server which uses batik can
-
-        be revealed to arbitrary users who send maliciously formed SVG
-
-        files. The file types that can be shown depend on the user context
-
-        in which the exploitable application is running. If the user is root
-
-        a full compromise of the server--including confidential or sensitive
-
-        files--would be possible.
-
- 
-
-        XXE can also be used to attack the availability of the server
-
-        via denial of service as the references within a xml document
-
-        can trivially trigger an amplification attack.
-
- 
-
-Mitigation:
-
-        Users should upgrade to Batik 1.9+
-
- 
-
-Credit:
-
-        This issue was independently reported by Lars Krapf of Adobe and
-Pierre Ernst at Salesforce.
-
- 
-
-References:
-
-        http://xmlgraphics.apache.org/security.html
-
- 
-
-The Apache XML Graphics team.
-
-
-------=_NextPart_000_016A_01D2B823.BC308BF0--
-
+Joey
