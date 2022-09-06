@@ -1,31 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/31/1
-Message-ID: <CAGUWgD_OwgwKVQ+kxLv00dvDnNC9ZU9gWEarwPjSxg7kxK3rbA@mail.gmail.com>
-Date: Mon, 31 Oct 2022 11:16:37 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/06/1
+Message-ID: <CAGUWgD9QR7mjyVnBV4NcyVv=RzLBjNoqvv=d02P-GGsdOV_VWg@mail.gmail.com>
+Date: Tue, 6 Sep 2022 08:47:58 +0300
 From: Georgi Guninski <gguninski@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Is third party javascript on a login page considered dangerous?
+Subject: sagemath denial of service with abort() in gmp: overflow in mpz type
 Content-Type: text/plain; charset=utf-8
 
-In short, is third party javascript on a login page considered dangerous?
+sagemath 9.0 and reportedly later on ubuntu 20.
 
-The JS has full access to the DOM of the page and can steal
-the username and password, which might be reused on other services,
-making it yet another cross site cookie, lol.
+sagemath gives access to the python interpreter,
+so code execution is trivial.
 
-In general, the JS persists after login, potentially giving
-access to sensitive information.
+We give DoS attacks, which terminates the sagemath process
+with abort(), when raising symbolic expression to large integer power.
 
-I believe static analysis can't catch all JS, since one script
-may load another script.
+We get abort() with stack:
 
-Also, the JS might be dynamic, depending on the user.
+gmp: overflow in mpz type
 
-Experience suggests the main 3rd party JS comes from google
-and google do [k]no[w] evil [1]
+#6  0x00007f55c83ee72e in __GI_abort () at
+/build/glibc-SzIz7B/glibc-2.31/stdlib/abort.c:79
+#7  0x00007f55c56e0d20 in __gmpz_realloc ()
+#8  0x00007f55c56dd2b0 in __gmpz_n_pow_ui ()
+#9  0x0000000000000000 in GiNaC::numeric::power(long) const ()
+#10 0x0000000000000000 in GiNaC::numeric::pow_intexp(GiNaC::numeric
+const&) const ()
 
-Examples:
-bugzilla.mozilla.org loads from googleanalytics
-*.stackexchange.com loads from google and cloudfare.
+The non-minimal testcase
+===
+#sagemath code, copyright Georgi Guninski
 
-[1] https://en.wikipedia.org/w/index.php?title=Don%27t_be_evil&oldid=1109436328
+def binnk3u(n,k):  return ( (n/k)**(k))
+n1=(2*10**3);d0=29004853178239;n0=SR(log(n1));
+tt=binnk3u(n0+d0-1,d0);
+print("passed :(")
+===
