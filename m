@@ -1,64 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/11/4
-Message-ID: <CA+eGCHb3=V20Fh-dda20O6xtfBszuKmHnqSupsmrz_1Xuj3N4Q@mail.gmail.com>
-Date: Tue, 11 Jan 2022 20:00:08 +0800
-From: tr3e wang <tr3e.wang@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/06/9
+Message-ID: <87leqwtr7t.fsf@hope.eyrie.org>
+Date: Tue, 06 Sep 2022 09:14:46 -0700
+From: Russ Allbery <eagle@...ie.org>
 To: oss-security@...ts.openwall.com
-Cc: Daniel Borkmann <daniel@...earbox.net>
-Subject: CVE-2021-4204: Linux Kernel eBPF Improper Input Validation Vulnerability
+Subject: Re: sagemath denial of service with abort() in gmp: overflow in mpz type
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Georgi Guninski <gguninski@...il.com> writes:
 
-This vulnerability allows local attackers to escalate privileges on
-affected installations of Linux Kernel. An attacker must first obtain the
-ability to execute low-privileged code on the target system in order to
-exploit this vulnerability.
+> If you can crash the python interpreter without syscalls and without
+> the kernel killing it for OOM, would you call this DoS?
 
-The specific flaw exists within the handling of eBPF programs. The issue
-results from the lack of proper validation of user-supplied eBPF programs
-prior to executing them. An attacker can leverage this vulnerability to
-escalate privileges and execute code in the context of the kernel.
-BE AWARE, unprivileged bpf is disabled by default in most distros.
+I would only call it a DoS if it crosses a privilege boundary.  A user can
+always DoS themselves; that's just Ctrl-C.  :)
 
-*Affected Version*
+The implication here may be that it's unsafe to use sagemath on untrusted
+input, and that by doing so one creates a DoS opportunity.  This would be
+far (far!) from the only tool for which that's true, and thus not
+particularly exciting, but possibly an opportunity for better
+documentation.  (One could also reasonably desire that sagemath was safe
+for use with untrusted input as a feature, but that can be a surprisingly
+difficult feature to implement.)
 
-    Linux kernel 5.8 or later (For now, 5.8 - 5.16)
-
-*Root Cause Analysis*
-
-eBPF provides some helper functions, and the verifier checks whether it is
-used properly according to bpf_func_proto.
-
-For some helper functions require a PTR_TO_MEM as an argument, the verifier
-MUST know the memory size through the next argument to prevent OOB.
-(see
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/kernel/bpf/verifier.c?h=v5.10.83#n4579
-)
-
-However, bpf_ringbuf_submit and bpf_ringbuf_discard do not follow the
-aboving rule. the verifier never know the size of memory passing into these
-two helper functions, resulting in OOB.
-(see
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/kernel/bpf/ringbuf.c?h=v5.10.83#n423
-)
-
-*Exploit Code*
-
-Exploit code will be delayed for 7 days and will be posted at 12:00 UTC,
-Jan 18, 2022
-
-*Mitigations*
-
-set kernel.unprivileged_bpf_disabled to 1
-
-BE AWARE AGAIN, unprivileged bpf is disabled by default in most distros.
-
-*Credits*
-
-tr3e of SecCoder Security Lab
-
-
-Best Regards,
-tr3e
-
+-- 
+Russ Allbery (eagle@...ie.org)             <https://www.eyrie.org/~eagle/>
