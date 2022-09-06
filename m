@@ -1,27 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/05/1
-Message-ID: <SJ0PR11MB500698A24AD3AC00A44358D7DCC29@SJ0PR11MB5006.namprd11.prod.outlook.com>
-Date: Thu, 5 May 2022 01:50:08 +0000
-From: "Jiang, Cheng1" <cheng1.jiang@...el.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: DPDK CVE-2021-3839 Release Notice
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/06/7
+Message-ID: <20220906145100.kmnuhcj4slmbrokz@yuggoth.org>
+Date: Tue, 6 Sep 2022 14:51:01 +0000
+From: Jeremy Stanley <fungi@...goth.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: sagemath denial of service with abort() in gmp: overflow in mpz type
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was fixed in DPDK.
-Some downstream stakeholders were warned in advance
-in order to coordinate the release of fixes
-and reduce the vulnerability window.
+On 2022-09-06 16:26:58 +0300 (+0300), Georgi Guninski wrote:
+> If you can crash the python interpreter without syscalls and
+> without the kernel killing it for OOM, would you call this DoS?
 
-In DPDK Vhost communication, we didn't test if msg->payload.inflight.num_queues is out of bounds in function 'vhost_user_set_inflight_fd()', and could cause the program to write OOB.
+I didn't say it wasn't a denial of service, but you can trivially
+create all manner of "denials of service" (and far, far worse things
+too) of the CPython interpreter and anything running in it by asking
+it to execute arbitrary Python code. It's more a question of whether
+that's something that can or even should be "fixed." If a program's
+author chooses to intentionally pass user-supplied code to CPython,
+hopefully they do so knowing all the risks and informing their users
+of the same.
+-- 
+Jeremy Stanley
 
-Commits: 6442c329b9d2 on the main branch
-
-CVE: CVE-2021-3839
-Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=657
-Severity: 5.2 (Medium)
-CVSS scores: 3.0/AV:L/AC:L/PR:L/UI:N/S:C/C:N/I:L/A:L
-
-Thanks
-Cheng Jiang, on behalf of the DPDK security team
-
-
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
