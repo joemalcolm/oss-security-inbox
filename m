@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["614" "Friday" "3" "February" "2017" "15:52:19" "+1000" "Wade Mealing" "wmealing@redhat.com" "<CALJHwhTW6d4uVqQDvDkn80AWvLSGXGsXT-9RE_ORyBXz59NNHA@mail.gmail.com>" "21" "[oss-security] Local DoS: Linux Kernel EXT4 Memory Corruption / SLAB-Out-of-Bounds Read" nil nil nil "2" "2017020305:52:19" "[oss-security] Local DoS: Linux Kernel EXT4 Memory Corruption / SLAB-Out-of-Bounds Read" (number mark "U       wmealing@red Feb  3   21/614   " thread-indent "\"[oss-security] Local DoS: Linux Kernel EXT4 Memory Corruption / SLAB-Out-of-Bounds Read\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 31975 invoked by uid 550); 3 Feb 2017 05:52:32 -0000
+Received: (qmail 23645 invoked by uid 550); 6 Sep 2022 11:50:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,46 +7,72 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31956 invoked from network); 3 Feb 2017 05:52:31 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=+ZodbO7NkQ1oUAOIKn1NW5br2PuL/kszgvrbGhC2L1E=;
-        b=EQOjF7KeGCCo9+A/z1K/5DoZsLfiCHMSM3tn++uqiR9pEfguEmyQtFzNBtTZk55YYK
-         hMESszWO5HlBrl+NGxeEHKYSHQyTgcM6rFhC6V814bmQh583NGerSg4aAd4oaeJYABC1
-         tgiw1G9ScCVyavKLUUuWWuPowrUGwfwLHbkItX7i2sfpi6xysticlkDsoXAtFqH2yBW3
-         wtTpoSQmA1cAslM/C0BsOLSi+yQuROqtKxpWytRrdGUaEC1PYJApgKxHZ6D6KMaMeBEx
-         OVB1Ej7ec6GtsFuMb8tCNksPTFZ0r8AF4lVuR9a/ZM+W0jfU0r9UKq+v1FOhFOG35SCR
-         4g4g==
-X-Gm-Message-State: AIkVDXKqO5nWYtJqBDM0IbSAL3rbzIcpdNJjuAXPDnA5Ew5EulLvm5qG5XPP/tQSfyPwtePsAoQP1XWjdDvuz+is
-X-Received: by 10.36.190.68 with SMTP id i65mr934274itf.118.1486101139815;
- Thu, 02 Feb 2017 21:52:19 -0800 (PST)
-MIME-Version: 1.0
-From: Wade Mealing <wmealing@redhat.com>
-Date: Fri, 3 Feb 2017 15:52:19 +1000
-Message-ID: <CALJHwhTW6d4uVqQDvDkn80AWvLSGXGsXT-9RE_ORyBXz59NNHA@mail.gmail.com>
+Received: (qmail 23622 invoked from network); 6 Sep 2022 11:50:24 -0000
+Date: Tue, 6 Sep 2022 11:50:10 +0000
+From: Jeremy Stanley <fungi@yuggoth.org>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] Local DoS: Linux Kernel EXT4 Memory Corruption / SLAB-Out-of-Bounds Read
+Message-ID: <20220906115010.gs7kec3wkmayhmhf@yuggoth.org>
+References: <CAGUWgD9QR7mjyVnBV4NcyVv=RzLBjNoqvv=d02P-GGsdOV_VWg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="szsnpwswdhffdiaj"
+Content-Disposition: inline
+In-Reply-To: <CAGUWgD9QR7mjyVnBV4NcyVv=RzLBjNoqvv=d02P-GGsdOV_VWg@mail.gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
+X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
+X-SA-Exim-Mail-From: fungi@yuggoth.org
+X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
+Subject: Re: [oss-security] sagemath denial of service with abort() in gmp:
+ overflow in mpz type
 
-Gday,
+--szsnpwswdhffdiaj
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I'd like to ask for a CVE for the flaw the EXT4 filesystem as described as:
+On 2022-09-06 08:47:58 +0300 (+0300), Georgi Guninski wrote:
+[...]
+> sagemath gives access to the python interpreter, so code execution
+> is trivial.
+[...]
 
-Mounting a crafted EXT4 image read-only leads to a memory corruption and
-SLAB-Out-of-Bounds Reads (according to KASAN).  Since the mounting
-procedure is a privileged operation, an attacker is probably not able
-to trigger this vulnerability on the commandline.
-Instead the automatic mounting feature of the GUI via a crafted
-USB-device is required.
+I'm not familiar with sagemath, but is it intended to protect
+against such cases? Note that even if all it does is pass
+expressions into CPython's eval(), it's pretty much impossible to
+guard against misuse without completely sandboxing the underlying
+processes. Denial of service scenarios are really the least of
+worries in that case. Many articles have been written over the years
+about this, though one of the more recent and thorough ones is:
+https://netsec.expert/posts/breaking-python3-eval-protections/
 
->From full disclosure at:
+If it's not trying to prevent getting access to do all the things
+the interpreter can do outside sagemath as well, then I hardly see
+this as a vulnerability (any more than "CPython interpreter allows
+execution of arbitrary Python code" would be, at any rate).
+--=20
+Jeremy Stanley
 
-http://seclists.org/fulldisclosure/2016/Nov/75
+--szsnpwswdhffdiaj
+Content-Type: application/pgp-signature; name="signature.asc"
 
-If it has been assigned elsewhere, I am unable to see it.
+-----BEGIN PGP SIGNATURE-----
 
-Thanks,
+iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmMXM+tfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
+QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
+WClinw//cnycHb8C/M+FOsZDlxuyBCb6QltZvVUlw88S5BdaQxV6wc8hfqsh3sRR
+5ClFgk3FR/RaL6wzS/wAo+BdOwxu4Ft30MyBJRP4D9Y100lABucEAvJNLbUeGXMH
+lIwG3YsFwMfxB9hnW8rfImr39jGIdJMUIPb6I9Y6znuVmFkxQN3Munpn+w4aPWfJ
+/2yZuvDGtCNFlVXGJrcTUnwedSbQ0zuq1tLzGeWFs4MpkVytfDzcQ1GkurFyngZ9
+v/TwMZrRv0JzZ+eQGn/tZXvXaL5YCn0g0TtoZK5RUWY89FQ35EWGA4KzEDwwbtoP
+j/ebJEsYBgQuqG1l+sIlT4fIypP/GH+A9S6/kAoNfpBKtM5/BvebQE7jwJVsbbn6
+MbAP5sLysU3SWyBaKGS3ETdOKNlErYAz4YXGE7YT9nrnQSpVev198KVMQuCuAb2A
+hjSNLiIGJZA7lr6+Q70+Ui+Dn/KB9DhqGdiG779c1NT+oKyVFvswNxTVBJ7sNxsn
+FcyUpr/PumwK7QbZHzIk5wg+1d2/i6GKzMx0KKmKJEwGhjUEXO9+FxiHTVkK2dkK
+Wywq9awglpT0/JsmH1b+yFwpKEA9bbN+bUkLTuQGmKLLWkHzXdDkHJhork1LtY1j
+dxAUwjarD2cQC9uWtjCcNSXopqaLczV7H5/FDo7XpA/4i0Zf9vE=
+=WzSY
+-----END PGP SIGNATURE-----
 
-Wade Mealing
-Red Hat Product Security
+--szsnpwswdhffdiaj--
