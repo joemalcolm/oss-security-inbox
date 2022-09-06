@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["14826" "Monday" "15" "January" "2018" "17:33:15" "+0100" "Marcus Meissner" "meissner@suse.de" "<20180115163315.GG5534@suse.de>" "392" "Re: [oss-security] transmission: rpc session-id mechanism design flaw results in RCE" nil nil nil "1" "2018011516:33:15" "[oss-security] transmission: rpc session-id mechanism design flaw results in RCE" (number mark "U       meissner@sus Jan 15  392/14826 " thread-indent "\"Re: [oss-security] transmission: rpc session-id mechanism design flaw results in RCE\"\n") "<CAJ_zFkLDRxE3wOXw9AwmOR1URO0xwTAK6Ud3i72mmOV7An=67A@mail.gmail.com>" ("<CAJ_zFkLDRxE3wOXw9AwmOR1URO0xwTAK6Ud3i72mmOV7An=67A@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 32601 invoked by uid 550); 15 Jan 2018 16:33:28 -0000
+Received: (qmail 3696 invoked by uid 550); 6 Sep 2022 14:24:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,413 +7,46 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32577 invoked from network); 15 Jan 2018 16:33:27 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Mon, 15 Jan 2018 17:33:15 +0100
-From: Marcus Meissner <meissner@suse.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20180115163315.GG5534@suse.de>
-References: <CAJ_zFkLDRxE3wOXw9AwmOR1URO0xwTAK6Ud3i72mmOV7An=67A@mail.gmail.com>
+Received: (qmail 1596 invoked from network); 6 Sep 2022 13:27:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date;
+        bh=v52mRCzOmfK+Fx0rJ1l2D84GDzDKn7rwoT3EYA1gF64=;
+        b=D9GoC6Y3fO2av3vEV26Oz+HIOojt1MicxieIMLjz7IXXndlkZUQ8rxkrh3xwBLXQWO
+         toBYxIcKP3Bqo97/51dxcppe4mGACTXytAdgtdVlO3yqQrJLd3RVd0A54G/e8isggUN9
+         4saPSU/7zBq+da2tojEuYxFOQX5/Zel92q09M50mPbR0iW3PWVAAgliRbziyoMrIGP0s
+         bCYSQC/TtleF1Ofb62nsFWu/Ro3PbRDc/ONeHn0uBZpF3i0TmdGHVS6rP7/KzbLbvWu6
+         Grt01zmrQosD/6w88wr57OAmuJEiryLs8WkjWWPj601fer5LtwN7Rogx2imZM9kNd4rG
+         ADcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=v52mRCzOmfK+Fx0rJ1l2D84GDzDKn7rwoT3EYA1gF64=;
+        b=KhfghL9j+PogNZW7vZva0O292eru9rvrSaFSRelhMnkfiD/thDmzsOdtmyxsuIQ+1J
+         dGKDYK6B4bh7Z3CaeiI5tO0vOhpLDyodu6Wy6uFDX0AUTz5MTTX6f0lm3SKDs/ogzILK
+         N4NNnP/st4IblIHCINCrfRi87PwWbb/OrxZZDAyuWFkmPAT5c6VfWpIRhqXPdDCb29UM
+         qBjwNVgqnVdwxQXPSjzDWKpRW6gBgBhX6xhCbp3/4pZoUi1jtnILoUkhBhDqBQDNk3jd
+         4TxuC53wLq7MUffoI+TS814W1Ip9YVSN16z24Mp0O2j5gGKpzUww75TUlpTMLUR59Fec
+         pmOA==
+X-Gm-Message-State: ACgBeo0K3nshzrUMxTnpw6A1a9UaD+wqcICQljT1uFWeEuYSuUWx2zIo
+	rhYlyad1eBtu0sp8n8Sk+1d/bwlIwd4UjMwqMCseTuEqXOE=
+X-Google-Smtp-Source: AA6agR50ETNp4rRAyT7Cd2eRAJQGRQuBLlPBYXHDw08UAqRJ80zuah+oBX9ztbsqVkWGKOSEhlV55xEc9SmE2oGbWxY=
+X-Received: by 2002:a05:6000:15c6:b0:228:de49:dade with SMTP id
+ y6-20020a05600015c600b00228de49dademr105091wry.28.1662470830638; Tue, 06 Sep
+ 2022 06:27:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAJ_zFkLDRxE3wOXw9AwmOR1URO0xwTAK6Ud3i72mmOV7An=67A@mail.gmail.com>
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: Re: [oss-security] transmission: rpc session-id mechanism design
- flaw results in RCE
+References: <CAGUWgD9QR7mjyVnBV4NcyVv=RzLBjNoqvv=d02P-GGsdOV_VWg@mail.gmail.com>
+ <20220906115010.gs7kec3wkmayhmhf@yuggoth.org>
+In-Reply-To: <20220906115010.gs7kec3wkmayhmhf@yuggoth.org>
+From: Georgi Guninski <gguninski@gmail.com>
+Date: Tue, 6 Sep 2022 16:26:58 +0300
+Message-ID: <CAGUWgD9x1RJdYcr9NCUOjaVNYdnhrPkSjNoh_NaLGu99q65W-w@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [oss-security] sagemath denial of service with abort() in gmp:
+ overflow in mpz type
 
-Hi,
-
-Mitre assigned CVE-2018-5702.
-
-Ciao, Marcus
-
-
-On Thu, Jan 11, 2018 at 10:47:38AM -0800, Tavis Ormandy wrote:
-> Hello, the transmission bittorrent client uses a client/server
-> architecture, the user interface is the client and a daemon runs in the
-> background managing the downloading, seeding, etc.
-> 
-> Clients interact with the daemon using JSON RPC requests to a web server
-> listening on port 9091. The daemon will only accept requests from localhost
-> by default, but it's common to configure NAS devices to accept remote
-> clients.
-> 
-> A sample RPC session looks like this:
-> 
-> $ curl -sI http://localhost:9091/transmission/rpc
-> HTTP/1.1 409 Conflict
-> Server: Transmission
-> X-Transmission-Session-Id: JL641xTn2h53UsN6bVa0kJjRBLA6oX1Ayl06AJwuhHvSgE6H
-> Date: Wed, 29 Nov 2017 21:37:41 GMT
-> 
-> $ curl -H 'X-Transmission-Session-Id:
-> JL641xTn2h53UsN6bVa0kJjRBLA6oX1Ayl06AJwuhHvSgE6H'  -d
-> '{"method":"session-set","arguments":{"download-dir":"/home/user"}}' -si
-> http://localhost:9091/transmission/rpc
-> HTTP/1.1 200 OK
-> Server: Transmission
-> Content-Type: application/json; charset=UTF-8
-> Date: Wed, 29 Nov 2017 21:38:57 GMT
-> Content-Length: 36
-> 
-> {"arguments":{},"result":"success"}
-> 
-> As with all HTTP RPC schemes like this, any website can send requests to
-> the daemon listening on localhost with XMLHttpRequest(), but the theory is
-> they will be ignored because clients must prove they can read and set a
-> specific header, X-Transmission-Session-Id.
-> 
-> Unfortunately, this design doesn't work because of an attack called "DNS
-> rebinding". Any website can simply create a dns name that they are
-> authorized to communicate with, and then make it resolve to localhost.
-> 
-> The attack works like this:
-> 
-> 1. A user visits http://attacker.com, which has an <iframe> to a subdomain
-> the attacker controls.
-> 2. The attacker configures their DNS server to respond alternately with
-> 127.0.0.1 and 123.123.123.123 (an address they control) with a very low TTL.
-> 3. When the browser resolves to 123.123.123.123, they serve HTML that waits
-> for the DNS entry to expire (or force it to expire by flooding the cache
-> with lookups), then they have permission to read and set headers.
-> 
-> I have a domain I use for testing dns rebinding called rbndr.us, you can
-> use this page to generate hostnames (source code is here:
-> https://github.com/taviso/rbndr):
-> 
-> https://lock.cmpxchg8b.com/rebinder.html
-> 
-> Here I want to alternate between 127.0.0.1 and 199.241.29.227, so I use
-> 7f000001.c7f11de3.rbndr.us:
-> 
-> $ host 7f000001.c7f11de3.rbndr.us
-> 7f000001.c7f11de3.rbndr.us has address 127.0.0.1
-> $ host 7f000001.c7f11de3.rbndr.us
-> 7f000001.c7f11de3.rbndr.us has address 199.241.29.227
-> $ host 7f000001.c7f11de3.rbndr.us
-> 7f000001.c7f11de3.rbndr.us has address 127.0.0.1
-> 
-> Here you can see the resolution alternates between the two addresses I want
-> (note that depending on caching it might take a while to switch, the TTL is
-> set to minimum but some servers round up).
-> 
-> I just wait for the cached response to expire, and then POST commands to
-> the server.
-> 
-> Exploitation is simple, you could set script-torrent-done-enabled and run
-> any command, or set download-dir to /home/user/ and then upload a torrent
-> for ".bashrc".
-> 
-> Here is my (simple) demo, it's slow, but could be made very fast:
-> 
-> http://lock.cmpxchg8b.com/Asoquu3e.html
-> 
-> I've verified it works on Chrome and Firefox on Windows and Linux (I tried
-> Fedora and Ubuntu), I expect other platforms and browsers are affected. There
-> are screenshots of how the attack is supposed to look on the bug report
-> here:
-> 
-> https://github.com/transmission/transmission/pull/468
-> 
-> Tavis.
-
-> From a82c9d154613a5f99394029c28a01148749735af Mon Sep 17 00:00:00 2001
-> From: Tavis Ormandy <taviso@gmail.com>
-> Date: Fri, 1 Dec 2017 12:49:25 -0800
-> Subject: [PATCH] mitigate dns rebinding attacks
-> 
-> ---
->  libtransmission/quark.c        |   2 +
->  libtransmission/quark.h        |   2 +
->  libtransmission/rpc-server.c   | 116 +++++++++++++++++++++++++++++++++++++----
->  libtransmission/rpc-server.h   |   4 ++
->  libtransmission/session.c      |   2 +
->  libtransmission/transmission.h |   1 +
->  libtransmission/web.c          |   3 ++
->  7 files changed, 121 insertions(+), 9 deletions(-)
-> 
-> diff --git a/libtransmission/quark.c b/libtransmission/quark.c
-> index 861050057..87ed9f3ef 100644
-> --- a/libtransmission/quark.c
-> +++ b/libtransmission/quark.c
-> @@ -296,6 +296,8 @@ static struct tr_key_struct const my_static[] =
->      { "rpc-version-minimum", 19 },
->      { "rpc-whitelist", 13 },
->      { "rpc-whitelist-enabled", 21 },
-> +    { "rpc-host-whitelist", 18 },
-> +    { "rpc-host-whitelist-enabled", 26 },
->      { "scrape", 6 },
->      { "scrape-paused-torrents-enabled", 30 },
->      { "scrapeState", 11 },
-> diff --git a/libtransmission/quark.h b/libtransmission/quark.h
-> index d40ab75fa..d82c7051b 100644
-> --- a/libtransmission/quark.h
-> +++ b/libtransmission/quark.h
-> @@ -298,6 +298,8 @@ enum
->      TR_KEY_rpc_version_minimum,
->      TR_KEY_rpc_whitelist,
->      TR_KEY_rpc_whitelist_enabled,
-> +    TR_KEY_rpc_host_whitelist,
-> +    TR_KEY_rpc_host_whitelist_enabled,
->      TR_KEY_scrape,
->      TR_KEY_scrape_paused_torrents_enabled,
->      TR_KEY_scrapeState,
-> diff --git a/libtransmission/rpc-server.c b/libtransmission/rpc-server.c
-> index 7c78f92ac..a33f07e10 100644
-> --- a/libtransmission/rpc-server.c
-> +++ b/libtransmission/rpc-server.c
-> @@ -51,6 +51,7 @@ struct tr_rpc_server
->      bool isEnabled;
->      bool isPasswordEnabled;
->      bool isWhitelistEnabled;
-> +    bool isHostWhitelistEnabled;
->      tr_port port;
->      char* url;
->      struct tr_address bindAddress;
-> @@ -62,6 +63,7 @@ struct tr_rpc_server
->      char* password;
->      char* whitelistStr;
->      tr_list* whitelist;
-> +    tr_list* hostWhitelist;
->      int loginattempts;
->  
->      bool isStreamInitialized;
-> @@ -547,6 +549,47 @@ static bool isAddressAllowed(tr_rpc_server const* server, char const* address)
->      return false;
->  }
->  
-> +static bool isHostnameAllowed(tr_rpc_server const* server, struct evhttp_request* req)
-> +{
-> +    const char *host = evhttp_find_header(req->input_headers, "Host");
-> +    char *hostname;
-> +
-> +    // If password auth is enabled, any hostname is permitted.
-> +    if (server->isPasswordEnabled)
-> +        return true;
-> +
-> +    // No host header, invalid request.
-> +    if (!host)
-> +        return false;
-> +
-> +    // Host header might include the port.
-> +    hostname = tr_strndup(host, strcspn(host, ":"));
-> +
-> +    // localhost or ipaddress is always acceptable.
-> +    if (strcmp(hostname, "localhost") == 0
-> +     || strcmp(hostname, "localhost.") == 0
-> +     || tr_addressIsIP(hostname))
-> +    {
-> +        tr_free(hostname);
-> +        return true;
-> +    }
-> +
-> +    // Otherwise, hostname must be whitelisted.
-> +    if (server->isHostWhitelistEnabled)
-> +    {
-> +        for (tr_list* l = server->hostWhitelist; l != NULL; l = l->next) {
-> +            if (tr_wildmat(hostname, l->data))
-> +            {
-> +                tr_free(hostname);
-> +                return true;
-> +            }
-> +        }
-> +    }
-> +
-> +    tr_free(hostname);
-> +    return false;
-> +}
-> +
->  static bool test_session_id(struct tr_rpc_server* server, struct evhttp_request* req)
->  {
->      char const* ours = get_current_session_id(server);
-> @@ -636,6 +679,22 @@ static void handle_request(struct evhttp_request* req, void* arg)
->  
->  #ifdef REQUIRE_SESSION_ID
->  
-> +        else if (!isHostnameAllowed(server, req))
-> +        {
-> +            char* tmp = tr_strdup_printf(
-> +                "<p>Transmission received your request, but the hostname was unrecognized.</p>"
-> +                "<p>To fix this, choose one of the following options:"
-> +                "<ul>"
-> +                "<li>Enable password authentication, then any hostname is allowed.</li>"
-> +                "<li>Add the hostname you want to use to the whitelist in settings.</li>"
-> +                "</ul></p>"
-> +                "<p>If you're editing settings.json, see the 'rpc-host-whitelist' and 'rpc-host-whitelist-enabled' entries.</p>"
-> +                "<p>This requirement has been added to help prevent "
-> +                "<a href=\"https://en.wikipedia.org/wiki/DNS_rebinding\">DNS Rebinding</a> "
-> +                "attacks.</p>");
-> +            send_simple_response(req, 421, tmp);
-> +            tr_free(tmp);
-> +        }
->          else if (!test_session_id(server, req))
->          {
->              char const* sessionId = get_current_session_id(server);
-> @@ -647,7 +706,7 @@ static void handle_request(struct evhttp_request* req, void* arg)
->                  "<li> When you get this 409 error message, resend your request with the updated header"
->                  "</ol></p>"
->                  "<p>This requirement has been added to help prevent "
-> -                "<a href=\"http://en.wikipedia.org/wiki/Cross-site_request_forgery\">CSRF</a> "
-> +                "<a href=\"https://en.wikipedia.org/wiki/Cross-site_request_forgery\">CSRF</a> "
->                  "attacks.</p>"
->                  "<p><code>%s: %s</code></p>",
->                  TR_RPC_SESSION_ID_HEADER, sessionId);
-> @@ -844,17 +903,12 @@ char const* tr_rpcGetUrl(tr_rpc_server const* server)
->      return server->url != NULL ? server->url : "";
->  }
->  
-> -void tr_rpcSetWhitelist(tr_rpc_server* server, char const* whitelistStr)
-> +static void tr_rpcSetList(char const* whitelistStr, tr_list** list)
->  {
->      void* tmp;
->  
-> -    /* keep the string */
-> -    tmp = server->whitelistStr;
-> -    server->whitelistStr = tr_strdup(whitelistStr);
-> -    tr_free(tmp);
-> -
->      /* clear out the old whitelist entries */
-> -    while ((tmp = tr_list_pop_front(&server->whitelist)) != NULL)
-> +    while ((tmp = tr_list_pop_front(list)) != NULL)
->      {
->          tr_free(tmp);
->      }
-> @@ -866,7 +920,7 @@ void tr_rpcSetWhitelist(tr_rpc_server* server, char const* whitelistStr)
->          size_t const len = strcspn(walk, delimiters);
->          char* token = tr_strndup(walk, len);
->  
-> -        tr_list_append(&server->whitelist, token);
-> +        tr_list_append(list, token);
->  
->          if (strcspn(token, "+-") < len)
->          {
-> @@ -889,6 +943,23 @@ void tr_rpcSetWhitelist(tr_rpc_server* server, char const* whitelistStr)
->      }
->  }
->  
-> +void tr_rpcSetHostWhitelist(tr_rpc_server* server, char const* whitelistStr)
-> +{
-> +    tr_rpcSetList(whitelistStr, &server->hostWhitelist);
-> +}
-> +
-> +void tr_rpcSetWhitelist(tr_rpc_server* server, char const* whitelistStr)
-> +{
-> +    void* tmp;
-> +
-> +    /* keep the string */
-> +    tmp = server->whitelistStr;
-> +    server->whitelistStr = tr_strdup(whitelistStr);
-> +    tr_free(tmp);
-> +
-> +    tr_rpcSetList(whitelistStr, &server->whitelist);
-> +}
-> +
->  char const* tr_rpcGetWhitelist(tr_rpc_server const* server)
->  {
->      return server->whitelistStr != NULL ? server->whitelistStr : "";
-> @@ -904,6 +975,11 @@ bool tr_rpcGetWhitelistEnabled(tr_rpc_server const* server)
->      return server->isWhitelistEnabled;
->  }
->  
-> +void tr_rpcSetHostWhitelistEnabled(tr_rpc_server* server, bool isEnabled)
-> +{
-> +    server->isHostWhitelistEnabled = isEnabled;
-> +}
-> +
->  /****
->  *****  PASSWORD
->  ****/
-> @@ -1054,6 +1130,28 @@ tr_rpc_server* tr_rpcInit(tr_session* session, tr_variant* settings)
->          tr_rpcSetWhitelistEnabled(s, boolVal);
->      }
->  
-> +    key = TR_KEY_rpc_host_whitelist_enabled;
-> +
-> +    if (!tr_variantDictFindBool(settings, key, &boolVal))
-> +    {
-> +        missing_settings_key(key);
-> +    }
-> +    else
-> +    {
-> +        tr_rpcSetHostWhitelistEnabled(s, boolVal);
-> +    }
-> +
-> +    key = TR_KEY_rpc_host_whitelist;
-> +
-> +    if (!tr_variantDictFindStr(settings, key, &str, NULL) && str != NULL)
-> +    {
-> +        missing_settings_key(key);
-> +    }
-> +    else
-> +    {
-> +        tr_rpcSetHostWhitelist(s, str);
-> +    }
-> +
->      key = TR_KEY_rpc_authentication_required;
->  
->      if (!tr_variantDictFindBool(settings, key, &boolVal))
-> diff --git a/libtransmission/rpc-server.h b/libtransmission/rpc-server.h
-> index 46e8a871f..ad1eb5204 100644
-> --- a/libtransmission/rpc-server.h
-> +++ b/libtransmission/rpc-server.h
-> @@ -42,6 +42,10 @@ void tr_rpcSetWhitelist(tr_rpc_server* server, char const* whitelist);
->  
->  char const* tr_rpcGetWhitelist(tr_rpc_server const* server);
->  
-> +void tr_rpcSetHostWhitelistEnabled(tr_rpc_server* server, bool isEnabled);
-> +
-> +void tr_rpcSetHostWhitelist(tr_rpc_server* server, char const* whitelist);
-> +
->  void tr_rpcSetPassword(tr_rpc_server* server, char const* password);
->  
->  char const* tr_rpcGetPassword(tr_rpc_server const* server);
-> diff --git a/libtransmission/session.c b/libtransmission/session.c
-> index 86d054f7f..9a0b7c104 100644
-> --- a/libtransmission/session.c
-> +++ b/libtransmission/session.c
-> @@ -371,6 +371,8 @@ void tr_sessionGetDefaultSettings(tr_variant* d)
->      tr_variantDictAddStr(d, TR_KEY_rpc_username, "");
->      tr_variantDictAddStr(d, TR_KEY_rpc_whitelist, TR_DEFAULT_RPC_WHITELIST);
->      tr_variantDictAddBool(d, TR_KEY_rpc_whitelist_enabled, true);
-> +    tr_variantDictAddStr(d, TR_KEY_rpc_host_whitelist, TR_DEFAULT_RPC_HOST_WHITELIST);
-> +    tr_variantDictAddBool(d, TR_KEY_rpc_host_whitelist_enabled, true);
->      tr_variantDictAddInt(d, TR_KEY_rpc_port, atoi(TR_DEFAULT_RPC_PORT_STR));
->      tr_variantDictAddStr(d, TR_KEY_rpc_url, TR_DEFAULT_RPC_URL_STR);
->      tr_variantDictAddBool(d, TR_KEY_scrape_paused_torrents_enabled, true);
-> diff --git a/libtransmission/transmission.h b/libtransmission/transmission.h
-> index ac1871adb..08a24eca4 100644
-> --- a/libtransmission/transmission.h
-> +++ b/libtransmission/transmission.h
-> @@ -109,6 +109,7 @@ char const* tr_getDefaultDownloadDir(void);
->  #define TR_DEFAULT_BIND_ADDRESS_IPV4 "0.0.0.0"
->  #define TR_DEFAULT_BIND_ADDRESS_IPV6 "::"
->  #define TR_DEFAULT_RPC_WHITELIST "127.0.0.1,::1"
-> +#define TR_DEFAULT_RPC_HOST_WHITELIST ""
->  #define TR_DEFAULT_RPC_PORT_STR "9091"
->  #define TR_DEFAULT_RPC_URL_STR "/transmission/"
->  #define TR_DEFAULT_PEER_PORT_STR "51413"
-> diff --git a/libtransmission/web.c b/libtransmission/web.c
-> index cca888b66..a57c85457 100644
-> --- a/libtransmission/web.c
-> +++ b/libtransmission/web.c
-> @@ -678,6 +678,9 @@ char const* tr_webGetResponseStr(long code)
->      case 417:
->          return "Expectation Failed";
->  
-> +    case 421:
-> +        return "Misdirected Request";
-> +
->      case 500:
->          return "Internal Server Error";
->  
-> -- 
-> 2.15.0.531.g2ccb3012c9-goog
-> 
-
-
--- 
-Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi. 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <meissner@suse.de>
+If you can crash the python interpreter without syscalls and without
+the kernel killing it for OOM, would you call this DoS?
