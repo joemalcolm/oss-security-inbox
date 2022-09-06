@@ -1,24 +1,11 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/26/4
-Message-ID: <20220526170432.m2o2srztnidk7jyw@yuggoth.org>
-Date: Thu, 26 May 2022 17:04:32 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/06/6
+Message-ID: <CAGUWgD9x1RJdYcr9NCUOjaVNYdnhrPkSjNoh_NaLGu99q65W-w@mail.gmail.com>
+Date: Tue, 6 Sep 2022 16:26:58 +0300
+From: Georgi Guninski <gguninski@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-1729: race condition in Linux perf subsystem leads to local privilege escalation
+Subject: Re: sagemath denial of service with abort() in gmp: overflow in mpz type
 Content-Type: text/plain; charset=utf-8
 
-On 2022-05-26 18:44:38 +0200 (+0200), Norbert Slusarek wrote:
-[...]
-> Overall, as a researcher I would prefer having a way just to
-> inform distros of a bug, *without* being subject to these
-> requirements.
-
-Problem is, at least some of the distribution representatives don't
-want to be privy to indefinitely secret information like exploits,
-as that's also a liability for them. They're willing to tolerate it
-for a brief period, but don't wish to be responsible for keeping
-your secret forever.
--- 
-Jeremy Stanley
-
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
+If you can crash the python interpreter without syscalls and without
+the kernel killing it for OOM, would you call this DoS?
