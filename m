@@ -1,63 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/31/1
-Message-ID: <Yfd+5JHnPnIZTbPP@eldamar.lan>
-Date: Mon, 31 Jan 2022 07:17:08 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/06/3
+Message-ID: <20220906115010.gs7kec3wkmayhmhf@yuggoth.org>
+Date: Tue, 6 Sep 2022 11:50:10 +0000
+From: Jeremy Stanley <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: xterm buffer overflow via crafted sixel
+Subject: Re: sagemath denial of service with abort() in gmp: overflow in mpz type
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 2022-09-06 08:47:58 +0300 (+0300), Georgi Guninski wrote:
+[...]
+> sagemath gives access to the python interpreter, so code execution
+> is trivial.
+[...]
 
-On Sun, Jan 30, 2022 at 12:27:38PM -0500, nick black wrote:
-> howdy! in the hopes of further distributing my computing into
-> your terminal emulators, i this morning learned that i can
-> control writes to memory from XTerm's context via the method of
-> crafted sixel. en garde, i'll let you try my wu-tang style.
-> 
-> this was discovered while working on Notcurses bug #2573:
-> 
->  https://github.com/dankamongmen/notcurses/issues/2573
-> 
-> an error of mine own led to emission of a corrupted sixel [0], and
-> spectacular gyrations from XTerm:
-> 
-> ==1426124== Invalid write of size 2
-> ==1426124==    at 0x193FF1: set_sixel (graphics_sixel.c:181)
-> ==1426124==    by 0x1949E1: parse_sixel (graphics_sixel.c:534)
-> ==1426124==    by 0x17203D: do_dcs (misc.c:4973)
-> ==1426124==    by 0x149E03: doparsing.constprop.0 (charproc.c:4224)
-> ==1426124==    by 0x14B383: VTparse (charproc.c:5183)
-> ==1426124==    by 0x14B670: VTRun (charproc.c:8163)
-> ==1426124==    by 0x12DC49: main (main.c:2911)
-> ==1426124==  Address 0xffffffff0941efb8 is not stack'd, malloc'd or (recently) free'd
-> ==1426124==
-> ==1426124==
-> ==1426124== Process terminating with default action of signal 11 (SIGSEGV): dumping core
-> ==1426124==  Access not within mapped region at address 0xFFFFFFFF0941EFB8
-> ==1426124==    at 0x193FF1: set_sixel (graphics_sixel.c:181)
-> ==1426124==    by 0x1949E1: parse_sixel (graphics_sixel.c:534)
-> ==1426124==    by 0x17203D: do_dcs (misc.c:4973)
-> ==1426124==    by 0x149E03: doparsing.constprop.0 (charproc.c:4224)
-> ==1426124==    by 0x14B383: VTparse (charproc.c:5183)
-> ==1426124==    by 0x14B670: VTRun (charproc.c:8163)
-> ==1426124==    by 0x12DC49: main (main.c:2911)
-> 
-> I reported this to Mr. Thomas Dickey, the Archfather, and
-> offered to put a patch together this evening. I also told him I
-> probably wouldn't bother with a CVE, regarding which I clearly
-> changed my mind pretty much immediately. Sorry, my good man =\.
-> 
-> This requires that XTerm was built with Sixel support, and that
-> the XTerm configuration interprets Sixels.
->  
-> --nick
-> 
-> [0] "a man of genius makes no mistakes -- his errors are
->   volitional, and the portals to discovery." (james joyce).
->   nah, just kidding, i totally screwed it up.
+I'm not familiar with sagemath, but is it intended to protect
+against such cases? Note that even if all it does is pass
+expressions into CPython's eval(), it's pretty much impossible to
+guard against misuse without completely sandboxing the underlying
+processes. Denial of service scenarios are really the least of
+worries in that case. Many articles have been written over the years
+about this, though one of the more recent and thorough ones is:
+https://netsec.expert/posts/breaking-python3-eval-protections/
 
-This issue has CVE-2022-24130 assigned.
+If it's not trying to prevent getting access to do all the things
+the interpreter can do outside sagemath as well, then I hardly see
+this as a vulnerability (any more than "CPython interpreter allows
+execution of arbitrary Python code" would be, at any rate).
+-- 
+Jeremy Stanley
 
-Regards,
-Salvatore
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
