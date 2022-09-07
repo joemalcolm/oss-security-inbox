@@ -1,4 +1,4 @@
-Received: (qmail 5390 invoked by uid 550); 2 Jan 2023 14:33:11 -0000
+Received: (qmail 1260 invoked by uid 550); 7 Sep 2022 12:53:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,53 +7,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27907 invoked from network); 2 Jan 2023 11:51:30 -0000
-Authentication-Results: apache.org; auth=none
-X-Gm-Message-State: AFqh2koOsRgqfaKrd7uv4egdFv3x4a9rQlbqDhkd9X3DzIBCr38CDVLl
-	mr1cUNA/6d1UywUWcyDJ26kfTiQOUCOFoB1gVz+tqg==
-X-Google-Smtp-Source: AMrXdXte2AFJDa0BH98EQq2lg7VbALwGCPJNW7hPWJ6ouG+y4FC22mn+cXIyLEjPjcZjbQNcX7O423WYf3Ony9Zo+xY=
-X-Received: by 2002:a81:4c07:0:b0:3e3:866c:a51b with SMTP id
- z7-20020a814c07000000b003e3866ca51bmr2951907ywa.439.1672660275494; Mon, 02
- Jan 2023 03:51:15 -0800 (PST)
+Received: (qmail 1234 invoked from network); 7 Sep 2022 12:53:26 -0000
+Date: Wed, 7 Sep 2022 12:53:12 +0000
+From: Jeremy Stanley <fungi@yuggoth.org>
+To: oss-security@lists.openwall.com
+Message-ID: <20220907125311.awpx3hu62mmqowaa@yuggoth.org>
+References: <CAGUWgD9QR7mjyVnBV4NcyVv=RzLBjNoqvv=d02P-GGsdOV_VWg@mail.gmail.com>
+ <20220906115010.gs7kec3wkmayhmhf@yuggoth.org>
+ <CAH8yC8k8C-gp9upSpJLsXrhBB5-qSnKGeP34+32A-_s5YG3UTA@mail.gmail.com>
+ <20220907013017.GA1357227@millbarge>
+ <CAGUWgD8f4V3uYf7wLjfHarRSwPo1PgqwDSWcNX6LaO_Cgco8vA@mail.gmail.com>
 MIME-Version: 1.0
-References: <d1b6acf9-0f59-1954-ccad-2243ca03d138@apache.org>
- <YwjuUy0a6FFdHPVB@gentoo.org> <Y61i4ojYhvXXx7Ap@eldamar.lan>
- <Y69d7JASugX99avX@gentoo.org> <CAHKPuKEiTO8uJi=sJxogt9ZUmvQ1o4mXT+bEb+6xBf=N7K_3-Q@mail.gmail.com>
- <Y7B0lbSvEhkIMdoq@gentoo.org>
-In-Reply-To: <Y7B0lbSvEhkIMdoq@gentoo.org>
-From: Arnout Engelen <engelen@apache.org>
-Date: Mon, 2 Jan 2023 12:51:04 +0100
-X-Gmail-Original-Message-ID: <CAHKPuKFDBmPF2So+g=VTkgniFGJpXHZ37kv+urCM-_j4pkjNRQ@mail.gmail.com>
-Message-ID: <CAHKPuKFDBmPF2So+g=VTkgniFGJpXHZ37kv+urCM-_j4pkjNRQ@mail.gmail.com>
-To: John Helmert III <ajak@gentoo.org>
-Cc: oss-security@lists.openwall.com, security@apache.org, jorton@apache.org, 
-	carnil@debian.org
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] CVE-2022-22728: libapreq2: libapreq2 multipart
- form parse memory corruption
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="7qkcy2ekom4bdx7b"
+Content-Disposition: inline
+In-Reply-To: <CAGUWgD8f4V3uYf7wLjfHarRSwPo1PgqwDSWcNX6LaO_Cgco8vA@mail.gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
+X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
+X-SA-Exim-Mail-From: fungi@yuggoth.org
+X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
+Subject: Re: [oss-security] sagemath denial of service with abort() in gmp:
+ overflow in mpz type
 
-On Sat, Dec 31, 2022 at 6:42 PM John Helmert III <ajak@gentoo.org> wrote:
-> On Sat, Dec 31, 2022 at 10:54:00AM +0100, Arnout Engelen wrote:
-> > On Fri, Dec 30, 2022 at 10:54 PM John Helmert III <ajak@gentoo.org> wrote:
-> > > On Thu, Dec 29, 2022 at 10:50:26AM +0100, Salvatore Bonaccorso wrote:
-> > > > On Fri, Aug 26, 2022 at 11:01:23AM -0500, John Helmert III wrote:
-> > > > > On Thu, Aug 25, 2022 at 02:09:16PM +0000, Joe Orton wrote:
-> > > > > > A flaw in libapreq2 versions 2.16 and earlier could cause a buffer
-> > > > > > overflow while processing multipart form uploads.
-> > > > >
-> > > > > Is there a fixed version or patch or upstream issue?
-> >
-> > libapreq2 2.17 was released on the same day as the advisory describing
-> > the problem with 2.16 and earlier (https://httpd.apache.org/apreq/).
->
-> Does it fix CVE-2022-22728? Whether or not it does isn't clear from
-> the changelog [1], and I can't find a reference to the CVE elsewhere
-> in the source tree.
+--7qkcy2ekom4bdx7b
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I think https://svn.apache.org/viewvc?view=revision&revision=1894937
-contained the fix for this issue. This is included in 2.17.
+On 2022-09-07 08:36:17 +0300 (+0300), Georgi Guninski wrote:
+[...]
+> will the infidels who argue that crash in python is nothing
+[...]
 
+I was merely pointing out that being able to "DoS" the Python
+interpreter with arbitrary Python source code is expected.
+"Infidels" like me tend to take no position on your related rants,
+but thanks for asking!
+--=20
+Jeremy Stanley
 
-Kind regards,
+--7qkcy2ekom4bdx7b
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Arnout
+-----BEGIN PGP SIGNATURE-----
+
+iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmMYlDFfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
+QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
+WCkEthAAqcxQRCYLPsr98h28WO2fTlSam0NOHw7PaXT1rnAV3rYBQ19+icf+1Z5b
+qp7FzoaycSrnkV5MEY9xKqjG/W5uo5eCsSw/sr+ocZMfw5bTZn21s8l+KzdL+H6V
+uCbBS0ieNFk80I1tVHJDXspGp4dY60L3zfEsJzpzC28gCreFIdVmXvdFAflbx5lD
+dK4ApvqhxShOVsqW3viarBdgvzsP7Bt3FSGTS1XxSv5mWAru5NC/9zCpOoYXiGRN
+pNqWNQ7a9DIcfRE+5A01ODzcmMKWbl9RQUyARj/HnPdi3xyt+sbWEru3NAVlfJXF
+RP8ufqjnrXOaCDeW2qzJ66ydGYAsxYLAwKGKrBWjVAO0OkVqx5laY4n/zDPaRIGq
+vs+17TPvMv7ZJR5RNp31r/rXkExjrd6XB7Jccs9e6sAqCo3KlnqWMm3hs3eCDqJ3
+Wr3GA2i8y6jkLPH5UUWRcideyqaYUzMyHgqTRN7VlJlPJUuLtMI8nkPjZ/RH2bK4
+meL8/iYYEiDUH6AdSYoTxZNR2XFtVXl1pDIF6JWBuND3P/Q5L9oe1THJMT1hoOW4
+urlE5QOn3FUMV0G6feAhhuXxqzk0LWz/FCBf/mzW9jM1uuQ2JFE739baByU1Dqds
+UHvd6mHWd0gROYIm6Gx0mBzl2dds2PAFB+rd7SVJAVu4/wZ4+dY=
+=wpqB
+-----END PGP SIGNATURE-----
+
+--7qkcy2ekom4bdx7b--
