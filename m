@@ -1,37 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/19/2
-Message-ID: <f350341e-31aa-895b-c092-f62fb18835c5@oracle.com>
-Date: Thu, 19 May 2022 12:52:38 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com, Dan Carpenter <dan.carpenter@...cle.com>
-Subject: Re: linux-distros list policy and Linux kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/07/3
+Message-ID: <20220907125311.awpx3hu62mmqowaa@yuggoth.org>
+Date: Wed, 7 Sep 2022 12:53:12 +0000
+From: Jeremy Stanley <fungi@...goth.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: sagemath denial of service with abort() in gmp: overflow in mpz type
 Content-Type: text/plain; charset=utf-8
 
-On 5/19/22 05:41, Dan Carpenter wrote:
-> I don't know how to distributions do embargos and I don't want to be a
-> part of that discussion.  If I started disclosing bugs then I would be
-> a part of a discussion I'm trying to avoid.
-> 
-> I'm pretty sure a lot of employers have policy about disclosing
-> vulnerabilities.  I've never disclosed a vulnerability so I don't know
-> Oracle's policy.  Possibly sending an email to oss-security could get
-> me fired???
+On 2022-09-07 08:36:17 +0300 (+0300), Georgi Guninski wrote:
+[...]
+> will the infidels who argue that crash in python is nothing
+[...]
 
-If you wanted to be in that position, you could take steps to be able to
-do so without getting fired.  Oracle sanctions my participation in the
-X.Org Security Team, including my disclosure of security fixes in X.Org's
-open source projects to public forums including oss-security following X.Org's
-security disclosure process. But I've also got over a decade of experience as
-the Security Lead for Oracle Solaris and know exactly where the line is between
-what I should and should not say on such forums, and have worked closely with
-the Oracle people who decide what should be said on security disclosures.
-You can also see other Oracle folks here like John Haxby who know what they're
-doing here.
-
-But if, as you say, you don't want to be involved in that and learn all the
-rules involved, that's not going to help you, and you should avoid disclosing
-vulnerabilities yourself.
-
+I was merely pointing out that being able to "DoS" the Python
+interpreter with arbitrary Python source code is expected.
+"Infidels" like me tend to take no position on your related rants,
+but thanks for asking!
 -- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+Jeremy Stanley
+
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
