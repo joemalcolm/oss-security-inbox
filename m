@@ -1,45 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/28/4
-Message-ID: <20220428154502.j4hzupl7hsipgtfk@yuggoth.org>
-Date: Thu, 28 Apr 2022 15:45:02 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/07/2
+Message-ID: <CAGUWgD8f4V3uYf7wLjfHarRSwPo1PgqwDSWcNX6LaO_Cgco8vA@mail.gmail.com>
+Date: Wed, 7 Sep 2022 08:36:17 +0300
+From: Georgi Guninski <gguninski@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-21449 and version reporting
+Subject: Re: sagemath denial of service with abort() in gmp: overflow in mpz type
 Content-Type: text/plain; charset=utf-8
 
-On 2022-04-28 14:12:04 +0000 (+0000), Seaman, Chad wrote:
-[...]
-> In what universe exactly are versions omitted from vulnerability
-> reporting because a vendor “no longer supports that version”… this
-> non-supported version is still vulnerable?
+On Wed, Sep 7, 2022 at 4:32 AM Seth Arnold <seth.arnold@...onical.com> wrote:
 
-The alternative is what projects I work on do: If the oldest
-supported version is vulnerable, then assume all unsupported
-versions are also vulnerable unless someone is able to find evidence
-to the contrary (we basically just always list <= the oldest fixed
-version as vulnerable).
+>
+> Could an application that handles secrets and uses GMP use prctl(2)'s
+> PR_SET_DUMPABLE command to prevent dumping the core file? It'd also
+> prevent using ptrace-based debugging, so it's not without costs, but if
+> it handles secrets, that's probably also a good idea.
+>
+on ubuntu 20 a lot of stuff depends on libgmp:
 
-> Are exploit developers expected to check against the version of
-> the vulnerable application during their exploit detonation to
-> ensure they’re “only infecting supported versions?”.
+$ apt-cache rdepends libgmp10 | wc -l
+2442
+$ apt-cache rdepends libgmp10 | grep -i crypt | wc -l
+28
 
-Vulnerability managers' jobs aren't to make things easier for
-exploit developers, quite the opposite in fact. My goal is to make
-sure users know when they may be running vulnerable software and
-disseminate fixes for all supported releases, where possible.
+some examples:
+  gcc-9
+  gawk
+  g++-9
+  dnsmasq-base
+  cpp-9-s390x-linux-gnu
 
-> Why is this being allowed… this is dangerous for everyone involved
-> save for Oracle’s own ego or public image?
-
-Speaking from the perspective of volunteer-run open source projects
-like the ones I work on, there are only so many hours in the day so
-we have to limit what versions of software we can effectively test
-and fix. In our case, as I said, we just assume all older versions
-that that are also vulnerable unless we happen to find information
-to the contrary, but I can certainly understand if others have a
-policy to only bother providing information about versions they
-support (and flat out tell users to upgrade to a supported version).
--- 
-Jeremy Stanley
-
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
+will the infidels who argue that crash in python is nothing
+still will claim that gmp crash in any of the 2442 packages
+is still nothing?
