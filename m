@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1335" "Thursday" "15" "September" "2016" "01:41:01" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160915054101.4E3A28BC3EB@smtpvmsrv1.mitre.org>" "36" "[oss-security] Re: CVE Request: XSS vulns in b2evolution v6.7.5" nil nil nil "9" "2016091505:41:01" "[oss-security] Re: CVE Request: XSS vulns in b2evolution v6.7.5" (number mark "U       cve-assign@m Sep 15   36/1335  " thread-indent "\"[oss-security] Re: CVE Request: XSS vulns in b2evolution v6.7.5\"\n") "<6D072F0A5597B449BEE8A9770E0BDBEA018D3CBA@EX01.corp.qihoo.net>" ("<6D072F0A5597B449BEE8A9770E0BDBEA018D3CBA@EX01.corp.qihoo.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 26489 invoked by uid 550); 15 Sep 2016 05:41:13 -0000
+Received: (qmail 25648 invoked by uid 550); 7 Sep 2022 17:28:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,48 +7,84 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26471 invoked from network); 15 Sep 2016 05:41:12 -0000
-From: cve-assign@mitre.org
-To: chenruiqi@360.cn
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <6D072F0A5597B449BEE8A9770E0BDBEA018D3CBA@EX01.corp.qihoo.net>
-Message-Id: <20160915054101.4E3A28BC3EB@smtpvmsrv1.mitre.org>
-Date: Thu, 15 Sep 2016 01:41:01 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: XSS vulns in b2evolution v6.7.5
+Received: (qmail 25630 invoked from network); 7 Sep 2022 17:28:56 -0000
+From: Russ Allbery <eagle@eyrie.org>
+To: oss-security@lists.openwall.com
+In-Reply-To: <CAGUWgD8f4V3uYf7wLjfHarRSwPo1PgqwDSWcNX6LaO_Cgco8vA@mail.gmail.com>
+	(Georgi Guninski's message of "Wed, 7 Sep 2022 08:36:17 +0300")
+Organization: The Eyrie
+References: <CAGUWgD9QR7mjyVnBV4NcyVv=RzLBjNoqvv=d02P-GGsdOV_VWg@mail.gmail.com>
+	<20220906115010.gs7kec3wkmayhmhf@yuggoth.org>
+	<CAH8yC8k8C-gp9upSpJLsXrhBB5-qSnKGeP34+32A-_s5YG3UTA@mail.gmail.com>
+	<20220907013017.GA1357227@millbarge>
+	<CAGUWgD8f4V3uYf7wLjfHarRSwPo1PgqwDSWcNX6LaO_Cgco8vA@mail.gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+Date: Wed, 07 Sep 2022 10:28:42 -0700
+Message-ID: <87o7vrksad.fsf@hope.eyrie.org>
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: Re: [oss-security] sagemath denial of service with abort() in gmp:
+ overflow in mpz type
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Georgi Guninski <gguninski@gmail.com> writes:
 
-> forum with some evil code
-> https://github.com/b2evolution/b2evolution/commit/9a4ab85439d1b838ee7b8eeebbf59174bb787811
+> on ubuntu 20 a lot of stuff depends on libgmp:
 
-Use CVE-2016-7149.
+> $ apt-cache rdepends libgmp10 | wc -l
+> 2442
+> $ apt-cache rdepends libgmp10 | grep -i crypt | wc -l
+> 28
 
+> some examples:
+>   gcc-9
+>   gawk
+>   g++-9
+>   dnsmasq-base
+>   cpp-9-s390x-linux-gnu
 
-> Edit the "Short site name"
-> https://github.com/b2evolution/b2evolution/commit/dd975fff7fce81bf12f9c59edb1a99475747c83c
+> will the infidels who argue that crash in python is nothing
+> still will claim that gmp crash in any of the 2442 packages
+> is still nothing?
 
-Use CVE-2016-7150.
+I don't think anyone here is trying to defend the behavior of gmp.  That
+it aborts on unexpected input has been a long-standing problem that's
+provoked a lot of discussion elsewhere.  It's certainly surprising, and it
+violates the expectations that a lot of people have about how libraries
+should work.  (I feel obligated to say that the gmp maintainers do have
+reasons for why they do this, so it's not a one-sided debate, but I think
+everyone would agree that the error handling is less than ideal and
+primarily disagree about whether doing better is practically feasible for
+this specific library.)
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+The point that I think folks are making, and at least the point that I'm
+making, is that not all bugs are security bugs.  Even very serious bugs
+are not necessarily security bugs.  You'll find a bit of skepticism from
+time to time in the security community about declaring something a
+security bug because it's not uncommon for people to try to use security
+as a lever to get a bug that annoys them fixed.  (I'm not saying you're
+doing this, just that we've all seen it happen at one point or another.)
 
-iQIcBAEBCAAGBQJX2jQYAAoJEHb/MwWLVhi2uiIP/2drloezwZ44oHZCA4fFelrs
-IQxqLq8IISpHE+EMLJL2fr+9+Etjkte+D1gD0IhUSwM8gBLT5l0QoKJKQG5shpmH
-uzCvz8lebBIEs+MExRDNg/yaN8L15u/Fw/CHwP6axSZK0WId0cJh8aIJ7vXHTecl
-iyFBiUT/bQo+EqTnzIWfDOyiAx+0xoGJUd8URQCroJGf0j4ZwmeOPjdy0NdGDavR
-p+DY4A18FENakMUpLx5hFGudCQCCoLk648lKsVfSqq9gDKrDiUSOmvNMBn6n80Vs
-q3YhFfbr4hGo4Degw6HBRJyOShzr/UpuYsYuEEut2g3DRVX8vCtNv04D6yA0ChUj
-dylwLceHC+D5lXdQEayNUtKuKrDQCR/MqzFfS6DRCghbBnObt3mdxuoSivxLX5gN
-fASKsXcPe+n9SVTJya/RG6svo0rxJD6oa0h3QQinE3bDF4+uQ10A6IpsFdzVDRew
-VtSCAzVktXMG+qU+ld2F/iu7ArLmvCtsu/Sxs1EP/iJKIkkIFkOiEOXLBU+Ye0kt
-fCmXRI2SKReJgv67KvXZJxA7t+p+9++gaHOUpcrvHESv8HiFs+swBMwLmCSLxHYv
-pqbwfpQ46+tj7MkW6D/+irj2fdgOjiStxq+7o/Mwd2uh5oEo3LFKnP4ciz0ajSUT
-B3LOjIAhuRfXD4XkcDlX
-=4IsD
------END PGP SIGNATURE-----
+The ability to make a program crash is not inherently a security bug.  The
+ability to make a program dump cryptographic keys to a core dump file is
+not inherently a security bug if the same person who can make it do that
+can also attach to it with gdb and just read the keys directly out of
+memory.  (And if you're particularly concerned about the core dump case,
+just turning off core dumps globally for your security-sensitive
+application may be easier than trying to chase each possible cause of a
+core dump.)  Sometimes this is equivalent to Ctrl-C or kill -SEGV or other
+operations that, while possibly unexpected, fall within the expected
+permission model.  There has to be some sort of impact on the permission
+model for it to be a security bug.
+
+There probably *are* such cases in the long list of things that depend on
+gmp.  That abort() behavior has led to DoS security bugs and potential
+information leakage via core dumps in the past and probably will in the
+future.  But, for example, I'm skeptical that there is a case where
+forcing gcc to crash with invalid input is going to count as a very
+interesting security bug.  If you're running gcc with untrusted input,
+you're probably already in a world where you need to be doing heavy
+sandboxing, and I'm not sure gmp's behavior is going to be your biggest
+challenge.
+
+-- 
+Russ Allbery (eagle@eyrie.org)             <https://www.eyrie.org/~eagle/>
