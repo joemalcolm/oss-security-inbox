@@ -1,4 +1,4 @@
-Received: (qmail 17935 invoked by uid 550); 29 Apr 2026 06:01:27 -0000
+Received: (qmail 5447 invoked by uid 550); 7 Sep 2022 01:30:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,108 +7,65 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 17895 invoked from network); 29 Apr 2026 06:01:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=haxx.se; s=silly;
-	t=1777442475; bh=0I7tIOo0Cv62SXiY1umvEvWlYZ279IVAC0A5u1+NpM4=;
-	h=Date:From:To:Subject:From;
-	b=ftRQwvpu/G3fVpEMeT4s07nQPdLYPHpFJgiUhjLfz37JAbDgsMh0NCNgjKwDgTRRt
-	 62MVBLtXl/On0mqnPKarHzq1VxMjXpoIulNSwv4WgaVj/oAdHI6Tf0MLflnAp67CYG
-	 xLhCoq3AOjnO9u91Yk92Y5xmHtvdKrTF2Og2Y7Sd3NmCks+NiV4BaPHf1zz8CKbTIo
-	 5pOj2ka/xXhaA17E3MCDg0VXZqHaXiStBI2RBDHDTDkCjua8GUSMFoMiToMxheP1eD
-	 xp53QohCNvTMuKu6yiKTS5i0nQ1Et5FxXdaywSGTEJVQJtLSHx8QKvFkp5Dnq7sJd+
-	 EWKA/FFVY6Hgg==
-Date: Wed, 29 Apr 2026 08:01:15 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
-To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
-    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
-    oss-security@lists.openwall.com
-Message-ID: <4r17o2o6-6np7-non8-0on5-0q68n3r38nn3@unkk.fr>
-X-fromdanielhimself: yes
+Received: (qmail 5426 invoked from network); 7 Sep 2022 01:30:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1662514220;
+	bh=PjvFZxIpNkuiutIW/x06hEClm9iY0zvRYR1CjKsxY+s=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:In-Reply-To;
+	b=vN39PnEDxY0byHUcWlbfTp6pyEvojvVD/1OOr8z7LbM8yVs6D4jKkpAi2uk9/qhCA
+	 jqG43JyTS79dphXCnSmLCbEJmYVb7u2I+PRdD6/xelzbQuwytPpDmPNXf0N5xkkTj0
+	 kqJuul+aTMwXu/4qD1cAyGFVQ/jeiAyuddaJPQs5j8a449MdUmDEBU3qS5xznnGSyN
+	 i3H3Q+f8HBfsahv6YF7KDlci/jllmLS11gNqCvu/iVzT9jU1yI+LHA5BR4k6eWYN1+
+	 krnDD7cC3o+HrgiL8H1zaSOmFZ9Wx42DftQ8H5jzu9VDMDCUwMsXW4W90TJLr7JQZ9
+	 Xj9QKVY5LvpjA==
+Date: Wed, 7 Sep 2022 01:30:17 +0000
+From: Seth Arnold <seth.arnold@canonical.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20220907013017.GA1357227@millbarge>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <CAGUWgD9QR7mjyVnBV4NcyVv=RzLBjNoqvv=d02P-GGsdOV_VWg@mail.gmail.com>
+ <20220906115010.gs7kec3wkmayhmhf@yuggoth.org>
+ <CAH8yC8k8C-gp9upSpJLsXrhBB5-qSnKGeP34+32A-_s5YG3UTA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [ADVISORY] curl: CVE-2026-6276: stale custom cookie host causes
- cookie leak
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="tThc/1wpZn/ma/RB"
+Content-Disposition: inline
+In-Reply-To: <CAH8yC8k8C-gp9upSpJLsXrhBB5-qSnKGeP34+32A-_s5YG3UTA@mail.gmail.com>
+Subject: Re: [oss-security] sagemath denial of service with abort() in gmp:
+ overflow in mpz type
 
-stale custom cookie host causes cookie leak
-===========================================
+--tThc/1wpZn/ma/RB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Project curl Security Advisory, April 29 2026
-[Permalink](https://curl.se/docs/CVE-2026-6276.html)
+On Tue, Sep 06, 2022 at 08:45:28AM -0400, Jeffrey Walton wrote:
+> One of the problems with GMP is, it will crash instead of returning
+> failure. The problem becomes more acute if the program using GMP is
+> handling sensitive information, like a private key or passphrase. The
+> sensitive material can be written to a dump file and can be sent to an
+> error reporting service.
 
-VULNERABILITY
--------------
+Could an application that handles secrets and uses GMP use prctl(2)'s
+PR_SET_DUMPABLE command to prevent dumping the core file? It'd also
+prevent using ptrace-based debugging, so it's not without costs, but if
+it handles secrets, that's probably also a good idea.
 
-Using libcurl, when a custom `Host:` header is first set for a HTTP request
-and a second request is subsequently done using the same *easy handle* but
-without the custom `Host:` header set, the second request would use stale
-information and pass on cookies meant for the first host in the second
-request. Leak them.
+Thanks
 
-INFO
-----
+--tThc/1wpZn/ma/RB
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Setting a custom `Host:` header is mostly done for debugging purposes when
-doing clear text HTTP transfers. When using HTTPS, setting a custom hostname
-like this is not enough for asking for a specific virtual host since then the
-SNI also needs to be correct. This condition reduces the impact of this flaw,
-and is probably a contributing factor why no one else found it before this.
+-----BEGIN PGP SIGNATURE-----
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2026-6276 to this issue.
+iQEzBAABCgAdFiEEQVAQ8bojyMcg37H18yFyWZ2NLpcFAmMX9CkACgkQ8yFyWZ2N
+LpeD9ggAm7AuZ9Dcksv1gw+5QE+eyc4rGCPQTuhuy/+3BZi28NplQTXXYwlL7y3Q
+t+IMXCGi9vvJR8quG8vTmUZxDQK0FPdLUFpTmoQgt6LkZus1SfOm4Pmzxa2n+YdY
+c5e0aBnJCmCaQmq1dM8QFVpjaRvB1F0DtJ5QkeCg65QmoG6h2RGWYlp85sU9VP5F
+ms0vrevpFtQxTAvXmJizBuE1gEDRZ/anPEls+G0ka+AHEEN3OTzTRWYVlWQc7V1D
++awLqFE2jIKcw4K/foRDWP5lW9612Bb1cCbU1spnrYFHZXKtxuXlzp/ZRRvh/M6T
+6sAURZsHzGplIBROx8IVOIjhCe7nWw==
+=/EZF
+-----END PGP SIGNATURE-----
 
-CWE-346: Origin Validation Error
-
-Severity: Low
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: from curl 7.71.0 to and including 8.19.0
-- Not affected versions: curl < 7.71.0 and >= 8.20.0
-- Introduced-in: https://github.com/curl/curl/commit/e15e51384a423be3131
-
-libcurl is used by many applications, but not always advertised as such!
-
-This bug is not considered a *C mistake*. It is not likely to have been
-avoided had we not been using C.
-
-This flaw does **not** affect the curl command line tool.
-
-SOLUTION
---------
-
-- Fixed-in: https://github.com/curl/curl/commit/3a19987a87f393d9394fe5ac
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade to curl and libcurl 8.20.0
-
-  B - Apply the patch and rebuild libcurl
-
-  C - Avoid using custom `Host:` headers
-
-TIMELINE
----------
-
-It was reported to the curl project on April 14th 2026. We contacted
-distros@openwall on April 23.
-
-libcurl 8.20.0 was released on April 29th 2026, coordinated with the
-publication of this advisory.
-
-CREDITS
--------
-
-- Reported-by: Muhamad Arga Reksapati
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se || https://rock-solid.curl.dev
+--tThc/1wpZn/ma/RB--
