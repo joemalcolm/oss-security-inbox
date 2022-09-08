@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2682" "Tuesday" "7" "April" "2015" "22:44:43" "-0400" "David A. Wheeler" "dwheeler@dwheeler.com" "<E1Yffyt-0004J8-1a@rmm6prod02.runbox.com>" "56" "Re: [oss-security] Hanno Boeck found Heartbleed using afl + ASan!" nil nil nil "4" "2015040802:44:43" "[oss-security] Hanno Boeck found Heartbleed using afl + ASan!" (number mark "        dwheeler@dwh Apr  7   56/2682  " thread-indent "\"Re: [oss-security] Hanno Boeck found Heartbleed using afl + ASan!\"\n") "<CALx_OUCyBQabw9Z7RiP7nLfzzJy0zF-5qKUXyzEFHTPUVRab+g@mail.gmail.com>" ("<CALx_OUCyBQabw9Z7RiP7nLfzzJy0zF-5qKUXyzEFHTPUVRab+g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 1478 invoked by uid 550); 8 Apr 2015 02:44:54 -0000
+Received: (qmail 5816 invoked by uid 550); 8 Sep 2022 11:26:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,73 +6,60 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1407 invoked from network); 8 Apr 2015 02:44:54 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
-X-Mailer: RMM6
-In-Reply-To: <CALx_OUCyBQabw9Z7RiP7nLfzzJy0zF-5qKUXyzEFHTPUVRab+g@mail.gmail.com>
-Message-Id: <E1Yffyt-0004J8-1a@rmm6prod02.runbox.com>
-Date: Tue, 07 Apr 2015 22:44:43 -0400 (EDT)
-From: "David A. Wheeler" <dwheeler@dwheeler.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Hanno Boeck found Heartbleed using afl + ASan!
-To: "oss-security" <oss-security@lists.openwall.com>
+Received: (qmail 23664 invoked from network); 8 Sep 2022 08:54:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date;
+        bh=ACS//QR4tdaCdn43cBw2y3N+NdHxtfLN7fhJh2wVWc8=;
+        b=PILbutmT3h7Kbz6wn5qTcQFZ+M4NLKBCm+8ANeQD/BHxGLD89/OlNy7r7PioODTkiv
+         BsveiZ915tXwh8iZaPs8bfaPmH+Ji9+hdrEAIaduM+hJHC9NegwzCPLPAH8nKCYYV10t
+         I+JpfPpmTqBch8FSzUsKhaqzPXjvYA7EpWy/5CfavuqzeTw/Bp2R1xHjocdkyQccYxm5
+         pBnUkeUzb7tiibA2ZGS8S15emk8hGqfFyUmEAMOLZgAGlYCG+9bPae5TOmICi1b+ruej
+         AM4SIl7AbRj3bgytgqecLU6tED+qXWXnPA+36qW94C1XplCHhZqvW5cHSJqaCnw0T7iK
+         3d+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=ACS//QR4tdaCdn43cBw2y3N+NdHxtfLN7fhJh2wVWc8=;
+        b=d25XC2sErxeUVWm6zJCytGRKM3aGIQRJtBGLtTMb27jSwnQXRJFA0ir+PrS3pLSCVZ
+         DNJ+6NawcZpT+JUxVROloNXjjWiPPz180ut5w5cdWAaKpD37ZSz0J7EQkpCJagi67gUP
+         vLXqEE6MFjoZxqaK6jnEu1v0km+mvByNrdMtyE1fo3Ejewm/hLGyApt0J+h/svK0Xek0
+         2rHWxF9ngB9EzEaADt9QzdGll9o+VPECIYTE/Q6p5A2Fk1f/XspfPZDhzNdS7/B+hPZv
+         mLXlus/z/8CZXaudg6kjvQlRruooUkjcDTbcGdUWrkWVIdRSjrMzA+wEEOSkDuVthVMK
+         RqGg==
+X-Gm-Message-State: ACgBeo1LRv5x+NDKzY+ednNP/wsYuLxXteuFAZOkVLmSa+hmI8WTTW1U
+	Szab9DkPlgLeBAX7bjaMysBcvNV3xEdryW0ieLEtPMt2XhU=
+X-Google-Smtp-Source: AA6agR6jyF/6D0DzIEtQuwGHxHcrskNq9ydW2Dz4m3yByHFm4N7YB3eGaC13tuK50wIJivWb8aWfKu2zRdJCqFxNTs8=
+X-Received: by 2002:a1c:4c03:0:b0:3a5:d65c:c1e7 with SMTP id
+ z3-20020a1c4c03000000b003a5d65cc1e7mr1560128wmf.4.1662627248493; Thu, 08 Sep
+ 2022 01:54:08 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAGUWgD9QR7mjyVnBV4NcyVv=RzLBjNoqvv=d02P-GGsdOV_VWg@mail.gmail.com>
+ <20220906115010.gs7kec3wkmayhmhf@yuggoth.org> <CAH8yC8k8C-gp9upSpJLsXrhBB5-qSnKGeP34+32A-_s5YG3UTA@mail.gmail.com>
+ <20220907013017.GA1357227@millbarge> <CAGUWgD8f4V3uYf7wLjfHarRSwPo1PgqwDSWcNX6LaO_Cgco8vA@mail.gmail.com>
+ <87o7vrksad.fsf@hope.eyrie.org>
+In-Reply-To: <87o7vrksad.fsf@hope.eyrie.org>
+From: Georgi Guninski <gguninski@gmail.com>
+Date: Thu, 8 Sep 2022 11:53:56 +0300
+Message-ID: <CAGUWgD-UcCLieARno1B_Oei9dgnntoOod2bcncuc3vy6Yyu+eg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [oss-security] sagemath denial of service with abort() in gmp:
+ overflow in mpz type
 
-On Tue, 7 Apr 2015 18:58:40 -0700, Michal Zalewski <lcamtuf@coredump.cx> wr=
-ote:
-> I think that cases such as Coverity are more of an exception than a
-> rule. Yup, they get credit for a steady trickle of issues (mostly
-> through their self-service offering to developers, rather than any
-> in-house analysis); but if you consider the size of the commercial and
-> research "market" for static analysis and symbolic execution tools,
-> it's not a common practice. Coverity and the singular case of
-> Heartbleed aside, the mark left by others isn't as easy to find.
+On Wed, Sep 7, 2022 at 8:31 PM Russ Allbery <eagle@eyrie.org> wrote:
+>
 
-HP/Fortify and Coverity are two of the most common
-source code weakness analyzers, and both *do* intentionally
-support OSS developers by giving the developers gratis access to their tool=
-s.
-There are probably others. I think it's a "common enough" practice.
 
-True, they're primarily provided as self-service for use by developers
-during development.  But that's how these tools are often used.
-There's nothing wrong with self-help, and that doesn't reduce the tool's ut=
-ility.
-Providing access to a tool (that would otherwise be unavailable) is still a=
- contribution.
+>
+> The ability to make a program crash is not inherently a security bug.
 
-Besides, I think if someone makes a tool that really helps find vulnerabili=
-ties, we
-should give the toolmaker credit for that.  Perhaps you can agree ;-).
-
-This typical usage also explains why the mark "isn't as easy to find".
-The vulnerabilities tend to be detected and fixed *before* the official rel=
-ease.
-This is exactly how it *should* be for OSS that many people depend on.
-Typically an OSS project makes its source code available for review
-(say, via a public repo managed by a version control system), then
-people publicly examine it using tools and manual review and localized test=
-s,
-and *then* the software is officially released (as a tarball or whatever).
-Vulnerabilities that slip through that process may get more publicity,
-but we don't *want* many to slip through.
-
-> so to be clear, I'm not
-> saying it provides no value. I'm just trying to be mindful of the fact
-> that I wouldn't give a proprietary tool an easy pass in similar
-> circumstances, so I don't want to give one to my own tool =3D)
-
-Sure.  The only way to really know how effective this will be
-is to apply this approach on more network protocols, and more thoroughly.
-In practice that means it needs to be easier to use these tools on network =
-protocols.
-
-Hanno's post is good evidence, though, that it's worth doing. There's a lot=
- of
-evidence that afl works on files, and that ASan helps find vulnerabilities;
-it seems reasonable that the combination (and similar) would also find
-vulnerabilities in network protocol implementations.
-
---- David A. Wheeler
+1. This is nearly true story: On a mailing list someone posted crash
+when parsing the Subject header in one the most popular MUA.
+Whenever the user tried to open the folder, the MUA crashed,
+preventing reading the list.
+Users without technical skills needed technical help to delete the DoS mail.
+2. coredump takes space.
