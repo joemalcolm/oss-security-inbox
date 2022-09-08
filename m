@@ -1,22 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/23/1
-Message-ID: <YezR31IUUe48w7KH@sol.nexus.lan>
-Date: Sat, 22 Jan 2022 22:02:46 -0600
-From: John Helmert III <ajak@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/08/1
+Message-ID: <CAGUWgD-UcCLieARno1B_Oei9dgnntoOod2bcncuc3vy6Yyu+eg@mail.gmail.com>
+Date: Thu, 8 Sep 2022 11:53:56 +0300
+From: Georgi Guninski <gguninski@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0001
+Subject: Re: sagemath denial of service with abort() in gmp: overflow in mpz type
 Content-Type: text/plain; charset=utf-8
 
-In this case the advisory was published the same day as the release,
-but in general I notice that WebKit security advisories are published
-sometimes weeks after the releases, often with vague changelog notes
-like "Fix several crashes and rendering issues.". For example,
-WSA-2021-0006 was released on October 26th, 2021 noting fixes for
-2.32.4, 2.34.0, and 2.34.1, which were released on September 17,
-September 22, and October 21 respectively.
+On Wed, Sep 7, 2022 at 8:31 PM Russ Allbery <eagle@...ie.org> wrote:
+>
 
-With this big of a gap between releases and security advisories, it
-seems that users and distributors will be unaware of the necessity of
-updating due to security fixes, sometimes for weeks after the
-release. Why not always publish advisories close to new releases?
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+
+>
+> The ability to make a program crash is not inherently a security bug.
+
+1. This is nearly true story: On a mailing list someone posted crash
+when parsing the Subject header in one the most popular MUA.
+Whenever the user tried to open the folder, the MUA crashed,
+preventing reading the list.
+Users without technical skills needed technical help to delete the DoS mail.
+2. coredump takes space.
