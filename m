@@ -1,4 +1,4 @@
-Received: (qmail 32626 invoked by uid 550); 25 Sep 2023 18:29:47 -0000
+Received: (qmail 30617 invoked by uid 550); 9 Sep 2022 11:37:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,96 +7,89 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32163 invoked from network); 25 Sep 2023 18:28:43 -0000
-Date: Mon, 25 Sep 2023 20:28:34 +0200
-From: Solar Designer <solar@openwall.com>
-To: Andrew Cooper <andrew.cooper3@citrix.com>
-Cc: oss-security@lists.openwall.com,
-	"Xen. org security team" <security-team-members@xen.org>
-Message-ID: <20230925182834.GA8247@openwall.com>
-References: <E1qko5Z-0003cF-KD@xenbits.xenproject.org> <20230925163652.GA6750@openwall.com> <70e568d7-9e09-a1a9-030f-40473447a619@citrix.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <70e568d7-9e09-a1a9-030f-40473447a619@citrix.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
+Received: (qmail 29878 invoked from network); 9 Sep 2022 04:53:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date;
+        bh=QlAJUHmkeTBHl7VJb32KqaJFfrkZpT3wKj4A/ONgCg0=;
+        b=RbqADzt/CJvYtAy7OR0ozCNVD6c1kwpDRMBe0Y646SaPBKz1T5uHDs3Xi1dly90XH7
+         JQDIIB2OmTaXjDGz+PbnKBKUWj5WWPg4DDmBuqLNKg/qzR5/JGzA8xJfynSmCiopQksW
+         0XkNgVE7gRdn2fuQYBKDSSQ5vP61bZ5MevGHsH6x65xlPMJFu1P6FwieA/QW2haImt4j
+         +NzZu5y7RVnSdlf5huXdWcOtXZYF09P0SAy30jpIbXB4DXoQalJhUAwDf2QFq+grgRaz
+         jMOenJuyrx487YlJo4x+k3vkVSM4T3GwyTWo+KAj0T1ndi0xwHhiz2lDjxbd0pNlXOz8
+         0sUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date;
+        bh=QlAJUHmkeTBHl7VJb32KqaJFfrkZpT3wKj4A/ONgCg0=;
+        b=vJUcDZi2yhkd5xOkHcqLUrWoJNLn9AtpMaDFwZfTQk0kRGogofG+vc38bN/sbOMBcw
+         4T6RHw28d6HMtdUSsVrPDugoJDzRmU0QYXeU/98VU9qKryQTjVSggOHbbeh+DdPQfXjZ
+         yOUhPfZ1Ly0gsk80NVmCmoB1P+A138af+i+QRp0ntWOL+U2Us1iuJaoG8okSG/skR+kK
+         6DNQLTky8Sz6Z//aOAsNTtYTS3TPRV7Ty2gV/pGcWWHgcVs3FbipY9bG+oQSQ3OuTJ0x
+         2zf56mPgT3nR4XYUOHkoTyHOGYIv5C4YdeMAYubfCFpgdO7ZNlagYIVBpBw6n53QL7Aq
+         HKrg==
+X-Gm-Message-State: ACgBeo1xvtDtmF3vAopcm9yQkz2d0cZZPc8YYj41lXs2gDoF3xiRu5ue
+	JJyTVXmMo9E3SLc7YXyQ6QKUtbHdK4hG5U3WYI7Eo36QViANtGwO
+X-Google-Smtp-Source: AA6agR71+5XZmeSlkgFTwGnhlDk9Os876g+v18u0WNNfsM9TZZYJBjswh6xaGvmx1ITg0G5MjMwDy3c/3Ui8WM5UHyw=
+X-Received: by 2002:a62:170b:0:b0:53b:93dc:966b with SMTP id
+ 11-20020a62170b000000b0053b93dc966bmr12648828pfx.29.1662699175002; Thu, 08
+ Sep 2022 21:52:55 -0700 (PDT)
+MIME-Version: 1.0
+From: Xingyuan Mo <hdthky0@gmail.com>
+Date: Fri, 9 Sep 2022 12:52:44 +0800
+Message-ID: <CALV6CNPFCj_qyutH_ETc8=+ayLEEqbd9+_GA+VJMJOeuOS-_qg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Linux kernel: information disclosure in stex_queuecommand_lck
 
-On Mon, Sep 25, 2023 at 06:10:05PM +0100, Andrew Cooper wrote:
-> On 25/09/2023 5:36 pm, Solar Designer wrote:
-> > While I am at it, here's the corresponding mitigation in Linux kernel:
-> >
-> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=77245f1c3c6495521f6a3af082696ee2f8ce3921
-> 
-> Not really.š That patch entirely misunderstood the vulnerability.š I
-> went through several rounds of getting AMD to better-understand their bug.
-> 
-> Linux's fix was rewritten in
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f58d6fbcb7c848b7f2469be339bc571f2e9d245b
-> and this implements the same logic as I implemented in Xen.
+Hello,
 
-Oh wow.  Thank you for correcting me (and correcting AMD first?)
+We found an information disclosure vulnerability in stex_queuecommand_lck() in
+drivers/scsi/stex.c through linux v6.0-rc4 which allows an attacker to disclose
+sensitive information such as kernel space address.
 
-> It's worth noting that because AMD did not allocate a $FOO_NO CPUID bit,
-> there's no ability for a VM to figure out that it might move to
-> vulnerable hardware and therefore should engage the workaround.š The
-> best a VM can do is best-effort based on whether it looks like it's
-> booting on a Zen1 system.
+This issue can be fixed with the following patch:
+https://lore.kernel.org/all/20220908145154.2284098-1-gregkh@linuxfoundation.org/
 
-Maybe directly probing for the bug is an option?  Perhaps can be done
-within one thread (where the bug doesn't have security impact, but is
-detectable anyway, no)?
+=*=*=*=*=*=*=*=*=  Bug Details  =*=*=*=*=*=*=*=*=
 
-> Also the cross-thread nature is also poorly reported in public.
+In drivers/scsi/stex.c:
+ 666:  case PASSTHRU_CMD:
+ 667:    if (cmd->cmnd[1] == PASSTHRU_GET_DRVVER) {
+ 668:      struct st_drvver ver;
+ 669:      size_t cp_len = sizeof(ver);
+ 670:
+ 671:      ver.major = ST_VER_MAJOR;
+ 672:      ver.minor = ST_VER_MINOR;
+ 673:      ver.oem = ST_OEM;
+ 674:      ver.build = ST_BUILD_VER;
+ 675:      ver.signature[0] = PASSTHRU_SIGNATURE;
+ 676:      ver.console_id = host->max_id - 1;
+ 677:      ver.host_no = hba->host->host_no;
+ 678:      cp_len = scsi_sg_copy_from_buffer(cmd, &ver, cp_len);
+ 679:      if (sizeof(ver) == cp_len)
+ 680:        cmd->result = DID_OK << 16;
+ 681:      else
+ 682:        cmd->result = DID_ERROR << 16;
+ 683:      done(cmd);
+ 684:      return 0;
+ 685:    }
+ 686:    break;
 
-Right, I couldn't find it mentioned anywhere other than your advisory.
+The variable ver is declared off of the stack, but not zeroed out before copied
+back to user space, resulting in sensitive information disclosure.
 
-Do you know if only the quotient leaks, or also the remainder?  In the
-below, I assume the remainder leaks as well.
+=*=*=*=*=*=*=*=*=  Timeline  =*=*=*=*=*=*=*=*=
 
-I'm concerned it could affect some cryptographic code, in particular
-(but in a very minor way) typical implementations of Argon2.  There's a
-3-year-pending pull request to the upstream/reference Argon2
-implementation that I think would avoid the issue there (by optimizing
-out the divides):
+2022-09-08: bug reported
+2022-09-08: patch released
 
-https://github.com/P-H-C/phc-winner-argon2/pull/306
+=*=*=*=*=*=*=*=*=  Credit  =*=*=*=*=*=*=*=*=
 
-but there are many other implementations and I guess (almost?) all use
-the programming language's modulo division operation as-is.  Luckily,
-the severity is minor - this would only affect the cache-timing unsafe
-flavors, providing an extra (more direct and maybe more reliable?)
-side-channel, and this only matters when the attacker has a copy of or
-has guessed the salts (the same as for other cache-timing unsafe
-password hashes/KDFs).  So in terms of threat models and attack vectors,
-no change at all, but real-world (in)feasibility of otherwise-similar
-attacks can vary.  No big deal, just something to improve where we can.
+Xingyuan Mo (@hdthky) and Gengjia Chen (@chengjia4574) of IceSword Lab, 360
 
-For others reading just the list postings and for archival, this newer
-Linux kernel commit is:
 
-> author	Borislav Petkov (AMD) <bp@alien8.de>	2023-08-11 23:38:24 +0200
-> committer	Borislav Petkov (AMD) <bp@alien8.de>	2023-08-14 11:02:50 +0200
-> 
-> x86/CPU/AMD: Fix the DIV(0) initial fix attempt
-> 
-> Initially, it was thought that doing an innocuous division in the #DE
-> handler would take care to prevent any leaking of old data from the
-> divider but by the time the fault is raised, the speculation has already
-> advanced too far and such data could already have been used by younger
-> operations.
-> 
-> Therefore, do the innocuous division on every exit to userspace so that
-> userspace doesn't see any potentially old data from integer divisions in
-> kernel space.
-> 
-> Do the same before VMRUN too, to protect host data from leaking into the
-> guest too.
-> 
-> Fixes: 77245f1c3c64 ("x86/CPU/AMD: Do not leak quotient data after a division by 0")
-> Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-> Cc: <stable@kernel.org>
-> Link: https://lore.kernel.org/r/20230811213824.10025-1-bp@alien8.de
-
-Alexander
+Best Regards,
+Xingyuan Mo
