@@ -1,28 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/20/2
-Message-ID: <CAKa5A-sEAqP-9YUT+cuT05H7i8fMG_g7upNRwi+3xOvt8PVuwA@mail.gmail.com>
-Date: Thu, 20 Jan 2022 13:54:46 +0800
-From: Haoran Meng <menghaoran@...che.org>
-To: oss-security@...ts.openwall.com, dev@...rdingsphere.apache.org
-Subject: CVE-2022-22733: Apache ShardingSphere ElasticJob-UI: Access-Token in ElasticJob UI causes password disclosure
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/09/1
+Message-ID: <CALV6CNPFCj_qyutH_ETc8=+ayLEEqbd9+_GA+VJMJOeuOS-_qg@mail.gmail.com>
+Date: Fri, 9 Sep 2022 12:52:44 +0800
+From: Xingyuan Mo <hdthky0@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Linux kernel: information disclosure in stex_queuecommand_lck
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Hello,
 
-Description:
+We found an information disclosure vulnerability in stex_queuecommand_lck() in
+drivers/scsi/stex.c through linux v6.0-rc4 which allows an attacker to disclose
+sensitive information such as kernel space address.
 
-Exposure of Sensitive Information to an Unauthorized Actor
-vulnerability in Apache ShardingSphere ElasticJob-UI allows an
-attacker who has guest account to do privilege escalation. This issue
-affects Apache ShardingSphere ElasticJob-UI Apache ShardingSphere
-ElasticJob-UI 3.x version 3.0.0 and prior versions.
+This issue can be fixed with the following patch:
+https://lore.kernel.org/all/20220908145154.2284098-1-gregkh@linuxfoundation.org/
+
+=*=*=*=*=*=*=*=*=  Bug Details  =*=*=*=*=*=*=*=*=
+
+In drivers/scsi/stex.c:
+ 666:  case PASSTHRU_CMD:
+ 667:    if (cmd->cmnd[1] == PASSTHRU_GET_DRVVER) {
+ 668:      struct st_drvver ver;
+ 669:      size_t cp_len = sizeof(ver);
+ 670:
+ 671:      ver.major = ST_VER_MAJOR;
+ 672:      ver.minor = ST_VER_MINOR;
+ 673:      ver.oem = ST_OEM;
+ 674:      ver.build = ST_BUILD_VER;
+ 675:      ver.signature[0] = PASSTHRU_SIGNATURE;
+ 676:      ver.console_id = host->max_id - 1;
+ 677:      ver.host_no = hba->host->host_no;
+ 678:      cp_len = scsi_sg_copy_from_buffer(cmd, &ver, cp_len);
+ 679:      if (sizeof(ver) == cp_len)
+ 680:        cmd->result = DID_OK << 16;
+ 681:      else
+ 682:        cmd->result = DID_ERROR << 16;
+ 683:      done(cmd);
+ 684:      return 0;
+ 685:    }
+ 686:    break;
+
+The variable ver is declared off of the stack, but not zeroed out before copied
+back to user space, resulting in sensitive information disclosure.
+
+=*=*=*=*=*=*=*=*=  Timeline  =*=*=*=*=*=*=*=*=
+
+2022-09-08: bug reported
+2022-09-08: patch released
+
+=*=*=*=*=*=*=*=*=  Credit  =*=*=*=*=*=*=*=*=
+
+Xingyuan Mo (@hdthky) and Gengjia Chen (@chengjia4574) of IceSword Lab, 360
 
 
-
-
-
--- 
-Best,
-Haoran Meng
-Apache ShardingSphere
-
+Best Regards,
+Xingyuan Mo
