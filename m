@@ -1,35 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/04/2
-Message-ID: <CAGaRif0TSpR9GYCMd3O5aFhA=N=qatnpeeq+0xL2jNOKp_0+KA@mail.gmail.com>
-Date: Fri, 4 Mar 2022 14:20:36 -0800
-From: lewis john mcgibbney <lewismc@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/09/2
+Message-Id: <FC4E26D0-4162-4D71-B40D-D6D384EE67F9@beckweb.net>
+Date: Fri, 9 Sep 2022 14:51:37 +0200
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-25312: An XML external entity (XXE) injection vulnerability exists in the Apache Any23 RDFa XSLTStylesheet extractor
+Subject: Vulnerability in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-An XML external entity (XXE) injection vulnerability was discovered in
-the Any23 RDFa XSLTStylesheet extractor and is known to affect Any23
-versions < 2.7. XML external entity injection (also known as XXE) is a
-web security vulnerability that allows an attacker to interfere with
-an application's processing of XML data. It often allows an attacker
-to view files on the application server filesystem, and to interact
-with any back-end or external systems that the application itself can
-access.
+The following releases contain fixes for security vulnerabilities:
 
-Resolution:
-
-This issue is fixed in Apache Any23 2.7 which can be downloaded from
-https://any23.apache.org/download.html. We strongly encourage all
-Any23 users to upgrade to Apache Any23 2.7.
-
-Credit:
-
-The Apache Any23 Project Management Committee would like to thank Lion
-Tree a.k.a liontree0110 for reporting this issue.
+* Jenkins 2.263
+* Jenkins LTS 2.361.1
 
 
--- 
-http://home.apache.org/~lewismc/
-http://people.apache.org/keys/committer/lewismc
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2022-09-09/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-2868 / CVE-2022-2048
+Jenkins bundles Winstone-Jetty, a wrapper around Jetty, to act as HTTP and
+servlet server when started using `java -jar jenkins.war`. This is how
+Jenkins is run when using any of the installers or packages, but not when
+run using servlet containers such as Tomcat.
+
+Jenkins LTS 2.346.3 and earlier, 2.362 and earlier bundle versions of Jetty
+affected by the security vulnerability CVE-2022-2048. This vulnerability
+allows unauthenticated attackers to make the Jenkins UI unresponsive by
+exploiting Jetty's handling of invalid HTTP/2 requests, causing a denial of
+service.
+
+NOTE: This only affects instances that enable HTTP/2, typically using the
+`--http2Port` argument to `java -jar jenkins.war` or corresponding options
+in service configuration files. It is disabled by default in all native
+installers and the Docker images provided by the Jenkins project.
+
+
+
