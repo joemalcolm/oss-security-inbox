@@ -1,19 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/23/2
-Message-ID: <de7dfa60-f860-951d-5a58-8a60b7341b89@apache.org>
-Date: Sun, 23 Oct 2022 15:04:39 +0000
-From: Josh Fischer <joshfischer@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/11/1
+Message-ID: <4739a75c-ca38-1f2a-babc-ee4fc3b427e3@apache.org>
+Date: Sun, 11 Sep 2022 08:03:22 +0000
+From: Ruben Q L <rubenql@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-42010: Apache Heron (Incubating): CRLF log injection 
+Subject: CVE-2022-39135: Apache Calcite: potential XEE attacks 
 Content-Type: text/plain; charset=utf-8
-
-Severity: low
 
 Description:
 
-Heron versions <= 0.20.4-incubating allows CRLF log injection because of the lack of escaping in the log statements.  Please update to version 0.20.5-incubating which addresses this issue. 
+In Apache Calcite prior to version 1.32.0 the SQL operators EXISTS_NODE, EXTRACT_XML, XML_TRANSFORM and EXTRACT_VALUE do not restrict XML External Entity references in their configuration, which makes them vulnerable to a potential XML External Entity (XXE) attack. Therefore any client exposing these operators, typically by using Oracle dialect (the first three) or MySQL dialect (the last one), is affected by this vulnerability (the extent of it will depend on the user under which the application is running).
+
+>From Apache Calcite 1.32.0 onwards, Document Type Declarations and XML External Entity resolution are disabled on the impacted operators.
 
 Credit:
 
-The Apache Heron (Incubating) project would like to thank Bo Yu for bringing this matter to our attention.
+Apache Calcite would like to thank David Handermann for reporting this issue
 
