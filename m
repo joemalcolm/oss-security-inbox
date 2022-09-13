@@ -1,42 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/24/4
-Message-ID: <CADW8OBs7P=YE_xfYCX3KuhaiVkwjSTMVUjLX93S_bn_XBd05EQ@mail.gmail.com>
-Date: Tue, 24 May 2022 09:10:37 -0700
-From: Kyle Zeng <zengyhkyle@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-1786: Linux Kernel invalid-free in io_uring
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/13/1
+Message-ID: <YyCZ4ShI4u9yn5qd@gentoo.org>
+Date: Tue, 13 Sep 2022 09:55:29 -0500
+From: John Helmert III <ajak@...too.org>
+To: oss-security@...ts.openwall.com, Carlos Alberto Lopez Perez <clopez@...lia.com>
+Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0008
 Content-Type: text/plain; charset=utf-8
 
-Hi there,
+On Mon, Aug 29, 2022 at 01:26:49PM +0200, Carlos Alberto Lopez Perez wrote:
+> 
+> On 26/08/2022 07:01, John Helmert III wrote:
+> > On Thu, Aug 25, 2022 at 11:34:04PM +0200, Carlos Alberto Lopez Perez wrote:
+> >> ------------------------------------------------------------------------
+> >> WebKitGTK and WPE WebKit Security Advisory                 WSA-2022-0008
+> >> ------------------------------------------------------------------------
+> >>
+> >> Date reported           : August 25, 2022
+> >> Advisory ID             : WSA-2022-0008
+> >> WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2022-0008.html
+> >> WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2022-0008.html
+> >> CVE identifiers         : CVE-2022-32893.
+> >>
+> >> Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+> >>
+> >> CVE-2022-32893
+> >>     Versions affected: WebKitGTK and WPE WebKit before 2.36.7.
+> >>     Credit to an anonymous researcher.
+> >>     Impact: Processing maliciously crafted web content may lead to
+> >>     arbitrary code execution. Apple is aware of a report that this issue
+> >>     may have been actively exploited.
+> > 
+> > According to Apple's security advisories for this (e.g. [1]), this
+> > issue is tracked on the Webkit Bugzilla as 243557 [2] which was opened
+> > on 2022-08-04. A few minutes after that bug was opened, a pull request
+> > on GitHub was linked [3] with a patch which also seems to add unit
+> > tests. So, it appears to me that this issue was public since at least
+> > August 4th, and even more widely publicized with Apple's security
+> > advisories on August 17.
+> > 
+> > WebKit-2.36.6 was released shortly after the first bug report, on
+> > 2022-08-07, and WebKit-2.36.7 was released yesterday, on 2022-08-25.
+> > 
+> > With this bug seemingly being publicly known to be an actively
+> > exploited code execution issue, why did it take several weeks and 2
+> > WebKit releases to get this issue fixed and a WSA released?
+> > 
+> > [1] https://support.apple.com/en-us/HT213412
+> > [2] https://bugs.webkit.org/show_bug.cgi?id=243557
+> > [3] https://github.com/WebKit/WebKit/pull/3023
+> > 
+> 
+> 
+> We (maintainers of Linux WebKit ports) don't have access to the security
+> issues affecting Apple products until those issues are made public by them.
+> 
+> So, we didn't knew until August 17th of this issue. Also you can see
+> that the bug report itself or the patch doesn't has any indication that
+> it fixes a security-related problem.
 
-I recently found a severe invalid-free bug in the io_uring subsystem
-which affects Linux kernel v5.10. It has been demonstrated that the
-vulnerability can be exploited to achieve local privilege escalation.
+Apple's released new security advisories yesterday, with 4 WebKit
+security fixes, two of which are code execution issues, but all 4 of
+which have public bugzilla bugs and public patches, since as early as
+late June (https://support.apple.com/en-us/HT213442):
 
-# Root Cause
-The root cause of the bug is a misuse of the identity model in
-io_uring. When preparing a request, the kernel uses the identity of
-the current task instead of that of the request task, which causes
-type confusion and invalid-free when the request needs to be
-destroyed.
+https://bugs.webkit.org/show_bug.cgi?id=242278
+https://bugs.webkit.org/show_bug.cgi?id=241969
+https://bugs.webkit.org/show_bug.cgi?id=242762
+https://bugs.webkit.org/show_bug.cgi?id=243236
 
-# Impact
-I wrote a proof-of-concept exploit and demonstrated that it can be
-used to achieve local privilege escalation.
+Is Apple fixing WebKit security issues in public while obfuscating the
+impact? This pattern seems to be potentially putting downstream WebKit
+users at a lot of risk, now that 2 code execution bugs (with patches!)
+are public (and have been for *months*, albeit without knowledge of
+security impact), and users need to wait weeks for remediation.
 
-# Affected Versions
-To the best of my knowledge, this bug only affects Linux kernel v5.10
-and v5.11 because of their unique identity model in io_uring. But it
-still affects many users because of some widely used vendors (Android
-12, ChromeOS, etc).
+> Therefore, the time it took us to notice the issue, backport the fix and
+> do a new release was just 7-8 days (from 17th to 24-25th of August).
+> Which, honestely, it is quite good taking into account that: 1)
+> back-porting the fix was not straightforward since it required
+> back-porting also a few previous patches in order to be able to merge it
+> properly and that 2) we are in August and people is usually on holidays.
+> 
+> On the other hand, I don't know if this issue was or is exploited on
+> Linux WebKit users. All I known is that Apple said they are aware of a
+> report that this issue was actively exploited (on Apple/WebKit users).
+> So I assume this can also affect Linux WebKit users. But I don't have a
+> confirmation that this is actually the case, neither I'm aware of any
+> PoC demonstrating the issue.
+> 
+> Regards.
 
-# Disclosure & Patch
-I already contacted the Linux security team and prepared a patch. The
-patch has been merged into the Linux kernel stable tree and it can be
-found here: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?h=linux-5.10.y&id=29f077d070519a88a793fbc70f1e6484dc6d9e35.
-
-I also informed the vendors and gave enough time for them to patch the
-bug before this public disclosure.
-
---
-Kyle Zeng
+Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
