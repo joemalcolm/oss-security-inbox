@@ -1,27 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/05/2
-Message-ID: <SJ0PR11MB5006E1D447596CFDF564B946DCC29@SJ0PR11MB5006.namprd11.prod.outlook.com>
-Date: Thu, 5 May 2022 01:55:20 +0000
-From: "Jiang, Cheng1" <cheng1.jiang@...el.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: DPDK CVE-2022-0669 Release Notice
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/14/2
+Message-ID: <CAGUWgD-oYbazh5f+EDj0AmzxmKBY9MK7fwZVkeeFsCETHF4T-g@mail.gmail.com>
+Date: Wed, 14 Sep 2022 10:52:46 +0300
+From: Georgi Guninski <gguninski@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: sagemath denial of service with abort() in gmp: overflow in mpz type
 Content-Type: text/plain; charset=utf-8
 
-A vulnerability was fixed in DPDK.
-Some downstream stakeholders were warned in advance
-in order to coordinate the release of fixes
-and reduce the vulnerability window.
+On Wed, Sep 7, 2022 at 8:36 AM Georgi Guninski <gguninski@...il.com> wrote:
+>
 
-It's an issue in the handling of vhost-user inflight type messages. A malicious vhost-user master can attach an unexpected number of fds as ancillary data to VHOST_USER_GET_INFLIGHT_FD / VHOST_USER_SET_INFLIGHT_FD messages that are not closed by the vhost-user slave. By sending such messages continuously, the vhost-user master could exhaust available fd in the vhost-user slave process and lead to a DoS.
+> $ apt-cache rdepends libgmp10 | grep -i crypt | wc -l
+> 28
+>
+> some examples:
+>   gawk
 
-Commits: af74f7db384e on the main branch
+Hopefully last post in this thread:
 
-CVE: CVE-2022-0669
-Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=922
-Severity: 6.5 (Medium)
-CVSS scores: 3.0/AV:L/AC:L/PR:L/UI:N/S:C/C:N/I:N/A:H
-
-Thanks
-Cheng Jiang, on behalf of the DPDK security team
-
-
+guest3@...ntu20:~/prim$ gawk --bignum 'BEGIN { a = 2 ^ 2 ^41; print "a =", a }'
+gmp: overflow in mpz type
+Aborted (core dumped)
+guest3@...ntu20:~/prim$ gawk 'BEGIN { a = 2 ^ 2 ^41; print "a =", a }'
+a = +inf
