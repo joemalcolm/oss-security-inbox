@@ -1,46 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/13/2
-Message-ID: <20221013101046.GB20615@suse.de>
-Date: Thu, 13 Oct 2022 12:10:54 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: oss-security@...ts.openwall.com, shuster@...moo.tu-darmstadt.de
-Subject: Various Linux Kernel WLAN security issues (RCE/DOS) found
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/15/1
+Message-Id: <ff1ec491-12ab-4a37-a53f-857c4a8e5e2fn@googlegroups.com>
+Date: Thu, 15 Sep 2022 10:44:19 -0700 (PDT)
+From: Vladimir de Turckheim <vdeturckheim@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Fwd: Node.js security updates for all active release lines, Month Year
 Content-Type: text/plain; charset=utf-8
 
-Hi folks,
 
-Security Researcher Soenke Huster from Tu Darmstadt (
-shuster@...moo.tu-darmstadt.de ) emailed SUSE with a buffer overwrite in
-the Linux Kernel mac80211 framework triggered by WLAN frames.
 
-We delegated the issue to the kernel security folks, and Soenke and
-Johannes Berg from Intel evaluated and worked on this issue.
+---------- Forwarded message ---------
+From: Vladimir de Turckheim <vdeturckheim@...il.com>
+Date: Thursday, September 15, 2022 at 7:13:25 PM UTC+2
+Subject: Node.js security updates for all active release lines, Month Year
+To: nodejs-sec <nodejs-sec@...glegroups.com>
 
-During their research they found multiple more problems in the WLAN
-stack, exploitable over the air.
 
-The patchset has been posted to the netdev list just now and will be
-merged in the next hours/days:
+The Node.js project will release new versions of all supported release 
+lines on or shortly after Thursday, 22nd of September, 2022 For more 
+information see: 
+https://nodejs.org/en/blog/vulnerability/september-2022-security-releases/
 
-	https://lore.kernel.org/netdev/20221013100522.46346-1-johannes@sipsolutions.net/T/#u
-
-I have requested 5 CVE from Mitre, they are referenced in the commits.
-
-Note that some patches did not get CVEs, as these were not showing any
-relevant security impact but only warning messages or UBSAN shift overflow
-messages.
-
-CVE-2022-41674: fix u8 overflow in cfg80211_update_notlisted_nontrans
-	(max 256 byte overwrite) (RCE)
-CVE-2022-42719: wifi: mac80211: fix MBSSID parsing use-after-free
-	use after free condition (RCE)
-CVE-2022-42720: wifi: cfg80211: fix BSS refcounting bugs
-	ref counting use-after-free possibilities (RCE)
-CVE-2022-42721: wifi: cfg80211: avoid nontransmitted BSS list corruption
-	list corruption, according to Johannes will however just make it endless loop (DOS)
-CVE-2022-42722: wifi: mac80211: fix crash in beacon protection for P2P-device
-	NULL ptr dereference crash (DOS)
-
-Soenke will post additional details as followup to this email.
-
-Ciao, Marcus
+Content of type "text/html" skipped
