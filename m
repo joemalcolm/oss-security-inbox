@@ -1,32 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/17/2
-Message-ID: <CAN10O-ajJuTXLKWWxtg02Nf5yVZ5jLs7B6PY+2F6Hk3PLsCNOg@mail.gmail.com>
-Date: Thu, 17 Mar 2022 23:03:45 +1100
-From: Filip Palian <s3810@...stk.edu.pl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/15/2
+Message-ID: <CAGsPOT3VSqGbvGySuZsJ4mkqBb5PApH66VyNrxTPFT2sCPo09Q@mail.gmail.com>
+Date: Thu, 15 Sep 2022 14:49:36 -0700
+From: Pushkar Joglekar <pushkarj.at.work@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux Kernel 5.15-rc-ksmbd-part2 is affected by: Buffer Overflow. The impact is: use-after-free (local).
+Subject: [kubernetes] CVE-2021-25749: runAsNonRoot logic bypass for Windows containers
 Content-Type: text/plain; charset=utf-8
 
-https://oss-security.openwall.org/wiki/mailing-lists/oss-security
-https://oss-security.openwall.org/wiki/
+Hello Kubernetes Community,
 
-Thanks for sharing. Wish you happy day as well :]
+A security issue was discovered in Kubernetes that could allow Windows
+workloads to run as ContainerAdministrator even when those workloads set
+the runAsNonRoot option to true .
 
+This issue has been rated low and assigned CVE-2021-25749
+<https://hackmd.io/ndl5QD3tTUKqYdO7rfGX7A#Am-I-vulnerable>Am I vulnerable?
 
-czw., 17 mar 2022 o 22:45 王明义 <6201613047@....jiangnan.edu.cn> napisał(a):
+All Kubernetes clusters with following versions, running Windows workloads
+with runAsNonRoot are impacted.
+Affected Versions
 
-> ** RESERVED ** Linux Kernel 5.15-rc-ksmbd-part2 is affected by: Buffer
-> Overflow. The impact is: use-after-free (local). The component is:
-> kernel/locking/rwsem.c. The attack vector is: Run OS with Linux Kernel
-> 5.15-rc-ksmbd-part2. Then execute the POC file.&nbsp; A vulnerability was
-> found in Linux Kernel 5.15-rc-ksmbd-part2 kernel/locking/rwsem.c causing
-> use-after-free.
->
->
-> It is fixed by&nbsp;
-> https://git.kernel.org/pub/scm/linux/kernel/git/netfilter/nf.git/commit/?id=9bf3d2033129
-> Please check the following website for details&nbsp;
-> https://bugzilla.kernel.org/show_bug.cgi?id=214655
-> And I want to request a CVE ID. Looking forward to your reply. Wish you a
-> happy day.
+   - kubelet v1.20 - v1.21
+   - kubelet v1.22.0 - v1.22.13
+   - kubelet v1.23.0 - v1.23.10
+   - kubelet v1.24.0 - v1.24.4
+
+How do I mitigate this vulnerability?
+
+There are no known mitigations to this vulnerability.
+<https://hackmd.io/ndl5QD3tTUKqYdO7rfGX7A#Fixed-Versions>Fixed Versions
+
+   - kubelet v1.22.14
+   - kubelet v1.23.11
+   - kubelet v1.23.5
+   - kubelet v1.25.0
+
+To upgrade, refer to this documentation. *For core Kubernetes:*
+https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#upgrading-a-cluster
+Detection
+
+Kubernetes Audit logs may indicate if the user name was misspelled to
+bypass the restriction placed on which user is a pod allowed to run as.
+
+If you find evidence that this vulnerability has been exploited, please
+contact security@...ernetes.io
+Additional Details
+
+See the GitHub issue for more details:
+https://github.com/kubernetes/kubernetes/issues/112192
+Acknowledgements
+
+This vulnerability was reported and fixed by Mark Rosetti (@marosset)
+
+Thank You,
+
+Pushkar Joglekar on behalf of the Kubernetes Security Response Committee
 
