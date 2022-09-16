@@ -1,270 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/17/8
-Message-Id: <34EFA4C8-0709-401C-B5AF-AF22234F0C22@beckweb.net>
-Date: Tue, 17 May 2022 15:13:45 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/16/1
+Message-ID: <CALrOjABKUtfOem9bF=La6qnf3GFkEKTngeb95MWRDYSGNYfHCA@mail.gmail.com>
+Date: Fri, 16 Sep 2022 15:41:32 -0400
+From: Monis Khan <i@...is.app>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+Subject: [kubernetes] CVE-2022-3172: Aggregated API server can cause clients to be redirected (SSRF)
 Content-Type: text/plain; charset=utf-8
 
+Hello Kubernetes Community,
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
-
-The following releases contain fixes for security vulnerabilities:
-
-* Application Detector Plugin 1.0.9
-* Blue Ocean Plugin 1.25.4
-* Git Plugin 4.11.2
-* GitLab Plugin 1.5.32
-* Mercurial Plugin 2.16.1
-* Multiselect parameter Plugin 1.4
-* Pipeline SCM API for Blue Ocean Plugin 1.25.4
-* Pipeline: Groovy Plugin 2692.v76b_089ccd026
-* REPO Plugin 1.14.1
-* Rundeck Plugin 3.6.11
-* Script Security Plugin 1172.v35f6a_0b_8207e
-* WMI Windows Agents Plugin 1.8.1
-
-Additionally, we announce unresolved security issues in the following
-plugins:
-
-* Autocomplete Parameter Plugin
-* Global Variable String Parameter Plugin
-* JDK Parameter Plugin
-* Promoted Builds (Simple) Plugin
-* Random String Parameter Plugin
-* Selection tasks Plugin
-* SSH Plugin
-* Storable Configs Plugin
-* vboxwrapper Plugin
+A security issue was discovered in kube-apiserver that allows an aggregated
+API server to redirect client traffic to any URL. This could lead to the
+client performing unexpected actions as well as forwarding the client's API
+server credentials to third parties.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2022-05-17/
+This issue has been rated *medium* (
+https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:H/PR:H/UI:R/S:C/C:L/I:L/A:L)
+(5.1), and assigned *CVE-2022-3172*
+Am I vulnerable?
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+All Kubernetes clusters with the following versions that are running
+aggregated API servers are impacted. To identify if you have aggregated API
+servers configured, run the following command:
 
----
+kubectl get apiservices.apiregistration.k8s.io -o=jsonpath='{range
+.items[?(@.spec.service)]}{.metadata.name}{"\n"}{end}'
 
-SECURITY-359 / CVE-2022-30945
-Pipeline: Groovy Plugin allows pipelines to load Groovy source files. This
-is intended to be used to allow Global Shared Libraries to execute without
-sandbox protection.
+Affected Versions
 
-In Pipeline: Groovy Plugin 2689.v434009a_31b_f1 and earlier, any Groovy
-source files bundled with Jenkins core and plugins could be loaded this way
-and their methods executed. If a suitable Groovy source file is available
-on the classpath of Jenkins, sandbox protections can be bypassed.
+   - kube-apiserver v1.25.0
+   - kube-apiserver v1.24.0 - v1.24.4
+   - kube-apiserver v1.23.0 - v1.23.10
+   - kube-apiserver v1.22.0 - v1.22.13
+   - kube-apiserver <= v1.21.14
 
-NOTE: The Jenkins security team has been unable to identify any Groovy
-source files in Jenkins core or plugins that would allow attackers to
-execute dangerous code. While the severity of this issue is declared as
-High due to the potential impact, successful exploitation is considered
-very unlikely.
+How do I mitigate this vulnerability?
 
+Aside from upgrading, no direct mitigation is available.
 
-SECURITY-2116 / CVE-2022-30946
-Script Security Plugin 1158.v7c1b_73a_69a_08 and earlier does not require
-POST requests for a form validation endpoint, resulting in a cross-site
-request forgery (CSRF) vulnerability.
+Aggregated API servers are a trusted part of the Kubernetes control plane,
+and configuring them is a privileged administrative operation. Ensure that
+only trusted cluster administrators are allowed to create or modify
+APIService configuration, and follow security best practices with any
+aggregated API servers that may be in use.
+Fixed Versions
 
-This vulnerability allows attackers to have Jenkins send an HTTP request to
-an attacker-specific webserver.
+   - kube-apiserver v1.25.1
+   - kube-apiserver v1.24.5
+   - kube-apiserver v1.23.11
+   - kube-apiserver v1.22.14
 
+*Fix impact:* The fix blocks all 3XX responses from aggregated API servers
+by default. This may disrupt an aggregated API server that relies on
+redirects as part of its normal function. If all current and future
+aggregated API servers are considered trustworthy and redirect
+functionality is required, set the
+--aggregator-reject-forwarding-redirect Kubernetes
+API server flag to false to restore the previous behavior.
 
-SECURITY-2478 / CVE-2022-30947 (Git) & CVE-2022-30948 (Mercurial) & CVE-2022-30949 (REPO)
-SCMs support a number of different URL schemes, including local file system
-paths (e.g. using `file:` URLs).
+To upgrade, refer to the documentation:
+https://kubernetes.io/docs/tasks/administer-cluster/cluster-upgrade
+Detection
 
-Historically in Jenkins, only agents checked out from SCM, and if multiple
-projects share the same agent, there is no expected isolation between
-builds besides using different workspaces unless overridden. Some
-Pipeline-related features check out SCMs from the Jenkins controller as
-well.
+Kubernetes audit log events indicate the HTTP status code sent to the
+client via the responseStatus.code field. This can be used to detect if an
+aggregated API server is redirecting clients.
 
-This allows attackers able to configure pipelines to check out some SCM
-repositories stored on the Jenkins controller's file system using local
-paths as SCM URLs, obtaining limited information about other projects' SCM
-contents. The following Jenkins plugins are known to be affected:
+If you find evidence that this vulnerability has been exploited, please
+contact security@...ernetes.io
+Additional Details
 
-* Git 4.11.1 and earlier
-* Mercurial 2.16 and earlier
-* REPO 1.14.0 and earlier
+See the GitHub issue for more details:
+https://github.com/kubernetes/kubernetes/issues/112513
+Acknowledgements
 
+This vulnerability was reported by Nicolas Joly & Weinong Wang @weinong
+from Microsoft.
 
-SECURITY-2604 / CVE-2022-30950 (buffer overflow) & CVE-2022-30951 (access control)
-WMI Windows Agents Plugin 1.8 and earlier includes the Windows Remote
-Command library. It provides a general-purpose remote command execution
-capability that Jenkins uses to check if Java is available, and if not, to
-install it.
+The issue was fixed and coordinated by Di Jin @jindijamie @enj @liggitt
+@lavalamp @deads2k and @puerco.
 
-This library has a buffer overflow vulnerability that may allow users able
-to connect to a named pipe to execute commands on the Windows agent
-machine.
+Thank You,
 
-Additionally, while the processes are started as the user who connects to
-the named pipe, no access control takes place, potentially allowing users
-to start processes even if they're not allowed to log in.
+Mo Khan on behalf of the Kubernetes Security Response Committee
 
-
-SECURITY-714 / CVE-2022-30952
-When pipelines are created using the pipeline creation wizard in Blue
-Ocean, the credentials used are stored in the per-user credentials store of
-the user creating the pipeline. To allow pipelines to use this credential
-to scan repositories and checkout from SCM, the Blue Ocean Credentials
-Provider allows pipelines to access a specific credential from the per-user
-credentials store in Pipeline SCM API for Blue Ocean Plugin 1.25.3 and
-earlier.
-
-As a result, attackers with Job/Configure permission can rewrite job
-configurations in a way that lets them access and capture any
-attacker-specified credential from any user's private credentials store.
-
-
-SECURITY-2502 / CVE-2022-30953 (CSRF) & CVE-2022-30954 (permission check)
-Blue Ocean Plugin 1.25.3 and earlier does not perform permission checks in
-several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to send requests to an
-attacker-specified URL.
-
-Additionally, these endpoints do not require POST requests, resulting in a
-cross-site request forgery (CSRF) vulnerability.
-
-
-SECURITY-2753 / CVE-2022-30955
-GitLab Plugin 1.5.31 and earlier does not perform a permission check in an
-HTTP endpoint.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-
-SECURITY-2600 / CVE-2022-30956
-Rundeck Plugin 3.6.10 and earlier does not restrict URL schemes in Rundeck
-webhook submissions.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to submit crafted Rundeck webhook payloads.
-
-
-SECURITY-2315 / CVE-2022-30957
-SSH Plugin 2.6.1 and earlier does not perform a permission check in an HTTP
-endpoint.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2093 / CVE-2022-30958 (CSRF) & CVE-2022-30959 (permission check)
-SSH Plugin 2.6.1 and earlier does not perform a permission check in an HTTP
-endpoint.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified SSH server using attacker-specified credentials IDs
-obtained through another method, capturing credentials stored in Jenkins.
-
-Additionally, this endpoint does not require POST requests, resulting in a
-cross-site request forgery (CSRF) vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2717 / CVE-2022-30960 through CVE-2022-30968
-Multiple plugins do not escape the name and description of the parameter
-types they provide:
-
-* Application Detector Plugin 1.0.8 and earlier (SECURITY-2732 /
-  CVE-2022-30960)
-* Autocomplete Parameter Plugin 1.1 and earlier (SECURITY-2729 /
-  CVE-2022-30961)
-* Global Variable String Parameter Plugin 1.2 and earlier (SECURITY-2715 /
-  CVE-2022-30962)
-* JDK Parameter Plugin 1.0 and earlier (SECURITY-2713 / CVE-2022-30963)
-* Multiselect parameter Plugin 1.3 and earlier (SECURITY-2726 /
-  CVE-2022-30964)
-* Promoted Builds (Simple) Plugin 1.9 and earlier (SECURITY-2720 /
-  CVE-2022-30965)
-* Random String Parameter Plugin 1.0 and earlier (SECURITY-2722 /
-  CVE-2022-30966)
-* Selection tasks Plugin 1.0 and earlier (SECURITY-2728 / CVE-2022-30967)
-* vboxwrapper Plugin 1.3 and earlier (SECURITY-2734 / CVE-2022-30968)
-
-This results in stored cross-site scripting (XSS) vulnerabilites
-exploitable by attackers with Item/Configure permission.
-
-Exploitation of these vulnerabilities requires that parameters are listed
-on another page, like the "Build With Parameters" and "Parameters" pages
-provided by Jenkins (core), and that those pages are not hardened to
-prevent exploitation. Jenkins (core) has prevented exploitation of
-vulnerabilities of this kind on the "Build With Parameters" and
-"Parameters" pages since 2.44 and LTS 2.32.2 as part of the SECURITY-353 /
-CVE-2017-2601 fix. Additionally, several plugins have previously been
-updated to list parameters in a way that prevents exploitation by default,
-see SECURITY-2617 in the 2022-04-12 security advisory for a list.
-
-As of publication of this advisory, there is no fix available for the
-following plugins:
-
-* Autocomplete Parameter Plugin 1.1 and earlier (SECURITY-2729 /
-  CVE-2022-30961)
-* Global Variable String Parameter Plugin 1.2 and earlier (SECURITY-2715 /
-  CVE-2022-30962)
-* JDK Parameter Plugin 1.0 and earlier (SECURITY-2713 / CVE-2022-30963)
-* Promoted Builds (Simple) Plugin 1.9 and earlier (SECURITY-2720 /
-  CVE-2022-30965)
-* Random String Parameter Plugin 1.0 and earlier (SECURITY-2722 /
-  CVE-2022-30966)
-* Selection tasks Plugin 1.0 and earlier (SECURITY-2728 / CVE-2022-30967)
-* vboxwrapper Plugin 1.3 and earlier (SECURITY-2734 / CVE-2022-30968)
-
-
-SECURITY-2322 / CVE-2022-30969
-Autocomplete Parameter Plugin 1.1 and earlier does not require POST
-requests for a form validation endpoint executing a provided Groovy script,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-This vulnerability allows attackers to execute arbitrary code without
-sandbox protection if the victim is an administrator.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2267 / CVE-2022-30970
-Autocomplete Parameter Plugin 1.1 and earlier references Dropdown
-Autocomplete parameter and Auto Complete String parameter names in an
-unsafe manner from Javascript embedded in view definitions.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Item/Configure permission.
-
-NOTE: While this looks similar to SECURITY-2729, this is an independent
-problem and exploitable even on views rendering parameters that otherwise
-attempt to prevent XSS vulnerabilities in parameter names.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-1969 / CVE-2022-30971 (XXE) & CVE-2022-30972 (CSRF)
-Storable Configs Plugin 1.0 and earlier does not configure its XML parser
-to prevent XML external entity (XXE) attacks.
-
-This allows attackers with Item/Configure permission to have Jenkins parse
-a crafted file that uses external entities for extraction of secrets from
-the Jenkins controller or server-side request forgery.
-
-Additionally, the HTTP endpoint calling the XML parser does not require
-POST requests, resulting in a cross-site request forgery (CSRF)
-vulnerability.
-
-As of publication of this advisory, there is no fix.
