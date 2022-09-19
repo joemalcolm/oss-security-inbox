@@ -1,37 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/06/2
-Message-ID: <CAEhjM2Bg-NDaUP6-LUM_+a7Q-3MzuZgni0HC4k3eA0oYU-8q4g@mail.gmail.com>
-Date: Wed, 6 Apr 2022 12:58:18 -0400
-From: Nathan Gough <thenatog@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/19/1
+Message-ID: <CALV6CNMWFmWc9O9qL8FBxdrNs79foRYgVZTuvvxYLR80WA8qew@mail.gmail.com>
+Date: Mon, 19 Sep 2022 15:46:35 +0800
+From: Xingyuan Mo <hdthky0@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-26850: Apache NiFi: Insufficiently protected credentials
+Subject: Re: Linux kernel: information disclosure in stex_queuecommand_lck
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+CVE-2022-40768 has been assigned to this issue.
 
-Description:
+Thanks,
+Xingyuan Mo
 
-When creating or updating credentials for single-user access, NiFi
-wrote a copy of the Login Identity Providers configuration to the
-operating system temporary directory. On most platforms, the operating
-system temporary directory has global read permissions. NiFi
-immediately moved the temporary file to the final configuration
-directory, which significantly limited the window of opportunity for
-access.
-
-This issue is being tracked as NIFI-9785
-
-Mitigation:
-
-NiFi 1.16.0 includes updates to replace the Login Identity Providers
-configuration without writing a file to the operating system temporary
-directory.
-
-Credit:
-
-This issue was discovered by Jonathan Leitschuh
-(https://twitter.com/jlleitschuh)
-
-References:
-https://nifi.apache.org/security.html#CVE-2022-26850
-
+On Fri, Sep 9, 2022 at 12:52 PM Xingyuan Mo <hdthky0@...il.com> wrote:
+>
+> Hello,
+>
+> We found an information disclosure vulnerability in stex_queuecommand_lck() in
+> drivers/scsi/stex.c through linux v6.0-rc4 which allows an attacker to disclose
+> sensitive information such as kernel space address.
+>
+> This issue can be fixed with the following patch:
+> https://lore.kernel.org/all/20220908145154.2284098-1-gregkh@linuxfoundation.org/
+>
+> =*=*=*=*=*=*=*=*=  Bug Details  =*=*=*=*=*=*=*=*=
+>
+> In drivers/scsi/stex.c:
+>  666:  case PASSTHRU_CMD:
+>  667:    if (cmd->cmnd[1] == PASSTHRU_GET_DRVVER) {
+>  668:      struct st_drvver ver;
+>  669:      size_t cp_len = sizeof(ver);
+>  670:
+>  671:      ver.major = ST_VER_MAJOR;
+>  672:      ver.minor = ST_VER_MINOR;
+>  673:      ver.oem = ST_OEM;
+>  674:      ver.build = ST_BUILD_VER;
+>  675:      ver.signature[0] = PASSTHRU_SIGNATURE;
+>  676:      ver.console_id = host->max_id - 1;
+>  677:      ver.host_no = hba->host->host_no;
+>  678:      cp_len = scsi_sg_copy_from_buffer(cmd, &ver, cp_len);
+>  679:      if (sizeof(ver) == cp_len)
+>  680:        cmd->result = DID_OK << 16;
+>  681:      else
+>  682:        cmd->result = DID_ERROR << 16;
+>  683:      done(cmd);
+>  684:      return 0;
+>  685:    }
+>  686:    break;
+>
+> The variable ver is declared off of the stack, but not zeroed out before copied
+> back to user space, resulting in sensitive information disclosure.
+>
+> =*=*=*=*=*=*=*=*=  Timeline  =*=*=*=*=*=*=*=*=
+>
+> 2022-09-08: bug reported
+> 2022-09-08: patch released
+>
+> =*=*=*=*=*=*=*=*=  Credit  =*=*=*=*=*=*=*=*=
+>
+> Xingyuan Mo (@hdthky) and Gengjia Chen (@chengjia4574) of IceSword Lab, 360
+>
+>
+> Best Regards,
+> Xingyuan Mo
