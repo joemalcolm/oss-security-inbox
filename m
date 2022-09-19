@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1480" "Thursday" "21" "January" "2021" "11:22:38" "+0100" "Matthias Gerstner" "mgerstner@suse.de" "<YAlV7n+yLVBceb3c@f195.suse.de>" "38" "Re: [oss-security] libreoffice-online \"loolforkit\" privileged program local root exploit" nil nil nil "1" "2021012110:22:38" "[oss-security] libreoffice-online \"loolforkit\" privileged program local root exploit" (number mark "U       mgerstner@su Jan 21   38/1480  " thread-indent "\"Re: [oss-security] libreoffice-online \"loolforkit\" privileged program local root exploit\"\n") "<YAWkPB4mFDvqtep9@f195.suse.de>" ("<YAWkPB4mFDvqtep9@f195.suse.de>") nil nil nil nil nil nil nil "Re: [oss-security] libreoffice-online \"loolforkit\" privileged program local root exploit" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9678 invoked by uid 550); 21 Jan 2021 10:22:50 -0000
+Received: (qmail 7394 invoked by uid 550); 19 Sep 2022 08:16:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,56 +7,98 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9657 invoked from network); 21 Jan 2021 10:22:49 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Thu, 21 Jan 2021 11:22:38 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
-To: oss-security@lists.openwall.com
-Message-ID: <YAlV7n+yLVBceb3c@f195.suse.de>
-References: <YAWkPB4mFDvqtep9@f195.suse.de>
+Received: (qmail 18031 invoked from network); 19 Sep 2022 07:46:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date;
+        bh=FuX0zuMo+DFwC1IJl8RImxDK5o2hNKEHx6f8fne9vnA=;
+        b=jcD5TA89oRqpsZ3C4NyXo7w776JvPvOZxqOdH26nsdETC6+jXQLgc1NZopmv3PN7hE
+         ktezJcEcSAM+sZssKZdA1V5Z0vsosh/2LsRrCWJT43bwqHk0zz+YLE3+6tk9NjTDX4bb
+         ceMvAv/UkMumf1VjmVuAJFgZUhBVRMJ4ic326Ung/zFg5PbI1s+QaeVlNOxmePJ5zuuo
+         36yjIV4wnzkxu8YsMe6+YalRcu5hPGL5ekpgNBFUuwfCWyIWm0xbRaly8uxnrh6yDjqT
+         AhvrnFgvudG4g5MTtc2Jy8yNFTj9JwoiIwXQ3KRnHs0zRoir36ccZp6gromQvVjszYYz
+         Q3/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=FuX0zuMo+DFwC1IJl8RImxDK5o2hNKEHx6f8fne9vnA=;
+        b=xfPulZ1mT/YQQCy/ZKgE7s2vKjbWVecDg45X3rA3h9ZnyE+ONeBxqMg0KwvR3Wb3rB
+         KW1BfJmQ2fw7KqbINStfgTi03GPykvMAe4tPrDFZdmA+ldsNVyTAZqT+zcWDMidZjaQF
+         N3RvwDWCKyQ92Kr2mXHBz2C69XiidEZuW8krMPW3T0GGQTPGyyv4ufbunrdj4QgHMx4w
+         lGSl2m1NsXQsn9xDyux7CHtwy/58/LL7e0LjR6+1HwvQxgWffzanKqXR2QYOne8Repcu
+         nkNRoUuZIW3ulRgM/SmdREM0YaxcPTE6Wmcl3W9YVAfbZutC8E81Ixt9NJP33wxqIQdb
+         dafg==
+X-Gm-Message-State: ACrzQf3a7fF0Mu7ffoMflVOAroESsWjBcKs2zVLn/cxrPLQlFksSc49l
+	DP3MhpC0ChocijJJvgwkki57QQcaRYXg0GnXjPoKf/yl
+X-Google-Smtp-Source: AMsMyM4djUCF0OR5dL6vebbkOeCHJjJelQmVdMBNdkDA/dhdJrjgRcP3tEoTNU+vlzH/y7PvncoyeAQd4UC6VTblzZY=
+X-Received: by 2002:a17:90b:35cf:b0:202:6f3d:53a7 with SMTP id
+ nb15-20020a17090b35cf00b002026f3d53a7mr19056150pjb.63.1663573606071; Mon, 19
+ Sep 2022 00:46:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="ydslp/axYI7XqV36"
-Content-Disposition: inline
-In-Reply-To: <YAWkPB4mFDvqtep9@f195.suse.de>
-Subject: Re: [oss-security] libreoffice-online "loolforkit" privileged
- program local root exploit
+References: <CALV6CNPFCj_qyutH_ETc8=+ayLEEqbd9+_GA+VJMJOeuOS-_qg@mail.gmail.com>
+In-Reply-To: <CALV6CNPFCj_qyutH_ETc8=+ayLEEqbd9+_GA+VJMJOeuOS-_qg@mail.gmail.com>
+From: Xingyuan Mo <hdthky0@gmail.com>
+Date: Mon, 19 Sep 2022 15:46:35 +0800
+Message-ID: <CALV6CNMWFmWc9O9qL8FBxdrNs79foRYgVZTuvvxYLR80WA8qew@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Re: Linux kernel: information disclosure in stex_queuecommand_lck
 
---ydslp/axYI7XqV36
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+CVE-2022-40768 has been assigned to this issue.
 
-On Mon, Jan 18, 2021 at 04:07:40PM +0100, Matthias Gerstner wrote:
-> Formally libreoffice-online is covered by the "Document Foundation" CNA,
-> therefore I did not request a CVE for this via the Mitre CVE form. I
-> will try to contact the CNA directly in this matter.
+Thanks,
+Xingyuan Mo
 
-The Document Foundation assigned CVE-2021-25630 for the missing
-enforcement of only allowing the "loolforkit" user to access the
-sensitive features of the program.
-
-Cheers
-
-Matthias
-
---ydslp/axYI7XqV36
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmAJVe0ACgkQFMQFyXGS
-NVO/IRAAhP/0RvDDAeFetkCEX7w4GXCohWHneKQGBVDjSt0WhcCTqN2Pgh1eNb0x
-BplW+WNfjGjA/cNOodG5DPw5tcyX3Yqk2xLol04D6WBEzmgc5c+iUUejFthth5TF
-GwshRC/FZNP5P76NUaUbEvDIJcc+dlo9D1mQrZb7FiuyKvh5jyewjZIpPtwbNZbR
-BXAbgS84wDvIb8aOXpG80Q+R4IPcieaU6oe5+/wOstsMtCgMg8gAl5zUWUf9kVwg
-lEgpTjiSKjUuyLdvb/pxYJacpm1g1qDG/LPBWATpa2Jyry0LCQcjJZpB+yXfxS/T
-/QuAimisl2RESOZ9tKkrxg7lq1nCSDfqfOS8xJYgjgK12tDgDcs+pD3a7navgaRk
-iJf4BUokpWGdz1l1fn4tfCC/wqj7WfI1c12G6hn2bPomqgVF8NPUVacLbYIcegaq
-UR5NwLV38xtb9l1Euu9nnH4XNybjWXxsZrmUTYLywL18A+Ao2ZJ98B4HB9tJCjWR
-FpuAJhr/emMGxkD29JxXlRBh/fcVVVH+tp2fXcXuOiHaQvPfd9s8x62AKCEGxu/F
-j22hHAgHYvSuWiXGE78obVLbU5rH39mkeQreG5NIxBQHFBmDtjiASnuJHGeM9RQs
-x9edojmRtbo9Yb+ol5C7/FM18iPttl1fgGEYftvDg3gR+r3vtAw=
-=t+pm
------END PGP SIGNATURE-----
-
---ydslp/axYI7XqV36--
+On Fri, Sep 9, 2022 at 12:52 PM Xingyuan Mo <hdthky0@gmail.com> wrote:
+>
+> Hello,
+>
+> We found an information disclosure vulnerability in stex_queuecommand_lck() in
+> drivers/scsi/stex.c through linux v6.0-rc4 which allows an attacker to disclose
+> sensitive information such as kernel space address.
+>
+> This issue can be fixed with the following patch:
+> https://lore.kernel.org/all/20220908145154.2284098-1-gregkh@linuxfoundation.org/
+>
+> =*=*=*=*=*=*=*=*=  Bug Details  =*=*=*=*=*=*=*=*=
+>
+> In drivers/scsi/stex.c:
+>  666:  case PASSTHRU_CMD:
+>  667:    if (cmd->cmnd[1] == PASSTHRU_GET_DRVVER) {
+>  668:      struct st_drvver ver;
+>  669:      size_t cp_len = sizeof(ver);
+>  670:
+>  671:      ver.major = ST_VER_MAJOR;
+>  672:      ver.minor = ST_VER_MINOR;
+>  673:      ver.oem = ST_OEM;
+>  674:      ver.build = ST_BUILD_VER;
+>  675:      ver.signature[0] = PASSTHRU_SIGNATURE;
+>  676:      ver.console_id = host->max_id - 1;
+>  677:      ver.host_no = hba->host->host_no;
+>  678:      cp_len = scsi_sg_copy_from_buffer(cmd, &ver, cp_len);
+>  679:      if (sizeof(ver) == cp_len)
+>  680:        cmd->result = DID_OK << 16;
+>  681:      else
+>  682:        cmd->result = DID_ERROR << 16;
+>  683:      done(cmd);
+>  684:      return 0;
+>  685:    }
+>  686:    break;
+>
+> The variable ver is declared off of the stack, but not zeroed out before copied
+> back to user space, resulting in sensitive information disclosure.
+>
+> =*=*=*=*=*=*=*=*=  Timeline  =*=*=*=*=*=*=*=*=
+>
+> 2022-09-08: bug reported
+> 2022-09-08: patch released
+>
+> =*=*=*=*=*=*=*=*=  Credit  =*=*=*=*=*=*=*=*=
+>
+> Xingyuan Mo (@hdthky) and Gengjia Chen (@chengjia4574) of IceSword Lab, 360
+>
+>
+> Best Regards,
+> Xingyuan Mo
