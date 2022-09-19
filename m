@@ -1,77 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/18/1
-Message-ID: <CAJedcCyz-uNq+tyK+BqG0xCD9_WOOC8nta77Up7gaOBs+pfwyA@mail.gmail.com>
-Date: Fri, 18 Nov 2022 11:58:55 +0800
-From: Zheng Hacker <hackerzheng666@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Linux kernel: staging: rtl8712: A Use-after-Free/Double-Free bug in read_bbreg_hdl in drivers/staging/rtl8712/rtl8712_cmd.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/19/2
+Message-ID: <59540946-5cbe-d264-4edc-2a2874ed222c@igalia.com>
+Date: Mon, 19 Sep 2022 14:44:45 +0200
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0009
 Content-Type: text/plain; charset=utf-8
 
-hi,
-This is a bug I've found in linux kernel before 5.19.2, which is
-in cmd_hdl_filter in drivers/staging/rtl8712/rtl8712_cmd.c, allows
-attacker to launch Local Denial of Service attack and gain escalation
-of privileges.
-I reported it to linux kernel in 2022.8.29 and the upstream fixed it in
-2022.09.06. Now the patch was opened to the public
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2022-0009
+------------------------------------------------------------------------
 
-## Root cause && possible exploit
+Date reported           : September 19, 2022
+Advisory ID             : WSA-2022-0009
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2022-0009.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2022-0009.html
+CVE identifiers         : CVE-2022-32886, CVE-2022-32891,
+                          CVE-2022-32912.
 
-This is a uaf / double free bug. Whenrtl8712 wireless networdk adapter
-initialized, for example using command "ifconfig wlan0 up",
-it calls netdev_open function, which final calls cmd_hdl_filter function.
-As we can control the command code, we can trigger the vulnerabiliy.
-After pcmd object was freed, we can use msg_msg heap spray to
-get the object, and design the layout of it. By controlling the parambuf
-address, we can leak infomation to pcmbuf, which will finally write to
-adapater's memory. By using msg_msg tech we can also leak the information.
-Then in r8712_free_cmd_obj funtion , as we have access to pcmd->parmbuf. Now
-we have a Arbitrary Free bug. This is a powerful primitive and there is some
-common skill after that.
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-## Fix
+CVE-2022-32886
+    Versions affected: WebKitGTK and WPE WebKit before 2.36.8.
+    Credit to P1umer, afang5472, xmzyshypnc.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A buffer overflow issue was
+    addressed with improved memory handling.
 
-[1] https://lore.kernel.org/all/20220906132823.157986856@linuxfoundation.org/
-[2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c53b3dcb9942b8ed7f81ee3921c4085d87070c73
+CVE-2022-32891
+    Versions affected: WebKitGTK and WPE WebKit before 2.36.5.
+    Credit to @real_as3617, an anonymous researcher.
+    Impact: Visiting a website that frames malicious content may lead to
+    UI spoofing. Description: The issue was addressed with improved UI
+    handling.
 
-## CVE
-
-Now no CVE number is assigned for this issue.
-
-## Timeline
-
-2022-08-29: reported to security@...nel.org
-2022-08-29: bug confirmed
-2022-09-06: patch it
-2022-09-06: patch released
-2022-09-07: apply for a CVE number in MITRE
-2022-09-29: reported to secalert@...hat.com
-2022-11-18: Announced on oss-security lists.
-
-## Credit
-
-Zheng Wang(@xmzyshypnc) and Zhuorao Yang(@A1ex)
-
-## Additional Information
-
-This is a bug reported to Linux kernel. Although staging driver is not
-a so important driver module in Linux. [1] This vulnerability has been
-introduced as far as the driver was added in 2010. I've checked the
-issue doesn't affect the vendor in the CNA-project list. But this
-issue can affect othe company who use it as their rtl8712 adapter
-driver module like D-link [2] . I  searched the related issue like
-CVE-2021-28660. I think its NOTE description(NOTE: from the
-perspective of kernel.org releases, CVE IDs are not normally used for
-drivers/staging/* (unfinished work); however, system integrators may
-have situations in which a drivers/staging issue is relevant to their
-own customer base) is very appropriate for my situation.  This is a
-long-existing issue as far as the driver module was added so I think
-it's necessary to assign a CVE number so that anyone using it can fix
-the bug.
-
-[1] https://github.com/torvalds/linux/commit/2865d42c78a9121caad52cb02d1fbb7f5cdbc4ef
-[2] https://cateee.net/lkddb/web-lkddb/R8712U.html
+CVE-2022-32912
+    Versions affected: WebKitGTK and WPE WebKit before 2.36.8.
+    Credit to Jeonghoon Shin (@singi21a) at Theori working with Trend
+    Micro Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: An out-of-bounds read was
+    addressed with improved bounds checking.
 
 
-Best regards,
-Zheng Wang
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
+
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+September 19, 2022
