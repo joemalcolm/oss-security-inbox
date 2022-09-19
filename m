@@ -1,27 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/06/5
-Message-ID: <7667fcae.47cc.17e2f40370d.Coremail.xxyu@apache.org>
-Date: Thu, 6 Jan 2022 19:57:24 +0800 (CST)
-From: "Xiaoxiang Yu" <xxyu@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/19/3
+Message-ID: <CAMVt_AwSgbSxwUZ4kjyM6j399HvRaQgjt-bPAruSu3cpQ1vm-w@mail.gmail.com>
+Date: Mon, 19 Sep 2022 21:23:30 +0530
+From: Manikumar <manikumar@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: jincsheng@...il.com
-Subject: CVE-2021-36774: Apache Kylin: Mysql JDBC Connector Deserialize RCE
+Cc: dev <dev@...ka.apache.org>
+Subject: CVE-2022-34917: Unauthenticated clients may cause OutOfMemoryError on Apache Kafka Brokers
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Severity: High
 
 Description:
 
-Apache Kylin allows users to read data from other database systems using JDBC. The MySQL JDBC driver supports certain properties, which, if left unmitigated, can allow an attacker to execute arbitrary code from a hacker-controlled malicious MySQL server within Kylin server processes. 
-This issue affects Apache Kylin Apache Kylin 2 version 2.6.6 and prior versions; Apache Kylin 3 version 3.1.2 and prior versions.
+A security vulnerability has been identified in Apache Kafka. It
+affects all releases since 2.8.0. The vulnerability allows malicious
+unauthenticated clients to allocate large amounts of memory on
+brokers. This can lead to brokers hitting OutOfMemoryException and
+causing denial of service.
 
-Mitigation:
+Example scenarios:
+- Kafka cluster without authentication: Any clients able to establish
+a network connection to a broker can trigger the issue.
+- Kafka cluster with SASL authentication: Any clients able to
+establish a network connection to a broker, without the need for valid
+SASL credentials, can trigger the issue.
+- Kafka cluster with TLS authentication: Only clients able to
+successfully authenticate via TLS can trigger the issue.
 
-Users of Kylin 2.x & Kylin 3.x should upgrade to 3.1.3 or apply patch https://github.com/apache/kylin/pull/1694.
+We advise the users to upgrade the Kafka installations to one of the
+3.2.3, 3.1.2, 3.0.2, 2.8.2 versions.
 
 Credit:
 
-jinchen sheng --
+Apache Kafka would like to thank Mickael Maison, Tom Bentley and
+Daniel Collins for reporting this issue.
 
-Best wishes to you ! 
-From ：Xiaoxiang Yu
+References:
+
+https://kafka.apache.org/cve-list
