@@ -1,48 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/22/2
-Message-ID: <YmJnJClvUcrgX31h@kroah.com>
-Date: Fri, 22 Apr 2022 10:28:20 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/20/3
+Message-ID: <276b2fdb-440f-5ed0-d9a5-6acc21202659@apache.org>
+Date: Tue, 20 Sep 2022 18:53:42 +0000
+From: Jedidiah Cunningham <jedcunningham@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-1419: Linux kernel: A concurrency use-after-free in vgem_gem_dumb_create
+Subject: CVE-2022-40604: Apache Airflow: Format String Vulnerability 
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Apr 22, 2022 at 09:05:50AM +0200, Marcus Meissner wrote:
-> On Thu, Apr 21, 2022 at 07:35:46PM +0200, Greg KH wrote:
-> > On Thu, Apr 21, 2022 at 11:44:54PM +0800, Minh Yuan wrote:
-> > > Timeline:
-> > > * 21.04.22 - Vulnerability reported to security@...nel.org and
-> > > linux-distros@...openwall.org
-> > > * 21.04.22 - CVE-2022-1419 assigned.
-> > 
-> > Why are people assigning CVEs to things that require root permissions?
-> > Or are there distros running on kernels older than 5.4 that allow
-> > untrusted users access to the drm ioctls directly?
-> > 
-> > I'm curious as it would affect the backporting of the needed fixes here
-> > (or not.)
-> 
-> It does not, distros like SUSE give out ACLs or groups write perms to /dev/dri/card0
-> to it via udev.
-> 
-> crw-rw----+ 1 root video 226, 0 Apr 22 08:47 /dev/dri/card0
-> 
-> getfacl /dev/dri/card0
-> 
-> # file: dev/dri/card0
-> # owner: root
-> # group: video
-> user::rw-
-> user:marcus:rw-
-> group::rw-
-> mask::rw-
-> other::---
+Description:
 
-Ok, so this is an issue for older kernels, I'll try to bump it up my
-priority list for backports, but I would really like some help from
-those distros still relying on those older kernels for this work.
-Especially for testing.
+In Apache Airflow 2.3.0 through 2.3.4, part of a url was unnecessarily formatted, allowing for possible information extraction.
 
-thanks,
+Credit:
 
-greg k-h
+The Apache Airflow PMC would like to thank L3yx of Syclover Security Team for reporting this issue.
+
+References:
+
+https://github.com/apache/airflow/pull/26337
+
+
