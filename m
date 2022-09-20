@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1978" "Monday" "3" "April" "2017" "10:01:22" "+0200" "Martin Prpic" "mprpic@redhat.com" "<87lgrhx6lp.fsf@redhat.com>" "55" "Re: [oss-security] CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring" nil nil nil "4" "2017040308:01:22" "[oss-security] CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring" (number mark "U       mprpic@redha Apr  3   55/1978  " thread-indent "\"Re: [oss-security] CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring\"\n") "<20170401204457.GA12965@openwall.com>" ("<CAAeHK+x6PmHr1jWD1MUiZx_Oj1R1gai3oXj03xbcfDe86uSjNA@mail.gmail.com>" "<CAAeHK+wL_b0h-gSq3E=8+0Pi7cmzr-FtUgszdeo3i_kJ9bJScg@mail.gmail.com>" "<20170401204457.GA12965@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 24440 invoked by uid 550); 3 Apr 2017 08:01:38 -0000
+Received: (qmail 3407 invoked by uid 550); 20 Sep 2022 12:19:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,77 +7,48 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24422 invoked from network); 3 Apr 2017 08:01:37 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com A853BC04B924
-Authentication-Results: ext-mx07.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx07.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=mprpic@redhat.com
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com A853BC04B924
-From: Martin Prpic <mprpic@redhat.com>
-To: oss-security@lists.openwall.com
-References: <CAAeHK+x6PmHr1jWD1MUiZx_Oj1R1gai3oXj03xbcfDe86uSjNA@mail.gmail.com> <CAAeHK+wL_b0h-gSq3E=8+0Pi7cmzr-FtUgszdeo3i_kJ9bJScg@mail.gmail.com> <20170401204457.GA12965@openwall.com>
-User-agent: mu4e 0.9.9.5; emacs 24.3.1
-In-reply-to: <20170401204457.GA12965@openwall.com>
-Date: Mon, 03 Apr 2017 10:01:22 +0200
-Message-ID: <87lgrhx6lp.fsf@redhat.com>
+Received: (qmail 3367 invoked from network); 20 Sep 2022 12:19:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:References:
+	Cc:To:From:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=CMP5xygdH74wWPRS9RTl5pREr2sscYbHPAuvHyR7sLA=; b=ME9RrtBDvgZyxYfjfK+4Ot7oka
+	qAic2LJ4Qj6uq2jxddboavZhz3z88FoaJWRPTNdBRH9RkL++/hLCjhv2U8AjjNXxeZinM36yavb2p
+	gb0axMONCgbHLzV6SGWQd+Zzvyb22hDCNE/AHruRdCN7vixd0N6+HF9LazVK0MalbbvbXhfabs8kw
+	6w8xOUWAM/yCeuUOpB68QAESsqanHEybmBcRtjUPPikAFoY7CgKeIVugvKCCLArkIFyzkpot32xDa
+	5X797l002+C/ocC/jU2SDR/QrYJz8vaXZeCAUFWCJY4orSngpm8Gl6Tdg2ie3yAFb9GDm9m5Lv2/y
+	ES0Oaa9A==;
+Message-ID: <3d98d0cb-2582-45ba-e768-28648bbe5ad2@igalia.com>
+Date: Tue, 20 Sep 2022 14:19:08 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Mon, 03 Apr 2017 08:01:25 +0000 (UTC)
-Subject: Re: [oss-security] CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Content-Language: en-GB
+From: Carlos Alberto Lopez Perez <clopez@igalia.com>
+To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Cc: security@webkit.org, distributor-list@gnome.org,
+ oss-security@lists.openwall.com, bugtraq@securityfocus.com
+References: <59540946-5cbe-d264-4edc-2a2874ed222c@igalia.com>
+Organization: Igalia S.L.
+Mail-Followup-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org,
+ security@webkit.org, distributor-list@gnome.org,
+ oss-security@lists.openwall.com, bugtraq@securityfocus.com
+In-Reply-To: <59540946-5cbe-d264-4edc-2a2874ed222c@igalia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] Re: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0009
 
-Solar Designer writes:
 
-> To Red Hat folks:
->
-> On Fri, Mar 31, 2017 at 07:20:20PM +0200, Andrey Konovalov wrote:
->> On Fri, Mar 31, 2017 at 2:03 PM, Andrey Konovalov <andreyknvl@google.com> wrote:
->> > CVE-2017-7308 [1] was assigned to the following issue:
->> >
->> > The packet_set_ring function in net/packet/af_packet.c in the Linux
->> > kernel through 4.10.6 does not properly validate certain block-size
->> > data, which allows local users to cause a denial of service (overflow)
->> > or possibly have unspecified other impact via crafted system calls.
->> >
->> > The fix is sent upstream [2].
->> 
->> Update: the fix actually consists of 3 patches:
->> 
->> https://patchwork.ozlabs.org/patch/744811/
->> https://patchwork.ozlabs.org/patch/744813/
->> https://patchwork.ozlabs.org/patch/744812/
->> 
->> > [1] http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7308
->> >
->> > [2] https://patchwork.ozlabs.org/patch/744811/
->
-> Red Hat currently says all RHEL starting with RHEL5 are affected:
->
-> https://access.redhat.com/security/cve/cve-2017-7308
->
-> However, the corresponding Bugzilla entry has no mention of that:
->
-> https://bugzilla.redhat.com/show_bug.cgi?id=1437404
->
-> So is it just a better-safe-than-sorry default to list products as
-> affected until known otherwise?  If so, maybe Unknown would be better?
->
-> RHEL5 doesn't yet include TPACKET_V3.  I did not check RHEL6.
->
-> https://github.com/torvalds/linux/commit/f6fb8f100b807378fda19e83e5ac6828b638603a
->
-> Alexander
+On 19/09/2022 14:44, Carlos Alberto Lopez Perez wrote:
+> CVE-2022-32912
+>     Versions affected: WebKitGTK and WPE WebKit before 2.36.8.
+>     Credit to Jeonghoon Shin (@singi21a) at Theori working with Trend
+>     Micro Zero Day Initiative.
+>     Impact: Processing maliciously crafted web content may lead to
+>     arbitrary code execution. Description: An out-of-bounds read was
+>     addressed with improved bounds checking.
 
-Hey Alexander,
-
-Thanks for the note. The issue in question has not yet been fully
-analyzed and I only did a quick check whether the affected code was
-present in RHEL 5 when filing it and must have misread my search results
-since the affected code is definitely not in RHEL 5. Sorry about that.
-
-We do have an "Under investigation" state for the affectedness table on
-the CVE pages, which is used when no triage has been done on a filed
-issue.
-
--- 
-Martin Prpič / Red Hat Product Security
+Just an update about this CVE: This issue doesn't affect Linux builds.
+Only MacOS builds are affected by this.
