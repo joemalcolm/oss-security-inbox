@@ -1,4 +1,4 @@
-Received: (qmail 22228 invoked by uid 550); 2 Sep 2022 09:25:15 -0000
+Received: (qmail 22227 invoked by uid 550); 21 Sep 2022 09:37:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,44 +7,54 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9580 invoked from network); 2 Sep 2022 06:26:05 -0000
+Received: (qmail 11549 invoked from network); 20 Sep 2022 19:57:13 -0000
 Authentication-Results: apache.org; auth=none
-Message-ID: <0692e33f-4855-c688-6718-26b94610fdeb@apache.org>
-Date: Fri, 2 Sep 2022 08:26:10 +0200
+X-Gm-Message-State: ACrzQf0YSZEz/NmRLUga/7bkOPrctejAASYQoMfajzPXerlRoN8xlH1J
+	vd11TFAJ+WuekgLfjGQHUbKUjfh8NZjlxZrqRa4=
+X-Google-Smtp-Source: AMsMyM5FqZCwERADHbA6A9DCPc8nwP/iBZRfT5pELfHu8M41D6l+/RFHasrI6wJpxByhGRMw5hND28+kq093FuvWb4w=
+X-Received: by 2002:a05:6214:5287:b0:4ac:c99b:fdeb with SMTP id
+ kj7-20020a056214528700b004acc99bfdebmr20855422qvb.41.1663703819263; Tue, 20
+ Sep 2022 12:56:59 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.0
-Content-Language: fr
-From: Jacques Le Roux <jleroux@apache.org>
-To: oss-security@lists.openwall.com
-Organization: Apache Software Fundation
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] Apache OFBiz - Unauth Path Traversal with file corruption
- (CVE-2022-25371)
+References: <c44d5503-8393-4048-2b2b-5bc3ddac3a43@apache.org> <20220902204301.GA3212087@millbarge>
+In-Reply-To: <20220902204301.GA3212087@millbarge>
+From: Jed Cunningham <jedcunningham@apache.org>
+Date: Tue, 20 Sep 2022 13:56:47 -0600
+X-Gmail-Original-Message-ID: <CAJ7ievqw=vXF-NL31ni7tHb7LHuz7e3x5hGQ_4YF2=3ybgbByA@mail.gmail.com>
+Message-ID: <CAJ7ievqw=vXF-NL31ni7tHb7LHuz7e3x5hGQ_4YF2=3ybgbByA@mail.gmail.com>
+To: Jedidiah Cunningham <jedcunningham@apache.org>, oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="00000000000028beab05e9213b65"
+Subject: Re: [oss-security] CVE-2022-38170: Apache Airflow: Overly permissive
+ umask for deamons
 
-Severity:
-High
+--00000000000028beab05e9213b65
+Content-Type: text/plain; charset="UTF-8"
 
-Vendor:
-The Apache Software Foundation
+Hi Seth,
 
-Versions Affected:
-OFBiz versions prior to 18.12.06
+Thanks for the feedback, and I agree. We will start adding links to the PR
+fixing the issue going forward, starting with our announcements today.
 
-Description:
-The Birt viewer version 4.5.0 has a security issue that allows this exploit.
-We waited long for https://github.com/eclipse/birt/issues/625
-to resolve but eventually decided to release OFBiz 18.12.06 without
-the Birt component
+Thanks,
+Jed
 
-Mitigation:
-Upgrade to at least 18.12.06
-or apply patches at https://issues.apache.org/jira/browse/OFBIZ-...
+On Fri, Sep 2, 2022, 2:43 PM Seth Arnold <seth.arnold@canonical.com> wrote:
 
-Credit:
-npodotykin@ptsecurity.com
+> On Fri, Sep 02, 2022 at 03:55:07AM +0000, Jedidiah Cunningham wrote:
+> > In Apache Airflow prior to 2.3.4, an insecure umask was configured for
+> numerous Airflow components when running with the  `--deamon` flag which
+> could result in a race condition giving world-writable files in the Airflow
+> home directory and allowing local users to expose arbitrary file contents
+> via the webserver.
+>
+> Hello Jedidiah,
+>
+> Thanks for contributing to the oss-security list; I believe your
+> contributions would be far more valuable if they included some further
+> details -- providing links to issues and commits is common, but you could
+> also include the details in the email if that's easier for whatever reason.
+>
+> Thanks
+>
 
-References:
-http://ofbiz.apache.org/download.html#vulnerabilities
-
+--00000000000028beab05e9213b65--
