@@ -1,4 +1,4 @@
-Received: (qmail 1859 invoked by uid 550); 29 Nov 2024 12:37:16 -0000
+Received: (qmail 1102 invoked by uid 550); 21 Sep 2022 14:55:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,290 +7,381 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 1826 invoked from network); 29 Nov 2024 12:37:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1732883827; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=AWUEaP4nLUNjKlRIshMsHczlRhV5X4t8UmYW4M6UdMU=;
-	b=xMgUl/mDupVe1p8NKFLlJ1rZrgUdjWslSv+43AMoybJeZJiPFlHtNKuzaYuFh8/ceefrva
-	97Zy+U3Qrlfu5nhhp9BHYQqS/gdNCS8QlJYqX5i8wpcDSuNDubRKq+j37mrTDk4ByEfL3r
-	kUQA6SE7SrAx6vjTWIeRSlX+eLfkrLE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1732883827;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=AWUEaP4nLUNjKlRIshMsHczlRhV5X4t8UmYW4M6UdMU=;
-	b=xBrFSHpbY1i846oz+ypyS2MzrEvBF+ORmKpXHQ3RcQvyw6T7Zbz9Q9ECUPnWUyo9NTejE6
-	8uDTptcefxgwFdBg==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1732883827; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=AWUEaP4nLUNjKlRIshMsHczlRhV5X4t8UmYW4M6UdMU=;
-	b=xMgUl/mDupVe1p8NKFLlJ1rZrgUdjWslSv+43AMoybJeZJiPFlHtNKuzaYuFh8/ceefrva
-	97Zy+U3Qrlfu5nhhp9BHYQqS/gdNCS8QlJYqX5i8wpcDSuNDubRKq+j37mrTDk4ByEfL3r
-	kUQA6SE7SrAx6vjTWIeRSlX+eLfkrLE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1732883827;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=AWUEaP4nLUNjKlRIshMsHczlRhV5X4t8UmYW4M6UdMU=;
-	b=xBrFSHpbY1i846oz+ypyS2MzrEvBF+ORmKpXHQ3RcQvyw6T7Zbz9Q9ECUPnWUyo9NTejE6
-	8uDTptcefxgwFdBg==
-Date: Fri, 29 Nov 2024 13:37:03 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
-To: oss-security@lists.openwall.com
-Message-ID: <Z0m1cSHNQ1-0_6Cv@kasco.suse.de>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="lW5VfK+MEg4UEQrI"
-Content-Disposition: inline
-Subject: [oss-security] stalld: unpatched fixed temporary file use and other issues
-
---lW5VfK+MEg4UEQrI
-Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
-Content-Disposition: inline
+Received: (qmail 1048 invoked from network); 21 Sep 2022 14:55:24 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 29 Nov 2024 13:37:03 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.1\))
+Message-Id: <A412834D-8B18-4A49-B80D-25AAB4940943@beckweb.net>
+Date: Wed, 21 Sep 2022 16:55:11 +0200
 To: oss-security@lists.openwall.com
-Subject: stalld: unpatched fixed temporary file use and other issues
+X-Mailer: Apple Mail (2.3696.120.41.1.1)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1663772124;6d2cbd87;
+X-HE-SMSGID: 1ob184-0007y3-JF
+Subject: [oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins
 
-Hello list,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-this is a report about unfixed issues in stalld [1]. We also offer a
-rendered version of this report on our blog [2].
+The following releases contain fixes for security vulnerabilities:
 
-1) Introduction
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+* Jenkins 2.370
+* Anchore Container Image Scanner Plugin 1.0.25
+* Compuware Common Configuration Plugin 1.0.15
+* NS-ND Integration Performance Publisher Plugin 4.8.0.130
 
-Stalld is a daemon that aims to prevent starvation of operating system
-threads on Linux. It has recently been added to openSUSE Tumbleweed and
-we performed a routine review the contained systemd service. During the
-review we noticed a couple of security issues that should be addressed.
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-We reached out to upstream via their GitLab issue tracker and created a
-public [3] and a private issue [4] (still private), but never got any
-reaction. After nearly three months without a reply we decided to
-publish the available information now.
+* Apprenda Plugin
+* BigPanda Notifier Plugin
+* Build-Publisher Plugin
+* CONS3RT Plugin
+* DotCi Plugin
+* extreme-feedback Plugin
+* NS-ND Integration Performance Publisher Plugin
+* RQM Plugin
+* Rundeck Plugin
+* SCM HttpClient Plugin
+* Security Inspector Plugin
+* SmallTest Plugin
+* View26 Test-Reporting Plugin
+* Walti Plugin
+* WildFly Deployer Plugin
+* Worksoft Execution Manager Plugin
 
-This report is based on stalld version v1.19.6.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2022-09-21/
 
-2) Use of Fixed Temporary File Path `/tmp/rtthrottle` in `scripts/throttlec=
-tl.sh`
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-The throttlectl.sh script [5], which is called with root privileges as a
-pre and post script in stalld's systemd unit, is using the fixed /tmp
-path `/tmp/rtthrottle` to cache the original values found in
-`/proc/sys/kernel/sched_rt_runtime_us` and `/proc/sys/kernel/sched_rt_perio=
-d_us`.
-This allows for a symlink attack and a file pre-creation attack.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-2.a) Symlink Attack
--------------------
+---
 
-A symlink attack can only work if the Linux kernel's
-`protected_symlinks` setting is not in effect. If that would be the case
-then an attacker could place a symlink at the location causing
-`throttlectl` to overwrite arbitrary files in the system, allowing for a
-local Denial-of-Service.
+SECURITY-2886 / CVE-2022-41224
+Jenkins 2.367 through 2.369 (both inclusive) does not escape tooltips of
+the `l:helpIcon` UI component used for some help icons on the Jenkins web
+UI.
 
-2.b) File Pre-Creation Attack
------------------------------
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to control tooltips for this component.
 
-Pre-creating the path in `/tmp/rtthrottle` will always work, even if the
-`protected_regular` setting in the kernel is active. This is the case
-because the shell redirection in the script (like in the line `echo
-$period > $path/sched_rt_period_us`) will fall back to opening the
-target file without `O_CREAT` in the `open()` flags, if creating the
-file fails. Without `O_CREAT` the `protected_regular` logic no longer
-triggers.
+NOTE: As of publication, the Jenkins security team is unaware of any
+exploitable help icon/tooltip in Jenkins core or plugins published by the
+Jenkins project. The vast majority of help icons use the `l:help` component
+instead of `l:helpIcon`. The few known instances of `l:helpIcon` do not
+have user-controllable contents.
 
-This means that if a local attacker pre-creates the file, the script
-will write to a file owned by the attacker. By the time the script tries
-to restore the values from this file, the local attacker can place
-arbitrary values in it, which will in turn be written to the pseudo
-files in `/proc/sys/kernel/sched_rt_*`. This is a kind of local
-Denial-of-Service or a local integrity violation. It is not an
-information leak, because the content of these pseudo files is
-world-accessible anyway.
 
-2.c) Exploitability
--------------------
+SECURITY-2821 / CVE-2022-41225
+Anchore Container Image Scanner Plugin 1.0.24 and earlier does not escape
+content provided by the Anchore engine API.
 
-When stalld starts at boot time, there is not much opportunity for
-unprivileged local users to exploit this issue. If the service is
-started at a later time, or restarted, then the attack vector is
-exploitable, though.
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to control API responses by Anchore engine.
 
-2.d) Suggested Fix
------------------
 
-To fix this, we suggest to place the file into the `/run/stalld`
-directory, which is owned by root. This directory is already created via
-stalld's systemd unit.
+SECURITY-2832 / CVE-2022-41226
+Compuware Common Configuration Plugin 1.0.14 and earlier does not configure
+its XML parser to prevent XML external entity (XXE) attacks.
 
-In the systemd unit some hardenings like `PrivateTmp=3Dyes` could also be
-applied to prevent any future temporary file issues of this type to be
-exploitable.
+This allows attackers able to change the contents of the Topaz Workbench
+CLI home directory on agents to have Jenkins parse a crafted file that uses
+external entities for extraction of secrets from the Jenkins controller or
+server-side request forgery.
 
-The `throttlectl` script should also set the `errexit` shell option to
-make it exit upon any unexpected errors.
 
-3) The `fill_process_comm()` Function Might Read Unexpected Control Charact=
-ers
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D
+SECURITY-2737 / CVE-2022-41227 (CSRF) & CVE-2022-41228 (missing permission =
+check)
+NS-ND Integration Performance Publisher Plugin 4.8.0.129 and earlier does
+not perform a permission check in a method implementing form validation.
 
-The `fill_process_comm()` function [6] reads the content of
-`/proc/<pid>/comm` from potentially untrusted processes in the system.
-The data found in there is obtained from the name of the executable that
-the kernel executed. Executable names can contain any data, except for
-the `/` character. This also includes control characters like `\r` or
-even terminal control sequences. This string is used by `stalld` to
-write information to logs. By embedding a carriage return in an
-executable name, a local attacker could achieve log spoofing.
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified webserver using attacker-specified username and
+password.
 
-To fix this, we suggest to transform any non-alphanumeric characters in
-the string into some safe character like `?`.
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
 
-4) Experimental FIFO Boosting Feature might have a Danger of Locking up the=
- System
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D
 
-Via the `--force_fifo` command line switch, stalld can be instructed to
-"boost" stalled tasks by switching them to `SCHED_FIFO` scheduling. We are
-wondering what happens if a "rogue task" is assigned to this scheduler. As =
-far
-as we know, if such a task never yields the CPU again, the whole system cou=
-ld
-lock up. This might require `stalld` to run under `SCHED_FIFO` itself,
-using a higher scheduling priority than the boosted task, to prevent any su=
-ch
-situation.
+SECURITY-2858 / CVE-2022-41229
+NS-ND Integration Performance Publisher Plugin 4.8.0.134 and earlier does
+not escape configuration options of the Execute NetStorm/NetCloud Test
+build step.
 
-5) Potential Race Conditions when Accessing `/proc/<pid>/{status,comm}`
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers with Item/Configure permission.
 
-As usual, when iterating over the processes in the `/proc` file system,
-race conditions can occur. Target processes could attempt to replace
-themselves by other processes, confusing stalld. We don't believe that
-the "stall" situation can be provoked easily by a local attacker,
-though, thus the possibility to exploit anything in this direction is
-likely small.
+As of publication of this advisory, there is no fix.
 
-We just mention this as a hint to the reader, maybe we're overlooking
-something more critical here.
 
-6) Weird `umask()` Setting used in `daemonize()`
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+SECURITY-1994 / CVE-2022-41230
+Build-Publisher Plugin 1.22 and earlier does not perform a permission check
+in an HTTP endpoint.
 
-The `daemonize()` function [7] applies a new umask to the daemon process
-by calling `umask(DAEMON_UMASK)`. The constant for this [8] has a weird
-value, though:
+This allows attackers with Overall/Read permission to obtain names and URLs
+of Jenkins servers that the plugin is configured to publish builds to, as
+well as builds pending for publication to those Jenkins servers.
 
-```
-/*
- * Daemon umask value.
- */
-#define DAEMON_UMASK  0x133  /* 0644 */
-```
+As of publication of this advisory, there is no fix.
 
-We don't know why an octal `0644` value isn't used in the first place,
-instead of writing this as a comment only. The constant `0x133`
-corresponds to an octal value of `0463`, though. It will mask out the
-owner-readable bit, read-write bits for the group and write-execute bits
-for world. This is likely not what was intended here.
 
-Luckily no world-writable files will come into existence this way, but
-the misconfiguration could lead to strange effects in the future, e.g.
-because the owner of the file will not have read permissions for it.
+SECURITY-2139 / CVE-2022-41231 (path traversal) & CVE-2022-41232 (CSRF)
+Build-Publisher Plugin 1.22 and earlier allows attackers with
+Item/Configure permission to create or replace any `config.xml` file on the
+Jenkins controller file system by providing a crafted file name to an API
+endpoint.
 
-We don't believe this is a security issue, which is why we created a
-public issue [3] in the upstream GitLab tracker for this.
+Additionally, this endpoint does not require POST requests, resulting in a
+cross-site request forgery (CSRF) vulnerability that allows attackers to
+replace any config.xml file on the Jenkins controller file system with an
+empty file.
 
-7) CVE Assignments
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+As of publication of this advisory, there is no fix.
 
-Since upstream did not react and therefore also didn't confirm any of
-these issues, we did not request any CVEs from Mitre until now. The
-fixed temporary file usage issue 2) likely is worthy of a CVE
-assignment, though.
 
-8) Timeline
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+SECURITY-2170 / CVE-2022-41233
+Rundeck Plugin 3.6.11 and earlier does not perform Run/Artifacts permission
+checks in multiple HTTP endpoints.
 
-2024-09-09: We reported the issues ([3], [4]) in the upstream GitLab
-            project, offering coordinated disclosure for the sensitive issu=
-es.
-2024-11-13: After getting no reaction for such a long time we commented
-	    in the issue, asking for a reply until 2024-11-22, otherwise
-	    we would publish the issue on our end.
-2024-11-28: We published the information without upstream fixes being avail=
-able.
+This allows attackers with Item/Read permission to obtain information about
+build artifacts of a given job, if the optional Run/Artifacts permission is
+enabled.
 
-9) References
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+As of publication of this advisory, there is no fix.
 
-[1]: https://gitlab.com/rt-linux-tools/stalld
-[2]: https://security.opensuse.org/2024/11/29/stalld-fixed-tmp-file.html
-[3]: https://gitlab.com/rt-linux-tools/stalld/-/issues/26
-[4]: https://gitlab.com/rt-linux-tools/stalld/-/issues/25
-[5]: https://gitlab.com/rt-linux-tools/stalld/-/blob/v1.19.6/scripts/thrott=
-lectl.sh#L13
-[6]: https://gitlab.com/rt-linux-tools/stalld/-/blob/v1.19.6/src/utils.c?re=
-f_type=3Dtags#L54
-[7]: https://gitlab.com/rt-linux-tools/stalld/-/blob/v1.19.6/src/utils.c?re=
-f_type=3Dtags#L355
-[7]: https://gitlab.com/rt-linux-tools/stalld/-/blob/v1.19.6/src/stalld.h?r=
-ef_type=3Dtags#L49
 
-Best Regards
+SECURITY-2169 / CVE-2022-41234
+Rundeck Plugin 3.6.11 and earlier does not protect access to the
+`/plugin/rundeck/webhook/` endpoint.
 
-Matthias
+This allows attackers with Item/Read permission to trigger jobs that are
+configured to be triggerable via Rundeck.
 
---=20
-Matthias Gerstner <matthias.gerstner@suse.de>
-Security Engineer
-https://www.suse.com/security
-GPG Key ID: 0x14C405C971923553
-=20
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG N=FCrnberg
-Gesch=E4ftsf=FChrer: Ivo Totev, Andrew McDonald, Werner Knoblich
+As of publication of this advisory, there is no fix.
 
---lW5VfK+MEg4UEQrI
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
+SECURITY-2645 / CVE-2022-41235
+WildFly Deployer Plugin 1.0.2 and earlier implements functionality that
+allows agent processes to read arbitrary files on the Jenkins controller
+file system.
 
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmdJtXEACgkQFMQFyXGS
-NVNiTQ/9GQe/vYfztjBIdXpHWgqU8iT3xGqo5SJHNNRZbM5bK8/wtn1zPVOWK/q4
-CtoM+M3QElDXJJjyc8Eg+Kkfptflfdnq5f9xiEYn4BPBoKuUvw2pSaYcDnipHKSh
-U4A5HM2tK3H9p+3pxLJC0vXaOS1sDO95OlxQm7G+xf7GZYKnWsME+FPhmLxGg+Qz
-xaij8fKrSCDSQbK+T6qICA/5pZlZy4l9QwO5sDxQ2MplkHXhmVSFrcPgXYCQS3or
-APmLLI4daEOks/xgM64UFp8GE1padfhShGKrPvVigfVQTp0DDVXr/8m3HigkIgIl
-3oRrTrV/fH34QX/cR/4E13HiYCUVS2ZhpfevAkR6aKZtiN4Q9v04oY1Z7Ny8RJp3
-IRHjV5dzw/t7KpseErGZBNFSn4jHYFOX98MAFNp3RXz99gPsnVJw7kfPX29GX6b3
-9vk0EfQvGFGWH6SCY76rw1z+XUtV+ciF49RvSsuOCGC9ZEWNDWlyyrXsj1gqMPy9
-OZ9xZnWn5RtXeRryaTneV77QCV+M9ogSni2wP+Oz8qRWwBOs1TlHX3ulp7p0ZFOV
-PB4v0js4FMvLjsvlYTszn+6uW1nKsqsJFAGkAKmQgs3pYM/8wIX+sy5dDks2ZAQV
-/2JTNW6UolSlOpHxOxyZPM1N8bjNZV7WpxK7isQKZQb4JlihSGs=
-=WyFi
------END PGP SIGNATURE-----
+This allows attackers able to control agent processes to read arbitrary
+files on the Jenkins controller file system.
 
---lW5VfK+MEg4UEQrI--
+NOTE: This vulnerability is only exploitable in Jenkins 2.318 and earlier,
+LTS 2.303.2 and earlier.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2051 / CVE-2022-41236
+Security Inspector Plugin 117.v6eecc36919c2 and earlier does not require
+POST requests for an HTTP endpoint, resulting in a cross-site request
+forgery (CSRF) vulnerability.
+
+This vulnerability allows attackers to replace the generated report stored
+in a per-session cache and displayed to authorized users at the
+`.../report` URL with a report based on attacker-specified report
+generation options. This could create confusion in users of the plugin who
+are expecting to see a different result.
+
+NOTE: A security hardening since Jenkins 2.287 and LTS 2.277.2 prevents
+exploitation of this vulnerability for the "Single user, multiple jobs"
+report. Other report types are still affected.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1737 / CVE-2022-41237
+DotCi Plugin 2.40.00 and earlier does not configure its YAML parser to
+prevent the instantiation of arbitrary types.
+
+This results in a remote code execution (RCE) vulnerability exploitable by
+attackers able to modify `.ci.yml` files in SCM.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2867 / CVE-2022-41238
+DotCi Plugin provides a webhook endpoint at `/githook/` that can be used to
+trigger builds of the job for a GitHub repository.
+
+In DotCi Plugin 2.40.00 and earlier, this endpoint can be accessed without
+authentication.
+
+This allows unauthenticated attackers to trigger builds of jobs
+corresponding to the attacker-specified repository for attacker-specified
+commits.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2884 / CVE-2022-41239
+DotCi Plugin 2.40.00 and earlier does not escape the GitHub user name
+parameter provided to commit notifications when displaying them in a build
+cause.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to submit crafted commit notifications to the
+`/githook/` endpoint (see also SECURITY-2867).
+
+NOTE: This vulnerability is only exploitable in Jenkins 2.314 and earlier,
+LTS 2.303.1 and earlier.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-1870 / CVE-2022-41240
+Walti Plugin 1.0.1 and earlier does not escape the information provided by
+the Walti API.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to provide malicious API responses from
+Walti.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2805 / CVE-2022-41241
+RQM Plugin 2.8 and earlier does not configure its XML parser to prevent XML
+external entity (XXE) attacks.
+
+This allows attackers able to provide crafted API responses from Rational
+Quality Manager to have Jenkins parse a crafted XML document that uses
+external entities for extraction of secrets from the Jenkins controller or
+server-side request forgery.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2001 / CVE-2022-41242
+extreme-feedback Plugin 1.7 and earlier does not perform a permission check
+in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to discover information
+about job names attached to lamps, discover MAC and IP addresses of
+existing lamps, and rename lamps.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2068 / CVE-2022-41243
+SmallTest Plugin 1.0.4 and earlier does not perform hostname validation
+when connecting to the configured SmallTest server.
+
+This lack of validation could be abused using a man-in-the-middle attack to
+intercept these connections.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2069 / CVE-2022-41244
+View26 Test-Reporting Plugin 1.0.7 and earlier does not perform hostname
+validation when connecting to the configured View26 server.
+
+This lack of validation could be abused using a man-in-the-middle attack to
+intercept these connections.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2237 / CVE-2022-41245 (CSRF) & CVE-2022-41246 (missing permission =
+check)
+Worksoft Execution Manager Plugin 10.0.3.503 and earlier does not perform a
+permission check in a method implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified credentials IDs obtained
+through another method, capturing credentials stored in Jenkins.
+
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2243 / CVE-2022-41247 (storage) & CVE-2022-41248 (masking)
+BigPanda Notifier Plugin 1.4.0 and earlier stores the BigPanda API key
+unencrypted in its global configuration file `BigpandaGlobalNotifier.xml`
+on the Jenkins controller as part of its configuration.
+
+This API key can be viewed by users with access to the Jenkins controller
+file system.
+
+Additionally, the global configuration form does not mask the API key,
+increasing the potential for attackers to observe and capture it.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2708 / CVE-2022-41249 (CSRF) & CVE-2022-41250 (missing permission =
+check)
+SCM HttpClient Plugin 1.5 and earlier does not perform permission check in
+a method implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified HTTP server using attacker-specified credentials IDs
+obtained through another method, capturing credentials stored in Jenkins.
+
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2710 / CVE-2022-41251
+Apprenda Plugin 2.2.0 and earlier does not perform a permission check in an
+HTTP endpoint.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2752 / CVE-2022-41252
+CONS3RT Plugin 1.0.0 and earlier does not perform permission checks in
+several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2751 / CVE-2022-41253 (CSRF) & CVE-2022-41254 (missing permission =
+check)
+CONS3RT Plugin 1.0.0 and earlier does not perform permission checks in
+methods implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified HTTP server using attacker-specified credentials IDs
+obtained through another method, capturing credentials stored in Jenkins.
+
+Additionally, these form validation methods do not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2759 / CVE-2022-41255
+CONS3RT Plugin 1.0.0 and earlier stores Cons3rt API token unencrypted in
+job `config.xml` files on the Jenkins controller as part of its
+configuration.
+
+This API token can be viewed by users with access to the Jenkins controller
+file system.
+
+As of publication of this advisory, there is no fix.
+
+
+
