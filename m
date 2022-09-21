@@ -1,23 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/06/5
-Message-ID: <20220806185940.GA8784@openwall.com>
-Date: Sat, 6 Aug 2022 20:59:40 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/21/4
+Message-ID: <YysGcZi/hcw7bPNs@itl-email>
+Date: Wed, 21 Sep 2022 08:41:16 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
 To: oss-security@...ts.openwall.com
-Cc: Hugues ANGUELKOV <hanguelkov@...dorisec.fr>
-Subject: Re: Linux kernel: Netfilter heap buffer overflow in nft_set_elem_init
+Subject: Re: big ints in python: CVE-2020-10735
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 05, 2022 at 08:56:28AM +0200, Marcus Meissner wrote:
-> Mitre has assigned CVE-2022-34918 to this issue.
+On Wed, Sep 21, 2022 at 09:17:21AM +0300, Georgi Guninski wrote:
+> There was recent discussion of big ints in python and libgmp.
+> 
+> https://docs.python.org/3.10/whatsnew/changelog.html#security
+> 
+> ===
+> gh-95778: Converting between int and str in bases other than 2
+> (binary), 4, 8 (octal), 16 (hexadecimal), or 32 such as base 10
+> (decimal) now raises a ValueError if the number of digits in string
+> form is above a limit to avoid potential denial of service attacks due
+> to the algorithmic complexity. This is a mitigation for CVE-2020-10735
+> ====
+> 
+> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-10735
+> ===
+> In algorithms with quadratic time complexity using non-binary bases ...
+> The highest threat from this vulnerability is to system availability.
+> ===
+> 
+> AFAICT the quadratic complexity is quadratic in the size of the int,
+> that is its logarithm.
 
-> > ----- Forwarded message from Hugues ANGUELKOV <hanguelkov@...dorisec.fr> -----
+This is correct, and IMO it is just a bug in Python.  Python should
+either provide better algorithms itself, or use an external library that
+does so.  Using GMP would be a good choice where available, but would
+require using GMP’s non-allocating functions, as the allocating ones
+abort in out-of-memory situations.
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-> > Also, we would like to release the LPE exploit targeting Ubuntu server 
-> > along with a more detailed blogpost.
-
-Apparently, this is the blog post:
-
-https://www.randorisec.fr/crack-linux-firewall/
-
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
