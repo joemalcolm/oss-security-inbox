@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3163" "Sunday" "20" "November" "2016" "11:28:27" "-0800" "Apache OpenOffice Security" "orcmid@apache.org" "<001201d24364$45662b80$d0328280$@apache.org>" "101" "[oss-security] CVE-2016-6804 Apache OpenOfice Advisory" nil nil nil "11" "2016112019:28:27" "[oss-security] CVE-2016-6804 Apache OpenOfice Advisory" (number mark "U       orcmid@apach Nov 20  101/3163  " thread-indent "\"[oss-security] CVE-2016-6804 Apache OpenOfice Advisory\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 26391 invoked by uid 550); 20 Nov 2016 19:55:39 -0000
+Received: (qmail 22217 invoked by uid 550); 21 Sep 2022 09:37:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,119 +7,60 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12166 invoked from network); 20 Nov 2016 19:28:40 -0000
-From: "Apache OpenOffice Security" <orcmid@apache.org>
-To: <oss-security@lists.openwall.com>
-Date: Sun, 20 Nov 2016 11:28:27 -0800
-Organization: Apache OpenOffice
-Message-ID: <001201d24364$45662b80$d0328280$@apache.org>
+Received: (qmail 11582 invoked from network); 21 Sep 2022 06:17:45 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date;
+        bh=eZfxSAIuCPSNfeqixvrEZ+MMSt5IgzZka4dhHTPE+ws=;
+        b=cqx5SIpNDGmRBfJMRWkZQXWGN5H+4oCWSjMvI0zzwHBLkVN5a1ZkP0j3li7GxYb5NX
+         VuTcnXESGe67Ijb2wSIjarlGkwv5UeE6oEFhnWnEHYKKtjgSlRCt2hcTukQjPXrzIzqe
+         ZzDf0SdITg/jFpPAF8jCW9dsqEklV6Q3zyQHSZgG2UFEehagT2yWLalOmRNlQWxUbd/x
+         p+fxeZ61rOS/dkl0m/Ms/Yh9+lpIr8dG2ghmAbkgdZUW8dOXmb76PgVQLkpqxaLSnemu
+         gz6wrUy061Qo2M3I/iex4uJjmEXozNeDOEvBSwAjBsgwbgpFL5/c/s3a6abS7sJW8Sez
+         mPBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date;
+        bh=eZfxSAIuCPSNfeqixvrEZ+MMSt5IgzZka4dhHTPE+ws=;
+        b=t02hNzh4tFyq+ME0ZuGiQnO1N7BkdpBI9FhpfmZgB+/MHBOdhzjJ5KDUIoHs3RhOFg
+         OxkxAUIjSYvefY9kKFmBNobW6VLd4gDCIWDKjxqOmbpi6DagRlKrE/E2JZ1lM09T2TXQ
+         njBpMonOJSfkGrU1ZE7ZABtyTfaJEy8JVn1pqme3ljKuTIH27rxrGV8kN6pcB/CIX8J/
+         4QkJfGCwvwzuCwXk1BWhysi4JFybrllGTSf2hj3htbJiQHCQ99Ewm9CEd+JVbbzOaxgi
+         bpfZk8pNV+MFkuLQ0ej5pWspuSzw4caND/toaIyazs134NDo2WdeYTaCaUzuKSe48G7b
+         hGOw==
+X-Gm-Message-State: ACrzQf2htmw82644MmxIKoWbiSACzXlcrIENsNu8M2a8cNFPVooMW00M
+	tj3B+nzVrHqjV8beMgHVP5y6Ea8f8un9CJlOxrtk3SC7rl8=
+X-Google-Smtp-Source: AMsMyM4lITON04wEay67q/XAgykRsqHSYdKEOqInCPQIHaikTL0dmGKchE6SLScXswUmktWilmaHrnJHvUXU+06aV5o=
+X-Received: by 2002:adf:eec3:0:b0:22a:d159:456c with SMTP id
+ a3-20020adfeec3000000b0022ad159456cmr15517655wrp.463.1663741053850; Tue, 20
+ Sep 2022 23:17:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AdJDZEA+O3eJzxUSQmevwBrc8YC33A==
-Content-Language: en-us
-Subject: [oss-security] CVE-2016-6804 Apache OpenOfice Advisory
+From: Georgi Guninski <gguninski@gmail.com>
+Date: Wed, 21 Sep 2022 09:17:21 +0300
+Message-ID: <CAGUWgD8-9ST3-hxOTY+Xar6S88uuydz=ods4k1vBQq_GXXahKg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] big ints in python: CVE-2020-10735
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+There was recent discussion of big ints in python and libgmp.
 
+https://docs.python.org/3.10/whatsnew/changelog.html#security
 
+===
+gh-95778: Converting between int and str in bases other than 2
+(binary), 4, 8 (octal), 16 (hexadecimal), or 32 such as base 10
+(decimal) now raises a ValueError if the number of digits in string
+form is above a limit to avoid potential denial of service attacks due
+to the algorithmic complexity. This is a mitigation for CVE-2020-10735
+====
 
-CVE-2016-6804
-<http://cve.mitre.org/cgi-bin/cvename.cgi?name=2016-6804>
-Apache OpenOffice Advisory
-<https://www.openoffice.org/security/cves/CVE-2016-6804.html>
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-10735
+===
+In algorithms with quadratic time complexity using non-binary bases ...
+The highest threat from this vulnerability is to system availability.
+===
 
-Title: Windows Installer Execution of Arbitrary Code with Elevated Privileges
-
-Version 1.0
-Announced October 11, 2016
-
-Description
-
-The Apache OpenOffice installer for Windows contained a defective
-operation that allows execution of arbitrary code with elevated 
-privileges.
-
-The location in which the installer is run may have been previously
-poisoned by a file that impersonates a dynamic-link library that 
-the installer depends upon.  The counterfeit is operated instead 
-because of a search-path defect in the installer.  The counterfeit 
-will be operated under the administrative privileges of the OpenOffice
-installer, compromising the user's PC.
-
-Severity: Medium
-
-    There are no known exploits of this vulnerability.
-    Proof-of-concept demonstrations exist.
-
-Vendor: The Apache Software Foundation
-
-Versions Affected:
-
-    All Apache OpenOffice versions 4.1.2 and older 
-    are affected.  OpenOffice.org versions are also
-    affected.
-
-    
-Mitigation:
-
-Install Apache OpenOffice 4.1.3 for the latest maintenance and 
-cumulative security fixes.  Use <https://www.openoffice.org/download/>.
-
-
-Defenses and Work-Arounds:
-
-If you are unable to update to 4.1.3, there are other 
-precautions that can be taken.  These precautions are also 
-recommended as protection against other software that may 
-have the vulnerability.
-
-When executing .exe installers, ensure that the installer
-is in a file folder that has no files but the installer 
-.exe file.
-
-If an installer proposes a folder to extract the setup
-files into before the actual install, choose the name of 
-a folder that is not in use.  Delete such a folder of setup 
-files after the installation completes successfully.  To 
-reinstall without downloading again, preserve the installer 
-.exe on private removable storage.
-
-
-Further Information:
-
-For additional information and assistance, consult the Apache
-OpenOffice Community Forums, <https://forum.openoffice.org/> or 
-make requests to the <mailto:users@openoffice.apache.org> public
-mailing list.  Defects not involving suspected security
-vulnerabilities can be reported via
-<http://www.openoffice.org/qa/issue_handling/pre_submission.html>.
-
-      
-The latest information on Apache OpenOffice security bulletins 
-can be found at the Bulletin Archive page 
-<http://www.openoffice.org/security/bulletin.html>.
-
-Credits: 
-
-The Apache OpenOffice project acknowledges the reporting and
-analysis for CVE-2016-6804 by Stefan Kanthak and by Himanshu Mehta.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQEcBAEBCAAGBQJYD4CxAAoJEPluif/UVmKKwJ0IAIp5Z5WGus5iaDcOYanVS+QN
-ng1SCb+0jitCiqmVy9Xv5/diVEgogRxOu0tryV5flAaChepsRehpuJmRRftxYTS0
-aNkQiKDSkd9d3XswAa0xfcQWaojANgYwV6aMGx1MstfRo3aIdRtHvNqjygU1ANyR
-z3UipEyRYmrRgeeHq5cBNBQQv+gGfKXMHr2nvfaOD5FSqvwa/3jEWbpagYHwXfyV
-18QqITRw5qG6sP/sQXw1I3CPez4+SbZebJZ2cuBSnnSmoojOQ3EJi69hESLOM2S5
-I4xiraQSYygTeybU3u2OARtsXejb8qa7d9pYB+JwboPVKam03s32X+0ZnBnv3Y4=
-=nKLP
------END PGP SIGNATURE-----
-
-
-
-
+AFAICT the quadratic complexity is quadratic in the size of the int,
+that is its logarithm.
