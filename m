@@ -1,36 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/12/1
-Message-ID: <20220512052823.advhiwrcdc6rokme@senku>
-Date: Thu, 12 May 2022 15:28:23 +1000
-From: Aleksa Sarai <asarai@...e.de>
-To: security-announce@...ncontainers.org, oss-security@...ts.openwall.com
-Subject: CVE-2022-29162: runc < 1.1.2 incorrect handling of inheritable capabilities in default configuration
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/21/3
+Message-ID: <YyrddDfDHLntRmJk@larwa.hq.kempniu.pl>
+Date: Wed, 21 Sep 2022 11:46:28 +0200
+From: Michał Kępień <michal@....org>
+To: oss-security@...ts.openwall.com
+Cc: security-officer@....org
+Subject: ISC has disclosed six vulnerabilities in BIND (CVE-2022-2795, CVE-2022-2881, CVE-2022-2906, CVE-2022-3080, CVE-2022-38177, CVE-2022-38178)
 Content-Type: text/plain; charset=utf-8
 
-A security update for runc (v1.1.2) was released to mitigate
-CVE-2022-29162, which is a low severity vulnerability related to
-mishandling of inheritable capabilities which resulted in an atypical
-Linux environment inside containers.
+On 21 September 2022 we (Internet Systems Consortium) disclosed six vulnerabilities affecting our BIND 9 software:
 
-As the inheritable set was a subset of the permitted capabilities (which
-are limited) this bug does not affect the container security boundary,
-it simply ensures that programs running inside the container do not
-inherit capabilities they do not need accidentally. This issue is
-similar to CVE-2022-24769 which was found in Docker and containerd.
+- CVE-2022-2795:	Processing large delegations may severely degrade resolver performance https://kb.isc.org/docs/cve-2022-2795
+- CVE-2022-2881:	Buffer overread in statistics channel code https://kb.isc.org/docs/cve-2022-2881
+- CVE-2022-2906:	Memory leaks in code handling Diffie-Hellman key exchange via TKEY RRs (OpenSSL 3.0.0+ only) https://kb.isc.org/docs/cve-2022-2906
+- CVE-2022-3080:	BIND 9 resolvers configured to answer from stale cache with zero stale-answer-client-timeout may terminate unexpectedly https://kb.isc.org/docs/cve-2022-3080
+- CVE-2022-38177:	Memory leak in ECDSA DNSSEC verification code https://kb.isc.org/docs/cve-2022-38177
+- CVE-2022-38178:	Memory leaks in EdDSA DNSSEC verification code https://kb.isc.org/docs/cve-2022-38178
 
-As this issue was deemed not exploitable, there is no embargo for this
-patch and release. Please update as soon as practical.
+New versions of BIND are available from https://www.isc.org/downloads
 
-You can find the new version of runc on our releases page[1] and the
-patch fixing the issue is [2].
+Operators and package maintainers who prefer to apply patches selectively can find individual vulnerability-specific patches in the "patches" subdirectory of the release directories for our stable release branches (9.16 and 9.18):
 
-[1]: https://github.com/opencontainers/runc/releases/tag/v1.1.2
-[2]: https://github.com/opencontainers/runc/commit/98fe566c527479195ce3c8167136d2a555fe6b65
+- https://downloads.isc.org/isc/bind9/9.16.33/patches/
+- https://downloads.isc.org/isc/bind9/9.18.7/patches/
+
+With the public announcement of these vulnerabilities, the embargo period is ended and any updated software packages that have been prepared may be released.
 
 -- 
-Aleksa Sarai
-Senior Software Engineer (Containers)
-SUSE Linux GmbH
-<https://www.cyphar.com/>
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Best regards,
+Michał Kępień
