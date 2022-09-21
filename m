@@ -1,58 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/05/1
-Message-ID: <CAP9KPhDh6PJu-0mD12wYUraf1Ya1MSUPwz1PsPO5omi39-OYLw@mail.gmail.com>
-Date: Mon, 5 Dec 2022 22:22:33 +1100
-From: David Leadbeater <dgl@....cx>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/21/1
+Message-ID: <CAGUWgD8-9ST3-hxOTY+Xar6S88uuydz=ods4k1vBQq_GXXahKg@mail.gmail.com>
+Date: Wed, 21 Sep 2022 09:17:21 +0300
+From: Georgi Guninski <gguninski@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-4170: rxvt-unicode code execution via background OSC
+Subject: big ints in python: CVE-2020-10735
 Content-Type: text/plain; charset=utf-8
 
-I've discovered rxvt-unicode 9.25 and 9.26 are vulnerable to remote
-code execution, in the Perl background extension, when an attacker can
-control the data written to the user's terminal and certain options
-are set.
+There was recent discussion of big ints in python and libgmp.
 
-The "background" extension is automatically loaded if certain X
-resources are set such as 'transparent' (see the full list at the top
-of src/perl/background[1]). So it is possible to be using this
-extension without realising it.
+https://docs.python.org/3.10/whatsnew/changelog.html#security
 
-This is accidentally fixed on version 9.30, and I haven't confirmed
-9.29, it appears to not be exploitable, but only due to another (not
-security) bug. The actual bug which makes this not vulnerable on 9.30
-is simply a wrong number in "on_osc_seq".
+===
+gh-95778: Converting between int and str in bases other than 2
+(binary), 4, 8 (octal), 16 (hexadecimal), or 32 such as base 10
+(decimal) now raises a ValueError if the number of digits in string
+form is above a limit to avoid potential denial of service attacks due
+to the algorithmic complexity. This is a mitigation for CVE-2020-10735
+====
 
-For 9.25 and 9.26 the patch at[2] can be backported. The body of the fix is:
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-10735
+===
+In algorithms with quadratic time complexity using non-binary bases ...
+The highest threat from this vulnerability is to system availability.
+===
 
- sub q0 {
--   (my $str = shift) =~ s/\x00//g; # make sure there really aren't
-any embedded NULs
--   "q\x00$str\x00"
-+   "qq\x00\Q$_[0]\E\x00"
- }
-
-Isn't Perl quoting fun? Paranoid people may wish to remove the entire
-"on_osc_seq" subroutine to avoid passing any potentially untrusted
-input anywhere near eval (this feature is deprecated and the
-maintainer did mention they are considering what to do longer term).
-
-It doesn't make sense to withhold an exploit for this; the fix gives a
-pretty good idea where to look and this isn't vulnerable in the latest
-version.
-
-$ urxvt -transparent
-
-Inside that running terminal:
-
-# Make tint be "\\", which means the ending \x00 is quoted under our control
-$ printf '\e]705;\\\a'
-# Make the second q0 end the quoted q-string and then be valid perl
-under our control
-$ printf '\e]20;,rootalign root),`touch /tmp/cve-2022-4170` #\a'
-
-This has been assigned CVE-2022-4170.
-
-David
-
-[1]: http://cvs.schmorp.de/rxvt-unicode/src/perl/background?revision=1.109&view=markup
-[2]: http://cvs.schmorp.de/rxvt-unicode/src/perl/background?r1=1.105&r2=1.109
+AFAICT the quadratic complexity is quadratic in the size of the int,
+that is its logarithm.
