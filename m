@@ -1,21 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/14/2
-Message-ID: <28650426-1002-ea94-54a5-71841b755b52@apache.org>
-Date: Mon, 14 Mar 2022 10:07:40 +0000
-From: Stefan Eissing <icing@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/22/8
+Message-ID: <CAB8KC3DCj9kaqZSmYR1fuZCTgkB-9Akw7KSSKbdLg8Bm_O20SQ@mail.gmail.com>
+Date: Thu, 22 Sep 2022 12:50:32 -0500
+From: Michael Marshall <mmarshall@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-22721: Apache HTTP Server: core: Possible buffer overflow with very large or unlimited LimitXMLRequestBody 
+Subject: CVE-2022-33682: Apache Pulsar: Disabled Hostname Verification makes Brokers, Proxies vulnerable to MITM attack
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+Severity: high
 
 Description:
 
-If LimitXMLRequestBody is set to allow request bodies larger than 350MB (defaults to 1M) on 32 bit systems an integer overflow happens which later causes out of bounds writes.
+TLS hostname verification cannot be enabled in the Pulsar Broker's
+Java Client, the Pulsar Broker's Java Admin Client, the Pulsar
+WebSocket Proxy's Java Client, and the Pulsar Proxy's Admin Client
+leaving intra-cluster connections and geo-replication connections
+vulnerable to man in the middle attacks, which could leak credentials,
+configuration data, message data, and any other data sent by these
+clients. The vulnerability is for both the pulsar+ssl protocol and
+HTTPS.
 
-This issue affects Apache HTTP Server 2.4.52 and earlier.
+An attacker can only take advantage of this vulnerability by taking
+control of a machine 'between' the client and the server. The attacker
+must then actively manipulate traffic to perform the attack by
+providing the client with a cryptographically valid certificate for an
+unrelated host.
+
+This issue affects Apache Pulsar Broker, Proxy, and WebSocket Proxy
+versions 2.7.0 to 2.7.4; 2.8.0 to 2.8.3; 2.9.0 to 2.9.2; 2.10.0; 2.6.4
+and earlier.
+
+Mitigation:
+
+Any users running affected versions of the Pulsar Broker, Pulsar
+Proxy, or Pulsar WebSocket Proxy should rotate static authentication
+data vulnerable to man in the middle attacks used by these
+applications, including tokens and passwords.
+
+To enable hostname verification, update the following configuration files.
+
+In the Broker configuration (broker.conf, by default) and in the
+WebSocket Proxy configuration (websocket.conf, by default), set:
+
+brokerClient_tlsHostnameVerificationEnable=true
+
+In Pulsar Helm chart deployments, the Broker and WebSocket Proxy
+setting name should be prefixed with "PULSAR_PREFIX_".
+
+In the Proxy configuration (proxy.conf, by default), set:
+
+tlsHostnameVerificationEnabled=true
+
+2.7 users should upgrade Pulsar Brokers, Proxies, and WebSocket
+Proxies to 2.7.5, rotate vulnerable authentication data, including
+tokens and passwords, and apply the above configuration.
+2.8 users should upgrade Pulsar Brokers, Proxies, and WebSocket
+Proxies to 2.8.4, rotate vulnerable authentication data, including
+tokens and passwords, and apply the above configuration.
+2.9 users should upgrade Pulsar Brokers, Proxies, and WebSocket
+Proxies to 2.9.3, rotate vulnerable authentication data, including
+tokens and passwords, and apply the above configuration.
+2.10 users should upgrade Pulsar Brokers, Proxies, and WebSocket
+Proxies to 2.10.1, rotate vulnerable authentication data, including
+tokens and passwords, and apply the above configuration.
+Any users running Pulsar Brokers, Proxies, and WebSocket Proxies for
+2.6.4 and earlier should upgrade to one of the above patched versions,
+rotate vulnerable authentication data, including tokens and passwords,
+and apply the above configuration.
 
 Credit:
 
-Anonymous working with Trend Micro Zero Day Initiative
-
+This issue was discovered by Michael Marshall of DataStax.
