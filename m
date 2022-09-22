@@ -1,4 +1,4 @@
-Received: (qmail 29865 invoked by uid 550); 5 Jan 2025 04:35:25 -0000
+Received: (qmail 17538 invoked by uid 550); 22 Sep 2022 13:04:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,82 +7,79 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 28132 invoked from network); 5 Jan 2025 04:34:53 -0000
-Date: Sun, 5 Jan 2025 05:34:40 +0100
-From: Solar Designer <solar@openwall.com>
-To: =?iso-8859-2?Q?J=FCrgen_Gro=DF?= <jgross@suse.com>
-Cc: David Woodhouse <dwmw2@infradead.org>,
-	"Xen.org security team" <security@xen.org>,
-	oss-security@lists.openwall.com,
-	"Xen.org security team" <security-team-members@xen.org>
-Message-ID: <20250105043440.GA4992@openwall.com>
-References: <E1tNWXG-00E268-2p@xenbits.xenproject.org> <54c892eded2b4ebdda8ee1085c383178f44414ad.camel@infradead.org> <a3031e7d-fe9d-4db8-8ccd-923165c9af72@suse.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <a3031e7d-fe9d-4db8-8ccd-923165c9af72@suse.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Xen Security Advisory 466 v3 (CVE-2024-53241) - Xen hypercall page unsafe against speculative attacks
+Received: (qmail 28023 invoked from network); 22 Sep 2022 12:53:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-language:thread-index:content-transfer-encoding
+         :mime-version:message-id:date:subject:to:from:from:to:cc:subject
+         :date;
+        bh=iGdj8UNQt4ttV/Q7+8qfdPWLI5yyHCz66HD3PLD4a88=;
+        b=W6F1wRZC62OXClp7g5xKuDX4ltns6G4SFE3ocZRQqDoWMeZTAk5HXwvysYtGTd8P9o
+         Kxw8c6nU3+6cjoRWJCRmvco5GuNgjlqTEhNCL9F9JPYkxqTLsj6A45eNR59mWW67tTzr
+         zj0l0erYuKzxTrXYZQOxrYKcf92YlILJqVdpwsq6uJ2KpGAhP8KHB+T6VnMBHa9aDl6d
+         KA0FRBQexqenyKmLfp5nJ7lzMYzs46ufJVgMP0s465Q20wvhioi7pQzoEwxA7QxiWP5I
+         X5rtpzaYgQtljd/G/nZsnrVKbt9IAlv1Evjk5/PSyPsHC2lUgXrUjX0b83kplmz+mojW
+         4v4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-language:thread-index:content-transfer-encoding
+         :mime-version:message-id:date:subject:to:from:x-gm-message-state
+         :from:to:cc:subject:date;
+        bh=iGdj8UNQt4ttV/Q7+8qfdPWLI5yyHCz66HD3PLD4a88=;
+        b=2pHSSetfEZOOXarwCc+mejNsObLvRSBQw/L4llvt8T6P5Lmry2n6u8HKxKuyXgQ8h4
+         17amz7cyh4ssobdbECajTY/dD1vQEiri1FxLFKpGVx6pmOmbgjTG4oyOQEurPktx6Mwx
+         8pI7bgrelK2TIbCpDdjX2h2CWdssXGEk7O4Y1z1/wEks/oBf1AJ0UgwCH9i+g8l4q1ds
+         df9m/+QvjvXaKW6bV+lp8yeQegDaHb7JvZqYJKBR5CclmNxzOCLKbo9kYZ5vdztfwdej
+         5ZfjAOo2g4GrziVDvx3doyxDTEBnD9RepAKszeP5YDRJlCj2cBmPVSrPE63xNlC0XB+m
+         NeAQ==
+X-Gm-Message-State: ACrzQf2UlOrNIRDFup+Lb1pHW1juRTWTv1kiIcL/Ub3mgjkC9QaUH7Pl
+	t+YbrxfQXTVOd6a5vXZy+Ak=
+X-Google-Smtp-Source: AMsMyM7AV1z4Yh/e7aUQwskPYQMRwO7tMlsw1m0re9Jz7u/xgXUX3HhlZGOUe0bVoFQvQ4p+pU8zbw==
+X-Received: by 2002:a05:6000:1683:b0:22a:fb88:2f35 with SMTP id y3-20020a056000168300b0022afb882f35mr1952848wrd.656.1663851190853;
+        Thu, 22 Sep 2022 05:53:10 -0700 (PDT)
+From: "Simon Steiner" <simonsteiner1984@gmail.com>
+To: <general@xmlgraphics.apache.org>,
+	<batik-dev@xmlgraphics.apache.org>,
+	<batik-users@xmlgraphics.apache.org>,
+	"'Apache Security Team'" <security@apache.org>,
+	<oss-security@lists.openwall.com>
+Date: Thu, 22 Sep 2022 13:53:09 +0100
+Message-ID: <001401d8ce82$44e04b50$cea0e1f0$@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AdjOgkRfOJy48O3/Tle4SUVqaa6pZA==
+Content-Language: en-gb
+Subject: [oss-security] [CVE-2022-40146] Apache Batik information disclosure vulnerability
 
-Hi,
+CVE-2022-40146:
+        Apache Batik information disclosure vulnerability
 
-As oss-security moderator, I let this thread through up to and including
-the message below, but not beyond, as further discussion went too far
-into Xen development specifics.  Those interested in further replies may
-see them e.g. here:
+Severity:
+        Medium
 
-https://lists.xenproject.org/archives/html/xen-devel/2025-01/threads.html#00015
+Vendor:
+        The Apache Software Foundation
 
-Alexander
+Versions Affected:
+        Batik 1.0 - 1.14
 
-On Thu, Jan 02, 2025 at 01:07:55PM +0100, Jürgen Groß wrote:
-> On 23.12.24 15:24, David Woodhouse wrote:
-> >On Tue, 2024-12-17 at 12:18 +0000, Xen.org security team wrote:
-> >>              Xen Security Advisory CVE-2024-53241 / XSA-466
-> >>                                 version 3
-> >>
-> >>          Xen hypercall page unsafe against speculative attacks
-> >>
-> >>UPDATES IN VERSION 3
-> >>====================
-> >>
-> >>Update of patch 5, public release.
-> >
-> >Can't we even use the hypercall page early in boot? Surely we have to
-> >know whether we're running on an Intel or AMD CPU before we get to the
-> >point where we can enable any of the new control-flow integrity
-> >support? Do we need to jump through those hoops do do that early
-> >detection and setup?
-> 
-> The downside of this approach would be to have another variant to do
-> hypercalls. So you'd have to replace the variant being able to use AMD
-> or INTEL specific instructions with a function doing the hypercall via
-> the hypercall page.
-> 
-> I'm planning to send patches for Xen and the kernel to add CPUID feature
-> bits indicating which instruction to use. This will make life much easier.
-> 
-> >Enabling the hypercall page is also one of the two points where Xen
-> >will 'latch' that the guest is 64-bit, which affects the layout of the
-> >shared_info, vcpu_info and runstate structures.
-> >
-> >The other such latching point is when the guest sets
-> >HVM_PARAM_CALLBACK_IRQ, and I *think* that should work in all
-> >implementations of the Xen ABI (including QEMU/KVM and EC2). But would
-> >want to test.
-> >
-> >But perhaps it wouldn't hurt for maximal compatibility for Linux to set
-> >the hypercall page *anyway*, even if Linux doesn't then use it ??? or
-> >only uses it during early boot?
-> 
-> I'm seeing potential problems with that approach when someone is using
-> an out-of-tree module doing hypercalls.
-> 
-> With having the hypercall page present such a module would add a way to do
-> speculative attacks, while deleting the hypercall page would result in a
-> failure trying to load such a module.
-> 
-> 
-> Juergen
+Description:
+        Jar url should be blocked by DefaultScriptSecurity
+
+Mitigation:
+        Users should upgrade to Batik 1.15+
+
+Credit:
+        This issue was independently reported by Piotr Bazydlo (@chudypb) of
+Trend Micro Zero Day Initiative
+
+References:
+        http://xmlgraphics.apache.org/security.html
+        https://issues.apache.org/jira/browse/BATIK-1335
+
+The Apache XML Graphics team.
+
+
