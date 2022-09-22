@@ -1,4 +1,4 @@
-Received: (qmail 7909 invoked by uid 550); 10 Apr 2025 13:43:30 -0000
+Received: (qmail 21703 invoked by uid 550); 22 Sep 2022 08:26:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,45 +7,43 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 13899 invoked from network); 10 Apr 2025 13:32:48 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1744291958;
-	bh=MCXFhYZse2XHv2jeMGCHmJQzuc0LiTOI8iW5s1l9DiU=;
-	h=Date:From:To:Subject:References:In-Reply-To:From;
-	b=OSlCu+HvWY1S9Rzwuu1MRHAfe2GtqEc8a3kVdE8HOHjy312gnIst7hOVtIn6OX1o8
-	 Y1YptGe1cSAyf++i+8RC7sM5vEfAzGQV5wZHJjWpZI5vIhzxf8R+Dr7BQ3yXsQuzoT
-	 mOzsexdGXJYelvwDfhz0LnM7/920zdtM0ecBCbf8=
-Date: Thu, 10 Apr 2025 15:31:03 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: oss-security@lists.openwall.com
-Message-ID: <2025041003-saddling-dart-5b8b@gregkh>
-References: <VI0P189MB276612AABA4D5DB2B4018524AEB72@VI0P189MB2766.EURP189.PROD.OUTLOOK.COM>
-MIME-Version: 1.0
+Received: (qmail 11345 invoked from network); 22 Sep 2022 08:07:54 -0000
+Authentication-Results: apache.org; auth=none
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <VI0P189MB276612AABA4D5DB2B4018524AEB72@VI0P189MB2766.EURP189.PROD.OUTLOOK.COM>
-Subject: Re: [oss-security] CVE-2024-50217: Linux kernel: btrfs:
- Use-after-free of block device file in __btrfs_free_extra_devids()
+From: Arnout Engelen <engelen@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <b6dccca1-9e43-d746-f832-6767ab0d3d03@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 22 Sep 2022 08:07:35 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2022-40705: Apache SOAP: XML External Entity Injection (XXE)
+ allows unauthenticated users to read arbitrary files via HTTP 
 
-On Thu, Apr 10, 2025 at 12:22:46PM +0000, akendo@akendo.eu wrote:
-> Hey everyone,
-> 
-> Not too sure how or whom to ask about: But I saw that there is CVE-2024-50217 that affects every kernel since 4.8.
-> 
-> However, it is only fixed on more recent version of the linux kernel like 6.11 or 6.12. Any reason this wasn’t backported to older kernel versions?
+Severity: important
 
-That's usually because no one has taken the time to do so.  Same for the
-thousands of other "unfixed" CVEs in older stable kernel trees.
+Description:
 
-As an example, for the latest 5.4.y stable kernel release, I see that
-there are currently 1110 unfixed CVEs as of right now.
+** UNSUPPORTED WHEN ASSIGNED ** An Improper Restriction of XML External Ent=
+ity Reference vulnerability in RPCRouterServlet of Apache SOAP allows an at=
+tacker to read arbitrary files over HTTP. This issue affects Apache SOAP ve=
+rsion 2.2 and later versions. It is unknown whether previous versions are a=
+lso affected.  NOTE: This vulnerability only affects products that are no l=
+onger supported by the maintainer.
 
-Feel free to send backports to the stable@vger.kernel.org mailing list
-if you wish to see specific commits applied to older stable kernel
-releases.
+Mitigation:
 
-thanks,
+We do not expect to release a version that fixes this problem. Instead, we =
+recommend users to migrate to one of the other actively maintained web serv=
+ice stacks such as Apache CXF (https://cxf.apache.org) or Apache Axis (http=
+s://axis.apache.org).
 
-greg k-h
+Apache SOAP is an archived project, with the last release published in 2003=
+. This means it is no longer maintained, does not receive updates, and we d=
+o not commit to publishing CVE's for security problems in this project. Thi=
+s advisory is published purely as a courtesy.
+
+Credit:
+
+Apache would like to thank TsungShu Chiu (CHT Security) for reporting this =
+issue
+
