@@ -1,23 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/30/4
-Message-ID: <e1baad62-b4a0-101a-c3bc-366d426e778c@apache.org>
-Date: Tue, 30 Aug 2022 17:06:53 +0000
-From: Kirk Lund <klund@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-37022: Apache Geode deserialization of untrusted data flaw when using JMX over RMI on Java 11 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/22/4
+Message-ID: <001501d8ce82$8df67800$a9e36800$@gmail.com>
+Date: Thu, 22 Sep 2022 13:55:12 +0100
+From: "Simon Steiner" <simonsteiner1984@...il.com>
+To: <general@...graphics.apache.org>, <batik-dev@...graphics.apache.org>, <batik-users@...graphics.apache.org>, "'Apache Security Team'" <security@...che.org>, <oss-security@...ts.openwall.com>
+Subject: [CVE-2022-38648] Apache Batik information disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Severity: high - possible RCE
+CVE-2022-38648:
+        Apache Batik information disclosure vulnerability
+
+Severity:
+        Medium
+
+Vendor:
+        The Apache Software Foundation
+
+Versions Affected:
+        Batik 1.0 - 1.14
 
 Description:
-
-Apache Geode versions up to 1.12.2 and 1.13.2 are vulnerable to a deserialization of untrusted data flaw when using JMX over RMI on Java 11.
-
-Any user wishing to protect against deserialization attacks involving JMX or RMI should upgrade to Apache Geode 1.15. Use of 1.15 on Java 11 will automatically protect JMX over RMI against deserialization attacks. This should have no impact on performance since it only affects JMX/RMI which Gfsh uses to communicate with the JMX Manager which is hosted on a Locator.
-
-This issue is being tracked as GEODE-9064
+        Block external resource before calling fop
 
 Mitigation:
+        Users should upgrade to Batik 1.15+
 
-Disable affected services such as JMX over RMI unless they are required. JMX over RMI can be disabled by setting Geode property `jmx-manager` to false; this property defaults to false on Servers and true on Locators. 
+Credit:
+        This issue was independently reported by Adam Rauch
+
+References:
+        http://xmlgraphics.apache.org/security.html
+        https://issues.apache.org/jira/browse/BATIK-1333
+
+The Apache XML Graphics team.
+
+
 
