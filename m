@@ -1,25 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/01/14
-Message-ID: <7f49987d-5eae-7235-eaf2-ba4b9915c44b@apache.org>
-Date: Tue, 01 Nov 2022 15:03:50 +0000
-From: "Sean R. Owen" <srowen@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-31777: Apache Spark XSS vulnerability in log viewer UI Javascript 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/22/2
+Message-ID: <001301d8ce81$fa4e05f0$eeea11d0$@gmail.com>
+Date: Thu, 22 Sep 2022 13:51:04 +0100
+From: "Simon Steiner" <simonsteiner1984@...il.com>
+To: <general@...graphics.apache.org>, <batik-dev@...graphics.apache.org>, <batik-users@...graphics.apache.org>, "'Apache Security Team'" <security@...che.org>, <oss-security@...ts.openwall.com>
+Subject: [CVE-2022-38398] Apache Batik information disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+CVE-2022-38398:
+        Apache Batik information disclosure vulnerability
+
+Severity:
+        Medium
+
+Vendor:
+        The Apache Software Foundation
+
+Versions Affected:
+        Batik 1.0 - 1.14
 
 Description:
-
-A stored cross-site scripting (XSS) vulnerability in Apache Spark 3.2.1 and earlier, and 3.3.0, allows remote attackers to execute arbitrary JavaScript in the web browser of a user, by including a malicious payload into the logs which would be returned in logs rendered in the UI.
-
-This issue is being tracked as SPARK-39505
+        DefaultExternalResourceSecurity should block urls loaded thru the
+jar protocol
 
 Mitigation:
-
-Upgrade to Apache Spark maintenance releases 3.2.2, or 3.3.1 or later
+        Users should upgrade to Batik 1.15+
 
 Credit:
+        This issue was independently reported by Piotr Bazydlo (@chudypb) of
+Trend Micro Zero Day Initiative
 
-Florian Walter (Veracode)
+References:
+        http://xmlgraphics.apache.org/security.html
+        https://issues.apache.org/jira/browse/BATIK-1331
+
+The Apache XML Graphics team.
 
