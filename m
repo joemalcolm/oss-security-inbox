@@ -1,80 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/22/12
-Message-ID: <20221222232112.GA29438@openwall.com>
-Date: Fri, 23 Dec 2022 00:21:12 +0100
-From: Solar Designer <solar@...nwall.com>
-To: Dominique Martinet <asmadeus@...ewreck.org>
-Cc: oss-security@...ts.openwall.com, Alejandro Colomar <alx.manpages@...il.com>, Michael Kerrisk <mtk.manpages@...il.com>, linux-kernel@...r.kernel.org, linux-man@...r.kernel.org
-Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/22/9
+Message-ID: <182c53cf-4478-dd22-915b-b54f8c8f21b0@apache.org>
+Date: Thu, 22 Sep 2022 17:45:36 +0000
+From: Michael Marshall <mmarshall@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2022-33683: Apache Pulsar: Disabled Certificate Validation makes Broker, Proxy Admin Clients vulnerable to MITM attack  
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Dec 23, 2022 at 07:03:17AM +0900, Dominique Martinet wrote:
-> Alexey Dobriyan wrote on Thu, Dec 22, 2022 at 07:42:53PM +0300:
-> > --- a/man5/proc.5
-> > +++ b/man5/proc.5
-> > @@ -2092,6 +2092,11 @@ Strings longer than
-> >  .B TASK_COMM_LEN
-> >  (16) characters (including the terminating null byte) are silently truncated.
-> >  This is visible whether or not the executable is swapped out.
-> > +
-> > +Note that \fIcomm\fP can contain space and closing parenthesis characters. 
-> > +Parsing /proc/${pid}/stat with split() or equivalent, or scanf(3) isn't
-> > +reliable. The correct way is to locate closing parenthesis with strrchr(')')
-> > +from the end of the buffer and parse integers from there.
-> 
-> That's still not enough unless new lines are escaped, which they aren't:
-> 
-> $ echo -n 'test) 0 0 0
-> ' > /proc/$$/comm
-> $ cat /proc/$$/stat
-> 71076 (test) 0 0 0
-> ) S 71075 71076 71076 34840 71192 4194304 6623 6824 0 0 10 3 2 7 20 0 1 0 36396573 15208448 2888 18446744073709551615 94173281726464 94173282650929 140734972513568 0 0 0 65536 3686404 1266761467 1 0 0 17 1 0 0 0 0 0 94173282892592 94173282940880 94173287231488 140734972522071 140734972522076 140734972522076 140734972526574 0
-> 
-> The silver lining here is that comm length is rather small (16) so we
-> cannot emulate full lines and a very careful process could notice that
-> there are not enough fields after the last parenthesis... So just look
-> for the last closing parenthesis in the next line and try again?
+Severity: high
 
-No, just don't treat this file's content as a line (nor as several
-lines) - treat it as a string that might contain new line characters.
+Description:
 
-The ps command from procps-ng seems to manage, e.g. for your test "ps c"
-prints:
+Apache Pulsar Brokers and Proxies create an internal Pulsar Admin Client that does not verify peer TLS certificates, even when tlsAllowInsecureConnection is disabled via configuration. The Pulsar Admin Client's intra-cluster and geo-replication HTTPS connections are vulnerable to man in the middle attacks, which could leak authentication data, configuration data, and any other data sent by these clients.
 
-29394 pts/3    S      0:00 test) 0 0 0?
+An attacker can only take advantage of this vulnerability by taking control of a machine 'between' the client and the server. The attacker must then actively manipulate traffic to perform the attack.
 
-where the question mark is what it substitutes for the non-printable
-character (the new line character).  I didn't check whether the process
-name it prints comes from /proc/$$/stat or /proc/$$/status, though (per
-strace, it reads both).
+This issue affects Apache Pulsar Broker and Proxy versions 2.7.0 to 2.7.4; 2.8.0 to 2.8.3; 2.9.0 to 2.9.2; 2.10.0; 2.6.4 and earlier.
 
-> But, really, I just don't see how this can practically be said to be parsable...
+Mitigation:
 
-This format certainly makes it easier to get a parser wrong than to get
-it right.
+Any users running affected versions of the Pulsar Broker or Pulsar Proxy should rotate static authentication data vulnerable to man in the middle attacks used by these applications, including tokens and passwords.
 
-I agree the above man page edit is not enough, and should also mention
-the caveat that this shouldn't be read in nor parsed as a line.
+2.7 users should upgrade Pulsar Brokers and Proxies to 2.7.5, and rotate vulnerable authentication data, including tokens and passwords.
+2.8 users should upgrade Pulsar Brokers and Proxies to 2.8.4, and rotate vulnerable authentication data, including tokens and passwords.
+2.9 users should upgrade Pulsar Brokers and Proxies to 2.9.3, and rotate vulnerable authentication data, including tokens and passwords.
+2.10 users should upgrade Pulsar Brokers and Proxies to 2.10.1, and rotate vulnerable authentication data, including tokens and passwords.
+Any users running Pulsar Brokers and Proxies for 2.6 and earlier should upgrade to one of the above patched versions, and rotate vulnerable authentication data, including tokens and passwords.
 
-Also, the Linux kernel does have problems with new lines in the comm
-field elsewhere, at least in the log messages it produces:
+In addition to upgrading, it is also necessary to enable hostname verification to prevent man in the middle attacks. Please see CVE-2022-33682 for more information.
 
-https://github.com/lkrg-org/lkrg/issues/165
+Credit:
 
-Here I looked into this in context of LKRG development, but with the
-kernel itself also producing messages with comm in them the point of
-only fixing LKRG's messages is moot.
+This issue was discovered by Michael Marshall of DataStax.
 
-Alexander
-
-P.S. While this thread goes well so far, please note that in general
-CC'ing other lists on postings to oss-security (or vice versa) is
-discouraged.  With such CC's, possible follow-ups from members of those
-other lists can be off-topic for oss-security - e.g., they might focus
-on non-security technicalities.  Probably not this time when only a man
-page is to be patched, but proposed patches to the Linux kernel often
-result in lengthy discussions and multiple versions of the patch.  In
-those cases, I think it's better to have separate threads and only post
-summary follow-up(s) to oss-security (e.g., one message stating that a
-patch was proposed and linking to the thread, and another after the
-final version is merged).
