@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1413" "Saturday" "22" "October" "2016" "21:05:29" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161023010529.DB3343AE00F@smtpvbsrv1.mitre.org>" "34" "[oss-security] Re: jasper: NULL pointer dereference in jp2_colr_destroy (jp2_cod.c)" nil nil nil "10" "2016102301:05:29" "[oss-security] Re: jasper: NULL pointer dereference in jp2_colr_destroy (jp2_cod.c)" (number mark "U       cve-assign@m Oct 22   34/1413  " thread-indent "\"[oss-security] Re: jasper: NULL pointer dereference in jp2_colr_destroy (jp2_cod.c)\"\n") "<2700333.W9CT5MSJyE@blackgate>" ("<2700333.W9CT5MSJyE@blackgate>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3736 invoked by uid 550); 23 Oct 2016 01:05:44 -0000
+Received: (qmail 5334 invoked by uid 550); 22 Sep 2022 20:58:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,46 +7,76 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3532 invoked from network); 23 Oct 2016 01:05:41 -0000
-From: cve-assign@mitre.org
-To: ago@gentoo.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <2700333.W9CT5MSJyE@blackgate>
-Message-Id: <20161023010529.DB3343AE00F@smtpvbsrv1.mitre.org>
-Date: Sat, 22 Oct 2016 21:05:29 -0400 (EDT)
-Subject: [oss-security] Re: jasper: NULL pointer dereference in jp2_colr_destroy (jp2_cod.c)
+Received: (qmail 18036 invoked from network); 22 Sep 2022 20:19:09 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:subject:references:in-reply-to:message-id:to:from:date
+         :from:to:cc:subject:date;
+        bh=IUVPERws9VJWduR8c4K7WtVay5FGE1ZYrGoWTAgL2FI=;
+        b=WNEb4eJxfnGQM70nqFC5vsFddPsxbL33uoZqTXn5P8kjz71VdLUdO0sXYVGazYZSOZ
+         SEKoiRJUay1gQYAAqLJgE+lyhAkTb1Bys78PwoOTis7+J6N/qBjWDU9rjlf4+BNqJQd4
+         c62ASqBGiTJMjbO87zHOSIGswYPAXOFdk2YdPrUdK4bSgIE8pp48BX6Ff9eETFnNymXb
+         V2ZlBUKDhjZLMhfPLBDaXuwiZDYLWuKMC8kkZ+s9DTQBVf0qS8IP5HbOCsz9FpuOgyUf
+         Ep8ClgGC5Lm4MOiRFAQ0R7U0nTyig/jN1VYnb1wOkDCf8RQnT18ooZhqxIZXt+OpMJcD
+         L09A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:subject:references:in-reply-to:message-id:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=IUVPERws9VJWduR8c4K7WtVay5FGE1ZYrGoWTAgL2FI=;
+        b=aNbmR2GpPNFYLI4yDtBccxbPEKoezTuDFbh0rGt9UaJvQB8cysJZQCOQswgSoP9aQx
+         VZR9UDOnEoqdlZ9Ip4acUptu/DKYupL5030BQ2gtjiJ0GC6l7Tewx5iXqs0ik19QZlt0
+         GSKIYNmHVXPexanpOunBQLEdtf59LD8DKSMDGOqRU3VVe1znBc/XqnC5GmAdrRDm7Eym
+         W2+32ILcNt9XRVrYw0NciYVldOZUtE8HFrii1M+j4KNME+uOfS7vc63zHDBEDB5xNdJr
+         XvW+k6OVeBc7vhSlfKEGhHb0ZsKLlpAsDmx+p7GuEhneWjyKTzYRY03m630chFdUE5Sv
+         LN2w==
+X-Gm-Message-State: ACrzQf3Jaxy/27E0JFYV7cFzfV+d09u8jbLDSi5BV9+mAiWMG30wpfPk
+	TmL/eKUmzOMMv/15HI+IVde9AAzXnw==
+X-Google-Smtp-Source: AMsMyM5jiJYrZGrM7IoOTVZjbFpsoKJbkJWpb2Kv4EylRiVbNb25Jcbww1AFj9dHX/d4Bzb+fnyRz57sPA==
+X-Received: by 2002:a05:622a:1:b0:35c:fa22:1046 with SMTP id x1-20020a05622a000100b0035cfa221046mr4535427qtw.340.1663877936991;
+        Thu, 22 Sep 2022 13:18:56 -0700 (PDT)
+Date: Thu, 22 Sep 2022 13:18:56 -0700 (PDT)
+From: Vladimir de Turckheim <vdeturckheim@gmail.com>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Message-Id: <71bd506a-bbfc-44fc-962d-f034683d2f98n@googlegroups.com>
+In-Reply-To: <d3f3f57e-3887-4917-a7e0-13fe67bcdf78n@googlegroups.com>
+References: <d3f3f57e-3887-4917-a7e0-13fe67bcdf78n@googlegroups.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_1562_1775777691.1663877936825"
+Subject: [oss-security] Fwd: [Postponed] Node.js security updates for all active release
+ lines, September 2022
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+------=_Part_1562_1775777691.1663877936825
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_1563_1304190754.1663877936825"
 
-> https://blogs.gentoo.org/ago/2016/10/18/jasper-null-pointer-dereference-in-jp2_colr_destroy-jp2_cod-c
-> 
-> AddressSanitizer: SEGV on unknown address 0x000000000000
-> 0x7f8dcb5bc940 in jp2_colr_destroy ... jasper-1.900.5/src/libjasper/jp2/jp2_cod.c:443:3
-> 
-> https://github.com/mdadams/jasper/commit/e24bdc716c3327b067c551bc6cfb97fd2370358d
+------=_Part_1563_1304190754.1663877936825
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Use CVE-2016-8887.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYDAr/AAoJEHb/MwWLVhi24I8QAKtduMTN4eo5SAOfpBYIgLdr
-9K4Vlzy3AB73c1TA/d/ck8EiG8WeDeHdU4XgZqpG7ZcEl3Yg8Tu1OZI/eNNS4pFs
-z2+TDEzRP71cy7yuX+LwjWFzu5jYDVZl4UYjLS004k5jQ4xvwZ8iuUCP6OmU1lfe
-kyaHWsvX5+uGohyz+Wd71pK8/OJockZmsSRDqaFj0ZN2luYB4daOnkUURiQ+b3Km
-9m6KfDIDw+x2sS9Ts+YFCU0LY/7Em68hh7qabACjXQql1xuwaGoZsw+30HItKfLo
-h41JMuPrEf1LyhJBZrg0URp/+f+Nlq/n3aqwrxRm/iARWw3XsNqrCBPa5QhBCO6e
-lWAGB3S8VnfXeFxsirFCy3yacIF0/sUfc3sYNdqOVOKkDPI3vg6bmwgnVefoD3+J
-4UY3KZOrGp54Y6vTGGiFBb4JMqRy6TijxoGWUhqRBZH5w9p0mbrcK3bC9iCOYndk
-ZCOeC1z+sfXYWSAdsqxInOJlT5WCVBK21qOfIbfcEfJIbaAWQbSZSTQ7OpIM/1K9
-IUuZqNWJNAEDXZi1BsxEr34lGFacIpXsCCiVBKBFrON7GKZPwikTrj13R8N1pCtJ
-FAFqIZflZDcpOoB80DgYgEZMhMV6QqaKkp6WgdwoTI1XXzrtPCFgfOU++JWmn9p+
-oFzCFvJnQ9yyHGdSThSf
-=eoij
------END PGP SIGNATURE-----
+---------- Forwarded message ---------
+From: Vladimir de Turckheim <vdeturckheim@gmail.com>
+Date: Thursday, September 22, 2022 at 10:18:40 PM UTC+2
+Subject: [Postponed] Node.js security updates for all active release lines, 
+September 2022
+To: nodejs-sec <nodejs-sec@googlegroups.com>
+
+
+Some fixes of the security releases have been recently updated and the 
+Node.js security team still needs an extra day of work to ensure the 
+binaries are ready to release. We would like to thank you for your patience 
+and understanding. The releases are now planned for September 23rd 2022.
+
+------=_Part_1563_1304190754.1663877936825
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+<br><br><div class="gmail_quote"><div dir="auto" class="gmail_attr">---------- Forwarded message ---------<br>From: <span dir="auto">Vladimir de Turckheim &lt;vdeturckheim@gmail.com&gt;</span><br>Date: Thursday, September 22, 2022 at 10:18:40 PM UTC+2<br>Subject: [Postponed] Node.js security updates for all active release lines, September 2022<br>To: <span dir="auto">nodejs-sec &lt;nodejs-sec@googlegroups.com&gt;</span><br></div><br><br><html-blob>Some fixes of the security releases have been recently updated and the Node.js security team still needs an extra day of work to ensure the binaries are ready to release.
+We would like to thank you for your patience and understanding.
+The releases are now planned for September 23rd 2022.<br></html-blob></div>
+------=_Part_1563_1304190754.1663877936825--
+
+------=_Part_1562_1775777691.1663877936825--
