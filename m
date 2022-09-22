@@ -1,17 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/03/9
-Message-ID: <Y2QYhxYN5/mNgtAO@wopr>
-Date: Thu, 3 Nov 2022 12:37:43 -0700
-From: Kurt H Maier <khm@...ops.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/22/5
+Message-ID: <10e2759e-66fb-9c9d-5d20-3e6f3fa672f2@apache.org>
+Date: Thu, 22 Sep 2022 15:15:07 +0000
+From: Arnout Engelen <engelen@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
+Subject: CVE-2022-40955: Deserialization attack in Apache InLong prior to version 1.3.0 allows RCE via JDBC 
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 03, 2022 at 06:32:22PM +0200, Nicola Tuveri wrote:
-> I can also add that at least this member of the OpenSSL Technical
-> Committee is following the discussion, and I believe I am not the only
-> one.
+Severity: important
 
-Thanks, Nicola, that makes me feel a lot better about this thread.
+Description:
 
-khm
+In versions of Apache InLong prior to 1.3.0, an attacker with sufficient privileges to specify MySQL JDBC connection URL parameters and to write arbitrary data to the MySQL database, could cause this data to be deserialized by Apache InLong, potentially leading to Remote Code Execution on the Apache InLong server.
+
+Users are advised to upgrade to Apache InLong 1.3.0 or newer.
+
+Credit:
+
+This issue was discovered by 4ra1n of Chaitin Tech.
+
+References:
+
+https://lists.apache.org/thread/r1r34y7bchrpmp9jhfdoohzdmk7pj1q1
+
