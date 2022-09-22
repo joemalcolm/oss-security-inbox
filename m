@@ -1,31 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/11/1
-Message-ID: <59c2f992-ea03-6654-51da-b485f5a16d9b@apache.org>
-Date: Fri, 11 Feb 2022 02:08:41 +0000
-From: Aristedes Maniatis <amaniatis@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-24289: Apache Cayenne: Deserialization of untrusted data in the Hessian Component of Apache Cayenne 4.1 with older Java versions 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/22/3
+Message-ID: <001401d8ce82$44e04b50$cea0e1f0$@gmail.com>
+Date: Thu, 22 Sep 2022 13:53:09 +0100
+From: "Simon Steiner" <simonsteiner1984@...il.com>
+To: <general@...graphics.apache.org>, <batik-dev@...graphics.apache.org>, <batik-users@...graphics.apache.org>, "'Apache Security Team'" <security@...che.org>, <oss-security@...ts.openwall.com>
+Subject: [CVE-2022-40146] Apache Batik information disclosure vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+CVE-2022-40146:
+        Apache Batik information disclosure vulnerability
+
+Severity:
+        Medium
+
+Vendor:
+        The Apache Software Foundation
+
+Versions Affected:
+        Batik 1.0 - 1.14
 
 Description:
-
-Hessian serialization is a network protocol that supports object-based transmission.
-Apache Cayenne's optional Remote Object Persistence (ROP) feature is a web services-based technology that provides object persistence and query functionality to 'remote' applications.
-
-In Apache Cayenne 4.1 and earlier, running on non-current patch versions of Java, an attacker with client access to Cayenne ROP can transmit a malicious payload to any vulnerable third-party dependency on the server.  This can result in arbitrary code execution.
-
+        Jar url should be blocked by DefaultScriptSecurity
 
 Mitigation:
-
-Either upgrade to Apache Cayenne 4.2 or a patched version of Java (after 6u211, 7u201, 8u191, and 11.0.1)
-
-All versions of Apache Cayenne 4.2 have whitelisting enabled by default for the Hessian deserialization.  Later versions of Java also have LDAP mitigation in place. Users can either upgrade Java or Apache Cayenne to avoid the issue.
-
-LDAP mitigation is present starting in JDK 6u211, 7u201, 8u191, and 11.0.1 where com.sun.jndi.ldap.object.trustURLCodebase system property is set to false by default to prevent JNDI from loading remote code through LDAP.
+        Users should upgrade to Batik 1.15+
 
 Credit:
+        This issue was independently reported by Piotr Bazydlo (@chudypb) of
+Trend Micro Zero Day Initiative
 
-Panda
+References:
+        http://xmlgraphics.apache.org/security.html
+        https://issues.apache.org/jira/browse/BATIK-1335
+
+The Apache XML Graphics team.
+
 
