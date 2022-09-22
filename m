@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1358" "Tuesday" "13" "September" "2016" "14:57:01" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1609131447570.990@freddy.simplesystems.org>" "34" "Re: [oss-security] libxml with CGI fix" nil nil nil "9" "2016091319:57:01" "[oss-security] libxml with CGI fix" (number mark "U       bfriesen@sim Sep 13   34/1358  " thread-indent "\"Re: [oss-security] libxml with CGI fix\"\n") "<CAFHDqJPkKJSrLp-oOdb5f94rU2yeuDrNM+MTmSn+hNz-+SqbeA@mail.gmail.com>" ("<CAFHDqJPkKJSrLp-oOdb5f94rU2yeuDrNM+MTmSn+hNz-+SqbeA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 11513 invoked by uid 550); 13 Sep 2016 19:57:14 -0000
+Received: (qmail 8043 invoked by uid 550); 22 Sep 2022 18:49:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,51 +7,84 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11493 invoked from network); 13 Sep 2016 19:57:13 -0000
-Date: Tue, 13 Sep 2016 14:57:01 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
-X-X-Sender: bfriesen@freddy.simplesystems.org
-To: oss-security@lists.openwall.com
-In-Reply-To: <CAFHDqJPkKJSrLp-oOdb5f94rU2yeuDrNM+MTmSn+hNz-+SqbeA@mail.gmail.com>
-Message-ID: <alpine.GSO.2.20.1609131447570.990@freddy.simplesystems.org>
-References: <CAFHDqJPkKJSrLp-oOdb5f94rU2yeuDrNM+MTmSn+hNz-+SqbeA@mail.gmail.com>
-User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
+Received: (qmail 22519 invoked from network); 22 Sep 2022 17:51:23 -0000
+Authentication-Results: apache.org; auth=none
+X-Gm-Message-State: ACrzQf0e3T79ggLUiOytGggbEQY5KXKpTs4h8gdAp8q1VIuNeaGRoeST
+	dCxzwwb3zZDf7aiRmrzO2FtYgfR/iLoOaLsYCmU=
+X-Google-Smtp-Source: AMsMyM6AuLD79fg6hoKn84GMVoQP7mv0A96b8TQCDANgySHYKVrz1LPf2MLAiA8F9JfpmXPeVuV6MBfs2Ss89ID0Ob4=
+X-Received: by 2002:a63:2:0:b0:42f:6169:f396 with SMTP id 2-20020a630002000000b0042f6169f396mr3972650pga.249.1663869068973;
+ Thu, 22 Sep 2022 10:51:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="-559023410-1485563912-1473796621=:990"
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Tue, 13 Sep 2016 14:57:01 -0500 (CDT)
-Subject: Re: [oss-security] libxml with CGI fix
+From: Michael Marshall <mmarshall@apache.org>
+Date: Thu, 22 Sep 2022 12:50:32 -0500
+X-Gmail-Original-Message-ID: <CAB8KC3DCj9kaqZSmYR1fuZCTgkB-9Akw7KSSKbdLg8Bm_O20SQ@mail.gmail.com>
+Message-ID: <CAB8KC3DCj9kaqZSmYR1fuZCTgkB-9Akw7KSSKbdLg8Bm_O20SQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2022-33682: Apache Pulsar: Disabled Hostname Verification makes
+ Brokers, Proxies vulnerable to MITM attack
 
----559023410-1485563912-1473796621=:990
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Severity: high
 
-On Tue, 13 Sep 2016, watashiwaher wrote:
+Description:
 
-> Hi, huys! There is a known httpoxy vulnerability ( https://httpoxy.org/ ).
-> There is a problem with CGI usage in all application which use libxml2
-> library. Attacker can make requests via attacker proxy from target server
-> using this vulnerability. I reported this problem in the 5th august, but
-> developers didn't reply me at all, and I don't know if they want to
-> response.
+TLS hostname verification cannot be enabled in the Pulsar Broker's
+Java Client, the Pulsar Broker's Java Admin Client, the Pulsar
+WebSocket Proxy's Java Client, and the Pulsar Proxy's Admin Client
+leaving intra-cluster connections and geo-replication connections
+vulnerable to man in the middle attacks, which could leak credentials,
+configuration data, message data, and any other data sent by these
+clients. The vulnerability is for both the pulsar+ssl protocol and
+HTTPS.
 
-The referenced web site provides the advice "Do it “at the edge”, 
-where HTTP requests first enter your system.".  In this case libxml2 
-is not the edge.  The edge is the parser which accepts the CGI 
-requests.
+An attacker can only take advantage of this vulnerability by taking
+control of a machine 'between' the client and the server. The attacker
+must then actively manipulate traffic to perform the attack by
+providing the client with a cryptographically valid certificate for an
+unrelated host.
 
-Adding detection of "REQUEST_METHOD" to libxml2 may reduce the 
-potential menace.
+This issue affects Apache Pulsar Broker, Proxy, and WebSocket Proxy
+versions 2.7.0 to 2.7.4; 2.8.0 to 2.8.3; 2.9.0 to 2.9.2; 2.10.0; 2.6.4
+and earlier.
 
-The libxml2 developers should have responded to you but I can see why 
-they would not consider this to be their problem.
+Mitigation:
 
-If you break libxml2 support for HTTP_PROXY (and/or http_proxy) then 
-the proxy capabilty can't be used outside of CGI applications, which 
-is likely to break existing valid uses.
+Any users running affected versions of the Pulsar Broker, Pulsar
+Proxy, or Pulsar WebSocket Proxy should rotate static authentication
+data vulnerable to man in the middle attacks used by these
+applications, including tokens and passwords.
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
----559023410-1485563912-1473796621=:990--
+To enable hostname verification, update the following configuration files.
+
+In the Broker configuration (broker.conf, by default) and in the
+WebSocket Proxy configuration (websocket.conf, by default), set:
+
+brokerClient_tlsHostnameVerificationEnable=true
+
+In Pulsar Helm chart deployments, the Broker and WebSocket Proxy
+setting name should be prefixed with "PULSAR_PREFIX_".
+
+In the Proxy configuration (proxy.conf, by default), set:
+
+tlsHostnameVerificationEnabled=true
+
+2.7 users should upgrade Pulsar Brokers, Proxies, and WebSocket
+Proxies to 2.7.5, rotate vulnerable authentication data, including
+tokens and passwords, and apply the above configuration.
+2.8 users should upgrade Pulsar Brokers, Proxies, and WebSocket
+Proxies to 2.8.4, rotate vulnerable authentication data, including
+tokens and passwords, and apply the above configuration.
+2.9 users should upgrade Pulsar Brokers, Proxies, and WebSocket
+Proxies to 2.9.3, rotate vulnerable authentication data, including
+tokens and passwords, and apply the above configuration.
+2.10 users should upgrade Pulsar Brokers, Proxies, and WebSocket
+Proxies to 2.10.1, rotate vulnerable authentication data, including
+tokens and passwords, and apply the above configuration.
+Any users running Pulsar Brokers, Proxies, and WebSocket Proxies for
+2.6.4 and earlier should upgrade to one of the above patched versions,
+rotate vulnerable authentication data, including tokens and passwords,
+and apply the above configuration.
+
+Credit:
+
+This issue was discovered by Michael Marshall of DataStax.
