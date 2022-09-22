@@ -1,50 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/09/2
-Message-Id: <FC4E26D0-4162-4D71-B40D-D6D384EE67F9@beckweb.net>
-Date: Fri, 9 Sep 2022 14:51:37 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/22/6
+Message-ID: <2b8ef975-bde6-eed7-3265-8f4d74cc9391@apache.org>
+Date: Thu, 22 Sep 2022 17:31:53 +0000
+From: Lari Hotari <lhotari@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Vulnerability in Jenkins
+Subject: CVE-2022-24280: Apache Pulsar Proxy target broker address isn't validated 
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+Severity: important
 
-The following releases contain fixes for security vulnerabilities:
+Description:
 
-* Jenkins 2.263
-* Jenkins LTS 2.361.1
+Improper Input Validation vulnerability in Proxy component of Apache Pulsar allows an attacker to make TCP/IP connection attempts that originate from the Pulsar Proxy's IP address.
 
+When the Apache Pulsar Proxy component is used, it is possible to attempt to open TCP/IP connections to any IP address and port that the Pulsar Proxy can connect to. An attacker could use this as a way for DoS attacks that originate from the Pulsar Proxy's IP address.
+It hasn’t been detected that the Pulsar Proxy authentication can be bypassed. The attacker will have to have a valid token to a properly secured Pulsar Proxy.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2022-09-09/
+This issue affects Apache Pulsar Proxy versions 2.7.0 to 2.7.4; 2.8.0 to 2.8.2; 2.9.0 to 2.9.1; 2.6.4 and earlier.
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Mitigation:
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+To address the issue, upgraded versions of Apache Pulsar Proxy will only allow connections to known broker ports 6650 and 6651 by default. In addition, it is necessary to limit proxied broker connections further to known broker addresses by specifying brokerProxyAllowedHostNames and brokerProxyAllowedIPAddresses Pulsar Proxy settings. In Pulsar Helm chart deployments, the setting names should be prefixed with "PULSAR_PREFIX_".
 
----
+2.7 users should upgrade Pulsar Proxies to 2.7.5 and apply configuration changes.
+2.8 users should upgrade Pulsar Proxies to at least 2.8.3 and apply configuration changes.
+2.9 users should upgrade Pulsar Proxies to at least 2.9.2 and apply configuration changes.
+2.10 users should apply configuration changes.
+Any users running the Pulsar Proxy 2.6.4 and earlier should upgrade to one of the above patched versions and apply configuration changes.
 
-SECURITY-2868 / CVE-2022-2048
-Jenkins bundles Winstone-Jetty, a wrapper around Jetty, to act as HTTP and
-servlet server when started using `java -jar jenkins.war`. This is how
-Jenkins is run when using any of the installers or packages, but not when
-run using servlet containers such as Tomcat.
+Credit:
 
-Jenkins LTS 2.346.3 and earlier, 2.362 and earlier bundle versions of Jetty
-affected by the security vulnerability CVE-2022-2048. This vulnerability
-allows unauthenticated attackers to make the Jenkins UI unresponsive by
-exploiting Jetty's handling of invalid HTTP/2 requests, causing a denial of
-service.
-
-NOTE: This only affects instances that enable HTTP/2, typically using the
-`--http2Port` argument to `java -jar jenkins.war` or corresponding options
-in service configuration files. It is disabled by default in all native
-installers and the Docker images provided by the Jenkins project.
-
-
+This issue was discovered by Lari Hotari of DataStax.
 
