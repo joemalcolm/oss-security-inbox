@@ -1,42 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/02/12
-Message-ID: <20221102124527.O5WVR%steffen@sdaoden.eu>
-Date: Wed, 02 Nov 2022 13:45:27 +0100
-From: Steffen Nurpmeso <steffen@...oden.eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/22/7
+Message-ID: <9e8dd09b-ec97-41bf-f741-16a35009e97c@apache.org>
+Date: Thu, 22 Sep 2022 17:34:52 +0000
+From: Michael Marshall <mmarshall@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
+Subject: CVE-2022-33681: Apache Pulsar: Improper Hostname Verification in Java Client and Proxy can expose authentication data via MITM 
 Content-Type: text/plain; charset=utf-8
 
-  ...
- |On Wed, Nov 2, 2022 at 7:57 AM Tavis Ormandy <taviso@...il.com> wrote:
- |> I don't know rust, so serious question - if this same buggy punycode
+Severity: high
 
-The problem with punycode is punycode as such.
-It should have been URL-encoded UTF-8 maybe with normal
-decomposition from the start, and the DNS limits should have been
-raised, all that now well over twenty years ago.
+Description:
 
-Poul-Hennig Kamp of FreeBSD, varnish etc wrote just this week on
-another ML
+Delayed TLS hostname verification in the Pulsar Java Client and the Pulsar Proxy make each client vulnerable to a man in the middle attack. Connections from the Pulsar Java Client to the Pulsar Broker/Proxy and connections from the Pulsar Proxy to the Pulsar Broker are vulnerable. Authentication data is sent before verifying the server’s TLS certificate matches the hostname, which means authentication data could be exposed to an attacker.
 
- |> The other ting to keep in mind is the immense existing codebase of
- |> unix kernels et al, not to mention application code depending on
- |> those kernels.
- |
- |This is the mistake we IT-people keep doing again and again:
- |
- |Forwards compatibility is /far/ more important than backwards compatibil\
- |ity.
+An attacker can only take advantage of this vulnerability by taking control of a machine 'between' the client and the server. The attacker must then actively manipulate traffic to perform the attack by providing the client with a cryptographically valid certificate for an unrelated host. Because the client sends authentication data before performing hostname verification, an attacker could gain access to the client’s authentication data. The client eventually closes the connection when it verifies the hostname and identifies the targeted hostname does not match a hostname on the certificate.
 
-It would have been grown out by now.  And many problems would
-never happened, including those incompatibilities that they wanted
-to avoid.  My one cent.
+Because the client eventually closes the connection, the value of the intercepted authentication data depends on the authentication method used by the client. Token based authentication and username/password authentication methods are vulnerable because the authentication data can be used to impersonate the client in a separate session.
 
-Other than that.  Sigh.  C is the culprit!!
+This issue affects Apache Pulsar Java Client versions 2.7.0 to 2.7.4; 2.8.0 to 2.8.3; 2.9.0 to 2.9.2; 2.10.0; 2.6.4 and earlier.
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+Mitigation:
+
+Any users running affected versions of the Java Client should rotate vulnerable authentication data, including tokens and passwords.
+
+2.7 Pulsar Java Client users should upgrade to 2.7.5, and rotate vulnerable authentication data, including tokens and passwords.
+2.8 Pulsar Java Client users should upgrade to 2.8.4, and rotate vulnerable authentication data, including tokens and passwords.
+2.9 Pulsar Java Client users should upgrade to 2.9.3, and rotate vulnerable authentication data, including tokens and passwords.
+2.10 Pulsar Java Client users should upgrade to 2.10.1, and rotate vulnerable authentication data, including tokens and passwords.
+Any users running the Pulsar Java Client for 2.6.4 and earlier should upgrade to one of the above patched versions, and rotate vulnerable authentication data, including tokens and passwords.
+
+Credit:
+
+This issue was discovered by Michael Marshall of DataStax.
+
