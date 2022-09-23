@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5852" "Thursday" "29" "October" "2015" "12:00:14" "+0000" "Xen.org security team" "security@xen.org" "<E1ZrlsM-00021I-Bt@xenbits.xen.org>" "153" "[oss-security] Xen Security Advisory 145 (CVE-2015-7812) - arm: Host crash when preempting a multicall" nil nil nil "10" "2015102912:00:14" "[oss-security] Xen Security Advisory 145 (CVE-2015-7812) - arm: Host crash when preempting a multicall" (number mark "U       security@xen Oct 29  153/5852  " thread-indent "\"[oss-security] Xen Security Advisory 145 (CVE-2015-7812) - arm: Host crash when preempting a multicall\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 26177 invoked by uid 550); 29 Oct 2015 12:00:42 -0000
+Received: (qmail 15983 invoked by uid 550); 23 Sep 2022 06:28:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,170 +7,233 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26084 invoked from network); 29 Oct 2015 12:00:34 -0000
-Date: Thu, 29 Oct 2015 12:00:14 +0000
-Message-Id: <E1ZrlsM-00021I-Bt@xenbits.xen.org>
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 26584 invoked from network); 23 Sep 2022 05:02:21 -0000
+Message-ID: <bcbc5246-0e4a-605f-9249-c4edf4c20f29@treenet.co.nz>
+Date: Fri, 23 Sep 2022 17:00:24 +1200
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.428 (Entity 5.428)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security@xen.org>
-Subject: [oss-security] Xen Security Advisory 145 (CVE-2015-7812) - arm: Host crash when
- preempting a multicall
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Content-Language: en-US
+References: <61966eb4-6778-8293-0cec-841db62f21ce@treenet.co.nz>
+To: oss-security@lists.openwall.com
+From: Amos Jeffries <squid3@treenet.co.nz>
+In-Reply-To: <61966eb4-6778-8293-0cec-841db62f21ce@treenet.co.nz>
+X-Forwarded-Message-Id: <61966eb4-6778-8293-0cec-841db62f21ce@treenet.co.nz>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------ZToS4TmngOBSR31HCQc2LA0t"
+Subject: [oss-security] Fwd: [ADVISORY] SQUID-2022:2 Buffer Over Read in SSPI and SMB
+ Authentication
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+--------------ZToS4TmngOBSR31HCQc2LA0t
+Content-Type: multipart/mixed; boundary="------------CzAfpKiKrYJmtLaT70fKzafh";
+ protected-headers="v1"
+From: Amos Jeffries <squid3@treenet.co.nz>
+To: oss-security@lists.openwall.com
+Message-ID: <bcbc5246-0e4a-605f-9249-c4edf4c20f29@treenet.co.nz>
+Subject: Fwd: [ADVISORY] SQUID-2022:2 Buffer Over Read in SSPI and SMB
+ Authentication
+References: <61966eb4-6778-8293-0cec-841db62f21ce@treenet.co.nz>
+In-Reply-To: <61966eb4-6778-8293-0cec-841db62f21ce@treenet.co.nz>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--------------CzAfpKiKrYJmtLaT70fKzafh
+Content-Type: multipart/mixed; boundary="------------H0RqxrLvV7M9V4RUCSfB1QRl"
 
-            Xen Security Advisory CVE-2015-7812 / XSA-145
-                              version 3
-
-             arm: Host crash when preempting a multicall
-
-UPDATES IN VERSION 3
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-Early versions of Xen on ARM did not support "multicall" functionality
-(the ability to perform multiple operations via a single hypercall)
-and therefore stubbed out the functionality needed to support
-preemption of multicalls in a manner which crashed the host.
-
-When multicall support was subsequently added these stubs were not
-replaced with the correct functionality and therefore exposed to
-guests a code path which crashes the host.
-
-Any guest can issue a preemptable hypercall via the multicall interface
-to exploit this vulnerability.
-
-IMPACT
-======
-
-A malicious guest can crash the host.
-
-VULNERABLE SYSTEMS
-==================
-
-Both 32- and 64-bit ARM systems are vulnerable from Xen 4.4 onward.
-
-x86 systems are not vulnerable.
-
-MITIGATION
-==========
-
-On systems where the guest kernel is controlled by the host rather
-than guest administrator, running only kernels which do not make use
-of multicall functionality will prevent untrusted guest users from
-exploiting this issue. However untrusted guest administrators can still
-trigger it unless further steps are taken to prevent them from loading
-code into the kernel (e.g. by disabling loadable modules etc) or from
-using other mechanisms which allow them to run code at kernel
-privilege.
-
-CREDITS
-=======
-
-This issue was discovered by Julien Grall of Citrix.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa145.patch        xen-unstable, Xen 4.6.x, Xen 4.5.x, Xen 4.4.x
-
-$ sha256sum xsa145*.patch
-4d4a4724e4d367ddfc9ac1b43dfe81bce873c65fe9bb13f443266dd12c002db1  xsa145.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.12 (GNU/Linux)
-
-iQEcBAEBAgAGBQJWMgmzAAoJEIP+FMlX6CvZUV0H/2uDN/R1KaR1x2OljM5toEUR
-vGrEN1LX/AzQ1f4DADZO4LIvth2BLdFEB6OsaaKThFdnZjJWQ0fbfxIzb6eGOpMR
-XzuToUEIBTA01JHKNUo5ovWQ36gePyvxkFWDjk8Ixj22YpbuyUDU5HiHH5UpTovg
-0QLfJdKDij7Sp3/r9quQ5KSO86kw9CZqut5qRvMI8VKRa03O2jDch5iKkyDTcuCL
-md7r5+k6O3F4/TVPrlET+BAHOqgOtuQd6EMFfqXolsr12OpzzBz2/ntK4srmqlZc
-wa7PgAoELAaLnv4nBtFEtIyjg9YI4RIKnMwBbeD9suM305ohi3yDCxDj9eaYJwo=
-=eNQ5
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa145.patch"
-Content-Disposition: attachment; filename="xsa145.patch"
+--------------H0RqxrLvV7M9V4RUCSfB1QRl
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: base64
 
-eGVuL2FybTogU3VwcG9ydCBoeXBlcmNhbGxfY3JlYXRlX2NvbnRpbnVhdGlv
-biBmb3IgbXVsdGljYWxsCgpNdWx0aWNhbGwgZm9yIEFSTSBoYXMgYmVlbiBz
-dXBwb3J0ZWQgc2luY2UgY29tbWl0IGYwZGJkYzYgInhlbjogYXJtOiBmdWxs
-eQppbXBsZW1lbnQgbXVsdGljYWxsIGludGVyZmFjZS4iLiBBbHRob3VnaCwg
-aWYgYW4gaHlwZXJjYWxsIGluIG11bHRpY2FsbApyZXF1aXJlcyBwcmVlbXB0
-aW9uLCBpdCB3aWxsIGNyYXNoIHRoZSBob3N0OgoKKFhFTikgWGVuIEJVRyBh
-dCBkb21haW4uYzozNDcKKFhFTikgLS0tLVsgWGVuLTQuNy11bnN0YWJsZSAg
-YXJtNjQgIGRlYnVnPXkgIFRhaW50ZWQ6ICAgIEMgXS0tLS0KWy4uLl0KKFhF
-TikgWGVuIGNhbGwgdHJhY2U6CihYRU4pICAgIFs8MDAwMDAwMDAwMDI0MjBj
-Yz5dIGh5cGVyY2FsbF9jcmVhdGVfY29udGludWF0aW9uKzB4NjQvMHgzODAg
-KFBDKQooWEVOKSAgICBbPDAwMDAwMDAwMDAyMTcyNzQ+XSBkb19tZW1vcnlf
-b3ArMHgxYjAwLzB4MjMzNCAoTFIpCihYRU4pICAgIFs8MDAwMDAwMDAwMDI1
-MGQyYz5dIGRvX211bHRpY2FsbF9jYWxsKzB4MTE0LzB4MTI0CihYRU4pICAg
-IFs8MDAwMDAwMDAwMDIxN2ZmMD5dIGRvX211bHRpY2FsbCsweDE3Yy8weDIz
-YwooWEVOKSAgICBbPDAwMDAwMDAwMDAyNGY5N2M+XSBkb190cmFwX2h5cGVy
-Y2FsbCsweDkwLzB4MTJjCihYRU4pICAgIFs8MDAwMDAwMDAwMDI1MWNhOD5d
-IGRvX3RyYXBfaHlwZXJ2aXNvcisweGQyYy8weDFiYTQKKFhFTikgICAgWzww
-MDAwMDAwMDAwMjU4MmNjPl0gZ3Vlc3Rfc3luYysweDg4LzB4YjgKKFhFTikK
-KFhFTikKKFhFTikgKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioq
-KioqKioqKgooWEVOKSBQYW5pYyBvbiBDUFUgNToKKFhFTikgWGVuIEJVRyBh
-dCBkb21haW4uYzozNDcKKFhFTikgKioqKioqKioqKioqKioqKioqKioqKioq
-KioqKioqKioqKioqKioqKgooWEVOKQooWEVOKSBNYW51YWwgcmVzZXQgcmVx
-dWlyZWQgKCdub3JlYm9vdCcgc3BlY2lmaWVkKQoKTG9va2luZyB0byB0aGUg
-Y29kZSwgdGhlIHN1cHBvcnQgb2YgbXVsdGljYWxsIGxvb2tzIHZhbGlkIHRv
-IG1lLCBhcyB3ZSBvbmx5Cm5lZWQgdG8gZmlsbCBjYWxsLmFyZ3NbLi4uXS4g
-U28gZHJvcCB0aGUgQlVHKCk7CgpUaGlzIGlzIFhTQS0xNDUuCgpBY2tlZC1i
-eTogSWFuIENhbXBiZWxsIDxpYW4uY2FtcGJlbGxAY2l0cml4LmNvbT4KCmRp
-ZmYgLS1naXQgYS94ZW4vYXJjaC9hcm0vZG9tYWluLmMgYi94ZW4vYXJjaC9h
-cm0vZG9tYWluLmMKaW5kZXggNTc1NzQ1Yy4uNWM1YWM5ZSAxMDA2NDQKLS0t
-IGEveGVuL2FyY2gvYXJtL2RvbWFpbi5jCisrKyBiL3hlbi9hcmNoL2FybS9k
-b21haW4uYwpAQCAtMzQ0LDggKzM0NCw2IEBAIHVuc2lnbmVkIGxvbmcgaHlw
-ZXJjYWxsX2NyZWF0ZV9jb250aW51YXRpb24oCiAKICAgICBpZiAoIHRlc3Rf
-Yml0KF9NQ1NGX2luX211bHRpY2FsbCwgJm1jcy0+ZmxhZ3MpICkKICAgICB7
-Ci0gICAgICAgIEJVRygpOyAvKiBYWFggbXVsdGljYWxscyBub3QgaW1wbGVt
-ZW50ZWQgeWV0LiAqLwotCiAgICAgICAgIF9fc2V0X2JpdChfTUNTRl9jYWxs
-X3ByZWVtcHRlZCwgJm1jcy0+ZmxhZ3MpOwogCiAgICAgICAgIGZvciAoIGkg
-PSAwOyAqcCAhPSAnXDAnOyBpKysgKQo=
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fDQoNClNxdWlkIFByb3h5IENhY2hlIFNl
+Y3VyaXR5IFVwZGF0ZSBBZHZpc29yeSBTUVVJRC0yMDIyOjINCl9fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fXw0KDQpBZHZpc29yeSBJRDogICAgICAgfCBTUVVJRC0y
+MDIyOjINCkRhdGU6ICAgICAgICAgICAgICB8IFNlcHRlbWJlciAyMywgMjAy
+Mg0KU3VtbWFyeTogICAgICAgICAgIHwgQnVmZmVyIE92ZXIgUmVhZA0KICAg
+ICAgICAgICAgICAgICAgICB8IGluIFNTUEkgYW5kIFNNQiBBdXRoZW50aWNh
+dGlvbg0KQWZmZWN0ZWQgdmVyc2lvbnM6IHwgU3F1aWQgMi41LlNUQUJMRTEg
+LT4gMi43LlNUQUJMRTkNCiAgICAgICAgICAgICAgICAgICAgfCBTcXVpZCAz
+LnggLT4gMy41LjI4DQogICAgICAgICAgICAgICAgICAgIHwgU3F1aWQgNC54
+IC0+IDQuMTcNCiAgICAgICAgICAgICAgICAgICAgfCBTcXVpZCA1LnggLT4g
+NS42DQpGaXhlZCBpbiB2ZXJzaW9uOiAgfCBTcXVpZCA1LjcNCl9fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fXw0KDQogIDxodHRwOi8vY3ZlLm1pdHJlLm9yZy9jZ2kt
+YmluL2N2ZW5hbWUuY2dpP25hbWU9Q1ZFLTIwMjItNDEzMTg+DQpfX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX18NCg0KUHJvYmxlbSBEZXNjcmlwdGlvbjoNCg0KICBE
+dWUgdG8gYW4gaW5jb3JyZWN0IGludGVnZXIgb3ZlcmZsb3cgcHJvdGVjdGlv
+biBTcXVpZCBTU1BJIGFuZA0KICBTTUIgYXV0aGVudGljYXRpb24gaGVscGVy
+cyBhcmUgdnVsbmVyYWJsZSB0byBhIEJ1ZmZlciBPdmVyZmxvdw0KICBhdHRh
+Y2suDQoNCl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fXw0KDQpTZXZlcml0eToNCg0K
+ICBUaGlzIHByb2JsZW0gYWxsb3dzIGEgcmVtb3RlIGNsaWVudCB0byBwZXJm
+b3JtIGEgRGVuaWFsIG9mDQogIFNlcnZpY2UgYXR0YWNrIHdoZW4gU3F1aWQg
+aXMgY29uZmlndXJlZCB0byB1c2UgTlRMTSBvciBOZWdvdGlhdGUNCiAgYXV0
+aGVudGljYXRpb24gd2l0aCBvbmUgb2YgdGhlIHZ1bG5lcmFibGUgaGVscGVy
+cy4NCg0KICBUaGlzIHByb2JsZW0gYWxsb3dzIGEgcmVtb3RlIGNsaWVudCB0
+byBleHRyYWN0IHNlbnNpdGl2ZQ0KICBpbmZvcm1hdGlvbiBmcm9tIG1hY2hp
+bmUgbWVtb3J5IHdoZW4gU3F1aWQgaXMgY29uZmlndXJlZCB0byB1c2UNCiAg
+TlRMTSBvciBOZWdvdGlhdGUgYXV0aGVudGljYXRpb24gd2l0aCBvbmUgb2Yg
+dGhlIHZ1bG5lcmFibGUNCiAgaGVscGVycy4gVGhlIHNjb3BlIG9mIHRoaXMg
+aW5mb3JtYXRpb24gaW5jbHVkZXMgdXNlciBjcmVkZW50aWFscw0KICBpbiBk
+ZWNyeXB0ZWQgZm9ybXMsIGFuZCBhbHNvIGFyYml0cmFyeSBtZW1vcnkgYXJl
+YXMgYmV5b25kIFNxdWlkDQogIGFuZCB0aGUgaGVscGVyIGl0c2VsZi4NCg0K
+ICBUaGlzIGF0dGFjayBpcyBsaW1pdGVkIHRvIGF1dGhlbnRpY2F0aW9uIGhl
+bHBlcnMgYnVpbHQgdXNpbmcgdGhlDQogIGxpYm50bG1hdXRoIGxpYnJhcnkg
+c2hpcHBlZCBieSBTcXVpZC4NCg0KQ1ZTUyBTY29yZSBvZiA4LjINCjxodHRw
+czovL252ZC5uaXN0Lmdvdi92dWxuLW1ldHJpY3MvY3Zzcy92My1jYWxjdWxh
+dG9yP3ZlY3Rvcj1BVjpOL0FDOkgvUFI6Ti9VSTpOL1M6Qy9DOkgvSTpML0E6
+SC9FOlAvUkw6Ty9SQzpDL0NSOkgvSVI6SC9BUjpIL01BVjpYL01BQzpYL01Q
+UjpYL01VSTpYL01TOkMvTUM6WC9NSTpML01BOkgmdmVyc2lvbj0zLjE+DQpf
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX18NCg0KVXBkYXRlZCBQYWNrYWdlczoNCg0K
+VGhpcyBidWcgaXMgZml4ZWQgYnkgU3F1aWQgdmVyc2lvbiA1LjcuDQoNCiAg
+SW4gYWRkaXRpb24sIHBhdGNoZXMgYWRkcmVzc2luZyB0aGlzIHByb2JsZW0g
+Zm9yIHRoZSBzdGFibGUNCiAgcmVsZWFzZXMgY2FuIGJlIGZvdW5kIGluIG91
+ciBwYXRjaCBhcmNoaXZlczoNCg0KU3F1aWQgNDoNCiAgPGh0dHA6Ly93d3cu
+c3F1aWQtY2FjaGUub3JnL1ZlcnNpb25zL3Y0L2NoYW5nZXNldHMvU1FVSUQt
+MjAyMl8yLnBhdGNoPg0KDQpTcXVpZCA1Og0KICA8aHR0cDovL3d3dy5zcXVp
+ZC1jYWNoZS5vcmcvVmVyc2lvbnMvdjUvY2hhbmdlc2V0cy9TUVVJRC0yMDIy
+XzIucGF0Y2g+DQoNCiAgSWYgeW91IGFyZSB1c2luZyBhIHByZXBhY2thZ2Vk
+IHZlcnNpb24gb2YgU3F1aWQgdGhlbiBwbGVhc2UgcmVmZXINCiAgdG8gdGhl
+IHBhY2thZ2UgdmVuZG9yIGZvciBhdmFpbGFiaWxpdHkgaW5mb3JtYXRpb24g
+b24gdXBkYXRlZA0KICBwYWNrYWdlcy4NCg0KX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fDQoNCkRldGVybWluaW5nIGlmIHlvdXIgdmVyc2lvbiBpcyB2dWxuZXJh
+YmxlOg0KDQogIFJ1biB0aGlzIGNvbW1hbmQgdG8gdmlldyB0aGUgY29uZmln
+dXJlZCBhdXRoZW50aWNhdGlvbiBoZWxwZXJzOg0KDQogICAgKHNxdWlkIC1r
+IHBhcnNlIDI+JjEpIHwgZ3JlcCAiUHJvY2Vzc2luZzogYXV0aF9wYXJhbSIN
+Cg0KICBZb3VyIFNxdWlkIG1heSBiZSB2dWxuZXJhYmxlIGlmIHRoZSByZXN1
+bHQgY29udGFpbnMgYW55IG9mIHRoZSBmb2xsb3dpbmc6DQogICAgbnRsbV9z
+bWJfbG1fYXV0aA0KICAgIG50bG1fc3NwaV9hdXRoDQogICAgbnRsbV9mYWtl
+X2F1dGgNCiAgICBuZWdvdGlhdGVfc3NwaV9hdXRoDQoNCiAgQWxsIFNxdWlk
+LTIuNSB1cCB0byBhbmQgaW5jbHVkaW5nIDQuMTcgaGF2ZSB2dWxuZXJhYmxl
+IGhlbHBlcnMuDQoNCiAgQWxsIFNxdWlkLTUueCB1cCB0byBhbmQgaW5jbHVk
+aW5nIDUuNiBoYXZlIHZ1bG5lcmFibGUgaGVscGVycy4NCg0KX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fDQoNCldvcmthcm91bmQ6DQoNCkVpdGhlciwNCg0KICBE
+aXNhYmxlIHVzZSBvZiB0aGUgdnVsbmVyYWJsZSBhdXRoZW50aWNhdGlvbiBz
+Y2hlbWUuDQoNCk9yLA0KDQogIFJlcGxhY2UgdGhlIHZ1bG5lcmFibGUgaGVs
+cGVyIHdpdGggYW4gYWx0ZXJuYXRpdmUgaGVscGVyIGZvciB0aGUNCiAgc2Ft
+ZSBhdXRoZW50aWNhdGlvbiBzY2hlbWUuDQoNCk9yLA0KDQogIFJlcGxhY2Ug
+dGhlIHZ1bG5lcmFibGUgaGVscGVyIGJpbmFyeSB3aXRoIG9uZSBidWlsdCBm
+cm9tIGFuDQogIHVwZGF0ZWQgb3IgcGF0Y2hlZCBTcXVpZCByZWxlYXNlLiBU
+aGUgcmVtYWluZGVyIG9mIFNxdWlkIGRvZXMgbm90DQogIG5lZWQgdXBkYXRp
+bmcgdG8gZml4IHRoaXMuDQoNCl9fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXw0KDQpD
+b250YWN0IGRldGFpbHMgZm9yIHRoZSBTcXVpZCBwcm9qZWN0Og0KDQogIEZv
+ciBpbnN0YWxsYXRpb24gLyB1cGdyYWRlIHN1cHBvcnQgb24gYmluYXJ5IHBh
+Y2thZ2VkIHZlcnNpb25zDQogIG9mIFNxdWlkOiBZb3VyIGZpcnN0IHBvaW50
+IG9mIGNvbnRhY3Qgc2hvdWxkIGJlIHlvdXIgYmluYXJ5DQogIHBhY2thZ2Ug
+dmVuZG9yLg0KDQogIElmIHlvdSBpbnN0YWxsIGFuZCBidWlsZCBTcXVpZCBm
+cm9tIHRoZSBvcmlnaW5hbCBTcXVpZCBzb3VyY2VzDQogIHRoZW4gdGhlIDxz
+cXVpZC11c2Vyc0BsaXN0cy5zcXVpZC1jYWNoZS5vcmc+IG1haWxpbmcgbGlz
+dCBpcyB5b3VyDQogIHByaW1hcnkgc3VwcG9ydCBwb2ludC4gRm9yIHN1YnNj
+cmlwdGlvbiBkZXRhaWxzIHNlZQ0KICA8aHR0cDovL3d3dy5zcXVpZC1jYWNo
+ZS5vcmcvU3VwcG9ydC9tYWlsaW5nLWxpc3RzLmh0bWw+Lg0KDQogIEZvciBy
+ZXBvcnRpbmcgb2Ygbm9uLXNlY3VyaXR5IGJ1Z3MgaW4gdGhlIGxhdGVzdCBT
+VEFCTEUgcmVsZWFzZQ0KICB0aGUgc3F1aWQgYnVnemlsbGEgZGF0YWJhc2Ug
+c2hvdWxkIGJlIHVzZWQNCiAgPGh0dHA6Ly9idWdzLnNxdWlkLWNhY2hlLm9y
+Zy8+Lg0KDQogIEZvciByZXBvcnRpbmcgb2Ygc2VjdXJpdHkgc2Vuc2l0aXZl
+IGJ1Z3Mgc2VuZCBhbiBlbWFpbCB0byB0aGUNCiAgPHNxdWlkLWJ1Z3NAbGlz
+dHMuc3F1aWQtY2FjaGUub3JnPiBtYWlsaW5nIGxpc3QuIEl0J3MgYSBjbG9z
+ZWQNCiAgbGlzdCAodGhvdWdoIGFueW9uZSBjYW4gcG9zdCkgYW5kIHNlY3Vy
+aXR5IHJlbGF0ZWQgYnVnIHJlcG9ydHMNCiAgYXJlIHRyZWF0ZWQgaW4gY29u
+ZmlkZW5jZSB1bnRpbCB0aGUgaW1wYWN0IGhhcyBiZWVuIGVzdGFibGlzaGVk
+Lg0KDQpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX18NCg0KQ3JlZGl0czoNCg0KICBU
+aGlzIHZ1bG5lcmFiaWxpdHkgd2FzIGRpc2NvdmVyZWQgYnkgTFdJQy4NCg0K
+ICBGaXhlZCBieSBBbW9zIEplZmZyaWVzIG9mIFRyZWVob3VzZSBOZXR3b3Jr
+cyBMdGQsDQogIGJhc2VkIG9uIHBhdGNoIGJ5IExXSUMuDQoNCl9fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX19fX19fXw0KDQpSZXZpc2lvbiBoaXN0b3J5Og0KDQogIDIwMTkt
+MDMtMTcgMTQ6MjQ6NDIgVVRDIEluaXRpYWwgUmVwb3J0DQogIDIwMjItMDgt
+MDggMTI6MTY6NDMgVVRDIEZpeCBSZWxlYXNlZA0KICAyMDIyLTA5LTIzIDA1
+OjAwOjAwIFVUQyBBZHZpc29yeSBSZWxlYXNlZA0KX19fX19fX19fX19fX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fDQpFTkQNCg==
 
---=separator--
+--------------H0RqxrLvV7M9V4RUCSfB1QRl
+Content-Type: application/pgp-keys; name="OpenPGP_0x00D863679420BDD3.asc"
+Content-Disposition: attachment; filename="OpenPGP_0x00D863679420BDD3.asc"
+Content-Description: OpenPGP public key
+Content-Transfer-Encoding: quoted-printable
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----=0A=
+=0A=
+xsFNBFiOEzoBEADuuawHiMOqHBjL5Mk6IfPCgJmY3oqJDmykzve+vDh7jArtFnOG=0A=
+067ftaMLligGh3y6LOLh3r1kIZ254CPHuKFYssA1p9mXL9YJnZ1qHrQVhqZwDq7d=0A=
+H/UtBQ2IM1QukoTo1VRTB3ppiPHKTSa2zZ/kgBs0d+1MOi8DY2SmIDYVhUJI55qS=0A=
+qpxlcs6MyG4KxlEPD35J3nL4hIzLzuzIbZoUO6M+dLvnqiFu2+mm6o75nxYmq+JC=0A=
+PwN5biETkSvndqr56t/W0ajlU1MpFXfOYJ8PfutrIBUPsRJUqWQjGg6uXp4torC1=0A=
+q2XasfSKVIQ+8duw7MCrkAfRv5BtDtpesAAsScvYTwUaDYVioiNNK1uJQZlrpYY4=0A=
+I0EbHI4GHKq7Q4VmotcQ2BhigqRIdh7kD3corddhlLTvTs0G5Pjk/T2ZoMFZI03g=0A=
++ieuo1l8VhCGdlqSQd8d1Np9WWwS9899QSgucwEeG+OK2f1IxxD12HiCgNoSh9id=0A=
+9vTYLTZK+HM1FEu+iwTxfQ9F/kDN49IaPhfvjJTs86Ov4FBTtaNUN2pF0qXpQr3A=0A=
+RisxZt7t7MVls+570sNnaijYYkLZdZj+49QArJxallltX3sbc9AK5JxkT8XivRCe=0A=
+LTKOngZEzIZCBeZuyI8cCemhU0csl89ZcORbMsgFS28FyWH4+X6lA+R5HQARAQAB=0A=
+zSJBbW9zIEplZmZyaWVzIDxhbW9zQHRyZWVuZXQuY28ubno+wsGOBBMBCAA4FiEE=0A=
+AimzwkzOwlQSfJUyANhjZ5QgvdMFAliOEzoCGwMFCwkIBwIGFQgJCgsCBBYCAwEC=0A=
+HgECF4AACgkQANhjZ5QgvdOKkhAAseag7QTzRF20TDwc6QQpfYdUyuuMqyEV3AwA=0A=
+TtJxF2Y+aF/hEHXU9XBCM8EMyiJR816haC+86Wci0cXYj7pmR80psR9C6JoaNos8=0A=
+9CrgsmMx9tZR5yJXrdTCnQajbZf3ozs7IDk41g4NvWg5GtHM3MYriL0LUBXLT+YS=0A=
+Z9Qq2DmRZRatCjk6tiMYeHG/GtH6GZs3YExRO9Am16C1gTJRao9mJtCBDR+0NrRB=0A=
+2E7tKN8EZySAsZkDzbL+hL/LpdWkEZvlBsSxJebAN0x64w3FSztHGfZwLfLsxdva=0A=
+6CfYs8kalHoTxRoRhpIKmTtGFJI4v9cR0+Ua5trMPgHG2QIOgXOKtOTgdYF5ksA9=0A=
+8ZF+OdsuW7yCe9POqc4bnDbOXByxVuNMPwVSESk/GJwnxRB2vW4nywQKREJ2H6He=0A=
+DO+KVhLE9nH5AlspXpEgPpzYVeplhcKKi6H56bI0anIHvao7vEEXNP2pwRWSoMKE=0A=
+wGWGG7QvmemQ0YbsUqJSK563SwNe5cVUg/Cqb08m7D9ybAm+hwgtvzU7OGsLyIHu=0A=
+yVxnGkB5A1GV1lizUmsFauBxyw8Yx6GmwfmsiwEVYV/lidg+ubnsxqN7Kuvg9gYR=0A=
+vv+Yg1wl1QFRgeOFjbU8hj/AaNAP9SppHcA5joBekakQx18Y6LIKKvdoepDg3mFX=0A=
+rOouo8jOwU0EWI4TOgEQAMmEISQmHDde0q2YfyeA8MKejHlt5vCldKYwtaN5ii07=0A=
+7vJaNrQk9Q8Iym6ro0plAdtLDTzyQCATWUctF6B0VowB4/LqF40U4g+uNAj7fzC/=0A=
+mVvSIG42diN0pJYkcfd9ghVcF7H5CeYe2zL3TlqilqQA6Xmt6i7NmYUMO939jw7V=0A=
+ZszMHlqvDTUzcimKrTVB7oS3+r5v1GGT3q+utrxka3WoQ3IHnidsylbTfF+dlRsv=0A=
+tKWxtg8kmTgu/oj1CmUE0DQh67kXsiC3nhjdUh+eZfDGmLuOGgVAWU/WNCS3oaVx=0A=
+VXW3rX/nUc+URkiOCuxyPjBy+A8Z+I8OXpIaC6FQY9sCFVo7yK4UxsK+eM93mWGI=0A=
+c5cGBL99vr+7YgZ3TBjYrazLO5Z8wyw765G1U3dPZB+egRMEY5CO64eb78f7vbRl=0A=
+8/INZWdkJxcotR4weGnvOxxDHyncS3BTSu6iiqmXSz0ZDpaOdCMNDHE6Kmt1qw2N=0A=
+buGUHohqg2K8+1mWnXwevS0afydoG7EX0AuE1YEfkODsek8ceFj4U2c1jlOQbuO0=0A=
+1pHa6Z9VYn5NOwXETlIytjDyBt15R7Tt1BQQg7wU482a5SSlwXYyzOx42a2CLvZM=0A=
+2tXnbIY4VZDu+V1ywXNMGOs8Am1LJzi74eEv2NTbvdFMmsGAkWNWn6KS77eR+pe5=0A=
+ABEBAAHCwXYEGAEIACAWIQQCKbPCTM7CVBJ8lTIA2GNnlCC90wUCWI4TOgIbDAAK=0A=
+CRAA2GNnlCC90zeSD/9qEpJAtuEAXyCCymUEpzN6XgSWdcYra+NolIGCRzWd3Snx=0A=
+tBi+zWwhLFxm8AEhfqSMRh95T4XWKHScIsZZuG9xiap5whJ5xLJC/NlZidQqiPSJ=0A=
+Log2+Yqt+PBVPrMpaG7Cmq64Y4ttvFwLZ8Wn23irJzr9JiWvsjprImsCZbuG/I1J=0A=
+WHUIn70oknzsTgpTPWDCfnCiGhCK7vgXak9QgBKhrzgADK3o6uCjmNllUdci9gFz=0A=
+USy4/x9x73xrbzXS8/pO23fnbBwPa7VV9IRtOb8HJJk8Y79A1ZnkVANBo1KmE+Yc=0A=
+w92IMcz2ev4VFw+pbqZ/swHqa3y3L5cT7Keqgc67wiahSZRc5zM0jJWxN//lpgcd=0A=
+nDRI1OSLCrMMI69yc2QMzUZu87BtEJzm0DBy2pIKEni9dSCwwMITUsU21Ny3RmaV=0A=
+7fmXYAyp9pcaQQWGOb2CIvU7k60eLWgfNTo5SGI56WYC+ndod7vPU+swJVbKrQKq=0A=
+fwO5JbdY9YPbo++Z6kfrnbkmm3wkJ4W8dOcrkLYbmOk7sColcQhVbmGy74Ggzl75=0A=
+R22Q7+Uhjj9iq0Kv3CGQ3rKVdXOfAo5OekdaMDx9t9HoirGiokcyCPTy7wAyvQ75=0A=
+lbrygxCme05XBfLZHrMp+SdM8ONsdgIe7U0bI85zYegceSagzCtBdB8HQ10TFg=3D=3D=0A=
+=3DT9Ck=0A=
+-----END PGP PUBLIC KEY BLOCK-----=0A=
+
+--------------H0RqxrLvV7M9V4RUCSfB1QRl--
+
+--------------CzAfpKiKrYJmtLaT70fKzafh--
+
+--------------ZToS4TmngOBSR31HCQc2LA0t
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
+
+-----BEGIN PGP SIGNATURE-----
+
+wsF5BAABCAAjFiEEAimzwkzOwlQSfJUyANhjZ5QgvdMFAmMtPWgFAwAAAAAACgkQANhjZ5QgvdOa
+Lg//bPwfQQGfcVtzeA+2vGEMAM/MSDgwmbPeiKSIrK5X2oU5sRa2EB7YNYsWDFQsNlJntZeKVrXN
+nwIJ2uNtic4MQDgP4VcGIInr/+h7VAiG/dG96pVxPkkus2RHT8AU3rBGBhMhLCdG/ggZTjSE+cVe
+VDG4Wme1+UXssjGZpPcjor23TyjMy9ebxmAfKSmVeJy54AhfkS+I+nvpzTIunpHRjKLv7vPZo88y
+ZZ3Pxr9GUFYpBxZda2N1sR+jXc6ceCRQWay91wPStVvH266BvjccNFfhHMHGjPOvpy/ZWYw3KwHU
+Hu2n7Hg901+Ah2CImrrsQSwJgPus6Jye1uAttfcnT85uF6ebzqUXY5Tz/ZPO3oLiCDELxvfwf2lb
+Bw0eLlWYADDHZ7u951BfhmL++arGG5Z6wXRmCb54jVzyYn8U+rSyMTCJ/V2G5XflOXQ0nXY8sGac
+tUiqVhra0ZOwtRiA8fr5S2TI3F1YY8iGRo6isqGMGATnQx4YRLElglWdGHfRNEQVLj4hscj/pSZd
+x+chTcpOEd1A/ZGlopzRWe2EF50SrKLPDWvnaDlV6+6W4Pi8BPfWNue5BzYiCHngq+JDyvVB1QlK
+ftGhq5VSeqXLbUIHXuhG3gO+9w5cICo+t2AGF/AlvgnoVBbpY08q4ksECqcbWV3mc7flaQqOSjkd
+5r8=
+=504z
+-----END PGP SIGNATURE-----
+
+--------------ZToS4TmngOBSR31HCQc2LA0t--
