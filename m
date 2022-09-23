@@ -1,31 +1,154 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/29/3
-Message-ID: <Y12Bu2dSDbwtLoB3@itl-email>
-Date: Sat, 29 Oct 2022 15:40:42 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/23/2
+Message-ID: <bcbc5246-0e4a-605f-9249-c4edf4c20f29@treenet.co.nz>
+Date: Fri, 23 Sep 2022 17:00:24 +1200
+From: Amos Jeffries <squid3@...enet.co.nz>
 To: oss-security@...ts.openwall.com
-Cc: Jisoo Jang <jisoo.jang@...sei.ac.kr>, Minsuk Kang <linuxlovemin@...sei.ac.kr>
-Subject: Re: CVE-2022-3628: A USB-accessible buffer overflow in Linux kernel driver
+Subject: Fwd: [ADVISORY] SQUID-2022:2 Buffer Over Read in SSPI and SMB Authentication
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Oct 29, 2022 at 05:33:21PM +0900, Dokyung Song wrote:
-> === Description ===
-> 
-> An intra-object buffer overflow was found in brcmfmac (an upstream
-> Broadcom's USB Wi-Fi driver), which can be triggered by a malicious USB
-> device.
-> 
-> As the object where the overflow could occur contains multiple function
-> pointers (e.g., bus_reset.func), with knowledge of the code layout (i.e.,
-> KASLR needs bypassing) the vulnerability could potentially be exploited by
-> an attacker who controls USB messages. Without knowledge of the code
-> layout, the consequence is a DoS.
+__________________________________________________________________
 
-Can this be exploited by means of e.g. partial function pointer
-overwrites without having to bypass KASLR?
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+Squid Proxy Cache Security Update Advisory SQUID-2022:2
+__________________________________________________________________
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Advisory ID:       | SQUID-2022:2
+Date:              | September 23, 2022
+Summary:           | Buffer Over Read
+                    | in SSPI and SMB Authentication
+Affected versions: | Squid 2.5.STABLE1 -> 2.7.STABLE9
+                    | Squid 3.x -> 3.5.28
+                    | Squid 4.x -> 4.17
+                    | Squid 5.x -> 5.6
+Fixed in version:  | Squid 5.7
+__________________________________________________________________
+
+  <http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-41318>
+__________________________________________________________________
+
+Problem Description:
+
+  Due to an incorrect integer overflow protection Squid SSPI and
+  SMB authentication helpers are vulnerable to a Buffer Overflow
+  attack.
+
+__________________________________________________________________
+
+Severity:
+
+  This problem allows a remote client to perform a Denial of
+  Service attack when Squid is configured to use NTLM or Negotiate
+  authentication with one of the vulnerable helpers.
+
+  This problem allows a remote client to extract sensitive
+  information from machine memory when Squid is configured to use
+  NTLM or Negotiate authentication with one of the vulnerable
+  helpers. The scope of this information includes user credentials
+  in decrypted forms, and also arbitrary memory areas beyond Squid
+  and the helper itself.
+
+  This attack is limited to authentication helpers built using the
+  libntlmauth library shipped by Squid.
+
+CVSS Score of 8.2
+<https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator?vector=AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:L/A:H/E:P/RL:O/RC:C/CR:H/IR:H/AR:H/MAV:X/MAC:X/MPR:X/MUI:X/MS:C/MC:X/MI:L/MA:H&version=3.1>
+__________________________________________________________________
+
+Updated Packages:
+
+This bug is fixed by Squid version 5.7.
+
+  In addition, patches addressing this problem for the stable
+  releases can be found in our patch archives:
+
+Squid 4:
+  <http://www.squid-cache.org/Versions/v4/changesets/SQUID-2022_2.patch>
+
+Squid 5:
+  <http://www.squid-cache.org/Versions/v5/changesets/SQUID-2022_2.patch>
+
+  If you are using a prepackaged version of Squid then please refer
+  to the package vendor for availability information on updated
+  packages.
+
+__________________________________________________________________
+
+Determining if your version is vulnerable:
+
+  Run this command to view the configured authentication helpers:
+
+    (squid -k parse 2>&1) | grep "Processing: auth_param"
+
+  Your Squid may be vulnerable if the result contains any of the following:
+    ntlm_smb_lm_auth
+    ntlm_sspi_auth
+    ntlm_fake_auth
+    negotiate_sspi_auth
+
+  All Squid-2.5 up to and including 4.17 have vulnerable helpers.
+
+  All Squid-5.x up to and including 5.6 have vulnerable helpers.
+
+__________________________________________________________________
+
+Workaround:
+
+Either,
+
+  Disable use of the vulnerable authentication scheme.
+
+Or,
+
+  Replace the vulnerable helper with an alternative helper for the
+  same authentication scheme.
+
+Or,
+
+  Replace the vulnerable helper binary with one built from an
+  updated or patched Squid release. The remainder of Squid does not
+  need updating to fix this.
+
+__________________________________________________________________
+
+Contact details for the Squid project:
+
+  For installation / upgrade support on binary packaged versions
+  of Squid: Your first point of contact should be your binary
+  package vendor.
+
+  If you install and build Squid from the original Squid sources
+  then the <squid-users@...ts.squid-cache.org> mailing list is your
+  primary support point. For subscription details see
+  <http://www.squid-cache.org/Support/mailing-lists.html>.
+
+  For reporting of non-security bugs in the latest STABLE release
+  the squid bugzilla database should be used
+  <http://bugs.squid-cache.org/>.
+
+  For reporting of security sensitive bugs send an email to the
+  <squid-bugs@...ts.squid-cache.org> mailing list. It's a closed
+  list (though anyone can post) and security related bug reports
+  are treated in confidence until the impact has been established.
+
+__________________________________________________________________
+
+Credits:
+
+  This vulnerability was discovered by LWIC.
+
+  Fixed by Amos Jeffries of Treehouse Networks Ltd,
+  based on patch by LWIC.
+
+__________________________________________________________________
+
+Revision history:
+
+  2019-03-17 14:24:42 UTC Initial Report
+  2022-08-08 12:16:43 UTC Fix Released
+  2022-09-23 05:00:00 UTC Advisory Released
+__________________________________________________________________
+END
+
+Download attachment "OpenPGP_0x00D863679420BDD3.asc" of type "application/pgp-keys" (3135 bytes)
+
+Download attachment "OpenPGP_signature" of type "application/pgp-signature" (841 bytes)
