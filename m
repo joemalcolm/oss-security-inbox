@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1703" "Friday" "3" "November" "2017" "19:38:03" "+0100" "Christian Brabandt" "cb@256bit.org" "<20171103183803.GB12742@256bit.org>" "38" "Re: [oss-security] Fw: Security risk of vim swap files" "^Date:" nil nil "11" "2017110318:38:03" "[oss-security] Fw: Security risk of vim swap files" (number mark "        cb@256bit.or Nov  3   38/1703  " thread-indent "\"Re: [oss-security] Fw: Security risk of vim swap files\"\n") "<20171103163936.cevlb7ghcwkln6x2@jwilk.net>" ("<20171102212916.GC23769@256bit.org>" "<20171103163936.cevlb7ghcwkln6x2@jwilk.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 3916 invoked by uid 550); 3 Nov 2017 18:57:34 -0000
+Received: (qmail 32574 invoked by uid 550); 24 Sep 2022 11:26:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +6,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 8079 invoked from network); 3 Nov 2017 18:38:14 -0000
-Message-ID: <20171103183803.GB12742@256bit.org>
-References: <20171102212916.GC23769@256bit.org>
- <20171103163936.cevlb7ghcwkln6x2@jwilk.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20171103163936.cevlb7ghcwkln6x2@jwilk.net>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: cb@256bit.org
-X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
-Date: Fri, 3 Nov 2017 19:38:03 +0100
-From: Christian Brabandt <cb@256bit.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Fw: Security risk of vim swap files
+Received: (qmail 9257 invoked from network); 23 Sep 2022 19:07:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date;
+        bh=vOqL7K6R5q1WrVZFEbeAqiZqyd8JvZU1QOao+PKmnIg=;
+        b=CKry1WcLfKl7YDs1iqBin420HKa2TBMN6JkPJvuwNRmVwnCbqKOrcvK38Oc1gc1NWj
+         F0TuzFAdEqupdYSkDMLRdz6uNYVg0+WYaLBGOLyuFijtEpkV9kxiQ+oCDMZl1SjFb8Z6
+         kAXc1iujAvoQrxTn5VIocjf/9opro4ONxj+8e6WCr1d511WWi/byGJC9wW8szkq2z6wY
+         DEwYQPOxy36OvvFJfihju8D75e+VAR/CQeWNoBc8Tiynl+O13VxJasSwc5gOSiidx0w7
+         D+zdRDfCjoGyG2CTTuHyqDAkdnX70P0KV0M2ClY/AxnJ8l+w+Rm8RfwnIG3NTB/DiaRH
+         zz+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=vOqL7K6R5q1WrVZFEbeAqiZqyd8JvZU1QOao+PKmnIg=;
+        b=mbOLpF03mTmVkzzYoptVlK0Dsvq9shmYZ0Qf2Cz6bKNYB8Muxrucr23hMoIwYYkfXZ
+         gEcep5XZR1Fee7WNoP/al0YlMCYSnHas5A5dRwcnCYUXVWmObIhPDALBDWGSVS/s8+QW
+         PVXe18xbq0ypcMgP+O7HdykZBbj3Baz7IZtulGLCjzzsy3WLnS834KYxpgwNyrrqwD5v
+         GkdC8LP456P7dvACSYZbFPwYYx4qjDP+Ew/tHN6y5SZkI4kh0BIY5MLenJPrTBklKCcH
+         DFJ1esMjEDUWNMTbrpNfM7peXMlyceIl26oVymezEzk/A5X8tIzZqftM/eeQ7v0UdOus
+         6PNg==
+X-Gm-Message-State: ACrzQf2XYIvjJ18/VpTfWDmfZX7PSXXwxNOW2+eYiICEUu4FLhvRCY3f
+	bnKDkTb3QlAMFBEg+Fyl5FBEEBr1Nro=
+X-Google-Smtp-Source: AMsMyM75CH2CwsfpjNNRGXXYY10ltSJ4as0GnicZBWgnWa5Od681N2D6yHJjiryloeuK8cLc8tVDfQ==
+X-Received: by 2002:a17:903:2452:b0:178:1c88:4a50 with SMTP id l18-20020a170903245200b001781c884a50mr10036400pls.113.1663960027331;
+        Fri, 23 Sep 2022 12:07:07 -0700 (PDT)
+Date: Fri, 23 Sep 2022 12:07:03 -0700
+From: Hyunwoo Kim <imv4bel@gmail.com>
 To: oss-security@lists.openwall.com
+Cc: imv4bel@gmail.com
+Message-ID: <20220923190703.GA364581@ubuntu>
+References: <20220923190601.GA364453@ubuntu>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220923190601.GA364453@ubuntu>
+Subject: [oss-security] Re: [Report v2] CVE-2022-41218: Linux dvb-core: UAF in
+ dvb-core/dmxdev
+
+Dear,
 
 
-On Fr, 03 Nov 2017, Jakub Wilk wrote:
+There was a typo in the v1 patch, so I retransmitted the corrected v2 patch.
 
-> * Christian Brabandt <cb@256bit.org>, 2017-11-02, 22:29:
-> >Vim copies the permission from the file being edited. Although the swap
-> >file is readable by others this does not leak any information here, since
-> >the file being edited is already readable by others.
-> 
-> In general, what vim does (copying mode bits) in not enough to ensure that
-> the swapfile is readable only by the users who had access to the original
-> file. It would have to copy also group ownership and ACLs.
 
-Yes, I am not saying there is no room for improvement here.
-
-> Also, keep in mind how this thread started. Somebody edited wp-config.php,
-> which was readable by the web server, of course; then vim created
-> .wp-config.php.swp with the same-ish permissions, which made the file
-> readable to the whole (external) world. Oops.
-
-I don't buy that argument. There are at least 2 problems here. Someone 
-misconfiguring his webserver so it does serve dotfiles and secondly 
-making some last minute changes on a live production server (and 
-thirdly, the Vim session must have crashed). That sounds more like an 
-user error. Also the other example about deleting the file that is 
-currently being edited is not very convincing.
-
-But please, if you really want to change how the swap files are created 
-please comment here:
-https://groups.google.com/d/msg/vim_dev/sRT9BtjLWMk/2oSF_b4MCAAJ
-or anywhere else in that thread starting here:
-https://groups.google.com/d/msg/vim_dev/sRT9BtjLWMk/Xn_Y3PHlBgAJ
-
-Note, first message needs approval.
-
-Christian
--- 
-Aus der Tatsache, daß der Plural von Atlas Atlanten ist, kann man
-nicht schließen, daß der Plural von Kompass Kompanten sein muß.
+Best Regards,
+Hyunwoo Kim.
