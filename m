@@ -1,31 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/04/5
-Message-ID: <3110cb65-cf6e-1742-0cdd-6792e47a6541@thermi.consulting>
-Date: Mon, 4 Jul 2022 15:05:10 +0200
-From: Noel Kuntze <noel.kuntze@...rmi.consulting>
-To: oss-security@...ts.openwall.com, Peter van Dijk <peter.van.dijk@...erdns.com>
-Subject: Re: DO NOT OPEN PREVIOUS MAIL Re:  Denial of service in GnuPG
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/27/1
+Message-ID: <CABbtqzEUXKVaWAK49231jQCPYF9_A2kGfDUz-LY_d7LtBJnsbA@mail.gmail.com>
+Date: Tue, 27 Sep 2022 17:33:16 +0200
+From: Ana Oprea <anaoprea@...gle.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2022-1941: Protobuf C++, Python DoS
 Content-Type: text/plain; charset=utf-8
 
-Hi Peter,
+Summary
+A message parsing and memory management vulnerability in ProtocolBuffer’s
+C++ and Python implementations can trigger an out of memory (OOM) failure
+when processing a specially crafted message, which could lead to a denial
+of service (DoS) on services using the libraries.
 
-It's really not that deep.
-The attachement is not named after the naming scheme expected of signatures of emails so clients won't try to process it in the context of opening or verifying an email.
-I had to call gpg locally on the attached fiels to reproduce the issue.
+Reporter
+ClusterFuzz [1]
 
-But I agree that attaching such files that could be read by clients directly is not a good move.
+Affected versions
+All versions of C++ Protobufs (including Python) prior to the versions
+listed below.
 
-Kind regards
-Noel
+Severity & Impact
+CVE-2022-1941 Medium 5.7 - CVSS:3.1/AV:A/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H [2]
+A small (~500 KB) malicious payload can be constructed which causes the
+running service to allocate more than 3GB of RAM.
 
-Am 04.07.22 um 14:15 schrieb Peter van Dijk:
-> Hello,
->
->> On 04/07/2022 07:31 Demi Marie Obenour <demi@...isiblethingslab.com> wrote:
->>
->> Signature (of /dev/null) that triggers this bug is attached, along with
->> the corresponding public key.
-> This is insane. You can't send weaponised exploits that crash email clients to public mailing lists. Please do not do this again.
->
-> Peter
+Proof of Concept
+For reproduction details, please refer to the unit test that identifies the
+specific inputs that exercise this parsing weakness. [3]
+
+Mitigation / Patching
+Please update to the latest available versions of the following packages:
+- protobuf-cpp (3.18.3, 3.19.5, 3.20.2, 3.21.6)
+- protobuf-python (3.18.3, 3.19.5, 3.20.2, 4.21.6)
+
+[1] https://google.github.io/clusterfuzz/
+[2] https://nvd.nist.gov/vuln/detail/CVE-2022-1941
+[3]
+https://github.com/protocolbuffers/protobuf/security/advisories/GHSA-8gq9-2x98-w8hf
+
+Kind regards,
+Ana
 
