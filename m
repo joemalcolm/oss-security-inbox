@@ -1,66 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/28/3
-Message-ID: <20221228153137.4w4bhaqt4fb5vlio@mutt-hbsd>
-Date: Wed, 28 Dec 2022 10:31:37 -0500
-From: Shawn Webb <shawn.webb@...denedbsd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/28/1
+Message-ID: <53a25a93-e8ae-da21-8a5c-ed10fc2a1669@apache.org>
+Date: Wed, 28 Sep 2022 14:19:57 +0100
+From: Mark Thomas <markt@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: Alejandro Colomar <alx.manpages@...il.com>, Michael Kerrisk <mtk.manpages@...il.com>, linux-kernel@...r.kernel.org, linux-man@...r.kernel.org
-Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
+Subject: CVE-2021-43980: Apache Tomcat: Information disclosure
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 28, 2022 at 10:24:58AM -0500, Shawn Webb wrote:
-> On Tue, Dec 27, 2022 at 04:44:49PM -0800, Lyndon Nerenberg (VE7TFX/VE6BBM) wrote:
-> > Dominique Martinet writes:
-> > 
-> > > But, really, I just don't see how this can practically be said to be parsable...
-> > 
-> > In its current form it never will be.  The solution is to place
-> > this variable-length field last.  Then you can "cut -d ' ' -f 51-"
-> > to get the command+args part (assuming I counted all those fields
-> > correctly ...)
-> > 
-> > Of course, this breaks backwards compatability.
-> 
-> It would also break forwards compatibility in the case new fields
-> needed to be added.
-> 
-> The only solution would be a libxo-style feature wherein a
-> machine-parseable format is exposed by virtue of a file extension.
-> 
-> Examples:
-> 
-> 1. /proc/pid/stats.json
-> 2. /proc/pid/stats.xml
-> 3. /proc/pid/stats.yaml_shouldnt_be_a_thing
+Severity: important
 
-To expand upon this idea, lets define an example json file:
+Description:
 
-{
-	"schemaver": "20221228001",
-	"name": "cat",
-	"state": {
-		"raw": "R",
-		"intval": 1,
-		"Pretty": "(Running)",
-	},
-	"tgid": 5452,
-	"pid": 5452,
-	"ppid": 743,
-	"uid": {
-		"real": 501,
-		"effective": 501,
-		"saved_set": 501,
-		"fs": 501
-	}
-}
+The simplified implementation of blocking reads and writes introduced in 
+Tomcat 10 and back-ported to Tomcat 9.0.47 onwards exposed a long 
+standing (but extremely hard to trigger) concurrency bug in Apache 
+Tomcat 10.1.0 to 10.1.0-M12, 10.0.0-M1 to 10.0.18, 9.0.0-M1 to 9.0.60 
+and 8.5.0 to 8.5.77 that could cause client connections to share an 
+Http11Processor instance resulting in responses, or part responses, to 
+be received by the wrong client.
 
-And so on.
+Credit:
 
--- 
-Shawn Webb
-Cofounder / Security Engineer
-HardenedBSD
+Thanks to Adam Thomas, Richard Hernandez and Ryan Schmitt for 
+discovering the issue and working with the Tomcat security team to 
+identify the root cause and appropriate fix.
 
-https://git.hardenedbsd.org/hardenedbsd/pubkeys/-/raw/master/Shawn_Webb/03A4CBEBB82EA5A67D9F3853FF2E67A277F8E1FA.pub.asc
+References:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+https://lists.apache.org/thread/3jjqbsp6j88b198x5rmg99b1qr8ht3g3
