@@ -1,68 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/27/2
-Message-ID: <20221227102535.GH4524@suse.de>
-Date: Tue, 27 Dec 2022 11:25:36 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/03/1
+Message-ID: <bb4f8cbe-d7d8-ba66-101c-f754f2e3d9cb@vulndisco.cc>
+Date: Mon, 3 Oct 2022 19:06:16 +0300
+From: Evgeny Legerov <admin@...ndisco.cc>
 To: oss-security@...ts.openwall.com
-Subject: Re: Details on this supposed Linux Kernel ksmbd RCE
+Subject: MySQL Cluster 8.0.30 overflow
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Dec 23, 2022 at 10:50:32AM -0600, John Helmert III wrote:
-> On Fri, Dec 23, 2022 at 05:19:06PM +0100, Marcus Meissner wrote:
-> > On Fri, Dec 23, 2022 at 03:20:17PM +0100, Greg KH wrote:
-> > > On Fri, Dec 23, 2022 at 09:04:25AM -0500, Sasha Levin wrote:
-> > > > On Fri, Dec 23, 2022 at 09:17:28AM +0100, Marcus Meissner wrote:
-> > > > > Not sure why they do not like you, but to be very clear anyone else can
-> > > > > requests CVEs for the kernel, (except the blacklisted drivers/staging/ area).
-> > > > 
-> > > > For CVEs assigned (earlier this month) to issues in drivers/staging,
-> > > > what would be the process to remove the assignment or mark them as
-> > > > invalid?
-> > > 
-> > > And who is doing this "blacklisting" of staging drivers from CVEs?  Why
-> > > are they special when many distros do enable and rely on them?
-> > 
-> > This is just information I received when I tried to allocate a CVE for a
-> > staging driver.
-> > 
-> > It has been over a year ago, so perhaps the this changed meanwhile again.
-> 
-> SUSE is a CNA. Wouldn't you be able to oassign a CVE via the SUSE CNA
-> without going through MITRE?
+Hi,
 
-Every CNA has to follow its set CVE assignment rules.
+There is a heap overflow in ndbd.
 
-The SUSE CNA is only allowed to assign CVEs for issues in SUSE products
-/ SUSE specific code patches, preferably only non-public ones to avoid
-dups. See:
+Bug details:
+void Dbdih::execSTART_MECONF(Signal* signal)
+{
+   jamEntry();
+   StartMeConf * const startMe = (StartMeConf *)&signal->theData[0];
+   Uint32 nodeId = startMe->startingNodeId;
+[1]  const Uint32 startWord = startMe->startWord;
 
-	https://www.cve.org/PartnerInformation/ListofPartners/partner/suse
+   CRASH_INSERTION(7130);
+   ndbrequire(nodeId == cownNodeId);
+   bool v2_format = true;
+   Uint32 cdata_size_in_words;
+[2]  if 
+(ndbd_send_node_bitmask_in_section(getNodeInfo(cmasterNodeId).m_version))
+   {
+     jam();
+     ndbrequire(signal->getNoOfSections() == 1);
+     SegmentedSectionPtr ptr;
+     SectionHandle handle(this, signal);
+     ndbrequire(handle.getSection(ptr, 0));
+     ndbrequire(ptr.sz <= (sizeof(cdata)/4));
+     copy(cdata, ptr);
+     cdata_size_in_words = ptr.sz;
+     releaseSections(handle);
+   }
+   else
+   {
+     jam();
+     v2_format = false;
+[3]    arrGuard(startWord + StartMeConf::DATA_SIZE, sizeof(cdata)/4);
+     for(Uint32 i = 0; i < StartMeConf::DATA_SIZE; i++)
+     {
+[4]      cdata[startWord+i] = startMe->data[i];
+     }
 
-There is one fallback OSS CNA, which is the Red Hat CNA.
-It is allowed to assign CVEs for OSS issues, and also is a root on its own:
 
-	https://www.cve.org/PartnerInformation/ListofPartners/partner/redhat
+}
 
-> > > In my talks with MITRE, they have said they don't want to make public
-> > > statments about the CVE issues and Linux, which is sad, but they never
-> > > mentioned anything about "we will ignore this portion of the kernel
-> > > source tree".  Is that in a public statement anywhere that I can point
-> > > to when people ask the kernel security team for CVEs?
-> > 
-> > No, it was in a private email, I will search for it, but I cannot
-> > promise I will find it again.
-> > 
-> > Ciao, Marcus
-> 
-> Relatedly, I find it very frustrating how little visibility there is
-> into the world's interactions with cveform.mitre.org. Your form inputs
-> aren't even sent back to you in the automated response, which makes it
-> quite hard to keep track of the state of changes you've asked for.
+We control the contents of signal->theData buffer.
+If master node is an old 7.6 version, which is still supported, check on 
+line #2 fails and we go to line #3.
+This check can be easily bypassed if startWord is negative.
+On line #4 we have nice heap overflow.
 
-Yes, I agree, it is a bit intransparent.
+Instructions and code to reproduce - 
+https://github.com/ivd38/mysql_overflow1
 
-Lets see how this all changes, as this manual CVE requesting
-should be done way less in the future, as most requests will be more via the CVE 
-automation APIs in the future (FWIW CNAs already submit via github pull requests).
 
-Ciao, Marcus
+regards,
+
+-e
+
