@@ -1,23 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/29/2
-Message-ID: <Y6y/0uzFlTpkw/VT@mit.edu>
-Date: Wed, 28 Dec 2022 17:14:42 -0500
-From: "Theodore Ts'o" <tytso@....edu>
-To: Demi Marie Obenour <demi@...isiblethingslab.com>
-Cc: oss-security@...ts.openwall.com, Alejandro Colomar <alx.manpages@...il.com>, Michael Kerrisk <mtk.manpages@...il.com>, linux-kernel@...r.kernel.org, linux-man@...r.kernel.org
-Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/04/2
+Message-ID: <CAJwKpyQDJVgvZGUXWVpx5dUCoajAyx8R-8qZEQ7CWMgXi+gv5g@mail.gmail.com>
+Date: Tue, 4 Oct 2022 10:03:56 +0200
+From: Carlton Gibson <carlton.gibson@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Django CVE-2022-41323: Potential denial-of-service vulnerability in internationalized URLs
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 28, 2022 at 01:02:35PM -0500, Demi Marie Obenour wrote:
-> > I think the argument I'm trying to make is to be flexible in
-> > implementation, allowing for future needs and wants--that is "future
-> > proofing".
-> 
-> Linux should not have an XML, JSON, or YAML serializer.  Linux already
-> does way too much; let’s not add one more thing to the list.
+Django security releases issued: 4.1.2, 4.0.8, and 3.2.16
+https://www.djangoproject.com/weblog/2022/oct/04/security-releases/
 
-There's always Protobufs[1]!  :-)  And all of these are better than
-ASN.1, for which Google already has a limited parser (for x.509
-certificates).   :-)   :-)   :-)
+In accordance with `our security release policy
+<https://docs.djangoproject.com/en/dev/internals/security/>`_, the Django
+team
+is issuing
+`Django 4.1.2 <https://docs.djangoproject.com/en/dev/releases/4.1.2/>`_,
+`Django 4.0.8 <https://docs.djangoproject.com/en/dev/releases/4.0.8/>`_, and
+`Django 3.2.16 <https://docs.djangoproject.com/en/dev/releases/3.2.16/>`_.
+These releases addresses the security issue detailed below. We encourage all
+users of Django to upgrade as soon as possible.
 
-						- Ted
+CVE-2022-41323: Potential denial-of-service vulnerability in
+internationalized URLs
+===================================================================================
+
+Internationalized URLs were subject to potential denial of service attack
+via
+the locale parameter. This is now escaped to avoid this possibility.
+
+This issue has medium severity, according to the Django security policy.
+
+Thanks to Benjamin Balder Bach for the report.
+
+Affected supported versions
+===========================
+
+* Django main branch
+* Django 4.1
+* Django 4.0
+* Django 3.2
+
+Resolution
+==========
+
+Patches to resolve the issue have been applied to Django's main branch and
+the
+4.1, 4.0, and 3.2 release branches. The patches may be obtained from the
+following changesets:
+
+* On the `main branch <
+https://github.com/django/django/commit/e5ea2842941967f06cefa10865f303b39c95279f
+>`__
+* On the `4.1 release branch <
+https://github.com/django/django/commit/9d656ea51d9ea7105c0c0785783ac29d426a7d25
+>`__
+* On the `4.0 release branch <
+https://github.com/django/django/commit/23f0093125ac2e553da6c1b2f9988eb6a3dd2ea1
+>`__
+* On the `3.2 release branch <
+https://github.com/django/django/commit/5b6b257fa7ec37ff27965358800c67e2dd11c924
+>`__
+
+The following releases have been issued:
+
+* Django 4.1.2 (`download Django 4.1.2 <
+https://www.djangoproject.com/m/releases/4.1/Django-4.1.2.tar.gz>`_ |
+`4.1.2 checksums <
+https://www.djangoproject.com/m/pgp/Django-4.1.2.checksum.txt>`_)
+* Django 4.0.8 (`download Django 4.0.8 <
+https://www.djangoproject.com/m/releases/4.0/Django-4.0.8.tar.gz>`_ |
+`4.0.8 checksums <
+https://www.djangoproject.com/m/pgp/Django-4.0.8.checksum.txt>`_)
+* Django 3.2.16 (`download Django 3.2.16 <
+https://www.djangoproject.com/m/releases/3.2/Django-3.2.16.tar.gz>`_ |
+`3.2.16 checksums <
+https://www.djangoproject.com/m/pgp/Django-3.2.16.checksum.txt>`_)
+
+The PGP key ID used for this release is Carlton Gibson: `E17DF5C82B4F9D00 <
+https://github.com/carltongibson.gpg>`_.
+
+General notes regarding security reporting
+==========================================
+
+As always, we ask that potential security issues be reported via
+private email to ``security@...ngoproject.com``, and not via Django's
+Trac instance or the django-developers list. Please see `our security
+policies <https://www.djangoproject.com/security/>`_ for further
+information.
+
