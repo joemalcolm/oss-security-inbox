@@ -1,31 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/21/3
-Message-ID: <YyrddDfDHLntRmJk@larwa.hq.kempniu.pl>
-Date: Wed, 21 Sep 2022 11:46:28 +0200
-From: Michał Kępień <michal@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/04/3
+Message-ID: <1563af5a-1a2a-0d41-f56b-cdd21f503fb6@apache.org>
+Date: Tue, 04 Oct 2022 18:29:07 +0000
+From: Jedidiah Cunningham <jedcunningham@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: security-officer@....org
-Subject: ISC has disclosed six vulnerabilities in BIND (CVE-2022-2795, CVE-2022-2881, CVE-2022-2906, CVE-2022-3080, CVE-2022-38177, CVE-2022-38178)
+Subject: CVE-2022-41672: Apache Airflow: Session still funtional after user is deactivated 
 Content-Type: text/plain; charset=utf-8
 
-On 21 September 2022 we (Internet Systems Consortium) disclosed six vulnerabilities affecting our BIND 9 software:
+Description:
 
-- CVE-2022-2795:	Processing large delegations may severely degrade resolver performance https://kb.isc.org/docs/cve-2022-2795
-- CVE-2022-2881:	Buffer overread in statistics channel code https://kb.isc.org/docs/cve-2022-2881
-- CVE-2022-2906:	Memory leaks in code handling Diffie-Hellman key exchange via TKEY RRs (OpenSSL 3.0.0+ only) https://kb.isc.org/docs/cve-2022-2906
-- CVE-2022-3080:	BIND 9 resolvers configured to answer from stale cache with zero stale-answer-client-timeout may terminate unexpectedly https://kb.isc.org/docs/cve-2022-3080
-- CVE-2022-38177:	Memory leak in ECDSA DNSSEC verification code https://kb.isc.org/docs/cve-2022-38177
-- CVE-2022-38178:	Memory leaks in EdDSA DNSSEC verification code https://kb.isc.org/docs/cve-2022-38178
+In Apache Airflow, prior to version 2.4.1, deactivating a user wouldn't prevent an already authenticated user from being able to continue using the UI or API.
 
-New versions of BIND are available from https://www.isc.org/downloads
+Credit:
 
-Operators and package maintainers who prefer to apply patches selectively can find individual vulnerability-specific patches in the "patches" subdirectory of the release directories for our stable release branches (9.16 and 9.18):
+The Apache Airflow PMC would like to thank Axel Chong (@Haxatron) for reporting this issue.
 
-- https://downloads.isc.org/isc/bind9/9.16.33/patches/
-- https://downloads.isc.org/isc/bind9/9.18.7/patches/
+References:
 
-With the public announcement of these vulnerabilities, the embargo period is ended and any updated software packages that have been prepared may be released.
+https://github.com/apache/airflow/pull/26635
 
--- 
-Best regards,
-Michał Kępień
+
