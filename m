@@ -1,5 +1,4 @@
-X-Quarantine-ID: <PVjCg0qGVIso>
-Received: (qmail 30149 invoked by uid 550); 10 Apr 2023 09:24:24 -0000
+Received: (qmail 1891 invoked by uid 550); 4 Oct 2022 10:42:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,41 +7,259 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27904 invoked from network); 10 Apr 2023 09:21:26 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Jacques Le Roux <jleroux@apache.org>
+Received: (qmail 1849 invoked from network); 4 Oct 2022 10:42:19 -0000
+From: Damien Miller <djm@cvs.openbsd.org>
+Date: Tue, 4 Oct 2022 04:42:06 -0600 (MDT)
 To: oss-security@lists.openwall.com
-Message-ID: <8a4746bb-6c19-dd80-10ca-9aa2b87d605b@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 10 Apr 2023 09:21:11 +0000
-MIME-Version: 1.0
-Subject: [oss-security] CVE-2022-47501: Apache OFBiz: Arbitrary file reading vulnerability
+Message-ID: <4f7d3157cbf91f85@cvs.openbsd.org>
+Subject: [oss-security] Announce: OpenSSH 9.1 released
 
-Severity: important
+OpenSSH 9.1 has just been released. It will be available from the
+mirrors listed at https://www.openssh.com/ shortly.
 
-Description:
+OpenSSH is a 100% complete SSH protocol 2.0 implementation and
+includes sftp client and server support.
 
-Arbitrary file reading vulnerability in Apache Software Foundation Apache O=
-FBiz.This issue affects Apache OFBiz: before 18.12.07.
+Once again, we would like to thank the OpenSSH community for their
+continued support of the project, especially those who contributed
+code or patches, reported bugs, tested snapshots or donated to the
+project. More information on donations may be found at:
+https://www.openssh.com/donations.html
 
-Required Configurations:
+Changes since OpenSSH 9.0
+=========================
 
-Using the Solr plugin
+This release is focused on bug fixing.
 
-Solution:
+Security
+========
 
-Upgrade to release 18.12.07
+This release contains fixes for three minor memory safety problems.
+None are believed to be exploitable, but we report most memory safety
+problems as potential security vulnerabilities out of caution.
 
-Credit:
+ * ssh-keyscan(1): fix a one-byte overflow in SSH- banner processing.
+   Reported by Qualys
 
-Skay <lhcaomail@gmail.com> (finder)
+ * ssh-keygen(1): double free() in error path of file hashing step in
+   signing/verify code; GHPR333
 
-References:
+ * ssh-keysign(8): double-free in error path introduced in openssh-8.9
 
-https://lists.apache.org/list.html?announce@apache.org
-https://ofbiz.apache.org/download.html
-https://ofbiz.apache.org/security.html
-https://ofbiz.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2022-47501
+Potentially-incompatible changes
+--------------------------------
 
+ * The portable OpenSSH project now signs commits and release tags
+   using git's recent SSH signature support. The list of developer
+   signing keys is included in the repository as .git_allowed_signers
+   and is cross-signed using the PGP key that is still used to sign
+   release artifacts:
+   https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
+
+ * ssh(1), sshd(8): SetEnv directives in ssh_config and sshd_config
+   are now first-match-wins to match other directives. Previously
+   if an environment variable was multiply specified the last set
+   value would have been used. bz3438
+
+ * ssh-keygen(8): ssh-keygen -A (generate all default host key types)
+   will no longer generate DSA keys, as these are insecure and have
+   not been used by default for some years.
+
+
+New features
+------------
+
+ * ssh(1), sshd(8): add a RequiredRSASize directive to set a minimum
+   RSA key length. Keys below this length will be ignored for user
+   authentication and for host authentication in sshd(8). 
+
+   ssh(1) will terminate a connection if the server offers an RSA key
+   that falls below this limit, as the SSH protocol does not include
+   the ability to retry a failed key exchange.
+
+ * sftp-server(8): add a "users-groups-by-id@openssh.com" extension
+   request that allows the client to obtain user/group names that
+   correspond to a set of uids/gids.
+
+ * sftp(1): use "users-groups-by-id@openssh.com" sftp-server
+   extension (when available) to fill in user/group names for
+   directory listings.
+
+ * sftp-server(8): support the "home-directory" extension request
+   defined in draft-ietf-secsh-filexfer-extensions-00. This overlaps
+   a bit with the existing "expand-path@openssh.com", but some other
+   clients support it.
+
+ * ssh-keygen(1), sshd(8): allow certificate validity intervals,
+   sshsig verification times and authorized_keys expiry-time options
+   to accept dates in the UTC time zone in addition to the default
+   of interpreting them in the system time zone. YYYYMMDD and
+   YYMMDDHHMM[SS] dates/times will be interpreted as UTC if suffixed
+   with a 'Z' character.
+
+   Also allow certificate validity intervals to be specified in raw
+   seconds-since-epoch as hex value, e.g. -V 0x1234:0x4567890. This
+   is intended for use by regress tests and other tools that call
+   ssh-keygen as part of a CA workflow. bz3468
+
+ * sftp(1): allow arguments to the sftp -D option, e.g. sftp -D
+   "/usr/libexec/sftp-server -el debug3"
+
+ * ssh-keygen(1): allow the existing -U (use agent) flag to work
+   with "-Y sign" operations, where it will be interpreted to require
+   that the private keys is hosted in an agent; bz3429
+
+Bugfixes
+--------
+
+ * ssh-keygen(1): implement the "verify-required" certificate option.
+   This was already documented when support for user-verified FIDO
+   keys was added, but the ssh-keygen(1) code was missing.
+
+ * ssh-agent(1): hook up the restrict_websafe command-line flag;
+   previously the flag was accepted but never actually used.
+
+ * sftp(1): improve filename tab completions: never try to complete
+   names to non-existent commands, and better match the completion
+   type (local or remote filename) against the argument position
+   being completed.
+
+ * ssh-keygen(1), ssh(1), ssh-agent(1): several fixes to FIDO key
+   handling, especially relating to keys that request
+   user-verification. These should reduce the number of unnecessary
+   PIN prompts for keys that support intrinsic user verification.
+   GHPR302, GHPR329
+
+ * ssh-keygen(1): when enrolling a FIDO resident key, check if a
+   credential with matching application and user ID strings already
+   exists and, if so, prompt the user for confirmation before
+   overwriting the credential. GHPR329
+
+ * sshd(8): improve logging of errors when opening authorized_keys
+   files. bz2042
+
+ * ssh(1): avoid multiplexing operations that could cause SIGPIPE from
+   causing the client to exit early. bz3454
+
+ * ssh_config(5), sshd_config(5): clarify that the RekeyLimit
+   directive applies to both transmitted and received data. GHPR328
+
+ * ssh-keygen(1): avoid double fclose() in error path.
+
+ * sshd(8): log an error if pipe() fails while accepting a
+   connection. bz3447
+
+ * ssh(1), ssh-keygen(1): fix possible NULL deref when built without
+   FIDO support. bz3443
+
+ * ssh-keyscan(1): add missing *-sk types to ssh-keyscan manpage.
+   GHPR294.
+
+ * sshd(8): ensure that authentication passwords are cleared from
+   memory in error paths. GHPR286
+
+ * ssh(1), ssh-agent(1): avoid possibility of notifier code executing
+   kill(-1). GHPR286
+
+ * ssh_config(5): note that the ProxyJump directive also accepts the
+   same tokens as ProxyCommand. GHPR305.
+
+ * scp(1): do not not ftruncate(3) files early when in sftp mode. The
+   previous behaviour of unconditionally truncating the destination
+   file would cause "scp ~/foo localhost:foo" and the reverse
+   "scp localhost:foo ~/foo" to delete all the contents of their
+   destination. bz3431
+
+ * ssh-keygen(1): improve error message when 'ssh-keygen -Y sign' is
+   unable to load a private key; bz3429
+
+ * sftp(1), scp(1): when performing operations that glob(3) a remote
+   path, ensure that the implicit working directory used to construct
+   that path escapes glob(3) characters. This prevents glob characters
+   from being processed in places they shouldn't, e.g. "cd /tmp/a*/",
+   "get *.txt" should have the get operation treat the path "/tmp/a*"
+   literally and not attempt to expand it.
+
+ * ssh(1), sshd(8): be stricter in which characters will be accepted
+   in specifying a mask length; allow only 0-9. GHPR278
+
+ * ssh-keygen(1): avoid printing hash algorithm twice when dumping a
+   KRL
+
+ * ssh(1), sshd(8): continue running local I/O for open channels
+   during SSH transport rekeying. This should make ~-escapes work in
+   the client (e.g. to exit) if the connection happened to have
+   stalled during a rekey event.
+
+ * ssh(1), sshd(8): avoid potential poll() spin during rekeying
+
+ * Further hardening for sshbuf internals: disallow "reparenting" a
+   hierarchical sshbuf and zero the entire buffer if reallocation
+   fails. GHPR287
+
+Portability
+-----------
+
+ * ssh(1), ssh-keygen(1), sshd(8): automatically enable the built-in
+   FIDO security key support if libfido2 is found and usable, unless
+   --without-security-key-builtin was requested.
+
+ * ssh(1), ssh-keygen(1), sshd(8): many fixes to make the WinHello
+   FIDO device usable on Cygwin. The windows://hello FIDO device will
+   be automatically used by default on this platform unless requested
+   otherwise, or when probing resident FIDO credentials (an operation
+   not currently supported by WinHello).
+
+ * Portable OpenSSH: remove workarounds for obsolete and unsupported
+   versions of OpenSSL libcrypto. In particular, this release removes
+   fallback support for OpenSSL that lacks AES-CTR or AES-GCM.
+
+   Those AES cipher modes were added to OpenSSL prior to the minimum
+   version currently supported by OpenSSH, so this is not expected to
+   impact any currently supported configurations.
+
+ * sshd(8): fix SANDBOX_SECCOMP_FILTER_DEBUG on current Linux/glibc
+
+ * All: resync and clean up internal CSPRNG code.
+
+ * scp(1), sftp(1), sftp-server(8): avoid linking these programs with
+   unnecessary libraries. They are no longer linked against libz and
+   libcrypto. This may be of benefit to space constrained systems
+   using any of those components in isolation.
+
+ * sshd(8): add AUDIT_ARCH_PPC to supported seccomp sandbox
+   architectures.
+
+ * configure: remove special casing of crypt(). configure will no
+   longer search for crypt() in libcrypto, as it was removed from
+   there years ago. configure will now only search libc and libcrypt.
+
+ * configure: refuse to use OpenSSL 3.0.4 due to potential RCE in its
+   RSA implementation (CVE-2022-2274) on x86_64.
+
+ * All: request 1.1x API compatibility for OpenSSL >=3.x; GHPR#322
+
+ * ssh(1), ssh-keygen(1), sshd(8): fix a number of missing includes
+   required by the XMSS code on some platforms.
+
+ * sshd(8): cache timezone data in capsicum sandbox.
+
+Checksums:
+==========
+
+- SHA1 (openssh-9.1.tar.gz) = 3ae2d6a3a695d92778c4c4567dcd6ad481092f6c
+- SHA256 (openssh-9.1.tar.gz) = QKfVArlcItV+e8V1Th85TL5//5d/AvOUhYOeHMDEGuE=
+
+- SHA1 (openssh-9.1p1.tar.gz) = 15545440268967511d3194ebf20bcd0c7ff3fcc9
+- SHA256 (openssh-9.1p1.tar.gz) = GfhQCcfj4jeH8CNvuxV4OSq01L+fjsX+a8HNfov90og=
+
+Please note that the SHA256 signatures are base64 encoded and not
+hexadecimal (which is the default for most checksum tools). The PGP
+key used to sign the releases is available from the mirror sites:
+https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
+
+Reporting Bugs:
+===============
+
+- Please read https://www.openssh.com/report.html
+  Security bugs should be reported directly to openssh@openssh.com
