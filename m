@@ -1,21 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/25/7
-Message-ID: <CA+ZBtZ50nKwuZooqV_sj2KgBbZdNhakNqA1dyWR2VCkm6WL3gA@mail.gmail.com>
-Date: Tue, 25 Jan 2022 19:42:04 +0800
-From: Zhang Yonglun <zhangyonglun@...che.org>
-To: oss-security@...ts.openwall.com, dev@...nyu.apache.org
-Subject: CVE-2022-23223: Password leakage in Apache ShenYu
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/05/1
+Message-ID: <c1168996-ea72-ad04-027f-2f3b190eabd5@isc.org>
+Date: Wed, 5 Oct 2022 18:29:06 +0200
+From: Peter Davies <peterd@....org>
+To: oss-security@...ts.openwall.com
+Subject: ISC has disclosed two vulnerabilities in ISC DHCP (CVE-2022-2928, CVE-2022-2929)
 Content-Type: text/plain; charset=utf-8
 
-Description:
+On 5 October 2022 we (Internet Systems Consortium) disclosed two 
+vulnerabilities affecting our ISC DHCP software:
 
-The HTTP response will disclose the user password. This issue affected
-Apache ShenYu 2.4.0 and 2.4.1.
+- CVE-2022-2928 An option refcount overflow exists in dhcpd
+- CVE-2022-2929 DHCP memory leak
 
 
---
+New versions of ISC DHCP are available from https://www.isc.org/downloads
 
-Zhang Yonglun
-Apache ShenYu (Incubating)
-Apache ShardingSphere
+Operators and package maintainers who prefer to apply patches 
+selectively can find individual vulnerability-specific patches in the 
+"patches" subdirectory of the release directories for our stable release 
+branches (4.4.3-P1 and 4.1-R16-P2):
 
+- https://downloads.isc.org/isc/dhcp/4.4.3-P1/patches/
+- https://downloads.isc.org/isc/dhcp/4.1-ESV-R16-P2/patches/
+
+With the public announcement of these vulnerabilities, the embargo 
+period is ended and any updated software packages that have been 
+prepared may be released.
+
+ISC Support
+----
