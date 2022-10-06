@@ -1,72 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/10/1
-Message-ID: <CABdrxGBr+uS70N8OhVvLZ=qW8EaGLJkA84Q0vAjQ3tpv6bdX0Q@mail.gmail.com>
-Date: Fri, 10 Jun 2022 09:11:47 -0700
-From: CJ Cullen <cjcullen@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: [kubernetes] CVE-2021-25748: Ingress-nginx `path` sanitization can be bypassed with newline character
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/06/4
+Message-ID: <Yz8JmGvc3Y6iYaKR@itl-email>
+Date: Thu, 6 Oct 2022 13:00:03 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
+To: Simon McVittie <smcv@...ian.org>, oss-security@...ts.openwall.com, dbus-security@...ts.freedesktop.org
+Subject: Re: dbus denial of service: CVE-2022-42010, -42011, -42012
 Content-Type: text/plain; charset=utf-8
 
-Issue Details
+On Thu, Oct 06, 2022 at 04:40:10PM +0100, Simon McVittie wrote:
+> On Thu, 06 Oct 2022 at 10:53:15 -0400, Demi Marie Obenour wrote:
+> > Is the memory corruption potentially exploitable for local privilege
+> > escalation?
+> 
+> It is not known to be, but also not known not to be. I'm sure a
+> sufficiently creative attacker can convert almost any memory corruption
+> into arbitrary code execution, but exploit development is not my job
+> (I'd rather fix the vulnerabilities!), so I have not attempted to
+> weaponize this.
 
-A security issue was discovered in ingress-nginx
-<https://github.com/kubernetes/ingress-nginx> where a user that can create
-or update ingress objects can use a newline character to bypass the
-sanitization of the `spec.rules[].http.paths[].path` field of an Ingress
-object (in the `networking.k8s.io` or `extensions` API group) to obtain the
-credentials of the ingress-nginx controller. In the default configuration,
-that credential has access to all secrets in the cluster.
+I, too, am not an exploit developer, but I agree with your conclusion.
 
-This issue has been rated High (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L
-<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L>),
-and assigned CVE-2021-25748.
-Affected Components and Configurations
+> > Are clients using libdbus vulnerable if they are behind dbus-broker?
+> 
+> I don't maintain dbus-broker and have not tested or audited it, so
+> I don't know how much validation it does. I would hope that it would
+> detect and prevent CVE-2022-42011 and CVE-2022-42010 (which involve
+> invalid messages), but probably not CVE-2022-42012 (which involves a
+> message that is odd but technically valid).
 
-This bug affects ingress-nginx. If you do not have ingress-nginx installed
-on your cluster, you are not affected. You can check this by running
-`kubectl get po -n ingress-nginx`.
+Should different-endian messages over AF_UNIX sockets just be rejected
+outright?
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-If you are running the “chrooted” ingress-nginx controller introduced in
-v1.2.0 (gcr.io/k8s-staging-ingress-nginx/controller-chroot), you are not
-affected.
-
-Multitenant environments where non-admin users have permissions to create
-Ingress objects are most affected by this issue.
-Affected Versions
-
-   -
-
-   <v1.2.1
-
-Fixed Versions
-
-   -
-
-   v1.2.1
-
-Mitigation
-
-If you are unable to roll out the fix, this vulnerability can be mitigated
-by implementing an admission policy that restricts the
-`spec.rules[].http.paths[].path` field on the networking.k8s.io/Ingress
-resource to known safe characters (see the newly added rules
-<https://github.com/kubernetes/ingress-nginx/blame/main/internal/ingress/inspector/rules.go>,
-or the suggested value for annotation-value-word-blocklist
-<https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#annotation-value-word-blocklist>
-).
-Detection
-
-If you find evidence that this vulnerability has been exploited, please
-contact security@...ernetes.io
-Additional Details
-
-See ingress-nginx Issue #8686
-<https://github.com/kubernetes/ingress-nginx/issues/8686> for more details.
-Acknowledgements
-
-This vulnerability was reported by Gafnit Amiga.
-
-Thank You,
-
-CJ Cullen on behalf of the Kubernetes Security Response Committee
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
