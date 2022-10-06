@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1340" "Saturday" "24" "March" "2018" "23:48:29" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20180324234829.01cc3edb@pc1>" "35" "[oss-security] Stack buffer overflow in WolfSSL before 3.13.0" nil nil nil "3" "2018032422:48:29" "[oss-security] Stack buffer overflow in WolfSSL before 3.13.0" (number mark "U       hanno@hboeck Mar 24   35/1340  " thread-indent "\"[oss-security] Stack buffer overflow in WolfSSL before 3.13.0\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 11544 invoked by uid 550); 24 Mar 2018 22:48:44 -0000
+Received: (qmail 15824 invoked by uid 550); 6 Oct 2022 18:26:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,49 +7,62 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11521 invoked from network); 24 Mar 2018 22:48:43 -0000
-Date: Sat, 24 Mar 2018 23:48:29 +0100
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20180324234829.01cc3edb@pc1>
-X-Mailer: Claws Mail 3.16.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Received: (qmail 15800 invoked from network); 6 Oct 2022 18:26:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=0WPQU6wzHHRXGOPebJEuwJxw7JQF0ihj+WaiUS99wtI=; b=e8sm3wXP7FIpX5+X+Lm5nI5eTm
+	xaQ6I4KmG1k0j4tevBob5imoXQol8ApGSbuDyGiM03jNk3V0V6IhgJ2KvuRZSqYho12vyVSJbcb6k
+	bszNT0m1+c5vtmjxSOWgY6PiMY5jj3oJDeUP57MMhyVShX3/KVAxK6WJeyNqG68LaobApl3614wjT
+	rn7HweLW0pjAo4HJ0CI4V71y9VrULH793lfFcuwHEVm8eQkirQrnlihR33rkLL6zjsxt/2xyU/3Py
+	FpmbQlwQHuNivKlqUji1pPZ45Blo7SLB9e0Yf8ava0360VLHB6uV5H7FpbYzA0cckmEXE1yusVJ5E
+	ENux3Ksw==;
+Date: Thu, 6 Oct 2022 19:26:35 +0100
+From: Simon McVittie <smcv@debian.org>
+To: oss-security@lists.openwall.com, dbus-security@lists.freedesktop.org
+Cc: Demi Marie Obenour <demi@invisiblethingslab.com>
+Message-ID: <Yz8d2yzrUF4r07ws@momentum.pseudorandom.co.uk>
+References: <Yz6XZSTsVQm7VKia@momentum.pseudorandom.co.uk>
+ <Yz7r3ke7oXMBHJ5A@itl-email>
+ <Yz722hsDFWr/hqGb@momentum.pseudorandom.co.uk>
+ <Yz8JmGvc3Y6iYaKR@itl-email>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] Stack buffer overflow in WolfSSL before 3.13.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Yz8JmGvc3Y6iYaKR@itl-email>
+X-Debian-User: smcv
+Subject: Re: [oss-security] dbus denial of service: CVE-2022-42010, -42011,
+ -42012
 
-https://blog.fuzzing-project.org/63-Stack-buffer-overflow-in-WolfSSL-before=
--3.13.0.html
+On Thu, 06 Oct 2022 at 13:00:03 -0400, Demi Marie Obenour wrote:
+> On Thu, Oct 06, 2022 at 04:40:10PM +0100, Simon McVittie wrote:
+> > CVE-2022-42012 (which involves a
+> > message that is odd but technically valid)
+> 
+> Should different-endian messages over AF_UNIX sockets just be rejected
+> outright?
 
-During some tests of TLS libraries I found a stack buffer overflow
-vulnerability in the WolfSSL library. Finding this one was surprisingly
-simple: I had a wolfssl server that was compiled with address sanitizer
-and ran the SSL Labs test against it.
+Probably not. I believe that would regress the ability to interoperate
+with dbus-java, which can receive either endianness but always sends
+big-endian messages.
 
-The bug happens in the parsing of the signature hash algorithm list
-that is sent in a ClientHello and is basically a textbook stack buffer
-overflow. WolfSSL simply tries to store that in an array with 32
-elements. If one sends more than 32 hash algorithms it overflows.
+It could also be annoying for proxying/forwarding tools like systemd's
+systemd-stdio-bridge, which is used to forward D-Bus connections to a
+remote bus's AF_UNIX socket via ssh (obviously out-of-band fd-passing
+like the feature that triggers CVE-2022-42012 can't work that way, but
+most of D-Bus is in-band), depending on whether systemd-stdio-bridge
+deserializes and reserializes messages or whether it just streams data
+without understanding its internal structure. There's nothing to stop
+you from using a client on a little-endian PC to debug a service on a
+big-endian embedded device over a ssh tunnel using systemd-stdio-bridge
+or even socat, but in that scenario, each end of the connection will
+be sending messages in its own endianness and receiving messages in the
+other endianness.
 
-With the SSL Labs scan the bug only causes WolfSSL to terminate if it's
-compiled with address sanitizer, but if one sends a very large list of
-hash algorithms it also crashes in a normal compile. In situations
-where WolfSSL is used without ASLR this bug is probably trivially
-exploitable.
+If I was designing D-Bus today, I'd probably pick a canonical endianness
+and stick to it (more like GVariant, parts of which are always LE),
+but it's too late for that: the "wire protocol" has been stable since
+about 2006, which was before I got involved.
 
-I have created a simple bash proof of concept [1] (using netcat and xxd)
-that crashes a WolfSSL server.
-
-The bug was fixed in this commit [2] and in version 3.13.0 of WolfSSL.
-
-[1] https://github.com/hannob/wolfoverflow
-[2]
-https://github.com/wolfSSL/wolfssl/pull/1231/commits/9f7e40ad5c8097ff38d7ca=
-ff4a9989db260981cc
-
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
-
-mail/jabber: hanno@hboeck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+    smcv
