@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3736" "Saturday" "13" "June" "2015" "01:25:15" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20150613012515.737b9d3d@pc1>" "88" "[oss-security] Out of bounds read in OpenSSL function X509_cmp_time (CVE-2015-1789) and other minor issues" nil nil nil "6" "2015061223:25:15" "[oss-security] Out of bounds read in OpenSSL function X509_cmp_time (CVE-2015-1789) and other minor issues" (number mark "        hanno@hboeck Jun 13   88/3736  " thread-indent "\"[oss-security] Out of bounds read in OpenSSL function X509_cmp_time (CVE-2015-1789) and other minor issues\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 17413 invoked by uid 550); 12 Jun 2015 23:24:40 -0000
+Received: (qmail 9795 invoked by uid 550); 6 Oct 2022 08:53:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,103 +6,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16339 invoked from network); 12 Jun 2015 23:24:35 -0000
-Message-ID: <20150613012515.737b9d3d@pc1>
-X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.28; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-24388-1434151463-0001-2"
-Date: Sat, 13 Jun 2015 01:25:15 +0200
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Out of bounds read in OpenSSL function X509_cmp_time
- (CVE-2015-1789) and other minor issues
+Received: (qmail 9774 invoked from network); 6 Oct 2022 08:53:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:Content-Type:MIME-Version:Message-ID:
+	Subject:Cc:To:From:Date:Reply-To:Content-Transfer-Encoding:Content-ID:
+	Content-Description:In-Reply-To:References;
+	bh=1l3T2ZiLC4x8dAdj40TwbctWyt3r56yPD6v8CDnxqCI=; b=vbDPAmqUwoGm6smaPJFR4biOQE
+	9gDmKAF2GaS9jko3tGqK9/vnxQ5ne1XTllI/ryUfJDYgAQ3s8KnnVmGIH4EeY8u4hLvwpNsFqgspi
+	XS8mA2l8sCN4aqAMNALsj6glCcz6f6PfPfpbF2B6GG49JjV1/+XitqBXSmBPTnQtHpmUm5muebdoV
+	ZP3cQqT8P9XCgc0hwbxldRMOC30xzUhwo2ERToXWtdA5G4LqWP0ILyD7M0KE3DnbzZ1tx0HqEbEqc
+	3D69Yv6qmKHplP1btoTzXsHaQM1Dejy87lPCWzRDjzMCLEHbJspMx5m+fsxCfNjgAeOeeMFW2avMa
+	ccC+uneQ==;
+Date: Thu, 6 Oct 2022 09:52:53 +0100
+From: Simon McVittie <smcv@debian.org>
 To: oss-security@lists.openwall.com
+Cc: dbus-security@lists.freedesktop.org
+Message-ID: <Yz6XZSTsVQm7VKia@momentum.pseudorandom.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-Debian-User: smcv
+Subject: [oss-security] dbus denial of service: CVE-2022-42010, -42011, -42012
 
---=_zucker.schokokeks.org-24388-1434151463-0001-2
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+dbus is the reference implementation of D-Bus, a message bus for
+communication between applications and system services.
 
-https://blog.fuzzing-project.org/15-Out-of-bounds-read-in-OpenSSL-function-=
-X509_cmp_time-CVE-2015-1789-and-other-minor-issues.html
+Evgeny Vereshchagin discovered several ways in which an authenticated
+local attacker could cause a crash (denial of service) in
+dbus-daemon --system or a custom DBusServer. In uncommon configurations
+these could potentially be carried out by an authenticated remote attacker.
 
-Lately I started an effort to systematically fuzz all possible file
-input vectors of OpenSSL. This led to the discovery of one potential
-security issue and two minor non-security fixes.
+Fixed versions:
 
-Malformed inputs can cause an out of bounds heap read access in the
-function X509_cmp_time. This issue was reported to the OpenSSL
-developers on 11th March. It was independently discovered three days
-earlier by Google developer Robert Swiecki.
+* dbus 1.14.x >= 1.14.4 (stable branch)
+* dbus 1.12.x >= 1.12.24 (old stable branch)
+* dbus >= 1.15.2 (development branch)
 
-During the fuzzing I also discovered several issues in the parser of
-ASN1 definition files. These can be used to create ASN1 data structures
-with OpenSSL. It is unlikely that there is any situation where ASN1
-definitions are attacker controlled, therefore these are not considered
-security issues.
+Older dbus branches such as 1.10.x are EOL and will not receive new
+upstream releases.
 
-The latest security updates of OpenSSL (1.0.2b, 1.0.1n, 1.0.0s,
-0.9.8zg) fix all three issues. These releases also fix a number of
-other security issues. Shortly after publishing these updates OpenSSL
-issued another update (1.0.2c, 1.0.1o), because the versions contained
-an ABI change which should not happen in minor releases.
+Vulnerable versions:
 
-I am aware that a couple of other people were also fuzzing OpenSSL
-lately. Noteworthy is one issue that was found by Joseph Birr-Pixton in
-the parser of elliptic curve parameters. It is an endless loop and can
-be used to hang processes with a high CPU load. Endless loop issues
-tend to get ignored because they are often false positives.
-https://jbp.io/2015/06/11/cve-2015-1788-openssl-binpoly-hang/
+* dbus 1.15.x before 1.15.2
+* dbus 1.14.x before 1.14.4
+* all versions before 1.12.24
 
-It is definitely getting harder finding any new issues through fuzzing
-in OpenSSL. This is good news.
+CVE-2022-42010 is believed to have been introduced during early dbus
+development (before 1.0) and the other two vulnerabilities mentioned
+here were regressions in 1.3.0.
 
-Out of bounds read in X509_cmp_time
-CVE-2015-1789
-https://web.nvd.nist.gov/view/vuln/detail?vulnId=3DCVE-2015-1789
-Git commit / fix
-https://github.com/openssl/openssl/commit/f48b83b4fb7d6689584cf25f61ca63a48=
-91f5b11
-OpenSSL Security Advisory
-https://openssl.org/news/secadv_20150611.txt
-Sample malformed cert (test with openssl verify [input])
-https://crashes.fuzzing-project.org/openssl-verify-oob.crt
+Vulnerability details:
 
-Samples for issues in ASN1 definition parser (test with openssl
-asn1parse -genconf [input]): Out of bounds read heap
-https://crashes.fuzzing-project.org/openssl-asn1-oob.asn
-Stack overflow through endless recursion
-https://crashes.fuzzing-project.org/openssl-asn1-stack.asn
-Uninitialized memory access
-https://crashes.fuzzing-project.org/openssl-asn1-uninitialized.asn
+* An invalid array of fixed-length elements where the length of the array
+  is not a multiple of the length of the element would cause an assertion
+  failure in debug builds or an out-of-bounds read in production builds.
+  This was a regression in version 1.3.0.
+  (dbus#413, CVE-2022-42011, fixed by
+  https://gitlab.freedesktop.org/dbus/dbus/-/commit/079bbf16186e87fb0157adf8951f19864bc2ed69)
 
---=20
-Hanno B=C3=B6ck
-http://hboeck.de/
+* A syntactically invalid type signature with incorrectly nested parentheses
+  and curly brackets would cause an assertion failure in debug builds.
+  Similar messages could potentially result in a crash or incorrect message
+  processing in a production build, although we are not aware of a practical
+  example. (dbus#418, CVE-2022-42010, fixed by
+  https://gitlab.freedesktop.org/dbus/dbus/-/commit/9d07424e9011e3bbe535e83043d335f3093d2916)
 
-mail/jabber: hanno@hboeck.de
-GPG: BBB51E42
+* A message in non-native endianness with out-of-band Unix file descriptors
+  would cause a use-after-free and possible memory corruption in production
+  builds, or an assertion failure in debug builds. This was a regression in
+  version 1.3.0. (dbus#417, CVE-2022-42012, fixed by
+  https://gitlab.freedesktop.org/dbus/dbus/-/commit/236f16e444e88a984cf12b09225e0f8efa6c5b44)
 
---=_zucker.schokokeks.org-24388-1434151463-0001-2
-Content-Type: application/pgp-signature
-Content-Transfer-Encoding: 7bit
-Content-Description: OpenPGP digital signature
+Reimplementations of the D-Bus protocol such as systemd's sd-bus (used
+in dbus-broker and systemd) and GLib's GDBus (used in gvfs and ibus)
+do not share dbus' code for message parsing and validation, so they are
+probably unaffected by these issues.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCgAGBQJVe2pbAAoJEKWIAHK7tR5CMg8QAKmmEfGKFwJ9zsyNJUiBlOJu
-iyFT1qj3Mqp97oqOEy9X5Cxzi3sqhydAszHeEM+6FcO9xm6aSXrDGhKDLP/t9BZV
-hMwkbpncyIQnkNrBH6nk45/v6PSkHSG+jS28ReHbmXl2xiRAF5FDG88rLJI6TRcP
-4FopyxDppZzttxYKqeKT2A9jGjgLdKH846SfHl4AjMk+FGQ3/EPeJYUpANRGpA0w
-Ut8Y32sv+wNlkCwP0NxLPle76qwJJKRs51WJoOW5SlrHh6NfS4K77qfULud/zCG1
-fEqvIUvq6nOfQWhViKYLxM8r2sSMrArvVnEUYoXb2770xsG1k8vSXAsctsnzv8He
-tpSvOCVDggqM2SMQRne5olDINzjGlU+/XKj3UBo5JpcBTI3Qb/go8rUSfGm8BaY3
-1vStxGt2f42hIAKapN6vNW5QzAHmWK8LVsq5JO+HB7nAue4whKwN6uUTLDyUxTWg
-sG+rJm62lSXmjH8UMB2+tzUpJNyyozEzDmWnlg8Gtgphi9AW+xpMu0lO91DPtnGg
-9enarkZBBlSf8qT0xo5raFdkvGgFGcGYceE/MsfG/LQ5yleDIGN1AyYIrz/sS7Qd
-37j5ZsVwch5ubHRZcu2ShhOMHLLq3KenQJB5yDZa10M3PNTswrd5pDbCDtWBnVIF
-iGAxHStJ24K8GCC+BmWN
-=1CD5
------END PGP SIGNATURE-----
-
---=_zucker.schokokeks.org-24388-1434151463-0001-2--
+-- 
+Simon McVittie, Collabora Ltd. / Debian
+on behalf of the dbus maintainers
