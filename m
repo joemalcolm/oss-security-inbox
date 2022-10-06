@@ -1,36 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/29/5
-Message-ID: <20221229174447.p9Q13%steffen@sdaoden.eu>
-Date: Thu, 29 Dec 2022 18:44:47 +0100
-From: Steffen Nurpmeso <steffen@...oden.eu>
-To: oss-security@...ts.openwall.com
-Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/06/2
+Message-ID: <Yz722hsDFWr/hqGb@momentum.pseudorandom.co.uk>
+Date: Thu, 6 Oct 2022 16:40:10 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com, dbus-security@...ts.freedesktop.org
+Cc: Demi Marie Obenour <demi@...isiblethingslab.com>
+Subject: Re: dbus denial of service: CVE-2022-42010, -42011, -42012
 Content-Type: text/plain; charset=utf-8
 
-Alan Coopersmith wrote in
- <b31213da-5ea2-d1f8-dcb2-2917b787ce89@...cle.com>:
- |On 12/28/22 08:47, Demi Marie Obenour wrote:
- |> A binary format would be even better.  No risk of ambiguity.
- |
- |That is how the Solaris (and now illumos) /proc has always worked - fewer
- |parsing problems, but you need to use tools to handle the contents, not
- |just cat/less/etc.
- |
- |https://docs.oracle.com/cd/E88353_01/html/E37852/proc-5.html
+On Thu, 06 Oct 2022 at 10:53:15 -0400, Demi Marie Obenour wrote:
+> Is the memory corruption potentially exploitable for local privilege
+> escalation?
 
-I personally find it highly beneficial to grasp informations meant
-for human consumption with UNIX text tools.
-..And still blinded by Pike's "just make it a string".
+It is not known to be, but also not known not to be. I'm sure a
+sufficiently creative attacker can convert almost any memory corruption
+into arbitrary code execution, but exploit development is not my job
+(I'd rather fix the vulnerabilities!), so I have not attempted to
+weaponize this.
 
-If you have an FS="\0" compatible awk(1) (not nawk, not busybox
-awk (yet)) it is very easy to parse such text files.
+> Are clients using libdbus vulnerable if they are behind dbus-broker?
 
-P.S.: CBOR .. if you want JSON.  (The NetBSD folks got that long
-before it was hip, where i saw it first.)
+I don't maintain dbus-broker and have not tested or audited it, so
+I don't know how much validation it does. I would hope that it would
+detect and prevent CVE-2022-42011 and CVE-2022-42010 (which involve
+invalid messages), but probably not CVE-2022-42012 (which involves a
+message that is odd but technically valid).
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+    smcv
