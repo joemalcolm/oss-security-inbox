@@ -1,113 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/05/4
-Message-Id: <E1o8hHz-0004HG-2A@xenbits.xenproject.org>
-Date: Tue, 05 Jul 2022 12:04:23 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 406 v3 (CVE-2022-33744) - Arm guests can cause Dom0 DoS via PV devices
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/06/3
+Message-ID: <Yz7r3ke7oXMBHJ5A@itl-email>
+Date: Thu, 6 Oct 2022 10:53:15 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
+To: oss-security@...ts.openwall.com
+Cc: dbus-security@...ts.freedesktop.org
+Subject: Re: dbus denial of service: CVE-2022-42010, -42011, -42012
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu, Oct 06, 2022 at 09:52:53AM +0100, Simon McVittie wrote:
+> dbus is the reference implementation of D-Bus, a message bus for
+> communication between applications and system services.
+> 
+> Evgeny Vereshchagin discovered several ways in which an authenticated
+> local attacker could cause a crash (denial of service) in
+> dbus-daemon --system or a custom DBusServer. In uncommon configurations
+> these could potentially be carried out by an authenticated remote attacker.
+> 
+> Fixed versions:
+> 
+> * dbus 1.14.x >= 1.14.4 (stable branch)
+> * dbus 1.12.x >= 1.12.24 (old stable branch)
+> * dbus >= 1.15.2 (development branch)
+> 
+> Older dbus branches such as 1.10.x are EOL and will not receive new
+> upstream releases.
+> 
+> Vulnerable versions:
+> 
+> * dbus 1.15.x before 1.15.2
+> * dbus 1.14.x before 1.14.4
+> * all versions before 1.12.24
+> 
+> CVE-2022-42010 is believed to have been introduced during early dbus
+> development (before 1.0) and the other two vulnerabilities mentioned
+> here were regressions in 1.3.0.
+> 
+> Vulnerability details:
+> 
+> * An invalid array of fixed-length elements where the length of the array
+>   is not a multiple of the length of the element would cause an assertion
+>   failure in debug builds or an out-of-bounds read in production builds.
+>   This was a regression in version 1.3.0.
+>   (dbus#413, CVE-2022-42011, fixed by
+>   https://gitlab.freedesktop.org/dbus/dbus/-/commit/079bbf16186e87fb0157adf8951f19864bc2ed69)
+> 
+> * A syntactically invalid type signature with incorrectly nested parentheses
+>   and curly brackets would cause an assertion failure in debug builds.
+>   Similar messages could potentially result in a crash or incorrect message
+>   processing in a production build, although we are not aware of a practical
+>   example. (dbus#418, CVE-2022-42010, fixed by
+>   https://gitlab.freedesktop.org/dbus/dbus/-/commit/9d07424e9011e3bbe535e83043d335f3093d2916)
+> 
+> * A message in non-native endianness with out-of-band Unix file descriptors
+>   would cause a use-after-free and possible memory corruption in production
+>   builds, or an assertion failure in debug builds. This was a regression in
+>   version 1.3.0. (dbus#417, CVE-2022-42012, fixed by
+>   https://gitlab.freedesktop.org/dbus/dbus/-/commit/236f16e444e88a984cf12b09225e0f8efa6c5b44)
 
-            Xen Security Advisory CVE-2022-33744 / XSA-406
-                               version 3
+Is the memory corruption potentially exploitable for local privilege
+escalation?
 
-             Arm guests can cause Dom0 DoS via PV devices
+> Reimplementations of the D-Bus protocol such as systemd's sd-bus (used
+> in dbus-broker and systemd) and GLib's GDBus (used in gvfs and ibus)
+> do not share dbus' code for message parsing and validation, so they are
+> probably unaffected by these issues.
 
-UPDATES IN VERSION 3
-====================
+Are clients using libdbus vulnerable if they are behind dbus-broker?
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-When mapping pages of guests on Arm, dom0 is using an rbtree to keep
-track of the foreign mappings.
-
-Updating of that rbtree is not always done completely with the related
-lock held, resulting in a small race window, which can be used by
-unprivileged guests via PV devices to cause inconsistencies of the
-rbtree. These inconsistencies can lead to Denial of Service (DoS) of
-dom0, e.g. by causing crashes or the inability to perform further
-mappings of other guests' memory pages.
-
-IMPACT
-======
-
-A guest performing multiple I/Os of PV devices in parallel can cause
-DoS of dom0 and thus of the complete host.
-
-VULNERABLE SYSTEMS
-==================
-
-Only Arm systems (32-bit and 64-bit) are vulnerable. Dom0 Linux versions
-3.13 - 5.18 are vulnerable.
-
-X86 systems are not vulnerable.
-
-MITIGATION
-==========
-
-There is no mitigation available.
-
-CREDITS
-=======
-
-This issue was discovered by Oleksandr Tyshchenko of EPAM.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa406-linux.patch     Linux 3.13 - 5.19-rc
-
-$ sha256sum xsa406*
-7a789f564b3365cade6e95d549dbbd5a8b7b5e53d09bc5a463c77dfefd5a4182  xsa406-linux.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmLEFgEMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZwJUIAJSrSYNMQE4jo1sJFKjEJ3cHy6CymbJC94JSm2Tf
-HzeMlwd7NQF3Sc2HSWQoCSI+0TiRb6bJpfZASsbL/E3b6zcm3+VxwS7HVUtvHXhN
-HJYRUMN9vckUkGwWDYbgveI7uie9P7gpjwi5CEXxQf4NO9Oloyk2J5bijktzbBN2
-9FIZ7zFuiSRwGtr2WRaozCSzgg4EGiPRc5eMCFMP+K0P+oRvpkE52wWo/ZOPzW8T
-xocUIcvQK335ib04OCS3oqJZrRNwrvX6Vn+CifXac2WHR9tQ24VnTq1iYRrVD+5x
-kxpg4IuiNc2eD8lZCLnKEUDUj6LzWvgxKoxXgJFKXlESb0A=
-=57so
------END PGP SIGNATURE-----
-
-Download attachment "xsa406-linux.patch" of type "application/octet-stream" (2561 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
