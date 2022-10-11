@@ -1,27 +1,136 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/03/6
-Message-ID: <00fa1dc6-2c61-66b7-1611-8158642e233b@apache.org>
-Date: Wed, 03 Aug 2022 20:46:24 +0000
-From: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-34158: Apache JSPWiki: User Group Privilege Escalation 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/11/2
+Message-Id: <E1oiE0a-0001d2-A6@xenbits.xenproject.org>
+Date: Tue, 11 Oct 2022 12:05:16 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 411 v3 (CVE-2022-33748) - lock order inversion in transitive grant copy handling
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Description:
+            Xen Security Advisory CVE-2022-33748 / XSA-411
+                               version 3
 
-A carefully crafted invocation on the Image plugin could trigger an CSRF vulnerability on Apache JSPWiki, which could allow a group privilege escalation of the attacker's account. Further examination of this issue established that it could also be used to modify the email associated with the attacked account, and then a reset password request from the login page. 
+        lock order inversion in transitive grant copy handling
 
-Mitigation:
+UPDATES IN VERSION 3
+====================
 
-Apache JSPWiki users should upgrade to 2.11.3 or later. 
+Public release.
 
-Credit:
+ISSUE DESCRIPTION
+=================
 
-This issue was discovered by Huiseong Seo (t0rchwo0d), <awdr1624AT gmail DOT com>
+As part of XSA-226 a missing cleanup call was inserted on an error
+handling path.  While doing so, locking requirements were not paid
+attention to.  As a result two cooperating guests granting each
+other transitive grants can cause locks to be acquired nested within
+one another, but in respectively opposite order.  With suitable
+timing between the involved grant copy operations this may result in
+the locking up of a CPU.
 
-References:
+IMPACT
+======
 
-https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2022-34158
+Malicious or buggy guest kernels may be able to mount a Denial of
+Service (DoS) attack affecting the entire system.
 
+VULNERABLE SYSTEMS
+==================
+
+Xen versions 4.0 and newer are vulnerable.  Xen versions 3.4 and older
+are not vulnerable.
+
+Only guests with access to transitive grants can exploit the
+vulnerability.  In particular, this means that:
+
+ * ARM systems which have taken the XSA-268 fix are not vulnerable, as
+   Grant Table v2 was disabled for other security reasons.
+
+ * All systems with the XSA-226 fixes, and booted with
+   `gnttab=max-ver:1` or `gnttab=no-transitive` are not vulnerable.
+
+ * From Xen 4.16, the maximum grant table version can be controlled on a
+   per-domain basis.  For the xl toolstack, the vulnerability does not
+   manifest if either:
+
+   1) Every guest has `max_grant_version=1` in their configuration file,
+      or
+
+   2) The global xl.conf has `max_grant_version=1`, and no guests have
+      the default overridden by selecting `max_grant_version=2`.
+
+Only multiple cooperating guests can exploit the vulnerability.
+
+MITIGATION
+==========
+
+Disallowing the use of transitive grants either via the
+`gnttab=no-transitive` Xen command line option, or by disabling grant
+interface version 2 altogether via the `gnttab=max-ver:1` Xen command
+line option or the xl controls as mentioned above will avoid the
+vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa411.patch           xen-unstable - Xen 4.15.x
+xsa411-4.14.patch      Xen 4.14.x - 4.13.x
+
+$ sha256sum xsa411*
+0802e2e4e9d03c82429a710bbb783cee2fded52d29b1d969b97c680d30c3ac57  xsa411.patch
+8473f2ee34562298c5174f0a5b3c64c561a945333aab675845093ad23250d1cf  xsa411-4.14.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches described above (or others which are
+substantially similar) is permitted during the embargo, even on
+public-facing systems with untrusted guest users and administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+HOWEVER, deployment of the mitigations is NOT permitted (except where
+all the affected systems and VMs are administered and used only by
+organisations which are members of the Xen Project Security Issues
+Predisclosure List).  Specifically, deployment on public cloud systems
+is NOT permitted.
+
+This is because it is a guest visible change which will draw attention
+to the issue.
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmNFTAAMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZPsQH/1JCqscbx49QygGVEnq43C97HQpcoZcUNJGwGjBJ
+Li0SXejxd3iWsYsFlMAgmacHIjevEGv318JJLSM21hBULGe85cc6QatpWS0VWrBc
+tQVbDIgqNRv42gJCtf1dLF0TnlTZ6p3wiqfsxEYBn1zlEhe2ZEMpY8an4707O32d
+nQ90JFh44QJXx6HMZD3pEw2g1+4pMDu9yDUp/Yc3YmxYnXmPW6KE7iMmGkLLGigI
+GfiTI4FA/BDVIZkjPErwG7pyXmp2sdtVkv5o/cg7YTOrLzeBmegdyUvzuXkizJ2F
+PQnc1rgS/vXPkC62cy6fmLkeAf0dQhq6KBuxW3N8s2fXRXk=
+=/bRo
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa411.patch" of type "application/octet-stream" (2204 bytes)
+
+Download attachment "xsa411-4.14.patch" of type "application/octet-stream" (2226 bytes)
