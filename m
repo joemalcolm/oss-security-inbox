@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1049" "Tuesday" "18" "August" "2015" "14:44:51" "+0200" "Florian Weimer" "fw@deneb.enyo.de" "<87vbccpxz0.fsf@mid.deneb.enyo.de>" "31" "Re: [oss-security] CVE Request for glusterfs:  fuse check return value of setuid" nil nil nil "8" "2015081812:44:51" "[oss-security] CVE Request for glusterfs: fuse check return value of setuid" (number mark "        fw@deneb.eny Aug 18   31/1049  " thread-indent "\"Re: [oss-security] CVE Request for glusterfs:  fuse check return value of setuid\"\n") "<415496778.7350783.1439890690568.JavaMail.zimbra@redhat.com>" ("<415496778.7350783.1439890690568.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 3417 invoked by uid 550); 18 Aug 2015 12:45:05 -0000
+Received: (qmail 3108 invoked by uid 550); 13 Oct 2022 06:17:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,48 +6,71 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3381 invoked from network); 18 Aug 2015 12:45:04 -0000
-References: <415496778.7350783.1439890690568.JavaMail.zimbra@redhat.com>
-In-Reply-To: <415496778.7350783.1439890690568.JavaMail.zimbra@redhat.com>
-	(Siddharth Sharma's message of "Tue, 18 Aug 2015 05:38:10 -0400
-	(EDT)")
-Message-ID: <87vbccpxz0.fsf@mid.deneb.enyo.de>
-MIME-Version: 1.0
-Content-Type: text/plain
-Date: Tue, 18 Aug 2015 14:44:51 +0200
-From: Florian Weimer <fw@deneb.enyo.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE Request for glusterfs:  fuse check return value of setuid
-To: oss-security@lists.openwall.com
+Received: (qmail 19494 invoked from network); 12 Oct 2022 22:16:16 -0000
+Authentication-Results: apache.org; auth=none
+X-Gm-Message-State: ACrzQf3XCmI9F0LTtxk1rjVCWHVDVa43S8hH7Lr5t5zbu+VK1+KtSKSr
+	c5D+LZ4KIesukvrQ4HflPDCWSCOB9hiCnQfvsJw=
+X-Google-Smtp-Source: AMsMyM6p+kh/pY5/hHRw8F979YtR7pda78KvnwwSKpTsouVPAAS8ZWRBQ0Q4plN8/P3tHolQgnx0O+WDJj/wz4msKsw=
+X-Received: by 2002:a05:6402:1d86:b0:457:e84:f0e with SMTP id
+ dk6-20020a0564021d8600b004570e840f0emr28972329edb.241.1665612930931; Wed, 12
+ Oct 2022 15:15:30 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAH9eYVo6DNN9awE8txmY_U2aYposhy7pon689n0L6h5yROpqPg@mail.gmail.com>
+ <2658c645-b4f7-1a39-2742-927e937be657@oracle.com>
+In-Reply-To: <2658c645-b4f7-1a39-2742-927e937be657@oracle.com>
+From: Brian Demers <bdemers@apache.org>
+Date: Wed, 12 Oct 2022 18:15:19 -0400
+X-Gmail-Original-Message-ID: <CAH9eYVog2BcGtOVgLp3Spc5=NN3d4RQAe3yGEmkF1+9zhz3H5w@mail.gmail.com>
+Message-ID: <CAH9eYVog2BcGtOVgLp3Spc5=NN3d4RQAe3yGEmkF1+9zhz3H5w@mail.gmail.com>
+To: Alan Coopersmith <alan.coopersmith@oracle.com>
+Cc: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="00000000000014e1a705eaddbb08"
+Subject: Re: [oss-security] CVE-2022-40664: Apache Shiro: Authentication
+ Bypass Vulnerability in Shiro when forwarding or including via RequestDispatcher
 
-* Siddharth Sharma:
+--00000000000014e1a705eaddbb08
+Content-Type: text/plain; charset="UTF-8"
 
-> Problem description from the bug: 
->
-> https://bugzilla.redhat.com/show_bug.cgi?id=1254488
->
-> setuid() sets the effective user ID of the calling process.  
-> If the effective UID of the caller is root, the real UID and
-> saved set-user-ID are also set. On success, zero is returned.
-> On error, -1 is returned, and errno is set appropriately.
->
-> Note: there are cases where setuid() can fail even when the 
-> caller is UID 0; it is a grave security error to omit checking
-> for a failure return from setuid(). if an environment limits 
-> the number of processes a user can have, setuid() might fail if
-> the target uid already is at the limit.
->
-> Can we have CVE assigned to this ?
->
-> Upstream Ref: 
->
-> http://review.gluster.org/#/c/10780/
-> https://github.com/gluster/glusterfs/commit/b5ceb1a9de9af563b0f91e2a3138fa5a95cad9f6
+Thanks for the feedback Alan, I'll make sure to include additional info in
+the future.
 
-Original code:
+For now:
 
-<http://sourceforge.net/p/fuse/fuse/ci/master/tree/lib/mount_util.c#l103>
+Mitigation:
+  Update to Shiro 1.10.0
 
-Pluse two more locations in that file.
+References:
+  https://lists.apache.org/thread/loc2ktxng32xpy7lfwxto13k4lvnhjwg
 
-A single CVE ID for all these issues should probably suffice.
+On Wed, Oct 12, 2022 at 3:21 PM Alan Coopersmith <
+alan.coopersmith@oracle.com> wrote:
+
+> On 10/11/22 19:52, Brian Demers wrote:
+> > Description:
+> >
+> > Apache Shiro before 1.10.0, Authentication Bypass Vulnerability in
+> > Shiro when forwarding or including via RequestDispatcher.
+> >
+> > Credit:
+> >
+> > Apache Shiro would like to thank Y4tacker for reporting this issue
+>
+> Thanks for informing oss-security of these issues, but good security
+> announcements have a little more detail, like what actions users or
+> distributors need to take (upgrade to a new version?  what version?)
+> and information on where to find more details, like a bug id in your
+> bug tracker.  If you look at the announcements from other Apache
+> projects, you'll see they often include those.
+>
+> Some good examples:
+> https://www.openwall.com/lists/oss-security/2021/12/18/2
+> https://www.openwall.com/lists/oss-security/2022/01/05/4
+> https://www.openwall.com/lists/oss-security/2022/01/06/2
+>
+> --
+>          -Alan Coopersmith-                 alan.coopersmith@oracle.com
+>           Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+>
+
+--00000000000014e1a705eaddbb08--
