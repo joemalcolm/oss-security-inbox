@@ -1,23 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/21/4
-Message-ID: <d342cc67-4b93-1ea2-1e9e-6bdf17605f7c@apache.org>
-Date: Mon, 21 Nov 2022 20:24:03 +0000
-From: Jarek Potiuk <potiuk@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-38649: Apache Airflow Pinot Provider, Apache Airflow: PinotAdminHook Command Injection 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/13/1
+Message-ID: <CAH9eYVog2BcGtOVgLp3Spc5=NN3d4RQAe3yGEmkF1+9zhz3H5w@mail.gmail.com>
+Date: Wed, 12 Oct 2022 18:15:19 -0400
+From: Brian Demers <bdemers@...che.org>
+To: Alan Coopersmith <alan.coopersmith@...cle.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2022-40664: Apache Shiro: Authentication Bypass Vulnerability in Shiro when forwarding or including via RequestDispatcher
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Thanks for the feedback Alan, I'll make sure to include additional info in
+the future.
 
-Description:
+For now:
 
-Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') vulnerability in Apache Airflow Pinot Provider, Apache Airflow allows an attacker to control commands executed in the task execution context, without write access to DAG files. This issue affects Apache Airflow Pinot Provider versions prior to 4.0.0. It also impacts any Apache Airflow versions prior to 2.3.0 in case Apache Airlfow Pinot Provider is installed (Apache Airflow Pinot Provider 4.0.0 can only be installed for Airflow 2.3.0+). Note that you need to manually install the Pinot Provider version 4.0.0 in order to get rid of the vulnerability on top of Airflow 2.3.0+ version.
-
-Credit:
-
-Apache Airflow PMC wants to thank id_No2015429 of 3H Security Team for reporting the issue.
+Mitigation:
+  Update to Shiro 1.10.0
 
 References:
+  https://lists.apache.org/thread/loc2ktxng32xpy7lfwxto13k4lvnhjwg
 
-https://github.com/apache/airflow/pull/27641
+On Wed, Oct 12, 2022 at 3:21 PM Alan Coopersmith <
+alan.coopersmith@...cle.com> wrote:
+
+> On 10/11/22 19:52, Brian Demers wrote:
+> > Description:
+> >
+> > Apache Shiro before 1.10.0, Authentication Bypass Vulnerability in
+> > Shiro when forwarding or including via RequestDispatcher.
+> >
+> > Credit:
+> >
+> > Apache Shiro would like to thank Y4tacker for reporting this issue
+>
+> Thanks for informing oss-security of these issues, but good security
+> announcements have a little more detail, like what actions users or
+> distributors need to take (upgrade to a new version?  what version?)
+> and information on where to find more details, like a bug id in your
+> bug tracker.  If you look at the announcements from other Apache
+> projects, you'll see they often include those.
+>
+> Some good examples:
+> https://www.openwall.com/lists/oss-security/2021/12/18/2
+> https://www.openwall.com/lists/oss-security/2022/01/05/4
+> https://www.openwall.com/lists/oss-security/2022/01/06/2
+>
+> --
+>          -Alan Coopersmith-                 alan.coopersmith@...cle.com
+>           Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+>
 
