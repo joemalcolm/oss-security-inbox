@@ -1,103 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/26/1
-Message-ID: <qo17no6-sr1s-8ps-469n-r218o8n99n2@unkk.fr>
-Date: Wed, 26 Oct 2022 08:26:35 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] CVE-2022-32221: POST following PUT confusion (curl)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/12/2
+Message-ID: <2658c645-b4f7-1a39-2742-927e937be657@oracle.com>
+Date: Wed, 12 Oct 2022 12:21:40 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com, Brian Demers <bdemers@...che.org>
+Subject: Re: CVE-2022-40664: Apache Shiro: Authentication Bypass Vulnerability in Shiro when forwarding or including via RequestDispatcher
 Content-Type: text/plain; charset=utf-8
 
-CVE-2022-32221: POST following PUT confusion
-============================================
+On 10/11/22 19:52, Brian Demers wrote:
+> Description:
+> 
+> Apache Shiro before 1.10.0, Authentication Bypass Vulnerability in
+> Shiro when forwarding or including via RequestDispatcher.
+> 
+> Credit:
+> 
+> Apache Shiro would like to thank Y4tacker for reporting this issue
 
-Project curl Security Advisory, October 26 2022 -
-[Permalink](https://curl.se/docs/CVE-2022-32221.html)
+Thanks for informing oss-security of these issues, but good security
+announcements have a little more detail, like what actions users or
+distributors need to take (upgrade to a new version?  what version?)
+and information on where to find more details, like a bug id in your
+bug tracker.  If you look at the announcements from other Apache
+projects, you'll see they often include those.
 
-VULNERABILITY
--------------
-
-When doing HTTP(S) transfers, libcurl might erroneously use the read callback
-(`CURLOPT_READFUNCTION`) to ask for data to send, even when the
-`CURLOPT_POSTFIELDS` option has been set, if the same handle previously was
-used to issue a `PUT` request which used that callback.
-
-This flaw may surprise the application and cause it to misbehave and either
-send off the wrong data or use memory after free or similar in the subsequent
-`POST` request.
-
-The problem exists in the logic for a reused handle when it is changed from a
-PUT to a POST.
-
-We are not aware of any exploit of this flaw.
-
-INFO
-----
-
-The code actually sending wrong data or doing a use-after-free is not present
-in libcurl code but are only presumed scenarios that might become the outcome
-of libcurl surprisingly calling the read callback in a situation where it is
-not expected to.
-
-This flaw cannot be triggered with the command line tool.
-
-This issue was [reported and managed
-publicly](https://github.com/curl/curl/issues/9507) before the security impact
-was properly understood.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2022-32221 to this issue.
-
-CWE-440: Expected Behavior Violation
-
-Severity: medium
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: libcurl 7.7 to and including 7.85.0
-- Not affected versions: libcurl < 7.7 and >= 7.86.0
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-[The fix for
-CVE-2022-32221](https://github.com/curl/curl/commit/a64e3e59938abd7d6) was
-committed to the curl git repository and made public before the security
-impact of this issue become clear to us. The securty impact was not
-highlighted in the commit message nor surrounding messsaging.
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 7.86.0
-
-  B - Apply the patch to your local version
-
-  C - Do not do mix using the read callback and postfields string on a reused
-      easy handle
-
-TIMELINE
---------
-
-This issue was reported to the curl project on September 19, 2022. We
-contacted distros@...nwall on October 18, 2022.
-
-libcurl 7.86.0 was released on October 26 2022, coordinated with the
-publication of this advisory.
-
-CREDITS
--------
-
-- Reported-by: Robby Simpson
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
+Some good examples:
+https://www.openwall.com/lists/oss-security/2021/12/18/2
+https://www.openwall.com/lists/oss-security/2022/01/05/4
+https://www.openwall.com/lists/oss-security/2022/01/06/2
 
 -- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
