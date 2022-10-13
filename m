@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["873" "Wednesday" "31" "May" "2017" "10:42:24" "+0200" "Peter Bex" "peter@more-magic.net" "<20170531084224.GG4590@scully.more-magic.net>" "29" "[oss-security] CVE request form not working" "^Date:" nil nil "5" "2017053108:42:24" "[oss-security] CVE request form not working" (number mark "        peter@more-m May 31   29/873   " thread-indent "\"[oss-security] CVE request form not working\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 5489 invoked by uid 550); 31 May 2017 08:42:36 -0000
+Received: (qmail 5999 invoked by uid 550); 13 Oct 2022 11:47:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +6,69 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5466 invoked from network); 31 May 2017 08:42:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=more-magic.net; s=dkim-2016-12;
-	h=Content-Type:MIME-Version:Message-ID:Subject:To:From:Date; bh=JokfGMJ2J811V0zUbyoudGqxQt0ETnqEVT2owsFeJvQ=;
-	b=ZHI/8uEx3lp7vneLW81dpYyJsvoUWu1YFmJLRmBepWZywfEsFBlTYJC0Yh51ii5i0Xqvm2RX14kM8DGjDkE5PTTEG5DQR1iuYpnWV9WNahzvPFvQatEd4D6DsHyrym2+TZjioxSBcEe3ve1FYdY7JlXr5Jgv4SDq/CASesey18s=;
-Message-ID: <20170531084224.GG4590@scully.more-magic.net>
-Mail-Followup-To: Open Source Security <oss-security@lists.openwall.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="wRtZRu2mMGBZ6YQ7"
-Content-Disposition: inline
-X-PGP-Key: http://www.more-magic.net/peter-bex.asc
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Date: Wed, 31 May 2017 10:42:24 +0200
-From: Peter Bex <peter@more-magic.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request form not working
-To: Open Source Security <oss-security@lists.openwall.com>
+Received: (qmail 12208 invoked from network); 13 Oct 2022 05:43:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=f76xrVYEFO2SE657LDkkRlS2drSld9L2PHsGvtXGmaU=;
+        b=NNE/ulWOhlSG94GkOKDV4MUAj8u9XyeZq/hRMTVF442goPMW03CjoLwv7oQUDbKUis
+         A5LXkTfmBoED5hahzAIRvkZgnnjQP+v+DeMcjwbk9bSVuGKA2ZRqtKnZ1tTsg8BovEZJ
+         aWIaLIjYlVvYLDKFsRKLCMmbX1NLoTRewZkD7Cf9yw6X3FR8zUfNzYhh2yVRdU6bGgDN
+         dq8TxzUFLo8Hwv8n/fNM3Qm63KUUo0yeSJjdMKSYrs5syOqWLVskon1pB/tOEnR42QYw
+         uB2GZZLnn/ny1EEZ1oRU2cDXvqrMYQNACUvBt6VvNEEeCnGPjnGfUKzY27Yc3EvuzVNc
+         fWtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=f76xrVYEFO2SE657LDkkRlS2drSld9L2PHsGvtXGmaU=;
+        b=gv3o4lJ7JrctzN1d/ufPdLXuVdeh0Zamfx+JLY2y0lgwpH9wfMvxqqwKd2qrVeE7wE
+         QVloBBiJj3GZFcs9UirP8JXKr/ALG6u1ir47nj5FWB6OUJM+F55un3joO8Kui8nTY/Qe
+         A5Pt4kKVbOIKD1gUcx3KfA92k60qexTnENOI1LaTn7v0/oRAJfrCPSN78kH8uz4ttL6T
+         9/+iYf2zHTnd0osDybFOeCEja2zkmuk4sVjoHvlDlQThgjrUo0nJAtiinJvp1xgN9WKw
+         1xo5l/nsMWZ40qnK6uIliYi4SFNXTTZU6t1F4mvVv12yL4qPxmsuyCNyM5jiFTmIAnJv
+         ch4Q==
+X-Gm-Message-State: ACrzQf3Kn7ZMnHRx4wsc0P6v62UOXGvIAaD5yaCFNE4vQ31fDOPWf+Gg
+	7Lu+tu+tJbpASyToNjKP2A+mOWAldZDy6Fs1hE17xFxB/oo=
+X-Google-Smtp-Source: AMsMyM5syZ2CKsXrUXcmr1cCTvAX5WahuBeJDqJhiSP8sqWrrO023ZV46dMFgGKf2BmxQQ35poM++AsyTnDsEftJODQ=
+X-Received: by 2002:a5d:524c:0:b0:22e:39c9:3567 with SMTP id
+ k12-20020a5d524c000000b0022e39c93567mr19226164wrc.463.1665639808682; Wed, 12
+ Oct 2022 22:43:28 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAGUWgD9QR7mjyVnBV4NcyVv=RzLBjNoqvv=d02P-GGsdOV_VWg@mail.gmail.com>
+ <20220906115010.gs7kec3wkmayhmhf@yuggoth.org> <CAGUWgD9x1RJdYcr9NCUOjaVNYdnhrPkSjNoh_NaLGu99q65W-w@mail.gmail.com>
+ <87leqwtr7t.fsf@hope.eyrie.org>
+In-Reply-To: <87leqwtr7t.fsf@hope.eyrie.org>
+From: Georgi Guninski <gguninski@gmail.com>
+Date: Thu, 13 Oct 2022 08:43:15 +0300
+Message-ID: <CAGUWgD-qOonOY_MakeWtotx4mC6KXsg1zLOo9zzx6DKtdaXLsg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [oss-security] sagemath denial of service with abort() in gmp:
+ overflow in mpz type
 
---wRtZRu2mMGBZ6YQ7
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Tue, Sep 6, 2022 at 7:17 PM Russ Allbery <eagle@eyrie.org> wrote:
+>
+>
+> I would only call it a DoS if it crosses a privilege boundary.  A user can
+> always DoS themselves; that's just Ctrl-C.  :)
+>
+Observe that ubuntu issue advisory about libgmp crash
+without mentioning potential exploitability.
 
-Hi all,
+quote:
+https://ubuntu.com/security/notices/USN-5672-1
 
-Today I wanted to request another CVE, but cveform.mitre.org seems to
-be down (it just loads forever here).  Can anyone please fix this?
+Details
+12 October 2022
 
-Cheers,
-Peter Bex
+It was discovered that GMP did not properly manage memory
+on 32-bit platforms when processing a specially crafted
+input. An attacker could possibly use this issue to cause
+applications using GMP to crash, resulting in a denial of
+service.
 
---wRtZRu2mMGBZ6YQ7
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBAgAGBQJZLoHwAAoJEBEdufnLRYmwNEoH/2afG6Og3h2k7D+e1shuI+zR
-SDP4BujPOFj93IZQ6vBbPmkBaCd06XWBR9cuQJp5M6ahgMQZeNFfMyG25cI75kNQ
-KiXAfoOesRykGRUvZTwpmEp9Qnpr9FXE+iSnqj8Ei83AYdlOYbk5lyJF7h4kBmBU
-6mrmwVHVNISWYXRKB9uuihz5rnyZoSRsvfBHbtTVwJnGEwulOxx9yGUezMuuEiXS
-/BS+JBx8qGhFrgtuxQIVTmNApXJFYMWvbtoACL94E+LM/xlV5O/m7MCgsWi3qVxD
-fYQyE70L2A1gwjz9+5j1Qqf8PhFza9Dz+NiAy91319p9PElXoCkNsLW9JOPUat0=
-=LjwM
------END PGP SIGNATURE-----
-
---wRtZRu2mMGBZ6YQ7--
+References
+CVE-2021-43618
