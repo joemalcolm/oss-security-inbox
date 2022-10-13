@@ -1,127 +1,157 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/05/1
-Message-Id: <E1nbhrE-0003M1-JC@xenbits.xenproject.org>
-Date: Tue, 05 Apr 2022 12:00:24 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 397 v2 (CVE-2022-26356) - Racy interactions between dirty vram tracking and paging log dirty hypercalls
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/13/5
+Message-ID: <ff7256bc-418b-e833-18d8-bc9700f6d77e@seemoo.tu-darmstadt.de>
+Date: Thu, 13 Oct 2022 19:13:11 +0200
+From: Sönke Huster <shuster@...moo.tu-darmstadt.de>
+To: Marcus Meissner <meissner@...e.de>, oss-security@...ts.openwall.com
+Subject: Re: Various Linux Kernel WLAN security issues (RCE/DOS) found
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi everyone,
 
-            Xen Security Advisory CVE-2022-26356 / XSA-397
-                               version 2
+In the following, I quickly introduce the PoC and briefly describe each CVE.
 
- Racy interactions between dirty vram tracking and paging log dirty hypercalls
+Please see attached:
+* The PCAP files containing the Wifi frames triggering the vulnerabilities and
+* inject-pcap.c to inject the Wifi frames into the 802.11 stack
+* A complete log for each CVE
 
-UPDATES IN VERSION 2
-====================
+Thanks to Johannes Berg, who provided the inject-pcap.c script, quickly worked on all the patches and resolved the issues!
 
-Public release.
+The PoC uses mac80211_hwsim to inject the frames, but the vulnerabilities are - to my knowledge - driver-independent, and we assume that they are exploitable over the air.
+All the malformed frames are Beacon frames.
 
-ISSUE DESCRIPTION
-=================
+# PoC Execution
 
-Activation of log dirty mode done by XEN_DMOP_track_dirty_vram (was named
-HVMOP_track_dirty_vram before Xen 4.9) is racy with ongoing log dirty
-hypercalls.  A suitably timed call to XEN_DMOP_track_dirty_vram can enable
-log dirty while another CPU is still in the process of tearing down the
-structures related to a previously enabled log dirty mode
-(XEN_DOMCTL_SHADOW_OP_OFF).  This is due to lack of mutually exclusive locking
-between both operations and can lead to entries being added in already freed
-slots, resulting in a memory leak.
+Boot a kernel with mac80211_hwsim included or load the module.
+Install libnl-3.0 libnl-genl-3.0 libpcap, which is required by the PoC, and compile it as follows:
 
-IMPACT
-======
+```
+cc -o inject-pcap inject-pcap.c $(pkg-config --cflags --libs  libnl-3.0 libnl-genl-3.0 libpcap)
+```
 
-An attacker can cause Xen to leak memory, eventually leading to a Denial of
-Service (DoS) affecting the entire host.
+Afterward, trigger a scan so that the device can receive the frame(s):
 
-VULNERABLE SYSTEMS
-==================
+```
+iw wlan0 scan trigger
+```
 
-All Xen versions from at least 4.0 onwards are vulnerable.
+Now, run inject-pcap with the PCAP file as argument.
 
-Only x86 systems are vulnerable.  Arm systems are not vulnerable.
+# CVE-2022-41674
 
-Only domains controlling an x86 HVM guest using Hardware Assisted Paging (HAP)
-can leverage the vulnerability.  On common deployments this is limited to
-domains that run device models on behalf of guests.
+This vulnerability was introduced in v5.1-rc1 and leads to a heap overflow. Compiled with CONFIG_SLUB_DEBUG_ON the kernel emits the following among other errors:
 
-MITIGATION
-==========
+```
+=============================================================================
+BUG kmalloc-64 (Tainted: G    B             ): Left Redzone overwritten
+-----------------------------------------------------------------------------
 
-Using only PV or PVH guests and/or running HVM guests in shadow mode will avoid
-the vulnerability.
+0xffff8880112b1e00-0xffff8880112b1e3f @offset=3584. First byte 0x10 instead of 0xbb
+Slab 0xffffea000044ac40 objects=16 used=16 fp=0x0000000000000000 flags=0x100000000000200(slab|node=0|zone=1)
+Object 0xffff8880112b1e40 @offset=3648 fp=0xffff8880112b1f40
 
-CREDITS
-=======
+Redzone  ffff8880112b1e00: 10 04 04 00 10 00 04 00 10 00 04 00 10 00 04 00  ................
+Redzone  ffff8880112b1e10: 10 00 04 00 10 00 04 00 10 00 04 00 10 00 04 00  ................
+Redzone  ffff8880112b1e20: 10 00 04 00 10 00 04 00 10 00 04 00 10 00 04 00  ................
+Redzone  ffff8880112b1e30: 10 00 04 00 f0 00 04 00 10 00 04 00 10 00 04 00  ................
+Object   ffff8880112b1e40: 80 00 04 00 04 00 dd 00 ff 00 60 00 ff 00 61 00  ..........`...a.
+Object   ffff8880112b1e50: 85 00 e4 00 ff 0a 05 ff ff 05 c3 00 52 00 ff 00  ............R...
+Object   ffff8880112b1e60: 61 04 85 00 ff 00 04 00 dd 00 e3 00 52 00 ff 00  a...........R...
+Object   ffff8880112b1e70: 61 00 85 00 e4 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b a5  a....kkkkkkkkkk.
+Redzone  ffff8880112b1e80: bb bb bb bb bb bb bb bb                          ........
+Padding  ffff8880112b1ee0: 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a  ZZZZZZZZZZZZZZZZ
+Padding  ffff8880112b1ef0: 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a  ZZZZZZZZZZZZZZZZ
+```
 
-This issue was discovered by Roger Pau Monné of Citrix.
+With the fix applied, the payload triggers slab-out-of-bounds. As that specific one is not considered harmful, no additional CVE is assigned, but it is fixed in "wifi: cfg80211: ensure length byte is present before access".
 
-RESOLUTION
-==========
+# CVE-2022-42719
 
-Applying the appropriate attached patch resolves this issue.
+This vulnerability was introduced in v5.2-rc1.
+With the patch for CVE-2022-41674 and the one mentioned prior applied, the same payload triggers use-after-frees, such as the following:
+```
+==================================================================
+BUG: KASAN: use-after-free in ieee80211_update_bss_from_elems (net/mac80211/scan.c:104) 
+Read of size 1 at addr ffff88800befa00a by task ksoftirqd/1/20
+```
 
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
+# CVE-2022-42720
 
-xsa397.patch           xen-unstable
-xsa397-4.16.patch      Xen 4.16.x - Xen 4.15.x
-xsa397-4.14.patch      Xen 4.14.x - Xen 4.13.x
-xsa397-4.12.patch      Xen 4.12.x
+This vulnerability was introduced in v5.1-rc1.
+After receiving the attached frames, the kernel log looks like that:
 
-$ sha256sum xsa397*
-49c663e2bb9131dbc2488e12487f79bdf0dafd51a32413cbf3964e39d8779cae  xsa397.patch
-24f95f47b79739c9cb5b9110137c802989356c82d0aa27963b5ac7e33f667285  xsa397-4.12.patch
-9af14f90ba10d074425eb6072a6c648082c92c1cf8b6f881f57ed2fc13d6e49d  xsa397-4.14.patch
-ff5dd3b7a8dbf349c3b832b7916322c0296fa59c7f9cd2ba30858989add5f65c  xsa397-4.16.patch
-$
+```
+==================================================================
+BUG: KASAN: use-after-free in cfg80211_inform_bss_frame_data (net/wireless/scan.c:2536) 
+Read of size 8 at addr ffff888008d04478 by task ksoftirqd/1/20
+```
 
-DEPLOYMENT DURING EMBARGO
-=========================
+Its patch fixes a root cause for at least four UAFs and other different memory issues, including:
+```
+BUG: KASAN: use-after-free in cmp_bss+0x856/0x920
+Read of size 8 at addr ffff88801459a068 by task ksoftirqd/0/14
 
-Deployment of the patches described above (or others which are substantially
-similar) is permitted during the embargo, even on public-facing systems with
-untrusted guest users and administrators.
+BUG: KASAN: use-after-free in cfg80211_inform_single_bss_data+0xe08/0xea0
+Read of size 8 at addr ffff888016272c40 by task ksoftirqd/0/14
 
-But: Distribution of updated software (except to other members of the
-predisclosure list) or deployment of mitigations is prohibited.
+BUG: KASAN: use-after-free in cfg80211_put_bss+0x261/0x270
+Read of size 8 at addr ffff8880162b4248 by task ksoftirqd/0/14
 
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+general protection fault, probably for non-canonical address 0xdffffc0200000005: 0000 [#1] PREEMPT SMP KASAN PTI
+KASAN: probably user-memory-access in range [0x0000001000000028-0x000000100000002f]
 
+general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] PREEMPT SMP KASAN PTI
+KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
+general protection fault, probably for non-canonical address 0xf99995999999999a: 0000 [#1] PREEMPT SMP KASAN PTI
+KASAN: maybe wild-memory-access in range [0xccccccccccccccd0-0xccccccccccccccd7]
+```
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
+# CVE-2022-42721
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmJMJDEMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZOUMH/RRZ8aMaoywqTV38SeTFne2tFT5jnWPPXR1ZGCvh
-825hmSqzcYUaILbWFruUfT2PdpGoU9Eprz3xWXBDwgsUEGvKt7ZhGoWvxzXASlDh
-cPRh/XwQVEEYsB1cRSk/GoLxLCQEV8oGNpmAcjEM4K1dG0VbVaRD0W2thNCmyPcv
-d7aTkAdD2IE8NU4hX8YGN6v+UCkjrgzL0AF/hff9CMj7Sn/wBRrdStLT0LDZU20c
-G/5+9nsOAVM7EwrzImI5Lx9KELyHwl37XUPffbftyTLUofdHJ5PK40J1tNIRS/RW
-YYvs2alF7ng7LlwB/Go8gtn4XRx6xZidceYrUk22oB4JBqo=
-=Fje3
------END PGP SIGNATURE-----
+This vulnerability was introduced in v5.1-rc1 and leads to an endless loop, leading to a DoS.
+This is the related kernel log:
 
-Download attachment "xsa397.patch" of type "application/octet-stream" (4463 bytes)
+```
+watchdog: BUG: soft lockup - CPU#0 stuck for 52s! [ksoftirqd/0:14]
+```
 
-Download attachment "xsa397-4.12.patch" of type "application/octet-stream" (3768 bytes)
+# CVE-2022-42722
 
-Download attachment "xsa397-4.14.patch" of type "application/octet-stream" (3766 bytes)
+For this, a P2P device is required. This is e.g. default behavior when running NetworkManager to the best of my knowledge.
+If there is no P2P device yet, it must be created for the reproduction:
 
-Download attachment "xsa397-4.16.patch" of type "application/octet-stream" (3773 bytes)
+```
+ip l set wlan0 up
+iw wlan0 interface add p2p0 type __p2pdev addr 02:00:00:00:00:00
+iw wdev 0x2 p2p start
+```
+
+Running the PoC leads to a null-ptr-dereference and thus to a DoS:
+```
+general protection fault, probably for non-canonical address 0xdffffc0000000064: 0000 [#1] PREEMPT SMP KASAN PTI
+KASAN: null-ptr-deref in range [0x0000000000000320-0x0000000000000327]
+```
+
+For more details, please see the full logs for each CVE attached.
+
+Best
+Sönke from SEEMOO @ TU Darmstadt
+View attachment "CVE-2022-41674-decoded.log" of type "text/x-log" (5387 bytes)
+
+View attachment "CVE-2022-42719-decoded.log" of type "text/x-log" (7840 bytes)
+
+View attachment "CVE-2022-42720-decoded.log" of type "text/x-log" (8413 bytes)
+
+View attachment "CVE-2022-42721-decoded.log" of type "text/x-log" (7153 bytes)
+
+View attachment "CVE-2022-42722-decoded.log" of type "text/x-log" (7813 bytes)
+
+Download attachment "CVE-2022-41674.pcap" of type "application/vnd.tcpdump.pcap" (1110 bytes)
+
+Download attachment "CVE-2022-42720.pcap" of type "application/vnd.tcpdump.pcap" (1472 bytes)
+
+Download attachment "CVE-2022-42721.pcap" of type "application/vnd.tcpdump.pcap" (1472 bytes)
+
+Download attachment "CVE-2022-42722.pcap" of type "application/vnd.tcpdump.pcap" (94 bytes)
