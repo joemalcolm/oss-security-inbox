@@ -1,51 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/01/5
-Message-ID: <e9e07db7-9456-4015-5241-8a7e6e80ab0a@igalia.com>
-Date: Thu, 1 Sep 2022 22:31:16 +0200
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: oss-security@...ts.openwall.com, Demi Marie Obenour <demi@...isiblethingslab.com>, John Helmert III <ajak@...too.org>
-Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0008
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/13/7
+Message-ID: <Y0iIXLUix9iFJl7m@itl-email>
+Date: Thu, 13 Oct 2022 17:51:21 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
+To: oss-security@...ts.openwall.com, shuster@...moo.tu-darmstadt.de
+Cc: Greg Kroah-Hartman <gregkh@...uxfoundation.org>
+Subject: Re: Various Linux Kernel WLAN security issues (RCE/DOS) found
 Content-Type: text/plain; charset=utf-8
 
-On 29/08/2022 20:03, Demi Marie Obenour wrote:
->> We (maintainers of Linux WebKit ports) don't have access to the security
->> issues affecting Apple products until those issues are made public by them.
-> That is unfortunate.  I thought you would have access to embargoed
-> bugzilla tickets.
+On Thu, Oct 13, 2022 at 12:10:54PM +0200, Marcus Meissner wrote:
+> Hi folks,
 > 
-
-We do have access to the tickets on WebKit bugzilla that are marked as
-security-related and are hidden from other users by default.
-
-However, we don't receive the information about which WebKit fixes will
-be included in any Apple security update until those advisories are public.
-
-
->> So, we didn't knew until August 17th of this issue. Also you can see
->> that the bug report itself or the patch doesn't has any indication that
->> it fixes a security-related problem.
->>
->> Therefore, the time it took us to notice the issue, backport the fix and
->> do a new release was just 7-8 days (from 17th to 24-25th of August).
->> Which, honestely, it is quite good taking into account that: 1)
->> back-porting the fix was not straightforward since it required
->> back-porting also a few previous patches in order to be able to merge it
->> properly and that 2) we are in August and people is usually on holidays.
-> Was backporting needed, as opposed to shipping a new minor version?
+> Security Researcher Soenke Huster from Tu Darmstadt (
+> shuster@...moo.tu-darmstadt.de ) emailed SUSE with a buffer overwrite in
+> the Linux Kernel mac80211 framework triggered by WLAN frames.
 > 
+> We delegated the issue to the kernel security folks, and Soenke and
+> Johannes Berg from Intel evaluated and worked on this issue.
+> 
+> During their research they found multiple more problems in the WLAN
+> stack, exploitable over the air.
+> 
+> The patchset has been posted to the netdev list just now and will be
+> merged in the next hours/days:
+> 
+> 	https://lore.kernel.org/netdev/20221013100522.46346-1-johannes@sipsolutions.net/T/#u
 
-It was. Fixes land in the master (main) branch. Those fixes don't
-necessarely apply or work on the branch of the last webkitgtk-stable branch.
+Are these fixes going to be backported to stable?  I did not see
+CC: stable@...r.kernel.org in any of the commit messages.
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-A new webkitgtk/stable branch is forked from master (main) each 6
-months, and once forked it receives cherry-picks from the main branch,
-but it is never rebased.
-
-We release a new major stable version each 6 months (2.XX), and then we
-backport fixes doing minor relases (2.XX.A) for 6 months until the next
-major relaseis out (2.XY).
-
-See:
-https://trac.webkit.org/wiki/WebKitGTK/StableRelease
-https://trac.webkit.org/wiki/WebKitGTK/2.36.x
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
