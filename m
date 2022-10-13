@@ -1,49 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/11/1
-Message-ID: <C5315523-3149-4845-9560-36D35AD65D2B@amazon.com>
-Date: Mon, 11 Jul 2022 16:42:12 +0000
-From: "Hausler, Micah" <mhausler@...zon.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: [kubernetes] CVE-2022-2385: aws-iam-authenticator AccessKeyID validation bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/13/3
+Message-ID: <CAGUWgD-qOonOY_MakeWtotx4mC6KXsg1zLOo9zzx6DKtdaXLsg@mail.gmail.com>
+Date: Thu, 13 Oct 2022 08:43:15 +0300
+From: Georgi Guninski <gguninski@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: sagemath denial of service with abort() in gmp: overflow in mpz type
 Content-Type: text/plain; charset=utf-8
 
-Hello Kubernetes Community,
+On Tue, Sep 6, 2022 at 7:17 PM Russ Allbery <eagle@...ie.org> wrote:
+>
+>
+> I would only call it a DoS if it crosses a privilege boundary.  A user can
+> always DoS themselves; that's just Ctrl-C.  :)
+>
+Observe that ubuntu issue advisory about libgmp crash
+without mentioning potential exploitability.
 
- 
+quote:
+https://ubuntu.com/security/notices/USN-5672-1
 
-A security issue was discovered in aws-iam-authenticator where an allow-listed IAM identity may be able to modify their username and escalate privileges. 
+Details
+12 October 2022
 
-This issue has been rated high (https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N), and assigned CVE-2022-2385
-Am I vulnerable?
-Users are only affected if they use the AccessKeyID template parameter to construct a username and provide different levels of access based on the username.
-Affected Versions
-v0.5.2 - v0.5.8
-How do I mitigate this vulnerability?
-Upgrading to v0.5.9 mitigates this vulnerability.
+It was discovered that GMP did not properly manage memory
+on 32-bit platforms when processing a specially crafted
+input. An attacker could possibly use this issue to cause
+applications using GMP to crash, resulting in a denial of
+service.
 
-Prior to upgrading, this vulnerability can be mitigated by not using the {{AccessKeyID}} template value to construct usernames.
-Fixed Versions
-aws-iam-authenticator v0.5.9
-Detection
-This issue affected the logged identity, and is not discernible from valid requests.
-Additional Details
-See the GitHub issue for more details: https://github.com/kubernetes-sigs/aws-iam-authenticator/issues/472
-Acknowledgements
-This vulnerability was reported by Gafnit Amiga from Lightspin
-
- 
-
- 
-
-Micah Hausler
-
-Principal Engineer
-
-Amazon Web Services
-
- 
-
-
-Content of type "text/html" skipped
-
-Download attachment "smime.p7s" of type "application/pkcs7-signature" (4700 bytes)
+References
+CVE-2021-43618
