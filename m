@@ -1,30 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/07/2
-Message-ID: <Yu+WyB/EKZ9m2hO2@bamboo.spacehopper.org>
-Date: Sun, 7 Aug 2022 11:41:12 +0100
-From: Stuart Henderson <sthen@...nbsd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/13/4
+Message-ID: <630d1a1c-8f32-65e0-86a5-8863e6d86614@apache.org>
+Date: Thu, 13 Oct 2022 12:09:48 +0000
+From: "Gary D. Gregory" <ggregory@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Exim < 4.95 heap overflow
+Subject: CVE-2022-42889: Apache Commons Text prior to 1.10.0 allows RCE when applied to untrusted input due to insecure interpolation defaults 
 Content-Type: text/plain; charset=utf-8
 
-On 2022/08/06 22:46, Evgeny Legerov wrote:
-> Hi,
-> 
-> 
-> Here is another bug which has been silently fixed in Exim.
-> 
-> It has not been recognized as a security issue, many distros still don't
-> have this patch.
-> 
-> Original report + patch  is here -
-> https://github.com/Exim/exim/commit/d4bc023436e4cce7c23c5f8bb5199e178b4cc743
-> 
-> Analysis of the bug  - https://github.com/ivd38/exim_overflow
-> 
-> I don't post here because it is huge snippet of code.
+Severity: important
 
-As a reader, I would much rather have a self-contained list post with a huge
-snippet of code, than a link to an external source. But in this case it isn't
-huge at all; the entire contents of https://github.com/ivd38/exim_overflow
-(README.md, exim.conf, asan.log) are certainly short enough for a list post.
+Description:
+
+Apache Commons Text performs variable interpolation, allowing properties to be dynamically evaluated and expanded. The standard format for interpolation is "${prefix:name}", where "prefix" is used to locate an instance of org.apache.commons.text.lookup.StringLookup that performs the interpolation. Starting with version 1.5 and continuing through 1.9, the set of default Lookup instances included interpolators that could result in arbitrary code execution or contact with remote servers. These lookups are: - "script" - execute expressions using the JVM script execution engine (javax.script) - "dns" - resolve dns records - "url" - load values from urls, including from remote servers Applications using the interpolation defaults in the affected versions may be vulnerable to remote code execution or unintentional contact with remote servers if untrusted configuration values are used. Users are recommended to upgrade to Apache Commons Text 1.10.0, which disables the problematic interpolators by default.
+
+Mitigation:
+
+Upgrade to Apache Commons Text 1.10.0.
 
