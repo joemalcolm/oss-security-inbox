@@ -1,19 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/14/4
-Message-ID: <22eef24e-713c-9a69-36f7-06cc2c8df835@apache.org>
-Date: Mon, 14 Nov 2022 13:27:39 +0000
-From: Arnout Engelen <engelen@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/13/8
+Message-ID: <Y0iO/0BAoxZmttt3@chrisdown.name>
+Date: Thu, 13 Oct 2022 23:19:43 +0100
+From: Chris Down <chris@...isdown.name>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-45378: Apache SOAP allows unauthenticated users to potentially invoke arbitrary code 
+Cc: shuster@...moo.tu-darmstadt.de, Greg Kroah-Hartman <gregkh@...uxfoundation.org>
+Subject: Re: Various Linux Kernel WLAN security issues (RCE/DOS) found
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Demi Marie Obenour writes:
+>Are these fixes going to be backported to stable?  I did not see
+>CC: stable@...r.kernel.org in any of the commit messages.
 
-Description:
+Greg pushed out stable rcs with them a few hours ago[0].
 
-** UNSUPPORTED WHEN ASSIGNED ** In the default configuration of Apache SOAP, an RPCRouterServlet is available without authentication. This gives an attacker the possibility to invoke methods on the classpath that meet certain criteria. Depending on what classes are available on the classpath this might even lead to arbitrary remote code execution. NOTE: This vulnerability only affects products that are no longer supported by the maintainer.
+0: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/refs/
 
-Credit:
-
-  Apache would like to thank TsungShu Chiu (CHT Security) for reporting this issue
-
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
