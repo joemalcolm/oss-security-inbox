@@ -1,30 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/29/1
-Message-ID: <Y61i4ojYhvXXx7Ap@eldamar.lan>
-Date: Thu, 29 Dec 2022 10:50:26 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Cc: jorton@...che.org
-Subject: Re: CVE-2022-22728: libapreq2: libapreq2 multipart form parse memory corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/13/6
+Message-ID: <e473c5b4-ec1e-4776-6fca-562bfb75f7d1@seemoo.tu-darmstadt.de>
+Date: Thu, 13 Oct 2022 22:15:50 +0200
+From: Sönke Huster <shuster@...moo.tu-darmstadt.de>
+To: Marcus Meissner <meissner@...e.de>, oss-security@...ts.openwall.com
+Subject: Re: Various Linux Kernel WLAN security issues (RCE/DOS) found
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello again,
 
-On Fri, Aug 26, 2022 at 11:01:23AM -0500, John Helmert III wrote:
-> On Thu, Aug 25, 2022 at 02:09:16PM +0000, Joe Orton wrote:
-> > Severity: important
-> > 
-> > Description:
-> > 
-> > A flaw in libapreq2 versions 2.16 and earlier could cause a buffer
-> > overflow while processing multipart form uploads.  A remote
-> > attacker could send a request causing a process crash which could
-> > lead to a denial of service attack.
-> > 
+On 13.10.22 19:13, Sönke Huster wrote:
+> Hi everyone,
 > 
-> Is there a fixed version or patch or upstream issue?
+> In the following, I quickly introduce the PoC and briefly describe each CVE.
+> 
+> Please see attached:
+> * The PCAP files containing the Wifi frames triggering the vulnerabilities and
+> * inject-pcap.c to inject the Wifi frames into the 802.11 stack
+I forgot to attach the inject-pcap.c file that sends the frames, sorry for that!
 
-Any pointers or information to this?
-
-Regards,
-Salvatore
+Best
+Sönke
+View attachment "inject-pcap.c" of type "text/x-csrc" (2449 bytes)
