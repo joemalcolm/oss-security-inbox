@@ -1,15 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/26/6
-Message-ID: <cf6b94a8-3d08-887a-7826-b59d534a1aaa@apache.org>
-Date: Wed, 26 Oct 2022 09:42:11 +0000
-From: Haonan Hou <haonan@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/18/2
+Message-ID: <ff5b6e5e9d40b5cdb6034c7f4ba2e5551d7389e6.camel@debian.org>
+Date: Mon, 17 Oct 2022 23:57:45 +0200
+From: Markus Koschany <apo@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-43766: Apache IoTDB: ReDoS Vulnerability by REGEXP 
+Subject: Re: CVE-2022-34169: Apache Xalan Java XSLT library is vulnerable to an integer truncation issue when processing malicious XSLT stylesheets
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+Hi,
 
-Description:
+it appears the underlying bug is in Apache Commons bcel and not in Apache Xalan
+itself. See
 
-Apache IoTDB version 0.12.2 to 0.12.6, 0.13.0 to 0.13.2 are vulnerable by the attack of REGEXP query with Java8. Users should upgrade to 0.13.3 which addresses this issue or use a later version of Java to avoid it.
+https://bugs.debian.org/1015860
 
+and
+
+https://github.com/apache/commons-bcel/pull/147
+
+https://github.com/apache/commons-bcel/commit/f3267cbcc900f80851d561bdd16b239d936947f5
+
+
+
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
