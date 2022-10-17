@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["524" "Monday" "13" "July" "2015" "15:52:26" "+0300" "Alexander Cherepanov" "ch3root@openwall.com" "<55A3B48A.4090700@openwall.com>" "17" "Re: [oss-security] How serious is undefined behavior?" nil nil nil "7" "2015071312:52:26" "[oss-security] How serious is undefined behavior?" (number mark "        ch3root@open Jul 13   17/524   " thread-indent "\"Re: [oss-security] How serious is undefined behavior?\"\n") "<20150713001914.GA8559@openwall.com>" ("<20150706181734.2b0288ca@pc1>" "<20150713001914.GA8559@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 1835 invoked by uid 550); 13 Jul 2015 12:52:42 -0000
+Received: (qmail 19823 invoked by uid 550); 18 Oct 2022 11:25:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,33 +6,66 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1814 invoked from network); 13 Jul 2015 12:52:42 -0000
-Message-ID: <55A3B48A.4090700@openwall.com>
-MIME-Version: 1.0
-References: <20150706181734.2b0288ca@pc1> <20150713001914.GA8559@openwall.com>
-In-Reply-To: <20150713001914.GA8559@openwall.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Date: Mon, 13 Jul 2015 15:52:26 +0300
-From: Alexander Cherepanov <ch3root@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] How serious is undefined behavior?
+Received: (qmail 13915 invoked from network); 17 Oct 2022 21:57:57 -0000
+Message-ID: <ff5b6e5e9d40b5cdb6034c7f4ba2e5551d7389e6.camel@debian.org>
+From: Markus Koschany <apo@debian.org>
 To: oss-security@lists.openwall.com
+Date: Mon, 17 Oct 2022 23:57:45 +0200
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-8o/ZjtbYDJnfXvTFLfTM"
+MIME-Version: 1.0
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=apo@gambaru.de smtp.mailfrom=apo@debian.org
+Subject: [oss-security] Re: CVE-2022-34169: Apache Xalan Java XSLT library is vulnerable to
+ an integer truncation issue when processing malicious XSLT stylesheets
 
-On 13.07.2015 03:19, Solar Designer wrote:
-> A productive direction may be for the free software community (or an
-> even wider community, if possible) to agree on de facto mainstream C
-> standard, where certain kinds of UB and such would in fact be defined in
-> specific ways.
+--=-8o/ZjtbYDJnfXvTFLfTM
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The last thing in this directoin that I saw is this:
+Hi,
 
-   http://blog.regehr.org/archives/1180
+it appears the underlying bug is in Apache Commons bcel and not in Apache X=
+alan
+itself. See
 
-   Proposal for a Friendly Dialect of C
+https://bugs.debian.org/1015860
 
-   [This post is jointly authored by Pascal Cuoq, Matthew Flatt, and 
-John Regehr.]
+and
 
--- 
-Alexander Cherepanov
+https://github.com/apache/commons-bcel/pull/147
+
+https://github.com/apache/commons-bcel/commit/f3267cbcc900f80851d561bdd16b2=
+39d936947f5
+
+
+
+
+
+--=-8o/ZjtbYDJnfXvTFLfTM
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iQKTBAABCgB9FiEErPPQiO8y7e9qGoNf2a0UuVE7UeQFAmNNz9lfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldEFD
+RjNEMDg4RUYzMkVERUY2QTFBODM1RkQ5QUQxNEI5NTEzQjUxRTQACgkQ2a0UuVE7
+UeRa/g/9HB7rDezWSO8zrtcOZrX1hAXDM9M0s5VDzzm9h3SinUEmcB2YIaKdI6Um
+Tw0EK26pdJN9730OQVFAYFfxGAxeRA4U3/joq4nN904DgJuPxX+rn2LXgA3Wy/4S
+fQaCYF+oAsWY4p5TRCQPmjAMagwLHBjCBOt9hXezgtcJ99pJIw8y7hOZp6V1bWnJ
+PvoW1BFVkI2v0mbhBXfrWV/le+S4oIBbsJKL0TNggKHexMa9QyYsMgNUGg//oM9V
+3a1ZwFZEG9IUWBbUtITL8Zol5WHBabTREWoMBVfG7VrPqSzKYzDYBq7cGU/FZKA6
+xbt1VpDWxGDcOieJ5t1tYg4anJNP1MnfQ0Pk7gOEB7QX9mBatJErFniN3hge7xss
+cN4ef+2N0bR0pS7SXMfAPKuqdjqRVbkFFElP6OSiDBgcsn65R6oPUdhW/hm5+FOH
+YfBmfyyAyGbZwJFtmhIrZljnmiyJpBSMiDAzzVqNssSqPxyLX3DtQ2/cd5uHmiIU
+EQWmLBAX+aPhoPds3XlVLagepiGh4ppZ/0dN8zAeJMurLFf0lA1DUKiiTXdleM6S
+My7JIk2J2cUwhfmpFs2puny7/gcC7CaBVx60yzMI7kPKx9DoBQtBCk9CfNNNbAxJ
+0LCNs99hW/VYNQOBzeUuwhj6VLWb26VREcsLDtamXw9fM7M2GsQ=
+=UZFP
+-----END PGP SIGNATURE-----
+
+--=-8o/ZjtbYDJnfXvTFLfTM--
+
