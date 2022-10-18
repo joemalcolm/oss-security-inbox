@@ -1,28 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/15/1
-Message-ID: <CACcefgfgnn7assSeTVLMaXDWuduiE=qxhFLx5NM_NtcKNVeYpA@mail.gmail.com>
-Date: Thu, 15 Dec 2022 10:14:15 +0100
-From: Enrico Olivelli <eolivelli@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/18/3
+Message-ID: <ce33d3c3-e71a-87f5-509f-799e83919acd@apache.org>
+Date: Tue, 18 Oct 2022 08:31:50 +0000
+From: Albumen Kevin <albumenj@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-32531: Apache BookKeeper: Java Client Uses Connection to Host that Failed Hostname Verification
+Subject: CVE-2022-39198: Apache Dubbo Hession Deserialization Vulnerability Gadgets Bypass 
 Content-Type: text/plain; charset=utf-8
 
-Severity: Moderate
+Severity: moderate
 
 Description:
 
-The Apache Bookkeeper Java Client (up to 4.14.5 and also 4.15.0) does
-not close the connection to the
-bookkeeper server when TLS hostname verification fails. This leaves
-the bookkeeper client vulnerable to a man in the middle attack.
+A deserialization vulnerability existed in dubbo hessian-lite 3.2.12 and its earlier versions, which could lead to malicious code execution. 
 
-The problem affects BookKeeper client prior to versions 4.14.6 and 4.15.1.
+This issue affects Apache Dubbo 2.7.x version 2.7.17 and prior versions; Apache Dubbo 3.0.x version 3.0.11 and prior versions; Apache Dubbo 3.1.x version 3.1.0 and prior versions. 
 
-Solution:
+Credit:
 
-Upgrade to 4.14.6 or to 4.15.1
+yemoli&cxc
 
-References:
-
-https://bookkeeper.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2022-32531
