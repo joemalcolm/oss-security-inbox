@@ -1,86 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/26/5
-Message-ID: <20220526173546.GA8848@openwall.com>
-Date: Thu, 26 May 2022 19:35:46 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Norbert Slusarek <nslusarek@....net>
-Cc: oss-security@...ts.openwall.com, peterz@...radead.org
-Subject: Re: CVE-2022-1729: race condition in Linux perf subsystem leads to local privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/18/5
+Message-ID: <Y07hdTCQHoSZjN2Q@nand.local>
+Date: Tue, 18 Oct 2022 13:25:09 -0400
+From: Taylor Blau <me@...ylorr.com>
+To: oss-security@...ts.openwall.com
+Cc: git-security@...glegroups.com, kevinbackhouse@...hub.com, csnider@...antis.com
+Subject: Git 2.38.1 and others for CVE-2022-39253, and CVE-2022-39260
 Content-Type: text/plain; charset=utf-8
 
-Norbert,
+The Git project released new versions on 2022-10-18, addressing CVEs
+2022-39253, 2022-39260. We highly recommend upgrading to one of the
+fixed versions below:
 
-Thank you for engaging in this discussion.  It helps.
+  v2.30.6 v2.31.5 v2.32.4 v2.33.5 v2.34.5 v2.35.5 v2.36.3 v2.37.4 v2.38.1
 
-On Thu, May 26, 2022 at 06:44:38PM +0200, Norbert Slusarek wrote:
-> >What do you suggest we do regarding the LPE exploit you sent to
-> >linux-distros?
-> 
-> I saw your reveal of linux-distros from 2020 and the exchange
-> didn't include any text nor attachments. In that case, the
-> exploit should remain private to linux-distros accordingly.
+If you are on the unreleased development track, the same fix is
+already included, so you do not have to do anything.
 
-I don't know what "reveal of linux-distros from 2020" you refer to.  The
-policy aspect in question (see below) is in effect since 2017, and I
-don't recall us deviating from it.  Did we?
+https://lore.kernel.org/git/xmqq4jw1uku5.fsf@gitster.g/T/#u
 
-We have a published policy here:
+The relevant information from the most recent release notes
+pertaining to the above two CVEs are as follows:
 
-https://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-instructions-for-reporters
+CVE-2022-39253:
+   When relying on the `--local` clone optimization, Git dereferences
+   symbolic links in the source repository before creating hardlinks
+   (or copies) of the dereferenced link in the destination repository.
+   This can lead to surprising behavior where arbitrary files are
+   present in a repository's `$GIT_DIR` when cloning from a malicious
+   repository.
 
-which includes:
+   Git will no longer dereference symbolic links via the `--local`
+   clone mechanism, and will instead refuse to clone repositories that
+   have symbolic links present in the `$GIT_DIR/objects` directory.
 
-"If you shared exploit(s) that are not an essential part of the issue
-description, then at your option you may slightly delay posting them to
-oss-security but you must post the exploits to oss-security within at
-most 7 days of making the mandatory posting above.  If you exercise this
-option, you have two mandatory postings to make: first with a
-sufficiently detailed issue description (as requested above) and with an
-announcement of your intent to post the exploits separately (please
-mention exactly when), and second with the exploits - or indeed you
-could have included the exploits right away, in your first and only
-mandatory posting."
+   Additionally, the value of `protocol.file.allow` is changed to be
+   "user" by default.
 
-Did you read this before posting?  If not, anything we should have done
-to ensure you'd have read it?
+CVE-2022-39260:
+   An overly-long command string given to `git shell` can result in
+   overflow in `split_cmdline()`, leading to arbitrary heap writes and
+   remote code execution when `git shell` is exposed and the directory
+   `$HOME/git-shell-commands` exists.
 
-> >What do you suggest we do with this policy aspect going forward, so that
-> >people do not get into a situation where they're required to do
-> >something they didn't want to subscribe to?
-> 
-> How is this policy aspect enforced in the first place?
-> If it's not, I suggest you remove it entirely as there is no reason
-> to have policies which cannot (and shouldn't) be enforced.
+   `git shell` is taught to refuse interactive commands that are
+   longer than 4MiB in size. `split_cmdline()` is hardened to reject
+   inputs larger than 2GiB.
 
-Reminders, like I am doing now (often in private, this time in public).
-Failing that, list members technically can post the exploits themselves.
-Finally, we can setup the list to automatically make all messages public
-with a delay.
+Credit for finding CVE-2022-39253 goes to Cory Snider of Mirantis. The
+fix was authored by Taylor Blau, with help from Johannes Schindelin.
 
-However, as you can see from another recent thread we're now in the
-process of reconsidering list policy aspects, so might end up e.g.
-extending the period from 7 to 30 days.  Would that work for you?
+Credit for finding CVE-2022-39260 goes to Kevin Backhouse of GitHub.
+The fix was authored by Kevin Backhouse, Jeff King, and Taylor Blau.
 
-If people insist on keeping exploits sent to (linux-)distros private
-forever, then I'll more likely either shut down the list instead or set
-it up to automatically make all messages public.  After all, if people
-send private messages to some list without reading its published policy
-first, they accept that anything can happen with those messages.  Right?
-Yet I've been reluctant to do that so far, as it's not ideal for social
-and technical reasons.
-
-> Overall, as a researcher I would prefer having a way just to inform
-> distros of a bug, *without* being subject to these requirements.
-
-I understand, yet I find that very problematic.
-
-Also, you don't need to post an exploit (especially more than a PoC) to
-the list "to inform distros of a bug".  You can literally just inform
-them, and (if you don't accept the policy on forced publication of what
-you share with the list) offer to privately share the exploit with
-interested distros.  Then the exploit itself wouldn't be subject to the
-forced publication.
-
-Thanks again,
-
-Alexander
+Thanks,
+Taylor
