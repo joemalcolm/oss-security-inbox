@@ -1,30 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/17/1
-Message-ID: <57f22782-ca9e-e289-0003-f2044fe5ff61@apache.org>
-Date: Fri, 16 Dec 2022 22:38:23 +0000
-From: Junkai Xue <jxue@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/18/4
+Message-ID: <Y07bhw5Um02VYKvl@quatroqueijos.cascardo.eti.br>
+Date: Tue, 18 Oct 2022 13:59:51 -0300
+From: Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-47500: Apache Helix: Open redirect 
+Subject: CVE-2022-2602 - Linux kernel io_uring UAF
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+A local privilege escalation vulnerabilty involving Unix socket Garbage
+Collection and io_uring was reported and fixed as:
 
-Description:
+0091bfc81741b8d3aeb3b7ab8636f911b2de6e80 ("io_uring/af_unix: defer registered files gc to io_uring release")
 
-URL Redirection to Untrusted Site ('Open Redirect') vulnerability in Apache Software Foundation Apache Helix UI component.This issue affects Apache Helix all releases from 0.8.0 to 1.0.4.
+The vulnerability is a use-after-free that happens when an io_uring request
+is being processed on a registered file and the Unix GC runs and frees the
+io_uring fd and all the registered fds. The order at which the Unix GC
+processes the inflight fds may lead to registered fds be freed before the
+io_uring is released and has the chance to unregister and wait for such
+requests to finish.
 
+One way to trigger this race condition is to use userfaultfd and other
+similar strategies that cause the request to be held waiting for the
+attacker to trigger the free.
 
+This issue was reported as ZDI-CAN-17428 and has been assigned
+CVE-2022-2602.
 
-Solution: removed the the forward component since it was improper designed for UI embedding.
+It affects upstream stable 5.4.y, 5.15.y and later versions. 5.10.y may be
+mitigated by the fact that commit 0f2122045b946241a9e549c2a76cea54fa58a7ff
+("io_uring: don't rely on weak ->files references") is present, but it is
+safer to apply the fixes.
 
- User please upgrade to 1.1.0 to fix this issue.
+A PoC will be posted in 7 days, on October 25th.
 
-Credit:
-
-This issue was discovered by Everardo Padilla Saca (reporter)
-
-References:
-
-https://helix.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2022-47500
-
+Cascardo.
