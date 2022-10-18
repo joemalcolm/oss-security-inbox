@@ -1,54 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/19/1
-Message-ID: <5953bcb8.7a23f.1817c6f6683.Coremail.duoming@zju.edu.cn>
-Date: Sun, 19 Jun 2022 22:48:04 +0800 (GMT+08:00)
-From: duoming@....edu.cn
-To: oss-security@...ts.openwall.com
-Subject: Linux kernel: CVE-2022-1516: NULL pointer dereference in Linux kernel`s X.25 network protocol
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/18/1
+Message-ID: <d39aa380-efd7-bb01-c6b4-06c5e2affb3c@oracle.com>
+Date: Mon, 17 Oct 2022 17:44:06 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com, "Gary D. Gregory" <ggregory@...che.org>
+Subject: Re: CVE-2022-42889: Apache Commons Text prior to 1.10.0 allows RCE when applied to untrusted input due to insecure interpolation defaults
 Content-Type: text/plain; charset=utf-8
 
-Hello there,
+On 10/13/22 05:09, Gary D. Gregory wrote:
+> Severity: important
+> 
+> Description:
+> 
+> Apache Commons Text performs variable interpolation, allowing properties to be dynamically evaluated and expanded. The standard format for interpolation is "${prefix:name}", where "prefix" is used to locate an instance of org.apache.commons.text.lookup.StringLookup that performs the interpolation. Starting with version 1.5 and continuing through 1.9, the set of default Lookup instances included interpolators that could result in arbitrary code execution or contact with remote servers. These lookups are: - "script" - execute expressions using the JVM script execution engine (javax.script) - "dns" - resolve dns records - "url" - load values from urls, including from remote servers Applications using the interpolation defaults in the affected versions may be vulnerable to remote code execution or unintentional contact with remote servers if untrusted configuration values are used. Users are recommended to upgrade to Apache Commons Text 1.10.0, which disables the problematic interpolators by default.
+> 
+> Mitigation:
+> 
+> Upgrade to Apache Commons Text 1.10.0.
+> 
 
-A NULL pointer dereference flaw was found in the Linux kernel’s X.25 set of
-standardized network protocols functionality in the way a user terminates 
-their session using a simulated Ethernet card and continued usage of this 
-connection.
+The advisory from the researcher who found it is at:
+https://securitylab.github.com/advisories/GHSL-2022-018_Apache_Commons_Text/
 
-=*=*=*=*=*=*=*=*=  Bug Details  =*=*=*=*=*=*=*=*=
-
-When the link layer is terminating, x25->neighbour will be set to NULL
-in x25_disconnect(). As a result, it could cause null-ptr-deref bugs in
-x25_sendmsg(),x25_recvmsg() and x25_connect(). One of the bugs is
-shown below.
-
-    (Thread 1)                 |  (Thread 2)
-x25_link_terminated()          | x25_recvmsg()
- x25_kill_by_neigh()           |  ...
-  x25_disconnect()             |  lock_sock(sk)
-   ...                         |  ...
-   x25->neighbour = NULL //(1) |
-   ...                         |  x25->neighbour->extended //(2)
-
-The code sets NULL to x25->neighbour in position (1) and dereferences
-x25->neighbour in position (2), which could cause null-ptr-deref bug.
-
-=*=*=*=*=*=*=*=*=  Bug Effects  =*=*=*=*=*=*=*=*=
-
-This flaw allows a local user to crash the system.
-
-=*=*=*=*=*=*=*=*=  Bug Fix  =*=*=*=*=*=*=*=*=
-
-The patch that have been applied to mainline Linux kernel is shown below.
-https://github.com/torvalds/linux/commit/7781607938c8371d4c2b243527430241c62e39c2
-
-=*=*=*=*=*=*=*=*=  Timeline  =*=*=*=*=*=*=*=*=
-
-2022-03-26: commit 7781607938c8 accepted to mainline kernel
-2022-03-26: CVE-2022-1516 is assigned
-
-=*=*=*=*=*=*=*=*=  Credit  =*=*=*=*=*=*=*=*=
-
-Duoming Zhou <duoming@....edu.cn>
-
-Best Regards,
-Duoming Zhou
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
