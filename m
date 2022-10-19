@@ -1,261 +1,464 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/07/5
-Message-ID: <190D2985-BF59-4CF2-BBC4-305C8F192A55@oracle.com>
-Date: Tue, 7 Jun 2022 19:04:13 +0000
-From: John Haxby <john.haxby@...cle.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: Daniel Kiper <daniel.kiper@...cle.com>
-Subject: [SECURITY PATCH 00/30]  Multiple GRUB2 vulnerabilities - 2022/06/07 round
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/19/3
+Message-Id: <750914AB-F2F5-4F92-A608-2939E0996B0F@beckweb.net>
+Date: Wed, 19 Oct 2022 17:08:51 +0200
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
-[ This message was sent to grub-devel@....org.   It's archived at.    ]
-[ https://lists.gnu.org/archive/html/grub-devel/2022-06/msg00035.html ]
-[ and the 30 individual patches are linked from there as well as in.  ]
-[ the git repo. These issues were previously brought to the.          ]
-[ linux-distros list.                                                 ]
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
+
+The following releases contain fixes for security vulnerabilities:
+
+* Compuware Source Code Download for Endevor, PDS, and ISPW Plugin 2.0.13
+* Compuware Topaz Utilities Plugin 1.0.9
+* Compuware Xpediter Code Coverage Plugin 1.0.8
+* Contrast Continuous Application Security Plugin 3.10
+* Generic Webhook Trigger Plugin 1.84.2
+* GitLab Plugin 1.5.36
+* Job Import Plugin 3.6
+* Katalon Plugin 1.0.33 and 1.0.34
+* Mercurial Plugin 1260.vdfb_723cdcc81
+* NUnit Plugin 0.28
+* Pipeline: Deprecated Groovy Libraries Plugin 588.v576c103a_ff86
+* Pipeline: Groovy Libraries Plugin 613.v9c41a_160233f
+* Pipeline: Groovy Plugin 2803.v1a_f77ffcc773
+* Pipeline: Input Step Plugin 456.vd8a_957db_5b_e9
+* Pipeline: Stage View Plugin 2.27
+* Pipeline: Supporting APIs Plugin 839.v35e2736cfd5c
+* REPO Plugin 1.16.0
+* Script Security Plugin 1184.v85d16b_d851b_3
+* Tuleap Git Branch Source Plugin 3.2.5
+
+Additionally, we announce unresolved security issues in the following
+plugins:
+
+* 360 FireLine Plugin
+* Compuware Strobe Measurement Plugin
+* Compuware Topaz for Total Test Plugin
+* Custom Checkbox Parameter Plugin
+* NeuVector Vulnerability Scanner Plugin
+* S3 Explorer Plugin
+* ScreenRecorder Plugin
+* XFramium Builder Plugin
+
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2022-10-19/
+
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-2824 (1) / CVE-2022-43401 through CVE-2022-43404
+Script Security Plugin provides a sandbox feature that allows low
+privileged users to define scripts, including Pipelines, that are generally
+safe to execute. Calls to code defined inside a sandboxed script are
+intercepted, and various allowlists are checked to determine whether the
+call is to be allowed.
+
+Multiple sandbox bypass vulnerabilities exist in Script Security Plugin and
+Pipeline: Groovy Plugin:
+
+* In Script Security Plugin 1183.v774b_0b_0a_a_451 and earlier and in
+  Pipeline: Groovy Plugin 2802.v5ea_628154b_c2 and earlier, various casts
+  performed implicitly by the Groovy language runtime were not intercepted
+  by the sandbox.
+  This includes casts performed when returning values from methods, when
+  assigning local variables, fields, properties, and when defining default
+  arguments for closure, constructor, and method parameters (CVE-2022-43401
+  in Script Security Plugin and CVE-2022-43402 in Pipeline: Groovy Plugin).
+* In Script Security Plugin 1183.v774b_0b_0a_a_451 and earlier, when
+  casting an array-like value to an array type, per-element casts to the
+  component type of the array are not intercepted by the sandbox
+  (CVE-2022-43403).
+* In Script Security Plugin 1183.v774b_0b_0a_a_451 and earlier, crafted
+  constructor bodies and calls to sandbox-generated synthetic constructors
+  can be used to construct any subclassable type (due to an incomplete fix
+  for SECURITY-1754 in the 2020-03-09 security advisory) (CVE-2022-43404).
+
+These vulnerabilities allow attackers with permission to define and run
+sandboxed scripts, including Pipelines, to bypass the sandbox protection
+and execute arbitrary code in the context of the Jenkins controller JVM.
 
 
-Hi all,
+SECURITY-2824 (2) / CVE-2022-43405 (Pipeline: Groovy Libraries Plugin)
+  & CVE-2022-43406 (Pipeline: Deprecated Groovy Libraries Plugin)
+Pipeline: Groovy Libraries Plugin and older releases of the Pipeline:
+Deprecated Groovy Libraries Plugin (formerly Pipeline: Shared Groovy
+Libraries Plugin) define the `library` Pipeline step, which allows Pipeline
+authors to dynamically load Pipeline libraries. The return value of this
+step can be used to instantiate classes defined in the loaded library.
 
-This patch set contains a bundle of fixes for various security flaws discovered
-in the GRUB2 during last year. The most severe ones, i.e. potentially exploitable,
-have CVEs assigned and are listed at the end of this email. Additionally, the list
-of CVEs contains a CVE assigned for the shim vulnerability. It has been added
-for completeness.
+In Pipeline: Groovy Libraries Plugin 612.v84da_9c54906d and earlier and in
+Pipeline: Deprecated Groovy Libraries Plugin 583.vf3b_454e43966 and
+earlier, the `library` step can be used to invoke sandbox-generated
+synthetic constructors in crafted untrusted libraries and construct any
+subclassable type. This is similar to SECURITY-582 in the 2017-08-07
+security advisory, but in a different plugin.
 
-Details of exactly what needs updating will be provided by the respective
-distros and vendors when updates become available. Here [1] we are listing at
-least some links to the messaging known at the time of this posting.
+This vulnerability allows attackers with permission to define untrusted
+Pipeline libraries and to define and run sandboxed Pipelines, to bypass the
+sandbox protection and execute arbitrary code in the context of the Jenkins
+controller JVM.
 
-Full mitigation against all CVEs will require updated shim with latest SBAT
-(Secure Boot Advanced Targeting) [2] data provided by distros and vendors.
-This time UEFI revocation list (dbx) will not be used and revocation of broken
-artifacts will be done with SBAT only. For information on how to apply the
-latest SBAT revocations, please see mokutil(1). Vendor shims may explicitly
-permit known older boot artifacts to boot.
 
-Updated GRUB2, shim and other boot artifacts from all the affected vendors will
-be made available when the embargo lifts or some time thereafter.
+SECURITY-2880 / CVE-2022-43407
+Pipeline: Input Step Plugin 451.vf1a_a_4f405289 and earlier does not
+restrict or sanitize the optionally specified ID of the `input` step. This
+ID is used for the URLs that process user interactions for the given
+`input` step (proceed or abort) and is not correctly encoded.
 
-I am posting all the GRUB2 upstream patches which fix all security bugs found
-and reported up until now. Major Linux distros carry or will carry soon one
-form or another of these patches. Now all the GRUB2 upstream patches are in
-the GRUB2 git repository [3] too.
+This allows attackers able to configure Pipelines to have Jenkins build
+URLs from `input` step IDs that would bypass the CSRF protection of any
+target URL in Jenkins when the `input` step is interacted with.
 
-I would like to thank, in alphabetical order, the following people who were working
-really hard on the GRUB, shim and other things related to these issues:
- - Alec Brown (Oracle),
- - Alexander Burmashev (Oracle),
- - Andrew Cooper (Citrix),
- - Chris Coulson (Canonical),
- - D. Jared Dominguez (Red Hat),
- - Daniel Axtens,
- - Darren Kenny (Oracle),
- - Eric Snowberg (Oracle),
- - Ilya Okomin (Oracle),
- - Jagannathan Raman (Oracle),
- - Jan Setje-Eilers (Oracle),
- - Jeremiah Cox,
- - John Haxby (Oracle),
- - Julian Andres Klode (Canonical),
- - Lidong Chen (Oracle),
- - Marco A Benatto (Red Hat),
- - Marcus Meissner (SUSE),
- - Marta Lewandowska (Red Hat),
- - Michael Chang (SUSE),
- - Peter Jones (Red Hat),
- - Petr Janda (Red Hat),
- - Robbie Harwood (Red Hat),
- - Robert Truxal (Microsoft),
- - Ross Philipson (Oracle),
- - Steve McIntyre (Debian),
- - Sudhakar Kuppusamy (IBM),
- - Tamas K Lengyel (Intel),
- - Todd Cullum (Red Hat),
- - Vikram Narayanan (University of California Irvine).
 
-We would not be able to succeed without all your hard work.
+SECURITY-2828 / CVE-2022-43408
+Pipeline: Stage View Plugin provides a visualization of Pipeline builds. It
+also allows users to interact with `input` steps from Pipeline: Input Step
+Plugin.
 
-It was very big pleasure to work with you all.
+Pipeline: Stage View Plugin 2.26 and earlier does not correctly encode the
+ID of `input` steps when using it to generate URLs to proceed or abort
+Pipeline builds.
 
-Thank you!
+This allows attackers able to configure Pipelines to specify `input` step
+IDs resulting in URLs that would bypass the CSRF protection of any target
+URL in Jenkins.
 
-Daniel
 
-[1] Red Hat: https://access.redhat.com/security/security-updates/#/
-   SUSE:    https://www.suse.com/support/kb/doc/?id=000020668
+SECURITY-2881 / CVE-2022-43409
+Pipeline: Supporting APIs Plugin provides a feature to add hyperlinks, that
+send POST requests when clicked, to build logs. These links are used by
+Pipeline: Input Step Plugin to allow users to proceed or abort the build,
+or by Pipeline: Job Plugin to allow users to forcibly terminate the build
+after aborting it.
 
-[2] https://github.com/rhboot/shim/blob/main/SBAT.md
+Pipeline: Supporting APIs Plugin 838.va_3a_087b_4055b and earlier does not
+sanitize or properly encode URLs of these hyperlinks in build logs.
 
-[3] https://git.savannah.gnu.org/gitweb/?p=grub.git
-   https://git.savannah.gnu.org/git/grub.git
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to create Pipelines.
 
-*******************************************************************************
 
-CVE-2021-3695 grub2: Crafted PNG grayscale images may lead to out-of-bounds write in heap
-7.5/CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:C/C:H/I:H/A:H
+SECURITY-2831 / CVE-2022-43410
+Mercurial Plugin provides a webhook endpoint at `/mercurial/notifyCommit`
+that can be used to notify Jenkins of changes to an SCM repository. This
+endpoint receives a repository URL, and Jenkins will schedule polling for
+all jobs configured with the specified repository. It can be accessed with
+GET requests and without authentication.
 
-A crafted 16-bit grayscale PNG image may lead to a out-of-bounds write in the
-heap area. An attacker may take advantage of that to cause heap data corruption
-or eventually arbitrary code execution and circumvent secure boot protections.
-This issue has a high complexity to be exploited as an attacker needs to
-perform some triage over the heap layout to achieve significant results, also
-the values written into the memory are repeated three times in a row making
-difficult to produce valid payloads.
+In Mercurial Plugin 1251.va_b_121f184902 and earlier, the output of the
+webhook endpoint will provide information about which jobs were triggered
+or scheduled for polling, including jobs the user has no permission to
+access. This allows attackers with knowledge of Mercurial repository URLs
+to obtain information about the existence of jobs configured with this
+Mercurial repository.
 
-Reported-by: Daniel Axtens
 
-*******************************************************************************
+SECURITY-2877 / CVE-2022-43411
+GitLab Plugin 1.5.35 and earlier does not use a constant-time comparison
+when checking whether the provided and expected webhook token are equal.
 
-CVE-2021-3696 grub2: Crafted PNG image may lead to out-of-bound write during huffman table handling
-5/CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:C/C:L/I:L/A:L
+This could potentially allow attackers to use statistical methods to obtain
+a valid webhook token.
 
-A heap out-of-bounds write may happen during the handling of Huffman tables in
-the PNG reader. This may lead to data corruption in the heap space.
-Confidentiality, Integrity and Availability impact may be considered Low as it's
-very complex to an attacker control the encoding and positioning of corrupted
-Huffman entries to achieve results such as arbitrary code execution and/or
-secure boot circumvention.
 
-Reported-by: Daniel Axtens
+SECURITY-2874 / CVE-2022-43412
+Generic Webhook Trigger Plugin 1.84.1 and earlier does not use a
+constant-time comparison when checking whether the provided and expected
+webhook token are equal.
 
-*******************************************************************************
+This could potentially allow attackers to use statistical methods to obtain
+a valid webhook token.
 
-CVE-2021-3697 grub2: Crafted JPEG image can lead to buffer underflow write in the heap
-7.5/CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:C/C:H/I:H/A:H
 
-A crafted JPEG image may lead the JPEG reader to underflow its data pointer,
-allowing user controlled data to be written in heap. To be successfully
-performed the attacker needs to do some triage over the heap layout and craft
-an image with a malicious format and payload. This vulnerability can lead to
-data corruption and eventual code execution or secure boot circumvention.
+SECURITY-2791 / CVE-2022-43413
+Job Import Plugin 3.5 and earlier does not perform a permission check in an
+HTTP endpoint.
 
-Reported-by: Daniel Axtens
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
 
-*******************************************************************************
 
-CVE-2022-28733 grub2: Integer underflow in grub_net_recv_ip4_packets
-8.1/CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H
+SECURITY-2551 / CVE-2022-43414
+NUnit Plugin 0.27 and earlier implements an agent-to-controller message
+that parses files inside a user-specified directory as test results.
 
-A malicious crafted IP packet can lead to an integer underflow in
-grub_net_recv_ip4_packets() function on rsm->total_len value. Under certain
-circumstances the total_len value may end up wrapping around to a small integer
-number which will be used in memory allocation. If the attack succeeds in such
-way, subsequent operations can write past the end of the buffer.
+This allows attackers able to control agent processes to obtain test
+results from files in an attacker-specified directory on the Jenkins
+controller.
 
-Reported-by: Daniel Axtens
 
-*******************************************************************************
+SECURITY-2337 / CVE-2022-43415
+REPO Plugin 1.15.0 and earlier does not configure its XML parser to prevent
+XML external entity (XXE) attacks.
 
-CVE-2022-28734 grub2: Out-of-bounds write when handling split HTTP headers
-7/CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:H
+This allows attackers able to control which `repo` binary is executed on
+agents to have Jenkins parse a crafted XML document that uses external
+entities for extraction of secrets from the Jenkins controller or
+server-side request forgery.
 
-When handling split HTTP headers, GRUB2 HTTP code accidentally moves its
-internal data buffer point by one position. This can lead to a out-of-bound
-write further when parsing the HTTP request, writing a NULL byte past the
-buffer. It's conceivable that an attacker controlled set of packets can lead
-to corruption of the GRUB2's internal memory metadata.
 
-Reported-by: Daniel Axtens
+SECURITY-2844 / CVE-2022-43416
+Katalon Plugin 1.0.32 and earlier implements an agent/controller message
+that does not limit where it can be executed and allows invoking Katalon
+with configurable arguments.
 
-*******************************************************************************
+It allows attackers able to control agent processes to invoke Katalon on
+the Jenkins controller with attacker-controlled version, install location,
+and arguments. Attackers additionally able to create files on the Jenkins
+controller (e.g., attackers with Item/Configure permission could archive
+artifacts) can invoke arbitrary OS commands.
 
-CVE-2022-28735 grub2: shim_lock verifier allows non-kernel files to be loaded
-6.7/CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H
+NOTE: This vulnerability is only exploitable in Jenkins 2.318 and earlier,
+LTS 2.303.2 and earlier.
 
-The GRUB2's shim_lock verifier allows non-kernel files to be loaded on shim-powered
-secure boot systems. Allowing such files to be loaded may lead to unverified
-code and modules to be loaded in GRUB2 breaking the secure boot trust-chain.
 
-Reported-by: Julian Andres Klode
+SECURITY-2845 (1) / CVE-2022-43417
+Katalon Plugin 1.0.32 and earlier does not perform permission checks in
+several HTTP endpoints.
 
-*******************************************************************************
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified credentials IDs obtained
+through another method, capturing credentials stored in Jenkins.
 
-CVE-2022-28736 grub2: use-after-free in grub_cmd_chainloader()
-6.4/CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:U/C:H/I:H/A:H
 
-There's a use-after-free vulnerability in grub_cmd_chainloader() function. The
-chainloader command is used to boot up operating systems that doesn't support
-multiboot and do not have direct support from GRUB2. When executing chainloader
-more than once a use-after-free vulnerability is triggered. If an attacker can
-control the GRUB2's memory allocation pattern sensitive data may be exposed and
-arbitrary code execution can be achieved.
+SECURITY-2845 (2) / CVE-2022-43418
+Katalon Plugin 1.0.33 and earlier does not require POST requests for
+several HTTP endpoints, resulting in cross-site request forgery (CSRF)
+vulnerabilities.
 
-Reported-by: Chris Coulson
+This vulnerability allows attackers to connect to an attacker-specified URL
+using attacker-specified credentials IDs obtained through another method,
+capturing credentials stored in Jenkins.
 
-*******************************************************************************
 
-CVE-2022-28737: shim: Buffer overflow when loading crafted EFI images
-6.5/CVSS:3.1/AV:L/AC:L/PR:H/UI:R/S:U/C:H/I:H/A:H
+SECURITY-2846 / CVE-2022-43419
+Katalon Plugin 1.0.32 and earlier stores API keys unencrypted in job
+`config.xml` files on the Jenkins controller as part of its configuration.
 
-There's a possible overflow in handle_image() when shim tries to load and execute
-crafted EFI executables. The handle_image() function takes into account the SizeOfRawData
-field from each section to be loaded. An attacker can leverage this to perform
-out-of-bound writes into memory. Arbitrary code execution is not discarded in
-such scenario.
+These API keys can be viewed by users with Item/Extended Read permission or
+access to the Jenkins controller file system.
 
-Reported-by: Chris Coulson
 
-*******************************************************************************
+SECURITY-2836 / CVE-2022-43420
+Contrast Continuous Application Security Plugin 3.9 and earlier does not
+escape data returned from the Contrast service when generating a report.
 
-grub-core/commands/boot.c          |  66 +++++++++++++++++++++++++++++++++++++++++++++++-------
-grub-core/fs/btrfs.c               | 105 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-grub-core/fs/f2fs.c                |  58 ++++++++++++++++++++++++++++++++++++-----------
-grub-core/kern/efi/sb.c            |  39 +++++++++++++++++++++++++++++---
-grub-core/kern/file.c              |   2 ++
-grub-core/loader/efi/chainloader.c |  46 ++++++++++++++++++++------------------
-grub-core/net/dns.c                |  25 ++++++++++++++++-----
-grub-core/net/http.c               |  17 +++++++++-----
-grub-core/net/ip.c                 |  10 ++++++++-
-grub-core/net/net.c                |  11 +++++++--
-grub-core/net/netbuff.c            |  13 +++++++++++
-grub-core/net/tftp.c               |   3 ++-
-grub-core/normal/charset.c         |   2 ++
-grub-core/video/readers/jpeg.c     | 106 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++----------------
-grub-core/video/readers/png.c      | 158 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++------------------------------------------------------------------------
-include/grub/loader.h              |   5 +++++
-include/grub/net.h                 |   1 +
-include/grub/verify.h              |   1 +
-18 files changed, 501 insertions(+), 167 deletions(-)
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to control or modify Contrast service API
+responses.
 
-Chris Coulson (3):
-     loader/efi/chainloader: Simplify the loader state
-     commands/boot: Add API to pass context to loader
-     loader/efi/chainloader: Use grub_loader_set_ex()
 
-Daniel Axtens (20):
-     kern/file: Do not leak device_name on error in grub_file_open()
-     video/readers/png: Abort sooner if a read operation fails
-     video/readers/png: Refuse to handle multiple image headers
-     video/readers/png: Drop greyscale support to fix heap out-of-bounds write
-     video/readers/png: Avoid heap OOB R/W inserting huff table items
-     video/readers/png: Sanity check some huffman codes
-     video/readers/jpeg: Abort sooner if a read operation fails
-     video/readers/jpeg: Do not reallocate a given huff table
-     video/readers/jpeg: Refuse to handle multiple start of streams
-     video/readers/jpeg: Block int underflow -> wild pointer write
-     normal/charset: Fix array out-of-bounds formatting unicode for display
-     net/ip: Do IP fragment maths safely
-     net/netbuff: Block overly large netbuff allocs
-     net/dns: Fix double-free addresses on corrupt DNS response
-     net/dns: Don't read past the end of the string we're checking against
-     net/tftp: Prevent a UAF and double-free from a failed seek
-     net/tftp: Avoid a trivial UAF
-     net/http: Do not tear down socket if it's already been torn down
-     net/http: Fix OOB write for split http headers
-     net/http: Error out on headers with LF without CR
+SECURITY-2852 / CVE-2022-43421
+Tuleap Git Branch Source Plugin provides a webhook endpoint at
+`/tuleap-hook/` that can be used to trigger Tuleap projects configured with
+a specified repository.
 
-Darren Kenny (3):
-     fs/btrfs: Fix several fuzz issues with invalid dir item sizing
-     fs/btrfs: Fix more ASAN and SEGV issues found with fuzzing
-     fs/btrfs: Fix more fuzz issues related to chunks
+In Tuleap Git Branch Source Plugin 3.2.4 and earlier, this endpoint can be
+accessed without authentication.
 
-Julian Andres Klode (1):
-     kern/efi/sb: Reject non-kernel files in the shim_lock verifier
+This allows unauthenticated attackers to trigger Tuleap projects whose
+configured repository matches the attacker-specified value.
 
-Sudhakar Kuppusamy (3):
-     fs/f2fs: Do not read past the end of nat journal entries
-     fs/f2fs: Do not read past the end of nat bitmap
-     fs/f2fs: Do not copy file names that are too long
 
-Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
+SECURITY-2620 / CVE-2022-43422
+Compuware Topaz Utilities Plugin 1.0.8 and earlier implements an
+agent/controller message that does not limit where it can be executed.
+
+It allows attackers able to control agent processes to obtain the values of
+Java system properties from the Jenkins controller process.
+
+NOTE: This vulnerability is only exploitable in Jenkins 2.318 and earlier,
+LTS 2.303.2 and earlier.
+
+
+SECURITY-2622 / CVE-2022-43423
+Compuware Source Code Download for Endevor, PDS, and ISPW Plugin 2.0.12 and
+earlier implements an agent/controller message that does not limit where it
+can be executed.
+
+It allows attackers able to control agent processes to obtain the values of
+Java system properties from the Jenkins controller process.
+
+NOTE: This vulnerability is only exploitable in Jenkins 2.318 and earlier,
+LTS 2.303.2 and earlier.
+
+
+SECURITY-2627 / CVE-2022-43424
+Compuware Xpediter Code Coverage Plugin 1.0.7 and earlier implements an
+agent/controller message that does not limit where it can be executed.
+
+It allows attackers able to control agent processes to obtain the values of
+Java system properties from the Jenkins controller process.
+
+NOTE: This vulnerability is only exploitable in Jenkins 2.318 and earlier,
+LTS 2.303.2 and earlier.
+
+
+SECURITY-2797 / CVE-2022-43425
+Custom Checkbox Parameter Plugin 1.4 and earlier does not escape the name
+and description of the parameter types it provides.
+
+This results in stored cross-site scripting (XSS) vulnerabilites
+exploitable by attackers with Item/Configure permission.
+
+Exploitation of this vulnerability requires that parameters are listed on
+another page, like the "Build With Parameters" and "Parameters" pages
+provided by Jenkins (core), and that those pages are not hardened to
+prevent exploitation. Jenkins (core) has prevented exploitation of
+vulnerabilities of this kind on the "Build With Parameters" and
+"Parameters" pages since 2.44 and LTS 2.32.2 as part of the SECURITY-353 /
+CVE-2017-2601 fix. Additionally, several plugins have previously been
+updated to list parameters in a way that prevents exploitation by default,
+see SECURITY-2617 in the 2022-04-12 security advisory for a list.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2480 / CVE-2022-43426
+S3 Explorer Plugin stores AWS_SECRET_ACCESS_KEY in its global configuration
+file `s3explorer.xml` on the Jenkins controller as part of its
+configuration.
+
+While this secret is stored encrypted on disk, in S3 Explorer Plugin 1.0.8
+and earlier the global configuration form does not mask the
+AWS_SECRET_ACCESS_KEY form field, increasing the potential for attackers to
+observe and capture it.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2623 / CVE-2022-43427
+Compuware Topaz for Total Test Plugin 2.4.8 and earlier does not perform
+permission checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2624 / CVE-2022-43428 (Java system properties) & CVE-2022-43429 (read files)
+Compuware Topaz for Total Test Plugin 2.4.8 and earlier implements two
+agent/controller messages that do not limit where they can be executed.
+
+* `RemoteSystemProperties` allows attackers able to control agent processes
+to obtain the values of Java system properties from the Jenkins
+controller process (CVE-2022-43428).
+* `GetRemoteUTF8FileContents` allows attackers able to control agent
+processes to read arbitrary files on the Jenkins controller file system
+(CVE-2022-43429).
+
+NOTE: These vulnerabilities are only exploitable in Jenkins 2.318 and
+earlier, LTS 2.303.2 and earlier.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2625 / CVE-2022-43430
+Compuware Topaz for Total Test Plugin 2.4.8 and earlier does not configure
+its XML parser to prevent XML external entity (XXE) attacks.
+
+This allows attackers able to control the input files for the 'Topaz for
+Total Test - Execute Total Test scenarios' build step to have Jenkins parse
+a crafted XML document that uses external entities for extraction of
+secrets from the Jenkins controller or server-side request forgery.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2631 / CVE-2022-43431
+Compuware Strobe Measurement Plugin 1.0.1 and earlier does not perform a
+permission check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2863 / CVE-2022-43432
+Jenkins sets the `Content-Security-Policy` header to static files served by
+Jenkins (specifically `DirectoryBrowserSupport`), such as workspaces,
+`/userContent`, or archived artifacts, unless a Resource Root URL is
+specified.
+
+XFramium Builder Plugin 1.0.22 and earlier globally disables the
+`Content-Security-Policy` header for static files served by Jenkins as soon
+as it is loaded. This allows cross-site scripting (XSS) attacks by users
+with the ability to control files in workspaces, archived artifacts, etc.
+
+NOTE: Jenkins instances with Resource Root URL configured are unaffected.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2864 / CVE-2022-43433
+Jenkins sets the `Content-Security-Policy` header to static files served by
+Jenkins (specifically `DirectoryBrowserSupport`), such as workspaces,
+`/userContent`, or archived artifacts, unless a Resource Root URL is
+specified.
+
+ScreenRecorder Plugin 0.7 and earlier programmatically updates the
+Java system property allowing administrators to customize the
+`Content-Security-Policy` header for static files served by Jenkins to
+include `media-src: 'self'`. On a Jenkins instance with default
+configuration, this effectively disables all other directives in the
+default rule set, including `script-src`. This allows cross-site scripting
+(XSS) attacks by users with the ability to control files in workspaces,
+archived artifacts, etc.
+
+NOTE: Jenkins instances with Resource Root URL configured are unaffected.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2865 / CVE-2022-43434
+Jenkins sets the `Content-Security-Policy` header to static files served by
+Jenkins (specifically `DirectoryBrowserSupport`), such as workspaces,
+`/userContent`, or archived artifacts, unless a Resource Root URL is
+specified.
+
+NeuVector Vulnerability Scanner Plugin 1.20 and earlier globally disables
+the `Content-Security-Policy` header for static files served by Jenkins
+whenever the 'NeuVector Vulnerability Scanner' build step is executed. This
+allows cross-site scripting (XSS) attacks by users with the ability to
+control files in workspaces, archived artifacts, etc.
+
+NOTE: Jenkins instances with Resource Root URL configured are unaffected.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2866 / CVE-2022-43435
+Jenkins sets the `Content-Security-Policy` header to static files served by
+Jenkins (specifically `DirectoryBrowserSupport`), such as workspaces,
+`/userContent`, or archived artifacts, unless a Resource Root URL is
+specified.
+
+360 FireLine Plugin 1.7.2 and earlier globally disables the
+`Content-Security-Policy` header for static files served by Jenkins
+whenever the 'Execute FireLine' build step is executed, if the option 'Open
+access to HTML with JS or CSS' is checked. This allows cross-site scripting
+(XSS) attacks by users with the ability to control files in workspaces,
+archived artifacts, etc.
+
+NOTE: Jenkins instances with Resource Root URL configured are unaffected.
+
+As of publication of this advisory, there is no fix.
+
+
+
