@@ -1,69 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/10/2
-Message-ID: <YvP6OlyJp+KPoFbr@gentoo.org>
-Date: Wed, 10 Aug 2022 13:34:34 -0500
-From: John Helmert III <ajak@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/19/2
+Message-ID: <CALJOYLFzKmL_qChvRV8iAcQBVuixtXr-_=50mPJynpUE5qSsHA@mail.gmail.com>
+Date: Wed, 19 Oct 2022 07:02:33 +0100
+From: Dan Haywood <danhaywood@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Apache mod_dav off-by-one
+Subject: CVE-2022-42466: Apache Isis: XSS vulnerability, eg for String properties.
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Aug 09, 2022 at 02:50:34PM +0300, Evgeny Legerov wrote:
-> Hi,
-> 
-> 
-> How it happens that Apache process_if_header off-by-one, which has been 
-> mentioned in
-> 
-> The Art of Software Security Assessment (page 420), still remains unpatched?
-> 
-> What am I missing?
+Severity: important
 
-Has anyone reported it upstream? Has anyone requested a CVE (seems
-unlikely, given the last CVE for mod_dav is one from 2013)?
+Description:
 
-Upstreams don't magically know about security issues, they need to be
-reported to the upstream one way or another.
+Prior to 2.0.0-M9, it was possible for an end-user to set the value of
+an editable string property of a domain object to a value that would
+be rendered unchanged when the value was saved.  In particular, the
+end-user could enter javascript or similar and this would be executed.
 
-> 
-> The code from Apache 2.4.54:
-> 
-> static dav_error * dav_process_if_header(request_rec *r, dav_if_header 
-> **p_ih)
-> {
-> ...
-> 
->       while (*list) {
->                  /* List is the entire production (in a uri scope) */
-> 
->                  switch (*list) {
->                  ...
->                  case 'N':
->                      if (list[1] == 'o' && list[2] == 't') {
->                          if (condition != DAV_IF_COND_NORMAL) {
->                              return dav_new_error(r->pool, HTTP_BAD_REQUEST,
-> DAV_ERR_IF_MULTIPLE_NOT, 0,
->                                                   "Invalid \"If:\" header: "
->                                                   "Multiple \"not\" 
-> entries "
->                                                   "for the same state.");
->                          }
->                          condition = DAV_IF_COND_NOT;
->                      }
->                      list += 2;
->                      break;
-> 
-> It is not only out of bounds read, dav_fetch_next_token() will write 
-> NULL byte on next iteration.
+As of this release, the inputted strings are properly escaped when rendered.
 
-So we can be more descriptive than calling the vulnerability an
-"off-by-one". It's more of an OOB read/write. And if NULL is the only
-thing that can be written, it seems likely that the only impact is a
-DoS, if that.
+Credit:
 
-> 
-> regards,
-> 
-> -e
-> 
-
-Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
+Apache Isis would like to thank Qing Xu for reporting this issue
