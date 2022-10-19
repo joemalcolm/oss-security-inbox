@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2303" "Saturday" "27" "July" "2019" "14:13:59" "+0200" "Hanno =?iso-8859-1?Q?B=F6c?==?iso-8859-1?Q?k?=" "hanno@hboeck.de" "<20190727141359.07cf0a8c@computer>" "53" "[oss-security] RCE through open PHP-FPM ports" nil nil nil "7" "2019072712:13:59" "[oss-security] RCE through open PHP-FPM ports" (number mark "U       hanno@hboeck Jul 27   53/2303  " thread-indent "\"[oss-security] RCE through open PHP-FPM ports\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] RCE through open PHP-FPM ports" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 14295 invoked by uid 550); 27 Jul 2019 12:14:14 -0000
+Received: (qmail 28532 invoked by uid 550); 19 Oct 2022 11:09:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,67 +7,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14258 invoked from network); 27 Jul 2019 12:14:14 -0000
-Date: Sat, 27 Jul 2019 14:13:59 +0200
-From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20190727141359.07cf0a8c@computer>
-X-Mailer: Claws Mail 3.17.4 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+Received: (qmail 20160 invoked from network); 19 Oct 2022 05:38:15 -0000
+Authentication-Results: apache.org; auth=none
+X-Gm-Message-State: ACrzQf3zFSeHyl1YFjRddHTgk8e3smkYrfspq6BodAIdLhlncPeGQ6th
+	WiXOwqhYzonZ5+OLXBZUHSz81+fbXt9zVUt+GwYc4Q==
+X-Google-Smtp-Source: AMsMyM6hfpUw6JADxSAWiDG/0a+AyOSnayZV4sgEdKiQXbacPRsyyvgVo1q9qCZAX7sp5M6YxMJmEjwMJ8Wl11xhpXU=
+X-Received: by 2002:ab0:70c6:0:b0:39e:ed14:806b with SMTP id
+ r6-20020ab070c6000000b0039eed14806bmr3302162ual.82.1666157880505; Tue, 18 Oct
+ 2022 22:38:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] RCE through open PHP-FPM ports
+From: Dan Haywood <danhaywood@apache.org>
+Date: Wed, 19 Oct 2022 06:37:50 +0100
+X-Gmail-Original-Message-ID: <CALJOYLHLGY5xmmyNgnBWucBe8TZ49TxBhByMGUm2ViO8U9nUSw@mail.gmail.com>
+Message-ID: <CALJOYLHLGY5xmmyNgnBWucBe8TZ49TxBhByMGUm2ViO8U9nUSw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] ISIS-3128: CVE-2022-42467: Apache Isis: h2 webconsole (available only
+ in prototype mode) should nevertheless be disabled by default.
 
-Hi,
+Severity: low
 
-I recently reported here [1] that open FPM ports may be used to
-exfiltrate data and this particularly affected HHVM. Originally I
-assumed that this is much less of an issue with upstream PHP. However
-swagpgs [2] pointed out to me that this is actually much more dangerous
-than I originally thought.
+Description:
 
-Background: FPM is a method to execute PHP in modern environments. A
-daemon is listening for incoming connections, so PHP doesn't need to be
-started for each request, the web server will forward requests to FPM.
-It can run either on a file socket or on a TCP port.
-The TCP port should never be exposed to the public.
+When running in prototype mode, the h2 webconsole module (accessible
+from the Prototype menu) is automatically made available with the
+ability to directly query the database.
 
-Here's how this can be used for remote code execution:
-The FPM daemon supports passing PHP configuration options via the
-PHP_VALUE variable. This can be used to inject PHP code via the
-auto_prepend_file configuration option (this is basically an option to
-provide a script that will be prependet to every other script
-execution).
-This may be prevented by settings for allow_url_include or
-allow_url_fopen. However these settings can be changed with PHP_VALUE
-as well, so this is no protection.
+It was felt that it is safer to require the developer to explicitly
+enable this capability.  As of 2.0.0-M8, this can now be done using
+the 'isis.prototyping.h2-console.web-allow-remote-access'
+configuration property; the web console will be unavailable without
+setting this configuration.
 
-The only thing an attacker needs is a file with a .php or .phar
-extension on the target systems (other files won't be executed due to
-to an option "security.limit_extensions" in the FPM daemon that by
-default only allows these two). However this is usually not very hard
-to achieve by guessing files on standard paths. For example on
-Debian/Ubuntu systems a file /usr/bin/phar.phar exists, alternatively
-on systems that have PEAR installed this can be used.
+As an additional safeguard, the new
+'isis.prototyping.h2-console.generate-random-web-admin-password'
+configuration parameter (enabled by default) requires that the
+administrator use a randomly generated password to use the console.
+The password is printed to the log, as "webAdminPass: xxx" (where
+"xxx") is the password.
 
-I've put this all together in a bash script [3] that should illustrate
-how this attack works.
+To revert to the original behaviour, the administrator would therefore
+need to set these configuration parameter:
 
-Notably HHVM is not affected by this attack vector, as it doesn't
-support PHP_VALUE [4]. However it is affected more severely by the
-original file exfiltration issue [1].
+    isis.prototyping.h2-console.web-allow-remote-access=true
+    isis.prototyping.h2-console.generate-random-web-admin-password=false
 
-tl;dr Never run FPM on a public network interface. With HHVM this means
-arbitrary file exfiltration, with PHP it means remote code execution.
-
-
-[1] https://www.openwall.com/lists/oss-security/2019/07/09/2
-[2] https://twitter.com/swapgs
-[3] https://github.com/hannob/fpmvuln/blob/master/fpmrce
-[4] https://github.com/facebook/hhvm/issues/3730
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
-
-mail/jabber: hanno@hboeck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Note also that the h2 webconsole is never available in production
+mode, so these safeguards are only to ensure that the webconsole is
+secured by default also in prototype mode.
