@@ -1,20 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/24/5
-Message-ID: <20220524162210.GA31294@openwall.com>
-Date: Tue, 24 May 2022 18:22:10 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Kyle Zeng <zengyhkyle@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-1786: Linux Kernel invalid-free in io_uring
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/19/4
+Message-ID: <CA+rf83oV8rxuEmDKmFjsR7Nst7HEu+0_j-hOm=ygQgjpcAUE8Q@mail.gmail.com>
+Date: Wed, 19 Oct 2022 20:10:13 +0200
+From: David Bouman <dbouman03@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2022-2602 - Linux kernel io_uring UAF
 Content-Type: text/plain; charset=utf-8
 
-On Tue, May 24, 2022 at 09:10:37AM -0700, Kyle Zeng wrote:
-> # Impact
-> I wrote a proof-of-concept exploit and demonstrated that it can be
-> used to achieve local privilege escalation.
+Hey,
 
-Since you shared the PoC exploit with linux-distros, you're supposed to
-also post that to oss-security within 7 days of your first posting
-above, so by or on May 31.  Do you intend to, and when exactly?
+I found this vulnerability independently of ZDI, and reported it to the
+maintainers (this email address is stated in the patch).
 
-Alexander
+I can verify that this issue is exploitable on 5.10 as well, the stated
+patch does not prevent the issue.
+
+Regards,
+
+David
+
+
+On Tue, 18 Oct 2022, 19:28 Thadeu Lima de Souza Cascardo <
+cascardo@...onical.com> wrote:
+
+> A local privilege escalation vulnerabilty involving Unix socket Garbage
+> Collection and io_uring was reported and fixed as:
+>
+> 0091bfc81741b8d3aeb3b7ab8636f911b2de6e80 ("io_uring/af_unix: defer
+> registered files gc to io_uring release")
+>
+> The vulnerability is a use-after-free that happens when an io_uring request
+> is being processed on a registered file and the Unix GC runs and frees the
+> io_uring fd and all the registered fds. The order at which the Unix GC
+> processes the inflight fds may lead to registered fds be freed before the
+> io_uring is released and has the chance to unregister and wait for such
+> requests to finish.
+>
+> One way to trigger this race condition is to use userfaultfd and other
+> similar strategies that cause the request to be held waiting for the
+> attacker to trigger the free.
+>
+> This issue was reported as ZDI-CAN-17428 and has been assigned
+> CVE-2022-2602.
+>
+> It affects upstream stable 5.4.y, 5.15.y and later versions. 5.10.y may be
+> mitigated by the fact that commit 0f2122045b946241a9e549c2a76cea54fa58a7ff
+> ("io_uring: don't rely on weak ->files references") is present, but it is
+> safer to apply the fixes.
+>
+> A PoC will be posted in 7 days, on October 25th.
+>
+> Cascardo.
+>
+
