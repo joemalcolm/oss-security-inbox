@@ -1,25 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/15/1
-Message-ID: <3435330c-e8dd-f9b7-6ff1-4a9bb76bb12b@apache.org>
-Date: Wed, 15 Jun 2022 12:24:22 +0000
-From: David Handermann <exceptionfactory@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/19/1
+Message-ID: <CALJOYLHLGY5xmmyNgnBWucBe8TZ49TxBhByMGUm2ViO8U9nUSw@mail.gmail.com>
+Date: Wed, 19 Oct 2022 06:37:50 +0100
+From: Dan Haywood <danhaywood@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-33140: Apache NiFi, Apache NiFi Registry: Improper Neutralization of Command Elements in Shell User Group Provider 
+Subject: ISIS-3128: CVE-2022-42467: Apache Isis: h2 webconsole (available only in prototype mode) should nevertheless be disabled by default.
 Content-Type: text/plain; charset=utf-8
 
-Severity: high
+Severity: low
 
 Description:
 
-The optional ShellUserGroupProvider in Apache NiFi 1.10.0 to 1.16.2 and Apache NiFi Registry 0.6.0 to 1.16.2 does not neutralize arguments for group resolution commands, allowing injection of operating system commands on Linux and macOS platforms.
+When running in prototype mode, the h2 webconsole module (accessible
+from the Prototype menu) is automatically made available with the
+ability to directly query the database.
 
-The ShellUserGroupProvider is not included in the default configuration. Command injection requires ShellUserGroupProvider to be one of the enabled User Group Providers in the Authorizers configuration. Command injection also requires an authenticated user with elevated privileges.  Apache NiFi requires an authenticated user with authorization to modify access policies in order to execute the command. Apache NiFi Registry requires an authenticated user with authorization to read user groups in order to execute the command.
+It was felt that it is safer to require the developer to explicitly
+enable this capability.  As of 2.0.0-M8, this can now be done using
+the 'isis.prototyping.h2-console.web-allow-remote-access'
+configuration property; the web console will be unavailable without
+setting this configuration.
 
-The resolution removes command formatting based on user-provided arguments.
+As an additional safeguard, the new
+'isis.prototyping.h2-console.generate-random-web-admin-password'
+configuration parameter (enabled by default) requires that the
+administrator use a randomly generated password to use the console.
+The password is printed to the log, as "webAdminPass: xxx" (where
+"xxx") is the password.
 
-This issue is being tracked as NIFI-10114
+To revert to the original behaviour, the administrator would therefore
+need to set these configuration parameter:
 
-Mitigation:
+    isis.prototyping.h2-console.web-allow-remote-access=true
+    isis.prototyping.h2-console.generate-random-web-admin-password=false
 
-Disabling the ShellUserGroupProvider mitigates the vulnerability.
-
+Note also that the h2 webconsole is never available in production
+mode, so these safeguards are only to ensure that the webconsole is
+secured by default also in prototype mode.
