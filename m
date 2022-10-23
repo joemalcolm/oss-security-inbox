@@ -1,51 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/27/3
-Message-ID: <20221227103415.GI4524@suse.de>
-Date: Tue, 27 Dec 2022 11:34:16 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/23/1
+Message-ID: <CAFcO6XNdzVKWQ3GEDvUxCTuSiauJU-qZT1yMMoKWEZV-cX5S4A@mail.gmail.com>
+Date: Sun, 23 Oct 2022 13:51:31 +0800
+From: butt3rflyh4ck <butterflyhuangxx@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Details on this supposed Linux Kernel ksmbd RCE
+Subject: Linux kernel: net: mctp: A Use-After-Free bug in mctp_sk_unhash in net/mctp/af_mctp.c
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Dec 23, 2022 at 05:19:06PM +0100, Marcus Meissner wrote:
-> On Fri, Dec 23, 2022 at 03:20:17PM +0100, Greg KH wrote:
-> > On Fri, Dec 23, 2022 at 09:04:25AM -0500, Sasha Levin wrote:
-> > > On Fri, Dec 23, 2022 at 09:17:28AM +0100, Marcus Meissner wrote:
-> > > > Not sure why they do not like you, but to be very clear anyone else can
-> > > > requests CVEs for the kernel, (except the blacklisted drivers/staging/ area).
-> > > 
-> > > For CVEs assigned (earlier this month) to issues in drivers/staging,
-> > > what would be the process to remove the assignment or mark them as
-> > > invalid?
-> > 
-> > And who is doing this "blacklisting" of staging drivers from CVEs?  Why
-> > are they special when many distros do enable and rely on them?
-> 
-> This is just information I received when I tried to allocate a CVE for a
-> staging driver.
-> 
-> It has been over a year ago, so perhaps the this changed meanwhile again.
+Hi, there is a Use-After-Free bug in mctp_sk_unhash in
+net/mctp/af_mctp.c in the last Linux kernel upstream.  An unprivileged
+the user  reproduced it with new namespaces.It would cause Local Privilege
+Escalation(LPE). It was introduced in v5.18.0, commit is
+63ed1aab3d40aa61aaa66819bdce9377ac7f40fa. It affected all the way up
+to upstream v6.0.0 and stable. Unfortunately, the mctp kernel module
+is not automatically loaded.
+I have reported to secuirty@...nel.org a month ago and Now the patch
+was opened to the public.
 
-It was 4 years ago for CVE-2018-8822, where ncpfs moved from being good
-into the "staging" tree due to quality / maintenance issues.
+##Root Cause
+The bug was introduced in commit
+63ed1aab3d40aa61aaa66819bdce9377ac7f40fa. It add
+SIOCMCTP{ALLOC,DROP}TAG ioctls for tag control.This change adds a
+couple of new ioctls for mctp sockets: SIOCMCTPALLOCTAG and
+SIOCMCTPDROPTAG.
+where a simultaneous DROPTAG ioctl and socket close may race, as we
+attempt to remove a key from lists twice, and perform an unref for
+each removal operation. This may result in a uaf when we attempt the
+second unref.
 
-> > In my talks with MITRE, they have said they don't want to make public
-> > statments about the CVE issues and Linux, which is sad, but they never
-> > mentioned anything about "we will ignore this portion of the kernel
-> > source tree".  Is that in a public statement anywhere that I can point
-> > to when people ask the kernel security team for CVEs?
-> 
-> No, it was in a private email, I will search for it, but I cannot
-> promise I will find it again.
+##Fix
+1.https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3a732b46736cd8a29092e4b0b1a9ba83e672bf89
 
-I got information back from Mitre on this topic.
+## CVE
+Now no CVE number is assigned for this issue.
 
-This thread from you and Moritz in 2014 set the Mitre non-assignment policy regarding drivers/staging/
+##Timeline
+2022-9-26: reported to security@...nel.org.
+2022-9-26: bug confirmed.
+2022-10-06: patch it.
+2022-10-12: patch released.
+2022-10-12: reported to secalert@...hat.com.
+2022-10-23: Announced on oss-security lists.
 
-	https://www.openwall.com/lists/oss-security/2014/03/05/6
+## Credit
+this bus is reported by Active Defense Lab of Venustech.
 
-If this has changed in meantime (e.g. that security issues in the
-staging tree are CVE worthy), we can ask Mitre to allow assigning to
-staging drivers again.
 
-Ciao, Marcus
+
+Regards,
+ butt3rflyh4ck.
+
+
+--
+Active Defense Lab of Venustech
