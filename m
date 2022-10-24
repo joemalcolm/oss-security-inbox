@@ -1,19 +1,13 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/04/6
-Message-ID: <0a509ab5-7397-d6ac-e841-ef4d9bf00d58@apache.org>
-Date: Fri, 04 Nov 2022 17:35:34 +0000
-From: "Gary D. Gregory" <ggregory@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-42920: Apache Commons BCEL prior to 6.6.0 allows producing arbitrary bytecode via out-of-bounds writing 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/24/3
+Message-ID:  <MWHPR05MB32146A1E7E26CA44CD71DF95C12E9@MWHPR05MB3214.namprd05.prod.outlook.com>
+Date: Mon, 24 Oct 2022 17:11:25 +0000
+From: Dan Smith <dasmith@...are.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: "dev@...de.apache.org" <dev@...de.apache.org>
+Subject: CVE-2022-34870: Apache Geode stored Cross-Site Scripting (XSS) via data injection vulnerability in Pulse web application 
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Apache Geode versions up to 1.15.0 are vulnerable to a Cross-Site Scripting (XSS) via data injection when using Pulse web application to view Region entries.
 
-Apache Commons BCEL has a number of APIs that would normally only allow changing specific class characteristics. However, due to an out-of-bounds writing issue, these APIs can be used to produce arbitrary bytecode. This could be abused in applications that pass attacker-controllable data to those APIs, giving the attacker more control over the resulting bytecode than otherwise expected. Update to Apache Commons BCEL 6.6.0.
-
-This issue is being tracked as BCEL-363
-
-Credit:
-
-Reported by Felix Wilhelm (Google); GitHub pull request to Apache Commons BCEL #147 by Richard Atkins (https://github.com/rjatkins); PR derived from OpenJDK (https://github.com/openjdk/jdk11u/) commit 13bf52c8d876528a43be7cb77a1f452d29a21492 by Aleksei Voitylov and RealCLanger (Christoph Langer https://github.com/RealCLanger)
-
+This issue is being tracked as GEODE-10411
