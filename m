@@ -1,100 +1,183 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/07/2
-Message-Id: <E1p2wHZ-00055M-Lo@xenbits.xenproject.org>
-Date: Wed, 07 Dec 2022 15:24:25 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 423 v2 (CVE-2022-3643) - Guests can trigger NIC interface reset/abort/crash via netback
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/24/1
+Message-ID: <Y1aKsQY3KEVt0aAl@kasco.suse.de>
+Date: Mon, 24 Oct 2022 14:53:05 +0200
+From: Matthias Gerstner <mgerstner@...e.de>
+To: oss-security@...ts.openwall.com
+Subject: Warpinator remote file creation / overwrite security issue (CVE-2022-42725)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello list,
 
-            Xen Security Advisory CVE-2022-3643 / XSA-423
-                              version 2
+this report is about a remote file creation / overwrite issue I found in
+Warpinator [1]. The release under review for this report was Warpinator
+version 1.2.13.
 
-    Guests can trigger NIC interface reset/abort/crash via netback
+1) About Warpinator
+===================
 
-UPDATES IN VERSION 2
-====================
+Warpinator is a graphical application to easily transfer files between
+hosts on a local network in a decentralized manner. To find other users
+on the network a zeroconf protocol is used.
 
-Patch updated.
+2) Connection Setup and Trust Model
+===================================
 
-ISSUE DESCRIPTION
-=================
+The main connection between two instances of Warpinator is established
+using SSL. To establish trust a shared symmetric key derived from what
+is called a "group code" is used. Each instance of Warpinator provides a
+randomly generated public SSL certificate in an encrypted form over the
+network. It is encrypted symmetrically based on the group code via the
+libsodium "SecretBox" API. According to libsodium documentation [2] this
+API employs the following cryptographic algorithms:
 
-It is possible for a guest to trigger a NIC interface reset/abort/crash in
-a Linux based network backend by sending certain kinds of packets.
+Encryption: XSalsa20 stream cipher
+Authentication: Poly1305 MAC
 
-It appears to be an (unwritten?) assumption in the rest of the Linux network
-stack that packet protocol headers are all contained within the linear
-section of the SKB and some NICs behave badly if this is not the case.
+Although it seems unusual to make the public SSL certificate actually
+secret in this approach it seems safe in so far as without it no one
+will be able to establish the encrypted SSL connection. Once the SSL
+connection is established no further authentication or authenticity
+checks happen in the Warpinator RPC protocol.
 
-This has been reported to occur with Cisco (enic) and Broadcom NetXtrem II
-BCM5780 (bnx2x) though it may be an issue with other NICs/drivers as well.
+An issue with the group code, though, is that is has the default value
+of "Warpinator". The project's README of the reviewed version states:
 
-In case the frontend is sending requests with split headers, netback will
-forward those violating above mentioned assumption to the networking core,
-resulting in said misbehavior.
+    Do not leave it as the default "Warpinator".
 
-IMPACT
-======
+During runtime the application does not undertake any efforts to bring
+this to the user's attention, but starts to operate using the default
+group code right away. A user has to consciously change this group code
+in the settings dialog to achieve a trusted setup. Therefore I fear
+there is a high risk of users keeping this default setup and thus
+possibly trusting arbitrary other instances of Warpinator on the same
+network.
 
-An unprivileged guest can cause network Denial of Service (DoS) of the
-host by sending network packets to the backend causing the related
-physical NIC to reset, abort, or crash.
+This could allow malicious actors on the same network to act as a
+man-in-the-middle to intercept transferred data. The authenticity of the
+randomly generated SSL certificates used is not verified otherwise by
+Warpinator as far as I can see, so the group code is the only means of
+establishing trust between Warpinator instances.
 
-Data corruption or privilege escalation seem unlikely but have not been
-ruled out.
+3) File Creation / Overwrite Issue (CVE-2022-42725)
+===================================================
 
-VULNERABLE SYSTEMS
-==================
+I noticed that Warpinator does not manage to confine uploaded data
+properly to the configured upload directory (~/Warpinator by default).
+Warpinator trusts the remote Warpinator instance regarding the path
+names and other metadata that are transferred. Furthermore the
+file information displayed in confirmation dialogs is not necessarily
+reflecting what the peer is actually sending.
 
-All systems using a Linux based network backend with kernel 3.19 and
-newer are vulnerable. Systems using other network backends are not
-known to be vulnerable.
+The following code change allows a simple demonstration of this:
 
-Systems using Cisco (enic driver) and Broadcom NetXtrem II BCM5780
-(bnx2x driver) NICs for guest network access are known to be vulnerable.
-Systems using other NICs for guest network access cannot be ruled out
-to be vulnerable.
+  diff --git a/src/transfers.py b/src/transfers.py
+  index 0996738..dc27433 100644
+  --- a/src/transfers.py
+  +++ b/src/transfers.py
+  @@ -138,7 +138,7 @@ class FileSender(GObject.Object):
+                           else:
+                               time = None
 
-MITIGATION
-==========
+  -                        yield warp_pb2.FileChunk(relative_path=file.relative_path,
+  +                        yield warp_pb2.FileChunk(relative_path="../.bashrc",
+                                                    file_type=file.file_type,
+                                                    chunk=b.get_data(),
+                                                    file_mode=file.file_mode,
 
-Using another PV network backend (e.g. the qemu based "qnic" backend)
-will mitigate the problem.
+This patch simply unconditionally changes the `relative_path` field
+reported during uploads to "../.bashrc". If a file is sent from a
+malicious Warpinator instance using this changed code then the uploaded
+file content will appear on the victim's system in $HOME/.bashrc,
+without the user being aware of this from GUI messages. It will solely
+be confusing, because the uploaded file will not appear under the
+expected name. This way a malicious remote Warpinator instance can
+achieve full remote code execution in the context of the user account
+running Warpinator on the victim's system.
 
-Using a dedicated network driver domain per guest will mitigate the
-problem.
+There is a configuration setting in Warpinator "Require approval when
+files would be overwritten", which is active by default. The check for
+file overwrite actually happens before the actual file and relative_path
+are transferred, thus this setting does not prevent the described
+attack.
 
-NOTE REGARDING LACK OF EMBARGO
-==============================
+Should a user decide to disable another setting "Require approval before
+accepting files" then the described attack would even work fully
+unattended, without any interactive confirmation by the victim user. The
+only precondition is that the attacker knows the correct group code to
+interact with the victim.
 
-This issue was discussed in public already.
+To get by the confirmation dialog a likely scenario would be social
+engineering attacks where the attacker suggests to send over a file
+using Warpinator but actually overwrites arbitrary data of the victim's
+user account.
 
-RESOLUTION
-==========
+4) Bugfix
+=========
 
-Applying the attached patch resolves this issue.
+Upstream implemented some first aid changes for the file overwrite issue
+in [3], [4], [5], [6]. This should prevent the naive attack outlined in
+this report. There are remaining concerns, however:
 
-xsa423-linux.patch           Linux 4.14 - 6.1-rc
+- Warpinator implements a complex file transfer protocol that even
+  allows to create complete directory trees including symlinks on the
+  remote node. Also Warpinator employs thread pools for processing
+  incoming requests potentially in parallel, thus it could be possible
+  to circumvent the added security checks by exploiting race conditions
+  (e.g. creating a symlink in one file transfer that is followed in
+  another). I did not further explore these possibilities.
+- To my knowledge the issue with the default group code described in 2)
+  is still not addressed. Changing the group code is vital to reduce the
+  potential attack surface. The interactive workflow of Warpinator
+  should foster this, or not set a default group code at all.
 
-$ sha256sum xsa423*
-e26ab5aa05cad09a26ebf12ef6e6197145937d5ae2ada6f6bb824af81ddf3916  xsa423-linux.patch
-$
+I want to thank Warpinator upstream for looking into the issue and
+dealing with my report. Upstream is still investigating and discussing
+how to best address the remaining concerns. The initial fixes and CVE
+assignment are already public for a while now so we decided to publish
+the full report. As far as I am aware there is no release available yet
+containing these initial fixes.
 
------BEGIN PGP SIGNATURE-----
+5) Timeline
+===========
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmOQr+IMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZP1MIAL6GhGU7LQrsi1w9DC4NbnbYMJ7uwEz0k6w0++n6
-IEB3+5k0Di20TdWJC7fhdi4GZMEfqfs6vJ5nN4oy3m1hsy2fU3CtEcrknba91NL/
-7O9N+z6tN4Sy163Mhe/LHaaYLt/R1L98HiQQnGNaTeybJDVhrEByucKhCum7Tasr
-AKcMK7M2/nevciOsbwnuAtoz9o+WQJBkVevMfjIL5NMg1wHevDM6BEzZ9bhQakY+
-YIf2rSVNuEzQ84dhwa+vzvjv9Ywvwyo1iNNnavUiEtqn0ZeZkuqcL/o3g6v/WjKC
-Rm4+Kc3RGSlw8i5/MB46Zq91kf9H3ccW2hyzred1byAy07g=
-=x7us
------END PGP SIGNATURE-----
+2022-09-01: a routine review [7] was requested for addition of Warpinator
+            to openSUSE Tumbleweed.
+2022-09-15: I discovered the file overwrite issue described in this
+            report and started getting into contact with upstream.
+2022-09-16: I sent the full report to the Warpinator main developer and
+            Linux Mint security contact. I offered coordinated
+	    disclosure.
+2022-09-22: I reviewed the initial patches by upstream and upstream
+            published them on GitHub. No formal coordinated disclosure
+	    process has been setup.
+2022-10-06: A colleague from the SUSE security team requested a CVE from
+            Mitre to track this issue.
+2022-10-19: No final solution has been found yet in discussions with
+            upstream to address the remaining concerns. We gave some
+	    ideas as input but also asked to publish the full
+	    vulnerability report soon to make the community fully aware.
 
-Download attachment "xsa423-linux.patch" of type "application/octet-stream" (12868 bytes)
+[1]: https://github.com/linuxmint/warpinator
+[2]: https://libsodium.gitbook.io/doc/secret-key_cryptography/secretbox
+[3]: https://github.com/linuxmint/warpinator/commit/5244c33d4c109ede9607b9d94461650410e2cddc
+[4]: https://github.com/linuxmint/warpinator/commit/f4907ef6a17a189d56ab0a9da4b53190b061ad75
+[5]: https://github.com/linuxmint/warpinator/commit/8bfd2f8b3f1b0c0f0a5a6d275702d107b9e08a94
+[6]: https://github.com/linuxmint/warpinator/commit/95124fd4468683dd69ddd7b3da0e9906ce6beae2
+[7]: https://bugzilla.suse.com/show_bug.cgi?id=1203037
+
+Best Regards
+
+Matthias
+
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Security Engineer
+https://www.suse.com/security
+GPG Key ID: 0x14C405C971923553
+ 
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG Nürnberg
+Geschäftsführer: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
