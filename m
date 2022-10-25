@@ -1,29 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/25/2
-Message-ID: <CAMufup7EzAAJ6QMk7C7mPutijDzFN5sG9xu1B4d2TSWF1h0eyQ@mail.gmail.com>
-Date: Fri, 25 Feb 2022 00:20:02 +0100
-From: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
-To: announce@...che.org, dev@...wiki.apache.org, user@...wiki.apache.org,  Apache Security Team <security@...che.org>, Paulos Yibelo <habte.yibelo@...il.com>,  oss-security@...ts.openwall.com
-Subject: [CVE-2022-24948] Apache JSPWiki Cross-site scripting vulnerability on User Preferences screen
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/25/4
+Message-ID: <db0d3f4e-ea16-83f0-2a2c-8186f42af180@openssl.org>
+Date: Tue, 25 Oct 2022 14:54:15 +0200
+From: "Ing. Martin Koci, MBA" <mkoci@...nssl.org>
+To: openssl-announce@...nssl.org, openssl-users@...nssl.org, openssl-project@...nssl.org, oss-security@...ts.openwall.com
+Subject: Forthcoming OpenSSL Releases
 Content-Type: text/plain; charset=utf-8
 
-Severity
-Medium
+Hello,
 
-Vendor
-The Apache Software Foundation
+The OpenSSL project team would like to announce the forthcoming release 
+of OpenSSL version 3.0.7.
 
-Versions Affected
-Apache JSPWiki up to 2.11.1
+This release will be made available on Tuesday 1st November 2022 between 
+1300-1700 UTC.
 
-Description
-A carefully crafted user preferences for submission could trigger an
-XSS vulnerability on Apache JSPWiki, related to the user preferences
-screen, which could allow the attacker to execute javascript in the
-victim's browser and get some sensitive information about the victim.
+OpenSSL 3.0.7 is a security-fix release. The highest severity issue 
+fixed in this release is CRITICAL:
 
-Mitigation
-Apache JSPWiki users should upgrade to 2.11.2 or later.
+https://www.openssl.org/policies/general/security-policy.html
 
-Credit
-This issue was discovered by Paulos Yibelo, from Octagon Networks.
+Yours
+The OpenSSL Project Team
+
+
+Download attachment "OpenPGP_0x6D0A36D2E30590A6.asc" of type "application/pgp-keys" (2441 bytes)
+
+Download attachment "OpenPGP_signature" of type "application/pgp-signature" (666 bytes)
