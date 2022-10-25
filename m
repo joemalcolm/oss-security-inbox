@@ -1,4 +1,4 @@
-Received: (qmail 3161 invoked by uid 550); 3 Apr 2024 13:04:39 -0000
+Received: (qmail 32208 invoked by uid 550); 25 Oct 2022 19:48:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,44 +7,29 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13917 invoked from network); 3 Apr 2024 03:31:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1712115081; x=1712374281;
-	bh=CwN7vehb8oTgdDc2iWfvygCI/nQQTgUkwjx0dN4qoxU=;
-	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=T9UcwVT6/69EU0aDGoVHjupyJequvTp7V4VuoDBQ1vWDMcCxU3gp+fqoYNQ4a0/iI
-	 H7TrBsLVEJuuX53yzZouOjHX0tiEnZbjwSaQvmJ864aBmXNR4CdtRCYLD2WdfAXnVU
-	 K69f0a/ekAIj6fY1ml3uW7kJxyYMACNdK4GvYbg5T3PnkinYI7hp4ELXqVy/4PtxAA
-	 QngeHwS6TIbj/H6jUphdVZXuSTd8Y5343lptnH1YJ0g+JRhsmOt8feQjpegw/ObjvY
-	 BTYtliwTSlVfdmUTu0h2VwGXBi4l8HIF9kX+QX8duuq6A6EPhbnBfjuliZ95Wl5rWk
-	 dcWd6nKZnTqAQ==
-Date: Wed, 03 Apr 2024 03:31:15 +0000
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-From: Nick Sal <specialroumpa@proton.me>
-Message-ID: <loqt-RGEN6MMP_6J6pm7KJN3UgHgOBQ3NLoF3NsdmxQhyJrFIS0XYItBeLNZeSMliq69Lw8ogw3rnIW3BZEqCIHQQSFq307cqsyIt7dcocE=@proton.me>
-Feedback-ID: 95722247:user:proton
+Received: (qmail 13607 invoked from network); 25 Oct 2022 18:36:38 -0000
+Message-ID: <f6d07458-3515-4f79-c013-440d27278554@openssl.org>
+Date: Tue, 25 Oct 2022 20:36:25 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] xz backdoor prevention using hosts.deny?
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Content-Language: en-GB
+To: openssl-announce@openssl.org, openssl-users@openssl.org,
+ openssl-project@openssl.org, oss-security@lists.openwall.com
+From: "Ing. Martin Koci, MBA" <mkoci@openssl.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] Forthcoming OpenSSL Bug Fix Release
 
-Hi,
+Hello,
 
-Assume we filter SSH access only to a public domain subnet using the files =
-hosts.{deny,allow} as seen below.
-Would this prevent an attack if a malicious payload was *not* sent from the=
- allowed subnet?
-Trying to figure out if an attack like this was still possible, for the few=
- days in March the backdoor was active and undetected in rolling distros (e=
-.g. debian testing).
+In addition to the already announced 3.0.7 release, the OpenSSL project 
+team would like to announce the forthcoming release of OpenSSL version 
+1.1.1s that is a bug fix release.
 
-/etc/hosts.deny:  sshd: ALL
-/etc/hosts.allow: sshd: "a_subnet"
+This bug fix release will be made available on Tuesday 1st November 2022 
+between 1300-1700 UTC too.
 
-Moreover, allowing only public-key authentication for SSH does not help, is=
-n't this right?
-
-Regards,
-Nick
+Yours
+The OpenSSL Project Team
 
