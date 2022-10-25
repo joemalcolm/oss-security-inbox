@@ -1,17 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/06/8
-Message-ID: <CAGUWgD8HasZRDG_BPCMTa2sZs1Kk4yFZd7R0oc=nfG2+JA3Sqw@mail.gmail.com>
-Date: Tue, 6 Sep 2022 18:14:38 +0300
-From: Georgi Guninski <gguninski@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: sagemath denial of service with abort() in gmp: overflow in mpz type
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/25/6
+Message-ID: <f6d07458-3515-4f79-c013-440d27278554@openssl.org>
+Date: Tue, 25 Oct 2022 20:36:25 +0200
+From: "Ing. Martin Koci, MBA" <mkoci@...nssl.org>
+To: openssl-announce@...nssl.org, openssl-users@...nssl.org, openssl-project@...nssl.org, oss-security@...ts.openwall.com
+Subject: Forthcoming OpenSSL Bug Fix Release
 Content-Type: text/plain; charset=utf-8
 
-The DoS can be a .cgi or in a web service, allowing only numerical and
-math functions input.
-As pointed by Jeffrey Walton, the problem is in libgmp, not in sage,
-and ubuntu asks for sending them crash info, including the coredump.
-To avoid the gmp crash in |2^2^64|, sage catches signals and ignores SIGABRT.
-The sage ``feature'' with more info is at:
-https://trac.sagemath.org/ticket/34492
-avoid crash and print better error message when gmp calls abort()
+Hello,
+
+In addition to the already announced 3.0.7 release, the OpenSSL project 
+team would like to announce the forthcoming release of OpenSSL version 
+1.1.1s that is a bug fix release.
+
+This bug fix release will be made available on Tuesday 1st November 2022 
+between 1300-1700 UTC too.
+
+Yours
+The OpenSSL Project Team
+
