@@ -1,31 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/05/1
-Message-ID: <CA+35996-YwwZzKuLhnXxBT55GSzQV5fLjZT3YC7Mn8=gnMxULQ@mail.gmail.com>
-Date: Tue, 4 Jan 2022 18:46:24 -0500
-From: Bryan English <bryan@...anenglish.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Fwd: Node.js security updates for all active release lines, January 2022
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/27/1
+Message-ID: <b3783d0c-19d9-4381-41b2-66747da55c05@openssl.org>
+Date: Thu, 27 Oct 2022 09:41:42 +1100
+From: Dr Paul Dale <pauli@...nssl.org>
+To: Matan Giladi <matangi@...ckpoint.com>, "openssl-users@...nssl.org" <openssl-users@...nssl.org>, "openssl-announce@...nssl.org" <openssl-announce@...nssl.org>, "openssl-project@...nssl.org" <openssl-project@...nssl.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Forthcoming OpenSSL Bug Fix Release
 Content-Type: text/plain; charset=utf-8
 
----------- Forwarded message ---------
-From: Bryan English <bryan@...anenglish.com>
-Date: Tue, Jan 4, 2022 at 6:40 PM
-Subject: Node.js security updates for all active release lines, January 2022
-To: nodejs-sec <nodejs-sec@...glegroups.com>
+1.1.1 is not susceptible to the CVE that is being fixed in 3.0:
+
+    /the forthcoming release of OpenSSL version 1.1.1s that is a *bug
+    fix* release/.
+
+(highlight added).
 
 
-The Node.js project will release new versions of all supported release
-lines on or shortly after Monday, 10th of January, 2022 For more
-information see:
-https://nodejs.org/en/blog/vulnerability/jan-2022-security-releases/
+Dr Paul Dale
 
--- 
-You received this message because you are subscribed to the Google Groups
-"nodejs-sec" group.
-To unsubscribe from this group and stop receiving emails from it, send an
-email to nodejs-sec+unsubscribe@...glegroups.com.
-To view this discussion on the web visit
-https://groups.google.com/d/msgid/nodejs-sec/436a4bef-7d60-49a4-97af-02b90b4fbd49n%40googlegroups.com
-<https://groups.google.com/d/msgid/nodejs-sec/436a4bef-7d60-49a4-97af-02b90b4fbd49n%40googlegroups.com?utm_medium=email&utm_source=footer>
-.
+On 26/10/22 22:17, Matan Giladi wrote:
+> Does 1.1.1s is going to include any security fix?
+> Can you please confirm that the critical issue found in 3.0.6 version is irrelevant for 1.1.1?
+>
+> -----Original Message-----
+> From: openssl-announce<openssl-announce-bounces@...nssl.org>  On Behalf Of Ing. Martin Koci, MBA
+> Sent: Tuesday, October 25, 2022 21:36
+> To:openssl-announce@...nssl.org;openssl-users@...nssl.org;openssl-project@...nssl.org;oss-security@...ts.openwall.com
+> Subject: Forthcoming OpenSSL Bug Fix Release
+>
+> Hello,
+>
+> In addition to the already announced 3.0.7 release, the OpenSSL project team would like to announce the forthcoming release of OpenSSL version 1.1.1s that is a bug fix release.
+>
+> This bug fix release will be made available on Tuesday 1st November 2022 between 1300-1700 UTC too.
+>
+> Yours
+> The OpenSSL Project Team
+>
+>
+> Email secured by Check Point
+> Report Phishing:https://mta-cnf.iaas.checkpoint.com/mta_feedback?id=b3dc9e6004806fac5adb86a1a47504d00416eb2590b631502621736f0652d7ea&ck=3D4CC6C8CB55;48DE55E160E5;C5CEAA199888;&v=m
+>
+> Email secured by Check Point
 
