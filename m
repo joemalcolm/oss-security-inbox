@@ -1,35 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/17/1
-Message-ID: <CAEccTyzievJ1i1uaGOz8NJ37=yCpr+iCAsCe_SJqoMKt3iJSnw@mail.gmail.com>
-Date: Sun, 17 Jul 2022 18:40:40 -0500
-From: Sean Owen <srowen@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/26/6
+Message-ID: <cf6b94a8-3d08-887a-7826-b59d534a1aaa@apache.org>
+Date: Wed, 26 Oct 2022 09:42:11 +0000
+From: Haonan Hou <haonan@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-33891: Apache Spark shell command injection vulnerability via Spark UI
+Subject: CVE-2022-43766: Apache IoTDB: ReDoS Vulnerability by REGEXP 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+Severity: low
 
 Description:
 
-The Apache Spark UI offers the possibility to enable ACLs via the
-configuration option spark.acls.enable. With an authentication filter, this
-checks whether a user has access permissions to view or modify the
-application. If ACLs are enabled, a code path in HttpSecurityFilter can
-allow someone to perform impersonation by providing an arbitrary user name.
-A malicious user might then be able to reach a permission check function
-that will ultimately build a Unix shell command based on their input, and
-execute it. This will result in arbitrary shell command execution as the
-user Spark is currently running as. This affects Apache Spark versions
-3.0.3 and earlier, versions 3.1.1 to 3.1.2, and versions 3.2.0 to 3.2.1.
-
-This issue is being tracked as SPARK-38992
-
-Mitigation:
-
-Upgrade to supported Apache Spark maintenance release 3.1.3, 3.2.2, or
-3.3.0 or later
-
-Credit:
-
- Kostya Kortchinsky (Databricks)
+Apache IoTDB version 0.12.2 to 0.12.6, 0.13.0 to 0.13.2 are vulnerable by the attack of REGEXP query with Java8. Users should upgrade to 0.13.3 which addresses this issue or use a later version of Java to avoid it.
 
