@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7197" "Tuesday" "24" "November" "2020" "12:03:45" "+0000" "Xen.org security team" "security@xen.org" "<E1khX2v-0002f4-3b@xenbits.xenproject.org>" "184" "[oss-security] Xen Security Advisory 355 v2 - stack corruption from XSA-346 change" nil nil nil "11" "2020112412:03:45" "[oss-security] Xen Security Advisory 355 v2 - stack corruption from XSA-346 change" (number mark "U       security@xen Nov 24  184/7197  " thread-indent "\"[oss-security] Xen Security Advisory 355 v2 - stack corruption from XSA-346 change\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 355 v2 - stack corruption from XSA-346 change" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 31752 invoked by uid 550); 24 Nov 2020 12:04:06 -0000
+Received: (qmail 25913 invoked by uid 550); 27 Oct 2022 07:36:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,206 +7,64 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30697 invoked from network); 24 Nov 2020 12:04:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
-	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
-	Content-Transfer-Encoding:Content-Type;
-	bh=yfttipwcpjyGr0PfbdQvyjVzZvYzgmIiVMoZvzn78XI=; b=O41nLK447kTInVnyNAxpWJG5GG
-	LJvFROMGe3S4Kx7fnC+zhbbffxMHbrLrkdL1xUMYpV5LgTsPU+q7jNUj3IjF2fU8TAD4wUq5+LVhW
-	cd/ra3WjTUl0d/I+WDYH9ycuy/6xCa69+jkKjJOhaH0dPH0zJNdaENYriHb1tsQcu1cw=;
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+Received: (qmail 15574 invoked from network); 26 Oct 2022 22:42:02 -0000
+Content-Type: multipart/alternative;
+ boundary="------------nWluHlx9aoNd8iCrcxFJi0Kr"
+Message-ID: <b3783d0c-19d9-4381-41b2-66747da55c05@openssl.org>
+Date: Thu, 27 Oct 2022 09:41:42 +1100
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.509 (Entity 5.509)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1khX2v-0002f4-3b@xenbits.xenproject.org>
-Date: Tue, 24 Nov 2020 12:03:45 +0000
-Subject: [oss-security] Xen Security Advisory 355 v2 - stack corruption from XSA-346 change
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.0
+Content-Language: en-US
+To: Matan Giladi <matangi@checkpoint.com>,
+ "openssl-users@openssl.org" <openssl-users@openssl.org>,
+ "openssl-announce@openssl.org" <openssl-announce@openssl.org>,
+ "openssl-project@openssl.org" <openssl-project@openssl.org>,
+ "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+References: <f6d07458-3515-4f79-c013-440d27278554@openssl.org>
+ <4a324f40d90b4cb5a6ceab5623615ed8@checkpoint.com>
+From: Dr Paul Dale <pauli@openssl.org>
+Organization: OpenSSL
+In-Reply-To: <4a324f40d90b4cb5a6ceab5623615ed8@checkpoint.com>
+Subject: [oss-security] Re: Forthcoming OpenSSL Bug Fix Release
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
+--------------nWluHlx9aoNd8iCrcxFJi0Kr
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+1.1.1 is not susceptible to the CVE that is being fixed in 3.0:
 
-                    Xen Security Advisory XSA-355
-                              version 2
+    /the forthcoming release of OpenSSL version 1.1.1s that is a *bug
+    fix* release/.
 
-                 stack corruption from XSA-346 change
+(highlight added).
 
-UPDATES IN VERSION 2
-====================
 
-Added metadata file.
+Dr Paul Dale
 
-Public release.
+On 26/10/22 22:17, Matan Giladi wrote:
+> Does 1.1.1s is going to include any security fix?
+> Can you please confirm that the critical issue found in 3.0.6 version is irrelevant for 1.1.1?
+>
+> -----Original Message-----
+> From: openssl-announce<openssl-announce-bounces@openssl.org>  On Behalf Of Ing. Martin Koci, MBA
+> Sent: Tuesday, October 25, 2022 21:36
+> To:openssl-announce@openssl.org;openssl-users@openssl.org;openssl-project@openssl.org;oss-security@lists.openwall.com
+> Subject: Forthcoming OpenSSL Bug Fix Release
+>
+> Hello,
+>
+> In addition to the already announced 3.0.7 release, the OpenSSL project team would like to announce the forthcoming release of OpenSSL version 1.1.1s that is a bug fix release.
+>
+> This bug fix release will be made available on Tuesday 1st November 2022 between 1300-1700 UTC too.
+>
+> Yours
+> The OpenSSL Project Team
+>
+>
+> Email secured by Check Point
+> Report Phishing:https://mta-cnf.iaas.checkpoint.com/mta_feedback?id=b3dc9e6004806fac5adb86a1a47504d00416eb2590b631502621736f0652d7ea&ck=3D4CC6C8CB55;48DE55E160E5;C5CEAA199888;&v=m
+>
+> Email secured by Check Point
 
-ISSUE DESCRIPTION
-=================
-
-One of the two changes for XSA-346 introduced an on-stack array.  The
-check for guarding against overrunning this array was off by one,
-allowing for corruption of the first stack slot immediately following
-this array.
-
-IMPACT
-======
-
-A malicious or buggy HVM or PVH guest can cause Xen to crash, resulting
-in a Denial of Service (DoS) to the entire host.  Privilege escalation
-as well as information leaks cannot be excluded.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions which have the patches for XSA-346 applied are
-vulnerable.
-
-Only x86 HVM and PVH guests can leverage the vulnerability.  Arm guests
-and x86 PV guests cannot leverage the vulnerability.
-
-Only x86 HVM and PVH guests which have physical devices passed through
-to them can leverage the vulnerability.
-
-MITIGATION
-==========
-
-Not passing through physical devices to untrusted guests will avoid
-the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Jan Beulich of SUSE.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa355.patch           xen-unstable - Xen 4.10.x
-
-$ sha256sum xsa355*
-a93bfc376897e7cffd095d395f1a66476adb9503d7d80a59b7861e64c2675323  xsa355.meta
-dae633c11cf2eff3e304737265e18ab09213e8e4640458080a944ae7a40819a4  xsa355.patch
-$
-
-NOTE CONCERNING SHORT EMBARGO
-=============================
-
-This issue is likely to be re-discovered as the changes for XSA-346
-are deployed more widely, since the issue is also triggerable without
-any malice or bugginess.
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl+89pEMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZRHQH/1D8CfjZWYgLcdYOg6sDO6BIK8IsnAiOoe2C8b9i
-M8QPFzHlUx09FI5CHVb0Va/pFliR1OS2tmmIU30DL9nmiDLcaP2uvpgJAYo5GwL5
-Rzccjo4qbXwfSRQvHmLzbr+XN8sHDxbekpFd8T5WvuarUgxOaPCLTfSG0nag/t52
-OVNIdDcP5lSt/Z88lYW75j4gBAsXUZDEXgn81JpeHj9js8YLFC3WFcwh58Jjd+hw
-5DH955jNAKD8TRSy6uffDpvN1m9wm2vDGeXSUcJyswlV8Nqi6YRW4XO4Q6Cfj+CG
-LVBS/T977JZGJjRvTw4j0H+xAXiLFwQ1I/6v6fSZzxDMt9k=
-=+4M1
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa355.meta"
-Content-Disposition: attachment; filename="xsa355.meta"
-Content-Transfer-Encoding: base64
-
-ewogICJYU0EiOiAzNTUsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
-Im1hc3RlciIsCiAgICAiNC4xNCIsCiAgICAiNC4xMyIsCiAgICAiNC4xMiIs
-CiAgICAiNC4xMSIsCiAgICAiNC4xMCIKICBdLAogICJUcmVlcyI6IFsKICAg
-ICJ4ZW4iCiAgXSwKICAiUmVjaXBlcyI6IHsKICAgICI0LjEwIjogewogICAg
-ICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0
-YWJsZVJlZiI6ICIxNWIyOTgwOTcyODlmMWMxMWI5ODE0NTRhM2RjOTEyYjk1
-ZTJmNjViIiwKICAgICAgICAgICJQcmVyZXFzIjogW10sCiAgICAgICAgICAi
-UGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTM1NS5wYXRjaCIKICAgICAg
-ICAgIF0KICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAgICAiNC4xMSI6IHsK
-ICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAgICAg
-ICJTdGFibGVSZWYiOiAiMTQ0N2Q0NDlmYWI3ZTQ4Yzg1ZmFmODM5NTE4NDJi
-YjYwZDdkYWJlNSIsCiAgICAgICAgICAiUHJlcmVxcyI6IFtdLAogICAgICAg
-ICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2EzNTUucGF0Y2giCiAg
-ICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9LAogICAgIjQuMTIi
-OiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAg
-ICAgICAiU3RhYmxlUmVmIjogIjE0YzljMGZjZWFlOTJhMThkZWRjM2YyODBl
-YmY4YjlmNTJlMzlkZTUiLAogICAgICAgICAgIlByZXJlcXMiOiBbXSwKICAg
-ICAgICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNhMzU1LnBhdGNo
-IgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICI0
-LjEzIjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewog
-ICAgICAgICAgIlN0YWJsZVJlZiI6ICJkNGMwNDgzYzBiODc3NjhjZDliOTU1
-NDJlOTgxMTFlNGMwOThkNTdmIiwKICAgICAgICAgICJQcmVyZXFzIjogW10s
-CiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAgICAgICAgICAgInhzYTM1NS5w
-YXRjaCIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIH0KICAgIH0sCiAg
-ICAiNC4xNCI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6
-IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiZDEwMWI0MTdiNzg0YTI2MzI2
-ZmM3ODAwYTc5Y2M1MzliYTU3MGI3OSIsCiAgICAgICAgICAiUHJlcmVxcyI6
-IFtdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAgICJ4c2Ez
-NTUucGF0Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9CiAgICB9
-LAogICAgIm1hc3RlciI6IHsKICAgICAgIlJlY2lwZXMiOiB7CiAgICAgICAg
-InhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYiOiAiYjY1OWE1Y2ViZDYx
-MWRiZTY5OGU2M2MwMzQ4NWI1ZmU4Y2Q5NjRhZCIsCiAgICAgICAgICAiUHJl
-cmVxcyI6IFtdLAogICAgICAgICAgIlBhdGNoZXMiOiBbCiAgICAgICAgICAg
-ICJ4c2EzNTUucGF0Y2giCiAgICAgICAgICBdCiAgICAgICAgfQogICAgICB9
-CiAgICB9CiAgfQp9
-
---=separator
-Content-Type: application/octet-stream; name="xsa355.patch"
-Content-Disposition: attachment; filename="xsa355.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0
-OiBtZW1vcnk6IGZpeCBvZmYtYnktb25lIGluIFhTQS0zNDYgY2hhbmdlCgpU
-aGUgY29tcGFyaXNvbiBhZ2FpbnN0IEFSUkFZX1NJWkUoKSBuZWVkcyB0byBi
-ZSA+PSBpbiBvcmRlciB0byBhdm9pZApvdmVycnVubmluZyB0aGUgcGFnZXNb
-XSBhcnJheS4KClRoaXMgaXMgWFNBLTM1NS4KCkZpeGVzOiA1Nzc3YTM3NDJk
-ODggKCJJT01NVTogaG9sZCBwYWdlIHJlZiB1bnRpbCBhZnRlciBkZWZlcnJl
-ZCBUTEIgZmx1c2giKQpTaWduZWQtb2ZmLWJ5OiBKYW4gQmV1bGljaCA8amJl
-dWxpY2hAc3VzZS5jb20+ClJldmlld2VkLWJ5OiBKdWxpZW4gR3JhbGwgPGpn
-cmFsbEBhbWF6b24uY29tPgoKLS0tIGEveGVuL2NvbW1vbi9tZW1vcnkuYwor
-KysgYi94ZW4vY29tbW9uL21lbW9yeS5jCkBAIC04NTQsNyArODU0LDcgQEAg
-aW50IHhlbm1lbV9hZGRfdG9fcGh5c21hcChzdHJ1Y3QgZG9tYWluCiAgICAg
-ICAgICAgICArK2V4dHJhLnBwYWdlOwogCiAgICAgICAgIC8qIENoZWNrIGZv
-ciBjb250aW51YXRpb24gaWYgaXQncyBub3QgdGhlIGxhc3QgaXRlcmF0aW9u
-LiAqLwotICAgICAgICBpZiAoICgrK2RvbmUgPiBBUlJBWV9TSVpFKHBhZ2Vz
-KSAmJiBleHRyYS5wcGFnZSkgfHwKKyAgICAgICAgaWYgKCAoKytkb25lID49
-IEFSUkFZX1NJWkUocGFnZXMpICYmIGV4dHJhLnBwYWdlKSB8fAogICAgICAg
-ICAgICAgICh4YXRwLT5zaXplID4gZG9uZSAmJiBoeXBlcmNhbGxfcHJlZW1w
-dF9jaGVjaygpKSApCiAgICAgICAgIHsKICAgICAgICAgICAgIHJjID0gc3Rh
-cnQgKyBkb25lOwo=
-
---=separator--
+--------------nWluHlx9aoNd8iCrcxFJi0Kr--
