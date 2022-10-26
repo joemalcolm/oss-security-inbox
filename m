@@ -1,85 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/10/2
-Message-ID: <20220110180746.GA3527@localhost.localdomain>
-Date: Mon, 10 Jan 2022 18:08:29 +0000
-From: Qualys Security Advisory <qsa@...lys.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2021-3997: Uncontrolled recursion in systemd's systemd-tmpfiles
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/26/4
+Message-ID: <1666n13n-4p11-777r-srq5-sp89r0q5s631@unkk.fr>
+Date: Wed, 26 Oct 2022 08:26:48 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] CVE-2022-42916: HSTS bypass via IDN (curl)
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+CVE-2022-42916: HSTS bypass via IDN
+===================================
 
-We discovered a minor denial of service (an uncontrolled recursion) in
-systemd-tmpfiles, CVE-2021-3997; the Coordinated Release Date is today
-(January 10, 2022), and a patch is now available at (many thanks to
-Zbigniew Jedrzejewski-Szmek for working on this):
+Project curl Security Advisory, October 26 2022 -
+[Permalink](https://curl.se/docs/CVE-2022-42916.html)
 
-https://github.com/systemd/systemd/commit/55a89ea1b4088a6d84ba0bd3cd8e648bd51f1ebf
+VULNERABILITY
+-------------
 
-Below is a short write-up (which is part of a longer advisory that is
-mostly unrelated to systemd and that we will publish at a later date):
+curl's HSTS check could be bypassed to trick it to keep using HTTP.
 
-========================================================================
-CVE-2021-3997: Uncontrolled recursion in systemd's systemd-tmpfiles
-========================================================================
+Using its HSTS support, curl can be instructed to use HTTPS directly instead
+of using an insecure clear-text HTTP step even when HTTP is provided in the
+URL. This mechanism could be bypassed if the host name in the given URL uses
+IDN characters that get replaced to ASCII counterparts as part of the IDN
+conversion. Like using the character UTF-8 U+3002 (IDEOGRAPHIC FULL STOP)
+instead of the common ASCII full stop (U+002E) `.`.
 
-[...]
+Like this: `http://curl。se。`
 
-We therefore looked into systemd-tmpfiles (which "creates, deletes, and
-cleans up volatile and temporary files and directories") and discovered
-a denial of service (an uncontrolled recursion): if we create thousands
-of nested directories in /tmp, then "systemd-tmpfiles --remove" (when
-executed as root at boot time) will call its rm_rf_children() function
-recursively (on each nested directory) and will exhaust its stack and
-crash. For example, on Ubuntu 21.04:
+We are not aware of any exploit of this flaw.
 
-------------------------------------------------------------------------
-$ cd /tmp
-$ perl -e 'use strict;
-for (my $i = 0; $i < (1<<15); $i++) {
-mkdir "A", 0700 or die;
-chdir "A" or die; }'
-------------------------------------------------------------------------
+INFO
+----
 
-Then, as root (warning: this command may delete important files and
-directories in /tmp; it is normally executed at boot time only):
+This flaw was introduced in [commit
+7385610d0c7](https://github.com/curl/curl/commit/7385610d0c7), which was
+shipped enabled by default from [commit
+d71ff2b9db566b3f](https://github.com/curl/curl/commit/d71ff2b9db566b3f) in
+curl 7.77.0.
 
-------------------------------------------------------------------------
-# systemd-tmpfiles --remove
-Segmentation fault (core dumped)
-------------------------------------------------------------------------
+This issue is similar to the previous [CVE-2022-30115](https://curl.se/docs/CVE-2022-30115.html).
 
-We have not fully explored the implications of this vulnerability;
-however, we noticed that:
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2022-42916 to this issue.
 
-- at boot time, systemd executes "systemd-tmpfiles --create --remove
-  --boot --exclude-prefix=/dev";
+CWE-319: Cleartext Transmission of Sensitive Information
 
-- systemd-tmpfiles first enters the "remove" phase, and subsequently
-  enters the "create" phase;
+Severity: Medium
 
-- but if systemd-tmpfiles crashes during the "remove" phase, then it
-  never enters the "create" phase;
+AFFECTED VERSIONS
+-----------------
 
-- and it fails to create the files and directories (specified in
-  /usr/lib/tmpfiles.d/*.conf) that it should create at boot time;
+- Affected versions: curl 7.77.0 to and including 7.85.0
+- Not affected versions: curl < 7.77.0 and curl >= 7.86.0
 
-- for example, on Ubuntu 21.04, systemd-tmpfiles fails to create the
-  directory /run/lock/subsys; but because /run/lock is world-writable,
-  attackers can create their own /run/lock/subsys; and because various
-  legacy packages and daemons write into /run/lock/subsys as root, the
-  attackers may create arbitrary files via symlinks in /run/lock/subsys.
+libcurl is used by many applications, but not always advertised as such!
 
-Last-minute note: it seems impossible to trigger this vulnerability in
-systemd-tmpfiles versions before commit e535840 ("tmpfiles: let's bump
-RLIMIT_NOFILE for tmpfiles") from February 2019.
+THE SOLUTION
+------------
 
-========================================================================
+A [fix for CVE-2022-42916](https://github.com/curl/curl/commit/53bcf55b4538067e6)
 
-Thank you very much! We are at your disposal for questions, comments,
-and further discussions.
+RECOMMENDATIONS
+--------------
 
-With best regards,
+  A - Upgrade curl to version 7.86.0
+
+  B - Apply the patch to your local version
+
+  C - Stick to always using `HTTPS://` in URLs
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on October 11, 2022. We contacted
+distros@...nwall on October 18, 2022.
+
+libcurl 7.86.0 was released on October 26 2022, coordinated with the
+publication of this advisory.
+
+CREDITS
+-------
+
+- Reported-by: Hiroki Kurosawa
+- Patched-by: Daniel Stenberg
+
+Thanks a lot!
 
 -- 
-the Qualys Security Advisory team
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
