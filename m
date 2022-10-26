@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["651" "Friday" "17" "April" "2015" "14:50:32" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkKibZ5LixkHx5PB6L3H5Xc6rJSSniFHo39Ewxwt=UGjqw@mail.gmail.com>" "21" "[oss-security] Problems in automatic crash analysis frameworks" nil nil nil "4" "2015041721:50:32" "[oss-security] Problems in automatic crash analysis frameworks" (number mark "        taviso@googl Apr 17   21/651   " thread-indent "\"[oss-security] Problems in automatic crash analysis frameworks\"\n") "<CANtF8NBuiE+1F65+cLp0CXivZUiYxyJcZK2Yhz9J1qu0hCdC9w@mail.gmail.com>" ("<CAJ_zFkJw7hNxGp0PNmQbH0suVwfkgzbCsvs2Sv1OdxD+UBiraw@mail.gmail.com>" "<55315C2B.6050207@redhat.com>" "<CANtF8NBuiE+1F65+cLp0CXivZUiYxyJcZK2Yhz9J1qu0hCdC9w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 3896 invoked by uid 550); 17 Apr 2015 21:50:45 -0000
+Received: (qmail 11895 invoked by uid 550); 26 Oct 2022 06:26:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +6,111 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3874 invoked from network); 17 Apr 2015 21:50:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        bh=d65+SwSwGpdnyY8+MSH4fb4+NzT+hovIaynEl6OC/DQ=;
-        b=CpTlpxZw/qQd4cOA8mw/cCiW2qe1ptugqoY+WMbDe5o8gPd9s0tw5w8nKNEMfvyVSp
-         C5JqgG33tVwpARPY4E2zgEeToLoGYob43KAjR1uEJMSntcMrDgQKn0cL6WnSrreELzO8
-         29HzSIZGmHldZWM5qKwAw54sBqIbKt24P9oa7vBt6vq7CzmUH1o30Lg3ZJrfE0yxqFy9
-         cscQkgawlfy1StbWftHkSFJM90PWQ9dDb8HHj8b44iy82w6Zbf0mDlY0tJ614tZ4bSJc
-         FdEKI1WoHrloZwgA80/a3KJ1dUa71cmX/UpnijYWxYc70cStf6hnRh8v8BgMA0k6RpbM
-         r+9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type;
-        bh=d65+SwSwGpdnyY8+MSH4fb4+NzT+hovIaynEl6OC/DQ=;
-        b=MBkFUp70+iamatf+/5fMjDBNahlH2V5XMbSAfSqSvMMkg7mcN4CYwwZkk9Qa7aZZb7
-         K/dNS8OcHh+rVXCq017fRhPW+po5GpnVctS/W+Ema116D77/o7iqGChJEIhiEgX684Vh
-         /7mGLQhSc4QcwHApEBrG9ZPzx85vPRRNGTU/UWsdg6/8nE79KRigxRccpWTJlVLpGuI7
-         zUHJynvO8DIrR1z5jhCyC6kzOPWdurrIxwPIP/7Ys4eFXx7EbLV4cm7R1QwB4iDE92FY
-         7yMamXNq1/zyvqnpVmz+NXU49tKxApzBupFdQelZOH2UYdzisHcFYEsZQqoqejKld6Xp
-         qr8Q==
-X-Gm-Message-State: ALoCoQktGFOsj2EBZeheysf/W3WsfNkGLdQhW5oq/sgMeczzvTrJIyhQ+GbpszwgKDiMiYS1zBak
-MIME-Version: 1.0
-X-Received: by 10.55.53.137 with SMTP id c131mr9723309qka.102.1429307432728;
- Fri, 17 Apr 2015 14:50:32 -0700 (PDT)
-In-Reply-To: <CANtF8NBuiE+1F65+cLp0CXivZUiYxyJcZK2Yhz9J1qu0hCdC9w@mail.gmail.com>
-References: <CAJ_zFkJw7hNxGp0PNmQbH0suVwfkgzbCsvs2Sv1OdxD+UBiraw@mail.gmail.com>
-	<55315C2B.6050207@redhat.com>
-	<CANtF8NBuiE+1F65+cLp0CXivZUiYxyJcZK2Yhz9J1qu0hCdC9w@mail.gmail.com>
-Message-ID: <CAJ_zFkKibZ5LixkHx5PB6L3H5Xc6rJSSniFHo39Ewxwt=UGjqw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a11476f56cdb0770513f291a1
-Date: Fri, 17 Apr 2015 14:50:32 -0700
-From: Tavis Ormandy <taviso@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Problems in automatic crash analysis frameworks
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 11871 invoked from network); 26 Oct 2022 06:26:47 -0000
+Date: Wed, 26 Oct 2022 08:26:35 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <qo17no6-sr1s-8ps-469n-r218o8n99n2@unkk.fr>
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] CVE-2022-32221: POST following PUT confusion
+ (curl)
 
---001a11476f56cdb0770513f291a1
-Content-Type: text/plain; charset=UTF-8
+CVE-2022-32221: POST following PUT confusion
+============================================
 
-On Fri, Apr 17, 2015 at 1:54 PM, Grandma Eubanks <tborland1@gmail.com>
-wrote:
-> Just to enter into the fray, I reported a simple dmesg_restrict bypass and
-> found a lot of these recent more recent 'information' disclosures a while
-> ago with minimal changes:
->
-> https://bugzilla.redhat.com/show_bug.cgi?id=1128400
->
+Project curl Security Advisory, October 26 2022 -
+[Permalink](https://curl.se/docs/CVE-2022-32221.html)
 
-Ugh, definitely needs to be fixed.
+VULNERABILITY
+-------------
 
-I've been waiting for some commits before I look any further, as I don't
-know if each issue is going to be addressed individually or if some
-rearchitecturing will resolve everything.
+When doing HTTP(S) transfers, libcurl might erroneously use the read callback
+(`CURLOPT_READFUNCTION`) to ask for data to send, even when the
+`CURLOPT_POSTFIELDS` option has been set, if the same handle previously was
+used to issue a `PUT` request which used that callback.
 
-Tavis.
+This flaw may surprise the application and cause it to misbehave and either
+send off the wrong data or use memory after free or similar in the subsequent
+`POST` request.
 
---001a11476f56cdb0770513f291a1--
+The problem exists in the logic for a reused handle when it is changed from a
+PUT to a POST.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+The code actually sending wrong data or doing a use-after-free is not present
+in libcurl code but are only presumed scenarios that might become the outcome
+of libcurl surprisingly calling the read callback in a situation where it is
+not expected to.
+
+This flaw cannot be triggered with the command line tool.
+
+This issue was [reported and managed
+publicly](https://github.com/curl/curl/issues/9507) before the security impact
+was properly understood.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2022-32221 to this issue.
+
+CWE-440: Expected Behavior Violation
+
+Severity: medium
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: libcurl 7.7 to and including 7.85.0
+- Not affected versions: libcurl < 7.7 and >= 7.86.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+[The fix for
+CVE-2022-32221](https://github.com/curl/curl/commit/a64e3e59938abd7d6) was
+committed to the curl git repository and made public before the security
+impact of this issue become clear to us. The securty impact was not
+highlighted in the commit message nor surrounding messsaging.
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 7.86.0
+
+  B - Apply the patch to your local version
+
+  C - Do not do mix using the read callback and postfields string on a reused
+      easy handle
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on September 19, 2022. We
+contacted distros@openwall on October 18, 2022.
+
+libcurl 7.86.0 was released on October 26 2022, coordinated with the
+publication of this advisory.
+
+CREDITS
+-------
+
+- Reported-by: Robby Simpson
+- Patched-by: Daniel Stenberg
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
