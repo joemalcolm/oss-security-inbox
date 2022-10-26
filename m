@@ -1,4 +1,4 @@
-Received: (qmail 9430 invoked by uid 550); 21 Apr 2024 20:44:32 -0000
+Received: (qmail 13947 invoked by uid 550); 26 Oct 2022 06:27:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,81 +7,106 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25759 invoked from network); 21 Apr 2024 20:06:33 -0000
-Date: Sun, 21 Apr 2024 22:06:25 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20240421200625.GA16869@openwall.com>
-References: <20240414190855.GA12716@openwall.com> <354b913bc1c154c1e3a2fc34ed8ed6b0d4641f11.camel@canonical.com> <20240419154435.GA7046@openwall.com> <ZiKo7shztRpgvAIC@remnant.pseudorandom.co.uk> <20240420181211.GA12463@openwall.com> <s7YhmQrnIRbmomFiJi0MJSYAPjcHLyd18qqgj0vxVww8pXjjmpmzh_TKTfQe-aLvqDRRXaVowt__uXBXONKKDA48d1uKDyeEuSiH0yM0uUI=@protonmail.ch>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <s7YhmQrnIRbmomFiJi0MJSYAPjcHLyd18qqgj0vxVww8pXjjmpmzh_TKTfQe-aLvqDRRXaVowt__uXBXONKKDA48d1uKDyeEuSiH0yM0uUI=@protonmail.ch>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Linux: Disabling network namespaces
+Received: (qmail 13889 invoked from network); 26 Oct 2022 06:27:00 -0000
+Date: Wed, 26 Oct 2022 08:26:48 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <1666n13n-4p11-777r-srq5-sp89r0q5s631@unkk.fr>
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: multipart/mixed; BOUNDARY="-39887073-46164039-1666705413=:3549212"
+Content-ID: <orq0o340-nqrs-980-7o0-8nsoq19372qo@unkk.fr>
+Subject: [oss-security] [SECURITY ADVISORY] CVE-2022-42916: HSTS bypass via IDN (curl)
 
-On Sat, Apr 20, 2024 at 09:33:07PM +0000, Jordan Glover wrote:
-> bubblwrap has --disable-userns option which prevents creation of nested namespaces (from manpage):
-> 
->        --disable-userns
-> Prevent the process in the sandbox from creating further user namespaces, so that it cannot rearrange the filesystem namespace or do other more complex namespace modification. This is currently implemented by setting the user.max_user_namespaces sysctl to 1, and then entering a nested user namespace which is unable to raise that limit in the outer namespace. This option requires --unshare-user, and doesn't work in the setuid version of bubblewrap.
-> 
-> Flatpak uses this (or seccomp filter) to block nested namespaces as this can bypass security its design. For this reason firefox own sandbox doesn't use namespaces in flatpak, see https://bugzilla.mozilla.org/show_bug.cgi?id=1756236
+---39887073-46164039-1666705413=:3549212
+Content-Type: text/plain; CHARSET=ISO-2022-JP; format=flowed
+Content-ID: <r58ss4n-n415-76n8-7p2p-n2nq2n9p29r8@unkk.fr>
 
-Thanks, I didn't expect it was this advanced already.
+CVE-2022-42916: HSTS bypass via IDN
+===================================
 
-In what exact way would nested namespaces bypass the security design of
-Flatpak?  Is this about the kernel's attack surface exposed by
-capabilities in a namespace or something else?  I guess capabilities are
-also dropped in the nested namespace?
+Project curl Security Advisory, October 26 2022 -
+[Permalink](https://curl.se/docs/CVE-2022-42916.html)
 
-After reviewing some kernel code, I have doubts as to how effective the
-dropping of capabilities in a namespace actually is.
+VULNERABILITY
+-------------
 
-security/commoncap.c: cap_capable() includes this:
+curl's HSTS check could be bypassed to trick it to keep using HTTP.
 
-                /*
-                 * The owner of the user namespace in the parent of the
-                 * user namespace has all caps.
-                 */
-                if ((ns->parent == cred->user_ns) && uid_eq(ns->owner, cred->euid))
-                        return 0;
+Using its HSTS support, curl can be instructed to use HTTPS directly instead
+of using an insecure clear-text HTTP step even when HTTP is provided in the
+URL. This mechanism could be bypassed if the host name in the given URL uses
+IDN characters that get replaced to ASCII counterparts as part of the IDN
+conversion. Like using the character UTF-8 U+3002 (IDEOGRAPHIC FULL STOP)
+instead of the common ASCII full stop (U+002E) `.`.
 
-this check is only reached when cap_capable() is called for a target
-namespace other than one the credentials are from.  However, such uses
-do exist, e.g. via Netlink, which would expose e.g. Netfilter:
+Like this: `http://curl。se。`
 
-net/netlink/af_netlink.c:
+We are not aware of any exploit of this flaw.
 
-/**
- * netlink_net_capable - Netlink network namespace message capability test
- * @skb: socket buffer holding a netlink command from userspace
- * @cap: The capability to use
- *
- * Test to see if the opener of the socket we received the message
- * from had when the netlink socket was created and the sender of the
- * message has the capability @cap over the network namespace of
- * the socket we received the message from.
- */
-bool netlink_net_capable(const struct sk_buff *skb, int cap)
-{
-        return netlink_ns_capable(skb, sock_net(skb->sk)->user_ns, cap);
-}
+INFO
+----
 
-So I worry whether even with all namespaces in a sandbox having dropped
-capabilities, an attack can still be arranged (with a pair of namespaces
-one nested in the other) where a task effectively "has all caps" for a
-dangerous operation like configuring Netfilter due to it hitting code
-paths like this, which bypass capability bit checks.
+This flaw was introduced in [commit
+7385610d0c7](https://github.com/curl/curl/commit/7385610d0c7), which was
+shipped enabled by default from [commit
+d71ff2b9db566b3f](https://github.com/curl/curl/commit/d71ff2b9db566b3f) in
+curl 7.77.0.
 
-The above finding may be a reason for us to prefer making capabilities
-in a namespace ineffective vs. dropping capabilities.  In context of my
-idea/proposal for a new sysctl, it could be better for it to work as I
-had described, overriding security_capable() return, instead of e.g.
-hooking return of create_user_ns() and dropping new cred's capabilities.
+This issue is similar to the previous [CVE-2022-30115](https://curl.se/docs/CVE-2022-30115.html).
 
-I hope the Ubuntu/AppArmor solution is also safe in this respect, as it
-sounds like it similarly makes capabilities ineffective instead of
-dropping them.
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2022-42916 to this issue.
 
-Alexander
+CWE-319: Cleartext Transmission of Sensitive Information
+
+Severity: Medium
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.77.0 to and including 7.85.0
+- Not affected versions: curl < 7.77.0 and curl >= 7.86.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+A [fix for CVE-2022-42916](https://github.com/curl/curl/commit/53bcf55b4538067e6)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 7.86.0
+
+  B - Apply the patch to your local version
+
+  C - Stick to always using `HTTPS://` in URLs
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on October 11, 2022. We contacted
+distros@openwall on October 18, 2022.
+
+libcurl 7.86.0 was released on October 26 2022, coordinated with the
+publication of this advisory.
+
+CREDITS
+-------
+
+- Reported-by: Hiroki Kurosawa
+- Patched-by: Daniel Stenberg
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
+---39887073-46164039-1666705413=:3549212--
