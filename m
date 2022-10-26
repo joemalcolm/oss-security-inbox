@@ -1,63 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/03/4
-Message-ID: <20220703160508.GA17310@openwall.com>
-Date: Sun, 3 Jul 2022 18:05:08 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Hugues ANGUELKOV <hanguelkov@...dorisec.fr>
-Subject: Re: Linux kernel: Netfilter heap buffer overflow in nft_set_elem_init
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/26/3
+Message-ID: <n1srq084-n412-2732-q867-r4ns9q23r570@unkk.fr>
+Date: Wed, 26 Oct 2022 08:26:44 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] CVE-2022-42915: HTTP proxy double-free (curl)
 Content-Type: text/plain; charset=utf-8
 
-Proposed fix by the maintainer:
+CVE-2022-42915: HTTP proxy double-free
+======================================
 
-https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=7e6bc1f6cabcd30aba0b11219d8e01b952eacbb6
+Project curl Security Advisory, October 26 2022 -
+[Permalink](https://curl.se/docs/CVE-2022-42915.html)
 
-netdev thread leading to there starts here:
+VULNERABILITY
+-------------
 
-https://lists.openwall.net/netdev/2022/07/02/86
+If curl is told to use an HTTP proxy for a transfer with a non-HTTP(S) URL, it
+sets up the connection to the remote server by issuing a `CONNECT` request to
+the proxy, and then *tunnels* the rest of protocol through.
 
-> ----- Forwarded message from Hugues ANGUELKOV <hanguelkov@...dorisec.fr> -----
+An HTTP proxy might refuse this request (HTTP proxies often only allow
+outgoing connections to specific port numbers, like 443 for HTTPS) and instead
+return a non-200 response code to the client.
 
-> One of our collaborators at RandoriSec, Arthur Mongodin found a 
-> vulnerability within the netfilter subsystem during his internship.
-> Successful exploitation of this bug leads to a Local Privilege 
-> Escalation (LPE) to the `root` user, as tested on Ubuntu server 22.04 
-> (Linux 5.15.0-39-generic).
-> This vulnerability is a heap buffer overflow due to a weak check and has 
-> been introduced within the commit 
-> [fdb9c405e35bdc6e305b9b4e20ebc141ed14fc81](https://github.com/torvalds/linux/commit/fdb9c405e35bdc6e305b9b4e20ebc141ed14fc81), 
-> it affects the Linux kernel since the version 5.8 and is still present 
-> today.
+Due to flaws in the error/cleanup handling, this could trigger a double-free
+in curl if one of the following schemes were used in the URL for the transfer:
+`dict`, `gopher`, `gophers`, `ldap`, `ldaps`, `rtmp`, `rtmps`, `telnet`
 
-The fix commit above says it Fixes an older commit from 2015
-(7d7402642eaf), but the bug was likely only exposed later, by the 2020
-commit referenced in RandoriSec's message above.  Quoting from:
+We are not aware of any exploit of this flaw.
 
-https://patchwork.ozlabs.org/project/netfilter-devel/patch/20220702191029.238563-1-pablo@netfilter.org/
+INFO
+----
 
-   Insufficient validation of element datatype and length in
-   nft_setelem_parse_data(). At least commit 7d7402642eaf updates
-   maximum element data area up to 64 bytes when only 16 bytes
-   where supported at the time. Support for larger element size
-   came later in fdb9c405e35b though. Picking this older commit
-   as Fixes: tag to be safe than sorry.
+The bug was introduced in [this commit](https://github.com/curl/curl/commit/51c0ebcff2140c3).
 
-> The vulnerable code path can be reached if the kernel is built with the 
-> configuration `CONFIG_NETFILTER`, `CONFIG_NF_TABLES` enabled.
-> To exploit the vulnerability, an attacker may need to obtain an 
-> unprivileged user namespace to gain the capability `CAP_NET_ADMIN` 
-> (`CONFIG_USER_NS` and `CONFIG_NET_NS` enabled, and 
-> `kernel.unprivileged_userns_clone = 1`).
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2022-42915 to this issue.
 
-Another scenario is the attacker having (or gaining by other means)
-"root" access inside a pre-existing container with CAP_NET_ADMIN.  This
-does not require unprivileged user namespaces as the container may have
-been started by host root.
+CWE-415: Double Free
 
-> we can 
-> suggest the August, 15th 2022 as a potential date for public disclosure.
+Severity: medium
 
-FWIW, an embargo this long wouldn't have been accepted by linux-distros.
-The latest this issue could be disclosed publicly is July 15th.
+AFFECTED VERSIONS
+-----------------
 
-Alexander
+- Affected versions: curl 7.77.0 to and including 7.85.0
+- Not affected versions: curl < 7.77.0 and >= 7.86.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+[The fix for CVE-2022-42915](https://github.com/curl/curl/commit/55e1875729f9d9fc7315ce)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 7.86.0
+
+  B - Apply the patch to your local version
+
+  C - Do not do use HTTP proxy
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on October 4, 2022. We contacted
+distros@...nwall on October 18, 2022.
+
+libcurl 7.86.0 was released on October 26 2022, coordinated with the
+publication of this advisory.
+
+CREDITS
+-------
+
+This report was part of the security audit performed by Trail of Bits.
+
+- Reported-by: Trail of Bits
+- Patched-by: Daniel Stenberg
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
