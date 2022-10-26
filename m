@@ -1,44 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/23/4
-Message-ID: <5b01b17d-0c06-2bbb-0a05-59eacab2b905@oracle.com>
-Date: Wed, 23 Feb 2022 11:52:13 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Fwd: Cyrus-SASL 2.1.28 released [fixes CVE-2022-24407 & CVE-2019-19906]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/26/1
+Message-ID: <qo17no6-sr1s-8ps-469n-r218o8n99n2@unkk.fr>
+Date: Wed, 26 Oct 2022 08:26:35 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] CVE-2022-32221: POST following PUT confusion (curl)
 Content-Type: text/plain; charset=utf-8
 
+CVE-2022-32221: POST following PUT confusion
+============================================
 
+Project curl Security Advisory, October 26 2022 -
+[Permalink](https://curl.se/docs/CVE-2022-32221.html)
 
+VULNERABILITY
+-------------
 
--------- Forwarded Message --------
-Subject: Cyrus-SASL 2.1.28 released
-Date: Tue, 22 Feb 2022 10:11:53 -0800
-From: Quanah Gibson-Mount <quanah@...t-mail.org>
-To: announce@...us.topicbox.com
+When doing HTTP(S) transfers, libcurl might erroneously use the read callback
+(`CURLOPT_READFUNCTION`) to ask for data to send, even when the
+`CURLOPT_POSTFIELDS` option has been set, if the same handle previously was
+used to issue a `PUT` request which used that callback.
 
-The Cyrus team is proud to announce the immediate availability of the new version of Cyrus-SASL: 2.1.28
+This flaw may surprise the application and cause it to misbehave and either
+send off the wrong data or use memory after free or similar in the subsequent
+`POST` request.
 
-Among other things, this release fixes two CVEs:
+The problem exists in the logic for a reused handle when it is changed from a
+PUT to a POST.
 
-lib/common.c:
-CVE-2019-19906 Fix off by one error (Issue#587)
+We are not aware of any exploit of this flaw.
 
-plugins/sql.c:
-CVE-2022-24407 Escape password for SQL insert/update commands.
+INFO
+----
 
-Of course, please check the release notes for the full list of changes.
+The code actually sending wrong data or doing a use-after-free is not present
+in libcurl code but are only presumed scenarios that might become the outcome
+of libcurl surprisingly calling the read callback in a situation where it is
+not expected to.
 
-Release notes:
+This flaw cannot be triggered with the command line tool.
 
-<https://www.cyrusimap.org/sasl/sasl/release-notes/2.1/index.html#new-in-2-1-28>
+This issue was [reported and managed
+publicly](https://github.com/curl/curl/issues/9507) before the security impact
+was properly understood.
 
-Download URLs:
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2022-32221 to this issue.
 
-<https://github.com/cyrusimap/cyrus-sasl/releases/download/cyrus-sasl-2.1.28/cyrus-sasl-2.1.28.tar.gz>
-<https://github.com/cyrusimap/cyrus-sasl/releases/download/cyrus-sasl-2.1.28/cyrus-sasl-2.1.28.tar.gz.sig>
+CWE-440: Expected Behavior Violation
 
-On behalf of the Cyrus team,
+Severity: medium
 
-Kind regards,
+AFFECTED VERSIONS
+-----------------
 
-Quanah Gibson-Mount
+- Affected versions: libcurl 7.7 to and including 7.85.0
+- Not affected versions: libcurl < 7.7 and >= 7.86.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+[The fix for
+CVE-2022-32221](https://github.com/curl/curl/commit/a64e3e59938abd7d6) was
+committed to the curl git repository and made public before the security
+impact of this issue become clear to us. The securty impact was not
+highlighted in the commit message nor surrounding messsaging.
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 7.86.0
+
+  B - Apply the patch to your local version
+
+  C - Do not do mix using the read callback and postfields string on a reused
+      easy handle
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on September 19, 2022. We
+contacted distros@...nwall on October 18, 2022.
+
+libcurl 7.86.0 was released on October 26 2022, coordinated with the
+publication of this advisory.
+
+CREDITS
+-------
+
+- Reported-by: Robby Simpson
+- Patched-by: Daniel Stenberg
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
