@@ -1,55 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/24/2
-Message-ID: <20220524132929.GA29337@openwall.com>
-Date: Tue, 24 May 2022 15:29:29 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros list policy and Linux kernel
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/26/2
+Message-ID: <p640o2q7-363s-36q2-1n4q-7q204o9qnp5n@unkk.fr>
+Date: Wed, 26 Oct 2022 08:26:39 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] CVE-2022-35260: .netrc parser out-of-bounds access (curl)
 Content-Type: text/plain; charset=utf-8
 
-On Sun, May 22, 2022 at 09:19:51PM +0200, Solar Designer wrote:
-> it looks like Vegard
-> Nossum and maybe Thadeu Lima de Souza Cascardo intend to propose changes
-> to the kernel's Documentation/admin-guide/security-bugs.rst:
-> 
-> On Fri, May 20, 2022 at 10:14:07AM +0200, Vegard Nossum wrote:
-> > I'll respond a bit later with a slightly more detailed option that also
-> > includes potential modifications to the in-kernel documentation as
-> > displayed on kernel.org.
+CVE-2022-35260: .netrc parser out-of-bounds access
+==================================================
 
-Reports of Linux kernel issues sent to linux-distros tend to ignore our
-policies - not only in terms of the aspect that started this thread, but
-also in that the reporter doesn't propose a specific date/time for
-making the issue (fully) public (maybe doesn't intend to do so
-themselves at all) and doesn't know/care/want to make a possible PoC
-public (if they shared that with linux-distros).
+Project curl Security Advisory, October 26 2022 -
+[Permalink](https://curl.se/docs/CVE-2022-35260.html)
 
-Overall, it looks like they're not reading our policy at all until we
-ask them to.
+VULNERABILITY
+-------------
 
-Documentation/admin-guide/security-bugs.rst gives the list posting
-address and mentions the [vs] prefix.  It also does link to the wiki,
-but that makes actually visiting the wiki and reading the policy
-technically optional.  Maybe only the wiki link should be kept, and the
-posting address removed.  Alternatively, if a dependency on the wiki is
-undesirable, maybe the Linux kernel documentation should include a copy
-of linux-distros instructions for reporters (copied from the wiki,
-including the posting address) in a nearby text file (and add to it the
-wiki link for a possibly more current revision), and refer to that.
+curl can be told to parse a `.netrc` file for credentials. If that file ends
+in a line with consecutive non-white space letters and no newline, curl could
+read past the end of the stack-based buffer, and if the read works, write a
+zero byte possibly beyond its boundary.
 
-There's also this:
+This will in most cases cause a segfault or similar, but circumstances might
+also cause different outcomes.
 
-"Distros will need some time to test the proposed patch and will
-generally request at least a few days of embargo"
+If a malicious user can provide a custom netrc file to an application or
+otherwise affect its contents, this flaw could be used as denial-of-service.
 
-which kind of goes against our request that the reporter be the first to
-propose a tentative public disclosure date/time.  So I suggest the above
-phrase be dropped.
+We are not aware of any exploit of this flaw.
 
-If there are no objections, Vegard can you please suggest specific edits
-accordingly, and if there are no objections to those either, then submit
-them as a patch?
+INFO
+----
 
-Thanks,
+The flaw was introduced in curl with [this
+commit](https://github.com/curl/curl/commit/eeaae10c0fb27aa06), first shipped
+in curl 7.84.0.
 
-Alexander
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2022-35260 to this issue.
+
+CWE-121: Stack-based Buffer Overflow
+
+Severity: low
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.84.0 to and including 7.85.0
+- Not affected versions: curl < 7.84.0 and >= 7.86.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+[The fix for CVE-2022-35260](https://github.com/curl/curl/commit/c97ec984fb2bc919a3aa86)
+
+RECOMMENDATIONS
+---------------
+
+  A - Upgrade curl to version 7.86.0
+
+  B - Apply the patch to your local version
+
+  C - Do not use `.netrc` files
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on October 3, 2022. We contacted
+distros@...nwall on October 18, 2022.
+
+libcurl 7.86.0 was released on October 26 2022, coordinated with the
+publication of this advisory.
+
+CREDITS
+-------
+
+- Reported-by: Hiroki Kurosawa
+- Patched-by: Daniel Stenberg
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
