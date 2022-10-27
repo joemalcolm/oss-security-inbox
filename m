@@ -1,26 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/24/3
-Message-ID: <78ad4469-23ca-e81d-6a5f-43afc716dfa9@enst-bretagne.fr>
-Date: Thu, 24 Mar 2022 07:46:31 +0100
-From: Gabriel Corona <gabriel.corona@...t-bretagne.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/28/1
+Message-ID: <CAB=ivF85hhN73MbzdX9j72Vqa5pNuF-FVYZD9BToqRM1qPSx2g@mail.gmail.com>
+Date: Thu, 27 Oct 2022 15:25:42 -0700
+From: Roxana Bradescu <roxabee@...omium.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Lack of TLS certification chain validation in ZAP Proxy
+Cc: libressl-security@...nbsd.org
+Subject: Re: Forthcoming OpenSSL Releases
 Content-Type: text/plain; charset=utf-8
 
-On 23/03/2022 22:02, Gabriel Corona wrote:
-> ZAP proxy does not verify the certificate chain of the HTTPS servers it 
-> connects to. For example, it connects without warning to servers 
-> presenting a self-signed certificate, an expired certificate, etc.
-> 
-> This opens up a browser configured to use ZAP as an intercepting proxy to:
-> 
-> 1. man-in-the-middle (MITM) attacks;
-> 2. DNS rebinding attacks (to HTTPS servers configured as default virtual 
-> server).
-> 
+I think that's a question for the LibreSSL Security team as to whether they
+do pre-advisories?
 
-This is CVE-2022-27820.
+---
+Regards, Roxana
 
-Regards,
+On Thu, Oct 27, 2022 at 8:13 AM Georgi Guninski <gguninski@...il.com> wrote:
 
-Gabriel Corona
+> Is libressl affected by these?
+>
+> Haven't seen announcement from libressl.
+>
+
