@@ -1,39 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/17/7
-Message-ID: <20220517125233.q2xhgdov2l7bpuvb@yuggoth.org>
-Date: Tue, 17 May 2022 12:52:34 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/27/3
+Message-ID: <Y1q26N3sohrCvZA6@quatroqueijos.cascardo.eti.br>
+Date: Thu, 27 Oct 2022 13:50:48 -0300
+From: Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros list policy and Linux kernel
+Subject: Re: CVE-2022-2602 - Linux kernel io_uring UAF
 Content-Type: text/plain; charset=utf-8
 
-Another potential nail in the coffin for embargoed disclosure lists
-such as linux-distros and distros, as well as the idea of embargoed
-disclosure in general, is recent changes in export controls, most
-recently by the USA's Commerce Dept. While there seem to be
-exceptions called out for "cybersecurity response" and
-"vulnerability disclosure" in 86-FR-58205 (Information Security
-Controls: Cybersecurity Items), I've been in a number of semi-hushed
-conversations with vulnerability managers of other large free/libre
-open source projects over worries that the provisions for this are
-still too vague.
+On Tue, Oct 18, 2022 at 01:59:51PM -0300, Thadeu Lima de Souza Cascardo wrote:
+> A local privilege escalation vulnerabilty involving Unix socket Garbage
+> Collection and io_uring was reported and fixed as:
+> 
+> 0091bfc81741b8d3aeb3b7ab8636f911b2de6e80 ("io_uring/af_unix: defer registered files gc to io_uring release")
+> 
+> The vulnerability is a use-after-free that happens when an io_uring request
+> is being processed on a registered file and the Unix GC runs and frees the
+> io_uring fd and all the registered fds. The order at which the Unix GC
+> processes the inflight fds may lead to registered fds be freed before the
+> io_uring is released and has the chance to unregister and wait for such
+> requests to finish.
+> 
+> One way to trigger this race condition is to use userfaultfd and other
+> similar strategies that cause the request to be held waiting for the
+> attacker to trigger the free.
+> 
+> This issue was reported as ZDI-CAN-17428 and has been assigned
+> CVE-2022-2602.
+> 
+> It affects upstream stable 5.4.y, 5.15.y and later versions. 5.10.y may be
+> mitigated by the fact that commit 0f2122045b946241a9e549c2a76cea54fa58a7ff
+> ("io_uring: don't rely on weak ->files references") is present, but it is
+> safer to apply the fixes.
+> 
+> A PoC will be posted in 7 days, on October 25th.
+> 
+> Cascardo.
 
-In particular, I've heard concerns raised by developers living in
-the USA that privately supplying vulnerability fix patches or
-information on exploiting privately identified vulnerabilities to
-individuals in "restricted" countries could be a contravention of
-federal export control policy, and that determining whether every
-individual in receipt of this information is not a resident of a
-"restricted" country is unfeasible enough to make a switch to
-full-disclosure models increasingly attractive for these projects.
+Sorry about posting this late, but here it is.
 
-Unfortunately, the regulations are also new enough that getting a
-clear risk assessment on these matters from legal counsel available
-to community-run projects and non-profit foundations is...
-challenging. Further, I've had some vulnerability manager colleagues
-instructed by their employers to cease participation in any embargo
-processes for related "corporate liability" reasons.
--- 
-Jeremy Stanley
+Cascardo.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
+View attachment "poc.c" of type "text/x-csrc" (3499 bytes)
