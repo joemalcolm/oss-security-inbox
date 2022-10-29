@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1588" "Thursday" "9" "April" "2015" "22:40:07" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<55275427.1040009@redhat.com>" "39" "[oss-security] Apache Tomcat partial file upload DoS CVE-2014-0230" nil nil nil "4" "2015041004:40:07" "[oss-security] Apache Tomcat partial file upload DoS CVE-2014-0230" (number mark "        kseifried@re Apr  9   39/1588  " thread-indent "\"[oss-security] Apache Tomcat partial file upload DoS CVE-2014-0230\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 13596 invoked by uid 550); 10 Apr 2015 04:40:22 -0000
+Received: (qmail 23608 invoked by uid 550); 29 Oct 2022 20:44:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +6,99 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13569 invoked from network); 10 Apr 2015 04:40:21 -0000
-Message-ID: <55275427.1040009@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="eGkWaUH0Jn5IwwHgeUxgxPmXJ19FgiR1N"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
-Date: Thu, 09 Apr 2015 22:40:07 -0600
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Apache Tomcat partial file upload DoS CVE-2014-0230
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Received: (qmail 11403 invoked from network); 29 Oct 2022 20:20:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	invisiblethingslab.com; h=cc:cc:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:sender:subject:subject:to:to; s=fm3; t=1667074790; x=
+	1667161190; bh=cuzbOPxP9TYQ3nzkrifMeYW2qRa8aERKQS3fSBiyfuA=; b=k
+	Y1ABBBGblkka2YRY5pmG7MIY42wzX8XVKFW2laie5jMyTY3MrdE6tsiCTo2i2MDE
+	44ZETOoM/cAQ+7r2XrmGdsJRKOvGA7ak6r2okNxnhwreMvis1Qd5mJFToC9V9cd2
+	zd/TG0gNS2iaAYDe04kp87o4kIsiyJKqfPGxbYPbmR+4JVKu1cScHW7LPl7/8/ja
+	nR758CvXyUaLJQ0LbL/DlBUunl97dv+FjjO1DBor0fsgB29cGrvsU63qYDR/oL55
+	UKpKsyZ4AurnRfLPx24kPcFMFh17mpMqOtygSp0FUdeVwN/SllB6g/lWsY4AfbDQ
+	JBEAX/ibCro4Nj+0mqhoA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:sender:subject:subject:to:to
+	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1667074790; x=1667161190; bh=cuzbOPxP9TYQ3nzkrifMeYW2qRa8
+	aERKQS3fSBiyfuA=; b=HJmQfzhRRKma1uY7W/Rjh259O2jYWmCncv9a6i+itIVG
+	Or+SiqEJjUalygUSspW3TLWnk8ajcBOURNWaUKMXKlvh/WW/MrU2z1kY8sqmGEEf
+	el2aoI7RWm7C+JRWY3OwYMMw2K47od2Lt2V6UlIsG7q/jmjjujWF+Vdhv+WVz25f
+	LTk181alK9OeGC6Wbama2qXgO5N8rTBO95S05bBGjg22+lXnU0Wm2c0oTjKuKqBN
+	9LR5ckVLnxVqvvLZn+8A8vw/QmIqeCzIDrCfuA22RlutwfTjTRJ2n+Fm1AByPPss
+	rKrHj8BvlRq2igw6oNG+baKLCPOIKAeqQixCMGVE8A==
+X-ME-Sender: <xms:5opdY5mJlQBXwFbZrwDkXWttwkNz6ltz0GInUcYmM-MZiWA6iCNswg>
+    <xme:5opdY00oTWiuvz4dnKEEYce1G81mllBg7JGOeJVrkqLb9W-53VM2BzZUFhOuYPGCL
+    2Fqf4oWddxKV2s>
+X-ME-Received: <xmr:5opdY_qua5-hwjCJq4Bhg_c14w1cSnnn04o6ZhixUuYcfaqfeeiG8MguVuNT>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrtdekgddugeekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpeffvghmihcuofgrrhhivgcuqfgsvghnohhurhcuoeguvghm
+    ihesihhnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhmqeenucggtffrrghtthgvrh
+    hnpeduieelfeeutedvleehueetffejgeejgeffkeelveeuleeukeejjeduffetjeekteen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpeguvghmih
+    esihhnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhm
+X-ME-Proxy: <xmx:5opdY5mIaf-E_SexnJySaeH1Cg7FLJah4-IJYeyPEPzzG6man2lMEw>
+    <xmx:5opdY31j-GfEztiVeicXll7fmACZs0pd_fQpflEU3BXv_agXGU2Yfg>
+    <xmx:5opdY4tGRwxJBdAV2x6fQy_L6dBcUcTeU_F9cXN-dU4wp6n5EpQWuw>
+    <xmx:5opdY0_x_SYdjBlUdxVa5xTDREKL3WRUThk68_CAlob5nBYQ95-Cpg>
+Feedback-ID: iac594737:Fastmail
+Date: Sat, 29 Oct 2022 16:19:41 -0400
+From: Demi Marie Obenour <demi@invisiblethingslab.com>
+To: oss-security@lists.openwall.com, Roxana Bradescu <roxabee@chromium.org>
+Cc: libressl-security@openbsd.org
+Message-ID: <Y12K5FxvbPe4gpkU@itl-email>
+References: <CAB=ivF85hhN73MbzdX9j72Vqa5pNuF-FVYZD9BToqRM1qPSx2g@mail.gmail.com>
+ <E8ADE3CA-4D49-4149-808F-8EC94BF3502D@obtuse.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Cs+jo5GlHo2rN8rS"
+Content-Disposition: inline
+In-Reply-To: <E8ADE3CA-4D49-4149-808F-8EC94BF3502D@obtuse.com>
+Subject: Re: [oss-security] Forthcoming OpenSSL Releases
 
---eGkWaUH0Jn5IwwHgeUxgxPmXJ19FgiR1N
-Content-Type: text/plain; charset=utf-8
+--Cs+jo5GlHo2rN8rS
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+Date: Sat, 29 Oct 2022 16:19:41 -0400
+From: Demi Marie Obenour <demi@invisiblethingslab.com>
+To: oss-security@lists.openwall.com, Roxana Bradescu <roxabee@chromium.org>
+Cc: libressl-security@openbsd.org
+Subject: Re: [oss-security] Forthcoming OpenSSL Releases
 
-http://svn.apache.org/viewvc?view=3Drevision&revision=3D1603781
+On Sat, Oct 29, 2022 at 08:43:08AM -0400, Bob Beck wrote:
+> Libressl is not vulnerable to the upcoming issue.=20
 
-was identified as a partial DoS (non persistent, but you can very easily
-eat up all server ram) and assigned CVE-2014-0230 and then the person
-handling it left Red Hat and it didn't get processed properly.
-
+Is the same true for BoringSSL?
 --=20
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-
---eGkWaUH0Jn5IwwHgeUxgxPmXJ19FgiR1N
+--Cs+jo5GlHo2rN8rS
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
 
-iQIcBAEBAgAGBQJVJ1QnAAoJEBYNRVNeJnmT6vIP/0yat5E5qRsPfEnzNPvemd6k
-QWwsQHw8hkz7zQzxsFOk8OhPypK5W3U55yZgmoIVMCkiMuaU5jnRYSIkz9/zMiqI
-zVKdaIYWKjKa7rUXQ/Fk5wMsivJ3Ifbb408Lpx2jPuaZE1nypzc2JdfPytLUroTd
-yYrOtdWRTJ9iGC2sKi3hVvVvMRM+Rk1IcaOTO0PpexXzooyI8f5Uict+Y+fNeJGy
-yQQKjIGv0iukkKDQFbrOTJDlf7LrM/kGqJo3NDEvEQA5N4Af1VEY+w1IjkMjaMBw
-/0K3SFSt3KMGUDGAbFe+UgVMJi4eutpw7jiXUUNqE7KNeYi4bTqUicoLcOxN6auV
-WaInSNEbdWlSFY/BH4HK3dQM0BCLyP7PjDlj+TaBBXyQ+8PQCSGUmDWg+hfbZXd+
-ydDMe3/7E0tUEpoD9gEl5XVg1b3Zmij8xOpyl+O5yWrfEtL+5e+ypYxyLe8DvzF4
-NEvQgADI/NuAAzUiQGBvrAolgaBDipi1dApcbEpBlxr6YwvaFiPCZlX/yuCw4EIS
-xbxYVKrs9Vvd1ATT/W3776i27tKKrPDDLhhC/fBZy9rzgeOYGD5DOZYvII8fGjLZ
-Nz8JdFWBPUI7oaVzKiQO8y6iWUdpOiZXzJeNzJHb7lF5Qxlqfet2AoGCk0bORgpA
-raIHXnETHhNK+iHXSdgO
-=oUck
+iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmNdiuMACgkQsoi1X/+c
+IsFIwg/+J+hkOp9NseFwabFGb5bwZ3ESKqE08k+TLUA8iG5aJJp5XaKW1QjHytCg
+8AMKo01ZRvswEjsq+GUZN/cQp6iigBVPThqdkgIiJOCHls5QdNgv/MSClRgEaG3U
+h+lE9/OqlFwC1U5Nn3lhYBhBmKjcfnU7cvGCcPubZM0ayUVSkYDACivgAO5IqhZa
+gWJQJwQT4aNKo9tvMwu+ymuzXHfKzY+M0nqxLv7+GdP1IQyBRNkeP983UkRL2pWg
+1oaGMfXLcFtbRAT1/fcfDp84LCh9JU5fKZ51fROMVpD+BNRpkZIDIVMVdohgeBTV
+vd2gbWzLSkecxiEcTHW7Kjbo6e3M3G5qryZUDuF+UFZj1yLbzbyXwssqFio1y51O
+Yn+uUep4/R70xn6OQmkxmiGlNwpY/GuSntrsFWdk6DaiLN8JfmlXP+86xLY3do8t
+P850eKUdTW6SOOQJY2SUX9gCPIt7F605Cxcl2d69Ws84hk3OHa47FuPJiC5ke4Be
+E/2knHWxid5M3jj00LSGhlKRBaoP2QJv9+K2zkx4wQ+MW2R2Kdz1E0v0AfEHzcfM
+bjR4Z2jsYVmEjBoeQTI+vQWXfK1TDBOEOh5MokXAbeE8uzwr/2H5I416GOo2ZJaY
+p1LOH9/hq8+4iL0AWtxzjn4lKH2wzxXzVd2YpVXO7FmJQH3v5R0=
+=BU90
 -----END PGP SIGNATURE-----
 
---eGkWaUH0Jn5IwwHgeUxgxPmXJ19FgiR1N--
+--Cs+jo5GlHo2rN8rS--
