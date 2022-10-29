@@ -1,4 +1,4 @@
-Received: (qmail 28488 invoked by uid 550); 5 Jun 2025 04:17:17 -0000
+Received: (qmail 8177 invoked by uid 550); 29 Oct 2022 13:04:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,82 +7,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 27669 invoked from network); 5 Jun 2025 04:16:59 -0000
-Date: Thu, 5 Jun 2025 06:16:45 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Cc: Qualys Security Advisory <qsa@qualys.com>,
-	Marco Benatto <mbenatto@redhat.com>
-Message-ID: <20250605041645.GA27217@openwall.com>
-References: <20250529171556.GA9260@localhost.localdomain> <20250603040528.GA12667@openwall.com> <CAOGQQ29wZe_Z8J5go4JZyM=Xc6ku-ton7xc6iqpwYaTUQ=VCmw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOGQQ29wZe_Z8J5go4JZyM=Xc6ku-ton7xc6iqpwYaTUQ=VCmw@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Local information disclosure in apport and systemd-coredump
+Received: (qmail 29749 invoked from network); 29 Oct 2022 12:43:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=obtuse.com; s=20200401;
+	t=1667047392;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=2cpn9F6kpUSwSRY8K9MMPPPqIyihfgdSsa+x+iwNB+I=;
+	b=hIHuQ1AMDyk68R8Q8KgtcBgcDTneaRdeT/1MjFMBYXKI/Grq9kqAKDfbJx4mpnckTN2LiE
+	5vAcd9Nef+nNSpRZEWR8zMkkrK8wqEB6Am6hGVILcoyJm2X8GOoMurPg4fWThqmtT1UqJc
+	Kfxzdhx3RPSCuymKbztnvmR53eCdU9E=
+Content-Type: multipart/alternative; boundary=Apple-Mail-1ED91C9F-0A1D-4B5D-8873-3B2FD4DC6876
+Content-Transfer-Encoding: 7bit
+From: Bob Beck <beck@obtuse.com>
+Mime-Version: 1.0 (1.0)
+Date: Sat, 29 Oct 2022 08:43:08 -0400
+Message-Id: <E8ADE3CA-4D49-4149-808F-8EC94BF3502D@obtuse.com>
+References: <CAB=ivF85hhN73MbzdX9j72Vqa5pNuF-FVYZD9BToqRM1qPSx2g@mail.gmail.com>
+Cc: oss-security@lists.openwall.com, libressl-security@openbsd.org
+In-Reply-To: <CAB=ivF85hhN73MbzdX9j72Vqa5pNuF-FVYZD9BToqRM1qPSx2g@mail.gmail.com>
+To: Roxana Bradescu <roxabee@chromium.org>
+X-Mailer: iPhone Mail (19G82)
+Subject: Re: [oss-security] Forthcoming OpenSSL Releases
 
-Hi Marco,
+--Apple-Mail-1ED91C9F-0A1D-4B5D-8873-3B2FD4DC6876
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jun 03, 2025 at 07:20:25PM -0300, Marco Benatto wrote:
-> > Meanwhile, Red Hat confirms RHEL 9 and 10 are affected, and curiously
-> > lists not only systemd, but also NetworkManager and rpm-ostree among
-> > affected packages - I wonder why?
-> 
-> This was brought to my attention and I was checking it here. For the
-> NetworkManager I could check
-> that our manifest caught that because the NetworkManager lists systemd
-> as a bundled 'provides'.
-> This happens because NetworkManager seems to use parts of
-> systemd-network internally, I'll fix the information on
-> our page as in fact this flaw *does not* affect NetworkManager at all.
-> 
-> I'll try to further look into the rpm-ostree case as well.
+Libressl is not vulnerable to the upcoming issue.=20
 
-Thank you very much!
+> On Oct 27, 2022, at 18:25, Roxana Bradescu <roxabee@chromium.org> wrote:
+>=20
+> =EF=BB=BF
+> I think that's a question for the LibreSSL Security team as to whether th=
+ey do pre-advisories?
+>=20
+> ---
+> Regards, Roxana
+>=20
+>> On Thu, Oct 27, 2022 at 8:13 AM Georgi Guninski <gguninski@gmail.com> wr=
+ote:
+>> Is libressl affected by these?
+>>=20
+>> Haven't seen announcement from libressl.
 
-I see https://access.redhat.com/security/cve/CVE-2025-4598 now correctly
-states NetworkManager is "Not affected" (could as well omit it?), but
-incorrectly states that RHEL9's systemd is also "Not affected" (whereas
-I've just confirmed that it is indeed affected).
-
-Also, as it relates to severity scores for this issue, I think your CVSS
-vector/score of 4.7 is reasonable - maybe only Attack Complexity should
-be reduced to Low, but other than that can't argue with CVSS even if the
-numeric score ends up lower than it is for less important issues.
-However, I think the threat impact of Moderate should be increased to
-Important.  Your current justification is:
-
-> This flaw was rated as having a severity of Moderate due to the
-> complexity to exploit this flaw. The attacker needs to setup a way to
-> win the race condition and have an unprivileged local account to
-> successfully exploit this vulnerability.
-
-However, due to Vegard Nossum's newgrp ns_last_pid trick the race is
-quick to win.  Moreover, the below attack on daemons is even easier:
-
-On Thu, May 29, 2025 at 05:17:08PM +0000, Qualys Security Advisory wrote:
-> Last-minute update: while working on these vulnerabilities, we
-> eventually realized that systemd-coredump does not specify %d (the
-> kernel's per-process "dumpable" flag) in /proc/sys/kernel/core_pattern;
-> consequently a local attacker can crash (with kill(SIGSEGV) for example)
-> root daemons that fork() and setuid() to the attacker's uid, gain read
-> access to the resulting core dumps, and therefore to the root daemons'
-> memory. For example, we wrote a trivial proof of concept that dumps the
-> memory of OpenSSH's sshd-session, systemd's sd-pam, and the cron daemon,
-> and obtained secret information such as half of sshd's private ed25519
-> host key, password hashes from /etc/shadow, other users' crontabs, ASLR
-> addresses, stack canaries. This second attack (against root daemons) is
-> powerful, different from the first attack (against SUID programs), and
-> can certainly be further improved; and other secrets can certainly be
-> obtained from other daemons, but this is left as an exercise for the
-> interested reader.
-
-These easier attacks may also be why you'd lower CVSS Attack Complexity.
-
-This issue is something that will in fact be used as a step in local
-privilege escalation attacks in the wild, except maybe on systems with
-known lower-hanging fruit.
-
-Alexander
+--Apple-Mail-1ED91C9F-0A1D-4B5D-8873-3B2FD4DC6876--
