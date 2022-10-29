@@ -1,27 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/24/2
-Message-ID: <CA+7MY97noRm+cNmUO+QPGRseAvb3vEpyMsG6mVrcVNCLC0yTzg@mail.gmail.com>
-Date: Sun, 24 Jul 2022 13:16:59 -0400
-From: Sheng Zha <zhasheng@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/29/1
+Message-ID: <CAM5P+QTzZEywndb2H1=hce+ahtz1TsrsJZEM6ZuKEmFM4ozL8Q@mail.gmail.com>
+Date: Sat, 29 Oct 2022 17:33:21 +0900
+From: Dokyung Song <dokyungs@...sei.ac.kr>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-24294: ReDoS in Apache MXNet RTC Module
+Cc: Jisoo Jang <jisoo.jang@...sei.ac.kr>, Minsuk Kang <linuxlovemin@...sei.ac.kr>
+Subject: CVE-2022-3628: A USB-accessible buffer overflow in Linux kernel driver
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+=== Description ===
 
-Description:
+An intra-object buffer overflow was found in brcmfmac (an upstream
+Broadcom's USB Wi-Fi driver), which can be triggered by a malicious USB
+device.
 
-A regular expression used in Apache MXNet (incubating) is vulnerable
-to a potential denial-of-service by excessive resource consumption.
-The bug could be exploited when loading a model in Apache MXNet that
-has a specially crafted operator name that would cause the regular
-expression evaluation to use excessive resources to attempt a match.
-This issue affects Apache MXNet versions prior to 1.9.1.
+As the object where the overflow could occur contains multiple function
+pointers (e.g., bus_reset.func), with knowledge of the code layout (i.e.,
+KASLR needs bypassing) the vulnerability could potentially be exploited by
+an attacker who controls USB messages. Without knowledge of the code
+layout, the consequence is a DoS.
 
-Mitigation:
+This vulnerability was assigned CVE-2022-3628.
 
-Users that depend on MXNet 1.x are advised to upgrade to MXNet>=1.9.1,<2
+=== Fix ===
 
-Credit:
+A fix has been successfully reviewed by the maintainer (see below), so it
+should appear upstream in the next few days.
 
-Apache MXNet would like to thank Dwi Siswanto for reporting this issue.
+https://lore.kernel.org/linux-wireless/10230673-8dbe-bf67-ba76-9f8cdc35faf3@gmail.com/T/#u
+
