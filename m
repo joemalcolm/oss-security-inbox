@@ -1,28 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/11/1
-Message-ID: <YvS/cMgjyTqrRbh8@eldamar.lan>
-Date: Thu, 11 Aug 2022 10:36:00 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: Neil Williams <codehelp@...ian.org>
-Cc: oss-security@...ts.openwall.com, team@...urity.debian.org
-Subject: Re: CVE-2022-20359 is not mentioned in linked bulletin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/29/2
+Message-Id: <E8ADE3CA-4D49-4149-808F-8EC94BF3502D@obtuse.com>
+Date: Sat, 29 Oct 2022 08:43:08 -0400
+From: Bob Beck <beck@...use.com>
+To: Roxana Bradescu <roxabee@...omium.org>
+Cc: oss-security@...ts.openwall.com, libressl-security@...nbsd.org
+Subject: Re: Forthcoming OpenSSL Releases
 Content-Type: text/plain; charset=utf-8
 
-Hi Neil,
+Libressl is not vulnerable to the upcoming issue. 
 
-On Thu, Aug 11, 2022 at 09:01:32AM +0100, Neil Williams wrote:
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-20359
+> On Oct 27, 2022, at 18:25, Roxana Bradescu <roxabee@...omium.org> wrote:
 > 
-> URL: https://source.android.com/security/bulletin/2022-08-01
+> ﻿
+> I think that's a question for the LibreSSL Security team as to whether they do pre-advisories?
 > 
-> CVE-2022-20359 is not mentioned in that particular bulletin. Lots of
-> others, either side, but not that one.
+> ---
+> Regards, Roxana
 > 
-> Does anyone know of the correct URL for more information?
+>> On Thu, Oct 27, 2022 at 8:13 AM Georgi Guninski <gguninski@...il.com> wrote:
+>> Is libressl affected by these?
+>> 
+>> Haven't seen announcement from libressl.
 
-As the CVE is assigned by Android, I would ask at
-https://www.cve.org/PartnerInformation/ListofPartners/partner/google_android
-.
-
-Regards,
-Salvatore
