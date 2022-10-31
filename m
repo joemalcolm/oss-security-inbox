@@ -1,26 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/11/4
-Message-ID: <YlQSAy7P8xHKaWpT@kroah.com>
-Date: Mon, 11 Apr 2022 13:33:23 +0200
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-28893: Linux kernel: Use after free in SUNRPC subsystem
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/31/4
+Message-ID: <CADkPfriF-FoX0Ywxi8Z8v8LjHkrCW_jXdXNgNuSeh6sNLvkGNA@mail.gmail.com>
+Date: Mon, 31 Oct 2022 10:34:48 -0600
+From: Bob Beck <bbe@...omium.org>
+To: demi@...isiblethingslab.com
+Cc: Roxana Bradescu <roxabee@...omium.org>, oss-security@...ts.openwall.com,  libressl-security@...nbsd.org
+Subject: Re: Forthcoming OpenSSL Releases
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Apr 11, 2022 at 04:20:56PM +0800, Felix Fu wrote:
-> Hello, I Request a CVE from MITRE.
-> 
-> Description: The SUNRPC subsystem in the Linux kernel through 5.17.2 can
-> call xs_xprt_free before ensuring that sockets are in the intended state.
-> Details: Use after free happens in inet_put_port because some sockets are
-> not close before xs_xprt_free().
-> CVE-ID: CVE-2022-28893  (
-> https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-28893)
-> Fix:
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=1a3b1bba7c7a5eb8a11513cf88427cb9d77bc60a
+On Mon, Oct 31, 2022 at 10:31 AM Bob Beck <beck@...use.com> wrote:
 
-This is a merge commit, not the actual commit that fixed the issue :(
+>
+>
+> Begin forwarded message:
+>
+> *From: *Demi Marie Obenour <demi@...isiblethingslab.com>
+> *Subject: **Re: [oss-security] Forthcoming OpenSSL Releases*
+> *Date: *October 29, 2022 at 2:19:41 PM MDT
+> *To: *oss-security@...ts.openwall.com, Roxana Bradescu <
+> roxabee@...omium.org>
+> *Cc: *libressl-security@...nbsd.org
+>
+> On Sat, Oct 29, 2022 at 08:43:08AM -0400, Bob Beck wrote:
+>
+> Libressl is not vulnerable to the upcoming issue.
+>
+>
+> Is the same true for BoringSSL?
+> --
+> Sincerely,
+> Demi Marie Obenour (she/her/hers)
+> Invisible Things Lab
+>
+>
+BoringSSL is not based on OpenSSL 3.0, so it is not affected.
 
-thanks,
-
-greg k-h
