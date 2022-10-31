@@ -1,4 +1,4 @@
-Received: (qmail 9761 invoked by uid 550); 7 Nov 2024 09:21:40 -0000
+Received: (qmail 1751 invoked by uid 550); 31 Oct 2022 12:09:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,61 +7,62 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 9743 invoked from network); 7 Nov 2024 09:21:40 -0000
-Authentication-Results:garm.ovh; auth=pass (GARM-101G004e77d54a5-9ffc-4c39-9209-3a41cc7d017d,
-                    FF1ED9190CE1D8155BD1F5405040E299EB659B1F) smtp.auth=jwilk@jwilk.net
-X-OVh-ClientIp:37.248.224.32
-Date: Thu, 7 Nov 2024 10:20:43 +0100
-From: Jakub Wilk <jwilk@jwilk.net>
-To: oss-security@lists.openwall.com
-Message-ID: <20241107092043.nkeldhmhc3sbur3o@jwilk.net>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <20241106041215.GA4432@openwall.com>
+Received: (qmail 20301 invoked from network); 31 Oct 2022 09:17:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=XbFRJrAV+YgYT3CHM3AYe1BqVxZatVEbPQGinq9pC24=;
+        b=Qne1JY8dgRFShduunGnNBq0e6gG0sDWPwKedxE12vkqRYlPsGO2AtyjaxB/+PV6Hk9
+         hZGs/gWJW7S23tICm09VyJR6O+nwa0JI5e2ag41VhoAXolnPhvs8EkeM9LdcDJPCgYP6
+         2SOE6rNspOk5UgY5nrzbJuPmcm3Yii4SpTxjYjl1z2UwteNWinupnECxhU7GINlO6xr4
+         70+3BQvcIpl3nZbBAJGrsryHt690VW+4K7mO9iy2ccM7pQd1HHiS44pJV07fTjquQ6fw
+         H2vnUgkphUF1+Xdlna5JbEfMNDrjJyNybDptWNvN3MRQ7d5G8D5KFSZyBZQNVkXps8aM
+         NJNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XbFRJrAV+YgYT3CHM3AYe1BqVxZatVEbPQGinq9pC24=;
+        b=rOIZPx/MeiQrXYktqYegb6DpWsX76X8qlaJD+HaBdZPYHgaMZxfRkZ/Tg1FpOIPOfL
+         OcbpYc+9dm9QXYYXpdWl7SAJkm+xUm4FaS1sVJStKzrMD2ga0TVGxBNEY9axvOSwECGO
+         MbHNV/p5q+N8wSuEMR5FsXQGgn4Qn+9vVqmEirnnIzh3mGTG6K+rysk+4KYQYZhzlFwd
+         Ly+XGnQSOWAHJaA00/VClYrkVf9cpEruWNr86XX7z6z4cCa5KvDAN3uOMkNrtTeqM7FZ
+         5uf1hVojdgu5lCN+ty8gATGmXEl2MY4U6HkNVVSLcZTnyRCE078kYsI7tKVjzA53GEoW
+         IwGw==
+X-Gm-Message-State: ACrzQf2JSzoTFTAuO2VUTIm9NQB4eWQsoECeA/BDurv0G6ElmzFJUOE5
+	GYQa7kb53lF9vTyjIsF7JqDCnRTu5sEirIrBWlC1uIf8C9w=
+X-Google-Smtp-Source: AMsMyM7hVuj0iaO06TqjkDS5plvDgfbwlnvRKNvTLr2liEyZm4M2j0GJIb7EbknPPOMiSfBAPX3953h14/VCdVX7M8M=
+X-Received: by 2002:a5d:40d1:0:b0:236:786d:611e with SMTP id
+ b17-20020a5d40d1000000b00236786d611emr7508891wrq.355.1667207826310; Mon, 31
+ Oct 2022 02:17:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20241106041215.GA4432@openwall.com>
-X-Ovh-Tracer-Id: 9699064748788231377
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefuddrtdeggddtvdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecunecujfgurhepfffhvffukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeflrghkuhgsucghihhlkhcuoehjfihilhhksehjfihilhhkrdhnvghtqeenucggtffrrghtthgvrhhnpefhtdffhfdvudeufeehudeiieejfeefheefgfegieejfefggffgtdeuhfdthffhveenucffohhmrghinhepshhouhhrtggvfigrrhgvrdhorhhgnecukfhppeduvdejrddtrddtrddupdefjedrvdegkedrvddvgedrfedvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpehjfihilhhksehjfihilhhkrdhnvghtpdhnsggprhgtphhtthhopedupdhrtghpthhtohepohhsshdqshgvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomhdpoffvtefjohhsthepmhhoheefgegmpdhmohguvgepshhmthhpohhuth
-DKIM-Signature: a=rsa-sha256; bh=Z5sdX/Ys9vq72YPf0AmosIPAOhZnGS8UefJ8CUlXeEA=;
- c=relaxed/relaxed; d=jwilk.net; h=From; s=ovhmo917968-selector1;
- t=1730971291; v=1;
- b=pU3L1HQt/T5fNplZljeBFpassceZp/mrEuLMuhrTs3fM5NwP8DJAt6WZl0R6HBXRbrqM1IYU
- nvmiwqd3SytI62c3w45qjvYEZiI9NLgb/RLNXR62uRLWkOaJ1Rca1HEWkVxGPe3cwpat2q+j3+4
- 0zwgxPQGv5eFwKLGc+ZILIHktLud8nKcZOycSiwxMvNTNsvljwDaeyx3hYZfF/BE6z45zBuj6NY
- GmfuryAfPLOEkSDSRwhQQXxtQha5rhk88FZ9cbcLy+ocG0Hk8FQJrn5lQ6VRYZ1diyVige+m0lm
- UMuk/DR20JN5L+/h96HXYMF5JGrGgAxlkZ0gOUvIYVzfQ==
-Subject: Re: [oss-security] shell wildcard expansion (un)safety
+From: Georgi Guninski <gguninski@gmail.com>
+Date: Mon, 31 Oct 2022 11:16:37 +0200
+Message-ID: <CAGUWgD_OwgwKVQ+kxLv00dvDnNC9ZU9gWEarwPjSxg7kxK3rbA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Is third party javascript on a login page considered dangerous?
 
-* Solar Designer <solar@openwall.com>, 2024-11-06 05:12:
->Can the shells do anything to mitigate this?
+In short, is third party javascript on a login page considered dangerous?
 
-Bash and glibc's getopt() tried to mitigate this back in 1996/1997, but 
-it didn't work out.
+The JS has full access to the DOM of the page and can steal
+the username and password, which might be reused on other services,
+making it yet another cross site cookie, lol.
 
-* https://sourceware.org/cgit/glibc/commit/?id=bf079e19f50d64aa5e05b5e1
->author	Zack Weinberg <zackw@panix.com>	2017-03-29 16:58:58 -0400
-[...]
->getopt: remove USE_NONOPTION_FLAGS
->
->glibc's implementation of getopt includes code to parse an environment 
->variable named _XXX_GNU_nonoption_argv_flags_ (where XXX is the current 
->process's PID in decimal); but all of it has been #ifdefed out since 
->2001, with no official way to turn it back on.
-> 
->According to commentary in our config.h.in, bash version 2.0 set this 
->environment variable to indicate argv elements that were the result of 
->glob expansion and therefore should not be treated as options, but the 
->feature was "disabled later" because "it caused problems". According 
->to bash's CHANGES file, "later" was release 2.01; it gives no more 
->detail about what the problems were.
->
->Version 2.0 of bash was released on the last day of 1996, and version 
->2.01 in June of 1997. Twenty years later, I think it is safe to assume 
->that this environment variable isn't coming back.
+In general, the JS persists after login, potentially giving
+access to sensitive information.
 
--- 
-Jakub Wilk
+I believe static analysis can't catch all JS, since one script
+may load another script.
+
+Also, the JS might be dynamic, depending on the user.
+
+Experience suggests the main 3rd party JS comes from google
+and google do [k]no[w] evil [1]
+
+Examples:
+bugzilla.mozilla.org loads from googleanalytics
+*.stackexchange.com loads from google and cloudfare.
+
+[1] https://en.wikipedia.org/w/index.php?title=Don%27t_be_evil&oldid=1109436328
