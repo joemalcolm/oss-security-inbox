@@ -1,79 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/26/3
-Message-ID: <20220426231825.GA484258@millbarge>
-Date: Tue, 26 Apr 2022 23:18:25 +0000
-From: Seth Arnold <seth.arnold@...onical.com>
-To: dev@...in.apache.org
-Cc: oss-security@...ts.openwall.com
-Subject: [morningman@....com: CVE-2022-23942: Apache Doris(incubating) hardcoded cryptography initialization]
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/31/3
+Message-Id: <16081501-6C23-4F5A-84DE-D3DCAE7982F7@gmail.com>
+Date: Mon, 31 Oct 2022 07:19:05 -0500
+From: Brandon Perry <bperry.volatile@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Is third party javascript on a login page considered dangerous?
 Content-Type: text/plain; charset=utf-8
 
-Hello, the Apache Doris project recently switched away from using
-hard-coded credentials; they apaprently copy-and-pasted code from the
-Kylin project:
+It depends.
 
-https://www.openwall.com/lists/oss-security/2022/04/26/2
-https://github.com/apache/incubator-doris/pull/7862/files
+You can prevent some classes of JS running such as inline JS so only trusted JS is executed. If you design your site to expect to pull from a specific CDN all the time, disabling inline JS (third party or otherwise) would prevent any attacker-controlled JS (say from XSS) from executing on the login page while letting you use any “safe” or trusted js.
 
-https://github.com/apache/kylin/blob/0fa41762ec0fc69c0b8029fc8a81b273388bbf1d/core-common/src/main/java/org/apache/kylin/common/util/EncryptUtil.java#L39
+If you perform SHA sum checking on resources with resource integrity from third party sites, you can be sure you won’t load a backdoor or otherwise-modified version after deployment.
 
-public class EncryptUtil {
-    /**
-     * thisIsAsecretKey
-     */
-    private static byte[] key = { 0x74, 0x68, 0x69, 0x73, 0x49, 0x73, 0x41, 0x53, 0x65, 0x63, 0x72, 0x65, 0x74, 0x4b,
-            0x65, 0x79 };
+If you are loading third party JS from a trusted source, but not performing resource integrity checks over plaintext HTTP, you obviously still can’t trust the final JS delivered.
 
-    private static final Cipher getCipher(int cipherMode) throws InvalidAlgorithmParameterException,
-            InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException, UnsupportedEncodingException {
-        Cipher cipher = Cipher.getInstance("AES/CFB/PKCS5Padding");
-        final SecretKeySpec secretKey = new SecretKeySpec(key, "AES");
-        IvParameterSpec ivSpec = new IvParameterSpec(KylinConfig.getInstanceFromEnv().getEncryptCipherIvSpec().getBytes("UTF-8"));
-        cipher.init(cipherMode, secretKey, ivSpec);
-        return cipher;
-    }
+Using third-party JS on a login page isn’t inherently dangerous. Having no control or ability to know when that JS changes is the dangerous part.
 
-
-Kylin may need a similar fix.
-
-Thanks
-
------ Forwarded message from 陈明雨 <morningman@....com> -----
-
-Date: Tue, 26 Apr 2022 22:33:47 +0800 (CST)
-From: 陈明雨 <morningman@....com>
-To: general <general@...ubator.apache.org>, me@....io, security@...che.org, oss-security@...ts.openwall.com
-Subject: [oss-security] CVE-2022-23942: Apache Doris(incubating) hardcoded cryptography initialization
-Message-ID: <3f9af332.69b6.180664aec3f.Coremail.morningman@....com>
-
-Severity: moderate
-
-Description:
-=============
-Doris use hardcoded key and IV to initialize the cipher used for ldap password, which may lead to information disclosure.
-
-Mitigation:
-=============
-Upgrade to 1.0.0[1] or higher will resolve this problem.
-
-Credit:
-=============
-We would like to thanks to Dwi Siswanto for the report of this issue
-
-References:
-=============
-https://lists.apache.org/thread/com2dyzp3bn2rdrotry90q2zzord4tvt[1] http://doris.incubator.apache.org/downloads/downloads.html
+> On Oct 31, 2022, at 4:16 AM, Georgi Guninski <gguninski@...il.com> wrote:
+> 
+> In short, is third party javascript on a login page considered dangerous?
+> 
+> The JS has full access to the DOM of the page and can steal
+> the username and password, which might be reused on other services,
+> making it yet another cross site cookie, lol.
+> 
+> In general, the JS persists after login, potentially giving
+> access to sensitive information.
+> 
+> I believe static analysis can't catch all JS, since one script
+> may load another script.
+> 
+> Also, the JS might be dynamic, depending on the user.
+> 
+> Experience suggests the main 3rd party JS comes from google
+> and google do [k]no[w] evil [1]
+> 
+> Examples:
+> bugzilla.mozilla.org loads from googleanalytics
+> *.stackexchange.com loads from google and cloudfare.
+> 
+> [1] https://en.wikipedia.org/w/index.php?title=Don%27t_be_evil&oldid=1109436328
 
 
-
---
-
-此致！Best Regards
-陈明雨 Mingyu Chen
-
-Email:
-chenmingyu@...che.org
-
------ End forwarded message -----
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
