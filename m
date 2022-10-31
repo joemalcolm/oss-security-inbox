@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1137" "Friday" "5" "July" "2019" "16:31:36" "+1000" "Daniel Axtens" "dja@axtens.net" "<8736jl0z7b.fsf@dja-thinkpad.axtens.net>" "28" "[oss-security] CVE-2019-13122: Patchwork: XSS via Message-ID " nil nil nil "7" "2019070506:31:36" "[oss-security] CVE-2019-13122: Patchwork: XSS via Message-ID" (number mark "U       dja@axtens.n Jul  5   28/1137  " thread-indent "\"[oss-security] CVE-2019-13122: Patchwork: XSS via Message-ID \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-13122: Patchwork: XSS via Message-ID " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1191 invoked by uid 550); 5 Jul 2019 10:50:42 -0000
+Received: (qmail 7807 invoked by uid 550); 31 Oct 2022 16:37:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,63 +7,73 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7896 invoked from network); 5 Jul 2019 06:31:54 -0000
+Received: (qmail 5162 invoked from network); 31 Oct 2022 16:35:11 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=axtens.net; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version;
-        bh=xnLSe5kwwFv1ay04p0BdU1WuUF36cxNl39CKD4pGCsc=;
-        b=ePLzSHTMi2ol+y2eca/cYIZNx/avyz4Vm6NN7f92B5H+OdIzHOrUb7pay9oPHCToP/
-         Pe/aQy5WLY4cerBTgskiNkZszA5ytvoSGNNa5PdvxaJgiIrPF4tMIu9QuXtPeT2pSalv
-         ak7Kp53u6EoBU854wRROat3dFbFR+il0rBOb4=
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=nMJn6YaAEyT6Vhgvc9FsRncTwThoWP6B3gvVZ9l5t8A=;
+        b=J+zDNrMZYoP6NJUNI5wOTdwioHkgA7lgw3lXrCRVZdXfDoNqHkjgn/PpL9c8N9uBuK
+         5aKuisCOz/gN9PmF3b0LIEfR5X5G2wFnbLtkiMAUt/f5lyyskjOTx4Av30AK4LW/4q+l
+         I05Xo/13t/FeQI2uEhR1rZUm7UzCdLE0qDOf4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version;
-        bh=xnLSe5kwwFv1ay04p0BdU1WuUF36cxNl39CKD4pGCsc=;
-        b=Q9Dnavy5EuZssB/7pFViVRnoHBv0Hc6Amhf7FIzK69pome34hNKoXp/LH34ShAZ6b/
-         jJbRusW48cPmAbnKsy7onwEn6NfJajBieMC5tfsoYyT4bpxKrx6puCZG4nV5WAV+XXOQ
-         Ha1ouwWHxzJECC/OC/FJnHL5+g2W+Z7b1apsv5GVFeHZlqleqTT6YipKXM3NOBV6tWqb
-         b6ij76GXyrQtjt2pO9EG1eDQPtEE9tgh5nMZBxWohXhUvi2JN9ZmH+JClchPSzTzO6Fb
-         L2w4dOpkLRRvNR7cY5ozkf0XFZoCFzuEWdjMqbxVh4dHUhvU3T+B6Nqi9vXgYpXoyoOs
-         H9xA==
-X-Gm-Message-State: APjAAAV48XoeUC3S3/H9RXUqR3yClNtv1nRvJJuRUCt9ItICNITebM/K
-	oahON+CNI5nFDH25+yVIJ3eeDO5qMjg=
-X-Google-Smtp-Source: APXvYqyrv8ryZBsh7PYnObH6gEO7EDvzibujd0btk8KVSFSLx+bL5lnxoRMQi67iVEP7seOSkt2F6A==
-X-Received: by 2002:a63:1f47:: with SMTP id q7mr3131500pgm.264.1562308301563;
-        Thu, 04 Jul 2019 23:31:41 -0700 (PDT)
-From: Daniel Axtens <dja@axtens.net>
-To: oss-security@lists.openwall.com
-Cc: Andrew Donnellan <ajd@linux.ibm.com>
-Date: Fri, 05 Jul 2019 16:31:36 +1000
-Message-ID: <8736jl0z7b.fsf@dja-thinkpad.axtens.net>
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nMJn6YaAEyT6Vhgvc9FsRncTwThoWP6B3gvVZ9l5t8A=;
+        b=ZLgPuiBU7YB2D0uWShd5VsJz6qMCwXS9p0V7US3fVY359BOFal9+EV+ZvaGL0qp0JQ
+         Fl7iLjPN6eGAYIhkjBpUvddSH8eFBg4Xets+RcL7fnFc8T7D6j84wOOD79C2nPaK0mdo
+         FXVOdA1DHL92Rqd2lu4L+5a4LbdAXOliZ1tzespJtXrdMrthZydRpeVrG6llTBUFn0nm
+         pwQ5Kt2hdk7tt9Aa92PFjcyeNaLz5WoCDt6C7zAGDL6zNrYqCvfMGRgyA7XK8YK7rrNt
+         ft8OUu5ApIpyaa5/XLZlhA07w1YFwsAAF3esfJmpGoERrYHa6AvJo+3V461VkZAk+yCO
+         mufg==
+X-Gm-Message-State: ACrzQf288wOjw7je2oGfAsNZtm3iIozH0+/wJxAZwTCL9T4DRxVhEPFY
+	ybImQG6mzF6zV3d6Bjluo+O1Kp5svemgYbyv0U+xhA==
+X-Google-Smtp-Source: AMsMyM7CQVeu24xlO/rL6DUanpkVwiu/4d18E0jsCHAzVhpWs8nE1sJ6IiSCHnLzh0uDF5h750X/qobqyxClwadFeTA=
+X-Received: by 2002:a17:90a:e60a:b0:213:e299:b8e8 with SMTP id
+ j10-20020a17090ae60a00b00213e299b8e8mr6136421pjy.85.1667234099142; Mon, 31
+ Oct 2022 09:34:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] CVE-2019-13122: Patchwork: XSS via Message-ID 
+References: <Y12K5FxvbPe4gpkU@itl-email> <994FA313-2A6F-48DA-9A59-BC3B69E51C7F@obtuse.com>
+In-Reply-To: <994FA313-2A6F-48DA-9A59-BC3B69E51C7F@obtuse.com>
+From: Bob Beck <bbe@chromium.org>
+Date: Mon, 31 Oct 2022 10:34:48 -0600
+Message-ID: <CADkPfriF-FoX0Ywxi8Z8v8LjHkrCW_jXdXNgNuSeh6sNLvkGNA@mail.gmail.com>
+To: demi@invisiblethingslab.com
+Cc: Roxana Bradescu <roxabee@chromium.org>, oss-security@lists.openwall.com, 
+	libressl-security@openbsd.org
+Content-Type: multipart/alternative; boundary="0000000000003cbb8005ec5730f1"
+Subject: Re: [oss-security] Forthcoming OpenSSL Releases
 
-Hello,
+--0000000000003cbb8005ec5730f1
+Content-Type: text/plain; charset="UTF-8"
 
-Patchwork is a web-based patch tracking system designed to facilitate
-the contribution and management of contributions to an open-source
-project that uses a mailing list for contributions.
-(http://jk.ozlabs.org/projects/patchwork/)
+On Mon, Oct 31, 2022 at 10:31 AM Bob Beck <beck@obtuse.com> wrote:
 
-Andrew Donnellan discovered an XSS via the message-id field. A malicious
-party could send a patch with a message ID that included a script
-tag. Because of the quirks of the email RFCs, such a message ID can
-survive being sent through many mail systems, including Gmail, and be
-parsed and stored by Patchwork. When a user views a patch detail page
-for the patch with this message id, the script would be run.
+>
+>
+> Begin forwarded message:
+>
+> *From: *Demi Marie Obenour <demi@invisiblethingslab.com>
+> *Subject: **Re: [oss-security] Forthcoming OpenSSL Releases*
+> *Date: *October 29, 2022 at 2:19:41 PM MDT
+> *To: *oss-security@lists.openwall.com, Roxana Bradescu <
+> roxabee@chromium.org>
+> *Cc: *libressl-security@openbsd.org
+>
+> On Sat, Oct 29, 2022 at 08:43:08AM -0400, Bob Beck wrote:
+>
+> Libressl is not vulnerable to the upcoming issue.
+>
+>
+> Is the same true for BoringSSL?
+> --
+> Sincerely,
+> Demi Marie Obenour (she/her/hers)
+> Invisible Things Lab
+>
+>
+BoringSSL is not based on OpenSSL 3.0, so it is not affected.
 
-This is due to an erroneous mark_safe() in the template tag that
-renders message IDs. This has been present since v1.1 of upstream
-Patchwork, but does not affect the FreeDesktop fork.
-
-Over the last few days, we have disclosed this bug to the admins of
-patchwork instances that we could identify. Several key instances have
-already been patched.
-
-The vulnerability is fixed in Patchwork v2.1.4 and v2.0.4, which have
-just been released.
-
-Kind regards,
-Daniel Axtens
-Patchwork maintainer
+--0000000000003cbb8005ec5730f1--
