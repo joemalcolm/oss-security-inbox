@@ -1,122 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/01/5
-Message-Id: <E1oppwi-0005Qa-B7@xenbits.xenproject.org>
-Date: Tue, 01 Nov 2022 12:00:44 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 415 v2 (CVE-2022-42310) - Xenstore: Guests can create orphaned Xenstore nodes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/01/21
+Message-ID: <CAH8yC8mzcw-C257znYHH+qSyXoFVJWaAD=3dbvH3ZxymUtZU0A@mail.gmail.com>
+Date: Tue, 1 Nov 2022 16:57:25 -0400
+From: Jeffrey Walton <noloader@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Tue, Nov 1, 2022 at 3:55 PM Pavan Maddamsetti
+<pavan.maddamsetti@...il.com> wrote:
+>
+> https://github.com/RustCrypto
 
-            Xen Security Advisory CVE-2022-42310 / XSA-415
-                               version 2
+I hope this does not start a war.. The problem with Rust is, it's only
+guaranteed to work on i686 and x86_64.
 
-          Xenstore: Guests can create orphaned Xenstore nodes
+Trying to compile Rust programs on armel, armhf, aarch64 and PowerPC
+has been excruciatingly painful. The tool cannot compile its own
+cargo's on those platforms. I gave up trying to use Rust on anything
+but x86_64.
 
-UPDATES IN VERSION 2
-====================
+(Don't believe the marketing literature at
+https://doc.rust-lang.org/beta/rustc/platform-support.html).
 
-Public release.
+Jeff
 
-ISSUE DESCRIPTION
-=================
-
-By creating multiple nodes inside a transaction resulting in an error,
-a malicious guest can create orphaned nodes in the Xenstore data base,
-as the cleanup after the error will not remove all nodes already
-created. When the transaction is committed after this situation, nodes
-without a valid parent can be made permanent in the data base.
-
-IMPACT
-======
-
-A malicious guest can cause inconsistencies in the xenstored data base,
-resulting in unusual error responses or memory leaks in xenstored. This
-can finally cause Denial of Service situations or long running error
-recoveries of xenstored.
-
-VULNERABLE SYSTEMS
-==================
-
-Systems with Xen version 4.9 and newer running the C variant of Xenstore
-(xenstored or xenstore-stubdom) are vulnerable.
-
-Systems using the Ocaml variant of Xenstore (oxenstored) are not vulnerable.
-
-MITIGATION
-==========
-
-Using oxenstored will avoid the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Julien Grall of Amazon.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa415.patch           xen-unstable, Xen 4.16.x
-xsa415-4.15.patch      Xen 4.15.x
-xsa415-4.14.patch      Xen 4.14.x - 4.13.x
-
-$ sha256sum xsa415*
-ff973fd3d0af2b45ba46ba74410204a60fcba30b0d0830c591dc827eac9ae484  xsa415.meta
-bc5b33bbef18c0fb15d6da6760ece9ef7f6f2cfab78664aee533ff717b379e3b  xsa415.patch
-243e7e35ba94973252a6381977af2cf70774abfd0bfd5d0015179b94c832453e  xsa415-4.14.patch
-7b18b510b811551025cd2a86d654ee776b5003172ab468e7e86a0c6d892f4629  xsa415-4.15.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmNg+6IMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZm88H/inrzV4zw8Po/g59rq1hUrCE/L4KwAemf5ZmWMK8
-Unka74TyN2j47wous4EbBstzQQtOvf7GP2OT68qpIlqaZSAGcu+7x6TPx3M8q8kM
-ZFzqcDYvNye8KrUCNp9pVJIV2Y8b3JLAZXCvxxGK++yECGMjTh5ZkxzdiNK/t9NO
-+TmhH7CHFzkiO25Ch/8+vlwMs6eH/rKFLUVbEU/ZiD9L/P84xQr1EORhAhDJorx1
-SLyprG0BlaCUIA/YbQVEftqHiG0J6ikuBYJGBHyQGVEV/MqSXGCUB/Eee6nzH4fH
-1USXmeQ27OMsKwOJXyxFvrCgmKdeTNDcx0KSzSPFrED9rSc=
-=hu/k
------END PGP SIGNATURE-----
-
-Download attachment "xsa415.meta" of type "application/octet-stream" (1485 bytes)
-
-Download attachment "xsa415.patch" of type "application/octet-stream" (4860 bytes)
-
-Download attachment "xsa415-4.14.patch" of type "application/octet-stream" (4899 bytes)
-
-Download attachment "xsa415-4.15.patch" of type "application/octet-stream" (4865 bytes)
+> On Tue, Nov 1, 2022, 3:42 PM Dave Horsfall <dave@...sfall.org> wrote:
+>
+> > On Tue, 1 Nov 2022, Demi Marie Obenour wrote:
+> >
+> > [ Massive trim ]
+> >
+> > > 3. When will OpenSSL be replaced by something written in a safe
+> > >    language, or at least with a better-maintained fork?  I know that
+> > >    distributions often cannot use LibreSSL (because FIPS, ugh) or
+> > >    BoringSSL (because of no stable API or ABI), but I wonder if e.g.
+> > >    libcurl should be linked to BoringSSL instead.
+> >
+> > We see this over at https://boringssl.googlesource.com/boringssl/ :
+> >
+> >   ``Although BoringSSL is an open source project, it is not intended
+> >     for general use, as OpenSSL is. We don't recommend that third parties
+> >     depend upon it. Doing so is likely to be frustrating because there
+> >     are no guarantees of API or ABI stability.''
+> >
+> > If even the manufacturer says that you shouldn't use it...
+> >
