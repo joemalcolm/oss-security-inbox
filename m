@@ -1,104 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/03/2
-Message-ID: <410aa0c9.2541c.181c24f0c89.Coremail.duoming@zju.edu.cn>
-Date: Sun, 3 Jul 2022 12:26:09 +0800 (GMT+08:00)
-From: duoming@....edu.cn
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/01/19
+Message-ID: <Y2F6C/dZo5njPUfd@itl-email>
+Date: Tue, 1 Nov 2022 15:56:57 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel: UAF vulnerabilities in rose protocol
+Subject: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
 Content-Type: text/plain; charset=utf-8
 
-Hello there,
+On Wed, Nov 02, 2022 at 06:35:42AM +1100, Dave Horsfall wrote:
+> On Tue, 1 Nov 2022, Demi Marie Obenour wrote:
+> 
+> [ Massive trim ]
+> 
+> > 3. When will OpenSSL be replaced by something written in a safe
+> >    language, or at least with a better-maintained fork?  I know that
+> >    distributions often cannot use LibreSSL (because FIPS, ugh) or
+> >    BoringSSL (because of no stable API or ABI), but I wonder if e.g.
+> >    libcurl should be linked to BoringSSL instead.
+> 
+> We see this over at https://boringssl.googlesource.com/boringssl/ :
+> 
+>   ``Although BoringSSL is an open source project, it is not intended
+>     for general use, as OpenSSL is. We don't recommend that third parties
+>     depend upon it. Doing so is likely to be frustrating because there
+>     are no guarantees of API or ABI stability.''
+> 
+> If even the manufacturer says that you shouldn't use it...
 
-There are use-after-free vulnerabilities caused by timer handler in net/rose/rose_timer.c
-of linux that allow attackers to crash linux kernel without any privileges.
+My understanding was that libcurl gets updated whenever BoringSSL needs
+a change, and that libcurl’s API does not depend on what TLS backend it
+uses.  Applications would not be impacted, since they would only use the
+libcurl API and ABI.
 
-=*=*=*=*=*=*=*=*=  Bug Details  =*=*=*=*=*=*=*=*=
+That said, this would require constantly updating to new versions of
+libcurl + BoringSSL, so it might not make sense in general.  LibreSSL or
+rustls could well be a better choice.
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-The root cause is that del_timer() could not stop the timer handler that is running
-and the refcount of sock is not managed properly in rose protocol.
-
-Attackers can use an active rose network interface, then, call close(), bind()
-and connect() syscall to crash Linux kernel without any privileges.
-
-=*=*=*=*=*=*=*=*=  Bug Effects  =*=*=*=*=*=*=*=*=
-
-We can successfully trigger the vulnerabilities to crash the linux kernel.
-
-BUG: KASAN: use-after-free in _raw_spin_lock+0x5a/0x110
-Write of size 4 at addr ffff88800ae59098 by task swapper/3/0
-...
-Call Trace:
- <IRQ>
- dump_stack_lvl+0xbf/0xee
- print_address_description+0x7b/0x440
- print_report+0x101/0x230
- ? irq_work_single+0xbb/0x140
- ? _raw_spin_lock+0x5a/0x110
- kasan_report+0xed/0x120
- ? _raw_spin_lock+0x5a/0x110
- kasan_check_range+0x2bd/0x2e0
- _raw_spin_lock+0x5a/0x110
- rose_heartbeat_expiry+0x39/0x370
- ? rose_start_heartbeat+0xb0/0xb0
- call_timer_fn+0x2d/0x1c0
- ? rose_start_heartbeat+0xb0/0xb0
- expire_timers+0x1f3/0x320
- __run_timers+0x3ff/0x4d0
- run_timer_softirq+0x41/0x80
- __do_softirq+0x233/0x544
- irq_exit_rcu+0x41/0xa0
- sysvec_apic_timer_interrupt+0x8c/0xb0
- </IRQ>
- <TASK>
- asm_sysvec_apic_timer_interrupt+0x1b/0x20
-RIP: 0010:default_idle+0xb/0x10
-RSP: 0018:ffffc9000012fea0 EFLAGS: 00000202
-RAX: 000000000000bcae RBX: ffff888006660f00 RCX: 000000000000bcae
-RDX: 0000000000000001 RSI: ffffffff843a11c0 RDI: ffffffff843a1180
-RBP: dffffc0000000000 R08: dffffc0000000000 R09: ffffed100da36d46
-R10: dfffe9100da36d47 R11: ffffffff83cf0950 R12: 0000000000000000
-R13: 1ffff11000ccc1e0 R14: ffffffff8542af28 R15: dffffc0000000000
-...
-Allocated by task 146:
- __kasan_kmalloc+0xc4/0xf0
- sk_prot_alloc+0xdd/0x1a0
- sk_alloc+0x2d/0x4e0
- rose_create+0x7b/0x330
- __sock_create+0x2dd/0x640
- __sys_socket+0xc7/0x270
- __x64_sys_socket+0x71/0x80
- do_syscall_64+0x43/0x90
- entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-Freed by task 152:
- kasan_set_track+0x4c/0x70
- kasan_set_free_info+0x1f/0x40
- ____kasan_slab_free+0x124/0x190
- kfree+0xd3/0x270
- __sk_destruct+0x314/0x460
- rose_release+0x2fa/0x3b0
- sock_close+0xcb/0x230
- __fput+0x2d9/0x650
- task_work_run+0xd6/0x160
- exit_to_user_mode_loop+0xc7/0xd0
- exit_to_user_mode_prepare+0x4e/0x80
- syscall_exit_to_user_mode+0x20/0x40
- do_syscall_64+0x4f/0x90
- entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-=*=*=*=*=*=*=*=*=  Bug Fix  =*=*=*=*=*=*=*=*=
-
-The patch that have been applied to mainline Linux kernel is shown below.
-https://github.com/torvalds/linux/commit/9cc02ede696272c5271a401e4f27c262359bc2f6
-
-=*=*=*=*=*=*=*=*=  Timeline  =*=*=*=*=*=*=*=*=
-
-2022-06-30: commit 9cc02ede6962 accepted to mainline kernel
-2022-07-03: send an email to secalert@...hat.com in order to request CVE number
-
-=*=*=*=*=*=*=*=*=  Credit  =*=*=*=*=*=*=*=*=
-
-Duoming Zhou <duoming@....edu.cn>
-
-Best Regards,
-Duoming Zhou
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
