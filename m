@@ -1,38 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/06/4
-Message-ID: <Yz8JmGvc3Y6iYaKR@itl-email>
-Date: Thu, 6 Oct 2022 13:00:03 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
-To: Simon McVittie <smcv@...ian.org>, oss-security@...ts.openwall.com, dbus-security@...ts.freedesktop.org
-Subject: Re: dbus denial of service: CVE-2022-42010, -42011, -42012
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/01/20
+Message-Id: <1e5efc36-0cd4-45e2-b838-1493f9db6518@app.fastmail.com>
+Date: Tue, 01 Nov 2022 21:52:59 +0100
+From: "Erin Shepherd" <erin.shepherd@....eu>
+To: oss-security@...ts.openwall.com
+Subject: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 06, 2022 at 04:40:10PM +0100, Simon McVittie wrote:
-> On Thu, 06 Oct 2022 at 10:53:15 -0400, Demi Marie Obenour wrote:
-> > Is the memory corruption potentially exploitable for local privilege
-> > escalation?
+LibreTLS does not track the OpenSSL API, so increasingly software does not build with it (it's not possible to support both LibreSSL and a supported version of OpenSSL without #ifdef hell)
+
+Additionally, there have been breakages to LibreSSL's compatibility with OpenSSL 1.0.
+
+As a general rule, distros don't want to package multiple OpenSSL forks because it just heavily multiplies the amount of security work necessary.
+
+On Tue, 1 Nov 2022, at 20:56, Demi Marie Obenour wrote:
+> On Wed, Nov 02, 2022 at 06:35:42AM +1100, Dave Horsfall wrote:
+> > On Tue, 1 Nov 2022, Demi Marie Obenour wrote:
+> > 
+> > [ Massive trim ]
+> > 
+> > > 3. When will OpenSSL be replaced by something written in a safe
+> > >    language, or at least with a better-maintained fork?  I know that
+> > >    distributions often cannot use LibreSSL (because FIPS, ugh) or
+> > >    BoringSSL (because of no stable API or ABI), but I wonder if e.g.
+> > >    libcurl should be linked to BoringSSL instead.
+> > 
+> > We see this over at https://boringssl.googlesource.com/boringssl/ :
+> > 
+> >   ``Although BoringSSL is an open source project, it is not intended
+> >     for general use, as OpenSSL is. We don't recommend that third parties
+> >     depend upon it. Doing so is likely to be frustrating because there
+> >     are no guarantees of API or ABI stability.''
+> > 
+> > If even the manufacturer says that you shouldn't use it...
 > 
-> It is not known to be, but also not known not to be. I'm sure a
-> sufficiently creative attacker can convert almost any memory corruption
-> into arbitrary code execution, but exploit development is not my job
-> (I'd rather fix the vulnerabilities!), so I have not attempted to
-> weaponize this.
-
-I, too, am not an exploit developer, but I agree with your conclusion.
-
-> > Are clients using libdbus vulnerable if they are behind dbus-broker?
+> My understanding was that libcurl gets updated whenever BoringSSL needs
+> a change, and that libcurl’s API does not depend on what TLS backend it
+> uses.  Applications would not be impacted, since they would only use the
+> libcurl API and ABI.
 > 
-> I don't maintain dbus-broker and have not tested or audited it, so
-> I don't know how much validation it does. I would hope that it would
-> detect and prevent CVE-2022-42011 and CVE-2022-42010 (which involve
-> invalid messages), but probably not CVE-2022-42012 (which involves a
-> message that is odd but technically valid).
-
-Should different-endian messages over AF_UNIX sockets just be rejected
-outright?
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+> That said, this would require constantly updating to new versions of
+> libcurl + BoringSSL, so it might not make sense in general.  LibreSSL or
+> rustls could well be a better choice.
+> -- 
+> Sincerely,
+> Demi Marie Obenour (she/her/hers)
+> Invisible Things Lab
+> 
+> 
+> *Attachments:*
+>  * signature.asc
