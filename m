@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1806" "Wednesday" "2" "November" "2016" "08:07:22" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1611020806410.375@tvnag.unkk.fr>" "73" "[oss-security] [SECURITY ADVISORY] curl case insensitive password comparison" nil nil nil "11" "2016110207:07:22" "[oss-security] [SECURITY ADVISORY] curl case insensitive password comparison" (number mark "U       daniel@haxx. Nov  2   73/1806  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl case insensitive password comparison\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 23755 invoked by uid 550); 2 Nov 2016 07:07:38 -0000
+Received: (qmail 24209 invoked by uid 550); 1 Nov 2022 17:09:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,92 +7,139 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23621 invoked from network); 2 Nov 2016 07:07:35 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-Date: Wed, 2 Nov 2016 08:07:22 +0100 (CET)
-From: Daniel Stenberg <daniel@haxx.se>
-X-X-Sender: dast@giant.haxx.se
-To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
-        curl-announce@cool.haxx.se,
-        libcurl hacking <curl-library@cool.haxx.se>,
-        oss-security@lists.openwall.com
-Message-ID: <alpine.DEB.2.20.1611020806410.375@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] curl case insensitive password comparison
+Received: (qmail 23931 invoked from network); 1 Nov 2022 17:08:38 -0000
+Date: Tue, 1 Nov 2022 18:08:34 +0100
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20221101170833.GA10470@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
 
-case insensitive password comparison
-====================================
+I don't know whether the OpenSSL project would be posting this to
+oss-security themselves (they really should have), but with publications
+elsewhere out for an hour or so I felt it's best if I forward in here.
 
-Project cURL Security Advisory, November 2, 2016 -
-[Permalink](https://curl.haxx.se/docs/adv_20161102B.html)
+There's also a blog post with a FAQ:
 
-VULNERABILITY
--------------
+https://www.openssl.org/blog/blog/2022/11/01/email-address-overflows/
 
-When re-using a connection, curl was doing case insensitive comparisons of
-user name and password with the existing connections.
+----- Forwarded message from OpenSSL <openssl@openssl.org> -----
 
-This means that if an unused connection with proper credentials exists for a
-protocol that has connection-scoped credentials, an attacker can cause that
-connection to be reused if s/he knows the case-insensitive version of the
-correct password.
+Date: Tue, 1 Nov 2022 16:16:40 +0000
+From: OpenSSL <openssl@openssl.org>
+To: openssl-project@openssl.org,
+ OpenSSL User Support ML <openssl-users@openssl.org>,
+ OpenSSL Announce ML <openssl-announce@openssl.org>
+Subject: OpenSSL Security Advisory
 
-We are not aware of any exploit of this flaw.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-INFO
-----
+OpenSSL Security Advisory [01 November 2022]
+============================================
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-8616 to this issue.
+X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602)
+==========================================================
 
-AFFECTED VERSIONS
------------------
+Severity: High
 
-This flaw exists in the following curl versions.
+A buffer overrun can be triggered in X.509 certificate verification,
+specifically in name constraint checking. Note that this occurs
+after certificate chain signature verification and requires either a
+CA to have signed the malicious certificate or for the application to
+continue certificate verification despite failure to construct a path
+to a trusted issuer. An attacker can craft a malicious email address
+to overflow four attacker-controlled bytes on the stack. This buffer
+overflow could result in a crash (causing a denial of service) or
+potentially remote code execution.
 
-- Affected versions: curl 7.7 to and including 7.50.3
-- Not affected versions: curl < 7.7 and curl >= 7.51.0
+Many platforms implement stack overflow protections which would mitigate
+against the risk of remote code execution. The risk may be further
+mitigated based on stack layout for any given platform/compiler.
 
-libcurl is used by many applications, but not always advertised as such!
+Pre-announcements of CVE-2022-3602 described this issue as CRITICAL.
+Further analysis based on some of the mitigating factors described above
+have led this to be downgraded to HIGH. Users are still encouraged to
+upgrade to a new version as soon as possible.
 
-THE SOLUTION
-------------
+In a TLS client, this can be triggered by connecting to a malicious
+server. In a TLS server, this can be triggered if the server requests
+client authentication and a malicious client connects.
 
-In version 7.51.0, these functions will deny negative string lengths from
-being used.
+OpenSSL versions 3.0.0 to 3.0.6 are vulnerable to this issue.
 
-A [patch for CVE-2016-8616](https://curl.haxx.se/CVE-2016-8616.patch) is
-available.
+OpenSSL 3.0 users should upgrade to OpenSSL 3.0.7.
 
-RECOMMENDATIONS
----------------
+OpenSSL 1.1.1 and 1.0.2 are not affected by this issue.
 
-We suggest you take one of the following actions immediately, in order of
-preference:
+This issue was reported to OpenSSL on 17th October 2022 by Polar Bear.
+The fixes were developed by Dr Paul Dale.
 
-  A - Upgrade curl and libcurl to version 7.51.0
+We are not aware of any working exploit that could lead to code execution,
+and we have no evidence of this issue being exploited as of the time of
+release of this advisory (November 1st 2022).
 
-  B - Apply the patch to your version and rebuild
+X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
+===================================================================
 
-TIME LINE
----------
+Severity: High
 
-It was first reported to the curl project on September 23 by Cure53.
+A buffer overrun can be triggered in X.509 certificate verification,
+specifically in name constraint checking. Note that this occurs after
+certificate chain signature verification and requires either a CA to
+have signed a malicious certificate or for an application to continue
+certificate verification despite failure to construct a path to a trusted
+issuer. An attacker can craft a malicious email address in a certificate
+to overflow an arbitrary number of bytes containing the `.' character
+(decimal 46) on the stack. This buffer overflow could result in a crash
+(causing a denial of service).
 
-We contacted distros@openwall on October 19.
+In a TLS client, this can be triggered by connecting to a malicious
+server. In a TLS server, this can be triggered if the server requests
+client authentication and a malicious client connects.
 
-curl 7.51.0 was released on November 2 2016, coordinated with the publication
-of this advisory.
+OpenSSL versions 3.0.0 to 3.0.6 are vulnerable to this issue.
 
-CREDITS
--------
+OpenSSL 3.0 users should upgrade to OpenSSL 3.0.7.
 
-This vulnerability was found during a Secure Open Source audit performed by
-Cure53.
+OpenSSL 1.1.1 and 1.0.2 are not affected by this issue.
 
--- 
+This issue was discovered on 18th October 2022 by Viktor Dukhovni while
+researching CVE-2022-3602. The fixes were developed by Dr Paul Dale.
 
-  / daniel.haxx.se
+We have no evidence of this issue being exploited as of the time of
+release of this advisory (November 1st 2022).
+
+References
+==========
+
+URL for this Security Advisory:
+https://www.openssl.org/news/secadv/20221101.txt
+
+Note: the online version of the advisory may be updated with additional details
+over time.
+
+For details of OpenSSL severity classifications please see:
+https://www.openssl.org/policies/secpolicy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQJGBAEBCAAwFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmNhRdsSHHRvbWFzQG9w
+ZW5zc2wub3JnAAoJEFJ0ZqIcp55tARIP/R4TFlh4N3wH4enjT74oJowxjmwNIu0q
+uRTmmwtMwJOd1Nw0tfydVEtd3qaN/KMcMnnBMzIzvCdzQ202g8SRSzX7zeHZtAEe
+idu9qQyQep1ECK7UGybdN+4Ahey30Py6J99okWejCmdHSpxo7+OOtADFdraqrV5A
+5vwyojD1Iv95Z0/RqYxMmMBEoJZitsGxeraw1IxBJCqw6sL2WwDelGb9NZwKFee1
+BrfeF+dwaXlAZ97Hsaai6ssDf8VOoTNbCDsrsnbo4MAbFAc6ZraynMcWMm9kwF96
+y+pO+0P9etzWeHkP+qHAeCCHZqU76Rexr58XtuWQpTdmbPbmLpnwr7wgwBAZxHA0
+RkhpR244vPLYrF3cIssNxEstHCi2NFX0cMtOnbY84lJfmnxgHTJqH/7LvUmHibC6
+FBNM9CCSezZgEiSvERB0R/auHZnpODj9riCyWWq82sXTkk3XrqkdnN3mAjgVpnDK
+3Cacx9vJxpUDl2U4ObEVCE1I1qHKomAcKVAErAMmLLsdkbzoK9dUquG2VhFaJYJW
+3TtqDMhQM0fqRgRu750P42w6dm1glH/UIK41viB0eVwbBZ0RdaAnI3+Tuk2NXH2o
+nZdH5Lx6scgS+l4K+IF2WzO+WCYThG0Sg22hC6NnFbdksoGA/XaXl80Kf5Ec1LJr
+QLeTSjQDj6Fc
+=8mrQ
+-----END PGP SIGNATURE-----
+
+----- End forwarded message -----
