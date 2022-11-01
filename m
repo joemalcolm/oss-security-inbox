@@ -1,36 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/18/5
-Message-ID: <aaadb779-50ab-2204-7927-bb8f93fd6b46@oracle.com>
-Date: Fri, 18 Feb 2022 11:19:27 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com, Devon Thompson <devthomp@...hat.com>
-Cc: jrybar@...hat.com, gsuckevi@...hat.com
-Subject: Re: CVE-2021-4115: polkit: file descriptor leak allows an unprivileged user to cause a crash.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/01/1
+Message-ID: <n7n0r558-o321-679p-5soo-4noso91q1q27@inai.de>
+Date: Tue, 1 Nov 2022 12:53:36 +0100 (CET)
+From: Jan Engelhardt <jengelh@...i.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Is third party javascript on a login page considered dangerous?
 Content-Type: text/plain; charset=utf-8
 
-On 2/17/22 13:35, Devon Thompson wrote:
-> Description:
-> There is an error handing flaw in polkit which can allow an unprivileged user to 
-> cause polkit to crash.
-> The crash happens due to process file descriptor exhaustion.
-> NOTE: Polkit process outage duration is tied to the failing process being reaped 
-> and a new one being spawned.
+On Monday 2022-10-31 10:16, Georgi Guninski wrote:
 
-A more detailed description has been posted at
-https://securitylab.github.com/advisories/GHSL-2021-077-polkit/
+>In short, is third party javascript on a login page considered dangerous?
 
-> References:
-> https://access.redhat.com/security/cve/cve-2021-4115
-> https://bugzilla.redhat.com/show_bug.cgi?id=2054127
-> https://pkgs.devel.redhat.com/cgit/rpms/polkit/commit/?h=rhel-8.6.0&id=a71b0b5bb6624858a16bfbc1e721757b243709c6 
+Any code should be treated as potentially dangerous.
+The less you have overall, the better.
+I do not see why a login page of all things needs code.
 
-That last hostname does not resolve (perhaps it's internal to Red Hat?).
-
-I'm surprised these are all Red Hat URL's - was this not reported & fixed
-upstream?  I see a query asking about that at
-https://gitlab.freedesktop.org/polkit/polkit/-/issues/170 but no response,
-and no commit or merge request yet there.
-
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+Input form, fields for username / password / other authentication 
+tokens, a submit button. Boom, done. If there is a REST interface or 
+somesuch, authentication tokens are also provided at once when a client 
+makes a request (i.e. with no code execution apriori) - so why would 
+your login page need any.
