@@ -1,89 +1,121 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/14/1
-Message-ID: <YyGlYB/oVle77hsB@kasco.suse.de>
-Date: Wed, 14 Sep 2022 11:56:48 +0200
-From: Matthias Gerstner <mgerstner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: insufficiently protected D-Bus interface in KDiskMark 3.0.0 (CVE-2022-40673)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/01/10
+Message-Id: <E1oppwm-0005Y4-0C@xenbits.xenproject.org>
+Date: Tue, 01 Nov 2022 12:00:48 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 420 v2 (CVE-2022-42324) - Oxenstored 32->31 bit integer truncation issues
 Content-Type: text/plain; charset=utf-8
 
-# Introduction
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-The SUSE security team has been asked to review changes [1] in the D-Bus
-implementation in KDiskMark [2] major version 3.0.0. KDiskMark is a graphical
-utility that allows to run performance benchmarks on local file systems.
+            Xen Security Advisory CVE-2022-42324 / XSA-420
+                               version 2
 
-# Vulnerability
+            Oxenstored 32->31 bit integer truncation issues
 
-The review of this codebase showed that the D-Bus interface of the privileged
-helper program `kdiskmark_helper` is insufficiently secured. Only the helper's
-`init()` member function (helper.cpp:51) is protected by the Kauth
-framework and thus by Polkit `auth_admin` authentication. Calling the `init()`
-method, once authorized, causes the actual Helper D-Bus interface to be
-registered on the D-Bus system bus. This means that the usual D-Bus level
-autostart of the helper service is not possible, but only users in the system
-that authenticate as root are allowed to fully start the helper.
+UPDATES IN VERSION 2
+====================
 
-Once the helper *is* started, however, all further D-Bus methods offered by
-the helper interface are *not* protected any more. Any user with access to the
-D-Bus system bus may invoke them without restrictions. These D-Bus methods
-then offer attack surface:
+Public release.
 
-- removeFile: allows to remove arbitrary files in the system (local DoS,
-              arbitrary file existence test).
-- prepareFile: allows to create large files owned by root in arbitrary locations
-              (also via symlinks), the final path component needs to be
-	      .kdiskmark.tmp, if not, then kdiskmark itself is DoS'ed, because
-              it quits.
-- startTest: similar to prepareFile. No arbitrary code execution is possible,
-	      because the interface takes mostly integers as input and the
-              `fio` sub process command line is carefully constructed.
-- flushPageCache: drops the kernel's file system caches, therefore this offers
-              a kind of local performance DoS.
+ISSUE DESCRIPTION
+=================
 
-# Fixed Version
+Integers in Ocaml are 63 or 31 bits of signed precision.
 
-I informed the review requestor (who is also the upstream author) about the
-issue and upstream created a follow-up version 3.1.0 featuring a
-fixed approach to authentication.
+The Ocaml Xenbus library takes a C uint32_t out of the ring and casts it
+directly to an Ocaml integer.  In 64-bit Ocaml builds this is fine, but
+in 32-bit builds, it truncates off the most significant bit, and then
+creates unsigned/signed confusion in the remainder.
 
-I obtained CVE-2022-40673 from Mitre to track the lack of proper D-Bus method
-authentication in the D-Bus helper program.
+This in turn can feed a negative value into logic not expecting a
+negative value, resulting in unexpected exceptions being thrown.
 
-# Timeline
+The unexpected exception is not handled suitably, creating a busy-loop
+trying (and failing) to take the bad packet out of the xenstore ring.
 
-2022-08-24: review request for KDiskMark 3.0.0 reached us.
-2022-08-31: I started working on the review.
-2022-08-31: I informed the upstream author about the vulnerability, offering
-            coordinated disclosure and a suggestion on which approach to take
-            to fix it.
-2022-09-07: Upstream presented version 3.1.0 with an improved
-            authentication scheme.
-2022-09-12: I performed a follow-up review and found the vulnerability to be
-            fixed.
-2022-09-13: I requested a CVE for the issue from Mitre.
-2022-09-14: There was no formal embargo established, upstream published fixes
-	    for the issue right away. Publication of the CVE, Bugzilla bug and
-            full report on our end.
+IMPACT
+======
 
-# References
+A malicious or buggy guest can write a packet into the xenstore ring
+which causes 32-bit builds of oxenstored to busy loop.
 
-[1]: https://bugzilla.suse.com/show_bug.cgi?id=1202725
-[2]: https://github.com/JonMagon/KDiskMark.git
+VULNERABLE SYSTEMS
+==================
 
-Cheers
+All versions of Xen are affected.
 
-Matthias
+Systems running a 32-bit build of oxenstored are affected.
 
--- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
- 
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG Nürnberg
-Geschäftsführer: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
+Systems running a 64-bit build of oxenstored, or systems running (C)
+xenstored are not affected.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+MITIGATION
+==========
+
+Running xenstored instead of oxenstored will avoid the vulnerability.
+
+CREDITS
+=======
+
+This issue was discovered by Jürgen Groß of SUSE.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa420.patch           xen-unstable - Xen 4.13.x
+
+$ sha256sum xsa420*
+565b332d325fd0fdeb5fee890c0cd9b53c4478c46c6b7ec7b24fd3444d2dc812  xsa420.meta
+bfa83ca1e78ef81f93c3d94cb1522d1cffed8b9989c5639e8ec663fad0a71027  xsa420.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmNg+68MHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZWJ8H/33T8Ub00BrIWdWSvajjRA4oLamGKRg5uJoI5peJ
+cpgKB7iFcoOZcM+G2YfYjm8W2ckoEHXQkJ7fJEbAW0rHc8+WyWl2ulklZSpyi9RX
+B6jloIo+5pFoenShirPrJNyfbCmgJduRiUcIzPMRg6vgTmS1RO1W2x3/A6haxez5
+LOJCm8dhUBbrp83KH7MgVBlUXIlVQ1irKBmCps11lFG7LaMWjLtScPI4qCpFbMf/
+Cmd91Jw6EpzfOWcqohbRabqXXrPZJqSe+EwqrEJsVkkEIK2y2e/kUWcy/9shr9a2
+YtudokkROE+bJGbpM9bbucCu/Rnwqj20fDIztR0soCtPbOM=
+=QFv9
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa420.meta" of type "application/octet-stream" (1980 bytes)
+
+Download attachment "xsa420.patch" of type "application/octet-stream" (2710 bytes)
