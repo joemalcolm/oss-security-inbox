@@ -1,154 +1,118 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/04/5
-Message-ID: <CAJwKpyQc7O94vcA7LTa6x3i-q08txoeFHzvMQDTOn0Zxwgak5g@mail.gmail.com>
-Date: Tue, 4 Jan 2022 11:06:35 +0100
-From: Carlton Gibson <carlton.gibson@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/01/16
+Message-ID: <Y2FhxvA/2e7xFUiF@itl-email>
+Date: Tue, 1 Nov 2022 14:13:22 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
 To: oss-security@...ts.openwall.com
-Subject: Django security releases issued: 4.0.1, 3.2.11, and 2.2.26 (Multiple CVEs)
+Subject: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
 Content-Type: text/plain; charset=utf-8
 
-Blog post:
-https://www.djangoproject.com/weblog/2022/jan/04/security-releases/
+On Tue, Nov 01, 2022 at 06:08:34PM +0100, Solar Designer wrote:
+> OpenSSL Security Advisory [01 November 2022]
+> ============================================
+> 
+> X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602)
+> ==========================================================
+> 
+> Severity: High
+> 
+> A buffer overrun can be triggered in X.509 certificate verification,
+> specifically in name constraint checking. Note that this occurs
+> after certificate chain signature verification and requires either a
+> CA to have signed the malicious certificate or for the application to
+> continue certificate verification despite failure to construct a path
+> to a trusted issuer. An attacker can craft a malicious email address
+> to overflow four attacker-controlled bytes on the stack. This buffer
+> overflow could result in a crash (causing a denial of service) or
+> potentially remote code execution.
+> 
+> Many platforms implement stack overflow protections which would mitigate
+> against the risk of remote code execution. The risk may be further
+> mitigated based on stack layout for any given platform/compiler.
+> 
+> Pre-announcements of CVE-2022-3602 described this issue as CRITICAL.
+> Further analysis based on some of the mitigating factors described above
+> have led this to be downgraded to HIGH. Users are still encouraged to
+> upgrade to a new version as soon as possible.
+> 
+> In a TLS client, this can be triggered by connecting to a malicious
+> server. In a TLS server, this can be triggered if the server requests
+> client authentication and a malicious client connects.
+> 
+> OpenSSL versions 3.0.0 to 3.0.6 are vulnerable to this issue.
+> 
+> OpenSSL 3.0 users should upgrade to OpenSSL 3.0.7.
+> 
+> OpenSSL 1.1.1 and 1.0.2 are not affected by this issue.
+> 
+> This issue was reported to OpenSSL on 17th October 2022 by Polar Bear.
+> The fixes were developed by Dr Paul Dale.
+> 
+> We are not aware of any working exploit that could lead to code execution,
+> and we have no evidence of this issue being exploited as of the time of
+> release of this advisory (November 1st 2022).
+> 
+> X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
+> ===================================================================
+> 
+> Severity: High
+> 
+> A buffer overrun can be triggered in X.509 certificate verification,
+> specifically in name constraint checking. Note that this occurs after
+> certificate chain signature verification and requires either a CA to
+> have signed a malicious certificate or for an application to continue
+> certificate verification despite failure to construct a path to a trusted
+> issuer. An attacker can craft a malicious email address in a certificate
+> to overflow an arbitrary number of bytes containing the `.' character
+> (decimal 46) on the stack. This buffer overflow could result in a crash
+> (causing a denial of service).
+> 
+> In a TLS client, this can be triggered by connecting to a malicious
+> server. In a TLS server, this can be triggered if the server requests
+> client authentication and a malicious client connects.
+> 
+> OpenSSL versions 3.0.0 to 3.0.6 are vulnerable to this issue.
+> 
+> OpenSSL 3.0 users should upgrade to OpenSSL 3.0.7.
+> 
+> OpenSSL 1.1.1 and 1.0.2 are not affected by this issue.
+> 
+> This issue was discovered on 18th October 2022 by Viktor Dukhovni while
+> researching CVE-2022-3602. The fixes were developed by Dr Paul Dale.
+> 
+> We have no evidence of this issue being exploited as of the time of
+> release of this advisory (November 1st 2022).
+> 
+> References
+> ==========
+> 
+> URL for this Security Advisory:
+> https://www.openssl.org/news/secadv/20221101.txt
+> 
+> Note: the online version of the advisory may be updated with additional details
+> over time.
+> 
+> For details of OpenSSL severity classifications please see:
+> https://www.openssl.org/policies/secpolicy.html
 
-Django 4.0.1, 3.2.11, and 2.2.26 fix three security issues.
+1. Why OpenSSL is even *parsing* these SANs?  In TLS they will never be
+   used, so parsing them is not just extra attack surface but also a
+   waste of resources.  I understand that parsing them is important for
+   S/MIME, but that does not mean OpenSSL should *always* parse them.
+   Instead, OpenSSL should only parse them when a certificate needs to
+   be verified against an email address, which TLS never requires.
 
-In accordance with `our security release policy
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the Django
-team
-is issuing
-`Django 4.0.1 <https://docs.djangoproject.com/en/dev/releases/4.0.1/>`_,
-`Django 3.2.11 <https://docs.djangoproject.com/en/dev/releases/3.2.11/>`_,
-and
-`Django 2.2.26 <https://docs.djangoproject.com/en/dev/releases/2.2.26/>`_.
-These release addresses the security issues detailed below. We encourage all
-users of Django to upgrade as soon as possible.
+2. Why was this not caught by fuzzing?  Is this code not fuzzed for some
+   reason?
 
-CVE-2021-45115: Denial-of-service possibility in
-``UserAttributeSimilarityValidator``
-=====================================================================================
+3. When will OpenSSL be replaced by something written in a safe
+   language, or at least with a better-maintained fork?  I know that
+   distributions often cannot use LibreSSL (because FIPS, ugh) or
+   BoringSSL (because of no stable API or ABI), but I wonder if e.g.
+   libcurl should be linked to BoringSSL instead.
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-``UserAttributeSimilarityValidator`` incurred significant overhead
-evaluating submitted password that were artificially large in relative to
-the
-comparison values. On the assumption that access to user registration was
-unrestricted this provided a potential vector for a denial-of-service
-attack.
-
-In order to mitigate this issue, relatively long values are now ignored by
-``UserAttributeSimilarityValidator``.
-
-This issue has severity "medium" according to the Django security policy.
-
-CVE-2021-45116: Potential information disclosure in ``dictsort`` template
-filter
-================================================================================
-
-Due to leveraging the Django Template Language's variable resolution logic,
-the
-``dictsort`` template filter was potentially vulnerable to information
-disclosure or unintended method calls, if passed a suitably crafted key.
-
-In order to avoid this possibility, ``dictsort`` now works with a restricted
-resolution logic, that will not call methods, nor allow indexing on
-dictionaries.
-
-As a reminder, all untrusted user input should be validated before use.
-
-This issue has severity "low" according to the Django security policy.
-
-CVE-2021-45452: Potential directory-traversal via ``Storage.save()``
-====================================================================
-
-``Storage.save()`` allowed directory-traversal if directly passed suitably
-crafted file names.
-
-This issue has severity "low" according to the Django security policy.
-
-Affected supported versions
-===========================
-
-* Django main branch
-* Django 4.0
-* Django 3.2
-* Django 2.2
-
-Resolution
-==========
-
-Patches to resolve the issue have been applied to Django's main branch and
-to
-the 4.0, 3.2, and 2.2 release branches. The patches may be obtained from the
-following changesets.
-
-CVE-2021-45115:
-
-* On the `main branch <
-https://github.com/django/django/commit/968a3d01fa79f055f93a1c3ed1535ecbcbdbb842
->`__
-* On the `4.0 release branch <
-https://github.com/django/django/commit/df79ef03ac867c93caaa6be56bc69e66abfeef8f
->`__
-* On the `3.2 release branch <
-https://github.com/django/django/commit/a8b32fe13bcaed1c0b772fdc53de84abc224fb20
->`__
-* On the `2.2 release branch <
-https://github.com/django/django/commit/2135637fdd5ce994de110affef9e67dffdf77277
->`__
-
-CVE-2021-45116:
-
-* On the `main branch <
-https://github.com/django/django/commit/761f449e0daf3de06b0132bd4d6dfcdeef578e26
->`__
-* On the `4.0 release branch <
-https://github.com/django/django/commit/2a8ec7f546d6d5806e221ec948c5146b55bd7489
->`__
-* On the `3.2 release branch <
-https://github.com/django/django/commit/c7fe895bca06daf12cc1670b56eaf72a1ef27a16
->`__
-* On the `2.2 release branch <
-https://github.com/django/django/commit/c9f648ccfac5ab90fb2829a66da4f77e68c7f93a
->`__
-
-CVE-2021-45452:
-
-* On the `main branch <
-https://github.com/django/django/commit/6d343d01c57eb03ca1c6826318b652709e58a76e
->`__
-* On the `4.0 release branch <
-https://github.com/django/django/commit/e1592e0f26302e79856cc7f2218ae848ae19b0f6
->`__
-* On the `3.2 release branch <
-https://github.com/django/django/commit/8d2f7cff76200cbd2337b2cf1707e383eb1fb54b
->`__
-* On the `2.2 release branch <
-https://github.com/django/django/commit/4cb35b384ceef52123fc66411a73c36a706825e1
->`__
-
-The following releases have been issued:
-
-* Django 4.0.1 (`download Django 4.0.1 <
-https://www.djangoproject.com/m/releases/4.0/Django-4.0.1.tar.gz>`_ |
-`4.0.1 checksums <
-https://www.djangoproject.com/m/pgp/Django-4.0.1.checksum.txt>`_)
-* Django 3.2.11 (`download Django 3.2.11 <
-https://www.djangoproject.com/m/releases/3.2/Django-3.2.11.tar.gz>`_ |
-`3.2.11 checksums <
-https://www.djangoproject.com/m/pgp/Django-3.2.11.checksum.txt>`_)
-* Django 2.2.26 (`download Django 2.2.26 <
-https://www.djangoproject.com/m/releases/2.2/Django-2.2.26.tar.gz>`_ |
-`2.2.26 checksums <
-https://www.djangoproject.com/m/pgp/Django-2.2.26.checksum.txt>`_)
-
-The PGP key ID used for these releases is Carlton Gibson: `E17DF5C82B4F9D00
-<https://github.com/carltongibson.gpg>`_.
-
-General notes regarding security reporting
-==========================================
-
-As always, we ask that potential security issues be reported via
-private email to ``security@...ngoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
