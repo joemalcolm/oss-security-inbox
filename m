@@ -1,38 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/06/1
-Message-ID: <CAGUWgD9QR7mjyVnBV4NcyVv=RzLBjNoqvv=d02P-GGsdOV_VWg@mail.gmail.com>
-Date: Tue, 6 Sep 2022 08:47:58 +0300
-From: Georgi Guninski <gguninski@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/01/18
+Message-ID: <CAPWQ=1TzQ_e2yHZMXx6Tm4UJG3owZypShvm+VDoxEMcDSDxX+A@mail.gmail.com>
+Date: Tue, 1 Nov 2022 15:49:27 -0400
+From: Pavan Maddamsetti <pavan.maddamsetti@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: sagemath denial of service with abort() in gmp: overflow in mpz type
+Subject: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
 Content-Type: text/plain; charset=utf-8
 
-sagemath 9.0 and reportedly later on ubuntu 20.
+https://github.com/RustCrypto
 
-sagemath gives access to the python interpreter,
-so code execution is trivial.
+On Tue, Nov 1, 2022, 3:42 PM Dave Horsfall <dave@...sfall.org> wrote:
 
-We give DoS attacks, which terminates the sagemath process
-with abort(), when raising symbolic expression to large integer power.
+> On Tue, 1 Nov 2022, Demi Marie Obenour wrote:
+>
+> [ Massive trim ]
+>
+> > 3. When will OpenSSL be replaced by something written in a safe
+> >    language, or at least with a better-maintained fork?  I know that
+> >    distributions often cannot use LibreSSL (because FIPS, ugh) or
+> >    BoringSSL (because of no stable API or ABI), but I wonder if e.g.
+> >    libcurl should be linked to BoringSSL instead.
+>
+> We see this over at https://boringssl.googlesource.com/boringssl/ :
+>
+>   ``Although BoringSSL is an open source project, it is not intended
+>     for general use, as OpenSSL is. We don't recommend that third parties
+>     depend upon it. Doing so is likely to be frustrating because there
+>     are no guarantees of API or ABI stability.''
+>
+> If even the manufacturer says that you shouldn't use it...
+>
+> -- Dave
+>
 
-We get abort() with stack:
-
-gmp: overflow in mpz type
-
-#6  0x00007f55c83ee72e in __GI_abort () at
-/build/glibc-SzIz7B/glibc-2.31/stdlib/abort.c:79
-#7  0x00007f55c56e0d20 in __gmpz_realloc ()
-#8  0x00007f55c56dd2b0 in __gmpz_n_pow_ui ()
-#9  0x0000000000000000 in GiNaC::numeric::power(long) const ()
-#10 0x0000000000000000 in GiNaC::numeric::pow_intexp(GiNaC::numeric
-const&) const ()
-
-The non-minimal testcase
-===
-#sagemath code, copyright Georgi Guninski
-
-def binnk3u(n,k):  return ( (n/k)**(k))
-n1=(2*10**3);d0=29004853178239;n0=SR(log(n1));
-tt=binnk3u(n0+d0-1,d0);
-print("passed :(")
-===
