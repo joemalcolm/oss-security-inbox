@@ -1,22 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/03/11
-Message-Id: <6442A168-FF2E-4CB9-8455-513A9FFC3EB5@gentoo.org>
-Date: Thu, 3 Nov 2022 20:32:33 +0000
-From: Sam James <sam@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/01/23
+Message-ID: <6a2839aa-8d22-ae93-a8d7-6676717cee07@apache.org>
+Date: Tue, 01 Nov 2022 20:59:26 +0000
+From: Jedidiah Cunningham <jedcunningham@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: nic.tuv@...il.com, Hanno Böck <hanno@...too.org>
-Subject: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
+Subject: CVE-2022-43985: Apache Airflow: Open Redirect 
 Content-Type: text/plain; charset=utf-8
 
+Description:
+
+In Apache Airflow versions prior to 2.4.2, there was an open redirect in the webserver's `/confirm` endpoint.
+
+Credit:
+
+The Apache Airflow PMC would like to thank Axel Chong (@Haxatron) [https://hackerone.com/haxatron1] for reporting this issue.
+
+References:
+
+https://github.com/apache/airflow/pull/27143
 
 
-> On 3 Nov 2022, at 20:23, Sam James <sam@...too.org> wrote:
-> [snip]
-
-> [2] https://github.com/openssl/openssl/issues/18663#issuecomment-1181478057
-
-I should add - the LTO warnings with GCC here (-Wfree-nonheap-object) are possibly
-false positives, but Clang doesn't emit them IIRC and I think it's a valuable
-resource to dig into.
-
-Download attachment "signature.asc" of type "application/pgp-signature" (359 bytes)
