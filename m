@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3246" "Friday" "13" "January" "2017" "20:55:42" "+0100" "Thomas Deutschmann" "whissi@gentoo.org" "<32e68d18-01e4-ff5f-c386-9aae4569205b@gentoo.org>" "79" "Re: [oss-security] Nginx (Debian-based + Gentoo distros) - Root Privilege Escalation [CVE-2016-1247 UPDATE]" "^Date:" nil nil "1" "2017011319:55:42" "[oss-security] Nginx (Debian-based + Gentoo distros) - Root Privilege Escalation [CVE-2016-1247 UPDATE]" (number mark "        whissi@gento Jan 13   79/3246  " thread-indent "\"Re: [oss-security] Nginx (Debian-based + Gentoo distros) - Root Privilege Escalation [CVE-2016-1247 UPDATE]\"\n") "<59bb3856-44d5-72b0-9488-edb0093ecb30@igalia.com>" ("<CADSYzsvmN6=Zc_hn-bk9zZRUUgz-TVDvSR8scEAcr6Gxe5PsDQ@mail.gmail.com>" "<3212855a-34ce-b2dc-d6b1-1fbb40f7ce2e@igalia.com>" "<d93729b8-0e0e-5d8c-8bf9-5de01ab62979@gentoo.org>" "<59bb3856-44d5-72b0-9488-edb0093ecb30@igalia.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 24049 invoked by uid 550); 13 Jan 2017 20:35:25 -0000
+Received: (qmail 10025 invoked by uid 550); 1 Nov 2022 19:54:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,102 +6,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5694 invoked from network); 13 Jan 2017 19:56:13 -0000
-References: <CADSYzsvmN6=Zc_hn-bk9zZRUUgz-TVDvSR8scEAcr6Gxe5PsDQ@mail.gmail.com>
- <3212855a-34ce-b2dc-d6b1-1fbb40f7ce2e@igalia.com>
- <d93729b8-0e0e-5d8c-8bf9-5de01ab62979@gentoo.org>
- <59bb3856-44d5-72b0-9488-edb0093ecb30@igalia.com>
-Message-ID: <32e68d18-01e4-ff5f-c386-9aae4569205b@gentoo.org>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.6.0
-MIME-Version: 1.0
-In-Reply-To: <59bb3856-44d5-72b0-9488-edb0093ecb30@igalia.com>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="mkOQHThCO61BfuJTp7J302C9rADOr0POb"
-Date: Fri, 13 Jan 2017 20:55:42 +0100
-From: Thomas Deutschmann <whissi@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Nginx (Debian-based + Gentoo distros) - Root
- Privilege Escalation [CVE-2016-1247 UPDATE]
+Received: (qmail 7618 invoked from network); 1 Nov 2022 19:49:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UVpAOsDfBUu7AxIh3R2mMQbQVnxNTBzBN4WAv1Mw6JA=;
+        b=Iaj+J66tKOlzZqgVs+WjzGxU6iYFXPg8iOOhmH7lPcE3EkZswABrM09lSBN38MIo5X
+         mUtkyrqs+8IJiZ10Cw1R8o+nSiIj4KoSTM82AtlmMWkuC7joa0o0i7xKgCnRDbKbbqUF
+         nwIV3HxG8/qvpCCmflaChRXhSMmDZUUtV/YAdsn4qfZnJ24QonzvX3pB0fRJ5pxnWriD
+         TgelwDKfcfYM1q0jtvo70jhoi3TlSGcCs1FdnOxjUCCuylUDl3l8Jk1tq9baZ8FytnM2
+         47K+zlvlgLy+XPCU1nFs+97cBE/IgwK25g/ErlOYbHPF4paV8kfOWLpY5+x47EyLybuy
+         KO0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UVpAOsDfBUu7AxIh3R2mMQbQVnxNTBzBN4WAv1Mw6JA=;
+        b=T60KbMFOWuPmO3n+IP+O6BAgt9pqIU+0tkWQIMBcwYDgvp80eMHggwNq/+9FsEtY+1
+         Oi0n14XTQdyusFGVdN5aFoO6GX11AwvQ0butrPc3ENQ55ZZl2sH7Crgn7jrIFkrWVEtr
+         F+qs4DnsdDov9hLsxteLvWniDGBs/yazroUUgx0MvadMH35aYOtXMYNhziVlBBQlJtqa
+         gsDBvHvXODg6TB4MGqRO8aBOpaUj8xPuKU4yPB+0+L9Aa6pVEgCXpFSwTGgd4lymZooX
+         Xj9LqbAWmDwZCuP1EP1IqQxhsjQkDi8X/9Iv6g391Hjy/+Ivv/xh35RHyGr+FB2Fv77+
+         Loww==
+X-Gm-Message-State: ACrzQf3IFCI1BouDyZ+8RzttdYbcI68X1sR2Kj1buPI3P4aGWcSVXDjK
+	nYZv6LfQJmJXLIvABHI+sUKEo0PhFZTzHA9V6E0TIyaj
+X-Google-Smtp-Source: AMsMyM7ROlv1FkGkRRAPzdTEnFxAXm8B9NdlSKiIlDgjxGfc4IVVCFhwLXuLwdYbgLdTucM/veoT+BseuDmk+RGtb1Q=
+X-Received: by 2002:a25:5f4e:0:b0:6cc:9093:c940 with SMTP id
+ h14-20020a255f4e000000b006cc9093c940mr12738054ybm.31.1667332178089; Tue, 01
+ Nov 2022 12:49:38 -0700 (PDT)
+MIME-Version: 1.0
+References: <20221101170833.GA10470@openwall.com> <Y2FhxvA/2e7xFUiF@itl-email> <alpine.BSF.2.21.9999.2211020631160.34372@aneurin.horsfall.org>
+In-Reply-To: <alpine.BSF.2.21.9999.2211020631160.34372@aneurin.horsfall.org>
+From: Pavan Maddamsetti <pavan.maddamsetti@gmail.com>
+Date: Tue, 1 Nov 2022 15:49:27 -0400
+Message-ID: <CAPWQ=1TzQ_e2yHZMXx6Tm4UJG3owZypShvm+VDoxEMcDSDxX+A@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000329c9a05ec6e0627"
+Subject: Re: [oss-security] OpenSSL X.509 Email Address 4-byte Buffer Overflow
+ (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
 
---mkOQHThCO61BfuJTp7J302C9rADOr0POb
-Content-Type: multipart/mixed; boundary="u6gEFiBiadU1jDwUjdgCwgJ2RF3pvLBgC";
- protected-headers="v1"
-From: Thomas Deutschmann <whissi@gentoo.org>
-To: oss-security@lists.openwall.com
-Message-ID: <32e68d18-01e4-ff5f-c386-9aae4569205b@gentoo.org>
-Subject: Re: [oss-security] Nginx (Debian-based + Gentoo distros) - Root
- Privilege Escalation [CVE-2016-1247 UPDATE]
-References: <CADSYzsvmN6=Zc_hn-bk9zZRUUgz-TVDvSR8scEAcr6Gxe5PsDQ@mail.gmail.com>
- <3212855a-34ce-b2dc-d6b1-1fbb40f7ce2e@igalia.com>
- <d93729b8-0e0e-5d8c-8bf9-5de01ab62979@gentoo.org>
- <59bb3856-44d5-72b0-9488-edb0093ecb30@igalia.com>
-In-Reply-To: <59bb3856-44d5-72b0-9488-edb0093ecb30@igalia.com>
+--000000000000329c9a05ec6e0627
+Content-Type: text/plain; charset="UTF-8"
 
---u6gEFiBiadU1jDwUjdgCwgJ2RF3pvLBgC
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: quoted-printable
+https://github.com/RustCrypto
 
-On 2017-01-13 19:26, Carlos Alberto Lopez Perez wrote:
-> /me happy to know that logrotate has a sane behaviour and avoids=20
-> trying to rotate symlinks.
+On Tue, Nov 1, 2022, 3:42 PM Dave Horsfall <dave@horsfall.org> wrote:
 
-But don't forget hardlinks ...
+> On Tue, 1 Nov 2022, Demi Marie Obenour wrote:
+>
+> [ Massive trim ]
+>
+> > 3. When will OpenSSL be replaced by something written in a safe
+> >    language, or at least with a better-maintained fork?  I know that
+> >    distributions often cannot use LibreSSL (because FIPS, ugh) or
+> >    BoringSSL (because of no stable API or ABI), but I wonder if e.g.
+> >    libcurl should be linked to BoringSSL instead.
+>
+> We see this over at https://boringssl.googlesource.com/boringssl/ :
+>
+>   ``Although BoringSSL is an open source project, it is not intended
+>     for general use, as OpenSSL is. We don't recommend that third parties
+>     depend upon it. Doing so is likely to be frustrating because there
+>     are no guarantees of API or ABI stability.''
+>
+> If even the manufacturer says that you shouldn't use it...
+>
+> -- Dave
+>
 
-
-> So the issue is than when in var/log/nginx/ there are standard logs
-> (non symlinked) that need to be rotated (appart from the malicious
-> symlinked one), then logrotate will rotate those ones, finally
-> running the post-rotate script that send SIGURSR1 to the nginx pid.
-
-Just to be sure that we don't misunderstand each other:
-
-Dawid's advisory only uses logrotate because this is present on most
-servers and guarantees privilege escalation on a given time which makes
-it easier to understand.
-
-But escalation happens via nginx master process which is running as root
-and changes owner of existing files.
-
-Without logrotate you can still exploit any system when you can write to
-the directory used by nginx for storing log files (and don't forget your
-vhosts!). The attacker only have to wait an undefined amount of time,
-i.e. for anyone causing nginx to chown files again. On systems running
-nginx it is not the question *if* it will happen but only *when*.
-
-
---=20
-Regards,
-Thomas Deutschmann
-
-
---u6gEFiBiadU1jDwUjdgCwgJ2RF3pvLBgC--
-
---mkOQHThCO61BfuJTp7J302C9rADOr0POb
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0
-
-iQJ8BAEBCgBmBQJYeTDCXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
-ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQzM0M1ODQ4MkM0MDIyOTJEMkUzQzVDMDY5
-NzA5RjkwQzNDOTZGRkM4AAoJEJcJ+Qw8lv/IU/YP/j5PUdOipXzu+mddh+fuPPoW
-5Oca8m/Nklgnmx49dPoB4GbtxNpRgYXwCpVmV2+fuAnCB/O2NtNJW3NLGpvBKYN1
-3gHOEWrjaQ5dwjEnNmFv6nj+BLdi68BxlLBY4wCwHr6sgkvK5qpoNZsIJsgLil9v
-aEPNkGHUrtFOEVmpM3WbFD87ow+kzgwqbTRiLfzi+84il1mc6VNSNbRdEKKsDdJv
-ji3OzLwpzlQxvReIU4QJYfryEpTbsVCLWZQ7xSamW3N8y/yEe+bY51RbvVi/nlaz
-w6HiZYlqNCBEw9iZ8eHnnlBUJG9t4Kug9kNDKhUmvNBjkcUGAX+xOCdiyvUBINBV
-eT6LxWoS++p23IxmMRiV6F64z9+x9jssRgQ5/g5xkN8wgQ+nFEYfM+FqJvO+HUF7
-ZCWBOpM2u/sicp6EdXpbQHb9vkdPNiHGVHG1xrHj9odo4LwHREaTQyXAPz8g1mXy
-+UrkWaKD0THt2qVR1Xuwzx0NOgQRa7n3IQjZN/QXGnGr8Lgm7Lz4d0ZmSC56+Z0z
-5q9HQ0IBxcXo8RUj0prub5hI7+wxmhj/o1Pp+VCiM2WPbUf8ljhHfe9973iXBo9J
-7MROe0DAEb6NywwK7bxnfYi57wS57A5cHi0f7D02YrLGhZBzZOAdz0gVYBjSX3oj
-xjUmwIuYhn+b6pT6cvvf
-=p2Gt
------END PGP SIGNATURE-----
-
---mkOQHThCO61BfuJTp7J302C9rADOr0POb--
+--000000000000329c9a05ec6e0627--
