@@ -1,24 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/21/7
-Message-ID: <91533482-24c2-5c74-ada0-ecfdbfcca7f0@apache.org>
-Date: Mon, 21 Nov 2022 20:48:59 +0000
-From: Jarek Potiuk <potiuk@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-41131: Apache Airflow Hive Provider vulnerability (command injection via hive_cli connection) 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/01/17
+Message-ID: <alpine.BSF.2.21.9999.2211020631160.34372@aneurin.horsfall.org>
+Date: Wed, 2 Nov 2022 06:35:42 +1100 (EST)
+From: Dave Horsfall <dave@...sfall.org>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+On Tue, 1 Nov 2022, Demi Marie Obenour wrote:
 
-Description:
+[ Massive trim ]
 
-Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') vulnerability in Apache Airflow Hive Provider, Apache Airflow allows an attacker to execute arbtrary commands in the task execution context, without write access to DAG files. This issue affects Hive Provider versions prior to 4.1.0. It also impacts any Apache Airflow versions prior to 2.3.0 in case HIve Provider is installed (Hive Provider 4.1.0 can only be installed for Airflow 2.3.0+). Note that you need to manually install the HIve Provider version 4.1.0 in order to get rid of the vulnerability on top of Airflow 2.3.0+ version that has lower version of the Hive Provider installed).
+> 3. When will OpenSSL be replaced by something written in a safe
+>    language, or at least with a better-maintained fork?  I know that
+>    distributions often cannot use LibreSSL (because FIPS, ugh) or
+>    BoringSSL (because of no stable API or ABI), but I wonder if e.g.
+>    libcurl should be linked to BoringSSL instead.
 
+We see this over at https://boringssl.googlesource.com/boringssl/ :
 
-Credit:
+  ``Although BoringSSL is an open source project, it is not intended
+    for general use, as OpenSSL is. We don't recommend that third parties
+    depend upon it. Doing so is likely to be frustrating because there
+    are no guarantees of API or ABI stability.''
 
-Apache Airflow PMC wants to thank id_No2015429 of 3H Security Team for reporting the issue.
+If even the manufacturer says that you shouldn't use it...
 
-References:
-
-https://github.com/apache/airflow/pull/27647
-
+-- Dave
