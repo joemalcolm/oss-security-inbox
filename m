@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1104" "Thursday" "28" "January" "2016" "08:56:25" "-0800" "Zach W." "kestrel@trylinux.us" "<56AA4839.9000506@trylinux.us>" "35" "Re: [oss-security] Re: [Pool] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes" "^Date:" nil nil "1" "2016012816:56:25" "[oss-security] Re: [Pool] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes" (number mark "        kestrel@tryl Jan 28   35/1104  " thread-indent "\"Re: [oss-security] Re: [Pool] shodan.io actively infiltrating ntp.org IPv6 pools for scanning purposes\"\n") "<56A8F223.2050908@knoware.nl.eu.org>" ("<2413003.GtkKFizscD@chimera>" "<56A8F223.2050908@knoware.nl.eu.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 14147 invoked by uid 550); 28 Jan 2016 16:56:39 -0000
+Received: (qmail 10081 invoked by uid 550); 2 Nov 2022 18:26:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +6,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14127 invoked from network); 28 Jan 2016 16:56:39 -0000
-References: <2413003.GtkKFizscD@chimera> <56A8F223.2050908@knoware.nl.eu.org>
-Message-ID: <56AA4839.9000506@trylinux.us>
-User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
-MIME-Version: 1.0
-In-Reply-To: <56A8F223.2050908@knoware.nl.eu.org>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Date: Thu, 28 Jan 2016 08:56:25 -0800
-From: "Zach W." <kestrel@trylinux.us>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: [Pool] shodan.io actively infiltrating ntp.org
- IPv6 pools for scanning purposes
+Received: (qmail 10057 invoked from network); 2 Nov 2022 18:26:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sciops.net; s=20210706;
+	t=1667413448;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ayqyj5x3RHHym2RHce7PpNwuRe4eZv3DpwV3z2qDgN8=;
+	b=iywnQLn6lBf39dyoSFtbh43Ya75EoKzOg0PrLLajTDKqBNgt9qfNRiK08v9cngpJaldMuH
+	sRVVbstXWcUNZW+5kQ/utmRTYn7hIk4Fqvd6C+9a3l2+sp/v4X0rS3VbAnrtNpSDh4z/TX
+	HLNRKUKZVYhOmQj4/IWXGgWPGQGlxkQ=
+Date: Wed, 2 Nov 2022 11:24:08 -0700
+From: Kurt H Maier <khm@sciops.net>
 To: oss-security@lists.openwall.com
+Message-ID: <Y2K1yOB7748iGI2P@wopr>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <20221101170833.GA10470@openwall.com>
+ <20221102150921.3ab3f2d0@computer>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20221102150921.3ab3f2d0@computer>
+Subject: Re: [oss-security] OpenSSL X.509 Email Address 4-byte Buffer
+ Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer
+ Overflow (CVE-2022-3786)
 
-> shodan.io are the bad guys!  block them wherever possible, put them in
-> default blocklists suggested
-> for firewalls, etc.
->
-> these guys really don't care.   when submitting networks for
-> exclusion, they reply as if they will do something,
-> sometimes the scanning may pause for a day or a week, then it always
-> comes back.
-This is simply not true and this is the first case that I've heard of
-this happening. They DO care and they typically respond very well. I
-will be contacting you off-list to resolve this.
+On Wed, Nov 02, 2022 at 03:09:21PM +0100, Hanno Böck wrote:
+> FWIW it only takes a basically trivial fuzz target on the affected
+> function to find this bug with libfuzzer.
 
-Zach W.
+I'm not sure what the value is of all this Monday-morning
+quarterbacking, from 'basically trivial' fuzzing to code-quality
+comparisons of hypothetical Rust ports.  OpenSSL's development process
+has a bad rap, and there are definitely some easy wins to be had.
+Posting "if they'd only adopted my pet practice" to oss-sec isn't fixing
+anything in the OpenSSL project.  Please consider directing fuzzing
+advice and PL theory directly to the project?  I agree there would be
+benefit to this stuff, but dunking on them on unrelated lists isn't
+getting the medicine to the patient.
 
-
-On 1/27/2016 8:36 AM, Rob Janssen wrote:
-> Luca BRUNO wrote:
->> [cross-posted to pool-ntp and oss-sec]
->>
->>
->> For ntp.org admins: can those rogue server be expunged from the
->> pools, and the whole
->> shodan.io situation clarified?
->
-> shodan.io are the bad guys!  block them wherever possible, put them in
-> default blocklists suggested
-> for firewalls, etc.
->
-> these guys really don't care.   when submitting networks for
-> exclusion, they reply as if they will do something,
-> sometimes the scanning may pause for a day or a week, then it always
-> comes back.
->
-> Rob
-
+Respectfully,
+khm
