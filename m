@@ -1,85 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/14/2
-Message-ID: <4027574e-ba23-10c4-0f2a-364f05d38cb8@enst-bretagne.fr>
-Date: Thu, 14 Apr 2022 21:20:08 +0200
-From: Gabriel Corona <gabriel.corona@...t-bretagne.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/02/15
+Message-ID: <Y2K1yOB7748iGI2P@wopr>
+Date: Wed, 2 Nov 2022 11:24:08 -0700
+From: Kurt H Maier <khm@...ops.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Browser-mediated attacks on WebDriver servers
+Subject: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, Nov 02, 2022 at 03:09:21PM +0100, Hanno Böck wrote:
+> FWIW it only takes a basically trivial fuzz target on the affected
+> function to find this bug with libfuzzer.
 
- > * Selenium server/Grid CSRF vulnerability;
- > * Selenium server/Grid DNS-rebinding vulnerability.
+I'm not sure what the value is of all this Monday-morning
+quarterbacking, from 'basically trivial' fuzzing to code-quality
+comparisons of hypothetical Rust ports.  OpenSSL's development process
+has a bad rap, and there are definitely some easy wins to be had.
+Posting "if they'd only adopted my pet practice" to oss-sec isn't fixing
+anything in the OpenSSL project.  Please consider directing fuzzing
+advice and PL theory directly to the project?  I agree there would be
+benefit to this stuff, but dunking on them on unrelated lists isn't
+getting the medicine to the patient.
 
-I have tried requesting CVE IDs for those three times (first request was 
-done in 2021-06-12) and failed so far.
-
-All three attempts were rejected for the following reasons:
-
- > The Jenkins CNA is responsible for assigning CVE IDs to
- > vulnerabilities in this product. Please contact the Jenkins CNA
- > to get a CVE ID assigned to this issue.
-
-However, as a far as I understand this not the case. Here is the scope 
-of the Jenkins CNA [1]:
-
- > The Jenkins project is a CVE Numbers Authority (CNA) for Jenkins
- > and Jenkins plugins published by the Jenkins project (listed
- > on plugins.jenkins.io and/or hosted in the jenkinsci
- > GitHub organization). This means that the Jenkins project assigns
- > CVE IDs for vulnerabilities in these components.
-
-A Selenium plugin [2,3] in indeed included in the list of Jenkins
-plugins. This plugin includes [4] selenium-standalone-server but is
-different from selenium-standalone-server [5] itself.
-
-I asked the Jenkins CNA:
-
- > I have been redirected to you by MITRE concerning the allocation of
- > CVE IDs for several vulnerabilities in Selenium standalone server /
- > Selenium Grid [...]
- >
- > I believe this is a mistake as I do not see any clue indicating
- > that Jenkins CNA might be responsible for assigning CVE IDs
- > to vulnerabilities in this product. Could you confirm me that this
- > is an error by MITRE ?
-
-Here is the answer from the Jenkins CNA:
-
- > You are correct: Selenium is not in the scope of the Jenkins CNA.
- > That said, we assigned CVE IDs in the past for Jenkins plugins
- > integrating Jenkins and Selenium in some way (CVE-2021-21672,
- > CVE-2020-2196). Those are in our scope. Perhaps this is the source
- > of the confusion?
-
-In my third CVE request attempt, I explicitly stated:
-
- > [Additional Information]
- > This was previously reported and denied with the following reason:
- >
- > > The Jenkins CNA is responsible for assigning CVE IDs to
- > > vulnerabilities in this product. Please contact the Jenkins CNA to
- > > get a CVE ID assigned to this issue.
- >
- > I asked Jenkins CNA about this and they denied being responsible
- > for Selenium itself :
- >
- > > You are correct: Selenium is not in the scope of the Jenkins CNA.
- > > That said, we assigned CVE IDs in the past for Jenkins plugins
- > > integrating Jenkins and Selenium in some way (CVE-2021-21672,
- > > CVE-2020-2196). Those are in our scope. Perhaps this is the
- > > source of the confusion?
-
-However, the request is still rejected for the same reason.
-
-Any idea how to proceed from there?
-
-[1] https://www.jenkins.io/security/cna/
-[2] https://plugins.jenkins.io/selenium/
-[3] https://github.com/jenkinsci/selenium-plugin
-[4] https://github.com/jenkinsci/selenium-plugin/blob/master/pom.xml
-[5] 
-https://github.com/SeleniumHQ/selenium/tree/trunk/java/src/org/openqa/selenium/grid
-
-Gabriel
+Respectfully,
+khm
