@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["429" "Thursday" "12" "May" "2016" "09:35:20" "+0200" "Moritz Muehlenhoff" "jmm@debian.org" "<20160512073520.GA9651@inutil.org>" "13" "Re: [oss-security] CVE Request - OpenJPEG: Security Fixes" nil nil nil "5" "2016051207:35:20" "[oss-security] CVE Request - OpenJPEG: Security Fixes" (number mark "U       jmm@debian.o May 12   13/429   " thread-indent "\"Re: [oss-security] CVE Request - OpenJPEG: Security Fixes\"\n") "<1F2D4DA31CA62740BFF46830A0E6A4F706575A62@EXMBX-TJ003.tencent.com>" ("<1F2D4DA31CA62740BFF46830A0E6A4F706575A62@EXMBX-TJ003.tencent.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 16299 invoked by uid 550); 12 May 2016 07:35:32 -0000
+Received: (qmail 14188 invoked by uid 550); 2 Nov 2022 15:08:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,34 +7,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16281 invoked from network); 12 May 2016 07:35:32 -0000
-Date: Thu, 12 May 2016 09:35:20 +0200
-From: Moritz Muehlenhoff <jmm@debian.org>
+Received: (qmail 20106 invoked from network); 2 Nov 2022 12:45:41 -0000
+Date: Wed, 02 Nov 2022 13:45:27 +0100
+Author: Steffen Nurpmeso <steffen@sdaoden.eu>
+From: Steffen Nurpmeso <steffen@sdaoden.eu>
 To: oss-security@lists.openwall.com
-Cc: cve-assign <cve-assign@mitre.org>
-Message-ID: <20160512073520.GA9651@inutil.org>
-References: <1F2D4DA31CA62740BFF46830A0E6A4F706575A62@EXMBX-TJ003.tencent.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1F2D4DA31CA62740BFF46830A0E6A4F706575A62@EXMBX-TJ003.tencent.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: jmm@inutil.org
-X-SA-Exim-Scanned: No (on inutil.org); SAEximRunCond expanded to false
-Subject: Re: [oss-security] CVE Request - OpenJPEG: Security Fixes
+Message-ID: <20221102124527.O5WVR%steffen@sdaoden.eu>
+In-Reply-To: <CAFRnB2Wyc9uLMz8O-YLQ3JZ1-fUYWr+NpFecYyFYdA1YyB+sfA@mail.gmail.com>
+References: <20221101170833.GA10470@openwall.com> <Y2FhxvA/2e7xFUiF@itl-email>
+ <alpine.BSF.2.21.9999.2211020631160.34372@aneurin.horsfall.org>
+ <CAPWQ=1TzQ_e2yHZMXx6Tm4UJG3owZypShvm+VDoxEMcDSDxX+A@mail.gmail.com>
+ <CAH8yC8mzcw-C257znYHH+qSyXoFVJWaAD=3dbvH3ZxymUtZU0A@mail.gmail.com>
+ <tjtkiu$jeu$1@ciao.gmane.io>
+ <CAFRnB2Wyc9uLMz8O-YLQ3JZ1-fUYWr+NpFecYyFYdA1YyB+sfA@mail.gmail.com>
+Mail-Followup-To: oss-security@lists.openwall.com
+User-Agent: s-nail v14.9.24-329-gce485e68d3
+OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
+ url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
+BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
+ the world can make no bugs.
+Subject: Re: [oss-security] Re: OpenSSL X.509 Email Address 4-byte
+ Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer
+ Overflow (CVE-2022-3786)
 
-On Thu, May 12, 2016 at 06:45:37AM +0000, winsonliu(刘科) wrote:
-> Hi,
-> 
-> Some security issues of OpenJPEG have been fixed. Please consider assigning CVE numbers to them.
-> 
-> 2. Issue 775
-> OpenJPEG Out-of-Bounds Access in function opj_tgt_reset of tgt.c
-> Fixed via https://github.com/uclouvain/openjpeg/commit/1a8318f6c24623189ecb65e049267c6f2e005c0e
+  ...
+ |On Wed, Nov 2, 2022 at 7:57 AM Tavis Ormandy <taviso@gmail.com> wrote:
+ |> I don't know rust, so serious question - if this same buggy punycode
 
-Is that a different issue than CVE-2016-1924?
+The problem with punycode is punycode as such.
+It should have been URL-encoded UTF-8 maybe with normal
+decomposition from the start, and the DNS limits should have been
+raised, all that now well over twenty years ago.
 
-Cheers,
-        Moritz
+Poul-Hennig Kamp of FreeBSD, varnish etc wrote just this week on
+another ML
+
+ |> The other ting to keep in mind is the immense existing codebase of
+ |> unix kernels et al, not to mention application code depending on
+ |> those kernels.
+ |
+ |This is the mistake we IT-people keep doing again and again:
+ |
+ |Forwards compatibility is /far/ more important than backwards compatibil\
+ |ity.
+
+It would have been grown out by now.  And many problems would
+never happened, including those incompatibilities that they wanted
+to avoid.  My one cent.
+
+Other than that.  Sigh.  C is the culprit!!
+
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
