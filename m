@@ -1,37 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/07/2
-Message-ID: <Y2lByE1FNVw3z/L8@gentoo.org>
-Date: Mon, 7 Nov 2022 11:35:04 -0600
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/03/2
+Message-ID: <Y2MAGbrZO7r23Wtp@gentoo.org>
+Date: Wed, 2 Nov 2022 18:41:13 -0500
 From: John Helmert III <ajak@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: ggregory@...che.org, security@...che.org
-Subject: Re: CVE-2022-42920: Apache Commons BCEL prior to 6.6.0 allows producing arbitrary bytecode via out-of-bounds writing
+Subject: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
 Content-Type: text/plain; charset=utf-8
 
-Copying Apache's CNA address and original sender. The new CVE is now
-public.
-
-On Fri, Nov 04, 2022 at 03:54:46PM -0500, John Helmert III wrote:
-> On Fri, Nov 04, 2022 at 05:35:34PM +0000, Gary D. Gregory wrote:
-> > Description:
-> > 
-> > Apache Commons BCEL has a number of APIs that would normally only allow changing specific class characteristics. However, due to an out-of-bounds writing issue, these APIs can be used to produce arbitrary bytecode. This could be abused in applications that pass attacker-controllable data to those APIs, giving the attacker more control over the resulting bytecode than otherwise expected. Update to Apache Commons BCEL 6.6.0.
-> > 
-> > This issue is being tracked as BCEL-363
-> > 
-> > Credit:
-> > 
-> > Reported by Felix Wilhelm (Google); GitHub pull request to Apache Commons BCEL #147 by Richard Atkins (https://github.com/rjatkins); PR derived from OpenJDK (https://github.com/openjdk/jdk11u/) commit 13bf52c8d876528a43be7cb77a1f452d29a21492 by Aleksei Voitylov and RealCLanger (Christoph Langer https://github.com/RealCLanger)
-> > 
+On Wed, Nov 02, 2022 at 11:24:08AM -0700, Kurt H Maier wrote:
+> On Wed, Nov 02, 2022 at 03:09:21PM +0100, Hanno Böck wrote:
+> > FWIW it only takes a basically trivial fuzz target on the affected
+> > function to find this bug with libfuzzer.
 > 
-> This appears to be a duplicate of CVE-2022-34169 (also issued by the
-> Apache CNA), and previously discussed on this list at [1]. It was
-> eventually reported to the list that the vulnerability was actually in
-> bcel [2].
+> I'm not sure what the value is of all this Monday-morning
+> quarterbacking, from 'basically trivial' fuzzing to code-quality
+> comparisons of hypothetical Rust ports.  OpenSSL's development process
+> has a bad rap, and there are definitely some easy wins to be had.
+> Posting "if they'd only adopted my pet practice" to oss-sec isn't fixing
+> anything in the OpenSSL project.  Please consider directing fuzzing
+> advice and PL theory directly to the project?  I agree there would be
+> benefit to this stuff, but dunking on them on unrelated lists isn't
+> getting the medicine to the patient.
+
+I don't read it (Hanno's point) as a 'dunk', some information on how
+this kind of thing might be prevented in the future certainly has
+value here.
+
 > 
-> [1] https://www.openwall.com/lists/oss-security/2022/07/19/5
-> [2] https://www.openwall.com/lists/oss-security/2022/10/18/2
-
-
+> Respectfully,
+> khm
 
 Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
