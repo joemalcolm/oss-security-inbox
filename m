@@ -1,20 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/11/2
-Message-ID: <bc351510-ab51-78dc-f10b-07701d9ca8ee@linux.ibm.com>
-Date: Fri, 11 Feb 2022 08:45:30 +0100
-From: Christian Borntraeger <borntraeger@...ux.ibm.com>
-To: oss-security@...ts.openwall.com, Janis Schoetterl-Glausch <scgl@...ux.ibm.com>, Janosch Frank <frankja@...ux.ibm.com>
-Subject: Linux kernel: Fix for KVM on s390, insufficient checks for ioctl
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/02/12
+Message-ID: <20221102124527.O5WVR%steffen@sdaoden.eu>
+Date: Wed, 02 Nov 2022 13:45:27 +0100
+From: Steffen Nurpmeso <steffen@...oden.eu>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
 Content-Type: text/plain; charset=utf-8
 
-Folks,
+  ...
+ |On Wed, Nov 2, 2022 at 7:57 AM Tavis Ormandy <taviso@...il.com> wrote:
+ |> I don't know rust, so serious question - if this same buggy punycode
 
-here is a Linux kernel fix
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=2c212e1baedcd782b2535a3f86bc491977677c0e
-for an insufficient check in the KVM module for s390.
-This was reported last week to linux-distros at openwall. No exploit is available.
+The problem with punycode is punycode as such.
+It should have been URL-encoded UTF-8 maybe with normal
+decomposition from the start, and the DNS limits should have been
+raised, all that now well over twenty years ago.
 
-According to Red Hat this is now tracked via CVE-2022-0516.
+Poul-Hennig Kamp of FreeBSD, varnish etc wrote just this week on
+another ML
 
+ |> The other ting to keep in mind is the immense existing codebase of
+ |> unix kernels et al, not to mention application code depending on
+ |> those kernels.
+ |
+ |This is the mistake we IT-people keep doing again and again:
+ |
+ |Forwards compatibility is /far/ more important than backwards compatibil\
+ |ity.
 
-Christian
+It would have been grown out by now.  And many problems would
+never happened, including those incompatibilities that they wanted
+to avoid.  My one cent.
+
+Other than that.  Sigh.  C is the culprit!!
+
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
