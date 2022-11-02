@@ -1,50 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/18/4
-Message-ID: <20220218163304.GA18539@openwall.com>
-Date: Fri, 18 Feb 2022 17:33:04 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/02/7
+Message-ID: <tjtkiu$jeu$1@ciao.gmane.io>
+Date: Wed, 2 Nov 2022 11:33:50 -0000 (UTC)
+From: Tavis Ormandy <taviso@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2021-3997: Uncontrolled recursion in systemd's systemd-tmpfiles
+Subject: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 2022-11-01, Jeffrey Walton wrote:
+> On Tue, Nov 1, 2022 at 3:55 PM Pavan Maddamsetti
+><pavan.maddamsetti@...il.com> wrote:
+>>
+>> https://github.com/RustCrypto
+>
 
-Sorry for commenting so late, but:
+I don't know rust, so serious question - if this same buggy punycode
+routine had been written in rust, what would have happened?
 
-On Mon, Jan 10, 2022 at 06:08:29PM +0000, Qualys Security Advisory wrote:
-> - but if systemd-tmpfiles crashes during the "remove" phase, then it
->   never enters the "create" phase;
-> 
-> - and it fails to create the files and directories (specified in
->   /usr/lib/tmpfiles.d/*.conf) that it should create at boot time;
-> 
-> - for example, on Ubuntu 21.04, systemd-tmpfiles fails to create the
->   directory /run/lock/subsys; but because /run/lock is world-writable,
->   attackers can create their own /run/lock/subsys; and because various
->   legacy packages and daemons write into /run/lock/subsys as root, the
->   attackers may create arbitrary files via symlinks in /run/lock/subsys.
+- I assume you *could* write similar logic, but perhaps the argument is
+  that idiomatic rust discourages it?
+- Would rustc have been able to reason about the code well enough at
+  compile time to error out?
+- Just detect it at runtime and abort()?
 
-I think the combination of world-writable /run/lock and writes into
-/run/lock/subsys as root is a vulnerability on its own, independent of
-any systemd issues.  This is a matter of failure modes: it's fail-open,
-but should be fail-secure.
+If the answer is "error out", then I think that's a pretty convincing win.
 
-Further, even without writes into /run/lock/subsys, keeping /run/lock
-world-writable unnecessarily allows for DoS attacks against other not
-yet started services that would use it.
+Tavis.
 
-On the Red Hat'ish systems I've just checked /run/lock is mode 755, on
-Debian and Ubuntu it's mode 1777.  The only non-root-owned entry under
-/run/lock on an Ubuntu system is /run/lock/whoopsie, but that alone does
-not tell us whether it was possibly created as root (and then chown'ed).
-Either way, keeping /run/lock as world-writable should be avoided, even
-if by also changing something in another package.
+-- 
+ _o)            $ lynx lock.cmpxchg8b.com
+ /\\  _o)  _o)  $ finger taviso@....org
+_\_V _( ) _( )  @taviso
 
-systemd's tmpfiles.d/legacy.conf.in lists /run/lock as mode 755, and
-/run/lock/subsys as mode 755 too.  (Incidentally, on Owl we had
-/var/lock as mode 755, but /var/lock/subsys as mode 700 with no issues.)
-
-So the Debian and Ubuntu /run/lock mode 1777 looks like those distros'
-shortcoming that they should fix.
-
-Alexander
