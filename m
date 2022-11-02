@@ -1,31 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/24/8
-Message-ID: <CADW8OBuPkS==FV+0zb9rObxoc+02GCBno+7SdDXpnYOvGLik0g@mail.gmail.com>
-Date: Tue, 24 May 2022 09:28:29 -0700
-From: Kyle Zeng <zengyhkyle@...il.com>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-1786: Linux Kernel invalid-free in io_uring
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/02/1
+Message-ID: <Y2HbGYMVSAm7/sUn@itl-email>
+Date: Tue, 1 Nov 2022 22:49:48 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
 Content-Type: text/plain; charset=utf-8
 
-A small correction, I shared a minimal crashing PoC to linux-distros
-but not the LPE exploit.
-I do not plan to share the LPE exploit because of ethical issues.
+On Tue, Nov 01, 2022 at 09:52:59PM +0100, Erin Shepherd wrote:
+> LibreTLS does not track the OpenSSL API, so increasingly software does not build with it (it's not possible to support both LibreSSL and a supported version of OpenSSL without #ifdef hell)
 
-To answer your question: I intend to post the crashing PoC on May
-27th. Thanks for reminding me.
+Has software not from OpenBSD considered switching to LibreSSL outright?
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-Kyle
-
-On Tue, May 24, 2022 at 9:22 AM Solar Designer <solar@...nwall.com> wrote:
->
-> On Tue, May 24, 2022 at 09:10:37AM -0700, Kyle Zeng wrote:
-> > # Impact
-> > I wrote a proof-of-concept exploit and demonstrated that it can be
-> > used to achieve local privilege escalation.
->
-> Since you shared the PoC exploit with linux-distros, you're supposed to
-> also post that to oss-security within 7 days of your first posting
-> above, so by or on May 31.  Do you intend to, and when exactly?
->
-> Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
