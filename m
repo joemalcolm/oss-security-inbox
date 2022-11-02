@@ -1,98 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/27/2
-Message-ID: <573s840-9q6o-7q70-5n1o-p0134rro2p88@unkk.fr>
-Date: Mon, 27 Jun 2022 08:20:10 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: CVE-2022-32206: HTTP compression denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/02/11
+Message-ID: <20221102150921.3ab3f2d0@computer>
+Date: Wed, 2 Nov 2022 15:09:21 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
 Content-Type: text/plain; charset=utf-8
 
-CVE-2022-32206: HTTP compression denial of service
-==================================================
+FWIW it only takes a basically trivial fuzz target on the affected
+function to find this bug with libfuzzer.
 
-Project curl Security Advisory, June 27th 2022 -
-[Permalink](https://curl.se/docs/CVE-2022-32206.html)
+In OpenSSL 3.0.5 code do:
 
-VULNERABILITY
--------------
+./config no-shared CC=clang CFLAGS="-fsanitize=fuzzer-no-link,address"
+clang -fsanitize=fuzzer,address -I$(pwd)/include punyfuzz.c libcrypto.a
 
-curl supports "chained" HTTP compression algorithms, meaning that a server
-response can be compressed multiple times and potentially with different
-algorithms. The number of acceptable "links" in this "decompression chain" was
-unbounded, allowing a malicious server to insert a virtually unlimited number
-of compression steps.
+with this in punyfuzz.c:
 
-The use of such a decompression chain could result in a "malloc bomb", making
-curl end up spending enormous amounts of allocated heap memory, or trying to
-and returning out of memory errors.
+#include <stddef.h>
+#include <stdint.h>
+#include "crypto/punycode.h"
 
-We are not aware of any exploit of this flaw.
+int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
+  unsigned int bar[32];
+  unsigned int x = 32;
+  ossl_punycode_decode((const char *)data, size, bar, &x);
+  return 0;
+}
 
-INFO
-----
-
-CVE-2022-32206 was introduced in [commit
-dbcced8e32b50c06](https://github.com/curl/curl/commit/dbcced8e32b50c06),
-shipped in curl 7.57.0.
-
-Automatic decompression of content needs to be enabled per transfer. It is
-disabled by default and then nothing bad happens.
-
-This flaw exists with just one of the compression algorithms built-in (gzip,
-brotli or zstd), but the individual algorithms has different "exploding"
-powers.
-
-Both `Content-Encoding:` and `Transfer-Encoding:` are affected. The
-vulnerability is more emphasized over HTTP/1 than HTTP/2 due to different curl
-internal header limits.
-
-CWE-770: Allocation of Resources Without Limits or Throttling
-
-Severity: Medium
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.57.0 to and including 7.83.1
-- Not affected versions: curl < 7.57.0 and curl >= 7.84.0
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-The amount of accepted "chained" algorithms is now capped to 5.
-
-A [fix for CVE-2022-32206](https://github.com/curl/curl/commit/3a09fbb7f264c67c43)
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 7.84.0
-
-  B - Apply the patch to your local version
-
-  C - Do not enable automatic decompression
-
-TIMELINE
---------
-
-This issue was reported to the curl project on May 15, 2022. We contacted
-distros@...nwall on June 20.
-
-libcurl 7.84.0 was released on June 27 2022, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-This issue was reported by Harry Sintonen. Patched by Daniel Stenberg.
-
-Thanks a lot!
+Run ./a.out and it'll crash with an ASAN error almost instantly.
 
 -- 
+Hanno Böck
+https://hboeck.de/
 
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
+Content of type "application/pgp-signature" skipped
