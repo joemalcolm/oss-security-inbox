@@ -1,46 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/27/4
-Message-ID: <0f115734-5e21-8fa9-7e96-f8636788a0bc@grsecurity.net>
-Date: Thu, 27 Jan 2022 21:00:19 +0100
-From: Mathias Krause <minipli@...ecurity.net>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Cc: Zack Rusin <zackr@...are.com>
-Subject: CVE-2022-22942: Linux kernel: wrong file descriptor handling in the vmwgfx driver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/03/11
+Message-Id: <6442A168-FF2E-4CB9-8455-513A9FFC3EB5@gentoo.org>
+Date: Thu, 3 Nov 2022 20:32:33 +0000
+From: Sam James <sam@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: nic.tuv@...il.com, Hanno Böck <hanno@...too.org>
+Subject: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
 Content-Type: text/plain; charset=utf-8
 
-Hi!
 
-A vulnerability was found in the vmwgfx driver that allows unprivileged
-users to gain access to files opened by other processes on the system
-through a dangling 'file' pointer.
 
-Exploiting this vulnerability requires an attacker to have access to
-either /dev/dri/card0 or /dev/dri/rendererD128 and be able to issue an
-ioctl() on the resulting file descriptor.
+> On 3 Nov 2022, at 20:23, Sam James <sam@...too.org> wrote:
+> [snip]
 
-Linux kernels making use of the vmwgfx driver and containing commit
-c906965dee22 ("drm/vmwgfx: Add export fence to file descriptor support")
-are affected, which is v4.14+.
+> [2] https://github.com/openssl/openssl/issues/18663#issuecomment-1181478057
 
-If the vmwgfx driver isn't loaded, your system isn't affected.
+I should add - the LTO warnings with GCC here (-Wfree-nonheap-object) are possibly
+false positives, but Clang doesn't emit them IIRC and I think it's a valuable
+resource to dig into.
 
-Systems using the VMWare graphics card emulated by QEMU (-vga vmware)
-aren't affected either, as these lack a required feature that makes the
-driver fail to load.
-
-Attached are patches as have been sent to linux-distros on Jan. 21st.
-They're against mainline Linux (0001-*.patch) or backports for all
-affected kernels (backport-*.patch) respectively. They should soon be
-merged into the corresponding Linux kernel trees.
-
-CVE-2022-22942 was allocated for this issue.
-
-Thanks,
-Mathias
-View attachment "backport-5.16-drm-vmwgfx-Fix-stale-file-descriptors-on-failed-user.patch" of type "text/x-patch" (5567 bytes)
-
-View attachment "backport-4.19-drm-vmwgfx-Fix-stale-file-descriptors-on-failed-user.patch" of type "text/x-patch" (5616 bytes)
-
-View attachment "0001-drm-vmwgfx-Fix-stale-file-descriptors-on-failed-user.patch" of type "text/x-patch" (5509 bytes)
-
-Download attachment "OpenPGP_signature" of type "application/pgp-signature" (666 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (359 bytes)
