@@ -1,44 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/27/1
-Message-ID: <CABbtqzEUXKVaWAK49231jQCPYF9_A2kGfDUz-LY_d7LtBJnsbA@mail.gmail.com>
-Date: Tue, 27 Sep 2022 17:33:16 +0200
-From: Ana Oprea <anaoprea@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/03/9
+Message-ID: <Y2QYhxYN5/mNgtAO@wopr>
+Date: Thu, 3 Nov 2022 12:37:43 -0700
+From: Kurt H Maier <khm@...ops.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-1941: Protobuf C++, Python DoS
+Subject: Re: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
 Content-Type: text/plain; charset=utf-8
 
-Summary
-A message parsing and memory management vulnerability in ProtocolBuffer’s
-C++ and Python implementations can trigger an out of memory (OOM) failure
-when processing a specially crafted message, which could lead to a denial
-of service (DoS) on services using the libraries.
+On Thu, Nov 03, 2022 at 06:32:22PM +0200, Nicola Tuveri wrote:
+> I can also add that at least this member of the OpenSSL Technical
+> Committee is following the discussion, and I believe I am not the only
+> one.
 
-Reporter
-ClusterFuzz [1]
+Thanks, Nicola, that makes me feel a lot better about this thread.
 
-Affected versions
-All versions of C++ Protobufs (including Python) prior to the versions
-listed below.
-
-Severity & Impact
-CVE-2022-1941 Medium 5.7 - CVSS:3.1/AV:A/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H [2]
-A small (~500 KB) malicious payload can be constructed which causes the
-running service to allocate more than 3GB of RAM.
-
-Proof of Concept
-For reproduction details, please refer to the unit test that identifies the
-specific inputs that exercise this parsing weakness. [3]
-
-Mitigation / Patching
-Please update to the latest available versions of the following packages:
-- protobuf-cpp (3.18.3, 3.19.5, 3.20.2, 3.21.6)
-- protobuf-python (3.18.3, 3.19.5, 3.20.2, 4.21.6)
-
-[1] https://google.github.io/clusterfuzz/
-[2] https://nvd.nist.gov/vuln/detail/CVE-2022-1941
-[3]
-https://github.com/protocolbuffers/protobuf/security/advisories/GHSA-8gq9-2x98-w8hf
-
-Kind regards,
-Ana
-
+khm
