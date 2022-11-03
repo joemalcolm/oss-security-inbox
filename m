@@ -1,26 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/31/1
-Message-ID: <CAHKPuKEiTO8uJi=sJxogt9ZUmvQ1o4mXT+bEb+6xBf=N7K_3-Q@mail.gmail.com>
-Date: Sat, 31 Dec 2022 10:54:00 +0100
-From: Arnout Engelen <engelen@...che.org>
-To: John Helmert III <ajak@...too.org>
-Cc: security@...che.org, jorton@...che.org, carnil@...ian.org,  oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-22728: libapreq2: libapreq2 multipart form parse memory corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/03/6
+Message-ID: <Y2QEz7/6u65wE4cd@wopr>
+Date: Thu, 3 Nov 2022 11:13:35 -0700
+From: Kurt H Maier <khm@...ops.net>
+To: oss-security@...ts.openwall.com
+Subject: Re: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Dec 30, 2022 at 10:54 PM John Helmert III <ajak@...too.org> wrote:
-> On Thu, Dec 29, 2022 at 10:50:26AM +0100, Salvatore Bonaccorso wrote:
-> > On Fri, Aug 26, 2022 at 11:01:23AM -0500, John Helmert III wrote:
-> > > On Thu, Aug 25, 2022 at 02:09:16PM +0000, Joe Orton wrote:
-> > > > A flaw in libapreq2 versions 2.16 and earlier could cause a buffer
-> > > > overflow while processing multipart form uploads.
-> > >
-> > > Is there a fixed version or patch or upstream issue?
+On Thu, Nov 03, 2022 at 03:36:51PM -0000, Tavis Ormandy wrote:
+> 
+> Hanno and I have contributed months of programmer time on openssl
+> research and produced a ton of CRITICAL/HIGH issues over the years, not
+> to mention nss, gnutls, etc. What you're looking at isn't Monday-morning
+> quarterbacking on an unrelated list - this is active prolific opensource
+> security researchers discussing their opensource security work on the
+> opensource security mailing list :)
 
-libapreq2 2.17 was released on the same day as the advisory describing
-the problem with 2.16 and earlier (https://httpd.apache.org/apreq/).
+I'm aware of your and Hanno's work.  In the past it has not appeared
+ex-post-facto in response to a thread where someone is trying to guess
+which programming language theory would squash the bug.  That's why I'm
+expressing confusion.  Feel free to ignore me.
 
+khm
 
-Kind regards,
-
-Arnout
