@@ -1,90 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/20/3
-Message-ID: <Y6ItNDy/+sfibmNL@gentoo.org>
-Date: Tue, 20 Dec 2022 15:46:28 -0600
-From: John Helmert III <ajak@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/03/4
+Message-ID: <39087948-8913-135e-b69d-bf6d1632266b@apache.org>
+Date: Thu, 03 Nov 2022 11:12:27 +0000
+From: Richard Eckart de Castilho <rec@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: ovs-discuss <ovs-discuss@...nvswitch.org>, i.maximets@....org, Aaron Conole <aconole@...hat.com>, Qian Chen <cq674350529@...il.com>
-Subject: Re: [ADVISORY] LLDP underflow while parsing malformed Auto Attach TLV (Open vSwitch)
+Subject: CVE-2022-32287: Apache UIMA prior to 3.3.1 has a path traversal vulnerability when extracting (PEAR) archives 
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Dec 20, 2022 at 10:39:23PM +0100, Ilya Maximets wrote:
-> Description
-> ===========
-> 
-> Multiple versions of Open vSwitch are vulnerable to crafted LLDP
-> packets causing denial of service, and data underflow attacks.
-> Triggering the vulnerabilities requires LLDP processing to be enabled
-> for a specific port.  Open vSwitch versions prior to 2.4.0 are not
-> vulnerable.
-> 
-> The Common Vulnerabilities and Exposures project (cve.mitre.org)
-> did not assign the identifier to this issue yet.  The identifier will
-> be communicated separately.
+Severity: low
 
-Has a CVE been requested?
+Description:
 
-> This issue does not affect the `lldpd' project, although they share
-> a code base.  The issue is related to parsing the Auto Attach TLVs,
-> which is specific to the Open vSwitch implementation.
-> 
-> 
-> Mitigation
-> ==========
-> 
-> For any version of Open vSwitch, preventing LLDP packets from reaching
-> Open vSwitch mitigates the vulnerability.  We do not recommend
-> attempting to mitigate the vulnerability this way because of the
-> following difficulties:
-> 
->     - Open vSwitch obtains packets before the iptables host firewall,
->       so ebtables on the Open vSwitch host cannot ordinarily block the
->       vulnerability.
-> 
->     - If Open vSwitch is configured to receive and transmit LLDP
->       messages, the required functionality will need to be disabled
->       potentially disrupting the network.
-> 
-> We have found that Open vSwitch is subject to a denial of service, and
-> possibly a remote code execution exploit when LLDP processing is enabled
-> on an interface.  By default, interfaces are not configured to process
-> LLDP messages.
-> 
-> 
-> Fix
-> ===
-> 
-> Patches to fix these vulnerabilities in Open vSwitch 2.13.x and newer are
-> applied to the appropriate branches, and the original patch is located
-> at:
-> 
->    https://mail.openvswitch.org/pipermail/ovs-dev/2022-December/400596.html
-> 
-> Recommendation
-> ==============
-> 
-> We recommend that users of Open vSwitch apply the respective patch, or
-> upgrade to a known patched version of Open vSwitch.  These include:
-> 
-> * 3.0.3
-> * 2.17.5
-> * 2.16.6
-> * 2.15.7
-> * 2.14.8
-> * 2.13.10
-> 
-> 
-> Acknowledgments
-> ===============
-> 
-> The Open vSwitch team wishes to thank the reporter:
-> 
->   Qian Chen <cq674350529@...il.com>
-> 
+A relative path traversal vulnerability in a FileUtil class used by the PEAR management component of Apache UIMA allows an attacker to create files outside the designated target directory using carefully crafted ZIP entry names. This issue affects Apache UIMA Apache UIMA version 3.3.0 and prior versions. 
 
+Note that PEAR files should never be installed into an UIMA installation from untrusted sources because PEAR archives are executable plugins that will be able to perform any actions with the same privileges as the host Java Virtual Machine.
 
+Credit:
 
+Apache UIMA would like to thank Huangzhicong from CodeSafe Team of Legendsec at Qi'anxin Group
 
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
