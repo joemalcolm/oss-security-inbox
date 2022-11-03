@@ -1,33 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/31/6
-Message-ID: <c20a5ac6-ec02-88ea-f6d4-713c93373904@igalia.com>
-Date: Mon, 31 Jan 2022 18:49:31 +0000
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0001
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/03/8
+Message-ID: <740d2f19-8818-9d6b-b356-8445e832f076@apache.org>
+Date: Thu, 03 Nov 2022 18:40:12 +0000
+From: Michael Marshall <mmarshall@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2022-33684: Apache Pulsar: Disabled Certificate Validation for OAuth Client Credential Requests makes C++/Python Clients vulnerable to MITM attack 
 Content-Type: text/plain; charset=utf-8
 
-On 21/01/2022 16:53, Carlos Alberto Lopez Perez wrote:
-> CVE-2022-XXXXX
->     Versions affected: WebKitGTK and WPE WebKit before 2.34.4.
->     Credit to Martin Bajanik from fingerprintjs.com.
->     Impact: A malicious website may exfiltrate data cross-origin.
->     Description: A cross-origin issue existed with the IndexedDB. This
->     was addressed with improved checking of security origins. 
->     Notes: There is a public PoC demonstrating this issue at
->     https://safarileaks.com so this issue may have been actively
->     exploited. We still don't know the CVE number that will be assigned
->     to this issue. We will update this advisory once we know it.
+Severity: high
 
-The data for the above unknown CVE number is now updated with the info below:
+Description:
 
-CVE-2022-22594
-    Versions affected: WebKitGTK and WPE WebKit before 2.34.4.
-    Credit to Martin Bajanik of fingerprintjs.com.
-    Impact: A website may be able to track sensitive user information.
-    Description: A cross-origin issue in the IndexDB API was addressed
-    with improved input validation. Notes: There is a public PoC
-    demonstrating this issue at safarileaks.com so it may have been
-    actively exploited.
+The Apache Pulsar C++ Client does not verify peer TLS certificates when making HTTPS calls for the OAuth2.0 Client Credential Flow, even when tlsAllowInsecureConnection is disabled via configuration. This vulnerability allows an attacker to perform a man in the middle attack and intercept and/or modify the GET request that is sent to the ClientCredentialFlow 'issuer url'. The intercepted credentials can be used to acquire authentication data from the OAuth2.0 server to then authenticate with an Apache Pulsar cluster.
+
+An attacker can only take advantage of this vulnerability by taking control of a machine 'between' the client and the server. The attacker must then actively manipulate traffic to perform the attack.
+
+The Apache Pulsar Python Client wraps the C++ client, so it is also vulnerable in the same way.
+
+This issue affects Apache Pulsar C++ Client and Python Client versions 2.7.0 to 2.7.4; 2.8.0 to 2.8.3; 2.9.0 to 2.9.2; 2.10.0 to 2.10.1; 2.6.4 and earlier.
+
+Mitigation:
+
+Any users running affected versions of the C++ Client or the Python Client should rotate vulnerable OAuth2.0 credentials, including client_id and client_secret.
+
+2.7 C++ and Python Client users should upgrade to 2.7.5 and rotate vulnerable OAuth2.0 credentials.
+2.8 C++ and Python Client users should upgrade to 2.8.4 and rotate vulnerable OAuth2.0 credentials.
+2.9 C++ and Python Client users should upgrade to 2.9.3 and rotate vulnerable OAuth2.0 credentials.
+2.10 C++ and Python Client users should upgrade to 2.10.2 and rotate vulnerable OAuth2.0 credentials.
+3.0 C++ users are unaffected and 3.0 Python Client users will be unaffected when it is released.
+Any users running the C++ and Python Client for 2.6 or less should upgrade to one of the above patched versions.
+
+Credit:
+
+This issue was discovered by Michael Rowley, michaellrowley@...tonmail.com
 
