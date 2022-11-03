@@ -1,82 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/22/1
-Message-ID: <20220522191951.GA21330@openwall.com>
-Date: Sun, 22 May 2022 21:19:52 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/03/3
+Message-ID: <877d0cl4md.wl-neal@walfield.org>
+Date: Thu, 03 Nov 2022 11:22:18 +0100
+From: "Neal H. Walfield" <neal@...field.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros list policy and Linux kernel
+Subject: Re: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, 02 Nov 2022 13:03:31 +0100,
+Alex Gaynor wrote:
+> In Rust, assuming you wrote normal safe Rust[0], and you had code that
+> overran a buffer on the stack, you'd get a panic() -- which is roughly
+> an abort (there's even a mode where it literally is an abort. By
+> default it unwinds and runs destructors and such). As a general rule,
+> bounds check issues aren't caught at compile time (in contrast with
+> temporal safety, which mostly is enforced at compile time.)
 
-Thank you all for the helpful replies in this thread.  Here's my summary
-of what was said so far:
+If you are careless, then this can indeed result in a panic, but that
+is not inevitable.  Here's how I'd copy a buffer in Rust:
 
-As seen from replies by Jason and Greg, I didn't make the distinction
-between my suggested options 0 and 2 clear enough.  They were:
+  fn main() -> Result<(), anyhow::Error> {
+      let mut dest = vec![10; 0];
+      let source = vec![10; 1];
+      let dest_offset = 0;
+      let source_offset = 0;
+      let len = 11;
 
-> 0. Do nothing specific - let things work or fail on their own.
+      dest.get_mut(source_offset..source_offset+len)
+          .ok_or(anyhow::anyhow!("Index out of bounds"))?
+          .copy_from_slice(
+              source.get(dest_offset..dest_offset+len)
+                  .ok_or(anyhow::anyhow!("Index out of bounds"))?
+              );
 
-> 2. Strictly enforce the policy as it is - and be in conflict with Linux
-> kernel security team, and handle fewer issues via linux-distros.
+      Ok(())
+  }
 
-Let me clarify.  As I wrote, after the disagreement in February, "the
-handling was hectic - indeed, people felt discouraged from enforcing the
-policy."  So by option 0 I referred to the loose (non-)enforcement we've
-had since February until now, and by option 2 to enforcement at least as
-strict as we had before February.
+  https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=b7981319d0629bfc83cc29f23d43a3be
 
-Although I wouldn't necessarily have the list's future decided by a
-majority vote, I counted something like 4.5 votes for relaxing the list
-policy to accommodate (at least) Linux kernel community's workflow:
+This returns an error when you attempt to read past the end of the
+source buffer (the first `ok_or`) or write beyond the end of the
+destintation buffer (the second `ok_or`).  The caller can catch or
+propagate any error in the usual Rust way (e.g., by using the `?`
+operator to return the error to its caller).
 
-Igor Seletskiy
-> My vote would be for #1
+Unfortunately, `copy_from_slice` will still panic if the slices are
+not the same length.
 
-Anthony Liguori
-> make this policy specific to changes under security@...r.kernel.org embargo
+  https://doc.rust-lang.org/stable/std/primitive.slice.html#method.copy_from_slice
 
-Greg KH
-> So if you all could just modify the rules to be something like,
-> "embargos are not broken when changes are posted in public, or accepted
-> into public trees, unless the changes or discussions around them turn
-> out to disclose the security related issue."
-
-Dan Carpenter
-> What I wish we had is a private way to tell maintainers "You may want to
-> pick up a patch."  It has to be private.
-
-Vegard Nossum
-> As a distribution, our preference is to see sources/patches and binaries
-> released simultaneously by both upstream and distributions. [...]
-> 
-> However, barring that option, our preference would be to adjust the
-> linux-distros list policy as proposed (option 1/Greg KH's proposal).
-
-and 1 vote for preserving the current policy:
-
-Jason A. Donenfeld
-> So I think maybe your option (0) makes sense? Enforce the policy, which
-> has worked well enough for a long while now.
-
-A few of you also said the linux-distros list is still valuable, and no
-one said otherwise.
-
-I think now we need to come up with a specific edit to the policy, and I
-think the exception should ideally be limited to Linux kernel issues
-currently/recently handled with the kernel's security team involved.
-Ideally, we'd also manage to simplify rather than further complicate the
-policy - a goal inconsistent with granting only a limited exception?
-
-A number of other related issues were brought up as well, including by
-Jason A. Donenfeld, Seth Arnold, Thadeu Lima de Souza Cascardo, and
-Vegard Nossum.  From a practical perspective, it looks like Vegard
-Nossum and maybe Thadeu Lima de Souza Cascardo intend to propose changes
-to the kernel's Documentation/admin-guide/security-bugs.rst:
-
-On Fri, May 20, 2022 at 10:14:07AM +0200, Vegard Nossum wrote:
-> I'll respond a bit later with a slightly more detailed option that also
-> includes potential modifications to the in-kernel documentation as
-> displayed on kernel.org.
-
-Alexander
+:) Neal
