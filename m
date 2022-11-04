@@ -1,38 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/22/4
-Message-ID: <001501d8ce82$8df67800$a9e36800$@gmail.com>
-Date: Thu, 22 Sep 2022 13:55:12 +0100
-From: "Simon Steiner" <simonsteiner1984@...il.com>
-To: <general@...graphics.apache.org>, <batik-dev@...graphics.apache.org>, <batik-users@...graphics.apache.org>, "'Apache Security Team'" <security@...che.org>, <oss-security@...ts.openwall.com>
-Subject: [CVE-2022-38648] Apache Batik information disclosure vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/04/9
+Message-Id: <292ca9a8-6552-460a-a780-c358fd842a89n@googlegroups.com>
+Date: Fri, 4 Nov 2022 14:04:07 -0700 (PDT)
+From: "soyjuanarbol@...il.com" <soyjuanarbol@...il.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Fwd: Node.js security updates for all active release lines, November 2022
 Content-Type: text/plain; charset=utf-8
 
-CVE-2022-38648:
-        Apache Batik information disclosure vulnerability
-
-Severity:
-        Medium
-
-Vendor:
-        The Apache Software Foundation
-
-Versions Affected:
-        Batik 1.0 - 1.14
-
-Description:
-        Block external resource before calling fop
-
-Mitigation:
-        Users should upgrade to Batik 1.15+
-
-Credit:
-        This issue was independently reported by Adam Rauch
-
-References:
-        http://xmlgraphics.apache.org/security.html
-        https://issues.apache.org/jira/browse/BATIK-1333
-
-The Apache XML Graphics team.
 
 
+---------- Forwarded message ---------
+From: soyjuanarbol@...il.com <soyjuanarbol@...il.com>
+Date: Friday, November 4, 2022 at 4:03:42 PM UTC-5
+Subject: Node.js security updates for all active release lines, November 
+2022
+To: nodejs-sec <nodejs-sec@...glegroups.com>
 
+
+The Node.js project has now released new versions of all supported release 
+lines.
+For more information see: 
+https://nodejs.org/en/blog/vulnerability/november-2022-security-releases/
+
+On Tuesday, November 1, 2022 at 5:37:56 PM UTC-5 soyjua...@...il.com wrote:
+
+> The Node.js project will release new versions of all supported release 
+> lines on or shortly after Thursday, 3rd of November, 2022
+> For more information see: 
+> https://nodejs.org/en/blog/vulnerability/november-2022-security-releases/
+>
+
+Content of type "text/html" skipped
