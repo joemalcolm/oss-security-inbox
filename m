@@ -1,147 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/14/4
-Message-Id: <E1o1BFN-0008DW-A3@xenbits.xenproject.org>
-Date: Tue, 14 Jun 2022 18:26:37 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 404 v1 (CVE-2022-21123,CVE-2022-21124,CVE-2022-21166) - x86: MMIO Stale Data vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/04/3
+Message-ID: <87wn8bm0vz.fsf@v45346.1blu.de>
+Date: Fri, 04 Nov 2022 12:09:52 +0100
+From: Stefan Bodewig <bodewig@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2022-37866: Apache Ivy: Ivy Path traversal
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hash: SHA1
 
- Xen Security Advisory CVE-2022-21123,CVE-2022-21124,CVE-2022-21166 / XSA-404
+Severity: medium
 
-                 x86: MMIO Stale Data vulnerabilities
+Description:
 
-ISSUE DESCRIPTION
-=================
+When Apache Ivy downloads artifacts from a repository it stores them in
+the local file system based on a user-supplied "pattern" that may
+include placeholders for artifacts coordinates like the organisation,
+module or version.
 
-This issue is related to the SRBDS, TAA and MDS vulnerabilities.  Please
-see:
+If said coordinates contain "../" sequences - which are valid characters
+for Ivy coordinates in general - it is possible the artifacts are stored
+outside of Ivy's local cache or repository or can overwrite different
+artifacts inside of the local cache.
 
-  https://xenbits.xen.org/xsa/advisory-320.html (SRBDS)
-  https://xenbits.xen.org/xsa/advisory-305.html (TAA)
-  https://xenbits.xen.org/xsa/advisory-297.html (MDS)
+In order to exploit this vulnerability an attacker needs collaboration
+by the remote repository as Ivy will issue http requests containing ".."
+sequences and a "normal" repository will not interpret them as part of
+the artifact coordinates.
 
-Please see Intel's whitepaper:
+Mitigation:
 
-  https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/technical-documentation/processor-mmio-stale-data-vulnerabilities.html
+Users of Apache Ivy 2.0.0 to 2.5.1 should upgrade to Ivy 2.5.1.
 
-IMPACT
-======
+Credit:
 
-An attacker might be able to directly read or infer data from other
-security contexts in the system.  This can include data belonging to
-other VMs, or to Xen itself.  The degree to which an attacker can obtain
-data depends on the CPU, and the system configuration.
-
-VULNERABLE SYSTEMS
-==================
-
-Systems running all versions of Xen are affected.
-
-Only x86 processors are vulnerable.  Processors from other manufacturers
-(e.g. ARM) are not believed to be vulnerable.
-
-Only Intel based processors are affected.  Processors from other x86
-manufacturers (e.g. AMD) are not believed to be vulnerable.
-
-Please consult the Intel Security Advisory for details on the affected
-processors and configurations.
-
-Per Xen's support statement, PCI passthrough should be to trusted
-domains because the overall system security depends on factors outside
-of Xen's control.
-
-As such, Xen, in a supported configuration, is not vulnerable to
-DRPW/SBDR.
-
-MITIGATION
-==========
-
-All mitigations depend on functionality added in the IPU 2022.1 (May
-2022) microcode release from Intel.  Consult your dom0 OS vendor.
-
-To the best of the security team's understanding, the summary is as
-follows:
-
-Server CPUs (Xeon EP/EX, Scalable, and some Atom servers), excluding
-Xeon E3 (which use the client CPU design), are potentially vulnerable to
-DRPW (CVE-2022-21166).
-
-Client CPUs (inc Xeon E3) are, furthermore, potentially vulnerable to
-SBDR (CVE-2022-21123) and SBDS (CVE-2022-21125).
-
-SBDS only affects CPUs vulnerable to MDS.  On these CPUs, there are
-previously undiscovered leakage channels.  There is no change to the
-existing MDS mitigations.
-
-DRPW and SBDR only affects configurations where less privileged domains
-have MMIO mappings of buggy endpoints.  Consult your hardware vendor.
-
-In configurations where less privileged domains have MMIO access to
-buggy endpoints, `spec-ctrl=unpriv-mmio` can be enabled which will cause
-Xen to mitigate cross-domain fill buffer leakage, and extend SRBDS
-protections to protect RNG data from leakage.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-The patches are still under review.  An update will be sent once they
-are reviewed and the backports are done.
-
-xsa404/xsa404-?.patch           xen-unstable
-
-$ sha256sum xsa404*/*
-18b307c2cbbd08d568e9dcb2447901d94e22ff1e3945c3436173aa693f6456fb  xsa404/xsa404-1.patch
-d6f193ad963396285e983aa1c18539f67222582711fc62105c21b71b3b53a97d  xsa404/xsa404-2.patch
-d2c123ccdf5eb9f862d6e9cb0e59045ae18799a07db149c7d90e301ca20436aa  xsa404/xsa404-3.patch
-$
-
-NOTE CONCERNING CVE-2022-21127 / Update to SRBDS
-================================================
-
-An issue was discovered with the SRBDS microcode mitigation.  A
-microcode update was released as part of Intel's IPU 2022.1 in May 2022.
-
-Updating microcode is sufficient to fix the issue, with no extra actions
-required on Xen's behalf.  Consult your dom0 OS vendor or OEM for
-updated microcode.
-
-NOTE CONCERNING CVE-2022-21180 / Undefined MMIO Hang
-====================================================
-
-A related issue was discovered.  See:
-
-  https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/advisory-guidance/undefined-mmio-hang.html
-
-Xen is not vulnerable to UMH in supported configurations.
-
-The only mitigation to is avoid passing impacted devices through to
-untrusted guests.
+This issue was discovered by Kostya Kortchinsky of the Databricks Security Team.
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmKo0Z0MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZc8cH/RFgxQ4L8OewWMxsuowpgLg8NVyYGFMBgttscBh+
-ANpjRTnV4yQGpt9nNFDAcXT1c/fvWhypOiwadEtczRl5k/Q96JOKFdiAc1QR35Oj
-vmbCLgO20jQ/GdTzaqKUaGBwi8GLShJvH1zMPJ2KuXk5w5uFDhj2gEiB6Kdv9+9O
-4FBxQkpDzll0gs5v16ien8btKhEuZj9lNtzXZw5j4+DJD69MvQqsRPVdEt+M17Ox
-XGYcpfpLeGUaIUPFTPZDcFIJnMvqPBQyt+2eaeR2ezW2ouNpxepCSPsEDlAmSZ/K
-uZA0ShyJD3pfCxjc8eztyF/4zajY5EvuEtWdUZC/3zVaUec=
-=4EdA
+iEYEARECAAYFAmNk8wAACgkQohFa4V9ri3IUCgCeNrT2fqxtV4aAJf/RhpmQLeDK
+VkAAoLmKEXe0H6Oe6cgWiyxvOM7HpZYd
+=mSlx
 -----END PGP SIGNATURE-----
-
-Download attachment "xsa404/xsa404-1.patch" of type "application/octet-stream" (9496 bytes)
-
-Download attachment "xsa404/xsa404-2.patch" of type "application/octet-stream" (5116 bytes)
-
-Download attachment "xsa404/xsa404-3.patch" of type "application/octet-stream" (8009 bytes)
