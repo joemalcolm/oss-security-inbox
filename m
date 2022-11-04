@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4855" "Wednesday" "29" "January" "2020" "16:10:08" "+0100" "Daniel Beck" "ml@beckweb.net" "<E012A6FB-C892-4272-BF4E-3300727D2F4F@beckweb.net>" "120" "[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins" nil nil nil "1" "2020012915:10:08" "[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins" (number mark "U       ml@beckweb.n Jan 29  120/4855  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1827 invoked by uid 550); 29 Jan 2020 15:10:20 -0000
+Received: (qmail 32550 invoked by uid 550); 4 Nov 2022 22:40:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,137 +7,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1809 invoked from network); 29 Jan 2020 15:10:20 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Message-Id: <E012A6FB-C892-4272-BF4E-3300727D2F4F@beckweb.net>
-Date: Wed, 29 Jan 2020 16:10:08 +0100
+Received: (qmail 23588 invoked from network); 4 Nov 2022 20:55:02 -0000
+Date: Fri, 4 Nov 2022 15:54:46 -0500
+From: John Helmert III <ajak@gentoo.org>
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3445.104.11)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1580310620;aab8b0b0;
-X-HE-SMSGID: 1iwoym-0007D2-D2
-Subject: [oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins
+Message-ID: <Y2V8FtuEeMuBjf1u@gentoo.org>
+References: <0a509ab5-7397-d6ac-e841-ef4d9bf00d58@apache.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="yWPH2t2YBFeNskKC"
+Content-Disposition: inline
+In-Reply-To: <0a509ab5-7397-d6ac-e841-ef4d9bf00d58@apache.org>
+Subject: Re: [oss-security] CVE-2022-42920: Apache Commons BCEL prior to
+ 6.6.0 allows producing arbitrary bytecode via out-of-bounds writing
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+--yWPH2t2YBFeNskKC
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The following releases contain fixes for security vulnerabilities:
+On Fri, Nov 04, 2022 at 05:35:34PM +0000, Gary D. Gregory wrote:
+> Description:
+>=20
+> Apache Commons BCEL has a number of APIs that would normally only allow c=
+hanging specific class characteristics. However, due to an out-of-bounds wr=
+iting issue, these APIs can be used to produce arbitrary bytecode. This cou=
+ld be abused in applications that pass attacker-controllable data to those =
+APIs, giving the attacker more control over the resulting bytecode than oth=
+erwise expected. Update to Apache Commons BCEL 6.6.0.
+>=20
+> This issue is being tracked as BCEL-363
+>=20
+> Credit:
+>=20
+> Reported by Felix Wilhelm (Google); GitHub pull request to Apache Commons=
+ BCEL #147 by Richard Atkins (https://github.com/rjatkins); PR derived from=
+ OpenJDK (https://github.com/openjdk/jdk11u/) commit 13bf52c8d876528a43be7c=
+b77a1f452d29a21492 by Aleksei Voitylov and RealCLanger (Christoph Langer ht=
+tps://github.com/RealCLanger)
+>=20
 
-* Jenkins 2.219
-* Jenkins LTS 2.204.2
-* Code Coverage API Plugin 1.1.3
-* Fortify Plugin 19.2.30
+This appears to be a duplicate of CVE-2022-34169 (also issued by the
+Apache CNA), and previously discussed on this list at [1]. It was
+eventually reported to the list that the vulnerability was actually in
+bcel [2].
 
-Additionally, we announce unresolved security issues in the following
-plugins:
+[1] https://www.openwall.com/lists/oss-security/2022/07/19/5
+[2] https://www.openwall.com/lists/oss-security/2022/10/18/2=
 
-* WebSphere Deployer Plugin
+--yWPH2t2YBFeNskKC
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2020-01-29/
+-----BEGIN PGP SIGNATURE-----
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+iHUEABYKAB0WIQQyG9yfCrmO0LPSdG2gXq2+aa/JtQUCY2V8EwAKCRCgXq2+aa/J
+te3KAP9C/h4dr0Zxvrc7qp9f1UuY1JnBbhHWHqKRTJ3b81VuMwEAi3Mud/smsGM/
+wpcyEIh1g54jXbGXfkryzMgYBsllLQg=
+=iRhQ
+-----END PGP SIGNATURE-----
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-1682 / CVE-2020-2099
-Jenkins 2.213 and earlier, LTS 2.204.1 and earlier includes support for the
-Inbound TCP Agent Protocol/3 for communication between master and agents.
-While this protocol has been deprecated in 2018 and was recently removed
-from Jenkins in 2.214, it could still easily be enabled in Jenkins LTS
-2.204.1, 2.213, and older.
-
-This protocol incorrectly reuses encryption parameters which allow an
-unauthenticated remote attacker to determine the connection secret. This
-secret can then be used to connect attacker-controlled Jenkins agents to
-the Jenkins master.
-
-
-SECURITY-1641 / CVE-2020-2100
-Jenkins 2.218 and earlier, LTS 2.204.1 and earlier supports two network
-discovery services (UDP multicast/broadcast and DNS multicast) by default.
-
-The UDP multicast/broadcast service can be used in an amplification
-reflection attack, as very few bytes sent to the respective endpoint result
-in much larger responses: A single byte request to this service would
-respond with more than 100 bytes of Jenkins metadata which could be used in
-a DDoS attack on a Jenkins master. Within the same network, spoofed UDP
-packets could also be sent to make two Jenkins masters go into an infinite
-loop of replies to one another, thus causing a denial of service.
-
-
-SECURITY-1659 / CVE-2020-2101
-Jenkins 2.218 and earlier, LTS 2.204.1 and earlier does not use a
-constant-time comparison validating the connection secret when an inbound
-TCP agent connection is initiated. This could potentially allow attackers
-to use statistical methods to obtain the connection secret.
-
-
-SECURITY-1660 / CVE-2020-2102
-Jenkins 2.218 and earlier, LTS 2.204.1 and earlier does not use a
-constant-time comparison when checking whether two HMACs are equal. This
-could potentially allow attackers to use statistical methods to obtain a
-valid HMAC for an attacker-controlled input value.
-
-
-SECURITY-1695 / CVE-2020-2103
-Jenkins shows various technical details about the current user on the
-`/whoAmI` page. In a previous fix, the `Cookie` header value containing the
-HTTP session ID was redacted. However, user metadata shown on this page
-could also include the HTTP session ID in Jenkins 2.218 and earlier, LTS
-2.204.1 and earlier.
-
-This allows attackers able to exploit a cross-site scripting vulnerability
-to obtain the HTTP session ID value from this page.
-
-
-SECURITY-1650 / CVE-2020-2104
-Jenkins includes a feature that shows a JVM memory usage chart for the
-Jenkins master.
-
-Access to the chart in Jenkins 2.218 and earlier, LTS 2.204.1 and earlier
-requires no permissions beyond the general Overall/Read, allowing users who
-are not administrators to view JVM memory usage data.
-
-
-SECURITY-1704 / CVE-2020-2105
-Jenkins 2.218 and earlier, LTS 2.204.1 and earlier does not serve the
-`X-Frame-Options: deny` HTTP header on REST API responses to protect
-against clickjacking attacks. An attacker could exploit this by routing the
-victim through a specially crafted web page that embeds a REST API endpoint
-in an iframe and tricking the user into performing an action which would
-allow for the attacker to learn the content of that REST API endpoint.
-
-
-SECURITY-1680 / CVE-2020-2106
-Code Coverage API Plugin 1.1.2 and earlier does not escape the filename of
-the coverage report used in its view.
-
-This results in a stored cross-site scripting vulnerability that can be
-exploited by users able to change the job configuration.
-
-
-SECURITY-1565 / CVE-2020-2107
-Fortify Plugin 19.1.29 and earlier stored its proxy server password
-unencrypted in job `config.xml` files. This password could be read by users
-with the Extended Read permission.
-
-
-SECURITY-1719 / CVE-2020-2108
-WebSphere Deployer Plugin 1.6.1 and earlier does not configure the XML
-parser to prevent XML external entity (XXE) attacks. This could be
-exploited by a user with Job/Configure permissions to upload a specially
-crafted war file containing a `WEB-INF/ibm-web-ext.xml` which is parsed by
-the plugin.
-
-As of publication of this advisory, there is no fix.
-
+--yWPH2t2YBFeNskKC--
