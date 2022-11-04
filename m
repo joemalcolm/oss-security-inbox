@@ -1,21 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/07/4
-Message-ID: <20220407090624.GA17007@openwall.com>
-Date: Thu, 7 Apr 2022 11:06:24 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/04/6
+Message-ID: <0a509ab5-7397-d6ac-e841-ef4d9bf00d58@apache.org>
+Date: Fri, 04 Nov 2022 17:35:34 +0000
+From: "Gary D. Gregory" <ggregory@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: kangel <kangel@....edu.cn>, pgn@....edu.cn, qiuhao@...ec.org, Pedro Sampaio <psampaio@...hat.com>, Paolo Bonzini <pbonzini@...hat.com>
-Subject: Re: Linux kernel: x86/kvm: null-ptr-deref in kvm_dirty_ring_push
+Subject: CVE-2022-42920: Apache Commons BCEL prior to 6.6.0 allows producing arbitrary bytecode via out-of-bounds writing 
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 07, 2022 at 10:53:17AM +0200, Paolo Bonzini wrote:
-> indeed it doesn't cross guest-host boundaries.  However, /dev/kvm is 
-> accessible by unprivileged users, so it should be treated like any other 
-> unprivileged NULL pointer dereference in Linux.  I do not apply an 
-> embargo for those bugs, but whether to assign a CVE is not my choice.
+Description:
 
-Oh, indeed.  So it's a local DoS for systems with user-accessible
-/dev/kvm and panic_on_oops=1, like RHEL and its rebuilds.  Makes sense
-to have a CVE ID, then.  (I assume that mmap_min_addr works.)
+Apache Commons BCEL has a number of APIs that would normally only allow changing specific class characteristics. However, due to an out-of-bounds writing issue, these APIs can be used to produce arbitrary bytecode. This could be abused in applications that pass attacker-controllable data to those APIs, giving the attacker more control over the resulting bytecode than otherwise expected. Update to Apache Commons BCEL 6.6.0.
 
-Alexander
+This issue is being tracked as BCEL-363
+
+Credit:
+
+Reported by Felix Wilhelm (Google); GitHub pull request to Apache Commons BCEL #147 by Richard Atkins (https://github.com/rjatkins); PR derived from OpenJDK (https://github.com/openjdk/jdk11u/) commit 13bf52c8d876528a43be7cb77a1f452d29a21492 by Aleksei Voitylov and RealCLanger (Christoph Langer https://github.com/RealCLanger)
+
