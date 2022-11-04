@@ -1,15 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/25/3
-Message-ID: <d1b6acf9-0f59-1954-ccad-2243ca03d138@apache.org>
-Date: Thu, 25 Aug 2022 14:09:16 +0000
-From: Joe Orton <jorton@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-22728: libapreq2: libapreq2 multipart form parse memory corruption 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/04/4
+Message-ID: <1dc711a9-42e7-91c6-e015-ec75cddac21f@igalia.com>
+Date: Fri, 4 Nov 2022 14:58:14 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0010
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2022-0010
+------------------------------------------------------------------------
 
-Description:
+Date reported           : November 04, 2022
+Advisory ID             : WSA-2022-0010
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2022-0010.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2022-0010.html
+CVE identifiers         : CVE-2022-32888, CVE-2022-32923,
+                          CVE-2022-42799, CVE-2022-42823,
+                          CVE-2022-42824.
 
-A flaw in libapreq2 versions 2.16 and earlier could cause a buffer overflow while processing multipart form uploads.  A remote attacker could send a request causing a process crash which could lead to a denial of service attack.
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
+CVE-2022-32888
+    Versions affected: WebKitGTK and WPE WebKit before 2.38.0.
+    Credit to P1umer (@p1umer).
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: An out-of-bounds write issue
+    was addressed with improved bounds checking.
+
+CVE-2022-32923
+    Versions affected: WebKitGTK and WPE WebKit before 2.38.0.
+    Credit to Wonyoung Jung (@nonetype_pwn) of KAIST Hacking Lab.
+    Impact: Processing maliciously crafted web content may disclose
+    internal states of the app. Description: A correctness issue in the
+    JIT was addressed with improved checks.
+
+CVE-2022-42799
+    Versions affected: WebKitGTK and WPE WebKit before 2.38.2.
+    Credit to Jihwan Kim (@gPayl0ad), Dohyun Lee. (@l33d0hyun).
+    Impact: Visiting a malicious website may lead to user interface
+    spoofing. Description: The issue was addressed with improved UI
+    handling.
+
+CVE-2022-42823
+    Versions affected: WebKitGTK and WPE WebKit before 2.38.2.
+    Credit to Dohyun Lee (@l33d0hyun) of SSD Labs.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A type confusion issue was
+    addressed with improved memory handling.
+
+CVE-2022-42824
+    Versions affected: WebKitGTK before 2.38.2.
+    Credit to Abdulrahman Alqabandi of Microsoft Browser Vulnerability
+    Research, Ryan Shin of IAAI SecLab at Korea University, Dohyun Lee
+    (@l33d0hyun) of DNSLab at Korea University.
+    Impact: Processing maliciously crafted web content may disclose
+    sensitive user information. Description: A logic issue was addressed
+    with improved state management.
+
+
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
+
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+November 04, 2022
