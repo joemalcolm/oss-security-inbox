@@ -1,70 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/06/12
-Message-ID: <YsXcAKWZYR90JMFf@itl-email>
-Date: Wed, 6 Jul 2022 15:01:19 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/04/8
+Message-ID: <Y2V8FtuEeMuBjf1u@gentoo.org>
+Date: Fri, 4 Nov 2022 15:54:46 -0500
+From: John Helmert III <ajak@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: DO NOT OPEN PREVIOUS MAIL Re:  Denial of service in  GnuPG
+Subject: Re: CVE-2022-42920: Apache Commons BCEL prior to 6.6.0 allows producing arbitrary bytecode via out-of-bounds writing
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 06, 2022 at 04:50:11PM +0200, Solar Designer wrote:
-> On Wed, Jul 06, 2022 at 09:47:28AM -0400, Demi Marie Obenour wrote:
-> > On Wed, Jul 06, 2022 at 03:38:10PM +0200, Solar Designer wrote:
-> > > On Wed, Jul 06, 2022 at 07:02:59AM -0400, Demi Marie Obenour wrote:
-> > > > Was adding compression to PGP even a good idea in the first place?
-> > > 
-> > > I think actually yes, it was, especially back then.  It has probably
-> > > helped more than it hurt in PGP's lifetime so far.
-> > 
-> > Interesting.  Why do you say that?
+On Fri, Nov 04, 2022 at 05:35:34PM +0000, Gary D. Gregory wrote:
+> Description:
 > 
-> Oh, I didn't feel this even needed explanation, and I feel silly writing
-> the below and don't really have time for it (lesson re-learned: should
-> have stayed silent), but well.
+> Apache Commons BCEL has a number of APIs that would normally only allow changing specific class characteristics. However, due to an out-of-bounds writing issue, these APIs can be used to produce arbitrary bytecode. This could be abused in applications that pass attacker-controllable data to those APIs, giving the attacker more control over the resulting bytecode than otherwise expected. Update to Apache Commons BCEL 6.6.0.
 > 
-> PGP is commonly used on compressible data (such as text), and PGP
-> messages are then transferred over a network and finally stay in
-> people's mailboxes or such.  Bandwidth was commonly low back then, and
-> storage much more limited than today's.
+> This issue is being tracked as BCEL-363
 > 
-> Some compression existed for unencrypted messages - some network links
-> somewhat compressed (e.g., V.42bis), some mail clients supported mailbox
-> compression, and of course a mailbox could also be compressed manually.
+> Credit:
 > 
-> Obviously, already encrypted content is not compressible.
+> Reported by Felix Wilhelm (Google); GitHub pull request to Apache Commons BCEL #147 by Richard Atkins (https://github.com/rjatkins); PR derived from OpenJDK (https://github.com/openjdk/jdk11u/) commit 13bf52c8d876528a43be7cb77a1f452d29a21492 by Aleksei Voitylov and RealCLanger (Christoph Langer https://github.com/RealCLanger)
 > 
-> Without built-in compression in PGP, its messages would be slower to
-> transfer and larger to store.  Compression would need to be performed
-> before PGP, which would be an inconvenience and would lead to similar
-> risks, especially if automated, and would often not be done.  In PGP,
-> it's just one standard way to do it, not more than one.
-> 
-> So compression was of some benefit to a lot of people.  We could argue
-> that it's little benefit, but multiplied by the number of people it's
-> significant.  Was compression also a problem for a lot of people?
-> Theoretically, yes, but in practice those attacks were not common.
-> 
-> We could also argue that PGP never became popular, MUA integrations are
-> poor, etc., and as a consequence that its individual features were not
-> of a lot of benefit to computer users at large.  While true, that
-> argument also means the risks associated with those features did not
-> apply to most computer users.  So it's irrelevant.
-> 
-> What I say is that for the geeks using PGP, compression was overall of
-> more benefit than risk.
-> 
-> Oh, and I'm also grateful for compression in SSH, despite of my own
-> criticism of its effect on security.
-> 
-> Alexander
 
-Thanks!  I had not considered this at all, and it makes a ton of sense.
-Being able to compress data prior to encryption is indeed necessary if
-one wants to avoid using more space than a message compressed using
-normal methods.
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+This appears to be a duplicate of CVE-2022-34169 (also issued by the
+Apache CNA), and previously discussed on this list at [1]. It was
+eventually reported to the list that the vulnerability was actually in
+bcel [2].
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+[1] https://www.openwall.com/lists/oss-security/2022/07/19/5
+[2] https://www.openwall.com/lists/oss-security/2022/10/18/2
+Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
