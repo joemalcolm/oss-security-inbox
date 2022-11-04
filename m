@@ -1,29 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/25/4
-Message-ID: <db0d3f4e-ea16-83f0-2a2c-8186f42af180@openssl.org>
-Date: Tue, 25 Oct 2022 14:54:15 +0200
-From: "Ing. Martin Koci, MBA" <mkoci@...nssl.org>
-To: openssl-announce@...nssl.org, openssl-users@...nssl.org, openssl-project@...nssl.org, oss-security@...ts.openwall.com
-Subject: Forthcoming OpenSSL Releases
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/04/7
+Message-ID: <Y2VfFUipF21W5dBh@itl-email>
+Date: Fri, 4 Nov 2022 14:51:00 -0400
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2022-37865: Apache Ivy allow create/overwrite any file on the system
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+On Fri, Nov 04, 2022 at 12:06:48PM +0100, Stefan Bodewig wrote:
+> Severity: medium
+> 
+> Description:
+> 
+> With Apache Ivy 2.4.0 an optional packaging attribute has been
+> introduced that allows artifacts to be unpacked on the fly if they used
+> pack200 or zip packaging.
+> 
+> For artifacts using the "zip", "jar" or "war" packaging Ivy prior to
+> 2.5.1 doesn't verify the target path when extracting the archive. An
+> archive containing absolute paths or paths that try to traverse
+> "upwards" using ".." sequences can then write files to any location on
+> the local fie system that the user executing Ivy has write access to.
+> 
+> Mitigation:
+> 
+> Ivy users of version 2.4.0 to 2.5.0 should upgrade to Ivy 2.5.1.
+> 
+> Credit:
+> 
+> This issue was discovered by Kostya Kortchinsky of the Databricks Security Team.
 
-The OpenSSL project team would like to announce the forthcoming release 
-of OpenSSL version 3.0.7.
+FYI, you might want to rotate your OpenPGP key, or at least use a newer
+hash algorithm.  The signature I got uses SHA-1 which is no longer
+considered secure.
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-This release will be made available on Tuesday 1st November 2022 between 
-1300-1700 UTC.
-
-OpenSSL 3.0.7 is a security-fix release. The highest severity issue 
-fixed in this release is CRITICAL:
-
-https://www.openssl.org/policies/general/security-policy.html
-
-Yours
-The OpenSSL Project Team
-
-
-Download attachment "OpenPGP_0x6D0A36D2E30590A6.asc" of type "application/pgp-keys" (2441 bytes)
-
-Download attachment "OpenPGP_signature" of type "application/pgp-signature" (666 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
