@@ -1,40 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/30/3
-Message-ID: <20221230201554.xborkqi2x5dvnh6h@jwilk.net>
-Date: Fri, 30 Dec 2022 21:15:54 +0100
-From: Jakub Wilk <jwilk@...lk.net>
-To: <oss-security@...ts.openwall.com>
-CC: <linux-man@...r.kernel.org>, <linux-kernel@...r.kernel.org>
-Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/04/2
+Message-ID: <87a657nflj.fsf@v45346.1blu.de>
+Date: Fri, 04 Nov 2022 12:06:48 +0100
+From: Stefan Bodewig <bodewig@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2022-37865: Apache Ivy allow create/overwrite any file on the system
 Content-Type: text/plain; charset=utf-8
 
-* Tavis Ormandy <taviso@...il.com>, 2022-12-28 01:50:
->>>But, really, I just don't see how this can practically be said to be 
->>>parsable...
->>
->>In its current form it never will be.  The solution is to place this 
->>variable-length field last.  Then you can "cut -d ' ' -f 51-" to get 
->>the command+args part (assuming I counted all those fields correctly 
->>...)
->>
->>Of course, this breaks backwards compatability.
->
->I think that cut command doesn't handle newlines,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Indeed.
+Severity: medium
 
->There already is 'ps -q $$ -o >comm='
+Description:
 
-FWIW, "ps ... -o comm=" doesn't just print the raw comm value: it 
-replaces non-printable chars with punctuation characters, and it may 
-append " <defunct>" if the process is a zombie.
+With Apache Ivy 2.4.0 an optional packaging attribute has been
+introduced that allows artifacts to be unpacked on the fly if they used
+pack200 or zip packaging.
 
-The easiest way to get unmangled comm is to read it from 
-/proc/$PID/comm, then strip the trailing newline.
+For artifacts using the "zip", "jar" or "war" packaging Ivy prior to
+2.5.1 doesn't verify the target path when extracting the archive. An
+archive containing absolute paths or paths that try to traverse
+"upwards" using ".." sequences can then write files to any location on
+the local fie system that the user executing Ivy has write access to.
 
-(But I suspect most /proc/*/stat parsers don't care about the comm field 
-at all; they just want to skip over it to get their hands on the 
-following fields.)
+Mitigation:
 
--- 
-Jakub Wilk
+Ivy users of version 2.4.0 to 2.5.0 should upgrade to Ivy 2.5.1.
+
+Credit:
+
+This issue was discovered by Kostya Kortchinsky of the Databricks Security Team.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iEYEARECAAYFAmNk8kgACgkQohFa4V9ri3IqkQCfQujcSRYhjtUmvl7GuyYn46cc
+f9MAn2ZSD7dzeAn9kPK+QqYH6gbH4F0e
+=jVS7
+-----END PGP SIGNATURE-----
