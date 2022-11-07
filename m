@@ -1,25 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/29/2
-Message-Id: <E8ADE3CA-4D49-4149-808F-8EC94BF3502D@obtuse.com>
-Date: Sat, 29 Oct 2022 08:43:08 -0400
-From: Bob Beck <beck@...use.com>
-To: Roxana Bradescu <roxabee@...omium.org>
-Cc: oss-security@...ts.openwall.com, libressl-security@...nbsd.org
-Subject: Re: Forthcoming OpenSSL Releases
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/07/1
+Message-ID:  <AM8PR05MB8115844B28815B6FC4FFEA2D8C3C9@AM8PR05MB8115.eurprd05.prod.outlook.com>
+Date: Mon, 7 Nov 2022 14:56:48 +0000
+From: John Smith <smitchj013@...look.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2022-2602 - Linux kernel io_uring UAF
 Content-Type: text/plain; charset=utf-8
 
-Libressl is not vulnerable to the upcoming issue. 
+Hello.
 
-> On Oct 27, 2022, at 18:25, Roxana Bradescu <roxabee@...omium.org> wrote:
-> 
-> ﻿
-> I think that's a question for the LibreSSL Security team as to whether they do pre-advisories?
-> 
-> ---
-> Regards, Roxana
-> 
->> On Thu, Oct 27, 2022 at 8:13 AM Georgi Guninski <gguninski@...il.com> wrote:
->> Is libressl affected by these?
->> 
->> Haven't seen announcement from libressl.
+Do anyone try this PoC? On my side it's not working on 5.4, 5.10 and 5.15 with KASAN on. KASAN is quiet.  Any ideas?
+
+27.10.2022, 21:05, "Thadeu Lima de Souza Cascardo" <cascardo@...onical.com>:
+> On Tue, Oct 18, 2022 at 01:59:51PM -0300, Thadeu Lima de Souza Cascardo wrote:
+>
+>     Sorry about posting this late, but here it is.
+>     poc.c
+>     Cascardo.
+
 
