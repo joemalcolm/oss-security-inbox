@@ -1,121 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/01/10
-Message-Id: <E1oppwm-0005Y4-0C@xenbits.xenproject.org>
-Date: Tue, 01 Nov 2022 12:00:48 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 420 v2 (CVE-2022-42324) - Oxenstored 32->31 bit integer truncation issues
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/07/2
+Message-ID: <Y2lByE1FNVw3z/L8@gentoo.org>
+Date: Mon, 7 Nov 2022 11:35:04 -0600
+From: John Helmert III <ajak@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: ggregory@...che.org, security@...che.org
+Subject: Re: CVE-2022-42920: Apache Commons BCEL prior to 6.6.0 allows producing arbitrary bytecode via out-of-bounds writing
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Copying Apache's CNA address and original sender. The new CVE is now
+public.
 
-            Xen Security Advisory CVE-2022-42324 / XSA-420
-                               version 2
-
-            Oxenstored 32->31 bit integer truncation issues
-
-UPDATES IN VERSION 2
-====================
-
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-Integers in Ocaml are 63 or 31 bits of signed precision.
-
-The Ocaml Xenbus library takes a C uint32_t out of the ring and casts it
-directly to an Ocaml integer.  In 64-bit Ocaml builds this is fine, but
-in 32-bit builds, it truncates off the most significant bit, and then
-creates unsigned/signed confusion in the remainder.
-
-This in turn can feed a negative value into logic not expecting a
-negative value, resulting in unexpected exceptions being thrown.
-
-The unexpected exception is not handled suitably, creating a busy-loop
-trying (and failing) to take the bad packet out of the xenstore ring.
-
-IMPACT
-======
-
-A malicious or buggy guest can write a packet into the xenstore ring
-which causes 32-bit builds of oxenstored to busy loop.
-
-VULNERABLE SYSTEMS
-==================
-
-All versions of Xen are affected.
-
-Systems running a 32-bit build of oxenstored are affected.
-
-Systems running a 64-bit build of oxenstored, or systems running (C)
-xenstored are not affected.
-
-MITIGATION
-==========
-
-Running xenstored instead of oxenstored will avoid the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Jürgen Groß of SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa420.patch           xen-unstable - Xen 4.13.x
-
-$ sha256sum xsa420*
-565b332d325fd0fdeb5fee890c0cd9b53c4478c46c6b7ec7b24fd3444d2dc812  xsa420.meta
-bfa83ca1e78ef81f93c3d94cb1522d1cffed8b9989c5639e8ec663fad0a71027  xsa420.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+On Fri, Nov 04, 2022 at 03:54:46PM -0500, John Helmert III wrote:
+> On Fri, Nov 04, 2022 at 05:35:34PM +0000, Gary D. Gregory wrote:
+> > Description:
+> > 
+> > Apache Commons BCEL has a number of APIs that would normally only allow changing specific class characteristics. However, due to an out-of-bounds writing issue, these APIs can be used to produce arbitrary bytecode. This could be abused in applications that pass attacker-controllable data to those APIs, giving the attacker more control over the resulting bytecode than otherwise expected. Update to Apache Commons BCEL 6.6.0.
+> > 
+> > This issue is being tracked as BCEL-363
+> > 
+> > Credit:
+> > 
+> > Reported by Felix Wilhelm (Google); GitHub pull request to Apache Commons BCEL #147 by Richard Atkins (https://github.com/rjatkins); PR derived from OpenJDK (https://github.com/openjdk/jdk11u/) commit 13bf52c8d876528a43be7cb77a1f452d29a21492 by Aleksei Voitylov and RealCLanger (Christoph Langer https://github.com/RealCLanger)
+> > 
+> 
+> This appears to be a duplicate of CVE-2022-34169 (also issued by the
+> Apache CNA), and previously discussed on this list at [1]. It was
+> eventually reported to the list that the vulnerability was actually in
+> bcel [2].
+> 
+> [1] https://www.openwall.com/lists/oss-security/2022/07/19/5
+> [2] https://www.openwall.com/lists/oss-security/2022/10/18/2
 
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmNg+68MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZWJ8H/33T8Ub00BrIWdWSvajjRA4oLamGKRg5uJoI5peJ
-cpgKB7iFcoOZcM+G2YfYjm8W2ckoEHXQkJ7fJEbAW0rHc8+WyWl2ulklZSpyi9RX
-B6jloIo+5pFoenShirPrJNyfbCmgJduRiUcIzPMRg6vgTmS1RO1W2x3/A6haxez5
-LOJCm8dhUBbrp83KH7MgVBlUXIlVQ1irKBmCps11lFG7LaMWjLtScPI4qCpFbMf/
-Cmd91Jw6EpzfOWcqohbRabqXXrPZJqSe+EwqrEJsVkkEIK2y2e/kUWcy/9shr9a2
-YtudokkROE+bJGbpM9bbucCu/Rnwqj20fDIztR0soCtPbOM=
-=QFv9
------END PGP SIGNATURE-----
-
-Download attachment "xsa420.meta" of type "application/octet-stream" (1980 bytes)
-
-Download attachment "xsa420.patch" of type "application/octet-stream" (2710 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
