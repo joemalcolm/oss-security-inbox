@@ -1,47 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/02/11
-Message-ID: <aca73c02-b870-1824-8cd2-515bbaaeebfc@protonmail.com>
-Date: Fri, 02 Sep 2022 16:13:36 +0000
-From: Art Manion <zmanion@...tonmail.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/08/2
+Message-ID: <CAEF3R_5ojvtyejQHGAuJXQ96xDZ3zq9H9Tm8nyh1NxN+1z2UAg@mail.gmail.com>
+Date: Tue, 8 Nov 2022 11:47:40 -0800
+From: Adam Reynolds <adamajreynolds@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: JBIG2 integer overflow fixed in Xpdf 4.04, Poppler 22.09.0
+Subject: Re: CVE-2022-2602 - Linux kernel io_uring UAF
 Content-Type: text/plain; charset=utf-8
 
-Xpdf 4.04 (released 2022-04-18, CVE-2022-38171):
+On Mon, Nov 7, 2022 at 7:30 AM John Smith <smitchj013@...look.com> wrote:
+>
+> Hello.
+>
+> Do anyone try this PoC? On my side it's not working on 5.4, 5.10 and 5.15 with KASAN on. KASAN is quiet.  Any ideas?
+>
+> 27.10.2022, 21:05, "Thadeu Lima de Souza Cascardo" <cascardo@...onical.com>:
+> > On Tue, Oct 18, 2022 at 01:59:51PM -0300, Thadeu Lima de Souza Cascardo wrote:
+> >
+> >     Sorry about posting this late, but here it is.
+> >     poc.c
+> >     Cascardo.
+>
 
-   <https://www.cve.org/CVERecord?id=CVE-2022-38171>
+I ran this against both 5.15.68 and 6.1-rc2 and did not see this, only
+a memory leak reported by asan:
 
-   <https://gist.github.com/zmanion/b2ed0d1a0cec163ecd07d5e3d9740dc6>
+adreynol@...M-HOMEDESK ~> sudo ./uaf_iouring
 
+=================================================================
+==182==ERROR: LeakSanitizer: detected memory leaks
 
-Poppler 22.09.0 (released 2022-09-01, CVE-2022-38784):
+Direct leak of 120 byte(s) in 1 object(s) allocated from:
+    #0 0x4cfa97 in __interceptor_malloc
+(/home/adreynol/uaf_iouring+0x4cfa97) (BuildId:
+2e78344ef59fbab75b1384f5e47ad697da629367)
+    #1 0x512dac in main (/home/adreynol/uaf_iouring+0x512dac)
+(BuildId: 2e78344ef59fbab75b1384f5e47ad697da629367)
+    #2 0x7fb49165150f in __libc_start_call_main
+(/lib64/libc.so.6+0x2950f) (BuildId:
+85c438f4ff93e21675ff174371c9c583dca00b2c)
 
-   <https://www.cve.org/CVERecord?id=CVE-2022-38784>
-
-   <https://gitlab.freedesktop.org/poppler/poppler/-/blob/master/NEWS>
-
-   <https://gitlab.freedesktop.org/poppler/poppler/-/merge_requests/1261/diffs?commit_id=27354e9d9696ee2bc063910a6c9a6b27c5184a52>
-
-The lineage of this bug includes a variant used as part of the FORCEDENTRY exploit chain (targeting Apple devices).  The bug readily crashes affected software, code execution is not straightforward and would depend heavily on the context in which affected software is used.
-
-FORCEDENTRY was first discussed publicly in 2021, it took some time to track down the affected OSS components.  Lots of packages are downstream of Xpdf and Poppler.
-
-
-Crashing test case, use at your own risk:
-
-   <https://github.com/jeffssh/CVE-2021-30860>
-
-
-For background, Apple CoreGraphics fixes released in September 2021 (CVE-2021-30860):
-
-   <https://www.cve.org/CVERecord?id=CVE-2021-30860>
-
-   <https://support.apple.com/en-ca/HT212807>
-
-   <https://googleprojectzero.blogspot.com/2021/12/a-deep-dive-into-nso-zero-click.html>
-
-
-Regards,
-
-  - Art
-
+SUMMARY: AddressSanitizer: 120 byte(s) leaked in 1 allocation(s).
