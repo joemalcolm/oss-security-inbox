@@ -1,54 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/23/2
-Message-ID: <Y6TzMR1Wh7jKmatU@codewreck.org>
-Date: Fri, 23 Dec 2022 09:15:45 +0900
-From: Dominique Martinet <asmadeus@...ewreck.org>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com, Alejandro Colomar <alx.manpages@...il.com>, Michael Kerrisk <mtk.manpages@...il.com>, linux-kernel@...r.kernel.org, linux-man@...r.kernel.org
-Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/10/1
+Message-ID: <CAP9KPhDsQSfQ5Y=uDS+x3s4SDBEHqkLaHLghrBVEpf3NETyQyQ@mail.gmail.com>
+Date: Thu, 10 Nov 2022 14:42:41 +1100
+From: David Leadbeater <dgl@....cx>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2022-45063: xterm <375 code execution via font ops
 Content-Type: text/plain; charset=utf-8
 
-Solar Designer wrote on Fri, Dec 23, 2022 at 12:21:12AM +0100:
-> On Fri, Dec 23, 2022 at 07:03:17AM +0900, Dominique Martinet wrote:
-> > Alexey Dobriyan wrote on Thu, Dec 22, 2022 at 07:42:53PM +0300:
-> > > --- a/man5/proc.5
-> > > +++ b/man5/proc.5
-> > > @@ -2092,6 +2092,11 @@ Strings longer than
-> > >  .B TASK_COMM_LEN
-> > >  (16) characters (including the terminating null byte) are silently truncated.
-> > >  This is visible whether or not the executable is swapped out.
-> > > +
-> > > +Note that \fIcomm\fP can contain space and closing parenthesis characters. 
-> > > +Parsing /proc/${pid}/stat with split() or equivalent, or scanf(3) isn't
-> > > +reliable. The correct way is to locate closing parenthesis with strrchr(')')
-> > > +from the end of the buffer and parse integers from there.
-> > 
-> > That's still not enough unless new lines are escaped, which they aren't:
-> > 
-> > $ echo -n 'test) 0 0 0
-> > ' > /proc/$$/comm
-> > $ cat /proc/$$/stat
-> > 71076 (test) 0 0 0
-> > ) S 71075 71076 71076 34840 71192 4194304 6623 6824 0 0 10 3 2 7 20 0 1 0 36396573 15208448 2888 18446744073709551615 94173281726464 94173282650929 140734972513568 0 0 0 65536 3686404 1266761467 1 0 0 17 1 0 0 0 0 0 94173282892592 94173282940880 94173287231488 140734972522071 140734972522076 140734972522076 140734972526574 0
-> > 
-> > The silver lining here is that comm length is rather small (16) so we
-> > cannot emulate full lines and a very careful process could notice that
-> > there are not enough fields after the last parenthesis... So just look
-> > for the last closing parenthesis in the next line and try again?
-> 
-> No, just don't treat this file's content as a line (nor as several
-> lines) - treat it as a string that might contain new line characters.
+xterm before patch 375 can enable an RCE under certain conditions.
 
-Ah, this came just after the /proc/net/unix discussion in another
-thread[1] pointing to [2] with one line per entry, and I was still in
-that mode.
+Fix:
 
-For /proc/pid/stat with a single entry I agree treating it as a buffer
-and looking for the last closing parenthesis should be correct as per
-the man page suggestion -- sorry for the noise.
+Upgrade to xterm patch #375
+https://invisible-island.net/xterm/xterm.log.html
 
-[1] https://www.openwall.com/lists/oss-security/2022/12/21/8
-[2] https://lore.kernel.org/all/8a87957e-4d33-9351-ae74-243441cb03cd@opteya.com/
+Mitigation:
 
--- 
-Dominique Martinet | Asmadeus
+Set this Xresource:
+XTerm*allowFontOps: false
+
+Details:
+
+The issue is in the OSC 50 sequence, which is for setting and querying
+the font. If a given font does not exist, it is not set, but a query
+will return the name that was set. Control characters can't be
+included, but the response string can be terminated with ^G. This
+essentially gives us a primitive for echoing text back to the terminal
+and ending it with ^G.
+
+It so happens ^G is in Zsh when in vi line editing mode bound to
+"list-expand". Which can run commands as part of the expansion leading
+to command execution without pressing enter!
+
+This does mean to exploit this vulnerability the user needs to be
+using Zsh in vi line editing mode (usually via $EDITOR having "vi" in
+it). While somewhat obscure this is not a totally unknown
+configuration.
+
+In that configuration, something like:
+printf "\e]50;i\$(touch /tmp/hack-like-its-1999)\a\e]50;?\a" > cve-2022-45063
+cat cve-2022-45063  # or another way to deliver this to the victim
+
+Will touch that file. It will leave the line on the user's screen;
+I'll leave it as an exercise for the reader to use the vi line editing
+commands to hide the evidence.
+
+Debian, Red Hat and others disable font ops by default (see some
+good foresight at[1] or this very list[2]), but users can re-enable them
+via a configuration option or menu. Additionally upstream xterm does
+not disable them by default, so some distributions include a
+vulnerable default configuration.
+
+This has been assigned CVE-2022-45063.
+
+David
+
+
+[1]: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=510030
+[2]: https://www.openwall.com/lists/oss-security/2015/09/20/2 towards the end.
