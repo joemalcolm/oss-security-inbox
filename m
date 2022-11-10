@@ -1,4 +1,4 @@
-Received: (qmail 32686 invoked by uid 550); 21 Jun 2023 17:31:32 -0000
+Received: (qmail 10003 invoked by uid 550); 10 Nov 2022 17:30:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,86 +7,131 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24329 invoked from network); 21 Jun 2023 17:26:56 -0000
+Received: (qmail 5175 invoked from network); 10 Nov 2022 17:26:24 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687368404; x=1689960404;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PL5HEDplpWjruscrH/A0V5hw4eJIeAX0pGm2IyNcMT4=;
-        b=TilDWoMXeW9g/bHtw5RuY2uOG7P6nIEjPP/vUExNd+qUDfMhcFuLObU0S6qAjgfzb3
-         YHaPiGS3WW07f7E8GGbGwQQX+8u6jFZmFqbtoRlMFvrEhc942B1J3T1cqA1MoPtShrbB
-         3dLLVgy2Ww3N4PGMXZqAkkllUoVv84gpJzujhtVYSZRhLPuCuxGzq+SBVMgl16dcgXFp
-         Tk4nx9/lgUREFTwX3PC1gJSoJpNEMig4d5dtjBa+3pQT97e8gLD8TekcfODepHGWFOkA
-         Wvshy5PoQ1abvaDqsQW+leOlFtpEXhtzmuBYFcTurdWKYMWkBeHmiZgK5wj8IAHOh5Hv
-         DK7Q==
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=/h/ezgUkHPb53qBEpxeEiHpCMemPKV1skCjnRGkwHLE=;
+        b=f5WaTzvol8lAB/nLVMFTHrGzQsnftFrycQ52u2BHVg4deoycfbiaWGMxkMlJHI0fXY
+         VSpqbVMFXgvSGtCtJM4cXG5OerRfyLndgmFlWRA0zDa97aDS8e7qW9/dvh3mTZPGYkuY
+         D2LB3iCtzqT0ABCCGYtFE3N95yoTULnueDil5hMJsWOw3j0bkS+D3OrEdMOaYjZgeJeT
+         M9v3e7wOHgVonWEZ8PNx4eKOAgeorywCxB9qwE1x85PWexoKHRtqT/SzzVlGRgS8cWWG
+         EhBuW50Lf8xoTPuhxZVJMlnTLmCWNLZ33iRM+4js1MBYWfA/rPehC4m5Aq/R1YScr35b
+         Ybng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687368404; x=1689960404;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=PL5HEDplpWjruscrH/A0V5hw4eJIeAX0pGm2IyNcMT4=;
-        b=dxglnYAgK4cPOTfi044UAexrX95vNiffIk+xtGKrD6GSCPx4EHKHWC+Ru8HW00DX0Q
-         W3tX9XerTL4Z6rCtNvR72BCoO/mZIzBDoiT89oJDUBszCjj/QJeoDgeziLS7fOuZKpKy
-         dBEKIHH+MNyl1CKJxFZCnkuXklJL32dQme8VNSY9uSY1LpMuX7C5i3u/CFdd72t0CRDy
-         Upee7bmUQMV7DF9ynfQ8umLZPQltJaF2UnOsgDhwupYtKJoZzK6RlWiUPLV3OFR5z4Yu
-         hwtnYRoR7mw/gcOsrg+up4w2P1FhIhvmKz4KNz+l2DCVEaYZbV+N4UrHhCz8daDnjzqG
-         jEKg==
-X-Gm-Message-State: AC+VfDxuUIm6wdclXx18UjXdrc1Ig4LNN9ctYjFal/A5Ux+Y6gUtu4qz
-	ry4MqTtBgdxcoQ32x2YOWgOxmk9N3CYcRrP9FDDNxmGM
-X-Google-Smtp-Source: ACHHUZ5LtChS0aAcPY2VtyFs0r0Enjoy5RAnSrS0nd0TCqCrSWQMRl5PTJ9DhHgJ38z2mwBGtFZGg/KplLPDBTy0QdY=
-X-Received: by 2002:a4a:c302:0:b0:560:ac0f:b87c with SMTP id
- c2-20020a4ac302000000b00560ac0fb87cmr2056153ooq.8.1687368403870; Wed, 21 Jun
- 2023 10:26:43 -0700 (PDT)
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/h/ezgUkHPb53qBEpxeEiHpCMemPKV1skCjnRGkwHLE=;
+        b=ekxKZMHM2ViCLF42ZL+hZhSXFEdreKJG2nWe/yEMJR9fh4h8M4M3b7UjiTfDTTXpND
+         s6I/5ss4/yAmCQNjXLIHDb0hyUtzbhq4/j3diniSjODU/7YuQDDtwXtXdIqcD+lCrAHl
+         l/kDYsK1ZQdAcr+RV3kIxOvqUKGi25uZk5ogClF8etHufB35jKo0BLTKyxenTzkNiNVE
+         dbofL6wZutAtDtwDTcsQ6zIgKSxrIzEO9S6hVICeKtdTR9UYGgG+2d1gtN2TCRl3S1Xr
+         P6/nDtF73Znx0Zg5AotjKhcNk8TaKzx6R+M9lRlSWn6NwfoDJ5EB/1ZbxW4lhR6qMNd6
+         31Kg==
+X-Gm-Message-State: ACrzQf30M3sxQyUJmrtPAZzXFJxIE8Wr8xImjeNusyiSOxJkCKHUHRs3
+	v+L8Q4I8IvHIFLzQp3c4oZYokY0T1+KhsS/qKv7AfkSUwbM=
+X-Google-Smtp-Source: AMsMyM7UXhi7c1cPS7mZqV3yaNXMd4o+/sMBMA4Xn7ArAj/dX9yCi0ZAPYcnNe/AnS4F+hnoV300tOcEgXHnOXBl0EU=
+X-Received: by 2002:a17:907:9546:b0:7ad:4a55:5e19 with SMTP id
+ ex6-20020a170907954600b007ad4a555e19mr3351731ejc.65.1668101172991; Thu, 10
+ Nov 2022 09:26:12 -0800 (PST)
 MIME-Version: 1.0
-References: <a37bfa30-f7d2-ae37-5af4-e3674af29a7a@oracle.com>
- <CAH8yC8noq14ANkUfn9VVD0ESLey1uv_2yZCV6DX4vgmE4FUatg@mail.gmail.com> <201c4d4e-a734-4642-f0b3-74ee7d0d87c5@oracle.com>
-In-Reply-To: <201c4d4e-a734-4642-f0b3-74ee7d0d87c5@oracle.com>
-From: Jeffrey Walton <noloader@gmail.com>
-Date: Wed, 21 Jun 2023 13:26:32 -0400
-Message-ID: <CAH8yC8k=-aVSwDXTOq0dSe7Ojw3Fy3M6ug6YVBb=bj4ZQYmq=A@mail.gmail.com>
+From: Tim Allclair <timallclair@gmail.com>
+Date: Thu, 10 Nov 2022 09:25:36 -0800
+Message-ID: <CALXpagykvZnnXHHPk6DP6O_qX5O=TBQK6_j-vO5ZFot5HY1NsQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000dd9c8705ed2111ab"
+Subject: [oss-security] [kubernetes] CVE-2022-3162: Unauthorized read of Custom Resources
+
+--000000000000dd9c8705ed2111ab
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] CVE-2023-31975: memory leak in yasm
 
-On Wed, Jun 21, 2023 at 1:22=E2=80=AFPM Alan Coopersmith
-<alan.coopersmith@oracle.com> wrote:
->
-> On 6/20/23 23:45, Jeffrey Walton wrote:
-> > On Tue, Jun 20, 2023 at 6:49=E2=80=AFPM Alan Coopersmith
-> > <alan.coopersmith@oracle.com> wrote:
-> >>
-> >> https://nvd.nist.gov/vuln/detail/CVE-2023-31975 is freaking out scanne=
-rs
-> >> since it claims this bug has a CVSS of 9.8.
-> >>
-> >>   From what I see at https://github.com/yasm/yasm/issues/210 though, I=
- can't
-> >> see any CVSS higher than 0.0 being relevant here and think the CVE sho=
-uld
-> >> be withdrawn.  Am I missing something here?  All I see is 2 objects of
-> >> 16 bytes each not being freed in the fraction of a second before the
-> >> command exits and automatically frees the memory - in a command the us=
-er
-> >> deliberately chooses to run, which runs as themselves with no raised
-> >> privileges, on an input file they provide, and which exits after proce=
-ssing
-> >> the file and doesn't hang around keeping that memory allocated - not a=
- bit
-> >> of security risk at all there.  (Yes, it's a small bug and is good to =
-fix,
-> >> but not to raise security alarms for.)
-> >
-> > Memory leaks on exit are par for the course in GNU software per
-> > https://www.gnu.org/prep/standards/standards.html#Memory-Usage .
-> >
-> > Nothing to see here, just move on.
->
-> This isn't a GNU program, but that doesn't matter here.  My argument
-> is still that this CVE should be revoked, and that this class of bug
-> shouldn't have CVEs issued.
+Hello Kubernetes Community,
 
-Agreed. I'm not sure how that got a CVE given its par for the course.
+A security issue was discovered in Kubernetes where users authorized to
+list or watch one type of namespaced custom resource cluster-wide can read
+custom resources of a different type in the same API group without
+authorization.
 
-Jeff
+This issue has been rated Medium (
+CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N
+<https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N>),
+and assigned CVE-2022-3162
+Am I vulnerable?
+
+Clusters are impacted by this vulnerability if all of the following are
+true:
+
+   1.
+
+   There are 2+ CustomResourceDefinitions sharing the same API group
+   2.
+
+   Users have cluster-wide list or watch authorization on one of those
+   custom resources.
+   3.
+
+   The same users are not authorized to read another custom resource in the
+   same API group.
+
+Affected Versions
+
+   -
+
+   Kubernetes kube-apiserver <= v1.25.3
+   -
+
+   Kubernetes kube-apiserver <= v1.24.7
+   -
+
+   Kubernetes kube-apiserver <= v1.23.13
+   -
+
+   Kubernetes kube-apiserver <= v1.22.15
+
+How do I mitigate this vulnerability?
+
+Upgrading the kube-apiserver to a fixed version mitigates this
+vulnerability.
+
+Prior to upgrading, this vulnerability can be mitigated by avoiding
+granting cluster-wide list and watch permissions.
+Fixed Versions
+
+   -
+
+   Kubernetes kube-apiserver v1.25.4
+   -
+
+   Kubernetes kube-apiserver v1.24.8
+   -
+
+   Kubernetes kube-apiserver v1.23.14
+   -
+
+   Kubernetes kube-apiserver v1.22.16
+
+These releases will be published over the course of today, November 10th.
+Detection
+
+Requests containing `..` in the request path are a likely indicator of
+exploitation. Request paths may be captured in API audit logs, or in
+kube-apiserver HTTP logs.
+
+If you find evidence that this vulnerability has been exploited, please
+contact security@kubernetes.io
+Additional Details
+
+See the GitHub issue for more details:
+https://github.com/kubernetes/kubernetes/issues/113756
+Acknowledgements
+
+This vulnerability was reported by Richard Turnbull of NCC Group as part of
+the Kubernetes Audit.
+
+Thank You,
+
+Tim Allclair on behalf of the Kubernetes Security Response Committee
+
+--000000000000dd9c8705ed2111ab--
