@@ -1,62 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/31/3
-Message-ID: <4bd95df2.42f12.1811adb8fd4.Coremail.kangel@zju.edu.cn>
-Date: Wed, 1 Jun 2022 00:03:25 +0800 (GMT+08:00)
-From: kangel <kangel@....edu.cn>
-To: oss-security@...ts.openwall.com, solar@...nwall.com,  john.haxby@...cle.com, carlos.lopez@...e.com
-Cc: secalert@...hat.com, pbonzini@...hat.com, seanjc@...gle.com,  vkuznets@...hat.com, wanpengli@...cent.com, jmattson@...gle.com,  joro@...tes.org, tglx@...utronix.de, mingo@...hat.com, bp@...en8.de,  dave.hansen@...ux.intel.com, x86@...nel.org, hpa@...or.com,  pgn@....edu.cn, qiuhao@...ec.org
-Subject: CVE-2022-1852: Linux Kernel: x86/kvm: NULL pointer dereference in x86_emulate_insn
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/10/4
+Message-ID: <CALXpagy9180LrnQ_1Ekgek+xj6+iaYRghU+CjRdnWGDcKXxUkQ@mail.gmail.com>
+Date: Thu, 10 Nov 2022 09:26:15 -0800
+From: Tim Allclair <timallclair@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: [kubernetes] CVE-2022-3294: Node address isn't always verified when proxying
 Content-Type: text/plain; charset=utf-8
 
-------------[ Description ]------------    Whenever x86_decode_emulated_instruction() detects a breakpoint, it
-returns the value that kvm_vcpu_check_breakpoint() writes into its
-pass-by-reference second argument.  Unfortunately this is completely
-bogus because the expected outcome of x86_decode_emulated_instruction
-is an EMULATION_* value.
-    Then, if kvm_vcpu_check_breakpoint() does "*r = 0" (corresponding to
-a KVM_EXIT_DEBUG userspace exit), it is misunderstood as EMULATION_OK
-and x86_emulate_instruction() is called without having decoded the
-instruction.  This causes various havoc from running with a stale
-emulation context.    This bug was disclosed on May 24 and assigned CVE-2022-1852. ------------[ Credits ]------------Yongkang Jia (Zhejiang University)Gaoning Pan (Zhejiang University)Qiuhao Li (Harbin Institute of Technology)------------[ Backtrace ]------------BUG: kernel NULL pointer dereference, address: 0000000000000000
-#PF: supervisor instruction fetch in kernel mode
-#PF: error_code(0x0010) - not-present page
-PGD 9112067 P4D 9112067 PUD 1f11067 PMD 0 
-Oops: 0010 [#1] PREEMPT SMP KASAN NOPTI
-CPU: 0 PID: 490 Comm: syz-executor159 Not tainted 5.17.0-rc8 #21
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014RIP: 0010:0x0
-Code: Unable to access opcode bytes at RIP 0xffffffffffffffd6.
-RSP: 0018:ffff88800a747810 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: 0003000008280000 RCX: ffffffff9032ac99
-RDX: 1ffff1100189400d RSI: 0000000000000000 RDI: ffff88800c4a0000
-RBP: ffff88800c4a0088 R08: 0000000000000000 R09: ffff88800a1c41a7
-R10: ffffed1001438834 R11: 0000000000000001 R12: ffff88800c4a0072
-R13: ffffffff932296a0 R14: ffff88800c4a0020 R15: ffff88800c4a0000
-FS:  00007f95fcd82700(0000) GS:ffff88806ce00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: ffffffffffffffd6 CR3: 0000000007c1a003 CR4: 0000000000772ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-PKRU: 55555554
-Call Trace:
- <TASK>
- x86_emulate_insn+0xe41/0x3480 arch/x86/kvm/emulate.c:5469
- x86_emulate_instruction+0x972/0x1400 arch/x86/kvm/x86.c:8375
- kvm_mmu_page_fault+0x48f/0x1b80 arch/x86/kvm/mmu/mmu.c:5359
- handle_ept_violation+0x24e/0x660 arch/x86/kvm/vmx/vmx.c:5429
- __vmx_handle_exit arch/x86/kvm/vmx/vmx.c:6171 [inline]
- vmx_handle_exit+0x5e7/0x1ab0 arch/x86/kvm/vmx/vmx.c:6188
- vcpu_enter_guest+0x1adb/0x3af0 arch/x86/kvm/x86.c:10178
- vcpu_run arch/x86/kvm/x86.c:10261 [inline]
- kvm_arch_vcpu_ioctl_run+0x41e/0x17c0 arch/x86/kvm/x86.c:10471
- kvm_vcpu_ioctl+0x4d2/0xc60 arch/x86/kvm/../../../virt/kvm/kvm_main.c:3908
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:874 [inline]
- __se_sys_ioctl fs/ioctl.c:860 [inline]
- __x64_sys_ioctl+0x16d/0x1d0 fs/ioctl.c:860
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x38/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x44/0xae------------[Patch ]------------The patch is public and it can be found here:https://git.kernel.org/pub/scm/virt/kvm/kvm.git/commit/?h=queue&id=7c718221fb3f1b362ac87b04dc8e143ba8ed09c1C repro is attached.Best regards.    Yongkang Jia
+Hello Kubernetes Community,
 
-Content of type "text/html" skipped
+A security issue was discovered in Kubernetes where users may have access
+to secure endpoints in the control plane network. Kubernetes clusters are
+only affected if an untrusted user can modify Node objects and send proxy
+requests to them.
 
-View attachment "poc.c" of type "text/plain" (35453 bytes)
+Kubernetes supports node proxying, which allows clients of kube-apiserver
+to access endpoints of a Kubelet to establish connections to Pods, retrieve
+container logs, and more. While Kubernetes already validates the proxying
+address for Nodes, a bug in kube-apiserver made it possible to bypass this
+validation. Bypassing this validation could allow authenticated requests
+destined for Nodes to to the API server's private network.
+
+This issue has been rated Medium (
+CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:H/I:H/A:H
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:H/I:H/A:H>),
+and assigned CVE-2022-3294
+Am I vulnerable?
+
+Clusters are affected by this vulnerability if there are endpoints that the
+kube-apiserver has connectivity to that users should not be able to access.
+This includes:
+
+   -
+
+   kube-apiserver is in a separate network from worker nodes
+   -
+
+   localhost services
+
+mTLS services that accept the same client certificate as nodes may be
+affected. The severity of this issue depends on the privileges &
+sensitivity of the exploitable endpoints.
+
+Clusters that configure the egress selector to use a proxy for cluster
+traffic may not be affected.
+Affected Versions
+
+   -
+
+   Kubernetes kube-apiserver <= v1.25.3
+   -
+
+   Kubernetes kube-apiserver <= v1.24.7
+   -
+
+   Kubernetes kube-apiserver <= v1.23.13
+   -
+
+   Kubernetes kube-apiserver <= v1.22.15
+
+How do I mitigate this vulnerability?
+
+Upgrading the kube-apiserver to a fixed version mitigates this
+vulnerability.
+
+Aside from upgrading, configuring an egress proxy for egress to the cluster
+network
+<https://kubernetes.io/docs/tasks/extend-kubernetes/setup-konnectivity/>
+can mitigate this vulnerability.
+Fixed Versions
+
+   -
+
+   Kubernetes kube-apiserver v1.25.4
+   -
+
+   Kubernetes kube-apiserver v1.24.8
+   -
+
+   Kubernetes kube-apiserver v1.23.14
+   -
+
+   Kubernetes kube-apiserver v1.22.16
+
+These releases will be published over the course of today, November 10th.
+
+Fix impact: In some cases, the fix can break clients that depend on the
+nodes/proxy subresource, specifically if a kubelet advertises a localhost
+or link-local address to the Kubernetes control plane.
+Detection
+
+Node create & update requests may be included in the Kubernetes audit log,
+and can be used to identify requests for IP addresses that should not be
+permitted. Node proxy requests may also be included in audit logs.
+
+If you find evidence that this vulnerability has been exploited, please
+contact security@...ernetes.io
+Additional Details
+
+See the GitHub issue for more details:
+https://github.com/kubernetes/kubernetes/issues/113757
+Acknowledgements
+
+This vulnerability was reported by Yuval Avrahami of Palo Alto Networks.
+
+Thank You,
+
+Tim Allclair on behalf of the Kubernetes Security Response Committee
+
