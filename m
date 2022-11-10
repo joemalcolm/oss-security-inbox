@@ -1,48 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/31/3
-Message-ID: <fe260c38cf7e416288449691bb9cb5dd@AcuMS.aculab.com>
-Date: Sat, 31 Dec 2022 16:31:30 +0000
-From: David Laight <David.Laight@...LAB.COM>
-To: 'Shawn Webb' <shawn.webb@...denedbsd.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: Alejandro Colomar <alx.manpages@...il.com>, Michael Kerrisk <mtk.manpages@...il.com>, "linux-kernel@...r.kernel.org" <linux-kernel@...r.kernel.org>, "linux-man@...r.kernel.org" <linux-man@...r.kernel.org>
-Subject: RE: [patch] proc.5: tell how to parse /proc/*/stat correctly
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/10/5
+Message-ID: <Y21BdMJyg9QUm2Qw@zuma.herrb.net>
+Date: Thu, 10 Nov 2022 18:22:44 +0000
+From: Matthieu Herrb <matthieu@...rb.eu>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2022-45063: xterm <375 code execution via font ops
 Content-Type: text/plain; charset=utf-8
 
-From: Shawn Webb
-> Sent: 28 December 2022 15:25
+On Thu, Nov 10, 2022 at 02:42:41PM +1100, David Leadbeater wrote:
+> xterm before patch 375 can enable an RCE under certain conditions.
 > 
-> On Tue, Dec 27, 2022 at 04:44:49PM -0800, Lyndon Nerenberg (VE7TFX/VE6BBM) wrote:
-> > Dominique Martinet writes:
-> >
-> > > But, really, I just don't see how this can practically be said to be parsable...
-> >
-> > In its current form it never will be.  The solution is to place
-> > this variable-length field last.  Then you can "cut -d ' ' -f 51-"
-> > to get the command+args part (assuming I counted all those fields
-> > correctly ...)
-> >
-> > Of course, this breaks backwards compatability.
+> Fix:
 > 
-> It would also break forwards compatibility in the case new fields
-> needed to be added.
+> Upgrade to xterm patch #375
+> https://invisible-island.net/xterm/xterm.log.html
 > 
-> The only solution would be a libxo-style feature wherein a
-> machine-parseable format is exposed by virtue of a file extension.
+> Mitigation:
 > 
-> Examples:
-> 
-> 1. /proc/pid/stats.json
-> 2. /proc/pid/stats.xml
-> 3. /proc/pid/stats.yaml_shouldnt_be_a_thing
+> Set this Xresource:
+> XTerm*allowFontOps: false
 
-None of those are of any real use if you are trying to parse the
-data in something like a shell script.
-Multiple lines formatted as "tag:value" are probably the best bet.
-Provided something sane is done with embedded \n (and maybe \r).
+Hi,
 
-	David
+Running xterm 375 on Arch Linux (Font Ops are enabled by default) and
+OpenBSD (after re-enabling Font Ops) shows it as still vulnerable
+using the test below..
 
--
-Registered Address Lakeside, Bramley Road, Mount Farm, Milton Keynes, MK1 1PT, UK
-Registration No: 1397386 (Wales)
+> 
+> Details:
+> 
+> The issue is in the OSC 50 sequence, which is for setting and querying
+> the font. If a given font does not exist, it is not set, but a query
+> will return the name that was set. Control characters can't be
+> included, but the response string can be terminated with ^G. This
+> essentially gives us a primitive for echoing text back to the terminal
+> and ending it with ^G.
+> 
+> It so happens ^G is in Zsh when in vi line editing mode bound to
+> "list-expand". Which can run commands as part of the expansion leading
+> to command execution without pressing enter!
+> 
+> This does mean to exploit this vulnerability the user needs to be
+> using Zsh in vi line editing mode (usually via $EDITOR having "vi" in
+> it). While somewhat obscure this is not a totally unknown
+> configuration.
+> 
+> In that configuration, something like:
+> printf "\e]50;i\$(touch /tmp/hack-like-its-1999)\a\e]50;?\a" > cve-2022-45063
+> cat cve-2022-45063  # or another way to deliver this to the victim
+> 
+> Will touch that file. It will leave the line on the user's screen;
+> I'll leave it as an exercise for the reader to use the vi line editing
+> commands to hide the evidence.
+> 
+> Debian, Red Hat and others disable font ops by default (see some
+> good foresight at[1] or this very list[2]), but users can re-enable them
+> via a configuration option or menu. Additionally upstream xterm does
+> not disable them by default, so some distributions include a
+> vulnerable default configuration.
+> 
+> This has been assigned CVE-2022-45063.
+> 
+> David
+> 
+> 
+> [1]: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=510030
+> [2]: https://www.openwall.com/lists/oss-security/2015/09/20/2 towards the end.
 
+-- 
+Matthieu Herrb
