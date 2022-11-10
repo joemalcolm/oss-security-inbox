@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["564" "Saturday" "2" "May" "2020" "14:32:34" "+0200" "=?UTF-8?B?RnJhbmNlc2NvIENoaWNjaGlyaWNjw7I=?=" "ilgrosso@apache.org" "<a998fd0a-c755-4500-7d53-718132abf24e@apache.org>" "24" "[oss-security] [CVE-2020-1961] Apache Syncope: Server-Side Template Injection on mail templates" nil nil nil "5" "2020050212:32:34" "[oss-security] [CVE-2020-1961] Apache Syncope: Server-Side Template Injection on mail templates" (number mark "U       ilgrosso@apa May  2   24/564   " thread-indent "\"[oss-security] [CVE-2020-1961] Apache Syncope: Server-Side Template Injection on mail templates\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-1961] Apache Syncope: Server-Side Template Injection on mail templates" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9272 invoked by uid 550); 2 May 2020 12:38:18 -0000
+Received: (qmail 11273 invoked by uid 550); 10 Nov 2022 17:30:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,64 +7,145 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5416 invoked from network); 2 May 2020 12:32:49 -0000
-From: =?UTF-8?Q?Francesco_Chicchiricc=c3=b2?= <ilgrosso@apache.org>
-To: oss-security@lists.openwall.com
-Autocrypt: addr=ilgrosso@apache.org; prefer-encrypt=mutual; keydata=
- xsBNBE9EncsBCAC02uAixULU/lI6u7y2a4hPLZ+J9eb1ZNVrg4iockEktP39C8zsve4rxltc
- 9SnT5wa2XwVTwiSl8HjxFGmc/CyMP4l+JLYLqAxvN25BXzoC7pvIpH5VcXMnTKP2bqIcIQ3H
- bR2gLxjxlEzRBgmzsnrtNWhlCi4DNuUcarMrzaWbQkW5DiieW/V7BNEKw7L/WESXWbXTC9zj
- vyf9JQ/Ql3ys7n7y+/C7nnnnRys9kJahJkYbiLasJTxRMm/ENjzwamE1s2khxNDhYXmeXyUf
- PYDv46rVP39TNNbecG9EuHbZZ1pRRSkGZJZnpWBu0O6VWOfn0aF2rR5mfbGHsQA8CQWlABEB
- AAHNOEZyYW5jZXNjbyBDaGljY2hpcmljY8OyIChpbGdyb3NzbykgPGlsZ3Jvc3NvQGFwYWNo
- ZS5vcmc+wsB4BBMBAgAiBQJPRJ3LAhsDBgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgAAKCRBr
- QxPtJz3yh5j3B/46VEpC62uq3wiwDaUYI2fl6DYjlAuSGbI9Q7Avxpz+yDieaPE7Q3C19Xx+
- wTFrHyPOswbltmT5KDNqEpe5C9IpqoSyu7UIkqHtlXTxhsu+rFWpfABnI4sfQ0ui1VOLN3JB
- xG7G8PHCmIdYThSCRoM14u4KSU1ytd3SFtOpNLVU5TVBGm+aJWOu++XPSICn97101ndn8AJm
- JDTlHQwqMzpQTejLQnv020SouLq5cB2O6HSuSmSDpctFCdYkYLzHA6p3WzKgVXt9c3CV7Zhf
- w/XufaqXQQIkr1VLN/l13PlbPPnLluzPO+agDuCsJReFzF2JwxJYBLUIu0T8A+yrfTIzzsBN
- BE9EncsBCADQrFXb7lIhSSaTIkNnE987DGgLn9QRUEvSa+132lWcZYx+knLehdH0++F/cqUc
- 2KT17anzbOidGo0rvxwj5s42NV3lOUWIFBM7pUCwN2ef2CM3TVwA+/WrKGRFq/+cwAhSfDoc
- jtN4+vYd4NbIgzSA7ZuoaT4vKRpBex0fAN2J8tLOzXSbXdsoWRj4pVBnJ0N6WHRlaqLQnQ7o
- F1E6ZrNREMWasjxRuZ38mlpfbArnqw+lAbHL6T/BsKXOEjASe5iOPN9r95HW6dH1vmef1mOk
- /Pu6wr+eIcqwPIBUQRvHw5UnOrMugUf1ohgnx2NvggLOSlvgGBnZo47MphpOd5DVABEBAAHC
- wF8EGAECAAkFAk9EncsCGwwACgkQa0MT7Sc98oeFHggAro4b3tGyKCV7tMz8q9drqigl/6n+
- /2riaumndUcPFZOsewDmg/75jszjc6hoe7wreBkJi0u8kvm6F0RpIlGk5WpCa7bljEc6Erm9
- GLON/DoYn1MSpdMZdwucairqvMK1YWg/7wI/xjgq6br5FBoLegVE8bd3Iy4SVWKUIRURBF7q
- Ft3rVRUJdcmqHvCWpxDJ1VKPRDHf5szVkWXFJI0xiU6KuICWidZ9Hg3WXUsm3SePD7FtokiK
- 0Y9SBzHpd9EZe8KRIHekl5gVS2Xe83GC5GvPHEXE0usYUNRDArOXqIkGUCWHZ7gzueMBcWqW
- x+uxeS7bQfZZO/7ew7lIDf4gYA==
-Message-ID: <a998fd0a-c755-4500-7d53-718132abf24e@apache.org>
-Date: Sat, 2 May 2020 14:32:34 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+Received: (qmail 5437 invoked from network); 10 Nov 2022 17:27:02 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=8k6W8LeOjFfVOl6jCUIMYl6AGJuwiHqJJ8wxsXQbiJE=;
+        b=qla7adEwSINeMFEoO8AjLTVv6EX3LM3HaXfxUk5rte9/3jYSq5z+O9ssvkLS2CSOOf
+         b277ZeW5SPxHQLKaeqJS+z0bSJ9dnkidYrOjjSKyPZGH73RFHIeDVy/zh3KLzFzuJXm+
+         7WQ1v8nrl14ocL9gYiVm/L+YstU+uGKblSb6aTUlVgpUUY189X0rCt6lsdfeRbqjI+0b
+         PZHxTVzKEvKG7iJzily4cmZDpCv/8opE2gQWIjm/ybStDooR0nVqG/x7w7TWeT9+XPeY
+         OawS6u/TSS0vPpMQYqyDDSx6ta0qiwCBZkQXyU6J4d/ERx9SlZj04uYN/xWRmZ0pE8sG
+         fpFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8k6W8LeOjFfVOl6jCUIMYl6AGJuwiHqJJ8wxsXQbiJE=;
+        b=AJFABVwrFLLhRWXfgM6VnlQHkOUPLzoxmPoQulmIiIxlH/XnGcdw26cqCPIoLQrNII
+         U1rbUYYjP3wPXf4HwwGizmwNrVyA32rx0TpxlcI42oCewStcixZMEHqeb/vggnC1Q/Pt
+         jxkre546dziBYnc/0CEni5FodcAsFX1mfKscBTD8/GylDpgvrFzQ5zozgkLx8xHnw7zd
+         d1/GiA9Spvkz0XzfdId//9Fw86HNkPdVP2yAeBjrGOU1pVrQxWY/ODOFMwR2wNflUyMq
+         FOvQAa9PtSJmh/YrcQAotQGLvgIY5WHVHZvpc1yCWsCW4gJHO1Q9odxeLoZgsNrTBr1H
+         ka4w==
+X-Gm-Message-State: ACrzQf3X34ch14wqOj80HI7LVVmr9BTjHEwnn6urSzgZgrD2WdWmzXZQ
+	So4MD9D6Q+3dsDzxsyDOTNMTj/E3gutwELTq/VS9sIUlsO8=
+X-Google-Smtp-Source: AMsMyM5K2Eb0HpXxiHOKDbxd0v1UibL24GAq+Y2rQqt1hDOlnfqfK4k13D2M3af7YaV4rgbqf/cCyIST/AiU2svBvbY=
+X-Received: by 2002:a05:6402:22b3:b0:461:6f87:20bb with SMTP id
+ cx19-20020a05640222b300b004616f8720bbmr2769725edb.300.1668101211130; Thu, 10
+ Nov 2022 09:26:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-Subject: [oss-security] [CVE-2020-1961] Apache Syncope: Server-Side Template Injection on mail templates
+From: Tim Allclair <timallclair@gmail.com>
+Date: Thu, 10 Nov 2022 09:26:15 -0800
+Message-ID: <CALXpagy9180LrnQ_1Ekgek+xj6+iaYRghU+CjRdnWGDcKXxUkQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000238ff305ed2114ea"
+Subject: [oss-security] [kubernetes] CVE-2022-3294: Node address isn't always verified when proxying
 
-Description:
-Vulnerability to Server-Side Template Injection on Mail templates enabling attackers to inject arbitrary JEXL expressions, leading to Remote
-Code Execution (RCE) was discovered.
+--000000000000238ff305ed2114ea
+Content-Type: text/plain; charset="UTF-8"
 
-Severity: Important
+Hello Kubernetes Community,
 
-Vendor: The Apache Software Foundation
+A security issue was discovered in Kubernetes where users may have access
+to secure endpoints in the control plane network. Kubernetes clusters are
+only affected if an untrusted user can modify Node objects and send proxy
+requests to them.
 
-Affects:
-2.0.X releases prior to 2.0.15
-2.1.X releases prior to 2.1.6
+Kubernetes supports node proxying, which allows clients of kube-apiserver
+to access endpoints of a Kubelet to establish connections to Pods, retrieve
+container logs, and more. While Kubernetes already validates the proxying
+address for Nodes, a bug in kube-apiserver made it possible to bypass this
+validation. Bypassing this validation could allow authenticated requests
+destined for Nodes to to the API server's private network.
 
-Solution:
-2.0.X users: upgrade to 2.0.15
-2.1.X users: upgrade to 2.1.6
+This issue has been rated Medium (
+CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:H/I:H/A:H
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:H/I:H/A:H>),
+and assigned CVE-2022-3294
+Am I vulnerable?
 
-Credit:
-This issue was discovered by GitHub Security Labs team member Alvaro Muñoz - https://github.com/pwntester.
+Clusters are affected by this vulnerability if there are endpoints that the
+kube-apiserver has connectivity to that users should not be able to access.
+This includes:
 
-References:
-https://syncope.apache.org/security
+   -
 
+   kube-apiserver is in a separate network from worker nodes
+   -
 
+   localhost services
 
+mTLS services that accept the same client certificate as nodes may be
+affected. The severity of this issue depends on the privileges &
+sensitivity of the exploitable endpoints.
+
+Clusters that configure the egress selector to use a proxy for cluster
+traffic may not be affected.
+Affected Versions
+
+   -
+
+   Kubernetes kube-apiserver <= v1.25.3
+   -
+
+   Kubernetes kube-apiserver <= v1.24.7
+   -
+
+   Kubernetes kube-apiserver <= v1.23.13
+   -
+
+   Kubernetes kube-apiserver <= v1.22.15
+
+How do I mitigate this vulnerability?
+
+Upgrading the kube-apiserver to a fixed version mitigates this
+vulnerability.
+
+Aside from upgrading, configuring an egress proxy for egress to the cluster
+network
+<https://kubernetes.io/docs/tasks/extend-kubernetes/setup-konnectivity/>
+can mitigate this vulnerability.
+Fixed Versions
+
+   -
+
+   Kubernetes kube-apiserver v1.25.4
+   -
+
+   Kubernetes kube-apiserver v1.24.8
+   -
+
+   Kubernetes kube-apiserver v1.23.14
+   -
+
+   Kubernetes kube-apiserver v1.22.16
+
+These releases will be published over the course of today, November 10th.
+
+Fix impact: In some cases, the fix can break clients that depend on the
+nodes/proxy subresource, specifically if a kubelet advertises a localhost
+or link-local address to the Kubernetes control plane.
+Detection
+
+Node create & update requests may be included in the Kubernetes audit log,
+and can be used to identify requests for IP addresses that should not be
+permitted. Node proxy requests may also be included in audit logs.
+
+If you find evidence that this vulnerability has been exploited, please
+contact security@kubernetes.io
+Additional Details
+
+See the GitHub issue for more details:
+https://github.com/kubernetes/kubernetes/issues/113757
+Acknowledgements
+
+This vulnerability was reported by Yuval Avrahami of Palo Alto Networks.
+
+Thank You,
+
+Tim Allclair on behalf of the Kubernetes Security Response Committee
+
+--000000000000238ff305ed2114ea--
