@@ -1,121 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/01/4
-Message-Id: <E1oppwh-0005PS-M8@xenbits.xenproject.org>
-Date: Tue, 01 Nov 2022 12:00:43 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 414 v2 (CVE-2022-42309) - Xenstore: Guests can crash xenstored
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/14/2
+Message-ID: <e300bb4d-e2ce-79e2-42fc-7ddcd4602a42@apache.org>
+Date: Sun, 13 Nov 2022 22:48:47 +0000
+From: Jarek Potiuk <potiuk@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2022-40127: RCE in Apache Airflow <2.4.0 bash example 
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: low
 
-            Xen Security Advisory CVE-2022-42309 / XSA-414
-                               version 2
+Description:
 
-                 Xenstore: Guests can crash xenstored
+A vulnerability in Example Dags of Apache Airflow allows an attacker with UI access who can trigger DAGs, to execute arbitrary commands via manually provided run_id parameter.  This issue affects Apache Airflow Apache Airflow versions prior to 2.4.0.
 
-UPDATES IN VERSION 2
-====================
+Mitigation:
 
-Public release.
+Do not enable example dags on systems that should not allow UI user to execute an arbitrary command.
 
-ISSUE DESCRIPTION
-=================
+Credit:
 
-Due to a bug in the fix of XSA-115 a malicious guest can cause xenstored
-to use a wrong pointer during node creation in an error path, resulting
-in a crash of xenstored or a memory corruption in xenstored causing
-further damage.
+Apache Airflow PMC would like to thank L3yx of Syclover Security Team.
 
-Entering the error path can be controlled by the guest e.g. by exceeding
-the quota value of maximum nodes per domain.
+References:
 
-IMPACT
-======
+https://github.com/apache/airflow/pull/25960
 
-A malicious guest can cause xenstored to crash, resulting in the inability
-to create new guests or to change the configuration of running guests.
-
-Memory corruption in xenstored or privilege escalation of a guest can't
-be ruled out.
-
-VULNERABLE SYSTEMS
-==================
-
-All Xen versions with the fix for XSA-115 running the C variant of Xenstore
-(xenstored or xenstore-stubdom) are vulnerable.
-
-Systems using the Ocaml variant of Xenstore (oxenstored) are not vulnerable.
-
-MITIGATION
-==========
-
-Using oxenstored instead of xenstored will avoid the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Julien Grall of Amazon.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa414.patch           xen-unstable, Xen 4.16.x - 4.15.x
-xsa414-4.14.patch      Xen 4.14.x - 4.13.x
-
-$ sha256sum xsa414*
-aad9be1af22eec504bf45ff651509be9106e7d4ceb7552befcf3152a17e5efbe  xsa414.meta
-f0683bce3b27dd516367091e845559359c12a193b4e051867b580ea46d58359f  xsa414.patch
-6eb053052786c738abaf747ea69384fd47525186fa6b6ea247383c7cbfbf3e07  xsa414-4.14.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmNg+58MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZYVAH/1m7ox0cI4jg17wM8ri+cWi0O4bp68MFQKG887DJ
-2WZsObdY3SYkUO1YBMg9qu9l5G11+z3UW8KBznafVPweyt35CZJdq6E82SfNc+uf
-6/9hmDvXl3fwNJDP9AQBEKMXHPMjRYmIPaniuQdRgnqKSZNUXefbyHZFuHqKabSq
-cIEJebNHyNWYmC5fulu53YHuX2WHCkUhlcYYLfqbqd+THGt6Aqj+1NxS3QZ/7zBC
-Jiw1eLjzyOGeARkmobl9FJuQpyB9ZmiyenrJCzFMR3uh0njMnMys95VgWxBH+uBe
-ooe2vvcoE9EpY8MPmV3UhA+q3JsIis+dkZ2vJQAjaQAomXQ=
-=NNSk
------END PGP SIGNATURE-----
-
-Download attachment "xsa414.meta" of type "application/octet-stream" (1480 bytes)
-
-Download attachment "xsa414.patch" of type "application/octet-stream" (3286 bytes)
-
-Download attachment "xsa414-4.14.patch" of type "application/octet-stream" (3249 bytes)
