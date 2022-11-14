@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1516" "Wednesday" "10" "February" "2016" "15:20:03" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160210202003.2D418B2E0D7@smtpvbsrv1.mitre.org>" "36" "[oss-security] Re: CVE Request: eom, gnome-photos, eog, gambas3, thunar, pinpoint, gtk+2.0" nil nil nil "2" "2016021020:20:03" "[oss-security] Re: CVE Request: eom, gnome-photos, eog, gambas3, thunar, pinpoint, gtk+2.0" (number mark "U       cve-assign@m Feb 10   36/1516  " thread-indent "\"[oss-security] Re: CVE Request: eom, gnome-photos, eog, gambas3, thunar, pinpoint, gtk+2.0\"\n") "<20160210032005.GC26858@hunt>" ("<20160210032005.GC26858@hunt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9481 invoked by uid 550); 10 Feb 2016 20:20:16 -0000
+Received: (qmail 20398 invoked by uid 550); 14 Nov 2022 15:36:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,48 +7,44 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9455 invoked from network); 10 Feb 2016 20:20:15 -0000
-From: cve-assign@mitre.org
-To: seth.arnold@canonical.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, security@ubuntu.com
-In-Reply-To: <20160210032005.GC26858@hunt>
-Message-Id: <20160210202003.2D418B2E0D7@smtpvbsrv1.mitre.org>
-Date: Wed, 10 Feb 2016 15:20:03 -0500 (EST)
-Subject: [oss-security] Re: CVE Request: eom, gnome-photos, eog, gambas3, thunar, pinpoint, gtk+2.0
+Received: (qmail 7601 invoked from network); 14 Nov 2022 15:26:59 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Rob Vesse <rvesse@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <f504671e-250d-f954-4f7b-39439e2cd429@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 14 Nov 2022 15:26:45 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2022-45136: JDBC Deserialisation in Apache Jena SDB 
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: low
 
-> https://bugzilla.gnome.org/show_bug.cgi?id=703220
->> Reported: 2013-06-27 23:17 UTC by Bert Massop
->> Memory allocation integer overflow in gdk_cairo_set_source_pixbuf on large pixbufs
+Description:
 
-> https://bugs.launchpad.net/ubuntu/+source/gtk+2.0/+bug/1540811
-> https://github.com/mate-desktop/eom/issues/93
-> https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=799275
-> https://git.gnome.org/browse/gtk+/commit?id=894b1ae76a32720f4bb3d39cf460402e3ce331d6
+** UNSUPPORTED WHEN ASSIGNED ** Apache Jena SDB 3.17.0 and earlier is vulne=
+rable to a JDBC Deserialisation attack if the attacker is able to control t=
+he JDBC URL used or cause the underlying database server to return maliciou=
+s data.  The mySQL JDBC driver in particular is known to be vulnerable to t=
+his class of attack.  As a result an application using Apache Jena SDB can =
+be subject to RCE when connected to a malicious database server.
 
-Use CVE-2013-7447.
+Apache Jena SDB has been EOL since December 2020 and users should migrate t=
+o alternative options e.g. Apache Jena TDB 2.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Mitigation:
 
-iQIcBAEBCAAGBQJWu5rcAAoJEL54rhJi8gl5JEoQAJvhxa+JfBRfWSeMuAkMjHZ/
-e2Sl1CSTNy/bSbJ+vZFxgNDSah/QRCW3wteA/wPpOubufPPklbDav9tycaVop3Wb
-hA1W5RFdHyxt0mUmGdLJd23nnyZ16OanMhMeIUhnzz0z5gY+rITFs2d7twK+k5To
-BIpbEjF/LjFyuP809v3vmdjY5vOET9X5cE6Vf4h0ewo7jCYRjtTSeYSTzZK07fTI
-dChHQ1TS8iw9kHZE7/BfsOcfm3zyPVKdgAb8C0d73/byLZs+CNdiOli0jP0V8BkO
-2335Kh1PNZgyg3/Q/13lgzuQD46WPUlWv+bz12yXzO6GpVTxp9ff9yVX5x2LCwL4
-oMVQ0OohIW0o7sdwBxv4wembusboImoae0aV8ID24y8poRVGtTlCevZoLbp7d0zr
-lOiOJGopzy2lin4i10yUhkZb+V1aCKb8KTQJX0r8LrbQl0TvYSqv18t5jueMbeIB
-Qg2emOFVc45eStz/zJI+PV4ly8smKOcWPiJOp47xHb4SlgdC409xJaak1FoGgiVX
-PdXvp6Fh1v96DUG0WXb+MqKSsJSbMqrj/PNtYC7fzFPrezVcjG3WDVx+EcqVAMvh
-mRkq+OjbhYEm3D69ZgoMgkVbDrgqEwFKZLkNfnpvQKjvJeA8vlhJadfZ/iuHY8MC
-mQn7uQO0hFn4AwX4s53z
-=wp1h
------END PGP SIGNATURE-----
+Apache Jena SDB has been EOL since December 2020, users should migrate to a=
+lternative options from the Apache Jena project e.g. Apache Jena TDB 2 or f=
+rom 3rd party vendors.
+
+
+Users utilising Apache Jena SDB with mySQL should ensure they explicitly se=
+t autoDeserialize=3Dfalse on their JDBC connection strings.  It is also rec=
+ommended that users ensure that any ability to set the JDBC connection stri=
+ng is limited to appropriate users.
+
+Credit:
+
+Apache Jena would like to thank Crilwa & LaNyer640 for reporting this issue
+
