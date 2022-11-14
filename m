@@ -1,17 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/22/7
-Message-ID:  <DM5PR14MB146504CDA1924C1B6B2479AEE1F79@DM5PR14MB1465.namprd14.prod.outlook.com>
-Date: Fri, 22 Apr 2022 17:49:37 +0000
-From: "Myers, Christopher" <Christopher.Myers@...or.edu>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: CVE-2022-29464 :: WSO2 Unrestricted arbitrary file upload, and remote code to execution vulnerability.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/14/1
+Message-ID: <CAFcO6XNrZziaKNu=BGiHoKiK4sdHH4CJLKoptOyE=yQ5WWqaLQ@mail.gmail.com>
+Date: Mon, 14 Nov 2022 11:10:21 +0800
+From: butt3rflyh4ck <butterflyhuangxx@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel: net: mctp: A Use-After-Free bug in mctp_sk_unhash in net/mctp/af_mctp.c
 Content-Type: text/plain; charset=utf-8
 
-I have not seen this come across the oss-sec/CISA/DHS emails at this point, but anyone using WSO2 or a derivative needs to check this out right away.
+CVE-2022-3977 is assigned for this issue by Redhat.
+https://access.redhat.com/security/cve/CVE-2022-3977
 
-https://docs.wso2.com/display/Security/Security+Advisory+WSO2-2021-1738
 
-https://nvd.nist.gov/vuln/detail/CVE-2022-29464
+Regards,
+ butt3rflyh4ck.
 
-Good writeup and PoC code here: https://github.com/hakivvi/CVE-2022-29464
+On Sun, Oct 23, 2022 at 1:51 PM butt3rflyh4ck
+<butterflyhuangxx@...il.com> wrote:
+>
+> Hi, there is a Use-After-Free bug in mctp_sk_unhash in
+> net/mctp/af_mctp.c in the last Linux kernel upstream.  An unprivileged
+> the user  reproduced it with new namespaces.It would cause Local Privilege
+> Escalation(LPE). It was introduced in v5.18.0, commit is
+> 63ed1aab3d40aa61aaa66819bdce9377ac7f40fa. It affected all the way up
+> to upstream v6.0.0 and stable. Unfortunately, the mctp kernel module
+> is not automatically loaded.
+> I have reported to secuirty@...nel.org a month ago and Now the patch
+> was opened to the public.
+>
+> ##Root Cause
+> The bug was introduced in commit
+> 63ed1aab3d40aa61aaa66819bdce9377ac7f40fa. It add
+> SIOCMCTP{ALLOC,DROP}TAG ioctls for tag control.This change adds a
+> couple of new ioctls for mctp sockets: SIOCMCTPALLOCTAG and
+> SIOCMCTPDROPTAG.
+> where a simultaneous DROPTAG ioctl and socket close may race, as we
+> attempt to remove a key from lists twice, and perform an unref for
+> each removal operation. This may result in a uaf when we attempt the
+> second unref.
+>
+> ##Fix
+> 1.https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3a732b46736cd8a29092e4b0b1a9ba83e672bf89
+>
+> ## CVE
+> Now no CVE number is assigned for this issue.
+>
+> ##Timeline
+> 2022-9-26: reported to security@...nel.org.
+> 2022-9-26: bug confirmed.
+> 2022-10-06: patch it.
+> 2022-10-12: patch released.
+> 2022-10-12: reported to secalert@...hat.com.
+> 2022-10-23: Announced on oss-security lists.
+>
+> ## Credit
+> this bus is reported by Active Defense Lab of Venustech.
+>
+>
+>
+> Regards,
+>  butt3rflyh4ck.
+>
+>
+> --
+> Active Defense Lab of Venustech
 
+
+
+-- 
+Active Defense Lab of Venustech
