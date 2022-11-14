@@ -1,70 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/14/1
-Message-ID: <CAFcO6XNrZziaKNu=BGiHoKiK4sdHH4CJLKoptOyE=yQ5WWqaLQ@mail.gmail.com>
-Date: Mon, 14 Nov 2022 11:10:21 +0800
-From: butt3rflyh4ck <butterflyhuangxx@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/14/4
+Message-ID: <22eef24e-713c-9a69-36f7-06cc2c8df835@apache.org>
+Date: Mon, 14 Nov 2022 13:27:39 +0000
+From: Arnout Engelen <engelen@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: net: mctp: A Use-After-Free bug in mctp_sk_unhash in net/mctp/af_mctp.c
+Subject: CVE-2022-45378: Apache SOAP allows unauthenticated users to potentially invoke arbitrary code 
 Content-Type: text/plain; charset=utf-8
 
-CVE-2022-3977 is assigned for this issue by Redhat.
-https://access.redhat.com/security/cve/CVE-2022-3977
+Severity: moderate
 
+Description:
 
-Regards,
- butt3rflyh4ck.
+** UNSUPPORTED WHEN ASSIGNED ** In the default configuration of Apache SOAP, an RPCRouterServlet is available without authentication. This gives an attacker the possibility to invoke methods on the classpath that meet certain criteria. Depending on what classes are available on the classpath this might even lead to arbitrary remote code execution. NOTE: This vulnerability only affects products that are no longer supported by the maintainer.
 
-On Sun, Oct 23, 2022 at 1:51 PM butt3rflyh4ck
-<butterflyhuangxx@...il.com> wrote:
->
-> Hi, there is a Use-After-Free bug in mctp_sk_unhash in
-> net/mctp/af_mctp.c in the last Linux kernel upstream.  An unprivileged
-> the user  reproduced it with new namespaces.It would cause Local Privilege
-> Escalation(LPE). It was introduced in v5.18.0, commit is
-> 63ed1aab3d40aa61aaa66819bdce9377ac7f40fa. It affected all the way up
-> to upstream v6.0.0 and stable. Unfortunately, the mctp kernel module
-> is not automatically loaded.
-> I have reported to secuirty@...nel.org a month ago and Now the patch
-> was opened to the public.
->
-> ##Root Cause
-> The bug was introduced in commit
-> 63ed1aab3d40aa61aaa66819bdce9377ac7f40fa. It add
-> SIOCMCTP{ALLOC,DROP}TAG ioctls for tag control.This change adds a
-> couple of new ioctls for mctp sockets: SIOCMCTPALLOCTAG and
-> SIOCMCTPDROPTAG.
-> where a simultaneous DROPTAG ioctl and socket close may race, as we
-> attempt to remove a key from lists twice, and perform an unref for
-> each removal operation. This may result in a uaf when we attempt the
-> second unref.
->
-> ##Fix
-> 1.https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3a732b46736cd8a29092e4b0b1a9ba83e672bf89
->
-> ## CVE
-> Now no CVE number is assigned for this issue.
->
-> ##Timeline
-> 2022-9-26: reported to security@...nel.org.
-> 2022-9-26: bug confirmed.
-> 2022-10-06: patch it.
-> 2022-10-12: patch released.
-> 2022-10-12: reported to secalert@...hat.com.
-> 2022-10-23: Announced on oss-security lists.
->
-> ## Credit
-> this bus is reported by Active Defense Lab of Venustech.
->
->
->
-> Regards,
->  butt3rflyh4ck.
->
->
-> --
-> Active Defense Lab of Venustech
+Credit:
 
+  Apache would like to thank TsungShu Chiu (CHT Security) for reporting this issue
 
-
--- 
-Active Defense Lab of Venustech
