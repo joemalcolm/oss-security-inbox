@@ -1,4 +1,4 @@
-Received: (qmail 16060 invoked by uid 550); 12 Jun 2024 22:54:58 -0000
+Received: (qmail 1875 invoked by uid 550); 15 Nov 2022 12:04:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,38 +7,25 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1677 invoked from network); 12 Jun 2024 22:49:43 -0000
-X-Injected-Via-Gmane: http://gmane.org/
+Received: (qmail 3309 invoked from network); 15 Nov 2022 11:35:56 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Olivier Lamy <olamy@apache.org>
 To: oss-security@lists.openwall.com
-From: Tavis Ormandy <taviso@gmail.com>
-Date: Wed, 12 Jun 2024 22:49:28 -0000 (UTC)
-Message-ID: <v4d8ln$2ut$1@ciao.gmane.io>
-References: <28902b9a-3255-4bfe-a3c8-d0e08fb5f426@redhat.com>
-User-Agent: slrn/1.0.3 (Linux)
-Subject: [oss-security] Re: CVE-2024-35235 cups: Cupsd Listen arbitrary chmod 0140777
+Message-ID: <a67241ba-4fe9-6eec-6b1a-0ee43405fc1d@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 15 Nov 2022 11:35:42 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2022-40308: Apache Archiva prior to 2.2.9 may allow the
+ anonymous user to read arbitrary files 
 
-On 2024-06-11, Zdenek Dohnal wrote:
->  ???????? Impact
->
-> Given that cupsd is often running as root, this can result in the change 
-> of permission of any user or system files to be world writable.
->
->
-> https://github.com/OpenPrinting/cups/commit/a436956f3
->
+Description:
 
-This is a pretty confusing description... if we accept the premise that an
-attacker can somehow get root to run cupsd with a modified configuration
-file (how???), then this patch doesn't seem sufficient. They can still
-get root to unlink() an arbitrary file, no?
+If anonymous read enabled, it's possible to read the database file directly=
+ without logging in.
 
-I guess someone from CUPS has seen a working Ubuntu exploit that did
-this, but this really feels like fixing the bug in the wrong place?
 
-Tavis.
+Credit:
 
--- 
- _o)            $ lynx lock.cmpxchg8b.com
- /\\  _o)  _o)  $ finger taviso@sdf.org
-_\_V _( ) _( )  @taviso
+Thanks to L3yx of Syclover Security Team
 
