@@ -1,45 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/20/2
-Message-ID: <86c70de9-3adb-a18c-23aa-0110d83dbdc2@redhat.com>
-Date: Wed, 20 Apr 2022 15:58:20 +1000
-From: Peter Hutterer <peter.hutterer@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/16/1
+Message-ID: <9de91c88-8c85-77d2-8846-07244ed4630e@apache.org>
+Date: Tue, 15 Nov 2022 23:08:17 +0000
+From: Thomas Wolf <twolf@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-1215 libinput format string vulnerability
+Subject: CVE-2022-45047: Apache MINA SSHD: Java unsafe deserialization vulnerability 
 Content-Type: text/plain; charset=utf-8
 
-Title: Format string vulnerability in libinput
-Component: libinput, affecting all Wayland compositors and X.Org when 
-using xf86-input-libinput
-Report URL: https://gitlab.freedesktop.org/libinput/libinput/-/issues/752
-Reporter: Albin Eldstål-Ahrens and Lukas Lamster
-CVSS: 7.1 AV:L/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:H/E:U/RL:O/RC:C
-Disclosure date: Embargo cancelled due to an independent public bug filed
+Severity: important
 
-When a device is detected by libinput, libinput logs several messages 
-through log handlers set up by the callers. These log handlers usually 
-eventually result in a printf call. Logging happens with the privileges 
-of the caller, in the case of Xorg this may be root.
+Description:
 
-The device name ends up as part of the format string and a kernel device 
-with printf-style format string placeholders in the device name can 
-enable an attacker to run malicious code. An exploit is possible through 
-any device where the attacker controls the device name, e.g. /dev/uinput 
-or Bluetooth devices.
+Class org.apache.sshd.server.keyprovider.SimpleGeneratorHostKeyProvider in Apache MINA SSHD <= 2.9.1 uses Java deserialization to load a serialized java.security.PrivateKey. The class is one of several implementations that an implementor using Apache MINA SSHD can choose for loading the host keys of an SSH server.
 
-All versions of libinput since 1.10 (released Feb 2018) are affected.
+Mitigation:
 
-The upstream patch is available as commit
-   2a8b8fde90d63d48ce09ddae44142674bbca1c28
+For Apache MINA SSHD <= 2.9.1, do not use org.apache.sshd.server.keyprovider.SimpleGeneratorHostKeyProvider to generate and later load your server's host key. Use separately generated host key files, for instance in OpenSSH format, and load them via a org.apache.sshd.common.keyprovider.FileKeyPairProvider instead. Or use a custom implementation instead of SimpleGeneratorHostKeyProvider that uses the OpenSSH format for storing and loading the host key (via classes OpenSSHKeyPairResourceWriter and OpenSSHKeyPairResourceParser).
 
-libinput releases that include these patches are:
-- 1.20.1
-- 1.19.4
-- 1.18.2
-Releases of versions 1.17.x and earlier are not planned at this stage.
+The issue was fixed in Apache MINA SSHD 2.9.2. 
 
-Many thanks to Albin Eldstål-Ahrens and Benjamin Svensson from Assured 
-AB for their discovery and responsible reporting of this issue.
+Credit:
 
-This issue was independently discovered by Lukas Lamster. Many thanks 
-for their discovery and responsible reporting.
+The Apache MINA SSHD team would like to thank Zhang Zewei, NOFOCUS, for reporting this issue.
 
