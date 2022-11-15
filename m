@@ -1,39 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/19/1
-Message-ID: <CALJOYLHLGY5xmmyNgnBWucBe8TZ49TxBhByMGUm2ViO8U9nUSw@mail.gmail.com>
-Date: Wed, 19 Oct 2022 06:37:50 +0100
-From: Dan Haywood <danhaywood@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/15/2
+Message-ID: <a67241ba-4fe9-6eec-6b1a-0ee43405fc1d@apache.org>
+Date: Tue, 15 Nov 2022 11:35:42 +0000
+From: Olivier Lamy <olamy@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: ISIS-3128: CVE-2022-42467: Apache Isis: h2 webconsole (available only in prototype mode) should nevertheless be disabled by default.
+Subject: CVE-2022-40308: Apache Archiva prior to 2.2.9 may allow the anonymous user to read arbitrary files 
 Content-Type: text/plain; charset=utf-8
-
-Severity: low
 
 Description:
 
-When running in prototype mode, the h2 webconsole module (accessible
-from the Prototype menu) is automatically made available with the
-ability to directly query the database.
+If anonymous read enabled, it's possible to read the database file directly without logging in.
 
-It was felt that it is safer to require the developer to explicitly
-enable this capability.  As of 2.0.0-M8, this can now be done using
-the 'isis.prototyping.h2-console.web-allow-remote-access'
-configuration property; the web console will be unavailable without
-setting this configuration.
 
-As an additional safeguard, the new
-'isis.prototyping.h2-console.generate-random-web-admin-password'
-configuration parameter (enabled by default) requires that the
-administrator use a randomly generated password to use the console.
-The password is printed to the log, as "webAdminPass: xxx" (where
-"xxx") is the password.
+Credit:
 
-To revert to the original behaviour, the administrator would therefore
-need to set these configuration parameter:
+Thanks to L3yx of Syclover Security Team
 
-    isis.prototyping.h2-console.web-allow-remote-access=true
-    isis.prototyping.h2-console.generate-random-web-admin-password=false
-
-Note also that the h2 webconsole is never available in production
-mode, so these safeguards are only to ensure that the webconsole is
-secured by default also in prototype mode.
