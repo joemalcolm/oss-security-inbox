@@ -1,23 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/02/12
-Message-ID: <20220902204301.GA3212087@millbarge>
-Date: Fri, 2 Sep 2022 20:43:01 +0000
-From: Seth Arnold <seth.arnold@...onical.com>
-To: Jedidiah Cunningham <jedcunningham@...che.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-38170: Apache Airflow: Overly permissive umask for deamons
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/18/1
+Message-ID: <CAJedcCyz-uNq+tyK+BqG0xCD9_WOOC8nta77Up7gaOBs+pfwyA@mail.gmail.com>
+Date: Fri, 18 Nov 2022 11:58:55 +0800
+From: Zheng Hacker <hackerzheng666@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Linux kernel: staging: rtl8712: A Use-after-Free/Double-Free bug in read_bbreg_hdl in drivers/staging/rtl8712/rtl8712_cmd.c
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 02, 2022 at 03:55:07AM +0000, Jedidiah Cunningham wrote:
-> In Apache Airflow prior to 2.3.4, an insecure umask was configured for numerous Airflow components when running with the  `--deamon` flag which could result in a race condition giving world-writable files in the Airflow home directory and allowing local users to expose arbitrary file contents via the webserver.
+hi,
+This is a bug I've found in linux kernel before 5.19.2, which is
+in cmd_hdl_filter in drivers/staging/rtl8712/rtl8712_cmd.c, allows
+attacker to launch Local Denial of Service attack and gain escalation
+of privileges.
+I reported it to linux kernel in 2022.8.29 and the upstream fixed it in
+2022.09.06. Now the patch was opened to the public
 
-Hello Jedidiah,
+## Root cause && possible exploit
 
-Thanks for contributing to the oss-security list; I believe your
-contributions would be far more valuable if they included some further
-details -- providing links to issues and commits is common, but you could
-also include the details in the email if that's easier for whatever reason.
+This is a uaf / double free bug. Whenrtl8712 wireless networdk adapter
+initialized, for example using command "ifconfig wlan0 up",
+it calls netdev_open function, which final calls cmd_hdl_filter function.
+As we can control the command code, we can trigger the vulnerabiliy.
+After pcmd object was freed, we can use msg_msg heap spray to
+get the object, and design the layout of it. By controlling the parambuf
+address, we can leak infomation to pcmbuf, which will finally write to
+adapater's memory. By using msg_msg tech we can also leak the information.
+Then in r8712_free_cmd_obj funtion , as we have access to pcmd->parmbuf. Now
+we have a Arbitrary Free bug. This is a powerful primitive and there is some
+common skill after that.
 
-Thanks
+## Fix
 
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+[1] https://lore.kernel.org/all/20220906132823.157986856@linuxfoundation.org/
+[2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c53b3dcb9942b8ed7f81ee3921c4085d87070c73
+
+## CVE
+
+Now no CVE number is assigned for this issue.
+
+## Timeline
+
+2022-08-29: reported to security@...nel.org
+2022-08-29: bug confirmed
+2022-09-06: patch it
+2022-09-06: patch released
+2022-09-07: apply for a CVE number in MITRE
+2022-09-29: reported to secalert@...hat.com
+2022-11-18: Announced on oss-security lists.
+
+## Credit
+
+Zheng Wang(@xmzyshypnc) and Zhuorao Yang(@A1ex)
+
+## Additional Information
+
+This is a bug reported to Linux kernel. Although staging driver is not
+a so important driver module in Linux. [1] This vulnerability has been
+introduced as far as the driver was added in 2010. I've checked the
+issue doesn't affect the vendor in the CNA-project list. But this
+issue can affect othe company who use it as their rtl8712 adapter
+driver module like D-link [2] . I  searched the related issue like
+CVE-2021-28660. I think its NOTE description(NOTE: from the
+perspective of kernel.org releases, CVE IDs are not normally used for
+drivers/staging/* (unfinished work); however, system integrators may
+have situations in which a drivers/staging issue is relevant to their
+own customer base) is very appropriate for my situation.  This is a
+long-existing issue as far as the driver module was added so I think
+it's necessary to assign a CVE number so that anyone using it can fix
+the bug.
+
+[1] https://github.com/torvalds/linux/commit/2865d42c78a9121caad52cb02d1fbb7f5cdbc4ef
+[2] https://cateee.net/lkddb/web-lkddb/R8712U.html
+
+
+Best regards,
+Zheng Wang
