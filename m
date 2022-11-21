@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["961" "Saturday" "14" "November" "2020" "14:35:01" "+1100" "Dave Horsfall" "dave@horsfall.org" "<alpine.BSF.2.21.9999.2011141426320.48674@aneurin.horsfall.org>" "24" "Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" nil nil nil "11" "2020111403:35:01" "[oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" (number mark "U       dave@horsfal Nov 14   24/961   " thread-indent "\"Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros\"\n") "<20201113133331.48185f9f@computer>" ("<20201113133331.48185f9f@computer>") nil nil nil nil nil nil nil "Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux distros" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1628 invoked by uid 550); 14 Nov 2020 11:41:32 -0000
+Received: (qmail 25824 invoked by uid 550); 21 Nov 2022 21:00:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,50 +7,38 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3529 invoked from network); 14 Nov 2020 03:35:19 -0000
-X-RG-Spam: Unknown
-X-RazorGate-Vade: gggruggvucftvghtrhhoucdtuddrgedujedruddviedgiedtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuuffpveftpgfvgffnuffvtfetpdfqfgfvnecuuegrihhlohhuthemucegtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvufgjkfhffgggtgesmhdttdertderjeenucfhrhhomhepffgrvhgvucfjohhrshhfrghllhcuoegurghvvgeshhhorhhsfhgrlhhlrdhorhhgqeenucggtffrrghtthgvrhhnpeejtdduffejhfetffejieeugefhtdejueffveefteffledtfeegteelvdettdefueenucffohhmrghinhepghhrohhkrdhorhhgrdhukhenucfkphepuddutddrudeguddrudelfedrvdeffeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhephhgvlhhopegrnhgvuhhrihhnrdhhohhrshhfrghllhdrohhrghdpihhnvghtpeduuddtrddugedurdduleefrddvfeefpdhmrghilhhfrhhomhepoegurghvvgeshhhorhhsfhgrlhhlrdhorhhgqecuuefqffgjpeekuefkvffokffogfdprhgtphhtthhopeeoohhsshdqshgvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomheq
-X-RazorGate-Vade-Verdict: clean 0
-X-RazorGate-Vade-Classification: clean
-X-RG-VS-CLASS: clean
-X-Authentication-Warning: aneurin.horsfall.org: dave owned process doing -bs
-Date: Sat, 14 Nov 2020 14:35:01 +1100 (EST)
-From: Dave Horsfall <dave@horsfall.org>
-To: OSS Security <oss-security@lists.openwall.com>
-In-Reply-To: <20201113133331.48185f9f@computer>
-Message-ID: <alpine.BSF.2.21.9999.2011141426320.48674@aneurin.horsfall.org>
-References: <20201113133331.48185f9f@computer>
-User-Agent: Alpine 2.21.9999 (BSF 287 2018-06-16)
-X-GPG-Public-Key: http://www.horsfall.org/gpgkey.pub
-X-GPG-Fingerprint: 05B4 FFBC 0218 B438 66E0  587B EF46 7357 EF5E F58B
-X-Home-Page: http://www.horsfall.org/
-X-Witty-Saying: "chmod 666 the_mode_of_the_beast"
+Received: (qmail 11300 invoked from network); 21 Nov 2022 20:41:37 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Jarek Potiuk <potiuk@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <f62db289-55b5-0163-ab99-783c23f2185b@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 21 Nov 2022 20:41:11 +0000
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="1483753691-1414010470-1605324903=:48674"
-Subject: Re: [oss-security] Buffer Overflow in raptor widely unfixed in Linux
- distros
+Subject: [oss-security] CVE-2022-40954: Apache Airflow Spark Provider, Apache Airflow:
+ Airflow 2.3.4 spark provider RCE that bypass restrictions to read
+ arbitrary files 
 
---1483753691-1414010470-1605324903=:48674
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Description:
 
-On Fri, 13 Nov 2020, Hanno Böck wrote:
+Improper Neutralization of Special Elements used in an OS Command ('OS Comm=
+and Injection') vulnerability in Apache Airflow Spark Provider, Apache Airf=
+low allows an attacker to read arbtrary files in the task execution context=
+, without write access to DAG files. This issue affects Spark Provider vers=
+ions prior to 4.0.0. It also impacts any Apache Airflow versions prior to 2=
+.3.0 in case Spark Provider is installed (Spark Provider 4.0.0 can only be =
+installed for Airflow 2.3.0+). Note that you need to manually install the S=
+park Provider version 4.0.0 in order to get rid of the vulnerability on top=
+ of Airflow 2.3.0+ version that has lower version of the Spark Provider ins=
+talled).
 
-[...]
+Credit:
 
-> It may be interesting to discuss how this happened. From my side I feel 
-> I did what I should do - I reported it to the project and later 
-> disclosed it publicly on oss-security. Apparently it seems there is no 
-> reliable process to make sure publicly reported vulns eventually get 
-> patched in distros if there is no active upstream.
+Apache Airflow PMC wants to thank id_No2015429 of 3H Security Team for repo=
+rting the issue.
 
-There's always the "Full Disclosure" list (URL forgotten, but 
-http://lists.grok.org.uk rings a bell).
+References:
 
-Their policy is simple: provide ample warning, then disclose the bug; the 
-problem is that Big Corporations brush off a bug report with "We're 
-working on it" and actually do nothing, because fixing bugs takes time 
-and money.  Funny how quickly a bug is fixed when it's published...
+https://github.com/apache/airflow/pull/27646
 
--- Dave
---1483753691-1414010470-1605324903=:48674--
