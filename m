@@ -1,24 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/23/14
-Message-ID: <4f88c2cf-994b-6a33-66a5-07694d5032c5@census-labs.com>
-Date: Fri, 23 Dec 2022 20:42:51 +0200
-From: Charalampos Maraziaris <cmaraziaris@...sus-labs.com>
-To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Snipe-IT
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/21/3
+Message-ID: <CABEwPvGVFWS8gNrc4txih+axEh_zwds_aXYGn+PB8xkcABTWvA@mail.gmail.com>
+Date: Mon, 21 Nov 2022 13:12:19 -0500
+From: David Smiley <dsmiley@...che.org>
+To: security <security@...che.org>, oss-security@...ts.openwall.com,  Andreas Hubold <andreas.hubold@...emedia.com>, users@...r.apache.org, dev@...r.apache.org
+Subject: Apache Solr is vulnerable to CVE-2022-39135 via /sql handler
 Content-Type: text/plain; charset=utf-8
 
-Hello all,
+Vendor:
 
-I have identified an XSS (CVE-2022-44380) and a user fingerprinting issue (CVE-2022-44381) in Snipe-IT versions prior to 6.0.14.
-
-There's more information about these issues here:
-https://census-labs.com/news/2022/12/23/multiple-vulnerabilities-in-snipe-it/
-
-The Snipe-IT project has patched CVE-2022-44380 in version 6.0.14, but CVE-2022-44381 has yet to be addressed correctly.
-
-Best Regards,
-
-Charalampos Maraziaris
+  The Apache Software Foundation
 
 
-Download attachment "OpenPGP_signature" of type "application/pgp-signature" (841 bytes)
+Versions Affected:
+
+  Solr 6.5 to 8.11.2
+
+  Solr 9.0
+
+
+Description:
+
+  Apache Calcite has a vulnerability, CVE-2022-39135, that is exploitable
+in Apache Solr in SolrCloud mode.  If an untrusted user can supply SQL
+queries to Solr’s “/sql” handler (even indirectly via proxies / other
+apps), then the user could perform an XML External Entity (XXE) attack.  This
+might have been exposed by some deployers of Solr in order for internal
+analysts to use JDBC based tooling, but would have unlikely been granted to
+wider audiences.
+
+
+Impact:
+
+  An XXE attack may lead to the disclosure of confidential data, denial of
+service, server side request forgery (SSRF), port scanning from the Solr
+node, and other system impacts.
+
+
+Mitigation:
+
+  Most Solr installations don’t make use of the SQL functionality.  For
+such users, the standard Solr security advice of using a firewall should be
+adequate.  Nonetheless, the functionality can be disabled.  As of Solr 9,
+it has been modularized and thus became opt-in, so nothing is needed for
+Solr 9 users that don’t use it.  Users *not* using SolrCloud can’t use the
+functionality at all.  For other users that wish to disable it, you must
+register a request handler that masks the underlying functionality in
+solrconfig.xml like so:
+
+  <requestHandler name="/sql" class="solr.NotFoundRequestHandler"/>
+
+
+  Users needing this SQL functionality are forced to upgrade to Solr 9.1.
+If Solr 8.11.3 is released, then it will be an option as well.  Simply
+replacing Calcite and other JAR files may mostly work but could fail
+depending on the particulars of the query.  Users interested in this or in
+patching their own versions of Solr should examine SOLR-16421 for a source
+patch.
+
+
+Credit:
+
+  Andreas Hubold at CoreMedia GmbH
+
+
+References:
+
+https://nvd.nist.gov/vuln/detail/CVE-2022-39135
+
+https://issues.apache.org/jira/browse/SOLR-16421
+
