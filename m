@@ -1,65 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/14/1
-Message-ID: <CA+FuTSeY-GNfBCppjRwhWrOnUg9JDOaesjby2+QbuvPOO5g-=Q@mail.gmail.com>
-Date: Sun, 13 Feb 2022 11:10:58 -0500
-From: Willem de Bruijn <willemdebruijn.kernel@...il.com>
-To: "Liu, Congyu" <liu3101@...due.edu>
-Cc: "security@...nel.org" <security@...nel.org>,  "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>,  "netdev@...r.kernel.org" <netdev@...r.kernel.org>
-Subject: Re: Linux kernel: potential net namespace bug in IPv6 flow label management
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/21/2
+Message-ID: <Y3tVWDWwK6b5a3c6@quatroqueijos.cascardo.eti.br>
+Date: Mon, 21 Nov 2022 07:39:20 -0300
+From: Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel: staging: rtl8712: A Use-after-Free/Double-Free bug in read_bbreg_hdl in drivers/staging/rtl8712/rtl8712_cmd.c
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Feb 13, 2022 at 5:31 AM Liu, Congyu <liu3101@...due.edu> wrote:
->
->
-> Hi,
->
-> In the test conducted on namespace, I found that one unsuccessful IPv6 flow label
-> management from one net ns could stop other net ns's data transmission that requests
-> flow label for a short time. Specifically, in our test case, one unsuccessful
-> `setsockopt` to get flow label will affect other net ns's `sendmsg` with flow label
-> set in cmsg. Simple PoC is included for verification. The behavior descirbed above
-> can be reproduced in latest kernel.
->
-> I managed to figure out the data flow behind this: when asking to get a flow label,
-> some `setsockopt` parameters can trigger function `ipv6_flowlabel_get` to call `fl_create`
-> to allocate an exclusive flow label, then call `fl_release` to release it before returning
-> -ENOENT. Global variable `ipv6_flowlabel_exclusive`, a rate limit jump label that keeps
-> track of number of alive exclusive flow labels, will get increased instantly after calling
-> `fl_create`. Due to its rate limit design, `ipv6_flowlabel_exclusive` can only decrease
-> sometime later after calling `fl_decrease`. During this period, if data transmission function
-> in other net ns (e.g. `udpv6_sendmsg`) calls `fl_lookup`, the false `ipv6_flowlabel_exclusive`
-> will invoke the `__fl_lookup`. In the test case observed, this function returns error and
-> eventually stops the data transmission.
->
-> I further noticed that this bug could somehow be vulnerable: if `setsockopt` is called
-> continuously, then `sendmmsg` call from other net ns will be blocked forever. Using the PoC
-> provided, if attack and victim programs are running simutaneously, victim program cannot transmit
-> data; when running without attack program, the victim program can transmit data normally.
+On Fri, Nov 18, 2022 at 11:58:55AM +0800, Zheng Hacker wrote:
+> hi,
+> This is a bug I've found in linux kernel before 5.19.2, which is
+> in cmd_hdl_filter in drivers/staging/rtl8712/rtl8712_cmd.c, allows
+> attacker to launch Local Denial of Service attack and gain escalation
+> of privileges.
+> I reported it to linux kernel in 2022.8.29 and the upstream fixed it in
+> 2022.09.06. Now the patch was opened to the public
+> 
+> ## Root cause && possible exploit
+> 
+> This is a uaf / double free bug. Whenrtl8712 wireless networdk adapter
+> initialized, for example using command "ifconfig wlan0 up",
+> it calls netdev_open function, which final calls cmd_hdl_filter function.
+> As we can control the command code, we can trigger the vulnerabiliy.
+> After pcmd object was freed, we can use msg_msg heap spray to
+> get the object, and design the layout of it. By controlling the parambuf
+> address, we can leak infomation to pcmbuf, which will finally write to
+> adapater's memory. By using msg_msg tech we can also leak the information.
+> Then in r8712_free_cmd_obj funtion , as we have access to pcmd->parmbuf. Now
+> we have a Arbitrary Free bug. This is a powerful primitive and there is some
+> common skill after that.
+> 
+> ## Fix
+> 
+> [1] https://lore.kernel.org/all/20220906132823.157986856@linuxfoundation.org/
+> [2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=c53b3dcb9942b8ed7f81ee3921c4085d87070c73
+> 
+> ## CVE
+> 
+> Now no CVE number is assigned for this issue.
+> 
 
-Thanks for the clear explanation.
+This was assigned CVE-2022-4095.
 
-Being able to use flowlabels without explicitly registering them
-through a setsockopt is a fast path optimization introduced in commit
-59c820b2317f ("ipv6: elide flowlabel check if no exclusive leases
-exist").
+Regards.
+Cascardo.
 
-Before this, any use of flowlabels required registering them, whether
-the use was exclusive or not. As autoflowlabels already skipped this
-stateful action, the commit extended this fast path to all non-exclusive
-use. But if any exclusive flowlabel is active, to protect it, all
-other flowlabel use has to be registered too.
-
-The commit message does state
-
-    This is an optimization. Robust applications still have to revert to
-    requesting leases if the fast path fails due to an exclusive lease.
-
-Though I can see how the changed behavior has changed the perception of the API.
-
-That this extends up to a second after release of the last exclusive
-flowlabel due to deferred release is only tangential to the issue?
-
-Flowlabels are stored globally, but associated with a netns
-(fl->fl_net). Perhaps we can add a per-netns check to the
-static_branch and maintain stateless behavior in other netns, even if
-some netns maintain exclusive leases.
+> ## Timeline
+> 
+> 2022-08-29: reported to security@...nel.org
+> 2022-08-29: bug confirmed
+> 2022-09-06: patch it
+> 2022-09-06: patch released
+> 2022-09-07: apply for a CVE number in MITRE
+> 2022-09-29: reported to secalert@...hat.com
+> 2022-11-18: Announced on oss-security lists.
+> 
+> ## Credit
+> 
+> Zheng Wang(@xmzyshypnc) and Zhuorao Yang(@A1ex)
+> 
+> ## Additional Information
+> 
+> This is a bug reported to Linux kernel. Although staging driver is not
+> a so important driver module in Linux. [1] This vulnerability has been
+> introduced as far as the driver was added in 2010. I've checked the
+> issue doesn't affect the vendor in the CNA-project list. But this
+> issue can affect othe company who use it as their rtl8712 adapter
+> driver module like D-link [2] . I  searched the related issue like
+> CVE-2021-28660. I think its NOTE description(NOTE: from the
+> perspective of kernel.org releases, CVE IDs are not normally used for
+> drivers/staging/* (unfinished work); however, system integrators may
+> have situations in which a drivers/staging issue is relevant to their
+> own customer base) is very appropriate for my situation.  This is a
+> long-existing issue as far as the driver module was added so I think
+> it's necessary to assign a CVE number so that anyone using it can fix
+> the bug.
+> 
+> [1] https://github.com/torvalds/linux/commit/2865d42c78a9121caad52cb02d1fbb7f5cdbc4ef
+> [2] https://cateee.net/lkddb/web-lkddb/R8712U.html
+> 
+> 
+> Best regards,
+> Zheng Wang
