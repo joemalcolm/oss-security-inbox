@@ -1,102 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/27/5
-Message-ID: <e42a27f3-a888-dbbe-8833-9d8cf5c43038@grsecurity.net>
-Date: Thu, 27 Jan 2022 21:05:31 +0100
-From: Mathias Krause <minipli@...ecurity.net>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Linux kernel: erroneous error handling after fd_install()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/21/4
+Message-ID: <d342cc67-4b93-1ea2-1e9e-6bdf17605f7c@apache.org>
+Date: Mon, 21 Nov 2022 20:24:03 +0000
+From: Jarek Potiuk <potiuk@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2022-38649: Apache Airflow Pinot Provider, Apache Airflow: PinotAdminHook Command Injection 
 Content-Type: text/plain; charset=utf-8
 
-Hi again!
+Severity: moderate
 
-As requested by Alexander, here's the disclosure of two more issues and
-a description of the general bug pattern behind all of them.
+Description:
 
-# The Bug Pattern
+Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') vulnerability in Apache Airflow Pinot Provider, Apache Airflow allows an attacker to control commands executed in the task execution context, without write access to DAG files. This issue affects Apache Airflow Pinot Provider versions prior to 4.0.0. It also impacts any Apache Airflow versions prior to 2.3.0 in case Apache Airlfow Pinot Provider is installed (Apache Airflow Pinot Provider 4.0.0 can only be installed for Airflow 2.3.0+). Note that you need to manually install the Pinot Provider version 4.0.0 in order to get rid of the vulnerability on top of Airflow 2.3.0+ version.
 
-During the work on the vmwgfx issue[1], it was noticed, that there are
-more code constructs in the kernel falling prone to the error pattern of
-calling fd_install(fd, file) and trying to make sense of either 'fd' or
-'file' afterwards. This is generally not safe, as the fd_install(...)
-call will make them reachable by userland.
+Credit:
 
-For example, a concurrent thread calling close(fd) in a tight loop
-(remember that file descriptors are allocated in a predictable manner,
-so the value of fd is known in advance) will release the associated
-'file', likely leading to use-after-free bugs in kernel code, still
-making use of it.
+Apache Airflow PMC wants to thank id_No2015429 of 3H Security Team for reporting the issue.
 
-That should make it clear, that it's generally unsafe to reason about
-'fd' or 'file' after a call to fd_install(). Now, in the vmwgfx case the
-code tried to clean up by itself, by closing the (assumed unused) fd and
-releasing the file using put_unused_fd(fd) and fput(file) respectively,
-basically like this:
+References:
 
-    fd_install(fd, file);
-    ...
-    if (copy_to_user(...)) {
-        put_unused_fd(fd);
-        fput(file);
-        return -EFAULT;
-    }
+https://github.com/apache/airflow/pull/27641
 
-If copy_to_user() fails (returns a non-zero value), the code tries to
-recover by releasing the allocated resources.
-
-Now, this is an even worse bug, as 'fd' isn't "unused". It was populated
-by fd_install(). What the error handling code instead allows is having a
-valid file descriptor 'fd' for an already released 'file'. A typical
-use-after-free scenario. It's just that an attacker doesn't have to look
-for an KASLR leak, SMEP / SMAP bypass or other memory corruption aiding
-bugs. One just has to sit and wait and look every now and then at the
-file descriptor to see what actual file is currently attached to that
-memory. That's because such an exploit doesn't try to introduce some
-type confusion bug. It simply wants (and relies on) the memory to get
-reallocated for a new 'file' object to gain access to other newly opened
-files in the system, e.g. /etc/shadow. And that's very likely, as 'file'
-objects use a dedicated slab cache.
-
-# Additional Bugs
-
-The following additional two code paths failing prone to the above bug
-pattern have been identified in the Linux kernel:
-
-1/ fanotify
-
-If the copy_info_records_to_user() call in copy_event_to_user() fails,
-it'll erroneously call put_unused_fd(fd) + fput(f) on a file that was
-already populated by fd_install(). The erroneous code path, however, is
-only reachable by privileged users, as one needs to pass the
-"!FAN_GROUP_FLAG(group, FANOTIFY_UNPRIV)" test which won't if one isn't
-already capable(CAP_SYS_ADMIN), i.e. has the CAP_SYS_ADMIN capability in
-the _init_ user namespace, which basically means root.
-
-The bug was introduced by commit f644bc449b37 ("fanotify: fix
-copy_event_to_user() fid error clean up"), which is Linux v5.13.
-
-A patch for the issue is pending and to be submitted by Dan Carpenter
-anytime soon.
-
-2/ fastrpc
-
-The fastrpc driver is prone to an additional fput() after having called
-fd_install() if the copy_to_user() fails in the fastrpc_dmabuf_alloc()
-function. This is similar to the above described bug pattern. It's just
-missing the put_unused_fd() which isn't needed to exploit the bug. In
-fact, the lack of calling put_unused_fd() even avoids a warning in
-alloc_fd() in case new file descriptors get allocated in the exploiting
-process.
-
-This bug was introduced by commit 6cffd79504ce ("misc: fastrpc: Add
-support for dmabuf exporter"), which is Linux v5.1.
-
-A patch for this issue can be found here:
-https://patchwork.kernel.org/project/linux-arm-msm/patch/20220127130218.809261-1-minipli@grsecurity.net/
-
-Thanks,
-Mathias
-
-[1] https://www.openwall.com/lists/oss-security/2022/01/27/4
-
-
-Download attachment "OpenPGP_signature" of type "application/pgp-signature" (666 bytes)
