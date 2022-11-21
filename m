@@ -1,51 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/06/6
-Message-ID: <1b440233-e567-4b47-b1c8-ffc421f30cf9@alexburke.ca>
-Date: Wed, 6 Jul 2022 13:06:44 +0000 (UTC)
-From: Alexander Burke <alex@...xburke.ca>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/21/5
+Message-ID: <0dde22b3-a9b9-02c0-b928-2a308ae67699@apache.org>
+Date: Mon, 21 Nov 2022 20:33:44 +0000
+From: Jarek Potiuk <potiuk@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: DO NOT OPEN PREVIOUS MAIL Re:  Denial of service in  GnuPG
+Subject: CVE-2022-40189: Apache Airlfow Pig Provider RCE 
 Content-Type: text/plain; charset=utf-8
 
+Severity: moderate
 
-> I would suggest ditching it outright.
+Description:
 
-Don't let your dreams be dreams!
+Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') vulnerability in Apache Airflow Pig Provider, Apache Airflow allows an attacker to control commands executed in the task execution context, without write access to DAG files. This issue affects Pig Provider versions prior to 4.0.0. It also impacts any Apache Airflow versions prior to 2.3.0 in case Pig Provider is installed (Pig Provider 4.0.0 can only be installed for Airflow 2.3.0+). Note that you need to manually install the Pig Provider version 4.0.0 in order to get rid of the vulnerability on top of Airflow 2.3.0+ version.
 
-----------------------------------------
+Credit:
 
-Jul 6, 2022 13:33:09 Demi Marie Obenour <demi@...isiblethingslab.com>:
+Apache Airflow PMC wants to thank id_No2015429 of 3H Security Team for reporting the issue.
 
-> On Wed, Jul 06, 2022 at 06:10:32AM -0000, Tavis Ormandy wrote:
->> On 2022-07-04, Jakub Wilk wrote:
->>> As a data point, if Mutt has pgp_auto_decode=yes ("automatically attempt
->>> to decrypt traditional PGP messages") in the config, it will trigger the
->>> DoS when you view the message.
->> 
->> Hmm - I think you don't even need auto_decode, because x-action parameters
->> can trigger automatic decryption in mutt.
->> 
->> There's an example message here: https://gitlab.com/muttmua/mutt/-/issues/405
->> 
->>> (And it seems that if you lose patience waiting for the message to show
->>> up and press ctrl+backslash in attempt to make it quit, it will actually
->>> hang forever.)
->>> 
->> 
->> I think you need at least something like max-output 104857600 in
->> gnupg.conf if you don't want trivial DoS pranks to be possible :)
->> 
->> Tavis.
-> 
-> I don't think this one is impacted by max-output.  Worse, I was told
-> “Not a bug, sorry” by Werner.
-> 
-> Was adding compression to PGP even a good idea in the first place?
-> Becuase it seems to have some of the same problems that compression in
-> TLS and SSH do, not to mention creating a trivial DoS.  If it were not
-> for OpenPGP being an archival format I would suggest ditching it
-> outright.
-> -- 
-> Sincerely,
-> Demi Marie Obenour (she/her/hers)
-> Invisible Things Lab
+References:
+
+https://github.com/apache/airflow/pull/27644
+
