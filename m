@@ -1,22 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/24/1
-Message-ID: <Ye2pUrZ81PjFsary@jasmine.lan>
-Date: Sun, 23 Jan 2022 14:15:30 -0500
-From: Leo Famulari <leo@...ulari.name>
-To: John Helmert III <ajak@...too.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0001
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/21/7
+Message-ID: <91533482-24c2-5c74-ada0-ecfdbfcca7f0@apache.org>
+Date: Mon, 21 Nov 2022 20:48:59 +0000
+From: Jarek Potiuk <potiuk@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2022-41131: Apache Airflow Hive Provider vulnerability (command injection via hive_cli connection) 
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Jan 22, 2022 at 10:02:46PM -0600, John Helmert III wrote:
-> With this big of a gap between releases and security advisories, it
-> seems that users and distributors will be unaware of the necessity of
-> updating due to security fixes, sometimes for weeks after the
-> release. Why not always publish advisories close to new releases?
+Severity: moderate
 
-Since (almost?) every WebKitGTK update includes fixes for bugs that
-allow remote execution of arbitrary code, I'd expect that distributors
-are well aware that every update is critical.
+Description:
 
-And given the complexity of a fully-featured browser engine, it probably
-cannot be any other way: it's the same story for Firefox and Chrome.
+Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') vulnerability in Apache Airflow Hive Provider, Apache Airflow allows an attacker to execute arbtrary commands in the task execution context, without write access to DAG files. This issue affects Hive Provider versions prior to 4.1.0. It also impacts any Apache Airflow versions prior to 2.3.0 in case HIve Provider is installed (Hive Provider 4.1.0 can only be installed for Airflow 2.3.0+). Note that you need to manually install the HIve Provider version 4.1.0 in order to get rid of the vulnerability on top of Airflow 2.3.0+ version that has lower version of the Hive Provider installed).
+
+
+Credit:
+
+Apache Airflow PMC wants to thank id_No2015429 of 3H Security Team for reporting the issue.
+
+References:
+
+https://github.com/apache/airflow/pull/27647
+
