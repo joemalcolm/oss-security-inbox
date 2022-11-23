@@ -1,64 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/20/1
-Message-ID: <1be21670-921c-9f0a-d99c-a9f6fd02b9b2@oracle.com>
-Date: Fri, 20 May 2022 10:14:07 +0200
-From: Vegard Nossum <vegard.nossum@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/23/1
+Message-ID: <69039489-c2ed-3a61-4691-adff38199082@apache.org>
+Date: Wed, 23 Nov 2022 02:19:51 +0000
+From: Jiajie Zhong <zhongjiajie@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros list policy and Linux kernel
+Subject: CVE-2022-45462: Apache DolphinScheduler prior to 2.0.5 have command execution vulnerability 
 Content-Type: text/plain; charset=utf-8
 
+Severity: moderate
 
-On 5/16/22 21:12, Greg KH wrote:
-> On Sun, May 15, 2022 at 06:27:40PM +0200, Solar Designer wrote:
->> 1. Adjust linux-distros policy to allow "embargoes" on publicly 
->> fixed Linux kernel issues.  (Only for Linux kernel, not for other 
->> projects.)
+Description:
 
-[...]
+Alarm instance management has command injection when there is a specific command configured. It is only for logged-in users. We recommend you upgrade to version 2.0.6 or higher
 
-> So if you all could just modify the rules to be something like, 
-> "embargos are not broken when changes are posted in public, or 
-> accepted into public trees, unless the changes or discussions around 
-> them turn out to disclose the security related issue."
-> 
-> That would allow us to still get changes merged into Linus's tree, 
-> and the stable trees, and the distro trees before the oss-security 
-> announcement goes out to the world.
+Credit:
 
-As a distribution, our preference is to see sources/patches and binaries
-released simultaneously by both upstream and distributions. This way,
-the window of exploitation for attackers combing through git history
-and/or changelogs is as small as possible. If the patch first appears in
-git or on a public mailing list before distros have had a chance to
-prepare, build, and test a new release then attackers who closely
-monitor these have an advantage over our users.
+This issue was discovered by Jigang Dong of M1QLin Security Team
 
-However, barring that option, our preference would be to adjust the
-linux-distros list policy as proposed (option 1/Greg KH's proposal).
-
-> I think we can all agree that this is our overall goal anyway, to 
-> make software more secure and keep user's systems safe.  Disclosing 
-> problems before the fixes even have the ability to make it to a 
-> user's systems goes directly against that goal.
-
-Absolutely agree on this -- we just have slightly different ideas of
-what the best way to keep users safe is.
-
-> I wouldn't like to see this happen as I think the distros get a lot 
-> of value out of the current situation.
-
-Absolutely, there is no doubt that our users are more secure with the
-advance notice that the linux-distros list has provided us with so far.
-
-In any case, I really think we should take this opportunity to iron out
-a process that both upstream and distros are happy with and that is also
-less confusing for people who want to report security issues, as that
-itself has been a problem for a long time (3 mailing lists, different
-embargo periods, ...).
-
-I'll respond a bit later with a slightly more detailed option that also
-includes potential modifications to the in-kernel documentation as
-displayed on kernel.org.
-
-
-Vegard
