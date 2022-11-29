@@ -1,22 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/07/3
-Message-ID: <20220907125311.awpx3hu62mmqowaa@yuggoth.org>
-Date: Wed, 7 Sep 2022 12:53:12 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/29/3
+Message-ID: <e3f656ef-0bb1-edf0-57f8-d62352a6675a@apache.org>
+Date: Tue, 29 Nov 2022 14:21:52 +0000
+From: Arnout Engelen <engelen@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: sagemath denial of service with abort() in gmp: overflow in mpz type
+Subject: CVE-2022-44635: Apache Fineract allowed an authenticated user to perform remote code execution due to path traversal 
 Content-Type: text/plain; charset=utf-8
 
-On 2022-09-07 08:36:17 +0300 (+0300), Georgi Guninski wrote:
-[...]
-> will the infidels who argue that crash in python is nothing
-[...]
+Severity: important
 
-I was merely pointing out that being able to "DoS" the Python
-interpreter with arbitrary Python source code is expected.
-"Infidels" like me tend to take no position on your related rants,
-but thanks for asking!
--- 
-Jeremy Stanley
+Description:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
+Apache Fineract allowed an authenticated user to perform remote code execution due to a path traversal vulnerability in a file upload component of Apache Fineract, allowing an attacker to run remote code.  This issue affects Apache Fineract version 1.8.0 and prior versions. We recommend users to upgrade to 1.8.1.
+
+Credit:
+
+We would like to thank  Aman Sapra, co-captain of the Super Guesser CTF team & Security researcher at CRED, for reporting this issue, and the Apache Security team for their assistance.  We give kudos and karma to @Aleksandar Vidakovic for resolving this CVE. 
+
