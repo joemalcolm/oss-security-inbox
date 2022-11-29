@@ -1,75 +1,123 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/06/3
-Message-ID: <Yz7r3ke7oXMBHJ5A@itl-email>
-Date: Thu, 6 Oct 2022 10:53:15 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
-To: oss-security@...ts.openwall.com
-Cc: dbus-security@...ts.freedesktop.org
-Subject: Re: dbus denial of service: CVE-2022-42010, -42011, -42012
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/29/2
+Message-ID: <20221129153803.GA27229@openwall.com>
+Date: Tue, 29 Nov 2022 16:38:03 +0100
+From: Solar Designer <solar@...nwall.com>
+To: Julien Pivotto <roidelapluie@...metheus.io>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2022-46146 in Prometheus' exporter toolkit: bypass basic authentication
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 06, 2022 at 09:52:53AM +0100, Simon McVittie wrote:
-> dbus is the reference implementation of D-Bus, a message bus for
-> communication between applications and system services.
+On Tue, Nov 29, 2022 at 01:22:58PM +0100, Julien Pivotto wrote:
+> The exporter toolkit is a go library intended at Prometheus exporters.
+> It provides some features that are useful for Prometheus exporters,
+> which work by exposing HTTP servers to be exposed by the Prometheus
+> server.
 > 
-> Evgeny Vereshchagin discovered several ways in which an authenticated
-> local attacker could cause a crash (denial of service) in
-> dbus-daemon --system or a custom DBusServer. In uncommon configurations
-> these could potentially be carried out by an authenticated remote attacker.
+> One of those features is basic authentication. To achieve this,
+> Prometheus requires you to store a bcrypt hash into a file, web.yml.
 > 
-> Fixed versions:
+> While bcrypt is fine, it takes by design a lot of time and resources to
+> compare a password with a hash. To limit this impact, we have a built-in
+> cache that caches the good and bad answers.
 > 
-> * dbus 1.14.x >= 1.14.4 (stable branch)
-> * dbus 1.12.x >= 1.12.24 (old stable branch)
-> * dbus >= 1.15.2 (development branch)
+> Once a request comes, we check it against the cache and decide whether
+> to allow the request. We also check that the user is valid. However, the
+> key for that cache is predictable:
 > 
-> Older dbus branches such as 1.10.x are EOL and will not receive new
-> upstream releases.
+> hex(username + hashed password + input password)
 > 
-> Vulnerable versions:
+> If you know the bcrypted password, you can poison the cache and use that
+> cached positive value in a subsequent query:
 > 
-> * dbus 1.15.x before 1.15.2
-> * dbus 1.14.x before 1.14.4
-> * all versions before 1.12.24
+> Request 1:
 > 
-> CVE-2022-42010 is believed to have been introduced during early dbus
-> development (before 1.0) and the other two vulnerabilities mentioned
-> here were regressions in 1.3.0.
+> username = username+hashed password
+> password = "fakepassword"
 > 
-> Vulnerability details:
+> Request 2:
 > 
-> * An invalid array of fixed-length elements where the length of the array
->   is not a multiple of the length of the element would cause an assertion
->   failure in debug builds or an out-of-bounds read in production builds.
->   This was a regression in version 1.3.0.
->   (dbus#413, CVE-2022-42011, fixed by
->   https://gitlab.freedesktop.org/dbus/dbus/-/commit/079bbf16186e87fb0157adf8951f19864bc2ed69)
+> username = username
+> password = bcrypt(fakepassword)+"fakepassword"
 > 
-> * A syntactically invalid type signature with incorrectly nested parentheses
->   and curly brackets would cause an assertion failure in debug builds.
->   Similar messages could potentially result in a crash or incorrect message
->   processing in a production build, although we are not aware of a practical
->   example. (dbus#418, CVE-2022-42010, fixed by
->   https://gitlab.freedesktop.org/dbus/dbus/-/commit/9d07424e9011e3bbe535e83043d335f3093d2916)
+> "fakepassword" is used as bcrypted password when a user does not exist.
 > 
-> * A message in non-native endianness with out-of-band Unix file descriptors
->   would cause a use-after-free and possible memory corruption in production
->   builds, or an assertion failure in debug builds. This was a regression in
->   version 1.3.0. (dbus#417, CVE-2022-42012, fixed by
->   https://gitlab.freedesktop.org/dbus/dbus/-/commit/236f16e444e88a984cf12b09225e0f8efa6c5b44)
+> The fact that we save unhappy tentatives and that we validate
+> non-existing users against "fakepassword" is to prevent side channel
+> attacks that could reveal if a user exists in a system or not.
+> 
+> Prometheus 2.37.4 and 2.40.4 are out, with this fix. We recommend all
+> the exporters that depend on the repository to upgrade.
+> 
+> CVE-2022-46146 was assigned to this security report in our exporter
+> toolkit:
+> https://github.com/prometheus/exporter-toolkit/security/advisories/GHSA-7rg2-cxvp-9p7p
+> 
+> We would like to thank Lei Wan for the responsible disclosure of this
+> bug.
 
-Is the memory corruption potentially exploitable for local privilege
-escalation?
+The above describes the issue, but not the fix.  This left me curious.
 
-> Reimplementations of the D-Bus protocol such as systemd's sd-bus (used
-> in dbus-broker and systemd) and GLib's GDBus (used in gvfs and ibus)
-> do not share dbus' code for message parsing and validation, so they are
-> probably unaffected by these issues.
+The fix commit appears to be this:
 
-Are clients using libdbus vulnerable if they are behind dbus-broker?
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+https://github.com/prometheus/exporter-toolkit/commit/5b1eab34484ddd353986bce736cd119d863e4ff5
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+It makes two changes:
+
+1. Rather than concatenate the original strings to produce the cache
+key, the 3 individual components are first hex-encoded and are then
+concatenated with colons as separators.
+
+2. Cache records for authentication against non-existent users with
+"fakepassword" no longer indicate that authentication passed.
+
+This appears sufficient to address the described issue.
+
+The caching is controversial.  A comment in cache.go says:
+
+// newCache returns a cache that contains a mapping of plaintext passwords
+// to their hashes (with random eviction). This can greatly improve the
+// performance of traffic-heavy servers that use secure password hashing
+// algorithms, with the downside that plaintext passwords will be stored in
+// memory for a longer time (this should not be a problem as long as your
+// machine is not compromised, at which point all bets are off, since basicauth
+// necessitates plaintext passwords being received over the wire anyway).
+
+IMO, storage of plaintext passwords in memory for longer doesn't become
+a non-issue just because plaintext passwords are also available during
+authentication.  A compromise might be short-lived and not every user
+who had logged in before would necessarily log in again while the server
+is compromised, so storage of plaintext passwords that might have been
+used a long time ago does make things worse and partially defeats the
+purpose of password hashing.  OTOH, in a persistent Go service they're
+likely to stay around anyway.
+
+Another (minor) concern is that the cache is indexed by password-derived
+material, making the password a bit more susceptible to local CPU cache
+timing attacks (after a leak of bcrypt's random salts to the attacker).
+bcrypt itself also does such indexing, but that's part of why it turned
+out to be relatively inefficient on GPUs, so it can be viewed as
+justified risk.  Is the risk from the cache also justified, by it saving
+computing resources (not under deliberate DoS, though)?  Maybe.
+Alternative designs of the cache are possible, but involve other
+non-trivial trade-offs and subtle detail.  If Go uses keyed hashing for
+its maps (does it? I don't know), that also provides a mitigation (while
+the random key is not leaked/inferred).
+
+Further, perhaps Go maps internally compare the provided key against
+some stored keys (within one hash bucket?), and that can probably
+involve a byte-by-byte comparison, kind of leaking the length of matched
+substring even to the remote client and potentially allowing to probe
+candidate passwords character-by-character (when hitting the same hash
+bucket).  This is mitigated by such probing also thrashing the cache and
+triggering the much slower bcrypt computation.
+
+To clarify, I am not suggesting that any changes to the code be made -
+they could as well introduce new issues, and would need a new review.
+Dropping of the cache is a pretty obvious change to make, but maybe the
+risks involved are no big deal for this specific service.
+
+I was just curious and I thought some others in here would be as well,
+so I am sharing observations and thoughts.
+
+Alexander
