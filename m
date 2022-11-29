@@ -1,47 +1,154 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/21/1
-Message-ID: <20220521154759.GA15268@openwall.com>
-Date: Sat, 21 May 2022 17:47:59 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Norbert Slusarek <nslusarek@....net>
-Cc: oss-security@...ts.openwall.com, peterz@...radead.org
-Subject: Re: CVE-2022-1729: race condition in Linux perf subsystem leads to local privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/29/4
+Message-ID: <Y4Zyy+29EK0o1Wc9@nixos>
+Date: Tue, 29 Nov 2022 21:59:55 +0100
+From: Julien Pivotto <roidelapluie@...metheus.io>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2022-46146 in Prometheus' exporter toolkit: bypass basic authentication
 Content-Type: text/plain; charset=utf-8
 
-Norbert,
-
-On Fri, May 20, 2022 at 10:14:36PM +0200, Norbert Slusarek wrote:
-> this is an announcement for a recently reported vulnerability (CVE-2022-1729) in the perf subsystem
-> of the Linux kernel. The issue is a race condition which was proven to allow for a local privilege
-> escalation to root on current kernel version >= 5.4.193, but the bug seems to exist since kernel
-> version 4.0-rc1 (patch fixes the commit to this version).
-> Fortunately, major Linux distributions often restrict the use of perf for unprivileged users by
-> setting the sysctl variable kernel.perf_event_paranoid >= 3, effectively rendering the
-> vulnerability harmless.
+On 29 Nov 16:38, Solar Designer wrote:
+> On Tue, Nov 29, 2022 at 01:22:58PM +0100, Julien Pivotto wrote:
+> > The exporter toolkit is a go library intended at Prometheus exporters.
+> > It provides some features that are useful for Prometheus exporters,
+> > which work by exposing HTTP servers to be exposed by the Prometheus
+> > server.
+> > 
+> > One of those features is basic authentication. To achieve this,
+> > Prometheus requires you to store a bcrypt hash into a file, web.yml.
+> > 
+> > While bcrypt is fine, it takes by design a lot of time and resources to
+> > compare a password with a hash. To limit this impact, we have a built-in
+> > cache that caches the good and bad answers.
+> > 
+> > Once a request comes, we check it against the cache and decide whether
+> > to allow the request. We also check that the user is valid. However, the
+> > key for that cache is predictable:
+> > 
+> > hex(username + hashed password + input password)
+> > 
+> > If you know the bcrypted password, you can poison the cache and use that
+> > cached positive value in a subsequent query:
+> > 
+> > Request 1:
+> > 
+> > username = username+hashed password
+> > password = "fakepassword"
+> > 
+> > Request 2:
+> > 
+> > username = username
+> > password = bcrypt(fakepassword)+"fakepassword"
+> > 
+> > "fakepassword" is used as bcrypted password when a user does not exist.
+> > 
+> > The fact that we save unhappy tentatives and that we validate
+> > non-existing users against "fakepassword" is to prevent side channel
+> > attacks that could reveal if a user exists in a system or not.
+> > 
+> > Prometheus 2.37.4 and 2.40.4 are out, with this fix. We recommend all
+> > the exporters that depend on the repository to upgrade.
+> > 
+> > CVE-2022-46146 was assigned to this security report in our exporter
+> > toolkit:
+> > https://github.com/prometheus/exporter-toolkit/security/advisories/GHSA-7rg2-cxvp-9p7p
+> > 
+> > We would like to thank Lei Wan for the responsible disclosure of this
+> > bug.
 > 
-> The patch can be found at
-> https://lkml.kernel.org/r/20220520183806.GV2578@worktop.programming.kicks-ass.net
+> The above describes the issue, but not the fix.  This left me curious.
 > 
-> Details
-> -------
+> The fix commit appears to be this:
 > 
-> The following syscall order triggers the bug:
+> https://github.com/prometheus/exporter-toolkit/commit/5b1eab34484ddd353986bce736cd119d863e4ff5
+> 
+> It makes two changes:
+> 
+> 1. Rather than concatenate the original strings to produce the cache
+> key, the 3 individual components are first hex-encoded and are then
+> concatenated with colons as separators.
+> 
+> 2. Cache records for authentication against non-existent users with
+> "fakepassword" no longer indicate that authentication passed.
+> 
+> This appears sufficient to address the described issue.
+> 
+> The caching is controversial.  A comment in cache.go says:
+> 
+> // newCache returns a cache that contains a mapping of plaintext passwords
+> // to their hashes (with random eviction). This can greatly improve the
+> // performance of traffic-heavy servers that use secure password hashing
+> // algorithms, with the downside that plaintext passwords will be stored in
+> // memory for a longer time (this should not be a problem as long as your
+> // machine is not compromised, at which point all bets are off, since basicauth
+> // necessitates plaintext passwords being received over the wire anyway).
+> 
+> IMO, storage of plaintext passwords in memory for longer doesn't become
+> a non-issue just because plaintext passwords are also available during
+> authentication.  A compromise might be short-lived and not every user
+> who had logged in before would necessarily log in again while the server
+> is compromised, so storage of plaintext passwords that might have been
+> used a long time ago does make things worse and partially defeats the
+> purpose of password hashing.  OTOH, in a persistent Go service they're
+> likely to stay around anyway.
+> 
+> Another (minor) concern is that the cache is indexed by password-derived
+> material, making the password a bit more susceptible to local CPU cache
+> timing attacks (after a leak of bcrypt's random salts to the attacker).
+> bcrypt itself also does such indexing, but that's part of why it turned
+> out to be relatively inefficient on GPUs, so it can be viewed as
+> justified risk.  Is the risk from the cache also justified, by it saving
+> computing resources (not under deliberate DoS, though)?  Maybe.
+> Alternative designs of the cache are possible, but involve other
+> non-trivial trade-offs and subtle detail.  If Go uses keyed hashing for
+> its maps (does it? I don't know), that also provides a mitigation (while
+> the random key is not leaked/inferred).
+> 
+> Further, perhaps Go maps internally compare the provided key against
+> some stored keys (within one hash bucket?), and that can probably
+> involve a byte-by-byte comparison, kind of leaking the length of matched
+> substring even to the remote client and potentially allowing to probe
+> candidate passwords character-by-character (when hitting the same hash
+> bucket).  This is mitigated by such probing also thrashing the cache and
+> triggering the much slower bcrypt computation.
+> 
+> To clarify, I am not suggesting that any changes to the code be made -
+> they could as well introduce new issues, and would need a new review.
+> Dropping of the cache is a pretty obvious change to make, but maybe the
+> risks involved are no big deal for this specific service.
 
-Thank you for bringing this to oss-security and for including the detail
-on triggering and exploiting the issue.
+Thanks for your meaningful message.
 
-Since you shared actual exploit code on linux-distros, you're supposed
-to also post that to oss-security within 7 days of your first posting
-above, so by or on May 27.  Do you intend to?
+I want to clarify the use case of this library for users who are not
+familiar with Prometheus.  The main goal is to secure communication
+between two components (Prometheus and exporters) that speak every
+10-30s, generally with a single (machine) user.
 
-I realize this is one of the aspects that not everyone is happy about.
-It helps against linux-distros and its subscribers' mailboxes becoming
-stockpiles of unpublished exploits, and it lets those in the larger
-community also test their fixes, general mitigations, and/or detection
-tools in the same ways that linux-distros members could and without
-extra effort to recreate exploits.  However, it also makes it easier to
-exploit the vulnerabilities on unpatched systems in the wild, and it
-could go against wishes of specific exploit authors or policies of their
-employers.
+Another goal is to secure the Prometheus server itself - where users are
+actually connecting. But in general, you would use a proper proxy in
+front to deal with more secure protocols than basic auth - such as
+OpenID connect - and those proxies would communicate with Prometheus
+either via TLS+Basic auth or TLS+Client-certificate or via loopback
+interface.
 
-Alexander
+On my machine, in a quick test, the first request (using Node Exporter)
+would take 103ms. Thanks to the cache, subsequent requests take ~58ms.
+The cache produces a significant improvement with resource usage and
+time.
+
+What I have in mind is that we could make the cache optional - but
+outside of the scope of this pull request; this would be a new feature.
+
+
+> 
+> I was just curious and I thought some others in here would be as well,
+> so I am sharing observations and thoughts.
+> 
+> Alexander
+
+-- 
+Julien Pivotto
+@roidelapluie
+
+Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
