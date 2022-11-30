@@ -1,32 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/12/1
-Message-ID: <CAH8yC8k==vRTEL+WuJg4goUzTSx3kanEaLfzCjV_qnfQYKooAQ@mail.gmail.com>
-Date: Tue, 11 Jan 2022 22:01:10 -0500
-From: Jeffrey Walton <noloader@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/30/1
+Message-ID: <c9089e54-bc0d-773c-233e-d63980ad49d4@intel.com>
+Date: Wed, 30 Nov 2022 11:22:16 +0100
+From: Andrzej Hajda <andrzej.hajda@...el.com>
 To: oss-security@...ts.openwall.com
-Cc: Mark Kirkwood <markkirkwood@...alystcloud.nz>
-Subject: Re: CVE-2021-3979 ceph: Ceph volume does not honour osd_dmcrypt_key_size
+Cc: Daniel Vetter <daniel@...ll.ch>, Dave Airlie <airlied@...il.com>, Joonas Lahtinen <joonas.lahtinen@...ux.intel.com>, Jani Nikula <jani.nikula@...ux.intel.com>, Tvrtko Ursulin <tvrtko.ursulin@...ux.intel.com>, Linus Torvalds <torvalds@...ux-foundation.org>, Marian Rehak <mrehak@...hat.com>, Greg Kroah-Hartman <gregkh@...uxfoundation.org>, Vegard Nossum <vegard.nossum@...cle.com>
+Subject: Security sensitive bug in the i915 kernel driver (CVE-2022-4139)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jan 11, 2022 at 4:18 PM Ana McTaggart <amctagga@...hat.com> wrote:
->
-> The key length for encrypted devices created using ceph-volume is
-> incorrect. This is due to a bug in ceph_volume/util/encryption.py, where
-> upon writing a key using osd_dmcrypt_key_size it does not pass the key size
-> to the format and open operations following. The default key is then
-> applied in cryptsetup. All versions since Luminous are assumed affected. At
-> Red Hat. we have assigned it  CVE-2021-3979 and proposed a CVSS score of
-> 6.5/CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N
+Hi all,
 
-The score does not make a lot of sense (to me). It seems too high. A
-256-bit XTS key means 128-bits are used for AES block cipher, and
-128-bits are used for the AES-based tweak. I don't think many people
-will feel AES-128 is a problem. If AES-128 is a problem nowadays, then
-there's a boat load of software that's going to be hit with CVEs.
+[This is a public disclosure of an issue reported 7 days ago to 
+linux-distros@...openwall.org. CVE-2022-4139 has been assigned to the 
+issue since.]
 
-In practice the biggest problem will be ensuring data is not lost once
-the bug is fixed.
+Incorrect GPU TLB flush code has been discovered in i915 kernel driver.
+In some cases (Gen12 hardware with specific types of engine) the 
+engine's TLB is not flushed at all.
+Depending on whether the GPU is running behind an active IOMMU there are 
+two possible scenarios which can happen, due to stale TLB mapping:
+1. Without IOMMU - GPU can still access physical memory which could be 
+already assigned by OS to different process.
+2. With IOMMU - GPU can access any memory, if the malicious process is 
+able to create/reuse necessary IOMMU mappings.
 
-I hope I'm not missing something obvious.
+It is currently not known if specific memory could be targeted, but 
+random memory corruption or data leaks are a known possibility.
 
-Jeff
+All Intel integrated and discrete GPUs Gen12 are affected, including 
+Tiger Lake, Rocket Lake, Alder Lake, DG1, Raptor Lake, DG2, Arctic 
+Sound, Meteor Lake.
+Fix has already been developed and consists of fixing the method of 
+writing to specific registers.
+I am attaching a set of back-ported patches which implement the fix for 
+all affected stable branches (all since 5.4).
+
+This vulnerability has similar impact as CVE-2022-0330[1].
+
+I will try to follow Linux Security Process[2]. So I hope to send the 
+fix for public mailing list after 7 days.
+
+[1]:https://nvd.nist.gov/vuln/detail/cve-2022-0330
+[2]:https://www.kernel.org/doc/html/latest/admin-guide/security-bugs.html
+
+Regards
+Andrzej
+
+
+
+Download attachment "media-tlb.tar" of type "application/x-tar" (20480 bytes)
