@@ -1,27 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/03/5
-Message-ID: <de967f01-c64a-fcc6-231a-d454a1f7dcd5@apache.org>
-Date: Wed, 03 Aug 2022 20:46:18 +0000
-From: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-28732: Apache JSPWiki Cross-site scripting vulnerability on WeblogPlugin 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/01/1
+Message-ID: <20221201000006.GA20004@localhost.localdomain>
+Date: Thu, 1 Dec 2022 00:01:18 +0000
+From: Qualys Security Advisory <qsa@...lys.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Race condition in snap-confine's must_mkdir_and_open_with_perms() (CVE-2022-3328)
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Hi all,
 
-Description:
+On Wed, Nov 30, 2022 at 11:28:27PM +0000, Qualys Security Advisory wrote:
+> We discovered a race condition (CVE-2022-3328) in snap-confine
 
-A carefully crafted request on WeblogPlugin could trigger an XSS vulnerability on Apache JSPWiki, which could allow the attacker to execute javascript in the victim's browser and get some sensitive information about the victim. 
+Patches are available at:
 
-Mitigation:
+https://github.com/snapcore/snapd/releases/tag/2.57.6
+https://github.com/snapcore/snapd/commits/release/2.57
 
-Apache JSPWiki users should upgrade to 2.11.3 or later. 
+Thank you very much! With best regards,
 
-Credit:
-
-This issue was discovered by Wang Ran, from JDArmy, @jd.com 
-
-References:
-
-https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2022-28732
-
+-- 
+the Qualys Security Advisory team
