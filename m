@@ -1,4 +1,4 @@
-Received: (qmail 22519 invoked by uid 550); 18 Apr 2023 01:10:16 -0000
+Received: (qmail 11935 invoked by uid 550); 5 Dec 2022 13:15:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,63 +7,89 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19807 invoked from network); 18 Apr 2023 00:58:06 -0000
-Date: Tue, 18 Apr 2023 02:57:41 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 24398 invoked from network); 5 Dec 2022 11:22:56 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dgl-cx.20210112.gappssmtp.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=mgdL+kotTSh7eIZxOsF6Xl5eUpHx7gWF1vTNGJgQmCY=;
+        b=jfv27DCQfylL26jLZBeibtm/bkj6YvEhp0GSIUGfVJYHGJAq31ji1Y5cK9UjQEVsjY
+         51OxF1DF5U3TP8h/afOD2X9/dBcDFn0NrS/+f8/UGjaosVPWlh+N4dgF7/PUq6NTnj27
+         K35BlXe8NfZ8mlvpOeBYMPHuwVT1yAsYPY5/nOLqAuspkOb91lJEQggAm3D8T0uCNUBo
+         MNzQlSc3Cdobfcgxy8FT14Ufu/Jk1wRcNJb8haMWKhJlormpyTQF2VjJFNIu6KhtCAwJ
+         bcLganpWh9FcnZpVfDfOFkI9E/kRorIYdHTXAz3YxhjopwRdvXCfhU/sx68KRPgjoltz
+         NPMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mgdL+kotTSh7eIZxOsF6Xl5eUpHx7gWF1vTNGJgQmCY=;
+        b=S22/JqXIgupr+lsJRKAgvX5sCoC9D8QG3rvXmW8rZcnE8TpUiIcPf5Z2mJG8p3pb7X
+         gJnWh4FIx/lXJ8NrFdytjEIQPyRvgGLjWyuv3S1Ulzd4J/8ygGBsQ192S6DOoUv2KAXp
+         KYUyTipDXhIjQiCEqrynjd5V/U2XomNr4d/IUiAfZoQtOvGH1oLLSj4ATm+5BAQCizjS
+         MmNVFAlc46ROY/t8nop6YL5kOWgTLc/uqI/y+k5zoFqS6s61j7JqpX/7sNqa4RdXxiUr
+         lHB2I8lgwumE5ql1xZG34tIFAB7e1n94eZ0yLMQDfobcpOkABlsLxq1Eq5tZJ9Ed79MP
+         CAmg==
+X-Gm-Message-State: ANoB5pmP41Vi3FNPu84YiL5B1qsdfWNEENRl4OCEATgwqkYVMZdD4dwj
+	/u2U2SNNFm1X+AuGSUXVtiZDXePqxdhV9USLCBxCS2fOwuuGBkpFQtU=
+X-Google-Smtp-Source: AA0mqf4U6pqBGKiz6/xBhoUQfaFm5DCu8fb+JC79AmCxbn0XJtUP4pgnbyMP6s0ABbzsGmW0BL1vx3Wqx5ji+KpZljc=
+X-Received: by 2002:a25:d74f:0:b0:6f6:2b2a:2cbf with SMTP id
+ o76-20020a25d74f000000b006f62b2a2cbfmr33604522ybg.61.1670239364338; Mon, 05
+ Dec 2022 03:22:44 -0800 (PST)
+MIME-Version: 1.0
+From: David Leadbeater <dgl@dgl.cx>
+Date: Mon, 5 Dec 2022 22:22:33 +1100
+Message-ID: <CAP9KPhDh6PJu-0mD12wYUraf1Ya1MSUPwz1PsPO5omi39-OYLw@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Cc: Ruihan Li <lrh2000@pku.edu.cn>, "Todd C. Miller" <Todd.Miller@sudo.ws>
-Message-ID: <20230418005741.GA25557@openwall.com>
-References: <w7boj4fg4x2o2bjz7a7zkjk4bgxqvqyuxycdqqw2dl3bhanh6a@h4jtbccffxgv> <20230416205727.0XQJ2%steffen@sdaoden.eu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230416205727.0XQJ2%steffen@sdaoden.eu>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2022-4170: rxvt-unicode code execution via background OSC
 
-Hi,
+I've discovered rxvt-unicode 9.25 and 9.26 are vulnerable to remote
+code execution, in the Perl background extension, when an attacker can
+control the data written to the user's terminal and certain options
+are set.
 
-Thank you Ruihan Li for finding and handling this vulnerability so well,
-and for the detailed write-up.
+The "background" extension is automatically loaded if certain X
+resources are set such as 'transparent' (see the full list at the top
+of src/perl/background[1]). So it is possible to be using this
+extension without realising it.
 
-When discussing this on linux-distros a week ago, I wrote:
+This is accidentally fixed on version 9.30, and I haven't confirmed
+9.29, it appears to not be exploitable, but only due to another (not
+security) bug. The actual bug which makes this not vulnerable on 9.30
+is simply a wrong number in "on_osc_seq".
 
-> Regarding the vulnerability itself, do you think it'd be a good idea to
-> also inform the maintainer of sudo?  My thinking is that sudo could be
-> hardened not to trigger ioctl's (which I guess it does via tcgetattr()
-> or such?) while having euid=0 (and thus root's typical capabilities) -
-> it could temporarily seteuid(uid), then switch back due to saved uid.
-> 
-> Did you identify (m)any other programs usable for this attack?  I guess
-> some with functionality "similar" to sudo's could also be "affected"
-> (there are several implementations of su in different packages for
-> Linux, pkexec, various container entry tools).
+For 9.25 and 9.26 the patch at[2] can be backported. The body of the fix is:
 
-And indeed Ruihan Li came up with the list of other likely usable
-programs on a typical Linux distro, which makes the point of hardening
-only sudo moot, and so we decided to postpone further discussion until
-this is public on oss-security.
+ sub q0 {
+-   (my $str = shift) =~ s/\x00//g; # make sure there really aren't
+any embedded NULs
+-   "q\x00$str\x00"
++   "qq\x00\Q$_[0]\E\x00"
+ }
 
-OTOH, not all distros are typical.  Besides Android, we got rid of all
-SUID binaries in default install of Owl over a decade ago.  While Owl is
-now effectively EOL'ed, some of its legacy lives on in ALT Linux
-distros, which are maintained, and other distros can do similar - it's
-primarily a matter of caring to do it or not.  We did not package sudo
-in Owl, but if someone were to install it then it'd be the only program
-exposing this kernel vulnerability.  So in that case, hardening sudo
-would have helped.
+Isn't Perl quoting fun? Paranoid people may wish to remove the entire
+"on_osc_seq" subroutine to avoid passing any potentially untrusted
+input anywhere near eval (this feature is deprecated and the
+maintainer did mention they are considering what to do longer term).
 
-On Sun, Apr 16, 2023 at 10:57:27PM +0200, Steffen Nurpmeso wrote:
-> So this general beating onto SETUID or super capable programs
-> smells like bad fish Hollywood boom-boom again, no?
+It doesn't make sense to withhold an exploit for this; the fix gives a
+pretty good idea where to look and this isn't vulnerable in the latest
+version.
 
-That lengthy list of them is actually in defense of sudo not having been
-hardened in this respect - it shows that this would not matter on a
-typical Linux system anyway.
+$ urxvt -transparent
 
-> You have to do some things, and if you give up privileges
-> thereafter, extended capabilities are gone.
+Inside that running terminal:
 
-POSIX saved IDs should help retain/regain the capabilities.
+# Make tint be "\\", which means the ending \x00 is quoted under our control
+$ printf '\e]705;\\\a'
+# Make the second q0 end the quoted q-string and then be valid perl
+under our control
+$ printf '\e]20;,rootalign root),`touch /tmp/cve-2022-4170` #\a'
 
-Alexander
+This has been assigned CVE-2022-4170.
+
+David
+
+[1]: http://cvs.schmorp.de/rxvt-unicode/src/perl/background?revision=1.109&view=markup
+[2]: http://cvs.schmorp.de/rxvt-unicode/src/perl/background?r1=1.105&r2=1.109
