@@ -1,112 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/14/1
-Message-ID: <4c698fc4-3a1f-e42a-9147-9948cbc247f4@sit.fraunhofer.de>
-Date: Sat, 13 Aug 2022 16:58:57 -0700
-From: "Philipp Jeitner (SIT)" <philipp.jeitner@....fraunhofer.de>
-To: <oss-security@...ts.openwall.com>
-Subject: Multiple DNS Cache poisoning vulnerabilities in dnrd DNS forwarder (CVE-2022-33993, CVE-2022-33992)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/07/2
+Message-Id: <E1p2wHZ-00055M-Lo@xenbits.xenproject.org>
+Date: Wed, 07 Dec 2022 15:24:25 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 423 v2 (CVE-2022-3643) - Guests can trigger NIC interface reset/abort/crash via netback
 Content-Type: text/plain; charset=utf-8
 
-We hereby disclose the discovery of multiple DNS Cache poisoning 
-vulnerabilities in the dnrd DNS forwarder. dnrd is a caching DNS 
-forwarder/proxy which is unmaintained since about 2007, yet it is still 
-used in some residential router firmwares. Because the project is 
-unmaintained, there are no patches available for the described issues.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Our findings are published in our 2022 paper "XDRI Attacks - and - How 
-to Enhance Resilience of Residential Routers" in August 2022.
+            Xen Security Advisory CVE-2022-3643 / XSA-423
+                              version 2
 
-Discovery/Credits
------------------
+    Guests can trigger NIC interface reset/abort/crash via netback
 
-Philipp Jeitner, Lucas Teichmann and Haya Shulman
-Fraunhofer SIT
+UPDATES IN VERSION 2
+====================
 
-References
-----------
+Patch updated.
 
-  - dnrd: http://dnrd.sourceforge.net/
-  - paper website: https://xdi-attack.net/
-  - paper presentation: 
-https://www.usenix.org/conference/usenixsecurity22/presentation/jeitner
+ISSUE DESCRIPTION
+=================
 
+It is possible for a guest to trigger a NIC interface reset/abort/crash in
+a Linux based network backend by sending certain kinds of packets.
 
+It appears to be an (unwritten?) assumption in the rest of the Linux network
+stack that packet protocol headers are all contained within the linear
+section of the SKB and some NICs behave badly if this is not the case.
 
-CVE-2022-33993: Misinterpretation of special characters in domain names 
-leading to cache-poisoning
---------------------------------------------------------------------------------------------------
+This has been reported to occur with Cisco (enic) and Broadcom NetXtrem II
+BCM5780 (bnx2x) though it may be an issue with other NICs/drivers as well.
 
-Misinterpretation of special domain name characters in dnrd leads to 
-cache-poisoning as domain names and their associated IP addresses are 
-cached in their misinterpreted form.
+In case the frontend is sending requests with split headers, netback will
+forward those violating above mentioned assumption to the networking core,
+resulting in said misbehavior.
 
-## Summary
+IMPACT
+======
 
-Attacker can poison the DNS cache of the vulnerable router/forwarder by 
-triggering queries to attacker controlled domain names whose queries 
-and/or answers contain special characters (zero-byte or period sign). 
-These characters are misinterpreted by the vulnerable router/forwarder 
-so that the attacker can provide addresses for domain names he does not own.
+An unprivileged guest can cause network Denial of Service (DoS) of the
+host by sending network packets to the backend causing the related
+physical NIC to reset, abort, or crash.
 
-## Impact
+Data corruption or privilege escalation seem unlikely but have not been
+ruled out.
 
-Attackers who control a script or web-site which is loaded on a client 
-of the vulnerable router/forwarder can hijack connections by poisoning 
-the DNS cache.
+VULNERABLE SYSTEMS
+==================
 
-## Steps to reproduce
+All systems using a Linux based network backend with kernel 3.19 and
+newer are vulnerable. Systems using other network backends are not
+known to be vulnerable.
 
-To reproduce, connect a computer to the router and follow the Steps at 
-https://xdi-attack.net/manual.html or use our downloadable test-tool at 
-https://xdi-attack.net/test.html (NOT the online test).
+Systems using Cisco (enic driver) and Broadcom NetXtrem II BCM5780
+(bnx2x driver) NICs for guest network access are known to be vulnerable.
+Systems using other NICs for guest network access cannot be ruled out
+to be vulnerable.
 
-## Detailed description and publication timeline
+MITIGATION
+==========
 
-A detailed description of this attack is included in our 2021 USENIX 
-security paper "Injection Attacks Reloaded: Tunnelling Malicious 
-Payloads over DNS", see Section 3.2. We conducted further research and 
-found that these attacks apply to various router models.
+Using another PV network backend (e.g. the qemu based "qnic" backend)
+will mitigate the problem.
 
+Using a dedicated network driver domain per guest will mitigate the
+problem.
 
+NOTE REGARDING LACK OF EMBARGO
+==============================
 
-CVE-2022-33992: Disabling of DNSSEC protection provided by upstream 
-resolvers
------------------------------------------------------------------------------
+This issue was discussed in public already.
 
-dnrd forwards and caches DNS queries with checking disabled (CD) bit set 
-to 1 which leads to disabling of DNSSEC protection provided by upstream 
-resolvers.
+RESOLUTION
+==========
 
-## Summary
+Applying the attached patch resolves this issue.
 
-The router/forwarder forwards DNS queries with the checking disabled 
-(CD) bit set to 1 to upstream resolvers and caches the responses 
-provided by the upstream resolver. The cached answers are then sent to 
-other clients even when they do set the checking disabled (CD) bit to 0.
+xsa423-linux.patch           Linux 4.14 - 6.1-rc
 
-## Impact
+$ sha256sum xsa423*
+e26ab5aa05cad09a26ebf12ef6e6197145937d5ae2ada6f6bb824af81ddf3916  xsa423-linux.patch
+$
 
-Attackers which can send DNS queries directly to the vulnerable 
-router/forwarder can disable DNSSEC protection on the upstream resolver 
-by sending queries with the checking disabled (CD) bit set to 1. When 
-the attacker is able to inject DNS responses via another method (e.g. 
-MitM attacks, BGP hijacking), this allows attacker to hijack connections 
-from clients of the vulnerable router/forwarder, as DNSSEC protection is 
-not guaranteed anymore.
+-----BEGIN PGP SIGNATURE-----
 
-## Steps to reproduce
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmOQr+IMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZP1MIAL6GhGU7LQrsi1w9DC4NbnbYMJ7uwEz0k6w0++n6
+IEB3+5k0Di20TdWJC7fhdi4GZMEfqfs6vJ5nN4oy3m1hsy2fU3CtEcrknba91NL/
+7O9N+z6tN4Sy163Mhe/LHaaYLt/R1L98HiQQnGNaTeybJDVhrEByucKhCum7Tasr
+AKcMK7M2/nevciOsbwnuAtoz9o+WQJBkVevMfjIL5NMg1wHevDM6BEzZ9bhQakY+
+YIf2rSVNuEzQ84dhwa+vzvjv9Ywvwyo1iNNnavUiEtqn0ZeZkuqcL/o3g6v/WjKC
+Rm4+Kc3RGSlw8i5/MB46Zq91kf9H3ccW2hyzred1byAy07g=
+=x7us
+-----END PGP SIGNATURE-----
 
-Connect a computer to the vulnerable router/forwarder and trigger the 
-following DNS queries via `dig`:
-
-     $ dig sigfail.verteiltesysteme.net +cdflag @router/forwarder-ip
-     (should always return 134.91.78.139)
-
-     $ dig sigfail.verteiltesysteme.net +short @router/forwarder-ip
-     (returns 134.91.78.139 if vulnerable, should return nothing)
-
-Note: you can replace `sigfail.verteiltesysteme.net` with any other 
-domain with broken DNSSEC, such as `www.dnssec-failed.org`, only the 
-addresses will be different.
-
-
+Download attachment "xsa423-linux.patch" of type "application/octet-stream" (12868 bytes)
