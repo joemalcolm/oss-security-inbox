@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["637" "Tuesday" "18" "April" "2017" "13:01:31" "+0100" "Colm O hEigeartaigh" "coheigea@apache.org" "<CAB8XdGDnqiF8VwmK8K8bst5icRcdyjxK82-2ocmJ8EcA6uqpgQ@mail.gmail.com>" "25" "[oss-security] New security advisories for Apache CXF" "^Cc:" nil nil "4" "2017041812:01:31" "[oss-security] New security advisories for Apache CXF" (number mark "U       coheigea@apa Apr 18   25/637   " thread-indent "\"[oss-security] New security advisories for Apache CXF\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3760 invoked by uid 550); 18 Apr 2017 12:08:44 -0000
+Received: (qmail 28107 invoked by uid 550); 7 Dec 2022 13:22:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,45 +6,113 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 31935 invoked from network); 18 Apr 2017 12:01:45 -0000
-X-Gm-Message-State: AN3rC/4ZA7Q412BHQkdRB4e0B7eolXpG0I20SF4yBgTnqAsgJQrmf5sO
-	loTuxyhixOtaV4xm36C2kq4yyB0B3A==
-X-Received: by 10.84.217.153 with SMTP id p25mr22975703pli.188.1492516891998;
- Tue, 18 Apr 2017 05:01:31 -0700 (PDT)
-MIME-Version: 1.0
-X-Gmail-Original-Message-ID: <CAB8XdGDnqiF8VwmK8K8bst5icRcdyjxK82-2ocmJ8EcA6uqpgQ@mail.gmail.com>
-Message-ID: <CAB8XdGDnqiF8VwmK8K8bst5icRcdyjxK82-2ocmJ8EcA6uqpgQ@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=f403045c76142b4867054d6fabc6
-Cc: Apache Security Response Team <security@apache.org>, bugtraq@securityfocus.com, 
-	oss-security@lists.openwall.com
-Date: Tue, 18 Apr 2017 13:01:31 +0100
-From: Colm O hEigeartaigh <coheigea@apache.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] New security advisories for Apache CXF
-To: "users@cxf.apache.org" <users@cxf.apache.org>, "dev@cxf.apache.org" <dev@cxf.apache.org>
+Received: (qmail 28074 invoked from network); 7 Dec 2022 13:22:48 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.1\))
+Message-Id: <B1DBF10E-2BE4-44BA-AD8C-431524FEA766@beckweb.net>
+Date: Wed, 7 Dec 2022 14:22:36 +0100
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3696.120.41.1.1)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1670419368;72ac8092;
+X-HE-SMSGID: 1p2uNh-0007D2-1h
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
---f403045c76142b4867054d6fabc6
-Content-Type: text/plain; charset=UTF-8
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-The Apache CXF project has released two new security advisories:
+The following releases contain fixes for security vulnerabilities:
 
-a) CVE-2017-5653: Apache CXF JAX-RS XML Security streaming clients do not
-validate that the service response was signed or encrypted.
+* Checkmarx Plugin 2022.4.3
+* Custom Build Properties Plugin 2.82.v16d5b_d3590c7
+* Gitea Plugin 1.4.5
+* Google Login Plugin 1.7
+* Plot Plugin 2.1.12
+* Spring Config Plugin 2.0.1
 
-b) CVE-2017-5656: Apache CXF's STSClient uses a flawed way of caching
-tokens that are associated with delegation tokens.
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-More details, including the text of the security advisories, are available
-at:
+* Sonar Gerrit Plugin
 
-http://cxf.apache.org/security-advisories.html
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2022-12-07/
 
-Colm.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
--- 
-Colm O hEigeartaigh
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-Talend Community Coder
-http://coders.talend.com
+---
 
---f403045c76142b4867054d6fabc6--
+SECURITY-2940 / CVE-2022-46682
+Plot Plugin 2.1.11 and earlier does not configure its XML parser to prevent
+XML external entity (XXE) attacks.
+
+This allows attackers able to control XML input files for the 'Plot build
+data' build step to have Jenkins parse a crafted file that uses external
+entities for extraction of secrets from the Jenkins controller or
+server-side request forgery.
+
+
+SECURITY-2967 / CVE-2022-46683
+Google Login Plugin 1.4 through 1.6 (both inclusive) improperly determines
+that a redirect URL after login is legitimately pointing to Jenkins.
+
+This allows attackers to perform phishing attacks by having users go to a
+Jenkins URL that will forward them to a different site after successful
+authentication.
+
+
+SECURITY-2869 / CVE-2022-46684
+Checkmarx Plugin processes Checkmarx service API responses and generates
+HTML reports from them for rendering on the Jenkins UI.
+
+Checkmarx Plugin 2022.3.3 and earlier does not escape values returned from
+the Checkmarx service API before inserting them into HTML reports. This
+results in a stored cross-site scripting (XSS) vulnerability.
+
+
+SECURITY-2661 / CVE-2022-46685
+Gitea Plugin support authentication with Gitea personal access tokens.
+
+In Gitea Plugin 1.4.4 and earlier, the implementation of these tokens did
+not support credentials masking. This can expose Gitea personal access
+tokens in the build log, e.g., when printed as part of repository URLs.
+
+
+SECURITY-2810 / CVE-2022-46686
+Custom Build Properties Plugin 2.79.vc095ccc85094 and earlier does not
+escape property values or build display names on the Custom Build
+Properties page.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to set or change these values.
+
+
+SECURITY-2814 / CVE-2022-46687
+Spring Config Plugin 2.0.0 and earlier does not escape build display names
+shown on the Spring Config view.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to change build display names.
+
+
+SECURITY-1002 / CVE-2022-46688
+Sonar Gerrit Plugin 377.v8f3808963dc5 and earlier does not require POST
+requests for an HTTP endpoint, resulting in a cross-site request forgery
+(CSRF) vulnerability.
+
+This allows attackers to have Jenkins connect to Gerrit servers (previously
+configured by Jenkins administrators) using attacker-specified credentials
+IDs obtained through another method, potentially capturing credentials
+stored in Jenkins.
+
+As of publication of this advisory, there is no fix.
+
