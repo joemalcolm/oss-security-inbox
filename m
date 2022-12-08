@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1389" "Saturday" "2" "May" "2015" "18:31:12" "+0800" "Wen Xu" "hotdog3645@gmail.com" "<CADOUnBK=jW36v6X2Q6EXLL35Wxqait7cWJR-adCFwRaMJtucPQ@mail.gmail.com>" "42" "[oss-security] CVE request for a fixed bug existed in all versions of linux kernel from KeenTeam" nil nil nil "5" "2015050210:31:12" "[oss-security] CVE request for a fixed bug existed in all versions of linux kernel from KeenTeam" (number mark "        hotdog3645@g May  2   42/1389  " thread-indent "\"[oss-security] CVE request for a fixed bug existed in all versions of linux kernel from KeenTeam\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 26390 invoked by uid 550); 2 May 2015 11:20:58 -0000
+Received: (qmail 15788 invoked by uid 550); 8 Dec 2022 14:33:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,68 +6,95 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 31850 invoked from network); 2 May 2015 10:31:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=nSmrOfEdnqS+9YrkDFGW/udv/NRcycIFpnCNqVA1qi0=;
-        b=JUUGyrLO3tCcYKASXCsS3ZjDehvNy+9YmRdLHVE1w5AvqAhpiztvl4uDdQsDNX1SZd
-         yEEz+1woclaCEk15k4oz1GvAkj4Nv8KbuxiDfB87oAanvlfhxce1yGCEY7ImDIIQapc8
-         fW9W0iwfbVZGAalyZXt9mdI4TuNDcdXWM0dlsRcSxYo6o2aSZHfyJQJwb5JCgPt+RV/n
-         lgJjf+db7hniX3zBoltPHNc+8ukTeK/NUVvs7viUXPXzRTkr7eYFrqnQuHr1VVtnKqpY
-         lkwV0MTzIeqVZr+aQ2nIh5AaJuHK53DTFT9p5mIfP1mRC2SSaIAGfkrHP5NNj54yVdWC
-         4VIA==
-X-Received: by 10.107.10.79 with SMTP id u76mr17216549ioi.79.1430562692319;
- Sat, 02 May 2015 03:31:32 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CADOUnBK=jW36v6X2Q6EXLL35Wxqait7cWJR-adCFwRaMJtucPQ@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a113ee1701ad8b3051516d53d
-Date: Sat, 2 May 2015 18:31:12 +0800
-From: Wen Xu <hotdog3645@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request for a fixed bug existed in all versions of linux kernel
- from KeenTeam
-To: oss-security@lists.openwall.com
+Received: (qmail 11287 invoked from network); 8 Dec 2022 00:22:37 -0000
+Date: Wed, 7 Dec 2022 18:22:21 -0600
+From: John Helmert III <ajak@gentoo.org>
+To: oss-security@lists.openwall.com, secalert@redhat.com
+Message-ID: <Y5EuPT5dLDd4FlKe@gentoo.org>
+References: <CAP9KPhDh6PJu-0mD12wYUraf1Ya1MSUPwz1PsPO5omi39-OYLw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="TwYgzBjeJV4dye4m"
+Content-Disposition: inline
+In-Reply-To: <CAP9KPhDh6PJu-0mD12wYUraf1Ya1MSUPwz1PsPO5omi39-OYLw@mail.gmail.com>
+Subject: Re: [oss-security] CVE-2022-4170: rxvt-unicode code execution via
+ background OSC
 
---001a113ee1701ad8b3051516d53d
-Content-Type: text/plain; charset=UTF-8
+--TwYgzBjeJV4dye4m
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
-Recently we found a use-after-free bug which can lead to kernel arbitrary
-execution in Linux kernel.
-The bug was reported to the linux security group and it has been fixed.(commit
-a134f083e79f ("ipv4: Missing sk_nulls_node_init() in ping_unhash()"). You
-can find the fix commit here:
-https://github.com/torvalds/linux/commit/6c3c1eb3c35e8856d6dcb01b412316a676f58bbe
-The bug exists in all versions of linux kernel. And the credit is to Wen Xu
-and wushi of KeenTeam.
-I am looking forward to your reply.
+On Mon, Dec 05, 2022 at 10:22:33PM +1100, David Leadbeater wrote:
+> I've discovered rxvt-unicode 9.25 and 9.26 are vulnerable to remote
+> code execution, in the Perl background extension, when an attacker can
+> control the data written to the user's terminal and certain options
+> are set.
+>=20
+> The "background" extension is automatically loaded if certain X
+> resources are set such as 'transparent' (see the full list at the top
+> of src/perl/background[1]). So it is possible to be using this
+> extension without realising it.
+>=20
+> This is accidentally fixed on version 9.30, and I haven't confirmed
+> 9.29, it appears to not be exploitable, but only due to another (not
+> security) bug. The actual bug which makes this not vulnerable on 9.30
+> is simply a wrong number in "on_osc_seq".
+>=20
+> For 9.25 and 9.26 the patch at[2] can be backported. The body of the fix =
+is:
+>=20
+>  sub q0 {
+> -   (my $str =3D shift) =3D~ s/\x00//g; # make sure there really aren't
+> any embedded NULs
+> -   "q\x00$str\x00"
+> +   "qq\x00\Q$_[0]\E\x00"
+>  }
+>=20
+> Isn't Perl quoting fun? Paranoid people may wish to remove the entire
+> "on_osc_seq" subroutine to avoid passing any potentially untrusted
+> input anywhere near eval (this feature is deprecated and the
+> maintainer did mention they are considering what to do longer term).
+>=20
+> It doesn't make sense to withhold an exploit for this; the fix gives a
+> pretty good idea where to look and this isn't vulnerable in the latest
+> version.
+>=20
+> $ urxvt -transparent
+>=20
+> Inside that running terminal:
+>=20
+> # Make tint be "\\", which means the ending \x00 is quoted under our cont=
+rol
+> $ printf '\e]705;\\\a'
+> # Make the second q0 end the quoted q-string and then be valid perl
+> under our control
+> $ printf '\e]20;,rootalign root),`touch /tmp/cve-2022-4170` #\a'
+>=20
+> This has been assigned CVE-2022-4170.
 
-Thanks,
-Wen Xu @ Keen Team
+Can this CVE be made public (ie, not "reserved" according to [1])?
 
+[1] https://github.com/CVEProject/cvelist/blob/master/2022/4xxx/CVE-2022-41=
+70.json
 
+> David
+>=20
+> [1]: http://cvs.schmorp.de/rxvt-unicode/src/perl/background?revision=3D1.=
+109&view=3Dmarkup
+> [2]: http://cvs.schmorp.de/rxvt-unicode/src/perl/background?r1=3D1.105&r2=
+=3D1.109
 
----------- Forwarded message ----------
-From: Willy Tarreau <w@1wt.eu>
-Date: 2015-05-02 15:43 GMT+08:00
-Subject: Re: Socket Vulnerability Report (Lead to kernel arbitrary
-execution) from KeenTeam
-To: Wen Xu <hotdog3645@gmail.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, David Miller <
-davem@davemloft.net>, "security@kernel.org" <security@kernel.org>
+--TwYgzBjeJV4dye4m
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
 
-On Sat, May 02, 2015 at 02:50:32PM +0800, Wen Xu wrote:
-> Many thanks, we've already seen the patch commit ;)
-> By the way, as security researchers, if we want a CVE number for this ping
-> socket bug, where could we request for? What's the routine process for
-this?
+iHUEABYKAB0WIQQyG9yfCrmO0LPSdG2gXq2+aa/JtQUCY5EuPAAKCRCgXq2+aa/J
+tdzaAP9E829Mm+Y4hFKYgaoKbhZDDNA+V+jWLAaWwlaA7NsP+AD/Zw1jWkrbEUaD
+EgQAUoh5pNBeBVnSJ/YmGPDX3pKi/As=
+=gsmK
+-----END PGP SIGNATURE-----
 
-Now that the fix is public, you should ask oss-security, someone there
-should provide you with one.
-
-Thanks,
-Willy
-
---001a113ee1701ad8b3051516d53d--
+--TwYgzBjeJV4dye4m--
