@@ -1,46 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/31/2
-Message-ID: <74cef8b2-e764-5644-0062-5cdad687bd6b@vanrees.org>
-Date: Mon, 31 Jan 2022 09:34:53 +0100
-From: Maurits van Rees <maurits@...rees.org>
-To: oss-security@...ts.openwall.com
-Subject: Plone: cache poisoning in image_view_fullscreen
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/08/1
+Message-ID: <Y5EuPT5dLDd4FlKe@gentoo.org>
+Date: Wed, 7 Dec 2022 18:22:21 -0600
+From: John Helmert III <ajak@...too.org>
+To: oss-security@...ts.openwall.com, secalert@...hat.com
+Subject: Re: CVE-2022-4170: rxvt-unicode code execution via background OSC
 Content-Type: text/plain; charset=utf-8
 
-Plone is vulnerable to reflected cross site scripting and open redirect 
-when an attacker can get a compromised version of the 
-image_view_fullscreen page in a cache, for example in Varnish.
-The technique is known as cache poisoning.
-Any later visitor can get redirected when clicking on a link on this page.
-Usually only anonymous users are affected, but this depends on your 
-cache settings.
+On Mon, Dec 05, 2022 at 10:22:33PM +1100, David Leadbeater wrote:
+> I've discovered rxvt-unicode 9.25 and 9.26 are vulnerable to remote
+> code execution, in the Perl background extension, when an attacker can
+> control the data written to the user's terminal and certain options
+> are set.
+> 
+> The "background" extension is automatically loaded if certain X
+> resources are set such as 'transparent' (see the full list at the top
+> of src/perl/background[1]). So it is possible to be using this
+> extension without realising it.
+> 
+> This is accidentally fixed on version 9.30, and I haven't confirmed
+> 9.29, it appears to not be exploitable, but only due to another (not
+> security) bug. The actual bug which makes this not vulnerable on 9.30
+> is simply a wrong number in "on_osc_seq".
+> 
+> For 9.25 and 9.26 the patch at[2] can be backported. The body of the fix is:
+> 
+>  sub q0 {
+> -   (my $str = shift) =~ s/\x00//g; # make sure there really aren't
+> any embedded NULs
+> -   "q\x00$str\x00"
+> +   "qq\x00\Q$_[0]\E\x00"
+>  }
+> 
+> Isn't Perl quoting fun? Paranoid people may wish to remove the entire
+> "on_osc_seq" subroutine to avoid passing any potentially untrusted
+> input anywhere near eval (this feature is deprecated and the
+> maintainer did mention they are considering what to do longer term).
+> 
+> It doesn't make sense to withhold an exploit for this; the fix gives a
+> pretty good idea where to look and this isn't vulnerable in the latest
+> version.
+> 
+> $ urxvt -transparent
+> 
+> Inside that running terminal:
+> 
+> # Make tint be "\\", which means the ending \x00 is quoted under our control
+> $ printf '\e]705;\\\a'
+> # Make the second q0 end the quoted q-string and then be valid perl
+> under our control
+> $ printf '\e]20;,rootalign root),`touch /tmp/cve-2022-4170` #\a'
+> 
+> This has been assigned CVE-2022-4170.
 
-Versions Affected: All supported Plone versions (4.3.20 and any earlier 
-4.3.x version, 5.2.6 and any earlier 5.x version, 6.0.0a2 and any 
-earlier 6.0.0 version).
+Can this CVE be made public (ie, not "reserved" according to [1])?
 
-There are updated packages for Plone 5.2:
+[1] https://github.com/CVEProject/cvelist/blob/master/2022/4xxx/CVE-2022-4170.json
 
-plone.app.contenttypes 2.2.3
-Products.ATContentTypes 3.0.6
+> David
+> 
+> [1]: http://cvs.schmorp.de/rxvt-unicode/src/perl/background?revision=1.109&view=markup
+> [2]: http://cvs.schmorp.de/rxvt-unicode/src/perl/background?r1=1.105&r2=1.109
 
-And updated packages for 6.0 (which is in alpha):
-
-plone.app.contenttypes 3.0.0a9
-
-With the default version pins, new Plone 5.2.7 and 6.0.0a3 are not 
-affected. Earlier versions are.
-
-CVE number: CVE-2022-23599.
-
-More information:
-
-- GitHub: 
-https://github.com/plone/Products.CMFPlone/security/advisories/GHSA-8w54-22w9-3g8f
-- community.plone.org: 
-https://community.plone.org/t/security-fix-for-image-view-fullscreen-cache-poisoning/14757?u=mauritsvanrees
-- plone.org: https://plone.org/security/hotfix/20220128
-
--- 
-Maurits van Rees https://maurits.vanrees.org/
-
+Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
