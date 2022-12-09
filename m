@@ -1,25 +1,134 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/30/3
-Message-ID: <fc373d19-9e46-80b5-fc19-c9aeed275c91@apache.org>
-Date: Tue, 30 Aug 2022 16:40:52 +0000
-From: Kirk Lund <klund@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-37021: Apache Geode deserialization of untrusted data flaw when using JMX over RMI on Java 8.  
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/09/2
+Message-ID: <CAG7k0EpOz=X8AFw-wE-0OEA98_w77PNmVg_AE-R8mc7sBcsr9w@mail.gmail.com>
+Date: Fri, 9 Dec 2022 16:54:41 +0000
+From: Ross Lagerwall <ross.lagerwall@...ud.com>
+To: Juergen Gross <jgross@...e.com>
+Cc: Pratyush Yadav <ptyadav@...zon.de>, "Xen.org security team" <security@....org>, xen-announce@...ts.xen.org,  xen-devel@...ts.xen.org, xen-users@...ts.xen.org,  oss-security@...ts.openwall.com,  "Xen.org security team" <security-team-members@....org>
+Subject: Re: Xen Security Advisory 424 v1 (CVE-2022-42328,CVE-2022-42329) - Guests can trigger deadlock in Linux netback driver
 Content-Type: text/plain; charset=utf-8
 
-Severity: high - possible RCE
+On Thu, Dec 8, 2022 at 4:13 PM Juergen Gross <jgross@...e.com> wrote:
+>
+> On 08.12.22 16:59, Pratyush Yadav wrote:
+> >
+> > Hi,
+> >
+> > I noticed one interesting thing about this patch but I'm not familiar
+> > enough with the driver to say for sure what the right thing is.
+> >
+> > On Tue, Dec 06 2022, Xen.org security team wrote:
+> >
+> > [...]
+> >>
+> >>  From cfdf8fd81845734b6152b4617746c1127ec52228 Mon Sep 17 00:00:00 2001
+> >> From: Juergen Gross <jgross@...e.com>
+> >> Date: Tue, 6 Dec 2022 08:54:24 +0100
+> >> Subject: [PATCH] xen/netback: don't call kfree_skb() with interrupts disabled
+> >>
+> >> It is not allowed to call kfree_skb() from hardware interrupt
+> >> context or with interrupts being disabled. So remove kfree_skb()
+> >> from the spin_lock_irqsave() section and use the already existing
+> >> "drop" label in xenvif_start_xmit() for dropping the SKB. At the
+> >> same time replace the dev_kfree_skb() call there with a call of
+> >> dev_kfree_skb_any(), as xenvif_start_xmit() can be called with
+> >> disabled interrupts.
+> >>
+> >> This is XSA-424 / CVE-2022-42328 / CVE-2022-42329.
+> >>
+> >> Fixes: be81992f9086 ("xen/netback: don't queue unlimited number of packages")
+> >> Reported-by: Yang Yingliang <yangyingliang@...wei.com>
+> >> Signed-off-by: Juergen Gross <jgross@...e.com>
+> >> Reviewed-by: Jan Beulich <jbeulich@...e.com>
+> >> ---
+> >>   drivers/net/xen-netback/common.h    | 2 +-
+> >>   drivers/net/xen-netback/interface.c | 6 ++++--
+> >>   drivers/net/xen-netback/rx.c        | 8 +++++---
+> >>   3 files changed, 10 insertions(+), 6 deletions(-)
+> >>
+> >> diff --git a/drivers/net/xen-netback/common.h b/drivers/net/xen-netback/common.h
+> >> index 1545cbee77a4..3dbfc8a6924e 100644
+> >> --- a/drivers/net/xen-netback/common.h
+> >> +++ b/drivers/net/xen-netback/common.h
+> >> @@ -386,7 +386,7 @@ int xenvif_dealloc_kthread(void *data);
+> >>   irqreturn_t xenvif_ctrl_irq_fn(int irq, void *data);
+> >>
+> >>   bool xenvif_have_rx_work(struct xenvif_queue *queue, bool test_kthread);
+> >> -void xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb);
+> >> +bool xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb);
+> >>
+> >>   void xenvif_carrier_on(struct xenvif *vif);
+> >>
+> >> diff --git a/drivers/net/xen-netback/interface.c b/drivers/net/xen-netback/interface.c
+> >> index 650fa180220f..f3f2c07423a6 100644
+> >> --- a/drivers/net/xen-netback/interface.c
+> >> +++ b/drivers/net/xen-netback/interface.c
+> >> @@ -254,14 +254,16 @@ xenvif_start_xmit(struct sk_buff *skb, struct net_device *dev)
+> >>      if (vif->hash.alg == XEN_NETIF_CTRL_HASH_ALGORITHM_NONE)
+> >>              skb_clear_hash(skb);
+> >>
+> >> -    xenvif_rx_queue_tail(queue, skb);
+> >> +    if (!xenvif_rx_queue_tail(queue, skb))
+> >> +            goto drop;
+> >> +
+> >>      xenvif_kick_thread(queue);
+> >>
+> >>      return NETDEV_TX_OK;
+> >>
+> >>    drop:
+> >>      vif->dev->stats.tx_dropped++;
+> >
+> > Now tx_dropped is incremented on packet drop...
+> >
+> >> -    dev_kfree_skb(skb);
+> >> +    dev_kfree_skb_any(skb);
+> >>      return NETDEV_TX_OK;
+> >>   }
+> >>
+> >> diff --git a/drivers/net/xen-netback/rx.c b/drivers/net/xen-netback/rx.c
+> >> index 932762177110..0ba754ebc5ba 100644
+> >> --- a/drivers/net/xen-netback/rx.c
+> >> +++ b/drivers/net/xen-netback/rx.c
+> >> @@ -82,9 +82,10 @@ static bool xenvif_rx_ring_slots_available(struct xenvif_queue *queue)
+> >>      return false;
+> >>   }
+> >>
+> >> -void xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb)
+> >> +bool xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb)
+> >>   {
+> >>      unsigned long flags;
+> >> +    bool ret = true;
+> >>
+> >>      spin_lock_irqsave(&queue->rx_queue.lock, flags);
+> >>
+> >> @@ -92,8 +93,7 @@ void xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb)
+> >>              struct net_device *dev = queue->vif->dev;
+> >>
+> >>              netif_tx_stop_queue(netdev_get_tx_queue(dev, queue->id));
+> >> -            kfree_skb(skb);
+> >> -            queue->vif->dev->stats.rx_dropped++;
+> >
+> > ... but earlier rx_dropped was incremented.
+> >
+> > Which one is actually correct? This line was added by be81992f9086b
+> > ("xen/netback: don't queue unlimited number of packages"), which was the
+> > fix for XSA-392. I think incrementing tx_dropped is the right thing to
+> > do, as was done before XSA-392 but it would be nice if someone else
+> > takes a look at this as well.
+>
+> Yes, I think the XSA-392 patch was wrong in this regard.
+>
 
-Description:
+Netback calls this rx (to-guest) traffic so rx_dropped seems better. On the
+other hand, the networking stack thinks of this as tx since the packet is going
+from the networking stack to the NIC driver...
 
-Apache Geode versions up to 1.12.5, 1.13.4 and 1.14.0 are vulnerable to a deserialization of untrusted data flaw when using JMX over RMI on Java 8. 
+Regardless, it is currently inconsistent since to-guest traffic increments
+tx_dropped if it is dropped because the rx queue len is too long but it
+increments rx_dropped if those same packets are dropped when they expire in the
+rx queue.
 
-Any user still on Java 8 who wishes to protect against deserialization attacks involving JMX or RMI should upgrade to Apache Geode 1.15 and Java 11. 
+I also see that the tx path (from-guest) doesn't increment any dropped counters
+when it drops a packet.
 
-If upgrading to Java 11 is not possible, then upgrade to Apache Geode 1.15 and specify "--J=-Dgeode.enableGlobalSerialFilter=true" when starting any Locators or Servers. Follow the documentation for details on specifying any user classes that may be serialized/deserialized with the "serializable-object-filter" configuration option. Using a global serial filter will impact performance.
-
-This issue is being tracked as GEODE-9758
-
-Mitigation:
-
-Disable affected services such as JMX over RMI unless they are required. JMX over RMI can be disabled by setting Geode property `jmx-manager` to false; this property defaults to false on Servers and true on Locators. 
-
+Ross
