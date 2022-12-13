@@ -1,75 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/22/4
-Message-Id: <1667A786-CDE3-4DB2-B6E8-5EA6B39F1AA4@gentoo.org>
-Date: Sun, 22 May 2022 20:55:50 +0100
-From: Sam James <sam@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/13/2
+Message-ID: <CAB8XdGDk7xbis9aOcDM3w+b6CepMBKNhWwweKH9ZW2a0TQXZ6Q@mail.gmail.com>
+Date: Tue, 13 Dec 2022 14:38:00 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: seth.arnold@...onical.com, greg@...ah.com
-Subject: Re: linux-distros list policy and Linux kernel
+Subject: CVE-2022-46363: Apache CXF directory listing / code exfiltration
 Content-Type: text/plain; charset=utf-8
 
+Severity: moderate
 
+Description:
 
-> On 22 May 2022, at 20:19, Solar Designer <solar@...nwall.com> wrote:
-> 
-> Hi,
-> 
-> Thank you all for the helpful replies in this thread.  Here's my summary
-> of what was said so far:
-> 
-> As seen from replies by Jason and Greg, I didn't make the distinction
-> between my suggested options 0 and 2 clear enough.  They were:
-> 
->> 0. Do nothing specific - let things work or fail on their own.
-> 
->> 2. Strictly enforce the policy as it is - and be in conflict with Linux
->> kernel security team, and handle fewer issues via linux-distros.
-> 
-> Let me clarify.  As I wrote, after the disagreement in February, "the
-> handling was hectic - indeed, people felt discouraged from enforcing the
-> policy."  So by option 0 I referred to the loose (non-)enforcement we've
-> had since February until now, and by option 2 to enforcement at least as
-> strict as we had before February.
-> 
-> Although I wouldn't necessarily have the list's future decided by a
-> majority vote, I counted something like 4.5 votes for relaxing the list
-> policy to accommodate (at least) Linux kernel community's workflow:
+A vulnerability in Apache CXF before versions 3.5.5 and 3.4.10 allows
+an attacker to perform a remote directory listing or code
+exfiltration. The vulnerability only applies when the CXFServlet is
+configured with both the static-resources-list and
+redirect-query-check attributes. These attributes are not supposed to
+be used together, and so the vulnerability can only arise if the CXF
+service is misconfigured.
 
-I've been watching as I was hesitant to muddy the waters as we've
-had this discussion many times before and didn't want to be noisy, but
-my support is for Greg's suggestion.
+Credit:
 
-We're trying to get the best possible outcome within practical means
-and I think it'll serve that aim.
+thanat0s from Beijin Qihoo 360 adlab (finder)
 
-> 
-> Igor Seletskiy
->> My vote would be for #1
-> 
-> Anthony Liguori
->> make this policy specific to changes under security@...r.kernel.org embargo
-> 
-> Greg KH
->> So if you all could just modify the rules to be something like,
->> "embargos are not broken when changes are posted in public, or accepted
->> into public trees, unless the changes or discussions around them turn
->> out to disclose the security related issue."
+References:
 
-What I ask is that the kernel folks are proactive in reaching out to us if they
-think people start to suspect, too.
-
-I'd also like to ask that the final commit messages please reference any
-relevant CVEs or at least the security impact. There've been a fair number
-of incidents where such information is stripped and it makes tracking
-issues *really* hard.
-
-This would make a big difference to us in distributions. I hope this can
-be considered.
-
-> [snip]
-
-best,
-sam
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (619 bytes)
+https://cxf.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2022-46363
