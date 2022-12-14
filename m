@@ -1,23 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/11/1
-Message-ID: <337c1e01-5515-6383-fb85-bdffce716435@apache.org>
-Date: Tue, 11 Oct 2022 10:16:58 +0000
-From: Xiaoxiang Yu <xxyu@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/14/1
+Message-ID: <36682633-71ed-3c1e-9e83-5e5f41d62c94@apache.org>
+Date: Wed, 14 Dec 2022 01:07:22 +0000
+From: Madhan Neethiraj <madhan@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-24697: Apache Kylin: Command injection exists when the configuration overwrites function overwrites system parameters 
+Subject: CVE-2022-34271: Apache Atlas: zip path traversal in import functionality 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+Severity: moderate
 
 Description:
 
-Kylin's cube designer function has a command injection vulnerability when overwriting system parameters in the configuration overwrites menu. RCE can be implemented by closing the single quotation marks around the parameter value of “-- conf=” to inject any operating system command into the command line parameters. This vulnerability affects the kylin which version is 4.0.1 and above.
+A vulnerability in import module of Apache Atlas allows an authenticated user to write to web server filesystem.  This issue affects Apache Atlas versions from 0.8.4 to 2.2.0.
 
-Mitigation:
-
-Users of Kylin 2.x & Kylin 3.x & 4.x should upgrade to 4.0.2 or apply patch https://github.com/apache/kylin/pull/1811 .
+This issue is being tracked as ATLAS-4622 
 
 Credit:
 
-Kylin Team would like to thanks Kai Zhao of ToTU Secruity Team.
+Huangzhicong (finder)
+
+References:
+
+https://atlas.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2022-34271
+https://issues.apache.org/jira/browse/ATLAS-4622
 
