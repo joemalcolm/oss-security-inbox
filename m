@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2536" "Thursday" "4" "February" "2016" "11:02:45" "+0100" "Andreas Stieger" "astieger@suse.com" "<56B321C5.40600@suse.com>" "65" "[oss-security] Re: Socat security advisory 7 - Created new 2048bit DH modulus" "^Cc:" nil nil "2" "2016020410:02:45" "[oss-security] Re: Socat security advisory 7 - Created new 2048bit DH modulus" (number mark "        astieger@sus Feb  4   65/2536  " thread-indent "\"[oss-security] Re: Socat security advisory 7 - Created new 2048bit DH modulus\"\n") "<20160202193606.7345E8BC044@smtpvmsrv1.mitre.org>" ("<20160202193606.7345E8BC044@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 28596 invoked by uid 550); 4 Feb 2016 10:03:16 -0000
+Received: (qmail 18098 invoked by uid 550); 14 Dec 2022 11:20:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,86 +6,153 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28544 invoked from network); 4 Feb 2016 10:03:09 -0000
-References: <20160202193606.7345E8BC044@smtpvmsrv1.mitre.org>
-Organization: SUSE Linux GmbH
-Message-ID: <56B321C5.40600@suse.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.5.0
-MIME-Version: 1.0
-In-Reply-To: <20160202193606.7345E8BC044@smtpvmsrv1.mitre.org>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="fFMQg4Q4G2hUIsTir4UiI53bS9rmQfEqF"
-Cc: cve-assign@mitre.org
-Date: Thu, 4 Feb 2016 11:02:45 +0100
-From: Andreas Stieger <astieger@suse.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Socat security advisory 7 - Created new 2048bit DH modulus
+Received: (qmail 32638 invoked from network); 14 Dec 2022 08:31:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9CMj67kQAqIr8wreXQBJFWKsEd/8R7Wl+l+39mwG0Zw=;
+        b=gv2WjXpSysPZLUYUQ+HqPxlq97OWa1reD9or3yN1yM03Nxjy/RRdbdTF06ZQU5Bkls
+         I3hZkYpusxFVeYaWNU9/8m5uz7zsjAKugsVxwXMe7u6zLICU6n55zujIeg3gzPTAC3HT
+         ntzW+sKaqCFGcUiohLgGddPBX3NXXRng6ouoJjT4F2Lf4XiuDX0MIwgAZsW5/hcdixQC
+         6Y+Ha2nn6HQwOMcn6Ek3BEsgMvuTjarKdrnpwWOcOxx0thE3CWnPz2zrj7IOn/ouUMlU
+         zHbhNyZLXzSuhfn08Z1b1Q7vLlgxnE9WlyCAHxkbEtwi7hw4bMG/BHtqHk9e7RGTT8+v
+         pjNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9CMj67kQAqIr8wreXQBJFWKsEd/8R7Wl+l+39mwG0Zw=;
+        b=2tK4dTZOOxl5XL66Gh5lmVXRnzKM3WXpy4m4yUQAwT+m3nYcnMblzoOB7fYGYajQfC
+         8qN6zTiycAdGpxlZStUIfDEcOO+ZmPA0kOtg/TTJo2A1ahGCs9NXdgFFkeP6pubW/KG7
+         il47Rx1XM9i2viDbAu0aEABIcrK3rUh0qdoTu6oWX3Fb9X8fGdvLLpa7NeXSBTPWMB89
+         gtFWY8sA7/nTCRmkezaNGAReTG75z/rfwxDo7C8ZkJvlmzICOTGATkWbMBVVih60AsCV
+         VD8LK4UBtYTS7TalZ+yMfvU9IM4G8THNgU5jTOhYWNtQoAIEEZN9vEwtwNy/CigBMs9l
+         V/Wg==
+X-Gm-Message-State: ANoB5pkeYbJkumxisIFRDokNTokeW6DBcClQfd3wff2INaMthT9545RG
+	jz7OdXCAGBy8iqLf5Bim6m6ydw2EVEJElQ==
+X-Google-Smtp-Source: AA0mqf6Cnpr6ImT9ewFF7K8j6i92IUEQ2c+E2jyWa2cjGJdBcyPC2PgGCMFzWjHi2dJqIh0Kh9nBGg==
+X-Received: by 2002:a0c:9109:0:b0:4c6:e395:b6f9 with SMTP id q9-20020a0c9109000000b004c6e395b6f9mr29593630qvq.39.1671006687330;
+        Wed, 14 Dec 2022 00:31:27 -0800 (PST)
+Date: Wed, 14 Dec 2022 16:31:25 +0800
+From: Xingyuan Mo <hdthky0@gmail.com>
 To: oss-security@lists.openwall.com
-
---fFMQg4Q4G2hUIsTir4UiI53bS9rmQfEqF
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: quoted-printable
+Message-ID: <Y5mJ3dLcB49yYsDo@ip-172-31-85-199.ec2.internal>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Subject: [oss-security] CVE-2022-4379: Linux kernel: use-after-free in __nfs42_ssc_open
 
 Hello,
 
-On 02.02.2016 20:36, cve-assign@mitre.org wrote:
-> >   In the OpenSSL address implementation the hard coded 1024 bit DH p
-> >   parameter was not prime. The effective cryptographic strength of a key
-> >   exchange using these parameters was weaker than the one one could
-> get by
-> >   using a prime p. Moreover, since there is no indication of how these
-> >   parameters were chosen, the existence of a trapdoor that makes
-> possible
-> >   for an eavesdropper to recover the shared secret from a key
-> exchange that
-> >   uses them cannot be ruled out.
->
-> This was sent to the oss-security list as a published advisory, not as
-> a CVE ID request. We would expect that one or more parties (e.g.,
-> Linux distributions) are planning to re-announce this to a different
-> audience in a way that would make at least one CVE ID especially
-> useful. Our question is about whether anyone needs two CVE IDs.
+We found a use-after-free vulnerability in __nfs42_ssc_open() in NFS subsystem
+of Linux through v6.1 which allows an attacker to trigger remote denial of
+service.
 
-SUSE acknowledges that one CVE ID would be useful for the "was not
-prime" finding, and would not need a second CVE ID.
+=*=*=*=*=*=*=*=*=  Bug Details  =*=*=*=*=*=*=*=*=
 
-SUSE distributions, except for the openSUSE Tumbleweed rolling community
-distribution, is not affected:
-https://bugzilla.suse.com/show_bug.cgi?id=3D964843
+The use-after-free violation is caused by dereferencing a vfsmount which is
+freed but still remains on the delayed unmount list. The reason the vfsmount is
+freed is that nfs42_ssc_open returns an error when called in
+nfsd4_do_async_copy. During my testing, this bug can be triggered by two
+consecutive inter-server-side copies, if the first one encounters some kind of
+error.
 
-Andreas
+=*=*=*=*=*=*=*=*=  Backtrace  =*=*=*=*=*=*=*=*=
 
---=20
-Andreas Stieger <astieger@suse.com>
-Project Manager Security
-SUSE Linux GmbH, GF: Felix Imend=F6rffer, Jane Smithard, Graham Norton,
-HRB 21284 (AG N=FCrnberg)
+[  150.198088 ] ==================================================================
+[  150.199766 ] BUG: KASAN: use-after-free in __nfs42_ssc_open (fs/nfs/nfs4file.c:332)
+[  150.201108 ] Read of size 8 at addr ffff888008bbc4a8 by task copy thread/375
+[  150.203035 ]
+[  150.203392 ] CPU: 4 PID: 375 Comm: copy thread Not tainted 6.1.0-rc8 #20
+[  150.204790 ] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/04
+[  150.206709 ] Call Trace:
+[  150.207271 ]  <TASK>
+[  150.207740 ] dump_stack_lvl (lib/dump_stack.c:107)
+[  150.208562 ] print_report (mm/kasan/report.c:285 mm/kasan/report.c:395)
+[  150.209385 ] ? __virt_addr_valid (./include/linux/mmzone.h:1759 ./include/linux/mmzone.h:1855 arch/x86/mm/physaddr.c:65)
+[  150.210296 ] ? __nfs42_ssc_open (fs/nfs/nfs4file.c:332)
+[  150.211184 ] kasan_report (mm/kasan/report.c:162 mm/kasan/report.c:497)
+[  150.211967 ] ? __nfs42_ssc_open (fs/nfs/nfs4file.c:332)
+[  150.212742 ] __nfs42_ssc_open (fs/nfs/nfs4file.c:332)
+[  150.213343 ] ? _raw_read_lock_bh (kernel/locking/spinlock.c:161)
+[  150.213935 ] nfsd4_do_async_copy (./include/linux/nfs_ssc.h:47 fs/nfsd/nfs4proc.c:1764)
+[  150.214520 ] ? preempt_count_sub (kernel/sched/core.c:5697)
+[  150.215133 ] ? __kthread_parkme (kernel/kthread.c:283)
+[  150.215769 ] ? nfsd4_read (fs/nfsd/nfs4proc.c:1757)
+[  150.216349 ] kthread (kernel/kthread.c:376)
+[  150.216873 ] ? kthread_complete_and_exit (kernel/kthread.c:331)
+[  150.217630 ] ret_from_fork (arch/x86/entry/entry_64.S:312)
+[  150.218206 ]  </TASK>
+[  150.218551 ]
+[  150.218803 ] Allocated by task 350:
+[  150.219348 ] kasan_save_stack (mm/kasan/common.c:46)
+[  150.219938 ] kasan_set_track (mm/kasan/common.c:52)
+[  150.220522 ] __kasan_slab_alloc (mm/kasan/common.c:328)
+[  150.221148 ] kmem_cache_alloc (./include/linux/kasan.h:201 mm/slab.h:737 mm/slub.c:3398 mm/slub.c:3406 mm/slub.c:3413 mm/slub.c:3422)
+[  150.221786 ] alloc_vfsmnt (./include/linux/slab.h:679 fs/namespace.c:198)
+[  150.222348 ] vfs_create_mount (fs/namespace.c:1017)
+[  150.222919 ] vfs_kern_mount.part.48 (fs/namespace.c:1073)
+[  150.223376 ] nfsd4_interssc_connect.isra.24 (fs/nfsd/nfs4proc.c:1443)
+[  150.223915 ] nfsd4_copy (fs/nfsd/nfs4proc.c:1499 fs/nfsd/nfs4proc.c:1805)
+[  150.224249 ] nfsd4_proc_compound (fs/nfsd/nfs4proc.c:2710)
+[  150.224647 ] nfsd_dispatch (fs/nfsd/nfssvc.c:1056)
+[  150.225000 ] svc_process_common (net/sunrpc/svc.c:1339)
+[  150.225403 ] svc_process (net/sunrpc/svc.c:1463)
+[  150.225735 ] nfsd (fs/nfsd/nfssvc.c:979)
+[  150.226022 ] kthread (kernel/kthread.c:376)
+[  150.226330 ] ret_from_fork (arch/x86/entry/entry_64.S:312)
+[  150.226662 ]
+[  150.226810 ] Freed by task 0:
+[  150.227072 ] kasan_save_stack (mm/kasan/common.c:46)
+[  150.227417 ] kasan_set_track (mm/kasan/common.c:52)
+[  150.227765 ] kasan_save_free_info (mm/kasan/generic.c:513)
+[  150.228134 ] __kasan_slab_free (mm/kasan/common.c:238 mm/kasan/common.c:200 mm/kasan/common.c:244)
+[  150.228497 ] kmem_cache_free (mm/slub.c:1750 mm/slub.c:3661 mm/slub.c:3683)
+[  150.228842 ] rcu_core (./arch/x86/include/asm/preempt.h:27 kernel/rcu/tree.c:2257 kernel/rcu/tree.c:2510)
+[  150.229144 ] __do_softirq (./arch/x86/include/asm/jump_label.h:27 ./include/linux/jump_label.h:207 ./include/trace/events/irq.h:142 kernel/softirq.c:572)
+[  150.229483 ]
+[  150.229636 ] Last potentially related work creation:
+[  150.230102 ] kasan_save_stack (mm/kasan/common.c:46)
+[  150.230470 ] __kasan_record_aux_stack (mm/kasan/generic.c:481)
+[  150.230901 ] call_rcu (./arch/x86/include/asm/irqflags.h:29 (discriminator 3) ./arch/x86/include/asm/irqflags.h:70 (discriminator 3) ./arch/x86/include/asm/irqflags.h:106 (discriminator 3) kernel/rcu/tree.c:2799 (discriminator 3))
+[  150.231214 ] mntput_no_expire (fs/namespace.c:1272)
+[  150.231586 ] nfsd4_do_async_copy (./include/linux/slab.h:553 ./include/linux/slab.h:689 fs/nfsd/nfs4proc.c:1734 fs/nfsd/nfs4proc.c:1787)
+[  150.231980 ] kthread (kernel/kthread.c:376)
+[  150.232295 ] ret_from_fork (arch/x86/entry/entry_64.S:312)
+[  150.232637 ]
+[  150.232792 ] The buggy address belongs to the object at ffff888008bbc480
+[  150.232792 ]  which belongs to the cache mnt_cache of size 320
+[  150.233849 ] The buggy address is located 40 bytes inside of
+[  150.233849 ]  320-byte region [ffff888008bbc480, ffff888008bbc5c0)
+[  150.234828 ]
+[  150.234970 ] The buggy address belongs to the physical page:
+[  150.235442 ] page:00000000711edc3f refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfnc
+[  150.236154 ] head:00000000711edc3f order:1 compound_mapcount:0 compound_pincount:0
+[  150.236724 ] flags: 0x100000000010200(slab|head|node=0|zone=1)
+[  150.237193 ] raw: 0100000000010200 0000000000000000 dead000000000122 ffff888004946dc0
+[  150.237784 ] raw: 0000000000000000 0000000080150015 00000001ffffffff 0000000000000000
+[  150.238367 ] page dumped because: kasan: bad access detected
+[  150.238804 ]
+[  150.238934 ] Memory state around the buggy address:
+[  150.239304 ]  ffff888008bbc380: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+[  150.239868 ]  ffff888008bbc400: fb fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+[  150.240420 ] >ffff888008bbc480: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+[  150.240967 ]                                   ^
+[  150.241333 ]  ffff888008bbc500: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+[  150.241885 ]  ffff888008bbc580: fb fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+[  150.242431 ] ==================================================================
+
+=*=*=*=*=*=*=*=*=  Patch  =*=*=*=*=*=*=*=*=
+
+The patch has been done by Dai Ngo, and it can be found here:
+https://lore.kernel.org/all/1670885411-10060-1-git-send-email-dai.ngo@oracle.com/
+
+=*=*=*=*=*=*=*=*=  Credit  =*=*=*=*=*=*=*=*=
+
+Xingyuan Mo and Gengjia Chen of IceSword Lab, Qihoo 360 Technology Co. Ltd.
 
 
-
-
---fFMQg4Q4G2hUIsTir4UiI53bS9rmQfEqF
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIcBAEBCgAGBQJWsyHLAAoJECzWqVXhWUVGK4UQAJiEDv8en+0msAX22YR/84zH
-OSIvErnZ/INmMGeG8WRcbdFIwBt+i9b6R13OsczjM4FncPs+DLWRF84gOxVJ5uUR
-IQ+j16s/o4h1VMKmWIGFJ3PtahVnI4GDgL52kyHMBSNWfnTzeJqz65+K2uF1UlNa
-oO+/qSTzZwKrjd4i7Hvpe6F5rDyYBrqAir1ids1yV2mqAoF8B91tmL83jGuytmc3
-bdPPA/b1OtuZ7ak+jEJJrz4dZhWT0TqgHGKK3iYFWKlv92FcalfpE6xNRXiquuus
-oErnp/QGvocFiot+l/UO4O5fvIuiySrsCHfmi6igEqZrT8xI/w1d/CAVjVJbcgUA
-fEyV9m8Aee8d8YYBsVK7+a2MNVDo+BKtHqGBQqx7yL7/9fDqcd4K8XQp7UfvhfaH
-RNj29jcqW5mp2tRAKzEhLF0Svqmp4rJrlV02njBDuRwLmv+ARiT1mfVP4HrBL8hz
-8GTWdQHAesfq5T8j7BTBiBc+TG00ucI8mp2zsCnSzx3YUAFGosb7yCIRrWmwAo0S
-B+8ysNWa2+Laq7DUxmUUNr9nBKS9de/mfv+b1Rg1+qjrpGpkHk3h0bmfDksD6xXF
-OSz07q/nFgxW6PBq/wTvISHnD0MZpvkcMcLmJyEUnQCo30ikcFHU8rhmqMGT1gKi
-2qDGD929xyWI4rJ/1xfS
-=CibR
------END PGP SIGNATURE-----
-
---fFMQg4Q4G2hUIsTir4UiI53bS9rmQfEqF--
+Best Regards,
+Xingyuan Mo
