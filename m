@@ -1,37 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/26/8
-Message-ID: <20221026151737.rtmp5eatjf5uqgnb@mutt-hbsd>
-Date: Wed, 26 Oct 2022 11:17:37 -0400
-From: Shawn Webb <shawn.webb@...denedbsd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/14/4
+Message-ID: <1dc7de41-f0d7-566f-d46c-c1206a3dafa2@canonical.com>
+Date: Wed, 14 Dec 2022 07:21:13 -0500
+From: Marc Deslauriers <marc.deslauriers@...onical.com>
 To: oss-security@...ts.openwall.com
-Cc: openssl-announce@...nssl.org, openssl-users@...nssl.org, openssl-project@...nssl.org
-Subject: Re: Forthcoming OpenSSL Releases
+Subject: Re: X.Org Security Advisory: multiple security issues in X server extensions
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 25, 2022 at 02:54:15PM +0200, Ing. Martin Koci, MBA wrote:
-> Hello,
+On 2022-12-13 20:23, Peter Hutterer wrote:
+> * CVE-2022-46283/ZDI-CAN-19530: X.Org Server XkbGetKbdByName use-after-free
 > 
-> The OpenSSL project team would like to announce the forthcoming release of
-> OpenSSL version 3.0.7.
+> The XkbCopyNames function left a dangling pointer to freed memory, resulting in 
+> out-of-bounds memory access on subsequent XkbGetKbdByName requests.
 > 
-> This release will be made available on Tuesday 1st November 2022 between
-> 1300-1700 UTC.
-> 
-> OpenSSL 3.0.7 is a security-fix release. The highest severity issue fixed in
-> this release is CRITICAL:
 
-Hey there,
+I think there's a typo there, the CVE should be CVE-2022-4283.
 
-I don't see anything on the CERT Vince site. Is there any way we could
-coordinate a response via CERT?
+Marc.
 
-Thanks,
-
--- 
-Shawn Webb
-Cofounder / Security Engineer
-HardenedBSD
-
-https://git.hardenedbsd.org/hardenedbsd/pubkeys/-/raw/master/Shawn_Webb/03A4CBEBB82EA5A67D9F3853FF2E67A277F8E1FA.pub.asc
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
