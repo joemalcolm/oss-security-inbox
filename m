@@ -1,19 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/04/3
-Message-ID: <939888998.96730.1656936945905@appsuite.open-xchange.com>
-Date: Mon, 4 Jul 2022 14:15:45 +0200 (CEST)
-From: Peter van Dijk <peter.van.dijk@...erdns.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/15/1
+Message-ID: <CACcefgfgnn7assSeTVLMaXDWuduiE=qxhFLx5NM_NtcKNVeYpA@mail.gmail.com>
+Date: Thu, 15 Dec 2022 10:14:15 +0100
+From: Enrico Olivelli <eolivelli@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: DO NOT OPEN PREVIOUS MAIL Re: Denial of service in GnuPG
+Subject: CVE-2022-32531: Apache BookKeeper: Java Client Uses Connection to Host that Failed Hostname Verification
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Severity: Moderate
 
-> On 04/07/2022 07:31 Demi Marie Obenour <demi@...isiblethingslab.com> wrote:
-> 
-> Signature (of /dev/null) that triggers this bug is attached, along with
-> the corresponding public key.
+Description:
 
-This is insane. You can't send weaponised exploits that crash email clients to public mailing lists. Please do not do this again.
+The Apache Bookkeeper Java Client (up to 4.14.5 and also 4.15.0) does
+not close the connection to the
+bookkeeper server when TLS hostname verification fails. This leaves
+the bookkeeper client vulnerable to a man in the middle attack.
 
-Peter
+The problem affects BookKeeper client prior to versions 4.14.6 and 4.15.1.
+
+Solution:
+
+Upgrade to 4.14.6 or to 4.15.1
+
+References:
+
+https://bookkeeper.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2022-32531
