@@ -1,35 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/14/1
-Message-ID: <xmqqh73k8sbl.fsf@gitster.g>
-Date: Wed, 13 Jul 2022 17:13:18 -0700
-From: Junio C Hamano <junio@...ox.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/16/1
+Message-ID: <caedcf4c-58a4-345d-41a1-a4e23be32780@apache.org>
+Date: Fri, 16 Dec 2022 12:48:32 +0000
+From: Arnout Engelen <engelen@...che.org>
 To: oss-security@...ts.openwall.com
-cc: git-security@...glegroups.com, ycdxsb <ycdxsb@...il.com>, Carlo Marcelo Arenas Belón <carenas@...il.com>, Johannes Schindelin <johannes.schindelin@....de>
-Subject: Git v2.37.1 and friends for CVE-2022-29187
+Subject: CVE-2021-28655: Apache Zeppelin: Arbitrary file deletion vulnerability 
 Content-Type: text/plain; charset=utf-8
 
-The Git project released new versions on July 12th, 2022, addressing
-CVE-2022-29187.  We highly recommend to upgrade to one of these fixed
-versions:
+Severity: important
 
-  v2.30.5 v2.31.4 v2.32.3 v2.33.4 v2.34.4 v2.35.4 v2.36.2 v2.37.1
+Description:
 
-If you are on the unreleased development track, the same fix is
-already included, so you do not have to do anything.
+The improper Input Validation vulnerability in "”Move folder to Trash” feature of Apache Zeppelin allows an attacker to delete the arbitrary files.  This issue affects Apache Zeppelin Apache Zeppelin version 0.9.0 and prior versions.
 
-https://lore.kernel.org/git/xmqqv8s2fefi.fsf@gitster.g/
+Credit:
 
+Kai Zhao (finder)
 
-This fix contained in these releases are minor updates for the
-changes that went into Git 2.30.3 and 2.30.4, addressing
-CVE-2022-29187.
+References:
 
- * The safety check that verifies a safe ownership of the Git
-   worktree is now extended to also cover the ownership of the Git
-   directory (and the `.git` file, if there is any).
-
-Credit for finding and fixing the problem goes to Carlo Marcelo
-Arenas Belón and Johannes Schindelin.
-
-Thanks.
+https://zeppelin.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2021-28655
 
