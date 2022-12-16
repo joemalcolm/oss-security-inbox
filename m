@@ -1,32 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/09/06/3
-Message-ID: <20220906115010.gs7kec3wkmayhmhf@yuggoth.org>
-Date: Tue, 6 Sep 2022 11:50:10 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/17/1
+Message-ID: <57f22782-ca9e-e289-0003-f2044fe5ff61@apache.org>
+Date: Fri, 16 Dec 2022 22:38:23 +0000
+From: Junkai Xue <jxue@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: sagemath denial of service with abort() in gmp: overflow in mpz type
+Subject: CVE-2022-47500: Apache Helix: Open redirect 
 Content-Type: text/plain; charset=utf-8
 
-On 2022-09-06 08:47:58 +0300 (+0300), Georgi Guninski wrote:
-[...]
-> sagemath gives access to the python interpreter, so code execution
-> is trivial.
-[...]
+Severity: low
 
-I'm not familiar with sagemath, but is it intended to protect
-against such cases? Note that even if all it does is pass
-expressions into CPython's eval(), it's pretty much impossible to
-guard against misuse without completely sandboxing the underlying
-processes. Denial of service scenarios are really the least of
-worries in that case. Many articles have been written over the years
-about this, though one of the more recent and thorough ones is:
-https://netsec.expert/posts/breaking-python3-eval-protections/
+Description:
 
-If it's not trying to prevent getting access to do all the things
-the interpreter can do outside sagemath as well, then I hardly see
-this as a vulnerability (any more than "CPython interpreter allows
-execution of arbitrary Python code" would be, at any rate).
--- 
-Jeremy Stanley
+URL Redirection to Untrusted Site ('Open Redirect') vulnerability in Apache Software Foundation Apache Helix UI component.This issue affects Apache Helix all releases from 0.8.0 to 1.0.4.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
+
+
+Solution: removed the the forward component since it was improper designed for UI embedding.
+
+ User please upgrade to 1.1.0 to fix this issue.
+
+Credit:
+
+This issue was discovered by Everardo Padilla Saca (reporter)
+
+References:
+
+https://helix.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2022-47500
+
