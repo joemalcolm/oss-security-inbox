@@ -1,62 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/22/3
-Message-Id: <80A23796-B927-434A-BC10-C71AE0CAE95E@gentoo.org>
-Date: Sun, 22 May 2022 20:53:06 +0100
-From: Sam James <sam@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/16/2
+Message-ID: <a8f37ed8-030b-5330-d68e-8942292ca16c@apache.org>
+Date: Fri, 16 Dec 2022 12:54:19 +0000
+From: Arnout Engelen <engelen@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros list policy and Linux kernel
+Subject: CVE-2022-46870: Apache Zeppelin: Stored XSS in note permissions 
 Content-Type: text/plain; charset=utf-8
 
+Severity: moderate
 
+Description:
 
-> On 22 May 2022, at 20:46, Solar Designer <solar@...nwall.com> wrote:
-> 
-> On Mon, May 16, 2022 at 09:12:25PM +0200, Greg KH wrote:
->> Taking this a bit further, why is the kernel "special" for something
->> like this?  Why wouldn't this also apply to any other project with a
->> reasonable number of developers where you want additional review and
->> acceptance of changes before the world is notified that an issue was
->> fixed?  That allows issues to be fixed, and to be in place on users
->> systems before the issue is made public.
->> 
->> I would imagine that projects like Kubernetes, or Jenkins, or Docker or
->> Mozilla or Chrome or other large systems would also fall into this
->> category.  Heck, smaller projects too, the size shouldn't matter, what
->> matters is that users have the ability to upgrade before security issues
->> are told to the world, ensuring that user's systems are safe.
-> 
-> For issues commonly brought to (linux-)distros, we currently only
-> encounter this sort of conflicting preferences with the Linux kernel
-> community.  I guess some other projects also release silent fixes that
-> are only later documented to have known security relevance.  Maybe our
-> policy plays a role in non-reporting of such issues to distros, or maybe
-> not.  For example, we generally do not receive reports of
-> vulnerabilities in Firefox and Chrome/ium to the distros list, but I
-> don't recall anyone ever expressing any unhappiness about that - neither
-> those projects nor the distros.  So it's kind of fine?
-> 
+An Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in Apache Zeppelin allows logged-in users to execute arbitrary javascript in other users' browsers.
+This issue affects Apache Zeppelin before 0.8.2. Users are recommended to upgrade to a supported version of Zeppelin.
 
-I (and ajak) have expressed some frustration with how WebKit handles
-their disclosures but that's not something you (or *-distros) is able
-to control.
+This issue is being tracked as ZEPPELIN-4333 
 
-From what I understand of Firefox and Chromium, they both have
-sufficient CI abilities and internal review to not have the same kind
-of problem the kernel has (with its open development model).
+References:
 
->> it's your list, not mine, if
->> you are tired of running it, I totally understand.
-> 
-> A bit tired, yes, but that's in part because of us fighting each other's
-> windmills.
-> 
+https://zeppelin.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2022-46870
+https://issues.apache.org/jira/browse/ZEPPELIN-4333
 
-Thank you for continuing to do it.
-
-> Alexander
-
-best,
-sam
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (619 bytes)
