@@ -1,44 +1,96 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/27/1
-Message-ID: <b3783d0c-19d9-4381-41b2-66747da55c05@openssl.org>
-Date: Thu, 27 Oct 2022 09:41:42 +1100
-From: Dr Paul Dale <pauli@...nssl.org>
-To: Matan Giladi <matangi@...ckpoint.com>, "openssl-users@...nssl.org" <openssl-users@...nssl.org>, "openssl-announce@...nssl.org" <openssl-announce@...nssl.org>, "openssl-project@...nssl.org" <openssl-project@...nssl.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Forthcoming OpenSSL Bug Fix Release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/20/4
+Message-ID: <757dede0-dd98-104e-5fad-ac425a282382@ovn.org>
+Date: Tue, 20 Dec 2022 22:51:54 +0100
+From: Ilya Maximets <i.maximets@....org>
+To: John Helmert III <ajak@...too.org>, oss-security@...ts.openwall.com
+Cc: i.maximets@....org, ovs-discuss <ovs-discuss@...nvswitch.org>, Aaron Conole <aconole@...hat.com>, Qian Chen <cq674350529@...il.com>
+Subject: Re: [ADVISORY] LLDP underflow while parsing malformed Auto Attach TLV (Open vSwitch)
 Content-Type: text/plain; charset=utf-8
 
-1.1.1 is not susceptible to the CVE that is being fixed in 3.0:
+On 12/20/22 22:46, John Helmert III wrote:
+> On Tue, Dec 20, 2022 at 10:39:23PM +0100, Ilya Maximets wrote:
+>> Description
+>> ===========
+>>
+>> Multiple versions of Open vSwitch are vulnerable to crafted LLDP
+>> packets causing denial of service, and data underflow attacks.
+>> Triggering the vulnerabilities requires LLDP processing to be enabled
+>> for a specific port.  Open vSwitch versions prior to 2.4.0 are not
+>> vulnerable.
+>>
+>> The Common Vulnerabilities and Exposures project (cve.mitre.org)
+>> did not assign the identifier to this issue yet.  The identifier will
+>> be communicated separately.
+> 
+> Has a CVE been requested?
 
-    /the forthcoming release of OpenSSL version 1.1.1s that is a *bug
-    fix* release/.
+Yes, CVE was requested via Red Hat.   There was initial communication
+but they didn't provide us the identifier yet.
 
-(highlight added).
+The issue was reported publicly, so we decided to release without waiting.
 
-
-Dr Paul Dale
-
-On 26/10/22 22:17, Matan Giladi wrote:
-> Does 1.1.1s is going to include any security fix?
-> Can you please confirm that the critical issue found in 3.0.6 version is irrelevant for 1.1.1?
->
-> -----Original Message-----
-> From: openssl-announce<openssl-announce-bounces@...nssl.org>  On Behalf Of Ing. Martin Koci, MBA
-> Sent: Tuesday, October 25, 2022 21:36
-> To:openssl-announce@...nssl.org;openssl-users@...nssl.org;openssl-project@...nssl.org;oss-security@...ts.openwall.com
-> Subject: Forthcoming OpenSSL Bug Fix Release
->
-> Hello,
->
-> In addition to the already announced 3.0.7 release, the OpenSSL project team would like to announce the forthcoming release of OpenSSL version 1.1.1s that is a bug fix release.
->
-> This bug fix release will be made available on Tuesday 1st November 2022 between 1300-1700 UTC too.
->
-> Yours
-> The OpenSSL Project Team
->
->
-> Email secured by Check Point
-> Report Phishing:https://mta-cnf.iaas.checkpoint.com/mta_feedback?id=b3dc9e6004806fac5adb86a1a47504d00416eb2590b631502621736f0652d7ea&ck=3D4CC6C8CB55;48DE55E160E5;C5CEAA199888;&v=m
->
-> Email secured by Check Point
+> 
+>> This issue does not affect the `lldpd' project, although they share
+>> a code base.  The issue is related to parsing the Auto Attach TLVs,
+>> which is specific to the Open vSwitch implementation.
+>>
+>>
+>> Mitigation
+>> ==========
+>>
+>> For any version of Open vSwitch, preventing LLDP packets from reaching
+>> Open vSwitch mitigates the vulnerability.  We do not recommend
+>> attempting to mitigate the vulnerability this way because of the
+>> following difficulties:
+>>
+>>     - Open vSwitch obtains packets before the iptables host firewall,
+>>       so ebtables on the Open vSwitch host cannot ordinarily block the
+>>       vulnerability.
+>>
+>>     - If Open vSwitch is configured to receive and transmit LLDP
+>>       messages, the required functionality will need to be disabled
+>>       potentially disrupting the network.
+>>
+>> We have found that Open vSwitch is subject to a denial of service, and
+>> possibly a remote code execution exploit when LLDP processing is enabled
+>> on an interface.  By default, interfaces are not configured to process
+>> LLDP messages.
+>>
+>>
+>> Fix
+>> ===
+>>
+>> Patches to fix these vulnerabilities in Open vSwitch 2.13.x and newer are
+>> applied to the appropriate branches, and the original patch is located
+>> at:
+>>
+>>    https://mail.openvswitch.org/pipermail/ovs-dev/2022-December/400596.html
+>>
+>> Recommendation
+>> ==============
+>>
+>> We recommend that users of Open vSwitch apply the respective patch, or
+>> upgrade to a known patched version of Open vSwitch.  These include:
+>>
+>> * 3.0.3
+>> * 2.17.5
+>> * 2.16.6
+>> * 2.15.7
+>> * 2.14.8
+>> * 2.13.10
+>>
+>>
+>> Acknowledgments
+>> ===============
+>>
+>> The Open vSwitch team wishes to thank the reporter:
+>>
+>>   Qian Chen <cq674350529@...il.com>
+>>
+> 
+> 
+> 
+> 
+> 
 
