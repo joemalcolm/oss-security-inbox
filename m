@@ -1,31 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/03/5
-Message-ID: <tk0n6j$10pr$1@ciao.gmane.io>
-Date: Thu, 3 Nov 2022 15:36:51 -0000 (UTC)
-From: Tavis Ormandy <taviso@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/20/2
+Message-ID: <0894155b-6a17-c117-d826-04e4a6b8ecfa@ovn.org>
+Date: Tue, 20 Dec 2022 22:39:23 +0100
+From: Ilya Maximets <i.maximets@....org>
+To: oss-security@...ts.openwall.com, ovs-announce@...nvswitch.org, ovs-discuss <ovs-discuss@...nvswitch.org>
+Cc: i.maximets@....org, Aaron Conole <aconole@...hat.com>, Qian Chen <cq674350529@...il.com>
+Subject: [ADVISORY] LLDP underflow while parsing malformed Auto Attach TLV (Open vSwitch)
 Content-Type: text/plain; charset=utf-8
 
-On 2022-11-02, Kurt H Maier wrote:
-> On Wed, Nov 02, 2022 at 03:09:21PM +0100, Hanno Böck wrote:
->> FWIW it only takes a basically trivial fuzz target on the affected
->> function to find this bug with libfuzzer.
->
-> I'm not sure what the value is of all this Monday-morning
-> quarterbacking.
+Description
+===========
 
-Hanno and I have contributed months of programmer time on openssl
-research and produced a ton of CRITICAL/HIGH issues over the years, not
-to mention nss, gnutls, etc. What you're looking at isn't Monday-morning
-quarterbacking on an unrelated list - this is active prolific opensource
-security researchers discussing their opensource security work on the
-opensource security mailing list :)
+Multiple versions of Open vSwitch are vulnerable to crafted LLDP
+packets causing denial of service, and data underflow attacks.
+Triggering the vulnerabilities requires LLDP processing to be enabled
+for a specific port.  Open vSwitch versions prior to 2.4.0 are not
+vulnerable.
 
-Tavis.
+The Common Vulnerabilities and Exposures project (cve.mitre.org)
+did not assign the identifier to this issue yet.  The identifier will
+be communicated separately.  This issue does not affect the `lldpd'
+project, although they share a code base.  The issue is related to
+parsing the Auto Attach TLVs, which is specific to the Open vSwitch
+implementation.
 
--- 
- _o)            $ lynx lock.cmpxchg8b.com
- /\\  _o)  _o)  $ finger taviso@....org
-_\_V _( ) _( )  @taviso
 
+Mitigation
+==========
+
+For any version of Open vSwitch, preventing LLDP packets from reaching
+Open vSwitch mitigates the vulnerability.  We do not recommend
+attempting to mitigate the vulnerability this way because of the
+following difficulties:
+
+    - Open vSwitch obtains packets before the iptables host firewall,
+      so ebtables on the Open vSwitch host cannot ordinarily block the
+      vulnerability.
+
+    - If Open vSwitch is configured to receive and transmit LLDP
+      messages, the required functionality will need to be disabled
+      potentially disrupting the network.
+
+We have found that Open vSwitch is subject to a denial of service, and
+possibly a remote code execution exploit when LLDP processing is enabled
+on an interface.  By default, interfaces are not configured to process
+LLDP messages.
+
+
+Fix
+===
+
+Patches to fix these vulnerabilities in Open vSwitch 2.13.x and newer are
+applied to the appropriate branches, and the original patch is located
+at:
+
+   https://mail.openvswitch.org/pipermail/ovs-dev/2022-December/400596.html
+
+Recommendation
+==============
+
+We recommend that users of Open vSwitch apply the respective patch, or
+upgrade to a known patched version of Open vSwitch.  These include:
+
+* 3.0.3
+* 2.17.5
+* 2.16.6
+* 2.15.7
+* 2.14.8
+* 2.13.10
+
+
+Acknowledgments
+===============
+
+The Open vSwitch team wishes to thank the reporter:
+
+  Qian Chen <cq674350529@...il.com>
+
+
+Download attachment "OpenPGP_0xB9F7EC77C829BF96.asc" of type "application/pgp-keys" (4740 bytes)
+
+Download attachment "OpenPGP_signature" of type "application/pgp-signature" (841 bytes)
