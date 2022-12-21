@@ -1,37 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/18/2
-Message-ID: <CADW8OBvo2NjaNEGsFsaT3QX3UtqvuLJbL07Kgwc1+qrJ51LiQQ@mail.gmail.com>
-Date: Wed, 18 May 2022 12:39:52 -0700
-From: Kyle Zeng <zengyhkyle@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/21/7
+Message-ID: <Y6NBGsQ+7FAaWuv/@itl-email>
+Date: Wed, 21 Dec 2022 12:23:35 -0500
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-29581: Linux kernel cls_u32 UAF
+Subject: Re: [Linux] /proc/pid/stat parsing bugs
 Content-Type: text/plain; charset=utf-8
 
-Hi there,
+On Wed, Dec 21, 2022 at 06:13:17PM +0100, Dmitry Vyukov wrote:
+> Hello,
+> 
+> This is not a single vulnerability, the list of affected software is
+> large, but it's not a security issue for all of it.
+> 
+> It occurred to me that most of the Linux procfs /proc/pid/stat and
+> /proc/pid/task/tid/stat parsing code out there is buggy. The fine
+> contains a set of numbers about the task:
+> https://man7.org/linux/man-pages/man5/proc.5.html
+> 
+> e.g. $ cat /proc/self/stat
+> 1715376 (cat) R 1544883 1715376 1544883 34819 1715376 4194304 106 0 0
+> 0 0 0 0 0 20 0 1 0 42505561 9207808 237 18446744073709551615
+> 93955355631616 93955355651497 140737444557056 0 0 0 0 0 0 0 0 0 17 36
+> 0 0 0 0 0 93955355667504 93955355669120 93955385581568 140737444559745
+> 140737444559765 140737444559765 140737444564971 0
+> 
+> Most of the code splits it by space and takes an N-th field.
+> The problem is that the process name "(cat)" can contain spaces (and
+> brackets). Potentially some important software (containers/sandboxes)
+> can be tricked into getting wrong data, and I've seen cases close to
+> stack overflows (buffer for a fixed number of fields is allocated on
+> stack).
+> 
+> Some examples:
+> OpenJDK:
+> https://sourcegraph.com/github.com/openjdk/jdk/-/blob/src/jdk.management/unix/native/libmanagement_ext/OperatingSystemImpl.c?L133-139
+> https://sourcegraph.com/github.com/openjdk/jdk8u/-/blob/jdk/src/solaris/native/sun/management/OperatingSystemImpl.c?L223-229
+> 
+> Ansible:
+> https://sourcegraph.com/github.com/ansible/ansible/-/blob/lib/ansible/modules/yum.py?L507-510
+> 
+> Libuv:
+> https://sourcegraph.com/github.com/libuv/libuv/-/blob/src/unix/linux.c?L674-701
+> 
+> bdwgc:
+> https://sourcegraph.com/github.com/mono/linux-packaging-mono/-/blob/external/bdwgc/os_dep.c?L1138-1155
+> 
+> But really most of the code that does it:
+> https://sourcegraph.com/search?q=context:global+/%5C%22%5C/proc%5C/.*%5C/stat%5C%22/
+> 
+> The only way to parse it is to do strrchr(')') first (fortunately it
+> contains just one unescaped string).
+> 
+> Thanks
 
-I recently discovered that a patch in Linux kernel upstream has
-security implications. And some vendor-maintained kernels were still
-affected when I checked on May 17th.
+Should Linux be patched to somehow escape the spaces, or replace them
+with something else?  /proc/pid/status is even harder to parse robustly.
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-# Impact
-I wrote a proof-of-concept exploit and demonstrated that it can be
-used to achieve local privilege escalation.
-
-# Vulnerability
-The vulnerability lies in the u32 network traffic classifier and it is
-enabled in most vendors. When u32_change function is called and it
-enters an error path, it will mistakenly reduce the refcount of the
-current network namespace, which can lead to UAF of the "struct net"
-data structure that is associated with the current net namespace. This
-UAF can lead to local privilege escalation.
-
-# Patch
-The patch is merged into Linux kernel main tree already and can be
-found here: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3db09e762dc79584a69c10d74a6b98f89a9979f8.
-
-# Disclosure
-I reported it to Google on Apr 21st, a CVE was allocated on Apr 22nd,
-and the detail was made public on May 17th.
-
---
-Kyle Zeng
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
