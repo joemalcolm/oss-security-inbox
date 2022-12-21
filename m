@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2317" "Wednesday" "12" "December" "2018" "16:27:02" "+0100" "=?UTF-8?B?U2FsdmEgUGVpcsOz?=" "speirofr@gmail.com" "<CA+NXwpT9J40mJe_=h-R==qJBc=9PA+-80b8p4gdaJ=uy_JhMJg@mail.gmail.com>" "80" "[oss-security] CVE Request: mini-httpd (<= v1.30) is affected by a response discrepancy information exposure (CWE-204)" "^Cc:" nil nil "12" "2018121215:27:02" "[oss-security] CVE Request: mini-httpd (<= v1.30) is affected by a response discrepancy information exposure (CWE-204)" (number mark "U       speirofr@gma Dec 12   80/2317  " thread-indent "\"[oss-security] CVE Request: mini-httpd (<= v1.30) is affected by a response discrepancy information exposure (CWE-204)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 22375 invoked by uid 550); 12 Dec 2018 15:40:54 -0000
+Received: (qmail 21913 invoked by uid 550); 21 Dec 2022 17:13:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,120 +6,86 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1151 invoked from network); 12 Dec 2018 15:27:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=+vgoc5/m77CAUU2NxK/iWj8e5UdoGSTXayjfthkIw3Q=;
-        b=tdH87arqKHoH/pLivum3PCERcGSk4VL1W+Y3PbHcuxZoBQ+3ZY3JYwxO/HYlKQV0Vv
-         yJdNS3ACps9BdgD+cCNfd4DkKPoJc+UjgJldqsxV3vmJoTjVHtjElBEetN4h72PcL62m
-         ZTfE3dqPcgpd9+pI6ypA8S/J0BZWDQr5g3cY/ivpTCylcg8ZaNgKdoypHQ/pEMWfBO2T
-         9DyWmT2T9EWvxVZ/IFu57A3ybNiw9eFaghOfZyy1rcDfslUWi9cSQiWrSb9lsh2W2KTe
-         o3BjWE/8HlNVSqOCfBt/ZGMn6HeHH0maQxN4+yo7oFQyqXTQFIswsfZNwlfUJb/8wzD8
-         TAsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=+vgoc5/m77CAUU2NxK/iWj8e5UdoGSTXayjfthkIw3Q=;
-        b=pzVHazrNLVUZ1WO2MW7Ia1MIEPEVMTdyv3jWqz85IUmsxNYv2AhTV0ht7jYfqULBiP
-         rHrF4ExGK3LXH/eluruDNhGc4yD1VHJvNysVxeTEnIdUha2j/JY3ouR3ngymfArveRPM
-         D2yao5pwzYVfxP8Gh1+Td3dmihcrNqqOI8N8yWiO3U0kfB0ABVwry0MQuAYuwP2THOPR
-         k2xcc5BtrFCskLbwU2arqVADgl92toa0+pD9JYX6o2j8FwftH/BDw9pu8CWbS+fR5W09
-         kSCsMlgeJvmRsU9/dAuUDLu2ZiNt6ayNtlM/1breSiwiR8F/9LpssAdvyZiDjXg+ORR5
-         6szg==
-X-Gm-Message-State: AA+aEWbwZczZPl3RVeASmge7zyj03Ee/VHo7ISz/GmOKqFjUAW8aOHdT
-	efsnZ4o/pq/6pUGSfP6meU1+V3RwvvkvzPrTIgJ+rkoY
-X-Google-Smtp-Source: AFSGD/UNURwUbVCVpB4hz+md7IHBFbjk0P4Mh9M5Pur5lKtgh4EPLIeclizKtezsBz0bo6JEuQ8QvslQP0TP0wQJdP8=
-X-Received: by 2002:a37:360a:: with SMTP id d10mr18437685qka.40.1544628433210;
- Wed, 12 Dec 2018 07:27:13 -0800 (PST)
-MIME-Version: 1.0
-Message-ID: <CA+NXwpT9J40mJe_=h-R==qJBc=9PA+-80b8p4gdaJ=uy_JhMJg@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000125310057cd4d572"
-Cc: security@debian.org
-Date: Wed, 12 Dec 2018 16:27:02 +0100
-From: =?UTF-8?B?U2FsdmEgUGVpcsOz?= <speirofr@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request: mini-httpd (<= v1.30) is affected by a response
- discrepancy information exposure (CWE-204)
+Received: (qmail 21878 invoked from network); 21 Dec 2022 17:13:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=UdeYIubiwGV2eGT6zxXjlVbpErxiQ7MWCX4wagFxSSw=;
+        b=ITdTpsBPWNbuieM59Y+XFuWn22ADkXVq4aQ22z4gULjneBJyONXt/tlubLQSpDQqdu
+         BLzz4amw1ze06BJAoUqiKr63H1JvqE44yVMC7rUmaL0rnRlFyAtWuU0XVD9kHfmpzqCQ
+         kc2ENBxCbKLF53qBIZsAlbBGwssDhz/yw2MKYrH2mmZsZ6PDUCCiolQKkKl+aO0sKIJL
+         RLJlRrZKcvmbH1aoQOLn1BipwtVYBVyvn+aP16WLJ0F7TxN1JX6IzJAaJHn4YYC8JjGV
+         Sc+Nnh9WGW64sIlZckTMLO/ttsNakaV8Cabeu+7T/9m9PDqaYZxTZxbFMXIKcdKEmlK4
+         TWCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UdeYIubiwGV2eGT6zxXjlVbpErxiQ7MWCX4wagFxSSw=;
+        b=uVpRNYyh7Sksgn3lRBRUHIfJHN7e2YshYJp2ienjUACO9yceFk1ppUnOxmafCrTdoa
+         4fYhql0ipVF5ZcEZqkRNhQNsl0byj+wmikd6ULPmXeLP2ptGuPzMSMOWl3FpO2ChX9if
+         SDTOiWRspeS2XyL1zcM7wK8GubduTXc1oOXu3sheHKQI2+OcbGpYeNEHJ8icQ06xw3Vi
+         ScpYiqLsoQrrCxyBiVZu9dbK+8hOQKb3+XNaAxg8xu014F0CEOrzi2HrgcavEWRDBovo
+         4TG6HKD4oyGuNRIs1x88VxgMl5FlELK9vgaZKXwBWSMWVEIFDjwvQ9Pv439Y1w60CEhy
+         4JnQ==
+X-Gm-Message-State: AFqh2kr1YPnelwxuYot3n8Ez8PsdJNZw88srHcfmWb95M8k+TaDp7pi6
+	eI+FxAfrEmfD/kdmWjQO+QTAiBCY34ZhaKyBN3HXXtQLChit9tIe
+X-Google-Smtp-Source: AMrXdXuvpxbC8Jb1UwIrnk6xaMQI53N+tqw4qjcrBnl0FTBnnODbDFppEsKXrExrxgri0l3asGg1IpGXcJmbyN0aSOs=
+X-Received: by 2002:a05:6870:4256:b0:148:5f4a:7f19 with SMTP id
+ v22-20020a056870425600b001485f4a7f19mr214666oac.120.1671642808681; Wed, 21
+ Dec 2022 09:13:28 -0800 (PST)
+MIME-Version: 1.0
+From: Dmitry Vyukov <dvyukov@google.com>
+Date: Wed, 21 Dec 2022 18:13:17 +0100
+Message-ID: <CACT4Y+aqb9V=WO0gsN1DgqimrjHiY3x+KvKGiz7b95jh9gubhw@mail.gmail.com>
 To: oss-security@lists.openwall.com
-
---000000000000125310057cd4d572
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] [Linux] /proc/pid/stat parsing bugs
 
-Hi everyone,
+Hello,
 
-The mini-httpd daemon (version <=3D v1.30) shipped in Debian/Ubuntu from [1]
-is affected by a response discrepancy information exposure (CWE-204) that
-enables an attacker to remotely enumerate valid htpasswd usernames (RFC
-7617).
+This is not a single vulnerability, the list of affected software is
+large, but it's not a security issue for all of it.
 
-A more detailed advisory can be found at:
-https://speirofr.appspot.com/files/advisory/SPADV-2018-01.md
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D916190
+It occurred to me that most of the Linux procfs /proc/pid/stat and
+/proc/pid/task/tid/stat parsing code out there is buggy. The fine
+contains a set of numbers about the task:
+https://man7.org/linux/man-pages/man5/proc.5.html
 
-Is there a CVE for this? If not, could one be assigned, please?
+e.g. $ cat /proc/self/stat
+1715376 (cat) R 1544883 1715376 1544883 34819 1715376 4194304 106 0 0
+0 0 0 0 0 20 0 1 0 42505561 9207808 237 18446744073709551615
+93955355631616 93955355651497 140737444557056 0 0 0 0 0 0 0 0 0 17 36
+0 0 0 0 0 93955355667504 93955355669120 93955385581568 140737444559745
+140737444559765 140737444559765 140737444564971 0
 
-[1] http://www.acme.com/software/mini_httpd/
+Most of the code splits it by space and takes an N-th field.
+The problem is that the process name "(cat)" can contain spaces (and
+brackets). Potentially some important software (containers/sandboxes)
+can be tricked into getting wrong data, and I've seen cases close to
+stack overflows (buffer for a fixed number of fields is allocated on
+stack).
 
-Best Regards,
---
-Salva Peir=C3=B3. Software Engineer
-https://speirofr.appspot.com
+Some examples:
+OpenJDK:
+https://sourcegraph.com/github.com/openjdk/jdk/-/blob/src/jdk.management/unix/native/libmanagement_ext/OperatingSystemImpl.c?L133-139
+https://sourcegraph.com/github.com/openjdk/jdk8u/-/blob/jdk/src/solaris/native/sun/management/OperatingSystemImpl.c?L223-229
 
-##  Description
+Ansible:
+https://sourcegraph.com/github.com/ansible/ansible/-/blob/lib/ansible/modules/yum.py?L507-510
 
-Requesting an .htpasswd protected URL with a valid username part without
-providing the corresponding password eg, "user:" per (RFC 7617)
-causes the mini-httpd to unexpectedly terminate.
+Libuv:
+https://sourcegraph.com/github.com/libuv/libuv/-/blob/src/unix/linux.c?L674-701
 
-~~~
-user@box $ curl http://user:@127.0.0.1:8000/auth/
-curl: (52) Empty reply from server
-~~~
+bdwgc:
+https://sourcegraph.com/github.com/mono/linux-packaging-mono/-/blob/external/bdwgc/os_dep.c?L1138-1155
 
-The problem is that the mini_httpd.c:2407 contains a NULL pointer
-dereference bug
-that allows a remote attacker to enumerate valid htpasswd usernames (RFC
-7617).
+But really most of the code that does it:
+https://sourcegraph.com/search?q=context:global+/%5C%22%5C/proc%5C/.*%5C/stat%5C%22/
 
-## Proposed Fix
+The only way to parse it is to do strrchr(')') first (fortunately it
+contains just one unescaped string).
 
-~~~
-=46rom 62eff179b34cd1435017438ab99ed1906b6cc6c8 Mon Sep 17 00:00:00 2001
-From: =3D?UTF-8?q?Salva=3D20Peir=3DC3=3DB3?=3D <speirofr@gmail.com>
-Date: Wed, 5 Dec 2018 18:46:46 +0100
-Subject: [PATCH] Fix NULL pointer dereference at mini_httpd.c:2407
-(SPADV-2018-01)
-
----
- mini_httpd.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/mini_httpd.c b/mini_httpd.c
-index 03d0cdd..77f030f 100644
---- a/mini_httpd.c
-+++ b/mini_httpd.c
-@@ -2404,7 +2404,8 @@ auth_check( char* dirname )
-         /* Yes. */
-         (void) fclose( fp );
-         /* So is the password right? */
--        if ( strcmp( crypt( authpass, cryp ), cryp ) =3D=3D 0 )
-+        char *cryptpass =3D crypt( authpass, cryp );
-+        if ((cryptpass !=3D NULL) && (strcmp(cryptpass, cryp ) =3D=3D 0) )
-         {
-         /* Ok! */
-         remoteuser =3D line;
---
-2.11.0
-~~~
-
-## Versions affected
-
-All versions of mini-httpd below <=3D v1.30.
-    http://www.acme.com/software/mini_httpd/
-
-Debian: https://packages.debian.org/stretch/mini-httpd
-Ubuntu: https://launchpad.net/ubuntu/+source/mini-httpd
-
---000000000000125310057cd4d572--
+Thanks
