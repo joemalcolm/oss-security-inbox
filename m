@@ -1,20 +1,108 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/13/3
-Message-ID: <c2d11523-cf18-652b-a817-de0dccd15910@apache.org>
-Date: Wed, 13 Apr 2022 16:31:29 +0000
-From: Ville Brofeldt <villebro@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-27479: Apache Superset: SQL injection vulnerability in chart data API 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/21/1
+Message-ID: <5r56o44n-369n-6s66-rs5q-84os4n2p64os@unkk.fr>
+Date: Wed, 21 Dec 2022 08:23:58 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: curl: CVE-2022-43551: Another HSTS bypass via IDN
 Content-Type: text/plain; charset=utf-8
 
-Description:
+CVE-2022-43551: Another HSTS bypass via IDN
+===========================================
 
-Apache Superset before 1.4.2 is vulnerable to SQL injection in chart data requests. Users should update to 1.4.2 or higher which addresses this issue.
+Project curl Security Advisory, December 21 2022 -
+[Permalink](https://curl.se/docs/CVE-2022-43551.html)
 
-This issue is being tracked as SUPERSET-20
+VULNERABILITY
+-------------
 
-References:
+curl's HSTS check could be bypassed to trick it to keep using HTTP.
 
-https://lists.apache.org/thread/94th50j5d0y2fw7ysx0g7w3t6jk3z7q6
-https://lists.apache.org/thread/ztb9b6jd9rngoxwvq8r4fhpp401o613y
+Using its HSTS support, curl can be instructed to use HTTPS instead of using
+an insecure clear-text HTTP step even when HTTP is provided in the URL.
 
+The HSTS mechanism could be bypassed if the host name in the given URL first
+uses IDN characters that get replaced to ASCII counterparts as part of the IDN
+conversion. Like using the character UTF-8 U+3002 (IDEOGRAPHIC FULL STOP)
+instead of the common ASCII full stop (U+002E). Then in a subsequent request,
+it does not detect the HSTS state and makes a clear text transfer. Because it
+would store the info IDN encoded but look for it IDN decoded.
+
+Reproducible like this:
+
+     curl --hsts hsts.txt https://curl%E3%80%82se
+     curl --hsts hsts.txt http://curl%E3%80%82se
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+This flaw was introduced in [commit
+7385610d0c7](https://github.com/curl/curl/commit/7385610d0c7), which was
+shipped enabled by default from [commit
+d71ff2b9db566b3f](https://github.com/curl/curl/commit/d71ff2b9db566b3f) in
+curl 7.77.0.
+
+This issue is similar to both the previous issues
+[CVE-2022-42916](https://curl.se/docs/CVE-2022-42916.html) and
+[CVE-2022-30115](https://curl.se/docs/CVE-2022-30115.html).
+
+This became a new separate vulnerability simply because we did not properly
+test and research related side-issues while we worked on fixing the previous
+issues.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2022-43551 to this issue.
+
+CWE-319: Cleartext Transmission of Sensitive Information
+
+Severity: Medium
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.77.0 to and including 7.86.0
+- Not affected versions: curl < 7.77.0 and curl >= 7.86.0
+
+curl built without IDN support is not vulnerable.
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+A [fix for CVE-2022-43551](https://github.com/curl/curl/commit/9e71901634e276dd)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 7.87.0
+
+  B - Apply the patch to your local version
+
+  C - Stick to always using `HTTPS://` in URLs
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on October 29, 2022. We contacted
+distros@...nwall on December 12, 2022.
+
+curl 7.87.0 was released on December 21 2022, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+- Reported-by: Hiroki Kurosawa
+- Patched-by: Daniel Stenberg
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
