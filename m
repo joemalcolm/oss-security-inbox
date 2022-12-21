@@ -1,20 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/06/7
-Message-ID: <20220806192502.GA10997@openwall.com>
-Date: Sat, 6 Aug 2022 21:25:02 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Evgeny Legerov <admin@...ndisco.cc>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Exim 4.95 invalid free
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/21/9
+Message-ID: <20221221194203.40e37b41@computer>
+Date: Wed, 21 Dec 2022 19:42:03 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Directory traversal in sharutils/uudecode and python uu module
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Aug 06, 2022 at 08:47:21PM +0200, Solar Designer wrote:
-> Yet I understand we cannot really ask you for more, and a brief
-> link-only heads-up is better than none.
+Hi
 
-When I wrote the above, I didn't realize these two bugs (in zlib and
-Exim) were Evgeny's own findings.  Now that I do, I think it isn't
-unreasonable for us to ask Evgeny to include the full detail in such
-postings going forward.  We'd appreciate that, Evgeny!
+uuencode is an old method to encode binary data in ascii.
 
-Alexander
+uuencoded files start with a line of this type:
+begin 644 [filename]
+
+If the implementation does not check for it this allows a directory
+traversal attack, e.g. like this:
+begin 644 /etc/shadow
+
+Or
+begin 644 ../../../../../etc/shadow
+
+If one can convince someone with root privileges to decode such a file
+this may thus compromise a system.
+
+I discovered two implementations vulnerable to this: The uudecode tool
+shipped with GNU sharutils and the uu module in python (only if no
+explicit filename is given). Both are vulnerable to both variations.
+
+I reported both on November 27th. The python security team asked me to
+report it to their public bug tracker, as they don't consider it a high
+risk issue:
+https://github.com/python/cpython/issues/99889
+
+The python uu module is deprecated and will be removed in python 3.13.
+The python developers pointed out that it is rarely used, and it is not
+vulnerable if an output file name is given.
+The python binascii module contains an uu decoder that is unaffected
+(as it does not directly write a file, it decodes to a variable) and no
+deprecation or removal is planned. I guess this means if you're using
+the python uu module you should probably switch to binascii.
+
+I got a reply confirming the report from the sharutils developers,
+pointing out that this can be interpreted as expected behavior
+according to the posix standard. I don't expect a fix any time soon,
+their latest release is from 2015.
+
+-- 
+Hanno Böck
+https://hboeck.de/
