@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["522" "Monday" "27" "February" "2017" "11:52:36" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<1621585.jUp2hzoFSL@blackgate>" "20" "Re: [oss-security] potrace: invalid memory access in findnext (decompose.c)" "^Date:" nil nil "2" "2017022710:52:36" "[oss-security] potrace: invalid memory access in findnext (decompose.c)" (number mark "U       ago@gentoo.o Feb 27   20/522   " thread-indent "\"Re: [oss-security] potrace: invalid memory access in findnext (decompose.c)\"\n") "<4079765.cAzWC0Rqb2@arcadia>" ("<4079765.cAzWC0Rqb2@arcadia>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 25640 invoked by uid 550); 27 Feb 2017 10:52:54 -0000
+Received: (qmail 28091 invoked by uid 550); 21 Dec 2022 18:42:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,37 +6,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25622 invoked from network); 27 Feb 2017 10:52:53 -0000
-Message-ID: <1621585.jUp2hzoFSL@blackgate>
-User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.28; x86_64; ; )
-In-Reply-To: <4079765.cAzWC0Rqb2@arcadia>
-References: <4079765.cAzWC0Rqb2@arcadia>
-MIME-Version: 1.0
-Content-Type: multipart/alternative; boundary="nextPart1609757.RTsCvMjxWy"
-Content-Transfer-Encoding: 7Bit
-Date: Mon, 27 Feb 2017 11:52:36 +0100
-From: Agostino Sarubbo <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] potrace: invalid memory access in findnext (decompose.c)
+Received: (qmail 28061 invoked from network); 21 Dec 2022 18:42:17 -0000
+Date: Wed, 21 Dec 2022 19:42:03 +0100
+From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
 To: oss-security@lists.openwall.com
+Message-ID: <20221221194203.40e37b41@computer>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.35; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] Directory traversal in sharutils/uudecode and python uu module
 
---nextPart1609757.RTsCvMjxWy
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
+Hi
 
-On Saturday 08 October 2016 22:29:54 Agostino Sarubbo wrote:
-> Permalink:
-> https://blogs.gentoo.org/ago/2016/08/29/potrace-invalid-memory-access-in-fin
-> dnext-decompose-c/
+uuencode is an old method to encode binary data in ascii.
 
-I'd like to notify that upstream released a patch here:
-http://potrace.sourceforge.net/patches/potrace-1.13-CVE-2016-8685.patch
+uuencoded files start with a line of this type:
+begin 644 [filename]
 
-and it is fixed in the 1.14 release
+If the implementation does not check for it this allows a directory
+traversal attack, e.g. like this:
+begin 644 /etc/shadow
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Or
+begin 644 ../../../../../etc/shadow
 
---nextPart1609757.RTsCvMjxWy--
+If one can convince someone with root privileges to decode such a file
+this may thus compromise a system.
 
+I discovered two implementations vulnerable to this: The uudecode tool
+shipped with GNU sharutils and the uu module in python (only if no
+explicit filename is given). Both are vulnerable to both variations.
+
+I reported both on November 27th. The python security team asked me to
+report it to their public bug tracker, as they don't consider it a high
+risk issue:
+https://github.com/python/cpython/issues/99889
+
+The python uu module is deprecated and will be removed in python 3.13.
+The python developers pointed out that it is rarely used, and it is not
+vulnerable if an output file name is given.
+The python binascii module contains an uu decoder that is unaffected
+(as it does not directly write a file, it decodes to a variable) and no
+deprecation or removal is planned. I guess this means if you're using
+the python uu module you should probably switch to binascii.
+
+I got a reply confirming the report from the sharutils developers,
+pointing out that this can be interpreted as expected behavior
+according to the posix standard. I don't expect a fix any time soon,
+their latest release is from 2015.
+
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
