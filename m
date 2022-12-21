@@ -1,47 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/10/1
-Message-ID: <CAKx+4-rd1JnV+C-0kxq4NWn1N-BPOxZpE29iYsXk8Y6MqbVkAw@mail.gmail.com>
-Date: Mon, 10 Jan 2022 17:49:47 +0530
-From: Rohit Keshri <rkeshri@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/21/8
+Message-ID: <cad6e3380e53431ae91d5a3b520e59a59043ab90@opteya.com>
+Date: Wed, 21 Dec 2022 18:13:50 +0000
+From: "Yann Droneaud" <ydroneaud@...eya.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-4155 kernel: xfs: raw block device data leak in ioctl(XFS_IOC_ALLOCSP)
+Subject: Re: [Linux] /proc/pid/stat parsing bugs
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
 
-A data leak flaw was found in the way XFS_IOC_ALLOCSP IOCTL in the XFS
-filesystem allowed for a size increase of files with unaligned size. A
-local attacker could use this flaw to leak data on the XFS filesystem
-otherwise not accessible to them.
+21 décembre 2022 à 18:59 "Demi Marie Obenour" <demi@...isiblethingslab.com> a écrit:
+> On Wed, Dec 21, 2022 at 06:13:17PM +0100, Dmitry Vyukov wrote:
+> 
+> > 
+> > Hello,
+> >  
+> >  This is not a single vulnerability, the list of affected software is
+> >  large, but it's not a security issue for all of it.
+> >  
+> >  It occurred to me that most of the Linux procfs /proc/pid/stat and
+> >  /proc/pid/task/tid/stat parsing code out there is buggy. The fine
+> >  contains a set of numbers about the task:
+> >  https://man7.org/linux/man-pages/man5/proc.5.html
+> >  
+> >  e.g. $ cat /proc/self/stat
+> >  1715376 (cat) R 1544883 1715376 1544883 34819 1715376 4194304 106 0 0
+> >  0 0 0 0 0 20 0 1 0 42505561 9207808 237 18446744073709551615
+> >  93955355631616 93955355651497 140737444557056 0 0 0 0 0 0 0 0 0 17 36
+> >  0 0 0 0 0 93955355667504 93955355669120 93955385581568 140737444559745
+> >  140737444559765 140737444559765 140737444564971 0
+> >  
+> >  Most of the code splits it by space and takes an N-th field.
+> >  The problem is that the process name "(cat)" can contain spaces (and
+> >  brackets). Potentially some important software (containers/sandboxes)
+> >  can be tricked into getting wrong data, and I've seen cases close to
+> >  stack overflows (buffer for a fixed number of fields is allocated on
+> >  stack).
+> >  
+> >  Some examples:
+> >  OpenJDK:
+> >  https://sourcegraph.com/github.com/openjdk/jdk/-/blob/src/jdk.management/unix/native/libmanagement_ext/OperatingSystemImpl.c?L133-139
+> >  https://sourcegraph.com/github.com/openjdk/jdk8u/-/blob/jdk/src/solaris/native/sun/management/OperatingSystemImpl.c?L223-229
+> >  
+> >  Ansible:
+> >  https://sourcegraph.com/github.com/ansible/ansible/-/blob/lib/ansible/modules/yum.py?L507-510
+> >  
+> >  Libuv:
+> >  https://sourcegraph.com/github.com/libuv/libuv/-/blob/src/unix/linux.c?L674-701
+> >  
+> >  bdwgc:
+> >  https://sourcegraph.com/github.com/mono/linux-packaging-mono/-/blob/external/bdwgc/os_dep.c?L1138-1155
+> >  
+> >  But really most of the code that does it:
+> >  https://sourcegraph.com/search?q=context:global+/%5C%22%5C/proc%5C/.*%5C/stat%5C%22/
+> >  
+> >  The only way to parse it is to do strrchr(')') first (fortunately it
+> >  contains just one unescaped string).
+> >  
+> >  Thanks
+> > 
+> 
+> Should Linux be patched to somehow escape the spaces, or replace them
+> with something else? /proc/pid/status is even harder to parse robustly.
 
-#Description
+It might be difficult because of Linux's policy to not break userspace ABI.
 
-(Kirill reported)
-"the scenario is:
+For example, I've suggested some sort of escaping on /proc/net/unix, and
+it was not welcomed.
 
-1)truncate() file by unaligned @size;
-2)ioctl(XFS_IOC_ALLOCSP) to increase the file size up to 4096.
+https://lore.kernel.org/all/20220406102213.2020784-1-ydroneaud@opteya.com/
 
-then xfs_ioc_space()->xfs_vn_setattr_size() never zeros [round_down(@size,
-4096), @size]
-and this raw block device data leaks away to user."
+In a follow up, I've added a PoC for injecting fake entries in /proc/net/unix
 
-#Fix
-The patch for this issue:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=983d8e60f50806f90534cc5373d0ce867e5aaf79
+https://lore.kernel.org/all/8a87957e-4d33-9351-ae74-243441cb03cd@opteya.com/
 
-#CVE
-Red Hat has assigned CVE-2021-4155 to this issue.
-https://access.redhat.com/security/cve/CVE-2021-4155
-https://bugzilla.redhat.com/show_bug.cgi?id=2034813
+I didn't found a way to abuse this issue: no vulnerability, no need for
+a change that would break userspace ABI.
 
-#Credit
-Kirill Tkhai (Virtuozzo Kernel team)
+Regards.
 
-Thanks,
-..
-Rohit Keshri / Red Hat Product Security Team
-PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
-
-secalert@...hat.com for urgent response
-
+-- 
+Yann Droneaud
+OPTEYA
