@@ -1,29 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/19/1
-Message-ID: <20220719001848.GA1516019@millbarge>
-Date: Tue, 19 Jul 2022 00:18:48 +0000
-From: Seth Arnold <seth.arnold@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/21/6
+Message-ID: <CACT4Y+aqb9V=WO0gsN1DgqimrjHiY3x+KvKGiz7b95jh9gubhw@mail.gmail.com>
+Date: Wed, 21 Dec 2022 18:13:17 +0100
+From: Dmitry Vyukov <dvyukov@...gle.com>
 To: oss-security@...ts.openwall.com
-Subject: snowflakedb security contacts
+Subject: [Linux] /proc/pid/stat parsing bugs
 Content-Type: text/plain; charset=utf-8
 
-Hello, if anyone has friends or acquaintances at snowflakedb, please
-direct their attention to:
+Hello,
 
-https://github.com/snowflakedb/gosnowflake/issues/619
-"Please add a SECURITY.md file and security policy"
+This is not a single vulnerability, the list of affected software is
+large, but it's not a security issue for all of it.
 
-I don't know if what I found is actually an issue but I'd like to give
-them a chance to see it privately before telling the whole world. I've
-not had much luck with the Usual Methods so far.
+It occurred to me that most of the Linux procfs /proc/pid/stat and
+/proc/pid/task/tid/stat parsing code out there is buggy. The fine
+contains a set of numbers about the task:
+https://man7.org/linux/man-pages/man5/proc.5.html
 
-Everyone else: *please* take five minutes to write down how you'd like
-people to report security issues. Some people subscribe to the "security
-bugs are just bugs, report them like any other" philosophy. Some people
-want a chance to look at potential security issues privately, first.
+e.g. $ cat /proc/self/stat
+1715376 (cat) R 1544883 1715376 1544883 34819 1715376 4194304 106 0 0
+0 0 0 0 0 20 0 1 0 42505561 9207808 237 18446744073709551615
+93955355631616 93955355651497 140737444557056 0 0 0 0 0 0 0 0 0 17 36
+0 0 0 0 0 93955355667504 93955355669120 93955385581568 140737444559745
+140737444559765 140737444559765 140737444564971 0
 
-Whatever you'd like, please just write it down someplace obvious.
+Most of the code splits it by space and takes an N-th field.
+The problem is that the process name "(cat)" can contain spaces (and
+brackets). Potentially some important software (containers/sandboxes)
+can be tricked into getting wrong data, and I've seen cases close to
+stack overflows (buffer for a fixed number of fields is allocated on
+stack).
+
+Some examples:
+OpenJDK:
+https://sourcegraph.com/github.com/openjdk/jdk/-/blob/src/jdk.management/unix/native/libmanagement_ext/OperatingSystemImpl.c?L133-139
+https://sourcegraph.com/github.com/openjdk/jdk8u/-/blob/jdk/src/solaris/native/sun/management/OperatingSystemImpl.c?L223-229
+
+Ansible:
+https://sourcegraph.com/github.com/ansible/ansible/-/blob/lib/ansible/modules/yum.py?L507-510
+
+Libuv:
+https://sourcegraph.com/github.com/libuv/libuv/-/blob/src/unix/linux.c?L674-701
+
+bdwgc:
+https://sourcegraph.com/github.com/mono/linux-packaging-mono/-/blob/external/bdwgc/os_dep.c?L1138-1155
+
+But really most of the code that does it:
+https://sourcegraph.com/search?q=context:global+/%5C%22%5C/proc%5C/.*%5C/stat%5C%22/
+
+The only way to parse it is to do strrchr(')') first (fortunately it
+contains just one unescaped string).
 
 Thanks
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
