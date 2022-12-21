@@ -1,27 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/03/4
-Message-ID: <7b1d53fa-a746-b369-211d-a8400fd0ea77@apache.org>
-Date: Wed, 03 Aug 2022 20:46:05 +0000
-From: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-28731: Apache JSPWiki CSRF in UserPreferences.jsp 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/21/2
+Message-ID: <q5686882-nr28-8426-s5r2-7pn92po2439o@unkk.fr>
+Date: Wed, 21 Dec 2022 08:24:27 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: curl: CVE-2022-43552: HTTP Proxy deny use-after-free
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical
+CVE-2022-43552: HTTP Proxy deny use-after-free
+==============================================
 
-Description:
+Project curl Security Advisory, December 21 2022 -
+[Permalink](https://curl.se/docs/CVE-2022-43552.html)
 
-A carefully crafted request on UserPreferences.jsp could trigger an CSRF vulnerability on Apache JSPWiki, which could allow the attacker to modify the email associated with the attacked account, and then a reset password request from the login page. 
+VULNERABILITY
+-------------
 
-Mitigation:
+curl can be asked to *tunnel* virtually all protocols it supports through an
+HTTP proxy. HTTP proxies can (and often do) deny such tunnel operations using
+an appropriate HTTP error response code.
 
-Apache JSPWiki users should upgrade to 2.11.3 or later. Installations >= 2.7.0 can also enable user management workflows' manual approval to mitigate the issue. 
+When getting denied to tunnel the specific protocols SMB or TELNET, curl would
+use a heap-allocated struct after it had been freed, in its transfer shutdown
+code path.
 
-Credit:
+We are not aware of any exploit of this flaw.
 
-This issue was discovered by Fabrice Perez, <fabioperez AT gmail DOT com> 
+INFO
+----
 
-References:
+This flaw was introduced for TELNET in [commit
+b7eeb6e67fca68](https://github.com/curl/curl/commit/b7eeb6e67fca68) in
+September 7, 2006. The SMB part was introduced in 2014 with [commit
+aec2e865f06669](https://github.com/curl/curl/commit/aec2e865f06669).
 
-https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2022-28732
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2022-43552 to this issue.
 
+CWE-416: Use After Free
+
+Severity: Low
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.16.0 to and including 7.86.0
+- Not affected versions: curl < 7.16.0 and curl >= 7.86.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+A [fix for CVE-2022-43552](https://github.com/curl/curl/commit/4f20188ac644afe17)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 7.87.0
+
+  B - Apply the patch to your local version
+
+  C - Avoid using SMB and TELNET or disable HTTP proxy use
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on November 7, 2022. We contacted
+distros@...nwall on December 12, 2022.
+
+curl 7.87.0 was released on December 21 2022, coordinated with the publication
+of this advisory.
+
+CREDITS
+-------
+
+- Reported-by: Trail of Bits
+- Patched-by: Daniel Stenberg
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
