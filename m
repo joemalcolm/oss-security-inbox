@@ -1,134 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/09/2
-Message-ID: <CAG7k0EpOz=X8AFw-wE-0OEA98_w77PNmVg_AE-R8mc7sBcsr9w@mail.gmail.com>
-Date: Fri, 9 Dec 2022 16:54:41 +0000
-From: Ross Lagerwall <ross.lagerwall@...ud.com>
-To: Juergen Gross <jgross@...e.com>
-Cc: Pratyush Yadav <ptyadav@...zon.de>, "Xen.org security team" <security@....org>, xen-announce@...ts.xen.org,  xen-devel@...ts.xen.org, xen-users@...ts.xen.org,  oss-security@...ts.openwall.com,  "Xen.org security team" <security-team-members@....org>
-Subject: Re: Xen Security Advisory 424 v1 (CVE-2022-42328,CVE-2022-42329) - Guests can trigger deadlock in Linux netback driver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/22/10
+Message-ID: <Y6TUJcr/IHrsTE0W@codewreck.org>
+Date: Fri, 23 Dec 2022 07:03:17 +0900
+From: Dominique Martinet <asmadeus@...ewreck.org>
+To: oss-security@...ts.openwall.com
+Cc: Alejandro Colomar <alx.manpages@...il.com>, Michael Kerrisk <mtk.manpages@...il.com>, linux-kernel@...r.kernel.org, linux-man@...r.kernel.org
+Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Dec 8, 2022 at 4:13 PM Juergen Gross <jgross@...e.com> wrote:
->
-> On 08.12.22 16:59, Pratyush Yadav wrote:
-> >
-> > Hi,
-> >
-> > I noticed one interesting thing about this patch but I'm not familiar
-> > enough with the driver to say for sure what the right thing is.
-> >
-> > On Tue, Dec 06 2022, Xen.org security team wrote:
-> >
-> > [...]
-> >>
-> >>  From cfdf8fd81845734b6152b4617746c1127ec52228 Mon Sep 17 00:00:00 2001
-> >> From: Juergen Gross <jgross@...e.com>
-> >> Date: Tue, 6 Dec 2022 08:54:24 +0100
-> >> Subject: [PATCH] xen/netback: don't call kfree_skb() with interrupts disabled
-> >>
-> >> It is not allowed to call kfree_skb() from hardware interrupt
-> >> context or with interrupts being disabled. So remove kfree_skb()
-> >> from the spin_lock_irqsave() section and use the already existing
-> >> "drop" label in xenvif_start_xmit() for dropping the SKB. At the
-> >> same time replace the dev_kfree_skb() call there with a call of
-> >> dev_kfree_skb_any(), as xenvif_start_xmit() can be called with
-> >> disabled interrupts.
-> >>
-> >> This is XSA-424 / CVE-2022-42328 / CVE-2022-42329.
-> >>
-> >> Fixes: be81992f9086 ("xen/netback: don't queue unlimited number of packages")
-> >> Reported-by: Yang Yingliang <yangyingliang@...wei.com>
-> >> Signed-off-by: Juergen Gross <jgross@...e.com>
-> >> Reviewed-by: Jan Beulich <jbeulich@...e.com>
-> >> ---
-> >>   drivers/net/xen-netback/common.h    | 2 +-
-> >>   drivers/net/xen-netback/interface.c | 6 ++++--
-> >>   drivers/net/xen-netback/rx.c        | 8 +++++---
-> >>   3 files changed, 10 insertions(+), 6 deletions(-)
-> >>
-> >> diff --git a/drivers/net/xen-netback/common.h b/drivers/net/xen-netback/common.h
-> >> index 1545cbee77a4..3dbfc8a6924e 100644
-> >> --- a/drivers/net/xen-netback/common.h
-> >> +++ b/drivers/net/xen-netback/common.h
-> >> @@ -386,7 +386,7 @@ int xenvif_dealloc_kthread(void *data);
-> >>   irqreturn_t xenvif_ctrl_irq_fn(int irq, void *data);
-> >>
-> >>   bool xenvif_have_rx_work(struct xenvif_queue *queue, bool test_kthread);
-> >> -void xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb);
-> >> +bool xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb);
-> >>
-> >>   void xenvif_carrier_on(struct xenvif *vif);
-> >>
-> >> diff --git a/drivers/net/xen-netback/interface.c b/drivers/net/xen-netback/interface.c
-> >> index 650fa180220f..f3f2c07423a6 100644
-> >> --- a/drivers/net/xen-netback/interface.c
-> >> +++ b/drivers/net/xen-netback/interface.c
-> >> @@ -254,14 +254,16 @@ xenvif_start_xmit(struct sk_buff *skb, struct net_device *dev)
-> >>      if (vif->hash.alg == XEN_NETIF_CTRL_HASH_ALGORITHM_NONE)
-> >>              skb_clear_hash(skb);
-> >>
-> >> -    xenvif_rx_queue_tail(queue, skb);
-> >> +    if (!xenvif_rx_queue_tail(queue, skb))
-> >> +            goto drop;
-> >> +
-> >>      xenvif_kick_thread(queue);
-> >>
-> >>      return NETDEV_TX_OK;
-> >>
-> >>    drop:
-> >>      vif->dev->stats.tx_dropped++;
-> >
-> > Now tx_dropped is incremented on packet drop...
-> >
-> >> -    dev_kfree_skb(skb);
-> >> +    dev_kfree_skb_any(skb);
-> >>      return NETDEV_TX_OK;
-> >>   }
-> >>
-> >> diff --git a/drivers/net/xen-netback/rx.c b/drivers/net/xen-netback/rx.c
-> >> index 932762177110..0ba754ebc5ba 100644
-> >> --- a/drivers/net/xen-netback/rx.c
-> >> +++ b/drivers/net/xen-netback/rx.c
-> >> @@ -82,9 +82,10 @@ static bool xenvif_rx_ring_slots_available(struct xenvif_queue *queue)
-> >>      return false;
-> >>   }
-> >>
-> >> -void xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb)
-> >> +bool xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb)
-> >>   {
-> >>      unsigned long flags;
-> >> +    bool ret = true;
-> >>
-> >>      spin_lock_irqsave(&queue->rx_queue.lock, flags);
-> >>
-> >> @@ -92,8 +93,7 @@ void xenvif_rx_queue_tail(struct xenvif_queue *queue, struct sk_buff *skb)
-> >>              struct net_device *dev = queue->vif->dev;
-> >>
-> >>              netif_tx_stop_queue(netdev_get_tx_queue(dev, queue->id));
-> >> -            kfree_skb(skb);
-> >> -            queue->vif->dev->stats.rx_dropped++;
-> >
-> > ... but earlier rx_dropped was incremented.
-> >
-> > Which one is actually correct? This line was added by be81992f9086b
-> > ("xen/netback: don't queue unlimited number of packages"), which was the
-> > fix for XSA-392. I think incrementing tx_dropped is the right thing to
-> > do, as was done before XSA-392 but it would be nice if someone else
-> > takes a look at this as well.
->
-> Yes, I think the XSA-392 patch was wrong in this regard.
->
+Alexey Dobriyan wrote on Thu, Dec 22, 2022 at 07:42:53PM +0300:
+> --- a/man5/proc.5
+> +++ b/man5/proc.5
+> @@ -2092,6 +2092,11 @@ Strings longer than
+>  .B TASK_COMM_LEN
+>  (16) characters (including the terminating null byte) are silently truncated.
+>  This is visible whether or not the executable is swapped out.
+> +
+> +Note that \fIcomm\fP can contain space and closing parenthesis characters. 
+> +Parsing /proc/${pid}/stat with split() or equivalent, or scanf(3) isn't
+> +reliable. The correct way is to locate closing parenthesis with strrchr(')')
+> +from the end of the buffer and parse integers from there.
 
-Netback calls this rx (to-guest) traffic so rx_dropped seems better. On the
-other hand, the networking stack thinks of this as tx since the packet is going
-from the networking stack to the NIC driver...
+That's still not enough unless new lines are escaped, which they aren't:
 
-Regardless, it is currently inconsistent since to-guest traffic increments
-tx_dropped if it is dropped because the rx queue len is too long but it
-increments rx_dropped if those same packets are dropped when they expire in the
-rx queue.
+$ echo -n 'test) 0 0 0
+' > /proc/$$/comm
+$ cat /proc/$$/stat
+71076 (test) 0 0 0
+) S 71075 71076 71076 34840 71192 4194304 6623 6824 0 0 10 3 2 7 20 0 1 0 36396573 15208448 2888 18446744073709551615 94173281726464 94173282650929 140734972513568 0 0 0 65536 3686404 1266761467 1 0 0 17 1 0 0 0 0 0 94173282892592 94173282940880 94173287231488 140734972522071 140734972522076 140734972522076 140734972526574 0
 
-I also see that the tx path (from-guest) doesn't increment any dropped counters
-when it drops a packet.
+The silver lining here is that comm length is rather small (16) so we
+cannot emulate full lines and a very careful process could notice that
+there are not enough fields after the last parenthesis... So just look
+for the last closing parenthesis in the next line and try again?
 
-Ross
+But, really, I just don't see how this can practically be said to be parsable...
+
+-- 
+Dominique Martinet | Asmadeus
