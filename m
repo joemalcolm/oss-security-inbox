@@ -1,57 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/30/5
-Message-Id: <388160F1-1B99-47C8-A904-3C204DA7D3DF@gentoo.org>
-Date: Sun, 30 Jan 2022 21:36:15 +0000
-From: Sam James <sam@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/22/6
+Message-ID: <20221222150448.5wyrhot7ikhp75j7@mutt-hbsd>
+Date: Thu, 22 Dec 2022 10:04:48 -0500
+From: Shawn Webb <shawn.webb@...denedbsd.org>
 To: oss-security@...ts.openwall.com
-Cc: John Helmert III <ajak@...too.org>
-Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0001
+Subject: Re: [Linux] /proc/pid/stat parsing bugs
 Content-Type: text/plain; charset=utf-8
 
+On Thu, Dec 22, 2022 at 03:44:45PM +0100, Jakub Wilk wrote:
+> sudo was bitten by this back in the day (CVE-2017-1000367):
+> https://www.openwall.com/lists/oss-security/2017/05/30/16
 
+I remember performing local privesc's against poorly-written cronjobs
+that ran as root and parsed things in procfs. One bug was in a C
+application that had a format string bug when parsing data from
+procfs data.
 
-> On 29 Jan 2022, at 20:16, Leo Famulari <leo@...ulari.name> wrote:
-> 
-> On Mon, Jan 24, 2022 at 08:13:15AM -0600, John Helmert III wrote:
->> I don't think it makes much sense for every downstream to make these
->> kinds of assumptions.
-> 
-> Why not? History shows that this assumption will almost always be
-> correct for WebKit.
-> 
->> Besides, this doesn't seem to be what's
->> happening in practice. For example, WSA-2021-0006 was released on
->> October 26, 2021 with vulnerabilities addressed in 2.34.0, released on
->> September 22, but RedHat's bugs for it were only opened in the days
->> after the *security advisory's* release, not the software release. It
->> doesn't help that most most distribution security tooling seems to be
->> oriented around CVEs, which aren't released for WebKit until after the
->> associated advisory.
-> 
-> I'm sure that Red Hat's package maintainers know what a WebKit update
-> means. Presumably they are busy and their KPIs prioritize fixing CVEs,
-> so they don't act as proactively as one might prefer.
-> 
-> In general, it seems that WebKit is handling these issues like Linux.
-> Observers know that important bugs are fixed constantly in software of
-> this size and complexity. Relying only on CVEs is too reactive and
-> limited in scope to provide a meaningful security stance, increasingly
-> so since the CVE assignment system stopped working in the last few
-> years.
+Something akin to this (in C-like pseudo code):
 
-This isn't an argument against WebKit Doing The Right Thing (TM).
+```
+fp = fopen("/some/logfile/here", "w+");
+procfs_fp = fopen("/proc/pid/something")
+fprintf(fp, something_read_from_procfs_fp);
+```
 
-There's no need for us to rehash the standard arguments for/against
-bothering with CVEs at all.
+Name your application "%n" or a shared object "%n" and you'll have a
+fun time. (Of course, replace with actual format string exploit).
 
-The point is that CVE notifications are useful for some of us and
-it _seems_ (obviously I can't know) that they're intentionally not
-published at the same time as release notes, often a week or more later.
+Process hollowing by abusing /proc/pid/maps and /proc/pid/mem was a
+fun tactic back in the early 2000's.
 
-I, and John, are just saying that if possible, it'd be a big help for
-them to do so.
+We knew way back then the dangers of VFS-based wizardry. Did we lose
+that knowledge somehow?
 
-Best,
-sam
+-- 
+Shawn Webb
+Cofounder / Security Engineer
+HardenedBSD
 
-Download attachment "signature.asc" of type "application/pgp-signature" (619 bytes)
+https://git.hardenedbsd.org/hardenedbsd/pubkeys/-/raw/master/Shawn_Webb/03A4CBEBB82EA5A67D9F3853FF2E67A277F8E1FA.pub.asc
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
