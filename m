@@ -1,112 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/01/3
-Message-Id: <E1oppwh-0005OH-0o@xenbits.xenproject.org>
-Date: Tue, 01 Nov 2022 12:00:43 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 412 v2 (CVE-2022-42327) - x86: unintended memory sharing between guests
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/22/2
+Message-ID: <Y6PQctuK5/GtDRa5@ip-172-31-85-199.ec2.internal>
+Date: Thu, 22 Dec 2022 11:35:14 +0800
+From: Xingyuan Mo <hdthky0@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Linux kernel: use-after-free in io_sqpoll_wait_sq
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello,
 
-            Xen Security Advisory CVE-2022-42327 / XSA-412
-                               version 2
+There is a use-after-free vulnerability in io_sqpoll_wait_sq() in fs/io_uring.c
+in linux-5.10.y through v5.10.154, which allows an attacker to crash the kernel,
+resulting in Denial of Service.
 
-               x86: unintended memory sharing between guests
+=*=*=*=*=*=*=*=*=  Bug Details  =*=*=*=*=*=*=*=*=
 
-UPDATES IN VERSION 2
-====================
+9028:  static int io_sqpoll_wait_sq(struct io_ring_ctx *ctx)
+9029:  {
+9030:  	int ret = 0;
+9031:  	DEFINE_WAIT(wait);
+9032:
+9033:  	do {
+9034:  		if (!io_sqring_full(ctx))
+9035:  			break;
+9036:
+9037:  		prepare_to_wait(&ctx->sqo_sq_wait, &wait, TASK_INTERRUPTIBLE);
+9038:
+9039:  		if (unlikely(ctx->sqo_dead)) {
+9040:  			ret = -EOWNERDEAD;
+9041:  			goto out;
+9042:  		}
+9043:
+9044:  		if (!io_sqring_full(ctx))
+9045:  			break;
+9046:
+9047:  		schedule();
+9048:  	} while (!signal_pending(current));
+9049:
+9050:  	finish_wait(&ctx->sqo_sq_wait, &wait);
+9051:  out:
+9052:  	return ret;
+9053:  }
 
-Public release.
+On line 9037 of fs/io_uring.c, a wait_queue_entry object on the stack named wait
+is added to wait queue ctx->sqo_sq_wait, which should be removed from
+ctx->sqo_sq_wait by calling finish_wait() once the current task does not need to
+wait for an available submission queue entry. Though, On line 9039, if
+ctx->sqo_dead is not 0, the control flow jumps to out, skipping the call to
+finish_wait() on line 9050. As a result, wait still exists in ctx->sqo_sq_wait
+even when the current task exits kernel mode or comes to an end, which means
+that the two entries before and after wait each contain a stale pointer to the
+expired kernel stack space. If one of the two entries is later unlinked from
+ctx->sqo_dead, the memory of the expired stack space pointed to by the stale
+pointer will be corrupted, resulting in use-after-free.
 
-ISSUE DESCRIPTION
-=================
+As mentioned earlier, the condition for triggering the vulnerability is that
+ctx->sqo_dead is not 0, which can be achieved by forking a new process and
+terminating it quickly. When the new process exits, the copied io_uring file
+descriptor will be closed, causing the following call chain to be triggered:
+io_uring_flush()->io_uring_cancel_task_requests()->io_disable_sqo_submit(). In
+io_disable_sqo_submit(), ctx->sqo_dead is assigned 1 on line 8732.
 
-On Intel systems that support the "virtualize APIC accesses" feature, a
-guest can read and write the global shared xAPIC page by moving the
-local APIC out of xAPIC mode.
+8729:  static void io_disable_sqo_submit(struct io_ring_ctx *ctx)
+8730:  {
+8731:  	mutex_lock(&ctx->uring_lock);
+8732:  	ctx->sqo_dead = 1;
+8733:  	if (ctx->flags & IORING_SETUP_R_DISABLED)
+8734:  		io_sq_offload_start(ctx);
+8735:  	mutex_unlock(&ctx->uring_lock);
+8736:
+8737:  	/* make sure callers enter the ring to get error */
+8738:  	if (ctx->rings)
+8739:  		io_ring_set_wakeup_flag(ctx);
+8740:  }
 
-Access to this shared page bypasses the expected isolation that should
-exist between two guests.
+=*=*=*=*=*=*=*=*=  Patch  =*=*=*=*=*=*=*=*=
 
-IMPACT
-======
+The patch can be found here:
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?h=v5.10.161&id=0f544353fec8e717d37724d95b92538e1de79e86
 
-Guests are able to access an unintended shared memory page.  Note the
-contents of the page are not interpreted by Xen or hardware.
+=*=*=*=*=*=*=*=*=  Credit  =*=*=*=*=*=*=*=*=
 
-VULNERABLE SYSTEMS
-==================
+Xingyuan Mo and Gengjia Chen of IceSword Lab, Qihoo 360 Technology Co. Ltd.
 
-Only Xen version 4.16 is vulnerable.  Other Xen versions are not vulnerable.
-
-x86 HVM or PVH guests running on Intel systems with the "virtualize APIC
-accesses" feature are affected.  This is believed to be all 64-bit
-capable Intel CPUs.
-
-x86 HVM or PVH guests running on AMD hardware, Arm or x86 PV guests are
-not affected.
-
-MITIGATION
-==========
-
-Only running PV guests will mitigate the vulnerability on affected
-hardware.
-
-CREDITS
-=======
-
-This issue was discovered by Andrew Cooper of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa412.patch           xen-unstable
-xsa412-4.16.patch      Xen 4.16.x
-
-$ sha256sum xsa412*
-64107d4a185dc3cdbc59400d724fe2ada490d39c14ab354aa73bb67a94ca0f65  xsa412.meta
-425c1cc3e25f67746a3074aa6304dd0d915f503ea57440b9ecdb583e1547a8fe  xsa412.patch
-b030bebbc4798e1d1ad75d763294ce25609f9f895402272a1f354d781f6f5f00  xsa412-4.16.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmNg+5sMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZF10H/2C2pgVmiJWW6iZNMTDHuV4EyZJTFPCBnKR3qirj
-3fffRN15gjzPLZZH+Ivwj3ZeWyQBLkGqC1EFemLtWpQePYlcRoH4mCyE4jc8dx89
-Ejh2Zfaib0GIJoHqqDYnRQV8/BusGjIRNgWG2zAEuj+ElHRYtXcd4G5/swtcmKyN
-/lSn5VMVrTGdfyGmQtcou24fK5sfzDrfCJm8pThUT6x+ERAUtCYWx2SG3fA1x55R
-hWc846qJPXay/BOI0F/d23QkOP+jZsCjhbe+xnTEfgGEq32ZvwhFgkz1/DuXHl0j
-hBrWjRzhLd8+mCmnXeXURDHbPmyg47TDsSg4n1VeRBJUKrc=
-=as4H
------END PGP SIGNATURE-----
-
-Download attachment "xsa412.meta" of type "application/octet-stream" (583 bytes)
-
-Download attachment "xsa412.patch" of type "application/octet-stream" (8274 bytes)
-
-Download attachment "xsa412-4.16.patch" of type "application/octet-stream" (8315 bytes)
+Best Regards,
+Xingyuan Mo
