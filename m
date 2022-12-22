@@ -1,27 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/24/11
-Message-ID: <trinity-4c518dcc-751b-4893-82dc-b2f80734eb9d-1653430844824@3c-app-gmx-bap13>
-Date: Wed, 25 May 2022 00:20:44 +0200
-From: Norbert Slusarek <nslusarek@....net>
-To: Solar Designer <solar@...nwall.com>
-Cc: oss-security@...ts.openwall.com, peterz@...radead.org
-Subject: Re: CVE-2022-1729: race condition in Linux perf subsystem leads to local privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/22/5
+Message-ID: <20221222144445.i6z7fifqily6uej5@jwilk.net>
+Date: Thu, 22 Dec 2022 15:44:45 +0100
+From: Jakub Wilk <jwilk@...lk.net>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: [Linux] /proc/pid/stat parsing bugs
 Content-Type: text/plain; charset=utf-8
 
-Hello Alexander,
+sudo was bitten by this back in the day (CVE-2017-1000367):
+https://www.openwall.com/lists/oss-security/2017/05/30/16
 
->Since you shared actual exploit code on linux-distros, you're supposed
->to also post that to oss-security within 7 days of your first posting
->above, so by or on May 27. Do you intend to?
-
-I don't intend to share the exploit to the public, mainly because
-the issue was fixed only few days ago. Instead, anyone wanting to check
-his own system for the bug should resort to the attached PoC repro.
-
->I realize this is one of the aspects that not everyone is happy about.
-
-Yes, you got that right.
-
-
-Norbert
-View attachment "repro.c" of type "text/plain" (1613 bytes)
+-- 
+Jakub Wilk
