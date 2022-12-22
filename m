@@ -1,44 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/04/8
-Message-ID: <YsNKzWyfLpY3Bt6+@itl-email>
-Date: Mon, 4 Jul 2022 16:17:17 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
-To: Open Source Software Security <oss-security@...ts.openwall.com>
-Subject: Re: Denial of service in GnuPG
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/22/4
+Message-ID: <20221222124755.tyrsrsnib4locz6k@mutt-hbsd>
+Date: Thu, 22 Dec 2022 07:47:55 -0500
+From: Shawn Webb <shawn.webb@...denedbsd.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: [Linux] /proc/pid/stat parsing bugs
 Content-Type: text/plain; charset=utf-8
 
-It has come to my attention that my original post caused at least two
-mail clients to hang.  Sorry about that; I did not expect any mail
-client to eagerly parse the attachments.  This version wraps the
-attachments in a password-protected zip file (password: MitB7vqh).  It
-also includes some additional information.
+On Wed, Dec 21, 2022 at 02:15:10PM -0500, Shawn Webb wrote:
+> On Wed, Dec 21, 2022 at 06:13:17PM +0100, Dmitry Vyukov wrote:
+> > Hello,
+> > 
+> > This is not a single vulnerability, the list of affected software is
+> > large, but it's not a security issue for all of it.
+> > 
+> > It occurred to me that most of the Linux procfs /proc/pid/stat and
+> > /proc/pid/task/tid/stat parsing code out there is buggy. The fine
+> > contains a set of numbers about the task:
+> > https://man7.org/linux/man-pages/man5/proc.5.html
+> > 
+> > e.g. $ cat /proc/self/stat
+> > 1715376 (cat) R 1544883 1715376 1544883 34819 1715376 4194304 106 0 0
+> > 0 0 0 0 0 20 0 1 0 42505561 9207808 237 18446744073709551615
+> > 93955355631616 93955355651497 140737444557056 0 0 0 0 0 0 0 0 0 17 36
+> > 0 0 0 0 0 93955355667504 93955355669120 93955385581568 140737444559745
+> > 140737444559765 140737444559765 140737444564971 0
+> > 
+> > Most of the code splits it by space and takes an N-th field.
+> > The problem is that the process name "(cat)" can contain spaces (and
+> > brackets). Potentially some important software (containers/sandboxes)
+> > can be tricked into getting wrong data, and I've seen cases close to
+> > stack overflows (buffer for a fixed number of fields is allocated on
+> > stack).
+> > 
+> > Some examples:
+> > OpenJDK:
+> > https://sourcegraph.com/github.com/openjdk/jdk/-/blob/src/jdk.management/unix/native/libmanagement_ext/OperatingSystemImpl.c?L133-139
+> > https://sourcegraph.com/github.com/openjdk/jdk8u/-/blob/jdk/src/solaris/native/sun/management/OperatingSystemImpl.c?L223-229
+> > 
+> > Ansible:
+> > https://sourcegraph.com/github.com/ansible/ansible/-/blob/lib/ansible/modules/yum.py?L507-510
+> > 
+> > Libuv:
+> > https://sourcegraph.com/github.com/libuv/libuv/-/blob/src/unix/linux.c?L674-701
+> > 
+> > bdwgc:
+> > https://sourcegraph.com/github.com/mono/linux-packaging-mono/-/blob/external/bdwgc/os_dep.c?L1138-1155
+> > 
+> > But really most of the code that does it:
+> > https://sourcegraph.com/search?q=context:global+/%5C%22%5C/proc%5C/.*%5C/stat%5C%22/
+> > 
+> > The only way to parse it is to do strrchr(')') first (fortunately it
+> > contains just one unescaped string).
+> 
+> What is old is new again. Perhaps it's a good time to reflect on the
+> security of relying on VFS-based gadgets for process and system
+> instrumentation.
+> 
+> Long live sysctl.
 
-GnuPG is vulnerable to a denial of service attack when processing
-crafted detached signatures and/or certificates.  By concatenating the
-same signature to itself a very large number of times, and then wrapping
-them in a compressed packet, I am able to cause GnuPG to take over a
-minute to process an input that is less than 5KB armored.
+At the very least, procfs could be taught to expose machine-readable
+formats based on file extension.
 
-I have attached two files:
+For JSON, /proc/<pid>/maps.json
+For XML, /proc/<pid>/stat.xml
 
-- A patch (based on one submitted upstream) that fixes the bug for keys,
-  detached signatures, and cleartext signatures.  It does not fix the
-  bug for other types of OpenPGP data, as I am not sure if the obvious
-  fix (only allowing a single literal data packet in a compressed
-  packet) would render data already in the wild inaccessible.  The only
-  difference between this patch and the one sent upstream already is that
-  this one prevents attacks involving cleartext signatures.
+And the like.
 
-- An encrypted zip file (see above for password) that contains a proof
-  of concept exploit.  Both the public key and the detached signature
-  (of an empty file) are included.
 -- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+Shawn Webb
+Cofounder / Security Engineer
+HardenedBSD
 
-View attachment "v3-0001-Disallow-compressed-signatures-and-certificates.patch" of type "text/plain" (8134 bytes)
-
-Download attachment "gnupg-dos.zip" of type "application/zip" (4070 bytes)
+https://git.hardenedbsd.org/hardenedbsd/pubkeys/-/raw/master/Shawn_Webb/03A4CBEBB82EA5A67D9F3853FF2E67A277F8E1FA.pub.asc
 
 Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
