@@ -1,25 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/16/1
-Message-Id: <d4bbb5e7-53f5-438f-b57f-134b63f26c1en@googlegroups.com>
-Date: Wed, 16 Mar 2022 08:00:33 -0700 (PDT)
-From: Joe Sepi <joesepi@...il.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Fwd: Node.js security updates for all active release lines, March 2022
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/22/7
+Message-ID: <Y6SJDbKBk471KE4k@p183>
+Date: Thu, 22 Dec 2022 19:42:53 +0300
+From: Alexey Dobriyan <adobriyan@...il.com>
+To: Alejandro Colomar <alx.manpages@...il.com>, Michael Kerrisk <mtk.manpages@...il.com>
+Cc: linux-kernel@...r.kernel.org, linux-man@...r.kernel.org, oss-security@...ts.openwall.com
+Subject: [patch] proc.5: tell how to parse /proc/*/stat correctly
 Content-Type: text/plain; charset=utf-8
 
+/proc/*/stat can't be parsed with split() or split(" ") or split(' ')
+or sscanf("%d (%s) ...") or equivalents because "comm" can contain
+whitespace and parenthesis and is not escaped by the kernel.
 
+BTW escaping would not help with naive split() anyway.
 
----------- Forwarded message ---------
-From: Joe Sepi <joesepi@...il.com>
-Date: Wednesday, March 16, 2022 at 10:57:17 AM UTC-4
-Subject: Node.js security updates for all active release lines, March 2022
-To: nodejs-sec <nodejs-sec@...glegroups.com>
+Mention strrchr(')') so people can at least stop adding new bugs.
 
+Signed-off-by: Alexey Dobriyan <adobriyan@...il.com>
+---
 
-The Node.js project will release new versions of all supported release 
-lines on or shortly after Thursday, 17th of March, 2022 For more 
-information see:
-https://nodejs.org/en/blog/vulnerability/mar-2022-security-releases/
+ man5/proc.5 |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-
-Content of type "text/html" skipped
+--- a/man5/proc.5
++++ b/man5/proc.5
+@@ -2092,6 +2092,11 @@ Strings longer than
+ .B TASK_COMM_LEN
+ (16) characters (including the terminating null byte) are silently truncated.
+ This is visible whether or not the executable is swapped out.
++
++Note that \fIcomm\fP can contain space and closing parenthesis characters. 
++Parsing /proc/${pid}/stat with split() or equivalent, or scanf(3) isn't
++reliable. The correct way is to locate closing parenthesis with strrchr(')')
++from the end of the buffer and parse integers from there.
+ .TP
+ (3) \fIstate\fP \ %c
+ One of the following characters, indicating process state:
