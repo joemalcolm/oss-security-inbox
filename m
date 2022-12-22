@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1444" "Friday" "2" "December" "2016" "22:20:08" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<0301c866a24643c1a4f15ace461d6aaf@imshyb02.MITRE.ORG>" "36" "[oss-security] Re: CVE request: -- Linux kernel: ALSA: use-after-free in,kill_fasync" nil nil nil "12" "2016120303:20:08" "[oss-security] Re: CVE request: -- Linux kernel: ALSA: use-after-free in,kill_fasync" (number mark "U       cve-assign@m Dec  2   36/1444  " thread-indent "\"[oss-security] Re: CVE request: -- Linux kernel: ALSA: use-after-free in,kill_fasync\"\n") "<ed9a84ac-7e62-55d5-afa2-4afaab0c1613@gmail.com>" ("<ed9a84ac-7e62-55d5-afa2-4afaab0c1613@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 21572 invoked by uid 550); 3 Dec 2016 03:20:20 -0000
+Received: (qmail 24318 invoked by uid 550); 22 Dec 2022 18:09:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,50 +7,71 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21550 invoked from network); 3 Dec 2016 03:20:20 -0000
-From: <cve-assign@mitre.org>
-To: <sploving1@gmail.com>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>, <tiwai@suse.de>
-In-Reply-To: <ed9a84ac-7e62-55d5-afa2-4afaab0c1613@gmail.com>
-Message-ID: <0301c866a24643c1a4f15ace461d6aaf@imshyb02.MITRE.ORG>
-Date: Fri, 2 Dec 2016 22:20:08 -0500
+Received: (qmail 7712 invoked from network); 22 Dec 2022 16:43:07 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yZLAlOhCGilIwuTmtW0IVLJRanvaBYIelqxDGN9L3mA=;
+        b=ntlPTMV4mBJYN7GB1xLqSC6qEFW7/c4RVIUl7rVnZDNgEyUnIFTrW7ehcuwSjA9MOT
+         roXNazIIcGsS24FHx1L0hDGQS3Z8bXmRO0K8a7JuCtbpCxERvYemdLj3Ua0F+5P3X8Js
+         6+6krr8AjM5RIrp+OxufDGOxjY2Hieowj0//MgfhL0H9x7rknnumipH69NwM/Hw9X11p
+         peaLgdBwcc1r1HCNdLU7G+QzpckOgMmxMzZq1aEn04PkaKZum8VZr5h/v5z0CMpwNa1w
+         EefqCy5z9v4qYICYsn3Qf9hH91DI57OppL3On7C7ra5J+d/YImz3xvg16yTkqmmOGHxI
+         5q1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yZLAlOhCGilIwuTmtW0IVLJRanvaBYIelqxDGN9L3mA=;
+        b=vnR8wXlQgscqVKG8tFrI/8qSDWroLYIR71AtuyJjfwB24k723PEwcbsDR1JDjxFCaA
+         IKjIqJElz5MIlKdb/FlRYo7GHey6XgpfjyTlohxkmXTJCOKh1cnsn0jD7ldt2qiw0VMT
+         xOQnSZDUQJ8xvS8+5VXVdM7TKx7RqjmHmWuXCPLsfjBSFnZ+NhYyB2MDg9H158JtpYpI
+         m3/yt0nlXq87vdaEJQi7WJ+JRNfPj3PAUTHUtF4YeAYbr8No/Y5ckC2W3DGaFnOga1gu
+         kVBn1JgffPTE2erJD9QomlbDIwm4iu4vhN6QKSlpAbGxRmlZcziBUCzkBgp7EPeJgsDP
+         4g0w==
+X-Gm-Message-State: AFqh2koY6Q9DWjmSbjf7GU0Qpn4EWUaUn7E32u/xsUsCfTyU9Cf+yqcB
+	HDeXrvskm2Sb2tTol8V6wQ==
+X-Google-Smtp-Source: AMrXdXuzs4kMZk+HWNO62x7FIJsgu18TkyZ58z9KExzlVdu/eNpacftlA06q5G9uWJDVMBdBRmQvoQ==
+X-Received: by 2002:a05:600c:4d25:b0:3d2:27ba:dde0 with SMTP id u37-20020a05600c4d2500b003d227badde0mr4876976wmp.33.1671727375391;
+        Thu, 22 Dec 2022 08:42:55 -0800 (PST)
+Date: Thu, 22 Dec 2022 19:42:53 +0300
+From: Alexey Dobriyan <adobriyan@gmail.com>
+To: Alejandro Colomar <alx.manpages@gmail.com>,
+	Michael Kerrisk <mtk.manpages@gmail.com>
+Cc: linux-kernel@vger.kernel.org, linux-man@vger.kernel.org,
+	oss-security@lists.openwall.com
+Message-ID: <Y6SJDbKBk471KE4k@p183>
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE request: -- Linux kernel: ALSA: use-after-free in,kill_fasync
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Subject: [oss-security] [patch] proc.5: tell how to parse /proc/*/stat correctly
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+/proc/*/stat can't be parsed with split() or split(" ") or split(' ')
+or sscanf("%d (%s) ...") or equivalents because "comm" can contain
+whitespace and parenthesis and is not escaped by the kernel.
 
-> https://github.com/torvalds/linux/commit/3aa02cb664c5fb1042958c8d1aa8c35055a2ebc4
-> https://patchwork.kernel.org/patch/8752621/
+BTW escaping would not help with naive split() anyway.
 
->> Currently kill_fasync() is called outside the stream lock in
->> snd_pcm_period_elapsed(). This is potentially racy, since the stream
->> may get released even during the irq handler is running.
+Mention strrchr(')') so people can at least stop adding new bugs.
 
->>> BUG: KASAN: use-after-free in kill_fasync
+Signed-off-by: Alexey Dobriyan <adobriyan@gmail.com>
+---
 
-Use CVE-2016-9794.
+ man5/proc.5 |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYQjl+AAoJEHb/MwWLVhi20bIP/2YwMe+WkpAO/h+tumPCmFmh
-hdZr5j+sGBqm+QajpvcMyRaSGr+5Jxby33NZVYiI7xOQsfRh7unL4+JqaDNvA0gU
-HrCin7BtFCKYS8LqUW0y1T3/PkjBr69PJJoBADwhn7MyFQ8VqlBCUMaILVUygk5M
-eSlyp3pl1KZblySC6KWEH+Lw+sfq+CaLH3Y1EPKcBqCwDPnib2cW7T9K6fYVBLnR
-1uzPX54A+bdXAWpU3Qb9wz0QrzLwtsFRp0ue/FjJLJWNCPwGuU4q8QcSUsZ4IVgo
-mYgZvWQs2sz5FJpL2TBFZ1Nx2ijx9WJrS26U02gUO3lhAc+8EkaW3TfvUFszWGsG
-5CI1FExd5j/oxmUISP8YXcQoy1B5V9pzzXkiz1HKLxSu5hdGplpuvRm5z7OZ9x5I
-hLwEH87wVhKYMofKFf90zJhOZYnQzmUe2Zs1Z4D1a1cKu7YT//lkQZytKmDKEceZ
-Fj36LwBwnI8MhV8T7F1a/ejdkBw0h32VazVF3hRPHqTeF3FREvu137MHA/vOTVzh
-+XsM+SJbKHkfzXEkxCisiuAluSkfOuWiyFuBAFiDHZYMMQAF7ZuOTwG+Zwu3BWUT
-ex3w0SJ1mkcCjw2EKJFaUT6/oQ0FF0e7vkgauwP5wI9owxdc14qKuD1JGbANHUGs
-8xXWBJWlploCCTgiYz7v
-=XKyZ
------END PGP SIGNATURE-----
+--- a/man5/proc.5
++++ b/man5/proc.5
+@@ -2092,6 +2092,11 @@ Strings longer than
+ .B TASK_COMM_LEN
+ (16) characters (including the terminating null byte) are silently truncated.
+ This is visible whether or not the executable is swapped out.
++
++Note that \fIcomm\fP can contain space and closing parenthesis characters. 
++Parsing /proc/${pid}/stat with split() or equivalent, or scanf(3) isn't
++reliable. The correct way is to locate closing parenthesis with strrchr(')')
++from the end of the buffer and parse integers from there.
+ .TP
+ (3) \fIstate\fP \ %c
+ One of the following characters, indicating process state:
