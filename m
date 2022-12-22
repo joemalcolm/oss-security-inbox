@@ -1,4 +1,4 @@
-Received: (qmail 28196 invoked by uid 550); 27 Feb 2026 21:42:24 -0000
+Received: (qmail 5931 invoked by uid 550); 22 Dec 2022 22:33:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,75 +7,67 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 28071 invoked from network); 27 Feb 2026 21:42:23 -0000
-Date: Fri, 27 Feb 2026 22:40:36 +0100
-From: Christian Brabandt <cb@256bit.org>
+Received: (qmail 9996 invoked from network); 22 Dec 2022 22:03:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
+	t=1671746630; bh=J9cbmNLcnEnCzcBsTSDM83r/CZk2MSdV+XdK2UiVhRg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=yrc8ExY0fLJTTRWHTlch4Cyxv5EtIeitomlHj/m+ith2ighEVLQ6n2zRleruRC6iK
+	 qZfblkCg9qAB1MZ2kwCJHpAfuvPggLa863smMTButGcD9cRu+sniJ9RDZFT4Tar5j+
+	 Q3ZajyhrLBW7JKD/HySrXL4tKtMQKDLpTNnzAX+cv4VOJ0aClp2E/N91/ZL6Lr5kz/
+	 ID7/p/lu7O0czxyVNVwaGDY6hWIqiMA1UO0lw3+/P79cbPGbhf1RLr0RzTsSjgkIcm
+	 UzmXioU+AKcv9ooLREIlB8SpKxfgakyELc4UNtelHklGoEkuhUWRFH2sKq+wvpVN/G
+	 b3/zZaoMAL/kQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
+	t=1671746629; bh=J9cbmNLcnEnCzcBsTSDM83r/CZk2MSdV+XdK2UiVhRg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=sN5SexYGLTywPu95AlPDl6xzCCf0WMMlvUROicG3DAfP5QeDpfD3rcxAiY9/y5fK7
+	 pWLoEi7+tJJftjgsMEDsss8t3v6SGZMPQScgFS2UJzUeSfi/DfEzsos+rzGgkOiZR/
+	 zhsYkZn+kJHISFOrv2bqWpZra6OeevrzOG0RrtlfQhlTFkSeZmdJpIm2vvtFpC2XbU
+	 CQ3VCHYcAjs3g1+UsTI5oOYlAPc4xSEVKmx5+PhHHT6ClGjWAEfyBd1VZkA6cYMmVW
+	 X9TjGhXQqZBr9IeRLFvKBpXMOEfs3a4LT41SunCI2nJACJE9jKRxurz1tE562ICieL
+	 zrYXBCYgZLijg==
+Date: Fri, 23 Dec 2022 07:03:17 +0900
+From: Dominique Martinet <asmadeus@codewreck.org>
 To: oss-security@lists.openwall.com
-Message-ID: <aaIPVDjoNGmseZIp@256bit.org>
+Cc: Alejandro Colomar <alx.manpages@gmail.com>,
+	Michael Kerrisk <mtk.manpages@gmail.com>,
+	linux-kernel@vger.kernel.org, linux-man@vger.kernel.org
+Message-ID: <Y6TUJcr/IHrsTE0W@codewreck.org>
+References: <Y6SJDbKBk471KE4k@p183>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: cb@256bit.org
-X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
-Subject: [oss-security] [vim-security] Heap-based Buffer Overflow in Emacs tags parsing
- affects Vim < 9.2.0074
+In-Reply-To: <Y6SJDbKBk471KE4k@p183>
+Subject: Re: [oss-security] [patch] proc.5: tell how to parse /proc/*/stat
+ correctly
 
-Heap-based Buffer Overflow in Emacs tags parsing affects Vim < 9.2.0074
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Date: 27.02.2026
-Severity: Low
-CVE: CVE-2026-28418
-CWE: Heap-based Buffer Overflow (CWE-122) / Out-of-bounds Read (CWE-125)
+Alexey Dobriyan wrote on Thu, Dec 22, 2022 at 07:42:53PM +0300:
+> --- a/man5/proc.5
+> +++ b/man5/proc.5
+> @@ -2092,6 +2092,11 @@ Strings longer than
+>  .B TASK_COMM_LEN
+>  (16) characters (including the terminating null byte) are silently truncated.
+>  This is visible whether or not the executable is swapped out.
+> +
+> +Note that \fIcomm\fP can contain space and closing parenthesis characters. 
+> +Parsing /proc/${pid}/stat with split() or equivalent, or scanf(3) isn't
+> +reliable. The correct way is to locate closing parenthesis with strrchr(')')
+> +from the end of the buffer and parse integers from there.
 
-### Summary
-A heap-based buffer overflow out-of-bounds read exists in Vim's=20
-Emacs-style tags file parsing logic. When processing a malformed tags=20
-file, Vim can be tricked into reading up to 7 bytes beyond the allocated=20
-memory boundary.
+That's still not enough unless new lines are escaped, which they aren't:
 
-### Description
-The vulnerability is located in the `emacs_tags_new_filename()`=20
-function. When Vim encounters a section header in an Emacs-style tags=20
-file, it reads the following line into a fixed 512-byte heap buffer.
+$ echo -n 'test) 0 0 0
+' > /proc/$$/comm
+$ cat /proc/$$/stat
+71076 (test) 0 0 0
+) S 71075 71076 71076 34840 71192 4194304 6623 6824 0 0 10 3 2 7 20 0 1 0 36396573 15208448 2888 18446744073709551615 94173281726464 94173282650929 140734972513568 0 0 0 65536 3686404 1266761467 1 0 0 17 1 0 0 0 0 0 94173282892592 94173282940880 94173287231488 140734972522071 140734972522076 140734972522076 140734972526574 0
 
-The code then searches for a comma delimiter to separate the filename=20
-from the section metadata. If a crafted tags file provides a line=20
-exceeding the buffer capacity without a comma, the search loop reaches=20
-the end of the allocation.=20
+The silver lining here is that comm length is rather small (16) so we
+cannot emulate full lines and a very careful process could notice that
+there are not enough fields after the last parenthesis... So just look
+for the last closing parenthesis in the next line and try again?
 
-Because the code assumes a comma was found, it proceeds to check for an=20
-"include" directive by accessing memory immediately following the buffer=20
-boundary. This results in an out-of-bounds read of up to 7 bytes.
+But, really, I just don't see how this can practically be said to be parsable...
 
-### Impact
-The vulnerability allows for an out-of-bounds heap read. An attacker who=20
-induces a user to perform a tag lookup using a crafted Emacs tags file=20
-(e.g., in a malicious repository) can crash Vim.
-
-The severity is rated **low** because it is a read-only overflow and=20
-requires the user to load and interact with a malicious emacs tags file.
-
-### Acknowledgements
-The Vim project would like to thank the reporter Github users ehdgks0627=20
-and un3xploitable for identifying the vulnerability and providing a=20
-proof-of-concept.
-
-### References
-The issue has been fixed as of Vim patch=20
-[v9.2.0074](https://github.com/vim/vim/releases/tag/v9.2.0074).
-
-[Commit](https://github.com/vim/vim/commit/f6a7f469a9c0d09e84cd6cb)
-[Github Advisory](https://github.com/vim/vim/security/advisories/GHSA-h4mf-=
-vg97-hj8j)
-
-Thanks
-Christian
---=20
-Ein einziger Aufwiegler taugt manchmal mehr als alle Abwiegler
-zusammen.
-		-- Georg B=C3=BCchner
+-- 
+Dominique Martinet | Asmadeus
