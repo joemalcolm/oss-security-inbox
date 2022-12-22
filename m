@@ -1,27 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/27/5
-Message-ID: <20220427074550.GL28706@suse.de>
-Date: Wed, 27 Apr 2022 09:45:54 +0200
-From: Marcus Meissner <meissner@...e.de>
-To: OSS Security List <oss-security@...ts.openwall.com>
-Subject: CVE-2022-27239: cifs-utils mount.cifs buffer overflow in ip parameter
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/22/9
+Message-ID: <Y6TQ0HyCJOMkKSDn@netmeister.org>
+Date: Thu, 22 Dec 2022 16:49:04 -0500
+From: Jan Schaumann <jschauma@...meister.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Details on this supposed Linux Kernel ksmbd RCE
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Josh Bressers <josh@...ss.net> wrote:
+ 
+> I was wondering if anyone on the list has additional details about this ZDI
+> advisory
+> https://www.zerodayinitiative.com/advisories/ZDI-22-1690/
+> 
+> There aren't many usable details at the moment
 
-A buffer overflow in mounts.cifs commandline parameter ip= handling
-was just fixed/published.
+Agreed.
 
-CVE-2022-27239
+The advisories link to a changelog in
+https://cdn.kernel.org/pub/linux/kernel/v5.x/ChangeLog-5.15.61
+but it's unclear (to me) whether that implies v6.x
+kernels are not affected?
 
-https://bugzilla.suse.com/show_bug.cgi?id=1197216
-https://github.com/piastry/cifs-utils/pull/7
-https://github.com/piastry/cifs-utils/pull/7/commits/955fb147e97a6a74e1aaa65766de91e2c1479765
+Note also that this disclosure is accompanied by a few
+others:
 
-(mounts.cifs is usually setuid-root)
+Authenticated remote information disclosure:
+https://www.zerodayinitiative.com/advisories/ZDI-22-1691/
 
-This was reported by Jeffrey Bencteux <jbe@...rosec.com> to samba security.
+Unauthenticated remote DoS:
+https://www.zerodayinitiative.com/advisories/ZDI-22-1687/
 
-Both -fstack-protector and -D_FORTIFY_SOURCE=2 overflow protections are catching it.
+Authenticated RCE:
+https://www.zerodayinitiative.com/advisories/ZDI-22-1688/
 
-Ciao, Marcus
+Authenticated DoS:
+https://www.zerodayinitiative.com/advisories/ZDI-22-1689/
+
+Lastly, given that this is a coordinated disclosure,
+I don't know why there are no CVE IDs reserved for
+these.
+
+-Jan
