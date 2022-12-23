@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1435" "Saturday" "5" "December" "2015" "09:40:23" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151205144023.D7E276C0237@smtpvmsrv1.mitre.org>" "37" "[oss-security] Re: CVE request: Redmine: cross-site scripting vulnerability fixed in 3.0.0 and 2.6.2" "^Cc:" nil nil "12" "2015120514:40:23" "[oss-security] Re: CVE request: Redmine: cross-site scripting vulnerability fixed in 3.0.0 and 2.6.2" (number mark "U       cve-assign@m Dec  5   37/1435  " thread-indent "\"[oss-security] Re: CVE request: Redmine: cross-site scripting vulnerability fixed in 3.0.0 and 2.6.2\"\n") "<20151205073937.GB14618@lakka.kapsi.fi>" ("<20151205073937.GB14618@lakka.kapsi.fi>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 7228 invoked by uid 550); 5 Dec 2015 14:40:37 -0000
+Received: (qmail 1790 invoked by uid 550); 23 Dec 2022 07:06:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +6,76 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7195 invoked from network); 5 Dec 2015 14:40:36 -0000
-In-Reply-To: <20151205073937.GB14618@lakka.kapsi.fi>
-Message-Id: <20151205144023.D7E276C0237@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Sat,  5 Dec 2015 09:40:23 -0500 (EST)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: Redmine: cross-site scripting vulnerability fixed in 3.0.0 and 2.6.2
-To: henri@nerv.fi
+Received: (qmail 1766 invoked from network); 23 Dec 2022 07:06:52 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
+	:content-type:date:date:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to; s=fm2; t=1671779191; x=1671865591; bh=orAroJ04PE
+	YU3XV9OKbILKHXm0YMifwHWeukhsjy4s8=; b=pGMB1bxbsCCXyz3tpqu+htnTPS
+	cvgMmIdKv7wvLrVjLJXYUMOGa8e1F5CBLZWewmvQS5DFiVpj/4+JvTVo7n6jZP61
+	LYFpkDbJ5+HBTQMi4tX387d5AYo/LLSqzZkW05U2duafm56DZUUwh4PPPxtXCGsW
+	+Ych2khwjXFcqIjoA/EdDUnU41LKgZ5Stj4iI9azpjaQfAFhr3543x+DEqqfJJ3A
+	IfVJxQlYtSN2rWjWcymyH9UNdMVGbFyOYlD0Vwqxs+8GYcErrovGUSgAAyWVxuaK
+	1y8KvS6rXdyKnWN55CFEVxOZX9VbUD6FBkDoxCpMtdc/Vwv/Tgvytf3/dHNw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:date:date:feedback-id
+	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:sender:subject:subject:to:to
+	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1671779191; x=1671865591; bh=orAroJ04PEYU3XV9OKbILKHXm0YM
+	ifwHWeukhsjy4s8=; b=tKb6pFt+R6Q3nkpWqKsPf9JISIVSvFv+1Vva2hR4gQGb
+	2SDxNAqF0btn59cyLFNxCmphETLlZUinqwn/CKC39ECgMW7P4FZn2l69PBTmMMGR
+	msO+nCXxhVqmKdpsGoUl+tUx8tZcwEEr6APwHAyVJJ5gW7XT5IzDvuFF9rQkQ9Pg
+	W3w3Hu13ONgf05VgJ61HhpJG1hEwSqLyyyoIB3NikCwaWdD9k33bcEN3YGGJBdjX
+	Kw39qheMtkvCpV3JXpyxlTjbhJSr3eEVdK6l+dBLm2yYgJuk5zTydJngmEyUQCzD
+	6RfWoYrq59cEBFXGn3YQkk6jWCaYVakGP6U3fBFGuA==
+X-ME-Sender: <xms:d1OlY1MVUzZtlNDXw7zf8bquQXzSqMcSWjqdoV0En7VSl_YQ9lOASA>
+    <xme:d1OlY3_CArHzj_E8jlip3opxI5QRPqCVBc-Nq0bo1JluCvqx7KEm4ywbtaH4fxzXs
+    9sLkvjphpWQ-A>
+X-ME-Received: <xmr:d1OlY0RCXz_L8G2Z-I_7u3yY375NA5E1wFp3H4EwgpFwjpVz3qWJfeegzjt1Qgnr16RgVa-8TzboyZdJNrktdcKQ-68DM8o5>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrhedugddutdeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesthdtre
+    dttddtvdenucfhrhhomhepifhrvghgucfmjfcuoehgrhgvgheskhhrohgrhhdrtghomheq
+    necuggftrfgrthhtvghrnhepteefgfevtefhheeuheejiefffffftdehvdekgeetieefje
+    ehudffffeihfevtdeknecuffhomhgrihhnpehglhhosggrlhhsvggtuhhrihhthigurght
+    rggsrghsvgdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    hlfhhrohhmpehgrhgvgheskhhrohgrhhdrtghomh
+X-ME-Proxy: <xmx:d1OlYxu7q-TALYs7QWf1XwkbhTS2fX8XnjESSuHCh2P5uYXVbYfVig>
+    <xmx:d1OlY9ewYMoZCXtyw0unTNFLbeq0B9VsJtD9S0iDLbzCGO3Np7KKCA>
+    <xmx:d1OlY90RJwOeQIJpWohNOsyzKzBcjjS2D42OIDq3YUkR5YIfaqS8kA>
+    <xmx:d1OlY9njkE3Ktdz6doSRqT_BDo2doGH7JczFpbWe2GbuHYtYRIx_yg>
+Feedback-ID: i787e41f1:Fastmail
+Date: Fri, 23 Dec 2022 08:06:28 +0100
+From: Greg KH <greg@kroah.com>
+To: oss-security@lists.openwall.com
+Message-ID: <Y6VTdO608VUE38Ke@kroah.com>
+References: <CAKoP-y-rbU=xEowJGp6my0khWMSbE05+ncDiE3wtXTOWwvyScA@mail.gmail.com>
+ <Y6TQ0HyCJOMkKSDn@netmeister.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y6TQ0HyCJOMkKSDn@netmeister.org>
+Subject: Re: [oss-security] Details on this supposed Linux Kernel ksmbd RCE
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu, Dec 22, 2022 at 04:49:04PM -0500, Jan Schaumann wrote:
+> Lastly, given that this is a coordinated disclosure,
+> I don't know why there are no CVE IDs reserved for
+> these.
 
-> https://www.redmine.org/issues/19117
-> http://www.redmine.org/projects/redmine/wiki/Security_Advisories
+The kernel developers do not work with CVEs at all as they are not all
+that relevant for the most part for kernel issues.  MITRE agrees with us
+will not even give them to us if we ask for them :)
 
-Use CVE-2015-8477.
+Some Linux companies still insist on assigning CVEs, but that's
+primarily to help enable their internal engineering processes more than
+anything else.
 
-Is there any public information that associates 19117 with the
+As an alternative, please look at the GSD (Global Security Database,
+https://globalsecuritydatabase.org/) for which the kernel does get ids
+assigned for issues like this, and many many others.
 
-  "Potential XSS vulnerability when rendering some flash messages" "2.6.2 and 3.0.0"
+sorry,
 
-line, or are you providing this association based on your own involvement with the
-vulnerability disclosure?
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWYvcGAAoJEL54rhJi8gl5nR0P/i9TvDbn3wa+dS1oiUq8HWkb
-XB5DgXPb32ZAPoTQ98FC1Y8LJ9CEug4TPEvb+AnDBt8Nwt3jOcYZB3OVCSh+9gkq
-nZ4uvK394WzcqkfRrV9xFKpxk+moEKqmvSl2s/V+pMf1rWCMdZAgmt2aV4T65Qc9
-FzzGrwi9CUyIHqXAKlQHTW8EQFRQ68iuyrGuqLS1rYRlitrLIhBjUy8SAXdXJXE4
-7TK8YnRfVYW55gzWMaPZXzBC04KT+nHi+feuDz5vk6LHlSyI41rjmCGAR2YD4t5y
-Vh04s7EYisccjiN11ejEtXnD0kqxnH3OSs+B4aB6pansrlXTc+19Ke21hMeyDTNM
-4vfcpJY/jjxgvIrzprPbyDnzg63Ac5pmsGbnSdLcDicvjgcziu4kyeF2ztHCci7a
-gwoyWJXN+vKmqohsd0jC667Lq8sKniH+6CG/MGKpQSplxDPLgP7emHCJJlBo5f/O
-Z4XE5Yt1L2RU9P+7qDtM6XhWZNpuN3gih5i2FNYFciQw7shlIM3oIZkVcj4E8FLy
-We+N6BhEB9eC5e8fT/RhqL4N/MHHbDevN/0rwzapQcWO65Pdxsuujn/qKI0+9XNA
-2WFieGbm/7/Q5gwilRcjgbVV5s3CEEhM8lL4stCXyvIKwz2l5+Dxz+rX9E1+xbhC
-vLY6539EGsJ/bgO39p3U
-=rJ0Y
------END PGP SIGNATURE-----
+greg k-h
