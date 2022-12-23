@@ -1,26 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/22/1
-Message-ID: <Yev0nNQ9yB/ucgQU@kroah.com>
-Date: Sat, 22 Jan 2022 13:12:12 +0100
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/23/13
+Message-ID: <Y6XdsmNOXvfti9kq@gentoo.org>
+Date: Fri, 23 Dec 2022 10:56:18 -0600
+From: John Helmert III <ajak@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: usbview polkit policy local root exploit (CVE-2022-23220)
+Subject: Re: Details on this supposed Linux Kernel ksmbd RCE
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jan 21, 2022 at 03:33:50PM +0100, Matthias Gerstner wrote:
-> Hello list,
+On Fri, Dec 23, 2022 at 09:04:25AM -0500, Sasha Levin wrote:
+> On Fri, Dec 23, 2022 at 09:17:28AM +0100, Marcus Meissner wrote:
+> >Not sure why they do not like you, but to be very clear anyone else can
+> >requests CVEs for the kernel, (except the blacklisted drivers/staging/ area).
 > 
-> this is to inform you about a local root exploit I found in usbview [1]
-> release 2.1. This finding was embargoed for 7 days on the linux-distros
-> mailing list and the fix has been published today.
-> 
-> The upstream author Greg KH is currently working on an improved version
-> of usbview that will no longer require root privileges to run.
+> For CVEs assigned (earlier this month) to issues in drivers/staging,
+> what would be the process to remove the assignment or mark them as
+> invalid?
 
-That new version is now released as 3.0, which should prevent the need
-for any of this mess in the future as no root permissions are needed at
-all.
+Requests for changes to CVEs (like rejections) should go to the
+assigning CNA. For MITRE, they want such requests to go through
+cveform.mitre.org. For others, you can find contact points on [1].
 
-thanks,
+[1] https://www.cve.org/PartnerInformation/ListofPartners
 
-gre gk-h
+> -- 
+> Thanks,
+> Sasha
+
+Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
