@@ -1,57 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/05/3
-Message-ID: <a793b97f-2bca-43c3-2555-012e80daeeb8@igalia.com>
-Date: Tue, 5 Jul 2022 13:16:55 +0200
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0006
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/23/5
+Message-ID: <Y6Vppxpq+PHTb/Qe@sol.localdomain>
+Date: Fri, 23 Dec 2022 00:41:11 -0800
+From: Eric Biggers <ebiggers@...nel.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Details on this supposed Linux Kernel ksmbd RCE
 Content-Type: text/plain; charset=utf-8
 
+On Fri, Dec 23, 2022 at 09:17:28AM +0100, Marcus Meissner wrote:
+> Hi folks,
+> 
+> tldr: I requested 5 CVEs for the new ZDI issues Josh and Jan referenced.
+> 
+> long form:
+> 
+> Nice surprise 1 day before Christmas.
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2022-0006
-------------------------------------------------------------------------
+Note that these bugs were already fixed in upstream and all affected Long Term
+Support (LTS) kernels months ago.  So this is really only a "surprise" for
+people who choose to use known buggy and insecure kernels that don't follow LTS.
 
-Date reported           : July 05, 2022
-Advisory ID             : WSA-2022-0006
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2022-0006.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2022-0006.html
-CVE identifiers         : CVE-2022-22662, CVE-2022-22677, CVE-2022-26710.
+Anyway, these sorts of bugs are totally predictable in a complex, new network
+filesystem server (ksmbd).  Personally I recommend not using ksmbd.
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
-
-CVE-2022-22662
-    Versions affected: WebKitGTK and WPE WebKit before 2.36.0.
-    Credit to Prakash (@1lastBr3ath) of Threat Nix.
-    Impact: Processing maliciously crafted web content may disclose
-    sensitive user information. Description: A cookie management issue
-    was addressed with improved state management.
-
-CVE-2022-22677
-    Versions affected: WebKitGTK and WPE WebKit before 2.36.4.
-    Credit to an anonymous researcher.
-    Impact: The video in a webRTC call may be interrupted if the audio
-    capture gets interrupted. Description: A logic issue in the handling
-    of concurrent media was addressed with improved state handling.
-
-CVE-2022-26710
-    Versions affected: WebKitGTK and WPE WebKit before 2.36.4.
-    Credit to Chijin Zhou of ShuiMuYuLin Ltd and Tsinghua wingtecher lab.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A use after free issue was
-    addressed with improved memory management.
-
-
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
-
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
-
-The WebKitGTK and WPE WebKit team,
-
-July 05, 2022
+- Eric
