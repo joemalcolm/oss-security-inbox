@@ -1,4 +1,4 @@
-Received: (qmail 24223 invoked by uid 550); 4 Oct 2022 13:26:28 -0000
+Received: (qmail 28001 invoked by uid 550); 23 Dec 2022 14:20:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,126 +7,78 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5134 invoked from network); 4 Oct 2022 08:04:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date;
-        bh=l4Q1wSHEPWl+hKNFWOWZu2uuYiP7cyNLS2A8CbTupVc=;
-        b=XECRTWLXV/Cm0eFZ6TB2Wjbp5GigI7B9ilKYPSz4+p5CscdlxdGTE8ZFLCIWJMsuxj
-         m0mlEiZxkoFxPxFeutDMaX9t0BCM97qfS7izJoOkRf3ExJGvh9bgw9OZ5qMwKv6yYSyc
-         IpJUbNJnuS0DiG6fIC8YQMlsvOmNlGOJyhn9EPxk0xWp5M4hM315XDkpicOhpGs10ptp
-         s3rQjIOqeJeZTM1fai8R0vXfwk7Yu/9SHfo9MrLjA7GFQ1LjOsh4UimorMQ5QyxlzxIq
-         4ZEOQsIhK9lhrtFqYqUyw+r7OYT3dBMdBtl0kIRzYby3MKBZOIy7xCODQ21Rzh46XU9u
-         /S5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date;
-        bh=l4Q1wSHEPWl+hKNFWOWZu2uuYiP7cyNLS2A8CbTupVc=;
-        b=0FhZzDrQN8PUgYXG6twBFZznfXFYlZdGmP1RTm3RD9UtizYXq7ijICQKyHhfKOKT8C
-         V5U91B+3M+tjk59axiDyfRfuOjrSpGvl2i2XA+IpvwK4Zibb0izmNKV/kjUX1oqdDXUF
-         Uxien0zeM/xQ6b+h/hSmu0J6xK/vMJzOCzwBk09Tq3lLIsm28o+p0JVm+bRj3MIXIzvN
-         LyZSh9bqsSbrdD+cNR8VlD48HkoSvIUxP39hW2J0bFDbuM5+hjQW3yiaD3uWeMEzB4Mb
-         tEFlbNTKQyRbq1MmfJLXheALsfwaxkqz9zO+sIIe8IU0/asrINr7yWVlAzN+6Lo76zqD
-         id6g==
-X-Gm-Message-State: ACrzQf1xLKNXyX2UvQ7Mbr6A9I2QuwqxIyR5dXuBfoHYs/1MPQI0BUXA
-	f2fO8envD+f5jH/Ahi2lhKd/kO7WA+pLf8DPTGkVVLI74oQ=
-X-Google-Smtp-Source: AMsMyM71/oYGtV8AFwz0/Ubl7uYEbtIieqsr2XSSQSBai/ng6A6OqSCWgkzqW865Y+CKpXDPJrNC0ZJAqb2myO4HXoo=
-X-Received: by 2002:a05:6a00:1a44:b0:528:6af7:ff4a with SMTP id
- h4-20020a056a001a4400b005286af7ff4amr26759403pfv.78.1664870648017; Tue, 04
- Oct 2022 01:04:08 -0700 (PDT)
-MIME-Version: 1.0
-From: Carlton Gibson <carlton.gibson@gmail.com>
-Date: Tue, 4 Oct 2022 10:03:56 +0200
-Message-ID: <CAJwKpyQDJVgvZGUXWVpx5dUCoajAyx8R-8qZEQ7CWMgXi+gv5g@mail.gmail.com>
+Received: (qmail 27980 invoked from network); 23 Dec 2022 14:20:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
+	:content-type:date:date:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to; s=fm2; t=1671805221; x=1671891621; bh=fSJ4tvuZik
+	7aASf6KMMoGUGYBfx+YHqV4Fc74zKpkjY=; b=wrp/40fEtlRHsLFpG+IQVPPNxD
+	10cqjeGYlQBC74JvSOGfdg/Q4LUoIdI0WGynOlkRkc17HNLIOF1gUDnWueef4D/k
+	Mr2cTiYu0rzjkkM1XbfS9yfawJuTHzXsfGHGmXUQ6JbvwLb0Le7TVUjqJTj/mhqu
+	4s0iPEV1i16rv2zMHM5P+/tWDcy3jV2wYz8ZZ64Z9fPNEKkSzZkj8U091esQ8IBp
+	fLog8p4jL6G7xsUsIz/1U4EwTtD5uIkGenS9y8Ly1RNYF6Ne9CNRS4t7FkD7PMGn
+	UeUJ0cFyWEjKCr00DZOXHoGpJfXsuAStLd3vYg4aImeJWDT/v/LjQ3eFzPpg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:date:date:feedback-id
+	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:sender:subject:subject:to:to
+	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1671805221; x=1671891621; bh=fSJ4tvuZik7aASf6KMMoGUGYBfx+
+	YHqV4Fc74zKpkjY=; b=eeGtKTjPL4jxp3p27TXrLrqui/JOycEoiRzb7xe+UmNf
+	vEkcdl433bgoj3MzXV/M94gSWf48JpIHYfxEN+oHJfqtNkLMDOB1xQecUHyHujZM
+	AmI2hl2UboosCJQPe+0nnugaSbnekUywhxP2QpD4aMPUiy337ovE2NDbHftENh5J
+	jl3dH+T+D4jwPmnmRi27xjPzl09mwabAf1D2PM4g5GQsykDAo2PtpEj0HxcRpXcB
+	PMvAwd3NpOC27tTejnziH8T+qcDYWAHS8nrJa5pzM9ceQxWd52i5+XPu4vVzLmZD
+	qwUF6eMdUYizi27091PP8K9k/RQizU1ZZ5vNb+XlXg==
+X-ME-Sender: <xms:JbmlY_xlNVHlDcnlFKrFAXGrzqLcpAZJjXue71uaL-OD_YIRxxBPHg>
+    <xme:JbmlY3TwomEfWNYObF1GU9QDcJqaVj7KrrK3-3QchQa24lAu0UlOBwsgSjHUJhiTU
+    aznYQ0JRkITCw>
+X-ME-Received: <xmr:JbmlY5XxuDDYgvvlsXzoxuKlR3UHdwkHQy0bMp1weKG7uDi-vVNwP0I6cF1D_rp2H35srg5sPlMH590OnForMPxFw82fcE9n>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrhedvgdeifecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefirhgvghcumffjuceoghhrvghgsehkrhhorghhrdgtohhmqeen
+    ucggtffrrghtthgvrhhnpeevueehjefgfffgiedvudekvdektdelleelgefhleejieeuge
+    egveeuuddukedvteenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
+    fhhrohhmpehgrhgvgheskhhrohgrhhdrtghomh
+X-ME-Proxy: <xmx:JbmlY5gmChgA0GMfa1JZyhbmV6Sk9GsBV-XTvT3tObTaQamSWWUfeQ>
+    <xmx:JbmlYxDDYvuR4KQv7wW7rJyjYWawCZhTd0mpFK8e787RmRrtZmuvog>
+    <xmx:JbmlYyIK9Pc1rt5hrkosfuul8t8v080JT4zmRc_hafq979QKKpgJaQ>
+    <xmx:JbmlY0rMuMMMLu71iRupB9Eay8lkh2Q_s4i_yZSGffpp7RdSvUXgMA>
+Feedback-ID: i787e41f1:Fastmail
+Date: Fri, 23 Dec 2022 15:20:17 +0100
+From: Greg KH <greg@kroah.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000009276be05ea30e7d1"
-Subject: [oss-security] Django CVE-2022-41323: Potential denial-of-service vulnerability in
- internationalized URLs
+Message-ID: <Y6W5IcAzIUb5rD1F@kroah.com>
+References: <CAKoP-y-rbU=xEowJGp6my0khWMSbE05+ncDiE3wtXTOWwvyScA@mail.gmail.com>
+ <Y6TQ0HyCJOMkKSDn@netmeister.org>
+ <Y6VTdO608VUE38Ke@kroah.com>
+ <20221223081727.GB2404@suse.de>
+ <Y6W1aSG2z5mBJDu8@sashalap>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y6W1aSG2z5mBJDu8@sashalap>
+Subject: Re: [oss-security] Details on this supposed Linux Kernel ksmbd RCE
 
---0000000000009276be05ea30e7d1
-Content-Type: text/plain; charset="UTF-8"
+On Fri, Dec 23, 2022 at 09:04:25AM -0500, Sasha Levin wrote:
+> On Fri, Dec 23, 2022 at 09:17:28AM +0100, Marcus Meissner wrote:
+> > Not sure why they do not like you, but to be very clear anyone else can
+> > requests CVEs for the kernel, (except the blacklisted drivers/staging/ area).
+> 
+> For CVEs assigned (earlier this month) to issues in drivers/staging,
+> what would be the process to remove the assignment or mark them as
+> invalid?
 
-Django security releases issued: 4.1.2, 4.0.8, and 3.2.16
-https://www.djangoproject.com/weblog/2022/oct/04/security-releases/
+And who is doing this "blacklisting" of staging drivers from CVEs?  Why
+are they special when many distros do enable and rely on them?
 
-In accordance with `our security release policy
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the Django
-team
-is issuing
-`Django 4.1.2 <https://docs.djangoproject.com/en/dev/releases/4.1.2/>`_,
-`Django 4.0.8 <https://docs.djangoproject.com/en/dev/releases/4.0.8/>`_, and
-`Django 3.2.16 <https://docs.djangoproject.com/en/dev/releases/3.2.16/>`_.
-These releases addresses the security issue detailed below. We encourage all
-users of Django to upgrade as soon as possible.
+In my talks with MITRE, they have said they don't want to make public
+statments about the CVE issues and Linux, which is sad, but they never
+mentioned anything about "we will ignore this portion of the kernel
+source tree".  Is that in a public statement anywhere that I can point
+to when people ask the kernel security team for CVEs?
 
-CVE-2022-41323: Potential denial-of-service vulnerability in
-internationalized URLs
-===================================================================================
+thanks,
 
-Internationalized URLs were subject to potential denial of service attack
-via
-the locale parameter. This is now escaped to avoid this possibility.
-
-This issue has medium severity, according to the Django security policy.
-
-Thanks to Benjamin Balder Bach for the report.
-
-Affected supported versions
-===========================
-
-* Django main branch
-* Django 4.1
-* Django 4.0
-* Django 3.2
-
-Resolution
-==========
-
-Patches to resolve the issue have been applied to Django's main branch and
-the
-4.1, 4.0, and 3.2 release branches. The patches may be obtained from the
-following changesets:
-
-* On the `main branch <
-https://github.com/django/django/commit/e5ea2842941967f06cefa10865f303b39c95279f
->`__
-* On the `4.1 release branch <
-https://github.com/django/django/commit/9d656ea51d9ea7105c0c0785783ac29d426a7d25
->`__
-* On the `4.0 release branch <
-https://github.com/django/django/commit/23f0093125ac2e553da6c1b2f9988eb6a3dd2ea1
->`__
-* On the `3.2 release branch <
-https://github.com/django/django/commit/5b6b257fa7ec37ff27965358800c67e2dd11c924
->`__
-
-The following releases have been issued:
-
-* Django 4.1.2 (`download Django 4.1.2 <
-https://www.djangoproject.com/m/releases/4.1/Django-4.1.2.tar.gz>`_ |
-`4.1.2 checksums <
-https://www.djangoproject.com/m/pgp/Django-4.1.2.checksum.txt>`_)
-* Django 4.0.8 (`download Django 4.0.8 <
-https://www.djangoproject.com/m/releases/4.0/Django-4.0.8.tar.gz>`_ |
-`4.0.8 checksums <
-https://www.djangoproject.com/m/pgp/Django-4.0.8.checksum.txt>`_)
-* Django 3.2.16 (`download Django 3.2.16 <
-https://www.djangoproject.com/m/releases/3.2/Django-3.2.16.tar.gz>`_ |
-`3.2.16 checksums <
-https://www.djangoproject.com/m/pgp/Django-3.2.16.checksum.txt>`_)
-
-The PGP key ID used for this release is Carlton Gibson: `E17DF5C82B4F9D00 <
-https://github.com/carltongibson.gpg>`_.
-
-General notes regarding security reporting
-==========================================
-
-As always, we ask that potential security issues be reported via
-private email to ``security@djangoproject.com``, and not via Django's
-Trac instance or the django-developers list. Please see `our security
-policies <https://www.djangoproject.com/security/>`_ for further
-information.
-
---0000000000009276be05ea30e7d1--
+greg k-h
