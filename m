@@ -1,38 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/29/2
-Message-ID: <YfWgu/Uv+2r3TpdL@jasmine.lan>
-Date: Sat, 29 Jan 2022 15:16:59 -0500
-From: Leo Famulari <leo@...ulari.name>
-To: John Helmert III <ajak@...too.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0001
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/23/8
+Message-ID: <CAH8yC8nSE6BOU_JBTiYWWKXx2LeYUazTDN1tzzvcE5mg6WJf6Q@mail.gmail.com>
+Date: Fri, 23 Dec 2022 10:19:00 -0500
+From: Jeffrey Walton <noloader@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Details on this supposed Linux Kernel ksmbd RCE
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jan 24, 2022 at 08:13:15AM -0600, John Helmert III wrote:
-> I don't think it makes much sense for every downstream to make these
-> kinds of assumptions.
+On Fri, Dec 23, 2022 at 8:22 AM Eric Biggers <ebiggers@...nel.org> wrote:
+>
+> On Fri, Dec 23, 2022 at 09:17:28AM +0100, Marcus Meissner wrote:
+> >
+> > tldr: I requested 5 CVEs for the new ZDI issues Josh and Jan referenced.
+> >
+> > long form:
+> >
+> > Nice surprise 1 day before Christmas.
+>
+> Note that these bugs were already fixed in upstream and all affected Long Term
+> Support (LTS) kernels months ago.  So this is really only a "surprise" for
+> people who choose to use known buggy and insecure kernels that don't follow LTS.
 
-Why not? History shows that this assumption will almost always be
-correct for WebKit.
+Comes to mind: https://thenewstack.io/design-system-can-update-greg-kroah-hartman-linux-security/
 
-> Besides, this doesn't seem to be what's
-> happening in practice. For example, WSA-2021-0006 was released on
-> October 26, 2021 with vulnerabilities addressed in 2.34.0, released on
-> September 22, but RedHat's bugs for it were only opened in the days
-> after the *security advisory's* release, not the software release. It
-> doesn't help that most most distribution security tooling seems to be
-> oriented around CVEs, which aren't released for WebKit until after the
-> associated advisory.
+> Anyway, these sorts of bugs are totally predictable in a complex, new network
+> filesystem server (ksmbd).  Personally I recommend not using ksmbd.
 
-I'm sure that Red Hat's package maintainers know what a WebKit update
-means. Presumably they are busy and their KPIs prioritize fixing CVEs,
-so they don't act as proactively as one might prefer.
-
-In general, it seems that WebKit is handling these issues like Linux.
-Observers know that important bugs are fixed constantly in software of
-this size and complexity. Relying only on CVEs is too reactive and
-limited in scope to provide a meaningful security stance, increasingly
-so since the CVE assignment system stopped working in the last few
-years.
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Jeff
