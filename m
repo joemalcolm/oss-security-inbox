@@ -1,20 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/14/4
-Message-ID: <1dc7de41-f0d7-566f-d46c-c1206a3dafa2@canonical.com>
-Date: Wed, 14 Dec 2022 07:21:13 -0500
-From: Marc Deslauriers <marc.deslauriers@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: X.Org Security Advisory: multiple security issues in X server extensions
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/23/2
+Message-ID: <Y6TzMR1Wh7jKmatU@codewreck.org>
+Date: Fri, 23 Dec 2022 09:15:45 +0900
+From: Dominique Martinet <asmadeus@...ewreck.org>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com, Alejandro Colomar <alx.manpages@...il.com>, Michael Kerrisk <mtk.manpages@...il.com>, linux-kernel@...r.kernel.org, linux-man@...r.kernel.org
+Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
 Content-Type: text/plain; charset=utf-8
 
-On 2022-12-13 20:23, Peter Hutterer wrote:
-> * CVE-2022-46283/ZDI-CAN-19530: X.Org Server XkbGetKbdByName use-after-free
+Solar Designer wrote on Fri, Dec 23, 2022 at 12:21:12AM +0100:
+> On Fri, Dec 23, 2022 at 07:03:17AM +0900, Dominique Martinet wrote:
+> > Alexey Dobriyan wrote on Thu, Dec 22, 2022 at 07:42:53PM +0300:
+> > > --- a/man5/proc.5
+> > > +++ b/man5/proc.5
+> > > @@ -2092,6 +2092,11 @@ Strings longer than
+> > >  .B TASK_COMM_LEN
+> > >  (16) characters (including the terminating null byte) are silently truncated.
+> > >  This is visible whether or not the executable is swapped out.
+> > > +
+> > > +Note that \fIcomm\fP can contain space and closing parenthesis characters. 
+> > > +Parsing /proc/${pid}/stat with split() or equivalent, or scanf(3) isn't
+> > > +reliable. The correct way is to locate closing parenthesis with strrchr(')')
+> > > +from the end of the buffer and parse integers from there.
+> > 
+> > That's still not enough unless new lines are escaped, which they aren't:
+> > 
+> > $ echo -n 'test) 0 0 0
+> > ' > /proc/$$/comm
+> > $ cat /proc/$$/stat
+> > 71076 (test) 0 0 0
+> > ) S 71075 71076 71076 34840 71192 4194304 6623 6824 0 0 10 3 2 7 20 0 1 0 36396573 15208448 2888 18446744073709551615 94173281726464 94173282650929 140734972513568 0 0 0 65536 3686404 1266761467 1 0 0 17 1 0 0 0 0 0 94173282892592 94173282940880 94173287231488 140734972522071 140734972522076 140734972522076 140734972526574 0
+> > 
+> > The silver lining here is that comm length is rather small (16) so we
+> > cannot emulate full lines and a very careful process could notice that
+> > there are not enough fields after the last parenthesis... So just look
+> > for the last closing parenthesis in the next line and try again?
 > 
-> The XkbCopyNames function left a dangling pointer to freed memory, resulting in 
-> out-of-bounds memory access on subsequent XkbGetKbdByName requests.
-> 
+> No, just don't treat this file's content as a line (nor as several
+> lines) - treat it as a string that might contain new line characters.
 
-I think there's a typo there, the CVE should be CVE-2022-4283.
+Ah, this came just after the /proc/net/unix discussion in another
+thread[1] pointing to [2] with one line per entry, and I was still in
+that mode.
 
-Marc.
+For /proc/pid/stat with a single entry I agree treating it as a buffer
+and looking for the last closing parenthesis should be correct as per
+the man page suggestion -- sorry for the noise.
 
+[1] https://www.openwall.com/lists/oss-security/2022/12/21/8
+[2] https://lore.kernel.org/all/8a87957e-4d33-9351-ae74-243441cb03cd@opteya.com/
+
+-- 
+Dominique Martinet | Asmadeus
