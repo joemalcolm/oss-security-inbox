@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1605" "Wednesday" "28" "July" "2021" "18:35:17" "-0400" "Alex O'Ree" "alexoree@apache.org" nil "48" "[oss-security] [SECURITY] CVE-2021-37578 Apache jUDDI Remote code execution" nil nil nil "7" nil nil (number mark "U       alexoree@apa Jul 28   48/1605  " thread-indent "\"[oss-security] [SECURITY] CVE-2021-37578 Apache jUDDI Remote code execution\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY] CVE-2021-37578 Apache jUDDI Remote code execution" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1163 invoked by uid 550); 29 Jul 2021 11:40:09 -0000
+Received: (qmail 32647 invoked by uid 550); 23 Dec 2022 01:01:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,68 +7,84 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1173 invoked from network); 28 Jul 2021 22:36:16 -0000
-X-Gm-Message-State: AOAM5335UsXoQ9uTojVH/dF03zn/hds0ZLOPMsu9R5MV7IAXG1OCRmGu
-	PgfjtMFnTOXQ7p2JB4lsNtQKNGv/+JgyaXXbZLk=
-X-Google-Smtp-Source: ABdhPJweh9jumWSvkkM21Alrfs3ObKRa1dFQM4DUeacc49eXMH/Lg5STmRbMDP/RkJIQwNMPloyyQl49k41/XLRHWl8=
-X-Received: by 2002:a67:db0a:: with SMTP id z10mr2369005vsj.32.1627511729054;
- Wed, 28 Jul 2021 15:35:29 -0700 (PDT)
+Received: (qmail 8013 invoked from network); 23 Dec 2022 00:16:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
+	t=1671754579; bh=3g+YqbVOxOYOai/as9CquuT+BvETpQ9bhFQwYeRZGeM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=uKL7A12xoVb6t40Iy4YGv1tw+PzU/OIlomzJZ9mzz/e+Cs/gPHi/aa73HohLvAmQX
+	 /e8dodS9/x+xDgOYvZjooysQrNqJPMunBqtvzYgb+rN8mbYn3HqTP6QM58Srshn1mN
+	 OpPAmmbrx4KEgrpHjPnMy6v4kG3K9v+0KEUNo/eYiEjJwVGST9RHIDGeOgFzA81jaI
+	 K7xw+b3jcjyQ0E6YPwxEKJAMi88k9lWd0mTPHG3XxGK7UfB+utBxNApUmskhYicEBW
+	 1DkU0fDZs3p036Y7RMSDUtfN/mxx3RdZB7oFwQxv4NaCnVEIh6El6rkNOmrok0llCE
+	 aMZvVI+pb8Nqg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
+	t=1671754579; bh=3g+YqbVOxOYOai/as9CquuT+BvETpQ9bhFQwYeRZGeM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=uKL7A12xoVb6t40Iy4YGv1tw+PzU/OIlomzJZ9mzz/e+Cs/gPHi/aa73HohLvAmQX
+	 /e8dodS9/x+xDgOYvZjooysQrNqJPMunBqtvzYgb+rN8mbYn3HqTP6QM58Srshn1mN
+	 OpPAmmbrx4KEgrpHjPnMy6v4kG3K9v+0KEUNo/eYiEjJwVGST9RHIDGeOgFzA81jaI
+	 K7xw+b3jcjyQ0E6YPwxEKJAMi88k9lWd0mTPHG3XxGK7UfB+utBxNApUmskhYicEBW
+	 1DkU0fDZs3p036Y7RMSDUtfN/mxx3RdZB7oFwQxv4NaCnVEIh6El6rkNOmrok0llCE
+	 aMZvVI+pb8Nqg==
+Date: Fri, 23 Dec 2022 09:15:45 +0900
+From: Dominique Martinet <asmadeus@codewreck.org>
+To: Solar Designer <solar@openwall.com>
+Cc: oss-security@lists.openwall.com,
+	Alejandro Colomar <alx.manpages@gmail.com>,
+	Michael Kerrisk <mtk.manpages@gmail.com>,
+	linux-kernel@vger.kernel.org, linux-man@vger.kernel.org
+Message-ID: <Y6TzMR1Wh7jKmatU@codewreck.org>
+References: <Y6SJDbKBk471KE4k@p183>
+ <Y6TUJcr/IHrsTE0W@codewreck.org>
+ <20221222232112.GA29438@openwall.com>
 MIME-Version: 1.0
-From: "Alex O'Ree" <alexoree@apache.org>
-Date: Wed, 28 Jul 2021 18:35:17 -0400
-X-Gmail-Original-Message-ID: <CALLT8kikyVve2ZhJi-tK8RzrYQQOxpbgKciMA6DwxAZmSJP=sg@mail.gmail.com>
-Message-ID: <CALLT8kikyVve2ZhJi-tK8RzrYQQOxpbgKciMA6DwxAZmSJP=sg@mail.gmail.com>
-To: "user@juddi.apache.org" <user@juddi.apache.org>, dev@juddi.apache.org, 
-	security <security@apache.org>, oss-security@lists.openwall.com, 
-	Artem Smotrakov <artem.smotrakov@gmail.com>
-Content-Type: multipart/alternative; boundary="0000000000007a6c5205c8369a3d"
-Subject: [oss-security] [SECURITY] CVE-2021-37578 Apache jUDDI Remote code execution
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20221222232112.GA29438@openwall.com>
+Subject: Re: [oss-security] [patch] proc.5: tell how to parse /proc/*/stat
+ correctly
 
---0000000000007a6c5205c8369a3d
-Content-Type: text/plain; charset="UTF-8"
+Solar Designer wrote on Fri, Dec 23, 2022 at 12:21:12AM +0100:
+> On Fri, Dec 23, 2022 at 07:03:17AM +0900, Dominique Martinet wrote:
+> > Alexey Dobriyan wrote on Thu, Dec 22, 2022 at 07:42:53PM +0300:
+> > > --- a/man5/proc.5
+> > > +++ b/man5/proc.5
+> > > @@ -2092,6 +2092,11 @@ Strings longer than
+> > >  .B TASK_COMM_LEN
+> > >  (16) characters (including the terminating null byte) are silently truncated.
+> > >  This is visible whether or not the executable is swapped out.
+> > > +
+> > > +Note that \fIcomm\fP can contain space and closing parenthesis characters. 
+> > > +Parsing /proc/${pid}/stat with split() or equivalent, or scanf(3) isn't
+> > > +reliable. The correct way is to locate closing parenthesis with strrchr(')')
+> > > +from the end of the buffer and parse integers from there.
+> > 
+> > That's still not enough unless new lines are escaped, which they aren't:
+> > 
+> > $ echo -n 'test) 0 0 0
+> > ' > /proc/$$/comm
+> > $ cat /proc/$$/stat
+> > 71076 (test) 0 0 0
+> > ) S 71075 71076 71076 34840 71192 4194304 6623 6824 0 0 10 3 2 7 20 0 1 0 36396573 15208448 2888 18446744073709551615 94173281726464 94173282650929 140734972513568 0 0 0 65536 3686404 1266761467 1 0 0 17 1 0 0 0 0 0 94173282892592 94173282940880 94173287231488 140734972522071 140734972522076 140734972522076 140734972526574 0
+> > 
+> > The silver lining here is that comm length is rather small (16) so we
+> > cannot emulate full lines and a very careful process could notice that
+> > there are not enough fields after the last parenthesis... So just look
+> > for the last closing parenthesis in the next line and try again?
+> 
+> No, just don't treat this file's content as a line (nor as several
+> lines) - treat it as a string that might contain new line characters.
 
-CVE-2021-37578 Apache jUDDI Remote code execution
+Ah, this came just after the /proc/net/unix discussion in another
+thread[1] pointing to [2] with one line per entry, and I was still in
+that mode.
 
-Severity: Low
+For /proc/pid/stat with a single entry I agree treating it as a buffer
+and looking for the last closing parenthesis should be correct as per
+the man page suggestion -- sorry for the noise.
 
-VERSION:  older than 3.3.10
+[1] https://www.openwall.com/lists/oss-security/2022/12/21/8
+[2] https://lore.kernel.org/all/8a87957e-4d33-9351-ae74-243441cb03cd@opteya.com/
 
-PROBLEMTYPE: Remote Code Execution
-
-REFERENCES: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-37578
-https://juddi.apache.org/security.html
-
-DESCRIPTION:
-Apache jUDDI uses several classes related to Java's Remote Method
-Invocation (RMI) which (as an extension to UDDI) provides an alternate
-transport for accessing UDDI services.
-
-RMI uses the default Java serialization mechanism to pass parameters in RMI
-invocations. A remote attacker can send a malicious serialized object to
-the above RMI entries. The objects get deserialized without any check on
-the incoming data. In the worst case, it may let the attacker run arbitrary
-code remotely.
-
-For both jUDDI web service applications and jUDDI clients, the usage of RMI
-is disabled by default. Since this is an optional feature and an extension
-to the UDDI protocol, the likelihood of impact is low. Starting with
-3.3.10, all RMI related code was removed.
-
-Mitigation:
-
-jUDDI Clients, disable RMITransports (found in uddi.xml) and use alternate
-transports such as HTTPS.
-jUDDI Server (juddiv3.war/WEB-INF/classes/juddiv3.xml), disable JNDI and
-RMI settings in juddiv3.xml.
-The appropriate settings are located below in xpath style notation.
-
-    juddi/jndi/registration=false
-    juddi/rmi/registration=false
-
-If the settings are not present, then JNDI and RMI are already disabled.
-This is the default setting.
-
-
-Reported by Artem Smotrakov
-
---0000000000007a6c5205c8369a3d--
+-- 
+Dominique Martinet | Asmadeus
