@@ -1,23 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/04/07/8
-Message-ID: <m2o81c3f8r.fsf@meyering.net>
-Date: Thu, 07 Apr 2022 11:44:36 -0700
-From: Jim Meyering <jim@...ering.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/23/3
+Message-ID: <Y6VTdO608VUE38Ke@kroah.com>
+Date: Fri, 23 Dec 2022 08:06:28 +0100
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: zgrep, xzgrep: arbitrary-file-write vulnerability
+Subject: Re: Details on this supposed Linux Kernel ksmbd RCE
 Content-Type: text/plain; charset=utf-8
 
-All previous versions of gzip and xzutils are affected.
+On Thu, Dec 22, 2022 at 04:49:04PM -0500, Jan Schaumann wrote:
+> Lastly, given that this is a coordinated disclosure,
+> I don't know why there are no CVE IDs reserved for
+> these.
 
-xzutils released this patch today:
+The kernel developers do not work with CVEs at all as they are not all
+that relevant for the most part for kernel issues.  MITRE agrees with us
+will not even give them to us if we ask for them :)
 
-  https://tukaani.org/xz/xzgrep-ZDI-CAN-16587.patch
-  https://tukaani.org/xz/xzgrep-ZDI-CAN-16587.patch.sig
+Some Linux companies still insist on assigning CVEs, but that's
+primarily to help enable their internal engineering processes more than
+anything else.
 
-gzip-1.12 was released today, with the fix:
+As an alternative, please look at the GSD (Global Security Database,
+https://globalsecuritydatabase.org/) for which the kernel does get ids
+assigned for issues like this, and many many others.
 
-  https://lists.gnu.org/r/bug-gzip/2022-04/msg00011.html
-  https://ftp.gnu.org/gnu/gzip/gzip-1.12.tar.xz
-  https://ftp.gnu.org/gnu/gzip/gzip-1.12.tar.xz.sig
+sorry,
 
-Download attachment "signature.asc" of type "application/pgp-signature" (858 bytes)
+greg k-h
