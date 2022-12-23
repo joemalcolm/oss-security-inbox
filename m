@@ -1,84 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/21/8
-Message-ID: <cad6e3380e53431ae91d5a3b520e59a59043ab90@opteya.com>
-Date: Wed, 21 Dec 2022 18:13:50 +0000
-From: "Yann Droneaud" <ydroneaud@...eya.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/23/1
+Message-ID: <s5r028oo-n662-9qqq-9130-208poq85418p@inai.de>
+Date: Fri, 23 Dec 2022 01:21:42 +0100 (CET)
+From: Jan Engelhardt <jengelh@...i.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: [Linux] /proc/pid/stat parsing bugs
+cc: Alejandro Colomar <alx.manpages@...il.com>,  Michael Kerrisk <mtk.manpages@...il.com>, linux-kernel@...r.kernel.org,  linux-man@...r.kernel.org
+Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
 Content-Type: text/plain; charset=utf-8
 
-Hi,
 
-21 décembre 2022 à 18:59 "Demi Marie Obenour" <demi@...isiblethingslab.com> a écrit:
-> On Wed, Dec 21, 2022 at 06:13:17PM +0100, Dmitry Vyukov wrote:
-> 
-> > 
-> > Hello,
-> >  
-> >  This is not a single vulnerability, the list of affected software is
-> >  large, but it's not a security issue for all of it.
-> >  
-> >  It occurred to me that most of the Linux procfs /proc/pid/stat and
-> >  /proc/pid/task/tid/stat parsing code out there is buggy. The fine
-> >  contains a set of numbers about the task:
-> >  https://man7.org/linux/man-pages/man5/proc.5.html
-> >  
-> >  e.g. $ cat /proc/self/stat
-> >  1715376 (cat) R 1544883 1715376 1544883 34819 1715376 4194304 106 0 0
-> >  0 0 0 0 0 20 0 1 0 42505561 9207808 237 18446744073709551615
-> >  93955355631616 93955355651497 140737444557056 0 0 0 0 0 0 0 0 0 17 36
-> >  0 0 0 0 0 93955355667504 93955355669120 93955385581568 140737444559745
-> >  140737444559765 140737444559765 140737444564971 0
-> >  
-> >  Most of the code splits it by space and takes an N-th field.
-> >  The problem is that the process name "(cat)" can contain spaces (and
-> >  brackets). Potentially some important software (containers/sandboxes)
-> >  can be tricked into getting wrong data, and I've seen cases close to
-> >  stack overflows (buffer for a fixed number of fields is allocated on
-> >  stack).
-> >  
-> >  Some examples:
-> >  OpenJDK:
-> >  https://sourcegraph.com/github.com/openjdk/jdk/-/blob/src/jdk.management/unix/native/libmanagement_ext/OperatingSystemImpl.c?L133-139
-> >  https://sourcegraph.com/github.com/openjdk/jdk8u/-/blob/jdk/src/solaris/native/sun/management/OperatingSystemImpl.c?L223-229
-> >  
-> >  Ansible:
-> >  https://sourcegraph.com/github.com/ansible/ansible/-/blob/lib/ansible/modules/yum.py?L507-510
-> >  
-> >  Libuv:
-> >  https://sourcegraph.com/github.com/libuv/libuv/-/blob/src/unix/linux.c?L674-701
-> >  
-> >  bdwgc:
-> >  https://sourcegraph.com/github.com/mono/linux-packaging-mono/-/blob/external/bdwgc/os_dep.c?L1138-1155
-> >  
-> >  But really most of the code that does it:
-> >  https://sourcegraph.com/search?q=context:global+/%5C%22%5C/proc%5C/.*%5C/stat%5C%22/
-> >  
-> >  The only way to parse it is to do strrchr(')') first (fortunately it
-> >  contains just one unescaped string).
-> >  
-> >  Thanks
-> > 
-> 
-> Should Linux be patched to somehow escape the spaces, or replace them
-> with something else? /proc/pid/status is even harder to parse robustly.
+On Thursday 2022-12-22 23:03, Dominique Martinet wrote:
+>> +
+>> +Note that \fIcomm\fP can contain space and closing parenthesis characters. 
+>> +Parsing /proc/${pid}/stat with split() or equivalent, or scanf(3) isn't
+>> +reliable. The correct way is to locate closing parenthesis with strrchr(')')
+>> +from the end of the buffer and parse integers from there.
+>
+>That's still not enough unless new lines are escaped, which they aren't:
 
-It might be difficult because of Linux's policy to not break userspace ABI.
-
-For example, I've suggested some sort of escaping on /proc/net/unix, and
-it was not welcomed.
-
-https://lore.kernel.org/all/20220406102213.2020784-1-ydroneaud@opteya.com/
-
-In a follow up, I've added a PoC for injecting fake entries in /proc/net/unix
-
-https://lore.kernel.org/all/8a87957e-4d33-9351-ae74-243441cb03cd@opteya.com/
-
-I didn't found a way to abuse this issue: no vulnerability, no need for
-a change that would break userspace ABI.
-
-Regards.
-
--- 
-Yann Droneaud
-OPTEYA
+strrchr does not concern itself with "lines".
+If your input buffer contains the complete content of /proc/X/stat (and not
+just a "line" thereof), the strrchr approach appears quite workable.
