@@ -1,54 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/28/8
-Message-ID: <20221228180256.2q-Rh%steffen@sdaoden.eu>
-Date: Wed, 28 Dec 2022 19:02:56 +0100
-From: Steffen Nurpmeso <steffen@...oden.eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/23/7
+Message-ID: <Y6W5IcAzIUb5rD1F@kroah.com>
+Date: Fri, 23 Dec 2022 15:20:17 +0100
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
+Subject: Re: Details on this supposed Linux Kernel ksmbd RCE
 Content-Type: text/plain; charset=utf-8
 
-Shawn Webb wrote in
- <20221228152458.6xyksrxunukjrtzx@...t-hbsd>:
- |On Tue, Dec 27, 2022 at 04:44:49PM -0800, Lyndon Nerenberg (VE7TFX/VE6BBM) \
- |wrote:
- |> Dominique Martinet writes:
- |>> But, really, I just don't see how this can practically be said to \
- |>> be parsable...
- |> 
- |> In its current form it never will be.  The solution is to place
- |> this variable-length field last.  Then you can "cut -d ' ' -f 51-"
- |> to get the command+args part (assuming I counted all those fields
- |> correctly ...)
- |> 
- |> Of course, this breaks backwards compatability.
- |
- |It would also break forwards compatibility in the case new fields
- |needed to be added.
- |
- |The only solution would be a libxo-style feature wherein a
- |machine-parseable format is exposed by virtue of a file extension.
- |
- |Examples:
- |
- |1. /proc/pid/stats.json
- |2. /proc/pid/stats.xml
- |3. /proc/pid/stats.yaml_shouldnt_be_a_thing
+On Fri, Dec 23, 2022 at 09:04:25AM -0500, Sasha Levin wrote:
+> On Fri, Dec 23, 2022 at 09:17:28AM +0100, Marcus Meissner wrote:
+> > Not sure why they do not like you, but to be very clear anyone else can
+> > requests CVEs for the kernel, (except the blacklisted drivers/staging/ area).
+> 
+> For CVEs assigned (earlier this month) to issues in drivers/staging,
+> what would be the process to remove the assignment or mark them as
+> invalid?
 
-Or, rather, in my thought, because this gets too crowded, let
-procfs only show /proc/pid/stats but let it be opened with
-whatever extension, and "let it dynamically check for an according
-creator".  Ie like Apple has those packages which you could look
-into. 
+And who is doing this "blacklisting" of staging drivers from CVEs?  Why
+are they special when many distros do enable and rely on them?
 
-Or simply offer stats.0 where \0 is the field separator(, and \0\0
-is the last entry).  One could even dream of KEY=VALUE\0 pairs,
-like state=R\0  Then not even the order matters no more, and there
-would be a bit of self-description without a documentation.
-(Ach!!  If the IETF would go that route more often.  Sigh.)
+In my talks with MITRE, they have said they don't want to make public
+statments about the CVE issues and Linux, which is sad, but they never
+mentioned anything about "we will ignore this portion of the kernel
+source tree".  Is that in a public statement anywhere that I can point
+to when people ask the kernel security team for CVEs?
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+thanks,
+
+greg k-h
