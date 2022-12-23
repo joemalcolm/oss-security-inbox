@@ -1,40 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/12/1
-Message-Id: <AF6E8613-D1CA-4072-B708-7C7702994D51@chromium.org>
-Date: Thu, 11 Aug 2022 20:28:02 -0700
-From: Roxana Bradescu <roxxbee@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/23/4
+Message-ID: <20221223081727.GB2404@suse.de>
+Date: Fri, 23 Dec 2022 09:17:28 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: [Exim-Security] Exim < 4.95 heap overflow
+Subject: Re: Details on this supposed Linux Kernel ksmbd RCE
 Content-Type: text/plain; charset=utf-8
 
-Thank you for the clarification and we sincerely appreciate all the efforts the Exim project team!
+Hi folks,
 
-—
-Regards, Roxana
+tldr: I requested 5 CVEs for the new ZDI issues Josh and Jan referenced.
+
+long form:
+
+Nice surprise 1 day before Christmas.
+
+On Fri, Dec 23, 2022 at 08:06:28AM +0100, Greg KH wrote:
+> On Thu, Dec 22, 2022 at 04:49:04PM -0500, Jan Schaumann wrote:
+> > Lastly, given that this is a coordinated disclosure,
+> > I don't know why there are no CVE IDs reserved for
+> > these.
+> 
+> The kernel developers do not work with CVEs at all as they are not all
+> that relevant for the most part for kernel issues.
+
+We know.
+
+> MITRE agrees with us
+> will not even give them to us if we ask for them :)
+
+Not sure why they do not like you, but to be very clear anyone else can
+requests CVEs for the kernel, (except the blacklisted drivers/staging/ area).
+
+> Some Linux companies still insist on assigning CVEs, but that's
+> primarily to help enable their internal engineering processes more than
+> anything else.
+
+The whole software industry operates with CVEs as primary identifiers at
+this time, so it is not just some "internal engineering processes".
+
+> As an alternative, please look at the GSD (Global Security Database,
+> https://globalsecuritydatabase.org/) for which the kernel does get ids
+> assigned for issues like this, and many many others.
+
+Perhaps this or any of the other ID spaces / databases will be taking
+off in the near future, but the main industry index is CVEs at this time.
 
 
-> On Aug 10, 2022, at 7:44 AM, Graeme Fowler <graeme+osssec@...emef.net> wrote:
-> 
-> On 7 Aug 2022, at 16:39, Roxana Bradescu via Security <security@...m.org> wrote:
->> Adding the Exim security folks to this thread to shed some light on the original report and CVE discussion.
-> 
-> Responding separately to each list...
-> 
-> The Exim developers don't use github to track bugs, there is a bugzilla instance used for that which is detailed on the Github Readme.pod page.
-> 
-> This issue (and others) weren't "silently fixed"; they were openly tracked in Bugzilla, and an example is here:
-> 
-> https://bugs.exim.org/show_bug.cgi?id=2747 (fixing the observed issue in this thread).
-> 
-> The pages detailing CVEs were regularly updated by a developer who is no longer involved. These have not been updated since 2019 as you observe, yet there have been 23 CVEs addressed by the developers. These are fairly easy to find using your favourite CVE tracker.
-> 
-> The development process - excepting times when a CVE has been allocated - is pretty open and easy to find, as all the commits are in the Git repo and bugzilla updates are mirrored into the exim-dev mailing list, often including the commit also.
-> 
-> Regards
-> 
-> Graeme
-> (wearing my exim mailing list admin hat)
-> 
+That said, I have just filed 5 CVE requests for the 5 ZDI issues cross-
+referencing the Linux kernel mainline commits.
 
+FWIW, they were fixed in mainline in July and no one had spotted them,
+which of course underlines Gregs point and that there are not enough
+watchers.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Ciao, Marcus
