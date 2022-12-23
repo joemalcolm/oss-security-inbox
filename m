@@ -1,57 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/18/5
-Message-ID: <Y07hdTCQHoSZjN2Q@nand.local>
-Date: Tue, 18 Oct 2022 13:25:09 -0400
-From: Taylor Blau <me@...ylorr.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/23/10
+Message-ID: <20221223162128.GD4524@suse.de>
+Date: Fri, 23 Dec 2022 17:21:29 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: git-security@...glegroups.com, kevinbackhouse@...hub.com, csnider@...antis.com
-Subject: Git 2.38.1 and others for CVE-2022-39253, and CVE-2022-39260
+Subject: Re: Details on this supposed Linux Kernel ksmbd RCE
 Content-Type: text/plain; charset=utf-8
 
-The Git project released new versions on 2022-10-18, addressing CVEs
-2022-39253, 2022-39260. We highly recommend upgrading to one of the
-fixed versions below:
+Hi,
 
-  v2.30.6 v2.31.5 v2.32.4 v2.33.5 v2.34.5 v2.35.5 v2.36.3 v2.37.4 v2.38.1
+Mitre has assigned following CVEs, also torvalds mainline commits:
 
-If you are on the unreleased development track, the same fix is
-already included, so you do not have to do anything.
+ZDI-22-1687 - CVE-2022-47941
+	aa7253c2393f6dcd6a1468b0792f6da76edad917
+ZDI-22-1688 - CVE-2022-47942
+	8f0541186e9ad1b62accc9519cc2b7a7240272a7
+ZDI-22-1689 - CVE-2022-47938
+	824d4f64c20093275f72fc8101394d75ff6a249e
+ZDI-22-1690 - CVE-2022-47939
+	a54c509c32adba9d136f2b9d6a075e8cae1b6d27
+ZDI-22-1691 - CVE-2022-47940
+	158a66b245739e15858de42c0ba60fcf3de9b8e6
 
-https://lore.kernel.org/git/xmqq4jw1uku5.fsf@gitster.g/T/#u
+Mitre assigned also from the stable patch, but was not in ZDI set - CVE-2022-47943
+	ac60778b87e45576d7bfdbd6f53df902654e6f09
 
-The relevant information from the most recent release notes
-pertaining to the above two CVEs are as follows:
+	(I did not request that in my batch, Mitre seemed to have
+	picked this from the stable patch.)
 
-CVE-2022-39253:
-   When relying on the `--local` clone optimization, Git dereferences
-   symbolic links in the source repository before creating hardlinks
-   (or copies) of the dereferenced link in the destination repository.
-   This can lead to surprising behavior where arbitrary files are
-   present in a repository's `$GIT_DIR` when cloning from a malicious
-   repository.
+I mistakenly declared 5.13-5.19 affectedness to Mitre in a hurry,
+but it is more 5.15 - 5.18.x / 5.19.x
 
-   Git will no longer dereference symbolic links via the `--local`
-   clone mechanism, and will instead refuse to clone repositories that
-   have symbolic links present in the `$GIT_DIR/objects` directory.
+Ciao, Marcus
 
-   Additionally, the value of `protocol.file.allow` is changed to be
-   "user" by default.
 
-CVE-2022-39260:
-   An overly-long command string given to `git shell` can result in
-   overflow in `split_cmdline()`, leading to arbitrary heap writes and
-   remote code execution when `git shell` is exposed and the directory
-   `$HOME/git-shell-commands` exists.
+On Thu, Dec 22, 2022 at 04:49:04PM -0500, Jan Schaumann wrote:
+> Josh Bressers <josh@...ss.net> wrote:
+>  
+> > I was wondering if anyone on the list has additional details about this ZDI
+> > advisory
+> > https://www.zerodayinitiative.com/advisories/ZDI-22-1690/
+> > 
+> > There aren't many usable details at the moment
+> 
+> Agreed.
+> 
+> The advisories link to a changelog in
+> https://cdn.kernel.org/pub/linux/kernel/v5.x/ChangeLog-5.15.61
+> but it's unclear (to me) whether that implies v6.x
+> kernels are not affected?
+> 
+> Note also that this disclosure is accompanied by a few
+> others:
+> 
+> Authenticated remote information disclosure:
+> https://www.zerodayinitiative.com/advisories/ZDI-22-1691/
+> 
+> Unauthenticated remote DoS:
+> https://www.zerodayinitiative.com/advisories/ZDI-22-1687/
+> 
+> Authenticated RCE:
+> https://www.zerodayinitiative.com/advisories/ZDI-22-1688/
+> 
+> Authenticated DoS:
+> https://www.zerodayinitiative.com/advisories/ZDI-22-1689/
+> 
+> Lastly, given that this is a coordinated disclosure,
+> I don't know why there are no CVE IDs reserved for
+> these.
+> 
+> -Jan
 
-   `git shell` is taught to refuse interactive commands that are
-   longer than 4MiB in size. `split_cmdline()` is hardened to reject
-   inputs larger than 2GiB.
-
-Credit for finding CVE-2022-39253 goes to Cory Snider of Mirantis. The
-fix was authored by Taylor Blau, with help from Johannes Schindelin.
-
-Credit for finding CVE-2022-39260 goes to Kevin Backhouse of GitHub.
-The fix was authored by Kevin Backhouse, Jeff King, and Taylor Blau.
-
-Thanks,
-Taylor
+-- 
+Marcus Meissner (he/him), Distinguished Engineer / Senior Project Manager Security
+SUSE Software Solutions Germany GmbH, Frankenstrasse 146, 90461 Nuernberg, Germany
+GF: Ivo Totev, Andrew Myers, Andrew McDonald, Martje Boudien Moerman, HRB 36809, AG Nuernberg
