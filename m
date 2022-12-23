@@ -1,78 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/06/2
-Message-Id: <E1p2ZhW-0005Xe-FG@xenbits.xenproject.org>
-Date: Tue, 06 Dec 2022 15:17:42 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 424 v1 (CVE-2022-42328,CVE-2022-42329) - Guests can trigger deadlock in Linux netback driver
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/23/11
+Message-ID: <Y6XcJ+tcf1Cg1jkZ@momentum.pseudorandom.co.uk>
+Date: Fri, 23 Dec 2022 16:49:43 +0000
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: [Linux] /proc/pid/stat parsing bugs
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu, 22 Dec 2022 at 10:04:48 -0500, Shawn Webb wrote:
+> We knew way back then the dangers of VFS-based wizardry. Did we lose
+> that knowledge somehow?
 
-     Xen Security Advisory CVE-2022-42328,CVE-2022-42329 / XSA-424
+To me this seems like a parsing problem, not a VFS problem. Some
+pseudo-files in Linux /proc are one file per item (/proc/self/oom_adj,
+/proc/self/sessionid, most of /proc/sys) and those are fine[1]: the
+structure is implicit in the filesystem layout, and the file contents
+are trivial to "parse". Others have a simple and well-defined format
+(like /proc/self/environ and /proc/self/cmdline, which are sequences of
+\0-terminated bytestrings), and those also seem fine.
 
-          Guests can trigger deadlock in Linux netback driver
+It's the pseudo-files that contain more than one item, particularly
+those with a semi-consistent format that aims for human-readability, that
+can easily get into escaping and parsing issues. If those pseudo-files
+made *more* use of the VFS (one new file in /proc/self for each field
+in the current /proc/self/stat?) then they would suffer from different
+issues instead, like inability to read all fields atomically and maybe
+performance issues for heavy users, but parsing would become a non-issue.
 
-ISSUE DESCRIPTION
-=================
+    smcv
 
-The patch for XSA-392 introduced another issue which might result in
-a deadlock when trying to free the SKB of a packet dropped due to
-the XSA-392 handling (CVE-2022-42328).
-
-Additionally when dropping packages for other reasons the same
-deadlock could occur in case of netpoll being active for the interface
-the xen-netback driver is connected to (CVE-2022-42329).
-
-IMPACT
-======
-
-A malicious guest could cause Denial of Service (DoS) of the host via
-the paravirtualized network interface.
-
-VULNERABLE SYSTEMS
-==================
-
-All systems using the Linux kernel based network backend xen-netback
-are vulnerable.
-
-MITIGATION
-==========
-
-Using another PV network backend (e.g. the qemu based "qnic" backend)
-will mitigate the problem.
-
-Using a dedicated network driver domain per guest will mitigate the
-problem.
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-This issue was discussed in public already.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa424-linux.patch     Linux 6.0, 6.1-rc
-
-$ sha256sum xsa424*
-89db7cad9694f498c4ac450356932fb69fb514162e07aea0343776effa821fc8  xsa424-linux.patch
-$
-
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmOPXKYMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ30IH/1GZwPXXAqMjN3d1n7BotiDLfmDiNp8e92wvQvmh
-cXgsBtvTZ+oDzI7J+Xr/42c4IN41s34fWl0hmNbdrw4lwrOSoj0rnCP73Bn22oUT
-jbv3bmFOHytCs5crvVrA4S7dCNcdpoEmfOoSaz1cBPhMecotlgTQo7M2Cagv3O9a
-a9fR+KGMk9EBDGdo2wBJyEcD9ApASPEV+LJgLoTOuYFIStCO/+TTBfJx5H7T/vgK
-Dqxsq1nULCSBc5Z5wrmtF49G3asBrAbPTkRhpyp9giXU+UV0QNJclnc+IJPdLIOe
-jISAvpHQ3Fkb7Q25jaBg+c0bf9KzT3ekBOaf1RofgA84Jg0=
-=4J/5
------END PGP SIGNATURE-----
-
-Download attachment "xsa424-linux.patch" of type "application/octet-stream" (3524 bytes)
+[1] or when they're not fine, the issues are around things like how to
+    separate an AppArmor enforcement mode from the label, which again is
+    a matter of parsing a human-readable format with structure
