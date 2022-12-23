@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3589" "Monday" "1" "July" "2019" "09:57:33" "+0200" "Mariusz Felisiak" "felisiak.mariusz@gmail.com" "<c03af74b-c5df-bff4-375f-d9caa0cf9894@gmail.com>" "86" "[oss-security] Django: CVE-2019-12781: Incorrect HTTP detection with reverse-proxy connecting via HTTPS" nil nil nil "7" "2019070107:57:33" "[oss-security] Django: CVE-2019-12781: Incorrect HTTP detection with reverse-proxy connecting via HTTPS" (number mark "U       felisiak.mar Jul  1   86/3589  " thread-indent "\"[oss-security] Django: CVE-2019-12781: Incorrect HTTP detection with reverse-proxy connecting via HTTPS\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Django: CVE-2019-12781: Incorrect HTTP detection with reverse-proxy connecting via HTTPS" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 7230 invoked by uid 550); 1 Jul 2019 11:27:36 -0000
+Received: (qmail 17970 invoked by uid 550); 23 Dec 2022 16:19:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,130 +7,69 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20052 invoked from network); 1 Jul 2019 07:57:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-transfer-encoding:content-language;
-        bh=erl8Lkz2w4BH1k7m3/Zqg5r9wpZToCleDXHAo+SP+c0=;
-        b=W74/nc2lk4iShmjv+e2cgZiID+gcXrH3VLgrCGFknxpz2ct2OJAK2hI7XE8EBuQmiK
-         Ag+YGFiZ1c2xyTScUXXm3ERaBNfhEafq9m24ThkZg0SyB+2oap4bY7pAYWZE19dmPWcN
-         OUg0qiBallH6tqUbsVukPMTlO8WNvNQg3kWUN/9zWUkyXZHACf+8EfUZ1AH55k4SHwxB
-         14rjCn41kioBUQkvqZPp8cYImb8nKcFh/BgoLGAJdSP8Q/6xbh65YJ0+CoyAqY4/fvHo
-         W2APNbvDvE+vbns3uyltjlHQdqrqep7r8nLRMjZzn0840cnWNQXhuyWz6RDYLEMxvZn9
-         a5tQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version:content-transfer-encoding:content-language;
-        bh=erl8Lkz2w4BH1k7m3/Zqg5r9wpZToCleDXHAo+SP+c0=;
-        b=k2AwkkF7jZaL+5+kmQbYOCvEK8VroEkDy8YM8rn8tEja6LqImAcIkB4EbqQbFOsbp6
-         LKAJATSLhvkc0h3VptkYkIqYUNfuyp74soQnrCs76e5n+1vIF9zn4HsMRZkGWdNUInd1
-         AiBduP8ri3kmnV7NjhsDaXEA4ruGqACzBs0Un4NUoiFT9vGsGqikZd1LYTCa5RQg62YJ
-         wkjIYGoCDi9oxoie+tIBWw7qcrsBrNlbUy9eMAOFbU50/MKQAO8F4mTNwXszIouF9/ba
-         M2RuMtEUjCxRUJESON27RhxFdF7/eZyePzGII9QsPDVfGFpvhDrMUNJc0mQ/XlkwJrO1
-         zetg==
-X-Gm-Message-State: APjAAAVxJrKjiCgSrLfIVWnjdQQN1Wg1H/eppzA0JXl775GeovzF7ZF7
-	P4gjsNd220/4KAZ27FKis9potOSg
-X-Google-Smtp-Source: APXvYqxPlNXcnpCBTcgKc7eui6teLBI62+EMQPqN6p9Osv4aVUjvIdCxVm2udnyw32bVBEI7Bpxl5A==
-X-Received: by 2002:ac2:446b:: with SMTP id y11mr10926739lfl.158.1561967854626;
-        Mon, 01 Jul 2019 00:57:34 -0700 (PDT)
+Received: (qmail 17952 invoked from network); 23 Dec 2022 16:19:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1671812347; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=0zVdRxY1vah14B7y+M3nJfE/g039jGDK45HNv8jvskY=;
+	b=u83wyRmYBGpFRw7jfGlvhk4LAewLemHftvz8khTM5q4bV7iG8vL7s/Q7lZhSG4QnQlkTtd
+	Z9yxJy0pgdxhSoMKysUeB7mlzzU671MkrgDz4vPJzm4htKtZaKCU/a7HlwdmbfM05q5jUv
+	SLutPmlOnoeA1zFPFVz4t2+f0yLhra0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1671812347;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=0zVdRxY1vah14B7y+M3nJfE/g039jGDK45HNv8jvskY=;
+	b=bIX1OVbppTRZOCAPafdx/LRX/sWNiAEYHk0F0MnKtW7WiXa5lsYqBVCTDVKXfhszQEQWXo
+	EZJwnZlkP7r8oqBw==
+Date: Fri, 23 Dec 2022 17:19:06 +0100
+From: Marcus Meissner <meissner@suse.de>
 To: oss-security@lists.openwall.com
-From: Mariusz Felisiak <felisiak.mariusz@gmail.com>
-Message-ID: <c03af74b-c5df-bff4-375f-d9caa0cf9894@gmail.com>
-Date: Mon, 1 Jul 2019 09:57:33 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.1
+Message-ID: <20221223161906.GC4524@suse.de>
+References: <CAKoP-y-rbU=xEowJGp6my0khWMSbE05+ncDiE3wtXTOWwvyScA@mail.gmail.com>
+ <Y6TQ0HyCJOMkKSDn@netmeister.org>
+ <Y6VTdO608VUE38Ke@kroah.com>
+ <20221223081727.GB2404@suse.de>
+ <Y6W1aSG2z5mBJDu8@sashalap>
+ <Y6W5IcAzIUb5rD1F@kroah.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-Subject: [oss-security] Django: CVE-2019-12781: Incorrect HTTP detection with reverse-proxy
- connecting via HTTPS
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y6W5IcAzIUb5rD1F@kroah.com>
+Organization: SUSE Software Solutions =?iso-8859-1?Q?Ger?=
+ =?iso-8859-1?Q?many_GmbH=2C_Frankenstra=DFe_146=2C_90461_Nuernberg=2C_Ger?=
+ =?iso-8859-1?Q?many=2C_GF=3A_Ivo_Totev=2C_Andrew_Myers=2C_Andrew_McDonald?=
+ =?iso-8859-1?Q?=2C_Martje_Boudien_Moerman=2C_HRB_36809=2C_AG_N=FCrnberg?=
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Subject: Re: [oss-security] Details on this supposed Linux Kernel ksmbd RCE
 
-https://www.djangoproject.com/weblog/2019/jul/01/security-releases/
+On Fri, Dec 23, 2022 at 03:20:17PM +0100, Greg KH wrote:
+> On Fri, Dec 23, 2022 at 09:04:25AM -0500, Sasha Levin wrote:
+> > On Fri, Dec 23, 2022 at 09:17:28AM +0100, Marcus Meissner wrote:
+> > > Not sure why they do not like you, but to be very clear anyone else can
+> > > requests CVEs for the kernel, (except the blacklisted drivers/staging/ area).
+> > 
+> > For CVEs assigned (earlier this month) to issues in drivers/staging,
+> > what would be the process to remove the assignment or mark them as
+> > invalid?
+> 
+> And who is doing this "blacklisting" of staging drivers from CVEs?  Why
+> are they special when many distros do enable and rely on them?
 
-In accordance with `our security release policy 
-<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
-Django team is issuing `Django 1.11.22 
-<https://docs.djangoproject.com/en/dev/releases/1.11.22/>`_, `Django 
-2.1.10 <https://docs.djangoproject.com/en/dev/releases/2.1.10/>`_, and 
-`Django 2.2.3 <https://docs.djangoproject.com/en/dev/releases/2.2.3/>`_. 
-These releases addresses the security issues detailed below. We 
-encourage all users of Django to upgrade as soon as possible.
+This is just information I received when I tried to allocate a CVE for a
+staging driver.
 
-Thanks Gavin Wahl for reporting this issue.
+It has been over a year ago, so perhaps the this changed meanwhile again.
+ 
+> In my talks with MITRE, they have said they don't want to make public
+> statments about the CVE issues and Linux, which is sad, but they never
+> mentioned anything about "we will ignore this portion of the kernel
+> source tree".  Is that in a public statement anywhere that I can point
+> to when people ask the kernel security team for CVEs?
 
-CVE-2019-12781: Incorrect HTTP detection with reverse-proxy connecting 
-via HTTPS
-================================================================================
+No, it was in a private email, I will search for it, but I cannot
+promise I will find it again.
 
-When deployed behind a reverse-proxy connecting to Django via HTTPS, 
-``django.http.HttpRequest.scheme`` would incorrectly detect client 
-requests made via HTTP as using HTTPS. This entails incorrect results 
-for ``is_secure()``, and ``build_absolute_uri()``, and that HTTP 
-requests would not be redirected to HTTPS in accordance with 
-``SECURE_SSL_REDIRECT``.
-
-``HttpRequest.scheme`` now respects ``SECURE_PROXY_SSL_HEADER``, if it 
-is configured, and the appropriate header is set on the request, for 
-both HTTP and HTTPS requests.
-
-If you deploy Django behind a reverse-proxy that forwards HTTP requests, 
-and that connects to Django via HTTPS, be sure to verify that your 
-application
-correctly handles code paths relying on ``scheme``, ``is_secure()``, 
-``build_absolute_uri()``, and ``SECURE_SSL_REDIRECT``.
-
-Affected supported versions
-===========================
-
-* Django master development branch
-* Django 2.2 before version 2.2.3
-* Django 2.1 before version 2.1.10
-* Django 1.11 before version 1.11.22
-
-Resolution
-==========
-
-Patches to resolve the issue have been applied to Django's master branch 
-and the 2.2, 2.1, and 1.11 release branches. The patches may be obtained 
-from the following changesets:
-
-* On the `master branch 
-<https://github.com/django/django/commit/54d0f5e62f54c29a12dd96f44bacd810cbe03ac8>`__
-* On the `2.2 release branch 
-<https://github.com/django/django/commit/77706a3e4766da5d5fb75c4db22a0a59a28e6cd6>`__
-* On the `2.1 release branch 
-<https://github.com/django/django/commit/1e40f427bb8d0fb37cc9f830096a97c36c97af6f>`__
-* On the `1.11 release branch 
-<https://github.com/django/django/commit/32124fc41e75074141b05f10fc55a4f01ff7f050>`__
-
-The following releases have been issued:
-
-* Django 1.11.22 (`download Django 1.11.22 
-<https://www.djangoproject.com/m/releases/1.11/Django-1.11.22.tar.gz>`_ 
-| `1.11.22 checksums 
-<https://www.djangoproject.com/m/pgp/Django-1.11.22.checksum.txt>`_)
-* Django 2.1.10 (`download Django 2.1.10 
-<https://www.djangoproject.com/m/releases/2.1/Django-2.1.10.tar.gz>`_ | 
-`2.1.10 checksums 
-<https://www.djangoproject.com/m/pgp/Django-2.1.10.checksum.txt>`_)
-* Django 2.2.3 (`download Django 2.2.3 
-<https://www.djangoproject.com/m/releases/2.2/Django-2.2.3.tar.gz>`_ | 
-`2.2.3 checksums 
-<https://www.djangoproject.com/m/pgp/Django-2.2.3.checksum.txt>`_)
-
-The PGP key ID used for this release is Mariusz Felisiak: 2EF56372BA48CD1B.
-
-General notes regarding security reporting
-==========================================
-
-As always, we ask that potential security issues be reported via
-private email to ``security@djangoproject.com``, and not via Django's
-Trac instance, Django's GitHub repositories, or the django-developers list.
-Please see `our security policies 
-<https://www.djangoproject.com/security/>`_
-for further information.
-
-
+Ciao, Marcus
