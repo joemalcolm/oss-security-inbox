@@ -1,120 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/26/2
-Message-Id: <E1oGJv9-0001Jn-PZ@xenbits.xenproject.org>
-Date: Tue, 26 Jul 2022 12:44:19 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 408 v2 (CVE-2022-33745) - insufficient TLB flush for x86 PV guests in shadow mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/25/1
+Message-ID: <CABEVAa1OxWqS9UAMZCLH7-9oLgHurv+bfRG1gsvYikuZv6CAXQ@mail.gmail.com>
+Date: Sun, 25 Dec 2022 17:44:50 +0100
+From: Dominik Czarnota <dominik.b.czarnota@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: [Linux] /proc/pid/stat parsing bugs
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+> To me this seems like a parsing problem, not a VFS problem. (...)
 
-            Xen Security Advisory CVE-2022-33745 / XSA-408
-                               version 2
+Indeed, it is a parsing problem, but if you have to split by ')'
+or/and read data from the end of file in order to parse it properly,
+that's not the best design.
 
-        insufficient TLB flush for x86 PV guests in shadow mode
+It is probably the lack of proper documentation and examples that
+causes devs to make those mistakes since it is hard to think or account
+for all edge cases. Escaping the rendered output or using a standard
+format like json/xml would probably cause less mistakes like this.
 
-UPDATES IN VERSION 2
-====================
+> Others have a simple and well-defined format
+> (like /proc/self/environ and /proc/self/cmdline, which are sequences of
+> \0-terminated bytestrings), and those also seem fine.
 
-Added metadata
+The format may seem to be well-defined, but it isn't. Nothing stops a
+process from changing what is rendered in their /proc/$pid/cmdline and
+/proc/$pid/environ files.
+The data in those files is rendered from mm->arg_start and
+mm->env_start user-space pointers respectively [0][1] and it can be
+changed either by:
+1) modifying the underlying data, e.g. overwriting the memory under
+argv[n] envp[n] in main
+2) changing those pointers with the prctl syscall with
+PR_SET_MM_ARG_{START,END} and PR_SET_MM_ENV_{START,END} flags [2]
+3) or by the setproctitle (3bsd) function [3]
 
-Public release.
+The `man procfs` page mentions that the `environ` file content may
+change, but it doesn't do so for the `cmdline` file:
 
-ISSUE DESCRIPTION
-=================
+```
+   /proc/[pid]/cmdline
+      This read-only file holds the complete command line for the
+process, unless the process is a zom‐
+      bie.  In the latter case, there is nothing in this file: that
+is, a read on this file will return
+      0  characters.   The  command-line arguments appear in this file
+as a set of strings separated by
+      null bytes ('\0'), with a further null byte after the last string.
+```
 
-For migration as well as to work around kernels unaware of L1TF (see
-XSA-273), PV guests may be run in shadow paging mode.  To address
-XSA-401, code was moved inside a function in Xen.  This code movement
-missed a variable changing meaning / value between old and new code
-positions.  The now wrong use of the variable did lead to a wrong TLB
-flush condition, omitting flushes where such are necessary.
+I understand we may not want to change what is already there to not
+break existing applications. But adding new files with well-defined
+formats and extending existing man pages sounds like a reasonable
+solution.
 
-IMPACT
-======
+[0] get_mm_cmdline -
+https://elixir.bootlin.com/linux/v6.1.1/source/fs/proc/base.c#L255
+[1] environ_read -
+https://elixir.bootlin.com/linux/v6.1.1/source/fs/proc/base.c#L941
+[2] https://man7.org/linux/man-pages/man2/prctl.2.html#:~:text=since%20Linux%203.5.-,PR_SET_MM_ARG_START,-Set%20the%20address
+[3] https://www.freebsd.org/cgi/man.cgi?query=setproctitle&sektion=3
 
-The known (observed) impact would be a Denial of Service (DoS) affecting
-the entire host, due to running out of memory.  Privilege escalation and
-information leaks cannot be ruled out.
+Best regards,
+Dominik 'Disconnect3d' Czarnota
 
-VULNERABLE SYSTEMS
-==================
 
-All versions of Xen with the XSA-401 fixes applied are vulnerable.
 
-Only x86 PV guests can trigger this vulnerability, and only when running
-in shadow mode.  Shadow mode would be in use when migrating guests or as
-a workaround for XSA-273 (L1TF).
-
-MITIGATION
-==========
-
-Not running x86 PV guests will avoid the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Charles Arnold of SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa408.patch           xen-unstable - Xen 4.14.x
-xsa408-4.13.patch      Xen 4.13.x
-
-$ sha256sum xsa408*
-7349445d53b68bc8e2be2aea9fa20409a9b87e0d6b78fc2515093a65668444a0  xsa408.meta
-f49cb67842c7576f1d59b965331956a9fa1f529a8e2da3531d7ebc4eb3f079b3  xsa408.patch
-26871efbd3f834dd4af4fbab6f2cb09a83c509e49894f025ee656071419ed995  xsa408-4.13.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmLfyP4MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZSkAIAM3XDzBdUXux7ONc9nztSMGPBdWosC5f0SycveSq
-adplJeShw50aFYLxpZzqfCBAX/Jh0ooF+7gHnjVMuKKkg8vu5SfBpSGRdmva6jpc
-qNXoNyIc21PdNH4PVCKDQnO8Dq8wPSCnPpMZbFwk2uz7QGN5BKU/GM6XQrmXA3wz
-3XYIcVVR377MdDuR8UQKyCSAG0JPr6SiozygRFHykGjg9NABWZwGyod64C9xBAyu
-K8CGTx12bAJEVcqJbGAVSEU6J5iKdWjSLHwy43ZOcAFvfiCAlolBOPlfjJTllYdQ
-Yhv0wQtOwsIDjQU6vbUtMsckuNEmfMPTEkRHPOpp46dPuVk=
-=33sr
------END PGP SIGNATURE-----
-
-Download attachment "xsa408.meta" of type "application/octet-stream" (1306 bytes)
-
-Download attachment "xsa408.patch" of type "application/octet-stream" (1633 bytes)
-
-Download attachment "xsa408-4.13.patch" of type "application/octet-stream" (1525 bytes)
+On Fri, 23 Dec 2022 at 17:50, Simon McVittie <smcv@...ian.org> wrote:
+>
+> On Thu, 22 Dec 2022 at 10:04:48 -0500, Shawn Webb wrote:
+> > We knew way back then the dangers of VFS-based wizardry. Did we lose
+> > that knowledge somehow?
+>
+> To me this seems like a parsing problem, not a VFS problem. Some
+> pseudo-files in Linux /proc are one file per item (/proc/self/oom_adj,
+> /proc/self/sessionid, most of /proc/sys) and those are fine[1]: the
+> structure is implicit in the filesystem layout, and the file contents
+> are trivial to "parse". Others have a simple and well-defined format
+> (like /proc/self/environ and /proc/self/cmdline, which are sequences of
+> \0-terminated bytestrings), and those also seem fine.
+>
+> It's the pseudo-files that contain more than one item, particularly
+> those with a semi-consistent format that aims for human-readability, that
+> can easily get into escaping and parsing issues. If those pseudo-files
+> made *more* use of the VFS (one new file in /proc/self for each field
+> in the current /proc/self/stat?) then they would suffer from different
+> issues instead, like inability to read all fields atomically and maybe
+> performance issues for heavy users, but parsing would become a non-issue.
+>
+>     smcv
+>
+> [1] or when they're not fine, the issues are around things like how to
+>     separate an AppArmor enforcement mode from the label, which again is
+>     a matter of parsing a human-readable format with structure
