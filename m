@@ -1,60 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/01/2
-Message-ID: <Ym6bSZb8S/5OVcuV@gentoo.org>
-Date: Sun, 1 May 2022 09:38:01 -0500
-From: John Helmert III <ajak@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-21449 and version reporting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/26/1
+Message-ID: <22302fa4-b994-7a92-83d0-2c83c344bcfb@igalia.com>
+Date: Mon, 26 Dec 2022 18:15:30 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, distributor-list@...me.org, oss-security@...ts.openwall.com, bugtraq@...urityfocus.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2022-0011
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Apr 30, 2022 at 09:09:16PM +0200, Christian Fischer wrote:
-> On Saturday, April 30, 2022 17:38 CEST, John Helmert III <ajak@...too.org> wrote:
-> 
-> > On Sat, Apr 30, 2022 at 01:24:36PM +0200, Christian Fischer wrote:
-> > >  > It’s not that they didn’t/can’t verify, it’s already verified,
-> > > they’re claiming those versions no longer being officially supported
-> > > means they can seemingly omit them from CVE reporting.
-> > >  >
-> > >  > Which is dangerous, misleading, and nonsensical.
-> > >
-> > > While i fully agree with this be aware that CVE entries could generally
-> > > contain incomplete information:
-> > >
-> > > After requesting an update of a CVE entry via the MITRE CVE forum in the
-> > > past to add additional affected products for a different vendor (which
-> > > wasn't even the assigning CNA like it is the case for Oracle here) my
-> > > request was rejected by MITRE with the following rationale given:
-> >
-> > The CNA that assigned that CVE is Oracle, so Oracle is the CNA to talk
-> > to to make changes to it. MITRE won't make changes to it as they're
-> > not the CNA behind that CVE.
-> >
-> > >  > A CVE description does not necessarily contain all the affected 
-> > > products or versions and is not part of CVE ID requirements. The
-> > > products are documented in the CVE references.
-> > > This is also matching my experiences with various other products / 
-> > > vendors and related CVE entries for these.
-> >
-> > Right, this is documented in the CNA rules [1]:
-> >
-> > "8.2.1 MUST provide enough information for a reader to have a
-> > reasonable understanding of what products are affected. If the
-> > affected products are not explicitly listed in the description, then
-> > the CNA MUST provide a reference that points to the known affected
-> > products."
-> >
-> > [1] https://www.cve.org/ResourcesSupport/AllResources/CNARules#section_8-2_cve_record_prose_description_requirements
-> 
-> Yes, indeed / in know (since then) but it wasn't clear if all participants in this thread are aware of this fact.
-> 
-> But i just have noticed that my posting was only partly relevant for the quoted message and the question of the OP "Why is this being allowed…" because i have missed that Oracle (if they as the assigning CNA are aware that Java 15 and 16 are affected) AFAICT indeed haven't provided any reference so far about all known affected versions / products.
-> 
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2022-0011
+------------------------------------------------------------------------
 
-Their April 2022 CPU (Critical Patch Update) Advisory, which is a
-reference of CVE-2022-21449, is pretty comprehensive:
+Date reported           : December 26, 2022
+Advisory ID             : WSA-2022-0011
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2022-0011.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2022-0011.html
+CVE identifiers         : CVE-2022-42852, CVE-2022-42856,
+                          CVE-2022-42863, CVE-2022-42867,
+                          CVE-2022-46691, CVE-2022-46692,
+                          CVE-2022-46698, CVE-2022-46699,
+                          CVE-2022-46700.
 
-https://www.oracle.com/security-alerts/cpuapr2022.html#AppendixJAVA
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-Supported versions affected: "Oracle Java SE: 17.0.2, 18; Oracle
-GraalVM Enterprise Edition: 21.3.1, 22.0.0.2"
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+CVE-2022-42852
+    Versions affected: WebKitGTK and WPE WebKit before 2.38.3.
+    Credit to hazbinhotel working with Trend Micro Zero Day Initiative.
+    Impact: Processing maliciously crafted web content may result in the
+    disclosure of process memory. Description: The issue was addressed
+    with improved memory handling.
+
+CVE-2022-42856
+    Versions affected: WebKitGTK and WPE WebKit before 2.38.3.
+    Credit to Clément Lecigne of Google's Threat Analysis Group.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A type confusion issue was
+    addressed with improved state handling.
+
+CVE-2022-42863
+    Versions affected: WebKitGTK and WPE WebKit before 2.38.0.
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A memory corruption issue was
+    addressed with improved state management.
+
+CVE-2022-42867
+    Versions affected: WebKitGTK and WPE WebKit before 2.38.3.
+    Credit to Maddie Stone of Google Project Zero.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A use after free issue was
+    addressed with improved memory management.
+
+CVE-2022-46691
+    Versions affected: WebKitGTK and WPE WebKit before 2.38.1.
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A memory consumption issue
+    was addressed with improved memory handling.
+
+CVE-2022-46692
+    Versions affected: WebKitGTK and WPE WebKit before 2.38.3.
+    Credit to KirtiKumar Anandrao Ramchandani.
+    Impact: Processing maliciously crafted web content may bypass Same
+    Origin Policy. Description: A logic issue was addressed with
+    improved state management.
+
+CVE-2022-46698
+    Versions affected: WebKitGTK and WPE WebKit before 2.38.3.
+    Credit to Dohyun Lee (@l33d0hyun) of DNSLab at Korea University,
+    Ryan Shin of IAAI SecLab at Korea University.
+    Impact: Processing maliciously crafted web content may disclose
+    sensitive user information. Description: A logic issue was addressed
+    with improved checks.
+
+CVE-2022-46699
+    Versions affected: WebKitGTK and WPE WebKit before 2.38.3.
+    Credit to Samuel Groß of Google V8 Security.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A memory corruption issue was
+    addressed with improved state management.
+
+CVE-2022-46700
+    Versions affected: WebKitGTK and WPE WebKit before 2.38.3.
+    Credit to Samuel Groß of Google V8 Security.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A memory corruption issue was
+    addressed with improved input validation.
+
+
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
+
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+December 26, 2022
