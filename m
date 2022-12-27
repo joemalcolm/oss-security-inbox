@@ -1,75 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/02/24/4
-Message-ID: <Yhfv8GPdgFbbiGXk@sol.localdomain>
-Date: Thu, 24 Feb 2022 12:52:00 -0800
-From: Eric Biggers <ebiggers@...nel.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/27/3
+Message-ID: <20221227103415.GI4524@suse.de>
+Date: Tue, 27 Dec 2022 11:34:16 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: fscrypt: Multiple File System Related Security Issues (CVE-2022-25326, CVE-2022-25327, CVE-2022-25328)
+Subject: Re: Details on this supposed Linux Kernel ksmbd RCE
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Feb 24, 2022 at 12:33:18PM +0100, Matthias Gerstner wrote:
-> Hello list,
+On Fri, Dec 23, 2022 at 05:19:06PM +0100, Marcus Meissner wrote:
+> On Fri, Dec 23, 2022 at 03:20:17PM +0100, Greg KH wrote:
+> > On Fri, Dec 23, 2022 at 09:04:25AM -0500, Sasha Levin wrote:
+> > > On Fri, Dec 23, 2022 at 09:17:28AM +0100, Marcus Meissner wrote:
+> > > > Not sure why they do not like you, but to be very clear anyone else can
+> > > > requests CVEs for the kernel, (except the blacklisted drivers/staging/ area).
+> > > 
+> > > For CVEs assigned (earlier this month) to issues in drivers/staging,
+> > > what would be the process to remove the assignment or mark them as
+> > > invalid?
+> > 
+> > And who is doing this "blacklisting" of staging drivers from CVEs?  Why
+> > are they special when many distros do enable and rely on them?
 > 
-> in the context of a request to include Fscrypt [1] into openSUSE Tumbleweed
-> a routine review of the package was required, as it contains a PAM module.
-> In the course of the review I discovered a number of file system management
-> related security issues.
+> This is just information I received when I tried to allocate a CVE for a
+> staging driver.
 > 
-> I have been reviewing Fscrypt version 0.3.1. Shortly later 0.3.2 got
-> released, with minor changes in the PAM module but some more changes in
-> other areas. All issues and source code locations mentioned in this report
-> relate to the upstream version tag v0.3.1. Most of the findings are also
-> valid for 0.3.2, however.
-> 
-> All acknowledged issues mentioned in this report have been addressed in the
-> new Fscrypt upstream release version v0.3.3.
+> It has been over a year ago, so perhaps the this changed meanwhile again.
 
-Thanks for doing a security review and reporting all of these!
+It was 4 years ago for CVE-2018-8822, where ncpfs moved from being good
+into the "staging" tree due to quality / maintenance issues.
 
-To provide some extra context for readers: "fscrypt" here refers to the
-userspace tool https://github.com/google/fscrypt, not to the kernel side of
-Linux native filesystem encryption which is also sometimes called fscrypt
-(https://www.kernel.org/doc/html/latest/filesystems/fscrypt.html).  These
-vulnerabilities only affected the userspace tool.  Also, these are not
-cryptographic vulnerabilities.
+> > In my talks with MITRE, they have said they don't want to make public
+> > statments about the CVE issues and Linux, which is sad, but they never
+> > mentioned anything about "we will ignore this portion of the kernel
+> > source tree".  Is that in a public statement anywhere that I can point
+> > to when people ask the kernel security team for CVEs?
+> 
+> No, it was in a private email, I will search for it, but I cannot
+> promise I will find it again.
 
-One correction below:
+I got information back from Mitre on this topic.
 
-> 5.i) Another User can Cause a Foreign Key to be Applied to its own File System
-> ------------------------------------------------------------------------------
-> 
-> Let's consider a malicious local user that has control over the root directory
-> of some mounted file system e.g. let's consider its own home directory is a
-> separate mount. Then this malicious user can do this:
-> 
->     $ ln -s /.fscrypt /home/$USER/.fscrypt
-> 
-> Actually a copy of all the files should also suffice. That Fscrypt is
-> following symlinks is an extra degree of freedom that is exploited here. The
-> `filesystem/CheckSetup()` function does only check the mode bits of the
-> involved directories, but not the actual *owners*, therefore a plain copy of
-> the directories and files would also be working.
-> 
-> Now when another user unlocks its Protector via the PAM module, the module
-> will also look into other file systems and since a matching policy will be
-> found for /home/$USER, the following (strace) happens (with $USER = attacker):
-> 
->     openat(AT_FDCWD, "/home/attacker", O_RDONLY|O_CLOEXEC) = 4
->     ioctl(4, FS_IOC_ADD_ENCRYPTION_KEY, 0x7f2738d29000) = 0
-> 
-> So the encryption key is added to a completely unrelated file system. The
-> attacking user does not seem to have the ability to take advantage of this,
-> because the key cannot be retrieved back and the ciphertext of the
-> originally encrypted data can also not easily be duplicated on the other file
-> system to have the kernel decrypt it.
-> 
-> Upstream acknowledges this issue but doesn't see an attack vector in it,
-> because the attacker cannot take any advantage of it.
+This thread from you and Moritz in 2014 set the Mitre non-assignment policy regarding drivers/staging/
 
-I believe this one did get addressed by
-https://github.com/google/fscrypt/commit/85a747493ff368a72f511619ecd391016ecb933c
-("Extend ownership validation to entire directory structure").  With that, by
-default pam_fscrypt will only consider filesystems whose root directory is owned
-by root or by the user logging in.
+	https://www.openwall.com/lists/oss-security/2014/03/05/6
 
-- Eric
+If this has changed in meantime (e.g. that security issues in the
+staging tree are CVE worthy), we can ask Mitre to allow assigning to
+staging drivers again.
+
+Ciao, Marcus
