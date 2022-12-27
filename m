@@ -1,4 +1,4 @@
-Received: (qmail 15824 invoked by uid 550); 6 Oct 2022 18:26:50 -0000
+Received: (qmail 27858 invoked by uid 550); 27 Dec 2022 10:25:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,62 +7,102 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15800 invoked from network); 6 Oct 2022 18:26:49 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=0WPQU6wzHHRXGOPebJEuwJxw7JQF0ihj+WaiUS99wtI=; b=e8sm3wXP7FIpX5+X+Lm5nI5eTm
-	xaQ6I4KmG1k0j4tevBob5imoXQol8ApGSbuDyGiM03jNk3V0V6IhgJ2KvuRZSqYho12vyVSJbcb6k
-	bszNT0m1+c5vtmjxSOWgY6PiMY5jj3oJDeUP57MMhyVShX3/KVAxK6WJeyNqG68LaobApl3614wjT
-	rn7HweLW0pjAo4HJ0CI4V71y9VrULH793lfFcuwHEVm8eQkirQrnlihR33rkLL6zjsxt/2xyU/3Py
-	FpmbQlwQHuNivKlqUji1pPZ45Blo7SLB9e0Yf8ava0360VLHB6uV5H7FpbYzA0cckmEXE1yusVJ5E
-	ENux3Ksw==;
-Date: Thu, 6 Oct 2022 19:26:35 +0100
-From: Simon McVittie <smcv@debian.org>
-To: oss-security@lists.openwall.com, dbus-security@lists.freedesktop.org
-Cc: Demi Marie Obenour <demi@invisiblethingslab.com>
-Message-ID: <Yz8d2yzrUF4r07ws@momentum.pseudorandom.co.uk>
-References: <Yz6XZSTsVQm7VKia@momentum.pseudorandom.co.uk>
- <Yz7r3ke7oXMBHJ5A@itl-email>
- <Yz722hsDFWr/hqGb@momentum.pseudorandom.co.uk>
- <Yz8JmGvc3Y6iYaKR@itl-email>
+Received: (qmail 27837 invoked from network); 27 Dec 2022 10:25:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1672136737; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=avipjlmwjgSBv3LADLwDkEO/zXDoLrAlAMJ7fn+xA2A=;
+	b=Y3oX0lDrRARns4a+AyppMCor419pkVm2ykf0Ku449HuM4n/YH07IFFl3Js5GhGOFMT9FUV
+	PpC1lvkYpIKYkh+RWlGvZHm8ScuwS+hoTqiGVqEu7p9RfVA3QRt0NanB8KjqFWAVBdD0/2
+	2ZUpKcPq7uUVxm7NMmOqbIxsqYBvu3I=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1672136737;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=avipjlmwjgSBv3LADLwDkEO/zXDoLrAlAMJ7fn+xA2A=;
+	b=bNiZ6wXCjypP1rl1H1WpeWc3aiM+bxC/ZcpH2P2ZUMUcP3juNIFeB1nKs4Y3HqdG+iFYxG
+	sjtX230InVnkZSAA==
+Date: Tue, 27 Dec 2022 11:25:36 +0100
+From: Marcus Meissner <meissner@suse.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20221227102535.GH4524@suse.de>
+References: <CAKoP-y-rbU=xEowJGp6my0khWMSbE05+ncDiE3wtXTOWwvyScA@mail.gmail.com>
+ <Y6TQ0HyCJOMkKSDn@netmeister.org>
+ <Y6VTdO608VUE38Ke@kroah.com>
+ <20221223081727.GB2404@suse.de>
+ <Y6W1aSG2z5mBJDu8@sashalap>
+ <Y6W5IcAzIUb5rD1F@kroah.com>
+ <20221223161906.GC4524@suse.de>
+ <Y6XcWDBY2uBellV3@gentoo.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Yz8JmGvc3Y6iYaKR@itl-email>
-X-Debian-User: smcv
-Subject: Re: [oss-security] dbus denial of service: CVE-2022-42010, -42011,
- -42012
+In-Reply-To: <Y6XcWDBY2uBellV3@gentoo.org>
+Organization: SUSE Software Solutions =?iso-8859-1?Q?Ger?=
+ =?iso-8859-1?Q?many_GmbH=2C_Frankenstra=DFe_146=2C_90461_Nuernberg=2C_Ger?=
+ =?iso-8859-1?Q?many=2C_GF=3A_Ivo_Totev=2C_Andrew_Myers=2C_Andrew_McDonald?=
+ =?iso-8859-1?Q?=2C_Martje_Boudien_Moerman=2C_HRB_36809=2C_AG_N=FCrnberg?=
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Subject: Re: [oss-security] Details on this supposed Linux Kernel ksmbd RCE
 
-On Thu, 06 Oct 2022 at 13:00:03 -0400, Demi Marie Obenour wrote:
-> On Thu, Oct 06, 2022 at 04:40:10PM +0100, Simon McVittie wrote:
-> > CVE-2022-42012 (which involves a
-> > message that is odd but technically valid)
+On Fri, Dec 23, 2022 at 10:50:32AM -0600, John Helmert III wrote:
+> On Fri, Dec 23, 2022 at 05:19:06PM +0100, Marcus Meissner wrote:
+> > On Fri, Dec 23, 2022 at 03:20:17PM +0100, Greg KH wrote:
+> > > On Fri, Dec 23, 2022 at 09:04:25AM -0500, Sasha Levin wrote:
+> > > > On Fri, Dec 23, 2022 at 09:17:28AM +0100, Marcus Meissner wrote:
+> > > > > Not sure why they do not like you, but to be very clear anyone else can
+> > > > > requests CVEs for the kernel, (except the blacklisted drivers/staging/ area).
+> > > > 
+> > > > For CVEs assigned (earlier this month) to issues in drivers/staging,
+> > > > what would be the process to remove the assignment or mark them as
+> > > > invalid?
+> > > 
+> > > And who is doing this "blacklisting" of staging drivers from CVEs?  Why
+> > > are they special when many distros do enable and rely on them?
+> > 
+> > This is just information I received when I tried to allocate a CVE for a
+> > staging driver.
+> > 
+> > It has been over a year ago, so perhaps the this changed meanwhile again.
 > 
-> Should different-endian messages over AF_UNIX sockets just be rejected
-> outright?
+> SUSE is a CNA. Wouldn't you be able to oassign a CVE via the SUSE CNA
+> without going through MITRE?
 
-Probably not. I believe that would regress the ability to interoperate
-with dbus-java, which can receive either endianness but always sends
-big-endian messages.
+Every CNA has to follow its set CVE assignment rules.
 
-It could also be annoying for proxying/forwarding tools like systemd's
-systemd-stdio-bridge, which is used to forward D-Bus connections to a
-remote bus's AF_UNIX socket via ssh (obviously out-of-band fd-passing
-like the feature that triggers CVE-2022-42012 can't work that way, but
-most of D-Bus is in-band), depending on whether systemd-stdio-bridge
-deserializes and reserializes messages or whether it just streams data
-without understanding its internal structure. There's nothing to stop
-you from using a client on a little-endian PC to debug a service on a
-big-endian embedded device over a ssh tunnel using systemd-stdio-bridge
-or even socat, but in that scenario, each end of the connection will
-be sending messages in its own endianness and receiving messages in the
-other endianness.
+The SUSE CNA is only allowed to assign CVEs for issues in SUSE products
+/ SUSE specific code patches, preferably only non-public ones to avoid
+dups. See:
 
-If I was designing D-Bus today, I'd probably pick a canonical endianness
-and stick to it (more like GVariant, parts of which are always LE),
-but it's too late for that: the "wire protocol" has been stable since
-about 2006, which was before I got involved.
+	https://www.cve.org/PartnerInformation/ListofPartners/partner/suse
 
-    smcv
+There is one fallback OSS CNA, which is the Red Hat CNA.
+It is allowed to assign CVEs for OSS issues, and also is a root on its own:
+
+	https://www.cve.org/PartnerInformation/ListofPartners/partner/redhat
+
+> > > In my talks with MITRE, they have said they don't want to make public
+> > > statments about the CVE issues and Linux, which is sad, but they never
+> > > mentioned anything about "we will ignore this portion of the kernel
+> > > source tree".  Is that in a public statement anywhere that I can point
+> > > to when people ask the kernel security team for CVEs?
+> > 
+> > No, it was in a private email, I will search for it, but I cannot
+> > promise I will find it again.
+> > 
+> > Ciao, Marcus
+> 
+> Relatedly, I find it very frustrating how little visibility there is
+> into the world's interactions with cveform.mitre.org. Your form inputs
+> aren't even sent back to you in the automated response, which makes it
+> quite hard to keep track of the state of changes you've asked for.
+
+Yes, I agree, it is a bit intransparent.
+
+Lets see how this all changes, as this manual CVE requesting
+should be done way less in the future, as most requests will be more via the CVE 
+automation APIs in the future (FWIW CNAs already submit via github pull requests).
+
+Ciao, Marcus
