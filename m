@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6230" "Friday" "10" "February" "2017" "22:59:27" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<b1a94becd9a94b39bd3c95c89bc05f1f@imshyb02.MITRE.ORG>" "151" "[oss-security] Re: MITRE is adding data intake to its CVE ID process" nil nil nil "2" "2017021103:59:27" "[oss-security] Re: MITRE is adding data intake to its CVE ID process" (number mark "U       cve-assign@m Feb 10  151/6230  " thread-indent "\"[oss-security] Re: MITRE is adding data intake to its CVE ID process\"\n") "<e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>" ("<e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5263 invoked by uid 550); 11 Feb 2017 03:59:41 -0000
+Received: (qmail 28003 invoked by uid 550); 28 Dec 2022 15:37:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,165 +7,140 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5223 invoked from network); 11 Feb 2017 03:59:39 -0000
-From: <cve-assign@mitre.org>
-To: <oss-security@lists.openwall.com>
-CC: <cve-assign@mitre.org>
-In-Reply-To: <e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>
-Message-ID: <b1a94becd9a94b39bd3c95c89bc05f1f@imshyb02.MITRE.ORG>
-Date: Fri, 10 Feb 2017 22:59:27 -0500
+Received: (qmail 22436 invoked from network); 28 Dec 2022 15:31:51 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=hardenedbsd.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=vuofHjDm4STYXNdGsep6aD4JXI32+stKyT0rMvY0yIE=;
+        b=gtw3JBQVK415jmrBeDvapjJYJdJrnltnKNSkGA6YgrLtP2bs/93MkQJeCOIQjucj2f
+         jZ1To18EjK2jj0xhwN8IYMiq6Xg5V/SPv5nZlAucA3ifJ4UAbPbg5X3GMMFD4ImRFlfu
+         DJbtp9w36RU53oYDAzNd29JbudrOxckr34nj6U+d9FMncElAubAJ6NiUceU+gLE6umJn
+         z6D7sclZS0mLbXhJnd26xqMG2dfmuKWyl6XP/Yyaf2A0JcD1cory6tUYo/TPu2YMttAA
+         ZAm4dfTdT/xpiY0SVWQ6xCzNiFlrWcmNlJbolRbXkuSOqJhvyzlCXB04MdpLlyKrX841
+         OYfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vuofHjDm4STYXNdGsep6aD4JXI32+stKyT0rMvY0yIE=;
+        b=eSGz0FGB8wZc+UgSg+YeqmL6F8n/Ou/ca/m+L+1eS35Qk9P2fKhgW8jo1SPpAUV66E
+         pMvBhY7sLgdineAXK4Mr3YvL21BXzhlnKcd6NjUVmn3rCJEZ4Ljq3TsM3SsNqDR9bnEP
+         4d37kwUNEr5ixWE+R6PNjChGWh3O2/JWYmgZXdgKPKjB43z1VaQGFd9FaQdWSvn2VNfG
+         ypgYduayjCoAB2b+cHHpFPs+e8dyQ/Uj3GctOXT0HeLP4ygiDaScTpitVWvPuxgKJug2
+         0qF5aiHlEUS2aLpByBq5mn2UEGvgU0hS/orwy7GshqLa0S71JvBzKUVGVtMEwJYDEHrz
+         LuOw==
+X-Gm-Message-State: AFqh2krF3Z+3I7i2A0zWQfLzkN6+0rhpbWM05KcamWVAj4eR7rjyCvlz
+	1gqvmVPNW2aSmukApSTBX0oSE/q37MjBhgX8cIYNc4ucn8iprpnbDl+ujYYKzuxVqhqh3SAVjWW
+	oOVVZNvj6+hYmXgORiQAB6zSPj2MHbABIpOjvXHDcHOtwrYtWx1MkAj/Dg+Xz1X9LM78vHmZXEH
+	Q0AxGZZmKsei+gnk2fog==
+X-Google-Smtp-Source: AMrXdXsJ7fP4Q5mz0Ra/FOpqE5hbViJkZkTFXPjbP9L+A24yyFhTx8aCgTBTZVxN/TmkNlUjEx+7sQ==
+X-Received: by 2002:ac8:534c:0:b0:3a9:8183:6a04 with SMTP id d12-20020ac8534c000000b003a981836a04mr43048522qto.54.1672241498856;
+        Wed, 28 Dec 2022 07:31:38 -0800 (PST)
+Date: Wed, 28 Dec 2022 10:31:37 -0500
+From: Shawn Webb <shawn.webb@hardenedbsd.org>
+To: oss-security@lists.openwall.com
+Cc: Alejandro Colomar <alx.manpages@gmail.com>,
+	Michael Kerrisk <mtk.manpages@gmail.com>,
+	linux-kernel@vger.kernel.org, linux-man@vger.kernel.org
+Message-ID: <20221228153137.4w4bhaqt4fb5vlio@mutt-hbsd>
+X-Operating-System: FreeBSD mutt-hbsd 14.0-CURRENT-HBSD FreeBSD
+ 14.0-CURRENT-HBSD 
+X-PGP-Key: https://git.hardenedbsd.org/hardenedbsd/pubkeys/-/blob/master/Shawn_Webb/03A4CBEBB82EA5A67D9F3853FF2E67A277F8E1FA.pub.asc
+References: <Y6SJDbKBk471KE4k@p183>
+ <Y6TUJcr/IHrsTE0W@codewreck.org>
+ <1a1963aa1036ba07@orthanc.ca>
+ <20221228152458.6xyksrxunukjrtzx@mutt-hbsd>
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: MITRE is adding data intake to its CVE ID process
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="k7cz6avvpg6f66a7"
+Content-Disposition: inline
+In-Reply-To: <20221228152458.6xyksrxunukjrtzx@mutt-hbsd>
+Subject: Re: [oss-security] [patch] proc.5: tell how to parse /proc/*/stat
+ correctly
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--k7cz6avvpg6f66a7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-All,
+On Wed, Dec 28, 2022 at 10:24:58AM -0500, Shawn Webb wrote:
+> On Tue, Dec 27, 2022 at 04:44:49PM -0800, Lyndon Nerenberg (VE7TFX/VE6BBM=
+) wrote:
+> > Dominique Martinet writes:
+> >=20
+> > > But, really, I just don't see how this can practically be said to be =
+parsable...
+> >=20
+> > In its current form it never will be.  The solution is to place
+> > this variable-length field last.  Then you can "cut -d ' ' -f 51-"
+> > to get the command+args part (assuming I counted all those fields
+> > correctly ...)
+> >=20
+> > Of course, this breaks backwards compatability.
+>=20
+> It would also break forwards compatibility in the case new fields
+> needed to be added.
+>=20
+> The only solution would be a libxo-style feature wherein a
+> machine-parseable format is exposed by virtue of a file extension.
+>=20
+> Examples:
+>=20
+> 1. /proc/pid/stats.json
+> 2. /proc/pid/stats.xml
+> 3. /proc/pid/stats.yaml_shouldnt_be_a_thing
 
-Thanks to all who have provided constructive and meaningful feedback
-on this change up to this point. This reply will hopefully answer all
-of the concerns so far. We are hearing 11 distinct concerns, listed
-below as C1 through C11, along with our responses of R1 through R11.
-If you have any ideas or suggestions for improvements to the CVE web
-form, we are completely open to this.
+To expand upon this idea, lets define an example json file:
 
+{
+	"schemaver": "20221228001",
+	"name": "cat",
+	"state": {
+		"raw": "R",
+		"intval": 1,
+		"Pretty": "(Running)",
+	},
+	"tgid": 5452,
+	"pid": 5452,
+	"ppid": 743,
+	"uid": {
+		"real": 501,
+		"effective": 501,
+		"saved_set": 501,
+		"fs": 501
+	}
+}
 
-C1. What exactly has changed after MITRE's 2017-02-09 announcement?
+And so on.
 
-R1. There are two changes. Each of the two changes is about the case
-where an oss-security participant is immediately ready to make a
-public disclosure, and wants an accompanying CVE ID. First, the person
-must visit https://cveform.mitre.org to make the CVE request (but can
-also send the vulnerability information to oss-security at the same
-time). Second, we would like a vulnerability description (i.e., a
-sentence or two about the product name, affected versions, problem
-type, impact, and attack methodology) so that we can publish the CVE
-on https://cve.mitre.org much more quickly. We recognize that, in a
-fraction of the cases (e.g., unanalyzed fuzzer results), a description
-would have very limited information.
+--=20
+Shawn Webb
+Cofounder / Security Engineer
+HardenedBSD
 
+https://git.hardenedbsd.org/hardenedbsd/pubkeys/-/raw/master/Shawn_Webb/03A=
+4CBEBB82EA5A67D9F3853FF2E67A277F8E1FA.pub.asc
 
-C2. Can I still obtain a CVE ID if I'm not yet willing to disclose
-what the vulnerability is, and cannot offer any public reference URL?
+--k7cz6avvpg6f66a7
+Content-Type: application/pgp-signature; name="signature.asc"
 
-R2. Yes, simply visit https://cveform.mitre.org and leave the
-"Reference(s)" box blank. Alternatively, you can enter a reference
-URL, and use the "Additional information" box to clarify that neither
-the reference nor the CVE should be public yet. This is not a change
-to how the oss-security list has be used. The oss-security list has
-always been about only public vulnerabilities.
-
-
-C3. MITRE currently has documentation such as
-https://cve.mitre.org/cve/request_id.html that recommends contacting
-DWF if an Open Source product does not appear on a certain list.
-
-R3. In all cases where our documentation suggests contacting DWF,
-please use https://cveform.mitre.org instead at this time. DWF is
-currently ramping up their operations. CVE is covering all Open Source
-software. There is no list that is excluding anything.
-
-
-C4. I have historically obtained CVE IDs from the CNA of a specific
-Linux distribution (e.g., Debian, Ubuntu, or Red Hat) and they are
-still willing to provide CVE IDs to me. May I continue?
-
-R4. Yes.
-
-
-C5. I want MITRE to send the https://cveform.mitre.org form data, and
-the CVE ID, to the oss-security list at the same time that these are
-sent to the requester.
-
-R5. We have had internal discussions within MITRE about this. We are
-able to implement this easily if the community requires this approach.
-At the moment, we are expecting the requester to resend this
-information to oss-security once they accept their CVE ID assignment.
-Please see http://www.openwall.com/lists/oss-security/2017/02/09/26
-for an example.
-
-
-C6. I want MITRE to send the https://cveform.mitre.org form data to
-the oss-security list as soon as that data is entered (i.e., before a
-CVE ID exists).
-
-R6. We have had internal discussions within MITRE about this. We are
-not yet able to implement this easily. We may work on this if the
-community requires this approach. However, our understanding of CVE
-consumers is that they look to MITRE as a source of vulnerability
-information after a CVE ID number exists, not before.
-
-
-C7. When using the https://cveform.mitre.org site, it is unclear what
-a "vendor" is, e.g., must it be the name of a Linux distribution?
-
-R7. The vendor is the name of the upstream project or organization
-that maintains the Open Source software. If there isn't any project
-name or organization name, then the name of the software can be used
-as the vendor name.
-
-
-C8. A CAPTCHA makes it difficult to do high-volume vulnerability
-reporting.
-
-R8. We agree. The https://cveform.mitre.org use case is persons with
-low-volume reporting needs. We will announce other solutions for
-high-volume reporting. You can contact us, using the
-https://cveform.mitre.org "request type: Other" option, if you need a
-high-volume workaround now.
-
-
-C9. I want to obtain CVE IDs faster in the future. Is there a plan for
-that?
-
-R9. Yes, we anticipate that, in the future, hundreds of Open Source
-projects will become CNAs for their own vulnerabilities. This will be
-coordinated under DWF. In other words, an individual Open Source
-project will have a "sub-CNA" role. The initial documentation is on
-the
-https://github.com/distributedweaknessfiling/DWF-Documentation/blob/master/README.md
-web page.
-
-
-C10. I do not want to use Google docs. Is there any other option?
-
-R10. First, Google docs is applicable only to DWF, which is currently
-ramping up their operations, and is not a required entity for any CVE
-ID requests at present. Also, we do not expect that Google docs will
-be applicable to persons or organizations with a higher level of DWF
-participation, such as sub-CNA participation. At the higher levels,
-DWF currently uses GitHub, not Google docs.
-
-
-C11. The https://cveform.mitre.org X.509 certificate chain is
-incomplete.
-
-R11. Yes, we realize this and will be adding the missing item (Entrust
-Certification Authority - L1K) soon.
-
-
-Regards,
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYnolXAAoJEHb/MwWLVhi25U8P/iFmLFMukKWRgurASnqee1IR
-hQTaRfu+KPn3yDPe7/PDhnGSirPJQoZ85GS954ac7/xTCmS/fnbRVIqCIsr8WhVe
-OpwAYHY2XyLKRCPslv7yMhXIOdK1mf9xak51A19nWgiDxxCToUOcJvxC9Gq0dmez
-+MhXDLfo2yy+LSsw1BNJhxVFqeI6Xpr007aIzedvUUXa4Q8oD1ifkSaVKFI0JONQ
-sbRpBBc4UJ2OyYcrj4nVDiH2/wHo1YzTFP09YwMXIL9cZuNUqX1ZXj5RDFfIFf4E
-FUUq4DU938TFJXl30YxIlYWu98physJ2MBtHIqXHaN6Q0RZQlv8esuLSfnN00Y2t
-j+Ki5biol4Eff8Zt+LGHdkpZj7JZHei6IDWsPVaaLdPWYwsR5MiZO2F/fm0Fb8zv
-ORbZHtCwnjl26OGqh08W/jxHKfoGPlruZHNHMHiYh84YOhMhjrtY4M/U6lxVB/rC
-6q2PleMmh6/jfBWCQgM3N+c1luwXwY6MEdkEbt9U+X6fxXNQlNy8S5EbEPzx1U4J
-4TTyWat4JsW/AKwAAjcI7R1qBPqkNvVEoKeKqIRpHKOnfKcqhtUTrq92KozNiVbH
-uKnsvuaxVWtjCc30onR0PUbi7ENeJZfVTQlAtBl3TN2Ku9ReASP/23KjTk4jnCZA
-Da1WB50SGz0ynSMY/fBZ
-=GKwE
+iQIzBAABCAAdFiEEA6TL67gupaZ9nzhT/y5nonf44foFAmOsYVkACgkQ/y5nonf4
+4fonfA//aKcBZ1LuRMDhEhGwkR7Iq3V988pnjIrfeJzNM33Cpf4zWtfsyR73gStD
+29peSWTP+L9hg6A9K9FcvcbseYYYhlegTtqPtxdbEbL7fqBzm2LDLD9Vh3RTQE1Z
+qYMOXSGRjbjivPfoDDGXlFahY5Lqt5NX5w1/wfR+4NpbpGZ/VyXo48XtSmiG9XuV
++LDGIQ1FOul4M1XqqD3CApJsjuOmwtLGQxQIcatQYgkOin9uN1O8bYMVHiXXPEJp
+q+s+gZIT9sxHLKvNbAjw3WRzTHMPNPk2PTxLkNjxBbrxd428UNamJlPmLwPsp2xg
+OucAMb3coSh+Af71K7f+bZ6lv/ZAVKbA0Vpmun887rww/dlcPKUd+DpdVKc2JK8k
+pvQy/OZIly8+uggmx3qfz8svjpR0wD68v5wX/i/+UXsszgp9ArlCKbAlORTxea+A
+5R7wQi9QS0jKk04zMA5GZ2W8gEFgjRYdjPe3oIt64mcbHKE8qaj3kZNjgoyqXl7e
+zmMjP776S8ot/aPsHTho9sizi8RuqjMbX3q4TePjWajbJC99Akqoo6Ah/x2rNZ54
+U3l5aQAEOw8E/sMYAjBNMVIJFZz9yEyDgeYqXBOI3zl68h6A/hdDtd75higpM1Qo
+8pHkUFFYDOBKfaIdJmDR4QNf/DPOYQaW9RZFrF6p6c2L5WPdOko=
+=Epsn
 -----END PGP SIGNATURE-----
+
+--k7cz6avvpg6f66a7--
