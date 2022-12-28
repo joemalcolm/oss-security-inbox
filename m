@@ -1,27 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/06/28/1
-Message-ID: <CAANuz54JHumf1epcp_U1ieWwrvupv0rZkSk--d_hsnxrgmnV4w@mail.gmail.com>
-Date: Tue, 28 Jun 2022 07:27:20 -0700
-From: Matteo Collina <matteo.collina@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/28/8
+Message-ID: <20221228180256.2q-Rh%steffen@sdaoden.eu>
+Date: Wed, 28 Dec 2022 19:02:56 +0100
+From: Steffen Nurpmeso <steffen@...oden.eu>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: Node.js security updates for all active release lines, July 2022
+Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
 Content-Type: text/plain; charset=utf-8
 
-On 28 June 2022 at 16:26:43, Matteo Collina (matteo.collina@...il.com)
-wrote:
+Shawn Webb wrote in
+ <20221228152458.6xyksrxunukjrtzx@...t-hbsd>:
+ |On Tue, Dec 27, 2022 at 04:44:49PM -0800, Lyndon Nerenberg (VE7TFX/VE6BBM) \
+ |wrote:
+ |> Dominique Martinet writes:
+ |>> But, really, I just don't see how this can practically be said to \
+ |>> be parsable...
+ |> 
+ |> In its current form it never will be.  The solution is to place
+ |> this variable-length field last.  Then you can "cut -d ' ' -f 51-"
+ |> to get the command+args part (assuming I counted all those fields
+ |> correctly ...)
+ |> 
+ |> Of course, this breaks backwards compatability.
+ |
+ |It would also break forwards compatibility in the case new fields
+ |needed to be added.
+ |
+ |The only solution would be a libxo-style feature wherein a
+ |machine-parseable format is exposed by virtue of a file extension.
+ |
+ |Examples:
+ |
+ |1. /proc/pid/stats.json
+ |2. /proc/pid/stats.xml
+ |3. /proc/pid/stats.yaml_shouldnt_be_a_thing
 
-The Node.js project will release new versions of all supported release
-lines on or shortly after Tuesday, 5th of July, 2022
-For more information see:
-https://nodejs.org/en/blog/vulnerability/july-2022-security-releases/
+Or, rather, in my thought, because this gets too crowded, let
+procfs only show /proc/pid/stats but let it be opened with
+whatever extension, and "let it dynamically check for an according
+creator".  Ie like Apple has those packages which you could look
+into. 
 
--- 
-You received this message because you are subscribed to the Google Groups
-"nodejs-sec" group.
-To unsubscribe from this group and stop receiving emails from it, send an
-email to nodejs-sec+unsubscribe@...glegroups.com.
-To view this discussion on the web visit
-https://groups.google.com/d/msgid/nodejs-sec/d522e004-c08a-4add-8e28-db579c4f4a27n%40googlegroups.com
-<https://groups.google.com/d/msgid/nodejs-sec/d522e004-c08a-4add-8e28-db579c4f4a27n%40googlegroups.com?utm_medium=email&utm_source=footer>
-.
+Or simply offer stats.0 where \0 is the field separator(, and \0\0
+is the last entry).  One could even dream of KEY=VALUE\0 pairs,
+like state=R\0  Then not even the order matters no more, and there
+would be a bit of self-description without a documentation.
+(Ach!!  If the IETF would go that route more often.  Sigh.)
 
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
