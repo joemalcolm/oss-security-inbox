@@ -1,86 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/28/1
-Message-ID: <YkED39EzRCU99yOO@sol.localdomain>
-Date: Sun, 27 Mar 2022 17:39:59 -0700
-From: Eric Biggers <ebiggers@...nel.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/28/6
+Message-ID: <20221228172517.l7h3m7wjfpxr3dzw@mutt-hbsd>
+Date: Wed, 28 Dec 2022 12:25:17 -0500
+From: Shawn Webb <shawn.webb@...denedbsd.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: zlib memory corruption on deflate (i.e. compress)
+Cc: Alejandro Colomar <alx.manpages@...il.com>, Michael Kerrisk <mtk.manpages@...il.com>, linux-kernel@...r.kernel.org, linux-man@...r.kernel.org
+Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Mar 27, 2022 at 12:42:55PM -0700, Eric Biggers wrote:
-> On Sun, Mar 27, 2022 at 03:10:41PM +0300, ariel.byd@...il.com wrote:
-> > If the match lengths are uniformly distributed between 3 and 258, you’ll get
-> > exactly 8 bits per length - not less due to entropy considerations, not more
-> > since N-3 is a valid Huffman encoding with 8 bits per character.
+On Wed, Dec 28, 2022 at 11:47:25AM -0500, Demi Marie Obenour wrote:
+> On Wed, Dec 28, 2022 at 10:24:58AM -0500, Shawn Webb wrote:
+> > On Tue, Dec 27, 2022 at 04:44:49PM -0800, Lyndon Nerenberg (VE7TFX/VE6BBM) wrote:
+> > > Dominique Martinet writes:
+> > > 
+> > > > But, really, I just don't see how this can practically be said to be parsable...
+> > > 
+> > > In its current form it never will be.  The solution is to place
+> > > this variable-length field last.  Then you can "cut -d ' ' -f 51-"
+> > > to get the command+args part (assuming I counted all those fields
+> > > correctly ...)
+> > > 
+> > > Of course, this breaks backwards compatability.
 > > 
-> > Actually, maybe not. I think 258 can be encoded as either “284 31” or “285”,
-> > and if the encoder always chooses the “285” encoding (leaving “284 31”
-> > useless) you might have 257 characters, you might need some 9-bit characters.
-> > I think it’s possible to bound that by 1/64 bit per character but I have not
-> > proven it.
+> > It would also break forwards compatibility in the case new fields
+> > needed to be added.
 > > 
-> > Similarly for distances uniformly distributed between 1 and 32768.
+> > The only solution would be a libxo-style feature wherein a
+> > machine-parseable format is exposed by virtue of a file extension.
 > > 
-> > That’s a total of 23 bits per code.
+> > Examples:
 > > 
+> > 1. /proc/pid/stats.json
+> > 2. /proc/pid/stats.xml
+> > 3. /proc/pid/stats.yaml_shouldnt_be_a_thing
 > 
-> Right, that's a better way to think about it.  I was basically thinking about
-> making the Huffman symbols equally likely, but it's "better" to just make the
-> match lengths and distances equally likely.
-> 
-> Length 258 can indeed be encoded two ways; however, zlib always uses one way.
-> 
-> I wrote a patch (given below) to inject sequences of matches with random lengths
-> and distances.  These are the "best" results I got with the various memLevels:
-> 
-> 	memLevel=9: 23.0188 bits/item
-> 	memLevel=8: 23.0268 bits/item
-> 	memLevel=7: 23.0399 bits/item
-> 	memLevel=6: 23.0720 bits/item
-> 	memLevel=5: 23.1285 bits/item
-> 	memLevel=4: 23.2414 bits/item
-> 	memLevel=3: 23.4521 bits/item
-> 	memLevel=2: 23.8431 bits/item
-> 	memLevel=1: OVERFLOW
-> 
-> As expected, the block header becomes more significant with the lower memLevels.
-> Interestingly, with memLevel=1, the bug is reproduced.
-> 
-> Caveat: these are all assuming the default (and maximum) windowBits of 15, in
-> order to maximize the cost of distances.  That would basically correspond to
-> 'deflateInit2(&z, <any>, Z_DEFLATED, 15, memLevel, Z_DEFAULT_STRATEGY)'.  It may
-> be common for people who decrease the default memLevel of 8 to also decrease the
-> default windowBits of 15, as these sort of have similar effects.  I.e.,
-> memLevel=1 and windowBits=15 is probably not too common.
-> 
-> Also, this isn't an actual reproducer; you would still need to craft an input
-> that made zlib generate one of these sequences of matches whose lengths and
-> distances are distributed uniformly at random.  I expect that this would be
-> harder with memLevel=1 than memLevel=8, but it might be possible.
+> A binary format would be even better.  No risk of ambiguity.
 
-I've attached a full reproducer that works with the following parameters:
+I think the argument I'm trying to make is to be flexible in
+implementation, allowing for future needs and wants--that is "future
+proofing".
 
-	level=7 (also 8 and 9)
-	windowBits=15
-	memLevel=1
-	strategy=Z_DEFAULT_STRATEGY
+-- 
+Shawn Webb
+Cofounder / Security Engineer
+HardenedBSD
 
-i.e.,
+https://git.hardenedbsd.org/hardenedbsd/pubkeys/-/raw/master/Shawn_Webb/03A4CBEBB82EA5A67D9F3853FF2E67A277F8E1FA.pub.asc
 
-    deflateInit2(&strm, 7, Z_DEFLATED, 15, 1, Z_DEFAULT_STRATEGY);
-
-With ASAN, it generates a warning like Tavis's reproducer with Z_FIXED did.
-
-Note, this is very sensitive to the specific parameters chosen, especially the
-memLevel of 1 which I expect is not very commonly used.  With memLevel=1, zlib
-only uses very short blocks, so it's possible for the block header to bring the
-average match cost above the 24 bits needed to hit the bug.  I'm not seeing a
-way for the bug to be reachable with much higher memLevels, notably the default
-memLevel of 8; as far as I can tell, the average match cost can't be much over
-23 bits in that case.
-
-- Eric
-
-View attachment "deflate.c" of type "text/plain" (818 bytes)
-
-View attachment "repro_7_15_1_DEFAULTSTRATEGY.txt" of type "text/plain" (48192 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
