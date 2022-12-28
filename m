@@ -1,32 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/17/2
-Message-ID: <ebb955eb-5f5c-473a-35a4-1ff66d6b97d0@apache.org>
-Date: Mon, 17 Jan 2022 17:48:28 +0000
-From: Larry McCay <lmccay@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/28/4
+Message-ID: <Y6xzIR9P+a6uaaEx@itl-email>
+Date: Wed, 28 Dec 2022 11:47:25 -0500
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2021-42357: DOM based XSS Vulnerability in Apache Knox 
+Cc: Alejandro Colomar <alx.manpages@...il.com>, Michael Kerrisk <mtk.manpages@...il.com>, linux-kernel@...r.kernel.org, linux-man@...r.kernel.org
+Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+On Wed, Dec 28, 2022 at 10:24:58AM -0500, Shawn Webb wrote:
+> On Tue, Dec 27, 2022 at 04:44:49PM -0800, Lyndon Nerenberg (VE7TFX/VE6BBM) wrote:
+> > Dominique Martinet writes:
+> > 
+> > > But, really, I just don't see how this can practically be said to be parsable...
+> > 
+> > In its current form it never will be.  The solution is to place
+> > this variable-length field last.  Then you can "cut -d ' ' -f 51-"
+> > to get the command+args part (assuming I counted all those fields
+> > correctly ...)
+> > 
+> > Of course, this breaks backwards compatability.
+> 
+> It would also break forwards compatibility in the case new fields
+> needed to be added.
+> 
+> The only solution would be a libxo-style feature wherein a
+> machine-parseable format is exposed by virtue of a file extension.
+> 
+> Examples:
+> 
+> 1. /proc/pid/stats.json
+> 2. /proc/pid/stats.xml
+> 3. /proc/pid/stats.yaml_shouldnt_be_a_thing
 
-Description:
+A binary format would be even better.  No risk of ambiguity.
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-When using Knox SSO in affected releases, a request could be crafted to
-redirect a user to a malicious page due to improper URL parsing.
-A request that included a specially crafted
-request parameter could be used to redirect the user to a page controlled
-by an attacker. This URL would need to be presented to the user outside
-the normal request flow through a XSS or phishing campaign.
-
-Mitigation:
-
-1.x users should upgrade to 1.6.1.
-Unsupported versions of the 0.x line that include this issue are: 0.13.0, 0.14.0.
-and these should upgrade to 1.6.1 as well.
-1.0.0 and 1.1.0 are also Unsupported but affected and should upgrade to 1.6.1.
-
-
-Credit:
-
-Apache Knox would like to thank Kajetan Rostojek for this report
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
