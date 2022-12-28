@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1119" "Thursday" "16" "March" "2017" "21:15:28" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<3025119.tSIlaHEIMQ@arcadia>" "31" "Re: [oss-security] CVE Request: multiple bugs found in BFD libraries and Binutils' utilities" nil nil nil "3" "2017031620:15:28" "[oss-security] CVE Request: multiple bugs found in BFD libraries and Binutils' utilities" (number mark "U       ago@gentoo.o Mar 16   31/1119  " thread-indent "\"Re: [oss-security] CVE Request: multiple bugs found in BFD libraries and Binutils' utilities\"\n") "<CAMNd5sthm7v3xxeZvpd6WBXQoM8OJsst+AWK9jQinzkM-VbZiw@mail.gmail.com>" ("<CAMNd5sthm7v3xxeZvpd6WBXQoM8OJsst+AWK9jQinzkM-VbZiw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 25822 invoked by uid 550); 16 Mar 2017 20:15:46 -0000
+Received: (qmail 17864 invoked by uid 550); 28 Dec 2022 18:04:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,48 +7,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25801 invoked from network); 16 Mar 2017 20:15:45 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
+Received: (qmail 13340 invoked from network); 28 Dec 2022 18:03:36 -0000
+Date: Wed, 28 Dec 2022 19:02:56 +0100
+Author: Steffen Nurpmeso <steffen@sdaoden.eu>
+From: Steffen Nurpmeso <steffen@sdaoden.eu>
 To: oss-security@lists.openwall.com
-Cc: Thuan Pham <thuanpv@comp.nus.edu.sg>
-Date: Thu, 16 Mar 2017 21:15:28 +0100
-Message-ID: <3025119.tSIlaHEIMQ@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.29; x86_64; ; )
-In-Reply-To: <CAMNd5sthm7v3xxeZvpd6WBXQoM8OJsst+AWK9jQinzkM-VbZiw@mail.gmail.com>
-References: <CAMNd5sthm7v3xxeZvpd6WBXQoM8OJsst+AWK9jQinzkM-VbZiw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: Re: [oss-security] CVE Request: multiple bugs found in BFD libraries and Binutils' utilities
+Message-ID: <20221228180256.2q-Rh%steffen@sdaoden.eu>
+In-Reply-To: <20221228152458.6xyksrxunukjrtzx@mutt-hbsd>
+References: <Y6SJDbKBk471KE4k@p183> <Y6TUJcr/IHrsTE0W@codewreck.org>
+ <1a1963aa1036ba07@orthanc.ca> <20221228152458.6xyksrxunukjrtzx@mutt-hbsd>
+Mail-Followup-To: oss-security@lists.openwall.com
+User-Agent: s-nail v14.9.24-383-g2889cb06b9
+OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
+ url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
+BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
+ the world can make no bugs.
+Subject: Re: [oss-security] [patch] proc.5: tell how to parse
+ /proc/*/stat correctly
 
-On Friday 17 March 2017 00:58:05 Thuan Pham wrote:
-> Could you please check whether these bugs are suitable for CVEs?
+Shawn Webb wrote in
+ <20221228152458.6xyksrxunukjrtzx@mutt-hbsd>:
+ |On Tue, Dec 27, 2022 at 04:44:49PM -0800, Lyndon Nerenberg (VE7TFX/VE6BBM) \
+ |wrote:
+ |> Dominique Martinet writes:
+ |>> But, really, I just don't see how this can practically be said to \
+ |>> be parsable...
+ |> 
+ |> In its current form it never will be.  The solution is to place
+ |> this variable-length field last.  Then you can "cut -d ' ' -f 51-"
+ |> to get the command+args part (assuming I counted all those fields
+ |> correctly ...)
+ |> 
+ |> Of course, this breaks backwards compatability.
+ |
+ |It would also break forwards compatibility in the case new fields
+ |needed to be added.
+ |
+ |The only solution would be a libxo-style feature wherein a
+ |machine-parseable format is exposed by virtue of a file extension.
+ |
+ |Examples:
+ |
+ |1. /proc/pid/stats.json
+ |2. /proc/pid/stats.xml
+ |3. /proc/pid/stats.yaml_shouldnt_be_a_thing
 
-Thuan,
-thanks for sharing.
+Or, rather, in my thought, because this gets too crowded, let
+procfs only show /proc/pid/stats but let it be opened with
+whatever extension, and "let it dynamically check for an according
+creator".  Ie like Apple has those packages which you could look
+into. 
 
-Since few time the cve requests happens on https://cveform.mitre.org instead 
-of here.
+Or simply offer stats.0 where \0 is the field separator(, and \0\0
+is the last entry).  One could even dream of KEY=VALUE\0 pairs,
+like state=R\0  Then not even the order matters no more, and there
+would be a bit of self-description without a documentation.
+(Ach!!  If the IETF would go that route more often.  Sigh.)
 
->From some time of fuzz experience, from multiple cve requests and multiple 
-feedback from mitre I'd say:
-- In any way you are able to crash a library, it needs a cve because it is 
-supposed to receive multiple inputs.
-- Undefined behavior in a library also needs a cve. 
-- while the bug is in a command line tool:
-1) if it is a simple crash like fpe / segv, it is considered just an 
-inconvenience.
-2) if it is an overflow with read of size 1 is also considered an inconveniece 
-unless you can demostrate any evidence of damage.
-The mentioned cases are not just an inconvenience unless there are common 
-cases where you know that for example a webapp relies on this command line 
-tool.
-3) if it is an overflow with write access it should have a cve.
-
-
-@everyone, if you think it is wrong or I missed something feel free to correct 
-me. 
- 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
