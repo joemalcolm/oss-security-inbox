@@ -1,29 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/13/1
-Message-ID: <CAD-N9QVuufAueZc5jeC0agddo3gE05YLjLOT4-q0n2wGJtMf=w@mail.gmail.com>
-Date: Sun, 13 Mar 2022 20:59:49 +0800
-From: Dongliang Mu <mudongliangabcd@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/28/2
+Message-ID: <20221228152458.6xyksrxunukjrtzx@mutt-hbsd>
+Date: Wed, 28 Dec 2022 10:24:58 -0500
+From: Shawn Webb <shawn.webb@...denedbsd.org>
 To: oss-security@...ts.openwall.com
-Subject: Memory leak in Linux HID-elo driver
+Cc: Alejandro Colomar <alx.manpages@...il.com>, Michael Kerrisk <mtk.manpages@...il.com>, linux-kernel@...r.kernel.org, linux-man@...r.kernel.org
+Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
 Content-Type: text/plain; charset=utf-8
 
-Hi oss-security,
+On Tue, Dec 27, 2022 at 04:44:49PM -0800, Lyndon Nerenberg (VE7TFX/VE6BBM) wrote:
+> Dominique Martinet writes:
+> 
+> > But, really, I just don't see how this can practically be said to be parsable...
+> 
+> In its current form it never will be.  The solution is to place
+> this variable-length field last.  Then you can "cut -d ' ' -f 51-"
+> to get the command+args part (assuming I counted all those fields
+> correctly ...)
+> 
+> Of course, this breaks backwards compatability.
 
-There is one memory leak in Linux HID driver, introduced in v5.13.0.
-When hid_parse in elo_probe fails, it forgets to call usb_put_dev to
-decrease the refcount, leading to memory leak in the Linux kernel.
+It would also break forwards compatibility in the case new fields
+needed to be added.
 
-This is fixed by 817b8b9c5396 [1] and already backported to Linux
-stable 5.15 and 5.16.
+The only solution would be a libxo-style feature wherein a
+machine-parseable format is exposed by virtue of a file extension.
 
-I am not sure how to request one CVE on the CVE request webpage. Any
-help would be appreciated.
+Examples:
 
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=817b8b9c5396d2b2d92311b46719aad5d3339dbe
-[2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=fbf42729d0e91332e8ce75a1ecce08b8a2dab9c1
+1. /proc/pid/stats.json
+2. /proc/pid/stats.xml
+3. /proc/pid/stats.yaml_shouldnt_be_a_thing
 
---
-My best regards to you.
+Thanks,
 
-     No System Is Safe!
-     Dongliang Mu
+-- 
+Shawn Webb
+Cofounder / Security Engineer
+HardenedBSD
+
+https://git.hardenedbsd.org/hardenedbsd/pubkeys/-/raw/master/Shawn_Webb/03A4CBEBB82EA5A67D9F3853FF2E67A277F8E1FA.pub.asc
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
