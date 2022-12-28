@@ -1,103 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/11/5
-Message-ID: <nooqr7o5-86no-68n-9s31-oq6o9pn1r425@unkk.fr>
-Date: Wed, 11 May 2022 08:41:12 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: TLS and SSH connection too eager reuse
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/28/11
+Message-ID: <551c6d28-2b4e-ce4e-7602-29afe014d725@gmail.com>
+Date: Wed, 28 Dec 2022 20:57:04 +0100
+From: Alejandro Colomar <alx.manpages@...il.com>
+To: Shawn Webb <shawn.webb@...denedbsd.org>, oss-security@...ts.openwall.com, John Helmert III <ajak@...too.org>, Demi Marie Obenour <demi@...isiblethingslab.com>, Jan Engelhardt <jengelh@...i.de>, "Lyndon Nerenberg (VE7TFX/VE6BBM)" <lyndon@...hanc.ca>
+Cc: Michael Kerrisk <mtk.manpages@...il.com>, linux-kernel@...r.kernel.org, linux-man@...r.kernel.org
+Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
 Content-Type: text/plain; charset=utf-8
 
-TLS and SSH connection too eager reuse
-======================================
+Hi all,
 
-Project curl Security Advisory, May 11 2022 -
-[Permalink](https://curl.se/docs/CVE-2022-27782.html)
+On 12/28/22 20:24, Shawn Webb wrote:
+> On Wed, Dec 28, 2022 at 01:02:35PM -0500, Demi Marie Obenour wrote:
+>> On Wed, Dec 28, 2022 at 12:25:17PM -0500, Shawn Webb wrote:
+>>> On Wed, Dec 28, 2022 at 11:47:25AM -0500, Demi Marie Obenour wrote:
+>>>> On Wed, Dec 28, 2022 at 10:24:58AM -0500, Shawn Webb wrote:
+>>>>> On Tue, Dec 27, 2022 at 04:44:49PM -0800, Lyndon Nerenberg (VE7TFX/VE6BBM) wrote:
+>>>>>> Dominique Martinet writes:
+>>>>>>
+>>>>>>> But, really, I just don't see how this can practically be said to be parsable...
+>>>>>>
+>>>>>> In its current form it never will be.  The solution is to place
+>>>>>> this variable-length field last.  Then you can "cut -d ' ' -f 51-"
+>>>>>> to get the command+args part (assuming I counted all those fields
+>>>>>> correctly ...)
+>>>>>>
+>>>>>> Of course, this breaks backwards compatability.
+>>>>>
+>>>>> It would also break forwards compatibility in the case new fields
+>>>>> needed to be added.
+>>>>>
+>>>>> The only solution would be a libxo-style feature wherein a
+>>>>> machine-parseable format is exposed by virtue of a file extension.
+>>>>>
+>>>>> Examples:
+>>>>>
+>>>>> 1. /proc/pid/stats.json
+>>>>> 2. /proc/pid/stats.xml
+>>>>> 3. /proc/pid/stats.yaml_shouldnt_be_a_thing
+>>>>
+>>>> A binary format would be even better.  No risk of ambiguity.
+>>>
+>>> I think the argument I'm trying to make is to be flexible in
+>>> implementation, allowing for future needs and wants--that is "future
+>>> proofing".
+>>
+>> Linux should not have an XML, JSON, or YAML serializer.  Linux already
+>> does way too much; let’s not add one more thing to the list.
+> 
+> Somewhat agreed. I think formats like JSON provide a good balance
+> between machine parseable and human readable.
+> a
+> As I described earlier, though, when it comes to concepts like procfs
+> and sysfs, I have a bias towards abandoning them in favor of sysctl.
+> If sysctl nodes were to be used, no new serialization formats would
+> need to be implemented--and developers would also use a safter method
+> of system and process inspection and manipulation.
+> 
 
-VULNERABILITY
--------------
+Just a comment as someone who is reading without much understanding of the 
+contents of /prod/pid/stat:
 
-libcurl would reuse a previously created connection even when a TLS or SSH
-related option had been changed that should have prohibited reuse.
+If organization of the data in the file is a problem, and the format starts to 
+matter, maybe it's a hint that there are too many different contents, and could 
+be split into different files, each one with its own formatting rules.  I'll 
+suggest that maybe a set of files, maybe contained in a common directory 
+stats.d, is what you're looking for?
 
-libcurl keeps previously used connections in a connection pool for subsequent
-transfers to reuse if one of them matches the setup. However, several TLS and
-SSH settings were left out from the configuration match checks, making them
-match too easily.
+Binary format is not of my preference, since most user-space tools work with the 
+standard interface, that is, text.
 
-We are not aware of any exploit of this flaw.
+Cheers,
 
-INFO
-----
-
-Here are the list of options that were not considered in the check, so curl
-would reuse a connection even if the subsequent transfer would have changed
-one or more of these options.
-
-### TLS options
-
-- `CURLOPT_SSL_OPTIONS` (since 7.25.0)
-- `CURLOPT_CRLFILE` (since 7.19.0)
-- `CURLOPT_TLSAUTH_USERNAME` (since 7.21.4)
-- `CURLOPT_TLSAUTH_PASSWORD` (since 7.21.4)
-- `CURLOPT_PROXY_SSL_OPTIONS` (since 7.52.0)
-- `CURLOPT_PROXY_CRLFILE` (since 7.52.0)
-- `CURLOPT_PROXY_TLSAUTH_USERNAME` (since 7.52.0)
-- `CURLOPT_PROXY_TLSAUTH_PASSWORD` (since 7.52.0)
-
-### SSH options
-
-- `CURLOPT_SSH_PUBLIC_KEYFILE` (since 7.16.1)
-- `CURLOPT_SSH_PRIVATE_KEYFILE` (since 7.16.1)
-
-This flaw was initially introduced in curl 7.16.1 and has been widened several
-times since then. See table above for details
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2022-27782 to this issue.
-
-CWE-305: Authentication Bypass by Primary Weakness
-
-Severity: Medium
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.16.1 to and including 7.83.0
-- Not affected versions: curl < 7.16.1 and curl >= 7.83.1
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-The two patches for CVE-2022-27782: [TLS-fix](https://github.com/curl/curl/commit/f18af4f874) and [SSH-fix](https://github.com/curl/curl/commit/1645e9b44505abd5cbaf65da5282c3f33b5924a5)
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 7.83.1
-
-  B - Apply the patch to your local version
-
-TIMELINE
---------
-
-This issue was reported to the curl project on May 1, 2022. We contacted
-distros@...nwall on May 5.
-
-libcurl 7.83.1 was released on May 11 2022, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-This issue was reported by Harry Sintonen. Patched by Daniel Stenberg.
-
-Thanks a lot!
+Alex
 
 -- 
+<http://www.alejandro-colomar.es/>
 
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
+Download attachment "OpenPGP_signature" of type "application/pgp-signature" (834 bytes)
