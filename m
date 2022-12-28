@@ -1,15 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/03/17/1
-Message-ID: <tencent_51295AD6751A466E1F4D819D@qq.com>
-Date: Thu, 17 Mar 2022 10:59:37 +0800
-From: "王明义" <6201613047@....jiangnan.edu.cn>
-To: "oss-security" <oss-security@...ts.openwall.com>
-Subject: Linux Kernel 5.15-rc-ksmbd-part2 is affected by: Buffer Overflow. The impact is: use-after-free (local). 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/28/1
+Message-ID: <1a1963aa1036ba07@orthanc.ca>
+Date: Tue, 27 Dec 2022 16:44:49 -0800
+From: "Lyndon Nerenberg (VE7TFX/VE6BBM)" <lyndon@...hanc.ca>
+To: oss-security@...ts.openwall.com
+cc: Alejandro Colomar <alx.manpages@...il.com>, Michael Kerrisk <mtk.manpages@...il.com>, linux-kernel@...r.kernel.org, linux-man@...r.kernel.org
+Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
 Content-Type: text/plain; charset=utf-8
 
-** RESERVED ** Linux Kernel 5.15-rc-ksmbd-part2 is affected by: Buffer Overflow. The impact is: use-after-free (local). The component is: kernel/locking/rwsem.c. The attack vector is: Run OS with Linux Kernel 5.15-rc-ksmbd-part2. Then execute the POC file.&nbsp; A vulnerability was found in Linux Kernel 5.15-rc-ksmbd-part2 kernel/locking/rwsem.c causing use-after-free.
+Dominique Martinet writes:
 
+> But, really, I just don't see how this can practically be said to be parsable...
 
-It is fixed by&nbsp;https://git.kernel.org/pub/scm/linux/kernel/git/netfilter/nf.git/commit/?id=9bf3d2033129
-Please check the following website for details&nbsp;https://bugzilla.kernel.org/show_bug.cgi?id=214655
-And I want to request a CVE ID. Looking forward to your reply. Wish you a happy day.
+In its current form it never will be.  The solution is to place
+this variable-length field last.  Then you can "cut -d ' ' -f 51-"
+to get the command+args part (assuming I counted all those fields
+correctly ...)
+
+Of course, this breaks backwards compatability.
+
+--lyndon
