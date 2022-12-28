@@ -1,29 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/03/7
-Message-ID: <CANm5x_MaPRcY8B6WdNM40xj8kaeqqfX2Z=EZk36MohfSk9KYNA@mail.gmail.com>
-Date: Thu, 3 Nov 2022 18:32:22 +0200
-From: Nicola Tuveri <nic.tuv@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/28/10
+Message-ID: <20221228192436.viuoyil2ntr4lxjo@mutt-hbsd>
+Date: Wed, 28 Dec 2022 14:24:36 -0500
+From: Shawn Webb <shawn.webb@...denedbsd.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
+Cc: Alejandro Colomar <alx.manpages@...il.com>, Michael Kerrisk <mtk.manpages@...il.com>, linux-kernel@...r.kernel.org, linux-man@...r.kernel.org
+Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
 Content-Type: text/plain; charset=utf-8
 
-I can also add that at least this member of the OpenSSL Technical
-Committee is following the discussion, and I believe I am not the only
-one.
+On Wed, Dec 28, 2022 at 01:02:35PM -0500, Demi Marie Obenour wrote:
+> On Wed, Dec 28, 2022 at 12:25:17PM -0500, Shawn Webb wrote:
+> > On Wed, Dec 28, 2022 at 11:47:25AM -0500, Demi Marie Obenour wrote:
+> > > On Wed, Dec 28, 2022 at 10:24:58AM -0500, Shawn Webb wrote:
+> > > > On Tue, Dec 27, 2022 at 04:44:49PM -0800, Lyndon Nerenberg (VE7TFX/VE6BBM) wrote:
+> > > > > Dominique Martinet writes:
+> > > > > 
+> > > > > > But, really, I just don't see how this can practically be said to be parsable...
+> > > > > 
+> > > > > In its current form it never will be.  The solution is to place
+> > > > > this variable-length field last.  Then you can "cut -d ' ' -f 51-"
+> > > > > to get the command+args part (assuming I counted all those fields
+> > > > > correctly ...)
+> > > > > 
+> > > > > Of course, this breaks backwards compatability.
+> > > > 
+> > > > It would also break forwards compatibility in the case new fields
+> > > > needed to be added.
+> > > > 
+> > > > The only solution would be a libxo-style feature wherein a
+> > > > machine-parseable format is exposed by virtue of a file extension.
+> > > > 
+> > > > Examples:
+> > > > 
+> > > > 1. /proc/pid/stats.json
+> > > > 2. /proc/pid/stats.xml
+> > > > 3. /proc/pid/stats.yaml_shouldnt_be_a_thing
+> > > 
+> > > A binary format would be even better.  No risk of ambiguity.
+> > 
+> > I think the argument I'm trying to make is to be flexible in
+> > implementation, allowing for future needs and wants--that is "future
+> > proofing".
+> 
+> Linux should not have an XML, JSON, or YAML serializer.  Linux already
+> does way too much; let’s not add one more thing to the list.
 
-The feedback shared here on oss-security is read and carefully
-considered, and I know it will be discussed within OTC to continue the
-ongoing process of improving the OpenSSL project and its procedures.
+Somewhat agreed. I think formats like JSON provide a good balance
+between machine parseable and human readable.
 
-I totally concur with Tavis Ormandy:
-> this is active prolific opensource security researchers discussing their opensource security work on the opensource security mailing list :)
+As I described earlier, though, when it comes to concepts like procfs
+and sysfs, I have a bias towards abandoning them in favor of sysctl.
+If sysctl nodes were to be used, no new serialization formats would
+need to be implemented--and developers would also use a safter method
+of system and process inspection and manipulation.
 
-Personally, I'd like to thank you all for the feedback so far, as it
-is in itself a contribution to the project, even when it is harsh and
-reminds us of our mistakes.
-As long as it is kept polite and constructive, as it has been so far
-here, all feedback is very welcome and valuable.
+-- 
+Shawn Webb
+Cofounder / Security Engineer
+HardenedBSD
 
-Cheers,
+https://git.hardenedbsd.org/hardenedbsd/pubkeys/-/raw/master/Shawn_Webb/03A4CBEBB82EA5A67D9F3853FF2E67A277F8E1FA.pub.asc
 
-Nicola Tuveri
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
