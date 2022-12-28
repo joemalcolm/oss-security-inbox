@@ -1,32 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/10/26/7
-Message-ID: <4a324f40d90b4cb5a6ceab5623615ed8@checkpoint.com>
-Date: Wed, 26 Oct 2022 11:17:32 +0000
-From: Matan Giladi <matangi@...ckpoint.com>
-To: "openssl-users@...nssl.org" <openssl-users@...nssl.org>, "openssl-announce@...nssl.org" <openssl-announce@...nssl.org>, "openssl-project@...nssl.org" <openssl-project@...nssl.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: RE: Forthcoming OpenSSL Bug Fix Release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/28/7
+Message-ID: <Y6yEv+6iYQQNaqi9@itl-email>
+Date: Wed, 28 Dec 2022 13:02:35 -0500
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
+To: oss-security@...ts.openwall.com
+Cc: Alejandro Colomar <alx.manpages@...il.com>, Michael Kerrisk <mtk.manpages@...il.com>, linux-kernel@...r.kernel.org, linux-man@...r.kernel.org
+Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
 Content-Type: text/plain; charset=utf-8
 
-Does 1.1.1s is going to include any security fix?
-Can you please confirm that the critical issue found in 3.0.6 version is irrelevant for 1.1.1?
+On Wed, Dec 28, 2022 at 12:25:17PM -0500, Shawn Webb wrote:
+> On Wed, Dec 28, 2022 at 11:47:25AM -0500, Demi Marie Obenour wrote:
+> > On Wed, Dec 28, 2022 at 10:24:58AM -0500, Shawn Webb wrote:
+> > > On Tue, Dec 27, 2022 at 04:44:49PM -0800, Lyndon Nerenberg (VE7TFX/VE6BBM) wrote:
+> > > > Dominique Martinet writes:
+> > > > 
+> > > > > But, really, I just don't see how this can practically be said to be parsable...
+> > > > 
+> > > > In its current form it never will be.  The solution is to place
+> > > > this variable-length field last.  Then you can "cut -d ' ' -f 51-"
+> > > > to get the command+args part (assuming I counted all those fields
+> > > > correctly ...)
+> > > > 
+> > > > Of course, this breaks backwards compatability.
+> > > 
+> > > It would also break forwards compatibility in the case new fields
+> > > needed to be added.
+> > > 
+> > > The only solution would be a libxo-style feature wherein a
+> > > machine-parseable format is exposed by virtue of a file extension.
+> > > 
+> > > Examples:
+> > > 
+> > > 1. /proc/pid/stats.json
+> > > 2. /proc/pid/stats.xml
+> > > 3. /proc/pid/stats.yaml_shouldnt_be_a_thing
+> > 
+> > A binary format would be even better.  No risk of ambiguity.
+> 
+> I think the argument I'm trying to make is to be flexible in
+> implementation, allowing for future needs and wants--that is "future
+> proofing".
 
------Original Message-----
-From: openssl-announce <openssl-announce-bounces@...nssl.org> On Behalf Of Ing. Martin Koci, MBA
-Sent: Tuesday, October 25, 2022 21:36
-To: openssl-announce@...nssl.org; openssl-users@...nssl.org; openssl-project@...nssl.org; oss-security@...ts.openwall.com
-Subject: Forthcoming OpenSSL Bug Fix Release
+Linux should not have an XML, JSON, or YAML serializer.  Linux already
+does way too much; let’s not add one more thing to the list.
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-Hello,
-
-In addition to the already announced 3.0.7 release, the OpenSSL project team would like to announce the forthcoming release of OpenSSL version 1.1.1s that is a bug fix release.
-
-This bug fix release will be made available on Tuesday 1st November 2022 between 1300-1700 UTC too.
-
-Yours
-The OpenSSL Project Team
-
-
-Email secured by Check Point
-Report Phishing: https://mta-cnf.iaas.checkpoint.com/mta_feedback?id=b3dc9e6004806fac5adb86a1a47504d00416eb2590b631502621736f0652d7ea&ck=3D4CC6C8CB55;48DE55E160E5;C5CEAA199888;&v=m
-
-Email secured by Check Point
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
