@@ -1,32 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/29/3
-Message-ID: <Y6zgcTndt4Ss6/6/@itl-email>
-Date: Wed, 28 Dec 2022 19:33:50 -0500
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
-To: Theodore Ts'o <tytso@....edu>
-Cc: oss-security@...ts.openwall.com, Alejandro Colomar <alx.manpages@...il.com>, Michael Kerrisk <mtk.manpages@...il.com>, linux-kernel@...r.kernel.org, linux-man@...r.kernel.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/28/3
+Message-ID: <20221228153137.4w4bhaqt4fb5vlio@mutt-hbsd>
+Date: Wed, 28 Dec 2022 10:31:37 -0500
+From: Shawn Webb <shawn.webb@...denedbsd.org>
+To: oss-security@...ts.openwall.com
+Cc: Alejandro Colomar <alx.manpages@...il.com>, Michael Kerrisk <mtk.manpages@...il.com>, linux-kernel@...r.kernel.org, linux-man@...r.kernel.org
 Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 28, 2022 at 05:14:42PM -0500, Theodore Ts'o wrote:
-> On Wed, Dec 28, 2022 at 01:02:35PM -0500, Demi Marie Obenour wrote:
-> > > I think the argument I'm trying to make is to be flexible in
-> > > implementation, allowing for future needs and wants--that is "future
-> > > proofing".
+On Wed, Dec 28, 2022 at 10:24:58AM -0500, Shawn Webb wrote:
+> On Tue, Dec 27, 2022 at 04:44:49PM -0800, Lyndon Nerenberg (VE7TFX/VE6BBM) wrote:
+> > Dominique Martinet writes:
 > > 
-> > Linux should not have an XML, JSON, or YAML serializer.  Linux already
-> > does way too much; let’s not add one more thing to the list.
+> > > But, really, I just don't see how this can practically be said to be parsable...
+> > 
+> > In its current form it never will be.  The solution is to place
+> > this variable-length field last.  Then you can "cut -d ' ' -f 51-"
+> > to get the command+args part (assuming I counted all those fields
+> > correctly ...)
+> > 
+> > Of course, this breaks backwards compatability.
 > 
-> There's always Protobufs[1]!  :-)  And all of these are better than
-> ASN.1, for which Google already has a limited parser (for x.509
-> certificates).   :-)   :-)   :-)
+> It would also break forwards compatibility in the case new fields
+> needed to be added.
 > 
-> 						- Ted
+> The only solution would be a libxo-style feature wherein a
+> machine-parseable format is exposed by virtue of a file extension.
+> 
+> Examples:
+> 
+> 1. /proc/pid/stats.json
+> 2. /proc/pid/stats.xml
+> 3. /proc/pid/stats.yaml_shouldnt_be_a_thing
 
-Cap’n Proto is better than Protobufs :-)
+To expand upon this idea, lets define an example json file:
+
+{
+	"schemaver": "20221228001",
+	"name": "cat",
+	"state": {
+		"raw": "R",
+		"intval": 1,
+		"Pretty": "(Running)",
+	},
+	"tgid": 5452,
+	"pid": 5452,
+	"ppid": 743,
+	"uid": {
+		"real": 501,
+		"effective": 501,
+		"saved_set": 501,
+		"fs": 501
+	}
+}
+
+And so on.
+
 -- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+Shawn Webb
+Cofounder / Security Engineer
+HardenedBSD
+
+https://git.hardenedbsd.org/hardenedbsd/pubkeys/-/raw/master/Shawn_Webb/03A4CBEBB82EA5A67D9F3853FF2E67A277F8E1FA.pub.asc
 
 Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
