@@ -1,25 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/03/6
-Message-ID: <Y2QEz7/6u65wE4cd@wopr>
-Date: Thu, 3 Nov 2022 11:13:35 -0700
-From: Kurt H Maier <khm@...ops.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: OpenSSL X.509 Email Address 4-byte Buffer Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/29/2
+Message-ID: <Y6y/0uzFlTpkw/VT@mit.edu>
+Date: Wed, 28 Dec 2022 17:14:42 -0500
+From: "Theodore Ts'o" <tytso@....edu>
+To: Demi Marie Obenour <demi@...isiblethingslab.com>
+Cc: oss-security@...ts.openwall.com, Alejandro Colomar <alx.manpages@...il.com>, Michael Kerrisk <mtk.manpages@...il.com>, linux-kernel@...r.kernel.org, linux-man@...r.kernel.org
+Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 03, 2022 at 03:36:51PM -0000, Tavis Ormandy wrote:
+On Wed, Dec 28, 2022 at 01:02:35PM -0500, Demi Marie Obenour wrote:
+> > I think the argument I'm trying to make is to be flexible in
+> > implementation, allowing for future needs and wants--that is "future
+> > proofing".
 > 
-> Hanno and I have contributed months of programmer time on openssl
-> research and produced a ton of CRITICAL/HIGH issues over the years, not
-> to mention nss, gnutls, etc. What you're looking at isn't Monday-morning
-> quarterbacking on an unrelated list - this is active prolific opensource
-> security researchers discussing their opensource security work on the
-> opensource security mailing list :)
+> Linux should not have an XML, JSON, or YAML serializer.  Linux already
+> does way too much; let’s not add one more thing to the list.
 
-I'm aware of your and Hanno's work.  In the past it has not appeared
-ex-post-facto in response to a thread where someone is trying to guess
-which programming language theory would squash the bug.  That's why I'm
-expressing confusion.  Feel free to ignore me.
+There's always Protobufs[1]!  :-)  And all of these are better than
+ASN.1, for which Google already has a limited parser (for x.509
+certificates).   :-)   :-)   :-)
 
-khm
-
+						- Ted
