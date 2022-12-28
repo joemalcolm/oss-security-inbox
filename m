@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1179" "Thursday" "7" "November" "2019" "21:34:36" "-0800" "Micah Kornfield" "emkornfield@apache.org" "<CAK7Z5T9-mgfJR-Bc=GsBb4MXihZAkARazkkyQXzefqwxVVopTA@mail.gmail.com>" "28" "[oss-security] [CVE-2019-12408][CVE-2019-12410] Uninitialized Memory Vulnerabilities fixed in Apache Arrow 0.15.1" nil nil nil "11" "2019110805:34:36" "[oss-security] [CVE-2019-12408][CVE-2019-12410] Uninitialized Memory Vulnerabilities fixed in Apache Arrow 0.15.1" (number mark "U       emkornfield@ Nov  7   28/1179  " thread-indent "\"[oss-security] [CVE-2019-12408][CVE-2019-12410] Uninitialized Memory Vulnerabilities fixed in Apache Arrow 0.15.1\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2019-12408][CVE-2019-12410] Uninitialized Memory Vulnerabilities fixed in Apache Arrow 0.15.1" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 10120 invoked by uid 550); 8 Nov 2019 06:57:56 -0000
+Received: (qmail 2034 invoked by uid 550); 28 Dec 2022 10:44:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,48 +7,34 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25656 invoked from network); 8 Nov 2019 05:35:00 -0000
-X-Gm-Message-State: APjAAAV9N6QWztqfatxLijiOaMMIyjRAObXR7gW/M15OMOssXXevyEAS
-	Z3nPXqqtIpw5bPcsj3+J43Z2KrieFAzTvXEdWco=
-X-Google-Smtp-Source: APXvYqwyQc9qefaASHrLgJHOW6lRzmtqtRw5+jy+W9pqcsfqcuryvYvJ1vW0AbGqg1oim5Ncd9ik6eT6FWx2Iwq4TEk=
-X-Received: by 2002:ac2:549a:: with SMTP id t26mr5021697lfk.25.1573191287227;
- Thu, 07 Nov 2019 21:34:47 -0800 (PST)
-MIME-Version: 1.0
-From: Micah Kornfield <emkornfield@apache.org>
-Date: Thu, 7 Nov 2019 21:34:36 -0800
-X-Gmail-Original-Message-ID: <CAK7Z5T9-mgfJR-Bc=GsBb4MXihZAkARazkkyQXzefqwxVVopTA@mail.gmail.com>
-Message-ID: <CAK7Z5T9-mgfJR-Bc=GsBb4MXihZAkARazkkyQXzefqwxVVopTA@mail.gmail.com>
+Received: (qmail 11617 invoked from network); 28 Dec 2022 00:45:04 -0000
+From: "Lyndon Nerenberg (VE7TFX/VE6BBM)" <lyndon@orthanc.ca>
 To: oss-security@lists.openwall.com
-Cc: security@apache.org
-Content-Type: multipart/alternative; boundary="000000000000d6ca800596cf2384"
-Subject: [oss-security] [CVE-2019-12408][CVE-2019-12410] Uninitialized Memory Vulnerabilities
- fixed in Apache Arrow 0.15.1
+cc: Alejandro Colomar <alx.manpages@gmail.com>,
+    Michael Kerrisk <mtk.manpages@gmail.com>,
+    linux-kernel@vger.kernel.org, linux-man@vger.kernel.org
+In-reply-to: <Y6TUJcr/IHrsTE0W@codewreck.org>
+References: <Y6SJDbKBk471KE4k@p183> <Y6TUJcr/IHrsTE0W@codewreck.org>
+Comments: In-reply-to Dominique Martinet <asmadeus@codewreck.org>
+   message dated "Fri, 23 Dec 2022 07:03:17 +0900."
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <93771.1672188289.1@orthanc.ca>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 27 Dec 2022 16:44:49 -0800
+Message-ID: <1a1963aa1036ba07@orthanc.ca>
+Subject: Re: [oss-security] [patch] proc.5: tell how to parse /proc/*/stat correctly
 
---000000000000d6ca800596cf2384
-Content-Type: text/plain; charset="UTF-8"
+Dominique Martinet writes:
 
-The Apache Arrow project would like to hereby disclose that our 0.15.1
-release patches two uninitialized memory bugs (CVE-2019-12408 and
-CVE-2019-12410) in the the C++ implementation (which in turn can affect,
-Python, Ruby and R).  In both cases there is a potential vulnerability
-where data in memory can be unintentionally shared if Arrow Arrays are
-transmitted over the wire (for instance with Flight) or persisted in the
-streaming IPC and file formats.  Neither bug affects data persisted to the
-Apache Parquet file format.
+> But, really, I just don't see how this can practically be said to be pars=
+able...
 
+In its current form it never will be.  The solution is to place
+this variable-length field last.  Then you can "cut -d ' ' -f 51-"
+to get the command+args part (assuming I counted all those fields
+correctly ...)
 
-The first issue (CVE-2019-12408) affected ArrayBuilder classes in 0.14.0
-and 0.14.1 releases.  In some cases arrays with null values could be built
-using uninitialized memory for their data segment.
+Of course, this breaks backwards compatability.
 
-
-The second bug (CVE-2019-12410) affected Apache Arrow versions since at
-least 0.12.0.  The bug left data read from Apache Parquet files with RLE
-null encoded data uninitialized.
-
-
-It is recommended that users upgrade to 0.15.1 as soon as possible and
-audit any data that has been persisted in the Arrow IPC format or the Arrow
-File Format.
-
---000000000000d6ca800596cf2384--
+--lyndon
