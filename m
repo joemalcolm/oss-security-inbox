@@ -1,58 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/08/07/3
-Message-ID: <16331f22-c81e-fa25-3930-9c282a975e0e@vulndisco.cc>
-Date: Sun, 7 Aug 2022 18:20:11 +0300
-From: Evgeny Legerov <admin@...ndisco.cc>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/29/6
+Message-Id: <90735C03-0C34-49ED-A79A-EC0165C274CC@dwheeler.com>
+Date: Thu, 29 Dec 2022 12:56:22 -0500
+From: "David A. Wheeler" <dwheeler@...eeler.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Exim 4.95 invalid free
+Cc: Demi Marie Obenour <demi@...isiblethingslab.com>, Alejandro Colomar <alx.manpages@...il.com>, Michael Kerrisk <mtk.manpages@...il.com>
+Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+> On Dec 29, 2022, at 11:43 AM, Alan Coopersmith <alan.coopersmith@...cle.com> wrote:
 
 
-Here is another interesting code in Exim 4.96.
+Another solution is to escape bytes that might cause trouble in this field, e.g., using %xx hexadecimal.
+So space would be %20, ")" would be %41, control characters 1-31 would be %01 to %1f,
+and (of course) "%" would be encoded as %25.
+Basically, URL-encode / Percent-encode them. See: https://en.wikipedia.org/wiki/Percent-encoding
 
-I really doubt that it is exploitable, but if someone manages to 
-reproduce at least ASAN crash, it would be great.
+Technically this would be a userspace change, but only in cases where the system
+would probably have done the wrong thing previously. It's okay if we break *attacker* workflows
+as long as we don't break others'. An advantage of URL encoding is that,
+like JSON, it's a well-known format. I might do something different if this was a new system,
+but that seems like the least-impact approach while eliminating the problem.
 
-SPF_dns_exim_new(int debug)
-{
+--- David A .Wheeler
 
-
-memset(spf_dns_server, 0, sizeof(SPF_dns_server_t));
-spf_dns_server->destroy      = NULL;
-spf_dns_server->lookup       = SPF_dns_exim_lookup;
-spf_dns_server->get_spf      = NULL;
-spf_dns_server->get_exp      = NULL;
-spf_dns_server->add_cache    = NULL;
-spf_dns_server->layer_below  = NULL;
-spf_dns_server->name         = "exim";
-spf_dns_server->debug        = debug;
-
-
-spf_nxdomain = SPF_dns_rr_new_init(spf_dns_server,
-   "", ns_t_any, 24 * 60 * 60, HOST_NOT_FOUND);
-if (!spf_nxdomain)
-   {
-   free(spf_dns_server);
-   return NULL;
-   }
-
-
-if SPF_dns_rr_new_init() fails, spf_dns_server will be freed with free().
-
-
-regards,
-
--e
-
-On 06.08.2022 22:25, Solar Designer wrote:
-> On Sat, Aug 06, 2022 at 08:47:21PM +0200, Solar Designer wrote:
->> Yet I understand we cannot really ask you for more, and a brief
->> link-only heads-up is better than none.
-> When I wrote the above, I didn't realize these two bugs (in zlib and
-> Exim) were Evgeny's own findings.  Now that I do, I think it isn't
-> unreasonable for us to ask Evgeny to include the full detail in such
-> postings going forward.  We'd appreciate that, Evgeny!
->
-> Alexander
