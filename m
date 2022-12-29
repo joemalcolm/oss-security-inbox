@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["742" "Saturday" "20" "May" "2017" "08:26:36" "-0700" "Ian Zimmerman" "itz@primate.net" "<20170520152406.2339.3B884775@matica.foolinux.mooo.com>" "19" "[oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder" "^Date:" nil nil "5" "2017052015:26:36" "[oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder" (number mark "        itz@primate. May 20   19/742   " thread-indent "\"[oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE decoder\"\n") "<20170520072632.z5nbivrdwmqm3soe@eldamar.local>" ("<20170520072632.z5nbivrdwmqm3soe@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 24391 invoked by uid 550); 20 May 2017 15:45:34 -0000
+Received: (qmail 13405 invoked by uid 550); 29 Dec 2022 17:56:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,39 +6,48 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15589 invoked from network); 20 May 2017 15:26:51 -0000
-X-Authentication-Warning: acedia.primate.net: itz set sender to itz@primate.net using -f
-Message-ID: <20170520152406.2339.3B884775@matica.foolinux.mooo.com>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <20170520072632.z5nbivrdwmqm3soe@eldamar.local>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170520072632.z5nbivrdwmqm3soe@eldamar.local>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Date: Sat, 20 May 2017 08:26:36 -0700
-From: Ian Zimmerman <itz@primate.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: ImageMagick: CVE-2017-9098: use of uninitialized memory in RLE
- decoder
+Received: (qmail 13376 invoked from network); 29 Dec 2022 17:56:53 -0000
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.7\))
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
+In-Reply-To: <b31213da-5ea2-d1f8-dcb2-2917b787ce89@oracle.com>
+Date: Thu, 29 Dec 2022 12:56:22 -0500
+Cc: Demi Marie Obenour <demi@invisiblethingslab.com>,
+ Alejandro Colomar <alx.manpages@gmail.com>,
+ Michael Kerrisk <mtk.manpages@gmail.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <90735C03-0C34-49ED-A79A-EC0165C274CC@dwheeler.com>
+References: <Y6SJDbKBk471KE4k@p183> <Y6TUJcr/IHrsTE0W@codewreck.org>
+ <1a1963aa1036ba07@orthanc.ca> <20221228152458.6xyksrxunukjrtzx@mutt-hbsd>
+ <Y6xzIR9P+a6uaaEx@itl-email>
+ <b31213da-5ea2-d1f8-dcb2-2917b787ce89@oracle.com>
 To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3608.120.23.2.7)
+Subject: Re: [oss-security] [patch] proc.5: tell how to parse /proc/*/stat
+ correctly
 
-On 2017-05-20 09:26, Salvatore Bonaccorso wrote:
+> On Dec 29, 2022, at 11:43 AM, Alan Coopersmith <alan.coopersmith@oracle.c=
+om> wrote:
 
-> Chris Evans discovered that ImageMagick uses unitialized memory in the
-> RLE decoder, allowing an attacker to leak sensitive information from
-> process memory space. There is missing initialization in the
-> ReadRLEImage function.
-> 
-> Original article at:
-> 
-> https://scarybeastsecurity.blogspot.com/2017/05/bleed-continues-18-byte-file-14k-bounty.html
 
-It was good to see the discussion of how GraphicsMagick was affected, or
-not.  I would love to see that in all *Magick weakness reports.
+Another solution is to escape bytes that might cause trouble in this field,=
+ e.g., using %xx hexadecimal.
+So space would be %20, ")" would be %41, control characters 1-31 would be %=
+01 to %1f,
+and (of course) "%" would be encoded as %25.
+Basically, URL-encode / Percent-encode them. See: https://en.wikipedia.org/=
+wiki/Percent-encoding
 
--- 
-Please *no* private Cc: on mailing lists and newsgroups
-Personal signed mail: please _encrypt_ and sign
-Don't clear-text sign:
-http://primate.net/~itz/blog/the-problem-with-gpg-signatures.html
+Technically this would be a userspace change, but only in cases where the s=
+ystem
+would probably have done the wrong thing previously. It's okay if we break =
+*attacker* workflows
+as long as we don't break others'. An advantage of URL encoding is that,
+like JSON, it's a well-known format. I might do something different if this=
+ was a new system,
+but that seems like the least-impact approach while eliminating the problem.
+
+--- David A .Wheeler
+
