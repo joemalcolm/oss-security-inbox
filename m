@@ -1,20 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/01/25/8
-Message-ID: <CA+ZBtZ5dRpp15h_OExLFuaPR=dEBeB-VYRCjA+omzNq23p=9cQ@mail.gmail.com>
-Date: Tue, 25 Jan 2022 19:53:03 +0800
-From: Zhang Yonglun <zhangyonglun@...che.org>
-To: oss-security@...ts.openwall.com, dev@...nyu.apache.org
-Subject: CVE-2021-45029: Groovy Code Injection & SpEL Injection in Apache ShenYu 2.4.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/29/7
+Message-ID: <CAH8yC8=p9a71AohbLtKGzb8d8yzBYyCADUJ1xthddQsyFbdSRA@mail.gmail.com>
+Date: Thu, 29 Dec 2022 13:36:52 -0500
+From: Jeffrey Walton <noloader@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
 Content-Type: text/plain; charset=utf-8
 
-Description:
+On Thu, Dec 29, 2022 at 12:58 PM David A. Wheeler <dwheeler@...eeler.com> wrote:
+>
+> > On Dec 29, 2022, at 11:43 AM, Alan Coopersmith <alan.coopersmith@...cle.com> wrote:
+>
+> Another solution is to escape bytes that might cause trouble in this field, e.g., using %xx hexadecimal.
+> So space would be %20, ")" would be %41, control characters 1-31 would be %01 to %1f,
+> and (of course) "%" would be encoded as %25.
+> Basically, URL-encode / Percent-encode them. See: https://en.wikipedia.org/wiki/Percent-encoding
 
-Groovy Code Injection & SpEL Injection which lead to Remote Code
-Execution. This issue affected Apache ShenYu 2.4.0 and 2.4.1.
+Would you need a full blown encoder?
 
---
+I was thinking along those lines, but pick a delimiter and only encode
+the delimiter when it is present in the data. For example, use the
+pipe as a delimiter.
 
-Zhang Yonglun
-Apache ShenYu (Incubating)
-Apache ShardingSphere
+Encoding the space character alone when it is present in the data may
+also work. Once a string is parsed based on whitespace, decode the
+percent-encoded spaces in the field.
 
+Using \0 as the delimiter would still require encoding of \0 when it
+is present in the data.
+
+I guess the question is, do parsers need control characters (<= 0x1f)
+encoded or not? If existing parsers can currently handle control
+characters, then a full blown encoder may not be needed.
+
+> Technically this would be a userspace change, but only in cases where the system
+> would probably have done the wrong thing previously. It's okay if we break *attacker* workflows
+> as long as we don't break others'. An advantage of URL encoding is that,
+> like JSON, it's a well-known format. I might do something different if this was a new system,
+> but that seems like the least-impact approach while eliminating the problem.
+
+I know David did not suggest JSON, but please, no JSON. Use a simple
+encoder/decoder like URL-encoding. A URL encoder is easy to implement
+in C. JSON is more complex, and developers would probably want/need a
+third-party library to do it. There's no sense in gratuitously
+broadening the dependency tree.
+
+Jeff
