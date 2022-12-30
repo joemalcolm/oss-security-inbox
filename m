@@ -1,50 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/01/1
-Message-ID: <24e8-626d8980-3-6d44cb00@230483808>
-Date: Sat, 30 Apr 2022 21:09:16 +0200
-From: "Christian Fischer" <christian.fischer@...enbone.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/30/2
+Message-ID: <20b7e5b0-8c9d-fdf0-8346-6ccd5b721b29@apache.org>
+Date: Fri, 30 Dec 2022 07:15:23 +0000
+From: Xiaoxiang Yu <xxyu@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-21449 and version  reporting
+Subject: CVE-2022-44621: Apache Kylin: Command injection by Diagnosis Controller 
 Content-Type: text/plain; charset=utf-8
 
-On Saturday, April 30, 2022 17:38 CEST, John Helmert III <ajak@...too.org> wrote: 
- 
-> On Sat, Apr 30, 2022 at 01:24:36PM +0200, Christian Fischer wrote:
-> >  > It’s not that they didn’t/can’t verify, it’s already verified, 
-> > they’re claiming those versions no longer being officially supported 
-> > means they can seemingly omit them from CVE reporting.
-> >  >
-> >  > Which is dangerous, misleading, and nonsensical.
-> > 
-> > While i fully agree with this be aware that CVE entries could generally 
-> > contain incomplete information:
-> > 
-> > After requesting an update of a CVE entry via the MITRE CVE forum in the 
-> > past to add additional affected products for a different vendor (which 
-> > wasn't even the assigning CNA like it is the case for Oracle here) my 
-> > request was rejected by MITRE with the following rationale given:
-> 
-> The CNA that assigned that CVE is Oracle, so Oracle is the CNA to talk
-> to to make changes to it. MITRE won't make changes to it as they're
-> not the CNA behind that CVE.
-> 
-> >  > A CVE description does not necessarily contain all the affected 
-> > products or versions and is not part of CVE ID requirements. The 
-> > products are documented in the CVE references.
-> > This is also matching my experiences with various other products / 
-> > vendors and related CVE entries for these.
-> 
-> Right, this is documented in the CNA rules [1]:
-> 
-> "8.2.1 MUST provide enough information for a reader to have a
-> reasonable understanding of what products are affected. If the
-> affected products are not explicitly listed in the description, then
-> the CNA MUST provide a reference that points to the known affected
-> products."
-> 
-> [1] https://www.cve.org/ResourcesSupport/AllResources/CNARules#section_8-2_cve_record_prose_description_requirements
+Severity: important
 
-Yes, indeed / in know (since then) but it wasn't clear if all participants in this thread are aware of this fact.
+Description:
 
-But i just have noticed that my posting was only partly relevant for the quoted message and the question of the OP "Why is this being allowed…" because i have missed that Oracle (if they as the assigning CNA are aware that Java 15 and 16 are affected) AFAICT indeed haven't provided any reference so far about all known affected versions / products.
+Diagnosis Controller miss parameter validation, so user may attacked by command injection via HTTP Request.
+
+Work Arounds:
+
+Users of Kylin 2.x & Kylin 3.x & 4.x should upgrade to 4.0.3 or apply patch  https://github.com/apache/kylin/pull/2011 https://github.com/apache/kylin/pull/2011
+
+Credit:
+
+Messy God <godimessy@...il.com> (finder)
+
+References:
+
+https://kylin.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2022-44621
 
