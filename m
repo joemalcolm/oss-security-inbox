@@ -1,58 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/06/10
-Message-ID: <20220706145011.GA2928@openwall.com>
-Date: Wed, 6 Jul 2022 16:50:11 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Re: DO NOT OPEN PREVIOUS MAIL Re: Denial of service in  GnuPG
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/30/4
+Message-ID: <Y69d7JASugX99avX@gentoo.org>
+Date: Fri, 30 Dec 2022 15:53:48 -0600
+From: John Helmert III <ajak@...too.org>
+To: security@...che.org
+Cc: jorton@...che.org, carnil@...ian.org, oss-security@...ts.openwall.com
+Subject: Re: CVE-2022-22728: libapreq2: libapreq2 multipart form parse memory corruption
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 06, 2022 at 09:47:28AM -0400, Demi Marie Obenour wrote:
-> On Wed, Jul 06, 2022 at 03:38:10PM +0200, Solar Designer wrote:
-> > On Wed, Jul 06, 2022 at 07:02:59AM -0400, Demi Marie Obenour wrote:
-> > > Was adding compression to PGP even a good idea in the first place?
-> > 
-> > I think actually yes, it was, especially back then.  It has probably
-> > helped more than it hurt in PGP's lifetime so far.
+On Thu, Dec 29, 2022 at 10:50:26AM +0100, Salvatore Bonaccorso wrote:
+> Hi,
 > 
-> Interesting.  Why do you say that?
+> On Fri, Aug 26, 2022 at 11:01:23AM -0500, John Helmert III wrote:
+> > On Thu, Aug 25, 2022 at 02:09:16PM +0000, Joe Orton wrote:
+> > > Severity: important
+> > > 
+> > > Description:
+> > > 
+> > > A flaw in libapreq2 versions 2.16 and earlier could cause a buffer
+> > > overflow while processing multipart form uploads.  A remote
+> > > attacker could send a request causing a process crash which could
+> > > lead to a denial of service attack.
+> > > 
+> > 
+> > Is there a fixed version or patch or upstream issue?
+> 
+> Any pointers or information to this?
+> 
+> Regards,
+> Salvatore
 
-Oh, I didn't feel this even needed explanation, and I feel silly writing
-the below and don't really have time for it (lesson re-learned: should
-have stayed silent), but well.
+Maybe it will help to loop in Apache's CNA contact address?
 
-PGP is commonly used on compressible data (such as text), and PGP
-messages are then transferred over a network and finally stay in
-people's mailboxes or such.  Bandwidth was commonly low back then, and
-storage much more limited than today's.
-
-Some compression existed for unencrypted messages - some network links
-somewhat compressed (e.g., V.42bis), some mail clients supported mailbox
-compression, and of course a mailbox could also be compressed manually.
-
-Obviously, already encrypted content is not compressible.
-
-Without built-in compression in PGP, its messages would be slower to
-transfer and larger to store.  Compression would need to be performed
-before PGP, which would be an inconvenience and would lead to similar
-risks, especially if automated, and would often not be done.  In PGP,
-it's just one standard way to do it, not more than one.
-
-So compression was of some benefit to a lot of people.  We could argue
-that it's little benefit, but multiplied by the number of people it's
-significant.  Was compression also a problem for a lot of people?
-Theoretically, yes, but in practice those attacks were not common.
-
-We could also argue that PGP never became popular, MUA integrations are
-poor, etc., and as a consequence that its individual features were not
-of a lot of benefit to computer users at large.  While true, that
-argument also means the risks associated with those features did not
-apply to most computer users.  So it's irrelevant.
-
-What I say is that for the geeks using PGP, compression was overall of
-more benefit than risk.
-
-Oh, and I'm also grateful for compression in SSH, despite of my own
-criticism of its effect on security.
-
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
