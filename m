@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1750" "Thursday" "24" "September" "2015" "00:16:21" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150924041621.914CA8BC02B@smtpvmsrv1.mitre.org>" "50" "[oss-security] Re: CVE Request: Maliciously crafted text files in IPython/Jupyter editor" nil nil nil "9" "2015092404:16:21" "[oss-security] Re: CVE Request: Maliciously crafted text files in IPython/Jupyter editor" (number mark "        cve-assign@m Sep 24   50/1750  " thread-indent "\"[oss-security] Re: CVE Request: Maliciously crafted text files in IPython/Jupyter editor\"\n") "<CAHNn8BV_zT_eADA1DGDwQNG2EQQraW0nAe42z5ft+8P=5L5MZw@mail.gmail.com>" ("<CAHNn8BV_zT_eADA1DGDwQNG2EQQraW0nAe42z5ft+8P=5L5MZw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 5940 invoked by uid 550); 24 Sep 2015 04:16:34 -0000
+Received: (qmail 15469 invoked by uid 550); 30 Dec 2022 20:16:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +6,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5916 invoked from network); 24 Sep 2015 04:16:33 -0000
-In-Reply-To: <CAHNn8BV_zT_eADA1DGDwQNG2EQQraW0nAe42z5ft+8P=5L5MZw@mail.gmail.com>
-Message-Id: <20150924041621.914CA8BC02B@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, security@ipython.org, rgbkrk@gmail.com, jkamens@quantopian.com, ssanderson@quantopian.com
-Date: Thu, 24 Sep 2015 00:16:21 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: Maliciously crafted text files in IPython/Jupyter editor
-To: benjaminrk@gmail.com
+Received: (qmail 15445 invoked from network); 30 Dec 2022 20:16:07 -0000
+Authentication-Results: garm.ovh; auth=pass (GARM-104R005e5696247-8558-4316-907d-20674b30cbbf,
+                    61162F1CAD51C30F4082BD59ECF03BCF2A04D20D) smtp.auth=jwilk@jwilk.net
+X-OVh-ClientIp: 5.172.255.8
+Date: Fri, 30 Dec 2022 21:15:54 +0100
+From: Jakub Wilk <jwilk@jwilk.net>
+To: <oss-security@lists.openwall.com>
+CC: <linux-man@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Message-ID: <20221230201554.xborkqi2x5dvnh6h@jwilk.net>
+Mail-Followup-To: oss-security@lists.openwall.com,
+	linux-man@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <Y6SJDbKBk471KE4k@p183>
+ <Y6TUJcr/IHrsTE0W@codewreck.org>
+ <1a1963aa1036ba07@orthanc.ca>
+ <tog7cb$105a$1@ciao.gmane.io>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"; format=flowed
+Content-Disposition: inline
+In-Reply-To: <tog7cb$105a$1@ciao.gmane.io>
+X-Originating-IP: [37.59.142.104]
+X-ClientProxiedBy: DAG3EX2.mxp6.local (172.16.2.22) To DAG4EX1.mxp6.local
+ (172.16.2.31)
+X-Ovh-Tracer-GUID: 964eb37d-b66c-4350-8a99-ebd663178077
+X-Ovh-Tracer-Id: 5114681804795926493
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvhedrieeigddufeefucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpeffhffvvefukfhfgggtuggjihesthdtredttddtvdenucfhrhhomheplfgrkhhusgcuhghilhhkuceojhifihhlkhesjhifihhlkhdrnhgvtheqnecuggftrfgrthhtvghrnhepuedttdetlefhffduvdehgfefudejledtkeehudevkeekleefudeuvdegjedufffgnecukfhppeduvdejrddtrddtrddupdefjedrheelrddugedvrddutdegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpeeojhifihhlkhesjhifihhlkhdrnhgvtheqpdhnsggprhgtphhtthhopedupdhrtghpthhtohepohhsshdqshgvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomhdplhhinhhugidqmhgrnhesvhhgvghrrdhkvghrnhgvlhdrohhrghdplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdfovfetjfhoshhtpehmohehhedvpdhmohguvgepshhmthhpohhuth
+Subject: Re: [oss-security] [patch] proc.5: tell how to parse /proc/*/stat
+ correctly
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+* Tavis Ormandy <taviso@gmail.com>, 2022-12-28 01:50:
+>>>But, really, I just don't see how this can practically be said to be 
+>>>parsable...
+>>
+>>In its current form it never will be.  The solution is to place this 
+>>variable-length field last.  Then you can "cut -d ' ' -f 51-" to get 
+>>the command+args part (assuming I counted all those fields correctly 
+>>...)
+>>
+>>Of course, this breaks backwards compatability.
+>
+>I think that cut command doesn't handle newlines,
 
-> Software name: IPython notebook / Jupyter notebook
-> Type of vulnerability: Maliciously forged file
-> Attack outcome: Possible remote execution
+Indeed.
 
-> Vulnerability: A maliciously forged file opened for editing can execute
-> javascript, specifically by being redirected to /files/ due to a failure to
-> treat the file as plain text.
+>There already is 'ps -q $$ -o >comm='
 
-> Affected versions:
-> 
-> - IPython 3.0 <= version <= 3.2.1
-> - notebook 4.0 <= 4.0.4
-> 
-> URI with issues:
-> 
-> - GET /edit/**
+FWIW, "ps ... -o comm=" doesn't just print the raw comm value: it 
+replaces non-printable chars with punctuation characters, and it may 
+append " <defunct>" if the process is a zombie.
 
-> Patches:
-> 
-> - IPython 3.x: https://github.com/ipython/ipython/commit/0a8096adf165e2465550bd5893d7e352544e5967
-> 
-> - Jupyter 4.0.x: https://github.com/jupyter/notebook/commit/9e63dd89b603dfbe3a7e774d8a962ee0fa30c0b5
+The easiest way to get unmangled comm is to read it from 
+/proc/$PID/comm, then strip the trailing newline.
 
-Use CVE-2015-7337.
+(But I suspect most /proc/*/stat parsers don't care about the comm field 
+at all; they just want to skip over it to get their hands on the 
+following fields.)
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWA3g8AAoJEL54rhJi8gl5nPYQALND4562BMNgf8AljcDNH/t7
-vslyEpM0547uN1Nrss+wTkXgAbkVDtggguPoE1Ok/I6PQP2D586Gp+V8TnKPiMBq
-u7i34j++T1E0eWtK/vV40Bx3oPNKdfO3pv54wJDvgToBIUc5f5yBffueejQtmGHS
-WNIhDSCRu0YNzV1Qw1hydLZiRu22JTP2PRCMAI+Go15v8iXq0dBtDE/c7hjyKkIK
-hCc3pCT+JQnOtjOENMa1A1V/pdT3y87FB8/wWYzCoBYzaYnJy1dEa+ZHDjRWoQSJ
-Y0kDRT/NzxMrXvnRNxgoaTITdk1vNooTXv3vn8U7omVIBf2AUjM6jXAZ1Kdve4Cz
-3D9eXibuBKCcgu3RSKhvVJrX8LcewVlJPUudqFjRA4btBljEI61K81t389Mrmb7o
-saxXyaeUc0qaJ4yaXf9Zf5B7XTMcUU7dZtTOMZouDYL5l+od2sgxNzcerPC9tJg5
-L9mIDaKKq0JraiExeRPJ623dh1iYPf1e3MediffPXJXA2fl6G8rZQU2IMUeXW14O
-/tBZeKxExdpRM/D/HfMb8bw9kryzWlIxPINHl9UbM/4V3+kg7boDwPpOaFXS+94P
-epoZxo7DbjesPCZ0MfDsPcw+ap2g19QCU5X9ey8Dj49Pc3TrqTybCMwEM7z74fOI
-Tgy1TA0PSNfSgpJ2EuNQ
-=KkUJ
------END PGP SIGNATURE-----
+-- 
+Jakub Wilk
