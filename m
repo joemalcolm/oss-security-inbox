@@ -1,11 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/19/3
-Message-ID: <22bea0b4f2b4411682adf3fdd8883afb@huawei.com>
-Date: Tue, 19 Jul 2022 02:14:27 +0000
-From: "Weigang (Jimmy)" <weigang12@...wei.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "openeuler-security@...neuler.org" <openeuler-security@...neuler.org>
-Subject: CVE-2021-33656: Linux kernel: When setting font with malicous data by ioctl cmd PIO_FONT,kernel will write memory out of bounds.(<5.10.127)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/30/3
+Message-ID: <20221230201554.xborkqi2x5dvnh6h@jwilk.net>
+Date: Fri, 30 Dec 2022 21:15:54 +0100
+From: Jakub Wilk <jwilk@...lk.net>
+To: <oss-security@...ts.openwall.com>
+CC: <linux-man@...r.kernel.org>, <linux-kernel@...r.kernel.org>
+Subject: Re: [patch] proc.5: tell how to parse /proc/*/stat correctly
 Content-Type: text/plain; charset=utf-8
 
-Fix has been released in Linux kernel stable tree: https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/tree/releases/5.10.127/vt-drop-old-font-ioctls.patch.
+* Tavis Ormandy <taviso@...il.com>, 2022-12-28 01:50:
+>>>But, really, I just don't see how this can practically be said to be 
+>>>parsable...
+>>
+>>In its current form it never will be.  The solution is to place this 
+>>variable-length field last.  Then you can "cut -d ' ' -f 51-" to get 
+>>the command+args part (assuming I counted all those fields correctly 
+>>...)
+>>
+>>Of course, this breaks backwards compatability.
+>
+>I think that cut command doesn't handle newlines,
+
+Indeed.
+
+>There already is 'ps -q $$ -o >comm='
+
+FWIW, "ps ... -o comm=" doesn't just print the raw comm value: it 
+replaces non-printable chars with punctuation characters, and it may 
+append " <defunct>" if the process is a zombie.
+
+The easiest way to get unmangled comm is to read it from 
+/proc/$PID/comm, then strip the trailing newline.
+
+(But I suspect most /proc/*/stat parsers don't care about the comm field 
+at all; they just want to skip over it to get their hands on the 
+following fields.)
+
+-- 
+Jakub Wilk
