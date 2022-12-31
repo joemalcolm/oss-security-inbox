@@ -1,50 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/05/26/1
-Message-ID: <970c7f80-293e-2fa2-69de-20553b314871@tuxera.com>
-Date: Thu, 26 May 2022 11:46:56 +0300
-From: Jussi Hietanen <jussi.hietanen@...era.com>
-To: oss-security@...ts.openwall.com
-Cc: Jean-Pierre André <jean-pierre.andre@...adoo.fr>
-Subject: OPEN SOURCE NTFS-3G SECURITY ADVISORY NTFS3G-SA-2022-0001
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/31/1
+Message-ID: <CAHKPuKEiTO8uJi=sJxogt9ZUmvQ1o4mXT+bEb+6xBf=N7K_3-Q@mail.gmail.com>
+Date: Sat, 31 Dec 2022 10:54:00 +0100
+From: Arnout Engelen <engelen@...che.org>
+To: John Helmert III <ajak@...too.org>
+Cc: security@...che.org, jorton@...che.org, carnil@...ian.org,  oss-security@...ts.openwall.com
+Subject: Re: CVE-2022-22728: libapreq2: libapreq2 multipart form parse memory corruption
 Content-Type: text/plain; charset=utf-8
 
-Security vulnerabilities were identified in the open source NTFS-3G and 
-NTFSPROGS software. These vulnerabilities were confirmed and resolved. 
-To our knowledge, these vulnerabilities have not been exploited.
+On Fri, Dec 30, 2022 at 10:54 PM John Helmert III <ajak@...too.org> wrote:
+> On Thu, Dec 29, 2022 at 10:50:26AM +0100, Salvatore Bonaccorso wrote:
+> > On Fri, Aug 26, 2022 at 11:01:23AM -0500, John Helmert III wrote:
+> > > On Thu, Aug 25, 2022 at 02:09:16PM +0000, Joe Orton wrote:
+> > > > A flaw in libapreq2 versions 2.16 and earlier could cause a buffer
+> > > > overflow while processing multipart form uploads.
+> > >
+> > > Is there a fixed version or patch or upstream issue?
 
-These vulnerabilities may allow an attacker using a maliciously crafted 
-NTFS-formatted image file or external storage to potentially execute 
-arbitrary privileged code, if the attacker has either local access and 
-the ntfs-3g binary is setuid root, or if the attacker has physical 
-access to an external port to a computer which is configured to run the 
-ntfs-3g binary or one of the ntfsprogs tools when the external storage 
-is plugged into the computer. These vulnerabilities result from 
-incorrect validation of some of the NTFS metadata that could potentially 
-cause buffer overflows, which could be exploited by an attacker. Common 
-ways for attackers to gain physical access to a machine is through 
-social engineering or an evil maid attack on an unattended computer.
+libapreq2 2.17 was released on the same day as the advisory describing
+the problem with 2.16 and earlier (https://httpd.apache.org/apreq/).
 
-We recommend installing and applying the update with the security fixes, 
-and advise to follow security guidance and frameworks such as NIST for 
-assessing and improving an organization’s abilities to prevent, detect, 
-and respond to security threats and cyber attacks.
 
-AFFECTED PRODUCTS: All previous versions of open source NTFS-3G and 
-NTFSPROGS.
+Kind regards,
 
-WORKAROUND: None
-
-SOLUTION: Upgrade to 2022.5.17
-
-PROJECT URL: https://github.com/tuxera/ntfs-3g
-
-ADVISORY ID: NTFS3G-SA-2022-0001
-
-ISSUE DATE: 2022-05-26
-
-SEVERITY: Moderate
-
-CVEs: CVE-2021-46790, CVE-2022-30784, CVE-2022-30786, CVE-2022-30788, 
-CVE-2022-30789
-
-CVSS SCORE: 5.0-6.7
+Arnout
