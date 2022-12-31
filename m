@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["480" "Friday" "31" "March" "2017" "14:03:09" "+0200" "Andrey Konovalov" "andreyknvl@google.com" "<CAAeHK+x6PmHr1jWD1MUiZx_Oj1R1gai3oXj03xbcfDe86uSjNA@mail.gmail.com>" "14" "[oss-security] CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring" "^Date:" nil nil "3" "2017033112:03:09" "[oss-security] CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring" (number mark "        andreyknvl@g Mar 31   14/480   " thread-indent "\"[oss-security] CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 32337 invoked by uid 550); 31 Mar 2017 16:04:49 -0000
+Received: (qmail 8127 invoked by uid 550); 31 Dec 2022 15:06:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,50 +6,128 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28529 invoked from network); 31 Mar 2017 12:03:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=E6jFW8kKWrYZYIhbwqlBazwWqgkLg5bd2qnrVLi7Lcg=;
-        b=c2khqtauesuJA0xJpP122JyjgZHd7fXhXsDLmJr2eVtFitmL1fR38M+RhttaAmEQU9
-         HGticVtVkl74LZYDc1Kvto1ymu8vWQMek+JH8UC0LPV/r0aoeKxWig8Gbc1Xm4MrFF0D
-         yFV+QmoMEQBY0QLmk3FwPE28BNy386HZ8ELs0HfAFHk4tT6Axi+3rBacw+dXz7YmtSjt
-         A2cdPEu6afuRtc44ZM0shar1Xrj8OwVD/V8RPzvZu7+oBId/VXLM42Gx1lM1rafS0bkF
-         BsP20MGbjPpTcR/OEIWuzfvmhOizzhkeKVKH+rt4UfQRKxjfMiOSjox2/bgd3P2SbTr0
-         xQyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=E6jFW8kKWrYZYIhbwqlBazwWqgkLg5bd2qnrVLi7Lcg=;
-        b=MXm9K/8CA5/uAv9AGKSv6vHWS4hL1n5GF5vO9BgBLH+iUNZdOIJhNuMNhd39ISgIbh
-         MxMIALvQMRrMtLjgDc3FXeU9uucZJT1/Lp7ge+nxF+YzDbOuJtEiuN1haDMnPm5eeiyp
-         ap9GAe5JMi5SC6h2s13VJ8hABpQcrRtl7KvZnri7JjsfM9hlGvGbwdAE9umGI4iu5gT7
-         /Kzza4P3fI1k8qkDlmrTHsBNmTr1dfK94q6ppOSnRxFnzxLMlJbbAb7zIJOAvVHqw00S
-         5tZtLdBM0FMIENC06lFK4fT5xQSHzJddk1d/vHs7hnMzSAEM4jr7YuCn7KUXLPA+1i2n
-         aoEQ==
-X-Gm-Message-State: AFeK/H096wDsYemD6LzMRbgL23eEcVc+rFZ0DWmw38fPl2xq7eOrCK2ClJkrehLlXFTulWDWy2akdJiMUp4ij4ft
-X-Received: by 10.98.212.7 with SMTP id a7mr2612067pfh.34.1490961789818; Fri,
- 31 Mar 2017 05:03:09 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CAAeHK+x6PmHr1jWD1MUiZx_Oj1R1gai3oXj03xbcfDe86uSjNA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 31 Mar 2017 14:03:09 +0200
-From: Andrey Konovalov <andreyknvl@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2017-7308: Linux kernel: integer overflow in packet_set_ring
+Received: (qmail 8109 invoked from network); 31 Dec 2022 15:06:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1672499160; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=VGZgeywlSefWQMpaBYUFPuHj9FnXUaTWVsRq9c9lDP0=;
+	b=HPQNQOAyHMSWhgW6wOY/BLVumi79W5tNrBjcCtowjYbdiI0utwLy1KWyu4oajzWpLnDS0M
+	hm0ah7xzmQTYEnlASimMMfxcZLijuPOTHLGhN0AyRp6k+H+Z4ZYyCaG8cpyr31yknhLaCn
+	Nrr5xKoR2yRBjvKkX7g9OVctI3Sq/0M=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1672499160;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=VGZgeywlSefWQMpaBYUFPuHj9FnXUaTWVsRq9c9lDP0=;
+	b=7LhSphmTSHoKh4f62k+jTtTRg0BuKv7+iOd75upBzT5IHRz1Po70HeVWEmQgtPRPMEUEgk
+	pDHTsysINTmnyqCw==
+Date: Sat, 31 Dec 2022 16:05:59 +0100
+From: Marcus Meissner <meissner@suse.de>
 To: oss-security@lists.openwall.com
+Message-ID: <20221231150559.GB675@suse.de>
+References: <CAKoP-y-rbU=xEowJGp6my0khWMSbE05+ncDiE3wtXTOWwvyScA@mail.gmail.com>
+ <Y6TQ0HyCJOMkKSDn@netmeister.org>
+ <20221223162128.GD4524@suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221223162128.GD4524@suse.de>
+Organization: SUSE Software Solutions =?iso-8859-1?Q?Ger?=
+ =?iso-8859-1?Q?many_GmbH=2C_Frankenstra=DFe_146=2C_90461_Nuernberg=2C_Ger?=
+ =?iso-8859-1?Q?many=2C_GF=3A_Ivo_Totev=2C_Andrew_Myers=2C_Andrew_McDonald?=
+ =?iso-8859-1?Q?=2C_Martje_Boudien_Moerman=2C_HRB_36809=2C_AG_N=FCrnberg?=
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Subject: Re: [oss-security] Details on this supposed Linux Kernel ksmbd RCE
 
 Hi,
 
-CVE-2017-7308 [1] was assigned to the following issue:
+I made a small mistake in this email, (CVE db is correct).
 
-The packet_set_ring function in net/packet/af_packet.c in the Linux
-kernel through 4.10.6 does not properly validate certain block-size
-data, which allows local users to cause a denial of service (overflow)
-or possibly have unspecified other impact via crafted system calls.
+On Fri, Dec 23, 2022 at 05:21:29PM +0100, Marcus Meissner wrote:
+> Hi,
+> 
+> Mitre has assigned following CVEs, also torvalds mainline commits:
 
-The fix is sent upstream [2].
+> 
+	> ZDI-22-1691 - CVE-2022-47940
+	> 	158a66b245739e15858de42c0ba60fcf3de9b8e6
 
-[1] http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2017-7308
+should be:
 
-[2] https://patchwork.ozlabs.org/patch/744811/
+	> ZDI-22-1691 - CVE-2022-47943
+	> 	ac60778b87e45576d7bfdbd6f53df902654e6f09
+
+ 
+and this
+	> Mitre assigned also from the stable patch, but was not in ZDI set - CVE-2022-47943
+	> 	ac60778b87e45576d7bfdbd6f53df902654e6f09
+
+should be:
+	> Mitre assigned also from the stable patch, but was not in ZDI set - CVE-2022-47940
+	> 	158a66b245739e15858de42c0ba60fcf3de9b8e6
+	
+
+so basically I had CVE-2022-47940 and CVE-2022-47943 switched.
+
+Sorry for this mistake.
+
+Ciao, Marcus
+
+> 	(I did not request that in my batch, Mitre seemed to have
+> 	picked this from the stable patch.)
+> 
+> I mistakenly declared 5.13-5.19 affectedness to Mitre in a hurry,
+> but it is more 5.15 - 5.18.x / 5.19.x
+> 
+> Ciao, Marcus
+> 
+> 
+> On Thu, Dec 22, 2022 at 04:49:04PM -0500, Jan Schaumann wrote:
+> > Josh Bressers <josh@bress.net> wrote:
+> >  
+> > > I was wondering if anyone on the list has additional details about this ZDI
+> > > advisory
+> > > https://www.zerodayinitiative.com/advisories/ZDI-22-1690/
+> > > 
+> > > There aren't many usable details at the moment
+> > 
+> > Agreed.
+> > 
+> > The advisories link to a changelog in
+> > https://cdn.kernel.org/pub/linux/kernel/v5.x/ChangeLog-5.15.61
+> > but it's unclear (to me) whether that implies v6.x
+> > kernels are not affected?
+> > 
+> > Note also that this disclosure is accompanied by a few
+> > others:
+> > 
+> > Authenticated remote information disclosure:
+> > https://www.zerodayinitiative.com/advisories/ZDI-22-1691/
+> > 
+> > Unauthenticated remote DoS:
+> > https://www.zerodayinitiative.com/advisories/ZDI-22-1687/
+> > 
+> > Authenticated RCE:
+> > https://www.zerodayinitiative.com/advisories/ZDI-22-1688/
+> > 
+> > Authenticated DoS:
+> > https://www.zerodayinitiative.com/advisories/ZDI-22-1689/
+> > 
+> > Lastly, given that this is a coordinated disclosure,
+> > I don't know why there are no CVE IDs reserved for
+> > these.
+> > 
+> > -Jan
+> 
+> -- 
+> Marcus Meissner (he/him), Distinguished Engineer / Senior Project Manager Security
+> SUSE Software Solutions Germany GmbH, Frankenstrasse 146, 90461 Nuernberg, Germany
+> GF: Ivo Totev, Andrew Myers, Andrew McDonald, Martje Boudien Moerman, HRB 36809, AG Nuernberg
+
+-- 
+Marcus Meissner (he/him), Distinguished Engineer / Senior Project Manager Security
+SUSE Software Solutions Germany GmbH, Frankenstrasse 146, 90461 Nuernberg, Germany
+GF: Ivo Totev, Andrew Myers, Andrew McDonald, Martje Boudien Moerman, HRB 36809, AG Nuernberg
