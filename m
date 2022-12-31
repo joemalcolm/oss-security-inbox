@@ -1,33 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/07/04/6
-Message-ID: <a165ce13d67c1d9dd29e4a4f0681ed5dbfd592aa.camel@powerdns.com>
-Date: Mon, 04 Jul 2022 15:15:40 +0200
-From: Peter van Dijk <peter.van.dijk@...erdns.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/31/2
+Message-ID: <20221231150559.GB675@suse.de>
+Date: Sat, 31 Dec 2022 16:05:59 +0100
+From: Marcus Meissner <meissner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: DO NOT OPEN PREVIOUS MAIL Re:  Denial of service in  GnuPG
+Subject: Re: Details on this supposed Linux Kernel ksmbd RCE
 Content-Type: text/plain; charset=utf-8
 
-On Mon, 2022-07-04 at 14:58 +0200, Jens-Wolfhard Schicke-Uffmann wrote:
+Hi,
+
+I made a small mistake in this email, (CVE db is correct).
+
+On Fri, Dec 23, 2022 at 05:21:29PM +0100, Marcus Meissner wrote:
 > Hi,
 > 
-> On Mon, Jul 04, 2022 at 02:15:45PM +0200, Peter van Dijk wrote:
-> > > On 04/07/2022 07:31 Demi Marie Obenour <demi@...isiblethingslab.com> wrote:
-> > > Signature (of /dev/null) that triggers this bug is attached, along with
-> > > the corresponding public key.
-> > This is insane. You can't send weaponised exploits that crash email
-> > clients to public mailing lists. Please do not do this again.
-> What email client would that be specifically? Because at least on
-> my end, nothing nefarious happened. GPG was called on the outermost
-> layer of signature and verified the email in entirety (and did so
-> quickly).
+> Mitre has assigned following CVEs, also torvalds mainline commits:
 
-GNOME Evolution (Debian's version 3.38.3-1) hangs (interruptibly, by
-navigating to another message) when trying to open the message. It
-hangs completely (eventually I used the Force Quit that GNOME offered
-me) when trying to reply to it.
+> 
+	> ZDI-22-1691 - CVE-2022-47940
+	> 	158a66b245739e15858de42c0ba60fcf3de9b8e6
 
-Kind regards,
+should be:
+
+	> ZDI-22-1691 - CVE-2022-47943
+	> 	ac60778b87e45576d7bfdbd6f53df902654e6f09
+
+ 
+and this
+	> Mitre assigned also from the stable patch, but was not in ZDI set - CVE-2022-47943
+	> 	ac60778b87e45576d7bfdbd6f53df902654e6f09
+
+should be:
+	> Mitre assigned also from the stable patch, but was not in ZDI set - CVE-2022-47940
+	> 	158a66b245739e15858de42c0ba60fcf3de9b8e6
+	
+
+so basically I had CVE-2022-47940 and CVE-2022-47943 switched.
+
+Sorry for this mistake.
+
+Ciao, Marcus
+
+> 	(I did not request that in my batch, Mitre seemed to have
+> 	picked this from the stable patch.)
+> 
+> I mistakenly declared 5.13-5.19 affectedness to Mitre in a hurry,
+> but it is more 5.15 - 5.18.x / 5.19.x
+> 
+> Ciao, Marcus
+> 
+> 
+> On Thu, Dec 22, 2022 at 04:49:04PM -0500, Jan Schaumann wrote:
+> > Josh Bressers <josh@...ss.net> wrote:
+> >  
+> > > I was wondering if anyone on the list has additional details about this ZDI
+> > > advisory
+> > > https://www.zerodayinitiative.com/advisories/ZDI-22-1690/
+> > > 
+> > > There aren't many usable details at the moment
+> > 
+> > Agreed.
+> > 
+> > The advisories link to a changelog in
+> > https://cdn.kernel.org/pub/linux/kernel/v5.x/ChangeLog-5.15.61
+> > but it's unclear (to me) whether that implies v6.x
+> > kernels are not affected?
+> > 
+> > Note also that this disclosure is accompanied by a few
+> > others:
+> > 
+> > Authenticated remote information disclosure:
+> > https://www.zerodayinitiative.com/advisories/ZDI-22-1691/
+> > 
+> > Unauthenticated remote DoS:
+> > https://www.zerodayinitiative.com/advisories/ZDI-22-1687/
+> > 
+> > Authenticated RCE:
+> > https://www.zerodayinitiative.com/advisories/ZDI-22-1688/
+> > 
+> > Authenticated DoS:
+> > https://www.zerodayinitiative.com/advisories/ZDI-22-1689/
+> > 
+> > Lastly, given that this is a coordinated disclosure,
+> > I don't know why there are no CVE IDs reserved for
+> > these.
+> > 
+> > -Jan
+> 
+> -- 
+> Marcus Meissner (he/him), Distinguished Engineer / Senior Project Manager Security
+> SUSE Software Solutions Germany GmbH, Frankenstrasse 146, 90461 Nuernberg, Germany
+> GF: Ivo Totev, Andrew Myers, Andrew McDonald, Martje Boudien Moerman, HRB 36809, AG Nuernberg
+
 -- 
-Peter van Dijk
-PowerDNS.COM BV - https://www.powerdns.com/
-
+Marcus Meissner (he/him), Distinguished Engineer / Senior Project Manager Security
+SUSE Software Solutions Germany GmbH, Frankenstrasse 146, 90461 Nuernberg, Germany
+GF: Ivo Totev, Andrew Myers, Andrew McDonald, Martje Boudien Moerman, HRB 36809, AG Nuernberg
