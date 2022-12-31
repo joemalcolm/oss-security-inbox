@@ -1,133 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/11/01/7
-Message-Id: <E1oppwj-0005Sr-O2@xenbits.xenproject.org>
-Date: Tue, 01 Nov 2022 12:00:45 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 417 v2 (CVE-2022-42320) - Xenstore: Guests can get access to Xenstore nodes of deleted domains
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2022/12/31/3
+Message-ID: <fe260c38cf7e416288449691bb9cb5dd@AcuMS.aculab.com>
+Date: Sat, 31 Dec 2022 16:31:30 +0000
+From: David Laight <David.Laight@...LAB.COM>
+To: 'Shawn Webb' <shawn.webb@...denedbsd.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: Alejandro Colomar <alx.manpages@...il.com>, Michael Kerrisk <mtk.manpages@...il.com>, "linux-kernel@...r.kernel.org" <linux-kernel@...r.kernel.org>, "linux-man@...r.kernel.org" <linux-man@...r.kernel.org>
+Subject: RE: [patch] proc.5: tell how to parse /proc/*/stat correctly
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+From: Shawn Webb
+> Sent: 28 December 2022 15:25
+> 
+> On Tue, Dec 27, 2022 at 04:44:49PM -0800, Lyndon Nerenberg (VE7TFX/VE6BBM) wrote:
+> > Dominique Martinet writes:
+> >
+> > > But, really, I just don't see how this can practically be said to be parsable...
+> >
+> > In its current form it never will be.  The solution is to place
+> > this variable-length field last.  Then you can "cut -d ' ' -f 51-"
+> > to get the command+args part (assuming I counted all those fields
+> > correctly ...)
+> >
+> > Of course, this breaks backwards compatability.
+> 
+> It would also break forwards compatibility in the case new fields
+> needed to be added.
+> 
+> The only solution would be a libxo-style feature wherein a
+> machine-parseable format is exposed by virtue of a file extension.
+> 
+> Examples:
+> 
+> 1. /proc/pid/stats.json
+> 2. /proc/pid/stats.xml
+> 3. /proc/pid/stats.yaml_shouldnt_be_a_thing
 
-            Xen Security Advisory CVE-2022-42320 / XSA-417
-                               version 2
+None of those are of any real use if you are trying to parse the
+data in something like a shell script.
+Multiple lines formatted as "tag:value" are probably the best bet.
+Provided something sane is done with embedded \n (and maybe \r).
 
- Xenstore: Guests can get access to Xenstore nodes of deleted domains
+	David
 
-UPDATES IN VERSION 2
-====================
+-
+Registered Address Lakeside, Bramley Road, Mount Farm, Milton Keynes, MK1 1PT, UK
+Registration No: 1397386 (Wales)
 
-Public release.
-
-ISSUE DESCRIPTION
-=================
-
-Access rights of Xenstore nodes are per domid.  When a domain is gone,
-there might be Xenstore nodes left with access rights containing the
-domid of the removed domain.  This is normally no problem, as those
-access right entries will be corrected when such a node is written
-later.
-
-There is a small time window when a new domain is created, where the
-access rights of a past domain with the same domid as the new one will
-be regarded to be still valid, leading to the new domain being able to
-get access to a node which was meant to be accessible by the removed
-domain.  For this to happen another domain needs to write the node
-before the newly created domain is being introduced to Xenstore by
-dom0.
-
-IMPACT
-======
-
-In some circumstances, it might be possible for a new guest domain to
-access resources belonging to a previous domain.  The impact would
-depend on the software in use and the configuration, but might include
-any of denial of service, information leak, or privilege escalation.
-
-VULNERABLE SYSTEMS
-==================
-
-All versions of Xen are in principle vulnerable.
-
-Only systems running the C variant of Xenstore (xenstored or xenstore-
-stubdom) are vulnerable.
-
-Systems using the Ocaml variant of Xenstore (oxenstored) are not vulnerable.
-
-Vulnerable systems are only those running software where one domain is
-granted access to another's xenstore nodes, without complete cleanup
-of those nodes on domain destruction.  No such software is enabled in
-default configurations of upstream Xen.
-
-Therefore upstream Xen, without additional management software (in
-host or guest(s)), is not vulnerable in the default (host and guest)
-configuration.
-
-MITIGATION
-==========
-
-Running oxenstored instead of xenstored will avoid the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Jürgen Groß of SUSE.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa417.patch           xen-unstable, Xen 4.16.x - 4.13.x
-
-$ sha256sum xsa417*
-62b37c77cc97374685d1df31da57809ddd6c9ad2272fb3380555e81dc85f0cd8  xsa417.meta
-b0c3bdc1723ead350c86b5a42f5e28445fa331ba5f463d82385fdaeb80119b30  xsa417.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQE/BAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmNg+6gMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZCj8H93lp5U3OwMNzzrurILUGMY/N6rcGnuoWqa91FslA
-C7PSK+A51TvrODUi7bo3YQ1mImW75NmyasMey7/I78DUdHuRwj4L9XOI+W9J5ePk
-oSVBja6jUC6LawLxj21DBP1rhufqVnJ0lOsO6rK+v/awJOkANH1nstUksqvxPmKa
-ESMDudyo4+2wWH/DKizq6FYexyEQ/rlCktWZTQi1T1PXFX5xMOk+dzd+SSxifX/7
-BSLc/HdRzNt1UemKtKvw7KJqCys0Sw8EWAwu6vpQCqczNbkM8CmhzapSWc+IyCZ3
-RMOxk9OuW8+6/9D0s4oqWJ7lV4UfW1kZ8euPeybEhLXo5w==
-=Kkzx
------END PGP SIGNATURE-----
-
-Download attachment "xsa417.meta" of type "application/octet-stream" (1725 bytes)
-
-Download attachment "xsa417.patch" of type "application/octet-stream" (4719 bytes)
