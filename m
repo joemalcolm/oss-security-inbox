@@ -1,25 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/15/2
-Message-ID: <a9e305ad-f33b-f0b5-8e0d-53baacc6430b@apache.org>
-Date: Wed, 15 Mar 2023 00:30:17 +0000
-From: Jarek Potiuk <potiuk@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-25695: Information disclosure in Apache Airflow 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/02/2
+Message-ID: <Y7MEEZ8v8rhptsuL@eldamar.lan>
+Date: Mon, 2 Jan 2023 17:19:29 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
+To: Arnout Engelen <engelen@...che.org>
+Cc: John Helmert III <ajak@...too.org>, security@...che.org, jorton@...che.org, oss-security@...ts.openwall.com
+Subject: Re: CVE-2022-22728: libapreq2: libapreq2 multipart form parse memory corruption
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+Hi Arnout,
 
-Description:
+On Mon, Jan 02, 2023 at 12:51:04PM +0100, Arnout Engelen wrote:
+> On Sat, Dec 31, 2022 at 6:42 PM John Helmert III <ajak@...too.org> wrote:
+> > On Sat, Dec 31, 2022 at 10:54:00AM +0100, Arnout Engelen wrote:
+> > > On Fri, Dec 30, 2022 at 10:54 PM John Helmert III <ajak@...too.org> wrote:
+> > > > On Thu, Dec 29, 2022 at 10:50:26AM +0100, Salvatore Bonaccorso wrote:
+> > > > > On Fri, Aug 26, 2022 at 11:01:23AM -0500, John Helmert III wrote:
+> > > > > > On Thu, Aug 25, 2022 at 02:09:16PM +0000, Joe Orton wrote:
+> > > > > > > A flaw in libapreq2 versions 2.16 and earlier could cause a buffer
+> > > > > > > overflow while processing multipart form uploads.
+> > > > > >
+> > > > > > Is there a fixed version or patch or upstream issue?
+> > >
+> > > libapreq2 2.17 was released on the same day as the advisory describing
+> > > the problem with 2.16 and earlier (https://httpd.apache.org/apreq/).
+> >
+> > Does it fix CVE-2022-22728? Whether or not it does isn't clear from
+> > the changelog [1], and I can't find a reference to the CVE elsewhere
+> > in the source tree.
+> 
+> I think https://svn.apache.org/viewvc?view=revision&revision=1894937
+> contained the fix for this issue. This is included in 2.17.
 
-Generation of Error Message Containing Sensitive Information vulnerability in Apache Software Foundation Apache Airflow.This issue affects Apache Airflow: before 2.5.2.
+Thank you!
 
-Credit:
+So apart https://svn.apache.org/r1894937 one would probably as well
+need
 
-kuteminh11 (finder)
+https://svn.apache.org/r1894940 (non-functional change)
+https://svn.apache.org/r1894977
 
-References:
+and
 
-https://github.com/apache/airflow/pull/29501
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-25695
+https://svn.apache.org/r1895054
 
+Regards,
+Salvatore
