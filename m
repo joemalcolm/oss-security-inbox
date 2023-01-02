@@ -1,51 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/18/1
-Message-ID: <3c762be4-6102-4642-92df-b2e4fee3d4a5@openssl.org>
-Date: Wed, 18 Oct 2023 14:30:22 +0100
-From: Matt Caswell <matt@...nssl.org>
-To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-Subject: Re: upcoming release of OpenSSL 3.1.4 and 3.0.12
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/02/1
+Message-ID: <CAHKPuKFDBmPF2So+g=VTkgniFGJpXHZ37kv+urCM-_j4pkjNRQ@mail.gmail.com>
+Date: Mon, 2 Jan 2023 12:51:04 +0100
+From: Arnout Engelen <engelen@...che.org>
+To: John Helmert III <ajak@...too.org>
+Cc: oss-security@...ts.openwall.com, security@...che.org, jorton@...che.org,  carnil@...ian.org
+Subject: Re: CVE-2022-22728: libapreq2: libapreq2 multipart form parse memory corruption
 Content-Type: text/plain; charset=utf-8
 
+On Sat, Dec 31, 2022 at 6:42 PM John Helmert III <ajak@...too.org> wrote:
+> On Sat, Dec 31, 2022 at 10:54:00AM +0100, Arnout Engelen wrote:
+> > On Fri, Dec 30, 2022 at 10:54 PM John Helmert III <ajak@...too.org> wrote:
+> > > On Thu, Dec 29, 2022 at 10:50:26AM +0100, Salvatore Bonaccorso wrote:
+> > > > On Fri, Aug 26, 2022 at 11:01:23AM -0500, John Helmert III wrote:
+> > > > > On Thu, Aug 25, 2022 at 02:09:16PM +0000, Joe Orton wrote:
+> > > > > > A flaw in libapreq2 versions 2.16 and earlier could cause a buffer
+> > > > > > overflow while processing multipart form uploads.
+> > > > >
+> > > > > Is there a fixed version or patch or upstream issue?
+> >
+> > libapreq2 2.17 was released on the same day as the advisory describing
+> > the problem with 2.16 and earlier (https://httpd.apache.org/apreq/).
+>
+> Does it fix CVE-2022-22728? Whether or not it does isn't clear from
+> the changelog [1], and I can't find a reference to the CVE elsewhere
+> in the source tree.
+
+I think https://svn.apache.org/viewvc?view=revision&revision=1894937
+contained the fix for this issue. This is included in 2.17.
 
 
-On 17/10/2023 19:06, Solar Designer wrote:
-> Matt, I'd appreciate it if you (or your team) would also be posting
-> these to oss-security going forward, roughly at the same time with
-> posting them to your project's public lists.  Also, more specific
-> Subject lines on these and on the eventual security advisories would be
-> helpful.  Thank you!
+Kind regards,
 
-Ok. Are you only interested in release pre-announcements for releases 
-which contain security fixes, or do you want to know about all OpenSSL 
-releases?
-
-Matt
-
-
-> 
-> ----- Forwarded message from Matt Caswell <matt@...nssl.org> -----
-> 
-> Date: Tue, 17 Oct 2023 18:48:26 +0100
-> To: openssl-announce@...nssl.org,
->   "openssl-users@...nssl.org" <openssl-users@...nssl.org>,
->   "openssl-project@...nssl.org" <openssl-project@...nssl.org>
-> From: Matt Caswell <matt@...nssl.org>
-> Subject: New OpenSSL Releases
-> 
-> The OpenSSL project team would like to announce the upcoming release of
-> OpenSSL versions 3.1.4 and 3.0.12.
-> 
-> These releases will be made available on Tuesday 24th October 2023
-> between 1300-1700 UTC.
-> 
-> These are security-fix releases. The highest severity issue fixed in
-> each of these two releases is Moderate:
-> 
-> https://www.openssl.org/policies/secpolicy.html
-> 
-> Yours
-> The OpenSSL Project Team
-> 
-> ----- End forwarded message -----
-> 
+Arnout
