@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["553" "Monday" "15" "January" "2018" "23:34:52" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.76.1801152331280.28933@wniryva>" "19" "[oss-security] CVE-2018-5683 Qemu: Out-of-bounds read in vga_draw_text routine" nil nil nil "1" "2018011518:04:52" "[oss-security] CVE-2018-5683 Qemu: Out-of-bounds read in vga_draw_text routine" (number mark "U       ppandit@redh Jan 15   19/553   " thread-indent "\"[oss-security] CVE-2018-5683 Qemu: Out-of-bounds read in vga_draw_text routine\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 20052 invoked by uid 550); 15 Jan 2018 18:05:18 -0000
+Received: (qmail 21862 invoked by uid 550); 3 Jan 2023 18:10:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,35 +7,52 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20028 invoked from network); 15 Jan 2018 18:05:17 -0000
-Date: Mon, 15 Jan 2018 23:34:52 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: jiangxin1@huawei.com
-Message-ID: <nycvar.YSQ.7.76.1801152331280.28933@wniryva>
+Received: (qmail 11549 invoked from network); 3 Jan 2023 17:51:11 -0000
+Authentication-Results: apache.org; auth=none
+Message-ID: <1420fa80-17ba-e9fa-c6f9-5c917f2b6af3@apache.org>
+Date: Tue, 3 Jan 2023 17:50:57 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.29]); Mon, 15 Jan 2018 18:05:05 +0000 (UTC)
-Subject: [oss-security] CVE-2018-5683 Qemu: Out-of-bounds read in vga_draw_text routine
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+From: Mark Thomas <markt@apache.org>
+To: oss-security@lists.openwall.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2022-45143 Apache Tomcat - JsonErrorReportValve injection
 
-   Hello,
+CVE-2022-45143 Apache Tomcat - JsonErrorReportValve injection
 
-Quick Emulator(QEMU) built with the VGA emulator support is vulnerable to an 
-out-of-bounds access issue in vga_draw_text. It could occur while updating vga 
-display area.
+Severity: Low
 
-A privileged user inside guest could use this flaw to crash the Qemu process 
-resulting in DoS.
+Vendor: The Apache Software Foundation
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2018-01/msg02131.html
+Versions Affected:
+Apache Tomcat 10.1.0-M1 to 10.1.1
+Apache Tomcat 9.0.40 to 9.0.68
+Apache Tomcat 8.5.83
 
-This issue was reported by Jiang Xin of Huawei.com.
+Description:
+The JsonErrorReportValve did not escape the type, message or description 
+values. In some circumstances these are constructed from user provided 
+data and it was therefore possible for users to supply values that 
+invalidated or manipulated the JSON output.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Mitigation:
+Users of the affected versions should apply one of the following
+mitigations:
+- Upgrade to Apache Tomcat 10.1.2 or later
+- Upgrade to Apache Tomcat 9.0.69 or later
+- Upgrade to Apache Tomcat 8.5.84 or later
+
+Credit:
+This issue was identified by the Apache Tomcat security team.
+
+History:
+2023-01-03 Original advisory
+
+References:
+[1] https://tomcat.apache.org/security-10.html
+[2] https://tomcat.apache.org/security-9.html
+[3] https://tomcat.apache.org/security-8.html
+
