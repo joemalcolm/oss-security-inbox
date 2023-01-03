@@ -1,37 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/06/5
-Message-ID: <ZKc+3fA5yQVqHVTc@netmeister.org>
-Date: Thu, 6 Jul 2023 18:23:25 -0400
-From: Jan Schaumann <jschauma@...meister.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/03/1
+Message-ID: <1420fa80-17ba-e9fa-c6f9-5c917f2b6af3@apache.org>
+Date: Tue, 3 Jan 2023 17:50:57 +0000
+From: Mark Thomas <markt@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-36459: mastodon: XSS through oEmbed preview cards
+Subject: CVE-2022-45143 Apache Tomcat - JsonErrorReportValve injection
 Content-Type: text/plain; charset=utf-8
 
-(I have no affiliation with the project, but posting
-this here because it seems to me that increasingly
-non-packaged / GitHub distributed projects tend not to
-send out announcements here.)
+CVE-2022-45143 Apache Tomcat - JsonErrorReportValve injection
 
-https://github.com/mastodon/mastodon/security/advisories/GHSA-ccm4-vgcc-73hp
+Severity: Low
 
-(This advisory describes an issue found by Cure53 as
-part of an audit performed at Mozilla's request)
+Vendor: The Apache Software Foundation
 
-Using carefully crafted oEmbed data, an attacker can
-bypass the HTML sanitization performed by Mastodon and
-include arbitrary HTML in oEmbed preview cards.
+Versions Affected:
+Apache Tomcat 10.1.0-M1 to 10.1.1
+Apache Tomcat 9.0.40 to 9.0.68
+Apache Tomcat 8.5.83
 
-Impact
-This introduces a vector for Cross-site-scripting
-(XSS) payloads that can be rendered in the user's
-browser when a preview card for a malicious link is
-clicked through.
+Description:
+The JsonErrorReportValve did not escape the type, message or description 
+values. In some circumstances these are constructed from user provided 
+data and it was therefore possible for users to supply values that 
+invalidated or manipulated the JSON output.
 
-CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:N
+Mitigation:
+Users of the affected versions should apply one of the following
+mitigations:
+- Upgrade to Apache Tomcat 10.1.2 or later
+- Upgrade to Apache Tomcat 9.0.69 or later
+- Upgrade to Apache Tomcat 8.5.84 or later
 
-Severity: 9.3/10
+Credit:
+This issue was identified by the Apache Tomcat security team.
 
-CVE-2023-36459
+History:
+2023-01-03 Original advisory
 
-Affected versions: >= 1.3
-Patched versions:  4.1.3, 4.0.5, 3.5.9
+References:
+[1] https://tomcat.apache.org/security-10.html
+[2] https://tomcat.apache.org/security-9.html
+[3] https://tomcat.apache.org/security-8.html
+
