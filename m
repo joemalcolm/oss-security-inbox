@@ -1,27 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/22/5
-Message-ID: <d0ca7096-045c-407f-9f48-c8e3855448b9@schafweide.org>
-Date: Fri, 22 Dec 2023 12:23:43 +0100
-From: Bjoern Franke <bjo@...afweide.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/05/1
+Message-ID: <07c41f5e-dbe3-4ff4-0e2f-386776a07370@free.fr>
+Date: Wed, 4 Jan 2023 23:47:12 +0100
+From: Gabriel Corona <gabriel.corona@...e.fr>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: New SMTP smuggling attack
+Subject: Code execution through MIME-type association of Mono interpreter and security expectations of MIME type associations
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Debian and derivatives, the mono-runtime-common package associates
+the application/x-ms-dos-executable MIME type with the Mono CLR
+interpreter [1]. This makes it very easy for an attacker to trigger
+arbitrary code execution through programs such as Chromium [2], Firefox
+[3] and Thunderbird [4] when the Mono packages are installed.
 
-> 
-> I'm a little confused by sec-consult's process here. They identify a
-> problem affecting various pieces of software including some very widely
-> deployed open source software, go to the trouble of doing a coordinated
-> disclosure, but only do that with...looking at their timeline... gmx,
-> microsoft and cisco?
-> 
+This has been fixed in package 6.8.0.105+dfsg-3.3 [5] which is available
+in Debian testing, Debian Sid and Ubuntu Lunar (23.04). This has
+currently not been fixed in any stable distribution.
 
-they already got some criticism regarding this behaviour:
+On Firefox and Thunderbird, a user interface is used to let the user
+confirm which program to use to open the file. In this case, we can
+trick the user into thinking he is about to open the file with a
+innocuous program by serving the file with a special MIME type such as
+inode/directory or x-scheme-handler/trash [3,4]. These MIME types are
+typically associated with a file manager. When called this way, several
+file managers will try to open the file based on MIME-type associations
+(where the MIME-type is inferred either from the file name extension or
+from the file content). Thunar, PCManFM, PCManFM-Qt were found to
+exhibit this behavior.
 
-https://zombofant.net/@jssfr/111618969359339789
+For Thunar, this behavior has been fixed in v4.16.7 and v4.17.2 [7].
 
-https://gay-pirate-assassins.de/@moanos/statuses/01HJ8D8XQ7ZJ89HN4TZFZZ9AS8
+We can use a visually confusable file name such as REPORT.ΡDF (notice
+the non-ASCII first letter in the extension) in order to trick the user
+into thinking he is opening a "safe" file type while disabling MIME-type
+detection based on the file name extension.
 
-Regards
+Moreover, in Firefox and Thunderbird [8], we can corrupt the file
+association database (handlers.json) in order to display a bogus file
+type description associated with the inode/directory or x-scheme-
+handler/trash MIME type. This is done by first serving a "safe" file
+type (such as a PDF) with this MIME type.
 
+This begs several questions about file associations:
+
+* Is it legitimate to register file associations for programs
+   which can exbibit arbitrary code execution such as unsandboxed
+   program interpreters?
+* When a program (such as a file manager) is called with a regular file
+   it does not handle, should it spawn a new program for handling the
+   file without user confirmation (as it may be exploited for file type
+   spoofing)?
+* Should a client program reject special/bogus MIME types such as
+   inode/* and x-scheme-handler/* as they are not expected to be
+   used in this context (and it may be exploited for file type spoofing)?
+
+I would consider the following behaviors to be vulnerabilities:
+
+* Association of the Mono interpreter with a MIME type in the
+   Debian/Ubuntu packages;
+* Thunar delegates to MIME type associations when opened with a regular
+   file (CVE-2021-32563);
+* PCManFM delegates to MIME type associations when opened with a regular
+   file;
+* PCManFM-Qt delegates to MIME type associations when opened with a
+   regular file;
+* Firefox and Thunderbird accept "special" MIME types (inode/* and
+   x-scheme-handler/*) from remote servers;
+* File type spoofing by corrupting the Firefox and Thunderbird
+   handlers.json database.
+
+[1] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=972146
+[2] https://www.gabriel.urdhr.fr/videos/chromium-filetype-spoofing-poc.ogv
+[3] https://www.gabriel.urdhr.fr/videos/firefox-filetype-spoofing-poc.ogv
+[4] 
+https://www.gabriel.urdhr.fr/videos/thunderbird-filetype-spoofing-poc.ogv
+[5] https://packages.debian.org/buster/mono-runtime-common
+[6] 
+https://packages.ubuntu.com/search?keywords=mono-runtime-common&searchon=names&suite=all&section=all
+[7] https://nvd.nist.gov/vuln/detail/CVE-2021-32563
+[8] https://www.gabriel.urdhr.fr/videos/firefox-filetype-spoofing-poc2.ogv
+
+Download attachment "OpenPGP_signature" of type "application/pgp-signature" (841 bytes)
