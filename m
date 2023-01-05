@@ -1,37 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/05/6
-Message-ID: <20231005081449.GA20205@unix-ag.uni-kl.de>
-Date: Thu, 5 Oct 2023 10:14:49 +0200
-From: Erik Auerswald <auerswal@...x-ag.uni-kl.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/05/3
+Message-ID: <cf934b1c-e776-33a1-1e53-b8a0ea6a1840@free.fr>
+Date: Thu, 5 Jan 2023 18:29:34 +0100
+From: Gabriel Corona <gabriel.corona@...e.fr>
 To: oss-security@...ts.openwall.com
-Subject: There is a curl "severity HIGH security problem" pre-announcement on GitHub
+Subject: Re: Code execution through MIME-type association of Mono interpreter and security expectations of MIME type associations
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-there is a pre-announcement of a curl security problem with high severity
-that can be found on GitHub:
+>> * Firefox and Thunderbird accept "special" MIME types (inode/* and
+>>    x-scheme-handler/*) from remote servers;
 
- - https://github.com/curl/curl/discussions
- - https://github.com/curl/curl/discussions/12026
+> Not sure what you mean by “accept”.  Do you mean that download should be
+> aborted?
 
-(I have seen a link to it from some web site, and did not see it on this
-list yet.)
+No I mean that Firefox should ignore the Content-Type header for 
+choosing an application to handle the file when such a special MIME type 
+value is sent by the HTTP server.
 
-There is little information available, the GitHub discussions post says:
+Currently when using inode/directory or x-scheme-handler/trash, 
+Firefox/Thunderbird proposes to use a file manager to handle the file. 
+If the file manager tries to spawn another program to handle the file, 
+this might be used to trick the user into thinking he is opening the 
+file with a safe program.
 
-   "We are cutting the release cycle short and will release curl 8.4.0 on
-    October 11, including fixes for a severity HIGH CVE and one severity
-    LOW. The one rated HIGH is probably the worst curl security flaw in
-    a long time.
+A similar exploit might be possible if some application:
 
-    The new version and details about the two CVEs will be published
-    around 06:00 UTC on the release day.
+* is registered to handle a custom URI scheme (eg. "foo:");
+* is not registered to handle regular files;
+* can trigger arbitrary code execution when called with a regular file.
 
-    * CVE-2023-38545: severity HIGH (affects both libcurl and the curl tool)
-    * CVE-2023-38546: severity LOW (affects libcurl only, not the tool)
+This might be expected to be safe. However an attacker might exploit 
+this by serving a malicious file with x-scheme-handler/foo: Firefox will 
+open the file using the application which will trigger the arbitrary 
+code execution.
 
-    Now you know. Plan accordingly."
+Regards,
 
-Best regards,
-Erik
+Gabriel
+
+
+Download attachment "OpenPGP_signature" of type "application/pgp-signature" (841 bytes)
