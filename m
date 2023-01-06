@@ -1,33 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/26/3
-Message-ID: <db7ff106-1c0f-48b1-8073-91ecce24448a@apache.org>
-Date: Mon, 26 Jun 2023 15:59:46 +0000
-From: Elad Kalif <eladkal@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/06/2
+Message-ID: <8b2cec3e-824b-4cba-6c4e-87bf6862fa5b@apache.org>
+Date: Fri, 06 Jan 2023 07:32:32 +0000
+From: Benoit Tellier <btellier@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-22886: Apache Airflow JDBC Provider: RCE Vulnerability 
+Subject: CVE-2022-45935: Apache James server: Temporary File Information Disclosure 
 Content-Type: text/plain; charset=utf-8
-
-Severity: low
-
-Affected versions:
-
-- Apache Airflow JDBC Provider before 4.0.0
 
 Description:
 
-Improper Input Validation vulnerability in Apache Software Foundation Apache Airflow JDBC Provider.
-Airflow JDBC Provider Connection’s [Connection URL] parameters had no
-restrictions, which made it possible to implement RCE attacks via
-different type JDBC drivers, obtain airflow server permission.
-This issue affects Apache Airflow JDBC Provider: before 4.0.0.
+Usage of temporary files with insecure permissions by the Apache James server allows an attacker with local access to access private user data in transit. 
+
+Vulnerable components includes the SMTP stack and IMAP APPEND command.
+
+This issue affects Apache James server version 3.7.2 and prior versions.
 
 Credit:
 
-heart Y (finder)
-happyhacking (finder)
+Benoit Tellier (reporter)
 
 References:
 
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-22886
+https://james.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2022-45935
 
