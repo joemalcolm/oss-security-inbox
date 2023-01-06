@@ -1,36 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/08/2
-Message-ID: <20230608152247.GA1003@openwall.com>
-Date: Thu, 8 Jun 2023 17:22:47 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/06/1
+Message-ID: <bf69e2b7-eed2-7a90-9b6f-80784e1fcf68@apache.org>
+Date: Fri, 06 Jan 2023 07:31:55 +0000
+From: Benoit Tellier <btellier@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: Hangyu Hua <hbh25y@...il.com>
-Subject: Re: Linux kernel: off-by-one in fl_set_geneve_opt
+Subject: CVE-2022-45787: Apache James MIME4J: Temporary File Information Disclosure in MIME4J TempFileStorageProvider 
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 08, 2023 at 10:57:33AM +0800, Hangyu Hua wrote:
-> On 7/6/2023 18:41, Hangyu Hua wrote:
-> >On 7/6/2023 11:32, Hangyu Hua wrote:
-> >># EXP
-> >>
-> >>In order to avoid confusion i will publish it after I get CVE.
-> >
-> >Hi guys,
-> >
-> >I decide not to publish the exp for ethical reasons. Please email me if 
-> >any distribution's maintainers need the code.
-> 
-> Since some maintainers have requested code from me, I sent the code to
-> <linux-distros@...openwall.org>.
+Severity: low
 
-Given your previous intent "not to publish the exp for ethical reasons",
-it's a surprising decision you made to share with all linux-distros when
-only some asked, but that's fine as long as you understand and are going
-to follow the list policy and make the now-mandatory posting of at least
-the same code to oss-security within 7 days - so no later than next
-Thursday, please.  Ideally, you'd pre-announce the date when you intend
-to post the code.
+Description:
 
-Thanks,
+Unproper laxist permissions on the temporary files used by MIME4J TempFileStorageProvider may lead to information disclosure to other local users. This issue affects Apache James MIME4J version 0.8.8 and prior versions.
 
-Alexander
+We recommend users to upgrade the version of Linkis to version 1.3.1.
+
+Credit:
+
+Jonathan Leitschuh (finder)
+
+References:
+
+https://james.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2022-45787
+
