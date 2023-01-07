@@ -1,33 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/19/2
-Message-ID: <d1fbf10c-8c1e-f187-b1fa-96d24dcdedc7@apache.org>
-Date: Thu, 19 Oct 2023 02:34:06 +0000
-From: Charles Zhang <dockerzhang@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/07/1
+Message-ID: <6bdc8ff7-0627-2515-7653-3b60ea38538b@apache.org>
+Date: Sat, 07 Jan 2023 15:52:42 +0000
+From: Dan Klco <dklco@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-46227: Apache inlong has an Arbitrary File Read Vulnerability 
+Subject: CVE-2022-46769: Apache Sling App CMS: XSS in CMS Site Group Detail 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
-
-Affected versions:
-
-- Apache InLong 1.4.0 through 1.8.0
+Severity: low
 
 Description:
 
-Deserialization of Untrusted Data Vulnerability in Apache Software Foundation Apache InLong.
+An improper neutralization of input during web page generation ('Cross-site Scripting') [CWE-79] vulnerability in Sling App CMS version 1.1.2 and prior may allow an authenticated remote attacker to perform a reflected cross-site scripting (XSS) attack in the site group feature.
 
-This issue affects Apache InLong: from 1.4.0 through 1.8.0, the attacker can use \t to bypass. Users are advised to upgrade to Apache InLong's 1.9.0 or cherry-pick [1] to solve it.
-
-[1]  https://github.com/apache/inlong/pull/8814
+Upgrade to Apache Sling App CMS >= 1.1.4
 
 Credit:
 
-zhiwei (finder)
-s3gundo (finder)
+Apache Sling would like to thank Sam Bagheri for reporting this issue (finder)
 
 References:
 
-https://inlong.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-46227
+https://sling.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2022-46769
 
