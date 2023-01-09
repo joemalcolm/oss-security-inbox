@@ -1,38 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/17/7
-Message-Id: <D2D5A1F8-9C54-46F3-AA9B-95913B446645@senki.org>
-Date: Wed, 17 May 2023 10:43:50 -0400
-From: Barry Greene <bgreene@...ki.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/10/1
+Message-ID: <CADW8OBsT3Lhc2GrgQQThG_-sUz5SyExn-XvbLm7q+wGjuHxPqA@mail.gmail.com>
+Date: Mon, 9 Jan 2023 15:09:22 -0700
+From: Kyle Zeng <zengyhkyle@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: IPv6 and Route of Death
+Subject: Type Confusion in Linux Kernel
 Content-Type: text/plain; charset=utf-8
 
+Hi there,
 
-My recommendation - check your “Exploitable Port Filter” rules and include IPv6. Test your gear to insure it ‘can’ filter exertion headers.
+I recently found a type-confusion vulnerability in the Linux kernel.
+Since it interprets random data as pointers, it is potentially
+exploitable. According to the fix commit, this bug was introduced in
+Linux-2.6.12-rc2 in 2005. I already contacted security@...nel.org and
+helped them patch the vulnerability.
 
-Read through RFC 9098.
+# Vulnerability
+The vulnerability is caused by accessing classification results before
+checking the classification return code in the network scheduler's
+code. For example, in the following snippet from `cbq_classify`:
+~~~
+struct cbq_class *cl;
+......
+result = tcf_classify(skb, fl, &res, true);
+if (!fl || result < 0)
+goto fallback;
 
-This is an doc on how major ISPs deploy port filtering in their networks. Some are applying RFC 9098.
+cl = (void *)res.class;
+~~~
+It checks `result < 0` before casting `res.class` to `struct cbq_class
+*`. However, `result >= 0` does not ensure `res.class` contains valid
+results. Specifically, it is possible `result` itself says the packet
+is invalid and should be dropped (`TC_ACT_SHOT`) while at the same
+time res.class contains invalid data because res.class is a huge union
+attribute and can be used for other purposes before it is marked as
+`TC_ACT_SHOT`. As a result, it is a type confusion between `struct
+cbq_class` and whatever struct that res.class was used as before it is
+returned.
 
-https://www.senki.org/operators-security-toolkit/filtering-exploitable-ports-and-minimizing-risk-to-and-from-your-customers/
+# Patch
+Two schedulers have the same vulnerable code patterns and the fixes
+can be found https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=caa4b35b4317d5147b3ab0fbdc9c075c7d2e9c12
+and https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a2965c7be0522eaa18808684b7b82b248515511b
 
+This vulnerability does not have a CVE assigned. I'll appreciate it if
+anyone on the mailing list can give it a CVE to signify its security
+implications.
 
-Sent from my iPhone
-
-> On May 17, 2023, at 10:23 AM, Jeffrey Walton <noloader@...il.com> wrote:
-> ﻿Hi Everyone,
-> 
-> This seems to have been dropped as a 0-day. I have not seen a CVE
-> assigned to it.
-> 
-> IPv6 and Route of Death:
-> 
->  * https://www.reddit.com/r/linux/comments/13jfehf/linux_ipv6_route_of_death_0day_no_patch/
->  * https://news.ycombinator.com/item?id=35950379
-> 
-> I _think_ this is the original writeup:
-> 
->  * https://www.interruptlabs.co.uk//articles/linux-ipv6-route-of-death
-> 
-> Jeff
-
+Best,
+Kyle Zeng
