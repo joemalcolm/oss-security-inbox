@@ -1,29 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/13/1
-Message-ID: <87y1mwd1xm.fsf@gentoo.org>
-Date: Thu, 13 Apr 2023 02:07:48 +0100
-From: Sam James <sam@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/10/2
+Message-ID: <Y71wQPQeIU1pTxCy@gentoo.org>
+Date: Tue, 10 Jan 2023 08:03:44 -0600
+From: John Helmert III <ajak@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: ncurses fixes upstream
+Subject: Re: Type Confusion in Linux Kernel
 Content-Type: text/plain; charset=utf-8
 
+On Mon, Jan 09, 2023 at 03:09:22PM -0700, Kyle Zeng wrote:
+> Hi there,
+> 
+> I recently found a type-confusion vulnerability in the Linux kernel.
+> Since it interprets random data as pointers, it is potentially
+> exploitable. According to the fix commit, this bug was introduced in
+> Linux-2.6.12-rc2 in 2005. I already contacted security@...nel.org and
+> helped them patch the vulnerability.
+> 
+> # Vulnerability
+> The vulnerability is caused by accessing classification results before
+> checking the classification return code in the network scheduler's
+> code. For example, in the following snippet from `cbq_classify`:
+> ~~~
+> struct cbq_class *cl;
+> ......
+> result = tcf_classify(skb, fl, &res, true);
+> if (!fl || result < 0)
+> goto fallback;
+> 
+> cl = (void *)res.class;
+> ~~~
+> It checks `result < 0` before casting `res.class` to `struct cbq_class
+> *`. However, `result >= 0` does not ensure `res.class` contains valid
+> results. Specifically, it is possible `result` itself says the packet
+> is invalid and should be dropped (`TC_ACT_SHOT`) while at the same
+> time res.class contains invalid data because res.class is a huge union
+> attribute and can be used for other purposes before it is marked as
+> `TC_ACT_SHOT`. As a result, it is a type confusion between `struct
+> cbq_class` and whatever struct that res.class was used as before it is
+> returned.
+> 
+> # Patch
+> Two schedulers have the same vulnerable code patterns and the fixes
+> can be found https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=caa4b35b4317d5147b3ab0fbdc9c075c7d2e9c12
+> and https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a2965c7be0522eaa18808684b7b82b248515511b
+> 
+> This vulnerability does not have a CVE assigned. I'll appreciate it if
+> anyone on the mailing list can give it a CVE to signify its security
+> implications.
 
-"Jonathan Bar Or (JBO)" <jobaror@...rosoft.com> writes:
+You haven't really elaborated on the security implications, but you
+can request a CVE at cveform.mitre.org I guess. MITRE tends to be
+prickley regarding kernel issues, though.
 
-> Hello oss-security,
->
-> Our team has worked with the maintainer of the ncurses library (used by several software packages in Linux) to fix several memory corruption vulnerabilities.
-> They are now fixed at commit 20230408 - see details here (https://invisible-island.net/ncurses/NEWS.html#index-t20230408)
-> A CVE was assigned (CVE-2023-29491) - it's still under a "reserved" status.
->
-> How can we ensure those fixes get deployed upstream, in major Linux distributions?
+> Best,
+> Kyle Zeng
 
-Try emailing the distributions mailing list at lists.linux.dev too?
-
-> We've reached out to Arch, RedHat, Canonical and other popular distros independently.
->
-> Thanks!
->                              JBO
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (378 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
