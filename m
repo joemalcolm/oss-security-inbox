@@ -1,51 +1,13 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/23/9
-Message-ID: <20230623121400.GV32338@suse.de>
-Date: Fri, 23 Jun 2023 14:14:02 +0200
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/11/1
+Message-ID: <jdzFyT-yMNf1Xi2J0avvAzYAa2Gs9xizA5V75N5baWiik_LhXUZ6jqQ2EP8VSHU3OQ5koXZ0OO_w-bNWLK0JzS_6uyi2TNdQ3oD9Ujs02PU=@protonmail.com>
+Date: Wed, 11 Jan 2023 06:14:40 +0000
+From: Will <willsroot@...tonmail.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-31975: memory leak in yasm
+Subject: Re: Linux kernel: Unauthenticated remote DOS in ksmbd NTLMv2 authentication
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 23, 2023 at 12:14:12PM +0200, Hanno Böck wrote:
-> On Tue, 20 Jun 2023 15:47:28 -0700
-> Alan Coopersmith <alan.coopersmith@...cle.com> wrote:
-> 
-> > https://nvd.nist.gov/vuln/detail/CVE-2023-31975 is freaking out
-> > scanners since it claims this bug has a CVSS of 9.8.
-> 
-> The problem really is that these scanners are assuming something that
-> is not true. They assume that data from vulnerability databases is
-> reliable.
-> 
-> These debates are coming on a regular basis, usually either "should
-> this thing get a CVE?" and "is this a reasonable CVSS value /
-> criticality rating?"
-> 
-> It's actually quite simple: There are dozends (maybe hundreds?) of CVEs
-> issued every day. If you want them to be properly vetted, you'd need to
-> have a massive team of security professionals doing that vetting. No
-> such team exists, so the only plausible assumption is that CVE and CVSS
-> data is by default unreliable.
+This is now tracked under CVE-2023-0210.
 
-The CVE ecosystem hierarchy intends to solve this by having the CNAs do
-this in the tree fashion.
-
-> If your scanner sounds an alarm because someone added a high CVSS
-> rating to a CVE entry, you should assume that the people creating that
-> scanner don't know what they are doing.
-
-FYI if you find incorrect NVD scores, you can contact <nvd at nist.gov>
-with an engineering level argumentation why the score is not correct
-and they will get back to you.
-
-Of course this does not scale.
-
-I contacted them however on this specific CVE now.
-
-
-For CNA provided CVSS scores contact the CNA of course ( search in
-https://www.cve.org/PartnerInformation/ListofPartners , all have email
-links)
-
-Ciao, Marcus
+Best,
+Will
