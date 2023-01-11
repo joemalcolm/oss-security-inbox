@@ -1,4 +1,4 @@
-Received: (qmail 13959 invoked by uid 550); 13 Jul 2023 16:26:52 -0000
+Received: (qmail 17678 invoked by uid 550); 11 Jan 2023 13:14:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,55 +7,32 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13935 invoked from network); 13 Jul 2023 16:26:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=netmeister.org;
-	s=2023; t=1689265598;
-	bh=gH2Oa0UXytZtVYiok/cOdKRfg2gToTbhWDj08GrF2G4=;
-	h=From:To:Subject:Content-Type:From:To:Subject;
-	b=rISOTqCXXSlIxlCyqM2UguOWcRsfCjAcpWzv9cb6gLOfpisNIbgC31RluIFh+a3nB
-	 gqML0SzYmgAHnwpebu/fIhnG4az6YM2khvvnRdRznHmLaQrOv0epnP/JjKDBffP/5B
-	 L+CENHKveiHndYY56UAlO7+9bx40Acyxf7zhpnuu4XmWcBv+dQDZl+vyQ4DETbO/1m
-	 slmxJmSpSn5kIuwFl2qoEa3jUKJyxKBv+zpSVqV+AVIUWjUry2jTKgclc+zpMOuZGU
-	 GWWbBWiwDrpq45hcOyXVSlDAG8UryIvXD4RAfJ3Ghy80oT+Wi2ZsuxkuedIz6x0SFr
-	 1jz1SHPIr67Jw==
-Date: Thu, 13 Jul 2023 12:26:38 -0400
-From: Jan Schaumann <jschauma@netmeister.org>
+Received: (qmail 9673 invoked from network); 11 Jan 2023 06:15:01 -0000
+Date: Wed, 11 Jan 2023 06:14:40 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1673417688; x=1673676888;
+	bh=IDrTok84BzWdck10RbkzQEVVCdxESw69JWqsQ2gVcyI=;
+	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=D7qsUZGT8F2KZLSGR6mfofk290ritfWqgx/GDZZijXVqzF6VU0VYmROMsPJXGbtYk
+	 dgi9fW+y0+l9LKBNO0YoJojYCFgLDIZKoepEUteaeikxzFOOgqQx2zfNz75YrN3rll
+	 72mt68HmRPjMzhcTsoITi3LYxgOuqyN3koo703ZJAvxdXwfUEsVX01Orn7L12nYkde
+	 YYjNKA5NBeFnRyB6yhALSzLiixI9+uACvTJOicqbSBgWGhbRzLXBGD1VUyplMBzmZR
+	 KW8QySKzAWao/c2+jxjURqR7F9EQg1HF6MsdKsvKL5uoNbyGXppZ97tAtPzxdGgu2G
+	 uK4HRILUez13A==
 To: oss-security@lists.openwall.com
-Message-ID: <ZLAlvlNOdMKixhiG@netmeister.org>
-References: <ZIpANf8DGHFYVBFR@netmeister.org>
+From: Will <willsroot@protonmail.com>
+Message-ID: <jdzFyT-yMNf1Xi2J0avvAzYAa2Gs9xizA5V75N5baWiik_LhXUZ6jqQ2EP8VSHU3OQ5koXZ0OO_w-bNWLK0JzS_6uyi2TNdQ3oD9Ujs02PU=@protonmail.com>
+In-Reply-To: <CAGakKvz79Ey501w4LwNsMv4zj6LyYdagNyXWOrEt5Kus9xUmuQ@mail.gmail.com>
+References: <CAGakKvz79Ey501w4LwNsMv4zj6LyYdagNyXWOrEt5Kus9xUmuQ@mail.gmail.com>
+Feedback-ID: 25491499:user:proton
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZIpANf8DGHFYVBFR@netmeister.org>
-Subject: Re: [oss-security] RCE in acme.sh < 3.0.6
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] Linux kernel: Unauthenticated remote DOS in ksmbd NTLMv2 authentication
 
-Just closing the loop here: this has now been assigned
-CVE-2023-38198:
+This is now tracked under CVE-2023-0210.
 
-https://www.cve.org/CVERecord?id=CVE-2023-38198
-
-
-Jan Schaumann <jschauma@netmeister.org> wrote:
-> Hi,
-> 
-> I don't think this has been raised here:
-> 
-> The acme.sh ACME client[1] prior to version 3.0.6[2] has
-> an RCE vulnerability allowing a hostile server to
-> execute arbitrary commands on the client[3].
-> 
-> I was unable to determine whether a CVE has been
-> requested for this issue; both the original discussion
-> and a second GitHub issue[4] have been inconclusively
-> closed for comments (I've reached out to the author).
-> 
-> The issue is also being discussed on Mozilla's
-> dev-security-policy[5].
-> 
-> -Jan
-> 
-> [1] https://github.com/acmesh-official/acme.sh
-> [2] https://github.com/acmesh-official/acme.sh/releases
-> [3] https://github.com/acmesh-official/acme.sh/issues/4659
-> [4] https://github.com/acmesh-official/acme.sh/issues/4665
-> [5] https://groups.google.com/a/mozilla.org/g/dev-security-policy/c/heXVr8o83Ys
+Best,
+Will
