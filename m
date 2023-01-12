@@ -1,4 +1,4 @@
-Received: (qmail 19900 invoked by uid 550); 14 Sep 2022 11:08:18 -0000
+Received: (qmail 30126 invoked by uid 550); 12 Jan 2023 17:10:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,61 +7,71 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30367 invoked from network); 14 Sep 2022 07:53:11 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date;
-        bh=NYBRQY3TYzoOfIZ1btPxLSEd8cYoCiJl41hIPfNSO+A=;
-        b=eE3uKOdjIAEqsBGgCUfkmcAnL3r5hQtoanmV/35ViF7j5R5vRC8m9RXXMf6Hiz1Wow
-         LjzsrKfbp592cYCq2qvVRgOOYlOG35Xs7DI/M3MKCzHcurpHafIL1QqEn8VExuEhwjDL
-         btRJIGor+QJ9b3WSczyhMb8njgvQH3N698Lz/hLrQsMSmIfqcCy/rD5XLM0UTGTJJdur
-         2r/MPWJYi1UwrNClFthGEkzAUrixlfnPEUQKgvQY4ZboqR0G17c0iDD7XddTJxheFI2t
-         Pj1zAZ/izKFnU6se8S93MScWOmw5yMkGSPOQvL8h4WZuVWwZKM2w2gijdqA/UysmUw74
-         BrjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date;
-        bh=NYBRQY3TYzoOfIZ1btPxLSEd8cYoCiJl41hIPfNSO+A=;
-        b=ShPaFRvygrrBTHaWRPCuVCSyrXYlPtyC8dA22nQyTR4c1HJyCwF5TdNgioD9JN20EU
-         kKmfiWUTjg9Tys407hTaO8nYS6562xv2XrlRBNMxyQwvFIkPGzXQWzDPeDNEseCyyVfb
-         QSPZ4fRQnzBzN48HQMc+CqoqWuafNE4ng71TYNRDLwIUQ1hR57YZyNPrKkqIkYj5LyWt
-         7U77d19jfDmOSdKg8ExvXGngOhtIop0EgVcvsXojFVjGj7U4xcCCntaGvvVVEIODpIgr
-         33+BmzR+1qvlevf7TLCK1K/bJrI4/qC5lW2N+r6EOVDujWFthq153l35Ezy6mgb35S7V
-         qlaw==
-X-Gm-Message-State: ACgBeo20Slz8CFfWrILZEBtTTE3eDMXFBCH/gYir92JWTz1opY0jgEF9
-	9CbI/sHUO4w1F5vDhhe+27Sn12obSbtzogXCXKmddZFj1SQ=
-X-Google-Smtp-Source: AA6agR763JVTTNTgQi+ucdF5hcUJ4pPHcUG5gq04KA40evHR4r/Ic58HJlaSpCQdPECsBktAKVjtcRXHlP/4IQiX2eI=
-X-Received: by 2002:a05:6000:15c6:b0:228:de49:dade with SMTP id
- y6-20020a05600015c600b00228de49dademr20433258wry.28.1663141979549; Wed, 14
- Sep 2022 00:52:59 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAGUWgD9QR7mjyVnBV4NcyVv=RzLBjNoqvv=d02P-GGsdOV_VWg@mail.gmail.com>
- <20220906115010.gs7kec3wkmayhmhf@yuggoth.org> <CAH8yC8k8C-gp9upSpJLsXrhBB5-qSnKGeP34+32A-_s5YG3UTA@mail.gmail.com>
- <20220907013017.GA1357227@millbarge> <CAGUWgD8f4V3uYf7wLjfHarRSwPo1PgqwDSWcNX6LaO_Cgco8vA@mail.gmail.com>
-In-Reply-To: <CAGUWgD8f4V3uYf7wLjfHarRSwPo1PgqwDSWcNX6LaO_Cgco8vA@mail.gmail.com>
-From: Georgi Guninski <gguninski@gmail.com>
-Date: Wed, 14 Sep 2022 10:52:46 +0300
-Message-ID: <CAGUWgD-oYbazh5f+EDj0AmzxmKBY9MK7fwZVkeeFsCETHF4T-g@mail.gmail.com>
+Received: (qmail 30105 invoked from network); 12 Jan 2023 17:10:42 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
+	:content-type:date:date:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to; s=fm3; t=1673543428; x=1673629828; bh=gia/TbQBxO
+	nR6Z/+7MwaGBllC2APlo34Dgp2fCiI38Q=; b=Z3azqqmfgLTP30bQbnxE93bfPp
+	MjwaTl2pLIWYgSdw//Zb6/CZC0BrQxAm1S0SE7aMqFUhaogIDvi0uPTvhgTBfZ85
+	bqNwKzRpg0bPUkIi6Y4vGV4qSpc/dtQi7Z9RFwSoiWbY9uxAsK1NAiS8IuVtblvf
+	Oqprcul4oWBOKRhI8lhxVOhUyLUt17Q9JufwZduaHItPMHoPjMQ1xxZ9gIbXzBov
+	ogS+PxMSIyiYNeesrSrxJBWRyWFke6Ss/wi1YuAU9FHKQcUBEpWHhs6xMxb9Oyhv
+	KaIOMFq9ULI4h9mGRyuqbjQIumBBDv6lZD9OdWznQPEGb/bCu426pOHrSmXQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:date:date:feedback-id
+	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:sender:subject:subject:to:to
+	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1673543428; x=1673629828; bh=gia/TbQBxOnR6Z/+7MwaGBllC2AP
+	lo34Dgp2fCiI38Q=; b=cKjd3giWFrMu2CVOF0hfIhu1v1be9dAoHHQ4rE2yDo1f
+	4gS1xsj/PhbkH6cZ4yo6t8+2nEdESIhdJdVzb6e7xbQtVxwneVLIbFo9Xu8F8MkB
+	BZxhZBTcx3RKLB3C8vc0OxYGlSbB+KlmoYwkH1Pk9voPEbVxxkoj1VWvkTUBPEfn
+	V7WtpDeNr5uK6qLUQ+a+5WkzoJ8gVXgHcs30a4GG2c8Zca7Z4HIe1ic6iEa1JlCa
+	QxGZEkU/yhDd6HPwdJ953wc0eU2ZGlhzn5UyYuOWTRyiEfvIgOAdBiim8YQliRFo
+	mLWmTsG3icKek0mj8+0SLrA8fphfFsIut9Va5JtnEg==
+X-ME-Sender: <xms:Az_AY3rSgzjwxxYsu6bbp4xvFP7vIhH6up3c0089uNE-une3BU91Hw>
+    <xme:Az_AYxpWqJvs-tgkNHSeP4Qa0VIoPeIZsTpXscxou4NUUjyUFIm5ijx0GY7FARTdT
+    3RHDd59pkgSBw>
+X-ME-Received: <xmr:Az_AY0NdYGfnmzjXKJqLiWz6yjvi7rcem3iwH4pSKrf207vWN9RpVZz3EXn7IwZg8OBkeTkEKVtaL-s4OXZgLiZIlGAQNl0fDUBvfQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrleeigdelkecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehttdertd
+    dttddvnecuhfhrohhmpefirhgvghcumffjuceoghhrvghgsehkrhhorghhrdgtohhmqeen
+    ucggtffrrghtthgvrhhnpeevueehjefgfffgiedvudekvdektdelleelgefhleejieeuge
+    egveeuuddukedvteenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
+    fhhrohhmpehgrhgvgheskhhrohgrhhdrtghomh
+X-ME-Proxy: <xmx:Az_AY65TefDViWuUqbnLPa4JD2FzuuaR5F0amopC35NNBr6-wws1vw>
+    <xmx:Az_AY265gqlpmy0aUFfFhG6w-TapoUJLqgDYhIaIUaIm7UWDRmGxJA>
+    <xmx:Az_AYyhkkHWWzLRDlktniQnxfyR9hBjYTUhwvc5HlR_KKlU-4sO8sQ>
+    <xmx:BD_AY7i_VG0vXoUIHCOMzL5_tw10b16al0JlnvAijdvM--vi-hfIMA>
+Feedback-ID: i787e41f1:Fastmail
+Date: Thu, 12 Jan 2023 18:10:23 +0100
+From: Greg KH <greg@kroah.com>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] sagemath denial of service with abort() in gmp:
- overflow in mpz type
+Message-ID: <Y8A+/ys+5oIRzr9V@kroah.com>
+References: <CAO15rPk6Uh6ZqZ=c8yjz0=53DqXQKF=fSXqDo9dLdMAy7-YS3g@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAO15rPk6Uh6ZqZ=c8yjz0=53DqXQKF=fSXqDo9dLdMAy7-YS3g@mail.gmail.com>
+Subject: Re: [oss-security] CVE-2023-0122: Linux kernel: Pre-Auth Remote DoS
+ in NVMe
 
-On Wed, Sep 7, 2022 at 8:36 AM Georgi Guninski <gguninski@gmail.com> wrote:
->
+On Thu, Jan 12, 2023 at 04:12:30PM +0200, Tal Lossos wrote:
+> Hi all,
+> 
+> # Description
+> A NULL Pointer Dereference bug in nvmet_setup_auth
+> (drivers/nvme/target/auth.c) can be triggered remotely to cause a DoS.
+> Since the bug occurs in the authentication feature, it can be easily
+> triggered by an unauthorized client in the pre-auth stage.
+> Versions affected - v6.0-rc1 to v6.0-rc3 (fixed in v6.0-rc4).
 
-> $ apt-cache rdepends libgmp10 | grep -i crypt | wc -l
-> 28
->
-> some examples:
->   gawk
+Meta-comment, why are CVE's being assigned for issues found, and then
+fixed, in development kernel releases?  Who assigned this CVE, MITRE or
+someone else?
 
-Hopefully last post in this thread:
+thanks,
 
-guest3@ubuntu20:~/prim$ gawk --bignum 'BEGIN { a = 2 ^ 2 ^41; print "a =", a }'
-gmp: overflow in mpz type
-Aborted (core dumped)
-guest3@ubuntu20:~/prim$ gawk 'BEGIN { a = 2 ^ 2 ^41; print "a =", a }'
-a = +inf
+greg k-h
