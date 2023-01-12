@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["508" "Thursday" "24" "January" "2019" "12:43:37" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.76.1901241241500.20220@xnncv>" "16" "[oss-security] CVE-2019-6501 QEMU: scsi-generic: possible OOB access while handling inquiry request" nil nil nil "1" "2019012407:13:37" "[oss-security] CVE-2019-6501 QEMU: scsi-generic: possible OOB access while handling inquiry request" (number mark "U       ppandit@redh Jan 24   16/508   " thread-indent "\"[oss-security] CVE-2019-6501 QEMU: scsi-generic: possible OOB access while handling inquiry request\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5931 invoked by uid 550); 24 Jan 2019 07:13:54 -0000
+Received: (qmail 18177 invoked by uid 550); 12 Jan 2023 21:26:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,32 +7,60 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5913 invoked from network); 24 Jan 2019 07:13:54 -0000
-Date: Thu, 24 Jan 2019 12:43:37 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@kaapi
-To: oss security list <oss-security@lists.openwall.com>
-Message-ID: <nycvar.YSQ.7.76.1901241241500.20220@xnncv>
+Received: (qmail 13850 invoked from network); 12 Jan 2023 19:24:53 -0000
+Date: Thu, 12 Jan 2023 13:24:38 -0600
+From: John Helmert III <ajak@gentoo.org>
+To: oss-security@lists.openwall.com
+Message-ID: <Y8BednLm17osifo0@gentoo.org>
+References: <CAO15rPk6Uh6ZqZ=c8yjz0=53DqXQKF=fSXqDo9dLdMAy7-YS3g@mail.gmail.com>
+ <Y8A+/ys+5oIRzr9V@kroah.com>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.38]); Thu, 24 Jan 2019 07:13:41 +0000 (UTC)
-Subject: [oss-security] CVE-2019-6501 QEMU: scsi-generic: possible OOB access while handling
- inquiry request
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="tz7tOt74yRvnpT3O"
+Content-Disposition: inline
+In-Reply-To: <Y8A+/ys+5oIRzr9V@kroah.com>
+Subject: Re: [oss-security] CVE-2023-0122: Linux kernel: Pre-Auth Remote DoS
+ in NVMe
 
-  Hello,
+--tz7tOt74yRvnpT3O
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-An out of bounds r/w access issue was found in the way QEMU handled inquiry 
-request coming from a guest in scsi_handle_inquiry_reply(). A guest 
-user/process could use this flaw to corrupt byte of QEMU process memory.
+On Thu, Jan 12, 2023 at 06:10:23PM +0100, Greg KH wrote:
+> On Thu, Jan 12, 2023 at 04:12:30PM +0200, Tal Lossos wrote:
+> > Hi all,
+> >=20
+> > # Description
+> > A NULL Pointer Dereference bug in nvmet_setup_auth
+> > (drivers/nvme/target/auth.c) can be triggered remotely to cause a DoS.
+> > Since the bug occurs in the authentication feature, it can be easily
+> > triggered by an unauthorized client in the pre-auth stage.
+> > Versions affected - v6.0-rc1 to v6.0-rc3 (fixed in v6.0-rc4).
+>=20
+> Meta-comment, why are CVE's being assigned for issues found, and then
+> fixed, in development kernel releases?  Who assigned this CVE, MITRE or
+> someone else?
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2019-01/msg02324.html
+This information used to be available for "reserved" CVEs in the JSON
+data in [1], but now that that's retired I'm not sure this is made
+public anywhere.
 
-CVE-2019-6501 requested via -> https://cveform.mitre.org/
+[1] https://github.com/CVEProject/cvelistV5
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+> thanks,
+>=20
+> greg k-h
+
+--tz7tOt74yRvnpT3O
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQQyG9yfCrmO0LPSdG2gXq2+aa/JtQUCY8BedgAKCRCgXq2+aa/J
+tZJYAP9hICVV71P6OvRaDBjUmP0GYpbZUlqWVrSRF+eTlw23vgEA/zdXsiV5yXNY
+2zOWrVUN+2KQJFoHoMKWyc+hUlzs/Q4=
+=iBxz
+-----END PGP SIGNATURE-----
+
+--tz7tOt74yRvnpT3O--
