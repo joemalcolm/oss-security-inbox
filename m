@@ -1,35 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/04/1
-Message-ID: <CAM+3YVqkFqtQ2ZBLFgPg6+=SxV_bcZb_3ZgLQ0V5H-JOqRZ--w@mail.gmail.com>
-Date: Mon, 4 Dec 2023 11:50:59 +0100
-From: Marco Ivaldi <raptor@...eadbeef.info>
-To: fulldisclosure@...lists.org, oss-security@...ts.openwall.com,  submissions@...ketstormsecurity.com
-Subject: HNS-2023-04 - HN Security Advisory - Buffer overflow vulnerabilities with long path names in TinyDir
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/12/2
+Message-ID: <Y8A+/ys+5oIRzr9V@kroah.com>
+Date: Thu, 12 Jan 2023 18:10:23 +0100
+From: Greg KH <greg@...ah.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: CVE-2023-0122: Linux kernel: Pre-Auth Remote DoS in NVMe
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Thu, Jan 12, 2023 at 04:12:30PM +0200, Tal Lossos wrote:
+> Hi all,
+> 
+> # Description
+> A NULL Pointer Dereference bug in nvmet_setup_auth
+> (drivers/nvme/target/auth.c) can be triggered remotely to cause a DoS.
+> Since the bug occurs in the authentication feature, it can be easily
+> triggered by an unauthorized client in the pre-auth stage.
+> Versions affected - v6.0-rc1 to v6.0-rc3 (fixed in v6.0-rc4).
 
-Please find attached a security advisory that describes some buffer
-overflow vulnerabilities we discovered in TinyDir.
+Meta-comment, why are CVE's being assigned for issues found, and then
+fixed, in development kernel releases?  Who assigned this CVE, MITRE or
+someone else?
 
-* Title: Buffer overflow vulnerabilities with long path names in TinyDir
-* Product: TinyDir <= 1.2.5
-* Author: Marco Ivaldi <marco.ivaldi@...ecurity.it>
-* Date: 2023-12-04
-* CVE ID: CVE-2023-49287
-* Severity: High - 7.7 - CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H
-* Vendor URL: https://github.com/cxong/tinydir
-* Advisory URL:
-https://github.com/cxong/tinydir/security/advisories/GHSA-jf5r-wgf4-qhxf
+thanks,
 
-The advisory is also available at:
-https://github.com/hnsecurity/vulns/blob/main/HNS-2023-04-tinydir.txt
-
-Regards,
-
--- 
-Marco Ivaldi
-https://0xdeadbeef.info/
-"When cryptography is outlawed, bayl bhgynjf jvyy unir cevinpl."
-
-View attachment "HNS-2023-04-tinydir.txt" of type "text/plain" (11249 bytes)
+greg k-h
