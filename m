@@ -1,24 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/28/6
-Message-ID: <20230328204149.GA15059@openwall.com>
-Date: Tue, 28 Mar 2023 22:41:49 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/13/1
+Message-ID: <Y8EvnDtwz6Hlq/Qs@kroah.com>
+Date: Fri, 13 Jan 2023 11:17:00 +0100
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-28464: Linux: Bluetooth: hci_conn_cleanup function has double free
+Subject: Re: CVE-2023-0122: Linux kernel: Pre-Auth Remote DoS in NVMe
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Mar 28, 2023 at 08:22:30PM +0000, Seth Arnold wrote:
-> On Tue, Mar 28, 2023 at 04:00:22PM +0200, Solar Designer wrote:
-> > However, we have not heard from Gentoo, who are "primary" on this and a
-> > couple of other related tasks.  Gentoo, please let us all know whether
-> > you intend to handle these tasks, or should we remove the assignment?
+On Thu, Jan 12, 2023 at 01:24:38PM -0600, John Helmert III wrote:
+> On Thu, Jan 12, 2023 at 06:10:23PM +0100, Greg KH wrote:
+> > On Thu, Jan 12, 2023 at 04:12:30PM +0200, Tal Lossos wrote:
+> > > Hi all,
+> > > 
+> > > # Description
+> > > A NULL Pointer Dereference bug in nvmet_setup_auth
+> > > (drivers/nvme/target/auth.c) can be triggered remotely to cause a DoS.
+> > > Since the bug occurs in the authentication feature, it can be easily
+> > > triggered by an unauthorized client in the pre-auth stage.
+> > > Versions affected - v6.0-rc1 to v6.0-rc3 (fixed in v6.0-rc4).
+> > 
+> > Meta-comment, why are CVE's being assigned for issues found, and then
+> > fixed, in development kernel releases?  Who assigned this CVE, MITRE or
+> > someone else?
 > 
-> I've not seen K_F online in any capacity in years. It is time to ask if
-> we should remove him from the list, beyond just the assignment of this
-> task. (If you're around Kristian, and we're just in different circles
-> these days, hello. :)
+> This information used to be available for "reserved" CVEs in the JSON
+> data in [1], but now that that's retired I'm not sure this is made
+> public anywhere.
+> 
+> [1] https://github.com/CVEProject/cvelistV5
 
-Kristian isn't on the list for a couple of years now.  Two others are
-currently subscribed for Gentoo.
+So if we don't know who allocated it, we can't know who to ask to get it
+revoked?
 
-Alexander
+{sigh}
+
+Yet-another reason why I hate CVEs...
+
+greg k-h
