@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["535" "Wednesday" "8" "August" "2018" "23:35:19" "+0300" "Jouni Malinen" "jkmalinen@gmail.com" "<CANe27jJDj8xhe4KeUiPwxLE2Uqp-JXahC_JtvR4O_JabEhdtow@mail.gmail.com>" "19" "Re: [oss-security] Unauthenticated EAPOL-Key decryption in wpa_supplicant" nil nil nil "8" "2018080820:35:19" "[oss-security] Unauthenticated EAPOL-Key decryption in wpa_supplicant" (number mark "U       jkmalinen@gm Aug  8   19/535   " thread-indent "\"Re: [oss-security] Unauthenticated EAPOL-Key decryption in wpa_supplicant\"\n") "<CACVwi=KLCbDhMvzSmrBU7vi=zexSn-EfoHszYHzmt8VWLXD9Fg@mail.gmail.com>" ("<20180808142247.GB15601@w1.fi>" "<CACVwi=KLCbDhMvzSmrBU7vi=zexSn-EfoHszYHzmt8VWLXD9Fg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 14304 invoked by uid 550); 8 Aug 2018 21:57:07 -0000
+Received: (qmail 1849 invoked by uid 550); 13 Jan 2023 17:33:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,59 +7,96 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11354 invoked from network); 8 Aug 2018 20:35:32 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=Za5Oxv+SYgRJk5NPkfebr2XusPoyTV3uSyHAMStpXC4=;
-        b=ae4ukgDe2wuyVm3ScxtrIyK/Dqj8TPAnOHcudynbPrxDD2nrGo2WVYyVA9Jv84rid8
-         J4g7DMoCxgBa3/Ea7c2gWJdWNPLmNxt9gCwYVsc/DXANFu3SY+N4qs0JSuYrBCi/okIx
-         9w/pIOp3wxB8gNAIOL5UlcPny6cH+W/OrGAdC34sM/RKzizL5DrWMr5QdES9YLymgAKp
-         zkAVR++fuJk8rGv/S5EsRzCVfDZijUbT3gZRLBA4VH5tlNbvH1w+3utgl28QeIH7XzlT
-         pp3N02n3BIFNjXcaS1IaTcxduFlAKZ8l5dpIdF9BmzuQxQSxB+OZl2xV2QT1NC1uKfDS
-         ro7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=Za5Oxv+SYgRJk5NPkfebr2XusPoyTV3uSyHAMStpXC4=;
-        b=RoTCOZlZU8yMsPYYuRNzTNMCrcj6kN7Bri1SugwO0R0uyaFj5iiVT/qzjtE5yFnjCo
-         YvcKo6ExeY1ZP7UPEpcqB8jx/fxaquLcCw0u5c6WxTTBCWcUuZKTc+DeiF2ymJlBBEFc
-         fWUsvGq5Acs/VvvQWGiUau4JKA5SoLTJ8e8wohoPwene3O/KZGK1Ke42RcGaWtrGxd0Q
-         RDyWuhqVKoeGoATgnMpRhgPpjqnrp5ZaISTt9obn3HRdTgi4Tjk1egUrJj7kuzifsXLc
-         mtHzoyCL1YELneE7qfk6Fl8lPKI+uJ/huFdnB+flw00uA0QhXadLbaE/cmqxH1HWkote
-         Tlew==
-X-Gm-Message-State: AOUpUlH+8qzT5c85FA1hhBwHw6eAnyC0EJr9cbhTXiqh/BBBG/9U0rbb
-	uoefRiIRVvhII4MKJx72qKSHm2eYJKDD0L9PJB0MoA==
-X-Google-Smtp-Source: AA+uWPxo1mJMFpZ9HRPPp7caNTW9pWoTs7yPuE4ckwU1MnQ4vafKCC2rLb4OMlEVjpXk0TiV0h8TPvnaVJ18dZM41TA=
-X-Received: by 2002:a1c:2dc8:: with SMTP id t191-v6mr2947547wmt.94.1533760520377;
- Wed, 08 Aug 2018 13:35:20 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CACVwi=KLCbDhMvzSmrBU7vi=zexSn-EfoHszYHzmt8VWLXD9Fg@mail.gmail.com>
-References: <20180808142247.GB15601@w1.fi> <CACVwi=KLCbDhMvzSmrBU7vi=zexSn-EfoHszYHzmt8VWLXD9Fg@mail.gmail.com>
-From: Jouni Malinen <jkmalinen@gmail.com>
-Date: Wed, 8 Aug 2018 23:35:19 +0300
-Message-ID: <CANe27jJDj8xhe4KeUiPwxLE2Uqp-JXahC_JtvR4O_JabEhdtow@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000fcda460572f272d2"
-Subject: Re: [oss-security] Unauthenticated EAPOL-Key decryption in wpa_supplicant
+Received: (qmail 16065 invoked from network); 13 Jan 2023 17:30:32 -0000
+Date: Fri, 13 Jan 2023 18:30:16 +0100
+From: Solar Designer <solar@openwall.com>
+To: Davide Ornaghi <d.ornaghi97@gmail.com>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20230113173016.GA23279@openwall.com>
+References: <CAHH-0UfWddrL_x9n1eG1oJ6iurew7D6Yb=z=068BfV7uJGSRGw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHH-0UfWddrL_x9n1eG1oJ6iurew7D6Yb=z=068BfV7uJGSRGw@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2023-0179: Linux kernel stack buffer overflow in nftables: PoC and writeup
 
---000000000000fcda460572f272d2
-Content-Type: text/plain; charset="UTF-8"
+Hi all,
 
-On Wed, Aug 8, 2018 at 6:33 PM, Jens Timmerman <jens.timmerman@gmail.com>
-wrote:
+Just sharing a little detail on handling of this issue:
 
-> I have to ask since this was only published 4 days ago and also describes
-> an attack on the EAPOL frames
-> Is this in any way related to atom's new attack on WPA/WPA2 using PMKID,
-> https://hashcat.net/forum/thread-7717.html
->
-> As far as I can see these are 2 different attacks?
->
+On Fri, Jan 13, 2023 at 04:22:47PM +0100, Davide Ornaghi wrote:
+> While auditing the Linux kernel (6.2.0-rc1, commit
+> 1b929c02afd37871d5afb9d498426f83432e71c2), I found a buffer overflow
+> vulnerability within the Netfilter subsystem which has been assigned
+> CVE-2023-0179.
+> CVE-2023-0179 is exploitable starting from commit f6ae9f1 up to commit
+> 696e1a48b1a1.
+> The exploitation could allow the leakage of both stack and heap addresses
+> and, potentially, a Local Privilege Escalation to the root user via
+> arbitrary code execution.
 
-Correct. These are completely independent issues.
+Davide brought this to linux-distros early on Jan 11, Red Hat assigned
+the CVE ID on the same day, and Greg KH helped bring this to attention
+of Netfilter maintainers - all of which is appreciated!
 
-- Jouni
+Also the same day, Davide posted this publicly to Linux kernel mailing
+lists and syzkaller, but the message only(?) got through to syzkaller:
 
---000000000000fcda460572f272d2--
+https://groups.google.com/g/syzkaller/c/YRNDJBsJn_s?pli=1
+
+and a Netfilter maintainer posted the patch to netfilter-devel:
+
+https://patchwork.ozlabs.org/project/netfilter-devel/patch/20230111212251.193032-4-pablo@netfilter.org/
+
+Both messages contained the CVE ID, making it obvious that this is a
+security issue.
+
+Davide - this is absolutely not your fault.  It's just that
+linux-distros and Linux kernel team's preferences and thus policies and
+instructions differ and are not always compatible, which was indeed
+difficult from your side to make sense of.
+
+After that point, Greg KH nevertheless insisted on not posting this to
+oss-security until the fix is merged - and today's merging of it into
+linux-next was not enough to make him happy.  (I wonder how much longer
+we were supposed to sit on this issue.)
+
+We did add an exception for Linux kernel issues last year:
+
+https://www.openwall.com/lists/oss-security/2022/05/24/1
+
+However, it only applies "if the publicly accessible fix doesn't look
+like it's for a security issue", which wasn't the case this time.
+
+Regardless, this disclosure made Greg KH really unhappy - as if we
+violated some prior agreement, which wasn't the case.  It may well be
+the last straw that will result in Linux kernel documentation getting
+updated so that reporters would not be instructed to contact
+linux-distros anymore (or would even be instructed not to?)  On one
+hand, this is bad.  On the other, everyone is tired of the
+inconsistencies and the drama.
+
+Brainstorming on possible alternatives, I suppose we (oss-security
+community?) could want to setup a crawler detecting likely security
+issues on Linux kernel mailing lists and among Linux kernel commits
+(including branches).  This could detect even more issues than are being
+brought to linux-distros and oss-security now.  Unfortunately, we would
+have less information on those issues (not the full original reports),
+but I suppose them starting to appear on oss-security would sometimes
+encourage the reporters to follow-up with the additional detail?
+
+Apparently, grsecurity is successfully doing something similar, and
+quite possibly bad actors are doing it too - so us doing it would help
+level the playing field.  A public effort like this would possibly
+result in mailing list postings and commit messages becoming more
+obscure or even specifically tailored to avoid our detection if we make
+our keyword lists, etc. public (a reason not to, since the bad actors
+would not?)
+
+This situation where two well-meaning communities with a common end goal
+could end up treating each other as adversaries is indeed ridiculous.
+
+I welcome better ideas, if anyone has any.
+
+Alexander
