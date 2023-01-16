@@ -1,33 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/26/4
-Message-ID: <2023092630-survivor-headrest-02b0@gregkh>
-Date: Tue, 26 Sep 2023 06:58:45 +0200
-From: Greg KH <gregkh@...uxfoundation.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/16/1
+Message-ID: <ac40a15d-b99f-ab01-d219-2a6b455766e2@apache.org>
+Date: Mon, 16 Jan 2023 09:08:13 +0000
+From: Daniel Gaspar <dpgaspar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: [CVE-2023-42755] Linux kernel wild pointer access <= v6.2
+Subject: CVE-2022-43717: Apache Superset: Cross-Site Scripting on dashboards 
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Sep 25, 2023 at 01:13:19PM -0700, Kyle Zeng wrote:
-> [Patch]
-> The patch is to follow the upstream and retire the rsvp classifier in
-> all the stable trees.
-> And it is queued in all the stable trees, but not merged yet.
-> For example, the patch for v6.1 can be found here:
-> https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/diff/queue-6.1/net-sched-retire-rsvp-classifier.patch?id=f75b6fc19b6ec061f59b4e18d72ebb32ceea8587
+Description:
 
-This change is in released kernels already, specifically all of the
-following ones:
-	4.14.326 4.19.295 5.4.257 5.10.197 5.15.133 6.1.55 6.3
+Dashboard rendering does not sufficiently sanitize the content of markdown components leading to possible XSS attack vectors that can be performed by authenticated users with create dashboard permissions. This issue affects Apache Superset version 1.5.2 and prior versions and version 2.0.0.
 
-Perhaps this advisory was written before those kernels were released?
+Credit:
 
-> [Affected Version]
-> I confirmed that this bug affects v6.2, v6.1, v5.15, v5.10, v5.4,
-> v4.19, and v4.14.
+Positive Technologies (finder)
 
-v6.2 is long end-of-life, sorry.  But for all of the other versions you
-quote above, it should now be resolved.
+References:
 
-thanks,
+https://superset.apache.org
+https://www.cve.org/CVERecord?id=CVE-2022-43717
 
-greg k-h
