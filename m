@@ -1,25 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/05/1
-Message-ID: <20231005012718.GA2484@openwall.com>
-Date: Thu, 5 Oct 2023 03:27:18 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/16/3
+Message-ID: <28e387b6-3a42-cdc1-2477-a18329614f4e@apache.org>
+Date: Mon, 16 Jan 2023 09:19:57 +0000
+From: Daniel Gaspar <dpgaspar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-4911: Local Privilege Escalation in the glibc's ld.so
+Subject: CVE-2022-43719: Apache Superset: Cross Site Request Forgery (CSRF) on accept, request access API 
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 03, 2023 at 05:50:36PM +0000, Qualys Security Advisory wrote:
-> We successfully exploited this vulnerability and obtained full root
-> privileges on the default installations of Fedora 37 and 38, Ubuntu
-> 22.04 and 23.04, Debian 12 and 13; other distributions are probably also
-> vulnerable and exploitable (one notable exception is Alpine Linux, which
-> uses musl libc, not the glibc). We will not publish our exploit for now;
-> however, this buffer overflow is easily exploitable (by transforming it
-> into a data-only attack), and other researchers might publish working
-> exploits shortly after this coordinated disclosure.
+Severity: moderate
 
-And they did, here are a couple:
+Description:
 
-https://github.com/leesh3288/CVE-2023-4911
-https://github.com/RickdeJager/CVE-2023-4911
+Two legacy REST API endpoints for approval and request access are vulnerable to cross site request forgery. This issue affects Apache Superset version 1.5.2 and prior versions and version 2.0.0.
 
-Alexander
+Credit:
+
+Positive Technologies (finder)
+
+References:
+
+https://superset.apache.org
+https://www.cve.org/CVERecord?id=CVE-2022-43719
+
