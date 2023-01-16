@@ -1,21 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/24/1
-Message-ID: <ZG3Om+8ySRpIuHJu@pisco.westfalen.local>
-Date: Wed, 24 May 2023 10:45:15 +0200
-From: Moritz Mühlenhoff <jmm@...til.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/16/5
+Message-ID: <6c44abe1-2c71-b6c7-db9d-af0f00e8be09@apache.org>
+Date: Mon, 16 Jan 2023 09:25:56 +0000
+From: Daniel Gaspar <dpgaspar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Clarification on embargoed testing in a partner cloud
+Subject: CVE-2022-43721: Apache Superset: Open Redirect Vulnerability 
 Content-Type: text/plain; charset=utf-8
 
-Am Thu, May 11, 2023 at 01:57:04PM +0200 schrieb Marcus Meissner:
-> 
-> I understand that while some of the operators of the public clouds are also on
-> the distro lists, these are parts of very large cooperations and not the same
-> team as the intake PSIRT subscribed to distros.
-> 
-> So from my point I would suggest to exclude testing on third party public clouds.
+Severity: moderate
 
-I agree, FWIW.
+Description:
 
-Cheers,
-        Moritz
+An authenticated attacker with update datasets permission could change a dataset link to an untrusted site, users could be redirected to this site when clicking on that specific dataset. This issue affects Apache Superset version 1.5.2 and prior versions and version 2.0.0.
+
+Credit:
+
+Positive Technologies (finder)
+
+References:
+
+https://superset.apache.org
+https://www.cve.org/CVERecord?id=CVE-2022-43721
+
