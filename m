@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9721" "Sunday" "19" "May" "2019" "14:49:32" "+0200" "Wire Snark" "wsnark@tuta.io" nil "212" nil "^Date:" nil nil "5" nil nil (number mark "        wsnark@tuta. May 19  212/9721  " thread-indent "\"[oss-security] Potential DoS vulnerability in CGit\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Potential DoS vulnerability in CGit" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 1706 invoked by uid 550); 19 May 2019 12:51:03 -0000
+Received: (qmail 5780 invoked by uid 550); 17 Jan 2023 19:16:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,235 +6,38 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32457 invoked from network); 19 May 2019 12:49:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tuta.io; s=20161216;
-	t=1558270172; bh=IVF4JRiPbJPCg/FShO6GH/LiRq0mmkanZwjWMHehoko=;
-	h=Date:From:To:Subject:From;
-	b=e7QzdKmOTpJsiuwHGHR3MFotvMoH9+rDjxjqurzo+m5+678hkiSfp98Z/tbI+zxLH
-	 KBKOW3dOEGs770SOJEyx6qMYkTzCTjIcaMkfMqyZSxMnWp5ZJO07GCyqep6c42AARf
-	 wcKazBBMfxVap7cOPaOGuqVARazD9E2Uw2HdQic1scnK0QZfYLrSX4LDkFdqvK6jmr
-	 oZwCJ/TLRBIV1LWFyGLIalsNJW6V61XEkHDNydTBMphPFgdcfKJd6aur4ExTIQG3kE
-	 XQjPMnRdWY90+fkqFF0wGzxkzjPWz3uwLkVfL0dtsOInoUFi3g+PVYkEd2RC1Qlx0j
-	 wLCiWVXVZORqQ==
-Message-ID: <LfF7Bgg--3-1@tuta.io>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date: Sun, 19 May 2019 14:49:32 +0200 (CEST)
-From: Wire Snark <wsnark@tuta.io>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Potential DoS vulnerability in CGit
-To: <oss-security@lists.openwall.com>
+Received: (qmail 32356 invoked from network); 17 Jan 2023 19:11:20 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Eric Covener <covener@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <1801fa47-41b7-1771-f1fa-d3484c109fd4@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 17 Jan 2023 19:09:35 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2022-37436: Apache HTTP Server: mod_proxy prior to 2.4.55
+ allows a backend to trigger HTTP response splitting 
 
-Hello, oss-security list
+Severity: moderate
 
-I need your advice on the following bug in CGit disclosured by me recently =
-in the cgit 'at' lists.zx2c4.com [1].
-CGit is a hyperfast web frontend for git repositories written in C [2].
+Description:
 
-There is no formal security contact at [3], contacting CGit author and main=
-tainer Jason Donenfeld directly didn't work either (probably my mail ends u=
-p in spam or whatever). My posting to CGit mailing list hasn't received a r=
-eply yet (since May 15) so I'm not sure whether someone has even read it so=
- far.
+Prior to Apache HTTP Server 2.4.55, a malicious backend can cause the respo=
+nse headers to be truncated early, resulting in some headers being incorpor=
+ated into the response body. If the later headers have any security purpose=
+, they will not be interpreted by the client.
 
-My question: is this a valid security issue (DoS) that's worth applying for=
- CVE? This is my first bug in public software actually, so your advice on t=
-his will be very helpful. Should I do more thorough performance measures, o=
-r this qualitative analysis below is enough?
+Credit:
 
-[1] https://lists.zx2c4.com/pipermail/cgit/2019-May/004364.html <https://li=
-sts.zx2c4.com/pipermail/cgit/2019-May/004364.html>
-[2] https://git.zx2c4.com/cgit/ <https://git.zx2c4.com/cgit/>
-[3] https://git.zx2c4.com/cgit/about/ <https://git.zx2c4.com/cgit/about/>
+Dimas Fariski Setyawan Putra (@nyxsorcerer) (finder)
 
-### Bug description
+References:
 
-A specially crafted URL in the request is processed by cgit with a sort of =
-non-linear(quadratic) function, excessively using CPU and network resources=
-. That is, given input with len(input) =3D n, output produced by cgit becom=
-es len(output) ~ C * n^2.
+https://httpd.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2022-37436
 
-Severity: Low (?)
+Timeline:
 
-### Reproducers
-
-Hand-crafted reproducers I have come with so far look like:
-curl http://localhost:8080/mycgit/tree/0/0/ <http://localhost:8080/mycgit/t=
-ree/0/0/><...>/0/0/0
-
-Where "localhost:8080" is where my web server is, "mycgit" is a valid repos=
-itory name, and the number of /0/ blocks that can be filled is determined b=
-y the maximum URL length configured at the particular web server.
-
-Reproducer for my local server setup: local_repr.txt (attached)
-Input len =3D 8056, Output is ~15.5Mb.
-
-For kernel.org, that is using cgit: kernel.org_repr.txt (attached)
-There are 2 reproducers:
-- URL with len=3D1305 bytes. Output is html with len=3D424 kbytes.
-- URL with len=3D1875 (maximum that is accepted at kernel.org at the moment=
-). Output is html with len=3D863 kbytes.
-
-The dependency seems to be quadratic with C ~ 0.25.
-
-Original hang reproducer generated by AFL: afl_repr.bin (attached)
-Input: 34kb, Output: ~600Mb
-
-Note: afl_repr.bin file format is tab-separated values for all used env var=
-iables by cgit; the reproducer is different and contains some non-printable=
- chars (in my fuzzing setup cgit reads env variables from stdin, allowing a=
-rbitrary input)
-
-### Analysis
-
-Backtrace from interrupting cgit during processing of this input (with outp=
-ut in terminal, i.e. slow):
-Program received signal SIGINT, Interrupt.
-0x00007ffff7d741c5 in write () from /usr/lib/libpthread.so.0
-(gdb) bt
-#0=C2=A0 0x00007ffff7d741c5 in write () from /usr/lib/libpthread.so.0
-#1=C2=A0 0x00005555555647d4 in html_raw (data=3D<optimized out>, size=3D694=
-8) at ../html.c:83
-#2=C2=A0 0x0000555555564ec1 in html (txt=3D<optimized out>) at ../html.c:211
-#3=C2=A0 html_url_path (txt=3D<optimized out>, txt@entry=3D0x55555574ff30 "=
-Oe", '/' <repeats 198 times>...)
-=C2=A0=C2=A0=C2=A0 at ../html.c:211
-#4=C2=A0 0x000055555556e70d in repolink (title=3Dtitle@entry=3D0x0, class=
-=3Dclass@entry=3D0x0,
-=C2=A0=C2=A0=C2=A0 page=3Dpage@entry=3D0x5555556b175b "tree", head=3Dhead@e=
-ntry=3D0x555555759450 "fuzzing",
-=C2=A0=C2=A0=C2=A0 path=3Dpath@entry=3D0x55555574ff30 "Oe", '/' <repeats 19=
-8 times>...) at ../ui-shared.c:288
-#5=C2=A0 0x000055555556e853 in reporevlink (page=3Dpage@entry=3D0x5555556b1=
-75b "tree",
-=C2=A0=C2=A0=C2=A0 name=3Dname@entry=3D0x555555751a54 "", title=3Dtitle@ent=
-ry=3D0x0, class=3Dclass@entry=3D0x0,
-=C2=A0=C2=A0=C2=A0 head=3Dhead@entry=3D0x555555759450 "fuzzing", rev=3D0x0,
-=C2=A0=C2=A0=C2=A0 path=3D0x55555574ff30 "Oe", '/' <repeats 198 times>...) =
-at ../ui-shared.c:319
-#6=C2=A0 0x000055555556fbc9 in cgit_tree_link (path=3D0x55555574ff30 "Oe", =
-'/' <repeats 198 times>...,
-=C2=A0=C2=A0=C2=A0 rev=3D<optimized out>, head=3D<optimized out>, class=3D0=
-x0, title=3D0x0, name=3D0x555555751a54 "")
-=C2=A0=C2=A0=C2=A0 at ../ui-shared.c:345
-#7=C2=A0 cgit_self_link (name=3Dname@entry=3D0x555555751a54 "", class=3D0x0=
-, title=3D0x0) at ../ui-shared.c:527
-#8=C2=A0 0x0000555555571347 in cgit_print_path_crumbs (path=3D<optimized ou=
-t>) at ../ui-shared.c:957
-#9=C2=A0 cgit_print_pageheader () at ../ui-shared.c:1103
-#10 0x00005555555718cf in cgit_print_layout_start () at ../ui-shared.c:863
-#11 cgit_print_error_page (code=3Dcode@entry=3D404, msg=3Dmsg@entry=3D0x555=
-55568d951 "Not found",
-=C2=A0=C2=A0=C2=A0 fmt=3Dfmt@entry=3D0x555555690f7c "Path not found") at ..=
-/ui-shared.c:852
-#12 0x0000555555575d5b in cgit_print_tree (rev=3D0x555555759450 "fuzzing",
-=C2=A0=C2=A0=C2=A0 path=3D0x55555574ff30 "Oe", '/' <repeats 198 times>...) =
-at ../ui-tree.c:382
-#13 0x0000555555561993 in process_request () at ../cgit.c:800
-#14 0x0000555555563579 in cache_process (size=3D<optimized out>, path=3D<op=
-timized out>,
-=C2=A0=C2=A0=C2=A0 key=3D<optimized out>, ttl=3D<optimized out>, fn=3Dfn@en=
-try=3D0x555555561890 <process_request>)
-=C2=A0=C2=A0=C2=A0 at ../cache.c:370
-#15 0x000055555556236f in cmd_main (argc=3D<optimized out>, argv=3D<optimiz=
-ed out>) at ../cgit.c:1161
-#16 0x000055555555ed4f in main (argc=3D2, argv=3D0x7fffffffe7e8) at common-=
-main.c:45
-
-As I understand, the issue is in ui-shared.c, cgit_print_path_crumbs():
-
-ctx.qry.path =3D p =3D path;
-while (p < end) {
-=C2=A0 if (!(q =3D strchr(p, '/')))
-=C2=A0=C2=A0=C2=A0 q =3D end;
-=C2=A0 *q =3D '\0';
-=C2=A0 html_txt("/");
-=C2=A0 cgit_self_link(p, NULL, NULL);
-=C2=A0 if (q < end)
-=C2=A0=C2=A0=C2=A0 *q =3D '/';
-=C2=A0 p =3D q + 1;
-}
-
-It attempts to print a cgit_self_link() on each subpath in the URL, resulti=
-ng in O(n^2) for n as number of subpaths in the url.
-
-### How to fix
-
-I don't really know cgit internals, so I can propose only very simple fix -=
- limit the depth of path crumbs handling, e.g.
-
-diff --git a/ui-shared.c b/ui-shared.c
-index d27a5fd..279862f 100644
---- a/ui-shared.c
-+++ b/ui-shared.c
-@@ -949,7 +949,9 @@ static void cgit_print_path_crumbs(char *path)
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ctx.qry.path =3D NULL;
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 cgit_self_link("root", NULL, NUL=
-L);
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ctx.qry.path =3D p =3D path;
--=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 while (p < end) {
-+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 int maxdepth =3D 10;
-+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 while (p < end && maxdepth > 0) {
-+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 maxdepth--;
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0 if (!(q =3D strchr(p, '/')))
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 q =3D end;
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0 *q =3D '\0';
-
-Probably this magic 10 should be defined somewhere (do not think it should =
-be configurable though). Also I don't know what is valid path depth expecte=
-d here.
-With this fix I confirm the output size is reduced to normal (8056-len URL =
-gives 50K, 34K AFL-generated one gives 204K html output).
-
-### Security implications
-
-I think this issue can be leveraged to cause Denial of Service condition on=
- the cgit server. I have tried following experiment: at the localhost start=
- 100 curl instances with reproducer (8056 one) and "--limit-rate 10K -sS >/=
-dev/null" options so they do not consume output html too fast. This results=
- in a few seconds of high CPU usage at the target server (I used 4 vCPU VM =
-from some old Core i7 mobile CPU). 100 curls cause load ~1, adding more can=
- push to 2 and so on; curls do not seem to consume much CPU themselves. I u=
-se nginx, fcgiwrap and cgit.cgi, so nginx worker process and fcgiwrap were =
-using the most of CPU, probably until all cgit output has been saved in ngi=
-nx buffer (not really sure here, but seems like nginx memory usage grows). =
-After initial CPU usage burst cgit finishes rendering and terminates, so CP=
-U usage goes down. Some clients may receive one of the two errors:
-=C2=A0 curl: (18) transfer closed with outstanding read data remaining
-=C2=A0 curl: (56) Recv failure: Connection reset by peer
-
-Most of the clients continued to work. Sometimes (especially if increasing =
-a number of clients) there are fcgiwrap failures like:
-
-[crit] 21295#21295: *1182 pwritev() "/var/lib/nginx/fastcgi/2/57/0000000572=
-" has written only 936 of 8184 while reading upstream, client: 127.0.0.1, s=
-erver: localhost, request: "GET /mycgit/tree/0/0/0/0/0/0/0/0/0/0/0/0/0/0/0/=
-0/0/0/0/0/0/0/<...cut...>/0/
-
-After applying the fix, none of the issues have been observed with 100-400 =
-curl readers at the same setup (even if throttled to 1K instead of 10K as b=
-efore, to keep connections open). CPU bursts only for a very short amount o=
-f time (mostly when 100s of curls are forked/exec'd, though slight fcgiwrap=
- CPU usage has been observed in htop too).
-
-### About the author
-
-My name is Fyodor [Wire Snark], I'm an amateur security researcher at DC783=
-1 (http://defcon-nn.ru <http://defcon-nn.ru>), our local DEF CON group in N=
-izhniy Novgorod, Russia.
-
-This report has been prepared as a result of my self-studying fuzzing with =
-AFL and LibFuzzer from LLVM and applying them to cgit. I haven't seen any s=
-uch fuzzing reported for cgit, so if you know any previous work on this, I'=
-d be glad to know (I plan to publish a blog post about my fuzzing setup and=
- these results; no crashes have been observed so far).
-
-
-Best regards,
-Wire Snark
+2022-07-14: Reported to security team
 
