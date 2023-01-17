@@ -1,88 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/13/1
-Message-ID: <20231213022220.GA541253@quokka>
-Date: Wed, 13 Dec 2023 12:22:20 +1000
-From: Peter Hutterer <peter.hutterer@...-t.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/17/2
+Message-ID: <7b3fdf01-8189-567d-bf15-ba8478eaba79@oracle.com>
+Date: Tue, 17 Jan 2023 08:47:45 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: FW: X.Org Security Advisory: Issues in X.Org X server prior to 21.1.10 and Xwayland prior to 23.2.3
+Subject: Fwd: X.Org Security Advisory: Issues handling XPM files in libXpm prior to 3.5.15
 Content-Type: text/plain; charset=utf-8
 
------ Forwarded message from Peter Hutterer <peter.hutterer@...> -----
-
-From: Peter Hutterer <peter.hutterer@...>
-Subject: X.Org Security Advisory: Issues in X.Org X server prior to 21.1.10 and
-	Xwayland prior to 23.2.3
-Date: Wed, 13 Dec 2023 12:02:10 +1000
-To: xorg-announce@...ts.x.org, xorg@...ts.x.org
-
-X.Org Security Advisory: December 13, 2023
-
-Issues in X.Org X server prior to 21.1.10 and Xwayland prior to 23.2.3
-========================================================================
-
-Multiple issues have been found in the X server and Xwayland implementations 
-published by X.Org for which we are releasing security fixes for in
-xorg-server-21.1.10 and xwayland-23.2.3.
-
-1) CVE-2023-6377 can be triggered by forcing a logical device change on a device
-with buttons which will result in an out-of-bounds memory write.
-
-2) CVE-2023-6478 can be triggered by sending a specially crafted
-request RRChangeProviderProperty or RRChangeOutputProperty. This will trigger
-an integer overflow and lead to disclosure of information.
-
-------------------------------------------------------------------------
-
-1) CVE-2023-6377: X.Org server: Out-of-bounds memory write in XKB button actions
-
-Introduced in: xorg-server-1.6.0 (2009)
-Fixed in: xorg-server-21.1.10 and xwayland-23.2.3
-Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/0c1a93d319558fe3ab2d94f51d174b4f93810afd
-Found by: Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
-
-A device has XKB button actions for each button on the device. When a logical
-device switch happens (e.g. moving from a touchpad to a mouse), the server 
-re-calculates the information available on the respective master device
-(typically the Virtual Core Pointer). This re-calculation only allocated enough
-memory for a single XKB action rather instead of enough for the newly active
-physical device's number of button. As a result, querying or changing the XKB
-button actions results in out-of-bounds memory reads and writes.
-
-This may lead to local privilege escalation if the server is run as root or
-remote code execution (e.g. x11 over ssh).
-
-xorg-server-21.1.10 and xwayland-23.2.3 have been patched to fix this issue.
+For the libXpm 3.5.15 release announcement, see:
+https://lists.x.org/archives/xorg-announce/2023-January/003313.html
 
 
-2) CVE-2023-6478: X.Org server: Out-of-bounds memory read in RRChangeOutputProperty and RRChangeProviderProperty
+-------- Forwarded Message --------
+Subject: X.Org Security Advisory: Issues handling XPM files in libXpm prior to 3.5.15
+Date: Tue, 17 Jan 2023 08:41:00 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: xorg-announce@...ts.x.org
+CC: xorg@...ts.x.org
 
-Introduced in: xorg-server-1.4.0 (2007) and xorg-server-1.13.0 (2012), respectively
-Fixed in: xorg-server-21.1.10 and xwayland-23.2.3
-Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/14f480010a93ff962fef66a16412fafff81ad632
-Found by: Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
+X.Org Security Advisory:  January 17, 2023
 
-This fixes an OOB read and the resulting information disclosure.
+Issues handling XPM files in libXpm prior to 3.5.15
+===================================================
 
-Length calculation for the request was clipped to a 32-bit integer. With
-the correct stuff->nUnits value the expected request size was
-truncated, passing the REQUEST_FIXED_SIZE check.
+Three issues have been found in the libXpm library code to read XPM files
+in libXpm 3.5.14 and earlier releases.
 
-The server then proceeded with reading at least stuff->nUnits bytes
-(depending on stuff->format) from the request and stuffing whatever it
-finds into the property. In the process it would also allocate at least
-stuff->nUnits bytes, i.e. 4GB.
+1) CVE-2022-46285: Infinite loop on unclosed comments
 
-See also CVE-2022-46344 where this issue was fixed for other requests.
+When reading XPM images from a file with libXpm 3.5.14 or older, if a
+comment in the file is not closed (i.e. a C-style comment starts with
+"/*" and is missing the closing "*/"), the ParseComment() function will
+loop forever calling getc() to try to read the rest of the comment,
+failing to notice that it has returned EOF, which may cause a denial of
+service to the calling program.
 
-xorg-server-21.1.10 and xwayland-23.2.3 have been patched to fix this issue.
+This issue was found by Marco Ivaldi of the Humanativa Group's HN Security team.
 
-------------------------------------------------------------------------
+The fix is provided in
+https://gitlab.freedesktop.org/xorg/lib/libxpm/-/commit/a3a7c6dcc3b629d7650148
+
+2) CVE-2022-44617: Runaway loop on width of 0 and enormous height
+
+When reading XPM images from a file with libXpm 3.5.14 or older, if a
+image has a width of 0 and a very large height, the ParsePixels() function
+will loop over the entire height calling getc() and ungetc() repeatedly,
+or in some circumstances, may loop seemingly forever, which may cause a denial
+of service to the calling program when given a small crafted XPM file to parse.
+
+This issue was found by Martin Ettl.
+
+The fix is provided in
+https://gitlab.freedesktop.org/xorg/lib/libxpm/-/commit/f80fa6ae47ad4a5beacb28
+and
+https://gitlab.freedesktop.org/xorg/lib/libxpm/-/commit/c5ab17bcc34914c0b0707d
+
+3) CVE-2022-4883: compression commands depend on $PATH
+
+By default, on all platforms except MinGW, libXpm will detect if a filename
+ends in .Z or .gz, and will when reading such a file fork off an uncompress
+or gunzip command to read from via a pipe, and when writing such a file will
+fork off a compress or gzip command to write to via a pipe.
+
+In libXpm 3.5.14 or older these are run via execlp(), relying on $PATH
+to find the commands.  If libXpm is called from a program running with
+raised privileges, such as via setuid, then a malicious user could set
+$PATH to include programs of their choosing to be run with those privileges.
+
+This issue was found by Alan Coopersmith of the Oracle Solaris team.
+
+The fix is provided in
+https://gitlab.freedesktop.org/xorg/lib/libxpm/-/commit/515294bb8023a45ff91669
+and
+https://gitlab.freedesktop.org/xorg/lib/libxpm/-/commit/8178eb0834d82242e1edbc
+
+libXpm 3.5.15 includes fixes for all three of these issues.  It also adds
+a new configure option --disable-open-zfile that makes it easy for people
+building libXpm to completely disable the code to fork compression and
+uncompression programs if they do not have a need for it in their use case.
 
 X.Org thanks all of those who reported and fixed these issues, and those
 who helped with the review and release of this advisory and these fixes.
 
+The X.Org security team would like to take this opportunity to remind X client
+authors that current best practices suggest separating code that requires
+privileges from the GUI, to reduce the risk of issues like CVE-2022-4883.
 
+-- 
+      -Alan Coopersmith-              alan.coopersmith@...cle.com
+        X.Org Security Response Team - xorg-security@...ts.x.org
 
------ End forwarded message -----
-
-Download attachment "signature.asc" of type "application/pgp-signature" (196 bytes)
