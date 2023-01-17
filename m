@@ -1,37 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/13/2
-Message-Id: <CRVIITTTDAQ4.1S0X86S5D7TZD@sumire>
-Date: Thu, 13 Apr 2023 11:15:38 +0200
-From: "alice" <alice@...ya.dev>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: ncurses fixes upstream
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/17/1
+Message-ID: <20230117160111.htaewnl2wmuqlgq7@yuggoth.org>
+Date: Tue, 17 Jan 2023 16:01:11 +0000
+From: Jeremy Stanley <fungi@...goth.org>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA-2023-001] Swift: Arbitrary file access through custom S3 XML entities (CVE-2022-47950)
 Content-Type: text/plain; charset=utf-8
 
-On Wed Apr 12, 2023 at 10:40 PM CEST, Jonathan Bar Or (JBO) wrote:
-> Hello oss-security,
->
-> Our team has worked with the maintainer of the ncurses library (used by several software packages in Linux) to fix several memory corruption vulnerabilities.
-> They are now fixed at commit 20230408 - see details here (https://invisible-island.net/ncurses/NEWS.html#index-t20230408)
-> A CVE was assigned (CVE-2023-29491) - it's still under a "reserved" status.
->
-> How can we ensure those fixes get deployed upstream, in major Linux distributions?
+===================================================================
+OSSA-2023-001: Arbitrary file access through custom S3 XML entities
+===================================================================
 
-having a patch that is possible to apply to ncurses would make this possible,
-since otherwise it's not possible to patch anything without just updating to the
-latest ncurses snapshot.
+:Date: January 17, 2023
+:CVE: CVE-2022-47950
 
-that said,
 
-- ncurses doesn't keep any git (or whatever) history anywhere (to my knowledge),
-  so i don't know where this would even come from
+Affects
+~~~~~~~
+- Swift: <2.28.1, >=2.29.0 <2.29.2, ==2.30.0
 
-- as someone that uses the latest snapshots, 20230401 works, but 20230408 breaks
-  some applications like tmux (when clicking with the mouse, it just exits). i
-  assume this breakage is caused by these fixes in question, but i didn't debug
-  it further.
 
-> We've reached out to Arch, RedHat, Canonical and other popular distros independently.
->
-> Thanks!
->                              JBO
+Description
+~~~~~~~~~~~
+Sébastien Meriot (OVH) reported a vulnerability in Swift's S3 XML
+parser. By supplying specially crafted XML files an authenticated user
+may coerce the S3 API into returning arbitrary file contents from the
+host server resulting in unauthorized read access to potentially
+sensitive data; this impacts both s3api deployments (Rocky or later),
+and swift3 deployments (Queens and earlier, no longer actively
+developed). Only deployments with S3 compatibility enabled are
+affected.
 
+
+Patches
+~~~~~~~
+- https://review.opendev.org/870823 (2023.1/antelope)
+- https://review.opendev.org/870828 (Wallaby)
+- https://review.opendev.org/870827 (Xena)
+- https://review.opendev.org/870826 (Yoga)
+- https://review.opendev.org/870825 (Zed)
+
+
+Credits
+~~~~~~~
+- Sébastien Meriot from OVH (CVE-2022-47950)
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1998625
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-47950
+
+
+Notes
+~~~~~
+- The stable/wallaby branch is under extended maintenance and will receive no
+  new point releases, but a patch for it is provided as a courtesy.
+
+-- 
+Jeremy Stanley
+OpenStack Vulnerability Management Team
+
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
