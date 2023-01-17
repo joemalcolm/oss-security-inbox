@@ -1,25 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/19/11
-Message-ID: <20231019203554.GA11867@test>
-Date: Thu, 19 Oct 2023 22:35:54 +0200
-From: niekt0 <niekt0@...eria.cz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/17/3
+Message-ID: <CAEih1qXOiRzcGgLeyFtQ5C04_gi5FSFHq6qJ37Tqtg=EUS8bAw@mail.gmail.com>
+Date: Tue, 17 Jan 2023 18:05:30 +0100
+From: Pietro Borrello <borrello@...g.uniroma1.it>
 To: oss-security@...ts.openwall.com
-Subject: Re: with firefox on X11, any page can pastejack you anytime
+Subject: Linux Kernel: hid: type confusions on hid report_list entry
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hi all,
 
-On Thu, Oct 19, 2023 at 05:04:10PM +0100, Sam Bull wrote:
-> On Wed, 2023-10-18 at 13:25 -0500, Grant Taylor wrote:
-> > I think that this is more a problem with X11 security than it is a 
-> > problem specific to Mozilla / Firefox.
-> 
-> Also a problem with shell security. If you paste something with line breaks into bash, it
-> executes them. If you paste the same into fish, it doesn't (it'll display the multi-line
-> input and expect you to hit the enter key to execute it as a command).
+We found potential misuses of list_entry() on lists in hid driver
+code that are not checked, specifically hid_validate_values() in
+drivers/hid/hid-core.c and bigben_probe() in drivers/hid/hid-bigbenff.c.
+Issuing a list_entry() on an empty list causes a type confusion making
+the list_entry point to the list_head itself.
+The most impactful seems the missing check for an empty list in
+hid_validate_values() which is supposed to check the validity of the
+reports themselves, potentially affecting all the drivers that rely on it.
 
-the problem with modification of "clipboard" is unfortunately much broader, than just command execution in the shell. Imagine situation like pasting a bank account number for money transfer into internetbankig web page, and some browser tab in background silently replaces the number. Or replaces the bitcoin address, to make situation more dramatic. The direct command execution is probably the most straight-forward approach, but with bit of a creativity you can come with many various attack scenarios. 
+The problem is caused by the driver's assumption that the device must
+have a valid report_list. While this will be true for all normal HID
+devices, a suitably malicious device can violate the assumption.
 
-While I agree that application isolation in X11 is a security problem, this bug/feature is bit of a new pokemon, it also breaks tab isolation within a browser itself, when used under X11.
+At a first glance, it may seem that the patches have security implications.
+However, when plugging a device which provides a descriptor with no output
+report, the type confusions will create a fake struct hid_report*
+which points to ((struct hid_device *)hid).report_enum[type].report_list.
+This, by chance, makes the type confused structure to span
+the `struct hid_report* report_id_hash[256]` array in the
+((struct hid_device *)hid).report_enum[type] field.
 
-n.
+Then, due to their semantics hid_validate_values() will check
+(report->maxfield > field_index) on the type-confused report,
+and the maxfield field happens to overlap on the
+report_id_hash[] array in the report_enum[type] field
+which are all NULL since we provided no reports.
+Similarly, for bigben_probe(), the confused report entry is
+used in the bigben_worker() function which checks
+(report->field[0] != NULL) that, again, overlaps with a NULL
+pointer.
+It seems there is a commit (918aa1ef104d: "HID: bigbenff: prevent
+null pointer dereference") which added the check for report_field
+being NULL to bigben_worker() to prevent crashing, but without
+checking the actual root cause.
+
+Thus, while being type confusions bugs, they are not exploitable.
+The list checks should be added also to prevent future exploitability
+if the shape of the structure changes (e.g., structure layout
+randomization), and they do not overlap anymore with NULL pointers.
+In this case, it is not exploitable just by the pure chance of struct
+member ordering.
+
+This post has been written in accordance with linux-distros rules to
+which we disclosed the initial findings of the potential vulnerabilities.
+as even if the bugs seem not exploitable, the wider community on
+oss-security might see how the issue does have security relevance.
+
+We submitted patches to fix the issue by checking that the lists
+are non-empty before allowing them to be used:
+https://lore.kernel.org/all/20230114-hid-fix-emmpty-report-list-v1-0-e4d02fad3ba5@diag.uniroma1.it/T/
+
+
+Best regards,
+Pietro Borrello
