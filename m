@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2138" "Tuesday" "23" "January" "2018" "22:02:15" "-0500" "Mike O'Connor" "mjo@dojo.mi.org" "<20180124030215.ugiofq23lmyurwsa@dojo.mi.org>" "56" "Re: [oss-security] How to deal with reporters who don't want their bugs fixed?" "^Date:" nil nil "1" "2018012403:02:15" "[oss-security] How to deal with reporters who don't want their bugs fixed?" (number mark "        mjo@dojo.mi. Jan 23   56/2138  " thread-indent "\"Re: [oss-security] How to deal with reporters who don't want their bugs fixed?\"\n") "<07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>" ("<07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 20333 invoked by uid 550); 24 Jan 2018 03:25:56 -0000
+Received: (qmail 27655 invoked by uid 550); 17 Jan 2023 18:11:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,78 +6,118 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18088 invoked from network); 24 Jan 2018 03:20:33 -0000
-X-PGP-Key-Fingerprint: 8F 85 89 E1 A2 FC EB D2  27 49 56 1E CC DF C9 C1
-X-Organization: noitazinagrO-X
-X-AS#: 26096
-Message-ID: <20180124030215.ugiofq23lmyurwsa@dojo.mi.org>
-References: <07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="r5dsbutuymbps6dl"
-Content-Disposition: inline
-In-Reply-To: <07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>
-X-Greylist: Sender passed SPF test, not delayed by milter-greylist-4.5.11 (angus.mystery.com [127.0.0.1]); Tue, 23 Jan 2018 22:20:20 -0500 (EST)
-Date: Tue, 23 Jan 2018 22:02:15 -0500
-From: "Mike O'Connor" <mjo@dojo.mi.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] How to deal with reporters who don't want their
- bugs fixed?
+Received: (qmail 21886 invoked from network); 17 Jan 2023 18:06:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=zL/5g5tD/ITo1G86LLL5iEldtncPtnruhMS5tn83jTs=;
+        b=OM1MCGVf/AZfm4pZbCUZO61YPX2/7MHR3f230DN2/w9XQIpk1OCztyBaFgLrs/qwcm
+         siQ/jzu7y8dZu8ZP0yzxm9OcgZdPwB7ituAyg9W3xZq46tlInfBc3HTKy5cDsqEZUaj1
+         adqv9mkdx6e4xiGnJAPQrPRHRj46C4ZWEGoTwL6bjjUucMYx2suCVx3gGp3qPQUV2Igb
+         pgLcA0DSwetmjsN8KU3leDPbic8IpGRW+FG5RmkAtuiI4VvKSfX7njoh4N4dWazP427S
+         l4y0Cj+kigrmh0906tWAX4k4w91tKzXmA9rqdt/0ASjUwxvp5sx9bRMCvj+uqRwExqih
+         B3iQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zL/5g5tD/ITo1G86LLL5iEldtncPtnruhMS5tn83jTs=;
+        b=Ob179h8Wkn94VBKECYrAzNfs+8vx0vqJz0voLxzv/HHePQcrL4W7J9wSaWV5c6bf/7
+         zvWWfi9Lb5LOtIeHlU46i6gXsXBI5JTkdrq7o9AiUsgkgqp2L9VXUedww+oH5u3+qd6o
+         H/TnPxLjYcem/r3NvLhvS4pdDI7kjSRlNAAdZWLlNOF5SS2UB3QIMQe1rrKa5kZ2Mhdb
+         aVkB6k/A+wgXkhTObalfAM0X4ydwDymOD2HLKf/N0L3Pkrxnv7yKUIhCP0LdT7an+7MZ
+         8PJLSzNkR9GBwf78Rdjw928fJpJq05nRyKz+KtPXI4BLkeh2UqOzI4bzfm6mZcitGJs6
+         N+6A==
+X-Gm-Message-State: AFqh2kpWxk/no69zz2Do9Bvg1bqMurnCuu1ic5DiDpz7rvAzDdZQODPE
+	bbCVsk9OQbVYNTDZe0NoRGx25X8Gi04=
+X-Google-Smtp-Source: AMrXdXt24+FmNZfIBR4KOkEsJ4tQLD4Fb12lilCgV1bwd58C8RI+Spfwvv46Qc3NjpSKURwUggFoQQ==
+X-Received: by 2002:a17:902:a5c6:b0:193:33d4:d509 with SMTP id t6-20020a170902a5c600b0019333d4d509mr26016776plq.30.1673978771180;
+        Tue, 17 Jan 2023 10:06:11 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From: Junio C Hamano <junio@pobox.com>
 To: oss-security@lists.openwall.com
+Cc: git-security@googlegroups.com
+References: <xmqqfscit2ct.fsf@gitster.g>
+Date: Tue, 17 Jan 2023 10:06:10 -0800
+Message-ID: <xmqqzgah8299.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] Git 2.39.1 and friends
 
---r5dsbutuymbps6dl
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The Git project released versions v2.30.7, v2.31.6, v2.32.5,
+v2.33.6, v2.34.6, v2.35.6, v2.36.4, v2.37.5, v2.38.3, and v2.39.1
+today.  These maintenance releases are to address the security
+issues identified as CVE-2022-41903 and CVE-2022-23521.
 
-:Subject says it all: What do you do if you receive a vulnerability report,
-:and the reporter requests an embargo at some time in the future because
-:that's when their paper/conference presentation/patent submission is
-:scheduled?
-:
-:The obvious approach is to find a prior public report of essentially the s=
-ame
-:bug and fix that (which will work surprisingly often), but let's assume th=
-at
-:this isn't the case.
+The tarballs are found at:
 
-Well, does the embargo add value for the consumers of the product?
-That had historically been my guideline, when I've had to make that
-call.  Will it improve the fix, documentation, delivery mechanisms,
-etc.  Sometimes, the answer is "yes".  Other times, not so much or
-it's fairly indeterminate.  You don't always know all the facts, or
-all the players, you're left with educated guessing.=20=20
+    https://www.kernel.org/pub/software/scm/git/
 
-Sometimes, you can persuade researchers to a vendor-friendly point of
-view on disclosure by simply asking them if they think this is in the
-best interests of the users.  Other times, you work with someone who
-cares more about adding a CVE and|or bounty to their resume, or they
-are disingenuous or simply incapable of keeping secrets.
+The following public repositories all have a copy of the v2.39.1
+tag, as well as the tags for older maintenance tracks for v2.30.7,
+v2.31.6, v2.32.5, v2.33.6, v2.34.6, v2.35.6, v2.36.4, v2.37.5, and
+v2.38.3.
 
-If there's evidence of open exploitation, all bets should be off and
-that should be stated up front.  At that point, of course, it ceases
-adding value.  An agreed disclosure date does not generally amount to
-an NDA or the like.
+  url = https://git.kernel.org/pub/scm/git/git
+  url = https://kernel.googlesource.com/pub/scm/git/git
+  url = git://repo.or.cz/alt-git.git
+  url = https://github.com/gitster/git
 
--Mike
+The addressed issues are:
 
---=20
- Michael J. O'Connor                                          mjo@dojo.mi.o=
-rg
- =3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=
-=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D=
---=3D
-"The defendant pleaded exterminating circumstances."       -Anguished Engli=
-sh
+ * CVE-2022-41903:
 
---r5dsbutuymbps6dl
-Content-Type: application/pgp-signature; name="signature.asc"
+   git log has the ability to display commits using an arbitrary
+   format with its --format specifiers. This functionality is also
+   exposed to git archive via the export-subst gitattribute.
 
------BEGIN PGP SIGNATURE-----
+   When processing the padding operators (e.g., %<(, %<|(, %>(,
+   %>>(, or %><( ), an integer overflow can occur in
+   pretty.c::format_and_pad_commit() where a size_t is improperly
+   stored as an int, and then added as an offset to a subsequent
+   memcpy() call.
 
-iQBVAwUBWmf3N5Eu6kwgW799AQIJegIAkz8nzufQE7SY9DHnQLjAlDiNofmvGUah
-pC2vhV+LnJaR/C++/Gc0JszwzEwTdsEycmXkKyMNcYGnAdq5FeZM0g==
-=onaS
------END PGP SIGNATURE-----
+   This overflow can be triggered directly by a user running a
+   command which invokes the commit formatting machinery (e.g., git
+   log --format=...). It may also be triggered indirectly through
+   git archive via the export-subst mechanism, which expands format
+   specifiers inside of files within the repository during a git
+   archive.
 
---r5dsbutuymbps6dl--
+   This integer overflow can result in arbitrary heap writes, which
+   may result in remote code execution.
+
+* CVE-2022-23521:
+
+    gitattributes are a mechanism to allow defining attributes for
+    paths. These attributes can be defined by adding a `.gitattributes`
+    file to the repository, which contains a set of file patterns and
+    the attributes that should be set for paths matching this pattern.
+
+    When parsing gitattributes, multiple integer overflows can occur
+    when there is a huge number of path patterns, a huge number of
+    attributes for a single pattern, or when the declared attribute
+    names are huge.
+
+    These overflows can be triggered via a crafted `.gitattributes` file
+    that may be part of the commit history. Git silently splits lines
+    longer than 2KB when parsing gitattributes from a file, but not when
+    parsing them from the index. Consequentially, the failure mode
+    depends on whether the file exists in the working tree, the index or
+    both.
+
+    This integer overflow can result in arbitrary heap reads and writes,
+    which may result in remote code execution.
+
+Credit for finding CVE-2022-41903 goes to Joern Schneeweisz of GitLab.
+An initial fix was authored by Markus Vervier of X41 D-Sec. Credit for
+finding CVE-2022-23521 goes to Markus Vervier and Eric Sesterhenn of X41
+D-Sec. This work was sponsored by OSTIF.
+
+The proposed fixes have been polished and extended to cover additional
+findings by Patrick Steinhardt of GitLab, with help from others on the
+Git security mailing list.
