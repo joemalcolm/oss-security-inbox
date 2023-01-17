@@ -1,29 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/14/3
-Message-ID: <bfd06da9-4b55-ddf4-7b51-9cda1ac57fdd@apache.org>
-Date: Thu, 14 Sep 2023 06:27:25 +0000
-From: Elad Kalif <eladkal@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/17/6
+Message-ID: <eff1e2ba-5f3c-beb7-9fb3-a94eb11309a6@apache.org>
+Date: Tue, 17 Jan 2023 19:09:18 +0000
+From: Eric Covener <covener@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-41267: Apache HDFS Provider error message suggested installation of incorrect pip package 
+Subject: CVE-2022-36760: Apache HTTP Server: mod_proxy_ajp Possible request smuggling 
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
-
-Affected versions:
-
-- Apache Airflow HDFS Provider before 4.1.1
+Severity: moderate
 
 Description:
 
-In the Apache Airflow HDFS Provider, versions prior to 4.1.1, a documentation info pointed users to an install incorrect pip package. As this package name was unclaimed, in theory, an attacker could claim this package and provide code that would be executed when this package was installed. The Airflow team has since taken ownership of the package (neutralizing the risk), and fixed the doc strings in version 4.1.1
+Inconsistent Interpretation of HTTP Requests ('HTTP Request Smuggling') vulnerability in mod_proxy_ajp of Apache HTTP Server allows an attacker to smuggle requests to the AJP server it forwards requests to.  This issue affects Apache HTTP Server Apache HTTP Server 2.4 version 2.4.54 and prior versions.
 
 Credit:
 
-AnupamAs01 (finder)
+ZeddYu_Lu from Qi'anxin Research Institute of Legendsec at Qi'anxin Group (finder)
 
 References:
 
-https://github.com/apache/airflow/pull/33813
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-41267
+https://httpd.apache.org/security/vulnerabilities_24.html
+https://httpd.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2022-36760
+
+Timeline:
+
+2022-07-12: Reported to security team
 
