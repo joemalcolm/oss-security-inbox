@@ -1,34 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/19/1
-Message-ID: <q8994647-p2o4-241s-5qso-74r84r19399r@inai.de>
-Date: Thu, 19 Oct 2023 02:42:01 +0200 (CEST)
-From: Jan Engelhardt <jengelh@...i.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/17/4
+Message-ID: <xmqqzgah8299.fsf@gitster.g>
+Date: Tue, 17 Jan 2023 10:06:10 -0800
+From: Junio C Hamano <junio@...ox.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: with firefox on X11, any page can pastejack you anytime
+Cc: git-security@...glegroups.com
+Subject: Git 2.39.1 and friends
 Content-Type: text/plain; charset=utf-8
 
+The Git project released versions v2.30.7, v2.31.6, v2.32.5,
+v2.33.6, v2.34.6, v2.35.6, v2.36.4, v2.37.5, v2.38.3, and v2.39.1
+today.  These maintenance releases are to address the security
+issues identified as CVE-2022-41903 and CVE-2022-23521.
 
-On Thursday 2023-10-19 00:31, Grant Taylor wrote:
->
-> Aside:  The thread in question brought up some interesting idea, including
-> altering how things that start with unsafe characters -- though I wonder why
-> not all files -- with `./` so the `-bob` file becomes `./-bob` when expanded.
-> --  I wondered about prefixing globing with `--` which is the de-facto don't
-> process anything after this as a command line flag.
+The tarballs are found at:
 
-Humans have a habit of specifying the most important thing first, not
-only in natural language, but also commands. This reflects in
-command, e.g. `ls -l *z --color=never`. Forgot something? `!ls
---human-readable`, there, more stuff appended to the end. Nobody
-likes to do cursor movement, and nobody likes retyping the command
-from the start to meet the POSIX pedantism that requires all options
-before the first non-option (operand).
+    https://www.kernel.org/pub/software/scm/git/
 
-For this reason, POSIXLY_CORRECT=1 is unpopluar, and so would,
-unfortunately, be your suggestion to stop option processing at a
-wildcard with an implicit "--" (which would become explicit "--" for
-the program's argv).
+The following public repositories all have a copy of the v2.39.1
+tag, as well as the tags for older maintenance tracks for v2.30.7,
+v2.31.6, v2.32.5, v2.33.6, v2.34.6, v2.35.6, v2.36.4, v2.37.5, and
+v2.38.3.
 
-The ./ suggestion has some merit, though this leads to programs
-acting differently, e.g. `tar --strip=N` .
+  url = https://git.kernel.org/pub/scm/git/git
+  url = https://kernel.googlesource.com/pub/scm/git/git
+  url = git://repo.or.cz/alt-git.git
+  url = https://github.com/gitster/git
 
+The addressed issues are:
+
+ * CVE-2022-41903:
+
+   git log has the ability to display commits using an arbitrary
+   format with its --format specifiers. This functionality is also
+   exposed to git archive via the export-subst gitattribute.
+
+   When processing the padding operators (e.g., %<(, %<|(, %>(,
+   %>>(, or %><( ), an integer overflow can occur in
+   pretty.c::format_and_pad_commit() where a size_t is improperly
+   stored as an int, and then added as an offset to a subsequent
+   memcpy() call.
+
+   This overflow can be triggered directly by a user running a
+   command which invokes the commit formatting machinery (e.g., git
+   log --format=...). It may also be triggered indirectly through
+   git archive via the export-subst mechanism, which expands format
+   specifiers inside of files within the repository during a git
+   archive.
+
+   This integer overflow can result in arbitrary heap writes, which
+   may result in remote code execution.
+
+* CVE-2022-23521:
+
+    gitattributes are a mechanism to allow defining attributes for
+    paths. These attributes can be defined by adding a `.gitattributes`
+    file to the repository, which contains a set of file patterns and
+    the attributes that should be set for paths matching this pattern.
+
+    When parsing gitattributes, multiple integer overflows can occur
+    when there is a huge number of path patterns, a huge number of
+    attributes for a single pattern, or when the declared attribute
+    names are huge.
+
+    These overflows can be triggered via a crafted `.gitattributes` file
+    that may be part of the commit history. Git silently splits lines
+    longer than 2KB when parsing gitattributes from a file, but not when
+    parsing them from the index. Consequentially, the failure mode
+    depends on whether the file exists in the working tree, the index or
+    both.
+
+    This integer overflow can result in arbitrary heap reads and writes,
+    which may result in remote code execution.
+
+Credit for finding CVE-2022-41903 goes to Joern Schneeweisz of GitLab.
+An initial fix was authored by Markus Vervier of X41 D-Sec. Credit for
+finding CVE-2022-23521 goes to Markus Vervier and Eric Sesterhenn of X41
+D-Sec. This work was sponsored by OSTIF.
+
+The proposed fixes have been polished and extended to cover additional
+findings by Patrick Steinhardt of GitLab, with help from others on the
+Git security mailing list.
