@@ -1,81 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/21/1
-Message-ID: <ZQxRYY0HLhGyn4jf@thinkstation.cmpxchg8b.net>
-Date: Thu, 21 Sep 2023 07:21:21 -0700
-From: Tavis Ormandy <taviso@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/17/5
+Message-ID: <704eda51-7f85-fb5b-d6ab-0051f24b094d@apache.org>
+Date: Tue, 17 Jan 2023 19:06:20 +0000
+From: Eric Covener <covener@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: MOV{H,L}PS instructions can fail on Genoa (Zen 4)
+Subject: CVE-2006-20001: Apache HTTP Server: mod_dav out of  bounds read, or write of zero byte 
 Content-Type: text/plain; charset=utf-8
 
-Hey, when fuzzing Genoa (AMD Zen 4) I noticed that sometimes the
-MOV{H,L}PS instructions don't seem to work? I asked AMD if they consider
-this a vulnerability, and they didn't.. so I'll just document it here
-for reference...
+Severity: moderate
 
-Quick background, these instructions load two 32-bit packed singles from the
-source operand into the low (movlps) or high (movhps) 64-bits of a vector
-register.
+Description:
 
-Consider this minimal example:
+A carefully crafted If: request header can cause a memory read, or write of a single zero byte, in a pool (heap) memory location beyond the header value sent. This could cause the process to crash.
 
-section .data
-    a: dq 0x1111111111111111
-    b: dq 0x2222222222222222
+This issue affects Apache HTTP Server 2.4.54 and earlier.
 
-section .text
-    movhps  xmm0, [rel a]
-    movlps  xmm0, [rel b]
+References:
 
+https://httpd.apache.org/security/vulnerabilities_24.html
+https://httpd.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2006-20001
 
-The result should be xmm0 has the value 0x11111111111111112222222222222222.
+Timeline:
 
-Genoa added support for AVX512, which gives you a bunch more vector
-registers, so now you can do:
+2006-10-31: Described in first edition of "The Art of Software Security Assessment"
+2022-08-10: Reported to security team
 
-    movhps  xmm28, [rel b]
-
-However, I've found that non-deterministically, when using any register
-above xmm15, previous (pipelined?) operations on other registers fail.
-
-Here is an example:
-
-section .data
-    data: dd 0x11111111, 0x22222222, 0x33333333, 0x44444444
-    zero: dd 0,0,0,0
-
-section .text
-    vmovdqu  xmm0, [rel data]
-    vmovlps  xmm1, xmm0, [rel zero]
-    vmovhps  xmm17, xmm0, [rel zero]
-
-I think the expected result would be:
-
-xmm0  = 0x44444444333333332222222211111111
-xmm1  = 0x44444444333333330000000000000000
-xmm17 = 0x00000000000000002222222211111111
-
-However, on genoa we non-deterministically get xmm1=0.
-
-I don't know the cause or where the bug is, any feedback welcome. I've
-attached a testcase (I ported it to C from a raw fuzzer generated
-testcase, hopefully it compiles consistently!).
-
-I can reproduce it with pure intrinsics too (no asm), but the output is
-not consistent across gcc versions. The attached version does use some
-inline asm.
-
-I think it should produce no output at all, but on Genoa it does sometimes
-produce output for me.
-
-Compile with:
-
-$ gcc -mavx512vl -o movhps movhps.c
-
-Tavis.
-
--- 
- _o)            $ lynx lock.cmpxchg8b.com
- /\\  _o)  _o)  $ finger taviso@....org
-_\_V _( ) _( )  @taviso
-
-View attachment "movhps.c" of type "text/plain" (1293 bytes)
