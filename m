@@ -1,43 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/23/1
-Message-ID: <CAEih1qVJxs7j7XAjjjpmK_xFit+sekDuHCOzsaExmMh6ZjG48Q@mail.gmail.com>
-Date: Mon, 23 Jan 2023 19:39:41 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/18/3
+Message-ID: <CAEih1qWG=Ww18e6j-07RKND47_xAbwvPyoyMyiiP8GgeE+fEJw@mail.gmail.com>
+Date: Wed, 18 Jan 2023 16:20:51 +0100
 From: Pietro Borrello <borrello@...g.uniroma1.it>
 To: oss-security@...ts.openwall.com
-Subject: Linux Kernel: sctp: KASLR leak in inet_diag_msg_sctpasoc_fill()
+Subject: Linux Kernel: hid: NULL pointer dereference in hid_betopff_play()
 Content-Type: text/plain; charset=utf-8
 
 Hi all,
 
-We reported a type confusion in inet_diag_msg_sctpasoc_fill() in
-net/sctp/diag.c, which uses a type confused pointer to return
-information to userspace when issuing a list_entry() on
-asoc->base.bind_addr.address_list.next when the list is empty.
+I'm disclosing a possible DoS when plugging in a malicious USB device,
+which advertises itself as a betop USB device.
 
-The list, in theory, should never be empty, but it can be when binding
-an SCTP socket with something like:
-```
-servaddr.sin6_family = AF_INET6;
-servaddr.sin6_port = htons(0);
-servaddr.sin6_scope_id = 0;
-inet_pton(AF_INET6, "::1", &servaddr.sin6_addr);
-```
+A device driver must check that the device correctly registered the
+expected inputs and reports.
+Otherwise, a malicious USB device may violate assumptions throughout
+the driver's code.
 
-And then request a connection to:
-```
-connaddr.sin6_family = AF_INET6;
-connaddr.sin6_port = htons(20000);
-connaddr.sin6_scope_id = if_nametoindex("lo");
-inet_pton(AF_INET6, "fe88::1", &connaddr.sin6_addr);
-```
-
-The impact of the type confusion is a KASLR leak since the `laddr.v6.sin6_addr`
-is returned from the type confused pointer, which overlaps with `struct
-sctp_endpoint *ep` of the `struct sctp_association`.
-
-The fix from the maintainer prevents the connection to the socket with
-unmatched scopes and will be merged soon:
-https://lore.kernel.org/linux-sctp/9fcd182f1099f86c6661f3717f63712ddd1c676c.1674496737.git.marcelo.leitner%40gmail.com/T/
+betopff_init() in the betop driver's code only checks that the device advertises
+at least 4 report values among all its fields, but hid_betopff_play() expects
+at least 4 report fields with a value each.
+A device advertising an output report with one field and 4 report values
+would pass the check but crash the kernel with a NULL pointer dereference
+in hid_betopff_play(), when accessing `betopff->report->field[2]->value[0]`.
 
 Best regards,
 Pietro Borrello
