@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2833" "Sunday" "13" "August" "2017" "18:21:55" "+0200" "Andrey Konovalov" "andreyknvl@gmail.com" "<CA+fCnZdcQGnmXULmdoEKnLd2WTO1Ubdcd8bDBD3-3TjosOjtpg@mail.gmail.com>" "72" "[oss-security] Re: Linux kernel: CVE-2017-1000112: Exploitable memory corruption due to UFO to non-UFO path switch" "^Cc:" nil nil "8" "2017081316:21:55" "[oss-security] Re: Linux kernel: CVE-2017-1000112: Exploitable memory corruption due to UFO to non-UFO path switch" (number mark "        andreyknvl@g Aug 13   72/2833  " thread-indent "\"[oss-security] Re: Linux kernel: CVE-2017-1000112: Exploitable memory corruption due to UFO to non-UFO path switch\"\n") "<CA+fCnZfFS=iSJV9ke-XtX-S8abRZHjQRL31_Hvr6W_gHhRpMqw@mail.gmail.com>" ("<CA+fCnZfFS=iSJV9ke-XtX-S8abRZHjQRL31_Hvr6W_gHhRpMqw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 15600 invoked by uid 550); 13 Aug 2017 16:22:08 -0000
+Received: (qmail 9667 invoked by uid 550); 18 Jan 2023 08:00:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,116 +6,87 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15581 invoked from network); 13 Aug 2017 16:22:07 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=2BHnffHIf+uoUj6lLk0yPts42Gg2pDaUT9szr1+H3hU=;
-        b=It83KfdVcZYvV9xZoLQRnA+iPnB7L9P6r8tMybUbCjtMqpCDwMpMIAOG7dXAeKpACC
-         IE6fBaqQB8a8dNIuQ6ikvWW8qR4MAH/6N2+ZRUGK5dKC5D1FjJ3sCsyu9d5/b7NwyGht
-         Uzl6nV3/HoCx1xJVNQ69kvPgujj03zgx2noMeHf9iAahfQwgDfqu1IiJwfDa6+RT88Xa
-         asQm7jqSFkF6hztNHayzDJp9PR2yX0E+UuHTJ9J2d20I62hO2xW4EmmP73o6/PNPCiy8
-         O9rNgpWFzaNGhMA/J8faxjG2WWnLNBPJT1RHrOyaXxdfo/UWaZlcEDN4ACoqVzzZvpIN
-         yOjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=2BHnffHIf+uoUj6lLk0yPts42Gg2pDaUT9szr1+H3hU=;
-        b=TKmhgmFkX3/NLcFzFOt5CQ4KvzEBqNqGOcuKr0dQ3mnIuXKfXT0qas78++6tkGEqkt
-         P0jvh2aHzjYDZK2Vhds/MZUPpxl7wcpuf4gAf3ljRHnF+7gZm11ZyfgEdZbGZ5hs/7UC
-         hedJVEz36xj00mET/n9Cs23cV3QPlrktf7As8zhcSNmkedW1DjVRN6odZM2sXzesVMNP
-         ANP9rI3zJRRukOZI1PPXDBf4i5Zy+ymKdQNHnX/nJB7NB9n71WNf/xD/S+4MbmxMZdTr
-         XpzUMI+B7vbuTZm0GdPfHuIKBGR6r6LnVExanMRP7a2HAgjTRITLZQsRrIS6pqdd5VMy
-         bO9A==
-X-Gm-Message-State: AHYfb5jxClkUIxJ1xqpZqI7+oxYKMj6gdCpdtAkHr6BVJ9kQ3e3NWrTo
-	FStuUOKqfNXmd12a/SINuV+xBygPH4kKSV0=
-X-Received: by 10.80.186.100 with SMTP id 33mr21085369eds.47.1502641315842;
- Sun, 13 Aug 2017 09:21:55 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CA+fCnZfFS=iSJV9ke-XtX-S8abRZHjQRL31_Hvr6W_gHhRpMqw@mail.gmail.com>
-References: <CA+fCnZfFS=iSJV9ke-XtX-S8abRZHjQRL31_Hvr6W_gHhRpMqw@mail.gmail.com>
-Message-ID: <CA+fCnZdcQGnmXULmdoEKnLd2WTO1Ubdcd8bDBD3-3TjosOjtpg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: willemdebruijn.kernel@gmail.com, Dmitry Vyukov <dvyukov@google.com>, 
-	Kostya Serebryany <kcc@google.com>
-Date: Sun, 13 Aug 2017 18:21:55 +0200
-From: Andrey Konovalov <andreyknvl@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Linux kernel: CVE-2017-1000112: Exploitable memory corruption due
- to UFO to non-UFO path switch
+Received: (qmail 9647 invoked from network); 18 Jan 2023 08:00:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SuzdBM6jdOzk6DMyfw0iRpBJHbEMsA5TeSmQbZ7juBQ=;
+        b=DtNxLx8Jo1FLar344EvhsVZIfKbooJEH6OCwiO1z8dbtOdiaAfo3Cwd+8mRpaq5G6v
+         KCq8cna8zWBt928W6xH2tj7AIKL4w0wWvjcxTPJPkSxs/jE2Da7kzSSS396NCrqLZdXp
+         YrCBDK871SjaJbJEWGuXtTBsrPY+A6PO/j4Imu8qCBTwcqQ1Xbn9Uxj9geqkK0gKCtoD
+         UNaSOQILysZYYY+AwdbSgNuCj2RLZ8bD8KUek1JwsmvApbZQgMpkfqIXhp+8DJG006DQ
+         sru65R3uHjBrQhLBS5NWta1j4rxfvOe7mLYiewM5VXKR20MVAtyr018glMPiWqi83EgI
+         Z2Tg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=SuzdBM6jdOzk6DMyfw0iRpBJHbEMsA5TeSmQbZ7juBQ=;
+        b=Sbzvebd4XGwaBeNEg9N5zlMj5IW8/WemnlmHLZNoWUK+t3tkSN+T5Zt+zn1pu3iJmV
+         oH8ch2uKhygkXaeOiG+eLFkKmNvaElhcoQrZvuRMbEUqZKzAt8cjhoz12xujlCLhcNOf
+         DgrmOkQAkQwULj6I/+7OZ4DR2RQagw+fFeRxiM3weyun6RrXwnQjXTdCTEgvN9wxacVF
+         jrJDIZhVGLdzokBP0jHRr80UCMzQfUAqdGeGy93DOEqdBgrAua4l/33Kthj/7RtteGkb
+         2qD75VkMRjHHobakqsITWbsDa/s4y8ct9DX2Faw5aWTs6AWJ+jyv9QXw6bxpNDoUpUtR
+         nZvQ==
+X-Gm-Message-State: AFqh2koFq6eP/YZwsspr1MjTTL9E9f9a3lfOGZ3qhW+lk78czcX9pXUI
+	TwZ2dQN7kHCaoQoxOcylgSvAP8u1ilXpAQ==
+X-Google-Smtp-Source: AMrXdXt3KNbwLy09utHe5t3nXn7oinOfORGjbMXm9L/unKNUSO82iWaIc8skTnp4aP1DoaL/Go0BVA==
+X-Received: by 2002:a17:907:76da:b0:7c1:1dc7:8837 with SMTP id kf26-20020a17090776da00b007c11dc78837mr6110348ejc.66.1674028822592;
+        Wed, 18 Jan 2023 00:00:22 -0800 (PST)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Wed, 18 Jan 2023 09:00:20 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
 To: oss-security@lists.openwall.com
+Message-ID: <Y8enFHfWv5LQ8Whx@eldamar.lan>
+References: <CAO15rPk6Uh6ZqZ=c8yjz0=53DqXQKF=fSXqDo9dLdMAy7-YS3g@mail.gmail.com>
+ <Y8A+/ys+5oIRzr9V@kroah.com>
+ <Y8BednLm17osifo0@gentoo.org>
+ <Y8EvnDtwz6Hlq/Qs@kroah.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y8EvnDtwz6Hlq/Qs@kroah.com>
+Subject: Re: [oss-security] CVE-2023-0122: Linux kernel: Pre-Auth Remote DoS
+ in NVMe
 
-On Thu, Aug 10, 2017 at 10:55 PM, Andrey Konovalov <andreyknvl@gmail.com> wrote:
-> Hi!
->
-> syzkaller found an exploitable memory corruption in UFO code in the
-> Linux kernel, the details are below.
->
-> ### Bug details
->
-> When building a UFO packet with MSG_MORE __ip_append_data() calls
-> ip_ufo_append_data() to append. However in between two send() calls,
-> the append path can be switched from UFO to non-UFO one, which leads
-> to a memory corruption.
->
-> In case UFO packet lengths exceeds MTU, copy = maxfraglen - skb->len
-> becomes negative on the non-UFO path and the branch to allocate new
-> skb is taken. This triggers fragmentation and computation of fraggap =
-> skb_prev->len - maxfraglen. Fraggap can exceed MTU, causing copy =
-> datalen - transhdrlen - fraggap to become negative. Subsequently
-> skb_copy_and_csum_bits() writes out-of-bounds.
->
-> A similar issue is present in IPv6 code.
->
-> The bug was introduced in e89e9cf539a2 ("[IPv4/IPv6]: UFO
-> Scatter-gather approach") on Oct 18 2005.
->
-> The fix has been submitted to netdev [1] and should be committed to
-> mainline and to stable kernels soon. David has also sent an RFC series
-> to remove UFO completely [2], which should be merged in 4.14.
->
-> If unprivileged user namespaces are available, this bug can be
-> exploited to gain root privileges. I'll share the details and the
-> exploit in a few days.
->
-> Thanks!
->
-> ### Timeline
->
-> 2017.08.03 - Bug reported to security@kernel.org
-> 2017.08.04 - Bug reported to linux-distros@
-> 2017.08.10 - Patch submitted to netdev
-> 2017.08.10 - Announcement on oss-security@
->
-> ### Links
->
-> [1] https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=85f1bd9a7b5a79d5baa8bf44af19658f7bf77bfa
->
-> [2] https://www.spinics.net/lists/netdev/msg443815.html
+Hi
 
-### Exploitation
+On Fri, Jan 13, 2023 at 11:17:00AM +0100, Greg KH wrote:
+> On Thu, Jan 12, 2023 at 01:24:38PM -0600, John Helmert III wrote:
+> > On Thu, Jan 12, 2023 at 06:10:23PM +0100, Greg KH wrote:
+> > > On Thu, Jan 12, 2023 at 04:12:30PM +0200, Tal Lossos wrote:
+> > > > Hi all,
+> > > > 
+> > > > # Description
+> > > > A NULL Pointer Dereference bug in nvmet_setup_auth
+> > > > (drivers/nvme/target/auth.c) can be triggered remotely to cause a DoS.
+> > > > Since the bug occurs in the authentication feature, it can be easily
+> > > > triggered by an unauthorized client in the pre-auth stage.
+> > > > Versions affected - v6.0-rc1 to v6.0-rc3 (fixed in v6.0-rc4).
+> > > 
+> > > Meta-comment, why are CVE's being assigned for issues found, and then
+> > > fixed, in development kernel releases?  Who assigned this CVE, MITRE or
+> > > someone else?
+> > 
+> > This information used to be available for "reserved" CVEs in the JSON
+> > data in [1], but now that that's retired I'm not sure this is made
+> > public anywhere.
+> > 
+> > [1] https://github.com/CVEProject/cvelistV5
+> 
+> So if we don't know who allocated it, we can't know who to ask to get it
+> revoked?
 
-The bug can be exploited by an unprivileged user if:
+According to the CVE entry now published, the assignerShortName is
+"redhat" so the contact to discuss to possibly reject the CVE would be
+https://www.cve.org/PartnerInformation/ListofPartners/partner/redhat
+(see CNA contact email).
 
-1. User can set up an interface with UFO enabled and MTU < 65535 or
-such interface is already present in the system. The former is
-possible from inside a user namespace.
+Hope this helps,
 
-2. User can disable the NETIF_F_UFO interface feature or set the
-SO_NO_CHECK socket option. The former requires CAP_NET_ADMIN. The
-latter is only possible after 40ba330227ad ("udp: disallow UFO for
-sockets with SO_NO_CHECK option") from Jan 11 2016. Both are possible
-from inside a user namespace.
-
-In particular, the bug can be exploited by an unprivileged user if
-unprivileged user namespaces are available.
-
-Below is a link to a proof-of-concept exploit, that gets root on a
-range of Ubuntu kernels. The exploit triggers an out-of-bounds write
-on a socket buffer and overwrites
-skb_shared_info.destructor_arg->callback with a pointer to shellcode.
-The exploit includes a SMEP and KASLR bypasses, but no SMAP bypass.
-
-Link: https://github.com/xairy/kernel-exploits/blob/master/CVE-2017-1000112/poc.c
+Regards,
+Salvatore
