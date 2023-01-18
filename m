@@ -1,4 +1,4 @@
-Received: (qmail 28310 invoked by uid 550); 7 Nov 2024 21:21:55 -0000
+Received: (qmail 30502 invoked by uid 550); 18 Jan 2023 08:32:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,126 +7,180 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 6085 invoked from network); 7 Nov 2024 21:04:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sdaoden.eu;
- s=citron; t=1731013461; x=1731680127; h=date:author:from:to:subject:
-  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
-  mime-version:content-type:content-transfer-encoding:author:from:subject:
-  date:to:cc:resent-author:resent-date:resent-from:resent-sender:resent-to:
-  resent-cc:resent-reply-to:resent-message-id:in-reply-to:references:
-  mime-version:content-type:content-transfer-encoding:content-disposition:
-  content-id:content-description:message-id:mail-followup-to:openpgp:
-  blahblahblah; bh=+Z+j55KdhEuz/yZBxNTpmFU+/fOi+1tjfDVBDvpzFH0=;
- b=kIdrr69LmwOXNdiib/f+0iJ1ppkcOf5t87gtMHpDG5cBq+95He4KjNS9UuTiZ3rGP09v90k8
-  8XvQ/TBQ94p61iRXPVytZwgiVD0KysRSOoItZGVC8l+hyzBBrxF1y7r64AvFNowx4STiG85THC
-  2nWIM0CrstgY4V8xNZYwU4eNYvKD7DZlP0CGwGJuHSIZ2fj1v989rd7BW966b5ryyiCdojxjia
-  WKk+q848JduGHkSK9J5ETelk6VuGfyPM5e2/T9rzL2qG/8WRKDrQKdmSc0KzT91hOTgk+gn3Od
-  nchc1wbqJNuoG7bVsmc7cuHzGRny7aP2A/YkBPbWWbQtqQ9Q==
-DKIM-Signature: v=1; a=adaed25519-sha256; c=relaxed/relaxed; d=sdaoden.eu;
- s=orange; t=1731013461; x=1731680127; h=date:author:from:to:subject:
-  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
-  mime-version:content-type:content-transfer-encoding:author:from:subject:
-  date:to:cc:resent-author:resent-date:resent-from:resent-sender:resent-to:
-  resent-cc:resent-reply-to:resent-message-id:in-reply-to:references:
-  mime-version:content-type:content-transfer-encoding:content-disposition:
-  content-id:content-description:message-id:mail-followup-to:openpgp:
-  blahblahblah; bh=+Z+j55KdhEuz/yZBxNTpmFU+/fOi+1tjfDVBDvpzFH0=;
- b=O/ThTog6vys1LlVLNS97oxE6hyaUUdhFXLAFMqLoN5FciSby3ysCPgP31g4jkAscgERJSsqO
-  5cGsH6iQxuuUAA==
-Date: Thu, 07 Nov 2024 22:04:20 +0100
-Author: Steffen Nurpmeso <steffen@sdaoden.eu>
-From: Steffen Nurpmeso <steffen@sdaoden.eu>
-To: oss-security@lists.openwall.com
-Message-ID: <20241107210420.v7ZcHYHZ@steffen%sdaoden.eu>
-In-Reply-To: <20241107041658.GA10363@openwall.com>
-References: <20241106041215.GA4432@openwall.com>
- <F60236E0-F65A-4441-9E62-64EE55016B2C@dwheeler.com>
- <20241107000819.z6Ygg103@steffen%sdaoden.eu>
- <20241107041658.GA10363@openwall.com>
-Mail-Followup-To: oss-security@lists.openwall.com
-User-Agent: s-nail v14.9.25-623-g805238bd9b
-OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
- url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
-BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
- the world can make no bugs.
+Received: (qmail 17531 invoked from network); 18 Jan 2023 06:11:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=x9ASWWrSQROGLIkq/ASoNXgf2O+Qo1jW9L3Ama767D8=;
+        b=Pyv4HoX+K/i/deA138hWDMEkY9/4eyBFrxQKQVj3lryv0o/eA+GjuWJBPAc+FbMrd7
+         1cCAiomfa1U1XBPjSaPNLgNum5B3LQOuXUzYdPwI8NvRBIVhyPOM2F9++poYxGXdcnRk
+         11nOdCx6T09NeMJjSzNjIgeh6u6YR/TxHkC5nQz8wcWUIvMc08PbKce4VpOCOtUUs1f+
+         3jBQ3RutT1X85W/gwbuGhgcKsr1ImQYmy2Sf59Y+Y5ObnNUcpOodB4y7XHNPHQebKAhf
+         jI/ghAtwZJSDV7z5q0XQqtmLLluBnqkFbRPFmnABvBG4h8edVSRdtjS97s1ALFr/0M8P
+         em2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=x9ASWWrSQROGLIkq/ASoNXgf2O+Qo1jW9L3Ama767D8=;
+        b=PKyx6CDDjmSm3YXWD/WxTHNRd/FpBKX84kZEQGu+f78umFhw8m7cRdm9pxhwUgO5vk
+         oVqXgkNzLgBkAR/W5X61sunVUA531TYWQbX4bTPPUxyDV8FgJShU2mSW3sDKA1xk4M28
+         wAVAO22wjiDtmGcFKyZbcPLNNcNBf+oyTmn4k63SnAsguFXldCPoD1L27SMqlepk9qBR
+         pcuGn/w16qdSmhOAs/ipoKxqI4QJA1EKiprQ9DUB/IK0FBXeXJ2hBX099uufQVa+Lqqg
+         Gae3sx8+32yWmIKaK37aZ082z53ZAtlwFWhDlBHe0w4O+gqeVaIAcWIAXLIjIxjyl//x
+         kjgA==
+X-Gm-Message-State: AFqh2koxD9D2g+yVPdDtevYOjJxUYsioA3SnUrxuCIxo5PmJe/S5X9H3
+	/wOW4D7WAUk1oFMALCQ03D0vck+K92j5JHZCYEiM1IWYANIzJQ==
+X-Google-Smtp-Source: AMrXdXspbP5EYg93g/vVurEE9sn4maz+aFm4tRZB4Ezd8ieHpZ/UUXDfNbVigPqyJx2wLynEAYMLQl578DmAuiIIx/s=
+X-Received: by 2002:a5d:440b:0:b0:2be:3b3:ae31 with SMTP id
+ z11-20020a5d440b000000b002be03b3ae31mr160508wrq.107.1674022305408; Tue, 17
+ Jan 2023 22:11:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] shell wildcard expansion (un)safety
+From: Kyle Zeng <zengyhkyle@gmail.com>
+Date: Tue, 17 Jan 2023 23:11:09 -0700
+Message-ID: <CADW8OBuhuCTq-MvcFuAxOc6pWrkmOd-mwV9yasNRfbnD9s85-g@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] null pointer dereference in Linux kernel
 
-Solar Designer wrote in
- <20241107041658.GA10363@openwall.com>:
- |On Thu, Nov 07, 2024 at 01:08:19AM +0100, Steffen Nurpmeso wrote:
- |> David A. Wheeler wrote in
- |>  <F60236E0-F65A-4441-9E62-64EE55016B2C@dwheeler.com>:
- |>|> On Nov 5, 2024, at 11:12 PM, Solar Designer <solar@openwall.com> wrot=
-e:
- |>|
- |>|> ... over the years we gained things like ...
- |>|>=20
- |>|> find . -mindepth 1 -maxdepth 1 -type f -print0 | xargs -0 grep text --
- |>|
- |>|The "-print0" and "-0" options have been widely implemented, but
- |>|POSIX 2024 finally formally adds them. So I urge using them where they
- |>|make sense, as they counter embedded linefeed characters in filenames.
- |>=20
- |> To add that the POSIX core developers mention (APPLICATION USAGE):
- |>=20
- |>   It should be noted that using find with -print0 to pipe input to
- |>   xargs -r0 is less safe than using find with -exec because if
- |>   find -print0 is terminated after it has written a partial
- |>   pathname, the partial pathname may be processed as if it was
- |>   a complete pathname.
- |
- |Shouldn't that behavior be treated as an xargs implementation bug or at
- |least shortcoming, and fixed as such?  I hope POSIX doesn't require it?
+Hi there,
 
-Now, i am not a POSIX core developer.  POSIX.1-2024 was developed
-for over a decade (even almost one and a half) with many hundreds
-of issues fixed through discussions in regular meetings.
-A first thought is that the now really included (four decades too
-late!) sh(1)ell's "pipefail" option was agreed upon long after the
-text above appeared for the -print0/-r0 addition.  If that is true
-the above text is anyway a correct statement less the partial
-pathname because the undesired "termination" will not be reflected
-in the exit status of the pipe.
+I recently found a null pointer dereference in Linux kernel that
+affects multiple kernel versions. According to the versions that got
+patched, the vulnerability affects 6.1, 5.15, 5.10, 5.4, and 4.19.
 
- |In other words, if the input stream to "xargs -0" doesn't end in a NUL,
- |xargs must not process the last maybe-partial string.  I've just checked
+[Root Cause Analysis]
+The bug is in "rawv6_push_pending_frames" function in net/ipv6/raw.c.
+According to Herbert Xu, who fixed the bug, the root cause is that
+"total_len = inet_sk(sk)->cork.base.length" in this function also
+counts the length of the extension header (+ the amount of valid data
+in the socket cork queue). In the vulnerable version of the function,
+it directly uses the length as the amount of data in the cork queue.
+In the following code:
 
-Other than that i would agree.
+    struct sk_buff *csum_skb = NULL;
+    ...
+    skb_queue_walk(&sk->sk_write_queue, skb) {
+        ...
+        if (offset >= len) {
+            offset -= len;
+            continue;
+        }
+        csum_skb = skb;
+    }
+    skb = csum_skb;
 
- |GNU findutils xargs (not the latest version, though) and it does have
- |this problem - something we'd want to fix?
+If the `offset` is larger than the amount of data in the socket cork
+queue but smaller than valid data length + extension header length,
+then the loop shown above will always enter the "if (offset >= len)"
+branch. As a result, csum_skb will never be set. Consequently, the
+final skb variable will be set to NULL.
 
-=46rom a glance "git show master:findutils/xargs.c::process0_stdin()"
-of busybox also does
+Null dereference happens in the following "skb_transport_offset(skb);" call.
 
-                int c =3D getchar();
-                if (c =3D=3D EOF) {
-                        if (p =3D=3D s)
-                                goto ret;
-                        c =3D '\0';
-                }
-                *p++ =3D c;
-                if (c =3D=3D '\0') {   /* NUL or EOF detected */
+[Patch]
+I have contacted Linux kernel team and helped them prepare a patch.
+The patch to this bug has been merged into the mainline and stable
+trees: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=cb3e9864cdbe35ff6378966660edbcbac955fe17
 
- ...
+This bug does not have a CVE number assigned yet. I'll appreciate it
+if someone from the list can give it a CVE number to notify other
+vendors about its security implication.
 
-So then the above paragraph even reflects code reality.
+A crash report is attached to the email. And a poc that triggers oops
+can be found here:
+https://lore.kernel.org/netdev/Y7s%2FFofVXLwoVgWt@westworld/
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
-|
-|And in Fall, feel "The Dropbear Bard"s ball(s).
-|
-|The banded bear
-|without a care,
-|Banged on himself fore'er and e'er
-|
-|Farewell, dear collar bear
+Best,
+Kyle Zeng
+
+
+=====================================
+general protection fault, probably for non-canonical address
+0xdffffc0000000018: 0000 [#1] SMP KASAN PTI
+KASAN: null-ptr-deref in range [0x00000000000000c0-0x00000000000000c7]
+CPU: 0 PID: 619 Comm: syz-executor390 Not tainted 5.10.140+ #1
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+RIP: 0010:skb_transport_header include/linux/skbuff.h:2500 [inline]
+RIP: 0010:skb_transport_offset include/linux/skbuff.h:2606 [inline]
+RIP: 0010:rawv6_push_pending_frames net/ipv6/raw.c:593 [inline]
+RIP: 0010:rawv6_sendmsg+0x4368/0x5db0 net/ipv6/raw.c:956
+Code: e8 cd ca e0 fb e9 51 fe ff ff e8 c3 7b 61 fb 49 89 dd 48 bd 00
+00 00 00 00 fc ff df 49 8d bd c0 00 00 00 48 89 f8 48 c1 e8 03 <80> 3c
+28 00 74 05 e8 bd ca e0 fb 49 8b 9d c0 00 00 00 49 8d bd b2
+RSP: 0018:ffff888013ddf7e8 EFLAGS: 00010206
+RAX: 0000000000000018 RBX: 0000000000000000 RCX: ffff888011f05500
+RDX: 0000000000000000 RSI: 0000000000000004 RDI: 00000000000000c0
+RBP: dffffc0000000000 R08: dffffc0000000000 R09: ffffed10027a9afc
+R10: 0000000000000000 R11: 0000000000000000 R12: 00000000479c45b8
+R13: 0000000000000000 R14: ffff888013d4d800 R15: 00000000000000d8
+FS:  00005555560ca3c0(0000) GS:ffff88806b800000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000020001000 CR3: 000000000eb5a002 CR4: 0000000000170ef0
+Call Trace:
+ sock_sendmsg_nosec net/socket.c:651 [inline]
+ sock_sendmsg net/socket.c:671 [inline]
+ kernel_sendmsg+0x20a/0x230 net/socket.c:691
+ sock_no_sendpage+0xde/0x130 net/core/sock.c:2852
+ kernel_sendpage+0x4c8/0x530 net/socket.c:3514
+ sock_sendpage+0x83/0xb0 net/socket.c:944
+ pipe_to_sendpage+0x4c0/0x630 fs/splice.c:364
+ splice_from_pipe_feed fs/splice.c:418 [inline]
+ __splice_from_pipe+0x655/0xf60 fs/splice.c:562
+ splice_from_pipe fs/splice.c:597 [inline]
+ generic_splice_sendpage+0x132/0x1a0 fs/splice.c:743
+ do_splice_from fs/splice.c:764 [inline]
+ do_splice+0x1ea8/0x2da0 fs/splice.c:1057
+ __do_splice fs/splice.c:1135 [inline]
+ __do_sys_splice fs/splice.c:1341 [inline]
+ __se_sys_splice+0x935/0xdc0 fs/splice.c:1323
+ do_syscall_64+0x13a/0x160 arch/x86/entry/common.c:46
+ entry_SYSCALL_64_after_hwframe+0x61/0xc6
+RIP: 0033:0x7f111d8c47dd
+Code: c3 e8 e7 22 00 00 0f 1f 80 00 00 00 00 f3 0f 1e fa 48 89 f8 48
+89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d
+01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007fff0105cb48 EFLAGS: 00000246 ORIG_RAX: 0000000000000113
+RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 00007f111d8c47dd
+RDX: 0000000000000005 RSI: 0000000000000000 RDI: 0000000000000003
+RBP: 00007fff0105cb80 R08: 000000000804ffe2 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 000000000000bbd1 R14: 00007fff0105cb64 R15: 00007fff0105cb70
+Modules linked in:
+---[ end trace 66de936c85813c54 ]---
+RIP: 0010:skb_transport_header include/linux/skbuff.h:2500 [inline]
+RIP: 0010:skb_transport_offset include/linux/skbuff.h:2606 [inline]
+RIP: 0010:rawv6_push_pending_frames net/ipv6/raw.c:593 [inline]
+RIP: 0010:rawv6_sendmsg+0x4368/0x5db0 net/ipv6/raw.c:956
+Code: e8 cd ca e0 fb e9 51 fe ff ff e8 c3 7b 61 fb 49 89 dd 48 bd 00
+00 00 00 00 fc ff df 49 8d bd c0 00 00 00 48 89 f8 48 c1 e8 03 <80> 3c
+28 00 74 05 e8 bd ca e0 fb 49 8b 9d c0 00 00 00 49 8d bd b2
+RSP: 0018:ffff888013ddf7e8 EFLAGS: 00010206
+RAX: 0000000000000018 RBX: 0000000000000000 RCX: ffff888011f05500
+RDX: 0000000000000000 RSI: 0000000000000004 RDI: 00000000000000c0
+RBP: dffffc0000000000 R08: dffffc0000000000 R09: ffffed10027a9afc
+R10: 0000000000000000 R11: 0000000000000000 R12: 00000000479c45b8
+R13: 0000000000000000 R14: ffff888013d4d800 R15: 00000000000000d8
+FS:  00005555560ca3c0(0000) GS:ffff88806b800000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000020001000 CR3: 000000000eb5a002 CR4: 0000000000170ef0
+----------------
+Code disassembly (best guess):
+   0: e8 cd ca e0 fb        call   0xfbe0cad2
+   5: e9 51 fe ff ff        jmp    0xfffffe5b
+   a: e8 c3 7b 61 fb        call   0xfb617bd2
+   f: 49 89 dd              mov    %rbx,%r13
+  12: 48 bd 00 00 00 00 00 movabs $0xdffffc0000000000,%rbp
+  19: fc ff df
+  1c: 49 8d bd c0 00 00 00 lea    0xc0(%r13),%rdi
+  23: 48 89 f8              mov    %rdi,%rax
+  26: 48 c1 e8 03          shr    $0x3,%rax
+* 2a: 80 3c 28 00          cmpb   $0x0,(%rax,%rbp,1) <-- trapping instruction
+  2e: 74 05                je     0x35
+  30: e8 bd ca e0 fb        call   0xfbe0caf2
+  35: 49 8b 9d c0 00 00 00 mov    0xc0(%r13),%rbx
+  3c: 49                    rex.WB
+  3d: 8d                    .byte 0x8d
+  3e: bd                    .byte 0xbd
+  3f: b2                    .byte 0xb2
