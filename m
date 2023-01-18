@@ -1,36 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/21/2
-Message-ID: <f244bc0d-3df7-39c6-73a1-25a38b2e16f8@apache.org>
-Date: Sun, 21 May 2023 08:12:21 +0000
-From: Charles Zhang <dockerzhang@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/18/1
+Message-ID: <Y8enFHfWv5LQ8Whx@eldamar.lan>
+Date: Wed, 18 Jan 2023 09:00:20 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-31062: Apache InLong: Privilege escalation vulnerability for InLong 
+Subject: Re: CVE-2023-0122: Linux kernel: Pre-Auth Remote DoS in NVMe
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+Hi
 
-Affected versions:
+On Fri, Jan 13, 2023 at 11:17:00AM +0100, Greg KH wrote:
+> On Thu, Jan 12, 2023 at 01:24:38PM -0600, John Helmert III wrote:
+> > On Thu, Jan 12, 2023 at 06:10:23PM +0100, Greg KH wrote:
+> > > On Thu, Jan 12, 2023 at 04:12:30PM +0200, Tal Lossos wrote:
+> > > > Hi all,
+> > > > 
+> > > > # Description
+> > > > A NULL Pointer Dereference bug in nvmet_setup_auth
+> > > > (drivers/nvme/target/auth.c) can be triggered remotely to cause a DoS.
+> > > > Since the bug occurs in the authentication feature, it can be easily
+> > > > triggered by an unauthorized client in the pre-auth stage.
+> > > > Versions affected - v6.0-rc1 to v6.0-rc3 (fixed in v6.0-rc4).
+> > > 
+> > > Meta-comment, why are CVE's being assigned for issues found, and then
+> > > fixed, in development kernel releases?  Who assigned this CVE, MITRE or
+> > > someone else?
+> > 
+> > This information used to be available for "reserved" CVEs in the JSON
+> > data in [1], but now that that's retired I'm not sure this is made
+> > public anywhere.
+> > 
+> > [1] https://github.com/CVEProject/cvelistV5
+> 
+> So if we don't know who allocated it, we can't know who to ask to get it
+> revoked?
 
-- Apache InLong 1.2.0 through 1.6.0
+According to the CVE entry now published, the assignerShortName is
+"redhat" so the contact to discuss to possibly reject the CVE would be
+https://www.cve.org/PartnerInformation/ListofPartners/partner/redhat
+(see CNA contact email).
 
-Description:
+Hope this helps,
 
-Improper Privilege Management Vulnerabilities in Apache Software Foundation Apache InLong.This issue affects Apache InLong: from 1.2.0 through 1.6.0.  When the attacker has access to a valid (but unprivileged) account, the exploit can be executed using Burp Suite by sending a login
-request and following it with a subsequent HTTP request
-using the returned cookie.
-
-Users are advised to upgrade to Apache InLong's 1.7.0 or cherry-pick [1] to solve it.
-
-
-
-[1]  https://github.com/apache/inlong/pull/7836 https://github.com/apache/inlong/pull/7836
-
-Credit:
-
-escape Wang (finder)
-
-References:
-
-https://inlong.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-31062
-
+Regards,
+Salvatore
