@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2192" "Thursday" "7" "September" "2017" "21:38:11" "+0100" "Simon McVittie" "smcv@debian.org" "<20170907203811.bnzbtjq4c56cgxgw@perpetual.pseudorandom.co.uk>" "48" "Re: [oss-security] CVE-2017-12847: nagios-core privilege escalation via PID file manipulation" "^Date:" nil nil "9" "2017090720:38:11" "[oss-security] CVE-2017-12847: nagios-core privilege escalation via PID file manipulation" (number mark "        smcv@debian. Sep  7   48/2192  " thread-indent "\"Re: [oss-security] CVE-2017-12847: nagios-core privilege escalation via PID file manipulation\"\n") "<877exa8oap.fsf@fifthhorseman.net>" ("<f28badcd-c805-3fa5-5a1f-cd65c4899885@orlitzky.com>" "<87wp63jgxn.fsf@fifthhorseman.net>" "<2199434f-d7b6-0d01-9fbc-ed2d013a09d3@orlitzky.com>" "<87ingva5rf.fsf@fifthhorseman.net>" "<fb6b7e2d-977d-7eae-346e-a638f806bf34@orlitzky.com>" "<20170907151829.lff5etqqtwceqvq4@perpetual.pseudorandom.co.uk>" "<877exa8oap.fsf@fifthhorseman.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 5506 invoked by uid 550); 7 Sep 2017 20:38:49 -0000
+Received: (qmail 3185 invoked by uid 550); 18 Jan 2023 16:18:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,72 +6,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5488 invoked from network); 7 Sep 2017 20:38:48 -0000
-Message-ID: <20170907203811.bnzbtjq4c56cgxgw@perpetual.pseudorandom.co.uk>
-References: <f28badcd-c805-3fa5-5a1f-cd65c4899885@orlitzky.com>
- <87wp63jgxn.fsf@fifthhorseman.net>
- <2199434f-d7b6-0d01-9fbc-ed2d013a09d3@orlitzky.com>
- <87ingva5rf.fsf@fifthhorseman.net>
- <fb6b7e2d-977d-7eae-346e-a638f806bf34@orlitzky.com>
- <20170907151829.lff5etqqtwceqvq4@perpetual.pseudorandom.co.uk>
- <877exa8oap.fsf@fifthhorseman.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <877exa8oap.fsf@fifthhorseman.net>
-User-Agent: NeoMutt/20170609 (1.8.3)
-Date: Thu, 7 Sep 2017 21:38:11 +0100
-From: Simon McVittie <smcv@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2017-12847: nagios-core privilege escalation
- via PID file manipulation
+Received: (qmail 29764 invoked from network); 18 Jan 2023 15:21:14 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diag.uniroma1.it; s=google;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=6YL+7AiOClg9MVDsTpbyF5dS7uBtPGXeTYqHEdIAlAc=;
+        b=XeLtmm2if0+kHFapiVRL+9v9Yr+uUBpJh3h0HtfmEMhaVKzM55aWmUd2TVQcwlzyLg
+         kR9vEUCaukQynOxcl2PYwP8R+etC+0mH1ktHVY2cQufrIYHiTQipgPGxqP6VKwSOfX5P
+         MvD/7BWuXlv2OgtYNlk/mOceav94GTzZXfR2w=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6YL+7AiOClg9MVDsTpbyF5dS7uBtPGXeTYqHEdIAlAc=;
+        b=UPO5Z9BBiLm9zLhgqWUfRNOyLbGUH4IApyd/bpQgD5kc46mZYsiBXbAjTvcjpLMXGg
+         cDSbKIDmiAmTFczeUZCeihWCOKLv+x6w70GmMWbHkcSAufT9RQ3TxbRqSgHWsYBthIC+
+         MK6s/QKq5Ck5i4avBjWlJ+sq5qCTH2jiErUEbSPGzT9LIKUY8L9ciA49vfS14HRJV+lW
+         /IZOfT+cPbfVulknabkSrMGUYpObyitdYwZe/p/sF+ATVNpO3z8gTdHrPOVOQ67Ly448
+         mWS+Qf27SZhQcgRgFEnza2KFA/8bL+VySu11pD7RbN/DdKVZeA1r2EtcJbp1hfFb45+I
+         OFSA==
+X-Gm-Message-State: AFqh2kqiwc+3V0wyIiLDpt3GooOaKvBFAVSmZs7CMSUcKDbVDERHiIGX
+	yxwidpYh10st27pOwH9x+UT7h9QmknLQ03q8wTPfwZwiJX8MMGsL
+X-Google-Smtp-Source: AMrXdXsWwLmwWTw+04Psl7sWag1OpNi9OkzUD5HtjD6QzXFeUgjZjyp1mqL7hB9N11HWzI+6KfPlxGrMdNkr0T+Cm9w=
+X-Received: by 2002:a17:906:8617:b0:829:5c93:f150 with SMTP id
+ o23-20020a170906861700b008295c93f150mr465691ejx.595.1674055262298; Wed, 18
+ Jan 2023 07:21:02 -0800 (PST)
+MIME-Version: 1.0
+From: Pietro Borrello <borrello@diag.uniroma1.it>
+Date: Wed, 18 Jan 2023 16:20:51 +0100
+Message-ID: <CAEih1qWG=Ww18e6j-07RKND47_xAbwvPyoyMyiiP8GgeE+fEJw@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Linux Kernel: hid: NULL pointer dereference in hid_betopff_play()
 
-On Thu, 07 Sep 2017 at 12:29:50 -0400, Daniel Kahn Gillmor wrote:
-> On Thu 2017-09-07 16:27:25 +0100, Simon McVittie wrote:
-> > Ideally, the sequence of events would be something that ensures that
-> > the pid file already exists by the time readiness has been announced,
-> > like this pseudocode:
-> >
-> >     have the necessary privileges to write a pid file
-> >     fork
-> >     if (parent) {
-> >         write child pid to pid file
-> >         exit    /* tells supervisor we are ready */
-> >     }
-> >     else /* child */ {
-> >         drop privileges
-> >         while (1) { process request }
-> >     }
-> 
-> Is there a potential race condition here?  for example, if dropping
-> privileges takes some amount of time, or if there is additional setup
-> that ought to be done as non-root (building tables, pre-processing a
-> dataset from the filesystem, initializing a PRNG), then this pattern is
-> actually pretty hard to get right as a notification.
+Hi all,
 
-I was assuming a structure a bit like dbus-daemon, which calls bind()
-and listen() while still privileged before forking. It does do some
-additional setup as non-root after dropping privileges, but if a
-client connects during that window, the client's socket will just block
-for a short time (whether that means actually blocking or EAGAIN is up
-to the client), until the dbus-daemon is ready to enter its main loop.
-It won't get ECONNREFUSED, because the socket is already listening
-(assuming the socket backlog is sufficiently long to accommodate all the
-clients).
+I'm disclosing a possible DoS when plugging in a malicious USB device,
+which advertises itself as a betop USB device.
 
-The daemon doesn't need to be ready to actually do its work before
-forking, only ready to take responsibility for keeping clients waiting
-until it *is* ready.
+A device driver must check that the device correctly registered the
+expected inputs and reports.
+Otherwise, a malicious USB device may violate assumptions throughout
+the driver's code.
 
->  0) if dropping privs is known to be fast, then move any lengthy
->     initialization/setup into the root/pre-fork side.  this is a
->     violation of the principle of least privilege.
+betopff_init() in the betop driver's code only checks that the device advertises
+at least 4 report values among all its fields, but hid_betopff_play() expects
+at least 4 report fields with a value each.
+A device advertising an output report with one field and 4 report values
+would pass the check but crash the kernel with a NULL pointer dereference
+in hid_betopff_play(), when accessing `betopff->report->field[2]->value[0]`.
 
-Arguably yes, but putting a minimal amount of setup before forking closes
-the race condition, and some of that setup is probably going to need
-privileges anyway (for example web servers that want to listen on port
-80, or dbus-daemon --system which wants to listen on the root-owned
-/var/run/dbus/system_bus_socket).
-
-    S
+Best regards,
+Pietro Borrello
