@@ -1,137 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/26/1
-Message-ID: <ZEj04rd7LMiLwsKH@kasco.suse.de>
-Date: Wed, 26 Apr 2023 11:54:38 +0200
-From: Matthias Gerstner <mgerstner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Warpinator: Remote file deletion vulnerability (CVE-2023-29380)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/20/1
+Message-ID: <1295588158.7348.1674217183817@appsuite-guard.open-xchange.com>
+Date: Fri, 20 Jan 2023 13:19:43 +0100 (CET)
+From: Otto Moerbeek <otto.moerbeek@...erdns.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Security Advisory 2023-01 for PowerDNS Recursor 4.8.0 (CVE-2023-22617)
 Content-Type: text/plain; charset=utf-8
 
-Hi list,
+Hello,
 
-this report is about a remote file deletion vulnerability in Warpinator
-[1].
+   Today we have released PowerDNS Recursor 4.8.1 due to a high severity
+   issue found.
 
-Introduction
-============
+   Please find the full text of the advisory below.
 
-I already reviewed and found issues in Warpinator a while ago [2]. The
-openSUSE packager for Warpinator asked me for a follow-up review after
-updating to upstream release 1.4.3 which contained the fixes for
-CVE-2022-42725.
+   The [1]changelog is available.
 
-In the course of the review I found another vulnerability which is
-described in detail in the next section.
+   The [2]tarball ([3]signature) is available from our download [4]server.
+   Patches are available at [5]patches. Packages for various distributions
+   are available from our [6]repository.
 
-The Vulnerability
-=================
+   Note that PowerDNS Recursor 4.5.x and older releases are End of Life.
+   Consult the [7]EOL policy for more details.
+     __________________________________________________________________
 
-In the code base of version 1.4.3 the sender of a file also sends a list
-of `top_dir_basenames` to the peer. While there is now a verification of
-the `relative_path` on the receiving side, the `top_dir_basenames` are
-not verified at all. In `FileReceiver.__init__()` the following code is
-found:
+PowerDNS Security Advisory 2023-01: unbounded recursion results in program
+termination
 
-```
-    for name in op.top_dir_basenames:
-        try:
-            path = os.path.join(self.save_path, name)
-            if os.path.isdir(path): # file not found is ok
-                shutil.rmtree(path)
-            else:
-                os.remove(path)
-        except FileNotFoundError:
-            pass
-        except Exception as e:
-            logging.warning("Problem removing existing files.  Transfer may not succeed: %s" % e)
-```
+     * CVE: CVE-2023-22617
+     * Date: 20th of January 2023
+     * Affects: PowerDNS Recursor 4.8.0
+     * Not affected: PowerDNS Recursor < 4.8.0, PowerDNS Recursor 4.8.1
+     * Severity: High
+     * Impact: Denial of service
+     * Exploit: This problem can be triggered by a remote attacker with
+       access to the recursor by querying names from specific
+       mis-configured domains
+     * Risk of system compromise: None
+     * Solution: Upgrade to patched version
 
-If the sender is passing a string like "../" as part of
-`top_dir_basenames` then this code will delete the complete parent
-directory of the download directory (by default ~/Warpinator) and thus
-the complete home directory of the receiving party. Any other files
-under control of the receiving party are similarly endangered by this
-remote DoS / integrity attack.
+   CVSS 3.0 score: 8.2 (High)
+   https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/
+   S:U/C:N/I:L/A:H/E:H/RL:U/RC:C
 
-This can happen automatically if the receiving side is running
-Warpinator in trusted mode, both parties share the same non-default
-group key and unconfirmed file overwrites are allowed. If this is not
-the case then the receiving side will see a confirmation popup like
-
-    X wants to send `../´
-
-This message might not be very suspecting for an average end user. Other
-strings can be used here as well like an absolute path to the user's
-home directory, which could be interpreted as correct, or overlooked.
-
-I investigated whether the fact that this allows to delete the download
-directory completely could lead to a follow-up vulnerability to allow
-overwriting files in other paths again. This seems not to be possible
-though.  The check of the `relative_path()` is stable enough to prevent
-this even if the download directory does not exist at all.
-
-Affectedness
-============
-
-The problematic handling of `top_dir_basenames` was first introduced in
-upstream version 1.0.7.
-
-Bugfixes
-========
-
-The remote file deletion vulnerability has been fixed upstream via
-commit 9aae768 [3].
-
-The fact that this vulnerability escaped both upstream's and my own
-review efforts during handling of CVE-2022-4272 confirmed earlier
-concerns I had about relying on a single line of defense in the
-Warpinator codebase. I recommended to upstream to use an isolation
-technique like Linux mount namespaces to prevent escapes from the
-destined download directory. In the light of this new security issue I
-additionally or alternatively recommended a redesign of the codebase to
-better separate trusted and untrusted codepaths.
-
-Upstream used the 90 days embargo time we offered to implement isolation
-mechanisms either based on Linux namespaces through the Bubblewrap tool,
-or based on the Linux kernel's landlock security module. Only if none of
-both can be established, Warpinator will run in a legacy mode. In
-this case the user will be warned about the weakened security.
-
-The new Warpinator major version release 1.6.0 contains both the bugfix
-for this the remote file deletion issue as well as the added security
-layers.
-
-Timeline
-========
-
-2023-01-25: I reported the newly found issue to upstream and offered
-            coordinated disclosure.
-2023-03-08: Upstream shared the core changes listed above with us, I
-            reviewed them and gave feedback.
-2023-04-05: I received CVE-2023-29380 from Mitre to track the file
-            deletion issue and shared it with upstream.
-2023-04-25: Upstream needed additional time for testing and integration.
-            The 90 days maximum embargo period we offer ends and with
-	    the 1.6.0 release being available we agreed on the
-	    publication of all available information.
+   Thanks to applied-privacy.net for reporting this issue and their assistance in diagnosing it.
 
 References
-==========
 
-[1]: https://github.com/linuxmint/warpinator
-[2]: https://seclists.org/oss-sec/2022/q4/38
-[3]: https://github.com/linuxmint/warpinator/commit/9aae768522b7bbb09c836419893802a02221d663
+   1. https://docs.powerdns.com/recursor/changelog/4.8.html#change-4.8.1
+   2. https://downloads.powerdns.com/releases/pdns-recursor-4.8.1.tar.bz2
+   3. https://downloads.powerdns.com/releases/pdns-recursor-4.8.1.tar.bz2.sig
+   4. https://downloads.powerdns.com/releases/
+   5. https://downloads.powerdns.com/patches/2023-01/
+   6. https://repo.powerdns.com/
+   7. https://docs.powerdns.com/recursor/appendices/EOL.html
 
-Best Regards
+
 
 -- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Security Engineer
-https://www.suse.com/security
-GPG Key ID: 0x14C405C971923553
- 
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG Nürnberg
-Geschäftsführer: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+kind regards,
+Otto Moerbeek
+PowerDNS Developer 
+
+
+ 
+Email: otto.moerbeek@...n-xchange.com
+
+
+-------------------------------------------------------------------------------------
+Open-Xchange AG, Hohenzollernring 72, 50672 Cologne, District Court Cologne HRB 95366 
+Managing Board: Andreas Gauger, Dirk Valbert, Frank Hoberg, Stephan Martin 
+Chairman of the Board: Richard Seibt 
+ 
+PowerDNS.COM BV, Koninginnegracht 14L, 2514 AA Den Haag, The Netherlands
+Managing Director: Robert Brandt, Maxim Letski
+-------------------------------------------------------------------------------------
+
+Download attachment "signature.asc" of type "application/pgp-signature" (476 bytes)
