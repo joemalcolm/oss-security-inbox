@@ -1,4 +1,4 @@
-Received: (qmail 22411 invoked by uid 550); 29 Sep 2023 16:53:47 -0000
+Received: (qmail 9576 invoked by uid 550); 20 Jan 2023 12:34:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,117 +7,138 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3734 invoked from network); 29 Sep 2023 16:35:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	invisiblethingslab.com; h=cc:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to; s=fm2; t=
-	1696005311; x=1696091711; bh=TUr4IKkCIz0Bn3bBd7r0NtwrTYec8OByb/0
-	78/HfiMQ=; b=Kz0qxvfNZc6A9qLmra+lTF4AepvdmdLhAwIt2W2n3MJZ8ZnvfRu
-	2GJl2DMlraT0BtfImPrOvZO2sWlA+w+5MGmQKjNZL0iwrTMxGVZYjsB0239ZhD9w
-	wZMb7+TZlpE853DPRxsjOjJjXJFYx4tK5AOP86Lule9Fz/w1sx8YPxXcK0IylnD1
-	A28nv+Aj6mJEeF1b7E7HS8n86LNW2hVnbyktKv4xxVTWYeqFs9hkQmjhLPIphPfC
-	KfMerlCr1Q27prvkj3unI5Eniv4r+GLIRLnuelYbLPSU+7NZZIFB6tIrVN6MSKjN
-	tDVUrNHhCatCGPi3k7WXMB3qHthyEvi4PIA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm2; t=1696005311; x=1696091711; bh=TUr4IKkCIz0Bn
-	3bBd7r0NtwrTYec8OByb/078/HfiMQ=; b=qCsX6Y4ExfoPlp3xqFcVgvR9vROTw
-	e9U1ukv3Plb53a8iZd8LbHgho3FzSxOJcNha35SFR6HWInkI6KvlSJR5OvMmyi4x
-	agiEaKvg+Z5gAU1m+8OyYx3b1GsLwVTpmYF+cNBg1ZArJD4LwgNRtJyQnKjaECNF
-	vGza5zTY2FrZa7JeK5B7wahdq9LFaAzclu0Or0QE1WTV9D1KP9ae6usqQf+oms6I
-	Lmzfkq/AZ74X5l0oV8oD7evuzUi/pG75+zSsEWg9yrJZCIs9WYIeoj5ET6uEoKmV
-	Kc3o5QYNeBxsOMSO6W6FPHgdTHruYCoJoDxlWRj0AQks/emEr8HYh62tA==
-X-ME-Sender: <xms:v_wWZfUoAYrWLIYyz5ctsA_KdLWUOrgFRaRiOY-fXBs5-fYER6ncVA>
-    <xme:v_wWZXmqHE3roSdrf3txq1wN-l5OGa6mvtn9nJC4iVQfQQOMvSrB3gG5gSBG2yv9k
-    HJEoWs9z1u6enI>
-X-ME-Received: <xmr:v_wWZbajSaMe6ov4wV-oIL8U2_2xb__cspgjPlSgKXqDWPFtAMVOaf7G9T-09jz2T06WTXdMZ7FMncciSzuquO-4oTG_LsR2RDdhhpMySajshLfG>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrtddvgddutddvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
-    ertddtvdenucfhrhhomhepffgvmhhiucforghrihgvucfqsggvnhhouhhruceouggvmhhi
-    sehinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomheqnecuggftrfgrthhtvghrnh
-    epiefgieefvdfgjeelfeeifefgjedvvdefleegleeifeegfffhgffffeffhfeuudehnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepuggvmhhise
-    hinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomh
-X-ME-Proxy: <xmx:v_wWZaWkG7QHy_BBR699FOWJYezWPVaxu94igeHBwOrngPsj1EQEEg>
-    <xmx:v_wWZZkcEaAq7DhNnp8epaFq5K0gGOXrZij8VhCw6WqrKgoqmgPDWQ>
-    <xmx:v_wWZXc_7RJhoPS-tc0uwV635qRXVD1mSerWn5zV3md79Nct4NnQ0Q>
-    <xmx:v_wWZVzdTyWPIzhecOIrQIL737_VJZKx8utRIgqQnLV1jLhVWuilWA>
-Feedback-ID: iac594737:Fastmail
-Date: Fri, 29 Sep 2023 12:35:07 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: oss-security@lists.openwall.com
-Message-ID: <ZRb8vSZlWXIJtPjS@itl-email>
-References: <bd99e07a-8d8c-4652-9089-7c0fc2e86409@oracle.com>
- <ZRXlPoozp5n+cWv1@itl-email>
- <fu34pmyckhgrjugxc2pqbj5afhtsf5jisnbpjghhkr7rfie3my@53a2ma3ekn6i>
+Received: (qmail 30668 invoked from network); 20 Jan 2023 12:19:55 -0000
+Date: Fri, 20 Jan 2023 13:19:43 +0100 (CET)
+From: Otto Moerbeek <otto.moerbeek@powerdns.com>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Message-ID: <1295588158.7348.1674217183817@appsuite-guard.open-xchange.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="UhgTBVPUaaGL1ABf"
-Content-Disposition: inline
-In-Reply-To: <fu34pmyckhgrjugxc2pqbj5afhtsf5jisnbpjghhkr7rfie3my@53a2ma3ekn6i>
-Subject: Re: [oss-security] Re: CVE-2023-5217: Heap buffer overflow in vp8
- encoding in libvpx
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; 
+	boundary="----=_Part_7347_1649712590.1674217183817"
+X-Priority: 3
+Importance: Normal
+X-Mailer: Open-Xchange Mailer v7.10.6-Rev34
+X-Originating-Client: open-xchange-appsuite
+Autocrypt: addr=otto.moerbeek@open-xchange.com; prefer-encrypt=mutual; keydata=
+ mQENBFwsoP8BCACU+waQJk8NT0hkuTQwVEJjHiLHsHIPlj1w487uzBVnZ3jaacd1iPz6v5OTDVcT6qa
+ Q2f6NQosNpuLKzJr4lZTxRC2dIho+R7OjWKQ4vZ/XYbjRH/52+nT39VHEF6yTYj/rVDZvAsuu8+sTJ4
+ hkiGkqQv43OfDtbMCR3LdkwPNfgZ5KCmdFrmcOg3kovaUbffBhe8mFwZDVws7XnZJntvrhYi0zRH3MY
+ mLnd1WBBiVWcvqZDQsP8FwssFtmcjPgANpHBC/Q78eaji3XhcL4JGcpzok7nV6nbjkYq/kgkxlYviyR
+ dIW/Xm8tZWyFDjOktKFBQv4+S02j1D5Hqb8YUc8lABEBAAG0L01vZXJiZWVrLCBPdHRvIDxvdHRvLm1
+ vZXJiZWVrQG9wZW4teGNoYW5nZS5jb20+iQE6BBMBAgAkBQJcLKD/AhsDBAsJCAcGFQoJCAsCBRYCAw
+ EAAp4BBQkSzAMAAAoJEOrKuQsZY+wr0xcIAIEUvf0YeJ0LRN6uNo0IXuEqq/G+wvjq2drc/AQCxHB4y
+ PyF65ad0OQnphzCRTRSPmcVmRqNkqxc+BvORtwcX0we/KcS/4NshJ1MFel3X79jXowOPSuJzp+IwGWs
+ 3hkvTuI9U6dT75i+8jfG9XFDjO8q1l9Nr2WEmxXwtJ9vCIbLShMV1tnJtsW75obyhLVfXGIQBqYSDEW
+ XwLEccILI+mizvwWPk+wI2ReefXUDi1QIn4Ckbv9TwKVlI0wrHoNCPhz8Tp25RzUktpGT+GyGSAgDMR
+ BBP35BRGF/jUF5KrmmYhC9XH5za/XzBL2lCj4xg0yr0nV1wGpPdAC9SDw8bFW5AQ0EXCyg/wEIAL6BH
+ bRVWSVy0JNTKQCuUGl/F3oseEclbUvWgiYGaS6NQ1mPSSJJYNg+R0Of1+nO2JktSozT5gq9pAfAGpgQ
+ PJOZW/vOTo8bWJh6K5xVZni5Jcl//LAMfDBUFyno1Eb6t++jL60HGgWIEWDKSb8WevWX76ml4Y++xkG
+ 3geF5NHNgxHhdNpDsk2uHCnKSJgzfJLqK2E7HKVjEpFTg2ke5FOW/86N0rpUsguLRQOJnZJtb0C1xBd
+ f6nULks6HicRGxueax2XNl5viIK7wifPUyw8aitfzTorllZkF5YZAwFi/ljsim7mHDPVPdSUKbPG19v
+ FVlBbR8ANUfl869NMmpg5cAEQEAAYkBOgQYAQIAJAUCXCyg/wIbDAQLCQgHBhUKCQgLAgUWAgMBAAKe
+ AQUJEswDAAAKCRDqyrkLGWPsKzeYCACSPnYV5477A5/czhjBk1TDPjBiwhgRP5X+PW/NkdMAck1zrD5
+ PGsX3puYAgTMpn07QLfDdhDLc09+Khdp8gPp2SShgpS2H5d0G+SWHobpfSSoMg2ijC2tmtji7ZCMYWL
+ yUQR7SiqhGcgR+0BqrYBqiyPkGynr8i7PEdvMNgj+9hJYb+LKB6Ox+f/Qxc+Y5mR3ug5/XO4+FKnTAi
+ 24UFRLM3dStMzr4PvYJtWfj8l9rK8yV2nJv2EvEktS5RjKiYKb3od4wmf4o9O+xT9zWMJjIEK8Vuv1B
+ AFHqN6caHBW9UjSdQKecLLvR0L/+aLITi+jLoIjdvkwY75bu/xqx8MKD
+Subject: [oss-security] Security Advisory 2023-01 for PowerDNS Recursor 4.8.0
+ (CVE-2023-22617)
 
---UhgTBVPUaaGL1ABf
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
+------=_Part_7347_1649712590.1674217183817
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 29 Sep 2023 12:35:07 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE-2023-5217: Heap buffer overflow in vp8
- encoding in libvpx
 
-On Thu, Sep 28, 2023 at 05:10:09PM -0700, nightmare.yeah27@aceecat.org wrot=
-e:
-> On Thu, Sep 28, 2023 at 04:42:33PM -0400, Demi Marie Obenour wrote:
->=20
-> > How long will it take for corporations to accept that writing media
-> > codecs in C, C++, or any other memory-unsafe language is a
-> > fundamentally bad idea, and that it is better to rewrite the codecs
-> > in a safe language (such as Wuffs or Rust) than to try to secure the
-> > existing ones?
->=20
-> Wouldn't the low-level code have to ultimately depend on unsafe Rust
-> modules, or similar feature in other safe language?
+Hello,
 
-In Wuffs, every memory access is checked for safety at compile-time, and
-that includes being in-bounds.  If the compiler cannot prove that every
-access is safe, the code will not compile.  There are no bounds checks
-at runtime.
+   Today we have released PowerDNS Recursor 4.8.1 due to a high severity
+   issue found.
 
-Interfacing with hardware accelerators obviously will need unsafe code,
-but my understanding is that most vulnerabilities are in various
-parsers or in the code the accelerators replace, not in the code that
-interfaces with the accelerators.
+   Please find the full text of the advisory below.
+
+   The [1]changelog is available.
+
+   The [2]tarball ([3]signature) is available from our download [4]server.
+   Patches are available at [5]patches. Packages for various distributions
+   are available from our [6]repository.
+
+   Note that PowerDNS Recursor 4.5.x and older releases are End of Life.
+   Consult the [7]EOL policy for more details.
+=C2=A0    __________________________________________________________________
+
+PowerDNS Security Advisory 2023-01: unbounded recursion results in program
+termination
+
+     * CVE: CVE-2023-22617
+     * Date: 20th of January 2023
+     * Affects: PowerDNS Recursor 4.8.0
+     * Not affected: PowerDNS Recursor < 4.8.0, PowerDNS Recursor 4.8.1
+     * Severity: High
+     * Impact: Denial of service
+     * Exploit: This problem can be triggered by a remote attacker with
+       access to the recursor by querying names from specific
+       mis-configured domains
+     * Risk of system compromise: None
+     * Solution: Upgrade to patched version
+
+   CVSS 3.0 score: 8.2 (High)
+   https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:N/UI:N/
+=C2=A0  S:U/C:N/I:L/A:H/E:H/RL:U/RC:C
+
+   Thanks to applied-privacy.net for reporting this issue and their assista=
+nce in diagnosing it.
+
+References
+
+   1. https://docs.powerdns.com/recursor/changelog/4.8.html#change-4.8.1
+   2. https://downloads.powerdns.com/releases/pdns-recursor-4.8.1.tar.bz2
+   3. https://downloads.powerdns.com/releases/pdns-recursor-4.8.1.tar.bz2.s=
+ig
+   4. https://downloads.powerdns.com/releases/
+   5. https://downloads.powerdns.com/patches/2023-01/
+   6. https://repo.powerdns.com/
+   7. https://docs.powerdns.com/recursor/appendices/EOL.html
+
+
+
 --=20
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
 
---UhgTBVPUaaGL1ABf
-Content-Type: application/pgp-signature; name="signature.asc"
+kind regards,
+Otto Moerbeek
+PowerDNS Developer=20
+
+
+=20
+Email: otto.moerbeek@open-xchange.com
+
+
+---------------------------------------------------------------------------=
+----------
+Open-Xchange AG, Hohenzollernring 72, 50672 Cologne, District Court Cologne=
+ HRB 95366=20
+Managing Board: Andreas Gauger, Dirk Valbert, Frank Hoberg, Stephan Martin=
+=20
+Chairman of the Board: Richard Seibt=20
+=20
+PowerDNS.COM BV, Koninginnegracht 14L, 2514 AA Den Haag, The Netherlands
+Managing Director: Robert Brandt, Maxim Letski
+---------------------------------------------------------------------------=
+----------
+
+------=_Part_7347_1649712590.1674217183817
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=signature.asc
 
 -----BEGIN PGP SIGNATURE-----
+Version: BCPG v1.65
 
-iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmUW/L0ACgkQsoi1X/+c
-IsFFyRAA1jFfJx3084WrTdz5nxiunjDQR6PsuxW6z9bVDyAsDzSqhD8sV7e76e7p
-5yPHQTEra1fRpC/loCPPFlvRQPIeokSsj2nTriacKvGEG9MQxzu+cYT4cvyLF6Qn
-DJxWagMDyp2DeYD+kNID/tCNadue7L5kVZGu3SL2Yxv53mBE9RaIpCMspCKiVPsS
-k5C1xWcPp6IAhM8/NGEkrrNF2vuxnqxciItu1AwEzq+rT/8ss7C7DqLN0kk33vKY
-ZkoBkUQeSkgDJxKv1G066Wr+otZ40PN5Lrfzadcq8rxATJZOAY34G/qgHBGJK7nM
-T/afU4vNx7ldR/O8SaNCYti9a7dUz6QlbUbJleg48aghWWxvxRYQ4BH6QFbqng69
-klXjMhsy75WMYLHczWCutSDKPYI/kwznAB0JSTS/gfuC4mC5AVWd+HvxFaORIlzx
-ppK4BO7kuwQGoQlGFJucZXw+vCKK1X5R7mUOeuFnbmIeEXB93DMIfYGQcWh/d8tL
-u3qdrg4hj51lVh1T7YWz6SP8cbeWgThqVs1Ih+agl3qcdDcjcRraGQgdGewGwOYq
-edDkPEG7UTVHWwzUMKMtW3CQGxBCE8J+sbuyHl66i+uqj3jRtj2HIs9fZABT1KYD
-TgeOpLqdV3EB9NsMAJmfOlFEzUrGHyUomu+4hzGmsgKU8ASc08o=
-=FDf/
+iQEcBAABCgAGBQJjyobfAAoJEOrKuQsZY+wrDdUH/iWsvsbh/PCtHfNTog+eYEeX
+GUnMYAjMYCBuh42DMk7AJ7kBei36zKFT/fIZNwW+2FxqtcH0PP1HTi/t3VeMcCzN
+8kRla9ZRwXvxuwfZmckgqgjGFW36gtNVVq+yGma/hHvBP4iaKaZr+YURSLcxFHKj
+8swfNkyU5XtAPoAKrexHQlYJbD4Br21D0kcF39/liYHv2Dlk9BzpMJ5y329kP7Iu
+P2oZDskusQ2YQAS7qTjhSOqau8MU75NxZSAjezwk89Nb+HljUQZiLGSaSd1LD+Xh
+qaCiXOe04L6wtXJ1GwqxtXaArX1GqvnNLgBJb22WWpHhj9Hx9VB0wwpbJ8EVtBQ=
+=6qU4
 -----END PGP SIGNATURE-----
 
---UhgTBVPUaaGL1ABf--
+------=_Part_7347_1649712590.1674217183817--
