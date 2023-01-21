@@ -1,32 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/21/4
-Message-ID: <168cd715-c39b-aadc-0bb0-9bda2b06da0a@apache.org>
-Date: Thu, 21 Dec 2023 07:05:17 +0000
-From: Ephraim Anierobi <ephraimanierobi@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/21/1
+Message-ID: <169788bd-11b7-6e96-c953-1519d9a4c79a@apache.org>
+Date: Sat, 21 Jan 2023 00:50:27 +0000
+From: Jarek Potiuk <potiuk@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-50783: Apache Airflow: Improper access control vulnerability on the "varimport" endpoint 
+Subject: CVE-2023-22884: Apache Airflow, Apache Airflow MySQL Provider: Arbitrary file read via MySQL provider in Apache Airflow 
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
-
-Affected versions:
-
-- Apache Airflow before 2.8.0
+Severity: important
 
 Description:
 
-Apache Airflow, versions before 2.8.0, is affected by a vulnerability that allows an authenticated user without the variable edit permission, to update a variable.
-This flaw compromises the integrity of variable management, potentially leading to unauthorized data modification.
-Users are recommended to upgrade to 2.8.0, which fixes this issue
+Improper Neutralization of Special Elements used in a Command ('Command Injection') vulnerability in Apache Software Foundation Apache Airflow, Apache Software Foundation Apache Airflow MySQL Provider.This issue affects Apache Airflow: before 2.5.1; Apache Airflow MySQL Provider: before 4.0.0.
 
 Credit:
 
-balis0ng (finder)
-Ephraim Anierobi (remediation developer)
+Son Tran from VNPT - VCI (reporter)
 
 References:
 
-https://github.com/apache/airflow/pull/33932
+https://github.com/apache/airflow/pull/28811
 https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-50783
+https://www.cve.org/CVERecord?id=CVE-2023-22884
 
