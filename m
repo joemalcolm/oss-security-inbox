@@ -1,82 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/19/5
-Message-ID: <6c354ad9-7d17-4b37-8e54-73cc4088f2b0@oracle.com>
-Date: Tue, 19 Dec 2023 13:31:03 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/23/1
+Message-ID: <CAEih1qVJxs7j7XAjjjpmK_xFit+sekDuHCOzsaExmMh6ZjG48Q@mail.gmail.com>
+Date: Mon, 23 Jan 2023 19:39:41 +0100
+From: Pietro Borrello <borrello@...g.uniroma1.it>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-48795: Prefix Truncation Attacks in SSH Specification (Terrapin Attack)
+Subject: Linux Kernel: sctp: KASLR leak in inet_diag_msg_sctpasoc_fill()
 Content-Type: text/plain; charset=utf-8
 
-On 12/18/23 08:08, Fabian Bäumer wrote:
-> ### Mitigations
-> 
-> To mitigate this protocol vulnerability, OpenSSH suggested a so-called "strict 
-> kex" which alters the SSH handshake to ensure a Man-in-the-Middle attacker 
-> cannot introduce unauthenticated messages as well as convey sequence number 
-> manipulation across handshakes. Support for strict key exchange has been added 
-> to a variety of SSH implementations, including OpenSSH itself, PuTTY, libssh, 
-> and more.
-> 
-> **Warning: To take effect, both the client and server must support this 
-> countermeasure.**
+Hi all,
 
-Open source projects I see have implemented this already are:
+We reported a type confusion in inet_diag_msg_sctpasoc_fill() in
+net/sctp/diag.c, which uses a type confused pointer to return
+information to userspace when issuing a list_entry() on
+asoc->base.bind_addr.address_list.next when the list is empty.
 
-- AsyncSSH 2.14.2:
-   https://asyncssh.readthedocs.io/en/latest/changes.html#release-2-14-2-18-dec-2023
+The list, in theory, should never be empty, but it can be when binding
+an SCTP socket with something like:
+```
+servaddr.sin6_family = AF_INET6;
+servaddr.sin6_port = htons(0);
+servaddr.sin6_scope_id = 0;
+inet_pton(AF_INET6, "::1", &servaddr.sin6_addr);
+```
 
-- Dropbear git:
-   https://github.com/mkj/dropbear/commit/6e43be5c7b99dbee49dc72b6f989f29fdd7e9356
+And then request a connection to:
+```
+connaddr.sin6_family = AF_INET6;
+connaddr.sin6_port = htons(20000);
+connaddr.sin6_scope_id = if_nametoindex("lo");
+inet_pton(AF_INET6, "fe88::1", &connaddr.sin6_addr);
+```
 
-- Erlang ssh 5.1.1:
-   https://www.erlang.org/doc/apps/ssh/notes
+The impact of the type confusion is a KASLR leak since the `laddr.v6.sin6_addr`
+is returned from the type confused pointer, which overlaps with `struct
+sctp_endpoint *ep` of the `struct sctp_association`.
 
-- golang.org/x/crypto 0.17.0:
-   https://groups.google.com/g/golang-announce/c/qA3XtxvMUyg
+The fix from the maintainer prevents the connection to the socket with
+unmatched scopes and will be merged soon:
+https://lore.kernel.org/linux-sctp/9fcd182f1099f86c6661f3717f63712ddd1c676c.1674496737.git.marcelo.leitner%40gmail.com/T/
 
-- libssh 0.10.6 and 0.9.8:
-   https://www.libssh.org/2023/12/18/libssh-0-10-6-and-libssh-0-9-8-security-releases/
-
-- libssh2 git:
-   https://github.com/libssh2/libssh2/issues/1290
-   https://github.com/libssh2/libssh2/pull/1291
-
-- OpenSSH 9.6:
-   https://www.openssh.com/txt/release-9.6
-
-- Paramiko 3.4.0:
-   https://www.paramiko.org/changelog.html#3.4.0
-
-- PuTTY 0.80:
-   https://lists.tartarus.org/pipermail/putty-announce/2023/000037.html
-
-- russh 0.40.2:
-   https://github.com/warp-tech/russh/releases/tag/v0.40.2
-
-- SFTPGo 2.5.6:
-   https://github.com/drakkan/sftpgo/releases/tag/v2.5.6
-
-- ssh2 [node.js/npm] 1.15.0:
-   https://github.com/mscdex/ssh2/commits/v1.15.0
-
-- Tera Term 5.1:
-   https://github.com/TeraTermProject/teraterm/releases/tag/v5.1
-
-- Thrussh 0.35.1:
-   https://pijul.org/posts/2023-12-18-thrussh-cve/
-
-There's also some open bugs against these open source projects that are not yet handled:
-
-- Apache Mina:
-   https://github.com/apache/mina-sshd/issues/445
-
-- ProFTPD (mod_sftp):
-   https://github.com/proftpd/proftpd/issues/1760
-
-- SSHJ:
-   https://github.com/hierynomus/sshj/issues/916
-
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
-
+Best regards,
+Pietro Borrello
