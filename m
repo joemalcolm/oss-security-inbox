@@ -1,28 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/23/8
-Message-ID: <CAAHN_R2F99BmuwkLMiL8MFeuoB0UxdvVxLaRxXP3z2nebY_B=g@mail.gmail.com>
-Date: Fri, 23 Jun 2023 07:29:40 -0400
-From: Siddhesh Poyarekar <siddhesh.poyarekar@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/24/2
+Message-ID: <20230124160818.wlaspet7jsmths2p@yuggoth.org>
+Date: Tue, 24 Jan 2023 16:08:18 +0000
+From: Jeremy Stanley <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-31975: memory leak in yasm
+Subject: [OSSA-2023-002] Cinder, Glance, Nova: Arbitrary file access through custom VMDK flat descriptor (CVE-2022-47951)
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Jun 23, 2023 at 2:40 AM Smith, Stewart <trawets@...zon.com> wrote:
-> I don’t think you are, I can’t see anything here either.
->
-> Even if you were doing all the wrong things and running a yasm-as-a-service continually building untrusted source right alongside other processes as the same user, that contain all sorts of things you don’t want exposed, I still don’t see how this would be anything but a 0.0.
+========================================================================
+OSSA-2023-002: Arbitrary file access through custom VMDK flat descriptor
+========================================================================
 
-I know you probably only said that for effect but if someone is
-running a compiler-as-a-service building untrusted source but hasn't
-sandboxed it, the security issue is in the setup, not the compiler.
-Compilers for the most part have to assume trusted input because not
-doing so is a practical nightmare.  The golang project is the only one
-I know that accepts CVEs for untrusted input to the compiler (more
-power to them, and commiserations to the ecosystem that has to
-continuously respin everything to appease the CVE bots) while all
-other projects, implicitly or otherwise, reject the notion that you
-can just throw them on the internet and assume everything will be OK.
+:Date: January 24, 2023
+:CVE: CVE-2022-47951
 
-Sid
+
+Affects
+~~~~~~~
+- Cinder, glance, nova:
+  Cinder <19.1.2, >=20.0.0 <20.0.2, ==21.0.0;
+  Glance <23.0.1, >=24.0.0 <24.1.1, ==25.0.0;
+  Nova <24.1.2, >=25.0.0 <25.0.2, ==26.0.0
+
+
+Description
+~~~~~~~~~~~
+Guillaume Espanel, Pierre Libeau, Arnaud Morin and Damien Rannou
+(OVH) reported a vulnerability in VMDK image processing for Cinder,
+Glance and Nova. By supplying a specially created VMDK flat image
+which references a specific backing file path, an authenticated user
+may convince systems to return a copy of that file's contents from
+the server resulting in unauthorized access to potentially sensitive
+data. All Cinder deployments are affected; only Glance deployments
+with image conversion enabled are affected; all Nova deployments are
+affected.
+
+
+Patches
+~~~~~~~
+- https://review.opendev.org/871631 (Train(cinder))
+- https://review.opendev.org/871630 (Train(glance))
+- https://review.opendev.org/871629 (Ussuri(cinder))
+- https://review.opendev.org/871626 (Ussuri(glance))
+- https://review.opendev.org/871628 (Victoria(cinder))
+- https://review.opendev.org/871623 (Victoria(glance))
+- https://review.opendev.org/871627 (Wallaby(cinder))
+- https://review.opendev.org/871621 (Wallaby(glance))
+- https://review.opendev.org/871625 (Xena(cinder))
+- https://review.opendev.org/871619 (Xena(glance))
+- https://review.opendev.org/871622 (Xena(nova))
+- https://review.opendev.org/871620 (Yoga(cinder))
+- https://review.opendev.org/871617 (Yoga(glance))
+- https://review.opendev.org/871624 (Yoga(nova))
+- https://review.opendev.org/871618 (Zed(cinder))
+- https://review.opendev.org/871614 (Zed(glance))
+- https://review.opendev.org/871616 (Zed(nova))
+- https://review.opendev.org/871615 (2023.1/antelope(cinder))
+- https://review.opendev.org/871613 (2023.1/antelope(glance))
+- https://review.opendev.org/871612 (2023.1/antelope(nova))
+
+
+Credits
+~~~~~~~
+- Guillaume Espanel from OVH (CVE-2022-47951)
+- Pierre Libeau from OVH (CVE-2022-47951)
+- Arnaud Morin from OVH (CVE-2022-47951)
+- Damien Rannou from OVH (CVE-2022-47951)
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1996188
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-47951
+
+
+Notes
+~~~~~
+- The stable/wallaby, stable/victoria, stable/ussuri, and
+  stable/train branches are under extended maintenance and will
+  receive no new point releases, but patches for them are provided
+  as a courtesy where possible.
+
 -- 
-https://gotplt.org
+Jeremy Stanley
+OpenStack Vulnerability Management Team
+
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
