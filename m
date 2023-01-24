@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1219" "Saturday" "21" "November" "2015" "14:52:52" "+0100" "Yves-Alexis Perez" "corsac@debian.org" "<1448113972.31921.7.camel@debian.org>" "40" "[oss-security] CVE request for LightDM - XDMCP denial of service" nil nil nil "11" "2015112113:52:52" "[oss-security] CVE request for LightDM - XDMCP denial of service" (number mark "U       corsac@debia Nov 21   40/1219  " thread-indent "\"[oss-security] CVE request for LightDM - XDMCP denial of service\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9248 invoked by uid 550); 21 Nov 2015 13:53:08 -0000
+Received: (qmail 11566 invoked by uid 550); 24 Jan 2023 16:08:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,54 +7,130 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9229 invoked from network); 21 Nov 2015 13:53:08 -0000
-Message-ID: <1448113972.31921.7.camel@debian.org>
-From: Yves-Alexis Perez <corsac@debian.org>
+Received: (qmail 11478 invoked from network); 24 Jan 2023 16:08:32 -0000
+Date: Tue, 24 Jan 2023 16:08:18 +0000
+From: Jeremy Stanley <fungi@yuggoth.org>
 To: oss-security@lists.openwall.com
-Date: Sat, 21 Nov 2015 14:52:52 +0100
-Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-ApXzkLSUusu8QwA1Ocom"
-X-Mailer: Evolution 3.18.2-1 
-Mime-Version: 1.0
-Subject: [oss-security] CVE request for LightDM - XDMCP denial of service
+Message-ID: <20230124160818.wlaspet7jsmths2p@yuggoth.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="tcfhvreqzy74jjfa"
+Content-Disposition: inline
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
+X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
+X-SA-Exim-Mail-From: fungi@yuggoth.org
+X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
+Subject: [oss-security] [OSSA-2023-002] Cinder, Glance, Nova: Arbitrary file access through
+ custom VMDK flat descriptor (CVE-2022-47951)
 
---=-ApXzkLSUusu8QwA1Ocom
-Content-Type: text/plain; charset="UTF-8"
+--tcfhvreqzy74jjfa
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+OSSA-2023-002: Arbitrary file access through custom VMDK flat descriptor
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-it seems that some versions of LightDM (1.14 and 1.16 series) are vulnerable
-to a denial of service when XDMCP server is enabled. When that's the case, =
-an
-XDMCP request with no address will crash LightDM.
+:Date: January 24, 2023
+:CVE: CVE-2022-47951
 
-More information can be found in=C2=A0https://bugs.launchpad.net/lightdm/+b=
-ug/15168
-31=C2=A0and the bug is fixed with 1.14.4 and 1.16.6 (and development release
-1.17.2).
 
-Can a CVE be assigned to this?
+Affects
+~~~~~~~
+- Cinder, glance, nova:
+  Cinder <19.1.2, >=3D20.0.0 <20.0.2, =3D=3D21.0.0;
+  Glance <23.0.1, >=3D24.0.0 <24.1.1, =3D=3D25.0.0;
+  Nova <24.1.2, >=3D25.0.0 <25.0.2, =3D=3D26.0.0
 
-Thanks in advance,
+
+Description
+~~~~~~~~~~~
+Guillaume Espanel, Pierre Libeau, Arnaud Morin and Damien Rannou
+(OVH) reported a vulnerability in VMDK image processing for Cinder,
+Glance and Nova. By supplying a specially created VMDK flat image
+which references a specific backing file path, an authenticated user
+may convince systems to return a copy of that file's contents from
+the server resulting in unauthorized access to potentially sensitive
+data. All Cinder deployments are affected; only Glance deployments
+with image conversion enabled are affected; all Nova deployments are
+affected.
+
+
+Patches
+~~~~~~~
+- https://review.opendev.org/871631 (Train(cinder))
+- https://review.opendev.org/871630 (Train(glance))
+- https://review.opendev.org/871629 (Ussuri(cinder))
+- https://review.opendev.org/871626 (Ussuri(glance))
+- https://review.opendev.org/871628 (Victoria(cinder))
+- https://review.opendev.org/871623 (Victoria(glance))
+- https://review.opendev.org/871627 (Wallaby(cinder))
+- https://review.opendev.org/871621 (Wallaby(glance))
+- https://review.opendev.org/871625 (Xena(cinder))
+- https://review.opendev.org/871619 (Xena(glance))
+- https://review.opendev.org/871622 (Xena(nova))
+- https://review.opendev.org/871620 (Yoga(cinder))
+- https://review.opendev.org/871617 (Yoga(glance))
+- https://review.opendev.org/871624 (Yoga(nova))
+- https://review.opendev.org/871618 (Zed(cinder))
+- https://review.opendev.org/871614 (Zed(glance))
+- https://review.opendev.org/871616 (Zed(nova))
+- https://review.opendev.org/871615 (2023.1/antelope(cinder))
+- https://review.opendev.org/871613 (2023.1/antelope(glance))
+- https://review.opendev.org/871612 (2023.1/antelope(nova))
+
+
+Credits
+~~~~~~~
+- Guillaume Espanel from OVH (CVE-2022-47951)
+- Pierre Libeau from OVH (CVE-2022-47951)
+- Arnaud Morin from OVH (CVE-2022-47951)
+- Damien Rannou from OVH (CVE-2022-47951)
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/1996188
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2022-47951
+
+
+Notes
+~~~~~
+- The stable/wallaby, stable/victoria, stable/ussuri, and
+  stable/train branches are under extended maintenance and will
+  receive no new point releases, but patches for them are provided
+  as a courtesy where possible.
+
 --=20
-Yves-Alexis
+Jeremy Stanley
+OpenStack Vulnerability Management Team
 
-
---=-ApXzkLSUusu8QwA1Ocom
+--tcfhvreqzy74jjfa
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
 
-iQEcBAABCAAGBQJWUHc0AAoJEG3bU/KmdcClkuAH/0of+dTt+eycjcILfY8rvfmu
-3TcwO85Fv7P6ltbppu3LGg027CKXWwk/g7UwfCEMH8dmwASG3Qcay9jE7AzTN1Kq
-Lgj00ULP7YNakrKCaRuDPQo4Tstl9/ZnZfmWjYYFz4yfeVNb6BDFAbkuove7rDLM
-iwClXmWTxqd0s72WwWH1rns3oO8tQrO45t+Zmq4OstkmqFbzseoTyPQc7sHOE5hA
-8GxFeegB9F146RgnnT79LeBvinJ/18uW3b6TMBjItCV/l4qg2NDD+JstSI5QJjfV
-p7urtV/lWgV41i/BhONtpfcrd7f8nDyTQSxNKEPLMqh1L1lxtExX/V89GikXCIg=
-=5TWQ
+iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmPQAnJfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
+QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
+WCkKaBAAoZ/1MXtKKPoxKbud710naWI7qubPnibgjmt/wHzlZg3wo/4MXWESsFA/
+G/oFib9WxzkmGbbLyHzwObzrOoPsetBsLt3hKhHK26+osg0FA07LpZMByE7ME2h+
+75WEXLSTGuNizKA+XfnhSdIFTLgZq9o33aFP3ODZW6C+Bk9evbGHLAr0xVw3xRSR
+tyKYr/BOzD5y1XGWqjtK2eUvgxay5qIDsSm5K6JqQgUNDFBRjPL1P08K1+rgOYox
+oG9vIArcW1aDfYwV9WvAaFANA8VeYZCuEY9Vb8f5eS0TuFR34SCiTdKlHvF6qm0n
+l7aXP7SCI40cXA81gzs2HBtRx3oR6Qh/Z5QxOYfD97ihB50W+50/wxn8In9rjX2U
+S+QX07Z+Ds1PBBrI9OdhT6Wo7Y1hCNTdVTle4pJbA5SUvTf7wqsSdsYbP7Z5zARq
+R1PTFR1g1usbIu+TkilzunVQQ+pnawV0+y7Gg+0JW3wV1EIrJ8ddrM73pKCBaev8
+GrZ7B/IjdUKPSKH35GFvO03qsPu0+TiRMMQjFD2C2o6ci/ZELa5G8JE/dqHXwB2K
+WhZhY1Di2VhjcvUs7Z+8JFeD8omAXLaNqmkKy32N/oMs2pJrDq2lSIdwbjSgPN3E
+El4qEO7XJoLtxuIANMis6gYqx647TF9Kxp2di9EpLGfzWNhJpBU=
+=mRDN
 -----END PGP SIGNATURE-----
 
---=-ApXzkLSUusu8QwA1Ocom--
+--tcfhvreqzy74jjfa--
