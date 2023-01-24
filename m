@@ -1,4 +1,4 @@
-Received: (qmail 22206 invoked by uid 550); 10 Apr 2026 02:58:12 -0000
+Received: (qmail 3097 invoked by uid 550); 24 Jan 2023 16:07:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,241 +7,438 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 21958 invoked from network); 10 Apr 2026 02:58:06 -0000
-Date: Fri, 10 Apr 2026 04:58:03 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 2034 invoked from network); 24 Jan 2023 16:07:18 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.1\))
+Message-Id: <E26A8338-E55F-429C-A9C8-6D35F92C9200@beckweb.net>
+Date: Tue, 24 Jan 2023 17:07:07 +0100
 To: oss-security@lists.openwall.com
-Message-ID: <20260410025803.GA20948@openwall.com>
-References: <82bd2839-9db9-4ab4-9a7a-915e225a4450@oracle.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <82bd2839-9db9-4ab4-9a7a-915e225a4450@oracle.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Go 1.26.2 and Go 1.25.9 are released with 10 security fixes
+X-Mailer: Apple Mail (2.3696.120.41.1.1)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1674576438;d48f2534;
+X-HE-SMSGID: 1pKLpD-0002iH-CF
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
-On Wed, Apr 08, 2026 at 04:24:34PM -0700, Alan Coopersmith wrote:
-> https://groups.google.com/g/golang-announce/c/0uYbvbPZRWU announces:
-> >We have just released Go versions 1.26.2 and 1.25.9, minor point releases.
-> >
-> >These releases include 10 security fixes following the security policy:
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-This includes 2 issues in the compiler itself, which made some Go
-programs not memory safe:
+The following releases contain fixes for security vulnerabilities:
 
-> >  * cmd/compile: no-op interface conversion bypasses overlap checking
-> >
-> >    Previously, the compiler failed to unwrap pointers contained within
-> >    a no-op interface conversion leading to an incorrect determination
-> >    of a non-overlapping move.
-> >
-> >    To prevent unsafe move operations, the compiler will now unwrap all
-> >    such conversions before considering a move non-overlapping.
-> >
-> >    Thank you to Jakub Ciolek - https://ciolek.dev/ for reporting this 
-> >    issue.
-> >
-> >    This is CVE-2026-27144 and Go issue https://go.dev/issue/78371.
-> >
-> >  * cmd/compile: possible memory corruption after bound check elimination
-> >
-> >    Previously, slices and arrays accessed using induction variables
-> >    were sometimes incorrectly proved in-bound. If the induction variable
-> >    used for indexing were to overflow or underflow, it could allow access
-> >    to memory beyond the scope of the original slice or array.
-> >
-> >    To prevent this behavior, the compiler ensures that any mutated 
-> >    induction
-> >    variable that overflows/underflows with respect to its loop condition
-> >    is not used for bound check elimination.
-> >
-> >    Thank you to Jakub Ciolek - https://ciolek.dev/ for reporting this 
-> >    issue.
-> >
-> >    This is CVE-2026-27143 and Go issue https://go.dev/issue/78333.
+* Azure AD Plugin 306.va_7083923fd50
+* Bitbucket OAuth Plugin 0.13
+* Gerrit Trigger Plugin 2.38.1
+* Kubernetes Credentials Provider Plugin 1.209.v862c6e5fb_1ef
+* OpenId Connect Authentication Plugin 2.5
+* Orka by MacStadium Plugin 1.32
+* Script Security Plugin 1229.v4880b_b_e905a_6
+* Semantic Versioning Plugin 1.15
 
-Jakub Ciolek who found these 2 issues (and had inadvertently introduced
-"the underlying issue behind the first bug [...] more than three years
-earlier") posted an excellent write-up about them here:
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-https://ciolek.dev/posts/when-the-compiler-lies
+* BearyChat Plugin
+* Cisco Spark Notifier Plugin
+* GitHub Pull Request Builder Plugin
+* GitHub Pull Request Coverage Status Plugin
+* JIRA Pipeline Steps Plugin
+* Keycloak Authentication Plugin
+* MSTest Plugin
+* OpenID Plugin
+* PWauth Security Realm Plugin
+* RabbitMQ Consumer Plugin
+* TestComplete support Plugin
+* TestQuality Updater Plugin
+* view-cloner Plugin
+* visualexpert Plugin
 
-Here's my quick attempt at a plain text conversion:
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2023-01-24/
 
-> When the compiler lies: breaking memory safety in safe Go
-> 0001 go / memory safety / compilers
-> 
-> Early in March, I reported two compiler bugs affecting Go releases up to
-> 1.26.1 which broke the Go memory safety guarantees using only safe Go
-> code.
-> 
-> This means the proof-of-concepts did not import unsafe, did not use CGO
-> and did not rely on custom assembly nor data races. Using specially
-> constructed code, I was able to turn both bugs into control-flow hijack,
-> and with the loop bug I also got execution of injected instructions.
-> 
-> I’m not including the full end-to-end exploits, to allow the fixed
-> releases to become more widely available. I’ll briefly describe the
-> issues and show the problematic code patterns though. An interesting
-> learning from this, perhaps obvious to some people, is that memory
-> safety is a property of the whole toolchain, not only the language
-> itself.
-> 
-> I found the bugs after I decided to have a closer look at the compiler.
-> I had reported several denial-of-service issues in the standard library
-> before. I have spent a few years contributing smaller patches to the
-> compiler on-and-off so it was a codebase I understood reasonably well.
-> In late November I found two errors in the devel version of the prove
-> optimization pass (the step that infers limits and “proves”
-> facts about SSA values, among others to perform bounds check
-> elimination).
-> 
-> If you exclude the generated rewrite tables, prove is basically the
-> second largest backend SSA optimization pass, behind only the register
-> allocator itself. It also deals with arithmetic and signedness, two easy
-> ways to shoot yourself in the foot. It turned out, the hunch was correct
-> as there were more problems lurking in that area. This time in the
-> release versions of Go.
-> 
-> BUG 1: A LOOP THAT WRAPPED AND THE COMPILER SWORE IT DIDN’T
-> 
-> CVE-2026-27143
-> 
-> The first problem existed in the prove/loopbce reasoning about induction
-> variables and bound checks.
-> 
-> The triggering shape is surprisingly simple:
-> 
-> for i := int8(0); i <= int8(120); i += int8(10) {
->     arr[i] = value
-> }
-> 
-> Question to you: if i == 120 and you perform the iteration, then add 10
-> to it, what will you get? What’s the answer? 130? It turns out the
-> answer is -126. int8 has eight bits, it wraps.
-> 
-> That’s literally the whole bug. The compiler believed something
-> different though.
-> 
-> If you make prove emit debug data, these are the facts it inferred:
-> 
->     Induction variable: limits [0,120], increment 10
->     Proved IsInBounds
-> 
-> Once it takes those facts, it will confidently remove bound checking for
-> array access if the array size fits within the induction variable
-> limits. In this case, the index can become negative. With correct
-> arrangement of surrounding code, we can make the program jump to an
-> arbitrary address, change control flow or even inject instructions.
-> 
-> I must admit I could not believe this at first and reran the program
-> many times on different machines and different versions of the compiler.
-> Vulnerability hunting gives a large thrill when you finally confirm
-> something is a real security bug. When I found it, I was really
-> ecstatic, as bad as it sounds. That feeling would change soon, but more
-> about that later.
-> 
-> BUG 2: A NO-OP CONVERSION THAT CHANGED NOTHING AND BROKE EVERYTHING
-> 
-> CVE-2026-27144
-> 
-> The second problem lived in another place, slightly later, in the SSA
-> lowering phase. The compiler knows to be careful when copying from one
-> part of an array into an overlapping nearby part. This is important for
-> safety. It turns out, if you wrapped the source into a conversion that
-> didn’t really change anything, the compiler forgot to do that.
-> 
-> type T [N][]uint64
-> 
-> // buggy shape
-> *p = T(*q)
-> 
-> // control shape
-> *p = *q
-> 
-> Those two lines should mean the same thing here. The conversion does not
-> really matter, the overlap does. p and q can point at partially
-> overlapping windows of the same underlying array. Once that is true, the
-> compiler should use the careful copy path. If it does not do that, it
-> can overwrite data it has not read yet. If you do that over simple data,
-> you get a wrong result. If you do that over more complex composite
-> values it gets more interesting. If you do that to slice values, later
-> code still trusts the result. A harmless-looking assignment then turns
-> into memory corruption.
-> 
-> TWO DISTINCT PROBLEMS, BUT REALLY THE SAME CAUSE
-> 
-> Those two bugs resided in two different parts of the compiler, but the
-> root cause was the same. In the first case, the compiler erased the
-> possibility of signed wrap. In the second one, it excluded the
-> possibility of overlap.
-> 
-> Those were two different mechanisms of failure, but both caused by the
-> same problem: counterfeit certainty. I guess that’s how compilers
-> break, you can write some compiler code and it looks reasonable,
-> there’s math and tests and everything seems correct. Things get
-> reviewed by multiple people and merged, but it turns out you may
-> accidentally upgrade “probably safe” into “proved safe”
-> way too soon.
-> 
-> Then, once the compiler starts to generate and optimize code based on
-> that promise, it will miscompile. Sometimes, like in those cases, you
-> can make the code dance around it and break security boundaries.
-> 
-> THEN GIT BLAME GOT PERSONAL
-> 
-> As I was wrapping up the email to the Go security team, I sat down to
-> write the last part of the advisory. I was still ecstatic about the
-> find. The final part was to figure out when this was introduced. I did
-> the routine thing and ran git blame.
-> 
-> It came back with my own name. That was not ideal and I did not like it.
-> I got a sinking feeling in my stomach and went from feeling really smart
-> to feeling really dumb, real fast.
-> 
-> It turns out that the underlying issue behind the first bug came from a
-> CL I landed more than three years earlier.
-> 
-> I got over it by the next day and now see it as an amusing story, but it
-> was quite an experience.
-> 
-> DISCLOSURE
-> 
-> I reported both issues back in March.
-> 
-> I must commend the Go security team as they are always excellent. Neal
-> got back to me within 3 minutes of the first report and within 4 minutes
-> of the second report. Mind you, those were sent days apart. Typically,
-> the Go security advisories take up to a week to get a response. I guess
-> seeing “memory corruption” and “compiler bug” in the
-> same email thread speeds the process up.
-> 
-> I’ll publish the full minimized reproducers, deeper technical dive
-> and more once the fixed releases become more broadly available.
-> 
-> LEARNINGS
-> 
-> The main learning for myself is that a memory-safe language is only as
-> safe as the entire toolchain enforcing its invariants. Frontend,
-> optimizer, lowering, runtime and code generation. All of those parts sit
-> within the trust boundary. If parts of it start certifying wrong proofs
-> and generating code on top of that, the source code can stay safe while
-> the compiled program stops being memory-safe.
-> 
-> Every optimization is a security claim and most of the time those claims
-> are true. In this case, those two were not.
-> 
-> STATUS
-> 
-> Disclosure in progress
-> 
-> Full end-to-end exploits and minimized reproducers are intentionally
-> omitted until the fixed releases are more widely available.
-> 
-> AFFECTED
-> 
-> Two compiler bugs affecting release versions of Go up to 1.26.1.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-Alexander
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-3016 / CVE-2023-24422
+Script Security Plugin provides a sandbox feature that allows low
+privileged users to define scripts, including Pipelines, that are generally
+safe to execute. Calls to code defined inside a sandboxed script are
+intercepted, and various allowlists are checked to determine whether the
+call is to be allowed.
+
+In Script Security Plugin 1228.vd93135a_2fb_25 and earlier, property
+assignments performed implicitly by the Groovy language runtime when
+invoking map constructors were not intercepted by the sandbox.
+
+This vulnerability allows attackers with permission to define and run
+sandboxed scripts, including Pipelines, to bypass the sandbox protection
+and execute arbitrary code in the context of the Jenkins controller JVM.
+
+
+SECURITY-2137 / CVE-2023-24423
+Gerrit Trigger Plugin 2.38.0 and earlier does not require POST requests for
+several HTTP endpoints, resulting in a cross-site request forgery (CSRF)
+vulnerability.
+
+This vulnerability allows attackers to rebuild previous builds triggered by
+Gerrit.
+
+
+SECURITY-2978 / CVE-2023-24424
+OpenId Connect Authentication Plugin 2.4 and earlier does not invalidate
+the existing session on login.
+
+This allows attackers to use social engineering techniques to gain
+administrator access to Jenkins.
+
+
+SECURITY-3022 / CVE-2023-24425
+Kubernetes Credentials Provider Plugin 1.208.v128ee9800c04 and earlier does
+not set the appropriate context for Kubernetes credentials lookup, allowing
+the use of System-scoped credentials otherwise reserved for the global
+configuration.
+
+This allows attackers with Item/Configure permission to access and
+potentially capture Kubernetes credentials they are not entitled to.
+
+
+SECURITY-2980 / CVE-2023-24426
+Azure AD Plugin 303.va_91ef20ee49f and earlier does not invalidate the
+existing session on login.
+
+This allows attackers to use social engineering techniques to gain
+administrator access to Jenkins.
+
+
+SECURITY-2982 / CVE-2023-24427
+Bitbucket OAuth Plugin 0.12 and earlier does not invalidate the existing
+session on login.
+
+This allows attackers to use social engineering techniques to gain
+administrator access to Jenkins.
+
+
+SECURITY-2981 / CVE-2023-24428
+Bitbucket OAuth Plugin 0.12 and earlier does not implement a state
+parameter in its OAuth flow, a unique and non-guessable value associated
+with each authentication request.
+
+This vulnerability allows attackers to trick users into logging in to the
+attacker's account.
+
+
+SECURITY-2973 (1) / CVE-2023-24429
+Semantic Versioning Plugin defines a controller/agent message that
+processes a given file as XML and its XML parser is not configured to
+prevent XML external entity (XXE) attacks.
+
+Semantic Versioning Plugin 1.14 and earlier does not restrict execution of
+the controller/agent message to agents, and implements no limitations about
+the file path that can be parsed. This allows attackers able to control
+agent processes to have Jenkins parse a crafted file that uses external
+entities for extraction of secrets from the Jenkins controller or
+server-side request forgery.
+
+This is due to an incomplete fix of
+link:/security/advisory/2022-03-15/#SECURITY-2124[SECURITY-2124].
+
+NOTE: This vulnerability is only exploitable in Jenkins 2.318 and earlier,
+LTS 2.303.2 and earlier. See the
+link:/doc/upgrade-guide/2.303/#upgrading-to-jenkins-lts-2-303-3[LTS upgrade
+guide].
+
+
+SECURITY-2973 (2) / CVE-2023-24430
+Semantic Versioning Plugin 1.14 and earlier does not configure its XML
+parser to prevent XML external entity (XXE) attacks.
+
+This allows attackers able to control the contents of the version file for
+the 'Determine Semantic Version' build step to have agent processes parse a
+crafted file that uses external entities for extraction of secrets from the
+Jenkins agent or server-side request forgery.
+
+NOTE: Because Jenkins agent processes usually execute build tools whose
+input (source code, build scripts, etc.) is controlled externally, this
+vulnerability only has a real impact in very narrow circumstances: when
+attackers can control XML files, but are unable to change build steps,
+Jenkinsfiles, test code that gets executed on the agents, or similar.
+
+
+SECURITY-2772 (1) / CVE-2023-24431
+Orka by MacStadium Plugin 1.31 and earlier does not perform permission
+checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+
+SECURITY-2772 (2) / CVE-2023-24432 (CSRF) & CVE-2023-24433 (missing permiss=
+ion check)
+Orka by MacStadium Plugin 1.31 and earlier does not perform permission
+checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified HTTP server using attacker-specified credentials IDs
+obtained through another method, capturing credentials stored in Jenkins.
+
+Additionally, these HTTP endpoints do not require POST requests, resulting
+in a cross-site request forgery (CSRF) vulnerability.
+
+
+SECURITY-2789 (1) / CVE-2023-24436
+GitHub Pull Request Builder Plugin 1.42.2 and earlier does not perform a
+permission check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2789 (2) / CVE-2023-24434 (CSRF) & CVE-2023-24435 (missing permiss=
+ion check)
+GitHub Pull Request Builder Plugin 1.42.2 and earlier does not perform
+permission checks in methods implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified credentials IDs obtained
+through another method, capturing credentials stored in Jenkins.
+
+Additionally, these form validation methods do not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2786 / CVE-2023-24437 (CSRF) & CVE-2023-24438 (missing permission =
+check)
+JIRA Pipeline Steps Plugin 2.0.165.v8846cf59f3db and earlier does not
+perform permission checks in methods implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified credentials IDs obtained
+through another method, capturing credentials stored in Jenkins.
+
+Additionally, these form validation methods do not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2774 / CVE-2023-24439 (storage) & CVE-2023-24440 (masking)
+JIRA Pipeline Steps Plugin 2.0.165.v8846cf59f3db and earlier stores the
+private key unencrypted in its global configuration file
+`org.thoughtslive.jenkins.plugins.jira.JiraStepsConfig.xml` on the Jenkins
+controller as part of its configuration.
+
+This key can be viewed by users with access to the Jenkins controller file
+system.
+
+Additionally, the global configuration form does not mask the API key,
+increasing the potential for attackers to observe and capture it.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2292 / CVE-2023-24441
+MSTest Plugin 1.0.0 and earlier does not configure its XML parser to
+prevent XML external entity (XXE) attacks.
+
+This allows attackers able to control the contents of the report file for
+the 'Publish MSTest test result report' post-build step to have agent
+processes parse a crafted file that uses external entities for extraction
+of secrets from the Jenkins agent or server-side request forgery.
+
+NOTE: Because Jenkins agent processes usually execute build tools whose
+input (source code, build scripts, etc.) is controlled externally, this
+vulnerability only has a real impact in very narrow circumstances: when
+attackers can control XML files, but are unable to change build steps,
+Jenkinsfiles, test code that gets executed on the agents, or similar.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2767 / CVE-2023-24442
+GitHub Pull Request Coverage Status Plugin 2.2.0 and earlier stores the
+GitHub Personal Access Token, Sonar access token and Sonar password
+unencrypted in its global configuration file
+`com.github.terma.jenkins.githubprcoveragestatus.Configuration.xml` on the
+Jenkins controller as part of its configuration.
+
+These credentials can be viewed by users with access to the Jenkins
+controller file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2987 / CVE-2023-24456
+Keycloak Authentication Plugin 2.3.0 and earlier does not invalidate the
+existing session on login.
+
+This allows attackers to use social engineering techniques to gain
+administrator access to Jenkins.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2986 / CVE-2023-24457
+Keycloak Authentication Plugin 2.3.0 and earlier does not implement a state
+parameter in its OAuth flow, a unique and non-guessable value associated
+with each authentication request.
+
+This vulnerability allows attackers to trick users into logging in to the
+attacker's account.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2741 / CVE-2023-24443
+TestComplete support Plugin 2.8.1 and earlier does not configure its XML
+parser to prevent XML external entity (XXE) attacks.
+
+This allows attackers able to control the zip archive input file for the
+'TestComplete Test' build step to have Jenkins parse a crafted file that
+uses external entities for extraction of secrets from the Jenkins
+controller or server-side request forgery.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2996 / CVE-2023-24444
+OpenID Plugin 2.4 and earlier does not invalidate the existing session on
+login.
+
+This allows attackers to use social engineering techniques to gain
+administrator access to Jenkins.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2997 / CVE-2023-24445
+OpenID Plugin 2.4 and earlier improperly determines that a redirect URL
+after login is legitimately pointing to Jenkins.
+
+This allows attackers to perform phishing attacks by having users go to a
+Jenkins URL that will forward them to a different site after successful
+authentication.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2995 / CVE-2023-24446
+OpenID Plugin 2.4 and earlier does not implement a state parameter in its
+OAuth flow, a unique and non-guessable value associated with each
+authentication request.
+
+This vulnerability allows attackers to trick users into logging in to the
+attacker's account.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2778 / CVE-2023-24447 (CSRF) & CVE-2023-24448 (missing permission =
+check)
+RabbitMQ Consumer Plugin 2.8 and earlier does not perform a permission
+check in a method implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified AMQP server using attacker-specified username and
+password.
+
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2985 / CVE-2023-24449
+PWauth Security Realm Plugin 0.4 and earlier does not restrict the names of
+files in methods implementing form validation.
+
+This allows attackers with Overall/Read permission to check for the
+existence of an attacker-specified file path on the Jenkins controller file
+system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2787 / CVE-2023-24450
+view-cloner Plugin 1.1 and earlier stores passwords unencrypted in job
+`config.xml` files on the Jenkins controller as part of its configuration.
+
+These passwords can be viewed by users with Item/Extended Read permission
+or access to the Jenkins controller file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2803 / CVE-2023-24451
+Cisco Spark Notifier Plugin 1.1.1 and earlier does not perform permission
+checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2745 / CVE-2023-24458 (CSRF) & CVE-2023-24459 (missing permission =
+check)
+BearyChat Plugin 3.0.2 and earlier does not perform a permission check in a
+method implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL.
+
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2800 / CVE-2023-24452 (CSRF) & CVE-2023-24453 (missing permission =
+check)
+TestQuality Updater Plugin 1.3 and earlier does not perform a permission
+check in a method implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified username and password.
+
+Additionally, this form validation method does not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2091 / CVE-2023-24454
+TestQuality Updater Plugin 1.3 and earlier stores the TestQuality Updater
+password unencrypted in its global configuration file
+`com.testquality.jenkins.TestQualityNotifier.xml` on the Jenkins controller
+as part of its configuration.
+
+This password can be viewed by users with access to the Jenkins controller
+file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2709 / CVE-2023-24455
+visualexpert Plugin 1.3 and earlier does not restrict the names of files in
+methods implementing form validation.
+
+This allows attackers with Item/Configure permission to check for the
+existence of an attacker-specified file path on the Jenkins controller file
+system.
+
+As of publication of this advisory, there is no fix.
+
