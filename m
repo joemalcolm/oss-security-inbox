@@ -1,314 +1,161 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/21/2
-Message-ID: <9463a24f-e85f-ec54-6c5c-5e60db879c42@x41-dsec.de>
-Date: Thu, 21 Sep 2023 17:39:40 +0200
-From: X41 D-Sec GmbH Advisories <advisories@...-dsec.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/25/5
+Message-ID: <CAEih1qUhLRQ+nD-85r5AZv5mq33QTk2iWzDdRKgZY5Omfucbag@mail.gmail.com>
+Date: Wed, 25 Jan 2023 23:33:09 +0100
+From: Pietro Borrello <borrello@...g.uniroma1.it>
 To: oss-security@...ts.openwall.com
-Subject: Advisory X41-2023-001: Two Vulnerabilities in OPNsense
+Subject: Linux Kernel: hid: Use-After-Free in bigben_set_led()
 Content-Type: text/plain; charset=utf-8
 
+Hi all,
 
-Advisory X41-2023-001: Two Vulnerabilities in OPNsense
-===========================================================
-Highest Severity Rating: High
-Confirmed Affected Versions: 23.1.11_1, 23.7.3, 23.7.4
-Confirmed Patched Versions: Commit 484753b2abe3fd0fcdb73d8bf00c3fc3709eb8b7
-Vendor: Deciso B.V. / OPNsense
-Vendor URL: https://opnsense.org
-Credit: X41 D-Sec GmbH, Yasar Klawohn and JM
-Status: Public
-Advisory-URL: https://www.x41-dsec.de/lab/advisories/x41-2023-001-opnsense
+I'm disclosing a Use After Free that may be triggered when plugging in a
+malicious USB device, which advertises itself as a bigben device.
 
+The device uses a worker `bigben_worker` scheduled by bigben_set_led() to
+communicate with the hardware.
+The work_struct is embedded in `struct bigben_device`, and at device removal,
+`struct bigben_device` is freed.
 
-Summary and Impact
-------------------
-The OPNsense dashboard displays widgets with information about the
-system, running services, gateways and more. These widgets can be
-arranged in different orders and columns. The values for the number of
-columns and the order of widgets are stored server-side and are the same
-for all users of an OPNsense instance. They are reflected unmodified on
-every visit. This can be abused by a low-privileged attacker to inject
-their own content into the page, enabling a cross-site scripting (XSS)
-attack that can result in privilege escalation.
+However, concurrently with device removal, the LED controller bigben_set_led()
+may schedule a worker whose use would result in a use-after-free.
 
+Following the debug check triggered by freeing a work_struct in use:
+```
+[   37.803135][ T1170] usb 1-1: USB disconnect, device number 2
+[   37.827979][ T1170] ODEBUG: free active (active state 0) object
+type: work_struct hint: bigben_worker+0x0/0x860
+[   37.829634][ T1170] WARNING: CPU: 0 PID: 1170 at
+lib/debugobjects.c:505 debug_check_no_obj_freed+0x43a/0x630
+[   37.830904][ T1170] Modules linked in:
+[   37.831413][ T1170] CPU: 0 PID: 1170 Comm: kworker/0:3 Not tainted
+6.1.0-rc4-dirty #43
+[   37.832465][ T1170] Hardware name: QEMU Standard PC (i440FX + PIIX,
+1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+[   37.833751][ T1170] Workqueue: usb_hub_wq hub_event
+[   37.834409][ T1170] RIP: 0010:debug_check_no_obj_freed+0x43a/0x630
+[   37.835218][ T1170] Code: 48 89 ef e8 28 82 58 ff 49 8b 14 24 4c 8b
+45 00 48 c7 c7 40 5f 09 87 48 c7 c6 60 5b 09 87 89 d9 4d 89 f9 31 c0
+e8 46 25 ef fe <0f> 0b 4c 8b 64 24 20 48 ba 00 00 00 00 00 fc ff df ff
+05 4f 7c 17
+[   37.837667][ T1170] RSP: 0018:ffffc900006fee60 EFLAGS: 00010246
+[   37.838503][ T1170] RAX: 0d2d19ffcded3d00 RBX: 0000000000000000
+RCX: ffff888117fc9b00
+[   37.839519][ T1170] RDX: 0000000000000000 RSI: 0000000000000000
+RDI: 0000000000000000
+[   37.840570][ T1170] RBP: ffffffff86e88380 R08: ffffffff8130793b
+R09: fffff520000dfd85
+[   37.841618][ T1170] R10: fffff520000dfd85 R11: 0000000000000000
+R12: ffffffff87095fb8
+[   37.842649][ T1170] R13: ffff888117770ad8 R14: ffff888117770acc
+R15: ffffffff852b7420
+[   37.843728][ T1170] FS:  0000000000000000(0000)
+GS:ffff8881f6600000(0000) knlGS:0000000000000000
+[   37.844877][ T1170] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   37.845749][ T1170] CR2: 00007f992eaab380 CR3: 000000011834b000
+CR4: 00000000001006f0
+[   37.846794][ T1170] Call Trace:
+[   37.847245][ T1170]  <TASK>
+[   37.847643][ T1170]  slab_free_freelist_hook+0x89/0x160
+[   37.848409][ T1170]  ? devres_release_all+0x262/0x350
+[   37.849156][ T1170]  __kmem_cache_free+0x71/0x110
+[   37.849829][ T1170]  devres_release_all+0x262/0x350
+[   37.850478][ T1170]  ? devres_release+0x90/0x90
+[   37.851118][ T1170]  device_release_driver_internal+0x5e5/0x8a0
+[   37.851944][ T1170]  bus_remove_device+0x2ea/0x400
+[   37.852611][ T1170]  device_del+0x64f/0xb40
+[   37.853212][ T1170]  ? kill_device+0x150/0x150
+[   37.853831][ T1170]  ? print_irqtrace_events+0x1f0/0x1f0
+[   37.854564][ T1170]  hid_destroy_device+0x66/0x100
+[   37.855226][ T1170]  usbhid_disconnect+0x9a/0xc0
+[   37.855887][ T1170]  usb_unbind_interface+0x1e1/0x890
+```
 
-Product Description
--------------------
-OPNsense is an open source, FreeBSD-based firewall and routing operating
-system. It includes many features of commercial firewalls and can be
-managed entirely via its web GUI.
+And the KASAN error report:
+```
+[ 138.349079][  T7] usb 1-1: USB disconnect, device number 2
+[ 138.381243][ T1175]
+==================================================================
+[ 138.382329][ T1175] BUG: KASAN: use-after-free in __list_add_valid+0x66/0x100
+[ 138.383272][ T1175] Read of size 8 at addr ffff88810d62de70 by task
+systemd-udevd/1175
+[ 138.384238][ T1175]
+[ 138.384531][ T1175] CPU: 0 PID: 1175 Comm: systemd-udevd Not tainted
+6.1.0-rc4-dirty #30
+[ 138.385541][ T1175] Hardware name: QEMU Standard PC (i440FX + PIIX,
+1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+[ 138.386725][ T1175] Call Trace:
+[ 138.387145][ T1175] <TASK>
+[ 138.387515][ T1175] dump_stack_lvl+0x1b1/0x28e
+[ 138.388112][ T1175] ? nf_tcp_handle_invalid+0x3ff/0x3ff
+[ 138.388961][ T1175] ? __wake_up_klogd+0xdb/0x110
+[ 138.389756][ T1175] ? panic+0x822/0x822
+[ 138.390246][ T1175] ? _printk+0xc0/0x100
+[ 138.390763][ T1175] print_address_description+0x7d/0x340
+[ 138.391454][ T1175] print_report+0x107/0x1f0
+[ 138.391995][ T1175] ? __virt_addr_valid+0x211/0x2c0
+[ 138.392625][ T1175] ? __phys_addr+0xb5/0x160
+[ 138.393176][ T1175] ? __list_add_valid+0x66/0x100
+[ 138.393782][ T1175] kasan_report+0xcd/0x100
+[ 138.394330][ T1175] ? __list_add_valid+0x66/0x100
+[ 138.394955][ T1175] __list_add_valid+0x66/0x100
+[ 138.395542][ T1175] insert_work+0x10e/0x3c0
+[ 138.396119][ T1175] __queue_work+0xa97/0xde0
+[...]
+[ 138.403915][ T1175] __sys_bind+0x210/0x2b0
+[ 138.404458][ T1175] ? __ia32_sys_socketpair+0xb0/0xb0
+[ 138.405097][ T1175] ? lockdep_hardirqs_on_prepare+0x428/0x790
+[ 138.405833][ T1175] __x64_sys_bind+0x76/0x80
+[ 138.406378][ T1175] do_syscall_64+0x3d/0x90
+[ 138.406931][ T1175] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[ 138.407689][ T1175] RIP: 0033:0x7fe2d052d9e7
+[ 138.408241][ T1175] Code: 83 c4 08 48 3d 01 f0 ff ff 73 01 c3 48 8b
+0d a8 f4 2a 00 f7 d8 64 89 01 48 83 c8 ff c3 66 0f 1f 44 00 00 b8 31
+00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 81 f4 2a 00 f7 d8
+64 89 01 48
+[ 138.410572][ T1175] RSP: 002b:00007ffca13ea088 EFLAGS: 00000246
+ORIG_RAX: 0000000000000031
+[ 138.411571][ T1175] RAX: ffffffffffffffda RBX: 0000560b0c5b0f90 RCX:
+00007fe2d052d9e7
+[ 138.412542][ T1175] RDX: 000000000000000c RSI: 0000560b0c5b0fa0 RDI:
+000000000000000e
+[ 138.413525][ T1175] RBP: 0000000000000000 R08: 0000560b0c5960e0 R09:
+0000000000000210
+[ 138.414530][ T1175] R10: 000000000000000f R11: 0000000000000246 R12:
+0000560b0c5a8e94
+[ 138.415494][ T1175] R13: 0000000000000000 R14: 0000560b0c596010 R15:
+0000560b0c596028
+[ 138.416499][ T1175] </TASK>
+[ 138.416905][ T1175]
+[ 138.416499][ T1175] </TASK>
+[ 138.416905][ T1175]
+[ 138.417197][ T1175] Allocated by task 7:
+[ 138.417706][ T1175] kasan_set_track+0x3d/0x60
+[ 138.418271][ T1175] __kasan_kmalloc+0x7c/0x90
+[ 138.418867][ T1175] __kmalloc_node_track_caller+0xad/0x1a0
+[ 138.419583][ T1175] devm_kmalloc+0x77/0x1a0
+[ 138.420141][ T1175] bigben_probe+0x2f/0x770
+[ 138.420678][ T1175] hid_device_probe+0x251/0x3f0
+[...]
+[ 138.446475][ T1175]
+[ 138.446775][ T1175] Freed by task 7:
+[ 138.447232][ T1175] kasan_set_track+0x3d/0x60
+[ 138.447798][ T1175] kasan_save_free_info+0x2e/0x50
+[ 138.448410][ T1175] ____kasan_slab_free+0xb0/0x100
+[ 138.449039][ T1175] slab_free_freelist_hook+0x80/0x140
+[ 138.449696][ T1175] __kmem_cache_free+0x71/0x110
+[ 138.450292][ T1175] devres_release_all+0x262/0x350
+[ 138.450925][ T1175] device_release_driver_internal+0x5e5/0x8a0
+[ 138.451667][ T1175] bus_remove_device+0x2ea/0x400
+[ 138.452293][ T1175] device_del+0x64f/0xb40
+[ 138.452825][ T1175] hid_destroy_device+0x66/0x100
+[ 138.453424][ T1175] usbhid_disconnect+0x9a/0xc0
+[...]
+[ 138.462307][ T1175]
+```
 
+The proposed patch deregisters the LED controller bigben_set_led() before
+freeing the device and is currently under discussion with the maintainers.
 
-Stored XSS in the OPNsense Dashboard via the column_count Parameter
-===================================================================
-Severity Rating: High
-Vector: Network
-CWE: 79
-CVSS Score: 8.0
-CVSS Vector: 3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H
-Credit: X41 D-Sec GmbH, Yasar Klawohn
-
-
-Analysis
---------
-The number of columns displayed in the dashboard is set via an HTTP POST
-request to /index.php, using the column_count request parameter. This
-parameter is not properly escaped when returned to the client. To
-exploit this issue, the payload "><script>alert(1)</script> is submitted
-as part of the column_count parameter. This input is reflected
-unmodified in the response and on any subsequent visit to the dashboard
-by any user. Only the "Lobby: Login / Logout / Dashboard" permission is
-required to abuse this issue.
-
-Once the server receives the POST request, the column_count parameter is
-written unmodified into the configuration:
-
-} elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['origin'])
-                && $_POST['origin'] == 'dashboard') {
-        // ...
-        if (!empty($_POST['column_count'])) {
-            $config['widgets']['column_count'] = $_POST['column_count'];
-        } elseif(isset($config['widgets']['column_count'])) {
-            unset($config['widgets']['column_count']);
-        }
-        write_config('Widget configuration has been changed');
-        header(url_safe('Location: /index.php'));
-        exit;
-}
-// from:
-// 
-https://github.com/opnsense/core/blob/2306449329e462364c07317b23a1f257779a4fc8/src/www/index.php#L66-L79
-
-If the column_count parameter is not empty, it is used unmodified:
-
-// ...
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        $pconfig = $config['widgets'];
-        // ...
-        $pconfig['column_count'] =
-           !empty($pconfig['column_count']) ? $pconfig['column_count'] : 2;
-        // ...
-// from:
-// 
-https://github.com/opnsense/core/blob/306449329e462364c07317b23a1f257779a4fc8/src/www/index.php#L42
-
-Below, the unmodified value is written:
-
-<!-- ... -->
-<section class="page-content-main">
-      <form method="post" id="iform">
-        <input type="hidden" value="dashboard" name="origin" id="origin" />
-        <input type="hidden" value="" name="sequence" id="sequence" />
-        <input type="hidden" value="<?= $pconfig['column_count'];?>"
-            name="column_count" id="column_count_input" />
-      </form>
-<!-- ... -->
-<!-- from:
-https://github.com/opnsense/core/blob/306449329e462364c07317b23a1f257779a4fc8/src/www/index.php#L332
--->
-
-Proof of Concept
-----------------
-Log in as root. On the left side, go to System -> Access -> Users, and
-add a new user. For "Effective Privileges", only select "Lobby: Login /
-Logout / Dashboard". The user is now only able to view the dashboard and
-the help pages.
-
-Log in as that newly created user and open your browser's network
-monitor. In the OPNsense dashboard, select "1 column" from the top right
-and then press "save settings". Repeat the POST request and replace the
-column_count variable with
-
-column_count=1"><script>alert(1)</script>
-
-Now, log in as admin again, you should see an alert box resulting from
-the following HTML response:
-
-<form method="post" id="iform">
-        <!-- .. -->
-        <input type="hidden" value="1">
-            <script>alert(1)</script>"
-            name="column_count" id="column_count_input" />
-</form>
-
-This is the stored XSS and can result in privilege escalation. The
-OPNsense developers did apply a Content-Security-Policy, but
-unfortunately allow unsafe-inline and unsafe-eval for scripts, which
-does not prevent the exploitation of this vulnerability.
-
-
-Stored XSS in the OPNsense Dashboard via the sequence Parameter
-===============================================================
-Severity Rating: High
-Vector: Network
-CWE: 79
-CVSS Score: 8.0
-CVSS Vector: 3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:H/I:H/A:H
-Credit: X41 D-Sec GmbH, JM and Yasar Klawohn
-
-
-Analysis
---------
-The order in which the widgets are displayed in the Dashboard is set via
-an HTTP POST request to /index.php, using the sequence request
-parameter. This parameter is not properly escaped when returned to the
-client. To exploit this issue, the payload "><script>alert(1)</script>
-is submitted as part of the sequence parameter. This input is reflected
-unmodified in the response and on any subsequent visit to the dashboard
-by any user. Only the "Lobby: Login / Logout / Dashboard" permission is
-required to abuse this issue.
-
-The order in which widgets are displayed on the dashboard can be set in
-the same POST request, via the sequence parameter. The sequence
-parameter has the following format:
-
-sequence=services_status-container:00000000-col3:show,
-        interface_list-container:00000001-col4:show,
-        gateways-container:00000002-col4:show
-
-Once the server receives the POST request, the sequence parameter is
-written unmodified into the configuration:
-
-} elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['origin'])
-                && $_POST['origin'] == 'dashboard') {
-        if (!empty($_POST['sequence'])) {
-            $config['widgets']['sequence'] = $_POST['sequence'];
-        } elseif (isset($config['widgets']['sequence'])) {
-            unset($config['widgets']['sequence']);
-        }
-        // ...
-        write_config('Widget configuration has been changed');
-        header(url_safe('Location: /index.php'));
-        exit;
-}
-// from:
-// 
-https://github.com/opnsense/core/blob/cbaf7cee1f0a6fabd1ec4c752a5d169c402976dc/src/www/index.php#L66-L80
-
-When serving a GET request, the sequence parameter is returned
-unmodified, starting with a read of its value from the configuration:
-
-// ...
-$pconfig = $config['widgets'];
-// set default dashboard view
-$pconfig['sequence'] = !empty($pconfig['sequence']) ?
-        $pconfig['sequence'] : '';
-// ...
-// from:
-// 
-https://github.com/opnsense/core/blob/2306449329e462364c07317b23a1f257779a4fc8/src/www/index.php#L39-L41
-
-sequence is then split by comma and further split by colon into name,
-sortKey, and state. The list of widgets is sorted on the server side
-using the sortKey.
-
-$widgetSeqParts = explode(",", $pconfig['sequence']);
-foreach (glob('/usr/local/www/widgets/widgets/*.widget.php') as $php_file) {
-        $widgetItem = array();
-        // [...]
-        foreach ($widgetSeqParts as $seqPart) {
-            $tmp = explode(':', $seqPart);
-            if (count($tmp) == 3 &&
-                explode('-', $tmp[0])[0] == $widgetItem['name']
-            ) {
-                $widgetItem['state'] = $tmp[2];
-                $widgetItem['sortKey'] = $tmp[1];
-            }
-        }
-        $widgetCollection[] = $widgetItem;
-}
-// sort widgets
-usort($widgetCollection, function ($item1, $item2) {
-        return strcmp(strtolower($item1['sortKey']),
-            strtolower($item2['sortKey']));
-});
-// from:
-// 
-https://github.com/opnsense/core/blob/2306449329e462364c07317b23a1f257779a4fc8/src/www/index.php#L44-L65
-
-Finally, the sortKey is written unescaped into an HTML attribute:
-
-<section
-        class="widgetdiv"
-        data-sortkey="<?=$widgetItem['sortKey'] ?>"
-        id="<?=$widgetItem['name'];?>"
-        style="display:<?=$divdisplay;?>;"
-<!-- from:
-https://github.com/opnsense/core/blob/2306449329e462364c07317b23a1f257779a4fc8/src/www/index.php#L374
--->
-
-
-Proof of Concept
-----------------
-Log in as root. On the left side, go to System -> Access -> Users, and
-add a new user. For "Effective Privileges", only select "Lobby: Login /
-Logout / Dashboard". The user is now only able to view the dashboard and
-the help pages.
-
-Log in as that newly created user and open your browser's network
-monitor. In the OPNsense dashboard, reorder the widgets via drag-and-
-drop, then press "save settings".
-
-Repeat the POST request and replace the sequence variable with
-
-sequence=gateways-container:1"><script>alert(1)</script>-col4:show
-
-Now, log in as admin again, you should see an alert box resulting from
-the following HTML response:
-
-<div class="container-fluid">
-        <!-- ... -->
-            <section class="widgetdiv" data-sortkey="1">
-                <script>alert(2)</script>
-                -col4" id="gateways"  style="display:block;">
-
-This is the stored XSS and can result in privilege escalation.
-
-The OPNsense developers did apply a Content-Security-Policy, but
-unfortunately allow unsafe-inline and unsafe-eval for scripts, which
-does not prevent the exploitation of this vulnerability.
-
-
-Workarounds
-===========
-
-Remove all effective privileges for /index.php* of low-privilege users.
-
-Timeline
-========
-2023-09-13: Problem discovered
-
-2023-09-14: Write-up and discovery of second finding
-
-2023-09-19: Disclosure to Deciso B.V. / OPNsense
-
-2023-09-19: Issue fixed upstream by Deciso B.V. / OPNsense
-
-2023-09-20: CVE requested
-
-2023-09-20: Informed Deciso B.V. / OPNsense that we will make the issues
-public the following day, since the patch is public
-
-2023-09-21: Release of advisory
-
-
-About X41 D-Sec GmbH
-====================
-X41 is an expert provider for application security services.
-Having extensive industry experience and expertise in the area of
-information security, a strong core security team of world class
-security experts enables X41 to perform premium security services.
-
-Fields of expertise in the area of application security are security
-centered code reviews, binary reverse engineering and vulnerability
-discovery.
-
-Custom research and IT security consulting and support services are core
-competencies of X41.
-
-
-Download attachment "OpenPGP_0xA392A5A60E740B10.asc" of type "application/pgp-keys" (4699 bytes)
-
-View attachment "x41-2023-001-opnsense.txt" of type "text/plain" (10533 bytes)
-
-Download attachment "OpenPGP_signature" of type "application/pgp-signature" (841 bytes)
+Best regards,
+Pietro Borrello
