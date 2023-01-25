@@ -1,4 +1,4 @@
-Received: (qmail 19482 invoked by uid 550); 17 Jun 2024 16:31:20 -0000
+Received: (qmail 22427 invoked by uid 550); 25 Jan 2023 23:20:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,216 +7,189 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19461 invoked from network); 17 Jun 2024 16:31:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
-	content-type:message-id:date:subject:references:from:to
-	:in-reply-to:mime-version; s=corp-2023-11-20; bh=rEr9tGPwR8tyGEw
-	lSU/kB4TfIu+NUYWEe7SaV3RKLNg=; b=PlYU/3JxuqzI6IyMycqRtlWbOA+QKaY
-	9NPXbc6A7Yx4CiO+D/VcKOjzht9fWkmEPmJOrROuahHXQ8H/C5SO+ookq1EWqFHX
-	NFdt75cL+TPQE9XcaUpuQGd1i9SHVvndkcSK0FEXnx0P8K2j11D6qbG/LMn7zYfD
-	+u3vOFHj8sUlPcnUL39jUpCtsBhV2Fv2HsEjq0GYQlvGWGg308bhM/jYB8yaVvXJ
-	F01ol5/eN98aM/AX0LUbGyiVbO6BKtzbkcj/I3wtvmoQXLhn1MGezUI1OsJQ+CkC
-	hJnDFB//ja/ZeOWa2n4ldzPRbQ8Za99sD09fCAmw1EIPo9oqNoiPBXg==
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=mNhvveRFAheMZ6i9MnA5AiweuaejqDnTARFi8JBjMmCe2PIvIRBLHyA3KO51cEfYfOn5pGfYW7wq4a0DZlVOnnk1ltEsXJQMIyRKRasEjON02kFL7n3aeup7Lv3EeEDNbZRxXTq202VSHvUEjdwtQQR0m3P7ARSWk6Jx78Gc+l/vnA2dnBgJzrArGs38OSh43wrUnDdtQPToCNRYRsMKHvlnTuRRhNwu9z10sp1mhqwmFPrmIWDm+SrFLZBgVKuVuz3+OgvVtKOxyKfzjmVUqhvcMQ44VCpNU/wosMkT1zZfoxeg1NVZV/ziIudKTESVmDGIzoRuNQhf7Zl5T7HLyA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rEr9tGPwR8tyGEwlSU/kB4TfIu+NUYWEe7SaV3RKLNg=;
- b=ML9jJJTkC6+O/l+UkYzDjk/JhJXPmkGnYO2zwZ3YudtRcgkyMIS4L4zpASjpDO+yau2VXkuWIYBqZvHm/kjs7VHHjpXeQMigtLvpIasgR1EG0xKI4qln5uCHgndeSOfZtwtbrt70IEJPzNorJpkSStPQE1oej2yJ55d5Bl3MJtj5WQmiLRr1VAOFN/CNzrtdjdYI2qU6h32Jjm1PcIgKhemhOJFo4SJVRI4mgCKXxQAdr3ei+UVL645LW5TmWuhbJ1MGwzoYzUO1aoAEX8warUfAFk1wUBdtp5WQ3lz9uWPk7gKWwKyXDiTQBvOpreuCqLjHlrRDyVLYyOdWdqE5sw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+Received: (qmail 12264 invoked from network); 25 Jan 2023 22:33:32 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rEr9tGPwR8tyGEwlSU/kB4TfIu+NUYWEe7SaV3RKLNg=;
- b=JvMIWn8bBX2sosWo6zFn8UQzl3g9rw/jTJaP+MBrfXjTc2OZbN38qbBa/euIFaYlFYdx4jUusnIEzy7com/0yVIyjZTrCTMfxPfdlVR10/eY1Q6YtcWwvb8L6+e7ssDgGoLbnEt9i0gaAMduKUMczSozbmib1rIMGIzY+Ye9JaA=
-Content-Type: multipart/mixed; boundary="------------PmtMgnuZFfYp0HHuQcOJe5e4"
-Message-ID: <4bd69014-37f2-46fc-98f2-7ade8d1bc3a8@oracle.com>
-Date: Mon, 17 Jun 2024 09:31:05 -0700
-User-Agent: Mozilla Thunderbird
-References: <CAADqWPS_BXCTHOQYc_afkuUUN_-Q73F103yjirB-m9C2wDUu1g@mail.gmail.com>
-Content-Language: en-US
-From: Alan Coopersmith <alan.coopersmith@oracle.com>
-To: oss-security@lists.openwall.com
-Autocrypt: addr=alan.coopersmith@oracle.com; keydata=
- xsDiBEab+moRBACDH5yKqS3wcc5bdxY7PBNuwKvF5TKMfagmSvuRDtZjjIIWaA/nZ1KboV9G
- q5g7kP7+Kfu+Qgd8u65eVsWwmPW10fXvj3aCU53glx2EdGdrHcgiyH2gEQfPiyBw+trIppWF
- RV0IDXSLMA1FNC92t2nSG/VFHaPTVwcgkIRSfcXDvwCglGdEa6f4uLqoNHP+m4yYnzapFuMD
- /R4+2AJDAvEWKDdYCGZzlawjAmmWyXrmT7/C/mx98qUR473l4buXjHgDkkXXlHqdzil1vK85
- PhrKzNJDCCmlHUJNz+QwiAMOLwpD+kwVPb57RG7y+a5JQ5+jtVw4RlUxZIk/wj2An9YBO3A5
- vR7PdjM32ZJCN2+aM4dYfNzQxQKTA/47icvBaBVTl9rztjg2pd2Aqpc1P/GsIYLGj7XjnnJv
- GAENBHSH1QjpZMJGCTS9oJ+B0/wrIr+pA+MdFgYAb6ojMQJOO6UChjWWSGjMFcs/CeXhxlLB
- ido3DtAETbNTwO6OEfAvdosvTdhJFnwvZlJ+zZGGy5CrF2Fd9PUe9tmASc0uQWxhbiBDb29w
- ZXJzbWl0aCA8YWxhbi5jb29wZXJzbWl0aEBvcmFjbGUuY29tPsKCBBMRCgBCAhsDBgsJCAcD
- AgYVCAIJCgsEFgIDAQIeAQIXgAIZARYhBEoZPAbTXnxnD6TvC6L7nggfLRMOBQJkQs2eBQkn
- DNS0AAoJEKL7nggfLRMO1esAnR4FVD60BpDY/bJp5RC1VXhOVlo4AKCJgsQeVeGLxDlMuhAm
- bcCkOjafqc7BTQRGm/pvEAgAmnlpSWGjmtSGlLqKTuymwBAU9G7Jw8ow27QngXS/86g/PTzm
- yhXzK0uPgeoIaTZlqaHWNKCWJnC6T2btXtaDHH6cElrClYNf94os5sSt8PBDh184W+NtctAy
- Y2dA1pQYhYs8/eXwa4E4cyrrQG75M+CHrbu9Se0vlERARCpNcjNYLpTXRCwNuUvAi905VJ0Y
- XnGX83WbJfNIq+uxnBa2gVzwb2/2FwKOG03Wyb1vs6NznWJle9x61y8/LlEDoBRbfIQTFp51
- R0ue8gX2yMVgh8lYVViHYCBq+cat7p8X41Xa/fN/HfBFPsf3/+bhggNgmaBmDJBxxd6BPB8Y
- EireiwADBgf/UWIxQwwRLkiXPacOoh34MJYQIBTrCC8gVFxetlbEPEH5mueZMJegAPTF52l8
- 6REenxdNVz/0xT7BD6VlHHY5DowlbRca4W8eb3gpkX/wfNYDYCHtTifT7ewumTrNZx5mrbNk
- 0XTJVOPAP3z7E0rVD2w/xo4p22DzIwfeGKwpHqt1b6Z9fmrRDwaiXaFmwUf+rIiGc/OFcOSe
- 46HwTmIyTOt6NVdQSf75jOPbdeM/n1I5svOdWTLEj6QEj2q9UQ98UEPJuMdaotyBFwKlcDOO
- LMSL793fWINrYSskdXhHjaht5wWqI+egO2JfciI/vP1+bEzhpY9llGq+r7WG3nCSf8JJBBgR
- AgAJBQJGm/pvAhsMAAoJEKL7nggfLRMOgugAoIdhGnD9d/IS6fDVgv+4xnOXvyohAJ0VVxc1
- uoPzepWFbgvLuHIMvyjRog==
-In-Reply-To: <CAADqWPS_BXCTHOQYc_afkuUUN_-Q73F103yjirB-m9C2wDUu1g@mail.gmail.com>
-X-Forwarded-Message-Id: <CAADqWPS_BXCTHOQYc_afkuUUN_-Q73F103yjirB-m9C2wDUu1g@mail.gmail.com>
-X-ClientProxiedBy: BYAPR06CA0005.namprd06.prod.outlook.com
- (2603:10b6:a03:d4::18) To DS7PR10MB5005.namprd10.prod.outlook.com
- (2603:10b6:5:3ac::15)
+        d=diag.uniroma1.it; s=google;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=VshxQOY5fYhEOWMRKxtyjdelZo4X07KYR/nl/ZLaato=;
+        b=z/gUngiPzSf7Pe6iCf5U9+XMsfynHdbdvJTV9xuWdDQzTa9kHsqbVAR5rY0S7n7saO
+         G5SMN40djZ8lwR5emV8+5Pr2wgMVwN7RS+kN1Ok0S4Xo0GZW16FT/UYM6r9DD8V7QyNA
+         Hji6qSo+tuLgENAvK4m5Rt9vSgz+Hpm0tgg5w=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=VshxQOY5fYhEOWMRKxtyjdelZo4X07KYR/nl/ZLaato=;
+        b=mHEHqeoaghcKuGg8AA4eRZG2/VfxwomKBSdb1oW6B4caFFUxQGEVxkxwI4U9eSkTh6
+         qEht3HY/EZN87d59YSxSLwEMEA74rMhqZTL5DYRZdsqxZLHTuo8eq0k+x8mOtrA5hrL1
+         hCprgPO9KrOI5tDZT7bEZvtHM6qBZu/kCm21/4U79HOqdfx/ocGjlb5OsJcVUOWONM9T
+         eUhPEwVeIQECd6e/VpKFqTxoP0+Ksao971eHfkd4qux66FWDo9/Hv3CRrvm+qYPUXf/+
+         ZTp2f1D1JlkwWSECgilfuzoNELkBMhoOe/PsG1yZQCakb6tq3sCN0vUSdSiO9nFRhC99
+         nMdw==
+X-Gm-Message-State: AFqh2krPCmx2lvIOQYv2i3JoTqupf57oZBmb10rN22ILhgNuPS4xjc0B
+	HYE3YzLTDR+/P4q5UqaZKw2rh8JyiH4YzNAhHofaLBISWJbmmxGl
+X-Google-Smtp-Source: AMrXdXurDfwgDINAxe7zjf6JlaTISph7NVDlRvOZnkv0xSBhXZFgJBJBE0RgwryIRjREhC7gIJCXxqdzXLIzmswMWOw=
+X-Received: by 2002:a17:907:874f:b0:870:ef77:e243 with SMTP id
+ qo15-20020a170907874f00b00870ef77e243mr4548682ejc.203.1674686000889; Wed, 25
+ Jan 2023 14:33:20 -0800 (PST)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS7PR10MB5005:EE_|PH0PR10MB4550:EE_
-X-MS-Office365-Filtering-Correlation-Id: 875dcfc2-e699-47e6-625b-08dc8eeae3a2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230037|1800799021|366013|376011;
-X-Microsoft-Antispam-Message-Info: 
-	=?utf-8?B?amZIUFdvWWk4clVnbVd5a2M1aVFRdmhTVGFuR0pLK01JQm9ONFlSdFFDK3dp?=
- =?utf-8?B?SWZHUlpKdHFJK0NZbkZ1TEhQOWpBb1MvT2NSQXRjOTAwLzc2Y3d3NHNZL3ZT?=
- =?utf-8?B?NktNQjV0eTRSVkZqYnNUajl5aDU3V3NXcXozQndtYWlMUTF6SmcwclZWMEFy?=
- =?utf-8?B?bk4vSzFsYkVORmI2VUtueXdWK2JXQnJ2OE96bE80T0J2WCtSYURXQzkrRGFH?=
- =?utf-8?B?Q0Q0enBzajV3TXQvL1E4eUwyZW1qYkJSVWJYeVcrbGNOdUhGcDV3bHBuS3lJ?=
- =?utf-8?B?TEN1MmNyU0xjakk0c0FQcjJGN3RyYjdXcXpuV1MyK2VOU25qM2RUZmdFVFhB?=
- =?utf-8?B?MldRNG01QTFxVUVvUlRscWpQT1FEcE8yT0taZnNKQ3pUWHM1emxPM0xuOW03?=
- =?utf-8?B?T1lINXlKV25JRE1Wb0JtbW1hYzJvazc2MFlNTHlMNDZCelErcGVwemxuRXcy?=
- =?utf-8?B?VzlLQ29HczRWeUlhcEpkL3VneWZZWS90U1V5aEJnWnBGMTJIN1dSZ1BweW1R?=
- =?utf-8?B?TlI3SGJEV0dSRGlzaGloQUJsSW0rclVab0ZLR0NlVjYzSnQ2Qjh3VmorRUxR?=
- =?utf-8?B?eWhBbmNhVnlwUzlRMlZpY0tsSFlpbjdPQVF1cFVkaENVbWRuTjhKMnEraG9j?=
- =?utf-8?B?MlFrR0Z4VlA2b0xjRFlTa1lTaUppcXg4ZkZmRXRUUnM4aGFRQVhTSTlKU2xB?=
- =?utf-8?B?YUIvcnkxS1dkdEFQQ2trYmxScnVZRWYxY09zUCtkVFR1TTVvdDh5UFRVb0VG?=
- =?utf-8?B?RVZxOHdwUklkcm5OWjJwdGJzbDIySkVwN0Fvd1JGV1pkVDNuWURzUVRnZVRy?=
- =?utf-8?B?L2NGVjh6QTNpNkhGVXJSZEJaRm9teVluNzhyQ0I1UVQxVXVCZkxvU2hyN2VN?=
- =?utf-8?B?anV5anRmeVJsUXpkc0ZPSzNtbG00UXIvYjI5YXY2RUQ3blVKTFBRa2Q4UHhT?=
- =?utf-8?B?RVJDaXorMWVzRVpGOXFlMk1BOGFoUU02MmRDSm1RMXdHRWFKUkdVVWFOTVFs?=
- =?utf-8?B?eGsrL095MWJnUi94OFg0RHFOODg1azNTT3pDWThTUTZkWldwdGF3OFpIRHM0?=
- =?utf-8?B?M005UGF1MXR6WFIxUlpvWnlzN1pRYmozeDIxaWJqZnpVM2hjK0gveDR0bVVK?=
- =?utf-8?B?SUhsYVN0S05SUE0wLzJ5eEVsWDIrZXl5WjdNaCtvWUlIbG9ra3lyejBDbjFM?=
- =?utf-8?B?eEUzL0lUSytwaW9pN0luak5ZeHdTZExaQllEZE9XS3V1Wm81aGxLS3h2elV2?=
- =?utf-8?B?blZyeVNTWVl6S1BYWHc2Z0FMNFMwWHduVGhwWEdWamtkekhXdWRwS3ZMR1E4?=
- =?utf-8?B?Rmxyc1N0eEkzNlhzQ2VuTVgvejMrU3NoNWE5YmtiWDZiWmhmejlITXVKeFgw?=
- =?utf-8?B?R29iL2FDM2dLL083WXJxUGxxZHR5ZDRrSm1sWW1wbkpUZ1VuSzBsaDJkSkdQ?=
- =?utf-8?B?VUZPS3JkUVdFVjZySkhNYnBJK0FjMlNCRU00RXdyMlNQM0p0Umg0eXNZK2JN?=
- =?utf-8?B?YzNVZWY1TjJsNWU5ZXdwWDhiMnVBTzJXaGQvR0RkM0o0Y0Fxc1FmWERRNFV5?=
- =?utf-8?B?RHJqRGJWeW9wRVhDclpKZHppNTU5RC9mTkQ1YStxSDNTeWQwb3hPV1ZNU2Iy?=
- =?utf-8?B?RCtEajQyQy92dklzdHo1Rzd3UXVBWmFmT3JySWYwdkVjNHU5alNwU2o4NGNX?=
- =?utf-8?B?UTdGd2puOWtGbDZLWC9hd1NIMmNPMllvVjhpOVlqN24zb0RrY21hOEV3PT0=?=
-X-Forefront-Antispam-Report: 
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS7PR10MB5005.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230037)(1800799021)(366013)(376011);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 
-	=?utf-8?B?ZnAxTGs5Y2E2WE9jNDFRMVFVYVk3UWZlY1ZLMzc3ZGNYOU9ERCt2anExZS9Z?=
- =?utf-8?B?V1pobUU0b2lmOTBHUkpsem1idnRhWkZlejFmNXBKZXZKdWV1OGVqbzVaZnBR?=
- =?utf-8?B?VnlZOXBuWlBmUFVNTW9DRTJUeXFxQjVrNGZwN0dJQmVSOHlFOGFmTU9Dak5Y?=
- =?utf-8?B?b1ZkU29RTS9GNVExYUEvWkUzbXBVYStVcUtoYkl6SWNhdHZlNk9VRHZ4UzZm?=
- =?utf-8?B?OTRqaDJVUU9PY3BMQTE4YjJDd1pMTFZrVkwxYlBKVEFSVDZ6aTNYUGNHMmcy?=
- =?utf-8?B?dDdaSlQ1OUVRSjNyQ0wvdmd6ZzFRK2pNV0Z1NFEvQ3J4WUZTYkN0ZzlWaWpt?=
- =?utf-8?B?SWhUS2cxa3VBVzYvb2RhTTZ2SVBzUFRqVEUxaHRHQTQvL2hNUVNGUmMvUW9R?=
- =?utf-8?B?ZU14UGFHelBmT0t4cEM1U05HanFaUithZi9ZVjI5WWpFRnNEeHdzcEIyYnhz?=
- =?utf-8?B?dHc5K2dqZGsxb2xvT0g0b0FDdWd4ZXdMbGh4dHR2N3pzUmJmSGJtTDArWTl2?=
- =?utf-8?B?eFpoWW8xcHR2Wkh2QllNejJUdUxWeGsveUVrSk9QZndyM1Q5Uk5rZmNjRmtB?=
- =?utf-8?B?SkVVQ2tqdHJYbFJJMy9DbnoxaVNiSGZvcUNRYk0vcjdsQm9UbGhwb1VQRVhk?=
- =?utf-8?B?N2k3RE9jMzd3aGRXSHd6TThsT1lDUzlGMzNveldPZzQzWlZuSGxvVnZzaE96?=
- =?utf-8?B?SE9hUTZJQzlDd0FJUmtVYVp1WGVUUVg4bjdQTCtaRGpEazB4SWJxcXNucXYz?=
- =?utf-8?B?engzNlNvd2N1NkhseUl3emZwMzBPUGhtOGRueElNZGdyZDBUVU9YQm1yU2w2?=
- =?utf-8?B?dis4Kzg2Vlp3MlBmN0o0VHdET3JUMjNXcFZqUEgrOVc0bU9nYitzUmtXazVO?=
- =?utf-8?B?WnJaRjNLazRsdjRmanErRk5CdTkwL1dqaExMM3ZBcUZHdXhKeUdRZXRVR3dy?=
- =?utf-8?B?blBEMTY4MmxiUEVabllNcDRpVmJhT3g0bW5yNHdJUVVaUU40amlYckdCOUFa?=
- =?utf-8?B?MWZsbkpCYjJSenNpaE50OHV0K2tqWlVlaTR6NFM4YzVsUWE5d25jYUprZTNw?=
- =?utf-8?B?c3BOMmFnSTVEUmpwdkdHVy9YZ0pjQS9JN3MyaFFYODQwM3ZGWm9MbEl0UHQ5?=
- =?utf-8?B?WnA0bWxXZW14NWdFTWVVNHoyVzdBTFl0K21VQjV1RWFtdTJwTnIwRDlpalJU?=
- =?utf-8?B?TXV1M0lzcXB6OFNHL1BabnJNZk5rUXV5QU9iZUphZ0JnWmpZUDJJOU85cURW?=
- =?utf-8?B?SzUzOUIxSkRpMkduOTJhb3NlZjRUbEZ2aXNFb2c2V2x3eW5vQWFUOUU0RmtS?=
- =?utf-8?B?NmlrVEN5MzdBU09uS1BaeE9uU1lKQzU5VkFtV1RiK3Z2WmJNZ20xNWhYTnh3?=
- =?utf-8?B?bkM5MUVjbUpRK1NXYTBBdm5pWENTWjUwdUxHellodGJzS05uZVFiWEU2Vk1s?=
- =?utf-8?B?WDZPSCt1cTZsSjRqSVhlMlhTdU5WRUFpME5WMjhqQjBMMVFVcytzRU4zWUhK?=
- =?utf-8?B?OHNjeFp2SzUwWE8way8zdVFGOGo2YWE4dHZ0K0EvSEVXZCtIMXJWMXVaQmhz?=
- =?utf-8?B?U25kOEYxNmk5L09XR1hDWjZRMEFzNGl6UURaWjRzS01SREw3T2gwOG9QcDhz?=
- =?utf-8?B?U3p2RHhGR3d2R3BxektXakpLU21kS1F4dnNDMU1wS01XYk5OeTFpa3BFMVIr?=
- =?utf-8?B?MlU3WnUyN2JwRXJ2OGUzcGFCOU93elhyY3FGRi9mUFptclUwbE8rNDIyU2xk?=
- =?utf-8?B?WUU0NEdKQ1VBN3VaQWdTZlNTejl2OW13T0wrejJOVzQrZllHYW43clVENVQ5?=
- =?utf-8?B?SndUZ2tVYmZXcG5Mdm83Vk5wNVJEV1RkWHZiZ0FUZVVvcFl1aVZERXRKY2Vv?=
- =?utf-8?B?ZlJ3cTZYa1NYajJOb2UxTU15YnkxcHlCTnpHb3BYSUlIRXRhVmRDSTFmU2JC?=
- =?utf-8?B?K1ZYUDlnYk5iMDhndUNxM3ZaZWpOY0ZuOHA4YjJLcFNnUit1RDdnMTIvVDd6?=
- =?utf-8?B?ek1nUlBFZFQ3UGJCak9hb1BPQXgzLzhjYndQTTJCSFZTamxKVmxNdDQrNFdY?=
- =?utf-8?B?WVZJZ1RWOXNEcHAxZUpWV0hVNWJwYTYvbjFBblhiVldaVUlXelYyUDV4TExt?=
- =?utf-8?B?TncvYUxxeDJoaE4wMEdHTFdpdTRFRTcxVXhyemNTTGNyMGhrT1Q0UkpaY1hz?=
- =?utf-8?B?Smc9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 
-	cA6wa+O5Xq/qcawNshhSWnemu5k/673P6ZoIOtKurSPfxs5JlMClAiVnWOTMY2Y0KMjvqNC0vwPEY2MxT4URA8KYkGPYPaeB1STddNisx0zglEYwM/4QhIUY9Di/lrmDhg1I0d7cb7VO3oCs2Ljxp6Sue4LO3FyX6QYrvR81+yCbj2bfrVzCIXSW6I2pAZ2hdraUkSudQGC5eldFeQR6Yg3JFLYkuXPt0Hk0Wd95A6nC/th7mflhUjHT4c5KQOdCFakDAlaSjbC8D7F8eq7agZNIrHtpFwVeIYH9KeeMuepFgxYbQ5pD6Cd9/nWl9jPHO3JCvyZ+IydEwbHK9XcQ054ogMAJf4JCy4y5S2zs0+B/SIOMChmuoKMPr5Sk9j9Mqb8R/Su0vRTfXYVb+UNEEzrDmoqQHHmP9MZDHaB7+rOPv+U0padTGWronr+f+W010eeP8wUVf+d26NguQsD18ub4lOEiPTaPUvFy0m4QKenQawNvSon8Zae2S0fXir2py5XIPNp4eM0VP4MH56L9i9kKpAbgesISmt6wWZ9DwxIxADWd5uQPKdCOX7EvU4tRKDNzynGRjipYb12TwV1cU0mhpO6Yo+EeJZR1MMo9wNE=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 875dcfc2-e699-47e6-625b-08dc8eeae3a2
-X-MS-Exchange-CrossTenant-AuthSource: DS7PR10MB5005.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jun 2024 16:31:07.3549
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: bXYg+C0bdtKw20pHUJAD/DItWqti/e4nfIBDFXXdgqko34FbiTc3ztSRl84SgeaQ+4h402af6VBjIUBp4opCvB9VMduH89b4jd6CoMA0jQo=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR10MB4550
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-17_14,2024-06-17_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 suspectscore=0
- malwarescore=0 mlxlogscore=999 phishscore=0 bulkscore=0 adultscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2405010000 definitions=main-2406170128
-X-Proofpoint-GUID: BgrAlRRx5NC7HoXwmbPZPuT78cyoKSNi
-X-Proofpoint-ORIG-GUID: BgrAlRRx5NC7HoXwmbPZPuT78cyoKSNi
-Subject: [oss-security] Fwd: [Security-announce][CVE-2024-0397] Memory race condition in
- ssl.SSLContext certificate store methods
+From: Pietro Borrello <borrello@diag.uniroma1.it>
+Date: Wed, 25 Jan 2023 23:33:09 +0100
+Message-ID: <CAEih1qUhLRQ+nD-85r5AZv5mq33QTk2iWzDdRKgZY5Omfucbag@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Linux Kernel: hid: Use-After-Free in bigben_set_led()
 
---------------PmtMgnuZFfYp0HHuQcOJe5e4
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Hi all,
 
+I'm disclosing a Use After Free that may be triggered when plugging in a
+malicious USB device, which advertises itself as a bigben device.
 
+The device uses a worker `bigben_worker` scheduled by bigben_set_led() to
+communicate with the hardware.
+The work_struct is embedded in `struct bigben_device`, and at device removal,
+`struct bigben_device` is freed.
 
+However, concurrently with device removal, the LED controller bigben_set_led()
+may schedule a worker whose use would result in a use-after-free.
 
--------- Forwarded Message --------
-Subject: 	[Security-announce][CVE-2024-0397] Memory race condition in 
-ssl.SSLContext certificate store methods
-Date: 	Mon, 17 Jun 2024 09:02:21 -0500
-From: 	Seth Larson <seth@python.org>
-Reply-To: 	security-sig@python.org
-To: 	security-announce@python.org
+Following the debug check triggered by freeing a work_struct in use:
+```
+[   37.803135][ T1170] usb 1-1: USB disconnect, device number 2
+[   37.827979][ T1170] ODEBUG: free active (active state 0) object
+type: work_struct hint: bigben_worker+0x0/0x860
+[   37.829634][ T1170] WARNING: CPU: 0 PID: 1170 at
+lib/debugobjects.c:505 debug_check_no_obj_freed+0x43a/0x630
+[   37.830904][ T1170] Modules linked in:
+[   37.831413][ T1170] CPU: 0 PID: 1170 Comm: kworker/0:3 Not tainted
+6.1.0-rc4-dirty #43
+[   37.832465][ T1170] Hardware name: QEMU Standard PC (i440FX + PIIX,
+1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+[   37.833751][ T1170] Workqueue: usb_hub_wq hub_event
+[   37.834409][ T1170] RIP: 0010:debug_check_no_obj_freed+0x43a/0x630
+[   37.835218][ T1170] Code: 48 89 ef e8 28 82 58 ff 49 8b 14 24 4c 8b
+45 00 48 c7 c7 40 5f 09 87 48 c7 c6 60 5b 09 87 89 d9 4d 89 f9 31 c0
+e8 46 25 ef fe <0f> 0b 4c 8b 64 24 20 48 ba 00 00 00 00 00 fc ff df ff
+05 4f 7c 17
+[   37.837667][ T1170] RSP: 0018:ffffc900006fee60 EFLAGS: 00010246
+[   37.838503][ T1170] RAX: 0d2d19ffcded3d00 RBX: 0000000000000000
+RCX: ffff888117fc9b00
+[   37.839519][ T1170] RDX: 0000000000000000 RSI: 0000000000000000
+RDI: 0000000000000000
+[   37.840570][ T1170] RBP: ffffffff86e88380 R08: ffffffff8130793b
+R09: fffff520000dfd85
+[   37.841618][ T1170] R10: fffff520000dfd85 R11: 0000000000000000
+R12: ffffffff87095fb8
+[   37.842649][ T1170] R13: ffff888117770ad8 R14: ffff888117770acc
+R15: ffffffff852b7420
+[   37.843728][ T1170] FS:  0000000000000000(0000)
+GS:ffff8881f6600000(0000) knlGS:0000000000000000
+[   37.844877][ T1170] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   37.845749][ T1170] CR2: 00007f992eaab380 CR3: 000000011834b000
+CR4: 00000000001006f0
+[   37.846794][ T1170] Call Trace:
+[   37.847245][ T1170]  <TASK>
+[   37.847643][ T1170]  slab_free_freelist_hook+0x89/0x160
+[   37.848409][ T1170]  ? devres_release_all+0x262/0x350
+[   37.849156][ T1170]  __kmem_cache_free+0x71/0x110
+[   37.849829][ T1170]  devres_release_all+0x262/0x350
+[   37.850478][ T1170]  ? devres_release+0x90/0x90
+[   37.851118][ T1170]  device_release_driver_internal+0x5e5/0x8a0
+[   37.851944][ T1170]  bus_remove_device+0x2ea/0x400
+[   37.852611][ T1170]  device_del+0x64f/0xb40
+[   37.853212][ T1170]  ? kill_device+0x150/0x150
+[   37.853831][ T1170]  ? print_irqtrace_events+0x1f0/0x1f0
+[   37.854564][ T1170]  hid_destroy_device+0x66/0x100
+[   37.855226][ T1170]  usbhid_disconnect+0x9a/0xc0
+[   37.855887][ T1170]  usb_unbind_interface+0x1e1/0x890
+```
 
+And the KASAN error report:
+```
+[ 138.349079][  T7] usb 1-1: USB disconnect, device number 2
+[ 138.381243][ T1175]
+==================================================================
+[ 138.382329][ T1175] BUG: KASAN: use-after-free in __list_add_valid+0x66/0x100
+[ 138.383272][ T1175] Read of size 8 at addr ffff88810d62de70 by task
+systemd-udevd/1175
+[ 138.384238][ T1175]
+[ 138.384531][ T1175] CPU: 0 PID: 1175 Comm: systemd-udevd Not tainted
+6.1.0-rc4-dirty #30
+[ 138.385541][ T1175] Hardware name: QEMU Standard PC (i440FX + PIIX,
+1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+[ 138.386725][ T1175] Call Trace:
+[ 138.387145][ T1175] <TASK>
+[ 138.387515][ T1175] dump_stack_lvl+0x1b1/0x28e
+[ 138.388112][ T1175] ? nf_tcp_handle_invalid+0x3ff/0x3ff
+[ 138.388961][ T1175] ? __wake_up_klogd+0xdb/0x110
+[ 138.389756][ T1175] ? panic+0x822/0x822
+[ 138.390246][ T1175] ? _printk+0xc0/0x100
+[ 138.390763][ T1175] print_address_description+0x7d/0x340
+[ 138.391454][ T1175] print_report+0x107/0x1f0
+[ 138.391995][ T1175] ? __virt_addr_valid+0x211/0x2c0
+[ 138.392625][ T1175] ? __phys_addr+0xb5/0x160
+[ 138.393176][ T1175] ? __list_add_valid+0x66/0x100
+[ 138.393782][ T1175] kasan_report+0xcd/0x100
+[ 138.394330][ T1175] ? __list_add_valid+0x66/0x100
+[ 138.394955][ T1175] __list_add_valid+0x66/0x100
+[ 138.395542][ T1175] insert_work+0x10e/0x3c0
+[ 138.396119][ T1175] __queue_work+0xa97/0xde0
+[...]
+[ 138.403915][ T1175] __sys_bind+0x210/0x2b0
+[ 138.404458][ T1175] ? __ia32_sys_socketpair+0xb0/0xb0
+[ 138.405097][ T1175] ? lockdep_hardirqs_on_prepare+0x428/0x790
+[ 138.405833][ T1175] __x64_sys_bind+0x76/0x80
+[ 138.406378][ T1175] do_syscall_64+0x3d/0x90
+[ 138.406931][ T1175] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[ 138.407689][ T1175] RIP: 0033:0x7fe2d052d9e7
+[ 138.408241][ T1175] Code: 83 c4 08 48 3d 01 f0 ff ff 73 01 c3 48 8b
+0d a8 f4 2a 00 f7 d8 64 89 01 48 83 c8 ff c3 66 0f 1f 44 00 00 b8 31
+00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 81 f4 2a 00 f7 d8
+64 89 01 48
+[ 138.410572][ T1175] RSP: 002b:00007ffca13ea088 EFLAGS: 00000246
+ORIG_RAX: 0000000000000031
+[ 138.411571][ T1175] RAX: ffffffffffffffda RBX: 0000560b0c5b0f90 RCX:
+00007fe2d052d9e7
+[ 138.412542][ T1175] RDX: 000000000000000c RSI: 0000560b0c5b0fa0 RDI:
+000000000000000e
+[ 138.413525][ T1175] RBP: 0000000000000000 R08: 0000560b0c5960e0 R09:
+0000000000000210
+[ 138.414530][ T1175] R10: 000000000000000f R11: 0000000000000246 R12:
+0000560b0c5a8e94
+[ 138.415494][ T1175] R13: 0000000000000000 R14: 0000560b0c596010 R15:
+0000560b0c596028
+[ 138.416499][ T1175] </TASK>
+[ 138.416905][ T1175]
+[ 138.416499][ T1175] </TASK>
+[ 138.416905][ T1175]
+[ 138.417197][ T1175] Allocated by task 7:
+[ 138.417706][ T1175] kasan_set_track+0x3d/0x60
+[ 138.418271][ T1175] __kasan_kmalloc+0x7c/0x90
+[ 138.418867][ T1175] __kmalloc_node_track_caller+0xad/0x1a0
+[ 138.419583][ T1175] devm_kmalloc+0x77/0x1a0
+[ 138.420141][ T1175] bigben_probe+0x2f/0x770
+[ 138.420678][ T1175] hid_device_probe+0x251/0x3f0
+[...]
+[ 138.446475][ T1175]
+[ 138.446775][ T1175] Freed by task 7:
+[ 138.447232][ T1175] kasan_set_track+0x3d/0x60
+[ 138.447798][ T1175] kasan_save_free_info+0x2e/0x50
+[ 138.448410][ T1175] ____kasan_slab_free+0xb0/0x100
+[ 138.449039][ T1175] slab_free_freelist_hook+0x80/0x140
+[ 138.449696][ T1175] __kmem_cache_free+0x71/0x110
+[ 138.450292][ T1175] devres_release_all+0x262/0x350
+[ 138.450925][ T1175] device_release_driver_internal+0x5e5/0x8a0
+[ 138.451667][ T1175] bus_remove_device+0x2ea/0x400
+[ 138.452293][ T1175] device_del+0x64f/0xb40
+[ 138.452825][ T1175] hid_destroy_device+0x66/0x100
+[ 138.453424][ T1175] usbhid_disconnect+0x9a/0xc0
+[...]
+[ 138.462307][ T1175]
+```
 
+The proposed patch deregisters the LED controller bigben_set_led() before
+freeing the device and is currently under discussion with the maintainers.
 
-A defect was discovered in the Python “ssl” module where there is a memory race 
-condition with the ssl.SSLContext methods “cert_store_stats()” and 
-“get_ca_certs()”. The race condition can be triggered if the methods are called 
-at the same time as certificates are loaded into the SSLContext, such as during 
-the TLS handshake with a certificate directory configured. This issue is fixed 
-in CPython 3.10.14, 3.11.9, 3.12.3, and 3.13.0a5.
-
-Severity: Low
-
-References
-
-   * https://github.com/python/cpython/issues/114572
-   * https://github.com/python/cpython/pull/114573
-
-
-
---------------PmtMgnuZFfYp0HHuQcOJe5e4
-Content-Type: text/plain; charset=UTF-8; name="Attached Message Part"
-Content-Disposition: attachment; filename="Attached Message Part"
-Content-Transfer-Encoding: base64
-
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X18KU2VjdXJpdHktYW5ub3VuY2UgbWFpbGluZyBsaXN0IC0tIHNlY3VyaXR5
-LWFubm91bmNlQHB5dGhvbi5vcmcKVG8gdW5zdWJzY3JpYmUgc2VuZCBhbiBl
-bWFpbCB0byBzZWN1cml0eS1hbm5vdW5jZS1sZWF2ZUBweXRob24ub3JnCmh0
-dHBzOi8vbWFpbC5weXRob24ub3JnL21haWxtYW4zL2xpc3RzL3NlY3VyaXR5
-LWFubm91bmNlLnB5dGhvbi5vcmcvCk1lbWJlciBhZGRyZXNzOiBhbGFuLmNv
-b3BlcnNtaXRoQG9yYWNsZS5jb20KCg==
-
---------------PmtMgnuZFfYp0HHuQcOJe5e4--
+Best regards,
+Pietro Borrello
