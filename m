@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5137" "Thursday" "7" "June" "2018" "12:39:48" "+0200" "Secunia Research" "vuln@secunia.com" "<000001d3fe4b$dbee82c0$93cb8840$@secunia.com>" "128" "[oss-security] Secunia Research: Linux Kernel USB over IP Multiple Denial of Service Vulnerabilities" nil nil nil "6" "2018060710:39:48" "[oss-security] Secunia Research: Linux Kernel USB over IP Multiple Denial of Service Vulnerabilities" (number mark "U       vuln@secunia Jun  7  128/5137  " thread-indent "\"[oss-security] Secunia Research: Linux Kernel USB over IP Multiple Denial of Service Vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 11311 invoked by uid 550); 7 Jun 2018 10:43:48 -0000
+Received: (qmail 32482 invoked by uid 550); 25 Jan 2023 14:57:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,146 +7,235 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3374 invoked from network); 7 Jun 2018 10:40:03 -0000
-From: "Secunia Research" <vuln@secunia.com>
-To: <oss-security@lists.openwall.com>
-Cc: <vuln@secunia.com>
-Date: Thu, 7 Jun 2018 12:39:48 +0200
-Message-ID: <000001d3fe4b$dbee82c0$93cb8840$@secunia.com>
+Received: (qmail 32449 invoked from network); 25 Jan 2023 14:57:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
+	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
+	Content-Transfer-Encoding:Content-Type;
+	bh=4x+zYFZJ2fux5Y6wWNRS5h2J8/Cv4GXccaEhicN1EBc=; b=gJeN+Tbf+gVwtZasWDv9LrtxkB
+	HIua5PqCH9ryAxObrVZLIXuLVCD1CQNRoVFedpw4Yw31Ua3XrxPvE2eR7UCj8YTSNO4L7f6TY8zar
+	TlO1teALImTV5W+p56d12sVwXZEKu7LMZikjaKniuE3h7MfVVVPX/KMhmyZjfvJ4ceck=;
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
+X-Mailer: MIME-tools 5.509 (Entity 5.509)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1pKhCZ-0001p5-FK@xenbits.xenproject.org>
+Date: Wed, 25 Jan 2023 14:56:39 +0000
+Subject: [oss-security] Xen Security Advisory 425 v1 (CVE-2022-42330) - Guests can cause
+ Xenstore crash via soft reset
+
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
 Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AdP+SyQ9bRJ2h4R5QXaRcwMlp8cmVA==
-Content-Language: en-us
-Subject: [oss-security] Secunia Research: Linux Kernel USB over IP Multiple Denial of Service Vulnerabilities
 
-======================================================================
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-                     Secunia Research 2018/05/30
+            Xen Security Advisory CVE-2022-42330 / XSA-425
 
-  Linux Kernel USB over IP Multiple Denial of Service Vulnerabilities
+            Guests can cause Xenstore crash via soft reset
 
-======================================================================
-Table of Contents
+ISSUE DESCRIPTION
+=================
 
-Affected Software....................................................1
-Severity.............................................................2
-Description of Vulnerabilities.......................................3
-Solution.............................................................4
-Time Table...........................................................5
-Credits..............................................................6
-References...........................................................7
-About Flexera .......................................................8
-Verification.........................................................9
+When a guest issues a "Soft Reset" (e.g. for performing a kexec) the
+libxl based Xen toolstack will normally perform a XS_RELEASE Xenstore
+operation.
 
-======================================================================
-1) Affected Software
+Due to a bug in xenstored this can result in a crash of xenstored.
 
-* Linux Kernel versions 4.16.x, 4.14.x, 4.9.x, and 4.4.x.
-  Other versions may also by affected.
+Any other use of XS_RELEASE will have the same impact.
 
-======================================================================
-2) Severity
+IMPACT
+======
 
-Rating: Less critical
-Impact: Denial of Service
-Where: Local Area Network
+A malicious guest could try to kexec until it hits the xenstored bug,
+resulting in the inability to perform any further domain administration
+like starting new guests, or adding/removing resources to or from any
+existing guest.
 
-======================================================================
-3) Description of Vulnerabilities
+VULNERABLE SYSTEMS
+==================
 
-Secunia Research has discovered multiple vulnerabilities in Linux
-Kernel, which can be exploited by malicious people to cause a DoS
-(Denial of Service).
+Only Xen version 4.17 is vulnerable. Systems running an older version
+of Xen are not vulnerable.
 
-Multiple race condition errors when handling probe, disconnect, and
-rebind operations can be exploited to trigger a use-after-free
-condition or a NULL pointer dereference by sending multiple USB over
-IP packets.
+All Xen systems using C xenstored are vulnerable. Systems using the
+OCaml variant of xenstored are not vulnerable.
 
-Successful exploitation requires USB over IP daemon (usbipd) to be
-running.
+Systems running only PV guests (x86 only) are not vulnerable, as long as
+they are using a libxl based toolstack.
 
-The vulnerabilities are confirmed in versions 4.17.0-rc1 and 4.15.0
-and reported in versions 4.16.x prior to 4.16.11, 4.14.x prior to
-4.14.43, 4.9.x prior to 4.9.102, and 4.4.x prior to 4.4.133. Other
-versions may also by affected.
+MITIGATION
+==========
 
-======================================================================
-4) Solution
+The problem can be avoided by either:
 
-Update to version 4.16.11, 4.14.43, 4.9.102, or 4.4.133.
-https://git.kernel.org/linus/22076557b07c12086eeb16b8ce2b0b735f7a27e7
-https://git.kernel.org/linus/c171654caa875919be3c533d3518da8be5be966e
+- - using the OCaml xenstored variant
 
-======================================================================
-5) Time Table
+- - explicitly configuring guests to NOT perform the "Soft Reset" action
+  by adding:
+    on_soft_reset="reboot"
+  or similar to the guest's configuration. This will break kexec in the
+  guest, though.
 
-2018/05/03 - Linux Kernel team contacted with vulnerabilities details.
-2018/05/04 - Linux Kernel team confirmed the vulnerabilities.
-2018/05/15 - Release of an official patch.
-2018/05/30 - Release of Secunia Advisory SA81540.
-2018/05/30 - Public disclosure of Secunia Research Advisory.
+NOTE REGARDING LACK OF EMBARGO
+==============================
 
-======================================================================
-6) Credits
+This issue was discussed in public already.
 
-Jakub Jirasek, Secunia Research at Flexera.
+RESOLUTION
+==========
 
-======================================================================
-7) References
+Applying the attached patch resolves this issue.
 
-The Flexera CNA has assigned CVE-2018-5814 identifier for the
-vulnerabilities through the Common Vulnerabilities and Exposures (CVE)
-project.
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
 
-======================================================================
-8) About Flexera
+xsa425.patch           xen-unstable, Xen 4.17.x
 
-Flexera helps application producers and enterprises increase
-application usage and the value they derive from their software.
+$ sha256sum xsa425*
+49f322c955fe7857cc824bba80625e56f582fdf0a4b244f513b6750e15ba5e48  xsa425.patch
+$
 
-http://www.flexera.com
+-----BEGIN PGP SIGNATURE-----
 
-Flexera delivers market-leading Software Vulnerability Management
-solutions enabling enterprises to proactively identify and
-remediate software vulnerabilities, effectively reducing the risk of
-costly security breaches.
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmPRQroMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZEpsIAJmIVB2lvqT2Qdp0pPSoaJIxXxuGE320kVTWmudB
+F2WbRCxeubqoOC/MyHTLOujMix6wBHnbm1cMQo0r4Vah/KX34vPS3wYqDZQYZtES
+aEkOQ+214QLAS2futcT0gde9idKpShI9jjWSRwcH01a7V6tlwwidc4V0luUFV0iX
+EKHPJ89rbbCMP1fOq5B+C7UP8oyiHItNWPWPFBwtUeXKvFiPOoyUPCoTHG8CCYHG
+WiVbeaZab7x/9+WUwXJ6hZqZiVr6NqoaItOx9Nbw4yCHwJlAj2UfA9skmqtGbPbB
+vxhkbIgOeiWoPvZgTGQjzZLosWO5+y30Fv5QYIbjA2/1OSQ=
+=7kiM
+-----END PGP SIGNATURE-----
 
-https://www.flexera.com/enterprise/products/
+--=separator
+Content-Type: application/octet-stream; name="xsa425.patch"
+Content-Disposition: attachment; filename="xsa425.patch"
+Content-Transfer-Encoding: base64
 
-Flexera supports and contributes to the community in several
-ways. We have always believed that reliable vulnerability
-intelligence and tools to aid identifying and fixing vulnerabilities
-should be freely available for consumers to ensure that users,
-who care about their online privacy and security, can stay secure.
-Only a few vendors address vulnerabilities in a proper way and help
-users get updated and stay secure. End-users (whether private
-individuals or businesses) are otherwise left largely alone, and
-that is why back in 2002, Secunia Research started investigating,
-coordinating disclosure and verifying software vulnerabilities.
-In 2016, Secunia Research became a part of Flexera and today
-our in-house software vulnerability research remains the core of
-the Software Vulnerability Management products at Flexera.
+RnJvbTogSmFzb24gQW5kcnl1ayA8amFuZHJ5dWtAZ21haWwuY29tPgpTdWJq
+ZWN0OiBSZXZlcnQgInRvb2xzL3hlbnN0b3JlOiBzaW1wbGlmeSBsb29wIGhh
+bmRsaW5nIGNvbm5lY3Rpb24gSS9PIgoKSSdtIG9ic2VydmluZyBndWVzdCBr
+ZXhlYyB0cmlnZ2VyIHhlbnN0b3JlZCB0byBhYm9ydCBvbiBhIGRvdWJsZSBm
+cmVlLgoKZ2RiIG91dHB1dDoKUHJvZ3JhbSByZWNlaXZlZCBzaWduYWwgU0lH
+QUJSVCwgQWJvcnRlZC4KX19wdGhyZWFkX2tpbGxfaW1wbGVtZW50YXRpb24g
+KG5vX3RpZD0wLCBzaWdubz02LCB0aHJlYWRpZD0xNDA2NDU2MTQyNTgxMTIp
+IGF0IC4vbnB0bC9wdGhyZWFkX2tpbGwuYzo0NAo0NCAgICAuL25wdGwvcHRo
+cmVhZF9raWxsLmM6IE5vIHN1Y2ggZmlsZSBvciBkaXJlY3RvcnkuCihnZGIp
+IGJ0CiAgICBhdCAuL25wdGwvcHRocmVhZF9raWxsLmM6NDQKICAgIGF0IC4v
+bnB0bC9wdGhyZWFkX2tpbGwuYzo3OAogICAgYXQgLi9ucHRsL3B0aHJlYWRf
+a2lsbC5jOjg5CiAgICBhdCAuLi9zeXNkZXBzL3Bvc2l4L3JhaXNlLmM6MjYK
+ICAgIGF0IHRhbGxvYy5jOjExOQogICAgcHRyPXB0ckBlbnRyeT0weDU1OWZh
+ZTcyNDI5MCkgYXQgdGFsbG9jLmM6MjMyCiAgICBhdCB4ZW5zdG9yZWRfY29y
+ZS5jOjI5NDUKKGdkYikgZnJhbWUgNQogICAgYXQgdGFsbG9jLmM6MTE5CjEx
+OSAgICAgICAgICAgIFRBTExPQ19BQk9SVCgiQmFkIHRhbGxvYyBtYWdpYyB2
+YWx1ZSAtIGRvdWJsZSBmcmVlIik7CihnZGIpIGZyYW1lIDcKICAgIGF0IHhl
+bnN0b3JlZF9jb3JlLmM6Mjk0NQoyOTQ1ICAgICAgICAgICAgICAgIHRhbGxv
+Y19pbmNyZWFzZV9yZWZfY291bnQoY29ubik7CihnZGIpIHAgY29ubgokMSA9
+IChzdHJ1Y3QgY29ubmVjdGlvbiAqKSAweDU1OWZhZTcyNDI5MAoKTG9va2lu
+ZyBhdCBhIHhlbnN0b3JlIHRyYWNlLCB3ZSBoYXZlOgpJTiAweDU1OWZhZTcx
+ZjI1MCAyMDIzMDEyMCAxNzo0MDo1MyBSRUFEICgvbG9jYWwvZG9tYWluLzMv
+aW1hZ2UvZGV2aWNlLW1vZGVsLWRvbQppZCApCndybDogZG9tICAgIDAgICAg
+ICAxICBtc2VjICAgICAgMTAwMDAgY3JlZGl0ICAgICAxMDAwMDAwIHJlc2Vy
+dmUgICAgICAgIDEwMCBkaXNjCmFyZAp3cmw6IGRvbSAgICAzICAgICAgMSAg
+bXNlYyAgICAgIDEwMDAwIGNyZWRpdCAgICAgMTAwMDAwMCByZXNlcnZlICAg
+ICAgICAxMDAgZGlzYwphcmQKd3JsOiBkb20gICAgMCAgICAgIDAgIG1zZWMg
+ICAgICAxMDAwMCBjcmVkaXQgICAgIDEwMDAwMDAgcmVzZXJ2ZSAgICAgICAg
+ICAwIGRpc2MKYXJkCndybDogZG9tICAgIDMgICAgICAwICBtc2VjICAgICAg
+MTAwMDAgY3JlZGl0ICAgICAxMDAwMDAwIHJlc2VydmUgICAgICAgICAgMCBk
+aXNjCmFyZApPVVQgMHg1NTlmYWU3MWYyNTAgMjAyMzAxMjAgMTc6NDA6NTMg
+RVJST1IgKEVOT0VOVCApCndybDogZG9tICAgIDAgICAgICAxICBtc2VjICAg
+ICAgMTAwMDAgY3JlZGl0ICAgICAxMDAwMDAwIHJlc2VydmUgICAgICAgIDEw
+MCBkaXNjCmFyZAp3cmw6IGRvbSAgICAzICAgICAgMSAgbXNlYyAgICAgIDEw
+MDAwIGNyZWRpdCAgICAgMTAwMDAwMCByZXNlcnZlICAgICAgICAxMDAgZGlz
+YwphcmQKSU4gMHg1NTlmYWU3MWYyNTAgMjAyMzAxMjAgMTc6NDA6NTMgUkVM
+RUFTRSAoMyApCkRFU1RST1kgd2F0Y2ggMHg1NTlmYWU3M2Y2MzAKREVTVFJP
+WSB3YXRjaCAweDU1OWZhZTc1ZGRmMApERVNUUk9ZIHdhdGNoIDB4NTU5ZmFl
+NzVlYzMwCkRFU1RST1kgd2F0Y2ggMHg1NTlmYWU3NWVhNjAKREVTVFJPWSB3
+YXRjaCAweDU1OWZhZTczMmMwMApERVNUUk9ZIHdhdGNoIDB4NTU5ZmFlNzJj
+ZWEwCkRFU1RST1kgd2F0Y2ggMHg1NTlmYWU3MjhmYzAKREVTVFJPWSB3YXRj
+aCAweDU1OWZhZTcyOTU3MApERVNUUk9ZIGNvbm5lY3Rpb24gMHg1NTlmYWU3
+MjQyOTAKb3JwaGFuZWQgbm9kZSAvbG9jYWwvZG9tYWluLzMvZGV2aWNlL3N1
+c3BlbmQvZXZlbnQtY2hhbm5lbCBkZWxldGVkCm9ycGhhbmVkIG5vZGUgL2xv
+Y2FsL2RvbWFpbi8zL2RldmljZS92YmQvNTE3MTIgZGVsZXRlZApvcnBoYW5l
+ZCBub2RlIC9sb2NhbC9kb21haW4vMy9kZXZpY2UvdmtiZC8wIGRlbGV0ZWQK
+b3JwaGFuZWQgbm9kZSAvbG9jYWwvZG9tYWluLzMvZGV2aWNlL3ZpZi8wIGRl
+bGV0ZWQKb3JwaGFuZWQgbm9kZSAvbG9jYWwvZG9tYWluLzMvY29udHJvbC9z
+aHV0ZG93biBkZWxldGVkCm9ycGhhbmVkIG5vZGUgL2xvY2FsL2RvbWFpbi8z
+L2NvbnRyb2wvZmVhdHVyZS1wb3dlcm9mZiBkZWxldGVkCm9ycGhhbmVkIG5v
+ZGUgL2xvY2FsL2RvbWFpbi8zL2NvbnRyb2wvZmVhdHVyZS1yZWJvb3QgZGVs
+ZXRlZApvcnBoYW5lZCBub2RlIC9sb2NhbC9kb21haW4vMy9jb250cm9sL2Zl
+YXR1cmUtc3VzcGVuZCBkZWxldGVkCm9ycGhhbmVkIG5vZGUgL2xvY2FsL2Rv
+bWFpbi8zL2NvbnRyb2wvZmVhdHVyZS1zMyBkZWxldGVkCm9ycGhhbmVkIG5v
+ZGUgL2xvY2FsL2RvbWFpbi8zL2NvbnRyb2wvZmVhdHVyZS1zNCBkZWxldGVk
+Cm9ycGhhbmVkIG5vZGUgL2xvY2FsL2RvbWFpbi8zL2NvbnRyb2wvc3lzcnEg
+ZGVsZXRlZApvcnBoYW5lZCBub2RlIC9sb2NhbC9kb21haW4vMy9kYXRhIGRl
+bGV0ZWQKb3JwaGFuZWQgbm9kZSAvbG9jYWwvZG9tYWluLzMvZHJpdmVycyBk
+ZWxldGVkCm9ycGhhbmVkIG5vZGUgL2xvY2FsL2RvbWFpbi8zL2ZlYXR1cmUg
+ZGVsZXRlZApvcnBoYW5lZCBub2RlIC9sb2NhbC9kb21haW4vMy9hdHRyIGRl
+bGV0ZWQKb3JwaGFuZWQgbm9kZSAvbG9jYWwvZG9tYWluLzMvZXJyb3IgZGVs
+ZXRlZApvcnBoYW5lZCBub2RlIC9sb2NhbC9kb21haW4vMy9jb25zb2xlL2Jh
+Y2tlbmQtaWQgZGVsZXRlZAoKYW5kIG5vIGZ1cnRoZXIgb3V0cHV0LgoKVGhl
+IHRyYWNlIHNob3dzIHRoYXQgREVTVFJPWSB3YXMgY2FsbGVkIGZvciBjb25u
+ZWN0aW9uIDB4NTU5ZmFlNzI0MjkwLApidXQgdGhhdCBpcyB0aGUgc2FtZSBw
+b2ludGVyIChjb25uKSBtYWluKCkgd2FzIGxvb3BpbmcgdGhyb3VnaCBmcm9t
+CmNvbm5lY3Rpb25zLiAgU28gaXQgd2Fzbid0IGFjdHVhbGx5IHJlbW92ZWQg
+ZnJvbSB0aGUgY29ubmVjdGlvbnMgbGlzdD8KClJldmVydGluZyBjb21taXQg
+ZThlNmU0MjI3OWE1ICJ0b29scy94ZW5zdG9yZTogc2ltcGxpZnkgbG9vcCBo
+YW5kbGluZwpjb25uZWN0aW9uIEkvTyIgZml4ZXMgdGhlIGFib3J0L2RvdWJs
+ZSBmcmVlLiAgSSB0aGluayB0aGUgdXNlIG9mCmxpc3RfZm9yX2VhY2hfZW50
+cnlfc2FmZSBpcyBpbmNvcnJlY3QuICBsaXN0X2Zvcl9lYWNoX2VudHJ5X3Nh
+ZmUgbWFrZXMKdHJhdmVyc2FsIHNhZmUgZm9yIGRlbGV0aW5nIHRoZSBjdXJy
+ZW50IGl0ZXJhdG9yLCBidXQgUkVMRUFTRS9kb19yZWxlYXNlCndpbGwgZGVs
+ZXRlIHNvbWUgb3RoZXIgZW50cnkgaW4gdGhlIGNvbm5lY3Rpb25zIGxpc3Qu
+ICBJIHRoaW5rIHRoZQpvYnNlcnZlZCBhYm9ydCBpcyBiZWNhdXNlIGxpc3Rf
+Zm9yX2VhY2hfZW50cnkgaGFzIG5leHQgcG9pbnRpbmcgdG8gdGhlCmRlbGV0
+ZWQgY29ubmVjdGlvbiwgYW5kIGl0IGlzIHVzZWQgaW4gdGhlIHN1YnNlcXVl
+bnQgaXRlcmF0aW9uLgoKQWRkIGEgY29tbWVudCBleHBsYWluaW5nIHRoZSB1
+bnN1aXRhYmlsaXR5IG9mIGxpc3RfZm9yX2VhY2hfZW50cnlfc2FmZS4KQWxz
+byBub3RpY2UgdGhhdCB0aGUgb2xkIGNvZGUgdGFrZXMgYSByZWZlcmVuY2Ug
+b24gbmV4dCB3aGljaCB3b3VsZApwcmV2ZW50cyBhIHVzZS1hZnRlci1mcmVl
+LgoKVGhpcyByZXZlcnRzIGNvbW1pdCBlOGU2ZTQyMjc5YTU3MjMyMzljNWM0
+MGJhNGM3ZjU3OWE5Nzk0NjVkLgoKVGhpcyBpcyBYU0EtNDI1L0NWRS0yMDIy
+LTQyMzMwLgoKRml4ZXM6IGU4ZTZlNDIyNzlhNSAoInRvb2xzL3hlbnN0b3Jl
+OiBzaW1wbGlmeSBsb29wIGhhbmRsaW5nIGNvbm5lY3Rpb24gSS9PIikKU2ln
+bmVkLW9mZi1ieTogSmFzb24gQW5kcnl1ayA8amFuZHJ5dWtAZ21haWwuY29t
+PgpSZXZpZXdlZC1ieTogSnVlcmdlbiBHcm9zcyA8amdyb3NzQHN1c2UuY29t
+PgpSZXZpZXdlZC1ieTogSnVsaWVuIEdyYWxsIDxqZ3JhbGxAYW1hem9uLmNv
+bT4KLS0tCiB0b29scy94ZW5zdG9yZS94ZW5zdG9yZWRfY29yZS5jIHwgMTkg
+KysrKysrKysrKysrKysrKystLQogMSBmaWxlIGNoYW5nZWQsIDE3IGluc2Vy
+dGlvbnMoKyksIDIgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvdG9vbHMv
+eGVuc3RvcmUveGVuc3RvcmVkX2NvcmUuYyBiL3Rvb2xzL3hlbnN0b3JlL3hl
+bnN0b3JlZF9jb3JlLmMKaW5kZXggNzhhM2VkYWE0ZS4uMDI5ZTM4NTJmYyAx
+MDA2NDQKLS0tIGEvdG9vbHMveGVuc3RvcmUveGVuc3RvcmVkX2NvcmUuYwor
+KysgYi90b29scy94ZW5zdG9yZS94ZW5zdG9yZWRfY29yZS5jCkBAIC0yOTQx
+LDggKzI5NDEsMjMgQEAgaW50IG1haW4oaW50IGFyZ2MsIGNoYXIgKmFyZ3Zb
+XSkKIAkJCX0KIAkJfQogCi0JCWxpc3RfZm9yX2VhY2hfZW50cnlfc2FmZShj
+b25uLCBuZXh0LCAmY29ubmVjdGlvbnMsIGxpc3QpIHsKLQkJCXRhbGxvY19p
+bmNyZWFzZV9yZWZfY291bnQoY29ubik7CisJCS8qCisJCSAqIGxpc3RfZm9y
+X2VhY2hfZW50cnlfc2FmZSBpcyBub3Qgc3VpdGFibGUgaGVyZSBiZWNhdXNl
+CisJCSAqIGhhbmRsZV9pbnB1dCBtYXkgZGVsZXRlIGVudHJpZXMgYmVzaWRl
+cyB0aGUgY3VycmVudCBvbmUsIGJ1dAorCQkgKiB0aG9zZSBtYXkgYmUgaW4g
+dGhlIHRlbXBvcmFyeSBuZXh0IHdoaWNoIHdvdWxkIHRyaWdnZXIgYQorCQkg
+KiB1c2UtYWZ0ZXItZnJlZS4gIGxpc3RfZm9yX2VhY2hfZW50cnlfc2FmZSBp
+cyBvbmx5IHNhZmUgZm9yCisJCSAqIGRlbGV0aW5nIHRoZSBjdXJyZW50IGVu
+dHJ5LgorCQkgKi8KKwkJbmV4dCA9IGxpc3RfZW50cnkoY29ubmVjdGlvbnMu
+bmV4dCwgdHlwZW9mKCpjb25uKSwgbGlzdCk7CisJCWlmICgmbmV4dC0+bGlz
+dCAhPSAmY29ubmVjdGlvbnMpCisJCQl0YWxsb2NfaW5jcmVhc2VfcmVmX2Nv
+dW50KG5leHQpOworCQl3aGlsZSAoJm5leHQtPmxpc3QgIT0gJmNvbm5lY3Rp
+b25zKSB7CisJCQljb25uID0gbmV4dDsKKworCQkJbmV4dCA9IGxpc3RfZW50
+cnkoY29ubi0+bGlzdC5uZXh0LAorCQkJCQkgIHR5cGVvZigqY29ubiksIGxp
+c3QpOworCQkJaWYgKCZuZXh0LT5saXN0ICE9ICZjb25uZWN0aW9ucykKKwkJ
+CQl0YWxsb2NfaW5jcmVhc2VfcmVmX2NvdW50KG5leHQpOwogCiAJCQlpZiAo
+Y29ubl9jYW5fcmVhZChjb25uKSkKIAkJCQloYW5kbGVfaW5wdXQoY29ubik7
+Ci0tIAoyLjM0LjEK
 
-https://www.flexera.com/enterprise/company/about/secunia-research/
-
-The public Secunia Advisory database contains information for
-researchers, security enthusiasts, and consumers to lookup individual
-products and vulnerabilities and assess, whether they need to take
-any actions to secure their systems or whether a given vulnerability
-has already been discovered
-
-https://secuniaresearch.flexerasoftware.com/community/advisories/
-
-======================================================================
-9) Verification
-
-Please verify this advisory by visiting the Secunia Research website:
-https://secuniaresearch.flexerasoftware.com/secunia_research/2018-8
-
-======================================================================
-
-
+--=separator--
