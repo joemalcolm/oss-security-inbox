@@ -1,86 +1,127 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/06/2
-Message-ID: <0fedc6a9-9be7-56f3-2ee0-0e07875b86ba@cispa.de>
-Date: Fri, 6 Oct 2023 12:07:17 +0200
-From: Daniel Weber <daniel.weber@...pa.de>
-To: <oss-security@...ts.openwall.com>
-CC: <fabian.thomas@...pa.de>, <lukas.gerlach@...pa.de>, <ruiyi.zhang@...pa.de>, Michael Schwarz <michael.schwarz@...pa.de>
-Subject: Meltdown-US / Meltdown 3a Remaining Leakage
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/25/4
+Message-ID: <20230125214445.GA8487@openwall.com>
+Date: Wed, 25 Jan 2023 22:44:45 +0100
+From: Solar Designer <solar@...nwall.com>
+To: Eric Biggers <ebiggers@...nel.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Data operand dependent timing on Intel and Arm CPUs
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi Eric,
 
-we analyzed the remaining leakage of the "original" Meltdown attack 
-(Meltdown-US) (1) and the variant Meltdown 3a (2). We discovered that 
-the "original" Meltdown attack can be abused to infer the cache state of 
-memory pages that remain mapped despite KPTI. This allows an attacker to 
-monitor interrupt activity.
-Furthermore, Meltdown 3a can still leak the content of privileged system 
-registers, such as the FS/GS base register or performance counters.
+Thank you for bringing this up in here.
 
-ISSUE DESCRIPTION
-=================
-1) Kernel-page-table isolation (KPTI) does not unmap all memory pages. 
-While the remaining memory pages do not contain confidential data, 
-Meltdown has the side effect of leaking the cache state of the accessed 
-data. We observed that the remaining memory pages contain the KPTI 
-trampoline, the descriptor tables (IDT, GDT, ...), and the task state 
-segment.
+There was also a brief Twitter thread on it in August 2022, started by
+Adam Langley:
 
-2) Intel's microcode updates for Meltdown 3a only prevent the leakage of 
-model-specific registers. Thus, attackers can still leak further system 
-registers. In our analysis, we observed leakage from the time stamp 
-counter register (via rdtsc/rdtscp), the fsbase register (via rdfsbase), 
-the gsbase register (via rdgsbase), and performance counters (via 
-rdpmc). Furthermore, we observed that the instructions rdfsbase, 
-rdgsbase, sldt, and str, may transiently return the value 0.
+https://twitter.com/agl__/status/1561374334714671104
 
+In it Adam Langley, wrote:
+> It appears that Intel doesn't guarantee constant-time execution of _any_
+> instructions on Ice Lake or later unless a configuration bit is set:
+> https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/best-practices/data-operand-independent-timing-isa-guidance.html
+> 
+> Ice Lake was released in 2019 but this information is only a few months
+> old. So hopefully multiplication etc actually is always constant-time on
+> existing chips and this is just preparing for the future?
+> 
+> I guess the steady state is that every OS sets this DOITM bit all the
+> time, but Intel get to publish benchmarks based on variable-time
+> instructions and claim that they're using the default configuration?
 
-IMPACT
-======
-1) By leaking the cache state of an IDT entry, an attacker can observe 
-when an interrupt corresponding to this IDT entry has occurred. Assuming 
-an attacker with local code execution, this can be abused to spy on user 
-activity, such as keystrokes or visited websites. This issue impacts 
-Meltdown-affected CPUs, which rely on the KPTI mitigation.
+My reply was:
+> Reading between the lines, I think this is a vulnerability and
+> mitigations disclosure for 6th to 12th gen (fixed in 13th?), disguised
+> as a feature. They discovered that "data values may delay instruction
+> retirement by, at most, one cycle" for vector multiplication and bit
+> count.
 
-2) Unprivileged users with local native code execution can read out the 
-above-mentioned system registers. We believe that the only leakage that 
-currently impacts security is the unprivileged access to performance 
-counters, as this leakage enables side-channel attacks, depending on 
-whether and how the performance counters are programmed. To the best of 
-our knowledge, unprivileged reads to the other system registers do not 
-pose a security risk in current implementations. The impacted CPUs are 
-especially Intel CPUs from before 2019, however, the affected system 
-registers vary between CPU models. For AMD, the leakage seems restricted 
-to the FS/GS base register and impacts CPUs ranging from Zen to Zen 3+.
+On Wed, Jan 25, 2023 at 11:34:43AM -0800, Eric Biggers wrote:
+> I'd like to draw people's attention to the fact that on recent Intel and Arm
+> CPUs, by default the execution time of instructions may depend on the data
+> values operated on.  This even includes instructions like additions, XORs, and
+> AES instructions, that are traditionally assumed to be constant-time with
+> respect to the data values operated on.
 
+FWIW, I'm not aware of any indication that e.g. "additions, XORs, and
+AES instructions" have data-dependent timing on CPUs released so far.
 
-MITIGATION
-==========
-Neither Intel nor AMD informed us about plans to rollout further 
-mitigations.
+> For details, see the documents from each CPU vendor:
+> 
+> 	Intel: https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/best-practices/data-operand-independent-timing-isa-guidance.html
+> 	Arm: https://developer.arm.com/documentation/ddi0601/2020-12/AArch64-Registers/DIT--Data-Independent-Timing
+> 
+> ... as well as the following discussion on the Linux Kernel Mailing List:
+> 
+> 	https://lore.kernel.org/lkml/YwgCrqutxmX0W72r@gmail.com/T/#u
+> 
+> Non-constant-time instructions break cryptographic code that relies on
+> constant-time code to prevent timing attacks on cryptographic keys -- i.e., most
+> cryptographic code.  This issue may also have a wider impact on the ability of
+> operating systems to protect data from unprivileged processes.
+> 
+> For Intel, processors with Ice Lake and later are affected by this issue.
+> 
+> The fix for this issue is to set a CPU flag that restores the old, correct
+> behavior of data-independent timing: DIT on Arm, and DOITM on Intel.
+> 
+> Linux v6.2 will enable DIT on Arm, but only in the kernel.  Without any
+> additional patches, userspace code will still get data-dependent timing by
+> default.  See https://git.kernel.org/linus/01ab991fc0ee5019
+> 
+> No patch has been merged to enable DOITM on Intel processors.  Thus, as-is, it's
+> not really possible to safely execute cryptographic algorithms on Linux systems
+> that use an Intel processor with Ice Lake or later.  (I'd guess that the same is
+> true for other operating systems too; Linux is just the one I'm looking at.)  To
+> fix this issue, I've proposed a Linux kernel patch that enables DOITM globally:
+> https://lore.kernel.org/lkml/20230125012801.362496-1-ebiggers@kernel.org
+> 
+> I consider this issue to be a CPU security vulnerability; it shares many
+> characteristics with other CPU security vulnerabilities such as Meltdown and
+> Spectre.  However, Intel and Arm do not seem to consider it to be a security
+> vulnerability.  No CVEs seem to have been assigned yet.
 
-1) Preventing the Meltdown attack from leaking information about the 
-cache state can be achieved by marking the remaining memory pages, e.g., 
-the IDT, as uncacheable. This can be achieved by using a memory-type 
-range register (MTRR) or by modifying the corresponding page-table entries.
+I _guess_ there several aspects here:
 
-2) Preventing the leakage of system registers is not directly possible 
-from a software perspective. Thus, developers should be aware that these 
-contents may be read by unprivileged users and clear affected system 
-registers upon context switches if required.
+Many Intel CPUs starting with Skylake (Intel Core gen 6) were found to
+"delay instruction retirement by, at most, one cycle" for vector
+multiplication and bit count, despite of those instructions being on the
+list of "Data Operand Independent Timing Instructions" published a bit
+earlier (the web page says "Published: 05/10/2022", first copy on the
+Internet Archive is June 14, 2022).
 
+For some of those CPUs, Intel included an optional fix for this perhaps
+in microcode updates, retroactively calling this "MXCSR Configuration
+Dependent Timing (MCDT)" and adding a column "MCDT (MXCSR-Sensitivity)"
+to the list/table above.
 
-MORE DETAILS
-============
-1) - Research Paper: 
-https://publications.cispa.saarland/4011/1/masc_esorics23.pdf
-    - GitHub Repo: https://github.com/cispa/indirect-meltdown
+Separately, Intel and ARM introduced an explicit data independent
+timings mode, to allow for later inclusion of timing-unsafe
+optimizations when that mode is not enabled.  For Intel, this just
+happens to be starting with Ice Lake (gen 10), but there's currently no
+indication (from any source I know of) that Ice Lake is special in any
+other relevant way.  Specifically, it neither introduced nor fixed the
+issue with vector multiplication and bit count mentioned above (the
+issue was introduced much earlier than Ice Lake, and apparently fixed
+later than Ice Lake - at least it wasn't yet fixed in Alder Lake).
 
-2) - Research Paper: 
-https://publications.cispa.saarland/4010/1/meltdown3a_esorics23.pdf
-    - GitHub Repo: https://github.com/cispa/regcheck
+So the only thing changing with Ice Lake appears to be the interface to
+requesting the data-independent mode, which changes from ad-hoc MXCSR to
+longer-term and standardized DOITM.
 
-With best regards,
-Daniel, Fabian, Lukas, Ruiyi, Michael
+Further, given how recently the issue with vector multiplication and bit
+count appears to have been found, I expect that a CPU supporting DOITM
+does not imply that enabling DOITM fixes that issue.  Indeed, some Ice
+Lake and newer CPUs are listed among "Processors That May Exhibit MCDT
+Behavior", suggesting that the MXCSR way should still be used on those.
+
+Apparently, it's only with Raptor Lake (gen 13) that DOITM alone is
+guaranteed to be sufficient, or/and perhaps the issue is fixed such that
+neither way/mode matters (for now, until a future CPU introduces new
+optimizations for the no-DOITM case).
+
+The above is just my reading between the lines.  I have no inside info
+on any of this, and could have guessed some of it wrong.
+
+Alexander
