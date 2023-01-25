@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["918" "Monday" "4" "December" "2017" "08:32:55" "+0530" "Himanshu Mehta" "mehta.himanshu21@gmail.com" "<CAAYZd=nAiDbUuRuxz1tbeE6pnx7Tow7uedDxYJNDMgh2UE2c2g@mail.gmail.com>" "35" "[oss-security] ZKTime Web Software 2.0.1.12280 CVE-2017-17057 Cross Site Scripting" nil nil nil "12" "2017120403:02:55" "[oss-security] ZKTime Web Software 2.0.1.12280 CVE-2017-17057 Cross Site Scripting" (number mark "U       mehta.himans Dec  4   35/918   " thread-indent "\"[oss-security] ZKTime Web Software 2.0.1.12280 CVE-2017-17057 Cross Site Scripting\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3610 invoked by uid 550); 4 Dec 2017 05:44:39 -0000
+Received: (qmail 22115 invoked by uid 550); 25 Jan 2023 21:45:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,72 +7,134 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3185 invoked from network); 4 Dec 2017 03:03:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=rKoKWsy2nataqEmNTc4wFUqBFdHpTelt1x0J6gtdHOQ=;
-        b=QymwjjFdKKHPyOwcRshlFjSIP9gM/pkvHGy5Wsvq1uqGNI+T5unbvQa89C68Ji72AO
-         u2Yrr4MK22h66sg/7S5eoEKmIAe6dznSPHm0BcYOaAfrUAhFJlkC0d0A5gHWZ3d2161q
-         PE+PIffl4QpEbGO7xplYxtxRZiQPHSunaEx53iq1xFY1i8XzZ7G+9oO0/VHtNacpB26d
-         lb269FXCtNJBkvh/kP1HhMDJGOkhoxc+FRbWzAP0U6ozFvs5nRcLzxX0StVC1W0TT1sQ
-         DIjDcRVXGesRzoOtrDp4ErWFBikEUVXNJNgvjzevAwYBzTUPM3GNoQK2rJPWMYMeRoJP
-         iqJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=rKoKWsy2nataqEmNTc4wFUqBFdHpTelt1x0J6gtdHOQ=;
-        b=KYA4BkbW0cbaxua29sxNf68PziVrEO+KPnl8UgTW+v2WMXI9plWnFGvZIrqwzC7BO+
-         cc+g5mVIGDCDXcNLRESEfjuJM/Kjvjo7H+LSbENiApaC0hepPlCsHhUizjine8GLOZgS
-         btfzTrWUjsWsyA4ItDwFHwaG1mXys8AbV3RF2aABBgOPUkDIzH5QPH5bZh727VuMAUJa
-         mq2bCnwosLoHAW8GWGqof4CuBV1U/8FR3olCLElvjL6Lj2Vs/C5gRZ/+HDItEN2UsBwV
-         zMuBJQOMQVePXEHuJpjNy8Odj/R11GqRcmb/ZcMts1LUWJzMHF1EG/ndRV2bbW8uYqD0
-         Xqzw==
-X-Gm-Message-State: AJaThX4/zMg06y3W5m442geDxYaBge91hYGAm3B1aZuQ25nXCIUTqwtD
-	4SKQCv3IbntzCKWoghKma6q8q7oBrOwuJQtv9WcYCLK8
-X-Google-Smtp-Source: AGs4zMaOUcQnl7XjQE+DphDZW7Av/c+2BivvybDGdRkNXDpUDou3sLbLLU1aULdcFMUEFklfggp6iSfeIlJs6xqSji0=
-X-Received: by 10.107.132.150 with SMTP id o22mr24259536ioi.106.1512356595520;
- Sun, 03 Dec 2017 19:03:15 -0800 (PST)
-MIME-Version: 1.0
-From: Himanshu Mehta <mehta.himanshu21@gmail.com>
-Date: Mon, 4 Dec 2017 08:32:55 +0530
-Message-ID: <CAAYZd=nAiDbUuRuxz1tbeE6pnx7Tow7uedDxYJNDMgh2UE2c2g@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="001a113f2888a65915055f7af5e8"
-Subject: [oss-security] ZKTime Web Software 2.0.1.12280 CVE-2017-17057 Cross Site Scripting
+Received: (qmail 21886 invoked from network); 25 Jan 2023 21:44:54 -0000
+Date: Wed, 25 Jan 2023 22:44:45 +0100
+From: Solar Designer <solar@openwall.com>
+To: Eric Biggers <ebiggers@kernel.org>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20230125214445.GA8487@openwall.com>
+References: <Y9GEU0G9N5etu+H3@sol.localdomain>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y9GEU0G9N5etu+H3@sol.localdomain>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Data operand dependent timing on Intel and Arm CPUs
 
---001a113f2888a65915055f7af5e8
-Content-Type: text/plain; charset="UTF-8"
+Hi Eric,
 
-*1. Introduction*
+Thank you for bringing this up in here.
 
-Vendor:                ZKTeco
-Affected Product:      ZKTime Web - 2.0.1.12280
-Fixed in:
-Vendor Website:        https://www.zkteco.com/product/ZKTime_Web_2.0_435.html
-Vulnerability Type:    Reflected XSS
-Remote Exploitable:    Yes
-CVE:                   CVE-2017-17057
-*2. Overview*
+There was also a brief Twitter thread on it in August 2022, started by
+Adam Langley:
 
-There is a reflected XSS vulnerability in ZKTime Web. The
-vulnerability exists due to insufficient filtration of user-supplied data.
-A remote attacker can execute arbitrary HTML and script code in browser in
-context of the vulnerable application.
+https://twitter.com/agl__/status/1561374334714671104
 
-*3. Affected Modules*
+In it Adam Langley, wrote:
+> It appears that Intel doesn't guarantee constant-time execution of _any_
+> instructions on Ice Lake or later unless a configuration bit is set:
+> https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/best-practices/data-operand-independent-timing-isa-guidance.html
+> 
+> Ice Lake was released in 2019 but this information is only a few months
+> old. So hopefully multiplication etc actually is always constant-time on
+> existing chips and this is just preparing for the future?
+> 
+> I guess the steady state is that every OS sets this DOITM bit all the
+> time, but Intel get to publish benchmarks based on variable-time
+> instructions and claim that they're using the default configuration?
 
-Go to
-Personnel -> Personnel -> Advanced Query ->
+My reply was:
+> Reading between the lines, I think this is a vulnerability and
+> mitigations disclosure for 6th to 12th gen (fixed in 13th?), disguised
+> as a feature. They discovered that "data values may delay instruction
+> retirement by, at most, one cycle" for vector multiplication and bit
+> count.
 
-Select Search Field as 'Department' and in 'Range' field mention
-'<script>alert('XSS')</script>
+On Wed, Jan 25, 2023 at 11:34:43AM -0800, Eric Biggers wrote:
+> I'd like to draw people's attention to the fact that on recent Intel and Arm
+> CPUs, by default the execution time of instructions may depend on the data
+> values operated on.  This even includes instructions like additions, XORs, and
+> AES instructions, that are traditionally assumed to be constant-time with
+> respect to the data values operated on.
 
-*4. Payload*
-<script>alert('XSS')</script>
+FWIW, I'm not aware of any indication that e.g. "additions, XORs, and
+AES instructions" have data-dependent timing on CPUs released so far.
 
+> For details, see the documents from each CPU vendor:
+> 
+> 	Intel: https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/best-practices/data-operand-independent-timing-isa-guidance.html
+> 	Arm: https://developer.arm.com/documentation/ddi0601/2020-12/AArch64-Registers/DIT--Data-Independent-Timing
+> 
+> ... as well as the following discussion on the Linux Kernel Mailing List:
+> 
+> 	https://lore.kernel.org/lkml/YwgCrqutxmX0W72r@gmail.com/T/#u
+> 
+> Non-constant-time instructions break cryptographic code that relies on
+> constant-time code to prevent timing attacks on cryptographic keys -- i.e., most
+> cryptographic code.  This issue may also have a wider impact on the ability of
+> operating systems to protect data from unprivileged processes.
+> 
+> For Intel, processors with Ice Lake and later are affected by this issue.
+> 
+> The fix for this issue is to set a CPU flag that restores the old, correct
+> behavior of data-independent timing: DIT on Arm, and DOITM on Intel.
+> 
+> Linux v6.2 will enable DIT on Arm, but only in the kernel.  Without any
+> additional patches, userspace code will still get data-dependent timing by
+> default.  See https://git.kernel.org/linus/01ab991fc0ee5019
+> 
+> No patch has been merged to enable DOITM on Intel processors.  Thus, as-is, it's
+> not really possible to safely execute cryptographic algorithms on Linux systems
+> that use an Intel processor with Ice Lake or later.  (I'd guess that the same is
+> true for other operating systems too; Linux is just the one I'm looking at.)  To
+> fix this issue, I've proposed a Linux kernel patch that enables DOITM globally:
+> https://lore.kernel.org/lkml/20230125012801.362496-1-ebiggers@kernel.org
+> 
+> I consider this issue to be a CPU security vulnerability; it shares many
+> characteristics with other CPU security vulnerabilities such as Meltdown and
+> Spectre.  However, Intel and Arm do not seem to consider it to be a security
+> vulnerability.  No CVEs seem to have been assigned yet.
 
-*5. Credit*
-Himanshu Mehta (@LionHeartRoxx)
+I _guess_ there several aspects here:
 
---001a113f2888a65915055f7af5e8--
+Many Intel CPUs starting with Skylake (Intel Core gen 6) were found to
+"delay instruction retirement by, at most, one cycle" for vector
+multiplication and bit count, despite of those instructions being on the
+list of "Data Operand Independent Timing Instructions" published a bit
+earlier (the web page says "Published: 05/10/2022", first copy on the
+Internet Archive is June 14, 2022).
+
+For some of those CPUs, Intel included an optional fix for this perhaps
+in microcode updates, retroactively calling this "MXCSR Configuration
+Dependent Timing (MCDT)" and adding a column "MCDT (MXCSR-Sensitivity)"
+to the list/table above.
+
+Separately, Intel and ARM introduced an explicit data independent
+timings mode, to allow for later inclusion of timing-unsafe
+optimizations when that mode is not enabled.  For Intel, this just
+happens to be starting with Ice Lake (gen 10), but there's currently no
+indication (from any source I know of) that Ice Lake is special in any
+other relevant way.  Specifically, it neither introduced nor fixed the
+issue with vector multiplication and bit count mentioned above (the
+issue was introduced much earlier than Ice Lake, and apparently fixed
+later than Ice Lake - at least it wasn't yet fixed in Alder Lake).
+
+So the only thing changing with Ice Lake appears to be the interface to
+requesting the data-independent mode, which changes from ad-hoc MXCSR to
+longer-term and standardized DOITM.
+
+Further, given how recently the issue with vector multiplication and bit
+count appears to have been found, I expect that a CPU supporting DOITM
+does not imply that enabling DOITM fixes that issue.  Indeed, some Ice
+Lake and newer CPUs are listed among "Processors That May Exhibit MCDT
+Behavior", suggesting that the MXCSR way should still be used on those.
+
+Apparently, it's only with Raptor Lake (gen 13) that DOITM alone is
+guaranteed to be sufficient, or/and perhaps the issue is fixed such that
+neither way/mode matters (for now, until a future CPU introduces new
+optimizations for the no-DOITM case).
+
+The above is just my reading between the lines.  I have no inside info
+on any of this, and could have guessed some of it wrong.
+
+Alexander
