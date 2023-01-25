@@ -1,75 +1,95 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/06/3
-Message-ID: <CAL7+V1zEJQLeNE2Gm-1SaY4Gv1fRsTTtJNFQVKa85s8H0TyeNw@mail.gmail.com>
-Date: Thu, 6 Jul 2023 14:27:49 -0700
-From: Rita Zhang <rita.z.zhang@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: [kubernetes] CVE-2023-2728: Bypassing enforce mountable secrets policy imposed by the ServiceAccount admission plugin Rita Zhang <rita.z.zhang@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/25/1
+Message-Id: <E1pKhCZ-0001p5-FK@xenbits.xenproject.org>
+Date: Wed, 25 Jan 2023 14:56:39 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 425 v1 (CVE-2022-42330) - Guests can cause Xenstore crash via soft reset
 Content-Type: text/plain; charset=utf-8
 
-Hello Kubernetes Community,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-A security issue was discovered in Kubernetes where users may be able to
-launch containers that bypass the mountable secrets policy enforced by the
-ServiceAccount admission plugin when using ephemeral containers. The policy
-ensures pods running with a service account may only reference secrets
-specified in the service account’s secrets field. Kubernetes clusters are
-only affected if the ServiceAccount admission plugin and the
-*kubernetes.io/enforce-mountable-secrets
-<http://kubernetes.io/enforce-mountable-secrets>* annotation are used
-together with ephemeral containers.
+            Xen Security Advisory CVE-2022-42330 / XSA-425
 
-This issue has been rated *Medium* (
-CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:N
-<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:N>),
-and
-assigned CVE-2023-2728
+            Guests can cause Xenstore crash via soft reset
 
-*Am I vulnerable?*
-Clusters are impacted by this vulnerability if all of the following are
-true:
+ISSUE DESCRIPTION
+=================
 
-   1. The ServiceAccount admission plugin is used. Most cluster should have
-   this on by default as recommended in
-   https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#serviceaccount
-   2. The *kubernetes.io/enforce-mountable-secrets
-   <http://kubernetes.io/enforce-mountable-secrets>* annotation is used by
-   a service account. This annotation is not added by default.
-   3. Pods are using ephemeral containers.
+When a guest issues a "Soft Reset" (e.g. for performing a kexec) the
+libxl based Xen toolstack will normally perform a XS_RELEASE Xenstore
+operation.
 
-*Affected Versions*
+Due to a bug in xenstored this can result in a crash of xenstored.
 
-   - kube-apiserver v1.27.0 - v1.27.2
-   - kube-apiserver v1.26.0 - v1.26.5
-   - kube-apiserver v1.25.0 - v1.25.10
-   - kube-apiserver <= v1.24.14
+Any other use of XS_RELEASE will have the same impact.
 
-*How do I mitigate this vulnerability?*
-This issue can be mitigated by applying the patch provided for the
-kube-apiserver component. The patch prevents ephemeral containers from
-bypassing the mountable secrets policy enforced by the ServiceAccount
-admission plugin.
+IMPACT
+======
 
-*Fixed Versions*
+A malicious guest could try to kexec until it hits the xenstored bug,
+resulting in the inability to perform any further domain administration
+like starting new guests, or adding/removing resources to or from any
+existing guest.
 
-   - kube-apiserver v1.27.3
-   - kube-apiserver v1.26.6
-   - kube-apiserver v1.25.11
-   - kube-apiserver v1.24.15
+VULNERABLE SYSTEMS
+==================
 
-These releases have been published today, June 14th, 2023.
+Only Xen version 4.17 is vulnerable. Systems running an older version
+of Xen are not vulnerable.
 
-*Detection*
-Pod update requests using an ephemeral container that exploits this
-vulnerability with unintended secret will be captured in API audit logs.
-You can also use kubectl get pods to find active pods with ephemeral
-containers running with a secret that is not referenced by the service
-account in your cluster.
+All Xen systems using C xenstored are vulnerable. Systems using the
+OCaml variant of xenstored are not vulnerable.
 
-*Additional Details*
-See the GitHub issue for more details:
-https://github.com/kubernetes/kubernetes/issues/118640
+Systems running only PV guests (x86 only) are not vulnerable, as long as
+they are using a libxl based toolstack.
 
-Thank You,
-Rita Zhang on behalf of the Kubernetes Security Response Committee
+MITIGATION
+==========
 
+The problem can be avoided by either:
+
+- - using the OCaml xenstored variant
+
+- - explicitly configuring guests to NOT perform the "Soft Reset" action
+  by adding:
+    on_soft_reset="reboot"
+  or similar to the guest's configuration. This will break kexec in the
+  guest, though.
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This issue was discussed in public already.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa425.patch           xen-unstable, Xen 4.17.x
+
+$ sha256sum xsa425*
+49f322c955fe7857cc824bba80625e56f582fdf0a4b244f513b6750e15ba5e48  xsa425.patch
+$
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmPRQroMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZEpsIAJmIVB2lvqT2Qdp0pPSoaJIxXxuGE320kVTWmudB
+F2WbRCxeubqoOC/MyHTLOujMix6wBHnbm1cMQo0r4Vah/KX34vPS3wYqDZQYZtES
+aEkOQ+214QLAS2futcT0gde9idKpShI9jjWSRwcH01a7V6tlwwidc4V0luUFV0iX
+EKHPJ89rbbCMP1fOq5B+C7UP8oyiHItNWPWPFBwtUeXKvFiPOoyUPCoTHG8CCYHG
+WiVbeaZab7x/9+WUwXJ6hZqZiVr6NqoaItOx9Nbw4yCHwJlAj2UfA9skmqtGbPbB
+vxhkbIgOeiWoPvZgTGQjzZLosWO5+y30Fv5QYIbjA2/1OSQ=
+=7kiM
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa425.patch" of type "application/octet-stream" (5187 bytes)
