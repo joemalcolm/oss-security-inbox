@@ -1,60 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/27/5
-Message-ID: <ZOuqk2+3EMBV3pPy@1wt.eu>
-Date: Sun, 27 Aug 2023 21:57:07 +0200
-From: Willy Tarreau <w@....eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/25/3
+Message-ID: <Y9GEU0G9N5etu+H3@sol.localdomain>
+Date: Wed, 25 Jan 2023 11:34:43 -0800
+From: Eric Biggers <ebiggers@...nel.org>
 To: oss-security@...ts.openwall.com
-Cc: Vegard Nossum <vegard.nossum@...cle.com>, Jiri Kosina <jkosina@...e.cz>, Donald Buczek <buczek@...gen.mpg.de>, Greg KH <gregkh@...uxfoundation.org>
-Subject: Re: linux-distros list policy and Linux kernel, again
+Subject: Data operand dependent timing on Intel and Arm CPUs
 Content-Type: text/plain; charset=utf-8
 
-Hi Alexander,
+Hi,
 
-On Sat, Aug 26, 2023 at 12:23:59AM +0200, Solar Designer wrote:
-> In terms of (linux-)distros list policy, what can we do here?  Accept up
-> to 7 days since fix is ready and thus accept arbitrarily long embargoes
-> and more likely have issues "requiring" such embargoes brought to the
-> list?  BTW, for CPU microarchitectural issues, that would probably need
-> to be for the full distros list, not limited to Linux, and from what I
-> know disclosure timelines for such issues may be 3 to 12+ months.
+I'd like to draw people's attention to the fact that on recent Intel and Arm
+CPUs, by default the execution time of instructions may depend on the data
+values operated on.  This even includes instructions like additions, XORs, and
+AES instructions, that are traditionally assumed to be constant-time with
+respect to the data values operated on.
 
-Please note that delays are not specific to hardware issues. We've had
-to work maybe 3 months with a reporter on a randomness problem that
-allowed to some extents to guess TCP ports and sequence numbers, and it
-required us to imagine various approaches that shouldn't break TCP, and
-iterate with the researchers who studied them, tested them before getting
-back to us with "it still isn't sufficient". It was a long and painful
-one, nobody remained idle, yet it was really needed to get to the end of
-it before publishing anything. Further, the researchers asked us to keep
-some details on hold for a while because they were preparing a paper, and
-this is also something to keep in mind (some of them depened on this,
-though we must not accept that it drags for too long).
+For details, see the documents from each CPU vendor:
 
-As such I think that it's not a good solution to anything to require a
-disclosure before a fix is ready. Actually there can be one exception:
-when no more progress is being made. I don't think I would personally be
-shocked by saying that a discussion that remained inactive for 7 days
-leads to publication, it would sufficiently put the pressure on all parties
-not to let it cool rot. And difficult issues generally don't stay inactive
-for more than a few days.
+	Intel: https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/best-practices/data-operand-independent-timing-isa-guidance.html
+	Arm: https://developer.arm.com/documentation/ddi0601/2020-12/AArch64-Registers/DIT--Data-Independent-Timing
 
-> As to publishing PoCs/exploits, this is already mitigated by the Linux
-> kernel documentation edit making it less likely (but far from
-> impossible) that people would send stuff to linux-distros without being
-> aware of the policy.  We could further mitigate this issue by allowing
-> up to 30 days (but perhaps suggesting at most 7 days?)
+... as well as the following discussion on the Linux Kernel Mailing List:
 
-I don't think maintaining pressure on the reporter regarding the need
-for publishing reproducers is doing any good. It should be up to the
-reporter to say "please keep this confidential". We've had many of
-these on s@k.o, and it's perfectly understandable. Knowing that they
-must be very careful about what they share because it will be published
-is a big constraint, whether it's in terms of code quality, authorization
-from an employer or customer, code that was blatantly copy-pasted from
-another exploit just to help with testing, etc. All of this is useful
-for those trying to fix the problem and do not strictly need to be
-published, so it's pointless to add pressure on the reporter regarding
-this.
+	https://lore.kernel.org/lkml/YwgCrqutxmX0W72r@gmail.com/T/#u
 
-Just my two cents,
-willy
+Non-constant-time instructions break cryptographic code that relies on
+constant-time code to prevent timing attacks on cryptographic keys -- i.e., most
+cryptographic code.  This issue may also have a wider impact on the ability of
+operating systems to protect data from unprivileged processes.
+
+For Intel, processors with Ice Lake and later are affected by this issue.
+
+The fix for this issue is to set a CPU flag that restores the old, correct
+behavior of data-independent timing: DIT on Arm, and DOITM on Intel.
+
+Linux v6.2 will enable DIT on Arm, but only in the kernel.  Without any
+additional patches, userspace code will still get data-dependent timing by
+default.  See https://git.kernel.org/linus/01ab991fc0ee5019
+
+No patch has been merged to enable DOITM on Intel processors.  Thus, as-is, it's
+not really possible to safely execute cryptographic algorithms on Linux systems
+that use an Intel processor with Ice Lake or later.  (I'd guess that the same is
+true for other operating systems too; Linux is just the one I'm looking at.)  To
+fix this issue, I've proposed a Linux kernel patch that enables DOITM globally:
+https://lore.kernel.org/lkml/20230125012801.362496-1-ebiggers@kernel.org
+
+I consider this issue to be a CPU security vulnerability; it shares many
+characteristics with other CPU security vulnerabilities such as Meltdown and
+Spectre.  However, Intel and Arm do not seem to consider it to be a security
+vulnerability.  No CVEs seem to have been assigned yet.
+
+- Eric
