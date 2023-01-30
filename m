@@ -1,45 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/16/1
-Message-ID:  <MAXPR01MB350100A5BBBD4B0E8AE07E79D015A@MAXPR01MB3501.INDPRD01.PROD.OUTLOOK.COM>
-Date: Wed, 16 Aug 2023 03:45:35 +0000
-From: Srivani Reddy <srivani.reddy@...urelayer7.net>
-To: Dave <snoopdave@...il.com>, Apache Security Team <security@...che.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "dev@...ler.apache.org" <dev@...ler.apache.org>, Roller User <user@...ler.apache.org>, Sandeep Kamble <sandeep@...urelayer7.net>
-Subject: Re: CVE-2023-37581: Apache Roller: XSS vulnerability for site with untrusted users
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/30/1
+Message-ID: <23f62888-1023-1f89-651a-0f858e91c770@apache.org>
+Date: Mon, 30 Jan 2023 15:41:45 +0000
+From: Jialin Qiao <qiaojialin@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-24829: Apache IoTDB: apache/iotdb-web-workbench: forge the JWTToken to access workbench 
 Content-Type: text/plain; charset=utf-8
-
-Hi Dave,
-
-Can you please change the name Srivani Reddy to our company SecureLayer7 Technologies Pvt Ltd as we submitted the vulnerability?
-
-Regards,
-Srivani
-
-
-________________________________
-From: Dave <snoopdave@...il.com>
-Sent: Sunday, August 6, 2023 1:42:26 AM
-To: Apache Security Team <security@...che.org>; oss-security@...ts.openwall.com <oss-security@...ts.openwall.com>; Srivani Reddy <srivani.reddy@...urelayer7.net>; dev@...ler.apache.org <dev@...ler.apache.org>; Roller User <user@...ler.apache.org>
-Subject: CVE-2023-37581: Apache Roller: XSS vulnerability for site with untrusted users
-
-
-The Apache Roller project would like to announce a vulnerability that may impact Roller installations that allow group blogging with untrusted users.
-
-Severity:
-
-Medium (only impacts group blogging sites with untrusted users)
 
 Description:
 
-Insufficient input validation and sanitation in Weblog Category name, Website About and File Upload features in all versions of Apache Roller on all platforms allows an authenticated user to perform an XSS attack.
+Incorrect Authorization vulnerability in Apache Software Foundation Apache IoTDB iotdb-web-workbench.This issue affects users' access to the system without authorization.
 
-Mitigation:
+This CVE is fixed in iotdb-web-workbench tag v0.13.3.
 
-If you are not running a group blog, then no mitigation is needed. If you are running a group blog and you do not have Roller configured for untrusted users, then you need to do nothing because you trust your users to author raw HTML and other web content.
+References:
 
-But, if you are running a group blog and you do not trust your users to author HTML, CSS and JavaScript then you should upgrade to Roller 6.1.2 and you should disable Roller's File Upload feature. Roller 6.1.2 is available for download here: https://roller.apache.org/downloads/downloads.html
-
-Apache Roller would like to thank Srivani Reddy for reporting this vulnerability.
-
-
-This email and any files transmitted with it are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you have received this email in error please notify the system manager. This message contains confidential information and is intended only for the individual named. If you are not the named addressee you should not disseminate, distribute or copy this e-mail. Please notify the sender immediately by e-mail if you have received this e-mail by mistake and delete this e-mail from your system. If you are not the intended recipient you are notified that disclosing, copying, distributing or taking any action in reliance on the contents of this information is strictly prohibited.
+https://iotdb.apache.org/
+https://iotdb.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-24829
 
