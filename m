@@ -1,181 +1,132 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/27/4
-Message-ID: <ZTu6QIy-6vMegQf4@kasco.suse.de>
-Date: Fri, 27 Oct 2023 15:25:16 +0200
-From: Matthias Gerstner <mgerstner@...e.de>
-To: oss-security@...ts.openwall.com
-Subject: Security issues in passim local caching server
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/30/3
+Message-ID: <ef62abb418ad781fa159cc57b2270e05b0f88d49.camel@markhack.com>
+Date: Mon, 30 Jan 2023 10:43:16 -0600
+From: Mark Hack <markhack@...khack.com>
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Subject: Re: Data operand dependent timing on Intel and Arm CPUs
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
+This is a concern, but if you look into the crypto implementations,
+data blinding is applied to mitigate both instruction and power side
+channel attacks
 
-this is a report about findings in the passim [1] local caching server.
+Regards
 
-1) Introduction
-===============
+Mark Hack
 
-Passim is a relatively new project for a local caching server that helps
-distributing publicly available files in local networks to save network
-bandwidth. It is a dependency of new fwupd [2] releases, which is why it
-has come to our attention.
 
-Passim consists of a daemon component running as a separate passim user
-and group. The daemon offers a local D-Bus interface over which only the
-root user may publish or unpublish files on the network. Non-root users
-may only inspect the available items via D-Bus.
 
-Furthermore the daemon announces all cached items via the Ahavi
-discovery protocol. For retrieval of individual items a small libsoup
-based HTTP server is integrated into the daemon, listening on port
-25000.
+On Thu, 2023-01-26 at 22:09 +0000, Eric Biggers wrote:
+> On Wed, Jan 25, 2023 at 10:44:45PM +0100, Solar Designer wrote:
+> > Hi Eric,
+> > 
+> > Thank you for bringing this up in here.
+> > 
+> > There was also a brief Twitter thread on it in August 2022, started
+> > by
+> > Adam Langley:
+> > 
+> > https://twitter.com/agl__/status/1561374334714671104
+> > 
+> > In it Adam Langley, wrote:
+> > > It appears that Intel doesn't guarantee constant-time execution
+> > > of _any_
+> > > instructions on Ice Lake or later unless a configuration bit is
+> > > set:
+> > > https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/best-practices/data-operand-independent-timing-isa-guidance.html
+> > > 
+> > > Ice Lake was released in 2019 but this information is only a few
+> > > months
+> > > old. So hopefully multiplication etc actually is always constant-
+> > > time on
+> > > existing chips and this is just preparing for the future?
+> > > 
+> > > I guess the steady state is that every OS sets this DOITM bit all
+> > > the
+> > > time, but Intel get to publish benchmarks based on variable-time
+> > > instructions and claim that they're using the default
+> > > configuration?
+> > 
+> > My reply was:
+> > > Reading between the lines, I think this is a vulnerability and
+> > > mitigations disclosure for 6th to 12th gen (fixed in 13th?),
+> > > disguised
+> > > as a feature. They discovered that "data values may delay
+> > > instruction
+> > > retirement by, at most, one cycle" for vector multiplication and
+> > > bit
+> > > count.
+> > 
+> > On Wed, Jan 25, 2023 at 11:34:43AM -0800, Eric Biggers wrote:
+> > > I'd like to draw people's attention to the fact that on recent
+> > > Intel and Arm
+> > > CPUs, by default the execution time of instructions may depend on
+> > > the data
+> > > values operated on.  This even includes instructions like
+> > > additions, XORs, and
+> > > AES instructions, that are traditionally assumed to be constant-
+> > > time with
+> > > respect to the data values operated on.
+> > 
+> > FWIW, I'm not aware of any indication that e.g. "additions, XORs,
+> > and
+> > AES instructions" have data-dependent timing on CPUs released so
+> > far.
+> 
+> Sure.  To be clear, I don't have specific knowledge of how particular
+> instructions behave on particular CPUs.  Research into the real-world 
+> behavior
+> is absolutely needed.  I'm just going off what the Intel
+> documentation is saying
+> is possible / allowed now.  Additions, XORs, and AES-NI instructions
+> all show in
+> the following list of instructions:
+> https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/resources/data-operand-independent-timing-instructions.html
+> 
+> Now, that list is titled "Data Operand Independent Timing
+> Instructions".  That
+> sounds good; it means they have data operand independent timing,
+> right?
+> 
+> Actually, not necessarily.  If you read the documentation fully,
+> specifically
+> the "Data Operand Independent Timing Mode (DOITM)" section of
+> https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/best-practices/data-operand-independent-timing-isa-guidance.html,
+> it says that the instructions in that list are only guaranteed to
+> have data
+> operand independent timing ***if the DOITM flag is enabled***.
+> 
+> Also, Intel writes:
+> 
+> 	"For Intel® Core™ family processors based on microarchitectures
+> before
+> 	Ice Lake and Intel Atom® family processors based on
+> microarchitectures
+> 	before Gracemont that do not enumerate IA32_UARCH_MISC_CTL,
+> developers
+> 	may assume that the instructions listed here operate as if
+> DOITM is
+> 	enabled."
+> 
+> So, Intel is saying that on older CPUs, the instructions in that list
+> are
+> guaranteed to always have data operand independent timing.  But on
+> newer CPUs it
+> is ***explicitly not guaranteed by default***.
+> 
+> I'd be happy if people looked into this and found that in the real
+> world, data
+> operand independent timing by default is actually still the status
+> quo.
+> 
+> Of course, that would mean that while enabling DOITM would not
+> currently be
+> important, the overhead of enabling it would also be very small.
+> 
+> Conversely, if DOITM gets more expensive in the future, surely that
+> could only
+> be the result of it becoming much more important to enable anyway...
+> 
+> - Eric
 
-A small command line programm `passim` allows to interact with the
-daemon's D-Bus interface.
-
-The findings in this report are based on the upstream release tag 0.1.3.
-
-2) Findings
-===========
-
-2.1) Remote DoS Against `passimd` by Triggering NULL Pointer Dereference
-------------------------------------------------------------------------
-
-When accessing a URL different from the root "/" and without passing any
-parameters "?" then a segmentation fault is the result in passim-server.c:751
-(null pointer dereference, because there is no request).
-
-Example:
-
-    root# curl -v -k 'https://localhost:27500/myfile'
-    root# journalctl -u passim.service | tail -n 5
-    Oct 25 12:45:24 mybox passimd[5091]: accepting HTTP/1.1 GET /myfile  from ::1:39278 (loopback)
-    Oct 25 12:45:24 mybox passimd[5091]: g_strsplit: assertion 'string != NULL' failed
-    Oct 25 12:45:29 mybox systemd[1]: passim.service: Main process exited, code=dumped, status=11/SEGV
-    Oct 25 12:45:29 mybox systemd[1]: passim.service: Failed with result 'core-dump'.
-
-Upstream has library settings in effect to abort on failing assertions
-instead of trying to continue, to prevent possible memory access errors
-from becoming exploitable.
-
-This issue is fixed via upstream commit 1f7bcea [3].
-
-2.2) Serving Static Files from a Directory owned by Unprivileged Users
-----------------------------------------------------------------------
-
-Passim supports the configuration of static directories on the local
-file system, whose content will be processed and published upon startup.
-
-Consider a directory controlled by 'nobody':
-
-    root# cat /etc/passim.d/nobody.conf
-    [passim]
-    Path=/var/lib/nobody/passim
-
-There's two things that I found problematic in such a scenario.
-
-### a) Placing Inaccessible Files in the Directory
-
-    root# sudo -u nobody -g nobody /bin/bash
-    nobody$ mkdir /var/lib/nobody/passim
-    nobody$ touch /var/lib/nobody/passim/somefile
-    nobody$ chmod 000 /var/lib/nobody/passim/somefile
-
-This will prevent future starts of `passimd`:
-
-    root# systemctl restart passim.service
-    Job for passim.service failed because the control process exited with error code.
-    See "systemctl status passim.service" and "journalctl -xeu passim.service" for details.
-    root# journalctl -u passim.service | tail -n 6
-    Oct 25 12:56:58 mybox passimd[5330]: scanning /var/lib/nobody/passim
-    Oct 25 12:56:58 mybox passimd[5330]: failed to scan sysconfpkg directory: Error opening file /var/lib/nobody/passim/somefile: Permission denied
-    Oct 25 12:56:58 mybox systemd[1]: passim.service: Main process exited, code=exited, status=1/FAILURE
-    Oct 25 12:56:58 mybox systemd[1]: passim.service: Failed with result 'exit-code'.
-    Oct 25 12:56:58 mybox systemd[1]: Failed to start Local Caching Server.
-
-This opens a local DoS vector against passimd for the unprivileged user
-that owns the directory. This is also valid for other situations like a
-FIFO placed there, broken symlinks or symlinks to inaccessible locations
-as well as race conditions (time of readdir() vs. time of open()).
-
-This has at least partially been addressed by upstream commit f4c34bd3.
-
-### b) Placing Symlinks to Otherwise Inaccessible Data in the Directory
-
-Although `passimd` runs with low privileges by default there are some
-interesting files that a local attacker might want to get their hands
-on. Since `passimd` follows symlinks in the directory one could try to
-"publish" files from /proc/<pidof passimd> by placing symlinks. This is
-somewhat difficult though, since a race condition has to be won (the PID
-of a starting `passimd` needs to be known to place a proper symlink).
-Also there are not that many interesting files in there I believe. E.g.
-/proc/<pid>/mem cannot be shared this way, since it cannot be read
-sequentially.
-
-A much simpler attack is to publish the SSL private key of `passimd` though:
-
-    root# sudo -u nobody -g nobody /bin/bash
-    nobody$ mkdir /var/lib/nobody/passim
-    nobody$ ln -s /var/lib/passim/secret.key /var/lib/nobody/passim/secret
-
-    root# systemctl restart passim.service
-    root# passim dump
-    passimd is running
-    1c69e7e4d7b7ed655eafa94942a5ef04f7c7688a0519be387133176154f58fe6 secret size:2.5 kB
-    root# sha256sum /var/lib/passim/secret.key
-    1c69e7e4d7b7ed655eafa94942a5ef04f7c7688a0519be387133176154f58fe6  /var/lib/passim/secret.key
-
-From here on the local attacker can simply download the now shared
-"secret key" from localhost.
-
-It has to be noted that this SSL private key has no security purpose in
-passimd but only serves to prevent network traffic security scanners
-from raising alarm over unencrypted traffic.
-
-Thus currently there is no known information leak using this attack that
-has attacker value. It is still crossing of a security boundary and
-could be problematic in the future.
-
-Upstream issue #26 [5] deals with this issue but is not yet completely
-fixed, due to a remaining race condition.
-
-Bugfix Release and Upstream Reporting
-=====================================
-
-I reported these issues to the upstream author on 2023-10-25. No
-coordinated disclosure was desired so bugfixes have been and still are
-developed publicly over the GitHub issue tracker.
-
-There are some disagreements with upstream about whether these issues
-are qualifying as security issues. I believe they are. Due to this no
-CVEs have been assigned as of now.
-
-Passim is packaged, to my knowledge, in Fedora Linux and Arch Linux
-already. Otherwise it should not be widespread.
-
-Upstream is working on a new release of Passim containing fixes for
-these and some other non-security issues I reported as well.
-
-References
-==========
-
-[1]: https://github.com/hughsie/passim
-[2]: https://github.com/fwupd/fwupd
-[3]: https://github.com/hughsie/passim/issues/25
-[4]: https://github.com/hughsie/passim/commit/4cba26103daab69aedf584ae3a69ba48f4c34bd3
-[5]: https://github.com/hughsie/passim/issues/26
-
-Cheers
-
-Matthias
-
--- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Security Engineer
-https://www.suse.com/security
-GPG Key ID: 0x14C405C971923553
- 
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG Nürnberg
-Geschäftsführer: Ivo Totev, Andrew McDonald, Werner Knoblich
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
