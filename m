@@ -1,34 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/9
-Message-ID: <ZSzx4s49HaeHFd/e@jumper.schlittermann.de>
-Date: Mon, 16 Oct 2023 10:18:42 +0200
-From: Heiko Schlittermann <hs@...littermann.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/30/5
+Message-ID: <CADCiM6vwTMJoOuLmdmmCeKovvmdthDbou+Qx0g1n-rJ_FygBUQ@mail.gmail.com>
+Date: Mon, 30 Jan 2023 13:38:29 -0600
+From: John Runyon <me@....im>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application of openEuler
+Subject: Re: Data operand dependent timing on Intel and Arm CPUs
 Content-Type: text/plain; charset=utf-8
 
-Marcus Meissner <meissner@...e.de> (Mo 16 Okt 2023 10:08:50 CEST):
-> Regardless of your viability of subscription status I think we also
-> (sadly) have to consider current geopolitical issues here.
+>  I consider this issue to be a CPU security vulnerability
 
-No, we should not consider anything else than technical/security
-restrictions here.
+By that logic, allowing users to log into their system is a security
+vulnerability.
 
-And adhere the spirit of Free and Open Source (as far as I understand it),
-that there is no instance that can judge about political, ethical,
-religious issues. Free means free. Open means open.
+A choice taken by design is not generally a vuln, even if/though it creates
+vulns in other systems.
 
-> As far as I understand, US companies and US citizens are not permitted
-> to work with Chinese organizations and/or Chinese nationals.
-
-Any member of the list is free to unsubscribe for whatever reasons.
-
-    Best regards from Dresden/Germany
-    Viele Grüße aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
