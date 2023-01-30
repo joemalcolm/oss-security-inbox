@@ -1,59 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/21/9
-Message-ID:  <MN0PR01MB76576CBDD822AEB3A2292F23D497A@MN0PR01MB7657.prod.exchangelabs.com>
-Date: Thu, 21 Dec 2023 18:54:57 +0000
-From: "Tol, Caner" <mtol@....edu>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "Adiletta, Andrew" <ajadiletta@....edu>, "Sunar, Berk" <sunar@....edu>, "Doroz, Yarkin" <ydoroz@....edu>
-Subject: Mayhem: Targeted Corruption of Register and Stack Variables
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/30/6
+Message-ID: <933f5586e2b664ab5fe6a7ce40c741bb92e2e412.camel@markhack.com>
+Date: Mon, 30 Jan 2023 13:58:34 -0600
+From: Mark Hack <markhack@...khack.com>
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Subject: Re: Data operand dependent timing on Intel and Arm CPUs
 Content-Type: text/plain; charset=utf-8
 
-Our recent paper<https://arxiv.org/pdf/2309.02545.pdf> [AsiaCCS'24] describes a potential vulnerability where stack/register variables can be flipped via fault injection, affecting execution flow in security-sensitive code. There are mitigation strategies you may be interested in incorporating into your code:
 
- Take this vulnerable code, for example:
+The blinding I have seen was for RSA 
+https://www.openssl.org/docs/man1.1.1/man3/RSA_blinding_on.html and at
+least for ECDSA signatures
 
-int auth = 0;
-
-//password check code that sets auth variable
-
-if(auth != 0)
-
-return AUTH_SUCCESS;
-
-else
-
-return AUTH_FAILURE;
-
-The idea is that any bit can be flipped in auth, and it will result in a mis-authentication. We prove this is a potential vulnerability in OpenSSH, OpenSSL, MySQL, and SUDO. To mitigate this, it is important to have tight logic such that a single-bit flip will not result in unintended execution. For example:
-
-int auth = 0xbe405d1a;
-
-// password check code that sets auth variable to 0x23ab9701 is successful
-
-If(auth == 0x23ab9701)
-
-               return AUTH_SUCCESS;
-
-else
-
-               return AUTH_FAILURE;
-
-In this case, the auth variable must be corrupted into the exact authentication pattern, which is fairly improbable.
+For symmetric keys such as AES which are mostly table lookup and XOR
+based, I have not seen any blinding.
 
 
 
-We issued CVE-2023-42465 for SUDO for this vulnerability.
+Regards
 
-Here is the patch implemented in v1.9.15.
+Mark Hack
 
-https://github.com/sudo-project/sudo/commit/7873f8334c8d31031f8cfa83bd97ac6029309e4f
-
-Paper link: https://arxiv.org/abs/2309.02545
-
-
-
-Caner Tol
-___________________________
-Worcester Polytechnic Institute
-https://vernamlab.org<https://vernamlab.org/>
+On Mon, 2023-01-30 at 14:13 -0500, Demi Marie Obenour wrote:
+> On Mon, Jan 30, 2023 at 10:43:16AM -0600, Mark Hack wrote:
+> > This is a concern, but if you look into the crypto implementations,
+> > data blinding is applied to mitigate both instruction and power
+> > side
+> > channel attacks
+> 
+> Can you provide examples?  I have never seen blinding used for
+> symmetric
+> cryptography outside of embedded systems.
 
