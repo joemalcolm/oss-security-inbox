@@ -1,25 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/02/6
-Message-ID: <Y9whSM9p5F8tqxCp@xosc.org>
-Date: Thu, 2 Feb 2023 21:47:04 +0100
-From: Matthias Schmidt <oss-sec@...c.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: double-free vulnerability in OpenSSH server 9.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/30/4
+Message-ID: <Y9gWyhCK9X8onWos@itl-email>
+Date: Mon, 30 Jan 2023 14:13:10 -0500
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
+To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
+Subject: Re: Data operand dependent timing on Intel and Arm CPUs
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Mon, Jan 30, 2023 at 10:43:16AM -0600, Mark Hack wrote:
+> This is a concern, but if you look into the crypto implementations,
+> data blinding is applied to mitigate both instruction and power side
+> channel attacks
 
-* Georgi Guninski wrote:
-> Nice find :)
-> This is very complicated codepath, did a human found it "manually"
-> or some analysis program found it?
-> The warez are so large, they are hard for me manually.
+Can you provide examples?  I have never seen blinding used for symmetric
+cryptography outside of embedded systems.
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-According to djm@ [1] it was found manually and the first bug reported on
-the Fediverse.
-
-Cheers
-	
-	Matthias
-
-[1] https://cybervillains.com/@djm/109795488319439723
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
