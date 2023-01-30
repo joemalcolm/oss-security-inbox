@@ -1,50 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/30/1
-Message-ID: <ZRdyaYEi9YOZUXAg@codewreck.org>
-Date: Sat, 30 Sep 2023 09:57:13 +0900
-From: Dominique Martinet <asmadeus@...ewreck.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/30/2
+Message-ID: <42ccb113-9e59-b1ec-980c-adf4f75f26af@apache.org>
+Date: Mon, 30 Jan 2023 15:49:25 +0000
+From: Jialin Qiao <qiaojialin@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Rust programs in distrbutions (Was: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx)
+Subject: CVE-2023-24830: Apache IoTDB: apache/iotdb-web-workbench: create a user without authorization 
 Content-Type: text/plain; charset=utf-8
 
-Michael Orlitzky wrote on Fri, Sep 29, 2023 at 07:51:12PM -0400:
-> > There are workarounds like putting all of your Rust code in a single dynamic
-> > library, but that's obviously not ideal or always feasible. You can also avoid
-> > the Rust build tool "cargo" and directly compile dependencies to shared
-> > libraries with "rustc", but it's not easy to compile Rust code without "cargo".
-> 
-> This is the biggest problem. Cargo is the standard way to build rust
-> projects. Nobody is shipping a ./configure script for their rust
-> project. Cargo is what's documented. It's what everyone uses. It's
-> baked into all of the tools, the books, the domain names, the clever
-> puns. It's also a bundling tool.
-> 
-> Without ABI stability, the cargo approach was necessary to avoid
-> constant breakage. It's unreasonable to expect end users to track down
-> every rust program they're using and rebuild them all manually every
-> time a library is rebuilt with a newer version of rust. Instead, it was
-> decided that the blessed way to build and distribute rust projects
-> would be to bundle the world along with them.
-> 
-> Except, now, this is embarrassing: the only way for people to get
-> security updates is to track down every rust program they're using and
-> rebuild them all manually. This further presupposes that someone is
-> actually looking for security vulnerabilities in the old versions of
-> libraries bundled on everyone's systems. And that every rust upstream
-> is aware of every vulnerability in every dependency it bundles. None of
-> that happens.
+Severity: low
 
-For what it's worth, fedora is working very hard to improve this:
-they're still rebuilding each crate everytime it's a dependency for a
-program, but they're shipping each crate (source) only once, so when a
-lib is updated there's the tooling to rebuild everything that depends on
-it.
-(And, if said program no longer compiles, maintainers get the fun of
-fixing it or contacting upstream to report the problem, hoping they're
-OK with distributions basically ignoring the Cargo.lock... But I think
-it's better from a distribution point of view that e.g. nixos that does
-respect the Cargo.lock, as that means dependencies never get updated if
-the upstream doesn't pay attention as you pointed out)
+Description:
 
--- 
-Dominique Martinet | Asmadeus
+Improper Authentication vulnerability in Apache Software Foundation Apache IoTDB.This issue affects Apache IoTDB: from 0.13.0 before 0.13.3.
+
+References:
+
+https://iotdb.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-24830
+
