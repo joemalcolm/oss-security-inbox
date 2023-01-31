@@ -1,24 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/31/5
-Message-ID: <5056c1f3-fe9f-7a08-fdf6-9f90f12505d9@apache.org>
-Date: Tue, 31 Jan 2023 15:13:23 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/31/4
+Message-ID: <76996523-6b4d-c462-9ae9-9f3d1bbc8b2e@apache.org>
+Date: Tue, 31 Jan 2023 15:13:06 +0000
 From: Eric Covener <covener@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-28331: Apache Portable Runtime (APR):  Windows out-of-bounds write in apr_socket_sendv function 
+Subject: CVE-2022-25147: Apache Portable Runtime (APR): out-of-bounds writes in the apr_base64 family of functions 
 Content-Type: text/plain; charset=utf-8
 
 Severity: moderate
 
 Description:
 
-On Windows, Apache Portable Runtime 1.7.0 and earlier may write beyond the end of a stack based buffer in apr_socket_sendv(). This is a result of integer overflow.
+Integer Overflow or Wraparound vulnerability in apr_base64 functions of Apache Portable Runtime Utility (APR-util) allows an attacker to write beyond bounds of a buffer.\nThis issue affects Apache Portable Runtime Utility (APR-util) 1.6.1 and prior versions.
 
 Credit:
 
-Ronald Crane (Zippenhop LLC) (finder)
+Ronald Crane (Zippenhop LLC) (reporter)
 
 References:
 
 https://apr.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2022-28331
+https://www.cve.org/CVERecord?id=CVE-2022-25147
 
