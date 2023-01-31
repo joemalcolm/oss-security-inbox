@@ -1,36 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/25/6
-Message-ID: <20230725100133.GA6563@openwall.com>
-Date: Tue, 25 Jul 2023 12:01:33 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/31/1
+Message-ID: <2aff3b25-81e9-1bbd-6338-cea12a825809@apache.org>
+Date: Tue, 31 Jan 2023 07:31:04 +0000
+From: Heping Wang <peacewong@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-20593: A use-after-free in AMD Zen2 Processors
+Subject: CVE-2022-44644: Apache Linkis (incubating): The DatasourceManager module has a Local File Read Vulnerability 
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 24, 2023 at 07:28:18AM -0700, Tavis Ormandy wrote:
-> Hello, this is CVE-2023-20593, a use-after-free in AMD Zen2 processors.
+Severity: important
 
-An impressive finding, indeed!
+Description:
 
-On a related note:
+In Apache Linkis <=1.3.0 when used with the MySQL Connector/J, an authenticated attacker could read arbitrary local file by connecting a rogue mysql server, By adding allowLoadLocalInfile to true in the jdbc parameter. Therefore, the parameters in the jdbc url should be blacklisted. Versions of Apache Linkis <= 1.3.0 will be affected. 
 
-A few months earlier, Tavis found a _different_ AMD Zen1/Zen2 bug, which
-turned out to have already been known and patched in AMD microcode
-updates for many affected parts (but apparently not all).  There's also
-a kernel level workaround, which was included into Linux in response to
-Tavis' rediscovery of that issue.  Here are the links for that other
-issue/fix, for distros to double-check they're fixing this one as well:
+We recommend users upgrade the version of Linkis to version 1.3
 
-x86: AMD Zen2 ymm registers rolling back (Feb 21, 2023)
-https://lore.kernel.org/lkml/Y%2FW4x7%2FKFqmDmmR7@thinkstation.cmpxchg8b.net/
+Credit:
 
-x86/CPU/AMD: Disable XSAVES on AMD family 0x17 (Mar 8, 2023)
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b0563468eeac88ebc70559d52a0b66efc37e4e9d
+Department of Cyber Security Research (Jumbo, Unc1e), Beijing Zhiqian Technology Co., LTD (reporter)
+s3gundo of Hundsun Tech  (reporter)
 
-Once again, it's a different bug - not the one that this oss-security
-thread is mainly about - but both have cross-process security impact,
-affect similar AMD CPUs, and need to be taken care of by similar means
-(microcode updates or/and disabling of affected CPU features in the
-kernel).
+References:
 
-Alexander
+https://linkis.incubator.apache.org
+https://www.cve.org/CVERecord?id=CVE-2022-44644
+
