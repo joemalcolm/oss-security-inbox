@@ -1,47 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/20/11
-Message-ID: <20231020203023.7p2bZ%steffen@sdaoden.eu>
-Date: Fri, 20 Oct 2023 22:30:23 +0200
-From: Steffen Nurpmeso <steffen@...oden.eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/31/6
+Message-ID: <CAOGQQ29pYOHP2puP-nAzO+Qnbc-OouwnVFpQVY_=OvVo12=Mkw@mail.gmail.com>
+Date: Tue, 31 Jan 2023 12:59:19 -0300
+From: Marco Benatto <mbenatto@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Re: with firefox on X11, any page can pastejack you anytime
+Subject: pesign: Local privilege escalation on pesign systemd service
 Content-Type: text/plain; charset=utf-8
 
-nightmare.yeah27@...ecat.org wrote in
- <jvb6rc36mumsok24coqvjzthbksnbja7hlewhuxljqx3itwahu@...2z7j4ztug>:
- |What about people like me who don't use the graphical emulator's
- |paste directly at all but interact via a tmux layer in between?
+Hello all,
 
-tmux:
+a local privilege escalation vulnerability was found in pesign. This
+vulnerability has been identified by CVE-2022-3560.
 
-   Dsbp, Enbp
-           Disable and enable bracketed paste.  These are set automatically
-           if the XT capability is present.
+Description:
 
-I was curious what happens if i embed the user-proram bracketed-paste end
-marker (\x1B[201~) in the X selection, as the terminal i use does
-not protect itself from doing anything on the selection data
-except changing any \n to \r.  Actually 
+"The pesign deamon started by the systemd service of the pesign
+package is vulnerable to a path traversal vulnerability allowing a local
+privilege escalation. When properly exploited this flaw allows a
+malicious unprivileged user with access to pesign user or group can
+gain access to higher privileged files and directories."
 
-  printf 'a\x03\x1b[201~echo du' > .T1
-  printf 'a\x1b[201~\x03echo du' > .T2
+CVSSv3.1:7.8/CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H
 
-and then xclip .T[12] and then .. whatever.  bash cannot be
-"fooled", but the "a" is then invisible here
+The patch for this issue is attached to this message.
 
-  printf 'a\x1b[201~\x03echo du' > .T2
-  xclip .T2
-  echo du~
-^pasted
-  -bash: cho: command not found
+I'd like to thank Matthias Gerstner from SUSE Security Team for
+reporting this issue.
 
-Dunno since when i can no longer copy-selection etc via tmux
-without it actively changing what i want to copy!  'Thus that
-printf stuff above.  If that is what you meant :-(
+Marco Benatto
+Red Hat Product Security
+secalert@...hat.com for urgent response
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+View attachment "0001-Use-normal-file-permissions-instead-of-ACLs.patch" of type "text/x-patch" (2258 bytes)
