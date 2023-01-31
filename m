@@ -1,31 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/07/1
-Message-ID: <0de3c6b5-0b22-ffee-d3c8-2cefbcdf6e80@apache.org>
-Date: Thu, 07 Dec 2023 07:38:54 +0000
-From: Lukasz Lenart <lukaszlenart@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/31/2
+Message-ID: <a973ae81-dcc2-d506-50e2-a62d46321a32@apache.org>
+Date: Tue, 31 Jan 2023 07:31:21 +0000
+From: Heping Wang <peacewong@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-50164: Apache Struts: File upload component had a directory traversal vulnerability 
+Subject: CVE-2022-44645: Apache Linkis (incubating): The DatasourceManager module has a serialization attack vulnerability 
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical
-
-Affected versions:
-
-- Apache Struts 2.0.0 through 2.5.32
-- Apache Struts 6.0.0 through 6.3.0.1
+Severity: important
 
 Description:
 
-An attacker can manipulate file upload params to enable paths traversal and under some circumstances this can lead to uploading a malicious file which can be used to perform Remote Code Execution.
-Users are recommended to upgrade to versions Struts 2.5.33 or  Struts 6.3.0.1 or greater to fix this issue.
+In Apache Linkis <=1.3.0 when used with the MySQL Connector/J, a deserialization vulnerability with possible remote code execution impact exists when an attacker has write access to a database and configures new datasource with a MySQL data source and malicious parameters. Therefore, the parameters in the jdbc url should be blacklisted. Versions of Apache Linkis <= 1.3.0 will be affected.
+
+We recommend users to upgrade the version of Linkis to version 1.3.1.
 
 Credit:
 
-Steven Seeley (reporter)
+Tian Xin WU (Bearcat) , Vulnerability Researcher at Numen Cyber ​​​​Labs, Singapore. (reporter)
+Department of Cyber Security Research (Jumbo, Unc1e) (remediation developer)
+s3gundo of Hundsun Tech  (remediation developer)
 
 References:
 
-https://lists.apache.org/thread/yh09b3fkf6vz5d6jdgrlvmg60lfwtqhj
-https://struts.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-50164
+https://linkis.incubator.apache.org
+https://www.cve.org/CVERecord?id=CVE-2022-44645
 
