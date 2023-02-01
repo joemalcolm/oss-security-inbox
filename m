@@ -1,52 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/09/1
-Message-Id: <3C6BAFEB-A4D8-4691-9C7A-76B36B1BB74D@webweaving.org>
-Date: Mon, 9 Oct 2023 12:52:59 +0200
-From: Dirk-Willem van Gulik <dirkx@...weaving.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/01/1
+Message-ID: <a36f7bb9-32a0-7205-ae93-03537f562433@apache.org>
+Date: Wed, 01 Feb 2023 03:35:33 +0000
+From: Charles Zhang <dockerzhang@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: European Union Cyber Resilience Act (CRA)
+Subject: CVE-2023-24977: Apache InLong: Jdbc Connection causes arbitrary file reading in InLong 
 Content-Type: text/plain; charset=utf-8
 
-On 8 Oct 2023, at 22:56, Jean Luc Picard <atari2600a@...il.com> wrote:
+Severity: important
 
-> 'sharing', they'd likely blow a gasket.  It appears it's too late to bring
-> in the real industry experts into the committee meetings but not too late
-> to make a meaningful difference.  That said, the community at large needs
-> to prepare for a lull in rights & freedoms.  Perhaps if it got to a point
+Description:
 
-While I am not quite sure what qualifies as a `real’ industry expert :) — fair to assume that over the last 2 years a very sizeable body of such domain experts have enagaged with the European Commission, with the members (Shadows) of the European Parliament, with the Council (and at the national level - as in effect the council ‘is’ the cabinets/ministers at country level).
+Out-of-bounds Read vulnerability in Apache Software Foundation Apache InLong.This issue affects Apache InLong: from 1.1.0 through 1.5.0. Users are advised to upgrade to Apache InLong's latest version or cherry-pick  https://github.com/apache/inlong/pull/7214 https://github.com/apache/inlong/pull/7214  to solve it.
 
-This was not just open source [1,2,3,4] but also the industry [5,6]. In particular.
+Credit:
 
-If you are in any doubt - check the last page of 6 for the ‘who’ — that is the entire Who-is-who of Europes technical industry and notice that 5 comes from one of the most powerful industry bodies in Europe. And know that the interaction was not just `an email’ or a `like’ — but involved may face to face meetings, in Brussels.
+This issue was discovered by s3gundo of Hundsun Tech (finder)
 
-At this point I think it is fair to assume that the policy makers understand the impact the CRA can have on this industry. 
+References:
 
-And that they are (fairly!!, that is their role) trading this impact against the damage that bad software/security practices of our industry is doing to society.  Which is also considerable.
+https://inlong.apache.org
+https://www.cve.org/CVERecord?id=CVE-2023-24977
 
-Much like, in the latter half of the previous century, society introduced things such as safety belts, roll-cages and crumple zones for cars — accepting that it would literally decimate a very large industry; allowing only a few large (combined brand) players to survive. And making cars 10-30% more expensive.
-
-My reading is that part of  ‘forcing’ the CRA on open source is their hope that this will make it cheaper and more `do able’ for SME’s in Europe to implement the CRA. I.e. move the ‘cost’ of CRA compliance `upstream’ — away from the downstream*. And, perhaps, their hope is that the open-source is soo crucial to the industry - that industry will simply fund this**, ***.
-
-Obviously it is galling that open source (say, at the ASF),  is usually NOT the one patching & fixing late - au contraire) — but we are part of this industry & often the foundation of it all.
-
-Also note that the CRA is the `light’ one, impact wise. 
-
-The real sizzler for the industry (and not so much for Open Source)  is the Product Liability Directive — that introduces `strict liability[7].
-
-With kind regards,
-
-Dw 
-
-
-1: https://news.apache.org/foundation/entry/save-open-source-the-impending-tragedy-of-the-cyber-resilience-act
-2: https://eclipse-foundation.blog/2023/02/23/cyber-resilience-act-good-intentions-and-unintended-consequences/ (and a lot of others)
-3: https://blog.sonatype.com/eu-cyber-resilience-act-good-for-software-supply-chain-security-bad-for-open-source
-4: https://www.linuxfoundation.org/blog/understanding-the-cyber-resilience-act
-5: https://www.vda.de/dam/jcr:888e90b1-84dc-4660-a266-f246a141112f/VDA%20Brief%20position%20FOSS_EN.pdf?mode=view
-6: https://cdn.digitaleurope.org/uploads/2023/09/DIGITALEUROPE_Building-a-strong-foundation-for-the-CRA_key-considerations-for-trilogues.pdf
-7: Using the USA term for this; `when a defendant is fully liable for the effects of its product regardless of what the expected/intended when putting it on the market’
-
-*: Ignoring the rather large issue that, like `trust not being transitive’ — notified bodies/certification authorities generally do not allow such/look at the final step.
-**: And there is this assumption; based on the high 100’s if not mid 1000’s of millions put into open source foundations by big-tech - that they are already funded well enough as it is.
-***: my personal expectation is the opposite; the two or three main players in this industry may well fund this only for their own clouds & and simply tell the punters that you must run on platform X or Y in their cloud in order to be compliant.
