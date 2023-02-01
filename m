@@ -1,47 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/06/1
-Message-ID: <CADxcaYUjjVmubF+VBTEZH=xF32S4ERDSzK-765zNpuTDQ++UZQ@mail.gmail.com>
-Date: Thu, 5 Oct 2023 21:28:26 +0000
-From: Jean Luc Picard <atari2600a@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/01/4
+Message-ID: <bfeb845f-4e9a-69fa-3c09-a97eed9d3247@gmail.com>
+Date: Wed, 1 Feb 2023 12:00:48 +0100
+From: Mariusz Felisiak <felisiak.mariusz@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: "Linux Kernel security demistified"
+Subject: Django: CVE-2023-23969: Potential denial-of-service via Accept-Language headers.
 Content-Type: text/plain; charset=utf-8
 
-Hey just dropping in as I do, I really appreciated the talk once it hit the
-linux foundations channel & I got to watching it.  It flowed really really
-well, Very thought-provoking to the point of making the whole thing seem
-like 15 minutes rather than an hour.  I haven't been as enamered with a
-discussion of security philosophy since I watched CISSP test-prep so I
-could crash-course CISSP without having to actually pay for it (for fun).
+https://www.djangoproject.com/weblog/2023/feb/01/security-releases/
 
-On Thu, Oct 5, 2023 at 6:02 AM Willy Tarreau <w@....eu> wrote:
+In accordance with `our security release policy
+<https://docs.djangoproject.com/en/dev/internals/security/>`_, the 
+Django team
+is issuing
+`Django 4.1.6 <https://docs.djangoproject.com/en/dev/releases/4.1.6/>`_,
+`Django 4.0.9 <https://docs.djangoproject.com/en/dev/releases/4.0.9/>`_, and
+`Django 3.2.17 <https://docs.djangoproject.com/en/dev/releases/3.2.17/>`_.
+These releases addresses the security issue detailed below. We encourage all
+users of Django to upgrade as soon as possible.
 
-> Hi Alexander,
->
-> On Sun, Oct 01, 2023 at 09:13:03PM +0200, Solar Designer wrote:
-> > I wonder whether the kernel documentation could, however, be encouraging
-> > rather than discouraging (as it currently is) about issue reporters
-> > themselves contacting linux-distros after a fix is ready.  I wonder if a
-> > patch like that would be accepted?
->
-> Just as a quick heads up on this, I discussed with Greg there and proposed
-> to send a patch proposal to rework that part to take into account your now
-> relaxed rules. My goal is to let the reporter decide on their own, and let
-> them decide what they want to do after checking the linux-distros rules.
-> There could be a good motivation for some reporters to go there because a
-> number of them are first-timers who are seeking a Curriculum Vitae Enhancer
-> (CVE) ID that s@k.o doesn't deal with. But I also want to remind (I know I
-> may sound like a scratched record) that it's not because some may report
-> there that distros will magically be aware of all security issues, given
-> that those arriving on s@k.o are really a tiny portion and many more bugs
-> are fixed without anyone having a security look on them.
->
-> I'm just too short of time for now, having to catch up with what I left
-> for the 3 days of KR2023, but it's on my todo list to propose a patch to
-> Greg. I'm having reasonable hopes that we can end up with something
-> smoother in the near future.
->
-> Cheers,
-> Willy
->
+CVE-2023-23969: Potential denial-of-service via ``Accept-Language`` headers
+===========================================================================
+
+The parsed values of ``Accept-Language`` headers are cached in order to 
+avoid
+repetitive parsing. This leads to a potential denial-of-service vector via
+excessive memory usage if large header values are sent.
+
+In order to avoid this vulnerability, the ``Accept-Language`` header is now
+parsed up to a maximum length.
+
+Thanks to Nick Pope for the report and patch.
+
+This issue has severity "moderate" according to the Django security policy.
+
+Affected supported versions
+===========================
+
+* Django main branch
+* Django 4.2 (currently at pre-release alpha status)
+* Django 4.1
+* Django 4.0
+* Django 3.2
+
+Resolution
+==========
+
+Patches to resolve the issue have been applied to Django's main branch 
+and the
+4.2, 4.1, 4.0, and 3.2 release branches. The patches may be obtained 
+from the
+following changesets:
+
+* On the `main branch 
+<https://github.com/django/django/commit/8c660fb59239828583f17cdede3b64f208b8752c>`__
+* On the `4.2 release branch 
+<https://github.com/django/django/commit/8a7b22d4a623bcd95190d2f5a958472fb41e576d>`__
+* On the `4.1 release branch 
+<https://github.com/django/django/commit/9d7bd5a56b1ce0576e8e07a8001373576d277942>`__
+* On the `4.0 release branch 
+<https://github.com/django/django/commit/4452642f193533e288a52c02efb5bbc766a68f95>`__
+* On the `3.2 release branch 
+<https://github.com/django/django/commit/c7e0151fdf33e1b11d488b6f67b94fdf3a30614a>`__
+
+The following releases have been issued:
+
+* Django 4.1.6 (`download Django 4.1.6 
+<https://www.djangoproject.com/m/releases/4.1/Django-4.1.6.tar.gz>`_ | 
+`4.1.6 checksums 
+<https://www.djangoproject.com/m/pgp/Django-4.1.6.checksum.txt>`_)
+* Django 4.0.9 (`download Django 4.0.9 
+<https://www.djangoproject.com/m/releases/4.0/Django-4.0.9.tar.gz>`_ | 
+`4.0.9 checksums 
+<https://www.djangoproject.com/m/pgp/Django-4.0.9.checksum.txt>`_)
+* Django 3.2.17 (`download Django 3.2.17 
+<https://www.djangoproject.com/m/releases/3.2/Django-3.2.17.tar.gz>`_ | 
+`3.2.17 checksums 
+<https://www.djangoproject.com/m/pgp/Django-3.2.17.checksum.txt>`_)
+
+The PGP key ID used for this release is Mariusz Felisiak: 
+`2EF56372BA48CD1B <https://github.com/felixxm.gpg>`_.
+
+General notes regarding security reporting
+==========================================
+
+As always, we ask that potential security issues be reported via
+private email to ``security@...ngoproject.com``, and not via Django's
+Trac instance or the django-developers list. Please see `our security
+policies <https://www.djangoproject.com/security/>`_ for further
+information.
 
