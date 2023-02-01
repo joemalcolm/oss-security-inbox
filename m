@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1472" "Sunday" "15" "May" "2016" "10:20:22" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160515142022.4BFE7332008@smtpvbsrv1.mitre.org>" "38" "[oss-security] Re: CVE Requests: Linux: use-after-free issue for ppp channel" nil nil nil "5" "2016051514:20:22" "[oss-security] Re: CVE Requests: Linux: use-after-free issue for ppp channel" (number mark "U       cve-assign@m May 15   38/1472  " thread-indent "\"[oss-security] Re: CVE Requests: Linux: use-after-free issue for ppp channel\"\n") "<57385812.2030402@gmail.com>" ("<57385812.2030402@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5646 invoked by uid 550); 15 May 2016 14:20:35 -0000
+Received: (qmail 30227 invoked by uid 550); 1 Feb 2023 10:44:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,50 +7,32 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5628 invoked from network); 15 May 2016 14:20:34 -0000
-From: cve-assign@mitre.org
-To: sploving1@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, g.nault@alphalink.fr
-In-Reply-To: <57385812.2030402@gmail.com>
-Message-Id: <20160515142022.4BFE7332008@smtpvbsrv1.mitre.org>
-Date: Sun, 15 May 2016 10:20:22 -0400 (EDT)
-Subject: [oss-security] Re: CVE Requests: Linux: use-after-free issue for ppp channel
+Received: (qmail 28632 invoked from network); 1 Feb 2023 10:43:25 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Charles Zhang <dockerzhang@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <6e8f9006-ad6c-c97d-b14e-97be90964314@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 01 Feb 2023 10:43:09 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2023-24997: Apache InLong: Jdbc Connection Security Bypass in
+ InLong 
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Description:
 
->    The ppp channel did not take reference on its network namespace
-> when it was registered and unregistered, which causes a use-after-free
-> issue. Details:
-> https://lkml.org/lkml/2016/3/17/569
-> Fixed via:
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=1f461dcdd296eecedaffffc6bae2bfa90bd7eb89
+Bypass Through User-Controlled Key vulnerability in Apache Software Foundat=
+ion Apache InLong.This issue affects Apache InLong: from 1.1.0 through 1.5.=
+0.=C2=A0Users are advised to upgrade to Apache InLong's latest version or c=
+herry-pick=C2=A0 https://github.com/apache/inlong/pull/7223 https://github.=
+com/apache/inlong/pull/7223 =C2=A0to solve it.
 
->> ppp: take reference on channels netns
+Credit:
 
-> Fixed in linux-stable 4.5.4
+This issue was discovered by s3gundo of Hundsun Tech (finder)
 
-Use CVE-2016-4805.
+References:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+https://inlong.apache.org
+https://www.cve.org/CVERecord?id=3DCVE-2023-24997
 
-iQIcBAEBCAAGBQJXOISqAAoJEHb/MwWLVhi2pt0P/RXsGFFEKEkonzo9IdSJ/tZZ
-MTsM+l8dZzpHFh44HTbI+GnzilwX5TdtZADLR8a4mfLvnF+qxoMMf/rZBrmokkAI
-I0b5UfM+37twvWDnj7pKDYHn5LdsGsZW+z6WeXddhwdry9scB04xnVCgXni0SOJ4
-Fhmu72ykxgoZ4nT9gqT62nGbFHsLlS3mhF3lobmJwaFp3kiP1AL/NaaAzVdYX1T0
-bcIjRoJoRpKzIXURSIyQ+WnmtoMB5KvnQQgDZvsmqk9dLe0iWiZamAV8reKiIaHN
-ZbKiDsDSQzqHJ1IsY/CT08Uj+WFyn3bbikrbo2WmxVZd1kuvJCzB/uD1zLny5vLG
-GWWml1isPA8jTMH5AT8ZcTED+vPgN+a55JpOkUKSUq/thlwhdv+5smE/ZqUQaTZK
-6M910FY9AA+75AdA6RR+PKzbB6UnwaJS71oEGXELzwJw7UtdooUHHqJK9Y5mPH5J
-ysYb3vrEUiPvRuZyuWSXi1jk/MMHGmG/lInXhWFirvwh1jt5XYKJP5uJN+qfMwCg
-WBBvUOinqUwDu0C42wrpM5NkCfFE/o854+EurHuJ7nXOQjrX+Zzd5eAZkhFNJeej
-iCX4C/FV5QLpQnahtsbZeYrtl8FKJ/4yJty5KxnE+S/V4ic4H06zA00j3XPZD4jz
-U6E7HOPcRqdPhitNBIHt
-=RgAh
------END PGP SIGNATURE-----
