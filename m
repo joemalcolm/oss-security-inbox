@@ -1,77 +1,129 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/03/11
-Message-ID: <20231003203853.GA24745@openwall.com>
-Date: Tue, 3 Oct 2023 22:38:53 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Cc: Andreas Kling <kling@...enityos.org>
-Subject: Wuffs (was: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/02/2
+Message-ID: <20230202130212.GA15689@localhost.localdomain>
+Date: Thu, 2 Feb 2023 13:02:04 +0000
+From: Qualys Security Advisory <qsa@...lys.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: double-free vulnerability in OpenSSH server 9.1
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 29, 2023 at 12:35:07PM -0400, Demi Marie Obenour wrote:
-> On Thu, Sep 28, 2023 at 05:10:09PM -0700, nightmare.yeah27@...ecat.org wrote:
-> > On Thu, Sep 28, 2023 at 04:42:33PM -0400, Demi Marie Obenour wrote:
-> > 
-> > > How long will it take for corporations to accept that writing media
+Hi all,
 
-Demi Marie, for further occasions I'd appreciate it if such tangential
-topics be started in their own threads (OK to refer to current context,
-but not mix with it in same thread) and be worded non-provocatively.
+In case it helps, below is a brief analysis of this vulnerability:
 
-Luckily, we got quite reasonable follow-ups this time - much better than
-typical (anti-)Rust flamewars on tech news sites.  So I don't really
-complain.  But I was reluctant and worried about accepting the above.
+========================================================================
 
-> > > codecs in C, C++, or any other memory-unsafe language is a
-> > > fundamentally bad idea, and that it is better to rewrite the codecs
-> > > in a safe language (such as Wuffs or Rust) than to try to secure the
-> > > existing ones?
-> > 
-> > Wouldn't the low-level code have to ultimately depend on unsafe Rust
-> > modules, or similar feature in other safe language?
-> 
-> In Wuffs, every memory access is checked for safety at compile-time, and
-> that includes being in-bounds.  If the compiler cannot prove that every
-> access is safe, the code will not compile.  There are no bounds checks
-> at runtime.
-> 
-> Interfacing with hardware accelerators obviously will need unsafe code,
-> but my understanding is that most vulnerabilities are in various
-> parsers or in the code the accelerators replace, not in the code that
-> interfaces with the accelerators.
+On February 2, 2023, OpenSSH version 9.2 was released: it fixes a
+pre-authentication vulnerability (a double free) in the OpenSSH server
+version 9.1 (only this specific version, which was released in October
+2022). Affected users are urged to upgrade, as this vulnerability can be
+triggered in the default configuration of the OpenSSH server (sshd).
 
-The mention of Rust triggered people, but let's not overlook Wuffs,
-"Wrangling Untrusted File Formats Safely":
+This double free was introduced in July 2022 by the following commit:
 
-https://github.com/google/wuffs
+https://github.com/openssh/openssh-portable/commit/486c4dc3b83b4b67d663fb0fa62bc24138ec3946
 
-I was actually unaware of Wuffs, so I appreciate learning of it.  As I
-understand, it's a language currently transpiled to C:
+and was reported to the OpenSSH Bugzilla in January 2023 by Mantas
+Mikulenas:
 
-https://github.com/google/wuffs/tree/main/release/c
+https://bugzilla.mindrot.org/show_bug.cgi?id=3522
 
-> Wuffs the Library ships as a "single file C library", also known as a
-> "header file library".
-> 
-> To use that library in your C/C++ project, you just need to copy one
-> file from this directory, or otherwise integrate that one file into your
-> build system.
+The chunk of memory that is freed twice is "options.kex_algorithms"; it
+is freed once via do_ssh2_kex(), which calls compat_kex_proposal():
 
-The C file containing all of the parsers currently implemented in Wuffs
-is around 2 MB in size.  That's a lot, but then there are many parsers:
+------------------------------------------------------------------------
+2374 do_ssh2_kex(struct ssh *ssh)
+....
+2381         myproposal[PROPOSAL_KEX_ALGS] = prop_kex = compat_kex_proposal(ssh,
+2382             options.kex_algorithms);
+------------------------------------------------------------------------
+191 compat_kex_proposal(struct ssh *ssh, char *p)
+...
+198         if ((ssh->compat & SSH_BUG_CURVE25519PAD) != 0)
+199                 if ((p = match_filter_denylist(p,
+...
+202         if ((ssh->compat & SSH_OLD_DHGEX) != 0) {
+203                 cp = p;
+204                 if ((p = match_filter_denylist(p,
+...
+208                 free(cp);
+------------------------------------------------------------------------
 
-https://github.com/google/wuffs/tree/main/std
+- if at line 198 the "SSH_BUG_CURVE25519PAD" compatibility bit is *not*
+  set,
 
-$ ls std/
-adler32  bmp  bzip2  cbor  crc32  deflate  gif  gzip  jpeg  json  lzw
-netpbm  nie  png  tga  wbmp  zlib
+- and if at line 202 the "SSH_OLD_DHGEX" compatibility bit *is* set,
 
-Curiously, some of these optionally use SIMD - all while retaining the
-language's safety guarantees?
+- then at line 203 "cp" becomes equal to "p", which is still equal to
+  "options.kex_algorithms",
 
-Even though this looks like a Google project, I think a better place for
-its initial adoption could be a hobbyist OS and web browser project like
-what Andreas Kling is working on.  I'm not saying this is necessarily a
-good idea, it just feels more realistic to me.
+- and at line 208 "cp" is freed, i.e. "options.kex_algorithms" is freed
+  and becomes a dangling pointer.
 
-Alexander
+(Note: the "SSH_BUG_CURVE25519PAD" and "SSH_OLD_DHGEX" compatibility
+bits depend only on the client version, not on the server configuration;
+for example, the bug report mentioned earlier uses "PuTTY_Release_0.64",
+and we will use "FuTTY" for the ssh client version later in this post.)
+
+"options.kex_algorithms" is then freed a second time via
+do_authentication2(), which calls input_userauth_request(), which calls
+mm_getpwnamallow(), which calls copy_set_server_options(), which calls
+assemble_algorithms(), which calls kex_assemble_names() with "listp"
+equal to "&options.kex_algorithms", which therefore double-frees
+"options.kex_algorithms" at line 315:
+
+------------------------------------------------------------------------
+ 225 kex_assemble_names(char **listp, const char *def, const char *all)
+ ...
+ 240         list = *listp;
+ ...
+ 315         free(list);
+------------------------------------------------------------------------
+
+To reproduce this vulnerability, we installed a Debian testing
+(bookworm, which ships OpenSSH 9.1p1 at the time of writing this post)
+and we simply modified the banner of the ssh client to pretend that it
+is a "FuTTY" client (to force the "SSH_OLD_DHGEX" compatibility bit in
+sshd):
+
+------------------------------------------------------------------------
+$ cp -i /usr/bin/ssh ./ssh
+
+$ sed -i s/OpenSSH_9.1p1/FuTTYSH_9.1p1/g ./ssh
+
+$ ./ssh -v 127.0.0.1
+...
+debug1: Local version string SSH-2.0-FuTTYSH_9.1p1 Debian-2
+debug1: Remote protocol version 2.0, remote software version OpenSSH_9.1p1 Debian-2
+...
+debug1: SSH2_MSG_SERVICE_ACCEPT received
+Connection closed by 127.0.0.1 port 22
+------------------------------------------------------------------------
+
+This connection immediately triggered a double free in the unprivileged
+sshd process, as shown by the "Connection closed by 127.0.0.1 port 22"
+message above and by the strace output below:
+
+------------------------------------------------------------------------
+writev(2, [{iov_base="free(): double free detected in tcache 2", iov_len=40}, {iov_base="\n", iov_len=1}], 2) = 20
+--- SIGSYS {si_signo=SIGSYS, si_code=SYS_SECCOMP, si_call_addr=0x7f093649e1f5, si_syscall=__NR_writev, si_arch=AUDIT_ARCH_X86_64} ---
+write(8, "\0\0\0g\0\0\0\1\0\0\0\0\0\0\0[ssh_sandbox_violation: unexpected system call (arch:0xc000003e,syscall:20 @ 0x7f093649e1f5)", 107) = 107
+exit_group(1)                           = ?
++++ exited with 1 +++
+------------------------------------------------------------------------
+
+Exploiting this vulnerability will not be easy: modern memory allocators
+provide protections against double frees, and the impacted sshd process
+is unprivileged and heavily sandboxed.
+
+Once again we thank OpenSSH's developers for their outstanding work and
+for their implementation of these defense-in-depth mechanisms (privilege
+separation, sandboxing) that make it so much harder to exploit such a
+vulnerability.
+
+========================================================================
+
+With best regards,
+
+-- 
+the Qualys Security Advisory team
