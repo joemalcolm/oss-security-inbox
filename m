@@ -1,47 +1,212 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/20/6
-Message-ID: <20231020132741.GA4951@openwall.com>
-Date: Fri, 20 Oct 2023 15:27:41 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/02/3
+Message-ID: <729ab9380799c1ae@cvs.openbsd.org>
+Date: Thu, 2 Feb 2023 06:15:13 -0700 (MST)
+From: Damien Miller <djm@....openbsd.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: with firefox on X11, any page can pastejack you anytime
+Subject: Announce: OpenSSH 9.2 released
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Oct 17, 2023 at 03:17:36AM +0300, turistu wrote:
-> In firefox running on X11, any script from any page can freely write to the
-> primary selection, and that can be easily exploited to run arbitrary code
-> on the user's machine.
+OpenSSH 9.2 has just been released. It will be available from the
+mirrors listed at https://www.openssh.com/ shortly.
 
-What about other web browsers running on X11, most notably Chrome and
-Chromium?  If the issue is unique to Firefox or at least not universal
-across browsers, that's an extra reason for Firefox to make a change.
+OpenSSH is a 100% complete SSH protocol 2.0 implementation and
+includes sftp client and server support.
 
-On Fri, Oct 20, 2023 at 02:10:06AM +0300, Turistu wrote:
-> OK this was probably too technical and terse for people not familiar
-> with X11 programming and terminology, so thing goes like this:
-> 
-> 1. If you're a user who has first learned to use a GUI on e.g. Windows,
-> and who is used to copy & paste with Ctrl-C Ctrl-V (or with left-click,
-> choose Copy from the menu, and then again left-click, choose Paste),
-> then congratulations! this DOES NOT AFFECT YOU.
-> 
-> (Unless you're using some clipboard tools which merges the primary and
-> clipboard selection, but I guess you don't ;-))
-> 
-> 2. But if you're a *native* X11 user who is used to just select the text and
-> then paste it with a middle-click or shift-Insert, then this means you're
-> pretty much done, and you should immediately either stop using firefox or
-> try the workaround and patch described in my report. This also includes
-> Wayland users.
+Once again, we would like to thank the OpenSSH community for their
+continued support of the project, especially those who contributed
+code or patches, reported bugs, tested snapshots or donated to the
+project. More information on donations may be found at:
+https://www.openssh.com/donations.html
 
-Or isolate Firefox to its own X server (or at least a separate one from
-where you run terminal emulators managing important stuff), like it
-happens when you run it in its own VM (or perhaps many instances of it
-in many VMs) on Qubes OS.  Indeed this also removes the convenience of
-being able to paste stuff from Firefox with middle-click to outside of
-its VM - you have to be explicit by using Qubes' Ctrl-Shift-C and
-Ctrl-Shift-V - but that's currently the price for having control.  The
-remaining security issue is that some JavaScript running in Firefox can
-still race you when you do explicitly copy/paste stuff from Firefox.
+Changes since OpenSSH 9.1
+=========================
 
-Alexander
+This release fixes a number of security bugs.
+
+Security
+========
+
+This release contains fixes for two security problems and a memory
+safety problem. The memory safety problem is not believed to be
+exploitable, but we report most network-reachable memory faults as
+security bugs.
+
+ * sshd(8): fix a pre-authentication double-free memory fault
+   introduced in OpenSSH 9.1. This is not believed to be exploitable,
+   and it occurs in the unprivileged pre-auth process that is
+   subject to chroot(2) and is further sandboxed on most major
+   platforms.
+
+ * ssh(8): in OpenSSH releases after 8.7, the PermitRemoteOpen option
+   would ignore its first argument unless it was one of the special
+   keywords "any" or "none", causing the permission list to fail open
+   if only one permission was specified. bz3515
+
+ * ssh(1): if the CanonicalizeHostname and CanonicalizePermittedCNAMEs
+   options were enabled, and the system/libc resolver did not check
+   that names in DNS responses were valid, then use of these options
+   could allow an attacker with control of DNS to include invalid
+   characters (possibly including wildcards) in names added to
+   known_hosts files when they were updated. These names would still
+   have to match the CanonicalizePermittedCNAMEs allow-list, so
+   practical exploitation appears unlikely.
+
+Potentially-incompatible changes
+--------------------------------
+
+ * ssh(1): add a new EnableEscapeCommandline ssh_config(5) option that
+   controls whether the client-side ~C escape sequence that provides a
+   command-line is available. Among other things, the ~C command-line
+   could be used to add additional port-forwards at runtime.
+
+   This option defaults to "no", disabling the ~C command-line that
+   was previously enabled by default. Turning off the command-line
+   allows platforms that support sandboxing of the ssh(1) client
+   (currently only OpenBSD) to use a stricter default sandbox policy.
+
+New features
+------------
+
+ * sshd(8): add support for channel inactivity timeouts via a new
+   sshd_config(5) ChannelTimeout directive. This allows channels that
+   have not seen traffic in a configurable interval to be
+   automatically closed. Different timeouts may be applied to session,
+   X11, agent and TCP forwarding channels.
+
+ * sshd(8): add a sshd_config UnusedConnectionTimeout option to
+   terminate client connections that have no open channels for a
+   length of time. This complements the ChannelTimeout option above.
+    
+ * sshd(8): add a -V (version) option to sshd like the ssh client has.
+
+ * ssh(1): add a "Host" line to the output of ssh -G showing the
+   original hostname argument. bz3343
+    
+ * scp(1), sftp(1): add a -X option to both scp(1) and sftp(1) to
+   allow control over some SFTP protocol parameters: the copy buffer
+   length and the number of in-flight requests, both of which are used
+   during upload/download. Previously these could be controlled in
+   sftp(1) only. This makes them available in both SFTP protocol
+   clients using the same option character sequence.
+    
+ * ssh-keyscan(1): allow scanning of complete CIDR address ranges,
+   e.g.  "ssh-keyscan 192.168.0.0/24". If a CIDR range is passed, then
+   it will be expanded to all possible addresses in the range
+   including the all-0s and all-1s addresses. bz#976
+
+ * ssh(1): support dynamic remote port forwarding in escape
+   command-line's -R processing. bz#3499
+
+Bugfixes
+--------
+
+ * ssh(1): when restoring non-blocking mode to stdio fds, restore
+   exactly the flags that ssh started with and don't just clobber them
+   with zero, as this could also remove the append flag from the set.
+   bz3523
+    
+ * ssh(1): avoid printf("%s", NULL) if using UserKnownHostsFile=none
+   and a hostkey in one of the system known hosts file changes.
+    
+ * scp(1): switch scp from using pipes to a socket-pair for
+   communication with its ssh sub-processes, matching how sftp(1)
+   operates.
+
+ * sshd(8): clear signal mask early in main(); sshd may have been
+   started with one or more signals masked (sigprocmask(2) is not
+   cleared on fork/exec) and this could interfere with various things,
+   e.g. the login grace timer. Execution environments that fail to
+   clear the signal mask before running sshd are clearly broken, but
+   apparently they do exist.
+    
+ * ssh(1): warn if no host keys for hostbased auth can be loaded.
+    
+ * sshd(8): Add server debugging for hostbased auth that is queued and
+   sent to the client after successful authentication, but also logged
+   to assist in diagnosis of HostbasedAuthentication problems. bz3507
+
+ * ssh(1): document use of the IdentityFile option as being usable to
+   list public keys as well as private keys. GHPR352
+    
+ * sshd(8): check for and disallow MaxStartups values less than or
+   equal to zero during config parsing, rather than failing later at
+   runtime.  bz3489
+    
+ * ssh-keygen(1): fix parsing of hex cert expiry times specified on
+   the command-line when acting as a CA.
+ 
+ * scp(1): when scp(1) is using the SFTP protocol for transport (the
+   default), better match scp/rcp's handling of globs that don't match
+   the globbed characters but do match literally (e.g. trying to
+   transfer a file named "foo.[1]"). Previously scp(1) in SFTP mode
+   would not match these pathnames but legacy scp/rcp mode would.
+   bz3488
+    
+ * ssh-agent(1): document the "-O no-restrict-websafe" command-line
+   option.
+
+ * ssh(1): honour user's umask(2) if it is more restrictive then the
+   ssh default (022).
+
+Portability
+-----------
+
+ * sshd(8): allow writev(2) in the Linux seccomp sandbox. This seems
+   to be used by recent glibcs at least in some configurations during
+   error conditions. bz3512.
+
+ * sshd(8): simply handling of SSH_CONNECTION PAM env var, removing
+   global variable and checking the return value from pam_putenv.
+   bz3508
+
+ * sshd(8): disable SANDBOX_SECCOMP_FILTER_DEBUG that was mistakenly
+   enabled during the OpenSSH 9.1 release cycle.
+
+ * misc: update autotools and regenerate the config files using the
+   latest autotools
+
+ * all: use -fzero-call-used-regs=used on clang 15 instead of
+   -fzero-call-used-reg=all, as some versions of clang 15 have
+   miscompile code when it was enabled. bz3475
+
+ * sshd(8): defer PRNG seeding until after the initial closefrom(2)
+   call. PRNG seeding will initialize OpenSSL, and some engine
+   providers (e.g. Intel's QAT) will open descriptors for their own
+   use that closefrom(2) could clobber. bz3483
+
+ * misc: in the poll(2)/ppoll(2) compatibility code, avoid assuming
+   the layout of fd_set.
+
+ * sftp-server(8), ssh-agent(1): fix ptrace(2) disabling on older
+   FreeBSD kernels. Some versions do not support using id 0 to refer
+   to the current PID for procctl, so try again with getpid()
+   explicitly before failing.
+
+ * configure.ac: fix -Wstrict-prototypes in configure test code.
+   Clang 16 now warns on this and legacy prototypes will be removed
+   in C23. GHPR355
+
+ * configure.ac: fix setres*id checks to work with clang-16. glibc
+   has the prototypes for setresuid behind _GNU_SOURCE, and clang 16
+   will error out on implicit function definitions. bz3497
+
+Checksums:
+==========
+
+- SHA1 (openssh-9.2.tar.gz) = e4b806b7c81b87d6c90afe97b3d016ba6cf3ba1c
+- SHA256 (openssh-9.2.tar.gz) = yYe9uaaWSeetXGXOxuaaEiIsLnvITmGW+l5dgMZb9QU=
+
+- SHA1 (openssh-9.2p1.tar.gz) = 3b172b8e971773a7018bbf3231f6589ae539ca4b
+- SHA256 (openssh-9.2p1.tar.gz) = P2bb8WVftF9Q4cVtpiqwEhjCKIB7ITONY068351xz0Y=
+
+Please note that the SHA256 signatures are base64 encoded and not
+hexadecimal (which is the default for most checksum tools). The PGP
+key used to sign the releases is available from the mirror sites:
+https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
+
+Reporting Bugs:
+===============
+
+- Please read https://www.openssh.com/report.html
+  Security bugs should be reported directly to openssh@...nssh.com
