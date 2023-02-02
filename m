@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["369" "Friday" "23" "October" "2015" "13:11:15" "+0000" "Jeremy Stanley" "fungi@yuggoth.org" "<20151023131115.GZ4731@yuggoth.org>" "11" "Re: [oss-security] CVE Request: BusyBox tar directory traversal" nil nil nil "10" "2015102313:11:15" "[oss-security] CVE Request: BusyBox tar directory traversal" (number mark "        fungi@yuggot Oct 23   11/369   " thread-indent "\"Re: [oss-security] CVE Request: BusyBox tar directory traversal\"\n") "<CAOfWR+HjmAHz8oL3r5JyEa+d8wNHy7q6warHAKeRomZ_+CNdNg@mail.gmail.com>" ("<20151021153633.GA2430@boyd>" "<CAOfWR+FbqxJL-PPAnOPoJ4i3eCBjZv87uhpqtnOha1MCE4orbQ@mail.gmail.com>" "<13512806.1ZGcyoO27t@sarpedon>" "<CAOfWR+H7YdPbx2N33=U_35f0uK2irjP2XtfjaUdCYuEwQLx1XA@mail.gmail.com>" "<1445603081.14394.5.camel@debian.org>" "<CAOfWR+HjmAHz8oL3r5JyEa+d8wNHy7q6warHAKeRomZ_+CNdNg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 13944 invoked by uid 550); 23 Oct 2015 13:11:29 -0000
+Received: (qmail 5256 invoked by uid 550); 2 Feb 2023 08:53:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,37 +6,203 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13915 invoked from network); 23 Oct 2015 13:11:29 -0000
-Message-ID: <20151023131115.GZ4731@yuggoth.org>
-References: <20151021153633.GA2430@boyd>
- <CAOfWR+FbqxJL-PPAnOPoJ4i3eCBjZv87uhpqtnOha1MCE4orbQ@mail.gmail.com>
- <13512806.1ZGcyoO27t@sarpedon>
- <CAOfWR+H7YdPbx2N33=U_35f0uK2irjP2XtfjaUdCYuEwQLx1XA@mail.gmail.com>
- <1445603081.14394.5.camel@debian.org>
- <CAOfWR+HjmAHz8oL3r5JyEa+d8wNHy7q6warHAKeRomZ_+CNdNg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOfWR+HjmAHz8oL3r5JyEa+d8wNHy7q6warHAKeRomZ_+CNdNg@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
-X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
-X-SA-Exim-Mail-From: fungi@yuggoth.org
-X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
-Date: Fri, 23 Oct 2015 13:11:15 +0000
-From: Jeremy Stanley <fungi@yuggoth.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE Request: BusyBox tar directory traversal
-To: oss-security@lists.openwall.com
+Received: (qmail 20258 invoked from network); 2 Feb 2023 07:44:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1675323841; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=pkK6DFNunTwXUHMC4HUZUEQ+GTkYRfVC1sAKwjJ0O/Q=;
+	b=T7OhOdq9LWZehrd5GXUYxuwiI+eJ/SIAW11loO4l6h8h8AT9FVE0Ok1PaSQ6bpDd2zip4v
+	PnVQhSxCLL6SwfvVpbYIUpY9NOHcyALqVrFF0rB8wsBf5whC8lA+CNp8d55/CTIDuW0x5P
+	gs5Q4URjchY33beUBS/u70YkNvXaM5Q=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1675323841;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=pkK6DFNunTwXUHMC4HUZUEQ+GTkYRfVC1sAKwjJ0O/Q=;
+	b=9M2ZrXvKDGujsZY9ZKtvhcnAKeVxkK17YvMEr1goHQA/iVv0z+sMBub8dBDF3N6tKdhxu1
+	X5SX0X8E36Vlx3Cg==
+Message-ID: <759ffb00-cb84-b53d-5506-53543b015afa@suse.de>
+Date: Thu, 2 Feb 2023 08:43:30 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+To: oss-security@lists.openwall.com,
+ Pietro Borrello <borrello@diag.uniroma1.it>
+References: <CAEih1qUhLRQ+nD-85r5AZv5mq33QTk2iWzDdRKgZY5Omfucbag@mail.gmail.com>
+Content-Language: en-US
+From: Thomas Leroy <tleroy@suse.de>
+In-Reply-To: <CAEih1qUhLRQ+nD-85r5AZv5mq33QTk2iWzDdRKgZY5Omfucbag@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] Linux Kernel: hid: Use-After-Free in
+ bigben_set_led()
 
-On 2015-10-23 09:00:29 -0400 (-0400), Robert Watson wrote:
-> Okay. How then does one install a tar package that put most of its files
-> under /usr but also needs to put files under /etc to which there are
-> symlinks?
+MITRE assigned CVE-2023-25012 to this issue.
 
--C/
+Best regards,
+Thomas
 
-Though I have to assume this is rhetorical, since you could have
-answered your question through a brief review of its manpage.
+On 1/25/23 23:33, Pietro Borrello wrote:
+> Hi all,
+>
+> I'm disclosing a Use After Free that may be triggered when plugging in a
+> malicious USB device, which advertises itself as a bigben device.
+>
+> The device uses a worker `bigben_worker` scheduled by bigben_set_led() to
+> communicate with the hardware.
+> The work_struct is embedded in `struct bigben_device`, and at device removal,
+> `struct bigben_device` is freed.
+>
+> However, concurrently with device removal, the LED controller bigben_set_led()
+> may schedule a worker whose use would result in a use-after-free.
+>
+> Following the debug check triggered by freeing a work_struct in use:
+> ```
+> [   37.803135][ T1170] usb 1-1: USB disconnect, device number 2
+> [   37.827979][ T1170] ODEBUG: free active (active state 0) object
+> type: work_struct hint: bigben_worker+0x0/0x860
+> [   37.829634][ T1170] WARNING: CPU: 0 PID: 1170 at
+> lib/debugobjects.c:505 debug_check_no_obj_freed+0x43a/0x630
+> [   37.830904][ T1170] Modules linked in:
+> [   37.831413][ T1170] CPU: 0 PID: 1170 Comm: kworker/0:3 Not tainted
+> 6.1.0-rc4-dirty #43
+> [   37.832465][ T1170] Hardware name: QEMU Standard PC (i440FX + PIIX,
+> 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+> [   37.833751][ T1170] Workqueue: usb_hub_wq hub_event
+> [   37.834409][ T1170] RIP: 0010:debug_check_no_obj_freed+0x43a/0x630
+> [   37.835218][ T1170] Code: 48 89 ef e8 28 82 58 ff 49 8b 14 24 4c 8b
+> 45 00 48 c7 c7 40 5f 09 87 48 c7 c6 60 5b 09 87 89 d9 4d 89 f9 31 c0
+> e8 46 25 ef fe <0f> 0b 4c 8b 64 24 20 48 ba 00 00 00 00 00 fc ff df ff
+> 05 4f 7c 17
+> [   37.837667][ T1170] RSP: 0018:ffffc900006fee60 EFLAGS: 00010246
+> [   37.838503][ T1170] RAX: 0d2d19ffcded3d00 RBX: 0000000000000000
+> RCX: ffff888117fc9b00
+> [   37.839519][ T1170] RDX: 0000000000000000 RSI: 0000000000000000
+> RDI: 0000000000000000
+> [   37.840570][ T1170] RBP: ffffffff86e88380 R08: ffffffff8130793b
+> R09: fffff520000dfd85
+> [   37.841618][ T1170] R10: fffff520000dfd85 R11: 0000000000000000
+> R12: ffffffff87095fb8
+> [   37.842649][ T1170] R13: ffff888117770ad8 R14: ffff888117770acc
+> R15: ffffffff852b7420
+> [   37.843728][ T1170] FS:  0000000000000000(0000)
+> GS:ffff8881f6600000(0000) knlGS:0000000000000000
+> [   37.844877][ T1170] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+> [   37.845749][ T1170] CR2: 00007f992eaab380 CR3: 000000011834b000
+> CR4: 00000000001006f0
+> [   37.846794][ T1170] Call Trace:
+> [   37.847245][ T1170]  <TASK>
+> [   37.847643][ T1170]  slab_free_freelist_hook+0x89/0x160
+> [   37.848409][ T1170]  ? devres_release_all+0x262/0x350
+> [   37.849156][ T1170]  __kmem_cache_free+0x71/0x110
+> [   37.849829][ T1170]  devres_release_all+0x262/0x350
+> [   37.850478][ T1170]  ? devres_release+0x90/0x90
+> [   37.851118][ T1170]  device_release_driver_internal+0x5e5/0x8a0
+> [   37.851944][ T1170]  bus_remove_device+0x2ea/0x400
+> [   37.852611][ T1170]  device_del+0x64f/0xb40
+> [   37.853212][ T1170]  ? kill_device+0x150/0x150
+> [   37.853831][ T1170]  ? print_irqtrace_events+0x1f0/0x1f0
+> [   37.854564][ T1170]  hid_destroy_device+0x66/0x100
+> [   37.855226][ T1170]  usbhid_disconnect+0x9a/0xc0
+> [   37.855887][ T1170]  usb_unbind_interface+0x1e1/0x890
+> ```
+>
+> And the KASAN error report:
+> ```
+> [ 138.349079][  T7] usb 1-1: USB disconnect, device number 2
+> [ 138.381243][ T1175]
+> ==================================================================
+> [ 138.382329][ T1175] BUG: KASAN: use-after-free in __list_add_valid+0x66/0x100
+> [ 138.383272][ T1175] Read of size 8 at addr ffff88810d62de70 by task
+> systemd-udevd/1175
+> [ 138.384238][ T1175]
+> [ 138.384531][ T1175] CPU: 0 PID: 1175 Comm: systemd-udevd Not tainted
+> 6.1.0-rc4-dirty #30
+> [ 138.385541][ T1175] Hardware name: QEMU Standard PC (i440FX + PIIX,
+> 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+> [ 138.386725][ T1175] Call Trace:
+> [ 138.387145][ T1175] <TASK>
+> [ 138.387515][ T1175] dump_stack_lvl+0x1b1/0x28e
+> [ 138.388112][ T1175] ? nf_tcp_handle_invalid+0x3ff/0x3ff
+> [ 138.388961][ T1175] ? __wake_up_klogd+0xdb/0x110
+> [ 138.389756][ T1175] ? panic+0x822/0x822
+> [ 138.390246][ T1175] ? _printk+0xc0/0x100
+> [ 138.390763][ T1175] print_address_description+0x7d/0x340
+> [ 138.391454][ T1175] print_report+0x107/0x1f0
+> [ 138.391995][ T1175] ? __virt_addr_valid+0x211/0x2c0
+> [ 138.392625][ T1175] ? __phys_addr+0xb5/0x160
+> [ 138.393176][ T1175] ? __list_add_valid+0x66/0x100
+> [ 138.393782][ T1175] kasan_report+0xcd/0x100
+> [ 138.394330][ T1175] ? __list_add_valid+0x66/0x100
+> [ 138.394955][ T1175] __list_add_valid+0x66/0x100
+> [ 138.395542][ T1175] insert_work+0x10e/0x3c0
+> [ 138.396119][ T1175] __queue_work+0xa97/0xde0
+> [...]
+> [ 138.403915][ T1175] __sys_bind+0x210/0x2b0
+> [ 138.404458][ T1175] ? __ia32_sys_socketpair+0xb0/0xb0
+> [ 138.405097][ T1175] ? lockdep_hardirqs_on_prepare+0x428/0x790
+> [ 138.405833][ T1175] __x64_sys_bind+0x76/0x80
+> [ 138.406378][ T1175] do_syscall_64+0x3d/0x90
+> [ 138.406931][ T1175] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+> [ 138.407689][ T1175] RIP: 0033:0x7fe2d052d9e7
+> [ 138.408241][ T1175] Code: 83 c4 08 48 3d 01 f0 ff ff 73 01 c3 48 8b
+> 0d a8 f4 2a 00 f7 d8 64 89 01 48 83 c8 ff c3 66 0f 1f 44 00 00 b8 31
+> 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 81 f4 2a 00 f7 d8
+> 64 89 01 48
+> [ 138.410572][ T1175] RSP: 002b:00007ffca13ea088 EFLAGS: 00000246
+> ORIG_RAX: 0000000000000031
+> [ 138.411571][ T1175] RAX: ffffffffffffffda RBX: 0000560b0c5b0f90 RCX:
+> 00007fe2d052d9e7
+> [ 138.412542][ T1175] RDX: 000000000000000c RSI: 0000560b0c5b0fa0 RDI:
+> 000000000000000e
+> [ 138.413525][ T1175] RBP: 0000000000000000 R08: 0000560b0c5960e0 R09:
+> 0000000000000210
+> [ 138.414530][ T1175] R10: 000000000000000f R11: 0000000000000246 R12:
+> 0000560b0c5a8e94
+> [ 138.415494][ T1175] R13: 0000000000000000 R14: 0000560b0c596010 R15:
+> 0000560b0c596028
+> [ 138.416499][ T1175] </TASK>
+> [ 138.416905][ T1175]
+> [ 138.416499][ T1175] </TASK>
+> [ 138.416905][ T1175]
+> [ 138.417197][ T1175] Allocated by task 7:
+> [ 138.417706][ T1175] kasan_set_track+0x3d/0x60
+> [ 138.418271][ T1175] __kasan_kmalloc+0x7c/0x90
+> [ 138.418867][ T1175] __kmalloc_node_track_caller+0xad/0x1a0
+> [ 138.419583][ T1175] devm_kmalloc+0x77/0x1a0
+> [ 138.420141][ T1175] bigben_probe+0x2f/0x770
+> [ 138.420678][ T1175] hid_device_probe+0x251/0x3f0
+> [...]
+> [ 138.446475][ T1175]
+> [ 138.446775][ T1175] Freed by task 7:
+> [ 138.447232][ T1175] kasan_set_track+0x3d/0x60
+> [ 138.447798][ T1175] kasan_save_free_info+0x2e/0x50
+> [ 138.448410][ T1175] ____kasan_slab_free+0xb0/0x100
+> [ 138.449039][ T1175] slab_free_freelist_hook+0x80/0x140
+> [ 138.449696][ T1175] __kmem_cache_free+0x71/0x110
+> [ 138.450292][ T1175] devres_release_all+0x262/0x350
+> [ 138.450925][ T1175] device_release_driver_internal+0x5e5/0x8a0
+> [ 138.451667][ T1175] bus_remove_device+0x2ea/0x400
+> [ 138.452293][ T1175] device_del+0x64f/0xb40
+> [ 138.452825][ T1175] hid_destroy_device+0x66/0x100
+> [ 138.453424][ T1175] usbhid_disconnect+0x9a/0xc0
+> [...]
+> [ 138.462307][ T1175]
+> ```
+>
+> The proposed patch deregisters the LED controller bigben_set_led() before
+> freeing the device and is currently under discussion with the maintainers.
+>
+> Best regards,
+> Pietro Borrello
+
 -- 
-Jeremy Stanley
+Thomas Leroy
+Security Engineer
+SUSE Software Solutions
+
