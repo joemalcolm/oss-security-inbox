@@ -1,33 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/11/1
-Message-ID: <40a53997-ded9-402a-6c5b-2fa76e160ad6@apache.org>
-Date: Fri, 11 Aug 2023 04:57:45 +0000
-From: Elad Kalif <eladkal@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-39553: Apache Airflow Drill Provider Arbitrary File Read Vulnerability 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/02/4
+Message-ID: <63233106-c225-f27a-467a-76a73adc996b@igalia.com>
+Date: Thu, 2 Feb 2023 17:26:23 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, oss-security@...ts.openwall.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2023-0001
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0001
+------------------------------------------------------------------------
 
-Affected versions:
+Date reported           : February 02, 2023
+Advisory ID             : WSA-2023-0001
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0001.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0001.html
+CVE identifiers         : CVE-2023-23517, CVE-2023-23518,
+                          CVE-2022-42826.
 
-- Apache Airflow Drill Provider before 2.4.3
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-Description:
+CVE-2023-23517
+    Versions affected: WebKitGTK and WPE WebKit before 2.38.4.
+    Credit to YeongHyeon Choi (@hyeon101010), Hyeon Park
+    (@tree_segment), SeOk JEON (@_seokjeon), YoungSung Ahn (@_ZeroSung),
+    JunSeo Bae (@snakebjs0107), Dohyun Lee (@l33d0hyun) of Team
+    ApplePIE.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: The issue was addressed with
+    improved memory handling.
 
-Improper Input Validation vulnerability in Apache Software Foundation Apache Airflow Drill Provider.
+CVE-2023-23518
+    Versions affected: WebKitGTK and WPE WebKit before 2.38.4.
+    Credit to YeongHyeon Choi (@hyeon101010), Hyeon Park
+    (@tree_segment), SeOk JEON (@_seokjeon), YoungSung Ahn (@_ZeroSung),
+    JunSeo Bae (@snakebjs0107), Dohyun Lee (@l33d0hyun) of Team
+    ApplePIE.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: The issue was addressed with
+    improved memory handling.
 
-Apache Airflow Drill Provider is affected by a vulnerability that allows an attacker to pass in malicious parameters when establishing a connection with DrillHook giving an opportunity to read files on the Airflow server.
-This issue affects Apache Airflow Drill Provider: before 2.4.3.
-It is recommended to upgrade to a version that is not affected.
+CVE-2022-42826
+    Versions affected: WebKitGTK and WPE WebKit before 2.38.4.
+    Credit to Francisco Alonso (@revskills).
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Description: A use after free issue was
+    addressed with improved memory management.
 
-Credit:
 
-sw0rd1ight of Caiji Sec Team and 4ra1n of Chaitin Tech (finder)
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
 
-References:
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
 
-https://github.com/apache/airflow/pull/33074
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-39553
-
+The WebKitGTK and WPE WebKit team,
+February 02, 2023
