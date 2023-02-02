@@ -1,54 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/20/1
-Message-ID: <877cppilyi.fsf@v45346.1blu.de>
-Date: Sun, 20 Aug 2023 20:54:13 +0200
-From: Stefan Bodewig <bodewig@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-46751: Apache Ivy: XML External Entity vulnerability in Apache Ivy 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/02/7
+Message-ID: <20230202223830.GA1002@localhost.localdomain>
+Date: Thu, 2 Feb 2023 22:38:23 +0000
+From: Qualys Security Advisory <qsa@...lys.com>
+To: Georgi Guninski <gguninski@...il.com>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: double-free vulnerability in OpenSSH server 9.1
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Hi Georgi, all,
 
-Severity: moderate
+On Thu, Feb 02, 2023 at 09:06:19PM +0200, Georgi Guninski wrote:
+> Nice find :)
+> This is very complicated codepath, did a human found it "manually"
+> or some analysis program found it?
 
-Affected versions:
+Good question! Technically, we did not find the double free: we found
+the underlying bug in compat_kex_proposal() (the "unintended" free of
+options.kex_algorithms) during a manual code review, and reported it to
+the OpenSSH developers in July 2022.
 
-- - Apache Ivy 1.0.0 through 2.5.1
+Unfortunately, back then we (Qualys) mistakenly believed that "this does
+not seem to lead to a use-after-free or double-free, but the dangling
+pointer in options.kex_algorithms is probably not ideal."
 
-Description:
+Then, in January 2023, Mantas Mikulenas reported a double free in sshd
+to the OpenSSH bugzilla, and we immediately realized that this was a
+direct consequence of the bug in compat_kex_proposal().
 
-Improper Restriction of XML External Entity Reference, XML Injection (aka Blind XPath Injection) vulnerability in Apache Software Foundation Apache Ivy.This issue affects any version of Apache Ivy prior to 2.5.2.
+Thank you very much for your mail! With best regards,
 
-When Apache Ivy prior to 2.5.2 parses XML files - either its own configuration, Ivy files or Apache Maven POMs - it will allow downloading external document type definitions and expand any entity references contained therein when used.
-
-This can be used to exfiltrate data, access resources only the machine running Ivy has access to or disturb the execution of Ivy in different ways.
-
-Starting with Ivy 2.5.2 DTD processing is disabled by default except when parsing Maven POMs where the default is to allow DTD processing but only to include a DTD snippet shipping with Ivy that is needed to deal with existing Maven POMs that are not valid XML files but are nevertheless accepted by Maven. Access can be be made more lenient via newly introduced system properties where needed.
-
-Users of Ivy prior to version 2.5.2 can use Java system properties to restrict processing of external DTDs, see the section about "JAXP Properties for External Access restrictions" inside Oracle's "Java API for XML Processing (JAXP) Security Guide".
-
-Credit:
-
-CC Bomber, Kitri BoB (finder)
-Jenkins Security Team (reporter)
-
-References:
-
-https://docs.oracle.com/en/java/javase/13/security/java-api-xml-processing-jaxp-security-guide.html#GUID-94ABC0EE-9DC8-44F0-84AD-47ADD5340477
-https://gitbox.apache.org/repos/asf?p=ant-ivy.git;a=commit;h=2be17bc18b0e1d4123007d579e43ba1a4b6fab3d
-https://lists.apache.org/thread/9gcz4xrsn8c7o9gb377xfzvkb8jltffr
-https://ant.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2022-46751
-
-Timeline:
-
-2022-11-30: reported to the ASF security team
-2023-08-20: made public
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iEYEARECAAYFAmTiYVUACgkQohFa4V9ri3J3GQCeJtCHJPATZc1KNH66qv6TCwb+
-ossAnRDxeSXNQ+4G4vk9UtA9BdreXk1V
-=d0O7
------END PGP SIGNATURE-----
+-- 
+the Qualys Security Advisory team
