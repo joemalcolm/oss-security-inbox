@@ -1,41 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/10/10
-Message-ID: <c00af948-7407-4211-aeb3-38ac206cda8c@apache.org>
-Date: Tue, 10 Oct 2023 15:41:32 -0300
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/04/1
+Message-ID: <b96f4001-bed6-9594-c844-1766b8c8cefc@apache.org>
+Date: Fri, 03 Feb 2023 23:38:07 +0000
+From: Dan Klco <dklco@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-45648: Apache Tomcat: Trailer header parsing too lenient
+Subject: CVE-2023-22849: Apache Sling App CMS: XSS in CMS Reference / UI Components 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
-
-Affected versions:
-
-- Apache Tomcat 11.0.0-M1 through 11.0.0-M11
-- Apache Tomcat 10.1.0-M1 through 10.1.13
-- Apache Tomcat 9.0.0-M1 through 9.0.81
-- Apache Tomcat 8.5.0 through 8.5.93
+Severity: low
 
 Description:
 
-Improper Input Validation vulnerability in Apache Tomcat.Tomcat from 
-11.0.0-M1 through 11.0.0-M11, from 10.1.0-M1 through 10.1.13, from 
-9.0.0-M1 through 9.0.81 and from 8.5.0 through 8.5.93 did not correctly 
-parse HTTP trailer headers. A specially
-crafted, invalid trailer header could cause Tomcat to treat a single
-request as multiple requests leading to the possibility of request
-smuggling when behind a reverse proxy.
+An improper neutralization of input during web page generation ('Cross-site Scripting') [CWE-79] vulnerability in Sling App CMS version 1.1.4 and prior may allow an authenticated remote attacker to perform a reflected cross-site scripting (XSS) attack in multiple features.
 
-Users are recommended to upgrade to version 11.0.0-M12 onwards, 10.1.14 
-onwards, 9.0.81 onwards or 8.5.94 onwards, which fix the issue.
+Upgrade to Apache Sling App CMS >= 1.1.6
 
 Credit:
 
-Keran Mu and Jianjun Chen from Tsinghua University and Zhongguancun 
-Laboratory (finder)
+Apache Sling would like to thank Eugene Lim and Sng Jay Kai from GOVTECH for reporting this issue (finder)
 
 References:
 
-https://lists.apache.org/thread/2pv8yz1pyp088tsxfb7ogltk9msk0jdp
-https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-45648
+https://sling.apache.org/news.html
+https://sling.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-22849
+
