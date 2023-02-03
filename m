@@ -1,30 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/15/2
-Message-ID: <5bd36d34-4ded-2506-e1b4-260d3005b70f@apache.org>
-Date: Sat, 15 Jul 2023 12:45:38 +0000
-From: Xue Weiming <mikexue@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-26512: Apache EventMesh RabbitMQ-Connector plugin allows RCE through deserialization of untrusted data 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/04/4
+Message-ID: <2741ecb8-c5f1-54c3-3b70-1bca3f5db7d1@apache.org>
+Date: Fri, 03 Feb 2023 23:28:16 +0000
+From: John Gemignani <jgemignani@...che.org>
+To: announce@...che.org, users@....apache.org, dev@....apache.org, security@...che.org, oss-security@...ts.openwall.com
+Subject: CVE-2022-45786: Apache AGE: Python and Golang drivers allow data manipulation and exposure due to SQL injection 
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical
-
-Affected versions:
-
-- Apache EventMesh (incubating) 1.7.0 through 1.8.0
+Severity: important
 
 Description:
 
-CWE-502 Deserialization of Untrusted Data at the rabbitmq-connector plugin module in Apache EventMesh (incubating) V1.7.0\V1.8.0 on windows\linux\mac os e.g. platforms allows attackers to send controlled message and 
+There are issues with the AGE drivers for Golang and Python that enable SQL injections to occur. This impacts AGE for PostgreSQL 11 & AGE for PostgreSQL 12, all versions up-to-and-including 1.1.0, when using those drivers.
 
-remote code execute via rabbitmq messages. Users can use the code under the master branch in project repo to fix this issue, we will release the new version as soon as possible.
+The fix is to update to the latest Golang and Python drivers in addition to the latest version of AGE that is used for PostgreSQL 11 or  PostgreSQL 12.
 
-Credit:
+The update of AGE will add a new function to enable parameterization of the cypher() function, which, in conjunction with the driver updates, will resolve this issue.
 
-xuxiaoyu of HW GTS shengjian lab (reporter)
+Background (for those who want more information):
+
+After thoroughly researching this issue, we found that due to the nature of the cypher() function, it was not easy to parameterize the values passed into it. This enabled SQL injections, if the developer of the driver wasn't careful. The developer of the Golang and Pyton drivers didn't fully utilize parameterization, likely because of this, thus enabling SQL injections.
+
+The obvious fix to this issue is to use parameterization in the drivers for all PG SQL queries. However, parameterizing all PG queries is complicated by the fact that the cypher() function call itself cannot be parameterized directly, as it isn't a real function. At least, not the parameters that would take the graph name and cypher query.
+
+The reason the cypher() function cannot have those values parameterized is because the function is a placeholder and never actually runs. The cypher() function node, created by PG in the query tree, is transformed and replaced with a query tree for the actual cypher query during the analyze phase. The problem is that parameters - that would be passed in and that the cypher() function transform needs to be resolved - are only resolved in the execution phase, which is much later. Since the transform of the cypher() function needs to know the graph name and cypher query prior to execution, they can't be passed as parameters.
+
+The fix that we are testing right now, and are proposing to use, is to create a function that will be called prior to the execution of the cypher() function transform. This new function will allow values to be passed as parameters for the graph name and cypher query. As this command will be executed prior to the cypher() function transform, its values will be resolved. These values can then be cached for the immediately following cypher() function transform to use. As added features, the cached values will store the calling session's pid, for validation. And, the cypher() function transform will clear this cached information after function invocation, regardless of whether it was used.
+
+This method will allow the parameterizing of the cypher() function indirectly and provide a way to lock out SQL injection attacks.
 
 References:
 
-https://eventmesh.incubator.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-26512
+https://age.apache.org
+https://www.cve.org/CVERecord?id=CVE-2022-45786
 
