@@ -1,34 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/25/2
-Message-ID: <55a24bf6-82c1-4f5a-712d-04d187a5be30@apache.org>
-Date: Fri, 25 Aug 2023 12:17:33 +0000
-From: Elad Kalif <eladkal@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-27604: Apache Airflow Sqoop Provider: Airflow Sqoop Provider RCE Vulnerability 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/04/2
+Message-ID: <20230203231914.Vs2o_%steffen@sdaoden.eu>
+Date: Sat, 04 Feb 2023 00:19:14 +0100
+From: Steffen Nurpmeso <steffen@...oden.eu>
+To: Helmut Grohne <helmut@...divi.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: sox: patches for old vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Hello.
 
-Affected versions:
+Helmut Grohne wrote in
+ <Y91yP6mYIZ+UXmgf@....mars>:
+ |I am working on fixing known vulnerabilities in sox and since upstream
+ |seems mostly dead (no commits in more than a year, no replies to bug
+ |reports), I am posting my results here. My work on sox is compensated by
+ |Freexian SARL.
 
-- Apache Airflow Sqoop Provider before 4.0.0
+Thank you for this work on sox!
+But i was only wondering a bit, have you checked against the
+[master] branch?  For example
 
-Description:
+  02-fix-resource-leak-hcom.patch
+  03-fix-regression-in-CVE-2017-11358.patch
+  04-fix-hcom-big-endian.patch#
+  06-CVE-2021-33844.patch
+and
+  07-CVE-2021-3643.patch
 
-Apache Airflow Sqoop Provider, versions before 4.0.0, is affected by a vulnerability that allows an attacker pass parameters with the connections, which makes it possible to implement RCE attacks via ‘sqoop import --connect’, obtain airflow server permissions, etc. The attacker needs to be logged in and have authorization (permissions) to create/edit connections.
+do not apply against it, and he introduced functions like
+dictvalid() to do things you seem to unroll differently?
 
- It is recommended to upgrade to a version that is not affected.
-This issue was reported independently by happyhacking-k, And Xie Jianming and LiuHui of Caiji Sec Team also reported it.
+The rest just apply fine, and 02- was needed here, 03- seemed an
+unrolled dup, 04- in parts (stdint via sox.h, but overflow, sure),
+it is too late to check the rest, 'will do tomorrow.
+(I an maintaining an official contrib now private sox port for
+CRUX Linux based upon 42b3557e13e0fe0 as of 20211029.)
 
-Credit:
+Ciao!
 
-happyhacking-k (finder)
-Xie Jianming of Caiji Sec Team (finder)
-Liu Hui of Caiji Sec Team (finder)
-
-References:
-
-https://github.com/apache/airflow/pull/33039
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-27604
-
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
