@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["832" "Friday" "26" "January" "2018" "20:05:03" "+0100" "Jochen Wiedmann" "jochen.wiedmann@gmail.com" "<CAF8HOZ+J3NkaywfbHuQpHxK9ZXeT4=4Vs9rOwCDiUdnt1QA1Yw@mail.gmail.com>" "26" "[oss-security] CVE-2018-1294: Apache Commons Email vulnerability information disclosure" nil nil nil "1" "2018012619:05:03" "[oss-security] CVE-2018-1294: Apache Commons Email vulnerability information disclosure" (number mark "U       jochen.wiedm Jan 26   26/832   " thread-indent "\"[oss-security] CVE-2018-1294: Apache Commons Email vulnerability information disclosure\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 23654 invoked by uid 550); 26 Jan 2018 19:15:41 -0000
+Received: (qmail 13810 invoked by uid 550); 5 Feb 2023 13:32:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,65 +7,108 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13781 invoked from network); 26 Jan 2018 19:05:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=aYS4zBm+C8zgCbnuVYzptuUMhDE6D3JARQihYgOCDOs=;
-        b=Ohz2kngp8wsbMuUQ2tJvEg1W9dhUCG7ItAlrcRpVSozpC4go8+wqiSELaAxwkPFaGT
-         pyF9TqF9zkb/XY/FDcQFCPL/a7DM+R6E3RyFHMSGSPxON64Cl79QCFHBE7d1UEcH4pPg
-         PMiu81AmyH4NOeGXhlmwU9AbQc7CP5AdvOLBvC7mb44Cn/6iEdrkU3bmxCHPpIy8Mknf
-         XqHeon1PANC9z98JBLiWeibDBn/pPlt8F5JFuiXejZLZbepwp8QawVnUZCqnJzCWOGE9
-         u3Uaa10ULfPaXCFNbth69r6q4ZHnUJaGUeOL4oLUlIsHSDP1GddIYn4Vcf838/eq6lks
-         5qiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=aYS4zBm+C8zgCbnuVYzptuUMhDE6D3JARQihYgOCDOs=;
-        b=XC942ZnFby9oqrTh9oiD3xoQpAYPMwO+wcswRK21aTnK0YZlmB4TO/rqy289OfPC+6
-         +E1DnxXvCWgE0hqB5YRSCTBj8JYxr03BFLa74m32EuCbK3CJYMyUFctOkYBKcTRRaOia
-         IMwetP4WZW3NwYojnU3Lpj/K3Pg0oBjE54h1JPPxp+IZFeB6gQxtuE8YrPIQfPTCJhlz
-         1zjNSr35ZLIJMsuudAUJfm85+EY2hH0mvRO+unjvDaouJpsLUKvTbYTgA9tUhg0tIvy7
-         8oXUYXCnjs4DFe09rj7XYYXH7Yzjud+NdHqKS8ECPBh+RSBI7I6loiguNCYAksHVvBst
-         OCiA==
-X-Gm-Message-State: AKwxytd7+/jIC88b297meUeEHTEDjFP3k3mSS94Kz7KEChhksn/9BQwm
-	+voegfWNcq+izdAkJ0OCn1kw0tpcVdwd6vAltA==
-X-Google-Smtp-Source: AH8x227mEDRpQbyne8iws1V3b+3gC/mzO4Nft42TlUO+qPDlEyOpiPfKhHLihBbLNnxooxZdpuu1wIz73NwSXFmCz9c=
-X-Received: by 10.36.44.197 with SMTP id i188mr18693885iti.102.1516993524190;
- Fri, 26 Jan 2018 11:05:24 -0800 (PST)
-MIME-Version: 1.0
-From: Jochen Wiedmann <jochen.wiedmann@gmail.com>
-Date: Fri, 26 Jan 2018 20:05:03 +0100
-Message-ID: <CAF8HOZ+J3NkaywfbHuQpHxK9ZXeT4=4Vs9rOwCDiUdnt1QA1Yw@mail.gmail.com>
-To: security@commons.apache.org, security <security@apache.org>, 
-	private@commons.apache.org, Alexander Lehmann <alexlehm@gmail.com>, 
+Received: (qmail 8014 invoked from network); 5 Feb 2023 12:53:12 -0000
+Date: Sun, 5 Feb 2023 13:13:50 +0100
+From: Helmut Grohne <helmut@subdivi.de>
+To: oss-security@lists.openwall.com
+Message-ID: <Y9+dfm0bly+DJSJN@alf.mars>
+Mail-Followup-To: Helmut Grohne <helmut@subdivi.de>,
 	oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2018-1294: Apache Commons Email vulnerability information disclosure
+References: <Y91yP6mYIZ+UXmgf@alf.mars>
+ <20230203231914.Vs2o_%steffen@sdaoden.eu>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="7NC+r1ZZvwXGOyAR"
+Content-Disposition: inline
+In-Reply-To: <20230203231914.Vs2o_%steffen@sdaoden.eu>
+Subject: Re: [oss-security] sox: patches for old vulnerabilities
 
-CVE-2018-1294: Apache Commons Email vulnerability information
-disclosure
+--7NC+r1ZZvwXGOyAR
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Severity: Moderate
+Hi,
 
-Vendor:
-The Apache Software Foundation
+On Sat, Feb 04, 2023 at 12:19:14AM +0100, Steffen Nurpmeso wrote:
+> But i was only wondering a bit, have you checked against the
+> [master] branch?  For example
 
-Versions Affected:
-All Versions of Commons-Email, from 1.0, to 1.4, inclusive. The
-current version 1.5 is not affected.
+I did a (too) rough survey of the upstream repository and (too quickly)
+concluded that it wouldn't help me with fixing these in Debian, so I
+worked from Debian's fork. I should have made this more clear.
 
-Description: If a user of Commons-Email (typically an application
-programmer) passes unvalidated input as the so-called "Bounce
-Address", and that input contains line-breaks, then the email details
-(recipients, contents, etc.) might be manipulated.
+>   02-fix-resource-leak-hcom.patch
 
-Mitigation: Users should upgrade to Commons-Email 1.5.
-You can mitigate this vulnerability for older versions of Commons
-Email by stripping line-breaks from data, that will be passed to
-Email.setBounceAddress(String).
+Still needed in git.
 
-Credit: Alexander Lehmann
+>   03-fix-regression-in-CVE-2017-11358.patch
 
-References:
-http://commons.apache.org/proper/commons-email/security-reports.html
+I'll be replacing the Debian-specific, broken fix of CVE-2017-11358 with
+the one committed upstream. Thanks.
+
+>   04-fix-hcom-big-endian.patch#
+
+Indeed, I should have revisited the upstream tree. Upstream also fixes a
+double free and I'll be replacing my patch with the upstream one.
+
+>   06-CVE-2021-33844.patch
+
+The code is refactored, but I think the issue persists in wav_read_fmt
+where wav->bitsPerSample isn't checked.
+
+> and
+>   07-CVE-2021-3643.patch
+
+The hunk context changed and channels are now verified, but the size
+validation is still missing. During further analysis I also found that
+my patch is insufficient still.
+
+If uc becomes 1, we assign it to v->size, later we pass 6 - v->size as
+the second parameter to lsx_adpcm_init, which is used as an index into a
+static array of 5 elements. We thus have an out-of-bounds read access
+here. I don't yet know where exactly the check belongs as v->size == 1
+may be valid in some contexts still.
+
+Updated patch attached.
+
+> The rest just apply fine, and 02- was needed here, 03- seemed an
+> unrolled dup, 04- in parts (stdint via sox.h, but overflow, sure),
+> it is too late to check the rest, 'will do tomorrow.
+
+Thank you.
+
+> (I an maintaining an official contrib now private sox port for
+> CRUX Linux based upon 42b3557e13e0fe0 as of 20211029.)
+
+I think it would be good to have a maintained upstream repository of sox
+eventually. It seems like multiple distributions are maintaining
+diverging patch piles now.
+
+Helmut
+
+--7NC+r1ZZvwXGOyAR
+Content-Type: text/x-diff; charset=us-ascii
+Content-Disposition: attachment; filename="CVE-2021-3643.patch"
+
+From: Helmut Grohne <helmut@subdivi.de>
+Subject: voc: word width should never be 0 to avoid division by zero
+Bug: https://sourceforge.net/p/sox/bugs/351/
+Bug-Debian: https://bugs.debian.org/1010374
+
+This patch fixes both CVE-2021-3643 and CVE-2021-23210.
+
+--- a/src/voc.c
++++ b/src/voc.c
+@@ -614,6 +614,10 @@
+         v->rate = new_rate_32;
+         ft->signal.rate = new_rate_32;
+         lsx_readb(ft, &uc);
++        if (uc <= 1) {
++          lsx_fail_errno(ft, SOX_EFMT, "2 bits per word required");
++          return (SOX_EOF);
++        }
+         v->size = uc;
+         lsx_readb(ft, &(v->channels));
+         lsx_readw(ft, &(v->format));    /* ANN: added format */
+
+--7NC+r1ZZvwXGOyAR--
+
