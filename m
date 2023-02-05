@@ -1,49 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/04/9
-Message-ID: <SJ0PR01MB74130DAEAADAB8F76876E418D1CBA@SJ0PR01MB7413.prod.exchangelabs.com>
-Date: Wed, 4 Oct 2023 21:01:37 +0000
-From: "zdi@...ndmicro.com" <zdi@...ndmicro.com>
-To: Salvatore Bonaccorso <carnil@...ian.org>, "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: Solar Designer <solar@...nwall.com>
-Subject: RE: Exim4 MTA CVEs assigned from ZDI
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/05/1
+Message-ID: <Y9+dfm0bly+DJSJN@alf.mars>
+Date: Sun, 5 Feb 2023 13:13:50 +0100
+From: Helmut Grohne <helmut@...divi.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: sox: patches for old vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Hello Salvatore,
+Hi,
 
-We have received a notification from the developers that these issues have been patched. We will be happy to update our advisories once they do so.
+On Sat, Feb 04, 2023 at 12:19:14AM +0100, Steffen Nurpmeso wrote:
+> But i was only wondering a bit, have you checked against the
+> [master] branch?  For example
 
-Thanks,
-The ZDI Team
+I did a (too) rough survey of the upstream repository and (too quickly)
+concluded that it wouldn't help me with fixing these in Debian, so I
+worked from Debian's fork. I should have made this more clear.
 
------Original Message-----
-From: Salvatore Bonaccorso <salvatore.bonaccorso@...il.com> On Behalf Of Salvatore Bonaccorso
-Sent: Wednesday, October 4, 2023 12:23 PM
-To: oss-security@...ts.openwall.com
-Cc: Solar Designer <solar@...nwall.com>; ZDI Researcher Mailbox <zdi@...ndmicro.com>
-Subject: Re: [oss-security] Exim4 MTA CVEs assigned from ZDI
+>   02-fix-resource-leak-hcom.patch
 
-Hi ZDI team,
+Still needed in git.
 
-On Fri, Sep 29, 2023 at 07:26:45PM +0000, zdi@...ndmicro.com wrote:
-> Hi,
->
-> The ZDI reached out multiple times to the developers regarding
-> multiple bug reports with little progress to show for it. After our
-> disclosure timeline was exceeded by many months, we notified the
-> maintainer of our intent to publicly disclose these bugs, at which
-> time we were told, "you do what you do." If these bugs have been
-> appropriately addressed, we will update our advisories with a link
-> to the security advisory, code check-in, or other public
-> documentation closing the issue.
+>   03-fix-regression-in-CVE-2017-11358.patch
 
-As there is still some confusion around the libspf2 related issue: can
-you confirm or deny if the issue CVE-2023-42118 / ZDI-23-1472 is
-covered by https://github.com/shevek/libspf2/pull/44 ?
+I'll be replacing the Debian-specific, broken fix of CVE-2017-11358 with
+the one committed upstream. Thanks.
 
-Regards,
-Salvatore
-TREND MICRO EMAIL NOTICE
+>   04-fix-hcom-big-endian.patch#
 
-The information contained in this email and any attachments is confidential and may be subject to copyright or other intellectual property protection. If you are not the intended recipient, you are not authorized to use or disclose this information, and we request that you notify us by reply mail or telephone and delete the original message from your mail system.
+Indeed, I should have revisited the upstream tree. Upstream also fixes a
+double free and I'll be replacing my patch with the upstream one.
 
-For details about what personal information we collect and why, please see our Privacy Notice on our website at: Read privacy policy<http://www.trendmicro.com/privacy>
+>   06-CVE-2021-33844.patch
+
+The code is refactored, but I think the issue persists in wav_read_fmt
+where wav->bitsPerSample isn't checked.
+
+> and
+>   07-CVE-2021-3643.patch
+
+The hunk context changed and channels are now verified, but the size
+validation is still missing. During further analysis I also found that
+my patch is insufficient still.
+
+If uc becomes 1, we assign it to v->size, later we pass 6 - v->size as
+the second parameter to lsx_adpcm_init, which is used as an index into a
+static array of 5 elements. We thus have an out-of-bounds read access
+here. I don't yet know where exactly the check belongs as v->size == 1
+may be valid in some contexts still.
+
+Updated patch attached.
+
+> The rest just apply fine, and 02- was needed here, 03- seemed an
+> unrolled dup, 04- in parts (stdint via sox.h, but overflow, sure),
+> it is too late to check the rest, 'will do tomorrow.
+
+Thank you.
+
+> (I an maintaining an official contrib now private sox port for
+> CRUX Linux based upon 42b3557e13e0fe0 as of 20211029.)
+
+I think it would be good to have a maintained upstream repository of sox
+eventually. It seems like multiple distributions are maintaining
+diverging patch piles now.
+
+Helmut
+
+View attachment "CVE-2021-3643.patch" of type "text/x-diff" (672 bytes)
