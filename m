@@ -1,80 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/21/11
-Message-ID: <CABdrxGCTFixuOZWpSVzgbVnj4Em=GpMgapSarnLHAV9+3CG0bw@mail.gmail.com>
-Date: Wed, 21 Jun 2023 11:19:42 -0700
-From: CJ Cullen <cjcullen@...gle.com>
-To: oss-security@...ts.openwall.com
-Subject: [kubernetes/kops] CVE-2023-1943: Privilege Escalation in kOps using GCE/GCP Provider in Gossip Mode
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/06/1
+Message-ID: <20230206202528.dwTKc%steffen@sdaoden.eu>
+Date: Mon, 06 Feb 2023 21:25:28 +0100
+From: Steffen Nurpmeso <steffen@...oden.eu>
+To: Helmut Grohne <helmut@...divi.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: sox: patches for old vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Issue Details
+Hello Helmut.
 
-A security issue was reported in kOps <https://github.com/kubernetes/kops>
-with the GCP Provider running in Gossip Mode
-<https://kops.sigs.k8s.io/gossip/>, where Node service account credentials
-could be used by a container running in the cluster to retrieve sensitive
-information from the state storage bucket and escalate to cluster-admin
-permissions.
+Helmut Grohne wrote in
+ <Y9+dfm0bly+DJSJN@....mars>:
+ |On Sat, Feb 04, 2023 at 12:19:14AM +0100, Steffen Nurpmeso wrote:
+ |> But i was only wondering a bit, have you checked against the
+ |> [master] branch?  For example
+ |
+ |I did a (too) rough survey of the upstream repository and (too quickly)
+ |concluded that it wouldn't help me with fixing these in Debian, so I
+ |worked from Debian's fork. I should have made this more clear.
+ |
+ |>   02-fix-resource-leak-hcom.patch
+ |
+ |Still needed in git.
+ |
+ |>   03-fix-regression-in-CVE-2017-11358.patch
+ |
+ |I'll be replacing the Debian-specific, broken fix of CVE-2017-11358 with
+ |the one committed upstream. Thanks.
+ |
+ |>   04-fix-hcom-big-endian.patch#
+ |
+ |Indeed, I should have revisited the upstream tree. Upstream also fixes a
+ |double free and I'll be replacing my patch with the upstream one.
+ |
+ |>   06-CVE-2021-33844.patch
+ |
+ |The code is refactored, but I think the issue persists in wav_read_fmt
+ |where wav->bitsPerSample isn't checked.
+ |
+ |> and
+ |>   07-CVE-2021-3643.patch
+ |
+ |The hunk context changed and channels are now verified, but the size
+ |validation is still missing. During further analysis I also found that
+ |my patch is insufficient still.
+ |
+ |If uc becomes 1, we assign it to v->size, later we pass 6 - v->size as
+ |the second parameter to lsx_adpcm_init, which is used as an index into a
+ |static array of 5 elements. We thus have an out-of-bounds read access
+ |here. I don't yet know where exactly the check belongs as v->size == 1
+ |may be valid in some contexts still.
+ |
+ |Updated patch attached.
+ ...
+ |> (I an maintaining an official contrib now private sox port for
+ |> CRUX Linux based upon 42b3557e13e0fe0 as of 20211029.)
+ |
+ |I think it would be good to have a maintained upstream repository of sox
+ |eventually. It seems like multiple distributions are maintaining
+ |diverging patch piles now.
 
-This issue has been rated High (CVSS:3.1/AV:A/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H
-<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:A/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H>),
-and assigned CVE-2023-1943.
-Affected Components and Configurations
+Would be very nice, i use it almost daily for over twenty years.
+(But .. mostly for playing sounds, i am not a sophisticated sound
+engineer etc etc.)
 
-This bug affects the kOps GCP provider, only when running in Gossip Mode.
-See below for information about other providers.
-Affected Versions
+Wonderful, thank you very much for the additional work, i first
+thought hcom would now miss the INT32 max check, but that was also
+upstream.  (Thanks, i really have _zero_ idea of the code.)
 
-   -
+I hope it is ok, i still port [master], but now with the
+additional patch as attached, that has your name on it.
 
-   v1.26.0 - v1.26.1
-   -
+Ciao!
 
-   <v1.25.4
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
 
-Fixed Versions
-
-   -
-
-   v1.26.2
-   -
-
-   V1.25.4
-
-
-Recent kOps improvements have systematically reduced the potential for this
-class of attacks, by reducing or eliminating cloud credentials/privileges
-on the nodes.  The recommended versions vary by cloud:
-
-AWS users: should not be affected in recent versions.  kOps version 1.26
-(or later) is recommended, but not a critical update.
-
-GCE users: recommended kOps version is 1.26.3 (or later).
-
-DigitalOcean users: recommended kOps version is 1.27.0-alpha.2 (or later),
-with `--dns=none` for new clusters.  Cloud credentials have been removed
-from the nodes in this configuration.  Future versions will likely make
-dns=none the default.
-
-Hetzner users: recommended kOps version is 1.27.0-alpha.2 (or later).
-Cloud credentials have been removed from the nodes in this configuration.
-
-(Azure, Scaleway and other cloud providers are following the same approach,
-but as these are in alpha we recommend using the latest kOps version, and
-generally do not recommend production usage when in alpha).
-Detection
-
-If you find evidence that this vulnerability has been exploited, please
-contact security@...ernetes.io
-Additional Details
-
-See kOps Issue #15539 <https://github.com/kubernetes/kops/issues/15539> for
-more details.
-Acknowledgements
-
-This vulnerability was reported by James Cleverley-Prance
-
-Thank You,
-
-CJ Cullen on behalf of the Kubernetes Security Response Committee
-
+View attachment "grohne-sox.patch" of type "text/x-diff" (6620 bytes)
