@@ -1,48 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/23/7
-Message-ID: <20230623113856.GA7102@openwall.com>
-Date: Fri, 23 Jun 2023 13:38:56 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/07/4
+Message-ID: <87h6vxfk7l.fsf@hope.eyrie.org>
+Date: Tue, 07 Feb 2023 09:39:58 -0800
+From: Russ Allbery <eagle@...ie.org>
 To: oss-security@...ts.openwall.com
-Cc: Jyoti Raval <jenyraval@...il.com>
-Subject: Re: Open Source Tool | MPT: Pentest In Action!
+Subject: Re: SEGV in `alloca(BIG)` and `long pl[BIG]`
 Content-Type: text/plain; charset=utf-8
 
-I think I overlooked two things:
+Georgi Guninski <gguninski@...il.com> writes:
 
-On Fri, Jun 23, 2023 at 01:22:17PM +0200, Solar Designer wrote:
-> On Thu, Jun 22, 2023 at 06:05:14PM +0530, Jyoti Raval wrote:
-> > Managing Pentest (MPT: Pentest In Action) [image: HITBSecConf HITB2022SIN]
-> > <https://conference.hitb.org/hitbsecconf2022sin/session/mpt-pentest-in-action/>
-> 
-> This isn't a topic for oss-security.  But per the above, an Open Source
-> security tool announced for the first time nevertheless is.
+> Inline are two C warez, which crash on
+> `alloca(BIG)` and `long pl[BIG]`.
 
-While the code is technically open source, for it to be on-topic here
-it'd have to be under an Open Source license - and there's no license
-currently specified in the GitHub repo.  Jyoti, please fix this.
+I believe this is the documented behavior of alloca().  The Linux man
+pages, for instance, say:
 
-> > Github - https://github.com/jenyraval/MPT
+       The alloca() function returns a pointer to the beginning of the
+       allocated space.  If the allocation causes stack overflow, program
+       behavior is undefined.
 
-> live_edit.php:
-> $input = filter_input_array(INPUT_POST);
-> if ($input['action'] == 'edit') {
-> $update_field='';
-> if(isset($input['status'])) {
-> $update_field.= "status='".$input['status']."'";
-> }
-> if($update_field && $input['id']) {
-> $sql_query = "UPDATE issuedetails SET $update_field WHERE id='" . $input['id'] . "'";
-> mysqli_query($db, $sql_query) or die("database error:". mysqli_error($conn));
-> 
-> (Yes, the lack of indentation is in the original.)
-> 
-> Apparently, no escaping nor filtering is actually performed here, and
-> also no use of prepared statements.  Likely (post-authentication?) SQL
-> injection possibility.  OVE-20230623-0003
+and also:
 
-Actually, this looks pre-authentication.  Most of this project's PHP
-files include session.php, which attempts an authentication check, but
-live_edit.php does not include it.
+       Due to the nature of the stack, it is impossible to check if the
+       allocation would overflow the space available, and, hence, neither
+       is indicating an error.  (However, the program is likely to receive
+       a SIGSEGV signal if it attempts to access unavailable space.)
 
-Alexander
+alloca() is rather dangerous to use because it doesn't know in advance how
+much space is available on the stack, which is why most documentation of
+it recommend against using it except in very special situations where the
+size of the allocation is known and the speed benefits of alloca() are
+vital.
+
+> I think alloca(BIG) should return error if BIG>max_signed_size_t.
+> In C++ `new[BUG]` throws exception and core dumps.
+
+Code that does use alloca() generally assumes that it cannot fail and
+return NULL, so introducing error return values would cause a whole new
+class of bugs.
+
+The real solution is to not use alloca() unless you know exactly what
+you're doing and the properties of alloca() are important (which is
+unlikely).
+
+-- 
+Russ Allbery (eagle@...ie.org)             <https://www.eyrie.org/~eagle/>
