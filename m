@@ -1,4 +1,4 @@
-Received: (qmail 11470 invoked by uid 550); 3 May 2026 18:47:49 -0000
+Received: (qmail 7919 invoked by uid 550); 7 Feb 2023 01:37:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,80 +7,84 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 31906 invoked from network); 3 May 2026 18:30:17 -0000
-Date: Sun, 3 May 2026 20:30:06 +0200
-From: Christian Brabandt <cblists@256bit.org>
-To: oss-security@lists.openwall.com
-Message-ID: <afeULjoRjfjh3mzK@256bit.org>
+Received: (qmail 7239 invoked from network); 7 Feb 2023 01:36:53 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1675733801;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=NmXda5/HL4aOiuge12p5GnpEcxlHKZMrD5+xm967dAs=;
+	b=X5ydXXthz6A2+HpIzZvUQ/L+YdC/9/rjKLUfRSBLs0FsWgfZQO8f0ztVkrCQFvi5/nRqcu
+	PHjQ1kEOhd4oqd4uYv959BQxtxpAgTAUgxAcBsc+wIDJ2GVDaLeaXYBItjNuFGHCtCj4bt
+	pm5LAAF7Fks7qR25tZOsPqYIbytY4ZI=
+X-MC-Unique: HLTCUuYaNvGuuOKt0PqxCw-1
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=NmXda5/HL4aOiuge12p5GnpEcxlHKZMrD5+xm967dAs=;
+        b=1x/igbskrHeFu3EJjQOnI1inAHHRvonJx06gdHJ78xGfznFKYXmutZbe/FN+4UKXau
+         ps/QHCzi0bO1IZ92ECM8mGkmi5lIDCg+ztOCX4YKnnLfoUHtE7B8zOPs4eB5TaqcztFs
+         AcWW4x0VoL5v7LkrhEasMqGio0ueycRjnoYALCMmQV5hHeuzs+NXvq6k9mLaCkJfTTLS
+         ymbyxiXI1PdRlPMACsFbNT2gMJhTZmJX5gSX8N8A7f81gZWd69bR9jrCcKdMv7odtfVd
+         p1sUFazASkpUjUMFeWPX5co02NMpfQ3xVdhzVJ61YjQ/BreB6ylP0SCke7mXth2qUXSB
+         FKYg==
+X-Gm-Message-State: AO0yUKWg7EX8CZTOqrmYzMs87JKwiJ6sYX5nS5M/ISuUJdL8TRsL+J7s
+	fc0pm4HYBq18XgpDsFKtMUDI+XVAFsQAcD/2Fm2U0YyzWPVu9lPTTVBsEO6uF/LBit/umdPLQT2
+	mBUeGYV+4/2C6nHOlv8TYD9KKMn0ccZQDbmnyC3iY6U1vGpxF7w84QuUzSRY5skeew3YSXgRvzH
+	6RlnS2FA2hxPzQXslYfQ==
+X-Received: by 2002:a17:90b:3ecc:b0:22b:fff0:f80c with SMTP id rm12-20020a17090b3ecc00b0022bfff0f80cmr1931674pjb.1.1675733799266;
+        Mon, 06 Feb 2023 17:36:39 -0800 (PST)
+X-Google-Smtp-Source: AK7set/OlZBW9m+3YavZA67vIWiC1fZwxUHLauxiB5rT7c9WkaHf6NOl2CbbcYDZG8BIO+QuuQmkFA==
+X-Received: by 2002:a17:90b:3ecc:b0:22b:fff0:f80c with SMTP id rm12-20020a17090b3ecc00b0022bfff0f80cmr1931649pjb.1.1675733798754;
+        Mon, 06 Feb 2023 17:36:38 -0800 (PST)
+Message-ID: <9afca616-11f3-ac36-4d5f-918487e1a756@redhat.com>
+Date: Tue, 7 Feb 2023 11:36:35 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: cblists@256bit.org
-X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
-Subject: [oss-security] [vim-security] OS Command Injection via 'path' completion affects
- Vim < 9.2.0435
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+To: oss-security@lists.openwall.com
+From: Peter Hutterer <peter.hutterer@redhat.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] X.Org Security Advisory: Security issue in the X server
 
-OS Command Injection via 'path' completion affects Vim < 9.2.0435
-=================================================================
-Date: 02.05.2026
-Severity: Medium
-CVE: *requested, not yet assigned*
-CWE: Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') (CWE-78)
+X.Org Security Advisory: February 07, 2023
 
-## Summary
-An OS command injection vulnerability exists in Vim's `:find`
-command-line completion.  When the `path` option contains
-backtick-enclosed shell commands, those commands are executed during
-file name completion. Because the `path` option lacks the `P_SECURE`
-flag, it can be set from a modeline, allowing an attacker who controls
-the contents of a file to execute arbitrary shell commands when the user
-opens that file in Vim and triggers `:find` completion.
+Security issue in the X server
+==============================
 
-## Description
-The `path` option is used by `:find` Ex commands to locate files.  When
-command-completion is invoked on these commands, the value of `path` is
-processed by `expand_in_path()`, which ultimately reaches
-`mch_expand_wildcards()`.  The latter constructs a shell command from
-each path entry and any matching glob characters; in the process, text
-enclosed in backticks is executed by the shell.
+This issue can lead to local privileges elevation on systems
+where the X server is running privileged and remote code execution for
+ssh X forwarding sessions.
 
-The `expand_in_path()` code path has no check for backtick expansion.
-Additionally, the `path` option is missing the `P_SECURE` flag in
-`optiondefs.h`, so a modeline can set it to a value containing
-backticks.  Once the modeline has been applied, the `secure` global is
-no longer set, and the subsequent `:find` completion executes the
-backtick contents.
+* CVE-2023-0494/ZDI-CAN-19596: X.Org Server DeepCopyPointerClasses
+use-after-free
 
-## Impact
-The vulnerability allows arbitrary shell command execution in the
-context of the Vim process when the user invokes `:find`, `:sfind`,
-`:tabfind` or related completion and the path option has been set to
-include backticks.
+A dangling pointer in DeepCopyPointerClasses can be exploited by
+ProcXkbSetDeviceInfo() and ProcXkbGetDeviceInfo() to read/write into
+freed memory.
 
-Exploitation via modeline requires `'modeline'` to be enabled (the
-default in Vim <9.2.0350) and the user to trigger file completion after
-opening the file.
+Patches
+-------
+A patch for this issue has been committed to the xorg server git
+repository. xorg-server 21.1.7 will be released shortly and will include
+this patch.
 
-The severity is rated Medium because exploitation requires opening an
-attacker-controlled file and pressing Tab during a common completion
-operation.
+- commit 0ba6d8c37071131a49790243cdac55392ecf71ec
 
-Vim 9.2.0350 and later are not affected from the modeline vulnerability
-because the `'modelinestrict'` hardening prevents `'path'` from being
-set via modeline.
+   Xi: fix potential use-after-free in DeepCopyPointerClasses
 
-## Acknowledgements
-The Vim project would like to thank github user @q1uf3ng for reporting
-the issue.
+   CVE-2023-0494, ZDI-CAN 19596
 
-## References
-The issue has been fixed as of Vim patch [v9.2.0435](https://github.com/vim/vim/releases/tag/v9.2.0435).
-- [Commit](https://github.com/vim/vim/commit/190cb3c2b9c769a3972bcfd991a7b5b6cb771ef0)
-- [Github Security Advisory](https://github.com/vim/vim/security/advisories/GHSA-hwg5-3cxw-wvvg)
 
-Best,
-Christian
--- 
-Yow!  Maybe I should have asked for my Neutron Bomb in PAISLEY --
+Thanks
+======
+
+The vulnerabilities have been discovered by Jan-Niklas Sohn working with
+Trend Micro Zero Day Initiative.
+
