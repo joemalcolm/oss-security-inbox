@@ -1,83 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/05/1
-Message-ID: <07c41f5e-dbe3-4ff4-0e2f-386776a07370@free.fr>
-Date: Wed, 4 Jan 2023 23:47:12 +0100
-From: Gabriel Corona <gabriel.corona@...e.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/07/5
+Message-ID: <CAMVt_Ax_yicahFHffnaFSXQyW8xOthwvy0+TSrmGZFLCh=JBWw@mail.gmail.com>
+Date: Tue, 7 Feb 2023 23:41:30 +0530
+From: Manikumar <manikumar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Code execution through MIME-type association of Mono interpreter and security expectations of MIME type associations
+Subject: CVE-2023-25194: Apache Kafka: Possible RCE/Denial of service attack via SASL JAAS JndiLoginModule configuration using Kafka Connect
 Content-Type: text/plain; charset=utf-8
 
-On Debian and derivatives, the mono-runtime-common package associates
-the application/x-ms-dos-executable MIME type with the Mono CLR
-interpreter [1]. This makes it very easy for an attacker to trigger
-arbitrary code execution through programs such as Chromium [2], Firefox
-[3] and Thunderbird [4] when the Mono packages are installed.
+Severity: important
 
-This has been fixed in package 6.8.0.105+dfsg-3.3 [5] which is available
-in Debian testing, Debian Sid and Ubuntu Lunar (23.04). This has
-currently not been fixed in any stable distribution.
+Description:
 
-On Firefox and Thunderbird, a user interface is used to let the user
-confirm which program to use to open the file. In this case, we can
-trick the user into thinking he is about to open the file with a
-innocuous program by serving the file with a special MIME type such as
-inode/directory or x-scheme-handler/trash [3,4]. These MIME types are
-typically associated with a file manager. When called this way, several
-file managers will try to open the file based on MIME-type associations
-(where the MIME-type is inferred either from the file name extension or
-from the file content). Thunar, PCManFM, PCManFM-Qt were found to
-exhibit this behavior.
+A possible security vulnerability has been identified in Apache Kafka
+Connect. This requires access to a Kafka Connect worker,
+and the ability to create/modify connectors on it with an arbitrary
+Kafka client SASL JAAS config and a SASL-based security protocol,
+which has been possible on Kafka Connect clusters since Apache Kafka
+2.3.0. When configuring the connector via the Kafka Connect REST API,
+an authenticated operator can set the `sasl.jaas.config` property for any
+of the connector's Kafka clients to
+"com.sun.security.auth.module.JndiLoginModule",
+which can be done via the `producer.override.sasl.jaas.config`,
+`consumer.override.sasl.jaas.config`, or
+`admin.override.sasl.jaas.config` properties.
 
-For Thunar, this behavior has been fixed in v4.16.7 and v4.17.2 [7].
+This will allow the server to connect to the attacker's LDAP server
+and deserialize the LDAP response, which the attacker can use to
+execute java deserialization gadget chains on the Kafka connect
+server. Attackers can cause unrestricted deserialization of untrusted
+data (or) RCE vulnerability when there are gadgets in the classpath.
 
-We can use a visually confusable file name such as REPORT.ΡDF (notice
-the non-ASCII first letter in the extension) in order to trick the user
-into thinking he is opening a "safe" file type while disabling MIME-type
-detection based on the file name extension.
+Since Apache Kafka 3.0.0, users are allowed to specify these properties
+in connector configurations for Kafka Connect clusters running with
+out-of-the-box configurations. Before Apache Kafka 3.0.0, users may not
+specify these properties unless the Kafka Connect cluster has been reconfigured
+with a connector client override policy that permits them.
 
-Moreover, in Firefox and Thunderbird [8], we can corrupt the file
-association database (handlers.json) in order to display a bogus file
-type description associated with the inode/directory or x-scheme-
-handler/trash MIME type. This is done by first serving a "safe" file
-type (such as a PDF) with this MIME type.
+Since Apache Kafka 3.4.0, we have added a system property
+("-Dorg.apache.kafka.disallowed.login.modules") to disable the
+problematic login modules usage in SASL JAAS configuration. Also by
+default "com.sun.security.auth.module.JndiLoginModule" is disabled
+in Apache Kafka 3.4.0.
 
-This begs several questions about file associations:
+We advise the Kafka Connect users to validate connector configurations
+and only allow trusted JNDI configurations. Also examine connector
+dependencies for vulnerable versions and either upgrade their
+connectors, upgrading that specific dependency, or removing the
+connectors as options for remediation. Finally, in addition to leveraging the
+"org.apache.kafka.disallowed.login.modules" system property, Kafka Connect users
+can also implement their own connector client config override policy, which can
+be used to control which Kafka client properties can be overridden directly
+in a connector config and which cannot.
 
-* Is it legitimate to register file associations for programs
-   which can exbibit arbitrary code execution such as unsandboxed
-   program interpreters?
-* When a program (such as a file manager) is called with a regular file
-   it does not handle, should it spawn a new program for handling the
-   file without user confirmation (as it may be exploited for file type
-   spoofing)?
-* Should a client program reject special/bogus MIME types such as
-   inode/* and x-scheme-handler/* as they are not expected to be
-   used in this context (and it may be exploited for file type spoofing)?
+Credit:
 
-I would consider the following behaviors to be vulnerabilities:
+Apache Kafka would like to thank Jari Jääskelä
+(https://hackerone.com/reports/1529790)
+and 4ra1n and Y4tacker (they found vulnerabilities in other Apache projects.
+After discussion between PMC of the two projects, it was finally
+confirmed that it was the vulnerability of Kafka then they reported it to us)
 
-* Association of the Mono interpreter with a MIME type in the
-   Debian/Ubuntu packages;
-* Thunar delegates to MIME type associations when opened with a regular
-   file (CVE-2021-32563);
-* PCManFM delegates to MIME type associations when opened with a regular
-   file;
-* PCManFM-Qt delegates to MIME type associations when opened with a
-   regular file;
-* Firefox and Thunderbird accept "special" MIME types (inode/* and
-   x-scheme-handler/*) from remote servers;
-* File type spoofing by corrupting the Firefox and Thunderbird
-   handlers.json database.
 
-[1] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=972146
-[2] https://www.gabriel.urdhr.fr/videos/chromium-filetype-spoofing-poc.ogv
-[3] https://www.gabriel.urdhr.fr/videos/firefox-filetype-spoofing-poc.ogv
-[4] 
-https://www.gabriel.urdhr.fr/videos/thunderbird-filetype-spoofing-poc.ogv
-[5] https://packages.debian.org/buster/mono-runtime-common
-[6] 
-https://packages.ubuntu.com/search?keywords=mono-runtime-common&searchon=names&suite=all&section=all
-[7] https://nvd.nist.gov/vuln/detail/CVE-2021-32563
-[8] https://www.gabriel.urdhr.fr/videos/firefox-filetype-spoofing-poc2.ogv
+References:
 
-Download attachment "OpenPGP_signature" of type "application/pgp-signature" (841 bytes)
+https://kafka.apache.org/cve-list
+https://kafka.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-25194
