@@ -1,32 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/23/1
-Message-ID: <0e99031b-398c-6a65-5ac5-6332ca994da0@apache.org>
-Date: Tue, 23 May 2023 09:48:07 +0000
-From: Rongtong Jin <jinrongtong@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/07/1
+Message-ID: <9afca616-11f3-ac36-4d5f-918487e1a756@redhat.com>
+Date: Tue, 7 Feb 2023 11:36:35 +1000
+From: Peter Hutterer <peter.hutterer@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-33246: Apache RocketMQ: RocketMQ may have a remote code execution vulnerability when using the update configuration function 
+Subject: X.Org Security Advisory: Security issue in the X server
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+X.Org Security Advisory: February 07, 2023
 
-Affected versions:
+Security issue in the X server
+==============================
 
-- Apache RocketMQ through 5.1.0
+This issue can lead to local privileges elevation on systems
+where the X server is running privileged and remote code execution for
+ssh X forwarding sessions.
 
-Description:
+* CVE-2023-0494/ZDI-CAN-19596: X.Org Server DeepCopyPointerClasses
+use-after-free
 
-For RocketMQ versions 5.1.0 and below, under certain conditions, there is a risk of remote command execution. 
+A dangling pointer in DeepCopyPointerClasses can be exploited by
+ProcXkbSetDeviceInfo() and ProcXkbGetDeviceInfo() to read/write into
+freed memory.
 
-Several components of RocketMQ, including NameServer, Broker, and Controller, are leaked on the extranet and lack permission verification, an attacker can exploit this vulnerability by using the update configuration function to execute commands as the system users that RocketMQ is running as. Additionally, an attacker can achieve the same effect by forging the RocketMQ protocol content. 
+Patches
+-------
+A patch for this issue has been committed to the xorg server git
+repository. xorg-server 21.1.7 will be released shortly and will include
+this patch.
 
-To prevent these attacks, users are recommended to upgrade to version 5.1.1 above for using RocketMQ 5.x or 4.9.6 above for using RocketMQ 4.x .
+- commit 0ba6d8c37071131a49790243cdac55392ecf71ec
 
-Credit:
+   Xi: fix potential use-after-free in DeepCopyPointerClasses
 
-lvyyevd@...il.com (reporter)
+   CVE-2023-0494, ZDI-CAN 19596
 
-References:
 
-https://rocketmq.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-33246
+Thanks
+======
+
+The vulnerabilities have been discovered by Jan-Niklas Sohn working with
+Trend Micro Zero Day Initiative.
 
