@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1697" "Monday" "21" "November" "2016" "14:00:58" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty3-BtPv8QhWdvMDhW_mp0=xd+ysGC=GeoSsr-bR79BwGQ@mail.gmail.com>" "47" "Re: [oss-security] Multiple XSS vulnerabilities affecting five WordPress Plugins" nil nil nil "11" "2016112121:00:58" "[oss-security] Multiple XSS vulnerabilities affecting five WordPress Plugins" (number mark "U       kseifried@re Nov 21   47/1697  " thread-indent "\"Re: [oss-security] Multiple XSS vulnerabilities affecting five WordPress Plugins\"\n") "<20161121202816.GA26926@tunkki>" ("<d5b78405-740d-9ad8-3468-ebf402ed9237@securify.nl>" "<5ab8ddc8ee32428fb22f49bbb94a7543@VICExchange.imprezzio.org>" "<20161121202816.GA26926@tunkki>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 7413 invoked by uid 550); 21 Nov 2016 21:01:12 -0000
+Received: (qmail 28670 invoked by uid 550); 7 Feb 2023 19:29:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,78 +7,318 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7386 invoked from network); 21 Nov 2016 21:01:11 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=YtLUTYUqcDx1c/G/if1oJbZOxnJ4ZdxXLFJ5c4UIqfY=;
-        b=WtRb2LjvkADxln1VSULbi+YOtF89hCZQkVtjQgq0btRXH4n8gX0pcud9hbezHKeYfJ
-         fe9QEn5nBPelFMZu6ItgJPkbqZYoKXBC0UU6825KkFgbKkG2T4Zzr3U+mz/BLOp0Laad
-         LNiiHVsfKk/yx/bp1fEIOfdWmnNx1loq1qYJRsMl/cd6E1+46j2LLRwrpMRjJPuSI8ED
-         YzNTLFmJNlZ9IzZlcG/jlMGYzmVsxHDY6Q/B5k8esdMTrZ7T10kpuGt80dFj0Nw9IB8B
-         8BilHxM3LCtLmi4JQcj+YyOP+x1X6lwZznSecA5ssHHFF8ngSJGfL9LX5SNS86BgFxnC
-         bQIQ==
-X-Gm-Message-State: AKaTC001aCcm7ph9JYKFNVDYGOXp/0gjHprRwGTE0RVuoRIUncnJX3m8NRUnUZuM/3fTo1Bhyp+hEYDSJjMSDKZR
-X-Received: by 10.202.207.2 with SMTP id f2mr9816531oig.63.1479762058943; Mon,
- 21 Nov 2016 13:00:58 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <20161121202816.GA26926@tunkki>
-References: <d5b78405-740d-9ad8-3468-ebf402ed9237@securify.nl>
- <5ab8ddc8ee32428fb22f49bbb94a7543@VICExchange.imprezzio.org> <20161121202816.GA26926@tunkki>
-From: Kurt Seifried <kseifried@redhat.com>
-Date: Mon, 21 Nov 2016 14:00:58 -0700
-Message-ID: <CANO=Ty3-BtPv8QhWdvMDhW_mp0=xd+ysGC=GeoSsr-bR79BwGQ@mail.gmail.com>
-To: oss-security <oss-security@lists.openwall.com>
-Cc: Scott Gravelle <scottg@imprezzio.com>
-Content-Type: multipart/alternative; boundary=001a113d2feee041e40541d5f395
-Subject: Re: [oss-security] Multiple XSS vulnerabilities affecting five
- WordPress Plugins
+Received: (qmail 26492 invoked from network); 7 Feb 2023 19:29:00 -0000
+Date: Tue, 7 Feb 2023 20:28:51 +0100
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20230207192851.GA25381@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] Fwd: OpenSSL Security Advisory
 
---001a113d2feee041e40541d5f395
-Content-Type: text/plain; charset=UTF-8
+----- Forwarded message from OpenSSL <openssl@openssl.org> -----
 
-One aspect of this is the quality of CVE requests. Well formed requests are
-easy and fast to process. Poorly formed requests take more time (I'm not
-speaking about these WordPress issues in specific, but more in general
-terms).
+Date: Tue, 7 Feb 2023 16:32:29 +0000
+From: OpenSSL <openssl@openssl.org>
+To: openssl-project@openssl.org,
+ OpenSSL User Support ML <openssl-users@openssl.org>,
+ OpenSSL Announce ML <openssl-announce@openssl.org>
+Subject: OpenSSL Security Advisory
 
-We (MITRE and the CVE board as well as efforts like the DWF) are also
-making significant changes to CVE, how they are assigned, CNAs, federation,
-the technology and more that should result in much easier and faster
-assignments.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-Also there are problems with OVE, for example what counting rules does it
-use? Where is the database of data? To be honest OVE is a nice idea, but
-falls very short of what people need from a vulnerability identifier.
+OpenSSL Security Advisory [7th February 2023]
+=============================================
 
-On Mon, Nov 21, 2016 at 1:28 PM, Henri Salo <henri@nerv.fi> wrote:
+X.400 address type confusion in X.509 GeneralName (CVE-2023-0286)
+=================================================================
 
-> On Mon, Nov 21, 2016 at 04:56:13PM +0000, Scott Gravelle wrote:
-> > Any plans to get CVEs assigned to these vulnerabilities you guys found?
-> Our
-> > vulnerability scanner does not have a feature to filter off OVE
->
-> Maybe you should start handling OVE and other IDs too. Two reasons:
->
-> 1) MITRE is not always assigning CVEs for WordPress plugin and theme
-> vulnerabilities for unknown reason. It's not like the CVEs are running out
-> 2) MITRE is not assigning CVEs to all software that has previously
-> received a
-> CVE, silently dropping the software to out-of-scope area. Example case:
-> http://www.openwall.com/lists/oss-security/2016/11/10/6
->
-> --
-> Henri Salo
->
+Severity: High
 
+There is a type confusion vulnerability relating to X.400 address processing
+inside an X.509 GeneralName. X.400 addresses were parsed as an ASN1_STRING but
+the public structure definition for GENERAL_NAME incorrectly specified the type
+of the x400Address field as ASN1_TYPE. This field is subsequently interpreted by
+the OpenSSL function GENERAL_NAME_cmp as an ASN1_TYPE rather than an
+ASN1_STRING.
 
+When CRL checking is enabled (i.e. the application sets the
+X509_V_FLAG_CRL_CHECK flag), this vulnerability may allow an attacker to pass
+arbitrary pointers to a memcmp call, enabling them to read memory contents or
+enact a denial of service. In most cases, the attack requires the attacker to
+provide both the certificate chain and CRL, neither of which need to have a
+valid signature. If the attacker only controls one of these inputs, the other
+input must already contain an X.400 address as a CRL distribution point, which
+is uncommon. As such, this vulnerability is most likely to only affect
+applications which have implemented their own functionality for retrieving CRLs
+over a network.
 
--- 
+OpenSSL versions 3.0, 1.1.1 and 1.0.2 are vulnerable to this issue.
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
+OpenSSL 3.0 users should upgrade to OpenSSL 3.0.8.
+OpenSSL 1.1.1 users should upgrade to OpenSSL 1.1.1t.
+OpenSSL 1.0.2 users should upgrade to OpenSSL 1.0.2zg (premium support customers
+only).
 
---001a113d2feee041e40541d5f395--
+This issue was reported on 11th January 2023 by David Benjamin (Google).
+The fix was developed by Hugo Landau.
+
+Timing Oracle in RSA Decryption (CVE-2022-4304)
+===============================================
+
+Severity: Moderate
+
+A timing based side channel exists in the OpenSSL RSA Decryption implementation
+which could be sufficient to recover a plaintext across a network in a
+Bleichenbacher style attack. To achieve a successful decryption an attacker
+would have to be able to send a very large number of trial messages for
+decryption. The vulnerability affects all RSA padding modes: PKCS#1 v1.5,
+RSA-OEAP and RSASVE.
+
+For example, in a TLS connection, RSA is commonly used by a client to send an
+encrypted pre-master secret to the server. An attacker that had observed a
+genuine connection between a client and a server could use this flaw to send
+trial messages to the server and record the time taken to process them. After a
+sufficiently large number of messages the attacker could recover the pre-master
+secret used for the original connection and thus be able to decrypt the
+application data sent over that connection.
+
+OpenSSL 3.0, 1.1.1 and 1.0.2 are vulnerable to this issue.
+
+OpenSSL 3.0 users should upgrade to OpenSSL 3.0.8.
+OpenSSL 1.1.1 users should upgrade to OpenSSL 1.1.1t.
+OpenSSL 1.0.2 users should upgrade to OpenSSL 1.0.2zg (premium support customers
+only).
+
+An initial report of a possible timing side channel was made on 14th July 2020
+by Hubert Kario (Red Hat). A refined report identifying a specific timing side
+channel was made on 15th July 2022 by Hubert Kario.
+The fix was developed by Dmitry Belyavsky (Red Hat) and Hubert Kario.
+
+X.509 Name Constraints Read Buffer Overflow (CVE-2022-4203)
+===========================================================
+
+Severity: Moderate
+
+A read buffer overrun can be triggered in X.509 certificate verification,
+specifically in name constraint checking. Note that this occurs
+after certificate chain signature verification and requires either a
+CA to have signed the malicious certificate or for the application to
+continue certificate verification despite failure to construct a path
+to a trusted issuer.
+
+The read buffer overrun might result in a crash which could lead to
+a denial of service attack. In theory it could also result in the disclosure
+of private memory contents (such as private keys, or sensitive plaintext)
+although we are not aware of any working exploit leading to memory
+contents disclosure as of the time of release of this advisory.
+
+In a TLS client, this can be triggered by connecting to a malicious
+server. In a TLS server, this can be triggered if the server requests
+client authentication and a malicious client connects.
+
+OpenSSL versions 3.0.0 to 3.0.7 are vulnerable to this issue.
+
+OpenSSL 3.0 users should upgrade to OpenSSL 3.0.8.
+
+OpenSSL 1.1.1 and 1.0.2 are not affected by this issue.
+
+This issue was reported to OpenSSL on 3rd November 2022 by Corey Bonnell
+from Digicert. The fix was developed by Viktor Dukhovni.
+
+Use-after-free following BIO_new_NDEF (CVE-2023-0215)
+=====================================================
+
+Severity: Moderate
+
+The public API function BIO_new_NDEF is a helper function used for streaming
+ASN.1 data via a BIO. It is primarily used internally to OpenSSL to support the
+SMIME, CMS and PKCS7 streaming capabilities, but may also be called directly by
+end user applications.
+
+The function receives a BIO from the caller, prepends a new BIO_f_asn1 filter
+BIO onto the front of it to form a BIO chain, and then returns the new head of
+the BIO chain to the caller. Under certain conditions, for example if a CMS
+recipient public key is invalid, the new filter BIO is freed and the function
+returns a NULL result indicating a failure. However, in this case, the BIO chain
+is not properly cleaned up and the BIO passed by the caller still retains
+internal pointers to the previously freed filter BIO. If the caller then goes on
+to call BIO_pop() on the BIO then a use-after-free will occur. This will most
+likely result in a crash.
+
+This scenario occurs directly in the internal function B64_write_ASN1() which
+may cause BIO_new_NDEF() to be called and will subsequently call BIO_pop() on
+the BIO. This internal function is in turn called by the public API functions
+PEM_write_bio_ASN1_stream, PEM_write_bio_CMS_stream, PEM_write_bio_PKCS7_stream,
+SMIME_write_ASN1, SMIME_write_CMS and SMIME_write_PKCS7.
+
+Other public API functions that may be impacted by this include
+i2d_ASN1_bio_stream, BIO_new_CMS, BIO_new_PKCS7, i2d_CMS_bio_stream and
+i2d_PKCS7_bio_stream.
+
+The OpenSSL cms and smime command line applications are similarly affected.
+
+OpenSSL 3.0, 1.1.1 and 1.0.2 are vulnerable to this issue.
+
+OpenSSL 3.0 users should upgrade to OpenSSL 3.0.8.
+OpenSSL 1.1.1 users should upgrade to OpenSSL 1.1.1t.
+OpenSSL 1.0.2 users should upgrade to OpenSSL 1.0.2zg (premium support customers
+only).
+
+This issue was reported on 29th November 2022 by Octavio Galland and
+Marcel B?hme (Max Planck Institute for Security and Privacy). The fix was
+developed by Viktor Dukhovni and Matt Caswell.
+
+Double free after calling PEM_read_bio_ex (CVE-2022-4450)
+=========================================================
+
+Severity: Moderate
+
+The function PEM_read_bio_ex() reads a PEM file from a BIO and parses and
+decodes the "name" (e.g. "CERTIFICATE"), any header data and the payload data.
+If the function succeeds then the "name_out", "header" and "data" arguments are
+populated with pointers to buffers containing the relevant decoded data. The
+caller is responsible for freeing those buffers. It is possible to construct a
+PEM file that results in 0 bytes of payload data. In this case PEM_read_bio_ex()
+will return a failure code but will populate the header argument with a pointer
+to a buffer that has already been freed. If the caller also frees this buffer
+then a double free will occur. This will most likely lead to a crash. This
+could be exploited by an attacker who has the ability to supply malicious PEM
+files for parsing to achieve a denial of service attack.
+
+The functions PEM_read_bio() and PEM_read() are simple wrappers around
+PEM_read_bio_ex() and therefore these functions are also directly affected.
+
+These functions are also called indirectly by a number of other OpenSSL
+functions including PEM_X509_INFO_read_bio_ex() and
+SSL_CTX_use_serverinfo_file() which are also vulnerable. Some OpenSSL internal
+uses of these functions are not vulnerable because the caller does not free the
+header argument if PEM_read_bio_ex() returns a failure code. These locations
+include the PEM_read_bio_TYPE() functions as well as the decoders introduced in
+OpenSSL 3.0.
+
+The OpenSSL asn1parse command line application is also impacted by this issue.
+
+OpenSSL 3.0 and 1.1.1 are vulnerable to this issue.
+
+OpenSSL 3.0 users should upgrade to OpenSSL 3.0.8.
+OpenSSL 1.1.1 users should upgrade to OpenSSL 1.1.1t.
+
+OpenSSL 1.0.2 is not affected by this issue.
+
+This issue was discovered by CarpetFuzz and reported on 8th December 2022 by
+Dawei Wang. The fix was developed by Kurt Roeckx and Matt Caswell.
+
+Invalid pointer dereference in d2i_PKCS7 functions (CVE-2023-0216)
+==================================================================
+
+Severity: Moderate
+
+An invalid pointer dereference on read can be triggered when an
+application tries to load malformed PKCS7 data with the
+d2i_PKCS7(), d2i_PKCS7_bio() or d2i_PKCS7_fp() functions.
+
+The result of the dereference is an application crash which could
+lead to a denial of service attack. The TLS implementation in OpenSSL
+does not call this function however third party applications might
+call these functions on untrusted data.
+
+OpenSSL versions 3.0.0 to 3.0.7 are vulnerable to this issue.
+
+OpenSSL 3.0 users should upgrade to OpenSSL 3.0.8.
+
+OpenSSL 1.1.1 and 1.0.2 are not affected by this issue.
+
+This issue was reported on 27th December 2022 by Marc Sch?nefeld.
+The fix was developed by Tomas Mraz.
+
+NULL dereference validating DSA public key (CVE-2023-0217)
+==========================================================
+
+Severity: Moderate
+
+An invalid pointer dereference on read can be triggered when an
+application tries to check a malformed DSA public key by the
+EVP_PKEY_public_check() function. This will most likely lead
+to an application crash. This function can be called on public
+keys supplied from untrusted sources which could allow an attacker
+to cause a denial of service attack.
+
+The TLS implementation in OpenSSL does not call this function
+but applications might call the function if there are additional
+security requirements imposed by standards such as FIPS 140-3.
+
+OpenSSL versions 3.0.0 to 3.0.7 are vulnerable to this issue.
+
+OpenSSL 3.0 users should upgrade to OpenSSL 3.0.8.
+
+OpenSSL 1.1.1 and 1.0.2 are not affected by this issue.
+
+This issue was reported on 27th December 2022 by Kurt Roeckx.
+The fix was developed by Shane Lontis from Oracle.
+
+NULL dereference during PKCS7 data verification (CVE-2023-0401)
+===============================================================
+
+Severity: Moderate
+
+A NULL pointer can be dereferenced when signatures are being
+verified on PKCS7 signed or signedAndEnveloped data. In case the hash
+algorithm used for the signature is known to the OpenSSL library but
+the implementation of the hash algorithm is not available the digest
+initialization will fail. There is a missing check for the return
+value from the initialization function which later leads to invalid
+usage of the digest API most likely leading to a crash.
+
+The unavailability of an algorithm can be caused by using FIPS
+enabled configuration of providers or more commonly by not loading
+the legacy provider.
+
+PKCS7 data is processed by the SMIME library calls and also by the
+time stamp (TS) library calls. The TLS implementation in OpenSSL does
+not call these functions however third party applications would be
+affected if they call these functions to verify signatures on untrusted
+data.
+
+OpenSSL versions 3.0.0 to 3.0.7 are vulnerable to this issue.
+
+OpenSSL 3.0 users should upgrade to OpenSSL 3.0.8.
+
+OpenSSL 1.1.1 and 1.0.2 are not affected by this issue.
+
+This issue was reported on 13th January 2023 by Hubert Kario and
+Dmitry Belyavsky (Red Hat).
+The fix was developed by Tomas Mraz.
+
+References
+==========
+
+URL for this Security Advisory:
+https://www.openssl.org/news/secadv/20230207.txt
+
+Note: the online version of the advisory may be updated with additional details
+over time.
+
+For details of OpenSSL severity classifications please see:
+https://www.openssl.org/policies/general/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEeVOsH7w9yLOykjk+1enkP3357owFAmPifNgACgkQ1enkP335
+7oyMUQ/9FFv+1dJj7l1QP4irYrl6oPkUGK+/KTIxAULv4/OcmknPbIoMzPlN/RnF
+5ZQTxIWDLt5PleJapMFvG2hR/DFKD6wmupgQbj1KsU5ExiSLMO41Y1MOyJv2hAcf
+338pD2/5loxuO6TNihq3e8k7FDD1dGakAI/RmZii4UFUrNqsmjRH5OObMlV5SE47
+Pkf87rI1XuqODYcK+r6IhBD/7yF5WHeTXhKAtbpfxodmyK6Vnr+YrPbxGqQ6d39F
+3as6RePfImC5sW6SCeFFxJYaXRlzTs2w3OXMjzA4l0nPSxKLSQjnprGepJ6lI6uV
+MvJzNnlWPd2Bjq3a/B0fBtBNDgdnojg4je9C+WaKk6dUfsAzsdSFzEY2Aagwh3G5
+h1Ud/xzE6y3I6E4BMARHsx0qLTdElDkYApLYAmCcZIVhG9mNohrMw51bAVZ8vyFY
+XbQylYDDLL7DSv7u5Pcu4IpDkDWMVlvSdo6arJnOtWYjCuRnq5vF6Z0P22Zmwnd2
+aUjvgYnsTp1kWtR655QXiHe0fP03S8uo1XntMxKEhJHmvZNjZtb2gD/Rj17bIwhr
+yOa8Tj1JGFPz6aGW8FvBaL8JaNxRLe5pUyyMlLAokiQD6Aqzc4kIbkC6hp3ZmAAq
+CJhBTFspEn33shw1fP6vtr6IRDeRB+ku1MvtlDejNEEIZNEHV14=
+=42lP
+-----END PGP SIGNATURE-----
+
+----- End forwarded message -----
