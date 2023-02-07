@@ -1,31 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/23/1
-Message-ID: <72BCBA86-4192-47C9-ACA7-5F1A39994104@amazon.com>
-Date: Fri, 23 Jun 2023 01:20:17 +0000
-From: "Smith, Stewart" <trawets@...zon.com>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: CVE-2023-31975: memory leak in yasm
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/07/3
+Message-ID: <63fc7caa-6f5c-d45b-9cb6-aa9d56a3a243@oracle.com>
+Date: Tue, 7 Feb 2023 09:25:00 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com, Peter Hutterer <peter.hutterer@...hat.com>
+Subject: Re: X.Org Security Advisory: Security issue in the X server
 Content-Type: text/plain; charset=utf-8
 
-On Jun 20, 2023, at 3:47 PM, Alan Coopersmith <alan.coopersmith@...cle.com> wrote:
-> https://nvd.nist.gov/vuln/detail/CVE-2023-31975 is freaking out scanners
-> since it claims this bug has a CVSS of 9.8.
-> 
-> From what I see at https://github.com/yasm/yasm/issues/210 though, I can't
-> see any CVSS higher than 0.0 being relevant here and think the CVE should
-> be withdrawn.  Am I missing something here?  All I see is 2 objects of
-> 16 bytes each not being freed in the fraction of a second before the
-> command exits and automatically frees the memory - in a command the user
-> deliberately chooses to run, which runs as themselves with no raised
-> privileges, on an input file they provide, and which exits after processing
-> the file and doesn't hang around keeping that memory allocated - not a bit
-> of security risk at all there.  (Yes, it's a small bug and is good to fix,
-> but not to raise security alarms for.)
-> 
-> --
->        -Alan Coopersmith-                 alan.coopersmith@...cle.com
->         Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+Fixes have been released now in:
 
-I don’t think you are, I can’t see anything here either.
+xorg-server 21.1.7:
+https://lists.x.org/archives/xorg-announce/2023-February/003321.html
 
-Even if you were doing all the wrong things and running a yasm-as-a-service continually building untrusted source right alongside other processes as the same user, that contain all sorts of things you don’t want exposed, I still don’t see how this would be anything but a 0.0.
+xwayland 22.1.8:
+https://lists.x.org/archives/xorg-announce/2023-February/003322.html
+
+      -Alan Coopersmith-              alan.coopersmith@...cle.com
+        X.Org Security Response Team - xorg-security@...ts.x.org
+
+On 2/6/23 17:36, Peter Hutterer wrote:
+> X.Org Security Advisory: February 07, 2023
+> 
+> Security issue in the X server
+> ==============================
+> 
+> This issue can lead to local privileges elevation on systems
+> where the X server is running privileged and remote code execution for
+> ssh X forwarding sessions.
+> 
+> * CVE-2023-0494/ZDI-CAN-19596: X.Org Server DeepCopyPointerClasses
+> use-after-free
+> 
+> A dangling pointer in DeepCopyPointerClasses can be exploited by
+> ProcXkbSetDeviceInfo() and ProcXkbGetDeviceInfo() to read/write into
+> freed memory.
+> 
+> Patches
+> -------
+> A patch for this issue has been committed to the xorg server git
+> repository. xorg-server 21.1.7 will be released shortly and will include
+> this patch.
+> 
+> - commit 0ba6d8c37071131a49790243cdac55392ecf71ec
+> 
+>    Xi: fix potential use-after-free in DeepCopyPointerClasses
+> 
+>    CVE-2023-0494, ZDI-CAN 19596
+> 
+> 
+> Thanks
+> ======
+> 
+> The vulnerabilities have been discovered by Jan-Niklas Sohn working with
+> Trend Micro Zero Day Initiative.
+> 
