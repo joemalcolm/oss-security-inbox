@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["805" "Saturday" "19" "September" "2015" "10:43:42" "-0500" "Nathan Van Gheem" "vangheem@gmail.com" "<CAL8hw9GkuYtt2hn4QfHTzXYEoN9bMYCq=Hgptpf4Cqv6Mcsfpw@mail.gmail.com>" "26" "[oss-security] CVE Request: Plone XSS" nil nil nil "9" "2015091915:43:42" "[oss-security] CVE Request: Plone XSS" (number mark "U       vangheem@gma Sep 19   26/805   " thread-indent "\"[oss-security] CVE Request: Plone XSS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 13754 invoked by uid 550); 19 Sep 2015 15:43:55 -0000
+Received: (qmail 28307 invoked by uid 550); 7 Feb 2023 15:14:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,50 +7,105 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13731 invoked from network); 19 Sep 2015 15:43:54 -0000
+Received: (qmail 7681 invoked from network); 7 Feb 2023 14:45:51 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=4BCSiY2usGG+NXpxQ8kwe3WLDAu3vemt94TJP1JG/HY=;
-        b=qSI+jdhj8qHuQa8z9Mczmuh/a54UPbJG9yM3NQG+z6g8BMtTyynP5qkKjdDNmUh8mY
-         kILUkhBODzgzTBbGd0Zer6Q4nIPG5yQyWwdEwsvcwhw5o+H5AMnTU6q/qoqlL0D6aAei
-         aq4F0un/k8mHn8wMa0cuzl4AtuPFr/RiBOdZyhDxjOBPF9CFEEmojOtBPYY2wqx81ntm
-         MixFA1m9HO2zj+Ilb41qz2OZJgDjpemYxOtS34RB4ilueKOmkXskuIF5IpzuHBVAR4Cd
-         qnhpmMxN/HbKDT2X0f2LYr4l+7d00PORjrgYGIHJ6P3gwwIskciSbApCeniBoIAtvOBX
-         FEsg==
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=URJ7CSjjt4cbObTsz7ufPvS8knxwjYwfbFKECqpu1D4=;
+        b=MfohdpJpVaX8xNNT3pbkgGSR/q9kmzN089ix9Attwie9k+nP3fkhGfrSW2yOAGn2zb
+         WvPUBivNX0xUDvIJjque6nhku9BIaEpMGlzJzW/s8lr1AyOEuHOQJhNQGujzf+W2pDsx
+         V87v3PcOdtTppS8c2Aur3ff9VLmzsq5DIV8lqdzSjgFKuADmCS5IvGTPOLijz5dJXQmO
+         1iwpn308b3Lr2nggpf0h7Zu9YIQPuL7OI87x4fE8CBnUZ7dzqLN3bM/3eTNsWpKCm8mf
+         6Ym9jFIItp2xa/TTaBeGQ1WPHSf1kMneqC+j4WHdOM5EMnObXBd8MgBCItIzD4h3rfbO
+         njMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=URJ7CSjjt4cbObTsz7ufPvS8knxwjYwfbFKECqpu1D4=;
+        b=la4ZGEeAzhMvkl2xi9dRGaWRI35xJ8gY+CEsmDH7wflC84SBCLHvScWTLfD/CmnmZ0
+         Ndxo5O0tVb/dToutN5PwoiHtPhQ/bfC5qDRF8Tf2i8NzOozRrI26CJnvG9c3oR2Zde94
+         nkuN7H0PnyMF6W2XtQL68wZ3Ii5WZgjc49J9fhbLL7uel2499EJSkV3siDcOojoPpNHI
+         egbOAJUXyroGlotHRvKmZhbYV778JbPWIOeFcRZ1WEu39sFsk/r+oqq+kQen+8p7luTW
+         o3SaPUSpo5srdnsydaZcKM4a0LeF50MCD/p74RDNmYY9dtccBnzxBdfz2WmZ9zZz70Wx
+         Z8kA==
+X-Gm-Message-State: AO0yUKUyWfi28T7K2Gx8vXZ6iaHJTu10GFwySab+NS2UR3voqszhk255
+	r3sHpZpGZMoeJXtZqXiPeUl3JPw/hqPHk9vhdOgIog5eJtmvcw==
+X-Google-Smtp-Source: AK7set+cYCr2JanGLqy/RQo/LoQz6+ZlwW3C57ioEGHUvEnMZ6BCEYEPvx4qGoMOjRevVrYqRHlHWcmsShIJ575OQn8=
+X-Received: by 2002:a17:902:bcc8:b0:196:77ef:d51f with SMTP id
+ o8-20020a170902bcc800b0019677efd51fmr758749pls.19.1675781138584; Tue, 07 Feb
+ 2023 06:45:38 -0800 (PST)
 MIME-Version: 1.0
-X-Received: by 10.31.141.130 with SMTP id p124mr6612683vkd.44.1442677422926;
- Sat, 19 Sep 2015 08:43:42 -0700 (PDT)
-Date: Sat, 19 Sep 2015 10:43:42 -0500
-Message-ID: <CAL8hw9GkuYtt2hn4QfHTzXYEoN9bMYCq=Hgptpf4Cqv6Mcsfpw@mail.gmail.com>
-From: Nathan Van Gheem <vangheem@gmail.com>
+From: Georgi Guninski <gguninski@gmail.com>
+Date: Tue, 7 Feb 2023 16:45:16 +0200
+Message-ID: <CAGUWgD8zb-UEWp8TVHDSbo=iaCU4gWqnJHCFSPiR0fQWS73gPg@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a11425a4e51b40905201b8317
-Subject: [oss-security] CVE Request: Plone XSS
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] SEGV in `alloca(BIG)` and `long pl[BIG]`
 
---001a11425a4e51b40905201b8317
-Content-Type: text/plain; charset=UTF-8
+Hi v3nd0rz crowd.
 
-Hi,
+Inline are two C warez, which crash on
+`alloca(BIG)` and `long pl[BIG]`.
 
-Can a CVE be assigned to this issue, please?
+I think alloca(BIG) should return error if BIG>max_signed_size_t.
+In C++ `new[BUG]` throws exception and core dumps.
 
-    https://plone.org/security/20150910/non-persistent-xss-in-plone
+===
+#include <stdlib.h>
+#include <stdio.h>
+#include <alloca.h>
+/*
+ * Author:  Georgi Guninski
+ * CV: https://j.ludost.net/resumegg.pdf
+[joro@fedora prim]$ gcc alloca1.c
+[joro@fedora prim]$ ./a.out -1
+calloc=(nil) alloca()=0x7fff66c931e0
+Segmentation fault (core dumped)
 
-Plone's URL checking infrastructure includes a method for checking if URLs
-valid and located in the Plone site. By passing HTML into this specially
-crafted url, XSS can be achieved. Versions affected are Plone 3.x, 4.1.x,
-4.2.x, <4.3.7, <5.0rc1. A hotfix has been posted for earlier versions of
-Plone that are no longer provided new releases.
+[joro@fedora prim]$ ./a.out 4611686018427387904
+Bus error (core dumped)
+ */
+int main(int ac, char **av) {
+    void *p;
+    size_t l,cou;
+    l=atol(av[1]);
+    p=calloc(l,l);
+    char *pl=alloca(l);
+    printf("calloc=%p alloca()=%p\n",p,pl);
+    if (pl) {
+        for(cou=0;cou<l;cou++)
+            pl[cou]=0xcc;
+    }
+    return(0);
+}
+===
 
-The relevant commit is:
+#include <stdlib.h>
+#include <stdio.h>
+/*
+ * calloc1.c
+ *  * Author:  Georgi Guninski
+ * CV: https://j.ludost.net/resumegg.pdf
+[joro@fedora prim]$ gcc calloc1.c
+[joro@fedora prim]$ ./a.out -1
+calloc=(nil) long[l]=0x7ffe33f7e930
+Segmentation fault (core dumped)
+ * */
+int main(int ac, char **av) {
+    void *p;
+    size_t l,cou;
+    l=atol(av[1]);
+    p=calloc(l,l);
+    long pl[l];
+    printf("calloc=%p long[l]=%p\n",p,pl);
+    if (pl) {
+        for(cou=0;cou<l;cou++)
+            pl[cou]=0xcafebabe;
+    }
+    return(0);
+}
+===
 
-https://github.com/plone/Products.CMFPlone/commit/3da710a2cd68587f0bf34f2e7ea1167d6eeee087
-
-The vendor credits with the discovery: Peter Uittenbroek
-
-Thanks, let me know if you'd like more information.
-
-Nathan
-
---001a11425a4e51b40905201b8317--
+===
