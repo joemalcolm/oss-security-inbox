@@ -1,31 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/10/1
-Message-ID: <dc3c70ed-a152-e598-e353-7ba03abde474@apache.org>
-Date: Fri, 10 Mar 2023 13:37:22 +0000
-From: Arnout Engelen <engelen@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/07/2
+Message-ID: <CAGUWgD8zb-UEWp8TVHDSbo=iaCU4gWqnJHCFSPiR0fQWS73gPg@mail.gmail.com>
+Date: Tue, 7 Feb 2023 16:45:16 +0200
+From: Georgi Guninski <gguninski@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-26464: Apache Log4j 1.x (EOL) allows DoS in Chainsaw and SocketAppender 
+Subject: SEGV in `alloca(BIG)` and `long pl[BIG]`
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+Hi v3nd0rz crowd.
 
-Description:
+Inline are two C warez, which crash on
+`alloca(BIG)` and `long pl[BIG]`.
 
-** UNSUPPORTED WHEN ASSIGNED **
+I think alloca(BIG) should return error if BIG>max_signed_size_t.
+In C++ `new[BUG]` throws exception and core dumps.
 
-When using the Chainsaw or SocketAppender components with Log4j 1.x on JRE less than 1.7, an attacker that manages to cause a logging entry involving a specially-crafted (ie, deeply nested) 
-hashmap or hashtable (depending on which logging component is in use) to be processed could exhaust the available memory in the virtual machine and achieve Denial of Service when the object is deserialized.
+===
+#include <stdlib.h>
+#include <stdio.h>
+#include <alloca.h>
+/*
+ * Author:  Georgi Guninski
+ * CV: https://j.ludost.net/resumegg.pdf
+[joro@...ora prim]$ gcc alloca1.c
+[joro@...ora prim]$ ./a.out -1
+calloc=(nil) alloca()=0x7fff66c931e0
+Segmentation fault (core dumped)
 
-This issue affects Apache Log4j before 2. Affected users are recommended to update to Log4j 2.x.
+[joro@...ora prim]$ ./a.out 4611686018427387904
+Bus error (core dumped)
+ */
+int main(int ac, char **av) {
+    void *p;
+    size_t l,cou;
+    l=atol(av[1]);
+    p=calloc(l,l);
+    char *pl=alloca(l);
+    printf("calloc=%p alloca()=%p\n",p,pl);
+    if (pl) {
+        for(cou=0;cou<l;cou++)
+            pl[cou]=0xcc;
+    }
+    return(0);
+}
+===
 
-NOTE: This vulnerability only affects products that are no longer supported by the maintainer.
+#include <stdlib.h>
+#include <stdio.h>
+/*
+ * calloc1.c
+ *  * Author:  Georgi Guninski
+ * CV: https://j.ludost.net/resumegg.pdf
+[joro@...ora prim]$ gcc calloc1.c
+[joro@...ora prim]$ ./a.out -1
+calloc=(nil) long[l]=0x7ffe33f7e930
+Segmentation fault (core dumped)
+ * */
+int main(int ac, char **av) {
+    void *p;
+    size_t l,cou;
+    l=atol(av[1]);
+    p=calloc(l,l);
+    long pl[l];
+    printf("calloc=%p long[l]=%p\n",p,pl);
+    if (pl) {
+        for(cou=0;cou<l;cou++)
+            pl[cou]=0xcafebabe;
+    }
+    return(0);
+}
+===
 
-Credit:
-
-Garrett Tucker of Red Hat (reporter)
-
-References:
-
-https://logging.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-26464
-
+===
