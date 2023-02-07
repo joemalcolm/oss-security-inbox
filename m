@@ -1,22 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/16/6
-Message-ID: <79646e77-1de1-fc1e-ee4b-9937edb2b2b1@apache.org>
-Date: Mon, 16 Jan 2023 09:31:37 +0000
-From: Daniel Gaspar <dpgaspar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/07/7
+Message-ID: <CAP9KPhB7PqqFt=Of8+6CKiaV=+p=WwYOjG3QF3TEBDDop1125g@mail.gmail.com>
+Date: Tue, 7 Feb 2023 10:49:47 -0800
+From: David Leadbeater <dgl@....cx>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-45438: Apache Superset: Dashboard metadata information leak 
+Subject: CVE-2022-46663: less -R filtering bypass
 Content-Type: text/plain; charset=utf-8
 
-Description:
+Hi,
 
-When explicitly enabling the feature flag DASHBOARD_CACHE (disabled by default), the system allowed for an unauthenticated user to access dashboard configuration metadata using a REST API Get endpoint. This issue affects Apache Superset version 1.5.2 and prior versions and version 2.0.0.
+I discovered a way to bypass the escape sequence filtering performed
+by less -R due to incorrect terminal state machine handling.
 
-Credit:
+The fix is:
+https://github.com/gwsw/less/commit/a78e1351113cef564d790a730d657a321624d79c
+but not yet part of any less release.
 
-Sunny Alexli (finder)
+An example that results in a DoS in xterm or iTerm 2 is:
+printf "\e]8;;\e0m\e[>0q" > less-example-xtversion
+less -R less-example-xtversion
 
-References:
+This has the result of getting the terminal to reply with something
+like "\eP>|name version". The "P" there makes less scroll up, the ">"
+makes it scroll down, and then it prints the same thing to the tty,
+rinse, repeat.
 
-https://superset.apache.org
-https://www.cve.org/CVERecord?id=CVE-2022-45438
+This affects GNU less >= 566 (and <609, but version 608 is the last
+public release, the later version numbers are snapshots).
 
+David
