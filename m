@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2098" "Tuesday" "9" "January" "2018" "16:46:43" "+0000" "Simon McVittie" "smcv@debian.org" "<20180109164643.GA26974@perpetual.pseudorandom.co.uk>" "42" "Re: [oss-security] Own on install. How grave it is?" "^Cc:" nil nil "1" "2018010916:46:43" "[oss-security] Own on install. How grave it is?" (number mark "        smcv@debian. Jan  9   42/2098  " thread-indent "\"Re: [oss-security] Own on install. How grave it is?\"\n") "<CANO=Ty070FkdfSVcz35pYXsa+BBbgoN7zWheAO-XudbD34n1Kw@mail.gmail.com>" ("<20180109134207.GI869@sivokote.iziade.m$>" "<CANO=Ty070FkdfSVcz35pYXsa+BBbgoN7zWheAO-XudbD34n1Kw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 26514 invoked by uid 550); 9 Jan 2018 16:47:00 -0000
+Received: (qmail 11865 invoked by uid 550); 7 Feb 2023 19:26:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,61 +6,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26427 invoked from network); 9 Jan 2018 16:46:58 -0000
-Message-ID: <20180109164643.GA26974@perpetual.pseudorandom.co.uk>
-References: <20180109134207.GI869@sivokote.iziade.m$>
- <CANO=Ty070FkdfSVcz35pYXsa+BBbgoN7zWheAO-XudbD34n1Kw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CANO=Ty070FkdfSVcz35pYXsa+BBbgoN7zWheAO-XudbD34n1Kw@mail.gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
-Cc: Georgi Guninski <guninski@guninski.com>
-Date: Tue, 9 Jan 2018 16:46:43 +0000
-From: Simon McVittie <smcv@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Own on install. How grave it is?
+Received: (qmail 28498 invoked from network); 7 Feb 2023 18:50:11 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dgl-cx.20210112.gappssmtp.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=ankSdsHQ+Bbdh3dxxMRD/krwWnbIdc0NPx2c/uev/v8=;
+        b=H47QLc74TBdzyFktW9S0+Cy4ez+QngHaqn9JuRoLPYRwlFOGNH9vsV0w5Dy+nBu+tV
+         fhU7+Vcn9EdzhfYL0E/zcsLpcygGOqLPkFTe86ll3y3Y9e/RikD3GhnxVdkKZf/nuiOn
+         f/1u3GnJwUhq54xStSzawZcQhdRkhmAfFf3z4Eq8RP9my/ldHbq8czOardOyn0S6Z3U0
+         oN2Xeu4YsbXu3kHSEuOySQiTM7A5Vtph4AOOw6hB+HhSH5b6yZi5Qn07LMUAx0tHzcIr
+         L8hPLwPY7tEkApDK32a25Nes7iRcg9P3Cm14nUeMN+HDo0C1lZOgipW1s1ICzYRpQFQS
+         Iw9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ankSdsHQ+Bbdh3dxxMRD/krwWnbIdc0NPx2c/uev/v8=;
+        b=O22tOTOhQCt3COmtYs3jw0pbTqF6l0WRMbNGUAbtdDXJXFdiiNo9NbA+oOO19/ONdy
+         6wl4TKZHmsMHGe6jsNYnaGs3a+Jcl0WClX8ovWmFelNXvphorAW343gFMSlvD11RiNer
+         YCtmNRnKEH38pBLbSzgdPGv/83LKbw4RESjowE/xP7sZjxNbYqnLsv3NhS7v3jUkVebz
+         iORwiSsI9FE8UQg5GSGpuuLeXRRmzjPwvN9WX8sSC2VeQP65RDIglqk2vc1W9fPPhiLO
+         5RB6KA/BshO88yJ1uYljtWbLGTJtU7Cyw1xT9TzN9AWAeupIxd0GXN59BoUFUUjYRyhZ
+         UkCQ==
+X-Gm-Message-State: AO0yUKUKvC5xlchRxaYdtek85h+QvKFszfVG8Zc/uQNTn12yE/x76htc
+	yYQDGO4h53sBaORH8z0rJH8ndT6SdzksCvGr+M8D1M5qUcK6StqsHs0=
+X-Google-Smtp-Source: AK7set/tmOOlVoMt5Yz49B2JAICA/12vi+Oq7hw5zIFL9NaO8tpYh7Kh1nBSsGBRmsfXeoXpL6BkNy1kTqKqhIYPjEA=
+X-Received: by 2002:a1f:9b0e:0:b0:3ea:704:c196 with SMTP id
+ d14-20020a1f9b0e000000b003ea0704c196mr651312vke.11.1675795798909; Tue, 07 Feb
+ 2023 10:49:58 -0800 (PST)
+MIME-Version: 1.0
+From: David Leadbeater <dgl@dgl.cx>
+Date: Tue, 7 Feb 2023 10:49:47 -0800
+Message-ID: <CAP9KPhB7PqqFt=Of8+6CKiaV=+p=WwYOjG3QF3TEBDDop1125g@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2022-46663: less -R filtering bypass
 
-On Tue, 09 Jan 2018 at 08:37:08 -0700, Kurt Seifried wrote:
-> Many OS installs/etc take a password during install
+Hi,
 
-I think Georgi was more concerned about the installation having a secure
-design, but an insecure (vulnerable) implementation appearing on the
-installation media due to either unfixed vulnerabilities, or
-vulnerabilities that were fixed elsewhere but not on the installation
-media?
+I discovered a way to bypass the escape sequence filtering performed
+by less -R due to incorrect terminal state machine handling.
 
-For instance, the Debian installer installs packages from the install
-media (CD, USB stick, whatever), then immediately updates them
-from the Internet if possible; but there's a chicken-and-egg
-problem here, because that update has to be done with whatever
-version of apt was on the media. If that version happens to suffer
-from a vulnerability that can be exploited at that time (such as
-https://security-tracker.debian.org/tracker/CVE-2016-1252 in apt itself,
-or a vulnerability in the http or signature verification code that it
-uses) then there's an opportunity for attack.
+The fix is:
+https://github.com/gwsw/less/commit/a78e1351113cef564d790a730d657a321624d79c
+but not yet part of any less release.
 
-The same is true for the kernel and network-device firmware used to boot
-the installer. Debian mitigates this by releasing updated installation
-media at every point release (about 1 per 2 months for stable, somewhat
-slower for oldstable).
+An example that results in a DoS in xterm or iTerm 2 is:
+printf "\e]8;;\e0m\e[>0q" > less-example-xtversion
+less -R less-example-xtversion
 
-I don't see any way to prevent that class of attack completely. Releasing
-updated installation media sooner would mitigate it, but preparing
-installation media is far from being a rapid process.
+This has the result of getting the terminal to reply with something
+like "\eP>|name version". The "P" there makes less scroll up, the ">"
+makes it scroll down, and then it prints the same thing to the tty,
+rinse, repeat.
 
-> On Tue, Jan 9, 2018 at 6:42 AM, Georgi Guninski <guninski@guninski.com> wrote:
-> > Debian jessie (old stable) is vulnerable to malicious mirror attack.
+This affects GNU less >= 566 (and <609, but version 608 is the last
+public release, the later version numbers are snapshots).
 
-Assuming you're referring to CVE-2016-1252, whether this is true depends
-what you mean by jessie. Installs from older media (up to and including
-8.6) will be vulnerable to CVE-2016-1252 during the first upgrade run,
-whereas installs from newer media (8.7 or newer, with the current version
-being 8.10) are not vulnerable.
-
-It's true that there was a window (in this case it happens to be 1 month)
-during which Debian offered an update for CVE-2016-1252, but the newest
-available installation media still suffered from it.
-
-    smcv
+David
