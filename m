@@ -1,4 +1,4 @@
-Received: (qmail 32080 invoked by uid 550); 16 Jul 2024 12:38:55 -0000
+Received: (qmail 26333 invoked by uid 550); 8 Feb 2023 06:50:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,44 +7,121 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3617 invoked from network); 16 Jul 2024 09:02:02 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Daniel Gaspar <dpgaspar@apache.org>
+Received: (qmail 30337 invoked from network); 8 Feb 2023 05:45:54 -0000
+Date: Wed, 8 Feb 2023 06:45:22 +0100
+From: Helmut Grohne <helmut@subdivi.de>
 To: oss-security@lists.openwall.com
-Message-ID: <409e184f-4869-36ae-d898-9cc7f6d3183f@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 16 Jul 2024 09:01:50 +0000
+Message-ID: <Y+M28iuYG2lxmLG/@alf.mars>
+Mail-Followup-To: Helmut Grohne <helmut@subdivi.de>,
+	oss-security@lists.openwall.com
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2024-39887: Apache Superset: Improper SQL authorisation, parse
- not checking for specific engine functions 
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] [vs] heimdal: CVE-2022-45142: signature validation failure
 
-Affected versions:
+Hi,
 
-- Apache Superset before 4.0.2
+I am hereby publishing a vulnerability in heimdal backports by attaching
+the exact mail sent to distros@vs.openwall.org last week.
 
-Description:
+----- Forwarded message from Helmut Grohne <helmut@subdivi.de> -----
 
-An SQL Injection vulnerability in Apache Superset exists due to improper ne=
-utralization of special elements used in SQL commands. Specifically, certai=
-n engine-specific functions are not checked, which allows attackers to bypa=
-ss Apache Superset's SQL authorization. To mitigate this, a new configurati=
-on key named DISALLOWED_SQL_FUNCTIONS has been introduced. This key disallo=
-ws the use of the following PostgreSQL functions: version, query_to_xml, in=
-et_server_addr, and inet_client_addr. Additional functions can be added to =
-this list for increased protection.
+Date: Tue, 31 Jan 2023 15:52:58 +0100
+From: Helmut Grohne <helmut@subdivi.de>
+To: distros@vs.openwall.org
+Cc: heimdal-security@heimdal.team, Andrew Bartlett <abartlet@samba.org>, Jeffrey Altman <jaltman@secure-endpoints.com>, Joseph Sutton <josephsutton@catalyst.net.nz>, Nicolas Williams
+	<nico@twosigma.com>, "Roberto C. Sánchez" <roberto@freexian.com>, Salvatore Bonaccorso <carnil@debian.org>
+Subject: [vs] heimdal: CVE-2022-45142: signature validation failure
 
-This issue affects Apache Superset: before 4.0.2.
+(Resent with proper subject tag)
 
-Users are recommended to upgrade to version 4.0.2, which fixes the issue.
+CVE-2022-3437 was a vulnerability affecting heimdal and samba. It was
+fixed in both places. The fix included changing memcmp to be constant
+time and a workaround for a compiler bug by adding "!= 0" comparisons to
+the result of memcmp. When these patches were backported to the
+heimdal-7.7.1 and heimdal-7.8.0 branches (and possibly other branches) a
+logic inversion sneaked in causing the validation of message integrity
+codes in gssapi/arcfour to be inverted.
 
-Credit:
+This vulnerability does not affect samba nor the main heimdal branch and
+only applies to backports. At least the 7.7.1 and 7.8.0 branches are
+affected. CVE-2022-45142 has been assigned. All releases of Debian are
+affected. At least one release of Fedora and Ubuntu are affected.
 
-Mike Yushkovskiy (finder)
-Daniel Vaz Gaspar (remediation developer)
+Timeline of events
 
-References:
+2022-12-09 Issue discovered by me during backporting of patches
+2022-12-09 Notified Debian security team
+2022-12-09 Notified heimdal and samba
+2022-12-09 Jeffrey Altman (heimdal) confirmed the problem
+2022-12-10 Andrew Bartlett (samba) replied as not affected
+2022-12-13 Patch v1
+2022-12-13 Jeffrey Altman (heimdal) reviewed the patch
+2022-12-13 Patch v2 (updated commit message)
+2022-12-22 Last reply from heimdal (Jeffrey Altman) asking for more time
+2022-12-25 Ping
+2023-01-04 Ping
+2023-01-13 Ping
+2023-01-20 Ping and notified Ubuntu security team
+2023-01-30 CVE-2022-45142 assigned
+2023-01-31 Unilateral disclosure to distros mailinglist
+2023-02-08 Proposed public disclosure to oss-sec
 
-https://superset.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2024-39887
+I would like to thank Salvatore Bonaccorso for handling most of the
+coordination. Thanks also to go Jeffrey Altman and Andrew Bartlett for
+their timely replies. My work on this issue is paid by Freexian SARL.
+
+Patch below
+
+Helmut
+
+From: Helmut Grohne <helmut@subdivi.de>
+Subject: [PATCH v3] CVE-2022-45142: gsskrb5: fix accidental logic inversions
+
+The referenced commit attempted to fix miscompilations with gcc-9 and
+gcc-10 by changing `memcmp(...)` to `memcmp(...) != 0`. Unfortunately,
+it also inverted the result of the comparison in two occasions. This
+inversion happened during backporting the patch to 7.7.1 and 7.8.0.
+
+Fixes: f6edaafcfefd ("gsskrb5: CVE-2022-3437 Use constant-time memcmp()
+ for arcfour unwrap")
+Signed-off-by: Helmut Grohne <helmut@subdivi.de>
+---
+ lib/gssapi/krb5/arcfour.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+Changes since v1:
+ * Fix typo in commit message.
+ * Mention 7.8.0 in commit message. Thanks to Jeffrey Altman.
+
+Changes since v2:
+ * Add CVE identifier.
+
+diff --git a/lib/gssapi/krb5/arcfour.c b/lib/gssapi/krb5/arcfour.c
+index e838d007a..eee6ad72f 100644
+--- a/lib/gssapi/krb5/arcfour.c
++++ b/lib/gssapi/krb5/arcfour.c
+@@ -365,7 +365,7 @@ _gssapi_verify_mic_arcfour(OM_uint32 * minor_status,
+ 	return GSS_S_FAILURE;
+     }
+
+-    cmp = (ct_memcmp(cksum_data, p + 8, 8) == 0);
++    cmp = (ct_memcmp(cksum_data, p + 8, 8) != 0);
+     if (cmp) {
+ 	*minor_status = 0;
+ 	return GSS_S_BAD_MIC;
+@@ -730,7 +730,7 @@ OM_uint32 _gssapi_unwrap_arcfour(OM_uint32 *minor_status,
+ 	return GSS_S_FAILURE;
+     }
+
+-    cmp = (ct_memcmp(cksum_data, p0 + 16, 8) == 0); /* SGN_CKSUM */
++    cmp = (ct_memcmp(cksum_data, p0 + 16, 8) != 0); /* SGN_CKSUM */
+     if (cmp) {
+ 	_gsskrb5_release_buffer(minor_status, output_message_buffer);
+ 	*minor_status = 0;
+--
+2.38.1
+
+----- End forwarded message -----
 
