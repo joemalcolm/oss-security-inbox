@@ -1,45 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/04/4
-Message-ID: <20231004140526.GA27641@openwall.com>
-Date: Wed, 4 Oct 2023 16:05:26 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Andrew Cooper <andrew.cooper3@...rix.com>
-Cc: oss-security@...ts.openwall.com, "Xen. org security team" <security-team-members@....org>, t-jhofmann@...rosoft.com, fournet@...rosoft.com, boris.koepf@...rosoft.com, e.vannacci@...nl
-Subject: Re: Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/09/1
+Message-ID: <4796f6ee-fab4-b33f-e179-774ea70477aa@apache.org>
+Date: Thu, 09 Feb 2023 23:12:45 +0000
+From: David Handermann <exceptionfactory@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-22832: Apache NiFi: Improper Restriction of XML External Entity References in ExtractCCDAAttributes 
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 04, 2023 at 02:10:59AM +0100, Andrew Cooper wrote:
-> On 03/10/2023 9:58 pm, Solar Designer wrote:
-> > However, this may be another reason to actually look into whether the
-> > remainder also leaked, and whether the byte-sized form prevents that
-> > leak despite of it not touching the architectural register where the
-> > remainder would be stored by a preceding larger DIV.  I expect that
-> > we're fine here - it's the divider unit's internal register and not the
-> > architectural register that should matter - but worth making sure.  It
-> > could also theoretically be e.g. some buffer registers in the middle,
-> > where the byte-sized form wouldn't overwrite the full contents.
-> 
-> I've spent a while trying to reason about this...  I'm not sure I'm any
-> the wiser, but here goes.
+Severity: moderate
 
-Thank you!  This is helpful, but unfortunately doesn't appear (or at
-least not to me) to address the case of the remainder in its own
-register being overwritten or not by a smaller DIV that doesn't produce
-it in that register.  Of course, under the hood it's at least a rename
-register rather than the RDX that programs see, and it's supposedly
-getting a value copied from a DIV unit's internal register.  So the
-question is probably about the latter register being overwritten or not.
+Description:
 
-The USENIX Security paper you referenced includes this:
+The ExtractCCDAAttributes Processor in Apache NiFi 1.2.0 through 1.19.1 does not restrict XML External Entity references.
 
-> The source code, experiments, and executable leakage models are
-> available at https://github.com/microsoft/sca-fuzzer
+Flow configurations that include the ExtractCCDAAttributes Processor are vulnerable to malicious XML documents that contain Document Type Declarations with XML External Entity references.
 
-I think ideally one of us should come up with a single-process
-reproducer (using code from that repo or otherwise), see if it "leaks"
-the remainder, introduce a byte-sized DIV "mitigation" in it, and see if
-that mitigation fully works or maybe not.
+The resolution disables Document Type Declarations and disallows XML External Entity resolution in the ExtractCCDAAttributes Processor.
 
-Alternatively, maybe the paper authors (CC'ed) have comments on this?
+This issue is being tracked as NIFI-11029 
 
-Alexander
+Credit:
+
+Yi Cai of Chaitin Tech (finder)
+
+References:
+
+https://nifi.apache.org/security.html#CVE-2023-22832
+https://nifi.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-22832
+https://issues.apache.org/jira/browse/NIFI-11029
+
+Timeline:
+
+2023-01-03: reported
+
