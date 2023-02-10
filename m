@@ -1,25 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/31/3
-Message-ID: <0e9067f8-3ab3-0d40-2a28-9bfaa46f4d8f@apache.org>
-Date: Tue, 31 Jan 2023 15:12:33 +0000
-From: Eric Covener <covener@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/10/1
+Message-ID: <Y+a7dYG9Qm89wuij@netmeister.org>
+Date: Fri, 10 Feb 2023 16:47:33 -0500
+From: Jan Schaumann <jschauma@...meister.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-24963: Apache Portable Runtime (APR): out-of-bound writes in the apr_encode family of functions  
+Subject: CVE-2023-25139: glibc-2.37 sprintf buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Hi,
 
-Description:
+I just came across this and don't think I've seen a
+note of it to this list:
 
-Integer Overflow or Wraparound vulnerability in apr_encode functions of Apache Portable Runtime (APR) allows an attacker to write beyond bounds of a buffer.
-This issue affects Apache Portable Runtime (APR) version 1.7.0.
+CVE-2023-25139: a buffer overflow in sprintf(3) in
+glibc-2.37:
 
-Credit:
+https://sourceware.org/bugzilla/show_bug.cgi?id=30068
 
-Ronald Crane (Zippenhop LLC) (finder)
+glibc-2.37 was released on 2023-02-01, so this isn't
+going to be wide spread.
 
-References:
+Fixed in
+https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=c980549cc6a1c03c23cc2fe3e7b0fe626a0364b0
 
-https://apr.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2022-24963
-
+-Jan
