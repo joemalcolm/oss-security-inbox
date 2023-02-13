@@ -1,93 +1,165 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/06/1
-Message-ID: <d55edada-aa6b-f53b-8f5e-41340ea8e7ed@ovn.org>
-Date: Thu, 6 Apr 2023 19:37:53 +0200
-From: Ilya Maximets <i.maximets@....org>
-To: oss-security@...ts.openwall.com, ovs-announce@...nvswitch.org, ovs-discuss <ovs-discuss@...nvswitch.org>
-Cc: i.maximets@....org, Aaron Conole <aconole@...hat.com>, Flavio Leitner <fbl@...hat.com>, David Marchand <david.marchand@...hat.com>
-Subject: [ADVISORY] CVE-2023-1668: Open vSwitch: Remote traffic denial of service via crafted packets with IP proto 0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/13/1
+Message-ID: <20230213120214.GB19824@localhost.localdomain>
+Date: Mon, 13 Feb 2023 12:02:13 +0000
+From: Qualys Security Advisory <qsa@...lys.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: double-free vulnerability in OpenSSH server 9.1 (CVE-2023-25136)
 Content-Type: text/plain; charset=utf-8
 
-Description
-===========
+Hi all,
 
-Multiple versions of Open vSwitch are vulnerable to crafted IP packets
-with ip proto set to 0 causing a potential denial of service.
-Triggering the vulnerability will require an attacker to send a crafted
-IP packet with protocol field set to 0 and the flow rules to contain
-'set' actions on other fields in the IP protocol header.  The resulting
-flows will omit required actions, and fail to mask the IP protocol field,
-resulting in a large bucket which captures all IP packets.
+On Thu, Feb 02, 2023 at 01:02:04PM +0000, Qualys Security Advisory wrote:
+> Exploiting this vulnerability will not be easy: modern memory allocators
+> provide protections against double frees, and the impacted sshd process
+> is unprivileged and heavily sandboxed.
 
-All versions of Open vSwitch at least as early as 1.5.0 are affected.
+Quick update: we were able to gain arbitrary control of the "rip"
+register through this bug (i.e., we can jump wherever we want in sshd's
+address space) on an unpatched installation of OpenBSD 7.2 (which runs
+OpenSSH 9.1 by default). This is by no means the end of the story: this
+was only step 1, bypass the malloc and double-free protections. The next
+steps, which may or may not be feasible at all, are:
 
-The Common Vulnerabilities and Exposures project (cve.mitre.org) has
-assigned the identifier CVE-2023-1668 to this issue.
+- step 2, execute arbitrary code despite the ASLR, NX, and ROP
+  protections (this will probably require an information leak, either
+  through the same bug or through a secondary bug);
 
+- step 3, escape from sshd's sandbox (through a secondary bug, either in
+  the privileged parent process or in the kernel's reduced attack
+  surface).
 
-Mitigation
-==========
+Quick recap of this double-free bug: if an old ssh client connects to an
+sshd 9.1, then options.kex_algorithms (which is a string of 266 bytes in
+the default configuration) is mistakenly free()d at the beginning of the
+key-exchange phase (in compat_kex_proposal()); options.kex_algorithms is
+then later free()d again at the beginning of the authentication phase
+(in mm_getpwnamallow()).
 
-For any version of Open vSwitch, preventing packets with network
-protocol number '0' from reaching Open vSwitch will prevent the issue.
-This is difficult to achieve because Open vSwitch obtains packets before
-the iptables or nftables host firewall, so iptables or nftables on the
-Open vSwitch host cannot ordinarily block the vulnerability.
+The trick to bypass malloc's double-free and use-after-free protections
+is to re-allocate the memory that was occupied by options.kex_algorithms
+as soon as it is free: from malloc's point of view, no attempt is made
+to free, read, or write memory that is already free; from sshd's point
+of view, however, an aliasing attack occurs: two different pointers to
+two different objects refer to the same chunk of memory, and a write to
+one object overwrites the other object. This opens up a world of
+possibilities.
 
-Another method would be to add a high priority rule to the flow table
-explicitly matching on nw protocol '0' and handling that traffic
-separately:
+We started our investigation on Debian bookworm (which uses glibc's
+malloc), but we eventually switched to OpenBSD 7.2, because OpenBSD's
+malloc (despite its very defensive programming) has two features that
+make it especially interesting for this particular double-free bug:
 
-    table=0 priority=32768,ip,nw_proto=0,actions=drop
-    table=0 priority=32768,ipv6,nw_proto=0,actions=drop
-    table=0 priority=32768,arp,arp_op=0,actions=drop
+- Free chunks of memory are sorted (according to their size) into
+  buckets that are spaced at power-of-two intervals; i.e., any object
+  whose size is between 256 and 512 bytes can re-allocate the memory
+  that was occupied by options.kex_algorithms. This gives us
+  considerable freedom.
 
-All 3 OpenFlow rules should be added to every OVS bridge.  This can
-be difficult to maintain during the service restart.
+  (On the other hand, glibc's malloc sorts free chunks of memory into
+  buckets that are spaced at 16-byte intervals; i.e., only an object
+  whose size is almost exactly 266 bytes can re-allocate the memory that
+  was occupied by options.kex_algorithms. This leaves us with little
+  freedom of choice.)
 
+- OpenBSD's malloc() function picks a free chunk at random from several
+  (4) pages of memory; i.e., most of the time it will not pick the chunk
+  where options.kex_algorithms was allocated, but at least sometimes it
+  will (with a probability of ~1/(4*4096/512)=1/32).
 
-Fix
-===
+  (On the other hand, glibc's malloc() function behaves like a strict
+  LIFO (last in, first out); i.e., it will never pick the chunk where
+  options.kex_algorithms was allocated unless we precisely control the
+  sequence of malloc() and free() calls in sshd, which is something we
+  have been unable to do so far.)
 
-Patches to fix these vulnerabilities in Open vSwitch 2.13.x and newer:
+Our current proof-of-concept works as follows:
 
-* 3.1.x:
-  https://github.com/openvswitch/ovs/commit/61b39d8c4797f1b668e4d5e5350d639fca6082a9
-* 3.0.x:
-  https://github.com/openvswitch/ovs/commit/0ec9af260ad84225e758d249fa32151ddf8a6520
-* 2.17.x:
-  https://github.com/openvswitch/ovs/commit/27fb5db7f727ffc056f024f9ba4936facccb5f40
-* 2.16.x:
-  https://github.com/openvswitch/ovs/commit/42f2b4b9b9a3c11d38f180bf1e35c47b77cd4ce8
-* 2.15.x:
-  https://github.com/openvswitch/ovs/commit/f36509fd64e339ffd33593451099be6baa12ffe6
-* 2.14.x:
-  https://github.com/openvswitch/ovs/commit/b46505f4d26cd4612a533687e7884efcb7a74111
-* 2.13.x:
-  https://github.com/openvswitch/ovs/commit/7fa0106e8594c34f9e16efd87a58e38a947c6c5b
+- First, we free options.kex_algorithms in compat_kex_proposal(), by
+  pretending that our ssh client is an old "FuTTY" client.
 
+- Second, we re-allocate the chunk that was occupied by
+  options.kex_algorithms, with a struct EVP_AES_KEY whose size is 264
+  bytes, by selecting the "aes128-ctr" cipher during the key-exchange
+  phase. This re-allocation happens with a probability of ~1/32.
 
-Recommendation
-==============
+- Third, we free (again) the chunk that was occupied by
+  options.kex_algorithms (and is occupied by the struct EVP_AES_KEY now)
+  in kex_assemble_names() (via mm_getpwnamallow()). This free happens if
+  and only if the first byte of the chunk is '+', '-', or '^' (otherwise
+  kex_assemble_names() returns an error and fatal_fr() is called), but
+  luckily for us the first byte of the struct EVP_AES_KEY is the first
+  byte of the AES key itself, which is a random byte; so this free
+  happens with a probability of ~3/256.
 
-We recommend that users of Open vSwitch apply the linked patches, or
-upgrade to a known patched version of Open vSwitch.  These include:
+- Fourth, we re-allocate the chunk that was occupied by
+  options.kex_algorithms (and is still referenced as a struct
+  EVP_AES_KEY now), with a string of 300 'A' bytes, through either
+  "authctxt->user" or "authctxt->style" during the authentication phase.
+  This re-allocation, which effectively overwrites the entire struct
+  EVP_AES_KEY with 'A' bytes, happens with a probability of ~2/32.
 
-* 3.1.1
-* 3.0.4
-* 2.17.6
-* 2.16.7
-* 2.15.8
-* 2.14.9
-* 2.13.11
+- Last, we jump to 0x4141414141414141 when sshd calls EVP_Cipher(),
+  because the struct EVP_AES_KEY contains a function pointer that was
+  overwritten by our 'A' bytes and that is called by
+  CRYPTO_ctr128_encrypt_ctr32() (via EVP_Cipher()).
 
+This proof-of-concept can be simply reproduced with the ssh client from
+OpenBSD 7.2; we change its banner from "OpenSSH" to "FuTTY", and run it
+in a loop with the "aes128-ctr" cipher:
 
-Acknowledgements
-================
+------------------------------------------------------------------------
+$ cp -i /usr/bin/ssh ./ssh
 
-The Open vSwitch team wishes to thank the reporter:
+$ sed -i s/OpenSSH_9.1/FuTTYSH_9.1/g ./ssh
 
-      David Marchand <dmarchan@...hat.com>
-Download attachment "OpenPGP_0xB9F7EC77C829BF96.asc" of type "application/pgp-keys" (4740 bytes)
+$ user=`perl -e 'print "A" x 300'` && while true ;do ./ssh -o NumberOfPasswordPrompts=0 -o Ciphers=aes128-ctr -l "$user:$user" 192.168.56.123 ;done
+------------------------------------------------------------------------
 
-Download attachment "OpenPGP_signature" of type "application/pgp-signature" (841 bytes)
+sshd has a good chance of jumping to 0x4141414141414141 after
+32*256/3*16=43690 runs (this number is probably not entirely correct,
+but not entirely wrong either):
+
+------------------------------------------------------------------------
+# gdb /usr/sbin/sshd 53370
+...
+Attaching to program: /usr/sbin/sshd, process 53370
+...
+
+(gdb) continue
+Continuing.
+
+Program received signal SIGSEGV, Segmentation fault.
+0x000009bb0ea6f324 in __llvm_retpoline_r11 () from /usr/lib/libcrypto.so.50.0
+
+(gdb) bt
+#0  0x000009bb0ea6f324 in __llvm_retpoline_r11 () from /usr/lib/libcrypto.so.50.0
+#1  0x4141414141414141 in ?? ()
+#2  0x000009bb0ead2fe5 in CRYPTO_ctr128_encrypt_ctr32 (... func=0x4141414141414141)
+...
+
+(gdb) disassemble 0x000009bb0ea6f324
+Dump of assembler code for function __llvm_retpoline_r11:
+...
+0x000009bb0ea6f320 <__llvm_retpoline_r11+16>:   mov    %r11,(%rsp)
+0x000009bb0ea6f324 <__llvm_retpoline_r11+20>:   retq
+...
+
+(gdb) i r
+...
+r10            0x4141414141414141   4702111234474983745
+r11            0x4141414141414141   4702111234474983745
+------------------------------------------------------------------------
+
+(Note: this is a very crude proof-of-concept, which can certainly be
+improved in many different ways.)
+
+In conclusion, this double-free bug in sshd is an excellent opportunity
+to test how strong the modern memory protections really are. We are at
+your disposal for questions, comments, and further discussions. Thank
+you very much!
+
+With best regards,
+
+-- 
+the Qualys Security Advisory team
