@@ -1,115 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/01/5
-Message-ID: <c06293a7-27cc-908c-df04-e15fb982f83a@oracle.com>
-Date: Wed, 1 Feb 2023 15:03:50 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/14/2
+Message-ID: <8820f35d-5786-d799-b6c0-8800f148829b@gmail.com>
+Date: Mon, 13 Feb 2023 23:47:38 -0500
+From: Dave Wallace <dwallacelf@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: "X.Org Security Team" <xorg-security@...ts.x.org>
-Subject: Re: Fwd: X.Org Security Advisory: Issues handling XPM files in libXpm prior to 3.5.15
+Subject: CVE-2022-46397: FD.io VPP (Vector Packet Processor) IPSec generates a predictable IV with AES-CBC mode
 Content-Type: text/plain; charset=utf-8
 
-While it was not our intention to drop zero-day bugs on our fellow
-open source project, I have been unable to find any way to communicate
-with the maintainers of the OpenMotif project - the bug tracker and
-forums linked on their website are defunct, and mail has gone unanswered.
+Folks,
 
-Distros & others packaging the OpenMotif library (or the older commercial
-Motif library) may wish to compare our changes to the files under the
-src directory in libXpm with the corresponding files with an "Xpm" prefix
-on the file name in the OpenMotif lib/Xm directory.  For example:
-https://gitlab.freedesktop.org/xorg/lib/libxpm/-/blob/master/src/parse.c
-vs.
-https://sourceforge.net/p/motif/code/ci/master/tree/lib/Xm/Xpmparse.c
-
-I apologize for not considering this before releasing the X.Org advisory.
-I'd helped remove that code from the Solaris 11 libXm and replace it with
-calls to libXpm after the round of libXpm CVE's in 2004, so we wouldn't
-have to fix every XPM CVE twice, and forgot that other platforms may not
-have done so.
-
-      -Alan Coopersmith-              alan.coopersmith@...cle.com
-        X.Org Security Response Team - xorg-security@...ts.x.org
+A vulnerability in the VPP IPSec plugin was identified by Benoit Ganne 
+who has also provided a fix that has been committed to master and 
+cherry-picked to all affected VPP Release branches.
 
 
-On 1/17/23 08:47, Alan Coopersmith wrote:
-> For the libXpm 3.5.15 release announcement, see:
-> https://lists.x.org/archives/xorg-announce/2023-January/003313.html
-> 
-> 
-> -------- Forwarded Message --------
-> Subject: X.Org Security Advisory: Issues handling XPM files in libXpm prior to 
-> 3.5.15
-> Date: Tue, 17 Jan 2023 08:41:00 -0800
-> From: Alan Coopersmith <alan.coopersmith@...cle.com>
-> To: xorg-announce@...ts.x.org
-> CC: xorg@...ts.x.org
-> 
-> X.Org Security Advisory:  January 17, 2023
-> 
-> Issues handling XPM files in libXpm prior to 3.5.15
-> ===================================================
-> 
-> Three issues have been found in the libXpm library code to read XPM files
-> in libXpm 3.5.14 and earlier releases.
-> 
-> 1) CVE-2022-46285: Infinite loop on unclosed comments
-> 
-> When reading XPM images from a file with libXpm 3.5.14 or older, if a
-> comment in the file is not closed (i.e. a C-style comment starts with
-> "/*" and is missing the closing "*/"), the ParseComment() function will
-> loop forever calling getc() to try to read the rest of the comment,
-> failing to notice that it has returned EOF, which may cause a denial of
-> service to the calling program.
-> 
-> This issue was found by Marco Ivaldi of the Humanativa Group's HN Security team.
-> 
-> The fix is provided in
-> https://gitlab.freedesktop.org/xorg/lib/libxpm/-/commit/a3a7c6dcc3b629d7650148
-> 
-> 2) CVE-2022-44617: Runaway loop on width of 0 and enormous height
-> 
-> When reading XPM images from a file with libXpm 3.5.14 or older, if a
-> image has a width of 0 and a very large height, the ParsePixels() function
-> will loop over the entire height calling getc() and ungetc() repeatedly,
-> or in some circumstances, may loop seemingly forever, which may cause a denial
-> of service to the calling program when given a small crafted XPM file to parse.
-> 
-> This issue was found by Martin Ettl.
-> 
-> The fix is provided in
-> https://gitlab.freedesktop.org/xorg/lib/libxpm/-/commit/f80fa6ae47ad4a5beacb28
-> and
-> https://gitlab.freedesktop.org/xorg/lib/libxpm/-/commit/c5ab17bcc34914c0b0707d
-> 
-> 3) CVE-2022-4883: compression commands depend on $PATH
-> 
-> By default, on all platforms except MinGW, libXpm will detect if a filename
-> ends in .Z or .gz, and will when reading such a file fork off an uncompress
-> or gunzip command to read from via a pipe, and when writing such a file will
-> fork off a compress or gzip command to write to via a pipe.
-> 
-> In libXpm 3.5.14 or older these are run via execlp(), relying on $PATH
-> to find the commands.  If libXpm is called from a program running with
-> raised privileges, such as via setuid, then a malicious user could set
-> $PATH to include programs of their choosing to be run with those privileges.
-> 
-> This issue was found by Alan Coopersmith of the Oracle Solaris team.
-> 
-> The fix is provided in
-> https://gitlab.freedesktop.org/xorg/lib/libxpm/-/commit/515294bb8023a45ff91669
-> and
-> https://gitlab.freedesktop.org/xorg/lib/libxpm/-/commit/8178eb0834d82242e1edbc
-> 
-> libXpm 3.5.15 includes fixes for all three of these issues.  It also adds
-> a new configure option --disable-open-zfile that makes it easy for people
-> building libXpm to completely disable the code to fork compression and
-> uncompression programs if they do not have a need for it in their use case.
-> 
-> X.Org thanks all of those who reported and fixed these issues, and those
-> who helped with the review and release of this advisory and these fixes.
-> 
-> The X.Org security team would like to take this opportunity to remind X client
-> authors that current best practices suggest separating code that requires
-> privileges from the GUI, to reduce the risk of issues like CVE-2022-4883.
-> 
+Here is the Security Advisory report for CVE-2022-46397 [0]:
 
+Description:
+FP.io VPP (Vector Packet Processor) 22.10, 22.06, 22.02, 21.10, 21.06, 
+21.01, 20.09, 20.05, 20.01, 19.08, and 19.04 Generates a Predictable IV 
+with CBC Mode.
+
+Vulnerability Type Other:
+CWE-329: Generation of Predictable IV with CBC Mode
+
+Severity:
+Moderate
+
+Vendor of Product:
+https://fd.io
+
+Affected Product Code Base:
+vpp - v22.10, v22.06, v22.02, v21.10, v21.06, v21.01, v20.09, v20.05, 
+v20.01, v19.08, v19.04
+
+Credit:
+This issue was reported by Benoit Ganne of Cisco Systems, Inc per the 
+FD.io Security Policy [1].
+
+Resolution:
+The fix for the vulnerability was committed to the VPP repository's main 
+development branch and cherry-picked to all affected release branches on 
+2023-02-07. See FD.io VPP Jira ticket VPP-2037 [2] for details.
+
+Maintenance releases were performed on 2023-02-10 for the currently 
+supported releases (VPP 22.06, VPP 22.10) and release artifacts for VPP 
+22.06.1 and VPP 22.10.1 uploaded to the FD.io packagecloud.io release 
+repository [3].  All release branches prior to 2206 are UNSUPPORTED and 
+will NOT undergo maintenance releases.  Packages for each VPP release 
+version prior to VPP-22.06.1 SHOULD NOT BE INSTALLED from 
+https://packagecloud.io/fdio/release, but should be built from the 
+latest source code in the release branch.
+
+Reference:
+[0] https://www.cve.org/CVERecord?id=CVE-2022-46397
+[1] https://wiki.fd.io/view/TSC:Vulnerability_Management
+[2] https://jira.fd.io/browse/VPP-2037
+[3] https://packagecloud.io/fdio/release
+
+
+Thanks,
+FD.io Security Response Team
