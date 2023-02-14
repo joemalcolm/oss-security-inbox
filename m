@@ -1,59 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/28/2
-Message-ID: <ZY2_KYCRMCjlL9ED@itl-email>
-Date: Thu, 28 Dec 2023 13:32:07 -0500
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application of openEuler
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/14/5
+Message-ID: <xmqqr0us5dio.fsf@gitster.g>
+Date: Tue, 14 Feb 2023 10:05:03 -0800
+From: Junio C Hamano <gitster@...ox.com>
+To: git@...r.kernel.org
+Cc: Linux Kernel <linux-kernel@...r.kernel.org>, git-packagers@...glegroups.com, oss-security@...ts.openwall.com, git-security@...glegroups.com
+Subject: [Announce] Git 2.39.2 and friends
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Dec 28, 2023 at 10:31:42AM +0000, Greg KH wrote:
-> On Tue, Dec 26, 2023 at 01:35:55AM +0100, Solar Designer wrote:
-> > On Tue, Dec 26, 2023 at 12:38:36AM +0100, Steffen Nurpmeso wrote:
-> > > and i really today stumbled over his funny opinion
-> > > 
-> > >   . All "early notice" lists are leaks and should be considered
-> > >     public.
-> > >   . Unless your project is not used by anyone.
-> > >   . Otherwise, why would your government allow it to exist?
-> > 
-> > I think Greg's stance on this is inconsistent, if we also recall his
-> > preference against full public disclosure of issues discussed on private
-> > lists and his running of private lists on CPU microarchitectural issues.
-> 
-> As you are referring to my talk here, I figured I would point out that
-> later on in it I do talk explicitly about the private lists that we run
-> for these CPU issues and how much we hate them.  Companies who are
-> currently not on these lists are actively trying to circumvent them to
-> get access to the information on them, despite all of the lawyers and
-> governments involved agreeing that this is the best and only way we know
-> how to handle these types of issues at the moment.
-> 
-> In other words, I hate them, companies hate them, and governments hate
-> them, but no one involved has solid ideas of what to do instead.
+A maintenance release Git v2.39.2, together with releases for older
+maintenance tracks v2.38.4, v2.37.6, v2.36.5, v2.35.7, v2.34.7,
+v2.33.7, v2.32.6, v2.31.7, and v2.30.8, are now available at the
+usual places.
 
-Change the incentives so that CPU vendors decide to produce CPUs that
-don't have bugs, and therefore the lists aren't needed?
+These maintenance releases are to address two security issues
+identified as CVE-2023-22490 and CVE-2023-23946.  They both affect
+ranges of existing versions and users are strongly encouraged to
+upgrade.
 
-I'm not sure if this is practical, but if it is, it would solve the
-problem.  I also am not sure what the unintended consequences would be.
-Mandating Speculative Taint Tracking would get rid of the speculative
-execution vulnerabilities, assuming that it is implemented correctly.
+The tarballs are found at:
 
-> "Luckily" I think that laws like the CRA are going to make them obsolete
-> in a few years time so maybe that will cause them to go away as I don't
-> see any end of CPU bugs happening before then.
-> 
-> > However, the concern about leaks is valid.  I think the most effective
-> > defense we have is the 14 days maximum embargo time, which removes the
-> > data's long-term value for potential use in attacks.
-> 
-> Again, I still consider this a form of blackmail against open source
-> projects when you do this, but hey, you do you :)
+    https://www.kernel.org/pub/software/scm/git/
 
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+The following public repositories all have a copy of the 'v2.39.2'
+tag, as well as the tags for older maintenance tracks listed above.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+  url = https://git.kernel.org/pub/scm/git/git
+  url = https://kernel.googlesource.com/pub/scm/git/git
+  url = git://repo.or.cz/alt-git.git
+  url = https://github.com/gitster/git
+
+The addressed issues are:
+
+ * CVE-2023-22490:
+
+   Using a specially-crafted repository, Git can be tricked into using
+   its local clone optimization even when using a non-local transport.
+   Though Git will abort local clones whose source $GIT_DIR/objects
+   directory contains symbolic links (c.f., CVE-2022-39253), the objects
+   directory itself may still be a symbolic link.
+
+   These two may be combined to include arbitrary files based on known
+   paths on the victim's filesystem within the malicious repository's
+   working copy, allowing for data exfiltration in a similar manner as
+   CVE-2022-39253.
+
+ * CVE-2023-23946:
+
+   By feeding a crafted input to "git apply", a path outside the
+   working tree can be overwritten as the user who is running "git
+   apply".
+
+Credit for finding CVE-2023-22490 goes to yvvdwf, and the fix was
+developed by Taylor Blau, with additional help from others on the
+Git security mailing list.
+
+Credit for finding CVE-2023-23946 goes to Joern Schneeweisz, and the
+fix was developed by Patrick Steinhardt.
+
+Johannes Schindelin helped greatly in packaging the whole thing and
+proofreading the result.
+
+Thanks.
