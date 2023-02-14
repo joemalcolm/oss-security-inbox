@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2616" "Saturday" "23" "September" "2017" "11:14:28" "-0400" "Marc Deslauriers" "marc.deslauriers@canonical.com" "<e36752e0-c1d1-220f-76ae-5abbd047cd65@canonical.com>" "73" "Re: [oss-security] Why send bugs embargoed to distros?" "^Date:" nil nil "9" "2017092315:14:28" "[oss-security] Why send bugs embargoed to distros?" (number mark "        marc.deslaur Sep 23   73/2616  " thread-indent "\"Re: [oss-security] Why send bugs embargoed to distros?\"\n") "<20170923134418.6e460656@pc1>" ("<20170923134418.6e460656@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 32696 invoked by uid 550); 23 Sep 2017 15:14:41 -0000
+Received: (qmail 15428 invoked by uid 550); 14 Feb 2023 18:09:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,92 +6,100 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32678 invoked from network); 23 Sep 2017 15:14:41 -0000
-References: <20170923134418.6e460656@pc1>
-Message-ID: <e36752e0-c1d1-220f-76ae-5abbd047cd65@canonical.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.3.0
-MIME-Version: 1.0
-In-Reply-To: <20170923134418.6e460656@pc1>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-CA
-Content-Transfer-Encoding: 8bit
-Date: Sat, 23 Sep 2017 11:14:28 -0400
-From: Marc Deslauriers <marc.deslauriers@canonical.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Why send bugs embargoed to distros?
-To: oss-security@lists.openwall.com
+Received: (qmail 5412 invoked from network); 14 Feb 2023 18:05:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:date:subject:cc:to:from:sender
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=a/30totliODEH86d4s7yTqh1xVH9NfBjaZa+zjnDO/c=;
+        b=SiRsmbcm0rYggSVTzIZOA8sZ7SWL0XqG/PuADk+YJzz8eZPcJp3akUS+61rz40V4Cy
+         IDA6vopYw9W2GaG2RtI6Su/EggkclvrUprEFshmZKKjs0AKHpfLQse+kwaoxcvlWO3IB
+         gK7tNCniHVunkHh5CBqqrxEEuVjsVV9fKzB6wgO2bWF9BY/gx3ORaGf2gUBxha8a8Txm
+         Asp2cCcJd3eMPfTH7b0efJEKiuqFV7KRtKKELX4Nu2C4q5lT7Te8pU7IxZT6pNSGj/lh
+         Vhf/NbLLB8xNQKSj1LjMAT2s9Ltb88ud0zM3yp9xxjdy3gSta2Jyfbwyo2ZjA+FhAmip
+         vfUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:user-agent:message-id:date:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=a/30totliODEH86d4s7yTqh1xVH9NfBjaZa+zjnDO/c=;
+        b=y9+RBbKyoGSED3le12UHVzIRIYLZdc9XK/vIyCZITkAtd4+xpDb3uuoE6GV2D9PQnY
+         uoKugBk/QTXHoWiP/UXd/jZGbEblg+gIJabiZPXkkMALwr4wA1a+cuUPkbNskSxQJAxS
+         h7BTo8i51A4a3nTxaFL5Dm5gwlK7MP0Ejpw8gFCSm5f59hGpI8fixNisNPNqxPzMEiFP
+         7VcoKoflccJXgohwS/nDTINo/oFYynfHEadYzgxJN3xJ/JoinSUSqhss+WP+och2hRkG
+         Wnrmj9S68aI3vBVzG8ziNqeBJIsVhZPMvLZj7781gDYPa/J4gPfeuyTG0pCADubHSyT8
+         253g==
+X-Gm-Message-State: AO0yUKXl5NUsMV6bv19zAqj0rJxbcZZ51BUMH3m1j+aSckV+jdtXQvDd
+	KC6OhLwEZSr9ZM/1uHvsLMo=
+X-Google-Smtp-Source: AK7set+E8VQg9Jb85Rikix0JLva+MYuPsfcgprmCG3JJ7RGuW/bliCsOwZBZugn2JnelslqQvYms0g==
+X-Received: by 2002:a17:902:d48c:b0:199:16c6:8a24 with SMTP id c12-20020a170902d48c00b0019916c68a24mr3907362plg.61.1676397903975;
+        Tue, 14 Feb 2023 10:05:03 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>,
+    git-packagers@googlegroups.com,
+    oss-security@lists.openwall.com,
+    git-security@googlegroups.com
+Date: Tue, 14 Feb 2023 10:05:03 -0800
+Message-ID: <xmqqr0us5dio.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: [oss-security] [Announce] Git 2.39.2 and friends
 
-Hi,
+A maintenance release Git v2.39.2, together with releases for older
+maintenance tracks v2.38.4, v2.37.6, v2.36.5, v2.35.7, v2.34.7,
+v2.33.7, v2.32.6, v2.31.7, and v2.30.8, are now available at the
+usual places.
 
-On 2017-09-23 07:44 AM, Hanno Böck wrote:
-> Hi,
-> 
-> A few days have passed since the optionsbleed disclosure. Some
-> interesting things have surfaced, e.g. the fact that it was apparently
-> discovered already in 2014, but nobody noticed it was a security bug.
-> 
-> 
-> But I'd like to discuss something else:
-> I had informed the distros mailing list one week earlier about the
-> upcoming disclosure with a bug description and links to the already
-> available patch.
-> My understanding is that the purpose of the distros list is that
-> updates can be prepared so after a disclosure the time between "vuln is
-> known" and "patch is available" is short.
-> However from all I can see this largely didn't happen.
-> 
-> Debian+Ubuntu took more than a day after disclosure to fix. According
-> to the Debian bug tracker the bug got only opened after the public
-> disclosure[2]. I see no sign that any work on a fix began before the
-> disclosure.
+These maintenance releases are to address two security issues
+identified as CVE-2023-22490 and CVE-2023-23946.  They both affect
+ranges of existing versions and users are strongly encouraged to
+upgrade.
 
-Having access to the embargoed information allowed us (Ubuntu) to evaluate the
-impact of the issue, look at the fix, and start locally testing the fix to
-determine if there were any issues. It also allows us to properly assign
-resources to working on the update.
+The tarballs are found at:
 
-It would have probably taken us more than a day to publish this update if we
-didn't have access to the information in advance.
+    https://www.kernel.org/pub/software/scm/git/
 
-> 
-> If I can trust Red Hat's CVE tracker [3] there still are no fixed
-> packages available. Also I haven't found any info about updated
-> opensuse packages.
-> 
-> The only distro I'm aware of that prepared packages and pushed them
-> right after disclosure is Gentoo.
+The following public repositories all have a copy of the 'v2.39.2'
+tag, as well as the tags for older maintenance tracks listed above.
 
-For issues that aren't critical, we tend to wait until the upstream project
-commits the fix before we release updates, to make sure a last-minute adjustment
-or additional fix didn't get added.
+  url = https://git.kernel.org/pub/scm/git/git
+  url = https://kernel.googlesource.com/pub/scm/git/git
+  url = git://repo.or.cz/alt-git.git
+  url = https://github.com/gitster/git
 
-> 
-> All of this makes me wonder if the distros list serves its purpose.
-> 
-> I'd be curious to hear:
-> 
-> a) if any people felt that pre-disclosure of optionsbleed was helpful
-> to them and in which way (after all - even if it only helps minor
-> distros and major distros ignore it it may still be a good thing).
+The addressed issues are:
 
-Yes, I believe the pre-disclosure was helpful to us. Thanks for doing it.
+ * CVE-2023-22490:
 
-> 
-> b) if people think that they'd usually prepare a fixed package, however
-> they didn't consider optionsbleed important enough. (Naturally I
-> probably have a bias seeing my findings as more important as other
-> people, but I could live with that.)
-> 
-> c) other things?
-> 
+   Using a specially-crafted repository, Git can be tricked into using
+   its local clone optimization even when using a non-local transport.
+   Though Git will abort local clones whose source $GIT_DIR/objects
+   directory contains symbolic links (c.f., CVE-2022-39253), the objects
+   directory itself may still be a symbolic link.
 
-Thanks,
+   These two may be combined to include arbitrary files based on known
+   paths on the victim's filesystem within the malicious repository's
+   working copy, allowing for data exfiltration in a similar manner as
+   CVE-2022-39253.
 
-Marc.
+ * CVE-2023-23946:
 
+   By feeding a crafted input to "git apply", a path outside the
+   working tree can be overwritten as the user who is running "git
+   apply".
 
--- 
-Marc Deslauriers
-Ubuntu Security Engineer     | http://www.ubuntu.com/
-Canonical Ltd.               | http://www.canonical.com/
+Credit for finding CVE-2023-22490 goes to yvvdwf, and the fix was
+developed by Taylor Blau, with additional help from others on the
+Git security mailing list.
+
+Credit for finding CVE-2023-23946 goes to Joern Schneeweisz, and the
+fix was developed by Patrick Steinhardt.
+
+Johannes Schindelin helped greatly in packaging the whole thing and
+proofreading the result.
+
+Thanks.
