@@ -1,27 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/08/2
-Message-ID: <80616781-a635-02a0-2aa3-a8afc60e6c4c@free.fr>
-Date: Wed, 8 Mar 2023 12:37:29 +0100
-From: Gabriel Corona <gabriel.corona@...e.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/14/1
+Message-ID: <CAJwKpyQjA_giVHegda7CvLLCgpE3f4QPpTFpKbYqguJ=adZ7zg@mail.gmail.com>
+Date: Tue, 14 Feb 2023 09:40:43 +0100
+From: Carlton Gibson <carlton.gibson@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Shell command and Emacs Lisp code injection in emacsclient-mail.desktop
+Subject: Django - CVE-2023-24580: Potential denial-of-service vulnerability in file uploads
 Content-Type: text/plain; charset=utf-8
 
-emacsclient-mail.desktop is vulnerable to shell command
-injections and Emacs Lisp injections through a crafted
-mailto: URI.
+Django security releases issued: 4.1.7, 4.0.10, and 3.2.18
 
-This has been introduced in Emacs 28.1:
+Details are available on the Django project weblog:
+https://www.djangoproject.com/weblog/2023/feb/14/security-releases/
 
-http://git.savannah.gnu.org/cgit/emacs.git/commit/?h=emacs-29&id=b1b05c828d67930bb3b897fe98e1992db42cf23c
+In accordance with `our security release policy
+<https://docs.djangoproject.com/en/dev/internals/security/>`_, the Django
+team
+is issuing
+`Django 4.1.7 <https://docs.djangoproject.com/en/dev/releases/4.1.7/>`_,
+`Django 4.0.10 <https://docs.djangoproject.com/en/dev/releases/4.0.10/>`_,
+and
+`Django 3.2.18 <https://docs.djangoproject.com/en/dev/releases/3.2.18/>`_.
+These releases addresses the security issue detailed below. We encourage all
+users of Django to upgrade as soon as possible.
 
-A fix for shell command injection is currently included
-in the upcoming 28.3 branch:
+CVE-2023-24580: Potential denial-of-service vulnerability in file uploads
+=========================================================================
 
-http://git.savannah.gnu.org/cgit/emacs.git/commit/?h=emacs-29&id=d32091199ae5de590a83f1542a01d75fba000467
+Passing certain inputs to multipart forms could result in too many open
+files
+or memory exhaustion, and provided a potential vector for a
+denial-of-service
+attack.
 
-A fix for both is currently included in the upcoming 29.1 branch:
+The number of files parts parsed is now limited via the new
+``DATA_UPLOAD_MAX_NUMBER_FILES`` setting.
 
-http://git.savannah.gnu.org/cgit/emacs.git/commit/?h=emacs-29&id=3c1693d08b0a71d40a77e7b40c0ebc42dca2d2cc
+Thanks to Jakob Ackermann for the report.
 
-Download attachment "OpenPGP_signature" of type "application/pgp-signature" (841 bytes)
+This issue has severity "moderate" according to the Django security policy.
+
+Affected supported versions
+===========================
+
+* Django main branch
+* Django 4.2 (currently at pre-release alpha status)
+* Django 4.1
+* Django 4.0
+* Django 3.2
+
+Resolution
+==========
+
+Patches to resolve the issue have been applied to Django's main branch and
+the
+4.2, 4.1, 4.0, and 3.2 release branches. The patches may be obtained from
+the
+following changesets:
+
+* On the `main branch <
+https://github.com/django/django/commit/85ac33591c393f1480d4f23b4daff40119cb6410
+>`__
+* On the `4.2 release branch <
+https://github.com/django/django/commit/7ac5ff37b822c14e5b6be99da7f618eb1fe06062
+>`__
+* On the `4.1 release branch <
+https://github.com/django/django/commit/628b33a854a9c68ec8a0c51f382f304a0044ec92
+>`__
+* On the `4.0 release branch <
+https://github.com/django/django/commit/83f1ea83e4553e211c1c5a0dfc197b66d4e50432
+>`__
+* On the `3.2 release branch <
+https://github.com/django/django/commit/a665ed5179f5bbd3db95ce67286d0192eff041d8
+>`__
+
+The following releases have been issued:
+
+* Django 4.1.7 (`download Django 4.1.7 <
+https://www.djangoproject.com/m/releases/4.1/Django-4.1.7.tar.gz>`_ |
+`4.1.7 checksums <
+https://www.djangoproject.com/m/pgp/Django-4.1.7.checksum.txt>`_)
+* Django 4.0.10 (`download Django 4.0.10 <
+https://www.djangoproject.com/m/releases/4.0/Django-4.0.10.tar.gz>`_ |
+`4.0.10 checksums <
+https://www.djangoproject.com/m/pgp/Django-4.0.10.checksum.txt>`_)
+* Django 3.2.18 (`download Django 3.2.18 <
+https://www.djangoproject.com/m/releases/3.2/Django-3.2.18.tar.gz>`_ |
+`3.2.18 checksums <
+https://www.djangoproject.com/m/pgp/Django-3.2.18.checksum.txt>`_)
+
+The PGP key ID used for this release is Carlton Gibson: `E17DF5C82B4F9D00 <
+https://github.com/carltongibson.gpg>`_
+
+General notes regarding security reporting
+==========================================
+
+As always, we ask that potential security issues be reported via
+private email to ``security@...ngoproject.com``, and not via Django's
+Trac instance or the django-developers list. Please see `our security
+policies <https://www.djangoproject.com/security/>`_ for further
+information.
+
