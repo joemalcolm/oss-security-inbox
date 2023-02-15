@@ -1,130 +1,132 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/26/1
-Message-Id: <E1qOcS0-0007bb-Pt@xenbits.xenproject.org>
-Date: Wed, 26 Jul 2023 11:13:04 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 433 v2 (CVE-2023-20593) - x86/AMD: Zenbleed
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/15/4
+Message-Id: <DB0FE500-3DFB-468F-B954-162130155FC7@beckweb.net>
+Date: Wed, 15 Feb 2023 14:22:00 +0100
+From: Daniel Beck <ml@...kweb.net>
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-            Xen Security Advisory CVE-2023-20593 / XSA-433
-                              version 2
+The following releases contain fixes for security vulnerabilities:
 
-                          x86/AMD: Zenbleed
+* Azure Credentials Plugin 254.v64da_8176c83a
+* Email Extension Plugin 2.93.1
+* JUnit Plugin 1166.1168.vd6b_8042a_06de
+* Pipeline: Build Step Plugin 2.18.1
+* Synopsys Coverity Plugin 3.0.3
 
-UPDATES IN VERSION 2
-====================
 
-Include the CVE, which was missed accidentally in the rush of
-timelines repeatedly moving underfoot.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2023-02-15/
 
-ISSUE DESCRIPTION
-=================
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-Researchers at Google have discovered Zenbleed, a hardware bug causing
-corruption of the vector registers.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-When a VZEROUPPER instruction is discarded as part of a bad transient
-execution path, its effect on internal tracking are not unwound
-correctly.  This manifests as the wrong micro-architectural state
-becoming architectural, and corrupting the vector registers.
+---
 
-Note: While this malfunction is related to speculative execution, this
-      is not a speculative sidechannel vulnerability.
+SECURITY-3032 / CVE-2023-25761
+JUnit Plugin 1166.va_436e268e972 and earlier does not escape test case
+class names in JavaScript expressions.
 
-The corruption is not random.  It happens to be stale values from the
-physical vector register file, a structure competitively shared between
-sibling threads.  Therefore, an attacker can directly access data from
-the sibling thread, or from a more privileged context.
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to control test case class names in the JUnit
+resources processed by the plugin.
 
-For more details, see:
-  https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7008.html
-  https://github.com/google/security-research/security/advisories/GHSA-v6wh-rxpg-cmm8
 
-IMPACT
-======
+SECURITY-3019 / CVE-2023-25762
+Pipeline: Build Step Plugin 2.18 and earlier does not escape job names in a
+JavaScript expression used in the Pipeline Snippet Generator.
 
-With very low probability, corruption of the vector registers can occur.
-This data corruption causes mis-calculations in subsequent logic.
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to control job names.
 
-An attacker can exploit this bug to read data from different contexts on
-the same core.  Examples of such data includes key material, cypher and
-plaintext from the AES-NI instructions, or the contents of REP-MOVS
-instructions, commonly used to implement memcpy().
 
-VULNERABLE SYSTEMS
-==================
+SECURITY-2931 / CVE-2023-25763
+Email Extension Plugin bundled multiple preconfigured templates for
+notification emails. The Email Template Testing feature can be used to see
+what these and other templates would look like based on a given build.
 
-Systems running all versions of Xen are affected.
+Email Extension Plugin 2.93 and earlier does not escape various fields
+included in those email templates, like build display name, user display
+name, and the names of tests.
 
-This bug is specific to the AMD Zen2 microarchitecture.  AMD do not
-believe that other microarchitectures are affected.
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to control affected fields.
 
-MITIGATION
-==========
 
-This issue can be mitigated by disabling AVX, either by booting Xen with
-`cpuid=no-avx` on the command line, or by specifying `cpuid="host:avx=0"` in
-the vm.cfg file of all untrusted VMs.  However, this will come with a
-significant impact on the system and is not recommended for anyone able to
-deploy the microcode or patch described below.
+SECURITY-2934 / CVE-2023-25764
+Email Extension Plugin allows defining custom email templates using Config
+File Provider plugin as Jelly or Groovy files. The Email Template Testing
+feature can be used to see what these templates would look like based on a
+given build by specifying the `managed:` name prefix.
 
-RESOLUTION
-==========
+Email Extension Plugin 2.93 and earlier does not escape, sanitize, or
+sandbox rendered email template output or log output generated during
+template rendering.
 
-AMD are producing microcode updates to address the bug.  Consult your
-dom0 OS vendor.  This microcode is effective when late-loaded, which can
-be performed on a live system without reboot.
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to create or change custom email templates.
 
-In cases where microcode is not available, the appropriate attached
-patch updates Xen to use a control register to avoid the issue.
 
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
+SECURITY-2939 / CVE-2023-25765
+Email Extension Plugin allows defining custom email templates using Config
+File Provider plugin as Jelly or Groovy files. When defined inside a
+folder, email templates need to be subject to Script Security protection
+(sandboxed execution or full-script approval).
 
-xsa433.patch           xen-unstable
-xsa433-4.17.patch      Xen 4.17.x
-xsa433-4.16.patch      Xen 4.16.x
-xsa433-4.15.patch      Xen 4.15.x
-xsa433-4.14.patch      Xen 4.14.x
+In Email Extension Plugin 2.93 and earlier, templates defined inside a
+folder were not subject to Script Security protection.
 
-$ sha256sum xsa433*
-a9331733b63e3e566f1436a48e9bd9e8b86eb48da6a8ced72ff4affb7859e027  xsa433.patch
-6f1db2a2078b0152631f819f8ddee21720dabe185ec49dc9806d4a9d3478adfd  xsa433-4.14.patch
-ca3a92605195307ae9b6ff87240beb52a097c125a760c919d7b9a0aff6e557c0  xsa433-4.15.patch
-e5e94b3de68842a1c8d222802fb204d64acd118e3293c8e909dfaf3ada23d912  xsa433-4.16.patch
-41d12104869b7e8307cd93af1af12b4fd75a669aeff15d31b234dc72981ae407  xsa433-4.17.patch
-$
+This vulnerability allows attackers able to define email templates in
+folders to bypass the sandbox protection and execute arbitrary code in the
+context of the Jenkins controller JVM.
 
-NOTE CONCERNING TIMELINE
-========================
 
-This issue is subject to coordinated disclosure on August 8th.  The
-discoverer chose to publish details ahead of this timeline.
------BEGIN PGP SIGNATURE-----
+SECURITY-1757 / CVE-2023-25766
+Azure Credentials Plugin 253.v887e0f9e898b and earlier does not perform
+permission checks in several HTTP endpoints.
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmTA/2cMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ0EIH/02n/gvMGF5RCwfs/uvwjsQASAgELWTgAFv+tXOG
-yLZWCxNkWAWDxTWAEWfdcSsLCN8GDc4c6lNuhqnV3mVsIDiGSHmXgSkI9pcCQ79T
-2KTgC+ncMM4yeYTI5SUL4xvzzIQ/38t5gK5+AyPxg3jpMhCLEz2dJwbjgd4CKai+
-ax+l3cX9ibLj/lQQwvgkPXweAVsfILnCAB5J1VQb1Jw0DWauYJLurMj0flz82a2O
-NftdEx3b5ADDxXHdE52J5p/kpXMDohdPm0R07Y63j+eY+QJADLHfwE+n4pqyzvDf
-kPEGUtxbcCj4VygmO6xrHgoHYqaGbRYeHJyHEt4jpZDLwP4=
-=9wn5
------END PGP SIGNATURE-----
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
 
-Download attachment "xsa433.patch" of type "application/octet-stream" (4348 bytes)
 
-Download attachment "xsa433-4.14.patch" of type "application/octet-stream" (4332 bytes)
+SECURITY-1756 / CVE-2023-25767 (CSRF) & CVE-2023-25768 (missing permission check)
+Azure Credentials Plugin 253.v887e0f9e898b and earlier does not perform
+permission checks in methods implementing form validation.
 
-Download attachment "xsa433-4.15.patch" of type "application/octet-stream" (4292 bytes)
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified web server.
 
-Download attachment "xsa433-4.16.patch" of type "application/octet-stream" (4301 bytes)
+Additionally, these form validation methods do not require POST requests,
+resulting in a cross-site request forgery (CSRF) vulnerability.
 
-Download attachment "xsa433-4.17.patch" of type "application/octet-stream" (4348 bytes)
+
+SECURITY-2793 (1) / CVE-2023-23850
+Synopsys Coverity Plugin 3.0.2 and earlier does not perform permission
+checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+
+SECURITY-2793 (2) / CVE-2023-23847 (CSRF) & CVE-2023-23848 (missing permission check)
+Synopsys Coverity Plugin 3.0.2 and earlier does not perform permission
+checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified HTTP server using attacker-specified credentials IDs
+obtained through another method, capturing credentials stored in Jenkins.
+
+Additionally, these HTTP endpoints do not require POST requests, resulting
+in a cross-site request forgery (CSRF) vulnerability.
+
