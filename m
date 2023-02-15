@@ -1,95 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/20/6
-Message-ID: <f7586453-d83d-26a6-7d9a-e7a54009209f@innerheight.com>
-Date: Thu, 20 Apr 2023 13:15:38 +0200
-From: Jan Klopper <janklopper@...erheight.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Checking existence of firewalled web servers in Firefox via iframe.onload
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/15/6
+Message-ID: <f6168eac-5db1-e92c-778f-c6c2d4878e70@igalia.com>
+Date: Wed, 15 Feb 2023 16:01:23 +0100
+From: Carlos Alberto Lopez Perez <clopez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, oss-security@...ts.openwall.com
+Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2023-0002
 Content-Type: text/plain; charset=utf-8
 
-Hi
+------------------------------------------------------------------------
+WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0002
+------------------------------------------------------------------------
 
-The topic is still relevant.
+Date reported           : February 15, 2023
+Advisory ID             : WSA-2023-0002
+WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0002.html
+WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0002.html
+CVE identifiers         : CVE-2023-23529.
 
-Combining this attack with webservices that might be present behind a 
-NAT network, eg IOT or appliances can result in various serious issues.
+Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
 
-There are loads of devices that do not require csrf, or even POST for 
-requests that update settings or even firmware.
-
-Performing GET requests on those internal ip's, even though no content 
-will be returned is still plenty dangerous.
-Knowing which ip to perform these attacks on, can be found by looking at 
-the timing of various ready/error calls.
-
-However, it begs the question, is it the browser that is in the wrong 
-here, or those appliances/devices. And, should the browser be guarding 
-users against flaws in those appliances? And where then does the scope 
-of the browsers security features stop?
-
-I'm also expecting heaps of these issues to re-discovered when looking 
-at the whole websockets domain.
-
-With regards
-Jan Klopper
+CVE-2023-23529
+    Versions affected: WebKitGTK and WPE WebKit before 2.38.5.
+    Credit to an anonymous researcher.
+    Impact: Processing maliciously crafted web content may lead to
+    arbitrary code execution. Apple is aware of a report that this issue
+    may have been actively exploited. Description: A type confusion
+    issue was addressed with improved checks.
 
 
-On 20-04-2023 12:57, Stefano Di Paola wrote:
-> Hello George,
-> 
-> from time to time it happens to rediscover techniques issues.
-> This is one of those times :)
-> 
-> In 2006 there has been a lot of interest around browser based port
-> scans, in particular to pivot internal networks.
-> 
-> The following links are some of them:
-> 
-> http://web.archive.org/web/20060813034434/http://www.spidynamics.com/assets/documents/JSportscan.pdf
-> 
-> https://www.gnucitizen.org/blog/javascript-port-scanner/
-> 
-> https://www.blackhat.com/presentations/bh-usa-06/BH-US-06-Grossman.pdf
-> 
-> 
-> https://www.blackhat.com/presentations/bh-usa-07/Grossman/Whitepaper/bh-usa-07-grossman-WP.pdf
-> 
-> Some of those thecniques have been mitigated, and some it's still
-> there.
-> 
-> There are surely other resources IIRC, although some of them might have
-> been deleted, such as the ones on sla.cke.rs which is a real pity..
-> 
-> Cheers!
-> Stefano
-> 
-> Ps. this email applies to the other Script technique thread/email as
-> well.
-> 
-> On Tue, 2023-04-18 at 15:59 +0300, Georgi Guninski wrote:
->> In short in Firefox 112, it is possible to check existence
->> of firewalled web servers. This doesn't work in Chrome and Chromium
->> 112
->> for me.
->>
->> If user A has tcp connection to web server B, then in the
->> following html:
->>
->> <iframe src="http://B" onload="load()" onerror="alert('error')"
->> id="i1" />
->>
->> the javascript function load() will get executed if B serves
->> valid document to A's browser and will not be executed otherwise.
->>
->> This work for both http and https, and for http it is allowed
->> B to be IP address. Under some configurations of Apache2,
->> it serves http despite having https configured.
->>
->> In some sense, this is close to nmap via javascript in a browser.
->>
->> Potential privacy implication is when the attacker guess the
->> range of firewalled IPs and check them all in a loop.
->>
->> For online test:
->> https://j.ludost.net/onload1.html
->>
+We recommend updating to the latest stable versions of WebKitGTK and WPE
+WebKit. It is the best way to ensure that you are running safe versions
+of WebKit. Please check our websites for information about the latest
+stable releases.
+
+Further information about WebKitGTK and WPE WebKit security advisories
+can be found at: https://webkitgtk.org/security.html or
+https://wpewebkit.org/security/.
+
+The WebKitGTK and WPE WebKit team,
+February 15, 2023
