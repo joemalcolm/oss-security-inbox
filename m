@@ -1,22 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/20/21
-Message-ID: <CAH8yC8=BkNf7zOWv0Og4Nji7ORyaO_MO+_JnwvbT95NDmH8aTg@mail.gmail.com>
-Date: Thu, 20 Apr 2023 18:29:10 -0400
-From: Jeffrey Walton <noloader@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: PostgreSQL and CREATEROLE permission
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/15/3
+Message-ID: <r59op275-8q67-40q0-n912-8sq39s6o742q@unkk.fr>
+Date: Wed, 15 Feb 2023 08:28:58 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: curl: CVE-2023-23916: HTTP multi-header compression denial of service
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Apr 20, 2023 at 3:39 PM Bernd Zeimetz <bernd@...d.de> wrote:
->
-> > This information showed up on the pgsql-general mailing list at [1].
-> > It appears a user with CREATEROLE can elevate to root through
-> > pg_execute_server_program.[2]
->
-> really root? As I understand it you gain access to the DB superuser (usually
-> the postgres user) only. Although I could imagine that you could trick
-> careless admins into giving you root permissions on that way...
+CVE-2023-23916: HTTP multi-header compression denial of service
+===============================================================
 
-I hope I did not misparse things when I sent the email. My apologies if I did.
+Project curl Security Advisory, February 15th 2023 -
+[Permalink](https://curl.se/docs/CVE-2023-23916.html)
 
-Jeff
+VULNERABILITY
+-------------
+
+curl supports "chained" HTTP compression algorithms, meaning that a server
+response can be compressed multiple times and potentially with different
+algorithms. The number of acceptable "links" in this "decompression chain" was
+capped, but the cap was implemented on a per-header basis allowing a malicious
+server to insert a virtually unlimited number of compression steps simply by
+using many headers.
+
+The use of such a decompression chain could result in a "malloc bomb", making
+curl end up spending enormous amounts of allocated heap memory, or trying to
+and returning out of memory errors.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+CVE-2023-23916 was introduced in [commit
+dbcced8e32b50c06](https://github.com/curl/curl/commit/dbcced8e32b50c06),
+shipped in curl 7.57.0.
+
+Automatic decompression of content needs to be enabled per transfer. It is
+disabled by default and then nothing bad happens.
+
+This flaw exists with one or more of the compression algorithms built-in
+(gzip, brotli or zstd), but the individual algorithms have different
+"exploding" powers.
+
+Both `Content-Encoding:` and `Transfer-Encoding:` are affected over all HTTP
+versions.
+
+This flaw is almost identical to the previous [CVE-2022-32206: HTTP
+compression denial of service](https://curl.se/docs/CVE-2022-32206.html), as
+the fix for that earlier flaw was incomplete.
+
+CWE-770: Allocation of Resources Without Limits or Throttling
+
+Severity: Medium
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.57.0 to and including 7.87.0
+- Not affected versions: curl < 7.57.0 and curl >= 7.87.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+The amount of accepted "chained" algorithms is now capped to 5 in total,
+independently of the number of headers.
+
+A [fix for CVE-2023-23916](https://github.com/curl/curl/commit/119fb187192a9ea13dc)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 7.88.0
+
+  B - Apply the patch to your local version
+
+  C - Do not enable automatic decompression
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on January 8, 2023. We contacted
+distros@...nwall on February 7, 2023.
+
+libcurl 7.88.0 was released on February 15 2023, coordinated with the
+publication of this advisory.
+
+CREDITS
+-------
+
+- Reported-by: Patrick Monnerat
+- Patched-by: Patrick Monnerat
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
