@@ -1,141 +1,100 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/08/3
-Message-Id: <39217FA7-450E-49E9-A39A-44874096CBAC@beckweb.net>
-Date: Wed, 8 Mar 2023 16:27:16 +0100
-From: Daniel Beck <ml@...kweb.net>
-To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/15/1
+Message-ID: <3o509q6-7pr8-op1q-770-998791361on6@unkk.fr>
+Date: Wed, 15 Feb 2023 08:28:50 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: curl: CVE-2023-23914: HSTS ignored on multiple requests
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+CVE-2023-23914: HSTS ignored on multiple requests
+=================================================
 
-The following releases contain fixes for security vulnerabilities:
+Project curl Security Advisory, February 15 2023 -
+[Permalink](https://curl.se/docs/CVE-2023-23914.html)
 
-* Jenkins 2.394
-* Jenkins LTS 2.375.4 and 2.387.1
-* update-center2 3.15
+VULNERABILITY
+-------------
 
+curl's HSTS functionality fail when multiple URLs are requested serially.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2023-03-08/
+Using its HSTS support, curl can be instructed to use HTTPS instead of using
+an insecure clear-text HTTP step even when HTTP is provided in the URL. This
+HSTS mechanism would however suprisingly be ignored by subsequent transfers
+when done on the same command line because the state would not be properly
+carried on.
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Reproducible like this:
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+     curl --hsts "" https://curl.se http://curl.se
 
----
+The first URL returns HSTS information that the second URL fails to take
+advantage of.
 
-SECURITY-3037 / CVE-2023-27898
-Jenkins 2.270 through 2.393 (both inclusive), LTS 2.277.1 through 2.375.3
-(both inclusive) does not escape the Jenkins version a plugin depends on
-when rendering the error message stating its incompatibility with the
-current version of Jenkins in the plugin manager.
+We are not aware of any exploit of this flaw.
 
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to provide plugins to the configured update
-sites and have this message shown by Jenkins instances.
+INFO
+----
 
-IMPORTANT: Exploitation does _not_ require the manipulated plugin to be
-installed.
+This is a curl command line issue and does not affect libcurl.
 
+This flaw was introduced in [commit
+7385610d0c7](https://github.com/curl/curl/commit/7385610d0c7), which was
+shipped enabled by default from [commit
+d71ff2b9db566b3f](https://github.com/curl/curl/commit/d71ff2b9db566b3f) in
+curl 7.77.0.
 
-SECURITY-2823 / CVE-2023-27899
-Jenkins creates a temporary file when a plugin is uploaded from an
-administrator's computer.
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2023-23914 to this issue.
 
-Jenkins 2.393 and earlier, LTS 2.375.3 and earlier creates this temporary
-file in the system temporary directory with the default permissions for
-newly created files.
+CWE-319: Cleartext Transmission of Sensitive Information
 
-If these permissions are overly permissive, they may allow attackers with
-access to the Jenkins controller file system to read and write the file
-before it is installed in Jenkins, potentially resulting in arbitrary code
-execution.
+Severity: Low
 
-IMPORTANT: This vulnerability only affects operating systems using a shared
-temporary directory for all users (typically Linux). Additionally, the
-default permissions for newly created files generally only allows attackers
-to read the temporary file.
+AFFECTED VERSIONS
+-----------------
 
+- Affected versions: curl 7.77.0 to and including 7.87.0
+- Not affected versions: curl < 7.77.0 and curl >= 7.88.0
 
-SECURITY-3030 / CVE-2023-24998 (upstream issue) & CVE-2023-27900
-(MultipartFormDataParser) & CVE-2023-27901 (StaplerRequest)
-Jenkins 2.393 and earlier, LTS 2.375.3 and earlier is affected by the
-Apache Commons FileUpload library's vulnerability CVE-2023-24998. This
-library is used to process uploaded files via the Stapler web framework
-(usually through `StaplerRequest#getFile`) and `MultipartFormDataParser` in
-Jenkins.
+curl is used by many applications, but not always advertised as such!
 
-This allows attackers to cause a denial of service (DoS) by sending crafted
-requests to HTTP endpoints processing file uploads.
+THE SOLUTION
+------------
 
+7.88.0 will share the HSTS state properly between transfers.
 
-SECURITY-1807 / CVE-2023-27902
-Jenkins uses temporary directories adjacent to workspace directories,
-usually with the `@...` name suffix, to store temporary files related to
-the build. In pipelines, these temporary directories are adjacent to the
-current working directory when operating in a subdirectory of the
-automatically allocated workspace. Jenkins-controlled processes, like SCMs,
-may store credentials in these directories.
+A [fix for CVE-2023-23914](https://github.com/curl/curl/pull/10138)
 
-Jenkins 2.393 and earlier, LTS 2.375.3 and earlier shows these temporary
-directories when viewing job workspaces, which allows attackers with
-Item/Workspace permission to access their contents.
+RECOMMENDATIONS
+--------------
 
+  A - Upgrade curl to version 7.88.0
 
-SECURITY-3058 / CVE-2023-27903
-When triggering a build from the Jenkins CLI, Jenkins creates a temporary
-file on the controller if a file parameter is provided through the CLI's
-standard input.
+  B - Apply the patch to your local version
 
-Jenkins 2.393 and earlier, LTS 2.375.3 and earlier creates this temporary
-file in the default temporary directory with the default permissions for
-newly created files.
+  C - Specify all URLs with `HTTPS://` and not `HTTP://`
 
-If these permissions are overly permissive, they may allow attackers with
-access to the Jenkins controller file system to read and write the file
-before it is used in the build.
+TIMELINE
+--------
 
-IMPORTANT: This vulnerability only affects operating systems using a shared
-temporary directory for all users (typically Linux). Additionally, the
-default permissions for newly created files generally only allows attackers
-to read the temporary file.
+This issue was reported to the curl project on December 21, 2022. We contacted
+distros@...nwall on February 7, 2022.
 
+curl 7.88.0 was released on February 15 2023, coordinated with the publication
+of this advisory.
 
-SECURITY-2120 / CVE-2023-27904
-Jenkins 2.393 and earlier, LTS 2.375.3 and earlier prints an error stack
-trace on agent-related pages when agent connections are broken. This stack
-trace may contain information about Jenkins configuration that is otherwise
-inaccessible to attackers.
+CREDITS
+-------
 
+- Reported-by: Harry Sintonen
+- Patched-by: Daniel Stenberg
 
-SECURITY-3063 / CVE-2023-27905
-update-center2 is the tool used to generate the Jenkins update sites hosted
-on `updates.jenkins.io`.
+Thanks a lot!
 
-NOTE: While it is designed for use by the Jenkins project for this purpose,
-others may be using it to operate their own self-hosted update sites.
+-- 
 
-update-center2 3.13 and 3.14 renders the required Jenkins core version on
-plugin download index pages. This version is taken from plugin metadata
-without being sanitized.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to provide a plugin for hosting.
-
-The following preconditions must both be satisfied for this to be
-exploitable in a self-hosted update-center2:
-
-* The generation of download pages needs to be enabled (i.e., the
-  `--download-links-directory` argument needs to be set).
-* A custom download page template must be used (`--index-template-url`
-  argument), and the template used must not prevent JavaScript execution
-  through `Content-Security-Policy`.
-  The default template prevents exploitation by declaring a restrictive
-  `Content-Security-Policy`.
-
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
