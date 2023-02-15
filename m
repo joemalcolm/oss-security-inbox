@@ -1,4 +1,4 @@
-Received: (qmail 20382 invoked by uid 550); 1 Mar 2024 22:41:48 -0000
+Received: (qmail 32545 invoked by uid 550); 15 Feb 2023 07:29:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,50 +7,111 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17542 invoked from network); 1 Mar 2024 10:38:54 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Arnout Engelen <engelen@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <dfd84788-4844-1bd6-1546-4eec5c844e42@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 01 Mar 2024 10:42:22 +0000
+Received: (qmail 32498 invoked from network); 15 Feb 2023 07:29:10 -0000
+Date: Wed, 15 Feb 2023 08:28:58 +0100 (CET)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <r59op275-8q67-40q0-n912-8sq39s6o742q@unkk.fr>
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2024-27140: Apache Archiva: reflected XSS 
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] curl: CVE-2023-23916: HTTP multi-header compression denial of
+ service
 
-Severity: moderate
+CVE-2023-23916: HTTP multi-header compression denial of service
+===============================================================
 
-Affected versions:
+Project curl Security Advisory, February 15th 2023 -
+[Permalink](https://curl.se/docs/CVE-2023-23916.html)
 
-- Apache Archiva 2.0.0 or later
+VULNERABILITY
+-------------
 
-Description:
+curl supports "chained" HTTP compression algorithms, meaning that a server
+response can be compressed multiple times and potentially with different
+algorithms. The number of acceptable "links" in this "decompression chain" was
+capped, but the cap was implemented on a per-header basis allowing a malicious
+server to insert a virtually unlimited number of compression steps simply by
+using many headers.
 
-** UNSUPPORTED WHEN ASSIGNED **
+The use of such a decompression chain could result in a "malloc bomb", making
+curl end up spending enormous amounts of allocated heap memory, or trying to
+and returning out of memory errors.
 
-Improper Neutralization of Input During Web Page Generation ('Cross-site Sc=
-ripting') vulnerability in Apache Archiva.
+We are not aware of any exploit of this flaw.
 
-This issue affects Apache Archiva: from 2.0.0.
+INFO
+----
 
-As this project is retired, we do not plan to release a version that fixes =
-this issue. Users are recommended to find an alternative or restrict access=
- to the instance to trusted users. Alternatively, you could configure a HTT=
-P proxy in front of your Archiva instance to only forward requests that do =
-not have malicious characters in the URL.
+CVE-2023-23916 was introduced in [commit
+dbcced8e32b50c06](https://github.com/curl/curl/commit/dbcced8e32b50c06),
+shipped in curl 7.57.0.
 
-NOTE: This vulnerability only affects products that are no longer supported=
- by the maintainer.
+Automatic decompression of content needs to be enabled per transfer. It is
+disabled by default and then nothing bad happens.
 
-Credit:
+This flaw exists with one or more of the compression algorithms built-in
+(gzip, brotli or zstd), but the individual algorithms have different
+"exploding" powers.
 
-sandr0 / Sandro Bauer (sandr0.xyz) (finder)
-BTullis / Ben Tullis (wikimedia.org) (finder)
-sbassett / Scott Bassett (wikimedia.org) (finder)
-L0ne1y (finder)
+Both `Content-Encoding:` and `Transfer-Encoding:` are affected over all HTTP
+versions.
 
-References:
+This flaw is almost identical to the previous [CVE-2022-32206: HTTP
+compression denial of service](https://curl.se/docs/CVE-2022-32206.html), as
+the fix for that earlier flaw was incomplete.
 
-https://attic.apache.org/projects/archiva.html
-https://www.cve.org/CVERecord?id=3DCVE-2024-27140
+CWE-770: Allocation of Resources Without Limits or Throttling
 
+Severity: Medium
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.57.0 to and including 7.87.0
+- Not affected versions: curl < 7.57.0 and curl >= 7.87.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+The amount of accepted "chained" algorithms is now capped to 5 in total,
+independently of the number of headers.
+
+A [fix for CVE-2023-23916](https://github.com/curl/curl/commit/119fb187192a9ea13dc)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 7.88.0
+
+  B - Apply the patch to your local version
+
+  C - Do not enable automatic decompression
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on January 8, 2023. We contacted
+distros@openwall on February 7, 2023.
+
+libcurl 7.88.0 was released on February 15 2023, coordinated with the
+publication of this advisory.
+
+CREDITS
+-------
+
+- Reported-by: Patrick Monnerat
+- Patched-by: Patrick Monnerat
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
