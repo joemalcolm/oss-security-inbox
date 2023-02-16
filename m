@@ -1,49 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/23/11
-Message-Id: <B8655473-CC69-403E-BB35-5F233EF95D1A@dwheeler.com>
-Date: Fri, 23 Jun 2023 14:37:11 -0400
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Opinion: Governments don't want IT security, they want to have cyber weapons
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/16/2
+Message-Id: <E1pSiJN-0000j3-5f@xenbits.xenproject.org>
+Date: Thu, 16 Feb 2023 17:44:49 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 426 v2 (CVE-2022-27672) - x86: Cross-Thread Return Address Predictions
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> On Jun 23, 2023, at 6:28 AM, Solar Designer <solar@...nwall.com> wrote:
-> I actually think we should be rejecting postings like this.  I accepted
-> this one as an example.  By "postings like this" I mean rants without
-> proposed solutions, not helpful for this community (and where replies
-> are unlikely to be helpful either), and/or lacking focus on Open Source.
-> I think in this case it's all 3 of these.
+            Xen Security Advisory CVE-2022-27672 / XSA-426
+                               version 2
 
-I agree with you. I'd prefer if this (and ALL mailing lists) tried to stay on-topic. Currently that's
-"Discussion of security flaws, concepts, and practices in the Open Source community".
+             x86: Cross-Thread Return Address Predictions
 
->  I think the recent thread
-> "The AI chatgpt writes insecure code" was of similarly questionable
-> value for this list's subscribers.
+UPDATES IN VERSION 2
+====================
 
-I think the *first* post that "AI systems (including LLMs)
-often generate insecure code" was plausibly on-topic.
-Now that it's happened, we don't need any more such posts.
+Xen 4.16 is vulnerable too.  The previous analysis of impacted versions
+was incorrect.
 
-If someone has a solution, with evidence that it *works* and can be used in OSS,
-that would be relevant (and possibly interesting).
+The same patch is applicable to Xen 4.16, and the staging-4.16 branch
+has already had the backport applied.
 
-Regarding your comment:
+ISSUE DESCRIPTION
+=================
 
-> I think most governments do want IT security.  Some also want "cyber
-> weapons", which is partially contradictory, but that's how it is:
-> https://en.wikipedia.org/wiki/NOBUS
+It has been discovered that on some AMD CPUs, the RAS (Return Address
+Stack, also called RAP - Return Address Predictor - in some AMD
+documentation, and RSB - Return Stack Buffer - in Intel terminology) is
+dynamically partitioned between non-idle threads.  This allows an
+attacker to control speculative execution on the adjacent thread.
 
-Since we're on this topic, my understanding of US policy (at least at one time) was that
-it's considered a trade-off, so what will be done is decided on a case-by-case basis by the "VEP process":
-"The Vulnerabilities Equities Process (VEP) balances whether to disseminate vulnerability information to the vendor/supplier in the expectation that it will be patched, or to temporarily restrict the knowledge of the vulnerability to the USG, and potentially other partners, so that it can be used for national security and law enforcement purposes, such as intelligence collection, military operations, and/or counterintelligence."
-https://trumpwhitehouse.archives.gov/sites/whitehouse.gov/files/images/External%20-%20Unclassified%20VEP%20Charter%20FINAL.PDF
-That's a little old, and I don't know if the policy has been changed, but that's an official page from the US archives.
+For more details, see:
+  https://www.amd.com/en/corporate/product-security/bulletin/amd-sb-1045
 
-I have opinions about this policy, generally negative, but I think that discussion is outside the scope of this mailing list so I'l stop there.
+IMPACT
+======
 
-So having discussed this, I look forward to more messages focused on the topics of this mailing list :-).
+An attacker might be able to infer the contents of arbitrary host
+memory, including memory assigned to other guests.
 
---- David A. Wheeler
+VULNERABLE SYSTEMS
+==================
 
+Only AMD CPUs are known to be potentially vulnerable.  CPUs from other
+hardware vendors are not believed to be impacted.
+
+Only the Zen1 and Zen2 microarchitectures are believed to be potentially
+vulnerable.  Other microarchitectures are not believed to be vulnerable.
+
+Only configurations with SMT activate are potentially vulnerable.  If
+SMT is disabled by the firmware, or at runtime with `smt=0` on Xen's
+command line, then the platform is not vulnerable.
+
+Xen 4.16 and later contains an optimisation, specifically:
+
+  c/s afab477fba3b ("x86/spec-ctrl: Skip RSB overwriting when safe to do so")
+
+which in combination with disabling 32bit PV guests (either at compile
+time with CONFIG_PV32=n, or at runtime with `pv=no-32` on the command
+line) renders Xen vulnerable to attack from PV guests.
+
+Note: multiple downstreams are known to have backported this
+optimisation to older versions of Xen.  Consult your software vendor
+documentation.
+
+MITIGATION
+==========
+
+On otherwise-vulnerable configurations, the issue can be mitigated by
+booting Xen with `spec-ctrl=rsb`, which will override the aforementioned
+optimisation.
+
+Alternatively, SMT can be disabled either in the firmware, or by booting
+Xen with `smt=0`.
+
+Alternatively, if 32bit PV guests are only runtime disabled in Xen, this
+issue can also be mitigated by booting Xen with `pv=32` to enable
+support 32bit PV guests.  It is not necessary for a 32bit PV guest to
+actually be running in order to mitigate the issue.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa426.patch          xen-unstable - Xen 4.16
+
+$ sha256sum xsa426*
+425b1d8931e02852afec9fe3d9f1d009f6d8a33c6387b2e8b3896f374732d470  xsa426.patch
+$
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmPuawUMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZW1UIAJ6tjOwbjPJigbSVVfyr5FRnIIYjzVBqkhL5ufvc
+TQY6ZoPsEEkXzx+jJeVa3NveiegqNvIdK26exlp7n2NrrWCRWlrdGlp+/83TWfUA
+gwxBzERTVBmi67+9razBYKzxKAwXO2zOHsvgSB2aCX43K+e9SvlKMny8Wp9j0Z99
+SRGxzZ8D4I7kKnMMpQIGvp/rt5+k+Q2oxXmNHnIsnCGshF+Y+zK7VwlSEpFYE1ga
+78XWYULa1qOEbaj+xsPtf9mMIiWfViwKkX7ZT/EPFBbFxGHSK/aeiQmWdNcFGI3D
+6L7vfJIo1Xsw26ozja+C+m3cFPhNSYJDRj92oCKmLPl8iII=
+=hFGs
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa426.patch" of type "application/octet-stream" (5190 bytes)
