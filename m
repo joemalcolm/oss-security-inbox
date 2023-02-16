@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1517" "Tuesday" "26" "June" "2018" "15:45:57" "+0200" "Alexander Potapenko" "glider@google.com" "<CAG_fn=UCp-bw7312gxmSP8d1ioYr1YBmOuSiSsJKCvJakzHS4A@mail.gmail.com>" "47" "Re: [oss-security] CVE-2018-1000204: Linux kernel 3.18 to 4.16 infoleak due to incorrect handling of SG_IO ioctl" nil nil nil "6" "2018062613:45:57" "[oss-security] CVE-2018-1000204: Linux kernel 3.18 to 4.16 infoleak due to incorrect handling of SG_IO ioctl" (number mark "U       glider@googl Jun 26   47/1517  " thread-indent "\"Re: [oss-security] CVE-2018-1000204: Linux kernel 3.18 to 4.16 infoleak due to incorrect handling of SG_IO ioctl\"\n") "<460649570.45004048.1529674363441.JavaMail.zimbra@redhat.com>" ("<CAG_fn=VEy8E4C4gTC2wZ-FSma5Lh5c5mtxTmhfdFKN_TSjvggQ@mail.gmail.com>" "<460649570.45004048.1529674363441.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 15686 invoked by uid 550); 26 Jun 2018 13:46:21 -0000
+Received: (qmail 22413 invoked by uid 550); 16 Feb 2023 14:56:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,92 +7,465 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15662 invoked from network); 26 Jun 2018 13:46:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Aro17a7jtvuBCxLXcWjsV+prl1lERmlognR4uvkR3l8=;
-        b=qD0odOQGAGUoFG+Jkk4EMqvY73u7GjQETUJPkry5EpYd8DiPihysKm8RbksLLYIYwE
-         4SZNLsHJE2g+Kmh9fIF1SLdzysGJEB5cfLsxIC8IkkOyLzqdHWNo5mnJfBdly6yaPVh4
-         S4rgr+M9pKZr6UeV5xQfnNvvZ3I9Bur+rBFUACMnlxqm/C1J/oGMI7S9xyMCxzC0orAu
-         m84sS9pU/OSOfSEMLvpJWSe1oH5NSMK1IPuXLQ+V6BRSR9mEho8abbMV4rOwQPnFgWXw
-         ciw40apo+Cmp0cq9Wwwbjn6/XHYRSeMwUfEHxSdh7vkluQJ/k/WhmKG8/0V9p/eOMGHz
-         jD7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Aro17a7jtvuBCxLXcWjsV+prl1lERmlognR4uvkR3l8=;
-        b=ctJyiLL2t0FRoa9mFdlYrrpzS95hOdoND/l97xQoDvDZmzmUeOLacemb4GpvycpnhF
-         G2CGuVsFdD630wXA4B+TSyCUt3i/YCkHz/0BBjNpDCPeCPkw3o8ZqYewBujXU47nRGCV
-         MFXR1Vkr+k0QFUtu94sTlwRUFUwnGFpUfp8ZOtcQd7DMyG0S7nfodEXSzS/Z4HXEC8wD
-         UYALbSDnmDB/8eI5drFBur1wvtIlc5K49N7Bpz2Fv/2Mx6CF//zSiE99K/UltCQIoIka
-         4IzZvJewE0WVGOZtlLs4VemK8Gy+4wIt7dc4VQQ/zCZoU3ZO3AOlAYhOsIGUTZoudUcE
-         2E3g==
-X-Gm-Message-State: APt69E2m5GyECCE24TX1TaInsBFAlKVlOY+rH329O4Ykvj4FQcum2WIZ
-	CvPfkP7DITg0wZ7GPwZNS3YL76JiOEScEtBh+VjlSg==
-X-Google-Smtp-Source: AAOMgpcdOwL3rt4CZfjxWVwNwvh7KvpevLbeV1Mix4MyOcRe9DAKPv3zHSD8EbFr2MeKJqDo4SCGDrvDYBj+0/rsdck=
-X-Received: by 2002:ab0:663:: with SMTP id f90-v6mr982442uaf.167.1530020768808;
- Tue, 26 Jun 2018 06:46:08 -0700 (PDT)
+Received: (qmail 22383 invoked from network); 16 Feb 2023 14:56:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1676559373; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=qFLRgABNJdbCchhEWhgjH9p5v2ni2rcPiaPz3pcPiAI=;
+	b=ahkiXTVMC3YQ0wym77ZwlItaCxlYXTUnIGCCFd25fyfRrUHMu4CNAih3Cof8bT/KkI7VVF
+	/oUlrf839aiHA5iXn3jMcbW5Bdj7JQnGJnWDUyLXvP3HL30eogKXlqJE2VoJY38uFS2aQh
+	cn7KGRvNUpawkhqr45Zz2QdP91VrzB8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1676559373;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=qFLRgABNJdbCchhEWhgjH9p5v2ni2rcPiaPz3pcPiAI=;
+	b=dfyNws6+EHwbab89ac/nUyRdOM4pCp/jKb4ZpPmYUR2R4iFGtV2e0/2ocbyqd4yUdCtoyI
+	F6SPQOchZt9aToBg==
+Date: Thu, 16 Feb 2023 15:56:12 +0100
+From: Matthias Gerstner <mgerstner@suse.de>
+To: oss-security@lists.openwall.com
+Message-ID: <Y+5EDY4sEFoKuJ+Z@kasco.suse.de>
 MIME-Version: 1.0
-References: <CAG_fn=VEy8E4C4gTC2wZ-FSma5Lh5c5mtxTmhfdFKN_TSjvggQ@mail.gmail.com>
- <460649570.45004048.1529674363441.JavaMail.zimbra@redhat.com>
-In-Reply-To: <460649570.45004048.1529674363441.JavaMail.zimbra@redhat.com>
-From: Alexander Potapenko <glider@google.com>
-Date: Tue, 26 Jun 2018 15:45:57 +0200
-Message-ID: <CAG_fn=UCp-bw7312gxmSP8d1ioYr1YBmOuSiSsJKCvJakzHS4A@mail.gmail.com>
-To: Vladis Dronov <vdronov@redhat.com>
-Cc: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="7814Gp+3Ac9s1+nz"
+Content-Disposition: inline
+Subject: [oss-security] EternalTerminal: Review report and findings (predictable /tmp file
+ paths and file permission issues, 3 CVEs)
+
+--7814Gp+3Ac9s1+nz
+Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] CVE-2018-1000204: Linux kernel 3.18 to 4.16
- infoleak due to incorrect handling of SG_IO ioctl
+Date: Thu, 16 Feb 2023 15:56:12 +0100
+From: Matthias Gerstner <mgerstner@suse.de>
+To: oss-security@lists.openwall.com
+Subject: EternalTerminal: Review report and findings (predictable /tmp file
+ paths and file permission issues, 3 CVEs)
 
-On Fri, Jun 22, 2018 at 3:32 PM Vladis Dronov <vdronov@redhat.com> wrote:
->
-> Hello, Alexander,
-Hi Vladis,
-> Could you please, explain, why do you think CVE-2018-1000204 is a security
-> flaw?
->
-> > The problem has limited scope, as users don't usually have permissions
-> > to access SCSI devices. On the other hand, e.g. the Nero user manual
-> > suggests doing `chmod o+r+w /dev/sg*` to make the devices accessible.
->
-> There is a check in the kernel in sg_build_indirect() exactly for this
-> situation:
->
->         [drivers/scsi/sg.c]
->         if (!capable(CAP_SYS_ADMIN) || !capable(CAP_SYS_RAWIO))
->                 gfp_mask |=3D __GFP_ZERO;
-Yes, you're right. It appears unlikely that a user has both
-CAP_SYS_ADMIN and CAP_SYS_RAWIO.
+Hello list,
 
-> This means non-root user will get zero-ed pages even if it has o+rw access
-> to /dev/sg*. Tests of your reproducer on systems available to me confirm
-> this, i.e. non-root user gets a zero-ed out buffer even if it is able to
-> access /dev/sg*.
->
-> I may not got smth correctly, but for now I do not see CVE-2018-1000204
-> as a security flaw and I believe a reject request to MITRE should be
-> issued.
-How do I proceed with this?
->
-> Best regards,
-> Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+this is a report about a review of the EternalTerminal [1] codebase I
+performed and three CVE assignments that happened in this context.
+EternalTerminal is an SSH-like remote terminal solution that survives
+connection loss and IP roaming. Following is my detailed report which is ba=
+sed
+on the v6.2.1 upstream release.
 
-Thank you,
+I publish this report today, because the maximum embargo period of 90 days =
+we
+offered upstream has been exceeded. Not all issues mentioned in this report
+are currently fixed upstream.
 
+[1]: https://github.com/MisterTea/EternalTerminal
+
+1) Review Motivation
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+There have been a number of CVE assignments for EternalTerminal in August
+2022:
+
+CVE-2022-24952: DoS triggered remotely by invalid sequence numbers.
+CVE-2022-24951: race condition allows local attacker to hijack IPC socket.
+CVE-2022-24950: race condition allows authenticated attacker to hijack other
+                user's SSH authorization socket.
+
+In light of these issues I have been asked to have a closer look if there
+might linger more issues in the project.
+
+2) Basic Design Overview
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+EternalTerminal initially uses a regular SSH connection to establish a 256 =
+bit
+shared secret between client and server. The client invokes the executable
+`etterminal` on the remote node via SSH. This creates a random `clientid` /
+`passkey` pair which is passed (still on the remote node) to the privileged
+`etserver` component via a UNIX domain socket. At this point the `etserver`
+component has an entry for the `clientid` and its copy of the shared key for
+that client. The `clientid` / `passkey` pair is also written to stdout and
+consumed via the SSH connection by the `et` client process. This way the
+client gets its copy of the shared key. The `etterminal` helper program on =
+the
+server side then backgrounds and keeps running. It implements the PTY that
+will later be used for running the EternalTerminal session.
+
+In a second step the client talks to the `etserver` remote instance via IP
+port 2022. A Google Protocol Buffer based protocol is used here. An initial
+cleartext message is sent that just states the `clientid` and the protocol
+version of the client. If the server accepts the parameters then both parti=
+es
+switch over to a libsodium secretbox encryption based on the 256 bit shared
+secret `passkey` and an incrementally increasing nonce value. The server now
+attaches the session to the PTY provided by the instance of `etterminal` th=
+at
+was started earlier via regular SSH.
+
+If the connection is lost then the client can connect to the remote node on
+port 2022 again using the same `clientid` to resume a terminal session.
+
+3) Issues
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+3.a) World Readable Logfiles and Predictable Logfile Names in /tmp
+------------------------------------------------------------------
+
+Both etserver and etclient create logfiles directly in the "/tmp"
+directory. For reference some example files:
+
+    $ ls -lh /tmp/etserver*
+    -rw-r--r-- 1 root root 393 Nov 18 13:44 /tmp/etserver-2022-11-18_13-44.=
+log
+    -rw-r----- 1 root root   0 Nov 18 13:44 /tmp/etserver_stderr_2022-11-18=
+_01-44
+
+    $ ls -lh /tmp/etclient*
+    -rw-r--r-- 1 someuser users 1.8K Nov 18 13:45 /tmp/etclient-2022-11-18_=
+13_44_52.log
+    -rw-r----- 1 someuser users   78 Nov 18 13:44 /tmp/etclient_stderr_2022=
+-11-18_01-44
+
+This has the following problems:
+
+- The stdout logfile is world-readable and the stderr logfile is still group
+  readable. This can pose an information leak, depending on the logger
+  configuration and what is exactly output during runtime by etserver and
+  etclient. Other users on the system can deduce what is happening this way,
+  including the `clientid`s used.
+
+- The filenames of these logfiles are pretty predictable, with only minute
+  timestamp granularity on the server and second timestamp granularity on t=
+he
+  client side. This means a local attacker can prepare symlink attacks or
+  precreate these files. Luckily on most current Linux systems this is prev=
+ented
+  by the Linux kernel's symlink protection in world writable directories. E=
+ven
+  with the protection it still poses a denial-of-service risk, because the
+  EternalTerminal processes can fail to start if these files are precreated=
+ by
+  other users. Without the kernel protection, file creation in privileged
+  locations and logfile spoofing would be the impact.
+
+### Upstream Fix
+
+Upstream addressed some of the problems (open() flags, creation mode) in th=
+is
+commit which is part of release 6.2.2:
+
+https://github.com/MisterTea/EternalTerminal/commit/92c4c6ada445c1925a8b397=
+f4171ca7735cbda16
+
+### Further Suggestions
+
+- Ideally the logfiles should go into a dedicated directory e.g. in
+  /var/log/et for the server side.
+- For the client side a set of logfiles can be kept in the home
+  directory, but old logs should be deleted after some time.
+  Alternatively client logs can be placed into `/run/user/<uid>/et-logs`
+  or a similar location.
+
+### CVE Assignments
+
+Mitre assigned the following CVEs:
+
+- CVE-2022-48257 for the "predictable log filename" aspect.
+- CVE-2022-48258 for the "world readable log files" aspect.
+
+3.b) TelemetryService Uses Fixed Paths in /tmp
+----------------------------------------------
+
+The TelemetryService class is instantiated using a database path in
+"/tmp/.sentry-native-et" for the client and "/tmp/.sentry-native-etserver" =
+for
+the server. This is a directory within which further files and directories
+will be queried and created during runtime.
+
+Similar to issue 3.a) this allows other users on the system to pre-create t=
+his
+parent directory which will be used by the `etclient` or `etserver` process.
+
+For example in etserver the following system call sequence with regard
+to this database directory can be observed during startup:
+
+```
+    mkdir("/tmp//.sentry-native-etserver", 0700) =3D -1 EEXIST (File exists)
+    readlink("/tmp/.sentry-native-etserver", 0x7ffda847e750, 1023) =3D -1 E=
+INVAL (Invalid argument)
+    openat(AT_FDCWD, "/tmp/.sentry-native-etserver/a5323119-72df-430c-ad87-=
+38054a86d7e1.run.lock", O_RDONLY|O_CREAT|O_TRUNC, 0666) =3D 5
+    newfstatat(AT_FDCWD, "/tmp/.sentry-native-etserver/a5323119-72df-430c-a=
+d87-38054a86d7e1.run.lock", {st_mode=3DS_IFREG|0644, st_size=3D0, ...}, 0) =
+=3D 0
+    mkdir("/tmp/.sentry-native-etserver", 0700) =3D -1 EEXIST (File exists)
+    mkdir("/tmp/.sentry-native-etserver/a5323119-72df-430c-ad87-38054a86d7e=
+1.run", 0700) =3D 0
+    openat(AT_FDCWD, "/tmp/.sentry-native-etserver/user-consent", O_RDONLY)=
+ =3D -1 ENOENT (No such file or directory)
+    newfstatat(AT_FDCWD, "/tmp/.sentry-native-etserver/last_crash", 0x7ffda=
+847fdb0, 0) =3D -1 ENOENT (No such file or directory)
+    openat(AT_FDCWD, "/tmp/.sentry-native-etserver", O_RDONLY|O_NONBLOCK|O_=
+CLOEXEC|O_DIRECTORY) =3D 6
+    newfstatat(AT_FDCWD, "/tmp/.sentry-native-etserver/a5323119-72df-430c-a=
+d87-38054a86d7e1.run", {st_mode=3DS_IFDIR|0700, st_size=3D40, ...}, 0) =3D 0
+    openat(AT_FDCWD, "/tmp/.sentry-native-etserver/a5323119-72df-430c-ad87-=
+38054a86d7e1.run.lock", O_RDONLY|O_CREAT|O_TRUNC, 0666) =3D 7
+    newfstatat(AT_FDCWD, "/tmp/.sentry-native-etserver/a5323119-72df-430c-a=
+d87-38054a86d7e1.run.lock", {st_mode=3DS_IFREG|0644, st_size=3D0, ...}, 0) =
+=3D 0
+    newfstatat(AT_FDCWD, "/tmp/.sentry-native-etserver/a5323119-72df-430c-a=
+d87-38054a86d7e1.run/session.json", 0x7ffda847faa0, 0) =3D -1 ENOENT (No su=
+ch file or directory)
+    unlink("/tmp/.sentry-native-etserver/a5323119-72df-430c-ad87-38054a86d7=
+e1.run/session.json") =3D -1 ENOENT (No such file or directory)
+    openat(AT_FDCWD, "/tmp/.sentry-native-etserver/a5323119-72df-430c-ad87-=
+38054a86d7e1.run/session.json", O_RDWR|O_CREAT|O_TRUNC, 0664) =3D 6
+    openat(AT_FDCWD, "/tmp/.sentry-native-etserver/a5323119-72df-430c-ad87-=
+38054a86d7e1.run/session.json", O_RDWR|O_CREAT|O_TRUNC, 0664) =3D 6
+```
+
+A local attacker can create "/tmp/.sentry-native-etserver" with mode 0777
+before `etserver` starts. The attacker will then control the complete
+directory tree. Even though the TelemetryService backend uses UUIDs, they c=
+an
+be deduced by waiting for the `.run.lock` file being created, from this time
+on the local attacker knows the UUID and can try to win a race condition by
+pre-creating also the `<UUID>.run` directory. The information placed there
+will then leak to the attacker, but the attacker can also compromise the da=
+ta
+integrity by changing it.
+
+Again, without the Linux kernel's symlink protection mechanism this
+issue would provide a lot of possibilities to exploit symlink attacks. And =
+in
+the more deeply nested file paths below "/tmp/.sentry-native-etserver" the
+symlink protection might not even be triggered.
+
+### Upstream Fix
+
+I do not know of any upstream efforts to fix this.
+
+### Suggested Fix
+
+- The client should create this directory in "/run/user/<UID>/sentry-native=
+-et"
+  instead.
+- The server should create this directory in e.g. "/run/etserver/sentry-nat=
+ive-etserver"
+  instead.
+
+### CVE Assignments
+
+Mitre assigned the following CVE:
+
+- CVE-2023-23558 for the fixed "/tmp" path usage of the TelemetryService co=
+mponent
+
+3.c) Registration of Server Sessions via Local IPC Socket Allows for Simple=
+ Reverse Shells
+---------------------------------------------------------------------------=
+---------------
+
+The socket on the `etserver` side at "/var/run/etserver.idpasskey.fifo" is
+world accessible and allows any local user to register a future session with
+EternalTerminal that can later be accessed remotely on port 2022. To do so
+the local user only needs to get out the clientid and idpasskey registered =
+at
+the socket, which can also have static values, because the clientid and
+passkey are selected by the client side, not by the privileged server side.
+
+Usually only certain user accounts are allowed to log into a machine, based=
+ on
+policies found e.g. in the SSH configuration, PAM stack configuration and so
+on. Especially users without a valid account (no valid shell set, no passwo=
+rd
+assigned, locked, etc.) should not be able to log into a machine neither
+locally nor remotely. These login policies can easily be circumvented by us=
+ing
+the `etserver` features.
+
+A reverse shell can of course also be created in other ways as soon as a
+local user account can execute arbitrary code. What makes it special
+with `etserver` is that it will be very well hidden since it is using a
+regular facility of the system. What makes this more problematic is that
+there is no time limit, a local user account can register such a session
+and access it days or event months later remotely, provided that the
+`etserver` instance isn't restarted.
+
+Since all that is needed to register a session is access to the local IPC
+socket, this even has the potential to allow isolated container processes to
+escape network isolation. Even if the process has a detached networking sta=
+ck
+(separate Linux network namespace), the mere access to `etserver`'s IPC soc=
+ket
+allows to create a remote connection to the container from the outside.
+Depending on container configurations or other vulnerabilities in container
+setups this can be a realistic threat.
+
+### CVE Assignments
+
+Since this is not a tangible vulnerability on its own I did not request a
+dedicated CVE for it. I still believe that the topic should be addressed in
+some form.
+
+### Upstream Fix
+
+I do not know of any upstream efforts to improve this aspect of
+EternalTerminal.
+
+## Suggested Fixes
+
+- Ideally there would be a tighter coupling between the SSH authentication
+  part and the connection to port 2022. For example a small PAM module could
+  write out a kind of auth cookie during SSH login for the user account con=
+text
+  that will be verified again once the connection on port 2022 is coming in.
+  This should also be time limited so that the session doesn't remain valid
+  forever but only for a few minutes or so, if no one actually connects to
+  port 2022.
+
+4) Other Suggestions
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+4.a) srand(1) Calls
+-------------------
+
+Currently the following source locations (corresponding to the three main
+programs) contain a call to `srand(1)`:
+
+    terminal/TerminalServerMain.cpp:    srand(1);
+    terminal/TerminalClientMain.cpp:    srand(1);
+    terminal/TerminalMain.cpp:    srand(1);
+
+Luckily the C `rand()` function is only used for non-sensitive things in the
+codebase as far as I could see. Still this is bad practice, especially in a
+program that is also doing cryptography. Things could get mixed up in the
+future. I suggest to create a common init function that properly seeds the
+random number generator using real random data e.g. obtained from libsodium.
+
+### Upstream Fix
+
+I do not know of any upstream efforts to improve on this.
+
+4.b) Telemetry Enabled by Default
+---------------------------------
+
+I found it a bit irritating that the telemetry service is sending out
+crash data by default without explicit user opt-in. Even though it is
+anonymised I don't think an OSS program should send out data to third party
+remote servers without explicit consent.
+
+There should be at least a compile time option to influence this default
+so that integrators of the package can decide which way to go here.
+
+### Upstream Fix
+
+Upstream made the Telemetry opt-in (changed the defaults) via this commit
+which is part of release 6.2.2:
+
+https://github.com/MisterTea/EternalTerminal/commit/7289e04475a8418d376cbc7=
+ecbcc580e23c42bb7
+
+4.c) Busy-wait Loop in TerminalServer::run()
+--------------------------------------------
+
+Currently the while loop there `select()`s with a timeout of 10.000
+usec. I can see no purpose for that in the code, but it creates notable
+CPU load even in idle in etserver and also makes analyzing the program
+harder due to the massive load of system calls resulting from the busy loop.
+
+### Upstream Fix
+
+I do not know of any upstream efforts to improve on this.
+
+4.d) TerminalUserInfo in etserver Receives User Controlled uid/gid Values
+-------------------------------------------------------------------------
+
+Currently the `etterminal` program sends the client's uid and gid values to
+the privileged `etserver` via a local UNIX domain socket. This information
+ends up in the TerminalUserInfo protobuf structure. Currently `etserver` us=
+es
+this information only for the jump host configuration in a non-sensitive way
+as far as I can see.
+
+For prudence I suggest to change this logic though. The uid and gid values =
+can
+be forged by the client and future code changes might miss this fact and
+consider this information to be trusted. The safe way to obtain this
+information would be to use the `SO_PEERCRED` socket option on the UNIX dom=
+ain
+socket connection on the privileged end. This way the information is obtain=
+ed
+from the kernel and can be trusted.
+
+If it is intentional that clients can set this data then naming the fields
+differently and documenting that this is untrusted data is recommended.
+
+### Upstream Fix
+
+I do not know of any upstream efforts to improve on this.
+
+Timeline
+=3D=3D=3D=3D=3D=3D=3D=3D
+
+2022-11-18: I shared an initial report with the upstream author(s) offering
+            coordinated disclosure according to the openSUSE disclosure
+            policy. Some discussions about fixing parts of the issues start=
+ed
+            but died down again.
+            No statement about the desired duration of an embargo period (or
+            any at all) was made by upstream. No confirmation of the
+            individual issues or wishes regarding CVE assigments have been
+            stated.
+2023-01-09: I learned from upstream that information about issue 3.a) was
+            already public in form of an upstream GitHub pull request. I as=
+ked
+            about plans for fixes for the remaining findings and about
+            upstream's desires for a prolonged embargo period and CVE
+            assignments but got no answers.
+2023-01-13: I requested the three CVEs mentioned in this report from Mitre =
+for
+            the issues that I deemed critical and concrete enough to assign
+            CVEs.
+2023-01-18: Upstream released version 6.2.2 containing fixes for issue 3.a),
+            i.e. for CVE-2022-48257 and CVE-2022-48258.
+2023-02-16: The maximum embargo period we offer (90 days) has been exceeded
+            and lacking further details from upstream I published all
+            information I have.
+
+Best Regards
+
+Matthias
 
 --=20
-Alexander Potapenko
-Software Engineer
+Matthias Gerstner <matthias.gerstner@suse.de>
+Security Engineer
+https://www.suse.com/security
+GPG Key ID: 0x14C405C971923553
+=20
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG N=FCrnberg
+Gesch=E4ftsf=FChrer: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moer=
+man
 
-Google Germany GmbH
-Erika-Mann-Stra=C3=9Fe, 33
-80636 M=C3=BCnchen
+--7814Gp+3Ac9s1+nz
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
-Registergericht und -nummer: Hamburg, HRB 86891
-Sitz der Gesellschaft: Hamburg
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmPuRAwACgkQFMQFyXGS
+NVNoHxAAj+JhIiyW3WFt9d8IuWIhbMmijUSQW+F2LhJtlde2DVZdil4O97jiA2lJ
+8m7I/UnFuo6Q9CeKQg64Z5ujixMrDA4Qb4KNvKTq6t2FKAs8wDQS1pdEXEzgOfNW
+Fi/BusvCkk/FZgIM6Hakplx3CmtrzhxuTcuNY0/KCNb/tCndRb1PzC+E0btXOBXn
+OAN3Q8tvAHUVxHzdC/XTspYEYORheCSQs0wVLpfnYCidUF626IQGjnS2itJ3Uywp
+e2yl/q6oxiQWaxkWglFRQo8ksyNDnpcxJFX7PxRz40y+NPc7eGKWEkOvE8sXlMGs
+3a1YjB/CEhi1ovMBP3r4Gmq+xhwu3ULRbaqNhueowVTeLMg8QbR29T9zNuNhjlPi
+IYXLt9nJ42+uVAqw4s6XPd5EGAVsecwDFFJJciLysPusfjDduVHFa3/rxntT6gKh
+GJloznzv1is8s/vSMhmKm5Kjj2KbTxBZOBn/Uv1UopYWOZuhPbVHqsW4Jww3gvOX
+uro0Rl6luZ3h7Ci06qjN3W5E7janjI+oLPyqUCzwkW9H28n5nwTb6d3ayCpxRTgy
+ghydKslTkbOf2sALHG8VbEvjE6p14RVJc2afpjcTlROkDrqEv9vQxqHOvTZqtApb
+UI8BeQXEbgbxDuW7NybhhZl4ZYYslKFaBdriJcnDFrgI1f8FVtA=
+=5esp
+-----END PGP SIGNATURE-----
+
+--7814Gp+3Ac9s1+nz--
