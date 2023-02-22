@@ -1,24 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/17/2
-Message-ID: <8b244a2b-5079-02db-135d-f584af57add3@apache.org>
-Date: Mon, 17 Apr 2023 09:57:11 +0000
-From: Daniel Gaspar <dpgaspar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/22/2
+Message-ID: <Y/YyAyP4+WYltYm6@itl-email>
+Date: Wed, 22 Feb 2023 10:17:19 -0500
+From: Demi Marie Obenour <demi@...isiblethingslab.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-25504: Apache Superset: Possible SSRF on import datasets 
+Subject: Re: Re: double-free vulnerability in OpenSSH server 9.1 (CVE-2023-25136)
 Content-Type: text/plain; charset=utf-8
 
-Description:
+On Wed, Feb 22, 2023 at 05:54:36AM +0000, Qualys Security Advisory wrote:
+> Hi all,
+> 
+> Another quick update on the exploitation of this double-free bug on
+> OpenBSD:
+> 
+> a/ our previous attack (the arbitrary control of sshd's instruction
+> pointer via the EVP_AES_KEY structure) works only on OpenBSD amd64, not
+> on OpenBSD i386;
+> 
+> b/ we were able to recycle the chunk of memory where
+> options.kex_algorithms was allocated, into a chunk of a different size
+> (which gives us greater freedom), but this happens with such a low
+> probability (even on i386) that we do not consider this particular
+> attack to be practical;
+> 
+> c/ as a direct consequence of CVE-2023-25136, we found an information
+> leak (of bits and pieces from the memory of the unprivileged sshd
+> process), but it is unlikely to be useful in practice.
 
-A malicious actor who has been authenticated and granted specific permissions in Apache Superset may use the import dataset feature in order to conduct Server-Side Request Forgery
-attacks and query internal resources on behalf of the server where Superset
-is deployed. This vulnerability exists in Apache Superset versions up to and including 2.0.1.
+Is it possible to use this information leak to bypass ASLR without
+crashing the process?  If so, then one could use the control of the
+instruction pointer to jump to a ROP chain and get code execution.
+This flaw would then be at least the third RCE in OpenBSD’s default
+install, and the second in OpenSSH.
 
-Credit:
+Also, is this flaw expected to be exploitable for code execution on
+GNU/Linux?
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Invisible Things Lab
 
-Alexey Sabadash, VK (finder)
-
-References:
-
-https://superset.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-25504
-
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
