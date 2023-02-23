@@ -1,21 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/30/3
-Message-ID: <jwJLRnVfw9qn5wsHzRxO4mCtkAMJs9l7didEzdt2C9UBuFA7Td4ERwLG_9ZVtCy2SyomGMnZAgYJfJAjXhubHz07SaIQwTLmJemznO-W4CM=@protonmail.ch>
-Date: Thu, 30 Mar 2023 14:08:10 +0000
-From: Jordan Glover <Golden_Miller83@...tonmail.ch>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/23/6
+Message-ID: <6352d70e-c156-fb64-6b03-ca3f89331f88@apache.org>
+Date: Thu, 23 Feb 2023 17:43:54 +0000
+From: Jarek Potiuk <potiuk@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: polkitd service user privilege separation
+Subject: CVE-2023-25693: Sqoop Apache Airflow Provider Remote Code Execution Vulnerability 
 Content-Type: text/plain; charset=utf-8
 
-On Wednesday, March 29th, 2023 at 9:24 PM, Simon McVittie <smcv@...ian.org> wrote:
+Severity: moderate
 
+Description:
 
-> polkitd can only be either trusted or untrusted, we can't have it both
-> ways. I think the main thing that's wrong here is the documentation that
-> claims that the privilege separation is meaningful.
-> 
-> smcv
+Improper Input Validation vulnerability in the Apache Airflow Sqoop Provider.
 
-Is it valid conclusion that polkitd would be better of just running as root? That would clear any possible confusion. Or are there advantages of running it as separate "trusted" user?
+This issue affects Apache Airflow Sqoop Provider versions before 3.1.1.
 
-Jordan 
+Credit:
+
+ L3yx of Syclover Security Team (finder)
+
+References:
+
+https://github.com/apache/airflow/pull/29500
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-25693
+
