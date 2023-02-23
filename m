@@ -1,31 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/21/3
-Message-ID: <12f5129a-e222-69df-3760-456569ef1880@apache.org>
-Date: Thu, 21 Dec 2023 07:05:04 +0000
-From: Ephraim Anierobi <ephraimanierobi@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-49920: Apache Airflow: Missing CSRF protection on DAG/trigger 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/23/3
+Message-ID: <20230223145926.GA7509@localhost.localdomain>
+Date: Thu, 23 Feb 2023 14:59:32 +0000
+From: Qualys Security Advisory <qsa@...lys.com>
+To: Demi Marie Obenour <demi@...isiblethingslab.com>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Re: double-free vulnerability in OpenSSH server 9.1 (CVE-2023-25136)
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Hi Demi,
 
-Affected versions:
+On Wed, Feb 22, 2023 at 10:17:19AM -0500, Demi Marie Obenour wrote:
+> Is it possible to use this information leak to bypass ASLR without
+> crashing the process?
 
-- Apache Airflow 2.7.0 before 2.8.0
+Unfortunately, no: sshd calls _exit() immediately after this information
+leak, and fork()s + re-execv()s itself (and therefore re-randomizes its
+address space) the next time we connect to it; i.e., a memory address
+leaked in one connection is useless in another connection.
 
-Description:
+> Also, is this flaw expected to be exploitable for code execution on
+> GNU/Linux?
 
-Apache Airflow, version 2.7.0 through 2.7.3, has a vulnerability that allows an attacker to trigger a DAG in a GET request without CSRF validation. As a result, it was possible for a malicious website opened in the same browser - by the user who also had Airflow UI opened - to trigger the execution of DAGs without the user's consent.
-Users are advised to upgrade to version 2.8.0 or later which is not affected
+We are focusing on OpenBSD for now, because its malloc seems more
+compatible with this particular double-free bug than glibc's malloc; we
+will look into glibc/Linux at some point, and will keep you posted.
 
-Credit:
+Thank you very much! With best regards,
 
-Tareq Ahamed ( 0xt4req) (finder)
-Jens Scheffler (remediation developer)
-
-References:
-
-https://github.com/apache/airflow/pull/36026
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-49920
-
+-- 
+the Qualys Security Advisory team
