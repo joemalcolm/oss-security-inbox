@@ -1,61 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/08/7
-Message-ID: <240c8fa4-2872-0584-3cfd-7648ea4dc0eb@citrix.com>
-Date: Tue, 8 Aug 2023 19:18:51 +0100
-From: Andrew Cooper <andrew.cooper3@...rix.com>
-To: Solar Designer <solar@...nwall.com>, "Xen. org security team" <security@....org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 433 v3 (CVE-2023-20593) - x86/AMD: Zenbleed
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/23/2
+Message-ID: <7e538c37-50f5-0c58-3e2d-b44a8f37b5c3@apache.org>
+Date: Thu, 23 Feb 2023 08:40:58 +0000
+From: Carsten Ziegeler <cziegeler@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-25621: Apache Sling does not allow to handle i18n content in a secure way 
 Content-Type: text/plain; charset=utf-8
 
-On 08/08/2023 7:00 pm, Solar Designer wrote:
-> On Mon, Jul 31, 2023 at 05:00:35PM +0000, Xen. org security team wrote:
->> The patch provided with earlier versions was buggy.  It unintentionally
->> disable more bits than expected in the control register.  The contents of this
->> register is not generally known, so the effects on the system are unknown.
->>
->> A patch correcting this error has been committed and backported to all stable
->> trees which got the XSA-433 fix originally.  Additionally, it is attached to
->> this advisory as xsa433-bugfix.patch, and applicable to all branches in this
->> form.
-> where xsa433-bugfix.patch includes this description:
->
->> This line:
->>
->> 	val &= ~chickenbit;
->>
->> ends up truncating val to 32 bits, and turning off various errata workarounds
->> in Zen2 systems.
-> and that patch then corrects the truncation by changing the type of the
-> chickenbit variable to 64-bit.  The context is:
->
-> +	/*
-> +	 * Microcode is the preferred mitigation, in terms of performance.
-> +	 * However, without microcode, this chickenbit (specific to the Zen2
-> +	 * uarch) disables Floating Point Mov-Elimination to mitigate the
-> +	 * issue.
-> +	 */
-> +	val &= ~chickenbit;
-> +	if (sig->rev < good_rev)
-> +		val |= chickenbit;
->
-> This leaves me wondering: why have this line at all?  I understand Xen
-> wanting to enable the chicken bit on vulnerable CPUs, but why disable it
-> on other AMD CPUs?  If someone or something had enabled the bit, that's
-> probably intentional, and even if not it probably shouldn't be Xen's
-> business to alter CPU behavior beyond what's necessary for Xen itself to
-> work reliably and securely.
->
-> Am I missing something?
+Severity: important
 
-There is an earlier exit in this function for any non-Zen2 system.
+Description:
 
-So here, we are strictly on Zen2 (all vulnerable), and either have good
-microcode or not.
+Privilege Escalation vulnerability in Apache Software Foundation Apache Sling.
+Any content author is able to create i18n dictionaries in the repository in a location the author has write access to. As these translations are used across the whole product, it allows an author to change any text or dialog in the product. For example an attacker might fool someone by changing the text on a delete button to "Info".
+This issue affects the i18n module of Apache Sling up to version 2.5.18. Version 2.6.2 and higher limit by default i18m dictionaries to certain paths in the repository (/libs and /apps).
 
-The microcode fix is far more performant than the chickenbit.
+Users of the module are advised to update to version 2.6.2 or higher, check the configuration for resource loading and then adjust the access permissions for the configured path accordingly.
 
-This chickenbit is something unrelated to FP move-elimination on other
-microarchitectures.
+This issue is being tracked as SLING-11744 
 
-~Andrew
+References:
+
+https://sling.apache.org/news.html
+https://sling.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-25621
+https://issues.apache.org/jira/browse/SLING-11744
+
