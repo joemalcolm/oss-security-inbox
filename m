@@ -1,97 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/02/1
-Message-ID: <2e988a57-9577-8ccc-7d0b-9e663f218431@igalia.com>
-Date: Wed, 2 Aug 2023 11:09:30 +0200
-From: Carlos Alberto Lopez Perez <clopez@...lia.com>
-To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
-Cc: security@...kit.org, oss-security@...ts.openwall.com
-Subject: WebKitGTK and WPE WebKit Security Advisory WSA-2023-0007
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/23/4
+Message-ID: <418142a4-27db-192b-5c9e-38384e079527@apache.org>
+Date: Thu, 23 Feb 2023 17:16:39 +0000
+From: Jarek Potiuk <potiuk@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-25691: Apache Airflow Google Provider: Google Cloud Sql Provider Remote Command Execution 
 Content-Type: text/plain; charset=utf-8
 
-------------------------------------------------------------------------
-WebKitGTK and WPE WebKit Security Advisory                 WSA-2023-0007
-------------------------------------------------------------------------
+Severity: moderate
 
-Date reported           : August 02, 2023
-Advisory ID             : WSA-2023-0007
-WebKitGTK Advisory URL  : https://webkitgtk.org/security/WSA-2023-0007.html
-WPE WebKit Advisory URL : https://wpewebkit.org/security/WSA-2023-0007.html
-CVE identifiers         : CVE-2023-38133, CVE-2023-38572,
-                          CVE-2023-38592, CVE-2023-38594,
-                          CVE-2023-38595, CVE-2023-38597,
-                          CVE-2023-38599, CVE-2023-38600,
-                          CVE-2023-38611.
+Description:
 
-Several vulnerabilities were discovered in WebKitGTK and WPE WebKit.
+Improper Input Validation vulnerability in Apache Software Foundation Apache Airflow Google Provider.This issue affects Apache Airflow Google Provider: before 8.10.0.
 
-CVE-2023-38133
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
-    Credit to YeongHyeon Choi (@hyeon101010).
-    Impact: Processing web content may disclose sensitive information.
-    Description: The issue was addressed with improved checks.
+References:
 
-CVE-2023-38572
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
-    Credit to Narendra Bhati (twitter.com/imnarendrabhati) of Suma Soft
-    Pvt. Ltd, Pune - India.
-    Impact: A website may be able to bypass Same Origin Policy.
-    Description: The issue was addressed with improved checks.
+https://github.com/apache/airflow/pull/29497
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-25691
 
-CVE-2023-38592
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
-    Credit to Narendra Bhati (twitter.com/imnarendrabhati) of Suma Soft
-    Pvt. Ltd, Pune - India, Valentino Dalla Valle, Pedro Bernardo, Marco
-    Squarcina, and Lorenzo Veronese of TU Wien.
-    Impact: Processing web content may lead to arbitrary code execution.
-    Description: A logic issue was addressed with improved restrictions.
-
-CVE-2023-38594
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
-    Credit to Yuhao Hu.
-    Impact: Processing web content may lead to arbitrary code execution.
-    Description: The issue was addressed with improved checks.
-
-CVE-2023-38595
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
-    Credit to an anonymous researcher, Jiming Wang, and Jikai Ren.
-    Impact: Processing web content may lead to arbitrary code execution.
-    Description: The issue was addressed with improved checks.
-
-CVE-2023-38597
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
-    Credit to 이준성(Junsung Lee) of Cross Republic.
-    Impact: Processing web content may lead to arbitrary code execution.
-    Description: The issue was addressed with improved checks.
-
-CVE-2023-38599
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
-    Credit to Hritvik Taneja, Jason Kim, Jie Jeff Xu, Stephan van
-    Schaik, Daniel Genkin, and Yuval Yarom.
-    Impact: A website may be able to track sensitive user information.
-    Description: A logic issue was addressed with improved state
-    management.
-
-CVE-2023-38600
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
-    Credit to Anonymous working with Trend Micro Zero Day Initiative.
-    Impact: Processing web content may lead to arbitrary code execution.
-    Description: The issue was addressed with improved checks.
-
-CVE-2023-38611
-    Versions affected: WebKitGTK and WPE WebKit before 2.40.5.
-    Credit to Francisco Alonso (@revskills).
-    Impact: Processing web content may lead to arbitrary code execution.
-    Description: The issue was addressed with improved memory handling.
-
-
-We recommend updating to the latest stable versions of WebKitGTK and WPE
-WebKit. It is the best way to ensure that you are running safe versions
-of WebKit. Please check our websites for information about the latest
-stable releases.
-
-Further information about WebKitGTK and WPE WebKit security advisories
-can be found at: https://webkitgtk.org/security.html or
-https://wpewebkit.org/security/.
-
-The WebKitGTK and WPE WebKit team,
-August 02, 2023
