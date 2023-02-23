@@ -1,49 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/12/4
-Message-ID: <03df23f7-96c4-f1d1-32ea-86b2881cabe8@oracle.com>
-Date: Wed, 12 Apr 2023 09:55:44 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/23/7
+Message-ID: <377ad636-7363-ead2-b0e2-ccfc532a6f96@apache.org>
+Date: Thu, 23 Feb 2023 17:45:35 +0000
+From: Jarek Potiuk <potiuk@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Ghostscript CVE-2023-28879: "Shell in the Ghost"
+Subject: CVE-2023-25696: Apache Airflow Hive Provider Beeline RCE 
 Content-Type: text/plain; charset=utf-8
 
-I haven't seen mail to the list about this yet, so FYI for those who haven't
-seen it via other channels.
+Severity: moderate
 
-https://artifex.com/news/critical-security-vulnerability-fixed-in-ghostscript
-says:
+Description:
 
-> Artifex is pleased to announce that our team of developers have
-> successfully addressed and fixed a critical security vulnerability in
-> Artifex Ghostscript, version 10.01.0. A CVE (Common Vulnerabilities
-> and Exposures) identifier has been assigned to the issue,
-> https://nvd.nist.gov/vuln/detail/CVE-2023-28879.
-> 
-> On March 23, 2023, a security researcher, Hadrien Perrineau, reported
-> the buffer overflow and exploit, on March 24 Artifex fixed the overflow
-> and removed other related code reducing the attack surface. Fixes were
-> published here:
-> 
-> https://git.ghostscript.com/?p=ghostpdl.git;h=37ed5022cecd584de868933b5b60da2e995b3179
-> 
-> https://git.ghostscript.com/?p=ghostpdl.git;h=37ed5022cecd584de868933b5b60da2e995b3179
-> 
-> A release, Ghostscript and GhostPDL 10.01.1, was published on March 27.
-> An email alert was sent out to all Artifex customers on March 27
-> notifying them of the bug and the fix. Artifex worked with customers to
-> integrate the solution into their products as quickly as possible.
-> On April 7 the bug was made public.
-> 
-> Users of Ghostscript are urged to update their software to the latest
-> version immediately. By doing so, they will be able to mitigate the risk
-> associated with this vulnerability and ensure the security and integrity
-> of their systems.
+Improper Input Validation vulnerability in the Apache Airflow Hive Provider.
 
-A report from those who found the bug, including their POC, was published
-yesterday:
+This issue affects Apache Airflow Hive Provider versions before 5.1.3.
 
-https://offsec.almond.consulting/ghostscript-cve-2023-28879.html
+Credit:
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+id_No2015429 of 3H Secruity Team (finder)
+
+References:
+
+https://github.com/apache/airflow/pull/29502
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-25696
+
