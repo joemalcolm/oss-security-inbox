@@ -1,4 +1,4 @@
-Received: (qmail 19499 invoked by uid 550); 26 Dec 2024 00:11:51 -0000
+Received: (qmail 31752 invoked by uid 550); 1 Mar 2023 13:40:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,132 +7,110 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 20160 invoked from network); 25 Dec 2024 23:04:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	invisiblethingslab.com; h=cc:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1735167878;
-	 x=1735254278; bh=8ocg9WnYaWircmx4PzDgegxw3+Ogin65L0XCdsyYSGA=; b=
-	C+tz8lP6B5Tkrk9DL/nttbYiRR+JUK90bYodedNv4ggixLzbVgCtrqZHqAZ2YcEd
-	zmVQqDJEFnTNiOOY5RVfJ/83BBtGLekvKPRDDf32jSsr0UTCcK+ClPzPLS/T62+m
-	OVjFuS7DzVAO7TRIWEVhK+7+QY5Ej3C84BVpIn2VvgvENCOP6AaKawUkwyB69wjl
-	UZgs3H3OGkZGlaxS2LrzRdj4BYm3jcV47S1tITegMK1GKqGqAa7P/voRJ4c1DvPF
-	XsOXzDeo8IFwtzFA6Kjtw8hBFWJyXCRIMgintxGQA06RVSS46wsIpZ7gcPI4fDTB
-	zHNQK+DQzDntLKNRJRh1HA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1735167878; x=1735254278; bh=8ocg9WnYaWircmx4PzDgegxw3+Ogin65L0X
-	CdsyYSGA=; b=wbkN2ArvxKwthyV//c8fV72imGPXuQnxqktIexjo5eUiYNsE0AK
-	DBGA7oZzp7xJrkeCNzW9reh0OcXiKcNtaiJB9B7phoBqECGPly0PRKIRIkxqR3IY
-	wTCB7oKUDFKRLCw+lKOmeXjfi/e699DFQbT+oVhecMW5Lt609Lqh9XqT41yvjaBL
-	4U+NoaKFAdeBB0A0SkXxCWNPtx6RvX1gaSm0AUNUOLp1q2RJwDOaTiHTKQC69qM5
-	jj9jZP25p07a2T4W3l97PaOSXsKy8LlrgBN9NNqnSYMw/+qWLxBJoGoj5QFUBSSH
-	u84dkZNyYJR3dTNk4Sj39k3r7GSk41iUKQw==
-X-ME-Sender: <xms:hY9sZ4gRp310tfrxGFsr_e6A7dz6bJspZMel7NfzA7V8V3JiTcpo_Q>
-    <xme:hY9sZxDDOPvzanMGuFn_OQwZmySvew_TwPXZPf6ukHZlfVy7oUXUhUONvg7hfuQqy
-    xZlHVsqT9C5XFk>
-X-ME-Received: <xmr:hY9sZwHGi6DRVFaP50MKK6CMoAOOOaXFG62vAjAeOjt0fxMSdiibtEEtYg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddujedgtdeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecu
-    hfhrohhmpeffvghmihcuofgrrhhivgcuqfgsvghnohhurhcuoeguvghmihesihhnvhhish
-    hisghlvghthhhinhhgshhlrggsrdgtohhmqeenucggtffrrghtthgvrhhnpeeigfeifedv
-    gfejleefieefgfejvddvfeelgeelieefgeffhffgffeffffhueduheenucevlhhushhtvg
-    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpeguvghmihesihhnvhhishhi
-    sghlvghthhhinhhgshhlrggsrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepsh
-    hmthhpohhuthdprhgtphhtthhopehoshhsqdhsvggtuhhrihhthieslhhishhtshdrohhp
-    vghnfigrlhhlrdgtohhmpdhrtghpthhtohephigrihhrmhesjhhfrhhoghdrtghomh
-X-ME-Proxy: <xmx:hY9sZ5SgN5sev2vBAWlDtgHrMA35oZTiHQIdmGzgQnUcnq3Mf02Xxg>
-    <xmx:hY9sZ1wbqK2h6EvbTx6QViNBThNUL2QI6vZUAC-KGO9P5zsZuc6pCQ>
-    <xmx:hY9sZ37q3nrmWU2eHakxnRj5ypa0LYqWtHfNREAYHuoRwtFoYugd7A>
-    <xmx:hY9sZyydXHpC14mItyQu2pgmA_SHR2uK-069nE8uZuHovG2yg1asDQ>
-    <xmx:ho9sZw-4wKARXPT8Kq3wi0i48veB_6Lx3-L0yYqLbE2u367J7AyRxycS>
-Feedback-ID: iac594737:Fastmail
-Date: Wed, 25 Dec 2024 18:04:22 -0500
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: oss-security@lists.openwall.com, Yair Mizrahi <yairm@jfrog.com>
-Message-ID: <Z2yPhPjJ0MEBl6Uh@itl-email>
-References: <CALXx8ZniT0BHhhVgqZK4z+gsRUuOJGSZJRzFbjfA2BQUdRPmew@mail.gmail.com>
- <20241225181321.GA12547@openwall.com>
+Received: (qmail 32214 invoked from network); 1 Mar 2023 13:04:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=TaIay7VzpbnBSLM7xP+makP2vKUnvdNqizmSKLDctFY=;
+        b=Xg4TGw1ogrRQrPwwBtJyTLbjzJNeXN+sb/5SNJQDejOLPCdUduaDIjDDf98YuSBjPJ
+         mKnatTsvXEc+pAcq0x2ohsXolfxtWE8jt8RHat54cjrTs+u94EDhAJyJAttm0rx6aX4w
+         XM2Nc1vHY3Rh92obpK5lQf19UJjBsyRRhUeM9I4HFsG/FKJvnvBUwQnDXFn9B6SHBmU5
+         H4K9maR3a+braN+vZn5yBhv+tjk/KBk6/sbKfSxU3He3ypRDR03Kd1Hhb9MpQimnAi9t
+         NFqdueiFDbWEZhkZginbRbWf9/zcV3GQTuEh8cXsaRNW+YcJUQkSD3Pn5no2e9qNO5+e
+         Uv7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TaIay7VzpbnBSLM7xP+makP2vKUnvdNqizmSKLDctFY=;
+        b=P1opfCf1hTCJA/ODqsvHONEgRMwKPnMu7D6pgZyxKpfxzMwbAC08ENjsNIw+Qb3NpO
+         zzPflBf/GovPu7gje1fwbzg2p4KLEo8rlua4unmr+Psjtf/iVwopLBNMjnPlP/IE6/15
+         9GJwfnR56zaAJ+x0x8IKzMykvNALrRn2DkL4vvzBZqjwUfNdqVUPne5cksrx5MwxiJXn
+         g4Fc647RmVulapZh4r1IlIhAJUuaE64AKRAYvNm67HrvKsM9RzhO2ZDxPxomkoiAOeDq
+         roPWlBZ8aNU/6UB5fe+6ICfO7X4/xx06dgGhmlP+tqUMZ2IDo1xjTae8M382PBMEA+C4
+         lssQ==
+X-Gm-Message-State: AO0yUKWgDldZN7r4xvPxZfqyPcFkMkX5jbL3/bt8M5QmOGs9vfEvvvgN
+	PmSbWvhmeCGrE0KOwo4IGnFmVH1gA4jfTCuuMLF5ChqzARM=
+X-Google-Smtp-Source: AK7set8FXD0jP3vWR7RMhbf4t2CmXMuc2cGKiBKTVGparYmMWGP4JvdANbHg6hvBHTwmm8OSz8Xvb2nvvf2xmLmfSZ8=
+X-Received: by 2002:a05:6808:8cf:b0:383:f8b1:c259 with SMTP id
+ k15-20020a05680808cf00b00383f8b1c259mr2177101oij.7.1677675859704; Wed, 01 Mar
+ 2023 05:04:19 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="Wgi8BEB4pVIwiynY"
-Content-Disposition: inline
-In-Reply-To: <20241225181321.GA12547@openwall.com>
-Subject: Re: [oss-security] CVE-2024-40896 Analysis: libxml2 XXE due to type
- confusion
+References: <6ce790cbffb04331@millert.dev> <Y/6wnzgxs4K7zeYp@gentoo.org>
+In-Reply-To: <Y/6wnzgxs4K7zeYp@gentoo.org>
+From: Noryungi <noryungi@gmail.com>
+Date: Wed, 1 Mar 2023 14:04:08 +0100
+Message-ID: <CAA_Lw3_wha4rCNvu5hbwsu-kEsp96761WgOB4rh7DZxXtiyQZw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000aa812405f5d659fd"
+Subject: Re: [oss-security] sudo: double free with per-command chroot sudoers rules
 
---Wgi8BEB4pVIwiynY
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
+--000000000000aa812405f5d659fd
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 25 Dec 2024 18:04:22 -0500
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: oss-security@lists.openwall.com, Yair Mizrahi <yairm@jfrog.com>
-Subject: Re: [oss-security] CVE-2024-40896 Analysis: libxml2 XXE due to type
- confusion
 
-On Wed, Dec 25, 2024 at 07:13:21PM +0100, Solar Designer wrote:
-> Hi,
->=20
-> Thank you for bringing this in here.
->=20
-> On Wed, Dec 25, 2024 at 11:52:06AM +0200, Yair Mizrahi wrote:
-> > libxml2, CVE-2024-40896, was published recently and given a "Critical"
-> > (9.1) severity by CISA. Interestingly - This vulnerability is a regress=
-ion
-> > of an issue that was identified over a decade ago - CVE-2012-0037, which
-> > was given a "Medium" (6.5) severity.
-> >=20
-> > Is the massive increase in CVSS over the exact same issue justified? We
-> > believe that it's inflated.
->=20
-> I think both CVSS vectors are "buggy", and CVSS is quite poor at scoring
-> library code vulnerabilities.
->=20
-> CVE-2012-0037  NIST NVD CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N
-> CVE-2024-40896 CISA-ADP CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:H
->=20
-> The differences are whether user interaction is required or not (can't
-> know that for library code, so have to assume either best or worst case)
-> and what impact there is (again can't know it for library code, but
-> these two test vectors somehow assume different impacts).  Given how
-> poor CVSS base score is for scoring library code in general, I'm afraid
-> this issue would more "reasonably" (per CVSS spec) be scored 10.0 as
-> AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H, because such exposed usage of the
-> library is realistic, SSRF would be a change of scope (right?), and the
-> worst impacts of all 3 kinds are quite possible.
+https://www.sudo.ws/security/advisories/double_free/
 
-If SSRF is a scope change, shouldn't that mean that RCE is also a scope
-change?  It's usable for SSRF after all.
---=20
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+says:
 
---Wgi8BEB4pVIwiynY
-Content-Type: application/pgp-signature; name="signature.asc"
+CVE ID
+No CVE has been assigned to this issue due to its low impact.
 
------BEGIN PGP SIGNATURE-----
+Le mer. 1 mars 2023 =C3=A0 13:15, John Helmert III <ajak@gentoo.org> a =C3=
+=A9crit :
 
-iQIzBAEBCAAdFiEEopQtqVJW1aeuo9/sszaHOrMp8lMFAmdsj38ACgkQszaHOrMp
-8lPd/w/+L5wwY1rUc8ODFCFGXgh0Juhp86zvOw9L7C5aLc1dJpqPxdVVa/MdFxDl
-5gSDwTH0mDDMHpZbIJTPC/J5TXLoxT1Zv+xBPvYGBz+M4qVIctD1xJTU1tbYwbjr
-ug/VeYujbieUc6/6VsVUNBdksteiDrZHMY2lUziKpu/eAwkVSAuc+GW/iWV0ioam
-9mopE3U69ZhNAeWn+cD4wad4rEcjhS7H7aO9a0s/oacnDaObqlI14TaP0jjloLhv
-cQQYYEYClMPE+/TTNuMNo2Uo9THa8MxemPphZgbF9AS/W5vyrA8G85z/5H3IXLZs
-CEI9t+dOxlUdWhTiOEPL1YLX5ANdPDsWNIJK3RJm9tlz/8t44jh8BzPYS9Nheeg9
-+lgN3o6BougvNXvB3vMlpWhw7TTlM39IIkx+448dpkUiBwVWls8dbIVkzCmGmNtZ
-WXkTBdwCMBXB8RAz66M6jwOTBu7Ju1rmO+n5IlBonpVIiea683qsyoNH+YIn5HwS
-jQ+azKpfaUeUsqQNavJ3pQvKrqsJeuR66/9CQjgFSfWcFTUdmQGWzxCminWxTUFc
-nW0lQ9ciAN3BRyEyC6Aa0dd14UcITyIWeYhfdFXc092qIy3OWsZULIXn1DHNPAhT
-KBxxBJkNj9P32XSsVoKeUSOd8LHNjRbSWlYrL5Tyq767HQF8DoQ=
-=84+n
------END PGP SIGNATURE-----
+> Has a CVE been requeested?
+>
+> On Tue, Feb 28, 2023 at 07:31:11AM -0700, Todd C. Miller wrote:
+> > A flaw exists in sudo's per-command chroot feature that could result
+> > in the variable that stores the command being freed more than once.
+> >
+> > I believe this is a fairly low-impact bug as the per-command chroot
+> > feature is not widely used.  The bug was caught by glibc's double-free
+> > detection while I was performing some chroot-related testing.  No
+> > one else has reported the bug which leads me to believe it probably
+> > has not been encountered in the wild.
+> >
+> > Sudo versions affected:
+> >
+> >     Sudo versions 1.9.8 through 1.9.13p1 inclusive are affected.
+> >     Versions of sudo prior to 1.9.8 are not affected.
+> >
+> > Details:
+> >
+> >     Starting with Sudo 1.9.3, it is possible to specify an alternate
+> >     root directory that sudo will change to before executing the
+> >     command.  For example:
+> >
+> >       someuser ALL =3D CHROOT=3D/var/www /bin/sh
+> >
+> >     will result in /bin/sh being run inside the chroot jail /var/www
+> >     when the specific user runs "sudo sh".
+> >
+> >     Sudo 1.9.8 included a fix for a memory leak in the set_cmnd_path()
+> >     function which can result in the "user_cmnd" variable being
+> >     freed twice, but only when processing a sudoers rule that
+> >     contains a "CHROOT" setting.  This does not affect the "chroot"
+> >     Defaults setting.  Only a per-rule "CHROOT" setting will trigger
+> >     the bug.
+> >
+> > Impact:
+> >
+> >     The bug can only be triggered by a user that has been granted
+> >     sudo privileges using a sudoers rule that contain a "CHROOT"
+> >     setting and the rule must match the current host.  If no users
+> >     have sudoers rules containing "CHROOT" there is no impact.  This
+> >     feature is not commonly used.
+> >
+> > Workaround:
+> >
+> >     Remove rules from the sudoers file than contain a "CHROOT"
+> >     setting if using an affected version of sudo.
+> >
+> > Fix:
+> >
+> >     The bug is fixed in sudo 1.9.13p2.
+>
 
---Wgi8BEB4pVIwiynY--
+--000000000000aa812405f5d659fd--
