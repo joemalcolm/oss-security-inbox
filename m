@@ -1,61 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/14
-Message-ID: <ZS1UPsZo1VyHDAkV@itl-email>
-Date: Mon, 16 Oct 2023 11:18:19 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/01/7
+Message-ID: <CAEih1qU_yvoQUjGK3c0ncD8yMbxQ6_9+SFpWthEpK9ppq=oOyQ@mail.gmail.com>
+Date: Wed, 1 Mar 2023 16:32:42 +0100
+From: Pietro Borrello <borrello@...g.uniroma1.it>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application of openEuler
+Subject: CVE-2023-1077: Linux kernel: Type confusion in pick_next_rt_entity()
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Oct 16, 2023 at 04:52:32PM +0200, Greg KH wrote:
-> On Mon, Oct 16, 2023 at 10:01:44AM -0400, Demi Marie Obenour wrote:
-> > On Mon, Oct 16, 2023 at 10:23:50AM +0200, Greg KH wrote:
-> > > On Mon, Oct 16, 2023 at 10:08:50AM +0200, Marcus Meissner wrote:
-> > > > Hi,
-> > > > 
-> > > > Regardless of your viability of subscription status I think we also
-> > > > (sadly) have to consider current geopolitical issues here.
-> > > > 
-> > > > As far as I understand, US companies and US citizens are not permitted
-> > > > to work with Chinese organizations and/or Chinese nationals.
-> > > 
-> > > They can when working in the open on public projects and other
-> > > open-source-like things.  For "closed" lists and groups, please consult
-> > > a lawyer as the rules there are quite varied and depends on the
-> > > countries and companies involved.
-> > > 
-> > > But to be sure, again, consult your corporate lawyers, they know the
-> > > rules and the issues involved better than I do.
-> > > 
-> > > good luck!
-> > > 
-> > > greg k-h
-> > 
-> > The question is _who_ should consult their lawyers.
-> 
-> The people deciding if this group can be added to the closed list as
-> they are the ones responsible for it, AND then if the group is added,
-> the members of the list need to talk to their lawyers to see if their
-> country laws allow them to participate in a closed group with such
-> members.  Many countries might be fine, many might not be, it all
-> depends on the participants and what country laws they must abide by.
-> 
-> So in short, everyone involved in the list!  :(
-> 
-> good luck!
-> 
-> greg "I talk to too many lawyers" k-h
+Hi all,
 
-The result of this is simply that those who do not have access to
-lawyers on staff will not participate, which will reduce the value of
-the list substantially.  I suspect that most people who report
-vulnerabilities via distros@ fall into this category.  I know I do.
+I am disclosing a type confusion in the RT scheduling stack of the Linux Kernel.
+pick_next_rt_entity() caller checks that list_entry() on the scheduler queue
+does not return NULL, using a BUG_ON.
+However, this condition can never happen.
+For an empty list, list_entry() returns a type confused view of the list_head.
+The buggy condition would lead to the use of a type confused sched_rt_entity,
+causing memory corruption.
 
-Therefore, I recommend rejecting the application as too risky from a
-legal perspective.
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+The proposed patch has been merged in the Linux tree:
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=7c4a5b89a0b5a57a64b601775b296abf77a9fe97
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+The issue has been assigned CVE-2023-1077.
+
+Best regards,
+Pietro Borrello
