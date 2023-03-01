@@ -1,29 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/19/2
-Message-ID: <8ebe75bf-ab27-3937-4290-2415abcfadf0@apache.org>
-Date: Tue, 19 Dec 2023 09:31:15 +0000
-From: Daniel Gaspar <dpgaspar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/01/6
+Message-ID: <CAEih1qWzJSX8z4dx958nqFH=FX3Z2A2jgAwd0kBv0gGpidSeuw@mail.gmail.com>
+Date: Wed, 1 Mar 2023 16:23:54 +0100
+From: Pietro Borrello <borrello@...g.uniroma1.it>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-49736: Apache Superset: SQL Injection on where_in JINJA macro 
+Subject: CVE-2023-1075 - Linux Kernel: Type Confusion in tls_is_tx_ready()
 Content-Type: text/plain; charset=utf-8
 
-Affected versions:
+Hi all,
 
-- Apache Superset before 2.1.2
-- Apache Superset 3.0.0 before 3.0.2
+I am disclosing a type confusion in the net/tls stack of the Linux Kernel.
+tls_is_tx_ready() checks that list_first_entry() does not return NULL.
+However, this condition can never happen.
+For an empty `tx_list`, list_first_entry() returns the list_entry() of the head,
+which, when used, is a type confusion.
+Thus, tls_is_tx_ready() may potentially use a type-confused entry
+to the list_head, leaking the last byte of the type confused field
+that overlaps with rec->tx_ready.
 
-Description:
+The patch has been merged in the Linux tree:
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=ffe2a22562444720b05bdfeb999c03e810d84cbb
 
-A where_in JINJA macro allows users to specify a quote, which combined with a carefully crafted statement would allow for SQL injection in Apache Superset.This issue affects Apache Superset: before 2.1.2, from 3.0.0 before 3.0.2.
+The issue has been assigned CVE-2023-1075.
 
-Users are recommended to upgrade to version 3.0.2, which fixes the issue.
-
-Credit:
-
-Jack Prince-Fulls ( jf@...yan.com ) (finder)
-
-References:
-
-https://superset.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-49736
-
+Best regards,
+Pietro Borrello
