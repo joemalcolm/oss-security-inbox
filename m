@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1124" "Wednesday" "16" "December" "2015" "12:44:30" "+0100" "Marcus Meissner" "meissner@suse.de" "<20151216114430.GH19953@suse.de>" "23" "Re: [oss-security] Re: CVE Request: Linux Kernel: information leak from getsockname" "^Cc:" nil nil "12" "2015121611:44:30" "[oss-security] Re: CVE Request: Linux Kernel: information leak from getsockname" (number mark "        meissner@sus Dec 16   23/1124  " thread-indent "\"Re: [oss-security] Re: CVE Request: Linux Kernel: information leak from getsockname\"\n") "<20151215181507.A136936E040@smtpvbsrv1.mitre.org>" ("<20151215143002.GM11263@suse.de>" "<20151215181507.A136936E040@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 11288 invoked by uid 550); 16 Dec 2015 11:44:43 -0000
+Received: (qmail 30543 invoked by uid 550); 1 Mar 2023 15:55:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,47 +6,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11265 invoked from network); 16 Dec 2015 11:44:42 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Message-ID: <20151216114430.GH19953@suse.de>
-References: <20151215143002.GM11263@suse.de>
- <20151215181507.A136936E040@smtpvbsrv1.mitre.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20151215181507.A136936E040@smtpvbsrv1.mitre.org>
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Cc: cve-assign@mitre.org
-Date: Wed, 16 Dec 2015 12:44:30 +0100
-From: Marcus Meissner <meissner@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: CVE Request: Linux Kernel: information leak
- from getsockname
-To: oss-security@lists.openwall.com, cve-assign@mitre.org
+Received: (qmail 30505 invoked from network); 1 Mar 2023 15:55:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1677686107;
+	bh=GpMkqECy0OcPFiedqnKI0U9fQNQAUsllk7OBlk01DJw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type;
+	b=uhayrRIhAy9plipUYnM96+jZSgt8x0Dm+0/CPQvcUX5/Wt9yNfQRashKVJxHeSfjq
+	 liFHpR3A/RRAtE6aC3M1W9mCM+bpgj0OYvA3xReXz3ZczJYWwnJnWQIB0NlTTBMy/Y
+	 QEfDD08qmQTZRHr3Xg5EoLqYf+UmmXwuEc888sl4x+QqLDHYPVnXJ6KLotmChB1n7e
+	 mJBvKWvF3B6n+aQII3SPfNnqFLH/RsfFbiRQUiXauiCwUAw+fbAD8yYv+Hvcsr4wIM
+	 09KQJsO+qw/YPPK34wEN6YxcqJ5DuOowve/Zu+Euhmj/1lVno6/SLbKIPdzkxF2PjM
+	 wmDuYJQomGqEg==
+Message-ID: <a901d6be-4e2f-bc3f-c817-79fc362b142e@canonical.com>
+Date: Wed, 1 Mar 2023 10:55:05 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Content-Language: en-CA
+To: oss-security@lists.openwall.com
+References: <6ce790cbffb04331@millert.dev> <Y/6wnzgxs4K7zeYp@gentoo.org>
+ <6ce7a5966d933724@millert.dev>
+From: Marc Deslauriers <marc.deslauriers@canonical.com>
+In-Reply-To: <6ce7a5966d933724@millert.dev>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] sudo: double free with per-command chroot sudoers
+ rules
 
-On Tue, Dec 15, 2015 at 01:15:07PM -0500, cve-assign@mitre.org wrote:
-> > http://twitter.com/grsecurity/statuses/676744240802750464
-> > https://lkml.org/lkml/2015/12/14/252
-> > http://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=09ccfd238e5a0e670d8178cf50180ea81ae09ae1
+On 2023-03-01 10:11, Todd C. Miller wrote:
+> On Tue, 28 Feb 2023 19:55:43 -0600, John Helmert III wrote:
 > 
-> (not yet available at
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/drivers/net/ppp/pptp.c)
+>> Has a CVE been requeested?
 > 
-> > getsockname() for some socket families did not check the length of the passed sockaddr,
-> > copying out more kernel memory than required, leaking information from the kernel stack,
-> > including kernel addresses. This can be used for KASLR bypass or other information leaks.
+> No, and I don't plan on requesting one.  As far as I can tell, this
+> doesn't actually affect any users.
 > 
-> Use CVE-2015-8569 for both the pptp_bind issue and the pptp_connect
-> issue. (We don't know whether the pptp_connect issue would've been
-> exploitable if only the pptp_bind issue were fixed.)
+>   - todd
 
-The netdev team has added more fixes very similar to that. Could we merge them with this CVE?
+Well, it looks like CVE-2023-27320 already got assigned to this issue.
 
-http://git.kernel.org/cgit/linux/kernel/git/davem/net.git/commit/?id=5233252fce714053f0151680933571a2da9cbfb4
+https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-27320
 
-in bluetooth/sco
-
-Ciao, Marcus
+Marc.
