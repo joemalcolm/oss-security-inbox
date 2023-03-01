@@ -1,56 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/18/1
-Message-ID: <20230418005741.GA25557@openwall.com>
-Date: Tue, 18 Apr 2023 02:57:41 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/01/1
+Message-ID: <Y/6wnzgxs4K7zeYp@gentoo.org>
+Date: Tue, 28 Feb 2023 19:55:43 -0600
+From: John Helmert III <ajak@...too.org>
 To: oss-security@...ts.openwall.com
-Cc: Ruihan Li <lrh2000@....edu.cn>, "Todd C. Miller" <Todd.Miller@...o.ws>
-Subject: Re: CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
+Subject: Re: sudo: double free with per-command chroot sudoers rules
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Has a CVE been requeested?
 
-Thank you Ruihan Li for finding and handling this vulnerability so well,
-and for the detailed write-up.
-
-When discussing this on linux-distros a week ago, I wrote:
-
-> Regarding the vulnerability itself, do you think it'd be a good idea to
-> also inform the maintainer of sudo?  My thinking is that sudo could be
-> hardened not to trigger ioctl's (which I guess it does via tcgetattr()
-> or such?) while having euid=0 (and thus root's typical capabilities) -
-> it could temporarily seteuid(uid), then switch back due to saved uid.
+On Tue, Feb 28, 2023 at 07:31:11AM -0700, Todd C. Miller wrote:
+> A flaw exists in sudo's per-command chroot feature that could result
+> in the variable that stores the command being freed more than once.
 > 
-> Did you identify (m)any other programs usable for this attack?  I guess
-> some with functionality "similar" to sudo's could also be "affected"
-> (there are several implementations of su in different packages for
-> Linux, pkexec, various container entry tools).
+> I believe this is a fairly low-impact bug as the per-command chroot
+> feature is not widely used.  The bug was caught by glibc's double-free
+> detection while I was performing some chroot-related testing.  No
+> one else has reported the bug which leads me to believe it probably
+> has not been encountered in the wild.
+> 
+> Sudo versions affected:
+> 
+>     Sudo versions 1.9.8 through 1.9.13p1 inclusive are affected.
+>     Versions of sudo prior to 1.9.8 are not affected.
+> 
+> Details:
+> 
+>     Starting with Sudo 1.9.3, it is possible to specify an alternate
+>     root directory that sudo will change to before executing the
+>     command.  For example:
+> 
+> 	someuser ALL = CHROOT=/var/www /bin/sh
+> 
+>     will result in /bin/sh being run inside the chroot jail /var/www
+>     when the specific user runs "sudo sh".
+> 
+>     Sudo 1.9.8 included a fix for a memory leak in the set_cmnd_path()
+>     function which can result in the "user_cmnd" variable being
+>     freed twice, but only when processing a sudoers rule that
+>     contains a "CHROOT" setting.  This does not affect the "chroot"
+>     Defaults setting.  Only a per-rule "CHROOT" setting will trigger
+>     the bug.
+> 
+> Impact:
+> 
+>     The bug can only be triggered by a user that has been granted
+>     sudo privileges using a sudoers rule that contain a "CHROOT"
+>     setting and the rule must match the current host.  If no users
+>     have sudoers rules containing "CHROOT" there is no impact.  This
+>     feature is not commonly used.
+> 
+> Workaround:
+> 
+>     Remove rules from the sudoers file than contain a "CHROOT"
+>     setting if using an affected version of sudo.
+> 
+> Fix:
+> 
+>     The bug is fixed in sudo 1.9.13p2.
 
-And indeed Ruihan Li came up with the list of other likely usable
-programs on a typical Linux distro, which makes the point of hardening
-only sudo moot, and so we decided to postpone further discussion until
-this is public on oss-security.
-
-OTOH, not all distros are typical.  Besides Android, we got rid of all
-SUID binaries in default install of Owl over a decade ago.  While Owl is
-now effectively EOL'ed, some of its legacy lives on in ALT Linux
-distros, which are maintained, and other distros can do similar - it's
-primarily a matter of caring to do it or not.  We did not package sudo
-in Owl, but if someone were to install it then it'd be the only program
-exposing this kernel vulnerability.  So in that case, hardening sudo
-would have helped.
-
-On Sun, Apr 16, 2023 at 10:57:27PM +0200, Steffen Nurpmeso wrote:
-> So this general beating onto SETUID or super capable programs
-> smells like bad fish Hollywood boom-boom again, no?
-
-That lengthy list of them is actually in defense of sudo not having been
-hardened in this respect - it shows that this would not matter on a
-typical Linux system anyway.
-
-> You have to do some things, and if you give up privileges
-> thereafter, extended capabilities are gone.
-
-POSIX saved IDs should help retain/regain the capabilities.
-
-Alexander
+Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
