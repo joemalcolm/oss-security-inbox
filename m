@@ -1,164 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/03/1
-Message-ID: <e95ba96a-88e7-4bf1-a18b-12b566812225@oracle.com>
-Date: Tue, 3 Oct 2023 09:31:27 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/01/5
+Message-ID: <CAEih1qWNqz23HeSbKN+9=zShNOjnWD1SHbVQT-Mu0qSLsHRADQ@mail.gmail.com>
+Date: Wed, 1 Mar 2023 16:13:11 +0100
+From: Pietro Borrello <borrello@...g.uniroma1.it>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: X.Org Security Advisory: Issues in libX11 prior to 1.8.7 & libXpm prior to 3.5.17
+Subject: CVE-2023-1076: Linux Kernel: Type Confusion hardcodes tuntap socket UID to root
 Content-Type: text/plain; charset=utf-8
 
+Hi all,
 
+I am disclosing a type confusion in the initialization of TUN/TAP sockets
+which hardcodes their UID to 0, usually the root UID.
+sock_init_data() assumes that the `struct socket` passed in input is
+contained in a `struct socket_alloc` allocated with sock_alloc().
+However, tap_open() and tun_chr_open() pass a `struct socket` embedded
+in a `struct tap_queue` and `struct tun_file` respectively, both
+allocated with sk_alloc().
+This causes a type confusion when issuing a container_of() with
+SOCK_INODE() in sock_init_data() which results in assigning a wrong
+sk_uid to the `struct sock` in input.
 
+Due to the type confusion, both sockets happen to have their UID set
+to 0, i.e. root.
+While it will be often correct, as TUN/TAP devices require
+CAP_NET_ADMIN, it may not always be the case.
+Not sure how widespread is the impact of this, it seems the socket UID
+may be used for network filtering and routing, thus TUN/TAP sockets may
+be incorrectly managed, potentially bypassing network filters based on UID.
+Additionally, it seems the sockets with an incorrect UID may be returned
+to the vhost driver when issuing a get_socket() on a TUN/TAP device in
+vhost_net_set_backend().
 
--------- Forwarded Message --------
-Subject: X.Org Security Advisory: Issues in libX11 prior to 1.8.7 & libXpm prior to 3.5.17
-Date: Tue, 3 Oct 2023 09:27:22 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: xorg-announce@...ts.x.org
-CC: xorg@...ts.x.org
+The proposed patches fix the bugs by adding and using sock_init_data_uid(),
+which explicitly takes a UID as argument, and have been merged:
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=66b2c338adce580dfce2199591e65e2bab889cff
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=a096ccca6e503a5c575717ff8a36ace27510ab0a
 
-X.Org Security Advisory:  October 3, 2023
+The issue has been assigned CVE-2023-1076.
 
-Issues in libX11 prior to 1.8.7 & libXpm prior to 3.5.17
-========================================================
-
-Multiple issues have been found in the libX11 & libXpm libraries published
-by X.Org for which we are releasing security fixes in libX11 1.8.7 &
-libXpm 3.5.17.
-
-The first issue (CVE-2023-43785) can be triggered by connecting to an
-X server that sends specially crafted replies to X11 protocol requests.
-
-The other 4 issues can be triggered by opening specially crafted XPM format
-image files via libXpm.  Two of the four issues have root causes in the
-libX11 library and are fixed there, but patches have also been applied
-to libXpm to avoid passing the invalid data to libX11 in the first place.
-
-----------------------------------------------------------------------------
-
-1) CVE-2023-43785 libX11: out-of-bounds memory access in _XkbReadKeySyms()
-
-Introduced in: X11R6.1 [released March 1996]
-Fixed in: libX11 1.8.7
-Found by: Gregory James DUCK
-Fixed by: Alan Coopersmith of Oracle Solaris Engineering
-
-When libX11 is processing the reply from the X server to the XkbGetMap
-request, if it detected the number of symbols in the new map was less
-than the size of the buffer it had allocated, it always added room for
-128 more symbols, instead of the actual size needed. While the
-_XkbReadBufferCopyKeySyms() helper function returned an error if asked
-to copy more keysyms into the buffer than there was space allocated for,
-the caller never checked for an error and assumed the full set of keysyms
-was copied into the buffer and could then try to read out of bounds when
-accessing the buffer.  libX11 1.8.7 has been patched to both fix the size
-allocated and check for error returns from _XkbReadBufferCopyKeySyms().
-
-Fix:
-https://gitlab.freedesktop.org/xorg/lib/libx11/-/commit/6858d468d9ca55fb4c5fd70b223dbc78a3358a7f
-
-2) CVE-2023-43786 libX11: stack exhaustion from infinite recursion
-    in PutSubImage()
-
-Introduced in: X11R2 [released Feb. 1988]
-Fixed in: libX11 1.8.7
-Found by: Yair Mizrahi of the JFrog Vulnerability Research team
-Fixed by: Alan Coopersmith of Oracle Solaris Engineering
-
-When splitting a single line of pixels into chunks that fit in a single
-request (not using the BIG-REQUESTS extension) to send to the X server,
-the code did not take into account the number of bits per pixel, so would
-just loop forever finding it needed to send more pixels than fit in the
-given request size and not breaking them down into a small enough chunk to
-fit.  An XPM file was provided that triggered this bug when loaded via
-libXpm's XpmReadFileToPixmap() function, which in turn calls XPutImage()
-and hit this bug.
-
-Further hardening to prevent similar bugs was done in libX11 by making
-XPutImage() clip images to the maximum X protocol pixmap size (limited
-by the use of unsigned 16-bit integers for height & width) when writing
-to X pixmaps, and by making XCreatePixmap() generate X errors if a
-height or width was specified that did not fit into an unsigned 16-bit
-integer.  In libXpm, hardening was done to return error codes for any
-call that would have passed out-of-bounds width or height values to
-XCreatePixmap().
-
-Fix:
-https://gitlab.freedesktop.org/xorg/lib/libx11/-/commit/204c3393c4c90a29ed6bef64e43849536e863a86
-
-Hardening:
-https://gitlab.freedesktop.org/xorg/lib/libx11/-/commit/73a37d5f2fcadd6540159b432a70d80f442ddf4a
-https://gitlab.freedesktop.org/xorg/lib/libx11/-/commit/b4031fc023816aca07fbd592ed97010b9b48784b
-https://gitlab.freedesktop.org/xorg/lib/libxpm/-/commit/84fb14574c039f19ad7face87eb9acc31a50701c
-
-3) CVE-2023-43787 libX11: integer overflow in XCreateImage() leading to
-    a heap overflow
-
-Introduced in: X11R2 [released Feb. 1988]
-Fixed in: libX11 1.8.7
-Found by: Yair Mizrahi of the JFrog Vulnerability Research team
-Fixed by: Yair Mizrahi of the JFrog Vulnerability Research team
-
-When creating an image, there was no validation that the multiplication
-of the caller-provided width by the visual's bits_per_pixel did not
-overflow and thus result in the allocation of a buffer too small to hold
-the data that would be copied into it.  An XPM file was provided that
-triggered this bug when loaded via libXpm's XpmReadFileToPixmap() function,
-which in turn calls XCreateImage() and hit this bug.
-
-Further hardening to prevent similar bugs was done in libXpm to return
-error codes for any call to XCreateImage() that would have resulted in
-this calculation overflowing.
-
-Fix:
-https://gitlab.freedesktop.org/xorg/lib/libx11/-/commit/7916869d16bdd115ac5be30a67c3749907aea6a0
-
-Hardening:
-https://gitlab.freedesktop.org/xorg/lib/libxpm/-/commit/91f887b41bf75648df725a4ed3be036da02e911e
-
-4) CVE-2023-43788 libXpm: out of bounds read in XpmCreateXpmImageFromBuffer()
-
-Introduced in: unknown - prior to xpm-3.4k [released 1998]
-Fixed in: libXpm 3.5.17
-Found by: Alan Coopersmith of Oracle Solaris Engineering
-Fixed by: Alan Coopersmith of Oracle Solaris Engineering
-
-When the test case for CVE-2022-46285 (fixed in libXpm 3.5.15) was run
-with the Address Sanitizer enabled, it found an out-of-bounds read in
-ParseComment() when reading from a memory buffer instead of a file, as
-it continued to look for the closing comment marker past the end of the
-buffer.
-
-Fix:
-https://gitlab.freedesktop.org/xorg/lib/libxpm/-/commit/2fa554b01ef6079a9b35df9332bdc4f139ed67e0
-
-5) CVE-2023-43789 libXpm: out of bounds read on XPM with corrupted colormap
-
-Introduced in: unknown - prior to xpm-3.4k [released 1998]
-Fixed in: libXpm 3.5.17
-Found by: Alan Coopersmith of Oracle Solaris Engineering
-Fixed by: Alan Coopersmith of Oracle Solaris Engineering
-
-Fuzzing with clang's -fsanitize/libfuzzer generated an XPM file with a
-corrupted colormap section which caused libXpm to read out of bounds.
-
-Fix:
-https://gitlab.freedesktop.org/xorg/lib/libxpm/-/commit/7e21cb63b9a1ca760a06cc4cd9b19bbc3fcd8f51
-
-----------------------------------------------------------------------------
-
-X.Org thanks all of those who reported and fixed these issues, and those
-who helped with the review and release of this advisory and these fixes.
-
-The X.Org security team would like to take this opportunity to remind X client
-authors that current best practices suggest separating code that requires
-privileges from the GUI, to reduce the risk of issues like CVE-2023-43785.
-
--- 
-      -Alan Coopersmith-              alan.coopersmith@...cle.com
-        X.Org Security Response Team - xorg-security@...ts.x.org
-
-
-Download attachment "OpenPGP_0xA2FB9E081F2D130E.asc" of type "application/pgp-keys" (8713 bytes)
-
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (841 bytes)
+Best regards,
+Pietro Borrello
