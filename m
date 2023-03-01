@@ -1,35 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/12/3
-Message-ID: <Y8BednLm17osifo0@gentoo.org>
-Date: Thu, 12 Jan 2023 13:24:38 -0600
-From: John Helmert III <ajak@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/01/2
+Message-ID: <CAA_Lw3_wha4rCNvu5hbwsu-kEsp96761WgOB4rh7DZxXtiyQZw@mail.gmail.com>
+Date: Wed, 1 Mar 2023 14:04:08 +0100
+From: Noryungi <noryungi@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-0122: Linux kernel: Pre-Auth Remote DoS in NVMe
+Subject: Re: sudo: double free with per-command chroot sudoers rules
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jan 12, 2023 at 06:10:23PM +0100, Greg KH wrote:
-> On Thu, Jan 12, 2023 at 04:12:30PM +0200, Tal Lossos wrote:
-> > Hi all,
-> > 
-> > # Description
-> > A NULL Pointer Dereference bug in nvmet_setup_auth
-> > (drivers/nvme/target/auth.c) can be triggered remotely to cause a DoS.
-> > Since the bug occurs in the authentication feature, it can be easily
-> > triggered by an unauthorized client in the pre-auth stage.
-> > Versions affected - v6.0-rc1 to v6.0-rc3 (fixed in v6.0-rc4).
-> 
-> Meta-comment, why are CVE's being assigned for issues found, and then
-> fixed, in development kernel releases?  Who assigned this CVE, MITRE or
-> someone else?
+https://www.sudo.ws/security/advisories/double_free/
 
-This information used to be available for "reserved" CVEs in the JSON
-data in [1], but now that that's retired I'm not sure this is made
-public anywhere.
+says:
 
-[1] https://github.com/CVEProject/cvelistV5
+CVE ID
+No CVE has been assigned to this issue due to its low impact.
 
-> thanks,
-> 
-> greg k-h
+Le mer. 1 mars 2023 à 13:15, John Helmert III <ajak@...too.org> a écrit :
 
-Download attachment "signature.asc" of type "application/pgp-signature" (229 bytes)
+> Has a CVE been requeested?
+>
+> On Tue, Feb 28, 2023 at 07:31:11AM -0700, Todd C. Miller wrote:
+> > A flaw exists in sudo's per-command chroot feature that could result
+> > in the variable that stores the command being freed more than once.
+> >
+> > I believe this is a fairly low-impact bug as the per-command chroot
+> > feature is not widely used.  The bug was caught by glibc's double-free
+> > detection while I was performing some chroot-related testing.  No
+> > one else has reported the bug which leads me to believe it probably
+> > has not been encountered in the wild.
+> >
+> > Sudo versions affected:
+> >
+> >     Sudo versions 1.9.8 through 1.9.13p1 inclusive are affected.
+> >     Versions of sudo prior to 1.9.8 are not affected.
+> >
+> > Details:
+> >
+> >     Starting with Sudo 1.9.3, it is possible to specify an alternate
+> >     root directory that sudo will change to before executing the
+> >     command.  For example:
+> >
+> >       someuser ALL = CHROOT=/var/www /bin/sh
+> >
+> >     will result in /bin/sh being run inside the chroot jail /var/www
+> >     when the specific user runs "sudo sh".
+> >
+> >     Sudo 1.9.8 included a fix for a memory leak in the set_cmnd_path()
+> >     function which can result in the "user_cmnd" variable being
+> >     freed twice, but only when processing a sudoers rule that
+> >     contains a "CHROOT" setting.  This does not affect the "chroot"
+> >     Defaults setting.  Only a per-rule "CHROOT" setting will trigger
+> >     the bug.
+> >
+> > Impact:
+> >
+> >     The bug can only be triggered by a user that has been granted
+> >     sudo privileges using a sudoers rule that contain a "CHROOT"
+> >     setting and the rule must match the current host.  If no users
+> >     have sudoers rules containing "CHROOT" there is no impact.  This
+> >     feature is not commonly used.
+> >
+> > Workaround:
+> >
+> >     Remove rules from the sudoers file than contain a "CHROOT"
+> >     setting if using an affected version of sudo.
+> >
+> > Fix:
+> >
+> >     The bug is fixed in sudo 1.9.13p2.
+>
+
