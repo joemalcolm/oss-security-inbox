@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["540" "Wednesday" "26" "May" "2021" "18:25:58" "+0200" "Paolo Bonzini" "pbonzini@redhat.com" nil "17" "[oss-security] Re: CVE-2021-22543 - /dev/kvm LPE" nil nil nil "5" nil nil (number mark "U       pbonzini@red May 26   17/540   " thread-indent "\"[oss-security] Re: CVE-2021-22543 - /dev/kvm LPE\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: CVE-2021-22543 - /dev/kvm LPE" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 13698 invoked by uid 550); 26 May 2021 20:31:31 -0000
+Received: (qmail 21769 invoked by uid 550); 1 Mar 2023 15:48:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,70 +7,55 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11955 invoked from network); 26 May 2021 16:26:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1622046364;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=J4IB3x4ParAROr1ayH3bQVcS72ppsKfKo0JFU/dno9k=;
-	b=eZQ6fYIaCvvkVbqwDevoIShFohG1xeGLwTkeopxMGFvo3ontrv8JuldWSHyu/qitAgDEZD
-	XdIsNZM15thF0lZk/4vz2fhIfu1HjPk6vrR/ywPwFs6ifqKIAlJSLsyMnURPMu4VXKju0F
-	Ad5SzEQ0AWRBARkQz9vdP43lz2PAvJE=
-X-MC-Unique: zFuLAuU1PhKG341amNrbXA-1
+Received: (qmail 5347 invoked from network); 1 Mar 2023 15:24:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diag.uniroma1.it; s=google; t=1677684245;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Wd/UbWJVpGXiqzzqDzh5JGuAVPYLTcU/6FealMfIVts=;
+        b=ZUoPkmej+mzOnAyoCOXTochotCconNSPc6Gyfq/fOV+4/eZN+LSh8ub2XzxuRllW+p
+         65q8gH+CrTVA1bFtTOfy+qTVnSvOfuc3xJiKGyVilenCPOq4tPV/W4QsiNvl4YAOIHil
+         Fqp7WN7JchWiTXpJ9YvIQIV9cwT65kl+mXCXg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=J4IB3x4ParAROr1ayH3bQVcS72ppsKfKo0JFU/dno9k=;
-        b=KZUXj19wbhOhVvUYKFmYT4zRqalJk1IEBL0kasEAm2Y3ilQgahm6TseAqOBjseDVp4
-         +9BJDJs2ozR2OgxzK66m/ZwFq3oNwMyo+7/7jWOIHt6b0KFNnBy0RDB8xTAaH9KVOg40
-         i0ilP6n6iCrJmWKbSPuuBji34cbxKeM5CqzyPUICWCpBs+Lb1Va27Hvrrjr5EnV0KfoJ
-         pfKDbg4bDBgB/XTq7O6z9zfHDN5NxBgWTNuKH8P1wT63iumfk5h/0NIhDcqWx9S1NSCW
-         KUkA30HjXs4kHJu+NukUGgmavpXywuIl78QH7SdnG2e5PMXTGb9lSGlKrzzQZalKzr8B
-         WU+g==
-X-Gm-Message-State: AOAM532hhWnIJNvUbmUHcS8yqtDCrJYPnpzJcUkCkTZhxIeqkdgfDxkC
-	Jc5pA7MEyW6VCP6M8q1AH3/eX+h3R7dBvXyKFh73eUKsA6gAXeg196U6N5+ynJk0WYb+1EaYU7w
-	vofsURtZ5N3nPKqUZLndWByyXoBV4
-X-Received: by 2002:a17:906:d04f:: with SMTP id bo15mr8470454ejb.405.1622046359833;
-        Wed, 26 May 2021 09:25:59 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJw1DvPNqzU6YpRG7BDkMhsLbqbqcpoJ2vsiPtIC53M93uvtDEy8GwHNrSuBBlULSBdaCjOLsQ==
-X-Received: by 2002:a17:906:d04f:: with SMTP id bo15mr8470433ejb.405.1622046359612;
-        Wed, 26 May 2021 09:25:59 -0700 (PDT)
-To: oss-security@lists.openwall.com, evn@google.com
-References: <CAFswPa_QOAgf6wgng+KJcPJKykNG3zQWyQfiXWHj8VK0W+_tKg@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Message-ID: <9046efe7-a418-af68-910a-39e955f5fad9@redhat.com>
-Date: Wed, 26 May 2021 18:25:58 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.8.1
+        d=1e100.net; s=20210112; t=1677684245;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Wd/UbWJVpGXiqzzqDzh5JGuAVPYLTcU/6FealMfIVts=;
+        b=VRM17IxpNEnN5dUUqkDnu93sFFmF8+oG5qhg7+CJQX81lZXahoat9kBfV4EK2+0gZ+
+         TW4lj2/0ytJCmQozphGJhkkLplc3N56qRuOKLxzCuRvTuG7Bvi/dqjxNBxPhYiBM85HI
+         FmE3Qxwy9Cn5+Fp4QCMFuY8YwhoHJB2WS3evBlfkj+PIjiEBxTxxv9hBogcUm1GKVDq3
+         3tw46Fr7FLzTi6I1lVOPrCyjspiJzIqs3PrOr2amCLRwS7My5D5mnxLtvntmSbjDcKLc
+         3fWTiFNmvzwwpDVWKaxANUHCqEnKBCXRHCf0brluht2hlVBl+SpF9bpVkRMpanXdGBKa
+         bChA==
+X-Gm-Message-State: AO0yUKVEoYaejeGRHulfPGv4FPr5w3vhQC0rlrvHr7QTyM8dIzs3UCjy
+	Li8c26m6TmC6AJEe5b+4sQ7+T9VhmXFU5PzzwVUDL5MNpBS6hT1n
+X-Google-Smtp-Source: AK7set/heh5otXtdwjIow/1eXKyqTGkI/3Bx0pEKvTcTH7UN2cSvPj2QNcgtcdUOt1tmRZ/5QfTtntiPui/LnqcEdI8=
+X-Received: by 2002:a17:906:e41:b0:879:b98d:eb08 with SMTP id
+ q1-20020a1709060e4100b00879b98deb08mr3276953eji.3.1677684245335; Wed, 01 Mar
+ 2023 07:24:05 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAFswPa_QOAgf6wgng+KJcPJKykNG3zQWyQfiXWHj8VK0W+_tKg@mail.gmail.com>
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=pbonzini@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] Re: CVE-2021-22543 - /dev/kvm LPE
+From: Pietro Borrello <borrello@diag.uniroma1.it>
+Date: Wed, 1 Mar 2023 16:23:54 +0100
+Message-ID: <CAEih1qWzJSX8z4dx958nqFH=FX3Z2A2jgAwd0kBv0gGpidSeuw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2023-1075 - Linux Kernel: Type Confusion in tls_is_tx_ready()
 
-On 26/05/21 15:48, Eduardo' Vela" <Nava> wrote:
-> Hi
-> 
-> I believe this still doesn't have a patch, but +Paolo Bonzini 
-> <mailto:pbonzini@redhat.com> has been working on one for some time now.
-> 
-> Please use CVE-2021-22543 to refer to this issue.
-> 
-> Advisory: 
-> https://github.com/google/security-research/security/advisories/GHSA-7wq5-phmq-m584 
-> <https://github.com/google/security-research/security/advisories/GHSA-7wq5-phmq-m584>
+Hi all,
 
-Indeed, I had to put that on hold :( but I'm aware of the issue and I'm 
-working on it.
+I am disclosing a type confusion in the net/tls stack of the Linux Kernel.
+tls_is_tx_ready() checks that list_first_entry() does not return NULL.
+However, this condition can never happen.
+For an empty `tx_list`, list_first_entry() returns the list_entry() of the head,
+which, when used, is a type confusion.
+Thus, tls_is_tx_ready() may potentially use a type-confused entry
+to the list_head, leaking the last byte of the type confused field
+that overlaps with rec->tx_ready.
 
-Paolo
+The patch has been merged in the Linux tree:
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=ffe2a22562444720b05bdfeb999c03e810d84cbb
 
+The issue has been assigned CVE-2023-1075.
+
+Best regards,
+Pietro Borrello
