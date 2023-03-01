@@ -1,4 +1,4 @@
-Received: (qmail 21714 invoked by uid 550); 5 Jun 2022 19:10:20 -0000
+Received: (qmail 21882 invoked by uid 550); 1 Mar 2023 15:48:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,380 +7,54 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21691 invoked from network); 5 Jun 2022 19:10:19 -0000
+Received: (qmail 9532 invoked from network); 1 Mar 2023 15:33:04 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=HuOf0OO6tFsLhwl0PrqqAc6Jd3kEhPDgviWDTBkqaCQ=;
-        b=S9MzYl5LtPxTFUlqXhJL9uLk886U9FL/zPDiZt6y+1FYqRQUoasNZ42+ZYvUJVY+RD
-         YnUwogw2yx7HHH+Iwtd4bBoS1NCq1EnbxUZEjKKgDO4IhoKokBPqbaLA+9ywl8MHBS1s
-         tYjunuRCYzCLIJiz8TcynmIoZYAcJFn/zifww/vjuduThld3ikiwLYybLcM+fwZsY6Kf
-         SxTuc+7n8RsCfgF4+TYdSjI6GYIQgJiP2o/YuxBRkfrNEgOi/PJWXKAsZc2GAKgURdRA
-         RxtsBKwh6/lUVjJ74mTQzPQDqYHYxRvc5eoYlFpHf5nsYMsx0de3gOOzMhJPrEikvflJ
-         qu4Q==
+        d=diag.uniroma1.it; s=google; t=1677684773;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=sco5904WRJQnaNnZSnxVcdsMP7cJhwnYcFIkvMnlnm0=;
+        b=Az0+eT6xRovg5AQLHUmAYR6FT3tmWEn5xyCDyIT7LKIA0lY5AqP4F+LlFkMO3sgJht
+         g+C+jTvQUMIsRgUsAARZ0x13dmLUj/512+e7u2M1rhGy7kYFxKg+nWtKfv6QQkoh1Y3O
+         HYTB20eYsZ7QXmo4WFeR4BwUZZzw1s2tQM7dY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=HuOf0OO6tFsLhwl0PrqqAc6Jd3kEhPDgviWDTBkqaCQ=;
-        b=TRmzMkoniO7oAgvxgpNZ/bF1/tbQ1Cvif1uEvYdaMYDzKR1dNCQlLmr7dx1dgGPFWQ
-         fHUdErVfRFVlozrkDtQOupMZpJIeIojmlN/FfAVTpDPaEZXZJ1Fc6tdPVfCFnWdL56eA
-         R6knb5EiNrsmfiRtlmqfWVe42RK3lPBGRDqvqWEwSOTi6zxAUdaVhBHOJCcoVfDh/zFn
-         cfiLn8QLVTufTsve0focRJg16v/W/cra7pJrSAkFF+qtUU86JXUN7xJGw1rxdwdH8/9E
-         n+UyrujFM0HdDObcFetgpNv5w13zV8B5axDMyLsra7pYsiiNhPkAL72JwtCoIK+Ic9z6
-         rzeQ==
-X-Gm-Message-State: AOAM532jOVVRCoE9rQ91LJTMZ8LKPsKq1K4UYVQBfIoSXqWxdAByiG1Q
-	KSe5JMlf3bMhzX4oJ2NaxUc=
-X-Google-Smtp-Source: ABdhPJzoJg7bBI0DWo6X6g4oD92KrKavIlh41AOtZN4kXW/akf5WNlZBapOWbNIF37GZMxbjTFkgvQ==
-X-Received: by 2002:a17:906:b294:b0:6fe:fdb9:5fb4 with SMTP id q20-20020a170906b29400b006fefdb95fb4mr18300803ejz.179.1654456207952;
-        Sun, 05 Jun 2022 12:10:07 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Sun, 5 Jun 2022 21:10:06 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: oss-security@lists.openwall.com
-Cc: solar@openwall.com
-Message-ID: <Ypz/jgLCSgqGzMim@eldamar.lan>
-References: <80b5bf9.4e3f7.18134003f02.Coremail.duoming@zju.edu.cn>
+        d=1e100.net; s=20210112; t=1677684773;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=sco5904WRJQnaNnZSnxVcdsMP7cJhwnYcFIkvMnlnm0=;
+        b=4xDcHdT03Go4o0XANU5Gltc1SOS4DQ/fqyjuy2jGCEarRGFHYdMJNjGja9Yb2lECi7
+         FM7LUwxMGL3VQQWfuIsUZ85Pg87h7hcsp50QQ0FNmbqd5W+WopVoK7m1aPyfR8utnGz3
+         1dmRAGuU22uf+Dr1cDNBA2FhfaLUGxWUlraCz3Z/NCnLNqwM3JY5YRhS/ei6wGu1HVn7
+         KTS4kUeQpIFZ3hXZKf4iNmvlyb7LBNT9F86P9jb+xUMzHsgvjkD5stdnAufCpoKvkQEV
+         JlXtTyGf+krazm0BWeDMn9MMIEfHJbIGBjU7YcWAHPHMoGeNralN6cqQfO9BzZfGoOHG
+         7fZQ==
+X-Gm-Message-State: AO0yUKV8KBoDlfZ+9xy/zRrGZQyuSs09dBUswVK/bWTKlvd59ivaSQ6v
+	sg1mrKqA81JYw4lZ6/uSCVb4oDVBuuKLuPmrfKwHlHXoB9PLFqxm
+X-Google-Smtp-Source: AK7set9khWTtfXPGWgrKhotbzWDgg+nvQX52OADwrn/FV9OAz5/C9d4byU1Oy6+77+yZ4PcLxsIxiOQoQR2B6Tzn+pI=
+X-Received: by 2002:a50:ab12:0:b0:4bc:9aaa:8bc with SMTP id
+ s18-20020a50ab12000000b004bc9aaa08bcmr1139977edc.4.1677684773075; Wed, 01 Mar
+ 2023 07:32:53 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <80b5bf9.4e3f7.18134003f02.Coremail.duoming@zju.edu.cn>
-Subject: Re: [oss-security] Linux kernel: UAF, null-ptr-deref and double-free
- vulnerabilities in nfcmrvl module
+From: Pietro Borrello <borrello@diag.uniroma1.it>
+Date: Wed, 1 Mar 2023 16:32:42 +0100
+Message-ID: <CAEih1qU_yvoQUjGK3c0ncD8yMbxQ6_9+SFpWthEpK9ppq=oOyQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2023-1077: Linux kernel: Type confusion in pick_next_rt_entity()
 
-Hi,
+Hi all,
 
-On Sun, Jun 05, 2022 at 09:14:00PM +0800, duoming@zju.edu.cn wrote:
-> Hello there,
-> 
-> There are double-free, use-after-free(write,read), null-ptr-deref vulnerabilities
-> in drivers/nfc/nfcmrvl of linux that allow attacker to crash linux kernel by simulating
-> nfc device from user-space.
-> 
-> =*=*=*=*=*=*=*=*=  Bug Details  =*=*=*=*=*=*=*=*=
-> 
-> There are destructive operations such as nfcmrvl_fw_dnld_abort and
-> gpio_free in nfcmrvl_nci_unregister_dev. The resources such as firmware,
-> gpio and so on could be destructed while the upper layer functions such as
-> nfcmrvl_fw_dnld_start and nfcmrvl_nci_recv_frame is executing, which leads
-> to double-free, use-after-free and null-ptr-deref bugs.
-> 
-> There are three situations that could lead to double-free bugs.
-> 
-> The first situation is shown below:
-> 
->    (Thread 1)                 |      (Thread 2)
-> nfcmrvl_fw_dnld_start         |
->  ...                          |  nfcmrvl_nci_unregister_dev
->  release_firmware()           |   nfcmrvl_fw_dnld_abort
->   kfree(fw) //(1)             |    fw_dnld_over
->                               |     release_firmware
->   ...                         |      kfree(fw) //(2)
->                               |     ...
-> 
-> The second situation is shown below:
-> 
->    (Thread 1)                 |      (Thread 2)
-> nfcmrvl_fw_dnld_start         |
->  ...                          |
->  mod_timer                    |
->  (wait a time)                |
->  fw_dnld_timeout              |  nfcmrvl_nci_unregister_dev
->    fw_dnld_over               |   nfcmrvl_fw_dnld_abort
->     release_firmware          |    fw_dnld_over
->      kfree(fw) //(1)          |     release_firmware
->      ...                      |      kfree(fw) //(2)
-> 
-> The third situation is shown below:
-> 
->        (Thread 1)               |       (Thread 2)
-> nfcmrvl_nci_recv_frame          |
->  if(..->fw_download_in_progress)|
->   nfcmrvl_fw_dnld_recv_frame    |
->    queue_work                   |
->                                 |
-> fw_dnld_rx_work                 | nfcmrvl_nci_unregister_dev
->  fw_dnld_over                   |  nfcmrvl_fw_dnld_abort
->   release_firmware              |   fw_dnld_over
->    kfree(fw) //(1)              |    release_firmware
->                                 |     kfree(fw) //(2)
-> 
-> The firmware struct is deallocated in position (1) and deallocated
-> in position (2) again.
-> 
-> What's more, there are also use-after-free and null-ptr-deref bugs
-> in nfcmrvl_fw_dnld_start. 
-> 
-> One of the use-after-free bugs about firmware is shown below:
-> 
->    (Use Thread)               |      (Free Thread )
-> nfcmrvl_fw_dnld_start         |
->                               |  nfcmrvl_nci_unregister_dev
->                               |   nfcmrvl_fw_dnld_abort
->   ...                         |    fw_dnld_over
->                               |     release_firmware
->                               |      kfree(fw) //(1)
->   priv->fw_dnld.fw->data;//(2)|     ...
-> 
-> One of the use-after-free bugs about gpio is shown below:
-> 
->    (Use Thread)               |      (Free Thread )
-> nfcmrvl_fw_dnld_start         |
->                               |  nfcmrvl_nci_unregister_dev
->   ...                         |   ...
->                               |   gpio_free //(1)   
->   nfcmrvl_chip_reset          |     ...
->    gpio_set_value //(2)       |
-> 
-> One of the null-ptr-deref bugs about firmware is shown below:
-> 
->    (Use Thread)               |      (Free Thread )
-> nfcmrvl_fw_dnld_start         |
->                               |  nfcmrvl_nci_unregister_dev
->                               |   nfcmrvl_fw_dnld_abort
->   ...                         |    fw_dnld_over
->                               |     priv->fw_dnld.fw = NULL;//(1) 
->                               |     
->   priv->fw_dnld.fw->data;//(2)|     ...
-> 
-> If we deallocate firmware struct, gpio or set null to the members of priv->fw_dnld
-> in position(1), then, we dereference firmware, gpio or the members of priv->fw_dnld
-> in position(2), the UAF or NPD bugs will happen.
-> 
-> =*=*=*=*=*=*=*=*=  Bug Effects  =*=*=*=*=*=*=*=*=
-> 
-> We can successfully trigger the vulnerabilities to crash the linux kernel.
-> 
-> (1) One of the backtraces caused by use-after-free(write) bug is shown below.
-> 
-> [  138.280382] BUG: KASAN: use-after-free in _request_firmware+0x52/0x690
-> [  138.280382] Write of size 8 at addr ffff88800c114850 by task download/11174
-> [  138.280382] Call Trace:
-> [  138.280382]  <TASK>
-> [  138.280382]  dump_stack_lvl+0x57/0x7d
-> [  138.280382]  print_report.cold+0x5e/0x5db
-> [  138.280382]  ? _request_firmware+0x52/0x690
-> [  138.280382]  kasan_report+0xbe/0x1c0
-> [  138.280382]  ? _request_firmware+0x52/0x690
-> [  138.280382]  _request_firmware+0x52/0x690
-> [  138.280382]  request_firmware+0x2d/0x50
-> [  138.280382]  nfcmrvl_fw_dnld_start+0x7a/0xb0
-> [  138.280382]  nfc_fw_download+0x92/0xe0
-> [  138.280382]  nfc_genl_fw_download+0x10b/0x170
-> [  138.280382]  ? nfc_genl_enable_se+0xa0/0xa0
-> [  138.280382]  ? __kasan_slab_alloc+0x2c/0x80
-> [  138.280382]  ? __nla_parse+0x22/0x30
-> [  138.280382]  ? genl_family_rcv_msg_attrs_parse.constprop.0+0xd3/0x130
-> [  138.280382]  genl_family_rcv_msg_doit+0x17a/0x200
-> [  138.280382]  ? genl_family_rcv_msg_attrs_parse.constprop.0+0x130/0x130
-> [  138.280382]  ? mutex_lock_io_nested+0xb63/0xbd0
-> [  138.280382]  ? security_capable+0x48/0x60
-> [  138.280382]  genl_rcv_msg+0x18d/0x2c0
-> [  138.280382]  ? genl_get_cmd+0x1b0/0x1b0
-> [  138.280382]  ? rcu_read_lock_sched_held+0xd/0x70
-> [  138.280382]  ? nfc_genl_enable_se+0xa0/0xa0
-> [  138.280382]  ? rcu_read_lock_sched_held+0xd/0x70
-> [  138.280382]  ? lock_acquire+0xce/0x410
-> [  138.280382]  netlink_rcv_skb+0xc4/0x1f0
-> [  138.280382]  ? genl_get_cmd+0x1b0/0x1b0
-> [  138.280382]  ? netlink_ack+0x4d0/0x4d0
-> [  138.280382]  ? netlink_deliver_tap+0xf7/0x5a0
-> [  138.280382]  genl_rcv+0x1f/0x30
-> [  138.280382]  netlink_unicast+0x2d8/0x420
-> [  138.280382]  ? netlink_attachskb+0x430/0x430
-> [  138.280382]  netlink_sendmsg+0x3a9/0x6e0
-> [  138.280382]  ? netlink_unicast+0x420/0x420
-> [  138.280382]  ? netlink_unicast+0x420/0x420
-> [  138.280382]  sock_sendmsg+0x91/0xa0
-> [  138.280382]  __sys_sendto+0x168/0x200
-> [  138.280382]  ? __ia32_sys_getpeername+0x40/0x40
-> [  138.280382]  ? preempt_count_sub+0xf/0xb0
-> [  138.280382]  ? fd_install+0xfb/0x340
-> [  138.280382]  ? __sys_socket+0xf0/0x160
-> [  138.280382]  ? __x64_sys_clock_nanosleep+0x195/0x220
-> [  138.280382]  ? compat_sock_ioctl+0x410/0x410
-> [  138.280382]  __x64_sys_sendto+0x6f/0x80
-> [  138.280382]  do_syscall_64+0x3b/0x90
-> [  138.280382]  entry_SYSCALL_64_after_hwframe+0x44/0xae
-> [  138.280382] RIP: 0033:0x7ff12ac0602c
-> [  138.280382] Code: 0a f8 ff ff 44 8b 4c 24 2c 4c 8b 44 24 20 89 c5 44 8b 54 2b
-> [  138.280382] RSP: 002b:00007ff12aa1ee00 EFLAGS: 00000293 ORIG_RAX: 0000000000c
-> [  138.280382] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007ff12ac0602c
-> [  138.280382] RDX: 000000000000002c RSI: 000055eab88030b0 RDI: 0000000000000000
-> [  138.280382] RBP: 0000000000000000 R08: 00007ff12aa1ee7c R09: 000000000000000c
-> [  138.280382] R10: 0000000000000000 R11: 0000000000000293 R12: 00007ffca74ba00e
-> [  138.280382] R13: 00007ffca74ba00f R14: 00007ff12aa1efc0 R15: 00007ff12aa1f700
-> 
-> (2) One of the backtraces caused by use-after-free(read) bug is shown below.
-> 
-> [   65.835462] BUG: KASAN: use-after-free in nci_fw_download+0x26/0x60
-> [   65.840236] Read of size 8 at addr ffff88800c2f5008 by task download/160
-> [   65.845755] Call Trace:
-> [   65.845755]  <TASK>
-> [   65.845755]  dump_stack_lvl+0x57/0x7d
-> [   65.845755]  print_report.cold+0x5e/0x5db
-> [   65.845755]  ? nci_fw_download+0x26/0x60
-> [   65.845755]  kasan_report+0xbe/0x1c0
-> [   65.856061]  ? nfc_driver_failure+0x90/0xa0
-> [   65.856235]  ? nci_fw_download+0x26/0x60
-> [   65.856235]  nci_fw_download+0x26/0x60
-> [   65.856235]  nfc_fw_download+0x99/0xe0
-> [   65.856235]  nfc_genl_fw_download+0x10b/0x170
-> [   65.861189]  ? nfc_genl_enable_se+0xa0/0xa0
-> [   65.861189]  ? __kasan_slab_alloc+0x2c/0x80
-> [   65.861189]  ? __nla_parse+0x22/0x30
-> [   65.865988]  ? genl_family_rcv_msg_attrs_parse.constprop.0+0xd3/0x130
-> [   65.865988]  genl_family_rcv_msg_doit+0x17a/0x200
-> [   65.865988]  ? genl_family_rcv_msg_attrs_parse.constprop.0+0x130/0x130
-> [   65.870892]  ? asm_spurious_interrupt+0x3/0x30
-> [   65.870892]  ? security_capable+0x48/0x60
-> [   65.870892]  genl_rcv_msg+0x18d/0x2c0
-> [   65.870892]  ? genl_get_cmd+0x1b0/0x1b0
-> [   65.870892]  ? rcu_read_lock_sched_held+0xd/0x70
-> [   65.875946]  ? nfc_genl_enable_se+0xa0/0xa0
-> [   65.875946]  ? rcu_read_lock_sched_held+0xd/0x70
-> [   65.875946]  ? lock_acquire+0xce/0x410
-> [   65.875946]  netlink_rcv_skb+0xc4/0x1f0
-> [   65.880842]  ? genl_get_cmd+0x1b0/0x1b0
-> [   65.881778]  ? netlink_ack+0x4d0/0x4d0
-> [   65.881778]  ? netlink_deliver_tap+0xf7/0x5a0
-> [   65.881778]  genl_rcv+0x1f/0x30
-> [   65.881778]  netlink_unicast+0x2d8/0x420
-> [   65.885734]  ? netlink_attachskb+0x430/0x430
-> [   65.887472]  netlink_sendmsg+0x3a9/0x6e0
-> [   65.887472]  ? netlink_unicast+0x420/0x420
-> [   65.887472]  ? netlink_unicast+0x420/0x420
-> [   65.887472]  sock_sendmsg+0x91/0xa0
-> [   65.891949]  __sys_sendto+0x168/0x200
-> [   65.893134]  ? __ia32_sys_getpeername+0x40/0x40
-> [   65.893134]  ? lockdep_hardirqs_on_prepare+0xe/0x220
-> [   65.893134]  ? __schedule+0x5c5/0x1180
-> [   65.893134]  ? io_schedule_timeout+0xb0/0xb0
-> [   65.897936]  ? clockevents_program_event+0xd3/0x130
-> [   65.897936]  ? hrtimer_interrupt+0x332/0x350
-> [   65.897936]  __x64_sys_sendto+0x6f/0x80
-> [   65.897936]  do_syscall_64+0x3b/0x90
-> [   65.897936]  entry_SYSCALL_64_after_hwframe+0x44/0xae
-> [   65.902930] RIP: 0033:0x7f96173ec02c
-> [   65.902930] Code: 0a f8 ff ff 44 8b 4c 24 2c 4c 8b 44 24 20 89 c5 44 8b 54 24 28 48 8b 54 24 18 b8 2c 00 00 00 48 8b 74 24 10 8b 7c 24 08 0f 05 <48> 3d 00 fb
-> [   65.908959] RSP: 002b:00007f9617204df0 EFLAGS: 00000293 ORIG_RAX: 000000000000002c
-> [   65.908959] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f96173ec02c
-> [   65.908959] RDX: 0000000000000034 RSI: 0000556fa2a030b0 RDI: 0000000000000003
-> [   65.908959] RBP: 0000000000000000 R08: 00007f9617204e6c R09: 000000000000000c
-> [   65.915542] R10: 0000000000000000 R11: 0000000000000293 R12: 00007ffde78477ee
-> [   65.916990] R13: 00007ffde78477ef R14: 00007f9617204fc0 R15: 00007f9617205700
-> 
-> (3) One of the backtraces caused by double-free bug is shown below.
-> 
-> [  122.640457] BUG: KASAN: double-free or invalid-free in fw_dnld_over+0x28/0xf0
-> [  122.640457] Call Trace:
-> [  122.640457]  <TASK>
-> [  122.640457]  dump_stack_lvl+0x57/0x7d
-> [  122.640457]  print_report.cold+0x5e/0x5db
-> [  122.640457]  ? fw_dnld_over+0x28/0xf0
-> [  122.640457]  ? fw_dnld_over+0x28/0xf0
-> [  1re22.640457]  kasan_report_invalid_free+0x90/0x180
-> [  122.640457]  ? refcount_warn_saturate+0x40/0x110
-> [  122.640457]  ? fw_dnld_over+0x28/0xf0
-> [  122.640457]  __kasan_slab_free+0x152/0x170
-> [  122.640457]  ? fw_dnld_over+0x28/0xf0
-> [  122.640457]  kfree+0xb0/0x330
-> [  122.640457]  fw_dnld_over+0x28/0xf0
-> [  122.640457]  nfcmrvl_nci_unregister_dev+0x61/0x70
-> [  122.640457]  nci_uart_tty_close+0x87/0xd0
-> [  122.640457]  tty_ldisc_kill+0x3e/0x80
-> [  122.640457]  tty_ldisc_hangup+0x1b2/0x2c0
-> [  122.640457]  __tty_hangup.part.0+0x316/0x520
-> [  122.640457]  tty_release+0x200/0x670
-> [  122.640457]  __fput+0x110/0x410
-> [  122.640457]  ? _raw_spin_unlock_irq+0x1f/0x40
-> [  122.640457]  task_work_run+0x86/0xd0
-> [  122.640457]  exit_to_user_mode_prepare+0x1aa/0x1b0
-> [  122.640457]  syscall_exit_to_user_mode+0x19/0x50
-> [  122.640457]  do_syscall_64+0x48/0x90
-> [  122.640457]  entry_SYSCALL_64_after_hwframe+0x44/0xae
-> [  122.640457] RIP: 0033:0x7f68433f6beb
-> [  122.640457] Code: 0f 05 48 3d 00 f0 ff ff 77 45 c3 0f 1f 40 00 48 83 ec 18 84
-> [  122.640457] RSP: 002b:00007f684320fee0 EFLAGS: 00000293 ORIG_RAX: 00000000003
-> [  122.640457] RAX: 0000000000000000 RBX: 0000000000000000 RCX: 00007f68433f6beb
-> [  122.640457] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000003
-> [  122.640457] RBP: 00007f684320ff00 R08: 0000000000000000 R09: 00007f6843210700
-> [  122.640457] R10: 0000000000000000 R11: 0000000000000293 R12: 00007ffd5d6f9fde
-> [  122.640457] R13: 00007ffd5d6f9fdf R14: 00007f684320ffc0 R15: 00007f6843210700
-> 
-> (4) One of the backtraces caused by null-ptr-deref bug is shown below.
-> 
-> [   80.495478] BUG: KASAN: null-ptr-deref in nfcmrvl_fw_dnld_start.cold+0x19/0x276
-> [   80.498745] Read of size 8 at addr 0000000000000008 by task download/161
-> [   80.502308] Call Trace:
-> [   80.502308]  <TASK>
-> [   80.502308]  dump_stack_lvl+0x57/0x7d
-> [   80.502308]  kasan_report+0xbe/0x1c0
-> [   80.502308]  ? nfcmrvl_fw_dnld_start.cold+0x19/0x276
-> [   80.502308]  nfcmrvl_fw_dnld_start.cold+0x19/0x276
-> [   80.508210]  ? nfc_fw_download+0x79/0xe0
-> [   80.508210]  nfc_fw_download+0x99/0xe0
-> [   80.508210]  nfc_genl_fw_download+0x10b/0x170
-> [   80.508210]  ? nfc_genl_enable_se+0xa0/0xa0
-> [   80.508210]  ? __kasan_slab_alloc+0x2c/0x80
-> [   80.508210]  ? __nla_parse+0x22/0x30
-> [   80.508210]  ? genl_family_rcv_msg_attrs_parse.constprop.0+0xd3/0x130
-> [   80.508210]  genl_family_rcv_msg_doit+0x17a/0x200
-> [   80.508210]  ? genl_family_rcv_msg_attrs_parse.constprop.0+0x130/0x130
-> [   80.513085]  ? mutex_lock_io_nested+0xb43/0xbd0
-> [   80.513085]  ? security_capable+0x48/0x60
-> [   80.513085]  genl_rcv_msg+0x18d/0x2c0
-> [   80.513085]  ? genl_get_cmd+0x1b0/0x1b0
-> [   80.513085]  ? rcu_read_lock_sched_held+0xd/0x70
-> [   80.513085]  ? nfc_genl_enable_se+0xa0/0xa0
-> [   80.513085]  ? rcu_read_lock_sched_held+0xd/0x70
-> [   80.513085]  ? lock_acquire+0xce/0x410
-> [   80.513085]  netlink_rcv_skb+0xc4/0x1f0
-> [   80.513085]  ? genl_get_cmd+0x1b0/0x1b0
-> [   80.518420]  ? netlink_ack+0x4d0/0x4d0
-> [   80.518420]  ? netlink_deliver_tap+0xf7/0x5a0
-> [   80.518420]  genl_rcv+0x1f/0x30
-> [   80.518420]  netlink_unicast+0x2d8/0x420
-> [   80.518420]  ? netlink_attachskb+0x430/0x430
-> [   80.518420]  netlink_sendmsg+0x3a9/0x6e0
-> [   80.518420]  ? netlink_unicast+0x420/0x420
-> [   80.518420]  ? netlink_unicast+0x420/0x420
-> [   80.518420]  sock_sendmsg+0x91/0xa0
-> [   80.518420]  __sys_sendto+0x168/0x200
-> [   80.523005]  ? __ia32_sys_getpeername+0x40/0x40
-> [   80.523005]  ? preempt_count_sub+0xf/0xb0
-> [   80.523005]  ? fd_install+0xfb/0x340
-> [   80.523005]  ? __sys_socket+0xf0/0x160
-> [   80.523005]  ? compat_sock_ioctl+0x410/0x410
-> [   80.523005]  __x64_sys_sendto+0x6f/0x80
-> [   80.523005]  do_syscall_64+0x3b/0x90
-> [   80.523005]  entry_SYSCALL_64_after_hwframe+0x44/0xae
-> [   80.523005] RIP: 0033:0x7f30f54f402c
-> [   80.523005] Code: 0a f8 ff ff 44 8b 4c 24 2c 4c 8b 44 24 20 89 c5 44 8b 54 24 28 48 8b 54 24 18 b8 2b
-> [   80.528021] RSP: 002b:00007f30f530cdf0 EFLAGS: 00000293 ORIG_RAX: 000000000000002c
-> [   80.528021] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f30f54f402c
-> [   80.528021] RDX: 0000000000000034 RSI: 00005571766030b0 RDI: 0000000000000005
-> [   80.533650] RBP: 0000000000000000 R08: 00007f30f530ce6c R09: 000000000000000c
-> [   80.533650] R10: 0000000000000000 R11: 0000000000000293 R12: 00007ffd9c6c6cee
-> [   80.533650] R13: 00007ffd9c6c6cef R14: 00007f30f530cfc0 R15: 00007f30f530d700
-> 
-> =*=*=*=*=*=*=*=*=  Bug Fix  =*=*=*=*=*=*=*=*=
-> 
-> The patch that have been applied to mainline Linux kernel is shown below.
-> https://github.com/torvalds/linux/commit/d270453a0d9ec10bb8a802a142fb1b3601a83098
-> 
-> =*=*=*=*=*=*=*=*=  Timeline  =*=*=*=*=*=*=*=*=
-> 
-> 2022-05-01: commit d270453a0d9e accepted to mainline kernel
-> 2022-06-05: send an email to secalert@redhat.com in order to request CVE number
-> 
-> =*=*=*=*=*=*=*=*=  Credit  =*=*=*=*=*=*=*=*=
-> 
-> Duoming Zhou <duoming@zju.edu.cn>
+I am disclosing a type confusion in the RT scheduling stack of the Linux Kernel.
+pick_next_rt_entity() caller checks that list_entry() on the scheduler queue
+does not return NULL, using a BUG_ON.
+However, this condition can never happen.
+For an empty list, list_entry() returns a type confused view of the list_head.
+The buggy condition would lead to the use of a type confused sched_rt_entity,
+causing memory corruption.
 
-According to https://bugzilla.redhat.com/show_bug.cgi?id=2086766 this
-should be CVE-2022-1734.
+The proposed patch has been merged in the Linux tree:
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=7c4a5b89a0b5a57a64b601775b296abf77a9fe97
 
-Regards,
-Salvatore
+The issue has been assigned CVE-2023-1077.
+
+Best regards,
+Pietro Borrello
