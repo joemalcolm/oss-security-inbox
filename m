@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2620" "Tuesday" "26" "May" "2015" "14:17:45" "+0200" "Jason A. Donenfeld" "Jason@zx2c4.com" "<1432642669-7289-1-git-send-email-Jason@zx2c4.com>" "59" "[oss-security] [PATCH v2 0/4] ozwpan: Four remote packet-of-death vulnerabilities" nil nil nil "5" "2015052612:17:45" "[oss-security] [PATCH v2 0/4] ozwpan: Four remote packet-of-death vulnerabilities" (number mark "U       Jason@zx2c4. May 26   59/2620  " thread-indent "\"[oss-security] [PATCH v2 0/4] ozwpan: Four remote packet-of-death vulnerabilities\"\n") "<1431543500-4847-1-git-send-email-Jason@zx2c4.com>" ("<1431543500-4847-1-git-send-email-Jason@zx2c4.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 19533 invoked by uid 550); 26 May 2015 12:18:37 -0000
+Received: (qmail 20063 invoked by uid 550); 1 Mar 2023 15:48:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,85 +7,109 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18421 invoked from network); 26 May 2015 12:18:26 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=mail; bh=OkU7
-	voX6GsRBEtZjZD0CkznR4EY=; b=HBQEXTcSy3aHNgdksgWdhOhUc5bgrdVyeKLl
-	AXJiT3gBS1Vp0nlAR+/V48bdUw63XhaJ/yAWqx9ih2Qe5tQ05keCxSrXozKo/Xj+
-	ReYCv6TexiE7VetOZqKCuV14TWlnO3tpOAdPanGiowdF8Iis2X0G4pJDJR6rQaY/
-	kwPNDmdgNlNhNDC2MESSrAcXks1OEVwlMMh2ihzTbgXadSM6cU7YACsC1AZRfAwz
-	u+A2nQkMsMwrPaJDODGhVtBD5qBZvBPwPwO+soq4XEaIimgjW6AdO1y05Zx8/+ud
-	ma6b3uFGrimeWqF8cVWOSuhVJNjOuri3c23f5Nt73kjuoZkIBA==
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: oss-security <oss-security@lists.openwall.com>,
-	linux-kernel@vger.kernel.org,
-	Shigekatsu Tateno <shigekatsu.tateno@atmel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	devel@driverdev.osuosl.org
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Tue, 26 May 2015 14:17:45 +0200
-Message-Id: <1432642669-7289-1-git-send-email-Jason@zx2c4.com>
-X-Mailer: git-send-email 2.4.1
-In-Reply-To: <1431543500-4847-1-git-send-email-Jason@zx2c4.com>
-References: <1431543500-4847-1-git-send-email-Jason@zx2c4.com>
-Subject: [oss-security] [PATCH v2 0/4] ozwpan: Four remote packet-of-death vulnerabilities
+Received: (qmail 27874 invoked from network); 1 Mar 2023 15:06:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diag.uniroma1.it; s=google; t=1677683174;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Iqlp6b2pp+g3FJGzFAgQZAkGUuXHu8Kh19KEYZ3vy0A=;
+        b=D3+/XSjL3Y9rAwTFgVvwPRbQy3pSX1AdVbeTs3oXXHlVOjN/5BRVJc87NqZD2tZsBC
+         BNSAcwJZJtmBkAtd+ABxR6BiJQOLYHvyVp24lmvUwE/rePHXyZAt9APhROkEXKcXaQl+
+         GsVU2KdLCZmz8tdYIwmUsfM3h19dopa91TCk4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1677683174;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Iqlp6b2pp+g3FJGzFAgQZAkGUuXHu8Kh19KEYZ3vy0A=;
+        b=qkWSHRkOW9ylZKvfuf1BcS5+ygEPZ3EUiisv6R4jZf7AmA/DnyFjSpqn3QZmWV6cRa
+         cAACF3qB9WE/2YLpOqNMD5FDaY8I59fU3C7+DlbrDxLcga+6hq41TVOI1PdiKUg3SdFG
+         m2Hj5x8/r4ZQNeo9xDINEMf7XwV96frM04t9l+CbKw5qXoz/Wc3eEwRa7NAmE+otwgkn
+         cOKndDXDwx92zDn4i9UyuPOX/xPoCeJpio1KaUxTDESphYOsZqA60RGxp6b6RDiQMfsH
+         ccvKkt5LKiJCKhcd/doE3YXT/wWI7ILjnqrnIt6ih+rc0KuD4y0g2cVMbegDG4RtVRYN
+         /MgQ==
+X-Gm-Message-State: AO0yUKV18Md+wDXiJB2UASsMXUrLkgckmex106lYLbahCFc8T8avsPth
+	+le84U1TWwHFdA8LVGRpEUhr2UfsuxKaOLzrL8VILC02++xTqC1u
+X-Google-Smtp-Source: AK7set/h+U9lFvyOtXtqHHdB5swqNaiSQm1ld8HxCCNRuNJQVeM7end9ggEosO3RrubhUQDG5sqihMZaPFIh8daxEX4=
+X-Received: by 2002:a17:906:65d4:b0:8b1:78b8:4207 with SMTP id
+ z20-20020a17090665d400b008b178b84207mr3451300ejn.3.1677683174054; Wed, 01 Mar
+ 2023 07:06:14 -0800 (PST)
+MIME-Version: 1.0
+From: Pietro Borrello <borrello@diag.uniroma1.it>
+Date: Wed, 1 Mar 2023 16:06:03 +0100
+Message-ID: <CAEih1qWYc1B5nXxhTMoT7++9p4FhCPSuGamJOJp7OtRgEsC5pw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2023-1079: Linux Kernel: Use-After-Free in asus_kbd_backlight_set()
 
-This is v2 for this patch series, fixing a compiler warning.
+Hi all,
 
-The ozwpan driver accepts network packets, parses them, and converts
-them into various USB functionality. There are numerous security
-vulnerabilities in the handling of these packets. Two of them result in
-a memcpy(kernel_buffer, network_packet, -length), one of them is a
-divide-by-zero, and one of them is a loop that decrements -1 until it's
-zero.
+I'm disclosing a Use After Free that may be triggered when plugging in a
+malicious USB device, which advertises itself as an asus device.
 
-I've written a very simple proof-of-concept for each one of these
-vulnerabilities to aid with detecting and fixing them. The general
-operation of each proof-of-concept code is:
+The device uses a worker `asus_worker` scheduled by asus_kbd_backlight_set() to
+communicate with the hardware.
+The work_struct is embedded in `struct asus_kbd_leds`, and at device removal,
+`struct asus_kbd_leds` is freed.
 
-  - Load the module with:
-    # insmod ozwpan.ko g_net_dev=eth0
-  - Compile the PoC with ozprotocol.h from the kernel tree:
-    $ cp /path/to/linux/drivers/staging/ozwpan/ozprotocol.h ./
-    $ gcc ./poc.c -o ./poc
-  - Run the PoC:
-    # ./poc eth0 [mac-address]
+However, concurrently with device removal, the LED controller
+asus_kbd_backlight_set() may schedule a worker whose use would
+result in a use-after-free.
 
-These PoCs should also be useful to the maintainers for testing out
-constructing and sending various other types of malformed packets against
-which this driver should be hardened.
+Following the debug check triggered by freeing a work_struct in use:
+```
+[   77.409878][ T1169] usb 1-1: USB disconnect, device number 2
+[   77.423606][ T1169] ODEBUG: free active (active state 0) object
+type: work_struct hint: asus_kbd_backlight_work+0x0/0x2c0
+[   77.425222][ T1169] WARNING: CPU: 0 PID: 1169 at
+lib/debugobjects.c:505 debug_check_no_obj_freed+0x43a/0x630
+[   77.426599][ T1169] Modules linked in:
+[   77.427322][ T1169] CPU: 0 PID: 1169 Comm: kworker/0:3 Not tainted
+6.1.0-rc4-dirty #43
+[   77.428404][ T1169] Hardware name: QEMU Standard PC (i440FX + PIIX,
+1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+[   77.429644][ T1169] Workqueue: usb_hub_wq hub_event
+[   77.430296][ T1169] RIP: 0010:debug_check_no_obj_freed+0x43a/0x630
+[   77.431142][ T1169] Code: 48 89 ef e8 28 82 58 ff 49 8b 14 24 4c 8b
+45 00 48 c7 c7 40 5f 09 87 48 c7 c6 60 5b 09 87 89 d9 4d 89 f9 31 c0
+e8 46 25 ef fe <0f> 0b 4c 8b 64 24 20 48 ba 00 00 00 00 00 fc ff df ff
+05 4f 7c 17
+[   77.433691][ T1169] RSP: 0018:ffffc9000069ee60 EFLAGS: 00010246
+[   77.434470][ T1169] RAX: b85d2b40c12d7600 RBX: 0000000000000000
+RCX: ffff888117a78000
+[   77.435507][ T1169] RDX: 0000000000000000 RSI: 0000000080000000
+RDI: 0000000000000000
+[   77.436521][ T1169] RBP: ffffffff86e88380 R08: ffffffff8130793b
+R09: ffffed103ecc4ed6
+[   77.437582][ T1169] R10: ffffed103ecc4ed6 R11: 0000000000000000
+R12: ffffffff87095fb8
+[   77.438593][ T1169] R13: ffff88810e348fe0 R14: ffff88810e348fd4
+R15: ffffffff852b5780
+[   77.439667][ T1169] FS:  0000000000000000(0000)
+GS:ffff8881f6600000(0000) knlGS:0000000000000000
+[   77.440842][ T1169] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   77.441688][ T1169] CR2: 00007ffc05495ff0 CR3: 000000010cdf0000
+CR4: 00000000001006f0
+[   77.442720][ T1169] Call Trace:
+[   77.443167][ T1169]  <TASK>
+[   77.443555][ T1169]  slab_free_freelist_hook+0x89/0x160
+[   77.444302][ T1169]  ? devres_release_all+0x262/0x350
+[   77.444990][ T1169]  __kmem_cache_free+0x71/0x110
+[   77.445638][ T1169]  devres_release_all+0x262/0x350
+[   77.446309][ T1169]  ? devres_release+0x90/0x90
+[   77.446978][ T1169]  device_release_driver_internal+0x5e5/0x8a0
+[   77.447748][ T1169]  bus_remove_device+0x2ea/0x400
+[   77.448421][ T1169]  device_del+0x64f/0xb40
+[   77.448976][ T1169]  ? kill_device+0x150/0x150
+[   77.449577][ T1169]  ? print_irqtrace_events+0x1f0/0x1f0
+[   77.450307][ T1169]  hid_destroy_device+0x66/0x100
+[   77.450938][ T1169]  usbhid_disconnect+0x9a/0xc0
+```
 
-Please assign CVEs for these vulnerabilities. I believe the first two
-patches of this set can receive one CVE for both, and the remaining two
-can receive one CVE each.
+The proposed patch uses a spinlock to safely prevent the worker to be scheduled
+at device removal, and has been merged in the Linux tree:
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=4ab3a086d10eeec1424f2e8a968827a6336203df
 
+The issue has been assigned CVE-2023-1079.
 
-On a slightly related note, there are several other vulnerabilities in
-this driver that are worth looking into. When ozwpan receives a packet,
-it casts the packet into a variety of different structs, based on the
-value of type and length parameters inside the packet. When making these
-casts, and when reading bytes based on this length parameter, the actual
-length of the packet in the socket buffer is never actually consulted. As
-such, it's very likely that a packet could be sent that results in the
-kernel reading memory in adjacent buffers, resulting in an information
-leak, or from unpaged addresses, resulting in a crash. In the former case,
-it may be possible with certain message types to actually send these
-leaked adjacent bytes back to the sender of the packet. So, I'd highly
-recommend the maintainers of this driver go branch-by-branch from the
-initial rx function, adding checks to ensure all reads and casts are
-within the bounds of the socket buffer.
-
-Jason A. Donenfeld (4):
-  ozwpan: Use proper check to prevent heap overflow
-  ozwpan: Use unsigned ints to prevent heap overflow
-  ozwpan: divide-by-zero leading to panic
-  ozwpan: unchecked signed subtraction leads to DoS
-
- drivers/staging/ozwpan/ozhcd.c     |  8 ++++----
- drivers/staging/ozwpan/ozusbif.h   |  4 ++--
- drivers/staging/ozwpan/ozusbsvc1.c | 18 ++++++++++++++----
- 3 files changed, 20 insertions(+), 10 deletions(-)
-
--- 
-2.4.1
-
+Best regards,
+Pietro Borrello
