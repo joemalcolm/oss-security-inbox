@@ -1,36 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/20/11
-Message-Id: <A35F9CEA-C1F9-4D2B-8771-ED4EBA113B17@dwheeler.com>
-Date: Thu, 20 Apr 2023 11:28:22 -0400
-From: "David A. Wheeler" <dwheeler@...eeler.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/02/1
+Message-ID: <61b9aeb9.70ae6.1869fd253e9.Coremail.duoming@zju.edu.cn>
+Date: Thu, 2 Mar 2023 08:56:46 +0800 (GMT+08:00)
+From: duoming@....edu.cn
 To: oss-security@...ts.openwall.com
-Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
+Subject: Linux kernel: CVE-2023-1118: UAF vulnerabilities in "drivers/media/rc" directory
 Content-Type: text/plain; charset=utf-8
 
-> |Steffen Nurpmeso <steffen@...oden.eu> wrote:
-> |> IMO it is no vulnerability at all since it has "always" been _very
-> |> clearly_ (even very lengthily) documented in the manual page.
+Hello there,
 
-> Hanno Böck replied:
-> |A vulnerability does not go away if it's documented, and I find that a
-> |rather strange take.
+There are use-after-free vulnerabilities in drivers/media/rc/ene_ir.c of linux that
+allow attacker to crash linux kernel without any privilege by detaching rc device.
 
-> On Apr 20, 2023, at 8:56 AM, Steffen Nurpmeso <steffen@...oden.eu> wrote:
-> Hm no, i do not, the latter not at all.  You can bundle a OpenPGP
-> / signify / even OpenSSL signature with something and can get
-> secure download even over non-encrypted channels.
+=*=*=*=*=*=*=*=*=  Bug Details  =*=*=*=*=*=*=*=*=
 
-That's true, but irrelevant. The problem is that this function fails to
-perform the security function implied by its name. If
-HTTP::Tiny supports TLS (instead of rejecting it), it needs to verify TLS certs by default.
+When the rc device is detaching, function ene_remove() will be called.
+But the synchronizations in ene_remove() are bad. The situations that 
+may lead to race conditions are shown below.
 
-If there's function named "isodd()" where "isodd(4) === true", that's a bug,
-even if the documentation said that's what it did. The function/method name
-implies functionality. You could call it a naming bug. Papering over bugs helps no one.
+Firstly, the rx receiver is disabled with ene_rx_disable()
+before rc_unregister_device() in ene_remove(), which means it
+can be enabled again if a process opens /dev/lirc0 between
+ene_rx_disable() and rc_unregister_device().
 
-The *default* of an externally-called function needs to be secure.
+    (cleanup routine)      |        (open routine)
+ene_remove()               | 
+  ene_rx_disable(dev);     | ene_open()
+                           |   ene_rx_enable(dev); //re-enable!
 
-I'm sympathetic to the problem of loading in the *right* certs, but systems generally
-already have mechanisms for configuring certs. That seems like a solved problem.
+Secondly, the irqaction descriptor is freed by free_irq()
+before the rc device is unregistered, which means irqaction
+descriptor may be accessed again after it is deallocated.
 
---- David A. Wheeler
+    (free routine)                |        (use routine)
+ene_remove()                      | ene_rx_enable()
+  free_irq(dev->irq, ...); //FREE |   ene_rx_enable_hw()
+                                  |     ene_write_reg(..., dev->irq << 1) //USE
+                                  | 
+
+Thirdly, the timer can call ene_tx_sample() that can write
+to the io ports, which means the io ports could be accessed
+again after they are deallocated by release_region().
+
+    (free routine)                        |        (use routine)
+ene_remove()                              | ene_tx_sample()
+  release_region(dev->hw_io, ...); //FREE |   ene_write_reg()
+                                          |     outb(..., dev->hw_io + ENE_IO) //USE
+
+Fourthly, there is no function to cancel tx_sim_timer in ene_remove(),
+the timer handler ene_tx_irqsim() could race with ene_remove(). 
+As a result, the UAF bugs could happen, the process is shown below.
+
+    (free routine)             |        (use routine)
+                               | mod_timer(&dev->tx_sim_timer, ..)
+ene_remove()                   | (wait a time)
+  kfree(dev) //FREE            | ene_tx_irqsim()
+                               |   dev->hw_lock //USE
+                               |   ene_tx_sample(dev) //USE
+
+=*=*=*=*=*=*=*=*=  Bug Effects  =*=*=*=*=*=*=*=*=
+
+The vulnerabilities could crash the kernel and cause denial-of-service by detaching rc device.
+
+=*=*=*=*=*=*=*=*=  Bug Fix  =*=*=*=*=*=*=*=*=*=*=
+
+The patch that have been applied to mainline Linux kernel is shown below.
+https://github.com/torvalds/linux/commit/29b0589a865b6f66d141d79b2dd1373e4e50fe17
+
+=*=*=*=*=*=*=*=*=  Timeline  =*=*=*=*=*=*=*=*=*=
+
+2023-02-08: commit 29b0589a865b was accepted to mainline kernel
+2023-03-01: CVE-2023-1118 was assigned by redhat.
+
+=*=*=*=*=*=*=*=*=  Credit  =*=*=*=*=*=*=*=*=
+
+Duoming Zhou <duoming@....edu.cn>
+
+Best Regards,
+Duoming Zhou
