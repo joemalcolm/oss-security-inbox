@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3523" "Wednesday" "5" "July" "2017" "15:50:17" "+0100" "John Haxby" "john.haxby@oracle.com" "<1b6f7cd9-2eb7-2c2d-e2e0-327cf3dd1e82@oracle.com>" "79" "Re: [oss-security] systemd fails to parse user that should run service" "^Date:" nil nil "7" "2017070514:50:17" "[oss-security] systemd fails to parse user that should run service" (number mark "        john.haxby@o Jul  5   79/3523  " thread-indent "\"Re: [oss-security] systemd fails to parse user that should run service\"\n") "<20170705135320.ue7fojrds4tu2vpp@perpetual.pseudorandom.co.uk>" ("<VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>" "<20170705085034.GA2638@pali>" "<201707051202.v65C2NDB005864@room101.nl.oracle.com>" "<20170705135320.ue7fojrds4tu2vpp@perpetual.pseudorandom.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 9583 invoked by uid 550); 5 Jul 2017 14:50:32 -0000
+Received: (qmail 10035 invoked by uid 550); 2 Mar 2023 01:23:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,103 +6,91 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9564 invoked from network); 5 Jul 2017 14:50:31 -0000
-References: <VI1PR04MB310470DAAF5F79C8BA8AE789D6D10@VI1PR04MB3104.eurprd04.prod.outlook.com>
- <20170705085034.GA2638@pali>
- <201707051202.v65C2NDB005864@room101.nl.oracle.com>
- <20170705135320.ue7fojrds4tu2vpp@perpetual.pseudorandom.co.uk>
-Message-ID: <1b6f7cd9-2eb7-2c2d-e2e0-327cf3dd1e82@oracle.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
-MIME-Version: 1.0
-In-Reply-To: <20170705135320.ue7fojrds4tu2vpp@perpetual.pseudorandom.co.uk>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-X-Source-IP: userv0022.oracle.com [156.151.31.74]
-Date: Wed, 5 Jul 2017 15:50:17 +0100
-From: John Haxby <john.haxby@oracle.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] systemd fails to parse user that should run
- service
+Received: (qmail 25688 invoked from network); 2 Mar 2023 00:57:04 -0000
+X-Originating-IP: [106.117.98.179]
+Date: Thu, 2 Mar 2023 08:56:46 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: duoming@zju.edu.cn
 To: oss-security@lists.openwall.com
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20210104(ab8c30b6)
+ Copyright (c) 2002-2023 www.mailtech.cn zju.edu.cn
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
+MIME-Version: 1.0
+Message-ID: <61b9aeb9.70ae6.1869fd253e9.Coremail.duoming@zju.edu.cn>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:cS_KCgAXq91P9P9jsXN9Cw--.55966W
+X-CM-SenderInfo: qssqjiasttq6lmxovvfxof0/1tbiAgICAVZdtd2l0wAAsW
+X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
+	CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
+	daVFxhVjvjDU=
+Subject: [oss-security] Linux kernel: CVE-2023-1118: UAF vulnerabilities in
+ "drivers/media/rc" directory
 
-On 05/07/17 14:53, Simon McVittie wrote:
-> On Wed, 05 Jul 2017 at 14:02:23 +0200, Casper.Dik@oracle.com wrote:
->>> 2) If user name specified in systemd unit file is syntactically correct
->>> (according to systemd check) but user name does not exist then systemd
->>> refuse to start that unit.
->>
->> Should systemd really valid usernames?  I would think that you would 
->> either use getpwnam(username) and if that fails you may then parse it as a 
->> numeric value.  If "0day" isn't a valid username according to getpwnam(), 
->> when converting it to a numeric uid should *also* fail because "0day" 
->> isn't a properly numeric value.
-> 
-> It *does* fail. The problem is in the handling of that failure. systemd
-> interprets that failure as "this line is nonsense, so behave as though the
-> line didn't exist" rather than "this line can be positively identified as
-> an attempt to name a nonexistent or unacceptable user, so fail to load
-> the unit". So User=7up does the same thing as User=0day - it doesn't
-> run as uid 7, which is 'lp' on my Debian system.
-
-
-And therein lies the problem.  "0day" and "7up" are valid user names
-according to Posix[1], they may or may not exist, but they are valid.
-You may think Posix is wrong to allow an initial digit, but that isn't
-the issue.  The problem is that systemd treats an "invalid" username as
-either an integer or not specified and in either case this results in a
-program running as the wrong user, probably as root.
-
-Having systemd balk at what Posix considers to be a valid username is a
-bug that systemd is free to say "this is stupid, we're not allowing
-that".   If, as appears to be the case, systemd says "that username is
-stupid, we're going to interpret it differently" then that's when we
-need a CVE because, to my mind on this hot and sunny say, that's systemd
-apparently doing something for security that it is not.
-
-jch
-
-
-[1]
-http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_431
-
-
-
-> 
->     % cat /etc/systemd/system/demo.service
->     [Unit]
->     Description=Demonstration
-> 
->     [Service]
->     Type=oneshot
->     ExecStart=/usr/bin/id
->     User=7up
->     % sudo systemctl daemon-reload
->     % sudo systemctl start demo.service
->     % sudo systemctl status demo.service
->     ...
->     Jul 05 14:47:11 host systemd[1]: /etc/systemd/system/demo.service:7:
->     Invalid user/group name or numeric ID, ignoring: 7up
->     Jul 05 14:47:11 host systemd[1]: Starting Demonstration...
->     Jul 05 14:47:11 host id[27282]: uid=0(root) gid=0(root) groups=0(root)
->     Jul 05 14:47:11 host systemd[1]: Started Demonstration.
->     Jul 05 14:47:11 host systemd[1]: /etc/systemd/system/demo.service:7:
->     Invalid user/group name or numeric ID, ignoring: 7up
->     Jul 05 14:47:17 host systemd[1]: /etc/systemd/system/demo.service:7:
->     Invalid user/group name or numeric ID, ignoring: 7up
->     Jul 05 14:48:25 host systemd[1]: /etc/systemd/system/demo.service:7:
->     Invalid user/group name or numeric ID, ignoring: 7up
-> 
-> (The error message in the Journal is presumably repeated because systemd
-> re-parses User when looking for ExecStartPre, ExecStart, ExecStop and
-> ExecStopPost commands, even though in this case there is only ExecStart.)
-> 
-> The default user to run system units, if no user is specified, is root,
-> because for system services that's the right thing more often than not,
-> analogous to how LSB init scripts always run as root and can drop
-> privileges themselves if they want to.
-> 
->     S
-> 
-
+SGVsbG8gdGhlcmUsCgpUaGVyZSBhcmUgdXNlLWFmdGVyLWZyZWUgdnVsbmVy
+YWJpbGl0aWVzIGluIGRyaXZlcnMvbWVkaWEvcmMvZW5lX2lyLmMgb2YgbGlu
+dXggdGhhdAphbGxvdyBhdHRhY2tlciB0byBjcmFzaCBsaW51eCBrZXJuZWwg
+d2l0aG91dCBhbnkgcHJpdmlsZWdlIGJ5IGRldGFjaGluZyByYyBkZXZpY2Uu
+Cgo9Kj0qPSo9Kj0qPSo9Kj0qPSAgQnVnIERldGFpbHMgID0qPSo9Kj0qPSo9
+Kj0qPSo9CgpXaGVuIHRoZSByYyBkZXZpY2UgaXMgZGV0YWNoaW5nLCBmdW5j
+dGlvbiBlbmVfcmVtb3ZlKCkgd2lsbCBiZSBjYWxsZWQuCkJ1dCB0aGUgc3lu
+Y2hyb25pemF0aW9ucyBpbiBlbmVfcmVtb3ZlKCkgYXJlIGJhZC4gVGhlIHNp
+dHVhdGlvbnMgdGhhdCAKbWF5IGxlYWQgdG8gcmFjZSBjb25kaXRpb25zIGFy
+ZSBzaG93biBiZWxvdy4KCkZpcnN0bHksIHRoZSByeCByZWNlaXZlciBpcyBk
+aXNhYmxlZCB3aXRoIGVuZV9yeF9kaXNhYmxlKCkKYmVmb3JlIHJjX3VucmVn
+aXN0ZXJfZGV2aWNlKCkgaW4gZW5lX3JlbW92ZSgpLCB3aGljaCBtZWFucyBp
+dApjYW4gYmUgZW5hYmxlZCBhZ2FpbiBpZiBhIHByb2Nlc3Mgb3BlbnMgL2Rl
+di9saXJjMCBiZXR3ZWVuCmVuZV9yeF9kaXNhYmxlKCkgYW5kIHJjX3VucmVn
+aXN0ZXJfZGV2aWNlKCkuCgogICAgKGNsZWFudXAgcm91dGluZSkgICAgICB8
+ICAgICAgICAob3BlbiByb3V0aW5lKQplbmVfcmVtb3ZlKCkgICAgICAgICAg
+ICAgICB8IAogIGVuZV9yeF9kaXNhYmxlKGRldik7ICAgICB8IGVuZV9vcGVu
+KCkKICAgICAgICAgICAgICAgICAgICAgICAgICAgfCAgIGVuZV9yeF9lbmFi
+bGUoZGV2KTsgLy9yZS1lbmFibGUhCgpTZWNvbmRseSwgdGhlIGlycWFjdGlv
+biBkZXNjcmlwdG9yIGlzIGZyZWVkIGJ5IGZyZWVfaXJxKCkKYmVmb3JlIHRo
+ZSByYyBkZXZpY2UgaXMgdW5yZWdpc3RlcmVkLCB3aGljaCBtZWFucyBpcnFh
+Y3Rpb24KZGVzY3JpcHRvciBtYXkgYmUgYWNjZXNzZWQgYWdhaW4gYWZ0ZXIg
+aXQgaXMgZGVhbGxvY2F0ZWQuCgogICAgKGZyZWUgcm91dGluZSkgICAgICAg
+ICAgICAgICAgfCAgICAgICAgKHVzZSByb3V0aW5lKQplbmVfcmVtb3ZlKCkg
+ICAgICAgICAgICAgICAgICAgICAgfCBlbmVfcnhfZW5hYmxlKCkKICBmcmVl
+X2lycShkZXYtPmlycSwgLi4uKTsgLy9GUkVFIHwgICBlbmVfcnhfZW5hYmxl
+X2h3KCkKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHwgICAg
+IGVuZV93cml0ZV9yZWcoLi4uLCBkZXYtPmlycSA8PCAxKSAvL1VTRQogICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfCAKClRoaXJkbHksIHRo
+ZSB0aW1lciBjYW4gY2FsbCBlbmVfdHhfc2FtcGxlKCkgdGhhdCBjYW4gd3Jp
+dGUKdG8gdGhlIGlvIHBvcnRzLCB3aGljaCBtZWFucyB0aGUgaW8gcG9ydHMg
+Y291bGQgYmUgYWNjZXNzZWQKYWdhaW4gYWZ0ZXIgdGhleSBhcmUgZGVhbGxv
+Y2F0ZWQgYnkgcmVsZWFzZV9yZWdpb24oKS4KCiAgICAoZnJlZSByb3V0aW5l
+KSAgICAgICAgICAgICAgICAgICAgICAgIHwgICAgICAgICh1c2Ugcm91dGlu
+ZSkKZW5lX3JlbW92ZSgpICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+fCBlbmVfdHhfc2FtcGxlKCkKICByZWxlYXNlX3JlZ2lvbihkZXYtPmh3X2lv
+LCAuLi4pOyAvL0ZSRUUgfCAgIGVuZV93cml0ZV9yZWcoKQogICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8ICAgICBvdXRiKC4u
+LiwgZGV2LT5od19pbyArIEVORV9JTykgLy9VU0UKCkZvdXJ0aGx5LCB0aGVy
+ZSBpcyBubyBmdW5jdGlvbiB0byBjYW5jZWwgdHhfc2ltX3RpbWVyIGluIGVu
+ZV9yZW1vdmUoKSwKdGhlIHRpbWVyIGhhbmRsZXIgZW5lX3R4X2lycXNpbSgp
+IGNvdWxkIHJhY2Ugd2l0aCBlbmVfcmVtb3ZlKCkuIApBcyBhIHJlc3VsdCwg
+dGhlIFVBRiBidWdzIGNvdWxkIGhhcHBlbiwgdGhlIHByb2Nlc3MgaXMgc2hv
+d24gYmVsb3cuCgogICAgKGZyZWUgcm91dGluZSkgICAgICAgICAgICAgfCAg
+ICAgICAgKHVzZSByb3V0aW5lKQogICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgfCBtb2RfdGltZXIoJmRldi0+dHhfc2ltX3RpbWVyLCAuLikKZW5l
+X3JlbW92ZSgpICAgICAgICAgICAgICAgICAgIHwgKHdhaXQgYSB0aW1lKQog
+IGtmcmVlKGRldikgLy9GUkVFICAgICAgICAgICAgfCBlbmVfdHhfaXJxc2lt
+KCkKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHwgICBkZXYtPmh3
+X2xvY2sgLy9VU0UKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHwg
+ICBlbmVfdHhfc2FtcGxlKGRldikgLy9VU0UKCj0qPSo9Kj0qPSo9Kj0qPSo9
+ICBCdWcgRWZmZWN0cyAgPSo9Kj0qPSo9Kj0qPSo9Kj0KClRoZSB2dWxuZXJh
+YmlsaXRpZXMgY291bGQgY3Jhc2ggdGhlIGtlcm5lbCBhbmQgY2F1c2UgZGVu
+aWFsLW9mLXNlcnZpY2UgYnkgZGV0YWNoaW5nIHJjIGRldmljZS4KCj0qPSo9
+Kj0qPSo9Kj0qPSo9ICBCdWcgRml4ICA9Kj0qPSo9Kj0qPSo9Kj0qPSo9Kj0K
+ClRoZSBwYXRjaCB0aGF0IGhhdmUgYmVlbiBhcHBsaWVkIHRvIG1haW5saW5l
+IExpbnV4IGtlcm5lbCBpcyBzaG93biBiZWxvdy4KaHR0cHM6Ly9naXRodWIu
+Y29tL3RvcnZhbGRzL2xpbnV4L2NvbW1pdC8yOWIwNTg5YTg2NWI2ZjY2ZDE0
+MWQ3OWIyZGQxMzczZTRlNTBmZTE3Cgo9Kj0qPSo9Kj0qPSo9Kj0qPSAgVGlt
+ZWxpbmUgID0qPSo9Kj0qPSo9Kj0qPSo9Kj0KCjIwMjMtMDItMDg6IGNvbW1p
+dCAyOWIwNTg5YTg2NWIgd2FzIGFjY2VwdGVkIHRvIG1haW5saW5lIGtlcm5l
+bAoyMDIzLTAzLTAxOiBDVkUtMjAyMy0xMTE4IHdhcyBhc3NpZ25lZCBieSBy
+ZWRoYXQuCgo9Kj0qPSo9Kj0qPSo9Kj0qPSAgQ3JlZGl0ICA9Kj0qPSo9Kj0q
+PSo9Kj0qPQoKRHVvbWluZyBaaG91IDxkdW9taW5nQHpqdS5lZHUuY24+CgpC
+ZXN0IFJlZ2FyZHMsCkR1b21pbmcgWmhvdQ==
