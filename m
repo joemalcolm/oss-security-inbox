@@ -1,24 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/01/1
-Message-ID: <a36f7bb9-32a0-7205-ae93-03537f562433@apache.org>
-Date: Wed, 01 Feb 2023 03:35:33 +0000
-From: Charles Zhang <dockerzhang@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/06/1
+Message-ID: <CAGUWgD-RAoKOCtQ3COqyuFKxo0KHnwQFYpV9ZRfyidWPd4v2VA@mail.gmail.com>
+Date: Mon, 6 Mar 2023 09:53:06 +0200
+From: Georgi Guninski <gguninski@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-24977: Apache InLong: Jdbc Connection causes arbitrary file reading in InLong 
+Subject: Re: Re: double-free vulnerability in OpenSSH server 9.1 (CVE-2023-25136)
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+On Mon, Feb 13, 2023 at 2:05 PM Qualys Security Advisory <qsa@...lys.com> wrote:
+>
+> Hi all,
+>
+> On Thu, Feb 02, 2023 at 01:02:04PM +0000, Qualys Security Advisory wrote:
+> > Exploiting this vulnerability will not be easy: modern memory allocators
+> > provide protections against double frees, and the impacted sshd process
+> > is unprivileged and heavily sandboxed.
+>
+> Quick update: we were able to gain arbitrary control of the "rip"
 
-Description:
-
-Out-of-bounds Read vulnerability in Apache Software Foundation Apache InLong.This issue affects Apache InLong: from 1.1.0 through 1.5.0. Users are advised to upgrade to Apache InLong's latest version or cherry-pick  https://github.com/apache/inlong/pull/7214 https://github.com/apache/inlong/pull/7214  to solve it.
-
-Credit:
-
-This issue was discovered by s3gundo of Hundsun Tech (finder)
-
-References:
-
-https://inlong.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-24977
-
+So besides the double free bug you managed to circumvent
+the mitigation in both linux and openbsd, right?
+Did you find weakness in the mitigation or did you find
+fundamental way to exploit double free?
