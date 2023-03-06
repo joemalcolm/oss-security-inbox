@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2864" "Wednesday" "30" "June" "2021" "18:28:03" "+0200" "Daniel Beck" "ml@beckweb.net" nil "83" "[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins" nil nil nil "6" nil nil (number mark "U       ml@beckweb.n Jun 30   83/2864  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 24245 invoked by uid 550); 30 Jun 2021 16:28:16 -0000
+Received: (qmail 11369 invoked by uid 550); 6 Mar 2023 13:23:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,100 +7,62 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24215 invoked from network); 30 Jun 2021 16:28:15 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.15\))
-Message-Id: <071030FD-1E7C-4FD5-98C3-E2E6630E9BBF@beckweb.net>
-Date: Wed, 30 Jun 2021 18:28:03 +0200
+Received: (qmail 11831 invoked from network); 6 Mar 2023 07:53:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1678089218;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Zh1AgAInl6NWM00R6FtTn7OAC4CeszLk0BLT3Ky2Jvc=;
+        b=H2otoaHBZJ7fmX0TZ6OGb0ybixb33e5BcA3HAaBUxQrGAi+eKN8gbcetIe9+BCL/sP
+         DzRvOiHNRWjqdniYeMTpPdTiiJksT/VzqmseRwuObwoT8FpZERvnklGZdCbfOyAvwkg8
+         XnbveVpTLG5pdeuWD7ISMErjFZv0mYKjCqx8I85rHFuQXFfTeETHcoaEZka+f35aI7nj
+         9Hmj821RUAoi1fN/N1zfj3oo9akh4dKU/o4YnsApfK6ABc/trzXzZ306HkwqhMNiBQ8y
+         xiIb9zkcFEm5pqff4KVEZ1I8xbEoY12BQRj9M3jbIwKMui3r9DNor0wVqw9lsuA4akb2
+         NcEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678089218;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Zh1AgAInl6NWM00R6FtTn7OAC4CeszLk0BLT3Ky2Jvc=;
+        b=t3VYqsafafWZusdrqnjlcvibF5xgJvi9MSp824KDWr0dGmB5evxBNYWSS37dy6LubU
+         AyG8l6zb03zAAq9jM8bkv0TRaYmqZ7uni8Im3ZlsEg+BvWdyJml59ZIYRXyRgYte8RQa
+         dr0RVJvj96qlaFaNErHxvz4nGzgwpdA0bWSmcMP9jwuyEZiVcGbZArDG4uxlzvCarkZ+
+         N+lyZZbJ20zblCkCloB8bMo8ZvALW0NLIROkb4jJgvWPZ+cDsEJcweQwjqj1dELcaOnl
+         8J+LKRd+NH73z7zqFqboi5Usr8FSA/BU2NJ3zkx/GwT+B94YM0KXHZX3QH3nGGdbjawD
+         JqGQ==
+X-Gm-Message-State: AO0yUKXAEO4xjTWWQEHDbFyzwclEQnzGDY33xAFB2PEgCQz3ChEeOeBg
+	V00bKK49xa4msqaQW1oyEyTrTpFfnzVmyvLXyz+rw77S1DA=
+X-Google-Smtp-Source: AK7set9Dc+ghweuaQrlV076s3FtfEx9OZ4UJSy5j46jWBPsTm3Fbj/KCJw5FWulDfVhJ7i036eMMSzevkH5PzxISVEA=
+X-Received: by 2002:a62:cd4d:0:b0:593:a89e:a992 with SMTP id
+ o74-20020a62cd4d000000b00593a89ea992mr4252396pfg.2.1678089217858; Sun, 05 Mar
+ 2023 23:53:37 -0800 (PST)
+MIME-Version: 1.0
+References: <20230202130212.GA15689@localhost.localdomain> <20230213120214.GB19824@localhost.localdomain>
+In-Reply-To: <20230213120214.GB19824@localhost.localdomain>
+From: Georgi Guninski <gguninski@gmail.com>
+Date: Mon, 6 Mar 2023 09:53:06 +0200
+Message-ID: <CAGUWgD-RAoKOCtQ3COqyuFKxo0KHnwQFYpV9ZRfyidWPd4v2VA@mail.gmail.com>
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3445.104.15)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1625070495;52b51799;
-X-HE-SMSGID: 1lyd4G-0007mG-6E
-Subject: [oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] Re: double-free vulnerability in OpenSSH server
+ 9.1 (CVE-2023-25136)
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+On Mon, Feb 13, 2023 at 2:05=E2=80=AFPM Qualys Security Advisory <qsa@qualy=
+s.com> wrote:
+>
+> Hi all,
+>
+> On Thu, Feb 02, 2023 at 01:02:04PM +0000, Qualys Security Advisory wrote:
+> > Exploiting this vulnerability will not be easy: modern memory allocators
+> > provide protections against double frees, and the impacted sshd process
+> > is unprivileged and heavily sandboxed.
+>
+> Quick update: we were able to gain arbitrary control of the "rip"
 
-The following releases contain fixes for security vulnerabilities:
-
-* Jenkins 2.300
-* Jenkins LTS 2.289.2
-* CAS Plugin 1.6.1
-* requests-plugin 2.2.7, 2.2.8, and 2.2.13
-* Selenium HTML report Plugin 1.1
-
-
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2021-06-30/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-2278 / CVE-2021-21670
-Jenkins 2.299 and earlier, LTS 2.289.1 and earlier allows users to cancel
-queue items and abort builds of jobs for which they have Item/Cancel
-permission even when they do not have Item/Read permission.
-
-
-SECURITY-2371 / CVE-2021-21671
-Jenkins 2.299 and earlier, LTS 2.289.1 and earlier does not invalidate the
-existing session on login. This allows attackers to use social engineering
-techniques to gain administrator access to Jenkins.
-
-This vulnerability was introduced in Jenkins 2.266 and LTS 2.277.1.
-
-
-SECURITY-2329 / CVE-2021-21672
-Selenium HTML report Plugin 1.0 and earlier does not configure its XML
-parser to prevent XML external entity (XXE) attacks.
-
-This allows attackers with the ability to control the report files parsed
-using this plugin to have Jenkins parse a crafted report file that uses
-external entities for extraction of secrets from the Jenkins controller or
-server-side request forgery.
-
-
-SECURITY-2387 / CVE-2021-21673
-CAS Plugin 1.6.0 and earlier improperly determines that a redirect URL
-after login is legitimately pointing to Jenkins.
-
-This allows attackers to perform phishing attacks by having users go to a
-Jenkins URL that will forward them to a different site after successful
-authentication.
-
-
-SECURITY-1995 / CVE-2021-21674
-requests-plugin 2.2.6 and earlier does not perform a permission
-check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to view the list of
-pending requests.
-
-
-SECURITY-2136 (1) / CVE-2021-21675
-requests-plugin 2.2.12 and earlier does not require POST requests to
-request and apply changes, resulting in cross-site request forgery (CSRF)
-vulnerabilities.
-
-These vulnerabilities allow attackers to create requests and/or have
-administrators apply pending requests, like renaming or deleting jobs,
-deleting builds, etc.
-
-
-SECURITY-2136 (2) / CVE-2021-21676
-requests-plugin 2.2.7 and earlier does not perform a permission
-check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to send test emails to
-an attacker-specified email address.
-
+So besides the double free bug you managed to circumvent
+the mitigation in both linux and openbsd, right?
+Did you find weakness in the mitigation or did you find
+fundamental way to exploit double free?
