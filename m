@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["809" "Tuesday" "5" "January" "2021" "12:19:59" "+0100" "Robert Metzger" "rmetzger@apache.org" "<CAGr9p8A6LeRDMwc88DDOPo1WfGr1PR63WvGOSrPdHqR6uupZ4g@mail.gmail.com>" "28" "[oss-security] [CVE-2020-17518] Apache Flink directory traversal attack: remote file writing through the REST API" nil nil nil "1" "2021010511:19:59" "[oss-security] [CVE-2020-17518] Apache Flink directory traversal attack: remote file writing through the REST API" (number mark "U       rmetzger@apa Jan  5   28/809   " thread-indent "\"[oss-security] [CVE-2020-17518] Apache Flink directory traversal attack: remote file writing through the REST API\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-17518] Apache Flink directory traversal attack: remote file writing through the REST API" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1197 invoked by uid 550); 5 Jan 2021 11:49:15 -0000
+Received: (qmail 11838 invoked by uid 550); 7 Mar 2023 14:07:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,47 +7,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22023 invoked from network); 5 Jan 2021 11:20:30 -0000
-X-Gm-Message-State: AOAM532VCjklrPKw1W8+VR18goonanxb1e/NIu3wBtbcVHrtDhRgKjwd
-	GnDkpxW7UejCekqKBhFIq4LXIOTsj+zS64T+pKE=
-X-Google-Smtp-Source: ABdhPJykhw1Qzbf8lwnqEmwA+Mvw0F1VX0hoGfpyBuNzpMCv5x5Yvzkw4OvJOAOQ6clCSHqUZRhgYjBlNnKPGVMDkyQ=
-X-Received: by 2002:a05:6808:199:: with SMTP id w25mr2217791oic.151.1609845615678;
- Tue, 05 Jan 2021 03:20:15 -0800 (PST)
-MIME-Version: 1.0
-From: Robert Metzger <rmetzger@apache.org>
-Date: Tue, 5 Jan 2021 12:19:59 +0100
-X-Gmail-Original-Message-ID: <CAGr9p8A6LeRDMwc88DDOPo1WfGr1PR63WvGOSrPdHqR6uupZ4g@mail.gmail.com>
-Message-ID: <CAGr9p8A6LeRDMwc88DDOPo1WfGr1PR63WvGOSrPdHqR6uupZ4g@mail.gmail.com>
+Received: (qmail 18329 invoked from network); 7 Mar 2023 12:57:08 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Eric Covener <covener@apache.org>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="00000000000010d9cc05b82564fe"
-Subject: [oss-security] [CVE-2020-17518] Apache Flink directory traversal attack: remote file
- writing through the REST API
+Message-ID: <035a67dc-3b6a-3db1-1ad5-7fafac835c1f@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 07 Mar 2023 12:55:07 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2023-25690: Apache HTTP Server: HTTP request splitting with
+ mod_rewrite and mod_proxy 
 
---00000000000010d9cc05b82564fe
-Content-Type: text/plain; charset="UTF-8"
-
-CVE-2020-17518: Apache Flink directory traversal attack: remote file
-writing through the REST API
-
-Vendor:
-The Apache Software Foundation
-
-Versions Affected:
-1.5.1 to 1.11.2
+Severity: important
 
 Description:
-Flink 1.5.1 introduced a REST handler that allows you to write an uploaded
-file to an arbitrary location on the local file system, through a
-maliciously modified HTTP HEADER. The files can be written to any location
-accessible by Flink 1.5.1.
 
-Mitigation:
-All users should upgrade to Flink 1.11.3 or 1.12.0 if their Flink
-instance(s) are exposed.
-The issue was fixed in commit a5264a6f41524afe8ceadf1d8ddc8c80f323ebc4 from
-apache/flink:master.
+Some mod_proxy configurations on Apache HTTP Server versions 2.4.0 through =
+2.4.55 allow a HTTP Request Smuggling attack.
 
-Credits:
-This issue was discovered by 0rich1 of Ant Security FG Lab
 
---00000000000010d9cc05b82564fe--
+
+
+Configurations are affected when mod_proxy is enabled along with some form =
+of RewriteRule
+ or ProxyPassMatch in which a non-specific pattern matches
+ some portion of the user-supplied request-target (URL) data and is then
+ re-inserted into the proxied request-target using variable=20
+substitution. For example, something like:
+
+
+
+
+RewriteEngine on
+RewriteRule "^/here/(.*)" " http://example.com:8080/elsewhere?$1" http://ex=
+ample.com:8080/elsewhere ; [P]
+ProxyPassReverse /here/  http://example.com:8080/ http://example.com:8080/=
+=20
+
+
+Request splitting/smuggling could result in bypass of access controls in th=
+e proxy server, proxying unintended URLs to existing origin servers, and ca=
+che poisoning.
+
+Credit:
+
+Lars Krapf of Adobe (finder)
+
+References:
+
+https://httpd.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2023-25690
+
+Timeline:
+
+2023-02-02: reported
+
