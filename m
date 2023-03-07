@@ -1,22 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/16/2
-Message-ID: <7e07bfc9-ed8b-0b92-6f04-724638701e40@apache.org>
-Date: Mon, 16 Jan 2023 09:14:35 +0000
-From: Daniel Gaspar <dpgaspar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/07/2
+Message-ID: <089093c8-9749-efd1-71ad-aa96757010c0@apache.org>
+Date: Tue, 07 Mar 2023 12:55:32 +0000
+From: Eric Covener <covener@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-43718: Apache Superset: Cross-Site Scripting vulnerability on upload forms 
+Subject: CVE-2023-27522: Apache HTTP Server: mod_proxy_uwsgi HTTP response splitting 
 Content-Type: text/plain; charset=utf-8
+
+Severity: moderate
 
 Description:
 
-Upload data forms do not correctly render user input leading to possible XSS attack vectors that can be performed by authenticated users with database connection update permissions. This issue affects Apache Superset version 1.5.2 and prior versions and version 2.0.0.
+HTTP Response Smuggling vulnerability in Apache HTTP Server via mod_proxy_uwsgi. This issue affects Apache HTTP Server: from 2.4.30 through 2.4.55.
+
+Special characters in the origin response header can truncate/split the response forwarded to the client.
 
 Credit:
 
-Positive Technologies (finder)
+Dimas Fariski Setyawan Putra (nyxsorcerer) (finder)
 
 References:
 
-https://superset.apache.org
-https://www.cve.org/CVERecord?id=CVE-2022-43718
+https://httpd.apache.org/security/vulnerabilities_24.html
+https://httpd.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-27522
+
+Timeline:
+
+2023-01-29: Reported to security team
 
