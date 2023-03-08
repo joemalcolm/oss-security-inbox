@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5946" "Tuesday" "19" "January" "2016" "21:51:10" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160120025110.E39DC42E01D@smtpvbsrv1.mitre.org>" "128" "[oss-security] Re: CVE assignment request for security bugs fixed in glibc 2.23" "^Cc:" nil nil "1" "2016012002:51:10" "[oss-security] Re: CVE assignment request for security bugs fixed in glibc 2.23" (number mark "        cve-assign@m Jan 19  128/5946  " thread-indent "\"[oss-security] Re: CVE assignment request for security bugs fixed in glibc 2.23\"\n") "<569E7AA1.1040700@redhat.com>" ("<569E7AA1.1040700@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 28533 invoked by uid 550); 20 Jan 2016 02:51:24 -0000
+Received: (qmail 30631 invoked by uid 550); 8 Mar 2023 15:27:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,141 +6,150 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28515 invoked from network); 20 Jan 2016 02:51:23 -0000
-In-Reply-To: <569E7AA1.1040700@redhat.com>
-Message-Id: <20160120025110.E39DC42E01D@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue, 19 Jan 2016 21:51:10 -0500 (EST)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE assignment request for security bugs fixed in glibc 2.23
-To: fweimer@redhat.com
+Received: (qmail 30596 invoked from network); 8 Mar 2023 15:27:28 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.1\))
+Message-Id: <39217FA7-450E-49E9-A39A-44874096CBAC@beckweb.net>
+Date: Wed, 8 Mar 2023 16:27:16 +0100
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3696.120.41.1.1)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1678289248;d3a74217;
+X-HE-SMSGID: 1pZvhF-0000z8-1V
+Subject: [oss-security] Multiple vulnerabilities in Jenkins
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-The MITRE CVE team generally can assign IDs for security-fix releases
-of products where a notable upstream vendor has already made a final
-determination of what issues are, from their perspective,
-vulnerabilities that require customers to perform a product update.
-This is, to some extent, independent of what our perspective otherwise
-would have been.
+The following releases contain fixes for security vulnerabilities:
 
-Based on the set of issues mentioned, however, we probably don't have
-a shared understanding of what glibc bugs should be considered
-vulnerabilities and what ones should be considered ordinary bugs. This
-doesn't mean that there ought to be a decision process that is
-specific to glibc alone: there are people sending CVE ID requests to
-MITRE for other libraries, including similarly general-purpose
-libraries.
-
-Possibly part of the glibc vulnerability model is that memory-safety
-issues should be considered vulnerabilities, regardless of how
-unlikely it is for an attack to cross a privilege boundary. Similarly,
-possibly part of the model is that issues in which glibc simply
-provides the wrong answer are not vulnerabilities, regardless of
-whether there's a plausible scenario in which the wrong answer leads
-to a catastrophic security failure. If there should be some CVE IDs
-for wrong-answer issues, we don't know the best way to subdivide the
-space of wrong answers, e.g., wrong results in floating-point math are
-perhaps attackable less often than wrong results in string operations.
-None of this is going to be resolved today, so here are the five CVE
-IDs for the listed issues.
+* Jenkins 2.394
+* Jenkins LTS 2.375.4 and 2.387.1
+* update-center2 3.15
 
 
-> Passing out of range data to strftime() causes a segfault
-> https://sourceware.org/bugzilla/show_bug.cgi?id=18985
-> 
-> Out-of-range time values passed to the strftime function may cause it to
-> crash, leading to a denial of service, or potentially disclosure
-> information.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2023-03-08/
 
-Use CVE-2015-8776. We don't happen to know of any cases in which a
-reasonable application would, for example, allow a user to enter an
-integer value that refers to the 13th month in a way that crosses a
-privilege boundary. The glibc change might suggest that that
-application should be happy with output of the form "19 ? 2016" (the
-19th day of an unknown month in 2016). We feel that there's a
-(probably weak) argument that this is a defense-in-depth change to
-glibc, not a vulnerability fix, because there's no universally
-understood way for glibc to inform an arbitrary application that it
-has elected to produce a malformed, but memory-safe, result.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-> LD_POINTER_GUARD is not ignored for privileged binaries
-> https://sourceware.org/bugzilla/show_bug.cgi?id=18928
-> 
-> LD_POINTER_GUARD was an environment variable which controls
-> security-related behavior, but was not ignored for privileged binaries
-> (in AT_SECURE mode).  This might allow local attackers (who can supply
-> the environment variable) to bypass intended security restrictions.
+---
 
-Use CVE-2015-8777. We don't feel that there is any way to conclude
-that this is a vulnerability unless confirmed by the upstream vendor
-(and it obviously is confirmed). For example, maybe LD_POINTER_GUARD
-was originally envisioned as a defense against remote attacks, and the
-ability of unprivileged local users to run setuid/setgid programs with
-LD_POINTER_GUARD=0 was an intentional workaround for scenarios in
-which pointer guarding was not working properly.
+SECURITY-3037 / CVE-2023-27898
+Jenkins 2.270 through 2.393 (both inclusive), LTS 2.277.1 through 2.375.3
+(both inclusive) does not escape the Jenkins version a plugin depends on
+when rendering the error message stating its incompatibility with the
+current version of Jenkins in the plugin manager.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to provide plugins to the configured update
+sites and have this message shown by Jenkins instances.
+
+IMPORTANT: Exploitation does _not_ require the manipulated plugin to be
+installed.
 
 
-> hcreate((size_t)-1) should fail with ENOMEM
-> https://sourceware.org/bugzilla/show_bug.cgi?id=18240
-> 
-> This is an integer overflow in hcreate and hcreate_r which can result in
-> an out-of-bound memory access.  This could lead to application crashes
-> or, potentially, arbitrary code execution.
+SECURITY-2823 / CVE-2023-27899
+Jenkins creates a temporary file when a plugin is uploaded from an
+administrator's computer.
 
-Use CVE-2015-8778. We don't happen to know of any cases in which an
-application allows a user to specify hcreate arguments in a way that
-crosses a privilege boundary.
+Jenkins 2.393 and earlier, LTS 2.375.3 and earlier creates this temporary
+file in the system temporary directory with the default permissions for
+newly created files.
 
+If these permissions are overly permissive, they may allow attackers with
+access to the Jenkins controller file system to read and write the file
+before it is installed in Jenkins, potentially resulting in arbitrary code
+execution.
 
-> nan function unbounded stack allocation
-> https://sourceware.org/bugzilla/show_bug.cgi?id=16962
-> 
-> A stack overflow (unbounded alloca) can cause applications which process
-> long strings with the nan function to crash or, potentially, execute
-> arbitrary code.
-
-Use CVE-2014-9761. Here, it seems somewhat more plausible that the nan
-argument would ultimately originate from untrusted input in a way that
-crosses a privilege boundary. We don't know of a specific example that
-would be realistic.
+IMPORTANT: This vulnerability only affects operating systems using a shared
+temporary directory for all users (typically Linux). Additionally, the
+default permissions for newly created files generally only allows attackers
+to read the temporary file.
 
 
-> catopen() Multiple unbounded stack allocations
-> https://sourceware.org/bugzilla/show_bug.cgi?id=17905
-> 
-> A stack overflow (unbounded alloca) in the catopen function can cause
-> applications which pass long strings to the catopen function to crash
-> or, potentially execute arbitrary code.
+SECURITY-3030 / CVE-2023-24998 (upstream issue) & CVE-2023-27900
+(MultipartFormDataParser) & CVE-2023-27901 (StaplerRequest)
+Jenkins 2.393 and earlier, LTS 2.375.3 and earlier is affected by the
+Apache Commons FileUpload library's vulnerability CVE-2023-24998. This
+library is used to process uploaded files via the Stapler web framework
+(usually through `StaplerRequest#getFile`) and `MultipartFormDataParser` in
+Jenkins.
 
-Use CVE-2015-8779. At least for the
-https://sourceware.org/bugzilla/show_bug.cgi?id=17905#c0 example, we
-don't happen to know of any cases in which an application allows a
-user to specify an arbitrary pathname in a way that crosses a
-privilege boundary, and then decides to catopen that pathname.
+This allows attackers to cause a denial of service (DoS) by sending crafted
+requests to HTTP endpoints processing file uploads.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWnvVjAAoJEL54rhJi8gl5hXAQAJb94GQ4nmQNvRV/oxuJ8gkP
-GIjkWpfVAeHLJQZ4wxbFIBFrwexeimaZFICEyRnjsA8Jcw0vfdfKy+WbygpgmVuo
-jp38VYkreUXH1ZHJTEX+uTx7ySnKClccZ/599VwzYTMA5JI65srqtqMW52EOC0Lp
-nbqsW7aaQ9rJpXOqcgPNPHf01JIDOgzVMlIkzolWN5dP8YbwIvmWwfOQk0SePJj7
-6fhdj6M12Kob0uqytI4zTSnKa0z2qXC0SsoPgcxtWOqQut7oYhMESMD2a9zbhKPj
-5X4QdICT9ki86ysvujZV3+QoxkBJwd09nWY2AZm/vVgvTzNdArq2V+BPsNkLK+IJ
-xt1u385bw2GYjskLnr2UdyrbOQO5lqgcX9O/7+bzRbWhJsW58iIVwiX/a+slB7Bw
-CvaI565uncU6tR+UNUAT7BTJu2YLfGdqYzMG0G7rKmPVno0+q21cxjyigKpkRKxL
-yq95x3Ww/Yq4CIN4weGjAsOhtQ7h/5AP1D+aOgYp09KcvoKhV9meORCwmg0qZv5V
-RDr+7EquBWOuO84O8LnRcDFpiRPT+P1+CtS+YRo/tlLEVVTo5pe50+9t/7v7ey2o
-xta3mjd8tUdV4GWyItbn1Wzp0rv28/1kttlVJ6oUMpLzAFY8iQHJi+lmVtV+bDT2
-Ta6wlakhBjLtTQ7bCWtU
-=VJ/C
------END PGP SIGNATURE-----
+SECURITY-1807 / CVE-2023-27902
+Jenkins uses temporary directories adjacent to workspace directories,
+usually with the `@tmp` name suffix, to store temporary files related to
+the build. In pipelines, these temporary directories are adjacent to the
+current working directory when operating in a subdirectory of the
+automatically allocated workspace. Jenkins-controlled processes, like SCMs,
+may store credentials in these directories.
+
+Jenkins 2.393 and earlier, LTS 2.375.3 and earlier shows these temporary
+directories when viewing job workspaces, which allows attackers with
+Item/Workspace permission to access their contents.
+
+
+SECURITY-3058 / CVE-2023-27903
+When triggering a build from the Jenkins CLI, Jenkins creates a temporary
+file on the controller if a file parameter is provided through the CLI's
+standard input.
+
+Jenkins 2.393 and earlier, LTS 2.375.3 and earlier creates this temporary
+file in the default temporary directory with the default permissions for
+newly created files.
+
+If these permissions are overly permissive, they may allow attackers with
+access to the Jenkins controller file system to read and write the file
+before it is used in the build.
+
+IMPORTANT: This vulnerability only affects operating systems using a shared
+temporary directory for all users (typically Linux). Additionally, the
+default permissions for newly created files generally only allows attackers
+to read the temporary file.
+
+
+SECURITY-2120 / CVE-2023-27904
+Jenkins 2.393 and earlier, LTS 2.375.3 and earlier prints an error stack
+trace on agent-related pages when agent connections are broken. This stack
+trace may contain information about Jenkins configuration that is otherwise
+inaccessible to attackers.
+
+
+SECURITY-3063 / CVE-2023-27905
+update-center2 is the tool used to generate the Jenkins update sites hosted
+on `updates.jenkins.io`.
+
+NOTE: While it is designed for use by the Jenkins project for this purpose,
+others may be using it to operate their own self-hosted update sites.
+
+update-center2 3.13 and 3.14 renders the required Jenkins core version on
+plugin download index pages. This version is taken from plugin metadata
+without being sanitized.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to provide a plugin for hosting.
+
+The following preconditions must both be satisfied for this to be
+exploitable in a self-hosted update-center2:
+
+* The generation of download pages needs to be enabled (i.e., the
+  `--download-links-directory` argument needs to be set).
+* A custom download page template must be used (`--index-template-url`
+  argument), and the template used must not prevent JavaScript execution
+  through `Content-Security-Policy`.
+  The default template prevents exploitation by declaring a restrictive
+  `Content-Security-Policy`.
+
