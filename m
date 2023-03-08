@@ -1,25 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/21/1
-Message-ID: <169788bd-11b7-6e96-c953-1519d9a4c79a@apache.org>
-Date: Sat, 21 Jan 2023 00:50:27 +0000
-From: Jarek Potiuk <potiuk@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/08/2
+Message-ID: <80616781-a635-02a0-2aa3-a8afc60e6c4c@free.fr>
+Date: Wed, 8 Mar 2023 12:37:29 +0100
+From: Gabriel Corona <gabriel.corona@...e.fr>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-22884: Apache Airflow, Apache Airflow MySQL Provider: Arbitrary file read via MySQL provider in Apache Airflow 
+Subject: Shell command and Emacs Lisp code injection in emacsclient-mail.desktop
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+emacsclient-mail.desktop is vulnerable to shell command
+injections and Emacs Lisp injections through a crafted
+mailto: URI.
 
-Description:
+This has been introduced in Emacs 28.1:
 
-Improper Neutralization of Special Elements used in a Command ('Command Injection') vulnerability in Apache Software Foundation Apache Airflow, Apache Software Foundation Apache Airflow MySQL Provider.This issue affects Apache Airflow: before 2.5.1; Apache Airflow MySQL Provider: before 4.0.0.
+http://git.savannah.gnu.org/cgit/emacs.git/commit/?h=emacs-29&id=b1b05c828d67930bb3b897fe98e1992db42cf23c
 
-Credit:
+A fix for shell command injection is currently included
+in the upcoming 28.3 branch:
 
-Son Tran from VNPT - VCI (reporter)
+http://git.savannah.gnu.org/cgit/emacs.git/commit/?h=emacs-29&id=d32091199ae5de590a83f1542a01d75fba000467
 
-References:
+A fix for both is currently included in the upcoming 29.1 branch:
 
-https://github.com/apache/airflow/pull/28811
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-22884
+http://git.savannah.gnu.org/cgit/emacs.git/commit/?h=emacs-29&id=3c1693d08b0a71d40a77e7b40c0ebc42dca2d2cc
 
+Download attachment "OpenPGP_signature" of type "application/pgp-signature" (841 bytes)
