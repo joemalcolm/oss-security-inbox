@@ -1,37 +1,141 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/11/4
-Message-ID: <1f492976-2168-3281-af17-ff8d26d071d1@apache.org>
-Date: Wed, 11 Oct 2023 11:49:52 +0000
-From: Andor Molnar <andor@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/08/3
+Message-Id: <39217FA7-450E-49E9-A39A-44874096CBAC@beckweb.net>
+Date: Wed, 8 Mar 2023 16:27:16 +0100
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-44981: Apache ZooKeeper: Authorization bypass in SASL Quorum Peer Authentication 
+Subject: Multiple vulnerabilities in Jenkins
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-Affected versions:
+The following releases contain fixes for security vulnerabilities:
 
-- Apache ZooKeeper 3.9.0
-- Apache ZooKeeper 3.8.0 through 3.8.2
-- Apache ZooKeeper 3.7.0 through 3.7.1
-- Apache ZooKeeper before 3.7.0
+* Jenkins 2.394
+* Jenkins LTS 2.375.4 and 2.387.1
+* update-center2 3.15
 
-Description:
 
-Authorization Bypass Through User-Controlled Key vulnerability in Apache ZooKeeper. If SASL Quorum Peer authentication is enabled in ZooKeeper (quorum.auth.enableSasl=true), the authorization is done by verifying that the instance part in SASL authentication ID is listed in zoo.cfg server list. The instance part in SASL auth ID is optional and if it's missing, like 'eve@...MPLE.COM', the authorization check will be skipped. As a result an arbitrary endpoint could join the cluster and begin propagating counterfeit changes to the leader, essentially giving it complete read-write access to the data tree. Quorum Peer authentication is not enabled by default.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2023-03-08/
 
-Users are recommended to upgrade to version 3.9.1, 3.8.3, 3.7.2, which fixes the issue.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-Alternately ensure the ensemble election/quorum communication is protected by a firewall as this will mitigate the issue.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-See the documentation for more details on correct cluster administration.
+---
 
-Credit:
+SECURITY-3037 / CVE-2023-27898
+Jenkins 2.270 through 2.393 (both inclusive), LTS 2.277.1 through 2.375.3
+(both inclusive) does not escape the Jenkins version a plugin depends on
+when rendering the error message stating its incompatibility with the
+current version of Jenkins in the plugin manager.
 
-Damien Diederen <ddiederen@...che.org> (reporter)
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to provide plugins to the configured update
+sites and have this message shown by Jenkins instances.
 
-References:
+IMPORTANT: Exploitation does _not_ require the manipulated plugin to be
+installed.
 
-https://zookeeper.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-44981
+
+SECURITY-2823 / CVE-2023-27899
+Jenkins creates a temporary file when a plugin is uploaded from an
+administrator's computer.
+
+Jenkins 2.393 and earlier, LTS 2.375.3 and earlier creates this temporary
+file in the system temporary directory with the default permissions for
+newly created files.
+
+If these permissions are overly permissive, they may allow attackers with
+access to the Jenkins controller file system to read and write the file
+before it is installed in Jenkins, potentially resulting in arbitrary code
+execution.
+
+IMPORTANT: This vulnerability only affects operating systems using a shared
+temporary directory for all users (typically Linux). Additionally, the
+default permissions for newly created files generally only allows attackers
+to read the temporary file.
+
+
+SECURITY-3030 / CVE-2023-24998 (upstream issue) & CVE-2023-27900
+(MultipartFormDataParser) & CVE-2023-27901 (StaplerRequest)
+Jenkins 2.393 and earlier, LTS 2.375.3 and earlier is affected by the
+Apache Commons FileUpload library's vulnerability CVE-2023-24998. This
+library is used to process uploaded files via the Stapler web framework
+(usually through `StaplerRequest#getFile`) and `MultipartFormDataParser` in
+Jenkins.
+
+This allows attackers to cause a denial of service (DoS) by sending crafted
+requests to HTTP endpoints processing file uploads.
+
+
+SECURITY-1807 / CVE-2023-27902
+Jenkins uses temporary directories adjacent to workspace directories,
+usually with the `@...` name suffix, to store temporary files related to
+the build. In pipelines, these temporary directories are adjacent to the
+current working directory when operating in a subdirectory of the
+automatically allocated workspace. Jenkins-controlled processes, like SCMs,
+may store credentials in these directories.
+
+Jenkins 2.393 and earlier, LTS 2.375.3 and earlier shows these temporary
+directories when viewing job workspaces, which allows attackers with
+Item/Workspace permission to access their contents.
+
+
+SECURITY-3058 / CVE-2023-27903
+When triggering a build from the Jenkins CLI, Jenkins creates a temporary
+file on the controller if a file parameter is provided through the CLI's
+standard input.
+
+Jenkins 2.393 and earlier, LTS 2.375.3 and earlier creates this temporary
+file in the default temporary directory with the default permissions for
+newly created files.
+
+If these permissions are overly permissive, they may allow attackers with
+access to the Jenkins controller file system to read and write the file
+before it is used in the build.
+
+IMPORTANT: This vulnerability only affects operating systems using a shared
+temporary directory for all users (typically Linux). Additionally, the
+default permissions for newly created files generally only allows attackers
+to read the temporary file.
+
+
+SECURITY-2120 / CVE-2023-27904
+Jenkins 2.393 and earlier, LTS 2.375.3 and earlier prints an error stack
+trace on agent-related pages when agent connections are broken. This stack
+trace may contain information about Jenkins configuration that is otherwise
+inaccessible to attackers.
+
+
+SECURITY-3063 / CVE-2023-27905
+update-center2 is the tool used to generate the Jenkins update sites hosted
+on `updates.jenkins.io`.
+
+NOTE: While it is designed for use by the Jenkins project for this purpose,
+others may be using it to operate their own self-hosted update sites.
+
+update-center2 3.13 and 3.14 renders the required Jenkins core version on
+plugin download index pages. This version is taken from plugin metadata
+without being sanitized.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to provide a plugin for hosting.
+
+The following preconditions must both be satisfied for this to be
+exploitable in a self-hosted update-center2:
+
+* The generation of download pages needs to be enabled (i.e., the
+  `--download-links-directory` argument needs to be set).
+* A custom download page template must be used (`--index-template-url`
+  argument), and the template used must not prevent JavaScript execution
+  through `Content-Security-Policy`.
+  The default template prevents exploitation by declaring a restrictive
+  `Content-Security-Policy`.
 
