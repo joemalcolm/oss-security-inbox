@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1621" "Wednesday" "23" "November" "2016" "21:58:26" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<f5c9f4082b3b452386402eadd517b3cd@imshyb02.MITRE.ORG>" "46" "[oss-security] Re: CVE Request: gstreamer plugins" nil nil nil "11" "2016112402:58:26" "[oss-security] Re: CVE Request: gstreamer plugins" (number mark "U       cve-assign@m Nov 23   46/1621  " thread-indent "\"[oss-security] Re: CVE Request: gstreamer plugins\"\n") "<CAFRnB2XkOnZGGXwJTcNb2t2LbGFS4-vzKZ3COzBot2G32PEZ9Q@mail.gmail.com>" ("<CAFRnB2XkOnZGGXwJTcNb2t2LbGFS4-vzKZ3COzBot2G32PEZ9Q@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 32474 invoked by uid 550); 24 Nov 2016 02:58:38 -0000
+Received: (qmail 1709 invoked by uid 550); 8 Mar 2023 12:02:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,60 +7,71 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32447 invoked from network); 24 Nov 2016 02:58:37 -0000
-From: <cve-assign@mitre.org>
-To: <oss-security@lists.openwall.com>
-CC: <cve-assign@mitre.org>
-In-Reply-To: <CAFRnB2XkOnZGGXwJTcNb2t2LbGFS4-vzKZ3COzBot2G32PEZ9Q@mail.gmail.com>
-Message-ID: <f5c9f4082b3b452386402eadd517b3cd@imshyb02.MITRE.ORG>
-Date: Wed, 23 Nov 2016 21:58:26 -0500
+Received: (qmail 23583 invoked from network); 8 Mar 2023 11:37:41 -0000
+Message-ID: <80616781-a635-02a0-2aa3-a8afc60e6c4c@free.fr>
+Date: Wed, 8 Mar 2023 12:37:29 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE Request: gstreamer plugins
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+From: Gabriel Corona <gabriel.corona@free.fr>
+Content-Language: fr, en-US
+To: oss-security@lists.openwall.com
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------OOxcastI84GadyiX0810tE39"
+Subject: [oss-security] Shell command and Emacs Lisp code injection in
+ emacsclient-mail.desktop
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--------------OOxcastI84GadyiX0810tE39
+Content-Type: multipart/mixed; boundary="------------ODgiXUWhDc0RXcqNN9r05W99";
+ protected-headers="v1"
+From: Gabriel Corona <gabriel.corona@free.fr>
+To: oss-security@lists.openwall.com
+Message-ID: <80616781-a635-02a0-2aa3-a8afc60e6c4c@free.fr>
+Subject: Shell command and Emacs Lisp code injection in
+ emacsclient-mail.desktop
 
-> https://scarybeastsecurity.blogspot.com/2016/11/0day-exploit-advancing-exploitation.html
-> gstreamer decoder for the FLIC file format
+--------------ODgiXUWhDc0RXcqNN9r05W99
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-> To get an out-of-bounds write, the attacker simply has to specify a
-> start_line value greater than the number of lines in the output canvas
-> (bug 1)
+ZW1hY3NjbGllbnQtbWFpbC5kZXNrdG9wIGlzIHZ1bG5lcmFibGUgdG8gc2hl
+bGwgY29tbWFuZA0KaW5qZWN0aW9ucyBhbmQgRW1hY3MgTGlzcCBpbmplY3Rp
+b25zIHRocm91Z2ggYSBjcmFmdGVkDQptYWlsdG86IFVSSS4NCg0KVGhpcyBo
+YXMgYmVlbiBpbnRyb2R1Y2VkIGluIEVtYWNzIDI4LjE6DQoNCmh0dHA6Ly9n
+aXQuc2F2YW5uYWguZ251Lm9yZy9jZ2l0L2VtYWNzLmdpdC9jb21taXQvP2g9
+ZW1hY3MtMjkmaWQ9YjFiMDVjODI4ZDY3OTMwYmIzYjg5N2ZlOThlMTk5MmRi
+NDJjZjIzYw0KDQpBIGZpeCBmb3Igc2hlbGwgY29tbWFuZCBpbmplY3Rpb24g
+aXMgY3VycmVudGx5IGluY2x1ZGVkDQppbiB0aGUgdXBjb21pbmcgMjguMyBi
+cmFuY2g6DQoNCmh0dHA6Ly9naXQuc2F2YW5uYWguZ251Lm9yZy9jZ2l0L2Vt
+YWNzLmdpdC9jb21taXQvP2g9ZW1hY3MtMjkmaWQ9ZDMyMDkxMTk5YWU1ZGU1
+OTBhODNmMTU0MmEwMWQ3NWZiYTAwMDQ2Nw0KDQpBIGZpeCBmb3IgYm90aCBp
+cyBjdXJyZW50bHkgaW5jbHVkZWQgaW4gdGhlIHVwY29taW5nIDI5LjEgYnJh
+bmNoOg0KDQpodHRwOi8vZ2l0LnNhdmFubmFoLmdudS5vcmcvY2dpdC9lbWFj
+cy5naXQvY29tbWl0Lz9oPWVtYWNzLTI5JmlkPTNjMTY5M2QwOGIwYTcxZDQw
+YTc3ZTdiNDBjMGViYzQyZGNhMmQyY2MNCg==
 
-Use CVE-2016-9634.
+--------------ODgiXUWhDc0RXcqNN9r05W99--
 
+--------------OOxcastI84GadyiX0810tE39
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
 
-> Or they could specify a skip count that goes past the end of the last
-> line of the output canvas (bug 2)
-
-Use CVE-2016-9635.
-
-
-> Or they could specify a write count that goes past the end of the last
-> line of the output buffer (bug 3)
-
-Use CVE-2016-9636.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYNlcQAAoJEHb/MwWLVhi27goP/iFEWViR3EL1uQvw8r0pKrhG
-sn1xsANxTN2AFDs4OfXahfoC/zvmuTPbfJ9DeL0LhpIAMslQxd8JmnFHpnmQn6ah
-zwImr913g1OPR7WPwsTpFzK9geS75Mnq4YNiH8JFAIrW37vgimWhS/31mytFuRJR
-fRnqeKU33NCKwELK/vR0ZxTc8hy5bAVvjhGKYB94xZbgjCNLTc3PwsIMFLbY6aSf
-8k0w1xdumIFD6bw+x9jnNH+Rnv6fT3GPSDYsBajNZDIrgO7mcPlKEfv4t4+HYTHT
-Tnh3omqIFOrXnyKurZ+Qc0e2+zgusyhRJWRda1M2T+//cmGxNF58z+mtATlPRIaJ
-Dd8Ri8V/VWXdHRvmGHhFgzIG+LWBYd0VEttJE7PFJ5xzIy5kEoM6tGcacFsZn9Wp
-rlBrVi1Q+mp3jIdSxMu0KQvGzs/9gyQldoZDCxOQ3U0n3MaumBbdQmKU9Fj8PPoF
-f1OD6hBHc+Q42z30993GpjypiDy5WPINxN24ikRQyQha5qVT0BSCdYYph9Z70I3d
-lOrCF7x1LM5Gyr2biYyfdA4utAyqaBP0VqFI1gR3DByfN17WXSauVuxl6c7zS+hf
-03+ixlUk+65BsFDlmC+ep0BUKwLUn7vaIY3+t0QZMwTDDoGOGcK3/pfq3TYAgaCl
-r6UZUBI35WgyoCj0VoyY
-=xMfa
+wsF5BAABCAAjFiEEleStherPvjH3F2XUIWPS9KpGc+gFAmQIc3kFAwAAAAAACgkQIWPS9KpGc+iq
++BAAhIks6pZJivB4euEeu8jnYEZzX0v9XGJZgyUXkFrfZHjJKFpcjAYRpSIIIfSSefTLJspH6/Lf
+hZng/tHDztJNYWmZMfY+5JXnpoFeRG/SW/qkHEfebUOZWHfykPFER6ELPeCU5mGYjNXyil2Skg1P
+bbJQYn6SxntdHWtrlMrdf1tetiGu7p8tnqhZnS0svhlxOXzL36y79d1Ee3MFlJgCrm5Wew9hnhkL
+25ov+Xe7k6Gh8GYMEgQfzS5PfAo8x2KSL8TjDW4WgBaoYG/lQtF/ru+q8t6aA3K2llNOxuNQGdvq
+wzzBbT7GNNYzt5kvm1YlE6hhzg6bjpMM65N4zRr1qhtTy5tg8PkL8wfUuoFm+CunUrGbpGKqRXD4
+B/z2T4gYJl4rp6pmCnrBPM1i8oIJWaPJotQxcMf5tSgRYT1TQldtF26rkcXI2zmsTj+UXzr1QhIX
+GgxIM2f+7jNnYOYAGDpUJYZs1PWZaEM43EGSNVqFUWLDKrNz9WCxISX2c6f9oPr1Q1Jbum4SWp2d
+DmGbX9ity7LF3Ij9DQjyMBmD98kqaXT+qoKWrf+1cjLXyrkAf0sSItObYql6jwy/yDYvt0GRl9hg
+nVpMm5+Dswqdtdz9t9Kh1P0UpzmkZFqtaRf3QLC3EWYGz+crUZ9ngz1fyW1hr9T/Zj/ZbOFZwjNg
+NTI=
+=5cQt
 -----END PGP SIGNATURE-----
+
+--------------OOxcastI84GadyiX0810tE39--
