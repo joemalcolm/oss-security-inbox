@@ -1,97 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/14/1
-Message-Id: <E1qKMmq-00035B-SS@xenbits.xenproject.org>
-Date: Fri, 14 Jul 2023 17:41:00 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Notice 1 v1 - winpvdrvbuild.xenproject.org potentially compromised
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/09/2
+Message-ID: <20230309133444.GA22470@localhost.localdomain>
+Date: Thu, 9 Mar 2023 13:34:58 +0000
+From: Qualys Security Advisory <qsa@...lys.com>
+To: Georgi Guninski <gguninski@...il.com>
+CC: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Re: double-free vulnerability in OpenSSH server 9.1 (CVE-2023-25136)
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Georgi,
 
-                     Xen Security Notice 1
+On Mon, Mar 06, 2023 at 09:53:06AM +0200, Georgi Guninski wrote:
+> So besides the double free bug you managed to circumvent
+> the mitigation in both linux and openbsd, right?
+> Did you find weakness in the mitigation or did you find
+> fundamental way to exploit double free?
 
-         winpvdrvbuild.xenproject.org potentially compromised
+We have not been able to do anything useful on Linux (glibc) yet.
 
-ISSUE DESCRIPTION
-=================
+On OpenBSD, what we did works only because this double free is of the
+form "free(ptr); many other malloc() and free() calls; free(ptr);".
 
-Software running on the Xen Project hosted subdomain
-winpvdrvbuild.xenproject.org is outdated and vulnerable to several
-CVEs.  Some of the reported issues include remote code execution.  The
-affected host was running the Jenkins build system for the Windows PV
-Drivers subproject.
+If it were of the form "free(ptr); no other malloc() or free() call;
+free(ptr);" then this double free would be caught immediately by
+malloc's security checks.
 
-IMPACT
-======
+Hopefully this helps! With best regards,
 
-Since the list of CVEs reported include remote code execution we no
-longer have confidence that binaries previously available at:
-
-https://xenbits.xen.org/pvdrivers/win/
-
-are trustworthy.  This includes binaries signed with Xen Project's EV
-key that is cross-signed by Microsoft.
-
-Note that the source code for the windows drivers, hosted on
-xenbits.xen.org is in a separate system and we are confident that it
-has not been tampered with.  The EV key was also not available to the
-possibly compromised system.
-
-ACTIONS TAKEN
-=============
-
-The possibly compromised system has been decommissioned.
-
-We have removed all previous binaries from:
-
-https://xenbits.xen.org/pvdrivers/win/
-
-A new set of drivers based on the current master branch
-(9.0-unstable) and built on a trusted environment have been uploaded
-on the same folder with the following hashes:
-
-$ sha256sum xen*.tar
-b089e46d52ffc64a14799c609272ccdded805c1552a88b45d95a64a27e775de7  xenbus.tar
-afc6f11f9078cb457daa000b8b8d8ab69656d3950e7afbf6f40aaa5da217301a  xencons.tar
-7bbcedcda5e2ffa8ab32eb3d207d1c7db5b91e22926b26d75750bfadde6611f0  xenhid.tar
-a8f3344e370647696e3ed39201f5c9db693aca1c093a638fde8b7a928a4416c2  xeniface.tar
-560d7049f5e321545dda25c26b5f56e0975a7f62d35629f4c9a73f0fbd148cf3  xennet.tar
-9cb34cd135aab045a2401098c4044c95dbd179c454718e43045e433401b8e3dd  xenvbd.tar
-47c1b9bc6e90e20d3f524036a3171cf7f8da1d94186febbae0d4a108db7bb3b5  xenvif.tar
-09a4b108a9d3fca699c3c31aeb4836cfee2538e588462b0646dcccbde42a4263  xenvkbd.tar
-
-ACTIONS IN PROGRESS
-===================
-
-The security team is attempting to inspect existing binaries to
-determine whether there are any obvious signs of tampering.
-
-CREDITS
-=======
-
-We would like to thank Mahmud Hasan for bringing this to our
-attention.
-
-WHAT IS AN XSN
-==============
-
-A Xen Security Notice is a mechanism the Security Team was already in
-the process of introducing, for providing official communication of
-security-relevant information that is not of the form that fits in the
-normal XSA template.  Please bear with us as we find the right balance
-while trying to fast-track it into use.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmSxe3YMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZgwgH/1serMIChH2tFlbU0HSgVk07KCO17lFcCJnhDSA8
-uEv3uYiW8NCZEwaD2wmgxN9tW7yTIoeSrsnTyU9D305M6gy3F9g1XcktAv9HhtEO
-fS/Pdq1q/ec4vStOYUzx6yG/2GIKNYny5Um4X2Odr/dvYcdZJPkmeJtv6yIa5wSC
-q3jCou/VoBCwXUGqlqzRdRsJ+srmsFfmsTn/oNuM28gkV+qRAUc+J6z+psObo2yp
-KE/Jgl9B6Nq2+d7sbcgto77a/4FrgtW01qFgIbvQPcE8BBlPF4xymKeCBSGEY/yL
-MrOyYpw81cOd0IvSVdQglW63+DO76EksBJJWQbtazwhbPDs=
-=jmGB
------END PGP SIGNATURE-----
-
+-- 
+the Qualys Security Advisory team
