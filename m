@@ -1,132 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/15/4
-Message-Id: <DB0FE500-3DFB-468F-B954-162130155FC7@beckweb.net>
-Date: Wed, 15 Feb 2023 14:22:00 +0100
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/09/1
+Message-ID: <ZAmHgoA8GvuVpS2V@eldamar.lan>
+Date: Thu, 9 Mar 2023 08:15:14 +0100
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+Subject: Re: Shell command and Emacs Lisp code injection in emacsclient-mail.desktop
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+Hi,
 
-The following releases contain fixes for security vulnerabilities:
+On Wed, Mar 08, 2023 at 12:37:29PM +0100, Gabriel Corona wrote:
+> emacsclient-mail.desktop is vulnerable to shell command
+> injections and Emacs Lisp injections through a crafted
+> mailto: URI.
 
-* Azure Credentials Plugin 254.v64da_8176c83a
-* Email Extension Plugin 2.93.1
-* JUnit Plugin 1166.1168.vd6b_8042a_06de
-* Pipeline: Build Step Plugin 2.18.1
-* Synopsys Coverity Plugin 3.0.3
+Two CVEs are assigned by MITRE:
 
+> 
+> This has been introduced in Emacs 28.1:
+> 
+> http://git.savannah.gnu.org/cgit/emacs.git/commit/?h=emacs-29&id=b1b05c828d67930bb3b897fe98e1992db42cf23c
+> 
+> A fix for shell command injection is currently included
+> in the upcoming 28.3 branch:
+> 
+> http://git.savannah.gnu.org/cgit/emacs.git/commit/?h=emacs-29&id=d32091199ae5de590a83f1542a01d75fba000467
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2023-02-15/
+CVE-2023-27985
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+> 
+> A fix for both is currently included in the upcoming 29.1 branch:
+> 
+> http://git.savannah.gnu.org/cgit/emacs.git/commit/?h=emacs-29&id=3c1693d08b0a71d40a77e7b40c0ebc42dca2d2cc
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+CVE-2023-27986
 
----
-
-SECURITY-3032 / CVE-2023-25761
-JUnit Plugin 1166.va_436e268e972 and earlier does not escape test case
-class names in JavaScript expressions.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to control test case class names in the JUnit
-resources processed by the plugin.
-
-
-SECURITY-3019 / CVE-2023-25762
-Pipeline: Build Step Plugin 2.18 and earlier does not escape job names in a
-JavaScript expression used in the Pipeline Snippet Generator.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to control job names.
-
-
-SECURITY-2931 / CVE-2023-25763
-Email Extension Plugin bundled multiple preconfigured templates for
-notification emails. The Email Template Testing feature can be used to see
-what these and other templates would look like based on a given build.
-
-Email Extension Plugin 2.93 and earlier does not escape various fields
-included in those email templates, like build display name, user display
-name, and the names of tests.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to control affected fields.
-
-
-SECURITY-2934 / CVE-2023-25764
-Email Extension Plugin allows defining custom email templates using Config
-File Provider plugin as Jelly or Groovy files. The Email Template Testing
-feature can be used to see what these templates would look like based on a
-given build by specifying the `managed:` name prefix.
-
-Email Extension Plugin 2.93 and earlier does not escape, sanitize, or
-sandbox rendered email template output or log output generated during
-template rendering.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to create or change custom email templates.
-
-
-SECURITY-2939 / CVE-2023-25765
-Email Extension Plugin allows defining custom email templates using Config
-File Provider plugin as Jelly or Groovy files. When defined inside a
-folder, email templates need to be subject to Script Security protection
-(sandboxed execution or full-script approval).
-
-In Email Extension Plugin 2.93 and earlier, templates defined inside a
-folder were not subject to Script Security protection.
-
-This vulnerability allows attackers able to define email templates in
-folders to bypass the sandbox protection and execute arbitrary code in the
-context of the Jenkins controller JVM.
-
-
-SECURITY-1757 / CVE-2023-25766
-Azure Credentials Plugin 253.v887e0f9e898b and earlier does not perform
-permission checks in several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-
-SECURITY-1756 / CVE-2023-25767 (CSRF) & CVE-2023-25768 (missing permission check)
-Azure Credentials Plugin 253.v887e0f9e898b and earlier does not perform
-permission checks in methods implementing form validation.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified web server.
-
-Additionally, these form validation methods do not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-
-SECURITY-2793 (1) / CVE-2023-23850
-Synopsys Coverity Plugin 3.0.2 and earlier does not perform permission
-checks in several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-
-SECURITY-2793 (2) / CVE-2023-23847 (CSRF) & CVE-2023-23848 (missing permission check)
-Synopsys Coverity Plugin 3.0.2 and earlier does not perform permission
-checks in several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified HTTP server using attacker-specified credentials IDs
-obtained through another method, capturing credentials stored in Jenkins.
-
-Additionally, these HTTP endpoints do not require POST requests, resulting
-in a cross-site request forgery (CSRF) vulnerability.
-
+Regards,
+Salvatore
