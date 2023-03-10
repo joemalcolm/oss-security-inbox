@@ -1,48 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/02/2
-Message-ID: <Y7MEEZ8v8rhptsuL@eldamar.lan>
-Date: Mon, 2 Jan 2023 17:19:29 +0100
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: Arnout Engelen <engelen@...che.org>
-Cc: John Helmert III <ajak@...too.org>, security@...che.org, jorton@...che.org, oss-security@...ts.openwall.com
-Subject: Re: CVE-2022-22728: libapreq2: libapreq2 multipart form parse memory corruption
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/10/1
+Message-ID: <dc3c70ed-a152-e598-e353-7ba03abde474@apache.org>
+Date: Fri, 10 Mar 2023 13:37:22 +0000
+From: Arnout Engelen <engelen@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-26464: Apache Log4j 1.x (EOL) allows DoS in Chainsaw and SocketAppender 
 Content-Type: text/plain; charset=utf-8
 
-Hi Arnout,
+Severity: low
 
-On Mon, Jan 02, 2023 at 12:51:04PM +0100, Arnout Engelen wrote:
-> On Sat, Dec 31, 2022 at 6:42 PM John Helmert III <ajak@...too.org> wrote:
-> > On Sat, Dec 31, 2022 at 10:54:00AM +0100, Arnout Engelen wrote:
-> > > On Fri, Dec 30, 2022 at 10:54 PM John Helmert III <ajak@...too.org> wrote:
-> > > > On Thu, Dec 29, 2022 at 10:50:26AM +0100, Salvatore Bonaccorso wrote:
-> > > > > On Fri, Aug 26, 2022 at 11:01:23AM -0500, John Helmert III wrote:
-> > > > > > On Thu, Aug 25, 2022 at 02:09:16PM +0000, Joe Orton wrote:
-> > > > > > > A flaw in libapreq2 versions 2.16 and earlier could cause a buffer
-> > > > > > > overflow while processing multipart form uploads.
-> > > > > >
-> > > > > > Is there a fixed version or patch or upstream issue?
-> > >
-> > > libapreq2 2.17 was released on the same day as the advisory describing
-> > > the problem with 2.16 and earlier (https://httpd.apache.org/apreq/).
-> >
-> > Does it fix CVE-2022-22728? Whether or not it does isn't clear from
-> > the changelog [1], and I can't find a reference to the CVE elsewhere
-> > in the source tree.
-> 
-> I think https://svn.apache.org/viewvc?view=revision&revision=1894937
-> contained the fix for this issue. This is included in 2.17.
+Description:
 
-Thank you!
+** UNSUPPORTED WHEN ASSIGNED **
 
-So apart https://svn.apache.org/r1894937 one would probably as well
-need
+When using the Chainsaw or SocketAppender components with Log4j 1.x on JRE less than 1.7, an attacker that manages to cause a logging entry involving a specially-crafted (ie, deeply nested) 
+hashmap or hashtable (depending on which logging component is in use) to be processed could exhaust the available memory in the virtual machine and achieve Denial of Service when the object is deserialized.
 
-https://svn.apache.org/r1894940 (non-functional change)
-https://svn.apache.org/r1894977
+This issue affects Apache Log4j before 2. Affected users are recommended to update to Log4j 2.x.
 
-and
+NOTE: This vulnerability only affects products that are no longer supported by the maintainer.
 
-https://svn.apache.org/r1895054
+Credit:
 
-Regards,
-Salvatore
+Garrett Tucker of Red Hat (reporter)
+
+References:
+
+https://logging.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-26464
+
