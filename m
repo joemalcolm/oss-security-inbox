@@ -1,110 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/13/3
-Message-ID: <CAHrFiA_XB=rFrdC8+8KTwbi9-Jwf6fiGwNEEngmApg-v_VzZWg@mail.gmail.com>
-Date: Wed, 13 Dec 2023 15:11:35 +0100
-From: Jakub Jelen <jjelen@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/13/1
+Message-ID: <CABz=zMLL=m9dgAThaqT5i89TpArTO6o+4v=YQAHCzegm0MubQQ@mail.gmail.com>
+Date: Mon, 13 Mar 2023 20:10:33 +0900
+From: Jisoo Jang <jisoo.jang@...sei.ac.kr>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-40661: Dynamic analyzers reports in pkcs15-init in OpenSC before 0.24.0
+Cc: Dokyung Song <dokyungs@...sei.ac.kr>, Minsuk Kang <linuxlovemin@...sei.ac.kr>
+Subject: A USB-accessible slab-out-of-bounds read in Linux kernel driver
 Content-Type: text/plain; charset=utf-8
 
-This advisory summarizes automatically reported issues that are
-security relevant that were reported since the release of OpenSC
-0.23.0 and that are relevant to the handling the card enrollment
-process using pkcs15-init.
+=== Description ===
 
-All of these require physical access to the computer at the time user
-or administrator would be enrolling the cards (generating keys and
-loading certificates, other card/token management) operations. The
-attack requires crafted USB device or smart card that would present
-the system with specially crafted responses to the APDUs so they are
-considered a high-complexity and low-severity. This issue is not
-exploitable just by using a PKCS#11 module as done in most of the
-end-user deployments.
+A slab-out-of-bounds read bug was found in the Broadcom Full MAC Wi-Fi
+driver (e.g., brcmfmac.ko in the linux-modules-extra package in Ubuntu),
 
-Security-related oss-fuzz issues
+The bug occurs in kmemdup() called from brcmf_get_assoc_ies(), when
+assoc_info->req_len, data from a URB provided by a USB device, is bigger
+than the size of buffer which is defined as WL_EXTRA_BUF_MAX.
 
-Stack buffer overflow in sc_pkcs15_get_lastupdate in pkcs15init
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=60769
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=60527
-fixed with 245efe608d083fd4e4ec96793fdefd218e26fde7
+The driver duplicates the data of cfg->extra_buf to conn_info->req_ie as
+much as assoc_info->req_le, which could exceed the size of the buffer.
 
-Heap buffer overflow in setcos_create_key in pkcs15init
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=60672
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=64181
-fixed with
-440ca666eff10cc7011901252d20f3fc4ea23651
-4013a807492568bf9907cfb3df41f130ac83c7b9
+The data passes through cfg80211_connect_done(),
+__cfg80211_connect_result(); in the end, it reaches
+nl80211_send_connect_result() that will form netlink messages with the data
+read outside the bounds of the buffer.
 
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=60650 Heap
-buffer overflow in cosm_new_file in pkcs15init
-fixed with 41d61da8481582e12710b5858f8b635e0a71ab5e
+This data, which may contain sensitive information in the kernel, could be
+sent to a userspace socket by __netlink_sendskb() during this multicasting
+process.
 
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=60616 Heap
-double free in sc_pkcs15_free_object_content
-fixed with 638a5007a5d240d6fa901aa822cfeef94fe36e85
+=== Fix ===
 
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=58932 Stack
-buffer overflow in cflex_delete_file in pkcs15init
-fixed with c449a181a6988cc1e8dc8764d23574e48cdc3fa6
+A patch was reported to the linux wireless mailing list and successfully
+reviewed by the maintainer.
 
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=56213 Heap
-buffer overflow in sc_hsm_write_ef in pkcs15init
-not in any released version, fixed with dd138d0600a1acd7991989127f36827e5836b24e
-
-Stack buffer overflow while parsing pkcs15 profile files
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=55998
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=55851
-fixed with 5631e9843c832a99769def85b7b9b68b4e3e3959
-
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=54312 Stack
-buffer overflow in muscle driver in pkcs15init
-fixed with df5a176bfdf8c52ba89c7fef1f82f6f3b9312bc1
-
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=53927 Stack
-buffer overflow in cardos driver in pkcs15init
-fixed with 578aed8391ef117ca64a9e0cba8e5c264368a0ec
-
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=64215 Heap
-buffer overflow in epass2003 driver in pkcs15init
-fixed with 609164045facaeae193feb48d9c2fc5cc4321e8a
-
-Heap buffer overflow in iasecc driver in pkcs15init
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=63949
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=63587
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=63163
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=61797
-fixed with
-8fc2c20c3f895569eeb58328bb882aec07325d3b
-fbda61d0d276dc98b9d1d1e6810bbd21d19e3859
-83b9129bd3cfc6ac57d5554e015c3df85f5076dc
-2a4921ab23fd0853f327517636c50de947548161
-
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=63104 Stack
-buffer overflow in entersafe driver in pkcs15init
-fixed with 50f0985f6343eeac4044661d56807ee9286db42c
-
-Heap buffer overflow in oberthur driver in pkcs15init
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=60650
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=62613
-fixed with 41d61da8481582e12710b5858f8b635e0a71ab5e
-
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=61750 Stack
-buffer overflow in idprime driver in pkcs15init
-fixed with fa8ad362852dbefad5b6796c32f2a33859b8a8e0
-
-https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=60971 Heap
-buffer overflow in test_verify
-fixed with ffbff25ec6c6d0ad3f8df76f57210698f7947fc3
-
-Originally reported by OSS-fuzz automated service
-
-
-
-The full release notes for the 0.24.0 is available in announce list:
-
-https://sourceforge.net/p/opensc/mailman/message/58712583/
-
-and on github:
-
-https://github.com/OpenSC/OpenSC/releases/tag/0.24.0
+(
+https://lore.kernel.org/linux-wireless/20230309104457.22628-1-jisoo.jang@yonsei.ac.kr/T/#u
+)
 
