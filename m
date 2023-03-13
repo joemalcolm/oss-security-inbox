@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1360" "Thursday" "19" "November" "2015" "12:28:34" "+0300" "Solar Designer" "solar@openwall.com" "<20151119092834.GA11121@openwall.com>" "29" "Re: [oss-security] Fwd: x86 ROP mitigation" nil nil nil "11" "2015111909:28:34" "[oss-security] Fwd: x86 ROP mitigation" (number mark "U       solar@openwa Nov 19   29/1360  " thread-indent "\"Re: [oss-security] Fwd: x86 ROP mitigation\"\n") "<CAGfLVYzktacNa_ZyenDrybe-37A499rv4LEw6BSp9Jqcj5YaOA@mail.gmail.com>" ("<20151117153951.GA28672@openwall.com>" "<20151118021008.GB31188@openwall.com>" "<564C582B.6080803@redhat.com>" "<1673938.GaGbo5rB5J@x2>" "<CAGfLVYzktacNa_ZyenDrybe-37A499rv4LEw6BSp9Jqcj5YaOA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 6105 invoked by uid 550); 19 Nov 2015 09:28:39 -0000
+Received: (qmail 22358 invoked by uid 550); 13 Mar 2023 13:03:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,45 +7,75 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 6087 invoked from network); 19 Nov 2015 09:28:38 -0000
-Date: Thu, 19 Nov 2015 12:28:34 +0300
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 13339 invoked from network); 13 Mar 2023 11:10:56 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=yonsei-ac-kr.20210112.gappssmtp.com; s=20210112; t=1678705844;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=R+6iYidoCgHWyXEN12Fq8ZPKmWdGaocCaECf9jaeV4U=;
+        b=GIAtzAOcL/Hts/nWjRJwhzFqfOrbGa+ghuKEPJmxWjB2lThAN3OgV6qHY3YvfbQFyS
+         XBnavhzrbCN/Ivx7BXoViQOtlkAAu90BZaNMeq8wAFJ9LXVXBFldF9GQpmvs9l0JIlQ8
+         Z2kVYt3XT63xT2bZQZCmdBVG7P5RPPPpv1XU1pkaf9e1lFFWXGfxPLd9nkeFwOSOK1rF
+         5gQXUD6jdApjJH2JVqD1qIbY7+op2k+ApEMZWy6Hsum68u33YnZxlbNy36GQtiKbhuM1
+         R/nT9f1SGbFe9fYlFysSLPfs2CHiZckwPjDxyznbUy5YA6IjsjDsCnX356lFnRiZRSTv
+         bu7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678705844;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=R+6iYidoCgHWyXEN12Fq8ZPKmWdGaocCaECf9jaeV4U=;
+        b=8OZO0wVtxY/g1GA0m5iDnRJ+G/wGNgY3/CWCvgk/LTW7zCotARbtCTmCuYl+OPh2/e
+         VXJEvK7c1NdnwGdJb7n9HxbaxVrL6atDEYjs57To37he8yWzRg8nqc1PJ6SXc/uPrqGH
+         wgNR0ksHjYy2s2hYwVIgMuGNajBrmguobEqH+bHyR/1wpMQz6MD8/BHmWu6oSXQUwVw7
+         SMdqUVFKWxiCqAyaSTqk3hRlZIMjZQ1cQSkSd9PsFfLpLZDby9x63JoLT+wjFBjRpquT
+         7kK39Se/+MnUJ9mEonKefuWH6NGOa95lN8YekEyCvtFuvj9kLCIAeVstv4hSfrjUccta
+         KeOQ==
+X-Gm-Message-State: AO0yUKVM0sIZcX6ceDMQRiwM+cpToNgWer2wHoZs6UNI3zKoiJuNNxpM
+	93GxXGl211wNG+jYRFYA8anub/w8+pNYtSqwSk6yTxq6YekFAxWbF9Ut13I=
+X-Google-Smtp-Source: AK7set+tazLpRKqLzfkTeQNCxD57mJATJcjBwGRjwpxGjQC3HO3MfH3TrCLVGdUPD/EuPpXnJpc/X8wUf99k1H7hsM0=
+X-Received: by 2002:a81:c543:0:b0:536:4194:e6eb with SMTP id
+ o3-20020a81c543000000b005364194e6ebmr21764746ywj.0.1678705843911; Mon, 13 Mar
+ 2023 04:10:43 -0700 (PDT)
+MIME-Version: 1.0
+From: Jisoo Jang <jisoo.jang@yonsei.ac.kr>
+Date: Mon, 13 Mar 2023 20:10:33 +0900
+Message-ID: <CABz=zMLL=m9dgAThaqT5i89TpArTO6o+4v=YQAHCzegm0MubQQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Message-ID: <20151119092834.GA11121@openwall.com>
-References: <20151117153951.GA28672@openwall.com> <20151118021008.GB31188@openwall.com> <564C582B.6080803@redhat.com> <1673938.GaGbo5rB5J@x2> <CAGfLVYzktacNa_ZyenDrybe-37A499rv4LEw6BSp9Jqcj5YaOA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGfLVYzktacNa_ZyenDrybe-37A499rv4LEw6BSp9Jqcj5YaOA@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Fwd: x86 ROP mitigation
+Cc: Dokyung Song <dokyungs@yonsei.ac.kr>, Minsuk Kang <linuxlovemin@yonsei.ac.kr>
+Content-Type: multipart/alternative; boundary="00000000000082508e05f6c62992"
+Subject: [oss-security] A USB-accessible slab-out-of-bounds read in Linux kernel driver
 
-Thank you all for the responses.  The project makes more sense to me now.
+--00000000000082508e05f6c62992
+Content-Type: text/plain; charset="UTF-8"
 
-Florian wrote:
-> > It seems to me that if the stack canary check happened directly before
-> > the RET instruction, after restoring the registers, it would make it
-> > more difficult to abuse the RET instruction.  With the code above, you
-> > can just jump to the address 1c6e7 and have access to quite a few useful
-> > POP instructions.
+=== Description ===
 
-On Wed, Nov 18, 2015 at 05:33:37PM +0100, Fabio Pagani wrote:
-> You are right. Attackers will have access to POP instruction and
-> potentially to any instruction found in an unaligned fashion.
-> Shifting down the check will work but it's very dangerous, because you
-> are accessing a part of the stack that was deallocated with the add.
+A slab-out-of-bounds read bug was found in the Broadcom Full MAC Wi-Fi
+driver (e.g., brcmfmac.ko in the linux-modules-extra package in Ubuntu),
 
-Perhaps the POP instructions can be replaced with MOVs (since the stack
-pointer would not yet be right for the POPs) and the ADD postponed until
-after the check?  That way, the check would still be inside the would-be
-desirable gadget, and would hopefully spoil it (since the gadget would
-be invoked without a prior invocation of the function's prologue).
+The bug occurs in kmemdup() called from brcmf_get_assoc_ies(), when
+assoc_info->req_len, data from a URB provided by a USB device, is bigger
+than the size of buffer which is defined as WL_EXTRA_BUF_MAX.
 
-> Actually I've implemented G-Free for X86-64 (except the "symbolic
-> addresses" part) in the LLVM backend.
-> The source will be released max in 2 weeks, but anyway i will be very
-> happy to discuss and help for a GCC implementation.
+The driver duplicates the data of cfg->extra_buf to conn_info->req_ie as
+much as assoc_info->req_le, which could exceed the size of the buffer.
 
-Cool!
+The data passes through cfg80211_connect_done(),
+__cfg80211_connect_result(); in the end, it reaches
+nl80211_send_connect_result() that will form netlink messages with the data
+read outside the bounds of the buffer.
 
-Alexander
+This data, which may contain sensitive information in the kernel, could be
+sent to a userspace socket by __netlink_sendskb() during this multicasting
+process.
+
+=== Fix ===
+
+A patch was reported to the linux wireless mailing list and successfully
+reviewed by the maintainer.
+
+(
+https://lore.kernel.org/linux-wireless/20230309104457.22628-1-jisoo.jang@yonsei.ac.kr/T/#u
+)
+
+--00000000000082508e05f6c62992--
