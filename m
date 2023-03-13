@@ -1,97 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/17/1
-Message-ID: <ZI1CALKOZczi4lKI@eldamar.lan>
-Date: Sat, 17 Jun 2023 07:17:52 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/13/2
+Message-ID: <ZA+CMlU2Acu8NBhA@quatroqueijos.cascardo.eti.br>
+Date: Mon, 13 Mar 2023 17:06:10 -0300
+From: Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: off-by-one in fl_set_geneve_opt
+Subject: CVE-2023-1032 - Linux kernel io_uring IORING_OP_SOCKET double free
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+A double-free vulnerability was found in the handling of IORING_OP_SOCKET
+operation with io_uring on the Linux kernel.
 
-On Wed, Jun 07, 2023 at 11:32:31AM +0800, Hangyu Hua wrote:
-> Hi guys,
-> 
-> I find a off-by-one bug in linux kernel's Flower
-> classifier(NET_CLS_FLOWER). It can cause denial-of-service and privilege
-> escalation.
-> 
-> # Details:
-> 
-> static int fl_set_geneve_opt(const struct nlattr *nla, struct fl_flow_key
-> *key,
->      int depth, int option_len,
->      struct netlink_ext_ack *extack)
-> {
-> struct nlattr *tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_MAX + 1];
-> struct nlattr *class = NULL, *type = NULL, *data = NULL;
-> struct geneve_opt *opt;
-> int err, data_len = 0;
-> 
-> if (option_len > sizeof(struct geneve_opt))
-> data_len = option_len - sizeof(struct geneve_opt);
-> 
-> opt = (struct geneve_opt *)&key->enc_opts.data[key->enc_opts.len]; <--- [1]
-> memset(opt, 0xff, option_len);
-> opt->length = data_len / 4;
-> opt->r1 = 0;
-> opt->r2 = 0;
-> opt->r3 = 0;
-> 
-> ...
-> if (tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_DATA]) {
-> int new_len = key->enc_opts.len;
-> 
-> data = tb[TCA_FLOWER_KEY_ENC_OPT_GENEVE_DATA];
-> data_len = nla_len(data);
-> if (data_len < 4) {
-> NL_SET_ERR_MSG(extack, "Tunnel key geneve option data is less than 4
-> bytes long");
-> return -ERANGE;
-> }
-> if (data_len % 4) {
-> NL_SET_ERR_MSG(extack, "Tunnel key geneve option data is not a
-> multiple of 4 bytes long");
-> return -ERANGE;
-> }
-> 
-> new_len += sizeof(struct geneve_opt) + data_len;
-> BUILD_BUG_ON(FLOW_DIS_TUN_OPTS_MAX != IP_TUNNEL_OPTS_MAX);
-> if (new_len > FLOW_DIS_TUN_OPTS_MAX) { <--- [2]
-> NL_SET_ERR_MSG(extack, "Tunnel options exceeds max size");
-> return -ERANGE;
-> }
-> opt->length = data_len / 4;
-> memcpy(opt->opt_data, nla_data(data), data_len); <--- [3]
-> }
-> ...
-> }
-> 
-> We can see that opt use key->enc_opts.len to get its pointer from
-> key->enc_opts.data[] in [1]. Then length will be set to "data_len /
-> 4". The bug is that if we send two TCA_FLOWER_KEY_ENC_OPTS_GENEVE
-> packets and their total size is 252 bytes(key->enc_opts.len = 252)
-> then key->enc_opts.len = opt->length = data_len / 4 when the third
-> TCA_FLOWER_KEY_ENC_OPTS_GENEVE packet enters fl_set_geneve_opt. This
-> can bypass the check in [2] and cause out of bound write in
-> [3](opt->opt_data = key->enc_opts.data[257]).
-> 
-> # Patch
-> 
-> I already contacted the linux security team and made a patch:
-> 
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/net/sched?id=4d56304e5827c8cc8cc18c75343d283af7c4825c
-> 
-> # CVE
-> 
-> Pending
-> 
-> # EXP
-> 
-> In order to avoid confusion i will publish it after I get CVE.
+It was fixed by commit:
 
-CVE-2023-35788 has been assigned for this issue:
-https://www.cve.org/CVERecord?id=CVE-2023-35788
+649c15c7691e9b13cbe9bf6c65c365350e056067 ("net: avoid double iput when sock_alloc_file fails")
 
-Regards,
-Salvatore
+It has been assigned CVE-2023-1032.
+
+It affects kernel versions starting with 5.19-rc1 and should affect any
+backports including commits da214a475f8bd1d3e9e7a19ddfeb4d1617551bab ("net: add
+__sys_socket_file()") and 1374e08e2d44863c931910797852589803997668 ("io_uring:
+add socket(2) support").
+
+It requires a memory allocation failure to happen, which will be followed by a
+double free of a recently allocated object.
+
+Causing the memory allocation failure does not require much more than being in
+a memory cgroup with a maximum allocation setup (systemd MemoryMax, for
+example).
+
+The double free happens with iput, which sets up a flag, and leads to a BUG_ON.
+So, at least, a system crash is possible.
+
+Cascardo.
