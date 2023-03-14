@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1831" "Thursday" "10" "September" "2020" "00:30:40" "+0200" "=?UTF-8?B?S2FpIEzDvGtl?=" "kai@kinvolk.io" "<CAL6HQvHDika0NmatJLfHLDE2hnb44o7s-W-EscFPvgt2yXmamw@mail.gmail.com>" "47" "Re: [oss-security] CVE-2020-14386: Linux kernel: af_packet.c vulnerability" nil nil nil "9" "2020090922:30:40" "[oss-security] CVE-2020-14386: Linux kernel: af_packet.c vulnerability" (number mark "U       kai@kinvolk. Sep 10   47/1831  " thread-indent "\"Re: [oss-security] CVE-2020-14386: Linux kernel: af_packet.c vulnerability\"\n") "<20200904073603.GA21152@openwall.com>" ("<CAM6JnLfDLbZA1Ky+UDjcA8XOrbAqazh4YQgH8Ur9pyhjBA2nQQ@mail.gmail.com>" "<20200904073603.GA21152@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2020-14386: Linux kernel: af_packet.c vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 26236 invoked by uid 550); 10 Sep 2020 07:00:31 -0000
+Received: (qmail 15461 invoked by uid 550); 14 Mar 2023 11:10:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,87 +7,82 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23666 invoked from network); 9 Sep 2020 22:31:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kinvolk.io; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=AUulCcjG9ge1sYAJPfS4TQWEd7AAutSz5W9EQwWan5c=;
-        b=Zd1lmqhoxefGncIaMoHRuPlPfwlt3X785ETS1WVRp9ajGGuxmlO6HN23PoUeWDFKJi
-         B99FpUyHVUmnkVJujkdglVOhZizyVttFE4uZsnr73nzj8Sx+TEVq9Y6TLFZrMSc8eg0K
-         a4zYUYz/uxLcMa5VHNN8wpu8ruLIWj4qbNzFM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=AUulCcjG9ge1sYAJPfS4TQWEd7AAutSz5W9EQwWan5c=;
-        b=YNIpd9D8a5cF0Aql2b8jnlVKsFweL+yxp1eH2PQIwz6826QFOWiIzBlpgPgoAmjxFR
-         CO8zaFoFAXKaj3frk1N4gwEOwuQzKj4ByEf+EOFers8m4Y9wA5IJ1FPZHb8wwevYohcV
-         nohpw/SJG7As0u+ePTzYTol/0EMFP6lUs2+bTlByyMiCojAv7PcTwek9kBqM1zMK5csp
-         JtCczgaDeQHIdHm91xlHDqg6kpywWJBY5TR2jgPHU2z6QbBlI/FxEK82w6CBSxzbd/F5
-         /dwWP7jFCJfuGu7IoO5SyzCcyejD5QtuKKoLk9u0L9n+OIm7UclOaRAbJ7cyVVSU2Did
-         AqFw==
-X-Gm-Message-State: AOAM532ljPad5EbWr2A5dImramNaZ12tpPSmbpKpzyBXq9Mcj50Z7W2s
-	jXtvuZkM/Tyyw8aH2DAeaebk4TGODgQ+r82oLgB1iYs6uGBALQ==
-X-Google-Smtp-Source: ABdhPJxdUdNZoaWw5RQbgvhwax0zJv3bXIKCgdGfnO5rV7P4NTi4uEsadZ5WzQJ68SjIXZiLFFJDwxGmU1dhfrjnHYo=
-X-Received: by 2002:a1c:6445:: with SMTP id y66mr5844863wmb.12.1599690650922;
- Wed, 09 Sep 2020 15:30:50 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAM6JnLfDLbZA1Ky+UDjcA8XOrbAqazh4YQgH8Ur9pyhjBA2nQQ@mail.gmail.com>
- <20200904073603.GA21152@openwall.com>
-In-Reply-To: <20200904073603.GA21152@openwall.com>
-From: =?UTF-8?B?S2FpIEzDvGtl?= <kai@kinvolk.io>
-Date: Thu, 10 Sep 2020 00:30:40 +0200
-Message-ID: <CAL6HQvHDika0NmatJLfHLDE2hnb44o7s-W-EscFPvgt2yXmamw@mail.gmail.com>
+Received: (qmail 15443 invoked from network); 14 Mar 2023 11:10:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=more-magic.net; s=dkim-2016-12; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:To:From:Date:Sender:Reply-To:Cc:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=x8vWO25e5sAOWJA0EnaBtXyIgE0XGUwJUNfuTu0Sg94=; b=cVLrnc4HMrZ4A2TLzBhIBUtxos
+	3vwVCn+6Re5Z1jWI10/6HhcfaS5of49t4H4Q6Iwfz1v5lCBWfW++a96u5KLsqCbI8boXQeAz2RbhH
+	cQtiweozxyGjvaziC+XA6xmGsk3TagXDixhBThh/irxzFLVDIS2I+xliQGZ3ztKkf6dY=;
+Date: Tue, 14 Mar 2023 12:10:37 +0100
+From: Peter Bex <peter@more-magic.net>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <ZBBWLS+7hGnvtsqQ@doggett>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <20230314095103.1ed76cc0.hanno@hboeck.de>
+ <ZBBQifYr6J8OSNXP@doggett>
+ <20230314120117.46a105cc.hanno@hboeck.de>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="qJm6xOQLNAx3GWP1"
+Content-Disposition: inline
+In-Reply-To: <20230314120117.46a105cc.hanno@hboeck.de>
+X-PGP-Key: https://www.more-magic.net/peter-bex.asc
+Subject: Re: [oss-security] TTY pushback vulnerabilities / TIOCSTI
+
+--qJm6xOQLNAx3GWP1
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] CVE-2020-14386: Linux kernel: af_packet.c vulnerability
 
-Hello,
+On Tue, Mar 14, 2023 at 12:01:17PM +0100, Hanno B=F6ck wrote:
+> On Tue, 14 Mar 2023 11:46:33 +0100
+> Peter Bex <peter@more-magic.net> wrote:
+>=20
+> > Indeed, opendoas (the portable version of OpenBSD's "doas") has this
+> > exact bug as well: https://github.com/Duncaen/OpenDoas/issues/106
+>=20
+> Though some context is relevant here: doas is a tool from OpenBSD.
+> According to the Linux kernel commit message [1] OpenBSD has fixed this
+> already 3 years ago by entirely removing TIOCSTI [2][3].
 
-here are some words on whether related issues to CVE-2020-14386 could
-exist in similar software.
+Indeed, the GitHub issue makes this clear as well (that's why I
+specifically mentioned opendoas and not doas in general).
+It just shows that even for security-minded folks it's a big trap
+to fall into.
 
-There are of course forks of Linux which get updates slower or not
-at all. The Android mainline branch at least has the fix already.
-In case of =C2=B5Clinux I found trees that are kept on old versions with no
-plans to update to newer major versions (for example, the GitHub
-project EmcraftSystems/linux-emcraft is on 2.6.33).
+This is the case *especially* when either
+a) the developers are mainly working on OpenBSD
+or
+b) it's a port from OpenBSD
 
-Implementations of the Linux syscall ABI are getting more common.
-I didn't test the Windows WSL and WSL2 situation. For WSL I don't
-know if they implement support for RAW sockets and for WSL2 it
-likely means that the virtualized Linux kernel crashes. However,
-I tried to reproduce the bug with gVisor and FreeBSD.
+Because it isn't even an issue there.  And you wouldn't expect an
+OpenBSD-developer to include a PTY allocating feature unless they
+explicitly also target Linux.
 
-With gVisor and the default Go network stack it was not possible to
-open the RAW socket inside the runsc sandbox and a permission error
-was reported. This error went away when using the Linux host network
-stack and resulted in the new error
-"Address family not supported by protocol" which suggests that support
-for RAW sockets is not implemented but I didn't confirm it in the
-source code. I think that non-race memory corruptions are rare in Go.
+=46rom a very cursory search, it looks like NetBSD and FreeBSD haven't
+disabled the option either, so more fun to be had if they include
+doas versions as well.
 
-On FreeBSD and the Linux binary compatibility mode enabled I also got
-"Address family not supported by protocol" but here as well I didn't
-consult the source code to confirm that support for RAW sockets is
-indeed not implemented. I don't know if a native feature like
-PACKET_RESERVE exists.
+Cheers,
+Peter
 
-Regards,
-Kai
+--qJm6xOQLNAx3GWP1
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
 
+iQEzBAEBCAAdFiEE6bh5EUSYP1EE+1UTER25+ctFibAFAmQQVikACgkQER25+ctF
+ibB6vQf/aGSZ/Avu5gE62fcbC/PsnElhviyN9oJ4oxZ9B/OctZx6j8BFOZ81t95O
+e+b7m7FcMDDCE3SzKrVU7YaPFL8JUHteD7hMBNquAAHH7O5Wy+qcBR0/1PsuFLC9
+yr8dWmkpFwUhUWMoGo6np/OoK5uWs/9xwi5hR9GtKLWl8Aa2DPBVjl5dzrlMPAwy
+cX8fb2RahxJdyvffCb8haCFU5wcg4V485IjYRWjU419k1y+VLnNFywu1PRoYhAaG
+Re0akb5OlaImwswqJLJrNa2QXNRqnrVZ+z2yv3NyvzylH8klJ+jQwZHtRDaxJ1dg
+P+Ud8ZO4kMzV+6MkpgLuh3iyulS1tA==
+=VXu5
+-----END PGP SIGNATURE-----
 
---=20
-Kinvolk GmbH | Adalbertstr.6a, 10999 Berlin | tel: +491755589364
-
-Gesch=C3=A4ftsf=C3=BChrer/Directors: Alban Crequy, Chris K=C3=BChl, Iago L=
-=C3=B3pez Galeiras
-
-Registergericht/Court of registration: Amtsgericht Charlottenburg
-
-Registernummer/Registration number: HRB 171414 B
-
-Ust-ID-Nummer/VAT ID number: DE302207000
+--qJm6xOQLNAx3GWP1--
