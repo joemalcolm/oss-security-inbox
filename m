@@ -1,4 +1,4 @@
-Received: (qmail 19709 invoked by uid 550); 27 Aug 2023 19:02:57 -0000
+Received: (qmail 30156 invoked by uid 550); 14 Mar 2023 08:38:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,80 +7,88 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9699 invoked from network); 27 Aug 2023 18:56:37 -0000
+Received: (qmail 28102 invoked from network); 14 Mar 2023 01:34:58 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1693162582; x=1693767382; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Dzqa+nrhm3AZLbWxX8nwc/s3Z1dow4ddOwXi9Qo9Khc=;
-        b=xyBFKkD+VaQ53xz42dItC2xEz1539+lbJoyxCLqTOOsOCHWJ0nIqi+MIVl1UQF7vM4
-         uXOuZX6yb2S0YdXAhoSjmO99+2dAKUza9JnjGk6pR3dhQxpJCgT2axvgzOPGgqYQ2k72
-         27x2om0W6KHAo8X06ciehOUYBRK1N2gEiSXTskvnfRlZeRw2ArJtJIkvoee/s1ocxC6Q
-         qwXKYRFIO/vHwlkIscu5cQKHaLHHhrRAbGv/KmZ+sCxl0wxyC8Rz0tsY8oNTzaVfz5K6
-         aG9uniPvrB6BTNjxLqNCGgb5z4G4afHUBICjWzLhtHboQ+oYpmh4FCSUq0mhCEzJU0D2
-         u0Xg==
+        d=yonsei-ac-kr.20210112.gappssmtp.com; s=20210112; t=1678757686;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=mghZEIc+MACtsSsk1CPsE4YYu5QZ3pDUoQ9524E8wyc=;
+        b=CWod+Wi+YyXxhEOmOwhIv7P9MCfM+PECg/kYKfJ7znCVCE6JuEVzNi7d28guiizDGY
+         Fadh0fxxVaLdfYnKOMnkZ15JuFzCf6ZdnupRXv9t3fKUQ5l6tt0295JZBmeh1N8zBs0f
+         IN0QiYsCl3FdWKomqxhqWRAFCmKna3HXqr9Q+dmXrU2LQ4NxOv8BQs1qZ3xytsC+v7tk
+         VqyBvHeMOKaDKM8evXPL5YsC/YDBG3gyphgy+/n6SZJcOPauHOtAOs7cQcOTE09IkGbh
+         KRwxQmHftOGwMEhJUhudcwrVyxqBl9ziTvpuihMOf3NO4AjQBO2wGx97Unriwn0CY0Bx
+         tArg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693162582; x=1693767382;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Dzqa+nrhm3AZLbWxX8nwc/s3Z1dow4ddOwXi9Qo9Khc=;
-        b=Ch14WdvPx50iNET/Dp6hLLbjFLCONwUu7HytQfzHHawkq8n5kyPLXjNMIAJavPX12j
-         B2vP0ZrjYA7QMNkzW73hgQbApQMYPUBf05D9Nw3fllsqiSHSEXh3+lSkD8NdrJFOlOL2
-         C5P0waBJfaoGDs41cSYnl/aO2rU3KLDoSiDW3l+IdcliMsNHfBMMDTLku/pC4sfs3vbE
-         eHl4K7ZY2Ul3nw3lt9IZiZ7SAhkKEtVyv5j8cN3KcV2jn5KW2+l+Qga7M9EqlCI4tHA4
-         ddaQoU9A6cJFHvQ5vYix2JalpJxsZdzie34aPFTcG3lErXS7JLDXSdWTG0vEOo2UiU3A
-         lXeg==
-X-Gm-Message-State: AOJu0YwwznYpGk5+GcaqdIVge40BJyvnGbH1av6RWNS19IhUJ6C9ea8N
-	/ydpv0a5mQLMqT4LuqfSeKo5ad/3mdQ56cFsXhIlHSwjkcPPNrdBNVwHK1A/
-X-Google-Smtp-Source: AGHT+IG/NP+DWLA3Ejghs67Vv3VA72S0OpRi34jus73eazrFbB/OxPEtkPRGXkZnOHIhuHXbvhc4L3Xn/1v0gCDT30s=
-X-Received: by 2002:a05:6e02:1be3:b0:34c:b5cb:43d1 with SMTP id
- y3-20020a056e021be300b0034cb5cb43d1mr324323ilv.10.1693162582131; Sun, 27 Aug
- 2023 11:56:22 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1678757686;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mghZEIc+MACtsSsk1CPsE4YYu5QZ3pDUoQ9524E8wyc=;
+        b=MRmv3CTnNzvc78si+BV5Q8PmyqYylzCmesdF8h+zAJwo90h5RAt5mbpWRhPGQYZLuu
+         VeKBtcjbIx5wM/IM9Mr3cZ1SaqbrkfBqb1+D2CIh9+04CVB/K/AUyR6VJdJQPhOta3qk
+         ZEiVJmJSlu7L9mkAYqKCAdb19XPDP7B5mfZ8V9wgeetWk0EVOaOMMcfPpCmDdsqv5WOv
+         BkLN8KclO9ZTVN+CmcC79JH9rYppACyOfRMXlTdJQU8WVhA0o5sW2fBJk20a9mJ0j7Jy
+         ldZdptG1chw8U0g0L1PkKLRRMcDDhQU0oUZN6QWXPfr+eBO7FvCl1Seaky0DJh9t9SHt
+         qGWA==
+X-Gm-Message-State: AO0yUKVkGQirV6zDElOGSTySgpuVa3CJ+vxnhOh6AitI94jHGa01xhhQ
+	JSwKJhxRrVVe5CiPMwdnEYFzTqx8j6KykL0Dsaw8+tKkfiwWYYpAmEA1
+X-Google-Smtp-Source: AK7set9tiP8qiSKCFzNOSxBcFbsag2iv43tPc+/cxHR7CvxCPE4vvjxPj0binP8XJmdFi1gXsEHHP3Epgj8DIZY5qEg=
+X-Received: by 2002:a81:a946:0:b0:52b:fd10:4809 with SMTP id
+ g67-20020a81a946000000b0052bfd104809mr24526783ywh.0.1678757686602; Mon, 13
+ Mar 2023 18:34:46 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230825222359.GA10424@openwall.com> <20230826023129.GA2930052@millbarge>
- <20230826214914.GA18442@openwall.com> <CAFswPa8ERS8LOgMTk_95Dyb7JO_z_82g1zJx9dUP54t1R8ZWGw@mail.gmail.com>
- <ZOuKYMvCQ8EqIx4C@itl-email>
-In-Reply-To: <ZOuKYMvCQ8EqIx4C@itl-email>
-From: "Eduardo' Vela\" <Nava>" <evn@google.com>
-Date: Sun, 27 Aug 2023 20:56:12 +0200
-Message-ID: <CAFswPa83igZYQN7oAEEZERPCyOuiJv3sFD_+SZx2M_g8fhJDbg@mail.gmail.com>
+References: <CABz=zMLL=m9dgAThaqT5i89TpArTO6o+4v=YQAHCzegm0MubQQ@mail.gmail.com>
+In-Reply-To: <CABz=zMLL=m9dgAThaqT5i89TpArTO6o+4v=YQAHCzegm0MubQQ@mail.gmail.com>
+From: Jisoo Jang <jisoo.jang@yonsei.ac.kr>
+Date: Tue, 14 Mar 2023 10:34:35 +0900
+Message-ID: <CABz=zMLEVKD8pED=fGH8hzVzMscZPsvKT9Tb-5oQSeerV-pLTQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="00000000000041abdb0603ec2216"
-Subject: Re: [oss-security] linux-distros list policy and Linux kernel, again
+Cc: Dokyung Song <dokyungs@yonsei.ac.kr>, Minsuk Kang <linuxlovemin@yonsei.ac.kr>
+Content-Type: multipart/alternative; boundary="0000000000009306e505f6d23bc9"
+Subject: [oss-security] Re: A USB-accessible slab-out-of-bounds read in Linux kernel driver
 
---00000000000041abdb0603ec2216
+--0000000000009306e505f6d23bc9
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, 27 Aug 2023, 19:41 Demi Marie Obenour, <demi@invisiblethingslab.com>
-wrote:
+This bug was assigned CVE-2023-1380.Best,
+Jisoo
 
-> Does this include unfixed vulnerabilities?
+On Mon, Mar 13, 2023 at 8:10=E2=80=AFPM Jisoo Jang <jisoo.jang@yonsei.ac.kr=
+> wrote:
+
+> =3D=3D=3D Description =3D=3D=3D
+>
+> A slab-out-of-bounds read bug was found in the Broadcom Full MAC Wi-Fi
+> driver (e.g., brcmfmac.ko in the linux-modules-extra package in Ubuntu),
+>
+> The bug occurs in kmemdup() called from brcmf_get_assoc_ies(), when
+> assoc_info->req_len, data from a URB provided by a USB device, is bigger
+> than the size of buffer which is defined as WL_EXTRA_BUF_MAX.
+>
+> The driver duplicates the data of cfg->extra_buf to conn_info->req_ie as
+> much as assoc_info->req_le, which could exceed the size of the buffer.
+>
+> The data passes through cfg80211_connect_done(),
+> __cfg80211_connect_result(); in the end, it reaches
+> nl80211_send_connect_result() that will form netlink messages with the da=
+ta
+> read outside the bounds of the buffer.
+>
+> This data, which may contain sensitive information in the kernel, could be
+> sent to a userspace socket by __netlink_sendskb() during this multicasting
+> process.
+>
+> =3D=3D=3D Fix =3D=3D=3D
+>
+> A patch was reported to the linux wireless mailing list and successfully
+> reviewed by the maintainer.
+>
+> (
+> https://lore.kernel.org/linux-wireless/20230309104457.22628-1-jisoo.jang@=
+yonsei.ac.kr/T/#u
+> )
 >
 
-The link* has more details, but briefly, deduplication is done by fix
-commit.
-
-Efforts to fix unfixed Syzkaller crashes (also something being worked on)
-are complementary to the effort to generate CVE identifiers for them, if
-that's your question (so, yes? Unfixed vulnerabilities found by Syzkaller
-are meant to be fixed first and then a CVE is generated for the reports
-fixed by their corresponding Fix commit).
-
-Generating CVEs for Syzkaller reports without deduplicating them first
-would be disruptive and useless (the link* goes into more details).
-Deduplication is subjective as it depends on how the bugs are understood.
-The analysis that is needed to deduplicate is happening as part of the fix
-review process.
-
-One could, of course, create a different mechanism to automatically (or
-semi-automatically) deduplicate Syzkaller reports and accept the risk of
-duplicate CVEs. This may be something to look at in the future, but it's
-not what's being worked on for the first iteration, and we probably will
-have a lot to fix and learn from even after the first wave of CVEs are
-generated.
-
-* https://github.com/google/cvelist/tree/cve-automation/fuzzer
-
->
-
---00000000000041abdb0603ec2216--
+--0000000000009306e505f6d23bc9--
