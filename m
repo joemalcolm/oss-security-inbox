@@ -1,26 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/27/2
-Message-ID: <ec83c66b-4748-f48b-7396-e9fd654ffdff@apache.org>
-Date: Mon, 27 Nov 2023 09:31:05 +0000
-From: Daniel Gaspar <dpgaspar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/14/1
+Message-ID: <CABz=zMLEVKD8pED=fGH8hzVzMscZPsvKT9Tb-5oQSeerV-pLTQ@mail.gmail.com>
+Date: Tue, 14 Mar 2023 10:34:35 +0900
+From: Jisoo Jang <jisoo.jang@...sei.ac.kr>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-40610: Apache Superset: Privilege escalation with default examples database 
+Cc: Dokyung Song <dokyungs@...sei.ac.kr>, Minsuk Kang <linuxlovemin@...sei.ac.kr>
+Subject: Re: A USB-accessible slab-out-of-bounds read in Linux kernel driver
 Content-Type: text/plain; charset=utf-8
 
-Affected versions:
+This bug was assigned CVE-2023-1380.Best,
+Jisoo
 
-- Apache Superset before 2.1.2
+On Mon, Mar 13, 2023 at 8:10 PM Jisoo Jang <jisoo.jang@...sei.ac.kr> wrote:
 
-Description:
-
-Improper authorization check and possible privilege escalation on Apache Superset up to but excluding 2.1.2. Using the default examples database connection that allows access to both the examples schema and Apache Superset's metadata database, an attacker using a specially crafted CTE SQL statement could change data on the metadata database. This weakness could result on tampering with the authentication/authorization data.
-
-Credit:
-
-LEXFO for Orange Innovation and Orange CERT-CC  at Orange group (finder)
-
-References:
-
-https://superset.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-40610
+> === Description ===
+>
+> A slab-out-of-bounds read bug was found in the Broadcom Full MAC Wi-Fi
+> driver (e.g., brcmfmac.ko in the linux-modules-extra package in Ubuntu),
+>
+> The bug occurs in kmemdup() called from brcmf_get_assoc_ies(), when
+> assoc_info->req_len, data from a URB provided by a USB device, is bigger
+> than the size of buffer which is defined as WL_EXTRA_BUF_MAX.
+>
+> The driver duplicates the data of cfg->extra_buf to conn_info->req_ie as
+> much as assoc_info->req_le, which could exceed the size of the buffer.
+>
+> The data passes through cfg80211_connect_done(),
+> __cfg80211_connect_result(); in the end, it reaches
+> nl80211_send_connect_result() that will form netlink messages with the data
+> read outside the bounds of the buffer.
+>
+> This data, which may contain sensitive information in the kernel, could be
+> sent to a userspace socket by __netlink_sendskb() during this multicasting
+> process.
+>
+> === Fix ===
+>
+> A patch was reported to the linux wireless mailing list and successfully
+> reviewed by the maintainer.
+>
+> (
+> https://lore.kernel.org/linux-wireless/20230309104457.22628-1-jisoo.jang@yonsei.ac.kr/T/#u
+> )
+>
 
