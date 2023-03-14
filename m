@@ -1,22 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/29/1
-Message-ID: <fu34pmyckhgrjugxc2pqbj5afhtsf5jisnbpjghhkr7rfie3my@53a2ma3ekn6i>
-Date: Thu, 28 Sep 2023 17:10:09 -0700
-From: nightmare.yeah27@...ecat.org
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/14/9
+Message-ID: <20230314191132.qDz3u%steffen@sdaoden.eu>
+Date: Tue, 14 Mar 2023 20:11:32 +0100
+From: Steffen Nurpmeso <steffen@...oden.eu>
+To: Helmut Grohne <helmut@...divi.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: sox: patches for old vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Sep 28, 2023 at 04:42:33PM -0400, Demi Marie Obenour wrote:
+Hello and greetings.
 
-> How long will it take for corporations to accept that writing media
-> codecs in C, C++, or any other memory-unsafe language is a
-> fundamentally bad idea, and that it is better to rewrite the codecs
-> in a safe language (such as Wuffs or Rust) than to try to secure the
-> existing ones?
+Helmut Grohne wrote in
+ <20230314110138.GA1192267@...divi.de>:
+ |On Fri, Feb 03, 2023 at 09:44:47PM +0100, Helmut Grohne wrote:
+ |>  * CVE-2021-33844
+ |
+ |The original fix for this issue would cause a regression. After applying
+ |it, sox would be unable to decode WAV GSM files. This has been reported
+ ...
+ |I see that most distributions (e.g. RedHat, SUSE, Gentoo, etc.) have not
+ |picked up the faulty patch. Ubuntu inherited it from Debian and will
+ |likely inherit the fix as it gets fixed in Debian releases.
 
-Wouldn't the low-level code have to ultimately depend on unsafe Rust
-modules, or similar feature in other safe language?
+You have chosen not to update to latest possible git(?).
 
--- 
-Ian
+  ...
+ |From: Helmut Grohne <helmut@...divi.de>
+ |Subject: wav: reject 0 bits per sample to avoid division by zero
+ |Bug: https://sourceforge.net/p/sox/bugs/349/
+ |Bug-Debian: https://bugs.debian.org/1021135
+ ...
+ |--- a/src/wav.c
+ |+++ b/src/wav.c
+ ...
+ |     default:
+ |+        if (ft->encoding.bits_per_sample == 0)
+ |+        {
+ |+            lsx_fail_errno(ft, SOX_EHDR, "WAV file bits per sample \
+ |is zero");
+ |+            return SOX_EOF;
+ |+        }
+
+
+Now, latest git removed support for built-in GSM, and i am too
+lazy and angry (do not get me started on Microsoft and OAuth for
+a normal "app" that is to read mail, they now no longer accept
+simple token refresh but with re-authenticating a 1024 or so bit
+password after 3600 seconds, and then fail to accept SMTP even
+though it is included, POP3 is not there anyway even though
+announced, but IMAP is right -- is anybody here??  But that is
+off-topic; just like my single-line graylister fix to support
+verbose logs in non-development code, sic) to check it.
+
+_But_ .. "default" is mysterious, there is WAVE_FORMAT_GSM610
+right above, and it is optional in latest git, which does not even
+support the "default:" label.
+How can you reach "default:", thus?
+
+ |         wav->numSamples = div_bits(qwDataLength, ft->encoding.bits_per_sam\
+ |         ple) / ft->signal.channels;
+ |         ft->signal.length = wav->numSamples * ft->signal.channels;
+ |}
+
+ --End of <20230314110138.GA1192267@...divi.de>
+
+Subdivision is a top-modern song of Rush, no?
+
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
