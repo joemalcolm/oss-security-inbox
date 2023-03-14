@@ -1,213 +1,170 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/16/2
-Message-Id: <12CEE5C7-4E38-4998-BB27-A445F742C6C7@beckweb.net>
-Date: Wed, 16 Aug 2023 15:11:18 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/14/8
+Message-ID: <ZBBdYWmJn07r/UgI@kasco.suse.de>
+Date: Tue, 14 Mar 2023 12:41:21 +0100
+From: Matthias Gerstner <mgerstner@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins plugins
+Subject: Security issue in Hotspot elevate_perf_privileges.sh (CVE-2023-28144)
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
-
-The following releases contain fixes for security vulnerabilities:
-
-* Blue Ocean Plugin 1.27.5.1
-* Config File Provider Plugin 953.v0432a_802e4d2
-* Delphix Plugin 3.0.3
-* Flaky Test Handler Plugin 1.2.3
-* Folders Plugin 6.848.ve3b_fd7839a_81
-* Fortify Plugin 22.2.39
-* NodeJS Plugin 1.6.0.1
-* Shortcut Job Plugin 0.5
-* Tuleap Authentication Plugin 1.1.21
-
-Additionally, we announce unresolved security issues in the following
-plugins:
-
-* Docker Swarm Plugin
-* Favorite View Plugin
-* Gogs Plugin
-* Maven Artifact ChoiceListProvider (Nexus) Plugin
-
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2023-08-16/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-3106 / CVE-2023-40336
-Folders Plugin 6.846.v23698686f0f6 and earlier does not require POST
-requests for an HTTP endpoint, resulting in a cross-site request forgery
-(CSRF) vulnerability.
-
-This vulnerability allows attackers to copy an item, which could
-potentially automatically approve unsandboxed scripts and allow the
-execution of unsafe scripts.
-
-
-SECURITY-3105 / CVE-2023-40337
-Folders Plugin 6.846.v23698686f0f6 and earlier does not require POST
-requests for an HTTP endpoint, resulting in a cross-site request forgery
-(CSRF) vulnerability.
-
-This vulnerability allows attackers to copy a view inside a folder.
-
-
-SECURITY-3109 / CVE-2023-40338
-Folders Plugin displays an error message when attempting to access the Scan
-Organization Folder Log if no logs are available.
-
-In Folders Plugin 6.846.v23698686f0f6 and earlier, this error message
-includes the absolute path of a log file, exposing information about the
-Jenkins controller file system.
-
-
-SECURITY-3090 / CVE-2023-40339
-Config File Provider Plugin 952.va_544a_6234b_46 and earlier does not mask
-(i.e., replace with asterisks) credentials specified in configuration files
-when they're written to the build log.
-
-
-SECURITY-3196 / CVE-2023-40340
-NodeJS Plugin integrates with Config File Provider Plugin to specify custom
-NPM settings, including credentials for authentication, in a Npm config
-file.
-
-NodeJS Plugin 1.6.0 and earlier does not properly mask (i.e., replace with
-asterisks) credentials specified in the Npm config file in Pipeline build
-logs.
-
-
-SECURITY-3116 / CVE-2023-40341
-Blue Ocean Plugin 1.27.5 and earlier does not require POST requests for an
-HTTP endpoint, resulting in a cross-site request forgery (CSRF)
-vulnerability.
-
-This vulnerability allows attackers to connect to an attacker-specified
-URL, capturing GitHub credentials associated with an attacker-specified
-job.
-
-
-SECURITY-3115 / CVE-2023-4301 (CSRF) & CVE-2023-4302 (missing permission check)
-Fortify Plugin 22.1.38 and earlier does not perform permission checks in
-several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified URL using attacker-specified credentials IDs obtained
-through another method, capturing credentials stored in Jenkins.
-
-Additionally, these HTTP endpoints do not require POST requests, resulting
-in a cross-site request forgery (CSRF) vulnerability.
-
-
-SECURITY-3140 / CVE-2023-4303
-Fortify Plugin 22.1.38 and earlier does not escape the error message for a
-form validation method. This results in an HTML injection vulnerability.
-
-NOTE: Since Jenkins 2.275 and LTS 2.263.2, a security hardening for form
-validation responses prevents JavaScript execution, so no scripts can be
-injected.
-
-
-SECURITY-3223 / CVE-2023-40342
-Flaky Test Handler Plugin 1.2.2 and earlier does not escape JUnit test
-contents when showing them on the Jenkins UI.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to control JUnit report file contents.
-
-
-SECURITY-3229 / CVE-2023-40343
-Tuleap Authentication Plugin 1.1.20 and earlier does not use a
-constant-time comparison when checking whether two authentication tokens
-are equal.
-
-This could potentially allow attackers to use statistical methods to obtain
-a valid authentication token.
-
-
-SECURITY-3214 (1) / CVE-2023-40344
-Delphix Plugin 3.0.2 and earlier does not perform a permission check in an
-HTTP endpoint.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-
-SECURITY-3214 (2) / CVE-2023-40345
-Delphix Plugin 3.0.2 and earlier does not set the appropriate context for
-credentials lookup, allowing the use of System-scoped credentials otherwise
-reserved for the global configuration.
-
-This allows attackers with Overall/Read permission to access and capture
-credentials they are not entitled to.
-
-
-SECURITY-3071 / CVE-2023-40346
-Shortcut Job Plugin 0.4 and earlier does not escape the shortcut
-redirection URL.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers able to configure shortcut jobs.
-
-
-SECURITY-3153 / CVE-2023-40347
-Maven Artifact ChoiceListProvider (Nexus) Plugin 1.14 and earlier does not
-set the appropriate context for credentials lookup, allowing the use of
-System-scoped credentials otherwise reserved for the global configuration.
-
-This allows attackers with Item/Configure permission to access and capture
-credentials they are not entitled to.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2894 / CVE-2023-40348 (information disclosure) & CVE-2023-40349 (insecure default)
-Gogs Plugin provides a webhook endpoint at `/gogs-webhook` that can be used
-to trigger builds of jobs. In Gogs Plugin 1.0.15 and earlier, an option to
-specify a Gogs secret for this webhook is provided, but not enabled by
-default.
-
-This allows unauthenticated attackers to trigger builds of jobs
-corresponding to the attacker-specified job name.
-
-Additionally, the output of the webhook endpoint includes whether a job
-corresponding to the attacker-specified job name exists, even if the
-attacker has no permission to access it.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-2811 / CVE-2023-40350
-Docker Swarm Plugin processes Docker responses to generate the Docker Swarm
-Dashboard view.
-
-Docker Swarm Plugin 1.11 and earlier does not escape values returned from
-Docker before inserting them into the Docker Swarm Dashboard view. This
-results in a stored cross-site scripting (XSS) vulnerability exploitable by
-attackers able to control responses from Docker.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3201 / CVE-2023-40351
-Favorite View Plugin 5.v77a_37f62782d and earlier does not require POST
-requests for an HTTP endpoint, resulting in a cross-site request forgery
-(CSRF) vulnerability.
-
-This vulnerability allows attackers to add or remove views from another
-user's favorite views tab bar.
-
-As of publication of this advisory, there is no fix.
-
-
-
+Hello list,
+
+this report is about a possible security vulnerability I found in the Hotspot
+[1] project.
+
+An openSUSE packager for hotspot requested a review of a Hotspot update to
+version 1.4.1. This version contained a newly added D-Bus helper and Polkit
+authentication. During the review I found a vulnerability in the helper script
+`elevate_perf_privileges.sh` that is likely not exploitable by default, but
+could easily become a local root exploit when Polkit configuration is changed
+or an alternative authentication mechanism with weak authentication
+requirements is used.
+
+[1]: https://github.com/KDAB/hotspot.git
+[2]: https://bugzilla.suse.com/show_bug.cgi?id=1208808
+
+Introduction
+============
+
+Hotspot is a GUI application for doing performance profiling anylsis
+based on Linux performance counters. This report is about the v1.4.1 version
+tag in the upstream repository.
+
+The Issue
+=========
+
+Hotspot temporarily changes Linux Kernel sysctl settings and permissions of
+the `debugfs` and `tracefs` file systems to allow running the GUI application
+as unprivileged users. The issue is related to privilege escalation logic
+which is carried out by the `elevate_perf_privileges.sh` script. This script
+is invoked as root via a range of potential mechanisms like pkexec, kdesu or a
+D-Bus based KDE kauth authentication helper. The mechanism is selected during
+runtime with a prioritization of kauth > pkexec > kdesudo > kdesu.
+
+The script receives the path to a temporary file which is by default safely
+created in /tmp via the `QTemporaryFile` class in "src/perfrecord.cpp:142".
+The script contains the following logic during early startup:
+
+```sh
+    if [ ! -z "$1" ]; then
+        olduser=$(stat -c '%u' "$1")
+        chown "$(whoami)" "$1"
+        echo "rewriting to $1"
+        # redirect output to file, to enable parsing of output even when
+        # the graphical sudo helper like kdesudo isn't forwarding the text properly
+        $0 2>&1 | tee -a "$1"
+        chown "$olduser" "$1"
+        exit
+    fi
+```
+
+The two `chown` invocations on the temporary file result in a temporary change
+of the ownership of the temporary file to root, which is originally owned by
+the unprivileged user. It changes ownership of the provided path first to
+`root`, then reexecutes itself, then changes ownership back to the original
+user.
+
+This offers the following attack vectors:
+
+- giving ownership of an arbitrary file to root
+- giving ownership of an arbitrary file to the unprivileged user
+
+The script accepts arbitrary paths and doesn't check where the file is located
+and what its ownership is. Thus the path can also be a file in any other
+directory. Therefore even without having to win a race condition or using a
+symlink attack, an attacker can simply specify a path to an already existing
+file owned by root e.g. /etc/shadow, which will in the end be owned by the
+unprivileged user.
+
+It can be argued that this script can only be invoked as root if the root
+password has been supplied to kdesu, pkexec or the Kauth framework and thus
+requires root privileges in the first place. Since the Polkit authentication
+framework is likely used though, there is a certain chance that users or
+integrators want to get rid of the "annoying" authentication dialog and change
+the Polkit policy to something like "yes" for active users to make the
+elevation work out of the box. In this case all locally logged in users could
+trigger the exploit without authenticating as root.
+
+Potential Fix
+=============
+
+I recommended to upstream to replace the currently overly complex privilege
+escalation logic, that potentially uses a range of alternate privilege
+escalation mechanisms, by a single clean approach like using `pkexec`. Towards
+the helper script subprocess Pipes should be used for consuming the output
+instead of passing a temporary file path to it. This way the problematic
+`chown` calls will no longer be needed.
+
+At the moment no proper is available and upstream will require more time to
+address the issue. Using Polkit and the default upstream Polkit policy there
+should not be immediate danger, but users need to be aware that relaxing the
+authentication requirements in any way gives way to the local root exploit.
+
+Upstream added a commit [3] that allows to "opt-in" the risky authentication
+feature during build time.
+
+[3]: https://github.com/KDAB/hotspot/commit/65a246ce9196462081483fd07d97678dcfe36b9c
+
+Further Hardening
+=================
+
+The privileged operations that the script currently performs are the
+following:
+
+    sysctl -wq kernel.kptr_restrict=0 kernel.perf_event_paranoid=-1
+    mount -o remount,mode=755 /sys/kernel/debug
+    mount -o remount,mode=755 /sys/kernel/debug/tracing
+
+Granting world read access to the debug and tracing file systems is a
+bit coarse grained. Sadly these kernel file systems don't support ACL
+entries. If that would be possible then temporarily adding a dedicated ACL for
+the unprivileged user would have been a viable approach.
+
+I recommended to upstream to investigate the option to use a dedicated hotspot
+group that is granted access to the file systems. Furthermore there might be a
+possibility to use the capability `CAP_PERFMON` in conjunction with the lower
+level `perf` tool to obtain the necessary privileges.
+
+Affectedness and CVE Assignment
+===============================
+
+The problematic use of `chown` in the helper script has been introduced in the
+upstream commit 3b4682565f0e53f903f3ad0f3f2c0f236d382efb [4] and has been
+present since release v1.3.0.
+
+I decided to request a CVE for this issue even though it is likely not
+exploitable by default, because of the simplicity of exploiting it and the
+complexity of the overall privilege escalation logic in Hotspot. Mitre
+assigned CVE-2023-28144 for the issue.
+
+[4]: https://github.com/KDAB/hotspot/commit/3b4682565f0e53f903f3ad0f3f2c0f236d382efb
+
+Timeline
+========
+
+2023-03-09: I contacted the main upstream author about the vulnerability,
+            offering coordinated disclosure.
+2023-03-10: The upstream author agreed to publishing the issue without
+            embargo time, because there will be no proper fix available in
+            the short term. Users should be made aware of the issue right now.
+
+            We discussed various security aspects of the current code and
+            potential remedies and improvements.
+2023-03-13: I received the CVE from Mitre and started publishing the available
+            information.
+
+Best Regards
+
+Matthias
+
+-- 
+Matthias Gerstner <matthias.gerstner@...e.de>
+Security Engineer
+https://www.suse.com/security
+GPG Key ID: 0x14C405C971923553
+ 
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG Nürnberg
+Geschäftsführer: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
