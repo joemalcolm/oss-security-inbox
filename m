@@ -1,26 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/06/2
-Message-ID: <d4c80a00-82dd-d901-70dc-a7a42f0a83f2@apache.org>
-Date: Wed, 06 Sep 2023 09:10:14 +0000
-From: Daniel Gaspar <dpgaspar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/14/7
+Message-ID: <20230314110138.GA1192267@subdivi.de>
+Date: Tue, 14 Mar 2023 12:01:38 +0100
+From: Helmut Grohne <helmut@...divi.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-36388: Apache Superset: Improper API permission for low privilege users allows for SSRF 
+Subject: Re: sox: patches for old vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Affected versions:
+On Fri, Feb 03, 2023 at 09:44:47PM +0100, Helmut Grohne wrote:
+>  * CVE-2021-33844
 
-- Apache Superset through 2.1.0
+The original fix for this issue would cause a regression. After applying
+it, sox would be unable to decode WAV GSM files. This has been reported
+as https://bugs.debian.org/1032082. I am attaching an updated patch that
+fixes this regression. It is meant to replace the previous patch. The
+updated patch includes a regression test case to avoid repeating the
+mistake.
 
-Description:
+I see that most distributions (e.g. RedHat, SUSE, Gentoo, etc.) have not
+picked up the faulty patch. Ubuntu inherited it from Debian and will
+likely inherit the fix as it gets fixed in Debian releases.
 
-Improper REST API permission in Apache Superset up to and including 2.1.0 allows for an authenticated Gamma users to test network connections, possible SSRF.
+Helmut
 
-Credit:
-
-https://github.com/vin01 (finder)
-
-References:
-
-https://superset.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-36388
-
+View attachment "CVE-2021-33844.patch" of type "text/x-diff" (1186 bytes)
