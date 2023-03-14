@@ -1,32 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/16
-Message-ID: <ZS1dzvDl3tfczwoK@itl-email>
-Date: Mon, 16 Oct 2023 11:59:08 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
-To: Alan Coopersmith <alan.coopersmith@...cle.com>, oss-security@...ts.openwall.com
-Subject: Re: linux-distros membership application of openEuler
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/14/10
+Message-ID: <20230314201652.RlbWr%steffen@sdaoden.eu>
+Date: Tue, 14 Mar 2023 21:16:52 +0100
+From: Steffen Nurpmeso <steffen@...oden.eu>
+To: Helmut Grohne <helmut@...divi.de>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Re: sox: patches for old vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Oct 16, 2023 at 08:53:57AM -0700, Alan Coopersmith wrote:
-> On 10/16/23 08:18, Demi Marie Obenour wrote:
-> > The result of this is simply that those who do not have access to
-> > lawyers on staff will not participate, which will reduce the value of
-> > the list substantially.  I suspect that most people who report
-> > vulnerabilities via distros@ fall into this category.  I know I do.
-> 
-> Perhaps linux-distros is different, but on the wider distros list,
-> almost all the mail is from project maintainers providing fixes -
-> the researchers generally contact the individual projects directly,
-> as those projects aren't on the distros list and can't see or respond
-> to reports from researchers sent there.
+Hello Helmut, list, and special greetings to the happy moderator,
 
-True, but I don’t know if most project maintainers belong to
-organizations with legal teams that they can ask these kinds of
-questions to.  For those without such access, “you need to ask your
-lawyer before posting” is equivalent to “don’t post”.
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+Steffen Nurpmeso wrote in
+ <20230314191132.qDz3u%steffen@...oden.eu>:
+ ...
+ |Helmut Grohne wrote in
+ | <20230314110138.GA1192267@...divi.de>:
+ ||On Fri, Feb 03, 2023 at 09:44:47PM +0100, Helmut Grohne wrote:
+ ||>  * CVE-2021-33844
+ ||
+ ||The original fix for this issue would cause a regression. After applying
+ ||it, sox would be unable to decode WAV GSM files. This has been reported
+ ...
+ |You have chosen not to update to latest possible git(?).
+ ...
+ ||From: Helmut Grohne <helmut@...divi.de>
+ ||Subject: wav: reject 0 bits per sample to avoid division by zero
+ ||Bug: https://sourceforge.net/p/sox/bugs/349/
+ ||Bug-Debian: https://bugs.debian.org/1021135
+ | ...
+ ||--- a/src/wav.c
+ ||+++ b/src/wav.c
+ ...
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+So then my take for the git variant would be as attached.
+It compiles, but no GSM here.
+(It seems our dear sox developer was out of dynamic tension when
+he did that, overall.)
+
+Ciao,
+
+P.S.: on OpenBSD they committed additional code hunks; i still
+have not looked into this, but have it on that stairway to over
+the clowds to work through.
+
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
+
+View attachment "sox-git.patch" of type "text/x-diff" (2475 bytes)
