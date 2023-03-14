@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1156" "Tuesday" "5" "May" "2015" "10:47:49" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20150505084749.GA28854@eldamar.local>" "31" "[oss-security] CVE Request: GnuTLS: GNUTLS-SA-2015-2: MD5-based ServerKeyExchange signature accepted by default" nil nil nil "5" "2015050508:47:49" "[oss-security] CVE Request: GnuTLS: GNUTLS-SA-2015-2: MD5-based ServerKeyExchange signature accepted by default" (number mark "        carnil@debia May  5   31/1156  " thread-indent "\"[oss-security] CVE Request: GnuTLS: GNUTLS-SA-2015-2: MD5-based ServerKeyExchange signature accepted by default\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 19878 invoked by uid 550); 5 May 2015 08:48:03 -0000
+Received: (qmail 24489 invoked by uid 550); 14 Mar 2023 11:36:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +6,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19857 invoked from network); 5 May 2015 08:48:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=6H2hDYE59sTZzoF9aNgbyBJuTp53dYXwJkFuIwNZOJ0=;
-        b=S2Ie/bHTzJ2pCUMFUo0uK7lS42lucXosSCg2u0RNJDLGGzTuwhBDP2+6msy8hZ8exR
-         nrL72ybjINHA8E99anPog8JcCGVa84YswwEQPbqEB1HaWRvUTJiHhmwQ5AZyHzv2gvub
-         gZAS30hfLIahFVIHxIPp/y2CCmv3p9yfOZjNffYjSgzHPFO4FDKDj/9n3lvzoZSULRGv
-         txk8nCv807/cmpFQgo0iUGeeNWjp4NXgoIfMEeWD0TtFYgaBt1Y2hW9zQfW/PDvXeboZ
-         VY1hAk1WAkjDq3Rs49DEBWw6OywpItP2q03RP8ieFCXLMBTpuWpeiVCDYyjHDGihV26d
-         lY8g==
-X-Received: by 10.180.91.40 with SMTP id cb8mr1944344wib.64.1430815671471;
-        Tue, 05 May 2015 01:47:51 -0700 (PDT)
-Message-ID: <20150505084749.GA28854@eldamar.local>
+Reply-To: oss-security@lists.openwall.com
+Received: (qmail 22412 invoked from network); 14 Mar 2023 11:02:15 -0000
+Date: Tue, 14 Mar 2023 12:01:38 +0100
+From: Helmut Grohne <helmut@subdivi.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20230314110138.GA1192267@subdivi.de>
+Mail-Followup-To: Helmut Grohne <helmut@subdivi.de>,
+	oss-security@lists.openwall.com
+References: <Y91yP6mYIZ+UXmgf@alf.mars>
 MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="aqKdY5bIWcH9zdeu"
+Content-Disposition: inline
+In-Reply-To: <Y91yP6mYIZ+UXmgf@alf.mars>
+Subject: [oss-security] Re: sox: patches for old vulnerabilities
+
+--aqKdY5bIWcH9zdeu
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Cc: CVE Assignments MITRE <cve-assign@mitre.org>
-Date: Tue, 5 May 2015 10:47:49 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: [oss-security] CVE Request: GnuTLS: GNUTLS-SA-2015-2: MD5-based ServerKeyExchange
- signature accepted by default
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
 
-Hi
+On Fri, Feb 03, 2023 at 09:44:47PM +0100, Helmut Grohne wrote:
+>  * CVE-2021-33844
 
-I wonder if the following issue in GnuTLS should get a CVE:
+The original fix for this issue would cause a regression. After applying
+it, sox would be unable to decode WAV GSM files. This has been reported
+as https://bugs.debian.org/1032082. I am attaching an updated patch that
+fixes this regression. It is meant to replace the previous patch. The
+updated patch includes a regression test case to avoid repeating the
+mistake.
 
-http://www.gnutls.org/security.html#GNUTLS-SA-2015-2
+I see that most distributions (e.g. RedHat, SUSE, Gentoo, etc.) have not
+picked up the faulty patch. Ubuntu inherited it from Debian and will
+likely inherit the fix as it gets fixed in Debian releases.
 
-> Karthikeyan Bhargavan reported that a ServerKeyExchange signature
-> sent by the server is not verified to be in the acceptable by the
-> client set of algorithms. That has the effect of allowing MD5
-> signatures (which are disabled by default) in the ServerKeyExchange
-> message. It is not believed that this bug can be exploited because a
-> fraudulent signature has to be generated in real-time which is not
-> known to be possible. However, since attacks can only get better it
-> is recommended to update to a GnuTLS version which addresses the
-> issue.
+Helmut
 
-Details: 
-https://lists.gnupg.org/pipermail/gnutls-devel/2015-April/007572.html
-https://bugzilla.redhat.com/show_bug.cgi?id=1218426
+--aqKdY5bIWcH9zdeu
+Content-Type: text/x-diff; charset=us-ascii
+Content-Disposition: attachment; filename="CVE-2021-33844.patch"
 
-https://lists.gnupg.org/pipermail/gnutls-devel/2015-May/007577.html
-https://lists.gnupg.org/pipermail/gnutls-devel/2015-May/007578.html
+From: Helmut Grohne <helmut@subdivi.de>
+Subject: wav: reject 0 bits per sample to avoid division by zero
+Bug: https://sourceforge.net/p/sox/bugs/349/
+Bug-Debian: https://bugs.debian.org/1021135
 
-Upstream commit:
-https://gitlab.com/gnutls/gnutls/commit/7d9d5c61f8445dc9e9ca47bb575c77cef17da17a
+--- a/src/wav.c
++++ b/src/wav.c
+@@ -506,7 +506,7 @@
+     unsigned short wChannels;       /* number of channels */
+     uint32_t      dwSamplesPerSecond; /* samples per second per channel */
+     uint32_t      dwAvgBytesPerSec;/* estimate of bytes per second needed */
+-    uint16_t wBitsPerSample;  /* bits per sample */
++    uint16_t wBitsPerSample = 0;  /* bits per sample */
+     uint32_t wFmtSize;
+     uint16_t wExtSize = 0;    /* extended field for non-PCM */
+ 
+@@ -954,6 +959,11 @@
+         break;
+ 
+     default:
++        if (ft->encoding.bits_per_sample == 0)
++        {
++            lsx_fail_errno(ft, SOX_EHDR, "WAV file bits per sample is zero");
++            return SOX_EOF;
++        }
+         wav->numSamples = div_bits(qwDataLength, ft->encoding.bits_per_sample) / ft->signal.channels;
+         ft->signal.length = wav->numSamples * ft->signal.channels;
+     }
+--- a/src/testall.sh
++++ b/src/testall.sh
+@@ -67,3 +67,4 @@
+ t vox -r 8130
+ t wav
+ t wve
++t wav -e gsm-full-rate
 
-Testcase:
-https://gitlab.com/gnutls/gnutls/commit/6822a37947d4e38c45b1afc0121cda35ba897182
+--aqKdY5bIWcH9zdeu--
 
-Regards,
-Salvatore
