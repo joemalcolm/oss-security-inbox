@@ -1,122 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/17/3
-Message-ID: <20230317114844.21563d9a.hanno@hboeck.de>
-Date: Fri, 17 Mar 2023 11:48:44 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/14/11
+Message-ID: <20230314205725.oqr3um7kkkyq7zr3@mutt-hbsd>
+Date: Tue, 14 Mar 2023 16:57:25 -0400
+From: Shawn Webb <shawn.webb@...denedbsd.org>
 To: oss-security@...ts.openwall.com
 Subject: Re: TTY pushback vulnerabilities / TIOCSTI
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 14 Mar 2023 11:36:26 +0100
-Jakub Wilk <jwilk@...lk.net> wrote:
+On Tue, Mar 14, 2023 at 09:51:03AM +0100, Hanno Böck wrote:
+> Hi,
+> 
+> This blogpost highlights TTY Pushback vulnerabilities enabled via the
+> TIOCSTI kernel functionality available in the Linux kernel:
+> https://www.errno.fr/TTYPushback.html
+> 
+> This has been discussed here previously:
+> https://www.openwall.com/lists/oss-security/2017/06/03/9
+> 
+> Though I think there are some noteworthy updates. In the 2017 post
+> solar designer mentioned that the Linux kernel developers have multiple
+> times rejected changes in the kernel. However this has now changed:
+> Starting with Kernel 6.2 it is possible to disable TIOCSTI
+> (unset CONFIG_LEGACY_TIOCSTI). It also appears that very few (or no?)
+> applications practically use TIOCSTI.
+> 
+> This seems to be the only real mitigation for this issue. It appears
+> su has a parameter, and in sudo one can configure the creation of a new
+> pty in the sudoers file. I don't consider these as satisfying fixes, as
+> they are optinal, and thus rely on the expectation that users are aware
+> of this risk and manually use these mitigations. That does not seem
+> realistic to me.
+> 
+> This also affects such a large number of tools, not just
+> su/sudo-like tools, but also sandboxing tools. E.g. bubblewrap [1] is
+> affected by this by default.
+> 
+> Thus I strongly recommend that people disable this in the kernel.
+> 
+> [1] https://github.com/containers/bubblewrap/issues/555
 
-> On Linux virtual terminals, it's possible to achieve pretty much the 
-> same effect using TIOCLINUX, the ioctl used by gpm to implement 
-> copy&pasting.
+With commit c7d6d4bb4874720d9dab1625df62c2ea6eeb9df5[0], I've added a
+toggle in HardenedBSD to disable TIOCSTI. The toggle is set to
+prohibit TIOCSTI by default. Now attempts to use TIOCSTI will be met
+with EPERM.
 
-This is interesting.
+I've verified the toggle in a real-world scenario with the doas issue
+PoC found at [1].
 
-Given this works only on "virtual terminals" (aka not in a terminal
-window on X, not over SSH), I think the severity is much lower than the
-TIOCSTI issue. Still it should be fixed.
+[0]:
+https://git.hardenedbsd.org/hardenedbsd/HardenedBSD/-/commit/c7d6d4bb4874720d9dab1625df62c2ea6eeb9df5
+[1]:
+https://github.com/Duncaen/OpenDoas/issues/106#issuecomment-1467202981
 
-I've created a patch for the Linux kernel very similar to the patch
-that allows disabling TIOCSTI. I'll send that to the kernel devs soon,
-but maybe people here want to test and comment.
-
----
- drivers/tty/Kconfig  | 16 ++++++++++++++++
- drivers/tty/tty.h    |  1 +
- drivers/tty/tty_io.c |  7 +++++++
- drivers/tty/vt/vt.c  |  5 +++++
- 4 files changed, 29 insertions(+)
-
-diff --git a/drivers/tty/Kconfig b/drivers/tty/Kconfig
-index d35fc068d..f808e4ee7 100644
---- a/drivers/tty/Kconfig
-+++ b/drivers/tty/Kconfig
-@@ -168,6 +168,22 @@ config LEGACY_TIOCSTI
- 	  dev.tty.legacy_tiocsti sysctl. This configuration option sets
- 	  the default value of the sysctl.
- 
-+config LEGACY_TIOCLINUX
-+	bool "Allow legacy TIOCLINUX usage"
-+	default y
-+	help
-+	  The TIOCLINUX ioctl allows implementing copy-and-paste and
-+	  mouse operations in virtual terminals, used by tools like
-gpm.
-+	  However, it can be abused by a low privilege process when
-+	  called with tools like su or sudo to inject content on the
-+	  root shell.
-+
-+	  Say Y here if you use tools like gpm.
-+
-+	  This functionality can be changed at runtime with the
-+	  dev.tty.legacy_tioclinux sysctl. This configuration option
-sets
-+	  the default value of the sysctl.
-+
- config LDISC_AUTOLOAD
- 	bool "Automatically load TTY Line Disciplines"
- 	default y
-diff --git a/drivers/tty/tty.h b/drivers/tty/tty.h
-index f45cd683c..3e4f1e094 100644
---- a/drivers/tty/tty.h
-+++ b/drivers/tty/tty.h
-@@ -94,6 +94,7 @@ int __must_check tty_ldisc_init(struct tty_struct
-*tty); void tty_ldisc_deinit(struct tty_struct *tty);
- 
- extern int tty_ldisc_autoload;
-+extern bool tty_legacy_tioclinux;
- 
- /* tty_audit.c */
- #ifdef CONFIG_AUDIT
-diff --git a/drivers/tty/tty_io.c b/drivers/tty/tty_io.c
-index 36fb945fd..badd1f909 100644
---- a/drivers/tty/tty_io.c
-+++ b/drivers/tty/tty_io.c
-@@ -3602,6 +3602,13 @@ static struct ctl_table tty_table[] = {
- 		.mode		= 0644,
- 		.proc_handler	= proc_dobool,
- 	},
-+	{
-+		.procname	= "legacy_tioclinux",
-+		.data		= &tty_legacy_tioclinux,
-+		.maxlen		= sizeof(tty_legacy_tioclinux),
-+		.mode		= 0644,
-+		.proc_handler	= proc_dobool,
-+	},
- 	{
- 		.procname	= "ldisc_autoload",
- 		.data		= &tty_ldisc_autoload,
-diff --git a/drivers/tty/vt/vt.c b/drivers/tty/vt/vt.c
-index 57a5c23b5..3bc0d9149 100644
---- a/drivers/tty/vt/vt.c
-+++ b/drivers/tty/vt/vt.c
-@@ -3119,6 +3119,8 @@ static struct console vt_console_driver = {
-  *	Handling of Linux-specific VC ioctls
-  */
- 
-+bool tty_legacy_tioclinux __read_mostly =
-IS_ENABLED(CONFIG_LEGACY_TIOCLINUX); +
- /*
-  * Generally a bit racy with respect to console_lock();.
-  *
-@@ -3137,6 +3139,9 @@ int tioclinux(struct tty_struct *tty, unsigned
-long arg) int lines;
- 	int ret;
- 
-+	if (!tty_legacy_tioclinux)
-+		return -EIO;
-+
- 	if (current->signal->tty != tty && !capable(CAP_SYS_ADMIN))
- 		return -EPERM;
- 	if (get_user(type, p))
--- 
-2.40.0
-
+Thanks,
 
 -- 
-Hanno Böck
-https://hboeck.de/
+Shawn Webb
+Cofounder / Security Engineer
+HardenedBSD
+
+https://git.hardenedbsd.org/hardenedbsd/pubkeys/-/raw/master/Shawn_Webb/03A4CBEBB82EA5A67D9F3853FF2E67A277F8E1FA.pub.asc
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
