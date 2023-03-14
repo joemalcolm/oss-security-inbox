@@ -1,35 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/10/6
-Message-ID: <8a4746bb-6c19-dd80-10ca-9aa2b87d605b@apache.org>
-Date: Mon, 10 Apr 2023 09:21:11 +0000
-From: Jacques Le Roux <jleroux@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/14/6
+Message-ID: <ZBBWLS+7hGnvtsqQ@doggett>
+Date: Tue, 14 Mar 2023 12:10:37 +0100
+From: Peter Bex <peter@...e-magic.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-47501: Apache OFBiz: Arbitrary file reading vulnerability 
+Subject: Re: TTY pushback vulnerabilities / TIOCSTI
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+On Tue, Mar 14, 2023 at 12:01:17PM +0100, Hanno Böck wrote:
+> On Tue, 14 Mar 2023 11:46:33 +0100
+> Peter Bex <peter@...e-magic.net> wrote:
+> 
+> > Indeed, opendoas (the portable version of OpenBSD's "doas") has this
+> > exact bug as well: https://github.com/Duncaen/OpenDoas/issues/106
+> 
+> Though some context is relevant here: doas is a tool from OpenBSD.
+> According to the Linux kernel commit message [1] OpenBSD has fixed this
+> already 3 years ago by entirely removing TIOCSTI [2][3].
 
-Description:
+Indeed, the GitHub issue makes this clear as well (that's why I
+specifically mentioned opendoas and not doas in general).
+It just shows that even for security-minded folks it's a big trap
+to fall into.
 
-Arbitrary file reading vulnerability in Apache Software Foundation Apache OFBiz.This issue affects Apache OFBiz: before 18.12.07.
+This is the case *especially* when either
+a) the developers are mainly working on OpenBSD
+or
+b) it's a port from OpenBSD
 
-Required Configurations:
+Because it isn't even an issue there.  And you wouldn't expect an
+OpenBSD-developer to include a PTY allocating feature unless they
+explicitly also target Linux.
 
-Using the Solr plugin
+From a very cursory search, it looks like NetBSD and FreeBSD haven't
+disabled the option either, so more fun to be had if they include
+doas versions as well.
 
-Solution:
+Cheers,
+Peter
 
-Upgrade to release 18.12.07
-
-Credit:
-
-Skay <lhcaomail@...il.com> (finder)
-
-References:
-
-https://lists.apache.org/list.html?announce@apache.org
-https://ofbiz.apache.org/download.html
-https://ofbiz.apache.org/security.html
-https://ofbiz.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2022-47501
-
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
