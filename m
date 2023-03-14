@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2329" "Wednesday" "15" "September" "2021" "08:20:53" "+0200" "Daniel Stenberg" "daniel@haxx.se" nil "81" "[oss-security] [SECURITY ADVISORY] curl: STARTTLS protocol injection via MITM" "^Date:" nil nil "9" nil nil (number mark "        daniel@haxx. Sep 15   81/2329  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl: STARTTLS protocol injection via MITM\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY ADVISORY] curl: STARTTLS protocol injection via MITM" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 9710 invoked by uid 550); 15 Sep 2021 06:21:06 -0000
+Received: (qmail 23975 invoked by uid 550); 14 Mar 2023 08:51:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,99 +6,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9646 invoked from network); 15 Sep 2021 06:21:05 -0000
-X-X-Sender: dast@silly
-Message-ID: <nycvar.QRO.7.76.2109142337370.9650@fvyyl>
-User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
-X-fromdanielhimself: yes
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Date: Wed, 15 Sep 2021 08:20:53 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [SECURITY ADVISORY] curl: STARTTLS protocol injection via MITM
-To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
-    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
-    oss-security@lists.openwall.com
+Received: (qmail 23940 invoked from network); 14 Mar 2023 08:51:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hboeck.de; s=key1;
+	t=1678783864; bh=kF7BhVILLKN2jXNqbK9G1T/8Ra0WTU9rxQQl040dawE=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	b=mS8tmU5s9orULAjTnUJbGmOS+yoacLuuMecBxH01GS2cCFaRirWlrYpk5BwMyvQJS
+	 XK4Bt3ljBLQkhUQKacgHnUOUBkR6o0noHSc9xacu0CYQvWUfiSzmd2lydBKAgEEuvq
+	 AegfsN/Y/VvY1rIJk9kGxtz4qUOEpNf1fUdv9Fv/UoBZVg28CuVXtyOc04aQ4pH4DQ
+	 /LCPJ2ibVJkQpW122qIGM0GYuYVvJgw0RefjEsy/NycMuTdrfSqptdLF74YUT8JnDs
+	 B9MIJrJf8SOa7AO3s8KTSBRjlb59rHd2cUrYfvRkaXYhdqg/uAMtFISzeckXA+NkMJ
+	 OdLEjwwMUgdKA==
+Original-Subject: TTY pushback vulnerabilities / TIOCSTI
+Author: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
+Date: Tue, 14 Mar 2023 09:51:03 +0100
+From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20230314095103.1ed76cc0.hanno@hboeck.de>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.37; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] TTY pushback vulnerabilities / TIOCSTI
 
-STARTTLS protocol injection via MITM
-====================================
+Hi,
 
-Project curl Security Advisory, September 15th 2021 -
-[Permalink](https://curl.se/docs/CVE-2021-22947.html)
+This blogpost highlights TTY Pushback vulnerabilities enabled via the
+TIOCSTI kernel functionality available in the Linux kernel:
+https://www.errno.fr/TTYPushback.html
 
-VULNERABILITY
--------------
+This has been discussed here previously:
+https://www.openwall.com/lists/oss-security/2017/06/03/9
 
-When curl connects to an IMAP, POP3, SMTP or FTP server to exchange data
-securely using STARTTLS to upgrade the connection to TLS level, the server can
-still respond and send back multiple responses before the TLS upgrade. Such
-multiple "pipelined" responses are cached by curl. curl would then upgrade to
-TLS but not flush the in-queue of cached responses and instead use and trust
-the responses it got *before* the TLS handshake as if they were authenticated.
+Though I think there are some noteworthy updates. In the 2017 post
+solar designer mentioned that the Linux kernel developers have multiple
+times rejected changes in the kernel. However this has now changed:
+Starting with Kernel 6.2 it is possible to disable TIOCSTI
+(unset CONFIG_LEGACY_TIOCSTI). It also appears that very few (or no?)
+applications practically use TIOCSTI.
 
-Using this flaw, it allows a Man-In-The-Middle attacker to first inject the
-fake responses, then pass-through the TLS traffic from the legitimate server
-and trick curl into sending data back to the user thinking the attacker's
-injected data comes from the TLS-protected server.
+This seems to be the only real mitigation for this issue. It appears
+su has a parameter, and in sudo one can configure the creation of a new
+pty in the sudoers file. I don't consider these as satisfying fixes, as
+they are optinal, and thus rely on the expectation that users are aware
+of this risk and manually use these mitigations. That does not seem
+realistic to me.
 
-Over POP3 and IMAP an attacker can inject fake response data.
+This also affects such a large number of tools, not just
+su/sudo-like tools, but also sandboxing tools. E.g. bubblewrap [1] is
+affected by this by default.
 
-We are not aware of any case of this flaw having been exploited in the wild.
+Thus I strongly recommend that people disable this in the kernel.
 
-INFO
-----
+[1] https://github.com/containers/bubblewrap/issues/555
 
-This flaw was first introduced in commit
-[ec3bb8f727405](https://github.com/curl/curl/commit/ec3bb8f727405).
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2021-22947 to this issue.
-
-CWE-349: Acceptance of Extraneous Untrusted Data With Trusted Data
-
-Severity: Medium
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.20.0 to and including 7.78.0
-- Not affected versions: curl < 7.20.0 and curl >= 7.79.0
-
-Also note that libcurl is used by many applications, and not always advertised
-as such.
-
-THE SOLUTION
-------------
-
-A [fix for CVE-2021-22947](https://github.com/curl/curl/commit/8ef147c43646e91)
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 7.79.0
-
-  B - Apply the patch to your local version
-
-  C - Do not use IMAP, POP3, SMTP or FTP with explicit TLS
-
-TIMELINE
---------
-
-This issue was reported to the curl project on September 7, 2021.
-
-This advisory was posted on September 15, 2021.
-
-CREDITS
--------
-
-This issue was reported and patched by Patrick Monnerat.
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
