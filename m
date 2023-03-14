@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["11877" "Friday" "10" "February" "2017" "09:37:08" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<2944459.te4kZvfeBN@blackgate>" "173" "[oss-security] mupdf: use-after-free in fz_subsample_pixmap (pixmap.c)" nil nil nil "2" "2017021008:37:08" "[oss-security] mupdf: use-after-free in fz_subsample_pixmap (pixmap.c)" (number mark "U       ago@gentoo.o Feb 10  173/11877 " thread-indent "\"[oss-security] mupdf: use-after-free in fz_subsample_pixmap (pixmap.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 26440 invoked by uid 550); 10 Feb 2017 08:37:27 -0000
+Received: (qmail 10003 invoked by uid 550); 14 Mar 2023 20:19:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,189 +7,149 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26408 invoked from network); 10 Feb 2017 08:37:25 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Date: Fri, 10 Feb 2017 09:37:08 +0100
-Message-ID: <2944459.te4kZvfeBN@blackgate>
-User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.24; x86_64; ; )
-X-PRIORITY: 2 (High)
-Priority: urgent
+Received: (qmail 8167 invoked from network); 14 Mar 2023 20:17:04 -0000
+Date: Tue, 14 Mar 2023 21:16:52 +0100
+Author: Steffen Nurpmeso <steffen@sdaoden.eu>
+From: Steffen Nurpmeso <steffen@sdaoden.eu>
+To: Helmut Grohne <helmut@subdivi.de>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20230314201652.RlbWr%steffen@sdaoden.eu>
+In-Reply-To: <20230314191132.qDz3u%steffen@sdaoden.eu>
+References: <Y91yP6mYIZ+UXmgf@alf.mars> <20230314110138.GA1192267@subdivi.de>
+ <20230314191132.qDz3u%steffen@sdaoden.eu>
+Mail-Followup-To: Helmut Grohne <helmut@subdivi.de>,
+ oss-security@lists.openwall.com
+User-Agent: s-nail v14.9.24-438-g5e0fdbd9f9
+OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
+ url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
+BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
+ the world can make no bugs.
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] mupdf: use-after-free in fz_subsample_pixmap (pixmap.c)
+Content-Type: multipart/mixed;
+ boundary="=-=h7qpTD7T6GFWkLifFXAkV-o56TIE2fuKvDD_=-="
+Subject: Re: [oss-security] Re: sox: patches for old vulnerabilities
 
-Description:
-mupdf is a lightweight PDF viewer and toolkit written in portable C.
+--=-=h7qpTD7T6GFWkLifFXAkV-o56TIE2fuKvDD_=-=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-ID: <20230314201652.NaPry%steffen@sdaoden.eu>
 
-A fuzzing through mutool revealed a use-after-free. It seems that a fix for 
-the recent heap overflow in fz_subsample_pixmap fixes this issue too.
+Hello Helmut, list, and special greetings to the happy moderator,
 
-The complete ASan output:
+Steffen Nurpmeso wrote in
+ <20230314191132.qDz3u%steffen@sdaoden.eu>:
+ ...
+ |Helmut Grohne wrote in
+ | <20230314110138.GA1192267@subdivi.de>:
+ ||On Fri, Feb 03, 2023 at 09:44:47PM +0100, Helmut Grohne wrote:
+ ||>  * CVE-2021-33844
+ ||
+ ||The original fix for this issue would cause a regression. After applying
+ ||it, sox would be unable to decode WAV GSM files. This has been reported
+ ...
+ |You have chosen not to update to latest possible git(?).
+ ...
+ ||From: Helmut Grohne <helmut@subdivi.de>
+ ||Subject: wav: reject 0 bits per sample to avoid division by zero
+ ||Bug: https://sourceforge.net/p/sox/bugs/349/
+ ||Bug-Debian: https://bugs.debian.org/1021135
+ | ...
+ ||--- a/src/wav.c
+ ||+++ b/src/wav.c
+ ...
 
- # mutool draw $FILE
-==17100==ERROR: AddressSanitizer: heap-use-after-free on address 
-0x60c00000abb6 at pc 0x7fba6a8cee53 bp 0x7ffedf859700 sp 0x7ffedf8596f8                                                                                                                                       
-READ of size 1 at 0x60c00000abb6 thread T0                                                                                                                                                                                                                                     
-    #0 0x7fba6a8cee52 in fz_subsample_pixmap /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/pixmap.c:1210:12                                                                                                                                            
-    #1 0x7fba6a8d4dfa in fz_get_pixmap_from_image /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/image.c:686:3                                                                                                                                          
-    #2 0x7fba6a88cfae in fz_draw_fill_image /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/draw-device.c:1292:11                                                                                                                                        
-    #3 0x7fba6a7915f8 in fz_fill_image /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/device.c:319:3                                                                                                                                                    
-    #4 0x7fba6a8b6ab4 in fz_run_display_list /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/list-device.c:1651:6                                                                                                                                        
-    #5 0x51d503 in drawband /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:562:4                                                                                                                                                              
-    #6 0x51b026 in dodrawpage /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:918:6                                                                                                                                                            
-    #7 0x51edba in drawpage /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:1173:3                                                                                                                                                             
-    #8 0x51825b in drawrange /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:1190:5                                                                                                                                                            
-    #9 0x514aa1 in mudraw_main /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:1733:7                                                                                                                                                          
-    #10 0x50eded in main /tmp/portage/app-text/mupdf-1.10a/work/mupdf-1.10a-
-source/source/tools/mutool.c:110:12                                                                                                                                                                
-    #11 0x7fba6973278f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-
-r3/work/glibc-2.23/csu/../csu/libc-start.c:289                                                                                                                                                    
-    #12 0x41e1a8 in _init (/usr/bin/mutool+0x41e1a8)                                                                                                                                                                                                                           
-                                                                                                                                                                                                                                                                               
-0x60c00000abb6 is located 1 bytes to the right of 117-byte region 
-[0x60c00000ab40,0x60c00000abb5)                                                                                                                                                                              
-freed by thread T0 here:                                                                                                                                                                                                                                                       
-    #0 0x4d6c10 in free /tmp/portage/sys-devel/llvm-3.9.1-
-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:47                                                                                                                                         
-    #1 0x7fba6a810878 in fz_free /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/memory.c:187:2                                                                                                                                                          
-    #2 0x7fba6a8d0a0c in fz_decomp_image_from_stream /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/image.c:330:3                                                                                                                                       
-    #3 0x7fba6a8d7cdc in compressed_image_get_pixmap /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/image.c:468:10
-    #4 0x7fba6a8d4a1f in fz_get_pixmap_from_image /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/image.c:677:9
-    #5 0x7fba6a88cfae in fz_draw_fill_image /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/draw-device.c:1292:11
-    #6 0x7fba6a7915f8 in fz_fill_image /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/device.c:319:3
-    #7 0x7fba6a8b6ab4 in fz_run_display_list /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/list-device.c:1651:6
-    #8 0x51d503 in drawband /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:562:4
-    #9 0x51b026 in dodrawpage /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:918:6
-    #10 0x51edba in drawpage /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:1173:3
-    #11 0x51825b in drawrange /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:1190:5
-    #12 0x514aa1 in mudraw_main /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:1733:7
-    #13 0x50eded in main /tmp/portage/app-text/mupdf-1.10a/work/mupdf-1.10a-
-source/source/tools/mutool.c:110:12
-    #14 0x7fba6973278f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-
-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+So then my take for the git variant would be as attached.
+It compiles, but no GSM here.
+(It seems our dear sox developer was out of dynamic tension when
+he did that, overall.)
 
-previously allocated by thread T0 here:
-    #0 0x4d6f68 in malloc /tmp/portage/sys-devel/llvm-3.9.1-
-r1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:64
-    #1 0x7fba6a80c08f in do_scavenging_malloc /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/memory.c:17:7
-    #2 0x7fba6a80c08f in fz_malloc_array /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/memory.c:80
-    #3 0x7fba6a8cfd40 in fz_decomp_image_from_stream /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/image.c:268:13
-    #4 0x7fba6a8d7cdc in compressed_image_get_pixmap /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/image.c:468:10
-    #5 0x7fba6a8d4a1f in fz_get_pixmap_from_image /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/image.c:677:9
-    #6 0x7fba6a88cfae in fz_draw_fill_image /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/draw-device.c:1292:11
-    #7 0x7fba6a7915f8 in fz_fill_image /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/device.c:319:3
-    #8 0x7fba6a8b6ab4 in fz_run_display_list /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/list-device.c:1651:6
-    #9 0x51d503 in drawband /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:562:4
-    #10 0x51b026 in dodrawpage /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:918:6
-    #11 0x51edba in drawpage /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:1173:3
-    #12 0x51825b in drawrange /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:1190:5
-    #13 0x514aa1 in mudraw_main /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/tools/mudraw.c:1733:7
-    #14 0x50eded in main /tmp/portage/app-text/mupdf-1.10a/work/mupdf-1.10a-
-source/source/tools/mutool.c:110:12
-    #15 0x7fba6973278f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-
-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
+Ciao,
 
-SUMMARY: AddressSanitizer: heap-use-after-free /tmp/portage/app-
-text/mupdf-1.10a/work/mupdf-1.10a-source/source/fitz/pixmap.c:1210:12 in 
-fz_subsample_pixmap
-Shadow bytes around the buggy address:
-  0x0c187fff9520: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c187fff9530: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c187fff9540: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c187fff9550: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c187fff9560: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
-=>0x0c187fff9570: fd fd fd fd fd fd[fd]fa fa fa fa fa fa fa fa fa
-  0x0c187fff9580: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 05 fa
-  0x0c187fff9590: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
-  0x0c187fff95a0: fd fd fd fd fd fd fd fd fa fa fa fa fa fa fa fa
-  0x0c187fff95b0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c187fff95c0: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==17100==ABORTING
+P.S.: on OpenBSD they committed additional code hunks; i still
+have not looked into this, but have it on that stairway to over
+the clowds to work through.
 
-Affected version:
-1.10a
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
 
-Fixed version:
-1.11 (that will be released in march)
+--=-=h7qpTD7T6GFWkLifFXAkV-o56TIE2fuKvDD_=-=
+Content-Type: text/x-diff; charset=us-ascii
+Content-Disposition: attachment; filename="sox-git.patch"
+Content-ID: <20230314201652.R6SUn%steffen@sdaoden.eu>
 
-Commit fix:
-http://git.ghostscript.com/?p=mupdf.git;h=2c4e5867ee699b1081527bc6c6ea0e99a35a5c27
+diff --git a/src/wav.c b/src/wav.c
+index eb2ba03962..380796c0f0 100644
+--- a/src/wav.c
++++ b/src/wav.c
+@@ -654,8 +654,11 @@ static int wav_read_fmt(sox_format_t *ft, uint32_t len)
+     if (err)
+         return SOX_EOF;
+ 
+-    if (wav->bitsPerSample == 0)
+-    {
++    if (wav->bitsPerSample == 0
++#ifdef HAVE_LIBGSM
++            && wav->formatTag != WAVE_FORMAT_GSM610
++#endif
++    ){
+         lsx_fail_errno(ft, SOX_EHDR, "WAV file bits per sample is zero");
+         return SOX_EOF;
+     }
+@@ -1354,8 +1357,10 @@ static int wavwritehdr(sox_format_t * ft, int second_header)
+         (dwSamplesWritten + wSamplesPerBlock - 1) / wSamplesPerBlock;
+     dwDataLength = blocksWritten * wBlockAlign;
+ 
++#ifdef HAVE_LIBGSM
+     if (wFormatTag == WAVE_FORMAT_GSM610)
+         dwDataLength = (dwDataLength+1) & ~1u; /* round up to even */
++#endif
+ 
+     if (wFormatTag == WAVE_FORMAT_PCM && (wBitsPerSample > 16 || wChannels > 2)
+         && strcmp(ft->filetype, "wavpcm")) {
+@@ -1450,9 +1455,11 @@ static int wavwritehdr(sox_format_t * ft, int second_header)
+             lsx_writew(ft, (uint16_t)(lsx_ms_adpcm_i_coef[i][1]));
+         }
+         break;
++#ifdef HAVE_LIBGSM
+         case WAVE_FORMAT_GSM610:
+         lsx_writew(ft, wSamplesPerBlock);
+         break;
++#endif
+         default:
+         break;
+     }
+@@ -1560,7 +1567,9 @@ static int stopwrite(sox_format_t * ft)
+ 
+         /* Add a pad byte if the number of data bytes is odd.
+            See wavwritehdr() above for the calculation. */
++#ifdef HAVE_LIBGSM
+         if (wav->formatTag != WAVE_FORMAT_GSM610)
++#endif
+           lsx_padbytes(ft, (size_t)((wav->numSamples + wav->samplesPerBlock - 1)/wav->samplesPerBlock*wav->blockAlign) % 2);
+ 
+         free(wav->packet);
+@@ -1600,6 +1609,7 @@ static int seek(sox_format_t * ft, uint64_t offset)
+ 
+   if (ft->encoding.bits_per_sample & 7)
+     lsx_fail_errno(ft, SOX_ENOTSUP, "seeking not supported with this encoding");
++#ifdef HAVE_LIBGSM
+   else if (wav->formatTag == WAVE_FORMAT_GSM610) {
+     int alignment;
+     size_t gsmoff;
+@@ -1619,7 +1629,9 @@ static int seek(sox_format_t * ft, uint64_t offset)
+           new_offset += (wav->samplesPerBlock - alignment);
+       wav->numSamples = ft->signal.length - (new_offset / ft->signal.channels);
+     }
+-  } else {
++  }
++#endif /* HAVE_LIBGSM */
++  else {
+     double wide_sample = offset - (offset % ft->signal.channels);
+     double to_d = wide_sample * ft->encoding.bits_per_sample / 8;
+     off_t to = to_d;
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00149-mupdf-UAF-fz_subsample_pixmap
-
-Timeline:
-2017-02-06: bug discovered and reported to upstream
-2017-02-09: upstream released a patch
-2017-02-09: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/09/mupdf-use-after-free-in-fz_subsample_pixmap-pixmap-c
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+--=-=h7qpTD7T6GFWkLifFXAkV-o56TIE2fuKvDD_=-=--
