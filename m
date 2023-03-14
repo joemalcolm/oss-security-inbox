@@ -1,36 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/04/3
-Message-ID: <66e0470c0fcead1656316f51e560586d9411afe3.camel@sambull.org>
-Date: Thu, 04 May 2023 18:15:19 +0100
-From: Sam Bull <9m199i@...bull.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/14/4
+Message-ID: <ZBBQifYr6J8OSNXP@doggett>
+Date: Tue, 14 Mar 2023 11:46:33 +0100
+From: Peter Bex <peter@...e-magic.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
+Subject: Re: TTY pushback vulnerabilities / TIOCSTI
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2023-05-03 at 15:54 -0400, David A. Wheeler wrote:
-> > On May 3, 2023, at 3:15 PM, Reid Sutherland <reid@...rddimension.net> wrote:
-> > Who actually decides when something receives a CVE?
-> 
-> There's a process for assigning CVEs. Anyone who wants to be able to assign CVEs - that
-> is, to become a CVE Numbering Authority (CNA) - has to follow various processes.
-> 
-> >  This can be used to defame projects and products as in this case.
-> 
-> Identifying a vulnerability does not defame a project.
+On Tue, Mar 14, 2023 at 09:51:03AM +0100, Hanno Böck wrote:
+> This seems to be the only real mitigation for this issue. It appears
+> su has a parameter, and in sudo one can configure the creation of a new
+> pty in the sudoers file. I don't consider these as satisfying fixes, as
+> they are optinal, and thus rely on the expectation that users are aware
+> of this risk and manually use these mitigations. That does not seem
+> realistic to me.
 
-But, reporting a CVE where there is no vulnerability wastes a lot of time for the project
-maintainers, as we had last year with this CVE:
-https://github.com/aio-libs/aiohttp/issues/6801
+Indeed, opendoas (the portable version of OpenBSD's "doas") has this
+exact bug as well: https://github.com/Duncaen/OpenDoas/issues/106
 
-As far as we could tell, it seems a random user reported a DoS vulnerability to Github
-(maybe?) and got a CVE assigned, with no reproducer or any evidence of a vulnerability,
-and just a link to an issue which was never considered a security issue by anybody. None
-of us involved with the project were notified of the report either, we learnt about the
-CVE from other users asking us about it.
+Cheers,
+Peter
 
-It took months to get that satisfactorily revoked and stop getting users asking us about
-it (apparently there's no standardised way to tell if CVEs are revoked, so seems DB
-maintainers have to remove them on a case-by-case basis, making the process much longer).
-So, something somewhere is not fully working in the process.
-
-Download attachment "signature.asc" of type "application/pgp-signature" (196 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
