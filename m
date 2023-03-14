@@ -1,40 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/12/3
-Message-ID: <a15c3bbf-8edf-e498-93cb-0bbdcab75708@apache.org>
-Date: Mon, 12 Jun 2023 14:28:25 +0000
-From: David Handermann <exceptionfactory@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/14/5
+Message-ID: <20230314120117.46a105cc.hanno@hboeck.de>
+Date: Tue, 14 Mar 2023 12:01:17 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-34468: Apache NiFi: Potential Code Injection with Database Services using H2 
+Subject: Re: TTY pushback vulnerabilities / TIOCSTI
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+On Tue, 14 Mar 2023 11:46:33 +0100
+Peter Bex <peter@...e-magic.net> wrote:
 
-Affected versions:
+> Indeed, opendoas (the portable version of OpenBSD's "doas") has this
+> exact bug as well: https://github.com/Duncaen/OpenDoas/issues/106
 
-- Apache NiFi 0.0.2 through 1.21.0
+Though some context is relevant here: doas is a tool from OpenBSD.
+According to the Linux kernel commit message [1] OpenBSD has fixed this
+already 3 years ago by entirely removing TIOCSTI [2][3].
 
-Description:
+[1]
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=83efeeeb3d04
+[2] https://undeadly.org/cgi?action=article;sid=20170701132619
+[3] https://marc.info/?l=openbsd-cvs&m=149870941319610
 
-The DBCPConnectionPool and HikariCPConnectionPool Controller Services in Apache NiFi 0.0.2 through 1.21.0 allow an authenticated and authorized user to configure a Database URL with the H2 driver that enables custom code execution.
-
-The resolution validates the Database URL and rejects H2 JDBC locations.
-
-This issue is being tracked as NIFI-11653 
-
-Credit:
-
-Matei "Mal" Badanoiu (finder)
-
-References:
-
-https://nifi.apache.org/security.html#CVE-2023-34468
-https://nifi.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-34468
-https://issues.apache.org/jira/browse/NIFI-11653
-
-Timeline:
-
-2023-06-06: reported
-2023-06-06: confirmed
-2023-06-06: resolved
-
+-- 
+Hanno Böck
+https://hboeck.de/
