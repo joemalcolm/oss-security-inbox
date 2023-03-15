@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1245" "Friday" "30" "December" "2016" "13:00:23" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<d636dcedeede4aaba19662fe4d148b08@imshyb02.MITRE.ORG>" "33" "[oss-security] Re: libpng NULL pointer dereference bugfix" nil nil nil "12" "2016123018:00:23" "[oss-security] Re: libpng NULL pointer dereference bugfix" (number mark "U       cve-assign@m Dec 30   33/1245  " thread-indent "\"[oss-security] Re: libpng NULL pointer dereference bugfix\"\n") "<CA+PdXcv5kDWiMpDUWs7-cVN5eBb-L91myxUhSNJ8AVYq0jUbRA@mail.gmail.com>" ("<CA+PdXcv5kDWiMpDUWs7-cVN5eBb-L91myxUhSNJ8AVYq0jUbRA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 10199 invoked by uid 550); 30 Dec 2016 18:00:37 -0000
+Received: (qmail 27810 invoked by uid 550); 15 Mar 2023 09:10:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,47 +7,34 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10171 invoked from network); 30 Dec 2016 18:00:35 -0000
-From: <cve-assign@mitre.org>
-To: <glennrp@gmail.com>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <CA+PdXcv5kDWiMpDUWs7-cVN5eBb-L91myxUhSNJ8AVYq0jUbRA@mail.gmail.com>
-Message-ID: <d636dcedeede4aaba19662fe4d148b08@imshyb02.MITRE.ORG>
-Date: Fri, 30 Dec 2016 13:00:23 -0500
+Received: (qmail 5614 invoked from network); 15 Mar 2023 09:03:29 -0000
+X-RG-Spam: Unknown
+X-RazorGate-Vade: gggruggvucftvghtrhhoucdtuddrgedvhedrvddvjedguddvgecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfupfevtfgpvffgnffuvffttedpqfgfvfenuceurghilhhouhhtmecugedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvffujgfkfhgfgggtsehttddttddtredvnecuhfhrohhmpeffrghvvgcujfhorhhsfhgrlhhluceouggrvhgvsehhohhrshhfrghllhdrohhrgheqnecuggftrfgrthhtvghrnhepkeeiteejueeuhfefgeeuvdduieefvedugfevtdffkefhffejkefhuddtteehtefhnecukfhppeduuddtrddugedurdduleefrddvfeefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehhvghloheprghnvghurhhinhdrhhhorhhsfhgrlhhlrdhorhhgpdhinhgvthepuddutddrudeguddrudelfedrvdeffedpmhgrihhlfhhrohhmpegurghvvgeshhhorhhsfhgrlhhlrdhorhhgpdhnsggprhgtphhtthhopedupdhrtghpthhtohepohhsshdqshgvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomhdprhgvvhfkrfeptghpvgdquddutddqudeguddqudelfedqvdeffedrnhhsfidrrghsphdrthgvlhhsthhrrgdrnhgvthdpghgvohfkrfeptegfpdfovfetjfhoshhtpehnshhsthhlrhhguddvphdqshhvtg
+X-RazorGate-Vade-Verdict: clean 0
+X-RazorGate-Vade-Classification: clean
+X-RG-VS-CLASS: clean
+X-Authentication-Warning: aneurin.horsfall.org: dave owned process doing -bs
+Date: Wed, 15 Mar 2023 20:03:11 +1100 (EST)
+From: Dave Horsfall <dave@horsfall.org>
+To: OSS Security <oss-security@lists.openwall.com>
+In-Reply-To: <20230315094018.27d65aae@fabiankeil.de>
+Message-ID: <alpine.BSF.2.21.9999.2303152001170.67613@aneurin.horsfall.org>
+References: <20230314095103.1ed76cc0.hanno@hboeck.de> <20230314205725.oqr3um7kkkyq7zr3@mutt-hbsd> <20230315094018.27d65aae@fabiankeil.de>
+User-Agent: Alpine 2.21.9999 (BSF 287 2018-06-16)
+X-GPG-Public-Key: http://www.horsfall.org/gpgkey.pub
+X-GPG-Fingerprint: 05B4 FFBC 0218 B438 66E0  587B EF46 7357 EF5E F58B
+X-Home-Page: http://www.horsfall.org/
+X-Witty-Saying: "chmod 666 the_mode_of_the_beast"
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: libpng NULL pointer dereference bugfix
+Content-Type: text/plain; charset=US-ASCII
+Subject: Re: [oss-security] TTY pushback vulnerabilities / TIOCSTI
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Wed, 15 Mar 2023, Fabian Keil wrote:
 
-> NULL pointer dereference bug in png_set_text_2()
-> 
-> an application
-> has to load a text chunk into the png structure, then delete all text, then
-> add another text chunk
+> In ElectroBSD I removed TIOCSTI support in 2017 [0] and haven't noticed 
+> any problems.
 
-Use CVE-2016-10087.
+I hate tossing out functionality; would you not make it a privileged 
+operation instead?
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYZqBTAAoJEHb/MwWLVhi2wCQP/0MuFVxaThebajC21ogCNkZ+
-W1xIxSwriMBZPbTJmRVj10wdi07UhFH4ut5zAlFmL7nePhuTfZuH9C0BfjA124o9
-IFWlLaABz/yzPGFrWcapbdTkCFiE46xThxvhLoc9ESXtmlesN6tf+2nz7yBre2kS
-ySc20NoQNRCmTikdad9jerh+A9YjNmEZnS9g6ydxAAzuid1VHRZa8JGaq5ShgmBb
-oOmpEcxpsgqZxoSb62PR6NoKXgIkDTCrkcYvDXo3XNwHZ2d2/4eMK+FTvrClB84O
-7x4nFXgWnGlfL6PWOJVzXn51Guij2GHrUOKaC6X8OMR+8crF0jZncOq+yJr0HcNo
-ZEU0TQrIBj7CIOeflynhJS+ABbbABTLyODZJiBXxI5mSv/pWjTttcJ5ClIgesQAP
-/C151FeN05hc1bXQBV8VlXKpN+Ge7MMGZKnbbLO6ld1jEaIjKWfWIL4npceeAkJS
-MhHwg3VwwfcDZGsa6II6iy6Sny5ddEdsQSI0MKned3AI8U6Q7rZ51/NJvnA4t1A0
-7PQDwWd/kiftZD0JDPQI9xFtQXRR9QweHWsS0lNxApBITocMKqQQ0vv1Fo6vbJMs
-aHAkSpBo4IvyPkW5JBmA1WXXuNs8HRGZUDVLjlcErgr5+KpTbs3gt1J2/28kBL/+
-6UOSSsIexpBKzfoJj3tu
-=H34M
------END PGP SIGNATURE-----
+-- Dave
