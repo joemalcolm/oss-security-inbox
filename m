@@ -1,55 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/17/2
-Message-ID: <gmqx5z67cuzsknj5rp4qxtkaqfhpsnxzzr36dzmwk2b5r6hqoz@wtbvfm5sj2qg>
-Date: Tue, 17 Oct 2023 08:00:36 +0200
-From: Morten Linderud <foxboron@...hlinux.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros list membership application - CIQ Rocky Linux Security Team
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/15/6
+Message-ID: <nsp78p38-3648-oss5-9279-4sq279579q7q@inai.de>
+Date: Wed, 15 Mar 2023 10:44:37 +0100 (CET)
+From: Jan Engelhardt <jengelh@...i.de>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: Re: TTY pushback vulnerabilities / TIOCSTI
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Oct 13, 2023 at 11:19:18PM -0400, Neal Gompa wrote:
-> On Fri, Oct 13, 2023 at 8:07 PM Martin Hecht <martin.hecht@...s.de> wrote:
+On Wednesday 2023-03-15 10:03, Dave Horsfall wrote:
+>On Wed, 15 Mar 2023, Fabian Keil wrote:
 >
-> > Well, assuming there was a security team in these projects able to obey
-> > the embargo regulations, wouldn't they have tried to join?
-> > But, nevertheless, what is the relation of the organizational structure
-> > of these projects with the current application of CIQ/Rocky, after all?
-> >
-> 
-> The point I'm making is that SIGs do not count because they cannot
-> obey embargo regulations. No open project or community project can do
-> that without having some mechanism for private controls, which is
-> antithetical to the community process. They fundamentally are
-> ineligible to join because they cannot keep anything secret.
+>> In ElectroBSD I removed TIOCSTI support in 2017 [0] and haven't noticed 
+>> any problems.
+>
+>I hate tossing out functionality; would you not make it a privileged 
+>operation instead?
 
-This just seems like a personal opinion projected onto the relevant projects
-though. There is nothing preventing you from getting access to patches and
-distributing them to relevant package maintainers for preperation under an
-embargo.
-
-Evidently there are three atleast 3 community distros already participating on
-the linux-distros list, namely Debian, Arch and Gentoo. So while Fedora might
-not have any way to distribute patches, please don't infer that this applies to
-all community distros.
-
-We do this in Arch Linux, and I've personally handeled several embargos as a
-community project.
-
-https://oss-security.openwall.org/wiki/mailing-lists/distros
-
-A relevant piece of information is also the well-written Gentoo Pre-Release
-Disclosure Agreement they have with their package maintainers.
-
-https://wiki.gentoo.org/wiki/Project:Security/Pre-Release-Disclosure
-
-
-Personally my impression of Fedora after trying to pay attention to their
-security meetings and general security planning, all of this seems to be
-handeled by Red Hat. So Fedora might not have any need to join the Linux distros
-list themselves.
-
--- 
-Morten Linderud
-PGP: 9C02FF419FECBE16
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+But also: "Perfection is achieved, not when there is nothing more to 
+add, but when there is nothing left to take away", and it would 
+appear TIOCSTI does not have https://xkcd.com/2347/ -criticality.
