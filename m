@@ -1,4 +1,4 @@
-Received: (qmail 13759 invoked by uid 550); 11 Jun 2025 15:32:04 -0000
+Received: (qmail 29797 invoked by uid 550); 15 Mar 2023 23:13:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,420 +7,207 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 28249 invoked from network); 11 Jun 2025 04:16:21 -0000
+Received: (qmail 29756 invoked from network); 15 Mar 2023 23:13:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualys.com; h=from : to : subject :
+ date : message-id : content-type : content-id : content-transfer-encoding
+ : mime-version; s=qualyscom;
+ bh=xhCB8XXwdcno/+zXaiNJ33BedCFv3vjZs90RlvQOGfk=;
+ b=FBIh94rjMR74wIrTGMjzxDdUIHuthN1d8EAdKIb7E9izx6e8jWoUJWqK0DxkUUk6gnQ+
+ tA+eeN5xhu1YGhjofYP1Crt8qJS38RVRW0lF4IIS+eNeQV+DMpBQY+vaian2S12N6sPi
+ U756CcoOVbriWoDXnSoqRDXe+qeLIbgfa/i96R72mCVO2Jc3/0w+WTW27tmRKIQeXvXn
+ bQsfnbDdmwpzJ7uh2OkfiasNUvzZ49das7QoS5h5GLmkQ7+Z+cT+RiE8AKHTWGL3rtML
+ pa7V7QP///bwGE6y3hzXxaO+9eOMqtJJ6f/9LVcxCkbcWinda2eBSZWoPjjPmeuoFCTB MA== 
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=cALucpG+EOySIjajJjTX8ha3o3l2oAEUfCiEt4t2M4N4hCtQyfodN3Bj8Sf1nJFabMYhrUb0A+uymBwLuyqosnYS1Lznb91an+CeeONNZn//EymMb4GdGLTxbSolXtAvpEcogzU5KsUa5XcYo8lMuvzMXZl9mk1D7Shl82RjtBFAi8JziwzGgGCDsFRpwC3yyrSZkn7vZb9mHPV19LIVg455REGcJEX2h8BTu/Y3K2m48AuV0fUEo3xp4999LdwdNc1perYfeBWeKblQMPw6G34yPOgWm+Y14bXRztCEFLoroAtWijdZkwQ3QVv6wOun67g+CNGKGEwwvLRsITFm6A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=xhCB8XXwdcno/+zXaiNJ33BedCFv3vjZs90RlvQOGfk=;
+ b=XnouUsCYfC2Zr/zG3HX3YkzmtLVMdnWvVFgzBs9U8m6LecqcmBRsqaBVojY1M6fHGdTBCHIFnYwQE9yz2GG3NJCOEuVM7Jrw2xQf56KhbXQFdPynGhDP5bdHAlbDmde55gOcQeXgdnTRyXOjhX4AeBRQqPghRk0sSBCAhBV39TRSA6nxykOOyYqvOmHSKlJQiKxbSykcrZJFDrDIGMtsRCBe5HkCUJGFpNUnNnZh0M+SLxn+2w1CBkc9D2aIl+8lDk+L/AE5u0icCSyq/sM34vQLa/85l49uW28OeXYqRXlh1wW4/jd8y76tc9HSb3PjwhynukhQNLCPo4jkJcL8lQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=qualys.com; dmarc=pass action=none header.from=qualys.com;
+ dkim=pass header.d=qualys.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749615370; x=1750220170; darn=lists.openwall.com;
-        h=in-reply-to:autocrypt:content-language:references:to:subject:from
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZeVSODLI/VxTgWJ1HjsKK4DISf661l08WpTEwwFDfCU=;
-        b=SLxpHIqhbu6OLyODlRd9OuwUCFv1rt9/1v9k+5oJfm+YpNn0fsjKg2rC+hq8ehLeRE
-         U7P167C5vAuTmVKC7HX2xdFz0q9rtQinGIHJUseQbYIP7bd7kVwKg372pxm/iu+ospDO
-         DtlPjUKgiG1/ymBdd9K+hTeKRoZZNUYIi+mbZg2FnoKWvHGOFKEovOc2lK3+Id7Ldhwp
-         ndlyuzGxlZj9f9OdHZpWm6goaQGXqQ2RULO9ZBn1PMAcFDy6fedbq4sTdvvas7KSdwQk
-         FPDpDPWjGRs4yjDczXsHYxWa7abItQph2XesJ9+IfQ/HaQU3qNx1gCXUmUkFywwK4CI8
-         mnVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749615370; x=1750220170;
-        h=in-reply-to:autocrypt:content-language:references:to:subject:from
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ZeVSODLI/VxTgWJ1HjsKK4DISf661l08WpTEwwFDfCU=;
-        b=bPfjvByHQ4vi/PVjqiGjvZP3KwEieoha1ql2LSSLWOzk8IVELoBCVwnpPO7UEM0Y7W
-         YXvC756TlM1LacZbxa+u4GgQpaKqs3VBUyUa8czVVW+9LdeyvFRPrGThEOdRr5b7skjI
-         dEYur9XM8rZLmn+Vg3ufwBd/feCKLKUUZ57TL8N9+ZZ5yNNfW5b/g2dV7VHRmgmrrlmP
-         McrsDskX0gtoz0jgpL12wcx9eroj1XjyHK9fC/LeTSGZVHvZ6gm8w9beYTDJSXtUc3gw
-         4PZsvOMc+61E/l1GLEyUDEcIEo9wvWloh3A3dcGXSsrsBPzjSurLjsR6cvE0/+E3Ticd
-         CJNg==
-X-Gm-Message-State: AOJu0Yzv7eyBpJ2xCAdmFMGmx4p8XNgl9bxBAj8FTWo0g7bBxwil6K2m
-	smBvJb58xhcnuAW/vbmAa96kesEol9wvWyharKGCF6D8JxqY0WCVs8wnPfDXtw==
-X-Gm-Gg: ASbGncsu6eTNkfeyMq4Yh6mphObH+rmf7XWA/0Pd5pv1+ZI78V4mnlZV/OD51wZmTq5
-	QObnnJ+lbsqeLtQAsKDw7jylqy6D9SpQpUQxT2QCzmi/xt8OUsKJpQpaYye9m+8+Zzhek9pgSiy
-	MI9p8FNhC14kR71PA5e6++yACit7kky3gjHoLgFXhO5vM9YtHmCZ8XZvBHaXUqjyBnDebSanDw0
-	ybnR4mZ8DSbykn80kNBFD01BNZ4wiXfucQJUxrInkI8Deskm6pGdi2cxgEGRnEOOHa3oFHaFs4j
-	65G02bFXUfeYEnSxwu5Cv1Y787fr4c3uS5FuVyM9U5g6xsnCnlD+QHsW2gpO0prua+mZxw5xolJ
-	k2w==
-X-Google-Smtp-Source: AGHT+IGixR5QbW9ooUO4AtJX0s+xgWT0w0oHuXUmnMz9pi6jS8OTCVmETx9KqQ03n7gvTcbl+/YV6Q==
-X-Received: by 2002:a05:620a:2a07:b0:7ce:c604:3a77 with SMTP id af79cd13be357-7d3a8805f53mr276676485a.11.1749615369440;
-        Tue, 10 Jun 2025 21:16:09 -0700 (PDT)
-Message-ID: <85e51ab9-9ae9-4964-95f4-d29de53e5298@gmail.com>
-Date: Wed, 11 Jun 2025 00:16:03 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Demi Marie Obenour <demiobenour@gmail.com>
-To: oss-security@lists.openwall.com
-References: <20250603025919.GA11183@openwall.com>
- <b379213c-55d1-4564-90aa-591edf3097c7@gmail.com>
- <20250606030239.GA897@openwall.com>
+ d=qualys.onmicrosoft.com; s=selector1-qualys-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=xhCB8XXwdcno/+zXaiNJ33BedCFv3vjZs90RlvQOGfk=;
+ b=dwXZqhhdo98TPjTvKoJy5TTV7I8GXYRpREEwQFbfVQZhHqblBcYxFoEZCoZ4IbpIT71vxZ4+g8oA0GB7HykNBuPBMV+YH82WvKMvLmh1KFMqfohNoPG9a4Qj74G3U02ejo9clrmIXnzf+GkSjZBAXXP7yRH86srXxfoKxCMUkzo/iUOPZ9lbrZijG1ULur8YzmndQFKgFu+Aq+AKOQE3bupB8xKvJQhSiec6ntNhsKWkLArMlcq9Sf0mOlKKjuTZQGCvt4yT5AopbbogQ++ghXdgfwYeg2a//wGOMz7DsBCQ+DFtA4/3+QVRA8NgazlaNbkj5aV4bEXFlykS3B/6pA==
+From: Qualys Security Advisory <qsa@qualys.com>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: Minor stack-based buffer overflow in OpenBSD's libskey
+Thread-Index: AQHZV5O9PMG48EiJJ0mL1nq2YZFuLQ==
+Date: Wed, 15 Mar 2023 23:13:23 +0000
+Message-ID: <20230315231308.GA24066@localhost.localdomain>
+Accept-Language: en-US
 Content-Language: en-US
-Autocrypt: addr=demiobenour@gmail.com; keydata=
- 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
- +MYSfkEjBz0E8CLOcAw7JIwAaeBT
-In-Reply-To: <20250606030239.GA897@openwall.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------5PmCfLQaj0BJWQ5UCv0RTtAP"
-Subject: Re: [oss-security] Linux kernel: HFS+ filesystem implementation
- issues, exposure in distros
-
---------------5PmCfLQaj0BJWQ5UCv0RTtAP
-Content-Type: multipart/mixed; boundary="------------x8pNw2M3VOPzEH35NxlFgt5y";
- protected-headers="v1"
-From: Demi Marie Obenour <demiobenour@gmail.com>
-To: oss-security@lists.openwall.com
-Message-ID: <85e51ab9-9ae9-4964-95f4-d29de53e5298@gmail.com>
-Subject: Re: [oss-security] Linux kernel: HFS+ filesystem implementation
- issues, exposure in distros
-References: <20250603025919.GA11183@openwall.com>
- <b379213c-55d1-4564-90aa-591edf3097c7@gmail.com>
- <20250606030239.GA897@openwall.com>
-In-Reply-To: <20250606030239.GA897@openwall.com>
-
---------------x8pNw2M3VOPzEH35NxlFgt5y
-Content-Type: multipart/mixed; boundary="------------P1mysU8ZnwTS0L280nY9B0vk"
-
---------------P1mysU8ZnwTS0L280nY9B0vk
-Content-Type: text/plain; charset=UTF-8
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR06MB6910:EE_|CY4PR06MB2695:EE_
+x-ms-office365-filtering-correlation-id: 38a8fd14-f8e7-4f04-dbdf-08db25aae027
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 
+ 9lvScBW1iUOzkFsBC9y228jUgrpvd4iMWM3EqllO/Gn0t+gmOMgKoeRCId7CmPvZHtsTXlpkeiRckWgViLJ/+S3Rs5s88sO5l6UvWrKNywrhILJYmHLkE0scCY8KZ4B1OaRfo570BsQKVaL67lZ+g2kvy0ty/+VtPbW25giH4+GGJHUn6V6viCgnTiQotTfmg3tGaHx+F5aKVATVnLd279hpgsfofPJO6+qzzgwo2mPAXMkuL04uCyCygQUJ+SLole0B+Y7aN4DNjA7dShmpmZsdNIl179crPr9QDDRi2aJQ3EM94Kqy8p4N4rfa6zs41CFfT2dAWom95W3QhhO2N9ydL9V6RG1SR9KogCgosNoZ8qRO+33S7yolZEnYptdihvl+XYLage8xitrLvS53OF3I1v8NfAMx45rSjNs9u43GwO8C1DfxrMR/CXAsQXAW24xQu12Xl8K2YKo2mPs4jMmd7NDzSQso+2KshSZJKlWwFwl/sclOEofAEs/aT7ERqb0AjerlBcXGvrEz1mVRZGvb3ltYom8SCe/R7e6sdXzyW9/ceC5kwVii90YCyTO5cghBn+6e6/VUK+Fd/XYORV2LpMm37onrddgxuHHcWQr8/WuXbfY8OrVIzq05BAgwy+5Rzxtvl5Z6W1+cQFJwVOkzNS+LcOEPTFyO2YpBbuCnOAVpqCgv3kbwljaPhQ5Y+taK+18o6s9Gz2G0/Ui1msB/tU+tEiRlqCgemgUtCiU=
+x-forefront-antispam-report: 
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR06MB6910.namprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(396003)(136003)(376002)(39860400002)(366004)(346002)(451199018)(38100700002)(86362001)(38070700005)(122000001)(33656002)(2906002)(41300700001)(5660300002)(8936002)(6506007)(6916009)(64756008)(6512007)(83380400001)(186003)(26005)(9686003)(55236004)(316002)(1076003)(66446008)(66476007)(66556008)(966005)(6486002)(91956017)(8676002)(76116006)(71200400001)(478600001)(66946007);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: 
+ =?us-ascii?Q?SFqEsEMx42RsuLt0xAaKkztKhsyV2xho1ktYYAaRYhAQ1S7I4NO5DSbiaW4A?=
+ =?us-ascii?Q?XUc6h/QkTGsb2ntMzrq/D9ALAM59JeHXgfpTEic8xyG/6ZsobYGcqKq+zrxX?=
+ =?us-ascii?Q?z3xNp6S7fcClBMPRcEJXXO1Ao+eYbbtU7EbfZ9YOYTH9f02tLSS73ZEeNdV7?=
+ =?us-ascii?Q?4b0IWIY0i6J8BM7+cWGtib9SLaoX86Jbb4Efnr8mdQS9+pdWVkTfWgHWblf6?=
+ =?us-ascii?Q?GFGWZFW7qrPUh05oa96LX66lUJs2EyVlZaKf1LxnShgh+I3M8pnQZDwumMpA?=
+ =?us-ascii?Q?nmN33s1YJpPpL/+OLAaqKZSPWT/lVPOWRPj0CKn7BNHcQV1pMaqxgQi2WHGF?=
+ =?us-ascii?Q?fhhOyyI3g1HG/Of3r8hC7gelopI4JPMcYceUscCyfz/2jZSfj9TLOfi25vsb?=
+ =?us-ascii?Q?YvzXnnfcL4rx1bgnXEbUM0HjyWrClOmcZ5pR7PLYV/fYmCekAsxtOL0+6pkf?=
+ =?us-ascii?Q?1MtHNZuW8KpYCaG7ybdUoru7rWqZuiFsiq6cb852Rpc98tgwMcSStd/ZBmg8?=
+ =?us-ascii?Q?8MxHvzywZOdKzRxZFfqEc2nfSyzVRH/gwNqZ930EWInU3JxxjK7tYE/Rw/t4?=
+ =?us-ascii?Q?+YLSLF8mxF1hDAvN1TB/b6hVxnuSUgY7gyUXZKLGKiO6GDuebxcfBfp+knIv?=
+ =?us-ascii?Q?FrrC7nXJcJxRVhFBneLXxbtSfIvcswAZVFaBypVditKu2ryhkt0kfz0Rdo5B?=
+ =?us-ascii?Q?VE+BXL/6zpsSykk8QZM7qxNQ6H55uFPV6sT190zQ2Wc6modPmfegPoNqEd3J?=
+ =?us-ascii?Q?7GJ326Y2YwgriBmv6gxrWV6h+GM55xaw+dLnfXMOcBhPSkY5OhEHVnbs0LqG?=
+ =?us-ascii?Q?EXDUjJf3pHHUSIAAJVtzb3cd7APLQSg7noE9urFsBNVMUKI0CoLdkjn3rJtv?=
+ =?us-ascii?Q?5QGd2F3yEO2yQgLQX0isxNAaZP1iBgQlR2lCr1Ok43Xw+kpPAfvLRhawGGbu?=
+ =?us-ascii?Q?1A5tV1rEIncU5QEpwLTAScjuxo3bHxLaficdy2mxsEObiCBJCc++50EPMb3r?=
+ =?us-ascii?Q?C62KDS9WpbG6ZGFpMu2BaJYTJWM8W5M3Tk4eIRAzmp27U2mNQDmtkR3P3o+Q?=
+ =?us-ascii?Q?QWK/8XIHR1HUkSW+yUcZQeDuWtfCwbbLQ/pxSGPQqj3F01ReuYSFLUeWpa7Q?=
+ =?us-ascii?Q?xUQFmGw1Jz13hgCopmEoil8BHJnSgIklOc+LxT7tU6gETF7JnCH3JArQx5e+?=
+ =?us-ascii?Q?dwuSRyV+4NrDvR+lv8Rs2LT514EscP0YXKNNXn7loXzoMI7EOeYXltKvKr9N?=
+ =?us-ascii?Q?LjUL+T6LZhEbRMS49dOPrlxz18rH9/Ffxbb4mtL+irqKSrPJ8VgGO9+GlhsG?=
+ =?us-ascii?Q?dUgq/2pF36pqSoBAywItP9+w8bCPqgYy8zYLQU5zOhL3y3KUsH4dfCDaFgAB?=
+ =?us-ascii?Q?/rwaedKRtj6f6cASBrxbV9nYyTPuxVMSoXhjgkCClzNfUE2SOkeOrzIK8yje?=
+ =?us-ascii?Q?HB3qDWSZs2n93XHoaHMLYMuqG6Eh9KxxAc0m+1NJQKeQDAGzf/XGRJRo5V8d?=
+ =?us-ascii?Q?8p/pe5jv27MX9RALp94TUgQt/+shWnurXFWquXwk4+3nrnsIPxcob0P68kOF?=
+ =?us-ascii?Q?y0HrMId5j3OzqWHSTnwhKLTX+mm+ZGCY/gi3kuEWjH6wMIyb2/1iRf6YdFr0?=
+ =?us-ascii?Q?1JvUclU7eDzcMWnBQwFGxxk=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <5FBBF4EAFDFAA34988B56B170F9E7642@namprd06.prod.outlook.com>
 Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: qualys.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR06MB6910.namprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 38a8fd14-f8e7-4f04-dbdf-08db25aae027
+X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Mar 2023 23:13:23.7965
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 81a9ef9a-9a98-4b00-886a-895a603bc029
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 69wXZmZwpheuEHh6FmrxeaubWleeWw8S8jC+hLWw+hRYl8Mv8zrBZPIi/FZ1EE8mWeZIPsQ1bzaCruxzkCX1m1LiLnfkJAAK7EiywPDWLNY=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY4PR06MB2695
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-15_12,2023-03-15_01,2023-02-09_01
+Subject: [oss-security] Minor stack-based buffer overflow in OpenBSD's libskey
 
-On 6/5/25 23:02, Solar Designer wrote:
-> Re-added CC: Attila, Muhammed
->=20
-> On Mon, Jun 02, 2025 at 11:38:30PM -0400, Demi Marie Obenour wrote:
->> On 6/2/25 22:59, Solar Designer wrote:
->>> The kernel security team ended up rejecting the CVE:
->>>
->>> https://lore.kernel.org/linux-cve-announce/2025033057-CVE-2025-0927-143=
-6@gregkh/T/#u
->>>
->>>> Filesystem bugs due to corrupt images are not considered a CVE for any
->>>> filesystem that is only mountable by CAP_SYS_ADMIN in the initial user
->>>> namespace. That includes delegated mounting.
->>
->> If nothing else, this can be used to bypass UEFI Secure Boot.
->=20
-> Good point.
->=20
-> So is arbitrary unsigned code execution in the kernel (locked down
-> against it) generally out of scope of kernel CVE assignment?
+Hi all,
 
-It seems so, which is rather sad.
+(Posting this report here in case another project uses the same code.)
 
-> For practical purposes, I think there's major difference between UEFI
-> Secure Boot bypasses that let you run arbitrary code without logging in
-> (especially if you can bypass TPM-based disk encryption in this way) vs.
-> post-login (doesn't violate TPM-based disk encryption's security model).
+We discovered a minor stack-based buffer overflow in OpenBSD's libskey;
+it was introduced in July 1997 by the following commit:
 
-The code execution would happen after login.  This is still severe in
-some threat models, as it allows for an attacker to maintain persistent
-control of a machine as long as the user uses it, rather than only until
-the user reboots.
+https://github.com/openbsd/src/commit/ea55ee16580e7b47c83712c5fd50615f8b1d2=
+6ad
 
->>> An issue here is that "allowing console users to automount removable
->>> media" is a high risk, especially if upstream doesn't intend the code to
->>> be robust and secure against corrupt or malicious filesystem images.
->>> Maybe there should at least be an allow-list of filesystem types, which
->>> would be focused on filesystems most commonly used on removable media?
->>
->> Which ones would you include?
->=20
-> I was thinking those commonly seen on pre-formatted flash media, but
-> maybe that doesn't cover a large enough fraction of use cases.
+and was fixed today by the following commit (thanks to OpenBSD for their
+incredibly quick response!):
 
-I think those are NTFS, FAT32, and exFAT.
+https://github.com/openbsd/src/commit/848ef98a011b51fa811cb86fe900433edd2db=
+24a
 
->>> Another issue is the disconnect on what's CVE-worthy between upstream
->>> and the distro.  This will keep coming up.  Maybe a solution for such
->>> cases is to assign CVEs against the distro rather than against upstream?
->>
->> This is the only option I can see kernel.org being okay with, but it
->=20
-> Apparently, they were not OK with it this time.  I don't know why not.
+and although the vulnerable function is reachable remotely via OpenSSH,
+this bug is useless in practice:
 
-What the kernel developers would almost certainly prefer is for the
-vulnerability to state, =E2=80=9CUbuntu allows local users to mount untrust=
-ed
-filesystems, which allows them to escalate privileges via maliciously
-crafted filesystem images.=E2=80=9D  The patch would then be to no longer a=
-llow
-mounting filesystem images without providing root-equivalent
-credentials, or to require the mount to happen via libguestfs or
-another FUSE driver.  In other words, from an upstream kernel
-perspective, this is a udisks2 configuration vulnerability, *not* a
-kernel vulnerability.
+- the hostname of the affected system must be longer than 126 characters
+  to trigger this buffer overflow;
 
->> doesn't solve the underlying problem.  kernel.org's view of what is
->> (and is not) a vulnerability in a filesystem is severely out of touch
->> with what distros actually do, and that includes security-conscious
->> distros like ChromiumOS.
->=20
-> If distros could have CVEs for "Linux HFS+ filesystem only as exposed
-> for attack in certain distros, not a vulnerability in upstream Linux",
-> maybe that would be fine.
+- the characters that overflow this buffer are all '\0' characters (the
+  filler characters of a strncpy() call).
 
-I hope it would be.
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Analysis
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-I wonder if it would be possible to expose kernel filesystems via user-mode
-Linux and FUSE.
+For users who do not have an entry in the S/Key database (the default on
+OpenBSD), libskey generates a fake challenge:
 
->>> The linux-cve-announce thread above suggests that upstream may assign
->>> CVEs to filesystem implementation issues for corruptions that pass fsck.
->>> So theoretically a way for a distro to avoid relying on robustness and
->>> security of kernel code beyond what upstream cares about would be to
->>> force fsck before mounting a filesystem.  However, doing that even for
->>> filesystems that claim to be clean (as it would be required for
->>> security) is impractical.  Also, would the CVEs (and eventual fixes) be
->>> against (for) the kernel or fsck then?
->>
->> Why is it impractical?  Performance?
->=20
-> Yes, I was thinking primarily performance.  Then also UI in case fsck
-> finds any issues, but this can be taken care of.  Then there are some
-> fsck-only vulnerabilities.
->=20
-> Finally, the fsck approach wouldn't solve the secure boot bypass aspect,
-> as fsck could be bypassed by root (and that's how it should remain).
->=20
-> OTOH, is there other significant security impact?  As I understood, on
-> Ubuntu a privileged logged in user could use this bug to obtain root.
-> However, is that user perhaps privileged enough to also sudo to root by
-> default?  So is this only a bypass of the need to re-enter the user's
-> password for sudo?  That sudo from user to root is only a nominal
-> protection mechanism anyway, more against inadvertent mistakes than
-> against malicious attacks.
+------------------------------------------------------------------------
+ 46 #define SKEY_MAX_PW_LEN         255
+ ..
+ 49 #define SKEY_MAX_SEED_LEN       16
+------------------------------------------------------------------------
+420 skey_fakeprompt(char *username, char *skeyprompt)
+421 {
+422         char secret[SKEY_MAX_SEED_LEN], pbuf[SKEY_MAX_PW_LEN+1], *p, *u;
+...
+428         /*
+429          * Base first 4 chars of seed on hostname.
+430          * Add some filler for short hostnames if necessary.
+431          */
+432         if (gethostname(pbuf, sizeof(pbuf)) =3D=3D -1)
+433                 *(p =3D pbuf) =3D '.';
+434         else
+435                 for (p =3D pbuf; isalnum((unsigned char)*p); p++)
+436                         if (isalpha((unsigned char)*p) &&
+437                             isupper((unsigned char)*p))
+438                                 *p =3D (char)tolower((unsigned char)*p);
+439         if (*p && pbuf - p < 4)
+440                 (void)strncpy(p, "asjd", 4 - (pbuf - p));
+------------------------------------------------------------------------
 
-The user does not need sudo privileges.
+Unfortunately, "pbuf - p" at lines 439 and 440 should be "p - pbuf", so
+the "pbuf - p < 4" test at line 439 always succeeds and the strncpy() at
+line 440 may overflow pbuf (if 2 * (p - pbuf) + 4 > 255 + 1, i.e. if the
+hostname is longer than 126 characters).
 
->> There are three filesystems that *must* be secure against malicious
->> images to avoid very serious problems:
->>
->> 1. FAT32, as this is used by the UEFI System Partition and
->>    so must be mounted by every UEFI-based system.
->> 2. F2FS, as this is used by Android for its writable storage.
->> 3. ext4, as this is used by ChromiumOS for its writable storage.
->>
->> In all three cases, a malicious filesystem image can be used to
->> bypass secure boot.  UEFI secure boot is often considered quite
->> weak and I tend to agree with this, but Android and ChromiumOS
->> have very strong verified boot mechanisms and being able to break
->> them is without question worthy of a CVE.  ChromeOS Security
->> has confirmed that they do indeed consider "attacker corrupts
->> writable storage to get code execution when the machine reboots"
->> to be in scope for their threat model.
->>
->> The only way I can think of to fix this issue is not technical,
->> but organizational: somehow ensure that the burden of dealing
->> with these bugs falls onto those who care about them, rather
->> than on overworked filesystem maintainers.  Is there any way
->> that this could reasonably be done?  Could the Android and
->> ChromeOS security teams triage *and fix* bugs involving crafted
->> images *without* the filesystem maintainers having to be
->> involved?  Or is the solution for the parties who care about
->> these vulnerabilities to completely reimplement the filesystems
->> in Rust and/or using FUSE?
->=20
-> The filesystem maintainers would need to be involved to review and
-> approve/merge patches submitted by those who really care.  It is too
-> easy to introduce new bugs when you try and fix a bug without being
-> familiar with the subsystem's codebase.
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Proof of concept
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-The only solution to this I can think of is to add a filesystem
-maintainer whose explicit job is security.  That might take a long
-time due to training requirements, but it=E2=80=99s the only solution I can
-think of that is sustainable in the long term, short of a rewrite
-in Rust.
+- First, as root on an OpenBSD system:
 
-In some cases, it might be okay to deliberately crash the kernel
-(with BUG()) as a downstream-only patch.
+------------------------------------------------------------------------
+# hostname=3D"`hostname`"
+
+# hostname `perl -e 'print "a" x 136'`.my.domain
+
+# ktrace -i /usr/sbin/sshd -d -p 2222
+------------------------------------------------------------------------
+
+- Second, as a remote attacker:
+
+------------------------------------------------------------------------
+$ ssh -o ChallengeResponseAuthentication=3Dyes -o KbdInteractiveAuthenticat=
+ion=3Dyes -o PreferredAuthentications=3Dkeyboard-interactive -o KbdInteract=
+iveDevices=3Dbsdauth -l nobody:skey -p 2222 192.168.56.123
+------------------------------------------------------------------------
+
+- Third, again as root on the OpenBSD system:
+
+------------------------------------------------------------------------
+# hostname "$hostname"
+
+# kdump
+...
+6718 login_skey PSIG  SIGSEGV SIG_DFL code SEGV_MAPERR<1> addr=3D0x7f7f0000=
+0000 trapno=3D6
+------------------------------------------------------------------------
+
+We are at your disposal for questions, comments, and further
+discussions. Thank you very much!
+
+With best regards,
+
 --=20
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-
---------------P1mysU8ZnwTS0L280nY9B0vk
-Content-Type: application/pgp-keys; name="OpenPGP_0xB288B55FFF9C22C1.asc"
-Content-Disposition: attachment; filename="OpenPGP_0xB288B55FFF9C22C1.asc"
-Content-Description: OpenPGP public key
-Content-Transfer-Encoding: quoted-printable
-
------BEGIN PGP PUBLIC KEY BLOCK-----=0A=
-=0A=
-xsFNBFp+A0oBEADffj6anl9/BHhUSxGTICeVl2tob7hPDdhHNgPR4C8xlYt5q49y=0A=
-B+l2nipdaq+4Gk6FZfqC825TKl7eRpUjMriwle4r3R0ydSIGcy4M6eb0IcxmuPYf=0A=
-bWpr/si88QKgyGSVZ7GeNW1UnzTdhYHuFlk8dBSmB1fzhEYEk0RcJqg4AKoq6/3/=0A=
-UorR+FaSuVwT7rqzGrTlscnTDlPWgRzrQ3jssesI7sZLm82E3pJSgaUoCdCOlL7M=0A=
-MPCJwI8JpPlBedRpe9tfVyfu3euTPLPxwcV3L/cfWPGSL4PofBtB8NUU6QwYiQ9H=0A=
-zx4xOyn67zW73/G0Q2vPPRst8LBDqlxLjbtx/WLR6h3nBc3eyuZ+q62HS1pJ5EvU=0A=
-T1vjyJ1ySrqtUXWQ4XlZyoEFUfpJxJoN0A9HCxmHGVckzTRl5FMWo8TCniHynNXs=0A=
-BtDQbabt7aNEOaAJdE7to0AH3T/Bvwzcp0ZJtBk0EM6YeMLtotUut7h2Bkg1b//r=0A=
-6bTBswMBXVJ5H44Qf0+eKeUg7whSC9qpYOzzrm7+0r9F5u3qF8ZTx55TJc2g656C=0A=
-9a1P1MYVysLvkLvS4H+crmxA/i08Tc1h+x9RRvqba4lSzZ6/Tmt60DPM5Sc4R0nS=0A=
-m9BBff0Nm0bSNRS8InXdO1Aq3362QKX2NOwcL5YaStwODNyZUqF7izjK4QARAQAB=0A=
-zTxEZW1pIE9iZW5vdXIgKElUTCBFbWFpbCBLZXkpIDxhdGhlbmFAaW52aXNpYmxl=0A=
-dGhpbmdzbGFiLmNvbT7CwY4EEwEIADgWIQR2h02fEza6IlkHHHGyiLVf/5wiwQUC=0A=
-X6YJvQIbAwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgAAKCRCyiLVf/5wiwWRhD/0Y=0A=
-R+YYC5Kduv/2LBgQJIygMsFiRHbR4+tWXuTFqgrxxFSlMktZ6gQrQCWe38WnOXkB=0A=
-oY6n/5lSJdfnuGd2UagZ/9dkaGMUkqt+5WshLFly4BnP7pSsWReKgMP7etRTwn3S=0A=
-zk1OwFx2lzY1EnnconPLfPBc6rWG2moA6l0WX+3WNR1B1ndqpl2hPSjT2jUCBWDV=0A=
-rGOUSX7r5f1WgtBeNYnEXPBCUUM51pFGESmfHIXQrqFDA7nBNiIVFDJTmQzuEqIy=0A=
-Jl67pKNgooij5mKzRhFKHfjLRAH4mmWZlB9UjDStAfFBAoDFHwd1HL5VQCNQdqEc=0A=
-/9lZDApqWuCPadZN+pGouqLysesIYsNxUhJ7dtWOWHl0vs7/3qkWmWun/2uOJMQh=0A=
-ra2u8nA9g91FbOobWqjrDd6x3ZJoGQf4zLqjmn/P514gb697788e573WN/MpQ5XI=0A=
-Fl7aM2d6/GJiq6LC9T2gSUW4rbPBiqOCeiUx7Kd/sVm41p9TOA7fEG4bYddCfDsN=0A=
-xaQJH6VRK3NOuBUGeL+iQEVF5Xs6Yp+U+jwvv2M5Lel3EqAYo5xXTx4ls0xaxDCu=0A=
-fudcAh8CMMqx3fguSb7Mi31WlnZpk0fDuWQVNKyDP7lYpwc4nCCGNKCj622ZSocH=0A=
-AcQmX28L8pJdLYacv9pU3jPy4fHcQYvmTavTqowGnM08RGVtaSBNYXJpZSBPYmVu=0A=
-b3VyIChsb3ZlciBvZiBjb2RpbmcpIDxkZW1pb2Jlbm91ckBnbWFpbC5jb20+wsF4=0A=
-BBMBAgAiBQJafgNKAhsDBgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgAAKCRCyiLVf=0A=
-/5wiwYa/EACv8a2+MMou9cSCNoZBQaU+fTmyzft9hUE+0d5W2UY1RY3OsjFIzm9R=0A=
-/4SVccfsqOYLEo+S0vQMIIIqFEq3FCpXXwPzyimotps05VA8U3Bd7yseojFygOgK=0A=
-sAMOAee2RCaDDOnoJue01dfZMzzHPO/TVdp3OvnpWipfv5G1Xg96rwbhMLE3tg6N=0A=
-xwAHa31Bv4/Xq8CJOoIWvx6fcmZQpz01/lSvsYn0KrfEbTKkuUf0vM9JrCTCP2oz=0A=
-VNN5BYzqaq2M4r+jmSyeXLim922VOWqGkUEQ85BSEemqrRS06IU6NtEMsF8EWt/b=0A=
-hWjk/9GDKTcnpdJHTrMxTspExBiNrvpI2t+YPU5B/dJJAUxvmhFrbSIbdB8umBZs=0A=
-I3AMYrEmpAbh5x7jEjoskUC7uN3o9vpg1oCLS2ePDLtAtyBtbHnkA4xGD7ar8mem=0A=
-xpH9lY/i+sC6CyyIUWcUDnnagKyJP0m9ks0GLsTeOCA0bft2XA6rD6aaCnMUsndT=0A=
-ctrab42CV5XypjmC4U1rPJ8JQJUh1/3P48/8sMH+3krxpJ06KNWNFaUbaMTGiltZ=0A=
-7x9DngklSYrX0T+2G4kVXNmjaljwkoLahwLla2gUWwBSyofXdqyhQdwZsp01KXNQ=0A=
-UCyT/Pg+aDcm/E7OMV3d4lf7g/CSxiX2GSEe6BlhSz+Lmd7ZJ3g32M1ARGVtaSBN=0A=
-YXJpZSBPYmVub3VyIChJVEwgRW1haWwgS2V5KSA8ZGVtaUBpbnZpc2libGV0aGlu=0A=
-Z3NsYWIuY29tPsLBjgQTAQgAOBYhBHaHTZ8TNroiWQcccbKItV//nCLBBQJgOEV+=0A=
-AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJELKItV//nCLBKwoP/1WSnFdv=0A=
-SAD0g7fD0WlF+oi7ISFT7oqJnchFLOwVHK4Jg0e4hGn1ekWsF3Ha5tFLh4V/7UUu=0A=
-obYJpTfBAA2CckspYBqLtKGjFxcaqjjpO1I2W/jeNELVtSYuCOZICjdNGw2Hl9yH=0A=
-KRZiBkqc9u8lQcHDZKq4LIpVJj6ZQV/nxttDX90ax2No1nLLQXFbr5wb465LAPpU=0A=
-lXwunYDij7xJGye+VUASQh9datye6orZYuJvNo8Tr3mAQxxkfR46LzWgxFCPEAZJ=0A=
-5P56Nc0IMHdJZj0Uc9+1jxERhOGppp5jlLgYGK7faGB/jTV6LaRQ4Ad+xiqokDWp=0A=
-mUOZsmA+bMbtPfYjDZBz5mlyHcIRKIFpE1l3Y8F7PhJuzzMUKkJi90CYakCV4x/a=0A=
-Zs4pzk5E96c2VQx01RIEJ7fzHF7lwFdtfTS4YsLtAbQFsKayqwkGcVv2B1AHeqdo=0A=
-TMX+cgDvjd1ZganGlWA8Sv9RkNSMchn1hMuTwERTyFTr2dKPnQdA1F480+jUap41=0A=
-ClXgn227WkCIMrNhQGNyJsnwyzi5wS8rBVRQ3BOTMyvGM07j3axUOYaejEpg7wKi=0A=
-wTPZGLGH1sz5GljD/916v5+v2xLbOo5606j9dWf5/tAhbPuqrQgWv41wuKDi+dDD=0A=
-EKkODF7DHes8No+QcHTDyETMn1RYm7t0RKR4zsFNBFp+A0oBEAC9ynZI9LU+uJkM=0A=
-eEJeJyQ/8VFkCJQPQZEsIGzOTlPnwvVna0AS86n2Z+rK7R/usYs5iJCZ55/JISWd=0A=
-8xD57ue0eB47bcJvVqGlObI2DEG8TwaW0O0duRhDgzMEL4t1KdRAepIESBEA/iPp=0A=
-I4gfUbVEIEQuqdqQyO4GAe+MkD0Hy5JH/0qgFmbaSegNTdQg5iqYjRZ3ttiswalq=0A=
-l1/iSyv1WYeC1OAs+2BLOAT2NEggSiVOtxEfgewsQtCWi8H1SoirakIfo45Hz0tk=0A=
-/Ad9ZWh2PvOGt97Ka85o4TLJxgJJqGEnqcFUZnJJriwoaRIS8N2C8/nEM53jb1sH=0A=
-0gYddMU3QxY7dYNLIUrRKQeNkF30dK7V6JRH7pleRlf+wQcNfRAIUrNlatj9Txwi=0A=
-vQrKnC9aIFFHEy/0mAgtrQShcMRmMgVlRoOA5B8RTulRLCmkafvwuhs6dCxN0GNA=0A=
-ORIVVFxjx9Vn7OqYPgwiofZ6SbEl0hgPyWBQvE85klFLZLoj7p+joDY1XNQztmfA=0A=
-rnJ9x+YV4igjWImINAZSlmEcYtd+xy3Li/8oeYDAqrsnrOjb+WvGhCykJk4urBog=0A=
-2LNtcyCjkTs7F+WeXGUo0NDhbd3Z6AyFfqeF7uJ3D5hlpX2nI9no/ugPrrTVoVZA=0A=
-grrnNz0iZG2DVx46x913pVKHl5mlYQARAQABwsFfBBgBAgAJBQJafgNKAhsMAAoJ=0A=
-ELKItV//nCLBwNIP/AiIHE8boIqReFQyaMzxq6lE4YZCZNj65B/nkDOvodSiwfwj=0A=
-jVVE2V3iEzxMHbgyTCGA67+Bo/d5aQGjgn0TPtsGzelyQHipaUzEyrsceUGWYoKX=0A=
-YyVWKEfyh0cDfnd9diAm3VeNqchtcMpoehETH8frRHnJdBcjf112PzQSdKC6kqU0=0A=
-Q196c4Vp5HDOQfNiDnTf7gZSj0BraHOByy9LEDCLhQiCmr+2E0rW4tBtDAn2HkT9=0A=
-uf32ZGqJCn1O+2uVfFhGu6vPE5qkqrbSE8TG+03H8ecU2q50zgHWPdHMOBvy3Ehz=0A=
-fAh2VmOSTcRK+tSUe/u3wdLRDPwv/DTzGI36Kgky9MsDC5gpIwNbOJP2G/q1wT1o=0A=
-Gkw4IXfWv2ufWiXqJ+k7HEi2N1sree7Dy9KBCqb+ca1vFhYPDJfhP75I/VnzHVss=0A=
-Z/rYZ9+51yDoUABoNdJNSGUYl+Yh9Pw9pE3Kt4EFzUlFZWbE4xKL/NPno+z4J9aW=0A=
-emLLszcYz/u3XnbOvUSQHSrmfOzX3cV4yfmjM5lewgSstoxGyTx2M8enslgdXhPt=0A=
-hZlDnTnOT+C+OTsh8+m5tos8HQjaPM01MKBiAqdPgksm1wu2DrrwUi6ChRVTUBcj=0A=
-6+/9IJ81H2P2gJk3Ls3AVIxIffLoY34E+MYSfkEjBz0E8CLOcAw7JIwAaeBTzsFN=0A=
-BGbyLVgBEACqClxh50hmBepTSVlan6EBq3OAoxhrAhWZYEwN78k+ENhK68KhqC5R=0A=
-IsHzlL7QHW1gmfVBQZ63GnWiraM6wOJqFTL4ZWvRslga9u28FJ5XyK860mZLgYhK=0A=
-9BzoUk4s+dat9jVUbq6LpQ1Ot5I9vrdzo2p1jtQ8h9WCIiFxSYy8s8pZ3hHh5T64=0A=
-GIj1m/kY7lG3VIdUgoNiREGf/iOMjUFjwwE9ZoJ26j9p7p1U+TkKeF6wgswEB1T3=0A=
-J8KCAtvmRtqJDq558IU5jhg5fgN+xHB8cgvUWulgK9FIF9oFxcuxtaf/juhHWKMO=0A=
-RtL0bHfNdXoBdpUDZE+mLBUAxF6KSsRrvx6AQyJs7VjgXJDtQVWvH0PUmTrEswgb=0A=
-49nNU+dLLZQAZagxqnZ9Dp5l6GqaGZCHERJcLmdY/EmMzSf5YazJ6c0vO8rdW27M=0A=
-kn73qcWAplQn5mOXaqbfzWkAUPyUXppuRHfrjxTDz3GyJJVOeMmMrTxH4uCaGpOX=0A=
-Z8tN6829J1roGw4oKDRUQsaBAeEDqizXMPRc+6U9vI5FXzbAsb+8lKW65G7JWHym=0A=
-YPOGUt2hK4DdTA1PmVo0DxH00eWWeKxqvmGyX+Dhcg+5e191rPsMRGsDlH6KihI6=0A=
-+3JIuc0y6ngdjcp6aalbuvPIGFrCRx3tnRtNc7He6cBWQoH9RPwluwARAQABwsOs=0A=
-BBgBCgAgFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmbyLVgCGwICQAkQsoi1X/+c=0A=
-IsHBdCAEGQEKAB0WIQSilC2pUlbVp66j3+yzNoc6synyUwUCZvItWAAKCRCzNoc6=0A=
-synyU85gD/0T1QDtPhovkGwoqv4jUbEMMvpeYQf+oWgm/TjWPeLwdjl7AtY0G9Ml=0A=
-ZoyGniYkoHi37Gnn/ShLT3B5vtyI58ap2+SSa8SnGftdAKRLiWFWCiAEklm9FRk8=0A=
-N3hwxhmSFF1KR/AIDS4g+HIsZn7YEMubBSgLlZZ9zHl4O4vwuXlREBEW97iL/FSt=0A=
-VownU2V39t7PtFvGZNk+DJH7eLO3jmNRYB0PL4JOyyda3NH/J92iwrFmjFWWmmWb=0A=
-/Xz8l9DIs+Z59pRCVTTwbBEZhcUc7rVMCcIYL+q1WxBG2e6lMn15OQJ5WfiE6E0I=0A=
-sGirAEDnXWx92JNGx5l+mMpdpsWhBZ5iGTtttZesibNkQfd48/eCgFi4cxJUC4PT=0A=
-UQwfD9AMgzwSTGJrkI5XGy+XqxwOjL8UA0iIrtTpMh49zw46uV6kwFQCgkf32jZM=0A=
-OLwLTNSzclbnA7GRd8tKwezQ/XqeK3dal2n+cOr+o+Eka7yGmGWNUqFbIe8cjj9T=0A=
-JeF3mgOCmZOwMI+wIcQYRSf+e5VTMO6TNWH5BI3vqeHSt7HkYuPlHT0pGum88d4a=0A=
-pWqhulH4rUhEMtirX1hYx8Q4HlUOQqLtxzmwOYWkhl1C+yPObAvUDNiHCLf9w28n=0A=
-uihgEkzHt9J4VKYulyJM9fe3ENcyU6rpXD7iANQqcr87ogKXFxknZ97uEACvSucc=0A=
-RbnnAgRqZ7GDzgoBerJ2zrmhLkeREZ08iz1zze1JgyW3HEwdr2UbyAuqvSADCSUU=0A=
-GN0vtQHsPzWl8onRc7lOPqPDF8OO+UfN9NAfA4wl3QyChD1GXl9rwKQOkbvdlYFV=0A=
-UFx9u86LNi4ssTmU8p9NtHIGpz1SYMVYNoYy9NU7EVqypGMguDCL7gJt6GUmA0sw=0A=
-p+YCroXiwL2BJ7RwRqTpgQuFL1gShkA17D5jK4mDPEetq1d8kz9rQYvAR/sTKBsR=0A=
-ImC3xSfn8zpWoNTTB6lnwyP5Ng1bu6esS7+SpYprFTe7ZqGZF6xhvBPf1Ldi9UAm=0A=
-U2xPN1/eeWxEa2kusidmFKPmN8lcT4miiAvwGxEnY7Oww9CgZlUB+LP4dl5VPjEt=0A=
-sFeAhrgxLdpVTjPRRwTd9VQF3/XYl83j5wySIQKIPXgT3sG3ngAhDhC8I8GpM36r=0A=
-8WJJ3x2yVzyJUbBPO0GBhWE2xPNIfhxVoU4cGGhpFqz7dPKSTRDGq++MrFgKKGpI=0A=
-ZwT3CPTSSKc7ySndEXWkOYArDIdtyxdE1p5/c3aoz4utzUU7NDHQ+vVIwlnZSMiZ=0A=
-jek2IJP3SZ+COOIHCVxpUaZ4lnzWT4eDqABhMLpIzw6NmGfg+kLBJhouqz81WITr=0A=
-EtJuZYM5blWncBOJCoWMnBEcTEo/viU3GgcVRw=3D=3D=0A=
-=3Dx94R=0A=
------END PGP PUBLIC KEY BLOCK-----=0A=
-
---------------P1mysU8ZnwTS0L280nY9B0vk--
-
---------------x8pNw2M3VOPzEH35NxlFgt5y--
-
---------------5PmCfLQaj0BJWQ5UCv0RTtAP
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEopQtqVJW1aeuo9/sszaHOrMp8lMFAmhJAwQACgkQszaHOrMp
-8lMCYBAAnJaEkicBu60Rmt9shexwaOXvU2/ZgY4yVG+QFzmdJT1AmcVouzHDIXb1
-4Qe/11ydma0tY0+kawVpaAhKpVkJS/0YVxtRb/3U0cIxlgLll4NQERCNDDRWyFEL
-SVx+wuQ6QxyZyKeSqGPP6eCiJE2ewOwVmHY+X3WAqvNekhjjmpSZPjFZfEJOrERH
-fJdG+ZeaMJy47itd3DeVr06M7DcYTUIw+3QVgxV9lGwfjCCLC4i6uahnmU2uNsz4
-lx+R27mSqFDiJSQZIBt0ckTxEa6yYYeFUWH1+A+pyYBlCrNLsL4XH4Ty6qOItUf0
-K8vYpbTMhMyXepqmPuWNsWpwEuG6YvBovjQcx7nHjHljyHkw1WXQi6iWx2GMawCz
-qKtCa0ZH3elEv13m7vlZL0uQiphgR0J1KrjT8wQhl0vi1on3muwmIfr+d8donPIg
-lQ8u0QXClE4EHJV6JFTJXXYs/4DIgzy9GLRztgvHCvKDVvswkhLPrTiwX1HIewJv
-QoVbK1bIZOZnJy9Qk7xqcwKUOlL//SunnBNeqV3OB+ujp3Ymvm9TAKqp9U/iLPHq
-rMqpbP/+dCLX2KA5/a77+ItMSHYYcGDogN2/F+IH2YVd9/sRcSrwDwsecnFS6eZ+
-q6uUmt144cu02O4Ga2JgkhAK7DGtYkZ/2iZ/LSp4Cs0OI0ARst4=
-=oIck
------END PGP SIGNATURE-----
-
---------------5PmCfLQaj0BJWQ5UCv0RTtAP--
+the Qualys Security Advisory team=
