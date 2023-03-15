@@ -1,110 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/25/1
-Message-ID: <20231025023856.GA687776@quokka>
-Date: Wed, 25 Oct 2023 12:38:56 +1000
-From: Peter Hutterer <peter.hutterer@...-t.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/15/1
+Message-ID: <20230315094018.27d65aae@fabiankeil.de>
+Date: Wed, 15 Mar 2023 09:40:18 +0100
+From: Fabian Keil <freebsd-listen@...iankeil.de>
 To: oss-security@...ts.openwall.com
-Subject: FW: X.Org Security Advisory: Issues in X.Org X server prior to 21.1.9 and Xwayland prior to 23.2.2
+Subject: Re: TTY pushback vulnerabilities / TIOCSTI
 Content-Type: text/plain; charset=utf-8
 
------ Forwarded message from Peter Hutterer <peter.hutterer@...> -----
+Shawn Webb <shawn.webb@...denedbsd.org> wrote on 2023-03-14 at 16:57:25:
 
-Subject: X.Org Security Advisory: Issues in X.Org X server prior to 21.1.9 and
-	Xwayland prior to 23.2.2
-From: Peter Hutterer <peter.hutterer@...>
-Date: Wed, 25 Oct 2023 11:53:55 +1000
-To: xorg-announce@...ts.x.org
-Cc: xorg@...ts.x.org
+> On Tue, Mar 14, 2023 at 09:51:03AM +0100, Hanno Böck wrote:
+> > Hi,
+> > 
+> > This blogpost highlights TTY Pushback vulnerabilities enabled via the
+> > TIOCSTI kernel functionality available in the Linux kernel:
+> > https://www.errno.fr/TTYPushback.html
+> > 
+> > This has been discussed here previously:
+> > https://www.openwall.com/lists/oss-security/2017/06/03/9
+> > 
+> > Though I think there are some noteworthy updates. In the 2017 post
+> > solar designer mentioned that the Linux kernel developers have multiple
+> > times rejected changes in the kernel. However this has now changed:
+> > Starting with Kernel 6.2 it is possible to disable TIOCSTI
+> > (unset CONFIG_LEGACY_TIOCSTI). It also appears that very few (or no?)
+> > applications practically use TIOCSTI.
+> > 
+> > This seems to be the only real mitigation for this issue. It appears
+> > su has a parameter, and in sudo one can configure the creation of a new
+> > pty in the sudoers file. I don't consider these as satisfying fixes, as
+> > they are optinal, and thus rely on the expectation that users are aware
+> > of this risk and manually use these mitigations. That does not seem
+> > realistic to me.
+> > 
+> > This also affects such a large number of tools, not just
+> > su/sudo-like tools, but also sandboxing tools. E.g. bubblewrap [1] is
+> > affected by this by default.
+> > 
+> > Thus I strongly recommend that people disable this in the kernel.
+> > 
+> > [1] https://github.com/containers/bubblewrap/issues/555
+> 
+> With commit c7d6d4bb4874720d9dab1625df62c2ea6eeb9df5[0], I've added a
+> toggle in HardenedBSD to disable TIOCSTI. The toggle is set to
+> prohibit TIOCSTI by default. Now attempts to use TIOCSTI will be met
+> with EPERM.
 
-X.Org Security Advisory: October 25, 2023
+In ElectroBSD I removed TIOCSTI support in 2017 [0] and haven't
+noticed any problems.
 
-Issues in X.Org X server prior to 21.1.9 and Xwayland prior to 23.2.2
-=====================================================================
+According to the commit message "TIOCSTI is still used in tcsh,
+but as tcsh isn't compiled on ElectroBSD we don't care".
 
-Multiple issues have been found in the X.Org X server implementation published
-by X.Org for which we are releasing security fixes for in xorg-server-21.1.9
-and xwayland-23.2.2.
+> I've verified the toggle in a real-world scenario with the doas issue
+> PoC found at [1].
 
-The first issue (CVE-2023-5367) can be triggered by prepending to an input
-device property or randr property.
+I should probably do the same.
 
-The second issue (CVE-2023-5380) can be triggered by warping a pointer across
-screens in legacy multi-head setups and destroying specific client windows.
-Note that Xwayland is not affected by this issue.
+Fabian
 
-The third issue (CVE-2023-5574) can be triggered in Xvfb during cleanup of the
-ScreenRec, either at server shutdown or when the last client disconnects.
-Note that this issue has not been fixed in a release yet due to some
-issues with the proposed fixes.
+[0]: <https://www.fabiankeil.de/sourcecode/electrobsd/ElectroBSD-20220822-d9391cfeef5b/0157-sys-kern-Follow-OpenBSD-s-lead-and-remove-TIOCSTI-sup.diff>
 
-----------------------------------------------------------------------------
-
-1) CVE-2023-5367 X.Org server: OOB write in XIChangeDeviceProperty/RRChangeOutputProperty
-
-Introduced in: xorg-server-1.7.0 (2009) and xorg-server-1.4.0 (2007), respectively
-Fixed in: xorg-server-21.1.9 and xwayland-23.2.2
-Found by: Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
-Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/541ab2ecd41d4d8689e71855d93e492bc554719a
-
-When prepending values to an existing property an invalid offset calculation
-causes the existing values to be appended at the wrong offset. The resulting
-memcpy() would write into memory outside the heap-allocated array.
-
-For example, prepending 3 values to an existing 5 value property results in
-an allocated array of size 8, but the existing 5 values would be written at
-indices 5 through to 10. Indices 3 and 4 were left uninitialized, but due to a
-separate bug the resulting property only had a client-visible length of 3
-values and the uninitialized memory data was never visibile to the client.
-
-xorg-server-21.1.9 and xwayland-23.2.2 have been patched to fix the offset
-calculation and the length calculation of the property.
-
-2) CVE-2023-5380: Use-after-free bug in DestroyWindow
-
-Introduced in: xorg-server-1.7.0 (2009)
-Fixed in: xorg-server-21.1.9
-Found by: Sri working with Trend Micro Zero Day Initiative
-Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/564ccf2ce9616620456102727acb8b0256b7bbd7
-
-This vulnerability requires a legacy multi-screen setup with multiple protocol
-screens ("Zaphod"). If the pointer is warped from one screen to the root window
-of the other screen, the enter/leave code may retain a reference to the
-previous pointer window. Destroying this window leaves that reference in place,
-other windows may then trigger a use-after-free bug when they are destroyed.
-
-This bug can be triggered only under very specific conditions, in particular it
-requires an XWarpPointer call and that the pointer never enters a client window
-on the other screen.
-
-xorg-server-21.1.9 has been patched fix the offset calculation. Xwayland is not
-affected as it does not support multiple protocol screens.
-
-3) CVE-2023-5574: Use-after-free bug in DamageDestroy
-
-Introduced in: xorg-server-1.13.0 (2012)
-Found by: Sri working with Trend Micro Zero Day Initiative
-Merge request tracking the fixes: https://gitlab.freedesktop.org/xorg/xserver/-/merge_requests/1189
-
-This issue only affects Xvfb and requires a legacy multi-screen setup
-with multiple protocol screens ("Zaphod").
-
-Screen cleanup is handled via stackable "modules", but the fb module hardcoded
-the cleanup path for the screen pixmap instead of calling into the next layer
-of the stack. This caused a minor memory leak that was fixed with a patch to
-Xvfb introduced in server 1.13. However, that patch did not remove all
-references to the freed pixmap, causing a use-after-free during screen cleanup
-in a lower module.
-
-This issue has not yet been fixed, please see the above merge request to
-track future fixes to this issue.
-
-----------------------------------------------------------------------------
-
-X.Org thanks all of those who reported and fixed these issues, and those
-who helped with the review and release of this advisory and these fixes.
-
-
-
------ End forwarded message -----
-
-Download attachment "signature.asc" of type "application/pgp-signature" (196 bytes)
+Content of type "application/pgp-signature" skipped
