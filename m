@@ -1,25 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/22/13
-Message-ID: <ZYYDOSmzhWZu8OxS@codewreck.org>
-Date: Sat, 23 Dec 2023 06:44:25 +0900
-From: Dominique Martinet <asmadeus@...ewreck.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-6817: Linux kernel: use-after-free in nf_tables
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/15/3
+Message-ID: <alpine.BSF.2.21.9999.2303152001170.67613@aneurin.horsfall.org>
+Date: Wed, 15 Mar 2023 20:03:11 +1100 (EST)
+From: Dave Horsfall <dave@...sfall.org>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: Re: TTY pushback vulnerabilities / TIOCSTI
 Content-Type: text/plain; charset=utf-8
 
-Xingyuan Mo wrote on Fri, Dec 22, 2023 at 10:16:24AM +0800:
-> I found a use-after-free vulnerability in the implementation of pipapo set
-> in Linux kernel nf_tables, which can lead to DoS or local privilege
-> escalation, with CAP_NET_ADMIN capability required. The bug is fixed in
-> v6.7-rc5 kernel and the patch is:
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=317eb9685095678f2c9f5a8189de698c5354316a
+On Wed, 15 Mar 2023, Fabian Keil wrote:
 
-For anyone who'd do the same thing:
- - that commit marks Fixes 3c4287f62044 which was introduced in 5.6
- - it's already been backported to stable tree (5.10.204, 5.15.143,
- 6.1.68 and 6.6.7)
+> In ElectroBSD I removed TIOCSTI support in 2017 [0] and haven't noticed 
+> any problems.
 
+I hate tossing out functionality; would you not make it a privileged 
+operation instead?
 
-Thanks,
--- 
-Dominique
+-- Dave
