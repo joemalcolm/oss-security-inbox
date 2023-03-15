@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1377" "Tuesday" "11" "May" "2021" "14:55:49" "-0300" "Thadeu Lima de Souza Cascardo" "cascardo@canonical.com" nil "27" "[oss-security] CVE-2021-3489 - Linux kernel eBPF RINGBUF map oversized allocation" nil nil nil "5" nil nil (number mark "U       cascardo@can May 11   27/1377  " thread-indent "\"[oss-security] CVE-2021-3489 - Linux kernel eBPF RINGBUF map oversized allocation\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-3489 - Linux kernel eBPF RINGBUF map oversized allocation" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 23931 invoked by uid 550); 11 May 2021 18:02:16 -0000
+Received: (qmail 23727 invoked by uid 550); 15 Mar 2023 08:44:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,40 +7,88 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20457 invoked from network); 11 May 2021 17:56:07 -0000
-Date: Tue, 11 May 2021 14:55:49 -0300
-From: Thadeu Lima de Souza Cascardo <cascardo@canonical.com>
+Received: (qmail 23701 invoked from network); 15 Mar 2023 08:44:18 -0000
+Date: Wed, 15 Mar 2023 09:40:18 +0100
+From: Fabian Keil <freebsd-listen@fabiankeil.de>
 To: oss-security@lists.openwall.com
-Message-ID: <20210511175549.GK12149@mussarela>
+Message-ID: <20230315094018.27d65aae@fabiankeil.de>
+In-Reply-To: <20230314205725.oqr3um7kkkyq7zr3@mutt-hbsd>
+References: <20230314095103.1ed76cc0.hanno@hboeck.de>
+	<20230314205725.oqr3um7kkkyq7zr3@mutt-hbsd>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Subject: [oss-security] CVE-2021-3489 - Linux kernel eBPF RINGBUF map oversized allocation
+Content-Type: multipart/signed; boundary="Sig_/8fkfWhHbFCg55ziP5bQ/287";
+ protocol="application/pgp-signature"; micalg=pgp-sha1
+X-Df-Sender: Nzc1MDY3
+Subject: Re: [oss-security] TTY pushback vulnerabilities / TIOCSTI
 
-It was discovered that eBPF RINGBUF bpf_ringbuf_reserve did not check
-that the allocated size was smaller than the ringbuf size.
+--Sig_/8fkfWhHbFCg55ziP5bQ/287
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Ryota Shiga(@Ga_ryo_) of Flatt Security working with Trend Micro's Zero Day
-Initiative discovered that this vulnerability could be turned into
-out-of-bounds writes in the kernel. This has been originally reported as
-ZDI-CAN-13586, and assigned CVE-2021-3489.
+Shawn Webb <shawn.webb@hardenedbsd.org> wrote on 2023-03-14 at 16:57:25:
 
-It was introduced by commit 457f44363a88 ("bpf: Implement BPF ring buffer
-and verifier support for it"), so affects any kernels later than 5.8-rc1.
-It was not backported to any upstream LTS kernel.
+> On Tue, Mar 14, 2023 at 09:51:03AM +0100, Hanno B=C3=B6ck wrote:
+> > Hi,
+> >=20
+> > This blogpost highlights TTY Pushback vulnerabilities enabled via the
+> > TIOCSTI kernel functionality available in the Linux kernel:
+> > https://www.errno.fr/TTYPushback.html
+> >=20
+> > This has been discussed here previously:
+> > https://www.openwall.com/lists/oss-security/2017/06/03/9
+> >=20
+> > Though I think there are some noteworthy updates. In the 2017 post
+> > solar designer mentioned that the Linux kernel developers have multiple
+> > times rejected changes in the kernel. However this has now changed:
+> > Starting with Kernel 6.2 it is possible to disable TIOCSTI
+> > (unset CONFIG_LEGACY_TIOCSTI). It also appears that very few (or no?)
+> > applications practically use TIOCSTI.
+> >=20
+> > This seems to be the only real mitigation for this issue. It appears
+> > su has a parameter, and in sudo one can configure the creation of a new
+> > pty in the sudoers file. I don't consider these as satisfying fixes, as
+> > they are optinal, and thus rely on the expectation that users are aware
+> > of this risk and manually use these mitigations. That does not seem
+> > realistic to me.
+> >=20
+> > This also affects such a large number of tools, not just
+> > su/sudo-like tools, but also sandboxing tools. E.g. bubblewrap [1] is
+> > affected by this by default.
+> >=20
+> > Thus I strongly recommend that people disable this in the kernel.
+> >=20
+> > [1] https://github.com/containers/bubblewrap/issues/555
+>=20
+> With commit c7d6d4bb4874720d9dab1625df62c2ea6eeb9df5[0], I've added a
+> toggle in HardenedBSD to disable TIOCSTI. The toggle is set to
+> prohibit TIOCSTI by default. Now attempts to use TIOCSTI will be met
+> with EPERM.
 
-The proposed fix is that the allocating size cannot be larger than the
-ringbuf size. Also, in order to prevent other exploits that change the
-producer pointer or record headers, deny writable maps of those pages, as
-was documented and is used by libbpf.
+In ElectroBSD I removed TIOCSTI support in 2017 [0] and haven't
+noticed any problems.
 
-This is fixed by the following commit:
-https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/commit/?id=4b81ccebaeee885ab1aa1438133f2991e3a2b6ea
+According to the commit message "TIOCSTI is still used in tcsh,
+but as tcsh isn't compiled on ElectroBSD we don't care".
 
-The commit below is also helpful in preventing other exploits:
-https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/commit/?id=04ea3086c4d73da7009de1e84962a904139af219
+> I've verified the toggle in a real-world scenario with the doas issue
+> PoC found at [1].
 
-And the following commit to bpf selftests is useful for validating the above fix:
-https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf.git/commit/?id=98a34e93da83e50e197584c7c362668bf12c1d54
+I should probably do the same.
 
-Cascardo.
+Fabian
+
+[0]: <https://www.fabiankeil.de/sourcecode/electrobsd/ElectroBSD-20220822-d=
+9391cfeef5b/0157-sys-kern-Follow-OpenBSD-s-lead-and-remove-TIOCSTI-sup.diff>
+
+--Sig_/8fkfWhHbFCg55ziP5bQ/287
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EARECAB0WIQTKUNd6H/m3+ByGULIFiohV/3dUnQUCZBGEcgAKCRAFiohV/3dU
+na0uAJ9R7PKH5fa66X/57i+/umgSSmi8NACePzNxDsD/NTCQYHLInd3FfK8GEQo=
+=cZm/
+-----END PGP SIGNATURE-----
+
+--Sig_/8fkfWhHbFCg55ziP5bQ/287--
