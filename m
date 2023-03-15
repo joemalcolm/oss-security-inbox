@@ -1,31 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/07/7
-Message-ID: <CAP9KPhB7PqqFt=Of8+6CKiaV=+p=WwYOjG3QF3TEBDDop1125g@mail.gmail.com>
-Date: Tue, 7 Feb 2023 10:49:47 -0800
-From: David Leadbeater <dgl@....cx>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/15/2
+Message-ID: <a9e305ad-f33b-f0b5-8e0d-53baacc6430b@apache.org>
+Date: Wed, 15 Mar 2023 00:30:17 +0000
+From: Jarek Potiuk <potiuk@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2022-46663: less -R filtering bypass
+Subject: CVE-2023-25695: Information disclosure in Apache Airflow 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: low
 
-I discovered a way to bypass the escape sequence filtering performed
-by less -R due to incorrect terminal state machine handling.
+Description:
 
-The fix is:
-https://github.com/gwsw/less/commit/a78e1351113cef564d790a730d657a321624d79c
-but not yet part of any less release.
+Generation of Error Message Containing Sensitive Information vulnerability in Apache Software Foundation Apache Airflow.This issue affects Apache Airflow: before 2.5.2.
 
-An example that results in a DoS in xterm or iTerm 2 is:
-printf "\e]8;;\e0m\e[>0q" > less-example-xtversion
-less -R less-example-xtversion
+Credit:
 
-This has the result of getting the terminal to reply with something
-like "\eP>|name version". The "P" there makes less scroll up, the ">"
-makes it scroll down, and then it prints the same thing to the tty,
-rinse, repeat.
+kuteminh11 (finder)
 
-This affects GNU less >= 566 (and <609, but version 608 is the last
-public release, the later version numbers are snapshots).
+References:
 
-David
+https://github.com/apache/airflow/pull/29501
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-25695
+
