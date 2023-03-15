@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2698" "Wednesday" "31" "May" "2017" "14:14:32" "+0200" "Solar Designer" "solar@openwall.com" "<20170531121432.GA8671@openwall.com>" "56" "Re: [oss-security] I found Crash in tcpdump and radare2." "^Cc:" nil nil "5" "2017053112:14:32" "[oss-security] I found Crash in tcpdump and radare2." (number mark "        solar@openwa May 31   56/2698  " thread-indent "\"Re: [oss-security] I found Crash in tcpdump and radare2.\"\n") "<20170531131615.58752cc0@pc1>" ("<8XrcMd96kN_Nn_-TzYxWxS_29WZ5T4xj249Hg0NnH1FAaF42pe-_O32I4hSYnNChHMwPzFIhcsL5AQFCwYJmsCzaAC6QTgZtKwoXcGck-Rg=@protonmail.com>" "<20170531131615.58752cc0@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 1925 invoked by uid 550); 31 May 2017 12:15:23 -0000
+Received: (qmail 28349 invoked by uid 550); 15 Mar 2023 09:40:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,74 +6,48 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1657 invoked from network); 31 May 2017 12:14:48 -0000
-Message-ID: <20170531121432.GA8671@openwall.com>
-References: <8XrcMd96kN_Nn_-TzYxWxS_29WZ5T4xj249Hg0NnH1FAaF42pe-_O32I4hSYnNChHMwPzFIhcsL5AQFCwYJmsCzaAC6QTgZtKwoXcGck-Rg=@protonmail.com> <20170531131615.58752cc0@pc1>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170531131615.58752cc0@pc1>
-User-Agent: Mutt/1.4.2.3i
-Cc: Qhdwns123 <qhdwns123@protonmail.com>
-Date: Wed, 31 May 2017 14:14:32 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] I found Crash in tcpdump and radare2.
+Received: (qmail 28328 invoked from network); 15 Mar 2023 09:40:47 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hboeck.de; s=key1;
+	t=1678873236; bh=ykNFCE+6ll6RZ5zXeOAuENPjmu6y3wIabAiYENZ/qaE=;
+	h=Date:From:To:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	b=WljkiSjKKUmrOh6dlSRO5eXaNzNDlWjBKPB0lVA1EjG86lb7HVE8ddG46rbcGMo7j
+	 sBRj+HuSyhA4idGkVw0bztHBu+A5L/8ZnsyxzAZEZqS82rC3jqVnbOgWWx1rU5vUU0
+	 ID9d71Lsqk22X0y2rC6sduyTnLzMoec75P7K3gFJOumGzBUdzEHu4HTbdzY2pPc/pe
+	 GrDcZN9CUz+10x5GIDoB4+r6C6CilZ39/35fRcoQ1GvnZpLGFOid6kAvfNIhMGJ0Dz
+	 ZDC1fkFkjb+JrMoiH09APy/xeg6OHqDJW0QkkqkHCnS+97oj2Ox4U1zPxZmCS9Wizt
+	 ItJTVVZofV5NQ==
+Original-Subject: Re: [oss-security] TTY pushback vulnerabilities / TIOCSTI
+Author: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
+Date: Wed, 15 Mar 2023 10:40:35 +0100
+From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
 To: oss-security@lists.openwall.com
+Message-ID: <20230315104035.4b48f27d.hanno@hboeck.de>
+In-Reply-To: <alpine.BSF.2.21.9999.2303152001170.67613@aneurin.horsfall.org>
+References: <20230314095103.1ed76cc0.hanno@hboeck.de>
+	<20230314205725.oqr3um7kkkyq7zr3@mutt-hbsd>
+	<20230315094018.27d65aae@fabiankeil.de>
+	<alpine.BSF.2.21.9999.2303152001170.67613@aneurin.horsfall.org>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.37; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] TTY pushback vulnerabilities / TIOCSTI
 
-On Wed, May 31, 2017 at 01:16:15PM +0200, Hanno B??ck wrote:
-> On Wed, 31 May 2017 06:39:12 -0400 Qhdwns123 <qhdwns123@protonmail.com> wrote:
-> 
-> > I found Crash in tcpdump and radare2.
-> > 
-> > It points to the heap overflow as the result of analysis by ASAN.
-> > 
-> > What steps should I take to report this issue?
-> 
-> Please report the issues first to their respective developers and
-> provide the crashing files to them.
-> 
-> tcpdump has a contact address for security issues:
-> http://www.tcpdump.org/#security
-> 
-> I think radare2 has no specific security reporting process, you can
-> report it through their github tracker:
-> https://github.com/radare/radare2/issues
-> 
-> When the bugs are fixed you can post details to this list.
+On Wed, 15 Mar 2023 20:03:11 +1100 (EST)
+Dave Horsfall <dave@horsfall.org> wrote:
 
-Thanks, Hanno!
+> I hate tossing out functionality; would you not make it a privileged=20
+> operation instead?
 
-My opinion, both personal and as oss-security list admin:
+=46rom a security perspective tossing out functionality is the better
+option compared to restricting access. If there is practically no use
+of that functionality and it's mostly a security risk, then removing it
+is the right choice.
 
-It is rarely sensible to delay posting the detail to oss-security until
-the bugs are fixed - e.g., what if a bug is never fixed upstream?  We
-would still like to have the detail here - in fact, the detail should be
-in here no later (or not much later - e.g., same day) as it's made
-public elsewhere.  So if a bug report to an upstream project is made via
-a public GitHub issue (as may need to be the case for radare2, and
-that's fine), the detail should also be posted in here at about the same
-time, please.  For tcpdump, it may be OK to give the upstream some sane
-amount of time, like 7 or 14 days, but to notify them of this limited
-time along with the initial notification, and to post the detail to
-oss-security when the bug is fixed or when the time runs out, whichever
-occurs first.  Also, ask the upstream whether they expect to have a fix
-within the offered amount of time - if not, then post right away.
+Reducing complexity is a good principle for IT security.
 
-I don't know if the tcpdump project specifically is able to fix bugs
-reasonably fast - what was the precedent so far?  If not, then no point
-in giving them any advance notice (but you should notify them anyway,
-along with making the issue public).  I am speaking about notifying
-upstreams in general, using this as an example.
-
-Frankly, for the few issues I brought in here myself, I sometimes
-happened to give upstreams too much time or/and to discuss those issues
-in other public places for a while.  However, this is merely how it
-happened, for reasons including my own lack of time to stay on top of
-issues and because of initially unclear nature of some issues (e.g.,
-security or not?)  As I wrote above, I think that ideally if an issue is
-already being discussed in public elsewhere (such as with upstream), it
-should also be in here at the same time, and for issues reported to
-upstreams privately the amount of time offered should quite limited.
-
-Alexander
+--=20
+Hanno B=C3=B6ck
+https://hboeck.de/
