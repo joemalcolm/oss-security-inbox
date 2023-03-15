@@ -1,34 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/18/3
-Message-ID: <a0b0eca3540cf1cb5e7ccb1d4e20d4edee9333da.camel@orlitzky.com>
-Date: Wed, 18 Oct 2023 11:29:15 -0400
-From: Michael Orlitzky <michael@...itzky.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: with firefox on X11, any page can pastejack you anytime
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/15/4
+Message-ID:  <DS7PR10MB5358E5511783501575C5C133FDBF9@DS7PR10MB5358.namprd10.prod.outlook.com>
+Date: Wed, 15 Mar 2023 09:26:24 +0000
+From: Casper Dik <casper.dik@...cle.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: TTY pushback vulnerabilities / TIOCSTI
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 2023-10-17 at 03:17 +0300, turistu wrote:
-> Note to the moderator: I have already submitted this to the firefox people
-> three weeks ago, and according to them, this is not a real security issue,
-> or at least not worse than those pesky scripts which you cannot kill without
-> killing firefox itself; if you think the same, just ignore this without
-> replying.
+>On Wed, 15 Mar 2023, Fabian Keil wrote:
 
-If there's more than one bug they must be features, duh.
+>> In ElectroBSD I removed TIOCSTI support in 2017 [0] and haven't noticed
+>> any problems.
+
+>I hate tossing out functionality; would you not make it a privileged
+>operation instead?
+
+>-- Dave
 
 
-> I would however appreciate if you let this through and so give it some
-> visibility so that the other 2 or 3 people who may be affected by this
-> could learn about it.
+I think it makes it mostly useless.
 
-Thanks for this. Since nobody else has responded, I agree that it's a
-security issue. The data in the clipboard are mine and there should be
-exactly one way for me to overwrite them. This is a problem even if the
-data is not sensitive and if the terminal paste is not exploitable:
+In Solaris we've changed how TIOCSTI works; when a process reads the
+packet with the stuffed input, it then checks the credential of the
+sender.   So while the stuffed input is still echoed but ignored:
 
-1. A third party
-2. Has tricked my computer
-3. Into doing something I didn't want it to
+# su nobody -c tiocsti
+exit
+echo Payload as `whoami`
+#
 
-Those are the three criteria for a vulnerability that I just made up.
+But when having root calling tciosti, you get:
 
+# su root -c tiocsti
+exit
+echo Payload as `whoami`
+# exit
+Payload as root
+
+(The exit here is not needed)
+
+Casper
