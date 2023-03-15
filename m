@@ -1,4 +1,4 @@
-Received: (qmail 1634 invoked by uid 550); 27 Apr 2024 13:28:21 -0000
+Received: (qmail 15658 invoked by uid 550); 15 Mar 2023 23:18:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,184 +7,130 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31867 invoked from network); 27 Apr 2024 04:47:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714193269; x=1714798069; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:references:subject:to
-         :mime-version:user-agent:reply-to:from:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DDtPdmTjY0Ndtm1CMsvDyeiic5Q32n9Kve+IpWS0ZMw=;
-        b=hYYvUqIgmQgjRhQkf4eNNHJOZSGfRmXYaict0DpnSjs9a46iqMoUT9XWHhgGxyZwtU
-         isoQDShGY+Mxnl9aoGJNUajupM2S1zvf1fexcVrQyP27YWyuo6ZgII7oXQ3mySrQLKC8
-         Q4dM4xlvrDwbcj1PnkDoOJu4MTg3qg/drH6hnh+KbxUQ5vzPNZiHR2rqmgJsrVCltH8p
-         LNIGC6pnbeV6EpxSzoPSmUR8VR1tZfqklqDXTA6+IPbCYknpqPNzM8e8bpGYkvWB80EQ
-         wJuGDrFWgGFOaegoVqnflFUAMsfPlmpVNv/GatUJnl9hcszMCb+RPZxsCDtjz623Fn6h
-         Gd3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714193269; x=1714798069;
-        h=content-transfer-encoding:in-reply-to:references:subject:to
-         :mime-version:user-agent:reply-to:from:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DDtPdmTjY0Ndtm1CMsvDyeiic5Q32n9Kve+IpWS0ZMw=;
-        b=NN1kPXDq22MdpubP/pwk8vVxsM2xVJxfTVzE+qQOueh85/9sH2/C0ukbsWv3pLp1d7
-         GHKfIJeUl+Icfz7VI//Oyk1N90PIyrUU190PHBt6ATlaerFTcLyMm9tfdaSqB+pNVnia
-         v16/+YxlBV6Qpu4nrcAda9DuSoQex/x5ijWS7Ru3x7UJYnuWxIxuyEfS+CbSWay4e9WB
-         vpV/BZGBq4eCDpsOZaT3mTEtu1gaLkF0bJA2Ixi/aSnS/aNF4k9XmJbAgnpqGTJQG+OF
-         xFjC3Fs3xgZrXmrrd6/TX4hBMgVx4h0e/5DUpEBFd+el0DK96ECRZIwFuOn7d/hbf95v
-         oITQ==
-X-Gm-Message-State: AOJu0YxE0SyCSvV6Nwgv9nkYZ1lKENAAG1zOrMXngpF0wsQ1lJij92Qv
-	H9k2O1hTV8HwY5HmOMwlJHh8C+q+bjUMuSBhmjTROjw2402G6+fGS3+SRw==
-X-Google-Smtp-Source: AGHT+IHqiPq0jUaqjcp1oSfdxCXh9RHyCyVqSmgDuVFhAN71gxH8ej+moHmgz8OiP7u4fzw3pwKFYg==
-X-Received: by 2002:a4a:44c6:0:b0:5aa:4a0c:d99e with SMTP id o189-20020a4a44c6000000b005aa4a0cd99emr5786680ooa.8.1714193268585;
-        Fri, 26 Apr 2024 21:47:48 -0700 (PDT)
-Message-ID: <662C8372.80709@gmail.com>
-Date: Fri, 26 Apr 2024 23:47:46 -0500
-From: Jacob Bachmeyer <jcb62281@gmail.com>
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.8.1.22) Gecko/20090807 MultiZilla/1.8.3.4e SeaMonkey/1.1.17 Mnenhy/0.7.6.0
-MIME-Version: 1.0
+Received: (qmail 15627 invoked from network); 15 Mar 2023 23:18:51 -0000
+From: Damien Miller <djm@cvs.openbsd.org>
+Date: Wed, 15 Mar 2023 17:18:38 -0600 (MDT)
 To: oss-security@lists.openwall.com
-References: <20240426135217.a103ce0c-a775-4a49-ae2c-94dfd64f6695@korelogic.com>
-In-Reply-To: <20240426135217.a103ce0c-a775-4a49-ae2c-94dfd64f6695@korelogic.com>
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] Update on the distro-backdoor-scanner effort
+Message-ID: <488129326b383c39@cvs.openbsd.org>
+Subject: [oss-security] Announce: OpenSSH 9.3 released
 
-Hank Leininger wrote:
-> [...]
->
-> Where we are: main things investigated:
->
-> - Similar exploitation toolkits / operator-behavior in other packages?
->
-> [...]
->
->   - Output is manageable; able to rule out all hits not part of the
->     actual xz-utils backdoors as false positives.
->   
+OpenSSH 9.3 has just been released. It will be available from the
+mirrors listed at https://www.openssh.com/ shortly.
 
-This is what I would expect:  the backdoor dropper appears to have been 
-specifically developed for xz-utils, but could /possibly/ be adaptable 
-to other compression tools.  This is a much narrower field to search 
-than "every package in the distribution" and the potentially reusable 
-"smoking gun" parts (the stage2 and actual blob) were hidden in a way 
-that no scanner could plausibly find.
+OpenSSH is a 100% complete SSH protocol 2.0 implementation and
+includes sftp client and server support.
 
-That said, it would be possible to hide a similar backdoor in another 
-package and use the /installed/ xz to unpack it, but this would (again) 
-require very different patterns in the outermost dropper layers, since 
-the backdoor would have to be hidden somehow in another file type.  Most 
-packages will not have xz files in their testsuites.  While I do not 
-believe that there are more backdoors to find, the chances of any string 
-match based on this one finding another are tiny.
+Once again, we would like to thank the OpenSSH community for their
+continued support of the project, especially those who contributed
+code or patches, reported bugs, tested snapshots or donated to the
+project. More information on donations may be found at:
+https://www.openssh.com/donations.html
 
-> - Examine the provenance of every .m4 in every package unpacked above
->
-> [...]
->   - Big TODOs here are to implement fuzzy hashing when we don't have
->     a perfect match, so that we can pick the best knowngood candidate
->     to offer a diff against and to group the unknowns amongst
->     themselves, and something to facilitate tracking of diff-review
->     (CSV or another sqlite DB that tracks review status?), and then
->     to actually read all the diffs (currently only spot-checked).
->   
+Changes since OpenSSH 9.2
+=========================
 
-You might get better results by indexing macro definitions found in *.m4 
-files, instead of trying to fuzzily hash the files.  The interesting 
-comparison is then different definitions of macros with the same name.
+This release fixes a number of security bugs.
 
-> - Compare decompression of xz-utils vs other compatible tools
->
->   - Just to check for some obvious Thompsonesque weird machine where
->     xz injects malicious .c code into a tarball it unpacks, etc. Very
->     unlikely to find anything.
->   
+Security
+========
 
-While I agree that this is unlikely, the crackers missed an 
-opportunity:  many (most?) modern Linux kernels are compressed using xz, 
-which means that a Thompsonesque attack could binary-patch a freshly 
-built kernel while compressing vmlinux to make vmlinuz.  (The last time 
-I watched a kernel build, Linux is first linked to produce a kernel 
-image ("vmlinux"), which is then compressed and attached to a 
-decompression stub to produce the final bootable image ("vmlinuz").)
+This release contains fixes for a security problem and a memory
+safety problem. The memory safety problem is not believed to be
+exploitable, but we report most network-reachable memory faults as
+security bugs.
 
-Accomplishing such an attack with a weird machine is /very/ unlikely.  
-Having the inserted blob target xz itself would make far more sense, and 
-the blob from this backdoor (according to reports so far) only targets sshd.
+ * ssh-add(1): when adding smartcard keys to ssh-agent(1) with the
+   per-hop desination constraints (ssh-add -h ...) added in OpenSSH
+   8.9, a logic error prevented the constraints from being
+   communicated to the agent. This resulted in the keys being added
+   without constraints. The common cases of non-smartcard keys and
+   keys without destination constraints are unaffected. This problem
+   was reported by Luci Stanescu.
 
->   - Found nothing except some minor bugs in other decompressors (will
->     submit upstream bugs, but low priority).
->   
+ * ssh(1): Portable OpenSSH provides an implementation of the
+   getrrsetbyname(3) function if the standard library does not
+   provide it, for use by the VerifyHostKeyDNS feature. A
+   specifically crafted DNS response could cause this function to
+   perform an out-of-bounds read of adjacent stack data, but this
+   condition does not appear to be exploitable beyond denial-of-
+   service to the ssh(1) client.
 
-I expect that you will find nothing here, but if you are paranoid 
-enough, patching the Linux build process to run a similar comparison on 
-common distribution kernels might be interesting.  You would want to 
-ensure that decompressing the compressed kernel image (preferably with a 
-standalone decompressor derived from the xz-embedded used in Linux's 
-decompression stub) yields the original uncompressed kernel image.
+   The getrrsetbyname(3) replacement is only included if the system's
+   standard library lacks this function and portable OpenSSH was not
+   compiled with the ldns library (--with-ldns). getrrsetbyname(3) is
+   only invoked if using VerifyHostKeyDNS to fetch SSHFP records. This
+   problem was found by the Coverity static analyzer.
 
->   - Still plan to add more different decompressors for completeness.
->   
+New features
+------------
 
-I would like to suggest 7-zip here.
+ * ssh-keygen(1), ssh-keyscan(1): accept -Ohashalg=sha1|sha256 when
+   outputting SSHFP fingerprints to allow algorithm selection. bz3493
+    
+ * sshd(8): add a `sshd -G` option that parses and prints the
+   effective configuration without attempting to load private keys
+   and perform other checks. This allows usage of the option before
+   keys have been generated and for configuration evaluation and
+   verification by unprivileged users.
 
-> What's next: rough notions only, not yet implemented:
->
-> - Analyze IFUNC real-world use. They're dodgy and weird and useful for
->   backdoors like this one. Removing IFUNC support from glibc has been
->   floated: https://marc.info/?l=glibc-alpha&m=171389592724184&w=4
->   But that'll get hung up on "but what if users". AFAWK nobody knows.
->   So let's find out: survey sources & binaries from major distros and
->   get some actual numbers. Also thegrugq made an interesting
->   observation: it'd be telling which projects recently _added_ IFUNC
->   use, if any. See
->   https://github.com/hlein/distro-backdoor-scanner/issues/16
->   
+Bugfixes
+--------
 
-The IFUNC mechanism is actually a security feature.  In "inner-loop" 
-code, having multiple implementations with different optimizations with 
-the preferred implementation for the local processor chosen at runtime 
-is fairly common.  This is most common in cryptographic and other 
-data-processing libraries, where small incremental improvements can 
-significantly add up.
+ * scp(1), sftp(1): fix progressmeter corruption on wide displays;
+   bz3534
 
-The catch is that choosing an implementation at runtime means that you 
-must dispatch through a function pointer somewhere, typically in the 
-data segment, which is writable and leads to possible ways to hijack 
-control if those function pointers can be corrupted.  IFUNCs allow 
-storing those function pointers in the PLT, which can be made read-only 
-after relocation is completed, most importantly long before *any* input 
-is processed, if LD_BIND_NOW or "-z now" are used to disable lazy binding.
+ * ssh-add(1), ssh-keygen(1): use RSA/SHA256 when testing usability
+   of private keys as some systems are starting to disable RSA/SHA1
+   in libcrypto.
 
-The backdoor does not seem (according to reports so far) to actually use 
-the IFUNC mechanism as anything other than a way to gain control of 
-execution early in process initialization.  In fact, the backdoor's 
-IFUNC resolver ran "too early" so the backdoor tampered with ld.so's 
-data segment to register itself using parts of the LD_AUDIT mechanism, 
-so it would be called later when the PLT entries that it actually wanted 
-to hijack would exist.  I am still unsure whether IFUNC was actually 
-needed here or if __attribute__((__constructor__)) could achieve the 
-same results.
+ * sftp-server(8): fix a memory leak. GHPR363
 
-I currently suspect that the crackers used IFUNC support as a covert 
-flag.  The "jankiness" of the current glibc IFUNC implementation 
-provided a convenient excuse to ask oss-fuzz to --disable-ifunc when 
-building xz-utils, which *also* conveniently inhibited the backdoor 
-dropper and ensured that the fuzzing builds would not contain the backdoor.
+ * ssh(1), sshd(8), ssh-keyscan(1): remove vestigal protocol
+   compatibility code and simplify what's left.
 
-> - Check for irregular contents in .pc files, inspired by Vegard
->   Nossum's oss-security post
->   https://marc.info/?l=oss-security&m=171335763115933&w=4
->   This seems it'd be pretty easy to look for known bads. Starting
->   notes: https://github.com/hlein/distro-backdoor-scanner/issues/7
->   
+ * Fix a number of low-impact Coverity static analysis findings.
+   These include several reported via bz2687
 
-Much easier:  look for pkg-config descriptions containing text other 
-than a variable definition.  The pkg-config tool itself should probably 
-enforce "cleanliness" on this matter and refuse to process files 
-containing other text.  (It also should complain about and reject an 
-*-uninstalled.pc file found in the system directories, which was another 
-logic error exploited in that sample backdoor.)
+ * ssh_config(5), sshd_config(5): mention that some options are not
+   first-match-wins.
 
+ * Rework logging for the regression tests. Regression tests will now
+   capture separate logs for each ssh and sshd invocation in a test.
 
--- Jacob
+ * ssh(1): make `ssh -Q CASignatureAlgorithms` work as the manpage
+   says it should; bz3532.
+
+ * ssh(1): ensure that there is a terminating newline when adding a
+   new entry to known_hosts; bz3529
+
+Portability
+-----------
+
+ * sshd(8): harden Linux seccomp sandbox. Move to an allowlist of
+   mmap(2), madvise(2) and futex(2) flags, removing some concerning
+   kernel attack surface.
+
+ * sshd(8): improve Linux seccomp-bpf sandbox for older systems;
+   bz3537
+
+Checksums:
+==========
+
+- SHA1 (openssh-9.3.tar.gz) = 5f9d2f73ddfe94f3f0a78bdf46704b6ad7b66ec7
+- SHA256 (openssh-9.3.tar.gz) = eRcXkFZByz70DUBUcyIdvU0pVxP2X280FrmV8pyUdrk=
+
+- SHA1 (openssh-9.3p1.tar.gz) = 610959871bf8d6baafc3525811948f85b5dd84ab
+- SHA256 (openssh-9.3p1.tar.gz) = 6bq6dwGnalHz2Fpiw4OjydzZf6kAuFm8fbEUwYaK+Kg=
+
+Please note that the SHA256 signatures are base64 encoded and not
+hexadecimal (which is the default for most checksum tools). The PGP
+key used to sign the releases is available from the mirror sites:
+https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
+
+Reporting Bugs:
+===============
+
+- Please read https://www.openssh.com/report.html
+  Security bugs should be reported directly to openssh@openssh.com
+
 
