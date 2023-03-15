@@ -1,22 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/30/4
-Message-ID: <Y9gWyhCK9X8onWos@itl-email>
-Date: Mon, 30 Jan 2023 14:13:10 -0500
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
-To: oss-security@...ts.openwall.com, Solar Designer <solar@...nwall.com>
-Subject: Re: Data operand dependent timing on Intel and Arm CPUs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/15/5
+Message-ID: <20230315104035.4b48f27d.hanno@hboeck.de>
+Date: Wed, 15 Mar 2023 10:40:35 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: TTY pushback vulnerabilities / TIOCSTI
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jan 30, 2023 at 10:43:16AM -0600, Mark Hack wrote:
-> This is a concern, but if you look into the crypto implementations,
-> data blinding is applied to mitigate both instruction and power side
-> channel attacks
+On Wed, 15 Mar 2023 20:03:11 +1100 (EST)
+Dave Horsfall <dave@...sfall.org> wrote:
 
-Can you provide examples?  I have never seen blinding used for symmetric
-cryptography outside of embedded systems.
+> I hate tossing out functionality; would you not make it a privileged 
+> operation instead?
+
+From a security perspective tossing out functionality is the better
+option compared to restricting access. If there is practically no use
+of that functionality and it's mostly a security risk, then removing it
+is the right choice.
+
+Reducing complexity is a good principle for IT security.
+
 -- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
-
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Hanno Böck
+https://hboeck.de/
