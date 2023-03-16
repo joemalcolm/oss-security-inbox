@@ -1,48 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/04/4
-Message-ID: <407acc1c-dc56-d223-7ca9-d8d57532d145@oracle.com>
-Date: Thu, 4 May 2023 11:06:01 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com, Sam Bull <9m199i@...bull.org>
-Subject: Re: Perl's HTTP::Tiny has insecure TLS cert default, affecting CPAN.pm and other modules
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/16/2
+Message-ID: <1457266614.331217.1678982252139.JavaMail.zimbra@census-labs.com>
+Date: Thu, 16 Mar 2023 17:57:32 +0200 (EET)
+From: Giannis Christodoulakos <gchristodoulakos@...sus-labs.com>
+To: oss-security <oss-security@...ts.openwall.com>
+Subject: CVE-2023-24278 - Reflected XSS vulnerabilities in Squidex "/squid.svg" endpoint
 Content-Type: text/plain; charset=utf-8
 
-On 5/4/23 10:15, Sam Bull wrote:
-> On Wed, 2023-05-03 at 15:54 -0400, David A. Wheeler wrote:
->>> On May 3, 2023, at 3:15 PM, Reid Sutherland <reid@...rddimension.net> wrote:
->>> Who actually decides when something receives a CVE?
->>
->> There's a process for assigning CVEs. Anyone who wants to be able to assign CVEs - that
->> is, to become a CVE Numbering Authority (CNA) - has to follow various processes.
->>
->>>   This can be used to defame projects and products as in this case.
->>
->> Identifying a vulnerability does not defame a project.
-> 
-> But, reporting a CVE where there is no vulnerability wastes a lot of time for the project
-> maintainers, as we had last year with this CVE:
-> https://github.com/aio-libs/aiohttp/issues/6801
-> 
-> As far as we could tell, it seems a random user reported a DoS vulnerability to Github
-> (maybe?) and got a CVE assigned, with no reproducer or any evidence of a vulnerability,
-> and just a link to an issue which was never considered a security issue by anybody. None
-> of us involved with the project were notified of the report either, we learnt about the
-> CVE from other users asking us about it.
-> 
-> It took months to get that satisfactorily revoked and stop getting users asking us about
-> it (apparently there's no standardised way to tell if CVEs are revoked, so seems DB
-> maintainers have to remove them on a case-by-case basis, making the process much longer).
-> So, something somewhere is not fully working in the process.
-The CVE process is designed with a primary goal of simply providing a unique id
-for each claimed vulnerability - it's intended to not have much deeper meaning
-than creating a UUID.   There is no requirement that the claimed vulnerability
-be well described, proven, accepted, fixed, or anything else beyond not being a
-duplicate of an existing CVE entry.
+Hello all, 
 
-Unfortunately, many CVE consumers assume a far greater level of meaning to CVEs
-than the CVE project intends by them.
+Squidex, a "headless" open source CMS framework was found to have two reflected XSS vulnerabilities in the "/squid.svg" endpoint 
+affecting versions prior to 7.4.0. The vulnerabilities have been addressed in version 7.4.0 of the framework. 
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+CVE-2023-24278 was assigned to these vulnerabilities by MITRE. 
+
+The vulnerabilities affect both authenticated and unauthenticated users and allow for 
+malicious JavaScript to be executed within victim user browsers. Moreover, the vulnerabilities 
+enable an attacker to collect the CMS authentication token from browser local storage 
+and it is therefore possible for the attacker to gain unauthorized access to a victim user's session. 
+
+More information about these issues is available here: 
+[ [ https://census-labs.com/news/2023/03/16/reflected-xss-vulnerabilities-in-squidex-squidsvg-endpoint/ | https://census-labs.com/news/2023/03/16/reflected-xss-vulnerabilities-in-squidex-squidsvg-endpoint/ ] | [ https://census-labs.com/news/2023/03/16/reflected-xss-vulnerabilities-in-squidex-squidsvg-endpoint/ | https://census-labs.com/news/2023/03/16/reflected-xss-vulnerabilities-in-squidex-squidsvg-endpoint/ ] ] 
+
+Best regards, 
+
+Ioannis Christodoulakos 
 
