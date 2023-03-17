@@ -1,102 +1,122 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/20/6
-Message-ID: <s3sr40p2-p54p-803q-4313-30opr383p732@unkk.fr>
-Date: Mon, 20 Mar 2023 08:26:21 +0100 (CET)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORY] curl: CVE-2023-27538: SSH connection too eager reuse still
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/17/3
+Message-ID: <20230317114844.21563d9a.hanno@hboeck.de>
+Date: Fri, 17 Mar 2023 11:48:44 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: TTY pushback vulnerabilities / TIOCSTI
 Content-Type: text/plain; charset=utf-8
 
-CVE-2023-27538: SSH connection too eager reuse still
-====================================================
+On Tue, 14 Mar 2023 11:36:26 +0100
+Jakub Wilk <jwilk@...lk.net> wrote:
 
-Project curl Security Advisory, March 20th 2023 -
-[Permalink](https://curl.se/docs/CVE-2023-27538.html)
+> On Linux virtual terminals, it's possible to achieve pretty much the 
+> same effect using TIOCLINUX, the ioctl used by gpm to implement 
+> copy&pasting.
 
-VULNERABILITY
--------------
+This is interesting.
 
-libcurl would reuse a previously created connection even when an SSH related
-option had been changed that should have prohibited reuse.
+Given this works only on "virtual terminals" (aka not in a terminal
+window on X, not over SSH), I think the severity is much lower than the
+TIOCSTI issue. Still it should be fixed.
 
-libcurl keeps previously used connections in a connection pool for subsequent
-transfers to reuse if one of them matches the setup. However, two SSH settings
-were left out from the configuration match checks, making them match too
-easily.
+I've created a patch for the Linux kernel very similar to the patch
+that allows disabling TIOCSTI. I'll send that to the kernel devs soon,
+but maybe people here want to test and comment.
 
-We are not aware of any exploit of this flaw.
+---
+ drivers/tty/Kconfig  | 16 ++++++++++++++++
+ drivers/tty/tty.h    |  1 +
+ drivers/tty/tty_io.c |  7 +++++++
+ drivers/tty/vt/vt.c  |  5 +++++
+ 4 files changed, 29 insertions(+)
 
-INFO
-----
+diff --git a/drivers/tty/Kconfig b/drivers/tty/Kconfig
+index d35fc068d..f808e4ee7 100644
+--- a/drivers/tty/Kconfig
++++ b/drivers/tty/Kconfig
+@@ -168,6 +168,22 @@ config LEGACY_TIOCSTI
+ 	  dev.tty.legacy_tiocsti sysctl. This configuration option sets
+ 	  the default value of the sysctl.
+ 
++config LEGACY_TIOCLINUX
++	bool "Allow legacy TIOCLINUX usage"
++	default y
++	help
++	  The TIOCLINUX ioctl allows implementing copy-and-paste and
++	  mouse operations in virtual terminals, used by tools like
+gpm.
++	  However, it can be abused by a low privilege process when
++	  called with tools like su or sudo to inject content on the
++	  root shell.
++
++	  Say Y here if you use tools like gpm.
++
++	  This functionality can be changed at runtime with the
++	  dev.tty.legacy_tioclinux sysctl. This configuration option
+sets
++	  the default value of the sysctl.
++
+ config LDISC_AUTOLOAD
+ 	bool "Automatically load TTY Line Disciplines"
+ 	default y
+diff --git a/drivers/tty/tty.h b/drivers/tty/tty.h
+index f45cd683c..3e4f1e094 100644
+--- a/drivers/tty/tty.h
++++ b/drivers/tty/tty.h
+@@ -94,6 +94,7 @@ int __must_check tty_ldisc_init(struct tty_struct
+*tty); void tty_ldisc_deinit(struct tty_struct *tty);
+ 
+ extern int tty_ldisc_autoload;
++extern bool tty_legacy_tioclinux;
+ 
+ /* tty_audit.c */
+ #ifdef CONFIG_AUDIT
+diff --git a/drivers/tty/tty_io.c b/drivers/tty/tty_io.c
+index 36fb945fd..badd1f909 100644
+--- a/drivers/tty/tty_io.c
++++ b/drivers/tty/tty_io.c
+@@ -3602,6 +3602,13 @@ static struct ctl_table tty_table[] = {
+ 		.mode		= 0644,
+ 		.proc_handler	= proc_dobool,
+ 	},
++	{
++		.procname	= "legacy_tioclinux",
++		.data		= &tty_legacy_tioclinux,
++		.maxlen		= sizeof(tty_legacy_tioclinux),
++		.mode		= 0644,
++		.proc_handler	= proc_dobool,
++	},
+ 	{
+ 		.procname	= "ldisc_autoload",
+ 		.data		= &tty_ldisc_autoload,
+diff --git a/drivers/tty/vt/vt.c b/drivers/tty/vt/vt.c
+index 57a5c23b5..3bc0d9149 100644
+--- a/drivers/tty/vt/vt.c
++++ b/drivers/tty/vt/vt.c
+@@ -3119,6 +3119,8 @@ static struct console vt_console_driver = {
+  *	Handling of Linux-specific VC ioctls
+  */
+ 
++bool tty_legacy_tioclinux __read_mostly =
+IS_ENABLED(CONFIG_LEGACY_TIOCLINUX); +
+ /*
+  * Generally a bit racy with respect to console_lock();.
+  *
+@@ -3137,6 +3139,9 @@ int tioclinux(struct tty_struct *tty, unsigned
+long arg) int lines;
+ 	int ret;
+ 
++	if (!tty_legacy_tioclinux)
++		return -EIO;
++
+ 	if (current->signal->tty != tty && !capable(CAP_SYS_ADMIN))
+ 		return -EPERM;
+ 	if (get_user(type, p))
+-- 
+2.40.0
 
-These are the options that were not considered in the check, so curl would
-reuse a connection even if the subsequent transfer would have changed one or
-more of these options.
-
-- `CURLOPT_SSH_PUBLIC_KEYFILE`
-- `CURLOPT_SSH_PRIVATE_KEYFILE`
-
-This flaw was initially introduced in curl 7.16.1.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2023-27538 to this issue.
-
-This vulnerability is partially identical to
-[CVE-2022-27782](https://curl.se/docs/CVE-2022-27782.html) since the fix for
-that previous issue was bad and did not actually correct the problem for these
-SSH options.
-
-CWE-305: Authentication Bypass by Primary Weakness
-
-The previos flaw CVE-2022-27782 was set to severity Medium, but since this is
-a partial of that and affects only two options that rarely will change with
-the expectation that the user will be different, this time we set it severity
-Low.
-
-Severity: Low
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.16.1 to and including 7.88.1
-- Not affected versions: curl < 7.16.1 and curl >= 8.0.0
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-The fix for [CVE-2023-27538](https://github.com/curl/curl/commit/af369db4d3833272b8ed)
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 8.0.0
-
-  B - Apply the patch to your local version
-
-  C - Avoid SCP and SFTP transfers
-
-TIMELINE
---------
-
-This issue was reported to the curl project on March 9 2023. We contacted
-distros@...nwall on March 13, 2023.
-
-curl 8.0.0 was released on March 20 2023, coordinated with the publication of
-this advisory.
-
-CREDITS
--------
-
-- Reported-by: Harry Sintonen
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
 
 -- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
+Hanno Böck
+https://hboeck.de/
