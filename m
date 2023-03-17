@@ -1,24 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/30/1
-Message-ID: <ZWhZaaGx_OalvQYM@kasco.suse.de>
-Date: Thu, 30 Nov 2023 10:44:08 +0100
-From: Matthias Gerstner <mgerstner@...e.de>
-To: Alex Murray <alex.murray@...onical.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: hplip: security issues in `hpps` program due to fixed /tmp path usage in prnt/hpps/hppsfilter.c
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/17/2
+Message-ID: <ZBQ6JP/k/Czqm9S9@momentum.pseudorandom.co.uk>
+Date: Fri, 17 Mar 2023 10:00:04 +0000
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: flatpak: CVE-2023-28101: escape characters in metadata can hide app permissions in terminal
 Content-Type: text/plain; charset=utf-8
 
-Hello Alex,
+https://github.com/flatpak/flatpak/security/advisories/GHSA-h43h-fwqx-mpp8
+Vulnerable: all < 1.10.8, 1.12.x < 1.12.8, 1.14.x < 1.14.4, 1.15.x < 1.15.4
+Fixed: 1.15.4, 1.14.x >= 1.14.4, 1.12.x >= 1.12.8, 1.10.x >= 1.10.8
 
-On Thu, Nov 30, 2023 at 10:28:55AM +1030, Alex Murray wrote:
-> I just wanted to follow-up on this to see if a CVE was ever assigned?
+Flatpak is a system for building, distributing, and running sandboxed
+desktop applications on Linux.
 
-I did not get any news neither in the private Launchpad issue for the
-hplip project, nor after contacting hp-security-alert@...com, as was
-suggested by others in this thread.
+When installing or upgrading a Flatpak app using the flatpak(1) CLI,
+the user is normally shown any special permissions that the new app has
+in its metadata, so that they can make a somewhat informed choice about
+whether to allow its installation.
 
-Best Regards
+Ryan Gonzalez discovered that malicious Flatpak app maintainers could
+manipulate or hide this display of permissions by requesting permissions
+that include ANSI terminal control codes or other non-printable characters.
+This was fixed in Flatpak 1.14.4, 1.15.4, 1.12.8 and 1.10.8 by displaying
+non-printable characters in an escaped format (\xXX, \uXXXX, \UXXXXXXXX)
+so that they do not alter the terminal's behaviour, and also by treating
+non-printable characters in certain contexts as invalid (not allowed).
 
-Matthias
+Mitigation: graphical frontends for libflatpak, like GNOME Software and
+KDE Plasma Discover, are not directly affected by this. When retrieving an
+app's permissions to show to the user, the graphical frontend continues
+to be responsible for filtering or escaping any characters that would
+have a special meaning for its GUI libraries.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Workaround: use a GUI like GNOME Software rather than the command-line
+interface, or only install apps whose maintainers you trust.
