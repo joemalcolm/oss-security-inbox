@@ -1,19 +1,15 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/22/5
-Message-ID: <CAHjsZGb3P0dt1fe-SzcFXY_UiJWTR4v_Krv8ZaMDDaps09T6uQ@mail.gmail.com>
-Date: Fri, 22 Sep 2023 10:18:07 -0300
-From: Rodrigo Freire <rfreire@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/18/1
+Message-ID: <1a1ae12e36d5f711@orthanc.ca>
+Date: Fri, 17 Mar 2023 16:13:04 -0700
+From: "Lyndon Nerenberg (VE7TFX/VE6BBM)" <lyndon@...hanc.ca>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-4863: libwebp: Heap buffer overflow in WebP Codec
+Subject: Re: TTY pushback vulnerabilities / TIOCSTI
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 22, 2023 at 8:43 AM Marc Deslauriers
-<marc.deslauriers@...onical.com> wrote:
-> We (Ubuntu) didn't include that second commit in our libwebp updates, and I
-> don't believe Red Hat/Fedora did either. If that second commit does have a
-> security impact, it probably needs a different CVE to clear up confusion.
+Does anyone even remember why TIOCSTI was added in the
+first place?  I remember stumbling across it decades
+ago (SVR?), but I've ever seen a use case for it.
+It puzzled me back then why it even existed.
 
-And hope that time the CNA assigns the CVE to the right component...
-
-- RF
-
+--lyndon
