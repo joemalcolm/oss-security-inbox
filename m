@@ -1,28 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/12/29/4
-Message-ID: <u_37zo4-c8MMB7MsMhIWnl6UEq-x6XthS05w8OvrztTMgixZQWX1nf2zdsHsobnpojkG2ya44HMch-biNuT4sRGWS16EGd0EKWerHgtgmZA=@stig.io>
-Date: Fri, 29 Dec 2023 15:57:51 +0000
-From: Stig Palmquist <stig@...g.io>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Cc: "cpan-security@...l.org" <cpan-security@...l.org>
-Subject: CVE-2023-7101: Spreadsheet::ParseExcel for Perl is vulnerable to arbitrary code execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/17/5
+Message-ID: <20230317194102.wvso2ex65fuwbukg@jwilk.net>
+Date: Fri, 17 Mar 2023 20:41:02 +0100
+From: Jakub Wilk <jwilk@...lk.net>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: TTY pushback vulnerabilities / TIOCSTI
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+* Hanno Böck <hanno@...eck.de>, 2023-03-17 11:48:
+>Jakub Wilk <jwilk@...lk.net> wrote:
+>
+>>On Linux virtual terminals, it's possible to achieve pretty much the 
+>>same effect using TIOCLINUX, the ioctl used by gpm to implement 
+>>copy&pasting.
+[...]
+>Given this works only on "virtual terminals" (aka not in a terminal 
+>window on X, not over SSH), I think the severity is much lower than the 
+>TIOCSTI issue.
 
-The CPAN Security WG was recently informed that the Perl module Spreadsheet::ParseExcel 0.65 (and earlier) is vulnerable to arbitrary code execution.
+Agreed.
 
-Users should upgrade to version 0.66 as soon as possible.
+>I've created a patch for the Linux kernel very similar to the patch 
+>that allows disabling TIOCSTI.
 
-Updated Version:
-https://metacpan.org/release/JMCNAMARA/Spreadsheet-ParseExcel-0.66
+I don't think that's gonna fly, because...
 
-Patch:
-https://github.com/jmcnamara/spreadsheet-parseexcel/commit/bd3159277e745468e2c553417b35d5d7dc7405bc.patch
+>+	  The TIOCLINUX ioctl allows implementing copy-and-paste and
+>+	  mouse operations in virtual terminals, used by tools like gpm.
 
-References:
-https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-7101
-https://github.com/mandiant/Vulnerability-Disclosures/blob/master/2023/MNDT-2023-0019.md
+TIOCLINUX implements also functionality unrelated to copying and 
+pasting. See the ioctl_console(2) man page:
+https://manpages.debian.org/unstable/manpages-dev/ioctl_console.2.en.html#TIOCLINUX
 
-Best,
-Stig
+For example, apparently some of this stuff is used by systemd:
+
+     $ git grep -wB5 TIOCLINUX
+     src/basic/terminal-util.c-                int tiocl[2] = {
+     src/basic/terminal-util.c-                        TIOCL_GETKMSGREDIRECT,
+     src/basic/terminal-util.c-                        0
+     src/basic/terminal-util.c-                };
+     src/basic/terminal-util.c-
+     src/basic/terminal-util.c:                if (ioctl(fd, TIOCLINUX, tiocl) < 0)
+     --
+     src/vconsole/vconsole-setup.c-static int verify_vc_device(int fd) {
+     src/vconsole/vconsole-setup.c-        unsigned char data[] = {
+     src/vconsole/vconsole-setup.c-                TIOCL_GETFGCONSOLE,
+     src/vconsole/vconsole-setup.c-        };
+     src/vconsole/vconsole-setup.c-
+     src/vconsole/vconsole-setup.c:        return RET_NERRNO(ioctl(fd, TIOCLINUX, data));
+
+-- 
+Jakub Wilk
