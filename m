@@ -1,62 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/09/1
-Message-ID: <CABcoxUYuVw4TC8WiiBWmt+22NmVj_TVuskSWP5Fj3NWBkvDrfA@mail.gmail.com>
-Date: Wed, 8 Nov 2023 20:06:49 -0800
-From: Hsin-Wei Hung <hsinweih@....edu>
-To: Alexei Starovoitov <alexei.starovoitov@...il.com>
-Cc: Solar Designer <solar@...nwall.com>, Daniel Borkmann <daniel@...earbox.net>,  oss-security@...ts.openwall.com, Alexei Starovoitov <ast@...nel.org>
-Subject: Re: Linux: BPF: issues with copy_from_user_nofault()
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/17/1
+Message-ID: <ZBQ5Z9wfWqONphtz@momentum.pseudorandom.co.uk>
+Date: Fri, 17 Mar 2023 09:56:55 +0000
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: flatpak: CVE-2023-28100: TIOCLINUX can send commands outside sandbox if running on a virtual console
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 8, 2023 at 10:05 AM Alexei Starovoitov
-<alexei.starovoitov@...il.com> wrote:
->
-> On Sun, Nov 5, 2023 at 2:43 PM Solar Designer <solar@...nwall.com> wrote:
-> >
-> > Hi,
-> >
-> > Looks like the below wasn't brought to oss-security yet.
-> >
-> > As I understand from what was posted to the linux-distros thread, the
-> > issue was being fixed in:
-> >
-> > https://urldefense.com/v3/__https://lore.kernel.org/bpf/20230118051443.78988-1-alexei.starovoitov@gmail.com/__;!!CzAuKJ42GuquVTTmVmPViYEvSg!LwWVuruWiTdoRoQltcxHLiuP59L6twXiH9K5vSXHjQAJ4Kt_PY4ZrsFacExuGA2KxoT2yqmwlLOpBauWKwhXcD6QvQ$
-> >
-> > and actually fixed in:
-> >
-> > https://urldefense.com/v3/__https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf-next.git/commit/?id=d319f344561d__;!!CzAuKJ42GuquVTTmVmPViYEvSg!LwWVuruWiTdoRoQltcxHLiuP59L6twXiH9K5vSXHjQAJ4Kt_PY4ZrsFacExuGA2KxoT2yqmwlLOpBauWKwj2mNm1bQ$
-> >
-> > and it should have been merged to stable "tomorrow or so" after June 27,
-> > at which point Hsin-Wei Hung was supposed to finally make the
-> > oss-security posting, but apparently that never happened.
-> >
-> > Of course, the delay from January 2 to June 28 was way in excess of the
-> > supposed maximum, and it is even more ridiculous we didn't post in here
-> > for even longer.
-> >
-> > This is what happens when no one in particular keeps tracking issues
-> > after they fall out of the attention span.  This is also why we need to
-> > take care of the distros list statistics task in real time, not only
-> > retroactively like I'm doing for 2023 now.
->
-> As I tried to explain, the fix addresses two things:
-> - the WARN. By itself it's harmless and the severity is low.
-> - lockup with CONFIG_HARDENED_USERCOPY from bpf. That is a real bug
-> and backports are necessary.
->
-> But the 2nd part of the fix:
-> https://urldefense.com/v3/__https://lore.kernel.org/bpf/20230118051443.78988-2-alexei.starovoitov@gmail.com/__;!!CzAuKJ42GuquVTTmVmPViYEvSg!LwWVuruWiTdoRoQltcxHLiuP59L6twXiH9K5vSXHjQAJ4Kt_PY4ZrsFacExuGA2KxoT2yqmwlLOpBauWKwiOE1xn7Q$
->
-> was never merged.
-> Essentially perf (without any bpf) is broken on arm64 and others.
-> arch_perf_out_copy_user() might deadlock with CONFIG_HARDENED_USERCOPY.
+https://github.com/flatpak/flatpak/security/advisories/GHSA-7qpw-3vjv-xrqp
+Vulnerable: all < 1.10.8, 1.12.x < 1.12.8, 1.14.x < 1.14.4, 1.15.x < 1.15.4
+Fixed: 1.15.4, 1.14.x >= 1.14.4, 1.12.x >= 1.12.8, 1.10.x >= 1.10.8
 
+Flatpak is a system for building, distributing, and running sandboxed
+desktop applications on Linux.
 
-Hey,
+Jakub Wilk mentioned on the oss-security mailing list that various
+projects' mitigations for the problematic design of the TIOCSTI ioctl
+are not sufficient in all cases, because Linux virtual terminals
+implement copy/paste via the TIOCLINUX ioctl, which can have a similar
+effect. Flatpak is one of the projects affected by this.
 
-Sorry to put everyone in a tough situation. I can post it to
-oss-security if Alexei agrees. I can also try to pick up the 2nd part
-of the patch from where it is next week.
-https://lore.kernel.org/bpf/CAADnVQJRd3r84yLcqH1Z-BYU76SRYuDMOCWRcvBfapsXs_w-rg@mail.gmail.com/
+If a malicious Flatpak app is run on a Linux virtual console such as
+/dev/tty1, it can copy text from the virtual console and paste it back
+into the virtual console's input buffer, from which the command might
+be run by the user's shell after the Flatpak app has exited. This is
+similar to CVE-2017-5226, but using the TIOCLINUX ioctl command instead
+of TIOCSTI.
 
--Hsin-Wei
+This has been fixed in Flatpak upstream releases 1.14.4, 1.15.4, 1.12.8
+and 1.10.8 by preventing the TIOCLINUX ioctl via a seccomp filter,
+in the same way that was already done for the TIOCSTI ioctl.
+
+Mitigation: ordinary graphical terminal emulators like xterm,
+gnome-terminal and Konsole are unaffected. This vulnerability is specific
+to the Linux virtual consoles /dev/tty1, /dev/tty2 and so on, which are
+not commonly used to run Flatpak apps: Flatpak is primarily designed
+to be used in a Wayland or X11 graphical environment, either with no
+controlling terminal (the most common case) or from a graphical terminal
+emulator (while debugging or developing).
+
+Workaround: avoid running untrusted Flatpak apps (`flatpak run ...`)
+from the text-mode virtual consoles.
