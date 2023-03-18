@@ -1,40 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/21/4
-Message-ID: <3492dcaf-eccc-9767-3ccd-b099dce82bf3@apache.org>
-Date: Sun, 21 May 2023 08:16:20 +0000
-From: Charles Zhang <dockerzhang@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/18/2
+Message-Id: <26BD1B76-2CA5-4BC9-8601-60A5F78892A0@zoulas.com>
+Date: Sat, 18 Mar 2023 09:34:04 -0400
+From: Christos Zoulas <christos@...las.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-31065: Apache InLong: Insufficient Session Expiration in InLong 
+Subject: Re: TTY pushback vulnerabilities / TIOCSTI
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+I think that the original reason was for csh(1) to implement file completion:
+https://nxr.netbsd.org/xref/src/bin/csh/file.c#161
+I still have a use case for it. Sometimes I lose my VPN tunnel and an
+ssh session where I am running vi(1) suddenly dies. When I ssh to that
+machine, I can easily find the tty where the vi session is with ps(1) and
+then type "sti pts/X :wq\\n" and save the file  (https://man.netbsd.org/sti.8):-)
+Of course on NetBSD you need to be root to use TIOCSTI.
 
-Affected versions:
+Best,
 
-- Apache InLong 1.4.0 through 1.6.0
+christos
 
-Description:
-
-Insufficient Session Expiration vulnerability in Apache Software Foundation Apache InLong.This issue affects Apache InLong: from 1.4.0 through 1.6.0. 
-
-
-An old session can be used by an attacker even after the user has been deleted or the password has been changed.
-
-
-Users are advised to upgrade to Apache InLong's 1.7.0 or cherry-pick [1],[2] to solve it.
-
+> On Mar 17, 2023, at 7:13 PM, Lyndon Nerenberg (VE7TFX/VE6BBM) <lyndon@...hanc.ca> wrote:
+> 
+> Does anyone even remember why TIOCSTI was added in the
+> first place?  I remember stumbling across it decades
+> ago (SVR?), but I've ever seen a use case for it.
+> It puzzled me back then why it even existed.
+> 
+> --lyndon
 
 
+Content of type "text/html" skipped
 
-[1]  https://github.com/apache/inlong/pull/7836 https://github.com/apache/inlong/pull/7836 
-[2]  https://github.com/apache/inlong/pull/7884 https://github.com/apache/inlong/pull/7884
-
-Credit:
-
-lujie.ac.cn (finder)
-
-References:
-
-https://inlong.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-31065
-
+Download attachment "signature.asc" of type "application/pgp-signature" (236 bytes)
