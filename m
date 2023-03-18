@@ -1,78 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/05/08/3
-Message-ID: <e18a885b-de15-c287-e4a4-a0df7904f15f@tholl.xyz>
-Date: Mon, 8 May 2023 16:01:59 +0200
-From: Tobias Holl <tobias@...ll.xyz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/18/3
+Message-ID: <wDR-6EJXGD6-bxaq2W-kI1jLku16_YuQtd-b0xX_bdYFJxXswSPpw6AU2G_U-CMxENlwx8-d9B7v5geNxaWaWAN8MoblHQMuqNIMm_BYhiQ=@ab-data.us>
+Date: Sat, 18 Mar 2023 13:33:01 +0000
+From: Eric Ashley <eric@...data.us>
 To: oss-security@...ts.openwall.com
-Subject: Linux kernel io_uring out-of-bounds access to physical memory
+Subject: Re: TTY pushback vulnerabilities / TIOCSTI
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+According to a note from kernel maintenance (https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?h=v6.3-rc2&id=1e641743f055f075ed9a4edd75f1fb1e05669ddc), as of 2008 only Heirloom mailx (a.k.a. nail) used it for ~h interactive header editing.
 
-a bug in the fixed buffer registration code for io_uring
-(io_sqe_buffer_register in io_uring/rsrc.c) allows out-of-bounds access
-to physical memory beyond the end of the buffer. This can be used to
-achieve full local privilege escalation.
+Best regards,
 
-The vulnerable code landed in 6.3-rc1 with commit 57bebf807e2a
-("io_uring/rsrc: optimise registered huge pages")¹.
-
-A fix has been committed upstream for 6.4-rc1 in commit 776617db78c6
-("io_uring/rsrc: check for nonconsecutive pages")². The fix has also
-been staged³ for 6.3.2.
-
-CVE assignment for this issue is pending.
+Eric
 
 
-The idea behind the original commit is that instead of splitting huge
-pages that are registered as a buffer into individual bvec entries
-(expensive), we can just have a single bvec entry for all parts of the
-huge page that are in the buffer (not expensive). Specifically, if all
-pages in the buffer map to the same folio, it will use the first struct
-page and the length of the buffer in a single bvec entry rather than
-mapping each page individually.
-
-For a normal huge page, this works. Unfortunately, this misses the fact
-that just because the pages map to the same folio, they do not
-necessarily have to be consecutive. In fact, they can all be the _same_
-page of memory (e.g. by repeatedly mapping at offset 0 from a memfd).
-Then, the bvec will span far beyond the single page that it is actually
-allowed to touch. Later, IORING_OP_READ_FIXED and IORING_OP_WRITE_FIXED
-allow us to read from and write to the buffer (i.e. the memory pointed
-to by the bvec) at will. This allows read/write access to the physical
-memory behind the single page that we actually have.
-
-The actual length of the buffer (and therefore the limit of our OOB
-access) is only limited by the number of pages we can map (generally
-close to vm.max_map_count, since each mapping of the same page requires
-a new mapping). If hugetlbfs is enabled and huge pages are set up, you
-can use them to access even more memory, but this isn't generally
-required in order to find something interesting in the accessible
-memory.
 
 
-TL;DR bug reproduction steps:
-  1. Create a memfd
-  2. fallocate a single page in that file descriptor
-  3. Use MAP_FIXED to map this page repeatedly, in consecutive locations
-  4. Register the entire region that you just filled up with that page as
-     a fixed buffer with IORING_REGISTER_BUFFERS
-  5. Use IORING_OP_WRITE_FIXED to write the buffer to some other file
-     (OOB read) or IORING_OP_READ_FIXED to read data into the buffer (OOB
-     write).
+Sent with Proton Mail secure email.
 
-Of course, from there, we can simply find any interesting object in
-physical memory and start overwriting function pointers to get code
-execution and escalate privileges. A full proof-of-concept exploit with
-a bit more robustness can be found at
-   https://tholl.xyz/static/bugs/2023-io_uring-fixed-buffers/exploit.c
+------- Original Message -------
+On Friday, March 17th, 2023 at 7:13 PM, Lyndon Nerenberg (VE7TFX/VE6BBM) <lyndon@...hanc.ca> wrote:
 
 
--- Tobias
+> Does anyone even remember why TIOCSTI was added in the
+> first place? I remember stumbling across it decades
+> ago (SVR?), but I've ever seen a use case for it.
+> It puzzled me back then why it even existed.
+> 
 
+> --lyndon
+Download attachment "publickey - eric@...data.us - 0x43A549FB.asc" of type "application/pgp-keys" (1710 bytes)
 
-¹ https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=57bebf807e2abcf87d96b9de1266104ee2d8fc2f
-² https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=776617db78c6d208780e7c69d4d68d1fa82913de
-³ Commit 14ad317320c7c000e89ee5a928b9ca165443af0e for 6.3.2-rc1,
-   https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/commit/?h=linux-6.3.y&id=14ad317320c7c000e89ee5a928b9ca165443af0e
-
+Download attachment "signature.asc" of type "application/pgp-signature" (510 bytes)
