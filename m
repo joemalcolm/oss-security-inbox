@@ -1,24 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/03/13
-Message-ID: <1786f020-2af8-4adb-bb4c-5dc87c545dcd@citrix.com>
-Date: Tue, 3 Oct 2023 22:37:08 +0100
-From: Andrew Cooper <andrew.cooper3@...rix.com>
-To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-Cc: "Xen.org security team" <security-team-members@....org>
-Subject: Re: Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/19/4
+Message-ID: <CAGUWgD9EKiV7QxeYzH78S7RkzByR_mK+gtZiO-boo9qa6_mw7Q@mail.gmail.com>
+Date: Sun, 19 Mar 2023 18:24:03 +0200
+From: Georgi Guninski <gguninski@...il.com>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: First result on google promotes insecure coding (XSS)
 Content-Type: text/plain; charset=utf-8
 
-On 03/10/2023 9:12 pm, Solar Designer wrote:
-> P.S. Demi Marie, please note that oss-security list content guidelines
-> explicitly discourage CC'ing other lists(*), and Xen advisories are
-> already stretching this.
+On Sun, Mar 19, 2023 at 3:59 PM Solar Designer <solar@...nwall.com> wrote:
 
-Sorry, I hadn't realised we were bending the rules.  The emailing-out
-infrastructure predates my involvement.
+>
+> Have you contacted the site in question and suggested an edit to them?
+>
 
-If you have a proposal for how you'd prefer it to be done, I'll see what
-I can do.  Perhaps BCC oss-security, or just send out a second mail?
-
-Thanks,
-
-~Andrew
+No. Since this issue is already public, lol, let me see who from
+the community contacts them first. btw, I strongly suspect there are
+many more buggy tutorials.
