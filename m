@@ -1,28 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/21/8
-Message-ID: <CAAHN_R0PrisCtNJNVfCqp3pHsqFPT+P2aRPLdcknGC9w8vOCWA@mail.gmail.com>
-Date: Wed, 21 Jun 2023 13:20:37 -0400
-From: Siddhesh Poyarekar <siddhesh.poyarekar@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-31975: memory leak in yasm
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/19/3
+Message-ID: <20230319135946.GA20983@openwall.com>
+Date: Sun, 19 Mar 2023 14:59:46 +0100
+From: Solar Designer <solar@...nwall.com>
+To: Georgi Guninski <gguninski@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: First result on google promotes insecure coding (XSS)
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jun 20, 2023 at 6:49 PM Alan Coopersmith
-<alan.coopersmith@...cle.com> wrote:
->
-> https://nvd.nist.gov/vuln/detail/CVE-2023-31975 is freaking out scanners
-> since it claims this bug has a CVSS of 9.8.
->
->  From what I see at https://github.com/yasm/yasm/issues/210 though, I can't
-> see any CVSS higher than 0.0 being relevant here and think the CVE should
-> be withdrawn.  Am I missing something here?  All I see is 2 objects of
+On Sun, Mar 19, 2023 at 03:05:24PM +0200, Georgi Guninski wrote:
+> Does the so called security "community" plan to reduce teaching
+> insecure code?
 
-I wrote a SECURITY.md[1] for yasm a while back to push back on such
-bogus CVEs, so this CVE should actually get rejected.
+Georgi, are you part of the community?  Do you have a plan you're going
+to follow yourself or/and recommend to others?  If so, please share it.
 
-Sid
+It's easy to distance yourself from the community and criticize it, or
+to claim there isn't a community like you seem to imply by the quotes.
 
-[1] https://github.com/yasm/yasm/blob/master/SECURITY.md
+It's more effort to be part of the community and actually do things.
 
--- 
-https://gotplt.org
+Sometimes this involves figuring out the author's contact address (not
+always straightforward or reasonably possible at all) and asking them to
+make an edit.  Other times the content is on a forum where you can add a
+comment, e.g. StackOverflow.
+
+Have you contacted the site in question and suggested an edit to them?
+
+There's no systematic effort like this that I'm aware of - maybe there
+should be.  Maybe it should be funded.  Maybe it should focus on top
+search engine hits for a curated list of relevant search queries.
+
+Another approach is to write higher-quality tutorials that may become
+the new top hits.  For example, I wasn't into PHP at all, but I wrote
+and submitted "How to manage a PHP application's users and passwords" to
+Stefan Esser's Month of PHP Security in 2010 and it's been up on the
+Openwall website since.  While it's quite dated now, I think it helped
+at the time and for a while.
+
+Alexander
