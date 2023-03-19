@@ -1,36 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/15/3
-Message-ID: <20231015234559.GA29323@openwall.com>
-Date: Mon, 16 Oct 2023 01:45:59 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/19/2
+Message-ID: <CAGUWgD-icAVmX4LER-Ctu_98WYKd833tnS0ePLsu72iChJWshg@mail.gmail.com>
+Date: Sun, 19 Mar 2023 15:05:24 +0200
+From: Georgi Guninski <gguninski@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: distros list archive
+Subject: First result on google promotes insecure coding (XSS)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Jun 15, 2023 at 08:38:39PM +0200, Solar Designer wrote:
-> I've just made a further update of these, until May 31, 2023.
+>From my IP and cookie jar, searching google for
+"tutorial python cgi" returns as first result [1]
+on tutorialspoint.com
 
-I've just updated these headers-only archives once again, now up to
-September 30, 2023.
+In "Simple URL Example:Get Method"
 
-https://www.openwall.com/lists/linux-distros/
-https://www.openwall.com/lists/distros/
+```
+first_name = form.getvalue('first_name')
+last_name  = form.getvalue('last_name')
+print "<h2>Hello %s %s</h2>" % (first_name, last_name)
+```
 
-Like before, I did not decrypt the actual messages, but the traffic
-statistics and the message headers should provide some visibility into
-how much and roughly what was discussed and when.
+Besides cgi tutorial, this is XSS and CSRF tutorial by example.
 
-The messages appearing on distros should be strictly a subset of those
-appearing on linux-distros, as per the description of the lists here:
+Does the so called security "community" plan to reduce teaching
+insecure code?
 
-https://oss-security.openwall.org/wiki/mailing-lists/distros
+[1] https://www.tutorialspoint.com/python/python_cgi_programming.htm
 
-As you may notice, the Subject lines sometimes contain [vs] and other
-times [vs-plain].  This reflects whether the messages traveled to the
-list exploder in encrypted or plaintext form, respectively.  They
-traveled to the list members in re-encrypted form either way.
-
-Alexander
-
-P.S. I am also working on an update of the distros list statistics on
-the wiki, to be announced separately.
+-- 
+We don't need no education, we don't need no thought control
+Pink Floyd
