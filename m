@@ -1,4 +1,4 @@
-Received: (qmail 21862 invoked by uid 550); 17 May 2023 06:41:25 -0000
+Received: (qmail 9716 invoked by uid 550); 20 Mar 2023 07:26:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,103 +7,86 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21808 invoked from network); 17 May 2023 06:41:24 -0000
-Date: Wed, 17 May 2023 08:41:12 +0200 (CEST)
+Received: (qmail 9657 invoked from network); 20 Mar 2023 07:26:21 -0000
+Date: Mon, 20 Mar 2023 08:26:09 +0100 (CET)
 From: Daniel Stenberg <daniel@haxx.se>
 To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
     curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
     oss-security@lists.openwall.com
-Message-ID: <s335p31-738-9881-832n-r6945p656r3@unkk.fr>
+Message-ID: <40116rn7-8spr-8s65-275q-qq2pr4815911@unkk.fr>
 X-fromdanielhimself: yes
 MIME-Version: 1.0
 Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] curl: CVE-2023-28322: more POST-after-PUT confusion
+Subject: [oss-security] [SECURITY ADVISORY] curl: CVE-2023-27535: FTP too eager connection
+ reuse
 
-more POST-after-PUT confusion
-=============================
+CVE-2023-27535: FTP too eager connection reuse
+==============================================
 
-Project curl Security Advisory, May 17 2023 -
-[Permalink](https://curl.se/docs/CVE-2023-28322.html)
+Project curl Security Advisory, March 20th 2023 -
+[Permalink](https://curl.se/docs/CVE-2023-27535.html)
 
 VULNERABILITY
 -------------
 
-When doing HTTP(S) transfers, libcurl might erroneously use the read callback
-(`CURLOPT_READFUNCTION`) to ask for data to send, even when the
-`CURLOPT_POSTFIELDS` option has been set, if the same handle previously was
-used to issue a `PUT` request which used that callback.
+libcurl would reuse a previously created FTP connection even when one or more
+options had been changed that could have made the effective user a very
+different one, thus leading to the doing the second transfer with wrong
+credentials.
 
-This flaw may surprise the application and cause it to misbehave and either
-send off the wrong data or use memory after free or similar in the second
-transfer.
+libcurl keeps previously used connections in a connection pool for subsequent
+transfers to reuse if one of them matches the setup. However, several FTP
+settings were left out from the configuration match checks, making them match
+too easily. The settings in questions are `CURLOPT_FTP_ACCOUNT`,
+`CURLOPT_FTP_ALTERNATIVE_TO_USER`, `CURLOPT_FTP_SSL_CCC` and `CURLOPT_USE_SSL`
+level.
 
-The problem exists in the logic for a reused handle when it is (expected to
-be) changed from a PUT to a POST.
+We are not aware of any exploit of this flaw.
 
 INFO
 ----
 
-The code actually sending wrong data or doing a use-after-free is not present
-in libcurl code but are only presumed scenarios that might become the outcome
-of libcurl surprisingly calling the read callback in a situation where it is
-not expected to.
+CVE-2023-27535 was introduced in [commit
+177dbc7be07125582](https://github.com/curl/curl/commit/177dbc7be07125582),
+shipped in curl 7.13.0.
 
-This flaw cannot be triggered with the command line tool.
+CWE-305: Authentication Bypass by Primary Weakness
 
-This problem is almost identical to
-[CVE-2022-32221](https://curl.se/docs/CVE-2022-32221.html). A difference this
-time is that setting `CURLOPT_POST` for the second transfer avoids the
-problem, where as only setting `CURLOPT_POSTFIELDS` after the PUT still makes
-the second transfer to a PUT and use the callback.
-
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2023-28322 to this issue.
-
-CWE-440: Expected Behavior Violation
-
-Severity: Low
+Severity: Medium
 
 AFFECTED VERSIONS
 -----------------
 
-- Affected versions: libcurl 7.7 to and including 8.0.1
-- Not affected versions: libcurl < 7.7 and >= 8.1.0
-- Introduced-in: https://github.com/curl/curl/commit/546572da0457f3
+- Affected versions: curl 7.13.0 to and including 7.88.1
+- Not affected versions: curl < 7.13.0 and curl >= 8.0.0
 
 libcurl is used by many applications, but not always advertised as such!
 
-SOLUTION
+THE SOLUTION
 ------------
 
-This time the logic is improved to avoid having two separate variable fields
-holding info about HTTP method and behavior. Now there is only one, which
-should make it harder to end up in such a confused middle state.
-
-- Fixed-in: https://github.com/curl/curl/commit/7815647d6582c0a4900be2e1de
+A [fix for CVE-2023-27535](https://github.com/curl/curl/commit/8f4608468b890dc)
 
 RECOMMENDATIONS
 --------------
 
-  A - Upgrade curl to version 8.1.0
+  A - Upgrade curl to version 8.0.0
 
   B - Apply the patch to your local version
-
-  C - Do not do mix using the read callback and `CURLOPT_POSTFIELDS` string on
-      a reused easy handle
 
 TIMELINE
 --------
 
-This issue was reported to the curl project on April 19, 2023. We contacted
-distros@openwall on May 9, 2023.
+This issue was reported to the curl project on March 5, 2023. We contacted
+distros@openwall on March 13, 2023.
 
-libcurl 8.1.0 was released on May 17 2023, coordinated with the publication of
+curl 8.0.0 was released on March 20 2023, coordinated with the publication of
 this advisory.
 
 CREDITS
 -------
 
-- Reported-by: Hiroki Kurosawa
+- Reported-by: Harry Sintonen
 - Patched-by: Daniel Stenberg
 
 Thanks a lot!
@@ -111,3 +94,6 @@ Thanks a lot!
 -- 
 
   / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
