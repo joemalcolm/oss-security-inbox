@@ -1,22 +1,85 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/16/1
-Message-ID: <546b3452-d9b0-a16d-76eb-d8a87429e595@apache.org>
-Date: Sun, 16 Apr 2023 02:48:14 +0000
-From: Jialin Qiao <qiaojialin@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-30771: Apache IoTDB Workbench: apache/iotdb-web-workbench: forge the JWTToken to access workbench 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/20/4
+Message-ID: <25sspro4-64s5-1141-22s6-p27o7pn929@unkk.fr>
+Date: Mon, 20 Mar 2023 08:26:12 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: CVE-2023-27536: GSS delegation too eager connection re-use
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+CVE-2023-27536: GSS delegation too eager connection re-use
+==========================================================
 
-Description:
+Project curl Security Advisory, March 20th 2023 -
+[Permalink](https://curl.se/docs/CVE-2023-27536.html)
 
-Incorrect Authorization vulnerability in Apache Software Foundation Apache IoTDB.This issue affects the iotdb-web-workbench component on 0.13.3. iotdb-web-workbench is an optional component of IoTDB, providing a web console of the database.
+VULNERABILITY
+-------------
 
-This problem is fixed from version 0.13.4 of iotdb-web-workbench onwards.
+libcurl would reuse a previously created connection even when the GSS
+delegation (`CURLOPT_GSSAPI_DELEGATION`) option had been changed that could
+have changed the user's permissions in a second transfer.
 
-References:
+libcurl keeps previously used connections in a connection pool for subsequent
+transfers to reuse if one of them matches the setup. However, this GSS
+delegation setting was left out from the configuration match checks, making
+them match too easily, affecting krb5/kerberos/negotiate/GSSAPI transfers.
 
-https://iotdb.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-30771
+We are not aware of any exploit of this flaw.
 
+INFO
+----
+
+CVE-2023-27536 was introduced in [commit
+ebf42c4be76df4](https://github.com/curl/curl/commit/ebf42c4be76df4), shipped
+in curl 7.22.0.
+
+CWE-305: Authentication Bypass by Primary Weakness
+
+Severity: Low
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.22.0 to and including 7.88.1
+- Not affected versions: curl < 7.22.0 and curl >= 8.0.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+A [fix for CVE-2023-27536](https://github.com/curl/curl/commit/cb49e67303dba)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 8.0.0
+
+  B - Apply the patch to your local version
+
+  C - Do not use the `CURLOPT_GSSAPI_DELEGATION` option
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on March 7, 2023. We contacted
+distros@...nwall on March 13, 2023.
+
+curl 8.0.0 was released on March 20 2023, coordinated with the publication of
+this advisory.
+
+CREDITS
+-------
+
+- Reported-by: Harry Sintonen
+- Patched-by: Daniel Stenberg
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
