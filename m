@@ -1,28 +1,94 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/11/2
-Message-ID: <cdb4f336-4403-b778-2ab9-5732bb049ff0@apache.org>
-Date: Tue, 11 Apr 2023 14:16:59 +0000
-From: Charles Zhang <dockerzhang@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-30465: Apache InLong: SQL injection in apache inLong 1.5.0 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/20/2
+Message-ID: <677r5sr8-q659-pq78-587-n42q2q86oqs0@unkk.fr>
+Date: Mon, 20 Mar 2023 08:26:06 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: CVE-2023-27534: SFTP path ~ resolving discrepancy
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+CVE-2023-27534: SFTP path ~ resolving discrepancy
+=================================================
 
-Description:
+Project curl Security Advisory, March 20th 2023 -
+[Permalink](https://curl.se/docs/CVE-2023-27534.html)
 
-Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability in Apache Software Foundation Apache InLong.This issue affects Apache InLong: from 1.4.0 through 1.5.0. By manipulating the "orderType" parameter and the ordering of the returned content using an SQL injection attack, an attacker can extract the username of the   user with ID 1 from the "user" table, one character at a time.  Users are advised to upgrade to Apache InLong's 1.6.0 or cherry-pick [1] to solve it.
- 
- https://programmer.help/blogs/jdbc-deserialization-vulnerability-learning.html 
+VULNERABILITY
+-------------
 
-[1]  https://github.com/apache/inlong/issues/7529 https://github.com/apache/inlong/issues/7529
+curl supports SFTP transfers. curl's SFTP implementation offers a special
+feature in the path component of URLs: a tilde (`~`) character as the first
+path element in the path to denotes a path relative to the user's home
+directory. This is supported because of wording in the [once proposed
+to-become RFC
+draft](https://datatracker.ietf.org/doc/html/draft-ietf-secsh-scp-sftp-ssh-uri-04)
+that was to dictate how SFTP URLs work.
 
-Credit:
+Due to a bug, the handling of the tilde in SFTP path did however not only
+replace it when it is used stand-alone as the first path element but also
+wrongly when used as a mere prefix in the first element.
 
-escape Wang (finder)
+Using a path like `/~2/foo` when accessing a server using the user `dan` (with
+home directory `/home/dan`) would then quite surprisingly access the file
+`/home/dan2/foo`.
 
-References:
+This can be taken advantage of to circumvent filtering or worse.
 
-https://inlong.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-30465
+We are not aware of any exploit of this flaw.
 
+INFO
+----
+
+CVE-2023-27534 was introduced in [commit
+ba6f20a244](https://github.com/curl/curl/commit/ba6f20a244), shipped in curl
+7.18.0.
+
+CWE-22: Improper Limitation of a Pathname to a Restricted Directory
+
+Severity: Low
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.18.0 to and including 7.88.1
+- Not affected versions: curl < 7.18.0 and curl >= 8.0.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+A [fix for CVE-2023-27534](https://github.com/curl/curl/commit/4e2b52b5f7a3bf50a)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 8.0.0
+
+  B - Apply the patch to your local version
+
+  C - Avoid using tilde in SFTP URL paths.
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on March 5, 2023. We contacted
+distros@...nwall on March 13, 2023.
+
+curl 8.0.0 was released on March 20 2023, coordinated with the publication of
+this advisory.
+
+CREDITS
+-------
+
+- Reported-by: Harry Sintonen
+- Patched-by: Daniel Stenberg
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
