@@ -1,37 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/08/7
-Message-ID: <ZPuhj1UJpvl0hZCH@itl-email>
-Date: Fri, 8 Sep 2023 18:34:52 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-4809: FreeBSD pf bypass when using IPv6
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/20/6
+Message-ID: <s3sr40p2-p54p-803q-4313-30opr383p732@unkk.fr>
+Date: Mon, 20 Mar 2023 08:26:21 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: CVE-2023-27538: SSH connection too eager reuse still
 Content-Type: text/plain; charset=utf-8
 
-On Sat, Sep 09, 2023 at 12:12:31AM +0200, Alexander Bluhm wrote:
-> On Fri, Sep 08, 2023 at 07:48:21PM +0200, Enrico Bassetti wrote:
-> > A FreeBSD with `pf` as firewall for IPv6 traffic and `scrub` enabled to 
-> > reassemble IPv6 fragments is vulnerable to an attack that uses a crafted 
-> > packet posing as IPv6 "atomic" fragment to bypass the rules.
-> 
-> I would like to mention that OpenBSD pf is not affected by the bug.
-> As I am the original author of IPv6 fragment reassembly, I have
-> just added a regression test to show that our pf drops such packets.
-> 
-> https://cvsweb.openbsd.org/src/regress/sys/netinet6/frag6/frag6_doubleatomic.py
-> 
-> This behavior seems to be present since 2013 when I added support
-> for atomic fragments to pf.  The relevant code is in OpenBSD
-> pf_walk_header6() in pf.c.  There a bunch of sanity checks are done
-> for the IPv6 header chain resulting in packet drops.  This function
-> does not exist in FreeBSD.
-> 
-> https://github.com/openbsd/src/blame/cc53a24ce58eb2212822060db742650de2787ee4/sys/net/pf.c#L7076
+CVE-2023-27538: SSH connection too eager reuse still
+====================================================
 
-FreeBSD should include this in its pf, and probably adopt a bunch more
-changes from OpenBSD pf.
+Project curl Security Advisory, March 20th 2023 -
+[Permalink](https://curl.se/docs/CVE-2023-27538.html)
+
+VULNERABILITY
+-------------
+
+libcurl would reuse a previously created connection even when an SSH related
+option had been changed that should have prohibited reuse.
+
+libcurl keeps previously used connections in a connection pool for subsequent
+transfers to reuse if one of them matches the setup. However, two SSH settings
+were left out from the configuration match checks, making them match too
+easily.
+
+We are not aware of any exploit of this flaw.
+
+INFO
+----
+
+These are the options that were not considered in the check, so curl would
+reuse a connection even if the subsequent transfer would have changed one or
+more of these options.
+
+- `CURLOPT_SSH_PUBLIC_KEYFILE`
+- `CURLOPT_SSH_PRIVATE_KEYFILE`
+
+This flaw was initially introduced in curl 7.16.1.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2023-27538 to this issue.
+
+This vulnerability is partially identical to
+[CVE-2022-27782](https://curl.se/docs/CVE-2022-27782.html) since the fix for
+that previous issue was bad and did not actually correct the problem for these
+SSH options.
+
+CWE-305: Authentication Bypass by Primary Weakness
+
+The previos flaw CVE-2022-27782 was set to severity Medium, but since this is
+a partial of that and affects only two options that rarely will change with
+the expectation that the user will be different, this time we set it severity
+Low.
+
+Severity: Low
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.16.1 to and including 7.88.1
+- Not affected versions: curl < 7.16.1 and curl >= 8.0.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+The fix for [CVE-2023-27538](https://github.com/curl/curl/commit/af369db4d3833272b8ed)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 8.0.0
+
+  B - Apply the patch to your local version
+
+  C - Avoid SCP and SFTP transfers
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on March 9 2023. We contacted
+distros@...nwall on March 13, 2023.
+
+curl 8.0.0 was released on March 20 2023, coordinated with the publication of
+this advisory.
+
+CREDITS
+-------
+
+- Reported-by: Harry Sintonen
+- Patched-by: Daniel Stenberg
+
+Thanks a lot!
+
 -- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
