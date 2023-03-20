@@ -1,31 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/08/7
-Message-ID: <8bd7dfdd-1a33-1b6c-11d5-c65ebb736eb8@apache.org>
-Date: Wed, 08 Nov 2023 18:05:51 +0000
-From: Antoine Pitrou <apitrou@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-47248: PyArrow, PyArrow: Arbitrary code execution when loading a malicious data file 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/20/3
+Message-ID: <40116rn7-8spr-8s65-275q-qq2pr4815911@unkk.fr>
+Date: Mon, 20 Mar 2023 08:26:09 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: CVE-2023-27535: FTP too eager connection reuse
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical
+CVE-2023-27535: FTP too eager connection reuse
+==============================================
 
-Affected versions:
+Project curl Security Advisory, March 20th 2023 -
+[Permalink](https://curl.se/docs/CVE-2023-27535.html)
 
-- PyArrow 0.14.0 through 14.0.0
-- PyArrow 0.14.0 through 14.0.0
+VULNERABILITY
+-------------
 
-Description:
+libcurl would reuse a previously created FTP connection even when one or more
+options had been changed that could have made the effective user a very
+different one, thus leading to the doing the second transfer with wrong
+credentials.
 
-Deserialization of untrusted data in IPC and Parquet readers in PyArrow versions 0.14.0 to 14.0.0 allows arbitrary code execution. An application is vulnerable if it reads Arrow IPC, Feather or Parquet data from untrusted sources (for example user-supplied input files).
+libcurl keeps previously used connections in a connection pool for subsequent
+transfers to reuse if one of them matches the setup. However, several FTP
+settings were left out from the configuration match checks, making them match
+too easily. The settings in questions are `CURLOPT_FTP_ACCOUNT`,
+`CURLOPT_FTP_ALTERNATIVE_TO_USER`, `CURLOPT_FTP_SSL_CCC` and `CURLOPT_USE_SSL`
+level.
 
-This vulnerability only affects PyArrow, not other Apache Arrow implementations or bindings.
+We are not aware of any exploit of this flaw.
 
-It is recommended that users of PyArrow upgrade to 14.0.1. Similarly, it is recommended that downstream libraries upgrade their dependency requirements to PyArrow 14.0.1 or later. PyPI packages are already available, and we hope that conda-forge packages will be available soon.
+INFO
+----
 
-If it is not possible to upgrade, we provide a separate package `pyarrow-hotfix` that disables the vulnerability on older PyArrow versions. See  https://pypi.org/project/pyarrow-hotfix/  for instructions.
+CVE-2023-27535 was introduced in [commit
+177dbc7be07125582](https://github.com/curl/curl/commit/177dbc7be07125582),
+shipped in curl 7.13.0.
 
-References:
+CWE-305: Authentication Bypass by Primary Weakness
 
-https://arrow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-47248
+Severity: Medium
 
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.13.0 to and including 7.88.1
+- Not affected versions: curl < 7.13.0 and curl >= 8.0.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+A [fix for CVE-2023-27535](https://github.com/curl/curl/commit/8f4608468b890dc)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 8.0.0
+
+  B - Apply the patch to your local version
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on March 5, 2023. We contacted
+distros@...nwall on March 13, 2023.
+
+curl 8.0.0 was released on March 20 2023, coordinated with the publication of
+this advisory.
+
+CREDITS
+-------
+
+- Reported-by: Harry Sintonen
+- Patched-by: Daniel Stenberg
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
