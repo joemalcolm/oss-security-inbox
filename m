@@ -1,70 +1,90 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/18/19
-Message-ID: <20230418192822.GA2959@openwall.com>
-Date: Tue, 18 Apr 2023 21:28:22 +0200
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/20/5
+Message-ID: <92s379q0-52o-4rp2-o73-p1q92825pr39@unkk.fr>
+Date: Mon, 20 Mar 2023 08:26:17 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: CVE-2023-27537: HSTS double-free
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Apr 18, 2023 at 08:13:24PM +0300, 0xef967c36@...il.com wrote:
-> On Tue, Apr 18, 2023 at 05:40:16PM +0200, Solar Designer wrote:
-> > BTW, even with the kernel bug fixed, there are ioctl number clashes
-> > between different devices, so even e.g. isatty(3) is not necessarily
-> > safe if called with elevated privileges under a possible confused deputy
-> > scenario.  Here's strace showing some clashes on older Linux/i386:
-> > 
-> > $ cat isatty.c
-> > int main(void) { return isatty(0); }
-> > $ gcc isatty.c -o isatty
-> > $ strace -e ioctl ./isatty
-> > ioctl(0, SNDCTL_TMR_TIMEBASE or SNDRV_TIMER_IOCTL_NEXT_DEVICE or TCGETS, {B38400 opost isig icanon echo ...}) = 0
-> 
-> No, there's no clash. That was a bug in strace (fortunately fixed in
-> newer versions).
-> 
-> Those values macros are different; and they were ALWAYS different.
+CVE-2023-27537: HSTS double-free
+================================
 
-Oh, I didn't recall the full story.  Thank you for correcting me.
+Project curl Security Advisory, March 20th 2023 -
+[Permalink](https://curl.se/docs/CVE-2023-27537.html)
 
-> > IIRC, I was the one to add this feature to strace 20+ years ago:
-> > 
-> > * Sat Jun 08 2002 Solar Designer <solar-at-owl.openwall.com>
-> > - Updated to today's CVS version (post-4.4) with an additional fix for
-> > displaying all possible ioctl names when there's more than one match,
+VULNERABILITY
+-------------
 
-So what I did back then was actually work around the shortcoming of
-older strace not decoding the full 32 bits, which I did not realize was
-the case.
+libcurl supports sharing HSTS data between separate "handles". This sharing was
+introduced without considerations for do this sharing across separate threads
+but there was no indication of this fact in the documentation.
 
-> There was no number clash. That 'foo or bar or quux' "fix" in strace
-> was stupid.
+Due to missing mutexes or thread locks, two threads sharing the same HSTS data
+could end up doing a double-free or use-after-free.
 
-It was indeed stupid of me not to realize what was going on, but the
-"fix" nevertheless made things slightly better at the time - before it,
-strace reported an arbitrary one of the 16-bit matches.  So in the above
-example, we could have seen just SNDCTL_TMR_TIMEBASE whereas the program
-more likely meant TCGETS.  It took until 2015 for the proper fix by the
-new strace maintainer Dmitry V. Levin, now referenced by Ruihan Li in
-this thread, and that fix involved that "the tools for generating ioctl
-definitions from kernel headers have been rewritten, and the source
-format of ioctl definitions has been extended" resulting in "118 changed
-files with 7,272 additions and 3,004 deletions."
+We are not aware of any exploit of this flaw.
 
-> $ cc -xc - <<EOT && ./a.out
-> #include <sys/ioctl.h>
-> #include <linux/soundcard.h>
-> #include <sound/asound.h>
-> #include <stdio.h>
-> 
-> int main(int ac, char **av){
->      printf("%#lx %#lx %#x\n", SNDCTL_TMR_TIMEBASE, SNDRV_TIMER_IOCTL_NEXT_DEVICE, TCGETS);
->     return 0;
-> }
-> EOT
-> 0xc0045401 0xc0145401 0x5401
+INFO
+----
 
-Yes, these are the values I get on the same old test system as well.  So
-it was indeed just strace not decoding the high 16 bits.
+This feature was not implemented to support sharing between threads. That is
+still left for future improvements. The fix for this issue is therefore a
+documentation update clarifying that sharing HSTS between threads is not
+expected to work.
 
-Alexander
+CVE-2023-27537 was introduced in [commit
+076a2f629119222a](https://github.com/curl/curl/commit/076a2f629119222a), shipped
+in curl 7.88.0.
+
+CWE-415: Double Free
+
+Severity: Low
+
+Severity is set to Low because
+
+  - Not widely used functionality
+  - The timing necessary to trigger this has to match fairly exact
+  - Exploitation this for anything but denial of service is difficult
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.88.0 to and including 7.88.1
+- Not affected versions: curl < 7.88.0 and curl >= 8.0.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+A [fix for CVE-2023-27537](https://github.com/curl/curl/commit/dca4cdf071be0)
+
+RECOMMENDATIONS
+--------------
+
+  A - Do not share HSTS data between threads
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on March 8 2023. We contacted
+distros@...nwall on March 13, 2023.
+
+curl 8.0.0 was released on March 20 2023, coordinated with the publication of
+this advisory.
+
+CREDITS
+-------
+
+- Reported-by: Hiroki Kurosawa
+- Patched-by: Daniel Stenberg
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
