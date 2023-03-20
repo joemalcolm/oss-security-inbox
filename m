@@ -1,34 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/13/2
-Message-ID: <ZA+CMlU2Acu8NBhA@quatroqueijos.cascardo.eti.br>
-Date: Mon, 13 Mar 2023 17:06:10 -0300
-From: Thadeu Lima de Souza Cascardo <cascardo@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-1032 - Linux kernel io_uring IORING_OP_SOCKET double free
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/20/1
+Message-ID: <on2p28n5-r290-p375-6012-s05rr4s84so2@unkk.fr>
+Date: Mon, 20 Mar 2023 08:26:02 +0100 (CET)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORY] curl: CVE-2023-27533: TELNET option IAC injection
 Content-Type: text/plain; charset=utf-8
 
-A double-free vulnerability was found in the handling of IORING_OP_SOCKET
-operation with io_uring on the Linux kernel.
+CVE-2023-27533: TELNET option IAC injection
+============================================
 
-It was fixed by commit:
+Project curl Security Advisory, March 20th 2023 -
+[Permalink](https://curl.se/docs/CVE-2023-27533.html)
 
-649c15c7691e9b13cbe9bf6c65c365350e056067 ("net: avoid double iput when sock_alloc_file fails")
+VULNERABILITY
+-------------
 
-It has been assigned CVE-2023-1032.
+curl supports communicating using the TELNET protocol and as a part of this it
+offers users to pass on user name and "telnet options" for the server
+negotiation.
 
-It affects kernel versions starting with 5.19-rc1 and should affect any
-backports including commits da214a475f8bd1d3e9e7a19ddfeb4d1617551bab ("net: add
-__sys_socket_file()") and 1374e08e2d44863c931910797852589803997668 ("io_uring:
-add socket(2) support").
+Due to lack of proper input scrubbing and without it being the documented
+functionality, curl would pass on user name and telnet options to the server
+as provided. This could allow users to pass in carefully crafted content that
+pass on content or do option negotiation without the application intending to
+do so. In particular if an application for example allows users to provide the
+data or parts of the data.
 
-It requires a memory allocation failure to happen, which will be followed by a
-double free of a recently allocated object.
+We are not aware of any exploit of this flaw.
 
-Causing the memory allocation failure does not require much more than being in
-a memory cgroup with a maximum allocation setup (systemd MemoryMax, for
-example).
+INFO
+----
 
-The double free happens with iput, which sets up a flag, and leads to a BUG_ON.
-So, at least, a system crash is possible.
+CVE-2023-27533 was introduced in [commit
+a1d6ad26100bc493c7](https://github.com/curl/curl/commit/a1d6ad26100bc493c7),
+shipped in curl 7.7.
 
-Cascardo.
+CWE-75: Failure to Sanitize Special Elements into a Different Plane
+
+Severity: Low
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.7 to and including 7.88.1
+- Not affected versions: curl < 7.7 and curl >= 8.0.0
+
+libcurl is used by many applications, but not always advertised as such!
+
+THE SOLUTION
+------------
+
+Only accept ASCII user name and telnet options.
+
+A [fix for CVE-2023-27533](https://github.com/curl/curl/commit/538b1e79a6e7b)
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 8.0.0
+
+  B - Apply the patch to your local version
+
+  C - Do your own TELNET user name or option input filtering
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on March 3, 2023. We contacted
+distros@...nwall on March 13, 2023.
+
+curl 8.0.0 was released on March 20 2023, coordinated with the publication of
+this advisory.
+
+CREDITS
+-------
+
+- Reported-by: Harry Sintonen
+- Patched-by: Daniel Stenberg
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se
+  | Commercial curl support up to 24x7 is available!
+  | Private help, bug fixes, support, ports, new features
+  | https://curl.se/support.html
