@@ -1,4 +1,4 @@
-Received: (qmail 16256 invoked by uid 550); 10 Jan 2023 12:01:08 -0000
+Received: (qmail 7239 invoked by uid 550); 21 Mar 2023 14:31:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,82 +7,246 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28333 invoked from network); 9 Jan 2023 22:10:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=5X0ao7oUTLIICr/dTIJIVwCEPBpCJ/1CK6XlnaLfNOU=;
-        b=U07ETlBQUhKxhi4T6f/az5aMBq7FFmQ9JcykX+YfD8uKRlz5x6U2bmxPGvDGLSeWS3
-         YRZearXFdgCBkcN2SY5ZKP901v4SCOGJYENZo2N0kQX1PCyG0zrs6fFFq32J4CzWB66U
-         LPfdrbIanAuZ4pdGxkOM0V+lNe9D+rkT84qlaFJ94TecTSbaiA+JvXwKfYaf+vlEzPKC
-         cZ6RNxUAklAGh9AmSQsR1MrzCQkaaa6HIkLRIrxlarXZQTmqRbMk3HcUCoKjJPIvITzs
-         SfMpjVh7iNEWlvKsahWvRR2LtGWYTLLcHRcpv3ssMUu65GYLlvXiRTUBGp0ikhsW8cZh
-         57zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5X0ao7oUTLIICr/dTIJIVwCEPBpCJ/1CK6XlnaLfNOU=;
-        b=EJLmBDRFZRwUbfLtEI8KLZRMRrMI8Sic3RZVXR5bP5lmQyFhFafsxr0sN4A9+uLMRd
-         0sfISNRH6iAi38Ti9atSsL6SaO1JkZp65EM2VV3dtfLh9QikyUdAvbIDpgYSRxj8P0zp
-         wqllsoKpiAzM2iifBwZKUCb1ZQAoa4C8OfBM+Za4+dInHf7Xql79YOHkUKGHs2XqONiR
-         WG5uysKOQbaouW0qVFe2lI9ZOuU7hwVc/6UYTIirYkSasH9h0Lf4xv8snDMxv0S3VdrF
-         TU02vP+RadP1iIn3wGfyCv4fAk3qiACWHGRJbAwpAOB2At3e3FHirmd/8jWaUo1Y0ctB
-         yVxA==
-X-Gm-Message-State: AFqh2kriNis1hrtF9FY4izsBT7/op8CvS24/IqDWeB47bF1WjVHbQtZX
-	+wQu5sEiXh8BKJLC3sg9FPGUQlyVwnvSaIjukvqWN+TTqgA=
-X-Google-Smtp-Source: AMrXdXut6JedYWFAEAo4PxVMenmP9DLAMQlFz8RKSTuP4VWB/t8z+lqJFu1GAmDdNaztyj8L80M9f6aIPmqeMTZhZ0o=
-X-Received: by 2002:a5d:46c1:0:b0:2bb:8d0:983a with SMTP id
- g1-20020a5d46c1000000b002bb08d0983amr328221wrs.322.1673302198757; Mon, 09 Jan
- 2023 14:09:58 -0800 (PST)
-MIME-Version: 1.0
-From: Kyle Zeng <zengyhkyle@gmail.com>
-Date: Mon, 9 Jan 2023 15:09:22 -0700
-Message-ID: <CADW8OBsT3Lhc2GrgQQThG_-sUz5SyExn-XvbLm7q+wGjuHxPqA@mail.gmail.com>
+Received: (qmail 7206 invoked from network); 21 Mar 2023 14:31:00 -0000
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.1\))
+Message-Id: <7B02B649-609D-491C-B80E-A6CD114D27BA@beckweb.net>
+Date: Tue, 21 Mar 2023 15:30:46 +0100
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] Type Confusion in Linux Kernel
+X-Mailer: Apple Mail (2.3696.120.41.1.1)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1679409060;77bcc71b;
+X-HE-SMSGID: 1ped0h-0003hU-8L
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
-Hi there,
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-I recently found a type-confusion vulnerability in the Linux kernel.
-Since it interprets random data as pointers, it is potentially
-exploitable. According to the fix commit, this bug was introduced in
-Linux-2.6.12-rc2 in 2005. I already contacted security@kernel.org and
-helped them patch the vulnerability.
+The following releases contain fixes for security vulnerabilities:
 
-# Vulnerability
-The vulnerability is caused by accessing classification results before
-checking the classification return code in the network scheduler's
-code. For example, in the following snippet from `cbq_classify`:
-~~~
-struct cbq_class *cl;
-......
-result = tcf_classify(skb, fl, &res, true);
-if (!fl || result < 0)
-goto fallback;
+* JaCoCo Plugin 3.3.2.1
+* OctoPerf Load Testing Plugin 4.5.1, 4.5.2, and 4.5.3
+* Pipeline Aggregator View Plugin 1.14
+* Role-based Authorization Strategy Plugin 587.588.v850a_20a_30162
 
-cl = (void *)res.class;
-~~~
-It checks `result < 0` before casting `res.class` to `struct cbq_class
-*`. However, `result >= 0` does not ensure `res.class` contains valid
-results. Specifically, it is possible `result` itself says the packet
-is invalid and should be dropped (`TC_ACT_SHOT`) while at the same
-time res.class contains invalid data because res.class is a huge union
-attribute and can be used for other purposes before it is marked as
-`TC_ACT_SHOT`. As a result, it is a type confusion between `struct
-cbq_class` and whatever struct that res.class was used as before it is
-returned.
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-# Patch
-Two schedulers have the same vulnerable code patterns and the fixes
-can be found https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=caa4b35b4317d5147b3ab0fbdc9c075c7d2e9c12
-and https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a2965c7be0522eaa18808684b7b82b248515511b
+* AbsInt a=C2=B3 Plugin
+* Convert To Pipeline Plugin
+* Cppcheck Plugin
+* Crap4J Plugin
+* Mashup Portlets Plugin
+* Performance Publisher Plugin
+* Phabricator Differential Plugin
+* remote-jobs-view-plugin Plugin
+* Visual Studio Code Metrics Plugin
 
-This vulnerability does not have a CVE assigned. I'll appreciate it if
-anyone on the mailing list can give it a CVE to signify its security
-implications.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2023-03-21/
 
-Best,
-Kyle Zeng
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
+
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-3053 / CVE-2023-28668
+Permissions in Jenkins can be enabled and disabled. Some permissions are
+disabled by default, e.g., Overall/Manage or Item/Extended Read. Disabled
+permissions cannot be granted directly, only through greater permissions
+that imply them (e.g., Overall/Administer or Item/Configure).
+
+Role-based Authorization Strategy Plugin 587.v2872c41fa_e51 and earlier
+grants permissions even after they've been disabled.
+
+This allows attackers to have greater access than they're entitled to after
+the following operations took place:
+
+1. A permission is granted to attackers directly or through groups. 2. The
+permission is disabled, e.g., through the script console.
+
+
+SECURITY-3061 / CVE-2023-28669
+JaCoCo Plugin 3.3.2 and earlier does not escape class and method names
+shown on the UI.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to control input files for the 'Record JaCoCo
+coverage report' post-build action.
+
+
+SECURITY-2885 / CVE-2023-28670
+Pipeline Aggregator View Plugin 1.13 and earlier does not escape a variable
+representing the current view's URL in inline JavaScript.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by authenticated attackers with Overall/Read permission.
+
+
+SECURITY-3067 (1) / CVE-2023-28671
+OctoPerf Load Testing Plugin Plugin 4.5.0 and earlier does not require POST
+requests for a connection test HTTP endpoint, resulting in a cross-site
+request forgery (CSRF) vulnerability.
+
+This vulnerability allows attackers to connect to an attacker-specified URL
+using attacker-specified credentials IDs obtained through another method,
+capturing credentials stored in Jenkins.
+
+
+SECURITY-3067 (2) / CVE-2023-28672
+OctoPerf Load Testing Plugin Plugin 4.5.1 and earlier does not perform a
+permission check in a connection test HTTP endpoint.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified credentials IDs obtained
+through another method, capturing credentials stored in Jenkins.
+
+
+SECURITY-3067 (3) / CVE-2023-28673
+OctoPerf Load Testing Plugin Plugin 4.5.2 and earlier does not perform a
+permission check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+
+SECURITY-3067 (4) / CVE-2023-28674 (CSRF) & CVE-2023-28675 (missing permiss=
+ion check)
+OctoPerf Load Testing Plugin Plugin 4.5.2 and earlier does not perform
+permission checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to connect to a
+previously configured Octoperf server using attacker-specified credentials.
+
+Additionally, these endpoints do not require POST requests, resulting in a
+cross-site request forgery (CSRF) vulnerability.
+
+
+SECURITY-2963 / CVE-2023-28676
+Convert To Pipeline Plugin 1.0 and earlier does not require POST requests
+for the HTTP endpoint converting a Freestyle project to Pipeline, resulting
+in a cross-site request forgery (CSRF) vulnerability.
+
+This vulnerability allows attackers to create a Pipeline based on a
+Freestyle project. Combined with SECURITY-2966, this can result in the
+execution of unsandboxed Pipeline scripts.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2966 / CVE-2023-28677
+Convert To Pipeline Plugin 1.0 and earlier uses basic string concatenation
+to convert Freestyle projects' Build Environment, Build Steps, and
+Post-build Actions to the equivalent Pipeline step invocations.
+
+This allows attackers able to configure Freestyle projects to prepare a
+crafted configuration that injects Pipeline script code into the
+(unsandboxed) Pipeline resulting from a convertion by Convert To Pipeline
+Plugin. If an administrator converts the Freestyle project to a Pipeline,
+the script will be pre-approved.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2809 / CVE-2023-28678
+Cppcheck Plugin 1.26 and earlier does not escape file names from Cppcheck
+report files before showing them on the Jenkins UI.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to control report file contents.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2813 / CVE-2023-28679
+Mashup Portlets Plugin 1.1.2 and earlier provides the "Generic JS Portlet"
+feature that lets a user populate a portlet using a custom JavaScript
+expression.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by authenticated attackers with Overall/Read permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2925 / CVE-2023-28680
+Crap4J Plugin 0.9 and earlier does not configure its XML parser to prevent
+XML external entity (XXE) attacks.
+
+This allows attackers able to control Crap Report file contents to have
+Jenkins parse a crafted XML document that uses external entities for
+extraction of secrets from the Jenkins controller or server-side request
+forgery.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2926 / CVE-2023-28681
+Visual Studio Code Metrics Plugin 1.7 and earlier does not configure its
+XML parser to prevent XML external entity (XXE) attacks.
+
+This allows attackers able to control VS Code Metrics File contents to have
+Jenkins parse a crafted XML document that uses external entities for
+extraction of secrets from the Jenkins controller or server-side request
+forgery.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2928 / CVE-2023-28682
+Performance Publisher Plugin 8.09 and earlier does not configure its XML
+parser to prevent XML external entity (XXE) attacks.
+
+This allows attackers able to control PerfPublisher report files to have
+Jenkins parse a crafted XML document that uses external entities for
+extraction of secrets from the Jenkins controller or server-side request
+forgery.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2942 / CVE-2023-28683
+Phabricator Differential Plugin 2.1.5 and earlier does not configure its
+XML parser to prevent XML external entity (XXE) attacks.
+
+This allows attackers able to control coverage report file contents for the
+'Post to Phabricator' post-build action to have Jenkins parse a crafted XML
+document that uses external entities for extraction of secrets from the
+Jenkins controller or server-side request forgery.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2956 / CVE-2023-28684
+remote-jobs-view-plugin Plugin 0.0.3 and earlier does not configure its XML
+parser to prevent XML external entity (XXE) attacks.
+
+This allows authenticated attackers with Overall/Read permission to have
+Jenkins parse a crafted XML document that uses external entities for
+extraction of secrets from the Jenkins controller or server-side request
+forgery.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2930 / CVE-2023-28685
+AbsInt a=C2=B3 Plugin 1.1.0 and earlier does not configure its XML parser to
+prevent XML external entity (XXE) attacks.
+
+This allows attackers able to control 'Project File (APX)' contents to have
+Jenkins parse a crafted XML document that uses external entities for
+extraction of secrets from the Jenkins controller or server-side request
+forgery.
+
+As of publication of this advisory, there is no fix.
+
+
+
