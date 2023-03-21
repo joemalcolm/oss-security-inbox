@@ -1,93 +1,141 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/10/6
-Message-ID: <51049a59-5e4b-4def-895f-97b9c2b92b24@oracle.com>
-Date: Tue, 10 Oct 2023 11:40:06 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2023-44487: HTTP/2 Rapid Reset attack against many implementations
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/21/1
+Message-Id: <E1peafP-0000Ca-Ko@xenbits.xenproject.org>
+Date: Tue, 21 Mar 2023 12:00:39 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 427 v2 (CVE-2022-42332) - x86 shadow plus log-dirty mode use-after-free
 Content-Type: text/plain; charset=utf-8
 
-[I've seen multiple news articles & blogs in the wake of the coordinated
-  disclosure today, but no postings here yet, so lets start fixing that.]
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Google, Cloudflare, AWS, and others released details today of a protocol-level
-issue in HTTP/2 being exploited in recent months for denial-of-service attacks:
+            Xen Security Advisory CVE-2022-42332 / XSA-427
+                               version 2
 
-https://cloud.google.com/blog/products/identity-security/how-it-works-the-novel-http2-rapid-reset-ddos-attack
-https://blog.cloudflare.com/technical-breakdown-http2-rapid-reset-ddos-attack/
-https://aws.amazon.com/blogs/security/how-aws-protects-customers-from-ddos-events/
+             x86 shadow plus log-dirty mode use-after-free
 
-This attack works via the multiplexed streams feature of HTTP/2, in which the
-client repeatedly makes a request for a new stream, and then immediately sends
-a RST_STREAM frame to cancel them, resulting in the server doing lots of extra
-work to set up and tear down the streams, while not hitting any server-side
-limit on a maximum number of active streams per connection.
+UPDATES IN VERSION 2
+====================
 
-CVE-2023-44487 was issued to track this issue across implementations:
-https://www.cve.org/CVERecord?id=CVE-2023-44487
+Public release.
 
-A script to check for affected implemenations has been posted at:
-https://github.com/bcdannyboy/CVE-2023-44487
+ISSUE DESCRIPTION
+=================
 
-Information I've found so far on open source implementations (most via the
-current listings in the CVE) include:
+In environments where host assisted address translation is necessary
+but Hardware Assisted Paging (HAP) is unavailable, Xen will run guests
+in so called shadow mode.  Shadow mode maintains a pool of memory used
+for both shadow page tables as well as auxiliary data structures.  To
+migrate or snapshot guests, Xen additionally runs them in so called
+log-dirty mode.  The data structures needed by the log-dirty tracking
+are part of aformentioned auxiliary data.
 
-- Apache httpd:
-   https://chaos.social/@icing/111210915918780532
+In order to keep error handling efforts within reasonable bounds, for
+operations which may require memory allocations shadow mode logic
+ensures up front that enough memory is available for the worst case
+requirements.  Unfortunately, while page table memory is properly
+accounted for on the code path requiring the potential establishing of
+new shadows, demands by the log-dirty infrastructure were not taken into
+consideration.  As a result, just established shadow page tables could
+be freed again immediately, while other code is still accessing them on
+the assumption that they would remain allocated.
 
-- caddy:
-   https://github.com/caddyserver/caddy/issues/5877
+IMPACT
+======
 
-- envoy:
-   https://github.com/envoyproxy/envoy/pull/30055
+Guests running in shadow mode and being subject to migration or
+snapshotting may be able to cause Denial of Service and other problems,
+including escalation of privilege.
 
-- golang:
-   https://github.com/golang/go/issues/63417
-   https://groups.google.com/g/golang-announce/c/iNNxDTCjZvo
+VULNERABLE SYSTEMS
+==================
 
-- h2o:
-   https://github.com/h2o/h2o/security/advisories/GHSA-2m7v-gc89-fjqf
-   https://github.com/h2o/h2o/pull/3291
+All Xen versions from at least 3.2 onwards are vulnerable.  Earlier
+versions have not been inspected.
 
-- haproxy:
-   https://github.com/haproxy/haproxy/issues/2312
+Only x86 systems are vulnerable.  The vulnerability is limited to
+migration and snapshotting of guests, and only to PV ones as well as
+HVM or PVH ones run with shadow paging.
 
-- hyper:
-   https://seanmonstar.com/post/730794151136935936/hyper-http2-rapid-reset-unaffected
+MITIGATION
+==========
 
-- jetty:
-   https://github.com/eclipse/jetty.project/issues/10679
-   https://github.com/eclipse/jetty.project/releases/tag/jetty-12.0.2
-   https://github.com/eclipse/jetty.project/releases/tag/jetty-11.0.17
-   https://github.com/eclipse/jetty.project/releases/tag/jetty-10.0.17
-   https://github.com/eclipse/jetty.project/releases/tag/jetty-9.4.53.v20231009
+Not migrating or snapshotting guests will avoid the vulnerability.
 
-- netty:
-   https://github.com/netty/netty/commit/58f75f665aa81a8cbcf6ffa74820042a285c5e61
+Running only HVM or PVH guests and only in HAP (Hardware Assisted
+Paging) mode will also avoid the vulnerability.
 
-- nghttp2:
-   https://github.com/nghttp2/nghttp2/pull/1961
-   https://github.com/nghttp2/nghttp2/releases/tag/v1.57.0
+CREDITS
+=======
 
-- nginx:
-   https://www.nginx.com/blog/http-2-rapid-reset-attack-impacting-f5-nginx-products/
-   https://mailman.nginx.org/pipermail/nginx-devel/2023-October/S36Q5HBXR7CAIMPLLPRSSSYR4PCMWILK.html
+This issue was discovered by Jan Beulich of SUSE.
 
-- nodejs:
-   https://github.com/nodejs/node/pull/50121
+RESOLUTION
+==========
 
-- proxygen:
-   https://github.com/facebook/proxygen/pull/466
+Applying the appropriate attached patch resolves this issue.
 
-- swift-nio-http2:
-   https://forums.swift.org/t/swift-nio-http2-security-update-cve-2023-44487-http-2-dos/67764
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
 
-- tomcat:
-   https://tomcat.apache.org/security-11.html#Fixed_in_Apache_Tomcat_11.0.0-M12
-   https://tomcat.apache.org/security-10.html#Fixed_in_Apache_Tomcat_10.1.14
-   https://tomcat.apache.org/security-9.html#Fixed_in_Apache_Tomcat_9.0.81
-   https://tomcat.apache.org/security-8.html#Fixed_in_Apache_Tomcat_8.5.94
+xsa427.patch           xen-unstable - Xen 4.17.x
+xsa427-4.16.patch      Xen 4.16.x
+xsa427-4.15.patch      Xen 4.15.x
+xsa427-4.14.patch      Xen 4.14.x
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+$ sha256sum xsa427*
+5ebcdc495ba6f439e47be7e17dbb8fbdecf4de66d2fac560d460f6841bd3bef3  xsa427.meta
+aa39316cbb81478c62b3d5c5aea7edfb6ade3bc5e6d0aa8c4677f9ea7bcc97a2  xsa427.patch
+5ba679bc2170b0d9cd4c6ce139057e3287a6ee00434fa0e9a7a02441420030ff  xsa427-4.14.patch
+410ee6be28412841ab5aba1131f7dd7b84b9983f6c93974605f196fd278562e1  xsa427-4.15.patch
+76c1850eb9a274c1feb5a8645f61ecf394a0551278f4e40e123ec07ea307f101  xsa427-4.16.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmQZlVkMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZgRMH/RU6mB8M/feJeZDkYbrLPmT3yLiw6BpWroMTUTpv
+5kIlixxlfQqyv8gqd25p5WMMKUsZlPZdLCT0iOlyMTNz6EUPRBME2Yb3ByiM7O7/
+kFtlFDk5ZY5c/Vk1w0XuLm+YcABj0xnsn003YvgknmZfBJ2HWdR2iIayT/NjfQ+u
+twErqUqa7il2Em5M8ZwHZeJjCUN9t+g2sv5sdI/rQeRge8ofjsquLubpgUVMGjiV
+xwwUPCn3co0/2WArB4mHjWCNcoATk1NVZ3CTUyKGl5Mr+EvdmYWvzmlDa4wc8QPV
+tNoASqXw0MbOOTy+RnZQHwappCDP371MirPq4IaTwiXy7eo=
+=0flx
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa427.meta" of type "application/octet-stream" (1316 bytes)
+
+Download attachment "xsa427.patch" of type "application/octet-stream" (3199 bytes)
+
+Download attachment "xsa427-4.14.patch" of type "application/octet-stream" (3621 bytes)
+
+Download attachment "xsa427-4.15.patch" of type "application/octet-stream" (3610 bytes)
+
+Download attachment "xsa427-4.16.patch" of type "application/octet-stream" (3152 bytes)
