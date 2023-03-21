@@ -1,61 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/28/1
-Message-ID: <1dac33e6-1e9c-fc1d-3eb8-6bb771dba5bb@apache.org>
-Date: Tue, 28 Nov 2023 14:54:23 +0000
-From: Jean-Baptiste Onofré <jbonofre@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2022-41678: Apache ActiveMQ: Deserialization vulnerability on Jolokia that allows authenticated users to perform RCE 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/21/5
+Message-ID: <20230321154519.xoymfc2t6ixalgls@jwilk.net>
+Date: Tue, 21 Mar 2023 16:45:19 +0100
+From: Jakub Wilk <jwilk@...lk.net>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: TTY pushback vulnerabilities / TIOCSTI
 Content-Type: text/plain; charset=utf-8
 
-Severity: Medium
+* Hanno Böck <hanno@...eck.de>, 2023-03-19 09:18:
+>maybe restricting any TIOCLINUX sub features that implement anything 
+>related to selection would be a good option. The gpm daemon runs as 
+>root anyway.
+>
+>Do you see any risk left if
+>TIOCL_SETSEL
+>TIOCL_PASTESEL
+>TIOCL_SELLOADLUT
+>are no longer accessible to non-privileged processes?
 
-Affected versions:
+I think that should be fine.
 
-- Apache ActiveMQ before 5.16.6
-- Apache ActiveMQ 5.17.0 before 5.17.4
-- Apache ActiveMQ 5.18.0 unaffected
-- Apache ActiveMQ 6.0.0 unaffected
-
-Description:
-
-Once an user is authenticated on Jolokia, he can potentially trigger arbitrary code execution. 
-
-In details, in ActiveMQ configurations, jetty allows
-org.jolokia.http.AgentServlet to handler request to /api/jolokia
-
-org.jolokia.http.HttpRequestHandler#handlePostRequest is able to
-create JmxRequest through JSONObject. And calls to
-org.jolokia.http.HttpRequestHandler#executeRequest.
-
-Into deeper calling stacks,
-org.jolokia.handler.ExecHandler#doHandleRequest is able to invoke
-through refection.
-
-And then, RCE is able to be achieved via
-jdk.management.jfr.FlightRecorderMXBeanImpl which exists on Java version above 11.
-
-1 Call newRecording.
-
-2 Call setConfiguration. And a webshell data hides in it.
-
-3 Call startRecording.
-
-4 Call copyTo method. The webshell will be written to a .jsp file.
-
-The mitigation is to restrict (by default) the actions authorized on Jolokia, or disable Jolokia.
-A more restrictive Jolokia configuration has been defined in default ActiveMQ distribution. We encourage users to upgrade to ActiveMQ distributions version including updated Jolokia configuration: 5.16.6, 5.17.4, 5.18.0, 6.0.0.
-
-This issue is being tracked as AMQ-9201 
-
-Credit:
-
-wangxin@...eatbook.cn (finder)
-wangzhendong@...eatbook.cn (finder)
-honglonglong@...eatbook.cn (finder)
-
-References:
-
-https://activemq.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2022-41678
-https://issues.apache.org/jira/browse/AMQ-9201
-
+-- 
+Jakub Wilk
