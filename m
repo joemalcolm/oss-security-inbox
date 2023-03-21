@@ -1,52 +1,133 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/26/1
-Message-ID: <ZRKn0bQVe4MBMYiC@eldamar.lan>
-Date: Tue, 26 Sep 2023 11:43:45 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-4863: libwebp: Heap buffer overflow in WebP Codec
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/21/3
+Message-Id: <E1peafW-0000G3-UU@xenbits.xenproject.org>
+Date: Tue, 21 Mar 2023 12:00:46 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 429 v3 (CVE-2022-42331) - x86: speculative vulnerability in 32bit SYSCALL path
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Thu, Sep 21, 2023 at 10:52:50PM +0200, Solar Designer wrote:
-> Hi,
-> 
-> Ideally this should have been brought in here ~10 days ago, but I guess
-> better late than never, and I'd like to encourage others to be bringing
-> relevant stuff to the list.
-> 
-> On September 11, Google announced an update to Chrome:
-> 
-> https://chromereleases.googleblog.com/2023/09/stable-channel-update-for-desktop_11.html
-> 
-> fixing this issue:
-> 
-> > Critical CVE-2023-4863: Heap buffer overflow in WebP. Reported by Apple
-> > Security Engineering and Architecture (SEAR) and The Citizen Lab at The
-> > University of Toronto's Munk School on 2023-09-06
-> > 
-> > We would also like to thank all security researchers that worked with us
-> > during the development cycle to prevent security bugs from ever reaching
-> > the stable channel.
-> > 
-> > Google is aware that an exploit for CVE-2023-4863 exists in the wild.
-> 
-> With the bug being in a library used by many projects, this made people
-> wonder why a CVE was assigned to Chrome rather than to libwebp:
-> 
-> https://adamcaudill.com/2023/09/14/whose-cve-is-it-anyway/
+            Xen Security Advisory CVE-2022-42331 / XSA-429
+                               version 3
 
-Maybe related to this question in todays CVEs updates there appeared 
+          x86: speculative vulnerability in 32bit SYSCALL path
 
-https://www.cve.org/CVERecord?id=CVE-2023-5129
+UPDATES IN VERSION 3
+====================
 
-vs.
+Public release.
 
-https://www.cve.org/CVERecord?id=CVE-2023-4863
+ISSUE DESCRIPTION
+=================
 
-FWIW, I contacted the assigning CNAs so this can be clarified (e.g. if
-one of those needs to be rejected).
+Due to an oversight in the very original Spectre/Meltdown security work
+(XSA-254), one entrypath performs its speculation-safety actions too
+late.
 
-Regards,
-Salvatore
+In some configurations, there is an unprotected RET instruction which
+can be attacked with a variety of speculative attacks.
+
+IMPACT
+======
+
+An attacker might be able to infer the contents of arbitrary host
+memory, including memory assigned to other guests.
+
+VULNERABLE SYSTEMS
+==================
+
+Xen versions 4.5 through 4.17 are vulnerable.  Older versions are not
+vulnerable.
+
+Only x86 CPUs are potentially vulnerable.  CPUs of other architectures
+are not vulnerable.
+
+The problematic codepath is only reachable on x86 CPUs which follow
+AMD's behaviour with respect to SYSCALL instructions from compatibility
+mode segments.  This means that AMD and Hygon CPUs are potentially
+vulnerable, whereas Intel CPUs are not.  Other vendors have not been
+checked.
+
+Only PV guests can leverage the vulnerability.
+
+On Xen 4.16 and later, the vulnerability is only present if 32bit PV
+guest support is compiled in - i.e. CONFIG_PV32=y.  On Xen 4.15 and
+older, all supported build configurations are vulnerable.
+
+The vulnerability is only present when booting on hardware that supports
+SMEP or SMAP (Supervisor Mode Execution/Access Prevention).  This is
+believed to be some Family 0x16 models, and all later CPUs.
+
+MITIGATION
+==========
+
+Not running untrusted PV guests will avoid the issue.
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper of XenServer.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa429.patch           xen-unstable - Xen 4.16
+xsa429-4.15.patch      Xen 4.15 - Xen 4.14
+
+$ sha256sum xsa429*
+2d7be90d917c475ab5217e657d2b44f5d8b107d9023dca034fcfb7feab07b2f0  xsa429.meta
+36ed36dbfaad9e5df5fa87b9a3d9e9c531f476f97eeb2afe280aa238032a0540  xsa429.patch
+7ac3d4182585e5d2d39231f10e7c0c9fcb972c82cf81cb884e95b628187de3a7  xsa429-4.15.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmQZlWMMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZil4H/2b1DkLLz4RQqAgvaB8+SBeVLPqoZ7QxGLl8QXWT
+AMjFdy+M5T1OtbrMvEYCZNYhZnGOJgmVagERUvg/yZbPYx28NIHjG4+u90Ot6OId
+AQPqdrJ0wjEzN/ppNpnu1ALofAGbjsnAypEouGPh12gh5fcpcLQdT0rvpl2ff5f6
+Qi4ShtUXhBiduBQcJ0TSneSCf5s7cq1+sMenntenK5Nrsvg7gu51YR45FyKyXdZc
+raonkGDny9kmDAjdKkywS2Au2763ph9nHbW5TbD17s65AKUDTupzk+QlFPhJLIP+
+/gxDoUjKFiD/eY0AABWMAFGGvHFRNvdhTfUd6ImmWhqdEeE=
+=HxUJ
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa429.meta" of type "application/octet-stream" (1531 bytes)
+
+Download attachment "xsa429.patch" of type "application/octet-stream" (1842 bytes)
+
+Download attachment "xsa429-4.15.patch" of type "application/octet-stream" (1929 bytes)
