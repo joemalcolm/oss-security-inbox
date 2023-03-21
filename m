@@ -1,85 +1,237 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/31/1
-Message-ID: <ZMfVWXnJDgDYcnPe@openssl.org>
-Date: Mon, 31 Jul 2023 15:38:01 +0000
-From: Matt Caswell <matt@...nssl.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/21/4
+Message-Id: <7B02B649-609D-491C-B80E-A6CD114D27BA@beckweb.net>
+Date: Tue, 21 Mar 2023 15:30:46 +0100
+From: Daniel Beck <ml@...kweb.net>
 To: oss-security@...ts.openwall.com
-Subject: OpenSSL Security Advisory
+Subject: Multiple vulnerabilities in Jenkins plugins
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-OpenSSL Security Advisory [31st July 2023]
-==========================================
+The following releases contain fixes for security vulnerabilities:
 
-Excessive time spent checking DH q parameter value (CVE-2023-3817)
-==================================================================
+* JaCoCo Plugin 3.3.2.1
+* OctoPerf Load Testing Plugin 4.5.1, 4.5.2, and 4.5.3
+* Pipeline Aggregator View Plugin 1.14
+* Role-based Authorization Strategy Plugin 587.588.v850a_20a_30162
 
-Severity: Low
+Additionally, we announce unresolved security issues in the following
+plugins:
 
-Issue summary: Checking excessively long DH keys or parameters may be very slow.
+* AbsInt a³ Plugin
+* Convert To Pipeline Plugin
+* Cppcheck Plugin
+* Crap4J Plugin
+* Mashup Portlets Plugin
+* Performance Publisher Plugin
+* Phabricator Differential Plugin
+* remote-jobs-view-plugin Plugin
+* Visual Studio Code Metrics Plugin
 
-Impact summary: Applications that use the functions DH_check(), DH_check_ex()
-or EVP_PKEY_param_check() to check a DH key or DH parameters may experience long
-delays. Where the key or parameters that are being checked have been obtained
-from an untrusted source this may lead to a Denial of Service.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2023-03-21/
 
-The function DH_check() performs various checks on DH parameters. After fixing
-CVE-2023-3446 it was discovered that a large q parameter value can also trigger
-an overly long computation during some of these checks. A correct q value,
-if present, cannot be larger than the modulus p parameter, thus it is
-unnecessary to perform these checks if q is larger than p.
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-An application that calls DH_check() and supplies a key or parameters obtained
-from an untrusted source could be vulnerable to a Denial of Service attack.
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-The function DH_check() is itself called by a number of other OpenSSL functions.
-An application calling any of those other functions may similarly be affected.
-The other functions affected by this are DH_check_ex() and
-EVP_PKEY_param_check().
+---
 
-Also vulnerable are the OpenSSL dhparam and pkeyparam command line applications
-when using the "-check" option.
+SECURITY-3053 / CVE-2023-28668
+Permissions in Jenkins can be enabled and disabled. Some permissions are
+disabled by default, e.g., Overall/Manage or Item/Extended Read. Disabled
+permissions cannot be granted directly, only through greater permissions
+that imply them (e.g., Overall/Administer or Item/Configure).
 
-The OpenSSL SSL/TLS implementation is not affected by this issue.
+Role-based Authorization Strategy Plugin 587.v2872c41fa_e51 and earlier
+grants permissions even after they've been disabled.
 
-The OpenSSL 3.0 and 3.1 FIPS providers are not affected by this issue.
+This allows attackers to have greater access than they're entitled to after
+the following operations took place:
 
-OpenSSL 3.1, 3.0, 1.1.1 and 1.0.2 are vulnerable to this issue.
+1. A permission is granted to attackers directly or through groups. 2. The
+permission is disabled, e.g., through the script console.
 
-Due to the low severity of this issue we are not issuing new releases of
-OpenSSL at this time. The fix will be included in the next releases when they
-become available. The fix is also available in commit 6a1eb62c2 (for 3.1),
-commit 9002fd073 (for 3.0) and commit 91ddeba0f (for 1.1.1) in the OpenSSL git
-repository. It is available to premium support customer in commit 869ad69a (for
-1.0.2).
 
-This issue was reported on 20th July 2023 by Bernd Edlinger. The fix was
-developed by Tomas Mraz.
+SECURITY-3061 / CVE-2023-28669
+JaCoCo Plugin 3.3.2 and earlier does not escape class and method names
+shown on the UI.
 
-General Advisory Notes
-======================
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to control input files for the 'Record JaCoCo
+coverage report' post-build action.
 
-URL for this Security Advisory:
-https://www.openssl.org/news/secadv/20230731.txt
 
-Note: the online version of the advisory may be updated with additional details
-over time.
+SECURITY-2885 / CVE-2023-28670
+Pipeline Aggregator View Plugin 1.13 and earlier does not escape a variable
+representing the current view's URL in inline JavaScript.
 
-For details of OpenSSL severity classifications please see:
-https://www.openssl.org/policies/secpolicy.html
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by authenticated attackers with Overall/Read permission.
 
-OpenSSL 1.1.1 will reach end-of-life on 2023-09-11. After that date security
-fixes for 1.1.1 will only be available to premium support customers.
------BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCAAdFiEEhlersmDwVrHlGQg52cTSbQ5gRJEFAmTH1M4ACgkQ2cTSbQ5g
-RJGhtAf9E3HklBKezKOXvAbsPmCqcjySMVTV/JrBjrDn14UIRjZmhVoHd5QGusN2
-ReRtA3bRL41UQYdLKDkdYjp9XmlDDFb5hKO3G7P0ldtDaw21TkIQeI/90OKjgsQu
-A+vpf/TcE1a1Pbz8cIRKYBjIaS3z9yIDW4eB0gytWxsqMxze+9IOYNuAbDa0KsqO
-PFTUiHr5xu01wsdVdHeUMpZ01E8tGbVwgyY7tvCUAUJcjjLcTb9+gXQLn6cmVRJt
-6kU8jsamkiYpL1MoKI5yQvYx0nXZUxXbH1ICPltytC4pBsMEypCCnJTkcJKhRRNt
-76Z4/x3XDqMzapYMPimIRifdzPV9FQ==
-=Ve/V
------END PGP SIGNATURE-----
+SECURITY-3067 (1) / CVE-2023-28671
+OctoPerf Load Testing Plugin Plugin 4.5.0 and earlier does not require POST
+requests for a connection test HTTP endpoint, resulting in a cross-site
+request forgery (CSRF) vulnerability.
+
+This vulnerability allows attackers to connect to an attacker-specified URL
+using attacker-specified credentials IDs obtained through another method,
+capturing credentials stored in Jenkins.
+
+
+SECURITY-3067 (2) / CVE-2023-28672
+OctoPerf Load Testing Plugin Plugin 4.5.1 and earlier does not perform a
+permission check in a connection test HTTP endpoint.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified credentials IDs obtained
+through another method, capturing credentials stored in Jenkins.
+
+
+SECURITY-3067 (3) / CVE-2023-28673
+OctoPerf Load Testing Plugin Plugin 4.5.2 and earlier does not perform a
+permission check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+
+SECURITY-3067 (4) / CVE-2023-28674 (CSRF) & CVE-2023-28675 (missing permission check)
+OctoPerf Load Testing Plugin Plugin 4.5.2 and earlier does not perform
+permission checks in several HTTP endpoints.
+
+This allows attackers with Overall/Read permission to connect to a
+previously configured Octoperf server using attacker-specified credentials.
+
+Additionally, these endpoints do not require POST requests, resulting in a
+cross-site request forgery (CSRF) vulnerability.
+
+
+SECURITY-2963 / CVE-2023-28676
+Convert To Pipeline Plugin 1.0 and earlier does not require POST requests
+for the HTTP endpoint converting a Freestyle project to Pipeline, resulting
+in a cross-site request forgery (CSRF) vulnerability.
+
+This vulnerability allows attackers to create a Pipeline based on a
+Freestyle project. Combined with SECURITY-2966, this can result in the
+execution of unsandboxed Pipeline scripts.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2966 / CVE-2023-28677
+Convert To Pipeline Plugin 1.0 and earlier uses basic string concatenation
+to convert Freestyle projects' Build Environment, Build Steps, and
+Post-build Actions to the equivalent Pipeline step invocations.
+
+This allows attackers able to configure Freestyle projects to prepare a
+crafted configuration that injects Pipeline script code into the
+(unsandboxed) Pipeline resulting from a convertion by Convert To Pipeline
+Plugin. If an administrator converts the Freestyle project to a Pipeline,
+the script will be pre-approved.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2809 / CVE-2023-28678
+Cppcheck Plugin 1.26 and earlier does not escape file names from Cppcheck
+report files before showing them on the Jenkins UI.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to control report file contents.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2813 / CVE-2023-28679
+Mashup Portlets Plugin 1.1.2 and earlier provides the "Generic JS Portlet"
+feature that lets a user populate a portlet using a custom JavaScript
+expression.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by authenticated attackers with Overall/Read permission.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2925 / CVE-2023-28680
+Crap4J Plugin 0.9 and earlier does not configure its XML parser to prevent
+XML external entity (XXE) attacks.
+
+This allows attackers able to control Crap Report file contents to have
+Jenkins parse a crafted XML document that uses external entities for
+extraction of secrets from the Jenkins controller or server-side request
+forgery.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2926 / CVE-2023-28681
+Visual Studio Code Metrics Plugin 1.7 and earlier does not configure its
+XML parser to prevent XML external entity (XXE) attacks.
+
+This allows attackers able to control VS Code Metrics File contents to have
+Jenkins parse a crafted XML document that uses external entities for
+extraction of secrets from the Jenkins controller or server-side request
+forgery.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2928 / CVE-2023-28682
+Performance Publisher Plugin 8.09 and earlier does not configure its XML
+parser to prevent XML external entity (XXE) attacks.
+
+This allows attackers able to control PerfPublisher report files to have
+Jenkins parse a crafted XML document that uses external entities for
+extraction of secrets from the Jenkins controller or server-side request
+forgery.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2942 / CVE-2023-28683
+Phabricator Differential Plugin 2.1.5 and earlier does not configure its
+XML parser to prevent XML external entity (XXE) attacks.
+
+This allows attackers able to control coverage report file contents for the
+'Post to Phabricator' post-build action to have Jenkins parse a crafted XML
+document that uses external entities for extraction of secrets from the
+Jenkins controller or server-side request forgery.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2956 / CVE-2023-28684
+remote-jobs-view-plugin Plugin 0.0.3 and earlier does not configure its XML
+parser to prevent XML external entity (XXE) attacks.
+
+This allows authenticated attackers with Overall/Read permission to have
+Jenkins parse a crafted XML document that uses external entities for
+extraction of secrets from the Jenkins controller or server-side request
+forgery.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2930 / CVE-2023-28685
+AbsInt a³ Plugin 1.1.0 and earlier does not configure its XML parser to
+prevent XML external entity (XXE) attacks.
+
+This allows attackers able to control 'Project File (APX)' contents to have
+Jenkins parse a crafted XML document that uses external entities for
+extraction of secrets from the Jenkins controller or server-side request
+forgery.
+
+As of publication of this advisory, there is no fix.
+
+
+
