@@ -1,44 +1,154 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/02/07/1
-Message-ID: <9afca616-11f3-ac36-4d5f-918487e1a756@redhat.com>
-Date: Tue, 7 Feb 2023 11:36:35 +1000
-From: Peter Hutterer <peter.hutterer@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: X.Org Security Advisory: Security issue in the X server
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/21/2
+Message-Id: <E1peafT-0000E9-4J@xenbits.xenproject.org>
+Date: Tue, 21 Mar 2023 12:00:43 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 428 v3 (CVE-2022-42333,CVE-2022-42334) - x86/HVM pinned cache attributes mis-handling
 Content-Type: text/plain; charset=utf-8
 
-X.Org Security Advisory: February 07, 2023
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Security issue in the X server
-==============================
+     Xen Security Advisory CVE-2022-42333,CVE-2022-42334 / XSA-428
+                               version 3
 
-This issue can lead to local privileges elevation on systems
-where the X server is running privileged and remote code execution for
-ssh X forwarding sessions.
+             x86/HVM pinned cache attributes mis-handling
 
-* CVE-2023-0494/ZDI-CAN-19596: X.Org Server DeepCopyPointerClasses
-use-after-free
+UPDATES IN VERSION 3
+====================
 
-A dangling pointer in DeepCopyPointerClasses can be exploited by
-ProcXkbSetDeviceInfo() and ProcXkbGetDeviceInfo() to read/write into
-freed memory.
+Public release.
 
-Patches
--------
-A patch for this issue has been committed to the xorg server git
-repository. xorg-server 21.1.7 will be released shortly and will include
-this patch.
+ISSUE DESCRIPTION
+=================
 
-- commit 0ba6d8c37071131a49790243cdac55392ecf71ec
+To allow cachability control for HVM guests with passed through devices,
+an interface exists to explicitly override defaults which would
+otherwise be put in place.  While not exposed to the affected guests
+themselves, the interface specifically exists for domains controlling
+such guests.  This interface may therefore be used by not fully
+privileged entities, e.g. qemu running deprivileged in Dom0 or qemu
+running in a so called stub-domain.  With this exposure it is an issue
+that
+ - the number of the such controlled regions was unbounded
+   (CVE-2022-42333),
+ - installation and removal of such regions was not properly serialized
+   (CVE-2022-42334).
 
-   Xi: fix potential use-after-free in DeepCopyPointerClasses
-
-   CVE-2023-0494, ZDI-CAN 19596
-
-
-Thanks
+IMPACT
 ======
 
-The vulnerabilities have been discovered by Jan-Niklas Sohn working with
-Trend Micro Zero Day Initiative.
+Entities controlling HVM guests can run the host out of resources or
+stall execution of a physical CPU for effectively unbounded periods of
+time, resulting in a Denial of Servis (DoS) affecting the entire host.
+Crashes, information leaks, or elevation of privilege cannot be ruled
+out.
 
+VULNERABLE SYSTEMS
+==================
+
+Xen versions 4.11 through 4.17 are vulnerable.  Older versions contain
+the same functionality, but it is exposed there only via an interface
+which is subject to XSA-77's constraints.
+
+Only x86 systems are potentially vulnerable.  Arm systems are not
+vulnerable.
+
+Only entities controlling HVM guests can leverage the vulnerability.
+These are device models running in either a stub domain or de-privileged
+in Dom0.
+
+MITIGATION
+==========
+
+Running only PV or PVH guests will avoid the vulnerability.
+
+(Switching from a device model stub domain or a de-privileged device
+model to a fully privileged Dom0 device model does NOT mitigate this
+vulnerability.  Rather, it simply recategorises the vulnerability to
+hostile management code, regarding it "as designed"; thus it merely
+reclassifies these issues as "not a bug".  The security of a Xen system
+using stub domains is still better than with a qemu-dm running as a Dom0
+process.  Users and vendors of stub qemu dm systems should not change
+their configuration to use a Dom0 qemu process.)
+
+CREDITS
+=======
+
+Aspects of this issue were discovered by Andrew Cooper of XenServer and
+Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the appropriate set of attached patches resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa428-?.patch           xen-unstable
+xsa428-4.17-?.patch      Xen 4.17.x
+xsa428-4.16-?.patch      Xen 4.16.x - 4.14.x
+
+$ sha256sum xsa428*
+a7bd8d4c1e8579aeda47564efdc960cac92472387ba57d7f7a6d5d79470ebd6f  xsa428.meta
+85a421d9123a56894124bed54731b8b6f2e86ad4e286871dee86efff519f4c68  xsa428-1.patch
+3b691ca228592539a751ce5af69f31e09d9c477218d53af0602ac5f39f1e74d7  xsa428-2.patch
+da60e01a17f9073c83098d187c07bad3a868a6b7f97dbc538cb5ea5698c51b39  xsa428-4.16-1.patch
+27718a7a86fd57624cd8500df83eb42ff3499670bc807c6555686c25e7f7b01a  xsa428-4.16-2.patch
+da60e01a17f9073c83098d187c07bad3a868a6b7f97dbc538cb5ea5698c51b39  xsa428-4.17-1.patch
+20d3b66da8fe06d7e92992218e519f4f9746791d4ba5610d84a335f38a824fcb  xsa428-4.17-2.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmQZlkwMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZevEH/R0hCjoC/n2AJSr2dOU97c4bZmjeB5mTnWrOtOMA
+AZnP68nvEzQ7OYfI4ihl+wgtKUvyVXLOWaBH9lKL8CySxrCX1r3BILMGhtDKViV4
+opnKOoy0Ejg3H68x5McPhdr+PkvXWTzoNqbkUYMbNTw7ktB4Ze0mbsmKoXDUiLru
+QZZ0XxtL4jc+d8GUM0k3Msy0p3lLYvIob8k6DWg7RdWxiIOxL43pKNvShgh7ZehN
+P0S/PknVLpoPKzKFzMWrzakhZYYsOWoNM9U7C0zEozX4qrnsyQp3o3mvW/8MrPA+
+5BKsIjSYxdleUzLSNks7Xn0nG+ki6kOrwPjFGGOGAwoR8aE=
+=ILYn
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa428.meta" of type "application/octet-stream" (1466 bytes)
+
+Download attachment "xsa428-1.patch" of type "application/octet-stream" (1288 bytes)
+
+Download attachment "xsa428-2.patch" of type "application/octet-stream" (3685 bytes)
+
+Download attachment "xsa428-4.16-1.patch" of type "application/octet-stream" (1288 bytes)
+
+Download attachment "xsa428-4.16-2.patch" of type "application/octet-stream" (3689 bytes)
+
+Download attachment "xsa428-4.17-1.patch" of type "application/octet-stream" (1288 bytes)
+
+Download attachment "xsa428-4.17-2.patch" of type "application/octet-stream" (3698 bytes)
