@@ -1,40 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/22/3
-Message-ID: <001601d9d4cf$66c49ba0$344dd2e0$@gmail.com>
-Date: Tue, 22 Aug 2023 09:05:22 +0100
-From: "Simon Steiner" <simonsteiner1984@...il.com>
-To: <general@...graphics.apache.org>, <batik-dev@...graphics.apache.org>, <batik-users@...graphics.apache.org>, "'Apache Security Team'" <security@...che.org>, <oss-security@...ts.openwall.com>
-Subject: [CVE-2022-44730] Apache Batik information disclosure vulnerability
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/22/1
+Message-ID: <32ab10c5-fecd-438f-1371-5fa77d5f957a@apache.org>
+Date: Wed, 22 Mar 2023 10:12:50 +0000
+From: Mark Thomas <markt@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2023-28708: Apache Tomcat: JSESSIONID Cookie missing secure attribute in some configurations
 Content-Type: text/plain; charset=utf-8
 
-CVE-2022-44730:
-        Apache Batik information disclosure vulnerability
+CVE-2023-28708 Apache Tomcat - Information Disclosure
 
-Severity:
-        Medium
+Severity: Important
 
-Vendor:
-        The Apache Software Foundation
+Vendor: The Apache Software Foundation
 
 Versions Affected:
-        Batik 1.0 - 1.16
+Apache Tomcat 11.0.0-M1 to 11.0.0-M2
+Apache Tomcat 10.1.0-M1 to 10.1.5
+Apache Tomcat 9.0.0-M1 to 9.0.71
+Apache Tomcat 8.5.0 to 8.5.85
 
 Description:
-        Switch to empty whitelist for rhino
+When using the RemoteIpFilter with requests received from a reverse 
+proxy via HTTP that include the X-Forwarded-Proto header set to https, 
+session cookies created by Tomcat did not include the secure attribute. 
+This could result in the user agent transmitting the session cookie over 
+an insecure channel.
 
 Mitigation:
-        Users should upgrade to Batik 1.17
+Users of the affected versions should apply one of the following
+mitigations:
+- Upgrade to Apache Tomcat 11.0.0-M3 or later
+- Upgrade to Apache Tomcat 10.1.6 or later
+- Upgrade to Apache Tomcat 9.0.72 or later
+- Upgrade to Apache Tomcat 8.5.86 or later
 
-Credit:
-        This issue was independently reported by Julien Lacour
+History:
+2023-03-22 Original advisory
 
 References:
-        http://xmlgraphics.apache.org/security.html
-        https://issues.apache.org/jira/browse/BATIK-1347
-
-The Apache XML Graphics team.
-
-
-
-
+[1] https://tomcat.apache.org/security-11.html
+[2] https://tomcat.apache.org/security-10.html
+[3] https://tomcat.apache.org/security-9.html
+[4] https://tomcat.apache.org/security-8.html
 
