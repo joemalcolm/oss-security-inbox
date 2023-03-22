@@ -1,69 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/28/3
-Message-ID: <20230328140022.GA11153@openwall.com>
-Date: Tue, 28 Mar 2023 16:00:22 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/22/2
+Message-ID: <20230322170158.GA10390@openwall.com>
+Date: Wed, 22 Mar 2023 18:01:59 +0100
 From: Solar Designer <solar@...nwall.com>
-To: Zhenghan Wang <wzhmmmmm@...il.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-28464: Linux: Bluetooth: hci_conn_cleanup function has double free
+To: oss-security@...ts.openwall.com
+Cc: Tomas Mraz <tomas@...nssl.org>
+Subject: CVE-2023-0464: OpenSSL: Excessive Resource Usage Verifying X.509 Policy Constraints
 Content-Type: text/plain; charset=utf-8
 
-Hi Zhenghan Wang,
+Somehow the OpenSSL project doesn't post these in here on their own; I
+wish they did, but meanwhile let's forward.
 
-Thank you for bringing this to oss-security.
+----- Forwarded message from Tomas Mraz <tomas@...nssl.org> -----
 
-On Tue, Mar 28, 2023 at 08:00:00AM +0800, Zhenghan Wang wrote:
-> This patch drop the hci_dev_put and hci_conn_put function call in
-> hci_conn_cleanup function, because the object isfreed in hci_conn_del_sysfs
-> function.
-> https://lore.kernel.org/lkml/20230309074645.74309-1-wzhmmmmm@gmail.com/
+Date: Wed, 22 Mar 2023 15:49:38 +0000
+From: Tomas Mraz <tomas@...nssl.org>
+To: openssl-project@...nssl.org, openssl-users@...nssl.org,
+ openssl-announce@...nssl.org
+Subject: OpenSSL Security Advisory
 
-Please remind the Bluetooth subsystem maintainers, such as by "replying"
-to your own message you had sent them on March 9.  When doing so, please
-also inform them of the CVE ID and of the oss-security posting.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-For others on oss-security: Zhenghan Wang brought this issue to
-linux-distros and s@k.o on March 8, brought it to the subsystem
-maintainers and public Linux mailing lists on March 9 (of which
-linux-distros and s@k.o were not specifically informed), and then there
-was no progress until Carlos Lopez from SUSE sent a reminder when we
-were already just past the maximum embargo duration for linux-distros.
+Excessive Resource Usage Verifying X.509 Policy Constraints (CVE-2023-0464)
+===========================================================================
 
-Of course, it was inappropriate that no one stayed on top of the issue
-during the embargo.  The corresponding contributing-back task is:
+Severity: Low
 
-https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+A security vulnerability has been identified in all supported versions
+of OpenSSL related to the verification of X.509 certificate chains
+that include policy constraints.  Attackers may be able to exploit this
+vulnerability by creating a malicious certificate chain that triggers
+exponential use of computational resources, leading to a denial-of-service
+(DoS) attack on affected systems.
 
-"9. Stay on top of issues to ensure progress is being made, remind
-others when there's no apparent progress, as well as when the public
-disclosure date for an issue is approaching and when it's finally
-reached (unless the reporter beats you to it by making their mandatory
-posting to oss-security first) - primary: Gentoo, backup: Amazon"
+Policy processing is disabled by default but can be enabled by passing
+the `-policy' argument to the command line utilities or by calling the
+`X509_VERIFY_PARAM_set1_policies()' function.
 
-I brought this up on linux-distros and we already heard from Anthony
-Liguori for Amazon, who as you can see from another thread on
-oss-security is now also contributing the list statistics, which could
-help detect such delays too.  Thanks, Anthony!
+OpenSSL 3.1, 3.0, 1.1.1 and 1.0.2 are vulnerable to this issue.
 
-However, we have not heard from Gentoo, who are "primary" on this and a
-couple of other related tasks.  Gentoo, please let us all know whether
-you intend to handle these tasks, or should we remove the assignment?
+Due to the low severity of this issue we are not issuing new releases of
+OpenSSL at this time. The fix will be included in the next releases when they
+become available. The fix is also available in commit 2017771e (for 3.1),
+commit 959c59c7 (for 3.0), commit 879f7080 (for 1.1.1) in the OpenSSL
+git repository, and commit 2dcd4f1e (for 1.0.2) in the OpenSSL git
+repository for premium customers.
 
-As to the public message on Linux mailing lists on March 9, this time
-linux-distros did not specifically evaluate whether it was too revealing
-or not, and whether it'd make sense to keep the issue "embargoed" after
-such publication.  Like I wrote above, the very fact that such a posting
-was made was brought to linux-distros rather late.  However, for further
-occasions we do have a separate problem here - while we did introduce an
-exception for Linux kernel where such double-think is accepted, would
-this one have gotten too far?  The posting did not say "security",
-"vulnerability", nor mention a CVE ID.  However, it did mention "double
-free" in Bluetooth, and it kind of had to - no other reasonable way to
-justify the patch.  Now, not all double free bugs are vulnerabilities -
-some are not attacker-exposed.  (BTW, I did not look into whether this
-one is.)  Yet a bug of this category in a network subsystem would
-reasonably attract potential attackers' attention.  Also or OTOH,
-"KASAN: slab-use-after-free Read in hci_conn_hash_flush" in syzbot could
-have attracted attention, too.
+Once they are released:
 
-Alexander
+OpenSSL 3.1 users should upgrade to 3.1.1.
+OpenSSL 3.0 users should upgrade to 3.0.9.
+OpenSSL 1.1.1 users should upgrade to 1.1.1u.
+OpenSSL 1.0.2 users should upgrade to 1.0.2zh (premium support customers only).
+
+This issue was reported on 12th January 2023 by David Benjamin (Google).
+The fix was developed by Dr Paul Dale.
+
+OpenSSL 1.1.1 will reach end-of-life on 2023-09-11. After that date security
+fixes for 1.1.1 will only be available to premium support customers.
+
+References
+==========
+
+URL for this Security Advisory:
+https://www.openssl.org/news/secadv/20230322.txt
+
+Note: the online version of the advisory may be updated with additional details
+over time.
+
+For details of OpenSSL severity classifications please see:
+https://www.openssl.org/policies/secpolicy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQJGBAEBCAAwFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmQbItgSHHRvbWFzQG9w
+ZW5zc2wub3JnAAoJEFJ0ZqIcp55t8AgP/3mUOflbZ7e8yLjgEMqFqCSFlSQo5bFK
+gh2h2NOKBjkvzFtlqnAR+bqNPAr9CEosSRF1LiVtKu9RhaIh1LlTsp53aFWSP48p
+7LekiPmd5hnorO72dB1eLlbHPIe0lh2It2cDlkYc95BVcttQEzHbyygVKBD0f0cN
+WqslsIeVPIqMIZMHAlpnINz630Rsn/4cif+6U8gYgNN51f7WeCArPp3U7hAhHVuC
+b7lOVXBNzdfdFzKVjSTHqvWBib/Ji+Ga4knHFZya7VLQagKjDJiQB9uBpuCOmzxD
+kb9nJCSroIwf74wDxJxr4gb314/hju+jpC2Xny8l7SXxJUahdMywJLgofPMEOhWb
+lRod8SHr0Je5Gpp4R+p6cmwr0PM76KPxcLOvsa7OsIwIZQvFyxMVvsGYdMxg0ads
+qDqROqkb1Mx+Fa0smySe6Xru0RtEgXAk7AIltz8AqHmCvMED8S7ZwhsHipM/eLYZ
+Iky8SsSYn4K3a4Sa05+IrQARWmDCZHRHp9JfHacPq0HunNrAX5unDfHUNAx1TZcX
+0cSeN/SF56sds+SEjJpURCHxO+Z4toUxpaVKqZyLsDhuq/IwrbbaxhBFkNiHcWOg
+vCinoWvhpjo2YBs0BVJNIu4wpNhnCwOP7+91zmTAvD28xoBhSHKWkwGuypPkW3bO
+Y6lneBDfoNpj
+=iUFS
+-----END PGP SIGNATURE-----
+
+----- End forwarded message -----
