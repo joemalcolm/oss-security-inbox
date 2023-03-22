@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2114" "Thursday" "2" "March" "2017" "16:36:42" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<393990.264830308-sendEmail@localhost>" "62" "[oss-security] podofo: NULL pointer dereference in PoDoFo::PdfXObject::PdfXObject (PdfXObject.cpp)" nil nil nil "3" "2017030216:36:42" "[oss-security] podofo: NULL pointer dereference in PoDoFo::PdfXObject::PdfXObject (PdfXObject.cpp)" (number mark "U       ago@gentoo.o Mar  2   62/2114  " thread-indent "\"[oss-security] podofo: NULL pointer dereference in PoDoFo::PdfXObject::PdfXObject (PdfXObject.cpp)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 29980 invoked by uid 550); 2 Mar 2017 16:37:04 -0000
+Received: (qmail 15438 invoked by uid 550); 22 Mar 2023 17:02:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,74 +7,97 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28506 invoked from network); 2 Mar 2017 16:36:58 -0000
-Message-ID: <393990.264830308-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Thu, 2 Mar 2017 16:36:42 +0000
-MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-466483.419136242"
-Subject: [oss-security] podofo: NULL pointer dereference in PoDoFo::PdfXObject::PdfXObject (PdfXObject.cpp)
+Received: (qmail 14019 invoked from network); 22 Mar 2023 17:02:06 -0000
+Date: Wed, 22 Mar 2023 18:01:59 +0100
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Cc: Tomas Mraz <tomas@openssl.org>
+Message-ID: <20230322170158.GA10390@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] CVE-2023-0464: OpenSSL: Excessive Resource Usage Verifying X.509 Policy Constraints
 
-------MIME delimiter for sendEmail-466483.419136242
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+Somehow the OpenSSL project doesn't post these in here on their own; I
+wish they did, but meanwhile let's forward.
 
-Description:
-podofo is a C++ library to work with the PDF file format.
+----- Forwarded message from Tomas Mraz <tomas@openssl.org> -----
 
-A fuzz on it discovered a null pointer dereference. The upstream project denies me to open a new ticket. So, I just will forward this on the -users mailing list.
+Date: Wed, 22 Mar 2023 15:49:38 +0000
+From: Tomas Mraz <tomas@openssl.org>
+To: openssl-project@openssl.org, openssl-users@openssl.org,
+ openssl-announce@openssl.org
+Subject: OpenSSL Security Advisory
 
-The complete ASan output:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-# podofocolor dummy $FILE foo
-==21036==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7fc5cfd94743 bp 0x7ffc1eaffe50 sp 0x7ffc1eaffd40 T0)
-==21036==The signal is caused by a READ memory access.
-==21036==Hint: address points to the zero page.
-    #0 0x7fc5cfd94742 in PoDoFo::PdfXObject::PdfXObject(PoDoFo::PdfObject*) /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfXObject.cpp:264:74
-    #1 0x529308 in ColorChanger::start() /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/colorchanger.cpp:137:28
-    #2 0x523b8d in main /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/tools/podofocolor/podofocolor.cpp:116:12
-    #3 0x7fc5cd8d178f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #4 0x4300e8 in _start (/usr/bin/podofocolor+0x4300e8)
+Excessive Resource Usage Verifying X.509 Policy Constraints (CVE-2023-0464)
+===========================================================================
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/app-text/podofo-0.9.5/work/podofo-0.9.5/src/doc/PdfXObject.cpp:264:74 in PoDoFo::PdfXObject::PdfXObject(PoDoFo::PdfObject*)
-==21036==ABORTING
+Severity: Low
 
-Affected version:
-0.9.5
+A security vulnerability has been identified in all supported versions
+of OpenSSL related to the verification of X.509 certificate chains
+that include policy constraints.  Attackers may be able to exploit this
+vulnerability by creating a malicious certificate chain that triggers
+exponential use of computational resources, leading to a denial-of-service
+(DoS) attack on affected systems.
 
-Fixed version:
-N/A
+Policy processing is disabled by default but can be enabled by passing
+the `-policy' argument to the command line utilities or by calling the
+`X509_VERIFY_PARAM_set1_policies()' function.
 
-Commit fix:
-N/A
+OpenSSL 3.1, 3.0, 1.1.1 and 1.0.2 are vulnerable to this issue.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+Due to the low severity of this issue we are not issuing new releases of
+OpenSSL at this time. The fix will be included in the next releases when they
+become available. The fix is also available in commit 2017771e (for 3.1),
+commit 959c59c7 (for 3.0), commit 879f7080 (for 1.1.1) in the OpenSSL
+git repository, and commit 2dcd4f1e (for 1.0.2) in the OpenSSL git
+repository for premium customers.
 
-CVE:
-N/A
+Once they are released:
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00214-podofo-nullptr-PdfXObject-cpp
+OpenSSL 3.1 users should upgrade to 3.1.1.
+OpenSSL 3.0 users should upgrade to 3.0.9.
+OpenSSL 1.1.1 users should upgrade to 1.1.1u.
+OpenSSL 1.0.2 users should upgrade to 1.0.2zh (premium support customers only).
 
-Timeline:
-2017-03-01: bug discovered
-2017-03-02: bug reported upstream
-2017-03-02: blog post about the issue
+This issue was reported on 12th January 2023 by David Benjamin (Google).
+The fix was developed by Dr Paul Dale.
 
-Note:
-This bug was found with American Fuzzy Lop.
+OpenSSL 1.1.1 will reach end-of-life on 2023-09-11. After that date security
+fixes for 1.1.1 will only be available to premium support customers.
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/03/02/podofo-null-pointer-dereference-in-podofopdfxobjectpdfxobject-pdfxobject-cpp
+References
+==========
 
---
-Agostino Sarubbo
-Gentoo Linux Developer
+URL for this Security Advisory:
+https://www.openssl.org/news/secadv/20230322.txt
 
+Note: the online version of the advisory may be updated with additional details
+over time.
 
-------MIME delimiter for sendEmail-466483.419136242--
+For details of OpenSSL severity classifications please see:
+https://www.openssl.org/policies/secpolicy.html
+-----BEGIN PGP SIGNATURE-----
 
+iQJGBAEBCAAwFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmQbItgSHHRvbWFzQG9w
+ZW5zc2wub3JnAAoJEFJ0ZqIcp55t8AgP/3mUOflbZ7e8yLjgEMqFqCSFlSQo5bFK
+gh2h2NOKBjkvzFtlqnAR+bqNPAr9CEosSRF1LiVtKu9RhaIh1LlTsp53aFWSP48p
+7LekiPmd5hnorO72dB1eLlbHPIe0lh2It2cDlkYc95BVcttQEzHbyygVKBD0f0cN
+WqslsIeVPIqMIZMHAlpnINz630Rsn/4cif+6U8gYgNN51f7WeCArPp3U7hAhHVuC
+b7lOVXBNzdfdFzKVjSTHqvWBib/Ji+Ga4knHFZya7VLQagKjDJiQB9uBpuCOmzxD
+kb9nJCSroIwf74wDxJxr4gb314/hju+jpC2Xny8l7SXxJUahdMywJLgofPMEOhWb
+lRod8SHr0Je5Gpp4R+p6cmwr0PM76KPxcLOvsa7OsIwIZQvFyxMVvsGYdMxg0ads
+qDqROqkb1Mx+Fa0smySe6Xru0RtEgXAk7AIltz8AqHmCvMED8S7ZwhsHipM/eLYZ
+Iky8SsSYn4K3a4Sa05+IrQARWmDCZHRHp9JfHacPq0HunNrAX5unDfHUNAx1TZcX
+0cSeN/SF56sds+SEjJpURCHxO+Z4toUxpaVKqZyLsDhuq/IwrbbaxhBFkNiHcWOg
+vCinoWvhpjo2YBs0BVJNIu4wpNhnCwOP7+91zmTAvD28xoBhSHKWkwGuypPkW3bO
+Y6lneBDfoNpj
+=iUFS
+-----END PGP SIGNATURE-----
+
+----- End forwarded message -----
