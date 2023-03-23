@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1463" "Wednesday" "30" "March" "2016" "12:24:12" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20160330192412.GC7963@hunt>" "43" "Re: [oss-security] Re: CVE request: Heap overflow in VLC 2.1.6 processing wav files" nil nil nil "3" "2016033019:24:12" "[oss-security] Re: CVE request: Heap overflow in VLC 2.1.6 processing wav files" (number mark "U       seth.arnold@ Mar 30   43/1463  " thread-indent "\"Re: [oss-security] Re: CVE request: Heap overflow in VLC 2.1.6 processing wav files\"\n") "<CACn5sdQ1V7zLe=vy3msAAEF+vPpaYmftukhMBtRre=eKbk7MyQ@mail.gmail.com>" ("<CACn5sdTHZPTK7+u1ANCU-T-czJ_vT_-VQp8CisHreKKPAPpazw@mail.gmail.com>" "<CACn5sdQ1V7zLe=vy3msAAEF+vPpaYmftukhMBtRre=eKbk7MyQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1502 invoked by uid 550); 30 Mar 2016 19:24:27 -0000
+Received: (qmail 1845 invoked by uid 550); 23 Mar 2023 18:46:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,63 +7,73 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1482 invoked from network); 30 Mar 2016 19:24:26 -0000
-Date: Wed, 30 Mar 2016 12:24:12 -0700
-From: Seth Arnold <seth.arnold@canonical.com>
+Received: (qmail 28662 invoked from network); 23 Mar 2023 18:36:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=dino.im; s=20200526;
+	t=1679596564; bh=pw05CNPgslFPxwBNH2IhoVjEDNpb9l+wzmG3+IkOOnI=;
+	h=Subject:From:To:Date:From;
+	b=edghOdk9/gxARtNT/R65WDHXkhC9pL4r32hYPpORUXpOXRr2ltUcF+gqz2XIAuDtM
+	 ri0L4dVngZJDR2fdqL2/9PqgpAbDsccy/bgXVzDb7yf9EuCu9ls0NBK5AukSb8y/Sl
+	 hX6TUkWrtva6kf9rYpaLDoGfHdHhuOKWKaMWfWsGuLm09k2c1csy5hQV6dH6EDnGDq
+	 uASnKJBgHeWz7kNw1M729zhjfFyeV6caK9qbHeh0U62HAVmngnYjQHvyg+q3vIi2fH
+	 Y2/LTTveCjLWnUNYpPxR/Qio1MPPDAy0WgjIJDp2i7fsovWvGtWipbkS1byYmctlVu
+	 0bWzxfqVi3X6w==
+Message-ID: <f016f44efad2279da0c832dcef82f02491c9f889.camel@dino.im>
+From: Dino Team <team@dino.im>
 To: oss-security@lists.openwall.com
-Message-ID: <20160330192412.GC7963@hunt>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <CACn5sdTHZPTK7+u1ANCU-T-czJ_vT_-VQp8CisHreKKPAPpazw@mail.gmail.com>
- <CACn5sdQ1V7zLe=vy3msAAEF+vPpaYmftukhMBtRre=eKbk7MyQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="s9fJI615cBHmzTOP"
-Content-Disposition: inline
-In-Reply-To: <CACn5sdQ1V7zLe=vy3msAAEF+vPpaYmftukhMBtRre=eKbk7MyQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Subject: Re: [oss-security] Re: CVE request: Heap overflow in VLC 2.1.6
- processing wav files
-
---s9fJI615cBHmzTOP
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Date: Thu, 23 Mar 2023 12:35:59 -0600
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-1 
+MIME-Version: 1.0
+Subject: [oss-security] [CVE-2023-28686] Insufficient message sender validation in Dino
 
-On Wed, Mar 30, 2016 at 03:24:54PM -0300, Gustavo Grieco wrote:
-> For some reason, the attached test case did not go to the mailing list.
-> Let's try again..
->=20
-> 2016-03-30 14:43 GMT-03:00 Gustavo Grieco <gustavo.grieco@gmail.com>:
->=20
-> > Hi,
-> >
-> > We found a buffer overflow in the parsing and processing of wav files in
-> > VLC (version 2.1.6-0). It was tested in Ubuntu 14.04 (x86_64), but it w=
-ill
-> > probably affects other versions as well. Fortunately, it seems to be fi=
-xed
-> > in the last release of VLC. Here you can see the gdb stack trace:
+### Affected software
 
-It didn't come through the second try either; it's attached to the bug
-report at:
-https://bugs.launchpad.net/ubuntu/+source/vlc/+bug/1533633
+Dino (Instant Messenger) - https://dino.im/
 
-Thanks
+### Severity
 
---s9fJI615cBHmzTOP
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+Medium (5.3): AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+### Affected versions
+- Release version 0.4.0 and 0.4.1
+- Release version 0.3.0 and 0.3.1
+- Release version 0.2.2 and earlier
+- Nightly version 0.4.1-13-g6690d8e4 and earlier
 
-iQEcBAEBAgAGBQJW/CfcAAoJEPMhclmdjS6Xrf4H/21sYmc8yKr4wvFhiIrE333v
-Gg1Im45jNFhBRA4iDWcenuJELOfZquzYWQWePJawk6cHIIXA8P8lTnWYJkEzVaMJ
-lMfIvBqrPlDBc+S8FZog++BNDXo6k7QtyMy7euRQJjZN/1CPbj10HpjLZ/wUMICh
-ocaJ0+ZpD5RFnstWqcq9nFlgIGTQ7Mcq/WHVpb72uUmndb6Bql2l+/hCEAabFqTB
-THR3Yxa1l1KQi9+dJ2tUIUaOgMRxPvcyhv337rJnI2QFb5ArRPOEunn+z8elkH4Q
-BFS9BFD1zpXrpp5Sz+cK7+gJ+RrDrVw9Veuz3C6HUc2Vv8KfG0L5UsnumBhtlnI=
-=R/X2
------END PGP SIGNATURE-----
+### Fixed versions
+- Release version 0.4.2
+- Release version 0.3.2
+- Release version 0.2.3
+- Nightly version 0.4.1-14-gef8fb0e9
 
---s9fJI615cBHmzTOP--
+### Description
+
+It was discovered that when a Dino client receives a specifically
+crafted message from an unauthorized sender, it would use information
+from that message to add, update or remove entries in the user's
+personal bookmark store without requiring further user interaction.
+
+This vulnerability allows the attacker to change how group chats are
+displayed or to force a user to join or leave an attacker-selected
+groupchat. This can be used to trick the user to reveal sensitive
+information to the attacker.
+
+### Advice
+
+All deployments should upgrade to a fixed version or apply the patch
+from commit ef8fb0e94ce79d5fde2943e433ad0422eb7f70ec.
+
+### Credits
+
+Many thanks to Kim Alvefur for discovering and reporting this issue.
+
+### Links
+
+- https://dino.im/security/cve-2023-28686/
+- https://github.com/dino/dino/commit/ef8fb0e
+- https://github.com/dino/dino/releases/tag/v0.4.2
+- https://github.com/dino/dino/releases/tag/v0.3.2
+- https://github.com/dino/dino/releases/tag/v0.2.3
+- https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2023-28686
+
