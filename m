@@ -1,82 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/16/11
-Message-ID: <ZS1CommxbnxkvLaK@itl-email>
-Date: Mon, 16 Oct 2023 10:03:13 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/23/1
+Message-ID: <f016f44efad2279da0c832dcef82f02491c9f889.camel@dino.im>
+Date: Thu, 23 Mar 2023 12:35:59 -0600
+From: Dino Team <team@...o.im>
 To: oss-security@...ts.openwall.com
-Cc: VMware Security Response Center <security@...are.com>
-Subject: Re: CVE-2023-20867: open-vm-tools: Authentication Bypass vulnerability in the vgauth module
+Subject: [CVE-2023-28686] Insufficient message sender validation in Dino
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Oct 16, 2023 at 03:48:14AM +0200, Solar Designer wrote:
-> Hi,
-> 
-> This was brought to linux-distros on June 6 with "scheduled public
-> disclosure on June 13th, 2023."  There's a VMware security advisory that
-> says it was published on that date:
-> 
-> https://www.vmware.com/security/advisories/VMSA-2023-0013.html
-> 
-> and patches are available at:
-> 
-> https://github.com/vmware/open-vm-tools/tree/CVE-2023-20867.patch
-> 
-> but the issue was wrongly never brought to oss-security (or at least I
-> couldn't find it) - so I am correcting this now.
-> 
-> Quoting from the linux-distros message:
-> 
-> > Description
-> > ==============================================================
-> > CVE-2023-20867: VMware Tools contains an Authentication Bypass
-> > vulnerability in the vgauth module. VMware has evaluated the severity
-> > of this issue to be in the Low severity range with a maximum CVSSv3.1
-> > base score of 3.9 - CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:C/C:L/I:L/A:N.
-> > 
-> > Known Attack Vectors
-> > ==============================================================
-> > A fully compromised ESXi host can force VMware Tools to fail to
-> > authenticate host-to-guest operations, impacting the confidentiality
-> > and integrity of the virtual machine.
-> 
-> Quoting from the GitHub URL above:
-> 
-> > The issue has been fixed in the open-vm-tools version 12.2.5 released on
-> > June 13, 2023.
-> > 
-> > The following patch provided to the open-vm-tools community can be used
-> > to apply the security fix to previous open-vm-tools releases.
-> > 
-> > For releases 12.2.0, 12.1.5, 12.1.0, 12.0.5, 12.0.0, 11.3.5, 11.3.0
-> > 
-> >     2023-20867-Remove-some-dead-code.patch
-> > 
-> > For releases 11.1.0, 11.1.5, 11.2.0, 11.2.5
-> > 
-> >     2023-20867-Remove-some-dead-code-1110-1125.patch
-> > 
-> > For releases 11.0.0, 11.0.5
-> > 
-> >     2023-20867-Remove-some-dead-code-1100-1105.patch
-> > 
-> > For releases 10.3.0, 10.3.5, 10.3.10
-> > 
-> >     2023-20867-Remove-some-dead-code-1030-10310.patch
-> > 
-> > The patches have been tested against the above open-vm-tools releases.
-> > Each applies cleanly with:
-> > 
-> > git am        for a git repository.
-> > patch -p2     in the top directory of an open-vm-tools source tree.
-> 
-> Alexander
+### Affected software
 
-How is this a vulnerability at all?  A compromised ESXi host can
-compromise the guest already, unless confidential computing technologies
-are in use.
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+Dino (Instant Messenger) - https://dino.im/
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+### Severity
+
+Medium (5.3): AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N
+
+### Affected versions
+- Release version 0.4.0 and 0.4.1
+- Release version 0.3.0 and 0.3.1
+- Release version 0.2.2 and earlier
+- Nightly version 0.4.1-13-g6690d8e4 and earlier
+
+### Fixed versions
+- Release version 0.4.2
+- Release version 0.3.2
+- Release version 0.2.3
+- Nightly version 0.4.1-14-gef8fb0e9
+
+### Description
+
+It was discovered that when a Dino client receives a specifically
+crafted message from an unauthorized sender, it would use information
+from that message to add, update or remove entries in the user's
+personal bookmark store without requiring further user interaction.
+
+This vulnerability allows the attacker to change how group chats are
+displayed or to force a user to join or leave an attacker-selected
+groupchat. This can be used to trick the user to reveal sensitive
+information to the attacker.
+
+### Advice
+
+All deployments should upgrade to a fixed version or apply the patch
+from commit ef8fb0e94ce79d5fde2943e433ad0422eb7f70ec.
+
+### Credits
+
+Many thanks to Kim Alvefur for discovering and reporting this issue.
+
+### Links
+
+- https://dino.im/security/cve-2023-28686/
+- https://github.com/dino/dino/commit/ef8fb0e
+- https://github.com/dino/dino/releases/tag/v0.4.2
+- https://github.com/dino/dino/releases/tag/v0.3.2
+- https://github.com/dino/dino/releases/tag/v0.2.3
+- https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-28686
+
