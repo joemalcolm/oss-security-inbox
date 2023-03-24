@@ -1,40 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/06/22/6
-Message-ID: <ZJRD9Co3XtDxeuyF@itl-email>
-Date: Thu, 22 Jun 2023 08:50:42 -0400
-From: Demi Marie Obenour <demi@...isiblethingslab.com>
-To: Steve Grubb <sgrubb@...hat.com>, oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-31975: memory leak in yasm
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/24/4
+Message-ID: <20230324195650.6785dd20.hanno@hboeck.de>
+Date: Fri, 24 Mar 2023 19:56:50 +0100
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: TTY pushback vulnerabilities / TIOCSTI
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jun 21, 2023 at 09:53:54PM -0400, Steve Grubb wrote:
-> On Wednesday, June 21, 2023 5:54:57 PM EDT Demi Marie Obenour wrote:
-> > On Thu, Jun 22, 2023 at 01:44:04AM +1000, Dave Horsfall wrote:
-> > > On Wed, 21 Jun 2023, Jeffrey Walton wrote:
-> > > > Memory leaks on exit are par for the course in GNU software per
-> > > > https://www.gnu.org/prep/standards/standards.html#Memory-Usage .
-> > > 
-> > > Don't bother with this, don't bother with that, etc...  Call me
-> > > old-school (which I am), but I cannot abide sloppy programming[*].
-> > 
-> > Memory leaks on exit are a _good_ thing in general.  There is absolutely
-> > zero point in calling free() if the program is about to exit — the OS
-> > will do a better job of freeing resources than the program itself ever
-> > could.
-> 
-> Sure, but how can static analysis or address sanitizers tell the difference 
-> between something created and leaked on the error path, vs something that 
-> mattered during the life of the program? Meaning something leaks in an event 
-> loop and slowly accumulates leakage. Nothing gives you a free pass but the OS 
-> when analyzing leaks. Mundane leaks need cleaning up so you can find the real 
-> leaks that matter.
+Here's a proposed patch to restrict access to the dangerous
+functionality. Waiting a few days for feedback here and will then try
+to send it to the appropriate kernel lists.
 
-glibc exports a function for this exact purpose, and sanitizers call it
-precisely to avoid false leak reports.  Static analyzers can also be
-told to act as if that function is called.
+------------------
+
+Restrict access to TIOCLINUX selection functions
+
+These functions can be used for privilege escalation when code is
+executed with tools like su/sudo.
+
+Signed-off-by: Hanno Böck <hanno@...eck.de>
+---
+ drivers/tty/vt/vt.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/drivers/tty/vt/vt.c b/drivers/tty/vt/vt.c
+index 3c2ea9c09..367117310 100644
+--- a/drivers/tty/vt/vt.c
++++ b/drivers/tty/vt/vt.c
+@@ -3146,10 +3146,14 @@ int tioclinux(struct tty_struct *tty, unsigned
+long arg) switch (type)
+ 	{
+ 		case TIOCL_SETSEL:
++			if (!capable(CAP_SYS_ADMIN))
++				return -EPERM;
+ 			ret = set_selection_user((struct
+tiocl_selection __user *)(p+1), tty);
+ 			break;
+ 		case TIOCL_PASTESEL:
++			if (!capable(CAP_SYS_ADMIN))
++				return -EPERM;
+ 			ret = paste_selection(tty);
+ 			break;
+ 		case TIOCL_UNBLANKSCREEN:
+@@ -3158,6 +3162,8 @@ int tioclinux(struct tty_struct *tty, unsigned
+long arg) console_unlock();
+ 			break;
+ 		case TIOCL_SELLOADLUT:
++			if (!capable(CAP_SYS_ADMIN))
++				return -EPERM;
+ 			console_lock();
+ 			ret = sel_loadlut(p);
+ 			console_unlock();
 -- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+2.40.0
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+
+
+-- 
+Hanno Böck
+https://hboeck.de/
