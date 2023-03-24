@@ -1,41 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/08/27/4
-Message-ID: <CAFswPa83igZYQN7oAEEZERPCyOuiJv3sFD_+SZx2M_g8fhJDbg@mail.gmail.com>
-Date: Sun, 27 Aug 2023 20:56:12 +0200
-From: "Eduardo' Vela\" <Nava>" <evn@...gle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/24/2
+Message-ID: <39fbbc4c-95c1-2997-aeee-57982a76fcbd@apache.org>
+Date: Fri, 24 Mar 2023 15:04:50 +0000
+From: Marcus Lange <marcus@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: linux-distros list policy and Linux kernel, again
+Subject: CVE-2022-38745: Apache OpenOffice: Empty entry in Java class path 
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 27 Aug 2023, 19:41 Demi Marie Obenour, <demi@...isiblethingslab.com>
-wrote:
+Severity: moderate
 
-> Does this include unfixed vulnerabilities?
->
+Description:
 
-The link* has more details, but briefly, deduplication is done by fix
-commit.
+Apache OpenOffice versions before 4.1.14 may be configured to add an empty entry to the Java class path. This may lead to run arbitrary Java code from the current directory.
 
-Efforts to fix unfixed Syzkaller crashes (also something being worked on)
-are complementary to the effort to generate CVE identifiers for them, if
-that's your question (so, yes? Unfixed vulnerabilities found by Syzkaller
-are meant to be fixed first and then a CVE is generated for the reports
-fixed by their corresponding Fix commit).
+Credit:
 
-Generating CVEs for Syzkaller reports without deduplicating them first
-would be disruptive and useless (the link* goes into more details).
-Deduplication is subjective as it depends on how the bugs are understood.
-The analysis that is needed to deduplicate is happening as part of the fix
-review process.
+European Commission's Open Source Programme Office (sponsor)
 
-One could, of course, create a different mechanism to automatically (or
-semi-automatically) deduplicate Syzkaller reports and accept the risk of
-duplicate CVEs. This may be something to look at in the future, but it's
-not what's being worked on for the first iteration, and we probably will
-have a lot to fix and learn from even after the first wave of CVEs are
-generated.
+References:
 
-* https://github.com/google/cvelist/tree/cve-automation/fuzzer
-
->
+https://openoffice.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2022-38745
 
