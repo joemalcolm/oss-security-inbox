@@ -1,77 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/25/1
-Message-ID: <20230925102911.GA4097@openwall.com>
-Date: Mon, 25 Sep 2023 12:29:11 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/24/3
+Message-ID: <150baa70-a243-0405-55e2-ee8525034fc4@apache.org>
+Date: Fri, 24 Mar 2023 15:05:00 +0000
+From: Marcus Lange <marcus@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-4527: glibc: Stack read overflow in getaddrinfo in no-aaaa mode
+Subject: CVE-2022-47502: Apache OpenOffice: Macro URL arbitrary script execution 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: critical
 
-A bug affecting glibc 2.36+ was reported and fixed earlier this month:
+Description:
 
-https://sourceware.org/bugzilla/show_bug.cgi?id=30842
+Apache OpenOffice documents can contain links that call internal macros with arbitrary arguments. Several URI Schemes are defined for this purpose.
 
-> Florian Weimer 2023-09-12 15:16:27 UTC
-> 
-> If the system is configured in no-aaaa mode via /etc/resolv.conf,
-> getaddrinfo is called for the AF_UNSPEC address family, and a DNS
-> response is received over TCP that is larger than 2048 bytes,
-> getaddrinfo may potentially disclose stack contents via the returned
-> address data, or crash. While name lookup normally just fails
-> incorrectly, crashes are not difficult to trigger, with valid DNS
-> responses that are propagated by DNS resolvers.
-> 
-> Introduced by:
-> 
-> commit f282cdbe7f436c75864e5640a409a10485e9abb2
-> Author: Florian Weimer <fweimer@...hat.com>
-> Date:   Fri Jun 24 18:16:41 2022 +0200
-> 
->     resolv: Implement no-aaaa stub resolver option
->     
->     Reviewed-by: Carlos O'Donell <carlos@...hat.com>
 
-> Florian Weimer 2023-09-13 12:58:01 UTC
-> 
-> All impacted branches fixed.
+Links can be activated by clicks, or by automatic document events.
 
-Even though upstream 2.35 and older are not affected, the problematic
-commit was backported into some distro packages of older glibc:
+The execution of such links must be subject to user approval.
 
-https://access.redhat.com/security/cve/CVE-2023-4527
+In the affected versions of OpenOffice, approval for certain links is not   requested; when activated, such links could therefore result in arbitrary script execution.
 
-> Statement
-> This issue only affect systems configured with no-aaaa mode via
-> /etc/resolv.conf.
-> 
-> The no-aaaa stub resolver option was backported only to Red Hat
-> Enterprise Linux versions 8.7 and 9.1. Therefore, previous versions are
-> not affected.
-> 
-> Mitigation
-> Removing the no-aaaa diagnostic option from /etc/resolv.conf will
-> mitigate this flaw.
+Credit:
 
-Also tracked here:
+Altin Thartori (tin-z) (reporter)
 
-https://bugzilla.redhat.com/show_bug.cgi?id=2234712
+References:
 
-The feature is described in a glibc NEWS entry for 2.36 as follows:
+https://openoffice.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2022-47502
 
-https://lists.gnu.org/archive/html/info-gnu/2022-08/msg00000.html
-
-> * The "no-aaaa" DNS stub resolver option has been added.  System
->   administrators can use it to suppress AAAA queries made by the stub
->   resolver, including AAAA lookups triggered by NSS-based interfaces
->   such as getaddrinfo.  Only DNS lookups are affected: IPv6 data in
->   /etc/hosts is still used, getaddrinfo with AI_PASSIVE will still
->   produce IPv6 addresses, and configured IPv6 name servers are still
->   used.  To produce correct Name Error (NXDOMAIN) results, AAAA queries
->   are translated to A queries.  The new resolver option is intended
->   primarily for diagnostic purposes, to rule out that AAAA DNS queries
->   have adverse impact.  It is incompatible with EDNS0 usage and DNSSEC
->   validation by applications.
-
-Alexander
