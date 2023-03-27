@@ -1,34 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/02/2
-Message-ID: <2023100203-narrow-reliant-2560@gregkh>
-Date: Mon, 2 Oct 2023 09:08:50 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/27/4
+Message-ID: <919ca824-7bfc-76a6-3d94-88b2c5bfea62@apache.org>
+Date: Mon, 27 Mar 2023 16:21:18 +0000
+From: James Dailey <jdailey@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: "Linux Kernel security demistified"
+Subject: CVE-2023-25197: apache fineract: SQL injection vulnerability in certain procedure calls  
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Oct 01, 2023 at 09:13:03PM +0200, Solar Designer wrote:
-> There's also an upcoming Webinar:
-> 
-> https://www.linuxfoundation.org/webinars/demystifying-the-linux-kernel-security-process
-> 
-> > Demystifying the Linux Kernel Security Process
-> > October 3, 2023 | 07:00 AM PDT (UTC-7)
-> > 
-> > Join an interactive, complimentary Mentorship Session exploring
-> > Demystifying the Linux Kernel Security Process with Greg Kroah-Hartman,
-> > Kernel Maintainer & Fellow, The Linux Foundation
-> > 
-> > There is a lot of misunderstanding about how the Linux kernel deals with
-> > security vulnerabilities.  This talk will go into how the Linux kernel
-> > security team works, how changes are propagated out to the public, and
-> > how users must take advantage of these changes in order to have a secure
-> > system.
+Severity: moderate
 
-It's going to be much the same talk, with only minor tweaks as I forgot
-some points I wanted to make in the first one.
+Description:
 
-Thanks for the link to my slides and presentation, glad to see that
-information get spread wider!
+Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability in Apache Software Foundation apache fineract.
+Authorized users may be able to exploit this for limited impact on components.  
 
-greg k-h
+This issue affects apache fineract: from 1.4 through 1.8.2.
+
+Credit:
+
+Eugene Lim at Cyber Security Group (CSG) Government Technology Agency GOVTECH.sg (reporter)
+aleks@...che.org (remediation developer)
+
+References:
+
+https://fineract.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-25197
+
