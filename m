@@ -1,31 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/30/2
-Message-ID: <fde5850e-ac32-0e92-0df6-55f9f2175ca2@apache.org>
-Date: Thu, 30 Mar 2023 09:08:32 +0000
-From: Arnout Engelen <engelen@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/27/5
+Message-ID: <20230327193159.GB6662@openwall.com>
+Date: Mon, 27 Mar 2023 21:31:59 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-28935: Apache UIMA DUCC: DUCC (EOL) allows RCE 
+Subject: Re: New distros list statistics
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Hi,
 
-Description:
+Thank you very much for contributing this, Anthony!
 
-** UNSUPPORTED WHEN ASSIGNED ** Improper Neutralization of Special Elements used in a Command ('Command Injection') vulnerability in Apache Software Foundation Apache UIMA DUCC.
+I've just edited the wiki to credit Amazon for this (just like we did
+for Gentoo's similar contribution in 2017-2019) and to assign the task
+to Amazon.  Please let me know whether this is right.
 
+On Thu, Mar 23, 2023 at 08:37:42PM -0700, Anthony Liguori wrote:
+> I've been working to automate[*] tracking posting on the distros@ mailing
+> list for reporting purposes.  This includes searching oss-security for
+> posting information, extracting CVEs, and trying to tie it all together.
+> 
+> Anywhere, I have full stats for 2022 and stats for Jan/Feb of 2023.  As
+> long as everyone is happy with the content, I'll update regularly moving
+> forward.
+> 
+> https://oss-security.openwall.org/wiki/mailing-lists/distros/stats/2022
+> https://oss-security.openwall.org/wiki/mailing-lists/distros/stats/2023
+> 
+> [*] this has to be invoked manually in order to unlock my signing key so
+> it's only semi-automated.
 
-When using the "Distributed UIMA Cluster Computing" (DUCC) module of Apache UIMA, an authenticated user that has the permissions to modify core entities can cause command execution as the system user that runs the web process.
+Yes, please do update this regularly.
 
+Regarding the content, I notice some issues that I hope you can address:
 
-As the "Distributed UIMA Cluster Computing" module for UIMA is retired, we do not plan to release a fix for this issue.
-NOTE: This vulnerability only affects products that are no longer supported by the maintainer.
+You show "Coordinated Release Date" and "Days embargoed (scheduled)" as
+7.00 days from date "Reported" for most entries, which I assume is in
+most cases a placeholder when no specific CRD was extracted.  I
+understand it would be tricky to extract that from the private list
+threads automatically.  So for now I suggest that instead of stating
+7.00 in such cases, you leave these fields blank.  Longer-term, maybe we
+need to agree on a syntax (to include in list messages setting, ack'ing,
+or adjusting the CRD), so that your script would extract this more
+reliably?
 
-Credit:
+By the way, when an initially set CRD is later adjusted, how would you
+report that - report just one of them (I guess so, but need to decide
+and document which one) or add an extra column?  What if there's more
+than one adjustment?
 
-Crilwa (finder)
+You show extreme delays of 150+ days for two Linux kernel issues that
+you claim were brought to linux-distros in March 2022.  Neither of these
+two looks correct to me.  In one case, I merely added detail to an old
+thread where satisfactory disclosure on oss-security had been made
+months earlier.  In the other, you seem to link to a wrong CVE ID and
+thus picked up a correspondingly wrong linux-distros disclosure; in
+fact, you also list the same CVE ID for another issue, where it's
+probably correct, and you show that one was disclosed publicly on time.
 
-References:
+You show "A race condition vulnerability in drivers/tty/tty_buffers.c"
+as Reported on 2022-05-26, but I see this Subject first appear on
+2022-04-24.  You show nothing Reported in April at all, but I think this
+is a counter-example.  In fact, I only checked this one because I found
+it weird to see nothing for April.  I guess there are more issues like
+this that I did not notice.
 
-https://uima.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-28935
+I think more issues were handled via (linux-)distros than you report.
+For example, we had some "Embargoed OpenSSL issue" pre-notifications in
+2022, but you don't list them.  I understand they were not full
+disclosures of the issues to linux-distros - rather, the distros were
+invited to contact OpenSSL for more information - yet I think we should
+not exclude them from statistics.  Perhaps your script didn't capture
+something else as well.
 
+Once you've addressed these, I think it'd be a good idea to re-add the
+average and median embargo times - I think per year would be enough.
+
+Overall, this makes me skeptical about the automated processing.  We
+track these issues manually anyway, like we ought to, so we can as well
+manually keep track of the aspects needed for the statistics collection
+and reporting.  This would take some effort, but that's fine, and maybe
+we'll end up cross-verifying results of both approaches.
+
+Thanks again,
+
+Alexander
