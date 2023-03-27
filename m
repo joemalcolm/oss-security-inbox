@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4063" "Thursday" "16" "February" "2017" "15:55:47" "+0000" "Simon McVittie" "smcv@debian.org" "<20170216155547.z3ddx43uzzubj6wu@perpetual.pseudorandom.co.uk>" "98" "[oss-security] fd.o #99828: two symlink attacks fixed in dbus 1.10.16" nil nil nil "2" "2017021615:55:47" "[oss-security] fd.o #99828: two symlink attacks fixed in dbus 1.10.16" (number mark "U       smcv@debian. Feb 16   98/4063  " thread-indent "\"[oss-security] fd.o #99828: two symlink attacks fixed in dbus 1.10.16\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 12003 invoked by uid 550); 16 Feb 2017 15:56:08 -0000
+Received: (qmail 13748 invoked by uid 550); 27 Mar 2023 23:20:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,112 +7,246 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11969 invoked from network); 16 Feb 2017 15:56:06 -0000
-Date: Thu, 16 Feb 2017 15:55:47 +0000
-From: Simon McVittie <smcv@debian.org>
-To: oss-security@lists.openwall.com, dbus@lists.freedesktop.org
-Message-ID: <20170216155547.z3ddx43uzzubj6wu@perpetual.pseudorandom.co.uk>
+Received: (qmail 7249 invoked from network); 27 Mar 2023 23:07:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=codemonkey-ws.20210112.gappssmtp.com; s=20210112; t=1679958440;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=tXa57LMNkCLlGQH1bDU5UGKi04zm+h3ni6/nCkgF7rM=;
+        b=Nt2DCXKxpM8Mx2dmRNIWCKn1Vtic+hh2rVSvADBWen3GzaHifCXVRFzw6E8f7RkJ7d
+         vaoDSULMxzfnkGq7fpKvc6basxV4lJ+dB5/dNOqFaGrXU7T0Yr7S1CZu3uS2f0ErRwQU
+         IhA8NeNJnqiwZeD2xABhshqLYXtv3VFYGCeHJn09XNjkAe7rCJjSfh1g9PkKsVkfOIK8
+         OjoSYBvE+K58anbUXb/dZfrpEhISZtGU5gaFAiNTq/YFTDzYsCCuXXWyHWxinidOnFMa
+         kQwj/Pwn8naYdQZoPSXTyHZ5Mk7uL985HojIoDDN6gfNWkI5UGlZ/YtMDTE/mg2EQknu
+         4m1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679958440;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tXa57LMNkCLlGQH1bDU5UGKi04zm+h3ni6/nCkgF7rM=;
+        b=cw4E1HtZHwVWAZMbxgiaprR2vg6JMuWxXyoFN/08DmETNQYv8UQvLTtnzTOkGR98Ha
+         HRAO34vS7sxBjZhcmnx9UPu4RnUl1BfFlF4nWZcaL4q8PjVxcy/j/fqJ8fROvbqsq1eN
+         iWoaqKEg2YB0u1ukX7aK3gH3mznL881KD/OlZpscUfQvNB7DaFraq49eYXz4MbDUo0VY
+         hiHLtHaMj7fudoNsfap8zSg8h/8t8SjC74TKzr3jdSocPEIc7T66bx3r9A6xE3MeeS/b
+         oSHabIZxbPoyz7AeXoMmf4Mg13vJuy/6ptg78ZiIx/UkBLi1fuiMBhzc5MkkI0C2M7qR
+         6uFQ==
+X-Gm-Message-State: AO0yUKVMVPKSwyVYTEXljjr0yX8nchLjS+1I4olyQ7/wW6oa1Y+9Y75y
+	NOpKLT0rLKEj/UgMuYlLTrEf9TCXbC+PNpqnll7NqFsuv/oUoJ4zATA=
+X-Google-Smtp-Source: AK7set+GrI3zWcp5F4B2NhA/JWEiz5izIs+Jr7Sof3SecPozAmXRJmPyf5lzxtj8CpX2ouj0oir2fChcxCt+8K6KK28=
+X-Received: by 2002:a05:600c:378d:b0:3ed:1f9f:41d5 with SMTP id
+ o13-20020a05600c378d00b003ed1f9f41d5mr3009214wmr.0.1679958440132; Mon, 27 Mar
+ 2023 16:07:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: NeoMutt/20170113 (1.7.2)
-Subject: [oss-security] fd.o #99828: two symlink attacks fixed in dbus 1.10.16
+References: <CA+aC4kvP=EatKudD=V7Dzx6BRUN_0TQqyj_Xd0wOpzvnoG58wA@mail.gmail.com>
+ <20230327193159.GB6662@openwall.com>
+In-Reply-To: <20230327193159.GB6662@openwall.com>
+From: Anthony Liguori <anthony@codemonkey.ws>
+Date: Mon, 27 Mar 2023 16:07:09 -0700
+Message-ID: <CA+aC4kuPKy4-Ays67K8Xp3yWeA0emF=jX9xJcWtPC=_R8yVSkg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="0000000000000fd62e05f7e9ce7f"
+Subject: Re: [oss-security] New distros list statistics
 
-D-Bus <http://www.freedesktop.org/wiki/Software/dbus/> is an
-asynchronous inter-process communication system, commonly used
-for system services or within a desktop session on Linux and other
-operating systems.
+--0000000000000fd62e05f7e9ce7f
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The latest dbus release 1.10.16 fixes two symlink attacks in
-non-production-suitable configurations. I am treating these as bugs
-rather than practical vulnerabilities, and very much hope neither of
-these is going to affect any real users, but I'm reporting them to
-oss-security in case there's an attack vector that I've missed.
+On Mon, Mar 27, 2023 at 12:33=E2=80=AFPM Solar Designer <solar@openwall.com=
+> wrote:
 
-Please reference fd.o #99828 or
-<https://bugs.freedesktop.org/show_bug.cgi?id=99828> in any notices
-that refer to these.
+> Hi,
+>
+> Thank you very much for contributing this, Anthony!
+>
+> I've just edited the wiki to credit Amazon for this (just like we did
+> for Gentoo's similar contribution in 2017-2019) and to assign the task
+> to Amazon.  Please let me know whether this is right
+>
 
-I have already released 1.10.16 for the stable branch. For the
-development branch, 1.11.10 will have the same fixes. For the old
-stable branch 1.8.x, I'm going to apply the same fixes, but I am
-not planning to do a release just for this unless a vendor asks me
-to - they will be released next time there is a 1.8.x release for some
-other reason.
+Yes.
 
-Symlink attack in nonce-tcp transport
--------------------------------------
 
-Bug tracked as: https://bugs.freedesktop.org/show_bug.cgi?id=99828
-Versions affected: dbus >= 1.4.10
-Fixed in: dbus >= 1.11.10, 1.10.x >= 1.10.16
-Exploitable by: local users on inadvisably configured Unix systems
-Impact: overwrite a file named "nonce" in an attacker-chosen directory
-  with random contents known only to the victim
-Reporter: Simon McVittie, Collabora Ltd.
+> On Thu, Mar 23, 2023 at 08:37:42PM -0700, Anthony Liguori wrote:
+> > I've been working to automate[*] tracking posting on the distros@
+> mailing
+> > list for reporting purposes.  This includes searching oss-security for
+> > posting information, extracting CVEs, and trying to tie it all together.
+> >
+> > Anywhere, I have full stats for 2022 and stats for Jan/Feb of 2023.  As
+> > long as everyone is happy with the content, I'll update regularly moving
+> > forward.
+> >
+> > https://oss-security.openwall.org/wiki/mailing-lists/distros/stats/2022
+> > https://oss-security.openwall.org/wiki/mailing-lists/distros/stats/2023
+> >
+> > [*] this has to be invoked manually in order to unlock my signing key so
+> > it's only semi-automated.
+>
+> Yes, please do update this regularly.
+>
+> Regarding the content, I notice some issues that I hope you can address:
+>
+> You show "Coordinated Release Date" and "Days embargoed (scheduled)" as
+> 7.00 days from date "Reported" for most entries, which I assume is in
+> most cases a placeholder when no specific CRD was extracted.  I
+> understand it would be tricky to extract that from the private list
+> threads automatically.  So for now I suggest that instead of stating
+> 7.00 in such cases, you leave these fields blank.  Longer-term, maybe we
+> need to agree on a syntax (to include in list messages setting, ack'ing,
+> or adjusting the CRD), so that your script would extract this more
+> reliably?
+>
 
-The nonce-tcp transport writes a file to a randomly-named subdirectory
-of a system-wide temporary directory. It does not check whether the
-directory already exists (EEXIST from mkdir is ignored); so if the
-chosen directory is a symlink to an attacker-chosen directory, it
-would proceed to write a file named "nonce" to that directory.
-The file is created safely (O_EXCL, 0600 permissions, atomic-overwrite)
-and has random contents not chosen by the attacker.
+Yes.  This is actually supported today but I'm the only one doing it and
+I'm doing it privately.  I'm going to pick on the OpenSSL issue from Feb of
+this year to illustrate how this works.  Here's the OSV file that my
+tooling created:
 
-The reimplementation of this transport in GDBus does not have this bug.
+{
+  "schema_version": "1.3.0",
+  "id": "OSS-SEC-ea843",
+  "modified": "2023-02-04T09:46:55+00:00",
+  "published": "2023-01-25T12:02:01+00:00",
+  "summary": "Embargoed OpenSSL security issues",
+  "database_specific": {
+    "first_posting": "2023-01-25T12:02:01+00:00",
+    "last_posting": "2023-02-04T09:46:55+00:00",
+    "preferred_crd": "2023-02-07T00:00:00+00:00",
+    "latest_crd": "2023-02-08T12:02:01+00:00",
+    "cve_assigned": false,
+    "oss_security_posting": false,
+    "embargo_expired": false
+  }
+}
 
-Mitigations include:
+I really like OSV (https://osv.dev) and one thing I'd like to propose we do
+is publish an OSV repository along with these statistics (the statistics
+are currently fully generated from an OSV repo).
 
-* The nonce-tcp transport is only enabled if you ask for it when
-  configuring dbus-daemon or a DBusServer. It was added as a workaround
-  for Windows' lack of AF_UNIX sockets, and the only reason it is
-  available on Unix is to be able to test it. Even on Windows, it should
-  never be used on connections other than loopback (there is no
-  confidentiality or integrity protection).
+When I saw the initial report, I sent myself a private email that contained:
 
-* The directory has a random name with approximately 35 bits of entropy,
-  so an attacker would have to either create a massive number of symlinks
-  or be very lucky.
+ OSS-Sec-Bot: { "crd": "2023-02-07T00:00:00Z" }
 
-* The attacker cannot choose the file contents.
+Which is the current syntax for sending my email bot commands.  Anyone on
+the distros list can send commands like this but I've been doing it myself
+privately just to work out any kinks.
 
-* The attacker cannot read the file contents.
+That triggered setting the "preferred_crd" field in the OSV file.  The
+"latest_crd" is meant to enforce the lists policies of max 2 week embargo.
 
-* Versions before 1.4.10 were unaffected by this bug because nonce-tcp
-  didn't work on Unix at all.
+Take note of the fake that cve_assigned: false.  This will be important
+later.
 
-Workaround: do not use nonce-tcp. If you must use it, set the environment
-variable TMPDIR to a directory you control.
+By the way, when an initially set CRD is later adjusted, how would you
+> report that - report just one of them (I guess so, but need to decide
+> and document which one) or add an extra column?  What if there's more
+> than one adjustment?
+>
 
-Symlink attack in unit tests
-----------------------------
+Right now I'm just storing the latest.  Easy enough to make a list if
+there's value.
 
-Bug tracked as: https://bugs.freedesktop.org/show_bug.cgi?id=99828
-Versions affected: >= 1.1.3
-Fixed in: dbus >= 1.11.10, 1.10.x >= 1.10.16
-Exploitable by: local users sharing a system with a dbus developer
-Impact: unlikely file overwrite
-Reporter: Simon McVittie, Collabora Ltd.
 
-One of the "embedded tests" accessed a system-wide temporary directory
-in an inadvisable manner. It is probably vulnerable to a symlink
-attack due to a time-of-check/time-of-use error.
+>
+> You show extreme delays of 150+ days for two Linux kernel issues that
+> you claim were brought to linux-distros in March 2022.  Neither of these
+> two looks correct to me.  In one case, I merely added detail to an old
+> thread where satisfactory disclosure on oss-security had been made
+> months earlier.  In the other, you seem to link to a wrong CVE ID and
+> thus picked up a correspondingly wrong linux-distros disclosure; in
+> fact, you also list the same CVE ID for another issue, where it's
+> probably correct, and you show that one was disclosed publicly on time
 
-Mitigations: the "embedded tests" are not compiled in by default, are
-only intended to be used by dbus developers on trusted systems, and if they
-are enabled, ./configure specifically warns that they are insecure. The
-directory used is random with approximately 35 bits of entropy, so an
-attacker would have to either create a massive number of symlinks or
-be very lucky.
 
-Workaround: if you are testing older dbus versions, use a trusted
-machine, VM or container or set the environment variable TMPDIR to a
-directory you control.
+So the general problem is how to correlate a distros@ mail with an
+oss-security report given that the subject often changes between the two
+posting and the senders is also often not the same person.
 
-----
+The best strategy I've come up with is to look for CVEs.  There should
+(usually) be a CVE assigned in the distros thread and that should be a good
+indicator that the report on oss-security is about that issue.
+
+That works most of the time but in this case, the original report
+referenced Dirty Cow.  This is fixable with metadata annotations but I just
+haven't implemented that yet.
+
+
+>
+> You show "A race condition vulnerability in drivers/tty/tty_buffers.c"
+> as Reported on 2022-05-26, but I see this Subject first appear on
+> 2022-04-24.  You show nothing Reported in April at all, but I think this
+> is a counter-example.  In fact, I only checked this one because I found
+> it weird to see nothing for April.  I guess there are more issues like
+> this that I did not notice.
+>
+
+My 2022 data is incomplete because there was a period of time when the SPF
+rules changed on the openwall domain and that upset our email
+infrastructure at Amazon.  I now have monitoring for this but it was around
+that time frame.
+
+
+> I think more issues were handled via (linux-)distros than you report.
+> For example, we had some "Embargoed OpenSSL issue" pre-notifications in
+> 2022, but you don't list them.  I understand they were not full
+> disclosures of the issues to linux-distros - rather, the distros were
+> invited to contact OpenSSL for more information - yet I think we should
+> not exclude them from statistics.  Perhaps your script didn't capture
+> something else as well.
+>
+
+This is a feature.  Until we had this discussion on oss-security, I didn't
+want to post anything on the wiki that I wasn't absolutely sure was
+public.  So right now, I only post things where I can clearly find the
+oss-security posting (via CVE analysis).
+
+In the case of the OpenSSL issue, the report on distros@ did not contain
+any CVE information.
+
+I've posted the necessary command to distros@ and now the statistics show
+OpenSSL with the current publication date when you forwarded the
+announcement to the list.  Admittedly I had to do a small bug fix there to
+prioritize the earlier posting verses a more recent one that references one
+of those CVEs.
+
+
+> Once you've addressed these, I think it'd be a good idea to re-add the
+> average and median embargo times - I think per year would be enough.
+>
+> Overall, this makes me skeptical about the automated processing.  We
+> track these issues manually anyway, like we ought to, so we can as well
+> manually keep track of the aspects needed for the statistics collection
+> and reporting.  This would take some effort, but that's fine, and maybe
+> we'll end up cross-verifying results of both approaches.
+>
+
+So there's two things I really think would be neat to do:
+
+1) Agree to a machine readable metadata format that allows for the various
+tasks to be done in a way that automation can pick up.  Using commands to
+record the CRD date, CVE assignment, and rejecting invalid issues would go
+a super long way.
+
+2) In addition to publishing wiki statistics, I think putting this
+information out as an OSV repository on github would be generally useful
+for folks trying to coordinate vulnerability tracking.
+
+BTW, the source code here is nothing fancy.   I'll post it on github as
+soon as I can.  I'm about to go on vacation for a couple weeks so if I
+don't get to it before then, I'll do it when I come back.
+
+The approach I took is not dissimilar to https://github.com/aliguori/patches
+which is what I used a maintainer-bot on QEMU for many years.
 
 Regards,
-    S
--- 
-Simon McVittie
-Collabora Ltd. <https://www.collabora.com/> / Debian <https://www.debian.org/>
+
+Anthony Liguori
+
+
+>
+> Thanks again,
+>
+> Alexander
+>
+
+--0000000000000fd62e05f7e9ce7f--
