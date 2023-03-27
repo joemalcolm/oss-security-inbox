@@ -1,76 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/07/25/8
-Message-ID: <51769413-37d8-4f9a-6e37-1b50a7ff555a@apache.org>
-Date: Tue, 25 Jul 2023 13:23:19 +0000
-From: Julian Reschke <reschke@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/27/2
+Message-ID: <7fe42fad-2af9-3df6-b782-f527e99c1430@apache.org>
+Date: Mon, 27 Mar 2023 16:20:40 +0000
+From: James Dailey <jdailey@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-37895: Apache Jackrabbit RMI access can lead to RCE 
+Subject: CVE-2023-25195: Apache Fineract: SSRF template type vulnerability in certain authenticated users 
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical
-
-Affected versions:
-
-- Apache Jackrabbit Webapp (jackrabbit-webapp) 2.21.0 before 2.21.18
-- Apache Jackrabbit Webapp (jackrabbit-webapp) 1.0.0 before 2.20.11
-- Apache Jackrabbit Standalone (jackrabbit-standalone and jackrabbit-standalone-components) 2.21.0 before 2.21.18
-- Apache Jackrabbit Standalone (jackrabbit-standalone and jackrabbit-standalone-components) 1.0.0 before 2.20.11
+Severity: moderate
 
 Description:
 
-Java object deserialization issue in Jackrabbit webapp/standalone on all platforms allows attacker to remotely execute code via RMIVersions up to (including) 2.20.10 (stable branch) and 2.21.17 (unstable branch) use the component "commons-beanutils", which contains a class that can be used for remote code execution over RMI.
+Server-Side Request Forgery (SSRF) vulnerability in Apache Software Foundation Apache Fineract.
+Authorized users with limited permissions can gain access to server and may be able to use server for any outbound traffic. 
 
-Users are advised to immediately update to versions 2.20.11 or 2.21.18. Note that earlier stable branches (1.0.x .. 2.18.x) have been EOLd already and do not receive updates anymore.
-
-In general, RMI support can expose vulnerabilities by the mere presence of an exploitable class on the classpath. Even if Jackrabbit itself does not contain any code known to be exploitable anymore, adding other components to your server can expose the same type of problem. We therefore recommend to disable RMI access altogether (see further below), and will discuss deprecating RMI support in future Jackrabbit releases.
-
-How to check whether RMI support is enabledRMI support can be over an RMI-specific TCP port, and over an HTTP binding. Both are by default enabled in Jackrabbit webapp/standalone.
-
-The native RMI protocol by default uses port 1099. To check whether it is enabled, tools like "netstat" can be used to check.
-
-RMI-over-HTTP in Jackrabbit by default uses the path "/rmi". So when running standalone on port 8080, check whether an HTTP GET request on localhost:8080/rmi returns 404 (not enabled) or 200 (enabled). Note that the HTTP path may be different when the webapp is deployed in a container as non-root context, in which case the prefix is under the user's control.
-
-Turning off RMIFind web.xml (either in JAR/WAR file or in unpacked web application folder), and remove the declaration and the mapping definition for the RemoteBindingServlet:
-
-        <servlet>
-            <servlet-name>RMI</servlet-name>
-            <servlet-class>org.apache.jackrabbit.servlet.remote.RemoteBindingServlet</servlet-class>
-        </servlet>
-
-        <servlet-mapping>
-            <servlet-name>RMI</servlet-name>
-            <url-pattern>/rmi</url-pattern>
-        </servlet-mapping>
-
-Find the bootstrap.properties file (in $REPOSITORY_HOME), and set
-
-         rmi.enabled=false
-
-    and also remove
-
-         rmi.host
-         rmi.port
-         rmi.url-pattern
-
- If there is no file named bootstrap.properties in $REPOSITORY_HOME, it is located somewhere in the classpath. In this case, place a copy in $REPOSITORY_HOME and modify it as explained.
+This issue affects Apache Fineract: from 1.4 through 1.8.3.
 
 Credit:
 
-Siebene@ (reporter)
-Michael Dürig (other)
-Manfred Baedke (other)
+Huydoppa from GHTK  (reporter)
+Aleksander (remediation developer)
 
 References:
 
-https://lists.apache.org/list.html?users@jackrabbit.apache.org
-https://jackrabbit.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2023-37895
-
-Timeline:
-
-2023-06-30: Reported
-2023-07-20: Release vote for unstable branch with fix
-2023-07-20: Release vote for stable branch with fix
-2023-07-24: unstable branch (2.21.18) released
-2023-07-24: stable branch (2.20.11) released
+https://fineract.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-25195
 
