@@ -1,52 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/04/3
-Message-ID: <20231004134150.GB27450@openwall.com>
-Date: Wed, 4 Oct 2023 15:41:50 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/27/3
+Message-ID: <eed59b0c-fd99-1a0f-00df-dfbc8c120ec5@apache.org>
+Date: Mon, 27 Mar 2023 16:21:03 +0000
+From: James Dailey <jdailey@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
+Subject: CVE-2023-25196: Apache Fineract: SQL injection vulnerability  
 Content-Type: text/plain; charset=utf-8
 
-Regarding AMD not intending to provide a microcode mitigation:
+Severity: important
 
-On Tue, Oct 03, 2023 at 04:04:31PM -0700, Jean Luc Picard wrote:
-> No intent?  It wouldn't be terribly hard
+Description:
 
-Possibly not terribly hard, but (with my also too limited understanding)
-probably not in any of the ways you suggested.
+Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability in Apache Software Foundation Apache Fineract.
+Authorized users may be able to change or add data in certain components.  
 
-> That said I could understand the
-> want to depricate zen1 support entirely, everyone upgraded when they could
-> it was super super cheap to do so & there weren't really any enterprise
-> users.
+This issue affects Apache Fineract: from 1.4 through 1.8.2.
 
-That's false.
+Credit:
 
-Zen1 is still found in major clouds.  The AMD security bulletin:
+ Zhang Baocheng at Leng Jing Qi Cai Security Lab (reporter)
+Aleks@...che.org (remediation developer)
 
-https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7007.html
+References:
 
-specifically lists "Datacenter AMD EPYC 7001 Processors" as affected,
-and these are used e.g. in:
+https://fineract.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-25196
 
-https://aws.amazon.com/about-aws/whats-new/2021/04/amazon-ec2-instances-featuring-amd-epyc-processors-are-now-available-in-additional-regions/
-
-"M5a, R5a and T3a instances are variants of Amazon EC2 general purpose
-(M5), memory optimized (R5) and burstable general-purpose (T3) instance
-families. These instances feature AMD EPYC 7001 series processors"
-
-That was in 2021, but indeed the T3a tab at:
-
-https://aws.amazon.com/ec2/amd/
-
-still says:
-
-"Amazon EC2 T3a instances feature AMD EPYC 7000 series processors"
-
-T3 are the most common/default AWS instance family with Intel CPUs, and
-T3a are probably the most commonly used AMD alternative to them.
-
-I don't mean to single out AWS, I think it's similar with many other
-cloud and dedicated server providers.  This is just a prominent example.
-
-Alexander
