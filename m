@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["692" "Friday" "10" "September" "2021" "13:40:14" "-0700" "lewis john mcgibbney" "lewismc@apache.org" nil "24" "[oss-security] CVE-2021-40146: A Remote Code Execution (RCE) vulnerability exists in Apache Any23 YAMLExtractor.java" nil nil nil "9" nil nil (number mark "U       lewismc@apac Sep 10   24/692   " thread-indent "\"[oss-security] CVE-2021-40146: A Remote Code Execution (RCE) vulnerability exists in Apache Any23 YAMLExtractor.java\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-40146: A Remote Code Execution (RCE) vulnerability exists in Apache Any23 YAMLExtractor.java" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9807 invoked by uid 550); 11 Sep 2021 07:44:52 -0000
+Received: (qmail 5455 invoked by uid 550); 27 Mar 2023 16:23:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,44 +7,35 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30453 invoked from network); 10 Sep 2021 20:40:37 -0000
-X-Gm-Message-State: AOAM532WKYWNyFOVf7AQc8xHhkVkcxGz/YEodx1YmHvl1odzvuH5aXUG
-	8Xy0xDmNdYCcWuM5wCETm8mfnCCvrTkkvLi4IPY=
-X-Google-Smtp-Source: ABdhPJy7Zu2gnffO0UaRFT/tP0GMNoVbyWA9BlBf9tU2nssG6OTo6cev/2IxLEoqhGU5n++myS+XlHxanjRTNLRLS4Y=
-X-Received: by 2002:a17:906:8cd:: with SMTP id o13mr11305815eje.341.1631306424754;
- Fri, 10 Sep 2021 13:40:24 -0700 (PDT)
+Received: (qmail 3564 invoked from network); 27 Mar 2023 16:22:01 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: James Dailey <jdailey@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <eed59b0c-fd99-1a0f-00df-dfbc8c120ec5@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 27 Mar 2023 16:21:03 +0000
 MIME-Version: 1.0
-From: lewis john mcgibbney <lewismc@apache.org>
-Date: Fri, 10 Sep 2021 13:40:14 -0700
-X-Gmail-Original-Message-ID: <CAGaRif362BLKb+aaprbykjHDv+SDjex3BKRCH6Zpaazz82_Uvg@mail.gmail.com>
-Message-ID: <CAGaRif362BLKb+aaprbykjHDv+SDjex3BKRCH6Zpaazz82_Uvg@mail.gmail.com>
-To: user@any23.apache.org, dev@any23.apache.org, 
-	oss-security@lists.openwall.com, w3c@apache.org
-Content-Type: multipart/alternative; boundary="000000000000f7a8be05cbaa1fc1"
-Subject: [oss-security] CVE-2021-40146: A Remote Code Execution (RCE) vulnerability exists in
- Apache Any23 YAMLExtractor.java
+Subject: [oss-security] CVE-2023-25196: Apache Fineract: SQL injection vulnerability  
 
---000000000000f7a8be05cbaa1fc1
-Content-Type: text/plain; charset="UTF-8"
+Severity: important
 
 Description:
 
-A Remote Code Execution (RCE) vulnerability was discovered in the
-Any23 YAMLExtractor.java file and is known to affect Any23 versions <
-2.5. RCE vulnerabilities allow a malicious actor to execute any code
-of their choice on a remote machine over LAN, WAN, or internet. RCE
-belongs to the broader class of arbitrary code execution (ACE)
-vulnerabilities.
+Improper Neutralization of Special Elements used in an SQL Command ('SQL In=
+jection') vulnerability in Apache Software Foundation Apache Fineract.
+Authorized users may be able to change or add data in certain components. =
+=C2=A0
+
+This issue affects Apache Fineract: from 1.4 through 1.8.2.
 
 Credit:
 
-The Apache Any23 Project Management Committee would like to thank
-Zhuxuan Wu for reporting the security vulnerability.
+ Zhang Baocheng at Leng Jing Qi Cai Security Lab (reporter)
+Aleks@apache.org (remediation developer)
 
+References:
 
+https://fineract.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2023-25196
 
--- 
-http://home.apache.org/~lewismc/
-http://people.apache.org/keys/committer/lewismc
-
---000000000000f7a8be05cbaa1fc1--
