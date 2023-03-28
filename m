@@ -1,81 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/10/05/11
-Message-ID: <20231005182818.64a446f0@fabiankeil.de>
-Date: Thu, 5 Oct 2023 18:28:18 +0200
-From: Fabian Keil <freebsd-listen@...iankeil.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/28/4
+Message-ID: <ZCLzu6TDAOcf9OTz@openssl.org>
+Date: Tue, 28 Mar 2023 14:03:39 +0000
+From: Tomas Mraz <tomas@...nssl.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: There is a curl "severity HIGH security problem" pre-announcement on GitHub
+Subject: OpenSSL Security Advisory
 Content-Type: text/plain; charset=utf-8
 
-Shawn Webb <shawn.webb@...denedbsd.org> wrote on 2023-10-05 at 09:54:11:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-> On Thu, Oct 05, 2023 at 10:14:49AM +0200, Erik Auerswald wrote:
+OpenSSL Security Advisory [28th March 2023]
+===========================================
 
-> > there is a pre-announcement of a curl security problem with high severity
-> > that can be found on GitHub:
-> > 
-> >  - https://github.com/curl/curl/discussions
-> >  - https://github.com/curl/curl/discussions/12026
-> 
-> I wonder if this could also be coordinated through CERT VINCE since
-> there will be a wider impact than those on the distros mailing list.
+Invalid certificate policies in leaf certificates are silently ignored (CVE-2023-0465)
+======================================================================================
 
-I wondered what "CERT VINCE" is supposed to mean so I tried to
-search the English Wikipedia but was unsuccessful. Probably
-even the English Wikipedia can't keep up with all the "CERTS"
-that are available now.
+Severity: Low
 
-Anyway, after a proper web search I ended at [0] which says:
+Applications that use a non-default option when verifying certificates may be
+vulnerable to an attack from a malicious CA to circumvent certain checks.
 
-| Welcome to the Vulnerability Information and Coordination
-| Environment (VINCE). If you are a vendor and would like to
-| communicate with us about a vulnerability or update your
-| contact information, please create an account or sign in. You
-| can also report a vulnerability to us, with or without a VINCE
-| account. For more information see the VINCE Documentation site
+Invalid certificate policies in leaf certificates are silently ignored by
+OpenSSL and other certificate policy checks are skipped for that certificate.
+A malicious CA could use this to deliberately assert invalid certificate policies
+in order to circumvent policy checking on the certificate altogether.
 
-There doesn't seem to be a period after the last sentence,
-but maybe that's art or the page is still under construction.
+Policy processing is disabled by default but can be enabled by passing
+the `-policy' argument to the command line utilities or by calling the
+`X509_VERIFY_PARAM_set1_policies()' function.
 
-Apparently they are "Sponsored by CISA." and apparently
-CISA is "America's Cyber Defence Agency" [1] which seems
-to be relying a bit too much on computers without lower
-caps, otherwise their website would probably look a bit
-more professional.
+Due to the low severity of this issue we are not issuing new releases of
+OpenSSL at this time. The fix will be included in the next releases when they
+become available. The fix is also available in commit facfb1ab (for 3.1),
+commit 1dd43e07 (for 3.0), commit b013765a (for 1.1.1) in the OpenSSL
+git repository, and commit 10325176 (for 1.0.2) in the OpenSSL git
+repository for premium customers.
 
-Luckily I use ElectroBSD [2] so I was able to spell their
-name using lower caps anyway.
+This issue was reported on 12th January 2023 by David Benjamin (Google).
+The fix was developed by Matt Caswell.
 
-I also briefly looked at the "VINCE"
-"Vulnerability Disclosure Guidance" [3] and read:
+Certificate policy check not enabled (CVE-2023-0466)
+====================================================
 
-| A vulnerability is difficult to define. It can be thought of as
-| a flaw in software or hardware components that allows an
-| attacker to perform actions that wouldn't normally be
-| allowed. The impact of such vulnerabilities varies
-| greatly. They may allow the attacker to learn someone's private
-| email address, take control of a computer, or even cause
-| physical damage and bodily injury.
+Severity: Low
 
-My first impression is that they may be targeting children
-below ten and I wish them the best of luck in their endeavors.
-I'm already a bit older than ten and I already have enough
-accounts for somewhat dubious sites that could leak my data
-at any minute.
+The function X509_VERIFY_PARAM_add0_policy() is documented to
+implicitly enable the certificate policy check when doing certificate
+verification. However the implementation of the function does not
+enable the check which allows certificates with invalid or incorrect
+policies to pass the certificate verification.
 
-Anyway, I suppose nobody on this list will stop you, Shawn,
-from personally giving "CERT VINCE" a heads-up that a somewhat
-important curl [4] patch will probably be published around
-2023-10-11.
+As suddenly enabling the policy check could break existing deployments it was
+decided to keep the existing behavior of the X509_VERIFY_PARAM_add0_policy()
+function.
 
-If they ask you what curl is you should probably use simple
-words when you explain it.
+Instead the applications that require OpenSSL to perform certificate
+policy check need to use X509_VERIFY_PARAM_set1_policies() or explicitly
+enable the policy check by calling X509_VERIFY_PARAM_set_flags() with
+the X509_V_FLAG_POLICY_CHECK flag argument.
 
-Happy hacking
-Fabian
+Certificate policy checks are disabled by default in OpenSSL and are not
+commonly used by applications.
 
-[0] <https://kb.cert.org/vince/>
-[1] <https://www.cisa.gov/>
-[2] <https://www.fabiankeil.de/gehacktes/electrobsd/>
-[3] <https://kb.cert.org/vuls/guidance/>
-[4] <https://curl.se/>
+OpenSSL 3.1, 3.0, 1.1.1 and 1.0.2 are vulnerable to this issue.
+
+Applications need to be updated if they are affected by the issue.
+
+Due to the low severity of this issue we are not creating a new release at
+this time. The documentation fix is also available in commit fc814a30
+(for 3.1), commit 51e8a84c (for 3.0), commit 0d16b7e9 (for 1.1.1) in the
+OpenSSL git repository, and commit 73398dea (for 1.0.2) in the OpenSSL git
+repository for premium customers.
+
+This issue was reported on 12th January 2023 by David Benjamin (Google).
+The documentation fix was developed by Tomas Mraz.
+
+General Advisory Notes
+======================
+
+URL for this Security Advisory:
+https://www.openssl.org/news/secadv/20230328.txt
+
+Note: the online version of the advisory may be updated with additional details
+over time.
+
+For details of OpenSSL severity classifications please see:
+https://www.openssl.org/policies/secpolicy.html
+
+OpenSSL 1.1.1 will reach end-of-life on 2023-09-11. After that date security
+fixes for 1.1.1 will only be available to premium support customers.
+-----BEGIN PGP SIGNATURE-----
+
+iQJGBAEBCAAwFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmQi8tMSHHRvbWFzQG9w
+ZW5zc2wub3JnAAoJEFJ0ZqIcp55tem4P/3ujaUzEUXSMAX58jCiMzScB8o1HFyo1
+KQguXKh41dM7ooehR4J8JjveH6PExw2C0fI7CzROjdlOkcd66jfokJb5CIOTf3zs
+0pDn0gH1TcY4skKlUkFoo8d51ql3zlySxLX5MGEUiUq43U+H2sog/cLaMl5KJRJ4
+kDBGksdgsAb1o6rCcXpTHw40Dq5cEr3HaSy6hbbxubjt8SQv8fbK2vkZPu3pVwfw
+RR6w8K43aiDwcEC6eMPO5QOx3xTOFGU0tUNEG11QZhb2gOkmgshjRBZmbf9mEyU2
+mTk0P8G6ttlVP80qqXA33lSXIJlfpTqqSx9rlx6ovO4iu0TZPJYETkAhP6nBvEU6
+eyy/RTSphBUK4uSh44K3RTMcnPAvplZdzlX9jOHfiuOjwG1ff8pxWnJZt0s77MNI
+ByCKaOWwhyoph3jxkt+k4AP0f229qxFxryz1UKXWQ+2BXtXusXFVGs70FwHIvSWV
+nGpLKXedCnebPaQqlYKqFWmJPsDf4iEcSgluFyFr4zYW7+dN+7hNF3gFzYJjSCIo
+jvnKktMk3Vuu8xOMJ6uQQNmGvsEyhmDYsxqNuM/6QxaQmnfEGe8+bdp21g8PBLtG
+z+tnX2/7Cltm/5oIHnqVclNChqjOev9rho5/QVK7eNFDcuDTWVosWPPyqbhkmVpw
+acx7hxvK++Zl
+=L6VH
+-----END PGP SIGNATURE-----
