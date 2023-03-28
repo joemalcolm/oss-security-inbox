@@ -1,138 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/11/08/2
-Message-ID: <c01c1617-641d-4ec2-847f-2e85ea4676f7@notcve.org>
-Date: Wed, 8 Nov 2023 14:22:27 +0100
-From: !CVE Team <contact@...cve.org>
-To: oss-security@...ts.openwall.com, submissions@...ketstormsecurity.org, fulldisclosure@...lists.org, bugs@...uritytracker.com
-Subject: !CVE: A new platform to track security issues not acknowledged by vendors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/28/3
+Message-ID: <20230328140022.GA11153@openwall.com>
+Date: Tue, 28 Mar 2023 16:00:22 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Zhenghan Wang <wzhmmmmm@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2023-28464: Linux: Bluetooth: hci_conn_cleanup function has double free
 Content-Type: text/plain; charset=utf-8
 
-=======
-Mission
-=======
+Hi Zhenghan Wang,
 
-The mission of !CVE (read not CVE) is to track, identify and provide a
-common space for !vulnerabilities that are not acknowledged by vendors but
-still are serious security issues.
+Thank you for bringing this to oss-security.
 
-This project was presented a few days ago at Black Hat Toronto 2023 [1]
-and will also be presented next week at DeepSec 2023 [2].
+On Tue, Mar 28, 2023 at 08:00:00AM +0800, Zhenghan Wang wrote:
+> This patch drop the hci_dev_put and hci_conn_put function call in
+> hci_conn_cleanup function, because the object isfreed in hci_conn_del_sysfs
+> function.
+> https://lore.kernel.org/lkml/20230309074645.74309-1-wzhmmmmm@gmail.com/
 
+Please remind the Bluetooth subsystem maintainers, such as by "replying"
+to your own message you had sent them on March 9.  When doing so, please
+also inform them of the CVE ID and of the oss-security posting.
 
-===
-Why
-===
+For others on oss-security: Zhenghan Wang brought this issue to
+linux-distros and s@k.o on March 8, brought it to the subsystem
+maintainers and public Linux mailing lists on March 9 (of which
+linux-distros and s@k.o were not specifically informed), and then there
+was no progress until Carlos Lopez from SUSE sent a reminder when we
+were already just past the maximum embargo duration for linux-distros.
 
-According to MITRE's CNA rules section 7.1:
+Of course, it was inappropriate that no one stayed on top of the issue
+during the embargo.  The corresponding contributing-back task is:
 
-       "CNAs are left to their own discretion to determine whether
-        something is a vulnerability."[3]
+https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
 
-This poses a clear conflict of interest, since the same vendor is the one
-deciding whether or not an issue is a vulnerability and therefore whether a
-CVE is assigned to their own product or not.
+"9. Stay on top of issues to ensure progress is being made, remind
+others when there's no apparent progress, as well as when the public
+disclosure date for an issue is approaching and when it's finally
+reached (unless the reporter beats you to it by making their mandatory
+posting to oss-security first) - primary: Gentoo, backup: Amazon"
 
+I brought this up on linux-distros and we already heard from Anthony
+Liguori for Amazon, who as you can see from another thread on
+oss-security is now also contributing the list statistics, which could
+help detect such delays too.  Thanks, Anthony!
 
-==============
-What is a !CVE
-==============
+However, we have not heard from Gentoo, who are "primary" on this and a
+couple of other related tasks.  Gentoo, please let us all know whether
+you intend to handle these tasks, or should we remove the assignment?
 
-    - A common place for !vulnerabilities (read not vulnerabilities)
+As to the public message on Linux mailing lists on March 9, this time
+linux-distros did not specifically evaluate whether it was too revealing
+or not, and whether it'd make sense to keep the issue "embargoed" after
+such publication.  Like I wrote above, the very fact that such a posting
+was made was brought to linux-distros rather late.  However, for further
+occasions we do have a separate problem here - while we did introduce an
+exception for Linux kernel where such double-think is accepted, would
+this one have gotten too far?  The posting did not say "security",
+"vulnerability", nor mention a CVE ID.  However, it did mention "double
+free" in Bluetooth, and it kind of had to - no other reasonable way to
+justify the patch.  Now, not all double free bugs are vulnerabilities -
+some are not attacker-exposed.  (BTW, I did not look into whether this
+one is.)  Yet a bug of this category in a network subsystem would
+reasonably attract potential attackers' attention.  Also or OTOH,
+"KASAN: slab-use-after-free Read in hci_conn_hash_flush" in syzbot could
+have attracted attention, too.
 
-    - Security issues not covered by the traditional CVE.
-
-    - An identifier following common naming starting with an exclamation
-      mark(!) Example: !CVE-2023-0001
-
-
-============================
-How to request a new !CVE ID
-============================
-
-The !CVE Project is alive and assigning !CVE-IDs for security issues that
-present an advantage for an attacker.
-
-You can request a !CVE ID at: https://notcve.org/form.php
-
-
-======================
-How !CVEs are assigned
-======================
-
-A panel will review !CVE requests and if qualifies, a new !CVE number will
-be assigned and details will be publicly available.
-
-
-==============================
-How to access to !CVEs details
-==============================
-
-Using the search engine at https://notcve.org or a direct link to the !CVE
-entry. For example, the first ever !CVE is available at:
-https://notcve.org/view.php?id=!CVE-2023-0001
-
-
-The search engine combines information from multiple sources and also
-searches for regular CVEs in all fields from all sources. For example to
-search by credit we can obtain CVE discovered by Google Project Zero:
-
-https://notcve.org/search.php?query=Google+Project+Zero
-
-
-=========================
-What qualifies for a !CVE
-=========================
-
-Examples that qualifies for a !CVE:
------------------------------------
-    - A security issues that is not acknowledged by the vendor as a
-      vulnerability.
-
-    - A security issue acknowledged by a vendor as technically correct
-      but outside their threat model.
-
-    - A notified security issue that has not been assigned a CVE after
-      90 days.
-
-    - A published security issue without an assigned CVE.
-
-Examples that do NOT qualify for a !CVE:
-----------------------------------------
-    - A software defect with no impact on security.
-
-    - A generic security issue, you need to list one or more
-      devices/software affected with your finding.
-
-    - Well known attacks to unencrypted channels to obtain
-      credentials: Telnet, FTP, etc.
-
-    - You can read the FAQ [4] for more examples.
-
-
-
-In short, we see the !CVE Project as a great initiative to track and
-identify security issues that are not acknowledged by vendors but still are
-important for the security community.
-
-
-==========
-References
-==========
-
-[1] 
-https://www.blackhat.com/sector/2023/arsenal/schedule/index.html#cve-a-new-platform-for-unacknowledged-cybersecurity-vulnerabilities-36144
-
-[2] https://www.deepsec.net/speaker.html#PSLOT667
-
-[3] https://cve.mitre.org/cve/cna/CNA_Rules_v3.0.pdf
-
-[4] https://notcve.org/faq.html
-
-
-
-
----
-!CVE Team
-
-[ A PGP key is available for encrypted communications at
-https://notcve.org/contact.html ]
+Alexander
