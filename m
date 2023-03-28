@@ -1,27 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/04/10/2
-Message-ID: <da13c5d2-f965-cace-46d7-1dc92a7cf8c0@apache.org>
-Date: Mon, 10 Apr 2023 06:14:41 +0000
-From: Heping Wang <peacewong@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/28/6
+Message-ID: <20230328204149.GA15059@openwall.com>
+Date: Tue, 28 Mar 2023 22:41:49 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-27603: Apache Linkis Mangaer module engineConn material upload exists Zip Slip issue 
+Subject: Re: CVE-2023-28464: Linux: Bluetooth: hci_conn_cleanup function has double free
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+On Tue, Mar 28, 2023 at 08:22:30PM +0000, Seth Arnold wrote:
+> On Tue, Mar 28, 2023 at 04:00:22PM +0200, Solar Designer wrote:
+> > However, we have not heard from Gentoo, who are "primary" on this and a
+> > couple of other related tasks.  Gentoo, please let us all know whether
+> > you intend to handle these tasks, or should we remove the assignment?
+> 
+> I've not seen K_F online in any capacity in years. It is time to ask if
+> we should remove him from the list, beyond just the assignment of this
+> task. (If you're around Kristian, and we're just in different circles
+> these days, hello. :)
 
-Description:
+Kristian isn't on the list for a couple of years now.  Two others are
+currently subscribed for Gentoo.
 
-In Apache Linkis <=1.3.1, due to the Manager module engineConn material upload does not check the zip path, This is a Zip Slip issue, which will lead to a potential RCE vulnerability.
-
-
-We recommend users upgrade the version of Linkis to version 1.3.2.
-
-Credit:
-
-4ra1n (reporter)
-
-References:
-
-https://linkis.apache.org
-https://www.cve.org/CVERecord?id=CVE-2023-27603
-
+Alexander
