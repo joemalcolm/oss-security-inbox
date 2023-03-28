@@ -1,94 +1,98 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/09/29/11
-Message-ID: <7f60d2e7-59ca-13cd-9da1-473bd70dd5bb@juniper.net>
-Date: Fri, 29 Sep 2023 12:57:37 -0700
-From: Travis Finkenauer <tmfink@...iper.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/28/2
+Message-ID: <CAOvp68HCA1VXqCpnM9hMOo=BTCghgXfy85e6QxzUVFsaykiwvw@mail.gmail.com>
+Date: Tue, 28 Mar 2023 08:00:00 +0800
+From: Zhenghan Wang <wzhmmmmm@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx
+Subject: CVE-2023-28464: Linux: Bluetooth: hci_conn_cleanup function has double free
 Content-Type: text/plain; charset=utf-8
 
-On 9/29/23 6:16 AM, Michael Orlitzky wrote:
-> How long will it take for rust to quit changing the language,
-> standardize itself, and enforce some notion of API/ABI stability? The
-> thing we've already had with C and C++ for decades? As a result of the
-> language's instability (and their attempt to hide it with a "package
-> manager"), every rust package wants to install a gigabyte of bundled
-> dependencies that are all pinned to old versions.
+Hi,
 
-As of the 1.0 stable release of Rust in 2015, the language and standard library
-API are stable. Code you write for Rust stable 1.0 should compile with the
-latest stable Rust compiler (currently 1.72.1). Backwards-incompatible changes
-are made when required to fix a soundness bug, which is very infrequent. When
-such changes are made, a tool "crater" is used survey the impact of the change
-on the package ecosystem.
+In the Bluetooth subsystem, a double free vulnerability was found in the
+hci_conn_cleanup function of net/bluetooth/hci_conn.c, which may cause DOS
+or privilege escalation.
 
-https://github.com/rust-lang/crater
+Version: Linux kernel 6.2 (this problem also exists in 6.3-rc1)
 
-In order to allow opt-in breaking changes, a Rust "crate" (package) can specify
-an "edition" (similar to a C++ standard) which may have some breaking changes
-(and new features). Each crate specifies its edition independently. Your crate
-which uses the 2021 edition can depend on another crate which uses the 2015
-edition.
 
-Having a stable ABI has pros and cons. You are correct that Rust does not have
-a stable ABI by default (although you can you can opt into the C ABI per-type
-and per-function). A stable ABI is convenient because it lets you link to
-libraries compiled with different versions of a compiler. However, a stable ABI
-has performance implications. You are locked into that ABI even if you realize
-some decisions don't make sense in the future.
+At the end of the hci_conn_del_sysfs(conn) function in the hci_conn_cleanup
+function, hci_dev_put(hdev) will be called. The hci_dev_put function will
+eventually call kfree to release the space used by name:
 
-By making no promises of a stable ABI, the Rust compiler can use optimizations
-that would otherwise not be possible. For example, since the 1.0 release, the
-Rust compiler reorders struct fields and uses "niche optimizations" to pack
-enum variants into unused bits.
+```
+hci_dev_put
+put_device
+kobject_put
+kref_put
+kobject_release
+kobject_cleanup
+kfree_const
+kfree
+```
 
-Also, I will note that the C++ standard does not promise ABI stability.
-However, in practice, C++ ABI does not change often since some C++ committee
-vendors have just been very quick to veto changes to the C++ standard that
-would necessitate an ABI break. This means certain bugs can't be fixed and
-optimizations can't be taken by C++.
+After the hci_conn_del_sysfs function ends, the hci_dev_put function is
+called again in the hci_conn_cleanup function, and their parameters hdev
+are the same, so double free will be caused when the name is released.
 
-To quote the blog post "The Day The Standard Library Died":
-"But like everything, stability has a cost, and the entire C++ ecosystem is paying it."
+In addition, at the end of hci_conn_cleanup, the hci_conn_put function is
+called again, which will call the put_device function to release conn->dev.
+Obviously conn->dev has been released, so there will also be a double free
+problem here.
 
-https://cor3ntin.github.io/posts/abi/
+Call Trace from syzbot,
+https://syzkaller.appspot.com/bug?id=1bb51491ca5df96a5f724899d1dbb87afda61419
 
-> Software engineering is a fractal. Memory safety inside a language is
-> obviously desirable, but not if other design choices force everyone to
-> go back to bundled libraries and static linking. The state of rust is
-> that it's fun to write, but awful to use. If you want me to switch from
-> C to another language, then projects written in that language can't be
-> a nightmare to distribute and maintain.
+Here's a simplified flow:
 
-I agree that it would be nice if Rust had a better story around dynamic
-linking. If your "product" is a single executable, then statically linking all
-of your Rust dependencies may not be a big deal. However, if you are
-distributing many binaries (such as in an OS image), then you would be
-building and packaging some libraries multiple times.
+hci_conn_del_sysfs:
+  hci_dev_put
+    put_device
+      kobject_put
+        kref_put
+          kobject_release
+            kobject_cleanup
+              kfree_const
+                kfree(name)
 
-There are workarounds like putting all of your Rust code in a single dynamic
-library, but that's obviously not ideal or always feasible. You can also avoid
-the Rust build tool "cargo" and directly compile dependencies to shared
-libraries with "rustc", but it's not easy to compile Rust code without "cargo".
+hci_dev_put:
+  ...
+    kfree(name)
 
-> The situation is identical to how, ten years ago, we were going to
-> rewrite everything in Haskell. Haskell has the same pro/con list as
-> rust. But they never figured it out either. Every new release broke a
-> ton of code, and so version constraints became so tight that you
-> couldn't install more than a few programs at once without bundling. The
-> resulting treadmill was never-ending. Once "this is cool!" wore off,
-> everyone was left with "this is a waste of time."
+hci_conn_put:
+  put_device
+    ...
+      kfree(name)
 
-I would say that Rust does not have the same pro/con list as Haskell since
-Haskell does not have the same C-like performance as Rust and Haskell is
-probably much more difficult to learn for most people.
+This patch drop the hci_dev_put and hci_conn_put function call in
+hci_conn_cleanup function, because the object isfreed in hci_conn_del_sysfs
+function.
+https://lore.kernel.org/lkml/20230309074645.74309-1-wzhmmmmm@gmail.com/
 
-As mentioned above, Rust releases are backwards-compatible.
+Signed-off-by: ZhengHan Wang <wzhmmmmm@...il.com>
+---
+ net/bluetooth/hci_conn.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-I'm not that familiar with Haskell, but in Rust when you
-specify a dependency "foo" version "1.2.3", you are not pinning directly to
-version "1.2.3". You are actually saying "I depend on 'foo' whose semantic
-version is compatible with 1.2.3". That means the dependency resolver may
-resolve "1.2.99" (patch fix) or "1.99.0" (minor version bump). Hence, you
-don't need to manually update your dependencies every time a new version is
-published.
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index acf563fbdfd9..a0ccbef34bc2 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -152,10 +152,6 @@ static void hci_conn_cleanup(struct hci_conn *conn)
+    hci_conn_del_sysfs(conn);
+
+    debugfs_remove_recursive(conn->debugfs);
+-
+-   hci_dev_put(hdev);
+-
+-   hci_conn_put(conn);
+ }
+
+ static void le_scan_cleanup(struct work_struct *work)
+--
+2.25.1
+
+Regards,
+
+Zhenghan Wang
+
