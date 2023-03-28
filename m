@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2375" "Friday" "29" "July" "2016" "13:03:34" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160729170334.5334AB2E0A7@smtpvbsrv1.mitre.org>" "56" "[oss-security] Re: CVE Request: nettle's RSA code is vulnerable to cache sharing related attacks" "^Cc:" nil nil "7" "2016072917:03:34" "[oss-security] Re: CVE Request: nettle's RSA code is vulnerable to cache sharing related attacks" (number mark "        cve-assign@m Jul 29   56/2375  " thread-indent "\"[oss-security] Re: CVE Request: nettle's RSA code is vulnerable to cache sharing related attacks\"\n") "<700c370f-9fc4-7913-9d26-01574b218dba@redhat.com>" ("<700c370f-9fc4-7913-9d26-01574b218dba@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 19540 invoked by uid 550); 29 Jul 2016 17:03:47 -0000
+Received: (qmail 15492 invoked by uid 550); 28 Mar 2023 14:00:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,69 +6,77 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19520 invoked from network); 29 Jul 2016 17:03:46 -0000
-In-Reply-To: <700c370f-9fc4-7913-9d26-01574b218dba@redhat.com>
-Message-Id: <20160729170334.5334AB2E0A7@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri, 29 Jul 2016 13:03:34 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: nettle's RSA code is vulnerable to cache sharing related attacks
-To: huzaifas@redhat.com
+Received: (qmail 15392 invoked from network); 28 Mar 2023 14:00:32 -0000
+Date: Tue, 28 Mar 2023 16:00:22 +0200
+From: Solar Designer <solar@openwall.com>
+To: Zhenghan Wang <wzhmmmmm@gmail.com>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20230328140022.GA11153@openwall.com>
+References: <CAOvp68HCA1VXqCpnM9hMOo=BTCghgXfy85e6QxzUVFsaykiwvw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOvp68HCA1VXqCpnM9hMOo=BTCghgXfy85e6QxzUVFsaykiwvw@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2023-28464: Linux: Bluetooth: hci_conn_cleanup function has double free
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Zhenghan Wang,
 
-> The following whitepaper talks about libgcrypt's RSA code being
-> vulnerable to a cache timing attack, which the paper claims is fixed in
-> 1.6.3.
+Thank you for bringing this to oss-security.
 
-As far as we can tell, your message did not provide a link to a
-whitepaper, and any attachment did not arrive either through direct
-email or in any of the oss-security list archives.
+On Tue, Mar 28, 2023 at 08:00:00AM +0800, Zhenghan Wang wrote:
+> This patch drop the hci_dev_put and hci_conn_put function call in
+> hci_conn_cleanup function, because the object isfreed in hci_conn_del_sysfs
+> function.
+> https://lore.kernel.org/lkml/20230309074645.74309-1-wzhmmmmm@gmail.com/
 
-> It seems nettle is also vulnerable to this flaw. Which was confirmed by
-> upstream via:
-> https://lists.lysator.liu.se/pipermail/nettle-bugs/2016/003093.html
-> 
-> The above link also contains a proposed patch, will be committed soon.
+Please remind the Bluetooth subsystem maintainers, such as by "replying"
+to your own message you had sent them on March 9.  When doing so, please
+also inform them of the CVE ID and of the oss-security posting.
 
-We think the commit already occurred:
+For others on oss-security: Zhenghan Wang brought this issue to
+linux-distros and s@k.o on March 8, brought it to the subsystem
+maintainers and public Linux mailing lists on March 9 (of which
+linux-distros and s@k.o were not specifically informed), and then there
+was no progress until Carlos Lopez from SUSE sent a reminder when we
+were already just past the maximum embargo duration for linux-distros.
 
-  https://git.lysator.liu.se/nettle/nettle/commit/3fe1d6549765ecfb24f0b80b2ed086fdc818bff3
+Of course, it was inappropriate that no one stayed on top of the issue
+during the embargo.  The corresponding contributing-back task is:
 
-> I would like to request a CVE id for the flaw in nettle.
+https://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
 
-Use CVE-2016-6489 for the vulnerability that was fixed in
-3fe1d6549765ecfb24f0b80b2ed086fdc818bff3.
+"9. Stay on top of issues to ensure progress is being made, remind
+others when there's no apparent progress, as well as when the public
+disclosure date for an issue is approaching and when it's finally
+reached (unless the reporter beats you to it by making their mandatory
+posting to oss-security first) - primary: Gentoo, backup: Amazon"
 
-At this point, we are not assigning any CVE IDs for potential
-"incomplete fix" issues mentioned in the 003093.html post, such as
-"The CRT code used for RSA signing uses other functions which may
-leak, in particular division functions with branches depending on
-secret data ... exponents use a normalized size field (so top limb is
-non-zero). This might still leak information about the top exponent
-bits ... Mini-gmp builds don't try to be side-channel silent."
+I brought this up on linux-distros and we already heard from Anthony
+Liguori for Amazon, who as you can see from another thread on
+oss-security is now also contributing the list statistics, which could
+help detect such delays too.  Thanks, Anthony!
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+However, we have not heard from Gentoo, who are "primary" on this and a
+couple of other related tasks.  Gentoo, please let us all know whether
+you intend to handle these tasks, or should we remove the assignment?
 
-iQIcBAEBCAAGBQJXm4v1AAoJEHb/MwWLVhi2e1gP+wSLsNAZzwAJjOhLjYX2vzob
-CjfELfdo2uvAJvfydPIUD+T4j0gnHuSAPXJEtXwC9VdRPla5J202B2admS2wnKk+
-AXy14vW3trEYvcs4Gp7uqMMoS6K1Qb+rnbOOTsYKcirUk8Ml6yuHS9wDugUwrlyg
-G9VipRYFZCSz0pqiz4Lv1mc4ViMz7uQbUZ9oPWthwr8RDhJebdXlab1Co5FwPf8s
-IUOrubPlH/rSGsJ/zSWE3HsP8Qcfe3Mg7Rph4mqYiv/amefRcABjyKSo2lgGUcdZ
-RoM148KjY+3ys5hEwgYGv4PL7lkm698/lShsgBjyTlyQYpCRHMywBzK9ZorgZA49
-Mt+bghgMJEPilWxzwVsoQ53vPjs4IH4p8O1ba0NeBYfX/Crd9q25NMV7FCzzkO1R
-H8yRdITvBg9DmDifvWJT9mlnKmtkHEg3sPYr0QSVWI5qUKo4v1XYnNrr9K88rUUq
-+ai5/h13gN2hIQW6sc+S/01jO30X4rfL6+REhqz3ri8mi3LRLxj1n8ElaQEO/ulh
-USC88qdZpMDIwLl5e3WL11CjZ9EbtxGaFLwzScCm5cFXPPqZmVp1h7iX90380ItT
-rRzJ9sfCew+bWFly7l60oefy+OP8u2mIbUMK+dzzm5dkcu+n67uMWB3Rb2/64OpO
-WDByvQZt5Gaz6zeYp81s
-=Z0L4
------END PGP SIGNATURE-----
+As to the public message on Linux mailing lists on March 9, this time
+linux-distros did not specifically evaluate whether it was too revealing
+or not, and whether it'd make sense to keep the issue "embargoed" after
+such publication.  Like I wrote above, the very fact that such a posting
+was made was brought to linux-distros rather late.  However, for further
+occasions we do have a separate problem here - while we did introduce an
+exception for Linux kernel where such double-think is accepted, would
+this one have gotten too far?  The posting did not say "security",
+"vulnerability", nor mention a CVE ID.  However, it did mention "double
+free" in Bluetooth, and it kind of had to - no other reasonable way to
+justify the patch.  Now, not all double free bugs are vulnerabilities -
+some are not attacker-exposed.  (BTW, I did not look into whether this
+one is.)  Yet a bug of this category in a network subsystem would
+reasonably attract potential attackers' attention.  Also or OTOH,
+"KASAN: slab-use-after-free Read in hci_conn_hash_flush" in syzbot could
+have attracted attention, too.
+
+Alexander
