@@ -1,69 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/01/19/1
-Message-ID: <CAE-GootkXskaRKTmdPg1KsL3cm2oPq8DtL14MoupwX_CaVDeXw@mail.gmail.com>
-Date: Thu, 19 Jan 2023 01:33:43 +0100
-From: Matthieu Barjole <matthieu.barjole@...acktiv.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2023/03/28/1
+Message-ID: <e31de680-52c6-e824-ffc4-080f15cd0972@apache.org>
+Date: Tue, 28 Mar 2023 10:09:24 +0000
+From: Maxim Solodovnik <solomax@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2023-22809: Sudoedit can edit arbitrary files
+Subject: CVE-2023-28326: Apache OpenMeetings: allows user impersonation 
 Content-Type: text/plain; charset=utf-8
 
-Hello everyone,
+Severity: critical
 
-While auditing Sudo, Synacktiv identified a privilege escalation in sudoedit
-when a user is authorized to use it by the sudoers policy. This
-vulnerability
-was assigned CVE-2023-22809 and affects Sudo versions 1.8.0 through 1.9.12p1
-inclusive.
+Description:
 
-## Analysis
+Vendor: The Apache Software Foundation
 
-The technical analysis can be found in the following security advisory:
-https://www.synacktiv.com/sites/default/files/2023-01/sudo-CVE-2023-22809.pdf
+Versions Affected: Apache OpenMeetings from 2.0.0 before 7.0.0
 
-## Proof of Concept
+Description: Attacker can elevate their privileges in any room
 
-Assuming the following sudoers policy:
+This issue is being tracked as OPENMEETINGS-2739 
 
-```
-# cat /etc/sudoers
-user ALL=(ALL:ALL) sudoedit /etc/motd
-[...]
-```
+Credit:
 
-Arbitrary files such as `/etc/passwd` may also be edited as such:
+Dennis Zimmt (reporter)
 
-```
-EDITOR='vim -- /etc/passwd' sudoedit /etc/motd
-```
+References:
 
-## Mitigation
-
-It is possible to prevent a user-specified editor from being used by
-sudoedit by
-adding the following line to the sudoers file.
-
-```
-Defaults!sudoedit   env_delete+="SUDO_EDITOR VISUAL EDITOR"
-```
-
-To restrict the editor when editing specific files, a Cmnd_Alias can be
-used,
-for example:
-
-```
-Cmnd_Alias          EDIT_MOTD = sudoedit /etc/motd
-Defaults!EDIT_MOTD  env_delete+="SUDO_EDITOR VISUAL EDITOR"
-user                ALL = EDIT_MOTD
-```
-
-## Fix
-
-The issue was fixed in Sudo 1.9.12.p2.
-
-## References
-
-[1]
-https://www.synacktiv.com/sites/default/files/2023-01/sudo-CVE-2023-22809.pdf
-[2] https://www.sudo.ws/security/advisories/sudoedit_any/
-[3] https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-22809
+https://openmeetings.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2023-28326
+https://issues.apache.org/jira/browse/OPENMEETINGS-2739
 
