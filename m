@@ -1,4 +1,4 @@
-Received: (qmail 9802 invoked by uid 550); 12 Mar 2025 15:15:41 -0000
+Received: (qmail 32266 invoked by uid 550); 28 Mar 2023 14:06:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,71 +7,126 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-x-ms-reactions: disallow
-Received: (qmail 28560 invoked from network); 12 Mar 2025 14:06:59 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Andrea Cosentino <acosentino@apache.org>
+Received: (qmail 28626 invoked from network); 28 Mar 2023 14:03:51 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=openssl.org; s=dkim-2020-2;
+	t=1680012220; h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:mime-version:mime-version:
+	 content-type:content-type; bh=BxxwlNIygoZi3sJsqEEvPTPNih1wgjQLd4PrSLUu+6E=;
+	b=RQv12ksNxCJs4jQKaDgmryu7k8Qx0Ec5taszUwMBEtu/kdWCS/COva+J20+L9bGG61IwYW
+	fM3TckPj8G6JBafQadn0tGK4rqTh0MQ4EEq0HiXV/shr2FzC8d/FStpdJ66UVo5NuI2nDa
+	2KZQ8xv47LSg3mVAOdM3u8RL0fu/2WracTrGJKfSvkaBITK9cVXTE5r7oSI1WxGzo4zpbd
+	0/jIIybqFPkNjifLc/nwu1vseiUZHvR0LZUWvVfEuuYopz2IFEj9qSMzE/cr+nurXhOl0+
+	RniEb2kyn9DhpHsp2pTxemleg9UXncG2mA5jsCJV6gUEhQDy1/twLbQRw+e42g==
+Authentication-Results: mta.openssl.org;
+	dkim=none;
+	spf=pass (mta.openssl.org: domain of tomas@dev.openssl.org designates 2001:608:c00:180::1:ea as permitted sender) smtp.mailfrom=tomas@dev.openssl.org;
+	dmarc=pass (policy=none) header.from=openssl.org
+Date: Tue, 28 Mar 2023 14:03:39 +0000
+From: Tomas Mraz <tomas@openssl.org>
 To: oss-security@lists.openwall.com
-Message-ID: <e3770277-d3cf-75f5-b3dd-123c5a5e708f@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 12 Mar 2025 14:06:47 +0000
+Message-ID: <ZCLzu6TDAOcf9OTz@openssl.org>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2025-29891: Apache Camel: Camel Message Header Injection
- through request parameters 
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Subject: [oss-security] OpenSSL Security Advisory
 
-Severity: important
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Affected versions:
+OpenSSL Security Advisory [28th March 2023]
+===========================================
 
-- Apache Camel 4.10.0 before 4.10.2
-- Apache Camel 4.8.0 before 4.8.5
-- Apache Camel 3.10.0 before 3.22.4
+Invalid certificate policies in leaf certificates are silently ignored (CVE-2023-0465)
+======================================================================================
 
-Description:
+Severity: Low
 
-Bypass/Injection vulnerability in Apache Camel.
+Applications that use a non-default option when verifying certificates may be
+vulnerable to an attack from a malicious CA to circumvent certain checks.
 
-This issue affects Apache Camel: from 4.10.0 before 4.10.2, from 4.8.0 befo=
-re 4.8.5, from 3.10.0 before 3.22.4.
+Invalid certificate policies in leaf certificates are silently ignored by
+OpenSSL and other certificate policy checks are skipped for that certificate.
+A malicious CA could use this to deliberately assert invalid certificate policies
+in order to circumvent policy checking on the certificate altogether.
 
-Users are recommended to upgrade to version 4.10.2 for 4.10.x LTS, 4.8.5 fo=
-r 4.8.x LTS and 3.22.4 for 3.x releases.
+Policy processing is disabled by default but can be enabled by passing
+the `-policy' argument to the command line utilities or by calling the
+`X509_VERIFY_PARAM_set1_policies()' function.
 
-This vulnerability is present in Camel's default incoming header filter, th=
-at allows an attacker to include Camel specific headers that for some Camel=
- components can alter the behaviours such as the camel-bean component, or t=
-he camel-exec component.
+Due to the low severity of this issue we are not issuing new releases of
+OpenSSL at this time. The fix will be included in the next releases when they
+become available. The fix is also available in commit facfb1ab (for 3.1),
+commit 1dd43e07 (for 3.0), commit b013765a (for 1.1.1) in the OpenSSL
+git repository, and commit 10325176 (for 1.0.2) in the OpenSSL git
+repository for premium customers.
 
-If you have Camel applications that are directly connected to the internet =
-via HTTP, then an attacker=C2=A0could include parameters in the HTTP reques=
-ts that are sent to the Camel application that incorrectly get translated i=
-nto headers.=C2=A0
+This issue was reported on 12th January 2023 by David Benjamin (Google).
+The fix was developed by Matt Caswell.
 
-The headers could be both provided as request parameters for an HTTP method=
-s invocation or as part of the payload of the HTTP methods invocation.
+Certificate policy check not enabled (CVE-2023-0466)
+====================================================
 
-All the known Camel HTTP component such as camel-servlet, camel-jetty, came=
-l-undertow, camel-platform-http, and camel-netty-http would be vulnerable o=
-ut of the box.
+Severity: Low
 
-This CVE is related to the CVE-2025-27636: while they have the same root ca=
-use and are fixed with the same fix, CVE-2025-27636 was assumed to only be =
-exploitable if an attacker could add malicious HTTP headers, while we have =
-now determined that it is also exploitable via HTTP parameters. Like in CVE=
--2025-27636, exploitation is only possible if the Camel route uses particul=
-ar vulnerable components.
+The function X509_VERIFY_PARAM_add0_policy() is documented to
+implicitly enable the certificate policy check when doing certificate
+verification. However the implementation of the function does not
+enable the check which allows certificates with invalid or incorrect
+policies to pass the certificate verification.
 
-This issue is being tracked as CAMEL-21828=20
+As suddenly enabling the policy check could break existing deployments it was
+decided to keep the existing behavior of the X509_VERIFY_PARAM_add0_policy()
+function.
 
-Credit:
+Instead the applications that require OpenSSL to perform certificate
+policy check need to use X509_VERIFY_PARAM_set1_policies() or explicitly
+enable the policy check by calling X509_VERIFY_PARAM_set_flags() with
+the X509_V_FLAG_POLICY_CHECK flag argument.
 
-Ryan Barnett (finder)
+Certificate policy checks are disabled by default in OpenSSL and are not
+commonly used by applications.
 
-References:
+OpenSSL 3.1, 3.0, 1.1.1 and 1.0.2 are vulnerable to this issue.
 
-https://camel.apache.org/security/CVE-2025-27636.html
-https://camel.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2025-29891
-https://issues.apache.org/jira/browse/CAMEL-21828
+Applications need to be updated if they are affected by the issue.
 
+Due to the low severity of this issue we are not creating a new release at
+this time. The documentation fix is also available in commit fc814a30
+(for 3.1), commit 51e8a84c (for 3.0), commit 0d16b7e9 (for 1.1.1) in the
+OpenSSL git repository, and commit 73398dea (for 1.0.2) in the OpenSSL git
+repository for premium customers.
+
+This issue was reported on 12th January 2023 by David Benjamin (Google).
+The documentation fix was developed by Tomas Mraz.
+
+General Advisory Notes
+======================
+
+URL for this Security Advisory:
+https://www.openssl.org/news/secadv/20230328.txt
+
+Note: the online version of the advisory may be updated with additional details
+over time.
+
+For details of OpenSSL severity classifications please see:
+https://www.openssl.org/policies/secpolicy.html
+
+OpenSSL 1.1.1 will reach end-of-life on 2023-09-11. After that date security
+fixes for 1.1.1 will only be available to premium support customers.
+-----BEGIN PGP SIGNATURE-----
+
+iQJGBAEBCAAwFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmQi8tMSHHRvbWFzQG9w
+ZW5zc2wub3JnAAoJEFJ0ZqIcp55tem4P/3ujaUzEUXSMAX58jCiMzScB8o1HFyo1
+KQguXKh41dM7ooehR4J8JjveH6PExw2C0fI7CzROjdlOkcd66jfokJb5CIOTf3zs
+0pDn0gH1TcY4skKlUkFoo8d51ql3zlySxLX5MGEUiUq43U+H2sog/cLaMl5KJRJ4
+kDBGksdgsAb1o6rCcXpTHw40Dq5cEr3HaSy6hbbxubjt8SQv8fbK2vkZPu3pVwfw
+RR6w8K43aiDwcEC6eMPO5QOx3xTOFGU0tUNEG11QZhb2gOkmgshjRBZmbf9mEyU2
+mTk0P8G6ttlVP80qqXA33lSXIJlfpTqqSx9rlx6ovO4iu0TZPJYETkAhP6nBvEU6
+eyy/RTSphBUK4uSh44K3RTMcnPAvplZdzlX9jOHfiuOjwG1ff8pxWnJZt0s77MNI
+ByCKaOWwhyoph3jxkt+k4AP0f229qxFxryz1UKXWQ+2BXtXusXFVGs70FwHIvSWV
+nGpLKXedCnebPaQqlYKqFWmJPsDf4iEcSgluFyFr4zYW7+dN+7hNF3gFzYJjSCIo
+jvnKktMk3Vuu8xOMJ6uQQNmGvsEyhmDYsxqNuM/6QxaQmnfEGe8+bdp21g8PBLtG
+z+tnX2/7Cltm/5oIHnqVclNChqjOev9rho5/QVK7eNFDcuDTWVosWPPyqbhkmVpw
+acx7hxvK++Zl
+=L6VH
+-----END PGP SIGNATURE-----
